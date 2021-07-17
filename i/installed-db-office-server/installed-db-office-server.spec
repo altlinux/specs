@@ -1,24 +1,31 @@
+%define system_requires apache2-base, apache2-mod_php7, apache2-mod_ssl, mariadb-server
+%define deploy_requires deploy >= 0.3
+%define rule_requires   python3-module-pymysql, pwgen, curl
+
 Name: installed-db-office-server
-Version: 1.4.8
+Version: 1.5
 Release: alt1
-Summary: Databases and config files for moodle, mediawiki and rujel (common)
+Summary: Databases and config files for moodle, mediawiki and nextcloud
 License: GPL-2.0+
 Group: System/Configuration/Other
-Source: %name.tar.gz
+Source: %name-%version.tar
 BuildArch: noarch
 
-Requires: pwgen
-Requires: MySQL-server-control
+Requires: %name-mediawiki = %EVR
+Requires: %name-nextcloud = %EVR
+Requires: %name-moodle = %EVR
 
 %description
-Databases and config files for moodle, mediawiki and rujel (commom part)
+Databases and config files for moodle, mediawiki and nextcloud
 
 %package mediawiki
-Group: System/Configuration/Other
-Requires: mediawiki mediawiki-apache2 mediawiki-ldap
-Requires: %name = %version-%release
 Summary: Databases and config files for mediawiki
+Group: System/Configuration/Other
+Requires: %system_requires
+Requires: %deploy_requires
+Requires: %rule_requires
 Requires: mediawiki
+Requires: mediawiki-apache2
 Requires: mediawiki-mysql
 Requires: mediawiki-ldap
 
@@ -26,84 +33,64 @@ Requires: mediawiki-ldap
 Databases and config files for mediawiki
 
 %package moodle
+Summary: Databases and config files for moodle
 Group: System/Configuration/Other
-Requires: %name = %version-%release
-Requires: moodle-install-tools
+Requires: %system_requires
+Requires: %deploy_requires
+Requires: %rule_requires
 Requires: moodle
 Requires: moodle-apache2
 Requires: moodle-base
 Requires: moodle-local-mysql
-Summary: Databases and config files for moodle
 
 %description moodle
 Databases and config files for moodle
 
 %package nextcloud
+Summary: Databases and config files for nextcloud
 Group: System/Configuration/Other
-Requires: %name = %version-%release
+Requires: %system_requires
+Requires: %deploy_requires
+Requires: %rule_requires
 Requires: nextcloud
 Requires: nextcloud-apache2
 Requires: php7-pcntl
 Requires: php7-pdo_mysql
 Provides: %name-owncloud = %EVR
 Obsoletes: %name-owncloud < %EVR
-Summary: Databases and config files for nextcloud
 
 %description nextcloud
 Databases and config files for nextcloud
 
-%package rujel
-Group: System/Configuration/Other
-Requires: %name = %version-%release
-Summary:  Databases and config files for rujel 
-Requires: rujel
-
-%description rujel
-Databases and config files for rujel
-
 %prep
-%setup -q -c
+%setup
 
 %build
 
 %install
-
-mkdir -p %buildroot/usr/share/%name
-install -Dp -m755 %name/80-office-server %buildroot%_sysconfdir/firsttime.d/80-office-server
-#install -Dp -m755 %name/95-office-server-postinstall %buildroot/usr/share/install2/postinstall.d/95-office-server-postinstall
-install -Dp -m755 %name/root.d %buildroot/usr/lib/alterator/hooks/root.d/installed-db
-install -Dp -m755 %name/moodle %buildroot/etc/hooks/hostname.d/94-moodle-ldap
-install -Dp -m755 %name/mediawiki %buildroot/etc/hooks/hostname.d/95-mediawiki-ldap
-install -Dp -m755 %name/nextcloud %buildroot/etc/hooks/hostname.d/96-nextcloud-ldap
-install -Dp -m755 %name/rujel %buildroot/etc/hooks/hostname.d/97-rujel-ldap
-
-cp -r %name/data/* %buildroot/usr/share/%name/
-install -Dp -m755 %name/apache-office-server %buildroot/usr/share/%name/
-install -Dp -m755 %name/mysql-office-server %buildroot/usr/share/%name/
-mkdir -p %buildroot/var/www/webapps/mediawiki
-# ln -s /usr/share/doc/alt-docs/indexhtml/img/project-logo.png %buildroot/var/www/webapps/mediawiki/project-logo.png
+for service in mediawiki nextcloud moodle; do
+    install -Dp -m755 $service %buildroot%_sysconfdir/firsttime.d/80-office-server-$service
+    install -Dp -m755 ${service}-password %buildroot%_libexecdir/alterator/hooks/root.d/$service
+done
 
 %files
-# /var/www/webapps/mediawiki/project-logo.png
-/usr/share/%name
-%_sysconfdir/firsttime.d/80-office-server
-#/usr/share/install2/postinstall.d/*
-/usr/lib/alterator/hooks/root.d/*
 
 %files mediawiki
-/etc/hooks/hostname.d/*-mediawiki-ldap
+%_sysconfdir/firsttime.d/80-office-server-mediawiki
+%_libexecdir/alterator/hooks/root.d/mediawiki
 
 %files moodle
-/etc/hooks/hostname.d/*-moodle-ldap
+%_sysconfdir/firsttime.d/80-office-server-moodle
+%_libexecdir/alterator/hooks/root.d/moodle
 
 %files nextcloud
-/etc/hooks/hostname.d/*-nextcloud-ldap
-
-%files rujel
-/etc/hooks/hostname.d/*-rujel-ldap
-
+%_sysconfdir/firsttime.d/80-office-server-nextcloud
+%_libexecdir/alterator/hooks/root.d/nextcloud
 
 %changelog
+* Fri Jul 16 2021 Andrey Cherepanov <cas@altlinux.org> 1.5-alt1
+- Use deploy for installation and password change.
+
 * Mon Apr 12 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.8-alt1
 - Set strong password during mediawiki deploy.
 - Do not set password for MySQL during root password change.

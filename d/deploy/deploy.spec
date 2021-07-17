@@ -1,5 +1,5 @@
 Name: deploy
-Version: 0.2.1
+Version: 0.3
 Release: alt1
 
 Summary: Script and set of ansible roles to deploy system services
@@ -31,6 +31,9 @@ system services like PostgreSQL or Moodle.
 %_datadir/%name
 
 %changelog
+* Fri Jul 16 2021 Andrey Cherepanov <cas@altlinux.org> 0.3-alt1
+- Add rule for: apache, mariadb, mediawiki, nextcloud, moodle. 
+
 * Thu Jun 04 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.2.1-alt1
 - Add option to show available parameters
 
