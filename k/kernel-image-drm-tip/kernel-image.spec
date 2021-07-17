@@ -5,9 +5,9 @@
 
 Name: kernel-image-drm-tip
 %define kernel_source_version	5.12
-%define kernel_base_version	5.13
+%define kernel_base_version	5.14
 %define kernel_sublevel .0
-%define kernel_extra_version	+rel.20210702
+%define kernel_extra_version	+rc1.20210716
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1
 
@@ -41,7 +41,6 @@ ExclusiveArch: x86_64
 %define arch_dir x86
 
 BuildRequires(pre): rpm-build-kernel
-BuildRequires: dev86
 BuildRequires: flex
 BuildRequires: libdb4-devel
 BuildRequires: gcc%kgcc_version gcc%kgcc_version-c++
@@ -189,12 +188,13 @@ ln -s %kbuild_dir %buildroot%modules_dir/build
 mkdir %buildroot%modules_dir/{extra,updates}
 
 %check
-export TMP=/tmp
+cat /usr/lib/ltp/skiplist-alt-vm .gear/skiplist > skiplist
 if ! timeout 999 vm-run --kvm=cond \
         "/sbin/sysctl kernel.printk=8;
-         runltp -S $PWD/.gear/skiplist -f syscalls -o out"; then
-        cat /usr/lib/ltp/output/LTP_RUN_ON-out.failed
-        exit 1
+         runltp -S $PWD/skiplist -f kernel-alt-vm -o out"; then
+	cat /usr/lib/ltp/output/LTP_RUN_ON-out.failed >&2
+	sed '/TINFO/i\\' /usr/lib/ltp/output/out | awk '/TFAIL/' RS= >&2
+	exit 1
 fi
 
 %files
@@ -217,6 +217,6 @@ fi
 %modules_dir/build
 
 %changelog
-* Sat Jul 03 2021 Kernel Pony <kernelpony@altlinux.org> 5.13.0+rel.20210702-alt1
-- drm-tip 2021y-07m-02d-19h-49m-58s (3d3b5479895d).
+* Sun Jul 18 2021 Kernel Pony <kernelpony@altlinux.org> 5.14.0+rc1.20210716-alt1
+- drm-tip 2021y-07m-16d-20h-11m-35s (6c4e3c031a99).
 
