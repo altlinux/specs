@@ -2,7 +2,7 @@
 
 Name:           python3-module-django-%pypi_name
 Version:        0.3.0
-Release:        alt2
+Release:        alt3
 
 Summary:        A django package that allows easy identification of visitors information
 License:        MIT
@@ -14,7 +14,7 @@ Source0:        %name-%version.tar
 Patch0:         fix-import.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires:  python3-module-django python3-module-django-formtools
+BuildRequires:  python3-module-django
 
 
 %description
@@ -56,6 +56,9 @@ sed -i 's|core.urlresolvers|urls|' $(find ./ -name 'tests.py')
 
 
 %changelog
+* Sun Jul 18 2021 Vitaly Lipatov <lav@altlinux.ru> 0.3.0-alt3
+- drop unneeded BR: python3-module-django-formtools
+
 * Thu Dec 19 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.3.0-alt2
 - build for python2 disabled
 
