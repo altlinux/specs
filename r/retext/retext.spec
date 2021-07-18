@@ -2,7 +2,7 @@
 
 Name:    retext
 Version: 7.2.1
-Release: alt1
+Release: alt2
 License: GPL-3.0+
 Summary: Text editor for Markdown and reStructuredText
 Summary(de): Texteditor für Markdown und reStructuredText
@@ -13,6 +13,8 @@ Source0: %name-%version.tar
 Source1: %name.1
 
 BuildArch: noarch
+
+AutoProv:yes,nopython3
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): python3-devel
@@ -28,14 +30,16 @@ BuildRequires: librsvg-devel
 BuildRequires: librsvg-utils
 BuildRequires: ImageMagick-tools
 BuildRequires: qt5-tools-devel
-BuildRequires: python-module-PyQt5-devel
+#BuildRequires: python3-module-PyQt5
 
 %if_with tests
 BuildRequires:  libappstream-glib
 %endif
 
 %py3_requires docutils enchant markdown sip mdx_math chardet pygments
-%add_python3_req_skip FakeVim PyQt5.QtWebEngineWidgets
+%add_python3_req_skip FakeVim
+
+%add_python3_req_skip PyQt5.QtWebKit PyQt5.QtWebKitWidgets
 
 %description
 ReText is a simple but powerful text editor for Markdown and
@@ -87,6 +91,11 @@ python3 setup.py test
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Sun Jul 18 2021 Vitaly Lipatov <lav@altlinux.ru> 7.2.1-alt2
+- drop BR: python-module-PyQt5-devel
+- skip WebKit requires (ALT bug 40361)
+- disable python provides
+
 * Mon Mar 08 2021 Andrey Cherepanov <cas@altlinux.org> 7.2.1-alt1
 - New version.
 
