@@ -6,7 +6,7 @@
 Name: kernel-image-%kflavour
 %define kernel_base_version	5.10
 %define kernel_sublevel		.47
-%define kernel_rt_release	rt45
+%define kernel_rt_release	rt46
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -66,9 +66,6 @@ ExclusiveArch: x86_64
 ExclusiveOS: Linux
 
 BuildRequires(pre): rpm-build-kernel
-%ifarch %ix86 x86_64
-BuildRequires: dev86
-%endif
 BuildRequires: flex
 BuildRequires: libdb4-devel
 BuildRequires: gcc%kgcc_version
@@ -383,7 +380,8 @@ vm-run --depmod cat /sys/kernel/realtime
 if ! timeout 999 vm-run --kvm=cond \
 	"/sbin/sysctl kernel.printk=8;
 	 runltp -f kernel-alt-vm -S skiplist-alt-vm -o out"; then
-	cat /usr/lib/ltp/output/LTP_RUN_ON-out.failed
+	cat /usr/lib/ltp/output/LTP_RUN_ON-out.failed >&2
+	sed '/TINFO/i\\' /usr/lib/ltp/output/out | awk '/TFAIL/' RS= >&2
 	exit 1
 fi
 
@@ -420,6 +418,10 @@ fi
 %modules_dir/build
 
 %changelog
+* Sun Jul 18 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.47-alt1.rt46
+- Update to v5.10.47-rt46 (16 Jul 2021).
+- spec: Remove BuildRequires: dev86.
+
 * Wed Jul 07 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.47-alt1.rt45
 - Update to v5.10.47-rt45 (02 Jul 2021).
 - Remove startup from Requires.
