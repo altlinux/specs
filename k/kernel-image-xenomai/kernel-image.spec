@@ -14,7 +14,7 @@ Name: kernel-image-%flavour
 %define kernel_ipipe_release	18
 
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
-Release: alt2.%kernel_cip_release.%kernel_ipipe_release
+Release: alt3.%kernel_cip_release.%kernel_ipipe_release
 
 %define krelease	%release
 
@@ -48,7 +48,6 @@ ExclusiveArch: x86_64
 ExclusiveOS: Linux
 
 BuildRequires(pre): rpm-build-kernel
-BuildRequires: dev86
 BuildRequires: flex
 BuildRequires: libdb4-devel
 BuildRequires: gcc%kgcc_version
@@ -371,12 +370,12 @@ vm-run "set -x
   ! dmesg | grep 'init failed'
   set +x"
 
-export TMP=/tmp
-if ! timeout 600 vm-run --kvm=cond \
+if ! timeout 999 vm-run --kvm=cond \
        "/sbin/sysctl kernel.printk=8;
-        runltp -S $PWD/skiplist -f syscalls,syscalls-ipc,crypto,connectors,containers,fs_readonly,ima,kernel_misc,net.features,numa,pty,uevent -o out"
+        runltp -f kernel-alt-vm -S skiplist-alt-vm -o out"
 then
-	cat /usr/lib/ltp/output/LTP_RUN_ON-out.failed
+	cat /usr/lib/ltp/output/LTP_RUN_ON-out.failed >&2
+	sed '/TINFO/i\\' /usr/lib/ltp/output/out | awk '/TFAIL/' RS= >&2
 	exit 1
 fi
 
@@ -396,6 +395,10 @@ fi
 %modules_dir/build
 
 %changelog
+* Sun Jul 18 2021 Vitaly Chikunov <vt@altlinux.org> 4.19.192-alt3.cip50.18
+- spec: Remove BuildRequires: dev86.
+- spec: Improve LTP testing.
+
 * Sat Jun 12 2021 Vitaly Chikunov <vt@altlinux.org> 4.19.192-alt2.cip50.18
 - spec: Add more LTP tests.
 - spec: Fix objtool location (kernel-headers-modules).
