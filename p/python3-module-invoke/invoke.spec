@@ -2,22 +2,22 @@
 %define oname invoke
 
 Name: python3-module-%oname
-Version: 1.4.1
+Version: 1.6.0
 Release: alt1
 
 Summary: Simple Python task execution
 License: BSD-2-Clause
 Group: Development/Python3
 Url: https://www.pyinvoke.org/
-# https://github.com/pyinvoke/invoke.git
 BuildArch: noarch
 
+# Source-git: https://github.com/pyinvoke/invoke.git
 Source: %name-%version.tar
 Patch1: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
-%py3_requires lexicon
+#py3_requires lexicon
 %py3_requires six
 %py3_requires yaml
 
@@ -43,7 +43,7 @@ find . -name '*.py' | xargs sed -i \
    -e 's|from invoke\.vendor\.six\(.*\) import |from six\1 import |g'
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -54,6 +54,9 @@ find . -name '*.py' | xargs sed -i \
 %python3_sitelibdir/*
 
 %changelog
+* Sun Jul 18 2021 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1
+- new version 1.6.0
+
 * Mon Jul 06 2020 Stanislav Levin <slev@altlinux.org> 1.4.1-alt1
 - 0.21.0 -> 1.4.1.
 
