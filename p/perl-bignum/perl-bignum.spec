@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist bignum
 Name: perl-%dist
-Version: 0.52
+Version: 0.53
 Release: alt1
 
 Summary: Transparent BigNumber support for Perl
@@ -40,6 +40,9 @@ bigrat - Transparent BigNumber/BigRational support
 %perl_vendor_privlib/big*
 
 %changelog
+* Sun Jul 18 2021 Igor Vlasenko <viy@altlinux.org> 0.53-alt1
+- automated CPAN update
+
 * Sun Jul 11 2021 Igor Vlasenko <viy@altlinux.org> 0.52-alt1
 - automated CPAN update
 
