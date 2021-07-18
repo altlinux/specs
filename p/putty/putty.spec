@@ -1,6 +1,6 @@
 Name: putty
-Version: 0.75
-Release: alt2
+Version: 0.76
+Release: alt1
 
 Summary: Free SSH, Telnet and Rlogin client
 License: MIT
@@ -67,6 +67,9 @@ install -pDm644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_liconsdir/*.png
 
 %changelog
+* Sun Jul 18 2021 Michael Shigorin <mike@altlinux.org> 0.76-alt1
+- new version (watch file uupdate)
+
 * Fri May 14 2021 Michael Shigorin <mike@altlinux.org> 0.75-alt2
 - E2K: ftbfs wokaround (reported upstream; mcst#6021)
 
