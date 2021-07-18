@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 6.2.0
-Release: alt2
+Release: alt3
 
 Summary: Explicitly typed attributes for Python 3
 License: BSD-3-Clause and CC-BY-3.0
@@ -27,8 +27,8 @@ BuildRequires: python3-module-sphinx-pickles
 
 %description
 The traits package developed by Enthought provides a special type
-definition called a trait. Although they can be used as normal Python object 
-attributes, traits also have several additional characteristics: 
+definition called a trait. Although they can be used as normal Python object
+attributes, traits also have several additional characteristics:
 
 * Initialization: A trait can be assigned a default value.
 * Validation: A trait attribute's type can be explicitly declared.
@@ -99,7 +99,9 @@ cp -fR pickle %buildroot%python3_sitelibdir/%oname/
 %exclude %python3_sitelibdir/%oname/tests
 %exclude %python3_sitelibdir/%oname/*/tests
 %exclude %python3_sitelibdir/%oname/testing
+%if_with doc
 %exclude %python3_sitelibdir/%oname/pickle
+%endif
 
 %files tests
 %python3_sitelibdir/%oname/tests
@@ -117,6 +119,9 @@ cp -fR pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sun Jul 18 2021 Michael Shigorin <mike@altlinux.org> 6.2.0-alt3
+- Fixed doc knob (overlooked %%exclude).
+
 * Sun Jul 18 2021 Michael Shigorin <mike@altlinux.org> 6.2.0-alt2
 - Added doc knob (on by default).
 
