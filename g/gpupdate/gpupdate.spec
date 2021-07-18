@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpupdate
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 Summary: GPT applier
@@ -112,6 +112,13 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Sun Jul 18 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.9.1-alt1
+- Fix GSettings applier user part support
+- Add support additional firefox appliers
+- Add new windows policies mapping capability feature ruled by:
+  Software\BaseALT\Policies\GPUpdate\WindowsPoliciesMapping
+- Improve drop privileges mechanism with fork and dbus session
+
 * Fri Jun 25 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.9.0-alt1
 - Change policies.json location for Firefox
 - Set GSettings, Chromium and Firefox appliers
