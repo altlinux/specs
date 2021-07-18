@@ -1,6 +1,6 @@
 Name: seatd
 Version: 0.5.0.29.g6444da6
-Release: alt1
+Release: alt2
 Summary: Minimal seat management daemon and universal library
 License: MIT
 Url: https://github.com/kennylevinsen/seatd
@@ -22,6 +22,7 @@ Source3: %name.sysconfig
 %define soname seat%soversion
 
 BuildRequires:  meson
+BuildRequires:  systemd-devel
 BuildRequires:  scdoc
 
 %description
@@ -83,6 +84,10 @@ install -m644 -pD contrib/systemd/seatd.service %buildroot%_unitdir/%name.servic
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Jul 18 2021 Alexey Gladkov <legion@altlinux.ru> 0.5.0.29.g6444da6-alt2
+- Enable logind backend.
+- seatd.sock writable for xgrp.
+
 * Sat Jul 17 2021 Alexey Gladkov <legion@altlinux.ru> 0.5.0.29.g6444da6-alt1
 - New upstream snapshot (0.5.0-29-g6444da6).
 
