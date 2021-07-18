@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,12 +7,12 @@ BuildRequires: perl(Exporter.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Eval-LineNumbers
-Version:        0.34
-Release:        alt1_16
+Version:        0.35
+Release:        alt1
 Summary:        Add line numbers to hereis blocks that contain perl source code
 License:        Artistic 2.0 or LGPLv2+
 URL:            https://metacpan.org/release/Eval-LineNumbers
-Source0:        https://cpan.metacpan.org/authors/id/M/MU/MUIR/modules/Eval-LineNumbers-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/P/PL/PLICEASE/Eval-LineNumbers-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -44,10 +45,13 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 make test
 
 %files
-%doc Changes README
+%doc Changes README author.yml
 %{perl_vendor_privlib}/Eval
 
 %changelog
+* Sun Jul 18 2021 Igor Vlasenko <viy@altlinux.org> 0.35-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.34-alt1_16
 - update to new release by fcimport
 
