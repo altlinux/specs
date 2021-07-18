@@ -7,8 +7,8 @@
 %def_without  qml
 
 Name: ripasso
-Version: 0.5.0
-Release: alt1
+Version: 0.5.1
+Release: alt1.gita33ac767
 
 Summary: a simple password manager written in Rust
 Summary(ru_RU.UTF-8): простой парольный менеджер, написанный на Rust
@@ -99,5 +99,11 @@ cp -a -- target/translations/*  %buildroot%_datadir/%name/
 
 
 %changelog
+* Sun Jul 18 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.5.1-alt1.gita33ac767
+- Fix build with Rust 1.53.0
+
+* Fri Jul 16 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.5.1-alt1
+- New version
+
 * Wed Jul 07 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.5.0-alt1
 - Initial build for ALT Linux Sisyphus
