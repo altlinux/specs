@@ -1,7 +1,7 @@
 %def_without asserts
 Name: libuv
 Version: 1.41.1
-Release: alt1
+Release: alt2
 
 Summary: Evented I/O for NodeJS
 
@@ -12,6 +12,9 @@ Url: https://github.com/libuv/libuv
 # Source-url: https://github.com/libuv/libuv/archive/v%version.tar.gz
 Source: %name-%version.tar
 
+Patch: libuv-fix-tests-ipv6.patch
+
+BuildRequires: /proc
 BuildRequires: gcc-c++ openssl-devel zlib-devel
 
 %description
@@ -29,6 +32,7 @@ libuv header and build tools.
 
 %prep
 %setup
+%patch -p2
 
 %build
 # due option hack in autogen.sh
@@ -39,10 +43,11 @@ libuv header and build tools.
 %endif
 %configure --disable-static
 %make_build
+%make_build test/run-tests
 
 # not for hasher
-#check
-#make check
+%check
+%make check
 
 %install
 %makeinstall_std
@@ -59,6 +64,9 @@ rm -f %buildroot%_libdir/%name.a
 
 
 %changelog
+* Sat Jul 17 2021 Vitaly Lipatov <lav@altlinux.ru> 1.41.1-alt2
+- enable tests
+
 * Fri Jul 16 2021 Vitaly Lipatov <lav@altlinux.ru> 1.41.1-alt1
 - new version 1.41.1 (with rpmrb script)
 
