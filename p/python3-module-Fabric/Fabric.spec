@@ -1,25 +1,27 @@
 %define _unpackaged_files_terminate_build 1
 %define oname Fabric
 
-%def_with check
+%def_without check
 
 Name: python3-module-%oname
 Version: 2.5.0
-Release: alt1
+Release: alt2
 
 Summary: Simple, Pythonic remote execution and deployment.
+
 License: BSD-2-Clause
 Group: Development/Python3
 Url: https://github.com/fabric/fabric
+
 BuildArch: noarch
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-intro
 %if_with check
 BuildRequires: python3-module-decorator
 BuildRequires: python3-module-invoke
-BuildRequires: python3-module-lexicon
 BuildRequires: python3-module-paramiko
 BuildRequires: python3-module-six
 BuildRequires: python3-module-yaml
@@ -36,47 +38,30 @@ on top of Invoke (subprocess command execution and command-line features) and
 Paramiko (SSH protocol implementation), extending their APIs to complement one
 another and provide additional functionality.
 
-%package tests
-Summary: Tests for %oname.
-Group: Development/Python3
-Requires: python3-module-mock
-%py3_requires %oname
-
-%description tests
-Fabric is a high level Python (2.7, 3.4+) library designed to execute shell
-commands remotely over SSH, yielding useful Python objects in return. It builds
-on top of Invoke (subprocess command execution and command-line features) and
-Paramiko (SSH protocol implementation), extending their APIs to complement one
-another and provide additional functionality.
-
-This package contains tests for %oname.
 
 %prep
 %setup
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
+%python3_prune
 
 %check
-%if 0
 %__python3 setup.py test
-%endif
 
 %files
 %doc LICENSE README.rst
 %_bindir/fab
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/testing
+%python3_sitelibdir/fabric/
 %python3_sitelibdir/*.egg-info
 
-%files tests
-%python3_sitelibdir/*/testing/
-
-
 %changelog
+* Sun Jul 18 2021 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt2
+- cleaup spec, don't pack tests (useless)
+
 * Tue Feb 18 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.5.0-alt1
 - Version updated to 2.5.0
 - build for python2 disabled.
