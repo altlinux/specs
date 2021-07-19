@@ -1,6 +1,6 @@
 Name: telnet
 Version: 3.0
-Release: alt9.1
+Release: alt10
 
 Summary: The client program for the telnet remote login protocol
 License: BSD-style
@@ -51,7 +51,7 @@ support remote logins into the host machine.
 install -pm644 %_sourcedir/telnetd.eps .
 
 %build
-export CFLAGS="-c %optflags"
+export CFLAGS="-c $RPM_OPT_FLAGS $(getconf LFS_CFLAGS)"
 %make_build
 
 %install
@@ -63,6 +63,10 @@ install -pD -m644 libexec/telnetd/telnetd.8 %buildroot%_man8dir/telnetd.8
 
 install -pD -m640 %_sourcedir/telnetd.xinetd \
 	%buildroot%_sysconfdir/xinetd.d/telnetd
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %pre server
 /usr/sbin/groupadd -r -f telnetd
@@ -79,6 +83,10 @@ install -pD -m640 %_sourcedir/telnetd.xinetd \
 %doc telnetd.eps
 
 %changelog
+* Mon Jul 19 2021 Dmitry V. Levin <ldv@altlinux.org> 3.0-alt10
+- Fixed lfs=strict build on 32-bit systems.
+- Enabled debuginfo.
+
 * Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 3.0-alt9.1
 - NMU: added URL
 
@@ -94,7 +102,7 @@ install -pD -m640 %_sourcedir/telnetd.xinetd \
 * Tue Jun 28 2005 Dmitry V. Levin <ldv@altlinux.org> 3.0-alt5
 - Fixed compilation warnings.
 
-* Thu Mar 16 2005 Dmitry V. Levin <ldv@altlinux.org> 3.0-alt4
+* Wed Mar 16 2005 Dmitry V. Levin <ldv@altlinux.org> 3.0-alt4
 - Synced with 3.0-owl2:
   + Introduced the appropriate bounds checking into slc_add_reply()
     and env_opt_add() (both are in the telnet client only).
