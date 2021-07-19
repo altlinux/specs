@@ -1,6 +1,6 @@
 Name: valgrind
-Version: 3.16.1
-Release: alt1
+Version: 3.17.0
+Release: alt2
 
 Summary: Valgrind, an open-source memory debugger for GNU/Linux
 License: GPLv2+
@@ -14,13 +14,17 @@ Patch2: valgrind-alt-vki_siginfo.patch
 Patch3: valgrind-rh-cachegrind-improvements.patch
 Patch4: valgrind-rh-helgrind-race-supp.patch
 Patch5: valgrind-rh-ldso-supp.patch
-Patch6: valgrind-rh-pkglibexecdir.patch
-Patch7: valgrind-rh-alt-some-stack-protector.patch
-Patch8: valgrind-rh-some-Wl-z-now.patch
-Patch9: valgrind-rh-REX-prefix-JMP.patch
-Patch10: valgrind-rh-epoll.patch
-Patch11: valgrind-rh-sched_getsetattr.patch
-Patch12: valgrind-rh-dl_runtime_resolve.patch
+Patch6: valgrind-rh-alt-some-stack-protector.patch
+Patch7: valgrind-rh-some-Wl-z-now.patch
+Patch8: valgrind-rh-ppc64-isa-3.1.patch
+Patch9: valgrind-rh-ppc64-isa-3.1-tests.patch
+Patch10: valgrind-rh-debuginfod.patch
+Patch11: valgrind-rh-clone-parent-res.patch
+
+# Apparently, nobody cares whether valgrind works on arm or not.
+%ifarch %arm
+%def_disable check
+%endif
 
 # valgrind needs /proc to work
 Requires: /proc
@@ -146,6 +150,13 @@ echo "===============END TESTING==============="
 
 
 %changelog
+* Mon Jul 19 2021 Dmitry V. Levin <ldv@altlinux.org> 3.17.0-alt2
+- Disabled %%check on arm (closes: #40446).
+
+* Fri Jul 09 2021 Dmitry V. Levin <ldv@altlinux.org> 3.17.0-alt1
+- 3.16.1 -> 3.17.0.
+- Synced with valgrind-3.17.0-6 from Fedora.
+
 * Tue Aug 18 2020 Dmitry V. Levin <ldv@altlinux.org> 3.16.1-alt1
 - 3.16.0 -> 3.16.1.
 - Synced with valgrind-3.16.1-5 from Fedora.
