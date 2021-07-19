@@ -6,18 +6,17 @@
 %ifarch %ix86
 %def_disable check
 %endif
-%def_with docs
+%def_with doc
 
 Name: python3-module-%oname
 Version: 1.7.1
-Release: alt1
+Release: alt2
 
 Summary: Planar geometries, predicates, and operations
-
 License: BSD
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/Shapely
 
+Url: http://pypi.python.org/pypi/Shapely
 # https://github.com/Toblerity/Shapely.git
 Source: %name-%version.tar
 
@@ -39,7 +38,7 @@ BuildRequires: python3-module-packaging
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-numpy-testing
 BuildRequires: xvfb-run
-%if_with docs
+%if_with doc
 BuildRequires: python3-module-sphinx
 BuildRequires: /usr/bin/sphinx-apidoc
 BuildRequires: python3(matplotlib.sphinxext)
@@ -82,7 +81,7 @@ This package contains documentation for %oname.
 %setup
 %patch -p1
 
-%if_with docs
+%if_with doc
 %prepare_sphinx3 .
 ln -s ../objects.inv docs/
 %endif
@@ -98,7 +97,7 @@ export LC_ALL=en_US.UTF-8
 
 %python3_install
 
-%if_with docs
+%if_with doc
 %make SPHINXBUILD="sphinx-build-3" -C docs pickle
 %make SPHINXBUILD="sphinx-build-3" -C docs html
 
@@ -114,13 +113,15 @@ py.test3 -vv
 
 %files
 %python3_sitelibdir/*
+%if_with doc
 %exclude %python3_sitelibdir/*/pickle
+%endif
 %exclude %python3_sitelibdir/*/examples
 
 %files examples
 %python3_sitelibdir/*/examples
 
-%if_with docs
+%if_with doc
 %files pickles
 %python3_sitelibdir/*/pickle
 
@@ -129,6 +130,9 @@ py.test3 -vv
 %endif
 
 %changelog
+* Sun Jul 18 2021 Michael Shigorin <mike@altlinux.org> 1.7.1-alt2
+- Introduce doc knob (on by default).
+
 * Sat Apr 03 2021 Grigory Ustinov <grenka@altlinux.org> 1.7.1-alt1
 - Automatically updated to 1.7.1.
 - Enable check.
