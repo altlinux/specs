@@ -1,7 +1,7 @@
 %define _sover 4.7
 Name: libdb%_sover
 Version: %_sover.25
-Release: alt10
+Release: alt11
 %define srcname db-%version
 
 Summary: Berkeley database library
@@ -325,6 +325,7 @@ This package contains documentation for developers.
 %build
 %add_optflags -fno-strict-aliasing%{?_enable_rpc: -I/usr/include/tirpc}
 %define _configure_script ../dist/configure
+export ac_cv_prog_STRIP=:
 
 pushd build_unix
 	%configure \
@@ -417,6 +418,10 @@ for n in db%_sover-utils \
 	echo "${n/%_sover/4}" >"%buildroot%_sysconfdir/buildreqs/packages/substitute.d/$n"
 done
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
 /%_lib/*.so
@@ -504,6 +509,9 @@ done
 %_libdir/libdb-[0-9]*.a
 
 %changelog
+* Mon Jul 19 2021 Dmitry V. Levin <ldv@altlinux.org> 4.7.25-alt11
+- Enabled debuginfo for utils subpackage.
+
 * Sat Dec 19 2020 Dmitry V. Levin <ldv@altlinux.org> 4.7.25-alt10
 - Do not access DB_CONFIG when env->db_home is not set (fixes: CVE-2017-10140).
 - Build without RPC support.
