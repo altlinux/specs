@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 2.4
+%define ver_major 6.0
 %define api_ver 2.0
 
 Name: switchboard
@@ -16,17 +16,20 @@ Url: https://github.com/elementary/%name
 %if_disabled snapshot
 Source: %url/archive/%version/%name-%version.tar.gz
 %else
-# VCS: https://github.com/elementary/switchboard.git
+Vcs: https://github.com/elementary/switchboard.git
 Source: %name-%version.tar
 %endif
 
 Provides: %rdn_name = %version-%release
 Requires: lib%name = %version-%release
 
+%define granite_ver 5.4.0
+
 BuildRequires(pre): meson
 BuildRequires: vala-tools gcc-c++ libappstream-glib-devel
-BuildRequires: libgtk+3-devel >= 3.24
-BuildRequires: libgranite-devel libclutter-gtk3-devel
+BuildRequires: libgranite-devel >= %granite_ver 
+BuildRequires: pkgconfig(libhandy-1)
+BuildRequires: libclutter-gtk3-devel
 BuildRequires: libgranite-vala
 
 %description
@@ -77,6 +80,9 @@ This package contains files that are needed to develop Switchboard plugins.
 %_vapidir/%name-%api_ver.vapi
 
 %changelog
+* Mon Jul 19 2021 Yuri N. Sedunov <aris@altlinux.org> 6.0.0-alt1
+- 6.0.0
+
 * Tue May 12 2020 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
 - 2.4.0
 
