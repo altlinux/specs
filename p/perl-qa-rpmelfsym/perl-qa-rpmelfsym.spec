@@ -1,6 +1,6 @@
 %define dist qa-rpmelfsym
 Name: perl-%dist
-Version: 0.12.2
+Version: 0.12.3
 Release: alt1
 
 Summary: Faster rpmelfsym(1) and bad_elf_symbols implementation
@@ -37,6 +37,11 @@ rm %buildroot%perl_vendor_archlib/qa/*.pl
 %perl_vendor_autolib/qa*
 
 %changelog
+* Tue Jul 13 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.12.3-alt1
+- Added support of binutils >= 2.35.2.
+- Changed rpmelfsym.pm to skip virtualbox ELF shared objects with unclear
+  linkage semantics (ldv@).
+
 * Wed Jul 03 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.12.2-alt1
 - Added 'S' (for mips/mipsel) and 'G' (for riscv64 and ppc64le) symbol types.
 - Changed rpmelfsym.pm to skip files under /boot directory (ldv@).
