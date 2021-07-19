@@ -35,7 +35,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.15.2
-Release: alt2
+Release: alt3
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -47,6 +47,8 @@ Url: http://qt.io/
 Source: %qt_module-everywhere-src-%version.tar
 Source1: rpm-macros
 Source2: rpm-macros-addon
+# KDE
+Patch0: kde-5.15.patch
 # FC
 Patch1: qtbase-opensource-src-5.7.1-QT_VERSION_CHECK.patch
 Patch2: qtbase-opensource-src-5.7.1-moc_macros.patch
@@ -64,7 +66,7 @@ Patch1006: e2k-qt-5.15.patch
 Patch1007: alt-decrease-iconloader-fallback-depth.patch
 #Patch1008: alt-mkspecs-features.patch
 Patch1009: alt-false-detect-groupswitchmodifier.patch
-Patch1010: alt-glx-check-version.patch
+#
 Patch1011: alt-kernel-requires.patch
 Patch1012: alt-fix-paths.patch
 Patch1013: alt-QTBUG-88599.patch
@@ -374,6 +376,7 @@ EGL integration library for the Qt%major toolkit
 %endif
 
 %setup -n %qt_module-everywhere-src-%version
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -393,7 +396,7 @@ EGL integration library for the Qt%major toolkit
 %patch1007 -p1
 #%patch1008 -p1
 %patch1009 -p1
-%patch1010 -p2
+#
 %patch1011 -p1
 %patch1012 -p1
 %patch1013 -p1
@@ -821,6 +824,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Mon Jul 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt3
+- add fixes from kde/qt-5.15
+
 * Thu Mar 04 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt2
 - -no-reduce-relocations
 
