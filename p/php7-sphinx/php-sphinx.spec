@@ -4,7 +4,7 @@
 
 Name:	 	php%_php_suffix-%{php_extension}
 Version:	%php_version
-Release:	%php_release
+Release:	alt2.%_php_release_version
 
 Summary:	PHP bindings for Sphinx search client library
 
@@ -16,9 +16,6 @@ Packager:	Nikolay A. Fetisov <naf@altlinux.org>
 
 Source0:	%real_name-%real_version.tar
 Patch0:		%real_name-%real_version.patch
-
-Patch1:		php7-sphinx-1.4.0-memory_leak.patch
-Patch2:		php7-sphinx-1.4.0-RETURN_BOOL.patch
 
 Source1:	php-%php_extension.ini
 Source2:	php-%php_extension-params.sh
@@ -39,8 +36,6 @@ well with SQL databases and scripting languages.
 %setup -c
 %patch0 -p1
 
-%patch1
-%patch2
 
 %build
 phpize
