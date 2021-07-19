@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20210628
+Version: 20210719
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,18 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Mon Jul 19 2021 Cronbuild Service <cronbuild@altlinux.org> 20210719-alt1
+- upstream changes (GIT 168452e):
+  + iwlwifi: add ty firmware from Core63-43 (thx Johannes Berg)
+  + update NXP 8897/8997 firmware images (thx Sharvari Harisangam)
+  + rtlwifi: de-dupe rtl8723b WiFi firmware (thx Peter Robinson)
+  + rtlwifi: de-dupe rtl8192e WiFi firmware (thx Peter Robinson)
+  + update frimware for mediatek bluetooth chip (MT7921) (thx mark-yw.chen)
+  + cxgb4: Update firmware to revision 1.26.0.0 (thx Raju Rangoju)
+  + firmware/i915/guc: Add HuC v7.9.3 for TGL & DG1 (thx John Harrison)
+  + firmware/i915/guc: Add GuC v62.0.3 for ADL-P (thx John Harrison)
+  + firmware/i915/guc: Add GuC v62.0.0 for all platforms (thx John Harrison)
+
 * Mon Jul 05 2021 Cronbuild Service <cronbuild@altlinux.org> 20210628-alt1
 - upstream changes (GIT d79c267):
   + amdgpu: update vcn firmware for green sardine for 21.20 (thx Alex Deucher)
