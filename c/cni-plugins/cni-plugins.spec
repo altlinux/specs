@@ -1,6 +1,6 @@
 
 %global import_path github.com/containernetworking/plugins
-%global commit fa48f7515b50272b7106702a662fadbf2ead3d18
+%global commit 8de0287741e448a0a398b571030bcfa9243e4504
 #%%global shortcommit %(c=%commit; echo ${c:0:7})
 
 %global _unpackaged_files_terminate_build 1
@@ -9,13 +9,14 @@
 %define cni_etc_dir %_sysconfdir/cni
 
 Name: cni-plugins
-Version: 0.9.1
-Release: alt1
+Version: 1.0.0
+Release: alt0.rc1
 Summary: Container Network Interface plugins
 Group: Development/Other
 License: Apache-2.0
 Url: https://%import_path
 Source: %name-%version.tar
+Source2: %name.tmpfiles
 ExclusiveArch: %go_arches
 
 Provides: containernetworking-plugins = %EVR
@@ -38,12 +39,25 @@ the containernetworking team.
 %prep
 %setup -q
 
+# Use correct paths in cni-dhcp unitfiles
+sed -i 's,/opt/cni/bin,%cni_dir,' plugins/ipam/dhcp/systemd/cni-dhcp.service
+
 %build
 ./build_linux.sh
 
 %install
-mkdir -p %buildroot{%cni_dir,%cni_etc_dir/net.d}
+mkdir -p %buildroot{%cni_dir,%cni_etc_dir/net.d,%_unitdir,%_tmpfilesdir}
 install -m0755 bin/* %buildroot%cni_dir/
+
+install -p -m0644 plugins/ipam/dhcp/systemd/cni-dhcp.service %buildroot%_unitdir
+install -p -m0644 plugins/ipam/dhcp/systemd/cni-dhcp.socket %buildroot%_unitdir
+install -p -m0644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
+
+%post
+%post_service cni-dhcp
+
+%preun
+%preun_service cni-dhcp
 
 %files
 %doc LICENSE README.md
@@ -51,8 +65,14 @@ install -m0755 bin/* %buildroot%cni_dir/
 %dir %cni_etc_dir/net.d
 %dir %cni_dir
 %cni_dir/*
+%_unitdir/*
+%_tmpfilesdir/*
 
 %changelog
+* Mon Jul 19 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.0-alt0.rc1
+- new version 1.0.0-rc1
+- package cni-dhcp.service and cni-dhcp.socket
+
 * Tue May 18 2021 Alexey Shabalin <shaba@altlinux.org> 0.9.1-alt1
 - new version 0.9.1
 
