@@ -1,8 +1,8 @@
 %define shortname ices
 
 Name: ices2
-Version: 2.0.1
-Release: alt3.qa1
+Version: 2.0.3
+Release: alt1
 
 Summary: Ices2 - sourcer to use with Icecast2 daemon
 Packager: Pavlov Konstantin <thresh@altlinux.ru>
@@ -62,6 +62,10 @@ install -m755 %SOURCE1 %buildroot%_initdir/%name
 %_initdir/%name
 
 %changelog
+* Mon Jul 19 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.0.3-alt1
+- New version
+- Add LSB header into init script
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.1-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
