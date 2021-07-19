@@ -3,7 +3,7 @@
 %def_enable systemd
 
 Name: libratbag
-Version: 0.15
+Version: 0.16
 Release: alt0.1
 Summary: Programmable input device library
 Group: System/Libraries
@@ -125,6 +125,9 @@ Libratbag mice configuration data.
 %_datadir/libratbag
 
 %changelog
+* Mon Jul 19 2021 L.A. Kostis <lakostis@altlinux.ru> 0.16-alt0.1
+- 0.16.
+
 * Wed Nov 04 2020 L.A. Kostis <lakostis@altlinux.ru> 0.15-alt0.1
 - v0.15.
 

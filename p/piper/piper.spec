@@ -1,8 +1,8 @@
-%define git %nil
+%define git e117e87
 
 Name: piper
 Version: 0.5.1
-Release: alt0.1
+Release: alt20.g%{git}
 Summary: GTK+ application to configure gaming mice using ratbagd
 Group: System/Configuration/Hardware
 License: GPLv2
@@ -11,8 +11,8 @@ Source0: https://github.com/libratbag/%name/archive/v%version/%name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson
-BuildRequires: python3-module-pygobject3-devel python3-dev
-BuildRequires: python3-module-pycairo python3-module-lxml python3-module-evdev ratbagd >= 0.13
+BuildRequires: python3-module-pygobject3-devel python3-dev python3-module-flake8
+BuildRequires: python3-module-pycairo python3-module-lxml python3-module-evdev ratbagd >= 0.14
 
 BuildArch: noarch
 
@@ -33,8 +33,9 @@ get to see a pretty mouse trap).
 
 %install
 %meson_install
+%find_lang %name
 
-%files
+%files -f %name.lang
 %doc README* COPYING
 %_bindir/*
 %dir %python3_sitelibdir_noarch/%name
@@ -43,10 +44,14 @@ get to see a pretty mouse trap).
 %_datadir/%name
 %_datadir/metainfo/org.freedesktop.Piper.appdata.xml
 %_desktopdir/*.desktop
-%_iconsdir/hicolor/scalable/apps/*.svg
+%_iconsdir/hicolor/*/apps/*.svg
 %_man1dir/*
 
 %changelog
+* Mon Jul 19 2021 L.A. Kostis <lakostis@altlinux.ru> 0.5.1-alt20.ge117e87
+- 0.5.1-20-ge117e87.
+- Update BR (added flake8).
+
 * Wed Nov 04 2020 L.A. Kostis <lakostis@altlinux.ru> 0.5.1-alt0.1
 - 0.5.1.
 
