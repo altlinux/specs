@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 2.7
 %define gst_api_ver 1.0
@@ -7,7 +7,7 @@
 
 Name: audience
 %define xdg_name org.pantheon.%name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A modern media player
@@ -18,7 +18,7 @@ Url: https://launchpad.net/audience
 %if_disabled snapshot
 Source: https://github.com/elementary/videos/archive/%version/%_name-%version.tar.gz
 %else
-#VCS: https://github.com/elementary/videos.git
+Vcs: https://github.com/elementary/videos.git
 Source: %_name-%version.tar
 %endif
 
@@ -57,9 +57,17 @@ hardware acceleration than most players out there.
 %_desktopdir/%rdn_name.desktop
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_datadir/metainfo/%rdn_name.appdata.xml
+%_iconsdir/hicolor/*x*/apps/%rdn_name.svg
 %doc README.md
 
 %changelog
+* Mon Jul 19 2021 Yuri N. Sedunov <aris@altlinux.org> 2.7.3-alt1
+- updated to 2.7.3-15-gcdaed46f
+
+* Sun Mar 28 2021 Yuri N. Sedunov <aris@altlinux.org> 2.7.2-alt2
+- updated to 2.7.2-63-g0607dc5d
+- built against libgranite.so.6
+
 * Tue Jul 07 2020 Yuri N. Sedunov <aris@altlinux.org> 2.7.2-alt1
 - 2.7.2
 
