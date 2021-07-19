@@ -1,6 +1,6 @@
 Name: deepin
 Version: 5
-Release: alt11
+Release: alt12
 Summary: Set of Deepin Desktop installers
 License: GPL-2.0+
 Group: Graphical desktop/Other
@@ -92,6 +92,7 @@ Requires: deepin-manual
 Requires: deepin-screensaver
 Requires: deepin-screensaver-modules
 Requires: deepin-compressor
+Requires: gvfs-backend-smb
 
 %description default
 %name-default is a virtual package to provide default installation
@@ -131,6 +132,9 @@ Requires: %name-default = %version-%release
 %files regular
 
 %changelog
+* Mon Jul 19 2021 Leontiy Volodin <lvol@altlinux.org> 5-alt12
+- Added gvfs-backend-smb into deepin-default (ALT #40529).
+
 * Wed Jun 16 2021 Leontiy Volodin <lvol@altlinux.org> 5-alt11
 - Added deepin-manual, deepin-screensaver and deepin-compressor into deepin-default.
 
