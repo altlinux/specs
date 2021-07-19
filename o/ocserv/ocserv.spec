@@ -4,8 +4,8 @@
 %def_with maxmind
 
 Name: ocserv
-Version: 1.1.2
-Release: alt3
+Version: 1.1.3
+Release: alt1
 Summary: OpenConnect SSL VPN server
 Group: System/Servers
 License: GPLv2+
@@ -130,6 +130,9 @@ export PATH=/sbin:/usr/sbin:$PATH
 %_initdir/%name
 
 %changelog
+* Mon Jul 19 2021 Alexey Shabalin <shaba@altlinux.org> 1.1.3-alt1
+- new version 1.1.3
+
 * Fri May 28 2021 Alexey Shabalin <shaba@altlinux.org> 1.1.2-alt3
 - fixed check on 32-bit arches (glebfm@)
 
