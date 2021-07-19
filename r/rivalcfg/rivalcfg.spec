@@ -1,5 +1,5 @@
 Name:       rivalcfg
-Version:    4.1.0
+Version:    4.3.0
 Release:    alt1
 
 Summary:    Configure SteelSeries Rival gaming mice
@@ -45,14 +45,18 @@ __main__.main()
 EOF
 
 %files -f INSTALLED_FILES
-%doc README* LICENSE* doc/*.md
-%python3_sitelibdir_noarch/%name/__pycache__/
-%python3_sitelibdir_noarch/%name/*/__pycache__/
+%doc README* LICENSE* CHANGELOG.* doc/{env,faq}.rst
+%dir %python3_sitelibdir_noarch/%name
+%python3_sitelibdir_noarch/%name
 %exclude %python3_sitelibdir_noarch/%name-%{version}*
 %ghost %_udevrulesdir/*.rules
 
 
 %changelog
+* Sun Jul 18 2021 L.A. Kostis <lakostis@altlinux.ru> 4.3.0-alt1
+- 4.3.0.
+- Remove documentation (will add later).
+
 * Thu Nov 05 2020 L.A. Kostis <lakostis@altlinux.ru> 4.1.0-alt1
 - 4.1.0.
 - Record udev rules as ghost file.
