@@ -1,6 +1,6 @@
 Name: keepassxc
 Version:  2.6.6
-Release:  alt1
+Release:  alt2
 
 Summary: KeePassXC Password Safe - light-weight cross-platform password manager
 License: GPLv2+
@@ -9,6 +9,10 @@ Group: File tools
 Url: http://www.keepassxc.org/
 #Source: https://github.com/keepassxreboot/keepassxc/releases/download/%version/%name-%version-src.tar.xz
 Source: %name-%version.tar
+# to update the translation (may require creating an account on transifex and joining the project):
+# - either go to https://www.transifex.com/keepassxc/keepassxc/language/ru/ and "download for use", category "master"
+# - or use transifex client `tx pull` accordingly
+Source1: keepassx_ru.ts
 
 %def_without yubikey
 # requires asciidoctor
@@ -46,6 +50,8 @@ open-source password manager.
 # strip UTF-8 BOM for lcc < 1.24
 find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %endif
+# install fresh translation
+cp -v %SOURCE1 share/translations/keepassx_ru.ts
 
 %build
 %cmake \
@@ -85,6 +91,10 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %endif
 
 %changelog
+* Mon Jul 19 2021 Pavel Nakonechnyi <zorg@altlinux.org> 2.6.6-alt2
+- Updated Russian translation from https://www.transifex.com/keepassxc/keepassxc/language/ru/
+  last updated: May 30th 2021, fixes #40503
+
 * Mon Jun 14 2021 Pavel Nakonechnyi <zorg@altlinux.org> 2.6.6-alt1
 - Updated to v2.6.6.
 
