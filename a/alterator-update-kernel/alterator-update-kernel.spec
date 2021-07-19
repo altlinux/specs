@@ -2,7 +2,7 @@
 
 Name: alterator-update-kernel
 Version: 1.4
-Release: alt1
+Release: alt2
 
 Source:%name-%version.tar
 
@@ -55,6 +55,9 @@ export GUILE_LOAD_PATH=/usr/share/alterator/lookout
 %_datadir/dbus-1/interfaces/*.xml
 
 %changelog
+* Mon Jul 19 2021 Ivan Savin <svn17@altlinux.org> 1.4-alt2
+- Fix computation of version for installed modules.
+
 * Thu Apr 29 2021 Ivan Savin <svn17@altlinux.org> 1.4-alt1
 - Refactoring.
 - Update xml file after refactoring.
