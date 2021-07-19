@@ -1,7 +1,7 @@
 %def_without ru_doc
 
 Name:    kamoso
-Version: 21.04.3
+Version: 21.07.80
 Release: alt1
 
 Group:   Video
@@ -86,7 +86,7 @@ itstool -m $TMPDIR/kamoso.mo -o ru/ doc/index.docbook
 %find_lang %name --all
 
 %files -f %name.lang
-%doc AUTHORS COPYING*
+%doc AUTHORS
 %_K5bin/%name
 %_K5icon/hicolor/*/*/*.*
 %_K5xdgapp/*%name.desktop
@@ -97,6 +97,9 @@ itstool -m $TMPDIR/kamoso.mo -o ru/ doc/index.docbook
 %_K5notif/%name.notifyrc
 
 %changelog
+* Mon Jul 19 2021 Andrey Cherepanov <cas@altlinux.org> 21.07.80-alt1
+- New version.
+
 * Fri Jul 09 2021 Andrey Cherepanov <cas@altlinux.org> 21.04.3-alt1
 - New version.
 
