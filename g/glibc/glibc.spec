@@ -2,7 +2,7 @@
 
 Name: glibc
 Version: 2.32
-Release: alt3
+Release: alt4
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -787,6 +787,10 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Fri Jul 09 2021 Dmitry V. Levin <ldv@altlinux.org> 6:2.32-alt4
+- Updated to glibc-2.32-50-g737efa27fc from 2.32 branch
+  (fixes: CVE-2021-35942).
+
 * Thu Jun 10 2021 Dmitry V. Levin <ldv@altlinux.org> 6:2.32-alt3
 - Updated to glibc-2.32-48-g16949aeaa0 from 2.32 branch
   (fixes: CVE-2021-33574).
