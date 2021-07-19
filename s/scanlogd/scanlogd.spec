@@ -1,47 +1,36 @@
 Name: scanlogd
-Version: 2.2.6
-Release: alt2
+Version: 2.2.8
+Release: alt1
 
 Summary: A tool to detect and log TCP port scans
-License: GPL
+License: GPLv2+
 Group: System/Servers
-Url: http://www.openwall.com/scanlogd/
+Url: https://www.openwall.com/scanlogd/
 Packager: Dmitry V. Levin <ldv@altlinux.org>
-
-# ftp://ftp.openwall.com/pub/projects/scanlogd/scanlogd-%version.tar.gz
-Source: scanlogd-%version.tar
-Source1: scanlogd.init
-
-Requires(post): shadow-utils, %post_service
-Requires(preun): %preun_service
-
-Summary(ru_RU.KOI8-R): Утилита для обнаружения сканирования TCP-портов
+# git://git.altlinux.org/gears/s/scanlogd.git
+Source: %name-%version-%release.tar
 
 %description
 scanlogd detects port scans and writes one line per scan via the
 syslog(3) mechanism.  If a source address sends multiple packets to
 different ports in a short time, the event will be logged.
 
-%description -l ru_RU.KOI8-R
-scanlogd является постоянно работающим сервисом, следящим за сетевыми
-портами TCP/IP.  Каждый раз, когда он обнаруживает сканирование портов с
-какого-либо внешнего узла, он делает об этом запись в системном журнале
-(см. man 3 syslog).  Сканированием считается приход с одного IP-адреса
-большого количества сетевых пакетов на большое количество портов в
-короткое время.
-
 %prep
-%setup -q
+%setup -n %name-%version-%release
 
 %build
 make clean
-make linux CFLAGS="-c %optflags %optflags_notraceback"
+make linux CFLAGS="-c $RPM_OPT_FLAGS %optflags_notraceback $(getconf LFS_CFLAGS)" LDFLAGS=
 
 %install
 mkdir -p %buildroot{%_sbindir,%_mandir/man8,%_initdir}
 install -pm755 scanlogd %buildroot%_sbindir/
 install -pm644 scanlogd.8 %buildroot%_man8dir/
-install -pm755 %_sourcedir/scanlogd.init %buildroot%_initdir/%name
+install -pm755 scanlogd.init %buildroot%_initdir/%name
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %post
 /usr/sbin/groupadd -r -f %name
@@ -57,6 +46,9 @@ install -pm755 %_sourcedir/scanlogd.init %buildroot%_initdir/%name
 %_mandir/man?/*
 
 %changelog
+* Mon Jul 19 2021 Dmitry V. Levin <ldv@altlinux.org> 2.2.8-alt1
+- 2.2.6 -> 2.2.8.
+
 * Thu Apr 12 2007 Dmitry V. Levin <ldv@altlinux.org> 2.2.6-alt2
 - Minor startup script and specfile tweaks.
 
