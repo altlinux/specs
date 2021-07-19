@@ -8,7 +8,7 @@
 
 Name: calligra
 Version: 3.2.1
-Release: alt2
+Release: alt3
 Epoch: 0
 %K5init no_altplace
 %define libname lib%name
@@ -32,6 +32,8 @@ Requires: %name-plan
 Requires: %name-okular-generators
 
 Source: http://download.kde.org/stable/calligra/%version/calligra-%version.tar
+# upstream
+Patch1: 62f51070.patch
 # ALT
 Patch103: alt-disable-products.patch
 
@@ -181,6 +183,7 @@ Requires: %name-common = %EVR
 
 %prep
 %setup
+%patch1 -p1
 #
 %patch103 -p1
 
@@ -414,6 +417,9 @@ done
 %exclude %_K5lib/libkookularGenerator_odt.so*
 
 %changelog
+* Mon Jul 19 2021 Sergey V Turchin <zerg@altlinux.org> 0:3.2.1-alt3
+- fix to build with new cmake
+
 * Mon Dec 07 2020 Sergey V Turchin <zerg@altlinux.org> 0:3.2.1-alt2
 - clean build requries (closes: 39382)
 
