@@ -1,7 +1,7 @@
 %define  modulename m2r2
 
 Name:    python3-module-%modulename
-Version: 0.2.8
+Version: 0.3.1
 Release: alt1
 
 Summary: Markdown to reStructuredText converter
@@ -37,6 +37,9 @@ Source:  %modulename-%version.tar
 %doc *.md
 
 %changelog
+* Mon Jul 19 2021 Grigory Ustinov <grenka@altlinux.org> 0.3.1-alt1
+- Automatically updated to 0.3.1.
+
 * Tue Jun 29 2021 Grigory Ustinov <grenka@altlinux.org> 0.2.8-alt1
 - Automatically updated to 0.2.8.
 
