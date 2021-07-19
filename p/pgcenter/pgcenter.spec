@@ -4,7 +4,7 @@
 %global import_path github.com/lesovsky/pgcenter
 
 Name:     pgcenter
-Version:  0.9.1
+Version:  0.9.2
 Release:  alt1
 
 Summary: top-like PostgreSQL statistics viewer
@@ -66,6 +66,9 @@ mv -- $BUILDDIR/bin/cmd $BUILDDIR/bin/%name
 %_bindir/*
 
 %changelog
+* Mon Jul 19 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.9.2-alt1
+- New version
+
 * Mon Jun 28 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.9.1-alt1
 - New version (Closes: 36340, 38080)
 
