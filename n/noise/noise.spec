@@ -1,5 +1,5 @@
 %def_enable snapshot
-%define ver_major 5.0
+%define ver_major 5.1
 %define gst_api_ver 1.0
 # [ lastfm', 'audioplayer', 'cdrom', 'ipod' ]
 %define plugins [ 'audioplayer', 'cdrom', 'ipod' ]
@@ -9,8 +9,8 @@ Name: noise
 %define _name music
 %define xdg_name org.pantheon.%name
 %define rdn_name io.elementary.%_name
-Version: %ver_major.5
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: The official elementary music player
 Group: Sound
@@ -110,7 +110,7 @@ This package contains the development files.
 %_desktopdir/%rdn_name.desktop
 #%_datadir/%rdn_name/
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
-%_datadir/icons/hicolor/*/apps/multimedia-audio-player.svg
+%_iconsdir/hicolor/*/apps/%rdn_name.svg
 %_datadir/metainfo/%rdn_name.appdata.xml
 
 %files -n lib%name-core
@@ -124,6 +124,13 @@ This package contains the development files.
 %_vapidir/%rdn_name-core.vapi
 
 %changelog
+* Mon Jul 19 2021 Yuri N. Sedunov <aris@altlinux.org> 5.1.1-alt1
+- updated to 5.1.1-16-g7667b8e5
+
+* Sun Mar 28 2021 Yuri N. Sedunov <aris@altlinux.org> 5.0.5-alt3
+- updated to 5.0.5-105-g645684a5
+- built against libgranite.so.6
+
 * Sat Oct 31 2020 Yuri N. Sedunov <aris@altlinux.org> 5.0.5-alt2
 - updated to 5.0.5-63-g6a112438
 
