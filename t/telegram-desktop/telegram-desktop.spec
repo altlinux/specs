@@ -9,7 +9,7 @@
 %def_without ffmpeg_static
 
 Name: telegram-desktop
-Version: 2.8.6
+Version: 2.8.11
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -198,8 +198,6 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
     -DDESKTOP_APP_USE_PACKAGED_FONTS:BOOL=ON \
     -DDESKTOP_APP_DISABLE_SPELLCHECK:BOOL=OFF \
     -DTDESKTOP_DISABLE_GTK_INTEGRATION:BOOL=OFF \
-    -DTDESKTOP_USE_PACKAGED_TGVOIP:BOOL=ON \
-    -DDESKTOP_APP_DISABLE_WEBRTC_INTEGRATION:BOOL=ON \
     -DDESKTOP_APP_USE_GLIBC_WRAPS:BOOL=OFF \
     -DDESKTOP_APP_DISABLE_CRASH_REPORTS:BOOL=ON \
     -DTDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME:BOOL=ON \
@@ -238,6 +236,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Mon Jul 19 2021 Vitaly Lipatov <lav@altlinux.ru> 2.8.11-alt1
+- new version 2.8.11 (with rpmrb script)
+
 * Wed Jul 07 2021 Vitaly Lipatov <lav@altlinux.ru> 2.8.6-alt1
 - new version 2.8.6 (with rpmrb script)
 - add BR: libjemalloc-devel

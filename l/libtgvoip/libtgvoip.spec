@@ -2,11 +2,11 @@
 
 # see LIBTGVOIP_VERSION in VoIPController.h for a version
 
-%def_without json11
+%def_with json11
 
 Name: libtgvoip
 Version: 2.4.4
-Release: alt5.6e82b6e4
+Release: alt6.f321e7c8
 
 Summary: VoIP library for Telegram clients
 
@@ -30,13 +30,17 @@ Patch1: libtgvoip-system-json11.patch
 %add_optflags -msse2
 %endif
 
-%add_optflags -DTGVOIP_USE_DESKTOP_DSP_BUNDLED
+#add_optflags -DTGVOIP_USE_DESKTOP_DSP_BUNDLED
 
 BuildRequires: gcc-c++
 BuildRequires: libssl-devel
 BuildRequires: libalsa-devel libpulseaudio-devel
 # >= 1.3
 BuildRequires: libopus-devel
+#BuildRequires: libowt-tg-devel
+%if_with json11
+BuildRequires: libjson11-devel
+%endif
 
 %description
 VoIP library for Telegram clients.
@@ -66,7 +70,7 @@ rm -vf json11.*
 
 %build
 %autoreconf
-%configure --disable-static
+%configure --disable-static --disable-dsp
 %make_build
 
 %install
@@ -89,6 +93,10 @@ rm -vf json11.*
 %_pkgconfigdir/tgvoip.pc
 
 %changelog
+* Mon Jul 19 2021 Vitaly Lipatov <lav@altlinux.ru> 2.4.4-alt6.f321e7c8
+- build without dsp support (also disable TGVOIP_USE_DESKTOP_DSP_BUNDLED)
+- build with external libjson11-devel
+
 * Thu Aug 20 2020 Vitaly Lipatov <lav@altlinux.ru> 2.4.4-alt5.6e82b6e4
 - update to 6e82b6e45664c1f80b9039256c99bebc76d34672
 - still use bundled webrtc (TGVOIP_USE_DESKTOP_DSP_BUNDLED)
