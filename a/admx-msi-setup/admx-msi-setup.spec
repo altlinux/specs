@@ -2,7 +2,7 @@
 
 Name: admx-msi-setup
 Version: 0.1.0
-Release: alt2
+Release: alt3
 
 Summary: ADMX msi file downloader and extractor
 License: GPLv2+
@@ -30,6 +30,9 @@ install -D %name.sh %buildroot/%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Mon Jul 19 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.1.0-alt3
+- Don't stop with error if DESTDIR already exists
+
 * Sun Jul 18 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.1.0-alt2
 - Build as noarch
 - Replace renamed project to github.com/altlinux projects
