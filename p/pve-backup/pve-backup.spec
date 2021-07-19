@@ -4,7 +4,7 @@
 
 Name: pve-backup
 Version: 1.0.5
-Release: alt1
+Release: alt2
 Summary: PVE Backup Server
 License: GPL-1 and LGPLv2 and BSD
 Group: Archiving/Backup
@@ -136,6 +136,9 @@ grep -q "^%proxy_user:" %_sysconfdir/passwd \
 %_libdir/libproxmox_backup_qemu.so
 
 %changelog
+* Mon Jul 19 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.0.5-alt2
+- FTBFS: new rust (ALT #40521)
+
 * Tue Feb 16 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.0.5-alt1
 - initial build for ALT
 
