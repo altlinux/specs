@@ -1,12 +1,12 @@
 %def_enable snapshot
 
-%define ver_major 5.5
+%define ver_major 6.0
 %define _name terminal
 %define xdg_name org.pantheon.%_name
 %define rdn_name io.elementary.%_name
 
 Name: pantheon-terminal
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Pantheon Terminal
@@ -21,7 +21,9 @@ Source: %url/archive/%version/%_name-%version.tar.gz
 Source: %_name-%version.tar
 %endif
 
-%define granite_ver 5.3.0
+%define granite_ver 6.1.0
+%define handy_ver 1.0
+%define vala_ver 0.40
 
 Requires: elementary-icon-theme
 Provides: %rdn_name = %version-%release
@@ -30,7 +32,8 @@ BuildRequires(pre): meson
 BuildRequires: appstream desktop-file-utils
 BuildRequires: libgranite-devel >= %granite_ver libnotify-devel
 BuildRequires: libvte3-devel libpcre2-devel libgee0.8-devel
-BuildRequires: vala-tools libgranite-vala
+BuildRequires: vala-tools >= %vala_ver libgranite-vala
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 
 %description
 Pantheon Terminal (referred to simply as "Terminal" when installed) is a super
@@ -78,6 +81,12 @@ This package provides Vala language bindings for the %name.
 %endif
 
 %changelog
+* Mon Jul 19 2021 Yuri N. Sedunov <aris@altlinux.org> 6.0.0-alt1
+- updated to 6.0.0-15-ge274f5c9
+
+* Sun Mar 28 2021 Yuri N. Sedunov <aris@altlinux.org> 5.5.2-alt2
+- updated to 5.5.2-169-g7946306b
+
 * Sat Apr 04 2020 Yuri N. Sedunov <aris@altlinux.org> 5.5.2-alt1
 - updated to 5.5.2-3-g87e33614
 

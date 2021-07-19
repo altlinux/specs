@@ -4,7 +4,7 @@
 
 %define _name granite
 %define rdn_name io.elementary.%_name
-%define ver_major 6.0
+%define ver_major 6.1
 %define api_ver 1.0
 %define sover 6
 
@@ -135,6 +135,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/vala/vapi/%_name.vapi
 
 %changelog
+* Mon Jul 19 2021 Yuri N. Sedunov <aris@altlinux.org> 6.1.0-alt1
+- 6.1.0
+
 * Sun Mar 28 2021 Yuri N. Sedunov <aris@altlinux.org> 6.0.0-alt1
 - 6.0.0
 

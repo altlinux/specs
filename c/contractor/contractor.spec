@@ -1,7 +1,7 @@
 %define ver_major 0.3
 
 Name: contractor
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: service for sharing data between apps
@@ -9,8 +9,8 @@ License: GPLv3+
 Group: Graphical desktop/Other
 Url: https://github.com/elementary/contractor
 
-# VCS: https://github.com/elementary/contractor.git
-Source: %name-%version.tar.gz
+Vcs: https://github.com/elementary/contractor.git
+Source: %name-%version.tar
 
 BuildRequires(pre): meson
 BuildRequires: vala-tools libdbus-devel libgee0.8-devel libgio-devel
@@ -36,6 +36,9 @@ have the destination apps hard coded into them.
 %doc README*
 
 %changelog
+* Mon Jul 19 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt1
+- 0.3.5
+
 * Fri Aug 10 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt1
 - 0.3.4
 
