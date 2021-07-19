@@ -2,7 +2,7 @@
 
 Name: mtools
 Version: 4.0.32
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Programs for accessing FAT formatted media without mounting it
@@ -20,6 +20,9 @@ Patch2: mtools-3.9.6-atari.patch
 Patch3: mtools-3.9.7-texinfo.patch
 Patch4: mtools-3.9.10-alt-no-x.patch
 Patch5: mtools-4.0.10-alt-buffer.patch
+
+# for check
+BuildRequires: dosfstools
 
 Requires: glibc-gconv-modules
 
@@ -106,6 +109,13 @@ install -pD %SOURCE1 %buildroot%inetd_floppyd
 find %buildroot -name floppyd\* -print0 | xargs -r0 rm -fv --
 %endif
 
+%check
+dd if=/dev/zero of=.efiboot.img bs=32k count=227
+/sbin/mkfs.fat -v -n 'El Torito' .efiboot.img
+mkdir -p EFI/BOOT EFI/enroll
+touch EFI/BOOT/bootia32.efi EFI/enroll/cert
+%buildroot%_bindir/mcopy -v -i .efiboot.img -s EFI ::
+
 %files
 %config(noreplace) %_sysconfdir/%name.conf
 %_bindir/*
@@ -129,6 +139,9 @@ find %buildroot -name floppyd\* -print0 | xargs -r0 rm -fv --
 # - review, rediff and send upstream patch1, patch2
 
 %changelog
+* Mon Jul 19 2021 Anton Midyukov <antohami@altlinux.org> 1:4.0.32-alt3
+- add check mcopy to image with FAT12
+
 * Mon Jul 19 2021 Michael Shigorin <mike@altlinux.org> 1:4.0.32-alt2
 - reverting to 4.0.32 due to mcopy breakage (ALT#40532)
 
