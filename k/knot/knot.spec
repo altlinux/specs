@@ -7,7 +7,7 @@
 %def_disable documentation
 
 Name: knot
-Version: 3.0.6
+Version: 3.0.8
 Release: alt1
 Summary: High-performance authoritative DNS server
 Group: System/Servers
@@ -144,7 +144,7 @@ install -d -m 0770 -D %buildroot%_sharedstatedir/%name/keys
 find %buildroot -type f -name "*.la" -delete -print
 
 %check
-%make check ||:
+V=1 %make check ||:
 
 %pre
 %_sbindir/groupadd -r -f %name
@@ -202,6 +202,9 @@ find %buildroot -type f -name "*.la" -delete -print
 %endif
 
 %changelog
+* Mon Jul 19 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.8-alt1
+- new version 3.0.8
+
 * Tue May 18 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.6-alt1
 - new version 3.0.6
 
