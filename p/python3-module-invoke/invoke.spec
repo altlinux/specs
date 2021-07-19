@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 1.6.0
-Release: alt1
+Release: alt2
 
 Summary: Simple Python task execution
 License: BSD-2-Clause
@@ -17,7 +17,7 @@ Patch1: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
-#py3_requires lexicon
+%py3_requires lexicon
 %py3_requires six
 %py3_requires yaml
 
@@ -54,6 +54,9 @@ find . -name '*.py' | xargs sed -i \
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jul 19 2021 Stanislav Levin <slev@altlinux.org> 1.6.0-alt2
+- Restored back runtime dep on lexicon.
+
 * Sun Jul 18 2021 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1
 - new version 1.6.0
 
