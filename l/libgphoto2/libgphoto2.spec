@@ -1,13 +1,11 @@
 %define sover 6
 %define sover_port 12
 %def_disable static
-%def_enable hal
-%def_disable libhal
 %define _libexecdir /usr/libexec
 
 Name: libgphoto2
 Version: 2.5.27
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Library to access to digital cameras
@@ -19,9 +17,6 @@ Packager: Dmitriy Khanzhin <jinn@altlinux.org>
 # Automatically added by buildreq on Mon Oct 11 2010
 BuildRequires: doxygen flex gcc-c++ libcurl-devel libexif-devel libgd2-devel libjpeg-devel
 BuildRequires: liblockdev-devel libltdl7-devel libusb-devel libxml2-devel
-%if_enabled libhal
-BuildRequires: libhal-devel
-%endif
 
 # IMHO, this build requires are needs when build with cdk
 #BuildRequires: libncurses-devel libtinfo-devel
@@ -136,9 +131,6 @@ export utilsdir=%_libexecdir/%name
 %configure \
     %{subst_enable static} \
     --with-drivers=all \
-%if_disabled libhal
-    --without-hal \
-%endif
     --disable-rpath
 %make_build
 
@@ -150,12 +142,6 @@ export utilsdir=%_libexecdir/%name
 /bin/touch %buildroot/lib/udev/rules.d/40-%name.rules
 /bin/mkdir -p %buildroot/lib/udev/hwdb.d
 /bin/touch %buildroot/lib/udev/hwdb.d/40-%name.hwdb
-
-%if_enabled hal
-# create hal support
-/bin/mkdir -p %buildroot%_datadir/hal/fdi/information/20thirdparty
-/bin/touch %buildroot%_datadir/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
-%endif
 
 # correct content of doc. directory
 /bin/rm -rf %buildroot/%_datadir/doc/%name/{linux-hotplug,ABOUT-NLS,COPYING,ChangeLog,RELEASE-HOWTO.md}
@@ -182,10 +168,6 @@ export utilsdir=%_libexecdir/%name
 # create udev rules
 %_libexecdir/%name/print-camera-list --verbose udev-rules version 201 owner root mode 0660 group camera > /lib/udev/rules.d/40-%name.rules 2> /dev/null
 %_libexecdir/%name/print-camera-list hwdb > /lib/udev/hwdb.d/40-%name.hwdb 2> /dev/null
-%if_enabled hal
-# create .fdi file
-%_libexecdir/%name/print-camera-list hal-fdi > %_datadir/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
-%endif
 
 %triggerpostun -- %name <= 2.4.0
 /sbin/ldconfig
@@ -210,9 +192,6 @@ export utilsdir=%_libexecdir/%name
 %_datadir/doc/%name/README.md
 %_datadir/doc/%name/OUTDATED.txt
 %exclude %_datadir/locale/*/LC_MESSAGES/%{name}_port*
-%if_enabled hal
-%ghost %_datadir/hal/fdi/information/20thirdparty/*
-%endif
 
 %files -n %{name}_port-%sover_port -f %name.lang
 %_libdir/%{name}_port.so.*
@@ -247,6 +226,9 @@ export utilsdir=%_libexecdir/%name
 %endif
 
 %changelog
+* Tue Jul 20 2021 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.27-alt2
+- finally removed hal support
+
 * Sun Feb 21 2021 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.27-alt1
 - 2.5.27
 
