@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: gparted
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: %Name Partition Editor
@@ -130,6 +130,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Tue Jul 20 2021 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt1
+- 1.3.1
+
 * Mon May 03 2021 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 
