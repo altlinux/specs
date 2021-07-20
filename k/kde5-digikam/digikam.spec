@@ -22,7 +22,7 @@
 %define label digiKam
 Name: kde5-%rname
 %define lname lib%name
-Version: 7.1.0
+Version: 7.3.0
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
@@ -218,8 +218,8 @@ sed -i '/set(HAVE_OPENGL TRUE)/ s,TRUE,FALSE,' core/CMakeLists.txt
     -DENABLE_FACESENGINE_DNN=OFF \
 %endif
     -DENABLE_QWEBENGINE=ON \
-    -DENABLE_INTERNALMYSQL=%{?_enable_mysql:ON}%{!_enable_mysql:OFF} \
-    -DENABLE_MYSQLSUPPORT=%{?_enable_mysql:ON}%{!_enable_mysql:OFF} \
+    -DENABLE_INTERNALMYSQL=%{?_enable_mysql:ON}%{!?_enable_mysql:OFF} \
+    -DENABLE_MYSQLSUPPORT=%{?_enable_mysql:ON}%{!?_enable_mysql:OFF} \
     -DENABLE_KFILEMETADATASUPPORT=%{?_enable_baloo:ON}%{!?_enable_baloo:OFF} \
     -DENABLE_APPSTYLES=ON \
     -DBUILD_TESTING=OFF \
@@ -274,7 +274,7 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_datadir/%rname/colorschemes/
 %_datadir/%rname/data/
 %_datadir/%rname/database/
-%_datadir/%rname/facesengine/
+#%_datadir/%rname/facesengine/
 %_datadir/%rname/geoiface/
 %_datadir/%rname/geolocationedit/
 %_datadir/%rname/metadata/
@@ -313,6 +313,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Mon Jul 19 2021 Sergey V Turchin <zerg@altlinux.org> 7.3.0-alt1
+- new version
+
 * Tue Oct 20 2020 Sergey V Turchin <zerg@altlinux.org> 7.1.0-alt1
 - new version
 
