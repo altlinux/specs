@@ -2,7 +2,7 @@
 
 Name: %srcname
 Version: 2.3.0
-Release: alt3
+Release: alt4
 Summary: A keyboard-driven, vim-like browser based on PyQt5 and QtWebEngine
 License: GPLv3
 Group: Networking/WWW
@@ -26,8 +26,9 @@ BuildRequires: desktop-file-utils python3-module-setuptools rpm-build-python3
 #Requires: qt5-qtwebengine qt5-qtwebkit python3-qt5-webkit python3-cssutils
 Provides: python3(qutebrowser.extensions)
 Provides: python3(qutebrowser.components.utils)
-%add_python3_req_skip python3(PyQt5.QtWebKit)
-%add_python3_req_skip python3(PyQt5.QtWebKitWidgets)
+#add_python3_req_skip python3(PyQt5.QtWebKit)
+#add_python3_req_skip python3(PyQt5.QtWebKitWidgets)
+%add_python3_req_skip PyQt5.QtWebKit PyQt5.QtWebKitWidgets
 
 
 %description
@@ -95,6 +96,8 @@ find %buildroot -size 0 -delete
 %_datadir/icons/hicolor/512x512/apps/%srcname.png
 
 %changelog
+* Tue Jul 20 2021 Ilya Mashkin <oddity@altlinux.ru> 2.3.0-alt4
+- Fixing skip reqs for python3 QtWebKit in the correct way (thanks to Vitaly Lipatov, closes: #38837)
 
 * Fri Jul 16 2021 Ilya Mashkin <oddity@altlinux.ru> 2.3.0-alt3
 - add BR rpm-build-python3
