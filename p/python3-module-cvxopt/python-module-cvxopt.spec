@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.2.6
-Release: alt1
+Release: alt1.1
 
 Summary: Python Software for Convex Optimization
 License: GPL v3 or higher
@@ -88,8 +88,7 @@ sed -i 's,^BUILD_DSDP.\+$,BUILD_DSDP = 0,' setup.py
 
 %ifarch %e2k
 # openblas not available
-sed -i 's,openblas,blas,g' setup.py \
-	src/C/SuiteSparse/SuiteSparse_config/SuiteSparse_config.mk
+sed -i 's,openblas,blas,g' setup.py
 %endif
 
 %if_with docs
@@ -145,6 +144,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Jul 19 2021 Michael Shigorin <mike@altlinux.org> 1.2.6-alt1.1
+- E2K: fix build (SuiteSparse seems unbundled)
+
 * Wed Mar 03 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.6-alt1
 - Automatically updated to 1.2.6.
 
