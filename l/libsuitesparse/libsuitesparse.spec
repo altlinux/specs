@@ -7,7 +7,7 @@
 
 Name: libsuitesparse
 Version: 5.8.1
-Release: alt3
+Release: alt4
 
 Summary: Shared libraries for sparse matrix calculations
 License: LGPL and GPL
@@ -19,6 +19,7 @@ Source1: cholmod.pc
 Source2: umfpack.pc
 
 Patch1: SuiteSparse-%version-alt.patch
+Patch2000: %name-e2k.patch
 
 BuildRequires: libmetis-devel gcc-c++ libtbb-devel
 BuildRequires: libblas-devel
@@ -87,6 +88,9 @@ mongoose <MM-input-file.mtx> [output-file]
 %setup
 install -m644 %SOURCE1 %SOURCE2 .
 %patch1 -p1
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 # Copy examples src
 mkdir demos-src/
@@ -96,8 +100,10 @@ cp -rpf --parents $(find ./ -name Demo) demos-src/
 sed -i "s|@VERSION@|%cholmod_ver|" cholmod.pc
 sed -i "s|@VERSION@|%umfpack_ver|" umfpack.pc
 
+%ifnarch %e2k
 # Remove rpath due to "RPATH contains illegal entry" error
 sed -i 's/ -Wl,-rpath=$(INSTALL_LIB)//' SuiteSparse_config/SuiteSparse_config.mk
+%endif
 pushd GraphBLAS
 %cmake -DCMAKE_INSTALL_LIBDIR=%_libdir -DCMAKE_INSTALL_INCLUDEDIR=%_includedir
 popd
@@ -179,6 +185,9 @@ mv %buildroot%_docdir/%name-%version/*.pdf %buildroot%_docdir/%name-%version/pdf
 %_bindir/mongoose
 
 %changelog
+* Mon Jul 19 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 5.8.1-alt4
+- Added patch for Elbrus.
+
 * Thu Jun 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.8.1-alt3
 - Fixed build with new cmake macros.
 
