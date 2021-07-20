@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.84.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -115,6 +115,9 @@ BUILD/bin/fdo_secrets_test
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Tue Jul 20 2021 Slava Aseev <ptrnine@altlinux.org> 5.84.0-alt2
+- Update Secret Service API patch to the new version
+
 * Tue Jul 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.84.0-alt1
 - new version
 
