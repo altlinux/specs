@@ -59,7 +59,7 @@
 %def_enable sysusers
 %def_disable ldconfig
 %def_enable firstboot
-%def_disable standalone_binaries
+%def_enable standalone_binaries
 
 %if_enabled sysusers
 %def_enable ldconfig
@@ -87,7 +87,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
@@ -139,6 +139,15 @@ Source76: systemd-binfmt.filetrigger
 Source77: journal-catalog.filetrigger
 Source78: systemd-sysusers.filetrigger
 Source79: systemd-modules-load.filetrigger
+
+Source81: systemd-modules-load-shared.alternatives
+Source82: systemd-modules-load-standalone.alternatives
+Source83: systemd-sysctl-shared.alternatives
+Source84: systemd-sysctl-standalone.alternatives
+Source85: systemd-sysusers-shared.alternatives
+Source86: systemd-sysusers-standalone.alternatives
+Source87: systemd-tmpfiles-shared.alternatives
+Source88: systemd-tmpfiles-standalone.alternatives
 
 Patch1: %name-%version.patch
 
@@ -412,14 +421,7 @@ Obsoletes: bash-completion-%name < %EVR
 Obsoletes: bash-completion-journalctl < %EVR
 Obsoletes: zsh-completion-%name < %EVR
 Obsoletes: zsh-completion-journalctl < %EVR
-%if_disabled standalone_binaries
-Provides: systemd-modules-load-standalone = %EVR
-Provides: systemd-tmpfiles-standalone = %EVR
-Provides: systemd-sysctl-standalone = %EVR
-Obsoletes: systemd-modules-load-standalone < %EVR
-Obsoletes: systemd-tmpfiles-standalone < %EVR
-Obsoletes: systemd-sysctl-standalone < %EVR
-%endif
+Requires: systemd-utils-filetriggers = %EVR
 
 %description utils
 This package contains utils from systemd:
@@ -558,33 +560,16 @@ systemd-coredump and coredumpctl utils.
 Group: System/Servers
 Summary: systems that boot up with an empty /etc directory
 Requires: %name = %EVR
-%if_disabled standalone_binaries
-Provides: systemd-sysusers-standalone = %EVR
-Obsoletes: systemd-sysusers-standalone < %EVR
-%endif
 
 %description stateless
 This package contains:
- - systemd-sysusers util and unit
  - ldconfig unit
- - systemd-update-done unit
-
-systemd-sysusers tool creates system users and groups in /etc/passwd and
-/etc/group, based on static declarative system user/group
-definitions in /lib/sysusers.d/. This is useful to
-enable factory resets and volatile systems that boot up with
-an empty /etc directory, and thus need system users and
-groups created during early boot. systemd now also ships
-with two default sysusers.d/ files for the most basic
-users and groups systemd and the core operating system
-require.
 
 %package -n udev
 Group: System/Configuration/Hardware
 Summary: udev - an userspace implementation of devfs
 License: GPLv2+
 Requires: shadow-utils dmsetup kmod >= 15 util-linux >= 2.27.1 losetup >= 2.19.1
-Requires: systemd-utils = %EVR
 Provides: hotplug = 2004_09_23-alt18
 Obsoletes: hotplug
 Provides: udev-extras = %EVR
@@ -635,37 +620,37 @@ License: LGPLv2.1+
 %description -n libudev-devel-static
 Static library for libudev.
 
-%package modules-load-standalone
-Summary: Standalone systemd-modules-load binary for use in non-systemd systems
+%package utils-standalone
 Group: System/Configuration/Boot and Init
+Summary: Standalone systemd utils
+Provides: %name-modules-load-standalone = %EVR
+Provides: %name-sysctl-standalone = %EVR
+Provides: %name-sysusers-standalone = %EVR
+Provides: %name-tmpfiles-standalone = %EVR
+Obsoletes: %name-modules-load-standalone < %EVR
+Obsoletes: %name-sysctl-standalone < %EVR
+Obsoletes: %name-sysusers-standalone < %EVR
+Obsoletes: %name-tmpfiles-standalone < %EVR
+Requires: systemd-utils-filetriggers = %EVR
 
-%description modules-load-standalone
-Standalone systemd-modules-load binary with no dependencies on the systemd-shared
-library or other libraries from libsystemd.
+%description utils-standalone
+This package contains standalone utils from systemd:
+ - systemd-modules-load.standalone
+ - systemd-sysctl.standalone
+ - systemd-sysusers.standalone
+ - systemd-tmpfiles.standalone
 
-%package sysctl-standalone
-Summary: Standalone systemd-sysctl binary for use in non-systemd systems
+%package utils-filetriggers
 Group: System/Configuration/Boot and Init
+Summary: RPM filetriggers for systemd utils
+BuildArch: noarch
+%add_findreq_skiplist %_rpmlibdir/systemd-tmpfiles.filetrigger
+%add_findreq_skiplist %_rpmlibdir/systemd-sysusers.filetrigger
+%add_findreq_skiplist %_rpmlibdir/systemd-modules-load.filetrigger
+%add_findreq_skiplist %_rpmlibdir/systemd-sysctl.filetrigger
 
-%description sysctl-standalone
-Standalone systemd-sysctl binary with no dependencies on the systemd-shared
-library or other libraries from libsystemd.
-
-%package sysusers-standalone
-Summary: Standalone systemd-sysusers binary for use in non-systemd systems
-Group: System/Configuration/Boot and Init
-
-%description sysusers-standalone
-Standalone systemd-sysusers binary with no dependencies on the systemd-shared
-library or other libraries from libsystemd.
-
-%package tmpfiles-standalone
-Summary: Standalone systemd-tmpfiles binary for use in non-systemd systems
-Group: System/Configuration/Boot and Init
-
-%description tmpfiles-standalone
-Standalone systemd-tmpfiles binary with no dependencies on the systemd-shared
-library or other libraries from libsystemd.
+%description utils-filetriggers
+%summary
 
 %prep
 %setup -q
@@ -962,6 +947,19 @@ install -pD -m755 %SOURCE76 %buildroot%_rpmlibdir/systemd-binfmt.filetrigger
 install -pD -m755 %SOURCE77 %buildroot%_rpmlibdir/journal-catalog.filetrigger
 install -pD -m755 %SOURCE78 %buildroot%_rpmlibdir/systemd-sysusers.filetrigger
 install -pD -m755 %SOURCE79 %buildroot%_rpmlibdir/systemd-modules-load.filetrigger
+
+# alternatives
+for f in systemd-modules-load systemd-sysusers systemd-sysctl systemd-tmpfiles; do
+	mv %buildroot/sbin/$f %buildroot/sbin/$f.shared
+done
+install -pD -m644 %SOURCE81 %buildroot/%_altdir/systemd-modules-load-shared
+install -pD -m644 %SOURCE82 %buildroot/%_altdir/systemd-modules-load-standalone
+install -pD -m644 %SOURCE83 %buildroot/%_altdir/systemd-sysctl-shared
+install -pD -m644 %SOURCE84 %buildroot/%_altdir/systemd-sysctl-standalone
+install -pD -m644 %SOURCE85 %buildroot/%_altdir/systemd-sysusers-shared
+install -pD -m644 %SOURCE86 %buildroot/%_altdir/systemd-sysusers-standalone
+install -pD -m644 %SOURCE87 %buildroot/%_altdir/systemd-tmpfiles-shared
+install -pD -m644 %SOURCE88 %buildroot/%_altdir/systemd-tmpfiles-standalone
 
 cat >>%buildroot/lib/sysctl.d/50-mmap-min-addr.conf <<EOF
 # Indicates the amount of address space which a user process will be
@@ -1512,8 +1510,6 @@ udevadm hwdb --update &>/dev/null
 %exclude %_unitdir/var-lib-machines.mount
 %exclude %_unitdir/*/var-lib-machines.mount
 %exclude %_unitdir/systemd-nspawn@.service
-%exclude %_unitdir/*/systemd-sysusers.service
-%exclude %_unitdir/systemd-sysusers.service
 %exclude %_unitdir/systemd-portabled.service
 
 %_man1dir/busctl.*
@@ -1757,9 +1753,9 @@ udevadm hwdb --update &>/dev/null
 /bin/systemd-escape
 %_mandir/*/*escape*
 
-/sbin/systemd-tmpfiles
+/sbin/systemd-tmpfiles.shared
+%_altdir/systemd-tmpfiles-shared
 %_mandir/*/*tmpfiles*
-%_rpmlibdir/systemd-tmpfiles.filetrigger
 %_tmpfilesdir/legacy.conf
 %_tmpfilesdir/x11.conf
 %_tmpfilesdir/tmp.conf
@@ -1772,15 +1768,23 @@ udevadm hwdb --update &>/dev/null
 %_rpmlibdir/systemd-binfmt.filetrigger
 %_mandir/*/*binfmt*
 
+/sbin/systemd-sysusers.shared
+%_altdir/systemd-sysusers-shared
+%dir /lib/sysusers.d
+/lib/sysusers.d/systemd.conf
+/lib/sysusers.d/basic.conf
+%_tmpfilesdir/etc.conf
+%_mandir/*/*sysusers*
+
 /lib/systemd/systemd-modules-load
 %_sysconfdir/modules-load.d/modules.conf
-/sbin/systemd-modules-load
-%_rpmlibdir/systemd-modules-load.filetrigger
+/sbin/systemd-modules-load.shared
+%_altdir/systemd-modules-load-shared
 %_mandir/*/*modules-load*
 
 /lib/systemd/systemd-sysctl
-/sbin/systemd-sysctl
-%_rpmlibdir/systemd-sysctl.filetrigger
+/sbin/systemd-sysctl.shared
+%_altdir/systemd-sysctl-shared
 %config(noreplace) %_sysconfdir/sysctl.d/99-sysctl.conf
 /lib/sysctl.d/49-coredump-disable.conf
 /lib/sysctl.d/50-default.conf
@@ -2078,41 +2082,36 @@ udevadm hwdb --update &>/dev/null
 %dir %_localstatedir/lib/systemd/coredump
 %endif
 
-%if_enabled sysusers
 %files stateless
-/sbin/systemd-sysusers
-%dir /lib/sysusers.d
 %dir %_datadir/factory
 %_datadir/factory/*
-%_unitdir/systemd-sysusers.service
-%_unitdir/sysinit.target.wants/systemd-sysusers.service
-%_rpmlibdir/systemd-sysusers.filetrigger
-/lib/sysusers.d/systemd.conf
-/lib/sysusers.d/basic.conf
-%_tmpfilesdir/etc.conf
-%_mandir/*/*sysusers*
-
 %if_enabled ldconfig
 %_unitdir/ldconfig.service
 %_unitdir/sysinit.target.wants/ldconfig.service
 %endif #ldconfig
-%endif #sysuser
 
 %if_enabled standalone_binaries
+%files utils-standalone
 %if_enabled sysusers
-%files sysusers-standalone
 /sbin/systemd-sysusers.standalone
+%_altdir/systemd-sysusers-standalone
 %endif #sysuser
 
-%files modules-load-standalone
 /sbin/systemd-modules-load.standalone
+%_altdir/systemd-modules-load-standalone
 
-%files sysctl-standalone
 /sbin/systemd-sysctl.standalone
+%_altdir/systemd-sysctl-standalone
 
-%files tmpfiles-standalone
 /sbin/systemd-tmpfiles.standalone
+%_altdir/systemd-tmpfiles-standalone
 %endif
+
+%files utils-filetriggers
+%_rpmlibdir/systemd-tmpfiles.filetrigger
+%_rpmlibdir/systemd-sysusers.filetrigger
+%_rpmlibdir/systemd-modules-load.filetrigger
+%_rpmlibdir/systemd-sysctl.filetrigger
 
 %files -n libudev1
 /%_lib/libudev.so.*
@@ -2165,6 +2164,14 @@ udevadm hwdb --update &>/dev/null
 %exclude /lib/udev/rules.d/99-systemd.rules
 
 %changelog
+* Tue Jul 20 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.1-alt1
+- 249.1 (Fixes: CVE-2021-33910)
+- Enable build stanadlone utils.
+- Add alternatives for shared and standalone utils.
+- Move systemd-sysusers to utils package.
+- Merge standalone utils to systemd-utils-standalone package.
+- Move rpm filetriggers to systemd-utils-filetriggers.
+
 * Fri Jul 09 2021 Alexey Shabalin <shaba@altlinux.org> 1:249-alt1
 - 249
 - Add rpm filetrigger for systemd-modules-load.
