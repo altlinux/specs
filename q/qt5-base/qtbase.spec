@@ -35,7 +35,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.15.2
-Release: alt3
+Release: alt4
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -48,11 +48,13 @@ Source: %qt_module-everywhere-src-%version.tar
 Source1: rpm-macros
 Source2: rpm-macros-addon
 # KDE
-Patch0: kde-5.15.patch
+Patch1: kde-5.15.patch
+Patch2: kde-5.15-rev-6344955d17e.patch
+Patch3: kde-5.15-rev-f8ad329f7ee.patch
 # FC
-Patch1: qtbase-opensource-src-5.7.1-QT_VERSION_CHECK.patch
-Patch2: qtbase-opensource-src-5.7.1-moc_macros.patch
-Patch3: qtbase-use-wayland-on-gnome.patch
+Patch51: qtbase-opensource-src-5.7.1-QT_VERSION_CHECK.patch
+Patch52: qtbase-opensource-src-5.7.1-moc_macros.patch
+Patch53: qtbase-use-wayland-on-gnome.patch
 # SuSE
 Patch100: disable-rc4-ciphers-bnc865241.diff
 # ALT
@@ -376,10 +378,13 @@ EGL integration library for the Qt%major toolkit
 %endif
 
 %setup -n %qt_module-everywhere-src-%version
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+#
+%patch51 -p1
+%patch52 -p1
+%patch53 -p1
 #
 %patch100 -p1
 #
@@ -824,6 +829,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Tue Jul 20 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt4
+- revert fix for QTBUG-88431
+
 * Mon Jul 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt3
 - add fixes from kde/qt-5.15
 
