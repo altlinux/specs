@@ -6,7 +6,7 @@
 
 Name: gutenpy
 Version: 0.3.0
-Release: alt6.1
+Release: alt7
 
 Summary: text reader and catalog browser for Project Gutenberg
 Summary(ru_RU.UTF-8): утилита для поиска и чтения текстов из Project Gutenberg
@@ -15,10 +15,11 @@ License: %gpl2only
 Group: Text tools
 URL: http://gutenpy.sourceforge.net/
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 #BuildArch: noarch
 
 Source0: %name-%version.tar
+Patch0:  %name-0.3.0-alt-urls.patch 
 Source1: %name.desktop
 Source2: %name.png
 Source3: %name-16.png
@@ -51,6 +52,7 @@ GutenPy  предназначается для комфортного чтени
 
 %prep
 %setup
+%patch0
 
 %build
 sed -e  's@share/doc/gutenpy@share/gutenpy@' -i %name.py
@@ -105,6 +107,9 @@ install -m0644 -- %SOURCE5 %buildroot%_liconsdir/%name.png
 
 
 %changelog
+* Tue Jul 20 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.3.0-alt7
+- Update URLs to meet current Project Gutenberg website
+
 * Thu Jul 15 2021 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt6.1
 - FTBFS: use rpm-build-python for autoprov python scripts
 
