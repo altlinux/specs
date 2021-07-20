@@ -1,5 +1,5 @@
-%define kernel_base_version	5.12
-%define kernel_sublevel        .16
+%define kernel_base_version	5.13
+%define kernel_sublevel        .4
 %define kernel_extra_version	%nil
 
 Name: kernel-image-mp
@@ -261,6 +261,12 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Tue Jul 20 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.13.4-alt1
+- 5.13.4
+
+* Mon Jul 12 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.13.0-alt1
+- 5.13
+
 * Mon Jul 12 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.12.16-alt1
 - 5.12.16
 
