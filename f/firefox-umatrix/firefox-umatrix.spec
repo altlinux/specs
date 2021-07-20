@@ -4,7 +4,7 @@
 %define cid	uMatrix@raymondhill.net
 
 Name:		%firefox_name-%rname
-Version:	1.4.0
+Version:	1.4.4
 Release:	alt1
 
 Summary:	uMatrix extension for Firefox
@@ -43,6 +43,13 @@ install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 %firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Tue Jul 20 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.4.4-alt1
+- New version
+  - Fix infinite recursion with maliciously crafted URL
+  - Remove obsolete assets
+  - Remove no longer existing hpHosts
+  - mvps host list secure protocol http => https
+
 * Tue Jul 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.4.0-alt1
 - New version
 
