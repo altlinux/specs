@@ -11,7 +11,7 @@
 
 Name: fence-agents
 Summary: Fence Agents
-Version: 4.9.0
+Version: 4.10.0
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Base
@@ -147,6 +147,16 @@ Requires: fence-agents-common = %version-%release
 
 %description brocade
 The fence-agents-bladecenter package contains a fence agent for Brocade devices that are accessed via telnet or SSH.
+
+%package cdu
+Group: System/Base
+License: GPL-3.0-only
+Summary: Fence agent for a Sentry Switch CDU
+Requires: fence-agents-common = %version-%release
+BuildArch: noarch
+
+%description cdu
+Fence agent for Sentry Switch CDU power switch.
 
 %package cisco-mds
 BuildArch: noarch
@@ -405,6 +415,17 @@ Requires: fence-agents-common = %version-%release
 
 %description kdump
 The fence-agents-kdump package contains a fence agent for use with kdump crash recovery service.
+
+%package kubevirt
+Group: System/Base
+License: GPLv2+ and LGPLv2+
+Summary: Fence agent for KubeVirt platform
+Requires: python3-module-openshift >= 0.12.1
+Requires: fence-agents-common = %version-%release
+BuildArch: noarch
+
+%description kubevirt
+Fence agent for KubeVirt platform.
 
 %package ldom
 BuildArch: noarch
@@ -848,6 +869,10 @@ install -m 0755 %SOURCE11 %buildroot%_initdir/fence_virtd
 %_sbindir/fence_brocade
 %_man8dir/fence_brocade.8*
 
+%files cdu
+%_sbindir/fence_cdu
+%_man8dir/fence_cdu.8*
+
 %files cisco-mds
 %_sbindir/fence_cisco_mds
 %_man8dir/fence_cisco_mds.8*
@@ -969,6 +994,10 @@ install -m 0755 %SOURCE11 %buildroot%_initdir/fence_virtd
 %files ironic
 %_sbindir/fence_ironic
 %_man8dir/fence_ironic.8*
+
+%files kubevirt
+%_sbindir/fence_kubevirt
+%_man8dir/fence_kubevirt.8*
 
 %files kdump
 %_sbindir/fence_kdump
@@ -1127,6 +1156,10 @@ install -m 0755 %SOURCE11 %buildroot%_initdir/fence_virtd
 %endif
 
 %changelog
+* Mon Jul 19 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.10.0-alt1
+- 4.10.0
+- Add cdu and kubevirt modules.
+
 * Wed Jun 09 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.9.0-alt1
 - 4.9.0
 - Add lindypdu module.
