@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 %def_enable check
 
 Name: gpodder
-Version: 3.10.20
+Version: 3.10.21
 Release: alt1
 
 Summary: podcast receiver/catcher in PyGTK
@@ -96,6 +96,9 @@ PYTHON=python3 PYTEST=%_bindir/py.test3 %make unittest
 
 
 %changelog
+* Tue Jul 20 2021 Yuri N. Sedunov <aris@altlinux.org> 3.10.21-alt1
+- 3.10.21
+
 * Tue Jun 15 2021 Yuri N. Sedunov <aris@altlinux.org> 3.10.20-alt1
 - updated to 3.10.20-6-gc31ba52f
 
