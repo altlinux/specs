@@ -1,14 +1,25 @@
-Summary: Is an open source real-time web log analyzer
 Name: goaccess
-Version: 1.1.1
-Release: alt2
-Url: http://goaccess.prosoftcorp.com/
-Source: %name-%version.tar
+
+Summary: Is an open source real-time web log analyzer
+Version: 1.5.1
+Release: alt1
+
+URL: https://goaccess.io/
+#URL: http://goaccess.prosoftcorp.com/
+
+Source0: %name-%version.tar
+Patch0:  %name-%version-%release.patch
+
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
-License: GPLv2
+License: %mit
 Group: Other
 
-BuildRequires: glib2-devel libncurses-devel libGeoIP-devel
+BuildRequires(pre): rpm-build-licenses
+
+# Automatically added by buildreq on Tue Jul 20 2021
+# optimized out: glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libncurses-devel libtinfo-devel perl python3 python3-base python3-module-paste ruby ruby-stdlibs sh4 shared-mime-info tzdata xz
+BuildRequires: glib2-devel libGeoIP-devel libncursesw-devel libssl-devel
+
 
 %description
 GoAccess is an open source real-time web log analyzer
@@ -19,24 +30,43 @@ report on the fly.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %autoreconf
-%add_optflags -fcommon
-%configure --enable-geoip
+#%%add_optflags -fcommon
+%configure --with-getline \
+           --with-openssl \
+           --enable-geoip=legacy \
+           --enable-utf8  \
+           %nil
 %make
 
 %install
-install -D -m 755 goaccess %buildroot%_sbindir/goaccess
-install -D -m 644 goaccess.1 %buildroot%_man1dir/goaccess.1
+%makeinstall
+%find_lang %name
 
-%files
-%_sbindir/goaccess
-%_man1dir/goaccess*
-
+%files -f %name.lang
 %doc AUTHORS ChangeLog NEWS COPYING README TODO
 
+%dir %_sysconfdir/%name
+%config(noreplace) %_sysconfdir/%name/goaccess.conf
+%config %_sysconfdir/%name/browsers.list
+%config %_sysconfdir/%name/podcast.list
+
+%_bindir/goaccess
+%_man1dir/goaccess*
+
+
 %changelog
+* Tue Jul 20 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.5.1-alt1
+- New version
+  - lot of new features
+  - incrementally logs processing through the on-disk persistence option
+  - fixes for overflows, segfaults, etc
+- Update project URL
+- Fix license
+
 * Tue Apr 06 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.1-alt2
 - Fixed FTBFS with -fcommon.
 
