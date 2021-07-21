@@ -4,7 +4,7 @@
 
 Name: apache2-mod_wsgi
 Version: 4.8.0
-Release: alt1
+Release: alt2
 
 Summary: Python WSGI module for Apache2
 Group: System/Servers
@@ -21,7 +21,6 @@ BuildRequires: python3-dev
 %if_with check
 BuildRequires: nss_wrapper
 BuildRequires: socket_wrapper
-BuildRequires: pytest
 BuildRequires: pytest3
 BuildRequires: python3-module-nose
 BuildRequires: python3-module-requests
@@ -69,6 +68,9 @@ echo -e '<IfModule !wsgi_module>\n\tLoadModule wsgi_module %apache2_moduledir/mo
 %config(noreplace) %apache2_mods_available/wsgi-py3.load
 
 %changelog
+* Wed Jul 21 2021 Stanislav Levin <slev@altlinux.org> 4.8.0-alt2
+- Dropped unused dependency on pytest.
+
 * Tue May 25 2021 Stanislav Levin <slev@altlinux.org> 4.8.0-alt1
 - 4.7.1 -> 4.8.0.
 
