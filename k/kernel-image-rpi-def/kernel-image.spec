@@ -1,12 +1,12 @@
 %def_disable check
 
 Name: kernel-image-rpi-def
-Release: alt2
+Release: alt1
 epoch:1
 %define kernel_need_version	5.10
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	5.10
-%define kernel_sublevel .36
+%define kernel_sublevel .50
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -505,6 +505,11 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Tue Jul 20 2021 Dmitry Terekhin <jqt4@altlinux.org> 1:5.10.50-alt1
+- Updated to 5.10.50 (still RPi-specific)
+- https://github.com/raspberrypi/linux.git rpi-5.10.y
+- commit 55f43ec57e13d6aeac6f126df8083b67d68705db
+
 * Wed Jul 07 2021 Dmitry Terekhin <jqt4@altlinux.org> 1:5.10.36-alt2
 - Remove dependency on startup package. See ALT bug 39840.
 
