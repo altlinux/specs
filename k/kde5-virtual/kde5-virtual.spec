@@ -1,6 +1,6 @@
 
 Name: kde5-virtual
-Version: 5.21.4
+Version: 5.21.5
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -205,11 +205,11 @@ Summary: Mixed messaging client
 Provides: kde5-messenger-client = %EVR
 Provides: kde5-messenger-client-mix = %EVR
 Requires: kf5-filesystem
-Requires: choqok
-#Requires: blink-qt
-Requires: kde5-konversation
+#Requires: choqok
+##Requires: blink-qt
+#Requires: kde5-konversation
 %ifnarch armh ppc64le aarch64
-Requires: telegram-desktop
+#Requires: telegram-desktop
 %endif
 Requires: psi-plus psi-plus-l10n psi-plus-plugin-autoreply psi-plus-plugin-cleaner psi-plus-plugin-conferencelogger psi-plus-plugin-contentdownloader
 Requires: psi-plus-plugin-enummessages psi-plus-plugin-historykeeper psi-plus-plugin-image psi-plus-plugin-imagepreview psi-plus-plugin-messagefilter
@@ -281,6 +281,9 @@ Requires: sddm sddm-theme-breeze plasma5-sddm-kcm
 %files -n kde5-display-manager-5-sddm
 
 %changelog
+* Wed Jul 21 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.5-alt1
+- drop all requires from kde5-messenger-client-mix exept psi-plus
+
 * Wed May 12 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.4-alt1
 - don't require thunderbird on ppc64le
 
