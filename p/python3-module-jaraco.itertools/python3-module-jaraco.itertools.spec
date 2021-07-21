@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 5.0.0
-Release: alt1
+Release: alt2
 
 Summary: Tools to supplement packaging Python releases
 License: MIT
@@ -13,6 +13,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools_scm
 
 BuildArch: noarch
+
+%py3_provides %modulename
 
 # Source-url: https://github.com/jaraco/jaraco.itertools/archive/4.4.2.tar.gz
 Source: %name-%version.tar
@@ -42,6 +44,9 @@ rm -f %buildroot%python3_sitelibdir/jaraco/__init__*
 %python3_sitelibdir/%modulename-*.egg-info/
 
 %changelog
+* Wed Jul 21 2021 Stanislav Levin <slev@altlinux.org> 5.0.0-alt2
+- Provided jaraco.itertools.
+
 * Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0.0-alt1
 - new version 5.0.0 (with rpmrb script)
 
