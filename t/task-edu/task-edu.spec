@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.4.4
+Version: 1.4.5
 Release: alt1
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
@@ -230,7 +230,6 @@ Requires: systemd-settings-enable-log-to-tty12
 Requires: deploy
 # Network
 Requires: ipset
-Requires: vlan-utils
 # Group policy management
 Requires: alterator-gpupdate
 %ifnarch armh
@@ -593,6 +592,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Wed Jul 21 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.5-alt1
+- Remove vlan-utils.
+
 * Wed Jul 07 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.4-alt1
 - Remove python2 modules.
 
