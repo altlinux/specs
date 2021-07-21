@@ -10,7 +10,7 @@
 %define sover 4.4
 Name: %oname%sover
 Version: %major.%minor.%bugfix
-Release: alt7
+Release: alt7.1
 
 Group: System/Libraries
 Summary: Game programming library
@@ -23,6 +23,8 @@ Patch1: allegro-4.1.8-allegro.h.patch
 Patch2: allegro-4.4.2-allegrogl.patch
 Patch3: allegro-4.4.2-allegro.h.patch
 Patch4: allegro-4.4-no-degree-symbol.patch
+
+Patch100: Fix-build-with-lcc-1.23.patch
 
 Obsoletes: %name
 Conflicts: lib%oname-svgalib < %version-%release
@@ -65,6 +67,7 @@ This package contains files needed to build programs using Allegro.
 %setup
 %patch2 -p1
 %patch4 -p2
+%patch100 -p1
 
 %build
 mkdir Build
@@ -124,6 +127,9 @@ gzip CHANGES
 %_pkgconfigdir/*
 
 %changelog
+* Wed Jul 21 2021 Michael Shigorin <mike@altlinux.org> 4.4.2-alt7.1
+- E2K: fix build (reapply sem@'s solution for alt5)
+
 * Thu Jan 28 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.4.2-alt7
 - FTBFS fixed
 
