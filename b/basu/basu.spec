@@ -1,6 +1,6 @@
 Name: basu
 Version: 0.2.0
-Release: alt1
+Release: alt2
 License: LGPL-2.1
 Summary: The sd-bus library, extracted from systemd
 URL: https://github.com/emersion/basu
@@ -50,6 +50,9 @@ This package provides development files for lib%name library.
 %prep
 %setup
 %autopatch -p1
+%ifarch %e2k
+sed -i 's|ELEMENTSOF(log_max_level)|(sizeof(log_max_level)/sizeof(*log_max_level))|' src/basic/log.c
+%endif
 
 if ! grep -qs '^soversion[[:space:]]*=[[:space:]]*%soversion[[:space:]]*$' meson.build; then
 	echo >&2 "Outdated %%soversion value in spec"
@@ -78,5 +81,8 @@ dbus-run-session -- %meson_test
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Jul 20 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.2.0-alt2
+- Fixed build for Elbrus.
+
 * Tue Apr 27 2021 Alexey Gladkov <legion@altlinux.ru> 0.2.0-alt1
 - Initial build.
