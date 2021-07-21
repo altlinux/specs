@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.84.0
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: System/Libraries
@@ -115,6 +115,9 @@ BUILD/bin/fdo_secrets_test
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Wed Jul 21 2021 Oleg Solovyov <mcpain@altlinux.org> 5.84.0-alt3
+- create wallet when user refuses to set password
+
 * Tue Jul 20 2021 Slava Aseev <ptrnine@altlinux.org> 5.84.0-alt2
 - Update Secret Service API patch to the new version
 
