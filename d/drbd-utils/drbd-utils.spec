@@ -1,11 +1,11 @@
 %def_without xen
-%define githash fa9b9d3823b6e1792919e711fcf6164cac629290
+%define githash a8fbde2743409348d5c4ff08986c7f13c8f40e80
 %define gitdiff c6e62702d5e4fb2cf6b3fa27e67cb0d4b399a30b
 %define _localstatedir %_var
 
 Name: drbd-utils
-Version: 9.17.0
-Release: alt1.1
+Version: 9.18.1
+Release: alt1
 
 Summary: DRBD user-land tools and scripts
 License: GPLv2+
@@ -17,7 +17,10 @@ Source1: %name-headers-%version.tar
 Patch0: %name-%version-%release.patch
 
 BuildRequires: docbook-style-xsl flex xsltproc
-BuildRequires: gcc-c++ po4a udev libsystemd-devel
+BuildRequires: gcc-c++ po4a udev libudev-devel libsystemd-devel
+BuildRequires: asciidoctor resource-agents
+
+Requires: linux-ha-common
 
 Conflicts: drbd-tools drbd83-tools
 
@@ -99,8 +102,13 @@ sed -i "s|--pedantic-errors|-pedantic-errors|" user/drbdmon/Makefile
 
 rm -rf %buildroot%_mandir/ja
 rm -f  %buildroot/etc/init.d/drbd	# NB: _not_ %%_initdir here
-install -pDm644 drbd.service %buildroot%_unitdir/drbd.service
-install -pDm644 scripts/drbd %buildroot%_initdir/drbd
+# install -pDm644 drbd.service %buildroot%_unitdir
+pushd scripts
+install -pDm644 -t %buildroot%_unitdir *.service
+install -pDm644 -t %buildroot%_unitdir *.target
+install -pDm755 -t %buildroot/lib/drbd/scripts drbd drbd-service-shim.sh drbd-wait-promotable.sh ocf.ra.wrapper.sh
+install -pDm755 drbd %buildroot%_initdir/drbd
+popd
 
 %post
 %post_service drbd
@@ -117,6 +125,14 @@ install -pDm644 scripts/drbd %buildroot%_initdir/drbd
 %_sysconfdir/ha.d/resource.d/*
 %_initdir/drbd
 %_unitdir/drbd.service
+%_unitdir/drbd-lvchange@.service
+%_unitdir/drbd-promote@.service
+%_unitdir/drbd-reconfigure-suspend-or-error@.service
+%_unitdir/drbd-services@.target
+%_unitdir/drbd-wait-promotable@.service
+%_unitdir/drbd@.service
+%_unitdir/drbd@.target
+%_unitdir/ocf.ra@.service
 %_sbindir/drbdsetup
 %_sbindir/drbdadm
 %_sbindir/drbdmeta
@@ -124,6 +140,11 @@ install -pDm644 scripts/drbd %buildroot%_initdir/drbd
 %dir /lib/drbd
 /lib/drbd/drbdadm-*
 /lib/drbd/drbdsetup-*
+%dir /lib/drbd/scripts
+/lib/drbd/scripts/drbd
+/lib/drbd/scripts/drbd-service-shim.sh
+/lib/drbd/scripts/drbd-wait-promotable.sh
+/lib/drbd/scripts/ocf.ra.wrapper.sh
 /lib/udev/rules.d/65-drbd.rules
 %exclude /usr/lib/drbd/crm-*fence-peer.sh
 %exclude /usr/lib/drbd/stonith_admin-fence-peer.sh
@@ -153,9 +174,13 @@ install -pDm644 scripts/drbd %buildroot%_initdir/drbd
 %_datadir/cluster/drbd.metadata
 
 %files bash-completion
-%_sysconfdir/bash_completion.d/drbdadm*
+%_sysconfdir/bash_completion.d
 
 %changelog
+* Wed Jul 21 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.18.1-alt1
+- 9.18.1
+- add systemd templates and ocf RA wrapper script
+
 * Fri Jun 18 2021 Michael Shigorin <mike@altlinux.org> 9.17.0-alt1.1
 - E2K: ftbfs workaround
 
