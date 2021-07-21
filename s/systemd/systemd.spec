@@ -88,7 +88,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -421,7 +421,8 @@ Obsoletes: bash-completion-%name < %EVR
 Obsoletes: bash-completion-journalctl < %EVR
 Obsoletes: zsh-completion-%name < %EVR
 Obsoletes: zsh-completion-journalctl < %EVR
-Requires: systemd-utils-filetriggers = %EVR
+Requires: %name-utils-filetriggers = %EVR
+Requires: %name-tmpfiles-common = %EVR
 
 %description utils
 This package contains utils from systemd:
@@ -534,7 +535,6 @@ Group: System/Servers
 Summary: Journal Gateway Daemon
 Requires: %name = %EVR
 Requires: libnss-systemd  = %EVR
-Requires: %name-stateless = %EVR
 Provides: systemd-journal-gateway = %EVR
 Obsoletes: systemd-journal-gateway < %EVR
 
@@ -559,6 +559,7 @@ systemd-coredump and coredumpctl utils.
 %package stateless
 Group: System/Servers
 Summary: systems that boot up with an empty /etc directory
+BuildArch: noarch
 Requires: %name = %EVR
 
 %description stateless
@@ -631,7 +632,8 @@ Obsoletes: %name-modules-load-standalone < %EVR
 Obsoletes: %name-sysctl-standalone < %EVR
 Obsoletes: %name-sysusers-standalone < %EVR
 Obsoletes: %name-tmpfiles-standalone < %EVR
-Requires: systemd-utils-filetriggers = %EVR
+Requires: %name-utils-filetriggers = %EVR
+Requires: %name-tmpfiles-common = %EVR
 
 %description utils-standalone
 This package contains standalone utils from systemd:
@@ -650,6 +652,14 @@ BuildArch: noarch
 %add_findreq_skiplist %_rpmlibdir/systemd-sysctl.filetrigger
 
 %description utils-filetriggers
+%summary
+
+%package tmpfiles-common
+Group: System/Configuration/Boot and Init
+Summary: Common tmpfiles configs
+BuildArch: noarch
+
+%description tmpfiles-common
 %summary
 
 %prep
@@ -1510,6 +1520,8 @@ udevadm hwdb --update &>/dev/null
 %exclude %_unitdir/var-lib-machines.mount
 %exclude %_unitdir/*/var-lib-machines.mount
 %exclude %_unitdir/systemd-nspawn@.service
+%exclude %_unitdir/*/systemd-sysusers.service
+%exclude %_unitdir/systemd-sysusers.service
 %exclude %_unitdir/systemd-portabled.service
 
 %_man1dir/busctl.*
@@ -1732,6 +1744,13 @@ udevadm hwdb --update &>/dev/null
 %_man8dir/runlevel*
 %_initdir/README
 
+%files tmpfiles-common
+%_tmpfilesdir/legacy.conf
+%_tmpfilesdir/x11.conf
+%_tmpfilesdir/tmp.conf
+%_tmpfilesdir/var.conf
+%_tmpfilesdir/home.conf
+
 %files utils
 %dir /lib/systemd
 /lib/systemd/libsystemd-shared-%ver_major.so
@@ -1756,13 +1775,7 @@ udevadm hwdb --update &>/dev/null
 /sbin/systemd-tmpfiles.shared
 %_altdir/systemd-tmpfiles-shared
 %_mandir/*/*tmpfiles*
-%_tmpfilesdir/legacy.conf
-%_tmpfilesdir/x11.conf
-%_tmpfilesdir/tmp.conf
 %_tmpfilesdir/systemd-tmp.conf
-%_tmpfilesdir/var.conf
-%_tmpfilesdir/home.conf
-
 /lib/systemd/systemd-binfmt
 /sbin/systemd-binfmt
 %_rpmlibdir/systemd-binfmt.filetrigger
@@ -1770,10 +1783,6 @@ udevadm hwdb --update &>/dev/null
 
 /sbin/systemd-sysusers.shared
 %_altdir/systemd-sysusers-shared
-%dir /lib/sysusers.d
-/lib/sysusers.d/systemd.conf
-/lib/sysusers.d/basic.conf
-%_tmpfilesdir/etc.conf
 %_mandir/*/*sysusers*
 
 /lib/systemd/systemd-modules-load
@@ -2088,7 +2097,15 @@ udevadm hwdb --update &>/dev/null
 %if_enabled ldconfig
 %_unitdir/ldconfig.service
 %_unitdir/sysinit.target.wants/ldconfig.service
-%endif #ldconfig
+%endif
+%if_enabled sysusers
+%_unitdir/systemd-sysusers.service
+%_unitdir/sysinit.target.wants/systemd-sysusers.service
+%dir /lib/sysusers.d
+/lib/sysusers.d/systemd.conf
+/lib/sysusers.d/basic.conf
+%_tmpfilesdir/etc.conf
+%endif
 
 %if_enabled standalone_binaries
 %files utils-standalone
@@ -2164,6 +2181,12 @@ udevadm hwdb --update &>/dev/null
 %exclude /lib/udev/rules.d/99-systemd.rules
 
 %changelog
+* Wed Jul 21 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.1-alt2
+- Move sysusers configs to stateless package (ALT #40396).
+- Move common tmpfiles configs to new systemd-tmpfiles-common package (ALT #40396).
+- Package systemd-stateless as noarch.
+- Drop systemd-stateless requies in systemd-journal-remote.
+
 * Tue Jul 20 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.1-alt1
 - 249.1 (Fixes: CVE-2021-33910)
 - Enable build stanadlone utils.
