@@ -1,7 +1,7 @@
 %def_enable translation
 
 Name: nvidia-settings
-Version: 460.73.01
+Version: 470.57.02
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -125,6 +125,9 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Tue Jul 20 2021 Sergey V Turchin <zerg@altlinux.org> 470.57.02-alt1
+- new version
+
 * Mon Apr 26 2021 Sergey V Turchin <zerg@altlinux.org> 460.73.01-alt1
 - new version
 
