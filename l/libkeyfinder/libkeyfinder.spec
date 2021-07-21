@@ -1,8 +1,8 @@
 %define _cmake__builddir BUILD
 
 Name: libkeyfinder
-Version: 2.2.4
-Release: alt1.1
+Version: 2.2.5
+Release: alt1
 
 Summary: Musical key detection for digital audio
 Summary(ru_RU.UTF-8): Обнаружение музыкального ключа для цифрового звука
@@ -24,6 +24,17 @@ libkeyfinder is a small C++11 library for estimating the musical key of digital 
 %description -l ru_RU.UTF-8
 libkeyfinder - это небольшая библиотека на c++11 для оценки музыкального ключа цифрового звука.
 
+%package -n libkeyfinder2
+Summary: Musical key detection for digital audio
+Summary(ru_RU.UTF-8): Обнаружение музыкального ключа для цифрового звука
+Group: System/Libraries
+
+%description -n libkeyfinder2
+libkeyfinder is a small C++11 library for estimating the musical key of digital audio.
+
+%description -n libkeyfinder2 -l ru_RU.UTF-8
+libkeyfinder - это небольшая библиотека на c++11 для оценки музыкального ключа цифрового звука.
+
 %package devel
 Summary: Development files for %name
 Summary(ru_RU.UTF-8): Файлы для разработки с помощью %name
@@ -41,6 +52,7 @@ sed -i 's|lib/cmake/KeyFinder|%_lib/cmake/KeyFinder|' CMakeLists.txt
 
 %build
 %cmake \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
 #
 %cmake_build
@@ -48,8 +60,11 @@ sed -i 's|lib/cmake/KeyFinder|%_lib/cmake/KeyFinder|' CMakeLists.txt
 %install
 %cmake_install
 
-%files devel
+%files -n libkeyfinder2
 %doc CHANGELOG.md LICENSE README.md
+%_libdir/libkeyfinder.so.2*
+
+%files devel
 %dir %_includedir/keyfinder/
 %_includedir/keyfinder/*.h
 %_libdir/libkeyfinder.so
@@ -58,6 +73,12 @@ sed -i 's|lib/cmake/KeyFinder|%_lib/cmake/KeyFinder|' CMakeLists.txt
 %_libdir/cmake/KeyFinder/*
 
 %changelog
+* Wed Jul 21 2021 Leontiy Volodin <lvol@altlinux.org> 2.2.5-alt1
+- New version (2.2.5).
+- Built with debuginfo.
+- Upstream:
+  + Set version for .so library and setup version symlinks.
+
 * Fri Jul 02 2021 Leontiy Volodin <lvol@altlinux.org> 2.2.4-alt1.1
 - Adapted build for p9 branch.
 
