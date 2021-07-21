@@ -1,6 +1,6 @@
 Name: netcmdplus
-Version: 0.1.1
-Release: alt3
+Version: 0.1.2
+Release: alt1
 
 Summary: Extended samba-tool (netcmd) version
 License: GPLv3+
@@ -14,6 +14,10 @@ Source: %name-%version.tar
 
 BuildPreReq: rpm-build-python3
 BuildRequires: /usr/bin/2to3
+
+# Add conflicts due compatiblity with old samba package provided python3(samba.netcmd.user)
+Conflicts: samba-dc < 4.14
+Conflicts: python3-module-samba < 4.14
 
 Conflicts: %name < %EVR
 
@@ -52,6 +56,11 @@ sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' bin/samba-tool-plus
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Jul 21 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.1.2-alt1
+- Fix using obsoleted in samba-4.14 cmd_user_create class with renamed
+  cmd_user_add class (closes: 40557)
+- Add conflicts with old samba package provided python3(samba.netcmd.user)
+
 * Mon Sep 07 2020 Paul Wolneykien <manowar@altlinux.org> 0.1.1-alt3
 - Fix: Remove self-obsoletes.
 
