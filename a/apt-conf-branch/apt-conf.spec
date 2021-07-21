@@ -1,10 +1,10 @@
 %define base_name apt-conf
 %define distro branch
-%define Distro p9 branch
+%define Distro p10 branch
 
 Name: %base_name-%distro
-Version: 9.0
-Release: alt6
+Version: 10.0
+Release: alt1
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL-2.0-or-later
@@ -29,7 +29,7 @@ This package contains default apt configuration for %distribution %Distro.
 %setup
 
 %build
-%make_build REPOSITORIES=p9
+%make_build REPOSITORIES=p10
 
 %install
 %makeinstall
@@ -48,6 +48,10 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Wed Jul 21 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.0-alt1
+- Built for p10 branch.
+- Added [p10] key to vendor.list.
+
 * Fri Oct 02 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 9.0-alt6
 - release bump for building custom version into c9f1 branch
 

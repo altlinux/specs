@@ -3,8 +3,8 @@
 %define Distro Sisyphus
 
 Name: %base_name-%distro
-Version: 9.96
-Release: alt4
+Version: 10.96
+Release: alt1
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL-2.0-or-later
@@ -47,6 +47,9 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Wed Jul 21 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.96-alt1
+- vendors.list.d/alt.list: add new [p10] signing key.
+
 * Fri Jul 19 2019 Alexey Shabalin <shaba@altlinux.org> 9.96-alt4
 - cleanup and update pkgpriorities
 
