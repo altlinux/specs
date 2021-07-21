@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.3
@@ -26,7 +26,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.31
+Version: %ver_major.32
 Release: alt1
 
 Summary: Media Sharing Server
@@ -258,6 +258,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Wed Jul 21 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.32-alt1
+- 0.3.32
+
 * Mon Jun 28 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.31-alt1
 - updated to 0.3.31-2-g5497d2d90
 
