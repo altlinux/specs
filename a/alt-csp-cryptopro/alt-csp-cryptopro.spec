@@ -1,5 +1,5 @@
 Name: alt-csp-cryptopro
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Group: File tools
@@ -42,6 +42,12 @@ install -m 0644 %_cmake__builddir/*.qm %buildroot/%_qt5_translationdir/
 %_datadir/file-manager/actions/alt-csp-cryptopro.desktop
 
 %changelog
+* Wed Jul 21 2021 Oleg Solovyov <mcpain@altlinux.org> 0.2.3-alt1
+- use QListView
+- fix errors caused by implementing attached signatures creation
+- fix behavior of View button
+- don't alter environment in child processes
+
 * Thu Jul 15 2021 Oleg Solovyov <mcpain@altlinux.org> 0.2.2-alt1
 - fix build with Qt 5.12
 
