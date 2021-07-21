@@ -1,5 +1,5 @@
 Name: git-cola
-Version: 3.9
+Version: 3.10.1
 Release: alt1
 
 Summary: A highly caffeinated git gui
@@ -60,6 +60,9 @@ chmod +x %buildroot%_datadir/git-cola/lib/cola/widgets/spellcheck.py
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jul 20 2021 Leontiy Volodin <lvol@altlinux.org> 3.10.1-alt1
+- New version 3.10.1.
+
 * Thu Feb 25 2021 Leontiy Volodin <lvol@altlinux.org> 3.9-alt1
 - New version 3.9.
 
