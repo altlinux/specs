@@ -4,7 +4,7 @@
 
 Name: installed-db-office-server
 Version: 1.5
-Release: alt1
+Release: alt2
 Summary: Databases and config files for moodle, mediawiki and nextcloud
 License: GPL-2.0+
 Group: System/Configuration/Other
@@ -27,7 +27,6 @@ Requires: %rule_requires
 Requires: mediawiki
 Requires: mediawiki-apache2
 Requires: mediawiki-mysql
-Requires: mediawiki-ldap
 
 %description mediawiki
 Databases and config files for mediawiki
@@ -88,6 +87,9 @@ done
 %_libexecdir/alterator/hooks/root.d/nextcloud
 
 %changelog
+* Wed Jul 21 2021 Andrey Cherepanov <cas@altlinux.org> 1.5-alt2
+- Remove deprecated mediawiki-ldap from requirements.
+
 * Fri Jul 16 2021 Andrey Cherepanov <cas@altlinux.org> 1.5-alt1
 - Use deploy for installation and password change.
 
