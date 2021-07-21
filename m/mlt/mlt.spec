@@ -18,7 +18,7 @@
 
 Name: mlt
 Version: 6.26.1
-Release: alt1
+Release: alt2
 
 Summary: Multimedia framework designed for television broadcasting
 License: GPL-3.0-or-later
@@ -54,6 +54,7 @@ BuildRequires: libxml2-devel swig ladspa_sdk
 BuildRequires: libvidstab-devel
 %endif
 BuildRequires: python3-devel
+BuildRequires: libgdk-pixbuf-devel libpango-devel
 
 %description
 %Name is a multimedia framework designed for television broadcasting.
@@ -202,6 +203,9 @@ install -pm 0755 src/swig/python/_%name.so %buildroot/%python3_sitelibdir/
 %_pkgconfigdir/mlt++.pc
 
 %changelog
+* Wed Jul 21 2021 Andrey Sokolov <keremet@altlinux.org> 6.26.1-alt2
+- add build requirements for libmltgdk.so (closes 40556)
+
 * Wed Jul 14 2021 Sergey V Turchin <zerg@altlinux.org> 6.26.1-alt1
 - new version
 
