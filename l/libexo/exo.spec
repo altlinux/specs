@@ -1,7 +1,7 @@
 %define _name exo
 
 Name: lib%_name
-Version: 4.16.2
+Version: 4.17.0
 Release: alt1
 
 Summary: Extension library to Xfce
@@ -17,8 +17,8 @@ Patch: %_name-%version-%release.patch
 
 BuildRequires: rpm-build-xfce4  xfce4-dev-tools >= 4.15 libxfce4util-devel
 BuildRequires: libgtk+3-devel libxfce4ui-gtk3-devel
-BuildRequires: libICE-devel glib2-devel >= 2.27
-BuildRequires: gtk-doc intltool time
+BuildRequires: glib2-devel >= 2.27
+BuildRequires: gtk-doc intltool
 
 Requires: %name-common = %version-%release
 # There is no longer python bindings for exo.
@@ -103,14 +103,13 @@ export NPROCS=1
 
 %install
 %makeinstall_std
-%find_lang %_name-2
+%find_lang %_name
 
 %check
 make check
 
-%files common -f %_name-2.lang
+%files common -f %_name.lang
 %doc AUTHORS NEWS README.md
-%_iconsdir/hicolor/*/*/*
 %_pixmapsdir/%_name/
 
 %files -n %_name-utils
@@ -129,6 +128,10 @@ make check
 %_datadir/gtk-doc/html/%{_name}*
 
 %changelog
+* Thu Jul 22 2021 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt1
+- Cleanup BR.
+- Updated to 4.17.0.
+
 * Mon Apr 12 2021 Mikhail Efremov <sem@altlinux.org> 4.16.2-alt1
 - Updated to 4.16.2.
 

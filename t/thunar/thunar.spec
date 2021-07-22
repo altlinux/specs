@@ -1,5 +1,5 @@
 Name: thunar
-Version: 4.16.8
+Version: 4.17.4
 Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
@@ -16,7 +16,7 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-xfce4 >= 0.1.0
 
 BuildPreReq: xfce4-dev-tools
-BuildPreReq: libxfce4panel-gtk3-devel >= 4.8 libxfconf-devel >= 4.8 libexo-gtk3-devel libxfce4ui-gtk3-devel
+BuildPreReq: libxfce4panel-gtk3-devel >= 4.12.0 libxfconf-devel >= 4.12.0 libexo-gtk3-devel >= 4.17.0 libxfce4ui-gtk3-devel >= 4.17.0
 BuildRequires: gtk-doc intltool libSM-devel libexif-devel libgamin-devel libpcre-devel time
 BuildRequires: libpango-devel
 BuildRequires: libnotify4-devel libgudev-devel
@@ -136,6 +136,9 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Thu Jul 22 2021 Mikhail Efremov <sem@altlinux.org> 4.17.4-alt1
+- Updated to 4.17.4.
+
 * Wed May 12 2021 Mikhail Efremov <sem@altlinux.org> 4.16.8-alt1
 - Updated to 4.16.8.
 
