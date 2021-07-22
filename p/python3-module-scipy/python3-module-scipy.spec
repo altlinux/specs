@@ -10,26 +10,34 @@
 
 Name: python3-module-%modname
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt2.1
+
 Summary: SciPy is the library of scientific codes
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://www.scipy.org/
 
+Url: https://www.scipy.org/
 #VCS git://github.com/scipy/scipy.git
-Source: %name-%version.tar
+Source0: %name-%version.tar
 Source1: site.cfg
 
 BuildRequires(pre): rpm-macros-make
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: gcc-c++ gcc-fortran liblapack-devel
+BuildRequires: gcc-c++ gcc-fortran
 BuildRequires: python3-devel
 BuildRequires: libnumpy-py3-devel python3-module-numpy-testing
 BuildRequires: python3-module-Cython
 BuildRequires: python3-module-html5lib
 BuildRequires: python3-module-matplotlib
 BuildRequires: python3-module-pybind11
+
+%ifarch %e2k
+BuildRequires: eml-devel-compat-lapack
+BuildRequires: eml-devel-compat-blas
+%else
+BuildRequires: liblapack-devel
+%endif
 
 Requires: %python3_sitelibdir_noarch
 Requires: python3-module-numpy >= %numpy_version
@@ -78,6 +86,10 @@ cp %python3_sitelibdir/matplotlib/mpl-data/matplotlibrc \
 sed -i 's|^\(backend\).*|\1 : Agg|' ~/.matplotlib/matplotlibrc
 
 %build
+%ifarch %e2k
+# as of lcc 1.25.17 (mcst#6255)
+%add_optflags -DPOCKETFFT_NO_VECTORS
+%endif
 %add_optflags -I%_includedir/suitesparse -fno-strict-aliasing %optflags_shared
 %python3_build_debug build_ext build_py build_clib \
 	config_fc --fcompiler=gnu95
@@ -138,6 +150,11 @@ done
 %_includedir/%modname-py3
 
 %changelog
+* Thu Jul 22 2021 Michael Shigorin <mike@altlinux.org> 1.6.1-alt2.1
+- E2K: build
+  + with EML instead of openblas/lapack
+  + without vector extension (mcst#6255; thx ilyakurdyukov@)
+
 * Thu Jun 24 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.1-alt2
 - drop excessive python3-module-jinja2-tests BR
 
