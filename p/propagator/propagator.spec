@@ -3,7 +3,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20210329
+Version: 20210721
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -39,6 +39,11 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Wed Jul 21 2021 Egor Ignatov <egori@altlinux.org> 20210721-alt1
+- mkmodpack: include leading directories for firmware files
+  The kernel needs leading directories in the cpio archive when
+  creating rootfs. Otherwise, the files will not be copied.
+
 * Mon Mar 29 2021 Evgeny Sinelnikov <sin@altlinux.org> 20210329-alt1
 - Add support 'fuid' automatic mode option for method cdrom
 - Fix potential memory overflow in welcome string
