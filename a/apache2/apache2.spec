@@ -13,7 +13,7 @@
 
 Name:    apache2
 Version: 2.4.48
-Release: alt3
+Release: alt3.1
 Epoch: 1
 
 License: %asl
@@ -1530,6 +1530,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Thu Jul 22 2021 Paul Wolneykien <manowar@altlinux.org> 1:2.4.48-alt3.1
+- Rebuild to reflect CVE close in the changelog (Fixes: CVE-2021-26691).
+
 * Fri Jun 11 2021 Anton Farygin <rider@altlinux.ru> 1:2.4.48-alt3
 - fixed httpd restart from filetrigger
 
