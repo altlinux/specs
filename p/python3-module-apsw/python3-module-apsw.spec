@@ -1,17 +1,16 @@
 %define _name apsw
 %define rel r1
 %define sqlite_ver 3.35.4
-%def_with python2
 %def_enable check
 
-Name: python-module-%_name
+Name: python3-module-%_name
 Version: 3.35.4
-Release: alt2.%rel
+Release: alt3
 
 Summary: Another Python SQLite Wrapper
 #doc/_sources/copyright.rst.txt
 License: Zlib
-Group: Development/Python
+Group: Development/Python3
 Url: https://rogerbinns.github.io/apsw
 
 Vcs: https://rogerbinns.github.io/apsw.git
@@ -19,81 +18,38 @@ Source: https://github.com/rogerbinns/apsw/releases/download/%version-%rel/%_nam
 
 BuildRequires: libsqlite3-devel >= %sqlite_ver unzip
 BuildRequires: python3-devel rpm-build-python3
-%if_with python2
-BuildRequires: python-devel
-%endif
 
 %description
-APSW is a Python wrapper for the SQLite embedded relational database
+APSW is a Python 3 wrapper for the SQLite embedded relational database
 engine. In contrast to other wrappers such as pysqlite it focuses on
 being a minimal layer over SQLite attempting just to translate the
 complete SQLite API into Python.
 
-%package -n python3-module-%_name
-Summary: Another Python SQLite Wrapper Python 3 packages
-Group: Development/Python3
-
-%description -n python3-module-%_name
-APSW is a Python 3 wrapper for the SQLite embedded relational database
-engine. In contrast to other wrappers such as pysqlite it focuses on
-being a minimal layer over SQLite attempting just to translate the
-complete SQLite API into Python 3.
-
 %prep
 %setup -n %_name-%version-%rel
-
-%if_with python2
-rm -rf ../python2
-cp -a . ../python2
-find ../python2 -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python}|'
-%endif
-
 find . -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
 
 %build
 %define opts --enable=load_extension
 %python3_build %opts
 
-%if_with python2
-pushd ../python2
-%python_build %opts
-popd
-%endif
-
 %install
 %python3_install
 
-%if_with python2
-pushd ../python2
-%python_install
-popd
-%endif
-
 %check
-%if_with python2
-pushd ../python2
-export PYTHONPATH=%buildroot%python_sitelibdir
-gcc %optflags %optflags_shared -shared -o ./testextension.sqlext -I. -Isqlite3 src/testextension.c
-%__python tests.py
-popd
-%endif
-
 export PYTHONPATH=%buildroot%python3_sitelibdir
 gcc %optflags %optflags_shared -shared -o ./testextension.sqlext -I. -Isqlite3 src/testextension.c
 %__python3 tests.py
 
 %files
-%if_with python2
-%python_sitelibdir/*
-%doc doc/*
-%endif
-
-%files -n python3-module-%_name
 %python3_sitelibdir/*
 %doc doc/*
 
 
 %changelog
+* Thu Jul 22 2021 Yuri N. Sedunov <aris@altlinux.org> 3.35.4-alt3
+- python3-only build
+
 * Tue Jul 13 2021 Yuri N. Sedunov <aris@altlinux.org> 3.35.4-alt2.r1
 - enabled SQLite loadable extensions (ALT # 40472)
 
