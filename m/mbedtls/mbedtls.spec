@@ -5,7 +5,7 @@
 
 Name: mbedtls
 Version: 3.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: Transport Layer Security protocol suite
 License: Apache-2.0
@@ -82,10 +82,14 @@ Summary: Utilities for PolarSSL
 Group: Development/Tools
 
 %description utils
-Cryptographic utilities based on mbed TLS 
+Cryptographic utilities based on mbed TLS
 
 %prep
 %setup
+%ifarch %e2k
+# unsupported as of lcc 1.25.17
+sed -i 's,-Wformat-overflow=2,,' CMakeLists.txt
+%endif
 
 %build
 %cmake .. \
@@ -103,12 +107,12 @@ Cryptographic utilities based on mbed TLS
 
 %install
 %cmakeinstall_std
-%__mkdir_p %buildroot%_libexecdir/%name
-%__mkdir_p %buildroot%_libdir/cmake/%name
-%__mv %buildroot%_bindir/* %buildroot%_libexecdir/%name
-%__mv %buildroot%_prefix/cmake/* %buildroot%_libdir/cmake/%name
-%__rm -rf %buildroot%_bindir
-%__rm -rf %buildroot%_prefix/cmake
+mkdir -p %buildroot%_libexecdir/%name
+mkdir -p %buildroot%_libdir/cmake/%name
+mv %buildroot%_bindir/* %buildroot%_libexecdir/%name
+mv %buildroot%_prefix/cmake/* %buildroot%_libdir/cmake/%name
+rm -rf %buildroot%_bindir
+rm -rf %buildroot%_prefix/cmake
 
 %files -n lib%name%so_tls_version
 %_libdir/lib%name.so.*
@@ -142,6 +146,9 @@ Cryptographic utilities based on mbed TLS
 %_libexecdir/%name/*
 
 %changelog
+* Thu Jul 22 2021 Michael Shigorin <mike@altlinux.org> 3.0.0-alt1.1
+- E2K: avoid lcc-unsupported option
+
 * Wed Jul 07 2021 Nazarov Denis <nenderus@altlinux.org> 3.0.0-alt1
 - Version 3.0.0
 
