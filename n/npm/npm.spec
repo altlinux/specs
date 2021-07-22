@@ -1,5 +1,5 @@
 Name: npm
-Version: 6.14.12
+Version: 6.14.13
 Release: alt1
 
 Summary: A package manager for node
@@ -74,11 +74,16 @@ rm -rf %buildroot%nodejs_sitelib/%name/node_modules/request/node_modules/node-uu
 %nodejs_sitelib/%name/
 
 %changelog
+* Thu Jul 22 2021 Vitaly Lipatov <lav@altlinux.ru> 6.14.13-alt1
+- new version 6.14.13 (with rpmrb script)
+
 * Sun Apr 11 2021 Vitaly Lipatov <lav@altlinux.ru> 6.14.12-alt1
 - new version 6.14.12 (with rpmrb script)
+- CVE-2020-7774, CVE-2020-7788. CVE-2020-8244
 
 * Fri Feb 05 2021 Vitaly Lipatov <lav@altlinux.ru> 6.14.10-alt1
 - new version 6.14.10 (with rpmrb script)
+- GHSL-2020-145
 
 * Wed Sep 02 2020 Vitaly Lipatov <lav@altlinux.ru> 6.14.8-alt1
 - new version 6.14.8 (with rpmrb script)
