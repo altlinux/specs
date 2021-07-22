@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.1.5
-Release: alt1
+Release: alt2
 
 Summary: A Python module for interfacing with the OpenGL library
 Summary(ru_RU.UTF-8): Расширение языка Python для работы с библиотекой OpenGL
@@ -71,14 +71,6 @@ Requires: %name = %EVR
 %description doc
 PyOpenGL documentation
 
-%package tests
-Summary: PyOpenGL tests
-Group: Development/Python
-Requires: %name = %EVR
-
-%description tests
-PyOpenGL tests.
-
 %package tk
 Summary: %oname Python 2.x Tk widget
 Group: Development/Python
@@ -101,11 +93,7 @@ Requires: python3-module-%oname = %EVR
 %setup -n PyOpenGL-%version
 
 
-cp -a tests tests3
 find tests -type f -name '*.py' -exec \
-	sed -i 's|#! %_bindir/env python|#!%_bindir/python2|' '{}' +
-
-find tests3 -type f -name '*.py' -exec \
 	sed -i 's|#! %_bindir/env python|#!%_bindir/python3|' '{}' +
 
 %build
@@ -116,22 +104,16 @@ sed -i '/import itertools/afrom __future__ import print_function' build2/lib/Ope
 %install
 rm -f build && ln -s build2 build
 %python_install
-touch tests/__init__.py
-cp -fR tests %buildroot/%python_sitelibdir/%modulename/
 
 rm -f build && ln -s build3 build
 %python3_install
-touch tests3/__init__.py
-cp -fR tests3 %buildroot/%python3_sitelibdir/%modulename/tests
+touch tests/__init__.py
+cp -fR tests %buildroot/%python3_sitelibdir/%modulename/tests
 
 %files
 %python_sitelibdir/*.egg-info
 %python_sitelibdir/%modulename/
-%exclude %python_sitelibdir/%modulename/tests
 %exclude %python_sitelibdir/OpenGL/Tk
-
-%files tests
-%python_sitelibdir/%modulename/tests
 
 %files tk
 %python_sitelibdir/OpenGL/Tk
@@ -149,6 +131,9 @@ cp -fR tests3 %buildroot/%python3_sitelibdir/%modulename/tests
 %python3_sitelibdir/OpenGL/Tk
 
 %changelog
+* Thu Jul 22 2021 Stanislav Levin <slev@altlinux.org> 3.1.5-alt2
+- Stopped shipping of tests for Python2.
+
 * Tue Jan 14 2020 Fr. Br. George <george@altlinux.ru> 3.1.5-alt1
 - Version up
 
