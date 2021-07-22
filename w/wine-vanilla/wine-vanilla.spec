@@ -31,7 +31,7 @@
 %def_with opencl
 
 Name: wine-vanilla
-Version: 6.12
+Version: 6.13
 Release: alt1
 
 Summary: Wine - environment for running Windows applications
@@ -571,6 +571,9 @@ done
 %endif
 
 %changelog
+* Wed Jul 21 2021 Vitaly Lipatov <lav@altlinux.ru> 6.13-alt1
+- new version 6.13
+
 * Sat Jul 03 2021 Vitaly Lipatov <lav@altlinux.ru> 6.12-alt1
 - new version 6.12
 
