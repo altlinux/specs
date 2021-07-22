@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zipp
 
-%def_without check
+%def_with check
 
 Name: python3-module-%oname
-Version: 1.0.0
+Version: 3.5.0
 Release: alt1
 
 Summary: A pathlib-compatible Zipfile object wrapper
@@ -15,28 +15,29 @@ Url: https://pypi.org/project/zipp/
 
 BuildArch: noarch
 
-# Source-url: %__pypi_url %oname
+# Source-url: https://github.com/jaraco/zipp.git
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python3(setuptools_scm)
+BuildRequires: python3(toml)
 
 %if_with check
-BuildRequires: python3(contextlib2)
 BuildRequires: python3(pytest)
-BuildRequires: python3(unittest2)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+BuildRequires: python3(tox_console_scripts)
+BuildRequires: python3(jaraco.itertools)
 %endif
 
 %description
 A pathlib-compatible Zipfile object wrapper.
 
-
 %prep
 %setup
-# currently disable PEP517/518
-rm -f pyproject.toml
+%autopatch -p1
 
 %build
 # SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
@@ -50,15 +51,23 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 
 %check
-py.test3
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false
 
 %files
 %doc LICENSE README.rst
 %python3_sitelibdir/zipp.py
 %python3_sitelibdir/__pycache__/zipp.cpython-*.py*
-%python3_sitelibdir/zipp-*.egg-info/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Jul 21 2021 Stanislav Levin <slev@altlinux.org> 3.5.0-alt1
+- 1.0.0 -> 3.5.0.
+- Reenabled testing.
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - new version 1.0.0 (with rpmrb script)
 

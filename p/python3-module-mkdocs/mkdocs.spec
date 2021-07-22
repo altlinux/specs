@@ -1,26 +1,40 @@
+%define _unpackaged_files_terminate_build 1
 %define oname mkdocs
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.0.4
-Release: alt4
+Version: 1.2.2
+Release: alt1
 
 Summary: Python tool to create HTML documentation from markdown sources
-License: BSD
+License: BSD-2-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/mkdocs/
+Url: https://pypi.org/project/mkdocs/
 
 BuildArch: noarch
 
-Source: mkdocs-%version.tar.gz
-#https://github.com/mkdocs/mkdocs/pull/687
-Source1: mkdocs.1
+Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-markdown
-BuildRequires: python3-module-watchdog
 
-Requires: ghp-import.py3
-Requires: python3-module-livereload
+%if_with check
+# install_requires:
+BuildRequires: python3(click)
+BuildRequires: python3(jinja2)
+BuildRequires: python3(markdown)
+BuildRequires: python3(yaml)
+BuildRequires: python3(watchdog)
+BuildRequires: python3-module-ghp-import
+BuildRequires: python3(yaml_env_tag)
+BuildRequires: python3(importlib_metadata)
+BuildRequires: python3(packaging)
+BuildRequires: python3(mergedeep)
+
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+%endif
 
 %description
 MkDocs is a fast, simple and downright gorgeous static site generator
@@ -28,47 +42,36 @@ that's geared towards building project documentation. Documentation
 source files are written in Markdown, and configured with a single YAML
 configuration file.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-MkDocs is a fast, simple and downright gorgeous static site generator
-that's geared towards building project documentation. Documentation
-source files are written in Markdown, and configured with a single YAML
-configuration file.
-
-This package contains tests for %oname.
-
 %prep
-%setup -n mkdocs-%version
+%setup
+%autopatch -p1
 
-rm -rf mkdocs/themes/*/fonts/fontawesome-webfont.*
-
-rm -rf mkdocs/themes/*/js/highlight.pack.js
-
-sed -i 1d mkdocs/utils/ghp_import.py
+rm mkdocs/themes/*/fonts/fontawesome-webfont.*
 
 %build
 %python3_build_debug
 
 %install
 %python3_install
+rm -r %buildroot%python3_sitelibdir/%oname/tests/
 
-mkdir -p %buildroot/%_man1dir/
-install -p -m 0644 %SOURCE1 %buildroot/%_man1dir/
+%check
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+export TOXENV=py%{python_version_nodots python3}-unittests
+tox.py3 --sitepackages --no-deps -vvr -s false
 
 %files
-%_bindir/*
-%_man1dir/*
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/tests
-
-%files tests
-%python3_sitelibdir/*/test*
+%_bindir/mkdocs
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Jul 19 2021 Stanislav Levin <slev@altlinux.org> 1.2.2-alt1
+- 1.0.4 -> 1.2.2.
+- Enabled testing.
+
 * Thu Jun 24 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.4-alt4
 - drop excessive python3-module-jinja2-tests BR
 

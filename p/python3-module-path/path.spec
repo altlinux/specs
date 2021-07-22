@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 13.2.0
-Release: alt2
+Version: 16.0.0
+Release: alt1
 
 Summary: A module wrapper for os.path
 License: MIT
@@ -26,6 +26,8 @@ BuildRequires: python3(appdirs)
 BuildRequires: python3(packaging)
 BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 %py3_provides %oname
@@ -51,25 +53,12 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 
-# don't package tests
-rm -f %buildroot%python3_sitelibdir/test_path.py
-
 %check
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-sed -i -e '/\[testenv\]/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/pytest\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' \
-tox.ini
-
-export LC_ALL=C.UTF-8
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
-export TOX_TESTENV_PASSENV='LC_ALL'
-export TOXENV=py%{python_version_nodots python3}
-%_bindir/tox.py3 --sitepackages -vv -r
+export TOXENV=py3
+tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
 
 %files
 %doc *.rst
@@ -77,6 +66,9 @@ export TOXENV=py%{python_version_nodots python3}
 %python3_sitelibdir/path-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Jul 20 2021 Stanislav Levin <slev@altlinux.org> 16.0.0-alt1
+- 13.2.0 -> 16.0.0.
+
 * Sun May 23 2021 Michael Shigorin <mike@altlinux.org> 13.2.0-alt2
 - Fixed BR:
 

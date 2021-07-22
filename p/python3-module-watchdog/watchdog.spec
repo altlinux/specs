@@ -1,26 +1,32 @@
+%define _unpackaged_files_terminate_build 1
 %define oname watchdog
 
-%def_enable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 0.8.3
-Release: alt4.git20150727.1
+Version: 2.1.3
+Release: alt1
 
 Summary: Filesystem events monitoring
-License: ASLv2.0
+License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/watchdog/
+Url: https://pypi.org/project/watchdog/
 
 BuildArch: noarch
 
 # https://github.com/gorakhargosh/watchdog.git
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pathtools
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-pytest-timeout
-BuildRequires: python3-module-sphinx
+
+%if_with check
+BuildRequires: python3(flaky)
+BuildRequires: python3(pytest)
+BuildRequires: python3(pytest_timeout)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+%endif
 
 %add_python3_req_skip AppKit FSEvents _watchdog_fsevents
 
@@ -29,29 +35,9 @@ Conflicts: python-module-%oname
 %description
 Python API and shell utilities to monitor file system events.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-Python API and shell utilities to monitor file system events.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-Python API and shell utilities to monitor file system events.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
-
-sed -i 's|sphinx-build|&-3|' docs/Makefile
+%autopatch -p1
 
 %build
 %python3_build_debug
@@ -59,29 +45,22 @@ sed -i 's|sphinx-build|&-3|' docs/Makefile
 %install
 %python3_install
 
-export PYTHONPATH=%buildroot%python3_sitelibdir
-%make -C docs pickle
-%make -C docs html
-
-cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
-
 %check
-rm -f tests/test_delayed_queue.py
-%__python3 setup.py test -v
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --no-deps -vvr -s false
 
 %files
 %doc AUTHORS *.rst
-%_bindir/*
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/pickle
-
-%files pickles
-%python3_sitelibdir/*/pickle
-
-%files docs
-%doc docs/build/html/*
+%_bindir/watchmedo
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Jul 20 2021 Stanislav Levin <slev@altlinux.org> 2.1.3-alt1
+- 0.8.3 -> 2.1.3.
+
 * Tue Apr 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.8.3-alt4.git20150727.1
 - Build for python2 disabled.
 
