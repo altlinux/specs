@@ -4,7 +4,7 @@
 
 Name: ocrfeeder
 Version: %ver_major.3
-Release: alt2
+Release: alt3
 
 Summary: OCRFeeder is a document layout analysis and optical character recognition system
 Group: Graphics
@@ -82,6 +82,10 @@ export PYTHON=%__python3
 %python3_sitelibdir/ocrfeeder
 
 %changelog
+* Thu Jul 22 2021 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt3
+- updated to 0.8.3-31-gb4313f0 (removed the usage of deprecated
+  since Python-3.9 'xml.etree.ElementTree.Element.getchildren')
+
 * Thu Sep 24 2020 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt2
 - configure.ac: improved gi modules test
 
