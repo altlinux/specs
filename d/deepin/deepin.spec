@@ -1,6 +1,6 @@
 Name: deepin
 Version: 5
-Release: alt12
+Release: alt13
 Summary: Set of Deepin Desktop installers
 License: GPL-2.0+
 Group: Graphical desktop/Other
@@ -93,6 +93,8 @@ Requires: deepin-screensaver
 Requires: deepin-screensaver-modules
 Requires: deepin-compressor
 Requires: gvfs-backend-smb
+Requires: deepin-shortcut-viewer
+Requires: deepin-picker
 
 %description default
 %name-default is a virtual package to provide default installation
@@ -105,10 +107,8 @@ Group: Graphical desktop/Other
 # BuildArch: noarch
 ExcludeArch: ppc64le armh
 Requires: %name-default = %version-%release
-Requires: deepin-shortcut-viewer
 Requires: deepin-account-faces
 Requires: deepin-topbar
-Requires: deepin-picker
 Requires: deepin-device-formatter
 Requires: redshift
 
@@ -132,6 +132,9 @@ Requires: %name-default = %version-%release
 %files regular
 
 %changelog
+* Thu Jul 22 2021 Leontiy Volodin <lvol@altlinux.org> 5-alt13
+- Moved deepin-shortcut-viewer and deepin-picker into deepin-default.
+
 * Mon Jul 19 2021 Leontiy Volodin <lvol@altlinux.org> 5-alt12
 - Added gvfs-backend-smb into deepin-default (ALT #40529).
 
