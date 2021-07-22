@@ -1,16 +1,14 @@
 %define oname netius
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.17.52
-Release: alt1
+Release: alt2
 
 Summary: Fast and readable async non-blocking network apps
 
 License: ASLv2.0
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/netius/
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/hivesolutions/netius.git
 # Source-url: https://pypi.io/packages/source/n/%oname/%oname-%version.tar.gz
@@ -19,8 +17,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-
 BuildRequires: python3-module-pytest
+%py3_provides %oname
 
 %description
 Netius is a Python network library that can be used for the rapid
@@ -28,23 +26,12 @@ creation of asynchronous non-blocking servers and clients. It has no
 dependencies, it's cross-platform, and brings some sample netius-powered
 servers out of the box, namely a production-ready WSGI server.
 
-%package -n python3-module-%oname
-Summary: Fast and readable async non-blocking network apps
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-Netius is a Python network library that can be used for the rapid
-creation of asynchronous non-blocking servers and clients. It has no
-dependencies, it's cross-platform, and brings some sample netius-powered
-servers out of the box, namely a production-ready WSGI server.
-
-%package -n python3-module-%oname-tests
+%package tests
 Summary: Tests and examples for %oname
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
 
-%description -n python3-module-%oname-tests
+%description tests
 Netius is a Python network library that can be used for the rapid
 creation of asynchronous non-blocking servers and clients. It has no
 dependencies, it's cross-platform, and brings some sample netius-powered
@@ -64,17 +51,20 @@ This package contains tests and examples for %oname.
 %check
 python3 setup.py test
 
-%files -n python3-module-%oname
+%files
 %doc *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test
 %exclude %python3_sitelibdir/*/examples
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/test
 %python3_sitelibdir/*/examples
 
 %changelog
+* Thu Jul 22 2021 Grigory Ustinov <grenka@altlinux.org> 1.17.52-alt2
+- Rename package, cleanup spec.
+
 * Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 1.17.52-alt1
 - new version 1.17.52 (with rpmrb script)
 - python3 only
