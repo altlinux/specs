@@ -8,7 +8,7 @@
 
 Name: gimp
 Version: %ver_major.24
-Release: alt1
+Release: alt1.1
 
 Summary: The GNU Image Manipulation Program
 License: %gpl3only
@@ -80,6 +80,13 @@ gtkdocize
 	--disable-gimp-console \
 	--enable-python
 
+%ifarch %e2k
+# FIXME: lcc 1.23.12 and sisyphus_e2k's current libgraphite2/libharfbuzz =>
+# /usr/bin/ld: core/libappcore.a(gimppickable-contiguous-region.o):
+# undefined reference to symbol `__gxx_personality_v0'
+sed -i '/^CCLD =/s/(CC)/(CXX)/' app/Makefile
+%endif
+
 %make_build V=1
 
 %install
@@ -118,6 +125,10 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/aclocal/*
 
 %changelog
+* Thu Apr 01 2021 Michael Shigorin <mike@altlinux.org> 2.10.24-alt1.1
+- E2K: worked around ftbfs with lcc 1.25.14
+  and sisyphus_e2k's current libgraphite2/libharfbuzz
+
 * Wed Mar 31 2021 Valery Inozemtsev <shrek@altlinux.ru> 2.10.24-alt1
 - 2.10.24
 
