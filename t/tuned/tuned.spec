@@ -5,7 +5,7 @@
 %define tuneddir %_prefix/lib/tuned
 
 Name: tuned
-Version: 2.15.0
+Version: 2.16.0
 Release: alt1
 
 Summary: A dynamic adaptive system tuning daemon
@@ -458,6 +458,9 @@ fi
 %_man7dir/tuned-profiles-postgresql.7*
 
 %changelog
+* Thu Jul 22 2021 Vitaly Chikunov <vt@altlinux.org> 2.16.0-alt1
+- Update to v2.16.0 (2021-07-21).
+
 * Sat Dec 26 2020 Vitaly Chikunov <vt@altlinux.org> 2.15.0-alt1
 - Update to v2.15.0 (2020-12-17).
 
