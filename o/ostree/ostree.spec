@@ -1,8 +1,8 @@
 %def_disable check
 
 Name: ostree
-Version: 2021.2
-Release: alt2
+Version: 2021.3
+Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
 License: LGPLv2+
@@ -18,6 +18,8 @@ Source: %name-%version.tar
 Source1: libglnx.tar
 # Source2-url: https://github.com/mendsley/bsdiff/archive/master.zip
 Source2: bsdiff.tar
+
+Patch1: %name-%version.patch
 
 Requires: libostree = %version-%release
 Requires: %_bindir/gpg2
@@ -62,6 +64,7 @@ This package contains development documentation for lib%name.
 
 %prep
 %setup -a1 -a2
+%patch1 -p1
 %__subst 's|$(prefix)\(/lib/tmpfiles.d\)|\1|g' Makefile-boot.am
 
 %build
@@ -74,6 +77,7 @@ NOCONFIGURE=1 sh -x ./autogen.sh
            --with-openssl \
            --enable-gtk-doc \
 	   --enable-trivial-httpd-cmdline \
+	   --with-builtin-grub2-mkconfig \
 	   --without-grub2-mkconfig-path
 
 # hack to fix missed dirname declaration
@@ -98,7 +102,6 @@ rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 %prefix/lib/dracut/*
 %_libexecdir/lib%name/
 %_libexecdir/%name/
-%exclude /usr/lib/libostree/grub2-15_ostree
 %_datadir/%name/
 %_unitdir/ostree-prepare-root.service
 %_unitdir/ostree-remount.service
@@ -123,6 +126,10 @@ rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 %_datadir/gtk-doc/html/ostree/
 
 %changelog
+* Thu Jul 22 2021 Andrey Sokolov <keremet@altlinux.org> 2021.3-alt1
+- GRUB2 configuration file generation using built-in script
+- set GRUB timeout to 5
+
 * Fri Jul 09 2021 Andrey Sokolov <keremet@altlinux.org> 2021.2-alt2
 - add trivial-httpd command
 
