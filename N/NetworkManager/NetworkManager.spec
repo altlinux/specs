@@ -55,7 +55,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.32.2
+Version: 1.32.4
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -77,6 +77,8 @@ Patch: %name-%version-%release.patch
 # For tests
 %{?!_without_check:%{?!_disable_check:BuildPreReq: dbus dhcpcd dhcp-client}}
 %{?!_without_check:%{?!_disable_check:BuildRequires: python3-module-dbus}}
+# For /etc/machine-id
+%{?!_without_check:%{?!_disable_check:BuildRequires: systemd-utils}}
 
 BuildPreReq: intltool libgcrypt-devel libtool
 BuildRequires: iproute2 ppp-devel
@@ -618,6 +620,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Jul 22 2021 Mikhail Efremov <sem@altlinux.org> 1.32.4-alt1
+- Added systemd-utils to BR for tests.
+- Updated to 1.32.4.
+
 * Thu Jul 01 2021 Mikhail Efremov <sem@altlinux.org> 1.32.2-alt1
 - Updated to 1.32.2 (fixes: CVE-2020-13529).
 
