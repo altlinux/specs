@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 1.3.20
-Release: alt2
+Release: alt3
 
 Summary: Python SQL toolkit and Object Relational Mapper
 License: MIT
@@ -27,21 +27,6 @@ It provides a full suite of well known enterprise-level persistence patterns,
 designed for efficient and high-performing database access, adapted into a
 simple and Pythonic domain language.
 
-%package tests
-Summary: Tests for SQLAlchemy
-Group: Development/Python
-Requires: %name = %version-%release
-
-%description tests
-SQLAlchemy is the Python SQL toolkit and Object Relational Mapper that gives
-application developers the full power and flexibility of SQL.
-
-It provides a full suite of well known enterprise-level persistence patterns,
-designed for efficient and high-performing database access, adapted into a
-simple and Pythonic domain language.
-
-This package contains tests for SQLAlchemy.
-
 %prep
 %setup -n SQLAlchemy-%version
 
@@ -51,15 +36,15 @@ This package contains tests for SQLAlchemy.
 
 %install
 %python_install
+rm -r %buildroot%python_sitelibdir/*/testing
 
 %files
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/testing
-
-%files tests
-%python_sitelibdir/*/testing
 
 %changelog
+* Thu Jul 22 2021 Stanislav Levin <slev@altlinux.org> 1.3.20-alt3
+- Stopped shipping of tests.
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.3.20-alt2
 - python2 build
 
