@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:	 getssl
-Version: 2.31
-Release: alt2
+Version: 2.37
+Release: alt1
 
 Summary: Obtain SSL certificates from the letsencrypt.org ACME server
 License: GPL-3.0
@@ -46,6 +46,9 @@ sed -i s/python/python3/ dns_scripts/dns_route53.py
 %_datadir/getssl
 
 %changelog
+* Thu Jul 22 2021 Vitaly Chikunov <vt@altlinux.org> 2.37-alt1
+- Update to v2.37-2-g91d0f13 (2021-07-20).
+
 * Wed May 05 2021 Vitaly Chikunov <vt@altlinux.org> 2.31-alt2
 - spec: AutoReqProv: nopythons.
 
