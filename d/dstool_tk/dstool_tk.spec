@@ -1,7 +1,7 @@
 %def_enable recommends_geomview
 Name: dstool_tk
 Version: 0.2007
-Release: alt1
+Release: alt2
 Summary: DSTool - a dynamical systems toolkit
 License: GPL-like
 Group: Sciences/Mathematics
@@ -19,7 +19,9 @@ Patch2: dstool_tk-redhat8.0-remove-hack-systimes.diff
 Patch3: dstool_tk-debian-systimes.patch
 # alt; x86_64 crush
 Patch10: dstool_tk-alt-x86_64.patch
-Patch11: dstool_tk-remove-deprecated-matherr-hack.patch 
+Patch11: dstool_tk-remove-deprecated-matherr-hack.patch
+Patch12: dstool_tk-0.2007-geomview.patch
+Patch13: dstool_tk-alt-DUSE_INTERP_RESULT.patch
 
 Requires: tcl tk
 # it is very useful, but it is in orphaned
@@ -47,12 +49,21 @@ This software is very useful in the visual study of nonlinear systems and Chaos,
 
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
+%patch13 -p1
 
 # target is reserved word in gmake >= 4
 sed -i s,target,targetto,g config/Makefile.rules config/Makefile.defs
 
+# native executables
+rm -f my_dstool/bin/*/my_dstool
+
+find . -name .kdbgrc.dstool_tk -delete
+rmdir bin/solaris my_dstool/bin/solaris
+
 %build
-%add_optflags -DUSE_INTERP_RESULT
+# made into patch13: support for old tcl code
+#add_optflags -DUSE_INTERP_RESULT
 DSTOOL=$PWD
 ARCH=linux
 export ARCH DSTOOL
@@ -63,10 +74,11 @@ make all
 
 %install
 mkdir -p $RPM_BUILD_ROOT%_libdir/%name/src
-cp -r oogl help site_specific tcl bin $RPM_BUILD_ROOT%_libdir/%name/
+cp -r oogl help site_specific tcl bin my_dstool $RPM_BUILD_ROOT%_libdir/%name/
 
 ### see README for details; it claims to require them
 cp -r src/models $RPM_BUILD_ROOT%_libdir/%name/src
+
 mkdir -p $RPM_BUILD_ROOT%_bindir
 install -m 755 bin/dstool_tk $RPM_BUILD_ROOT%_bindir/
 sed -e 's!/u/pkg/dstool_tk}!%_libdir/%name} ${ARCH=linux} ${GEOMVIEW=/usr/bin/geomview}!' bin/dstool_tk > $RPM_BUILD_ROOT%_bindir/dstool_tk
@@ -101,6 +113,9 @@ EOF
 %_man1dir/dstool*
 
 %changelog
+* Thu Jul 22 2021 Igor Vlasenko <viy@altlinux.org> 0.2007-alt2
+- build bugfixes (closes: #40377)
+
 * Sun Jun 27 2021 Igor Vlasenko <viy@altlinux.org> 0.2007-alt1
 - new version
 
