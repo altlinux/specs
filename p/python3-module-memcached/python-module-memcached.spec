@@ -1,87 +1,46 @@
 %define _unpackaged_files_terminate_build 1
 %define modulename python-memcached
 
-%def_with python3
-
-Name: python-module-memcached
+Name: python3-module-memcached
 Version: 1.58
-Release: alt1
+Release: alt2
 
 Summary: A Python module for memcached daemon
-Group: Development/Python
+Group: Development/Python3
 License: GPL
 Url: https://github.com/linsomniac/python-memcached
-
-%setup_python_module %modulename
 
 Source0: https://pypi.python.org/packages/f7/62/14b2448cfb04427366f24104c9da97cf8ea380d7258a3233f066a951a8d8/python-memcached-%{version}.tar.gz
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Mon Nov 14 2005
-BuildRequires: python-devel python-modules-compiler python-modules-encodings
-
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-six
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
 BuildRequires: python3-module-six
-%endif
 
-%py_provides memcache
+%py3_provides memcache
 
 %description
 %modulename is a Python module that interfaces to the memcached -
 distributed memory object caching system.
 
-%package -n python3-module-memcached
-Summary: A Python module for memcached daemon
-Group: Development/Python3
-%py3_provides memcache
-
-%description -n python3-module-memcached
-%modulename is a Python module that interfaces to the memcached -
-distributed memory object caching system.
-
 %prep
-%setup -q -n python-memcached-%{version}
-
-%if_with python3
-cp -fR . ../python3
-%endif
+%setup -n python-memcached-%{version}
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc ChangeLog PKG-INFO test-requirements.txt README.md
-%python_sitelibdir/*
-%doc README* PKG-INFO ChangeLog
-
-%if_with python3
-%files -n python3-module-memcached
-%doc ChangeLog PKG-INFO test-requirements.txt README.md
 %python3_sitelibdir/*
 %doc README* PKG-INFO ChangeLog
-%endif
 
 %changelog
+* Thu Jul 22 2021 Grigory Ustinov <grenka@altlinux.org> 1.58-alt2
+- Drop python2 support.
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.58-alt1
 - automated PyPI update
 
