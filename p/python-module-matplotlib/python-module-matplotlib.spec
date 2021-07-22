@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.3
-Release: alt9
+Release: alt10
 
 Summary: Matlab(TM) style python plotting package
 
@@ -32,7 +32,6 @@ BuildRequires(pre): rpm-build-xdg
 BuildRequires(pre): rpm-build-gir
 BuildRequires: gcc-c++ libnumpy-devel time tk-devel libgtk+3-gir-devel libpng-devel libfreetype-devel
 BuildRequires: python-module-pycairo python-module-pygobject3 python-modules-tkinter python-module-cycler python-module-pyparsing python-module-pytz python-module-dateutil
-%{?!_without_check:BuildRequires: python-module-numpy-testing}
 %{?_with_wx:BuildRequires: python-module-wx}
 Requires: %name-gtk3
 
@@ -211,6 +210,9 @@ done
 #needed fix NameError: name 'gtk_git' is not defined
 
 %changelog
+* Thu Jul 22 2021 Stanislav Levin <slev@altlinux.org> 2.2.3-alt10
+- Dropped unused dep on numpy.testing.
+
 * Tue May 11 2021 Grigory Ustinov <grenka@altlinux.org> 2.2.3-alt9
 - Drop python3 support.
 - Build without qt4 and qt5 subpackages (Closes: #38047).
