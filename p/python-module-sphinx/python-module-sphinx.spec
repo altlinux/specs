@@ -3,10 +3,12 @@
 %define oname sphinx
 %define sphinx_dir %python_sitelibdir_noarch/%oname
 
+%def_without docs
+
 Name: python-module-%oname
 Epoch: 1
 Version: 1.6.5
-Release: alt9
+Release: alt10
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
@@ -34,28 +36,18 @@ Source4: refcounting.py
 Patch0: sphinx-1.4b1-alt-avoid-download-objects.inv.patch 
 # deprecate formatargspec() and format_annotation()
 Patch1: 464f94c2380b4cb2600735c0c0085e771da2bce4.patch
-Patch2: sphinx-1.6.5-Fix-sphinx.testing-uses-deprecated-pytest-API-Node.patch
-Patch3: sphinx-1.6.4-alt-disable-remote-tests.patch
 
 BuildRequires(pre): rpm-build-python
+
+%if_with docs
 BuildRequires: python-sphinx-objects.inv
-BuildRequires: python-module-docutils
-BuildRequires: python-module-html5lib
-BuildRequires: python-module-nose
-BuildRequires: python-module-alabaster
+BuildRequires: python2.7(six)
+BuildRequires: python2.7(docutils)
 BuildRequires: python2.7(typing)
-BuildRequires: python2.7(sphinxcontrib.websupport)
-BuildRequires: /usr/bin/convert
-BuildRequires: python2.7(sphinxcontrib)
-BuildRequires: %py_dependencies imagesize
-# For %%check:
-BuildRequires: %py_dependencies mock
-BuildRequires: python2.7(pytest)
-# minimal deps on the built-in sqlite driver have been fixed in 1.0.8-alt2:
-BuildRequires: python-module-SQLAlchemy >= 1.0.8-alt2
-# These 2 must be recent to pass the tests:
-BuildRequires: python-module-Pygments >= 2.1.3
-BuildRequires: python-module-alabaster >= 0.7.6-alt2.git20150703
+BuildRequires: python2.7(babel)
+BuildRequires: python2.7(jinja2)
+BuildRequires: python2.7(pygments)
+%endif
 
 %description
 Sphinx is a tool that makes it easy to create intelligent and beautiful
@@ -66,7 +58,9 @@ multiple reStructuredText sources)
 Summary: Development package for Sphinx
 Group: Development/Python
 Requires: %name = %EVR
+%if_with docs
 Requires: %name-pickles = %EVR
+%endif
 Requires: rpm-macros-sphinx = %EVR
 
 %description devel
@@ -96,23 +90,7 @@ multiple reStructuredText sources)
 
 This packages contains RPM macros for build with Sphinx.
 
-%package tests
-Summary: Tests for Sphinx
-Group: Development/Python
-Requires: %name = %EVR
-%py_requires nose
-%add_python_req_skip compiler
-%add_python_req_skip missing_module missing_package1 missing_package2
-%add_python_req_skip dummy missing_package3
-%add_findreq_skiplist %sphinx_dir/tests/typing_test_data.py
-
-%description tests
-Sphinx is a tool that makes it easy to create intelligent and beautiful
-documentation for Python projects (or other documents consisting of
-multiple reStructuredText sources)
-
-This packages contains tests for Sphinx.
-
+%if_with docs
 %package doc
 Summary: Documentation for Sphinx
 Group: Development/Python
@@ -136,47 +114,51 @@ documentation for Python projects (or other documents consisting of
 multiple reStructuredText sources)
 
 This packages contains pickles for Sphinx.
+%endif
 
 %prep
 %setup
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 install -pm644 %SOURCE1 .
 
+%if_with docs
 ln -s %_datadir/python-sphinx/objects.inv doc/
 ln -s %_datadir/python-sphinx/objects.inv tests/
+%endif
 
 cp %SOURCE4 sphinx/ext/
 
 install -pm644 %SOURCE2 .
-# Invalid Python2:
-rm tests/py35/test_autodoc_py35.py
+
+# don't generate dev versions, we need release ones
+sed -i '/^tag_build =.*/d;/^tag_date =.*/d' setup.cfg
 
 %build
 %python_build
 
-# docs
+%if_with docs
 %make_build -C doc html PYTHON=python2 SPHINXBUILD="python2 ../sphinx-build.py"
 %make_build -C doc man  PYTHON=python2 SPHINXBUILD="python2 ../sphinx-build.py"
+%endif
 
 %install
 %python_install
 
-ln -rs %buildroot%_datadir/python-sphinx/objects.inv \
-	%buildroot%sphinx_dir/
-
-# docs
-install -d %buildroot%_docdir/%name
-install -d %buildroot%_man1dir
-cp -R doc/_build/html %buildroot%_docdir/%name/
-install -p -m644 AUTHORS CHANGES* EXAMPLES LICENSE README.rst \
-	%buildroot%_docdir/%name
+ln -rs %buildroot%_datadir/python-sphinx/objects.inv %buildroot%sphinx_dir/
+install -p -m644 conf.py.template %buildroot%sphinx_dir/
 
 # macros
 install -d %buildroot%_rpmmacrosdir
 sed -e 's:@SPHINX_DIR@:%sphinx_dir:g' < macro > %buildroot%_rpmmacrosdir/sphinx
+
+install -d %buildroot%_man1dir
+
+%if_with docs
+install -d %buildroot%_docdir/%name
+cp -R doc/_build/html %buildroot%_docdir/%name/
+install -p -m644 AUTHORS CHANGES* EXAMPLES LICENSE README.rst \
+	%buildroot%_docdir/%name
 
 # add pickle files
 %make_build -C doc pickle PYTHON=python2 SPHINXBUILD="python2 ../sphinx-build.py"
@@ -185,46 +167,45 @@ install -d %buildroot%sphinx_dir/doctrees
 install -p -m644 doc/_build/doctrees/*.pickle \
 	%buildroot%sphinx_dir/doctrees/
 cp -R doc/_build/pickle %buildroot%sphinx_dir/
-install -p -m644 conf.py.template \
-	%buildroot%sphinx_dir/
+%endif
 
 mkdir -p %buildroot%_rpmlibdir
 cat <<\EOF >%buildroot%_rpmlibdir/%name-files.req.list
 %sphinx_dir	%name
 EOF
 
-%check
-# Tried to export NOSE_PROCESSES=%%__nprocs, but it makes a lot tests fail.
-export LC_ALL=en_US.utf8 # some tests fail otherwise, because they use paths with Unicode
-
-rm -f tests/test_build_linkcheck.py
-PYTHONPATH=$(pwd) %make_build test PYTHON=python2
+# don't package tests
+rm -r %buildroot%sphinx_dir/testing/
 
 %files
 %_bindir/*
 %sphinx_dir/
-%exclude %sphinx_dir/testing
+%python_sitelibdir/Sphinx-%version-py%_python_version.egg-info/
+%if_with docs
 %exclude %sphinx_dir/pickle
 %exclude %sphinx_dir/doctrees
-%python_sitelibdir/*.egg-info
+%endif
 
 %files devel
+
+%if_with docs
+%files doc
+%doc %_docdir/%name
 
 %files pickles
 %sphinx_dir/pickle
 %sphinx_dir/doctrees
-
-%files tests
-%sphinx_dir/testing
-
-%files doc
-%doc %_docdir/%name
+%endif
 
 %files -n rpm-macros-sphinx
 %_rpmmacrosdir/sphinx
 %_rpmlibdir/%name-files.req.list
 
 %changelog
+* Thu Jul 22 2021 Stanislav Levin <slev@altlinux.org> 1:1.6.5-alt10
+- Stopped testing to remove Pytest.
+- Built without docs, pickles and tests.
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1:1.6.5-alt9
 - fix build
 
