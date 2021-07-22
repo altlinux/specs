@@ -14,7 +14,7 @@
 
 Name: kde5-%rname
 Version: 21.04.3
-Release: alt1
+Release: alt2
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{?_enable_obsolete_kde4:appdata}%{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Terminals
@@ -35,6 +35,7 @@ Patch10: alt-no-transparency.patch
 Patch11: alt-konsole-profiles.patch
 Patch12: alt-def-font.patch
 Patch13: alt-def-colors.patch
+Patch14: alt-fix-empty-profile.patch
 
 # Automatically added by buildreq on Mon Apr 27 2015 (-bi)
 # optimized out: alternatives cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -91,6 +92,7 @@ KF5 library
 #%patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 
 %build
 %K5build \
@@ -154,6 +156,9 @@ __EOF__
 %_K5lib/libkonsoleprivate.so.%sover
 
 %changelog
+* Thu Jul 22 2021 Oleg Solovyov <mcpain@altlinux.org> 21.04.3-alt2
+- fix empty profile when ran from desktop action
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 
