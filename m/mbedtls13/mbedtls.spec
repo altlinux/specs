@@ -6,7 +6,7 @@
 
 Name: %pkgname%so_tls_version
 Version: 2.27.0
-Release: alt1
+Release: alt1.1
 
 Summary: Transport Layer Security protocol suite
 License: Apache-2.0
@@ -82,6 +82,10 @@ that use mbed TLS
 
 %prep
 %setup -n %pkgname-%version
+%ifarch %e2k
+# unsupported as of lcc 1.25.17
+sed -i 's,-Wformat-overflow=2,,' CMakeLists.txt
+%endif
 
 %build
 %cmake .. \
@@ -128,6 +132,9 @@ that use mbed TLS
 %endif
 
 %changelog
+* Thu Jul 22 2021 Michael Shigorin <mike@altlinux.org> 2.27.0-alt1.1
+- E2K: avoid lcc-unsupported option
+
 * Sat Jul 10 2021 Nazarov Denis <nenderus@altlinux.org> 2.27.0-alt1
 - Version 2.27.0
 - Build devel subpackage for legacy-library
