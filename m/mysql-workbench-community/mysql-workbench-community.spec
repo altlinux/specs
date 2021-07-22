@@ -1,6 +1,6 @@
 Name: mysql-workbench-community
 Version: 8.0.25
-Release: alt2
+Release: alt3
 
 Summary: A MySQL visual database modeling tool
 
@@ -64,9 +64,6 @@ BuildRequires(pre): rpm-build-python3
 %add_python3_path %_libdir/mysql-workbench/modules
 
 %set_verify_elf_method unresolved=relaxed
-
-# used by library/sshtunnel/sshtunnel.py
-Requires: python-module-paramiko
 
 Requires: mysql-client gnome-keyring
 Requires: %name-data = %version
@@ -234,6 +231,9 @@ cp %_builddir/%name-%version/images/icons/MySQLWorkbenchDocIcon32x32.png %buildr
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Thu Jul 22 2021 Stanislav Levin <slev@altlinux.org> 8.0.25-alt3
+- Dropped no longer used dep on python-paramiko.
+
 * Tue Jul 06 2021 Sergey Y. Afonin <asy@altlinux.org> 8.0.25-alt2
 - Updated spec-file for compatibility with p9
 
