@@ -1,5 +1,5 @@
 Name: Kvantum
-Version: 0.20.0
+Version: 0.20.1
 Release: alt1
 
 Summary: SVG-based theme engine for Qt5, KDE and LXQt
@@ -49,7 +49,9 @@ This package contains the data needed for Kvantum.
 # -std=c++03 by default as of lcc 1.23.12
 %add_optflags -std=c++11
 %endif
-%cmake -GNinja
+%cmake \
+ -GNinja \
+#
 %cmake_build
 
 %install
@@ -87,6 +89,9 @@ desktop-file-validate %buildroot%_desktopdir/kvantummanager.desktop
 %_datadir/themes/Kv*/*
 
 %changelog
+* Thu Jul 22 2021 Leontiy Volodin <lvol@altlinux.org> 0.20.1-alt1
+- 0.20.1.
+
 * Mon May 31 2021 Leontiy Volodin <lvol@altlinux.org> 0.20.0-alt1
 - 0.20.0
 - NMU: spec: adapted to new cmake macros (altlinux.org/CMakeMigration2021)
