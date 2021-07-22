@@ -1,86 +1,46 @@
 %define _unpackaged_files_terminate_build 1
 %define oname gevent-websocket
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.9.5
-Release: alt1
+Release: alt2
 Summary: Websocket handler for the gevent pywsgi server, a Python network library
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/gevent-websocket/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # hg clone https://bitbucket.org/Jeffrey/gevent-websocket
 Source0: https://pypi.python.org/packages/de/93/6bc86ddd65435a56a2f2ea7cc908d92fea894fc08e364156656e71cc1435/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-distribute
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
-BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3 time
+BuildRequires: /usr/bin/2to3
 
-#BuildRequires: python3-devel python3-module-distribute
-#BuildPreReq: python-tools-2to3
-%endif
-
-%py_provides %oname
-%py_requires gevent greenlet
+%py3_provides %oname
+%py3_requires gevent greenlet
 
 %description
 gevent-websocket is a websocket library for the gevent networking
 library.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Websocket handler for the gevent pywsgi server, a Python 3 network library
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires gevent greenlet
-
-%description -n python3-module-%oname
-gevent-websocket is a websocket library for the gevent networking
-library.
-%endif
-
 %prep
-%setup -q -n %{oname}-%{version}
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
+%setup -n %{oname}-%{version}
 
 %build
-%python_build
-%if_with python3
-pushd ../python3
 find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc LICENSE README.rst AUTHORS
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc LICENSE README.rst AUTHORS
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Thu Jul 22 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.5-alt2
+- Drop python2 support.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.5-alt1
 - automated PyPI update
 
