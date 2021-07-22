@@ -1,46 +1,27 @@
 %define oname flup
 %define version 1.0.3
-%define release alt2
+%define release alt3
 %define subrel hg20120223
-%setup_python_module %oname
-
-%def_with python3
 
 Summary: Random assortment of WSGI servers, middleware
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: %version
-Release: alt2.hg20120223.1.2
+Release: alt3.hg20120223.1.2
 # http://hg.saddi.com/flup-server
-Source0: %modulename.tar.bz2
+Source0: %oname.tar.bz2
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 URL: http://www.saddi.com/software/flup/
-Packager: Python Development Team <python at packages.altlinux.org>
 
 BuildArch: noarch
 #BuildPreReq: python-module-setuptools python-module-sphinx-devel
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-module-setuptools rpm-build-python3 time
-
-#BuildRequires: python3-devel python3-module-distribute
-#BuildPreReq: python-tools-2to3
-%endif
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-sphinx
+BuildRequires: /usr/bin/2to3
 
 %description
 Random assortment of WSGI servers, middleware
-
-%if_with python3
-%package -n python3-module-%oname
-Summary: Random assortment of WSGI servers, middleware (Python 3)
-Group: Development/Python3
-
-%description -n python3-module-%oname
-Random assortment of WSGI servers, middleware
-%endif
 
 %package docs
 Summary: Documentation for flup
@@ -64,54 +45,39 @@ This package contains pickles for flup.
 
 %prep
 %setup
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
 
-%prepare_sphinx docs/source
+%prepare_sphinx3 docs/source
 
 %build
-%python_build
-%if_with python3
-pushd ../python3
 find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
-popd
-%endif
 
 #docs
 
-%make -C docs pickle
-%make -C docs html
+%make SPHINXBUILD="sphinx-build-3" -C docs pickle
+%make SPHINXBUILD="sphinx-build-3" -C docs html
 
 %install
-%python_install --optimize=2 --record=INSTALLED_FILES
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 #docs
 
-cp -fR docs/build/pickle %buildroot%python_sitelibdir_noarch/%oname/
-
-%files -f INSTALLED_FILES
-%exclude %python_sitelibdir_noarch/%oname/pickle
+cp -fR docs/build/pickle %buildroot%python3_sitelibdir_noarch/%oname/
 
 %files docs
 %doc docs/build/html
 
 %files pickles
-%python_sitelibdir_noarch/%oname/pickle
+%python3_sitelibdir_noarch/%oname/pickle
 
-%if_with python3
-%files -n python3-module-%oname
+%files
 %python3_sitelibdir_noarch/*
-%endif
+%exclude %python3_sitelibdir_noarch/%oname/pickle
 
 %changelog
+* Thu Jul 22 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.3-alt3.hg20120223.1.2
+- Drop python2 support.
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0.3-alt2.hg20120223.1.2
 - (NMU) rebuild with python3.6
 
