@@ -2,20 +2,21 @@
 
 Name: exodusii
 Version: 6.09.0
-Release: alt6.git20150119
+Release: alt7.git20150119
+
 Summary: A model developed to store and retrieve transient data for finite element analyses
 License: BSD
 Group: Sciences/Mathematics
+
 Url: http://sourceforge.net/projects/exodusii/
-
-ExclusiveArch: %ix86 x86_64
-
-%define somver 0
-%define sover %somver.%version
-
 # git://exodusii.git.sourceforge.net/gitroot/exodusii/exodusii
 Source: %name-%version.tar
 Patch0: port-on-python3.patch
+
+ExclusiveArch: %ix86 x86_64 %e2k
+
+%define somver 0
+%define sover %somver.%version
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ gcc-fortran
@@ -154,6 +155,10 @@ mv nemesis/README README.Nemesis
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jul 23 2021 Michael Shigorin <mike@altlinux.org> 6.09.0-alt7.git20150119
+- EA: add %%e2k
+- minor spec cleanup (according to preferred rpmtag order)
+
 * Fri Apr 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.09.0-alt6.git20150119
 - Updated build and runtime dependencies.
 
