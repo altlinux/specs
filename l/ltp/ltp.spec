@@ -4,13 +4,15 @@
 
 Name: ltp
 Version: 20210524
-Release: alt2
+Release: alt3
 
 Summary: Linux Test Project
 License: GPL-2.0-only
 Group: Development/Tools
 Url: http://linux-test-project.github.io/
 Vcs: https://github.com/linux-test-project/ltp.git
+
+Requires: ltp-alt-lists
 
 Source: %name-%version.tar
 BuildRequires: rpm-build-python3
@@ -87,12 +89,6 @@ cd testcases/realtime
 %make_build
 cd ../..
 
-# Create ALT specific testcases list.
-# Run example: vm-run runltp -S skiplist-alt-vm -f kernel-alt-vm
-cd runtest
-cat syscalls syscalls-ipc crypto connectors containers fs_readonly \
-	ima kernel_misc net.features numa pty uevent >> kernel-alt-vm
-
 %install
 %makeinstall_std -s -j%__nprocs --output-sync=none
 mkdir -p %buildroot/usr/lib/openposix_testsuite/bin
@@ -108,8 +104,6 @@ cat > %buildroot/%_bindir/runltp <<-EOF
 	exec /usr/lib/ltp/runltp "\$@"
 EOF
 chmod a+x %buildroot/%_bindir/runltp
-
-install -p -m644 .gear/skiplist-alt-vm %buildroot/usr/lib/ltp/
 
 %check
 PATH=%buildroot/usr/lib/ltp/testcases/bin:$PATH
@@ -140,6 +134,9 @@ fi
 /usr/lib/realtime_testsuite
 
 %changelog
+* Fri Jul 23 2021 Vitaly Chikunov <vt@altlinux.org> 20210524-alt3
+- Move ALT specific lists into ltp-alt-lists.
+
 * Tue Jul 06 2021 Vitaly Chikunov <vt@altlinux.org> 20210524-alt2
 - Add testcases list kernel-alt-vm and skiplist-alt-vm.
 
