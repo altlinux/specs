@@ -3,9 +3,9 @@
 %define gecko_version 2.47.2
 %define mono_version 6.2.0
 
-%define major 6.12
+%define major 6.13
 %define rel %nil
-%define stagingrel .1
+%define stagingrel %nil
 
 %def_with gtk3
 
@@ -640,6 +640,9 @@ done
 %endif
 
 %changelog
+* Thu Jul 22 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.13.1-alt1
+- new version 6.13.1 (with rpmrb script)
+
 * Sat Jul 03 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.12.1-alt1
 - new version 6.12.1 (with rpmrb script)
 
