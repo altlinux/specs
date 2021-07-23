@@ -150,7 +150,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version:	4.4
-Release:	alt4
+Release:	alt5
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -875,6 +875,9 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
+* Wed Jul 14 2021 Slava Aseev <ptrnine@altlinux.org> 2:4.4-alt5
+- fixed build on arm (closes: #40437)
+
 * Wed May 26 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2:4.4-alt4
 - disabled checkasm for armh due to segfault
 
