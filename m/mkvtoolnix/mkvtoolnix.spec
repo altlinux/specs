@@ -10,7 +10,7 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 58.0.0
+Version: 59.0.0
 Release: alt1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
@@ -24,6 +24,7 @@ Provides: mkvmerge = %EVR
 
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++ boost-devel boost-filesystem-devel zlib-devel libmagic-devel
+BuildRequires: libgmp-devel
 BuildRequires: libvorbis-devel libogg-devel
 BuildRequires: ruby ruby-stdlibs ruby-tools
 BuildRequires: libebml-devel >= 1.4.0 libmatroska-devel >= 1.6.0 libfmt-devel >= 6.1.0
@@ -152,6 +153,9 @@ rake V=1 tests:run_unit
 %endif
 
 %changelog
+* Fri Jul 23 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 59.0.0-alt1
+- Updated to upstream version 59.0.0.
+
 * Wed Jun 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 58.0.0-alt1
 - Updated to upstream version 58.0.0.
 
