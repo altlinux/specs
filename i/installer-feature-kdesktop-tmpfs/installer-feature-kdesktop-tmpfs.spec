@@ -1,5 +1,5 @@
 Name: installer-feature-kdesktop-tmpfs
-Version: 2.4
+Version: 2.5
 Release: alt1
 
 Summary: Setup services for start/not start on boot
@@ -30,6 +30,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Fri Jul 23 2021 Sergey V Turchin <zerg@altlinux.org> 2.5-alt1
+- fix typo
+
 * Fri Jul 23 2021 Sergey V Turchin <zerg@altlinux.org> 2.4-alt1
 - fix typo
 
