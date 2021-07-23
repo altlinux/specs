@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.32.0
-Release: alt2
+Release: alt3
 Summary: Manage dynamic plugins for Python applications
 Group: Development/Python3
 License: Apache-2.0
@@ -14,13 +14,10 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-Pillow
 BuildRequires: python3-module-oslotest
-BuildRequires: python3-module-discover
 BuildRequires: python3-module-testrepository
 BuildRequires: python3-module-coverage
 BuildRequires: python3-module-mock
@@ -111,6 +108,9 @@ py.test-%_python3_version
 %doc doc/build/html/*
 
 %changelog
+* Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 1.32.0-alt3
+- Fixed BuildRequires.
+
 * Fri Oct 30 2020 Vitaly Lipatov <lav@altlinux.ru> 1.32.0-alt2
 - NMU: move example2 to tests subpackage (fix tests subpackage requires)
 
