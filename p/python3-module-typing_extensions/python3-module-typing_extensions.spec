@@ -2,7 +2,7 @@
 
 Name: python3-module-%modname
 Version: 3.7.4.3
-Release: alt1
+Release: alt2
 Summary: Python Typing Extensions
 Group: Development/Python3
 License: Python
@@ -15,7 +15,6 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 # For tests
 BuildRequires: python3-test
-BuildRequires: python3-module-discover
 
 %description
 Typing Extensions - Backported and Experimental Type Hints for Python
@@ -51,5 +50,8 @@ must be compatible with multiple Python versions or requires experimental types.
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 3.7.4.3-alt2
+- Fixed BuildRequires.
+
 * Sun Sep 06 2020 Alexey Shabalin <shaba@altlinux.org> 3.7.4.3-alt1
 - Initial release.
