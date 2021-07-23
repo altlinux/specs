@@ -10,7 +10,7 @@ Summary: SELinux policy core utilities
 Name: policycoreutils
 Epoch:   1
 Version: 3.2
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: System/Base
 Url: https://github.com/SELinuxProject/selinux
@@ -129,6 +129,15 @@ Group:   Development/Python3
 Requires: %name = %EVR
 
 %description -n python3-module-policycoreutils
+The policycoreutils-python package contains the management tools use to manage
+an SELinux environment.
+
+%package -n python3-module-policycoreutils-gui
+Summary: SELinux policy core python utilities
+Group:   Development/Python3
+Requires: python3-module-policycoreutils = %EVR
+
+%description -n python3-module-policycoreutils-gui
 The policycoreutils-python package contains the management tools use to manage
 an SELinux environment.
 
@@ -405,13 +414,24 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 %_man8dir/sepolicy-gui.*
 
 %files -n python3-module-policycoreutils
-%python3_sitelibdir/sepolicy
-%python3_sitelibdir/sepolgen
+%python3_sitelibdir/sepolicy/
+%python3_sitelibdir/sepolgen/
 %python3_sitelibdir/sepolicy-*.egg-info
 %python3_sitelibdir/seobject.py
 %python3_sitelibdir/__pycache__/*
+%exclude %python3_sitelibdir/sepolicy/gui.py
+%exclude %python3_sitelibdir/sepolicy/__pycache__/gui*.py*
+%exclude %python3_sitelibdir/sepolicy/sepolicy.glade
+
+%files -n python3-module-policycoreutils-gui
+%python3_sitelibdir/sepolicy/gui.py
+%python3_sitelibdir/sepolicy/__pycache__/gui*.py*
+%python3_sitelibdir/sepolicy/sepolicy.glade
 
 %changelog
+* Tue Jul 13 2021 Vitaly Lipatov <lav@altlinux.ru> 1:3.2-alt2
+- NMU: move gui module to python3-module-policycoreutils-gui (ALT bug 30125)
+
 * Mon Mar 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.2-alt1
 - Updated to upstream version 3.2.
 
