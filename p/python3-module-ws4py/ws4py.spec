@@ -1,13 +1,13 @@
 %define oname ws4py
-Name: python-module-ws4py
+Name: python3-module-ws4py
 Version: 0.5.1
-Release: alt2
+Release: alt3
 
 Summary: WebSocket for Python (ws4py)
 
 Url: https://github.com/Lawouach/WebSocket-for-Python
-License: ASL 2.0
-Group: Development/Python
+License: Apache-2.0
+Group: Development/Python3
 
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
 
@@ -17,25 +17,14 @@ Patch1: %oname-async-fix.patch
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
 
 %description
 ws4py is a Python package implementing the WebSocket protocol as
 defined in RFC 6455.
 
-%package -n python3-module-%oname
-Summary: WebSocket for Python (ws4py)
-Group: Development/Python3
-
-%description -n python3-module-%oname
-ws4py is a Python package implementing the WebSocket protocol as
-defined in RFC 6455.
-
-
 %prep
 %setup
 %patch1 -p1
-
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -44,13 +33,14 @@ defined in RFC 6455.
 %install
 %python3_install
 
-
-%files -n python3-module-%oname
+%files
 %doc CHANGELOG.md LICENSE README.md
 %python3_sitelibdir/*
 
-
 %changelog
+* Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 0.5.1-alt3
+- Rename package.
+
 * Tue Oct 01 2019 Anton Farygin <rider@altlinux.ru> 0.5.1-alt2
 - removed python2 support
 
