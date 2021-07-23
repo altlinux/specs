@@ -1,102 +1,48 @@
 %define _unpackaged_files_terminate_build 1
 %define oname tasklocals
 
-%def_without python2
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.2
-Release: alt2.1
+Release: alt3
 Summary: Task locals support for tulip/asyncio
 License: Free
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.python.org/pypi/tasklocals/
 
 # https://github.com/vkryachko/tasklocals.git
 Source: %oname-%version.tar
 
-%if_with python2
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python2.7(asyncio) python-module-nose
-%endif
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(asyncio) python3-module-nose
-%endif
 
-%py_provides %oname
-%py_requires asyncio
+%py3_provides %oname
+%py3_requires asyncio
 
 %description
 It provides Task local storage similar to python's threading.local
 but for Tasks in asyncio.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Task locals support for tulip/asyncio
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires asyncio
-
-%description -n python3-module-%oname
-It provides Task local storage similar to python's threading.local
-but for Tasks in asyncio.
-%endif
-
 %prep
 %setup -n %oname-%version
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%if_with python2
-%python_build_debug
-%endif
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
-%if_with python2
-%python_install
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-%if_with python2
-python setup.py test
-%endif
-%if_with python3
-pushd ../python3
 python3 setup.py test
-popd
-%endif
 
-%if_with python2
 %files
 %doc *.rst
-%python_sitelibdir/*
-%endif
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 0.2-alt3
+- Drop python2 support.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
