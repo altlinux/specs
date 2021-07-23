@@ -2,17 +2,17 @@
 %def_without python3_bindings
 
 Name: grpc
-Version: 1.35.0
-Release: alt3
+Version: 1.38.0
+Release: alt1
 
 Summary: Modern, open source, high-performance remote procedure call (RPC) framework
 
 License: Apache-2.0
 Group: Networking/Other
 URL: https://www.grpc.io
+Vcs: https://github.com/grpc/grpc.git
 
 Source0: %name-%version.tar
-# VCS0: git://github.com/grpc/grpc.git
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -33,8 +33,8 @@ Patch2: 0001-CMakeLists.txt-introduce-a-cache-variable-for-pkg-config.patch
 
 %description
 gRPC is a modern open source high performance RPC framework that can run in any
-environment. It can efficiently connect services in and across data centers
-with pluggable support for load balancing, tracing, health checking and
+environment. It can efficiently connect services in and across data centers with
+pluggable support for load balancing, tracing, health checking and
 authentication. It is also applicable in last mile of distributed computing to
 connect devices, mobile applications and browsers to backend services.
 
@@ -239,6 +239,9 @@ export CFLAGS="%optflags"
 %endif
 
 %changelog
+* Tue Jun 01 2021 Pavel Skrylev <majioa@altlinux.org> 1.38.0-alt1
+- ^ 1.35.0 -> 1.38.0
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 1.35.0-alt3
 - spec: Fixed FTBFS.
 
