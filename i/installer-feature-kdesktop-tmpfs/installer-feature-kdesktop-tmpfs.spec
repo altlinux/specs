@@ -1,6 +1,6 @@
 Name: installer-feature-kdesktop-tmpfs
-Version: 2.3
-Release: alt2
+Version: 2.4
+Release: alt1
 
 Summary: Setup services for start/not start on boot
 License: GPL
@@ -30,6 +30,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Fri Jul 23 2021 Sergey V Turchin <zerg@altlinux.org> 2.4-alt1
+- fix typo
+
 * Fri Jun 14 2019 Sergey V Turchin <zerg@altlinux.org> 2.3-alt2
 - dont use ubt macro
 
