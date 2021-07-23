@@ -2,8 +2,8 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.0.0
-Release: alt2
+Version: 1.1.0
+Release: alt1
 Summary: Mock object framework for Python
 License: Apache-2.0
 Group: Development/Python3
@@ -14,7 +14,6 @@ BuildArch:      noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-devel
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-sphinx
@@ -26,10 +25,8 @@ BuildRequires: python3-module-mimeparse
 BuildRequires: python3-module-extras
 BuildRequires: python3-module-testrepository
 BuildRequires: python3-module-subunit
-BuildRequires: python3-module-discover
 BuildRequires: python3-module-coverage
 BuildRequires: python3-module-hacking
-BuildRequires: python3-module-d2to1
 BuildRequires: python3-module-flake8
 BuildRequires: python3-pyflakes
 BuildRequires: python3-tools-pep8
@@ -107,6 +104,9 @@ py.test3
 %python3_sitelibdir/*/tests
 
 %changelog
+* Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
+- Build new version.
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt2
 - drop unneeded BR: python3-module-subunit-tests
 
