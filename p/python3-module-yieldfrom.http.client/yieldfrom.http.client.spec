@@ -1,63 +1,28 @@
 %define mname yieldfrom
 %define oname %mname.http.client
 
-%def_without python2
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.1.3
-Release: alt1
+Release: alt2
 Summary: asyncio version of http.client
 License: PSFL
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/yieldfrom.http.client/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/rdbhost/yieldfromHttplib.git
 Source: %name-%version.tar
 
-%if_with python2
-#BuildPreReq: python-devel python-module-setuptools
-#BuildPreReq: python-module-asyncio
-%endif
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
-#BuildPreReq: python3-module-asyncio
-%endif
 
-%py_provides %oname
-Requires: python-module-%mname.http = %EVR
-%py_requires asyncio
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python3-module-setuptools rpm-build-python3
+%py3_provides %oname
+%py3_requires asyncio
+%python3_req_hier
+Requires: python3-module-%mname.http = %EVR
 
 %description
 Asyncio conversion of http.client.
 
 The classes are named the same as in http.client.
-
-%package -n python3-module-%oname
-Summary: asyncio version of http.client
-Group: Development/Python3
-Requires: python3-module-%mname.http = %EVR
-%python3_req_hier
-
-%description -n python3-module-%oname
-Asyncio conversion of http.client.
-
-The classes are named the same as in http.client.
-
-%package -n python-module-%mname.http
-Summary: Core files of %mname.http
-Group: Development/Python
-%py_provides %mname.http
-%py_requires %mname
-
-%description -n python-module-%mname.http
-Core files of %mname.http.
 
 %package -n python3-module-%mname.http
 Summary: Core files of %mname.http
@@ -70,60 +35,20 @@ Core files of %mname.http.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%if_with python2
-%python_build_debug
-%endif
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
-%if_with python2
-%python_install
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %if "%_libdir" != "%_libexecdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %check
-%if_with python2
-python setup.py test
-%endif
-%if_with python3
-pushd ../python3
 python3 setup.py test
-popd
-%endif
 
-%if_with python2
 %files
-%doc *.md
-%python_sitelibdir/%mname/http/*
-%python_sitelibdir/*.egg-info
-%exclude %python_sitelibdir/%mname/http/__init__.py*
-
-%files -n python-module-%mname.http
-%dir %python_sitelibdir/%mname/http
-%python_sitelibdir/%mname/http/__init__.py*
-%endif
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.md
 %python3_sitelibdir/%mname/http/*
 %python3_sitelibdir/*.egg-info
@@ -135,9 +60,11 @@ popd
 %dir %python3_sitelibdir/%mname/http/__pycache__
 %python3_sitelibdir/%mname/http/__init__.*
 #python3_sitelibdir/%mname/http/__pycache__/__init__.*
-%endif
 
 %changelog
+* Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 0.1.3-alt2
+- Drop python2 support.
+
 * Fri Aug 10 2018 Ivan A. Melnikov <iv@altlinux.org> 0.1.3-alt1
 - Version 0.1.3
 
