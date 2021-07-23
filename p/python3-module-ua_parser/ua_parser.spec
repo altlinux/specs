@@ -1,29 +1,21 @@
 %define oname ua_parser
 %def_disable check
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.4.1
-Release: alt2
+Release: alt3
 Summary: Python port of Browserscope's user agent parser
 License: ASLv2.0
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/ua-parser/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/tobie/ua-parser.git
 Source: %name-%version.tar
 BuildArch: noarch
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-%endif
-BuildRequires: python-module-pytest python-module-yaml python-modules-json
+BuildRequires: python3-module-pytest python3-module-yaml
 
-#BuildPreReq: python-module-setuptools-tests python-module-yaml
-#BuildPreReq: python-modules-json
-
-%py_provides %oname
+%py3_provides %oname
 
 %description
 The crux of the original parser--the data collected by Steve Souders
@@ -32,79 +24,33 @@ reusable as is by implementations in other programming languages.
 
 ua-parser is just a small wrapper around this data.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary:        %summary
-Group:          Development/Python
-BuildRequires: python3-module-pytest python3-module-yaml
-
-%description -n python3-module-%oname
-The crux of the original parser--the data collected by Steve Souders
-over the years--has been extracted into a separate YAML file so as to be
-reusable as is by implementations in other programming languages.
-
-ua-parser is just a small wrapper around this data.
-%endif
-
 %prep
 %setup
 
 cp -v regexes.* uap-core/
 cp -v regexes.* py/ua_parser/
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-#python setup.py sdist
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-#python3 setup.py sdist
-popd
-%endif
+%python3_build
 
 %install
-%python_install
-
-install -m644 py/%oname/regexes.* %buildroot%python_sitelibdir/%oname/
-
-%if_with python3
-pushd ../python3
 %python3_install
 install -m644 py/%oname/regexes.* %buildroot%python3_sitelibdir/%oname/
-popd
-%endif
 
 %check
-python setup.py test
-rm -fR build
-export PYTHONPATH=%buildroot%python_sitelibdir
-py.test
-
-
-%if_with python3
-pushd ../python3
 python3 setup.py test
 rm -fR build
 export PYTHONPATH=%buildroot%python3_sitelibdir
 py.test
-popd
-%endif
 
 %files
 %doc *.md *.txt *.markdown
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 0.4.1-alt3
+- Drop python2 support.
+
 * Thu Jan 31 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.1-alt2
 - NMU: Updated build dependencies.
 
