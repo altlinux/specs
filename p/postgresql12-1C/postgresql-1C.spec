@@ -6,8 +6,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     12
-%define postgresql_minor     6
-%define postgresql_altrel    3
+%define postgresql_minor     7
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -780,6 +780,10 @@ fi
 %endif
 
 %changelog
+* Fri Jul 23 2021 Alexei Takaseev <taf@altlinux.org> 12.7-alt1
+- 12.7
+- Update 1C patch
+
 * Wed May 19 2021 Alexei Takaseev <taf@altlinux.org> 12.6-alt3
 - Update 1C patch
 
