@@ -1,6 +1,6 @@
 Name: deepin
 Version: 5
-Release: alt13
+Release: alt14
 Summary: Set of Deepin Desktop installers
 License: GPL-2.0+
 Group: Graphical desktop/Other
@@ -95,6 +95,7 @@ Requires: deepin-compressor
 Requires: gvfs-backend-smb
 Requires: deepin-shortcut-viewer
 Requires: deepin-picker
+Requires: kde5-profile
 
 %description default
 %name-default is a virtual package to provide default installation
@@ -132,6 +133,9 @@ Requires: %name-default = %version-%release
 %files regular
 
 %changelog
+* Fri Jul 23 2021 Leontiy Volodin <lvol@altlinux.org> 5-alt14
+- Added kde5-profile into deepin-default.
+
 * Thu Jul 22 2021 Leontiy Volodin <lvol@altlinux.org> 5-alt13
 - Moved deepin-shortcut-viewer and deepin-picker into deepin-default.
 
