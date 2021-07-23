@@ -1,15 +1,13 @@
 %define oldname python-uinput
 
-%def_with python3
-
-Name: python-module-uinput
+Name: python3-module-uinput
 Version: 0.10.1
-Release: alt5
+Release: alt6
 
 Summary: Pythonic API to the Linux uinput kernel module
 
 License: GPLv3
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/python-uinput/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -17,24 +15,15 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: http://pypi.python.org/packages/source/p/%oldname/%oldname-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python rpm-build-python3 rpm-build-intro
+BuildRequires(pre): rpm-build-python3 rpm-build-intro
 BuildRequires: rdma-core-devel
 BuildRequires: libudev-devel
-BuildRequires: python-dev python3-devel
 
 # https://github.com/tuomasjjrasanen/python-uinput/issues/16
 # setup.py parses /usr/include/linux/input.h
 BuildRequires: glibc-kernheaders-generic
 
 %description
-Python-uinput is Python interface to the Linux uinput kernel module
-which allows attaching userspace device drivers into kernel.
-
-%package -n python3-module-uinput
-Group: Development/Python
-Summary: Pythonic API to the Linux uinput kernel module
-
-%description -n python3-module-uinput
 Python-uinput is Python interface to the Linux uinput kernel module
 which allows attaching userspace device drivers into kernel.
 
@@ -50,34 +39,24 @@ which allows attaching userspace device drivers into kernel.
 [ -s /usr/include/linux/input-event-codes.h ] && \
     %__subst "s/input.h/input-event-codes.h/" setup.py
 
-%python3_dirsetup
-#find . -name '*.py' | xargs sed -i '1s|^#!python|#!%__python3|'
-
 %build
-%python_build
-%python3_dirbuild
+%python3_build
 
 %install
-%python_install
-%python3_dirinstall
+%python3_install
 
 chmod a-x examples/*
 
 %files
 %doc COPYING NEWS README examples
-%python_sitelibdir/python_uinput-%version-py?.?.egg-info
-%python_sitelibdir/_libsuinput.so
-%python_sitelibdir/uinput/
-
-%if_with python3
-%files -n python3-module-uinput
-%doc COPYING NEWS README examples
 %python3_sitelibdir/python_uinput-%version-py?.?.egg-info
 %python3_sitelibdir/_libsuinput.*.so
 %python3_sitelibdir/uinput/
-%endif
 
 %changelog
+* Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 0.10.1-alt6
+- Drop python2 support.
+
 * Thu May 09 2019 Vitaly Lipatov <lav@altlinux.ru> 0.10.1-alt5
 - build for ALT Sisyphus (with python2 support)
 
