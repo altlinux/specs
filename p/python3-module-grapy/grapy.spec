@@ -1,16 +1,13 @@
 %define oname grapy
 
-%def_without python2
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.1.8
-Release: alt1
+Release: alt2
 
 Summary: Fast high-level web crawling framework for Python 3.3 or later base on asyncio
 
 License: Free
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/grapy/
 
 # https://github.com/Lupino/grapy.git
@@ -19,32 +16,14 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-%if_with python2
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python2.7(asyncio) python-module-aiohttp
-BuildRequires: python-module-BeautifulSoup4 python-module-requests
-%endif
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(asyncio) python3-module-aiohttp
 BuildRequires: python3-module-BeautifulSoup4 python3-module-requests
-%endif
 
-%py_provides %oname
-%py_requires asyncio aiohttp bs4 requests
-
-%description
-Grapy, a fast high-level screen scraping and web crawling framework for
-Python 3.3 or later base on asyncio.
-
-%package -n python3-module-%oname
-Summary: Fast high-level web crawling framework for Python 3.3 or later base on asyncio
-Group: Development/Python3
 %py3_provides %oname
 %py3_requires asyncio aiohttp bs4 requests
 
-%description -n python3-module-%oname
+%description
 Grapy, a fast high-level screen scraping and web crawling framework for
 Python 3.3 or later base on asyncio.
 
@@ -57,55 +36,23 @@ subst "s|self.async|self.fasync|" grapy/core/request.py
 #	-e "s|'asyncio', ||g" \
 #	setup.py
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%if_with python2
-%python_build_debug
-%endif
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
-%if_with python2
-%python_install
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-%if_with python2
-python setup.py test
-%endif
-%if_with python3
-pushd ../python3
 python3 setup.py test
-popd
-%endif
 
-%if_with python2
 %files
 %doc *.md docs/*.rst
-%python_sitelibdir/*
-%endif
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.md docs/*.rst
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 0.1.8-alt2
+- Drop python2 support.
+
 * Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 0.1.8-alt1
 - new version 0.1.8 (with rpmrb script)
 - switch to build from tarball
