@@ -2,37 +2,21 @@
 
 %define modname py9p
 
-Name: python-module-%modname
+Name: python3-module-%modname
 Version: 1.0.9
-Release: alt2
+Release: alt3
 
 Summary: Pure Python implementation of 9P protocol (Plan9)
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 URL: https://github.com/svinota/py9p
 BuildArch: noarch
 
 Source: py9p-%version.tar
 
-BuildPreReq: python3-module-setuptools
-BuildPreReq: python3-devel
-
+BuildRequires(pre): rpm-build-python3
 
 %description
-Protocol 9P is developed for Plan9 operating system from Bell Labs.
-It is used for remote file access, and since files are key objects
-in Plan9, 9P can be used also for composite file access, RPC etc.
-
-This library provides low-level 9p2000.u API. For high-level look
-into python-module-pyvfs.
-
-%package -n python3-module-%modname
-Summary: Pure Python implementation of 9P protocol (Plan9)
-License: MIT
-Group: Development/Python
-URL: https://github.com/svinota/py9p
-
-%description -n python3-module-%modname
 Protocol 9P is developed for Plan9 operating system from Bell Labs.
 It is used for remote file access, and since files are key objects
 in Plan9, 9P can be used also for composite file access, RPC etc.
@@ -44,7 +28,6 @@ into python-module-pyvfs.
 Summary: Plan9 filesystem client for FUSE
 License: MIT
 Group: Development/Python
-URL: https://github.com/svinota/py9p
 
 %description -n fuse9p
 Protocol 9P is developed for Plan9 operating system from Bell Labs.
@@ -57,7 +40,6 @@ This package contains FUSE client for the 9p protocol.
 Summary: Plan9 filesystem server
 License: MIT
 Group: Development/Python
-URL: https://github.com/svinota/py9p
 
 %description -n 9pfs
 Protocol 9P is developed for Plan9 operating system from Bell Labs.
@@ -76,7 +58,7 @@ make force-version
 %install
 %python3_install
 
-%files -n python3-module-%modname
+%files
 %doc README* LICENSE
 %{python3_sitelibdir}/*
 
@@ -91,6 +73,9 @@ make force-version
 %_man1dir/9pfs.*
 
 %changelog
+* Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.9-alt3
+- Rename package, cleanup spec.
+
 * Mon Sep 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.9-alt2
 - Fixed compatibility with pycryptodome.
 - Disabled build of python-2 module.
