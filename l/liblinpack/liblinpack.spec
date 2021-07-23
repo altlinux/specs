@@ -2,16 +2,24 @@
 
 Name: liblinpack
 Version: 20090217
-Release: alt6
+Release: alt7
+
 Summary: Analyze and solve linear equations and linear least-squares probles
 License: Free
 Group: System/Libraries
+
 Url: http://www.netlib.org/linpack/
+Source: %name-%version.tar.gz
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar.gz
+BuildRequires: gcc-fortran
 
-BuildPreReq: gcc-fortran liblapack-devel
+%ifarch %e2k
+BuildRequires: eml-devel-compat-lapack
+BuildRequires: eml-devel-compat-blas
+%else
+BuildRequires: liblapack-devel
+%endif
 
 %description
 LINPACK is a collection of Fortran subroutines that analyze and
@@ -80,7 +88,12 @@ pushd %buildroot%_libdir/tmp
 for i in %name; do
 	ar x ../$i.a
 	g77 -shared * -Wl,-soname,$i.so.%sover -o ../$i.so.%sover \
-		-llapack -lopenblas
+		-llapack \
+%ifarch %e2k
+		-lblas
+%else
+		-lopenblas
+%endif
 	ln -s $i.so.%sover ../$i.so
 	rm -f *
 done
@@ -98,6 +111,10 @@ rmdir %buildroot%_libdir/tmp
 #_libdir/*.a
 
 %changelog
+* Fri Jul 23 2021 Michael Shigorin <mike@altlinux.org> 20090217-alt7
+- E2K: use EML instead of lapack/openblas
+- minor spec cleanup
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20090217-alt6
 - Built with OpenBLAS instead of GotoBLAS2
 
