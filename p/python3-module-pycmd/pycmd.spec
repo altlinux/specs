@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pycmd
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.2
-Release: alt2
+Release: alt3
 
 Summary: Command line tools for helping with Python development
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.org/project/pycmd/
 
 Source: %name-%version.tar
@@ -17,47 +17,25 @@ BuildRequires(pre): rpm-build-python3
 # pycmd was separated from pylib at that point
 Conflicts: py < 1.4.0
 BuildArch: noarch
-%py_requires py
+
+Conflicts: python-module-%oname
+Obsoletes: python-module-%oname
 
 %description
-Collection of command line tools for dealing with python files
-(locating, counting LOCs, cleaning up pyc files ...)
-
-%package -n python3-module-%oname
-Summary: Command line tools for helping with Python development
-Group: Development/Python3
-
-%description -n python3-module-%oname
 Collection of command line tools for dealing with python files
 (locating, counting LOCs, cleaning up pyc files ...)
 
 %prep
 %setup
 
-cp -fR . ../python3
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-	../python3/%oname/*.py
+	%oname/*.py
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-
-pushd ../python3
 %python3_install
-popd
-
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-
-%python_install
 
 %files
 %doc CHANGELOG LICENSE *.txt
@@ -67,21 +45,13 @@ popd
 %_bindir/py.lookup
 %_bindir/py.svnwcrevert
 %_bindir/py.which
-%python_sitelibdir/pycmd/
-%python_sitelibdir/pycmd-*.egg-info/
-
-%files -n python3-module-%oname
-%doc CHANGELOG LICENSE *.txt
-%_bindir/py.cleanup.py3
-%_bindir/py.convert_unittest.py3
-%_bindir/py.countloc.py3
-%_bindir/py.lookup.py3
-%_bindir/py.svnwcrevert.py3
-%_bindir/py.which.py3
 %python3_sitelibdir/pycmd/
 %python3_sitelibdir/pycmd-*.egg-info/
 
 %changelog
+* Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 1.2-alt3
+- Drop python2 support.
+
 * Thu Jan 17 2019 Stanislav Levin <slev@altlinux.org> 1.2-alt2
 - Add Requires on python py.
 
