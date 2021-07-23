@@ -20,7 +20,7 @@
 
 Name: godot
 Version: 3.1
-Release: alt2.1
+Release: alt3
 
 Summary: Godot Engine - Multi-platform 2D and 3D game engine
 License: %mit
@@ -35,6 +35,8 @@ Source3: %name.svg
 # https://github.com/godotengine/godot/issues/16100
 # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=79085
 Patch0: godot-3.0.2-workaround-gcc-ice-armv7hl.patch
+Patch1: fix-zstd-linking.patch
+Patch2: fix-zstd-1.3.8.patch
 #ExclusiveArch: x86_64 %ix86
 
 # optimized out: libX11-devel libXext-devel libXfixes-devel libXrender-devel libcom_err-devel libgpg-error libjson-c libkrb5-devel libstdc++-devel pkg-config python-base python-devel python-module-numpy python-module-setuptools python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-json python3 python3-base xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
@@ -60,9 +62,6 @@ BuildRequires: scons pkgconfig libX11-devel libXcursor-devel libXrandr-devel lib
 %{!?_with_builtin_thekla_atlas:BuildRequires: libtheklaatlas-devel}
 %{!?_with_builtin_zlib:BuildRequires: zlib-devel}
 %{!?_with_builtin_zstd:BuildRequires: libzstd-devel}
-
-Patch1: fix-zstd-linking.patch
-Patch2: fix-zstd-1.3.8.patch
 
 %description
 Godot Engine is a feature-packed, cross-platform game engine to create 2D and 3D
@@ -104,6 +103,12 @@ by pointing to the location of the game's data package.
 cp %SOURCE1 .
 cp %SOURCE2 .
 cp %SOURCE3 .
+%ifarch %e2k
+# unsupported as of lcc 1.25.17 (mcst#6261)
+sed -i  -e 's,-fno-tree-copy-prop,,' -e 's,-fno-tree-ccp,,' \
+	-e 's,-fno-code-hoisting,,' modules/gdnative/SCsub
+sed -i "s/'-Werror=return-type'/&, '-fno-error-always-inline'/" SConstruct
+%endif
 
 %build
 %define subst_builtin() %{expand:%{1}=%%{?_with_%{1}:yes}}%{expand:%%{?_without_%{1}:no}}
@@ -127,12 +132,14 @@ cp %SOURCE3 .
 	%{subst_builtin builtin_zlib} \\\
 	%{subst_builtin builtin_zstd} \\\
 %nil
-	
+
 export GCC_USE_CCACHE=1
+# Verbose build to see what exactly breaks next time
 scons \
 	%godot_common_builtin_options \
 	platform=x11 \
 	tools=yes \
+	verbose=yes \
 	target=release_debug \
     -j %__nprocs
 
@@ -141,6 +148,7 @@ scons \
 	%godot_common_builtin_options \
 	platform=x11 \
 	tools=no \
+	verbose=yes \
 	target=release \
     -j %__nprocs
 
@@ -150,6 +158,7 @@ scons \
 	%godot_common_builtin_options \
 	platform=server \
 	tools=yes \
+	verbose=yes \
 	target=release_debug \
     -j %__nprocs
 %endif
@@ -184,13 +193,17 @@ install -m 644 -D %name.desktop %buildroot%_desktopdir/
 %endif
 
 %changelog
+* Fri Jul 23 2021 Michael Shigorin <mike@altlinux.org> 3.1-alt3
+- E2K: avoid lcc-unsupported options
+- minor spec cleanup (incl. bogus changelog date fixup)
+
 * Sun Jul 11 2021 Nazarov Denis <nenderus@altlinux.org> 3.1-alt2.1
 - Fixed FTBFS (build with mbedTLS 2.27.0)
 
 * Mon Mar 29 2021 Grigory Ustinov <grenka@altlinux.org> 3.1-alt2
 - Fixed FTBFS (removed python-module-pyxdg from BR's)
 
-* Mon Mar 16 2019 Sergey Bubnov <omg@altlinux.org> 3.1-alt1
+* Mon Mar 18 2019 Sergey Bubnov <omg@altlinux.org> 3.1-alt1
 - 3.1-stable
 
 * Wed Jan 02 2019 Sergey Bubnov <omg@altlinux.org> 3.0.6-alt3
