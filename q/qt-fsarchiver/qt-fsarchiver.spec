@@ -6,7 +6,7 @@
 Summary: GUI for Filesystem Archiver for Linux
 Name: qt-fsarchiver
 Version: 0.8.4.%subver
-Release: alt3
+Release: alt4
 Url: http://www.fsarchiver.org
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
@@ -39,7 +39,7 @@ BuildRequires(pre): rpm-macros-qt5
 BuildRequires: qt5-connectivity-devel qt5-multimedia-devel qt5-phonon-devel qt5-quick1-devel qt5-sensors-devel qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-webengine-devel
 BuildRequires: qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel liblz4-devel libzstd-devel
 
-BuildRequires: bzlib-devel libattr-devel libblkid-devel libe2fs-devel libgcrypt-devel liblzma-devel liblzo2-devel libuuid-devel python-module-junos-eznc python3-module-zope zlib-devel
+BuildRequires: bzlib-devel libattr-devel libblkid-devel libe2fs-devel libgcrypt-devel liblzma-devel liblzo2-devel libuuid-devel zlib-devel
 
 BuildRequires: libcom_err-devel libgpg-error-devel
 
@@ -162,6 +162,9 @@ install -pD -m640 %SOURCE3 %buildroot/%_desktopdir/%sname.desktop
 %_datadir/polkit-1/actions/org.project.pkexec.run-%sname.policy
 
 %changelog
+* Thu Jul 22 2021 Stanislav Levin <slev@altlinux.org> 0.8.4.0-alt4
+- Dropped unused dependencies on Python packages.
+
 * Tue Apr 06 2021 Grigory Ustinov <grenka@altlinux.org> 0.8.4.0-alt3
 - Fixed FTBFS with -fcommon.
 
