@@ -1,10 +1,10 @@
 %define oname pytest-services
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.0.1
-Release: alt1
+Release: alt2
 Summary: Services plugin for pytest testing framework
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.python.org/pypi/pytest-services/
 # https://github.com/pytest-dev/pytest-services.git
@@ -15,25 +15,13 @@ BuildRequires: python3-module-html5lib python3-module-mysqlclient python3-module
 BuildRequires: python3-module-pytest-cov python3-module-tox python3-module-unittest2
 BuildRequires: python3-tools-pep8
 
-%py_provides pytest_services
-%py_requires requests psutil subprocess32
-# we have several versions of Django
-# so, we cannot rely on auto-requires
-%filter_from_requires /^python2\.7(django\(\..*\)\?)/d
-%filter_from_requires /^python3(django\(\..*\)\?)/d
-
-
-%description
-The plugin provides a set of fixtures and utility functions to start
-service processes for your tests with pytest.
-
-%package -n python3-module-%oname
-Summary: Services plugin for pytest testing framework
-Group: Development/Python
 %py3_provides pytest_services
 %py3_requires requests psutil
+# we have several versions of Django
+# so, we cannot rely on auto-requires
+%filter_from_requires /^python3(django\(\..*\)\?)/d
 
-%description -n python3-module-%oname
+%description
 The plugin provides a set of fixtures and utility functions to start
 service processes for your tests with pytest.
 
@@ -49,11 +37,14 @@ service processes for your tests with pytest.
 %check
 py.test3 -vv --fixtures tests
 
-%files -n python3-module-%oname
+%files
 %doc *.rst docs/*.rst docs/api
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt2
+- Rename package, cleanup spec.
+
 * Tue Dec 03 2019 Anton Farygin <rider@altlinux.ru> 2.0.1-alt1
 - 2.0.1
 
