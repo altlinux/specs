@@ -8,24 +8,17 @@ Whoosh works can be extended or replaced to meet your needs exactly.
 
 Name: %fname
 Version: 2.7.4
-Release: alt1
+Release: alt2
 
-%if ""==""
 Summary: Fast pure-Python indexing and search library
 Group: Development/Python
-%else
-Summary: Documentation for %oname
-Group: Development/Documentation
-%endif
 
 License: BSD
 URL: https://bitbucket.org/mchaput/whoosh/wiki/Home
 # hg clone https://bitbucket.org/mchaput/whoosh
 Source: %oname-%version.tar
 
-BuildRequires(pre): rpm-build-python rpm-macros-sphinx
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
-Buildrequires: python-module-sphinx-pickles python-module-setuptools time
+BuildRequires(pre): rpm-build-python
 
 BuildArch: noarch
 
@@ -42,88 +35,29 @@ BuildArch: noarch
 # ImportError: cannot import name 'find_object'
 %endif
 
-%if ""!=""
-Conflicts: %fname < %EVR
-Conflicts: %fname > %EVR
-%endif
-
 %description
 %descr
 
-%if ""!=""
-This package contains documentation for %oname.
-
-%package -n %fname-pickles
-Summary: Pickles for whoosh
-Group: Development/Python
-
-%description -n %fname-pickles
-%descr
-
-This package contains pickles for %oname.
-
-%else
-
-%package tests
-Summary: Tests for %oname
-Group: Development/Python
-Requires: %fname = %version-%release
-%if ""=="3"
-%py3_requires nose
-%endif
-
-%description tests
-%descr
-
-This package contains tests for %oname.
-
-%endif
-
 %prep
 %setup
-%if ""!=""
-%prepare_sphinx docs
-ln -s ../objects.inv docs/source/
-%endif
 
 %build
-%if ""==""
 %python_build
-%else
-mkdir docs/source/_static
-%generate_pickles docs/source docs/source %oname
-sphinx-build -E -a -b html -c docs/source -d doctrees docs/source html
-%endif
 
 %install
-%if ""!=""
-mkdir -p %buildroot%python_sitelibdir/%oname/
-cp -fR pickle %buildroot%python_sitelibdir/%oname/
-%else
 %python_install
 cp -fR src/whoosh/query src/whoosh/matching %buildroot%python_sitelibdir/%oname/
-%endif
+# don't ship tests
+rm %buildroot%python_sitelibdir/%oname/util/testing.py*
 
-%if ""==""
 %files
 %doc *.txt
 %python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/util/testing.py*
-
-%files tests
-%doc tests
-%python_sitelibdir/%oname/util/testing.py*
-
-%else
-
-%files
-%doc html/*
-
-%files -n %fname-pickles
-%python_sitelibdir/%oname/pickle
-%endif
 
 %changelog
+* Fri Jul 23 2021 Stanislav Levin <slev@altlinux.org> 2.7.4-alt2
+- Dropped unused docs deps.
+
 * Wed May 30 2018 Grigory Ustinov <grenka@altlinux.org> 2.7.4-alt1
 - Build new version.
 
