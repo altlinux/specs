@@ -13,15 +13,15 @@
 %def_with machines
 
 Name: pdsh
-Version: 2.29
-Release: alt2
+Version: 2.34
+Release: alt1
 
 Summary: Parallel remote shell program
-License: GPL
+License: GPLv2+
 Group: System/Base
 
 Url: http://sourceforge.net/projects/pdsh
-Source0: http://dl.sourceforge.net/sourceforge/pdsh/%name-%version.tar.bz2
+Source0: http://dl.sourceforge.net/sourceforge/pdsh/%name-%version.tar.gz
 Source1: dshdir.pl
 Source2: dshdir.1
 Source100: pdsh.watch
@@ -272,8 +272,8 @@ install -pDm644 %SOURCE1 %buildroot%_man1dir/dshdir.1
 ##############################################################################
 
 %files
-%doc COPYING README NEWS DISCLAIMER
-%doc README.KRB4 README.modules README.QsNet
+%doc COPYING README NEWS 
+%doc README.KRB4 README.modules
 %_bindir/pdsh
 %_bindir/pdcp
 %_bindir/rpdcp
@@ -401,6 +401,10 @@ fi
 ##############################################################################
 
 %changelog
+* Sat Jul 24 2021 Ilya Mashkin <oddity@altlinux.ru> 2.34-alt1
+- 2.34
+- Update License: GPLv2+
+
 * Tue Feb 05 2019 Michael Shigorin <mike@altlinux.org> 2.29-alt2
 - rebuilt against readline7
 
