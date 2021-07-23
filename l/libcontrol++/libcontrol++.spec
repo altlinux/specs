@@ -1,6 +1,6 @@
 Name: libcontrol++
-Version: 0.25.0
-Release: alt2
+Version: 0.25.1
+Release: alt1
 
 Summary: control++ common classes and functions library
 License: GPLv3
@@ -56,6 +56,10 @@ cp src/*.h %{buildroot}%{_includedir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Fri Jul 23 2021 Alexey Appolonov <alexey@altlinux.org> 0.25.1-alt1
+- Fix of the "GetPermModeString" function that could produce incorrect string
+  representation of a permission mode.
+
 * Thu May 13 2021 Alexey Appolonov <alexey@altlinux.org> 0.25.0-alt2
 - Build with debuginfo enabled.
 
