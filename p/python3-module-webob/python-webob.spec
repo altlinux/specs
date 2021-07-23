@@ -5,13 +5,8 @@ BuildRequires(pre): rpm-build-python rpm-build-python3
 %define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%if 0%{?fedora} || 0%{?rhel} > 7
-%global with_python3 1
 %{!?py3ver: %global py3ver %(%{__python3} -c "import sys ; print(sys.version[:3])")}
-%endif
 
-%{!?py2ver: %global py2ver %(%{__python} -c "import sys ; print sys.version[:3]")}
-%global with_tests 0
 
 %global modname webob
 %global desc WebOb provides wrappers around the WSGI request environment, and an object to \
@@ -20,10 +15,10 @@ HTTP, including header parsing and accessors for other standard parts of the \
 environment.
 
 
-Name:           python-module-webob
+Name:           python3-module-webob
 Summary:        WSGI request and response object
 Version:        1.8.6
-Release:        alt1
+Release:        alt2
 License:        MIT
 Group:          System/Libraries
 URL:            http://pythonpaste.org/webob/
@@ -32,42 +27,18 @@ Source1:        README.Fedora
 
 BuildArch:      noarch
 
-BuildRequires:  python-devel
-BuildRequires:  python-module-setuptools
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 
-%if 0%{?with_tests}
-BuildRequires:  python-module-dtopt
-BuildRequires:  python-module-tempita
-BuildRequires:  python-module-webtest
-BuildRequires:  python-module-nose
-BuildRequires:  pytest python-module-pytest
-%endif # with_tests
-
-%if 0%{?with_python3}
-BuildRequires:  python3-devel
-BuildRequires:  python3-module-setuptools
 %if 0%{?with_tests}
 BuildRequires:  python3-module-nose
 BuildRequires:  python3-module-pytest
 %endif # with_tests
-%endif
 Source44: import.info
 
 
 %description
 %{desc}
-
-
-%if 0%{?with_python3}
-%package -n python3-module-webob
-Summary:        %{summary}
-Group:          System/Libraries
-
-Requires:       python3
-
-%description -n python3-module-webob
-%{desc}
-%endif
 
 %prep
 %setup -q -n WebOb-%{version}
@@ -79,56 +50,25 @@ rm -f tests/performance_test.py
 # Remove an empty unneeded file that is there for scm purposes.
 rm docs/_static/.empty
 
-%if 0%{?with_python3}
-rm -rf %{_builddir}/python3-%{oldname}-%{version}-%{release}
-cp -a . %{_builddir}/python3-%{oldname}-%{version}-%{release}
-%endif
-
 %build
-%{__python} setup.py build
-
-%if 0%{?with_python3}
-pushd %{_builddir}/python3-%{oldname}-%{version}-%{release}
 %{__python3} setup.py build
-popd
-%endif
 
 %install
-%if 0%{?with_python3}
-pushd %{_builddir}/python3-%{oldname}-%{version}-%{release}
 %{__python3} setup.py install --skip-build --root %{buildroot}
-popd
-%endif
-
-mkdir -p %{buildroot}%{python_sitelibdir_noarch}
-%{__python} setup.py install --skip-build --root %{buildroot}
 
 %check
-%if 0%{?with_tests}
-%{__python} setup.py test
-
-%if 0%{?with_python3}
-pushd %{_builddir}/python3-%{oldname}-%{version}-%{release}
 %{__python3} setup.py test
-popd
-%endif
-%endif # with_tests
 
-%files -n python-module-webob
-%doc --no-dereference docs/license.txt
-%doc docs/* README.Fedora
-%{python_sitelibdir_noarch}/webob/
-%{python_sitelibdir_noarch}/WebOb-%{version}-py%{py2ver}.egg-info
-
-%if 0%{?with_python3}
-%files -n python3-module-webob
+%files
 %doc --no-dereference docs/license.txt
 %doc docs/* README.Fedora
 %{python3_sitelibdir_noarch}/webob/
 %{python3_sitelibdir_noarch}/WebOb-%{version}-py%{py3ver}.egg-info
-%endif
 
 %changelog
+* Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 1.8.6-alt2
+- Drop python2 support.
+
 * Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 1.8.6-alt1
 - new version
 
