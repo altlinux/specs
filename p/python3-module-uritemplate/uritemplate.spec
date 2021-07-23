@@ -1,81 +1,43 @@
 %define oname uritemplate
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 3.0.1
-Release: alt1
+Release: alt2
 
 Summary: Python implementation of RFC6570, URI Template
 License: Apache-2.0 or BSD-3-Clause
-Group: Development/Python
+Group: Development/Python3
 
 Url: https://pypi.python.org/pypi/uritemplate
 
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-%endif
 
-%setup_python_module %oname
-%py_provides %oname
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-modules python-modules-compiler python-modules-email python3 python3-base
-BuildRequires: python-devel rpm-build-python3
-
-%description
-This is a Python implementation of RFC6570, URI Template, and can expand
-templates up to and including Level 4 in that specification.
-
-%package -n python3-module-%oname
-Summary: Python implementation of RFC6570, URI Template
-Group: Development/Python3
 %py3_provides %oname
 
-%description -n python3-module-%oname
+%description
 This is a Python implementation of RFC6570, URI Template, and can expand
 templates up to and including Level 4 in that specification.
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc README.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc README.rst
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt2
+- Drop python2 support.
+
 * Wed Jan 01 2020 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
 - Build new version.
 
