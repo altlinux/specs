@@ -1,19 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Metrics-Any
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(List/Util.pm) perl(Module/Build.pm) perl(Test/Fatal.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.06
-Release: alt2
+Version: 0.07
+Release: alt1
 Summary: abstract collection of monitoring metrics
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -48,10 +48,13 @@ required to perform that reporting).
 %perl_vendor_install
 
 %files
-%doc Changes README LICENSE
+%doc Changes README
 %perl_vendor_privlib/M*
 
 %changelog
+* Sat Jul 24 2021 Igor Vlasenko <viy@altlinux.org> 0.07-alt1
+- automated CPAN update
+
 * Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2
 - to Sisyphus as IO-Async dep
 
