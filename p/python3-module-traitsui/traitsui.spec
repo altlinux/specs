@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 7.2.1
-Release: alt2
+Release: alt3
 Summary: A set of user interface tools designed to complement Traits
 Group: Development/Python3
 License: EPL-1.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause
@@ -21,11 +21,9 @@ Patch1: %oname-alt-docs.patch
 Patch2: %oname-mayavi-altbug-40382-hack.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setupdocs
 
 %if_disabled bootstrap
 BuildRequires(pre): python3-module-sphinx-devel
-BuildRequires: python3-module-setupdocs
 BuildRequires: python3-module-traits
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 %endif
@@ -162,6 +160,9 @@ cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sat Jul 24 2021 Grigory Ustinov <grenka@altlinux.org> 7.2.1-alt3
+- NMU: fixed BuildRequires.
+
 * Tue Jul 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.2.1-alt2
 - Added NoneType comparison behaviour similar to python-2 (Closes: #40382).
 
