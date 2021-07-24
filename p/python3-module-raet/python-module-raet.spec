@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.6.5.git.f2a25d18
-Release: alt2
+Release: alt3
 
 Summary: RAET (Reliable Asynchronous Event Transport) Protocol
 License: ASL 2.0
@@ -13,8 +13,6 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setupdocs
-
 
 %description
 Modern large scale distributed application architectures, wherein
@@ -58,6 +56,9 @@ Test files for %oname
 
 
 %changelog
+* Sat Jul 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.6.5.git.f2a25d18-alt3
+- Fixed BuildRequires.
+
 * Wed Jan 15 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.6.5.git.f2a25d18-alt2
 - porting on python3
 
