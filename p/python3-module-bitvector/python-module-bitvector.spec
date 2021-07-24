@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 3.4.4
-Release: alt2
+Release: alt3
 
 Summary: A pure-Python memory-efficient packed representation for bit arrays
 
@@ -15,8 +15,6 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setupdocs
-
 
 %description
 The BitVector.py module is for a memory-efficient packed
@@ -39,6 +37,9 @@ vectors.
 
 
 %changelog
+* Sat Jul 24 2021 Grigory Ustinov <grenka@altlinux.org> 3.4.4-alt3
+- Fixed BuildRequires.
+
 * Wed Jan 15 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.4.4-alt2
 - porting on python3
 
