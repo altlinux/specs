@@ -2,12 +2,12 @@
 
 Name: python3-module-%oname
 Version: 1.7.1
-Release: alt1
+Release: alt2
 
 Summary: This library is used to gain direct access to the functions exposed by Daniel J. Bernstein's nacl library via libsodium or tweetnacl
 
-License: ASL 2.0
-Group: Development/Python
+License: Apache-2.0
+Group: Development/Python3
 Url: https://github.com/saltstack/libnacl
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
 BuildArch: noarch
@@ -15,7 +15,6 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setupdocs
 
 Requires: libsodium23
 
@@ -43,6 +42,11 @@ file binding to all of nacl.
 
 
 %changelog
+* Sat Jul 24 2021 Grigory Ustinov <grenka@altlinux.org> 1.7.1-alt2
+- Fixed BuildRequires.
+- Fixed License tag.
+- Fixed Group tag.
+
 * Wed Jan 15 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.7.1-alt1
 - Version updated to 1.7.1
 - porting on python3
