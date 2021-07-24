@@ -16,7 +16,7 @@ including quicklists.
 
 Name: arronax
 Version: 0.8
-Release: alt1
+Release: alt2
 
 Summary: Create and modify application, file and URI starters
 
@@ -80,6 +80,8 @@ License: GPLv3
 %_bindir/%name
 %_datadir/%name
 %_man1dir/%name.*
+%_iconsdir/hicolor/*/*.png
+%_iconsdir/hicolor/scalable/apps/arronax.svg
 
 %files -n python3-module-%name
 %python3_sitelibdir_noarch/%name
@@ -95,5 +97,8 @@ License: GPLv3
 %_datadir/caja-python/extensions/caja-arronax.py
 
 %changelog
+* Sat Jul 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.8-alt2
+- Add icons package (thx to mike@).
+
 * Wed Jul 07 2021 Grigory Ustinov <grenka@altlinux.org> 0.8-alt1
 - Initial build for Sisyphus (Closes: #39066).
