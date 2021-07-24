@@ -1,5 +1,5 @@
 Version: 1.1.2
-Release: alt1.2
+Release: alt1.3
 %setup_python_module pyxmpp
 Name: %packagename
 Summary: XMPP-IM-compliant library for jabber instant messenging
@@ -16,7 +16,7 @@ Packager: Fr. Br. George <george@altlinux.ru>
 BuildRequires(pre): rpm-macros-make
 
 # Automatically added by buildreq on Sat Jul 29 2006
-BuildRequires: libxml2-devel python-module-dns python-modules-libxml2 python-module-epydoc
+BuildRequires: libxml2-devel python-module-dns python-modules-libxml2
 
 Requires: python-module-dns python-modules-libxml2
 
@@ -43,7 +43,6 @@ subst 's|python |%__python |' $(find ./ -name 'Makefile')
 
 %build
 %make_ext build
-%make doc
 
 %install
 %makeinstall DESTDIR=$RPM_BUILD_ROOT/
@@ -55,9 +54,10 @@ subst 's|python |%__python |' $(find ./ -name 'Makefile')
 %python_sitelibdir/%modulename
 %python_sitelibdir/*.egg-info
 
-%doc doc/*
-
 %changelog
+* Sat Jul 24 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.2-alt1.3
+- Fixed BuildRequires.
+
 * Thu Aug 13 2020 Pavel Vasenkov <pav@altlinux.org> 1.1.2-alt1.2
 - NMU: set correct python2 executable in shebang and script
 
