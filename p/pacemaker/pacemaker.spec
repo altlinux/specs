@@ -10,7 +10,7 @@
 
 Name:    pacemaker
 Summary: Scalable High-Availability cluster resource manager
-Version: 2.0.5
+Version: 2.1.0
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Url:     http://www.clusterlabs.org
@@ -181,17 +181,22 @@ manager.
 
 subst 's|/usr/bin/help2man|/usr/bin/help2man --no-discard-stderr|g' tools/Makefile
 
-%make_build V=1
+%make_build
+# Hack to fix undefined symbol get_object_root
+cd lib/pengine
+make clean
+subst 's|^libpe_status_la_LIBADD = |libpe_status_la_LIBADD = $(top_builddir)/lib/cib/libcib.la |' Makefile
+%make_build LDFLAGS=-L../cib/.libs
 
 %install
 %makeinstall_std
 
 mkdir -p %buildroot%_var/lib/pacemaker/cores
-install -D -m 644 daemons/pacemakerd/pacemaker.sysconfig %buildroot%_sysconfdir/sysconfig/pacemaker
+install -D -m 644 etc/sysconfig/pacemaker %buildroot%_sysconfdir/sysconfig/pacemaker
 install -D -m 755 pacemaker.init %buildroot%_initdir/pacemaker
 
 # Copy configuration for pacemaker_remote and use it in init script
-install -D -m 644 daemons/pacemakerd/pacemaker.sysconfig %buildroot%_sysconfdir/sysconfig/pacemaker_remote
+install -D -m 644 etc/sysconfig/pacemaker %buildroot%_sysconfdir/sysconfig/pacemaker_remote
 subst 's|/etc/sysconfig/pacemaker|/etc/sysconfig/pacemaker_remote|' %buildroot%_initdir/pacemaker_remote
 install -D -m 755 pacemaker_remote.init %buildroot%_initdir/pacemaker_remote
 
@@ -262,6 +267,7 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 /usr/lib/ocf/resource.d/pacemaker/remote
 
 %files cli
+%config(noreplace) %_sysconfdir/sysconfig/crm_mon
 %_sbindir/attrd_updater
 %_sbindir/cibadmin
 %_sbindir/crm_attribute
@@ -336,6 +342,10 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_datadir/pacemaker/api
 
 %changelog
+* Thu Jun 24 2021 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1
+- New version.
+- Security fix CVE-2020-25654 in 2.0.5.
+
 * Fri Jan 08 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.5-alt1
 - New version.
 
@@ -349,11 +359,13 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 
 * Sun Jun 16 2019 Alexey Shabalin <shaba@altlinux.org> 2.0.2-alt1
 - New version.
+- Security fixes CVE-2018-16878, CVE-2019-3885.
 
 * Wed Mar 06 2019 Alexey Shabalin <shaba@altlinux.org> 2.0.1-alt1
 - New version.
 - build with python3
 - move schemas to sepatated package
+- security fix CVE-2018-16877
 
 * Thu Oct 04 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
 - New version.
@@ -375,6 +387,7 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 
 * Sat Dec 24 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.16-alt1
 - New version
+- Security fix CVE-2016-7035
 
 * Fri Sep 23 2016 Alexey Shabalin <shaba@altlinux.ru> 1.1.15-alt3
 - do not package fence files
@@ -386,6 +399,7 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 
 * Mon Jun 27 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.15-alt1
 - New version
+- Security fix CVE-2016-7797
 
 * Fri Jan 22 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.14-alt2
 - Fix initscripts and paths
@@ -395,6 +409,7 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 
 * Sat Oct 17 2015 Andrey Cherepanov <cas@altlinux.org> 1.1.13-alt1
 - New version
+- Security fix CVE-2015-1867
 
 * Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.1.10-alt4
 - NMU: added missing Pod dependencies
