@@ -11,8 +11,8 @@ branches, it seems like a good time to make that code into a proper \
 re-usable library.
 
 Name:       python3-module-%pypi_name
-Version:    5.5.1
-Release:    alt3
+Version:    5.6.0
+Release:    alt1
 
 Summary:    Python Build Reasonableness
 
@@ -26,7 +26,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3-module-setuptools python3-module-unittest2 python3-module-d2to1
+BuildRequires: python3-module-unittest2
 %if_with doc
 BuildRequires: python3-module-sphinx python3-module-sphinxcontrib-apidoc
 %endif
@@ -77,6 +77,9 @@ rm -fv %buildroot%python3_sitelibdir/%pypi_name/sphinxext.py
 %python3_sitelibdir/%pypi_name
 
 %changelog
+* Sat Jul 24 2021 Grigory Ustinov <grenka@altlinux.org> 5.6.0-alt1
+- Build new version.
+
 * Tue Apr 27 2021 Vitaly Lipatov <lav@altlinux.ru> 5.5.1-alt3
 - drop pbr.sphinxext
 
