@@ -1,6 +1,6 @@
 Name: openstack-swift
 Version: 2.25.0
-Release: alt1
+Release: alt2
 Summary: OpenStack Object Storage (Swift)
 
 Group: System/Servers
@@ -63,11 +63,8 @@ Source7: swift.conf
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-pbr
-BuildRequires: python3-module-d2to1
 BuildRequires: python3-module-dns >= 1.9.4
 BuildRequires: python3-module-eventlet >= 0.25.0
 BuildRequires: python3-module-greenlet >= 0.3.2
@@ -454,6 +451,9 @@ done
 #doc/build/html
 
 %changelog
+* Sat Jul 24 2021 Grigory Ustinov <grenka@altlinux.org> 2.25.0-alt2
+- Fixed BuildRequires.
+
 * Sat May 16 2020 Grigory Ustinov <grenka@altlinux.org> 2.25.0-alt1
 - Automatically updated to 2.25.0.
 - Renamed spec file.
