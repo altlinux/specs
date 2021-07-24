@@ -1,11 +1,11 @@
 Name:     kde5-kup
-Version:  0.7.3
+Version:  0.9.1
 Release:  alt1
 
 Summary:  Kup is a KDE-based frontend for the very excellent bup backup software, that gives you easy and fast incremental backups!
-License:  GPLv2+
+License:  GPL-2.0+
 Group:    Archiving/Backup
-URL:      https://github.com/spersson/Kup
+URL:      https://invent.kde.org/system/kup.git
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -46,7 +46,6 @@ that gives you easy and fast incremental backups!
 %setup -n kup-%version
 
 %build
-#add_optflags -fPIC
 %K5init no_altplace
 %K5build -DQMAKE_EXECUTABLE=%_bindir/qmake-qt5
 
@@ -57,9 +56,7 @@ that gives you easy and fast incremental backups!
 %files -f %name.lang
 %doc README.md
 %_bindir/kup-*
-%_K5link/libgit24kup.so
 %_K5start/kup-daemon.desktop
-%_libdir/libgit24kup.so.*
 %_libdir/libkdeinit5_kup-daemon.so
 %_qt5_plugindir/*.so
 %_qt5_plugindir/plasma/dataengine/*.so
@@ -70,9 +67,15 @@ that gives you easy and fast incremental backups!
 %_K5srv/*.desktop
 %_datadir/metainfo/*.appdata.xml
 %_K5srv/kcm_kup.desktop
-%_iconsdir/hicolor/scalable/apps/kup.svgz
+%_iconsdir/hicolor/scalable/apps/kup.svg
+%_K5data/plasma/services/kupdaemonservice.operations
+%_datadir/qlogging-categories5/kup.categories
 
 %changelog
+* Sat Jul 24 2021 Andrey Cherepanov <cas@altlinux.org> 0.9.1-alt1
+- New version.
+- New upstream URL.
+
 * Sat Feb 09 2019 Andrey Cherepanov <cas@altlinux.org> 0.7.3-alt1
 - New version.
 
