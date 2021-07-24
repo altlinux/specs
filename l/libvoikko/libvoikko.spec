@@ -1,28 +1,37 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libtinyxml2-devel python-devel
 # END SourceDeps(oneline)
-Group: System/Libraries
-%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%define fontpkgname libvoikko
+%global _hardened_build 1
+
 Name:           libvoikko
-Version:        4.1.1
-Release:        alt1_5
+Version:        4.3.1
+Release:        alt1_0
 Summary:        Voikko is a library for spellcheckers and hyphenators
 
 License:        GPLv2+
-URL:            http://voikko.puimula.org
+URL:            https://voikko.puimula.org
 # The usual format of stable release URLs
-Source0:        http://www.puimula.org/voikko-sources/%{name}/%{name}-%{version}.tar.gz
+Source0:        https://www.puimula.org/voikko-sources/%{name}/%{name}-%{version}.tar.gz
 # The usual format of test release URLs
-#Source0:        http://www.puimula.org/htp/testing/%%{name}-%%{version}rc1.tar.gz
+#Source0:        https://www.puimula.org/htp/testing/%%{name}-%%{version}rc1.tar.gz
 
+# See https://voikko.puimula.org/sources.html for the key fingerprint.
+# I did
+#  gpg --recv-keys "AC5D 65F1 0C85 96D7 E2DA  E263 3D30 9B60 4AE3 942E"
+# and then
+#  gpg2 --export --export-options export-minimal AC5D65F10C8596D7E2DAE2633D309B604AE3942E > gpgkey-AC5D65F10C8596D7E2DAE2633D309B604AE3942E.gpg
+Source1:        http://www.puimula.org/voikko-sources/%{name}/%{name}-%{version}.tar.gz.asc
+Source2:        gpgkey-AC5D65F10C8596D7E2DAE2633D309B604AE3942E.gpg
+
+#Requires: voikko-fi
 BuildRequires:  gcc-c++
 BuildRequires:  python3-devel
-# Require the Finnish morphology because Finnish is currently the only language
-# supported by libvoikko in Fedora.
-Requires:       malaga-suomi-voikko
+BuildRequires: gnupg2
 Source44: import.info
 
 %description
@@ -62,7 +71,6 @@ Group: Development/Other
 Summary:        Python interface to %{name}
 Requires:       %{name} = %{version}-%{release}
 BuildArch:      noarch
-%{?python_provide:%python_provide python3-libvoikko}
 
 %description -n python3-module-libvoikko
 Python interface to libvoikko, library of Finnish language tools.
@@ -70,13 +78,17 @@ This module can be used to perform various natural language analysis
 tasks on Finnish text.
 
 %prep
+
 %setup -q
 
 
+
 %build
-# The dictionary path must be the same where malaga-suomi-voikko is installed
-# Use malaga for now, no hfst or vfst. We need to package foma for the vfst dictionaries.
-%configure --with-dictionary-path=%{_libdir}/voikko --disable-hfst --disable-vfst --disable-buildtools --enable-malaga
+# Use vfst for now, no hfst yet. We need to package hfst-ospell for the hfst dictionaries.
+# Use /usr/lib/voikko for the dictionaries, this is where the voikko-fi package will put them.
+# The dictonary path has been agreed on in reviews and fedora-devel discussions.
+# This way the voikko-fi package can be noarch.
+%configure --disable-hfst --with-dictionary-path=%{_prefix}/lib/voikko
 # Remove rpath,
 # https://fedoraproject.org/wiki/Packaging/Guidelines#Removing_Rpath
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -92,32 +104,40 @@ find $RPM_BUILD_ROOT -name '*.a' -exec rm -f {} ';'
 # Install the Python interface
 install -d $RPM_BUILD_ROOT%{python3_sitelibdir_noarch}
 install -pm 0644 python/libvoikko.py $RPM_BUILD_ROOT%{python3_sitelibdir_noarch}/
-
-
+# Make the directory for the dictionary data files, so this package can own it.
+mkdir -p %{buildroot}%{_prefix}/lib/voikko
 
 
 %files
-%doc ChangeLog COPYING README
-%{_libdir}/*.so.*
+%doc ChangeLog README
+%doc --no-dereference COPYING
+%dir %{_prefix}/lib/voikko
+%{_libdir}/libvoikko.so.1*
 
 %files -n voikko-tools
 %{_bindir}/voikkospell
 %{_bindir}/voikkohyphenate
 %{_bindir}/voikkogc
+%{_bindir}/voikkovfstc
 %{_mandir}/man1/voikkohyphenate.1*
 %{_mandir}/man1/voikkospell.1*
 %{_mandir}/man1/voikkogc.1*
+%{_mandir}/man1/voikkovfstc.1*
 
 %files devel
 %{_includedir}/*
-%{_libdir}/*.so
+%{_libdir}/libvoikko.so
 %{_libdir}/pkgconfig/libvoikko.pc
 
 %files -n python3-module-libvoikko
-%{python3_sitelibdir_noarch}/%{name}.py*
-%{python3_sitelibdir_noarch}/__pycache__/*
+%{python3_sitelibdir_noarch}/%{name}.py
+%{python3_sitelibdir_noarch}/__pycache__/%{name}.cpython-3*.pyc
+%{python3_sitelibdir_noarch}/__pycache__/%{name}.cpython-3*.opt-?.pyc
 
 %changelog
+* Sat Jul 24 2021 Igor Vlasenko <viy@altlinux.org> 4.3.1-alt1_0
+- bootstrap w/o voikko-fi dependency
+
 * Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_5
 - update to new release by fcimport
 
