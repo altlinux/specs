@@ -1,8 +1,8 @@
 %def_with bootstrap
 
 Name: rpm-build-perl
-Version: 0.84
-Release: alt20
+Version: 0.85
+Release: alt1
 
 Summary: RPM helper scripts to calculate Perl dependencies
 License: GPLv2+
@@ -79,6 +79,9 @@ install -pm644 macros.env %buildroot%_rpmmacrosdir/perl5.env
 %config %_rpmmacrosdir/perl5.env
 
 %changelog
+* Tue Jul 13 2021 Igor Vlasenko <viy@altlinux.org> 0.85-alt1
+- added %%(add|remove)_perl_vendor_optflags
+
 * Thu Apr 23 2020 Igor Vlasenko <viy@altlinux.ru> 0.84-alt20
 - migrated to libdb4.8
 
