@@ -4,11 +4,11 @@
 
 Name: qpid-proton
 Version: 0.28.0
-Release: alt1.1
+Release: alt2
 Summary: A high performance, lightweight messaging library
 Group: System/Libraries
 
-License: ASL 2.0
+License: Apache-2.0
 Url: http://qpid.apache.org/proton/
 
 %define proton_datadir %_datadir/proton-%version
@@ -26,10 +26,7 @@ BuildRequires: libssl-devel
 BuildRequires: libsasl2-devel
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-epydoc
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 
 %description
 Proton is a high performance, lightweight messaging library. It can be used in
@@ -217,6 +214,9 @@ rm -rf %buildroot%proton_datadir/CMakeLists.txt
 %endif
 
 %changelog
+* Sat Jul 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.28.0-alt2
+- NMU: fixed BuildRequires.
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 0.28.0-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
