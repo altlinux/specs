@@ -2,11 +2,11 @@
 
 Name: python3-module-%oname
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: Flow Based Programming Automated Reasoning Engine and Automation Operation System
 
-License: ASL 2.0
+License: Apache-2.0
 Group: Development/Python3
 Url: https://github.com/ioflo/ioflo.git
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
@@ -19,8 +19,6 @@ Patch0: port-on-python3.patch
 %python3_req_hier
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setupdocs
-
 
 %description
 IoFlo is configured in a convenient user friendly scripting language
@@ -45,6 +43,10 @@ called FloScript.
 
 
 %changelog
+* Sat Jul 24 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt2
+- Fixed BuildRequires.
+- Fixed License tag.
+
 * Wed Jan 15 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.0.0-alt1
 - Version updated to 2.0.0
 - porting on python3
