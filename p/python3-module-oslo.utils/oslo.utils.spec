@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 4.1.1
-Release: alt1
+Release: alt2
 
 Summary: OpenStack Oslo Utility library
 
@@ -17,10 +17,7 @@ BuildArch: noarch
 Provides: python3-module-oslo-utils = %EVR
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
-BuildRequires: python3-module-d2to1
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-iso8601 >= 0.1.11
@@ -88,6 +85,9 @@ rm -rf html/.{doctrees,buildinfo}
 %doc LICENSE html
 
 %changelog
+* Sat Jul 24 2021 Grigory Ustinov <grenka@altlinux.org> 4.1.1-alt2
+- Fixed BuildRequires.
+
 * Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 4.1.1-alt1
 - Automatically updated to 4.1.1.
 - Unify documentation building.
