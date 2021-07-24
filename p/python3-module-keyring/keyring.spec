@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 12.0.0
-Release: alt5
+Release: alt6
 Summary: Keyring provides an easy way to access the system keyring service
 
 License: MIT
@@ -16,7 +16,6 @@ Source: %oname-%version.tar
 Patch0: fix_deps.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python-module-setuptools_scm
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -65,6 +64,9 @@ This package contains tests for keyring.
 %python3_sitelibdir/*/tests
 
 %changelog
+* Sat Jul 24 2021 Grigory Ustinov <grenka@altlinux.org> 12.0.0-alt6
+- Fixed BuildRequires.
+
 * Thu Jul 15 2021 Grigory Ustinov <grenka@altlinux.org> 12.0.0-alt5
 - Drop python2 support.
 
