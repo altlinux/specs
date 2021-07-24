@@ -1,6 +1,6 @@
 Name:           pology
 Version:        0.12
-Release:        alt2.1
+Release:        alt2.2
 Summary:        Pology is a Python library and collection of command-line tools for in-depth processing of PO files
 
 License:        GPL-3.0+
@@ -17,8 +17,7 @@ BuildRequires:  docbook-style-xsl
 BuildRequires:  libxml2-devel
 BuildRequires:  python-devel
 BuildRequires:  python-module-distribute
-BuildRequires:  python-module-epydoc
-BuildRequires:  xmllint 
+BuildRequires:  xmllint
 BuildRequires:  xsltproc
 
 %description
@@ -50,6 +49,9 @@ subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
 %python_sitelibdir/%name
 
 %changelog
+* Sat Jul 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.12-alt2.2
+- NMU: fixed BuildRequires.
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 0.12-alt2.1
 - NMU: spec: adapted to new cmake macros.
 
