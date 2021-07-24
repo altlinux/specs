@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.0.6
-Release: alt2
+Release: alt3
 Summary: CSS Minifier
 License: Apache-2.0
 Group: Development/Python3
@@ -12,7 +12,6 @@ Url: https://pypi.python.org/pypi/%oname
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: /usr/bin/epydoc
 
 %py3_provides %oname
 
@@ -28,16 +27,14 @@ rCSSmin is a CSS minifier written in python.
 %install
 %python3_install
 
-export PYTHONPATH=%buildroot%python3_sitelibdir
-pushd docs
-epydoc --config=epydoc.conf
-popd
-
 %files
 %doc %_docdir/%oname
 %python3_sitelibdir/*
 
 %changelog
+* Sat Jul 24 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.6-alt3
+- Fixed BuildRequires.
+
 * Tue May 25 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.6-alt2
 - Drop python2 support.
 
