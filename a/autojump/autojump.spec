@@ -10,7 +10,7 @@ Requires: bash-completion
 
 Name:           autojump
 Version:        22.5.3
-Release:        alt1_6
+Release:        alt1_7
 
 Summary:        A fast way to navigate your filesystem from the command line
 
@@ -25,7 +25,7 @@ BuildArch:      noarch
 BuildRequires:  pandoc
 BuildRequires:  python3-devel
 BuildRequires:  python3-module-mock
-BuildRequires:  pytest pytest3 python3-module-pytest
+BuildRequires:  pytest3 python3-module-pytest
 Source44: import.info
 
 %description
@@ -104,6 +104,9 @@ mv %{buildroot}%{_bindir}/%{name}_*.py %{buildroot}%{python3_sitelibdir_noarch}/
 %config(noreplace) %{_datadir}/%{name}/%{name}.fish
 
 %changelog
+* Sat Jul 24 2021 Grigory Ustinov <grenka@altlinux.org> 22.5.3-alt1_7
+- NMU: fixed BuildRequires.
+
 * Thu Jul 08 2021 Igor Vlasenko <viy@altlinux.org> 22.5.3-alt1_6
 - update to new release by fcimport
 
