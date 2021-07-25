@@ -13,7 +13,7 @@ re-usable library.
 
 Name:       python-module-%pypi_name
 Version:    5.5.0
-Release:    alt4
+Release:    alt5
 
 Summary:    Python Build Reasonableness
 
@@ -24,10 +24,10 @@ URL:        http://pypi.python.org/pypi/pbr
 # git://git.openstack.org/openstack-dev/pbr
 Source: %name-%version.tar
 
-BuildRequires: python-module-setuptools python-module-unittest2 python-module-d2to1
+BuildRequires: python-module-setuptools python-module-unittest2
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools python3-module-unittest2 python3-module-d2to1
+BuildRequires: python3-module-setuptools python3-module-unittest2
 BuildRequires: python3-module-sphinxcontrib-apidoc
 %endif
 
@@ -115,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Sun Jul 25 2021 Grigory Ustinov <grenka@altlinux.org> 5.5.0-alt5
+- fixed ftbfs
+
 * Mon Apr 26 2021 Vitaly Lipatov <lav@altlinux.ru> 5.5.0-alt4
 - don't pack bin tools
 
