@@ -1,12 +1,17 @@
 %set_verify_elf_method unresolved=strict
+%def_disable bootstrap
+%if_disabled bootstrap
 %def_enable gui
 %def_enable docs
 %def_disable jsoncpp_bootstrap
+%endif
 %def_without check
+%add_optflags %optflags_shared
+%define _cmake__builddir build
 
 Name: cmake
 Version: 3.21.0
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform, open-source make system
 
@@ -24,6 +29,10 @@ Patch: %name-%version-%release.patch
 Patch1: alt-fallback-modules-dir.patch
 Patch2: 696d16ae6c5214e314cfc7cb809c2e574bcff651.patch
 
+%if_disabled bootstrap
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
+%endif
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: bzlib-devel gcc-c++ libarchive-devel >= 2.8.4
 BuildRequires: libcurl-devel libexpat-devel libncurses-devel libxml2-devel
@@ -151,6 +160,7 @@ rm -rf cmake/Utilities/cmjsoncpp/
 %endif
 
 %build
+%if_enabled bootstrap
 mkdir build
 pushd build
 install -m644 %SOURCE2 ./
@@ -178,23 +188,42 @@ CFLAGS="%optflags" CXXFLAGS="%optflags" ../bootstrap \
 export LD_LIBRARY_PATH=$PWD/Source:$PWD/Source/kwsys/:$PWD/Source/CursesDialog/form%{?_enable_jsoncpp_bootstrap::$PWD/Utilities/cmjsoncpp}
 %make_build VERBOSE=1
 popd
-
+%else
+%cmake -DCMAKE_USE_SYSTEM_LIBRARIES=ON \
+    -DCMAKE_DATA_DIR=share/%name \
+    -DCMAKE_DOC_DIR=share/doc/%name-%version \
+    -DCMAKE_MAN_DIR=share/man \
+%if_enabled gui
+    -DBUILD_QtDialog=ON \
+%endif
+%if_enabled docs
+    -DSPHINX_HTML=ON -DSPHINX_MAN=ON \
+%endif
+    %nil
+%endif
+%cmake_build
 
 %install
 pushd build
+%if_enabled bootstrap
 export LD_LIBRARY_PATH=$PWD/Source:$PWD/Source/kwsys/:$PWD/Source/CursesDialog/form%{?_enable_jsoncpp_bootstrap::$PWD/Utilities/cmjsoncpp}
+%endif
 %makeinstall_std
 popd
-#install -m644 ChangeLog.manual %buildroot%_docdir/%name-%version
+
+# TODO: fix in the sources
 mv %buildroot/usr/lib %buildroot%_libdir || :
+
 %if_enabled jsoncpp_bootstrap
 cp build/Utilities/cmjsoncpp/libcmjsoncpp.so %buildroot%_libdir/
 %endif
+
 %if_with gui
 for i in 32 128; do
     install -pD -m644 Source/QtDialog/CMakeSetup$i.png %buildroot%_iconsdir/hicolor/${i}x$i/apps/CMakeSetup.png
 done
 %endif
+
 mkdir -p %buildroot{%vim_indent_dir,%vim_syntax_dir,%_sysconfdir/bash_completion.d}
 install -m644 Auxiliary/vim/indent/%name.vim %buildroot%vim_indent_dir/%name.vim
 install -m644 Auxiliary/vim/syntax/%name.vim %buildroot%vim_syntax_dir/%name.vim
@@ -301,6 +330,10 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Sat Jul 24 2021 Vitaly Lipatov <lav@altlinux.ru> 3.21.0-alt2
+- add bootstrap switch and build via cmake by default
+- add optflags_shared to optflags
+
 * Fri Jul 23 2021 Vitaly Lipatov <lav@altlinux.ru> 3.21.0-alt1
 - new version 3.21.0 (with rpmrb script)
 
