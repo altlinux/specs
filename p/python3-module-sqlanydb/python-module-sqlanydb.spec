@@ -2,15 +2,13 @@
 # -*- coding: utf-8 -*-
 %define oname sqlanydb
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.0.8
-Release: alt1
+Release: alt2
 Epoch: 1
 License: Apache
 BuildArch: noarch
-Group: Development/Python
+Group: Development/Python3
 Summary: Python interface for Sybase Anywhere DB
 Summary(ru_RU.UTF-8): Интерфейс к БД Sybase Anywhere для Python
 
@@ -18,65 +16,31 @@ Url: http://code.google.com/p/sqlanydb/
 
 Source0: https://pypi.python.org/packages/45/62/e0c80101e551fb16ca919cc80b1938ff225e0f20c3afdabf35d6ca79e52f/%{oname}-%{version}.tar.gz
 
-Requires: python >= 2.4
 Requires: libfreetds >= 0.64
-Requires: python-module-egenix-mx-base
 
-BuildPreReq: python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
 
 %description
 This a Google Code project providing a python interface to the
 SQL Anywhere Database. This interface conforms to PEP 249.
 
-%package -n python3-module-%oname
-Summary: Python interface for Sybase Anywhere DB
-Group: Development/Python3
-Requires: libfreetds >= 0.64
-
-%description -n python3-module-%oname
-This a Google Code project providing a python interface to the
-SQL Anywhere Database. This interface conforms to PEP 249.
-
 %prep
-%setup -q -n %{oname}-%{version}
-
-%if_with python3
-cp -fR . ../python3
-%endif
+%setup -n %{oname}-%{version}
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 1:1.0.8-alt2
+- Drop python2 support.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0.8-alt1
 - automated PyPI update
 
