@@ -1,6 +1,6 @@
 #define status beta
 Name: rosegarden
-Version: 20.06
+Version: 21.06
 Release: alt1
 
 Summary: MIDI and audio sequencer and musical notation editor
@@ -56,6 +56,9 @@ find -type f -print0 -name '*.cpp' -o -name '*.h' |
 %_datadir/mime/packages/*
 
 %changelog
+* Sun Jul 25 2021 Vitaly Lipatov <lav@altlinux.ru> 21.06-alt1
+- new version 21.06 (ALT bug 40573)
+
 * Mon Sep 07 2020 Vitaly Lipatov <lav@altlinux.ru> 20.06-alt1
 - new version 20.06
 
