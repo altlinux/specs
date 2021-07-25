@@ -1,38 +1,23 @@
 %define version 0.9.6.1
-%define release alt1
-%setup_python_module vobject
+%define modulename vobject
 
-Name: python-module-vobject
+Name: python3-module-vobject
 Version: %version
-Release: alt1
+Release: alt2
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Summary: Python module for parsing and generating vCard files
 License: ASL 1.1
-Group: Development/Python
+Group: Development/Python3
 Url: http://vobject.skyhouseconsulting.com
 BuildArch: noarch
 
 Source0: %modulename-%version.tar
 #VCS: https://github.com/eventable/vobject
 
-BuildRequires:  python-module-setuptools
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 
 %description
-vobject is intended to be a full featured Python package for parsing
-and generating vCard and vCalendar files.
-
-Currently, iCalendar files are supported and well tested. vCard 3.0
-files are supported, and all data should be imported, but only a few
-components are understood in a sophisticated way.
-
-%package -n python3-module-%modulename
-Summary: Python module for parsing and generating vCard files
-Group: Development/Python3
-
-%description -n python3-module-%modulename
 vobject is intended to be a full featured Python package for parsing
 and generating vCard and vCalendar files.
 
@@ -44,29 +29,21 @@ components are understood in a sophisticated way.
 %setup -n %modulename-%version
 # remove win32 files
 rm -f vobject/win32tz.py
-rm -rf ../python3
-cp -a . ../python3
 
 %build
-%python_build
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install 
-pushd ../python3
 %python3_install
-popd
 
 %files
 %doc ACKNOWLEDGEMENTS.txt LICENSE-2.0.txt README.md
-%python_sitelibdir/%{modulename}*
-
-%files -n python3-module-%modulename
 %python3_sitelibdir/%{modulename}*
 
 %changelog
+* Sun Jul 25 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.6.1-alt2
+- Drop python2 support.
+
 * Tue Jul 24 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.6.1-alt1
 - New version.
 
