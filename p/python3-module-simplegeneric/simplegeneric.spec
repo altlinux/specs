@@ -1,21 +1,20 @@
-%def_with python3
-
 %global modname simplegeneric
 
-Name:           python-module-%{modname}
+Name:           python3-module-%{modname}
 Version:        0.8.1
-Release:        alt1.1.1.1
+Release:        alt2
 Summary:        Simple generic functions (similar to Python's own len(), pickle.dump(), etc.)
 
-Group:          Development/Python
+Group:          Development/Python3
 License:        Python or ZPLv2.1
 URL:            http://cheeseshop.python.org/pypi/simplegeneric
-Source0:        %{name}-%{version}.zip
+Source0:        %{modname}-%{version}.zip
 
 BuildArch:      noarch
-BuildRequires:  python-devel unzip
-BuildRequires:  python-module-setuptools
-BuildRequires:  python-module-setuptools
+BuildRequires:  unzip
+BuildRequires:  rpm-build-python3
+BuildRequires:  python3-module-setuptools
+BuildRequires:  python-tools-2to3
 
 %description
 The simplegeneric module lets you define simple single-dispatch generic
@@ -24,84 +23,32 @@ so on. However, instead of using specially-named methods, these generic
 functions use simple lookup tables, akin to those used by e.g. pickle.dump()
 and other generic functions found in the Python standard library.
 
-
-%if_with python3
-%package -n python3-module-%{modname}
-Summary:        Simple generic functions (similar to Python's own len(), pickle.dump(), etc.)
-
-Group:          Development/Python
-License:        Python or ZPLv2.1
-
-BuildRequires:  rpm-build-python3
-BuildRequires:  python3-module-setuptools
-BuildRequires:  python3-module-setuptools
-BuildRequires:  python-tools-2to3
-
-%description -n python3-module-%{modname}
-The simplegeneric module lets you define simple single-dispatch generic
-functions, akin to Python's built-in generic functions like len(), iter() and
-so on. However, instead of using specially-named methods, these generic
-functions use simple lookup tables, akin to those used by e.g. pickle.dump()
-and other generic functions found in the Python standard library.
-%endif
-
-
 %prep
-%setup
+%setup -n %{modname}-%{version}
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-pushd ../python3
     2to3 --write --nobackups .
     sed -i "s/file(/open(/g" setup.py
-popd
-find ../python3 -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
-%endif
-
-find -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python}|'
+find . -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
-
-%python_install
 
 %check
-%if_with python3
-pushd ../python3
 PYTHONPATH=$(pwd) %{__python3} setup.py test
-popd
-%endif
-
-PYTHONPATH=$(pwd) %{__python} setup.py test
 
 %files
-%doc README.txt
-%{python_sitelibdir}/simplegeneric.py*
-%{python_sitelibdir}/simplegeneric-%{version}-py?.?.egg-info
-
-%if_with python3
-%files -n python3-module-%{modname}
 %doc README.txt
 %{python3_sitelibdir}/__pycache__/simplegeneric.cpython*
 %{python3_sitelibdir}/simplegeneric.py*
 %{python3_sitelibdir}/simplegeneric-%{version}-py?.?.egg-info
-%endif
 
 %changelog
+* Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt2
+- Drop python2 support.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.1-alt1.1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
