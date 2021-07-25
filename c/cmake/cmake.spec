@@ -11,7 +11,7 @@
 
 Name: cmake
 Version: 3.21.0
-Release: alt2
+Release: alt3
 
 Summary: Cross-platform, open-source make system
 
@@ -200,13 +200,16 @@ popd
     -DSPHINX_HTML=ON -DSPHINX_MAN=ON \
 %endif
     %nil
-%endif
 %cmake_build
+%endif
 
 %install
 pushd build
 %if_enabled bootstrap
 export LD_LIBRARY_PATH=$PWD/Source:$PWD/Source/kwsys/:$PWD/Source/CursesDialog/form%{?_enable_jsoncpp_bootstrap::$PWD/Utilities/cmjsoncpp}
+%else
+# FIXME
+subst 's|	bin/cmake|	$(CMAKE_COMMAND)|' Makefile
 %endif
 %makeinstall_std
 popd
@@ -330,6 +333,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Sat Jul 24 2021 Vitaly Lipatov <lav@altlinux.ru> 3.21.0-alt3
+- fix build
+
 * Sat Jul 24 2021 Vitaly Lipatov <lav@altlinux.ru> 3.21.0-alt2
 - add bootstrap switch and build via cmake by default
 - add optflags_shared to optflags
