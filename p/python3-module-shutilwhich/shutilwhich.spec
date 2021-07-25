@@ -1,75 +1,42 @@
 %define _unpackaged_files_terminate_build 1
 %define oname shutilwhich
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.1.0
-Release: alt2
+Release: alt3
 Summary: shutil.which for those not using Python 3.3 yet
 License: PSF
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/shutilwhich/
 BuildArch: noarch
 
 # https://github.com/mbr/shutilwhich.git
 Source: %oname-%version.tar.gz
 
-BuildRequires: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-%endif
 
-%py_provides %oname
+%py3_provides %oname
 
 %description
 A copy & paste backport of Python 3.3's shutil.which function.
 
-%package -n python3-module-%oname
-Summary: shutil.which for those not using Python 3.3 yet
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-A copy & paste backport of Python 3.3's shutil.which function.
-
 %prep
-%setup -q -n %oname-%version
-
-%if_with python3
-cp -fR . ../python3
-%endif
+%setup -n %oname-%version
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt3
+- Drop python2 support.
+
 * Wed Oct 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt2
 - Rebuilt to fix file permissions.
 
