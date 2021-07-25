@@ -5,13 +5,13 @@
 # bootstrap building docs (pillow is required by docutils, docutils are
 #  required by sphinx; pillow build-requires sphinx)
 %def_without docs
-%def_enable check
+%def_disable check
 
 %global py2_libbuilddir %(python2 -c 'import sys; import sysconfig; print("lib.{p}-{v[0]}.{v[1]}".format(p=sysconfig.get_platform(), v=sys.version_info))')
 
 Name: python-module-%oname
 Version: 6.2.0
-Release: alt3
+Release: alt4
 
 Summary: Python image processing library
 
@@ -30,7 +30,7 @@ Source: %name-%version.tar
 BuildRequires: rpm-build-intro >= 2.1.4
 
 BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-nose python-module-html5lib python-module-pytest
+BuildPreReq: python-module-nose python-module-html5lib
 BuildPreReq: python-modules-tkinter
 
 BuildRequires: tk-devel zlib-devel libwebp-devel libopenjpeg2.0-devel
@@ -201,6 +201,9 @@ popd
 %endif
 
 %changelog
+* Sun Jul 25 2021 Grigory Ustinov <grenka@altlinux.org> 6.2.0-alt4
+- disabled check.
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 6.2.0-alt3
 - fix build
 
