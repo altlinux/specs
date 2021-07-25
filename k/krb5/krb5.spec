@@ -8,8 +8,8 @@
 %def_enable check
 
 Name: krb5
-Version: 1.19.1
-Release: alt2
+Version: 1.19.2
+Release: alt1
 
 %if_without bootstrap
 %if_with doc
@@ -530,6 +530,9 @@ fi
 # {{{ changelog
 
 %changelog
+* Sun Jul 25 2021 Ivan A. Melnikov <iv@altlinux.org> 1.19.2-alt1
+- 1.19.2 (Fixes: CVE-2021-36222)
+
 * Mon Mar 15 2021 Ivan A. Melnikov <iv@altlinux.org> 1.19.1-alt2
 - Fix build on mipsel
 
