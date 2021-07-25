@@ -1,6 +1,6 @@
 Name: git
 Version: 2.29.3
-Release: alt2
+Release: alt3
 
 Summary: Git core and tools
 License: GPLv2
@@ -359,11 +359,11 @@ mkdir -p %buildroot%pkgdocdir/
 install -pm644 Documentation/SubmittingPatches %buildroot%pkgdocdir/
 install -Dm755 contrib/diff-highlight/diff-highlight %buildroot%_bindir
 cp -a contrib %buildroot%_datadir/git-core/
-rm -r %buildroot%_datadir/git-core/contrib/completion
 rm -r %buildroot%_datadir/git-core/contrib/emacs
 rm -r %buildroot%_datadir/git-core/contrib/examples
 rm -r %buildroot%_datadir/git-core/contrib/diff-highlight
 rm -r %buildroot%_datadir/git-core/contrib/subtree
+find %buildroot%_datadir/git-core/contrib -name .gitattributes -delete
 
 # Remove unpackaged files.
 %{?_without_arch:rm %buildroot%gitexecdir/git-archimport}
@@ -528,6 +528,9 @@ popd
 %endif #doc
 
 %changelog
+* Sun Jul 25 2021 Vitaly Chikunov <vt@altlinux.org> 2.29.3-alt3
+- git-contrib: Package completion directory.
+
 * Fri Apr 30 2021 Dmitry V. Levin <ldv@altlinux.org> 2.29.3-alt2
 - git-contrib: fixed FTBFS by disabling automatic provides.
 
