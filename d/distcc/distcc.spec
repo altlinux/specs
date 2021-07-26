@@ -2,7 +2,7 @@
 
 Name: distcc
 Version: 3.4
-Release: alt3
+Release: alt4
 
 Summary: distcc is a program to distribute builds C/C++/ Objective C/C++
 
@@ -104,6 +104,7 @@ find /usr/lib/distcc -type l -print0 | xargs -r -0 rm -f || :
 %_bindir/distcc
 %_bindir/lsdistcc
 %_bindir/distccmon-text
+%_sbindir/update-distcc-symlinks
 %_man1dir/distcc.*
 %_man1dir/lsdistcc.*
 %_man1dir/distccmon-text.*
@@ -124,7 +125,6 @@ find /usr/lib/distcc -type l -print0 | xargs -r -0 rm -f || :
 %_initdir/distccd
 %config(noreplace) %_sysconfigdir/distccd
 %_bindir/distccd
-%_sbindir/update-distcc-symlinks
 %_man1dir/distccd.*
 %_sysconfdir/distcc/*allow*
 
@@ -132,6 +132,9 @@ find /usr/lib/distcc -type l -print0 | xargs -r -0 rm -f || :
 %python3_sitelibdir/include_server*
 
 %changelog
+* Mon Jul 26 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.4-alt4
+- Avoid circular dependencies between distcc and distcc-server
+
 * Mon Jul 26 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.4-alt3
 - distccd: fixed search for approved compilers (Closes: #40577)
 - update-distcc-symlinks correctly finds GCC (cross-) compilers
