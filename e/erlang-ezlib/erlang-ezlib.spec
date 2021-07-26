@@ -5,7 +5,7 @@
 %set_verify_elf_method relaxed
 
 Name: erlang-%realname
-Version: 1.0.9
+Version: 1.0.10
 Release: alt1
 Summary: Native zlib driver for Erlang / Elixir
 Group: Development/Erlang
@@ -43,6 +43,9 @@ Native zlib driver for Erlang / Elixir. This library focuses on compression / de
 %_erllibdir/%realname-%version
 
 %changelog
+* Mon Jul 26 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.10-alt1
+- Updated to upstream version 1.0.10.
+
 * Tue Jan 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.9-alt1
 - Updated to upstream version 1.0.9.
 

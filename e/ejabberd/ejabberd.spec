@@ -12,7 +12,7 @@
 %def_enable lua
 
 Name: ejabberd
-Version: 21.04
+Version: 21.07
 Release: alt1
 Summary: Fault-tolerant distributed Jabber server written in Erlang
 License: GPL-2.0 with OpenSSL-exception
@@ -223,6 +223,9 @@ install -p -m 0644 sql/pg.sql    %buildroot%_erllibdir/%name-%version/priv/sql/
 %attr(1770,root,ejabberd) %dir %_lockdir/ejabberd
 
 %changelog
+* Mon Jul 26 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.07-alt1
+- Updated to upstream version 21.07.
+
 * Fri Jun 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.04-alt1
 - Updated to upstream version 21.04.
 

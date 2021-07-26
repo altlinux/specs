@@ -5,7 +5,7 @@
 %set_verify_elf_method relaxed
 
 Name: erlang-%realname
-Version: 1.1.46
+Version: 1.1.47
 Release: alt1
 Summary: Fast Expat based Erlang XML parsing library
 Group: Development/Erlang
@@ -41,6 +41,8 @@ after major optimisations to put emphasis on the fact it is damn fast.
 %setup
 
 %build
+%autoreconf
+%configure
 %rebar_compile
 
 %install
@@ -55,6 +57,9 @@ after major optimisations to put emphasis on the fact it is damn fast.
 %_erllibdir/%realname-%version
 
 %changelog
+* Mon Jul 26 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.47-alt1
+- Updated to upstream version 1.1.47.
+
 * Fri Jun 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.46-alt1
 - Updated to upstream version 1.1.46.
 
