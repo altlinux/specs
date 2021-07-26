@@ -1,14 +1,12 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%python_req_hier
-
 %def_without docs
 %def_without static
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
-Version: 2.8.2
-Release: alt1
+Version: 2.9.0
+Release: alt0.1
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -23,11 +21,14 @@ Source: %name-%version.tar
 Patch1: fix-dir-path.patch
 Patch6: qtvcp_import_fix.patch
 Patch7: not_require_dpkg.patch
-Patch8: linuxcnc-upstream-gcc10-compat.patch
+Patch8: linuxcnc-alt-python3.patch
 Patch9: linuxcnc-alt-tirpc.patch
-Buildrequires(pre): rpm-build-tcl rpm-build-python
+Buildrequires(pre): rpm-build-tcl rpm-build-python3
+Buildrequires: rpm-build-gir
+Buildrequires: python3-devel
 BuildRequires: gcc-c++ pkgconfig(glib-2.0)
-BuildRequires: pkgconfig(gtk+-2.0)
+BuildRequires: libgtk+3-gir-devel
+BuildRequires: python3-module-pygobject3
 BuildRequires: libGL-devel libGLU-devel
 BuildRequires: libXaw-devel libXinerama-devel libXmu-devel libXt-devel xorg-cf-files
 BuildRequires: pkgconfig(libmodbus)
@@ -37,38 +38,37 @@ BuildRequires: libncurses-devel libreadline-devel
 BuildRequires: libtirpc-devel
 BuildRequires: kmod
 BuildRequires: man-db
-BuildRequires: python-modules-tkinter python-modules-unittest
-BuildRequires: python-module-yapps2
-BuildRequires: boost-devel-headers boost-python-devel
-BuildRequires: pkgconfig(pygtk-2.0)
+BuildRequires: python3-modules-tkinter
+#python3-modules-unittest
+BuildRequires: python3-module-yapps2
+BuildRequires: boost-devel-headers
+BuildRequires: boost-python3-devel
 BuildRequires: tcl-devel tk-devel tcl-img tclx bwidget
 #BuildRequires: tcl-blt-devel
 BuildRequires: intltool
 #BuildRequires: pkgconfig(libgnomeprintui-2.2)
 %if_with docs
-BuildPreReq: asciidoc-a2x ghostscript-common ghostscript-utils source-highlight graphviz groff-ps
+BuildRequires: asciidoc-a2x ghostscript-common ghostscript-utils source-highlight graphviz groff-ps
 %endif
-BuildPreReq: desktop-file-utils ImageMagick-tools
+BuildRequires: desktop-file-utils ImageMagick-tools
 
-%if_with docs
-Requires: %name-doc = %version
-%endif
+Obsoletes: %name-data =< %EVR
+Requires: lib%name = %EVR
+# for qtvcp
+Requires: python3-module-PyQt5-devel
 
-Requires: %name-data = %version
-Requires: lib%name = %version
 Requires: tclx tcl-blt
-%py_requires Xlib
-%py_requires PyQt5.Qsci
-%add_python_req_skip emccanon
-%add_python_req_skip interpreter
-%add_python_req_skip gtk.gdk
+%py3_requires Xlib
+%py3_requires PyQt5.Qsci
+
+# Fix me!!!
+%add_python3_req_skip __main__ gi.repository.GdkPixbuf gst gtk gtk.glade Cairo
+%add_python3_req_skip emccanon interpreter
 
 %filter_from_requires s/^.*rip-environment//
 
-# replace requres python-module-gst -> python-module-gst1.0
-# see https://github.com/LinuxCNC/linuxcnc/commit/fe2483ceb06a1ae93669e0f98657eb8fa1638915
-%add_python_req_skip gst
-Requires: python-module-gst1.0
+%add_python3_path %_datadir/qtvcp
+%add_python3_path %_datadir/%name/ncfiles
 
 %description
 LinuxCNC is software that runs on Linux, on most standard PCs, that can
@@ -87,7 +87,7 @@ LinuxCNC это программа, которая работает на ОС Li
 %package -n liblinuxcnc-devel
 Summary: Development files for %name
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n liblinuxcnc-devel
 Development files for %name
@@ -95,18 +95,10 @@ Development files for %name
 %package -n liblinuxcnc-devel-static
 Summary: Static version of linuxcnc libraries
 Group: Development/C++
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description -n liblinuxcnc-devel-static
 Static version of linuxcnc libraries
-
-%package data
-Summary: Data files for %name
-Group: Engineering
-Conflicts: linuxcnc-doc < 2.7.12
-
-%description data
-Data files for %name
 
 %package -n lib%name
 Summary: Library for %name
@@ -143,11 +135,7 @@ Spanish documementation for %name
 
 %prep
 %setup
-%patch1 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
+%autopatch -p1
 
 sed -i 's|lib/tcltk/linuxcnc|%_lib/tcl/linuxcnc|' lib/python/rs274/options.py
 sed -i 's|INCLUDES := .|INCLUDES := . /usr/include/tirpc|' src/Makefile
@@ -156,11 +144,11 @@ sed -i 's|LDFLAGS := |LDFLAGS := -ltirpc |' src/Makefile
 #fix make install
 sed 's/ -o root//g' -i src/Makefile
 
-# explicitly set python-2
+# explicitly set python-3
 find . -type f -name *.py | xargs sed -i \
-	-e '1s:^#!/usr/bin/env python$:#!/usr/bin/python%__python_version:' \
-	-e '1s:^#!/usr/bin/python$:#!/usr/bin/python%__python_version:' \
-	-e '1s:^#!/usr/bin/python3$:#!/usr/bin/python%__python_version:' \
+	-e '1s:^#!/usr/bin/env python$:#!/usr/bin/python%__python3_version:' \
+	-e '1s:^#!/usr/bin/python$:#!/usr/bin/python%__python3_version:' \
+	-e '1s:^#!/usr/bin/python2$:#!/usr/bin/python%__python3_version:' \
 	%nil
 
 %build
@@ -169,8 +157,7 @@ pushd src
 %configure \
     --enable-non-distributable=yes \
     --with-realtime=uspace \
-    --with-python=$(which python2) \
-    --with-boost-python=boost_python%{python_version_nodots python2} \
+    --disable-gtk2 \
     %if_with docs
     --enable-build-documentation=pdf
     %endif
@@ -233,40 +220,21 @@ popd
 
 %find_lang %name gmoccapy --output=%name.lang
 
-%files
+%files -f %name.lang
 %_bindir/*
 %_libexecdir/%name
+%_tcllibdir/%name
+%python3_sitelibdir/*
 %_sysconfdir/%name
 %_initdir/realtime
 %_udevrulesdir/*.rules
 %_desktopdir/*.desktop
+# Fix me!!! Exclude not working with python3 application:
+%exclude %_desktopdir/linuxcnc-pncconf.desktop
+%exclude %_desktopdir/linuxcnc-stepconf.desktop
 %_sysconfdir/X11/app-defaults/*
 %_datadir/axis
-%exclude %_datadir/axis/images
-%_datadir/%name/hallib
-%_datadir/%name/ncfiles
-%_tcllibdir/%name
-%python_sitelibdir/*
-
-%files -n lib%name
-%_libdir/*.so.*
-%exclude %_libdir/*.a
-
-%files -n lib%name-devel
-%_includedir/%name
-%_libdir/*.so
-
-%if_with static
-%files -n lib%name-devel-static
-%_libdir/*.a
-%endif
-
-%files data -f %name.lang
 %_datadir/%name
-%exclude %_datadir/%name/hallib
-%exclude %_datadir/%name/ncfiles
-%dir %_datadir/axis
-%_datadir/axis/images
 %_datadir/glade3
 %_datadir/gmoccapy
 %_datadir/gscreen
@@ -279,6 +247,19 @@ popd
 %_docdir/%name
 %if_with docs
 %exclude %_docdir/%name/*.pdf
+%endif
+
+%files -n lib%name
+%_libdir/*.so.*
+%exclude %_libdir/*.a
+
+%files -n lib%name-devel
+%_includedir/%name
+%_libdir/*.so
+
+%if_with static
+%files -n lib%name-devel-static
+%_libdir/*.a
 %endif
 
 %if_with docs
@@ -294,6 +275,11 @@ popd
 %endif
 
 %changelog
+* Mon Jul 26 2021 Anton Midyukov <antohami@altlinux.org> 2.9.0-alt0.1
+- New snapshot
+- switch to python3 (Closes: 40376)
+- exclude pncconf, stepconf (not support python3)
+
 * Fri Jun 25 2021 Anton Midyukov <antohami@altlinux.org> 2.8.2-alt1
 - new version 2.8.2
 
