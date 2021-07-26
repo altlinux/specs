@@ -1,103 +1,49 @@
 %define _unpackaged_files_terminate_build 1
 %define oname redis_structures
 
-%def_without python2
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.1.6
-Release: alt2.1
+Release: alt3
 Summary: Redis data structures wrapped with Python 3
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.python.org/pypi/redis_structures/
 
 # https://github.com/jaredlunde/redis_structures.git
 Source: %oname-%version.tar
 
-%if_with python2
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-redis-py python-module-ujson
-BuildRequires: python-module-pip
-BuildRequires: python-modules-compiler python-modules-encodings
-%endif
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-redis-py python3-module-ujson
 BuildRequires: python3-module-pip python-tools-2to3
 BuildRequires: python3-module-html5lib python3-module-pytest
-%endif
 
-%py_provides %oname
-%py_requires redis ujson
+%py3_provides %oname
+%py3_requires redis ujson
 
 %description
 Pythonic data structures backed by Redis.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Redis data structures wrapped with Python 3
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires redis ujson
-
-%description -n python3-module-%oname
-Pythonic data structures backed by Redis.
-%endif
-
 %prep
-%setup -q -n %{oname}-%{version}
-
-%if_with python3
-cp -fR . ../python3
-%endif
+%setup -n %{oname}-%{version}
 
 %build
-%if_with python2
-%python_build_debug
-%endif
-
-%if_with python3
-pushd ../python3
 2to3 -w -n %oname/__init__.py
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
-%if_with python2
-%python_install
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-%if_with python2
-python setup.py test
-%endif
-%if_with python3
-pushd ../python3
 python3 setup.py test
-popd
-%endif
 
-%if_with python2
 %files
-%python_sitelibdir/*
-%endif
-
-%if_with python3
-%files -n python3-module-%oname
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 0.1.6-alt3
+- Drop python2 support.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.6-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
