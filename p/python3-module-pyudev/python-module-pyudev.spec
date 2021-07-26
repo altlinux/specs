@@ -1,15 +1,11 @@
-%def_without python2
-%def_with python3
 # wait for new wx
 %def_without wx
 %def_without qt4
 %def_without pyside
 
-#add_findreq_skiplist %python_sitelibdir/pyudev/*
-
-Name: python-module-pyudev
+Name: python3-module-pyudev
 Version: 0.21.0
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Udev bindings for Python
@@ -20,76 +16,11 @@ BuildArch: noarch
 
 Source: pyudev-%version.tar
 
-%if_with python2
-%setup_python_module pyudev
-BuildRequires: python-module-setuptools
-%endif
-
-#BuildRequires: libudev-devel python-devel python-module-distribute
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-%endif
 
 %description
 A Python binding to libudev, the hardware management library and service
 found in modern linux systems.
-
-%package -n python-module-pyudev-qtbase
-Summary: Udev Base mixin class for Qt4,Qt5 support
-Group: Development/Python
-Requires: %name = %EVR
-%description -n python-module-pyudev-qtbase
-Udev Base mixin class for Qt4,Qt5 support
-
-%package -n python-module-pyudev-pyqt4
-Summary:            Udev PyQt4 bindings for Python
-Group:              Development/Python
-Requires: %name = %EVR python-module-pyudev-qtbase = %EVR
-%description -n python-module-pyudev-pyqt4
-A Python PyQt4 binding to libudev, the hardware management library and
-service found in modern linux systems.
-
-%package -n python-module-pyudev-pyqt5
-Summary:            Udev PyQt5 bindings for Python
-Group:              Development/Python
-Requires: %name = %EVR python-module-pyudev-qtbase = %EVR
-%description -n python-module-pyudev-pyqt5
-A Python PyQt5 binding to libudev, the hardware management library and
-service found in modern linux systems.
-
-%package -n python-module-pyudev-pyside
-Summary:            Udev PySide bindings for Python
-Group:              Development/Python
-Requires: %name = %EVR
-%description -n python-module-pyudev-pyside
-A Python PySide binding to libudev, the hardware management library and
-service found in modern linux systems.
-
-%package -n python-module-pyudev-glib
-Summary:            Udev Glib bindings for Python
-Group:              Development/Python
-Requires: %name = %EVR
-%description -n python-module-pyudev-glib
-A Python Glib binding to libudev, the hardware management library and
-service found in modern linux systems.
-
-%package -n python-module-pyudev-wx
-Summary:            Udev Wx bindings for Python
-Group:              Development/Python
-Requires: %name = %EVR
-%description -n python-module-pyudev-wx
-A Python Wx binding to libudev, the hardware management library and
-service found in modern linux systems.
-
-%if_with python3
-%package -n python3-module-pyudev
-Summary:            Udev bindings for Python
-Group:              System/Libraries
-%description -n python3-module-pyudev
-A Python3 binding to libudev, the hardware management library and
-service found in modern linux systems.
 
 %package -n python3-module-pyudev-qtbase
 Summary: Udev Base mixin class for Qt4,Qt5 support
@@ -138,61 +69,16 @@ Requires: python3-module-pyudev = %EVR
 A Python Wx binding to libudev, the hardware management library and
 service found in modern linux systems.
 
-%endif
-
 %prep
 %setup -n pyudev-%version
 
 %build
-%if_with python2
-%python_build
-%endif
-
-%if_with python3
 %python3_build
-%endif
 
 %install
-%if_with python3
 %python3_install
-%endif
 
-%if_with python2
-%python_install
-%endif
-
-%if_with python2
 %files
-%doc CHANGES.rst COPYING README.rst
-%python_sitelibdir/pyudev
-%exclude %python_sitelibdir/pyudev/pyqt?.p*
-%exclude %python_sitelibdir/pyudev/_qt_base.p*
-%exclude %python_sitelibdir/pyudev/glib.p*
-%exclude %python_sitelibdir/pyudev/pyside.p*
-%exclude %python_sitelibdir/pyudev/wx.p*
-%python_sitelibdir/pyudev-*
-
-%files -n python-module-pyudev-qtbase
-%python_sitelibdir/pyudev/_qt_base.p*
-
-%files -n python-module-pyudev-pyqt4
-%python_sitelibdir/pyudev/pyqt4.p*
-
-%files -n python-module-pyudev-pyqt5
-%python_sitelibdir/pyudev/pyqt5.p*
-
-%files -n python-module-pyudev-glib
-%python_sitelibdir/pyudev/glib.p*
-
-%files -n python-module-pyudev-pyside
-%python_sitelibdir/pyudev/pyside.p*
-
-%files -n python-module-pyudev-wx
-%python_sitelibdir/pyudev/wx.p*
-%endif
-
-%if_with python3
-%files -n python3-module-pyudev
 %doc CHANGES.rst COPYING README.rst
 %python3_sitelibdir/pyudev
 %exclude %python3_sitelibdir/pyudev/pyqt?.p*
@@ -225,11 +111,11 @@ service found in modern linux systems.
 %files -n python3-module-pyudev-wx
 %python3_sitelibdir/pyudev/wx.p*
 %endif
-%endif
-
-
 
 %changelog
+* Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 0.21.0-alt4
+- Drop python2 support.
+
 * Mon Jun 07 2021 Sergey V Turchin <zerg@altlinux.org> 0.21.0-alt3
 - disable build of qt4 and pyside modules
 
