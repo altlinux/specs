@@ -11,7 +11,7 @@
 
 Name: itk
 Version: %itkver.2
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Toolkit for N-dimensional scientific image processing, segmentation, and registration.
@@ -216,6 +216,13 @@ rm -rf Modules/ThirdParty/DoubleConversion/src
 rm -rf Modules/ThirdParty/GoogleTest/src
 
 %build
+%ifarch aarch64
+# limit build jobs on aarch64
+if [ %__nprocs -gt 8 ] ; then
+	export NPROCS=8
+fi
+%endif
+
 # XXX: itk-examples (ex-Examples) for some reason are linked with the build
 # artifact dir in the runpath, so we pass -DCMAKE_SKIP_RPATH=ON.
 # remote modules go last
@@ -389,6 +396,9 @@ install -D -m755 -t %buildroot%_libdir/%name-examples/ %_cmake__builddir/bin/*
 %_libdir/libITKVtkGlue-%itkver.so.*
 
 %changelog
+* Fri Jul 23 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.2-alt4
+- Circumvented build issues on aarch64.
+
 * Wed Jul 07 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.2-alt3
 - Updated dependencies.
 
