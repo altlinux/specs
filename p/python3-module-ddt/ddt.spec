@@ -3,11 +3,11 @@
 %global oname ddt
 %def_with check
 
-Name: python-module-ddt
+Name: python3-module-ddt
 Version: 1.4.2
-Release: alt1
+Release: alt2
 Summary: A Python library to multiply test cases
-Group: Development/Python
+Group: Development/Python3
 License: MIT
 Url: https://pypi.org/project/ddt/
 
@@ -17,9 +17,7 @@ Patch0: %name-%version-alt.patch
 
 BuildArch: noarch
 
-BuildRequires: rpm-build-python
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python2.7(enum34)
 
 %if_with check
 BuildRequires: python3(tox)
@@ -33,33 +31,15 @@ DDT (Data-Driven Tests) allows you to multiply one test case by running it with
 different test data, and make it appear as multiple test cases.  It is used in
 combination with other testing frameworks like unittest and nose.
 
-%package -n python3-module-%oname
-Summary: Data-Driven/Decorated Tests
-Group: Development/Python
-
-%description -n python3-module-%oname
-DDT (Data-Driven Tests) allows you to multiply one test case by running it with
-different test data, and make it appear as multiple test cases.  It is used in
-combination with other testing frameworks like unittest and nose.
-
 %prep
 %setup
 %autopatch -p1
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-%python_build
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-pushd ../python3
 %python3_install
-popd
 
 %check
 export PIP_NO_INDEX=YES
@@ -68,13 +48,12 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr
 
 %files
 %doc README.md
-%python_sitelibdir/*
-
-%files -n python3-module-%oname
-%doc README.md
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 1.4.2-alt2
+- Drop python2 support.
+
 * Thu Apr 15 2021 Stanislav Levin <slev@altlinux.org> 1.4.2-alt1
 - 1.1.1 -> 1.4.2.
 
