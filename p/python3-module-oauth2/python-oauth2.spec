@@ -1,11 +1,11 @@
 %define oname oauth2
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.9
-Release: alt1
+Release: alt2
 Summary: Library for OAuth version 1.0a (forked from python-oauth)
 
-Group: Development/Python
+Group: Development/Python3
 License: MIT
 Url: https://github.com/simplegeo/python-oauth2
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
@@ -13,24 +13,10 @@ BuildArch: noarch
 
 Source: oauth2-%version.tar
 
-BuildRequires: python-module-setuptools
-
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools
-BuildPreReq: python3-devel
 BuildPreReq: python-tools-2to3
 
-
 %description
-python-oauth2 implements OAuth, which is an open protocol to allow API
-authentication in a simple and standard method from desktop and web 
-applications. This was forked from python-oauth.
-
-%package -n python3-module-%oname
-Summary: Library for OAuth version 1.0a (forked from python-oauth)
-Group: Development/Python3
-
-%description -n python3-module-%oname
 python-oauth2 implements OAuth, which is an open protocol to allow API
 authentication in a simple and standard method from desktop and web 
 applications. This was forked from python-oauth.
@@ -38,35 +24,23 @@ applications. This was forked from python-oauth.
 %prep
 %setup -n oauth2-%version
 
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-rm -rf %buildroot/%python_sitelibdir/tests
-
-pushd ../python3
 %python3_install
-popd
 rm -rf %buildroot/%python3_sitelibdir/tests
 
 %files
 %doc LICENSE.txt README.md example/
-%python_sitelibdir/*
-
-%files -n python3-module-%oname
-%doc LICENSE.txt README.md example/
 %python3_sitelibdir/*
 
-
 %changelog
+* Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 1.9-alt2
+- Drop python2 support.
+
 * Thu Mar 22 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.9-alt1
 - Version 1.9
 
