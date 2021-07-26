@@ -1,11 +1,10 @@
 %define module_name redis
 %define oname redis-py
-%def_with python3
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 3.4.1
-Release: alt1
-Group: Development/Python
+Release: alt2
+Group: Development/Python3
 License: MIT
 Summary: The Python interface to the Redis key-value store
 URL: http://github.com/andymccurdy/redis-py
@@ -13,69 +12,29 @@ Packager: Vladimir Didenko <cow@altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-#BuildPreReq: rpm-build-python
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
-BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
-
-#BuildRequires: python-devel python-module-distribute
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel python3-module-distribute
-%endif
-
-%setup_python_module %oname
 
 %description
 The Python interface to the Redis key-value store
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: The Python interface to the Redis key-value store
-Group: Development/Python3
-
-%description -n python3-module-%oname
-The Python interface to the Redis key-value store
-%endif
-
 %prep
 %setup -n %name-%version
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc CHANGES LICENSE README.rst
-%python_sitelibdir/%module_name/
-%python_sitelibdir/*.egg-info
-
-%if_with python3
-%files -n python3-module-%oname
 %python3_sitelibdir/%module_name/
 %python3_sitelibdir/*.egg-*
-%endif
 
 %changelog
+* Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 3.4.1-alt2
+- drop python2 support
+
 * Tue Mar 24 2020 Vladimir Didenko <cow@altlinux.org> 3.4.1-alt1
 - new version
 - fix license name
