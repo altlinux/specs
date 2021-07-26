@@ -1,6 +1,6 @@
 Name: dlm
 Version: 4.1.0
-Release: alt1
+Release: alt2
 
 Summary: dlm control daemon and tool
 License: GPLv2 and GPLv2+ and LGPLv2+
@@ -48,10 +48,7 @@ sed -i 's,fence,,' Makefile
 %endif
 
 %build
-%ifarch %ix86
-export CFLAGS="$CFLAGS -fPIC"
-%endif
-export CFLAGS="$CFLAGS $(pkg-config --cflags pacemaker) -I../libdlm -I../dlm_controld -I../include"
+export CFLAGS="$CFLAGS -fPIC $(pkg-config --cflags pacemaker) -I../libdlm -I../dlm_controld -I../include"
 export LDCONF
 %make CFLAGS="$CFLAGS" LLT_LDFLAGS="-lpthread"
 %ifnarch %e2k
@@ -95,6 +92,9 @@ touch %buildroot%_sysconfdir/dlm/dlm.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jul 26 2021 Andrey Cherepanov <cas@altlinux.org> 4.1.0-alt2
+- Rebuild with -fPIC for all architectures.
+
 * Mon Jul 26 2021 Andrey Cherepanov <cas@altlinux.org> 4.1.0-alt1
 - 4.1.0
 
