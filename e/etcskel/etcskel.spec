@@ -1,5 +1,5 @@
 Name: etcskel
-Version: 2.0.16
+Version: 2.0.17
 Release: alt1
 
 %def_enable langify
@@ -55,6 +55,12 @@ done
 %config(noreplace) %_sysconfdir/skel
 
 %changelog
+* Mon Jul 26 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.0.17-alt1
+- .mutt/gpg:
+  + do not use --passphrase-fd option if passphrase is not needed;
+  + check gpg status fd during decode, decrypt, and verify;
+  + make sure we don't rely on gpg-agent(1) to handle passphrases.
+
 * Fri Jun 08 2018 Dmitry V. Levin <ldv@altlinux.org> 2.0.16-alt1
 - .bash*: enhanced comments (closes: #29933).
 - .bash_logout: invoke "clear" on linux terminals only.
