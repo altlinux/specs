@@ -1,88 +1,47 @@
 %define oname phonenumbers
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 8.5.1
-Release: alt1.1
+Release: alt2
 
 Summary: Python port of Google's libphonenumber
 
-License: ASLv2.0
-Group: Development/Python
+License: Apache-2.0
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/phonenumbers/
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # Source-git: https://github.com/daviddrysdale/python-phonenumbers.git
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
 
-%py_provides %oname
-
-%description
-Python version of Google's common library for parsing, formatting,
-storing and validating international phone numbers.
-
-%package -n python3-module-%oname
-Summary: Python port of Google's libphonenumber
-Group: Development/Python3
 %py3_provides %oname
 
-%description -n python3-module-%oname
+%description
 Python version of Google's common library for parsing, formatting,
 storing and validating international phone numbers.
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-#python setup.py test
-%if_with python3
-pushd ../python3
 #python3 setup.py test
-popd
-%endif
 
 %files
 %doc *.md python/HISTORY.md
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.md python/HISTORY.md
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 8.5.1-alt2
+- Drop python2 support.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 8.5.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
