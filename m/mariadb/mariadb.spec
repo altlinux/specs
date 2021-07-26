@@ -25,11 +25,9 @@
 %def_without libarchive
 
 %ifarch x86_64 aarch64 ppc64le
-%def_without tokudb
 %def_without mroonga
 %def_with rocksdb
 %else
-%def_without tokudb
 %def_without mroonga
 %def_without rocksdb
 %endif
@@ -42,6 +40,7 @@
 %def_without galera
 %def_without oqgraph
 %endif
+%def_with s3
 %def_with sphinx
 %def_with connect
 %def_with gssapi
@@ -49,11 +48,11 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.4.20
+Version: 10.5.11
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
-License: GPLv2 with exceptions
+License: GPLv2 and LGPLv2
 Group: Databases
 
 Url: http://mariadb.org/
@@ -99,6 +98,8 @@ Source101: libmariadb.tar
 Source102: rocksdb.tar
 Source103: wsrep-lib.tar
 Source104: wsrep-API.tar
+Source105: columnstore.tar
+Source106: libmarias3.tar
 
 Patch0: %name-%version.patch
 
@@ -117,7 +118,7 @@ Patch33: mariadb-covscan-signexpr.patch
 #Patch34: mariadb-covscan-stroverflow.patch
 
 Patch101: rocksdb-6.8.0-alt-add-libatomic-if-needed.patch
-Patch102: mariadb-10.4.16-alt-link-with-latomic-if-needed.patch
+Patch102: mariadb-10.5.11-alt-link-with-latomic-if-needed.patch
 
 Requires: %name-server = %EVR
 Requires: %name-client = %EVR
@@ -135,7 +136,7 @@ BuildRequires: checkpolicy policycoreutils
 %{?_with_cassandra:BuildRequires: boost-devel}
 %{?_with_oqgraph:BuildRequires: boost-devel libjudy-devel}
 %{?_with_jemalloc:BuildRequires: libjemalloc-devel}
-%{?_with_pcre:BuildRequires: libpcre-devel >= 8.35}
+%{?_with_pcre:BuildRequires: libpcre2-devel}
 %{?_with_systemd:BuildRequires: libsystemd-devel}
 %{?_with_gssapi:BuildRequires: libkrb5-devel}
 %{?_with_libarchive:BuildRequires: libarchive-devel}
@@ -227,6 +228,15 @@ that consists of a server daemon (mysqld) and many different client
 programs/libraries.
 This package contents perl utils for MySQL-server.
 
+%package pam
+Summary: PAM authentication plugin for the MariaDB server
+Group: Databases
+Requires: %name-common = %EVR
+Requires: %name-server = %EVR
+
+%description pam
+PAM authentication server-side plugin for MariaDB.
+
 %package oqgraph-engine
 Summary: The Open Query GRAPH engine for MariaDB
 Group: Databases
@@ -258,14 +268,6 @@ Requires: %name-server = %EVR
 
 %description rocksdb-engine
 The RocksDB storage engine is used for high performance servers on SSD drives.
-
-%package tokudb-engine
-Summary: The TokuDB storage engine for MariaDB
-Group: Databases
-Requires: %name-server = %EVR
-
-%description tokudb-engine
-The TokuDB storage engine from Percona.
 
 %package cracklib-password-check
 Summary: The password strength checking plugin
@@ -305,6 +307,16 @@ Requires: %name-server = %EVR
 
 %description cassandra-engine
 The Cassandra storage engine for MariaDB. EXPERIMENTAL VERSION!
+
+%package s3-engine
+Summary: The S3 storage engine for MariaDB
+Group: Databases
+Requires: %name-server = %EVR
+
+%description s3-engine
+The S3 read only storage engine allows archiving MariaDB tables in Amazon S3,
+or any third-party public or private cloud that implements S3 API,
+but still have them accessible for reading in MariaDB.
 
 %package client
 Summary: Client
@@ -406,6 +418,8 @@ tar -xf %SOURCE101 -C libmariadb
 tar -xf %SOURCE102 -C storage/rocksdb/rocksdb
 tar -xf %SOURCE103 -C wsrep-lib
 tar -xf %SOURCE104 -C wsrep-lib/wsrep-API/v26
+tar -xf %SOURCE105 -C storage/columnstore/columnstore
+tar -xf %SOURCE106 -C storage/maria/libmarias3
 
 %patch0 -p1
 %patch1 -p1
@@ -481,9 +495,10 @@ export LDFLAGS
 	-DPLUGIN_OQGRAPH=%{?_with_oqgraph:DYNAMIC}%{?_without_oqgraph:NO} \
 	-DPLUGIN_ROCKSDB=%{?_with_rocksdb:DYNAMIC}%{?_without_rocksdb:NO} \
 	-DPLUGIN_SPHINX=%{?_with_sphinx:DYNAMIC}%{?_without_sphinx:NO} \
-	-DPLUGIN_TOKUDB=%{?_with_tokudb:DYNAMIC}%{?_without_tokudb:NO} \
 	-DPLUGIN_CONNECT=%{?_with_connect:DYNAMIC}%{?_without_connect:NO} \
 	-DWITH_CASSANDRA=%{?_with_cassandra:TRUE}%{?_without_cassandra:FALSE} \
+	-DDPLUGIN_S3=%{?_with_s3:DYNAMIC}%{?_without_s3:NO} \
+	-DPLUGIN_COLUMNSTORE=NO \
 	-DWITH_PIC=ON \
 	-DWITH_EXTRA_CHARSETS=all \
 	-DWITH_INNOBASE_STORAGE_ENGINE=ON \
@@ -515,7 +530,7 @@ export LDFLAGS
 %install
 mkdir -p %buildroot{%_bindir,%_sbindir,%_includedir,%_mandir,%_infodir,%_datadir/sql-bench,%_logdir/mysql}
 mkdir -p %buildroot%ROOT/{etc,/%_lib,%_libdir,%prefix/%plugindir/auth_pam_tool_dir,%_libdir/galera,dev,log,tmp,run/systemd,/var/{nis,yp/binding},db/mysql,usr/share/mysql/charsets}
-touch %buildroot%ROOT{%_sysconfdir/{hosts,services,{host,nsswitch,resolv}.conf},/dev/urandom,/var/nis/NIS_COLD_START,/run/systemd/notify}
+touch %buildroot%ROOT{%_sysconfdir/{hosts,services,{host,nsswitch,resolv}.conf},/dev/urandom,/var/nis/NIS_COLD_START,/run/systemd/notify,%prefix/%plugindir/auth_pam_tool_dir/auth_pam_tool}
 
 # don't fiddle with the initscript!
 export DONT_GPRINTIFY=1
@@ -559,11 +574,6 @@ install -pD -m644 %SOURCE21 %buildroot%_unitdir/mysqld.service
 install -pD -m644 %SOURCE22 %buildroot%_sysconfdir/systemd/system/mysqld.service.d/user.conf
 install -pD -m644 %SOURCE23 %buildroot%_sysconfdir/systemd/system/mysqld.service.d/notify.conf
 install -pD -m644 %SOURCE24 %buildroot%_sysconfdir/systemd/system/mysqld.service.d/notify-chroot.conf
-
-%if_with tokudb
-install -pD -m644 storage/tokudb/tokudb.cnf %buildroot%_sysconfdir/my.cnf.d/tokudb.cnf
-mv %buildroot/etc/systemd/system/mariadb.service.d/tokudb.conf %buildroot%_sysconfdir/systemd/system/mysqld.service.d/tokudb.conf
-%endif
 
 %if_with galera
 # install galera config file
@@ -731,12 +741,14 @@ fi
 %config(noreplace) %_sysconfdir/my.cnf
 %config(noreplace) %_sysconfdir/my.cnf.d/server.cnf
 %config(noreplace) %_sysconfdir/my.cnf.server/*.cnf
+%config(noreplace) %_sysconfdir/my.cnf.d/spider.cnf
 %_tmpfilesdir/%name.conf
 %_unitdir/mysqld.service
 %_unitdir/mariadb.service
 %config(noreplace) %_sysconfdir/systemd/system/mysqld.service.d/*.conf
 
 %_bindir/aria*
+%{?_with_s3:%exclude %_bindir/aria_s3_copy}
 %_bindir/*isam*
 %_bindir/mysql_fix_extensions
 %_bindir/mariadb-fix-extensions
@@ -752,6 +764,7 @@ fi
 %_bindir/mariadbd-safe
 %_bindir/mysql_install_db
 %_bindir/mariadb-install-db
+%_bindir/mariadb-conv
 %if_with mroonga
 %_datadir/mysql/mroonga
 %endif
@@ -762,20 +775,17 @@ fi
 %{?_with_connect:%exclude %prefix/%plugindir/ha_connect.so}
 %{?_with_cracklib:%exclude %prefix/%plugindir/cracklib_password_check.so}
 %{?_with_rocksdb:%exclude %prefix/%plugindir/ha_rocksdb.so}
-%{?_with_tokudb:%exclude %prefix/%plugindir/ha_tokudb.so}
 %{?_with_gssapi:%exclude %prefix/%plugindir/auth_gssapi.so}
 %{?_with_sphinx:%exclude %prefix/%plugindir/ha_sphinx.so}
 %{?_with_cassandra:%exclude %prefix/%plugindir/ha_cassandra.so}
-
+%{?_with_s3:%exclude %prefix/%plugindir/ha_s3.so}
 %{?_with_gssapi:%exclude %prefix/%plugindir/auth_gssapi_client.so}
 %exclude %prefix/%plugindir/client_ed25519.so
 %exclude %prefix/%plugindir/dialog.so
 %exclude %prefix/%plugindir/mysql_clear_password.so
 %exclude %prefix/%plugindir/caching_sha2_password.so
 %exclude %prefix/%plugindir/sha256_password.so
-
-%config(noreplace) %_sysconfdir/security/user_map.conf
-%_pam_modules_dir/pam_user_map.so
+%exclude %prefix/%plugindir/auth_pam*
 
 %attr(3770,root,mysql) %dir %_logdir/mysql
 %dir %_docdir/%name-%version
@@ -786,7 +796,6 @@ fi
 %attr(710,root,mysql) %dir %ROOT/%_libdir
 %attr(710,root,mysql) %dir %ROOT/%_libdir/%name
 %attr(750,root,mysql) %dir %ROOT/%prefix/%plugindir
-%attr(750,root,mysql) %dir %ROOT/%prefix/%plugindir/auth_pam_tool_dir
 %if_with galera
 %attr(750,root,mysql) %dir %ROOT/%_libdir/galera
 %endif
@@ -811,6 +820,15 @@ fi
 %dir %ROOT/run
 %dir %ROOT/run/systemd
 %ghost %ROOT/run/systemd/notify
+
+%files pam
+%prefix/%plugindir/auth_pam*
+%config(noreplace) %_sysconfdir/security/user_map.conf
+%_pam_modules_dir/pam_user_map.so
+%attr(755,root,root) %dir %prefix/%plugindir/auth_pam_tool_dir
+%attr(4710,root,mysql) %prefix/%plugindir/auth_pam_tool_dir/auth_pam_tool
+%attr(755,root,root) %dir %ROOT/%prefix/%plugindir/auth_pam_tool_dir
+%attr(4710,root,mysql) %ROOT/%prefix/%plugindir/auth_pam_tool_dir/auth_pam_tool
 
 %if_with galera
 %files server-galera
@@ -842,16 +860,6 @@ fi
 %_man1dir/mysql_ldb.1*
 %endif
 
-%if_with tokudb
-%files tokudb-engine
-%_bindir/tokuftdump
-%_bindir/tokuft_logprint
-%_man1dir/tokuftdump.1*
-%_man1dir/tokuft_logprint.1*
-%config(noreplace) %_sysconfdir/my.cnf.d/tokudb.cnf
-%prefix/%plugindir/ha_tokudb.so
-%endif
-
 %if_with gssapi
 %files gssapi-server
 %prefix/%plugindir/auth_gssapi.so
@@ -879,6 +887,14 @@ fi
 %files cassandra-engine
 %config(noreplace) %_sysconfdir/my.cnf.d/cassandra.cnf
 %prefix/%plugindir/ha_cassandra.so
+%endif
+
+%if_with s3
+%files s3-engine
+%_bindir/aria_s3_copy
+%_man1dir/aria_s3_copy.1*
+%config(noreplace) %_sysconfdir/my.cnf.d/s3.cnf
+%prefix/%plugindir/ha_s3.so
 %endif
 
 %files common
@@ -952,6 +968,9 @@ fi
 %exclude %_man1dir/mariadb-test-embedded.1*
 %exclude %_man1dir/mysql_ldb.1*
 %exclude %_man1dir/mariadb-ldb.1*
+%{?_with_rocksdb:%exclude %_man1dir/mysql_ldb.1*}
+%{?_with_rocksdb:%exclude %_man1dir/mariadb-ldb.1*}
+%{?_with_s3:%exclude %_man1dir/aria_s3_copy.1*}
 %endif
 
 %if_with bench
@@ -988,6 +1007,7 @@ fi
 %doc INSTALL-SOURCE
 %_bindir/mysql_config
 %_bindir/mariadb_config
+%_bindir/mariadb-config
 %_libdir/lib%name.so
 %_libdir/libmysqlclient.so
 %_libdir/libmysqlclient_r.so
@@ -1016,6 +1036,12 @@ fi
 %endif
 
 %changelog
+* Mon Jul 12 2021 Alexey Shabalin <shaba@altlinux.org> 10.5.11-alt1
+- 10.5.11
+- Drop tokudb build support
+- Add package with S3 storage engine
+- Move pam plugin to separate package
+
 * Sun Jul 11 2021 Alexey Shabalin <shaba@altlinux.org> 10.4.20-alt1
 - 10.4.20 (ALT #40403)
 - Fixes for the following security vulnerabilities:
