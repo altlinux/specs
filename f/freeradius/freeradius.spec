@@ -1,6 +1,6 @@
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
-Version: 3.0.21
+Version: 3.0.23
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
@@ -29,7 +29,7 @@ BuildRequires: libreadline-devel
 BuildRequires: libunixODBC-devel
 BuildRequires: mailx
 BuildRequires: net-snmp-utils
-BuildRequires: perl-DBI perl-devel perl-DBM
+BuildRequires: perl-DBI perl-devel perl-DBM perl-Net-IP
 BuildRequires: postgresql-devel
 BuildRequires: python3-devel
 BuildRequires: slocate
@@ -106,6 +106,15 @@ of the server, and let you decide if they satisfy your needs.
 
 Support for RFC and VSA Attributes Additional server configuration
 attributes Selecting a particular configuration Authentication methods
+
+%package perl-util
+Group: System/Servers
+Summary: FreeRADIUS Perl utilities
+Requires: perl-Net-IP
+
+%description perl-util
+This package provides Perl utilities for managing IP pools stored in
+SQL databases.
 
 %package devel
 Group: Development/C
@@ -258,6 +267,9 @@ rm -f %buildroot%_libdir/freeradius/*.a
 rm -f %buildroot%_libdir/freeradius/*.la
 rm -rf %buildroot%_sysconfdir/raddb/mods-config/sql/main/mssql
 rm -rf %buildroot%_sysconfdir/raddb/mods-config/sql/ippool/mssql
+rm -rf %buildroot%_sysconfdir/raddb/mods-config/sql/ippool-dhcp/mssql
+rm -rf %buildroot%_sysconfdir/raddb/mods-config/sql/dhcp/mssql
+rm -rf %buildroot%_sysconfdir/raddb/mods-config/sql/dhcp/oracle
 rm -rf %buildroot%_sysconfdir/raddb/mods-config/sql/main/oracle
 rm -rf %buildroot%_sysconfdir/raddb/mods-config/sql/ippool-dhcp/oracle
 rm -rf %buildroot%_sysconfdir/raddb/mods-config/sql/ippool/oracle
@@ -338,7 +350,7 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/users
 %dir %attr(770,root,radiusd) %_sysconfdir/raddb/certs
 %_sysconfdir/raddb/certs/Makefile
-%_sysconfdir/raddb/certs/README
+%_sysconfdir/raddb/certs/README.md
 %_sysconfdir/raddb/certs/xpextensions
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/*.cnf
 %attr(750,root,radiusd) %_sysconfdir/raddb/certs/bootstrap
@@ -386,6 +398,9 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/detail.example.com
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/detail.log
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/dhcp
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/dhcp_files
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/dhcp_passwd
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/dhcp_sql
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/dhcp_sqlippool
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/digest
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/dynamic_clients
@@ -423,9 +438,11 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/soh
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/sometimes
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/sql
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/sql_map
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/sqlcounter
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/sqlippool
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/sradutmp
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/totp
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/unix
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/unpack
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/utf8
@@ -433,18 +450,11 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/yubikey
 %_sysconfdir/raddb/mods-config/README.rst
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/attr_filter
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/attr_filter/access_challenge
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/attr_filter/access_reject
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/attr_filter/accounting_response
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/attr_filter/post-proxy
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/attr_filter/pre-proxy
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/attr_filter/*
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/files
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/files/accounting
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/files/authorize
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/files/pre-proxy
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/files/*
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/preprocess
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/preprocess/hints
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/preprocess/huntgroups
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/preprocess/*
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/counter
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/cui
@@ -480,6 +490,7 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/replicate
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/soh
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/sradutmp
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/totp
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/unix
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/unpack
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/utf8
@@ -498,6 +509,7 @@ fi
 %_man1dir/*
 %_man5dir/*
 %_man8dir/*
+%exclude %_man8dir/rlm_sqlippool_tool.*
 # logs
 %dir %attr(1770,root,radiusd) %_logdir/radius/
 %dir %attr(1770,root,radiusd) %_logdir/radius/radacct/
@@ -522,7 +534,6 @@ fi
 %_libdir/freeradius/rlm_eap.so
 %_libdir/freeradius/rlm_eap_fast.so
 %_libdir/freeradius/rlm_eap_gtc.so
-%_libdir/freeradius/rlm_eap_leap.so
 %_libdir/freeradius/rlm_eap_md5.so
 %_libdir/freeradius/rlm_eap_mschapv2.so
 %_libdir/freeradius/rlm_eap_peap.so
@@ -552,6 +563,8 @@ fi
 %_libdir/freeradius/rlm_sql_null.so
 %_libdir/freeradius/rlm_sqlcounter.so
 %_libdir/freeradius/rlm_sqlippool.so
+%_libdir/freeradius/rlm_sql_map.so
+%_libdir/freeradius/rlm_totp.so
 %_libdir/freeradius/rlm_unix.so
 %_libdir/freeradius/rlm_unpack.so
 %_libdir/freeradius/rlm_utf8.so
@@ -573,6 +586,12 @@ fi
 
 %files utils
 %_bindir/*
+%exclude %_bindir/rlm_sqlippool_tool
+
+%files perl-util
+%_bindir/rlm_sqlippool_tool
+#man-pages
+%_man8dir/rlm_sqlippool_tool.*
 
 %files libs
 # RADIU shared libs
@@ -605,28 +624,27 @@ fi
 %files mysql
 %_libdir/freeradius/rlm_sql_mysql.so
 #%_libdir/freeradius/rlm_sql_mysql-%version.so
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/counter/mysql/dailycounter.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/counter/mysql/expire_on_login.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/counter/mysql/monthlycounter.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/counter/mysql/noresetcounter.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/cui/mysql/queries.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/cui/mysql/schema.sql
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool-dhcp/mysql/queries.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool-dhcp/mysql/schema.sql
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool/mysql/queries.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool/mysql/schema.sql
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool/mysql/procedure.sql
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/mysql/extras/wimax/queries.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/mysql/extras/wimax/schema.sql
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/mysql/queries.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/mysql/schema.sql
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/mysql/setup.sql
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/mysql/process-radacct.sql
+%dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/counter/mysql
+%dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/cui/mysql
+%dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/dhcp/mysql
+%dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/ippool-dhcp/mysql
+%dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/ippool/mysql
+%dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/main/mysql
+%dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/main/mysql/extras
+%dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/main/mysql/extras/wimax
+%dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/main/ndb
+%dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/moonshot-targeted-ids/mysql
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/counter/mysql/*
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/cui/mysql/*
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/dhcp/mysql/*
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool-dhcp/mysql/*
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool/mysql/*
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/mysql/*.sql
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/mysql/*.conf
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/mysql/extras/wimax/*
 %_sysconfdir/raddb/mods-config/sql/main/ndb/README
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/ndb/schema.sql
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/ndb/setup.sql
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/moonshot-targeted-ids/mysql/queries.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/moonshot-targeted-ids/mysql/schema.sql
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/ndb/*
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/moonshot-targeted-ids/mysql/*
 
 %files postgresql
 %_libdir/freeradius/rlm_sql_postgresql.so
@@ -634,51 +652,37 @@ fi
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/counter/postgresql
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/cui/postgresql
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/ippool/postgresql
+%dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/ippool-dhcp/postgresql
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/main/postgresql
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/main/postgresql/extras
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/moonshot-targeted-ids/postgresql
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/counter/postgresql/dailycounter.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/counter/postgresql/expire_on_login.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/counter/postgresql/monthlycounter.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/counter/postgresql/noresetcounter.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/cui/postgresql/queries.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/cui/postgresql/schema.sql
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool/postgresql/queries.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool/postgresql/schema.sql
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool/postgresql/procedure.sql
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/postgresql/extras/cisco_h323_db_schema.sql
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/postgresql/extras/voip-postpaid.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/postgresql/queries.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/postgresql/schema.sql
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/postgresql/setup.sql
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/postgresql/process-radacct.sql
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/moonshot-targeted-ids/postgresql/queries.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/moonshot-targeted-ids/postgresql/schema.sql
+%dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/dhcp/postgresql
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/counter/postgresql/*
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/cui/postgresql/*
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/dhcp/postgresql/*
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool/postgresql/*
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool-dhcp/postgresql/*
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/postgresql/*.conf
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/postgresql/*.sql
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/postgresql/extras/*
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/moonshot-targeted-ids/postgresql/*
 
 %files sqlite
 %_libdir/freeradius/rlm_sql_sqlite.so
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/counter/sqlite
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/cui/sqlite
+%dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/dhcp/sqlite
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/ippool-dhcp/sqlite
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/ippool/sqlite
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/main/sqlite
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/moonshot-targeted-ids/sqlite
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/counter/sqlite/dailycounter.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/counter/sqlite/expire_on_login.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/counter/sqlite/monthlycounter.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/counter/sqlite/noresetcounter.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/cui/sqlite/queries.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/cui/sqlite/schema.sql
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool-dhcp/sqlite/queries.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool-dhcp/sqlite/schema.sql
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool/sqlite/queries.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool/sqlite/schema.sql
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/sqlite/queries.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/sqlite/schema.sql
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/sqlite/process-radacct-refresh.sh
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/sqlite/process-radacct-schema.sql
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/moonshot-targeted-ids/sqlite/queries.conf
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/moonshot-targeted-ids/sqlite/schema.sql
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/counter/sqlite/*
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/cui/sqlite/*
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/dhcp/sqlite/*
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool-dhcp/sqlite/*
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool/sqlite/*
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/sqlite/*
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/moonshot-targeted-ids/sqlite/*
 
 %files ldap
 #%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/ldap.attrmap
@@ -691,6 +695,9 @@ fi
 #%_libdir/freeradius/rlm_sql_unixodbc-%version.so
 
 %changelog
+* Tue Jun 15 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.23-alt1
+- 3.0.23
+
 * Fri Apr 10 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.21-alt1
 - 3.0.21
 
