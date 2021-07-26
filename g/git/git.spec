@@ -1,6 +1,6 @@
 Name: git
-Version: 2.29.3
-Release: alt3
+Version: 2.32.0
+Release: alt1
 
 Summary: Git core and tools
 License: GPLv2
@@ -528,11 +528,23 @@ popd
 %endif #doc
 
 %changelog
+* Mon Jul 26 2021 Dmitry V. Levin <ldv@altlinux.org> 2.32.0-alt1
+- 2.29.3 -> 2.32.0.
+
 * Sun Jul 25 2021 Vitaly Chikunov <vt@altlinux.org> 2.29.3-alt3
 - git-contrib: Package completion directory.
 
+* Sun Jun 06 2021 Dmitry V. Levin <ldv@altlinux.org> 2.32.0-alt1
+- 2.31.1 -> 2.32.0.
+
 * Fri Apr 30 2021 Dmitry V. Levin <ldv@altlinux.org> 2.29.3-alt2
 - git-contrib: fixed FTBFS by disabling automatic provides.
+
+* Fri Mar 26 2021 Dmitry V. Levin <ldv@altlinux.org> 2.31.1-alt1
+- 2.30.2 -> 2.31.1.
+
+* Fri Feb 12 2021 Dmitry V. Levin <ldv@altlinux.org> 2.30.2-alt1
+- 2.29.3 -> 2.30.2.
 
 * Fri Feb 12 2021 Dmitry V. Levin <ldv@altlinux.org> 2.29.3-alt1
 - 2.29.2 -> 2.29.3 (fixes: CVE-2021-21300).
