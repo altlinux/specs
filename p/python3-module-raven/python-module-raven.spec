@@ -1,12 +1,12 @@
 %define oname raven
 
-Name: python-module-raven
+Name: python3-module-raven
 Version: 6.10.0
-Release: alt1
+Release: alt2
 Summary: Python client for Sentry
 
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://github.com/getsentry/raven-python
 Packager: Anton Midyukov <antohami@altlinux.org>
 
@@ -14,7 +14,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+%py3_provides %oname
+%add_findreq_skiplist %python3_sitelibdir/%oname/contrib/zope/*
 
 %description
 Raven is a Python client for Sentry <http://getsentry.com>. It provides full
@@ -22,22 +23,9 @@ out-of-the-box support for many of the popular frameworks, including Django, and
 Flask. Raven also includes drop-in support for any WSGI-compatible web
 application.
 
-%package -n python3-module-%oname
-Summary: Python 3 client for Sentry
-Group: Development/Python
-%py3_provides %oname
-%add_findreq_skiplist %python3_sitelibdir/%oname/contrib/zope/*
-
-%description -n python3-module-%oname
-Raven is a Python client for Sentry <http://getsentry.com>. It provides full
-out-of-the-box support for many of the popular frameworks, including Django, and
-Flask. Raven also includes drop-in support for any WSGI-compatible web
-application.
-Python 3 version.
-
 %package -n %oname
 Summary: Python client for Sentry
-Group: Development/Python
+Group: Development/Python3
 Requires: python3-module-%oname = %version-%release
 
 %description -n %oname
@@ -55,7 +43,7 @@ application.
 %install
 %python3_install
 
-%files -n python3-module-%oname
+%files
 %doc LICENSE
 %doc README.*
 %python3_sitelibdir/%oname
@@ -65,6 +53,9 @@ application.
 %_bindir/%oname
 
 %changelog
+* Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 6.10.0-alt2
+- Rename package, spec cleanup.
+
 * Tue Oct 01 2019 Anton Farygin <rider@altlinux.ru> 6.10.0-alt1
 - 6.10.0
 - built without python-2.7 support
