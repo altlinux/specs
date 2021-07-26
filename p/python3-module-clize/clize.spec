@@ -1,19 +1,14 @@
 %define oname clize
 
-%def_without python2
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 4.1.1
-Release: alt1
+Release: alt2
 
 Summary: Command-line argument parsing for Python, without the effort
 
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/clize/
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/epsy/clize.git
 # Source-url: https://pypi.io/packages/source/c/%oname/%oname-%version.tar.gz
@@ -21,46 +16,27 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools
-#BuildPreReq: python-module-sigtools python-module-six
-#BuildPreReq: python-module-sphinx-devel
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-sigtools >= 2.0
 BuildRequires: python3-module-attrs >= 17.4.0
 BuildRequires: python3-module-six
 BuildRequires: python3-module-od
 BuildRequires: python3(dateutil)
 BuildRequires: python3(unittest2) python3(repeated_test) python3(pygments)
-%endif
 
-%py_provides %oname
-%py_requires sigtools six
+%py3_provides %oname
+%py3_requires sigtools six
 
-BuildRequires(pre): rpm-macros-sphinx
-%if_with python2
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-setuptools python-module-sigtools
-%endif
-BuildRequires: time
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-sphinx
 
 %description
 Clize procedurally turns your functions into convenient command-line
 interfaces.
 
-%package -n python3-module-%oname
-Summary: Command-line argument parsing for Python, without the effort
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires sigtools six
-
-%description -n python3-module-%oname
-Clize procedurally turns your functions into convenient command-line
-interfaces.
-
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 Clize procedurally turns your functions into convenient command-line
@@ -82,76 +58,40 @@ This package contains documentation for %oname.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%if_with python2
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
-%endif
 
 %build
-%if_with python2
-%python_build_debug
-%endif
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
-%if_with python2
-%python_install
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
 rm -rf %buildroot%python3_sitelibdir/clize/tests/
-popd
-%endif
 
-%if_with python2
 export PYTHONPATH=$PWD
-%make -C docs pickle
-%make -C docs html
+#make SPHINXBUILD="sphinx-build-3" -C docs pickle
+#make SPHINXBUILD="sphinx-build-3" -C docs html
 
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
-%endif
+#cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-%if_with python2
-python setup.py test
-%endif
-%if_with python3
-pushd ../python3
 python3 setup.py test
-popd
-%endif
 
-%if_with python2
 %files
 %doc *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+%python3_sitelibdir/*
+#exclude %python3_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+#python3_sitelibdir/*/pickle
 
 %files docs
-%doc docs/_build/html examples
-%endif
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
-%python3_sitelibdir/*
-%endif
+#doc docs/_build/html examples
 
 %changelog
+* Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 4.1.1-alt2
+- Drop python2 support.
+
 * Mon Apr 20 2020 Pavel Vasenkov <pav@altlinux.org> 4.1.1-alt1
 - new version 4.1.1
 
