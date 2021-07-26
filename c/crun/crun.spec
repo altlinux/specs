@@ -1,9 +1,10 @@
 %global _unpackaged_files_terminate_build 1
-%define git_commit 38271d1c8d9641a2cdc70acfa3dcb6996d124b3d
+%define git_commit c4c3cdf2ce408ed44a9e027c618473e6485c635b
+%define __nprocs 8
 
 Summary: OCI runtime written in C
 Name: crun
-Version: 0.20.1
+Version: 0.21
 Release: alt1
 Group: Development/Other
 License: GPLv3+
@@ -26,6 +27,7 @@ BuildRequires: libcriu-devel >= 3.13
 BuildRequires: gperf
 BuildRequires: go-md2man
 BuildRequires: python3
+BuildRequires: cmake
 Provides: oci-runtime = 2
 
 %description
@@ -57,6 +59,9 @@ rm -f %buildroot%_libdir/*.a
 %_man1dir/*
 
 %changelog
+* Mon Jul 26 2021 Andrew A. Vasilyev <andy@altlinux.org> 0.21-alt1
+- 0.21
+
 * Tue Jun 15 2021 Alexey Shabalin <shaba@altlinux.org> 0.20.1-alt1
 - 0.20.1
 
