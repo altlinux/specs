@@ -4,8 +4,8 @@
 %define branch %nil
 Name: %oname%branch
 
-Version: 2.0.4.0.4.gd6732de7d
-Release: alt2
+Version: 2.1.1.0.3.g6c0f75cca
+Release: alt1
 Epoch: 3
 
 %def_disable debug
@@ -297,6 +297,10 @@ find %buildroot%_sysconfdir -type f -print0 |
 %_bindir/mutt-Maxi
 
 %changelog
+* Mon Jul 26 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 3:2.1.1.0.3.g6c0f75cca-alt1
+- Updated to mutt-2-1-1-rel-3-g6c0f75cca.
+- Disabled $pgp_check_gpg_decrypt_status_fd by default.
+
 * Thu Jan 21 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 3:2.0.4.0.4.gd6732de7d-alt2
 - Disabled $pgp_use_gpg_agent by default (this option works only
   with GnuPG 2).
