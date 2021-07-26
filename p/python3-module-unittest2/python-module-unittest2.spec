@@ -2,85 +2,55 @@
 
 %def_disable check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.1.0
-Release: alt3
+Release: alt4
 
 Summary: Backport of Python 2.7 unittest module
 License: Same as Python
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/unittest2
 # hg clone https://hg.python.org/unittest2
 BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires: python-module-pytest python-module-traceback2
-
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-pytest python3-module-traceback2
 BuildPreReq: python-tools-2to3
 
-#%%py_requires traceback2 six
-
+Conflicts: python-module-%oname
+Obsoletes: python-module-%oname
 
 %description
 unittest2 is a backport of the new features added to the unittest
 testing framework in Python 2.7. It is tested to run on Python 2.4 -
 2.7.
 
-%package -n python3-module-%oname
-Summary: Port of Python 2.7 unittest module
-Group: Development/Python3
-#%%py3_requires traceback2 six
-
-%description -n python3-module-%oname
-unittest2 is a port of the features added to the unittest testing
-framework in Python 2.7.
-
 %prep
 %setup
 
-rm -rf ../python3
-cp -a . ../python3
-
-
 %build
-%python_build
-
-pushd ../python3
 for i in $(find ./ -name '*.py'); do
 	2to3 -w -n $i
 done
 %python3_build
-popd
 
 %install
-pushd ../python3
 %python3_install
-popd
-
-%python_install
 
 %check
-python setup.py test
-
-pushd ../python3
 python3 setup.py test
-popd
 
 %files
 %doc README.txt
 %_bindir/*
-%python_sitelibdir/*
-
-%files -n python3-module-%oname
-%doc README.txt
-#_bindir/*
 %python3_sitelibdir/*
 
-
 %changelog
+* Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt4
+- Drop python2 support.
+
 * Mon May 14 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.1.0-alt3
 - rebuild with python3.6
 
