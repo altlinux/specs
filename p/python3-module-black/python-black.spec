@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 21.6b0
+Version: 21.7b0
 Release: alt1
 
 Summary: The Uncompromising Code Formatter
@@ -23,7 +23,7 @@ BuildRequires: python3-module-setuptools_scm
 # install_requires=
 BuildRequires: python3(click)
 BuildRequires: python3(appdirs)
-BuildRequires: python3(toml)
+BuildRequires: python3(tomli)
 BuildRequires: python3(regex)
 BuildRequires: python3(pathspec)
 BuildRequires: python3(mypy_extensions)
@@ -37,8 +37,6 @@ BuildRequires: python3(parameterized)
 BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
 %endif
-
-%py3_provides black_primer
 
 %description
 Black is the uncompromising Python code formatter. By using it, you agree to
@@ -83,9 +81,18 @@ tox.py3 --sitepackages -vvr
 %_bindir/black
 %_bindir/blackd
 %_bindir/black-primer
-%python3_sitelibdir/*
+%python3_sitelibdir/__pycache__/_black_version.cpython*
+%python3_sitelibdir/_black_version.py
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/black_primer/
+%python3_sitelibdir/blackd/
+%python3_sitelibdir/blib2to3/
 
 %changelog
+* Mon Jul 26 2021 Stanislav Levin <slev@altlinux.org> 21.7b0-alt1
+- 21.6b0 -> 21.7b0.
+
 * Tue Jun 22 2021 Stanislav Levin <slev@altlinux.org> 21.6b0-alt1
 - 21.5b1 -> 21.6b0.
 
