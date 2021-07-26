@@ -1,73 +1,39 @@
 %define oname pylibmc
-%def_with python3
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.5.2
-Release: alt1.1
+Release: alt2
 Summary: Quick and small memcached client for Python
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/pylibmc
 Source: pylibmc-%version.tar.gz
 
-%setup_python_module %oname
-
-# Automatically added by buildreq on Wed Jul 17 2013
-# optimized out: python-base python-modules python-modules-compiler python-modules-email
-BuildRequires: libmemcached-devel python-devel zlib-devel
-%if_with python3
+BuildRequires: libmemcached-devel zlib-devel
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
-%endif
 
 %description
-Pylibmc is a Python client for memcached (<http://memcached.org/>)
-written in C.
-
-%package -n python3-module-%oname
-Summary: Quick and small memcached client for Python
-Group: Development/Python3
-
-%description -n python3-module-%oname
 Pylibmc is a Python client for memcached (<http://memcached.org/>)
 written in C.
 
 %prep
 %setup -n %oname-%version
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc README.rst docs
-%python_sitelibdir/*%{oname}*
-
-%if_with python3
-%files -n python3-module-%oname
 %doc README.rst docs
 %python3_sitelibdir/*%{oname}*
-%endif
 
 %changelog
+* Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 1.5.2-alt2
+- Drop python2 support.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.2-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
