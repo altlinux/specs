@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.42
+Version: 0.2.43
 Release: alt1
 
 Summary: Simple image creator
@@ -86,6 +86,10 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Mon Jul 26 2021 Alexey Gladkov <legion@altlinux.ru> 0.2.43-alt1
+- Add own list of initial packages to instrumental chroot
+- mki-pack-isodata: Set the UUID of the ISO image explicitly
+
 * Wed Apr 07 2021 Alexey Gladkov <legion@altlinux.ru> 0.2.42-alt1
 - mki-build-propagator: Not require mar for build propagator
 - mki-pack-efionly-isoboot: Create GPT with MBR Protective instead Hybrid MBR
