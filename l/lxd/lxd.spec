@@ -6,8 +6,8 @@
 %define lxduser lxd
 
 Name:		lxd
-Version:	4.10
-Release:	alt2
+Version:	4.16
+Release:	alt1
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
 Group:		Development/Other
@@ -40,6 +40,7 @@ Requires:	lvm2
 Requires:	squashfs-tools
 Requires:	rsync
 Requires:	iptables
+Requires:	ebtables
 Requires:	dnsmasq
 
 BuildRequires: libcap-devel
@@ -143,6 +144,25 @@ help2man %buildroot%_bindir/lxd-benchmark -n "The container lightervisor - bench
 %_sbindir/useradd  -r -g %lxdgroup -c "LXD daemon" \
    -s /dev/null -d /dev/null %lxduser 2>/dev/null || :
 
+%post
+if [ $1 = 1 ]; then
+    if ! grep -qs '^root:' /etc/subuid \
+       && ! grep -qs '^root:' /etc/subgid \
+       && ! grep -qs '^lxd:' /etc/subuid \
+       && ! grep -qs '^lxd:' /etc/subuid
+    then
+        %_sbindir/usermod --add-subgids 100000-165535 root ||:
+        %_sbindir/usermod --add-subgids 100000-165535 lxd ||:
+        %_sbindir/usermod --add-subuids 100000-165535 root ||:
+        %_sbindir/usermod --add-subuids 100000-165535 lxd ||:
+   fi
+fi
+
+%post_service %name
+
+%preun
+%preun_service %name
+
 %files
 %doc AUTHORS COPYING
 %_bindir/*
@@ -169,6 +189,10 @@ help2man %buildroot%_bindir/lxd-benchmark -n "The container lightervisor - bench
 %exclude %go_path/src/%import_path/go.sum
 
 %changelog
+* Sat Jul 24 2021 Mikhail Gordeev <obirvalger@altlinux.org> 4.16-alt1
+- new version 4.16
+- Add subuids and subgids if not added previously
+
 * Thu May 20 2021 Slava Aseev <ptrnine@altlinux.org> 4.10-alt2
 - Fix FTBFS due to python3.{prov,req}
 
