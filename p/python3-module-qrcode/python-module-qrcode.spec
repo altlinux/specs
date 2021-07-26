@@ -1,14 +1,13 @@
 %define oname qrcode
-%def_with python3
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 6.1.0
-Release: alt2
+Release: alt3
 
 Summary: Python module to generate QR Codes
 
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://github.com/lincolnloop/python-qrcode
 
 # It is new feature etersoft-build-utils since 1.7.6: supports commented real url
@@ -16,78 +15,37 @@ Url: https://github.com/lincolnloop/python-qrcode
 Source: %oname-%version.tar
 BuildArch: noarch
 
-#BuildPreReq: rpm-build-python
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base xz
-BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
-
-#BuildRequires: python-devel python-module-distribute
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel python3-module-distribute
-%endif
 
-%setup_python_module %oname
+Conflicts: python-module-%oname
+Obsoletes: python-module-%oname
 
 %description
 This module uses image libraries, Python Imaging Library (PIL) by default,
 to generate QR Codes.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Python module to generate QR Codes (Python 3)
-Group: Development/Python3
-
-%description -n python3-module-%oname
-This module uses image libraries, Python Imaging Library (PIL) by default,
-to generate QR Codes.
-%endif
-
-
 %prep
 %setup -n %oname-%version
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc README.rst LICENSE CHANGES.rst
-%python_sitelibdir/%oname/
-# pure.py requires pymaging module that is not ready for release
-%exclude %python_sitelibdir/%oname/image/pure.py
-%python_sitelibdir/*.egg-info
+%_bindir/*
 %_man1dir/*
-%exclude %_bindir/*
-
-%if_with python3
-%files -n python3-module-%oname
 %python3_sitelibdir/%oname/
 # pure.py requires pymaging module that is not ready for release
 %exclude %python3_sitelibdir/%oname/image/pure.py
 %python3_sitelibdir/*.egg-*
-%endif
 
 %changelog
+* Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 6.1.0-alt3
+- Drop python2 support.
+
 * Mon Oct 19 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.1.0-alt2
 - NMU: Do not exclude egg files: side modules rely on them.
 
