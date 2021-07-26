@@ -1,36 +1,31 @@
 %define _libexecdir %_prefix/libexec
 %define modname dbus-python
 
+%def_enable documentation
 %def_enable check
 %def_disable installed_tests
-%add_findreq_skiplist %_libexecdir/installed-tests/%modname/test/*.py
-%def_disable documentation
+#%%add_findreq_skiplist %_libexecdir/installed-tests/%modname/test/*.py
 
-Name: python-module-dbus
+Name: python3-module-dbus
 Version: 1.2.18
 Release: alt2
 
 Summary: Python bindings for D-BUS library
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://www.freedesktop.org/wiki/Software/DBusBindings
 
-##Source: dbus-python-%version.tar
 Source: https://dbus.freedesktop.org/releases/dbus-python/dbus-python-%version.tar.gz
 
 %define dbus_ver 1.8
 %define glib_ver 2.40
+%define python3_ver 3.5
 
-%setup_python_module dbus
-Requires: dbus
-Provides: %modname = %EVR
-Provides: %name-data = %EVR
-Obsoletes: %name-data < %version-%release
-
+BuildRequires(pre): rpm-build-python3
 BuildRequires: autoconf-archive libdbus-devel >= %dbus_ver libgio-devel >= %glib_ver
-BuildRequires: python-devel >= 2.7 python-modules-unittest
-BuildRequires: python-module-pygobject3
-%{?_enable_documentation:BuildRequires: python-module-sphinx python-module-sphinx_rtd_theme}
+BuildRequires: python3-devel python3-module-pygobject3
+%{?_enable_check:BuildRequires: /proc dbus-tools dbus-tools-gui glibc-i18ndata python3-module-tappy}
+%{?_enable_documentation:BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme}
 
 %description
 D-Bus python bindings for use with python programs.
@@ -38,17 +33,19 @@ D-Bus python bindings for use with python programs.
 %package gobject
 Summary: Python bindings for D-BUS library
 Group: Development/Python
-Requires: python-module-dbus = %EVR
+Requires: %name = %EVR
 
 %description gobject
 D-Bus bindings for use with python programs
 (gobject introspection bindings).
 
-%package devel
+%package -n %modname-devel
 Summary: Python bindings for D-BUS library (devel package)
-Group: Development/Python
+Group: Development/Python3
+Provides: python3-module-dbus-devel = %EVR
+Provides: python-module-dbus-devel  = %EVR
 
-%description devel
+%description -n %modname-devel
 D-Bus python bindings for use with python programs.
 Development package.
 
@@ -63,7 +60,7 @@ Development documentation for %modname.
 
 %package tests
 Summary: Tests for the %name package
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 Requires: dbus-tools
 
@@ -76,12 +73,11 @@ the functionality of the installed python-dbus package.
 
 %build
 %define options %{?_enable_installed_tests:--enable-installed-tests} %{subst_enable documentation}
-export am_cv_python_pythondir=%python_sitelibdir
-export am_cv_python_pyexecdir=%python_sitelibdir
+export am_cv_python_pythondir=%python3_sitelibdir
+export am_cv_python_pyexecdir=%python3_sitelibdir
 %autoreconf
 %configure %options \
-	PYTHON=%__python \
-	PYTHON_LIBS="$(python-config --libs)"
+    PYTHON=%__python3
 %make_build
 
 %install
@@ -91,26 +87,26 @@ export am_cv_python_pyexecdir=%python_sitelibdir
 %make check
 
 %files
-%python_sitelibdir/*.so
-%python_sitelibdir/dbus/
+%python3_sitelibdir/*.so
+%python3_sitelibdir/dbus/
 %doc AUTHORS COPYING NEWS
 
-%exclude %python_sitelibdir/*.la
-%exclude %python_sitelibdir/dbus/gobject_service.py*
-%exclude %python_sitelibdir/dbus/gi_service.py*
+%exclude %python3_sitelibdir/*.la
+%exclude %python3_sitelibdir/dbus/gi_service.py
+%exclude %python3_sitelibdir/dbus/__pycache__/gi_service.*.pyc
 
 %files gobject
-%python_sitelibdir/dbus/gobject_service.py*
-%python_sitelibdir/dbus/gi_service.py*
+%python3_sitelibdir/dbus/gi_service.py
+%python3_sitelibdir/dbus/__pycache__/gi_service.*.pyc
 
-#%files devel
-%exclude %_includedir/dbus-1.0/dbus/%modname.h
-%exclude %_pkgconfigdir/%modname.pc
+%files -n %modname-devel
+%_includedir/dbus-1.0/dbus/%modname.h
+%_pkgconfigdir/%modname.pc
+%doc doc/*.txt
 
 %if_enabled installed_tests
 %files tests
 %_libexecdir/installed-tests/%modname/
-%exclude %_libexecdir/installed-tests/%modname/test/__pycache__
 %_datadir/installed-tests/%modname/
 %endif
 
@@ -119,13 +115,10 @@ export am_cv_python_pyexecdir=%python_sitelibdir
 %_docdir/%modname/
 %endif
 
-
 %changelog
 * Mon Jul 26 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.18-alt2
-- python2-only build
-- removed -devel subpackage to avoid duplicate provides after
-  split python 2 and 3 build
-- disabled documentation
+- python3-only build
+- new dbus-python-devel subpackage provides both python{,3}-module-dbus-devel
 
 * Wed Jul 21 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.18-alt1
 - 1.2.18
