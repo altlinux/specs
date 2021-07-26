@@ -1,78 +1,43 @@
 %define oname WSGIUtils
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.7
-Release: alt2.2
+Release: alt3
 Summary: Libraries for use in a WSGI environnment
 License: Free
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/WSGIUtils/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python-tools-2to3
-%endif
 
-%py_provides %oname
+%py3_provides %oname
 
 %description
 WSGI Utils are a collection of useful libraries for use in a WSGI
 environnment.
 
-%package -n python3-module-%oname
-Summary: Libraries for use in a WSGI environnment
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-WSGI Utils are a collection of useful libraries for use in a WSGI
-environnment.
-
 %prep
 %setup
-
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc *.txt
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.txt
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 0.7-alt3
+- Drop python2 support.
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.7-alt2.2
 - (NMU) rebuild with python3.6
 
