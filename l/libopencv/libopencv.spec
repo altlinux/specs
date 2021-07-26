@@ -40,7 +40,7 @@
 %define sover 4.5
 Name: lib%bname
 Epoch: 1
-Version: 4.5.2
+Version: 4.5.3
 Release: alt1
 Summary: Open Source Computer Vision Library
 License: Distributable
@@ -64,7 +64,8 @@ Patch2000: %name-e2k-simd.patch
 
 BuildRequires: gcc-c++ libjasper-devel libjpeg-devel libtiff-devel
 BuildRequires: openexr-devel graphviz libpng-devel libpixman-devel
-BuildRequires: cmake eigen3 doxygen python2.7(bs4) zlib-devel
+BuildRequires: cmake eigen3 zlib-devel
+BuildRequires: python3 python3(bs4) doxygen
 BuildRequires: libucil-devel libtbb-devel bzlib-devel
 BuildRequires: pkgconfig(glproto) pkgconfig(dri2proto) pkgconfig(xext)
 BuildRequires: pkgconfig(xdamage) pkgconfig(xxf86vm)
@@ -316,6 +317,8 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* %_cmake__builddir/downloads/xfea
 	-DOPENCV_OTHER_INSTALL_PATH=%_datadir/%Name \
 	-DOPENCV_GENERATE_PKGCONFIG:BOOL=ON \
 	-DOPENCV_SKIP_CMAKE_CXX_STANDARD:BOOL=ON \
+	-DPYTHON_EXECUTABLE=%__python3 \
+	-DPYTHON_DEFAULT_EXECUTABLE=%__python3 \
 	%nil
 
 %cmake_build
@@ -367,6 +370,9 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* %_cmake__builddir/downloads/xfea
 %_datadir/%Name/quality
 
 %changelog
+* Mon Jul 26 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.5.3-alt1
+- Updated to upstream version 4.5.3.
+
 * Thu Jun 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.5.2-alt1
 - Updated to upstream version 4.5.2.
 - Built with openmp support.
