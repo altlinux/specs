@@ -1,6 +1,6 @@
 Name: steam
-Version: 1.0.0.70
-Release: alt1.1
+Version: 1.0.0.71
+Release: alt1
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -54,12 +54,16 @@ savegame and screenshot functionality, and many social features.
 %dir %_defaultdocdir/%name
 %_defaultdocdir/%name/*
 %_iconsdir/hicolor/*/apps/%name.png
+%_datadir/metainfo/com.valvesoftware.Steam.metainfo.xml
 %_man6dir/%{name}*
 %_pixmapsdir/%{name}*.png
 %config %_udevrulesdir/60-%name-input.rules
 %config %_udevrulesdir/60-%name-vr.rules
 
 %changelog 
+* Mon Jul 26 2021 Nazarov Denis <nenderus@altlinux.org> 1.0.0.71-alt1
+- Version 1.0.0.71
+
 * Mon May 03 2021 Nazarov Denis <nenderus@altlinux.org> 1.0.0.70-alt1.1
 - Update build requires to fix FTBFS
 
