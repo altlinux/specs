@@ -1,14 +1,11 @@
 Name: mtd-utils
-Version: 2.1.2
-Release: alt2
+Version: 2.1.3
+Release: alt1
 
 Summary: Tools for maintaining Memory Technology Devices
 License: GPLv2
 Group: System/Kernel and hardware
 Url: http://www.linux-mtd.infradead.org/
-
-Provides: mtd
-Obsoletes: mtd
 
 Source: %name-%version-%release.tar
 
@@ -37,6 +34,9 @@ including JFFS2, M-Systems DiskOnChip devices, etc.
 %_man8dir/ubinize.*
 
 %changelog
+* Mon Jul 26 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.3-alt1
+- 2.1.3 released
+
 * Mon Apr 19 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.2-alt2
 - fixed 2G+ mtd devices handling
 
