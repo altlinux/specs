@@ -1,6 +1,6 @@
 Name: dlm
-Version: 4.0.9
-Release: alt2
+Version: 4.1.0
+Release: alt1
 
 Summary: dlm control daemon and tool
 License: GPLv2 and GPLv2+ and LGPLv2+
@@ -48,9 +48,14 @@ sed -i 's,fence,,' Makefile
 %endif
 
 %build
-%make
+%ifarch %ix86
+export CFLAGS="$CFLAGS -fPIC"
+%endif
+export CFLAGS="$CFLAGS $(pkg-config --cflags pacemaker) -I../libdlm -I../dlm_controld -I../include"
+export LDCONF
+%make CFLAGS="$CFLAGS" LLT_LDFLAGS="-lpthread"
 %ifnarch %e2k
-%make -C fence
+%make -C fence CFLAGS="$CFLAGS"
 %endif
 
 %install
@@ -90,6 +95,9 @@ touch %buildroot%_sysconfdir/dlm/dlm.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jul 26 2021 Andrey Cherepanov <cas@altlinux.org> 4.1.0-alt1
+- 4.1.0
+
 * Fri Apr 03 2020 Michael Shigorin <mike@altlinux.org> 4.0.9-alt2
 - E2K: build without fence (BR: libpacemaker-devel, unavailable now)
 
