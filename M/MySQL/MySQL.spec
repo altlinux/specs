@@ -13,7 +13,7 @@
 
 Name: MySQL
 Version: 8.0.25
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -80,8 +80,10 @@ BuildRequires: zlib-devel
 BuildRequires: libsystemd-devel
 BuildRequires: protobuf-compiler
 BuildRequires: libprotobuf-lite-devel
+%if %(test -f /usr/include/rpc/rpc.h && echo 0 || echo 1)
 BuildRequires: libtirpc-devel
 BuildRequires: rpcgen
+%endif
 
 %define soname 21
 
@@ -792,6 +794,10 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Thu Jul 08 2021 Nikolai Kostrigin <nickel@altlinux.org> 8.0.25-alt2
+- spec: add conditional BR: evaluation for RPC libs excluded from glibc
+  for seamless backporting
+
 * Wed May 19 2021 Nikolai Kostrigin <nickel@altlinux.org> 8.0.25-alt1
 - new version
 
