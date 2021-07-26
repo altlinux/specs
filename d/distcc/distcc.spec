@@ -2,7 +2,7 @@
 
 Name: distcc
 Version: 3.4
-Release: alt2
+Release: alt3
 
 Summary: distcc is a program to distribute builds C/C++/ Objective C/C++
 
@@ -14,6 +14,7 @@ Url: http://distcc.org
 Source: %name-%version.tar
 Source1: distccd.init
 Source2: distccd.conf
+Source3: distcc.filetrigger
 
 BuildRequires: glibc-devel-static binutils-devel
 BuildRequires: libavahi-devel libpopt-devel
@@ -70,14 +71,23 @@ Python3 module distcc include_server.
 %install
 %makeinstall_std
 mkdir -p %buildroot%_sysconfigdir/ %buildroot%_initdir/
+mkdir -p -m755 %buildroot%prefix/lib/distcc
+mkdir -p -m755 %buildroot%prefix/lib/rpm
 install -p -m 0755 %SOURCE1  %buildroot%_initdir/distccd
 install -p -m 0644 %SOURCE2 %buildroot%_sysconfigdir/distccd
+install -p -m 0755 %SOURCE3 %buildroot%prefix/lib/rpm
 
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/ignore.d/
 touch %buildroot%_sysconfdir/buildreqs/packages/ignore.d/distcc
 
 rm -rf %buildroot/etc/default/
 rm -rf %buildroot/%_docdir/
+
+%post
+/usr/sbin/update-distcc-symlinks || :
+
+%preun
+find /usr/lib/distcc -type l -print0 | xargs -r -0 rm -f || :
 
 %pre server
 %groupadd distccd || :
@@ -88,7 +98,6 @@ rm -rf %buildroot/%_docdir/
 
 %preun server
 %preun_service distccd
-
 
 %files
 %doc AUTHORS NEWS README README.pump TODO
@@ -101,6 +110,9 @@ rm -rf %buildroot/%_docdir/
 %_sysconfdir/buildreqs/packages/ignore.d/distcc
 %dir %_sysconfdir/distcc/
 %_sysconfdir/distcc/hosts
+%prefix/lib/rpm/distcc.filetrigger
+# XXX: don't change this to %_lib, please!
+%dir %prefix/lib/distcc
 
 %files pump
 %_bindir/pump
@@ -120,6 +132,11 @@ rm -rf %buildroot/%_docdir/
 %python3_sitelibdir/include_server*
 
 %changelog
+* Mon Jul 26 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.4-alt3
+- distccd: fixed search for approved compilers (Closes: #40577)
+- update-distcc-symlinks correctly finds GCC (cross-) compilers
+- automatically run update-distcc-symlinks (Closes: #40579)
+
 * Mon Jul 12 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.4-alt2
 - Fixed heap corruption (#40425)
 - Distcc correctly finds the native compiler (#40425, upstream: #426)
