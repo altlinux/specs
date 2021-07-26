@@ -1,51 +1,27 @@
-%def_without doc
-
-Name:           python-module-rtslib
+Name:           python3-module-rtslib
 Version:        2.1.fb69
-Release:        alt2
+Release:        alt3
 
 Summary:        API for Linux kernel LIO SCSI target
 
-License:        ASL 2.0
-Group:          Development/Python
+License:        Apache-2.0
+Group:          Development/Python3
 URL:            https://github.com/open-iscsi/rtslib-fb
 
 Source:         %name-%version.tar
 
 BuildArch:      noarch
 
-%if_with doc
-BuildRequires: python3-module-epydoc
-%endif
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-six
 BuildRequires: python3-module-pyudev
 BuildRequires: python3-module-kmod
 
 Requires: python3-module-kmod
 
-%package doc
-Summary:        Documentation for python-rtslib
-Group:          Documentation
-
 %description
 API for generic Linux SCSI kernel target. Includes the 'target'
 service and targetctl tool for restoring configuration.
-
-%description doc
-API documentation for rtslib, to configure the generic Linux SCSI
-multiprotocol kernel target.
-
-%package -n python3-module-rtslib
-Summary:        API for Linux kernel LIO SCSI target
-Group:          Development/Python3
-
-Requires: python3-module-kmod
-
-%description -n python3-module-rtslib
-API for generic Linux SCSI kernel target.
 
 %package -n target-restore
 Summary:        Systemd service for targetcli/rtslib
@@ -70,11 +46,6 @@ gzip --stdout doc/saveconfig.json.5 > doc/saveconfig.json.5.gz
 
 %python3_build_debug
 
-%if_with doc
-mkdir -p doc/html
-epydoc --no-sourcecode --html -n rtslib -o doc/html rtslib/*.py
-%endif
-
 %install
 %python3_install
 mkdir -p %buildroot{%_man8dir,%_man5dir,%_unitdir,%_sysconfdir/target/backup,%_localstatedir/target/{pr,alua}}
@@ -89,7 +60,7 @@ install -m 644 doc/saveconfig.json.5.gz %buildroot%_man5dir/
 %preun -n target-restore
 %preun_service target
 
-%files -n python3-module-rtslib
+%files
 %doc COPYING README.md doc/getting_started.md
 %python3_sitelibdir/*
 
@@ -104,12 +75,10 @@ install -m 644 doc/saveconfig.json.5.gz %buildroot%_man5dir/
 %_man8dir/targetctl.8.*
 %_man5dir/saveconfig.json.5.*
 
-%if_with doc
-%files doc
-%doc doc/html
-%endif
-
 %changelog
+* Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 2.1.fb69-alt3
+- Rename package, spec cleanup.
+
 * Fri Feb 07 2020 Vitaly Lipatov <lav@altlinux.ru> 2.1.fb69-alt2
 - build python3 only
 - add def_without doc to disable epydoc
