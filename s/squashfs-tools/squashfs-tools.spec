@@ -1,9 +1,9 @@
 Name: squashfs-tools
-Version: 4.4
-Release: alt2
+Version: 4.5
+Release: alt1
 
 Summary: squashfs support
-License: GPL
+License: GPLv2
 Group: System/Kernel and hardware
 Url: https://git.kernel.org/cgit/fs/squashfs/squashfs-tools.git/
 Source: %name-%version.tar
@@ -40,6 +40,9 @@ ln -sf ../../sbin/mksquashfs %buildroot%_bindir/mksquashfs
 %_bindir/*
 
 %changelog
+* Mon Jul 26 2021 Anton Farygin <rider@altlinux.ru> 4.5-alt1
+- 4.5
+
 * Sat Feb 27 2021 Anton Farygin <rider@altlinux.org> 4.4-alt2
 - updated to upstream version 4.4-git.1 to fix build with gcc-10
 
