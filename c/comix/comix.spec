@@ -1,7 +1,7 @@
 Summary: Comic book viewer
 Name: comix
 Version: 4.0.4
-Release: alt4
+Release: alt5
 License: GPLv2+
 Group: Graphics
 Url: http://comix.sourceforge.net/
@@ -35,7 +35,7 @@ BuildArch: noarch
 
 # Automatically added by buildreq on Sat Mar 09 2019
 # optimized out: libdbus-glib libgpg-error python-base python-module-cffi python-module-scandir python-module-six python-modules python-modules-compiler python-modules-ctypes python-modules-logging sh4 shared-mime-info
-BuildRequires: GConf python-module-Pillow python-module-pathlib2 python-module-pygobject unrar
+BuildRequires: GConf python-module-Pillow python-module-pygobject unrar
 
 %description
 Comix is a comic book viewer. It reads zip, rar, tar, tar.gz, and tar.bz2
@@ -110,6 +110,9 @@ install -D mime/comicbook.schemas %buildroot%_sysconfdir/gconf/schemas/%name.sch
 %exclude %_datadir/mime/version
 
 %changelog
+* Tue Jul 27 2021 Grigory Ustinov <grenka@altlinux.org> 4.0.4-alt5
+- Fixed BuildRequires.
+
 * Thu Jul 30 2020 Pavel Vasenkov <pav@altlinux.org> 4.0.4-alt4
 - NMU: the following fixes applied:
   * version-deprecation
