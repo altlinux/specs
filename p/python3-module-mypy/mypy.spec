@@ -12,8 +12,8 @@
 %endif
 
 Name:    python3-module-%oname
-Version: 0.812
-Release: alt2
+Version: 0.910
+Release: alt1
 
 Summary: Optional static typing for Python 3 and 2 (PEP 484)
 License: MIT
@@ -27,7 +27,7 @@ BuildRequires: python3-dev python3-module-setuptools
 
 # Needed to generate the man pages
 BuildRequires:  help2man
-BuildRequires: python3-module-typeshed
+BuildRequires: python3-module-typeshed > 0-alt2
 
 %if_with check
 # TODO: unbundle googletest
@@ -39,6 +39,7 @@ BuildRequires: python3(psutil)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_xdist)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
 BuildRequires: python3(typing)
 BuildRequires: python3(typing_extensions)
 %endif
@@ -74,9 +75,9 @@ mypyc. Compiled mypy is about 4x faster than without compilation.
 # Python2 parser
 rm mypy/fastparse2.py
 
-# upstream may merge typeshed, remove only if empty
-rmdir ./mypy/typeshed/
-ln -s %python3_sitelibdir_noarch/typeshed ./mypy/
+# bundled type stubs for stdlib from typeshed
+rm -r ./mypy/typeshed/stdlib/
+ln -s %python3_sitelibdir_noarch/typeshed/stdlib ./mypy/typeshed/
 
 %build
 %python3_build
@@ -127,7 +128,7 @@ TESTS="$TESTS mypyc/test"
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
-tox.py3 --sitepackages -vvr -- -vv $TESTS
+tox.py3 --sitepackages --no-deps -vvr -s false -- -vv $TESTS
 
 %files
 %doc README.md
@@ -147,6 +148,9 @@ tox.py3 --sitepackages -vvr -- -vv $TESTS
 %endif
 
 %changelog
+* Wed Jun 23 2021 Stanislav Levin <slev@altlinux.org> 0.910-alt1
+- 0.812 -> 0.910.
+
 * Thu May 20 2021 Fr. Br. George <george@altlinux.ru> 0.812-alt2
 - Fix tempfile.TemporaryDirectory() naming in tests
 

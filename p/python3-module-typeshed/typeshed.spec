@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0
-Release: alt1.gitadd4d92f
+Release: alt2.git17bc1d83
 
 Summary: External type annotations for the Python packages
 License: Apache-2.0
@@ -33,13 +33,15 @@ inference.
 %install
 mkdir -p %buildroot%python3_sitelibdir/%oname
 cp -a stdlib %buildroot%python3_sitelibdir/%oname/
-cp -a third_party %buildroot%python3_sitelibdir/%oname/
 
 %files
 %doc README.md
 %python3_sitelibdir/%oname/
 
 %changelog
+* Wed Jun 23 2021 Stanislav Levin <slev@altlinux.org> 0-alt2.git17bc1d83
+- add4d92f -> 17bc1d83.
+
 * Wed Mar 24 2021 Stanislav Levin <slev@altlinux.org> 0-alt1.gitadd4d92f
 - Updated to add4d92f.
 
