@@ -1,5 +1,5 @@
 Name: mokutil
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 Epoch: 1
 
@@ -15,6 +15,7 @@ BuildRequires: efivar-devel
 BuildRequires: efivar
 BuildRequires: openssl-devel
 BuildRequires: openssl
+BuildRequires: libkeyutils-devel
 Conflicts: shim0.4-unsigned
 
 ExclusiveArch: x86_64
@@ -41,6 +42,10 @@ make PREFIX=%prefix LIBDIR=%_libdir DESTDIR=%buildroot install
 %_datadir/bash-completion/completions/mokutil
 
 %changelog
+* Tue Jul 27 2021 Nikolai Kostrigin <nickel@altlinux.org> 1:0.5.0-alt1
+- new version
+  + spec: add libkeyutils-devel to BR
+
 * Fri Jun 28 2019 Nikolai Kostrigin <nickel@altlinux.org> 1:0.4.0-alt1
 - new version
   + spec: remove rpm-build-ubt from BR
