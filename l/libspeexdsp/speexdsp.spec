@@ -8,7 +8,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libspeexdsp
 Version:        1.2.0
-Release:        alt1_1
+Release:        alt1_1.2
 Summary:        A voice compression format (DSP)
 
 License:        BSD
@@ -55,7 +55,7 @@ This is the DSP package, see the speex package for the codec part.
 
 %build
 %configure \
-%ifarch aarch64
+%ifarch aarch64 %e2k
 	--disable-neon \
 %endif
 	--disable-static
@@ -82,6 +82,12 @@ find %{buildroot} -type f -name "*.la" -delete
 %{_libdir}/libspeexdsp.so
 
 %changelog
+* Tue Jul 27 2021 Michael Shigorin <mike@altlinux.org> 1.2.0-alt1_1.2
+- built for sisyphus
+
+* Tue Jul 27 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.2.0-alt1_1.1
+- fixed build for Elbrus
+
 * Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_1
 - update to new release by fcimport
 
