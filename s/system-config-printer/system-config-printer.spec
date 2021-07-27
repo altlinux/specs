@@ -1,21 +1,20 @@
 Name:    system-config-printer
-Version: 1.5.11
-Release: alt12
+Version: 1.5.15
+Release: alt1
 
 Summary: A printer administration tool
 Group:   System/Configuration/Printing
 License: GPLv2+
 Url:     http://cyberelk.net/tim/software/system-config-printer/
-# Git:   https://github.com/zdohnal/system-config-printer
+# Git:   https://github.com/OpenPrinting/system-config-printer
 
 Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
+Source1: ru.po
+Patch0: %name-1.5.11-alt.patch
 Patch1: fix_search_printer.patch
 Patch2: about_logo.patch
-Patch3: fix-translation-in-troubleshoot-menu.patch
+Patch3: %name-alt-fix-SMB-auth-fields-order.patch
 Patch4: %name-1.5.11-plugins.patch
-Patch5: %name-1.5.11-ru.patch
-Patch6: %name-1.5.11-gtk-grid-attach.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -33,7 +32,6 @@ BuildRequires: xmlto
 Requires: %name-lib = %EVR
 
 %add_python3_path /usr/share/system-config-printer
-
 
 %description
 system-config-printer is a graphical user interface that allows
@@ -74,8 +72,7 @@ sed -i 's/mod.*ins.*_aft.*//' newprinter.py
 %patch2 -p0
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
-%patch6 -p1
+cat %SOURCE1 > po/ru.po
 
 %build
 ./bootstrap
@@ -84,7 +81,7 @@ sed -i 's/mod.*ins.*_aft.*//' newprinter.py
 
 %install
 %makeinstall_std udevrulesdir=/lib/udev/rules.d \
-		 udevhelperdir=/lib/udev
+                 udevhelperdir=/lib/udev
 install -Dm0644 tmpfiles.conf %buildroot%_tmpfilesdir/system-config-printer.conf
 mv %buildroot%_datadir/{metainfo,appdata}
 
@@ -120,8 +117,14 @@ exit 0
 %python3_sitelibdir_noarch/cupshelpers
 %python3_sitelibdir_noarch/cupshelpers-*
 
-
 %changelog
+* Tue Jul 27 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.15-alt1
+- New version (ALT #37558).
+
+* Tue Jul 27 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.13-alt1
+- New version.
+- Fix bogus date in %%changelog.
+
 * Mon Jun 21 2021 Paul Wolneykien <manowar@altlinux.org> 1.5.11-alt12
 - Restore the original authconn.py extracting the changes into a
   separate patch.
@@ -1362,7 +1365,7 @@ exit 0
 * Fri Jun 23 2006 Tim Waugh <twaugh@redhat.com> 0.7.16-1
 - 0.7.16, now with SMB browser.
 
-* Wed Jun 22 2006 Tim Waugh <twaugh@redhat.com> 0.7.15-1
+* Thu Jun 22 2006 Tim Waugh <twaugh@redhat.com> 0.7.15-1
 - 0.7.15.
 - Build requires gettext-devel.
 - Ship translations.
