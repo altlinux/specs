@@ -6,9 +6,10 @@ Group: System/Libraries
 %define oldname speexdsp
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%define fontpkgname speexdsp
 Name:           libspeexdsp
 Version:        1.2.0
-Release:        alt1_1.2
+Release:        alt1_3
 Summary:        A voice compression format (DSP)
 
 License:        BSD
@@ -82,6 +83,9 @@ find %{buildroot} -type f -name "*.la" -delete
 %{_libdir}/libspeexdsp.so
 
 %changelog
+* Tue Jul 27 2021 Igor Vlasenko <viy@altlinux.org> 1.2.0-alt1_3
+- e2k support imported
+
 * Tue Jul 27 2021 Michael Shigorin <mike@altlinux.org> 1.2.0-alt1_1.2
 - built for sisyphus
 
