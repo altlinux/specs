@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 20.4.7
+Version: 20.6.0
 Release: alt1
 
 Summary: Virtual Python Environment builder
@@ -21,7 +21,9 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools_scm
 
 %if_with check
-BuildRequires: python3(appdirs)
+# install_requires
+BuildRequires: python3(importlib_metadata)
+BuildRequires: python3(platformdirs)
 BuildRequires: python3(distlib)
 BuildRequires: python3(filelock)
 BuildRequires: python3(six)
@@ -101,6 +103,9 @@ tox.py3 --sitepackages --no-deps -vvr -s false
 %python3_sitelibdir/virtualenv-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Jul 26 2021 Stanislav Levin <slev@altlinux.org> 20.6.0-alt1
+- 20.4.7 -> 20.6.0.
+
 * Mon May 24 2021 Stanislav Levin <slev@altlinux.org> 20.4.7-alt1
 - 20.4.6 -> 20.4.7.
 

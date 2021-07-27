@@ -5,7 +5,7 @@
 %def_without bootstrap
 
 Name: python3-module-pip
-Version: 21.1.2
+Version: 21.2.1
 Release: alt1
 
 Summary: The PyPA recommended tool for installing Python packages
@@ -95,7 +95,7 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
 %_bindir/pip3
 %_bindir/pip%__python3_version
 %python3_sitelibdir/pip/
-%python3_sitelibdir/pip-*.egg-info/
+%python3_sitelibdir/pip-%version-py%_python3_version.egg-info/
 
 %if_without bootstrap
 %files wheel
@@ -103,6 +103,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
 %endif
 
 %changelog
+* Mon Jul 26 2021 Stanislav Levin <slev@altlinux.org> 21.2.1-alt1
+- 21.1.2 -> 21.2.1.
+
 * Mon May 24 2021 Stanislav Levin <slev@altlinux.org> 21.1.2-alt1
 - 21.1.1 -> 21.1.2.
 
