@@ -5,7 +5,7 @@
 
 Name: mct
 Version: 2.8.3
-Release: alt2
+Release: alt3
 Summary: The Model Coupling Toolkit
 License: MIT
 Group: Development/Tools
@@ -110,7 +110,11 @@ MPILIBS="$MPILIBS -lmpi_f77 -lmpi -Wl,-rpath,%mpidir/lib"
 	MPILIBS="$MPILIBS" \
 	MPIHEADER="-I%mpidir/include" \
 	FC=mpif77 F90=mpif90 CC=mpicc \
+%ifnarch %e2k
 	OPT="%optflags %optflags_shared -fallow-argument-mismatch"
+%else
+    OPT="%optflags %optflags_shared"
+%endif
 
 %make
 #make examples
@@ -169,6 +173,9 @@ popd
 #_docdir/lib%name-devel
 
 %changelog
+* Tue Jul 27 2021 Grigory Ustinov <grenka@altlinux.org> 2.8.3-alt3
+- Fixed fix for %%e2k.
+
 * Thu Apr 08 2021 Grigory Ustinov <grenka@altlinux.org> 2.8.3-alt2
 - Fixed FTBFS.
 
