@@ -1,32 +1,24 @@
 %define oname pytest-watch
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 4.2.0
-Release: alt1
+Release: alt2
 Summary: Local continuous test runner with pytest and watchdog
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/pytest-watch/
 
 # https://github.com/joeyespo/pytest-watch.git
 Source: %name-%version.tar
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel 
 BuildRequires: python3-module-pytest python3-module-watchdog
 BuildRequires: python3-module-colorama
 BuildRequires: python3-module-docopt
 
-%description
-pytest-watch a zero-config CLI tool that runs pytest, and reruns it when
-a file in your project changes.
-
-%package -n python3-module-%oname
-Summary: Local continuous test runner with pytest and watchdog
-Group: Development/Python3
 %py3_provides pytest_watch
 
-%description -n python3-module-%oname
+%description
 pytest-watch a zero-config CLI tool that runs pytest, and reruns it when
 a file in your project changes.
 
@@ -45,6 +37,9 @@ a file in your project changes.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jul 27 2021 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt2
+- Rename package, spec cleanup.
+
 * Fri Oct 04 2019 Anton Farygin <rider@altlinux.ru> 4.2.0-alt1
 - 4.2.0
 - removed python-2.7 support
