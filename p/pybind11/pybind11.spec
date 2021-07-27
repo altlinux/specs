@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 #based on fedora spec
 Name: pybind11
-Version: 2.6.2
-Release: alt2
+Version: 2.7.0
+Release: alt1
 
 Summary: Seamless operability between C++11 and Python
 License: BSD-3-Clause
@@ -97,6 +97,9 @@ export SKIP_E2K=1
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Tue Jul 27 2021 Nikolai Kostrigin <nickel@altlinux.org> 2.7.0-alt1
+- New version
+
 * Wed Jun 23 2021 Michael Shigorin <mike@altlinux.org> 2.6.2-alt2
 - E2K: drop c++ hacks, update ones for tests
 
