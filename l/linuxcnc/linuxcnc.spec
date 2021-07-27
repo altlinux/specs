@@ -6,7 +6,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.9.0
-Release: alt0.1
+Release: alt0.2
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -14,7 +14,7 @@ License: GPLv2+ and LGPLv2
 Group: Engineering
 Url: https://github.com/LinuxCNC/linuxcnc
 
-ExclusiveArch: aarch64 alpha %arm ia64 %ix86 x86_64
+ExclusiveArch: aarch64 alpha %arm ia64 %ix86 x86_64 %e2k
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
@@ -151,6 +151,11 @@ find . -type f -name *.py | xargs sed -i \
 	-e '1s:^#!/usr/bin/python2$:#!/usr/bin/python%__python3_version:' \
 	%nil
 
+%ifarch %e2k
+# unsupported as of lcc 1.25.17
+sed -i 's,-fno-fast-math,,' src/Makefile*
+%endif
+
 %build
 pushd src
 %autoreconf
@@ -275,6 +280,9 @@ popd
 %endif
 
 %changelog
+* Wed Jul 28 2021 Michael Shigorin <mike@altlinux.org> 2.9.0-alt0.2
+- E2K: fix build
+
 * Mon Jul 26 2021 Anton Midyukov <antohami@altlinux.org> 2.9.0-alt0.1
 - New snapshot
 - switch to python3 (Closes: 40376)
