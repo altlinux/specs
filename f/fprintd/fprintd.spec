@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fprintd
-Version: 1.90.9
-Release: alt1.1
+Version: 1.92.0
+Release: alt1
 Summary: D-Bus service for Fingerprint reader access
 Group: System/Servers
 Url: https://www.freedesktop.org/wiki/Software/fprint/fprintd
@@ -108,6 +108,9 @@ install -m0644 -p %SOURCE2 %buildroot%_sysconfdir/pam.d/
 %_bindir/%name-*
 
 %changelog
+* Tue Jul 27 2021 Anton Farygin <rider@altlinux.ru> 1.92.0-alt1
+- 1.92.0
+
 * Tue Jun 29 2021 L.A. Kostis <lakostis@altlinux.ru> 1.90.9-alt1.1
 - Split -clients pkg (to use them with other fingerprint providers).
 - Add pam.d configuration into pam pkg.

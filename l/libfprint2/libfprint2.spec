@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libfprint2
-Version: 1.90.7
+Version: 1.92.1
 Release: alt1
 
 Summary: Tool kit for fingerprint scanner
@@ -19,7 +19,7 @@ BuildRequires: libusb-devel libnss-devel glib2-devel libImageMagick-devel libXv-
 BuildRequires: gcc-c++ doxygen 
 BuildRequires: libgio-devel libgusb-devel libudev-devel gtk-doc libcairo-devel cmake
 BuildRequires: /proc python3-module-pygobject3
-BuildRequires: gobject-introspection-devel libgusb-gir-devel
+BuildRequires: gobject-introspection-devel libgusb-gir-devel libgudev-devel
 
 %description
 The fprint project aims to support for consumer fingerprint reader
@@ -59,7 +59,7 @@ GObject introspection devel data for %name
 %build
 %meson -Ddrivers=all \
        -Dintrospection=true \
-       -Dudev_rules=true \
+       -Dudev_rules=enabled \
        -Dudev_rules_dir=%_sysconfdir/udev/rules.d/ \
        -Dgtk-examples=false \
        -Ddoc=true
@@ -75,7 +75,7 @@ export LD_LIBRARY_PATH="libfprint"
 %files
 %doc COPYING INSTALL NEWS TODO THANKS AUTHORS README
 %_libdir/*.so.*
-%_sysconfdir/udev/rules.d/60-libfprint-2-autosuspend.rules
+%_sysconfdir/udev/rules.d/70-libfprint-2.rules
 
 %files gir
 %_libdir/girepository-1.0/*.typelib
@@ -91,6 +91,9 @@ export LD_LIBRARY_PATH="libfprint"
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Tue Jul 27 2021 Anton Farygin <rider@altlinux.ru> 1.92.1-alt1
+- 1.92.1
+
 * Mon Apr 05 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.90.7-alt1
 - Updated to upstream version 1.90.7.
 - Enabled introspection since it's required for fprintd tests now.
