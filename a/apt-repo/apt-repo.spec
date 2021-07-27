@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.3.15
+Version:  1.3.16
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -35,6 +35,9 @@ install -Dpm 644 %name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %_man8dir/%name.8*
 
 %changelog
+* Fri Jul 23 2021 Andrey Cherepanov <cas@altlinux.org> 1.3.16-alt1
+- Add p10 branch.
+
 * Mon Nov 16 2020 Andrey Cherepanov <cas@altlinux.org> 1.3.15-alt1
 - Add https to allowed apt protocols.
 
