@@ -1,5 +1,5 @@
 Name: iputils
-%define timestamp 20210202
+%define timestamp 20210722
 Version: %timestamp
 Release: alt1
 
@@ -12,6 +12,10 @@ Source0: %name-%version.tar
 Source1: ping.control
 Source2: ninfod.init
 Patch: %name-%version-%release.patch
+
+# Patch from upstream git.
+# Drop them when new version will be released.
+Patch100: meson-Make-tests-optional.patch
 
 Conflicts: netkit-base
 
@@ -51,6 +55,7 @@ Queries.
 %prep
 %setup
 %patch -p1
+%patch100 -p1
 
 %build
 %add_optflags -fno-strict-aliasing -Wstrict-prototypes -Werror -Wno-error=variadic-macros
@@ -68,7 +73,8 @@ export LDFLAGS='-pie'
 	-DNO_SETCAP_OR_SUID=true \
 	-DUSE_CAP=true \
 	-DUSE_IDN=true \
-	-DUSE_GETTEXT=false
+	-DUSE_GETTEXT=false \
+	-DSKIP_TESTS=true
 
 %meson_build -v
 
@@ -152,6 +158,12 @@ fi
 %_man8dir/ninfod.*
 
 %changelog
+* Tue Jul 27 2021 Mikhail Efremov <sem@altlinux.org> 20210722-alt1
+- Patch from upstream git:
+    + meson: Make tests optional.
+- Explicitly disabled tests.
+- 20210202 -> 20210722.
+
 * Tue Mar 23 2021 Mikhail Efremov <sem@altlinux.org> 20210202-alt1
 - Drop obsoleted patches.
 - 20200821 -> 20210202.
