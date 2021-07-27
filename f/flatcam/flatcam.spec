@@ -1,6 +1,6 @@
 Name: flatcam
 Version: 8.5
-Release: alt4.20190601
+Release: alt5.20190601
 Summary: 2D Computer-Aided PCB Manufacturing
 Group: Engineering
 License: MIT
@@ -10,8 +10,19 @@ BuildArch: noarch
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+
+# Fedora patchs
+# Reported upstream as: https://bitbucket.org/jpcgt/flatcam/pull-requests/125
+Patch1: https://bitbucket.org/dwrobel/flatcam/commits/0d2cb7e53e629a1c8d5ba790752e4a4d605065bc/raw#/%{name}-setup-update.patch
+# Disable checks for the latest version of the program
+Patch2: https://bitbucket.org/dwrobel/flatcam/commits/002a69f71632a3bb2d71302b24aae6b4d449557d/raw#/%{name}-disable-checks-for-the-latest-version-of-the-program.patch
+Patch3: %{name}-Fix-for-python3.7-StopIteration-exception.patch
+
 Buildrequires(pre): rpm-build-python3
-Buildrequires: python3-module-setuptools desktop-file-utils
+Buildrequires: python3-module-setuptools
+Buildrequires: desktop-file-utils
+BuildRequires: libappstream-glib
+
 Requires: python3-module-svg-path
 Requires: python3-module-matplotlib-qt4
 
@@ -25,6 +36,7 @@ for Isolation routing.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %python3_build
@@ -61,6 +73,9 @@ desktop-file-install --dir=%buildroot%_desktopdir %name.desktop
 %exclude %python3_sitelibdir/descartes
 
 %changelog
+* Tue Jul 27 2021 Anton Midyukov <antohami@altlinux.org> 8.5-alt5.20190601
+- Add patch from Fedora
+
 * Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 8.5-alt4.20190601
 - NMU: update to 46454c293a9b390c931b52eb6217ca47e13b0231
 - build with python3
