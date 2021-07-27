@@ -24,7 +24,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 9.1.991
+Version: 9.2
 Release: alt1
 Url: https://basealt.ru
 
@@ -365,6 +365,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Jul 27 2021 Mikhail Efremov <sem@altlinux.org> 9.2-alt1
+- Bump version.
+
 * Thu Jul 15 2021 Mikhail Efremov <sem@altlinux.org> 9.1.991-alt1
 - Bump version.
 
