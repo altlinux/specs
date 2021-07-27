@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gifsicle
-Version: 1.92
+Version: 1.93
 Release: alt1
 Summary: command-line program for manipulating GIF images
 Group: Graphics
@@ -34,15 +34,18 @@ program that checks whether two GIFs look the same.
 %makeinstall
 
 %files
-%_bindir/gifdiff
-%_man1dir/gifdiff.1.*
-%_bindir/gifsicle
-%_man1dir/gifsicle.1.*
-%_bindir/gifview
-%_man1dir/gifview.1.*
 %doc README.md NEWS.md
+%_bindir/gifdiff
+%_bindir/gifsicle
+%_bindir/gifview
+%_man1dir/gifdiff.1*
+%_man1dir/gifsicle.1*
+%_man1dir/gifview.1*
 
 %changelog
+* Tue Jul 27 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.93-alt1
+- Updated to upstream version 1.93.
+
 * Wed Oct 28 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.92-alt1
 - Updated to upstream version 1.92 (Fixes: CVE-2017-1000421).
 
