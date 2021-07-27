@@ -1,15 +1,13 @@
 %global pypi_name python-editor
 
-%define with_python3 1
-
-Name: python-module-editor
+Name: python3-module-editor
 Version: 1.0.4
-Release: alt2
+Release: alt3
 
 Summary: Programmatically open an editor, capture the result
 
-License: ASL 2.0
-Group: Development/Python
+License: Apache-2.0
+Group: Development/Python3
 Url: https://github.com/fmoo/python-editor
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -18,67 +16,35 @@ Source: https://pypi.python.org/packages/source/p/%pypi_name/%pypi_name-%version
 
 BuildArch: noarch
 
-#BuildPreReq: rpm-build-python3 python3-module-distribute
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
-BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
-
-#BuildRequires: python-devel
-#BuildRequires: python-module-setuptools
+BuildRequires: rpm-build-python3
 
 %description
 An python module which provides a convenient example.
-
-%if 0%with_python3
-%package -n python3-module-editor
-Summary: Programmatically open an editor, capture the result
-#BuildRequires: python3-devel
-Group: Development/Python
-
-%description -n python3-module-editor
-An python module which provides a convenient example.
-%endif
 
 %prep
 %setup -n %pypi_name-%version
 rm -rf %pypi_name.egg-info
 
 %build
-%python_build
-%if 0%with_python3
 %python3_build
-%endif
 
 %install
-%python_install
-chmod a+x %buildroot%python_sitelibdir/editor.py
-%__subst "s|python$|python2|g" %buildroot%python_sitelibdir/editor.py
-
-%if 0%with_python3
 %python3_install
 chmod a+x %buildroot%python3_sitelibdir/editor.py
 %__subst "s|python$|python3|g" %buildroot%python3_sitelibdir/editor.py
-%endif
 
 %check
 
 %files
 %doc README.md
 %doc LICENSE
-%python_sitelibdir/editor.py*
-%python_sitelibdir/python_editor-%version-py?.?.egg-info
-
-%if 0%with_python3
-%files -n python3-module-editor
-%doc README.md
-%doc LICENSE
 %python3_sitelibdir/*.egg-info
 %python3_sitelibdir/editor.py*
-#python3_sitelibdir/__pycache__/*
-%endif
 
 %changelog
+* Tue Jul 27 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.4-alt3
+- Drop python2 support.
+
 * Sun Feb 09 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.4-alt2
 - use python2 in the script
 
