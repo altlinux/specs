@@ -1,32 +1,24 @@
 %define _unpackaged_files_terminate_build 1
 %define oname fastimport
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.9.8
-Release: alt1
+Release: alt2
 Summary: VCS fastimport/fastexport parser
 License: GPLv2+
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/fastimport/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 BuildArch: noarch
 
 Source0: https://pypi.python.org/packages/aa/65/47a579aae80fbd8b89cfbdffcde8dff68d57e3148b99da6a326673021455/%{oname}-%{version}.tar.gz
 
-#BuildPreReq: python-devel python-module-distribute
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
-BuildRequires: python-devel python-tools-2to3 rpm-build-python3 time
+BuildRequires: python-tools-2to3
 
-#BuildRequires: python3-devel python3-module-distribute
-#BuildPreReq: python-tools-2to3
-%endif
+%py3_provides %oname
 
-%py_provides %oname
+Conflicts: python-module-%oname
+Obsoletes: python-module-%oname
 
 %description
 This is the Python parser that was originally developed for
@@ -35,37 +27,9 @@ bzr-fastimport, but extracted so it can be used by other projects.
 It is currently used by bzr-fastimport and dulwich. hg-fastimport and
 git-remote-hg use a slightly modified version of it.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: VCS fastimport/fastexport parser (Python 3)
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-This is the Python parser that was originally developed for
-bzr-fastimport, but extracted so it can be used by other projects.
-
-It is currently used by bzr-fastimport and dulwich. hg-fastimport and
-git-remote-hg use a slightly modified version of it.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for fastimport (Python 3)
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-
-%description -n python3-module-%oname-tests
-This is the Python parser that was originally developed for
-bzr-fastimport, but extracted so it can be used by other projects.
-
-It is currently used by bzr-fastimport and dulwich. hg-fastimport and
-git-remote-hg use a slightly modified version of it.
-
-This package contains tests for fastimport.
-%endif
-
 %package tests
 Summary: Tests for fastimport
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description tests
@@ -78,53 +42,28 @@ git-remote-hg use a slightly modified version of it.
 This package contains tests for fastimport.
 
 %prep
-%setup -q -n %{oname}-%{version}
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
+%setup -n %{oname}-%{version}
 
 %build
-%python_build
-%if_with python3
-pushd ../python3
 find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
-%doc PKG-INFO
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
-%if_with python3
-%else
-%_bindir/*
-%endif
-
-%files tests
-%python_sitelibdir/*/tests
-
-%if_with python3
-%files -n python3-module-%oname
 %doc PKG-INFO
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 %_bindir/*
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/tests
-%endif
 
 %changelog
+* Tue Jul 27 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.8-alt2
+- Drop python2 support.
+
 * Mon May 06 2019 Anatoly Kitaykin <cetus@altlinux.org> 0.9.8-alt1
 - Version 0.9.8
 
