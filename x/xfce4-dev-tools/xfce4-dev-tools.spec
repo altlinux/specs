@@ -1,5 +1,5 @@
 Name: xfce4-dev-tools
-Version: 4.16.0
+Version: 4.17.0
 Release: alt1
 
 Summary: Development tools for Xfce
@@ -17,9 +17,6 @@ BuildRequires: xsltproc docbook-style-xsl
 
 Requires: intltool >= 0.50.0
 Requires: xfce4-common
-
-Obsoletes: exo-csource <= 0.12.11-alt1
-Provides: exo-csource = %EVR
 
 %define _unpackaged_files_terminate_build 1
 
@@ -42,7 +39,6 @@ Development tools for Xfce
 
 %install
 %makeinstall_std
-ln -s xdt-csource %buildroot%_bindir/exo-csource
 
 %find_lang %name
 
@@ -56,6 +52,10 @@ make check
 %_man1dir/*
 
 %changelog
+* Tue Jul 27 2021 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt1
+- Dropped exo-csource symlink.
+- Updated to 4.17.0.
+
 * Wed Dec 23 2020 Mikhail Efremov <sem@altlinux.org> 4.16.0-alt1
 - Updated to 4.16.0.
 
