@@ -1,14 +1,14 @@
+%define _libexecdir %_prefix/libexec
 %define qIF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
 %define _localstatedir %_var
 
-%define pkg_version 5.6
+%define pkg_version 6.3
 %define xdg_name org.a11y.brlapi
-%define api_ver 0.6.7
+%define api_ver 0.8.2
 %define _exec_prefix %nil
 %define _jnidir %_libdir/java
 
 %def_with at_spi2
-%def_with python
 %def_with python3
 %def_with speech_dispatcher
 %if_with speech_dispatcher
@@ -25,35 +25,39 @@
 
 Name: brltty
 Version: %pkg_version
-Release: alt3
+Release: alt1
 
 Summary: Braille display driver for Linux/Unix
 Group: System/Servers
 License: GPLv2+
 Url: http://mielke.cc/brltty/
 
+Vcs: https://github.com/brltty/brltty.git
 Source: http://mielke.cc/brltty/archive/%name-%version.tar.xz
 # from fc
 Source1: %name.service
 Source2: ru_brltty.tar
 Source44: import.info
-Patch0: brltty-cppflags.patch
 Patch1: brltty-4.5-alt-fix-python-syntax.patch
 Patch2: fix-speechd-includes.patch
-Patch3: convert-to-python3.patch
 Patch4: brltty-5.6-fix_brltty-systemd-wrapper_path.patch
 
 %define cython_ver 0.18
 
-BuildRequires: rpm-build-java rpm-build-python
+BuildRequires(pre): rpm-build-java
 BuildRequires: libappstream-glib-devel
 BuildRequires: gcc-c++ libbluez-devel libalsa-devel libgpm-devel
+# for updusbdevs and udev rules
+BuildRequires: tcl
 BuildRequires: byacc glibc-kernheaders
 BuildRequires: /proc java-devel
+BuildRequires: pkgconfig(systemd) libudev-devel
+BuildRequires: doxygen python3-module-docutils
 %{?_with_at_spi2:BuildRequires: libat-spi2-core-devel}
 %{?_with_speech_dispatcher:BuildRequires: libspeechd-devel}
-%{?_with_python:BuildRequires: python-devel python-module-Cython >= %cython_ver}
-%{?_with_python3:BuildRequires: rpm-build-python3 python3-devel python3-module-Cython >= %cython_ver}
+%{?_with_python3:
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-Cython >= %cython_ver}
 %{?_with_tcl:BuildRequires: tcl-devel}
 %{?_with_ocaml:BuildRequires: ocaml findlib}
 # for XWindow driver
@@ -156,16 +160,6 @@ Requires: brlapi = %api_ver-%release
 %description -n tcl-brlapi
 This package provides the Tcl binding for BrlAPI.
 
-%package -n python-module-brlapi
-Version: %api_ver
-Summary: Python binding for BrlAPI
-Group: Development/Python
-License: LGPLv2+
-Requires: brlapi = %api_ver-%release
-
-%description -n python-module-brlapi
-This package provides the Python binding for BrlAPI.
-
 %package -n python3-module-brlapi
 Version: %api_ver
 Summary: Python binding for BrlAPI
@@ -200,22 +194,13 @@ This package provides the OCaml binding for BrlAPI.
 
 %prep
 %setup
-%setup -D -c
-mv %name-%pkg_version py3build
-for d in {.,py3build}; do
-pushd $d
-%patch0 -p1 -b .cppflags
-%patch1 -p2
 %qIF_ver_gteq %libspeechd_ver 0.8
 %patch2 -p2
 %endif
-%patch3 -p2
-%patch4 -p2
-popd
-done
+sed -i 's;\/usr\(/bin/true\);\1;' Autostart/Systemd/brltty-device@.service
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 
 # Patch6 changes aclocal.m4:
 autoconf
@@ -234,16 +219,8 @@ opts="--disable-stripping --without-curses --libdir=/%_lib \
 %endif
   --with-install-root=%buildroot"
 
-%configure $opts PYTHON=%__python
+%configure $opts PYTHON=%__python3
 %make_build
-
-%if_with python3
-pushd py3build
-autoconf
-%configure $opts PYTHON=%_bindir/python3
-%make_build
-popd
-%endif
 
 find . \( -path ./doc -o -path ./Documents \) -prune -o \
   \( -name 'README*' -o -name '*.txt' -o -name '*.html' -o \
@@ -267,14 +244,8 @@ while read file; do
 done
 
 %install
-%define install_opts JAVA_JNI_DIR=%_jnidir INSTALL_X11_AUTOSTART_DIRECTORY=%buildroot%_x11sysconfdir/xsession.user.d
+%define install_opts JAVA_JNI_DIR=%_jnidir INSTALL_X11_AUTOSTART_DIRECTORY=%buildroot%_x11sysconfdir/xsession.user.d INSTALL_PKGCONFIG_DIRECTORY=%buildroot%_pkgconfigdir
 %make %install_opts install
-
-%if_with python3
-pushd py3build
-%make %install_opts install
-popd
-%endif
 
 install -d -m755 %buildroot{%_sysconfdir,%_man5dir}
 install -m644 Documents/brltty.conf %buildroot%_sysconfdir
@@ -304,33 +275,45 @@ cat > %buildroot%_tmpfilesdir/%name.conf << _EOF_
 d /run/%name 0755 root root -
 _EOF_
 
+# install polkit rules
+pushd Authorization/Polkit
+%makeinstall_std
+popd
+
 # udev rules
-install -D -p -m644 Autostart/Udev/rules %buildroot%_udevrulesdir/95-%name.rules
+#install -pD -m644 Autostart/Udev/ %buildroot%_udevrulesdir/95-%name.rules
+pushd Autostart/Udev
+%makeinstall_std
+popd
 
 # systemd unit
 %make -C Autostart/Systemd SYSTEMD_UNITS_DIRECTORY=%buildroot%_unitdir install
 mkdir -p %buildroot%_unitdir
-#install -m 644 Autostart/Systemd/*.{service,path} %buildroot%_unitdir/
+install -m 644 Autostart/Systemd/*.{service,path} %buildroot%_unitdir/
 
-# fix 
-
-chmod +x %buildroot%_bindir/%name-config
+chmod +x %buildroot%_bindir/%name-config.sh
 
 %find_lang %name
 
 %files -f %name.lang
 %config(noreplace) %_sysconfdir/brltty.conf
 %_sysconfdir/brltty/
-%_udevrulesdir/95-%name.rules
+/lib/sysusers.d/%name.conf
+%_udevrulesdir/90-%name-device.rules
+%_udevrulesdir/90-%name-uinput.rules
 %_tmpfilesdir/%name.conf
 %_unitdir/brltty@.service
+%_unitdir/%name-device@.service
 %_unitdir/*.path
+%_datadir/polkit-1/rules.d/org.a11y.brlapi.rules
+%dir %_libexecdir/%name
 # bash script
-%_sbindir/brltty-systemd-wrapper
+%_libexecdir/%name/systemd-wrapper
+%_libexecdir/%name/udev-wrapper
 %_datadir/polkit-1/actions/%xdg_name.policy
 %_bindir/brltty
 %_bindir/brltty-*
-%exclude %_bindir/brltty-config
+%exclude %_bindir/brltty-config.sh
 %_bindir/eutp
 /%_lib/brltty/
 %exclude /%_lib/brltty/libbrlttybba.so
@@ -348,7 +331,7 @@ chmod +x %buildroot%_bindir/%name-config
 %_man1dir/eutp.1.*
 %_man5dir/brltty.*
 #%_datadir/metainfo/org.a11y.brltty.metainfo.xml
-%doc LICENSE-GPL LICENSE-LGPL
+%doc LICENSE-LGPL
 %doc Documents/ChangeLog Documents/TODO
 %doc Documents/Manual-BRLTTY/
 %doc doc/*
@@ -361,7 +344,7 @@ chmod +x %buildroot%_bindir/%name-config
 
 %files xw
 %doc Drivers/Braille/XWindow/README
-%_x11sysconfdir/xsession.user.d/60xbrlapi
+%_x11sysconfdir/xsession.user.d/90xbrlapi
 /%_lib/brltty/libbrlttybxw.so
 
 %if_with at_spi1
@@ -386,22 +369,17 @@ chmod +x %buildroot%_bindir/%name-config
 %doc %_mandir/man1/vstp.*
 
 %files -n brlapi-devel
-%_bindir/%name-config
+%_bindir/%name-config.sh
 /%_lib/libbrlapi.so
 %_includedir/brltty
 %_includedir/brlapi*.h
+%_pkgconfigdir/brltty.pc
 %_man3dir/brlapi_*.3*
 %doc Documents/BrlAPIref/BrlAPIref/
 
 %if_with tcl
 %files -n tcl-brlapi
 %tcl_sitearch/brlapi-%api_ver
-%endif
-
-%if_with python
-%files -n python-module-brlapi
-%python_sitelibdir/brlapi.so
-%python_sitelibdir/Brlapi-%api_ver-py%__python_version.egg-info
 %endif
 
 %if_with python3
@@ -421,6 +399,10 @@ chmod +x %buildroot%_bindir/%name-config
 %endif
 
 %changelog
+* Tue Jul 27 2021 Yuri N. Sedunov <aris@altlinux.org> 6.3-alt1
+- 6.3
+- disabled useless python2 support
+
 * Mon Jan 13 2019 Anton Midyukov <antohami@altlinux.org> 5.6-alt3
 - Convert to python3 latex-access.ctb
 - Fixed PATH to brltty-systemd-wrapper in brltty@.service
