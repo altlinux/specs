@@ -1,17 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define oname appier
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.18.25
-Release: alt1
+Release: alt2
 
 Summary: Appier Framework
 
-License: ASLv2.0
-Group: Development/Python
+License: Apache-2.0
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/appier/
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # Source-url: https://pypi.io/packages/source/a/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
@@ -19,28 +17,18 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
 
 %description
 Simple WSGI based framework for easy REST API creation. It aims at
 creating simple infra-structure for the consulting work that is being
 developed by the Hive Solutions team.
 
-%package -n python3-module-%oname
-Summary: Appier Framework
-Group: Development/Python3
-
-%description -n python3-module-%oname
-Simple WSGI based framework for easy REST API creation. It aims at
-creating simple infra-structure for the consulting work that is being
-developed by the Hive Solutions team.
-
-%package -n python3-module-%oname-tests
+%package tests
 Summary: Tests for Appier Framework
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
 
-%description -n python3-module-%oname-tests
+%description tests
 Simple WSGI based framework for easy REST API creation. It aims at
 creating simple infra-structure for the consulting work that is being
 developed by the Hive Solutions team.
@@ -51,20 +39,23 @@ This package contains tests for Appier Framework.
 %setup
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
-%files -n python3-module-%oname
+%files
 %doc PKG-INFO README.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/test
 
 %changelog
+* Tue Jul 27 2021 Grigory Ustinov <grenka@altlinux.org> 1.18.25-alt2
+- Rename package, spec cleanup.
+
 * Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 1.18.25-alt1
 - new version 1.18.25 (with rpmrb script)
 - python3 only (uses yield from)
