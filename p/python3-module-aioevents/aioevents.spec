@@ -1,96 +1,47 @@
 %define oname aioevents
 
-%def_without python2
-%def_with python3
 %def_disable check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.1
-Release: alt2.git20140222.1
+Release: alt3.git20140222
 Summary: Events for asyncio (PEP 3156)
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.python.org/pypi/aioevents/
 
 # https://github.com/astronouth7303/aioevents.git
 Source: %name-%version.tar
 
-%if_with python2
-BuildRequires: python-devel python-module-setuptools
-%endif
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-%endif
 
-%py_provides %oname
-%py_requires asyncio
-
-%description
-Events for asyncio (PEP 3156).
-
-%package -n python3-module-%oname
-Summary: Events for asyncio (PEP 3156)
-Group: Development/Python3
 %py3_provides %oname
 %py3_requires asyncio
 
-%description -n python3-module-%oname
+%description
 Events for asyncio (PEP 3156).
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%if_with python2
-%python_build_debug
-%endif
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
-%if_with python2
-%python_install
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-%if_with python2
-py.test -vv
-%endif
-%if_with python3
-pushd ../python3
 py.test3 -vv
-popd
-%endif
 
-%if_with python2
 %files
 %doc *.md test.py
-%python_sitelibdir/*
-%endif
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.md test.py
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Tue Jul 27 2021 Grigory Ustinov <grenka@altlinux.org> 0.1-alt3.git20140222
+- Drop python2 support.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1-alt2.git20140222.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
