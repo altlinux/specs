@@ -1,23 +1,17 @@
 %define  modulename pyvmomi
-%def_with python3
 
-Name:    python-module-%modulename
+Name:    python3-module-%modulename
 Version: 7.0.2
-Release: alt1
+Release: alt2
 
 Summary: VMware vSphere API Python Bindings
 License: Apache-2.0
-Group:   Development/Python
+Group:   Development/Python3
 URL:     https://github.com/vmware/pyvmomi
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-BuildPreReq: rpm-build-python python-module-setuptools
-%if_with python3
 BuildPreReq: rpm-build-python3 python3-module-setuptools
-%endif
-
-%setup_python_module %modulename
 
 BuildArch: noarch
 
@@ -27,52 +21,23 @@ Source:  %modulename-%version.tar
 pyVmomi is the Python SDK for the VMware vSphere API that allows you to
 manage ESX, ESXi, and vCenter.
 
-%if_with python3
-%package -n python3-module-%modulename
-Summary: VMware vSphere API Python Bindings
-Group: Development/Python3
-
-%description -n python3-module-%modulename
-pyVmomi is the Python SDK for the VMware vSphere API that allows you to
-manage ESX, ESXi, and vCenter.
-%endif
-
 %prep
 %setup -n %modulename-%version
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
-%python_sitelibdir/pyV*
-%python_sitelibdir/*.egg-info
-
-%if_with python3
-%files -n python3-module-%modulename
 %python3_sitelibdir/pyV*
 %python3_sitelibdir/*.egg-*
-%endif
 
 %changelog
+* Tue Jul 27 2021 Grigory Ustinov <grenka@altlinux.org> 7.0.2-alt2
+- Drop python2 support.
+
 * Mon Apr 12 2021 Andrey Cherepanov <cas@altlinux.org> 7.0.2-alt1
 - New version.
 
