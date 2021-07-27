@@ -1,5 +1,5 @@
 Name: xfce4-sensors-plugin
-Version: 1.3.95
+Version: 1.4.1
 Release: alt1
 
 Summary: Sensors plugin for Xfce Desktop
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 %ifarch %ix86 x86_64
-%def_disable xnvctrl
+%def_enable xnvctrl
 %else
 %def_disable xnvctrl
 %endif
@@ -70,6 +70,10 @@ Requires: xfce4-panel >= 4.11 hddtemp lm_sensors3
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Tue Jul 27 2021 Mikhail Efremov <sem@altlinux.org> 1.4.1-alt1
+- Enabled xnvctrl support.
+- Updated to 1.4.1.
+
 * Mon Dec 28 2020 Mikhail Efremov <sem@altlinux.org> 1.3.95-alt1
 - Updated to 1.3.95.
 
