@@ -3,7 +3,7 @@
 
 Name: i2pd
 Version: 2.38.0
-Release: alt1
+Release: alt2
 
 Summary: Full C++ implementation of I2P router
 
@@ -39,6 +39,9 @@ See documentation at https://i2pd.readthedocs.io/en/latest/
 %patch -p1
 
 %build
+%ifarch %e2k
+%add_optflags -mno-aes
+%endif
 export CXXFLAGS="%optflags"
 pushd build
 %cmake_insource \
@@ -118,6 +121,9 @@ touch %buildroot%_logdir/%name/%name.log
 %dir %_logdir/%name/
 
 %changelog
+* Tue Jul 27 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.38.0-alt2
+- fixed build for Elbrus
+
 * Mon Jun 07 2021 Vitaly Lipatov <lav@altlinux.ru> 2.38.0-alt1
 - new version 2.38.0 (with rpmrb script)
 
