@@ -2,7 +2,7 @@
 
 Name: alterator-auth
 Version: 0.43.9
-Release: alt4
+Release: alt5
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d;/^gpupdate$/d;/gpupdate-setup/d
 
@@ -169,6 +169,11 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Tue Jul 27 2021 Lenar Shakirov <snejok@altlinux.org> 0.43.9-alt5
+- backend: fix list ldap local_bases (namingContexts) (ALT #40569)
+- sbin/system-auth: fix sssd package check, old LDAP auth scheme
+  work again (ALT #40570)
+
 * Sun Jul 04 2021 Andrey Cherepanov <cas@altlinux.org> 0.43.9-alt4
 - Add libsss_sudo to task-auth-freeipa.
 
