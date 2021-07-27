@@ -3,7 +3,7 @@
 
 Name: mixxx
 Version: 2.3.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Free digital DJ software
 Summary(ru_RU.UTF-8): Свободная программа для цифрового диджеинга
@@ -22,7 +22,7 @@ BuildPreReq: rpm-macros-qt5
 BuildRequires: flex gcc-c++ cmake libflac-devel libid3tag-devel libmad-devel
 BuildRequires: libportaudio2-devel libportmidi-devel
 BuildRequires: libsndfile-devel libtag-devel python-devel
-BuildRequires: python-module-Reportlab python-module-bzr-fastimport scons
+BuildRequires: python-module-Reportlab scons
 BuildRequires: swig libvamp-devel libprotobuf-devel
 BuildRequires: libchromaprint-devel libusb-devel libfftw3-devel
 BuildRequires: protobuf-compiler
@@ -117,6 +117,9 @@ mv %buildroot%_datadir/mixxx/udev/rules.d/* \
 # %_libdir/soundsourceqt5
 
 %changelog
+* Tue Jul 27 2021 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt1.2
+- Fixed BuildRequires.
+
 * Fri Jul 02 2021 Leontiy Volodin <lvol@altlinux.org> 2.3.0-alt1.1
 - Adapted build for p9 branch.
 
