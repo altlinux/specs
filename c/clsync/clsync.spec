@@ -3,19 +3,15 @@
 # license: GPL-3+
 
 %global _unpackaged_files_terminate_build 1
-%ifarch aarch64
-%def_disable seccomp
-%else
-%ifarch armh
+%ifarch aarch64 armh %mips
 %def_disable seccomp
 %else
 %def_enable seccomp
 %endif
-%endif
 
 Name: clsync
 Version: 0.4.5
-Release: alt2
+Release: alt3
 
 Summary: Live sync tool based on inotify
 License: GPLv3+
@@ -174,6 +170,9 @@ mv doc/doxygen/html %buildroot%_docdir/%name/
 %_docdir/%name/html
 
 %changelog
+* Wed Jul 28 2021 Ivan A. Melnikov <iv@altlinux.org> 0.4.5-alt3
+- Disable seccomp on %%mips (porting is required)
+
 * Mon Nov 30 2020 Andrew Savchenko <bircoph@altlinux.org> 0.4.5-alt2
 - Major init script improvements, including:
   - Support for multiple clsync instances via config blocks and
