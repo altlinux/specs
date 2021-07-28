@@ -1,34 +1,23 @@
-%def_with python3
-
-Name:          python-module-pyinotify
+Name:          python3-module-pyinotify
 Version:       0.9.6
-Release:       alt2
+Release:       alt3
 
 Summary:       Monitor filesystem events with Python under Linux
 
 License:       MIT
-Group:         Development/Python
+Group:         Development/Python3
 URL:           https://github.com/seb-m/pyinotify
 
 # https://github.com/seb-m/pyinotify.git
 Source0:       %name-%version.tar
-Source1:       pyinotify
 Source2:       py3inotify
 
-BuildRequires: python-devel
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-%endif
-
-Provides: python-module-inotify = %version-%release
-Obsoletes: python-module-inotify < %version-%release
-
-Provides: pyinotify = %version-%release
-Obsoletes: pyinotify < %version-%release
 
 BuildArch:     noarch
+
+Provides:      python3-module-inotify = %version-%release
+%py3_provides pyinotify
 
 %description
 This is a Python module for watching filesystems changes. pyinotify
@@ -45,71 +34,25 @@ Requires:      python-module-inotify = %version-%release
 %description   examples
 This package includes some examples usage of the Python inotify module.
 
-%if_with python3
-%package -n    python3-module-pyinotify
-Summary:       Monitor filesystem events with Python under Linux
-Group:         Development/Python3
-Provides:      python3-module-inotify = %version-%release
-%py3_provides pyinotify
-
-%description -n    python3-module-pyinotify
-This is a Python3 module for watching filesystems changes. pyinotify
-can be used for various kind of fs monitoring. pyinotify relies on a
-recent Linux Kernel feature (merged in kernel 2.6.13) called
-inotify. inotify is an event-driven notifier, its notifications are
-exported from kernel space to user space.
-
-%endif
-
-
 %prep
 %setup
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
-
-%__subst "s|#!/usr/bin/env python|#!/usr/bin/env python2|" python2/examples/*.py
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-install -D -m 0755 -p %SOURCE1 %buildroot%_bindir/pyinotify
-
-%if_with python3
-pushd ../python3
 %python3_install
 install -D -m 0755 -p %SOURCE2 %buildroot%_bindir/py3inotify
-popd
-%endif
-
-# examples
-install -d -m 0755 %buildroot%_datadir/pyinotify
-cp -a python2/examples/* %buildroot%_datadir/pyinotify
 
 %files
 %doc ACKS COPYING README.md
-%_bindir/pyinotify
-%python_sitelibdir_noarch/*
-
-%if_with python3
-%files -n python3-module-pyinotify
 %_bindir/py3inotify
 %python3_sitelibdir_noarch/*
-%endif
-
-%files examples
-%_datadir/pyinotify
 
 %changelog
+* Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.6-alt3
+- Drop python2 support.
+
 * Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.6-alt2
 - run scripts via python2
 
