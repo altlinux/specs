@@ -2,39 +2,24 @@
 
 %define oname m2crypto
 
-%def_without python3
 %def_disable check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.30.1
 Release: alt3
 Summary: Support for using OpenSSL in python scripts.
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 URL: http://wiki.osafoundation.org/bin/view/Projects/MeTooCrypto
 
 # https://gitlab.com/m2crypto/m2crypto.git
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Thu Aug 26 2010
-BuildRequires: libssl-devel python-module-setuptools swig
-BuildRequires: libnumpy-devel
+BuildRequires: libssl-devel swig
 BuildRequires: /usr/bin/openssl
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-py libnumpy-py3-devel
-%endif
 
-%py_requires typing
-
-%description
-This package allows you to call OpenSSL functions from python scripts.
-
-%if_with python3
-%package -n python3-module-%oname
-Summary: Support for using OpenSSL in python 3 scripts
-Group: Development/Python3
 %add_python3_req_skip M2Crypto.six.moves.http_client
 %add_python3_req_skip M2Crypto.six.moves.http_cookies
 %add_python3_req_skip M2Crypto.six.moves.socketserver
@@ -43,17 +28,11 @@ Group: Development/Python3
 %add_python3_req_skip M2Crypto.six.moves.xmlrpc_client
 %py3_requires typing
 
-%description -n python3-module-%oname
+%description
 This package allows you to call OpenSSL functions from python scripts.
-%endif
 
 %prep
 %setup
-
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
 
 %build
 if pkg-config openssl ; then
@@ -62,13 +41,7 @@ if pkg-config openssl ; then
 	LDFLAGS="$LDFLAGS`pkg-config --libs-only-L openssl`" ; export LDFLAGS
 fi
 
-%python_build_debug
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
 if pkg-config openssl ; then
@@ -77,36 +50,18 @@ if pkg-config openssl ; then
 	LDFLAGS="$LDFLAGS`pkg-config --libs-only-L openssl`" ; export LDFLAGS
 fi
 
-%python_build_install
-
-%if_with python3
-pushd ../python3
 %python3_build_install
-popd
-%endif
 
 %check
-python setup.py test -v
-
-%if_with python3
-pushd ../python3
 python3 setup.py test -v
-popd
-%endif
 
 %files
 %doc CHANGES LICENCE README.rst tests doc/*
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc CHANGES LICENCE README.rst tests doc/*
 %python3_sitelibdir/*
-%endif
 
 %changelog
 * Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 0.30.1-alt3
-- Build without python3 support.
+- Drop python2 support.
 
 * Tue Sep 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.30.1-alt2
 - Updated runtime dependencies.
