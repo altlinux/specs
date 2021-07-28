@@ -9,7 +9,7 @@
 
 Name: mono
 Version: 6.12.0.122
-Release: alt2
+Release: alt3
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -110,15 +110,13 @@ BuildRequires: %name-devel-full >= 5.0
 
 # Interfaces of slightly older versions are required, upstream corrects it by modifying 'Requires'
 # TODO: on each upgrade disable and recheck it
-%define __find_provides sh -c '/usr/lib/rpm/find-provides | sort | uniq'
-%define __find_requires sh -c '/usr/lib/rpm/find-requires | sort | uniq | grep ^... | \
-	sed "s/mono\(Microsoft\.Build\.Framework\) = 15\.1/mono\(Microsoft.Build.Framework\) = 14.0/" | \
-	sed "s/mono\(Microsoft\.Build\.Tasks\.Core\) = 15\.1\.0\.0/mono\(Microsoft.Build.Tasks.Core\) = 14.0.0.0/" | \
-	sed "s/mono\(Microsoft\.Build\.Utilities\.Core\) = 15\.1\.0\.0/mono\(Microsoft.Build.Utilities.Core\) = 14.0.0.0/" | \
-	sed "s/mono\(Mono\.Cecil\) = 0\.10\.0\.0/mono\(Mono.Cecil\) = 0.11.0.0/" | \
-	sed "s/mono\(System\.Numerics\.Vectors\) = 4\.1/mono\(System.Numerics.Vectors\) = 4.0/" | \
-	sed  "/mono\(System\.Buffers\) = .*/d" | \
-	sed  "/mono\(System\.Runtime\.Loader\) = .*/d"'
+%filter_from_requires s/^mono\(Microsoft\.Build\.Framework\) = 15\.1/mono\(Microsoft.Build.Framework\) = 14.0/
+%filter_from_requires s/^mono\(Microsoft\.Build\.Tasks\.Core\) = 15\.1\.0\.0/mono\(Microsoft.Build.Tasks.Core\) = 14.0.0.0/
+%filter_from_requires s/^mono\(Microsoft\.Build\.Utilities\.Core\) = 15\.1\.0\.0/mono\(Microsoft.Build.Utilities.Core\) = 14.0.0.0/
+%filter_from_requires s/^mono\(Mono\.Cecil\) = 0\.10\.0\.0/mono\(Mono.Cecil\) = 0.11.0.0/
+%filter_from_requires s/^mono\(System\.Numerics\.Vectors\) = 4\.1/mono\(System.Numerics.Vectors\) = 4.0/
+%filter_from_requires /^mono\(System\.Buffers\) = .*/d
+%filter_from_requires /^mono\(System\.Runtime\.Loader\) = .*/d
 
 %description
 The Mono runtime implements a JIT engine for the ECMA CLI
@@ -898,9 +896,6 @@ done
 # winfx
 %exclude %_monodir/*-api/WindowsBase.dll
 
-%post core
-cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
-
 %files dyndata
 %gac_dll System.Web.DynamicData
 
@@ -1320,6 +1315,12 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Wed Jul 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.12.0.122-alt3
+- Replaced %%post with updated filetrigger: if CA certificates are installed
+  in same transaction with mono, certificates are not prepared for use during %%post.
+  If mono filetrigger runs before CA certificates filetrigger,
+  it still may fail.
+
 * Wed Jun 23 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.12.0.122-alt2
 - Fixed dependencies issues introduced by rpm-build (Closes: #40273).
 
