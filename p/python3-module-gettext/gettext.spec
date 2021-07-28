@@ -2,28 +2,22 @@
 BuildRequires: unzip
 %define oname gettext
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 3.0
-Release: alt1.2
+Release: alt2
 Summary: Python Gettext po to mo file compiler
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/python-gettext/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/hannosch/python-gettext.git
 Source0: https://pypi.python.org/packages/80/a7/a4a5cf3aa9500dbb09b48dae6d4d9581883dd90ae7a84cbb2d3448410114/python-%{oname}-%{version}.zip
 BuildArch: noarch
 
-BuildPreReq: python-module-unittest2
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-unittest2
-%endif
 
-%py_provides pythongettext
+%py3_provides pythongettext
 
 %description
 This implementation of Gettext for Python includes a Msgfmt class which
@@ -32,7 +26,7 @@ includes support for the newer msgctxt keyword.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -42,80 +36,30 @@ includes support for the newer msgctxt keyword.
 
 This package contains tests for %oname.
 
-%package -n python3-module-%oname
-Summary: Python Gettext po to mo file compiler
-Group: Development/Python3
-%py3_provides pythongettext
-
-%description -n python3-module-%oname
-This implementation of Gettext for Python includes a Msgfmt class which
-can be used to generate compiled mo files from Gettext po files and
-includes support for the newer msgctxt keyword.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-This implementation of Gettext for Python includes a Msgfmt class which
-can be used to generate compiled mo files from Gettext po files and
-includes support for the newer msgctxt keyword.
-
-This package contains tests for %oname.
-
 %prep
-%setup -q -n python-%{oname}-%{version}
-
-%if_with python3
-cp -fR . ../python3
-%endif
+%setup -n python-%{oname}-%{version}
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-%__python setup.py test
-%if_with python3
-pushd ../python3
 %__python3 setup.py test
-popd
-%endif
 
 %files
-%doc *.rst PKG-INFO
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
-
-%files tests
-%python_sitelibdir/*/tests
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.rst PKG-INFO
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/tests
-%endif
 
 %changelog
+* Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 3.0-alt2
+- Drop python2 support.
+
 * Sat Jul 03 2021 Grigory Ustinov <grenka@altlinux.org> 3.0-alt1.2
 - NMU: Fixed FTBFS.
 
