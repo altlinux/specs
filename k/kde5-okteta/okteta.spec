@@ -19,8 +19,8 @@
 
 
 Name: kde5-%rname
-Version: 0.26.1
-Release: alt2
+Version: 0.26.6
+Release: alt1
 Epoch: 1
 %K5init altplace
 
@@ -30,10 +30,6 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
-Patch1: %rname-alt-castxml-compat.patch
-
-# Remove 'gccxml' from 'Requires'
-%filter_from_requires /^gccxml$/d
 
 # Automatically added by buildreq on Thu Oct 01 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqca-qt5 libqt5-core libqt5-dbus libqt5-designer libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python3 python3-base qt5-base-devel qt5-script-devel rpm-build-gir ruby ruby-stdlibs shared-mime-info xml-common xml-utils
@@ -125,7 +121,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K5build \
@@ -134,20 +129,19 @@ KF5 library
 
 %install
 %K5install
-%K5install_move data okteta
+%K5install_move data okteta knsrcfiles
 %find_lang %name --with-kde --all-name
 mv %buildroot/%_K5xdgmime/okteta{,5}.xml
 
 %files common -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 
 %files
-%config(noreplace) %_K5xdgconf/*.knsrc
 %_K5bin/*
 %_K5plug/kf5/parts/*.so
 %_K5plug/designer/*.so
 %_K5data/okteta/
-#%_K5xmlgui/*/
+%_K5data/knsrcfiles/*.knsrc
 %_K5xdgmime/*.xml
 %_K5xdgapp/*.desktop
 %_K5icon/*/*/apps/*.*
@@ -189,6 +183,9 @@ mv %buildroot/%_K5xdgmime/okteta{,5}.xml
 
 
 %changelog
+* Wed Jul 28 2021 Sergey V Turchin <zerg@altlinux.org> 1:0.26.6-alt1
+- new version
+
 * Wed Jul 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.26.1-alt2
 - Updated dependencies.
 
