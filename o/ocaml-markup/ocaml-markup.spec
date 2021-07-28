@@ -2,7 +2,7 @@
 %define libname markup
 %define libnamelwt %libname-lwt
 Name: ocaml-%libname
-Version: 1.0.0
+Version: 1.0.2
 Release: alt1
 Summary: Error-recovering streaming HTML5 and XML parsers.
 License: MIT
@@ -11,7 +11,7 @@ Url: https://github.com/aantron/markup.ml
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildRequires: ocaml >= 4.07.1 opam dune >= 1.4.0
+BuildRequires: ocaml >= 4.07.1 dune >= 2.9
 BuildRequires: ocaml-uutf-devel ocaml-lwt-devel ocaml-bisect_ppx-devel ocaml-migrate-parsetree-devel ocaml-result-devel
 
 %if_with check
@@ -92,6 +92,9 @@ programs which use %name-lwt
 %_libdir/ocaml/%libnamelwt/*.mli
 
 %changelog
+* Wed Jul 28 2021 Anton Farygin <rider@altlinux.ru> 1.0.2-alt1
+- 1.0.2
+
 * Mon Jan 11 2021 Anton Farygin <rider@altlinux.ru> 1.0.0-alt1
 - 1.0.0
 - testing enabled
