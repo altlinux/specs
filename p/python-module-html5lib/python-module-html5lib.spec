@@ -2,11 +2,12 @@
 
 %def_without python3
 %def_without doc
+%def_without check
 
 Name: python-module-%module_name
 Epoch: 1
 Version: 1.0.1
-Release: alt2
+Release: alt3
 
 Summary: Library for working with HTML5 documents
 
@@ -25,7 +26,6 @@ Patch: html5lib-0.999999999-Fix-Pytest4.x-compatibility-error.patch
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools >= 18.5
 BuildRequires: python2.7(webencodings)
-BuildRequires: python2.7(pytest) python2.7(six) python2.7(mock)
 
 %setup_python_module %module_name
 
@@ -177,6 +177,9 @@ popd
 %endif
 
 %changelog
+* Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 1:1.0.1-alt3
+- Build without check.
+
 * Sun Jul 11 2021 Vitaly Lipatov <lav@altlinux.ru> 1:1.0.1-alt2
 - build python2 module only
 
