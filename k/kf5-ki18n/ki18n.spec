@@ -8,13 +8,13 @@
 
 Name: kf5-%rname
 Version: 5.84.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
 Summary: KDE Frameworks 5 gettext-based UI text internationalization
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: LGPL-2.0-or-later
 
 Source: %rname-%version.tar
 Patch1: alt-fallback.patch
@@ -23,10 +23,9 @@ Patch1: alt-fallback.patch
 # optimized out: cmake cmake-modules elfutils libcloog-isl4 libqt5-concurrent libqt5-core libqt5-script libqt5-test libstdc++-devel python-base python-modules qt5-base-devel ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ python-module-google python-modules-encodings qt5-script-devel rpm-build-gir rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
-BuildRequires(pre): python-module-sip-devel python3-module-sip-devel
-BuildRequires(pre): rpm-build-python3
-BuildRequires: extra-cmake-modules gcc-c++ qt5-script-devel qt5-declarative-devel python-modules-encodings
-BuildRequires: python-module-PyQt5-devel python3-module-PyQt5-devel
+BuildRequires(pre): rpm-build-python3 python3-module-sip-devel
+BuildRequires: extra-cmake-modules gcc-c++ qt5-script-devel qt5-declarative-devel
+BuildRequires: python3-module-PyQt5-devel
 
 %description
 KI18n provides functionality for internationalizing user interface text
@@ -130,10 +129,10 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %_K5plug/kf5/ktranscript.so
 
 %if_enabled python
-%files -n python-module-%rname
-%python_sitelibdir/PyKF5/*.so
-%files -n python-module-%rname-devel
-%_datadir/sip/PyKF5/KI18n/
+#%files -n python-module-%rname
+#%python_sitelibdir/PyKF5/*.so
+#%files -n python-module-%rname-devel
+#%_datadir/sip/PyKF5/KI18n/
 %files -n python3-module-%rname
 %python3_sitelibdir/PyKF5/*.so
 %files -n python3-module-%rname-devel
@@ -141,6 +140,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Wed Jul 28 2021 Sergey V Turchin <zerg@altlinux.org> 5.84.0-alt2
+- fix build requires
+
 * Tue Jul 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.84.0-alt1
 - new version
 
