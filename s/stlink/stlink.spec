@@ -1,25 +1,52 @@
-Summary: STM32 microcontrolles programmer and debuger, using STLINKv1/v2
-Name: stlink
-Version: 2018.04.18
-Release: alt2.qa1
-License: Other
-Group: Development/Other
-URL: https://github.com/texane/stlink.git
-Source0: %name-master.zip
+%define _unpackaged_files_terminate_build 1
+%def_without static
 
-BuildRequires: cmake libgtk+3-devel libusb-devel unzip
+Name: stlink
+Version: 1.6.1
+Release: alt1
+Epoch: 1
+
+Summary: STM32 microcontrolles programmer and debuger, using STLINKv1/v2/v2-1/v3
+License: BSD-3-Clause
+Group: Development/Other
+
+URL: https://github.com/texane/stlink.git
+Source0: %name-%version.tar
+
+BuildRequires: cmake
+BuildRequires: libgtk+3-devel
+BuildRequires: libusb-devel
+BuildRequires: pandoc
+BuildRequires: libpcre-devel
+BuildRequires: libffi-devel
+BuildRequires: bzlib-devel
+BuildRequires: libbrotli-devel
 
 %description
-First, you have to know there are several boards supported by the software.
-Those boards use a chip to translate from USB to JTAG commands. The chip is
-called stlink and there are 2 versions:
-. STLINKv1, present on STM32VL discovery kits,
-. STLINKv2, present on STM32L discovery and later kits.
 
-2 different transport layers are used:
-. STLINKv1 uses SCSI passthru commands over USB,
-. STLINKv2 uses raw USB commands.
+Open source version of the STMicroelectronics STlink Tools
 
+STLink is an open source toolset to program and debug STM32 devices and boards
+manufactured by STMicroelectronics. It supports several so called STLINK
+programmer boards (and clones thereof) which use a microcontroller chip to
+translate commands from USB to JTAG/SWD. There are four generations available
+on the market which are all supported by this toolset:
+
+ STLINK/v1 (obsolete as of 21-11-2019, continued support by this toolset)
+   transport layer: SCSI passthru commands over USB
+   stand-alone programmer and present on STM32VL Discovery boards
+ STLINK/v2
+   transport layer: raw USB commands
+   stand-alone programmer and present on STM32L Discovery and Nucleo boards
+ STLINK/v2-1
+   transport layer: raw USB commands
+   present on some STM32 Nucleo boards
+ STLINK/v3
+   transport layer: raw USB commands
+   stand-alone programmer
+
+On the user level there is no difference in handling or operation between these
+different revisions.
 
 %package -n lib%name
 Summary: Shared library of %name
@@ -36,43 +63,86 @@ Requires: lib%name = %EVR
 %description -n lib%name-devel
 Development files for libstlink
 
+%package gui
+Summary: GUI for %name
+Group: Development/Other
+Requires: %name = %EVR
+
+%description gui
+GUI for stlink
+
 %prep
-%setup -q -n %name-master
+%setup
+# restore pkgconfig generation
+# FIXME: resulting pkgconfig is broken anyway
+sed -i 's|#add_subdirectory(cmake\/pkgconfig)|add_subdirectory(cmake/pkgconfig)|' CMakeLists.txt
+# NB: this may become way too generic in future
+sed -i 's|\(.*DESTINATION.*\)\(${PROJECT_NAME}\/\)\(.*\)|\1\3|g' doc/man/CMakeLists.txt src/stlink-gui/CMakeLists.txt
+# move stlink-gui.ui out of %%_bindir
+sed -i 's|stlink-gui.ui DESTINATION ${CMAKE_INSTALL_BINDIR}|stlink-gui.ui DESTINATION %_datadir/%name|' src/stlink-gui/CMakeLists.txt
+sed -i 's|STLINK_UI_DIR="${CMAKE_INSTALL_PREFIX}/bin"|STLINK_UI_DIR="%_datadir/%name"|' src/stlink-gui/CMakeLists.txt
 
 %build
-%make_build CMAKEFLAGS="-DCMAKE_INSTALL_PREFIX:PATH=%prefix -DLIB_INSTALL_DIR=%_libdir"
-
-%install
-%makeinstall DESTDIR=%buildroot -C build/Release
 # sysconf/udev policy - /etc is for user
 mkdir -p %buildroot%_udevrulesdir/
-mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
+%cmake \
+	-DCMAKE_BUILD_TYPE=Release \
+	-DCMAKE_INSTALL_PREFIX=%prefix \
+	-DINCLUDE_INSTALL_DIR=%_includedir \
+	-DSTLINK_LIBRARY_PATH=%_libdir \
+	-DSTLINK_GENERATE_MANPAGES=ON \
+	-DSTLINK_UDEV_RULES_DIR=%_udevrulesdir \
+	-DSTLINK_MODPROBED_DIR=%_sysconfdir/modprobe.d
+
+# parallel build is broken with NPROCS >=8 and even >=4 on ppc64le
+export NPROCS=1
+%cmake_build
+
+%install
+%cmakeinstall_std
+
+
+%if_without static
+rm -f %buildroot/%_libdir/lib%name.a
+%endif
 
 %files
-%doc ChangeLog.md LICENSE README.md
-%dir %_datadir/%name
-
+%doc CHANGELOG.md LICENSE.md README.md
 %_sysconfdir/modprobe.d/*
 %_udevrulesdir/*
-
-%_bindir/*
-
-%_datadir/applications/*
-%_liconsdir/*
+%_bindir/st-*
 %_man1dir/*
-%_datadir/%name/*
+
+%files gui
+%_bindir/%name-gui
+%dir %_datadir/%name
+%_datadir/%name/%name-gui.ui
+%_datadir/applications/*
+%_iconsdir/hicolor/scalable/apps/*.svg
 
 %files -n lib%name
-%_libdir/*.so*
+%_libdir/lib%name.so*
 
 %files -n lib%name-devel
+%if_with static
 %_libdir/*.a
+%endif
 %dir %_includedir/%name
 %_includedir/%name.h
+# stm32.h: https://github.com/stlink-org/stlink/issues/976
+%_includedir/stm32.h
 %_includedir/%name/*.h
-%_pkgconfigdir/*
+%_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Feb 08 2021 Nikolai Kostrigin <nickel@altlinux.org> 1:1.6.1-alt1
+- New version (closes: #34271)
+  + switch to new upstream location
+  + switch packaging scheme SRPM->gears
+  + alter Epoch to change versioning scheme according to upstream
+  + switch to use .gear/tags
+  + extract gui into a separate package
+
 * Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 2018.04.18-alt2.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
