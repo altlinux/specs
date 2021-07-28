@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.6.0
-Release: alt1
+Release: alt2
 
 Summary: A fast and thorough lazy object proxy
 License: BSD
@@ -29,6 +29,9 @@ BuildRequires: python3(tox_console_scripts)
 %endif
 
 %py3_provides lazy-object-proxy
+
+Conflicts: python-module-lazy_object_proxy
+Obsoletes: python-module-lazy_object_proxy
 
 %description
 This Python module is based on wrapt's ObjectProxy with one big change: it
@@ -61,6 +64,9 @@ tox.py3 --sitepackages -vvr --no-deps --console-scripts -s false
 %python3_sitelibdir/lazy_object_proxy-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 1.6.0-alt2
+- Added conflict to old package.
+
 * Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 1.6.0-alt1
 - 1.5.1 -> 1.6.0.
 
