@@ -2,11 +2,11 @@
 
 %define oname ipython
 
-%def_without doc
+%def_with doc
 
 Name: ipython3
-Version: 7.18.1
-Release: alt4
+Version: 7.25.0
+Release: alt1
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
 Group: Development/Python3
@@ -16,7 +16,7 @@ BuildArch: noarch
 
 # https://github.com/ipython/ipython.git
 Source: %name-%version.tar
-Patch1: %name-%version-alt-docs.patch
+Patch1: %name-alt-docs.patch
 Patch2: %name-alt-dont-import-tests.patch
 
 %add_findreq_skiplist %python3_sitelibdir/IPython/utils/eventful.py
@@ -30,6 +30,7 @@ BuildRequires: python3(backcall)
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx-devel python3-module-matplotlib-sphinxext python3-module-numpydoc
 BuildRequires: python3(sphinx_rtd_theme) graphviz
+BuildRequires: python3(traitlets) python3(pexpect) python3(pickleshare) python3(ipykernel) python3-module-sphinx-sphinx-build-symlink
 %endif
 
 %add_python3_req_skip __main__
@@ -84,6 +85,7 @@ This package contains examples for IPython.
 %package -n python3-module-%oname
 Summary: An enhanced interactive Python 3 shell
 Group: Development/Python3
+Requires: python3(matplotlib_inline)
 
 %description -n python3-module-%oname
 IPython provides a replacement for the interactive Python interpreter with
@@ -199,6 +201,10 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Wed Jul 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.25.0-alt1
+- Updated to upstream version 7.25.0.
+- Enabled documentation.
+
 * Wed Jun 23 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.18.1-alt4
 - Made test imports optional (Closes: #40270).
 
