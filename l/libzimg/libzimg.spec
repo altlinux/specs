@@ -1,6 +1,6 @@
 %define gname zimg
 Name: libzimg
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 Summary: Scaling, color space conversion, and dithering library
 License: WTFPL
@@ -60,5 +60,11 @@ rm -fr %buildroot%_docdir/%gname
 %_pkgconfigdir/%gname.pc
 
 %changelog
+* Wed Jul 28 2021 Leontiy Volodin <lvol@altlinux.org> 3.0.2-alt1
+- New version (3.0.2).
+- Upstream:
+  + arm: fix data alignment.
+  + x86: fix detection of Zen2 and add detection of Zen3.
+
 * Wed Jan 13 2021 Leontiy Volodin <lvol@altlinux.org> 3.0.1-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
