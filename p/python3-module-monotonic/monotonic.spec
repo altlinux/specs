@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define oname monotonic
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.5
-Release: alt1
+Release: alt2
 Summary: An implementation of time.monotonic() for Python 2 & Python 3
-License: ASLv2.0
-Group: Development/Python
+License: Apache-2.0
+Group: Development/Python3
 Url: https://pypi.org/project/monotonic/
 
 # https://github.com/atdt/monotonic.git
@@ -19,46 +19,25 @@ BuildRequires(pre): rpm-build-python3
 This module provides a monotonic() function which returns the value (in
 fractional seconds) of a clock which never goes backwards.
 
-%package -n python3-module-%oname
-Summary: An implementation of time.monotonic() for Python 2 & Python 3
-Group: Development/Python3
-
-%description -n python3-module-%oname
-This module provides a monotonic() function which returns the value (in
-fractional seconds) of a clock which never goes backwards.
-
 %prep
 %setup
 
-cp -fR . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %files
-%doc README.md
-%python_sitelibdir/monotonic.py
-%python_sitelibdir/monotonic.py[oc]
-%python_sitelibdir/monotonic-%version-py%_python_version.egg-info/
-
-%files -n python3-module-%oname
 %doc README.md
 %python3_sitelibdir/monotonic.py
 %python3_sitelibdir/__pycache__/monotonic.cpython-*
 %python3_sitelibdir/monotonic-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 1.5-alt2
+- Drop python2 support.
+
 * Sat Apr 27 2019 Stanislav Levin <slev@altlinux.org> 1.5-alt1
 - 1.2 -> 1.5.
 
