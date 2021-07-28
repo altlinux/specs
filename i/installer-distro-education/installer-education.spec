@@ -1,6 +1,6 @@
 Name:    installer-distro-education
 Version: 9.2
-Release: alt2
+Release: alt3
 
 Summary: Installer common files for ALT Education
 License: GPL-2.0
@@ -45,6 +45,7 @@ Requires: installer-feature-runlevel5-stage2
 Requires: installer-feature-xdg-user-dirs
 Requires: installer-feature-auto-domain
 Requires: installer-feature-services
+Requires: installer-feature-quota-stage2
 
 %description stage2
 Installer stage2
@@ -71,7 +72,6 @@ Requires: installer-feature-repo-add
 %endif
 Requires: installer-feature-resolver-bind-stage3
 Requires: installer-feature-lightdm-stage3
-Requires: installer-feature-quota-stage2
 Requires: installer-feature-bell-off-stage3
 Requires: installer-feature-efi-stage3
 
@@ -114,6 +114,9 @@ rm -rf %buildroot%_datadir/alterator/help/ru_RU \
 %_datadir/install2/initinstall.d/10-vm-profile.sh
 
 %changelog
+* Wed Jul 28 2021 Michael Shigorin <mike@altlinux.org> 9.2-alt3
+- Fix stage2/stage3 dependency issue.
+
 * Tue Apr 20 2021 Andrey Cherepanov <cas@altlinux.org> 9.2-alt2
 - Set default size for root filesystem to 50 GiB.
 
