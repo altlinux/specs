@@ -5,7 +5,7 @@
 Summary: A collection of basic system utilities
 Name: util-linux
 Version: 2.36.1
-Release: alt2
+Release: alt3
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.1-or-later and BSD-3-Clause and BSD-4-Clause-UC and ALT-Public-Domain
 Group: System/Base
 URL: https://kernel.org/pub/linux/utils/util-linux/
@@ -144,7 +144,6 @@ devices and files for paging and swapping.
 %package -n losetup
 Summary: Programs for setting up and configuring loopback devices
 Group: System/Base
-Requires: hashalot
 Requires: libsmartcols = %version-%release
 
 %description -n losetup
@@ -972,6 +971,9 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Wed Jul 28 2021 Alexey Gladkov <legion@altlinux.ru> 2.36.1-alt3
+- losetup cannot use hashalot package and therefore should not require it (ALT#40590).
+
 * Fri Jan 15 2021 Alexey Gladkov <legion@altlinux.ru> 2.36.1-alt2
 - libmount: don't use "symfollow" for helpers on user mounts.
 
