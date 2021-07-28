@@ -1,15 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define modulename pymysql
-%def_with python3
-Name: python-module-%modulename
+Name: python3-module-%modulename
 Version: 0.9.3
-Release: alt1
-
-%setup_python_module %modulename
+Release: alt2
 
 Summary: This pure Python MySQL client provides a DB-API to a MySQL database.
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 
 Url: http://code.google.com/p/pymysql/
 BuildArch: noarch
@@ -17,61 +14,30 @@ BuildArch: noarch
 # https://github.com/PyMySQL/PyMySQL.git
 Source0: %name-%{version}.tar
 
-%if_with python3
-BuildRequires(pre): rpm-build-python3 python3-module-setuptools
-%endif
-BuildRequires: python-module-setuptools
+BuildRequires(pre): rpm-build-python3
 
 %description
-This pure Python MySQL client provides a DB-API to a MySQL database by
-talking directly to the server via the binary client/server protocol.
-
-%package -n python3-module-%modulename
-Summary: This pure Python MySQL client provides a DB-API to a MySQL database
-Group: Development/Python3
-
-%description -n python3-module-%modulename
 This pure Python MySQL client provides a DB-API to a MySQL database by
 talking directly to the server via the binary client/server protocol.
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc CHANGELOG example.py *.rst
-%python_sitelibdir/%modulename/
-%python_sitelibdir/*.egg-info
-
-%if_with python3
-%files -n python3-module-%modulename
-%doc CHANGELOG example.py *.rst
 %python3_sitelibdir/%modulename/
 %python3_sitelibdir/*.egg-info
-%endif
 
 %changelog
+* Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.3-alt2
+- Drop python2 support.
+
 * Fri Jul 24 2020 Anton Farygin <rider@altlinux.ru> 0.9.3-alt1
 - 0.9.3
 
