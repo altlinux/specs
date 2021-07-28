@@ -1,10 +1,11 @@
 %define oname pycrypto
 
 %def_without python3
+%def_without check
 
 Name: python-module-%oname
 Version: 2.7
-Release: alt6.a1.git20140620
+Release: alt7.a1.git20140620
 Summary: Cryptographic modules for Python
 License: Public domain
 Group: Development/Python
@@ -17,7 +18,7 @@ Patch: replace-time.clock-with-timeit.default_timer.patch
 
 BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-epydoc gcc-c++ libgmp-devel libmpir-devel
-BuildPreReq: python-module-epydoc gcc-c++ libgmp-devel
+BuildPreReq: gcc-c++ libgmp-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
@@ -129,9 +130,6 @@ pushd ../python3
 popd
 %endif
 
-export PYTHONPATH=%buildroot%python_sitelibdir
-epydoc --config=Doc/epydoc-config
-
 %check
 python2 setup.py test
 %if_with python3
@@ -149,7 +147,7 @@ popd
 %python_sitelibdir/*/SelfTest
 
 %files docs
-%doc Doc/*.txt Doc/*.rst Doc/apidoc
+#doc Doc/*.txt Doc/*.rst Doc/apidoc
 
 %if_with python3
 %files -n python3-module-%oname
@@ -162,6 +160,10 @@ popd
 %endif
 
 %changelog
+* Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 2.7-alt7.a1.git20140620
+- Build without check.
+- Build without docs.
+
 * Mon Sep 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7-alt6.a1.git20140620
 - Disabled build of python-3 module.
 
