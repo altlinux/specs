@@ -2,7 +2,7 @@
 
 Name: libpixman
 Version: 0.40.0
-Release: alt1
+Release: alt2
 Epoch: 3
 Summary: Pixel manipulation library
 License: MIT
@@ -13,6 +13,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %srcname-%version.tar
 Patch: %srcname-%version-%release.patch
+Patch2000: %name-e2k.patch
 
 BuildRequires: libpng-devel
 
@@ -31,6 +32,9 @@ develop programs which make use of %name
 %prep
 %setup -q -n %srcname-%version
 %patch -p1
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 %build
 %autoreconf
@@ -53,6 +57,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jul 28 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3:0.40.0-alt2
+- added patch for Elbrus
+
 * Mon Apr 27 2020 Valery Inozemtsev <shrek@altlinux.ru> 3:0.40.0-alt1
 - 0.40.0
 
