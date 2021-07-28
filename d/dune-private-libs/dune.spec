@@ -10,7 +10,7 @@
 %endif
 
 Name: dune%subpackagename
-Version: 2.8.5
+Version: 2.9.0
 Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
@@ -84,7 +84,11 @@ developing applications that use %name.
 
 %build
 sed -i '/^(name/a (version %version)' dune-project
-./configure --libdir=%_libdir/ocaml --mandir=%_mandir
+./configure --libdir=%_libdir/ocaml \
+	    --mandir=%_mandir  \
+	    --etcdir %_sysconfdir \
+	    --docdir %_docdir
+
 %if_without subpackage
 %make_build release
 %else
@@ -152,6 +156,9 @@ sed -i '/^(name/a (version %version)' dune-project
 %endif
 
 %changelog
+* Tue Jul 27 2021 Anton Farygin <rider@altlinux.ru> 2.9.0-alt1
+- 2.9.0
+
 * Fri Apr 09 2021 Anton Farygin <rider@altlinux.org> 2.8.5-alt1
 - 2.8.5
 - enabled unit-test
