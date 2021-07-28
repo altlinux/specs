@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: warzone2100
-Version: 4.0.1
+Version: 4.1.1
 Release: alt1
 
 Summary: Warzone 2100 Resurrection Project (RTS 3D game)
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 Source1: Warzone_2100_Tango_Icon_by_Unit66.tar
 
 # Upstream now generates cache via cmake. 
-# Use following command on clean full upstream copy of repository while current release tag is checked out:
+# Use following command on clean full upstream copy of repository while master branch is updated and current release tag is checked out:
 # cmake -DOUTPUT_TYPE=sh -DOUTPUT_FILE=autorevision.cache -P build_tools/autorevision.cmake
 # ATTENTION: this must be done on pristine full clone of upstream repository, which must include all upstream tags
 # and NO downstream tags.
@@ -36,6 +36,7 @@ Source8: %name-%version-data-base-texpages.tar
 Source9: %name-%version-data-music.tar
 
 Patch1: %name-alt-unbundle-libs.patch
+Patch2: %name-alt-dont-install-portable-marker.patch
 
 BuildRequires: /proc
 BuildRequires: qt5-base-devel qt5-3d-devel qt5-script-devel qt5-x11extras-devel openssl-devel
@@ -75,6 +76,7 @@ Game data for warzone2100.
 %prep
 %setup -a1 -a3 -a4 -a5 -a6 -a7 -a8 -a9
 %patch1 -p1
+%patch2 -p1
 
 install -m644 %SOURCE2 build_tools/autorevision.cache
 
@@ -116,6 +118,9 @@ rm -rf %buildroot%_iconsdir/warzone2100.png
 %_datadir/warzone2100
 
 %changelog
+* Wed Jul 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.1-alt1
+- Updated to upstream version 4.1.1.
+
 * Wed Jun 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.1-alt1
 - Updated to upstream version 4.0.1.
 - Disabled -Werror build flag.
