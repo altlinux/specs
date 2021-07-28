@@ -1,6 +1,6 @@
 Name: alt-rootfs-installer
-Version: 0.5.0
-Release: alt2
+Version: 0.5.1
+Release: alt1
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -30,7 +30,6 @@ install -pm 644 SUPPORTED-BOARDS %buildroot%_datadir/%name
 
 install -d %buildroot%_bindir
 install -pm 0755 %name %buildroot%_bindir/
-ln -s %name %buildroot%_bindir/arm-rootfs-installer
 
 install -d %buildroot%_docdir/%name
 install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
@@ -42,6 +41,16 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Mon Jul 26 2021 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt1
+- Prevent concurrent use of options --image-in and --image-out
+- Fixed mounting ROOTPART when writing image
+- Add option '--addconsole'
+- Rockchips-aarch64.sh: use msdos partition table
+- socs.d: Set START_SECTOR to 16 MiB for AllWinner and RPi
+- Fixed output of the final message
+- jetson_nano-aarch64.sh: require python2
+- not create symlink arm-rootfs-installer more
+
 * Fri Jun 11 2021 Anton Midyukov <antohami@altlinux.org> 0.5.0-alt2
 - copy SUPPORTED-BOARDS file to %_datadir/%name (Closes: 40209)
 
