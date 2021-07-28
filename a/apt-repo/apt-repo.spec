@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.3.16
+Version:  1.3.17
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -35,6 +35,10 @@ install -Dpm 644 %name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %_man8dir/%name.8*
 
 %changelog
+* Wed Jul 28 2021 Andrey Cherepanov <cas@altlinux.org> 1.3.17-alt1
+- Fix check branch with disttag in short form.
+- Remove disttag macro file during apt-repo rm.
+
 * Fri Jul 23 2021 Andrey Cherepanov <cas@altlinux.org> 1.3.16-alt1
 - Add p10 branch.
 
