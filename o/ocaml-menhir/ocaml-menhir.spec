@@ -1,5 +1,5 @@
 Name: ocaml-menhir
-Version: 20210310
+Version: 20210419
 Release: alt1
 Summary: LR(1) parser generator for the OCaml programming language.
 
@@ -30,7 +30,7 @@ replacing all calls to module Parsing with new Menhir-specific keywords.
 %setup -q -n menhir-%version
 
 %build
-dune build
+%dune_build
 
 %install
 %dune_install
@@ -48,6 +48,9 @@ dune build
 %_libdir/ocaml/menhirSdk/*
 
 %changelog
+* Wed Jul 28 2021 Anton Farygin <rider@altlinux.ru> 20210419-alt1
+- 20210419
+
 * Thu Mar 11 2021 Anton Farygin <rider@altlinux.org> 20210310-alt1
 - 20210310
 
