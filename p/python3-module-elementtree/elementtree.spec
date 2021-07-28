@@ -1,39 +1,24 @@
+%define modulename elementtree
 %define rver 20050316
-
-%def_with python3
 
 %define version 1.2.6
 %define release alt1.%rver
-%setup_python_module elementtree
 Summary: ElementTree - a light-weight XML object model for Python.
-Name: %packagename
+Name: python3-module-%modulename
 Version: %version
-Release: alt1.20050316.1.1.1.2
+Release: alt2.20050316
 URL: http://effbot.org/zone/element-index.htm
 Source: %modulename-%version-%rver.tar.gz
 Patch1: %modulename-TidyHTMLTreeBuilder-fix.patch
 Patch2: elementtree-1.2.6-alt-python3.patch
 Copyright: Python (MIT style)
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
-Packager: Konstantin Klimchev <koka@altlinux.ru>
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
 BuildPreReq: python-tools-2to3
-%endif
 
 %description
-The Element type is a flexible container object, designed to store
-hierarchical data structures in memory.  Element structures can be
-converted to and from XML.
-
-%package -n python3-module-%modulename
-Summary: ElementTree - a light-weight XML object model for Python
-Group: Development/Python3
-
-%description -n python3-module-%modulename
 The Element type is a flexible container object, designed to store
 hierarchical data structures in memory.  Element structures can be
 converted to and from XML.
@@ -43,44 +28,22 @@ converted to and from XML.
 %patch1 -p1
 %patch2 -p2
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%__python setup.py install \
-        --root=%buildroot \
-        --optimize=2 \
-        --record=INSTALLED_FILES
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
-
-%files -f INSTALLED_FILES
-%defattr(-,root,root)
-%doc docs samples CHANGES README benchmark.py selftest.py
-
-%if_with python3
-%files -n python3-module-%modulename
+%files
 %doc docs samples CHANGES README benchmark.py selftest.py
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.6-alt2.20050316
+- Drop python2 support.
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.2.6-alt1.20050316.1.1.1.2
 - (NMU) rebuild with python3.6
 
