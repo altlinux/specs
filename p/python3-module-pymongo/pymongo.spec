@@ -1,55 +1,21 @@
-%def_with python3
-
-Name:           python-module-pymongo
+Name:           python3-module-pymongo
 Version:        3.8.0
-Release:        alt1
+Release:        alt2
 Summary:        Python driver for MongoDB
 
-Group:          Development/Python
+Group:          Development/Python3
 # All code is ASL 2.0 except bson/time64*.{c,h} which is MIT
-License:        ASL 2.0 and MIT
+License:        Apache-2.0 and MIT
 URL:            http://api.mongodb.org/python
 Source0:        http://pypi.python.org/packages/source/p/pymongo/pymongo-%{version}.tar.gz
 
-Provides:       pymongo = %{version}-%{release}
-Obsoletes:      pymongo <= 2.1.1-4
-
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-nose
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires:  python3-devel python3-module-setuptools
-%endif
 
-%add_findprov_skiplist %{python_sitelibdir}.*\.so$
-
-%setup_python_module pymongo
+Requires:       python3-module-bson = %{version}-%{release}
 
 %description
 The Python driver for MongoDB.
 
-%if_with python3
-%package -n python3-module-pymongo
-Summary:        Python driver for MongoDB
-Group:          Development/Python3
-Requires:       python3-module-bson = %{version}-%{release}
-
-%description -n python3-module-pymongo
-The Python driver for MongoDB.  This package contains the python3 version of
-this module.
-%endif
-
-%package -n python-module-pymongo-gridfs
-Summary:        Python GridFS driver for MongoDB
-Group:          Development/Python
-Provides:       pymongo-gridfs = %{version}-%{release}
-Obsoletes:      pymongo-gridfs <= 2.1.1-4
-
-%description -n python-module-pymongo-gridfs
-GridFS is a storage specification for large objects in MongoDB.
-
-%if_with python3
 %package -n python3-module-gridfs
 Summary:        Python GridFS driver for MongoDB
 Group:          Development/Python3
@@ -58,18 +24,7 @@ Requires:       python3-module-pymongo = %{version}-%{release}
 %description -n python3-module-gridfs
 GridFS is a storage specification for large objects in MongoDB.  This package
 contains the python3 version of this module.
-%endif
 
-%package -n python-module-bson
-Summary:        Python bson library
-Group:          Development/Python
-
-%description -n python-module-bson
-BSON is a binary-encoded serialization of JSON-like documents. BSON is designed
-to be lightweight, traversable, and efficient. BSON, like JSON, supports the
-embedding of objects and arrays within other objects and arrays.
-
-%if_with python3
 %package -n python3-module-bson
 Summary:        Python bson library
 Group:          Development/Python3
@@ -79,67 +34,33 @@ BSON is a binary-encoded serialization of JSON-like documents. BSON is designed
 to be lightweight, traversable, and efficient. BSON, like JSON, supports the
 embedding of objects and arrays within other objects and arrays.  This package
 contains the python3 version of this module.
-%endif
 
 %prep
-%setup -q -n pymongo-%{version}
-
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
+%setup -n pymongo-%{version}
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc LICENSE README.rst doc
-%{python_sitelibdir}/pymongo
-%{python_sitelibdir}/pymongo-%{version}-*.egg-info
-
-%if_with python3
-%files -n python3-module-pymongo
-%doc LICENSE README.rst doc
 %{python3_sitelibdir}/pymongo
 %{python3_sitelibdir}/pymongo-%{version}-*.egg-info
-%endif
 
-%files -n python-module-pymongo-gridfs
-%doc LICENSE README.rst doc
-%{python_sitelibdir}/gridfs
-
-%if_with python3
 %files -n python3-module-gridfs
 %doc LICENSE README.rst doc
 %{python3_sitelibdir}/gridfs
-%endif
 
-%files -n python-module-bson
-%doc LICENSE README.rst doc
-%{python_sitelibdir}/bson
-
-%if_with python3
 %files -n python3-module-bson
 %doc LICENSE README.rst doc
 %{python3_sitelibdir}/bson
-%endif
 
 %changelog
+* Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 3.8.0-alt2
+- Drop python2 support.
+
 * Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 3.8.0-alt1
 - NMU: new version 3.8.0 (with rpmrb script)
 
