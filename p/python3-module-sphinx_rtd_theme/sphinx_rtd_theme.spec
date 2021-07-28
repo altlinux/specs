@@ -1,36 +1,20 @@
 %define oname sphinx_rtd_theme
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.5.2
-Release: alt1
+Release: alt2
 Summary: ReadTheDocs.org theme for Sphinx
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/sphinx_rtd_theme/
 
 # https://github.com/snide/sphinx_rtd_theme.git
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
 
 %description
-This is a prototype mobile-friendly sphinx_ theme I made for
-readthedocs.org_. It's currently in development and includes some rtd
-variable checks that can be ignored if you're just trying to use it on
-your project outside of that site.
-
-%package -n python3-module-%oname
-Summary: ReadTheDocs.org theme for Sphinx
-Group: Development/Python3
-
-%description -n python3-module-%oname
 This is a prototype mobile-friendly sphinx_ theme I made for
 readthedocs.org_. It's currently in development and includes some rtd
 variable checks that can be ignored if you're just trying to use it on
@@ -39,40 +23,21 @@ your project outside of that site.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
 export CI=":"
-%python_build_debug
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 0.5.2-alt2
+- Drop python2 support.
+
 * Sun May 30 2021 Fr. Br. George <george@altlinux.ru> 0.5.2-alt1
 - Build new version.
 
