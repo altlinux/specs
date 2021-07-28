@@ -1,19 +1,19 @@
 %define _name CCfits
 
 Name: libccfits
-Version: 2.5
-Release: alt1.1
+Version: 2.6
+Release: alt1
 
 Summary: A C++ interface for cfitsio
 Group: System/Libraries
 License: BSD
-Url: http://heasarc.gsfc.nasa.gov/docs/software/fitsio/ccfits
+Url: https://heasarc.gsfc.nasa.gov/docs/software/fitsio/ccfits
 
-Source: http://heasarc.gsfc.nasa.gov/docs/software/fitsio/ccfits/%_name-%version.tar.gz
-# fc
-Patch: CCfits-2.5-removerpath.patch
+Source: https://heasarc.gsfc.nasa.gov/docs/software/fitsio/ccfits/%_name-%version.tar.gz
 
-BuildRequires: gcc-c++ gcc-fortran libcfitsio-devel
+Patch: CCfits-2.6-alt-removerpath.patch
+
+BuildRequires: autoconf-archive gcc-c++ gcc-fortran libcfitsio-devel
 
 %description
 CCfits is an object oriented interface to the cfitsio library. It is
@@ -41,8 +41,7 @@ Conflicts: %name < %version
 This package contains the full API documentation for %name.
 
 %prep
-%setup -c
-%setup -DT -n %name-%version/%_name
+%setup -n %_name-%version
 %patch -p1
 rm -rf html/*.pl
 
@@ -55,13 +54,13 @@ rm -rf html/*.pl
 %makeinstall_std
 mkdir -p %buildroot%_datadir/doc/%name
 cp -R html %buildroot%_datadir/doc/%name/
+rm -f %buildroot%_bindir/cookbook
 
 %files
 %_libdir/*.so.*
 %doc License.txt
 
 %files devel
-%exclude %_bindir/cookbook
 %_libdir/*.so
 %_pkgconfigdir/%_name.pc
 %_includedir/%_name/
@@ -71,6 +70,9 @@ cp -R html %buildroot%_datadir/doc/%name/
 %_datadir/doc/%name/
 
 %changelog
+* Fri Jul 23 2021 Yuri N. Sedunov <aris@altlinux.org> 2.6-alt1
+- 2.6
+
 * Wed May 26 2021 Yuri N. Sedunov <aris@altlinux.org> 2.5-alt1.1
 - rebuilt against libcfitsio.so.9
 
