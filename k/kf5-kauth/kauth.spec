@@ -7,7 +7,7 @@
 
 Name: kf5-%rname
 Version: 5.84.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -22,8 +22,8 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kcoreaddons-devel libpolkitqt5-qt5-devel python-module-google qt5-tools-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 %if_enabled python
-BuildRequires(pre): python3-module-sip-devel python-module-sip-devel python-module-PyQt5-devel
-BuildRequires: python-module-kcoreaddons-devel
+BuildRequires(pre): python3-module-sip-devel python3-module-PyQt5-devel
+BuildRequires: python3-module-kcoreaddons-devel
 %endif
 BuildRequires: extra-cmake-modules gcc-c++ kf5-kcoreaddons-devel polkitqt5-devel qt5-tools-devel
 
@@ -139,10 +139,10 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %_K5plug/kauth/
 
 %if_enabled python
-%files -n python-module-%rname
-%python_sitelibdir/PyKF5/*.so
-%files -n python-module-%rname-devel
-%_datadir/sip/PyKF5/KAuth/
+#%files -n python-module-%rname
+#%python_sitelibdir/PyKF5/*.so
+#%files -n python-module-%rname-devel
+#%_datadir/sip/PyKF5/KAuth/
 %files -n python3-module-%rname
 %python3_sitelibdir/PyKF5/*.so
 %files -n python3-module-%rname-devel
@@ -150,6 +150,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Wed Jul 28 2021 Sergey V Turchin <zerg@altlinux.org> 5.84.0-alt2
+- fix build requires
+
 * Tue Jul 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.84.0-alt1
 - new version
 
