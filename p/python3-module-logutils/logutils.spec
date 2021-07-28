@@ -1,24 +1,18 @@
-%def_with python3
-
 %global modname logutils
 
-Name:               python-module-%{modname}
+Name:               python3-module-%{modname}
 Version:            0.3.3
-Release:            alt1.2
+Release:            alt2
 Summary:            Logging utilities
 
-Group:              Development/Python
+Group:              Development/Python3
 License:            BSD
 URL:                http://pypi.python.org/pypi/logutils
-Source0:            %{name}-%{version}.tar
+Source0:            %{modname}-%{version}.tar
 
 BuildArch:          noarch
 
-BuildRequires:      python-devel
-
-%if_with python3
 BuildRequires:      rpm-build-python3
-%endif
 
 %description
 The logutils package provides a set of handlers for the Python standard
@@ -29,71 +23,30 @@ they are packaged here. Others are updated versions which have appeared in
 recent Python releases, but are usable with older versions of Python and so
 are packaged here.
 
-%if_with python3
-%package -n python3-module-logutils
-Summary:            Logging utilities
-Group:              Development/Python
-
-%description -n python3-module-logutils
-The logutils package provides a set of handlers for the Python standard
-library's logging package.
-
-Some of these handlers are out-of-scope for the standard library, and so
-they are packaged here. Others are updated versions which have appeared in
-recent Python releases, but are usable with older versions of Python and so
-are packaged here.
-%endif
-
 %prep
-%setup
+%setup -n %{modname}-%{version}
 
 # Remove bundled egg-info in case it exists
 rm -rf %{modname}.egg-info
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
-
-%python_install
 
 %check
-%{__python} setup.py test
-%if_with python3
-pushd ../python3
 %{__python3} setup.py test
-popd
-%endif
 
 %files
 %doc README.txt LICENSE.txt NEWS.txt doc/
-%{python_sitelibdir}/%{modname}/
-%{python_sitelibdir}/%{modname}-%{version}*
-
-%if_with python3
-%files -n python3-module-%{modname}
-%doc README.txt LICENSE.txt NEWS.txt doc/
 %{python3_sitelibdir}/%{modname}/
 %{python3_sitelibdir}/%{modname}-%{version}-*
-%endif
 
 %changelog
+* Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 0.3.3-alt2
+- Drop python2 support.
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.3.3-alt1.2
 - (NMU) rebuild with python3.6
 
