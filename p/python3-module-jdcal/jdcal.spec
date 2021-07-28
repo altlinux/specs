@@ -1,78 +1,43 @@
 %define _unpackaged_files_terminate_build 1
 %define oname jdcal
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.3
-Release: alt1.1
+Release: alt1.2
 Summary: Julian dates from proleptic Gregorian and Julian calendars
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/jdcal/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/phn/jdcal.git
 Source0: https://pypi.python.org/packages/9b/fa/40beb2aa43a13f740dd5be367a10a03270043787833409c61b79e69f1dfd/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-%endif
 
-%py_provides %oname
+%py3_provides %oname
 
 %description
 This module contains functions for converting between Julian dates and
 calendar dates.
 
-%package -n python3-module-%oname
-Summary: Julian dates from proleptic Gregorian and Julian calendars
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-This module contains functions for converting between Julian dates and
-calendar dates.
-
 %prep
-%setup -q -n %{oname}-%{version}
-
-%if_with python3
-cp -fR . ../python3
-%endif
+%setup -n %{oname}-%{version}
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 1.3-alt1.2
+- Drop python2 support.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
