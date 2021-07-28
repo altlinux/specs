@@ -2,23 +2,14 @@
 
 Name: xpra
 Version: 4.0.6
-Release: alt1
+Release: alt1.1
 
 Summary: X Persistent Remote Applications
-
-Group: Networking/Remote access
 License: GPLv2
+Group: Networking/Remote access
+
 Url: http://xpra.org/
-
 Source: https://xpra.org/src/xpra-%version.tar
-
-# TODO: improve detection
-BuildRequires(pre): rpm-build-ubt
-%if %ubt_id == "M80P"
-%def_with ffmpeg_static
-%else
-%def_without ffmpeg_static
-%endif
 
 BuildRequires(pre): rpm-build-python3
 
@@ -29,12 +20,14 @@ BuildRequires: libgtk+3-devel python3-module-pygobject3-devel python3-module-pyc
 # Video
 BuildRequires: libvpx-devel libx264-devel libx265-devel libwebp-devel libjpeg-devel libpng-devel libyuv-devel
 
+# p9+
+%def_without ffmpeg_static
+
 %if_with ffmpeg_static
 BuildRequires: libffmpeg-devel-static
 %else
 BuildRequires: libavformat-devel libavcodec-devel libswscale-devel
 %endif
-
 
 # Sound
 BuildRequires: libogg-devel libopus-devel libflac-devel libspeex-devel libvorbis-devel libwavpack-devel liblame-devel libtwolame-devel libmad-devel
@@ -45,7 +38,14 @@ Requires: python3-module-OpenGL python3-module-OpenGL_accelerate
 
 BuildRequires: python3-module-Pillow python3-module-websockify
 
+%ifarch %e2k
+# no libv8/node so far => --without-minify;
+# it's java actually
+BuildRequires: python3-module-yuicompressor
+BuildRequires: /proc
+%else
 BuildRequires: /usr/bin/uglifyjs
+%endif
 
 BuildRequires: xorg-server brotli
 
@@ -88,6 +88,12 @@ Requires: python3-module-pyinotify python3-module-rencode python3-module-lz4 pyt
 
 Requires: libgtk+3-gir
 
+%ifarch %e2k
+%define py_flags --without-mdns --without-html5 --without-minify
+%else
+%define py_flags --without-mdns
+%endif
+
 %description
 Xpra is 'screen for X': it allows you to run X programs,
 usually on a remote host, direct their display to your local machine,
@@ -114,28 +120,27 @@ If connecting from a remote machine, you would use something like (or you can al
 
 %prep
 %setup
-%__subst "s|-Werror|-Wall|g" setup.py
-find xpra -type f -name "*.py" | xargs %__subst "s|^#!/usr/bin/env python$|#!/usr/bin/python3|"
-%__subst "s|^#!/usr/bin/env python$|#!/usr/bin/python3|" scripts/* cups/*
-
-%__subst "s|^#!/usr/bin/.*sh$|^$#!/bin/sh|" scripts/*
+sed -i "s|-Werror|-Wall|g" setup.py
+find xpra -type f -name "*.py" | xargs sed -i "s|^#!/usr/bin/env python$|#!/usr/bin/python3|"
+sed -i "s|^#!/usr/bin/env python$|#!/usr/bin/python3|" scripts/* cups/*
+sed -i "s|^#!/usr/bin/.*sh$|^$#!/bin/sh|" scripts/*
 
 # fatal error: pygtk-2.0/pygtk/pygtk.h: No such file or directory
 #__subst "s|pygtk-2.0/||g" xpra/x11/gtk2/gdk_display_source.pyx xpra/gtk_common/gtk2/gdk_bindings.pyx
 
 # move systemd service to correct %_unitdir
-%__subst "s|/bin/systemctl|NONONO|g" setup.py
-%__subst "s|.*/etc/default/xpra.*||g" service/xpra
+sed -i "s|/bin/systemctl|NONONO|g" setup.py
+sed -i "s|.*/etc/default/xpra.*||g" service/xpra
 
 %build
 %if_with ffmpeg_static
 export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
 %endif
 
-%python3_build_debug --without-mdns %_smp_mflags
+%python3_build_debug %py_flags %_smp_mflags
 
 %install
-%python3_install --without-mdns
+%python3_install %py_flags
 mkdir -p %buildroot/%_tmpfilesdir/
 mv -f %buildroot/usr/lib/tmpfiles.d/xpra.conf %buildroot/%_tmpfilesdir/
 mkdir -p %buildroot%_udevrulesdir/
@@ -176,10 +181,15 @@ rm -rf %buildroot/%python3_sitelibdir/xpra/client/gtk_base/example/
 %_unitdir/%name.service
 %_unitdir/%name.socket
 %_udevrulesdir/71-xpra-virtual-pointer.rules
-/etc/dbus-1/system.d/xpra.conf
-/etc/X11/xorg.conf.d/90-xpra-virtual.conf
+%_sysconfdir/dbus-1/system.d/xpra.conf
+%_sysconfdir/X11/xorg.conf.d/90-xpra-virtual.conf
 
 %changelog
+* Wed Jul 28 2021 Michael Shigorin <mike@altlinux.org> 4.0.6-alt1.1
+- drop ubt handling (was there for p8)
+- minor spec cleanup
+- E2K: yuicompressor is there but uglifyjs isn't => no minification
+
 * Fri Jan 22 2021 Vitaly Lipatov <lav@altlinux.ru> 4.0.6-alt1
 - new version 4.0.6 (with rpmrb script)
 
