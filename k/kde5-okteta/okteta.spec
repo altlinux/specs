@@ -20,7 +20,7 @@
 
 Name: kde5-%rname
 Version: 0.26.1
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace
 
@@ -33,8 +33,7 @@ Source: %rname-%version.tar
 Patch1: %rname-alt-castxml-compat.patch
 
 # Remove 'gccxml' from 'Requires'
-%define __find_provides sh -c '/usr/lib/rpm/find-provides | sort | uniq'
-%define __find_requires sh -c '/usr/lib/rpm/find-requires | sort | uniq | sed "/^gccxml$/d"'
+%filter_from_requires /^gccxml$/d
 
 # Automatically added by buildreq on Thu Oct 01 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqca-qt5 libqt5-core libqt5-dbus libqt5-designer libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python3 python3-base qt5-base-devel qt5-script-devel rpm-build-gir ruby ruby-stdlibs shared-mime-info xml-common xml-utils
@@ -190,6 +189,9 @@ mv %buildroot/%_K5xdgmime/okteta{,5}.xml
 
 
 %changelog
+* Wed Jul 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.26.1-alt2
+- Updated dependencies.
+
 * Mon Jun 17 2019 Sergey V Turchin <zerg@altlinux.org> 1:0.26.1-alt1
 - new version
 
