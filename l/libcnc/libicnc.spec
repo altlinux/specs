@@ -1,7 +1,7 @@
 %define oname icnc
 Name: libcnc
 Version: 1.0.100git
-Release: alt1
+Release: alt2
 
 Summary: Intel(R) Concurrent Collections for C++
 
@@ -13,6 +13,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-git: https://github.com/icnc/icnc
 Source: %name-%version.tar
+Patch2000: %name-e2k.patch
 
 BuildRequires: gcc-c++ cmake doxygen libtbb-devel
 
@@ -32,6 +33,9 @@ developing applications that use %name.
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 %build
 %cmake -DLIB=%_libdir
@@ -49,5 +53,8 @@ developing applications that use %name.
 %_datadir/icnc/
 
 %changelog
+* Wed Jul 28 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.0.100git-alt2
+- added patch for Elbrus
+
 * Thu Oct 29 2015 Vitaly Lipatov <lav@altlinux.ru> 1.0.100git-alt1
 - initial build for ALT Linux Sisyphus
