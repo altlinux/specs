@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: rng-tools
-Version: 6.12
+Version: 6.13
 Release: alt1
 
 Summary: Random number generator related utilities
@@ -65,6 +65,9 @@ make check
 %_man8dir/rngd.8*
 
 %changelog
+* Fri Jun 18 2021 Nikolai Kostrigin <nickel@altlinux.org> 6.13-alt1
+- Version 6.13
+
 * Thu Mar 11 2021 Nikolai Kostrigin <nickel@altlinux.org> 6.12-alt1
 - Version 6.12
 - remove BR: libsysfs-devel (according to upstream code changes)
