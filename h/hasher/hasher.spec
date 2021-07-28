@@ -1,5 +1,5 @@
 Name: hasher
-Version: 1.4.6
+Version: 1.4.7
 Release: alt1
 
 Summary: Modern safe package building technology
@@ -61,6 +61,9 @@ network connection or local mirror is highly recommended.
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Wed Jul 28 2021 Dmitry V. Levin <ldv@altlinux.org> 1.4.7-alt1
+- hsh-initroot: enabled %%_rpmscript_werror (by Ivan Zakharyaschev; see ALT#40582).
+
 * Fri Dec 25 2020 Dmitry V. Levin <ldv@altlinux.org> 1.4.6-alt1
 - mkaptbox: invoke rpm --showrc and rpmdb --initdb using setarch wrapper.
 
