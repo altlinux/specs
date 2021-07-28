@@ -3,7 +3,7 @@
 Name: monodevelop
 Epoch: 1
 Version: 5.10.0.871
-Release: alt1
+Release: alt2
 
 Summary: MonoDevelop is a project to port SharpDevelop to Gtk#
 License: LGPLv2.1
@@ -52,10 +52,9 @@ Patch101: %name-downgrade_to_mvc3.patch
 Patch102: %name-nuget-unbundle.patch
 
 # Remove missing dependencies
-%define __find_requires sh -c '/usr/lib/rpm/find-requires | sort | uniq | \
-	sed -e "/mono\(System\.Web\.DataVisualization\).*/d" \\\
-	-e "/mono\(Microsoft\.VisualStudio\.ImageCatalog\).*/d" \\\
-	-e "/mono\(PresentationCore\).*/d"'
+%filter_from_requires /mono\(System\.Web\.DataVisualization\).*/d
+%filter_from_requires /mono\(Microsoft\.VisualStudio\.ImageCatalog\).*/d
+%filter_from_requires /mono\(PresentationCore\).*/d
 
 BuildRequires(pre): rpm-build-xdg
 BuildRequires(pre): rpm-build-mono >= 2.0.0
@@ -199,6 +198,9 @@ rm -rf %buildroot%_libexecdir/%name/AddIns/ChangeLogAddIn
 %_man1dir/*
 
 %changelog
+* Wed Jul 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:5.10.0.871-alt2
+- Updated dependencies.
+
 * Tue Apr 27 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:5.10.0.871-alt1
 - Downgraded to version 5.10.0.871 to update mono.
 - Applied patches and changes from Fedora.
