@@ -62,7 +62,7 @@
 %add_findprov_lib_path %vboxdir
 
 Name: virtualbox
-Version: 6.1.22
+Version: 6.1.24
 Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -94,6 +94,9 @@ Source26:	virtualbox-vboxguest.modprobe.conf
 Source27:	virtualbox-vmsvga.service
 Source28:	virtualbox-addition.conf
 Source29:	virtualbox-vboxsf.modprobe.conf
+Source30:	vboxadd-service.service
+Source31:	virtualbox.role
+Source32:	virtualbox-addition.role
 
 %if_with manual
 %if_without manualbuild
@@ -211,6 +214,8 @@ Provides: %name-guest-common = 6.1.6
 Provides: %name-guest-common = 6.1.4
 Provides: %name-guest-common = 6.1.2
 Provides: %name-guest-common = 6.1.0
+# for automatic adding group vboxadd (and vboxsf) to system roles (users, powerusers, localadmins)
+Requires: libnss-role >= 0.5.1
 
 %description guest-common
 This packages contains common files for VirtualBox OSE guest systems.
@@ -335,6 +340,8 @@ PreReq: control >= 0.7.2-alt1
 PreReq: shadow-utils
 # due to /bin/mountpoint
 PreReq: sysvinit-utils
+# for automatic adding group vboxusers to system roles (users, powerusers, localadmins)
+Requires: libnss-role >= 0.5.1
 
 %description common
 This package contains scripts and other support files which are
@@ -502,11 +509,13 @@ sed -i -n '/action .* modprobe --syslog $MODULENAMEPCI/!p' %buildroot%_initdir/%
 %endif
 install -Dp -m644 %SOURCE4 \
 	%buildroot%_udevrulesdir/90-%name.rules
+install -Dp -m644 %SOURCE31 %buildroot%_sysconfdir/role.d/virtualbox.role
 %endif
 
 %if_with additions
 # install additions from src
 install -Dp %SOURCE8 %buildroot%_initdir/vboxadd-service
+install -Dp -m644 %SOURCE30 %buildroot%_unitdir/vboxadd-service.service
 install -Dp -m644 %SOURCE3 %buildroot%_udevrulesdir/60-vboxadd.rules
 
 #install -d %buildroot%_sysconfdir/hal/fdi/policy
@@ -670,6 +679,9 @@ cd additions >/dev/null
   install -pDm644 %SOURCE28 %buildroot%_sysconfdir/modules-load.d/virtualbox-addition.conf
   install -pDm644 %SOURCE29 %buildroot%_sysconfdir/modprobe.d/virtualbox-vboxsf.conf
 
+# install roles
+  install -Dpm644 %SOURCE32 %buildroot%_sysconfdir/role.d/virtualbox-addition.role
+
 # create links
   ln -s $(relative %_bindir/VBoxService %_sbindir/) %buildroot%_sbindir/vboxadd-service
 
@@ -792,8 +804,9 @@ mountpoint -q /dev || {
 	[ -n "$status" ] && /usr/sbin/control %name "$status" ||:
 }
 
-%pre guest-additions
+%pre guest-common
 /usr/sbin/groupadd -r -f vboxadd
+/usr/sbin/groupadd -r -f vboxsf
 
 %if_with webservice
 %pre webservice
@@ -864,6 +877,7 @@ mountpoint -q /dev || {
 %if_with additions
 %files guest-common
 %config %_sysconfdir/modules-load.d/virtualbox-addition.conf
+%config(noreplace) %_sysconfdir/role.d/virtualbox-addition.role
 
 %files guest-common-vboxvideo
 %config %_sysconfdir/modprobe.d/virtualbox-vboxvideo.conf
@@ -880,6 +894,7 @@ mountpoint -q /dev || {
 %config(noreplace) %_sysconfdir/sysconfig/vboxadd-service
 %config %_udevrulesdir/60-vboxadd.rules
 %_sbindir/vboxadd-service
+%_unitdir/vboxadd-service.service
 %_bindir/VBoxControl
 %_bindir/VBoxService
 %_pam_modules_dir/*.so
@@ -916,6 +931,7 @@ mountpoint -q /dev || {
 %dir %vboxdatadir
 %vboxdatadir/VBoxCreateUSBNode.sh
 %config %_sysconfdir/modules-load.d/%name.conf
+%config(noreplace) %_sysconfdir/role.d/virtualbox.role
 
 %if_with manual
 %files doc
@@ -936,6 +952,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Thu Jul 22 2021 Valery Sinelnikov <greh@altlinux.org> 6.1.24-alt1
+- Update to newest version 6.1.24
+
 * Fri May 14 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.1.22-alt1
 - Update to latest relase with regression fixes
 

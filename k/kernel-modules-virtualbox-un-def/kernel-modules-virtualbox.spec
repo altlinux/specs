@@ -8,10 +8,10 @@
 %define net_module_name	vboxnetflt
 %define net_module_adaptor_name	vboxnetadp
 
-%define flavour		std-def
+%define flavour		un-def
 %define karch x86_64
 BuildRequires(pre): rpm-build-kernel >= 0.100-alt1
-BuildRequires(pre): kernel-headers-modules-std-def
+BuildRequires(pre): kernel-headers-modules-un-def
 
 %setup_kernel_module %flavour
 
