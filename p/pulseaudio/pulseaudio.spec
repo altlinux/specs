@@ -1,6 +1,6 @@
 Name: pulseaudio
-Version: 14.2
-Release: alt5
+Version: 15.0
+Release: alt1
 
 Summary: PulseAudio is a networked sound server
 Group: System/Servers
@@ -15,8 +15,7 @@ BuildRequires: libavahi-devel libbluez-devel
 BuildRequires: libcap-devel libdbus-devel libgdbm-devel libudev-devel
 BuildRequires: libltdl7-devel libsoxr-devel
 BuildRequires: libsndfile-devel libspeex-devel libspeexdsp-devel libwebrtc-devel
-BuildRequires: libSM-devel libX11-devel libXtst-devel libxcbutil-devel
-BuildRequires: libGConf-devel
+BuildRequires: libICE-devel libSM-devel libX11-devel libXtst-devel libxcbutil-devel
 BuildRequires: libfftw3-devel libsbc-devel liborc-devel orc xmltoman
 BuildRequires: libcheck-devel libssl-devel libsystemd-devel
 
@@ -172,14 +171,16 @@ This package contains development files for pulseaudio.
 %prep
 %setup
 echo %version > .tarball-version
-# behaviour changed in meson >= 0.58
-sed -ri '/^\s+implicit_include_directories/ s,false,true,' src/modules/meson.build
 
 %build
 %meson \
+    -Ddoxygen=false \
     -Ddatabase=gdbm \
     -Daccess_group=audio \
     -Dadrian-aec=true \
+    -Dbluez5=enabled \
+    -Dgsettings=enabled \
+    -Djack=enabled \
     #
 
 %meson_build
@@ -195,7 +196,7 @@ find %buildroot%_libdir -name \*.la -delete
 
 %find_lang %name
 
-%define pulselibdir %_libdir/pulse-14.2
+%define pulselibdir %_libdir/pulse-15.0
 %define pulsemoduledir %pulselibdir/modules
 
 %pre system
@@ -215,6 +216,7 @@ find %buildroot%_libdir -name \*.la -delete
 
 %files daemon
 %_sysconfdir/xdg/autostart/pulseaudio.desktop
+%_sysconfdir/xdg/Xwayland-session.d/00-pulseaudio-x11
 
 %dir %_sysconfdir/pulse
 %config(noreplace) %_sysconfdir/pulse/daemon.conf
@@ -230,9 +232,10 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/zsh/site-functions/_pulseaudio
 %_datadir/bash-completion/completions/*
 
-%_libdir/pulseaudio/libpulsecore-14.2.so
+%_libdir/pulseaudio/libpulsecore-15.0.so
 
 %_libexecdir/systemd/user/pulseaudio.service
+%_libexecdir/systemd/user/pulseaudio-x11.service
 %_libexecdir/systemd/user/pulseaudio.socket
 
 %dir %pulselibdir
@@ -314,7 +317,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/libpulse-mainloop-glib.so.*
 
 %dir %_libdir/pulseaudio
-%_libdir/pulseaudio/libpulsecommon-14.2.so
+%_libdir/pulseaudio/libpulsecommon-15.0.so
 %_man5dir/pulse-client.conf.5*
 
 %files -n lib%name-devel
@@ -325,6 +328,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/vala/vapi/*
 
 %changelog
+* Wed Jul 28 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 15.0-alt1
+- 15.0 released
+
 * Wed Jun 23 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 14.2-alt5
 - exclude reexec from pulseaudio startup paths
 
