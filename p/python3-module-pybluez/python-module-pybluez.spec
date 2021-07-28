@@ -1,14 +1,11 @@
 %define pyname pybluez
 %define modulename PyBluez
 
-%def_without python2
-%def_with python3
-
-Name: python-module-pybluez
+Name: python3-module-pybluez
 Version: 0.22
-Release: alt1
+Release: alt2
 Summary: A Python module for the Bluez library
-Group: Development/Python
+Group: Development/Python3
 License: GPLv2+
 Url: http://code.google.com/p/pybluez/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
@@ -18,78 +15,33 @@ Requires: libbluez >= 4.0
 Source: %url/files/%pyname-%version.tar.gz
 
 BuildRequires: libbluez-devel
-%if_with python2
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel
-%endif
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-%endif
 
 %description
-PyBluez is an effort to create python wrappers around bluez to allow python
-developers to use system bluetooth resources.
-
-%setup_python_module %modulename
-
-%package -n python3-module-pybluez
-Summary: A Python module for the Bluez library
-Group: Development/Python3
-
-%description -n python3-module-pybluez
 PyBluez is an effort to create python wrappers around bluez to allow python
 developers to use system bluetooth resources.
 
 %prep
 %setup -n %pyname-%version
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
 %add_optflags -fno-strict-aliasing
-%if_with python2
-%python_build
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%if_with python2
-%python_install
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
-%if_with python2
-%files -n python-module-pybluez
-%doc README CHANGELOG COPYING
-%python_sitelibdir/bluetooth
-%python_sitelibdir/*.egg-info
-%exclude %python_sitelibdir/bluetooth/msbt*
-%exclude %python_sitelibdir/bluetooth/widcomm*
-%endif
-
-%if_with python3
-%files -n python3-module-pybluez
+%files
 %doc README CHANGELOG COPYING
 %python3_sitelibdir/bluetooth
 %python3_sitelibdir/*.egg-info
 %exclude %python3_sitelibdir/bluetooth/msbt*
 %exclude %python3_sitelibdir/bluetooth/widcomm*
-%endif
 
 %changelog
+* Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 0.22-alt2
+- Drop python2 support.
+
 * Wed Apr 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
 - (NMU) new version
 - dropped python2
