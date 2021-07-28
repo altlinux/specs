@@ -1,94 +1,54 @@
 %def_without check
-%def_with python3
 
 %define modulename pynacl
-Name: python-module-pynacl
+Name: python3-module-pynacl
 Version: 1.3.0
-Release: alt1
+Release: alt2
 
 Summary: Python binding to the Networking and Cryptography (NaCl) library
 
 Url: https://github.com/pyca/pynacl
-License: ASL 2.0
-Group: Development/Python
-
+License: Apache-2.0
+Group: Development/Python3
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/pyca/pynacl/archive/%version.tar.gz
-Source: %name-%version.tar
-
-BuildRequires: python-devel python-module-setuptools
+Source: %modulename-%version.tar
 
 BuildRequires:  libsodium-devel >= 1.0.16
-BuildRequires: python-module-cffi
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
 BuildRequires: python3-module-cffi
-%endif
-
-#setup_python_module %modulename
 
 %description
 PyNaCl is a Python binding to the Networking and Cryptography library,
 a crypto library with the stated goal of improving usability, security
 and speed.
 
-
-%package -n python3-module-pynacl
-Summary: Python binding to the Networking and Cryptography (NaCl) library
-Group: Development/Python3
-
-%description -n python3-module-pynacl
-PyNaCl is a Python binding to the Networking and Cryptography library,
-a crypto library with the stated goal of improving usability, security
-and speed.
-
-
 %prep
-%setup
+%setup -n %modulename-%version
 # Remove bundled libsodium, to be sure
 rm -vrf src/libsodium/
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
 export SODIUM_INSTALL=system
-%python_build_debug
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
 # FIXME
 mv %buildroot/%python3_sitelibdir/nacl/_sodium.abi3.so %buildroot/%python3_sitelibdir/nacl/_sodium.so
-popd
-%endif
 
 %files
 %doc README.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-pynacl
 %doc README.rst
 %python3_sitelibdir/*
-%endif
-
 
 %changelog
+* Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt2
+- Drop python2 support.
+
 * Tue Jan 22 2019 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
 - new version 1.3.0 (with rpmrb script)
 
