@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpupdate
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 
 Summary: GPT applier
@@ -112,6 +112,11 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Wed Jul 28 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.9.2-alt1
+- Fix Shortcuts applier double running in user context
+- Add LogonUser variable to expand_windows_var() function
+- Add support of path variable expansion to Shortcuts applier
+
 * Sun Jul 18 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.9.1-alt1
 - Fix GSettings applier user part support
 - Add support additional firefox appliers
