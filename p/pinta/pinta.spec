@@ -1,6 +1,6 @@
 Name: pinta
 Version: 1.7
-Release: alt1
+Release: alt2
 
 Summary: An easy to use drawing and image editing program
 
@@ -32,10 +32,8 @@ Requires: icon-theme-hicolor
 Requires: mono-addins
 
 # Interfaces of slightly older versions are required, upstream corrects it by modifying 'Requires'
-%define __find_provides sh -c '/usr/lib/rpm/find-provides | sort | uniq'
-%define __find_requires sh -c '/usr/lib/rpm/find-requires | sort | uniq | \
-	sed -e "/mono\(Mono.Cairo\) = 2.0/d" | \
-	sed -e "/mono\(Mono.Posix\) = 2.0/d"'
+%filter_from_requires /mono\(Mono.Cairo\) = 2.0/d
+%filter_from_requires /mono\(Mono.Posix\) = 2.0/d
 
 %description
 Pinta is an image drawing/editing program.
@@ -67,6 +65,9 @@ It's goal is to provide a simplified alternative to GIMP for casual users.
 %_pixmapsdir/%{name}*
 
 %changelog
+* Wed Jul 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7-alt2
+- Updated dependencies.
+
 * Wed Dec 16 2020 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.7-alt1
 - new version 1.7 (close: #39106)
 - update BR:
