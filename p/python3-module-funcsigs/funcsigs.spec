@@ -1,90 +1,50 @@
 %define _unpackaged_files_terminate_build 1
 %define oname funcsigs
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.0.2
-Release: alt3
+Release: alt4
 Summary: Python function signatures from PEP362 for Python 2.6, 2.7 and 3.2+
-License: ASLv2.0
-Group: Development/Python
+License: Apache-2.0
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/funcsigs/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/aliles/funcsigs.git
 Source0: https://pypi.python.org/packages/94/4a/db842e7a0545de1cdb0439bb80e6e42dfe82aaeaadd4072f2263a4fbed23/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-unittest2 python3-module-coverage
 BuildPreReq: python3-module-flake8 python3-module-wheel
-%endif
 
-%py_provides %oname
+%py3_provides %oname
 
 %description
 funcsigs is a backport of the PEP 362 function signature features from
 Python 3.3's inspect module. The backport is compatible with Python 2.6,
 2.7 as well as 3.2 and up.
 
-%package -n python3-module-%oname
-Summary: Python function signatures from PEP362 for Python 2.6, 2.7 and 3.2+
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-funcsigs is a backport of the PEP 362 function signature features from
-Python 3.3's inspect module. The backport is compatible with Python 2.6,
-2.7 as well as 3.2 and up.
-
 %prep
-%setup -q -n %{oname}-%{version}
-
-%if_with python3
-cp -fR . ../python3
-%endif
+%setup -n %{oname}-%{version}
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-%if_with python3
-pushd ../python3
 python3 setup.py test
 flake8 --exit-zero funcsigs tests
-popd
-%endif
 
 %files
 %doc CHANGELOG *.rst docs/*.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc CHANGELOG *.rst docs/*.rst
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt4
+- Drop python2 support.
+
 * Mon Oct 19 2020 Stanislav Levin <slev@altlinux.org> 1.0.2-alt3
 - Disabled Python2 testing.
 
