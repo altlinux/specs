@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 1.25.10
-Release: alt2
+Release: alt3
 
 Epoch: 2
 
@@ -26,9 +26,7 @@ BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-six python-module-backports.ssl_match_hostname
 BuildRequires: python-module-ndg-httpsclient
 BuildRequires: python-module-sphinx-devel
-BuildRequires: python-module-mock
 BuildRequires: python-module-nose
-BuildRequires: python-module-socks
 
 %setup_python_module %oname
 
@@ -86,13 +84,13 @@ ln -s ../objects.inv docs/
 %install
 %python_install
 
-export PYTHONPATH=%buildroot%python_sitelibdir
-pushd docs
-%make html
-%make pickle
-popd
+#export PYTHONPATH=%buildroot%python_sitelibdir
+#pushd docs
+#make html
+#make pickle
+#popd
 
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+#cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 py.test
@@ -100,15 +98,18 @@ py.test
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+#exclude %python_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+#python_sitelibdir/*/pickle
 
 %files docs
-%doc docs/_build/html/*
+#doc docs/_build/html/*
 
 %changelog
+* Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 2:1.25.10-alt3
+- Build without docs.
+
 * Fri Jun 11 2021 Grigory Ustinov <grenka@altlinux.org> 2:1.25.10-alt2
 - Build python2 module separately.
 
