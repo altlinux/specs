@@ -2,19 +2,17 @@
 %define oname %mname.charts
 
 %def_with doc
-%def_without test
+%def_without check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 6.1
-Release: alt1
+Release: alt2
 
 Summary: Python SVG Charting Library
 
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/svg.charts/
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # Source-url: https://pypi.io/packages/source/s/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
@@ -24,29 +22,21 @@ BuildRequires: rpm-macros-sphinx3 python3-module-sphinx python3-module-rst.linke
 BuildRequires: python3-module-jaraco.packaging
 %endif
 
-%if_with test
+%if_with check
 BuildRequires: python3-module-jaraco.itertools 
 %endif
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-cssutils python3-module-dateutil
 BuildRequires: python3-module-lxml python3-module-six
 BuildRequires: python3-module-pytest-runner python3-module-setuptools_scm
 BuildRequires: python3-module-pytest python3-module-tempora
 
-%description
-svg.charts is a pure-python library for generating charts and graphs in
-SVG, originally based on the SVG::Graph Ruby package by Sean E. Russel.
-
-%package -n python3-module-%oname
-Summary: Python SVG Charting Library
-Group: Development/Python3
 %py3_provides %oname
 Requires: python3-module-%mname = %EVR
 %py3_requires cssutils dateutil lxml six
 
-%description -n python3-module-%oname
+%description
 svg.charts is a pure-python library for generating charts and graphs in
 SVG, originally based on the SVG::Graph Ruby package by Sean E. Russel.
 
@@ -76,7 +66,7 @@ ln -s ../objects.inv docs/
 %endif
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -95,13 +85,11 @@ sphinx-build-3 -b html -d _build/doctrees . _build/html
 popd
 %endif
 
-%if_with test
 %check
 rm -f conf.py
 python3 setup.py test
-%endif
 
-%files -n python3-module-%oname
+%files
 %python3_sitelibdir/%mname/*
 %python3_sitelibdir/*.egg-info
 %exclude %python3_sitelibdir/%mname/__init__.py
@@ -119,6 +107,9 @@ python3 setup.py test
 %endif
 
 %changelog
+* Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 6.1-alt2
+- Rename package, spec cleanup.
+
 * Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 6.1-alt1
 - new version 6.1 (with rpmrb script)
 - python3 only
