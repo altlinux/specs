@@ -1,22 +1,19 @@
 %define oname nose
 
-%def_without test
-%def_without python3
+%def_without check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Epoch: 1
 Version: 1.3.7
 Release: alt8.git20160316
 
 Summary: A unittest-based testing framework for python that makes writing and running tests easier
 
-Group: Development/Python
+Group: Development/Python3
 License: LGPL
 Url: https://nose.readthedocs.io/en/latest/
 
 BuildArch: noarch
-
-%setup_python_module %oname
 
 Source: %name-%version.tar
 
@@ -39,29 +36,13 @@ Patch4: python-nose-fedora-py36.patch
 # Remove a SyntaxWarning (other projects may treat it as error)
 Patch5: python-nose-fedora-py38.patch
 
-
-BuildRequires: python-module-setuptools python-module-coverage
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools
-BuildRequires: python3-devel python3-module-coverage
-%endif
+BuildRequires: python3-module-coverage
 
 %description
 nose provides an alternate test discovery and running process for
 unittest, one that is intended to mimic the behavior of py.test as much
 as is reasonably possible without resorting to too much magic.
-
-%if_with python3
-%package -n python3-module-%oname
-Summary: A unittest-based testing framework for python3 that makes writing and running tests easier
-Group: Development/Python3
-
-%description -n python3-module-%oname
-nose provides an alternate test discovery and running process for
-unittest, one that is intended to mimic the behavior of py.test as much
-as is reasonably possible without resorting to too much magic.
-%endif
 
 %prep
 %setup
@@ -73,67 +54,29 @@ as is reasonably possible without resorting to too much magic.
 
 sed -i "s|man/man1|share/man/man1|g" setup.py
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
-
 %build
-%python_build
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
-rm -f %buildroot%_bindir/nosetests
-ln -s nosetests-%_python_version %buildroot%_bindir/nosetests
-ln -s nosetests-%_python_version %buildroot%_bindir/nosetests-2
-%if_with python3
 ln -s nosetests-%_python3_version %buildroot%_bindir/nosetests3
 ln -s nosetests-%_python3_version %buildroot%_bindir/nosetests-3
-%endif
 
-%if_with test
 %check
-python2 ./selftest.py
-%if_with python3
-pushd ../python3
 python3 setup.py build_tests
 python3 ./selftest.py
-popd
-%endif
-%endif
 
 %files
-%doc AUTHORS CHANGELOG NEWS README.txt examples/
-%_bindir/nosetests
-%_bindir/nosetests-2
-%_bindir/nosetests-%_python_version
-%python_sitelibdir/%oname/
-%python_sitelibdir/*.egg-info
-%_man1dir/*
-
-%if_with python3
-%files -n python3-module-%oname
 %_bindir/nosetests3
 %_bindir/nosetests-3
 %_bindir/nosetests-%_python3_version
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/*.egg-info
-%endif
 
 %changelog
 * Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 1:1.3.7-alt8.git20160316
-- Build without python3 support.
+- Drop python2 support.
 
 * Tue Sep 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1:1.3.7-alt7.git20160316
 - add python 3.8 fix from Fedora
