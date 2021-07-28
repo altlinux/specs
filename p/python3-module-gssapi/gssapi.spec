@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%mname
-Version: 1.6.12
+Version: 1.6.14
 Release: alt1
 
 Summary: Python Bindings for GSSAPI (RFC 2743/2744 and extensions)
@@ -29,6 +29,7 @@ BuildRequires: python3(nose)
 BuildRequires: python3(parameterized)
 BuildRequires: python3(six)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
 BuildRequires: krb5-kdc >= 1.15
 %endif
 
@@ -53,8 +54,8 @@ RFC 2743, as well as multiple extensions.
 
 %check
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -r -vv
+export TOXENV=py3
+tox.py3 --sitepackages -r -vvr --no-deps -s false
 
 %files
 %doc LICENSE.txt README.rst
@@ -64,6 +65,9 @@ tox.py3 --sitepackages -r -vv
 %exclude %python3_sitelibdir/%mname/tests/
 
 %changelog
+* Wed Jul 28 2021 Stanislav Levin <slev@altlinux.org> 1.6.14-alt1
+- 1.6.12 -> 1.6.14.
+
 * Thu Jan 21 2021 Stanislav Levin <slev@altlinux.org> 1.6.12-alt1
 - 1.6.10 -> 1.6.12.
 
