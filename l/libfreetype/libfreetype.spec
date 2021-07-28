@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: libfreetype
-Version: 2.10.4
-Release: alt2
+Version: 2.11.0
+Release: alt1
 Summary: A free and portable font rendering engine
 License: FTL or GPLv2+
 Group: System/Libraries
@@ -10,7 +10,7 @@ Url: http://www.freetype.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 PreReq: libharfbuzz
-Provides: freetype2 = %version
+Provides: freetype2 = %version freetype = %version-%release
 Obsoletes: freetype2 < %version
 
 Source0: http://download.savannah.gnu.org/releases/freetype/freetype-%version.tar.xz
@@ -62,7 +62,7 @@ Group: Development/C
 Requires: %name = %version-%release
 Provides: freetype2-demos = %version
 Obsoletes: freetype2-demos < %version
-Conflicts: freetype
+Conflicts: freetype < %version-%release
 
 %description demos
 The FreeType engine is a free and portable TrueType font rendering
@@ -116,7 +116,8 @@ pushd %buildroot%develdocdir
 	bzip2 -9 CHANGES raster.txt
 	rm INSTALL* release
 popd
-mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
+mv %buildroot%develdocdir/{FTL.TXT,CHANGES.bz2} %buildroot%docdir/
+install -pm644 LICENSE.TXT %buildroot%docdir/
 
 %set_verify_elf_method strict
 
@@ -146,6 +147,10 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
+* Wed Jul 28 2021 Valery Inozemtsev <shrek@altlinux.ru> 2.11.0-alt1
+- 2.11.0
+- added provides freetype (closes: #38892)
+
 * Fri Oct 23 2020 Michael Shigorin <mike@altlinux.org> 2.10.4-alt2
 - E2K: patch unneeded with lcc 1.25
 
