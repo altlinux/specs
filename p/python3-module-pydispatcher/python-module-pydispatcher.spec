@@ -1,15 +1,13 @@
 %define oname PyDispatcher
 %define sname pydispatcher
 
-%def_with python3
-
-Name: python-module-%sname
+Name: python3-module-%sname
 Version: 2.0.5
-Release: alt1.bzr20150114.3
+Release: alt2.bzr20150114
 
 Summary: Multi-producer-multi-consumer signal dispatching mechanism
 
-Group: Development/Python
+Group: Development/Python3
 License: BSD-like, see license.txt
 Url: http://pydispatcher.sourceforge.net/
 
@@ -20,15 +18,9 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-%setup_python_module %oname
-
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
 
-%py_provides %sname
+%py3_provides %sname
 
 %description
 The dispatcher provides loosely-coupled message passing between
@@ -47,62 +39,24 @@ highest-rated recipes on the Python Cookbook website.
 
 This package contains documentation for %oname.
 
-%package -n python3-module-%sname
-Summary: Multi-producer-multi-consumer signal dispatching mechanism
-Group: Development/Python3
-%py3_provides %sname
-
-%description -n python3-module-%sname
-The dispatcher provides loosely-coupled message passing between
-Python objects (signal senders and receivers). It began as one of the
-highest-rated recipes on the Python Cookbook website.
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
-
-export PYTHONPATH=%buildroot%python_sitelibdir
-pushd docs/pydoc
-python2 ./builddocs.py
-popd
 
 %files
 %doc license.txt
-%python_sitelibdir/pydispatch/
-%python_sitelibdir/*egg-info
-
-%files docs
-%doc docs/*
-
-%if_with python3
-%files -n python3-module-%sname
-%doc license.txt
 %python3_sitelibdir/pydispatch/
 %python3_sitelibdir/*egg-info
-%endif
 
 %changelog
+* Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.5-alt2.bzr20150114
+- Drop python2 support.
+
 * Thu Apr 30 2020 Stanislav Levin <slev@altlinux.org> 2.0.5-alt1.bzr20150114.3
 - Fixed FTBFS.
 
