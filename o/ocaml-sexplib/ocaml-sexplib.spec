@@ -1,8 +1,7 @@
-%set_verify_elf_method textrel=relaxed
 %define oname sexplib
 Name: ocaml-%oname
 Version: 0.14.0
-Release: alt2
+Release: alt3
 Summary: OCaml library for converting OCaml values to S-expressions
 License: Apache-2.0
 Group: Development/ML
@@ -39,48 +38,28 @@ developing applications that use %name.
 %setup
 
 %build
-dune build --verbose -p %oname
+%dune_build -p %oname
 
 %check
-dune runtest
+%dune_check
 
 %install
-dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
-rm -rf %buildroot/usr/share/doc
+%dune_install
+rm -rf %buildroot%_docdir/%oname
 
-%files
+%files -f ocaml-files.runtime
 %doc LICENSE.md LICENSE-Tywith.txt
 %dir %_libdir/ocaml/sexplib
 %dir %_libdir/ocaml/sexplib/num
 %dir %_libdir/ocaml/sexplib/unix
-%_libdir/ocaml/sexplib/META
-%_libdir/ocaml/sexplib/*.a
-%_libdir/ocaml/sexplib/*.cmi
-%_libdir/ocaml/sexplib/*.cma
-%_libdir/ocaml/sexplib/*.cmxs
-%_libdir/ocaml/sexplib/*/*.a
-%_libdir/ocaml/sexplib/*/*.cmi
-%_libdir/ocaml/sexplib/*/*.cma
-%_libdir/ocaml/sexplib/*/*.cmxs
 
-%files devel
+%files devel -f ocaml-files.devel
 %doc COPYRIGHT.txt README.org CHANGES.md CHANGES.txt
-%_libdir/ocaml/sexplib/opam
-%_libdir/ocaml/sexplib/*.cmt
-%_libdir/ocaml/sexplib/*.cmti
-%_libdir/ocaml/sexplib/*.cmx
-%_libdir/ocaml/sexplib/*.cmxa
-%_libdir/ocaml/sexplib/*.mli
-%_libdir/ocaml/sexplib/*.ml
-%_libdir/ocaml/sexplib/dune-package
-%_libdir/ocaml/sexplib/*/*.cmt
-%_libdir/ocaml/sexplib/*/*.cmti
-%_libdir/ocaml/sexplib/*/*.cmx
-%_libdir/ocaml/sexplib/*/*.cmxa
-%_libdir/ocaml/sexplib/*/*.mli
-%_libdir/ocaml/sexplib/*/*.ml
 
 %changelog
+* Thu Jul 29 2021 Anton Farygin <rider@altlinux.ru> 0.14.0-alt3
+- switched to use of macros from rpm-build-ocaml 1.4
+
 * Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
 - cmxa moved to the devel package
 
