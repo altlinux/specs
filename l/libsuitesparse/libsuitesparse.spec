@@ -6,19 +6,23 @@
 %define _cmake__builddir BUILD
 
 Name: libsuitesparse
-Version: 5.8.1
-Release: alt4
+Version: 5.10.1
+Release: alt1
 
 Summary: Shared libraries for sparse matrix calculations
 License: LGPL and GPL
 Group: Sciences/Mathematics
 Url: http://faculty.cse.tamu.edu/davis/suitesparse.html
 
-Source: SuiteSparse-%version.tar
+# https://github.com/DrTimothyAldenDavis/SuiteSparse.git
+Source: %name-%version.tar
+
 Source1: cholmod.pc
 Source2: umfpack.pc
 
-Patch1: SuiteSparse-%version-alt.patch
+Patch1: %name-alt-rename-build-directory.patch
+Patch2: %name-alt-link-with-libatomic-on-mipsel.patch
+
 Patch2000: %name-e2k.patch
 
 BuildRequires: libmetis-devel gcc-c++ libtbb-devel
@@ -88,6 +92,7 @@ mongoose <MM-input-file.mtx> [output-file]
 %setup
 install -m644 %SOURCE1 %SOURCE2 .
 %patch1 -p1
+%patch2 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -185,6 +190,9 @@ mv %buildroot%_docdir/%name-%version/*.pdf %buildroot%_docdir/%name-%version/pdf
 %_bindir/mongoose
 
 %changelog
+* Wed Jul 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.10.1-alt1
+- Updated to upstream version 5.10.1.
+
 * Mon Jul 19 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 5.8.1-alt4
 - Added patch for Elbrus.
 
