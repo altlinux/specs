@@ -9,6 +9,7 @@
 
 %def_without docs
 %def_without ganesha
+%def_with fuse3
 
 %add_findreq_skiplist %_sbindir/mfscgiserv
 %add_findprov_skiplist %_sbindir/mfscgiserv
@@ -16,7 +17,7 @@
 Summary: LizardFS - distributed, fault tolerant file system
 Name: lizardfs
 Version: 3.13.0
-Release: alt0.rc3.39
+Release: alt0.rc3.60
 License: GPLv3
 Group: System/Servers
 Url: https://www.lizardfs.org/
@@ -55,6 +56,9 @@ BuildRequires: libsystemd-devel
 # BuildRequires: thrift
 BuildRequires: zlib-devel
 BuildRequires: libspdlog-devel
+%if_with fuse3
+BuildRequires: libfuse3-devel
+%endif
 
 %description
 LizardFS is an Open Source, easy to deploy and maintain, distributed,
@@ -101,6 +105,16 @@ Conflicts: moosefs-client
 
 %description client
 LizardFS client: mfsmount and lizardfs.
+
+%if_with fuse3
+%package client3
+Summary: LizardFS client using FUSE3
+Group: System/Servers
+Requires: %name-client = %EVR
+
+%description client3
+LizardFS client: mfsmount and lizardfs.
+%endif
 
 %package -n lib%name-client
 Summary: LizardFS client C/C++ library
@@ -189,7 +203,6 @@ done
 %endif
 	-DCMAKE_BUILD_TYPE=Release \
 	-DENABLE_TESTS=NO \
-	-DENABLE_DEBIAN_PATHS=YES \
 	-DCMAKE_INSTALL_PREFIX=/ \
 	-DENABLE_CLIENT_LIB=YES \
 %if_with ganesha
@@ -241,6 +254,12 @@ for f in *.init ; do
     install -p -m755 $f %buildroot%_initdir/${f%%.init}
 done
 popd
+
+%if_with fuse3
+%if_with docs
+ln -sf mfsmount.1 %buildroot%_man1dir/mfsmount3.1
+%endif
+%endif
 
 %pre master
 %_sbindir/groupadd -r -f %_groupname 2>/dev/null ||:
@@ -344,8 +363,14 @@ popd
 %_bindir/*
 %exclude %_bindir/lizardfs-admin
 %exclude %_bindir/lizardfs-probe
+%if_with fuse3
+%exclude %_bindir/mfsmount3
+%endif
 %if_with docs
 %_man1dir/*
+%if_with fuse3
+%exclude %_man1dir/mfsmount3.1*
+%endif
 %_man5dir/iolimits.cfg.5*
 %_man5dir/mfsmount.cfg.5*
 %_man7dir/mfs.7*
@@ -356,6 +381,14 @@ popd
 %dir %liz_confdir
 %config(noreplace) %liz_confdir/mfsmount.cfg
 %config(noreplace) %liz_confdir/iolimits.cfg
+
+%if_with fuse3
+%files client3
+%_bindir/mfsmount3
+%if_with docs
+%_man1dir/mfsmount3.1*
+%endif
+%endif
 
 %files -n lib%name-client
 %_libdir/liblizardfsmount_shared.so
@@ -416,6 +449,10 @@ popd
 %_unitdir/lizardfs-uraft.lizardfs-ha-master.service
 
 %changelog
+* Wed Jul 28 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc3.60
+- update to 73a011cc4ba43b3ef0d81a4733c46fc6f67136b4 from upstream
+- fuse3 support
+
 * Tue May 04 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc3.39
 - BR: +rpm-build-python3
 
