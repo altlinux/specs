@@ -1,5 +1,5 @@
 Name: hasher-priv
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 
 Summary: A privileged helper for the hasher project
@@ -59,6 +59,11 @@ groupadd -r -f hashman
 %doc DESIGN
 
 %changelog
+* Thu Jul 29 2021 Dmitry V. Levin <ldv@altlinux.org> 1.6.1-alt1
+- sanitize_fds: changed to use close_range(2) if available (by Arseny Maslennikov).
+- hasher-useradd: added new option: -r/--system (by Arseny Maslennikov).
+- Added hidepid=2 to builtin /proc mount options.
+
 * Tue Sep 10 2019 Dmitry V. Levin <ldv@altlinux.org> 1.6.0-alt1
 - x11_parse_display: fixed hostname:displaynumber separation.
 - Do not issue the warning about X11 auth data mismatch when
