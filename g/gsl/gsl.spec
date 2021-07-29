@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gsl
-Version: 2.6
+Version: 2.7
 Release: alt1
 Summary: The GNU Scientific Library for numerical analysis
 License: GPL
@@ -10,6 +10,7 @@ URL: http://www.gnu.org/software/gsl/gsl.html
 
 # git://git.savannah.gnu.org/gsl.git
 Source: %name-%version.tar
+
 Patch1: %name-%version-alt-build.patch
 
 Requires: lib%name = %EVR
@@ -19,8 +20,7 @@ Conflicts: lib%name-devel < %EVR
 BuildRequires: ghostscript-module-X ghostscript-utils
 # explicitly added texinfo for info files
 BuildRequires: texinfo
-BuildRequires: python-module-sphinx python-module-sphinx_rtd_theme
-
+BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink python3-module-sphinx_rtd_theme
 
 %package -n lib%name
 Summary: Shared librairies for Scientific Library
@@ -137,6 +137,9 @@ rm -f %buildroot%_libdir/*.a
 %doc doc/examples
 
 %changelog
+* Thu Jul 29 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7-alt1
+- Updated to upstream version 2.7.
+
 * Mon Apr 13 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6-alt1
 - Updated to upstream version 2.6.
 
