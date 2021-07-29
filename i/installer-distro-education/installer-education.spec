@@ -1,10 +1,12 @@
 Name:    installer-distro-education
 Version: 9.2
-Release: alt3
+Release: alt4
 
 Summary: Installer common files for ALT Education
 License: GPL-2.0
 Group: System/Configuration/Other
+
+Url: http://altlinux.org/installer/beans
 Source: %name-%version.tar
 
 ExcludeArch: armh
@@ -86,7 +88,7 @@ Group: System/Configuration/Other
 Volumes profile for ALT Education.
 
 %prep
-%setup -q
+%setup
 
 %install
 %makeinstall
@@ -114,6 +116,9 @@ rm -rf %buildroot%_datadir/alterator/help/ru_RU \
 %_datadir/install2/initinstall.d/10-vm-profile.sh
 
 %changelog
+* Wed Jul 28 2021 Michael Shigorin <mike@altlinux.org> 9.2-alt4
+- E2K: added /boot support to volumes-profile-education.
+
 * Wed Jul 28 2021 Michael Shigorin <mike@altlinux.org> 9.2-alt3
 - Fix stage2/stage3 dependency issue.
 
