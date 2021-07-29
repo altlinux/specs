@@ -1,5 +1,5 @@
 Name: 		skrooge
-Version: 	2.25.0
+Version: 	2.26.1
 Release: 	alt1
 License: 	%gpl2plus
 Summary: 	Personal finances manager for KF5
@@ -108,6 +108,9 @@ cp -f %SOURCE1 po/ru/skrooge.po
 %_datadir/%name
 
 %changelog
+* Thu Jul 29 2021 Andrey Cherepanov <cas@altlinux.org> 2.26.1-alt1
+- new version 2.26.1
+
 * Mon May 03 2021 Andrey Cherepanov <cas@altlinux.org> 2.25.0-alt1
 - new version 2.25.0
 - rebuild with rpm-build-python3
