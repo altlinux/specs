@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 1.20.3
+Version: 1.21.1
 Release: alt1
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
@@ -15,6 +15,7 @@ Url: https://www.numpy.org/
 # https://github.com/numpy/numpy.git
 Source: %name-%version.tar
 Source2: site.cfg
+
 Patch0: %oname-1.20.2-Remove-strict-dependency-on-testing-package.patch
 
 # E2K patchset with MCST numbering scheme
@@ -36,9 +37,6 @@ BuildRequires: python3-module-Cython
 
 %add_findprov_skiplist %python3_sitelibdir/%oname/random/_examples/*
 %add_findreq_skiplist  %python3_sitelibdir/%oname/random/_examples/*
-
-%py3_provides %oname.addons
-Provides: python3-module-numpy-addons = %EVR
 
 Conflicts: python-module-numpy < 1:1.15.4-alt6
 
@@ -136,12 +134,16 @@ sed -i 's|@BLAS@|blas|' site.cfg
 sed -i 's|@BLAS@|openblas|' site.cfg
 %endif
 
-
 # headers
 sed -i 's|^prefix.*|prefix=%python3_sitelibdir/%oname/core|' \
 	%oname/core/npymath.ini.in
 sed -i 's|^includedir.*|includedir=%_includedir/python%_python3_version/%oname|' \
 	%oname/core/npymath.ini.in
+
+# fix version info
+sed -i \
+	-e "s/git_refnames\s*=\s*\"[^\"]*\"/git_refnames = \" \(tag: v%version\)\"/" \
+	%oname/_version.py
 
 %build
 INCS="-I%_includedir/suitesparse -I$PWD/numpy/core/include/numpy"
@@ -237,6 +239,9 @@ cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Wed Jul 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.21.1-alt1
+- Updated to upstream version 1.21.1.
+
 * Tue Jun 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.20.3-alt1
 - Updated to upstream version 1.20.3.
 
