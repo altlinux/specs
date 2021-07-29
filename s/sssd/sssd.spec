@@ -8,8 +8,8 @@
 %def_with openssl
 
 Name: sssd
-Version: 2.4.2
-Release: alt2
+Version: 2.5.2
+Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -120,6 +120,7 @@ BuildRequires: nss_wrapper
 BuildRequires: softhsm
 %endif
 %endif
+BuildRequires: po4a
 
 # Due sssd-drop-privileges control for unprivileged mode support
 Requires: local-policy >= 0.4.8
@@ -506,6 +507,11 @@ mkdir -p %buildroot%dotcachepath
 mkdir -p %buildroot/%_altdir
 printf '%_libdir/cifs-utils/idmap-plugin\t%_libdir/cifs-utils/cifs_idmap_sss.so\t20\n' > %buildroot%_altdir/cifs-idmap-plugin-sss
 
+%if_without secrets
+rm -rf %buildroot%_mandir/*/man5/sssd-secrets.5*
+rm -rf %buildroot%_mandir/*/man5/sssd-systemtap.5*
+%endif
+
 %check
 export CK_TIMEOUT_MULTIPLIER=10
 %make check VERBOSE=yes
@@ -627,18 +633,28 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_datadir/%name/sssd.api.d/sssd-simple.conf
 %_datadir/%name/sssd.api.d/sssd-files.conf
 %_man1dir/sss_ssh_*
+%_mandir/*/man1/sss_ssh_*
 %_man5dir/sssd.conf.5*
+%_mandir/*/man5/sssd.conf.5*
 %_man5dir/sssd-files.5*
+%_mandir/*/man5/sssd-files.5*
 %_man5dir/sssd-simple.5*
+%_mandir/*/man5/sssd-simple.5*
 %_man5dir/sssd-sudo.5*
+%_mandir/*/man5/sssd-sudo.5*
 %_man5dir/sssd-session-recording.5*
+%_mandir/*/man5/sssd-session-recording.5*
 %_man5dir/sss_rpcidmapd.5*
+%_mandir/*/man5/sss_rpcidmapd.5*
 %_man8dir/sssd.8*
+%_mandir/*/man8/sssd.8*
 %_man8dir/sss_cache.8*
+%_mandir/*/man8/sss_cache.8*
 
 %files ldap
 %_libdir/%name/libsss_ldap.so
 %_man5dir/sssd-ldap*
+%_mandir/*/man5/sssd-ldap*
 %_datadir/%name/sssd.api.d/sssd-ldap.conf
 
 %files krb5-common
@@ -649,6 +665,7 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %files krb5
 %_libdir/%name/libsss_krb5.so
 %_man5dir/sssd-krb5*
+%_mandir/*/man5/sssd-krb5*
 %_datadir/%name/sssd.api.d/sssd-krb5.conf
 
 %files pac
@@ -661,12 +678,14 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_libdir/%name/libsss_ipa.so
 %attr(4710,root,%sssd_user) %_libexecdir/%name/selinux_child
 %_man5dir/sssd-ipa*
+%_mandir/*/man5/sssd-ipa*
 %_datadir/%name/sssd.api.d/sssd-ipa.conf
 
 %files ad
 %_libdir/%name/libsss_ad.so
 %_libexecdir/%name/gpo_child
 %_man5dir/sssd-ad*
+%_mandir/*/man5/sssd-ad*
 %_datadir/%name/sssd.api.d/sssd-ad.conf
 
 %files proxy
@@ -685,7 +704,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_altdir/cifs-idmap-plugin-sss
 %_libdir/%name/modules/sssd_krb5_localauth_plugin.so
 %_man8dir/pam_sss*
+%_mandir/*/man8/pam_sss*
 %_man8dir/sssd_krb5_locator_plugin*
+%_mandir/*/man8/sssd_krb5_locator_plugin*
 
 %files -n libsss_sudo
 %_libdir/libsss_sudo.so*
@@ -701,9 +722,12 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_sbindir/sss_*
 %_sbindir/sssctl
 %_man8dir/sss_*
+%_mandir/*/man8/sss_*
 %_man8dir/sssctl*
+%_mandir/*/man8/sssctl*
 %exclude %_sbindir/sss_cache
 %exclude %_man8dir/sss_cache*
+%exclude %_mandir/*/man8/sss_cache*
 
 %files -n libsss_idmap
 %_libdir/libsss_idmap.so.*
@@ -717,6 +741,7 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %files -n libsss_certmap
 %_libdir/libsss_certmap.so.*
 %_man5dir/sss-certmap*
+%_mandir/*/man5/sss-certmap*
 
 %files -n libsss_certmap-devel
 %doc certmap_doc/html
@@ -746,6 +771,7 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %doc COPYING
 %_libexecdir/%name/sssd_ifp
 %_man5dir/sssd-ifp*
+%_mandir/*/man5/sssd-ifp*
 # InfoPipe DBus plumbing
 %_sysconfdir/dbus-1/system.d/org.freedesktop.sssd.infopipe.conf
 %_datadir/dbus-1/system-services/org.freedesktop.sssd.infopipe.service
@@ -759,11 +785,13 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_unitdir/sssd-kcm.socket
 %_unitdir/sssd-kcm.service
 %_man8dir/sssd-kcm*
+%_mandir/*/man8/sssd-kcm*
 %if_with secrets
 %_libexecdir/%name/sssd_secrets
 %_unitdir/sssd-secrets.socket
 %_unitdir/sssd-secrets.service
 %_man5dir/sssd-secrets.5*
+%_mandir/*/man5/sssd-secrets.5*
 %endif
 %endif
 
@@ -779,6 +807,7 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %files winbind-idmap
 %_libdir/samba/idmap/sss.so
 %_man8dir/idmap_sss*
+%_mandir/*/man8/idmap_sss*
 
 %files nfs-idmap
 %nfsidmapdir/sss.so
@@ -803,6 +832,27 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/SSSDConfig/__pycache__/*.py*
 
 %changelog
+* Thu Jul 29 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.5.2-alt1
+- Update to 2.5.2:
+  + auto_private_groups option can be set centrally through ID range setting
+    in IPA (see ipa idrange commands family).
+  + Default value of ldap_sudo_random_offset changed to 0 (disabled).
+  + originalADgidNumber attribute in the SSSD cache is now indexed.
+  + Add new config option fallback_to_nss.
+
+* Fri May 14 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.5.0-alt1
+- Update to 2.5.0:
+  + Deprecated support of secrets, local-provider, libwbclient, pcre1.
+  + Added support for automatic renewal of renewable TGTs stored in KCM cache.
+  + Backround sudo periodic tasks (smart and full refresh) periods are now
+    extended by a random offset.
+  + Completing a sudo full refresh now postpones the smart refresh by
+    ldap_sudo_smart_refresh_interval value.
+  + Besides trusted domains known by the forest root, trusted domains known by
+    the local domain are used as well.
+  + New configuration option offline_timeout_random_offset to control random
+    factor in backend probing interval when SSSD is in offline mode.
+
 * Fri May 07 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.4.2-alt2
 - Apply internal, domain and service fixes from upstream.
 - Add compatibility support of unprivileged mode with "user = _sssd"
