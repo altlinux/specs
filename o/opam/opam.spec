@@ -1,6 +1,6 @@
 Name: opam
-Version: 2.0.8
-Release: alt2
+Version: 2.0.9
+Release: alt1
 Summary: A source-based package manager for OCaml
 License: LGPLv3
 Group: Development/ML
@@ -86,6 +86,9 @@ rm -rf %buildroot%prefix/doc
 %doc shell/
 
 %changelog
+* Thu Jul 29 2021 Anton Farygin <rider@altlinux.ru> 2.0.9-alt1
+- 2.0.9
+
 * Wed May 19 2021 Anton Farygin <rider@altlinux.ru> 2.0.8-alt2
 - removed ocaml-odoc from BR
 
