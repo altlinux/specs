@@ -5,7 +5,7 @@
 %def_without prelude
 
 Name: audit
-Version: 3.0.2
+Version: 3.0.3
 Release: alt1
 Summary: User space tools for Linux kernel 2.6+ auditing
 License: GPL
@@ -227,6 +227,9 @@ fi
 %endif
 
 %changelog
+* Sat Jul 17 2021 Egor Ignatov <egori@altlinux.org> 3.0.3-alt1
+- new version 3.0.3
+
 * Tue Jun 22 2021 Egor Ignatov <egori@altlinux.org> 3.0.2-alt1
 - new version 3.0.2
 
