@@ -1,6 +1,6 @@
 Name: trinity
 Version: 1.9
-Release: alt2
+Release: alt3
 Summary: System call fuzz tester
 
 License: GPL-2.0
@@ -13,6 +13,10 @@ Source0: http://codemonkey.org.uk/projects/%name/%name-%version.tar.xz
 # Fix crash due to walking off the end of the net_protocols array
 Patch0: %name-net-protocols.patch
 Patch1: %name-rm-definition.patch
+Patch2: %name-1.9-alt3.patch
+
+BuildRequires: libpam-devel libpcap-devel libssl-devel libudev-devel
+%{?_with_systemd:BuildRequires: libsystemd-devel}
 
 %description
 Trinity makes syscalls at random, with random arguments.  Where Trinity
@@ -46,6 +50,7 @@ and fed to subsequent syscalls, sometimes with hilarious results.
 %setup
 %patch0 -p0
 %patch1 -p2
+%patch2 -p2
 
 %build
 %configure
@@ -64,6 +69,10 @@ install -Dm0755 scripts/* -t %buildroot%_libexecdir/%name
 %_libexecdir/%name/
 
 %changelog
+* Sun Jul 11 2021 Pavel Vasenkov <pav@altlinux.org> 1.9-alt3
+- Change headers order
+- Fix checking headers
+
 * Fri Dec 11 2020 Pavel Vasenkov <pav@altlinux.org> 1.9-alt2
 - Remove multiple defined variables
 
