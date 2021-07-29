@@ -1,8 +1,8 @@
 %def_without build_docs
 
 Name:    synfigstudio
-Version: 1.4.1
-Release: alt2
+Version: 1.4.2
+Release: alt1
 
 Summary: Synfig studio - animation program
 License: GPLv2+
@@ -216,6 +216,9 @@ cat synfig.lang >> %name.lang
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jul 29 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt1
+- New version.
+
 * Wed Jun 23 2021 Michael Shigorin <mike@altlinux.org> 1.4.1-alt2
 - BR: ladspa_sdk, zlib-devel to fix ftbfs
 - ExclusiveArch: replaced with ExcludeArch: (see also #40274)
