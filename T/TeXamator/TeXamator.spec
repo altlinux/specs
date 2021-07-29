@@ -1,9 +1,10 @@
+%define mname texamator
 Name: TeXamator
-Version: 1.7.5
-Release: alt3
+Version: 3.0
+Release: alt0.1
 
 Summary: Helping you making your exercise sheets
-License: GPLv3
+License: GPL-3.0
 Group: Other
 Url: http://snouffy.free.fr/blog-en/index.php/category/TeXamator
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -13,8 +14,6 @@ BuildArch: noarch
 Source0: http://snouffy.free.fr/blog-en/public/TeXamator/%name.v.%version.tar.gz
 Source1: %name.desktop
 Source44: import.info
-
-Patch0: port-to-python3.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: desktop-file-utils python3-tools
@@ -36,7 +35,6 @@ can generate a .dvi file.
 
 %prep
 %setup -n %name
-%patch0 -p2
 find -name '*~' -delete # Remove backup file in source package
 
 $(find /usr/lib*/python%{_python3_version}/Tools/scripts/reindent.py) \
@@ -49,8 +47,8 @@ mkdir -p %buildroot%_datadir/%name
 cp -rp partielatormods %buildroot%_datadir/%name
 cp -rp ts_files %buildroot%_datadir/%name
 cp -rp ui_files %buildroot%_datadir/%name
-cp -p %name.py %buildroot%_datadir/%name/%name.py
-ln -s %_datadir/%name/%name.py %buildroot%_bindir/%name # Create a link in _bindir
+cp -p %mname.py %buildroot%_datadir/%name/%name.py
+ln -sr %_datadir/%name/%name.py %buildroot%_bindir/%name # Create a link in _bindir
 # Remove shebang from Python libraries
 sed -i -e '/\/usr\/bin\/python/d' %buildroot%_datadir/%name/partielatormods/*.py
 for lib in %buildroot%_datadir/%name/partielatormods/*/*.py; do
@@ -65,13 +63,16 @@ desktop-file-install --dir=%buildroot%_datadir/applications %SOURCE1
 desktop-file-validate %buildroot/%_datadir/applications/%name.desktop
 
 %files
-%doc README gpl-3.0.txt
+%doc README* gpl-3.0.txt
 %_bindir/%name
 %_datadir/%name
 %_datadir/applications/%name.desktop
 
 
 %changelog
+* Thu Jul 29 2021 Sergey V Turchin <zerg@altlinux.org> 3.0-alt0.1
+- 3.0+git.20190226.91432e4
+
 * Fri Mar 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.7.5-alt3
 - Porting to python3.
 
