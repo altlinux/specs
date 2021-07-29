@@ -1,5 +1,5 @@
 Name:           socket_wrapper
-Version:        1.2.5
+Version:        1.3.3
 Release:        alt1
 Group:          Development/Other
 License:        BSD
@@ -54,21 +54,27 @@ popd
 
 %check
 pushd obj
-LD_LIBRARY_PATH=. ctest -V
+LD_LIBRARY_PATH=$PWD/src ctest -V
 
 LD_PRELOAD=src/libsocket_wrapper.so bash -c '>/dev/null'
+LD_PRELOAD=src/libsocket_wrapper_noop.so bash -c '>/dev/null'
 
 popd
 
 %files
 %doc AUTHORS README.md CHANGELOG LICENSE
-%_libdir/lib%name.so*
+%_libdir/lib%{name}*.so*
 %dir %_libdir/cmake/%name
 %_libdir/cmake/%name/*.cmake
-%_pkgconfigdir/socket_wrapper.pc
-%_man1dir/socket_wrapper.1*
+%_includedir/%name.h
+%_pkgconfigdir/%{name}*.pc
+%_man1dir/%name.1*
 
 %changelog
+* Thu Jul 29 2021 Evgeny Sinelnikov <sin@altlinux.org> 1.3.3-alt1
+- Update to latest release with support for fd-passing via unix sockets
+- Add public libsocket_wrapper_noop library
+
 * Sun Feb 07 2021 Evgeny Sinelnikov <sin@altlinux.org> 1.2.5-alt1
 - Update to latest release
 
