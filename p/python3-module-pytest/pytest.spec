@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 6.2.4
-Release: alt1
+Release: alt2
 
 Summary: Python test framework
 License: MIT
@@ -18,29 +18,34 @@ Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools_scm)
+BuildRequires: python3(toml)
 
 %if_with check
-BuildRequires: /dev/pts
-BuildRequires: /dev/shm
-BuildRequires: python3(tox)
-
-BuildRequires: python3(argcomplete)
+# install_requires:
 BuildRequires: python3(attr)
-BuildRequires: python3(decorator)
-BuildRequires: python3(funcsigs)
-BuildRequires: python3(hypothesis)
 BuildRequires: python3(iniconfig)
-BuildRequires: python3(jinja2)
+BuildRequires: python3(packaging)
+BuildRequires: python3(pluggy)
+BuildRequires: python3(py)
+BuildRequires: python3(toml)
+
+# extras_require:
+BuildRequires: python3(argcomplete)
+BuildRequires: python3(hypothesis)
 BuildRequires: python3(mock)
 BuildRequires: python3(nose)
-BuildRequires: python3(numpy)
-BuildRequires: python3(py)
-BuildRequires: python3(packaging)
-BuildRequires: python3(pexpect)
-BuildRequires: python3(pluggy)
 BuildRequires: python3(requests)
-BuildRequires: python3(toml)
 BuildRequires: python3(xmlschema)
+
+BuildRequires: /dev/pts
+BuildRequires: /dev/shm
+
+BuildRequires: python3(tox)
+BuildRequires: python3(decorator)
+BuildRequires: python3(funcsigs)
+BuildRequires: python3(jinja2)
+BuildRequires: python3(numpy)
+BuildRequires: python3(pexpect)
 BuildRequires: python3-module-Pygments > 2.4.2
 %endif
 
@@ -92,7 +97,7 @@ export TERM=xterm
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
+export TOXENV=py3
 tox.py3 --sitepackages -vvr -s false
 
 %files
@@ -101,13 +106,16 @@ tox.py3 --sitepackages -vvr -s false
 %_bindir/py.test-3
 %python3_sitelibdir/pytest/
 %python3_sitelibdir/_pytest/
-%python3_sitelibdir/pytest-*.egg-info/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %files -n pytest3
 %_bindir/pytest3
 %_bindir/pytest-3
 
 %changelog
+* Thu Jul 29 2021 Stanislav Levin <slev@altlinux.org> 6.2.4-alt2
+- Fixed build without check (thanks to grenka@).
+
 * Fri May 07 2021 Stanislav Levin <slev@altlinux.org> 6.2.4-alt1
 - 6.2.3 -> 6.2.4.
 
