@@ -1,6 +1,6 @@
 Name: prosody
 Version: 0.11.9
-Release: alt1
+Release: alt2
 
 Summary: Modern XMPP communication server
 
@@ -21,6 +21,7 @@ Source10: autobuild.watch
 Source11: upstream-signing-key.asc
 
 Patch1: prosody-0.11.5-alt-user.patch
+Patch2: prosody-0.11.9-cve-2021-37601.patch
 
 %description
 %summary
@@ -67,6 +68,9 @@ install -Dpm644 %SOURCE4 %buildroot/%_tmpfilesdir/prosody.conf
 %_man1dir/*
 
 %changelog
+* Thu Jul 29 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.11.9-alt2
+- Fixed CVE-2021-37601.
+
 * Sat May 15 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.11.9-alt1
 - Updated to 0.11.9 (fixed CVE-2021-32917, CVE-2021-32918, CVE-2021-32919,
   CVE-2021-32920 and CVE-2021-32921).
