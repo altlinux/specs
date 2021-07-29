@@ -2,7 +2,7 @@
 
 Name: cifs-utils
 Version: 6.13
-Release: alt1
+Release: alt2
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
 License: GPLv3+
@@ -12,6 +12,7 @@ Url: https://wiki.samba.org/index.php/LinuxCIFS_utils
 Source: %name-%version.tar
 
 Patch2: cifs-utils-alt-python3.patch
+Patch3: cifs-utils-alt-docutils.patch
 
 BuildRequires(pre): rpm-macros-pam0
 BuildRequires: libcap-ng-devel libkeyutils-devel libkrb5-devel libtalloc-devel libwbclient-devel libpam-devel
@@ -51,11 +52,21 @@ provide these credentials to the kernel automatically at login.
 %prep
 %setup
 %patch2 -p1
+%patch3 -p1
 
 %build
 %autoreconf
 %configure \
 	--with-pamdir=/%_lib/security \
+%if_with doc
+	--enable-man \
+%endif
+	--enable-systemd \
+	--enable-smbinfo \
+	--enable-cifscreds \
+	--enable-cifsacl \
+	--enable-cifsidmap \
+	--enable-cifsupcall \
 	--with-idmap-plugin=%_libdir/%name/idmap-plugin
 %make_build
 
@@ -108,6 +119,10 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 %endif
 
 %changelog
+* Thu Jul 29 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.13-alt2
+- Rebuild with explicitly enabled man pages and other build options
+- Added rst2man.py3 to configure search list for compatibility with branch p9
+
 * Sat May 15 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.13-alt1
 - Update to latest release supported cifs.upcall trying to use container
   ipc/uts/net/pid/mnt/user namespaces
