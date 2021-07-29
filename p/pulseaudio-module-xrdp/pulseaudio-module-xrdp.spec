@@ -1,8 +1,8 @@
-%define pulseaudio_version 14.2
+%define pulseaudio_version 15.0
 
 Name:     pulseaudio-module-xrdp
 Version:  0.5
-Release:  alt2
+Release:  alt3
 
 Summary:  xrdp sink / source pulseaudio modules
 License:  Apache-2.0
@@ -16,6 +16,7 @@ Source1:  pulseaudio-src.tar
 
 BuildRequires: libpulseaudio-devel
 
+BuildRequires(pre): meson
 BuildRequires: gcc-c++
 BuildRequires: intltool jackit-devel libalsa-devel libasyncns-devel
 BuildRequires: libavahi-devel libbluez-devel
@@ -25,7 +26,7 @@ BuildRequires: libsndfile-devel libspeex-devel libspeexdsp-devel libwebrtc-devel
 BuildRequires: libSM-devel libX11-devel libXtst-devel libxcbutil-devel
 BuildRequires: libGConf-devel
 BuildRequires: libfftw3-devel libsbc-devel liborc-devel orc xmltoman
-BuildRequires: libssl-devel libsystemd-devel
+BuildRequires: libcheck-devel libssl-devel libsystemd-devel
 
 %description
 xrdp implements Audio Output redirection using PulseAudio, which is a
@@ -47,20 +48,18 @@ fi
 # Configure Pulseaudio like pulseaudio.spec
 pushd pulseaudio-src
 echo "%pulseaudio_version" > .tarball-version
-touch config.rpath
-%autoreconf
-%configure \
-    --localstatedir=/var \
-    --with-access-group=audio \
-    --enable-per-user-esound-socket \
-    --enable-adrian-aec \
-    --disable-bluez4 \
-    --disable-static \
-    #
+%meson \
+    -Ddoxygen=false \
+    -Ddatabase=gdbm \
+    -Daccess_group=audio \
+    -Dadrian-aec=true \
+    -Dbluez5=enabled \
+    -Dgsettings=enabled \
+    -Djack=enabled
 popd
 # Build pulseaudio-module-xrdp
 %autoreconf
-%configure PULSE_DIR=`pwd`/pulseaudio-src
+%configure PULSE_DIR=`pwd`/pulseaudio-src CFLAGS="-I`pwd`/pulseaudio-src/%_host_alias"
 %make_build
 
 %install
@@ -75,6 +74,9 @@ rm -f %buildroot%_libdir/pulse-*/modules/*.la
 %_libdir/pulse-*/modules/*.so
 
 %changelog
+* Thu Jul 29 2021 Andrey Cherepanov <cas@altlinux.org> 0.5-alt3
+- Rebuild with pulseaudio 15.0.
+
 * Tue Apr 27 2021 Andrey Cherepanov <cas@altlinux.org> 0.5-alt2
 - Add hook to check current pulseaudio version in repository.
 
