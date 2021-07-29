@@ -2,7 +2,7 @@
 %define        pkgname puppetserver-ca
 
 Name:          gem-%pkgname
-Version:       2.3.0
+Version:       2.3.1
 Release:       alt1
 Summary:       A simple Ruby CLI tool to interact with the Puppet Server's included CA
 License:       Apache-2.0
@@ -81,6 +81,9 @@ find -name "*.rb" | while read f; do sed "s,/etc/puppetlabs,/etc," -i "$f"; done
 
 
 %changelog
+* Thu Jul 29 2021 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt1
+- New version.
+
 * Fri Jul 23 2021 Andrey Cherepanov <cas@altlinux.org> 2.3.0-alt1
 - New version.
 
