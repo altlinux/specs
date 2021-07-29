@@ -1,6 +1,6 @@
 Name:     ovirt-guest-agent
 Version:  1.0.16
-Release:  alt1
+Release:  alt2
 
 Summary:  The oVirt Guest Agent
 License:  Apache-2.0
@@ -11,11 +11,11 @@ URL:      http://wiki.ovirt.org/wiki/Category:Ovirt_guest_agent
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:   %name-%version.tar
+Patch1:   allowed-dbus-user.patch
 
 BuildRequires(pre): rpm-build-python
 BuildRequires: gcc-c++
 BuildRequires: libpam-devel
-BuildRequires: python-module-pycodestyle
 
 Requires: python-module-ethtool
 Requires: python-module-rpm
@@ -41,6 +41,7 @@ oVirt automatic log-in system.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %autoreconf
@@ -172,6 +173,10 @@ fi
 %_pam_modules_dir/pam_ovirt_cred.so
 
 %changelog
+* Thu Jul 29 2021 Andrey Cherepanov <cas@altlinux.org> 1.0.16-alt2
+- Fix dbus service permissions.
+- Remove deprecated requirements.
+
 * Sat Feb 23 2019 Andrey Cherepanov <cas@altlinux.org> 1.0.16-alt1
 - New version.
 
