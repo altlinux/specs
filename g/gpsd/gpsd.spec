@@ -4,7 +4,7 @@
 Name: gpsd
 Summary: Service daemon for mediating access to a GPS
 Version: 3.20
-Release: alt6
+Release: alt6.1
 License: BSD-2-Clause
 Group: System/Servers
 Url: https://gpsd.gitlab.io/gpsd/index.html
@@ -19,7 +19,7 @@ BuildRequires: asciidoc docbook-dtds docbook-style-xsl
 
 BuildRequires: scons gcc-c++ libXaw-devel libXext-devel libXpm-devel libdbus-glib-devel xorg-cf-files xsltproc libgtk+3-devel pps-tools-devel
 
-BuildRequires: python3-dev python3-module-pycairo python3-module-pygobject3 python3-module-anyjson python3-module-serial
+BuildRequires: python3-dev python3-module-pycairo python3-module-pygobject3 python3-module-serial
 
 %if_with libQgpsmm
 BuildRequires: qt5-base-devel
@@ -175,6 +175,9 @@ DESTDIR=%buildroot scons install udev-install
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Jul 29 2021 Grigory Ustinov <grenka@altlinux.org> 3.20-alt6.1
+- NMU: removed buildrequires on python3-module-anyjson.
+
 * Wed Mar 10 2021 Sergey Y. Afonin <asy@altlinux.org> 3.20-alt6
 - updated URL
 - added pps-tools-devel to BuildRequires (ALT #39774)
