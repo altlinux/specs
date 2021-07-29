@@ -2,7 +2,7 @@
 %define  modulename luv
 Name:    ocaml-%modulename
 Version: 0.5.8
-Release: alt1
+Release: alt2
 Summary: Binding to libuv for ocaml: cross-platform asynchronous I/O
 License: MIT
 Group:   Development/ML
@@ -59,6 +59,9 @@ export TRAVIS=true
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Jul 29 2021 Anton Farygin <rider@altlinux.ru> 0.5.8-alt2
+- increased version libluv in tests to fix the build with libluv 1.41.1
+
 * Mon May 17 2021 Anton Farygin <rider@altlinux.ru> 0.5.8-alt1
 - 0.5.8
 
