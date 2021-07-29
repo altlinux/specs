@@ -5,8 +5,8 @@
 %define kflavour		rt
 Name: kernel-image-%kflavour
 %define kernel_base_version	5.10
-%define kernel_sublevel		.47
-%define kernel_rt_release	rt46
+%define kernel_sublevel		.52
+%define kernel_rt_release	rt47
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -418,6 +418,9 @@ fi
 %modules_dir/build
 
 %changelog
+* Wed Jul 28 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.52-alt1.rt47
+- Update to v5.10.52-rt47 (2021-07-23).
+
 * Sun Jul 18 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.47-alt1.rt46
 - Update to v5.10.47-rt46 (16 Jul 2021).
 - spec: Remove BuildRequires: dev86.
