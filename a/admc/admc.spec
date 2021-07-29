@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: AD editor
@@ -73,6 +73,7 @@ Tests for ADMC
 %_bindir/admc_test_unlock_edit
 %_bindir/admc_test_upn_edit
 %_bindir/admc_test_string_edit
+%_bindir/admc_test_string_large_edit
 %_bindir/admc_test_country_edit
 %_bindir/admc_test_gplink
 %_bindir/admc_test_ad_interface
@@ -93,6 +94,8 @@ Tests for ADMC
 %_bindir/admc_test_manager_edit
 %_bindir/admc_test_delegation_edit
 %_bindir/admc_test_string_other_edit
+%_bindir/admc_test_account_option_edit
+%_bindir/admc_test_gpoptions_edit
 %_bindir/admc_test_octet_editor
 %_bindir/admc_test_bool_editor
 %_bindir/admc_test_string_editor
@@ -100,6 +103,9 @@ Tests for ADMC
 %_bindir/admc_test_datetime_editor
 
 %changelog
+* Thu Jul 29 2021 Dmitry Degtyarev <kevl@altlinux.org> 0.6.2-alt1
+- 0.6.2 (closes: 40562)
+
 * Tue Jul 20 2021 Dmitry Degtyarev <kevl@altlinux.org> 0.6.1-alt1
 - 0.6.1
 
