@@ -11,7 +11,7 @@
 
 Name: libreoffice-online
 Version: 6.2.3.2
-Release: alt6
+Release: alt7
 Summary: LibreOffice Online WebSocket Daemon
 License: MPL-2.0
 Group: Office
@@ -164,6 +164,7 @@ a2enport https
 a2enmod rewrite
 a2enmod env
 a2enmod headers
+a2enmod proxy
 %_initdir/httpd2 condreload
 
 %postun apache2
@@ -199,6 +200,9 @@ a2enmod headers
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
 
 %changelog
+* Thu Jul 29 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.3.2-alt7
+- Enabled additional modules for Apache2 (Closes: #36344).
+
 * Wed Jun 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.3.2-alt6
 - Fixed build without python-module-polib.
 
