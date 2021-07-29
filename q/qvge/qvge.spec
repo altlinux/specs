@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qvge
-Version: 0.6.1
+Version: 0.6.3
 Release: alt1
 Summary: Qt Visual Graph Editor
 Group: Development/Other
@@ -41,5 +41,8 @@ cd src
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Jul 29 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.3-alt1
+- Updated to upstream version 0.6.3.
+
 * Mon Nov 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.1-alt1
 - Initial build for ALT.
