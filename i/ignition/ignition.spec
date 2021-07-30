@@ -3,7 +3,7 @@
 
 Name:     ignition
 Version:  2.11.0
-Release:  alt1
+Release:  alt2
 
 Summary:  First boot installer and configuration tool
 License:  Apache-2.0
@@ -86,6 +86,9 @@ popd
 %_bindir/%name-validate
 
 %changelog
+* Fri Jul 30 2021 Andrey Sokolov <keremet@altlinux.org> 2.11.0-alt2
+- compile without relabeling support
+
 * Mon Jul 19 2021 Alexey Shabalin <shaba@altlinux.org> 2.11.0-alt1
 - 2.11.0
 
