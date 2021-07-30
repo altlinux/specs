@@ -1,6 +1,6 @@
 Name: flatcam
-Version: 8.5
-Release: alt5.20190601
+Version: 8.994
+Release: alt1.20210406
 Summary: 2D Computer-Aided PCB Manufacturing
 Group: Engineering
 License: MIT
@@ -10,23 +10,19 @@ BuildArch: noarch
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-
-# Fedora patchs
-# Reported upstream as: https://bitbucket.org/jpcgt/flatcam/pull-requests/125
-Patch1: https://bitbucket.org/dwrobel/flatcam/commits/0d2cb7e53e629a1c8d5ba790752e4a4d605065bc/raw#/%{name}-setup-update.patch
-# Disable checks for the latest version of the program
-Patch2: https://bitbucket.org/dwrobel/flatcam/commits/002a69f71632a3bb2d71302b24aae6b4d449557d/raw#/%{name}-disable-checks-for-the-latest-version-of-the-program.patch
-Patch3: %{name}-Fix-for-python3.7-StopIteration-exception.patch
+Patch: flatcam-alt.patch
 
 Buildrequires(pre): rpm-build-python3
-Buildrequires: python3-module-setuptools
+#Buildrequires: python3-module-setuptools
 Buildrequires: desktop-file-utils
 BuildRequires: libappstream-glib
 
-Requires: python3-module-svg-path
-Requires: python3-module-matplotlib-qt4
+#Requires: python3-module-svg-path
+#Requires: python3-module-matplotlib-qt4
 
-%add_python3_req_skip ToolDblSided ToolTransform ToolMeasurement
+#add_python3_req_skip ToolDblSided ToolTransform ToolMeasurement
+
+%add_python3_path %_datadir/%name
 
 %description
 FlatCAM is a program for preparing CNC jobs for making PCBs on
@@ -38,41 +34,28 @@ for Isolation routing.
 %setup
 %autopatch -p1
 
-%build
-%python3_build
+#build
+#python3_build
+#make_build
 
 %install
-%python3_install
-
-# Install icons
-for x in 16 24 32 48 128; do
-    install -pD -m 0644 share/flatcam_icon$x.png \
-	%buildroot%_iconsdir/hicolor/$x'x'$x/apps/flatcam.png
-done
-
-### == desktop file
-cat>%name.desktop<<END
-[Desktop Entry]
-Name=%name
-Exec=%_bindir/%name
-Icon=%name
-Terminal=false
-Type=Application
-Categories=Development;Engineering;
-END
-
-desktop-file-install --dir=%buildroot%_desktopdir %name.desktop
+#python3_install
+%makeinstall_std
 
 %files
 %doc LICENSE README.md
 %_datadir/%name/
 %_bindir/%name
 %_desktopdir/%name.desktop
-%_iconsdir/hicolor/*/apps/%name.*
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/descartes
+#_iconsdir/hicolor/*/apps/%name.*
+#python3_sitelibdir/*
+#exclude %python3_sitelibdir/descartes
 
 %changelog
+* Fri Jul 30 2021 Anton Midyukov <antohami@altlinux.org> 8.994-alt1.20210406
+- new snapshot
+- build with pyQt5 (Closes: 40601)
+
 * Tue Jul 27 2021 Anton Midyukov <antohami@altlinux.org> 8.5-alt5.20190601
 - Add patch from Fedora
 
