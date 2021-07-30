@@ -4,7 +4,7 @@
 
 Name: python3-module-envisage
 Version: 5.0.0
-Release: alt1
+Release: alt2
 
 Summary: Extensible Application Framework
 
@@ -27,6 +27,9 @@ BuildRequires: python3-module-setuptools
 
 %add_findprov_skiplist %python3_sitelibdir/%oname/plugins/*
 %add_findreq_skiplist  %python3_sitelibdir/%oname/plugins/*
+
+%add_findprov_skiplist %python3_sitelibdir/%oname/examples/*
+%add_findreq_skiplist  %python3_sitelibdir/%oname/examples/*
 
 %add_python3_req_skip wx
 %add_python3_req_skip ui.main
@@ -87,6 +90,9 @@ This package contains development documentation for Envisage.
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jul 30 2021 Ivan A. Melnikov <iv@altlinux.org> 5.0.0-alt2
+- skip examples in findreq and findprov
+
 * Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.0-alt1
 - new version
 - switch to build from tarball
