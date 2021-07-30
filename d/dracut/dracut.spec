@@ -12,7 +12,7 @@
 
 Name: dracut
 Version: 055
-Release: alt1
+Release: alt2
 
 Summary: Initramfs generator using udev
 Group: System/Base
@@ -74,6 +74,7 @@ Requires: %name = %EVR
 Requires: iputils
 Requires: iproute
 Requires: NetworkManager
+Requires: curl
 AutoReq: noshell, noshebang
 
 %description network
@@ -325,7 +326,6 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/09dbus
 %dracutlibdir/modules.d/10i18n
 %dracutlibdir/modules.d/30convertfs
-%dracutlibdir/modules.d/45url-lib
 %dracutlibdir/modules.d/50drm
 %dracutlibdir/modules.d/50plymouth
 %dracutlibdir/modules.d/62bluetooth
@@ -409,6 +409,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/35network-wicked
 %dracutlibdir/modules.d/40network
 %dracutlibdir/modules.d/45ifcfg
+%dracutlibdir/modules.d/45url-lib
 %dracutlibdir/modules.d/90kernel-network-modules
 %dracutlibdir/modules.d/90qemu-net
 %dracutlibdir/modules.d/95cifs
@@ -463,6 +464,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 #%dracutlibdir/modules.d/98integrity
 
 %changelog
+* Fri Jul 30 2021 Andrey Sokolov <keremet@altlinux.org> 055-alt2
+- Move url-lib module to network package, add dependency on curl (closes 40591)
+
 * Mon May 31 2021 Alexey Shabalin <shaba@altlinux.org> 055-alt1
 - 055
 
