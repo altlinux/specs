@@ -10,7 +10,7 @@
 
 %define is_enabled() %{expand:%%{?_enable_%{1}:true}%%{!?_enable_%{1}:false}}
 
-%global llvm_version 11.0
+%global llvm_version 12.0
 %global gcc_version %nil
 #set_gcc_version %gcc_version
 
@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        91.0.4472.164
+Version:        92.0.4515.107
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -85,6 +85,7 @@ Patch019: 0019-Move-offending-function-to-chromeos-only.patch
 Patch020: 0020-ALT-Do-not-use-no-canonical-prefixes-clang-option.patch
 Patch021: 0021-ALT-Disable-NOMERGE-attribute.patch
 Patch022: 0022-IWYU-include-limits-for-std-numeric_limits.patch
+Patch023: 0023-ALT-Hide-some-utilities-from-rpm-build.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -94,7 +95,6 @@ BuildRequires:  bison
 BuildRequires:  bzlib-devel
 BuildRequires:  flex
 BuildRequires:  chrpath
-BuildRequires:  gcc%gcc_version-c++
 BuildRequires:  libstdc++-devel
 BuildRequires:  libstdc++-devel-static
 BuildRequires:  glibc-kernheaders
@@ -103,6 +103,8 @@ BuildRequires:  clang%{llvm_version}
 BuildRequires:  clang%{llvm_version}-devel
 BuildRequires:  llvm%{llvm_version}-devel
 BuildRequires:  lld%{llvm_version}-devel
+%else
+BuildRequires:  gcc%gcc_version-c++
 %endif
 BuildRequires:  ninja-build
 BuildRequires:  gperf
@@ -179,31 +181,7 @@ faster, and more stable way for all Internet users to experience the web.
 %prep
 %setup -q -n chromium
 tar -xf %SOURCE1
-
-### Begin to apply patches
-%patch001 -p1
-%patch002 -p1
-%patch003 -p1
-%patch004 -p1
-%patch005 -p1
-%patch006 -p1
-%patch007 -p1
-%patch008 -p1
-%patch009 -p1
-%patch010 -p1
-%patch011 -p1
-%patch012 -p1
-%patch013 -p1
-%patch014 -p1
-%patch015 -p1
-%patch016 -p1
-%patch017 -p1
-%patch018 -p1
-%patch019 -p1
-%patch020 -p1
-%patch021 -p1
-%patch022 -p1
-### Finish apply patches
+%autopatch -p1
 
 # lost sources
 for f in .rpm/blinkpy-common/*.py; do
@@ -224,12 +202,16 @@ sed -i \
 mkdir -p third_party/node/linux/node-linux-x64/bin
 ln -s %_bindir/node third_party/node/linux/node-linux-x64/bin/
 
+mkdir -p buildtools/third_party/eu-strip/bin
+ln -sf %_bindir/strip buildtools/third_party/eu-strip/bin/eu-strip
+
 rm -f -- .rpm/depot_tools/ninja
 ln -s %_bindir/ninja .rpm/depot_tools/ninja
 ln -s %_bindir/python2 .rpm/depot_tools/python
 
 %build
 %if_enabled clang
+export ALTWRAP_LLVM_VERSION="%llvm_version"
 export CC="clang"
 export CXX="clang++"
 export AR="llvm-ar"
@@ -340,7 +322,7 @@ tools/gn/bootstrap/bootstrap.py --gn-gen-args="$CHROMIUM_GN_DEFINES" --build-pat
 %target/gn gen --args="$CHROMIUM_GN_DEFINES" %target
 
 n=%build_parallel_jobs
-[ "$n" -lt 16 ] || n=16
+[ "$n" -lt 20 ] || n=20
 
 ninja \
 	-vvv \
@@ -376,13 +358,21 @@ ln -s %name.1  %buildroot/%_man1dir/chrome.1
 sed -i -e 's,/usr/lib/chromium,%_libdir/%name,g' %buildroot%_bindir/%name
 
 pushd %target
-cp -a chrome         %buildroot%_libdir/%name/%name
-cp -a chrome_sandbox %buildroot%_libdir/%name/chrome-sandbox
-cp -a chromedriver   %buildroot%_libdir/%name/chromedriver
+cp -a chrome           %buildroot%_libdir/%name/%name
+cp -a chrome_sandbox   %buildroot%_libdir/%name/chrome-sandbox
+cp -a crashpad_handler %buildroot%_libdir/%name/crashpad_handler
+
+for chromedriver in chromedriver chromedriver.unstripped; do
+	[ ! -x $chromedriver ] || break
+done
+
+cp -a $chromedriver %buildroot%_libdir/%name/chromedriver
+strip %buildroot%_libdir/%name/chromedriver
 
 ln -s -- %_libdir/%name/chromedriver %buildroot/%_bindir/chromedriver
 
-for f in *.bin *.so* *.pak swiftshader locales icudtl.dat; do
+for f in *.bin *.so* *.pak swiftshader locales icudtl.dat \
+	xdg-mime xdg-settings MEIPreload; do
 	[ ! -e "$f" ] ||
 		cp -at %buildroot%_libdir/%name -- "$f"
 done
@@ -458,6 +448,34 @@ EOF
 %_altdir/%name
 
 %changelog
+* Mon Jul 26 2021 Alexey Gladkov <legion@altlinux.ru> 92.0.4515.107-alt1
+- New version (92.0.4515.107).
+- Security fixes:
+  - CVE-2021-30565: Out of bounds write in Tab Groups.
+  - CVE-2021-30566: Stack buffer overflow in Printing.
+  - CVE-2021-30567: Use after free in DevTools.
+  - CVE-2021-30568: Heap buffer overflow in WebGL.
+  - CVE-2021-30569: Use after free in sqlite.
+  - CVE-2021-30571: Insufficient policy enforcement in DevTools.
+  - CVE-2021-30572: Use after free in Autofill.
+  - CVE-2021-30573: Use after free in GPU.
+  - CVE-2021-30574: Use after free in protocol handling.
+  - CVE-2021-30575: Out of bounds read in Autofill.
+  - CVE-2021-30576: Use after free in DevTools.
+  - CVE-2021-30577: Insufficient policy enforcement in Installer.
+  - CVE-2021-30578: Uninitialized Use in Media.
+  - CVE-2021-30579: Use after free in UI framework.
+  - CVE-2021-30580: Insufficient policy enforcement in Android intents.
+  - CVE-2021-30581: Use after free in DevTools.
+  - CVE-2021-30582: Inappropriate implementation in Animation.
+  - CVE-2021-30583: Insufficient policy enforcement in image handling on Windows.
+  - CVE-2021-30584: Incorrect security UI in Downloads.
+  - CVE-2021-30585: Use after free in sensor handling.
+  - CVE-2021-30586: Use after free in dialog box handling on Windows.
+  - CVE-2021-30587: Inappropriate implementation in Compositing on Windows.
+  - CVE-2021-30588: Type Confusion in V8.
+  - CVE-2021-30589: Insufficient validation of untrusted input in Sharing.
+
 * Sat Jul 17 2021 Alexey Gladkov <legion@altlinux.ru> 91.0.4472.164-alt1
 - New version (91.0.4472.164).
 - Security fixes:
