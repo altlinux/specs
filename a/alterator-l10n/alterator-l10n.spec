@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.92
+Version: 2.9.93
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -115,6 +115,9 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Fri Jul 30 2021 Andrey Cherepanov <cas@altlinux.org> 2.9.93-alt1
+- Update translation for alterator-net-domain-0.7.2-alt1.
+
 * Thu Jul 08 2021 Ivan Savin <svn17@altlinux.org> 2.9.92-alt1
 - alterator-role: add help
 - alterator-role: add translation
