@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.3.1
-Release: alt2
+Release: alt3
 
 Summary: asyncio (PEP 3156) Redis client library
 License: MIT
@@ -61,7 +61,7 @@ export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
 
-%ifarch armh
+%ifarch armh %mips
 # https://github.com/redis/redis/issues/7935
 export REDIS_7935=yes
 export TOX_TESTENV_PASSENV='REDIS_7935'
@@ -75,6 +75,9 @@ tox.py3 --sitepackages --console-scripts -vvr
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Jul 30 2021 Ivan A. Melnikov <iv@altlinux.org> 1.3.1-alt3
+- Fixed build on %%mips.
+
 * Thu Jul 01 2021 Stanislav Levin <slev@altlinux.org> 1.3.1-alt2
 - Fixed FTBFS (Redis 5 -> 6).
 
