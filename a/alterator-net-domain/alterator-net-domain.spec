@@ -1,5 +1,5 @@
 Name:    alterator-net-domain
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 Source:  %name-%version.tar
 
@@ -45,6 +45,9 @@ and FreeIPA domain.
 %_bindir/*-sh-functions
 
 %changelog
+* Fri Jul 30 2021 Andrey Cherepanov <cas@altlinux.org> 0.7.2-alt1
+- Domain name should have at least two labels separated by dot (ALT #40566).
+
 * Fri Sep 11 2020 Andrey Cherepanov <cas@altlinux.org> 0.7.1-alt1
 - Add note for Active Directory domain name (ALT #38917).
 
