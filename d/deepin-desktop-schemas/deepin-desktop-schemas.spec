@@ -1,6 +1,6 @@
 Name: deepin-desktop-schemas
 Version: 5.9.16
-Release: alt1
+Release: alt2
 Summary: GSettings deepin desktop-wide schemas
 License: GPL-3.0
 Group: Graphical desktop/Other
@@ -8,6 +8,7 @@ Url: https://github.com/linuxdeepin/deepin-desktop-schemas
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: deepin-desktop-schemas-5.9.16-default-value-for-timeout-lockscreen.patch
 
 BuildArch: noarch
 
@@ -21,12 +22,14 @@ Requires: dconf
 Requires: gnome-backgrounds
 Requires: icon-theme-deepin
 Requires: gtk-theme-deepin
+# Requires: gsettings-desktop-schemas deepin-daemon
 
 %description
 %summary.
 
 %prep
 %setup
+%patch -p1
 
 sed -i 's|adwaita-lock.jpg|adwaita-night.jpg|' \
     schemas/wrap/com.deepin.wrap.gnome.desktop.screensaver.gschema.xml
@@ -51,6 +54,11 @@ cp -a \
 %check
 make test
 
+# %%post
+# force change the value of the "Lock screen after" variable
+# gsettings set com.deepin.dde.power line-power-lock-delay 0
+# gsettings set com.deepin.dde.power battery-lock-delay 0
+
 %files
 %doc README.md
 %doc LICENSE
@@ -60,6 +68,9 @@ make test
 %exclude %_datadir/deepin-appstore/
 
 %changelog
+* Fri Jul 30 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.16-alt2
+- Fixed broken lockscreen after 15 minutes.
+
 * Thu Jul 01 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.16-alt1
 - New version (5.9.16).
 
