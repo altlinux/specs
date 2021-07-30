@@ -1,8 +1,17 @@
 %define oname oslo.i18n
 
+%define _unpackaged_files_terminate_build 1
+
+%def_without bootstrap
+%if_with bootstrap
+%def_disable check
+%else
+%def_enable check
+%endif
+
 Name: python3-module-%oname
 Version: 4.0.1
-Release: alt1
+Release: alt2
 
 Summary: OpenStack i18n library
 
@@ -20,15 +29,23 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
-BuildRequires: python3-module-babel >= 2.3.4
 BuildRequires: python3-module-six >= 1.10.0
 
+%if_without bootstrap
+BuildRequires: python3-module-babel >= 2.3.4
 BuildRequires: python3-module-oslo.config >= 3.14.0
 
 BuildRequires: python3-module-sphinx >= 1.2.1
 BuildRequires: python3-module-reno >= 1.8.0
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-sphinxcontrib-apidoc
+
+%if_enabled check
+BuildRequires: python3-module-stestr
+BuildRequires: python3-module-oslotest
+%endif
+%endif
+
 
 %description
 The oslo.i18n library contain utilities for working with internationalization
@@ -66,28 +83,39 @@ sed -i '/warning-is-error/d' setup.cfg
 %build
 %python3_build
 
+%if_without bootstrap
 export PYTHONPATH="$PWD"
 
 # generate html docs
 sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
 %python3_install
+
+%check
+stestr run
 
 %files
 %doc *.rst LICENSE
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
+%if_without bootstrap
 %files tests
 %python3_sitelibdir/*/tests
 
 %files doc
 %doc LICENSE html
+%endif
 
 %changelog
+* Thu Jul 29 2021 Ivan A. Melnikov <iv@altlinux.org> 4.0.1-alt2
+- Add bootstrap toggle.
+- Add %%check section.
+
 * Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt1
 - Automatically updated to 4.0.1.
 - Unify documentation building.
