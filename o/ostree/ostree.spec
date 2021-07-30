@@ -2,7 +2,7 @@
 
 Name: ostree
 Version: 2021.3
-Release: alt1
+Release: alt2
 
 Summary: Linux-based operating system develop/build/deploy tool
 License: LGPLv2+
@@ -126,6 +126,9 @@ rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 %_datadir/gtk-doc/html/ostree/
 
 %changelog
+* Fri Jul 30 2021 Andrey Sokolov <keremet@altlinux.org> 2021.3-alt2
+- add ignition support to grub.cfg generator
+
 * Thu Jul 22 2021 Andrey Sokolov <keremet@altlinux.org> 2021.3-alt1
 - GRUB2 configuration file generation using built-in script
 - set GRUB timeout to 5
