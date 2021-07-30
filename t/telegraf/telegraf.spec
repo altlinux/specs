@@ -1,10 +1,9 @@
 %global import_path github.com/influxdata/telegraf
-%global commit 24a552b90ba06d278cbe0639290a9bee1d7791b6
 
 %global _unpackaged_files_terminate_build 1
 
 Name:		telegraf
-Version:	1.17.3
+Version:	1.19.2
 Release:	alt1
 Summary:	The plugin-driven server agent for collecting and reporting metrics
 
@@ -54,10 +53,10 @@ export GO111MODULE=off
 cd .gopath/src/%import_path
 
 export VERSION=%version
-export COMMIT=%commit
+export COMMIT=%release
 export BRANCH=altlinux
 
-CGO_ENABLED=0 GOGC=off go install -ldflags " -s -w \
+CGO_ENABLED=0 GOGC=off go install -ldflags " \
     -X main.version=$VERSION \
     -X main.commit=$COMMIT \
     -X main.branch=$BRANCH \
@@ -114,6 +113,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Fri Jul 30 2021 Alexey Shabalin <shaba@altlinux.org> 1.19.2-alt1
+- 1.19.2
+
 * Fri Feb 19 2021 Alexey Shabalin <shaba@altlinux.org> 1.17.3-alt1
 - 1.17.3
 
