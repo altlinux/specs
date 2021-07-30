@@ -1,10 +1,9 @@
 %global import_path github.com/prometheus/promu
-%global commit b17dc4f71c810678db907367b392a3e7a14c4038
 
 %global _unpackaged_files_terminate_build 1
 
 Name: promu
-Version: 0.7.0
+Version: 0.12.0
 Release: alt1
 Summary: Prometheus Utility Tool
 
@@ -33,7 +32,7 @@ export GOPATH="$BUILDDIR:%go_path"
 cd .gopath/src/%import_path
 
 export VERSION=%version
-export COMMIT=%commit
+export COMMIT=%release
 export BRANCH=altlinux
 export GOFLAGS="-mod=vendor"
 
@@ -50,6 +49,9 @@ rm -rf -- %buildroot%_datadir
 %_bindir/*
 
 %changelog
+* Fri Jul 30 2021 Alexey Shabalin <shaba@altlinux.org> 0.12.0-alt1
+- 0.12.0
+
 * Tue Jan 26 2021 Alexey Shabalin <shaba@altlinux.org> 0.7.0-alt1
 - 0.7.0
 

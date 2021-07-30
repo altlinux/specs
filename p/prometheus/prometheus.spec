@@ -1,9 +1,8 @@
 %global import_path github.com/prometheus/prometheus
-%global commit e4487274853c587717006eeda8804e597d120340
 %global _unpackaged_files_terminate_build 1
 
 Name: prometheus
-Version: 2.24.1
+Version: 2.28.0
 Release: alt1
 Summary: Prometheus monitoring system and time series database
 
@@ -117,6 +116,9 @@ install -m0644 %SOURCE5 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(775, root, %name) %_localstatedir/%name
 
 %changelog
+* Fri Jul 30 2021 Alexey Shabalin <shaba@altlinux.org> 2.28.0-alt1
+- 2.28.0 (Fixes: CVE-2021-29622)
+
 * Tue Jan 26 2021 Alexey Shabalin <shaba@altlinux.org> 2.24.1-alt1
 - 2.24.1.
 

@@ -1,12 +1,11 @@
 
 %define oname blackbox_exporter
 %global import_path github.com/prometheus/blackbox_exporter
-%global commit 60c86e6ce5a1111f7958b06ae7a08222bb6ec839
 
 %global _unpackaged_files_terminate_build 1
 
 Name: prometheus-%oname
-Version: 0.18.0
+Version: 0.19.0
 Release: alt1
 Summary: Prometheus blackbox prober exporter
 
@@ -36,6 +35,7 @@ The blackbox exporter allows blackbox probing of endpoints over HTTP, HTTPS, DNS
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
+export GOFLAGS="-mod=vendor"
 %golang_prepare
 promu build
 
@@ -67,6 +67,9 @@ install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
 %config(noreplace) %_sysconfdir/prometheus/blackbox.yml
 
 %changelog
+* Fri Jul 30 2021 Alexey Shabalin <shaba@altlinux.org> 0.19.0-alt1
+- 0.19.0
+
 * Tue Jan 26 2021 Alexey Shabalin <shaba@altlinux.org> 0.18.0-alt1
 - 0.18.0
 
