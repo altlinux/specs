@@ -10,8 +10,8 @@
 %define _cmake__builddir build
 
 Name: cmake
-Version: 3.21.0
-Release: alt3
+Version: 3.21.1
+Release: alt1
 
 Summary: Cross-platform, open-source make system
 
@@ -333,6 +333,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Thu Jul 29 2021 Vitaly Lipatov <lav@altlinux.ru> 3.21.1-alt1
+- new version
+
 * Sat Jul 24 2021 Vitaly Lipatov <lav@altlinux.ru> 3.21.0-alt3
 - fix build
 
