@@ -2,7 +2,7 @@
 
 Name: summain
 Version: 0.20
-Release: alt2
+Release: alt3
 
 Summary: File manifest generator
 License: GPLv3+
@@ -55,6 +55,9 @@ chmod 755 %buildroot%python3_sitelibdir/_summain.cpython-%{py_vers_nodot}.so
 
 
 %changelog
+* Fri Jul 30 2021 Stanislav Levin <slev@altlinux.org> 0.20-alt3
+- Fixed build on e2k (thanks to ilyakurdyukov@).
+
 * Fri Mar 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.20-alt2
 - Porting to python3.
 
