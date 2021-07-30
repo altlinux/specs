@@ -1,11 +1,11 @@
 %add_findreq_skiplist /usr/share/make-initrd/features/*
 
 Name: make-initrd-netboot
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: Netboot feature for make-initrd
-License: GPL
+License: GPLv2+
 Group: System/Base
 
 Source0: %name-%version.tar
@@ -38,6 +38,9 @@ cp -a netboot %buildroot/usr/share/make-initrd/features/
 %_datadir/make-initrd/features/netboot
 
 %changelog
+* Fri Jul 30 2021 Dmitry V. Levin <ldv@altlinux.org> 0.4.2-alt1
+- Fixed handling of more than a single ntp server (by Gleb Fotengauer-Malinovskiy).
+
 * Fri Dec 18 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.1-alt1
 - Fixed dhcpcd >= 9.0.0 support (quote all lease variable values).
 
