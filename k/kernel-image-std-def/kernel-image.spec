@@ -1,8 +1,8 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt1.1
 epoch:2
 %define kernel_base_version	5.10
-%define kernel_sublevel .53
+%define kernel_sublevel .54
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -59,11 +59,7 @@ Patch0: %name-%version-%release.patch
 %if "%sub_flavour" == "pae"
 ExclusiveArch: i586
 %else
-%if "%sub_flavour" == "debug"
-ExclusiveArch: i586 x86_64 ppc64le
-%else
 ExclusiveArch: i586 x86_64 ppc64le aarch64 armh
-%endif
 %endif
 
 %define make_target bzImage
@@ -662,6 +658,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Fri Jul 30 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.54-alt1.1
+- Null dereference fixed
+
+* Wed Jul 28 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.54-alt1
+- v5.10.54
+
 * Mon Jul 26 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.53-alt1
 - v5.10.53
 
@@ -734,6 +736,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 
 * Fri Apr 09 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.28-alt1
 - v5.10.28
+
+* Thu Apr 08 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.4.110-alt1
+- v5.4.110
 
 * Wed Mar 31 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.4.109-alt1
 - v5.4.109
