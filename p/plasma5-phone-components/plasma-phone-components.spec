@@ -2,8 +2,8 @@
 %def_disable dialer
 
 Name: plasma5-phone-components
-Version: 5.22.3
-Release: alt2
+Version: 5.22.4
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -88,6 +88,9 @@ sed -i 's|\(.*add_subdirectory.*dialer.*\)|#\1|' CMakeLists.txt
 %_datadir/xsessions/plasma-mobile.desktop
 
 %changelog
+* Tue Jul 27 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.4-alt1
+- new version
+
 * Fri Jul 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.3-alt2
 - fix package
 

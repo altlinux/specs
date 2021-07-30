@@ -11,7 +11,7 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma5-%rname
-Version: 5.22.3
+Version: 5.22.4
 Release: alt1
 %K5init no_altplace appdata
 
@@ -148,7 +148,7 @@ KF5 library
 %K5install
 mv %buildroot/%_libdir/plasma-discover/lib*.so* %buildroot/%_libdir/
 
-%K5install_move data libdiscover discover locale knsrcfiles kpackage
+%K5install_move data libdiscover discover locale kpackage
 
 mkdir -p %buildroot/%_K5xdgconf/plasma-workspace/env/
 install -m 0755 %SOURCE1 %buildroot/%_K5xdgconf/plasma-workspace/env/%{name}-flatpak.sh
@@ -190,7 +190,6 @@ done
 
 %files kns
 %_K5plug/discover/kns-backend.so
-%_K5data/knsrcfiles/*.knsrc
 
 %files packagekit
 %_K5plug/discover/packagekit-backend.so
@@ -222,6 +221,9 @@ done
 
 
 %changelog
+* Tue Jul 27 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.4-alt1
+- new version
+
 * Wed Jul 07 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.3-alt1
 - new version
 

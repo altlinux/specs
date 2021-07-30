@@ -1,8 +1,8 @@
 %define rname kinfocenter
 
 Name: plasma5-%rname
-Version: 5.22.3
-Release: alt2
+Version: 5.22.4
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -96,6 +96,9 @@ KF5 library
 %_K5srvtyp/*
 
 %changelog
+* Tue Jul 27 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.4-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.3-alt2
 - fix build requires libusb
 
