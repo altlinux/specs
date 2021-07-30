@@ -1,10 +1,10 @@
 %define oname oslotest
 
-%def_disable check
+%def_enable check
 
 Name: python3-module-%oname
 Version: 4.2.0
-Release: alt1
+Release: alt2
 Summary: OpenStack test framework
 License: ASLv2.0
 Group: Development/Python3
@@ -19,6 +19,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
+
+%if_enabled check
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-subunit
 BuildRequires: python3-module-six >= 1.10.0
@@ -40,6 +42,7 @@ BuildRequires: python3-module-debtcollector >= 1.2.0
 BuildRequires: python3-module-openstackdocstheme
 BuildRequires: python3-module-reno
 BuildRequires: python3-module-oslo.config
+%endif
 
 %py3_provides %oname
 
@@ -88,7 +91,6 @@ popd
 
 %check
 python3 setup.py test
-py.test-%_python3_version
 
 %files
 %doc *.rst
@@ -96,6 +98,9 @@ py.test-%_python3_version
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jul 30 2021 Ivan A. Melnikov <iv@altlinux.org> 4.2.0-alt2
+- Enable %%check.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
 - Automatically updated to 4.2.0.
 
