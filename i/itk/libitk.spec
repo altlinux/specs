@@ -11,7 +11,7 @@
 
 Name: itk
 Version: %itkver.2
-Release: alt4
+Release: alt5
 
 Group: System/Libraries
 Summary: Toolkit for N-dimensional scientific image processing, segmentation, and registration.
@@ -216,8 +216,8 @@ rm -rf Modules/ThirdParty/DoubleConversion/src
 rm -rf Modules/ThirdParty/GoogleTest/src
 
 %build
-%ifarch aarch64
-# limit build jobs on aarch64
+%ifarch aarch64 ppc64le
+# limit build jobs on aarch64 and ppc64le to prevent resources exhaustion
 if [ %__nprocs -gt 8 ] ; then
 	export NPROCS=8
 fi
@@ -396,6 +396,9 @@ install -D -m755 -t %buildroot%_libdir/%name-examples/ %_cmake__builddir/bin/*
 %_libdir/libITKVtkGlue-%itkver.so.*
 
 %changelog
+* Fri Jul 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.2-alt5
+- Circumvented build issues on ppc64le too.
+
 * Fri Jul 23 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.2-alt4
 - Circumvented build issues on aarch64.
 
