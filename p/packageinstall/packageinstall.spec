@@ -1,11 +1,11 @@
 Name:	 packageinstall
-Version: 1.3
+Version: 1.4
 Release: alt1
 Summary: GUI frontend for install packages using apt-get
 
 License: GPL-3.0+
 Group:   System/Configuration/Packaging
-URL:     http://www.altlinux.org/PackageInstall
+URL:     http://www.altlinux.org/Install
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -47,6 +47,10 @@ for f in *.qm; do install -m 0644 $f %buildroot/%_datadir/apps/%name/ ||: ; done
 %config(noreplace) %_sysconfdir/security/console.apps/%name
 
 %changelog
+* Fri Jul 30 2021 Andrey Cherepanov <cas@altlinux.org> 1.4-alt1
+- Fix progress calculation by hash count (ALT #40479).
+- README: fix URL and copyright notes (ALT #40511).
+
 * Tue Jul 13 2021 Andrey Cherepanov <cas@altlinux.org> 1.3-alt1
 - Fix Russian localization for group of processed packages (ALT #30931).
 
