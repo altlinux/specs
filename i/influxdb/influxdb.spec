@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:		influxdb
-Version:	1.8.6
+Version:	1.8.7
 Release:	alt1
 Summary:	Distributed time-series database
 
@@ -118,6 +118,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Fri Jul 30 2021 Alexey Shabalin <shaba@altlinux.org> 1.8.7-alt1
+- 1.8.7
+
 * Thu Jun 24 2021 Alexey Shabalin <shaba@altlinux.org> 1.8.6-alt1
 - 1.8.6
 
