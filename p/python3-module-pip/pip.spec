@@ -6,7 +6,7 @@
 
 Name: python3-module-pip
 Version: 21.2.1
-Release: alt1
+Release: alt2
 
 Summary: The PyPA recommended tool for installing Python packages
 License: MIT
@@ -38,6 +38,8 @@ BuildRequires: python3(tox_no_deps)
 %endif
 
 Obsoletes: python3-module-pip-pickles
+# due to file conflict on /usr/bin/pip: https://bugzilla.altlinux.org/40612
+Conflicts: python-module-pip
 
 %description
 %summary
@@ -103,6 +105,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
 %endif
 
 %changelog
+* Fri Jul 30 2021 Stanislav Levin <slev@altlinux.org> 21.2.1-alt2
+- Added conflict to python2-pip (closes: #40612).
+
 * Mon Jul 26 2021 Stanislav Levin <slev@altlinux.org> 21.2.1-alt1
 - 21.1.2 -> 21.2.1.
 
