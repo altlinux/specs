@@ -1,5 +1,5 @@
 # check deps/npm/package.json for it
-%define npmver 6.14.12
+%define npmver 6.14.14
 # separate build npm
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
@@ -24,10 +24,10 @@
 %define openssl_version 1.1.1k
 %def_with systemssl
 
-%global libuv_abi 1.41.0-alt3
+%global libuv_abi 1.41.1-alt1
 %def_with systemuv
 
-%global libicu_abi 6.7
+%global libicu_abi 6.5
 # rpm-build-info gives _distro_version
 %if %_vendor == "alt" && (%_distro_version == "Sisyphus")
 %def_with systemicu
@@ -50,7 +50,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.2
+Version: %major.4
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -101,8 +101,7 @@ BuildRequires: libnghttp2-devel >= %libnghttp2_abi
 BuildRequires: libhttp-parser-devel >= 2.9.2-alt2
 %endif
 
-# c-ares, see https://bugzilla.altlinux.org/show_bug.cgi?id=39303
-BuildRequires: libcares-devel >= 1.16.1-alt2
+BuildRequires: libcares-devel >= 1.17.1-alt1
 
 BuildRequires: curl
 
@@ -380,6 +379,12 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Fri Jul 30 2021 Vitaly Lipatov <lav@altlinux.ru> 14.17.4-alt1
+- new version 14.17.4 (with rpmrb script)
+- CVE-2021-22930: Use after free on close http2 on stream canceling (High)
+- set npm >= 6.14.14
+- restore minimum ICU version to 65
+
 * Thu Jul 01 2021 Vitaly Lipatov <lav@altlinux.ru> 14.17.2-alt1
 - new version 14.17.2 (with rpmrb script)
 - CVE-2021-22918: Out of bounds read (set libuv >= 1.41.0-alt3)
