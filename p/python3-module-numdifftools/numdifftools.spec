@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.9.39
-Release: alt1
+Release: alt2
 
 Summary: Solves automatic numerical differentiation problems in one or more variables
 
@@ -18,7 +18,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-scipy
-BuildPreReq: python3-module-numpy-addons python3-module-matplotlib
+BuildPreReq: python3-module-numpy python3-module-matplotlib
 BuildPreReq: python3-module-coverage python3-module-setuptools
 BuildPreReq: python3-module-setuptools_scm python3-module-six
 BuildPreReq: python3-module-algopy
@@ -64,6 +64,9 @@ xvfb-run py.test-%_python3_version -vv -rsxXf
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jul 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.39-alt2
+- Updated build dependencies.
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.39-alt1
 - new version 0.9.39 (with rpmrb script)
 - disable check (need rewrite)
