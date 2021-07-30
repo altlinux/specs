@@ -1,9 +1,7 @@
-%def_enable boost
-%def_disable boost_pool
-%def_enable system_asio
+%define _unpackaged_files_terminate_build 1
 
 Name: galera
-Version: 26.4.6
+Version: 26.4.9
 Release: alt1
 Summary: Synchronous multi-master wsrep provider (replication engine)
 Group: System/Servers
@@ -20,12 +18,12 @@ Source4: garbd.conf
 # git submodules
 Source100: wsrep.tar
 
-ExcludeArch: %arm
+Patch: %name-%version.patch
 
-BuildRequires: gcc-c++ scons
-%{?_enable_boost:BuildRequires: boost-devel boost-program_options-devel}
-%{?_enable_system_asio:BuildRequires: asio-devel}
-
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++ cmake ctest
+BuildRequires: boost-devel boost-program_options-devel boost-signals-devel
+BuildRequires: asio-devel
 BuildRequires: libcheck-devel libssl-devel zlib-devel
 
 %description
@@ -59,29 +57,30 @@ replication engine see http://www.codership.com.
 %prep
 %setup
 tar -xf %SOURCE100 -C wsrep/src
+%patch -p1
+echo %release > GALERA_GIT_REVISION
 
 %build
-export CFLAGS="%optflags"
-export CXXFLAGS="%optflags"
-export CPPFLAGS="%optflags"
-scons %{?_smp_mflags} \
-    revno=%release \
-    %{?_disable_boost:boost=0} \
-    %{?_enable_boost_pool:boost_pool=1} \
-    %{?_disable_system_asio:system_asio=0} \
-    strict_build_flags=0
+%cmake
+%cmake_build
 
 %install
+%cmake_install
+rm -rf %buildroot/usr/doc
+rm -rf %buildroot/usr/share/garb*
 install -D -m 755 %SOURCE1 %buildroot%_initdir/garbd
 install -D -m 644 %SOURCE2 %buildroot%_unitdir/garbd.service
 mkdir -p %buildroot{%_localstatedir,%_logdir}/garbd
 install -D -m 644 %SOURCE3 %buildroot%_tmpfilesdir/garbd.conf
 install -D -m 644 %SOURCE4 %buildroot%_sysconfdir/garbd/garbd.conf
-install -D -m 755 garb/garbd %buildroot%_sbindir/garbd
-install -D -m 644 libgalera_smm.so %buildroot%_libdir/galera/libgalera_smm.so
+#install -D -m 755 garb/garbd %buildroot%_sbindir/garbd
+#install -D -m 644 libgalera_smm.so %buildroot%_libdir/galera/libgalera_smm.so
 install -D -m 644 COPYING %buildroot%_docdir/galera/COPYING
 install -D -m 644 scripts/packages/README %buildroot%_docdir/galera/README
 install -D -m 644 scripts/packages/README-MySQL %buildroot%_docdir/galera/README-MySQL
+
+%check
+%cmake_build --target test
 
 %pre garbd
 groupadd -r -f _garbd
@@ -104,6 +103,7 @@ useradd -r -g _garbd -c "Galera Arbitrator Daemon" -d %_localstatedir/garbd -s /
 %attr(0750,_garbd,_garbd) %dir %_localstatedir/garbd
 %attr(3770,root,_garbd) %dir %_logdir/garbd
 %_sbindir/garbd
+%_man8dir/garbd.*
 %_unitdir/garbd.service
 %_initdir/garbd
 %_tmpfilesdir/garbd.conf
@@ -112,6 +112,10 @@ useradd -r -g _garbd -c "Galera Arbitrator Daemon" -d %_localstatedir/garbd -s /
 %doc %_docdir/galera/README-MySQL
 
 %changelog
+* Fri Jul 30 2021 Alexey Shabalin <shaba@altlinux.org> 26.4.9-alt1
+- 26.4.9
+- Changed build system from Scons to CMake.
+
 * Wed Nov 11 2020 Alexey Shabalin <shaba@altlinux.org> 26.4.6-alt1
 - 26.4.6
 
