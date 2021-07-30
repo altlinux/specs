@@ -1,5 +1,5 @@
 Name: kernel-image-std-debug
-Release: alt1
+Release: alt1.1
 epoch:2
 %define kernel_base_version	5.10
 %define kernel_sublevel .54
@@ -658,6 +658,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Fri Jul 30 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.54-alt1.1
+- Null dereference fixed
+
 * Wed Jul 28 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.54-alt1
 - v5.10.54
 
