@@ -9,7 +9,7 @@
 %def_without ffmpeg_static
 
 Name: telegram-desktop
-Version: 2.8.11
+Version: 2.9.0
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -167,7 +167,7 @@ or business messaging needs.
 
 %prep
 %setup
-%patch -p2
+#patch -p2
 %__subst "s|set(webrtc_build_loc.*|set(webrtc_build_loc %_libdir)|" cmake/external/webrtc/CMakeLists.txt
 # TODO: there are incorrec using and linking libyuv
 %__subst "s|\(desktop-app::external_rnnoise\)|\1 -lyuv|" Telegram/cmake/lib_tgcalls.cmake
@@ -236,6 +236,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Fri Jul 30 2021 Vitaly Lipatov <lav@altlinux.ru> 2.9.0-alt1
+- new version 2.9.0 (with rpmrb script)
+
 * Mon Jul 19 2021 Vitaly Lipatov <lav@altlinux.ru> 2.8.11-alt1
 - new version 2.8.11 (with rpmrb script)
 
