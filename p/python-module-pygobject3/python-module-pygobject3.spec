@@ -7,11 +7,11 @@
 %def_enable pycairo
 %def_disable devel_doc
 %def_disable tests
-%def_enable check
+%def_disable check
 
 Name: python-module-%{_name}3
 Version: %ver_major.1
-Release: alt4
+Release: alt5
 
 Summary: Python bindings for GObject
 Group: Development/Python
@@ -41,10 +41,10 @@ Requires: typelib(GdkX11) = %gtk_api_ver
 BuildRequires(pre): meson rpm-build-gir rpm-build-python
 BuildRequires: gtk-doc
 BuildRequires: glib2-devel >= %glib_ver libgio-devel libffi-devel
-BuildRequires: python-devel python-modules-encodings python-module-pytest
+BuildRequires: python-devel python-modules-encodings python-module-setuptools
 %{?_enable_pycairo:BuildRequires: python-module-pycairo-devel >= %pycairo_ver libcairo-gobject-devel}
 BuildRequires: gobject-introspection-devel >= %gi_ver
-%{?_enable_check:BuildRequires: xvfb-run dbus-tools-gui libgtk+3-gir-devel glibc-i18ndata}
+%{?_enable_check:BuildRequires: xvfb-run python-module-pytest dbus-tools-gui libgtk+3-gir-devel glibc-i18ndata}
 
 %description
 GObject is a object system used by GTK+, GStreamer and other libraries.
@@ -115,6 +115,9 @@ xvfb-run %meson_test
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Sat Jul 31 2021 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt5
+- disabled %%check (python-modules-pytest was removed from Sisyphus)
+
 * Mon Nov 23 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt4
 - pygtkcompat: removed dependency on old gtk2-based WebKit-1.0
 
