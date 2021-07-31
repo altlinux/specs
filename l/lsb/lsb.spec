@@ -25,40 +25,42 @@
 %define lsb_arch mipsel
 %define lib_suffix %nil
 %endif
+%ifarch ppc64le
+%define lsb_arch ppc64
+%define lib_suffix ()(64bit)
+%endif
 
 Name: lsb
-Version: 4.0
-Release: alt12
+Version: 5.0
+Release: alt1
 
 Summary: The skeleton package defining packages needed for LSB compliance
 
-License: GPLv2
+License: GPL-2.0
 Url: http://www.linuxbase.org/
 Group: System/Base
 
 Source1: README.alt
 
-# 20.4 Installation and Removal of Init Scripts
+# 22.4 Installation and Removal of Init Scripts
 Source11: install_initd
 Source12: remove_initd
 
 # B.2 Commands And Utilities
 # lsbinstall -- installation tool for various types of data
-# XXX:
 Source21: lsbinstall
 
-ExclusiveArch: %ix86 x86_64 %e2k aarch64 armh mipsel
+ExclusiveArch: %ix86 x86_64 %e2k aarch64 armh mipsel ppc64le
 
 Requires: lsb-core = %version
-Requires: lsb-cxx = %version
 Requires: lsb-desktop = %version
 Requires: lsb-languages = %version
-Requires: lsb-printing = %version
+Requires: lsb-imaging = %version
 
 %description
 LSB metapackage. This package provides an implementation of all mandatory
 modules of the Linux Standard Base:
-Core, C++, Desktop, Interpreted Languages, Printing.
+Core, C++, Desktop, Interpreted Languages, Imaging.
 
 Necessary tools, links, and dependencies for the Linux Standard Base (LSB).
 
@@ -68,16 +70,14 @@ upon.
 
 ##############################
 ##############################
-# LSB 4.0 defines next modules
-# MODULE      ARCHITUCTURE DEPENDENT/INDEPENDENT
+# LSB 5.0 defines next modules
+# MODULE      ARCHITECTURE DEPENDENT/INDEPENDENT
 # * Core      dependent
-# * CXX       dependent
 # * Desktop   dependent
 # * Languages independent
-# * Printing  independent
+# * Imaging   independent
 # * TrialUse  independent
-# http://www.linuxfoundation.org/en/Specifications
-# http://dev.linuxfoundation.org/navigator/browse/module.php
+# https://refspecs.linuxfoundation.org/lsb.shtml
 # define for each separate package
 ##############################
 ##############################
@@ -89,7 +89,7 @@ upon.
 Summary: Linux Standard Base %version core support package
 Group: System/Base
 
-# 22.6 Package Dependencies
+# 25.6 Package Dependencies
 #
 # lsb-core-arch
 #      This dependency is used to indicate that the application is dependent on
@@ -100,20 +100,18 @@ Group: System/Base
 #      features contained in the LSB-Core specification and that the package does
 #      not contain any architecture specific files.
 #
-#      These dependencies shall have a version of 4.0.
-
+#      These dependencies shall have a version of 5.0.
 Provides: lsb-core-noarch = %version
 Provides: lsb-core-%lsb_arch = %version
 Provides: lsb-core-noarch = %compat_version
 Provides: lsb-core-%lsb_arch = %compat_version
 
+Provides: %name-cxx = %EVR
+Obsoletes: %name-cxx < %EVR
+
 Requires: lsb-init = %version
 
-# 15.1. Commands and Utilities
-# http://refspecs.linux-foundation.org/LSB_4.0.0/LSB-Core-generic/LSB-Core-generic/command.html
-# http://dev.linuxfoundation.org/navigator/browse/command.php?changever=3.2&changearch=1
-# http://dev.linuxfoundation.org/navigator/browse/module.php?cmd=display_module&module=LSB_Core
-# Commands (139 entries)
+# Table 17-1. Commands And Utilities
 # Commands with predefined path
 Requires: /bin/cat
 Requires: /bin/chgrp
@@ -134,7 +132,7 @@ Requires: /usr/sbin/groupmod
 Requires: /bin/gunzip
 Requires: /bin/gzip
 Requires: /bin/hostname
-# Requires:       /usr/lib/lsb/install_initd supplied by lsb-core package
+# Requires: /usr/lib/lsb/install_initd supplied by lsb-core package
 Requires: /bin/kill
 Requires: /bin/ln
 Requires: /bin/ls
@@ -146,7 +144,7 @@ Requires: /bin/mount
 Requires: /bin/mv
 Requires: /bin/ps
 Requires: /bin/pwd
-# Requires:       /usr/lib/lsb/remove_initd supplied by lsb-core package
+# Requires: /usr/lib/lsb/remove_initd supplied by lsb-core package
 Requires: /bin/rm
 Requires: /bin/rmdir
 Requires: /bin/sed
@@ -164,7 +162,6 @@ Requires: /usr/sbin/userdel
 Requires: /usr/sbin/usermod
 Requires: /bin/zcat
 # Commands without predefined path
-# search path in ALTLinux with: cmd="ar at..."; for i in $cmd; do which "$i"; done
 Requires: /usr/bin/ar
 Requires: /usr/bin/at
 Requires: /bin/awk
@@ -200,6 +197,7 @@ Requires: /usr/bin/groups
 Requires: /bin/head
 Requires: /usr/bin/iconv
 Requires: /usr/bin/id
+Requires: /usr/bin/infocmp
 Requires: /bin/install
 Requires: /usr/bin/ipcrm
 Requires: /usr/bin/ipcs
@@ -233,15 +231,19 @@ Requires: /bin/pidof
 Requires: /usr/bin/pr
 Requires: /usr/bin/printf
 Requires: /usr/bin/renice
+Requires: /usr/bin/seq
 Requires: /bin/sleep
 Requires: /bin/sort
 Requires: /usr/bin/split
+Requires: /usr/bin/strings
 Requires: /usr/bin/strip
 Requires: /bin/stty
 Requires: /bin/tail
 Requires: /usr/bin/tee
 Requires: /usr/bin/test
+Requires: /usr/bin/tic
 Requires: /usr/bin/time
+Requires: /bin/tput
 Requires: /bin/touch
 Requires: /usr/bin/tr
 Requires: /usr/bin/tsort
@@ -250,28 +252,30 @@ Requires: /usr/bin/unexpand
 Requires: /usr/bin/uniq
 Requires: /bin/wc
 Requires: /bin/xargs
-Requires: /usr/bin/seq
-# Table 15-2. Built In Utilities
-# http://refspecs.linux-foundation.org/LSB_4.0.0/LSB-Core-generic/LSB-Core-generic/command.html
-# cd getopts type umask
-# command read ulimit wait
 
 # Required libs for LSB_Core:
-# http://dev.linuxfoundation.org/navigator/browse/module.php?cmd=display_module&module=LSB_Core
+# Table 3-1. Standard Library Names
+# http://refspecs.linux-foundation.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic.html#RLIBRARIES
 # Common for %ix86 x86_64
-Requires: libm.so.6%lib_suffix
-Requires: libdl.so.2%lib_suffix
 Requires: libcrypt.so.1%lib_suffix
-Requires: libz.so.1%lib_suffix
+Requires: libdl.so.2%lib_suffix
+Requires: libgcc_s.so.1%lib_suffix
 Requires: libncurses.so.5%lib_suffix
-Requires: libutil.so.1%lib_suffix
-Requires: libc.so.6%lib_suffix
+Requires: libncurses.so.5%lib_suffix
+Requires: libncursesw.so.5%lib_suffix
+Requires: libnspr4.so%lib_suffix
+Requires: libnss3.so%lib_suffix
+Requires: libpam.so.0%lib_suffix
 Requires: libpthread.so.0%lib_suffix
 Requires: librt.so.1%lib_suffix
-Requires: libpam.so.0%lib_suffix
-Requires: libgcc_s.so.1%lib_suffix
-# Special libs
-# http://dev.linuxfoundation.org/navigator/browse/lib_single.php?cmd=list-by-name&Section=ABI&Lname=proginterp
+Requires: libssl3.so%lib_suffix
+Requires: libstdc++.so.6%lib_suffix
+Requires: libutil.so.1%lib_suffix
+Requires: libz.so.1%lib_suffix
+# Table 3-2. Standard Library Names defined in the Architecture Specific Parts of the LSB Core Specification
+Requires: libc.so.6%lib_suffix
+Requires: libm.so.6%lib_suffix
+# proginterp
 %ifarch %ix86
 # see %install section Requires: /lib/ld-lsb.so.3
 Requires: ld-linux.so.2%lib_suffix
@@ -287,6 +291,9 @@ Requires: ld-linux.so.2%lib_suffix
 %ifarch mipsel
 Requires: ld.so.1%lib_suffix
 %endif
+%ifarch ppc64le
+Requires: ld64.so.2%lib_suffix
+%endif
 
 %description core
 This is the Core module of the Linux Standard Base (LSB), ISO/IEC 23360
@@ -299,37 +306,8 @@ built upon the core.
 # END Module Core
 #################
 
-############
-# Module CXX
-############
-%package cxx
-Summary: Linux Standard Base %version cxx support package
-Group: System/Base
-Requires: %name-core = %version
-
-Provides: lsb-cxx-noarch = %version
-Provides: lsb-cxx-%lsb_arch = %version
-Provides: lsb-cxx-noarch = %compat_version
-Provides: lsb-cxx-%lsb_arch = %compat_version
-
-# http://dev.linuxfoundation.org/navigator/browse/module.php?cmd=display_module&module=LSB_Cpp
-Requires: libstdc++.so.6%lib_suffix
-
-%description cxx
-The cxx requirements for LSB compliance.
-################
-# END Module CXX
-################
-
 ################
 # Module Desktop
-#       Have next submodules:
-#       * Graphics
-#       * Graphics_Ext
-#       * Toolkit_Gtk
-#       * Toolkit_Qt
-#       * Toolkit_Qt3
-#       * XML
 ################
 %package desktop
 Summary: Linux Standard Base %version desktop support package
@@ -349,75 +327,65 @@ Provides: lsb-graphics-%lsb_arch = %version
 Provides: lsb-graphics-noarch = %compat_version
 Provides: lsb-graphics-%lsb_arch = %compat_version
 
-# Submodule Graphics
-# http://dev.linuxfoundation.org/navigator/browse/module.php?cmd=display_module&module=LSB_Graphics
+# https://refspecs.linuxfoundation.org/LSB_5.0.0/LSB-Desktop-generic/LSB-Desktop-generic/requirements.html
 Requires: libX11.so.6%lib_suffix
 Requires: libXt.so.6%lib_suffix
 Requires: libGL.so.1%lib_suffix
+Requires: libGLU.so.1%lib_suffix
 Requires: libXext.so.6%lib_suffix
 Requires: libICE.so.6%lib_suffix
 Requires: libSM.so.6%lib_suffix
 Requires: libXi.so.6%lib_suffix
-Requires: libGLU.so.1%lib_suffix
 Requires: libXtst.so.6%lib_suffix
 
-# XXX@stanv: graphics is submodule of desktop module:
-# http://dev.linuxfoundation.org/navigator/browse/module.php
-# Another distros provide this sub-module as independent module. Why ???
-# AEN@altlinux: "Lets be as all others!".
-# https://bugzilla.altlinux.org/show_bug.cgi?id=25877
-
-Provides: lsb-graphics-noarch = %version
-Provides: lsb-graphics-%lsb_arch = %version
-Provides: lsb-graphics-noarch = %compat_version
-Provides: lsb-graphics-%lsb_arch = %compat_version
-
-# Submodule Graphics_Ext
-# http://dev.linuxfoundation.org/navigator/browse/module.php?cmd=display_module&module=LSB_Graphics_Ext
 Requires: libfontconfig.so.1%lib_suffix
 Requires: libpng12.so.0%lib_suffix
 Requires: libjpeg.so.62%lib_suffix
 Requires: libXrender.so.1%lib_suffix
 Requires: libfreetype.so.6%lib_suffix
-Requires: libXft.so.2%lib_suffix
-Requires: libcairo.so.2%lib_suffix
-Requires: /usr/bin/fc-cache
-Requires: /usr/bin/fc-list
-Requires: /usr/bin/fc-match
+Requires: libtiff.so.5%lib_suffix
+Requires: libxcb.so.1%lib_suffix
 
-# Submodule Toolkit_Gtk
-# http://dev.linuxfoundation.org/navigator/browse/module.php?cmd=display_module&module=LSB_Toolkit_Gtk
-Requires: libglib-2.0.so.0%lib_suffix
-Requires: libgobject-2.0.so.0%lib_suffix
-Requires: libgmodule-2.0.so.0%lib_suffix
-Requires: libgthread-2.0.so.0%lib_suffix
+# GTK
 Requires: libatk-1.0.so.0%lib_suffix
-Requires: libpango-1.0.so.0%lib_suffix
-Requires: libpangoxft-1.0.so.0%lib_suffix
-Requires: libpangoft2-1.0.so.0%lib_suffix
+Requires: libcairo.so.2%lib_suffix
+Requires: libcairo-gobject.so.2%lib_suffix
+Requires: libcairo-script-interpreter.so.2%lib_suffix
+Requires: libgdk-x11-2.0.so.0%lib_suffix
 Requires: libgdk_pixbuf-2.0.so.0%lib_suffix
 Requires: libgdk_pixbuf_xlib-2.0.so.0%lib_suffix
-Requires: libgdk-x11-2.0.so.0%lib_suffix
+Requires: libgio-2.0.so.0%lib_suffix
+Requires: libglib-2.0.so.0%lib_suffix
+Requires: libgmodule-2.0.so.0%lib_suffix
+Requires: libgobject-2.0.so.0%lib_suffix
+Requires: libgthread-2.0.so.0%lib_suffix
 Requires: libgtk-x11-2.0.so.0%lib_suffix
+Requires: libpango-1.0.so.0%lib_suffix
 Requires: libpangocairo-1.0.so.0%lib_suffix
+Requires: libpangoft2-1.0.so.0%lib_suffix
+Requires: libpangoxft-1.0.so.0%lib_suffix
 
-# Submodule Toolkit_Qt
-# http://dev.linuxfoundation.org/navigator/browse/module.php?cmd=display_module&module=LSB_Toolkit_Qt
+# Qt
 Requires: libQtCore.so.4%lib_suffix
 Requires: libQtGui.so.4%lib_suffix
 Requires: libQtNetwork.so.4%lib_suffix
-Requires: libQtXml.so.4%lib_suffix
 Requires: libQtOpenGL.so.4%lib_suffix
 Requires: libQtSql.so.4%lib_suffix
 Requires: libQtSvg.so.4%lib_suffix
+Requires: libQtXml.so.4%lib_suffix
 
-# Submodule Toolkit_Qt3
-# http://dev.linuxfoundation.org/navigator/browse/module.php?cmd=display_module&module=LSB_Toolkit_Qt3
-Requires: libqt-mt.so.3%lib_suffix
+# ALSA
+Requires: libasound.so.2%lib_suffix
 
-# Submodule XML
-# http://dev.linuxfoundation.org/navigator/browse/module.php?cmd=display_module&module=LSB_XML
-Requires: libxml2.so.2%lib_suffix
+# Table 21-1. Commands And Utilities
+# https://refspecs.linuxfoundation.org/LSB_5.0.0/LSB-Desktop-generic/LSB-Desktop-generic/deskcmd.html#AEN171419
+Requires: /usr/bin/xdg-desktop-icon
+Requires: /usr/bin/xdg-desktop-menu
+Requires: /usr/bin/xdg-email
+Requires: /usr/bin/xdg-icon-resource
+Requires: /usr/bin/xdg-mime
+Requires: /usr/bin/xdg-open
+Requires: /usr/bin/xdg-screensaver
 
 %description desktop
 The desktop requirements for LSB compliance.
@@ -427,9 +395,6 @@ The desktop requirements for LSB compliance.
 
 ##################
 # Module Languages
-#       Have next submodules:
-#       * Perl
-#       * Python
 ##################
 %package languages
 Summary: Linux Standard Base %version languages support package
@@ -439,46 +404,74 @@ Requires: %name-core = %version
 Provides: lsb-languages-noarch = %version
 Provides: lsb-languages-noarch = %compat_version
 
-# Submodule Perl
-# http://dev.linuxfoundation.org/navigator/browse/module.php?cmd=display_module&module=LSB_Perl
-# http://dev.linuxfoundation.org/navigator/browse/intlang.php?cmd=list-modules&ILid=1
-Requires: perl-base >= 5.8.8
-Requires: /usr/bin/perl
-Requires: perl-DBM
-Requires: perl-Attribute-Handlers
-Requires: perl-devel
-Requires: perl-CGI
-Requires: perl-CPAN
-Requires: perl-Encode
-Requires: perl-Filter
-Requires: perl-Filter-Simple
-Requires: perl-I18N-LangTags
-Requires: perl-Locale-Maketext
-Requires: perl-Locale-Codes
-Requires: perl-Math-BigRat
-Requires: perl-Math-BigInt
-Requires: perl-Memoize
-Requires: perl-NEXT
-Requires: perl-libnet
-Requires: perl-PerlIO
-Requires: perldoc
-Requires: perl-Storable
-Requires: perl-Switch
-Requires: perl-Term-ReadLine-Gnu
-Requires: perl-Text-Balanced
-Requires: perl-Text-Soundex
-Requires: perl-Unicode-Collate
-Requires: perl-Unicode-Normalize
-Requires: perl-unicore
-Requires: perl4-compat
-Requires: perl-bignum
+# Table 3-1. Standard Library Names
+# https://refspecs.linuxfoundation.org/LSB_5.0.0/LSB-Languages/LSB-Languages/requirements.html#RLIBRARIES
+Requires: libxml2.so.2%lib_suffix
+Requires: libxslt.so.1%lib_suffix
 
-# Submodule Python
-# http://dev.linuxfoundation.org/navigator/browse/module.php?cmd=display_module&module=LSB_Python
-# http://dev.linuxfoundation.org/navigator/browse/intlang.php?cmd=list-modules&ILid=2
+# Python
+# https://refspecs.linuxfoundation.org/LSB_5.0.0/LSB-Languages/LSB-Languages/python.html
 Requires: %__python
 #Requires: python2-base >= 2.4.2
 Requires: python-modules
+
+# Perl
+# https://refspecs.linuxfoundation.org/LSB_5.0.0/LSB-Languages/LSB-Languages/perlymodules.html
+Requires: perl-base >= 5.8.8
+Requires: /usr/bin/perl
+Requires: perl-Attribute-Handlers
+Requires: perl-autodie
+Requires: perl-base
+Requires: perl-B-Debug
+Requires: perl-bignum
+Requires: perl-B-Lint
+Requires: perl-CGI
+Requires: perl-CPAN
+Requires: perl-DBM
+Requires: perl-devel
+Requires: perl-Encode
+Requires: perl-Encode-CN
+Requires: perl-Encode-JP
+Requires: perl-Encode-KR
+Requires: perl-Encode-TW
+Requires: perl-Filter
+Requires: perl-Filter-Simple
+Requires: perl-I18N-Collate
+Requires: perl-I18N-LangTags
+Requires: perl-libnet
+Requires: perl-Locale-Codes
+Requires: perl-Locale-Maketext
+Requires: perl-Math-BigInt
+Requires: perl-Math-BigRat
+Requires: perl-Math-Complex
+Requires: perl-Memoize
+Requires: perl-Net-Ping
+Requires: perl-NEXT
+Requires: perl-Pod-Checker
+Requires: perl-Pod-LaTeX
+Requires: perl-podlators
+Requires: perl-Pod-Parser
+Requires: perl-Pod-Perldoc
+Requires: perl-Pod-Usage
+Requires: perl-Term-ANSIColor
+Requires: perl-Term-ReadLine-Gnu
+Requires: perl-Text-Balanced
+Requires: perl-Text-Soundex
+Requires: perl-Tie-File
+Requires: perl-Tie-RefHash
+Requires: perl-Unicode-Collate
+Requires: perl-Unicode-Normalize
+Requires: perl-unicore
+Requires: perl-CGI-Apache
+Requires: perl-Devel-SelfStubber
+Requires: perl-File-CheckTree
+#perl module Math::BigInt::CalcEmu is deprecated: 
+#perl-Math-BigInt 1.999815 2018-10-19
+#
+# * Move bitwise operators signed and, signed or, and signed xor from
+#   lib/Math/BigInt/CalcEmu.pm into lib/Math/BigInt/Lib.pm. The file
+#   lib/Math/BigInt/CalcEmu.pm is no longer needed and thus removed.
+
 %description languages
 The languages requirements for LSB compliance.
 ######################
@@ -486,32 +479,39 @@ The languages requirements for LSB compliance.
 ######################
 
 #################
-# Module Printing
+# Module Imaging
 #################
-%package printing
-Summary: Linux Standard Base %version printing support package
+%package imaging
+Summary: Linux Standard Base %version imaging support package
 Group: System/Base
 Requires: %name-core = %version
 
-Provides: lsb-printing-noarch = %version
-Provides: lsb-printing-noarch = %compat_version
+Provides: lsb-imaging-noarch = %version
+Provides: lsb-imaging-noarch = %compat_version
 
-# http://dev.linuxfoundation.org/navigator/browse/module.php?cmd=display_module&module=LSB_Printing
+Provides: lsb-printing = %EVR
+Obsoletes: lsb-printing < %EVR
+
+# https://refspecs.linuxfoundation.org/LSB_5.0.0/LSB-Imaging/LSB-Imaging/requirements.html#XLIBRARIES
 Requires: libcups.so.2%lib_suffix
 Requires: libcupsimage.so.2%lib_suffix
+Requires: libsane.so.1%lib_suffix
+
+# https://refspecs.linuxfoundation.org/LSB_5.0.0/LSB-Imaging/LSB-Imaging/printcommand.html
 Requires: /usr/bin/foomatic-rip
 Requires: /usr/bin/gs
-%description printing
-The printing requirements for LSB compliance.
+
+%description imaging
+The imaging requirements for LSB compliance.
 #####################
 # END Module Printing
 #####################
 
 #################
 # Module TrialUse
-#       Have next submodules:
-#       * Multimedia
-#       * TUM
+# Have next submodules:
+# * TUM
+# * Gtk3
 #################
 %package trialuse
 Summary: Linux Standard Base %version trialuse support package
@@ -521,30 +521,14 @@ Requires: %name-core = %version
 Provides: lsb-trialuse-noarch = %version
 Provides: lsb-trialuse-noarch = %compat_version
 
-# Submodule Java
-# http://dev.linuxfoundation.org/navigator/browse/module.php?cmd=display_module&module=LSB_Java
-Requires: /usr/bin/java
-Requires: java >= 1.8.0
+# TUM Libraries
+# https://refspecs.linuxfoundation.org/LSB_5.0.0/LSB-TrialUse/LSB-TrialUse/requirements.html
+Requires: libpng15.so.15%lib_suffix
 
-# Submodule Multimedia
-# http://dev.linuxfoundation.org/navigator/browse/module.php?cmd=display_module&module=LSB_Multimedia
-Requires: libasound.so.2%lib_suffix
-
-# Submodule Security
-# http://dev.linuxfoundation.org/navigator/browse/module.php?cmd=display_module&module=LSB_Security
-Requires: libnss3.so%lib_suffix
-Requires: libssl3.so%lib_suffix
-Requires: libnspr4.so%lib_suffix
-
-# Submodule TUM
-# http://dev.linuxfoundation.org/navigator/browse/module.php?cmd=display_module&module=LSB_TUM
-Requires: /usr/bin/xdg-desktop-icon
-Requires: /usr/bin/xdg-desktop-menu
-Requires: /usr/bin/xdg-email
-Requires: /usr/bin/xdg-icon-resource
-Requires: /usr/bin/xdg-mime
-Requires: /usr/bin/xdg-open
-Requires: /usr/bin/xdg-screensaver
+# Gtk3 Libraries
+# https://refspecs.linuxfoundation.org/LSB_5.0.0/LSB-TrialUse/LSB-TrialUse/gtk3libraries.html
+Requires: libgdk-3.so.0%lib_suffix
+Requires: libgtk-3.so.0%lib_suffix
 
 %description trialuse
 The trialuse requirements for LSB compliance.
@@ -588,7 +572,7 @@ LSB_VERSION="%version"
 EOF
 
 # Required libs for LSB_Core:
-# 11.1 Program Interpreter/Dynamic Linker
+# https://refspecs.linuxfoundation.org/LSB_5.0.0/LSB-Core-AMD64/LSB-Core-AMD64/baselib.html#PROGINTERP
 # The Program Interpreter shall be ......
 mkdir -p "%buildroot/%_lib"
 %ifarch %ix86
@@ -603,23 +587,20 @@ ln -sf "/lib64/ld-linux.so.2" "%buildroot/lib64/ld-lsb.so.3"
 %ifarch mipsel
 ln -sf "/lib/ld.so.1" "%buildroot/lib/ld-lsb-mipsel.so.3"
 %endif
+%ifarch ppc64le
+ln -sf "/lib64/ld-2.32.so" "%buildroot/lib64/ld-lsb-ppc64.so.3"
+%endif
 
 touch %buildroot%_sysconfdir/lsb-release.d/core-%compat_version-%lsb_arch
 touch %buildroot%_sysconfdir/lsb-release.d/core-%compat_version-noarch
 touch %buildroot%_sysconfdir/lsb-release.d/core-%version-%lsb_arch
 touch %buildroot%_sysconfdir/lsb-release.d/core-%version-noarch
 
-touch %buildroot%_sysconfdir/lsb-release.d/cxx-%compat_version-%lsb_arch
-touch %buildroot%_sysconfdir/lsb-release.d/cxx-%compat_version-noarch
-touch %buildroot%_sysconfdir/lsb-release.d/cxx-%version-%lsb_arch
-touch %buildroot%_sysconfdir/lsb-release.d/cxx-%version-noarch
-
 touch %buildroot%_sysconfdir/lsb-release.d/desktop-%compat_version-%lsb_arch
 touch %buildroot%_sysconfdir/lsb-release.d/desktop-%compat_version-noarch
 touch %buildroot%_sysconfdir/lsb-release.d/desktop-%version-%lsb_arch
 touch %buildroot%_sysconfdir/lsb-release.d/desktop-%version-noarch
 
-# XXX@stanv see above note about lsb-graphics:
 touch %buildroot%_sysconfdir/lsb-release.d/graphics-%compat_version-%lsb_arch
 touch %buildroot%_sysconfdir/lsb-release.d/graphics-%compat_version-noarch
 touch %buildroot%_sysconfdir/lsb-release.d/graphics-%version-%lsb_arch
@@ -628,8 +609,8 @@ touch %buildroot%_sysconfdir/lsb-release.d/graphics-%version-noarch
 touch %buildroot%_sysconfdir/lsb-release.d/languages-%compat_version-noarch
 touch %buildroot%_sysconfdir/lsb-release.d/languages-%version-noarch
 
-touch %buildroot%_sysconfdir/lsb-release.d/printing-%compat_version-noarch
-touch %buildroot%_sysconfdir/lsb-release.d/printing-%version-noarch
+touch %buildroot%_sysconfdir/lsb-release.d/imaging-%compat_version-noarch
+touch %buildroot%_sysconfdir/lsb-release.d/imaging-%version-noarch
 
 touch %buildroot%_sysconfdir/lsb-release.d/trialuse-%compat_version-noarch
 touch %buildroot%_sysconfdir/lsb-release.d/trialuse-%version-noarch
@@ -654,16 +635,14 @@ touch %buildroot%_sysconfdir/lsb-release.d/trialuse-%version-noarch
 %ifarch mipsel
 /lib/ld-lsb-mipsel.so.3
 %endif
+%ifarch ppc64le
+/lib64/ld-lsb-ppc64.so.3
+%endif
+%dir %prefix/lib/lsb
 %prefix/lib/lsb/install_initd
 %prefix/lib/lsb/remove_initd
 %prefix/lib/lsb/lsbinstall
 %_sysconfdir/lsb-release
-
-%files cxx
-%_sysconfdir/lsb-release.d/cxx-%compat_version-%lsb_arch
-%_sysconfdir/lsb-release.d/cxx-%compat_version-noarch
-%_sysconfdir/lsb-release.d/cxx-%version-%lsb_arch
-%_sysconfdir/lsb-release.d/cxx-%version-noarch
 
 %files desktop
 %_sysconfdir/lsb-release.d/desktop-%compat_version-%lsb_arch
@@ -681,15 +660,21 @@ touch %buildroot%_sysconfdir/lsb-release.d/trialuse-%version-noarch
 %_sysconfdir/lsb-release.d/languages-%compat_version-noarch
 %_sysconfdir/lsb-release.d/languages-%version-noarch
 
-%files printing
-%_sysconfdir/lsb-release.d/printing-%compat_version-noarch
-%_sysconfdir/lsb-release.d/printing-%version-noarch
+%files imaging
+%_sysconfdir/lsb-release.d/imaging-%compat_version-noarch
+%_sysconfdir/lsb-release.d/imaging-%version-noarch
 
 %files trialuse
 %_sysconfdir/lsb-release.d/trialuse-%compat_version-noarch
 %_sysconfdir/lsb-release.d/trialuse-%version-noarch
 
 %changelog
+* Sat Jul 31 2021 Andrey Cherepanov <cas@altlinux.org> 5.0-alt1
+- New version of LSB.
+- lsb-cxx is now part of lsb-core.
+- lsb-printing is renamed to lsb-imaging.
+- Add ppc64le support.
+
 * Wed Sep 02 2020 Anton Midyukov <antohami@altlinux.org> 4.0-alt12
 - added armh
 

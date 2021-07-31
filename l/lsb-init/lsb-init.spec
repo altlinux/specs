@@ -1,7 +1,7 @@
 Name:         lsb-init
 Summary:      ALT Linux implementation of LSB compliant init functions
-Version:      4.0
-Release:      alt5
+Version:      5.0
+Release:      alt1
 License:      GPL
 URL:          http://www.linuxbase.org
 Source:       %name-%version.tar
@@ -44,6 +44,9 @@ install -m 644 ./lib/lsb/* %buildroot/lib/lsb
 %doc test-initscript.sh
 
 %changelog
+* Sat Jul 31 2021 Andrey Cherepanov <cas@altlinux.org> 5.0-alt1
+- Update version for lsb-5.0.
+
 * Wed Oct 05 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0-alt5
 - status_of_proc should not print DONE/FAILED.
 - docs: test-initscript.sh (in a working system) added.
