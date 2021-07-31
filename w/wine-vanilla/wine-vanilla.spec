@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %def_disable static
 %define gecko_version 2.47.2
-%define mono_version 6.2.0
+%define mono_version 6.3.0
 
 %ifarch %{ix86}
 %define winepedir i386-windows
@@ -31,7 +31,7 @@
 %def_with opencl
 
 Name: wine-vanilla
-Version: 6.13
+Version: 6.14
 Release: alt1
 
 Summary: Wine - environment for running Windows applications
@@ -571,6 +571,10 @@ done
 %endif
 
 %changelog
+* Fri Jul 30 2021 Vitaly Lipatov <lav@altlinux.ru> 6.14-alt1
+- new version 6.14
+- set strict require wine-mono 6.3.0
+
 * Wed Jul 21 2021 Vitaly Lipatov <lav@altlinux.ru> 6.13-alt1
 - new version 6.13
 

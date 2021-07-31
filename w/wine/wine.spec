@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %def_disable static
 %define gecko_version 2.47.2
-%define mono_version 6.2.0
+%define mono_version 6.3.0
 
-%define major 6.13
+%define major 6.14
 %define rel %nil
 %define stagingrel %nil
 
@@ -640,6 +640,10 @@ done
 %endif
 
 %changelog
+* Sat Jul 31 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.14.1-alt1
+- new version 6.14.1 (with rpmrb script)
+- set strict require wine-mono 6.3.0
+
 * Thu Jul 22 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.13.1-alt1
 - new version 6.13.1 (with rpmrb script)
 
