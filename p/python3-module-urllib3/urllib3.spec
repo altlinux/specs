@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.26.6
-Release: alt1
+Release: alt2
 
 Epoch: 2
 
@@ -25,7 +25,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-six
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-nose
-Requires: python3-module-ndg-httpsclient
+#Requires: python3-module-ndg-httpsclient
 Requires: python3-module-six ca-certificates
 %if_with docs
 BuildRequires(pre): rpm-macros-sphinx3
@@ -112,6 +112,9 @@ py.test-3
 %endif
 
 %changelog
+* Sun Aug 01 2021 Vitaly Lipatov <lav@altlinux.ru> 2:1.26.6-alt2
+- drop circle requires python3-module-ndg-httpsclient
+
 * Thu Jul 01 2021 Grigory Ustinov <grenka@altlinux.org> 2:1.26.6-alt1
 - 1.26.5 -> 1.26.6.
 
