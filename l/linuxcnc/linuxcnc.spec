@@ -6,7 +6,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.9.0
-Release: alt0.2
+Release: alt0.3.20210801
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -280,6 +280,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 01 2021 Anton Midyukov <antohami@altlinux.org> 2.9.0-alt0.3.20210801
+- new snapshot
+
 * Wed Jul 28 2021 Michael Shigorin <mike@altlinux.org> 2.9.0-alt0.2
 - E2K: fix build
 
