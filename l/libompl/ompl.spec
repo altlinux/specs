@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: /usr/bin/R boost-devel boost-filesystem-devel boost-program_options-devel
 # END SourceDeps(oneline)
 Group: System/Libraries
@@ -7,12 +7,14 @@ Group: System/Libraries
 %define oldname ompl
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%define fontpkgname ompl
+%undefine __cmake_in_source_build
 %global soversion 16
 %global apiversion 1.5
 
 Name:           libompl
 Version:        1.5.0
-Release:        alt1_1
+Release:        alt1_7
 Summary:        The Open Motion Planning Library
 
 License:        BSD
@@ -63,10 +65,8 @@ rm -rf scripts/plannerarena
 
 %build
 # Python bindings are disabled because dependencies pygccxml and pyplusplus are not packaged for Fedora
-mkdir build
-cd build
-%{fedora_cmake} .. \
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+%{fedora_v2_cmake}  \
+  -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_SKIP_RPATH=ON \
   -DOMPL_BUILD_PYBINDINGS=OFF \
   -DOMPL_LIB_INSTALL_DIR=%{_lib} \
@@ -76,12 +76,12 @@ cd build
   -DOMPL_ODESOLVER=ON \
   -DOMPL_REGISTRATION=OFF
 
-%make_build
-make ompl_doc
+%fedora_v2_cmake_build
+%fedora_v2_cmake_build --target ompl_doc
 rm -f ompl_doc/installdox
 
 %install
-make -C build install DESTDIR=%{buildroot}
+%fedora_v2_cmake_install
 
 rm -f %{buildroot}%{_datadir}/%{oldname}/demos/*.py
 rm -rf %{buildroot}%{_includedir}/%{oldname}/CMakeFiles
@@ -92,9 +92,7 @@ rm -f %{buildroot}%{_mandir}/man1/plannerareana*
 export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
 # Test failures can be triggered by builder CPU speed.
 # Accept test failures for slow builders.
-VERBOSE=1 make -C build test  || exit 0
-
-
+%fedora_v2_ctest --verbose  || exit 0
 
 
 %files
@@ -104,7 +102,7 @@ VERBOSE=1 make -C build test  || exit 0
 %{_mandir}/man1/*.1*
 
 %files devel
-%doc build/ompl_doc
+%doc %{_vpath_builddir}/ompl_doc
 %{_libdir}/libompl.so
 %{_includedir}/%{oldname}-%{apiversion}
 %{_datadir}/%{oldname}
@@ -112,6 +110,9 @@ VERBOSE=1 make -C build test  || exit 0
 %{_libdir}/%{oldname}
 
 %changelog
+* Sun Aug 01 2021 Igor Vlasenko <viy@altlinux.org> 1.5.0-alt1_7
+- build w/o python2 (closes: #40626)
+
 * Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_1
 - update to new release by fcimport
 
