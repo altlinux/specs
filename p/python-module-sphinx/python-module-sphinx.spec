@@ -8,7 +8,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 1.6.5
-Release: alt10
+Release: alt11
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
@@ -21,7 +21,7 @@ BuildArch: noarch
 %py_requires alabaster
 %py_requires requests
 %py_requires typing
-%py_requires sphinxcontrib.websupport
+#py_requires sphinxcontrib.websupport
 %py_requires docutils
 
 Provides: python-module-objects.inv
@@ -202,6 +202,9 @@ rm -r %buildroot%sphinx_dir/testing/
 %_rpmlibdir/%name-files.req.list
 
 %changelog
+* Sun Aug 01 2021 Vitaly Lipatov <lav@altlinux.ru> 1:1.6.5-alt11
+- drop require sphinxcontrib.websupport
+
 * Thu Jul 22 2021 Stanislav Levin <slev@altlinux.org> 1:1.6.5-alt10
 - Stopped testing to remove Pytest.
 - Built without docs, pickles and tests.
