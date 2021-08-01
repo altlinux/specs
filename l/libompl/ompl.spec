@@ -14,7 +14,7 @@ Group: System/Libraries
 
 Name:           libompl
 Version:        1.5.0
-Release:        alt1_7
+Release:        alt2_7
 Summary:        The Open Motion Planning Library
 
 License:        BSD
@@ -50,6 +50,7 @@ Summary:        Development files for %{oldname}
 Requires:       %{name} = %{version}-%{release}
 Requires:       boost-complete
 Provides: ompl-devel = %{version}-%{release}
+AutoReq: yes,nopython
 
 %description    devel
 The %{oldname}-devel package contains libraries and header files for
@@ -110,6 +111,9 @@ export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
 %{_libdir}/%{oldname}
 
 %changelog
+* Sun Aug 01 2021 Igor Vlasenko <viy@altlinux.org> 1.5.0-alt2_7
+- added AutoReq:yes,nopython (closes: #40626)
+
 * Sun Aug 01 2021 Igor Vlasenko <viy@altlinux.org> 1.5.0-alt1_7
 - build w/o python2 (closes: #40626)
 
