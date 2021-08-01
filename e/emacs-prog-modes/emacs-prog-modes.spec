@@ -1,10 +1,7 @@
-# -*- coding: utf-8; mode: rpm-spec -*-
-# $Id: emacs-prog-modes.spec,v 1.7 2006/02/04 18:02:41 eugene Exp $
-
 %define pkg_name prog-modes
 
 Version: 0.2
-Release: alt8
+Release: alt9
 Name: emacs-%pkg_name
 License: GPL
 Group: Editors
@@ -68,6 +65,15 @@ install -pD -m0644 %SOURCE9 %buildroot%_emacs_sitestart_dir/xbase.el
 
 
 %changelog
+* Sun Aug 01 2021 Ivan Zakharyaschev <imz@altlinux.org> 0.2-alt9
+- Some fixes in rpm-spec-mode:
+  + its filename pattern (the .spec extenstion) now matches only at the end.
+  + initialize a new spec-file with no trailing empty lines (in the changelog).
+  + rpm-add-change-log-entry(): fixed inconsistency in the order of
+    the items added to a single changelog entry.
+  + in a new spec-file, initialize version, too
+    (for correct initialisation of the changelog).
+
 * Fri Feb 22 2019 Dmitry V. Levin <ldv@altlinux.org> 0.2-alt8
 - NMU: updated build dependencies.
 
