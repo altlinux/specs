@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
 %define pkg     epson-inkjet-printer-escpr
-%define ver     1.7.10
+%define ver     1.7.15
 %define rel     1
 
 # used in RPM macro set for the LSB Driver Development Kit
@@ -85,6 +85,20 @@ gzip -n9 %buildroot%_datadir/cups/model/%name/*.ppd
 %_datadir/cups/model/%name
 
 %changelog
+* Sun Aug 01 2021 Andrey Cherepanov <cas@altlinux.org> 1.7.15-alt1
+- New version.
+- Supported new models:
+  + Epson ET-1810 Series
+  + Epson ET-2800 Series
+  + Epson ET-2810 Series
+  + Epson ET-2820 Series
+  + Epson ET-2850 Series
+  + Epson ET-4800 Series
+  + Epson L3250 Series
+  + Epson L3260 Series
+  + Epson L4260 Series
+  + Epson L5290 Series
+
 * Mon May 10 2021 Andrey Cherepanov <cas@altlinux.org> 1.7.10-alt1
 - New version.
 
