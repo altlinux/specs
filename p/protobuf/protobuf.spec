@@ -29,7 +29,7 @@ Name: %oname
 Name: %oname%soversion
 %endif
 Version: 3.16.0
-Release: alt1
+Release: alt2
 Summary: Protocol Buffers - Google's data interchange format
 License: BSD-3-Clause
 %if_disabled legacy
@@ -58,7 +58,6 @@ BuildRequires: python-module-pytz python-module-gflags
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel
 BuildRequires: python3-module-setuptools python-tools-2to3
-BuildRequires: python3-module-google-apputils
 BuildRequires: python3-module-mox python3-module-mox python3-module-dateutil
 BuildRequires: python3-module-pytz python3-module-gflags
 %endif
@@ -382,6 +381,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 01 2021 Vitaly Lipatov <lav@altlinux.ru> 3.16.0-alt2
+- drop unused BR: python3-module-google-apputils
+
 * Mon Jul 12 2021 Alexey Shabalin <shaba@altlinux.org> 3.16.0-alt1
 - 3.16.0
 
