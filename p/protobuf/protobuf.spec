@@ -29,7 +29,7 @@ Name: %oname
 Name: %oname%soversion
 %endif
 Version: 3.16.0
-Release: alt2
+Release: alt3
 Summary: Protocol Buffers - Google's data interchange format
 License: BSD-3-Clause
 %if_disabled legacy
@@ -144,7 +144,6 @@ Python bindings for protocol buffers
 Summary: Python module files for %oname
 Group: Development/Python3
 Requires: lib%oname%soversion = %EVR
-%py3_requires google.apputils
 Conflicts: %name-compiler > %version
 Conflicts: %name-compiler < %version
 
@@ -381,6 +380,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 01 2021 Vitaly Lipatov <lav@altlinux.ru> 3.16.0-alt3
+- drop unused require google.apputils
+
 * Sun Aug 01 2021 Vitaly Lipatov <lav@altlinux.ru> 3.16.0-alt2
 - drop unused BR: python3-module-google-apputils
 
