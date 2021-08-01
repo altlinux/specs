@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: yara
 Version: 4.1.1
-Release: alt1
+Release: alt2
 License: BSD-3-Clause and Apache-2.0
 Group: Development/Tools
 Summary: The pattern matching swiss knife for malware researchers (and everyone else)
 Url: http://virustotal.github.io/yara/
 Vcs: https://github.com/virustotal/yara
 # Docs: https://yara.readthedocs.io/
-ExclusiveArch: %ix86 x86_64
 
 Source: %name-%version.tar
 BuildRequires: flex
@@ -49,6 +49,8 @@ Development files for YARA.
 
 %build
 %autoreconf
+#	--disable-static
+# make[2]: *** No rule to make target 'libyara/.libs/libyara.a', needed by 'test-arena'.  Stop.
 %configure \
 	--with-crypto	\
 	--enable-cuckoo	\
@@ -81,6 +83,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %buildroot%_bindir/yara --version
 %_pkgconfigdir/yara.pc
 
 %changelog
+* Sun Aug 01 2021 Vitaly Chikunov <vt@altlinux.org> 4.1.1-alt2
+- Build on all architectures.
+
 * Mon Jun 14 2021 Vitaly Chikunov <vt@altlinux.org> 4.1.1-alt1
 - Update to v4.1.1 (2021-05-24).
 
