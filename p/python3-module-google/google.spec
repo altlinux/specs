@@ -1,22 +1,25 @@
-%define oname google.google
+%define oname google
 
-Name: python3-module-%oname
-Version: 1.05
-Release: alt2
+Name: python3-module-google
+Version: 3.0.0
+Release: alt1
 
 Summary: Python bindings to the Google search engine
+
 License: BSD
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/google/
-BuildArch: noarch
 
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
+BuildArch: noarch
+
+BuildRequires(pre): rpm-build-intro >= 2.1.3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: dos2unix
 
-%py3_requires google
-
+Obsoletes: python3-module-google.google
+Provides: python3-module-google.google = %EVR
 
 %description
 Python bindings to the Google search engine.
@@ -24,21 +27,11 @@ Python bindings to the Google search engine.
 %prep
 %setup
 
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
-
-dos2unix google.py
-
 %build
 %python3_build
 
 %install
 %python3_install
-
-install -d %buildroot%python3_sitelibdir/google
-mv %buildroot%python3_sitelibdir/*.py \
-    %buildroot%python3_sitelibdir/__pycache__ \
-    %buildroot%python3_sitelibdir/google/
 
 %files
 %doc *.md
@@ -47,6 +40,10 @@ mv %buildroot%python3_sitelibdir/*.py \
 
 
 %changelog
+* Sun Aug 01 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0.0-alt1
+- rename package to python3-module-google (as upstream named it)
+- cleanup spec, new version 3.0.0 (with rpmrb script)
+
 * Fri Dec 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.05-alt2
 - build for python2 disabled
 
