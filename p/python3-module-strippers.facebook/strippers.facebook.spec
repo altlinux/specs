@@ -1,48 +1,27 @@
 %define pname strippers
 %define oname %pname.facebook
 
-%def_with python3
 %def_with bootstrap
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.9
-Release: alt3
+Release: alt4
 Summary: Python library for Facebook Graph API
 License: LGPL
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/strippers.facebook/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python-tools-2to3
-%endif
-
-Requires: python-module-%pname = %EVR
-
-%description
-Python library for Facebook Graph API.
-
-%package -n python-module-%pname
-Summary: Core files of %pname
-Group: Development/Python
-
-%description -n python-module-%pname
-Core files of %pname.
-
-%package -n python3-module-%oname
-Summary: Python library for Facebook Graph API
-Group: Development/Python3
-Requires: python3-module-%pname = %EVR
 %if_with bootstrap
 %add_python3_req_skip mimetools
 %endif
 
-%description -n python3-module-%oname
+Requires: python3-module-%pname = %EVR
+
+%description
 Python library for Facebook Graph API.
 
 %package -n python3-module-%pname
@@ -55,56 +34,26 @@ Core files of %pname.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
 export LC_ALL=en_US.UTF-8
 
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
 export LC_ALL=en_US.UTF-8
 
-%python_install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %if "%_lib" == "lib64"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 install -p -m644 src/%pname/__init__.py \
-	%buildroot%python_sitelibdir/%pname/
-%if_with python3
-pushd ../python3
-install -p -m644 src/%pname/__init__.py \
 	%buildroot%python3_sitelibdir/%pname/
-popd
-%endif
 
 %files
-%doc *.rst
-%python_sitelibdir/*.egg-info
-%python_sitelibdir/%pname/facebook
-
-%files -n python-module-%pname
-%dir %python_sitelibdir/%pname
-%python_sitelibdir/%pname/__init__.py*
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.rst
 %python3_sitelibdir/*.egg-info
 %python3_sitelibdir/%pname/facebook
@@ -114,9 +63,11 @@ popd
 %python3_sitelibdir/%pname/__init__.py
 %dir %python3_sitelibdir/%pname/__pycache__
 %python3_sitelibdir/%pname/__pycache__/__init__.*
-%endif
 
 %changelog
+* Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 0.9-alt4
+- Drop python2 support.
+
 * Mon May 21 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9-alt3
 - fixed packaging on 64bit arches other than x86_64
 
