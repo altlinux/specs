@@ -2,8 +2,8 @@
 
 Summary: Gearman provides a generic application framework to farm out work to other machines.
 Name: gearmand
-Version: 1.1.18
-Release: alt3
+Version: 1.1.19.1
+Release: alt1
 License: BSD
 Group: Development/C
 URL: http://gearman.org
@@ -11,12 +11,10 @@ URL: http://gearman.org
 # https://github.com/gearman/gearmand.git
 Source: %name-%version.tar
 
-Patch1: gearmand-1.1.18-alt-mysql8-transition.patch
-
 BuildRequires: perl gcc-c++ boost-devel boost-program_options-devel libevent-devel libuuid-devel gperf
 BuildRequires: libsqlite3-devel libtokyocabinet-devel libmemcached-devel memcached libhiredis-devel
 BuildRequires: mysql-devel postgresql-devel zlib-devel
-BuildRequires: python-module-sphinx python-module-sphinx_rtd_theme
+BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink python3-module-sphinx_rtd_theme
 BuildRequires: libssl-devel
 
 %description
@@ -32,7 +30,6 @@ This package contains necessary header files for Gearman development.
 
 %prep
 %setup
-%patch1 -p0
 # provide information about version needed for bootstrap
 sed -i -e 's:git describe --always:echo %version:' \
 	version.m4 \
@@ -45,7 +42,8 @@ export ax_boost_user_program_options_lib=boost_program_options
 %configure \
 	--enable-ssl \
 	--disable-static \
-	--localstatedir=%_var
+	--localstatedir=%_var \
+	%nil
 
 # first build docs
 pushd docs
@@ -74,6 +72,9 @@ popd
 %_man3dir/*
 
 %changelog
+* Mon Aug 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.19.1-alt1
+- Updated to upstream version 1.1.19.1.
+
 * Thu Nov 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.18-alt3
 - Rebuilt with boost-1.71.0.
 
