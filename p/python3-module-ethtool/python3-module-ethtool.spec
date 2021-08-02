@@ -6,8 +6,8 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 0.14
-Release: alt2
+Version: 0.15
+Release: alt1
 
 Summary: Ethernet settings python bindings
 Group: Development/Python3
@@ -50,6 +50,7 @@ install -m644 man/pifconfig.8 %buildroot%_man8dir/pifconfig.8
 %endif
 
 %check
+#PYTHONPATH=%buildroot%python3_sitelibdir py.test3
 tox.py3 -e py%(echo %__python3_version | tr -d .) --sitepackages -o -v
 
 %files
@@ -61,6 +62,9 @@ tox.py3 -e py%(echo %__python3_version | tr -d .) --sitepackages -o -v
 %doc README.rst CHANGES.rst
 
 %changelog
+* Mon Aug 02 2021 Yuri N. Sedunov <aris@altlinux.org> 0.15-alt1
+- 0.15
+
 * Sat Oct 03 2020 Yuri N. Sedunov <aris@altlinux.org> 0.14-alt2
 - updated to v0.14-8-gb8b09b6 
 
