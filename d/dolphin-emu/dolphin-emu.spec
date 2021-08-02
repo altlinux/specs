@@ -1,11 +1,13 @@
 # git describe upstream | sed 's/-g[0-9a-f]*\(+*\)$/\1/'
-%define git_version 5.0-14344
+%define git_version 5.0-14790
 # git show-ref --heads --hash upstream
-%define git_commit acc7d3710d60552769f61f4b44bc8533a940df36
+%define git_commit 3cc274880f47d340bd508dba91aaf37c48acd367
+
+%define mgba_commit 9cccc5197ed73ba0a54f584d3121c27dc97405f5
 
 Name: dolphin-emu
-Version: 5.0.14344
-Release: alt1.1
+Version: 5.0.14790
+Release: alt1
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -17,7 +19,10 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 ExclusiveArch: x86_64 aarch64
 
 # https://github.com/%name/dolphin/archive/%git_commit/dolphin-%git_commit.tar.gz
-Source: dolphin-%version.tar
+Source0: dolphin-%version.tar
+# https://github.com/mgba-emu/mgba/archive/%mgba_commit/mgba-%mgba_commit.tar.gz
+Source1: mgba-%mgba_commit.tar
+
 Patch0: %name-alt-git.patch
 
 BuildPreReq: pkgconfig(expat)
@@ -69,8 +74,10 @@ Dolphin-emu is a emulator for Gamecube, Wii, Triforce that lets
 you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 
 %prep
-%setup -n dolphin-%version
+%setup -n dolphin-%version -b 1
 %patch0 -p1
+
+%__mv -Tf ../mgba-%mgba_commit Externals/mGBA/mgba
 
 %build
 %cmake .. \
@@ -99,6 +106,9 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Mon Aug 02 2021 Nazarov Denis <nenderus@altlinux.org> 5.0.14790-alt1
+- Version 5.0-14790
+
 * Sat Jul 10 2021 Nazarov Denis <nenderus@altlinux.org> 5.0.14344-alt1.1
 - Fix FTBFS
 
