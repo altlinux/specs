@@ -1,15 +1,13 @@
 %define oname OpenGL
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 3.1.5
-Release: alt2
+Release: alt3
 
 Summary: A Python module for interfacing with the OpenGL library
 Summary(ru_RU.UTF-8): Расширение языка Python для работы с библиотекой OpenGL
 
-Group: Development/Python
+Group: Development/Python3
 License: see license.txt
 Url: http://pyopengl.sourceforge.net
 
@@ -19,21 +17,8 @@ Patch1: %name.patch
 
 BuildArch: noarch
 
-%setup_python_module OpenGL
-
-%py_requires OpenGL_accelerate
-
-BuildPreReq: python-module-setuptools python-devel
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools python3-devel
 
-%description
-OpenGL bindings for Python including support for GL extensions,
-GLU, WGL, GLUT, GLE, and Tk
-
-%package -n python3-module-%oname
-Summary: A Python module for interfacing with the OpenGL library
-Group: Development/Python3
 %py3_requires OpenGL_accelerate
 %add_python3_req_skip OpenGL.GLES3.OES
 %add_python3_req_skip OpenGL.raw.DISABLED
@@ -41,96 +26,43 @@ Group: Development/Python3
 %add_python3_req_skip OpenGL.raw.GLSC2
 %add_python3_req_skip OpenGL.raw.GLSC2._types
 
-%description -n python3-module-%oname
+%description
 OpenGL bindings for Python including support for GL extensions,
 GLU, WGL, GLUT, GLE, and Tk
 
-%package -n python3-module-%oname-tests
-Summary: PyOpenGL tests
-Group: Development/Python3
-Requires: python3-module-%oname =  %EVR
-###add_python3_req_skip pygame
-
-%description -n python3-module-%oname-tests
-PyOpenGL tests.
-
-%package demo
-Summary: PyOpenGL demo files
-Group: Development/Python
-Requires: %name = %EVR
-%add_python_req_skip items win32ui
-
-%description demo
-Demo for PyOpenGL
-
-%package doc
-Summary: PyOpenGL documentation
-Group: Development/Python
-Requires: %name = %EVR
-
-%description doc
-PyOpenGL documentation
-
 %package tk
 Summary: %oname Python 2.x Tk widget
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
-%py_requires tkinter
+%py3_requires tkinter
 
 %description tk
 %oname Togl (Tk OpenGL widget) 1.6 support for Python 2.x.
 
-%package -n python3-module-%oname-tk
-Summary: %oname Python 3.x Tk widget
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-%py3_requires tkinter
-
-%description -n python3-module-%oname-tk
-%oname Togl (Tk OpenGL widget) 1.6 support for Python 3.x.
-
 %prep
 %setup -n PyOpenGL-%version
-
 
 find tests -type f -name '*.py' -exec \
 	sed -i 's|#! %_bindir/env python|#!%_bindir/python3|' '{}' +
 
 %build
-%python_build_debug -b build2
-sed -i '/import itertools/afrom __future__ import print_function' build2/lib/OpenGL/EGL/debug.py
-%python3_build_debug -b build3
+%python3_build
 
 %install
-rm -f build && ln -s build2 build
-%python_install
-
-rm -f build && ln -s build3 build
 %python3_install
-touch tests/__init__.py
-cp -fR tests %buildroot/%python3_sitelibdir/%modulename/tests
 
 %files
-%python_sitelibdir/*.egg-info
-%python_sitelibdir/%modulename/
-%exclude %python_sitelibdir/OpenGL/Tk
-
-%files tk
-%python_sitelibdir/OpenGL/Tk
-
-%files -n python3-module-%oname
 %python3_sitelibdir/*.egg-info
-%python3_sitelibdir/%modulename/
-%exclude %python3_sitelibdir/%modulename/tests
+%python3_sitelibdir/%oname/
 %exclude %python3_sitelibdir/OpenGL/Tk
 
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/%modulename/tests
-
-%files -n python3-module-%oname-tk
+%files tk
 %python3_sitelibdir/OpenGL/Tk
 
 %changelog
+* Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 3.1.5-alt3
+- Drop python2 support.
+
 * Thu Jul 22 2021 Stanislav Levin <slev@altlinux.org> 3.1.5-alt2
 - Stopped shipping of tests for Python2.
 
