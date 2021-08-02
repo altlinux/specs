@@ -1,5 +1,5 @@
 Name: mousepad
-Version: 0.5.5
+Version: 0.5.6
 Release: alt1
 
 Summary: Mousepad - A simple text editor for Xfce
@@ -46,6 +46,7 @@ Mousepad - простой текстовый редактор для Xfce осн
 	--enable-maintainer-mode \
 	--enable-gtksourceview4 \
 	--enable-plugin-gspell \
+	--disable-plugin-test \
 	--enable-debug=minimum
 %make_build
 
@@ -68,6 +69,10 @@ Mousepad - простой текстовый редактор для Xfce осн
 %exclude %_libdir/%name/plugins/*.la
 
 %changelog
+* Mon Aug 02 2021 Mikhail Efremov <sem@altlinux.org> 0.5.6-alt1
+- Explicitly disabled test plugin.
+- Updated to 0.5.6.
+
 * Wed May 12 2021 Mikhail Efremov <sem@altlinux.org> 0.5.5-alt1
 - Enabled gspell plugin.
 - Dropped libxconf-devel from BR.
