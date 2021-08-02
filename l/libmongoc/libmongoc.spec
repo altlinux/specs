@@ -2,7 +2,7 @@
 
 Name: libmongoc
 Version: 1.14.0
-Release: alt1.1
+Release: alt1.2
 Summary: Client library written in C for MongoDB
 Group: System/Libraries
 License: ASL 2.0 and ISC and MIT and zlib
@@ -12,9 +12,11 @@ Source: %name-%version.tar
 
 BuildRequires: gcc-c++
 BuildRequires: cmake >= 3.1
-BuildRequires: python-module-sphinx
+BuildRequires: python3-module-sphinx
 BuildRequires: libssl-devel libsasl2-devel libicu-devel
 BuildRequires: zlib-devel libsnappy-devel
+BuildRequires:	sphinx
+BuildRequires(pre): rpm-macros-cmake
 
 %{?_enable_tests:BuildRequires: mongodb-server openssl}
 
@@ -56,6 +58,9 @@ This package contains development files of libbson.
 
 %prep
 %setup
+sed -i 's|sphinx-build|sphinx-build-3|' build/cmake/FindSphinx.cmake
+sed -i 's|-j ${NPROCS}|-j 1|g' build/cmake/SphinxBuild.cmake
+sed -i 's/from sphinx.environment import NoUri/from sphinx.errors import NoUri/' build/sphinx/taglist.py src/libbson/doc/taglist.py
 
 %build
 %cmake \
@@ -105,6 +110,7 @@ exit $ret
 %doc COPYING NEWS *.md *.rst
 %_bindir/*
 %_libdir/libmongoc*.so.*
+%_datadir/mongo-c-driver
 
 %files devel
 %_includedir/libmongoc*
@@ -126,22 +132,25 @@ exit $ret
 
 
 %changelog
+* Mon Aug 02 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.14.0-alt1.2
+- NMU: fix FTBFS (sphinx).
+
 * Tue Jun 01 2021 Arseny Maslennikov <arseny@altlinux.org> 1.14.0-alt1.1
 - NMU: spec: adapt to new cmake macros.
 
 * Sat Feb 23 2019 Alexey Shabalin <shaba@altlinux.org> 1.14.0-alt1
 - 1.14.0
 
-* Tue Sep 04 2018 Alexey Shabalin <shaba@altlinux.org> 1.12.0-alt1%ubt
+* Tue Sep 04 2018 Alexey Shabalin <shaba@altlinux.org> 1.12.0-alt1
 - 1.12.0
 
-* Fri Mar 09 2018 Alexey Shabalin <shaba@altlinux.ru> 1.9.3-alt1%ubt
+* Fri Mar 09 2018 Alexey Shabalin <shaba@altlinux.ru> 1.9.3-alt1
 - 1.9.3
 
-* Tue Feb 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.9.2-alt1%ubt
+* Tue Feb 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.9.2-alt1
 - 1.9.2
 
-* Fri Dec 01 2017 Alexey Shabalin <shaba@altlinux.ru> 1.8.2-alt1%ubt
+* Fri Dec 01 2017 Alexey Shabalin <shaba@altlinux.ru> 1.8.2-alt1
 - 1.8.2
 
 * Wed Mar 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1.git20150310
