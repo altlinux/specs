@@ -1,37 +1,20 @@
 %define module_name tornado
 
-%def_with python3
-
-Name: python-module-%module_name
+Name: python3-module-%module_name
 Version: 5.1.1
-Release: alt2
+Release: alt3
 Summary: Scalable, non-blocking web server and tools
 
 License: Apache
-Group: Development/Python
+Group: Development/Python3
 Url: http://www.tornadoweb.org
 
 # https://github.com/tornadoweb/tornado.git
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: ca-certificates elfutils python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
-BuildRequires: python-module-setuptools python3-devel python3-module-setuptools rpm-build-python3
-
-#BuildRequires: python-devel python-module-distribute
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel python3-module-distribute
-%endif
-Requires: python-module-simplejson
-Requires: ca-certificates
-# required by tornado/netutil.py for Python2 version.
-Requires: python-module-backports.ssl_match_hostname python-module-certifi
-# required by tornado/gen.py
-Requires: python-module-singledispatch
-# required by tornado/gen.py
-Requires: python-module-backports_abc
-%py_requires concurrent.futures
+Requires: ca-certificates python3-module-certifi
+%add_python3_req_skip MySQLdb pycurl
 
 %description
 Tornado is an open source version of the scalable, non-blocking web
@@ -43,69 +26,28 @@ reasonably fast. Because it is non-blocking and uses epoll, it can
 handle thousands of simultaneous standing connections, which means it is
 ideal for real-time web services.
 
-%if_with python3
-%package -n python3-module-%module_name
-Summary: Scalable, non-blocking web server and tools (Python 3)
-Group: Development/Python3
-Requires: ca-certificates python3-module-certifi
-%add_python3_req_skip MySQLdb pycurl
-
-%description -n python3-module-%module_name
-Tornado is an open source version of the scalable, non-blocking web
-server and tools.
-
-The framework is distinct from most mainstream web server frameworks
-(and certainly most Python frameworks) because it is non-blocking and
-reasonably fast. Because it is non-blocking and uses epoll, it can
-handle thousands of simultaneous standing connections, which means it is
-ideal for real-time web services.
-%endif
-
 %prep
 %setup
 # remove shebang from files
 sed -i.orig -e '/^#!\//, 1d' *py tornado/*.py tornado/*/*.py
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
-
 %build
-%python_build
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-pushd %buildroot%python_sitelibdir/%module_name
-rm -rf ca-certificates.crt
-ln -sf /usr/share/ca-certificates/ca-bundle.crt ca-certificates.crt
-popd
-
-%if_with python3
-pushd ../python3
 %python3_install
 pushd %buildroot%python3_sitelibdir/%module_name
 rm -rf ca-certificates.crt
 ln -sf /usr/share/ca-certificates/ca-bundle.crt ca-certificates.crt
-popd
-%endif
 
 %files
-%python_sitelibdir/%module_name
-%python_sitelibdir/*.egg-*
-
-%if_with python3
-%files -n python3-module-%module_name
 %python3_sitelibdir/*
 %python3_sitelibdir/*.egg-*
-%endif
 
 %changelog
+* Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 5.1.1-alt3
+- Drop python2 support.
+
 * Wed Jan 30 2019 Stanislav Levin <slev@altlinux.org> 5.1.1-alt2
 - Added dependency on python futures.
 
