@@ -1,15 +1,13 @@
 %define project PyYAML
 
-%def_without python3
-
-Name: python-module-yaml
+Name: python3-module-yaml
 Version: 5.4.1
 Release: alt2
 
 Summary: PyYAML, a YAML parser and emitter for Python
 
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://github.com/yaml/pyyaml
 #BuildArch: noarch
 
@@ -18,11 +16,8 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-intro >= 2.0.0
 
-BuildRequires: python-devel libyaml-devel python-module-Cython
-%if_with python3
+BuildRequires: libyaml-devel
 BuildRequires(pre): rpm-build-python3 python3-module-Cython
-BuildRequires: python3-devel
-%endif
 
 %description
 YAML is a data serialization format designed for human readability
@@ -32,50 +27,24 @@ PyYAML is a YAML parser and emitter for the Python programming
 language.  PyYAML features a complete YAML 1.1 parser, Unicode
 support, and relatively sensible error messages.
 
-%if_with python3
-%package -n python3-module-yaml
-Summary: PyYAML, a YAML parser and emitter for Python3
-Group: Development/Python3
-
-%description -n python3-module-yaml
-YAML is a data serialization format designed for human readability
-and interaction with scripting languages.
-
-PyYAML is a YAML parser and emitter for the Python3 programming
-language.  PyYAML features a complete YAML 1.1 parser, Unicode
-support, and relatively sensible error messages.
-%endif
-
 %prep
 %setup
-%python3_dirsetup
 
 %build
 %add_optflags -fno-strict-aliasing
 
-%python_build build_ext
-%if_with python3
-pushd ../python3
 %python3_build build_ext
-popd
-%endif
 
 %install
-%python_install
-%python3_dirinstall
+%python3_install
 
 %files
 %doc CHANGES README
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-yaml
 %python3_sitelibdir/*
-%endif
 
 %changelog
 * Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 5.4.1-alt2
-- Build without python3 support.
+- Drop python2 support.
 
 * Fri Feb 19 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.4.1-alt1
 - 5.4.1 released
