@@ -1,9 +1,9 @@
 Name: openssh
-Version: 7.9p1
-Release: alt3
+Version: 8.6p1
+Release: alt1
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
-License: BSD-style
+License: SSH-OpenSSH and ALT-Public-Domain and BSD-3-clause and Beerware
 Group: Networking/Remote access
 Url: http://www.openssh.com/portable.html
 # git://git.altlinux.org/gears/o/openssh.git
@@ -18,7 +18,8 @@ Source: %name-%version-%release.tar
 %def_with kerberos5
 %def_with selinux
 %def_with openssl
-%def_with ssh1
+%def_without security_key_builtin
+%def_with zlib
 
 %{expand: %%global _libexecdir %_libexecdir/openssh}
 %define _pamdir /etc/pam.d
@@ -27,7 +28,8 @@ Requires: %name-clients = %version-%release
 Requires: %name-server = %version-%release
 
 # Automatically added by buildreq on Wed Apr 04 2007
-BuildRequires: libssl-devel pam_userpass-devel zlib-devel
+BuildRequires: libssl-devel pam_userpass-devel
+%{?_with_zlib:BuildRequires: zlib-devel}
 %{?_with_libedit:BuildRequires: libedit-devel}
 %{?_with_libaudit:BuildRequires: libaudit-devel}
 %{?_with_kerberos5:BuildRequires: libkrb5-devel}
@@ -185,8 +187,8 @@ export ac_cv_path_xauth_path=/usr/bin/xauth
 	%{subst_with libedit} \
 	%{subst_with openssl} \
 	%{subst_with selinux} \
-	%{subst_with ssh1} \
 	%{?_with_libaudit:--with-audit=linux} \
+	%{?_with_security_key_builtin:--with-security-key-builtin} \
 	#
 %make_build
 
@@ -309,6 +311,7 @@ sed -i '1 i\# Added automatically by openssh update script:\nPubkeyAcceptedKeyTy
 %_bindir/ssh-keyscan
 %attr(751,root,root) %dir %_libexecdir
 %_libexecdir/ssh-pkcs11-helper
+%_libexecdir/ssh-sk-helper
 %_man1dir/sftp.*
 %_man1dir/ssh.*
 %_man1dir/ssh-add.*
@@ -317,6 +320,7 @@ sed -i '1 i\# Added automatically by openssh update script:\nPubkeyAcceptedKeyTy
 %_man1dir/ssh-keyscan.*
 %_man5dir/ssh_config.*
 %_man8dir/ssh-pkcs11-helper.*
+%_man8dir/ssh-sk-helper.*
 
 %files keysign
 %attr(751,root,root) %dir %_libexecdir
@@ -348,6 +352,9 @@ sed -i '1 i\# Added automatically by openssh update script:\nPubkeyAcceptedKeyTy
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Tue Jul 27 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.6p1-alt1
+- Updated to 8.6p1.
+
 * Tue Apr 27 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 7.9p1-alt3
 - Allowed CIPSO.
 

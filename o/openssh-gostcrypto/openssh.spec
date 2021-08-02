@@ -1,10 +1,10 @@
 %define oname openssh
 Name: openssh-gostcrypto
-Version: 7.9p1
-Release: alt4.gost
+Version: 8.6p1
+Release: alt1.gost
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
-License: BSD-style
+License: SSH-OpenSSH and ALT-Public-Domain and BSD-3-clause and Beerware
 Group: Networking/Remote access
 Url: http://www.openssh.com/portable.html
 # git://git.altlinux.org/gears/o/openssh.git
@@ -19,8 +19,10 @@ Source: %name-%version-%release.tar
 %def_with kerberos5
 %def_with selinux
 %def_with openssl
+%def_without security_key_builtin
+%def_with zlib
+
 %def_with ssl_engine
-%def_with ssh1
 
 %{expand: %%global _libexecdir %_libexecdir/openssh}
 %define _pamdir /etc/pam.d
@@ -30,9 +32,8 @@ Requires: %oname-clients-gostcrypto = %EVR
 Requires: %oname-server-gostcrypto = %EVR
 
 # Automatically added by buildreq on Wed Apr 04 2007
-BuildRequires: libssl-devel >= 1.1.0j-alt2
-BuildRequires: pam_userpass-devel
-BuildRequires: zlib-devel
+BuildRequires: libssl-devel pam_userpass-devel
+%{?_with_zlib:BuildRequires: zlib-devel}
 %{?_with_libedit:BuildRequires: libedit-devel}
 %{?_with_libaudit:BuildRequires: libaudit-devel}
 %{?_with_kerberos5:BuildRequires: libkrb5-devel}
@@ -201,8 +202,8 @@ export ac_cv_path_xauth_path=/usr/bin/xauth
 	--with-ssl-engine \
 %endif
 	%{subst_with selinux} \
-	%{subst_with ssh1} \
 	%{?_with_libaudit:--with-audit=linux} \
+	%{?_with_security_key_builtin:--with-security-key-builtin} \
 	#
 %make_build
 
@@ -291,6 +292,7 @@ fi
 %_bindir/ssh-keyscan
 %attr(751,root,root) %dir %_libexecdir
 %_libexecdir/ssh-pkcs11-helper
+%_libexecdir/ssh-sk-helper
 %_man1dir/sftp.*
 %_man1dir/ssh.*
 %_man1dir/ssh-add.*
@@ -299,6 +301,7 @@ fi
 %_man1dir/ssh-keyscan.*
 %_man5dir/ssh_config.*
 %_man8dir/ssh-pkcs11-helper.*
+%_man8dir/ssh-sk-helper.*
 
 %files -n %oname-keysign-gostcrypto
 %attr(751,root,root) %dir %_libexecdir
@@ -330,11 +333,21 @@ fi
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Tue Jul 27 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.6p1-alt1.gost
+- Updated -gostcrypto version.
+
+* Tue Jul 27 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.6p1-alt1
+- Updated to 8.6p1.
+
+* Tue Apr 27 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 7.9p1-alt3
+- Allowed CIPSO.
+
 * Fri Dec 18 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.9p1-alt4.gost
 - Merged upstream patches for seccomp filter into -gostcrypto version.
 
 * Fri Dec 18 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.9p1-alt2
 - Backported upstream patches for seccomp filter.
+- Fixed build with gcc10.
 
 * Thu Dec 19 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.9p1-alt3.gost
 - Moved config dir to /etc/openssh .
