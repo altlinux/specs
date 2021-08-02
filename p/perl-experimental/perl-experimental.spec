@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-experimental
-Version:        0.024
+Version:        0.025
 Release:        alt1
 Summary:        Experimental features made easy
 License:        GPL+ or Artistic
@@ -53,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 02 2021 Igor Vlasenko <viy@altlinux.org> 0.025-alt1
+- automated CPAN update
+
 * Sun May 16 2021 Igor Vlasenko <viy@altlinux.org> 0.024-alt1
 - automated CPAN update
 
