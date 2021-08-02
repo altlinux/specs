@@ -4,7 +4,7 @@
 #define _without_test 1
 
 Name: perl-%module
-Version: 0.077
+Version: 0.078
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -18,7 +18,7 @@ Url: http://search.cpan.org/dist/%module
 Conflicts: perl-RPM-Source-Editor < 0.909
 
 BuildRequires: perl-devel /usr/bin/pod2man perl-podlators perl-Source-Bundle perl-RPM-Source-Editor perl(Pod/Strip.pm)
-BuildRequires: perl-DistroMap perl-Marpa-R2
+BuildRequires: perl-DistroMap perl-Marpa-R2 perl(Source/Shared/Resource/Debug.pm)
 
 
 %description
@@ -46,6 +46,9 @@ install -Dm644 stdheaders.txt %buildroot%_datadir/%module/headers-ignore/stdhead
 %_man1dir/sourcedep-resolve*
 
 %changelog
+* Sun Aug 01 2021 Igor Vlasenko <viy@altlinux.org> 0.078-alt1
+- new version
+
 * Sat Jul 24 2021 Igor Vlasenko <viy@altlinux.org> 0.077-alt1
 - new version
 
