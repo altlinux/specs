@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Test-NoWarnings
 Name: perl-%dist
-Version: 1.04
+Version: 1.06
 Release: alt1
 
 Summary: Make sure you didn't emit any warnings while testing
@@ -8,7 +9,7 @@ License: LGPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/H/HA/HAARG/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,7 +35,7 @@ The test is run by an END block in Test::NoWarnings. It will not be run when
 any forked children exit.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -47,6 +48,9 @@ any forked children exit.
 %perl_vendor_privlib/Test
 
 %changelog
+* Mon Aug 02 2021 Igor Vlasenko <viy@altlinux.org> 1.06-alt1
+- automated CPAN update
+
 * Mon Feb 20 2012 Alexey Tourbin <at@altlinux.ru> 1.04-alt1
 - 1.03 -> 1.04
 
