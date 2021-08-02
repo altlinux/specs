@@ -1,11 +1,10 @@
-%set_verify_elf_method textrel=relaxed
 # check disabled due to fail on html.
 # I have looked at all these errors and it is a formatting issue.
 # Needs to be investigated.
 %def_without check
 
 Name: ocaml-odoc
-Version: 1.5.2
+Version: 1.5.3
 Release: alt1
 Summary: Documentation compiler for OCaml and Reason
 Group: Development/ML
@@ -62,6 +61,9 @@ mkdir -p %buildroot/%_docdir
 %_libdir/ocaml/dune_odoc_test
 
 %changelog
+* Mon Aug 02 2021 Anton Farygin <rider@altlinux.ru> 1.5.3-alt1
+- 1.5.3
+
 * Thu Dec 10 2020 Anton Farygin <rider@altlinux.ru> 1.5.2-alt1
 - 1.5.2
 
