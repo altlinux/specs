@@ -6,7 +6,7 @@
 
 Name:    %prefixname-%modulename
 Version: 1.1.1
-Release: alt2
+Release: alt3
 
 Summary: Sphinx SVG to PDF converter extension
 License: BSD-2-Clause
@@ -67,7 +67,7 @@ This package contains converter using libRSVG.
 Summary: Sphinx SVG to PDF Converter Extension - CairoSVG converter
 Group:   Development/Python3
 
-Requires: /usr/bin/python3-cairosvg
+Requires: /usr/bin/cairosvg
 Requires: %name-common = %EVR
 
 %description -n %prefixname-cairosvgconverter
@@ -110,6 +110,9 @@ This package contains converter using CairoSVG.
 %python3_sitelibdir/sphinxcontrib/cairosvgconverter.py
 
 %changelog
+* Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.1-alt3
+- Fixed requires on cairosvg.
+
 * Tue Apr 13 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.1-alt2
 - Disabled check, because it isn't supported by python3.9 and upstream sleeps.
 

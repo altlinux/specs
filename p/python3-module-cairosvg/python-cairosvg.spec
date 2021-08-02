@@ -1,13 +1,12 @@
-%def_with python3
 %define modname cairosvg
 %define eggname CairoSVG
 
-Name:               python-module-cairosvg
+Name:               python3-module-cairosvg
 Version:            1.0.20
-Release:            alt1.2
+Release:            alt2
 Summary:            A Simple SVG Converter for Cairo
 
-Group:              Development/Python
+Group:              Development/Python3
 License:            LGPLv3+
 URL:                http://cairosvg.org/
 # VCS:		    git://github.com/Kozea/CairoSVG.git
@@ -15,21 +14,11 @@ Source0:            http://pypi.python.org/packages/source/C/%{eggname}/%{eggnam
 
 BuildArch:          noarch
 
-BuildRequires(pre): rpm-build-python
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python3 python3-base
-BuildRequires: python-devel rpm-build-python3
-
-#BuildRequires:      python-devel
-#BuildRequires:      python-module-pycairo
-
-Provides:	    python-cairosvg = %version-%release
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildRequires:      python3-devel
-#BuildRequires:      python3-module-pycairo
-%endif
+Requires:           python3-module-pycairo
+
+Conflicts: python-module-cairosvg
+Obsoletes: python-module-cairosvg
 
 %description
 CairoSVG is a SVG converter based on Cairo. It can export SVG files to PDF,
@@ -38,54 +27,25 @@ PostScript and PNG files.
 For further information, please visit the CairoSVG Website
 http://www.cairosvg.org
 
-%if_with python3
-%package -n python3-module-cairosvg
-Summary:            A Simple SVG Converter for Cairo
-Group:              Development/Python3
-
-Requires:           python3-module-pycairo
-
-%description -n python3-module-cairosvg
-CairoSVG is a SVG converter based on Cairo. It can export SVG files to PDF,
-PostScript and PNG files.
-
-For further information, please visit the CairoSVG Website
-http://www.cairosvg.org
-%endif
-
 %prep
-%setup -q -n %{eggname}-%{version}
+%setup -n %{eggname}-%{version}
 
 %build
-%python_build
-
-%if_with python3
 python3 setup.py build
-%endif
 
 %install
-%if_with python3
 python3 setup.py install --skip-build --root=%buildroot
-mv %buildroot%_bindir/{,python3-}cairosvg
-%endif
-
-%python_install
 
 %files
 %doc README.rst COPYING NEWS.rst TODO.rst
 %_bindir/cairosvg
-%python_sitelibdir/%modname/
-%python_sitelibdir/%{eggname}-%{version}*
-
-%if_with python3
-%files -n python3-module-cairosvg
-%doc README.rst COPYING NEWS.rst TODO.rst
-%_bindir/python3-cairosvg
 %python3_sitelibdir/%modname/
 %python3_sitelibdir/%{eggname}-%{version}-*
-%endif
 
 %changelog
+* Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.20-alt2
+- Drop python2 support.
+
 * Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.20-alt1.2
 - Rebuild with python3.7.
 
