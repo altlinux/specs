@@ -3,7 +3,7 @@
 %define git	1
 
 Name: phototonic
-Version: 2.1.72
+Version: 2.1.75
 Release: alt1
 
 Summary: An image viewer and organizer
@@ -67,8 +67,12 @@ cp -r translations/*.qm %buildroot%_datadir/%name/translations
 %_iconsdir/hicolor/*x*/apps/%name.png
 %_datadir/pixmaps/%name.png
 %doc README.md
+%_datadir/metainfo/phototonic.appdata.xml
 
 %changelog
+* Mon Aug 02 2021 Ilya Mashkin <oddity@altlinux.ru> 2.1.75-alt1
+- 2.1.75
+
 * Sat Apr 23 2021 Ilya Mashkin <oddity@altlinux.ru> 2.1.72-alt1
 - 2.1.72
 - git snaphot and sync spec from Mageia
