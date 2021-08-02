@@ -2,74 +2,42 @@
 
 %define oname OpenGL_accelerate
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 3.1.5
-Release: alt1
+Release: alt2
 Summary: Acceleration code for PyOpenGL
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: http://pyopengl.sourceforge.net/
 
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-Cython libnumpy-devel
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-Cython libnumpy-py3-devel
-%endif
 
 %description
-This set of C (Cython) extensions provides acceleration of common
-operations for slow points in PyOpenGL 3.x.
-
-%package -n python3-module-%oname
-Summary: Acceleration code for PyOpenGL
-Group: Development/Python3
-
-%description -n python3-module-%oname
 This set of C (Cython) extensions provides acceleration of common
 operations for slow points in PyOpenGL 3.x.
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
 %add_optflags -fno-strict-aliasing
 
-%python_build_debug
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc *.txt
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.txt
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 3.1.5-alt2
+- Drop python2 support.
+
 * Mon Feb 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.5-alt1
 - Updated to upstream version 3.1.5.
 
