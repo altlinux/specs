@@ -3,13 +3,13 @@
 
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.3.0
-Release: alt3
+Release: alt4
 
 Summary: Python Atomic file writes on POSIX
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 # Source-git: https://github.com/untitaker/python-atomicwrites.git
 Url: https://pypi.org/project/atomicwrites
 
@@ -32,30 +32,14 @@ systems. It supports:                                                         \
 %description
 %long_desc
 
-%package -n python3-module-%oname
-Summary: Python3 Atomic file writes on POSIX
-Group: Development/Python3
-
-%description -n python3-module-%oname
-%long_desc
-
 %prep
 %setup
-cp -a . ../python3
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %check
 sed -i '/\[testenv\]$/a whitelist_externals =\
@@ -72,15 +56,13 @@ tox.py3 --sitepackages -vvr
 
 %files
 %doc LICENSE README.rst
-%python_sitelibdir/atomicwrites/
-%python_sitelibdir/atomicwrites-*.egg-info/
-
-%files -n python3-module-%oname
-%doc LICENSE README.rst
 %python3_sitelibdir/atomicwrites/
 %python3_sitelibdir/atomicwrites-*.egg-info/
 
 %changelog
+* Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt4
+- Drop python2 support.
+
 * Tue Sep 08 2020 Stanislav Levin <slev@altlinux.org> 1.3.0-alt3
 - Disabled tests against Python2.
 
