@@ -2,7 +2,7 @@
 
 Name: xfce4
 Version: 4.16
-Release: alt1
+Release: alt2
 Summary: Set of Xfce4 Desktop installers.
 License: GPLv2+
 Group: Graphical desktop/XFce
@@ -83,7 +83,6 @@ Requires: xfce4-panel-profiles \
 # Panel plugins \
 Requires: xfce4-battery-plugin \
 Requires: xfce4-calculator-plugin \
-Requires: xfce4-clipman-plugin \
 Requires: xfce4-cpufreq-plugin \
 Requires: xfce4-cpugraph-plugin \
 Requires: xfce4-datetime-plugin \
@@ -116,6 +115,7 @@ Requires: xfce4-screensaver
 Requires: desktop-screensaver-modules-xscreensaver
 Requires: desktop-screensaver-modules-xscreensaver-gl
 %commonreqs
+Requires: xfce4-clipman-plugin
 Requires: xfce4-pulseaudio-plugin
 # For xfce4-pulseaudio-plugin
 Requires: pavucontrol
@@ -161,6 +161,9 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
 %endif
 
 %changelog
+* Mon Aug 02 2021 Anton Midyukov <antohami@altlinux.org> 4.16-alt2
+- regular: Drop xfce4-clipman
+
 * Wed Dec 23 2020 Mikhail Efremov <sem@altlinux.org> 4.16-alt1
 - full,regular: Add xfce4-verve-plugin again.
 - full,regular: Add xfce4-mailwatch-plugin again.
