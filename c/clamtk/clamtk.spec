@@ -1,5 +1,5 @@
 Name: clamtk
-Version: 6.02
+Version: 6.13
 Release: alt1
 
 Summary: Easy to use front-end for ClamAV
@@ -7,37 +7,40 @@ Summary(ru_RU.UTF-8): Простой в использовании интерф�
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-License: Perl
+License: GPL+ or Artistic 2.0
 Group: File tools
 Url: https://gitlab.com/dave_m/clamtk/wikis/Home
 
 BuildArch: noarch
 
-Source: https://bitbucket.org/davem_/clamtk-gtk3/downloads/clamtk-%version.tar
+# Note! This is a release tarball, not source code tarball
+# Source-url: https://github.com/dave-theunsub/clamtk/releases/download/v%version/clamtk-%version.tar.xz
+Source: %name-%version.tar
 Patch: %name-gtk.patch
 
-Requires: clamav >= 0.83 gnome-icon-theme gnome-icon-theme-extras libcanberra-gtk3
+Requires: clamav >= 0.95
+Requires: gnome-icon-theme gnome-icon-theme-extras libcanberra-gtk3
 Requires(post,postun): desktop-file-utils
 
-# manually removed: rpm-build-python3 ruby ruby-stdlibs vixie-cron
-
-# Automatically added by buildreq on Tue Sep 02 2014 (-bi)
-# optimized out: fontconfig libX11-locales libgdk-pixbuf libwayland-client libwayland-server perl-Cairo perl-Encode perl-Glib perl-HTTP-Date perl-HTTP-Message perl-IO-Socket-IP perl-IO-Socket-SSL perl-JSON-XS perl-Net-HTTP perl-Net-HTTPS perl-Net-SSLeay perl-Pango perl-Time-Piece perl-Types-Serialiser perl-URI perl-common-sense perl-libwww python-base python3 python3-base
-#BuildRequires: perl-Digest-SHA perl-Gtk2 perl-Gtk3 perl-JSON perl-LWP-Protocol-https perl-Locale-gettext perl-Text-CSV perl-Text-CSV_XS perl-JSON
 BuildRequires: perl-Glib perl-Gtk3 perl-libwww perl-LWP-Protocol-https perl-base perl-Digest-SHA perl-Text-CSV perl-Text-CSV_XS perl-JSON perl-Encode perl-Locale-gettext perl-Time-Piece
+
+# (clamtk:2505039): Gtk-WARNING **: 11:56:59.364: cannot open display: 
+# /tmp/.private/lav/clamtk-buildroot/usr/bin/clamtk: deparse failed. isPerl=0.0416866315285098.
+# find-requires: ERROR: /usr/lib/rpm/perl.req failed
+AutoReq:yes,noperl
+Requires: perl-Glib perl-Gtk3 perl-libwww perl-LWP-Protocol-https perl-base perl-Digest-SHA perl-Text-CSV perl-Text-CSV_XS perl-JSON perl-Encode perl-Locale-gettext perl-Time-Piece
 
 %description
 ClamTk is a front-end, point and click gui for ClamAV on Linux systems.
 It supports easy signature-updates. It is meant to be lightweight and easy to use.
 
 %description -l ru_RU.UTF-8
-ClamTk - графический интерфейс для ClamAV, разработанный для простоты использования антивирусного сканера и обновления баз сигнатур на системах Linux.
+ClamTk - графический интерфейс для ClamAV, разработанный для простоты использования
+антивирусного сканера и обновления баз сигнатур на системах Linux.
 
 %prep
 %setup
-%patch -p2
-# we place it in standard place
-%__subst "s|.*/usr/lib.*||g" %name
+#patch -p2
 
 %install
 install -D -m755 %name %buildroot%_bindir/%name
@@ -63,6 +66,10 @@ done
 %_man1dir/*
 
 %changelog
+* Mon Jul 26 2021 Vitaly Lipatov <lav@altlinux.ru> 6.13-alt1
+- new version 6.13 (with rpmrb script)
+- cleanup spec, update source url
+
 * Fri Oct 11 2019 Leontiy Volodin <lvol@altlinux.org> 6.02-alt1
 - new version (6.02) with rpmgs script
 
