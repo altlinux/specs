@@ -2,7 +2,7 @@
 Summary: Cloud image management utilities
 Name: cloud-utils
 Version: 0.32
-Release: alt1
+Release: alt1.1
 License: GPLv3
 Group: System/Configuration/Boot and Init
 Url: https://launchpad.net/cloud-utils
@@ -15,7 +15,6 @@ BuildArch: noarch
 Requires: cloud-utils-growpart
 Requires: gawk
 Requires: e2fsprogs
-Requires: euca2ools
 Requires: file
 Requires: util-linux
 Requires: qemu-img
@@ -71,6 +70,9 @@ rm -f %buildroot%_bindir/*ubuntu*
 %_man1dir/growpart.*
 
 %changelog
+* Mon Aug 02 2021 Andrey Cherepanov <cas@altlinux.org> 0.32-alt1.1
+- Remove deprecated euca2ools from build requirements.
+
 * Tue May 25 2021 Andrew A. Vasilyev <andy@altlinux.org> 0.32-alt1
 - 0.32
 - FTBFS: rpm-build-python3
