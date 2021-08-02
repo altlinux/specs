@@ -1,6 +1,6 @@
 Name: ocaml-lwt
-Version: 5.4.0
-Release: alt2
+Version: 5.4.1
+Release: alt1
 Summary: OCaml lightweight thread library
 
 Group: Development/ML
@@ -49,6 +49,9 @@ developing applications that use %name.
 %_libdir/ocaml/lwt/unix/*.h
 
 %changelog
+* Mon Aug 02 2021 Anton Farygin <rider@altlinux.ru> 5.4.1-alt1
+- 5.4.1
+
 * Sat Mar 20 2021 Anton Farygin <rider@altlinux.org> 5.4.0-alt2
 - spec BR: removed ocaml-ppx_tools_versioned-devel
 
