@@ -1,20 +1,16 @@
 %define oname asyncssh
 
-%def_without python2
-%def_with python3
 %def_disable check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.17.0
-Release: alt1
+Release: alt2
 
 Summary: AsyncSSH: Asynchronous SSHv2 client and server library
 
 License: Eclipse Public License v1.0
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/asyncssh/
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/ronf/asyncssh.git
 # Source-url: https://pypi.io/packages/source/a/%oname/%oname-%version.tar.gz
@@ -23,38 +19,15 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-intro
 
-%if_with python2
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-asyncio python-module-pycrypto
-#BuildPreReq: python-module-cryptography python-module-curve25519
-%py_provides %oname
-%py_requires asyncio Crypto curve25519
-%py_use cryptography >= 2.7
-%endif
-#BuildPreReq: %_bindir/openssl
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pytest
-%endif
 
-
-
-%description
-AsyncSSH is a Python package which provides an asynchronous client and
-server implementation of the SSHv2 protocol on top of the Python asyncio
-framework.
-
-%package -n python3-module-%oname
-Summary: AsyncSSH: Asynchronous SSHv2 client and server library
-Group: Development/Python3
 %py3_provides %oname
-%if_with python3
-%py3_requires asyncio 
+%py3_requires asyncio
 %py3_use Crypto curve25519
 %py3_use cryptography >= 2.7
-%endif
 
-%description -n python3-module-%oname
+%description
 AsyncSSH is a Python package which provides an asynchronous client and
 server implementation of the SSHv2 protocol on top of the Python asyncio
 framework.
@@ -62,58 +35,25 @@ framework.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%if_with python2
-%python_build_debug
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%if_with python2
-%python_install
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
-rm -f %buildroot%python_sitelibdir/%oname/*_win32*
 rm -f %buildroot%python3_sitelibdir/%oname/*_win32*
 
 %check
-%if_with python2
-python setup.py test
-%endif
-%if_with python3
-pushd ../python3
 python3 setup.py test
-popd
-%endif
 
-%if_with python2
 %files
 %doc COPYRIGHT LICENSE README* examples
-%python_sitelibdir/*
-%endif
-
-%if_with python3
-%files -n python3-module-%oname
-%doc COPYRIGHT LICENSE README* examples
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 1.17.0-alt2
+- Drop python2 support.
+
 * Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 1.17.0-alt1
 - new version 1.17.0 (with rpmrb script)
 - switch to build from tarball
