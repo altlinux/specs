@@ -2,7 +2,7 @@
 %define module FCGI
 
 Name: perl-%module
-Version: 0.79
+Version: 0.82
 Release: alt1
 
 Summary: Fast CGI module for perl
@@ -13,7 +13,7 @@ URL: %CPAN %module
 Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Oct 09 2011
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(FCGI/Client.pm)
 
 %description
 This is a Fast CGI module for perl. It's based on the FCGI module that comes
@@ -41,6 +41,9 @@ WARRANTIES.
 #*.fpl
 
 %changelog
+* Mon Aug 02 2021 Igor Vlasenko <viy@altlinux.org> 0.82-alt1
+- automated CPAN update
+
 * Wed Dec 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.79-alt1
 - automated CPAN update
 
