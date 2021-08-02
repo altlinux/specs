@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Linux-Inotify2
 Name: perl-%dist
-Version: 2.2
-Release: alt3
+Version: 2.3
+Release: alt1
 
 Summary: Scalable directory/file change notification
 License: GPL or Artistic
@@ -38,6 +38,9 @@ sed -i- 's/watch->cancel,/watch->cancel || 1,/' t/01_inotify.t
 %perl_vendor_autolib/Linux
 
 %changelog
+* Mon Aug 02 2021 Igor Vlasenko <viy@altlinux.org> 2.3-alt1
+- automated CPAN update
+
 * Mon Jun 21 2021 Igor Vlasenko <viy@altlinux.org> 2.2-alt3
 - disabled perl 7 patch for now
 
