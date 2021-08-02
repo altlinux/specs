@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Class-Data-Inheritable
 Name: perl-%dist
-Version: 0.08
-Release: alt2
+Version: 0.09
+Release: alt1
 
 Summary: Inheritable, overridable class data
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RS/RSHERER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +23,7 @@ whole (instead of about a single object).  This data is then inherited
 by your subclasses and can be overriden.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,10 +32,13 @@ by your subclasses and can be overriden.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README doc
 %perl_vendor_privlib/Class*
 
 %changelog
+* Mon Aug 02 2021 Igor Vlasenko <viy@altlinux.org> 0.09-alt1
+- automated CPAN update
+
 * Mon Sep 26 2011 Alexey Tourbin <at@altlinux.ru> 0.08-alt2
 - rebuilt as plain src.rpm
 
