@@ -4,15 +4,16 @@
 %def_enable databasedesigner
 
 Name: pgadmin3
-Version: 1.22.2
-Release: alt3
+Version: 1.23.0b
+Release: alt1.1
 
 Summary: Powerful administration and development platform for PostgreSQL.
 License: BSD
 Group: Databases
 Packager: PostgreSQL Maintainers Team <pgsql@packages.altlinux.org>
 
-Url: http://www.pgadmin.org/
+# Originally http://www.pgadmin.org/, switch to fork with current PG support
+Url: https://github.com/allentc/pgadmin3-lts/
 
 Source: %name-%version.tar
 Patch: %name-%version.patch
@@ -22,10 +23,12 @@ Requires: %name-docs-en_US
 BuildRequires: gcc-c++ libxslt-devel postgresql-devel
 BuildRequires: libwxGTK-contrib-ogl-devel libwxGTK-contrib-stc-devel libwxGTK-devel
 BuildRequires: findutils ImageMagick-tools
-BuildRequires: python-module-sphinx
+BuildRequires: python3-module-sphinx
 BuildRequires: libssl-devel
 BuildRequires: libkrb5-devel
 BuildRequires: libssh2-devel
+
+ExcludeArch: armh i586
 
 %description
 pgAdmin III is a powerful administration and development platform for
@@ -56,11 +59,14 @@ All docs for %name.
 %prep
 %setup -q
 %patch -p1
+# remove embedded libssh2
+rm -rf pgadmin/libssh2 pgadmin/include/libssh2
 
 %build
 /bin/sh bootstrap
 %configure CPPFLAGS="-I./include" \
 	%{subst_enable databasedesigner} \
+	--with-sphinx-build=/usr/bin/sphinx-build-3 \
 	--with-libssh2
 
 %make_build
@@ -105,7 +111,7 @@ cp -f pgadmin/include/images/pgAdmin3.png %buildroot%_liconsdir/%name.png
 mkdir -p %buildroot%_datadir/locale
 mv -f %buildroot%_datadir/%name/i18n/??_?? %buildroot%_datadir/locale
 
-%find_lang %name
+%find_lang --output=%name.lang %name wxstd
 
 %files -f %name.lang
 %_bindir/%name
@@ -132,6 +138,14 @@ mv -f %buildroot%_datadir/%name/i18n/??_?? %buildroot%_datadir/locale
 %doc %_datadir/%name/docs/sl_SI
 
 %changelog
+* Mon Aug 02 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.23.0b-alt1.1
+- Exclude 32bit arches
+
+* Wed Jun 02 2021 Alexey Shabalin <shaba@altlinux.org> 1.23.0b-alt1
+- 1.23.0b
+- Switch to maintained fork with curent PG support
+- Switch to python3-module-sphinx for build docs
+
 * Mon Apr 19 2021 Slava Aseev <ptrnine@altlinux.org> 1.22.2-alt3
 - Fix build with gcc-10
 
@@ -139,7 +153,7 @@ mv -f %buildroot%_datadir/%name/i18n/??_?? %buildroot%_datadir/locale
 - build with system libssh2
 - support PG 10
 
-* Wed Sep 27 2017 Alexey Shabalin <shaba@altlinux.ru> 1.22.2-alt1%ubt
+* Wed Sep 27 2017 Alexey Shabalin <shaba@altlinux.ru> 1.22.2-alt1
 - 1.22.2
 
 * Wed Jul 06 2016 Alexey Shabalin <shaba@altlinux.ru> 1.22.1-alt1
