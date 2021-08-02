@@ -8,14 +8,14 @@ BuildRequires(pre): rpm-build-python3
 %global commit 88c53cd44a626ede3b07dab0b548f8bcfda42867
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
-Name:          python-module-canberra
+Name:          python3-module-canberra
 Summary:       A very basic (and incomplete) wrapper for libcanberra
 URL:           https://github.com/psykoyiko/pycanberra/
 License:       LGPLv2
 
 # There's no versioning upstream, it's all about the Git hash
 Version:       0
-Release:       alt2_0.22.git%{shortcommit}
+Release:       alt3_0.22.git88c53cd
 
 # There aren't any release yet, I'm downloading straight from the last commit
 Source0:       https://github.com/psykoyiko/pycanberra/archive/%{commit}/%{oldname}-%{version}-%{shortcommit}.tar.gz
@@ -31,34 +31,24 @@ Source44: import.info
 %description
 A very basic (and incomplete) wrapper of libcanberra for Python 2.
 
-
-%package -n python3-module-canberra
-Group: Other
-Summary:       A very basic (and incomplete) wrapper for libcanberra
-
-%description -n python3-module-canberra
-A very basic (and incomplete) wrapper of libcanberra for Python 3.
-
-
 %prep
-%setup -q -n pycanberra-%{commit}
-
+%setup -n pycanberra-%{commit}
 
 %build
 # Nothing to build
 
-
 %install
 install -D -p -m 0644 pycanberra.py -t %{buildroot}%{python3_sitelibdir_noarch}/
 
-
-%files -n python3-module-canberra
+%files
 %doc COPYING README
 %{python3_sitelibdir_noarch}/pycanberra.py
 %{python3_sitelibdir_noarch}/__pycache__/*
 
-
 %changelog
+* Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 0-alt3_0.22.git88c53cd
+- Drop python2 support.
+
 * Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 0-alt2_0.22.git88c53cd
 - update to new release by fcimport
 
