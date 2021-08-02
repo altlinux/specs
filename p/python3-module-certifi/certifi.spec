@@ -1,24 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 %define oname certifi
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2020.12.5
-Release: alt1
+Release: alt2
 Summary: Python package for providing Mozilla's CA Bundle
 License: MPL-2.0
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/certifi/
 
 Source0: https://files.pythonhosted.org/packages/06/a9/cd1fd8ee13f73a4d4f491ee219deeeae20afefa914dfb4c130cfc9dc397a/certifi-2020.12.5.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
 
 %description
 This installable Python package contains a CA Bundle that you can
@@ -28,54 +22,23 @@ requests, for example.
 This is the same CA Bundle which ships with the Requests codebase, and
 is derived from Mozilla Firefox's canonical set.
 
-%package -n python3-module-%oname
-Summary: Python package for providing Mozilla's CA Bundle
-Group: Development/Python3
-
-%description -n python3-module-%oname
-This installable Python package contains a CA Bundle that you can
-reference in your Python code. This is useful for verifying HTTP
-requests, for example.
-
-This is the same CA Bundle which ships with the Requests codebase, and
-is derived from Mozilla Firefox's canonical set.
-
 %prep
-%setup -q -n %{oname}-%{version}
-
-%if_with python3
-cp -fR . ../python3
-%endif
+%setup -n %{oname}-%{version}
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc LICENSE *.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc LICENSE *.rst
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 2020.12.5-alt2
+- Drop python2 support.
+
 * Fri Feb 19 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2020.12.5-alt1
 - 2020.12.5 released
 
