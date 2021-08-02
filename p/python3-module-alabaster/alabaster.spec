@@ -1,12 +1,12 @@
 %define oname alabaster
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.7.6
 Release: alt4
 
 Summary: A configurable sidebar-enabled Sphinx theme
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/alabaster/
 # https://github.com/bitprophet/alabaster.git
 BuildArch: noarch
@@ -14,7 +14,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Patch: %name-0.7.6-alt-valid-xhtml.patch
 
-BuildRequires: python-module-setuptools
+BuildRequires(pre): rpm-build-python3
 
 %description
 This theme is a modified "Kr" Sphinx theme from @kennethreitz
@@ -27,18 +27,18 @@ for [Flask](http://flask.pocoo.org/) & related projects.
 %patch -p1
 
 %build
-%python_build_debug
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
 %doc *.rst
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 %changelog
 * Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 0.7.6-alt4
-- Build without python3 support.
+- Drop python2 support.
 
 * Tue May 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.7.6-alt3
 - rebuild with python3.6
