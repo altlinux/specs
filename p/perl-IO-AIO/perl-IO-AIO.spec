@@ -1,12 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 #set_perl_req_method relaxed
 #define _without_test 1
-%define _unpackaged_files_terminate_build 1
 BuildRequires: perl-podlators
 Epoch: 2
 %define dist IO-AIO
 Name: perl-%dist
-Version: 4.75
-Release: alt5
+Version: 4.76
+Release: alt1
 
 Summary: Asynchronous Input/Output
 License: GPL or Artistic
@@ -76,6 +76,9 @@ scripts for %name
 
 
 %changelog
+* Mon Aug 02 2021 Igor Vlasenko <viy@altlinux.org> 2:4.76-alt1
+- automated CPAN update
+
 * Mon Jun 21 2021 Igor Vlasenko <viy@altlinux.org> 2:4.75-alt5
 - no need for perl 7 patches
 
