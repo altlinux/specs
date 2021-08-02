@@ -16,13 +16,14 @@
 
 Name: gcc-defaults
 Version: %gcc_branch
-Release: alt1
+Release: alt2
 License: None
 Group: Development/Other
 
 Summary: %vendor GNU Compiler Collection Setup
 Url: http://git.altlinux.org/gears/g/gcc-defaults.git
 
+%define gcc_target_libdir %_libdir/gcc/%_target_platform/%gcc_branch
 %define gcc_target_platform %_target_platform
 
 %description
@@ -213,6 +214,7 @@ This is metapackage for %{1}-%{2}. \
 %install
 mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%_man1dir
+mkdir -p %buildroot%_libdir/bfd-plugins
 
 ln_bin()
 {
@@ -244,6 +246,9 @@ ln_man gcov{,-tool,-dump}
 
 ln_bin lto-dump
 ln_man lto-dump
+
+# LTO linker plugin for BFD
+ln -s %gcc_target_libdir/liblto_plugin.so %buildroot%_libdir/bfd-plugins/
 
 # gcc-c++
 ln_bin g++
@@ -293,6 +298,8 @@ ln_bin gnat gnatbind gnatchop gnatclean gnatfind gnatkr gnatlink gnatls \
 %_bindir/%gcc_target_platform-lto-dump
 %_man1dir/lto-dump.1.xz
 
+%_libdir/bfd-plugins/liblto_plugin.so
+
 %files -n gcc-c++
 %_bindir/%gcc_target_platform-g++
 %_man1dir/g++.1.xz
@@ -317,6 +324,9 @@ ln_bin gnat gnatbind gnatchop gnatclean gnatfind gnatkr gnatlink gnatls \
 %endif
 
 %changelog
+* Fri Jul 30 2021 Vitaly Chikunov <vt@altlinux.org> 10-alt2
+- Install LTO linker plugin for BFD.
+
 * Wed Dec 02 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 10-alt1
 - Changed default compiler to gcc10.
 - gcc: added lto-dump symlinks.

@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 10.3.1
-Release: alt2
+Release: alt3
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -1223,6 +1223,7 @@ CONFIGURE_OPTS="\
 	--enable-shared \
 	--program-suffix=%psuffix \
 	--with-slibdir=/%_lib \
+	--libexecdir=%_libdir \
 	--with-bugurl=http://bugzilla.altlinux.org \
 	--enable-__cxa_atexit \
 	--enable-threads=posix \
@@ -1434,7 +1435,7 @@ pushd %buildtarget
 popd #%buildtarget
 
 # Remove install-tools.
-rm -r %buildroot{%gcc_target_libdir,%gcc_target_libexecdir}/install-tools
+rm -r %buildroot%gcc_target_libdir/install-tools
 
 # Rename binaries which will be packaged under alternatives control.
 pushd %buildroot%_bindir
@@ -1455,10 +1456,10 @@ pushd %buildroot%_bindir
 popd
 
 # Hardlink merged lto1 and lto-dump.
-cmp %buildroot%gcc_target_libexecdir/lto1 \
+cmp %buildroot%gcc_target_libdir/lto1 \
 	%buildroot%_bindir/%gcc_target_platform-lto-dump%psuffix
 
-ln -f %buildroot%gcc_target_libexecdir/lto1 \
+ln -f %buildroot%gcc_target_libdir/lto1 \
 	%buildroot%_bindir/%gcc_target_platform-lto-dump%psuffix
 
 pushd %buildroot%_libdir
@@ -1580,7 +1581,6 @@ chmod 644 %buildroot%_sysconfdir/buildreqs/packages/substitute.d/*
 mkdir -p %buildroot%_sysconfdir/buildreqs/files/ignore.d
 cat >%buildroot%_sysconfdir/buildreqs/files/ignore.d/%name <<EOF
 ^%gcc_target_libdir(/include)?$
-^%gcc_target_libexecdir(/include)?$
 EOF
 
 # no valid g++ manpage exists in 4.1+ series.
@@ -1746,13 +1746,12 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %dir %gcc_target_lib32dir/
 %gcc_target_libdir/32
 %endif
-%dir %gcc_target_libexecdir/
-%dir %gcc_target_libexecdir/plugin/
-%gcc_target_libexecdir/collect2
-%gcc_target_libexecdir/lto-wrapper
-%gcc_target_libexecdir/lto1
-%attr(0755,root,root) %gcc_target_libexecdir/liblto_plugin.so*
-%gcc_target_libexecdir/plugin/gengtype
+%dir %gcc_target_libdir/plugin/
+%gcc_target_libdir/collect2
+%gcc_target_libdir/lto-wrapper
+%gcc_target_libdir/lto1
+%attr(0755,root,root) %gcc_target_libdir/liblto_plugin.so*
+%gcc_target_libdir/plugin/gengtype
 
 %exclude %_bindir/%gcc_target_platform-gcc-tmp
 %exclude %gcc_target_libdir/include-fixed
@@ -1761,7 +1760,7 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %exclude %gcc_target_libdir/plugin/gtype.state
 %exclude %gcc_target_libdir/plugin/libcc1plugin.la
 %exclude %gcc_target_libdir/plugin/libcp1plugin.la
-%exclude %gcc_target_libexecdir/liblto_plugin.la
+%exclude %gcc_target_libdir/liblto_plugin.la
 %exclude %_datadir/locale/de/LC_MESSAGES/libstdc++.mo
 %exclude %_datadir/locale/fr/LC_MESSAGES/libstdc++.mo
 %exclude %_man7dir/fsf-funding.7*
@@ -1910,8 +1909,7 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %_bindir/cpp%psuffix
 %_bindir/%gcc_target_platform-cpp%psuffix
 %_man1dir/cpp%psuffix.*
-%dir %gcc_target_libexecdir/
-%gcc_target_libexecdir/cc1
+%gcc_target_libdir/cc1
 
 %if_disabled compat
 %files -n libstdc++6
@@ -1948,8 +1946,7 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %_bindir/g++%psuffix
 %_bindir/%gcc_target_platform-g++%psuffix
 %_man1dir/g++%psuffix.*
-%dir %gcc_target_libexecdir/
-%gcc_target_libexecdir/cc1plus
+%gcc_target_libdir/cc1plus
 %ifarch %libvtv_arches
 %gcc_target_libdir/vtv_*.o
 %gcc_target_libdir/include/vtv_*.h
@@ -1982,8 +1979,7 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %_bindir/gdc%psuffix
 %_bindir/%gcc_target_platform-gdc%psuffix
 %_man1dir/gdc%psuffix.*
-%dir %gcc_target_libexecdir/
-%gcc_target_libexecdir/d21
+%gcc_target_libdir/d21
 
 %files gdc-doc
 %_infodir/gdc.info*
@@ -2011,13 +2007,11 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 
 %files objc
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name-objc
-%dir %gcc_target_libexecdir/
-%gcc_target_libexecdir/cc1obj
+%gcc_target_libdir/cc1obj
 
 %files objc++
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name-objc++
-%dir %gcc_target_libexecdir/
-%gcc_target_libexecdir/cc1objplus
+%gcc_target_libdir/cc1objplus
 %endif #with_objc
 
 %if_with fortran
@@ -2047,8 +2041,7 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %dir %gcc_target_libdir/
 %gcc_target_libdir/libgfortran.spec
 %gcc_target_libdir/libcaf_single.a
-%dir %gcc_target_libexecdir/
-%gcc_target_libexecdir/f951
+%gcc_target_libdir/f951
 
 %files fortran-doc
 %_infodir/gfortran.info*
@@ -2064,8 +2057,7 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %_bindir/gnat*%psuffix
 %dir %gcc_target_libdir/
 %gcc_target_libdir/ada*
-%dir %gcc_target_libexecdir/
-%gcc_target_libexecdir/gnat1
+%gcc_target_libdir/gnat1
 
 %files -n libgnat%gcc_branch
 %config %_sysconfdir/buildreqs/packages/substitute.d/libgnat%gcc_branch
@@ -2098,12 +2090,11 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %_man1dir/gccgo%psuffix.*
 %_man1dir/go%psuffix.*
 %_man1dir/gofmt%psuffix.*
-%dir %gcc_target_libexecdir/
-%gcc_target_libexecdir/go1
-%gcc_target_libexecdir/cgo
-%gcc_target_libexecdir/buildid
-%gcc_target_libexecdir/test2json
-%gcc_target_libexecdir/vet
+%gcc_target_libdir/go1
+%gcc_target_libdir/cgo
+%gcc_target_libdir/buildid
+%gcc_target_libdir/test2json
+%gcc_target_libdir/vet
 
 %files go-doc
 %_infodir/gccgo.info*
@@ -2171,6 +2162,9 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Sat Jul 31 2021 Vitaly Chikunov <vt@altlinux.org> 10.3.1-alt3
+- Move contents of libexecdir to libdir (ALT#40611).
+
 * Mon Jul 05 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.3.1-alt2
 - Backported upstream PR:
   + libstdc++/100900: add missing typename for dependent type in
