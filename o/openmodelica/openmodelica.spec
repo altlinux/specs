@@ -4,7 +4,7 @@
 
 Name:     openmodelica
 Version:  1.17.0
-Release:  alt2
+Release:  alt3
 
 Summary:  OpenModelica is an open-source Modelica-based modeling and simulation environment intended for industrial and academic usage
 License:  GPL-3.0+ and OSMC-PL
@@ -35,7 +35,6 @@ Patch7: openmodelica-cmake-3.20.patch
 BuildRequires(pre): cmake
 BuildRequires(pre): qt5-base-devel
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-build-python
 BuildRequires: gcc-c++
 BuildRequires: gcc-fortran
 BuildRequires: qt5-tools
@@ -69,7 +68,8 @@ BuildRequires: qt5-xmlpatterns-devel
 BuildRequires: chrpath
 
 %add_python3_lib_path %_libdir/OMSimulator
-%add_findprov_skiplist %_libexecdir/omlibrary/
+%add_findprov_skiplist %_libexecdir/omlibrary/*
+%add_findreq_skiplist %_libexecdir/omlibrary/*
 
 ExclusiveArch: %ix86 x86_64
 
@@ -175,6 +175,9 @@ cp -a libraries/build/* %buildroot%_libexecdir/omlibrary
 %endif
 
 %changelog
+* Sun Aug 01 2021 Vitaly Lipatov <lav@altlinux.ru> 1.17.0-alt3
+- NMU: don't req python2 modules
+
 * Wed Jul 14 2021 Andrey Cherepanov <cas@altlinux.org> 1.17.0-alt2
 - FTBFS: build with cmake 3.20.
 
