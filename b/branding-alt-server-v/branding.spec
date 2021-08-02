@@ -9,29 +9,28 @@
 
 %define design_graphics_abi_epoch 0
 %define design_graphics_abi_major 12
-%define design_graphics_abi_minor 0
+%define design_graphics_abi_minor 1
 %define design_graphics_abi_bugfix 0
-
-%define data_cur_dir %_datadir/branding-data-current
 
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
 Version: 9.2
-Release: alt1
+Release: alt2
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
-BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-google-droid-sans
-BuildRequires: design-bootloader-source >= 5.0-alt2 fribidi
+BuildRequires: design-bootloader-source >= 5.0-alt2
+BuildRequires: cpio
 %endif
+BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-sans
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
 BuildRequires: qt5-base-devel
 
-BuildRequires: ImageMagick fontconfig bc
+BuildRequires: ImageMagick fontconfig bc fribidi
 
 Source: branding.tar
 
@@ -56,7 +55,6 @@ License: GPLv2+
 
 Requires(pre):    coreutils
 Provides:  design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
-Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme
 %branding_add_conflicts %flavour bootloader
 
 %define grub_normal white/light-blue
@@ -98,10 +96,9 @@ Group: System/Configuration/Other
 BuildArch: noarch
 Provides: design-alterator-browser-%theme  branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt
 Provides: alterator-icons design-alterator design-alterator-%theme
-Obsoletes:  branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt 
 
 %branding_add_conflicts %flavour alterator
-Obsoletes: design-alterator-server design-alterator-desktop design-altertor-browser-desktop  design-altertor-browser-server branding-altlinux-backup-server-alterator
+Obsoletes: design-alterator-server design-alterator-desktop design-altertor-browser-desktop design-altertor-browser-server branding-altlinux-backup-server-alterator
 Requires(post,preun): alternatives >= 0.2 alterator
 
 %description alterator
@@ -117,8 +114,7 @@ Summary(ru_RU.UTF-8): Тема для дистрибутива %distro_name_ru
 License: Different licenses
 Group: Graphics
 BuildArch: noarch
-Provides: design-graphics-%theme  branding-alt-%theme-graphics
-Obsoletes: design-graphics-%theme
+Provides: design-graphics-%theme
 Provides: design-graphics = %design_graphics_abi_major.%design_graphics_abi_minor.%design_graphics_abi_bugfix
 
 Requires(post,preun): alternatives >= 0.2
@@ -153,7 +149,6 @@ Obsoletes: %obsolete_list
 %package notes
 BuildArch: noarch
 Provides:  alt-license-theme = %version alt-notes-%theme
-Obsoletes: alt-license-%theme alt-notes-%theme
 Summary:   Distribution license and release notes
 Summary(ru_RU.UTF-8): Лицензия и дополнительные сведения для дистрибутива %distro_name_ru
 License:   Distributable
@@ -189,7 +184,6 @@ Summary(ru_RU.UTF-8): Стартовая страница для дистриб�
 License:  distributable
 Group:    System/Base
 Provides: indexhtml indexhtml-%theme = %version indexhtml-Desktop = 1:5.0
-Obsoletes: indexhtml-desktop indexhtml-Desktop
 %branding_add_conflicts %flavour indexhtml
 
 Requires: docs-alt-%theme
@@ -215,29 +209,30 @@ make
 find %buildroot -name \*.in -delete
 
 #bootloader
-%ifarch %ix86 x86_64
 %pre bootloader
+%ifarch %ix86 x86_64
 [ -s /usr/share/gfxboot/%theme ] && rm -fr  /usr/share/gfxboot/%theme ||:
+%endif
+%ifarch %ix86 x86_64 aarch64
 [ -s /boot/splash/%theme ] && rm -fr  /boot/splash/%theme ||:
 %endif
 
 %post bootloader
-[ "$1" -eq 1 ] || exit 0
-%ifarch %ix86 x86_64
+%ifarch %ix86 x86_64 aarch64
 ln -snf %theme/message /boot/splash/message
 . /etc/sysconfig/i18n
 lang=$(echo $LANG | cut -d. -f 1)
 cd boot/splash/%theme/
 echo $lang > lang
 [ "$lang" = "C" ] || echo lang | cpio -o --append -F message
-%endif
 . shell-config
 shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
 #shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
+%endif
 
-%ifarch %ix86 x86_64
+%ifarch %ix86 x86_64 aarch64
 %preun bootloader
 [ "$1" -eq 0 ] || exit 0
 [ "`readlink /boot/splash/message`" != "%theme/message" ] ||
@@ -262,19 +257,6 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
       subst "s|GRUB_WALLPAPER=.*|GRUB_WALLPAPER=/usr/share/plymouth/themes/%theme/grub.jpg|" \
              /etc/sysconfig/grub2 ||:
 
-#release
-%post release
-if ! [ -e %_sysconfdir/altlinux-release ] && \
-   ! [ -e %_sysconfdir/os-release ]; then
-	cp -a %data_cur_dir/release/*-release %_sysconfdir/
-fi
-
-#notes
-%post notes
-if ! [ -e %_datadir/alt-notes/license.all.html ]; then
-	cp -a %data_cur_dir/alt-notes/license.*.html %_datadir/alt-notes/
-fi
-
 %files alterator
 %config %_altdir/*.rcc
 /usr/share/alterator-browser-qt/design/*.rcc
@@ -290,17 +272,11 @@ fi
 %_pixmapsdir/system-logo.png
 
 %files release
-%dir %data_cur_dir
-%data_cur_dir/release/
+%_sysconfdir/*-release
 %_sysconfdir/buildreqs/packages/ignore.d/*
-%ghost %config(noreplace) %_sysconfdir/*-release
 
 %files notes
-%dir %data_cur_dir
-%data_cur_dir/alt-notes
-%_datadir/alt-notes/livecd-*
-%_datadir/alt-notes/release-notes.*
-%ghost %config(noreplace) %_datadir/alt-notes/license.*.html
+%_datadir/alt-notes/*
 
 %files slideshow
 /etc/alterator/slideshow.conf
@@ -317,6 +293,13 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Aug 02 2021 Alexey Shabalin <shaba@altlinux.org> 9.2-alt2
+- Revert "Don't change license and *-release files during update"
+- indexhtml: update copyright years
+- Do not obsolete packages itself without version
+- Increase alternative version of design-current and design-browser-qt
+  for resolve duplicate provides
+
 * Tue May 18 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.2-alt1
 - version 9.2
 
