@@ -9,7 +9,7 @@
 
 Name: krb5
 Version: 1.19.2
-Release: alt1
+Release: alt2
 
 %if_without bootstrap
 %if_with doc
@@ -26,9 +26,6 @@ Url: http://web.mit.edu/kerberos/www/
 
 Source0: %name-%version.tar
 Source2: %name-alt.tar
-
-# Tex style for new sphinx pdf builder
-Source11: ltxcmds.sty
 
 # Carry this locally until it's available in a packaged form.
 Source100: noport.c
@@ -56,7 +53,7 @@ BuildRequires: libpam-devel
 %{?_with_lmdb:BuildRequires: liblmdb-devel}
 
 %if_with doc
-BuildRequires: python-module-sphinx
+BuildRequires: python3-module-sphinx
 BuildRequires: texlive-latex-base texlive-base-bin texlive-latex-recommended latexmk
 %endif
 
@@ -276,19 +273,11 @@ fi
 make -C src/doc paths.py version.py
 cp src/doc/paths.py doc/
 mkdir -p build-man build-html build-pdf
-sphinx-build -a -b man   -t pathsubs doc build-man
-sphinx-build -a -b html  -t pathsubs doc build-html
+sphinx-build-3 -a -b man   -t pathsubs doc build-man
+sphinx-build-3 -a -b html  -t pathsubs doc build-html
 rm -fr build-html/_sources
-sphinx-build -a -b latex -t pathsubs doc build-pdf
-# Fix build PDFs with newest sphinx and latexmk
-# https://bugzilla.altlinux.org/show_bug.cgi?id=34119
-mkdir -p build-pdf/texmf/tex/latex
-cp -f %SOURCE11 build-pdf/texmf/tex/latex/
-export TEXMFHOME=texmf/
-# Build the PDFs if we didn't have pre-built ones.
-for pdf in admin appdev basic build plugindev user ; do
-    test -s build-pdf/$pdf.pdf || make -C build-pdf
-done
+sphinx-build-3 -a -b latex -t pathsubs doc build-pdf
+make -C build-pdf
 %endif
 
 # We need to cut off any access to locally-running nameservers, too.
@@ -530,6 +519,11 @@ fi
 # {{{ changelog
 
 %changelog
+* Mon Aug 02 2021 Ivan A. Melnikov <iv@altlinux.org> 1.19.2-alt2
+- Fix documentation build
+  + switch to python3-module-sphinx
+  + drop obsolete texlive workaround
+
 * Sun Jul 25 2021 Ivan A. Melnikov <iv@altlinux.org> 1.19.2-alt1
 - 1.19.2 (Fixes: CVE-2021-36222)
 
