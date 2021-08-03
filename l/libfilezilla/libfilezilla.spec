@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libfilezilla
-Version: 0.27.1
+Version: 0.31.0
 Release: alt1
 Summary: Small and modern C++ library
 License: GPLv2+
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 
 BuildRequires: cppunit-devel doxygen gcc-c++ graphviz libnettle-devel
 BuildRequires: libgnutls-devel
+BuildRequires: libgmp-devel
 
 Conflicts: libfilezilla0 < %EVR
 Obsoletes: libfilezilla0 < %EVR
@@ -80,6 +81,9 @@ LC_ALL=en_US.UTF-8 make check
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Aug 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.31.0-alt1
+- Updated to upstream version 0.31.0.
+
 * Tue Mar 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.27.1-alt1
 - Updated to upstream version 0.27.1.
 

@@ -1,6 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: gmp
 Version: 6.2.1
-Release: alt1
+Release: alt2
 
 Summary: GNU MP arbitrary precision arithmetic library
 License: LGPLv3+
@@ -249,6 +253,7 @@ install -pm644 gmp-mparam.h rand/randmt.h %buildroot%_includedir/
 %_includedir/*
 %{?_enable_cxx:%exclude %_includedir/*xx*}
 %_infodir/*.info*
+%_pkgconfigdir/gmp.pc
 
 %files -n libgmp-devel-static
 %_libdir/libgmp.a
@@ -260,12 +265,16 @@ install -pm644 gmp-mparam.h rand/randmt.h %buildroot%_includedir/
 %files -n libgmpxx-devel
 %_libdir/*xx*.so
 %_includedir/*xx*
+%_pkgconfigdir/gmpxx.pc
 
 %files -n libgmpxx-devel-static
 %_libdir/*xx*.a
 %endif #cxx
 
 %changelog
+* Tue Aug 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.1-alt2
+- Packaged pkgconfig files.
+
 * Tue Dec 01 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.2.1-alt1
 - Updated to 6.2.1.
 
