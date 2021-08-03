@@ -1,18 +1,32 @@
 %define _unpackaged_files_terminate_build 1
 %define oname future
 
-Name: python-module-%oname
+%def_with check
+
+Name: python3-module-%oname
 Version: 0.18.2
 Release: alt2
 Summary: Clean single-source support for Python 3 and 2
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://python-future.org/
 
 # https://github.com/PythonCharmers/python-future.git
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 BuildArch: noarch
+
+BuildRequires(pre): rpm-build-python3
+
+%if_with check
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox_console_scripts)
+BuildRequires: python3(tox_no_deps)
+BuildRequires: python3(tox)
+%endif
+
+# filter requires of self
+%filter_from_requires /python3\(\.[[:digit:]]\)\?(future\..*)/d
 
 %description
 future is the missing compatibility layer between Python 3 and Python 2.
@@ -24,23 +38,31 @@ support both Python 3 and Python 2 with minimal overhead.
 %autopatch -p1
 
 %build
-%python_build_debug
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 # don't package tests
-rm -r %buildroot%python_sitelibdir/*/*/test
-rm -r %buildroot%python_sitelibdir/*/tests
+rm -r %buildroot%python3_sitelibdir/*/*/test
+rm -r %buildroot%python3_sitelibdir/*/tests
+
+rm -r %buildroot%_bindir/*
+
+%check
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+export NO_INTERNET=YES
+export TOX_TESTENV_PASSENV='NO_INTERNET'
+tox.py3 --sitepackages --console-scripts --no-deps -vvr
 
 %files
 %doc *.txt *.rst
-%_bindir/*
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 %changelog
 * Tue Aug 03 2021 Grigory Ustinov <grenka@altlinux.org> 0.18.2-alt2
-- Build without python3 support.
+- Drop python2 support.
 
 * Thu Apr 15 2021 Stanislav Levin <slev@altlinux.org> 0.18.2-alt1
 - 0.16.0 -> 0.18.2.
