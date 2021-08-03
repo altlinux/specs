@@ -10,7 +10,7 @@
 
 Name: %_name%api_ver_major
 Version: %ver_major.2
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPL-2.0 and LGPL-2.1-or-later
@@ -18,6 +18,8 @@ Group: Office
 Url: http://wiki.gnome.org/Projects/Tracker
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
+# properly link tracker-miners-{rss,fs-control} with private libraries
+Patch: %_name-3.1.2-alt-link.patch
 
 %add_findprov_lib_path %_libdir/%_name-%api_ver_major/
 
@@ -109,10 +111,11 @@ This package provides miners for TRacker.
 
 %prep
 %setup -n %_name-%version%beta
-
-#fixed install_rpath for modules
+# fix install_rpath for modules
 find src/ -name "meson.build" -print0 | xargs -r0 \
 sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
+
+%patch -b .link
 
 %build
 %meson \
@@ -200,6 +203,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 %doc AUTHORS NEWS README*
 
 %changelog
+* Tue Aug 03 2021 Yuri N. Sedunov <aris@altlinux.org> 3.1.2-alt2
+- fixed link tracker-miners-{rss,fs-control} with private libraries (ALT #40639)
+
 * Sat Jun 12 2021 Yuri N. Sedunov <aris@altlinux.org> 3.1.2-alt1
 - 3.1.2
 
