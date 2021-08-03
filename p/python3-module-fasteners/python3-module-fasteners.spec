@@ -2,12 +2,12 @@
 
 Name: python3-module-fasteners
 Version: 0.15
-Release: alt2
+Release: alt3
 
 Summary: A python package that provides useful locks
 
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: https://github.com/harlowja/fasteners
 
 BuildArch: noarch
@@ -17,13 +17,11 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
 BuildRequires: python3-module-six python3-module-monotonic
 
 # tests
 BuildRequires: python3-module-testtools
 BuildRequires: python3-module-nose
-BuildRequires: python-module-futures
 
 %description
 A python package that provides useful locks.
@@ -49,6 +47,10 @@ nosetests3
 
 
 %changelog
+* Tue Aug 03 2021 Grigory Ustinov <grenka@altlinux.org> 0.15-alt3
+- Fixed BuildRequires.
+- Fixed license tag.
+
 * Tue Apr 27 2021 Vitaly Lipatov <lav@altlinux.ru> 0.15-alt2
 - drop test.py
 
