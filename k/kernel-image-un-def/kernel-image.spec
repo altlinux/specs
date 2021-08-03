@@ -1,5 +1,5 @@
 Name: kernel-image-un-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	5.12
 %define kernel_sublevel .19
@@ -662,6 +662,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Tue Aug 03 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:5.12.19-alt2
+- Bumped release to pesign with new key.
+
 * Wed Jul 21 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.12.19-alt1
 - v5.12.19
 
