@@ -2,7 +2,7 @@
 
 Name: python-module-Pygments
 Version: 2.4.2
-Release: alt3
+Release: alt4
 
 Summary: Pygments is a syntax highlighting package written in Python
 
@@ -14,13 +14,6 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 Source1: autobuild.watch
-
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-docutils
-BuildRequires: python-module-objects.inv
-BuildRequires: python-module-alabaster
-BuildRequires: python-module-html5lib
-BuildRequires: time
 
 %description
 It is a generic syntax highlighter for general use in all kinds of
@@ -87,50 +80,26 @@ This package contains pickles for %name.
 %prep
 %setup
 
-%prepare_sphinx .
-ln -s ../objects.inv doc/
-
 %build
 %python_build
-
-%make -C doc pickle
-%make -C doc html
 
 %install
 %python_install
 
-install -d %buildroot%_man1dir
-install -d %buildroot%_docdir/%name
-
-install -p -m644 AUTHORS CHANGES LICENSE TODO \
-	%buildroot%_docdir/%name/
-cp -fR doc/_build/html %buildroot%_docdir/%name/
-
-install -p -m644 doc/pygmentize.1 %buildroot%_man1dir
 cp -fR tests %buildroot%python_sitelibdir/pygments/
-cp -fR doc/_build/pickle %buildroot%python_sitelibdir/pygments/
 
 %files
-%doc %dir %_docdir/%name
-%doc %_docdir/%name/*
-%exclude %_docdir/%name/html
 %_bindir/pygmentize
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
 %exclude %python_sitelibdir/pygments/tests
-%_man1dir/*
 
 %files tests
 %python_sitelibdir/pygments/tests
 
-%files doc
-%doc %dir %_docdir/%name
-%doc %_docdir/%name/html
-
-%files pickles
-%python_sitelibdir/*/pickle
-
 %changelog
+* Tue Aug 03 2021 Grigory Ustinov <grenka@altlinux.org> 2.4.2-alt4
+- Built without docs.
+
 * Wed May 06 2020 Stanislav Levin <slev@altlinux.org> 2.4.2-alt3
 - Moved Python3 subpackage to its own package.
 
