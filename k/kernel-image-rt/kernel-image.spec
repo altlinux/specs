@@ -9,7 +9,7 @@ Name: kernel-image-%kflavour
 %define kernel_rt_release	rt47
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
-Release: alt1.%kernel_rt_release
+Release: alt2.%kernel_rt_release
 
 %define krelease	%release
 
@@ -418,6 +418,9 @@ fi
 %modules_dir/build
 
 %changelog
+* Tue Aug 03 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.10.52-alt2.rt47
+- Bumped release to pesign with new key.
+
 * Wed Jul 28 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.52-alt1.rt47
 - Update to v5.10.52-rt47 (2021-07-23).
 
