@@ -10,7 +10,7 @@
 
 Name: python3-module-%oname
 Version: 1.7.1
-Release: alt2
+Release: alt3
 
 Summary: Planar geometries, predicates, and operations
 License: BSD
@@ -40,7 +40,7 @@ BuildRequires: python3-module-numpy-testing
 BuildRequires: xvfb-run
 %if_with doc
 BuildRequires: python3-module-sphinx
-BuildRequires: /usr/bin/sphinx-apidoc
+BuildRequires: python3-module-sphinxcontrib-websupport
 BuildRequires: python3(matplotlib.sphinxext)
 %endif
 
@@ -84,6 +84,7 @@ This package contains documentation for %oname.
 %if_with doc
 %prepare_sphinx3 .
 ln -s ../objects.inv docs/
+sed -i 's/sphinx-apidoc/sphinx-apidoc-3/' docs/Makefile
 %endif
 
 %build
@@ -130,6 +131,9 @@ py.test3 -vv
 %endif
 
 %changelog
+* Tue Aug 03 2021 Grigory Ustinov <grenka@altlinux.org> 1.7.1-alt3
+- Fixed building docs with python3.
+
 * Sun Jul 18 2021 Michael Shigorin <mike@altlinux.org> 1.7.1-alt2
 - Introduce doc knob (on by default).
 
