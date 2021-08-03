@@ -7,7 +7,7 @@
 
 Name: python-module-%oname
 Version: %major.2.0
-Release: alt2
+Release: alt3
 Epoch: 1
 
 # Enable/disable GLcanvas
@@ -54,7 +54,7 @@ BuildPreReq: libGL-devel libGLU-devel
 BuildPreReq: python-module-sphinx-devel python-module-Pygments-tests
 BuildPreReq: libGConf-devel swig
 BuildPreReq: python-module-distribute python-module-enchant
-BuildPreReq: python-module-Pillow python-module-PyPDF2
+BuildPreReq: python-module-Pillow
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel python3-module-enchant
@@ -243,6 +243,9 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %endif
 
 %changelog
+* Tue Aug 03 2021 Grigory Ustinov <grenka@altlinux.org> 1:3.0.2.0-alt3
+- Fixed BuildRequires.
+
 * Sat May 23 2020 Anton Midyukov <antohami@altlinux.org> 1:3.0.2.0-alt2
 - Fix License Tag
 - Fix shebang
