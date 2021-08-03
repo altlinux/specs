@@ -1,40 +1,41 @@
-%define origname python-gammu
-
-Name: python-module-gammu
+Name: python3-module-gammu
 Version: 2.8
-Release: alt1
+Release: alt2
 
 Summary: Python module to communicate with mobile phones
-License: GPL
-Group: Communications
+License: GPLv2
+Group: Development/Python3
 
 Url: http://wammu.eu/gammu/
-Source0: http://dl.cihar.com/%origname/python-gammu-%version.tar.gz
+Source0: %name-%version.tar.gz
 Source100: python-module-gammu.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildRequires: python-module-setuptools libgammu-devel
+BuildRequires: libgammu-devel
 Obsoletes: python-gammu
-
-%setup_python_module %origname
 
 %description
 This provides Python gammu module that can work with any phone
 that Gammu supports - many Nokias, Siemens, Alcatel, ...
 
 %prep
-%setup -n %origname-%version
+%setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
-%python_sitelibdir/gammu
+%python3_sitelibdir/gammu
+%python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Aug 03 2021 Grigory Ustinov <grenka@altlinux.org> 2.8-alt2
+- Transferred on python3.
+- Fixed license tag.
+
 * Fri Jun 16 2017 Michael Shigorin <mike@altlinux.org> 2.8-alt1
 - new version (watch file uupdate)
 
