@@ -1,6 +1,6 @@
 Name: seadrive-gui
 Version: 2.0.14
-Release: alt1
+Release: alt1.1
 
 Summary: Seafile Drive client
 
@@ -17,11 +17,17 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: cmake libsqlite3-devel libssl-devel zlib-devel libcurl-devel
-BuildRequires: qt5-imageformats qt5-tools-devel qt5-base-devel qt5-webengine-devel
+BuildRequires: qt5-imageformats qt5-tools-devel qt5-base-devel
 
 BuildRequires: libevent-devel >= 2.0
 BuildRequires: libglib2-devel libuuid-devel libjansson-devel
 BuildRequires: libsearpc-devel
+
+%ifarch %e2k
+BuildRequires: qt5-webkit-devel
+%else
+BuildRequires: qt5-webengine-devel
+%endif
 
 %description
 Seafile Drive client.
@@ -36,7 +42,10 @@ Note: you need install seadrive-daemon also, which not opensourced.
 
 %prep
 %setup
-subst '1iADD_DEFINITIONS(-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_26)' CMakeLists.txt
+sed -i '1iADD_DEFINITIONS(-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_26)' CMakeLists.txt
+%ifarch %e2k
+sed -i '/USE_QT_WEBKIT/ {s/OFF/ON/}' CMakeLists.txt
+%endif
 
 %build
 PATH=%_qt5_bindir:$PATH %cmake_insource
@@ -54,6 +63,9 @@ PATH=%_qt5_bindir:$PATH %cmake_insource
 %_pixmapsdir/*
 
 %changelog
+* Tue Aug 03 2021 Michael Shigorin <mike@altlinux.org> 2.0.14-alt1.1
+- E2K: use webkit instead of the (missing) webengine
+
 * Tue Jun 08 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.14-alt1
 - new version 2.0.14 (with rpmrb script)
 
