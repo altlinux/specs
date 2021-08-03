@@ -1,6 +1,6 @@
 Name:     hyperfine
 Version:  1.11.0
-Release:  alt3
+Release:  alt4
 
 Summary:  A command-line benchmarking tool
 License:  Apache-2.0
@@ -10,9 +10,7 @@ Url:      https://github.com/sharkdp/hyperfine
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 Source:   %name-%version.tar
-Patch: %name-%version.patch
-
-ExclusiveArch: x86_64 aarch64
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc
@@ -38,6 +36,9 @@ BuildRequires: /proc
 %doc *.md
 
 %changelog
+* Tue Aug 03 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.11.0-alt4
+- Remove ExclusiveArch
+
 * Wed Jun 23 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.11.0-alt3
 - Use rpm-build-rust macros
 

@@ -1,5 +1,5 @@
 Name:      rpm-build-rust
-Version:   0.1.0
+Version:   0.1.1
 Release:   alt1
 Summary:   RPM build enviroment to build rust packages
 Group:     Development/Other
@@ -33,5 +33,8 @@ cp %SOURCE0 %buildroot%_rpmmacrosdir/rust
 %_rpmmacrosdir/rust
 
 %changelog
+* Tue Aug 03 2021 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.1-alt1
+- Remove target specifiaction
+
 * Tue Jun 22 2021 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.0-alt1
 - Initila build
