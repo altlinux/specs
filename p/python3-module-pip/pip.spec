@@ -6,7 +6,7 @@
 
 Name: python3-module-pip
 Version: 21.2.1
-Release: alt3
+Release: alt4
 
 Summary: The PyPA recommended tool for installing Python packages
 License: MIT
@@ -63,6 +63,8 @@ Requires: python3-module-pip
 Obsoletes: python3-module-pip <= 21.2.1-alt2
 Conflicts: python3-module-pip <= 21.2.1-alt2
 
+BuildArch: noarch
+
 %description -n pip
 %summary
 
@@ -114,6 +116,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
 %endif
 
 %changelog
+* Wed Aug 04 2021 Stanislav Levin <slev@altlinux.org> 21.2.1-alt4
+- Built pip package as arch-independent.
+
 * Tue Aug 03 2021 Stanislav Levin <slev@altlinux.org> 21.2.1-alt3
 - Moved pip executable into its own package.
 
