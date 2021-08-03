@@ -1,7 +1,7 @@
 Name: iputils
 %define timestamp 20210722
 Version: %timestamp
-Release: alt1
+Release: alt2
 
 Summary: Utilities for IPv4/IPv6 networking
 License: BSD-3-Clause and GPL-2.0+ and Rdisc
@@ -158,6 +158,10 @@ fi
 %_man8dir/ninfod.*
 
 %changelog
+* Tue Aug 03 2021 Mikhail Efremov <sem@altlinux.org> 20210722-alt2
+- ping: Fixed -W/-i options in case of setlocale() error
+   (closes: #40636).
+
 * Tue Jul 27 2021 Mikhail Efremov <sem@altlinux.org> 20210722-alt1
 - Patch from upstream git:
     + meson: Make tests optional.
