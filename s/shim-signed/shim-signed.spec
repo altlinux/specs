@@ -1,6 +1,6 @@
 Name: shim-signed
-Version: 15
-Release: alt2
+Version: 15.4
+Release: alt1
 
 Summary: UEFI RestrictedBoot shim signed by Microsoft
 License: BSD
@@ -40,6 +40,9 @@ for pefile in $(ls %buildroot%_efi_bindir/*.efi | rev | cut -d/ -f1 | rev);
 %attr(0644,root,root) %_libexecdir/shim/BOOT*.CSV
 
 %changelog
+* Thu Jul 08 2021 Nikolai Kostrigin <nickel@altlinux.org> 15.4-alt1
+- new shim version
+
 * Mon Dec 21 2020 Nikolai Kostrigin <nickel@altlinux.org> 15-alt2
 - add BOOT<efi_arch>.CSV files for fallback boot variable creation
 

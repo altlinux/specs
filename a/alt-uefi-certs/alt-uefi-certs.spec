@@ -1,6 +1,6 @@
 Name: alt-uefi-certs
-Version: 1.0
-Release: alt2
+Version: 2.0
+Release: alt1
 
 Summary: A set of ALT Linux certificates to verify UEFI binaries
 License: Public domain
@@ -42,6 +42,9 @@ install -pDm644 altlinux-ca.cer %buildroot%_efi_keydir/altlinux.cer
 %_efi_keydir/altlinux.cer
 
 %changelog
+* Tue Aug 03 2021 Nikolai Kostrigin <nickel@altlinux.org> 2.0-alt1
+- replaced ALT UEFI SB CA 2013 certificate with ALT UEFI SB CA 2021
+
 * Mon Apr 22 2019 Michael Shigorin <mike@altlinux.org> 1.0-alt2
 - oops, it's still used in mkimage
 - updated Url:
