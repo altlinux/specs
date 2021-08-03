@@ -1,6 +1,6 @@
 Name: libsigrok
-Version: 0.5.2
-Release: alt1
+Version: 0.6.0
+Release: alt0.20210723
 
 Summary: sigrok -- signal analysis software suite
 License: GPLv3
@@ -9,13 +9,12 @@ Url: https://sigrok.org/
 
 Source: %name-%version-%release.tar
 
+BuildRequires: gcc-c++ doxygen
 BuildRequires: glib2-devel libzip-devel libserialport-devel
 BuildRequires: libftdi1-devel libusb-devel libieee1284-devel
-# c++ bindings
-BuildRequires: gcc-c++ doxygen libcheck-devel libglibmm-devel
-BuildRequires: python2.7(xml.etree)
-# python bindings
-#BuildRequires: swig pkgconfig(pygobject-3.0)
+BuildRequires: libcheck-devel libglibmm-devel python3-dev swig
+BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires: libnumpy-py3-devel pkgconfig(pygobject-3.0)
 
 %package devel
 Summary: sigrok -- signal analysis software suite
@@ -28,6 +27,10 @@ Group: System/Libraries
 %package -n libsigrokcxx-devel
 Summary: sigrok -- signal analysis software suite
 Group: Development/C++
+
+%package -n python3-module-sigrok
+Summary: sigrok -- signal analysis software suite
+Group: Development/Python
 
 %description
 The sigrok project aims at creating a portable, cross-platform,
@@ -62,6 +65,13 @@ Free/Libre/Open-Source signal analysis software suite that supports various
 device types (such as logic analyzers, oscilloscopes, multimeters, and more).
 
 this package provides development part of libsigrokcxx.
+
+%description -n python3-module-sigrok
+The sigrok project aims at creating a portable, cross-platform,
+Free/Libre/Open-Source signal analysis software suite that supports various
+device types (such as logic analyzers, oscilloscopes, multimeters, and more).
+
+this package provides Python bindings for libsigrok
 
 %prep
 %setup
@@ -99,7 +109,14 @@ install -pm0644 contrib/61-libsigrok-uaccess.rules %buildroot%_udevrulesdir/
 %_includedir/libsigrokcxx
 %_pkgconfigdir/libsigrokcxx.pc
 
+%files -n python3-module-sigrok
+%python3_sitelibdir/sigrok
+%python3_sitelibdir/libsigrok-%version-*-info
+
 %changelog
+* Tue Aug 03 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.0-alt0.20210723
+- git snapshot libsigrok-unreleased-1316-gb96051a5
+
 * Wed Jul 15 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.2-alt1
 - 0.5.2 released
 
