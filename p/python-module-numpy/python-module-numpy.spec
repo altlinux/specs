@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %majver.4
-Release: alt8
+Release: alt9
 Epoch: 1
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
@@ -34,14 +34,12 @@ Conflicts: libsyfi-devel < 0.6.1-alt3.hg20090822
 Conflicts: lib%oname-devel < %version-%release
 Obsoletes: libsyfi-devel < 0.6.1-alt3.hg20090822
 
-BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: /proc
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: doxygen gcc-c++ gcc-fortran liblapack-devel
 BuildRequires: swig
 BuildRequires: python-module-Cython
-BuildRequires: python-module-alabaster python-module-html5lib python-module-matplotlib-sphinxext python-module-numpydoc python-module-objects.inv
 
 # closes unmets in autoimports
 Provides: python-module-numpy-doc = %EVR
@@ -239,6 +237,9 @@ fi
 %python_sitelibdir/%oname/core/lib/npy-pkg-config
 
 %changelog
+* Tue Aug 03 2021 Grigory Ustinov <grenka@altlinux.org> 1:1.15.4-alt9
+- Fixed BuildRequires.
+
 * Thu Jul 22 2021 Stanislav Levin <slev@altlinux.org> 1:1.15.4-alt8
 - Stopped shipping of tests and testing.
 
