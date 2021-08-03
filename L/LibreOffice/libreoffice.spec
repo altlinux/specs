@@ -29,7 +29,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt1.1
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -89,6 +89,7 @@ Patch18: FC-0001-disable-libe-book-support.patch
 ## ALT patches
 Patch401: alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
 Patch402: alt-002-tmpdir.patch
+Patch403: alt-003-skia-freetype-2.11.patch
 Patch404: alt-004-shortint.patch
 
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
@@ -304,6 +305,10 @@ echo Direct build
 ## ALT apply patches
 %patch401 -p0
 %patch402 -p1
+# Patch bundled Skia fior freetype-2.11
+tar xf ext_sources/skia-m90-45c57e116ee0ce214bdf78405a4762722e4507d9.tar.xz
+%patch403 -p1 -d skia
+tar cJf ext_sources/skia-m90-45c57e116ee0ce214bdf78405a4762722e4507d9.tar.xz skia
 %patch404 -p1
 
 %patch500 -p0
@@ -617,6 +622,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Tue Aug 03 2021 Andrey Cherepanov <cas@altlinux.org> 7.2.0.1-alt1.1
+- FTBFS: patch bundled Skia for freetype 2.11 (ALT #40642)
+
 * Thu Jul 15 2021 Fr. Br. George <george@altlinux.ru> 7.2.0.1-alt1
 - Update to 7.2.0.1
 
