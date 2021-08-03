@@ -1,25 +1,20 @@
 %define _unpackaged_files_terminate_build 1
 %define mname kerberos
 
-Name: python-module-%mname
+Name: python3-module-%mname
 Version: 1.3.0
-Release: alt2
+Release: alt3
 
 Summary: A high-level wrapper for Kerberos (GSSAPI) operations
-License: ASL 2.0
+License: Apache-2.0
 Group: System/Libraries
 # Source-git: https://github.com/apple/ccs-pykerberos.git
 Url: https://pypi.python.org/pypi/kerberos
 
 Source0: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-dev
-BuildRequires: python3-dev
 BuildRequires: libkrb5-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python3-module-setuptools
 
 %description
 This Python package is a high-level wrapper for Kerberos (GSSAPI) operations.
@@ -30,48 +25,25 @@ is needed for client/serverKerberos authentication based on
 
 Much of the C-code here is adapted from Apache's mod_auth_kerb-5.0rc7.
 
-%package -n python3-module-%mname
-Summary: A high-level wrapper for Kerberos (GSSAPI) operations
-Group: Development/Python3
-
-%description -n python3-module-%mname
-This Python package is a high-level wrapper for Kerberos (GSSAPI) operations.
-The goal is to avoid having to build a module that wraps the entire
-Kerberos.framework, and instead offer a limited set of functions that do what
-is needed for client/serverKerberos authentication based on
-<http://www.ietf.org/rfc/rfc4559.txt>.
-
-Much of the C-code here is adapted from Apache's mod_auth_kerb-5.0rc7.
-
 %prep
 %setup
-rm -rf ../python3
-cp -a . ../python3
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
-pushd ../python3
-%python3_build_debug
-popd
+%python3_build
 
 %install
-%python_install
-pushd ../python3
 %python3_install
-popd
 
 %files
-%doc README.rst
-%python_sitelibdir/kerberos*.so
-%python_sitelibdir/kerberos-%version-*.egg-info
-
-%files -n python3-module-%mname
 %doc README.rst
 %python3_sitelibdir/kerberos*.so
 %python3_sitelibdir/kerberos-%version-*.egg-info
 
 %changelog
+* Tue Aug 03 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt3
+- Drop python2 support.
+
 * Wed Jan 16 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.3.0-alt2
 - Disable ubt macros due binary package identity change
 
