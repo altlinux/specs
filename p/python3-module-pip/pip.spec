@@ -6,7 +6,7 @@
 
 Name: python3-module-pip
 Version: 21.2.1
-Release: alt2
+Release: alt3
 
 Summary: The PyPA recommended tool for installing Python packages
 License: MIT
@@ -38,9 +38,6 @@ BuildRequires: python3(tox_no_deps)
 %endif
 
 Obsoletes: python3-module-pip-pickles
-# due to file conflict on /usr/bin/pip: https://bugzilla.altlinux.org/40612
-Conflicts: python-module-pip
-
 %description
 %summary
 
@@ -58,6 +55,16 @@ Group: Development/Python3
 
 Packaged as wheel. Provides the seed package for virtualenv.
 %endif
+
+%package -n pip
+Summary: Executable for PIP
+Group: Development/Python3
+Requires: python3-module-pip
+Obsoletes: python3-module-pip <= 21.2.1-alt2
+Conflicts: python3-module-pip <= 21.2.1-alt2
+
+%description -n pip
+%summary
 
 %prep
 %setup
@@ -91,9 +98,11 @@ export TOX_TESTENV_PASSENV='NO_LATEST_WHEELS'
 tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
     -m 'not network and unit'
 
+%files -n pip
+%_bindir/pip
+
 %files
 %doc *.txt *.rst
-%_bindir/pip
 %_bindir/pip3
 %_bindir/pip%__python3_version
 %python3_sitelibdir/pip/
@@ -105,6 +114,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
 %endif
 
 %changelog
+* Tue Aug 03 2021 Stanislav Levin <slev@altlinux.org> 21.2.1-alt3
+- Moved pip executable into its own package.
+
 * Fri Jul 30 2021 Stanislav Levin <slev@altlinux.org> 21.2.1-alt2
 - Added conflict to python2-pip (closes: #40612).
 
