@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define ver_major 2.22
-%define ver_minor 0
+%define ver_minor 1
 %define _lily_dir %_datadir/%name/%version
 %define _texmf %_datadir/texmf
 
@@ -128,6 +128,9 @@ rm -f %buildroot%_infodir/lilypond* %buildroot%_infodir/music*
 %vim_runtime_dir/syntax/*
 
 %changelog
+* Tue Aug 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.22.1-alt1
+- Updated to stable upstream version 2.22.1.
+
 * Thu Feb 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.22.0-alt1
 - Updated to stable upstream version 2.22.0.
 
