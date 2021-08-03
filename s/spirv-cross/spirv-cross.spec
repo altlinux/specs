@@ -5,7 +5,7 @@
 
 Name: spirv-cross
 Version: 2021.01.15
-Release: alt0.1
+Release: alt0.2
 
 Summary: tool to parse and convert SPIR-V to other shader languages
 Group: Development/C++
@@ -43,6 +43,9 @@ Provides: lib%{name} = %EVR
 %prep
 %setup -n %name-%version
 %patch -p1
+%ifarch %e2k
+sed -i "s/make_msl_version(1, 2)/make_msl_version(1, 2, 0)/" spirv_msl.hpp
+%endif
 
 %build
 %_cmake \
@@ -65,6 +68,9 @@ Provides: lib%{name} = %EVR
 %_datadir/cmake/*
 
 %changelog
+* Tue Aug 03 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2021.01.15-alt0.2
+- e2k: compiler bug workaround.
+
 * Mon Jun 14 2021 L.A. Kostis <lakostis@altlinux.ru> 2021.01.15-alt0.1
 - 2021-01-15.
 
