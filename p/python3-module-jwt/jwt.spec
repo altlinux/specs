@@ -1,84 +1,46 @@
 %define _unpackaged_files_terminate_build 1
 %define oname jwt
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.7.1
-Release: alt1
+Release: alt2
 Summary: JSON Web Token implementation in Python
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/PyJWT/
 
 # https://github.com/progrium/pyjwt.gi
 Source0: https://files.pythonhosted.org/packages/2f/38/ff37a24c0243c5f45f5798bd120c0f873eeed073994133c084e1cf13b95c/PyJWT-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
+
+Conflicts: python-module-%oname
+Obsoletes: python-module-%oname
 
 %description
 A Python implementation of JSON Web Token draft 01.
 
-%package -n python3-module-%oname
-Summary: JSON Web Token implementation in Python
-Group: Development/Python3
-
-%description -n python3-module-%oname
-A Python implementation of JSON Web Token draft 01.
-
 %prep
-%setup -q -n PyJWT-%{version}
-
-%if_with python3
-cp -fR . ../python3
-%endif
+%setup -n PyJWT-%{version}
 
 %build
 export LC_ALL=en_US.UTF-8
-%python_build_debug
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python3_build
 
 %install
 export LC_ALL=en_US.UTF-8
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-%endif
-
-%python_install
 
 %files
 %doc AUTHORS *.md
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc AUTHORS *.md
-%_bindir/*.py3
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Tue Aug 03 2021 Grigory Ustinov <grenka@altlinux.org> 1.7.1-alt2
+- Drop python2 support.
+
 * Fri Nov 29 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.1-alt1
 - 1.7.1 released
 
