@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 2.11.3
-Release: alt2
+Release: alt3
 
 Summary: The new and improved version of a small but fast template engine
 License: BSD
@@ -17,7 +17,6 @@ Url: http://jinja.pocoo.org/2/
 # https://github.com/mitsuhiko/jinja2.git
 Source: %name-%version.tar
 
-BuildRequires: python-module-pytest
 %if_with doc
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib
 %endif
@@ -136,6 +135,9 @@ make test
 %endif
 
 %changelog
+* Tue Aug 03 2021 Grigory Ustinov <grenka@altlinux.org> 2.11.3-alt3
+- Fixed BuildRequires.
+
 * Mon Jun 21 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.11.3-alt2
 - rebuilt as legacy python2 package
 
