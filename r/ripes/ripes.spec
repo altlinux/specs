@@ -1,17 +1,22 @@
 Name: ripes
 Version: 2.1.0
-Release: alt1.1
-Source: %name-%version.tar.gz
+Release: alt1.1.1
+
 Summary: A graphical 5-stage RISC-V pipeline simulator
-Group: Emulators
 License: MIT
+Group: Emulators
+
 Url: https://github.com/mortbopet/Ripes
+Source: %name-%version.tar.gz
 Patch1: Ripes.patch
 Patch2: VSRTL.patch
 
 # Automatically added by buildreq on Thu Aug 01 2019
 # optimized out: gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libglvnd-devel libqt5-core libqt5-gui libqt5-svg libqt5-widgets libstdc++-devel python-base python-modules qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-webchannel-devel sh4
-BuildRequires: qt5-3d-devel qt5-charts-devel qt5-connectivity-devel qt5-datavis3d-devel qt5-gamepad-devel qt5-multimedia-devel qt5-networkauth-devel qt5-phonon-devel qt5-quickcontrols2-devel qt5-script-devel qt5-scxml-devel qt5-sensors-devel qt5-serialbus-devel qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-virtualkeyboard-devel qt5-wayland-devel qt5-webengine-devel qt5-webkit-devel qt5-websockets-devel qt5-webview-devel qt5-x11extras-devel qt5-xmlpatterns-devel cmake
+BuildRequires: qt5-3d-devel qt5-charts-devel qt5-connectivity-devel qt5-datavis3d-devel qt5-gamepad-devel qt5-multimedia-devel qt5-networkauth-devel qt5-phonon-devel qt5-quickcontrols2-devel qt5-script-devel qt5-scxml-devel qt5-sensors-devel qt5-serialbus-devel qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-virtualkeyboard-devel qt5-wayland-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel cmake
+%ifnarch %e2k
+BuildRequires: qt5-webengine-devel qt5-webview-devel
+%endif
 
 %description
 Ripes is a graphical 5-stage processor pipeline simulator and assembly
@@ -44,6 +49,10 @@ cp -a appdir/usr %buildroot
 %_iconsdir/*/*/apps/*
 
 %changelog
+* Tue Aug 03 2021 Michael Shigorin <mike@altlinux.org> 2.1.0-alt1.1.1
+- E2K: avoid qt5-{webengine,webview} as missing
+- minor spec cleanup
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 2.1.0-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
