@@ -1,11 +1,11 @@
 %define oname babel
 
-%def_with doc
+%def_without doc
 #def_disable check
 
 Name:    python-module-%oname
 Version: 2.6.0
-Release: alt4
+Release: alt5
 Epoch:   1
 
 Summary: a collection of tools for internationalizing Python applications
@@ -19,13 +19,12 @@ Source: %name-%version.tar
 Source1: CLDR.tar
 
 BuildArch: noarch
-BuildRequires: python-module-setuptools python-module-sphinx-devel
+BuildRequires: python-module-setuptools
 BuildRequires: python2-base
 %{?!_without_check:%{?!_disable_check:BuildRequires: %py_dependencies setuptools.command.test pytz}}
 
 %setup_python_module babel
 
-BuildRequires(pre): rpm-macros-sphinx
 %py_requires pytz
 
 %description
@@ -71,6 +70,9 @@ mv %buildroot%_bindir/pybabel %buildroot%_bindir/pybabel.py2
 %endif
 
 %changelog
+* Tue Aug 03 2021 Grigory Ustinov <grenka@altlinux.org> 1:2.6.0-alt5
+- Build without docs.
+
 * Sun Jul 04 2021 Vitaly Lipatov <lav@altlinux.ru> 1:2.6.0-alt4
 - use python2 command instead of python
 
