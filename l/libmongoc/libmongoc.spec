@@ -1,8 +1,8 @@
 %def_disable tests
 
 Name: libmongoc
-Version: 1.14.0
-Release: alt1.2
+Version: 1.18.0
+Release: alt1
 Summary: Client library written in C for MongoDB
 Group: System/Libraries
 License: ASL 2.0 and ISC and MIT and zlib
@@ -59,8 +59,6 @@ This package contains development files of libbson.
 %prep
 %setup
 sed -i 's|sphinx-build|sphinx-build-3|' build/cmake/FindSphinx.cmake
-sed -i 's|-j ${NPROCS}|-j 1|g' build/cmake/SphinxBuild.cmake
-sed -i 's/from sphinx.environment import NoUri/from sphinx.errors import NoUri/' build/sphinx/taglist.py src/libbson/doc/taglist.py
 
 %build
 %cmake \
@@ -132,6 +130,9 @@ exit $ret
 
 
 %changelog
+* Tue Aug 03 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.18.0-alt1
+- 1.18.0
+
 * Mon Aug 02 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.14.0-alt1.2
 - NMU: fix FTBFS (sphinx).
 
