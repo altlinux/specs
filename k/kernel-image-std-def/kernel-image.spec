@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt1.1
+Release: alt2
 epoch:2
 %define kernel_base_version	5.10
 %define kernel_sublevel .54
@@ -658,6 +658,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Tue Aug 03 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:5.10.54-alt2
+- Bumped release to pesign with new key.
+
 * Fri Jul 30 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.54-alt1.1
 - Null dereference fixed
 
