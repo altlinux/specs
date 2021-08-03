@@ -1,4 +1,5 @@
-%def_without bootstrap
+%def_with bootstrap
+%def_without check
 
 %define modulename lxml
 
@@ -6,7 +7,7 @@
 
 Name: python-module-lxml
 Version: 4.6.3.0.16.git5ecb40bc
-Release: alt1
+Release: alt2
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API.
 
@@ -150,6 +151,10 @@ popd
 %doc doc samples
 
 %changelog
+* Tue Aug 03 2021 Grigory Ustinov <grenka@altlinux.org> 4.6.3.0.16.git5ecb40bc-alt2
+- Build with bootstrap.
+- Build without check.
+
 * Thu Jul 01 2021 Grigory Ustinov <grenka@altlinux.org> 4.6.3.0.16.git5ecb40bc-alt1
 - Build from last commit.
 
