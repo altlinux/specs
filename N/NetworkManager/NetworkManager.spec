@@ -55,7 +55,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.32.4
+Version: 1.32.6
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -620,6 +620,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Aug 04 2021 Mikhail Efremov <sem@altlinux.org> 1.32.6-alt1
+- Updated to 1.32.6.
+
 * Thu Jul 22 2021 Mikhail Efremov <sem@altlinux.org> 1.32.4-alt1
 - Added systemd-utils to BR for tests.
 - Updated to 1.32.4.
