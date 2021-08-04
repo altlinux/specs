@@ -1,35 +1,21 @@
+Epoch: 1
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_without jna
-
 Name:           bcel
 Version:        6.4.1
-Release:        alt1_2jpp11
-Epoch:          1
+Release:        alt1_7jpp11
 Summary:        Byte Code Engineering Library
 License:        ASL 2.0
 URL:            http://commons.apache.org/proper/commons-bcel/
-Source0:        http://archive.apache.org/dist/commons/bcel/source/bcel-%{version}-src.tar.gz
-
 BuildArch:      noarch
+
+Source0:        http://archive.apache.org/dist/commons/bcel/source/bcel-%{version}-src.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-%if %{with jna}
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(net.java.dev.jna:jna)
-BuildRequires:  mvn(net.java.dev.jna:jna-platform)
-BuildRequires:  mvn(org.apache.commons:commons-lang3)
-%endif
 Source44: import.info
 
 %description
@@ -65,11 +51,7 @@ This package provides %{summary}.
 %mvn_file : %{name}
 
 %build
-%if %{without jna}
-%mvn_build -f
-%else
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
-%endif
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -82,6 +64,9 @@ This package provides %{summary}.
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1:6.4.1-alt1_7jpp11
+- update
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1:6.4.1-alt1_2jpp11
 - new version
 
