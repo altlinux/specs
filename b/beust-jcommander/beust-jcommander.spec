@@ -1,11 +1,19 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           beust-jcommander
 Version:        1.78
-Release:        alt1_2jpp11
+Release:        alt1_7jpp11
 Summary:        Java framework for parsing command line parameters
 License:        ASL 2.0
 URL:            http://jcommander.org/
@@ -21,8 +29,12 @@ Source2:        generate-tarball.sh
 Patch0:         0001-ParseValues-NullPointerException-patch.patch
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.testng:testng)
+%endif
 Source44: import.info
 
 %description
@@ -47,7 +59,7 @@ sed -i 's/@VERSION@/%{version}/g' pom.xml
 
 %build
 %mvn_file : %{name}
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -59,6 +71,9 @@ sed -i 's/@VERSION@/%{version}/g' pom.xml
 %doc license.txt notice.md
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.78-alt1_7jpp11
+- update
+
 * Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 1.78-alt1_2jpp11
 - new version
 
