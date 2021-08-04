@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.18
-Release: alt5
+Release: alt6
 
 %define package_name		%real_name
 %define weight			1001
@@ -86,7 +86,44 @@ Patch34: python-2.7.14-upstream-issue31530-patch2.patch
 Patch104: 00104-lib64-fix-for-test_install.patch
 
 Patch105: python-2.7.18-fc-alt-cve-2019-20907-fix-infinite-loop-in-tarfile.patch
+
+# Reject control chars in HTTP method in httplib.putrequest to prevent
+# HTTP header injection
+#
+# Backported from Python 3.5-3.10 (and adjusted for py2's single-module httplib):
+# - https://bugs.python.org/issue39603
+# - https://github.com/python/cpython/pull/18485 (3.10)
+# - https://github.com/python/cpython/pull/21946 (3.5)
 Patch106: python-2.7.18-fc-cve-2020-26116-http-request-method-crlf-injection-in-httplib.patch
+
+# No longer call eval() on content received via HTTP in the CJK codec tests
+# Backported from the python3 branches upstream: https://bugs.python.org/issue41944
+# Resolves: https://bugzilla.redhat.com/show_bug.cgi?id=1889886
+Patch107: python-2.7.18-fc-cve-2020-27619.patch
+
+# CVE-2021-3177: Replace snprintf with Python unicode formatting in ctypes param reprs
+#
+# Backport of Python3 commit 916610ef90a0d0761f08747f7b0905541f0977c7:
+# https://bugs.python.org/issue42938
+# https://github.com/python/cpython/pull/24239
+Patch108: python-2.7.18-fc-cve-2021-3177.patch
+
+# CVE-2021-23336: Add `separator` argument to parse_qs; warn with default
+#
+# Partially backports https://bugs.python.org/issue42967 : [security] Address a web cache-poisning issue reported in urllib.parse.parse_qsl().
+#
+# Backported from the python3 branch.
+# However, this solution is different than the upstream solution in Python 3.
+#
+# Based on the downstream solution for python 3.6.13 by Petr Viktorin.
+#
+# An optional argument seperator is added to specify the separator.
+# It is recommended to set it to '&' or ';' to match the application or proxy in use.
+# The default can be set with an env variable of a config file.
+# If neither the argument, env var or config file specifies a separator, "&" is used
+# but a warning is raised if parse_qs is used on input that contains ';'.
+Patch109: python-2.7.18-fc-cve-2021-23336.patch
+
 # XXX ignore pydoc dependencies for now
 %add_findreq_skiplist %_bindir/pydoc*
 %add_python_req_skip msilib
@@ -716,6 +753,9 @@ install -p -m644 %SOURCE12 -t Lib/distutils/command
 ##patch34 -p1
 %patch105 -p2
 %patch106 -p1
+%patch107 -p1
+%patch108 -p1
+%patch109 -p1
 
 # XXX temporary Issue20445 fix
 sed -i 's/val1 == nice(2)/val1 == nice(2)+2/' configure.ac
@@ -1163,11 +1203,15 @@ rm %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Mon Aug 02 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.18-alt6
+- Adopted patches from Fedora project (fixed CVE-2020-27619, CVE-2021-3177 and
+  CVE-2021-23336).
+
 * Wed Apr 28 2021 Dmitry V. Levin <ldv@altlinux.org> 2.7.18-alt5
 - python-dev: added rpm-build-python to requirements.
 
 * Thu Feb 25 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.18-alt4
-- python-dev: Removed dependency to libnsl2-devel (close #39727).
+- python-dev: Removed dependency to libnsl2-devel (closes #39727).
 - Built without libnsl LDFLAGS.
 
 * Mon Dec 21 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.18-alt3
