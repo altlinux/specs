@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: fossology-nomos
-Version: 3.10.0
+Version: 3.11.0
 Release: alt1
 
 Summary: Architecture for analyzing software, nomos standalone
@@ -55,6 +55,9 @@ src/nomos/agent/nomossa -d .gear
 %_bindir/nomossa
 
 %changelog
+* Wed Aug 04 2021 Vitaly Chikunov <vt@altlinux.org> 3.11.0-alt1
+- Update to 3.11.0 (2021-07-30).
+
 * Mon May 10 2021 Vitaly Chikunov <vt@altlinux.org> 3.10.0-alt1
 - Update to 3.10.0 (2021-05-07).
 
