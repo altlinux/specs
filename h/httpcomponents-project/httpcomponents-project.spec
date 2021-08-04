@@ -3,25 +3,34 @@ Group: Development/Other
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global srcname httpcomponents-parent
+%bcond_with bootstrap
 
 Name:           httpcomponents-project
 Summary:        Common POM file for HttpComponents
 Version:        12
-Release:        alt1_2jpp11
+Release:        alt1_4jpp11
 License:        ASL 2.0
-
-URL:            http://hc.apache.org/
-Source0:        http://archive.apache.org/dist/httpcomponents/%{srcname}/%{srcname}-%{version}-source-release.zip
-
+URL:            https://hc.apache.org/
+Source0:        https://archive.apache.org/dist/httpcomponents/httpcomponents-parent/httpcomponents-parent-%{version}-source-release.zip
+Source1:        https://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch:      noarch
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+%endif
 Source44: import.info
 
 Obsoletes: hc-project < 4.1.1-alt1_1jpp6
@@ -33,7 +42,9 @@ required only for building dependant packages with Maven. Please don't
 use it as runtime requirement.
 
 %prep
-%setup -q -n %{srcname}-%{version}
+%setup -q -n httpcomponents-parent-%{version}
+
+cp -p %{SOURCE1} .
 
 %pom_remove_plugin :clirr-maven-plugin
 %pom_remove_plugin :docbkx-maven-plugin
@@ -55,6 +66,9 @@ use it as runtime requirement.
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 12-alt1_4jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 12-alt1_2jpp11
 - new version
 
