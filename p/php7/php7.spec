@@ -7,7 +7,7 @@
 %define _php_version  %version
 %define _php_major  7
 %define _php_minor  4
-%define _php_release_version 21
+%define _php_release_version 22
 %define _php_suffix %_php_major
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -446,6 +446,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Mon Aug 02 2021 Anton Farygin <rider@altlinux.ru> 7.4.22-alt1
+- 7.4.22
+
 * Sat Jul 10 2021 Anton Farygin <rider@altlinux.ru> 7.4.21-alt1
 - 7.4.21
 - added _php_release_version to rpm macros

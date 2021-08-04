@@ -2,7 +2,7 @@
 
 Name: php%_php_suffix-%php_extension
 Version: 2.0.1
-Release: alt3
+Release: alt4.%_php_release_version
 
 Summary:  Resource and persistent handles factory
 
