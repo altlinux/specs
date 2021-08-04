@@ -39,7 +39,7 @@
 %add_findreq_skiplist %_libexecdir/lxc/lxc-net
 
 Name: lxc
-Version: 4.0.9
+Version: 4.0.10
 Release: alt1
 
 Summary: Linux Containers
@@ -322,6 +322,9 @@ groupadd -r -f vmusers ||:
 %_man8dir/pam_cgfs.8*
 
 %changelog
+* Thu Jul 22 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.10-alt1
+- Updated to lxc-4.0.10.
+
 * Wed Jul 14 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.9-alt1
 - Updated to lxc-4.0.9.
 - Do not require criu on armh, require criu on ppc64le.
