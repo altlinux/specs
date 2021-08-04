@@ -2,7 +2,7 @@
 Summary: A suite of tools for manipulating the metadata of the dm-thin device-mapper target.
 Name: thin-provisioning-tools
 Version: 0.9.0
-Release: alt1
+Release: alt2
 License: GPLv3+
 Group: System/Base
 Url: https://github.com/jthornber/thin-provisioning-tools
@@ -27,6 +27,11 @@ snapshot eras
 %setup
 %patch -p1
 
+%ifarch %e2k
+sed -i "s|ref_counter<uint64_t>|persistent_data::&|" \
+	persistent-data/data-structures/array.h
+%endif
+
 echo %version > VERSION
 
 %build
@@ -43,6 +48,9 @@ echo %version > VERSION
 %_sbindir/*
 
 %changelog
+* Wed Aug 04 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.9.0-alt2
+- Fixed Elbrus build
+
 * Thu Sep 10 2020 Andrew A. Vasilyev <andy@altlinux.org> 0.9.0-alt1
 - 0.9.0
 
