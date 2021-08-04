@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -13,7 +13,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:		classloader-leak-test-framework
 Version:	1.1.1
-Release:	alt1_13jpp8
+Release:	alt1_16jpp11
 Summary:	Detection and verification of Java ClassLoader leaks
 License:	ASL 2.0
 URL:		https://github.com/mjiderhamn/classloader-leak-prevention/tree/master/%{name}
@@ -24,9 +24,6 @@ BuildArch:	noarch
 BuildRequires:	maven-local
 BuildRequires:	mvn(junit:junit)
 BuildRequires:	mvn(org.apache.bcel:bcel)
-%if %{with tests}
-BuildRequires: mvn(javax.el:el-api)
-%endif
 Source44: import.info
 
 %description
@@ -51,12 +48,15 @@ cp -r %{name}/* .
 
 %pom_remove_dep com.sun.faces:jsf-api
 %pom_remove_dep com.sun.faces:jsf-impl
+%pom_remove_dep javax.el:el-api
+
+%pom_remove_plugin -r :maven-javadoc-plugin
 
 %build
 %if %{with tests}
-%mvn_build --xmvn-javadoc
+%mvn_build --xmvn-javadoc -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 %else
-%mvn_build -f --xmvn-javadoc
+%mvn_build -f --xmvn-javadoc -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 %endif
 
 %install
@@ -70,6 +70,9 @@ cp -r %{name}/* .
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.1.1-alt1_16jpp11
+- update
+
 * Wed Dec 16 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_13jpp8
 - build w/o mojarra
 
