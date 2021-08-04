@@ -6,8 +6,8 @@
 %def_disable wmsession
 
 Name: %{_name}-session
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 License: GPLv2+
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
@@ -120,6 +120,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon Aug 2 2021 Vladimir Didenko <cow@altlinux.org> 5.0.1-alt1
+- 5.0.1
+
 * Tue Jun 1 2021 Vladimir Didenko <cow@altlinux.org> 5.0.0-alt2
 - use new cinnamon screensaver name for required components
 
