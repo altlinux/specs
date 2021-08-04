@@ -1,20 +1,33 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:             fusesource-pom
 Version:          1.12
-Release:          alt1_5jpp11
+Release:          alt1_8jpp11
 Summary:          Parent POM for FuseSource Maven projects
 License:          ASL 2.0
 URL:              http://fusesource.com/
+
 Source0:          http://repo1.maven.org/maven2/org/fusesource/fusesource-pom/%{version}/fusesource-pom-%{version}.pom
 Source1:          http://www.apache.org/licenses/LICENSE-2.0.txt
+
 BuildArch:        noarch
 
 BuildRequires:    maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%endif
 Source44: import.info
 
 %description
@@ -26,9 +39,6 @@ cp %{SOURCE0} pom.xml
 cp -p %{SOURCE1} LICENSE
 
 %pom_remove_plugin :maven-scm-plugin
-
-# source/target of 1.4 is not supported in fedora
-sed -i -e 's/>1\.4</>1.8</' pom.xml
 
 # WebDAV wagon is not available in Fedora.
 %pom_xpath_remove "pom:extension[pom:artifactId[text()='wagon-webdav-jackrabbit']]"
@@ -43,6 +53,9 @@ sed -i -e 's/>1\.4</>1.8</' pom.xml
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:1.12-alt1_8jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.12-alt1_5jpp11
 - update
 
