@@ -1,6 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
-%define major 3.0.7.33374
+%define major 4.0.0.2496
 %define minor 0
 %define pkgname Firebird
 %define pkgversion %major-%minor
@@ -18,17 +20,27 @@ Url: https://www.firebirdsql.org/
 Source: %name-%version.tar
 Source1: %name.init
 Source2: %name.tmpfiles.conf.in
+Source3: %name-logrotate
 
-Patch1: %name-3.0.5.33220.0-fedora-obsolete-syslogd.target.patch
-Patch2: %name-3.0.5.33220.0-fedora-no-copy-from-icu.patch
-Patch3: %name-3.0.5.33220.0-fedora-honour-buildflags.patch
-Patch4: %name-3.0.5.33220.0-fedora-cloop-honour-build-flags.patch
-Patch5: %name-3.0.5.33220.0-fedora-add-pkgconfig-files.patch
-Patch6: %name-3.0.5.33220.0-fedora-Provide-sized-global-delete-operators-when-compiled.patch
+# from OpenSuse
+Patch101: %name-%version-fedora-add-pkgconfig-files.patch
+
+# from Debian to be sent upstream
+Patch203: %name-%version-fedora-no-copy-from-icu.patch
+Patch205: %name-%version-fedora-cloop-honour-build-flags.patch
+
+# from upstream
+Patch301: %name-%version-fedora-c++17.patch
+Patch302: %name-%version-fedora-noexcept.patch
+
+# ALT patches
+Patch1001: %name-%version-alt-dont-link-libstdcxx-statically.patch
+Patch1002: %name-%version-alt-use-system-libre2.patch
+Patch1003: %name-%version-alt-disable-examples.patch
 
 Requires: libfbclient = %EVR
 
-BuildPreReq: rpm-build-compat
+BuildRequires(pre): rpm-build-compat
 BuildRequires: libtinfo-devel libicu-devel libedit-devel
 BuildRequires: gcc gcc-c++
 BuildRequires: autoconf
@@ -38,11 +50,13 @@ BuildRequires: libtool
 BuildRequires: libncurses-devel
 BuildRequires: zlib-devel libtommath-devel
 BuildRequires: libtomcrypt-devel
+BuildRequires: libre2-devel
+BuildRequires: unzip
 
-Obsoletes: %name-superserver
+Obsoletes: %name-superserver < %EVR
 Conflicts: %name-superserver < %EVR
 Provides: %name-superserver = %EVR
-Obsoletes: %name-classic
+Obsoletes: %name-classic < %EVR
 Conflicts: %name-classic < %EVR
 Provides: %name-classic = %EVR
 
@@ -62,10 +76,10 @@ Summary: Client programs for Firebird SQL Database
 Group: Databases
 Requires: %name = %EVR
 Obsoletes: %name-client-embedded <= 2.0
-Obsoletes: %name-utils-superserver
+Obsoletes: %name-utils-superserver < %EVR
 Conflicts: %name-utils-superserver < %EVR
 Provides: %name-utils-superserver = %EVR
-Obsoletes: %name-utils-classic
+Obsoletes: %name-utils-classic < %EVR
 Conflicts: %name-utils-classic < %EVR
 Provides: %name-utils-classic = %EVR
 
@@ -83,13 +97,13 @@ Multi-threaded, non-local client libraries for Firebird SQL Database
 Summary: Server for Firebird SQL Database
 Group: Databases
 Requires: %name = %EVR
-Obsoletes: %name-server-superserver
+Obsoletes: %name-server-superserver < %EVR
 Conflicts: %name-server-superserver < %EVR
 Provides: %name-server-superserver = %EVR
-Obsoletes: %name-server-classic
+Obsoletes: %name-server-classic < %EVR
 Conflicts: %name-server-classic < %EVR
 Provides: %name-server-classic = %EVR
-Obsoletes: %name-server-common
+Obsoletes: %name-server-common < %EVR
 Conflicts: %name-server-common < %EVR
 Provides: %name-server-common = %EVR
 %add_findreq_skiplist %_sbindir/changeServerMode.sh
@@ -121,12 +135,14 @@ Examples for Firebird SQL server.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
+%patch101 -p1
+%patch203 -p1
+%patch205 -p1
+%patch301 -p1
+%patch302 -p1
+%patch1001 -p1
+%patch1002 -p1
+%patch1003 -p1
 
 # sed vs patch for portability and addtional location changes
 # based on FIREBIRD=%_libdir/firebird
@@ -146,15 +162,20 @@ check_sed "$(sed -i -e 's:--- ISQL:--- ISQL-FB:w /dev/stdout' \
 	src/msgs/messages2.sql | wc -l)" "6" "src/msgs/messages2.sql" # 6 lines
 
 find . -name \*.sh -exec chmod +x {} + || { echo "chmod failed" ; exit -1 ; }
-rm -rf ./extern/{editline,icu,libtomcrypt,libtommath,zlib} || { echo "rm -rf failed" ; exit -1 ;}
+rm -rf ./extern/{editline,libtomcrypt,libtommath,re2,zlib} || { echo "rm -rf failed" ; exit -1 ;}
 
 %build
-%add_optflags -fno-sized-deallocation -fno-delete-null-pointer-checks -I%_includedir/tommath
+%add_optflags -fno-sized-deallocation
+%add_optflags -fno-delete-null-pointer-checks
 %add_optflags -fno-strict-aliasing
 %add_optflags -Wno-deprecated -Wno-switch
+%add_optflags -I%_includedir/tommath
+%add_optflags -I%_includedir/tomcrypt
 
 %autoreconf
 %configure \
+	--disable-rpath \
+	--disable-static \
 	--prefix=%fbroot \
 	--with-system-editline \
 	--with-fbbin=%_bindir \
@@ -163,7 +184,6 @@ rm -rf ./extern/{editline,icu,libtomcrypt,libtommath,zlib} || { echo "rm -rf fai
 	--with-fblib=%_libdir \
 	--with-fbinclude=%_includedir/%name \
 	--with-fbdoc=%_defaultdocdir/%name \
-	--with-fbudf=%_libdir/%name/udf \
 	--with-fbsample=%_defaultdocdir/%name/sample \
 	--with-fbsample-db=%_localstatedir/%name/data/ \
 	--with-fbhelp=%_localstatedir/%name/system/ \
@@ -174,7 +194,7 @@ rm -rf ./extern/{editline,icu,libtomcrypt,libtommath,zlib} || { echo "rm -rf fai
 	--with-fblog=%_logdir/%name \
 	--with-fbglock=%_runtimedir/%name \
 	--with-fbplugins=%_libdir/%name/plugins \
-	--disable-rpath \
+	--with-fbtzdata=%_localstatedir/%name/tzdata \
 	%nil
 
 %make
@@ -190,7 +210,6 @@ mkdir -p %buildroot
 cp -r gen/buildroot/* %buildroot/
 
 # prepare dir
-mkdir -p %buildroot%_sysconfdir/xinetd.d
 mkdir -p %buildroot%_initdir
 mkdir -p %buildroot%fbroot/intl
 mkdir -p %buildroot%_datadir/%name
@@ -203,9 +222,7 @@ mkdir -p %buildroot%_tmpfilesdir
 
 cp -a src/misc/upgrade %buildroot%_datadir/%name
 
-install -m 0644 gen/install/misc/firebird-superserver.service %buildroot%_unitdir/
-install -m 0644 gen/install/misc/firebird-classic@.service %buildroot%_unitdir/
-install -m 0644 gen/install/misc/firebird-classic.socket %buildroot%_unitdir/
+install -m 0644 gen/install/misc/firebird.service %buildroot%_unitdir/
 
 sed -e "s|@runtimedir@|%_runtimedir|g" -e "s|@name@|%name|g" %SOURCE2 > %buildroot%_tmpfilesdir/%name.conf
 
@@ -226,22 +243,22 @@ ln -sf $(relative %fbroot/intl/fbintl.so %_sysconfdir/%name/libfbintl.so) %build
 
 # services
 install -m 755 %SOURCE1 %buildroot%_initdir/%name
-mv %buildroot%_datadir/%name/misc/%name.xinetd %buildroot%_sysconfdir/xinetd.d/%name
 
 # log
 touch %buildroot%_logdir/%name/%name.log
 
+# logrotate
+mkdir -p %buildroot%_sysconfdir/logrotate.d
+sed "s@%name.log@%_logdir/%name/%name.log@g" %SOURCE3 > %buildroot%_sysconfdir/logrotate.d/%name
+
 mv %buildroot%_bindir/isql %buildroot%_bindir/isql-fb
 mv %buildroot%_bindir/gstat %buildroot%_bindir/gstat-fb
 mv %buildroot%_sbindir/fb_config %buildroot%_bindir/fb_config
-mv %buildroot%_sysconfdir/%name/README %buildroot%_docdir/%name/
-mv %buildroot%_sysconfdir/%name/{WhatsNew,*.txt} %buildroot%_docdir/%name/
+mv %buildroot%_sysconfdir/%name/{*.md,*.txt} %buildroot%_docdir/%name/
 
 rm -f %buildroot%_sbindir/FirebirdUninstall.sh
 rm -rf %buildroot%_datadir/%name/misc/upgrade
-rm -f %buildroot%_datadir/%name/misc/firebird-classic.socket
-rm -f %buildroot%_datadir/%name/misc/firebird-classic@.service
-rm -f %buildroot%_datadir/%name/misc/firebird-superserver.service
+rm -f %buildroot%_datadir/%name/misc/firebird.service
 rm -f %buildroot%_datadir/%name/misc/firebird.init.d.debian
 rm -f %buildroot%_datadir/%name/misc/firebird.init.d.generic
 rm -f %buildroot%_datadir/%name/misc/firebird.init.d.gentoo
@@ -276,6 +293,28 @@ if [ -z "$oldLine" ]; then
 	echo $newLine >> $FileName
 fi
 
+%triggerun -- %name-server < 4.0.0.2496.0-alt1
+if [ $2 -gt 0 ]; then
+# This is firebird upgrade.
+	SYSTEMCTL=/bin/systemctl
+	if /sbin/sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1 ; then
+# collect service states
+		enable_server=0
+
+		if "$SYSTEMCTL" is-enabled firebird-superserver.service >/dev/null 2>&1 ; then
+			enable_server=1
+		fi
+
+# disable services with old names
+		"$SYSTEMCTL" disable --now firebird-superserver.service ||:
+
+# re-enable services with new names
+		if [ $enable_server -eq 1 ] ; then
+			"$SYSTEMCTL" enable --now firebird.service
+		fi
+	fi
+fi
+
 %files
 %_docdir/%name/IDPLicense.txt
 %_docdir/%name/IPLicense.txt
@@ -286,6 +325,7 @@ fi
 %config(noreplace) %_sysconfdir/%name/fbtrace.conf
 %config(noreplace) %_sysconfdir/%name/firebird.conf
 %config(noreplace) %_sysconfdir/%name/plugins.conf
+%config(noreplace) %_sysconfdir/%name/replication.conf
 %dir %_datadir/%name
 %dir %_datadir/%name/upgrade
 %_datadir/%name/upgrade/*
@@ -313,26 +353,24 @@ fi
 %_libdir/libfbclient.so.*
 
 %files server
+%config(noreplace) %_sysconfdir/logrotate.d/%name
 %attr(0644,root,root) %_tmpfilesdir/%name.conf
 %dir %attr(2775,root,%name) %_localstatedir/%name
 %dir %attr(2775,root,%name) %_localstatedir/%name/secdb
 %dir %attr(2775,root,%name) %_localstatedir/%name/system
 %dir %attr(2775,root,%name) %_localstatedir/%name/backup
-#ghost %_sysconfdir/gds_hosts.equiv
-%dir %fbroot/udf
 %dir %fbroot/intl
-%attr(0660,firebird,firebird) %config(noreplace) %_localstatedir/%name/secdb/security3.fdb
+%attr(0660,firebird,firebird) %config(noreplace) %_localstatedir/%name/secdb/security4.fdb
 %attr(0664,firebird,firebird) %_localstatedir/%name/system/help.fdb
 %attr(0664,firebird,firebird) %_localstatedir/%name/system/firebird.msg
+%dir %_localstatedir/%name/tzdata
+%_localstatedir/%name/tzdata/*.res
 %config(noreplace) %_sysconfdir/%name/fbintl.conf
 %_sysconfdir/%name/libfbintl.so
 %attr(0755,root,root) %_initdir/%name
-#TODO: move xinetd.d config to separate subpackage
-%config(noreplace) %attr(640,root,root) %_sysconfdir/xinetd.d/%name
 %_unitdir/*
 %dir %attr (2770,root,%name) %_logdir/%name
 %attr (0660,%name,%name) %_logdir/%name/%name.log
-%fbroot/udf/*
 %fbroot/intl/*
 %_bindir/gsplit
 %_bindir/nbackup
@@ -353,11 +391,13 @@ fi
 
 %files examples
 %_docdir/%name/sample
-%attr(0660,%name,%name) %_localstatedir/%name/data/employee.fdb
-%dir %_datadir/%name/examples
-%_datadir/%name/examples/*
+%_datadir/%name/examples
 
 %changelog
+* Tue Aug 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0.2496.0-alt1
+- Updated to upstream version 4.0.0.2496-0.
+- Built with system re2 library.
+
 * Mon Oct 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.7.33374.0-alt1
 - Updated to upstream version 3.0.7.33374-0.
 
