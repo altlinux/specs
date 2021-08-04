@@ -1,16 +1,23 @@
 Name: osc
-Version: 0.162.1
+Version: 0.174.0
 Release: alt1
+
 Summary: Open Build Service Commander
+
 License: GPLv2+
 Group: Development/Other
 Url: https://github.com/openSUSE/osc
-Source: %name-%version-%release.tar
+
+# Source-git: https://github.com/openSUSE/osc.git
+Source: %name-%version.tar
+
 BuildArch: noarch
-BuildRequires: python-devel
-BuildRequires: python-module-m2crypto
-BuildRequires: python-module-rpm
-BuildRequires: python-module-urlgrabber
+
+BuildRequires(pre): rpm-build-python3
+
+BuildRequires: python3-module-m2crypto
+BuildRequires: python3-module-rpm
+BuildRequires: python3-module-urlgrabber
 
 %description
 Commandline client for the Open Build Service.
@@ -20,13 +27,13 @@ http://en.opensuse.org/openSUSE:Build_Service_Tutorial
 for a general introduction.
 
 %prep
-%setup -n %name-%version-%release
+%setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 ln -s osc-wrapper.py %buildroot/%_bindir/osc
 
 mkdir -p %buildroot/var/lib/osc-plugins
@@ -36,7 +43,7 @@ install -Dpm0644 dist/complete.sh %buildroot/etc/bash_completion.d/osc.sh
 
 %files
 %_bindir/osc*
-%python_sitelibdir/*
+%python3_sitelibdir/*
 %dir /var/lib/osc-plugins/
 %_man1dir/osc.*
 %_datadir/osc/
@@ -45,6 +52,10 @@ install -Dpm0644 dist/complete.sh %buildroot/etc/bash_completion.d/osc.sh
 %doc AUTHORS README TODO NEWS
 
 %changelog
+* Wed Aug 04 2021 Vitaly Lipatov <lav@altlinux.ru> 0.174.0-alt1
+- new version (0.174.0) with rpmgs script
+- switch to python3
+
 * Wed Dec 27 2017 Denis Pynkin <dans@altlinux.org> 0.162.1-alt1
 - New version
 
