@@ -2,7 +2,7 @@
 
 Name: sigviewer
 Version: 0.6.4
-Release: alt1.git.f62f8d9
+Release: alt2.git.f62f8d9
 Summary: SigViewer is a viewing application for biosignals
 Group: Sciences/Medicine
 License: GPL-3.0+
@@ -12,6 +12,7 @@ Url: https://github.com/cbrnr/sigviewer
 Source: %name-%version.tar
 
 Patch1: %name-alt-desktop.patch
+Patch2: %name-alt-power-spectrum-segfaults.patch
 
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires: gcc-c++ qt5-base-devel
@@ -25,6 +26,7 @@ and display event information (such as annotations or artifact selections).
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 %qmake_qt5 \
@@ -48,5 +50,8 @@ install -Dpm644 deploy/debian/%{name}.desktop %buildroot%_desktopdir/%{name}.des
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Mon Aug 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.4-alt2.git.f62f8d9
+- Fixed crashes in Power Spectrum tool.
+
 * Mon Jul 26 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.4-alt1.git.f62f8d9
 - Initial build for ALT.
