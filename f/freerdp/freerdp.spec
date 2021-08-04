@@ -8,7 +8,7 @@
 
 Name: freerdp
 Version: 2.3.2
-Release: alt2
+Release: alt3
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -17,6 +17,7 @@ URL: http://www.freerdp.com
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+Patch2000: %name-e2k.patch
 
 Requires: xfreerdp = %EVR
 Requires: wlfreerdp = %EVR
@@ -73,7 +74,9 @@ BuildRequires: libuuid-devel
 BuildRequires: libudev-devel
 BuildRequires: libusb-devel
 BuildRequires: libdbus-glib-devel
+%ifnarch %e2k
 BuildRequires: patchelf
+%endif
 
 %description
 freerdp implements Remote Desktop Protocol (RDP), used in a number of Microsoft
@@ -197,6 +200,9 @@ the RDP protocol.
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 %build
 %cmake \
@@ -252,15 +258,20 @@ the RDP protocol.
     -DWITH_XTEST=ON \
     -DWITH_XV=ON \
     -DWITH_ZLIB=ON \
-%ifarch x86_64
+%ifarch x86_64 %e2k
     -DWITH_SSE2=ON \
-    -DWITH_VAAPI=%{?_with_ffmpeg:ON}%{?!_with_ffmpeg:OFF} \
 %else
     -DWITH_SSE2=OFF \
+%endif
+%ifarch x86_64
+    -DWITH_VAAPI=%{?_with_ffmpeg:ON}%{?!_with_ffmpeg:OFF} \
 %endif
 %ifarch armh
     -DARM_FP_ABI=hard \
     -DWITH_NEON=OFF \
+%endif
+%ifarch %e2k
+    -DCMAKE_C_FLAGS_RELEASE="-O%_optlevel -DNDEBUG"
 %endif
     #
 
@@ -275,8 +286,15 @@ rm -f %buildroot%_libdir/*.a \
 # workaround, add compat
 ln -s freerdp2.pc %buildroot%_pkgconfigdir/freerdp.pc
 
+%ifnarch %e2k
 # Set rpath to %_libdir/freerdp2 for freerdp-proxy executable
 patchelf --set-rpath %_libdir/freerdp2 %buildroot%_bindir/freerdp-proxy
+%else
+# Set rpath to %_libdir/freerdp2 for freerdp-proxy executable (without using patchelf)
+pushd %_cmake__builddir/server/proxy
+%__cc %optflags -rdynamic CMakeFiles/freerdp-proxy.dir/*.c.o -o %buildroot%_bindir/freerdp-proxy -Wl,-rpath,%_libdir/freerdp2 ../common/libfreerdp-server2.so.%version ../../client/common/libfreerdp-client2.so.%version ../../channels/rdpgfx/client/librdpgfx-client.so ../../libfreerdp/libfreerdp2.so.%version ../../winpr/libwinpr/libwinpr2.so.%version 
+popd
+%endif
 
 %files
 
@@ -342,6 +360,9 @@ patchelf --set-rpath %_libdir/freerdp2 %buildroot%_bindir/freerdp-proxy
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Thu Jul 29 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.3.2-alt3
+- Fixed build for Elbrus.
+
 * Thu Jul 08 2021 Andrey Cherepanov <cas@altlinux.org> 2.3.2-alt2
 - FTBFS: disable build with mbedtls-3.0.0 (https://github.com/FreeRDP/FreeRDP/issues/7163).
 
