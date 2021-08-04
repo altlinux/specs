@@ -3,18 +3,19 @@ BuildRequires: perl(Pod/Usage.pm) perl(RPM/Header.pm) perl(Parallel/ForkManager.
 # END SourceDeps(oneline)
 URL: https://www.altlinux.org/Repofork-utils
 Name: repofork-utils
-Version: 0.11
+Version: 0.12
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
 Summary: tools to create a modified copy of a repository
 Group: Development/Other
-License: GPL2+
+License: GPLv2+
 #Url: 
 Source: %name-%version.tar
 
 Requires: /usr/bin/pkglist-query
+BuildRequires: /usr/bin/altlinux-find-local-mirror
 
 %description
 mkrepofork tool creates a (hardlinked) modified copy of an
@@ -38,6 +39,9 @@ rm $RPM_BUILD_ROOT%_bindir/*.spec
 %_bindir/repofork*
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0.12-alt1
+- new version
+
 * Mon Mar 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - new version
 
