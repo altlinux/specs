@@ -1,25 +1,19 @@
-Name: ash
-Version: 0.5.8
-Release: alt1.2e5842258
-
-%define real_name dash
-
 Summary: A smaller version of the Bourne shell
-License: BSD
+Name: ash
+Version: 0.5.11.18.g6f6d1f2
+Release: alt1
+
+License: BSD-3-Clause
 Group: Shells
+Url: http://gondor.apana.org.au/~herbert/dash/
 
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
-Url:	http://gondor.apana.org.au/~herbert/dash/
-
 Source: %name-%version.tar
-Patch0: dash-0.5.4-alt-losetup.patch
-Patch2: dash-0.5.6-alt-cleanup-warnings.patch
-Patch6: dash-0.5.3-makefile-cflags.patch
-Patch7: dash-0.5.6-string_literal.patch
-Patch8: dash-0.5.8-logical-not-parentheses.patch
+Patch01: 0001-Implement-losetup-as-builtin.patch
+Patch02: 0002-Use-CFLAGS-to-compile-helpers.patch
+Patch03: 0003-Enable-large-file-support-when-available.patch
 
-PreReq: coreutils, grep
 Conflicts: mkinitrd <= 1:1.7
 Provides: dash
 
@@ -37,7 +31,7 @@ same capabilities as the bash shell.
 
 %package static
 Summary: A smaller version of the Bourne shell statically linked
-License: BSD
+License: BSD-3-Clause
 Group: Shells
 
 %description static
@@ -53,11 +47,7 @@ This version is statically compiled.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch2 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
+%autopatch -p1
 
 sed -i -e 's,\$(tempfile),`mktemp -t ash.XXXXXX`,' src/mkbuiltins
 
@@ -73,14 +63,14 @@ cd build-dynamic
 	export CFLAGS="$BUILD_FLAGS -Werror"
 	%configure --disable-dependency-tracking
 	%make_build
-	mv src/%real_name sh.dynamic
+	mv src/dash sh.dynamic
 cd -
 
 cd build-static
 	export CFLAGS="$BUILD_FLAGS -Werror"
 	%configure --disable-dependency-tracking --enable-static
-	%make_build 
-	mv src/%real_name sh.static
+	%make_build
+	mv src/dash sh.static
 cd -
 
 %install
@@ -91,7 +81,7 @@ install -m755 -pD build-static/sh.static %buildroot/bin/%name.static
 ln -s %name %buildroot/bin/bsh
 ln -s %name %buildroot/bin/dash
 
-install -m644 -pD src/%real_name.1 %buildroot/%_man1dir/%name.1
+install -m644 -pD src/dash.1 %buildroot/%_man1dir/%name.1
 ln -s %name.1 %buildroot/%_man1dir/bsh.1
 ln -s %name.1 %buildroot/%_man1dir/dash.1
 
@@ -105,6 +95,11 @@ ln -s %name.1 %buildroot/%_man1dir/dash.1
 /bin/%name.static
 
 %changelog
+* Wed Aug 04 2021 Alexey Gladkov <legion@altlinux.ru> 0.5.11.18.g6f6d1f2-alt1
+- New release (0.5.11) and update from upstream git.
+- Update local patches.
+- Update license tag.
+
 * Wed Feb 03 2016 Alexey Gladkov <legion@altlinux.ru> 0.5.8-alt1.2e5842258
 - New release (0.5.8) and update from upstream git.
 
