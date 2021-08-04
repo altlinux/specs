@@ -1,24 +1,32 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           felix-parent
 Version:        7
-Release:        alt1_3jpp11
+Release:        alt1_6jpp11
 Summary:        Parent POM file for Apache Felix Specs
 License:        ASL 2.0
 URL:            https://felix.apache.org/
-Source0:        https://repo1.maven.org/maven2/org/apache/felix/%{name}/%{version}/%{name}-%{version}-source-release.tar.gz
+Source0:        https://repo1.maven.org/maven2/org/apache/felix/felix-parent/%{version}/%{name}-%{version}-source-release.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(org.apache:apache:pom:)
-
-# FIXME auto-requires are not generated
-Requires:  mvn(org.easymock:easymock)
-Requires:  mvn(org.mockito:mockito-all)
+%endif
 Source44: import.info
 
 %description
@@ -48,6 +56,9 @@ Parent POM file for Apache Felix Specs.
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:7-alt1_6jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:7-alt1_3jpp11
 - new version
 
