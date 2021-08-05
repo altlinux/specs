@@ -3,7 +3,7 @@
 
 Name: childsplay
 Version: 3.4
-Release: alt2
+Release: alt3
 
 License: GPLv3+
 Group: Games/Educational
@@ -23,7 +23,6 @@ BuildArch: noarch
 
 BuildRequires: python-devel >= 2.6
 BuildRequires: python-module-pygtk-devel >= 2.0
-BuildRequires: python-module-numpy libnumpy-devel
 BuildRequires: python-modules-sqlite3
 BuildRequires: python-module-pygame-devel >= 1.7
 BuildRequires: libSDL-devel >= 1.2
@@ -332,6 +331,10 @@ install -m644 lib/SPData/themes/childsplay/logo_cp_64x64.png %buildroot%_datadir
 
 
 %changelog
+* Thu Aug 05 2021 Vitaly Lipatov <lav@altlinux.ru> 3.4-alt3
+- drop unneeded BR: *numpy*
+- see http://savannah.nongnu.org/bugs/?53770 for python3 status
+
 * Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 3.4-alt2
 - run with python2 command
 
