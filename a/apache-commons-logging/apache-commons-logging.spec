@@ -3,7 +3,7 @@ Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -12,11 +12,11 @@ BuildRequires: jpackage-11-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_with     avalon
+%bcond_with bootstrap
 
 Name:           apache-commons-logging
 Version:        1.2
-Release:        alt1_25jpp11
+Release:        alt1_27jpp11
 Summary:        Apache Commons Logging
 License:        ASL 2.0
 URL:            http://commons.apache.org/logging
@@ -29,18 +29,16 @@ Patch0:         0001-Generate-different-Bundle-SymbolicName-for-different.patch
 Patch1:         0002-Port-to-maven-jar-plugin-3.0.0.patch
 
 BuildRequires:  maven-local
-%if %{with avalon}
-BuildRequires:  mvn(avalon-framework:avalon-framework-api)
-BuildRequires:  mvn(avalon-framework:avalon-framework-impl)
-BuildRequires:  mvn(logkit:logkit)
-%endif
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(javax.servlet:servlet-api)
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.logging.log4j:log4j-1.2-api)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+%endif
 Source44: import.info
 
 %description
@@ -62,23 +60,15 @@ logging implementation.
 %patch1 -p1
 
 
-%if %{with avalon}
-# Sent upstream https://issues.apache.org/jira/browse/LOGGING-143
-%pom_remove_dep :avalon-framework
-%pom_add_dep avalon-framework:avalon-framework-api:4.3:provided
-%pom_add_dep avalon-framework:avalon-framework-impl:4.3:test
-%pom_xpath_inject "pom:dependency[pom:artifactId='logkit']" '<scope>provided</scope>'
-
-%else
 %pom_remove_dep -r :avalon-framework
 %pom_remove_dep -r :logkit
-rm -r src/test/java/org/apache/commons/logging/{avalon,logkit}
+%pom_remove_dep -r :log4j
 rm src/main/java/org/apache/commons/logging/impl/AvalonLogger.java
+rm src/main/java/org/apache/commons/logging/impl/Log4JLogger.java
 rm src/main/java/org/apache/commons/logging/impl/LogKitLogger.java
-%endif
+rm -r src/test/java/org/apache/commons/logging/{avalon,log4j,logkit}
+rm src/test/java/org/apache/commons/logging/pathable/{Parent,Child}FirstTestCase.java
 
-# Switch to log4j 2.x API
-%pom_change_dep log4j:log4j org.apache.logging.log4j:log4j-1.2-api
 
 # Avoid hard-coded versions in OSGi metadata
 %pom_xpath_set "pom:properties/pom:commons.osgi.import" '*;resolution:=optional'
@@ -96,7 +86,7 @@ sed -i 's/\r//' RELEASE-NOTES.txt LICENSE.txt NOTICE.txt
 rm -rf src/test/java/org/apache/commons/logging/log4j/log4j12
 
 %build
-%mvn_build -- -Dcommons.osgi.symbolicName=org.apache.commons.logging -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6 -Dcommons.osgi.symbolicName=org.apache.commons.logging
 
 # The build produces more artifacts from one pom
 %mvn_artifact %{SOURCE2} target/commons-logging-%{version}-api.jar
@@ -110,6 +100,9 @@ rm -rf src/test/java/org/apache/commons/logging/log4j/log4j12
 %doc PROPOSAL.html RELEASE-NOTES.txt
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:1.2-alt1_27jpp11
+- update
+
 * Fri Jun 11 2021 Igor Vlasenko <viy@altlinux.org> 0:1.2-alt1_25jpp11
 - new version
 
