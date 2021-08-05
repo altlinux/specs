@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 9.2
-Release: alt4
+Release: alt5
 
 %ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
@@ -59,7 +59,7 @@ Distro-specific packages with design and texts for %distro_name.
 %package bootloader
 Group:   System/Configuration/Boot and Init
 Summary: Graphical boot logo for grub2, lilo and syslinux
-Summary(ru_RU.UTF-8): Тема для экрана выбора вариантов загрузки (lilo и syslinux) 
+Summary(ru_RU.UTF-8): Тема для экрана выбора вариантов загрузки (lilo и syslinux)
 License: GPL-2.0
 
 Requires(pre):    coreutils
@@ -74,7 +74,7 @@ Here you find the graphical boot logo for %distro_name.
 Suitable for both lilo and syslinux.
 
 %description bootloader -l ru_RU.UTF-8
-В данном пакете находится тема для экрана выбора вариантов загрузки (lilo и syslinux) 
+В данном пакете находится тема для экрана выбора вариантов загрузки (lilo и syslinux)
 для дистрибутива %distro_name_ru.
 
 %package bootsplash
@@ -132,7 +132,7 @@ Requires(post,preun): alternatives >= 0.2
 This package contains some graphics for %distro_name design.
 
 %description graphics -l ru_RU.UTF-8
-В данном пакете находится необходимые графические элементы для дистрибутива 
+В данном пакете находится необходимые графические элементы для дистрибутива
 %distro_name_ru.
 
 %define provide_list altlinux fedora redhat system altlinux
@@ -181,6 +181,7 @@ Requires: kde5-konsole-colorscheme-SolarizedPastel
 Requires: plasma5-breeze
 Requires: fonts-ttf-liberation
 Requires: fonts-ttf-google-droid-sans-mono
+Requires: document-templates
 Provides: branding-%flavour-kde4-settings = %version-%release
 Obsoletes: branding-%flavour-kde4-settings < %version-%release
 %branding_add_conflicts %flavour kde-settings
@@ -251,7 +252,7 @@ MATE settings for %distro_name
 Summary: Slideshow for %distro_name installer
 Summary(ru_RU.UTF-8): Изображения для организации "слайдшоу" в установщике дистрибутива %distro_name_ru
 License: Distributable
-Group: System/Configuration/Other 
+Group: System/Configuration/Other
 BuildArch: noarch
 %branding_add_conflicts %flavour slideshow
 
@@ -259,7 +260,7 @@ BuildArch: noarch
 Slideshow for %distro_name installer.
 
 %description slideshow -l ru_RU.UTF-8
-В данном пакете находятся изображения для организации "слайдшоу" в установщике 
+В данном пакете находятся изображения для организации "слайдшоу" в установщике
 дистрибутива %distro_name_ru.
 
 %package indexhtml
@@ -419,7 +420,6 @@ subst 's/^#\?clock-format=.*/clock-format=%A, %x %H:%M/' /etc/lightdm/lightdm-gt
 /etc/skel/.config/autostart/nm-applet.desktop
 /etc/skel/.config/kdeglobals
 /etc/skel/.config/konsolerc
-%_datadir/templates/*
 
 %files fvwm-settings
 %_sysconfdir/skel/.fvwm2rc
@@ -466,6 +466,10 @@ subst 's/^#\?clock-format=.*/clock-format=%A, %x %H:%M/' /etc/lightdm/lightdm-gt
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Thu Aug 05 2021 Andrey Cherepanov <cas@altlinux.org> 9.2-alt5
+- Fix trembling hovered buttons in ahttpd.
+- Move templates to package document-templates.
+
 * Mon May 17 2021 Andrey Cherepanov <cas@altlinux.org> 9.2-alt4
 - Replace smplayer by vlc as default player (it has best perfomance on aarch64).
 

@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.49.1
-Release: alt2
+Version: 5.49.2
+Release: alt1
 
 Source: %name-%version.tar
 Patch0: alterator-fbi-5.49.1-call-cc-via-reset.patch
@@ -161,6 +161,9 @@ fi ||:
 
 
 %changelog
+* Thu Aug 05 2021 Andrey Cherepanov <cas@altlinux.org> 5.49.2-alt1
+- CSS: fix column size for alterator-updates.
+
 * Fri Jun 11 2021 Paul Wolneykien <manowar@altlinux.org> 5.49.1-alt2
 - Added "with delimited_continuations" spec option (on for E2K).
 - New version of the reset/shift hack.
