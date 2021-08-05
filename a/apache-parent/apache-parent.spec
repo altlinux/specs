@@ -3,12 +3,20 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           apache-parent
 Version:        23
-Release:        alt1_3jpp8
+Release:        alt1_6jpp11
 Summary:        Parent POM file for Apache projects
 License:        ASL 2.0
 URL:            http://apache.org/
@@ -16,11 +24,17 @@ Source0:        https://repo1.maven.org/maven2/org/apache/apache/%{version}/apac
 BuildArch:      noarch
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
+%endif
 
 # Not generated automatically
+%if %{without bootstrap}
 BuildRequires:  mvn(org.apache:apache-jar-resource-bundle)
+%endif
 Requires:       mvn(org.apache:apache-jar-resource-bundle)
 Source44: import.info
 
@@ -33,7 +47,7 @@ This package contains the parent pom file for apache projects.
 %pom_remove_plugin :maven-site-plugin
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -42,6 +56,9 @@ This package contains the parent pom file for apache projects.
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 23-alt1_6jpp11
+- update
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 23-alt1_3jpp8
 - new version
 
