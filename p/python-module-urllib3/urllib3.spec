@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 1.25.10
-Release: alt3
+Release: alt4
 
 Epoch: 2
 
@@ -21,11 +21,11 @@ Source: %oname-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
-BuildRequires(pre): rpm-macros-sphinx
+#BuildRequires(pre): rpm-macros-sphinx
 
 BuildRequires: python-module-six python-module-backports.ssl_match_hostname
 BuildRequires: python-module-ndg-httpsclient
-BuildRequires: python-module-sphinx-devel
+#BuildRequires: python-module-sphinx-devel
 BuildRequires: python-module-nose
 
 %setup_python_module %oname
@@ -75,8 +75,8 @@ This package contains documentation for urllib3.
 %patch -p1
 
 
-%prepare_sphinx .
-ln -s ../objects.inv docs/
+#prepare_sphinx .
+#ln -s ../objects.inv docs/
 
 %build
 %python_build
@@ -107,6 +107,9 @@ py.test
 #doc docs/_build/html/*
 
 %changelog
+* Thu Aug 05 2021 Vitaly Lipatov <lav@altlinux.ru> 2:1.25.10-alt4
+- drop sphinx from build requires
+
 * Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 2:1.25.10-alt3
 - Build without docs.
 
