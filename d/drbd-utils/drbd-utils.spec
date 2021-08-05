@@ -1,10 +1,10 @@
 %def_without xen
-%define githash a8fbde2743409348d5c4ff08986c7f13c8f40e80
+%define githash bd7a08c4ec9cad113c4e5ad448a15c8900a67b68
 %define gitdiff c6e62702d5e4fb2cf6b3fa27e67cb0d4b399a30b
 %define _localstatedir %_var
 
 Name: drbd-utils
-Version: 9.18.1
+Version: 9.18.2
 Release: alt1
 
 Summary: DRBD user-land tools and scripts
@@ -177,6 +177,9 @@ popd
 %_sysconfdir/bash_completion.d
 
 %changelog
+* Thu Aug 05 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.18.2-alt1
+- 9.18.2
+
 * Wed Jul 21 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.18.1-alt1
 - 9.18.1
 - add systemd templates and ocf RA wrapper script
