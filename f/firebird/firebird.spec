@@ -10,7 +10,7 @@
 
 Name: firebird
 Version: %major.%minor
-Release: alt1
+Release: alt2
 Summary: Firebird SQL Database, fork of InterBase
 Group: Databases
 License: IPL
@@ -182,7 +182,7 @@ rm -rf ./extern/{editline,libtomcrypt,libtommath,re2,zlib} || { echo "rm -rf fai
 	--with-fbsbin=%_sbindir \
 	--with-fbconf=%_sysconfdir/%name \
 	--with-fblib=%_libdir \
-	--with-fbinclude=%_includedir/%name \
+	--with-fbinclude=%_includedir \
 	--with-fbdoc=%_defaultdocdir/%name \
 	--with-fbsample=%_defaultdocdir/%name/sample \
 	--with-fbsample-db=%_localstatedir/%name/data/ \
@@ -202,7 +202,7 @@ rm -rf ./extern/{editline,libtomcrypt,libtommath,re2,zlib} || { echo "rm -rf fai
 pushd gen
 %make -f Makefile.install buildRoot
 chmod -R u+w buildroot%{_docdir}/%{name}
-chmod u+rw,a+rx buildroot/usr/include/firebird/firebird/impl
+chmod u+rw,a+rx buildroot/usr/include/firebird/impl
 popd
 
 %install
@@ -394,6 +394,9 @@ fi
 %_datadir/%name/examples
 
 %changelog
+* Thu Aug 05 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0.2496.0-alt2
+- Updated include files location.
+
 * Tue Aug 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0.2496.0-alt1
 - Updated to upstream version 4.0.0.2496-0.
 - Built with system re2 library.
