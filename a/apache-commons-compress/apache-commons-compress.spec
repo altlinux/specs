@@ -1,34 +1,43 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global base_name       compress
-%global short_name      commons-%{base_name}
+%bcond_with bootstrap
 
-Name:           apache-%{short_name}
+Name:           apache-commons-compress
 Version:        1.20
-Release:        alt1_4jpp11
+Release:        alt1_7jpp11
 Summary:        Java API for working with compressed files and archivers
 License:        ASL 2.0
-URL:            http://commons.apache.org/proper/commons-compress/
+URL:            https://commons.apache.org/proper/commons-compress/
 BuildArch:      noarch
 
-Source0:        http://archive.apache.org/dist/commons/compress/source/%{short_name}-%{version}-src.tar.gz
+Source0:        https://archive.apache.org/dist/commons/compress/source/commons-compress-%{version}-src.tar.gz
 
 Patch0:         0001-Remove-Brotli-compressor.patch
 Patch1:         0002-Remove-ZSTD-compressor.patch
 Patch2:         0003-Avoid-use-of-internal-Mockito-API.patch
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.mockito:mockito-core)
-BuildRequires:  mvn(org.osgi:osgi.core)
+BuildRequires:  mvn(org.osgi:org.osgi.core)
 BuildRequires:  mvn(org.tukaani:xz)
+%endif
 Source44: import.info
 
 %description
@@ -46,7 +55,7 @@ BuildArch: noarch
 This package provides %{summary}.
 
 %prep
-%setup -q -n %{short_name}-%{version}-src
+%setup -q -n commons-compress-%{version}-src
 
 # Unavailable Google Brotli library (org.brotli.dec)
 %patch0 -p1
@@ -69,19 +78,13 @@ rm src/test/java/org/apache/commons/compress/compressors/DetectCompressorTestCas
 %pom_remove_dep :slf4j-api::test
 rm src/test/java/org/apache/commons/compress/OsgiITest.java
 
-# use osgi-core instead of felix-osgi-core
-%pom_change_dep :org.osgi.core org.osgi:osgi.core
-
 # Remove test that requires powermock
 %pom_remove_dep org.powermock:
 %pom_add_dep org.mockito:mockito-core::test
 rm src/test/java/org/apache/commons/compress/compressors/z/ZCompressorInputStreamTest.java
 
-# Generate Java 8 level bytecode when built on Java 11
-%pom_xpath_replace "pom:maven.compiler.release" "<maven.compiler.release>8</maven.compiler.release>"
-
 %build
-%mvn_file  : %{short_name} %{name}
+%mvn_file  : commons-compress %{name}
 %mvn_alias : commons:
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dcommons.osgi.symbolicName=org.apache.commons.compress
 
@@ -95,6 +98,9 @@ rm src/test/java/org/apache/commons/compress/compressors/z/ZCompressorInputStrea
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:1.20-alt1_7jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.20-alt1_4jpp11
 - new version
 
