@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %majver.4
-Release: alt9
+Release: alt10
 Epoch: 1
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
@@ -81,7 +81,7 @@ Summary: Development files of NumPy
 Group: Development/Python
 Requires: lib%oname = %EVR
 Requires: %name = %EVR
-Requires: python-module-numpydoc
+#Requires: python-module-numpydoc
 Requires: %name-addons = %EVR
 Requires: python-devel
 
@@ -237,6 +237,9 @@ fi
 %python_sitelibdir/%oname/core/lib/npy-pkg-config
 
 %changelog
+* Thu Aug 05 2021 Vitaly Lipatov <lav@altlinux.ru> 1:1.15.4-alt10
+- drop python-module-numpydoc require from libnumpy-devel
+
 * Tue Aug 03 2021 Grigory Ustinov <grenka@altlinux.org> 1:1.15.4-alt9
 - Fixed BuildRequires.
 
