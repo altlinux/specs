@@ -2,7 +2,7 @@
 
 Name: alterator-update-kernel
 Version: 1.4
-Release: alt2
+Release: alt3
 
 Source:%name-%version.tar
 
@@ -10,7 +10,7 @@ Summary: alterator module for update kernel
 License: GPL
 Group: System/Configuration/Other
 
-Requires: alterator-l10n >= 2.9.82-alt1
+Requires: alterator-l10n >= 2.9.94-alt1
 BuildPreReq: alterator >= 4.10-alt1 alterator-lookout
 
 %ifarch %e2k
@@ -55,6 +55,10 @@ export GUILE_LOAD_PATH=/usr/share/alterator/lookout
 %_datadir/dbus-1/interfaces/*.xml
 
 %changelog
+* Thu Aug 05 2021 Ivan Savin <svn17@altlinux.org> 1.4-alt3
+- Add error message when updating kernel when /tmp is mounted with noexec.
+- Fix computation of package version in several functions in the backend.
+
 * Mon Jul 19 2021 Ivan Savin <svn17@altlinux.org> 1.4-alt2
 - Fix computation of version for installed modules.
 
