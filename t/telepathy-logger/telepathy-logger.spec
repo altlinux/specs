@@ -1,31 +1,35 @@
 %def_disable static
-%def_disable gtk_doc
+%def_enable gtk_doc
 %def_enable introspection
+%def_disable check
+
 %define api_ver 0.2
 
 Name: telepathy-logger
 Version: 0.8.2
-Release: alt1
+Release: alt2
 
 Summary: Telepathy client that logs information received by the Telepathy framework
 License: LGPLv2.1+
 Group: Networking/Instant messaging
 Url: http://telepathy.freedesktop.org/
 
+Vcs: https://gitlab.freedesktop.org/telepathy/telepathy-logger.git
 Source: http://telepathy.freedesktop.org/releases/%name/%name-%version.tar.bz2
+Patch10: telepathy-logger-0.8.2-deb-Add-a-systemd-user-service.patch
+Patch11: telepathy-logger-0.8.2-deb-doc-Use-CDATA-section-to-avoid-XML-error-caused-by-e.patch
+Patch12: telepathy-logger-0.8.2-deb-sync_tools_with_tp-glib_master.patch
+Patch13: telepathy-logger-0.8.2-deb-update_gtkdoc.patch
 
 Requires: lib%name = %version-%release
 Requires: libtelepathy-mission-control >= 5.4.0
 
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: gtk-doc intltool libgio-devel >= 2.28.0
-BuildRequires: libdbus-devel libdbus-glib-devel libtelepathy-glib-devel >= 0.19.2
-BuildRequires: libxml2-devel
-BuildRequires: libsqlite3-devel python-module-twisted-words python-module-xmpp
+BuildRequires: libdbus-devel libdbus-glib-devel libtelepathy-glib-devel >= 0.24.2
+BuildRequires: libxml2-devel libsqlite3-devel
 %{?_enable_introspection:BuildRequires: libtelepathy-glib-gir-devel}
-
-# some tests require x11
-# for check
-#BuildRequires: /proc dbus
+%{?_enable_check:BuildRequires: xvfb-run /proc dbus python3-module-twisted-words python3-module-xmpp}
 
 %description
 tp-logger is a headless observer client that logs information received by the
@@ -81,19 +85,23 @@ GObject introspection devel data for %name library.
 
 %prep
 %setup
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
 
 %build
 %autoreconf
+%add_optflags %(getconf LFS_CFLAGS)
 %configure \
 	--disable-schemas-compile \
 	%{subst_enable static} \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
-
+	%{?_enable_gtk_doc:--enable-gtk-doc} \
+	PYTHON=%__python3
 %make_build
 
 %check
-# x11 session required
-#%%make check
+xvfb-run %make -k check VERBOSE=1
 
 %install
 %makeinstall_std
@@ -103,6 +111,7 @@ GObject introspection devel data for %name library.
 %_datadir/telepathy/clients/Logger.client
 %_datadir/dbus-1/services/*
 %config %_datadir/glib-2.0/schemas/*
+%_prefix/lib/systemd/user/telepathy-logger.service
 %doc AUTHORS NEWS README
 
 %files -n lib%name
@@ -111,21 +120,27 @@ GObject introspection devel data for %name library.
 %files -n lib%name-devel
 %_includedir/%name-%api_ver
 %_libdir/lib%name.so
-%_libdir/pkgconfig/%name-%api_ver.pc
+%_pkgconfigdir/%name-%api_ver.pc
 
+%if_enabled gtk_doc
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %if_enabled introspection
 %files -n lib%name-gir
-%_libdir/girepository-1.0/*
+%_typelibdir/*.typelib
 
 %files -n lib%name-gir-devel
-%_datadir/gir-1.0/*
+%_girdir/*.gir
 %endif
 
 
 %changelog
+* Thu Aug 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt2
+- applied debian (0.8.2-4) patchset
+- updated BR
+
 * Thu Apr 30 2015 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
 - 0.8.2
 
