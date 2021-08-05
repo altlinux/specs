@@ -3,12 +3,20 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           xz-java
 Version:        1.8
-Release:        alt1_9jpp11
+Release:        alt1_12jpp11
 Summary:        Java implementation of XZ data compression
 License:        Public Domain
 URL:            http://tukaani.org/xz/java.html
@@ -17,7 +25,11 @@ BuildArch:      noarch
 Source0:        http://tukaani.org/xz/xz-java-%{version}.zip
 
 BuildRequires:  javapackages-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  ant
+%endif
 Source44: import.info
 
 %description
@@ -39,9 +51,6 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -c %{name}-%{version}
 
-# disable javadoc linting
-sed -i -e '/<javadoc/aadditionalparam="-Xdoclint:none"' build.xml
-
 %mvn_file : %{name} xz
 
 %build
@@ -49,7 +58,7 @@ sed -i -e '/<javadoc/aadditionalparam="-Xdoclint:none"' build.xml
 # package-list from oracle.com. Create a dummy package-list to prevent that.
 mkdir -p extdoc && touch extdoc/package-list
 
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  maven -Dsourcever=1.8
+%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  maven -Dsourcever=1.6
 
 %install
 %mvn_artifact build/maven/xz-%{version}.pom build/jar/xz.jar
@@ -64,6 +73,9 @@ ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  maven -Dsourcever
 %doc --no-dereference COPYING
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.8-alt1_12jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.8-alt1_9jpp11
 - update
 
