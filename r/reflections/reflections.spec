@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          reflections
 Version:       0.9.12
-Release:       alt1_4jpp11
+Release:       alt1_7jpp11
 Summary:       Java run-time meta-data analysis
 License:       WTFPL
 URL:           https://github.com/ronmamo/reflections
@@ -20,7 +20,6 @@ BuildRequires:  mvn(org.javassist:javassist)
 BuildRequires:  mvn(org.jsr-305:ri)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.slf4j:slf4j-simple)
-BuildRequires:  java-atk-wrapper
 
 BuildArch:     noarch
 Source44: import.info
@@ -80,6 +79,9 @@ find -name "*.jar" -print -delete
 %doc --no-dereference COPYING.txt
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0.9.12-alt1_7jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0.9.12-alt1_4jpp11
 - update
 
