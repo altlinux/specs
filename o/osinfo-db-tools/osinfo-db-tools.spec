@@ -1,7 +1,7 @@
 
 Summary: Tools for managing the osinfo database
 Name: osinfo-db-tools
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 License: GPLv2+
 Group: Development/Tools
@@ -50,6 +50,9 @@ information about operating systems for use with virtualization
 %_man1dir/*
 
 %changelog
+* Thu Aug 05 2021 Alexey Shabalin <shaba@altlinux.org> 1.9.0-alt1
+- new version 1.9.0
+
 * Thu Jun 04 2020 Alexey Shabalin <shaba@altlinux.org> 1.8.0-alt1
 - new version 1.8.0
 
