@@ -6,7 +6,7 @@
 Summary: Regulatory compliance agent for 802.11 wireless networking
 Name: crda
 Version: 4.14
-Release: alt5.1
+Release: alt6
 License: copyleft-next-0.3.0
 Group: Networking/Other
 
@@ -26,9 +26,12 @@ Patch1: crda-remove-ldconfig.patch
 Patch2: crda-ldflags.patch
 Patch3: %_db-fw-dependency.patch
 Patch4: %_db-pubcert-conf.patch
+# https://gitweb.gentoo.org/repo/gentoo.git/plain/net-wireless/crda/files/crda-4.14-python-3.patch
+Patch5: crda-4.14-python-3.patch
 
 BuildRequires: libgcrypt-devel openssl chrpath
-BuildRequires: python-devel python-module-future python-module-attrs python-module-m2crypto
+BuildRequires: rpm-build-python3
+BuildRequires: python3-module-future python3-module-attrs python3-module-m2crypto
 
 BuildRequires: kernel-headers >= 2.6.27
 BuildRequires: libnl-devel >= 1.1
@@ -63,13 +66,14 @@ Regulatory Database Agent daemon (CRDA).
 %setup -c
 %setup -T -D -a 1
 
-# Set correct python2 executable in shebang
-subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
+# Set correct python3 executable in shebang
+subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
 
 cd %name-%version
 %patch -p1 -b .setregdomain
 %patch1 -p1 -b .ldconfig-remove
 %patch2 -p2 -b .ldflags
+%patch5 -p1
 cd ../%_db
 %patch3 -p2 -b .fwsign
 %patch4 -p2 -b .pubcert
@@ -121,6 +125,9 @@ ln -s regulatory.bin.5 %buildroot%_man5dir/regulatory.db.5
 %_includedir/reglib
 
 %changelog
+* Thu Aug 05 2021 Grigory Ustinov <grenka@altlinux.org> 4.14-alt6
+- Transfer on python3.
+
 * Tue Jul 06 2021 Andrey Cherepanov <cas@altlinux.org> 4.14-alt5.1
 - FTBFS: use %%_python in Python shebangs.
 
