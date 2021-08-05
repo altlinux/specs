@@ -3,16 +3,15 @@ Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-
 %global base_name    net
 %global short_name   commons-%{base_name}
 
 Name:           apache-%{short_name}
 Version:        3.6
-Release:        alt1_8jpp8
+Release:        alt1_13jpp11
 Summary:        Internet protocol suite Java library
 License:        ASL 2.0
 URL:            http://commons.apache.org/%{base_name}/
@@ -24,9 +23,7 @@ BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
 Source44: import.info
-
 
 %description
 This is an Internet protocol suite Java library originally developed by
@@ -51,15 +48,16 @@ rm src/test/java/org/apache/commons/net/time/TimeTCPClientTest.java
 # Fails in Koji with "Address already in use"
 rm src/test/java/org/apache/commons/net/tftp/TFTPServerPathTest.java
 
+%pom_remove_plugin :exec-maven-plugin
+
 %mvn_file  : %{short_name} %{name}
 %mvn_alias : org.apache.commons:%{short_name}
 
 %build
-%mvn_build -- -Dcommons.osgi.symbolicName=org.apache.commons.net
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dcommons.osgi.symbolicName=org.apache.commons.net
 
 %install
 %mvn_install
-
 
 %files -f .mfiles
 %doc README.md RELEASE-NOTES.txt
@@ -69,6 +67,9 @@ rm src/test/java/org/apache/commons/net/tftp/TFTPServerPathTest.java
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:3.6-alt1_13jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.6-alt1_8jpp8
 - fc update
 
