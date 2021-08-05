@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.9.1
-Release: alt1
+Release: alt2
 
 Summary: Terminals served by tornado websockets
 
@@ -22,8 +22,8 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildPreReq: python-module-sphinx
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
 %if_with check
 BuildRequires: /dev/pts
@@ -86,7 +86,7 @@ This package contains documentation for %oname.
 %prep
 %setup
 
-#%prepare_sphinx .
+%prepare_sphinx3 .
 #ln -s ../objects.inv doc/
 
 %build
@@ -117,6 +117,9 @@ nosetests3 -v
 #%doc doc/_build/html/*
 
 %changelog
+* Thu Aug 05 2021 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt2
+- use python3-module-sphinx
+
 * Wed Oct 21 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt1
 - separated build python3 module, cleanup spec
 - new version 0.9.1 (with rpmrb script)
