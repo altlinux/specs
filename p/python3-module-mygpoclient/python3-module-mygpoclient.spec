@@ -1,61 +1,37 @@
 %define modname mygpoclient
 
-Name: python-module-%modname
+Name: python3-module-%modname
 Version: 1.8
-Release: alt2
+Release: alt3
 
-Summary: Python interface to the my.gpodder.org webservices
+Summary: Python 3 interface to the my.gpodder.org webservices
 License: GPLv3+
-Group: Development/Python
+Group: Development/Python3
 Url: https://github.com/gpodder/%modname
 
 Source: %url/archive/%modname-%version.tar.gz
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python rpm-build-python3
-BuildRequires: python-devel python-module-setuptools
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
 
 %description
-This Python library provides an easy and structured way to access the
+This Python 3 library provides an easy and structured way to access the
 my.gpodder.org web services. In addition to subscription list
 synchronization and storage, the advanced API support allows to upload
 and download episode status changes.
-
-%package -n python3-module-%modname
-Summary: Python3 interface to the my.gpodder.org webservices
-Group: Development/Python3
-
-%description -n python3-module-%modname
-This Python3 library provides an easy and structured way to access the
-my.gpodder.org web services. In addition to subscription list
-synchronization and storage, the advanced API support allows to upload
-and download episode status changes.
-
 
 %prep
-%setup -n %modname-%version -a0
-cp -a %modname-%version py3build
+%setup -n %modname-%version
 
 %build
-%python_build
-
-pushd py3build
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd py3build
 %python3_install
-popd
 
 %files
-%python_sitelibdir/*
-
-%files -n python3-module-%modname
 %_bindir/mygpo-bpsync
 %_bindir/mygpo-list-devices
 %_bindir/mygpo-simple-client
@@ -65,6 +41,9 @@ popd
 
 
 %changelog
+* Thu Aug 05 2021 Yuri N. Sedunov <aris@altlinux.org> 1.8-alt3
+- python3-only build
+
 * Fri Mar 23 2018 Yuri N. Sedunov <aris@altlinux.org> 1.8-alt2
 - added python3 subpackage
 
