@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.15.0
-Release: alt4
+Release: alt5
 Summary: Simplejson is a simple, fast, extensible JSON encoder/decoder for Python
 License: MIT/X Consortium
 Group: Development/Python
@@ -15,7 +15,8 @@ Url: https://simplejson.readthedocs.io/
 Source: %name-%version.tar
 Patch: %oname-3.5.3-alt-python3.patch
 
-BuildRequires: python-devel python-module-setuptools python-module-sphinx
+BuildRequires: python-devel python-module-setuptools
+# python-module-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
@@ -68,7 +69,7 @@ pushd ../python3
 popd
 %endif
 
-python2 ./scripts/make_docs.py
+#python2 ./scripts/make_docs.py
 
 %install
 %python_install
@@ -92,8 +93,8 @@ popd
 %exclude %python_sitelibdir/%oname/tests
 %python_sitelibdir/*.egg-info
 
-%files doc
-%doc docs/*
+#files doc
+#doc docs/*
 
 %if_with python3
 %files -n python3-module-%oname
@@ -103,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 05 2021 Vitaly Lipatov <lav@altlinux.ru> 3.15.0-alt5
+- drop sphinx using and build doc subpackage
+
 * Sun Jul 04 2021 Vitaly Lipatov <lav@altlinux.ru> 3.15.0-alt4
 - NMU: build python2 module only
 
