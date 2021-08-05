@@ -9,7 +9,7 @@
 %def_enable gstreamer
 %def_enable systemd
 %def_enable libusb
-%def_enable libcamera
+%def_disable libcamera
 %def_enable avahi
 %def_enable webrtc
 %def_enable sdl
@@ -26,7 +26,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.32
+Version: %ver_major.33
 Release: alt1
 
 Summary: Media Sharing Server
@@ -57,8 +57,8 @@ BuildRequires: libavformat-devel libavcodec-devel libavfilter-devel
 BuildRequires: libbluez-devel
 # BT codecs
 BuildRequires: libsbc-devel libfdk-aac-devel libldac-devel
-# https://github.com/pali/libopenaptx
-BuildRequires: libopenaptx-devel
+# https://github.com/iamthehorker/libfreeaptx
+BuildRequires: libfreeaptx-devel
 # for pw-top
 BuildRequires: libncursesw-devel
 %if_enabled gstreamer
@@ -258,6 +258,10 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Thu Aug 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.33-alt1
+- 0.3.33
+- temporarily disabled libcamera support
+
 * Wed Jul 21 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.32-alt1
 - 0.3.32
 
