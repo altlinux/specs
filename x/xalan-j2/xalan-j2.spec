@@ -1,3 +1,4 @@
+Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
@@ -5,45 +6,16 @@ BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# Copyright (c) 2000-2005, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
-%global cvs_version 2_7_2
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 2.7.2
+%global cvs_version %(echo %{version} | tr . _)
 
 Name:           xalan-j2
 Version:        2.7.2
-Release:        alt1_6jpp8
-Epoch:          0
+Release:        alt1_9jpp11
 Summary:        Java XSLT processor
 # src/org/apache/xpath/domapi/XPathStylesheetDOM3Exception.java is W3C
 License:        ASL 2.0 and W3C
@@ -51,15 +23,15 @@ URL:            http://xalan.apache.org/
 
 # ./generate-tarball.sh
 Source0:        %{name}-%{version}.tar.gz
-Source1:        %{name}-serializer-MANIFEST.MF
+Source1:        xalan-j2-serializer-MANIFEST.MF
 Source2:        http://repo1.maven.org/maven2/xalan/xalan/%{version}/xalan-%{version}.pom
 Source3:        http://repo1.maven.org/maven2/xalan/serializer/%{version}/serializer-%{version}.pom
 Source4:        xsltc-%{version}.pom
-Source5:        %{name}-MANIFEST.MF
+Source5:        xalan-j2-MANIFEST.MF
 # Remove bundled binaries which cannot be easily verified for licensing
 Source6:        generate-tarball.sh
 
-Patch0:         %{name}-noxsltcdeps.patch
+Patch0:         xalan-j2-noxsltcdeps.patch
 
 BuildArch:      noarch
 
@@ -70,10 +42,8 @@ BuildRequires:  bcel
 BuildRequires:  java_cup
 BuildRequires:  regexp
 BuildRequires:  sed
-BuildRequires:  glassfish-servlet-api
 BuildRequires:  xerces-j2 >= 0:2.7.1
 BuildRequires:  xml-commons-apis >= 0:1.3
-BuildRequires:  java-1.8.0-openjdk-devel
 
 Requires:       xerces-j2
 
@@ -112,25 +82,6 @@ BuildArch: noarch
 %description    manual
 Documentation for %{name}.
 
-%package        javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-License:        ASL 2.0
-BuildArch: noarch
-
-%description    javadoc
-Javadoc for %{name}.
-
-%package        demo
-Group: Development/Java
-Summary:        Demo for %{name}
-License:        ASL 2.0
-Requires:       %{name} = %{epoch}:%{version}-%{release}
-Requires:       glassfish-servlet-api
-
-%description    demo
-Demonstrations and samples for %{name}.
-
 %prep
 %setup -q -n xalan-j_%{cvs_version}
 %patch0 -p0
@@ -138,7 +89,8 @@ Demonstrations and samples for %{name}.
 find . -name '*.jar' -delete
 find . -name '*.class' -delete
 
-sed -i '/<!-- Expand jaxp sources/,/<delete file="${xml-commons-srcs.tar}"/{d}' build.xml
+sed -i '/<bootclasspath/d' build.xml
+(cd ./src && tar xf xml-commons-external-*-src.tar.gz)
 
 # Remove classpaths from manifests
 sed -i '/class-path/I d' $(find -iname '*manifest*')
@@ -153,7 +105,6 @@ sed -i 's/\r//' KEYS LICENSE.txt NOTICE.txt xdocs/style/resources/script.js \
 %mvn_package :xsltc xsltc
 
 %build
-export JAVA_HOME=%{_jvmdir}/java-1.8.0-openjdk
 pushd lib
 ln -sf $(build-classpath java_cup-runtime) runtime.jar
 ln -sf $(build-classpath bcel) BCEL.jar
@@ -167,16 +118,14 @@ ln -sf $(build-classpath ant) ant.jar
 popd
 export CLASSPATH=$(build-classpath glassfish-servlet-api)
 
-ant -Dcompiler.source=1.8 -Dcompiler.target=1.8 \
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  \
+  -Dcompiler.source=1.6 \
+  -Dcompiler.target=1.6 \
   -Djava.awt.headless=true \
-  -Dapi.j2se=%{_javadocdir}/java \
   -Dbuild.xalan-interpretive.jar=build/xalan-interpretive.jar \
   xalan-interpretive.jar\
   xsltc.unbundledjar \
-  docs \
-  javadocs \
-  samples \
-  servlet
+  docs
 
 # inject OSGi manifests
 jar ufm build/serializer.jar %{SOURCE1}
@@ -187,18 +136,7 @@ jar ufm build/xalan-interpretive.jar %{SOURCE5}
 %mvn_artifact %{SOURCE4} build/xsltc.jar
 
 %install
-%mvn_install -J build/docs/apidocs
-
-# demo
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
-install -p -m 644 build/xalansamples.jar \
-  $RPM_BUILD_ROOT%{_datadir}/%{name}/%{name}-samples.jar
-install -p -m 644 build/xalanservlet.war \
-  $RPM_BUILD_ROOT%{_datadir}/%{name}/%{name}-servlet.war
-cp -pr samples $RPM_BUILD_ROOT%{_datadir}/%{name}
-
-# fix link between manual and javadoc
-(cd build/docs; ln -sf %{_javadocdir}/%{name} apidocs)
+%mvn_install
 
 find $RPM_BUILD_ROOT -name '*.sh' -print0 | xargs -0 dos2unix
 grep -r -m 1 -l -Z '^#!/bin/sh' $RPM_BUILD_ROOT%_bindir | xargs -0 dos2unix
@@ -221,14 +159,10 @@ mv %{_javadir}/jaxp_transform_impl.jar{.tmp,} || :
 %doc --no-dereference LICENSE.txt NOTICE.txt
 %doc --no-dereference build/docs/*
 
-%files javadoc
-%doc --no-dereference LICENSE.txt NOTICE.txt
-%doc %{_javadocdir}/%{name}
-
-%files demo
-%{_datadir}/%{name}
-
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:2.7.2-alt1_9jpp11
+- update
+
 * Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 0:2.7.2-alt1_6jpp8
 - jvm8 update
 
