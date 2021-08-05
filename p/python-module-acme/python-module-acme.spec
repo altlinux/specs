@@ -1,13 +1,16 @@
 %define modulename acme
 
-Name: python3-module-acme
-Version: 1.17.0
-Release: alt2
+%def_with python3
+%def_without python2
+
+Name: python-module-acme
+Version: 1.18.0
+Release: alt1
 
 Summary: Python library for the ACME protocol
 
-License: Apache-2.0
-Group: Development/Python3
+License: ASL 2.0
+Group: Development/Python
 Url: https://pypi.python.org/pypi/acme
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -15,7 +18,39 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://pypi.io/packages/source/a/%modulename/%modulename-%version.tar.gz
 Source: %modulename-%version.tar
 
+%if_with python2
+BuildRequires: python-devel python-module-setuptools
+#BuildRequires: python-sphinx
+#BuildRequires: python-sphinxcontrib-programoutput
+#BuildRequires: python-sphinx_rtd_theme
+#BuildRequires: python-pyrfc3339
+#BuildRequires: python-werkzeug
+
+# requires list checked 06.10.2017 with https://pypi.python.org/pypi/acme
+# requests[security] is requests with extra pyOpenSSL cryptography idna
+BuildRequires: python-module-six >= 1.9.0
+BuildRequires: python-module-OpenSSL >= 0.14
+BuildRequires: python-module-cryptography >= 1.3.4
+BuildRequires: python-module-idna >= 2.0.0
+BuildRequires: python-module-cffi >= 1.7
+BuildRequires: python-module-requests >= 2.10
+BuildRequires: python-module-pytz
+#BuildRequires: python-module-pyrfc3339
+
+Requires: python-module-six >= 1.9.0
+Requires: python-module-OpenSSL >= 0.14
+Requires: python-module-cryptography >= 1.3.4
+Requires: python-module-idna >= 2.0.0
+Requires: python-module-cffi >= 1.7
+Requires: python-module-requests >= 2.10
+Requires: python-module-josepy >= 1.0.0
+%endif
+
+%if_with python3
 BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+#BuildRequires: python3-sphinx
+#BuildRequires: python3-sphinxcontrib-programoutput
 
 # requests[security] is requests with extra pyOpenSSL cryptography idna
 BuildRequires: python3-module-six >= 1.9.0
@@ -25,11 +60,24 @@ BuildRequires: python3-module-idna >= 2.0.0
 BuildRequires: python3-module-cffi >= 1.7
 BuildRequires: python3-module-requests >= 2.10
 BuildRequires: python3-module-pytz
-Requires: python3-module-OpenSSL >= 0.14
-Requires: python3-module-cryptography >= 1.3.4
-Requires: python3-module-idna >= 2.0.0
-Requires: python3-module-cffi >= 1.7
-Requires: python3-module-requests >= 2.10
+#BuildRequires: python3-module-pyrfc3339
+#BuildRequires: python3-werkzeug
+%endif
+
+# Required for testing
+#BuildRequires: python-ndg_httpsclient
+#BuildRequires: python-nose
+#BuildRequires: python-tox
+#BuildRequires: python-mock
+#BuildRequires: pytz
+
+#%if_with python3
+#BuildRequires: python3-ndg_httpsclient
+#BuildRequires: python3-nose
+#BuildRequires: python3-tox
+#BuildRequires: python3-mock
+#BuildRequires: python3-pytz
+#%endif
 
 BuildArch: noarch
 
@@ -37,8 +85,60 @@ BuildArch: noarch
 Python libraries implementing the Automatic Certificate Management Environment
 (ACME) protocol. It is used by the Certbot Project.
 
+#%package -n python-module-acme
+#Group: Development/Python
+#Summary: %summary
+#Requires: python-cryptography
+#Requires: python-ndg_httpsclient
+#Requires: python-pyasn1
+#Requires: pyOpenSSL >= 0.13
+#Requires: python-pyrfc3339
+#Requires: pytz
+#Requires: python-requests
+#Requires: python-six
+#Requires: python-werkzeug
+#%if_with python3
+# Recommends not supported by rpm on EL7
+#Recommends: python-acme-doc
+#%endif
+
+#%description -n python-module-acme
+#Python 2 library for use of the Automatic Certificate Management Environment
+#protocol as defined by the IETF. It's used by the Let's Encrypt project.
+
+%if_with python3
+%package -n python3-module-acme
+Group: Development/Python
+Summary: %summary
+
+Requires: python3-module-OpenSSL >= 0.14
+Requires: python3-module-cryptography >= 1.3.4
+Requires: python3-module-idna >= 2.0.0
+Requires: python3-module-cffi >= 1.7
+Requires: python3-module-requests >= 2.10
+#Requires: python3-ndg_httpsclient
+#Requires: python3-pyasn1
+#Requires: python3-pyOpenSSL
+#Requires: python3-pyrfc3339
+#Requires: python3-pytz
+#Requires: python3-requests
+#Requires: python3-six
+#Requires: python3-werkzeug
+#Recommends: python-acme-doc
+
+%description -n python3-module-acme
+Python 3 library for use of the Automatic Certificate Management Environment
+protocol as defined by the IETF. It's used by the Certbot Project.
+%endif
+
 %package doc
-Group: Development/Documentation
+Group: Development/Python
+#Provides: bundled(jquery)
+#Provides: bundled(underscore)
+#Provides: bundled(inconsolata-fonts)
+#Provides: bundled(lato-fonts)
+#Provides: bundled(robotoslab-fonts)
+#Requires: fontawesome-fonts fontawesome-fonts-web
 Summary: Documentation for python-acme libraries
 
 %description doc
@@ -48,13 +148,29 @@ Documentation for the ACME python libraries
 %setup -n %modulename-%version
 
 %build
+%if_with python2
+%python_build
+%endif
+%if_with python3
 %python3_build
+%endif
 
 %install
+%if_with python3
+# Do python3 first so bin ends up from py2
 %python3_install
 #  it is better do not to require argparse on python >= 2.7.
 %__subst "s|^argparse$||" \
     %buildroot%python3_sitelibdir/%modulename-%{version}*.egg-info/requires.txt
+%endif
+
+%if_with python2
+%python_install
+#  it is better do not to require argparse on python >= 2.7.
+%__subst "s|^argparse$||" \
+    %buildroot%python2_sitelibdir/%modulename-%{version}*.egg-info/requires.txt
+%endif
+
 
 %check
 #__python setup.py test
@@ -62,10 +178,19 @@ Documentation for the ACME python libraries
 #__python3 setup.py test
 #endif
 
+%if_with python2
 %files
+%doc LICENSE.txt
+%python_sitelibdir/%modulename/
+%python_sitelibdir/%modulename-%{version}*.egg-info
+%endif
+
+%if_with python3
+%files -n python3-module-acme
 %doc LICENSE.txt
 %python3_sitelibdir/%modulename/
 %python3_sitelibdir/%modulename-%{version}*.egg-info
+%endif
 
 #%files doc
 #%doc LICENSE.txt
@@ -73,8 +198,8 @@ Documentation for the ACME python libraries
 #%doc docs/_build/html
 
 %changelog
-* Thu Jul 22 2021 Grigory Ustinov <grenka@altlinux.org> 1.17.0-alt2
-- Cleanup spec, rename package.
+* Thu Aug 05 2021 Vitaly Lipatov <lav@altlinux.ru> 1.18.0-alt1
+- new version 1.18.0 (with rpmrb script)
 
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.17.0-alt1
 - new version 1.17.0 (with rpmrb script)
