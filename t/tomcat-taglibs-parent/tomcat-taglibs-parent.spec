@@ -3,17 +3,17 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           tomcat-taglibs-parent
 Version:        3
-Release:        alt1_11jpp8
+Release:        alt1_16jpp11
 Summary:        Apache Taglibs Parent
 
 License:        ASL 2.0
 URL:            http://tomcat.apache.org/taglibs/
-Source0:        http://svn.apache.org/repos/asf/tomcat/taglibs/taglibs-parent/tags/taglibs-parent-3/pom.xml
+Source0:        https://github.com/apache/tomcat-taglibs-parent/raw/master/pom.xml
 BuildArch: noarch
 
 BuildRequires:  maven-local
@@ -29,7 +29,7 @@ Apache Taglibs Parent pom used for building purposes.
 cp -p %{SOURCE0} .
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -38,6 +38,9 @@ cp -p %{SOURCE0} .
 %dir %{_mavenpomdir}/%{name}
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 3-alt1_16jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 3-alt1_11jpp8
 - fc update
 
