@@ -1,39 +1,23 @@
 Summary: The ``zope`` package is a pure namespace package
 Version: 3.3.0
-Release: alt8.5
+Release: alt9
 License: ZPL
-Group: Development/Python
-Packager: Python Development Team <python@packages.altlinux.org>
+Group: Development/Python3
 
+%define modulename zope
 %define oname zope
-%def_with python3
-%setup_python_module %oname
-Name: %packagename
+Name: python3-module-%modulename
 
-Requires: python-module-zope.interface >= 3.3.0-alt2
-Requires: python-module-zc
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-%endif
+Requires: python3-module-zope.interface
+Requires: python3-module-zc
 
 %description
 %summary
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: The ``zope`` package is a pure namespace package (Python 3)
-Group: Development/Python3
-Requires: python3-module-zope.interface
-Requires: python3-module-zc
-
-%description -n python3-module-%oname
-%summary
-%endif
-
 %install
-mkdir -p %buildroot/%python_sitelibdir/%modulename
-cat <<EOF > %buildroot/%python_sitelibdir/%modulename/__init__.py
+mkdir -p %buildroot/%python3_sitelibdir/%modulename
+cat <<EOF > %buildroot/%python3_sitelibdir/%modulename/__init__.py
 ##############################################################################
 #
 # Copyright (c) 2004 Zope Corporation and Contributors.
@@ -58,25 +42,16 @@ except ImportError:
     pass
 EOF
 
-%if_with python3
-install -d %buildroot/%python3_sitelibdir/%oname
-install -m644 %buildroot/%python_sitelibdir/%modulename/__init__.py \
-	%buildroot/%python3_sitelibdir/%oname/
-%endif
-
 %files
-%dir %python_sitelibdir/%modulename
-%python_sitelibdir/%modulename/__init__.py*
-
-%if_with python3
-%files -n python3-module-%oname
 %dir %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname/__init__.py*
 %dir %python3_sitelibdir/%oname/__pycache__
 %python3_sitelibdir/%oname/__pycache__/__init__.*
-%endif
 
 %changelog
+* Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt9
+- Drop python2 support.
+
 * Fri Apr 05 2019 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt8.5
 - Rebuild for python3.7.
 

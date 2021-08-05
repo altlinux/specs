@@ -1,23 +1,20 @@
 %define oname zope.event
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 4.4
-Release: alt1
+Release: alt2
 
 Summary: Very basic event publishing system
 License: ZPL
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.event/
 # git://github.com/zopefoundation/zope.event.git
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-module-setuptools
-BuildPreReq: python3-module-setuptools
 
-%py_requires zope
-
+%py3_requires zope
 
 %description
 The zope.event package provides a simple event system. It provides:
@@ -28,39 +25,9 @@ The zope.event package provides a simple event system. It provides:
   event dispatching system that builds on zope.event can be found in
   zope.component.
 
-%package -n python3-module-%oname
-Summary: Very basic event publishing system (Python 3)
-Group: Development/Python3
-%py3_requires zope
-
-%description -n python3-module-%oname
-The zope.event package provides a simple event system. It provides:
-
-* An event publishing system
-* A very simple event-dispatching system on which more sophisticated
-  event dispatching systems can be built. For example, a type-based
-  event dispatching system that builds on zope.event can be found in
-  zope.component.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for zope.event (Python 3)
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-
-%description -n python3-module-%oname-tests
-The zope.event package provides a simple event system. It provides:
-
-* An event publishing system
-* A very simple event-dispatching system on which more sophisticated
-  event dispatching systems can be built. For example, a type-based
-  event dispatching system that builds on zope.event can be found in
-  zope.component.
-
-This package contains tests for zope.event.
-
 %package tests
 Summary: Tests for zope.event
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description tests
@@ -77,27 +44,11 @@ This package contains tests for zope.event.
 %prep
 %setup
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-    %buildroot%python_sitelibdir/
-%endif
-
-pushd ../python3
 %python3_install
-popd
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -106,24 +57,17 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %files
 %doc *.txt docs/*.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests*
-
-%files tests
-%python_sitelibdir/*/*/tests*
-
-%files -n python3-module-%oname
-%doc *.txt docs/*.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests*
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/*/tests*
 
-
 %changelog
+* Thu Aug 05 2021 Grigory Ustinov <grenka@altlinux.org> 4.4-alt2
+- Drop python2 support.
+
 * Wed Feb 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.4-alt1
 - Version updated to 4.4
 - Cleanup spec
