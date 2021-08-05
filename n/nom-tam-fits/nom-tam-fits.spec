@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          nom-tam-fits
 Version:       1.15.2
-Release:       alt1_6jpp11
+Release:       alt1_8jpp11
 Summary:       Java library for reading and writing FITS files
 License:       Public Domain
 URL:           http://nom-tam-fits.github.io/nom-tam-fits/
@@ -13,7 +13,6 @@ Source0:       https://github.com/nom-tam-fits/nom-tam-fits/archive/%{name}-%{ve
 Patch0:        0001-Skip-tests-if-we-cannot-download-images.patch
 
 BuildRequires: maven-local
-BuildRequires: mvn(com.google.code.findbugs:annotations)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.commons:commons-compress)
 BuildRequires: mvn(org.codehaus.mojo:exec-maven-plugin)
@@ -122,6 +121,10 @@ rm -r src/main/fpack
 %pom_remove_dep org.openjdk.jmh:
 rm src/test/java/nom/tam/manual/intergration/FitsBenchmark.java
 
+# Retired in Fedora; not required for build
+%pom_remove_dep com.google.code.findbugs:annotations
+sed -i 's/.*SuppressFBWarnings.*//' $(fgrep -lr SuppressFBWarnings src/main/java)
+
 %mvn_file :%{name} %{name} fits
 
 %build
@@ -138,6 +141,9 @@ rm src/test/java/nom/tam/manual/intergration/FitsBenchmark.java
 %doc --no-dereference src/license/publicdomain/license.txt
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.15.2-alt1_8jpp11
+- update
+
 * Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 1.15.2-alt1_6jpp11
 - new version
 
