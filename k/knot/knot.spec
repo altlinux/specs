@@ -7,7 +7,7 @@
 %def_disable documentation
 
 Name: knot
-Version: 3.0.8
+Version: 3.1.0
 Release: alt1
 Summary: High-performance authoritative DNS server
 Group: System/Servers
@@ -29,7 +29,7 @@ BuildRequires: pkgconfig(libcap-ng)
 BuildRequires: pkgconfig(libidn2)
 BuildRequires: pkgconfig(libnghttp2)
 %{?_enable_maxminddb:BuildRequires: pkgconfig(libmaxminddb)}
-%{?_enable_xdp:BuildRequires: pkgconfig(libbpf) >= 0.0.6}
+%{?_enable_xdp:BuildRequires: pkgconfig(libbpf) >= 0.0.6 pkgconfig(libmnl)}
 BuildRequires: pkgconfig(libsystemd)
 BuildRequires: pkgconfig(systemd)
 %{?_enable_documentation:BuildRequires: /usr/bin/sphinx-build-3}
@@ -202,6 +202,9 @@ V=1 %make check ||:
 %endif
 
 %changelog
+* Fri Aug 06 2021 Alexey Shabalin <shaba@altlinux.org> 3.1.0-alt1
+- new version 3.1.0
+
 * Mon Jul 19 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.8-alt1
 - new version 3.0.8
 

@@ -5,7 +5,7 @@
 %def_disable doc
 
 Name: knot-resolver
-Version: 5.3.2
+Version: 5.4.0
 Release: alt1
 Summary: Caching full DNS Resolver
 Group: System/Servers
@@ -20,7 +20,7 @@ Patch0: %name-%version.patch
 ExclusiveArch: %luajit_arches
 
 BuildRequires(pre): meson >= 0.49 rpm-macros-luajit
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ luajit
 BuildRequires: pkgconfig(cmocka)
 BuildRequires: pkgconfig(gnutls)
 BuildRequires: pkgconfig(libedit)
@@ -167,34 +167,12 @@ fi
 %_sbindir/kresd
 %_sbindir/kresc
 %_sbindir/kres-cache-gc
-%dir %_libdir/%name
-%_libdir/%name/*.so
-%_libdir/%name/*.lua
-%dir %_libdir/%name/kres_modules
-%_libdir/%name/kres_modules/*.so
-%exclude %_libdir/%name/debug_opensslkeylog.so
-%_libdir/%name/kres_modules/daf
-%_libdir/%name/kres_modules/daf.lua
-%_libdir/%name/kres_modules/detect_time_jump.lua
-%_libdir/%name/kres_modules/detect_time_skew.lua
-%_libdir/%name/kres_modules/dns64.lua
-%_libdir/%name/kres_modules/etcd.lua
-%_libdir/%name/kres_modules/experimental_dot_auth.lua
-%_libdir/%name/kres_modules/graphite.lua
-%_libdir/%name/kres_modules/policy.lua
-%_libdir/%name/kres_modules/predict.lua
-%_libdir/%name/kres_modules/prefill.lua
-%_libdir/%name/kres_modules/priming.lua
-%_libdir/%name/kres_modules/rebinding.lua
-%_libdir/%name/kres_modules/renumber.lua
-%_libdir/%name/kres_modules/serve_stale.lua
-%_libdir/%name/kres_modules/ta_sentinel.lua
-%_libdir/%name/kres_modules/ta_signal_query.lua
-%_libdir/%name/kres_modules/ta_update.lua
-%_libdir/%name/kres_modules/view.lua
-%_libdir/%name/kres_modules/watchdog.lua
-%_libdir/%name/kres_modules/workarounds.lua
+%_libdir/%name
 %_man8dir/*
+%exclude %_libdir/%name/debug_opensslkeylog.so
+%exclude %_libdir/%name/kres_modules/http
+%exclude %_libdir/%name/kres_modules/http*.lua
+%exclude %_libdir/%name/kres_modules/prometheus.lua
 
 %files -n libkres
 %_libdir/libkres.so.*
@@ -216,6 +194,9 @@ fi
 %_libdir/%name/kres_modules/prometheus.lua
 
 %changelog
+* Fri Aug 06 2021 Alexey Shabalin <shaba@altlinux.org> 5.4.0-alt1
+- 5.4.0
+
 * Tue May 18 2021 Alexey Shabalin <shaba@altlinux.org> 5.3.2-alt1
 - 5.3.2
 
