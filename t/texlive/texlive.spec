@@ -1,7 +1,6 @@
-%add_optflags -fcommon
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ gobject-introspection-devel imake libXt-devel perl(BibTeX/Parser.pm) perl(BibTeX/Parser/Author.pm) perl(Date/Format.pm) perl(Date/Parse.pm) perl(Digest/SHA1.pm) perl(Encode.pm) perl(ExtUtils/MakeMaker.pm) perl(Fatal.pm) perl(File/Copy/Recursive.pm) perl(File/Which.pm) perl(HTML/FormatText.pm) perl(HTML/TreeBuilder.pm) perl(HTTP/Request/Common.pm) perl(IPC/System/Simple.pm) perl(JSON.pm) perl(LWP/Protocol/https.pm) perl(LWP/Simple.pm) perl(LWP/UserAgent.pm) perl(LaTeX/ToUnicode.pm) perl(Locale/Maketext/Simple.pm) perl(Math/Trig.pm) perl(Output.pm) perl(Pod/Man.pm) perl(Pod/Text.pm) perl(Pod/Usage.pm) perl(Spreadsheet/ParseExcel.pm) perl(Statistics/Descriptive.pm) perl(Statistics/Distributions.pm) perl(Term/ANSIColor.pm) perl(Term/ReadKey.pm) perl(Test.pm) perl(Tk.pm) perl(Tk/Dialog.pm)
-BuildRequires: perl(Tk/NoteBook.pm) perl(URI/Escape.pm) perl(WWW/Mechanize.pm) perl(autodie.pm) perl-devel texinfo xorg-cf-files zlib-devel
+BuildRequires: gcc-c++ gobject-introspection-devel imake libXt-devel perl(Archive/Tar.pm) perl(BibTeX/Parser.pm) perl(BibTeX/Parser/Author.pm) perl(Date/Format.pm) perl(Date/Parse.pm) perl(Digest/SHA1.pm) perl(Encode.pm) perl(Encode/Alias.pm) perl(Encode/Locale.pm) perl(ExtUtils/MakeMaker.pm) perl(Fatal.pm) perl(File/Copy/Recursive.pm) perl(File/Which.pm) perl(HTML/FormatText.pm) perl(HTML/TreeBuilder.pm) perl(HTTP/Request/Common.pm) perl(IO/Compress/Zip.pm) perl(IPC/System/Simple.pm) perl(JSON.pm) perl(LWP/Protocol/https.pm) perl(LWP/Simple.pm) perl(LWP/UserAgent.pm) perl(LaTeX/ToUnicode.pm) perl(Locale/Maketext/Simple.pm) perl(Math/Trig.pm) perl(Pod/Man.pm) perl(Pod/Text.pm) perl(Pod/Usage.pm) perl(Spreadsheet/ParseExcel.pm) perl(Statistics/Descriptive.pm) perl(Statistics/Distributions.pm) perl(Term/ANSIColor.pm)
+BuildRequires: perl(Term/ReadKey.pm) perl(Test.pm) perl(Tk.pm) perl(Tk/Dialog.pm) perl(Tk/NoteBook.pm) perl(URI/Escape.pm) perl(WWW/Mechanize.pm) perl(autodie.pm) perl-devel texinfo xorg-cf-files zlib-devel
 # END SourceDeps(oneline)
 # findreq artefacts
 # let's drop the dep for now
@@ -19,6 +18,9 @@ BuildRequires: libpixman-devel
 BuildRequires: chrpath
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+BuildRequires: /usr/bin/hg
+#define _binary_payload		w9.gzdio
+#define _source_payload		w9.gzdio
 
 %global __requires_exclude ^perl\\((PDF::Reuse.*|Pedigree.*|TeXLive.*|Tk::path_tre|only|pdfTeX|script::MakeSPList)\\)|pear\\(animals.php\\)
 %global __provides_exclude_from %{?__provides_exclude_from:%__provides_exclude_from|}^%{_docdir}
@@ -65,15 +67,15 @@ BuildRequires: chrpath
 %define texmfprojectdir		%{_datadir}/texmf-project
 %define texmfvardir		%{_localstatedir}/lib/texmf
 %define texmfconfdir		%{_sysconfdir}/texmf
-%define relYear	2019
+%define relYear	2021
 %global tl_version %relYear
-%global mga_tl_timestamp 20190410
+%global mga_tl_timestamp 20210325
 
 
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	%relYear
-Release:	alt2_7
+Release:	alt1_2
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -88,7 +90,7 @@ Requires:	ghostscript-module-X
 
 #-----------------------------------------------------------------------
 %if %{with_system_dialog}
-Requires:	dialog
+Requires:	cdialog
 %endif
 Requires:	gambit
 %if %{enable_asymptote}
@@ -114,26 +116,35 @@ Requires:	texlive-collection-basic
 # Fix upgrade for luatex (mga#12303)
 
 #-----------------------------------------------------------------------
+BuildRequires:	autoconf-archive
 BuildRequires:	bison
 %if %{enable_xindy}
 BuildRequires:	clisp
 BuildRequires:	libffcall-devel
 %endif
 %if %{enable_asymptote}
-BuildRequires:	libfftw3-devel libfftw3-mpi-devel
+BuildRequires:	libfftw3-devel
 BuildRequires:	flex
 %endif
-BuildRequires:	libfreetype-devel
+BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(fontconfig)
-BuildRequires: pkgconfig(gdlib)
+BuildRequires:  libgmp-devel
 %if %{enable_asymptote}
 BuildRequires:	libgc-devel
 BuildRequires:	libsigsegv-devel
 BuildRequires:	ghostscript-utils
 BuildRequires:	libgsl-devel
-BuildRequires:	libGL-devel
+BuildRequires:	libglvnd-devel
 %endif
+BuildRequires:	libgs-devel
+BuildRequires:	pkgconfig(libbrotlienc)
+BuildRequires:	pkgconfig(libwoff2enc)
+BuildRequires:	libxxhash-devel
+BuildRequires:	libpotrace-devel
 BuildRequires:	pkgconfig(gdlib)
+BuildRequires:  graphite2-devel
+BuildRequires:  pkgconfig(harfbuzz)
+BuildRequires:  pkgconfig(mpfr)
 %if %{with_system_poppler}
 BuildRequires: pkgconfig(poppler)
 %endif
@@ -166,7 +177,7 @@ BuildRequires:	makeinfo
 BuildRequires:	pkgconfig(zziplib)
 BuildRequires:	pkgconfig(cairo)
 BuildRequires:	libpaper-devel
-BuildRequires:	mercurial
+BuildRequires:	mercurial mercurial-hgext
 
 #-----------------------------------------------------------------------
 Patch1: texlive-20160523-mageia-format.patch
@@ -175,11 +186,7 @@ Patch2: texlive-20160523-mageia-asymptote.patch
 %endif
 Patch4: texlive-20160523-texmf-mageia-kpfix.patch
 Patch5: includePatch.patch
-# Poppler patches
-Patch101: 0001-try-to-adapt-to-poppler-0.58.patch
-Patch102: pdftex-poppler0.76.patch
-Patch103: pdftex-poppler0.83.patch
-Patch104: xetex-poppler0.83.patch
+Patch7: texlive-dvisvgm-system-libs.patch
 Source44: import.info
 Provides: dvipng = %{tl_version}
 Provides: lcdf-typetools = %{tl_version}
@@ -212,6 +219,8 @@ Patch33: texlive-2017-alt-texmf-first.patch
 Patch34: texlive-2018-alt-gcc8.patch
 Provides: texlive-collection-binextra = %{tl_version}
 Patch35: texlive-2018-e2k-luatex.patch
+# Poppler patches
+#Patch101: 0001-try-to-adapt-to-poppler-0.58.patch
 
 #-----------------------------------------------------------------------
 %description
@@ -223,7 +232,9 @@ free software, including support for many languages around the world.
 %files
 %{texmfbindir}/*
 %dir %{texmfvardir}
+%ghost %{texmfvardir}/ls-R
 %dir %{texmfconfdir}/web2c
+%ghost %{texmfconfdir}/ls-R
 %ghost %config(noreplace) %{texmfconfdir}/web2c/updmap.cfg
 
 
@@ -263,22 +274,6 @@ This package includes the kpathsea development files.
 %{_includedir}/kpathsea
 %{_libdir}/libkpathsea.so
 %{_libdir}/pkgconfig/kpathsea.pc
-
-#-----------------------------------------------------------------------
-%define	kpathsea_static_devel	libkpathsea-devel-static
-
-%package	-n %{kpathsea_static_devel}
-Summary:	Kpathsea development files
-Group:		Development/C
-Provides:	kpathsea-devel-static = %{version}-%{release}
-
-%description	-n %{kpathsea_static_devel}
-Kpathsea implements generic path searching, configuration,
-and TeX-specific file searching.
-This package includes the static kpathsea library.
-
-%files		-n %{kpathsea_static_devel}
-%{_libdir}/libkpathsea.a
 
 #-----------------------------------------------------------------------
 %define        texlua_major           5
@@ -324,24 +319,6 @@ This package includes the TeXlua development files.
 %endif
 
 #-----------------------------------------------------------------------
-%define	texlua_static_devel	libtexlua-devel-static
-
-%package	-n %{texlua_static_devel}
-Summary:	Library for TeXlua
-Group:		Development/C
-Provides:	texlua-devel-static = %{version}-%{release}
-
-%description	-n %{texlua_static_devel}
-TeXlua library
-This package includes the static TeXlua library.
-
-%files		-n %{texlua_static_devel}
-%{_libdir}/libtexlua53.a
-%if %{enable_luajittex}
-%{_libdir}/libtexluajit.a
-%endif
-
-#-----------------------------------------------------------------------
 %define        synctex_major           2
 %define        synctex                 libsynctex%{synctex_major}
 
@@ -372,21 +349,6 @@ This package includes the synctex development files.
 %{_includedir}/synctex
 %{_libdir}/libsynctex.so
 %{_libdir}/pkgconfig/synctex.pc
-
-#-----------------------------------------------------------------------
-%define	synctex_static_devel	libsynctex-devel-static
-
-%package	-n %{synctex_static_devel}
-Summary:	Library for SyncTeX
-Group:		Development/C
-Provides:	synctex-devel-static = %{version}-%{release}
-
-%description	-n %{synctex_static_devel}
-synctex library
-This package includes the static synctex library.
-
-%files		-n %{synctex_static_devel}
-%{_libdir}/libsynctex.a
 
 #-----------------------------------------------------------------------
 %define        ptexenc_major           1
@@ -424,23 +386,6 @@ This package includes the ptexenc development files.
 %{_libdir}/libptexenc.so
 %{_libdir}/pkgconfig/ptexenc.pc
 
-#-----------------------------------------------------------------------
-%define	ptexenc_static_devel	libptexenc-devel-static
-
-%package	-n %{ptexenc_static_devel}
-Summary:	Library for Japanese pTeX
-Group:		Development/C
-Provides:	ptexenc-devel-static = %{version}-%{release}
-
-%description	-n %{ptexenc_static_devel}
-ptexenc is a useful library for Japanese pTeX
-(which stands for publishing TeX, and is an extension of
-TeX by ASCII Co.) and its surrounding tools.
-This package includes the static ptexenc library.
-
-%files		-n %{ptexenc_static_devel}
-%{_libdir}/libptexenc.a
-
 ########################################################################
 # enable_shared
 %endif
@@ -448,21 +393,17 @@ This package includes the static ptexenc library.
 #-----------------------------------------------------------------------
 %prep
 %setup -q -n %{name}-%{mga_tl_timestamp}-source
-%patch1 -p1
+hg init -q .
+hg add -q .
+hg commit -q --user "rpmbuild <rpmbuild>" -m "%{NAME}-%{VERSION} base"
+cat %_sourcedir/texlive-20160523-mageia-format.patch | hg import -  -q -m texlive-20160523-mageia-format.patch --user "rpmbuild <rpmbuild>"
 %if %{enable_asymptote}
-%patch2 -p1
+cat %_sourcedir/texlive-20160523-mageia-asymptote.patch | hg import -  -q -m texlive-20160523-mageia-asymptote.patch --user "rpmbuild <rpmbuild>"
 %endif
-%patch4 -p1
-%patch5 -p1
-%patch101 -p1
-%patch102 -p1
-%patch103 -p1
-%patch104 -p1
+cat %_sourcedir/texlive-20160523-texmf-mageia-kpfix.patch | hg import -  -q -m texlive-20160523-texmf-mageia-kpfix.patch --user "rpmbuild <rpmbuild>"
+cat %_sourcedir/includePatch.patch | hg import -  -q -m includePatch.patch --user "rpmbuild <rpmbuild>"
+cat %_sourcedir/texlive-dvisvgm-system-libs.patch | hg import -  -q -m texlive-dvisvgm-system-libs.patch --user "rpmbuild <rpmbuild>"
 
-
-# poppler
-cp -pv texk/web2c/pdftexdir/pdftoepdf{-poppler0.83.0,}.cc
-cp -pv texk/web2c/pdftexdir/pdftosrc{-poppler0.83.0,}.cc
 
 # setup default builtin values, added to paths.h from texmf.cnf
 perl -pi -e 's%%^(TEXMFMAIN\s+= ).*%%$1%{texmfdistdir}%%;'			  \
@@ -484,17 +425,24 @@ perl -pi -e 's%%^(TEXMFMAIN\s+= ).*%%$1%{texmfdistdir}%%;'			  \
 %add_optflags -fpermissive
 export CXXFLAGS="%{optflags} -std=c++14"
 
-[ -d Work ] || mkdir Work
-pushd Work
-ln -sf ../configure .
+#for dvisvgm system libs patches
+autoreconf -vfi texk/dvisvgm
 
+mkdir -p Work
+pushd Work
+
+%define _configure_script ../configure
+CONFIGURE_TOP=.. \
 %configure							\
-        LDFLAGS="-Wl,--no-as-needed -ldl"                       \
 	--with-banner-add="/Mageia"				\
 	--disable-native-texlive-build				\
 	--enable-missing					\
 	--disable-linked-scripts				\
+	--with-system-gmp					\
+	--with-system-graphite2					\
+	--with-system-harfbuzz					\
 	--with-system-libpaper					\
+	--with-system-mpfr					\
 	--with-system-zlib					\
 %if %{enable_luajittex}
 	--enable-luajittex					\
@@ -508,6 +456,7 @@ ln -sf ../configure .
 %endif
 %if %{enable_shared}
 	--enable-shared						\
+	--disable-static					\
 %else
 	--disable-shared					\
 %endif
@@ -526,8 +475,6 @@ ln -sf ../configure .
 %else
         --disable-dvi2tty                                       \
 %endif
-	--with-system-freetype					\
-	--with-freetype-includes=%{_includedir}/freetype	\
 	--with-system-freetype2					\
 	--with-freetype2-includes=%{_includedir}/freetype2	\
 %if %{with_system_dialog}
@@ -544,7 +491,7 @@ ln -sf ../configure .
 %if %{with_system_lcdf}
 	--disable-lcdf-typetools				\
 %endif
-	--with-system-png					\
+	--with-system-libpng					\
 %if %{with_system_t1lib}
 	--with-system-t1lib					\
 	--disable-t1utils					\
@@ -562,7 +509,7 @@ ln -sf ../configure .
 	--without-system-icu					\
 %endif
 %if %{with_system_poppler}
-	--with-system-xpdf					\
+	--without-system-xpdf					\
 	--with-system-poppler					\
 %else
 	--without-system-xpdf					\
@@ -580,6 +527,7 @@ ln -sf ../configure .
 	--with-system-zziplib					\
 	--with-system-cairo					\
 	--with-system-pixman
+%define _configure_script ./configure
 %make_build
 
 popd
@@ -631,8 +579,8 @@ pushd %{buildroot}%{texmfbindir}
 	# missing symbolic links
 	ln -sf aleph lamed
 	ln -sf luatex dvilualatex
-	ln -sf luatex lualatex
 	ln -sf luatex dviluatex
+	ln -sf luahbtex lualatex
 	ln -sf pdftex amstex
 	ln -sf pdftex cslatex
 	ln -sf pdftex csplain
@@ -703,7 +651,10 @@ rm -fr %{buildroot}%{_includedir}
 %endif
 
 rm -f %{buildroot}%{_datadir}/applications/xdvi.desktop
-for rpm404_ghost in %{texmfconfdir}/web2c/updmap.cfg
+
+# drop .la files
+find %{buildroot} -name "*.la" -delete
+for rpm404_ghost in %{texmfvardir}/ls-R %{texmfconfdir}/ls-R %{texmfconfdir}/web2c/updmap.cfg
 do
     mkdir -p %buildroot`dirname "$rpm404_ghost"`
     touch %buildroot"$rpm404_ghost"
@@ -720,6 +671,9 @@ rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R %{texmfconfdir}/ls-R
 
 #-----------------------------------------------------------------------
 %changelog
+* Thu Aug 05 2021 Igor Vlasenko <viy@altlinux.org> 2021-alt1_2
+- new version
+
 * Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 2019-alt2_7
 - fixed build with gcc10
 
