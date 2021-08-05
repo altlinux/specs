@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.19.1
+Version: 2.20.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -187,8 +187,24 @@ Feature adds the ability to mount the root using SSH (more precisely, the SFTP
 subsystem). Most SSH servers support and enable this SFTP access by default, so
 SSHFS is very simple to use.
 
+%package smartcard
+Summary: smart-card module for %name
+Group: System/Base
+BuildArch: noarch
+Requires: %name = %version-%release
+Requires: opensc
+Requires: pcsc-lite
+Requires: pcsc-tools
+AutoReq: noshell, noshebang
+
+%description smartcard
+Feature adds smart card daemon and smart card utilities.
+
 %prep
 %setup -q
+
+# Quick fix
+sed -i -e 's/"opensc-pkcs11.so"/opensc-pkcs11.so/' features/smart-card/rules.mk
 
 %build
 ./autogen.sh
@@ -208,8 +224,6 @@ make
 
 %install
 %make_install DESTDIR=%buildroot install
-
-mkdir -p %buildroot%_datadir/%name/features/kickstart/data/root
 
 %triggerin -- %name < 0.8.1-alt1
 c="%_sysconfdir/initrd.mk"
@@ -238,7 +252,9 @@ fi
 %exclude %_datadir/%name/guess/ucode
 %exclude %_datadir/%name/features/iscsi
 %exclude %_datadir/%name/features/kickstart
+%exclude %_datadir/%name/guess/sshfsroot
 %exclude %_datadir/%name/features/sshfsroot
+%exclude %_datadir/%name/features/smart-card
 %doc Documentation/*.md
 
 %files devmapper
@@ -277,7 +293,18 @@ fi
 %files sshfs
 %_datadir/%name/features/sshfsroot
 
+%files smartcard
+%_datadir/%name/guess/sshfsroot
+%_datadir/%name/features/smart-card
+
 %changelog
+* Thu Aug 05 2021 Alexey Gladkov <legion@altlinux.ru> 2.20.0-alt1
+- New version (2.20.0).
+- New subpackage make-initrd-smartcard.
+
+* Tue Jun 29 2021 Alexey Gladkov <legion@altlinux.ru> 2.19.1.4.g9a4a6f814-alt1
+- New snapshot (2.19.1-4-g9a4a6f814).
+
 * Mon Jun 21 2021 Alexey Gladkov <legion@altlinux.ru> 2.19.1-alt1
 - New version (2.19.1).
 - Unblock image generation in the absence of drm modules (ALT#40243).
