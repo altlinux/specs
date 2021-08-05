@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -9,26 +9,24 @@ BuildRequires: jpackage-11-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_without tests
+%bcond_with bootstrap
 
 Name:           univocity-parsers
 Version:        2.9.1
-Release:        alt1_1jpp11
+Release:        alt1_3jpp11
 Summary:        Collection of parsers for Java
 License:        ASL 2.0
-
 URL:            https://github.com/uniVocity/univocity-parsers
-Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
-
 BuildArch:      noarch
 
+Source0:        https://github.com/uniVocity/univocity-parsers/archive/v%{version}.tar.gz
+
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-%if %{with tests}
-BuildRequires:  mvn(com.univocity:univocity-output-tester)
-BuildRequires:  mvn(org.hsqldb:hsqldb)
-BuildRequires:  mvn(org.testng:testng)
 %endif
 Source44: import.info
 
@@ -53,22 +51,23 @@ API documentation for %{name}.
 %pom_remove_plugin :maven-javadoc-plugin
 
 %build
-%if %{with tests}
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
-%else
+# Tests require univocity-output-tester, which is not packaged yet.
 %mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
-%endif
 
 %install
 %mvn_install
 
 %files -f .mfiles
+%doc README.md
 %doc --no-dereference LICENSE-2.0.html
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE-2.0.html
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 2.9.1-alt1_3jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.9.1-alt1_1jpp11
 - new version
 
