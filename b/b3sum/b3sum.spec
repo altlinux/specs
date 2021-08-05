@@ -1,6 +1,8 @@
+%def_without benchmark
+
 Name:     b3sum
 Version:  1.0.0
-Release:  alt1
+Release:  alt2
 
 Summary:  A command line utility for calculating BLAKE3 hashes
 License:  Apache-2.0
@@ -10,12 +12,13 @@ Url:      https://github.com/sharkdp/hyperfine
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 Source:   %name-%version.tar
-Patch: %name-%version.patch
-
-ExclusiveArch: x86_64 aarch64
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc
+%if_with benchmark
+BuildRequires: hyperfine
+%endif
 
 %description
 A command line utility for calculating BLAKE3 hashes, similar to Coreutils
@@ -27,20 +30,38 @@ tools like b2sum or md5sum.
 
 %build
 cd b3sum
-%rust_build
+export RUSTFLAGS="${RUSTFLAGS} -g"
+%ifarch %arm
+cargo build --release %{?_smp_mflags} --offline --features neon
+%else
+cargo build --release %{?_smp_mflags} --offline
+%endif
 
 %install
 cd b3sum
-%rust_install
+install -Dm 755 target/release/%name %buildroot%_bindir/%name
 
 %check
 cd b3sum
-%rust_test
+cargo test --release --no-fail-fast
+%if_with benchmark
+SIZE="$(numfmt --from=iec 10G)"
+head -"$SIZE"c /dev/zero > /tmp/zero
+hyperfine --style basic --warmup 3 \
+    "sh -c 'head -c $SIZE /dev/zero | %buildroot%_bindir/b3sum'" \
+    "sh -c 'head -c $SIZE /dev/zero | b2sum'" \
+    "sh -c 'head -c $SIZE /dev/zero | md5sum'" \
+    "sh -c 'head -c $SIZE /dev/zero | sha256sum'" \
+    #
+%endif
 
 %files
 %_bindir/*
 %doc *.md
 
 %changelog
+* Tue Aug 03 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.0.0-alt2
+- Remove ExclusiveArch
+
 * Mon Aug 02 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus
