@@ -1,5 +1,5 @@
 Name: common-licenses
-Version: 1.12
+Version: 1.13
 Release: alt1
 
 Summary: Contains the various common licenses used in the %distribution
@@ -47,6 +47,9 @@ cp -dp license-exception/* %buildroot%_licensedir-exception
 %_licensedir-exception
 
 %changelog
+* Thu Aug 05 2021 Alexey Gladkov <legion@altlinux.ru> 1.13-alt1
+- Fix formatting of the MPL-2.0 (ALT#40506)
+
 * Sun Feb 07 2021 Arseny Maslennikov <arseny@altlinux.org> 1.12-alt1
 - Add licenses:
   + Add the Z Shell license (ALT-Zsh)
