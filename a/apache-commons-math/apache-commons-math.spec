@@ -4,20 +4,21 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global short_name commons-math3
 
 Name:             apache-commons-math
 Version:          3.6.1
-Release:          alt1_5jpp8
+Release:          alt1_8jpp11
 Summary:          Java library of lightweight mathematics and statistics components
 License:          ASL 1.1 and ASL 2.0 and BSD
 URL:              http://commons.apache.org/math/
 Source0:          http://www.apache.org/dist/commons/math/source/%{short_name}-%{version}-src.tar.gz
 
 BuildRequires:    maven-local
+BuildRequires:    mvn(junit:junit)
 BuildRequires:    mvn(org.apache.commons:commons-parent:pom:)
 BuildArch:        noarch
 Source44: import.info
@@ -50,7 +51,7 @@ src/test/java/org/apache/commons/math3/util/FastMathTest.java
 %mvn_file :%{short_name} %{short_name} %{name}
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.test.skip.exec=true
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
 
 
 %install
@@ -68,6 +69,9 @@ src/test/java/org/apache/commons/math3/util/FastMathTest.java
 
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:3.6.1-alt1_8jpp11
+- update
+
 * Mon Oct 12 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.6.1-alt1_5jpp8
 - new version
 
