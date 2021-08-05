@@ -1,21 +1,32 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           apiguardian
-Summary:        API Guardian Java annotation
 Version:        1.1.1
-Release:        alt1_1jpp11
+Release:        alt1_3jpp11
+Summary:        API Guardian Java annotation
 License:        ASL 2.0
-
 URL:            https://github.com/apiguardian-team/apiguardian
-Source0:        %{url}/archive/r%{version}/%{name}-%{version}.tar.gz
-Source100:      https://repo1.maven.org/maven2/org/apiguardian/apiguardian-api/%{version}/apiguardian-api-%{version}.pom
-
 BuildArch:      noarch
 
+Source0:        https://github.com/apiguardian-team/apiguardian/archive/r%{version}.tar.gz
+
+Source100:      https://repo1.maven.org/maven2/org/apiguardian/apiguardian-api/%{version}/apiguardian-api-%{version}.pom
+
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%endif
 Source44: import.info
 
 %description
@@ -25,7 +36,6 @@ methods, constructors, and fields within a framework or application in
 order to publish their API status and level of stability and to
 indicate how they are intended to be used by consumers of the API.
 
-
 %package        javadoc
 Group: Development/Java
 Summary:        Javadoc for %{name}
@@ -34,12 +44,10 @@ BuildArch: noarch
 %description    javadoc
 API documentation for %{name}.
 
-
 %prep
-%setup -q -n %{name}-r%{version}
-find -name "*.jar" -print -delete
-
-cp -pav %{SOURCE100} pom.xml
+%setup -q -n apiguardian-r%{version}
+find -name \*.jar -delete
+cp -p %{SOURCE100} pom.xml
 
 # Inject OSGi manifest required by Eclipse
 %pom_xpath_inject pom:project "
@@ -71,14 +79,11 @@ cp -pav %{SOURCE100} pom.xml
     </pluginManagement>
   </build>"
 
-
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
-
 %install
 %mvn_install
-
 
 %files -f .mfiles
 %doc --no-dereference LICENSE
@@ -86,8 +91,10 @@ cp -pav %{SOURCE100} pom.xml
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE
 
-
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.1.1-alt1_3jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.1.1-alt1_1jpp11
 - new version
 
