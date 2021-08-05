@@ -1,6 +1,6 @@
 Name: bakefile
 Version: 0.2.12.1
-Release: alt1
+Release: alt2
 
 Summary: Native makefiles generator
 
@@ -14,8 +14,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-empy.patch
 
-# Automatically added by buildreq on Sat Mar 07 2009
-BuildRequires: gcc-c++ swig python-devel python-module-em
+BuildRequires: gcc-c++ swig python-devel
 BuildRequires: xsltproc docbook-style-xsl
 
 %description
@@ -55,6 +54,9 @@ touch ChangeLog
 %_man1dir/bakefil*.1*
 
 %changelog
+* Thu Aug 05 2021 Grigory Ustinov <grenka@altlinux.org> 0.2.12.1-alt2
+- Fixed BuildRequires.
+
 * Mon Mar 29 2021 Vitaly Lipatov <lav@altlinux.ru> 0.2.12.1-alt1
 - new version 0.2.12.1 (with rpmrb script)
 
