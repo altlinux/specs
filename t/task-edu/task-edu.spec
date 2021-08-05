@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.4.5
+Version: 1.4.6
 Release: alt1
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
@@ -310,7 +310,7 @@ Requires: kde5-kolourpaint
 %ifarch %ix86 x86_64
 Requires: lazarus
 Requires: openscad
-#Requires: scilab
+Requires: scilab
 %endif
 %ifarch %ix86 x86_64 %e2k
 Requires: synfigstudio
@@ -592,6 +592,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Thu Aug 05 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.6-alt1
+- Return scilab.
+
 * Wed Jul 21 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.5-alt1
 - Remove vlan-utils.
 
