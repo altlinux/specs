@@ -1,6 +1,6 @@
 Name: mate-terminal
 Version: 1.24.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Terminal emulator for MATE
 License: GPLv3+
@@ -52,6 +52,9 @@ __EOF__
 %_man1dir/*.1*
 
 %changelog
+* Thu Aug 05 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.1-alt2
+- colors from the system theme are not used (closes: #39009)
+
 * Thu Aug 20 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.1-alt1
 - 1.24.1
 
