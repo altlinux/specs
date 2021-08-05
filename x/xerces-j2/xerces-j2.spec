@@ -6,14 +6,14 @@ BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define __requires_exclude system.bundle
 
 Name:          xerces-j2
 Version:       2.12.1
-Release:       alt1_3jpp11
+Release:       alt1_5jpp11
 Summary:       Java XML parser
 # Most of the source is ASL 2.0
 # W3C licensed files:
@@ -25,8 +25,6 @@ URL:           http://xerces.apache.org/xerces2-j/
 %global cvs_version %(tr . _ <<< %{version})
 
 Source0:       http://mirror.ox.ac.uk/sites/rsync.apache.org/xerces/j/source/Xerces-J-src.%{version}.tar.gz
-Source1:       http://www.apache.org/dist/xerces/j/source/Xerces-J-src.%{version}.tar.gz.asc
-Source2:       http://www.apache.org/dist/xerces/j/binaries/KEYS
 Source11:      %{name}-version.1
 Source12:      %{name}-constants.1
 
@@ -49,12 +47,9 @@ BuildArch:     noarch
 BuildRequires: javapackages-local
 BuildRequires: ant
 BuildRequires: apache-parent
-BuildRequires: xalan-j2 >= 2.7.1
 BuildRequires: xml-commons-apis >= 1.4.01
 BuildRequires: xml-commons-resolver >= 1.2
-BuildRequires: gnupg2
 
-Requires:      xalan-j2 >= 2.7.1
 Requires:      xml-commons-apis >= 1.4.01
 Requires:      xml-commons-resolver >= 1.2
 # Explicit javapackages-tools requires since scripts use
@@ -123,13 +118,10 @@ Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 %{summary}.
 
 %prep
-# Verify the source file
-
-%setup -q -n xerces-%{cvs_version}
-%patch0
-%patch1
-%patch2
-
+%setup -n xerces-%{cvs_version}
+%patch0 -p0
+%patch1 -p0
+%patch2 -p0
 
 # Copy the custom ant task into place
 mkdir -p tools/org/apache/xerces/util
@@ -155,15 +147,14 @@ pushd tools
 javac -classpath $(build-classpath ant) org/apache/xerces/util/XJavac.java
 jar cf bin/xjavac.jar org/apache/xerces/util/XJavac.class
 
-ln -sf $(build-classpath xalan-j2-serializer) serializer.jar
+jar cmf /dev/null serializer.jar
 ln -sf $(build-classpath xml-commons-apis) xml-apis.jar
 ln -sf $(build-classpath xml-commons-resolver) resolver.jar
-ln -sf $(build-classpath xerces-j2) x.jar
 popd
 
 # Build everything
 export ANT_OPTS="-Xmx512m -Djava.awt.headless=true -Dbuild.sysclasspath=first -Ddisconnected=true"
-ant -Djavac.source=1.7 -Djavac.target=1.7 \
+ant -Djavac.source=1.8 -Djavac.target=1.8 \
     -Dbuild.compiler=modern \
     clean jars javadocs
 
@@ -212,6 +203,9 @@ ln -sf %{name}.jar %{_javadir}/jaxp_parser_impl.jar
 %{_datadir}/%{name}
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:2.12.1-alt1_5jpp11
+- update
+
 * Sun Jun 13 2021 Igor Vlasenko <viy@altlinux.org> 0:2.12.1-alt1_3jpp11
 - new version
 
