@@ -1,12 +1,12 @@
+Epoch: 0
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           xml-commons-resolver
-Epoch:          0
 Version:        1.2
-Release:        alt1_32jpp11
+Release:        alt1_35jpp11
 Summary:        Resolver subproject of xml-commons
 License:        ASL 2.0
 URL:            http://xerces.apache.org/xml-commons/components/resolver/
@@ -92,6 +92,9 @@ touch $RPM_BUILD_ROOT/etc/java/%name.conf
 %doc LICENSE.resolver.txt NOTICE-resolver.txt
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:1.2-alt1_35jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.2-alt1_32jpp11
 - update
 
