@@ -4,56 +4,60 @@
 %define target_qemu_arch aarch64
 %define target %target_arch-linux-gnu
 
-%define gcc_branch 10
-%define gcc_version 10.3.1
-%define gcc_source_version_timestamp 20200305
 
-Name: gcc-%target
-Version: %gcc_version
+Name: cross-toolchain-%target
+Version: 20210804
 Release: alt1
+Summary: GCC cross-toolchain for %target
+License: LGPL-2.1-or-later and LGPL-3.0-or-later and GPL-2.0-or-later and GPL-3.0-or-later and GPL-3.0-or-later with GCC-exception-3.1
+Group: Development/C
 
 ExclusiveArch: x86_64
 
-%define binutils_version 2.35.2
-%define binutils_evr 1:%binutils_version-alt2
-%define glibc_version 2.32
-%define glibc_release alt4
-%define glibc_evr 6:%glibc_version-%glibc_release
+%define gcc_version %{get_version gcc-source}
+%define gcc_branch %(v=%gcc_version; v=${v%%%%.*}; echo $v)
+%define binutils_version %{get_version binutils-source}
+%define glibc_version %{get_version glibc-source}
 %define kernel_version 5.10
 
 %define sysroot %prefix/lib/%target/sys-root
 %define target_ld_linux /lib64/ld-linux-aarch64.so.1
 
-Summary: %target_arch-targeted GCC cross-toolchain
-License: LGPL-2.1-or-later and LGPL-3.0-or-later and GPL-2.0-or-later and GPL-3.0-or-later and GPL-3.0-or-later with GCC-exception-3.1
-Group: Development/C
 
 BuildPreReq: gcc-c++
 BuildPreReq: libmpc-devel libmpfr-devel libgmp-devel zlib-devel
 BuildPreReq: coreutils flex bison makeinfo findutils
 # Linux' headers_install uses rsync
 BuildPreReq: rsync
-BuildRequires: gcc-source = %gcc_version
-BuildRequires: binutils-source = %binutils_evr
-BuildRequires: glibc-source = %glibc_evr
-BuildRequires: kernel-source-%kernel_version
+BuildRequires(pre): gcc-source
+BuildRequires(pre): binutils-source
+BuildRequires(pre): glibc-source
+BuildPreReq: kernel-source-%kernel_version
 BuildRequires: qemu-user-static-%target_qemu_arch
 BuildRequires: python3
 
+%description
+GCC cross-toolchain for %target
+
+%define _libexecdir /usr/libexec
+
+%package -n gcc-%target
+Version: %gcc_version
+Summary: %target_arch-targeted GCC cross-compiler
+Group: Development/C
 Requires: gcc-%target-static = %gcc_version
 Requires: binutils-%target = %binutils_version
 Requires: cross-glibc-%target_arch = %glibc_version
 
-%define _libexecdir /usr/libexec
-
-%description
+%description -n gcc-%target
 %target_arch-targeted GCC cross-compiler
 
-%package static
+%package -n gcc-%target-static
+Version: %gcc_version
 Summary: %target_arch-targeted GCC cross-compiler, static libraries
 Group: Development/C
 
-%description static
+%description -n gcc-%target-static
 %target_arch-targeted GCC cross-compiler, static libraries
 
 %package -n binutils-%target
@@ -351,7 +355,7 @@ env PATH=%buildroot%prefix/bin:$PATH \
 %buildroot%prefix/bin/%target-gcc -static -nostdlib -o bye_asm bye.S || exit 11
 qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
-%files
+%files -n gcc-%target
 %_bindir/%target-gcc*
 %_bindir/%target-cpp
 %_bindir/%target-g++
@@ -375,7 +379,7 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %prefix/share/man/man1/aarch64-linux-gnu-gcov-tool*
 %prefix/share/man/man1/aarch64-linux-gnu-gcov*
 
-%files static
+%files -n gcc-%target-static
 %prefix/lib/gcc/%target/%gcc_branch/libatomic.a
 %prefix/lib/gcc/%target/%gcc_branch/libgomp.a
 %prefix/lib/gcc/%target/%gcc_branch/libitm.a
@@ -433,6 +437,9 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %prefix/libexec/gcc/%target/lib/*
 
 %changelog
+* Wed Aug 04 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 20210804-alt1
+- Avoid breaking whenever GCC, binutils, or glibc gets updated
+
 * Thu Jul 29 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 10.3.1-alt1
 - Build GCC 10.3.1
 - Disabled libsanitizer to avoid bootstrap problems
