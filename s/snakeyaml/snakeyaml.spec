@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global vertag 29e2699b80fc
@@ -8,7 +8,7 @@ BuildRequires: jpackage-11-compat
 Name:           snakeyaml
 Summary:        YAML parser and emitter for Java
 Version:        1.27
-Release:        alt1_2jpp11
+Release:        alt1_4jpp11
 License:        ASL 2.0
 
 URL:            https://bitbucket.org/asomov/%{name}
@@ -23,6 +23,7 @@ Source0:        %{url}/get/%{name}-%{version}.tar.gz
 Patch0:         0001-replace-bundled-base64coder-with-java.util.Base64.patch
 # We don't have gdata-java in Fedora any longer, use commons-codec instead
 Patch1:         0002-Replace-bundled-gdata-java-client-classes-with-commo.patch
+Patch2:         reader_bom_test_fix.patch
 
 BuildArch:      noarch
 
@@ -60,6 +61,8 @@ This package contains %{summary}.
 %setup -q -n asomov-%{name}-%{vertag}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
+
 
 %mvn_file : %{name}
 
@@ -83,6 +86,23 @@ rm src/test/java/org/yaml/snakeyaml/issues/issue67/NonAsciiCharsInClassNameTest.
 # fails after unbundling
 rm src/test/java/org/yaml/snakeyaml/issues/issue318/ContextClassLoaderTest.java
 
+# Problematic test resources for maven-resources-plugin 3.2
+rm src/test/resources/issues/issue99.jpeg
+rm src/test/resources/reader/unicode-16be.txt
+rm src/test/resources/reader/unicode-16le.txt
+rm src/test/resources/pyyaml/spec-05-01-utf16be.data
+rm src/test/resources/pyyaml/spec-05-01-utf16le.data
+rm src/test/resources/pyyaml/spec-05-02-utf16le.data
+rm src/test/resources/pyyaml/odd-utf16.stream-error
+rm src/test/resources/pyyaml/invalid-character.loader-error
+rm src/test/resources/pyyaml/invalid-character.stream-error
+rm src/test/resources/pyyaml/invalid-utf8-byte.loader-error
+rm src/test/resources/pyyaml/invalid-utf8-byte.stream-error
+rm src/test/resources/pyyaml/empty-document-bug.data
+rm src/test/resources/pyyaml/spec-05-02-utf16be.data
+# Test using the jpeg data removed above
+rm src/test/java/org/yaml/snakeyaml/issues/issue99/YamlBase64Test.java
+
 # convert CR+LF to LF
 sed -i 's/\r//g' LICENSE.txt
 
@@ -103,6 +123,9 @@ sed -i 's/\r//g' LICENSE.txt
 
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.27-alt1_4jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.27-alt1_2jpp11
 - new version
 
