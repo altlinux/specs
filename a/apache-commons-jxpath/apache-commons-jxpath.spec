@@ -1,12 +1,20 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           apache-commons-jxpath
 Version:        1.3
-Release:        alt3_37jpp11
+Release:        alt3_40jpp11
 Summary:        Simple XPath interpreter
 License:        ASL 2.0
 URL:            http://commons.apache.org/jxpath/
@@ -17,13 +25,14 @@ Source0:        http://www.apache.org/dist/commons/jxpath/source/commons-jxpath-
 Patch0:         commons-jxpath-mockrunner.patch
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(commons-beanutils:commons-beanutils)
-BuildRequires:  mvn(javax.servlet:jsp-api)
-BuildRequires:  mvn(javax.servlet:servlet-api)
 BuildRequires:  mvn(jdom:jdom)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-BuildRequires:  mvn(xerces:xercesImpl)
-BuildRequires:  mvn(xml-apis:xml-apis)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+%endif
 Source44: import.info
 
 %description
@@ -43,6 +52,16 @@ This package contains the API documentation for %{name}.
 %setup -q -n commons-jxpath-%{version}-src
 %patch0 -p1
 
+%pom_remove_dep xerces:
+%pom_remove_dep xml-apis:
+
+# Remove dependency on glassfish
+%pom_remove_dep :servlet-api
+%pom_remove_dep :jsp-api
+rm src/java/org/apache/commons/jxpath/servlet/*Context*.java
+rm src/java/org/apache/commons/jxpath/servlet/*Handler.java
+rm src/test/org/apache/commons/jxpath/servlet/JXPathServletContextTest.java
+
 %mvn_file ":{*}" %{name} @1
 %mvn_alias : org.apache.commons:
 
@@ -51,7 +70,7 @@ This package contains the API documentation for %{name}.
 
 %build
 # we are skipping tests because we don't have com.mockrunner in repos yet
-%mvn_build -f -- -Dcommons.osgi.symbolicName=org.apache.commons.jxpath -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6 -Dcommons.osgi.symbolicName=org.apache.commons.jxpath
 
 %install
 %mvn_install
@@ -63,6 +82,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:1.3-alt3_40jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.3-alt3_37jpp11
 - update
 
