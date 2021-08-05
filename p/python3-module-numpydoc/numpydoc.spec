@@ -1,64 +1,32 @@
 %define oname numpydoc
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.7.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Numpy's Sphinx extensions
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: http://numpy.scipy.org/
 BuildArch: noarch
-
-%setup_python_module %oname
 
 # https://github.com/numpy/numpydoc.git
 Source: %name-%version.tar
 
-BuildRequires: python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python-tools-2to3
-%endif
 
 %description
 Numpy's documentation uses several custom extensions to Sphinx.  These
 are shipped in this ``numpydoc`` package, in case you want to make use
 of them in third-party projects.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Numpy's Sphinx extensions
-Group: Development/Python3
-
-%description -n python3-module-%oname
-Numpy's documentation uses several custom extensions to Sphinx.  These
-are shipped in this ``numpydoc`` package, in case you want to make use
-of them in third-party projects.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for numpydoc
-Group: Development/Python3
-BuildArch: noarch
-Requires: python3-module-numpydoc = %EVR
-
-%description -n python3-module-%oname-tests
-Numpy's documentation uses several custom extensions to Sphinx.  These
-are shipped in this ``numpydoc`` package, in case you want to make use
-of them in third-party projects.
-
-This package contains tests for numpydoc.
-%endif
-
 %package tests
 Summary: Tests for numpydoc
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
-Requires: python-module-numpydoc = %EVR
+Requires: %name = %EVR
 
 %description tests
 Numpy's documentation uses several custom extensions to Sphinx.  These
@@ -70,48 +38,26 @@ This package contains tests for numpydoc.
 %prep
 %setup
 
-%if_with python3
-cp -a . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
-
-%python_build_debug
+%python3_build
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
-
-%python_install
 
 %files
-%doc LICENSE.txt README.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/tests
-
-%files tests
-%python_sitelibdir/%oname/tests
-
-%if_with python3
-%files -n python3-module-%oname
 %doc LICENSE.txt README.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/tests
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/%oname/tests
-%endif
 
 %changelog
+* Thu Aug 05 2021 Grigory Ustinov <grenka@altlinux.org> 1:0.7.0-alt2
+- Drop python2 support.
+
 * Thu Nov 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.7.0-alt1
 - Updated to upstream version 0.7.0.
 - Enabled build for python3.
