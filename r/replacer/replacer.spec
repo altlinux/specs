@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          replacer
 Version:       1.6
-Release:       alt1_17jpp11
+Release:       alt1_20jpp11
 Summary:       Replacer Maven Mojo
 License:       MIT
 URL:           https://github.com/beiliubei/maven-replacer-plugin
@@ -49,11 +49,6 @@ This package contains javadoc for %{name}.
 # remove hard-coded compiler settings
 %pom_remove_plugin :maven-compiler-plugin
 
-%pom_xpath_inject pom:build/pom:plugins "<plugin>
-<artifactId>maven-javadoc-plugin</artifactId>
-<configuration><source>\${maven.compiler.source}</source><detectJavaApiLink>false</detectJavaApiLink></configuration>
-</plugin>"
-
 # trivial port to commons-lang3
 %pom_change_dep :commons-lang org.apache.commons:commons-lang3:3.8.1
 
@@ -65,7 +60,7 @@ done
 %mvn_alias :%{name} com.google.code.maven-replacer-plugin:maven-replacer-plugin
 
 %build
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -78,6 +73,9 @@ done
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.6-alt1_20jpp11
+- update
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 1.6-alt1_17jpp11
 - new version
 
