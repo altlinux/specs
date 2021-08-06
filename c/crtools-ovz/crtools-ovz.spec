@@ -1,17 +1,17 @@
 %def_without check
 
 Name: crtools-ovz
-Version: 3.15.2.5
+Version: 3.15.2.6
 Release: alt1
 
 Summary: Utility to checkpoint/restore tasks for OpenVZ containers
 License: GPL-2.0-only
 Group: System/Configuration/Other
 Url: http://criu.org
+Vcs: https://src.openvz.org/scm/ovz/criu.git
 
 Packager: Andrew A. Vasilyev <andy@altlinux.org>
 
-# VCS: https://src.openvz.org/scm/ovz/criu.git
 Source: criu-%version.tar
 
 Provides: criu-ovz = %EVR
@@ -35,7 +35,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: rpm-build-vm-run
 BuildRequires: vzkernel
 BuildRequires: libaio-devel
-BuildRequires: python-module-future python3-module-yaml python3-module-protobuf
+BuildRequires: python3-module-future python3-module-yaml python3-module-protobuf
 BuildRequires: libbsd-devel
 BuildRequires: iproute2 iptables iputils openvswitch
 %endif
@@ -92,6 +92,9 @@ vm-run --kvm=cond make test || :
 %_man8dir/crtools.8*
 
 %changelog
+* Fri Aug 06 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.15.2.6-alt1
+- 3.15.2.6
+
 * Thu Jul 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.15.2.5-alt1
 - 3.15.2.5
 
