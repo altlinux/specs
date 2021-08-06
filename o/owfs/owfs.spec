@@ -2,7 +2,7 @@
 
 Name: owfs
 Version: 3.2p2
-Release: alt3
+Release: alt4
 
 Summary: 1-Wire Virtual File System
 License: GPLv2
@@ -20,8 +20,7 @@ Patch4: owfs-multiple_definition.patch
 BuildRequires: chrpath
 BuildRequires: service
 
-# Automatically added by buildreq on Tue Jul 25 2017
-BuildRequires: glibc-devel-static groff-base libftdi1-devel libfuse-devel mt-st python-dev python-module-google python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-locale swig
+BuildRequires: groff-base libftdi1-devel libfuse-devel perl swig
 
 %description
 OWFS is a userspace virtual filesystem providing access to 1-Wire
@@ -338,10 +337,13 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/OW/OW.so
 %perl_vendor_archlib/OW*
 %perl_vendor_autolib/OW
 
-%files -n python-module-%name
-%python_sitelibdir/*
+#files -n python-module-%name
+#python_sitelibdir/*
 
 %changelog
+* Thu Aug 05 2021 Vitaly Lipatov <lav@altlinux.ru> 3.2p2-alt4
+- fix BR, disable python module
+
 * Thu Jan 21 2021 Grigory Milev <week@altlinux.ru> 3.2p2-alt3
 - multiple definition fix
 
