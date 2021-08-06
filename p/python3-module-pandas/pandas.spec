@@ -7,7 +7,7 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 1.2.3
+Version: 1.3.1
 Release: alt1
 Summary: Python Data Analysis Library
 License: BSD-3-Clause
@@ -37,6 +37,7 @@ BuildRequires: pandoc
 BuildRequires: xvfb-run python3(nbsphinx)
 BuildRequires: python3-module-notebook
 BuildRequires: python3(numpydoc) python3(matplotlib.sphinxext) python3(matplotlib.sphinxext.plot_directive)
+BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 %endif
 
 %add_python3_req_skip feather
@@ -119,7 +120,7 @@ xvfb-run python3 setup.py test
 %python3_sitelibdir/%oname-%version-py*.egg-info
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/testing.py
-%exclude %python3_sitelibdir/*/_testing.py
+%exclude %python3_sitelibdir/*/_testing
 %exclude %python3_sitelibdir/*/conftest.py
 %exclude %python3_sitelibdir/*/*/test*
 %exclude %python3_sitelibdir/*/*/_test*
@@ -130,7 +131,7 @@ xvfb-run python3 setup.py test
 %files tests
 %python3_sitelibdir/*/tests
 %python3_sitelibdir/*/testing.py
-%python3_sitelibdir/*/_testing.py
+%python3_sitelibdir/*/_testing
 %python3_sitelibdir/*/conftest.py
 %python3_sitelibdir/*/*/test*
 %python3_sitelibdir/*/*/_test*
@@ -144,6 +145,9 @@ xvfb-run python3 setup.py test
 %endif
 
 %changelog
+* Fri Aug 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.1-alt1
+- Updated to upstream version 1.3.1.
+
 * Wed Mar 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.3-alt1
 - Updated to upstream version 1.2.3.
 - Disabled bootstrapping.
