@@ -2,7 +2,7 @@
 
 Name: moodle
 Version: 3.11.2
-Release: alt1
+Release: alt2
 
 Summary: The world's open source learning platform
 License: GPLv3
@@ -64,11 +64,6 @@ Group: Networking/WWW
 Requires(pre): webserver-common
 Requires(pre): %_sbindir/web-condstop-rpm
 Requires(pre): %_sbindir/web-condstart-rpm
-Requires(pre): %_sbindir/mt-getCFG
-Requires(pre): %_sbindir/mt-setCFG
-Requires(pre): %_sbindir/mt-newdatadir
-Requires(pre): %_sbindir/mt-getdef
-Requires(pre): %_sbindir/mt-setdef
 Requires: %webserver_webappsdir
 Requires: texlive-base-bin ImageMagick
 Requires: iconv
@@ -238,6 +233,9 @@ for ar in *.zip;do unzip "$ar" >/dev/null && rm -f "$ar";done
 %endif
 
 %changelog
+* Fri Aug 06 2021 Andrey Cherepanov <cas@altlinux.org> 3.11.2-alt2
+- Remove requirements of deprecated helper scripts.
+
 * Thu Jul 29 2021 Andrey Cherepanov <cas@altlinux.org> 3.11.2-alt1
 - New version.
 
