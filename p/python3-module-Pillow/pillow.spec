@@ -1,5 +1,5 @@
 Name: python3-module-Pillow
-Version: 8.1.2
+Version: 8.2.0
 Release: alt1
 
 Summary: Python Imaging Library
@@ -44,6 +44,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir python3 selftest.py
 %python3_sitelibdir/Pillow-%version-*-info
 
 %changelog
+* Fri Aug 06 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.2.0-alt1
+- 8.2.0 released
+
 * Thu Apr 08 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.1.2-alt1
 - 8.1.2 released (fixes: CVE-2021-27921, CVE-2021-27922, CVE-2021-27923)
 

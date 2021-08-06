@@ -2,8 +2,8 @@
 
 %define modulename pynacl
 Name: python3-module-pynacl
-Version: 1.3.0
-Release: alt2
+Version: 1.4.0
+Release: alt1
 
 Summary: Python binding to the Networking and Cryptography (NaCl) library
 
@@ -18,7 +18,7 @@ Source: %modulename-%version.tar
 
 BuildRequires:  libsodium-devel >= 1.0.16
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 python3-module-wheel
 BuildRequires: python3-module-cffi
 
 %description
@@ -46,6 +46,9 @@ mv %buildroot/%python3_sitelibdir/nacl/_sodium.abi3.so %buildroot/%python3_sitel
 %python3_sitelibdir/*
 
 %changelog
+* Fri Aug 06 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.0-alt1
+- 1.4.0 released
+
 * Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt2
 - Drop python2 support.
 
