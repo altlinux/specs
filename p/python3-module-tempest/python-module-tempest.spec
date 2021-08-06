@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 19.0.0
-Release: alt3
+Release: alt4
 Summary: OpenStack Integration Testing Suite
 
 Group: Development/Python3
@@ -70,6 +70,8 @@ Documentation for OpenStack Integration Testing Suite.
 %prep
 %setup -n %oname-%version
 
+find -name "*.py" | xargs subst "s|pep8|pycodestyle|"
+
 # Remove bundled egg-info
 rm -rf %{oname}.egg-info
 
@@ -104,6 +106,9 @@ rm -rf %buildroot/usr/etc/tempest
 %doc build/sphinx/html
 
 %changelog
+* Fri Aug 06 2021 Vitaly Lipatov <lav@altlinux.ru> 19.0.0-alt4
+- replace pep8 with pycodestyle
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 19.0.0-alt3
 - drop unneeded BR: python3-module-subunit-tests
 
