@@ -17,7 +17,7 @@
 
 Name: keepalived
 Version: 2.2.2
-Release: alt2
+Release: alt3
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
 License: GPLv2
@@ -28,6 +28,7 @@ Source0: %url/%name-%version.tar
 Source1: %name.init
 Patch0: 0002-update-systemd-unit-file.patch
 Patch1: keepalived-2.2.2-fix-build-with-nftables.patch
+Patch2: keepalived-e2k-check-nft-set-concat.patch
 
 # Automatically added by buildreq on Thu Aug 09 2007 (-ba)
 BuildRequires: libpopt-devel libssl-devel
@@ -55,6 +56,7 @@ userspace daemon for LVS cluster nodes healthchecks and LVS directors failover.
 %patch0 -p1
 %patch1 -p1
 %ifarch %e2k
+%patch2 -p1
 # lcc 1.23's edg frontend can only do numbers here (#4061)
 sed -i 's,"O0",0,' lib/utils.c
 %endif
@@ -124,6 +126,9 @@ install -pD -m644 keepalived/etc/sysconfig/%name %buildroot%_sysconfdir/sysconfi
 %doc doc/samples
 
 %changelog
+* Fri Aug 06 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.2.2-alt3
+- e2k: added patch to check if NFT_SET_CONCAT is declared
+
 * Fri Jul 02 2021 Alexey Shabalin <shaba@altlinux.org> 2.2.2-alt2
 - Fixed build (ALT#40355).
 
