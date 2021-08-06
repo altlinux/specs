@@ -2,23 +2,24 @@
 %define oname shortuuid
 
 Name: python3-module-%oname
-Version: 0.4.3
-Release: alt2
+Version: 1.0.0
+Release: alt1
 
 Summary: A generator library for concise, unambiguous and URL-safe UUIDs
+
 License: BSD
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/shortuuid/
+
+# Source-url: %__pypi_url %oname
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-intro >= 2.1.3
+BuildRequires(pre): rpm-build-python3
+
 BuildArch: noarch
 
-# https://github.com/stochastic-technologies/shortuuid.git
-Source0: https://pypi.python.org/packages/e9/41/d867be1470af87dd8af1b3462e5eae44f78ffd33cec54630d40ca6b2d0bd/%{oname}-%{version}.tar.gz
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-tools-pep8
-
 %py3_provides %oname
-
 
 %description
 A library that generates short, pretty, unambiguous unique IDs by using
@@ -38,16 +39,17 @@ letters and numbers.
 This package contains tests for %oname.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
+%python3_prune
 
 %check
 %__python3 setup.py test
@@ -55,15 +57,20 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 %files
 %doc *.rst
 %python3_sitelibdir/*
+%if_with pack_test
 %exclude %python3_sitelibdir/*/tests.*
 %exclude %python3_sitelibdir/*/*/tests.*
 
 %files tests
 %python3_sitelibdir/*/tests.*
 %python3_sitelibdir/*/*/tests.*
-
+%endif
 
 %changelog
+* Fri Aug 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
+- new version (1.0.0) with rpmgs script
+- cleanup spec, disable packing tests
+
 * Wed Dec 04 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.4.3-alt2
 - python2 disabled
 
