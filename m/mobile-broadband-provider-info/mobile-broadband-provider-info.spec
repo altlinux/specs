@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: mobile-broadband-provider-info
-Version: 20201225
+Version: 20210805
 Release: alt1
 
 Summary: Mobile Broadband Service Provider Database
@@ -47,6 +47,9 @@ associated network and plan information.
 %doc COPYING README
 
 %changelog
+* Fri Aug 06 2021 Yuri N. Sedunov <aris@altlinux.org> 20210805-alt1
+- 20210805
+
 * Fri Dec 25 2020 Yuri N. Sedunov <aris@altlinux.org> 20201225-alt1
 - 20201225
 
