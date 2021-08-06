@@ -1,40 +1,29 @@
 %define oname cups
 
-%def_with python3
-
-Name:          python-module-%oname
+Name:          python3-module-cups
 Version:       1.9.74
-Release:       alt2
-%setup_python_module %oname
+Release:       alt3
 
-Group:         Development/Python
 Summary:       Python bindings for the CUPS API
+
+Group:         Development/Python3
 Url:           http://cyberelk.net/tim/software/pycups/
 License:       %gpl2plus
 
 # git://git.fedorahosted.org/git/pycups.git
 Source0:       pycups-%{version}.tar
 Patch0:        python-module-cups-1.9.74-alt-extension-copy-document.patch
+Patch1:        3df8a811b650c01cca595fff89209087b92f801c.patch
 
 Packager:      Yury Yurevich <anarresti@altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): libcups-devel >= 2.2.12-alt2
-BuildRequires: python-devel python-module-epydoc
-%if_with python3
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-%endif
 
 %description
-Python bindings for the CUPS API. This module allows
-use the CUPS API (managing printers, jobs, etc) in Python.
-
-%package -n python3-module-%oname
-Summary: Python bindings for the CUPS API
-Group: Development/Python3
-
-%description -n python3-module-%oname
 Python bindings for the CUPS API. This module allows
 use the CUPS API (managing printers, jobs, etc) in Python.
 
@@ -55,48 +44,31 @@ API.
 %prep
 %setup -n pycups-%version
 %patch0 -p1
+%patch1 -p1
 
-%if_with python3
-cp -fR . ../python3
-sed -i 's|python|python3|g' ../python3/Makefile
-sed -i 's|python$|%__python|g' Makefile
+subst 's|python|python3|g' Makefile
+subst 's|build/lib\*/$@|build/lib*/cups*.so|g' Makefile
 subst 's|#!.*python$|#!%__python3|' $(grep -Rl 'python$' *)
-%endif
 
 %build
 %make
-
-%if_with python3
-pushd ../python3
-%make
-popd
-%endif
-
 %make doc
 
 %install
 %makeinstall_std
 
-%if_with python3
-pushd ../python3
-%makeinstall_std
-popd
-%endif
-
 %files
 %doc NEWS README TODO test.py examples
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 %files docs
 %doc html/*
 
-%if_with python3
-%files -n python3-module-%oname
-%doc NEWS README TODO test.py examples
-%python3_sitelibdir/*
-%endif
 
 %changelog
+* Fri Aug 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.9.74-alt3
+- build python3 module separately
+
 * Mon Jun 21 2021 Paul Wolneykien <manowar@altlinux.org> 1.9.74-alt2
 - Added API to support ALT copy document IPP extension.
 
