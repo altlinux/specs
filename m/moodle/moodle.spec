@@ -2,7 +2,7 @@
 
 Name: moodle
 Version: 3.11.2
-Release: alt2
+Release: alt3
 
 Summary: The world's open source learning platform
 License: GPLv3
@@ -78,6 +78,7 @@ Requires: php7-mbstring
 Requires: php7-opcache
 Requires: php7-openssl
 Requires: php7-soap
+Requires: php7-sodium
 Requires: php7-xmlreader
 Requires: php7-xmlrpc
 Requires: php7-zip
@@ -233,6 +234,9 @@ for ar in *.zip;do unzip "$ar" >/dev/null && rm -f "$ar";done
 %endif
 
 %changelog
+* Fri Aug 06 2021 Andrey Cherepanov <cas@altlinux.org> 3.11.2-alt3
+- Requires recommended php7-sodium.
+
 * Fri Aug 06 2021 Andrey Cherepanov <cas@altlinux.org> 3.11.2-alt2
 - Remove requirements of deprecated helper scripts.
 
