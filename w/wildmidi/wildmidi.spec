@@ -3,8 +3,8 @@
 %define soname 2
 
 Name: wildmidi
-Version: 0.4.3
-Release: alt1.1
+Version: 0.4.4
+Release: alt1
 Summary: WildMidi Open Source Midi Sequencer
 Group: Sound
 
@@ -29,7 +29,6 @@ WildMidi is a software midi play which has a core softsynth library that can be 
 %cmake_build
 
 %install
-#cmake -DCMAKE_INSTALL_PREFIX=%buildroot%prefix -P cmake_install.cmake
 %cmake_install
 
 %files
@@ -43,6 +42,9 @@ WildMidi is a software midi play which has a core softsynth library that can be 
 Summary: Library for wildmidi
 Group: System/Libraries
 License: LGPLv3+
+# Package qmmp-in-midi has broken requires for libwildmidi while actually this package is used.
+# This provide is added in order to allow removing old library with CVE.
+Provides: libwildmidi = %EVR
 
 %description -n %libname
 This package contains library files for wildmidi
@@ -67,9 +69,13 @@ This package contains development files for wildmidi
 %_libdir/*.so
 %_includedir/*.h
 %_pkgconfigdir/*
+%_libdir/cmake/WildMidi
 %_man3dir/*.3*
 
 %changelog
+* Wed Aug 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.4-alt1
+- Updated to upstream version 0.4.4.
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 0.4.3-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
