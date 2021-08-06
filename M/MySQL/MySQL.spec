@@ -12,8 +12,8 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.25
-Release: alt2
+Version: 8.0.26
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -55,15 +55,18 @@ Patch0: mysql-%version.patch
 # ALTLinux
 Patch1: mysql-8.0.21-alt-chroot.patch
 Patch2: mysql-5.0.20-alt-libdir.patch
-Patch4: mysql-8.0.20-alt-client.patch
+Patch4: mysql-8.0.26-alt-client.patch
 Patch5: mysql-8.0.12-alt-load_defaults.patch
 Patch6: mysql-5.1.50-alt-fPIC-innodb.patch
 Patch7: mysql-8.0.12-alt-mysql_config-libs.patch
 Patch9: mysql-8.0.18-alt-disable-run-libmysql_api_test.patch
+Patch10: mysql-8.0.26-alt-powerpc-fix-longdouble-constexpr.patch
 
 # Patches taken from boost 1.59
 Patch115: boost-1.58.0-pool.patch
 Patch125: boost-1.57.0-mpl-print.patch
+
+Patch2000: mysql-8.0.26-alt-e2k-fixes.patch
 
 # Automatically added by buildreq on Tue Nov 20 2018 (-bi)
 # optimized out: cmake cmake-modules control elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libcrypt-devel libsasl2-3 libstdc++-devel libtinfo-devel perl pkg-config python-base sh3 xz
@@ -328,12 +331,17 @@ recommend upgrading your installation to MySQL Router 8.
 %patch5 -p1
 %patch7 -p1
 %patch9 -p1
+%patch10 -p1
 
 # Patch Boost
 pushd boost/boost_1_73_0
 %patch115 -p0
 %patch125 -p1
 popd
+
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 # with patch4
 # Prepare commands list for completion in mysql client.
@@ -794,6 +802,22 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Fri Aug 06 2021 Nikolai Kostrigin <nickel@altlinux.org> 8.0.26-alt1
+- new version
+  + (fixes: CVE-2021-22901, CVE-2019-17543, CVE-2021-2417, CVE-2021-2389)
+  + (fixes: CVE-2021-2390, CVE-2021-2429, CVE-2021-2356, CVE-2021-2385)
+  + (fixes: CVE-2021-2339, CVE-2021-2352, CVE-2021-2399, CVE-2021-2370)
+  + (fixes: CVE-2021-2440, CVE-2021-2354, CVE-2021-2402, CVE-2021-2342)
+  + (fixes: CVE-2021-2357, CVE-2021-2367, CVE-2021-2412, CVE-2021-2383)
+  + (fixes: CVE-2021-2384, CVE-2021-2387, CVE-2021-2444, CVE-2021-2410)
+  + (fixes: CVE-2021-2418, CVE-2021-2425, CVE-2021-2426, CVE-2021-2427)
+  + (fixes: CVE-2021-2437, CVE-2021-2441, CVE-2021-2422, CVE-2021-2424)
+  + (fixes: CVE-2021-2372, CVE-2021-2374, CVE-2021-2340)
+- update alt-client patch
+- add alt-e2k-fixes patch(ilyakurdyakov@)
+- add alt-powerpc-fix-longdouble-constexpr patch(egori@, ilyakurdyakov@)
+  refer to #40641 for details
+
 * Thu Jul 08 2021 Nikolai Kostrigin <nickel@altlinux.org> 8.0.25-alt2
 - spec: add conditional BR: evaluation for RPC libs excluded from glibc
   for seamless backporting
