@@ -1,6 +1,6 @@
 %define libname bisect_ppx
 Name: ocaml-%libname
-Version: 2.6.1
+Version: 2.6.3
 Release: alt1
 Summary: Code coverage for OCaml
 Group: Development/ML
@@ -10,11 +10,8 @@ Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 BuildRequires: ocaml >= 4.07.1
-BuildRequires: ocaml-findlib-devel
 BuildRequires: dune
-BuildRequires: ocaml-migrate-parsetree-devel
 BuildRequires: ocaml-ppxlib-devel
-BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-cmdliner-devel
 
 %description
@@ -51,6 +48,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Aug 06 2021 Anton Farygin <rider@altlinux.ru> 2.6.3-alt1
+- 2.6.3
+
 * Thu May 13 2021 Anton Farygin <rider@altlinux.ru> 2.6.1-alt1
 - 2.6.1
 
