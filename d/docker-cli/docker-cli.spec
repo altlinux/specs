@@ -10,7 +10,7 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-cli
-Version:    20.10.7
+Version:    20.10.8
 Release: alt1
 Summary: Docker CLI
 License: Apache-2.0
@@ -91,6 +91,9 @@ install -Dp -m 644 contrib/completion/fish/docker.fish %{buildroot}%{_datadir}/f
 %{_datadir}/fish/completions/docker.fish
 
 %changelog
+* Thu Aug 5 2021 Vladimir Didenko <cow@altlinux.org> 20.10.8-alt1
+- new release
+
 * Fri Jun 18 2021 Vladimir Didenko <cow@altlinux.org> 20.10.7-alt1
 - new release
 
