@@ -1,7 +1,7 @@
 %define modname pytest_httpserver
 
 Name: python3-module-pytest-httpserver
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: HTTP server for pytest
@@ -38,6 +38,9 @@ http requests and their responses.
 %doc README* LICENSE
 
 %changelog
+* Fri Aug 06 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Mon Apr 12 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - first build for Sisyphus
 
