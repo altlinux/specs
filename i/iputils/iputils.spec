@@ -1,7 +1,7 @@
 Name: iputils
 %define timestamp 20210722
 Version: %timestamp
-Release: alt2
+Release: alt3
 
 Summary: Utilities for IPv4/IPv6 networking
 License: BSD-3-Clause and GPL-2.0+ and Rdisc
@@ -58,7 +58,10 @@ Queries.
 %patch100 -p1
 
 %build
-%add_optflags -fno-strict-aliasing -Wstrict-prototypes -Werror -Wno-error=variadic-macros
+%add_optflags -fno-strict-aliasing -Wstrict-prototypes
+%ifnarch %e2k
+%add_optflags -Werror -Wno-error=variadic-macros
+%endif
 %ifarch s390 s390x
 	%add_optflags -fPIE
 %else
@@ -158,6 +161,9 @@ fi
 %_man8dir/ninfod.*
 
 %changelog
+* Fri Aug 06 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 20210722-alt3
+- disabled -Werror option for Elbrus build
+
 * Tue Aug 03 2021 Mikhail Efremov <sem@altlinux.org> 20210722-alt2
 - ping: Fixed -W/-i options in case of setlocale() error
    (closes: #40636).
