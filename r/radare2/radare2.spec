@@ -1,6 +1,6 @@
 Summary: A reverse engineering framework
 Name: radare2
-Version: 5.2.1
+Version: 5.3.1
 Release: alt1
 License: LGPL-3.0-or-later
 Group: Development/Tools
@@ -43,8 +43,7 @@ Development files for %name package.
   -Duse_sys_xxhash=true              \
   -Duse_sys_openssl=true             \
   -Duse_libuv=true                   \
-  -Duse_sys_capstone=true            \
-  -Duse_sys_tree_sitter=true
+  -Duse_sys_capstone=true
 %meson_build
 
 %install
@@ -70,6 +69,9 @@ cp -r shlr/heap/include/r_jemalloc %buildroot/%_includedir/
 %_datadir/zsh
 
 %changelog
+* Sat Aug 07 2021 Nikita Ermakov <arei@altlinux.org> 5.3.1-alt1
+- Update to 5.3.1
+
 * Mon May 24 2021 Nikita Ermakov <arei@altlinux.org> 5.2.1-alt1
 - Update to 5.2.1
 
