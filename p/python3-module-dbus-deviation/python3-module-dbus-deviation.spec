@@ -3,14 +3,14 @@
 
 Name: python3-module-%modname
 Version: 0.6.1
-Release: alt1
+Release: alt1.1
 
 Summary: %modname is a project for parsing and processing D-Bus introspection XML
 Group: Development/Python3
 License: LGPL-2.1-or-later
 Url: https://pypi.org/project/%modname
 
-#VCS: https://github.com/dbus-deviation/dbus-deviation.git
+Vcs: https://github.com/dbus-deviation/dbus-deviation.git
 Source: https://pypi.io/packages/source/d/%modname/%modname-%version.tar.gz
 # setuptools_git
 Source1: python3-module-%modname-eggs.tar.gz
@@ -20,7 +20,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-wheel python3-module-sphinx
-BuildRequires: python3-tools-pep8 python3-module-unittest2
+BuildRequires: python3-module-pycodestyle python3-module-unittest2
 
 %description
 %modname is a project for parsing D-Bus introspection XML and processing
@@ -51,6 +51,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %doc README* NEWS
 
 %changelog
+* Sat Aug 07 2021 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1.1
+- fixed BR
+
 * Tue Mar 09 2021 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
 - 0.6.1
 
