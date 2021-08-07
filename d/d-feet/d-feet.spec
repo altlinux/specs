@@ -5,7 +5,7 @@
 
 Name: d-feet
 Version: %ver_major.16
-Release: alt1
+Release: alt1.1
 
 Summary: A powerful D-Bus Debugger
 Group: Development/Tools
@@ -22,7 +22,7 @@ BuildRequires(pre): meson rpm-build-gir rpm-build-python3
 BuildRequires: python3-module-pygobject3-devel python3-module-setuptools
 BuildRequires: yelp-tools libgtk+3-devel libgtk+3-gir-devel >= 3.9.4
 BuildRequires: dbus-tools-gui
-%{?_enable_tests:BuildRequires: python3-tools-pep8 python3-module-pycodestyle}
+%{?_enable_tests:BuildRequires: python3-module-pycodestyle}
 
 %description
 D-Feet is an easy to use D-Bus debugger.
@@ -58,6 +58,9 @@ sed -i 's/\(pycodestyle\)-3/\1.py3/' src/tests/meson.build
 %doc AUTHORS README* NEWS
 
 %changelog
+* Sat Aug 07 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.16-alt1.1
+- fixed BR
+
 * Fri May 07 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.16-alt1
 - 0.3.16
 
