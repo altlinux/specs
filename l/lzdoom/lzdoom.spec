@@ -1,6 +1,6 @@
 Name: lzdoom
 Version: 3.87c
-Release: alt2
+Release: alt3
 
 Summary: Enhanced Doom engine
 Summary(ru_RU.UTF-8): Продвинутый порт движка Doom
@@ -14,11 +14,13 @@ Packager: Artyom Bystrov <arbars@altlinux.org>
 Source: %name-%version.tar
 Source1: ico_%name.png
 
-Patch0: lzdoom-3.87c-sse2.patch
+Patch: lzdoom-3.87c-sse2.patch
+Patch1: 0001-Fix-soundfont-search-path.patch
 
 BuildRequires: cmake gcc-c++ rpm-macros-cmake nasm glslang-devel libspirv-tools-devel bzip2 zmusic-devel
 BuildRequires: libSDL2-devel zlib-devel libgme-devel libpng-devel libfluidsynth-devel libjpeg-devel libgomp5-devel libtimidity-devel xz
 BuildRequires: libopenal1-devel libGLU-devel libsndfile-devel libmpg123-devel flac libogg-devel libvorbis-devel ImageMagick-tools
+Requires: fluidsynth fluid-soundfont-gs
 
 %description
 LZDoom is a fork of GZDoom 3.3 compiling with MinGW and running
@@ -38,6 +40,7 @@ LZDoom - ответвление от  GZDoom 3.3, собранное с MinGW д
 %setup -n %name-%version
 
 %patch0 -p1
+%patch1 -p1
 
 %build
 %cmake_insource \
@@ -83,6 +86,10 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sat Aug 07 2021 Artyom Bystrov <arbars@altlinux.org> 3.87c-alt3
+- Add patch for fixing paths for soundfont (thx to jan@ FROM aur)
+- Add fluid-soundfont in Requires list
+
 * Sun Apr 04 2021 Artyom Bystrov <arbars@altlinux.org> 3.87c-alt2
 - Add patch for fixing bild on x86 arch (taked from ROSA Linux gzdoom repo);
 - Add zmusic library in list of deps
