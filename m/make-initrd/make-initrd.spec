@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 2.20.0
-Release: alt1
+Release: alt2
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -177,7 +177,6 @@ Kickstart module for %name
 %package sshfs
 Summary: sshfs module for %name
 Group: System/Base
-BuildArch: noarch
 Requires: %name = %version-%release
 Requires: fuse-sshfs
 AutoReq: noshell, noshebang
@@ -200,6 +199,8 @@ AutoReq: noshell, noshebang
 %description smartcard
 Feature adds smart card daemon and smart card utilities.
 
+%define _libexecdir %_prefix/libexec
+
 %prep
 %setup -q
 
@@ -209,7 +210,7 @@ sed -i -e 's/"opensc-pkcs11.so"/opensc-pkcs11.so/' features/smart-card/rules.mk
 %build
 ./autogen.sh
 %configure \
-	--libexecdir=%_prefix/libexec \
+	--libexecdir=%_libexecdir \
 	--with-bootdir=/boot \
 	--with-runtimedir=/lib/initrd \
 	--with-kbddir=/lib/kbd \
@@ -291,6 +292,7 @@ fi
 %_datadir/%name/features/kickstart
 
 %files sshfs
+%_libexecdir/%name/features/sshfsroot
 %_datadir/%name/features/sshfsroot
 
 %files smartcard
@@ -298,6 +300,9 @@ fi
 %_datadir/%name/features/smart-card
 
 %changelog
+* Sat Aug 07 2021 Alexey Gladkov <legion@altlinux.ru> 2.20.0-alt2
+- Add missing sshfsroot files.
+
 * Thu Aug 05 2021 Alexey Gladkov <legion@altlinux.ru> 2.20.0-alt1
 - New version (2.20.0).
 - New subpackage make-initrd-smartcard.
