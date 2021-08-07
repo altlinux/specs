@@ -25,7 +25,7 @@
 %define qsa_major 1
 %define qsa_minor 1
 %define qsa_bugfix 5
-%define rlz alt14
+%define rlz alt15
 Name: %rname%major
 Version: %major.%minor.%bugfix
 Release: %rlz
@@ -525,6 +525,11 @@ rm -f ./*.qm
 tar xf %SOURCE11
 popd
 
+%ifarch %e2k
+# workaround to SIGILL in uic -> src/tools/qlocale.cpp -> qdtoa()
+%add_optflags -DQT_QLOCALE_USES_FCVT
+%endif
+
 perl -pi -e "s,-O2,%optflags -DGLX_GLXEXT_LEGACY,g" mkspecs/*/qmake.conf
 #perl -pi -e "s,-fpic,-fPIC,g" mkspecs/*/qmake.conf
 perl -pi -e "s|-Wl,-rpath,| |" mkspecs/*/qmake.conf
@@ -550,6 +555,10 @@ find . -type f -name .cvsignore | xargs rm -f
 [ -f Makefile.cvs ] && make -f Makefile.cvs
 
 %build
+# to avoid a race condition when creating settings directory
+# workaround for "QSettings: error creating /usr/src/.qt3" on Elbrus
+mkdir -p $HOME/.qt3
+
 %if %versioning_hack
 #if "%%__gcc_version_major" == "4"
 cat > ./src/libqt_add.map <<__EOF__
@@ -1300,6 +1309,10 @@ install -m 644 %SOURCE103 %buildroot/%_iconsdir/hicolor/48x48/apps/%rname.png
 %_rpmmacrosdir/*
 
 %changelog
+* Sat Aug 07 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.3.8d-alt15
+- e2k: fixed race condition when creating settings directory
+- e2k: workaround to SIGILL in uic
+
 * Wed Feb 05 2020 Vitaly Lipatov <lav@altlinux.ru> 3.3.8d-alt14
 - rebuild without sqlite support (ALT bug 37985)
 
