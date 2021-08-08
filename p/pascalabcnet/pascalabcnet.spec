@@ -1,6 +1,6 @@
 Name:    pascalabcnet
 Version: 3.8.0.2951
-Release: alt2
+Release: alt3
 
 Summary: PascalABC.NET programming language  
 License: LGPL-3.0
@@ -10,7 +10,9 @@ Url:     http://pascalabc.net/
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source:   %name-%version.tar
+Source: %name-%version.tar
+Patch1: 0001-Exit-build-shell-script-on-first-subcommand-failed.patch
+Patch2: 0002-Do-not-change-background-color-of-console-output.patch
 
 ExcludeArch: ppc64le
 
@@ -30,8 +32,10 @@ parallel programming tools.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
 # Use xbuild insead of msbuild
-subst 's/msbuild/xbuild/' _RebuildReleaseAndRunTests.sh
+subst 's/msbuild/xbuild/;/^if/,$d' _RebuildReleaseAndRunTests.sh
 # Remove proprietary part
 rm -rf bin/PT4
 # Remove all binaries
@@ -66,6 +70,10 @@ chmod +x %buildroot%_bindir/pabcnetcclear
 %_libdir/%name
 
 %changelog
+* Sat Aug 07 2021 Andrey Cherepanov <cas@altlinux.org> 3.8.0.2951-alt3
+- Do not use black background to compiler banner (#211).
+- Remove tests run during build process.
+
 * Fri Aug 06 2021 Andrey Cherepanov <cas@altlinux.org> 3.8.0.2951-alt2
 - Use rpm-build-mono.
 
