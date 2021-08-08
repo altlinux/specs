@@ -1,5 +1,5 @@
 Name: imapsync
-Version: 1.977
+Version: 2.140
 Release: alt1
 
 Summary: Tool to migrate email between IMAP servers
@@ -56,6 +56,7 @@ optionally be deleted after a successful transfer.
 %patch1
 
 %install
+mkdir W
 %makeinstall_std
 
 %files
@@ -64,6 +65,9 @@ optionally be deleted after a successful transfer.
 %_man1dir/%name.*
 
 %changelog
+* Sun Aug 08 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.140-alt1
+- New version
+
 * Tue Jun 15 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.977-alt1
 - New version
 
