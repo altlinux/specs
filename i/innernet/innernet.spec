@@ -2,8 +2,8 @@
 #
 
 Name: innernet
-Version: 1.3.1
-Release: alt2
+Version: 1.4.1
+Release: alt1
 
 Summary: a private network system that uses WireGuard under the hood
 Summary(ru_RU.UTF-8): система построения сетей VPN на базе WireGuard
@@ -164,6 +164,9 @@ install -m 0700 -d %buildroot/var/lib/%{name}-server
 
 
 %changelog
+* Sun Aug 08 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.4.1-alt1
+- New version
+
 * Thu Jul 01 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.3.1-alt2
 - Update BuildRequires to use clang 11.0
 
