@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-power-manager
-Version: 1.24.2
+Version: 1.26.0
 Release: alt1
 Epoch: 1
 Summary: MATE power management service
@@ -15,7 +15,7 @@ Requires: upower
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: mate-common libXrandr-devel libcanberra-gtk3-devel libdbus-glib-devel libpolkit-devel
+BuildRequires: mate-common libXrandr-devel libcanberra-gtk3-devel libdbus-glib-devel libpolkit-devel libsecret-devel
 BuildRequires: libgnome-keyring-devel libnotify-devel libupower-devel mate-panel-devel yelp-tools
 
 %description
@@ -56,6 +56,9 @@ displaying icons and handling user callbacks in an interactive MATE session.
 %_man1dir/mate-power-*.1*
 
 %changelog
+* Fri Aug 06 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
+- 1.26.0
+
 * Thu Aug 20 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.2-alt1
 - 1.24.2
 

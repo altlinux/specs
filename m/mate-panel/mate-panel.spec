@@ -1,5 +1,5 @@
 Name: mate-panel
-Version: 1.24.1
+Version: 1.26.0
 Release: alt1
 Epoch: 2
 Summary: MATE Desktop panel and applets
@@ -8,7 +8,8 @@ Group: Graphical desktop/MATE
 Url: http://mate-desktop.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: mate-submodules-%name.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: mate-common gtk-doc libSM-devel libXi-devel libXrandr-devel libdbus-glib-devel libdconf-devel
@@ -36,7 +37,7 @@ Summary: Development files for mate-panel
 Development files for mate-panel
 
 %prep
-%setup -q
+%setup -q -a1
 %patch -p1
 
 %build
@@ -85,6 +86,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gir-1.0/MatePanelApplet-4.0.gir
 
 %changelog
+* Fri Aug 06 2021 Valery Inozemtsev <shrek@altlinux.ru> 2:1.26.0-alt1
+- 1.26.0
+
 * Fri Aug 14 2020 Valery Inozemtsev <shrek@altlinux.ru> 2:1.24.1-alt1
 - 1.24.1
 

@@ -1,7 +1,7 @@
 %define rname marco
 
 Name: mate-window-manager
-Version: 1.24.2
+Version: 1.26.0
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop window manager
@@ -78,6 +78,9 @@ Development files for marco
 %_man1dir/marco-window-demo.1*
 
 %changelog
+* Fri Aug 06 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
+- 1.26.0
+
 * Sun Apr 04 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.2-alt1
 - 1.24.2
 

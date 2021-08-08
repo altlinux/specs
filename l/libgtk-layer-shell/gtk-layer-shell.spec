@@ -1,7 +1,7 @@
 %define rname gtk-layer-shell
 
 Name: lib%rname
-Version: 0.3.0
+Version: 0.6.0
 Release: alt1
 Summary: Library to create components for Wayland using the Layer Shell
 License: MIT
@@ -53,6 +53,9 @@ Development files for %rname
 %_datadir/gir-1.0/GtkLayerShell-*.gir
 
 %changelog
+* Fri Aug 06 2021 Valery Inozemtsev <shrek@altlinux.ru> 0.6.0-alt1
+- 0.6.0
+
 * Fri Aug 14 2020 Valery Inozemtsev <shrek@altlinux.ru> 0.3.0-alt1
 - 0.3.0
 

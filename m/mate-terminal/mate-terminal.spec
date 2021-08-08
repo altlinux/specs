@@ -1,6 +1,6 @@
 Name: mate-terminal
-Version: 1.24.1
-Release: alt2
+Version: 1.26.0
+Release: alt1
 Epoch: 1
 Summary: Terminal emulator for MATE
 License: GPLv3+
@@ -11,6 +11,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Provides: xvt
 
 Source: %name-%version.tar
+Source1: mate-submodules-%name.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: mate-common libSM-devel libdconf-devel libpcre2-devel libvte3-devel yelp-tools
@@ -21,7 +22,7 @@ backgrounds, opening multiple terminals in a single window (tabs) and
 clickable URLs.
 
 %prep
-%setup -q
+%setup -q -a1
 %patch -p1
 
 %build
@@ -52,6 +53,9 @@ __EOF__
 %_man1dir/*.1*
 
 %changelog
+* Sun Aug 08 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
+- 1.26.0
+
 * Thu Aug 05 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.1-alt2
 - colors from the system theme are not used (closes: #39009)
 

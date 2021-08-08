@@ -1,5 +1,5 @@
 Name: libmateweather
-Version: 1.24.1
+Version: 1.26.0
 Release: alt1
 Epoch: 1
 Summary: Libraries to allow MATE Desktop to display weather information
@@ -58,7 +58,7 @@ Development files for libmateweather
 %_datadir/glib-2.0/schemas/org.mate.weather.gschema.xml
 
 %files data -f %name.lang
-%_iconsdir/mate/*/status/*
+%_iconsdir/hicolor/*/status/*
 %_datadir/%name
 
 %files devel
@@ -67,6 +67,9 @@ Development files for libmateweather
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Aug 06 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
+- 1.26.0
+
 * Fri Aug 14 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.1-alt1
 - 1.24.1
 

@@ -2,7 +2,7 @@
 %define rname mate-session-manager
 
 Name: mate-session
-Version: 1.24.1
+Version: 1.26.0
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop session manager
@@ -14,10 +14,12 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Requires: mate-control-center mate-polkit mate-desktop polkit
 
 Source: %rname-%version.tar
+Source1: mate-submodules-%rname.tar
 Patch: %rname-%version-%release.patch
+Patch1: mate-submodules-libegg.patch
 
 BuildRequires: mate-common libSM-devel libXtst-devel libdbus-glib-devel libgtk+3-devel libsystemd-devel
-BuildRequires: libXcomposite-devel libepoxy-devel xmlto xorg-xtrans-devel
+BuildRequires: glib2-devel libXcomposite-devel libepoxy-devel xmlto xorg-xtrans-devel
 
 %description
 This package contains a session that can be started from a display
@@ -25,8 +27,13 @@ manager such as MDM. It will load all necessary applications for a
 full-featured user session.
 
 %prep
-%setup -q -n %rname-%version
+%setup -q -n %rname-%version -a1
 %patch -p1
+%patch1 -p0
+
+cat << __EOF__ > mate-submodules/Makefile.am
+SUBDIRS = libegg
+__EOF__
 
 %build
 %autoreconf
@@ -68,6 +75,9 @@ __EOF__
 %_man1dir/*.1*
 
 %changelog
+* Fri Aug 06 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
+- 1.26.0
+
 * Fri Aug 14 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.1-alt1
 - 1.24.1
 

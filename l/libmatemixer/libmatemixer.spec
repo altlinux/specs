@@ -1,5 +1,5 @@
 Name: libmatemixer
-Version: 1.24.1
+Version: 1.26.0
 Release: alt1
 Epoch: 1
 Summary: Mixer library for MATE desktop
@@ -11,7 +11,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: mate-common gtk-doc libalsa-devel libpulseaudio-devel
+BuildRequires: mate-common gtk-doc libalsa-devel libpulseaudio-devel libudev-devel
 
 %description
 libmatemixer is a mixer library for MATE desktop.
@@ -47,7 +47,8 @@ Development libraries for libmatemixer
 %files -f %name.lang
 %doc AUTHORS COPYING NEWS README
 %_libdir/%name.so.*
-%_libdir/%name
+%dir %_libdir/%name
+%_libdir/%name/*.so
 
 %files devel
 %_includedir/mate-mixer/
@@ -56,6 +57,9 @@ Development libraries for libmatemixer
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Fri Aug 06 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
+- 1.26.0
+
 * Fri Aug 14 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.1-alt1
 - 1.24.1
 

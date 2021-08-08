@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-file-manager
-Version: 1.24.0
+Version: 1.26.0
 Release: alt1
 Epoch: 1
 Summary: File manager for MATE
@@ -14,6 +14,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Requires: mate-file-manager-extensions mate-file-manager-schemas
 
 Source: %rname-%version.tar
+Source1: mate-submodules-%rname.tar
 Patch: %rname-%version-%release.patch
 
 BuildRequires: mate-common gtk-doc libSM-devel libexempi-devel libexif-devel libgail3-devel libnotify-devel libselinux-devel libxml2-devel mate-desktop-devel
@@ -51,8 +52,12 @@ This package provides libraries and header files needed
 for developing caja extensions.
 
 %prep
-%setup -q -n %rname-%version
+%setup -q -n %rname-%version -a1
 %patch -p1
+
+cat << __EOF__ > mate-submodules/Makefile.am
+SUBDIRS = libegg
+__EOF__
 
 %build
 %autoreconf
@@ -99,6 +104,9 @@ mkdir -p %buildroot%_libdir/caja/extensions-2.0
 %_datadir/gtk-doc/html/libcaja-extension
 
 %changelog
+* Fri Aug 06 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
+- 1.26.0
+
 * Tue Feb 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
 - 1.24.0
 

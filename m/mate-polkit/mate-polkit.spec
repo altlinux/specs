@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-polkit
-Version: 1.24.0
+Version: 1.26.0
 Release: alt1
 Epoch: 1
 Summary: Integrates polkit authentication for MATE desktop
@@ -25,7 +25,6 @@ Integrates polkit with the MATE Desktop environment
 %build
 %autoreconf
 %configure \
-	--enable-accountsservice \
 	--enable-appindicator
 
 %make_build
@@ -41,6 +40,9 @@ Integrates polkit with the MATE Desktop environment
 %_libexecdir/polkit-mate-authentication-agent-1
 
 %changelog
+* Fri Aug 06 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
+- 1.26.0
+
 * Tue Feb 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
 - 1.24.0
 
