@@ -1,6 +1,6 @@
 Name: make-initrd
-Version: 2.20.0
-Release: alt2
+Version: 2.20.1
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -204,9 +204,6 @@ Feature adds smart card daemon and smart card utilities.
 %prep
 %setup -q
 
-# Quick fix
-sed -i -e 's/"opensc-pkcs11.so"/opensc-pkcs11.so/' features/smart-card/rules.mk
-
 %build
 ./autogen.sh
 %configure \
@@ -253,7 +250,7 @@ fi
 %exclude %_datadir/%name/guess/ucode
 %exclude %_datadir/%name/features/iscsi
 %exclude %_datadir/%name/features/kickstart
-%exclude %_datadir/%name/guess/sshfsroot
+%exclude %_datadir/%name/guess/smart-card
 %exclude %_datadir/%name/features/sshfsroot
 %exclude %_datadir/%name/features/smart-card
 %doc Documentation/*.md
@@ -296,10 +293,15 @@ fi
 %_datadir/%name/features/sshfsroot
 
 %files smartcard
-%_datadir/%name/guess/sshfsroot
+%_datadir/%name/guess/smart-card
 %_datadir/%name/features/smart-card
 
 %changelog
+* Sun Aug 08 2021 Alexey Gladkov <legion@altlinux.ru> 2.20.1-alt1
+- New version (2.20.1).
+- Fearure gpu-drm: Drop prefix from output which resulted in an image
+  build error (ALT#40667).
+
 * Sat Aug 07 2021 Alexey Gladkov <legion@altlinux.ru> 2.20.0-alt2
 - Add missing sshfsroot files.
 
