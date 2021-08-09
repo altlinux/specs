@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt2
+Release: alt3
 epoch:2
 %define kernel_base_version	5.10
 %define kernel_sublevel .54
@@ -227,6 +227,22 @@ and to the kernel.  The first major use for the DRI is to create fast
 OpenGL implementations.
 
 These are modules for your ALT Linux system
+
+%ifarch aarch64
+%package -n kernel-modules-midgard-be-m1000-%flavour
+Summary: Non-DRM driver for Mali Midgard GPU for BE-M1000 SoC
+Group: System/Kernel and hardware
+Prereq: coreutils
+Prereq: module-init-tools >= 3.1
+Prereq: %name = %epoch:%version-%release
+Requires(postun): %name = %epoch:%version-%release
+
+%description -n kernel-modules-midgard-be-m1000-%flavour
+Kernel part of non-DRM driver for Mali T628 GPU. Requires a proprietary
+userspace library (libmali.so) to make use of GPU. Suitable for BE-M1000
+SoC only. Use the open source panfrost driver included in
+kernel-modules-drm-%flavour package unless you know what are you doing.
+%endif
 
 %package -n kernel-modules-ide-%flavour
 Summary: IDE  driver modules (obsolete by PATA)
@@ -636,6 +652,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %exclude %modules_dir/kernel/drivers/gpu/drm/mga
 %exclude %modules_dir/kernel/drivers/gpu/drm/via
 %endif
+%ifarch aarch64
+%exclude %modules_dir/kernel/drivers/gpu/arm/midgard
+%endif
 
 %files -n kernel-modules-drm-ancient-%flavour
 %modules_dir/kernel/drivers/gpu/drm/mgag200
@@ -651,6 +670,11 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/ide/
 %endif
 
+%ifarch aarch64
+%files -n kernel-modules-midgard-be-m1000-%flavour
+%modules_dir/kernel/drivers/gpu/arm/midgard/
+%endif
+
 %files -n kernel-modules-drm-nouveau-%flavour
 %modules_dir/kernel/drivers/gpu/drm/nouveau
 
@@ -658,6 +682,10 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Fri Aug 06 2021 Dmitry Terekhin <jqt4@altlinux.org> 2:5.10.54-alt3
+- Enable panfrost driver by default.
+- Moved non-DRM Mali Midgard GPU driver into subpackage.
+
 * Tue Aug 03 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:5.10.54-alt2
 - Bumped release to pesign with new key.
 
