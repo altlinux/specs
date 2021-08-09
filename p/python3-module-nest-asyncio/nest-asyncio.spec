@@ -4,7 +4,7 @@
 %define pkgname nest-asyncio
 
 Name: python3-module-%pkgname
-Version: 1.4.0
+Version: 1.5.1
 Release: alt1
 Summary: Patch asyncio to allow nested event loops 
 License: BSD-2-Clause
@@ -15,8 +15,6 @@ BuildArch: noarch
 
 # https://github.com/erdewit/nest_asyncio
 Source: %name-%version.tar
-
-Patch1: upstream-version-fix.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -37,7 +35,6 @@ and loop.run_until_complete.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %python3_build
@@ -51,10 +48,13 @@ py.test3 -vv tests
 %files
 %doc LICENSE
 %doc README.rst
-%python3_sitelibdir/__pycache__/%{oname}*
-%python3_sitelibdir/%oname.py*
+%python3_sitelibdir/%oname.py
+%python3_sitelibdir/__pycache__/%{oname}.*
 %python3_sitelibdir/%oname-%version-py3*.egg-info
 
 %changelog
+* Mon Aug 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.1-alt1
+- Updated to upstream version 1.5.1.
+
 * Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.0-alt1
 - Initial build for ALT.
