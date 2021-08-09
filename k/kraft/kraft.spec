@@ -1,6 +1,6 @@
 Name: kraft
 Version: 0.96
-Release: alt2
+Release: alt3
 
 Summary: Kraft - Software for small business
 Summary(ru_RU.UTF-8): Kraft — программное обеспечение для малого бизнеса
@@ -9,7 +9,7 @@ Group: Office
 # VCS: https://github.com/dragotin/kraft
 URL: http://www.volle-kraft-voraus.de/
 
-Requires: libctemplate trmltools kde5-akonadi
+Requires: kde5-akonadi
 
 Source0: kraft-%version.tar
 
@@ -55,6 +55,9 @@ subst 's|LIBRARY DESTINATION lib/kraft|LIBRARY DESTINATION ${LIB_INSTALL_DIR}|' 
 %_datadir/metainfo/*.appdata.xml
 
 %changelog 
+* Mon Aug 09 2021 Vitaly Lipatov <lav@altlinux.ru> 0.96-alt3
+- NMU: fix requires (libctemplate is linked, trmltools is not used)
+
 * Wed Jun 30 2021 Sergey V Turchin <zerg@altlinux.org> 0.96-alt2
 - fix requires (ALT #40014)
 
