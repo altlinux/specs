@@ -3,7 +3,7 @@
 %define oname nbformat
 
 Name: python3-module-%oname
-Version: 5.0.7
+Version: 5.1.3
 Release: alt1
 Summary: The Jupyter Notebook format
 License: BSD-3-Clause
@@ -21,6 +21,7 @@ BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-pytest python3(testpath)
 BuildRequires: python3-module-jsonschema python3-module-jupyter_core
 BuildRequires: python3-module-nose python3-modules-sqlite3
+BuildRequires: python3(fastjsonschema)
 BuildRequires: python3-module-sphinx-devel
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
@@ -89,6 +90,9 @@ py.test3 -vv
 %python3_sitelibdir/%oname/pickle
 
 %changelog
+* Mon Aug 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.3-alt1
+- Updated to upstream version 5.1.3.
+
 * Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.7-alt1
 - Updated to upstream version 5.0.7.
 - Disabled build for python-2.
