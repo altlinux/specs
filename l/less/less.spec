@@ -3,7 +3,7 @@
 
 Name: less
 Version: 530
-Release: alt1
+Release: alt2
 
 Summary: A text file browser similar to more, but better
 License: GPLv3+
@@ -104,6 +104,10 @@ ln -s lesspipe.1 %buildroot%_man1dir/lessfile.1
 %doc NEWS.bz2 *.html
 
 %changelog
+* Mon Aug 09 2021 Vitaly Chikunov <vt@altlinux.org> 530-alt2
+- lesspipe.sh: Support detection of XZ compression by new file.
+- lesspipe.sh: Remove absolute pathnames from tools invocations.
+
 * Mon Apr 01 2019 Alexey Gladkov <legion@altlinux.ru> 530-alt1
 - New version 530.
 
