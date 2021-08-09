@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: latte-dock
-Version: 0.9.12
+Version: 0.10.0
 Release: alt1
 Summary: Latte is a dock based on plasma frameworks
 
@@ -11,7 +11,7 @@ Url: https://download.kde.org/stable/%name
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: %name-%version.tar
-Patch0: K5bin.patch
+Patch: K5bin.patch
 
 BuildRequires: xdg-utils
 BuildRequires: libxdg-basedir-devel
@@ -24,6 +24,8 @@ BuildRequires: libxcbutil-devel
 BuildRequires: libSM-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: qt5-x11extras-devel
+BuildRequires: kf5-kirigami-devel
+BuildRequires: kf5-kio-devel
 BuildRequires: kf5-karchive-devel
 BuildRequires: kf5-kactivities-devel
 BuildRequires: kf5-kcoreaddons-devel
@@ -57,8 +59,7 @@ using parabolic zoom effect and tries to be there only when it is needed.
 %patch0 -p2
 
 %build
-%K5build  
-
+%K5build
 
 %install
 %K5install
@@ -83,10 +84,13 @@ using parabolic zoom effect and tries to be there only when it is needed.
 %_qt5_qmldir/org/kde/latte
 %_qt5_plugindir/plasma_containmentactions_lattecontextmenu.so
 %_qt5_plugindir/kpackage/packagestructure/latte_packagestructure_indicator.so
-%_K5xdgconf/latte-layouts.knsrc
-%_K5xdgconf/latte-indicators.knsrc
+%_datadir/knsrcfiles/latte-layouts.knsrc
+%_datadir/knsrcfiles/latte-indicators.knsrc
 
 %changelog
+* Mon Aug 09 2021 Artyom Bystrov <arbars@altlinux.org> 0.10.0-alt1
+- Updated to upstream version 0.10.0
+
 * Fri Jul 16 2021 Konstantin Rybakov <kastet@altlinux.org> 0.9.12-alt1
 - Updated to upstream version v0.9.12
 - Fix package service files
