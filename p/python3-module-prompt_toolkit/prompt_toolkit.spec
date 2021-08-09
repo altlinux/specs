@@ -3,7 +3,7 @@
 %define oname prompt_toolkit
 
 Name: python3-module-%oname
-Version: 3.0.7
+Version: 3.0.19
 Release: alt1
 Summary: Library for building powerful interactive command lines in Python
 License: BSD-3-Clause
@@ -25,7 +25,7 @@ BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-wcwidth
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-html5lib python3-module-sphinx
+BuildRequires: python3-module-html5lib python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 BuildRequires: python3-module-alabaster python3-module-docutils python3-module-objects.inv
 
 %description
@@ -67,8 +67,8 @@ ln -s ../objects.inv docs/
 %python3_install
 
 export PYTHONPATH=%buildroot%python3_sitelibdir
-%make -C docs pickle SPHINXBUILD=sphinx-build-3
-%make -C docs html SPHINXBUILD=sphinx-build-3
+%make -C docs pickle
+%make -C docs html
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
@@ -89,6 +89,9 @@ py.test3
 %doc examples docs/_build/html
 
 %changelog
+* Mon Aug 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.19-alt1
+- Updated to upstream release 3.0.19.
+
 * Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.7-alt1
 - Updated to upstream release 3.0.7.
 - Dropped python-2 support.
