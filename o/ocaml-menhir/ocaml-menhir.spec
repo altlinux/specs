@@ -1,6 +1,6 @@
 Name: ocaml-menhir
 Version: 20210419
-Release: alt1
+Release: alt2
 Summary: LR(1) parser generator for the OCaml programming language.
 
 Group: Development/ML
@@ -12,7 +12,7 @@ BuildRequires(pre): ocaml
 Provides: ocaml4-menhir = %EVR
 Obsoletes: ocaml4-menhir
 
-BuildRequires: dune opam python-module-google python3-base
+BuildRequires: dune 
 
 %description
 Menhir is a LR(1) parser generator for the OCaml programming language.
@@ -48,6 +48,9 @@ replacing all calls to module Parsing with new Menhir-specific keywords.
 %_libdir/ocaml/menhirSdk/*
 
 %changelog
+* Mon Aug 09 2021 Anton Farygin <rider@altlinux.ru> 20210419-alt2
+- cleanup build requires
+
 * Wed Jul 28 2021 Anton Farygin <rider@altlinux.ru> 20210419-alt1
 - 20210419
 
