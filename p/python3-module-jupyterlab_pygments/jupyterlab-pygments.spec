@@ -3,7 +3,7 @@
 %define oname jupyterlab_pygments
 
 Name: python3-module-%oname
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 Summary: Pygments theme using JupyterLab CSS variables
 License: BSD-3-Clause and MIT and Python
@@ -36,5 +36,8 @@ Pygments theme using JupyterLab CSS variables
 %python3_sitelibdir/%oname-%version-py*.egg-info
 
 %changelog
+* Mon Aug 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.2-alt1
+- Updated to upstream version 0.1.2.
+
 * Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.1-alt1
 - Initial build for ALT.
