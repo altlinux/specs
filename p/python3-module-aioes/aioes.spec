@@ -3,8 +3,8 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 0.6.1
-Release: alt2
+Version: 0.7.2
+Release: alt1
 Summary: Elasticsearch integration with asyncio
 License: BSD
 Group: Development/Python3
@@ -19,7 +19,7 @@ BuildRequires(pre): rpm-build-python3
 %py3_provides %oname
 %py3_requires asyncio aiohttp
 
-BuildRequires: python3-module-nose python3-module-urllib3 python3-pyflakes python3-tools-pep8
+BuildRequires: python3-module-nose python3-module-urllib3 python3-pyflakes
 
 %description
 aioes is a asyncio compatible library for working with ElasticSearch.
@@ -45,6 +45,9 @@ python3 cmp.py
 %python3_sitelibdir/*
 
 %changelog
+* Mon Aug 09 2021 Grigory Ustinov <grenka@altlinux.org> 0.7.2-alt1
+- Build new version.
+
 * Tue Jul 27 2021 Grigory Ustinov <grenka@altlinux.org> 0.6.1-alt2
 - Drop python2 support.
 
