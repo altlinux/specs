@@ -1,7 +1,8 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-%define fedora 28
+%define fedora 34
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # spec file for package asl
@@ -17,8 +18,7 @@ BuildRequires: gcc-c++
 Name:           asl
 URL:            http://john.ccac.rwth-aachen.de:8000/as/index.html
 Version:        1.42
-Release:        alt2_0.38.%{patchlevel}
-Group:          Development/Other
+Release:        alt2_0.44.%{patchlevel}
 License:        GPLv2+
 Summary:        Macro Assembler AS
 Source:         http://john.ccac.rwth-aachen.de:8000/ftp/as/source/c_version/asl-current-142-%{patchlevel}.tar.bz2
@@ -26,6 +26,7 @@ Patch0:         asl-Makefile.def.patch
 Patch1:         asl-sysdefs.h.patch
 Patch2:         asl-install.sh.patch
 Patch3:         asl-Makefile-DESTDIR.patch
+BuildRequires:  gcc
 BuildRequires:  tex(latex)
 %if 0%{?fedora} > 18 || 0%{?rhel} > 7
 BuildRequires:  tex(german.sty)
@@ -61,7 +62,7 @@ sed -i '/doc_DE/d' Makefile
 # make seems to have problems with %{_smp_mflags}
 make CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing"
 # make docs isn't SMP-safe, so can't use %{_smp_mflags}
-make docs
+#make docs
 
 %check
 make test
@@ -69,6 +70,7 @@ make test
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
 
+%if 0
 # convert doc files from ISO-8859-1 to UTF-8 encoding
 %if 0%{?rhel} != 0 && 0%{?rhel} <= 7
 %global change_encoding_files changelog doc/as-EN.txt
@@ -82,7 +84,7 @@ do
   touch -r $f $f.new
   mv $f.new $f
 done
-
+%endif
 
 %files
 %{_bindir}/asl
@@ -102,12 +104,15 @@ done
 %{_mandir}/man1/alink.1*
 %doc --no-dereference COPYING
 %doc README README.LANGS TODO BENCHES changelog
-%doc doc/as-EN.html doc/as-EN.txt doc/as-EN.ps doc/as-EN.pdf doc/as-EN.dvi
+#doc doc/as-EN.html doc/as-EN.txt doc/as-EN.ps doc/as-EN.pdf doc/as-EN.dvi
 %if 0%{?rhel} == 0 || 0%{?rhel} > 7
-%lang(de) %doc doc/as-DE.html doc/as-DE.txt doc/as-DE.ps doc/as-DE.pdf doc/as-DE.dvi
+#%lang(de) %doc doc/as-DE.html doc/as-DE.txt doc/as-DE.ps doc/as-DE.pdf doc/as-DE.dvi
 %endif
 
 %changelog -n asl
+* Mon Aug 09 2021 Igor Vlasenko <viy@altlinux.org> 1.42-alt2_0.44.bld134
+- texlive 2021 support
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.38.bld134
 - update to new release by fcimport
 
