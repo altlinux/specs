@@ -38,14 +38,12 @@
 %def_disable check
 
 Name:    golang
-Version: 1.16.6
+Version: 1.16.7
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
 URL:     http://golang.org/
-
-Packager: Alexey Gladkov <legion@altlinux.ru>
 
 Source0: golang-%version.tar
 Source1: golang-gdbinit
@@ -74,7 +72,7 @@ BuildRequires: libpcre-devel
 Provides: go = %version-%release
 
 Provides:  golang-godoc = %version-%release
-Obsoletes: golang-godoc
+Obsoletes: golang-godoc < %version-%release
 
 # Due to vet, cover utilities.
 Conflicts: golang-tools <= 0-alt1.git7e09e072
@@ -344,6 +342,11 @@ mkdir -p -- \
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Mon Aug 09 2021 Alexey Shabalin <shaba@altlinux.org> 1.16.7-alt1
+- New version (1.16.7).
+- Fixes:
+  + CVE-2021-36221
+
 * Tue Jul 13 2021 Alexey Shabalin <shaba@altlinux.org> 1.16.6-alt1
 - New version (1.16.6).
 - Fixes:
