@@ -4,12 +4,12 @@ BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: zlib-devel
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           osmpbf
 Version:        1.5.0
-Release:        alt1_3jpp11
+Release:        alt1_6jpp11
 Summary:        C library to read and write OpenStreetMap PBF files
 
 License:        LGPLv3
@@ -17,8 +17,9 @@ URL:            https://github.com/openstreetmap/OSM-binary
 Source0:        https://github.com/openstreetmap/OSM-binary/archive/v%{version}/OSM-binary-%{version}.tar.gz
 
 BuildRequires:  ctest cmake gcc-c++
-BuildRequires:  libprotobuf-devel protobuf-java libprotobuf25 protobuf-compiler
-BuildRequires:  maven-local maven-source-plugin maven-javadoc-plugin
+BuildRequires:  libprotobuf-devel protobuf-java protobuf-compiler
+BuildRequires:  maven-local maven-source-plugin
+BuildRequires:  junit
 Source44: import.info
 
 %description
@@ -67,6 +68,7 @@ This package contains javadoc for %{name}.
 
 %pom_remove_plugin :protobuf-maven-plugin
 %pom_remove_plugin :maven-gpg-plugin
+%pom_remove_plugin :maven-javadoc-plugin
 
 
 %build
@@ -109,6 +111,9 @@ rm %{buildroot}/%{_libdir}/libosmpbf.a
 
 
 %changelog
+* Tue Aug 10 2021 Igor Vlasenko <viy@altlinux.org> 1.5.0-alt1_6jpp11
+- fixed build
+
 * Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 1.5.0-alt1_3jpp11
 - new version
 
