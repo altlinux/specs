@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 5.0.1
+Version: 5.1.0
 Release: alt1
 
 Summary: Various code metrics for Python code
@@ -66,6 +66,9 @@ py.test3 -vv
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Mon Aug 09 2021 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt1
+- Automatically updated to 5.1.0.
+
 * Fri Jun 18 2021 Grigory Ustinov <grenka@altlinux.org> 5.0.1-alt1
 - Automatically updated to 5.0.1.
 
