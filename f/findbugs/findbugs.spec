@@ -5,15 +5,16 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: perl(FileHandle.pm) unzip
 # END SourceDeps(oneline)
 BuildRequires: tex(pdftex.def)
+BuildRequires: tex(dehypht.tex)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global noupdatechecks_version 20140707gitcce19ac
 
 Name:           findbugs
 Version:        3.0.1
-Release:        alt1_25jpp11
+Release:        alt2_25jpp11
 Summary:        Find bugs in Java code
 
 License:        LGPLv2+
@@ -257,6 +258,9 @@ fi ||:
 %{_javadir}/findbugs-tools.jar
 
 %changelog
+* Mon Aug 09 2021 Igor Vlasenko <viy@altlinux.org> 0:3.0.1-alt2_25jpp11
+- texlive 2021 support
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:3.0.1-alt1_25jpp11
 - fc34 update
 
