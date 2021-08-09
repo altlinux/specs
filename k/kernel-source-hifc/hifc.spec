@@ -2,8 +2,8 @@
 
 Name: kernel-source-hifc
 Version: 3.5.0.11
-Release: alt1
-Summary: Huawei Hifc PCI Express Linux driver
+Release: alt2
+Summary: Huawei Fibre Channel Adapter
 License: GPL-2.0-only
 Group: Development/Kernel
 Url: https://openeuler.org/en/
@@ -34,6 +34,10 @@ make -C /lib/modules/*-std-def-*/build M=$PWD/drivers/scsi/huawei/hifc modules C
 %kernel_src/%name-%version.tar
 
 %changelog
+* Mon Aug 09 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.5.0.11-alt2
+- update sources from openEuler 5.10
+- fix build for 5.13 kernel
+
 * Thu Mar 04 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.5.0.11-alt1
 - First import of 3.5.0.11 from openEuler kernel-4.19.
 

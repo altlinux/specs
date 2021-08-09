@@ -1,12 +1,13 @@
 %define module_name     hifc
 %define module_version  3.5.0.11
-%define module_release  alt1
+%define module_release  alt2
 %define flavour         un-def
 %define karch x86_64 aarch64
 
 %setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
+%add_verify_elf_skiplist %module_dir/*
 
 Summary: Huawei Hifc PCI Express Linux driver
 Name: kernel-modules-%module_name-%flavour
