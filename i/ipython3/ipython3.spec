@@ -5,7 +5,7 @@
 %def_with doc
 
 Name: ipython3
-Version: 7.25.0
+Version: 7.26.0
 Release: alt1
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
@@ -201,6 +201,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Mon Aug 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.26.0-alt1
+- Updated to upstream version 7.26.0.
+
 * Wed Jul 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.25.0-alt1
 - Updated to upstream version 7.25.0.
 - Enabled documentation.
