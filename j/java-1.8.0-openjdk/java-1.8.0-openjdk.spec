@@ -3,7 +3,6 @@ BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 BuildRequires: ca-certificates-java
-%def_enable accessibility
 %def_disable javaws
 %def_disable moz_plugin
 %def_disable control_panel
@@ -27,7 +26,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.282.b08
+%define version 1.8.0.302.b08
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -133,10 +132,8 @@ BuildRequires: /proc rpm-build-java
 %endif
 
 # If you disable both builds, then the build fails
-# Note that the debug build requires the normal build for docs
-%global build_loop %{normal_build} %{fastdebug_build} %{slowdebug_build}
-# Test slowdebug first as it provides the best diagnostics
-%global rev_build_loop  %{slowdebug_build} %{fastdebug_build} %{normal_build}
+# Build and test slowdebug first as it provides the best diagnostics
+%global build_loop  %{slowdebug_build} %{fastdebug_build} %{normal_build}
 
 %ifarch %{jit_arches}
 %global bootstrap_build 1
@@ -177,7 +174,7 @@ BuildRequires: /proc rpm-build-java
 # as to why some libraries *cannot* be excluded. In particular,
 # these are:
 # libjsig.so, libjava.so, libjawt.so, libjvm.so and libverify.so
-#%global _privatelibs libatk-wrapper[.]so.*|libattach[.]so.*|libawt_headless[.]so.*|libawt[.]so.*|libawt_xawt[.]so.*|libdt_socket[.]so.*|libfontmanager[.]so.*|libhprof[.]so.*|libinstrument[.]so.*|libj2gss[.]so.*|libj2pcsc[.]so.*|libj2pkcs11[.]so.*|libjaas_unix[.]so.*|libjava_crw_demo[.]so.*|libjavajpeg[.]so.*|libjdwp[.]so.*|libjli[.]so.*|libjsdt[.]so.*|libjsoundalsa[.]so.*|libjsound[.]so.*|liblcms[.]so.*|libmanagement[.]so.*|libmlib_image[.]so.*|libnet[.]so.*|libnio[.]so.*|libnpt[.]so.*|libsaproc[.]so.*|libsctp[.]so.*|libsplashscreen[.]so.*|libsunec[.]so.*|libunpack[.]so.*|libzip[.]so.*|lib[.]so\\(SUNWprivate_.*
+#%global _privatelibs libattach[.]so.*|libawt_headless[.]so.*|libawt[.]so.*|libawt_xawt[.]so.*|libdt_socket[.]so.*|libfontmanager[.]so.*|libhprof[.]so.*|libinstrument[.]so.*|libj2gss[.]so.*|libj2pcsc[.]so.*|libj2pkcs11[.]so.*|libjaas_unix[.]so.*|libjava_crw_demo[.]so.*|libjavajpeg[.]so.*|libjdwp[.]so.*|libjli[.]so.*|libjsdt[.]so.*|libjsoundalsa[.]so.*|libjsound[.]so.*|liblcms[.]so.*|libmanagement[.]so.*|libmlib_image[.]so.*|libnet[.]so.*|libnio[.]so.*|libnpt[.]so.*|libsaproc[.]so.*|libsctp[.]so.*|libsplashscreen[.]so.*|libsunec[.]so.*|libunpack[.]so.*|libzip[.]so.*|lib[.]so\\(SUNWprivate_.*
 
 # In some cases, the arch used by the JDK does
 # not match _arch.
@@ -245,6 +242,26 @@ BuildRequires: /proc rpm-build-java
 %global with_systemtap 0
 %endif
 
+%ifarch %{ix86} x86_64
+%global with_openjfx_binding 0
+%global openjfx_path %{_jvmdir}/openjfx8
+# links src directories
+%global jfx_jre_libs_dir %{openjfx_path}/rt/lib
+%global jfx_jre_native_dir %{jfx_jre_libs_dir}/%{archinstall}
+%global jfx_sdk_libs_dir %{openjfx_path}/lib
+%global jfx_sdk_bins_dir %{openjfx_path}/bin
+%global jfx_jre_exts_dir %{jfx_sdk_libs_dir}/ext
+# links src files
+# maybe depend on jfx and generate the lists in build time? Yes, bad idea to inlcude cyclic depndenci, but this list is aweful
+%global jfx_jre_libs jfxswt.jar javafx.properties
+%global jfx_jre_native libprism_es2.so libprism_common.so libjavafx_font.so libdecora_sse.so libjavafx_font_freetype.so libprism_sw.so libjavafx_font_pango.so ibglass.so libjavafx_iio.so libglassgtk2.so libglassgtk3.so
+%global jfx_sdk_libs javafx-mx.jar packager.jar ant-javafx.jar
+%global jfx_sdk_bins javafxpackager javapackager
+%global jfx_jre_exts jfxrt.jar
+%else
+%global with_openjfx_binding 0
+%endif
+
 # New Version-String scheme-style defines
 %global majorver 8
 
@@ -276,7 +293,7 @@ BuildRequires: /proc rpm-build-java
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
 %global shenandoah_project	aarch64-port
 %global shenandoah_repo		jdk8u-shenandoah
-%global shenandoah_revision    	aarch64-shenandoah-jdk8u282-b08
+%global shenandoah_revision    	aarch64-shenandoah-jdk8u302-b08
 # Define old aarch64/jdk8u tree variables for compatibility
 %global project         %{shenandoah_project}
 %global repo            %{shenandoah_repo}
@@ -292,7 +309,7 @@ BuildRequires: /proc rpm-build-java
 %global updatever       %(VERSION=%{whole_update}; echo ${VERSION##*u})
 # eg jdk8u60-b27 -> b27
 %global buildver        %(VERSION=%{version_tag}; echo ${VERSION##*-})
-%global rpmrelease      3
+%global rpmrelease      0
 # Define milestone (EA for pre-releases, GA ("fcs") for releases)
 # Release will be (where N is usually a number starting at 1):
 # - 0.N%%{?extraver}%%{?dist} for EA releases,
@@ -426,17 +443,12 @@ Source13: TestCryptoLevel.java
 # Ensure ECDSA is working
 Source14: TestECDSA.java
 
-# nss fips configuration file
-Source15: nss.fips.cfg.in
-
 Source20: repackReproduciblePolycies.sh
 
 # New versions of config files with aarch64 support. This is not upstream yet.
 Source100: config.guess
 Source101: config.sub
 
-# Ensure vendor settings are correct
-Source16: CheckVendor.java
 
 ############################################
 #
@@ -448,14 +460,8 @@ Source16: CheckVendor.java
 ############################################
 
 # Accessibility patches
-# Ignore AWTError when assistive technologies are loaded 
-Patch1:   rh1648242-accessible_toolkit_crash_do_not_break_jvm.patch
-# Restrict access to java-atk-wrapper classes
-Patch3:   rh1648644-java_access_bridge_privileged_security.patch
 # Turn on AssumeMP by default on RHEL systems
 Patch534: rh1648246-always_instruct_vm_to_assume_multiple_processors_are_available.patch
-# RH1648249: Add PKCS11 provider to java.security
-Patch1000: rh1648249-add_commented_out_nss_cfg_provider_to_java_security.patch
 # RH1655466: Support RHEL FIPS mode using SunPKCS11 provider
 Patch1001: rh1655466-global_crypto_and_fips.patch
 # RH1760838: No ciphersuites available for SSLSocket in FIPS mode
@@ -537,6 +543,8 @@ Patch202: jdk8035341-allow_using_system_installed_libpng.patch
 # 8042159: Allow using a system-installed lcms2
 Patch203: jdk8042159-allow_using_system_installed_lcms2-root.patch
 Patch204: jdk8042159-allow_using_system_installed_lcms2-jdk.patch
+# JDK-8195607, PR3776, RH1760437: sun/security/pkcs11/Secmod/TestNssDbSqlite.java failed with "NSS initialization failed" on NSS 3.34.1
+Patch580: jdk8195607-pr3776-rh1760437-nss_sqlite_db_config.patch
 
 #############################################
 #
@@ -612,9 +620,8 @@ BuildRequires: java-1.8.0-openjdk-devel
 %ifnarch %{jit_arches}
 BuildRequires: libffi-devel
 %endif
-# 2020b required as of JDK-8254177 in October CPU
-# Temporarily held at 2020a until 2020b has shipped
-BuildRequires: tzdata-java >= 2020a
+# 2021a required as of JDK-8260356 in April CPU
+Requires: tzdata-java >= 2021a
 # Earlier versions have a bug in tree vectorization on PPC
 BuildRequires: gcc >= 4.8.3
 
@@ -667,6 +674,15 @@ Provides: %{_jvmdir}/%{jredir}/lib/%archinstall/server/libjvm.so(SUNWprivate_1.1
 Patch33: java-1.8.0-openjdk-alt-no-Werror.patch
 Patch34: java-1.8.0-openjdk-alt-link.patch
 
+# Fix upgrade path after removal of accessibility subpackage
+# on commit 0c79c1451ef42c540682fb75329a92bb110609e7
+# As main accessibility was requiring main package, main package now have to
+# obsolete java-1.8.0-openjdk-accessibility-{release, slowdebug, fastdebug} < 1:1.8.0.292.b06
+# otherwise update fails
+Obsoletes: java-1.8.0-openjdk-accessibility < 1:1.8.0.292.b06
+Obsoletes: java-1.8.0-openjdk-accessibility-slowdebug < 1:1.8.0.292.b06
+Obsoletes: java-1.8.0-openjdk-accessibility-fastdebug < 1:1.8.0.292.b06
+
 %description
 The %{origin_nice} runtime environment %{majorver}.
 
@@ -700,16 +716,10 @@ Requires: ca-trust-java
 # Require javapackages-filesystem for ownership of /usr/lib/jvm/
 Requires: javapackages-filesystem
 # Require zoneinfo data provided by tzdata-java subpackage.
-# 2020b required as of JDK-8254177 in October CPU
-# Temporarily held at 2020a until 2020b has shipped
-Requires: tzdata-java >= 2020a
+# 2021a required as of JDK-8260356 in April CPU
+Requires: tzdata-java >= 2021a
 # libsctp.so.1 is being `dlopen`ed on demand
 Requires: liblksctp lksctp-tools
-# tool to copy jdk's configs - should be Recommends only, but then only dnf/yum enforce it,
-# not rpm transaction and so no configs are persisted when pure rpm -u is run. It may be
-# considered as regression
-#Requires: copy-jdk-configs >= 3.3
-#Requires: copy-jdk-configs
 # for printing support
 Requires: libcups
 # Post requires alternatives to install tool alternatives
@@ -903,7 +913,9 @@ Provides: java-javadoc = 1:1.9.0
 
 %description javadoc
 The %{origin_nice} %{majorver} API documentation.
+%endif
 
+%if %{include_normal_build}
 %package javadoc-zip
 Summary: %{origin_nice} %{majorver} API documentation compressed in single archive
 Group:   Development/Java
@@ -924,49 +936,66 @@ Provides: java-%{javaver}-%{origin}-javadoc = %{epoch}:%{version}-%{release}
 
 %description javadoc-zip
 The %{origin_nice} %{majorver} API documentation compressed in a single archive.
-
-%package accessibility
-Group: Development/Java
-Summary: %{origin_nice} %{majorver} accessibility connector
-
-Requires: java-atk-wrapper
-Requires: %{name} = %{epoch}:%{version}-%{release}
-Requires: %{name}-headless%{?_isa} = %{epoch}:%{version}-%{release}
-
-Provides: java-accessibility = %{epoch}:%{version}-%{release}
-Provides: java-%{javaver}-accessibility = %{epoch}:%{version}-%{release}
-Provides: java-%{javaver}-%{origin}-accessibility = %{epoch}:%{version}-%{release}
-
-
-%description accessibility
-Enables accessibility support in %{origin_nice} %{majorver} by using java-atk-wrapper. This allows
-compatible at-spi2 based accessibility programs to work for AWT and Swing-based
-programs.
-
-Please note, the java-atk-wrapper is still in beta, and %{origin_nice} %{majorver} itself is still
-being tuned to be working with accessibility features. There are known issues
-with accessibility on, so please do not install this package unless you really
-need to.
 %endif
 
-%if %{include_debug_build}
-%package accessibility-slowdebug
+%if %{with_openjfx_binding}
+%package openjfx
+Summary: OpenJDK x OpenJFX connector. This package adds symliks finishing Java FX integration to %{name}
 Group: Development/Other
-Summary: %{origin_nice} %{majorver} accessibility connector %{for_debug}
+Requires: %{name}%{?_isa} = %{epoch}:%{version}-%{release}
+Requires: openjfx%{?_isa}
+%description openjfx
+Set of links from OpenJDK (jre) to OpenJFX
 
+%package openjfx-devel
+Summary: OpenJDK x OpenJFX connector for FX developers. This package adds symliks finishing Java FX integration to %{name}-devel
+Group: Development/Other
+Requires: %{name}-devel%{?_isa} = %{epoch}:%{version}-%{release}
+Requires: openjfx-devel
+%description openjfx-devel
+Set of links from OpenJDK (sdk) to OpenJFX
 
-%description accessibility-slowdebug
-See normal java-%{version}-openjdk-accessibility description.
+%if %{include_debug_build}
+%package openjfx-debug
+Summary: OpenJDK x OpenJFX connector %{for_debug}. his package adds symliks finishing Java FX integration to %{name}-debug
+Group: Development/Other
+Requires: %{name}-debug%{?_isa} = %{epoch}:%{version}-%{release}
+Requires: openjfx%{?_isa}
+%description openjfx-debug
+Set of links from OpenJDK-debug (jre) to normal OpenJFX. OpenJFX do not support
+debug builds of itself
+
+%package openjfx-devel-debug
+Summary: OpenJDK x OpenJFX connector for FX developers %{for_debug}. This package adds symliks finishing Java FX integration to %{name}-devel-debug
+Group: Development/Other
+Requires: %{name}-devel-debug%{?_isa} = %{epoch}:%{version}-%{release}
+Requires: openjfx-devel
+%description openjfx-devel-debug
+Set of links from OpenJDK-debug (sdk) to normal OpenJFX. OpenJFX do not support
+debug builds of itself
 %endif
 
 %if %{include_fastdebug_build}
-%package accessibility-fastdebug
+%package openjfx-fastdebug
+Summary: OpenJDK x OpenJFX connector %{for_fastdebug}. his package adds symliks finishing Java FX integration to %{name}-fastdebug
 Group: Development/Other
-Summary: %{origin_nice} %{majorver} accessibility connector %{for_fastdebug}
+Requires: %{name}-fastdebug%{?_isa} = %{epoch}:%{version}-%{release}
+Requires: openjfx8%{?_isa}
+Provides: javafx-fastdebug = %{epoch}:%{version}-%{release}
+%description openjfx-fastdebug
+Set of links from OpenJDK-fastdebug (jre) to normal OpenJFX. OpenJFX do not
+support debug builds of itself
 
-
-%description accessibility-fastdebug
-See normal java-%{version}-openjdk-accessibility description.
+%package openjfx-devel-fastdebug
+Summary: OpenJDK x OpenJFX connector for FX developers %{for_fastdebug}. This package adds symliks finishing Java FX integration to %{name}-devel-slowdebug
+Group: Development/Other
+Requires: %{name}-devel-fastdebug%{?_isa} = %{epoch}:%{version}-%{release}
+Requires: openjfx8-devel%{?_isa}
+Provides: javafx-devel-fastdebug = %{epoch}:%{version}-%{release}
+%description openjfx-devel-fastdebug
+Set of links from OpenJDK-fastdebug (sdk) to normal OpenJFX. OpenJFX do not
+support debug builds of itself
+%endif
 %endif
 
 %prep
@@ -1042,8 +1071,6 @@ sh %{SOURCE12}
 %patch400
 %patch401
 
-%patch1
-%patch3
 %patch5
 
 # s390 build fixes
@@ -1066,12 +1093,13 @@ sh %{SOURCE12}
 %patch539
 %patch600
 
-# RPM-only fixes
+# Do not apply FIPS support patches
 #patch1000
 #patch1001
 #patch1002
 #patch1003
 #patch1004
+#patch1005
 
 # RHEL-only patches
 %if ! 0%{?fedora} && 0%{?rhel} <= 7
@@ -1089,7 +1117,6 @@ cp -r tapset tapset%{debug_suffix}
 %if %{include_fastdebug_build}
 cp -r tapset tapset%{fastdebug_suffix}
 %endif
-
 
 for suffix in %{build_loop} ; do
   for file in "tapset"$suffix/*.in; do
@@ -1130,9 +1157,6 @@ done
 # Setup nss.cfg
 sed -e "s:@NSS_LIBDIR@:%{NSS_LIBDIR}:g" %{SOURCE11} > nss.cfg
 
-# Setup nss.fips.cfg
-sed -e "s:@NSS_LIBDIR@:%{NSS_LIBDIR}:g" %{SOURCE15} > nss.fips.cfg
-sed -i -e "s:@NSS_SECMOD@:/etc/pki/nssdb:g" nss.fips.cfg
 sed -i -e 's, -m32, -m32 %optflags_shared -fpic -D_BLA_BLA_BLA1,' openjdk/hotspot/make/linux/makefiles/gcc.make
 sed -i -e 's,DEF_OBJCOPY=/usr/bin/objcopy,DEF_OBJCOPY=/usr/bin/NO-objcopy,' openjdk/hotspot/make/linux/makefiles/defs.make
 %patch33 -p1
@@ -1286,9 +1310,6 @@ export JAVA_HOME=$(pwd)/%{buildoutputdir}/images/%{jdkimage}
 # Install nss.cfg right away as we will be using the JRE above
 install -m 644 nss.cfg $JAVA_HOME/jre/lib/security/
 
-# Install nss.fips.cfg: NSS configuration for global FIPS mode (crypto-policies)
-install -m 644 nss.fips.cfg $JAVA_HOME/jre/lib/security/
-
 # Use system-wide tzdata
 rm $JAVA_HOME/jre/lib/tzdb.dat
 ln -s %{_datadir}/javazi-1.8/tzdb.dat $JAVA_HOME/jre/lib/tzdb.dat
@@ -1307,21 +1328,13 @@ done
 
 %check
 # We test debug first as it will give better diagnostics on a crash
-for suffix in %{rev_build_loop} ; do
+for suffix in %{build_loop} ; do
 
 export JAVA_HOME=$(pwd)/%{buildoutputdir}/images/%{jdkimage}
 
 # Check unlimited policy has been used
 $JAVA_HOME/bin/javac -d . %{SOURCE13}
 $JAVA_HOME/bin/java TestCryptoLevel
-
-# Check ECC is working
-#$JAVA_HOME/bin/javac -d . %{SOURCE14}
-#$JAVA_HOME/bin/java $(echo $(basename %{SOURCE14})|sed "s|\.java||")
-
-# Check correct vendor values have been set
-$JAVA_HOME/bin/javac -d . %{SOURCE16}
-$JAVA_HOME/bin/java $(echo $(basename %{SOURCE16})|sed "s|\.java||") "%{oj_vendor}" %{oj_vendor_url} %{oj_vendor_bug_url}
 
 # Check debug symbols are present and can identify code
 find "$JAVA_HOME" -iname '*.so' -print0 | while read -d $'\0' lib
@@ -1369,7 +1382,7 @@ done
 
 # Make sure gdb can do a backtrace based on line numbers on libjvm.so
 # javaCalls.cpp:58 should map to:
-# http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/ff3b27e6bcc2/src/share/vm/runtime/javaCalls.cpp#l58 
+# http://hg.openjdk.java.net/jdk8u/jdk8u/hotspot/file/ff3b27e6bcc2/src/share/vm/runtime/javaCalls.cpp#l58
 # Using line number 1 might cause build problems. See:
 # https://bugzilla.redhat.com/show_bug.cgi?id=1539664
 # https://bugzilla.redhat.com/show_bug.cgi?id=1538767
@@ -1529,20 +1542,43 @@ find $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/demo \
   | sed 's|^|%%dir |' \
   >> %{name}-demo.files"$suffix"
 
-# Create links which leads to separately installed java-atk-bridge and allow configuration
-# links points to java-atk-wrapper - an dependence
-  pushd $RPM_BUILD_ROOT/%{_jvmdir}/%{jredir}/lib/%{archinstall}
-    ln -s %{_libdir}/java-atk-wrapper/libatk-wrapper.so.0 libatk-wrapper.so
-  popd
-  pushd $RPM_BUILD_ROOT/%{_jvmdir}/%{jredir}/lib/ext
-     ln -s %{_libdir}/java-atk-wrapper/java-atk-wrapper.jar  java-atk-wrapper.jar
-  popd
-  pushd $RPM_BUILD_ROOT/%{_jvmdir}/%{jredir}/lib/
-    echo "#Config file to  enable java-atk-wrapper" > accessibility.properties
-    echo "" >> accessibility.properties
-    echo "assistive_technologies=org.GNOME.Accessibility.AtkWrapper" >> accessibility.properties
-    echo "" >> accessibility.properties
-  popd
+# intentionally after all else, fx links  with redirections on its own
+%if %{with_openjfx_binding}
+  FXSDK_FILES=%{name}-openjfx-devel.files"$suffix"
+  FXJRE_FILES=%{name}-openjfx.files"$suffix"
+  echo -n "" > $FXJRE_FILES
+  echo -n "" > $FXSDK_FILES
+  for file in  %{jfx_jre_libs} ; do
+    srcfile=%{jfx_jre_libs_dir}/$file
+    targetfile=%{_jvmdir}/%{jredir $suffix}/lib/$file
+    ln -s $srcfile $RPM_BUILD_ROOT/$targetfile
+    echo $targetfile >> $FXJRE_FILES
+  done
+  for file in  %{jfx_jre_native} ; do
+    srcfile=%{jfx_jre_native_dir}/$file
+    targetfile=%{_jvmdir}/%{jredir $suffix}/lib/%{archinstall}/$file
+    ln -s $srcfile $RPM_BUILD_ROOT/$targetfile
+    echo $targetfile >> $FXJRE_FILES
+  done
+  for file in  %{jfx_jre_exts} ; do
+    srcfile=%{jfx_jre_exts_dir}/$file
+    targetfile=%{_jvmdir}/%{jredir $suffix}/lib/ext/$file
+    ln -s $srcfile $RPM_BUILD_ROOT/$targetfile
+    echo $targetfile >> $FXJRE_FILES
+  done
+  for file in  %{jfx_sdk_libs} ; do
+    srcfile=%{jfx_sdk_libs_dir}/$file
+    targetfile=%{_jvmdir}/%{sdkdir $suffix}/lib/$file
+    ln -s $srcfile $RPM_BUILD_ROOT/$targetfile
+    echo $targetfile >> $FXSDK_FILES
+  done
+  for file in  %{jfx_sdk_bins} ; do
+    srcfile=%{jfx_sdk_bins_dir}/$file
+    targetfile=%{_jvmdir}/%{sdkdir $suffix}/bin/$file
+    ln -s $srcfile $RPM_BUILD_ROOT/$targetfile
+    echo $targetfile >> $FXSDK_FILES
+  done
+%endif
 
 bash %{SOURCE20} $RPM_BUILD_ROOT/%{_jvmdir}/%{jredir} %{javaver}
 # https://bugzilla.redhat.com/show_bug.cgi?id=1183793
@@ -1551,7 +1587,7 @@ touch -t 201401010000 $RPM_BUILD_ROOT/%{_jvmdir}/%{jredir}/lib/security/java.sec
 # moving config files to /etc
 mkdir -p $RPM_BUILD_ROOT/%{etcjavadir -- $suffix}/lib/security/policy/unlimited/
 mkdir -p $RPM_BUILD_ROOT/%{etcjavadir -- $suffix}/lib/security/policy/limited/
-for file in lib/security/cacerts lib/security/policy/unlimited/US_export_policy.jar lib/security/policy/unlimited/local_policy.jar lib/security/policy/limited/US_export_policy.jar lib/security/policy/limited/local_policy.jar lib/security/java.policy lib/security/java.security lib/security/blacklisted.certs lib/logging.properties lib/calendars.properties lib/security/nss.fips.cfg ; do
+for file in lib/security/cacerts lib/security/policy/unlimited/US_export_policy.jar lib/security/policy/unlimited/local_policy.jar lib/security/policy/limited/US_export_policy.jar lib/security/policy/limited/local_policy.jar lib/security/java.policy lib/security/java.security lib/security/blacklisted.certs lib/logging.properties lib/calendars.properties ; do
   mv      $RPM_BUILD_ROOT/%{_jvmdir}/%{jredir}/$file   $RPM_BUILD_ROOT/%{etcjavadir -- $suffix}/$file
   ln -sf  %{etcjavadir -- $suffix}/$file                          $RPM_BUILD_ROOT/%{_jvmdir}/%{jredir}/$file
 done
@@ -1570,10 +1606,6 @@ do
     mkdir -p %buildroot`dirname "$rpm404_ghost"`
     touch %buildroot"$rpm404_ghost"
 done
-
-%if %{include_normal_build}
-# intentionally only for non-debug
-%endif
 
 export LANG=ru_RU.UTF-8
 if stat -t %buildroot/usr/share/applications/*policytool.desktop; then
@@ -1741,8 +1773,6 @@ done
 ##################################################
 # - END alt linux specific, shared with openjdk -#
 ##################################################
-
-
 echo "install passed past alt linux specific."
 
 %post headless
@@ -1840,9 +1870,7 @@ fi
 %{_mandir}/man1/unpack200-%{uniquesuffix}.1*
 %{_mandir}/man1/policytool-%{uniquesuffix}.1*
 %{_jvmdir}/%{jredir}/lib/security/nss.cfg
-#%{_jvmdir}/%{jredir}/lib/security/nss.fips.cfg
 #%config(noreplace) %{etcjavadir}/lib/security/nss.cfg
-#%config(noreplace) %{etcjavadir}/lib/security/nss.fips.cfg
 %ifarch %{jit_arches}
 %ifnarch %{power64}
 %attr(444, root, root) %ghost %{_jvmdir}/%{jredir}/lib/%{archinstall}/server/classes.jsa
@@ -2075,10 +2103,11 @@ fi
 %doc %{_javadocdir}/%{uniquejavadocdir}.zip
 %doc --no-dereference %{buildoutputdir}/images/%{jdkimage}/jre/LICENSE
 
-%files accessibility
-%{_jvmdir}/%{jredir}/lib/%{archinstall}/libatk-wrapper.so
-%{_jvmdir}/%{jredir}/lib/ext/java-atk-wrapper.jar
-%{_jvmdir}/%{jredir}/lib/accessibility.properties
+%if %{with_openjfx_binding}
+%files openjfx -f %{name}-openjfx.files
+
+%files openjfx-devel -f %{name}-openjfx-devel.files
+%endif
 %endif
 
 %if %{include_debug_build}
@@ -2091,8 +2120,11 @@ fi
 %files demo-slowdebug -f %{name}-demo.files-slowdebug
 
 %files src-slowdebug
+%if %{with_openjfx_binding}
+%files openjfx-slowdebug -f %{name}-openjfx.files-slowdebug
 
-%files accessibility-slowdebug
+%files openjfx-devel-slowdebug -f %{name}-openjfx-devel.files-slowdebug
+%endif
 %endif
 
 %if %{include_fastdebug_build}
@@ -2106,10 +2138,24 @@ fi
 
 %files src-fastdebug
 
-%files accessibility-fastdebug
+%if %{with_openjfx_binding}
+%files openjfx-debug -f %{name}-openjfx.files-debug
+
+%files openjfx-devel-debug -f %{name}-openjfx-devel.files-debug
+%endif
 %endif
 
 %changelog
+* Sun Aug 08 2021 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.302.b08-alt1_0jpp8
+- New version
+- Security fixes since 1.8.0.282.b08-alt1_0jpp8:
+  + CVE-2021-2341: Improve file transfers
+  + CVE-2021-2369: Better jar file validation
+  + CVE-2021-2388: Enhance compiler validation
+  + CVE-2021-2163: Enhance opening JARs
+  + CVE-2021-2161: Less ambiguous processing
+- Remove accessibility packages
+
 * Wed Feb 03 2021 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.282.b08-alt1_0jpp8
 - New version (ALT #39635)
 - Require ca-trust-java instead of ca-trust (ALT #35690)
