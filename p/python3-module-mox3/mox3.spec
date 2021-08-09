@@ -3,7 +3,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.1.0
-Release: alt1
+Release: alt2
 Summary: Mock object framework for Python
 License: Apache-2.0
 Group: Development/Python3
@@ -29,7 +29,6 @@ BuildRequires: python3-module-coverage
 BuildRequires: python3-module-hacking
 BuildRequires: python3-module-flake8
 BuildRequires: python3-pyflakes
-BuildRequires: python3-tools-pep8
 BuildRequires: python3-module-requests
 
 %py3_provides %pypi_name
@@ -104,6 +103,9 @@ py.test3
 %python3_sitelibdir/*/tests
 
 %changelog
+* Mon Aug 09 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt2
+- Fixed BuildRequires.
+
 * Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
 - Build new version.
 
