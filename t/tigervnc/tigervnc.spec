@@ -2,8 +2,8 @@
 %define _xorgmoduledir %_libdir/X11/modules
 
 Name: tigervnc
-Version: 1.10.1
-Release: alt5
+Version: 1.11.0
+Release: alt1
 Summary: A TigerVNC remote display system
 
 Group: Networking/Remote access
@@ -18,6 +18,8 @@ Obsoletes: tightvnc
 Source0: %name-%version.tar.gz
 Source1: vncserver.init
 Source2: vncserver.service
+Source3: vncserver.pl
+Source4: vncserver.man
 
 Source100: xorg-server-source.tar
 Source101: tightpasswd.tar.gz
@@ -26,28 +28,35 @@ Source201: tigervnc.unused
 
 ## FC patches
 Patch1: FC-xserver120.patch
-Patch2: FC-getmaster.patch
-Patch3: FC-utilize-system-crypto-policies.patch
-Patch4: FC-passwd-crash-with-malloc-checks.patch
+Patch2: FC-let-user-know-about-not-using-view-only-password.patch
+Patch3: FC-working-tls-on-fips-systems.patch
+Patch4: FC-utilize-system-crypto-policies.patch
+Patch5: FC-passwd-crash-with-malloc-checks.patch
+Patch6: FC-tolerate-specifying-boolparam.patch
+Patch7: FC-systemd-service.patch
+Patch8: FC-correctly-start-vncsession-as-daemon.patch
+Patch9: FC-selinux-missing-compression-and-correct-location.patch
+Patch10: FC-selinux-policy-improvements.patch
+Patch11: FC-argb-runtime-ximage-byteorder-selection.patch
 
 ## Ubuntu patches
-Patch101: Ubuntu-0010-fix-xtigervnc-build.patch
-Patch102: Ubuntu-0020-buildtime-from-debian-changelog.patch
-Patch103: Ubuntu-0102-fix-spelling-error-in-manpages-to-shutup-lintian.patch
-Patch104: Ubuntu-0151-make-cmake-enable-options-mandatory-if-turned-on.patch
-Patch105: Ubuntu-0175-xtigervncviewer-WM_CLASS.patch
-Patch106: Ubuntu-0177-tigervnc-1.10.1-fix-setupShm-wrong-width-heigh-method.patch
-Patch107: Ubuntu-0178-xorg-server-1.20.7-fix-ddxInputThreadInit-link-error.patch
-Patch108: Ubuntu-0179-Fix-saving-of-bad-server-certificates.patch
-Patch109: Ubuntu-rh_0904-Added-RH-patch-tigervnc11-rh588342.patch-which-fixes.patch
-Patch110: Ubuntu-rh_tigervnc-manpages.patch
-Patch111: Ubuntu-rh_tigervnc-cursor.patch
-Patch112: Ubuntu-rh_tigervnc-working-tls-on-fips-systems.patch
-Patch113: Ubuntu-find-fltk-libs.patch
-Patch114: Ubuntu-x0vncserver-build-make-missing-libraries-fatal-errors.patch
-Patch115: Ubuntu-fix-linking.patch
-Patch116: Ubuntu-CVE-2014-8240-849479.patch
-Patch117: Ubuntu-CVE-2014-8241-849478.patch
+Patch101: Ubuntu-0000-find-fltk-libs.patch
+Patch102: Ubuntu-0001-x0vncserver-build-make-missing-libraries-fatal-errors.patch
+Patch103: Ubuntu-0002-fix-linking.patch
+Patch104: Ubuntu-0010-fix-xtigervnc-build.patch
+Patch105: Ubuntu-0020-buildtime-from-debian-changelog.patch
+Patch106: Ubuntu-0102-fix-spelling-error-in-manpages-to-shutup-lintian.patch
+Patch107: Ubuntu-0151-make-cmake-enable-options-mandatory-if-turned-on.patch
+Patch108: Ubuntu-0175-xtigervncviewer-WM_CLASS.patch
+Patch109: Ubuntu-0205-defined-CMAKE_INSTALL_FULL_BINDIR.patch
+Patch110: Ubuntu-0210-use-tigervncsession-name.patch
+Patch111: Ubuntu-0220-remove-systemd-service-obsolete-syslog-target.patch
+Patch112: Ubuntu-0300-fix-Xtigervnc-boolparam-parsing.patch
+Patch113: Ubuntu-rh_0904-Added-RH-patch-tigervnc11-rh588342.patch-which-fixes.patch
+Patch114: Ubuntu-rh_tigervnc-manpages.patch
+Patch115: Ubuntu-rh_tigervnc-cursor.patch
+Patch116: Ubuntu-rh_tigervnc-working-tls-on-fips-systems.patch
+Patch117: Ubuntu-CVE-2014-8240-849479.patch
 
 ## ALT patches
 Patch501: tigervnc-stdinpasswd.patch
@@ -82,7 +91,7 @@ Summary: A TigerVNC server
 Group: Networking/Remote access
 Provides: tightvnc-server
 Obsoletes: tightvnc-server
-Requires: %name-common = %version-%release
+Requires: %name-common = %version-%release, %name-pam = %version-%release
 
 %description server
 The VNC system allows you to access the same desktop from a wide
@@ -100,54 +109,67 @@ A TigerVNC and TightVNC compatible passwd utilities
 %package -n xorg-extension-vnc
 Summary: VNC extension for Xorg
 Group: Networking/Remote access
-Requires: %name-common = %version-%release
+Requires: %name-common = %version-%release, %name-pam = %version-%release
 
 %description -n xorg-extension-vnc
 TigerVNC extension for Xorg server
 
+%package pam
+Summary: PAM module for TigerVNC servers
+Group: Networking/Remote access
+
+%description pam
+PAM module for TigerVNC servers
+
 %prep
 %setup -a101 -a100
+cp %SOURCE3 %SOURCE4 .
 
 ## FC apply patches
 #patch1 -p1 -b .xserver120-rebased
-%patch2 -p1 -b .getmaster
-%patch3 -p1 -b .utilize-system-crypto-policies
-%patch4 -p1 -b .tigervnc-passwd-crash-with-malloc-checks
+%patch2 -p1 -b .let-user-know-about-not-using-view-only-password
+%patch3 -p1 -b .working-tls-on-fips-systems
+%patch4 -p1 -b .utilize-system-crypto-policies
+%patch5 -p1 -b .passwd-crash-with-malloc-checks
+%patch6 -p1 -b .tolerate-specifying-boolparam
+%patch7 -p1 -b .systemd-service
+%patch8 -p1 -b .correctly-start-vncsession-as-daemon
+%patch9 -p1 -b .selinux-missing-compression-and-correct-location
+%patch10 -p1 -b .selinux-policy-improvements
+%patch11 -p1 -b .argb-runtime-ximage-byteorder-selection
 
-#%patch1 -p1 -b .cookie
-#%patch2 -p1 -b .libvnc-os
-#%patch5 -p1 -b .inetd-nowait
-#%patch10 -p1 -b .xserver118
-#%patch11 -p1 -b .xorg118-QueueKeyboardEvents
 ## Ubuntu apply patches
 %patch101 -p1
-#patch102 -p1
+%patch102 -p1
 %patch103 -p1
 %patch104 -p1
-%patch105 -p1
+#patch105 -p1
 %patch106 -p1
 %patch107 -p1
 %patch108 -p1
 %patch109 -p1
 #patch110 -p1
 %patch111 -p1
-%patch112 -p1
+#patch112 -p1
 %patch113 -p1
-%patch114 -p1
+#patch114 -p1
 %patch115 -p1
-%patch116 -p1
+#patch116 -p1
 %patch117 -p1
 
 ## ALT apply patches
 %patch501 -p1
 %patch502 -p1
-%patch601 -p1
-%patch602 -p1
+#patch601 -p1
+#patch602 -p1
+
+# Unpach Ubuntu's xtigervncviewer
+sed -i 's/xtigervncviewer/vncviewer/g' vncviewer/vncviewer.desktop.in.in
 
 %build
 
 %add_optflags -fPIC
-%cmake_insource
+%cmake_insource -DCMAKE_INSTALL_UNITDIR:PATH=%_unitdir
 %make_build
 
 pushd unix/xserver
@@ -186,10 +208,10 @@ pushd unix/xserver
 popd
 
 # Build icons
-pushd media
-%cmake_insource -DDATA_DIR:PATH=%_datadir
-%make
-popd
+##pushd media
+##%cmake_insource -DDATA_DIR:PATH=%_datadir
+##%make
+##popd
 
 # Build tightvnc compatible vncpasswd
 pushd tightpasswd
@@ -199,13 +221,10 @@ popd
 %install
 %makeinstall_std
 
-pushd unix/xserver/hw/vnc
-%makeinstall_std
-popd
+%makeinstall_std -C unix/xserver/hw/vnc
 
 # Install Xvnc as service
 install -pD -m755 %SOURCE1 %buildroot%_initddir/vncserver
-install -pD -m644 %SOURCE2 %buildroot%_unitdir/vncserver@.service
 
 mkdir -p %buildroot%_sysconfdir/sysconfig
 cat << __EOF__ > %buildroot%_sysconfdir/sysconfig/vncservers
@@ -225,31 +244,19 @@ cat << __EOF__ > %buildroot%_sysconfdir/sysconfig/vncservers
 # VNCSERVERARGS[1]="-geometry 800x600 -localhost"
 __EOF__
 
-mkdir -p %buildroot%_sysconfdir/X11/xorg.conf.d
-cat << __EOF__ > %buildroot%_sysconfdir/X11/xorg.conf.d/vnc.conf
-#Section "Module"
-#      Load "vnc"
-#EndSection
-
-#Section "Screen"
-#      Identifier "VNC Extension"
-#      Option "SecurityTypes" "VncAuth"
-#      Option "UserPasswdVerifier" "VncAuth"
-#      Option "PasswordFile" "/root/.vnc/passwd"
-#EndSection
-__EOF__
-
+install -D contrib/packages/rpm/el7/SOURCES/10-libvnc.conf %buildroot%_sysconfdir/X11/xorg.conf.d/vnc.conf
 
 # Build tightvnc compatible vncpasswd
-pushd tightpasswd
-install tightpasswd %buildroot%_bindir/tightpasswd
-install vncpasswd.man %buildroot%_man1dir/tightpasswd.1
-popd
+install tightpasswd/tightpasswd %buildroot%_bindir/tightpasswd
+install tightpasswd/vncpasswd.man %buildroot%_man1dir/tightpasswd.1
+
+install vncserver.pl %buildroot/%_bindir/vncserver
+install vncserver.man %buildroot/%_man1dir/vncserver.1
 
 %find_lang %name
 
 %files -f %name.lang
-%doc LICENCE.TXT
+%doc LICENCE.TXT *.rst
 %_bindir/vncviewer
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/*.png
@@ -260,13 +267,16 @@ popd
 %_initddir/vncserver
 %_unitdir/vncserver@.service
 %config(noreplace) %_sysconfdir/sysconfig/vncservers
+%config(noreplace) %_sysconfdir/tigervnc
 %_bindir/vncconfig
 %_bindir/x0vncserver
 %_bindir/Xvnc
 %_bindir/vncserver
+%_sbindir/*
+%_prefix/libexec/*
 %_man1dir/Xvnc.1*
 %_man1dir/vncconfig.1*
-%_man1dir/vncserver.1*
+%_man8dir/*.8*
 %_man1dir/x0vncserver.1*
 
 %files common
@@ -275,11 +285,18 @@ popd
 %_man1dir/vncpasswd.1*
 %_man1dir/tightpasswd.1*
 
+%files pam
+%_sysconfdir/pam.d/*
+
 %files -n xorg-extension-vnc
 %config(noreplace) %_sysconfdir/X11/xorg.conf.d/vnc.conf
 %_xorgmoduledir/extensions/*.so
 
 %changelog
+* Fri Aug 06 2021 Fr. Br. George <george@altlinux.ru> 1.11.0-alt1
+- Udate to 1.11.0
+- Update patches
+
 * Mon Jan 25 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.10.1-alt5
 - Fixed desktop file (Closes: 39595).
 
