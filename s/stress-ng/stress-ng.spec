@@ -6,7 +6,7 @@
 %endif
 
 Name: stress-ng
-Version: 0.12.12
+Version: 0.13.00
 Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
@@ -79,6 +79,9 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Mon Aug 09 2021 Vitaly Chikunov <vt@altlinux.org> 0.13.00-alt1
+- Update to V0.13.00 (2021-08-02).
+
 * Thu Jul 15 2021 Vitaly Chikunov <vt@altlinux.org> 0.12.12-alt1
 - Update to V0.12.12 (2021-07-09).
 
