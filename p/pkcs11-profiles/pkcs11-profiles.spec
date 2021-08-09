@@ -10,12 +10,15 @@
 %def_disable isbc
 %endif
 
-# libjcpkcs11 is not available in Sisyphus any more!
+%ifarch x86_64 armh aarch64 mipsel %e2k
+%def_enable jacarta
+%else
 %def_disable jacarta
+%endif
 
 Name: pkcs11-profiles
-Version: 0.1.11
-Release: alt2
+Version: 0.1.12
+Release: alt1
 
 Summary: Set of scripts and profiles for PAM PKCS11 configuration
 License: GPLv3+
@@ -67,7 +70,7 @@ License: GPLv3+
 Group: System/Configuration/Other
 Requires: %name-common = %version-%release
 Requires: pam_pkcs11 >= 0.6.11-alt1
-Requires: libjcpkcs11
+Requires: libjcpkcs11 >= 2.7.2-alt4
 
 %description jacarta
 JaCarta PAM PKCS11 module configuration
@@ -124,7 +127,6 @@ Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 %dir %confdir/profiles
 %config(noreplace) %confdir/profiles/opensc
 %dir %confdir/modules.avail
-%config(noreplace) %confdir/modules.avail/aladdin
 %dir %confdir/mapping.profiles
 %config(noreplace) %confdir/mapping.profiles/cert
 %config(noreplace) %confdir/mapping.profiles/cn
@@ -167,6 +169,11 @@ Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 %config(noreplace) %confdir/message.profiles/zastava
 
 %changelog
+* Mon Jul 19 2021 Paul Wolneykien <manowar@altlinux.org> 0.1.12-alt1
+- Enable JaCarta profile again (requires libjcpkcs11 >= 2.7.2-alt4).
+- Fix: Do not package module profile for "Aladdin eTokenPRO-32".
+- Set path to the new JaCarta library: @libdir@/pkcs11/libjcPKCS11-2.so.
+
 * Tue Jan 12 2021 Paul Wolneykien <manowar@altlinux.org> 0.1.11-alt2
 - Fixed %%changelog glitches.
 
