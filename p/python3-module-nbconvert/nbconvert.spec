@@ -7,8 +7,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.0.2
-Release: alt4
+Version: 6.1.0
+Release: alt1
 
 Summary: Converting Jupyter Notebooks
 
@@ -25,9 +25,9 @@ Patch1: %oname-%version-alt-tests.patch
 
 # It may be necessary to update these files when package is updated
 # URLs are taken from setup.py
-Source1: lab-2.1.0-index.css
-Source2: lab-2.1.2-theme-light.css
-Source3: lab-2.1.2-theme-dark.css
+Source1: lab-3.0.7-index.css
+Source2: lab-3.0.7-theme-light.css
+Source3: lab-3.0.7-theme-dark.css
 Source4: classic-5.4.0-style.css
 
 BuildRequires(pre): rpm-build-intro
@@ -67,7 +67,7 @@ BuildRequires: python3(nest_asyncio)
 # TODO: py3_use pygments >= 2.4.1
 %py3_use Pygments >= 2.4.1
 %py3_use jupyterlab_pygments
-%py3_use traitlets >= 4.2
+%py3_use traitlets >= 5.0
 %py3_use jupyter_core
 %py3_use nbformat >= 4.4
 %py3_use entrypoints >= 0.2.2
@@ -189,6 +189,9 @@ PYTHONPATH=$(pwd) py.test3 -vv
 %endif
 
 %changelog
+* Mon Aug 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.0-alt1
+- Updated to upstream version 6.1.0.
+
 * Thu Jun 24 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.0.2-alt4
 - drop excessive python3-module-jinja2-tests BR
 
