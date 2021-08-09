@@ -3,7 +3,7 @@
 
 Name: mysql-connector-odbc
 Version: 8.0.25
-Release: alt1
+Release: alt2
 
 Summary: MySQL Connector/ODBC - ODBC driver for MySQL
 
@@ -64,9 +64,15 @@ setup instructions can be found at
 %install
 %cmakeinstall_std
 
-install -m 0644 %SOURCE1 odbc.ini
-install -m 0644 %SOURCE2 odbcinst.ini
-sed -e 's#@@lib@@#%{_libdir}#g' -i odbcinst.ini
+%ifarch %e2k
+# no LIB_SUFFIX reaction
+mkdir -p %buildroot%_libdir
+mv %buildroot{%_prefix/lib/*,%_libdir} ||:
+%endif
+
+install -pm 0644 %SOURCE1 odbc.ini
+install -pm 0644 %SOURCE2 odbcinst.ini
+sed -e 's#@@lib@@#%_libdir#g' -i odbcinst.ini
 
 rm -f %buildroot/%_prefix/{ChangeLog,README.txt,LICENSE.txt,INFO_BIN,INFO_SRC}
 
@@ -77,6 +83,9 @@ rm -f %buildroot/%_prefix/{ChangeLog,README.txt,LICENSE.txt,INFO_BIN,INFO_SRC}
 %exclude %_prefix/test
 
 %changelog
+* Mon Aug 09 2021 Michael Shigorin <mike@altlinux.org> 8.0.25-alt2
+- libsuffix installation problem workaround on e2k
+
 * Tue May 25 2021 Nikolai Kostrigin <nickel@altlinux.org> 8.0.25-alt1
 - New version
 
