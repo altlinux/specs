@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
-Version: 0.0.23b
-Release: alt7
+Version: 0.0.25
+Release: alt1
 
 Group: Games/Strategy
 Summary: Free, open-source realtime strategy game of ancient warfare
@@ -9,12 +9,10 @@ License: Various (all distributable)
 Url: http://www.wildfiregames.com/0ad/
 Requires: %name-data = %epoch:%version
 Source: %name-%version.tar
-Patch0: mozjs38-jit-none.patch
-Patch1: 0ad-ppc64le.patch
-Patch2: 0ad-gcc10-compat.patch
-Patch3: 0ad-alt-build.patch
+Patch0: 0ad-mozjs78-version.patch
+Patch1: 0ad-mozjs78-PrepareZoneForGC.patch
 
-ExcludeArch: %arm
+ExcludeArch: ppc64le
 
 BuildRequires: gcc-c++ python cmake
 BuildRequires: boost-filesystem-devel boost-flyweight-devel boost-signals-devel
@@ -23,6 +21,7 @@ BuildRequires: libopenal-devel libGL-devel libSDL2-devel libwxGTK3.0-devel libXc
 BuildRequires: libcurl-devel libxml2-devel libnspr-devel libicu-devel zlib-devel
 BuildRequires: libenet-devel libminiupnpc-devel libgloox-devel libsodium-devel
 BuildRequires: python-devel python-module-json
+BuildRequires: libmozjs78-devel libfmt-devel boost-lockfree-devel
 
 # premake5 requires /proc/self/exe
 BuildRequires: /proc
@@ -44,11 +43,8 @@ educational celebration of game development and ancient history.
 
 %prep
 %setup
-cp -p %{P:0} libraries/source/spidermonkey/FixJitNone.diff
-echo "patch -p0 <../FixJitNone.diff" >>libraries/source/spidermonkey/patch.sh
+%patch0 -p1
 %patch1 -p1
-%patch2 -p2
-%patch3 -p2
 
 # update shebangs from python to python2
 find . -name '*.py' -o -name 'cxxtestgen' | xargs sed -i \
@@ -57,7 +53,6 @@ find . -name '*.py' -o -name 'cxxtestgen' | xargs sed -i \
 	%nil
 
 %build
-mkdir -p libraries/source/fcollada/src/output/debug/FCollada
 export CFLAGS="%optflags"
 export CPPFLAGS="%optflags"
 export SHELL=/bin/sh
@@ -66,6 +61,7 @@ build/workspaces/update-workspaces.sh \
 	--bindir=%_bindir \
 	--datadir=%_datadir/%name \
 	--libdir=%_libdir/%name \
+	--with-system-mozjs \
 	-j$NPROCS
 %make_build -C build/workspaces/gcc verbose=1
 
@@ -73,7 +69,6 @@ build/workspaces/update-workspaces.sh \
 install -Dm 0755 binaries/system/pyrogenesis %buildroot%_bindir/pyrogenesis
 install -Dm 0755 binaries/system/libCollada.so %buildroot%_libdir/%name/libCollada.so
 install -Dm 0755 binaries/system/libAtlasUI.so %buildroot%_libdir/%name/libAtlasUI.so
-install -Dm 0755 binaries/system/libmozjs*-ps-release.so %buildroot%_libdir/%name/
 install -Dm 0755 binaries/system/libnvcore.so %buildroot%_libdir/%name/libnvcore.so
 install -Dm 0755 binaries/system/libnvimage.so %buildroot%_libdir/%name/libnvimage.so
 install -Dm 0755 binaries/system/libnvmath.so %buildroot%_libdir/%name/libnvmath.so
@@ -96,8 +91,20 @@ cp -a binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad/*
 
 %changelog
+* Mon Aug 09 2021 Alexey Tourbin <at@altlinux.ru> 1:0.0.25-alt1
+- 0.0.24b -> 0.0.25
+- build with system mozjs78
+- re-enable Atlas (the scenario editor)
+
 * Mon Jun 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.0.23b-alt7
 - Fixed build (Closes: #40307).
+
+* Tue Feb 23 2021 Alexey Tourbin <at@altlinux.ru> 1:0.0.24b-alt1
+- 0.0.23b -> 0.0.24b
+- build with system mozjs78 for now
+- disable Atlas (the scenario editor) for now
+- removed ExcludeArch: %%arm; added ExcludeArch: ppc64le
+- new BuildRequires: libmozjs78-devel libfmt-devel boost-lockfree-devel
 
 * Tue Feb 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.0.23b-alt6
 - Fixed build with gcc-10 and rebuilt with new boost libraries.

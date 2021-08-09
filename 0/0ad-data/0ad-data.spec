@@ -1,6 +1,6 @@
 Name: 0ad-data
 Epoch: 1
-Version: 0.0.23b
+Version: 0.0.25
 Release: alt1
 BuildArch: noarch
 
@@ -8,7 +8,6 @@ Group: Games/Strategy
 Summary: Data for 0ad: free, open-source realtime strategy game of ancient warfare
 License: Various (all distributable)
 Url: http://www.wildfiregames.com/0ad/
-Requires: 0ad = %epoch:%version
 Source: 0ad-%version-alpha-unix-data.tar.xz
 
 %description
@@ -37,6 +36,13 @@ mv binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad
 
 %changelog
+* Mon Aug 09 2021 Alexey Tourbin <at@altlinux.ru> 1:0.0.25-alt1
+- 0.0.24b -> 0.0.25
+
+* Tue Feb 23 2021 Alexey Tourbin <at@altlinux.ru> 1:0.0.24b-alt1
+- 0.0.23b -> 0.0.24b
+- removed Requires: 0ad, to avoid an unmet dependency on ppc64le
+
 * Mon Dec 24 2018 Alexey Tourbin <at@altlinux.ru> 1:0.0.23b-alt1
 - official re-release of Alpha 23
 
