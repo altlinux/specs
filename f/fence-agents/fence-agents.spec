@@ -12,7 +12,7 @@
 Name: fence-agents
 Summary: Fence Agents
 Version: 4.10.0
-Release: alt1
+Release: alt2
 License: GPLv2+ and LGPLv2+
 Group: System/Base
 Url: http://sourceware.org/cluster/wiki/
@@ -31,9 +31,27 @@ BuildRequires: libcorosync-devel libvirt-devel
 BuildRequires: libxml2-devel nss-devel nspr-devel
 BuildRequires: flex libuuid-devel
 
+# skipped: pve, raritan, rcd-serial, virsh
+%global allfenceagents fence-agents-aliyun fence-agents-alom fence-agents-amt fence-agents-apc fence-agents-apc-snmp fence-agents-aws fence-agents-azure-arm fence-agents-bladecenter fence-agents-brocade fence-agents-cdu fence-agents-cisco-mds fence-agents-cisco-ucs fence-agents-common fence-agents-crosslink fence-agents-docker fence-agents-drac fence-agents-drac5 fence-agents-eaton-snmp fence-agents-emerson fence-agents-eps fence-agents-hds-cb fence-agents-heuristics-ping fence-agents-hpblade fence-agents-ibmblade fence-agents-ibmz fence-agents-ifmib fence-agents-ilo2 fence-agents-ilo-moonshot fence-agents-ilo-mp fence-agents-ilo-ssh fence-agents-intelmodular fence-agents-ipdu fence-agents-ipmilan fence-agents-kdump fence-agents-kubevirt fence-agents-ldom fence-agents-lindypdu fence-agents-lpar fence-agents-mpath fence-agents-netio fence-agents-ovh fence-agents-powerman fence-agents-redfish fence-agents-rhevm fence-agents-rsa fence-agents-rsb fence-agents-sanbox2 fence-agents-sbd fence-agents-scsi fence-agents-skalar fence-agents-vbox fence-agents-vmware fence-agents-vmware-rest fence-agents-vmware-soap fence-agents-vmware-vcloud fence-agents-wti fence-agents-xenapi fence-agents-zvm fence-virt fence-virtd fence-virtd-multicast fence-virtd-serial fence-virtd-tcp fence-virtd-vsock fence-virtd-libvirt fence-virtd-cpg fence-agents-compute fence-agents-ironic fence-agents-openstack
+
 %description
 Fence Agents is a collection of scripts to handle remote
 power management for several devices.
+
+%package all
+BuildArch: noarch
+Group: System/Base
+Summary: Set of unified programs capable of host isolation ("fencing")
+Requires: %allfenceagents
+Provides: fence-agents = %EVR
+Obsoletes: fence-agents < 3.1.13
+
+%description all
+A collection of executables to handle isolation ("fencing") of possibly
+misbehaving hosts by the means of remote power management, blocking
+network, storage, or similar.
+
+This package serves as a catch-all for all supported fence agents.
 
 %package common
 BuildArch: noarch
@@ -93,17 +111,6 @@ Requires: fence-agents-common = %version-%release
 
 %description amt
 The fence-agents-amt package contains a fence agent for AMT compatibile devices that are accessed via 3rd party software.
-
-#%package amt-ws
-#BuildArch: noarch
-#License: ASL 2.0
-#Group: System/Base
-#Summary: Fence agent for Intel AMT (WS-Man) devices
-#Requires: fence-agents-common >= %version-%release
-#Requires: openwsman-python3
-
-#%description amt-ws
-#The fence-agents-amt-ws package contains a fence agent for AMT (WS-Man) devices.
 
 %package aws
 License: GPLv2+ and LGPLv2+
@@ -251,18 +258,6 @@ Requires: fence-agents-common = %version-%release
 
 %description eps
 The fence-agents-eps package contains a fence agent for ePowerSwitch 8M+ power switches that are accessed via the HTTP(s) protocol.
-
-#%package gce
-#License: GPLv2+ and LGPLv2+
-#Summary: Fence agent for GCE (Google Cloud Engine)
-#Requires: fence-agents-common = %version-%release
-#Requires: python3-google-api-client
-#BuildArch: noarch
-#Group: System/Base
-#Obsoletes: fence-agents
-
-#%description gce
-#Fence agent for GCE (Google Cloud Engine) instances.
 
 %package heuristics-ping
 License: GPLv2+ and LGPLv2+
@@ -808,6 +803,8 @@ install -m 0755 %SOURCE11 %buildroot%_initdir/fence_virtd
 %preun
 %preun_service fence_virtd
 
+%files all
+
 %files common
 %_defaultdocdir/%name
 %_datadir/fence
@@ -847,10 +844,6 @@ install -m 0755 %SOURCE11 %buildroot%_initdir/fence_virtd
 %files amt
 %_sbindir/fence_amt
 %_man8dir/fence_amt.8*
-
-#%files amt-ws
-#%_sbindir/fence_amt_ws
-#%_man8dir/fence_amt_ws.8*
 
 %files aws
 %_sbindir/fence_aws
@@ -914,10 +907,6 @@ install -m 0755 %SOURCE11 %buildroot%_initdir/fence_virtd
 %files eps
 %_sbindir/fence_eps
 %_man8dir/fence_eps.8*
-
-#%files gce
-#%_sbindir/fence_gce
-#%_man8dir/fence_gce.8*
 
 %files heuristics-ping
 %_sbindir/fence_heuristics_ping
@@ -1156,6 +1145,9 @@ install -m 0755 %SOURCE11 %buildroot%_initdir/fence_virtd
 %endif
 
 %changelog
+* Tue Aug 10 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.10.0-alt2
+- fence-agents-all meta package
+
 * Mon Jul 19 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.10.0-alt1
 - 4.10.0
 - Add cdu and kubevirt modules.
