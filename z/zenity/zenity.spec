@@ -1,25 +1,26 @@
-%define ver_major 3.32
+%define ver_major 3.41
 %def_enable libnotify
 %def_enable webkitgtk
+%def_enable check
 
 Name: zenity
 Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME port of dialog(1)
-License: LGPLv2+
+License: LGPL-2.1
 Group: Graphical desktop/GNOME
-URL: https://wiki.gnome.org/Projects/Zenity
+Url: https://wiki.gnome.org/Projects/Zenity
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
 
-%define gtk_ver 3.0.0
+%define glib_ver 2.43.4
+%define gtk_ver 3.16.0
 
-BuildPreReq: gnome-common yelp-tools
-BuildPreReq: glib2-devel
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: perl-XML-Parser xsltproc
+BuildRequires(pre): meson
+BuildRequires: yelp-tools
+BuildRequires: glib2-devel > %glib_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
 %{?_enable_libnotify:BuildPreReq: libnotify-devel >= 0.7.0}
 %{?_enable_webkitgtk:BuildRequires: libwebkit2gtk-devel}
 
@@ -34,17 +35,18 @@ a cooler name.
 %setup
 
 %build
-%autoreconf
-%configure \
-	%{subst_enable libnotify} \
-	%{subst_enable webkitgtk}
-
-%make_build
+%meson \
+	%{?_enable_libnotify:-Dlibnotify=true} \
+	%{?_enable_webkitgtk:-Dwebkitgtk=true}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --with-gnome %name
+
+%check
+%meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -54,6 +56,9 @@ a cooler name.
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Tue Aug 10 2021 Yuri N. Sedunov <aris@altlinux.org> 3.41.0-alt1
+- 3.41.0 (ported to Meson build system)
+
 * Fri Mar 29 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 
