@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt49
+Release: alt50
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -183,6 +183,9 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Wed Aug 04 2021 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt50
+- plugins/xfs: fix incorrect log size calculation (Closes: #39567)
+
 * Mon Jan 18 2021 Slava Aseev <ptrnine@altlinux.org> 2.5.5-alt49
 - plugins/gpt: fix start_useable and pt_count calculation
   (closes: #39385)
