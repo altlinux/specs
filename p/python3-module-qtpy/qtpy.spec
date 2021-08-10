@@ -3,7 +3,7 @@
 %define oname qtpy
 
 Name: python3-module-%oname
-Version: 1.7.0
+Version: 1.9.0
 Release: alt1
 Summary: Provides an uniform layer to support PyQt5, PySide2, PyQt4 and PySide with a single codebase
 License: MIT
@@ -15,8 +15,16 @@ BuildArch: noarch
 # https://github.com/spyder-ide/qtpy.git
 Source: %name-%version.tar
 
+# https://github.com/spyder-ide/qtpy/pull/239
+Patch1: %oname-%version-upstream-tests.patch
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
+# test dependencies
+BuildRequires: /usr/bin/py.test3
+BuildRequires: python3-module-PySide2
+BuildRequires: python3(mock)
+BuildRequires: xvfb-run
 
 %description
 QtPy is a small abstraction layer that lets you write applications
@@ -49,6 +57,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %python3_build_debug
@@ -56,15 +65,23 @@ This package contains tests for %oname.
 %install
 %python3_install
 
+%check
+xvfb-run py.test3 -vv
+
 %files
 %doc LICENSE.txt
 %doc AUTHORS.md CHANGELOG.md README.md
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/QtPy-%version-py*.egg-info
+%python3_sitelibdir/%oname
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname/tests
 
 %changelog
+* Tue Aug 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.0-alt1
+- Updated to upstream version 1.9.0.
+- Enabled tests.
+
 * Wed Apr 10 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.0-alt1
 - Initial build for ALT.
