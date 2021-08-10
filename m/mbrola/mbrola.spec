@@ -23,7 +23,7 @@
 %define tver    0.96
 Name:           mbrola
 Version:        3.3
-Release:        alt1_1.9
+Release:        alt1_1.10
 Summary:        Speech Synthesis System
 Summary(de):    Sprachsynthese System
 License:        AGPL-3.0-or-later
@@ -64,6 +64,7 @@ mbrola-de Pakete.
 %prep
 %setup -q -n MBROLA-%{version} -a 0 -a 2
 mkdir txt2pho-%{tver}/lib txt2pho-%{tver}/obj
+sed -i 's,-O6,-O%_optlevel,g' Makefile MBROLA-%version/Makefile
 
 %build
 export CFLAGS="%{optflags}"
@@ -102,6 +103,9 @@ fdupes %{buildroot}%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Wed Aug 11 2021 Michael Shigorin <mike@altlinux.org> 3.3-alt1_1.10
+- fix optlevel (lcc won't accept insane values)
+
 * Fri Jun 11 2021 Igor Vlasenko <viy@altlinux.org> 3.3-alt1_1.9
 - new version
 - now open source
