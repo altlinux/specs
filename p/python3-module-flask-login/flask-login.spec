@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.3.0
-Release: alt3
+Release: alt4
 
 Summary: User session management for Flask
 License: MIT
@@ -19,7 +19,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-blinker python3-module-coverage
 BuildRequires: python3-module-html5lib python3-module-nose
 BuildRequires: python3-module-pbr python3-module-unittest2
-BuildRequires: python3-pyflakes python3-tools-pep8
+BuildRequires: python3-pyflakes
 
 
 %description
@@ -52,6 +52,9 @@ python3 setup.py test
 
 
 %changelog
+* Tue Aug 10 2021 Grigory Ustinov <grenka@altlinux.org> 0.3.0-alt4
+- Fixed BuildRequires.
+
 * Wed Nov 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.3.0-alt3
 - python2 disabled
 
