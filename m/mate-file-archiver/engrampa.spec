@@ -2,7 +2,7 @@
 %define rname engrampa
 
 Name: mate-file-archiver
-Version: 1.24.1
+Version: 1.26.0
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop file archiver
@@ -15,6 +15,7 @@ Provides: %rname = %epoch:%version-%release
 Requires: p7zip zip
 
 Source: %rname-%version.tar
+Source1: libegg.tar
 Patch: %rname-%version-%release.patch
 
 BuildRequires: mate-common libSM-devel libjson-glib-devel libmagic-devel mate-file-manager-devel yelp-tools
@@ -32,7 +33,7 @@ Requires: %name = %epoch:%version-%release
 Mate-file-manager extension for mount archiver
 
 %prep
-%setup -q -n %rname-%version
+%setup -q -n %rname-%version -a1
 %patch -p1
 
 %build
@@ -56,7 +57,6 @@ Mate-file-manager extension for mount archiver
 %_bindir/%rname
 %_libexecdir/%rname
 %_libexecdir/%rname-server
-%_datadir/%rname
 %_datadir/metainfo/engrampa.appdata.xml
 %_desktopdir/%rname.desktop
 %_datadir/dbus-1/services/org.mate.Engrampa.service
@@ -69,6 +69,9 @@ Mate-file-manager extension for mount archiver
 %_datadir/caja/extensions/libcaja-engrampa.caja-extension
 
 %changelog
+* Tue Aug 10 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
+- 1.26.0
+
 * Fri Aug 21 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.1-alt1
 - 1.24.1
 

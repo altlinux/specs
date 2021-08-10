@@ -1,7 +1,7 @@
 %define rname python-caja
 
 Name: python3-module-caja
-Version: 1.24.0
+Version: 1.26.0
 Release: alt1
 Summary: Python bindings for Caja
 Group: Development/Other
@@ -13,7 +13,7 @@ Patch: %rname-%version.patch
 
 Conflicts: python-module-caja
 
-BuildRequires: gtk-doc mate-file-manager-devel python-module-pygobject3-common-devel python3-dev
+BuildRequires: gtk-doc mate-file-manager-devel python-module-pygobject3-common-devel python3-dev rpm-build-python3
 
 %description
 Python bindings for Caja
@@ -55,6 +55,9 @@ Python bindings for Caja
 %_datadir/gtk-doc/html/caja-python
 
 %changelog
+* Tue Aug 10 2021 Valery Inozemtsev <shrek@altlinux.ru> 1.26.0-alt1
+- 1.26.0
+
 * Wed Mar 11 2020 Valery Inozemtsev <shrek@altlinux.ru> 1.24.0-alt1
 - initial release
 

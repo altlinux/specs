@@ -1,7 +1,7 @@
 %define rname mozo
 
 Name: mate-menu-editor
-Version: 1.24.0
+Version: 1.26.0
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop menu editor
@@ -14,7 +14,7 @@ Source: %rname-%version.tar
 Patch: %rname-%version-%release.patch
 
 BuildArch: noarch
-BuildRequires: mate-common glib2-devel gtk-update-icon-cache python3-devel
+BuildRequires: mate-common glib2-devel gtk-update-icon-cache python3-devel rpm-build-python3
 BuildRequires: pkgconfig(libmate-menu) pkgconfig(pygobject-3.0)
 
 %description
@@ -45,6 +45,9 @@ MATE Desktop menu editor
 %_man1dir/%rname.1.*
 
 %changelog
+* Tue Aug 10 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
+- 1.26.0
+
 * Wed Feb 26 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
 - 1.24.0
 

@@ -5,7 +5,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-document-viewer
-Version: 1.24.0
+Version: 1.26.0
 Release: alt1
 Epoch: 1
 Summary: Document viewer
@@ -17,6 +17,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Requires: mathjax
 
 Source: %rname-%version.tar
+Source1: libegg.tar
 Patch: %rname-%version-%release.patch
 
 BuildRequires: mate-common
@@ -106,8 +107,8 @@ This package contains the atril extension for the
 caja file manager.
 
 %prep
-%setup -q -n %rname-%version
-%patch -p1
+%setup -q -n %rname-%version -a1
+#patch -p1
 
 %build
 %autoreconf
@@ -134,7 +135,7 @@ find %buildroot%_libdir -name \*.la -delete
 %find_lang %rname --with-gnome --all-name
 
 %files -f %rname.lang
-%doc README COPYING NEWS AUTHORS
+%doc README.md COPYING NEWS AUTHORS
 %_bindir/*
 %_libexecdir/atrild
 %_datadir/%rname
@@ -193,10 +194,10 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gir-1.0/Atril*.gir
 %_datadir/gtk-doc/html/*
 
-# TODO:
-# -default subpackage to pull in backend deps
-
 %changelog
+* Tue Aug 10 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
+- 1.26.0
+
 * Tue Feb 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
 - 1.24.0
 

@@ -2,8 +2,8 @@
 %define rname pluma
 
 Name: mate-text-editor
-Version: 1.24.1
-Release: alt2
+Version: 1.26.0
+Release: alt1
 Epoch: 1
 Summary: Text editor for the MATE desktop
 License: GPLv3+
@@ -15,11 +15,12 @@ Provides: %name-data = %version-%release
 Obsoletes: %name-data
 
 Source: %rname-%version.tar
+Source1: libegg.tar
 Patch: %rname-%version-%release.patch
 
 BuildPreReq: rpm-build-python3
-BuildRequires: mate-common gtk-doc iso-codes-devel libSM-devel libenchant-devel libgtksourceview3-devel
-BuildRequires: libgtksourceview3-gir-devel libpeas-devel libxml2-devel yelp-tools python3-devel
+BuildRequires: mate-common gtk-doc iso-codes-devel libSM-devel libenchant-devel libgtksourceview4-devel
+BuildRequires: libgtksourceview4-gir-devel libpeas-devel libxml2-devel yelp-tools python3-devel
 
 %description
 pluma is a small, but powerful text editor designed specifically for
@@ -42,7 +43,7 @@ Development files for pluma
 %add_python3_path %_libdir/%rname/plugins
 
 %prep
-%setup -q -n %rname-%version
+%setup -q -n %rname-%version -a1
 %patch -p1
 
 %build
@@ -64,7 +65,7 @@ find %buildroot%_libdir -name \*.la -delete
 %find_lang %rname --with-gnome --all-name
 
 %files -f %rname.lang
-%doc README COPYING AUTHORS
+%doc README.md COPYING AUTHORS
 %_bindir/%rname
 %_libdir/%rname
 %_libexecdir/%rname
@@ -82,6 +83,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gir-1.0/Pluma-1.0.gir
 
 %changelog
+* Tue Aug 10 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
+- 1.26.0
+
 * Mon Mar 01 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.1-alt2
 - rebuild with python 3 (closes: #39730)
 

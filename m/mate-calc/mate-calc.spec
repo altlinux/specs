@@ -1,5 +1,5 @@
 Name: mate-calc
-Version: 1.24.1
+Version: 1.26.0
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop calculator
@@ -11,7 +11,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: mate-common libgtk+3-devel libxml2-devel yelp-tools
+BuildRequires: mate-common libgtk+3-devel libxml2-devel libmpfr-devel libmpc-devel yelp-tools
 
 %description
 mate-calc is a powerful graphical calculator with financial, logical and scientific modes.
@@ -34,7 +34,7 @@ It uses a multiple precision package to do its arithmetic to give a high degree 
 %find_lang %name --with-gnome --all-name
 
 %files -f %name.lang
-%doc AUTHORS COPYING README
+%doc AUTHORS COPYING README.md
 %_bindir/*
 %_datadir/metainfo/%name.appdata.xml
 %_desktopdir/%name.desktop
@@ -42,6 +42,9 @@ It uses a multiple precision package to do its arithmetic to give a high degree 
 %_man1dir/*.1*
 
 %changelog
+* Tue Aug 10 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
+- 1.26.0
+
 * Thu Aug 20 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.1-alt1
 - 1.24.1
 

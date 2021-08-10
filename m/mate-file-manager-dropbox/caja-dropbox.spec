@@ -1,8 +1,8 @@
 %define rname caja-dropbox
 
 Name: mate-file-manager-dropbox
-Version: 1.24.0
-Release: alt2
+Version: 1.26.0
+Release: alt1
 Epoch: 1
 Summary: Dropbox extension for caja
 License: GPLv3 and CC-BY-ND-3.0
@@ -34,7 +34,9 @@ your computers automatically.
 %install
 %make DESTDIR=%buildroot install
 
-%files
+%find_lang %rname --with-gnome --all-name
+
+%files -f %rname.lang
 %doc AUTHORS COPYING NEWS README
 %_bindir/%rname
 %_libdir/caja/extensions-2.0/libcaja-dropbox.so
@@ -45,6 +47,9 @@ your computers automatically.
 %_man1dir/%rname.1*
 
 %changelog
+* Tue Aug 10 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
+- 1.26.0
+
 * Tue Jul 13 2021 Igor Vlasenko <viy@altlinux.org> 1:1.24.0-alt2
 - NMU: fixed build (closes: #40104)
 

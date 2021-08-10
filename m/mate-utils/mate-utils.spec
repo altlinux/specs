@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-utils
-Version: 1.24.0
+Version: 1.26.0
 Release: alt1
 Epoch: 1
 Summary: MATE utility programs
@@ -18,6 +18,7 @@ Requires: mate-disk-usage-analyzer = %epoch:%version-%release
 Obsoletes: mate-utils-libs
 
 Source: %name-%version.tar
+SOurce1: libegg.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: mate-common gcc-c++ gtk-doc inkscape libSM-devel libcanberra-gtk3-devel libgtop-devel
@@ -95,7 +96,7 @@ Requires: %name-common = %epoch:%version-%release
 Attach and mount one or more disk image files
 
 %prep
-%setup -q
+%setup -q -a1
 %patch -p1
 
 rm -fr gsearchtool/help/pt
@@ -124,7 +125,7 @@ rm -fr gsearchtool/help/pt
 %files
 
 %files common -f %name.lang
-%doc COPYING COPYING.libs NEWS README
+%doc COPYING COPYING.libs NEWS README.md
 
 %files devel
 %_includedir/mate-dict
@@ -149,7 +150,7 @@ rm -fr gsearchtool/help/pt
 %_man1dir/mate-panel-screenshot.1*
 
 %files -n mate-dictionary -f mate-dictionary.lang
-%doc mate-dictionary/AUTHORS mate-dictionary/README
+%doc mate-dictionary/AUTHORS mate-dictionary/README.md
 %_bindir/mate-dictionary
 %_datadir/metainfo/mate-dictionary.appdata.xml
 %_desktopdir/mate-dictionary.desktop
@@ -171,7 +172,7 @@ rm -fr gsearchtool/help/pt
 %_man1dir/mate-search-tool.1*
 
 %files -n mate-disk-usage-analyzer -f mate-disk-usage-analyzer.lang
-%doc baobab/AUTHORS baobab/README
+%doc baobab/AUTHORS baobab/README.md
 %_bindir/mate-disk-usage-analyzer
 %_datadir/metainfo/mate-disk-usage-analyzer.appdata.xml
 %_desktopdir/mate-disk-usage-analyzer.desktop
@@ -184,6 +185,9 @@ rm -fr gsearchtool/help/pt
 %_desktopdir/mate-disk-image-mounter.desktop
 
 %changelog
+* Tue Aug 10 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
+- 1.26.0
+
 * Wed Feb 26 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
 - 1.24.0
 
