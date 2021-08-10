@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 143
 %define nv_minor %nil
-%define pkg_rel alt212
+%define pkg_rel alt213
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -100,6 +100,7 @@ Source100: nvidia_create_xinf
 
 Patch1: alt-fix-build-kernel.patch
 Patch2: alt-ignore-dma-remap.patch
+Patch10: buildfix_kernel_5.13.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: kernel-build-tools rpm-macros-alternatives
@@ -167,6 +168,7 @@ cd %tbname-%tbver%dirsuffix
 pushd kernel
 #%patch1 -p1
 %patch2 -p1
+%patch10 -p1
 rm -rf precompiled
 popd
 
@@ -350,6 +352,9 @@ fi
 %endif
 
 %changelog
+* Tue Aug 10 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 390.143-alt213
+- Fixed build of kernel modules for linux 5.13 (thx Alberto Milone for patch).
+
 * Mon Apr 26 2021 Sergey V Turchin <zerg@altlinux.org> 390.143-alt212
 - new version
 
