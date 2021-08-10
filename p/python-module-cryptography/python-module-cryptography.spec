@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 3.0
-Release: alt1
+Release: alt2
 
 Summary: Cryptographic recipes and primitives to Python developers.
 
@@ -16,8 +16,7 @@ Packager: Vladimir Didenko <cow@altlinux.org>
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python rpm-build-licenses
-BuildRequires: libssl-devel python-module-cffi python-module-enum34 python-module-pyasn1 python-module-setuptools
-BuildRequires: python-module-asn1crypto >= 0.21.0
+BuildRequires: libssl-devel python-module-cffi python-module-enum34 python-module-setuptools
 %if_enabled test
 BuildRequires: python-module-cryptography-vectors
 BuildRequires: python-module-pretend python-module-iso8601 python-module-pytz
@@ -58,6 +57,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Tue Aug 10 2021 Grigory Ustinov <grenka@altlinux.org> 3.0-alt2
+- Fixed BuildRequires.
+
 * Tue Jul 21 2020 Vladimir Didenko <cow@altlinux.ru> 3.0-alt1
 - new version (3.0)
 - build Python 2 version only (Python 3 version moved to separate package)
