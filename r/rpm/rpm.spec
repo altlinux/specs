@@ -20,7 +20,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt24
+Release: alt25
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -54,6 +54,7 @@ BuildRequires: libelf-devel
 BuildRequires: readline-devel zlib-devel
 %if_with beecrypt
 BuildRequires: libbeecrypt-devel
+BuildRequires: libblake2-devel
 %else
 BuildRequires: nss-devel
 %endif
@@ -127,6 +128,7 @@ Summary: Libraries for manipulating RPM packages
 Group: System/Libraries
 License: GPLv2+ and LGPLv2+ with exceptions
 Provides: rpm-plugin-selinux = %EVR
+Provides: librpmio(PGPHASHALGO_BLAKE2B)%{?_is_libsuff:(%{_libsuff}bit)} = 100
 Obsoletes: rpm-plugin-selinux < %EVR
 Conflicts: librpm < 4.0.4-alt102
 # due to liblua update
@@ -412,6 +414,9 @@ make check
 ls -A tests/rpmtests.dir 2>/dev/null ||:
 [ ! -s tests/rpmtests.log ] || cat tests/rpmtests.log
 
+# Run no-pass-on-failure test(s).
+rpmio/test_digest
+
 #%%pre
 #[ ! -L %%_rpmlibdir/noarch-alt-%%_target_os ] || rm -f %%_rpmlibdir/noarch-alt-%%_target_os ||:
 
@@ -575,6 +580,9 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Thu Aug 05 2021 Vitaly Chikunov <vt@altlinux.org> 4.13.0.1-alt25
+- rpmio: Add support for BLAKE2b in rpmpgp (over beecrypt interface).
+
 * Sat Aug 29 2020 Ivan Zakharyaschev <imz@altlinux.org> 4.13.0.1-alt24
   [Restored some patches from 4.0.4-alt94]
 - rpmrc.c: recognize new Intel CPUs (Dmitry V. Levin)
