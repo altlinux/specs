@@ -1,25 +1,27 @@
 %def_disable snapshot
 
 %define _name gnome-autoar
-%define ver_major 0.3
+%define ver_major 0.4
 %define api_ver_base 0
 %define api_ver %api_ver_base.1
-%def_disable static
 %def_enable introspection
+%def_enable vala
+%def_enable gtk_doc
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Automatic archives creating and extracting library
 Group: System/Libraries
-License: LGPLv2+
-Url: https://gnome.org
+License: LGPL-2.1
+Url: https://gitlab.gnome.org/GNOME/gnome-autoar
 
 %if_disabled snapshot
 Source: https://download.gnome.org/sources/%_name/%ver_major/%_name-%version.tar.xz
 %else
+Vcs: https://gitlab.gnome.org/GNOME/gnome-autoar.git
 Source: %_name-%version.tar
 %endif
 
@@ -27,11 +29,12 @@ Source: %_name-%version.tar
 %define gtk_ver 3.2
 %define archive_ver 3.2.0
 
-BuildRequires: autoconf-archive gtk-doc
+BuildRequires(pre): meson
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libarchive-devel >= %archive_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
-BuildRequires: vala-tools
+%{?_enable_vala:BuildRequires: vala-tools}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
 
 # for check
 BuildRequires: dbus-tools-gui
@@ -81,25 +84,27 @@ GObject introspection devel data for the %_name library
 %setup -n %_name-%version
 
 %build
-%autoreconf
-%configure \
-	%{subst_enable static} \
-	--enable-gtk-doc
-
-%make_build
+%meson \
+    %{?_disable_introspection:-Dintrospection=disabled} \
+    %{?_enable_gtk_doc:-Dgtk_doc=true} \
+    %{?_enable_vala:-Dvapi=true} \
+    %{?_enable_check:-Dtests=true}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %_name
 
 %check
-%make check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 
 %files -f %_name.lang
 %_libdir/lib%_name-%api_ver_base.so.*
 %_libdir/lib%_name-gtk-%api_ver_base.so.*
-#%doc AUTHORS README
+%doc NEWS README*
 
 %files devel
 %_includedir/%_name-%api_ver_base/
@@ -107,11 +112,16 @@ GObject introspection devel data for the %_name library
 %_libdir/lib%_name-gtk-%api_ver_base.so
 %_pkgconfigdir/%_name-%api_ver_base.pc
 %_pkgconfigdir/%_name-gtk-%api_ver_base.pc
+%{?_enable_vala:
+%_vapidir/%_name-%api_ver_base.deps
 %_vapidir/%_name-%api_ver_base.vapi
-%_vapidir/%_name-gtk-%api_ver_base.vapi
+%_vapidir/%_name-gtk-%api_ver_base.deps
+%_vapidir/%_name-gtk-%api_ver_base.vapi}
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %if_enabled introspection
 %files gir
@@ -125,6 +135,9 @@ GObject introspection devel data for the %_name library
 
 
 %changelog
+* Tue Aug 10 2021 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0 (ported to Meson build system)
+
 * Fri Jun 04 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt1
 - 0.3.3
 
