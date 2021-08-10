@@ -97,7 +97,7 @@ BuildRequires: perl(Test/More.pm) perl(Text/Unidecode.pm) perl(Tk.pm) perl(Tk/Ad
 
 Name:		texlive-texmf
 Version:	%relYear
-Release:	alt1_1
+Release:	alt1_3
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -120,6 +120,8 @@ BuildArch:	noarch
 # for pathfix.py
 BuildRequires:	python3 python3-tools
 BuildRequires:	pkgconfig(python3)
+# for _javadir def
+BuildRequires:	javapackages-filesystem
 
 #-----------------------------------------------------------------------
 Requires:	perl-Algorithm-Diff
@@ -258,6 +260,7 @@ Conflicts: texlive-latex-recommended < 2009
 Obsoletes: texlive-latex-recommended < 2009
 Obsoletes: texlive-common < 0.1.0.1
 Provides: %{texmfdistdir}
+Conflicts: texlive < 2021
 
 
 %description	-n texlive-collection-basic
@@ -935,6 +938,9 @@ pushd %{buildroot}%{texmfbindir}
 	ln -sf %{texmfdistdir}/scripts/texlive-extra/kpsetool.sh kpsexpand
 	ln -sf %{texmfdistdir}/scripts/texlive/fmtutil.pl mktexfmt
 	ln -sf %{texmfdistdir}/scripts/texlive/mktexlsr texhash
+	ln -sf %{texmfdistdir}/scripts/texlive/mktexlsr mktexlsr
+	ln -sf %{texmfdistdir}/scripts/texlive/mktextfm mktextfm
+	ln -sf %{texmfdistdir}/scripts/texlive/mktexmf mktexmf
 	ln -sf %{texmfdistdir}/scripts/texlive/rungs.tlu rungs
 #    ln -sf %{texmfdistdir}/scripts/fontools/showglyphs showglyphs
 	ln -sf %{texmfdistdir}/scripts/splitindex/splitindex.pl splitindex
@@ -1081,6 +1087,9 @@ EOF
 
 
 %changelog
+* Mon Aug 09 2021 Igor Vlasenko <viy@altlinux.org> 2021-alt1_3
+- restored mktextfm, mktexmf, mktexlsr
+
 * Thu Aug 05 2021 Igor Vlasenko <viy@altlinux.org> 2021-alt1_1
 - new version
 
