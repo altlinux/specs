@@ -5,18 +5,16 @@
 
 Name: python-module-%oname
 Version: 1.2
-Release: alt2.b1.2
+Release: alt3
 Summary: Query metadatdata from sdists / bdists / installed packages
 License: Python
 Group: Development/Python
 Url: https://pypi.python.org/pypi/pkginfo/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pytest python-modules-wsgiref 
-BuildRequires: python-module-sphinx-devel
+BuildRequires: python-modules-wsgiref
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-coverage python3-module-nose python3-module-pytest
@@ -110,9 +108,6 @@ cp -fR . ../python3
 find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
-%prepare_sphinx .
-ln -s ../objects.inv docs/
-
 %build
 %python_build_debug
 
@@ -136,12 +131,6 @@ popd
 
 %python_install
 
-export PYTHONPATH=%buildroot%python_sitelibdir
-%make -C docs pickle
-%make -C docs html
-
-cp -fR docs/.build/pickle %buildroot%python_sitelibdir/%oname/
-
 %check
 python setup.py test
 %if_with python3
@@ -157,17 +146,10 @@ popd
 %exclude %_bindir/*.py3
 %endif
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
 %exclude %python_sitelibdir/*/tests
 
 %files tests
 %python_sitelibdir/*/tests
-
-%files pickles
-%python_sitelibdir/*/pickle
-
-%files docs
-%doc docs/.build/html/*
 
 %if_with python3
 %files -n python3-module-%oname
@@ -181,6 +163,9 @@ popd
 %endif
 
 %changelog
+* Tue Aug 10 2021 Grigory Ustinov <grenka@altlinux.org> 1.2-alt3
+- Build without docs.
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.2-alt2.b1.2
 - (NMU) rebuild with python3.6
 
