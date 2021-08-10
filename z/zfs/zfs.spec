@@ -2,8 +2,8 @@
 %global _localstatedir %_var
 
 Name: zfs
-Version: 2.0.4
-Release: alt2
+Version: 2.1.0
+Release: alt1
 Summary: ZFS on Linux
 License: CDDL-1.0
 Group: System/Kernel and hardware
@@ -12,7 +12,7 @@ Conflicts: fuse-zfs
 
 Source0: %name-%version.tar
 Source1: gitrevision.h
-Patch1: zfs-0.7.13-import-by-disk-id.patch
+Patch1: zfs-2.1.0-import-by-disk-id.patch
 
 BuildRequires: libblkid-devel libssl-devel libudev-devel libuuid-devel python3-devel zlib-devel rpm-build-kernel libtirpc-devel
 
@@ -100,6 +100,9 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 
 install -m0644 COPYRIGHT LICENSE %buildroot%_datadir/doc/%name-utils-%version/
 
+#remove binary file from docdir:
+rm -f %buildroot%_docdir/%name-utils-%version/examples/zed_fd_spill-zedlet
+
 touch %buildroot%_sysconfdir/%name/zpool.cache
 mkdir -p %buildroot%_sysconfdir/{modprobe.d,dfs}
 touch %buildroot%_sysconfdir/dfs/sharetab
@@ -170,7 +173,9 @@ fi
 /sbin/*
 %_bindir/*
 %_man1dir/*.1*
+%_man4dir/*.4*
 %_man5dir/*.5*
+%_man7dir/*.7*
 %_man8dir/*.8*
 %exclude %_man8dir/zed.8*
 
@@ -196,8 +201,11 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Tue Aug 10 2021 Anton Farygin <rider@altlinux.ru> 2.1.0-alt1
+- 2.1.0
+
 * Fri May 21 2021 Anton Farygin <rider@altlinux.ru> 2.0.4-alt2
-- added upstream for build with kernel 5.12
+- added upstream fix for build with kernel 5.12
 
 * Tue Mar 23 2021 Anton Farygin <rider@altlinux.org> 2.0.4-alt1
 - 2.0.4
