@@ -27,7 +27,7 @@
 %define nv_version 470
 %define nv_release 57
 %define nv_minor   02
-%define pkg_rel alt221
+%define pkg_rel alt222
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -371,6 +371,9 @@ fi
 %endif
 
 %changelog
+* Tue Aug 10 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 470.57.02-alt222
+- Fixed nvidia module build for linux 5.13 on aarch64.
+
 * Wed Jul 21 2021 Sergey V Turchin <zerg@altlinux.org> 470.57.02-alt221
 - new version
 
