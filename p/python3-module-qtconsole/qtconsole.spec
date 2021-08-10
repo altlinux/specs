@@ -2,12 +2,9 @@
 
 %define oname qtconsole
 
-# tests require new ipython, which is python3-only
-%def_disable check
-
 Name: python3-module-%oname
-Version: 4.4.3
-Release: alt3
+Version: 5.1.1
+Release: alt1
 Summary: Jupyter Qt console
 License: BSD
 Group: Development/Python3
@@ -22,12 +19,17 @@ BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-PyQt5
+BuildRequires: python3(qtpy)
 BuildRequires: python3-module-html5lib
 BuildRequires: python3-module-ipython_genutils-tests python3-module-notebook
 BuildRequires: python3(IPython)
 BuildRequires: python3(IPython.testing.tests)
 BuildRequires: python3-module-pbr python3-module-traitlets-tests python3-module-unittest2
 BuildRequires: python3(sphinx_rtd_theme)
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
+BuildRequires: python3(flaky)
+BuildRequires: /usr/bin/py.test3
+BuildRequires: python3-module-pytest-qt
 BuildRequires: xvfb-run
 
 %py3_provides %oname
@@ -59,22 +61,30 @@ ln -s ../objects.inv docs/source/
 %python3_install
 
 export PYTHONPATH=$PWD
-%make -C docs html SPHINXBUILD=py3_sphinx-build
+%make -C docs html
 
 %check
 export PYTHONPATH=$PWD
-xvfb-run nosetests3 -vv
+# from openSUSE:
+# test skips: https://github.com/jupyter/qtconsole/issues/443
+# now with test_input too. But does not seem to happen on the build server, only locally.
+xvfb-run py.test3 -vv -ra -k "not (test_00 and (test_scroll or test_debug or test_input))"
 
 %files
 %doc *.md docs/build/html
 %_bindir/*
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname-%version-py*.egg-info
+%python3_sitelibdir/%oname/
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname/tests
 
 %changelog
+* Mon Aug 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.1-alt1
+- Updated to upstream version 5.1.1.
+- Enabled tests.
+
 * Thu Jun 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.3-alt3
 - Updated build dependencies.
 
