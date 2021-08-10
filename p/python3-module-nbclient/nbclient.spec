@@ -3,7 +3,7 @@
 %define oname nbclient
 
 Name: python3-module-%oname
-Version: 0.5.0
+Version: 0.5.3
 Release: alt1
 Summary: A client library for executing notebooks. Formally nbconvert's ExecutePreprocessor.
 License: BSD-3-Clause
@@ -24,6 +24,7 @@ BuildRequires: python3(async_generator)
 BuildRequires: python3(nest_asyncio)
 BuildRequires: python3(xmltodict)
 BuildRequires: python3(nbconvert)
+BuildRequires: python3(ipywidgets)
 
 %description
 NBClient, a client library for programmatic notebook execution,
@@ -45,7 +46,7 @@ NBClient lets you execute notebooks.
 export PYTHONDONTWRITEBYTECODE=1
 export PYTEST_ADDOPTS='-p no:cacheprovider'
 export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test3 -vv ||:
+py.test3 -vv
 
 %files
 %doc LICENSE
@@ -54,5 +55,8 @@ py.test3 -vv ||:
 %python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Mon Aug 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.3-alt1
+- Updated to upstream version 0.5.3.
+
 * Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.0-alt1
 - Initial build for ALT.
