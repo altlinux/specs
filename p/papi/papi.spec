@@ -1,6 +1,6 @@
 Name: papi
 Version: 6.0.0
-Release: alt2
+Release: alt3
 
 Summary: Performance Application Programming Interface
 
@@ -13,6 +13,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 %define tagversion %(echo "%version" | sed -e "s|\\.|-|g")
 # Source-url: https://bitbucket.org/icl/papi/get/papi-%tagversion-t.tar.bz2
 Source: %name-%version.tar
+
+Patch1: papi-6.0.0-alt-fix-mips-warning.patch
 
 Requires: lib%name = %EVR
 
@@ -69,6 +71,8 @@ This package contains documentation for PAPI.
 
 %prep
 %setup
+
+%patch1 -p2
 
 #rm -fR src/perfctr-*
 #cp -f src/Rules.pfm src/Rules.perfctr
@@ -135,6 +139,9 @@ rm -f %buildroot%_libdir/*.a
 %_docdir/%name
 
 %changelog
+* Tue Aug 10 2021 Ivan A. Melnikov <iv@altlinux.org> 6.0.0-alt3
+- fix build on mipsel
+
 * Sat May 15 2021 Vitaly Lipatov <lav@altlinux.ru> 6.0.0-alt2
 - add BR: rpm-build-python3
 
