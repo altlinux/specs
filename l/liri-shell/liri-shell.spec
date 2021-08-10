@@ -1,6 +1,6 @@
 Name: liri-shell
 Version: 0.9.0
-Release: alt7
+Release: alt8
 
 Summary: Responsive shell for the Liri desktop.
 License: GPLv3
@@ -55,6 +55,9 @@ BuildRequires: qt5-tools-devel
 %_datadir/glib-2.0/schemas/*.xml
 
 %changelog
+* Tue Aug 10 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.0-alt8
+- v0.9.0-556-g2a8b8e4a
+
 * Fri Aug 14 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.0-alt7
 - add explicit wayland-client buildreq
 

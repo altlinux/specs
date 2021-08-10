@@ -1,6 +1,6 @@
 Name: liri-text
 Version: 0.5.0
-Release: alt1
+Release: alt2
 
 Summary: Text editor for the Liri desktop.
 License: GPLv3
@@ -35,9 +35,13 @@ BuildRequires: qt5-tools-devel
 %_bindir/liri-text
 %_datadir/applications/io.liri.Text.desktop
 %_datadir/liri-text
+%_datadir/metainfo/*.xml
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Tue Aug 10 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.0-alt2
+- v0.5.0-118-gf4c919b
+
 * Wed Aug 19 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.0-alt1
 - initial
 

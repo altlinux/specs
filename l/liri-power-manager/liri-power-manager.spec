@@ -1,9 +1,9 @@
 Name: liri-power-manager
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Summary: Power management support for Liri
-License: GPL
+License: GPLv3
 Group: Graphical desktop/Other
 Url: https://github.com/lirios/power-manager
 
@@ -42,10 +42,13 @@ BuildRequires: qml(QtGraphicalEffects)
 
 %_datadir/liri-settings/modules/power
 %_datadir/liri-settings/translations/modules/*.qm
-%_datadir/liri-shell/indicators/power
+%_datadir/liri-shell/statusarea/power
 %_datadir/liri-power-manager
 %_datadir/glib-2.0/schemas/*.xml
 
 %changelog
+* Tue Aug 10 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.0-alt2
+- updated from git.9b757cc
+
 * Fri Nov 01 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.0-alt1
 - initial

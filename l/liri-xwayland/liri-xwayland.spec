@@ -1,9 +1,9 @@
 Name: liri-xwayland
 Version: 0.10.0
-Release: alt1
+Release: alt2
 
 Summary: QML plugin with an XWayland implementation
-License: LGPL
+License: LGPLv3
 Group: Graphical desktop/Other
 Url: https://github.com/lirios/qml-xwayland
 
@@ -40,5 +40,8 @@ BuildRequires: pkgconfig(wayland-egl)
 %_libdir/qt5/qml/Liri/XWayland
 
 %changelog
+* Tue Aug 10 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.10.0-alt2
+- updated from git.5328dc1
+
 * Mon Oct 14 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.10.0-alt1
 - initial

@@ -1,9 +1,9 @@
 Name: liri-session
-Version: 0.0.20191109
+Version: 0.0.20210810
 Release: alt1
 
 Summary: The Liri Session
-License: GPL
+License: GPLv3
 Group: Graphical desktop/Other
 Url: https://github.com/lirios/session
 
@@ -62,6 +62,9 @@ this package contains development part of %name
 %_pkgconfigdir/Liri1*.pc
 
 %changelog
+* Tue Aug 10 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20210810-alt1
+- updated form git.4690b3d
+
 * Tue Mar 03 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20191109-alt1
 - updated form upstream git.6a84698
 

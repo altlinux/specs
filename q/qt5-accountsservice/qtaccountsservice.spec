@@ -1,9 +1,9 @@
 Name: qt5-accountsservice
 Version: 1.3.0
-Release: alt1
+Release: alt2
 
 Summary: Qt-style API for AccountsService DBus service
-License: LGPL
+License: LGPLv3
 Group: System/Libraries
 Url: https://github.com/lirios/qtaccountsservice
 
@@ -53,5 +53,8 @@ this package contains development part of %name
 %_pkgconfigdir/Qt5AccountsService.pc
 
 %changelog
+* Tue Aug 10 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.0-alt2
+- v1.3.0-21-gcc8bbdc
+
 * Mon Oct 07 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.0-alt1
 - initial

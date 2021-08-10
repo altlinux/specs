@@ -1,9 +1,9 @@
 Name: libliri
-Version: 0.0.20200312
+Version: 0.0.20210809
 Release: alt1
 
 Summary: Libraries for Liri apps
-License: LGPL
+License: LGPLv3
 Group: System/Libraries
 Url: https://github.com/lirios/libliri
 
@@ -58,6 +58,12 @@ this package contains development part of %name
 %_pkgconfigdir/Liri*.pc
 
 %changelog
+* Tue Aug 10 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20210809-alt1
+- updated from git.c7cac0c
+
+* Fri Dec 11 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20201130-alt1
+- updated from git.6e47eb9
+
 * Fri Aug 14 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20200312-alt1
 - updated from git.0943d3b
 

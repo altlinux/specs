@@ -1,9 +1,9 @@
 Name: liri-terminal
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 Summary: A Material Design terminal
-License: GPL
+License: GPLv3
 Group: Terminals
 Url: https://github.com/lirios/terminal
 
@@ -33,8 +33,12 @@ BuildRequires: pkgconfig(Qt5GSettings)
 %_libdir/qt5/qml/Liri/Terminal
 %_datadir/applications/io.liri.Terminal.desktop
 %_datadir/glib-2.0/schemas/io.liri.Terminal.gschema.xml
+%_datadir/metainfo/*.xml
 %_datadir/liri-terminal
 
 %changelog
+* Tue Aug 10 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.0-alt2
+- v0.2.0-114-g8efb3e0
+
 * Mon Oct 14 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.0-alt1
 - initial

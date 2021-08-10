@@ -1,9 +1,9 @@
 Name: liri-browser
-Version: 0.0.20190816
+Version: 0.0.20210809
 Release: alt1
 
 Summary: A cross-platform Material Design web browser
-License: GPL
+License: GPLv3
 Group: Networking/WWW
 Url: https://github.com/lirios/browser
 
@@ -37,5 +37,8 @@ BuildRequires: qml(QtGraphicalEffects)
 %_iconsdir/*/*/*/*.svg
 
 %changelog
+* Tue Aug 10 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20210809-alt1
+- updated from git.a1d14aa
+
 * Fri Nov 01 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20190816-alt1
 - initial

@@ -1,9 +1,9 @@
 Name: qt5-udev
-Version: 0.0.20191001
+Version: 0.0.20201001
 Release: alt1
 
 Summary: Qt-style API to use udev
-License: LGPL
+License: LGPLv3
 Group: System/Libraries
 Url: https://github.com/lirios/qtudev
 
@@ -53,5 +53,8 @@ this package contains development part of %name
 %_pkgconfigdir/Qt5Udev.pc
 
 %changelog
+* Tue Aug 10 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20201001-alt1
+- updated form git.f80ba68
+
 * Fri Oct 11 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20191001-alt1
 - initial

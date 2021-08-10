@@ -1,9 +1,9 @@
 Name: qt5-gsettings
 Version: 1.3.0
-Release: alt2
+Release: alt3
 
 Summary: Qt-style API to wrap GSettings
-License: LGPL
+License: LGPLv3
 Group: System/Libraries
 Url: https://github.com/lirios/qtgsettings
 
@@ -54,6 +54,9 @@ this package contains development part of %name
 %_pkgconfigdir/Qt5GSettings.pc
 
 %changelog
+* Tue Aug 10 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.0-alt3
+- v1.3.0-26-g7215f41
+
 * Thu Aug 13 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.0-alt2
 - update from git.fdaa06f
 

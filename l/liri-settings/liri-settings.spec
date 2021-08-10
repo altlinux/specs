@@ -1,9 +1,9 @@
 Name: liri-settings
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Summary: Settings application and modules for Liri desktop
-License: GPL
+License: GPLv3
 Group: Graphical desktop/Other
 Url: https://github.com/lirios/settings
 
@@ -40,5 +40,8 @@ BuildRequires: qml(Fluid.Controls)
 %_datadir/liri-settings
 
 %changelog
+* Tue Aug 10 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.0-alt2
+- v0.9.0-227-g2ded515
+
 * Mon Oct 14 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.0-alt1
 - initial
