@@ -4,8 +4,8 @@
 %def_with pulse
 
 Name: SDL2
-Version: 2.0.14
-Release: alt4
+Version: 2.0.16
+Release: alt1
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -19,9 +19,6 @@ Source: %name-%version.tar
 
 # RH: ptrdiff_t is not the same as khronos defines on 32bit arches
 Patch0: %name-2.0.9-rh-khrplatform.patch
-
-# http://bugzilla.libsdl.org/show_bug.cgi?id=5418
-Patch1: SDL2-e2k.patch
 
 BuildRequires: libXext-devel
 BuildRequires: libdbus-devel
@@ -78,9 +75,6 @@ to develop SDL applications.
 %prep
 %setup
 %patch0 -p1
-%ifarch %e2k
-%patch1 -p1
-%endif
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -99,7 +93,7 @@ rm %buildroot%_libdir/*.a
 %define _unpackaged_files_terminate_build 1
 
 %files -n lib%name
-%doc BUGS.txt COPYING.txt CREDITS.txt README*.txt WhatsNew.txt
+%doc BUGS.txt CREDITS.txt README*.txt WhatsNew.txt
 %_libdir/lib%name-2.0.so.*
 
 %files -n lib%name-devel
@@ -111,6 +105,9 @@ rm %buildroot%_libdir/*.a
 %_aclocaldir/sdl2.m4
 
 %changelog
+* Tue Aug 10 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.16-alt1
+- Version 2.0.16
+
 * Sun Mar 28 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.14-alt4
 - Restore buid with configure
 
