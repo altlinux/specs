@@ -4,24 +4,24 @@
 
 Name: lv2-%oname-plugins
 Version: 0.1.5
-Release: alt1
+Release: alt2
+
 Summary: An lv2 plug-in for broadband noise reduction
-
-# meson.build have x86-specific options that require a patch
-# to override; let's just rest restrict the targets for now.
-ExclusiveArch: %ix86 x86_64 aarch64
-
 License: GPLv3+
 Group: Sound
 
 Url: https://github.com/lucianodato/noise-repellent
-
-Source: %name-%version.tar
+Source0: %name-%version.tar
 Source1: Home.md
 
 BuildRequires(pre): meson
 BuildRequires: pkgconfig(lv2)
 BuildRequires: pkgconfig(fftw3f)
+
+# meson.build have x86-specific options that require a patch
+# to override; let's just rest restrict the targets for now
+# (e2k is fine with 'em though).
+ExclusiveArch: %ix86 x86_64 aarch64 %e2k
 
 %description
 noise-repellent is an lv2 plug-in for broadband noise
@@ -40,7 +40,7 @@ reduction, featuring:
 
 %prep
 %setup
-cp %SOURCE1 .
+cp -a %SOURCE1 .
 
 %build
 %meson
@@ -58,5 +58,8 @@ install -p -m644 -t %buildroot%odir/ */*.ttl */*.so
 %doc Home.md
 
 %changelog
+* Tue Aug 10 2021 Michael Shigorin <mike@altlinux.org> 0.1.5-alt2
+- E2K builds fine
+
 * Sat Jun 05 2021 Ivan A. Melnikov <iv@altlinux.org> 0.1.5-alt1
 - Initial build for Sisyphus
