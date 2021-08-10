@@ -1,8 +1,8 @@
 Name: kernel-image-std-def
-Release: alt3
+Release: alt1
 epoch:2
 %define kernel_base_version	5.10
-%define kernel_sublevel .54
+%define kernel_sublevel .57
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -682,6 +682,11 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Tue Aug 10 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:5.10.57-alt1
+- Updated to v5.10.57.
+- Reintroduced argv+env 512K size limit for suid/sgid programs and also enforce
+  the same limit for all AT_SECURE programs.
+
 * Fri Aug 06 2021 Dmitry Terekhin <jqt4@altlinux.org> 2:5.10.54-alt3
 - Enable panfrost driver by default.
 - Moved non-DRM Mali Midgard GPU driver into subpackage.
