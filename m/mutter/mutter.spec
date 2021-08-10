@@ -17,7 +17,7 @@
 
 Name: mutter
 Version: %ver_major.3
-Release: alt1%beta
+Release: alt1.1%beta
 Epoch: 1
 
 Summary: Clutter based compositing GTK3 Window Manager
@@ -164,9 +164,9 @@ the functionality of the installed Mutter.
 %prep
 %setup -n %name-%version%beta
 %patch
-# Also disable KMS modifiers for radeon (fixed in 40.2)
-#echo 'DRIVERS=="radeon", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-modifiers"' \
-#>> data/61-%name.rules
+# Also disable KMS modifiers for baikal-vdu
+echo 'DRIVERS=="baikal-vdu", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-modifiers"' \
+>> data/61-%name.rules
 
 %build
 %meson \
@@ -228,6 +228,10 @@ the functionality of the installed Mutter.
 
 
 %changelog
+* Tue Aug 10 2021 Yuri N. Sedunov <aris@altlinux.org> 1:40.3-alt1.1
+- data/61-mutter.rules:
+  disabled KMS modifiers for "baikal-vdu" driver (ALT #40663)
+
 * Mon Jul 12 2021 Yuri N. Sedunov <aris@altlinux.org> 1:40.3-alt1
 - 40.3
 
