@@ -2,11 +2,11 @@
 
 Name: python3-module-%oname
 Version: 4.1.3
-Release: alt4
+Release: alt5
 
 Summary: OAuth 2.0 client library
 
-License: Apache Software License
+License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/oauth2client/
 
@@ -25,7 +25,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx
 
-BuildRequires: python3-module-httplib2 python3-module-keyring python3-module-mox python3-module-pyasn1-modules python3-module-rsa python3-module-setuptools
+BuildRequires: python3-module-httplib2 python3-module-keyring python3-module-pyasn1-modules python3-module-rsa
 BuildRequires: python3-module-mock python3-module-fasteners python3-module-flask
 BuildRequires: python3(sqlalchemy)
 BuildRequires: python3-module-pytest
@@ -124,6 +124,10 @@ py.test3 || :
 %python3_sitelibdir/oauth2client/contrib/gce*
 
 %changelog
+* Tue Aug 10 2021 Grigory Ustinov <grenka@altlinux.org> 4.1.3-alt5
+- Fixed BuildRequires.
+- Fixed license tag.
+
 * Sat Nov 07 2020 Vitaly Lipatov <lav@altlinux.ru> 4.1.3-alt4
 - build python3 package separately
 - disable tests due new pycryptodom
