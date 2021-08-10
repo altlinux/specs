@@ -10,7 +10,7 @@
 
 Name: inkscape
 Version: %major
-Release: alt3
+Release: alt4
 
 Summary: A Vector Drawing Application
 
@@ -136,6 +136,15 @@ Run checkinstall tests for %name.
 %prep
 %setup
 %patch -p1
+%ifarch %e2k
+# missing typeinfo fix
+cat >> src/inkscape-version.cpp.in << "EOF"
+#include <typeinfo>
+namespace Geom { struct Curve { };
+	__attribute__((visibility("hidden")))
+	auto Curve_typeinfo_ptr = &typeid(Curve); }
+EOF
+%endif
 rm -rfv src/3rdparty/2geom/
 
 %build
@@ -216,6 +225,9 @@ true
 %files checkinstall
 
 %changelog
+* Tue Aug 10 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.1-alt4
+- e2k: workaround for compiler bug
+
 * Thu Jul 08 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt3
 - fix build with gcc-7.5 and lcc (e2k)
 
