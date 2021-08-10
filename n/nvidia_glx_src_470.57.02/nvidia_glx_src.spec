@@ -27,7 +27,7 @@
 %define nv_version 470
 %define nv_release 57
 %define nv_minor   02
-%define pkg_rel alt222
+%define pkg_rel alt223
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -108,6 +108,7 @@ Patch1: alt-fix-build-kernel.patch
 Patch2: alt-ignore-dma-remap.patch
 Patch3: kernel-5.7.patch
 Patch4: kernel-5.11-aarch64.patch
+Patch5: kernel-5.13-aarch64.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: kernel-build-tools rpm-macros-alternatives
@@ -176,6 +177,7 @@ pushd kernel
 %patch3 -p2
 %ifarch aarch64
 %patch4 -p1
+%patch5 -p1
 %endif
 rm -rf precompiled
 popd
@@ -371,6 +373,10 @@ fi
 %endif
 
 %changelog
+* Tue Aug 10 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 470.57.02-alt223
+- Reverted previous change.
+- Actually fixed nvidia module build for linux 5.13 on aarch64 architecture.
+
 * Tue Aug 10 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 470.57.02-alt222
 - Fixed nvidia module build for linux 5.13 on aarch64.
 
