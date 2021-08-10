@@ -3,13 +3,15 @@
 
 Name: lightdm-gtk-greeter
 Version: 2.0.7
-Release: alt8
+Release: alt9
 Summary: LightDM GTK+ Greeter
 Group: Graphical desktop/Other
 License: GPLv3+
 Url: https://launchpad.net/lightdm-gtk-greeter
 #To get source code use the command "bzr branch lp:lightdm-gtk-greeter"
 Source: %name-%version.tar
+
+Patch0: %name-2.0.7-xdt-source-alt.patch
 Patch1: %name-%version-alt-fixes.patch
 Patch2: %name-%version-pd.patch
 Patch3: %name-%version-switch-lang.patch
@@ -29,7 +31,7 @@ BuildRequires: pkgconfig(liblightdm-gobject-1) >= 1.3.5
 BuildRequires: pkgconfig(x11)
 BuildRequires: pkgconfig(libxklavier)
 BuildRequires: lightdm-devel >= 1.16.7-alt11 lightdm-gir-devel >= 1.16.7-alt11
-BuildRequires: /usr/bin/exo-csource
+BuildRequires: /usr/bin/xdt-csource
 
 %description
 This package provides a GTK+-based LightDM greeter engine. In contrast
@@ -38,6 +40,7 @@ directly controlled by PAM prompts and messages.
 
 %prep
 %setup -n %name-%version
+%patch0 -p2
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -76,6 +79,13 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %config(noreplace) %_sysconfdir/lightdm/lightdm-gtk-greeter.conf
 
 %changelog
+* Tue Aug 10 2021 Paul Wolneykien <manowar@altlinux.org> 2.0.7-alt9
+- Fixed the empty string for "OK" (Russian).
+- Translated "Screen Reader" (Russian).
+- Restore Russian translations of some prompts and titles (thx Oleg Zenin)
+  (closes: 40630).
+- Use xdt-csource instead of exo-csource for CSS files (thx Mikhail Efremov).
+
 * Sat Jul 10 2021 Paul Wolneykien <manowar@altlinux.org> 2.0.7-alt8
 - Fix: Reduce the weight of lightdm-default-greeter.desktop
   alternative to 50 (closes: 40422).
