@@ -1,7 +1,7 @@
 %define rname mint-themes
 
 Name: gtk-themes-mint
-Version: 1.8.4
+Version: 1.8.8
 Release: alt1
 Summary: Mint themes
 License: GPLv3+
@@ -35,6 +35,12 @@ cp -a usr %buildroot/
 %_datadir/themes/*
 
 %changelog
+* Tue Aug 10 2021 Valery Inozemtsev <shrek@altlinux.ru> 1.8.8-alt1
+- 1.8.8
+
+* Wed Sep 09 2020 Valery Inozemtsev <shrek@altlinux.ru> 1.8.6-alt1
+- 1.8.6
+
 * Tue May 05 2020 Valery Inozemtsev <shrek@altlinux.ru> 1.8.4-alt1
 - 1.8.4
 
