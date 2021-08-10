@@ -1,5 +1,5 @@
 Name: matrix-synapse
-Version: 1.38.0
+Version: 1.40.0
 Release: alt1
 
 Summary: Synapse: Matrix reference homeserver
@@ -139,6 +139,7 @@ fi
 %_libexecdir/%name/synapse_port_db
 %_libexecdir/%name/synctl
 %_libexecdir/%name/move_remote_media_to_new_store.py
+%_libexecdir/%name/synapse_review_recent_signups
 %_libexecdir/%name/sync_room_to_group.pl
 %_libexecdir/%name/generate_config
 %_libexecdir/%name/generate_signing_key.py
@@ -155,6 +156,9 @@ fi
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Tue Aug 10 2021 Vitaly Lipatov <lav@altlinux.ru> 1.40.0-alt1
+- new version 1.40.0 (with rpmrb script)
+
 * Tue Jul 13 2021 Vitaly Lipatov <lav@altlinux.ru> 1.38.0-alt1
 - new version 1.38.0 (with rpmrb script)
 
