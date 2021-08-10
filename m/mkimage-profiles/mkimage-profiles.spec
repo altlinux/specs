@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.14
+Version: 1.4.15
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,36 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Tue Aug 10 2021 Anton Midyukov <antohami@altlinux.org> 1.4.15-alt1
+- reports.mk: convert targets.svgz to pdf, if rsvg-convert is available
+- reports.mk: save distcfg.mk to report directory, when check build (CHECK=1)
+- vmguest: add xorg-drv-spiceqxl, xorg-dri-virtio to kvm/x11
+- grub: add missing '--id' for items menu grub.cfg
+- grub: not set GRUB_UI for unsupported ARCHES
+- grub: fix selection by default install2, if GRUB_DEFAULT is not set
+- live.mk: add new target grub-ui.iso
+- build.mk: initial .work/aptbox immediately after configuring the profile
+- pkg.in: Add @META suffix support for pkglist items
+- tar2fs: Add offset 16 MiB for singleboard PC support
+- tar2fs: Mark root partition as bootable if extlinux.conf is present
+- arm-rpi4: use mode nouboot for rpi kernel only
+- regular-vm.mk: build universal images for aarch64/armh
+- net: use/net/nm/native not require use/net/nm
+- net: enable udevd-final for etcnet
+- regular.mk: not use grupcboot and multiple kernels for boot ISO for
+  starterkit's
+- firmware: add firmware-alsa-sof to use/firmware/laptop (thanks cas@)
+- x11: drop primus
+- init: enable udevd-final for sysvinit
+- pack: add squash to the list of ve archive formats (thanks glebfm@)
+- add lxc-guest feature (thanks glebfm@)
+- arm-rpi4: not use specyphic features for RPi4 in use/arm-rpi4
+- regular-vm.mk: set VM_SIZE to 7 GiB
+- realtime.mk: disable plymouth
+- e2k fixes for alt-workstation, slinux
+- add latest commits for alt-server (thanks boyarsh@)
+- add latest commits for alt-workstation (thanks sem@)
+
 * Mon Jul 05 2021 Anton Midyukov <antohami@altlinux.org> 1.4.14-alt1
 - reports.mk: fix launch together with the CHECK option
 - Makefile: Create a report directory at each iteration
