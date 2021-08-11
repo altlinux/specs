@@ -1,5 +1,5 @@
 Name: linuxptp
-Version: 3.1
+Version: 3.1.1
 Release: alt1
 
 Summary: Precision Time Protocol (PTP) implementation
@@ -59,5 +59,8 @@ install -pm0644 phc2sys.service %buildroot%_unitdir/phc2sys.service
 %_man8dir/*
 
 %changelog
+* Wed Aug 11 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.1.1-alt1
+- 3.1.1 released
+
 * Tue Feb 09 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.1-alt1
 - initial
