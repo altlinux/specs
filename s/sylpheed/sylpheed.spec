@@ -1,6 +1,6 @@
 Name: sylpheed
 Version: 3.7.0
-Release: alt0.4
+Release: alt0.5
 
 Summary: a GTK+ based, lightweight, and fast e-mail client
 License: GPLv2+
@@ -35,6 +35,11 @@ Patch22: %name-3.1.0-alt-icons.patch
 Patch23: %name-3.1.2-alt-glib2-2.32.0.patch
 Patch24: %name-3.6.0-alt-certdir.patch
 Patch25: %name-3.7.0-tofu.patch
+
+# harden link checker
+# https://bugzilla.redhat.com/show_bug.cgi?id=1988552
+Patch26:         sylpheed-3.7.0-uri-check.patch
+
 
 # old patches - not applied, should be obsolete now
 Patch1000: %name-0.9.3cvs9-alt-wm_race.patch
@@ -109,11 +114,16 @@ This package contains development files.
 #patch23 -p2
 %patch24 -p2
 %patch25 -p1
+%patch26 -p1 -b .uri-check
+
 
 cp -a %SOURCE5 README.actions
 bzip2 -9fk ChangeLog
 
 %build
+%ifarch %e2k
+%add_optflags -lm
+%endif
 #rm -f missing
 aclocal -I ac
 libtoolize --force --copy
@@ -158,6 +168,13 @@ autoconf
 %_includedir/sylpheed/
 
 %changelog
+
+* Thu Aug 12 2021 Ilya Mashkin <oddity@altlinux.ru> 3.7.0-alt0.5
+- harden link checker (RH#1988552) (Fixes: CVE-2021-37746)
+
+* Sun May 05 2019 Michael Shigorin <mike at altlinux.ru> 3.7.0-alt0.4.1
+- E2K: fix build with explicit -lm
+
 * Wed Nov 07 2018 Alexey Shabalin <shaba@altlinux.org> 3.7.0-alt0.4
 - Disable PDA support.
 
