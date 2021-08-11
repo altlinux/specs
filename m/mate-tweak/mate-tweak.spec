@@ -1,12 +1,12 @@
 Name: mate-tweak
-Version: 18.04.14
+Version: 21.04.3
 Release: alt1
 Epoch:   1
 
 Summary: Mate desktop configuration tool
-License: GPLv2+
+License: GPL-2.0
 Group: Graphical desktop/MATE
-Url: https://bitbucket.org/ubuntu-mate/mate-tweak
+URL: https://bitbucket.org/ubuntu-mate/mate-tweak
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 
@@ -48,6 +48,9 @@ Settings that can be handled via MATE Tweak:
 %_datadir/polkit-1/actions/*
 
 %changelog
+* Wed Aug 11 2021 Andrey Cherepanov <cas@altlinux.org> 1:21.04.3-alt1
+- New version.
+
 * Mon Mar 26 2018 Anton Midyukov <antohami@altlinux.org> 1:18.04.14-alt1
 - new version 18.04.14
 
