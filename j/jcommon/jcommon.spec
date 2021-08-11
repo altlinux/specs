@@ -1,12 +1,12 @@
 Epoch: 0
 Group: System/Libraries
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: jcommon
 Version: 1.0.23
-Release: alt1_16jpp11
+Release: alt1_18jpp11
 Summary: JFree Java utility classes
 License: LGPLv2+
 # Github: https://github.com/jfree/jcommon
@@ -16,6 +16,7 @@ License: LGPLv2+
 #  bash getsources.sh 1ea10aa82e30e0d60f57e1c562281a3ac7dd5cdd 1.0.23
 Source: %{name}-%{version}.tar.gz
 URL: http://www.jfree.org/jcommon
+BuildRequires: junit
 BuildRequires: maven-local
 BuildRequires: maven-plugin-bundle
 Requires: jpackage-utils
@@ -83,6 +84,9 @@ fi
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:1.0.23-alt1_18jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:1.0.23-alt1_16jpp11
 - fc34 update
 
