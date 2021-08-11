@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jackson-core
 Version:        2.11.4
-Release:        alt1_2jpp11
+Release:        alt1_4jpp11
 Summary:        Core part of Jackson
 License:        ASL 2.0
 
@@ -24,14 +24,6 @@ Source44: import.info
 Core part of Jackson that defines Streaming API as well
 as basic shared abstractions.
 
-%package javadoc
-Group: Development/Java
-Summary: Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains API documentation for %{name}.
-
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 
@@ -47,7 +39,7 @@ sed -i 's/\r//' LICENSE NOTICE
 %mvn_file : %{name}
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -56,10 +48,10 @@ sed -i 's/\r//' LICENSE NOTICE
 %doc README.md release-notes/*
 %doc --no-dereference LICENSE NOTICE
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE NOTICE
-
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_4jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_2jpp11
 - new version
 
