@@ -1,17 +1,17 @@
 Name: sunxi-tools
 Version: 1.5
-Release: alt0.1
+Release: alt0.20210315
 Epoch: 1
 
 Summary: Tools for use with Allwinner SoC based devices
-License: GPL
+License: GPLv2
 Group: System/Kernel and hardware
 Url: http://linux-sunxi.org
 
 Source0: %name-%version-%release.tar
 Source1: boards-%version-%release.tar
 
-BuildRequires: libusb-devel zlib-devel
+BuildRequires: libfdt-devel libusb-devel zlib-devel
 
 %description
 Tools to help hacking Allwinner SoC (aka sunxi) based devices.
@@ -33,6 +33,9 @@ tar xf %SOURCE1 -C %buildroot%_datadir/sunxi-tools
 %_datadir/sunxi-tools
 
 %changelog
+* Wed Aug 11 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.5-alt0.20210315
+- updated from git.6c02224
+
 * Tue Jan 22 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.5-alt0.1
 - 1.5 rc1
 
