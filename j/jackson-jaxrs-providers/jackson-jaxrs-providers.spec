@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -13,7 +13,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           jackson-jaxrs-providers
 Version:        2.11.4
-Release:        alt1_2jpp11
+Release:        alt1_4jpp11
 Summary:        Jackson JAX-RS providers
 License:        ASL 2.0
 
@@ -28,7 +28,7 @@ BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind) >= %{version}
 BuildRequires:  mvn(com.fasterxml.jackson.module:jackson-module-jaxb-annotations) >= %{version}
 BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= %{version}
 BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
-BuildRequires:  mvn(javax.ws.rs:javax.ws.rs-api)
+BuildRequires:  mvn(org.jboss.spec.javax.ws.rs:jboss-jaxrs-api_2.0_spec)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 
 %if %{without jp_minimal}
@@ -136,6 +136,9 @@ sed -i 's/\r//' LICENSE NOTICE
 %pom_remove_plugin :maven-jar-plugin yaml
 %pom_remove_plugin :maven-jar-plugin datatypes
 
+# Replace jakarta-ws-rs with jboss-jaxrs-2.0-api
+%pom_change_dep javax.ws.rs:javax.ws.rs-api org.jboss.spec.javax.ws.rs:jboss-jaxrs-api_2.0_spec
+
 # Add missing deps to fix java.lang.ClassNotFoundException during tests
 %pom_add_dep com.google.guava:guava:18.0:test datatypes cbor json smile xml yaml
 %pom_add_dep org.ow2.asm:asm:5.1:test cbor json smile xml yaml
@@ -187,6 +190,9 @@ rm json/src/test/java/com/fasterxml/jackson/jaxrs/json/resteasy/RestEasyProvider
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_4jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_2jpp11
 - new version
 
