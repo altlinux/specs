@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -11,21 +11,19 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 5.7.1
+%bcond_with bootstrap
+
 # Component versions, taken from gradle.properties
 %global platform_version 1.%(v=%{version}; echo ${v:2})
 %global jupiter_version %{version}
 %global vintage_version %{version}
 
-# Build with or without the console modules
-# Disabled by default due to missing dep: info.picocli:picocli
-%bcond_with console
-
 Name:           junit5
 Version:        5.7.1
-Release:        alt1_1jpp11
+Release:        alt1_3jpp11
 Summary:        Java regression testing framework
 License:        EPL-2.0
-URL:            http://junit.org/junit5/
+URL:            https://junit.org/junit5/
 BuildArch:      noarch
 
 Source0:        https://github.com/junit-team/junit5/archive/r%{version}/junit5-%{version}.tar.gz
@@ -43,6 +41,7 @@ Source207:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform
 Source208:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-reporting/%{platform_version}/junit-platform-reporting-%{platform_version}.pom
 Source209:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-testkit/%{platform_version}/junit-platform-testkit-%{platform_version}.pom
 # Jupiter POMs
+Source300:      https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter/%{jupiter_version}/junit-jupiter-%{jupiter_version}.pom
 Source301:      https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-api/%{jupiter_version}/junit-jupiter-api-%{jupiter_version}.pom
 Source302:      https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-engine/%{jupiter_version}/junit-jupiter-engine-%{jupiter_version}.pom
 Source303:      https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-migrationsupport/%{jupiter_version}/junit-jupiter-migrationsupport-%{jupiter_version}.pom
@@ -50,27 +49,20 @@ Source304:      https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-p
 Source305:      https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter/%{jupiter_version}/junit-jupiter-%{jupiter_version}.pom
 # Vintage POM
 Source400:      https://repo1.maven.org/maven2/org/junit/vintage/junit-vintage-engine/%{vintage_version}/junit-vintage-engine-%{vintage_version}.pom
-# Bill of Materials POM
+# BOM POM
 Source500:      https://repo1.maven.org/maven2/org/junit/junit-bom/%{version}/junit-bom-%{version}.pom
 
+BuildRequires:  asciidoc asciidoc-a2x
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(com.univocity:univocity-parsers)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apiguardian:apiguardian-api)
 BuildRequires:  mvn(org.assertj:assertj-core)
 BuildRequires:  mvn(org.opentest4j:opentest4j)
-
-%if %{with console}
-BuildRequires:  mvn(info.picocli:picocli)
-%endif
-
-BuildRequires:  asciidoc asciidoc-a2x
-
-%if %{with console}
-# Explicit requires for javapackages-tools since junit5 script
-# uses /usr/share/java-utils/java-functions
-Requires:       javapackages-tools
 %endif
 Source44: import.info
 
@@ -107,6 +99,7 @@ cp -p %{SOURCE206} junit-platform-runner/pom.xml
 cp -p %{SOURCE207} junit-platform-suite-api/pom.xml
 cp -p %{SOURCE208} junit-platform-reporting/pom.xml
 cp -p %{SOURCE209} junit-platform-testkit/pom.xml
+cp -p %{SOURCE300} junit-jupiter/pom.xml
 cp -p %{SOURCE301} junit-jupiter-api/pom.xml
 cp -p %{SOURCE302} junit-jupiter-engine/pom.xml
 cp -p %{SOURCE303} junit-jupiter-migrationsupport/pom.xml
@@ -125,15 +118,15 @@ for pom in $(find -mindepth 2 -name pom.xml); do
     %pom_xpath_set -f "pom:dependency[pom:artifactId='apiguardian-api']/pom:scope" provided $pom
 done
 
+%pom_remove_parent junit-bom
+
 # Add deps which are shaded by upstream and therefore not present in POMs.
 %pom_add_dep net.sf.jopt-simple:jopt-simple:5.0.4 junit-platform-console
 %pom_add_dep com.univocity:univocity-parsers:2.5.4 junit-jupiter-params
 
-%if %{without console}
 # Disable the console modules
 %pom_disable_module junit-platform-console
 %pom_disable_module junit-platform-console-standalone
-%endif
 
 %mvn_package :aggregator __noinstall
 
@@ -148,14 +141,7 @@ ln -s ../../javadoc/junit5 documentation/src/docs/api
 %install
 %mvn_install
 
-%if %{with console}
-%jpackage_script org/junit/platform/console/ConsoleLauncher "" "" junit5:junit:opentest4j:jopt-simple %{name} true
-%endif
-
 %files -f .mfiles
-%if %{with console}
-%{_bindir}/%{name}
-%endif
 %doc --no-dereference LICENSE.md LICENSE-notice.md
 
 %files javadoc -f .mfiles-javadoc
@@ -165,6 +151,9 @@ ln -s ../../javadoc/junit5 documentation/src/docs/api
 %doc --no-dereference documentation/src/docs/*
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 5.7.1-alt1_3jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 5.7.1-alt1_1jpp11
 - new version
 
