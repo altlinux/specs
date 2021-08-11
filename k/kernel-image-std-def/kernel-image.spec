@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt2
 epoch:2
 %define kernel_base_version	5.10
 %define kernel_sublevel .57
@@ -334,6 +334,15 @@ from the similar files in upstream kernel distributions, because some
 patches applied to the corresponding kernel packages may change things
 in the kernel and update the documentation to reflect these changes.
 
+%package checkinstall
+Summary: Verify EFI-stub signature
+Group: System/Kernel and hardware
+Requires: %name = %EVR
+Requires(post): rpm-pesign-checkinstall
+
+%description checkinstall
+Verify EFI-stub signature.
+
 %prep
 %setup -cT -n kernel-image-%flavour-%kversion-%krelease
 rm -rf kernel-source-%kernel_base_version
@@ -597,6 +606,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 	exit 1
 }
 
+%post checkinstall
+check-pesign-helper
+
 %files
 /boot/vmlinuz-%kversion-%flavour-%krelease
 /boot/System.map-%kversion-%flavour-%krelease
@@ -681,7 +693,13 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %files -n kernel-modules-staging-%flavour
 %modules_dir/kernel/drivers/staging/
 
+%files checkinstall
+
 %changelog
+* Wed Aug 11 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:5.10.57-alt2
+- Bumped release to pesign (alt1 was not pesigned, sorry).
+- Added -checkinstall subpackage to verify EFI-stub signature.
+
 * Tue Aug 10 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:5.10.57-alt1
 - Updated to v5.10.57.
 - Reintroduced argv+env 512K size limit for suid/sgid programs and also enforce
