@@ -1,6 +1,6 @@
 Name: x16-rom
 Version: r38
-Release: alt3
+Release: alt4
 Summary: Commander X16 BASIC/KERNAL/DOS/GEOS ROM
 Group: Development/Tools
 License: BSD2
@@ -32,13 +32,13 @@ pandoc \
     --metadata pagetitle="X16 KERNAL/BASIC/DOS ROM" README.md \
     --output KERNAL-BASIC.html
 
-%make_build
+make
 
 %install
 mkdir -p %buildroot%_datadir/%name
 mkdir -p %buildroot%_docdir/%name
-install -p -m 0755 build/x16/rom.bin %buildroot%_datadir/%name/%name.bin
-install -p -m 0755 build/x16/*.sym %buildroot%_datadir/%name
+install -p -m 0775 build/x16/rom.bin %buildroot%_datadir/%name/%name.bin
+install -p -m 0775 build/x16/*.sym %buildroot%_datadir/%name
 install -Dm644 KERNAL-BASIC.html %buildroot%_docdir/%name/KERNAL-BASIC.html
 install -Dm644 github-pandoc.css %buildroot%_docdir/%name/github-pandoc.css
 
@@ -50,6 +50,9 @@ install -Dm644 github-pandoc.css %buildroot%_docdir/%name/github-pandoc.css
 %_docdir/%name/github-pandoc.css
 
 %changelog
+* Wed Aug 11 2021 Artyom Bystrov <arbars@altlinux.org> r38-alt4
+- update sources to "master" branch
+
 * Fri Aug 06 2021 Artyom Bystrov <arbars@altlinux.org> r38-alt3
 - add noarch
 
