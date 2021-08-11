@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
-Release: alt2
+Release: alt1
 epoch:1 
-%define kernel_base_version	5.12
-%define kernel_sublevel .19
+%define kernel_base_version	5.13
+%define kernel_sublevel .9
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -59,11 +59,7 @@ Patch0: %name-%version-%release.patch
 %if "%sub_flavour" == "pae"
 ExclusiveArch: i586
 %else
-%if "%sub_flavour" == "debug"
-ExclusiveArch: i586 x86_64 ppc64le
-%else
 ExclusiveArch: i586 x86_64 ppc64le aarch64 armh
-%endif
 %endif
 
 %define make_target bzImage
@@ -469,6 +465,7 @@ KbuildFiles="
 	scripts/makelst
 	scripts/Makefile.*
 	scripts/Makefile
+	scripts/modules-check.sh
 	scripts/Kbuild.include
 	scripts/kallsyms
 	scripts/genksyms/genksyms
@@ -662,6 +659,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Wed Aug 11 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:5.13.9-alt1
+- Updated to v5.13.9.
+
 * Tue Aug 03 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:5.12.19-alt2
 - Bumped release to pesign with new key.
 

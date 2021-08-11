@@ -1,5 +1,5 @@
 %define module_name zfs
-%define module_version 2.0.4
+%define module_version 2.1.0
 %define module_release alt1
 
 %define flavour un-def
@@ -74,6 +74,9 @@ export CC="gcc${GCC_VERSION:+-$GCC_VERSION}"
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Aug 10 2021 Anton Farygin <rider@altlinux.ru> 2.1.0-alt1
+- 2.0.4 -> 2.1.0
 
 * Wed Mar 24 2021 Anton Farygin <rider@altlinux.org> 2.0.4-alt1
 - 0.8.6 -> 2.0.4
