@@ -29,14 +29,12 @@
 %def_disable elua
 %endif
 
-%ifnarch %e2k
 # lua-5.1 not supported anymore
 %def_enable lua
-%endif
 
 Name: efl
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: Enlightenment Foundation Libraries
 Group: System/Libraries
@@ -50,6 +48,7 @@ Source: %name-%version.tar
 %endif
 Patch: efl-1.15.0-alt-ecore_fb.patch
 Patch1: efl-1.19.1-luajitfix.patch
+Patch2000: efl-1.25.1-alt-e2k.patch
 
 # to skip libreoffice dependency for evas_generic_loaders
 %add_findreq_skiplist %_libdir/evas/utils/evas_generic_pdf_loader.libreoffice
@@ -69,13 +68,8 @@ BuildRequires: libXtst-devel libXcursor-devel libXp-devel libXi-devel scim-devel
 BuildRequires: libxkbcommon-x11-devel
 BuildRequires: libGL-devel libgnutls-devel
 
-%ifarch %e2k
-%{?_enable_lua:BuildRequires: liblua5.1-devel}
-# FIXME: lua is broken, elua won't be built but we need it to pass configure
-BuildRequires: liblua5.1-devel
-%else
-# 20171106: not ported to e2k yet
-%{?_enable_lua:BuildRequires: libluajit-devel}
+%{?_enable_elua:BuildRequires: libluajit-devel}
+%ifnarch %e2k
 BuildRequires: libunwind-devel
 %endif
 %{?_enable_ibus:BuildRequires: libibus-devel}
@@ -226,6 +220,9 @@ developing applications that use Elementary libraries.
 %setup -n %name-%version%beta
 %patch -p1
 %patch1 -p1
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 # fix path to soffice.bin
 subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.libreoffice
@@ -240,12 +237,12 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 	%{?_enable_drm:-Ddrm=true} \
 	%{?_disable_gstreamer:-Dgstreamer=false} \
 	%{?_disable_avahi:-Davahi=false} \
-%ifarch %e2k
-	-Dlua-interpreter=lua \
-%endif
 	-Dmount-path=/bin/mount \
 	-Dumount-path=/bin/umount \
 	-Deject-path=%_bindir/eject
+%ifarch %e2k
+export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_file:@efreet:@edje:@ecore_evas" | sed "s|@|$(pwd)/%__builddir/src/lib/|g")"
+%endif
 %meson_build
 
 %install
@@ -420,6 +417,11 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Wed Aug 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.25.1-alt3
+- E2K:
+  re-enable lua since luajit is now available too (mike@)
+  fix build (ilyakurdyukov@)
+
 * Mon May 03 2021 Yuri N. Sedunov <aris@altlinux.org> 1.25.1-alt2
 - BR: +rpm-build-python3
 
