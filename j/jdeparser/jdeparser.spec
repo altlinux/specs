@@ -1,6 +1,6 @@
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -10,15 +10,16 @@ BuildRequires: jpackage-1.8-compat
 
 Name:             jdeparser
 Version:          2.0.3
-Release:          alt1_5jpp8
+Release:          alt1_8jpp11
 Summary:          Source generator library for Java
 License:          ASL 2.0
 URL:              https://github.com/jdeparser/jdeparser2
 # old repos https://github.com/jdeparser/jdeparser
 Source0:          %{url}/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
+Patch1:           0001-Drop-Assertions.callerIs.patch
+
 BuildArch:        noarch
 
-BuildRequires:    java-1.8.0-openjdk-devel
 BuildRequires:    maven-local
 BuildRequires:    mvn(junit:junit)
 BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
@@ -30,21 +31,13 @@ decided to fork the project because by all evidence, the upstream project is
 dead and not actively accepting outside contribution. All JBoss projects are
 urged to use this project instead for source code generation.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
 %prep
 %setup -q -n jdeparser2-%{namedversion}
+%patch1 -p1
+
 
 %build
-# Use Java 8 as sun.reflect.Reflection is removed in Java 11.
-export JAVA_HOME=%{_jvmdir}/java-1.8.0
-%mvn_build
+%mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -52,10 +45,10 @@ export JAVA_HOME=%{_jvmdir}/java-1.8.0
 %files -f .mfiles
 %doc --no-dereference LICENSE.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt
-
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 2.0.3-alt1_8jpp11
+- update
+
 * Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 2.0.3-alt1_5jpp8
 - jvm8 update
 
