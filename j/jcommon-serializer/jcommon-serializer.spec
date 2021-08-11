@@ -3,21 +3,22 @@ Group: System/Libraries
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: jcommon-serializer
 Version: 0.3.0
-Release: alt1_25jpp11
+Release: alt1_27jpp11
 Summary: JFree Java General Serialization Framework
 License: LGPLv2+
 Source0: http://downloads.sourceforge.net/jfreereport/%{name}-%{version}.tar.gz
 URL: http://www.jfree.org/jfreereport/jcommon-serializer
-BuildRequires: ant jpackage-utils apache-commons-logging libbase >= 1.0.0
+BuildRequires: ant jpackage-utils libbase >= 1.0.0
 Requires: jpackage-utils libbase >= 1.0.0
 BuildArch: noarch
 Patch1: jcommon-serializer-0.3.0-depends.patch
 Patch2: jcommon-serializer-0.3.0-java11.patch
+Patch3: jcommon-serializer-0.3.0-remove-commons-logging.patch
 Source44: import.info
 
 %description
@@ -38,8 +39,9 @@ Javadoc for %{name}.
 %setup -q
 %patch1 -p1 -b .depends
 %patch2 -p1 -b .java11
+%patch3 -p1 -b .remove-commons-logging
 find . -name "*.jar" -exec rm -f {} \;
-build-jar-repository -s -p lib libbase commons-logging-api
+build-jar-repository -s -p lib libbase
 
 %build
 ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  compile javadoc
@@ -60,6 +62,9 @@ cp -rp javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0.3.0-alt1_27jpp11
+- update
+
 * Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 0.3.0-alt1_25jpp11
 - fixed build with new libbase
 
