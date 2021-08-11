@@ -1,19 +1,27 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:          jdom2
 Version:       2.0.6
-Release:       alt1_21jpp11
+Release:       alt1_23jpp11
 Summary:       Java manipulation of XML made easy
 License:       Saxpath
 URL:           http://www.jdom.org/
 # ./generate-tarball.sh
 Source0:       %{name}-%{version}.tar.gz
-# originally taken from http://repo1.maven.org/maven2/org/jdom/jdom-contrib/1.1.3/jdom-contrib-1.1.3.pom
-Source1:       jdom-contrib-template.pom
-Source2:       jdom-junit-template.pom
 # Bnd tool configuration
 Source3:       bnd.properties
 # Remove bundled jars that might not have clear licensing
@@ -22,16 +30,14 @@ Source4:       generate-tarball.sh
 # Disable gpg signatures
 # Process contrib and junit pom files
 Patch0:        0001-Adapt-build.patch
-Patch1:        0002-More-adapt-build-javac-1.8.patch
 
 BuildRequires: javapackages-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires: ant
 BuildRequires: ant-junit
-BuildRequires: jaxen
-BuildRequires: xalan-j2
-BuildRequires: xerces-j2
-BuildRequires: xml-commons-apis
-BuildRequires: aqute-bnd
+%endif
 
 BuildArch:     noarch
 Source44: import.info
@@ -59,34 +65,28 @@ This package contains javadoc for %{name}.
 %setup -q -n jdom-JDOM-%{version}
 
 %patch0 -p1
-%patch1 -p1
-
-cp -p %{SOURCE1} maven/contrib.pom
-cp -p %{SOURCE2} maven/junit.pom
 
 sed -i 's/\r//' LICENSE.txt README.txt
 
 # Unable to run coverage: use log4j12 but switch to log4j 2.x
 sed -i.coverage "s|coverage, jars|jars|" build.xml
 
-mkdir lib
-build-jar-repository lib xerces-j2 xml-commons-apis jaxen junit xalan-j2 xalan-j2-serializer
-
-# drop optional isorelax verifier support from contrib
-rm -r contrib/src/java/org/jdom2/contrib/schema
+# XPath functionality is not needed
+rm -rf core/src/java/org/jdom2/xpath/
+sed -i '/import org.jdom2.xpath.XPathFactory/d' core/src/java/org/jdom2/JDOMConstants.java
 
 %build
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dversion=%{version} -Dj2se.apidoc=%{_javadocdir}/java maven
+mkdir lib
+%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dversion=%{version} -Dcompile.source=1.6 -Dcompile.target=1.6 -Dj2se.apidoc=%{_javadocdir}/java maven
 
 # Make jar into an OSGi bundle
-bnd wrap --output build/package/jdom-%{version}.bar --properties %{SOURCE3} \
-         --version %{version} build/package/jdom-%{version}.jar
-mv build/package/jdom-%{version}.bar build/package/jdom-%{version}.jar
+# XXX disabled until BND is fixed
+#bnd wrap --output build/package/jdom-%{version}.bar --properties %{SOURCE3} \
+#         --version %{version} build/package/jdom-%{version}.jar
+#mv build/package/jdom-%{version}.bar build/package/jdom-%{version}.jar
 
 %install
 %mvn_artifact build/maven/core/%{name}-%{version}.pom build/package/jdom-%{version}.jar
-%mvn_artifact build/maven/core/%{name}-%{version}-contrib.pom build/package/jdom-%{version}-contrib.jar
-%mvn_artifact build/maven/core/%{name}-%{version}-junit.pom build/package/jdom-%{version}-junit.jar
 %mvn_install -J build/apidocs
 
 %files -f .mfiles
@@ -97,6 +97,9 @@ mv build/package/jdom-%{version}.bar build/package/jdom-%{version}.jar
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 2.0.6-alt1_23jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.0.6-alt1_21jpp11
 - fc34 update
 
