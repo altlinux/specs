@@ -1,19 +1,23 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cgal
-Version: 5.0.2
-Release: alt3
+Version: 5.3
+Release: alt1
 Summary: Easy access to efficient and reliable geometric algorithms
 License: Free for non-commertial using
 Group: Sciences/Mathematics
 Url: https://www.cgal.org/
 
 # https://github.com/CGAL/cgal/releases
+# Source-url: https://github.com/CGAL/cgal/archive/refs/tags/v%version.tar.gz
 Source: CGAL-%version.tar
+# Source1-url: https://github.com/CGAL/cgal/releases/download/v%version/CGAL-%version-doc_html.tar.xz
 Source1: CGAL-%version-doc_html.tar
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: gcc-c++ gcc-fortran cmake qt5-base-devel qt5-svg-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: gcc-c++ >= 8.3
+BuildRequires: cmake >= 3.14
+BuildRequires: gcc-fortran qt5-base-devel qt5-svg-devel
 BuildRequires: boost-devel libgmp-devel libgmpxx-devel eigen3
 BuildRequires: libGLU-devel libGL-devel libmpfr-devel libtbb-devel
 BuildRequires: zlib-devel libX11
@@ -54,7 +58,7 @@ library.
 Thid package contains development documentation for CGAL.
 
 %prep
-%setup
+%setup -a1
 
 %build
 %cmake \
@@ -71,14 +75,12 @@ Thid package contains development documentation for CGAL.
 
 install -d %buildroot%_docdir/%name
 cp -fR doc_html %buildroot%_docdir/%name
-cp -fR examples %buildroot%_docdir/%name
-
-pushd %buildroot%_docdir/%name
-tar -xf %SOURCE1
-popd
+#cp -fR examples %buildroot%_docdir/%name
+# due python2 scripts
+rm -rfv %buildroot%_libdir/cmake/CGAL/Help
 
 %files devel
-%_bindir/*
+#%_bindir/*
 %_man1dir/*
 %_includedir/*
 %_libdir/cmake/CGAL
@@ -87,6 +89,10 @@ popd
 %doc %_docdir/%{name}*
 
 %changelog
+* Mon Aug 09 2021 Vitaly Lipatov <lav@altlinux.ru> 5.3-alt1
+- NMU: new version 5.3 (with rpmrb script)
+- use cmake >= 3.14, g++ >= 8.3
+
 * Wed Jul 14 2021 Anton Midyukov <antohami@altlinux.org> 5.0.2-alt3
 - Fixed build dependencies
 
