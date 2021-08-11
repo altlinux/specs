@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: opensc
-Version: 0.21.0
+Version: 0.22.0
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -124,6 +124,9 @@ rm -f %buildroot%_datadir/doc/opensc/opensc.conf
 %endif
 
 %changelog
+* Tue Aug 10 2021 Andrey Cherepanov <cas@altlinux.org> 0.22.0-alt1
+- New version.
+
 * Sun Nov 22 2020 Andrey Cherepanov <cas@altlinux.org> 0.21.0-alt1
 - New version.
 
