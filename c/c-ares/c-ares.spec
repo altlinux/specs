@@ -1,6 +1,6 @@
 Name: c-ares
-Version: 1.17.1
-Release: alt2
+Version: 1.17.2
+Release: alt1
 
 Summary: A library that performs asynchronous DNS operations
 License: MIT
@@ -69,6 +69,9 @@ install -pm755 src/tools/.libs/{acountry,adig,ahost} %buildroot%_bindir/
 %_man3dir/*
 
 %changelog
+* Wed Aug 11 2021 Anton Farygin <rider@altlinux.ru> 1.17.2-alt1
+- 1.17.2 (Fixes: CVE-2021-3672)
+
 * Tue Jul 27 2021 Anton Farygin <rider@altlinux.ru> 1.17.1-alt2
 - fixed tools install in c-ares package
 
