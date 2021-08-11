@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jaxb-istack-commons
 Version:        3.0.11
-Release:        alt1_3jpp11
+Release:        alt1_4jpp11
 Summary:        iStack Common Utility Code
 License:        BSD
 
@@ -14,7 +14,6 @@ Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(args4j:args4j)
 BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.ant:ant)
@@ -68,18 +67,6 @@ Summary:        istack-commons import properties plugin
 This package contains the istack-commons import properties Maven Mojo.
 
 
-%package buildtools
-Group: Development/Java
-Summary:        istack-commons buildtools
-
-# package renamed in fedora 33, remove in fedora 35
-Provides:       istack-commons-buildtools = %{version}-%{release}
-Obsoletes:      istack-commons-buildtools < %{obs_vr}
-
-%description buildtools
-This package contains istack-commons buildtools.
-
-
 %package runtime
 Group: Development/Java
 Summary:        istack-commons runtime
@@ -90,30 +77,6 @@ Obsoletes:      istack-commons-runtime < %{obs_vr}
 
 %description runtime
 This package contains istack-commons runtime.
-
-
-%package soimp
-Group: Development/Java
-Summary:        istack-commons soimp
-
-# package renamed in fedora 33, remove in fedora 35
-Provides:       istack-commons-soimp = %{version}-%{release}
-Obsoletes:      istack-commons-soimp < %{obs_vr}
-
-%description soimp
-This package contains istack-commons soimp.
-
-
-%package test
-Group: Development/Java
-Summary:        istack-commons test
-
-# package renamed in fedora 33, remove in fedora 35
-Provides:       istack-commons-test = %{version}-%{release}
-Obsoletes:      istack-commons-test < %{obs_vr}
-
-%description test
-This package contains istack-commons test.
 
 
 %package tools
@@ -147,6 +110,9 @@ sed -i -e '/Xlint:all/d' pom.xml
 %pom_remove_plugin :spotbugs-maven-plugin
 popd
 
+%pom_disable_module buildtools istack-commons
+%pom_disable_module soimp istack-commons
+%pom_disable_module test istack-commons
 
 %build
 pushd istack-commons
@@ -172,16 +138,7 @@ popd
 %files -n import-properties-plugin -f istack-commons/.mfiles-import-properties-plugin
 %doc --no-dereference LICENSE.md NOTICE.md
 
-%files buildtools -f istack-commons/.mfiles-istack-commons-buildtools
-%doc --no-dereference LICENSE.md NOTICE.md
-
 %files runtime -f istack-commons/.mfiles-istack-commons-runtime
-%doc --no-dereference LICENSE.md NOTICE.md
-
-%files soimp -f istack-commons/.mfiles-istack-commons-soimp
-%doc --no-dereference LICENSE.md NOTICE.md
-
-%files test -f istack-commons/.mfiles-istack-commons-test
 %doc --no-dereference LICENSE.md NOTICE.md
 
 %files tools -f istack-commons/.mfiles-istack-commons-tools
@@ -189,6 +146,9 @@ popd
 
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 3.0.11-alt1_4jpp11
+- update
+
 * Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 3.0.11-alt1_3jpp11
 - new version
 
