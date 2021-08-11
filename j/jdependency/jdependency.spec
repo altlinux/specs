@@ -1,12 +1,12 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jdependency
 Version:        1.2
-Release:        alt1_9jpp11
+Release:        alt1_12jpp11
 Summary:        This project provides an API to analyse class dependencies
 License:        ASL 2.0
 URL:            http://github.com/tcurdt/%{name}
@@ -40,6 +40,8 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 %mvn_file : %{name}
+# work-around for: https://bugzilla.redhat.com/show_bug.cgi?id=1981486
+%pom_add_dep org.apache.commons:commons-lang3:3.12.0:test
 
 # remove maven-compiler-plugin configuration that is broken with Java 11
 %pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration'
@@ -48,7 +50,7 @@ BuildArch: noarch
 rm src/test/java/org/vafer/jdependency/DependencyUtilsTestCase.java
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -61,6 +63,9 @@ rm src/test/java/org/vafer/jdependency/DependencyUtilsTestCase.java
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:1.2-alt1_12jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.2-alt1_9jpp11
 - update
 
