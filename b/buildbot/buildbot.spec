@@ -1,5 +1,5 @@
 Name: buildbot
-Version: 3.2.0
+Version: 3.3.0
 Release: alt1
 Summary: Python-based continuous integration testing framework
 
@@ -9,6 +9,7 @@ Url: https://buildbot.net
 
 # https://github.com/buildbot/buildbot
 Source: %name-%version.tar
+
 
 ###############################################################################
 # Wheel sources
@@ -20,11 +21,13 @@ Source4: buildbot_waterfall_view-%version-py3-none-any.whl
 Source5: buildbot_badges-%version-py3-none-any.whl
 Source6: buildbot_wsgi_dashboards-%version-py3-none-any.whl
 
+
 ###############################################################################
 # Completion sources
 ###############################################################################
 Source21: _buildbot
 Source22: _buildbot-worker
+
 
 ###############################################################################
 # Systemd sources
@@ -38,7 +41,8 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
-Requires: python3-module-service-identity buildbot-www buildbot-sqlalchemy
+Requires: python3-module-service-identity buildbot-www
+
 
 ###############################################################################
 # Skip win requires
@@ -56,10 +60,6 @@ Requires: python3-module-service-identity buildbot-www buildbot-sqlalchemy
 %filter_from_requires /python3(win32serviceutil)/d
 %filter_from_requires /python3(winerror)/d
 
-###############################################################################
-# Change sqlalchemy requires
-###############################################################################
-%filter_from_requires s/python3(sqlalchemy.*).*/buildbot-sqlalchemy/
 
 ###############################################################################
 # Main Package
@@ -179,11 +179,6 @@ pushd worker
 install -Dm 0644 docs/buildbot-worker.1 %buildroot/%_man1dir/buildbot-worker.1
 popd
 
-change_path="sys.path.insert(0, '/usr/lib64/buildbot/modules')"
-for b in %buildroot%_bindir/buildbot %buildroot%_bindir/buildbot-worker; do
-    sed -i "/if __name__ == '__main__':/a\ \ \ \ $change_path" "$b"
-done
-
 python3 -mzipfile -e %SOURCE1 %buildroot/%python3_sitelibdir
 python3 -mzipfile -e %SOURCE2 %buildroot/%python3_sitelibdir
 python3 -mzipfile -e %SOURCE3 %buildroot/%python3_sitelibdir
@@ -224,9 +219,15 @@ useradd -r -g _%{name}-worker -c 'Buildbot worker' \
 ###############################################################################
 # Chekinstall
 ###############################################################################
-
 %post checkinstall
-trial -e buildbot.test buildbot_worker.test
+# create and start master
+buildbot create-master master
+mv master/master.cfg.sample master/master.cfg
+buildbot start master
+
+# create and start worker
+buildbot-worker create-worker worker localhost example-worker pass
+buildbot-worker start worker
 
 
 ###############################################################################
@@ -277,6 +278,9 @@ trial -e buildbot.test buildbot_worker.test
 %files checkinstall
 
 %changelog
+* Mon Aug 09 2021 Mikhail Gordeev <obirvalger@altlinux.org> 3.3.0-alt1
+- new version 3.3.0
+
 * Wed Jun 23 2021 Mikhail Gordeev <obirvalger@altlinux.org> 3.2.0-alt1
 - new version 3.2.0
 - add zsh completion
