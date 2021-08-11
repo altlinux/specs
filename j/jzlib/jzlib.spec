@@ -1,12 +1,12 @@
+Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jzlib
 Version:        1.1.3
-Release:        alt1_15jpp11
-Epoch:          0
+Release:        alt1_18jpp11
 Summary:        Re-implementation of zlib in pure Java
 License:        BSD
 URL:            http://www.jcraft.com/jzlib/
@@ -38,7 +38,7 @@ BuildArch: noarch
 %package        demo
 Group: Development/Java
 Summary:        Examples for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description    demo
 %{summary}.
@@ -47,17 +47,14 @@ Requires:       %{name} = %{epoch}:%{version}-%{release}
 %setup -q
 %patch0
 
+%pom_xpath_set "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/pom:source" 1.6
+%pom_xpath_set "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/pom:target" 1.6
+
 # Make into OSGi bundle
 %pom_xpath_inject "pom:project" "<packaging>bundle</packaging>"
 %pom_add_plugin "org.apache.felix:maven-bundle-plugin" . "<extensions>true</extensions>"
 
 %mvn_file : %{name}
-sed -i -e "s|1.5|1.6|" pom.xml
-# Fix javadoc generation on java 11
-%pom_xpath_inject pom:build/pom:plugins "<plugin>
-<artifactId>maven-javadoc-plugin</artifactId>
-<configuration><source>1.8</source></configuration>
-</plugin>" 
 
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
@@ -79,6 +76,9 @@ cp -pr example/* %{buildroot}%{_datadir}/%{name}
 %doc %{_datadir}/%{name}
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:1.1.3-alt1_18jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.1.3-alt1_15jpp11
 - update
 
