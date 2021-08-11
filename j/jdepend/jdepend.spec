@@ -1,6 +1,7 @@
+Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -35,8 +36,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           jdepend
 Version:        2.9.1
-Release:        alt4_22jpp8
-Epoch:          0
+Release:        alt4_27jpp11
 Summary:        Java Design Quality Metrics
 License:        BSD
 URL:            http://www.clarkware.com/
@@ -67,7 +67,7 @@ Javadoc for %{name}.
 %package demo
 Group: Development/Java
 Summary:        Demos for %{name}
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description demo
 Demonstrations and samples for %{name}.
@@ -82,7 +82,7 @@ find . -type d -exec chmod 755 {} \;
 %mvn_file %{name}:%{name} %{name}
 
 %build
-ant jar javadoc
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jar javadoc
 
 %install
 %mvn_artifact %{SOURCE1} dist/%{name}-%{version}.jar
@@ -103,6 +103,9 @@ cp -pr sample $RPM_BUILD_ROOT%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:2.9.1-alt4_27jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt4_22jpp8
 - fc update
 
