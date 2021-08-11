@@ -5,11 +5,11 @@
 %define kflavour		rt
 Name: kernel-image-%kflavour
 %define kernel_base_version	5.10
-%define kernel_sublevel		.52
-%define kernel_rt_release	rt47
+%define kernel_sublevel		.56
+%define kernel_rt_release	rt48
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
-Release: alt2.%kernel_rt_release
+Release: alt1.%kernel_rt_release
 
 %define krelease	%release
 
@@ -66,27 +66,28 @@ ExclusiveArch: x86_64
 ExclusiveOS: Linux
 
 BuildRequires(pre): rpm-build-kernel
+BuildRequires: bc
 BuildRequires: flex
-BuildRequires: libdb4-devel
 BuildRequires: gcc%kgcc_version
 BuildRequires: gcc%kgcc_version-c++
 BuildRequires: gcc%kgcc_version-plugin-devel
-BuildRequires: libgmp-devel
-BuildRequires: libmpc-devel
 BuildRequires: kernel-source-%kernel_base_version = 1.0.0
 BuildRequires: kmod
-BuildRequires: lzma-utils
+BuildRequires: libdb4-devel
 BuildRequires: libelf-devel
-BuildRequires: bc
+BuildRequires: libgmp-devel
+BuildRequires: libmpc-devel
+BuildRequires: lzma-utils
+BuildRequires: openssl
 BuildRequires: openssl-devel
 BuildRequires: rsync
 # for check
 %{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run >= 1.15 ltp >= 20210524-alt2 iproute2}}
 
 Requires: bootloader-utils
+Requires: coreutils
 Requires: kmod
 Requires: mkinitrd
-Requires: coreutils
 
 Provides: kernel = %kversion
 
@@ -150,6 +151,15 @@ The documentation files contained in this package may be different
 from the similar files in upstream kernel distributions, because some
 patches applied to the corresponding kernel packages may change things
 in the kernel and update the documentation to reflect these changes.
+
+%package checkinstall
+Summary: Verify presence of pesign
+Group: System/Kernel and hardware
+Requires: %name = %EVR
+Requires: rpm-pesign-checkinstall
+
+%description checkinstall
+%summary.
 
 %prep
 %setup -cT -n kernel-image-%flavour-%kversion-%krelease
@@ -385,6 +395,10 @@ if ! timeout 999 vm-run --kvm=cond \
 	exit 1
 fi
 
+%pre checkinstall
+set -ex
+check-pesign-helper /boot/vmlinuz-%kversion-%flavour-%krelease
+
 %files
 /boot/vmlinuz-%kversion-%flavour-%krelease
 /boot/System.map-%kversion-%flavour-%krelease
@@ -417,7 +431,13 @@ fi
 %dir %modules_dir
 %modules_dir/build
 
+%files checkinstall
+
 %changelog
+* Mon Aug 09 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.56-alt1.rt48
+- Update to v5.10.56-rt48 (2021-08-06).
+- Enable modules signing.
+
 * Tue Aug 03 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.10.52-alt2.rt47
 - Bumped release to pesign with new key.
 
