@@ -6,12 +6,12 @@ BuildRequires: unzip
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jsch
 Version:        0.1.55
-Release:        alt1_2jpp11
+Release:        alt1_4jpp11
 Summary:        Pure Java implementation of SSH2
 License:        BSD
 URL:            http://www.jcraft.com/jsch/
@@ -29,7 +29,6 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  zip
 
 Requires:       jzlib >= 0:1.0.5
-Obsoletes: %{name}-demo < %{version}
 Source44: import.info
 
 %description
@@ -49,16 +48,13 @@ BuildArch: noarch
 %setup -q
 %mvn_file : jsch
 
-# remove unnecessary dependency on parent POM
 %pom_remove_parent
 
 %pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :maven-compiler-plugin
 
 %pom_xpath_remove pom:project/pom:build/pom:extensions
 %pom_xpath_set pom:project/pom:version %{version}
-
-# Java 5 is too old
-%pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]//pom:target'
 
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
@@ -82,6 +78,9 @@ zip target/%{name}-%{version}.jar plugin.properties
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:0.1.55-alt1_4jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:0.1.55-alt1_2jpp11
 - new version
 
