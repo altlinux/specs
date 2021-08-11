@@ -6,8 +6,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     10
-%define postgresql_minor     17
-%define postgresql_altrel    2
+%define postgresql_minor     18
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -767,6 +767,9 @@ fi
 %endif
 
 %changelog
+* Wed Aug 11 2021 Alexei Takaseev <taf@altlinux.org> 10.18-alt1
+- 10.18
+
 * Thu Jun 10 2021 Alexei Takaseev <taf@altlinux.org> 10.17-alt2
 - Build without ICU (Do not build with ICU > 68)
 
