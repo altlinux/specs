@@ -1,6 +1,6 @@
 Name: rust
 Epoch: 1
-Version: 1.53.0
+Version: 1.54.0
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -295,6 +295,9 @@ verbose = 2
 vendor = true
 extended = true
 tools = ["cargo", "rls", "clippy", "rustfmt", "analysis", "src"]
+build-stage = 2
+test-stage = 2
+doc-stage = 2
 
 [install]
 prefix = "%prefix"
@@ -333,8 +336,8 @@ EOF
 
 . ./env.sh
 
-python3 x.py build --verbose --stage 2
-python3 x.py doc --stage 2
+python3 x.py build
+python3 x.py doc
 
 
 %install
@@ -381,8 +384,29 @@ find %buildroot/%_libdir \
 	-name 'librustc_driver-*.so' -execdir objdump -p '{}' '+' |
 	grep -qs 'NEEDED.*LLVM'
 %endif
-# python3 ./x.py test --no-doc --no-fail-fast ||:
 
+# https://rustc-dev-guide.rust-lang.org/tests/intro.html
+failed=
+for i in \
+	codegen \
+	codegen-units \
+	incremental \
+	mir-opt \
+; do
+	: "### rust_src_test: running $i"
+	status='done'
+	if ! python3 ./x.py test --no-doc --no-fail-fast "src/test/$i"; then
+		status='failed'
+		failed="$failed $i"
+	fi
+	: "### rust_src_test: $i $status"
+done
+
+if [ -n "$failed" ]; then
+	: "### rust_src_test: failure summary: $failed"
+	: "### aborting due to test failures"
+	exit 1
+fi
 
 %clean
 %if_with bootstrap
@@ -448,6 +472,9 @@ rm -rf %rustdir
 %rustlibdir/%rust_triple/analysis
 
 %changelog
+* Tue Aug 10 2021 Alexey Gladkov <legion@altlinux.ru> 1:1.54.0-alt1
+- New version (1.54.0).
+
 * Tue Jul 13 2021 Alexey Gladkov <legion@altlinux.ru> 1:1.53.0-alt1
 - New version (1.53.0).
 

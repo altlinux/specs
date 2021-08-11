@@ -1,16 +1,16 @@
 %set_verify_elf_method relaxed
 
 %define gst_version   1.0
-%define nspr_version  4.31
-%define nss_version   3.66.0
-%define rust_version  1.52.0
-%define cargo_version 1.52.0
+%define nspr_version  4.32
+%define nss_version   3.69.0
+%define rust_version  1.54.0
+%define cargo_version 1.54.0
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        90.0.2
+Version:        91.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -47,8 +47,7 @@ Patch011: 0011-bmo-847568-Support-system-harfbuzz.patch
 Patch012: 0012-bmo-847568-Support-system-graphite2.patch
 Patch013: 0013-bmo-1559213-Support-system-av1.patch
 Patch014: 0014-VAAPI-Add-extra-frames.patch
-Patch015: 0015-bmo-1719674-Make-packed_simd-compile-with-Rust-1.54.patch
-Patch016: 0016-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
+Patch015: 0015-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 ### End Patches
 
 #ExcludeArch: ppc64le
@@ -203,7 +202,6 @@ Most likely you don't need to use this package.
 %patch013 -p1
 %patch014 -p1
 %patch015 -p1
-%patch016 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -351,6 +349,10 @@ make -C objdir \
 install -D -m 644 %SOURCE9  %buildroot/%firefox_prefix/browser/defaults/preferences/all-altlinux.js
 install -D -m 644 %SOURCE12 %buildroot/%_sysconfdir/firefox/pref/all-privacy.js
 
+sed -i \
+	-e 's#@VERSION@#%{version}#g' \
+	%buildroot/%_sysconfdir/firefox/pref/all-privacy.js
+
 cat > %buildroot/%firefox_prefix/browser/defaults/preferences/firefox-l10n.js <<EOF
 pref("intl.locale.matchOS", true);
 pref("intl.locale.requested", "");
@@ -461,6 +463,21 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Aug 10 2021 Alexey Gladkov <legion@altlinux.ru> 91.0-alt1
+- New release (91.0).
+- Security fixes:
+  + CVE-2021-29986: Race condition when resolving DNS names could have led to memory corruption
+  + CVE-2021-29981: Live range splitting could have led to conflicting assignments in the JIT
+  + CVE-2021-29988: Memory corruption as a result of incorrect style treatment
+  + CVE-2021-29983: Firefox for Android could get stuck in fullscreen mode
+  + CVE-2021-29984: Incorrect instruction reordering during JIT optimization
+  + CVE-2021-29980: Uninitialized memory in a canvas object could have led to memory corruption
+  + CVE-2021-29987: Users could have been tricked into accepting unwanted permissions on Linux
+  + CVE-2021-29985: Use-after-free media channels
+  + CVE-2021-29982: Single bit data leak due to incorrect JIT optimization and type confusion
+  + CVE-2021-29989: Memory safety bugs fixed in Firefox 91 and Firefox ESR 78.13
+  + CVE-2021-29990: Memory safety bugs fixed in Firefox 91
+
 * Fri Jul 23 2021 Alexey Gladkov <legion@altlinux.ru> 90.0.2-alt1
 - New release (90.0.2).
 

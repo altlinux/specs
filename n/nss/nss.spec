@@ -1,7 +1,7 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.66.0
-Release:	alt2
+Version:	3.69.0
+Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
 Url:		http://www.mozilla.org/projects/security/pki/nss
@@ -14,9 +14,7 @@ Source4:	nss-db-%version.tar
 Source5:	setup-nsssysinit.sh
 Source6:	system-pkcs11.txt
 
-Patch0: nss-3.66.0-Bug-1566124-Fix-AES_GCM-mode-on-ppc64le-for-messages.patch
-Patch1: nss-3.66.0-Bug-1566124-Fix-counter-increase-in-ppc-gcm-wrap.c-r.patch
-Patch2: nss-3.66.0-Bug-1714874-alt-disable-test-dbtest-rw-in-a-readonly-directory.patch
+Patch1: 0001-Disable-test-dbtest-r-w-in-a-readonly-directory.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  chrpath zlib-devel libsqlite3-devel
@@ -99,9 +97,7 @@ Netscape Network Security Services Utilities
 
 %prep
 %setup -q
-%patch0 -p1 -d nss
 %patch1 -p1 -d nss
-%patch2 -p1 -d nss
 
 %build
 mkdir -p bin
@@ -238,6 +234,9 @@ popd
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_Releases
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Tue Aug 10 2021 Alexey Gladkov <legion@altlinux.ru> 3.69.0-alt1
+- New version (3.69).
+
 * Sat Jul 17 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.66.0-alt2
 - Backported upstream fixes for POWER AES-GCM Vector Acceleration (ALT#40510)
   (MBZ#1566124).
