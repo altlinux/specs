@@ -4,7 +4,7 @@
 
 Name: llvm-common
 Version: 11.0.1
-Release: alt2
+Release: alt3
 
 Summary: Common directories, symlinks and tool selection for LLVM
 License: Apache-2.0 with LLVM-exception
@@ -53,6 +53,7 @@ Group: Development/C
 Provides: llvm-devel = %EVR
 Requires: llvm%_llvm_version-devel
 Requires(pre,postun): %name = %version-%release
+Conflicts: llvm7.0-devel
 
 %package devel-static
 Summary: Common symlinks and development files for LLVM static libraries
@@ -424,6 +425,10 @@ clang-cpp --version
 llc --version
 
 %changelog
+* Wed Aug 11 2021 Andrey Cherepanov <cas@altlinux.org> 11.0.1-alt3
+- Added conflict with llvm7.0-devel.
+- Fix bogus dates in %%changelog.
+
 * Sun Feb 14 2021 Arseny Maslennikov <arseny@altlinux.org> 11.0.1-alt2
 - Obsolete the Sisyphus LLVM packages that do not use llvm-alt-tool-wrappers.
 
@@ -440,10 +445,10 @@ llc --version
 - Added new helper RPM macros for use in packaging of LLVM/Clang-reliant
   software.
 
-* Mon Nov 22 2020 Arseny Maslennikov <arseny@altlinux.org> 11.0.0-alt2
+* Sun Nov 22 2020 Arseny Maslennikov <arseny@altlinux.org> 11.0.0-alt2
 - Specified requirements for llvm%%_llvm_version in the -common packages.
 - Introduced wrappers for clang-tools-extra and clangd.
 - Introduced llvm-common-devel-static to provide llvm-devel-static.
 
-* Mon Nov 08 2020 Arseny Maslennikov <arseny@altlinux.org> 11.0.0-alt1
+* Sun Nov 08 2020 Arseny Maslennikov <arseny@altlinux.org> 11.0.0-alt1
 - Initial revision.
