@@ -50,7 +50,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.4
+Version: %major.5
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -65,6 +65,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://nodejs.org/dist/v%version/node-v%version.tar.gz
 Source: %name-%version.tar
 Source7: nodejs_native.req.files
+
+Patch: 8699aa501c4d4e1567ebe8901e5ec80cadaa9323.patch
 
 BuildRequires(pre): rpm-macros-nodejs
 BuildRequires(pre): rpm-build-intro >= 2.1.14
@@ -101,7 +103,7 @@ BuildRequires: libnghttp2-devel >= %libnghttp2_abi
 BuildRequires: libhttp-parser-devel >= 2.9.2-alt2
 %endif
 
-BuildRequires: libcares-devel >= 1.17.1-alt1
+BuildRequires: libcares-devel >= 1.17.2-alt1
 
 BuildRequires: curl
 
@@ -195,6 +197,7 @@ node programs. It manages dependencies and does other cool stuff.
 
 %prep
 %setup
+%patch -p1
 
 %if_with systemv8
 # hack against https://bugzilla.altlinux.org/show_bug.cgi?id=32573#c3
@@ -379,6 +382,13 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Wed Aug 11 2021 Vitaly Lipatov <lav@altlinux.ru> 14.17.5-alt1
+- new version 14.17.5 (with rpmrb script)
+- set c-ares >= 1.17.2
+- CVE-2021-3672, CVE-2021-22931: Improper handling of untypical characters in domain names
+- CVE-2021-22930: Use after free on close http2 on stream canceling
+- CVE-2021-22939: Incomplete validation of rejectUnauthorized parameter
+
 * Fri Jul 30 2021 Vitaly Lipatov <lav@altlinux.ru> 14.17.4-alt1
 - new version 14.17.4 (with rpmrb script)
 - CVE-2021-22930: Use after free on close http2 on stream canceling (High)
