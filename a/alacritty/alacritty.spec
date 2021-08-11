@@ -1,6 +1,6 @@
 Name: alacritty
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Summary: A fast, cross-platform, OpenGL terminal emulator
 License: Apache-2.0
@@ -64,5 +64,8 @@ ln -srv %buildroot/lib/terminfo/a/alacritty-direct %buildroot%_datadir/terminfo/
 %_man1dir/alacritty.1*
 
 %changelog
+* Wed Aug 11 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.0-alt2
+- lower required OpenGL version to 3.1
+
 * Tue Aug 03 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.0-alt1
 - initial
