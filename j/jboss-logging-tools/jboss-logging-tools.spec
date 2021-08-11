@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -10,7 +10,7 @@ BuildRequires: jpackage-11-compat
 
 Name:             jboss-logging-tools
 Version:          2.2.1
-Release:          alt1_3jpp11
+Release:          alt1_6jpp11
 Summary:          JBoss Logging I18n Annotation Processor
 # Not available license file https://issues.jboss.org/browse/LOGTOOL-107
 # ./annotations/src/main/java/org/jboss/logging/annotations/*.java: Apache (v2.0)
@@ -26,19 +26,10 @@ BuildRequires:    mvn(junit:junit)
 BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
 BuildRequires:    mvn(org.jboss.jdeparser:jdeparser)
 BuildRequires:    mvn(org.jboss.logging:jboss-logging)
-BuildRequires:    mvn(org.jboss.logmanager:jboss-logmanager)
 Source44: import.info
 
 %description
 This pacakge contains JBoss Logging I18n Annotation Processor
-
-%package javadoc
-Group: Development/Java
-Summary:          Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{namedversion}
@@ -55,7 +46,7 @@ rm processor/src/test/java/org/jboss/logging/processor/generated/GeneratedSource
 %pom_disable_module docs
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -64,11 +55,10 @@ rm processor/src/test/java/org/jboss/logging/processor/generated/GeneratedSource
 %doc --no-dereference LICENSE-2.0.txt
 %doc README.adoc
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE-2.0.txt
-%doc README.adoc
-
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 2.2.1-alt1_6jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.2.1-alt1_3jpp11
 - new version
 
