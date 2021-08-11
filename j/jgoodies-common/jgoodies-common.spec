@@ -3,14 +3,14 @@ Group: Development/Other
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global shortname common
 
 Name:           jgoodies-common
 Version:        1.8.1
-Release:        alt1_9jpp11
+Release:        alt1_11jpp11
 Summary:        Common library shared by JGoodies libraries and applications
 
 License:        BSD
@@ -21,6 +21,7 @@ Source0:        http://www.jgoodies.com/download/libraries/%{shortname}/%{name}-
 BuildRequires:  fonts-ttf-dejavu
 BuildRequires:  fontconfig
 BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
 BuildArch:      noarch
 Source44: import.info
 
@@ -84,6 +85,9 @@ done
 
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.8.1-alt1_11jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.8.1-alt1_9jpp11
 - fc34 update
 
