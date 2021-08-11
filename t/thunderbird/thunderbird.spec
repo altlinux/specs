@@ -10,7 +10,7 @@
 %define llvm_version      11.0
 
 Name: 	 thunderbird
-Version: 78.12.0
+Version: 78.13.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -584,6 +584,16 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Tue Aug 10 2021 Andrey Cherepanov <cas@altlinux.org> 78.13.0-alt1
+- New version (78.13.0).
+- Security fixes:
+  + CVE-2021-29986 Race condition when resolving DNS names could have led to memory corruption
+  + CVE-2021-29988 Memory corruption as a result of incorrect style treatment
+  + CVE-2021-29984 Incorrect instruction reordering during JIT optimization
+  + CVE-2021-29980 Uninitialized memory in a canvas object could have led to memory corruption
+  + CVE-2021-29985 Use-after-free media channels
+  + CVE-2021-29989 Memory safety bugs fixed in Thunderbird 78.13
+
 * Wed Jul 14 2021 Andrey Cherepanov <cas@altlinux.org> 78.12.0-alt1
 - New version (78.12.0).
 - Security fixes:
