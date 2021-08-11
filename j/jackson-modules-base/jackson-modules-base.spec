@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -13,7 +13,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           jackson-modules-base
 Version:        2.11.4
-Release:        alt1_2jpp11
+Release:        alt1_4jpp11
 Summary:        Jackson modules: Base
 License:        ASL 2.0
 
@@ -27,17 +27,12 @@ BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core) >= %{version}
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind) >= %{version}
 BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= %{version}
 BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
-BuildRequires:  mvn(com.google.inject:guice)
-%if %{without jp_minimal}
-BuildRequires:  mvn(com.thoughtworks.paranamer:paranamer)
-%endif
 BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
 BuildRequires:  mvn(javax.xml.bind:jaxb-api)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.glassfish.jaxb:jaxb-runtime)
 BuildRequires:  mvn(org.mockito:mockito-all)
-BuildRequires:  mvn(org.osgi:osgi.core)
 BuildRequires:  mvn(org.ow2.asm:asm)
 
 BuildArch:      noarch
@@ -46,23 +41,6 @@ Source44: import.info
 %description
 Jackson "base" modules: modules that build directly on databind,
 and are not data-type, data format, or JAX-RS provider modules.
-
-%package -n jackson-module-afterburner
-Group: Development/Java
-Summary: Jackson module that uses byte-code generation to further speed up data binding
-
-%description -n jackson-module-afterburner
-Module that will add dynamic bytecode generation for standard Jackson POJO
-serializers and deserializers, eliminating majority of remaining data binding
-overhead.
-
-%package -n jackson-module-guice
-Group: Development/Java
-Summary: Jackson module to make integration with Guice a bit easier
-
-%description -n jackson-module-guice
-This extension allows Jackson to delegate ObjectMapper creation and value
-injection to Guice when handling data bindings.
 
 %package -n jackson-module-jaxb-annotations
 Group: Development/Java
@@ -73,48 +51,6 @@ This Jackson extension module provides support for using JAXB (javax.xml.bind)
 annotations as an alternative to native Jackson annotations. It is most often
 used to make it easier to reuse existing data beans that used with JAXB
 framework to read and write XML.
-
-%if %{without jp_minimal}
-%package -n jackson-module-mrbean
-Group: Development/Java
-Summary: Functionality for implementing interfaces and abstract types dynamically
-
-%description -n jackson-module-mrbean
-Mr Bean is an extension that implements support for "POJO type materialization"
-ability for databinder to construct implementation classes for Java interfaces
-and abstract classes, as part of deserialization.
-%endif
-
-%package -n jackson-module-osgi
-Group: Development/Java
-Summary: Jackson module to inject OSGI services in deserialized beans
-
-%description -n jackson-module-osgi
-This module provides a way to inject OSGI services into deserialized objects.
-Thanks to the JacksonInject annotations, the OsgiJacksonModule will search for
-the required service in the OSGI service registry and injects it in the object
-while deserializing.
-
-%if %{without jp_minimal}
-%package -n jackson-module-paranamer
-Group: Development/Java
-Summary: Jackson module that uses Paranamer to introspect names of constructor params
-
-%description -n jackson-module-paranamer
-Module that uses Paranamer library to auto-detect names of Creator
-(constructor, static factory method, annotated with @JsonCreator) methods.
-%endif
-
-%package javadoc
-Group: Development/Java
-Summary: Javadoc for %{name}
-# Obsoletes standalone jackson-module-jaxb-annotations since F28
-Obsoletes: jackson-module-jaxb-annotations-javadoc < %{version}-%{release}
-Provides:  jackson-module-jaxb-annotations-javadoc = %{version}-%{release}
-BuildArch: noarch
-
-%description javadoc
-This package contains API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
@@ -138,11 +74,11 @@ cp -p mrbean/src/main/resources/META-INF/{LICENSE,NOTICE} .
 # NoClassDefFoundError: net/sf/cglib/core/CodeGenerationException
 %pom_add_dep cglib:cglib:3.2.4:test guice
 
-%if %{with jp_minimal}
-# Disable modules with additional deps
-%pom_disable_module paranamer
+%pom_disable_module afterburner
+%pom_disable_module guice
 %pom_disable_module mrbean
-%endif
+%pom_disable_module osgi
+%pom_disable_module paranamer
 
 # Allow javax,activation to be optional
 %pom_add_plugin "org.apache.felix:maven-bundle-plugin" jaxb "
@@ -158,7 +94,7 @@ rm osgi/src/test/java/com/fasterxml/jackson/module/osgi/InjectOsgiServiceTest.ja
 %mvn_file ":{*}" jackson-modules/@1
 
 %build
-%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -s -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -167,38 +103,14 @@ rm osgi/src/test/java/com/fasterxml/jackson/module/osgi/InjectOsgiServiceTest.ja
 %doc README.md release-notes
 %doc --no-dereference LICENSE NOTICE
 
-%files -n jackson-module-afterburner -f .mfiles-jackson-module-afterburner
-%doc afterburner/README.md afterburner/release-notes
-%doc --no-dereference LICENSE NOTICE
-
-%files -n jackson-module-guice -f .mfiles-jackson-module-guice
-%doc guice/README.md
-%doc --no-dereference LICENSE NOTICE
-
 %files -n jackson-module-jaxb-annotations -f .mfiles-jackson-module-jaxb-annotations
 %doc jaxb/README.md jaxb/release-notes
 %doc --no-dereference LICENSE NOTICE
 
-%if %{without jp_minimal}
-%files -n jackson-module-mrbean -f .mfiles-jackson-module-mrbean
-%doc mrbean/README.md mrbean/release-notes
-%doc --no-dereference LICENSE NOTICE
-%endif
-
-%files -n jackson-module-osgi -f .mfiles-jackson-module-osgi
-%doc osgi/README.md osgi/release-notes
-%doc --no-dereference LICENSE NOTICE
-
-%if %{without jp_minimal}
-%files -n jackson-module-paranamer -f .mfiles-jackson-module-paranamer
-%doc paranamer/README.md paranamer/release-notes
-%doc --no-dereference LICENSE NOTICE
-%endif
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE NOTICE
-
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_4jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_2jpp11
 - new version
 
