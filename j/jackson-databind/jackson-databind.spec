@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jackson-databind
 Version:        2.11.4
-Release:        alt1_2jpp11
+Release:        alt1_4jpp11
 Summary:        General data-binding package for Jackson (2.x)
 License:        ASL 2.0 and LGPLv2+
 
@@ -27,14 +27,6 @@ Source44: import.info
 The general-purpose data-binding functionality and tree-model for Jackson Data
 Processor. It builds on core streaming parser/generator package, and uses
 Jackson Annotations for configuration.
-
-%package javadoc
-Group: Development/Java
-Summary: Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
@@ -67,7 +59,7 @@ rm src/test/java/com/fasterxml/jackson/databind/ser/jdk/JDKTypeSerializationTest
 %mvn_file : %{name}
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.test.failure.ignore=true
+%mvn_build -f -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.test.failure.ignore=true
 
 %install
 %mvn_install
@@ -76,10 +68,10 @@ rm src/test/java/com/fasterxml/jackson/databind/ser/jdk/JDKTypeSerializationTest
 %doc README.md release-notes/*
 %doc --no-dereference LICENSE NOTICE
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE NOTICE
-
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_4jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_2jpp11
 - new version
 
