@@ -5,7 +5,7 @@
 
 Name: rpm-pesign-checkinstall
 Summary: Verify pesigned binaries (helper for checkinstall)
-Version: 2
+Version: 3
 Release: alt1
 License: GPL-2.0-only
 Group: Development/Other
@@ -42,6 +42,9 @@ install -Dp -m755 check-pesign.sh %buildroot%_bindir/check-pesign-helper
 %endif
 
 %changelog
+* Thu Aug 12 2021 Vitaly Chikunov <vt@altlinux.org> 3-alt1
+- Use trap to clean temporary directory.
+
 * Wed Aug 11 2021 Vitaly Chikunov <vt@altlinux.org> 2-alt1
 - Force check for the files specified in command line.
 - Make package multiarch.
