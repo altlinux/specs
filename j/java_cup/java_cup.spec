@@ -1,14 +1,21 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 %global pkg_version     11b
-%global with_bootstrap  0
 
 Name:           java_cup
 Version:        0.11b
-Release:        alt4_15jpp11
+Release:        alt4_18jpp11
 Epoch:          2
 Summary:        LALR parser generator for Java
 License:        MIT
@@ -24,12 +31,18 @@ Source4:        %{name}-runtime-MANIFEST.MF
 
 Patch0:         %{name}-build.patch
 
-BuildRequires:  ant
 BuildRequires:  javapackages-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
+BuildRequires:  ant
 BuildRequires:  jflex
-%if ! %{with_bootstrap}
-BuildRequires:  java_cup >= 1:0.11a
+BuildRequires:  java_cup
 %endif
+
+# Explicit javapackages-tools requires since scripts use
+# /usr/share/java-utils/java-functions
+Requires:       javapackages-tools
 Source44: import.info
 Obsoletes: java-cup < 2:11b
 Provides: java-cup = %{epoch}:%{version}-%release
@@ -58,31 +71,25 @@ Documentation for java_cup.
 %setup -q
 %patch0 -b .build
 
+sed -i '/<javac/s/1.5/1.6/g' build.xml
+
 # remove all binary files
 find -name "*.class" -delete
 
 %mvn_file ':{*}' @1
 
-%if ! %{with_bootstrap}
 # remove prebuilt JFlex
 rm -rf java_cup-%{version}/bin/JFlex.jar
 
 # remove prebuilt java_cup, if not bootstrapping
 rm -rf java_cup-%{version}/bin/java-cup-11.jar
-%endif
-
-# Use source/target 1.6 for Java 11
-sed -i 's/source="1.5"/source="1.6"/' build.xml
-sed -i 's/target="1.5"/target="1.6"/' build.xml
 
 %build
-%if ! %{with_bootstrap}
 export CLASSPATH=$(build-classpath java_cup java_cup-runtime jflex)
-%endif
 
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dcupversion=20150326 -Dsvnversion=65
+%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dcupversion=20150326 -Dsvnversion=65
 find -name parser.cup -delete
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  javadoc
+%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  javadoc
 
 # inject OSGi manifests
 jar ufm dist/java-cup-%{pkg_version}.jar %{SOURCE2}
@@ -94,7 +101,11 @@ jar ufm dist/java-cup-%{pkg_version}-runtime.jar %{SOURCE4}
 
 %mvn_install -J dist/javadoc
 
+# wrapper script for direct execution
+%jpackage_script java_cup.Main "" "" java_cup cup true
+
 %files -f .mfiles
+%{_bindir}/cup
 %doc changelog.txt
 %doc --no-dereference licence.txt
 
@@ -106,6 +117,9 @@ jar ufm dist/java-cup-%{pkg_version}-runtime.jar %{SOURCE4}
 %doc --no-dereference licence.txt
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 2:0.11b-alt4_18jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2:0.11b-alt4_15jpp11
 - update
 
