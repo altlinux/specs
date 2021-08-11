@@ -1,6 +1,7 @@
+Epoch: 0
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -37,8 +38,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           jakarta-oro
 Version:        2.0.8
-Release:        alt2_28jpp8
-Epoch:          0
+Release:        alt2_33jpp11
 Summary:        Full regular expressions API
 License:        ASL 1.1
 Source0:        http://archive.apache.org/dist/jakarta/oro/%{name}-%{version}.tar.gz
@@ -85,7 +85,7 @@ for file in `find . -type f -name .cvsignore`; do rm -rf $file; done
 cp %{SOURCE1} .
 
 %build
-ant -Dfinal.name=%{base_name} jar javadocs
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dfinal.name=%{base_name} jar javadocs
 
 %install
 %mvn_file : %{name} %{base_name}
@@ -101,6 +101,9 @@ ant -Dfinal.name=%{base_name} jar javadocs
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:2.0.8-alt2_33jpp11
+- update
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.0.8-alt2_28jpp8
 - fc update
 
