@@ -10,7 +10,7 @@
 
 Name: inkscape
 Version: %major
-Release: alt4
+Release: alt5
 
 Summary: A Vector Drawing Application
 
@@ -54,10 +54,7 @@ BuildRequires: libGraphicsMagick-c++-devel
 %else
 BuildRequires: libImageMagick-devel
 %endif
-%ifnarch %e2k
-# lcc has -lomp, not -lgomp
 BuildRequires: libgomp-devel
-%endif
 BuildRequires: libdouble-conversion-devel
 BuildRequires: perl-podlators
 
@@ -144,6 +141,8 @@ namespace Geom { struct Curve { };
 	__attribute__((visibility("hidden")))
 	auto Curve_typeinfo_ptr = &typeid(Curve); }
 EOF
+# LCC cannot work with expressions inside openmp pragmas
+sed -i "s|limit > OPENMP_THRESHOLD|limit_gt_thr|;s|limit = w \\* h|&, limit_gt_thr = limit > OPENMP_THRESHOLD|" src/display/{cairo-templates.h,nr-filter-morphology.cpp}
 %endif
 rm -rfv src/3rdparty/2geom/
 
@@ -225,6 +224,9 @@ true
 %files checkinstall
 
 %changelog
+* Wed Aug 11 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.1-alt5
+- e2k: fixed OpenMP pragmas for LCC
+
 * Tue Aug 10 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.1-alt4
 - e2k: workaround for compiler bug
 
