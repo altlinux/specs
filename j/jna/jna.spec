@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -17,7 +17,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           jna
 Version:        5.6.0
-Release:        alt1_2jpp11
+Release:        alt1_4jpp11
 Summary:        Pure Java access to native libraries
 # Most of code is dual-licensed under either LGPL 2.1+ only or Apache
 # License 2.0.  WeakIdentityHashMap.java was taken from Apache CXF,
@@ -120,6 +120,8 @@ ln -s $(xmvn-resolve ant:ant:1.10.5) lib/ant.jar
 
 cp lib/native/aix-ppc64.jar lib/clover.jar
 
+%pom_remove_plugin -r :maven-javadoc-plugin parent
+
 
 %build
 # We pass -Ddynlink.native which comes from our patch because
@@ -162,6 +164,9 @@ install -m 755 build/native*/libjnidispatch*.so %{buildroot}%{_libdir}/%{name}/
 
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 5.6.0-alt1_4jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 5.6.0-alt1_2jpp11
 - new version
 
