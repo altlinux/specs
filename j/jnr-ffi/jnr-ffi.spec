@@ -1,11 +1,11 @@
 Group: System/Libraries
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:     jnr-ffi
 Version:  2.1.8
-Release:  alt1_9jpp11
+Release:  alt1_12jpp11
 Summary:  Java Abstracted Foreign Function Layer
 License:  ASL 2.0
 URL:      http://github.com/jnr/%{name}/
@@ -55,6 +55,9 @@ find -name '*.jar' -o -name '*.class' -exec rm -f '{}' \;
 %pom_remove_parent
 %pom_remove_plugin ":maven-javadoc-plugin"
 
+# Port to maven-antrun-plugin 3.0.0
+sed -i s/tasks/target/ pom.xml
+
 # don't fail on unused parameters... (TODO: send patch upstream)
 sed -i 's|-Werror||' libtest/GNUmakefile
 
@@ -71,6 +74,9 @@ sed -i 's|-Werror||' libtest/GNUmakefile
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 2.1.8-alt1_12jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.1.8-alt1_9jpp11
 - update
 
