@@ -6,9 +6,8 @@
 %def_disable relocatable
 %def_disable check
 
-
 Name: %_name%api_ver
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 
 Summary: An Enchanting Spell Checking Program
@@ -19,7 +18,7 @@ Url: https://abiword.github.io/%_name/
 %if_disabled snapshot
 Source: https://github.com/AbiWord/%_name/releases/download/v%version/%_name-%version.tar.gz
 %else
-#VCS: https://github.com/AbiWord/enchant.git
+Vcs: https://github.com/AbiWord/enchant.git
 Source: %_name-%version.tar
 %endif
 
@@ -65,7 +64,7 @@ using libenchant.
 %makeinstall_std pkgdatadir=%_datadir/%_name-%api_ver
 
 %check
-%make check
+%make -k check VERBOSE=1
 
 %files
 %_bindir/*
@@ -86,6 +85,9 @@ using libenchant.
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Wed Aug 11 2021 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1
+- 2.3.1
+
 * Tue Jun 15 2021 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
 - 2.3.0
 
