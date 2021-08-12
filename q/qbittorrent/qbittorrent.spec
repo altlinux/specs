@@ -1,12 +1,12 @@
 %define ltr libtorrent-rasterbar-devel
-%define rel alt1
+%define rel alt2
 
 Name: qbittorrent
 Version: 4.3.7
 Epoch: 1
 Release: %rel
 
-ExcludeArch: ppc64le
+#ExcludeArch: ppc64le
 
 Summary: qBittorrent is a bittorrent client written in C++ / Qt5 using the good libtorrent library
 Summary(ru_RU.UTF-8): qBittorrent - bittorrent клиент написанный на C++ / Qt5, использующий библиотеку libtorrent.
@@ -79,6 +79,9 @@ Default is to listen on tcp/8080 with admin/adminadmin credentials
 #-n qBittorrent-release-%version
 
 %build
+%ifarch %e2k ppc64le riscv64
+sed -i 's,aarch64,&|riscv64|ppc64le|e2k,' m4/ax_boost_base.m4
+%endif
 ./bootstrap.sh
 %_configure_script --prefix=%buildroot%_usr
 %make_build
@@ -104,6 +107,9 @@ make clean
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Aug 12 2021 Ilya Mashkin <oddity@altlinux.ru> 1:4.3.7-alt2
+- fix build on e2k, ppc64le
+
 * Fri Aug 06 2021 Ilya Mashkin <oddity@altlinux.ru> 1:4.3.7-alt1
 - 4.3.7
 
