@@ -1,23 +1,34 @@
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:           plexus-components-pom
-Summary:        Plexus Components POM
-Version:        6.5
-Release:        alt1_2jpp11
-License:        ASL 2.0
+%bcond_with bootstrap
 
+Name:           plexus-components-pom
+Version:        6.5
+Release:        alt1_4jpp11
+Summary:        Plexus Components POM
+License:        ASL 2.0
 URL:            https://github.com/codehaus-plexus/plexus-components
+BuildArch:      noarch
+
 Source0:        https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-components/%{version}/plexus-components-%{version}.pom
 Source1:        https://www.apache.org/licenses/LICENSE-2.0.txt
 
-BuildArch:      noarch
-
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
+%endif
 Source44: import.info
 
 %description
@@ -39,6 +50,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 6.5-alt1_4jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 6.5-alt1_2jpp11
 - new version
 
