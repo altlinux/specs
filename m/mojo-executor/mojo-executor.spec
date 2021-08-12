@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Testing note: this package relies on an old version of mockito.  Compilation
@@ -12,7 +9,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           mojo-executor
 Version:        2.3.1
-Release:        alt1_5jpp11
+Release:        alt1_8jpp11
 Summary:        Execute other plugins within a maven plugin
 
 License:        ASL 2.0
@@ -21,17 +18,17 @@ Source0:        https://github.com/TimMoore/%{name}/archive/%{name}-parent-%{ver
 # Convert from commons-lang to commons-lang3
 # https://pagure.io/java-maint-sig/issue/4
 Patch0:         %{name}-commons-lang3.patch
+# Remove dependency on ant-contrib, which no longer builds successfully
+Patch1:         %{name}-ant-contrib.patch
 
 BuildArch:      noarch
 BuildRequires:  maven-local
-BuildRequires:  mvn(ant-contrib:ant-contrib)
 BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.jacoco:jacoco-maven-plugin)
 BuildRequires:  mvn(org.mockito:mockito-core)
 Source44: import.info
 
@@ -65,10 +62,14 @@ This package contains %{summary}.
 %prep
 %setup -q -n %{name}-%{name}-parent-%{version}
 %patch0 -p1
+%patch1 -p1
 
 
 # sonatype-oss-parent is deprecated in Fedora
 %pom_remove_parent
+
+# We do not need jacoco since we do not run the tests
+%pom_remove_plugin :jacoco-maven-plugin
 
 # maven-release is not needed
 %pom_remove_plugin :maven-release-plugin
@@ -78,11 +79,6 @@ This package contains %{summary}.
 %pom_change_dep :junit-dep :junit mojo-executor-maven-plugin/src/it/mojo-executor-test-project-no-plugin-version/pom.xml
 %pom_change_dep :junit-dep :junit mojo-executor-maven-plugin/src/it/mojo-executor-test-project-null-maven-project/pom.xml
 %pom_change_dep :junit-dep :junit mojo-executor-maven-plugin/src/it/mojo-executor-test-project-quiet/pom.xml
-
-# ant-contrib has no POM
-%pom_remove_dep ant-contrib: mojo-executor-maven-plugin/src/it/mojo-executor-test-project-with-dependencies/pom.xml
-sed -i 's,classpath.*,classpath="%{_javadir}/ant-contrib/ant-contrib.jar" />,' \
-  mojo-executor-maven-plugin/src/it/mojo-executor-test-project-with-dependencies/pom.xml
 
 %build
 %mvn_build -s -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
@@ -101,6 +97,9 @@ sed -i 's,classpath.*,classpath="%{_javadir}/ant-contrib/ant-contrib.jar" />,' \
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 2.3.1-alt1_8jpp11
+- update
+
 * Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 2.3.1-alt1_5jpp11
 - fixed build
 
