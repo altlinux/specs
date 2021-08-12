@@ -5,7 +5,7 @@
 %def_disable debug
 
 Name: dovecot
-Version: 2.3.14
+Version: 2.3.16
 Release: alt1
 
 Summary: Dovecot secure IMAP/POP3 server
@@ -21,6 +21,7 @@ Source2: dovecot.init
 # XXX doesn't work for now
 Source3: dovecot-auth.control
 Source4: http://www.unicode.org/Public/UNIDATA/UnicodeData.txt
+Source5: %name.watch
 
 Patch1: fix-mail_plugin_dir-default.patch
 Patch2: dovecot-2.0-defaultconfig.patch
@@ -28,15 +29,24 @@ Patch2: dovecot-2.0-defaultconfig.patch
 Patch4: dovecot-2.1.4-postreleasefix.patch
 Patch5: dovecot-2.3-systemd_firsttime.patch
 
-PreReq: mailboxes-control
+Requires(pre,postun): mailboxes-control
 
 # TODO remove this when splitting into modules
 %add_findreq_skiplist %_libexecdir/dovecot/decode2text.sh
 
-# Automatically added by buildreq on Tue Apr 24 2012
-# optimized out: libcom_err-devel libkrb5-devel libpq-devel libstdc++-devel pkg-config
-BuildRequires: bzlib-devel gcc-c++ libldap-devel libmysqlclient-devel libpam-devel libsasl2-devel libsqlite3-devel libssl-devel openssl postgresql-devel zlib-devel
+BuildRequires: bzlib-devel
+BuildRequires: gcc-c++
 BuildRequires: libkrb5-devel
+BuildRequires: libldap-devel
+BuildRequires: libmysqlclient-devel
+BuildRequires: libpam-devel
+BuildRequires: libsasl2-devel
+BuildRequires: libsqlite3-devel
+BuildRequires: libssl-devel
+BuildRequires: libsystemd-devel
+BuildRequires: openssl
+BuildRequires: postgresql-devel
+BuildRequires: zlib-devel
 
 Obsoletes: dovecot1.0
 Obsoletes: dovecot1.2
@@ -68,7 +78,7 @@ Libraries and headers for Dovecot
 %patch2 -p1
 #patch3 -p1
 %patch4 -p1
-%patch5 -p1
+%patch5 -p2
 
 sed -i 's@/usr/local@/usr@g' src/plugins/fts/decode2text.sh
 sed -i 's@/usr/local@/usr@g' doc/example-config/conf.d/90-quota.conf
@@ -81,13 +91,13 @@ sed -i 's, ATTR_RETURNS_NONNULL,,' src/lib/mempool.h
 xz -9 ChangeLog
 
 %build
+%undefine _configure_gettext
 %add_optflags -D_DEFAULT_SOURCE=1
 export ACLOCAL='aclocal -I .'
 %autoreconf
 %configure \
 	    --localstatedir=%_var                   \
 	    --with-moduledir=%_libdir/%name/modules \
-	    --with-systemdsystemunitdir=%_unitdir   \
 	    --disable-static                        \
 	    --with-ssl=openssl                      \
 	    --with-ssldir=%_ssldir                  \
@@ -211,6 +221,10 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Thu Aug 12 2021 Andrey Cherepanov <cas@altlinux.org> 2.3.16-alt1
+- Updated to 2.3.16 (fixes CVE-2021-33515, CVE-2021-29157, CVE-2021-33515, CVE-2021-29157).
+- Package watch file.
+
 * Wed Apr 07 2021 Andrey Cherepanov <cas@altlinux.org> 2.3.14-alt1
 - Updated to 2.3.14.
 
