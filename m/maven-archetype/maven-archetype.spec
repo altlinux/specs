@@ -4,12 +4,12 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-archetype
 Version:        3.2.0
-Release:        alt1_1jpp11
+Release:        alt1_4jpp11
 Summary:        Maven project templating toolkit
 
 # Most of the code is under ASL 2.0, but some bundled jdom sources are
@@ -31,37 +31,29 @@ Patch3: 0003-Port-to-commons-lang3.patch
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(commons-collections:commons-collections)
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(net.sourceforge.jchardet:jchardet)
-BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven:maven-archiver)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven:maven-settings)
 BuildRequires:  mvn(org.apache.maven:maven-settings-builder)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.shared:maven-artifact-transfer)
 BuildRequires:  mvn(org.apache.maven.shared:maven-invoker)
-BuildRequires:  mvn(org.apache.maven.shared:maven-script-interpreter)
 BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
 BuildRequires:  mvn(org.apache.velocity:velocity)
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-interactivity-api)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-velocity)
 BuildRequires:  mvn(org.jdom:jdom)
 Source44: import.info
 Provides: maven-archetype2 = %version
 Obsoletes: maven-archetype2 < %version
+
 
 
 %description
@@ -135,13 +127,6 @@ Summary: Maven Archetype packaging configuration for archetypes
 %description packaging
 %{summary}.
 
-%package -n %{name}-plugin
-Group: Development/Java
-Summary: Maven plug-in for using archetypes
-
-%description -n %{name}-plugin
-%{summary}.
-
 %prep
 %setup -q
 %patch1 -p1
@@ -192,10 +177,13 @@ popd
 # Disable processing of test resources using ant
 %pom_remove_plugin org.apache.maven.plugins:maven-antrun-plugin archetype-common
 
+# Don't build the maven-plugin
+%pom_disable_module maven-archetype-plugin
+
 %build
 %mvn_package :archetype-models maven-archetype
 # Tests are skipped due to missing test dependencies
-%mvn_build -f -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dsource=1.8 -DdetectJavaApiLink=false
+%mvn_build -f -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8 -Dsource=1.8 -DdetectJavaApiLink=false
 
 %install
 %mvn_install
@@ -212,12 +200,13 @@ popd
 
 %files packaging -f .mfiles-archetype-packaging
 
-%files -n %{name}-plugin -f .mfiles-maven-archetype-plugin
-
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:3.2.0-alt1_4jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:3.2.0-alt1_1jpp11
 - new version
 
