@@ -1,25 +1,35 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           plexus-resources
-Summary:        Plexus Resource Manager
 Version:        1.1.0
-Release:        alt1_4jpp11
+Release:        alt1_7jpp11
+Summary:        Plexus Resource Manager
 License:        MIT
-
-URL:            https://github.com/codehaus-plexus/%{name}
-Source0:        %{url}/archive/%{name}-%{version}/%{name}-%{version}.tar.gz
-
+URL:            https://github.com/codehaus-plexus/plexus-resources
 BuildArch:      noarch
 
+Source0:        https://github.com/codehaus-plexus/plexus-resources/archive/plexus-resources-%{version}.tar.gz
+
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+%endif
 Source44: import.info
 Source45: plexus-resources-1.0-components.xml
 
@@ -31,7 +41,6 @@ reusable components for hibernate, form processing, jndi, i18n,
 velocity, etc. Plexus also includes an application server which
 is like a J2EE application server, without all the baggage.
 
-
 %package        javadoc
 Group: Development/Java
 Summary:        Javadoc for %{name}
@@ -40,19 +49,16 @@ BuildArch: noarch
 %description    javadoc
 API documentation for %{name}.
 
-
 %prep
-%setup -q -n %{name}-%{name}-%{version}
+%setup -q -n plexus-resources-plexus-resources-%{version}
 
 mkdir -p target/classes/META-INF/plexus
 cp -p %{SOURCE45} target/classes/META-INF/plexus/components.xml
 
 
-
 %build
 %mvn_file  : plexus/resources
-%mvn_build -f -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
-
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -61,8 +67,10 @@ cp -p %{SOURCE45} target/classes/META-INF/plexus/components.xml
 
 %files javadoc -f .mfiles-javadoc
 
-
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:1.1.0-alt1_7jpp11
+- update
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0:1.1.0-alt1_4jpp11
 - fixed build
 
