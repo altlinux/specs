@@ -1,13 +1,13 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global git_tag 6578a73424849be942308f263eaf47fa897bcd13
 
 Name:           maven-indexer
 Version:        6.0.0
-Release:        alt1_5jpp11
+Release:        alt1_8jpp11
 Summary:        Standard for producing indexes of Maven repositories
 
 License:        ASL 2.0
@@ -15,20 +15,21 @@ URL:            http://maven.apache.org/maven-indexer/index.html
 
 Source0:        https://github.com/apache/maven-indexer/archive/%{git_tag}/maven-indexer-%{version}.tar.gz
 
-# Port to latest lucene, sent upstream:
-# - https://github.com/apache/maven-indexer/pull/37
-Patch0: 0001-MINDEXER-115-Migrate-to-BooleanQuery.Builder.patch
-Patch1: 0002-Eliminate-use-of-deprecated-Lucene-API.patch
-Patch2: 0003-Changes-needed-to-migrate-to-Lucene-8.patch
-
-# Drop dep on truezip
-Patch3:         maven-indexer-truezip.patch
+# https://github.com/apache/maven-indexer/commit/92cca9ce786f554fafa29f3f1e78a947357c2cf4
+Patch0: 0001-Migrate-to-BooleanQuery.Builder.patch
+# https://github.com/apache/maven-indexer/commit/005bc5e3d870b4e79e8e1593bfc098deaaa78f75
+Patch1: 0002-Eliminate-use-of-deprecated-Lucene-API-Field.patch
+# https://github.com/apache/maven-indexer/commit/83520cf9ce298d1ec9af66cf17e9c55ffddd26fb
+Patch2: 0003-Remove-dependency-to-TrueZip.patch
+# Not yet merged upstream: https://github.com/apache/maven-indexer/pull/37/commits/cb47364d8d294472daf068ffdcf3787fafac165b
+Patch3: 0004-Changes-needed-to-migrate-to-Lucene-8.patch
+# https://github.com/apache/maven-indexer/commit/94915762b81501bd5b3e041dcc5927580fa9e5c0
+Patch4: 0005-Remove-guava-dependency-from-indexer-core.patch
 
 BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
-BuildRequires:  mvn(com.google.inject:guice)
 BuildRequires:  mvn(javax.annotation:javax.annotation-api)
 BuildRequires:  mvn(javax.inject:javax.inject)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -69,11 +70,15 @@ This package contains the API documentation for %{name}.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3
+%patch3 -p1
+%patch4 -p1
 
 find -name '*.jar' -delete
 find -name '*.zip' -delete
 find -name '*.class' -delete
+
+# Google guice package no longer shipping aopalliance code
+%pom_remove_dep -r com.google.inject:guice
 
 # Tests need porting to a modern jetty
 %pom_remove_dep -r org.mortbay.jetty:jetty
@@ -103,10 +108,6 @@ find -name '*.class' -delete
   <goals><goal>main-index</goal></goals>
 </execution></executions>"
 
-# Drop unneeded optional dep on truezip
-%pom_remove_dep -r de.schlichtherle.truezip:
-rm indexer-core/src/main/java/org/apache/maven/index/util/zip/TrueZipZipFileHandle.java
-
 %build
 # Skip tests because they need porting to modern jetty
 %mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dsource=1.8 -DdetectJavaApiLink=false
@@ -122,6 +123,9 @@ rm indexer-core/src/main/java/org/apache/maven/index/util/zip/TrueZipZipFileHand
 %doc --no-dereference NOTICE
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 6.0.0-alt1_8jpp11
+- update
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 6.0.0-alt1_5jpp11
 - new version
 
