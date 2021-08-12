@@ -1,14 +1,19 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           munge-maven-plugin
 Version:        1.0
-Release:        alt1_16jpp11
+Release:        alt1_21jpp11
 Summary:        Munge Maven Plugin
 License:        CDDL-1.0
 URL:            http://github.com/sonatype/munge-maven-plugin
@@ -17,10 +22,15 @@ BuildArch:      noarch
 Source0:        https://github.com/sonatype/munge-maven-plugin/archive/munge-maven-plugin-1.0.tar.gz
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+%endif
 Source44: import.info
 
 %description
@@ -54,18 +64,15 @@ This package provides %{summary}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
-
-# remove unnecessary dependency on parent POM
 %pom_remove_parent
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc --no-dereference LICENSE
 %doc README
 
@@ -73,6 +80,9 @@ This package provides %{summary}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.0-alt1_21jpp11
+- update
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.0-alt1_16jpp11
 - update
 
