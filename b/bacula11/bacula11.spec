@@ -16,7 +16,7 @@
 
 Name: bacula%{bacula_major}
 Version: %{bacula_major}.0.5
-Release: alt2
+Release: alt3
 
 License: AGPL-3.0
 Summary: Network based backup program
@@ -44,6 +44,7 @@ Source17: generic.xpm
 Patch1: %name-alt.patch
 Patch2: %name-gui-alt.patch
 Patch3: bacula-9.4.0-fedora-seg-fault.patch
+Patch2000: %name-e2k.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libMySQL-devel postgresql-devel
@@ -445,6 +446,10 @@ popd
 %endif
 
 %patch3 -p1
+
+%ifarch %e2k
+%patch2000 -p2
+%endif
 
 mv ../%name-icons-%version icons
 
@@ -910,6 +915,9 @@ fi
 %endif
 
 %changelog
+* Thu Aug 12 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 11.0.5-alt3
+- Added patch for Elbrus that fixes compiler error from pthread hack.
+
 * Mon Jun 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 11.0.5-alt2
 - Corrected version displayed in web interface.
 
