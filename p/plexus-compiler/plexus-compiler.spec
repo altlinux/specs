@@ -1,9 +1,7 @@
+Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -12,12 +10,11 @@ BuildRequires: jpackage-11-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_without eclipse
+%bcond_with bootstrap
 
 Name:       plexus-compiler
-Epoch:      0
 Version:    2.8.8
-Release:    alt1_1jpp11
+Release:    alt1_3jpp11
 Summary:    Compiler call initiators for Plexus
 # extras subpackage has a bit different licensing
 # parts of compiler-api are ASL2.0/MIT
@@ -30,16 +27,15 @@ Source1:    https://www.apache.org/licenses/LICENSE-2.0.txt
 Source2:    LICENSE.MIT
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-%if %{with eclipse}
-BuildRequires:  mvn(org.eclipse.jdt:ecj)
 %endif
 Source44: import.info
-
 
 %description
 Plexus Compiler adds support for using various compilers from a
@@ -76,6 +72,8 @@ API documentation for %{name}.
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 
+find -name '.class' -delete
+
 cp %{SOURCE1} LICENSE
 cp %{SOURCE2} LICENSE.MIT
 
@@ -83,15 +81,10 @@ cp %{SOURCE2} LICENSE.MIT
 # missing com.google.errorprone:error_prone_core
 %pom_disable_module plexus-compiler-javac-errorprone plexus-compilers
 
-%if %{without eclipse}
 %pom_disable_module plexus-compiler-eclipse plexus-compilers
-%endif
 
 # don't build/install compiler-test module, it needs maven2 test harness
 %pom_disable_module plexus-compiler-test
-
-# disable integration tests (they require plexus-compiler-test)
-%pom_disable_module plexus-compiler-its
 
 # don't install sources jars
 %mvn_package ":*::sources:" __noinstall
@@ -102,10 +95,11 @@ cp %{SOURCE2} LICENSE.MIT
 # don't generate requires on test dependency (see #1007498)
 %pom_xpath_remove "pom:dependency[pom:artifactId[text()='plexus-compiler-test']]" plexus-compilers
 
-%pom_remove_plugin :maven-enforcer-plugin
-%pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :maven-site-plugin
 %pom_remove_plugin :animal-sniffer-maven-plugin
+%pom_remove_plugin :maven-enforcer-plugin
+
+%pom_remove_dep -r org.codehaus.plexus:plexus-compiler-javac-errorprone
 
 %build
 # Tests are skipped because of unavailable plexus-compiler-test artifact
@@ -115,7 +109,6 @@ cp %{SOURCE2} LICENSE.MIT
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc LICENSE LICENSE.MIT
 %files extras -f .mfiles-extras
 %files pom -f .mfiles-pom
@@ -124,6 +117,9 @@ cp %{SOURCE2} LICENSE.MIT
 %doc LICENSE LICENSE.MIT
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:2.8.8-alt1_3jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.8.8-alt1_1jpp11
 - new version
 
