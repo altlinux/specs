@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: python3-module-%modname
-Version: 0.6.6
+Version: 0.6.7
 Release: alt1
 
 Summary: Simple, fast and efficient podcast parser written in Python.
@@ -42,6 +42,9 @@ py.test3
 
 
 %changelog
+* Thu Aug 12 2021 Yuri N. Sedunov <aris@altlinux.org> 0.6.7-alt1
+- 0.6.7
+
 * Tue Nov 10 2020 Yuri N. Sedunov <aris@altlinux.org> 0.6.6-alt1
 - 0.6.6
 
