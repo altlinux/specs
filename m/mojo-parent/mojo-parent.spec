@@ -1,22 +1,32 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           mojo-parent
 Version:        60
-Release:        alt1_1jpp11
+Release:        alt1_3jpp11
 Summary:        Codehaus MOJO parent project pom file
 License:        ASL 2.0
-
 URL:            https://www.mojohaus.org/mojo-parent/
-Source0:        https://github.com/mojohaus/mojo-parent/archive/%{name}-%{version}.tar.gz
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
-
 BuildArch:      noarch
 
+Source0:        https://github.com/mojohaus/mojo-parent/archive/%{name}-%{version}.tar.gz
+Source1:        https://www.apache.org/licenses/LICENSE-2.0.txt
+
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%endif
 Source44: import.info
 
 %description
@@ -24,7 +34,6 @@ Codehaus MOJO parent project pom file
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
-
 # Not needed in Fedora.
 %pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_plugin :maven-site-plugin
@@ -32,21 +41,20 @@ Codehaus MOJO parent project pom file
 
 cp %SOURCE1 .
 
-
 %build
 %mvn_alias : org.codehaus.mojo:mojo
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
-
 %install
 %mvn_install
-
 
 %files -f .mfiles
 %doc LICENSE-2.0.txt
 
-
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:60-alt1_3jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:60-alt1_1jpp11
 - new version
 
