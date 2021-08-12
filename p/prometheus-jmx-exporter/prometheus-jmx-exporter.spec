@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global version_id parent
@@ -14,7 +14,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           prometheus-jmx-exporter
 Version:        0.12.0
-Release:        alt1_6jpp11
+Release:        alt1_8jpp11
 Summary:        Prometheus JMX Exporter
 
 License:        ASL 2.0
@@ -35,10 +35,11 @@ BuildRequires: mvn(io.prometheus:simpleclient)
 BuildRequires: mvn(io.prometheus:simpleclient_hotspot)
 BuildRequires: mvn(io.prometheus:simpleclient_common)
 BuildRequires: mvn(io.prometheus:simpleclient_httpserver)
+BuildRequires: mvn(junit:junit)
 
 Provides: bundled(io.prometheus.jmx:collector) = %{version}
 Provides: bundled(io.prometheus:simpleclient) = %{simple_client_version}
-Provides: bundled(org.yaml:snakeyaml) = 1.26
+Provides: bundled(org.yaml:snakeyaml) = 1.27
 Provides: bundled(biz.source_code:base64coder) = 2010.12.19
 Provides: bundled(commons-codec:commons-codec) = 1.11
 Provides: bundled(io.prometheus:simpleclient_hotspot) = %{simple_client_version}
@@ -83,6 +84,9 @@ a Java Agent, exposing a HTTP server and serving metrics of the local JVM.
 %doc NOTICE
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0.12.0-alt1_8jpp11
+- update
+
 * Sat Jun 05 2021 Igor Vlasenko <viy@altlinux.org> 0.12.0-alt1_6jpp11
 - new version
 
