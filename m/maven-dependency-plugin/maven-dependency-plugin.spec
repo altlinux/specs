@@ -3,48 +3,58 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           maven-dependency-plugin
 Version:        3.1.2
-Release:        alt1_4jpp11
+Release:        alt1_7jpp11
 Summary:        Plugin to manipulate, copy and unpack local and remote artifacts
 License:        ASL 2.0
-
-URL:            http://maven.apache.org/plugins/%{name}
-Source0:        https://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
-
+URL:            https://maven.apache.org/plugins/%{name}
 BuildArch:      noarch
 
+Source0:        https://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+Patch0:         0000-Port-tests-to-maven-model-3.6.X.patch
+
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(classworlds:classworlds)
 BuildRequires:  mvn(commons-collections:commons-collections)
-BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-lang3)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
+BuildRequires:  mvn(org.apache.maven.shared:file-management)
+BuildRequires:  mvn(org.apache.maven.shared:maven-artifact-transfer)
+BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
+BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-analyzer)
+BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-tree)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven:maven-repository-metadata)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
-BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
-BuildRequires:  mvn(org.apache.maven.shared:file-management)
-BuildRequires:  mvn(org.apache.maven.shared:maven-artifact-transfer) >= 0.11.0
-BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
-BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-analyzer)
-BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-tree)
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
-BuildRequires:  mvn(org.apache.maven.wagon:wagon-http-lightweight)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-io)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.mockito:mockito-core)
+%endif
 Source44: import.info
 
 %description
@@ -62,27 +72,45 @@ BuildArch: noarch
 
 %prep
 %setup -q
+%patch0 -p1
 
 %pom_remove_plugin :maven-enforcer-plugin
 
 # We don't want to support legacy Maven versions (older than 3.1)
 %pom_remove_dep org.sonatype.aether:
 
-# trivial port to commons-lang3
-%pom_change_dep :commons-lang org.apache.commons:commons-lang3:3.8.1
+# Not actually needed
+%pom_remove_dep :wagon-http-lightweight
 
-sed -i "s/org.apache.commons.lang./org.apache.commons.lang3./g" \
-    src/main/java/org/apache/maven/plugins/dependency/analyze/AbstractAnalyzeMojo.java
-sed -i "s/org.apache.commons.lang./org.apache.commons.lang3./g" \
-    src/main/java/org/apache/maven/plugins/dependency/resolvers/ResolveDependencySourcesMojo.java
-sed -i "s/org.apache.commons.lang./org.apache.commons.lang3./g" \
-    src/main/java/org/apache/maven/plugins/dependency/DisplayAncestorsMojo.java
-sed -i "s/org.apache.commons.lang./org.apache.commons.lang3./g" \
-    src/test/java/org/apache/maven/plugins/dependency/fromConfiguration/TestUnpackMojo.java
+# Port to apache-commons-lang3
+%pom_change_dep commons-lang:commons-lang org.apache.commons:commons-lang3
+find . -name '*.java' -exec sed -i 's/org\.apache\.commons\.lang/org.apache.commons.lang3/' {} +
+
+%pom_remove_dep :maven-reporting-api
+%pom_remove_dep :maven-reporting-impl
+%pom_remove_dep :commons-io
+%pom_remove_dep :doxia-core
+%pom_remove_dep :doxia-sink-api
+%pom_remove_dep :doxia-site-renderer
+
+%pom_remove_dep :jetty-server
+%pom_remove_dep :jetty-servlet
+%pom_remove_dep :jetty-webapp
+%pom_remove_dep :maven-plugin-testing-tools
+
+# Tests which require eclipse
+rm src/test/java/org/apache/maven/plugins/dependency/TestGetMojo.java
+rm -r src/test/java/org/apache/maven/plugins/dependency/fromDependencies
+rm -r src/test/java/org/apache/maven/plugins/dependency/fromConfiguration
+rm src/test/java/org/apache/maven/plugins/dependency/utils/translators/TestClassifierTypeTranslator.java
+
+# Requires org.apache.maven.reporting
+rm src/main/java/org/apache/maven/plugins/dependency/analyze/AnalyzeReport{Mojo,View}.java
+sed -i '/doSpecialTest( "analyze-report" );/d' src/test/java/org/apache/maven/plugins/dependency/TestSkip.java
 
 %build
 # Tests require legacy Maven
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -94,6 +122,9 @@ sed -i "s/org.apache.commons.lang./org.apache.commons.lang3./g" \
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 3.1.2-alt1_7jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.1.2-alt1_4jpp11
 - new version
 
