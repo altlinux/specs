@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		voms-clients-java
 Version:	3.3.2
-Release:	alt1_2jpp11
+Release:	alt1_4jpp11
 Summary:	Virtual Organization Membership Service Java clients
 
 License:	ASL 2.0
@@ -19,6 +19,7 @@ BuildArch:	noarch
 BuildRequires:	maven-local
 BuildRequires:	mvn(commons-cli:commons-cli)
 BuildRequires:	mvn(commons-io:commons-io)
+BuildRequires:	mvn(junit:junit)
 BuildRequires:	mvn(org.italiangrid:voms-api-java)
 BuildRequires:	voms-api-java >= 3.3.2
 Requires:	voms-api-java >= 3.3.2
@@ -145,6 +146,9 @@ EOF
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 3.3.2-alt1_4jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 3.3.2-alt1_2jpp11
 - new version
 
