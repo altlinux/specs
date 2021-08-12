@@ -2,7 +2,7 @@
 
 %def_with docs
 
-%ifarch x86_64
+%ifarch x86_64 %e2k
 %def_with embree
 %else
 %def_without embree
@@ -12,7 +12,7 @@
 
 Name: blender
 Version: 2.93.2
-Release: alt1
+Release: alt2
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -48,6 +48,8 @@ Patch28: blender-2.90.0-alt-doc.patch
 Patch29: blender-2.90-alt-non-x86_64-linking.patch
 Patch30: blender-2.93.0-suse-reproducible.patch
 
+Patch2000: blender-e2k-support.patch
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-filesystem-devel boost-locale-devel
 BuildRequires: cmake gcc-c++
@@ -77,7 +79,9 @@ BuildRequires: libgmp-devel libgmpxx-devel
 BuildRequires: libharu-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: libpotrace-devel
+%ifnarch %e2k
 BuildRequires: openshadinglanguage-devel
+%endif
 BuildRequires: opensubdiv-devel
 
 %ifarch x86_64
@@ -189,6 +193,9 @@ This package contains documentation for Blender.
 %patch28 -p1
 %patch29 -p1
 %patch30 -p1
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 %ifnarch %ix86 x86_64
 sed -i 's,-fuse-ld=gold,,' build_files/cmake/platform/platform_unix.cmake
@@ -255,7 +262,11 @@ fi
 	-DWITH_SYSTEM_GFLAGS:BOOL=ON \
 	-DWITH_SYSTEM_GLOG:BOOL=ON \
 	-DWITH_IMAGE_OPENEXR=ON \
+%ifarch %e2k
+	-DWITH_TBB:BOOL=OFF \
+%else
 	-DWITH_TBB:BOOL=ON \
+%endif
 	-DPYTHON_VERSION="%_python3_version" \
 	-DBUILDINFO_OVERRIDE_DATE="$BUILD_DATE" \
 	-DBUILDINFO_OVERRIDE_TIME="$BUILD_TIME" \
@@ -303,6 +314,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Wed Aug 11 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.93.2-alt2
+- Added patch for Elbrus.
+
 * Fri Aug 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.93.2-alt1
 - Updated to upstream version 2.93.2.
 
