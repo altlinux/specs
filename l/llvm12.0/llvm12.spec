@@ -5,7 +5,7 @@
 
 %global v_major 12
 %global v_majmin %v_major.0
-%global v_full %v_majmin.0
+%global v_full %v_majmin.1
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -53,7 +53,7 @@
 
 Name: %llvm_name
 Version: %v_full
-Release: alt2
+Release: alt1
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -81,10 +81,7 @@ Patch11: hwasan_symbolize-python3.patch
 Patch14: llvm-10-alt-riscv64-config-guess.patch
 Patch15: llvm-cmake-resolve-symlinks-in-LLVMConfig.cmake.patch
 Patch16: clang-cmake-resolve-symlinks-in-ClangConfig.cmake.patch
-Patch17: clang-tools-extra-completion-model-cmake.patch
 Patch18: lld-compact-unwind-encoding.h.patch
-# https://reviews.llvm.org/D96367
-Patch19: clang-D96367-bring-reporter-back.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -375,9 +372,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' lib/Support/Unix/Path.inc
 %patch14 -p1
 %patch15 -p2
 %patch16 -p1
-%patch17 -p1
 %patch18 -p1
-%patch19 -p1
 
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
@@ -838,6 +833,9 @@ ninja -C BUILD check-all || :
 #doc %llvm_docdir/lldb
 
 %changelog
+* Tue Aug 10 2021 Arseny Maslennikov <arseny@altlinux.org> 12.0.1-alt1
+- 12.0.0 -> 12.0.1. (Closes: bug 40358)
+
 * Tue May 11 2021 Arseny Maslennikov <arseny@altlinux.org> 12.0.0-alt2
 - Built with python2 in BTE to appease python2's findprov.
 

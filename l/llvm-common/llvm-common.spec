@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%global _llvm_version 11.0
+%global _llvm_version 12.0
 
 Name: llvm-common
-Version: 11.0.1
-Release: alt3
+Version: 12.0.0
+Release: alt1
 
 Summary: Common directories, symlinks and tool selection for LLVM
 License: Apache-2.0 with LLVM-exception
@@ -37,107 +37,107 @@ License: Apache-2.0 with LLVM-exception
 Group: System/Configuration/Packaging
 BuildArch: noarch
 
-%package util
+%package -n llvm
 Summary: Common symlinks for LLVM utilities
 License: Apache-2.0 with LLVM-exception
 Group: Development/C
 BuildArch: noarch
-Provides: llvm = %EVR
+Provides: llvm-common-util = %EVR
 Requires: llvm%_llvm_version
 Requires(pre,postun): %name = %version-%release
 
-%package devel
+%package -n llvm-devel
 Summary: Common symlinks and development files for LLVM utilities
 License: Apache-2.0 with LLVM-exception
 Group: Development/C
-Provides: llvm-devel = %EVR
+Provides: llvm-common-devel = %EVR
 Requires: llvm%_llvm_version-devel
 Requires(pre,postun): %name = %version-%release
 Conflicts: llvm7.0-devel
 
-%package devel-static
+%package -n llvm-devel-static
 Summary: Common symlinks and development files for LLVM static libraries
 License: Apache-2.0 with LLVM-exception
 Group: Development/C
-Provides: llvm-devel-static = %EVR
+Provides: llvm-common-devel-static = %EVR
 Requires: llvm%_llvm_version-devel-static
 Requires(pre,postun): %name = %version-%release
 
-%package clang
+%package -n clang
 Summary: Common symlinks for Clang
 License: Apache-2.0 with LLVM-exception
 Group: Development/C
 BuildArch: noarch
-Provides: clang = %EVR
+Provides: llvm-common-clang = %EVR
 Requires: clang%_llvm_version
 Requires(pre,postun): %name = %version-%release
 
-%package clang-tools
+%package -n clang-tools
 Summary: Common symlink for Clang-based tools
 License: Apache-2.0 with LLVM-exception
 Group: Development/C
 BuildArch: noarch
-Provides: clang-tools = %EVR
+Provides: llvm-common-clang-tools = %EVR
 Requires: clang%_llvm_version-tools
 Requires(pre,postun): %name = %version-%release
 
-%package clangd
+%package -n clangd
 Summary: Common symlinks for clangd, a Clang-based language server
 License: Apache-2.0 with LLVM-exception
 Group: Development/C
 BuildArch: noarch
-Provides: clangd = %EVR
+Provides: llvm-common-clangd = %EVR
 Requires: clangd%_llvm_version
 Requires(pre,postun): %name = %version-%release
 
-%package clang-devel
+%package -n clang-devel
 Summary: Provides clang-devel
 License: Apache-2.0 with LLVM-exception
 Group: Development/C
-Provides: clang-devel = %EVR
+Provides: llvm-common-clang-devel = %EVR
 Requires: clang%_llvm_version-devel
 Requires(pre,postun): %name = %version-%release
 
-%package clang-devel-static
+%package -n clang-devel-static
 Summary: Provides clang-devel-static
 License: Apache-2.0 with LLVM-exception
 Group: Development/C
-Provides: clang-devel-static = %EVR
+Provides: llvm-common-clang-devel-static = %EVR
 Requires: clang%_llvm_version-devel-static
 Requires(pre,postun): %name = %version-%release
 
-%package lld
+%package -n lld
 Summary: Common symlinks for lld
 License: Apache-2.0 with LLVM-exception
 Group: Development/Other
 BuildArch: noarch
-Provides: lld = %EVR
+Provides: llvm-common-lld = %EVR
 Requires: lld%_llvm_version
 Requires(pre,postun): %name = %version-%release
 
-%package lld-devel
+%package -n lld-devel
 Summary: Provides lld-devel and lld-devel-static
 License: Apache-2.0 with LLVM-exception
 Group: Development/Other
-Provides: lld-devel = %EVR
+Provides: llvm-common-lld-devel = %EVR
 Requires: lld%_llvm_version-devel
 Requires(pre,postun): %name = %version-%release
 
-%package lldb
+%package -n lldb
 Summary: Common symlinks for lldb
 License: Apache-2.0 with LLVM-exception
 Group: Development/Debuggers
 BuildArch: noarch
-Provides: lldb = %EVR
+Provides: llvm-common-lldb = %EVR
 Requires: lldb%_llvm_version
 Requires(pre,postun): %name = %version-%release
 
-%package liblldb-devel
+%package -n liblldb-devel
 Summary: Provides lldb-devel
 License: Apache-2.0 with LLVM-exception
 Group: Development/Debuggers
 BuildArch: noarch
-Provides: liblldb-devel = %EVR
+Provides: llvm-common-liblldb-devel = %EVR
 Requires: liblldb%_llvm_version-devel
 Requires(pre,postun): %name = %version-%release
 
@@ -148,42 +148,42 @@ This package contains RPM macros related to LLVM packaging.
 This package contains common symlinks, directories and selection
 utility for LLVM.
 
-%description util
+%description -n llvm
 This package contains common symlinks to wrap various LLVM utilities.
 
-%description devel
+%description -n llvm-devel
 This package contains common development files and %_bindir/llvm-config.
 
-%description devel-static
+%description -n llvm-devel-static
 This package currently only pulls in the LLVM static libraries of the default
 version.
 
-%description clang
+%description -n clang
 This package contains common symlinks to wrap Clang.
 
-%description clang-tools
+%description -n clang-tools
 This package contains common symlinks to wrap the Clang-based tools.
 
-%description clangd
+%description -n clangd
 This package contains common symlinks to wrap clangd, a Clang-based C and C++
 language server.
 
-%description clang-devel
+%description -n clang-devel
 This package contains clangXXX-devel and provides clang-devel.
 
-%description clang-devel-static
+%description -n clang-devel-static
 This package contains clangXXX-devel-static and provides clang-devel-static.
 
-%description lld
+%description -n lld
 This package contains common symlinks to wrap LLD.
 
-%description lld-devel
+%description -n lld-devel
 This package contains lldXXX-devel and provides lld-devel{,-static}.
 
-%description lldb
+%description -n lldb
 This package contains common symlinks to wrap LLDB.
 
-%description liblldb-devel
+%description -n liblldb-devel
 This package pulls in liblldbXXX-devel.
 
 %prep
@@ -349,7 +349,7 @@ which %__clang_versioned || { echo 'Skipping the test of llvm-alt-tool-wrapper.'
 %files
 %_bindir/llvm-alt-tool-wrapper
 
-%files util
+%files -n llvm
 %exclude %_bindir/llvm-alt-tool-wrapper
 %_bindir/*
 # llvm-common-devel
@@ -360,22 +360,22 @@ which %__clang_versioned || { echo 'Skipping the test of llvm-alt-tool-wrapper.'
 %exclude %_bindir/*lld*
 %exclude %_bindir/wasm-ld*
 
-%files devel
+%files -n llvm-devel
 %_bindir/llvm-config
 %_libdir/cmake/llvm
 
-%files devel-static
+%files -n llvm-devel-static
 
-%files clang
+%files -n clang
 %_bindir/clang++
 %_bindir/clang
 %_bindir/clang-cl
 %_bindir/clang-cpp
 
-%files clangd
+%files -n clangd
 %_bindir/clangd
 
-%files clang-tools
+%files -n clang-tools
 %_bindir/*clang*
 %exclude %_bindir/clang++
 %exclude %_bindir/clang
@@ -383,20 +383,20 @@ which %__clang_versioned || { echo 'Skipping the test of llvm-alt-tool-wrapper.'
 %exclude %_bindir/clang-cpp
 %exclude %_bindir/clangd
 
-%files clang-devel
+%files -n clang-devel
 %_libdir/cmake/clang
 
-%files clang-devel-static
+%files -n clang-devel-static
 
-%files lld
+%files -n lld
 %_bindir/ld*.lld
 %_bindir/lld
 %_bindir/lld-link
 %_bindir/wasm-ld
 
-%files lld-devel
+%files -n lld-devel
 
-%files lldb
+%files -n lldb
 %_bindir/lldb
 %_bindir/lldb-argdumper
 %_bindir/lldb-instr
@@ -425,12 +425,17 @@ clang-cpp --version
 llc --version
 
 %changelog
+* Wed Aug 11 2021 Arseny Maslennikov <arseny@altlinux.org> 12.0.0-alt1
+- Made LLVM 12 the default.
+- For each package in the llvm-common-* family, replaced it with its provide.
+  The old name is retained as a provide for compatibility.
+
 * Wed Aug 11 2021 Andrey Cherepanov <cas@altlinux.org> 11.0.1-alt3
 - Added conflict with llvm7.0-devel.
 - Fix bogus dates in %%changelog.
 
 * Sun Feb 14 2021 Arseny Maslennikov <arseny@altlinux.org> 11.0.1-alt2
-- Obsolete the Sisyphus LLVM packages that do not use llvm-alt-tool-wrappers.
+- Obsoleted the Sisyphus LLVM packages that do not use llvm-alt-tool-wrappers.
 
 * Sat Jan 16 2021 Arseny Maslennikov <arseny@altlinux.org> 11.0.1-alt1
 - Introduced wrappers for the following utilities:
