@@ -10,7 +10,7 @@
 %def_without builtin_libvpx
 %def_without builtin_libwebp
 %def_without builtin_mbedtls
-%def_with builtin_opus # cannot find
+%def_without builtin_opus
 %def_without builtin_pcre2
 %def_with builtin_recast
 %def_with builtin_squish
@@ -20,7 +20,7 @@
 
 Name: godot
 Version: 3.1
-Release: alt3
+Release: alt4
 
 Summary: Godot Engine - Multi-platform 2D and 3D game engine
 License: %mit
@@ -39,11 +39,12 @@ Patch1: fix-zstd-linking.patch
 Patch2: fix-zstd-1.3.8.patch
 #ExclusiveArch: x86_64 %ix86
 
-# optimized out: libX11-devel libXext-devel libXfixes-devel libXrender-devel libcom_err-devel libgpg-error libjson-c libkrb5-devel libstdc++-devel pkg-config python-base python-devel python-module-numpy python-module-setuptools python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-json python3 python3-base xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: libXcursor-devel libXi-devel libXinerama-devel libXrandr-devel
-BuildRequires: python-module-Reportlab python-module-configobj python-module-enum34 python-module-olefile python-module-pygobject3 python3-module-yieldfrom python-modules-json
-BuildRequires: scons pkgconfig libX11-devel libXcursor-devel libXrandr-devel libXinerama-devel libXi-devel libGL-devel libalsa-devel libpulseaudio-devel openssl-devel libudev-devel libGLU-devel libpng-devel gcc gcc-c++ libssl-devel ccache
+BuildRequires: gcc-c++ ccache scons
+BuildRequires: libX11-devel libXcursor-devel libXi-devel libXinerama-devel libXrandr-devel
+BuildRequires: libGL-devel libGLU-devel
+BuildRequires: libalsa-devel libpulseaudio-devel
+BuildRequires: libudev-devel
 
 %{!?_with_builtin_bullet:BuildRequires: libbullet-devel}
 %{!?_with_builtin_enet:BuildRequires: libenet-devel}
@@ -55,7 +56,7 @@ BuildRequires: scons pkgconfig libX11-devel libXcursor-devel libXrandr-devel lib
 %{!?_with_builtin_libvpx:BuildRequires: libvpx-devel}
 %{!?_with_builtin_libwebp:BuildRequires: libwebp-devel}
 %{!?_with_builtin_mbedtls:BuildRequires: libmbedtls13-devel}
-%{!?_with_builtin_opus:BuildRequires: libopus-devel}
+%{!?_with_builtin_opus:BuildRequires: libopus-devel libopusfile-devel}
 %{!?_with_builtin_pcre2:BuildRequires: libpcre2-devel}
 %{!?_with_builtin_recast:BuildRequires: librecast-devel}
 %{!?_with_builtin_squish:BuildRequires: libsquish-devel}
@@ -193,6 +194,10 @@ install -m 644 -D %name.desktop %buildroot%_desktopdir/
 %endif
 
 %changelog
+* Thu Aug 12 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1-alt4
+- NMU: drop all python2 BR, drop openssl BR, cleanup all BR
+- NMU: enable build with system opus
+
 * Fri Jul 23 2021 Michael Shigorin <mike@altlinux.org> 3.1-alt3
 - E2K: avoid lcc-unsupported options
 - minor spec cleanup (incl. bogus changelog date fixup)
