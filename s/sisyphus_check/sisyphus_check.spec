@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.63
+Version: 0.8.64
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -9,7 +9,7 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-Requires: file, getopt, mktemp >= 1:1.3.1, rpm
+Requires: getopt, mktemp >= 1:1.3.1, rpm
 Conflicts: sisyphus < 0.7.2
 
 %description
@@ -32,6 +32,9 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Thu Aug 12 2021 Vitaly Chikunov <vt@altlinux.org> 0.8.64-alt1
+- Remove dependency on file.
+
 * Tue Mar 16 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.8.63-alt1
 - 210-check-kernel: disallow reqs from kernel-image to kernel-modules
 

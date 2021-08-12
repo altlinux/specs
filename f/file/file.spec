@@ -1,29 +1,34 @@
-Name: file
-Version: 4.26
-Release: alt17
+# SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
-Summary: A utility for determining file types
-License: BSD-style
+Name: file
+Version: 5.40
+Release: alt1
+
+Summary: File type guesser
+License: BSD-2-Clause
 Group: File tools
 Url: http://www.darwinsys.com/file/
-
-Summary(ru_RU.UTF-8): Утилита для определения типов файлов
-Requires: libmagic = %version-%release
-BuildPreReq: zlib-devel
-
-# ftp://ftp.astron.com/pub/file/file-%version.tar.gz
-Source: file-%version.tar
-Source1: magic.local
-
-Patch: file-%version-%release.patch
+# Sources archive: ftp://ftp.astron.com/pub/file/
+Vcs: https://github.com/file/file
 
 %def_enable static
 
+Source: %name-%version.tar
+
+BuildRequires: bzlib-devel
+BuildRequires: liblzma-devel
+BuildRequires: libseccomp-devel
+BuildRequires: zlib-devel
+
 %description
-The file command is used to identify a particular file according to the
-type of data contained by the file.  file can identify many different
-file types, including ELF binaries, system libraries, RPM packages, and
-different graphics formats.
+The file command is "a file type guesser", that is, a command-line tool that
+tells you in words what kind of data a file contains. Unlike most GUI systems,
+command-line UNIX systems - with this program leading the charge - don't rely
+on filename extentions to tell you the type of a file, but look at the file's
+actual contents. This is, of course, more reliable, but requires a bit of I/O.
 
 %package -n libmagic
 Summary: Shared library for handling magic files
@@ -35,7 +40,7 @@ This package contains shared library for handling magic files.
 %package -n libmagic-devel
 Summary: Development files to build applications that handle magic files
 Group: Development/C
-Requires: libmagic = %version-%release
+Requires: libmagic = %EVR
 
 %description -n libmagic-devel
 This package contains development files to build applications that handle
@@ -44,7 +49,7 @@ magic files.
 %package -n libmagic-devel-static
 Summary: Static library to build statically linked applications that handle magic files
 Group: Development/C
-Requires: libmagic-devel = %version-%release
+Requires: libmagic-devel = %EVR
 
 %description -n libmagic-devel-static
 This package contains static library to build statically linked
@@ -52,52 +57,49 @@ applications that handle magic files.
 
 %prep
 %setup
-%patch -p1
-bzip2 -9k ChangeLog
 
 %build
 %autoreconf
-%configure --enable-fsect-man5 %{subst_enable static}
-grep -FZl sparc magic/Magdir/* |
-	xargs -r0 sed -i 's/sparc/SPARC/g' --
-# SMP-incompatible build.
-make
+%configure \
+	--enable-fsect-man5 \
+	--disable-rpath \
+	%{subst_enable static}
+%make_build
 
 %install
 %makeinstall_std
-install -pDm644 doc/magic.5 %buildroot%_man5dir/magic.5
-install -pDm644 %_sourcedir/magic.local %buildroot%_sysconfdir/magic
+mkdir -p %buildroot%_sysconfdir
+cat <<EOF > %buildroot%_sysconfdir/magic
+# Magic local data for file(1) command.
+# Insert here your local magic data. Format is described in magic(5).
 
-# Test for correct identification of Perl modules
-find /usr/*/perl5 -type f -name '*.p[lmh]' |
-LD_LIBRARY_PATH=%buildroot%_libdir %buildroot%_bindir/file \
-	-m %buildroot%_datadir/file/magic -f - >test.out
-grep -q ' [Pp]erl.* text' test.out
-grep -v ' text' test.out && exit 1
-
-# Provide %_datadir/magic/ for compatibility.
-mkdir -p %buildroot%_datadir/magic
-ln -s ../file/magic %buildroot%_datadir/magic/
+EOF
+cat magic/magic/* > %buildroot%_datadir/file/magic
+xz ChangeLog
 
 %check
-make -k check
+src/file -m /dev/null		ChangeLog.xz | grep ': data'
+src/file -m magic/magic/	ChangeLog.xz | grep ': XZ compressed data'
+src/file -m magic/magic.mgc	ChangeLog.xz | grep ': XZ compressed data'
+src/file -m magic/magic.mgc -z	ChangeLog.xz | grep ': ASCII text (XZ compressed data'
+make check
 
 %files
+%doc COPYING README.md ChangeLog.xz
 %config(noreplace) %_sysconfdir/magic
-%_bindir/*
-%_datadir/%name
-%_datadir/magic
-%_man1dir/*
-%_man5dir/*
-%doc ChangeLog.bz2 COPYING MAINT README
+%_bindir/file
+%_datadir/file
+%_man1dir/file.1*
+%_man5dir/magic.5*
 
 %files -n libmagic
-%_libdir/*.so.*
+%_libdir/libmagic.so.*
 
 %files -n libmagic-devel
-%_libdir/*.so
-%_includedir/*
-%_man3dir/*
+%_includedir/magic.h
+%_libdir/libmagic.so
+%_pkgconfigdir/libmagic.pc
+%_man3dir/libmagic.3*
 
 %if_enabled static
 %files -n libmagic-devel-static
@@ -105,6 +107,9 @@ make -k check
 %endif
 
 %changelog
+* Sun Aug 01 2021 Vitaly Chikunov <vt@altlinux.org> 5.40-alt1
+- Build FILE5_40-75-g9b2538dc (2021-07-30).
+
 * Wed Feb 10 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.26-alt17
 - Removed weak magic for Infocom game data (to fix detection of
   zstd-compressed files).

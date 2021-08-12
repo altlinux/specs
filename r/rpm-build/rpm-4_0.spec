@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt170
+Release: alt171
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -45,7 +45,6 @@ Requires: bzip2 >= 1:1.0.2-alt4
 Requires: coreutils
 Requires: cpio
 Requires: elfutils >= 0.143-alt1
-Requires: file
 Requires: gcc
 Requires: gettext-tools
 Requires: glibc-devel
@@ -413,6 +412,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Thu Aug 12 2021 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt171
+- Use file4 instead of file.
+
 * Tue Jul 06 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4-alt170
 - rpm-build: do not record directory sizes in packages.
 
