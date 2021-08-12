@@ -3,23 +3,33 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           maven-common-artifact-filters
 Version:        3.1.1
-Release:        alt1_1jpp11
+Release:        alt1_3jpp11
 Summary:        Maven Common Artifact Filters
 License:        ASL 2.0
-
 URL:            https://maven.apache.org/shared/
+BuildArch:      noarch
+
 Source0:        https://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
 Patch0:         0001-Remove-Maven-3.0-specific-code.patch
 
-BuildArch:      noarch
-
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
@@ -32,6 +42,7 @@ BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-util)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
 BuildRequires:  mvn(org.mockito:mockito-core)
+%endif
 Source44: import.info
 
 %description
@@ -68,6 +79,9 @@ find -name SonatypeAether\*.java -delete
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 3.1.1-alt1_3jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 3.1.1-alt1_1jpp11
 - new version
 
