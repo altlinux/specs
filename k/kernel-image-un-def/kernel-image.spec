@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
-Release: alt2
+Release: alt1
 epoch:1 
 %define kernel_base_version	5.13
-%define kernel_sublevel .9
+%define kernel_sublevel .10
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -673,6 +673,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Aug 12 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:5.13.10-alt1
+- Updated to v5.13.10.
+
 * Wed Aug 11 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:5.13.9-alt2
 - Bumped release to pesign (alt1 was not pesigned, sorry).
 - Added -checkinstall subpackage to verify EFI-stub signature.
