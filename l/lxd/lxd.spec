@@ -6,8 +6,8 @@
 %define lxduser lxd
 
 Name:		lxd
-Version:	4.16
-Release:	alt1
+Version:	4.17
+Release:	alt0.61bb78a49.1
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
 Group:		Development/Other
@@ -189,6 +189,9 @@ fi
 %exclude %go_path/src/%import_path/go.sum
 
 %changelog
+* Thu Aug 12 2021 Mikhail Gordeev <obirvalger@altlinux.org> 4.17-alt0.61bb78a49.1
+- new version 4.17 (Closes: #40674)
+
 * Sat Jul 24 2021 Mikhail Gordeev <obirvalger@altlinux.org> 4.16-alt1
 - new version 4.16
 - Add subuids and subgids if not added previously
