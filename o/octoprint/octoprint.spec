@@ -1,8 +1,9 @@
+%define _localstatedir %_var
 %define  srcname OctoPrint
 
 Name:    octoprint
 Version: 1.6.1
-Release: alt1
+Release: alt2
 
 Summary: OctoPrint is the snappy web interface for your 3D printer
 License: AGPL-3.0
@@ -15,6 +16,13 @@ BuildArch: noarch
 
 # Source-url: https://github.com/OctoPrint/OctoPrint/archive/refs/tags/%version.tar.gz
 Source: %srcname-%version.tar
+Source1: octoprint.service
+Source2: octoprint.init
+Source3: octoprint-16x16.png
+Source4: octoprint-32x32.png
+Source5: octoprint-48x48.png
+Source6: octoprint.desktop
+Source7: octoprint.conf
 
 Patch: octoprint-1.6.1-alt-fix.patch
 
@@ -54,7 +62,7 @@ BuildRequires: python3-module-filetype
 BuildRequires: python3-module-pip
 %endif
 
-%py3_requires frozendict websocket
+%py3_requires frozendict websocket blinker pip
 
 %description
 %summary.
@@ -69,17 +77,49 @@ BuildRequires: python3-module-pip
 %install
 %python3_install
 
+install -pD -m644 %SOURCE1 %buildroot/lib/systemd/system/octoprint.service
+install -pD -m755 %SOURCE2 %buildroot/%_sysconfdir/rc.d/init.d/octoprint
+install -pD -m644 %SOURCE3 %buildroot/%_miconsdir/octoprint.png
+install -pD -m644 %SOURCE4 %buildroot/%_niconsdir/octoprint.png
+install -pD -m644 %SOURCE5 %buildroot/%_liconsdir/octoprint.png
+install -pD -m644 %SOURCE6 %buildroot/%_desktopdir/octoprint.desktop
+install -pD -m644 %SOURCE7 %buildroot/%_tmpfilesdir/octoprint.conf
 rm %buildroot/%python3_sitelibdir/*egg-info/requires.txt
+mkdir -p %buildroot%_localstatedir/lib/octoprint
 
 %check
 export PYTHONPATH=%buildroot/%python3_sitelibdir/
 py.test3 -v tests
 
+%pre
+%_sbindir/groupadd -r -f octoprint 2>/dev/null ||:
+%_sbindir/useradd -c 'Web interface for 3D printer' \
+	-d %_localstatedir/lib/octoprint -g octoprint -s '/dev/null' \
+	-r octoprint 2>/dev/null || :
+
+%post
+%post_service octoprint
+
+%preun
+%preun_service octoprint
+
 %files
 %_bindir/%name
 %python3_sitelibdir/*
+%_unitdir/octoprint.service
+%_tmpfilesdir/octoprint.conf
+%_sysconfdir/rc.d/init.d/octoprint
+%attr(1770, octoprint, octoprint) %dir %_localstatedir/lib/octoprint
+%_miconsdir/octoprint.png
+%_niconsdir/octoprint.png
+%_liconsdir/octoprint.png
+%_desktopdir/octoprint.desktop
 %doc *.md
 
 %changelog
+* Thu Aug 12 2021 Anton Midyukov <antohami@altlinux.org> 1.6.1-alt2
+- Add octoprint.service and octoprint.init
+- Add desktop and icons files
+
 * Wed Jul 28 2021 Anton Midyukov <antohami@altlinux.org> 1.6.1-alt1
 - Initial build for Sisyphus
