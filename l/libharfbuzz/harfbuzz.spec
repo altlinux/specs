@@ -13,7 +13,7 @@
 %endif
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: HarfBuzz is an OpenType text shaping engine
@@ -180,6 +180,9 @@ export PYTHON=%__python3
 %endif
 
 %changelog
+* Fri Jul 09 2021 Yuri N. Sedunov <aris@altlinux.org> 2.8.2-alt1
+- 2.8.2
+
 * Wed May 05 2021 Yuri N. Sedunov <aris@altlinux.org> 2.8.1-alt1
 - 2.8.1
 

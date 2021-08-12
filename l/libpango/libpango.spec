@@ -18,7 +18,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.5
+Version: %ver_major.8
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -41,7 +41,6 @@ Source14: pangocairo-compat.map
 Source15: pangocairo-compat.lds
 
 Patch: pango-1.45.1-alt-compat-version-script.patch
-Patch1: pango-1.48.3-alt-build.patch
 
 Provides: %_name = %version
 Obsoletes: %_name < %version
@@ -56,7 +55,7 @@ Obsoletes: gscript
 %define fontconfig_ver 2.11.91
 %define freetype_ver 2.1.4
 %define gi_ver 0.9.5
-%define hb_ver 2.0.0
+%define hb_ver 2.2.0
 %define thai_ver 0.1.9
 %define fribidi_ver 0.19.7
 
@@ -140,12 +139,10 @@ Requires: %name = %version-%release
 This package provides tests programs that can be used to verify
 the functionality of the installed Pango library.
 
-
 %prep
 %setup -n %_name-%version
 %patch -p1 -b .vs
 install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
-#%patch1 -b .docgen
 
 %build
 %meson \
@@ -171,6 +168,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %files
 %_bindir/%_name-list
 %_bindir/%_name-view
+%{?_enable_cairo:%_bindir/%_name-segmentation}
 %_libdir/%name-%api_ver.so.*
 %_libdir/%{name}cairo-%api_ver.so.*
 %_libdir/%{name}ft2-%api_ver.so.*
@@ -217,6 +215,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Thu Aug 12 2021 Yuri N. Sedunov <aris@altlinux.org> 1.48.8-alt1
+- 1.48.8
+
 * Tue May 18 2021 Yuri N. Sedunov <aris@altlinux.org> 1.48.5-alt1
 - 1.48.5
 
