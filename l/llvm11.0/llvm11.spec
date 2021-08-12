@@ -1,5 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
+# Those are self-provided.
+%filter_from_requires /python[0-9.]\+(Reporter)/d
+%filter_from_requires /python[0-9.]\+(optpmap)/d
+%filter_from_requires /python[0-9.]\+(optrecord)/d
+
 %global v_major 11
 %global v_majmin %v_major.0
 %global v_full %v_majmin.1
@@ -45,7 +50,7 @@
 
 Name: %llvm_name
 Version: %v_full
-Release: alt2
+Release: alt3
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -71,6 +76,7 @@ Patch10: llvm-10-alt-python3.patch
 Patch14: llvm-10-alt-riscv64-config-guess.patch
 Patch15: llvm-cmake-resolve-symlinks-in-LLVMConfig.cmake.patch
 Patch16: clang-cmake-resolve-symlinks-in-ClangConfig.cmake.patch
+Patch20: compiler-rt-D102059-libsanitizer-Remove-cyclades-inclusion-in-sanitizer.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -360,7 +366,10 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' lib/Support/Unix/Path.inc
 %patch14 -p1
 %patch15 -p2
 %patch16 -p1
+%patch20 -p1
 
+# Explicitly use python3 in select hashbangs.
+subst '/^#!.*python$/s|python$|python3|' $(find * -name opt-viewer.py)
 # Explicitly use python2 in hashbangs.
 # TODO: LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/11.0.0/docs/ReleaseNotes.html
@@ -815,6 +824,13 @@ ninja -C BUILD check-all || :
 %doc %llvm_docdir/lldb
 
 %changelog
+* Tue Aug 10 2021 Arseny Maslennikov <arseny@altlinux.org> 11.0.1-alt3
+- Made opt-viewer use python3. (closes: bug 40691)
+- Backported from llvmorg-12.0.1:
+  D102059: 884040d "libsanitizer: Remove cyclades inclusion in sanitizer"
+  This is needed for the package to be buildable from source with modern
+  glibc-kernheaders. (closes: bug 40357)
+
 * Tue Jun 01 2021 Arseny Maslennikov <arseny@altlinux.org> 11.0.1-alt2
 - spec: adapted to https://altlinux.org/CMakeMigration2021
 
