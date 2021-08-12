@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: A Python module for interfacing with the SDL multimedia library
 Summary(ru_RU.UTF-8): Расширение языка Python для работы с библиотекой SDL
@@ -28,19 +28,13 @@ Obsoletes: %oname
 
 Requires: libSDL >= 1.2.7
 BuildRequires(pre): rpm-build-python3
-#if_with python2
-#BuildRequires: python-devel python-modules-compiler
-#endif
 
 %add_python_req_skip AppKit Foundation py2app Numeric
 
-# Automatically added by buildreq on Fri Jan 29 2021
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libSDL2-devel libX11-devel libcrypt-devel libfreetype-devel pkg-config python-devel python-module-OpenSSL python-module-Pygments python-module-SQLAlchemy python-module-babel python-module-cffi python-module-chardet python-module-cryptography python-module-cssselect python-module-enum34 python-module-idna python-module-imagesize python-module-ipaddress python-module-jinja2 python-module-lxml python-module-markupsafe python-module-ndg-httpsclient python-module-ntlm python-module-pkg_resources python-module-pycparser python-module-pytz python-module-requests python-module-simplejson python-module-six python-module-sphinx python-module-sphinxcontrib python-module-typing python-module-urllib3 python-module-webencodings python-module-whoosh python-modules python-modules-compiler python-modules-ctypes python-modules-distutils python-modules-email python-modules-encodings python-modules-json python-modules-logging python2-base python3 python3-base python3-dev python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-cffi python3-module-chardet python3-module-cryptography python3-module-docutils python3-module-idna python3-module-imagesize python3-module-jinja2 python3-module-markupsafe python3-module-openssl python3-module-packaging python3-module-pkg_resources python3-module-pytz python3-module-requests python3-module-sphinx python3-module-urllib3 sh4 xorg-proto-devel xz
-BuildRequires: ctags libfreetype-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel libjpeg-devel libpng-devel libportmidi-devel python3-module-setuptools python3-module-sphinxcontrib-applehelp python3-module-sphinxcontrib-devhelp python3-module-sphinxcontrib-htmlhelp python3-module-sphinxcontrib-jsmath python3-module-sphinxcontrib-qthelp python3-module-sphinxcontrib-serializinghtml
-
-%if_with python2
-BuildRequires: python-module-alabaster python-module-html5lib python-module-numpy python-module-numpydoc python-module-setuptools python-module-sphinxcontrib-websupport
-%endif
+BuildRequires: libfreetype-devel
+BuildRequires: libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel
+BuildRequires: libjpeg-devel libpng-devel libportmidi-devel
+BuildRequires: python3-module-setuptools python3-module-sphinxcontrib-applehelp python3-module-sphinxcontrib-devhelp python3-module-sphinxcontrib-htmlhelp python3-module-sphinxcontrib-jsmath python3-module-sphinxcontrib-qthelp python3-module-sphinxcontrib-serializinghtml
 
 %description
 pygame is a Python wrapper module for the SDL multimedia library, written by
@@ -186,6 +180,9 @@ sed -i '/^pkg_dir =/s@pkg_dir = .*@pkg_dir = "%_defaultdocdir/python3-module-pyg
 %doc _html/.
 
 %changelog
+* Thu Aug 12 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt2
+- drop unneeded python2 BR
+
 * Fri Jan 29 2021 Fr. Br. George <george@altlinux.ru> 2.0.1-alt1
 - Autobuild version bump to 2.0.1
 
