@@ -3,18 +3,26 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           maven-compiler-plugin
 Version:        3.8.1
-Release:        alt1_7jpp11
+Release:        alt1_10jpp11
 Summary:        Maven Compiler Plugin
 License:        ASL 2.0
-URL:            http://maven.apache.org/plugins/maven-compiler-plugin
+URL:            https://maven.apache.org/plugins/maven-compiler-plugin
 BuildArch:      noarch
 
-Source0:        http://archive.apache.org/dist/maven/plugins/%{name}-%{version}-source-release.zip
+Source0:        https://archive.apache.org/dist/maven/plugins/%{name}-%{version}-source-release.zip
 
 # port to plexus-languages 1.0.3
 Patch0:         0001-plexus-languages-1.0.patch
@@ -23,11 +31,17 @@ Patch0:         0001-plexus-languages-1.0.patch
 Patch1:         0002-MCOMPILER-359-Fix-for-NPE.patch
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
+BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-incremental)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
@@ -36,8 +50,9 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler-javac)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler-manager)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-java)
+BuildRequires:  mvn(org.mockito:mockito-core)
+%endif
 Source44: import.info
-
 
 %description
 The Compiler Plugin is used to compile the sources of your project.
@@ -55,8 +70,11 @@ API documentation for %{name}.
 %patch0 -p1
 %patch1 -p1
 
+# Replace path to junit in a test case with the system wide .jar
+sed -i 's|localRepository,\ "junit/junit/3.8.1/junit-3.8.1.jar"|"%(find-jar junit || find-jar javapackages-bootstrap/junit)"|' src/test/java/org/apache/maven/plugin/compiler/CompilerMojoTestCase.java
+
 %build
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -68,6 +86,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 3.8.1-alt1_10jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.8.1-alt1_7jpp11
 - update
 
