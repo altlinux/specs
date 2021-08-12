@@ -1,6 +1,6 @@
 Name: bmkdep
 Version: 20140112
-Release: alt5
+Release: alt6
 
 Summary: NetBSD version of mkdep(1)
 
@@ -25,14 +25,19 @@ options not available in the original BSD mkdep.
 %prep
 %setup
 
+%ifarch mipsel
+%define machine_arch mipsel
+%endif
+
 %define env \
   unset MAKEFLAGS; \
-  export BINOWN=`id -u` BINGRP=`id -g` \
-    MANOWN=${BINOWN} MANGRP=${BINGRP} \
-    MKHTML=no MKCATPAGES=no \
-    PREFIX=%prefix \
-    MANDIR=%_mandir \
-    CFLAGS=-O2
+  export BINOWN=`id -u` BINGRP=`id -g` \\\
+    MANOWN=${BINOWN} MANGRP=${BINGRP} \\\
+    MKHTML=no MKCATPAGES=no \\\
+    PREFIX=%prefix \\\
+    MANDIR=%_mandir \\\
+    %{?machine_arch:MACHINE_ARCH=%machine_arch} \\\
+    CFLAGS='%optflags'
 
 %build
 %env
@@ -48,6 +53,10 @@ install -pDm755 bmkdep %buildroot%_bindir/bmkdep
 %_bindir/bmkdep
 
 %changelog
+* Thu Aug 12 2021 Ivan A. Melnikov <iv@altlinux.org> 20140112-alt6
+- fix build on mipsel
+- fix %%env macro definition
+
 * Sun Mar 03 2019 Vitaly Lipatov <lav@altlinux.ru> 20140112-alt5
 - cleanup spec, fix buildreq
 
