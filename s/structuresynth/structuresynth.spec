@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define svn_release svn312
-%define our_release alt5
+%define our_release alt6
 
 Name: structuresynth
 Version: 1.5.0
@@ -15,7 +15,7 @@ Url: http://structuresynth.sourceforge.net
 
 # Blender doesn't officially support 32-bit build since 2.80. See also:
 # https://developer.blender.org/T67184
-ExclusiveArch: x86_64 aarch64 ppc64le %e2k
+ExcludeArch: %ix86 %arm
 
 Source: %name-%version.tar
 
@@ -28,6 +28,9 @@ BuildRequires: qt5-script-devel libGLU-devel libGLUT-devel
 
 %add_python3_path %_datadir/%name/Misc
 %add_python3_req_skip Blender.Mathutils
+%add_python3_req_skip Blender
+
+Requires: blender
 
 %description
 Structure Synth is a cross-platform application for generating 3D structures by
@@ -83,6 +86,9 @@ install -pDm0644 images/fileicons/StructureSynth-256.png %buildroot%_iconsdir/hi
 %_iconsdir/hicolor/128x128/*
 
 %changelog
+* Thu Aug 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.0-alt6.svn312
+- Updated runtime dependencies and supported architectures.
+
 * Sun Jan 03 2021 Michael Shigorin <mike@altlinux.org> 1.5.0-alt5.svn312
 - %%e2k is 64-bit and has blender
 

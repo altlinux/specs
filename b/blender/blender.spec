@@ -12,7 +12,7 @@
 
 Name: blender
 Version: 2.93.2
-Release: alt2
+Release: alt3
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -124,16 +124,13 @@ BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink 
 %add_python3_req_skip oscurart_tools.object
 %add_python3_req_skip oscurart_tools.render
 %add_python3_req_skip setuptools
+%add_python3_req_skip bmesh
+%add_python3_req_skip bpy.app.handlers
+%add_python3_req_skip bpy.app.translations
+%add_python3_req_skip bpy.props
+%add_python3_req_skip bpy.types
 
-%py3_provides BPyMesh
-%py3_provides Blender
-%py3_provides bmesh
-%py3_provides bpy
-%py3_provides bpy.props
-%py3_provides bpy.types
-%py3_provides bpy.app.translations
-%py3_provides bpy.app.handlers
-%py3_provides bpy.app
+AutoProv: no
 
 Obsoletes: %name-i18n
 
@@ -314,6 +311,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Wed Aug 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.93.2-alt3
+- Disabled provides autogeneration (Closes: #40706).
+
 * Wed Aug 11 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.93.2-alt2
 - Added patch for Elbrus.
 
