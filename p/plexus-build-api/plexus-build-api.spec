@@ -1,12 +1,20 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           plexus-build-api
 Version:        0.0.7
-Release:        alt3_30jpp11
+Release:        alt3_33jpp11
 Summary:        Plexus Build API
 License:        ASL 2.0
 URL:            https://github.com/sonatype/sisu-build-api
@@ -18,14 +26,16 @@ Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 # Forwarded upstream: https://github.com/sonatype/sisu-build-api/pull/2
 Patch0:         %{name}-migration-to-component-metadata.patch
-
-# Port to plexus-utils 3.3.0 (implement a dummy method)
-Patch1:         %{name}-utils-3.3.0.patch
+Patch1:         0000-Port-to-plexus-utils-3.3.0.patch
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+%endif
 Source44: import.info
 
 %description
@@ -46,15 +56,16 @@ cp -p %{SOURCE1} .
 %patch0 -p1
 %patch1 -p1
 
-# remove unnecessary dependency on parent POM
 %pom_remove_parent
+%pom_xpath_set "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/*" 1.6
 
 %mvn_file : plexus/%{name}
 
-%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration"
+# Install plexus-build-api-tests as well
+%mvn_package :
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -66,6 +77,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:0.0.7-alt3_33jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:0.0.7-alt3_30jpp11
 - update
 
