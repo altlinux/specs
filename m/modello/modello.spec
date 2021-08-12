@@ -1,10 +1,10 @@
+Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -13,14 +13,12 @@ BuildRequires: jpackage-11-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_without jackson
-%bcond_without snakeyaml
+%bcond_with bootstrap
 
 Name:           modello
-Summary:        Modello Data Model toolkit
-Epoch:          0
 Version:        1.11
-Release:        alt1_3jpp11
+Release:        alt1_6jpp11
+Summary:        Modello Data Model toolkit
 # The majority of files are under MIT license, but some of them are ASL 2.0.
 # Some parts of the project are derived from the Exolab project,
 # and are licensed under a 5-clause BSD license.
@@ -33,6 +31,9 @@ Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch:      noarch
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
@@ -46,15 +47,6 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.jsoup:jsoup)
 BuildRequires:  mvn(org.sonatype.plexus:plexus-build-api)
-
-%if %{with jackson}
-BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations)
-BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core)
-BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind)
-%endif
-
-%if %{with snakeyaml}
-BuildRequires:  mvn(org.yaml:snakeyaml)
 %endif
 
 # Explicit javapackages-tools requires since modello script uses
@@ -71,7 +63,6 @@ architecture, various types of code and descriptors can be generated
 from the single model, including Java POJOs, XML
 marshallers/unmarshallers, XSD and documentation.
 
-
 %package        javadoc
 Group: Development/Java
 Summary:        Javadoc for %{name}
@@ -80,34 +71,25 @@ BuildArch: noarch
 %description    javadoc
 API documentation for %{name}.
 
-
 %prep
 %setup -q
 cp -p %{SOURCE1} LICENSE
-
 # We don't generate site; don't pull extra dependencies.
 %pom_remove_plugin :maven-site-plugin
-
 # Avoid using Maven 2.x APIs
 sed -i s/maven-project/maven-core/ modello-maven-plugin/pom.xml
 
-%if %{without jackson}
 %pom_disable_module modello-plugin-jackson modello-plugins
 %pom_disable_module modello-plugin-jsonschema modello-plugins
 %pom_remove_dep :modello-plugin-jackson modello-maven-plugin
 %pom_remove_dep :modello-plugin-jsonschema modello-maven-plugin
-%endif
 
-%if %{without snakeyaml}
 %pom_disable_module modello-plugin-snakeyaml modello-plugins
 %pom_remove_dep :modello-plugin-snakeyaml modello-maven-plugin
-%endif
-
 
 %build
-# FIXME: tests fail
+# skip tests because we have too old xmlunit in Fedora now (1.0.8)
 %mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.version=3.1.1
-
 
 %install
 %mvn_install
@@ -117,7 +99,6 @@ sed -i s/maven-project/maven-core/ modello-maven-plugin/pom.xml
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
-
 %files -f .mfiles
 %doc LICENSE
 %{_bindir}/modello
@@ -126,8 +107,10 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
-
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:1.11-alt1_6jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.11-alt1_3jpp11
 - new version
 
