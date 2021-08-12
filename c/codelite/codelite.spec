@@ -1,6 +1,6 @@
 Name:    codelite
-Version: 15.0.3
-Release: alt2
+Version: 15.0.6
+Release: alt1
 
 Summary: CodeLite is a powerful open-source, cross platform code editor for C/C++
 
@@ -76,6 +76,9 @@ rm -f %buildroot%_bindir/codelite_open_helper.py
 %dir %_iconsdir/hicolor/64x64@2x/apps
 
 %changelog
+* Wed Aug 11 2021 Grigory Ustinov <grenka@altlinux.org> 15.0.6-alt1
+- Automatically updated to 15.0.6.
+
 * Fri Jul 02 2021 Grigory Ustinov <grenka@altlinux.org> 15.0.3-alt2
 - Fixed FTBFS.
 
