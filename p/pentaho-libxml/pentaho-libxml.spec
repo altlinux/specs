@@ -4,14 +4,14 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define origname libxml
 
 Name: pentaho-libxml
 Version: 1.1.3
-Release: alt1_28jpp8
+Release: alt1_30jpp11
 Summary: Namespace aware SAX-Parser utility library
 License: LGPLv2
 #Original source: http://downloads.sourceforge.net/jfreereport/%%{origname}-%%{version}.zip
@@ -19,12 +19,13 @@ License: LGPLv2
 #to simplify the licensing
 Source: %{origname}-%{version}-jarsdeleted.zip
 URL: http://reporting.pentaho.org/
-BuildRequires: ant ant-contrib jpackage-utils libbase libloader
+BuildRequires: ant jpackage-utils libbase libloader
 Requires: libbase >= 1.1.2 libloader >= 1.1.2
 BuildArch: noarch
 Patch0: libxml-1.1.2-build.patch
 Patch1: libxml-1.1.2-java11.patch
 Patch2: libxml-1.1.3-remove-commons-logging.patch
+Patch3: libxml-1.1.3-remove-antcontrib-support.patch
 Source44: import.info
 
 %description
@@ -46,14 +47,14 @@ Javadoc for %{name}.
 %patch0 -p1 -b .build
 %patch1 -p1 -b .java11
 %patch2 -p1 -b .no_commons_logging
+%patch3 -p1 -b .remove-antcontrib-support
 find . -name "*.jar" -exec rm -f {} \;
 mkdir -p lib
 build-jar-repository -s -p lib libbase libloader
 cd lib
-ln -s /usr/share/java/ant ant-contrib
 
 %build
-ant jar javadoc
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jar javadoc
 for file in README.txt licence-LGPL.txt ChangeLog.txt; do
     tr -d '\r' < $file > $file.new
     mv $file.new $file
@@ -74,6 +75,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{origname}
 %{_javadocdir}/%{origname}
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.1.3-alt1_30jpp11
+- update
+
 * Tue Apr 27 2021 Igor Vlasenko <viy@altlinux.org> 1.1.3-alt1_28jpp8
 - dropped java requires (closes: #40000)
 
