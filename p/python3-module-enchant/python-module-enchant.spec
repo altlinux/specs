@@ -2,7 +2,7 @@
 
 Name: python3-module-enchant
 Version: 3.2.1
-Release: alt1
+Release: alt2
 
 Summary: PyEnchant is a spellchecking library for Python
 
@@ -20,7 +20,8 @@ BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: libenchant-devel
-#Requires: libenchant
+# used dynamically
+Requires: libenchant
 
 %description
 PyEnchant combines all the functionality of the underlying Enchant
@@ -58,6 +59,9 @@ sed -i '/use_setuptools/d' setup.py
 %endif
 
 %changelog
+* Fri Aug 13 2021 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt2
+- NMU: restore missed libenchant
+
 * Fri Aug 13 2021 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt1
 - NMU: cleanup spec
 - NMU: new version 3.2.1 (with rpmrb script)
