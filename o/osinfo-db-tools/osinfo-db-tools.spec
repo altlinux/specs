@@ -1,12 +1,13 @@
-
-Summary: Tools for managing the osinfo database
 Name: osinfo-db-tools
 Version: 1.9.0
-Release: alt1
+Release: alt1.1
+
+Summary: Tools for managing the osinfo database
 License: GPLv2+
 Group: Development/Tools
-Source: %name-%version.tar
+
 Url: http://libosinfo.org/
+Source: %name-%version.tar
 
 BuildRequires(pre): meson >= 0.49.0
 BuildRequires: gettext >= 0.19.8
@@ -31,6 +32,10 @@ information about operating systems for use with virtualization
 
 %prep
 %setup
+%ifarch %e2k
+# meson knows lcc as lcc; FIXME: patch/upstream?
+sed -i '/requires GCC or CLang/d' meson.build
+%endif
 
 %build
 %meson
@@ -50,6 +55,9 @@ information about operating systems for use with virtualization
 %_man1dir/*
 
 %changelog
+* Fri Aug 13 2021 Michael Shigorin <mike@altlinux.org> 1.9.0-alt1.1
+- E2K: don't be so specific about C compiler please
+
 * Thu Aug 05 2021 Alexey Shabalin <shaba@altlinux.org> 1.9.0-alt1
 - new version 1.9.0
 
