@@ -2,7 +2,7 @@
 
 Name: xraylib
 Version: 4.1.0
-Release: alt1
+Release: alt2
 Summary: X-ray matter interaction cross sections for X-ray fluorescence applications
 License: BSD-3-Clause
 Group: Sciences/Physics
@@ -10,6 +10,7 @@ Url: https://github.com/tschoonj/xraylib
 
 # https://github.com/tschoonj/xraylib.git
 Source: %name-%version.tar
+Patch2000: %name-e2k.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-fortran gcc-c++ swig
@@ -52,6 +53,9 @@ This package contains python bindings of %name.
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 # change python shebangs to python3
 find . -name '*.py' | xargs sed -i \
@@ -101,6 +105,9 @@ rm -f %buildroot%python3_sitelibdir/*.la
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Fri Aug 13 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.1.0-alt2
+- Added workaround for ICE in fortran compiler for Elbrus.
+
 * Wed Jun 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.0-alt1
 - Updated to upstream version 4.1.0.
 
