@@ -1,19 +1,19 @@
 %define _name flare
 
 Name: %_name-engine
-Version: 1.11
-Release: alt1.1
+Version: 1.12
+Release: alt1
 
 Summary: A simple game engine for single-player 2D action RPGs
-License: %gpl3plus
+License: GPLv3+
 Group: Games/Adventure
 
 URL: http://flarerpg.org/
-# https://github.com/flareteam/flare-engine.git
+Vcs: https://github.com/flareteam/flare-engine.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel
 
 %define _unpackaged_files_terminate_build 1
@@ -46,6 +46,11 @@ the common, reusable code.
 %_man6dir/*
 
 %changelog
+* Thu Aug 12 2021 Mikhail Efremov <sem@altlinux.org> 1.12-alt1
+- Added Vcs tag.
+- Don't use rpm-build-licenses.
+- Updated to 1.12.
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.11-alt1.1
 - NMU: spec: adapted to new cmake macros.
 

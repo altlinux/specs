@@ -1,24 +1,24 @@
 %define _name flare
 
 Name: %_name-game
-Version: 1.11
-Release: alt1.1
+Version: 1.12
+Release: alt1
 
 Summary: Fantasy action RPG using the FLARE engine
 # All of Flare's art and data files are released under CC-BY-SA 3.0.
 # Later versions are permitted.
 # The Liberation Sans fonts version 2 are released under the SIL Open
 # Font License, Version 1.1.
-License: %ccbysa30+, SIL Open Font License 1.1
+License: CC-BY-SA-3.0 and OFL-1.1
 Group: Games/Adventure
 
 URL: http://flarerpg.org/
-# https://github.com/flareteam/flare-game.git
+Vcs: https://github.com/flareteam/flare-game.git
 Source: %name-%version.tar
 #Patch: %name-%version-%release.patch
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-licenses rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
 
 Requires: %_name-engine >= %version
@@ -52,6 +52,11 @@ It is built on the FLARE engine (Free/Libre Action Roleplaying Engine).
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Aug 12 2021 Mikhail Efremov <sem@altlinux.org> 1.12-alt1
+- Added Vcs tag.
+- Don't use rpm-build-licenses.
+- Updated to 1.12.
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.11-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
