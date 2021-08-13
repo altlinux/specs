@@ -1,6 +1,6 @@
 Name: xfce4-sensors-plugin
 Version: 1.4.1
-Release: alt1
+Release: alt2
 
 Summary: Sensors plugin for Xfce Desktop
 License: GPLv2+
@@ -70,6 +70,9 @@ Requires: xfce4-panel >= 4.11 hddtemp lm_sensors3
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Fri Aug 13 2021 Mikhail Efremov <sem@altlinux.org> 1.4.1-alt2
+- Increase tachometers spacing (closes: #40699).
+
 * Tue Jul 27 2021 Mikhail Efremov <sem@altlinux.org> 1.4.1-alt1
 - Enabled xnvctrl support.
 - Updated to 1.4.1.
