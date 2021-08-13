@@ -2,7 +2,7 @@
 
 Name: p7zip
 Version: 17.04
-Release: alt1
+Release: alt2
 
 Summary: 7zip unofficial port - a file-archiver with highest compression ratio
 License: LGPLv2+ with UnRAR exception
@@ -65,6 +65,8 @@ chmod +x *.sh */*.sh
 
 %ifarch %ix86
 cp -f makefile.linux_x86_asm_gcc_4.X makefile.machine
+%endif
+%ifarch %ix86 %mips32
 sed -i 's/mx=22/mx=10/' check/check.sh
 sed -i 's/mx=22/mx=10/' check/check_7za.sh
 %endif
@@ -111,6 +113,9 @@ xargs -0 install -pm644 -t %buildroot%includedir/
 P7ZIP_HOME_DIR=`pwd`/bin/ make test_7z
 
 %changelog
+* Fri Aug 13 2021 Ivan A. Melnikov <iv@altlinux.org> 17.04-alt2
+- Reduce tests memory requirements for %%mips32
+
 * Sun Apr 18 2021 Fr. Br. George <george@altlinux.ru> 17.04-alt1
 - Autobuild version bump to 17.04
 - Reduce i686 memory on tests
