@@ -1,5 +1,5 @@
 Name: passwdqc
-Version: 2.0.2
+Version: 2.0.2.0.4.a866
 Release: alt1
 
 Summary: A passphrase strength checking and policy enforcement toolset
@@ -150,8 +150,9 @@ install -pD -m755 passwdqc.control \
 %doc LICENSE README PLATFORMS *.php
 
 %files -n lib%name-devel
-%_libdir/lib*.so
 %_includedir/*.h
+%_libdir/lib*.so
+%_pkgconfigdir/*.pc
 %_man3dir/*
 
 %files -n %pam_name
@@ -163,6 +164,9 @@ install -pD -m755 passwdqc.control \
 %_man1dir/*
 
 %changelog
+* Fri Aug 13 2021 Dmitry V. Levin <ldv@altlinux.org> 2.0.2.0.4.a866-alt1
+- Added pkg-config file (by Egor Ignatov).
+
 * Sun Apr 04 2021 Dmitry V. Levin <ldv@altlinux.org> 2.0.2-alt1
 - Merged with 2.0.2-owl1:
   + pam_passwdqc: enhanced formatting of auto-generated policy descriptions;
