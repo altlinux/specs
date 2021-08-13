@@ -1,6 +1,8 @@
+%define oname pyenchant
+
 Name: python3-module-enchant
-Version: 2.0.0
-Release: alt2
+Version: 3.2.1
+Release: alt1
 
 Summary: PyEnchant is a spellchecking library for Python
 
@@ -10,11 +12,15 @@ Url: https://pypi.python.org/pypi/pyenchant
 
 BuildArch: noarch
 
-Source: pyenchant-%version.tar
+# Source-url: %__pypi_url %oname
+Source: %name-%version.tar
 
-BuildPreReq: python3-devel rpm-build-python3 python3-module-setuptools
+BuildRequires(pre): rpm-build-intro >= 2.1.3
+BuildRequires(pre): rpm-build-python3
+
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: libenchant-devel
-Requires: libenchant
+#Requires: libenchant
 
 %description
 PyEnchant combines all the functionality of the underlying Enchant
@@ -22,16 +28,16 @@ library with the flexibility of Python and a nice "Pythonic"
 object-oriented interface. It also aims to provide some higher-level
 functionality than is available in the C API.
 
-%if "3"==""
+%if "@pyver@"==""
 %package gui
 Summary: PyEnchant GUI dialogs
-Group: Development/Python3
+Group: Development/Python@pyver@
 %description gui
 PyEnchant GUI dialogs
 %endif
 
 %prep
-%setup -q -n pyenchant-%version
+%setup
 sed -i '/use_setuptools/d' setup.py
 
 %build
@@ -44,15 +50,18 @@ sed -i '/use_setuptools/d' setup.py
 %python3_sitelibdir/enchant
 %python3_sitelibdir/*.egg-info
 %exclude %python3_sitelibdir/enchant/checker/*CheckerDialog*
-%exclude %python3_sitelibdir/enchant/checker/tests.py
 
-%if "3"==""
+# TODO
+%if "@pyver@"==""
 %files gui
 %python3_sitelibdir/enchant/checker/*CheckerDialog*
-%python3_sitelibdir/enchant/checker/tests.py
 %endif
 
 %changelog
+* Fri Aug 13 2021 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt1
+- NMU: cleanup spec
+- NMU: new version 3.2.1 (with rpmrb script)
+
 * Thu Mar 15 2018 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt2
 - Add packaging egg-info.
 
