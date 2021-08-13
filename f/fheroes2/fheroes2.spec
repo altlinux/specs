@@ -1,7 +1,7 @@
 %def_with sdl2
 Name: fheroes2
 Epoch: 2
-Version: 0.9.5
+Version: 0.9.6
 #define rev 20210604
 #Release: alt1.%rev
 Release: alt1
@@ -62,6 +62,9 @@ install -pm 644 {CONTRIBUTING.md,changelog.txt,LICENSE,README.md} %buildroot%_do
 
 
 %changelog
+* Fri Aug 13 2021 Igor Vlasenko <viy@altlinux.org> 2:0.9.6-alt1
+- new version
+
 * Mon Jul 12 2021 Igor Vlasenko <viy@altlinux.org> 2:0.9.5-alt1
 - new version
 
