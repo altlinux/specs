@@ -5,7 +5,7 @@
 
 Name: file
 Version: 5.40
-Release: alt1
+Release: alt2
 
 Summary: File type guesser
 License: BSD-2-Clause
@@ -82,6 +82,19 @@ src/file -m /dev/null		ChangeLog.xz | grep ': data'
 src/file -m magic/magic/	ChangeLog.xz | grep ': XZ compressed data'
 src/file -m magic/magic.mgc	ChangeLog.xz | grep ': XZ compressed data'
 src/file -m magic/magic.mgc -z	ChangeLog.xz | grep ': ASCII text (XZ compressed data'
+
+tar cf ChangeLog.tar.zst ChangeLog.xz --zstd
+src/file -z ChangeLog.tar.zst | grep ': POSIX tar archive (GNU) (Zstandard compressed data'
+
+tar czf ChangeLog.tar.gz ChangeLog.xz
+src/file -z ChangeLog.tar.gz | grep ': POSIX tar archive (GNU) (gzip compressed data'
+
+tar cjf ChangeLog.tar.bz2 ChangeLog.xz
+src/file -z ChangeLog.tar.bz2 | grep ': POSIX tar archive (GNU) (bzip2 compressed data'
+
+tar cJf ChangeLog.tar.xz ChangeLog.xz
+src/file -z ChangeLog.tar.xz | grep ': POSIX tar archive (GNU) (XZ compressed data'
+
 make check
 
 %files
@@ -107,6 +120,9 @@ make check
 %endif
 
 %changelog
+* Fri Aug 13 2021 Vitaly Chikunov <vt@altlinux.org> 5.40-alt2
+- seccomp: Allow running compression helpers.
+
 * Sun Aug 01 2021 Vitaly Chikunov <vt@altlinux.org> 5.40-alt1
 - Build FILE5_40-75-g9b2538dc (2021-07-30).
 
