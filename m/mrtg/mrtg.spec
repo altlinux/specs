@@ -1,6 +1,6 @@
 Name: mrtg
-Version: 2.17.7
-Release: alt2
+Version: 2.17.8
+Release: alt1
 
 Summary: Multi Router Traffic Grapher
 Group: Monitoring
@@ -16,7 +16,8 @@ Source5: mrtg.iptables
 Source6: mrtg-lo0.cfg
 Source7: mrtg.cpuinfo
 Source8: README.ALT-ru_RU.KOI8-R
-PreReq: sysstat
+
+Requires(pre,postun): sysstat
 
 BuildRequires: fontconfig freetype2-devel groff-base libgd2-devel libjpeg-devel libpng-devel perl-Math-BigInt perl-Net-SNMP zlib-devel
 BuildRequires: perl-Pod-Parser
@@ -50,61 +51,61 @@ echo "Removing .orig's..."
 find . -name "*.orig" -print0 -exec rm -f \{\} \; \
  > /dev/null
 
-%__cp -p %SOURCE8 .
+cp -p %SOURCE8 .
 
-%__mv -f COPYING COPYING.orig
-%__ln_s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
+mv -f COPYING COPYING.orig
+ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
 %build
 %configure
 %make_build
 
-find contrib -type f -print0 -exec %__perl -pi \
+find contrib -type f -print0 -exec perl -pi \
  -e 's;^#!/.*/perl.*;#!/usr/bin/perl;gi' \{\} \; \
  > /dev/null
 
-find contrib -type f -print0 -exec %__perl -pi \
+find contrib -type f -print0 -exec perl -pi \
  -e 's;/usr/local/bin/;/usr/bin/;gi' \{\} \; \
  > /dev/null
 
-find contrib -type f -print0 -exec %__perl -pi \
+find contrib -type f -print0 -exec perl -pi \
  -e 's;/usr/local/mrtg/(bin/)?mrtg;/usr/bin/mrtg;gi' \{\} \; \
  > /dev/null
 
-find . -name "*.pl" -print0 -exec %__perl -pi -e 's;\015;;gi' \{\} \; \
+find . -name "*.pl" -print0 -exec perl -pi -e 's;\015;;gi' \{\} \; \
  > /dev/null
 
 #tar -cf - contrib | gzip -9nf > contrib.tar.gz
 
 %install
 %make_install DESTDIR=%buildroot install
-%__rm -rf %buildroot{%_docdir,%_datadir}/mrtg2
+rm -rf %buildroot{%_docdir,%_datadir}/mrtg2
 
 # another try to work around x86_64
 if [ "%_libdir" == "/usr/lib64" ]; then
-	%__mkdir -p %buildroot/usr/lib
-	%__mv %buildroot%_libdir/mrtg2 %buildroot/usr/lib
-	%__rm -rf %buildroot%_libdir
+	mkdir -p %buildroot/usr/lib
+	mv %buildroot%_libdir/mrtg2 %buildroot/usr/lib
+	rm -rf %buildroot%_libdir
 fi
 
 # get rid of a copy of standard Pod perl modules
-%__rm -rf %buildroot%_libmrtg/Pod
+rm -rf %buildroot%_libmrtg/Pod
 
-%__mkdir -p %buildroot{%_sysconfdir/%name,%_sysconfdir/cron.d,%_contentdir/images,%_libmrtg/helpers,%_localstatedir/%name}
+mkdir -p %buildroot{%_sysconfdir/%name,%_sysconfdir/cron.d,%_contentdir/images,%_libmrtg/helpers,%_localstatedir/%name}
 
-%__install -m 644 images/* %buildroot%_contentdir/images
-%__install -m 644 %SOURCE1 %buildroot%_sysconfdir/%name
-%__install -m 640 %SOURCE4 %buildroot%_sysconfdir/cron.d/%name
+install -m 644 images/* %buildroot%_contentdir/images
+install -m 644 %SOURCE1 %buildroot%_sysconfdir/%name
+install -m 640 %SOURCE4 %buildroot%_sysconfdir/cron.d/%name
 
-%__install -m 755 %SOURCE5 %buildroot/%_libmrtg/helpers/iptables-accounting.pl
-%__install -m 644 %SOURCE6 %buildroot%_sysconfdir/%name
-%__install -m 755 %SOURCE7 %buildroot/%_libmrtg/helpers/cpuinfo.pl
+install -m 755 %SOURCE5 %buildroot/%_libmrtg/helpers/iptables-accounting.pl
+install -m 644 %SOURCE6 %buildroot%_sysconfdir/%name
+install -m 755 %SOURCE7 %buildroot/%_libmrtg/helpers/cpuinfo.pl
 
-%__cp -r contrib %buildroot%_libmrtg/
+cp -r contrib %buildroot%_libmrtg/
 
 %pre
 /usr/sbin/groupadd -r -f %name &> /dev/null ||:
-/usr/sbin/useradd -r -g %name -d /dev/null -s /dev/null -n %name &> /dev/null ||:
+/usr/sbin/useradd -r -g %name -d /dev/null -s /dev/null -N %name &> /dev/null ||:
 
 %files
 %doc CHANGES COPYRIGHT MANIFEST README README.ALT-ru_RU.KOI8-R THANKS
@@ -132,6 +133,10 @@ fi
 %_libmrtg/contrib/*
 
 %changelog
+* Fri Aug 13 2021 Ilya Mashkin <oddity@altlinux.ru> 2.17.8-alt1
+- 2.17.8
+- cleanup spec according repocop patch
+
 * Sun Nov 08 2020 Dmitry V. Levin <ldv@altlinux.org> 2.17.7-alt2
 - NMU.
 - Filtered out all perl Provides and the corresponding Requires as
