@@ -3,19 +3,23 @@
 
 Name: openscad
 Version: 2021.01
-Release: alt1
+Release: alt2
+
 Summary: The Programmers Solid 3D CAD Modeller
+
 # COPYING contains a linking exception for CGAL
 # Appdata file is CC0
 # Examples are CC0
 License: GPLv2 with exceptions and CC0
 Group: Engineering
-Url: http://www.%name.org/
+Url: http://openscad.org/
 
+# Source0-url: https://github.com/%name/%name/releases/download/%name-%version/%name-%version.src.tar.gz
 Source0: %name-%version.tar
 #Source1: ru.po
-#Source-url: https://github.com/%name/%name/releases/download/%name-%version/%name-%version.src.tar.gz
 Patch: openscad-polyclipping.patch
+# fix build with cgal >= 5.3
+Patch1: cc49ad8dac24309f5452d5dea9abd406615a52d9.patch
 
 # needed cgal-devel on armh
 ExcludeArch: armh
@@ -25,7 +29,7 @@ BuildRequires: cmake
 BuildRequires: cgal-devel
 BuildRequires: ImageMagick-tools
 BuildRequires: xorg-xvfb xvfb-run
-BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
+BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-signals-devel boost-wave-devel
 BuildRequires: desktop-file-utils
 BuildRequires: eigen3
 BuildRequires: libfreetype-devel >= 2.4
@@ -77,6 +81,7 @@ changes, however many things are already working.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 #cp -f %SOURCE1 locale/ru.po
 
@@ -144,6 +149,11 @@ popd
 %_datadir/%name/libraries/MCAD
 
 %changelog
+* Fri Aug 13 2021 Vitaly Lipatov <lav@altlinux.ru> 2021.01-alt2
+- NMU: fix build with cgal >= 5.3
+- NMU: fix URL
+- NMU: drop BR: boost-python-devel (see # 40722)
+
 * Thu May 13 2021 Anton Midyukov <antohami@altlinux.org> 2021.01-alt1
 - New version 2021.01
 - ExcludeArch: armh
