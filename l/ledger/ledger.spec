@@ -1,6 +1,11 @@
+# use no more than system_memory/2000 build procs (see https://bugzilla.altlinux.org/show_bug.cgi?id=35112)
+%_tune_parallel_build_by_procsize 2000
+
+%def_with python
+
 Name: ledger
-Version: 3.1.aed3709
-Release: alt5.1
+Version: 3.2.1
+Release: alt1
 
 Summary: Ledger is a highly flexible, double-entry accounting system
 
@@ -13,19 +18,19 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/ledger/ledger/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-Patch1: ledger-upstream-boost.patch
-Patch2: ledger-alt-boost-compat.patch
+Patch: 69e6b89cf8d2820d28174e7ffaea1c59a0f84d3f.patch
 
-Requires: libledger = %version-%release
+Requires: libledger = %EVR
 
-BuildPreReq: cmake rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-intro
 
-# manual removed: python3 ruby ruby-stdlibs  python-module-cmd2 python-module-mwlib python-module-protobuf
-# Automatically added by buildreq on Sat Aug 15 2015
-# optimized out: boost-devel boost-devel-headers boost-python-headers cmake cmake-modules libgmp-devel libstdc++-devel python-base python-devel python-module-distribute python-module-oslo.i18n python-module-oslo.utils python-modules python3-base
-BuildRequires: boost-filesystem-devel boost-python-devel ccmake gcc-c++ libedit-devel libicu-devel libmpfr-devel
-
-BuildRequires: libutfcpp-devel
+BuildRequires: cmake gcc-c++
+BuildRequires: boost-filesystem-devel
+%if_with python
+BuildRequires: boost-python3-devel
+%endif
+BuildRequires: libedit-devel libicu-devel libmpfr-devel libutfcpp-devel libssl-devel
 
 %description
 Ledger is an accounting program which is invoked from the command-line
@@ -67,12 +72,12 @@ ledger file and using Ledger to generate reports.
 This package contains files needed for developing programs using
 ledger facilities.
 
-%package -n python-module-%name
+%package -n python3-module-%name
 Summary: Python bindings for ledger
-Group: Development/Python
-Requires: libledger = %version-%release
+Group: Development/Python3
+Requires: libledger = %EVR
 
-%description -n python-module-%name
+%description -n python3-module-%name
 Ledger is an accounting program which is invoked from the command-line
 using a textual ledger file.  To start using Ledger, you will need to
 create such a file containing your financial transactions.  A sample
@@ -86,7 +91,7 @@ functionality.
 %package -n emacs-ledger
 Summary: Emacs mode for ledger accounting system
 Group: Editors
-Requires: ledger = %version-%release
+Requires: ledger = %EVR
 
 %description -n emacs-ledger
 Ledger is an accounting program which is invoked from the command-line
@@ -100,15 +105,13 @@ This package contains emacs libraries to ease use of ledger.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p2
+%patch -p1
 
 %build
 %cmake -DUSE_PYTHON=yes
 # 15.08.2015: disabled due ledger3.info install bug
 # -DBUILD_DOCS=yes
-# don't use parallel build
-%cmake_build -j1
+%cmake_build
 
 %install
 %cmake_install
@@ -126,13 +129,19 @@ This package contains emacs libraries to ease use of ledger.
 %_includedir/%name/
 %_libdir/libledger.so
 
-%files -n python-module-ledger
-%_libdir/python*/site-packages/*
+%if_with python
+%files -n python3-module-ledger
+%python3_sitelibdir/*
+%endif
 
 #%files -n emacs-ledger
 #%_emacslispdir/*
 
 %changelog
+* Fri Aug 13 2021 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt1
+- new version 3.2.1 (with rpmrb script)
+- fix build with boost-1.76
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 3.1.aed3709-alt5.1
 - NMU: spec: adapted to new cmake macros.
 
