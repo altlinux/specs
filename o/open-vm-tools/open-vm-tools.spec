@@ -24,7 +24,7 @@
 
 Name: open-vm-tools
 Version: %toolsversion
-Release: alt1
+Release: alt2
 Summary: Open Virtual Machine Tools for virtual machines hosted on VMware
 Group: System/Kernel and hardware
 License: GPLv2
@@ -144,6 +144,7 @@ export CXXFLAGS="$RPM_OPT_FLAGS -std=gnu++11"
 
 mv %buildroot%_sysconfdir/vmware-tools/tools.conf.example %buildroot%_sysconfdir/vmware-tools/tools.conf
 chmod a-x %buildroot%_sysconfdir/vmware-tools/*.conf
+sed -i '/^\[deployPkg\]/a enable-custom-scripts=true' %buildroot%_sysconfdir/vmware-tools/tools.conf
 # Remove exec bit from config files
 chmod a-x %buildroot%_sysconfdir/pam.d/*
 %if_enabled vgauth
@@ -210,7 +211,7 @@ if [ "$1" = "0" -a                      \
      -e %_bindir/vmware-rpctool ] &&  \
      %_bindir/vmware-checkvm &> /dev/null; then
 		%_bindir/vmware-rpctool 'tools.set.version 0' &> /dev/null || /bin/true
-		
+
 		if [ -d /mnt/hgfs ] &&   \
 		    %{_bindir}/vmware-checkvm -p | grep -q Workstation; then
 		    umount /mnt/hgfs &> /dev/null || /bin/true
@@ -297,6 +298,9 @@ fi
 
 
 %changelog
+* Thu Aug 12 2021 Andrew A. Vasilyev <andy@altlinux.org> 11.3.0-alt2
+- set enable-custom-scripts=true by default
+
 * Sun Jun 20 2021 Andrew A. Vasilyev <andy@altlinux.org> 11.3.0-alt1
 - 11.3.0
 
