@@ -2,11 +2,11 @@
 
 Name: meld
 %define xdg_name org.gnome.%name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Meld Diff Viewer
-License: %gpl2plus
+License: GPL-2.0-or-later
 Group: Text tools
 Url: http://meldmerge.org/
 
@@ -16,7 +16,7 @@ BuildArch: noarch
 
 Requires: typelib(GtkSource) = 3.0
 
-BuildRequires(pre): rpm-build-licenses rpm-build-gir rpm-build-python3
+BuildRequires(pre): rpm-build-gir rpm-build-python3
 BuildRequires: intltool yelp-tools python3-devel
 
 %description
@@ -56,6 +56,9 @@ including Git, Bazaar, Mercurial, Subversion and CVS.
 %doc NEWS
 
 %changelog
+* Fri Aug 13 2021 Yuri N. Sedunov <aris@altlinux.org> 3.20.4-alt1
+- 3.20.4
+
 * Sat Feb 13 2021 Yuri N. Sedunov <aris@altlinux.org> 3.20.3-alt1
 - 3.20.3
 
