@@ -1,5 +1,5 @@
 Name: bat
-Version: 0.18.1
+Version: 0.18.2
 Release: alt1
 Summary: A cat(1) clone with syntax highlighting and Git integration
 License: MIT or Apache-2.0
@@ -35,13 +35,23 @@ mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%_man1dir
 install -m 0755 target/release/%name %buildroot%_bindir
 install -m 0644 target/release/build/%name-*/out/assets/manual/%name.1 %buildroot%_man1dir
+install -Dm 0644 target/release/build/%name-*/out/assets/completions/bat.bash %buildroot%_datadir/bash-completion/completions/bat
+install -Dm 0644 target/release/build/%name-*/out/assets/completions/bat.zsh %buildroot%_datadir/zsh/site-functions/_bat
+install -Dm 0644 target/release/build/%name-*/out/assets/completions/bat.fish %buildroot%_datadir/fish/vendor_completions.d/bat.fish
 
 %files
 %_bindir/%name
 %_man1dir/%name.1.xz
+%_datadir/bash-completion/completions/bat
+%_datadir/zsh/site-functions/_bat
+%_datadir/fish/vendor_completions.d/bat.fish
 %doc README.md LICENSE-MIT LICENSE-APACHE
 
 %changelog
+* Thu Aug 12 2021 Egor Ignatov <egori@altlinux.org> 0.18.2-alt1
+- Update to version 0.18.2
+- add bash, zsh and fish completions
+
 * Sun Jun 06 2021 Alexander Makeenkov <amakeenk@altlinux.org> 0.18.1-alt1
 - Updated to version 0.18.1
 
