@@ -3,7 +3,7 @@
 Name: monodevelop
 Epoch: 1
 Version: 5.10.0.871
-Release: alt3
+Release: alt4
 
 Summary: MonoDevelop is a project to port SharpDevelop to Gtk#
 License: LGPLv2.1
@@ -68,9 +68,7 @@ BuildRequires: autoconf automake cmake
 BuildRequires: libgtk-sharp2-devel libgnome-sharp-devel
 BuildRequires: libssh2-devel
 BuildRequires: mono-addins-devel
-BuildRequires: nunit2-devel
 BuildRequires: nuget-devel
-BuildRequires: newtonsoft-json-devel
 BuildRequires: /usr/bin/7z
 
 Requires: mono-core
@@ -79,8 +77,6 @@ Requires: mono-devel-full
 Requires: pkg-config
 Requires: xsp
 Requires: mono-addins
-Requires: nunit2
-Requires: newtonsoft-json
 
 %description
 This is MonoDevelop which is intended to be a full-featured
@@ -191,6 +187,9 @@ rm -rf %buildroot%_libexecdir/%name/AddIns/ChangeLogAddIn
 %_man1dir/*
 
 %changelog
+* Fri Aug 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:5.10.0.871-alt4
+- Updated dependencies.
+
 * Wed Aug 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:5.10.0.871-alt3
 - Rebuilt with new mono.
 
