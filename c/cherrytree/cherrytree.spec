@@ -1,9 +1,9 @@
 Name: cherrytree
-Version: 0.38.5
-Release: alt1.qa1
+Version: 0.99.40
+Release: alt1
 
 Summary: Hierarchical note taking application
-Summary(ru_RU.UTF-8):  Записная книжка иерархической структуры для заметок
+Summary(ru_RU.UTF-8): Записная книжка иерархической структуры для заметок
 
 Group: Office
 License: GPLv2+
@@ -11,22 +11,26 @@ Url: http://www.giuspen.com/cherrytree/
 
 Packager: Konstantin Artyushkin <akv@altlinux.org>
 
-Source: http://www.giuspen.com/software/%name-%version.tar
+# Source-url: https://www.giuspen.com/software/cherrytree_%version.tar.xz
+Source: %name-%version.tar
 Patch: categories.patch
 
-BuildArch: noarch
-
-BuildRequires: python-devel
+BuildRequires: cmake
+BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
 BuildRequires: gettext
-
-#Requires: python-module-pygtk
-#Requires: python-module-pygobject
-#Requires: python-module-pygtksourceview
-#Requires: python-module-enchant
+BuildRequires: libgtkmm3-devel
+BuildRequires: libxml++2-devel
+BuildRequires: libgtksourceviewmm3-devel
+BuildRequires: libsqlite3-devel
+BuildRequires: libgspell-devel
+BuildRequires: libfmt-devel
+BuildRequires: libspdlog-devel
+BuildRequires: gnome-icon-theme
+BuildRequires: libuchardet-devel
+BuildRequires: libcurl-devel
 
 Requires: %_bindir/7z
-Requires: python-module-enchant
 
 %description
 CherryTree is a hierarchical note taking application, featuring rich text and
@@ -40,39 +44,35 @@ file with extension ".ctd".
 %prep
 %setup
 %patch -p0
-# remove shebang to make rpmlint happy
-#sed '/\/usr\/bin\/env/d' modules/main.py > modules/main.py.new && \
-#  touch -r modules/main.py modules/main.py.new && \
-#  mv modules/main.py.new modules/main.py
 
 %build
-%python_build
+%cmake  -DBUILD_TESTING=OFF -DCT_VERSION=%version
+%cmake_build
 
 %install
-#python_install
-# --skip-build makes it crazy
-%__python setup.py install -O2 --root %buildroot
-
-#install -D cherrytree %buildroot%_bindir/%name
-rm -rf %buildroot%python_sitelibdir_noarch/
+%cmakeinstall_std
 
 %find_lang %name
 
 %files -f %name.lang
 %doc changelog.txt license.txt
 %_bindir/%name
+%_datadir/metainfo/com.giuspen.%name.metainfo.xml
 %_datadir/%name/
-%_datadir/appdata/%name.appdata.xml
-%_datadir/application-registry/%name.applications
 %_desktopdir/%name.desktop
 %_datadir/mime-info/*
 %_iconsdir/hicolor/scalable/apps/%%name.svg
-%_datadir/mime/packages/%name.xml
+%_datadir/mime-info/%name.*
 %_man1dir/*.1*
-#_datadir/locale/*
 
 
 %changelog
+* Fri Aug 13 2021 Vitaly Lipatov <lav@altlinux.ru> 0.99.40-alt1
+- NMU: new version 0.99.40 (with rpmrb script)
+
+* Fri Mar 12 2021 Konstantin Artyushkin <akv@altlinux.org> 0.99.31-alt1
+- New Version
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.38.5-alt1.qa1
 - NMU: applied repocop patch
 
