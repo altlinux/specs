@@ -1,6 +1,6 @@
 Name: onedrive
-Version: 2.4.12
-Release: alt2
+Version: 2.4.13
+Release: alt1
 
 Summary: OneDrive Free Client written in D
 
@@ -12,8 +12,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/abraunegg/onedrive/archive/v%version.tar.gz
 Source: %name-%version.tar
-
-Patch: 761cf3eb878fd370576329127055eec06b975672.patch
 
 BuildRequires(pre): rpm-build-dmd
 BuildRequires: rpm-build-intro
@@ -36,7 +34,7 @@ Free CLI client for Microsoft OneDrive written in D.
 
 %prep
 %setup
-%patch -p1
+
 # sed -i 's|version ||g' Makefile
 # sed -i '/chown/d' Makefile.in
 %__subst 's/-o root -g users//g' Makefile.in
@@ -69,6 +67,9 @@ chmod a-x %buildroot/%_man1dir/%{name}*
 %config %_logrotatedir/onedrive
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 2.4.13-alt1
+- new version 2.4.13 (with rpmrb script)
+
 * Wed Jun 16 2021 Vitaly Lipatov <lav@altlinux.ru> 2.4.12-alt2
 - add patch: support DMD 2.096.0 as compiler
 
