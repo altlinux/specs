@@ -4,7 +4,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 0.7.0
+Version: 0.7.2
 Release: alt1
 
 Summary: Click params for GeoJSON CLI
@@ -44,6 +44,9 @@ py.test3 -vv
 %python3_sitelibdir/*
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 0.7.2-alt1
+- new version 0.7.2 (with rpmrb script)
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 0.7.0-alt1
 - new version 0.7.0 (with rpmrb script)
 
