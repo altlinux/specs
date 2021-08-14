@@ -3,7 +3,7 @@
 %def_without check
 
 Name: python3-module-argcomplete
-Version: 1.12.2
+Version: 1.12.3
 Release: alt1
 
 Summary: Bash tab completion for argparse
@@ -23,7 +23,6 @@ Obsoletes: python-module-argcomplete
 Provides: python-module-argcomplete
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
-BuildRequires(pre): rpm-macros-sphinx
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
@@ -71,6 +70,10 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/argcomplete-*.egg-info/
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1.12.3-alt1
+- new version 1.12.3 (with rpmrb script)
+- drop BR: rpm-build-sphinx
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.12.2-alt1
 - new version 1.12.2 (with rpmrb script)
 
