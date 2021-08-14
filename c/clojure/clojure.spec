@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global project     clojure
@@ -13,8 +13,8 @@ BuildRequires: jpackage-11-compat
 
 Name:           clojure
 Epoch:          1
-Version:        1.10.2
-Release:        alt1_1jpp11
+Version:        1.10.3
+Release:        alt1_2jpp11
 Summary:        A dynamic programming language that targets the Java Virtual Machine
 
 License:        EPL-1.0
@@ -67,6 +67,9 @@ can avoid reflection.
 %{_bindir}/%{name}
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 1:1.10.3-alt1_2jpp11
+- new version
+
 * Fri Jun 11 2021 Igor Vlasenko <viy@altlinux.org> 1:1.10.2-alt1_1jpp11
 - new version
 
