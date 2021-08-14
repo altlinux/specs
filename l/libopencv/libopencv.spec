@@ -6,7 +6,7 @@
 %def_with openmp
 %def_without unicap
 %def_with swig
-%def_with python
+%def_without python
 %def_with python3
 %def_without xine
 %def_without octave
@@ -41,7 +41,7 @@
 Name: lib%bname
 Epoch: 1
 Version: 4.5.3
-Release: alt1
+Release: alt2
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -70,7 +70,6 @@ BuildRequires: libucil-devel libtbb-devel bzlib-devel
 BuildRequires: pkgconfig(glproto) pkgconfig(dri2proto) pkgconfig(xext)
 BuildRequires: pkgconfig(xdamage) pkgconfig(xxf86vm)
 BuildRequires: libGLU-devel libXau-devel libXdmcp-devel
-BuildRequires: python-module-sphinx-devel python-module-Pygments
 BuildRequires: texlive-latex-base
 BuildRequires: libprotobuf-devel protobuf-compiler libwebp-devel
 BuildRequires: libgflags-devel
@@ -90,6 +89,7 @@ BuildRequires: ceres-solver-devel
 %{?_with_python:
 BuildRequires: python-devel
 BuildRequires: libnumpy-devel
+BuildRequires: python-module-sphinx-devel python-module-Pygments
 }
 %{?_with_python3:
 BuildRequires(pre): rpm-build-python3
@@ -104,6 +104,8 @@ BuildRequires: libnumpy-py3-devel
 BuildRequires: openni-devel
 BuildRequires: openni-primesense
 }
+
+%add_findprov_skiplist /usr/share/OpenCV/samples/*
 
 %description
 %Name means Intel(R) Open Source Computer Vision Library. It is a
@@ -370,6 +372,9 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* %_cmake__builddir/downloads/xfea
 %_datadir/%Name/quality
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1:4.5.3-alt2
+- disable python2 subpackage, disable provides for python examples
+
 * Mon Jul 26 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.5.3-alt1
 - Updated to upstream version 4.5.3.
 
