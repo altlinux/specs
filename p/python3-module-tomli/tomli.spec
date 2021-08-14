@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: A lil' TOML parser
 License: MIT
@@ -19,7 +19,6 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python3(flit)
 BuildRequires: python3(dateutil)
 BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
@@ -55,6 +54,9 @@ tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt2
+- NMU: drop BR: python3-module-flit (publishing tool)
+
 * Mon Jul 26 2021 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus.
 
