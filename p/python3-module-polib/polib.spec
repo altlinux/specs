@@ -1,23 +1,26 @@
 %define oname polib
 
-Name:		python3-module-%oname
-Version:	1.0.5
-Release:	alt1.1.2
-Summary:	Manipulate, create, and modify gettext files
-Group:		Development/Python
-License:	BSD-like
-Source:		%oname-%version.tar.gz
-URL:		https://bitbucket.org/izi/polib
-BuildArch:	noarch
+Name: python3-module-polib
+Version: 1.1.1
+Release: alt1
 
+Summary: Manipulate, create, and modify gettext files
+
+License: BSD-like
+Group: Development/Python3
+Url: https://bitbucket.org/izi/polib
+
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
+# Source-url: %__pypi_url %oname
+Source: %name-%version.tar
+
+BuildArch: noarch
+
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python3 python3-base python3-module-setuptools xz
-BuildRequires: python3-module-coverage rpm-build-python3 time
 
-#BuildRequires: ctags time
-#BuildPreReq: python3-devel python3-module-setuptools
-#BuildPreReq: python3-module-coverage
+BuildRequires: python3-module-coverage
 
 %py3_provides %oname
 
@@ -28,7 +31,8 @@ entries, add, modify entries, comments or metadata, etc... or create new
 po files from scratch.
 
 %prep
-%setup -n %oname-%version
+%setup
+subst 's|coverage|coverage3|' runtests.sh
 
 %build
 %python3_build
@@ -44,6 +48,9 @@ po files from scratch.
 %python3_sitelibdir/*
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
+- cleanup spec, new version 1.1.1 (with rpmrb script)
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0.5-alt1.1.2
 - (NMU) rebuild with python3.6
 
