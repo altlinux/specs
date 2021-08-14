@@ -31,7 +31,7 @@
 %def_with opencl
 
 Name: wine-vanilla
-Version: 6.14
+Version: 6.15
 Release: alt1
 
 Summary: Wine - environment for running Windows applications
@@ -453,6 +453,7 @@ done
 %libwinedir/%winesodir/mscms.so
 %libwinedir/%winesodir/wmphoto.so
 %libwinedir/%winesodir/msv1_0.so
+%libwinedir/%winesodir/ws2_32.so
 %if_with opencl
 %libwinedir/%winesodir/opencl.so
 %endif
@@ -571,6 +572,9 @@ done
 %endif
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 6.15-alt1
+- new version 6.15
+
 * Fri Jul 30 2021 Vitaly Lipatov <lav@altlinux.ru> 6.14-alt1
 - new version 6.14
 - set strict require wine-mono 6.3.0
