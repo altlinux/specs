@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.1.0
+Version: 3.1.3
 Release: alt1
 
 Summary: LZ4 Bindings for Python
@@ -63,6 +63,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/lz4/
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.3-alt1
+- new version 3.1.3 (with rpmrb script)
+
 * Sat Sep 19 2020 Vitaly Lipatov <lav@altlinux.ru> 3.1.0-alt1
 - new version 3.1.0 (with rpmrb script)
 
