@@ -3,7 +3,7 @@
 %define gecko_version 2.47.2
 %define mono_version 6.3.0
 
-%define major 6.14
+%define major 6.15
 %define rel %nil
 %define stagingrel %nil
 
@@ -520,6 +520,7 @@ done
 %libwinedir/%winesodir/mscms.so
 %libwinedir/%winesodir/wmphoto.so
 %libwinedir/%winesodir/msv1_0.so
+%libwinedir/%winesodir/ws2_32.so
 %if_with opencl
 %libwinedir/%winesodir/opencl.so
 %endif
@@ -640,6 +641,9 @@ done
 %endif
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.15.1-alt1
+- new version 6.15.1 (with rpmrb script)
+
 * Sat Jul 31 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.14.1-alt1
 - new version 6.14.1 (with rpmrb script)
 - set strict require wine-mono 6.3.0
