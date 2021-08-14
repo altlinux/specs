@@ -3,7 +3,7 @@
 %def_disable static
 
 Name: vips
-Version: 8.11.2
+Version: 8.11.3
 Release: alt1
 
 Summary: Large image processing library
@@ -151,6 +151,9 @@ rm -fv %buildroot%_bindir/vips%majorver
 # - package python bindings
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 8.11.3-alt1
+- new version 8.11.3 (with rpmrb script)
+
 * Sun Jul 04 2021 Vitaly Lipatov <lav@altlinux.ru> 8.11.2-alt1
 - new version 8.11.2 (with rpmrb script)
 
