@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.5.11
-Release: alt2
+Release: alt6
 
 Summary: Python library for AXON
 License: MIT
@@ -14,7 +14,7 @@ Url: https://pypi.python.org/pypi/pyaxon/
 # https://github.com/intellimath/pyaxon.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-Cython
 BuildRequires: python3-module-sphinx
 
@@ -73,6 +73,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 0.5.11-alt6
+- drop unused BR: rpm-macros-sphinx
+
 * Mon Dec 02 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.5.11-alt2
 - python2 disabled
 
