@@ -1,9 +1,11 @@
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
+%def_without python
+
 Name: babel
 Version: 2.0.0
-Release: alt2.qa3
+Release: alt3
 Summary: Language tool for high-performance scientific computing community
 
 License: LGPLv2.1
@@ -17,8 +19,10 @@ Requires: %name-common = %version-%release
 Requires: lib%name = %version-%release
 Requires: lib%name-devel = %version-%release
 Requires: %name-j = %version-%release
+%if_with python
 Requires: python-module-sidl = %version-%release
 Requires: python-module-sidlx = %version-%release
+%endif
 
 Conflicts: openbabel
 
@@ -76,7 +80,9 @@ Requires: %name = %version-%release
 Requires: %name-common = %version-%release
 Requires: lib%name = %version-%release
 Requires: %name-j = %version-%release
+%if_with python
 Requires: python-module-sidl = %version-%release
+%endif
 
 %description -n lib%name-devel
   Babel is a language interoperability tool intended for use by
@@ -262,6 +268,7 @@ source %mpidir/bin/mpivars.sh
 	--with-mpi=%mpidir/bin \
 	--with-ltdl-lib=%_libdir \
 	--with-ltdl-include=%_includedir \
+	%{subst_with python} \
 	--enable-java=$JAVAPREFIX
 
 %install
@@ -340,6 +347,7 @@ done
 %_aclocaldir/*
 %_pkgconfigdir/*
 
+%if_with python
 %files -n python-module-sidl
 %python_sitelibdir/llnl_babel-*
 %python_sitelibdir/sidl*
@@ -348,6 +356,7 @@ done
 %files -n python-module-sidlx
 %python_sitelibdir/llnl_babel_sidl_sidlx-*
 %python_sitelibdir/sidlx*
+%endif
 
 %files j
 %_javadir/*
@@ -366,6 +375,9 @@ done
 %_docdir/%name
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt3
+- build without python subpackages
+
 * Thu Apr 08 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt2.qa3
 - Fixed FTBFS.
 
