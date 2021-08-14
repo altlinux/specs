@@ -7,7 +7,7 @@
 %def_without check
 
 Name:    python3-module-babel
-Version: 2.9.0
+Version: 2.9.1
 Release: alt1
 Epoch:   1
 
@@ -78,6 +78,9 @@ ln -s ../objects.inv docs/
 %python3_sitelibdir/*
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1:2.9.1-alt1
+- new version 2.9.1 (with rpmrb script)
+
 * Thu Jan 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1:2.9.0-alt1
 - new version 2.9.0 (with rpmrb script)
 - require CLDR = 37
