@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.6.0
-Release: alt3
+Release: alt4
 
 Summary: Label the rows, columns, any dimension, of your NumPy arrays
 License: BSD
@@ -13,7 +13,7 @@ Url: https://pypi.python.org/pypi/la
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx
+BuildRequires(pre): rpm-build-python3
 %if_with docs
 BuildRequires: python3-module-sphinx
 %endif
@@ -112,6 +112,9 @@ cp -fR doc/build/pickle %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt4
+- drop unused BR: rpm-macros-sphinx
+
 * Thu Nov 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.6.0-alt3
 - python2 disabled
 
