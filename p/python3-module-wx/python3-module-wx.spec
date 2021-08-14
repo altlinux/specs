@@ -1,6 +1,6 @@
 Name:		python3-module-wx
 Version:	4.0.7
-Release:	alt3
+Release:	alt4
 Group:		Development/Python3
 Summary:	The cross-platform GUI toolkit for the Python language
 URL:		https://pypi.org/project/wxPython
@@ -38,6 +38,7 @@ Summary: Development tools for wxPython
 Group: Development/Python3
 License:	GPL-2.0+ WITH WxWindows-exception-3.1
 Provides:	pycrust = %version-%release
+Conflicts: python-module-wx3.0
 %description utils
 %summary
 
@@ -104,6 +105,9 @@ cp -a demo %buildroot%python3_sitelibdir/wx/demo
 %_bindir/*
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 4.0.7-alt4
+- add Conflicts with python-module-wx3.0 (ALT bug 38541)
+
 * Tue May 25 2021 Fr. Br. George <george@altlinux.ru> 4.0.7-alt3
 - Build with new sphinx
 
