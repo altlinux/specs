@@ -1,8 +1,10 @@
 %set_automake_version 1.11
 
+%def_without gui
+
 Name: libkate
 Version: 0.4.1
-Release: alt1.5
+Release: alt1.6
 Summary: kate is a karaoke and text codec for embedding in ogg
 License: BSD-3-Clause
 Group: Video
@@ -84,12 +86,17 @@ rm -rf %buildroot%_datadir/doc/libkate
 %_bindir/kat*
 %_man1dir/kat*.1*
 
+%if_with gui
 %files -n KateDJ
 %_bindir/KateDJ
 %python_sitelibdir_noarch/kdj
 %_man1dir/KateDJ.1*
+%endif
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 0.4.1-alt1.6
+- NMU: build without KateDJ (gui subpackage)
+
 * Thu Jun 04 2020 Andrey Cherepanov <cas@altlinux.org> 0.4.1-alt1.5
 - FTBFS: set correct python 2.x executable for autotools and in shebang.
 - Remove unpackaged files.
