@@ -11,31 +11,26 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Eye Of Gnome
-License: %gpl2plus
+License: GPL-2.0
 Group: Graphics
 Url: https://wiki.gnome.org/Apps/EyeOfGnome
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 
-Provides: %oldname = %version-%release
+Provides: %oldname = %EVR
 Obsoletes: %oldname < 2.14.2-alt1
 
 %add_findprov_lib_path %_libdir/%name
 %set_typelibdir %_libdir/%name/girepository-1.0
 %set_girdir %_datadir/%name/gir-1.0
 
-# use python3
-AutoReqProv: nopython
-%define __python %nil
 %add_python3_path %_libdir/%name/plugins
-# required dogtail and behave use python2
-#%{?_enable_installed_tests:%_libexecdir/%name/installed-tests}
 
-BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
+BuildRequires(pre): meson rpm-build-gnome
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: python3-devel yelp-tools libappstream-glib-devel
 BuildPreReq: libgtk+3-devel >= 3.22
@@ -61,7 +56,7 @@ program.
 %package devel
 Summary: Development files for EOG viewer
 Group: Development/GNOME and GTK+
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains files necessary to develop plugins for Eye of GNOME.
@@ -79,7 +74,7 @@ of GNOME.
 %package gir
 Summary: GObject introspection data for the EOG
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the Eye of GNOME
@@ -88,7 +83,7 @@ GObject introspection data for the Eye of GNOME
 Summary: GObject introspection devel data for the EOG
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-gir = %EVR
 
 %description gir-devel
 GObject introspection devel data for the Eye of GNOME
@@ -97,7 +92,7 @@ GObject introspection devel data for the Eye of GNOME
 Summary: Tests for the EOG
 Group: Development/Other
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package provides tests programs that can be used to verify
@@ -168,6 +163,9 @@ the functionality of the EOG GUI.
 
 
 %changelog
+* Sat Aug 14 2021 Yuri N. Sedunov <aris@altlinux.org> 40.3-alt1
+- 40.3
+
 * Sat Jun 05 2021 Yuri N. Sedunov <aris@altlinux.org> 40.2-alt1
 - 40.2
 
