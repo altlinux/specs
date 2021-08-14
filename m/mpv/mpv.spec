@@ -4,7 +4,7 @@
 
 Name: mpv
 Version: 0.33.1
-Release: alt2
+Release: alt3
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 License: GPLv2+
@@ -20,7 +20,7 @@ Packager: %packager
 BuildRequires(pre): rpm-macros-luajit
 
 # Automatically added by buildreq on Fri Feb 14 2014
-BuildRequires: libGL-devel libXext-devel libalsa-devel libass-devel libavformat-devel libavresample-devel libjpeg-devel libswscale-devel patool perl-Encode perl-Math-BigRat python-module-docutils time zlib-devel libva-devel
+BuildRequires: libGL-devel libXext-devel libalsa-devel libass-devel libavformat-devel libavresample-devel libjpeg-devel libswscale-devel zlib-devel libva-devel
 
 BuildRequires: libpulseaudio-devel libXScrnSaver-devel libXv-devel libXinerama-devel libXrandr-devel libdvdnav-devel libbluray-devel libavfilter-devel
 
@@ -31,6 +31,8 @@ BuildRequires: libenca-devel libuchardet-devel libvulkan-devel libwayland-egl-de
 BuildRequires: libgbm-devel libplacebo-devel libSDL2-devel libspirv-cross-devel libavdevice-devel
 
 BuildRequires: libzimg-devel vapoursynth-devel
+
+BuildRequires: /usr/bin/rst2man.py
 
 %if_enabled lua
 BuildRequires: liblua5.3-devel libluajit-devel
@@ -85,6 +87,7 @@ This package contains %name shared library
 %prep
 %setup -n %name-%version
 %patch -p1
+subst 's|rst2man|rst2man.py|' wscript*
 
 ls
 chmod ugo+rx waf
@@ -142,6 +145,9 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %_libdir/libmpv.so.*
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 0.33.1-alt3
+- NMU: drop unused BR, use /usr/bin/rst2man.py
+
 * Mon Jun 14 2021 L.A. Kostis <lakostis@altlinux.ru> 0.33.1-alt2
 - Apply build fix for new libplacebo.
 
