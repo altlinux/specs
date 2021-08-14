@@ -7,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 5.3
-Release: alt1
+Release: alt2
 Summary: A tool for measuring code coverage of Python programs
 License: Apache-2.0
 Group: Development/Python
@@ -116,8 +116,9 @@ ln -s coverage3 %buildroot%_bindir/python3-coverage
 
 %python_install
 
-install -d %buildroot%python_sitelibdir/%oname/lab
-install -p -m644 lab/* %buildroot%python_sitelibdir/%oname/lab
+# The lab directory is not part of the installed coverage.py code
+#install -d %buildroot%python_sitelibdir/%oname/lab
+#install -p -m644 lab/* %buildroot%python_sitelibdir/%oname/lab
 
 %if_with doc
 install -d %buildroot%_docdir/%name
@@ -161,6 +162,9 @@ tox.py3 --sitepackages -v
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 5.3-alt2
+- drop lab subdir (see README, it is not part of the installed coverage.py code)
+
 * Fri Sep 25 2020 Grigory Ustinov <grenka@altlinux.org> 5.3-alt1
 - 5.2 -> 5.3.
 
