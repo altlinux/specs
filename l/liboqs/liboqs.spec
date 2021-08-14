@@ -3,8 +3,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: liboqs
-Version: 0.6.0
-Release: alt2
+Version: 0.7.0
+Release: alt1
 Summary: C library for prototyping and experimenting with quantum-resistant cryptography
 License: MIT
 Group: System/Libraries
@@ -20,6 +20,7 @@ BuildRequires: banner
 BuildRequires: cmake
 BuildRequires: libssl-devel
 BuildRequires: ninja-build
+BuildRequires: python3-module-pyaml
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-xdist
 
@@ -53,26 +54,18 @@ Development files for %name.
 %prep
 %setup
 sed -i '\!DESTINATION!s!lib!%_libdir!' src/CMakeLists.txt
+# Add armh to the list of supported arm32 arches.
+sed -i '/CMAKE_SYSTEM_PROCESSOR.*armhf/s/")/|armv8l&/' CMakeLists.txt
 
 %build
 # CMake options https://github.com/open-quantum-safe/liboqs/wiki/Customizing-liboqs
-# Default (oqsdefault) algos was (see .CMake/alg_support.cmake):
-#   OQS_KEM_DEFAULT "OQS_KEM_alg_frodokem_640_aes" (~Microsoft) L1
-#   OQS_SIG_DEFAULT "OQS_SIG_alg_dilithium_2" (~IBM) L2
-# for the sake of diversity I change them (in cmake invocation) to
-# D. J. Bernstein teams':
-#   OQS_KEM_DEFAULT="OQS_KEM_alg_ntruprime_ntrulpr653" L2
-#   OQS_SIG_DEFAULT="OQS_SIG_alg_sphincs_haraka_192f_simple" L3
-# with (claimed) NIST security level not less than before.
 # -DOQS_ENABLE_TEST_CONSTANT_TIME=ON -- does not pass.
 %cmake -B build \
 	-GNinja \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DBUILD_SHARED_LIBS=ON \
 	-DOQS_DIST_BUILD=ON \
-	-DOQS_OPT_TARGET=generic \
-	-DOQS_KEM_DEFAULT="OQS_KEM_alg_ntruprime_ntrulpr653" \
-	-DOQS_SIG_DEFAULT="OQS_SIG_alg_sphincs_haraka_192f_simple"
+	-DOQS_OPT_TARGET=generic
 %ninja_build -C build
 
 %install
@@ -101,6 +94,9 @@ export LD_LIBRARY_PATH=$PWD/build/lib
 %_libdir/liboqs.so
 
 %changelog
+* Sat Aug 14 2021 Vitaly Chikunov <vt@altlinux.org> 0.7.0-alt1
+- Update to 0.7.0 (2021-08-11).
+
 * Wed Jun 23 2021 Vitaly Chikunov <vt@altlinux.org> 0.6.0-alt2
 - Optimistic port to x86 and ppc64le.
 
