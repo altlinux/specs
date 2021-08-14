@@ -4,13 +4,14 @@
 %def_enable ldap
 
 # p8: TypeError: inline_all_toctrees() takes exactly 5 arguments (6 given)
-%def_with sphinx
+# Sisyphus: can't build with new sphinx
+%def_without sphinx
 
 %define abiversion 3
 
 Name: cyrus-sasl2
 Version: 2.1.27
-Release: alt2.1
+Release: alt2.2
 
 Summary: SASL2 is the Simple Authentication and Security Layer
 License: ALT-Cyrus
@@ -30,13 +31,14 @@ Source7: %name-alt-server-plugin-flow.jpg
 Source8: README.ALT
 
 Patch1: bug_3920_rimap.patch
+Patch2: sphinx3.patch
 
 Requires: libsasl2-%abiversion = %version-%release
 
 BuildRequires: libcom_err-devel libdb4-devel libkrb5-devel libpam-devel groff-base autoconf automake openssl-devel
 %if_with sphinx
 BuildRequires: perl-Pod-POM-View-Restructured
-BuildRequires: python-module-sphinx >= 1.6
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
 %endif
 
 %if_enabled sql
@@ -129,6 +131,7 @@ This package contains documentations for SASL2
 %setup
 
 #patch1 -p0
+%patch2 -p1
 
 %build
 
@@ -316,6 +319,9 @@ ls -l %buildroot%_man3dir/*
 %endif
 
 %changelog
+* Thu Aug 05 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.27-alt2.2
+- disable sphinx (can't build with new sphinx)
+
 * Wed Aug 05 2020 Alexei Takaseev <taf@altlinux.org> 2.1.27-alt2.1
 - Build with ldapdb plugin
 - Fix License:
