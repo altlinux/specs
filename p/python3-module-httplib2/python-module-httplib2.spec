@@ -1,7 +1,7 @@
 %define oname httplib2
 
 Name: python3-module-httplib2
-Version: 0.19.0
+Version: 0.19.1
 Release: alt1
 
 Summary: A comprehensive HTTP client library in Python
@@ -38,6 +38,9 @@ of other HTTP libraries.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 0.19.1-alt1
+- new version 0.19.1 (with rpmrb script)
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 0.19.0-alt1
 - new version 0.19.0 (with rpmrb script)
 
