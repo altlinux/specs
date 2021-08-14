@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 1.6.0
-Release: alt4
+Release: alt5
 Summary: Debugging manhole for python applications 
 License: BSD
 Group: Development/Python3
@@ -19,7 +19,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 %if_with docs
-BuildRequires(pre): rpm-macros-sphinx
+BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3(sphinx)
 BuildRequires: python3(sphinx_rtd_theme)
 BuildRequires: python3(sphinx_py3doc_enhanced_theme)
@@ -83,7 +83,7 @@ This package contains documentation for %oname.
 %patch -p1
 
 %if_with docs
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
 %endif
 
@@ -140,6 +140,9 @@ export TOXENV=%py3_nodot-normal-normal-nocov
 
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt5
+- s/rpm-macros-sphinx/rpm-macros/sphinx3/
+
 * Tue Feb 04 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.6.0-alt4
 - Porting on Python3.
 
