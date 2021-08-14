@@ -7,7 +7,7 @@
 
 Name: geeqie
 Version: 1.6
-Release: alt2
+Release: alt3
 
 Summary: Graphics file browser utility
 License: GPLv2+
@@ -23,12 +23,14 @@ Source: %name-%version.tar
 
 Patch: %name-1.5-libdir-fix.patch
 Patch1: %name-1.6-up-doc-build.patch
+Patch2: geeqie-1.6-up-clutter.patch
 
 Provides: gqview = %version-%release
 Obsoletes: gqview < %version
 
 Requires: %_bindir/exiftool %_bindir/exiftran
 Requires: %_bindir/convert %_bindir/gphoto2
+Requires: %_bindir/zenity
 
 BuildRequires: gcc-c++ yelp-tools intltool libappstream-glib-devel
 BuildRequires: python3-module-markdown
@@ -49,6 +51,7 @@ ExifTool.
 %setup
 %patch -b .libdir
 %patch1 -p1
+%patch2 -p1
 
 sed -i 's/\-Werror//' configure.ac
 
@@ -80,6 +83,10 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %doc NEWS README.*
 
 %changelog
+* Sat Aug 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt3
+- applied upstream fixes for "segfault with clutter-gtk"
+  https://github.com/BestImageViewer/geeqie/issues/829 (ALT #40734)
+
 * Tue Apr 13 2021 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt2
 - fixed doc building with newer yelp by upstream
 
