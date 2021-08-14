@@ -5,8 +5,8 @@
 %define oname dateutil
 
 Name: python3-module-%oname
-Version: 2.8.1
-Release: alt3
+Version: 2.8.2
+Release: alt1
 
 Summary: Extensions to the standard datetime module
 
@@ -75,6 +75,9 @@ py.test3
 %python3_sitelibdir/dateutil
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 2.8.2-alt1
+- new version 2.8.2 (with rpmrb script)
+
 * Tue Apr 06 2021 Vitaly Lipatov <lav@altlinux.ru> 2.8.1-alt3
 - disable check (see https://bugzilla.altlinux.org/show_bug.cgi?id=39164)
 
