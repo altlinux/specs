@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.5
-Release: alt2
+Release: alt3
 
 Summary: Sign- and validate- data (dictionaries, strings) using symmetric-key algorithm
 License: GPLv2.0/LGPLv2.1
@@ -13,7 +13,7 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-django python3-module-sphinx
 BuildRequires: python3-module-six
 
@@ -116,6 +116,9 @@ sed -i 's|python|python3|' test.sh
 
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1.5-alt3
+- drop unneeded BR: rpm-macros-sphinx
+
 * Wed Nov 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.5-alt2
 - disable python2
 
