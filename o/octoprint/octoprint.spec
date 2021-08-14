@@ -3,7 +3,7 @@
 
 Name:    octoprint
 Version: 1.6.1
-Release: alt2
+Release: alt3
 
 Summary: OctoPrint is the snappy web interface for your 3D printer
 License: AGPL-3.0
@@ -62,7 +62,9 @@ BuildRequires: python3-module-filetype
 BuildRequires: python3-module-pip
 %endif
 
-%py3_requires frozendict websocket blinker pip
+%py3_requires frozendict websocket blinker
+
+AutoProv:no
 
 %description
 %summary.
@@ -117,6 +119,10 @@ py.test3 -v tests
 %doc *.md
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1.6.1-alt3
+- NMU: drop pip python module require
+- NMU: disable provides, octoprint is a program, not a public module
+
 * Thu Aug 12 2021 Anton Midyukov <antohami@altlinux.org> 1.6.1-alt2
 - Add octoprint.service and octoprint.init
 - Add desktop and icons files
