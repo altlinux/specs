@@ -5,7 +5,7 @@
 Summary: A set of tools to gather troubleshooting information from a system
 Name: sos
 Version: 3.5
-Release: alt9.1
+Release: alt9.2
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
 Source: %name-%version.tar
@@ -14,7 +14,8 @@ Group: System/Configuration/Other
 
 BuildArch: noarch
 Url: http://github.com/sosreport/sos
-BuildPreReq: python-devel python-module-sphinx-devel
+BuildPreReq: python-devel
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
 Requires: libxml2-python
 Provides: sysreport = 1.3.15-8
 
@@ -53,6 +54,9 @@ rm -f %buildroot%_datadir/%name/{AUTHORS,README.md}
 %doc %_defaultdocdir/sos/html
 
 %changelog
+* Thu Aug 05 2021 Vitaly Lipatov <lav@altlinux.ru> 3.5-alt9.2
+- use python3 sphinx
+
 * Tue Jul 06 2021 Andrey Cherepanov <cas@altlinux.org> 3.5-alt9.1
 - FTBFS: fix install using %%__python.
 
