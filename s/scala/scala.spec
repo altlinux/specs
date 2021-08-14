@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /osgi(org.apache.ant*/d
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -31,7 +31,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           scala
 Version:        2.13.5
-Release:        alt1_1jpp11
+Release:        alt2_1jpp11
 Summary:        Hybrid functional/object-oriented language for the JVM
 BuildArch:      noarch
 
@@ -96,10 +96,10 @@ Patch1:         %{name}-unbundle-fonts.patch
 Patch2:         %{name}-difflib.patch
 
 BuildRequires:  aqute-bnd
-#BuildRequires:  font(lato)
-#BuildRequires:  font(materialicons)
-#BuildRequires:  font(opensans)
-#BuildRequires:  font(sourcecodepro)
+BuildRequires:  font(lato)
+BuildRequires:  font(materialicons)
+BuildRequires:  font(opensans)
+BuildRequires:  font(sourcecodepro)
 BuildRequires:  maven-local
 BuildRequires:  mvn(io.github.java-diff-utils:java-diff-utils)
 BuildRequires:  mvn(junit:junit)
@@ -113,11 +113,11 @@ BuildRequires:  mvn(org.openjdk.jol:jol-core)
 BuildRequires:  scala
 %endif
 
-Requires:       scala = %{version}-%{release}
-#Requires:       font(lato)
-#Requires:       font(materialicons)
-#Requires:       font(opensans)
-#Requires:       font(sourcecodepro)
+Requires:       %{name}-reflect = %{version}-%{release}
+Requires:       font(lato)
+Requires:       font(materialicons)
+Requires:       font(opensans)
+Requires:       font(sourcecodepro)
 Requires:       javapackages-tools
 
 # scaladoc depends on a specific version of jquery, which may differ from the
@@ -156,7 +156,7 @@ language.
 %package        reflect
 Group: Development/Java
 Summary:        Scala reflection library
-Requires:       scala = %{version}-%{release}
+Requires:       %{name}-library = %{version}-%{release}
 
 %description    reflect 
 %_desc
@@ -167,10 +167,10 @@ language.
 %package        apidoc
 Group: Development/Java
 Summary:        Documentation for the Scala programming language
-#Requires:       font(lato)
-#Requires:       font(materialicons)
-#Requires:       font(opensans)
-#Requires:       font(sourcecodepro)
+Requires:       font(lato)
+Requires:       font(materialicons)
+Requires:       font(opensans)
+Requires:       font(sourcecodepro)
 
 %description    apidoc 
 %_desc
@@ -181,7 +181,7 @@ programming language.
 %prep
 %setup -q
 %patch0 -p1
-#patch1 -p1
+%patch1 -p1
 %patch2 -p1
 
 %if %{with bootstrap}
@@ -249,8 +249,8 @@ scalac $SCALAC_FLAGS -d ../target/library -classpath ../target/library \
 scaladoc $SCALADOC_FLAGS -doc-title 'Scala Standard Library' \
     -sourcepath $PWD/library -doc-no-compile $PWD/library-aux \
     -skip-packages scala.concurrent.impl \
-    -doc-root-content $PWD/library/rootdoc.txt $(find library -name \*.scala)
-mv scala ../target/html/library
+    -doc-root-content $PWD/library/rootdoc.txt $(find library -name \*.scala) ||:
+mv scala ../target/html/library ||:
 
 # Build the reflection library
 javac $JAVAC_FLAGS -d ../target/reflect $(find reflect -name \*.java)
@@ -259,8 +259,8 @@ scalac $SCALAC_FLAGS -d ../target/reflect -classpath ../target/reflect \
 scaladoc $SCALADOC_FLAGS -doc-title 'Scala Reflection Library' \
     -sourcepath $PWD/reflect \
     -skip-packages scala.reflect.macros.internal:scala.reflect.internal:scala.reflect.io \
-    $(find reflect -name \*.scala)
-mv scala ../target/html/reflect
+    $(find reflect -name \*.scala) ||:
+mv scala ../target/html/reflect ||:
 
 # Build the compiler
 javac $JAVAC_FLAGS -d ../target/compiler -cp $COMPJAR \
@@ -285,8 +285,8 @@ scaladoc $SCALADOC_FLAGS -doc-title 'Scala Compiler' \
     -doc-root-content $PWD/compiler/rootdoc.txt \
     -classpath $PWD/../target/library:$PWD/../target/reflect \
     $(find compiler -name \*.scala) $(find interactive -name \*.scala) \
-    $(find repl -name \*.scala) $(find repl-frontend -name \*.scala)
-mv scala ../target/html/compiler
+    $(find repl -name \*.scala) $(find repl-frontend -name \*.scala) ||:
+mv scala ../target/html/compiler ||:
 
 # Build the documentation generator
 # The order of the source files matters!  Some orderings end with this error:
@@ -378,7 +378,7 @@ cd -
 # Build the man pages
 mkdir -p html man/man1
 cd src
-scala -classpath ../target/manual:../target/scala-library.jar scala.tools.docutil.ManMaker 'fsc, scala, scalac, scaladoc, scalap' ../html ../man
+#scala -classpath ../target/manual:../target/scala-library.jar scala.tools.docutil.ManMaker 'fsc, scala, scalac, scaladoc, scalap' ../html ../man
 cd -
 
 # Prepare to install
@@ -453,13 +453,13 @@ install -p -m 644 %{SOURCE17} %{buildroot}%{_datadir}/mime/packages/
 
 # Install the man pages
 install -d %{buildroot}%{_mandir}/man1
-install -p -m 644 man/man1/* %{buildroot}%{_mandir}/man1
+#install -p -m 644 man/man1/* %{buildroot}%{_mandir}/man1
 
 %files -f .mfiles
 %{_bindir}/*
 %{_datadir}/mime-info/*
 %{_datadir}/mime/packages/*
-%{_mandir}/man1/*
+#%{_mandir}/man1/*
 
 %files library -f .mfiles-library
 %doc --no-dereference LICENSE NOTICE doc/LICENSE.md doc/License.rtf
@@ -471,6 +471,9 @@ install -p -m 644 man/man1/* %{buildroot}%{_mandir}/man1
 %doc --no-dereference LICENSE NOTICE doc/LICENSE.md doc/License.rtf
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 2.13.5-alt2_1jpp11
+- fixed build; build w/o scalsdoc
+
 * Tue Jun 15 2021 Igor Vlasenko <viy@altlinux.org> 2.13.5-alt1_1jpp11
 - new version
 
