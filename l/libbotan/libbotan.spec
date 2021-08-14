@@ -2,7 +2,7 @@
 
 Name: libbotan
 Version: 2.18.1
-Release: alt1
+Release: alt2
 
 Summary: A C++ Crypto Library
 License: BSD
@@ -18,7 +18,7 @@ BuildRequires: rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: liblzma-devel bzlib-devel libssl-devel zlib-devel
 BuildRequires: boost-asio-devel
-BuildRequires: %_bindir/sphinx-build %_bindir/rst2man
+BuildRequires: %_bindir/sphinx-build %_bindir/rst2man.py
 
 %description
 Botan is a C++ library that provides support for many common
@@ -75,6 +75,7 @@ python3 ./configure.py \
 	--with-python-versions=%__python3_version \
 	--with-documentation \
 	--with-sphinx \
+	--with-rst2man \
 	%nil
 
 %make_build
@@ -105,6 +106,9 @@ LD_LIBRARY_PATH=. ./botan-test
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 2.18.1-alt2
+- use /usr/bin/rst2man.py
+
 * Fri Jul 09 2021 Vitaly Lipatov <lav@altlinux.ru> 2.18.1-alt1
 - new version 2.18.1 (with rpmrb script)
 
