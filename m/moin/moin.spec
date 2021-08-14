@@ -1,7 +1,7 @@
 Summary: MoinMoin is a Python clone of WikiWiki
 Name: moin
 Version: 1.9.11
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: Networking/Other
 Url: http://moinmo.in/
@@ -24,6 +24,8 @@ BuildRequires: python-devel
 %add_python_req_skip MySQLdb
 %add_python_req_skip win32service
 %add_python_req_skip win32serviceutil
+
+%add_python_req_skip docutils
 
 %add_python_req_skip openid
 
@@ -67,6 +69,8 @@ Shellscript for deploing moin under Apache2
 %setup
 sed -i 's@^STATIC_FILES_PATH = .*@STATIC_FILES_PATH = "%htdocs"@' MoinMoin/web/static/__init__.py
 
+rm -fv MoinMoin/support/pygments/sphinxext.py
+
 %build
 sed 's|@HTDOCS@|%htdocs|' < %SOURCE1 > moin-instance-setup
 python2 setup.py build
@@ -105,6 +109,9 @@ sed -i 1s,python,python2, \
 %_sbindir/*
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1.9.11-alt2
+- NMU: disable text_rst.py parser (due docutils)
+
 * Mon Aug 09 2021 Vitaly Lipatov <lav@altlinux.ru> 1.9.11-alt1
 - NMU: new version 1.9.11 (with rpmrb script)
  + GHSA-52q8-877j-gghq, GHSA-4q96-6xhq-ff43
