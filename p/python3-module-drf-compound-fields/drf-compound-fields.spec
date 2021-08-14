@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.2.2
-Release: alt2
+Release: alt3
 
 Summary: Django-REST-framework serializer fields for compound types
 License: BSD
@@ -15,7 +15,7 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-sphinx rpm-build-python3
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-coverage python3-module-django
 BuildRequires: python3-module-sphinx
 
@@ -97,6 +97,9 @@ python3 setup.py test
 
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 0.2.2-alt3
+- drop unneeded BR: rpm-macros-sphinx
+
 * Tue Nov 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.2.2-alt2
 - disable python2
 
