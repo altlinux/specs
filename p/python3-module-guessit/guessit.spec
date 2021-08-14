@@ -4,23 +4,26 @@
 
 Name: python3-module-%oname
 Version: 3.3.1
-Release: alt1
+Release: alt2
+
 Summary: GuessIt - a library for guessing information from video files
+
 License: LGPLv3
 Group: Development/Python3
-BuildArch: noarch
 Url: https://pypi.python.org/pypi/guessit/
 
 # https://github.com/wackou/guessit.git
 Source: %name-%version.tar
+
+BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-babelfish python3-module-stevedore
 BuildRequires: python3-module-requests python3-module-dateutil
 BuildRequires: python3-module-yaml python3-module-guess-language
 BuildRequires: python3-module-enzyme python3-module-nose
-BuildRequires: python3-module-pbr python3-module-pip pylint-py3
-BuildRequires: python3-module-chardet python3-module-html5lib
+BuildRequires: pylint-py3
+BuildRequires: python3-module-chardet
 BuildRequires: python3-module-unittest2 python3-module-urllib3
 BuildRequires: python3-module-pytest-runner python3(rebulk) python3(pytest_benchmark)
 
@@ -111,6 +114,9 @@ python3 setup.py test
 %python3_sitelibdir/*/test
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 3.3.1-alt2
+- drop unused BR
+
 * Wed Jun 09 2021 Grigory Ustinov <grenka@altlinux.org> 3.3.1-alt1
 - Automatically updated to 3.3.1.
 - Build without docs (upstream removed them).
