@@ -2,14 +2,17 @@
 %def_enable libwebpmux
 %def_enable libwebpdemux
 %def_enable libwebpdecoder
+%def_disable sdl
+# disabled by default
+%def_disable libwebpextras
 # https://chromium.googlesource.com/webm/libwebp-test-data required
 # see tests/README
 %def_disable check
 %define soversion 7
 
 Name: libwebp
-Version: 1.2.0
-Release: alt2
+Version: 1.2.1
+Release: alt1
 
 Summary: Library and tools for the WebP graphics format
 License: BSD-3-Clause
@@ -21,6 +24,7 @@ Source: https://storage.googleapis.com/downloads.webmproject.org/releases/webp/%
 
 BuildRequires: libgomp-devel libjpeg-devel libpng-devel libtiff-devel
 BuildRequires: libgif-devel libfreeglut-devel libSDL2-devel
+%{?_enable_sdl:BuildRequires: libSDL-devel}
 
 %description
 WebP is an image format that does lossy compression of digital
@@ -80,7 +84,10 @@ export CFLAGS="%optflags -DEMSCRIPTEN"
 %configure --disable-static \
 	%{subst_enable libwebpmux} \
 	%{subst_enable libwebpdemux} \
-	%{subst_enable libwebpdecoder}
+	%{subst_enable libwebpdecoder} \
+	%{subst_enable libwebpextras} \
+	%{subst_enable sdl}
+%nil
 %make_build
 
 %install
@@ -134,6 +141,9 @@ export CFLAGS="%optflags -DEMSCRIPTEN"
 %{?_enable_libwebpdemux:%_man1dir/vwebp.1.*}
 
 %changelog
+* Sat Aug 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
+- 1.2.1 (security update, see NEWS)
+
 * Wed Jun 02 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt2
 - ilyakurdyukov@: enabled use of SIMD code on Elbrus
 
