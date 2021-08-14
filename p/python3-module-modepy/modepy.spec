@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2016.1.2
-Release: alt2
+Release: alt3
 
 Summary: Modes and nodes for high-order discretizations
 License: MIT
@@ -17,7 +17,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Patch1: %oname-alt-docs.patch
 
-BuildRequires(pre): rpm-macros-sphinx rpm-build-python3
+BuildRequires(pre): rpm-build-python3
 
 
 %description
@@ -102,6 +102,9 @@ cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 2016.1.2-alt3
+- drop unused BR: rpm-macros-sphinx
+
 * Wed Nov 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 2016.1.2-alt2
 - disable python2
 
