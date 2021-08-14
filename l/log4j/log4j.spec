@@ -6,7 +6,7 @@ BuildRequires(pre): rpm-macros-java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -18,8 +18,8 @@ BuildRequires: jpackage-11-compat
 %bcond_without  jp_minimal
 
 Name:           log4j
-Version:        2.13.3
-Release:        alt1_3jpp11
+Version:        2.14.1
+Release:        alt1_1jpp11
 Summary:        Java logging package
 BuildArch:      noarch
 License:        ASL 2.0
@@ -43,11 +43,10 @@ BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(org.fusesource.jansi:jansi:1)
+BuildRequires:  mvn(org.fusesource.jansi:jansi)
 BuildRequires:  mvn(org.jctools:jctools-core)
 BuildRequires:  mvn(org.osgi:osgi.core)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
-BuildRequires:  mvn(org.slf4j:slf4j-ext)
 
 %if %{without jp_minimal}
 BuildRequires:  mvn(com.datastax.cassandra:cassandra-driver-core)
@@ -158,7 +157,6 @@ Use NoSQL databases such as MongoDB and CouchDB to append log messages.
 Group: Development/Java
 Summary:        API documentation for %{name}
 Obsoletes:      %{name}-manual < %{version}
-BuildArch: noarch
 
 %description    javadoc
 %{summary}.
@@ -208,9 +206,9 @@ rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
 # we don't have commons-dbcp2
 %pom_disable_module %{name}-jdbc-dbcp2
 
-# We have mongodb 4
-%pom_disable_module %{name}-mongodb2
+# We don't have mmongo-java
 %pom_disable_module %{name}-mongodb3
+%pom_disable_module %{name}-mongodb4
 
 # System scoped dep provided by JDK
 %pom_remove_dep :jconsole %{name}-jmx-gui
@@ -228,6 +226,10 @@ rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
 # Update required version of jansi 1.x
 %pom_xpath_set "//pom:dependency[pom:artifactId='jansi']/pom:version" 1.18
 
+# Remove deps on slf4j-ext, it is no longer available in Fedora 35
+%pom_remove_dep -r :slf4j-ext
+%pom_remove_parent
+
 %if %{with jp_minimal}
 %pom_disable_module %{name}-taglib
 %pom_disable_module %{name}-jmx-gui
@@ -241,7 +243,9 @@ rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
 %pom_disable_module %{name}-cassandra
 %pom_disable_module %{name}-appserver
 %pom_disable_module %{name}-spring-cloud-config
+%pom_disable_module %{name}-spring-boot
 %pom_disable_module %{name}-kubernetes
+%pom_disable_module %{name}-layout-template-json
 
 %pom_remove_dep -r :jackson-dataformat-yaml
 %pom_remove_dep -r :jackson-dataformat-xml
@@ -280,7 +284,7 @@ rm -r log4j-1.2-api/src/main/java/org/apache/log4j/or/jms
 
 %build
 # missing test deps (mockejb)
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -308,11 +312,14 @@ touch $RPM_BUILD_ROOT/etc/chainsaw.conf
 %{_bindir}/%{name}-jmx
 %endif
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+#%%files javadoc -f .mfiles-javadoc
+#%%doc LICENSE.txt NOTICE.txt
 
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 0:2.14.1-alt1_1jpp11
+- new version
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:2.13.3-alt1_3jpp11
 - fc34 update
 
