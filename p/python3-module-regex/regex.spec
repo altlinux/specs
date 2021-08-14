@@ -4,7 +4,7 @@
 
 %define modulename regex
 Name: python3-module-regex
-Version: 2020.7.14
+Version: 2021.7.6
 Release: alt1
 
 Summary: Alternative regular expression module, to replace re
@@ -40,6 +40,9 @@ rm %buildroot%python3_sitelibdir/regex/__pycache__/test_regex.*
 %python3_sitelibdir/*
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 2021.7.6-alt1
+- new version 2021.7.6 (with rpmrb script)
+
 * Mon Sep 14 2020 Stanislav Levin <slev@altlinux.org> 2020.7.14-alt1
 - 2019.06.05 -> 2020.7.14.
 
