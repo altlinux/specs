@@ -1,6 +1,6 @@
 Name: quilt
 Version: 0.66
-Release: alt1
+Release: alt2
 
 Summary: Scripts for working with series of patches
 License: GPLv2+
@@ -11,10 +11,8 @@ BuildArch: noarch
 Provides: bash-completion-quilt = %version-%release
 Obsoletes: bash-completion-quilt
 Requires: diffstat
-# for quilt-rus.pdf
-BuildRequires: texlive-lang-cyrillic texlive-latex-extra
 # for test suite
-%{?!_without_check:%{?!_disable_check:BuildRequires: procmail}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: ed procmail}}
 # git://git.altlinux.org/gears/q/quilt
 Source: %name-%version-%release.tar
 
@@ -28,7 +26,6 @@ found at http://userweb.kernel.org/~akpm/stuff/patch-scripts.tar.gz.
 
 %prep
 %setup -n %name-%version-%release
-rm doc/*.pdf
 
 %build
 %define docdir %_docdir/%name
@@ -38,10 +35,6 @@ rm doc/*.pdf
 	--with-sendmail=%_sbindir/sendmail \
 	--docdir=%docdir
 %make_build COMPAT_SYMLINKS=sendmail RELEASE=%release
-%make_build -C doc
-# rerun to get right cross-references
-rm doc/*.pdf
-%make_build -C doc
 
 %install
 %makeinstall_std COMPAT_SYMLINKS=sendmail BUILD_ROOT=%buildroot
@@ -62,6 +55,9 @@ install -pm644 AUTHORS NEWS TODO doc/README.EMACS doc/*.pdf \
 %docdir/
 
 %changelog
+* Sat Aug 07 2021 Dmitry V. Levin <ldv@altlinux.org> 0.66-alt2
+- Removed texlive from BR, packaged bundled docs instead.
+
 * Thu Mar 28 2019 Dmitry V. Levin <ldv@altlinux.org> 0.66-alt1
 - v0.65-27-g0f2a913 -> v0.66 (closes: #36476).
 
