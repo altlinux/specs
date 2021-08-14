@@ -1,6 +1,6 @@
 Name: seadrive-gui
-Version: 2.0.14
-Release: alt1.1
+Version: 2.0.15
+Release: alt1
 
 Summary: Seafile Drive client
 
@@ -63,6 +63,9 @@ PATH=%_qt5_bindir:$PATH %cmake_insource
 %_pixmapsdir/*
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.15-alt1
+- new version 2.0.15 (with rpmrb script)
+
 * Tue Aug 03 2021 Michael Shigorin <mike@altlinux.org> 2.0.14-alt1.1
 - E2K: use webkit instead of the (missing) webengine
 
