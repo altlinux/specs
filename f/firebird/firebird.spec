@@ -10,7 +10,7 @@
 
 Name: firebird
 Version: %major.%minor
-Release: alt2
+Release: alt3
 Summary: Firebird SQL Database, fork of InterBase
 Group: Databases
 License: IPL
@@ -37,6 +37,9 @@ Patch302: %name-%version-fedora-noexcept.patch
 Patch1001: %name-%version-alt-dont-link-libstdcxx-statically.patch
 Patch1002: %name-%version-alt-use-system-libre2.patch
 Patch1003: %name-%version-alt-disable-examples.patch
+
+# Elbrus
+Patch2000: %name-e2k.patch
 
 Requires: libfbclient = %EVR
 
@@ -143,6 +146,9 @@ Examples for Firebird SQL server.
 %patch1001 -p1
 %patch1002 -p1
 %patch1003 -p1
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 # sed vs patch for portability and addtional location changes
 # based on FIREBIRD=%_libdir/firebird
@@ -171,6 +177,10 @@ rm -rf ./extern/{editline,libtomcrypt,libtommath,re2,zlib} || { echo "rm -rf fai
 %add_optflags -Wno-deprecated -Wno-switch
 %add_optflags -I%_includedir/tommath
 %add_optflags -I%_includedir/tomcrypt
+%ifarch %e2k
+# required to enable GNU extensions from fenv.h
+%add_optflags -D_GNU_SOURCE
+%endif
 
 %autoreconf
 %configure \
@@ -394,6 +404,9 @@ fi
 %_datadir/%name/examples
 
 %changelog
+* Sat Aug 14 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.0.0.2496.0-alt3
+- Added patch for Elbrus.
+
 * Thu Aug 05 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0.2496.0-alt2
 - Updated include files location.
 
