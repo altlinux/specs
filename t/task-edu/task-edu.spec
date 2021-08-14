@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.4.6
-Release: alt1
+Release: alt2
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
 Group:   Education
@@ -249,8 +249,9 @@ Summary: Educational software (preschool)
 Group: Education
 Requires: gcompris-qt
 Requires: gcompris-qt-voices-ru
-Requires: childsplay
-Requires: childsplay-alphabet_sounds_ru
+# wait for python3 version
+#Requires: childsplay
+#Requires: childsplay-alphabet_sounds_ru
 Requires: tuxpaint
 Requires: kde5-khangman
 Requires: kde5-kanagram
@@ -592,6 +593,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.6-alt2
+- NMU: temp. disable childsplay (was python2 only)
+
 * Thu Aug 05 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.6-alt1
 - Return scilab.
 
