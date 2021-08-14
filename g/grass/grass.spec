@@ -3,7 +3,7 @@
 
 Name:    grass
 Version: 7.8.5
-Release: alt2
+Release: alt3
 
 %def_with mysql
 %def_with postgres
@@ -77,7 +77,6 @@ BuildRequires: libGLw-devel
 BuildRequires: libunixODBC-devel
 BuildRequires: libwxGTK-devel
 BuildRequires: libmariadbd-devel
-BuildRequires: python-module-simplejson
 BuildRequires: xorg-glproto-devel
 BuildRequires: desktop-file-utils
 BuildRequires: bzlib-devel
@@ -86,7 +85,6 @@ BuildRequires: libnetcdf-devel
 BuildRequires: opencl-headers
 BuildRequires: libgomp-devel
 BuildRequires: liblz4-devel
-BuildRequires: python-modules-distutils
 
 # internal modules
 %if_with python3
@@ -113,12 +111,14 @@ Obsoletes: %name-docs < %version-%release
 %description -n lib%name
 GRASS (Geographic Resources Analysis Support System) runtime libraries.
 
-%package devel
+%package -n lib%name-devel
 Summary: Development files for GRASS
 Group: Development/C
-Requires: %name = %version-%release
+Requires: lib%name = %version-%release
+Provides: %name-devel = %version
+Obsoletes: %name-devel
 
-%description devel
+%description -n lib%name-devel
 This package contains development headers for GRASS.
 
 %prep
@@ -305,13 +305,17 @@ rm -f %_libdir/%grassdir/locks
 %files -n lib%name
 %_libdir/lib%{name}_*.%libver.so
 
-%files devel
+%files -n lib%name-devel
 %_pkgconfigdir/%name.pc
 %_includedir/%name
 %exclude %_libdir/lib%{name}_*.%libver.so
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 7.8.5-alt3
+- NMU: rename grass-devel to libgrass-devel, fix require libgrass in devel subpackage
+- NMU: drop unused python2 modules from BR
+
 * Thu Apr 22 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.8.5-alt2
 - Rebuilt with new netcdf.
 
