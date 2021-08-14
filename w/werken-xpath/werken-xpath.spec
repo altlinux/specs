@@ -3,7 +3,7 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-default
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -38,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           werken-xpath
 Version:        0.9.4
-Release:        alt1_15.beta.12.7jpp8
+Release:        alt2_15.beta.12.7jpp11
 Epoch:          0
 Summary:        XPath implementation using JDOM
 License:        Saxpath
@@ -113,7 +113,7 @@ cp %{SOURCE1} .
 
 %build
 export CLASSPATH=$(build-classpath jdom antlr xerces-j2 xml-commons-apis)
-ant -Dbuild.compiler=modern package javadoc compile-test
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dbuild.compiler=modern package javadoc compile-test
 # Note that you'll have to java in PATH for this to work, it is by default
 # when using a JPackage JVM.
 CLASSPATH=$CLASSPATH:build/werken.xpath.jar:build/test/classes
@@ -149,6 +149,9 @@ install -pm 644 %{name}-%{version}.pom \
 # -----------------------------------------------------------------------------
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 0:0.9.4-alt2_15.beta.12.7jpp11
+- java11 build
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.9.4-alt1_15.beta.12.7jpp8
 - new fc release
 
