@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-mock
-Version: 4.0.2
+Version: 4.0.3
 Release: alt1
 
 Summary: A Python Mocking and Patching Library for Testing
@@ -55,6 +55,9 @@ py.test3 -vv
 %python3_sitelibdir/*
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 4.0.3-alt1
+- new version 4.0.3 (with rpmrb script)
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0.2-alt1
 - new version 4.0.2 (with rpmrb script)
 
