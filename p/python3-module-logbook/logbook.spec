@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.4.3
-Release: alt2
+Release: alt3
 
 Summary: A logging replacement for Python
 License: BSD
@@ -14,11 +14,11 @@ Url: https://pypi.python.org/pypi/Logbook/
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-sphinx rpm-build-python3
-BuildRequires: python3-module-Cython python3-module-html5lib
+BuildRequires(pre): rpm-macros-sphinx3 rpm-build-python3
+BuildRequires: python3-module-Cython
 BuildRequires: python3-module-notebook python3-module-setuptools
-BuildRequires: python3-module-mock python3-module-pip python3-module-brotlipy
-BuildRequires: python3-module-sphinx-devel
+BuildRequires: python3-module-mock python3-module-brotlipy
+BuildRequires: python3-module-sphinx
 
 
 %description
@@ -78,6 +78,9 @@ py.test3
 
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.3-alt3
+- cleanup BR
+
 * Tue Oct 22 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.4.3-alt2
 - python2 -> python3
 
