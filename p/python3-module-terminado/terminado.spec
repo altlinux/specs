@@ -3,8 +3,8 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 0.9.1
-Release: alt2
+Version: 0.9.5
+Release: alt1
 
 Summary: Terminals served by tornado websockets
 
@@ -117,6 +117,9 @@ nosetests3 -v
 #%doc doc/_build/html/*
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 0.9.5-alt1
+- new version 0.9.5 (with rpmrb script)
+
 * Thu Aug 05 2021 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt2
 - use python3-module-sphinx
 
