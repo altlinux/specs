@@ -1,6 +1,6 @@
 Name: spdlog
 Version: 1.8.5
-Release: alt1.1
+Release: alt2
 
 Summary: Super fast C++ logging library
 
@@ -13,6 +13,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/gabime/%name/archive/v%version.tar.gz
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: ctest
 BuildRequires: gcc-c++
 BuildRequires: libbenchmark-devel libfmt-devel
@@ -40,7 +41,7 @@ applications that use %name.
 
 %prep
 %setup
-#__subst "s|CHAR_WIDTH|SPDLOG_CHAR_WIDTH|g" include/spdlog/fmt/bundled/format.h
+rm -rfv include/spdlog/fmt/bundled/
 
 %build
 %cmake -DSPDLOG_BUILD_SHARED=ON \
@@ -54,7 +55,7 @@ applications that use %name.
 %__subst "s|// #define SPDLOG_FMT_EXTERNAL|#define SPDLOG_FMT_EXTERNAL|" %buildroot%_includedir/spdlog/tweakme.h
 
 %check
-export LD_LIBRARY_PATH=$(pwd)/BUILD
+export LD_LIBRARY_PATH=$(pwd)/%_cmake__builddir
 %cmake_build --target test
 
 %files -n lib%name
@@ -69,6 +70,9 @@ export LD_LIBRARY_PATH=$(pwd)/BUILD
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1.8.5-alt2
+- remove bundled fmt, use _cmake__builddir
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1.8.5-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
