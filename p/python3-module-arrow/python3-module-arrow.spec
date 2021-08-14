@@ -5,7 +5,7 @@
 
 Name: python3-module-%modname
 Version: 1.1.1
-Release: alt1
+Release: alt1.1
 
 Summary: Better dates & times for Python
 License: Apache-2.0
@@ -24,7 +24,7 @@ BuildRequires: python3-module-chai
 BuildRequires: python3-module-simplejson
 BuildRequires: python3-module-mock python3-module-dateparser >= 0.7.2
 %{?_enable_docs:
-BuildRequires(pre): rpm-macros-sphinx
+BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx python3-module-sphinx-autodoc-typehints}
 %{?_enable_check:BuildRequires: python3-module-tox}
 
@@ -64,6 +64,9 @@ tox.py3 -e py%(echo %__python3_version | tr -d .) --sitepackages -o -v
 %{?_enable_docs: man/}
 
 %changelog
+* Sat Aug 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1.1
+- fixed BR
+
 * Fri Jun 25 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
 - 1.1.1
 
