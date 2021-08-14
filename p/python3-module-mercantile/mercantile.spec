@@ -1,7 +1,7 @@
 %define oname mercantile
 
 Name: python3-module-%oname
-Version: 1.1.6
+Version: 1.2.1
 Release: alt1
 
 Summary: Spherical mercator and XYZ tile utilities
@@ -52,6 +52,9 @@ point.
 %python3_sitelibdir/*
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
+- new version 1.2.1 (with rpmrb script)
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.6-alt1
 - new version 1.1.6 (with rpmrb script)
 
