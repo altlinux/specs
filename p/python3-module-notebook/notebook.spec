@@ -6,7 +6,7 @@
 %def_without doc
 
 Name: python3-module-%oname
-Version: 6.1.4
+Version: 6.4.0
 Release: alt1
 
 Summary: Jupyter Interactive Notebook
@@ -151,6 +151,9 @@ nosetests3 -vv --with-coverage --cover-package=%oname %oname
 %endif
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 6.4.0-alt1
+- new version 6.4.0 (with rpmrb script)
+
 * Wed Oct 21 2020 Vitaly Lipatov <lav@altlinux.ru> 6.1.4-alt1
 - separate build python3 module, cleanup spec
 - new version 6.1.4 (with rpmrb script)
