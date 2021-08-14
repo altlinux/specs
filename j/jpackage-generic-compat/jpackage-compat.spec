@@ -1,5 +1,5 @@
 Name: jpackage-generic-compat
-Version: 0.36
+Version: 0.37
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
@@ -39,7 +39,6 @@ Requires(pre): java-devel >= 1.8.0 java >= 1.8.0
 Conflicts: java-devel > 1.8.99 java > 1.8.99 java-headless > 1.8.99
 
 Requires: jpackage-generic-compat
-Provides: jpackage-compat = %version-%release
 Obsoletes: jpackage-1.4-compat < %version
 Obsoletes: jpackage-1.5-compat < %version
 Obsoletes: jpackage-1.6-compat < %version
@@ -61,8 +60,6 @@ Group: Development/Java
 Obsoletes: jpackage-9-compat < %version
 Obsoletes: jpackage-10-compat < %version
 Provides: jpackage-default = %version-%release
-#Provides: jpackage-core = %version-%release
-#Provides: jpackage-compat = %version-%release
 
 Requires: jpackage-generic-compat
 Requires(pre): java-11-devel >= 11 java-11
@@ -87,6 +84,9 @@ install -d $RPM_BUILD_ROOT%_datadir
 %files -n jpackage-11-compat
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 0.37-alt1
+- dropped jpackage-compat
+
 * Fri Jul 02 2021 Igor Vlasenko <viy@altlinux.org> 0.36-alt1
 - dropped requires on unzip
 
