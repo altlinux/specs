@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.5.19
-Release: alt1
+Release: alt2
 
 Summary: Python Netlink library
 
@@ -19,6 +19,7 @@ BuildRequires(pre): rpm-build-python3
 %add_python3_req_skip pyroute2.bsd.rtmsocket
 %add_python3_req_skip dhclient
 %add_python3_req_skip netl
+%add_python3_req_skip mitogen.core mitogen.master
 
 %description
 Pyroute2 is a pure Python3 netlink library.
@@ -64,6 +65,9 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %python3_sitelibdir/*/tests
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 0.5.19-alt2
+- NMU: make mitogen requirement optional, as in README
+
 * Sat May 15 2021 Grigory Ustinov <grenka@altlinux.org> 0.5.19-alt1
 - Automatically updated to 0.5.19.
 
