@@ -4,24 +4,22 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           exec-maven-plugin
-Version:        1.6.0
-Release:        alt1_8jpp8
+Version:        3.0.0
+Release:        alt1_2jpp11
 Summary:        Exec Maven Plugin
 
 License:        ASL 2.0
-URL:            http://www.mojohaus.org/exec-maven-plugin/
-Source0:        http://repo1.maven.org/maven2/org/codehaus/mojo/exec-maven-plugin/%{version}/exec-maven-plugin-%{version}-source-release.zip
-
-Patch1:         exec-maven-plugin-1.6.0-Port-to-Maven-3.patch
+URL:            https://www.mojohaus.org/exec-maven-plugin/
+Source0:        https://repo1.maven.org/maven2/org/codehaus/mojo/exec-maven-plugin/%{version}/exec-maven-plugin-%{version}-source-release.zip
 
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
+BuildRequires:  maven-artifact-transfer
 BuildRequires:  mvn(org.apache.commons:commons-exec)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-compat)
@@ -30,11 +28,9 @@ BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.shared:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.codehaus.mojo:mojo-parent:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 
 Obsoletes:      maven-plugin-exec < %{version}-%{release}
@@ -58,19 +54,17 @@ API documentation for %{name}.
 sed -i 's/\r$//' LICENSE.txt
 find . -name *.jar -delete
 
-%pom_remove_dep :maven-project
-%pom_remove_dep :maven-toolchain
-%pom_remove_dep :maven-artifact-manager
-
-%pom_add_dep org.apache.maven:maven-compat
-%pom_add_dep junit:junit::test
-
 %pom_remove_plugin :animal-sniffer-maven-plugin
 
-%patch1 -p1
+#Drop test part. sonatype-aerther not available
+%pom_remove_dep :mockito-core
+%pom_remove_dep :maven-plugin-testing-harness
+%pom_remove_dep :plexus-interpolation
+
+rm -rf src/test/
 
 %build
-%mvn_build -- -DmavenVersion=3
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -83,6 +77,9 @@ find . -name *.jar -delete
 %doc LICENSE.txt
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 3.0.0-alt1_2jpp11
+- new version
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_8jpp8
 - fc update
 
