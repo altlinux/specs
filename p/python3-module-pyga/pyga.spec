@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 2.6.2
-Release: alt1
+Release: alt2
 
 Summary: Server side implemenation of Google Analytics in Python
 License: BSD
@@ -14,8 +14,7 @@ BuildArch: noarch
 # https://github.com/kra3/py-ga-mob.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx
-#BuildRequires: python3-module-html5lib python3-module-pbr
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pytest python3-module-unittest2
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
@@ -85,6 +84,9 @@ cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname
 
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 2.6.2-alt2
+- drop unused BR: rpm-macros-sphinx
+
 * Wed Apr 28 2021 Vitaly Lipatov <lav@altlinux.ru> 2.6.2-alt1
 - NMU: new version 2.6.2 (with rpmrb script)
 - NMU: cleanup spec
