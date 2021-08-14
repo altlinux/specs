@@ -1,40 +1,34 @@
 %define oname pygame
-%def_with python2
-%def_with python3
 
-Name: python-module-%oname
+Name: python3-module-pygame
 Version: 2.0.1
-Release: alt2
+Release: alt3
 
 Summary: A Python module for interfacing with the SDL multimedia library
 Summary(ru_RU.UTF-8): Расширение языка Python для работы с библиотекой SDL
 
-Group: Development/Python
+Group: Development/Python3
 License: LGPL-2.1
-Url: http://www.pygame.org
+Url: https://www.pygame.org
 
-Source: %version.tar.gz
-Patch: RPM/SOURCES/pygame-1.9.6-docs.patch
+# Source-url: https://github.com/pygame/pygame/archive/refs/tags/%version.tar.gz
+Source: %name-%version.tar
+Patch: pygame-1.9.6-docs.patch
 
-%if_with python2
-%setup_python_module pygame
-%endif
-
-%define python_includedir %_includedir/python%_python_version
 %define python3_includedir %_includedir/python%_python3_version
 
-Provides: python-pygame, %oname
-Obsoletes: %oname
-
-Requires: libSDL >= 1.2.7
 BuildRequires(pre): rpm-build-python3
-
-%add_python_req_skip AppKit Foundation py2app Numeric
 
 BuildRequires: libfreetype-devel
 BuildRequires: libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel
 BuildRequires: libjpeg-devel libpng-devel libportmidi-devel
-BuildRequires: python3-module-setuptools python3-module-sphinxcontrib-applehelp python3-module-sphinxcontrib-devhelp python3-module-sphinxcontrib-htmlhelp python3-module-sphinxcontrib-jsmath python3-module-sphinxcontrib-qthelp python3-module-sphinxcontrib-serializinghtml
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-sphinx
+
+Requires: libSDL >= 1.2.7
+
+%add_python3_req_skip AppKit Foundation py2app Numeric opencv
+
 
 %description
 pygame is a Python wrapper module for the SDL multimedia library, written by
@@ -54,53 +48,12 @@ DirectMedia Layer), предоставляющей низкоуровневый 
 устройствам, клавиатуре, манипулятору мышь и к буферу экрана на
 множестве различных платформ.
 
-%package -n python3-module-%oname
-Summary: A Python 3 module for interfacing with the SDL multimedia library
-Group: Development/Python3
-%add_python3_req_skip AppKit Foundation py2app Numeric opencv
 
-%description -n python3-module-%oname
-pygame is a Python wrapper module for the SDL multimedia library, written by
-Pete Shinners.  It contains python functions and classes that will allow you
-to use SDL's support for playing cdroms, audio and video output, and keyboard,
-mouse and joystick input. pygame also includes support for the Numerical
-Python extension. pygame is the successor to the pySDL wrapper project, written
-by Mark Baker.
-
-Install %name if you would like to write or play SDL games written in the
-python language.
-
-%package -n python3-module-%oname-devel
+%package devel
 Summary: Pygame development headers (Python 3)
 Group: Development/Python3
 BuildArch: noarch
-Requires: python3-module-%oname = %version-%release
-
-%description -n python3-module-%oname-devel
-pygame is a Python wrapper module for the SDL multimedia library, written by
-Pete Shinners.  It contains python functions and classes that will allow you
-to use SDL's support for playing cdroms, audio and video output, and keyboard,
-mouse and joystick input. pygame also includes support for Numerical Python
-extension. pygame is the successor to the pySDL wrapper project, written by
-Mark Baker.
-
-Install python3-module-%oname-devel if you need the c/c++ include files.
-
-%package -n python3-module-%oname-doc
-Summary: Pygame documentation and example programs (Python3 version)
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-BuildArch: noarch
-
-%description -n python3-module-%oname-doc
-Pygame documentation and example programs (Python3 version)
-
-%package devel
-Summary: Pygame development headers
-Summary(ru_RU.UTF-8): Файлы для разработчика приложений, использующих pygame
-Group: Development/Python
-BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 pygame is a Python wrapper module for the SDL multimedia library, written by
@@ -110,76 +63,46 @@ mouse and joystick input. pygame also includes support for Numerical Python
 extension. pygame is the successor to the pySDL wrapper project, written by
 Mark Baker.
 
-Install python3-module-%oname-devel if you need the c/c++ include files.
-
-%description devel -l ru_RU.UTF-8
-Пакет содержит заголовочные файлы для разработки pygame.
+Install %name-devel if you need the c/c++ include files.
 
 %package doc
-Summary: Pygame documentation and example programs
-Group: Development/Python
-Requires: %name = %version-%release
+Summary: Pygame documentation and example programs (Python3 version)
+Group: Development/Python3
+#Requires: %name = %EVR
 BuildArch: noarch
 
 %description doc
-pygame is a Python  wrapper  module  for  the  SDL  multimedia  library,
-written by Pete Shinners. It contains python functions and classes  that
-will allow you to use SDL's support for playing cdroms, audio and  video
-output, and keyboard, mouse and joystick  input.  pygame  also  includes
-support for Numerical Python extension. pygame is the successor  to  the
-pySDL wrapper project, written by Mark Baker.
-
-Install %name-doc  if  you  need  the  API  documentation  and  example
-programs.
+Pygame documentation and example programs (Python3 version)
 
 %prep
-%setup -n %oname-%version
+%setup
 %patch -p1
 
 %build
 # XXX check:
 #export LOCALBASE=%prefix
 #add_optflags -fno-strict-aliasing
-%if_with python2
-%python_build_debug -b build2
-%endif
-%python3_build_debug -j${NPROCS:-%__nprocs} -b build3
-rm -f build && ln -s build3 build
+%python3_build_debug -j${NPROCS:-%__nprocs}
 python3 setup.py docs
 
 %install
-%if_with python2
-rm -f build && ln -s build2 build
-%python_install
-sed -i '/^pkg_dir =/s@pkg_dir = .*@pkg_dir = "%_defaultdocdir/python-module-pygame-doc-%version"@' %buildroot%python_sitelibdir/%oname/docs/__main__.py
-%endif
-
-rm -f build && ln -s build3 build
 %python3_install
 sed -i '/^pkg_dir =/s@pkg_dir = .*@pkg_dir = "%_defaultdocdir/python3-module-pygame-doc-%version"@' %buildroot%python3_sitelibdir/%oname/docs/__main__.py
 
-%if_with python2
 %files
-%python_sitelibdir/%oname/
-%python_sitelibdir/*.egg-info
+%python3_sitelibdir/*
 
 %files doc
 %doc _html/.
-%endif
 
 %files devel
-%python_includedir/%oname/
+%python3_includedir/%oname/
 
-%files -n python3-module-%oname
-%python3_sitelibdir/*
-
-%files -n python3-module-%oname-devel
-%python3_includedir/%oname
-
-%files -n python3-module-%oname-doc
-%doc _html/.
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt3
+- cleanup spec, build python3 module separately
+
 * Thu Aug 12 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt2
 - drop unneeded python2 BR
 
