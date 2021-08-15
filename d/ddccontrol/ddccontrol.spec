@@ -14,7 +14,7 @@
 
 Name: ddccontrol
 Version: 0.4.4
-Release: alt1.%ddcreleasedate
+Release: alt2.%ddcreleasedate
 
 Summary: Control your monitor by software using the DDC/CI protocol
 License: GPLv2+
@@ -131,7 +131,10 @@ install -m 644 -D %SOURCE1 %buildroot%_sysconfdir/modules-load.d/%name.conf
 /sbin/modprobe i2c-dev &>/dev/null || :
 
 %files -f %name.lang
-%doc AUTHORS NEWS doc/html
+%doc AUTHORS NEWS
+%if_enabled doc
+%doc doc/html
+%endif
 %_bindir/ddccontrol
 #%_bindir/ddcpci
 %_man1dir/%{name}*
@@ -171,6 +174,9 @@ install -m 644 -D %SOURCE1 %buildroot%_sysconfdir/modules-load.d/%name.conf
 %endif
 
 %changelog
+* Sun Aug 15 2021 Michael Shigorin <mike@altlinux.org> 0.4.4-alt2.20200630gitf3d003f
+- fix doc knob
+
 * Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 0.4.4-alt1.20200630gitf3d003f
 - new version
 
