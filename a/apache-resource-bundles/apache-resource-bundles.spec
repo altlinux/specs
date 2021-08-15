@@ -1,32 +1,44 @@
 Epoch: 1
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 %global jar_version 1.4
 %global lh_version 1.1
 %global id_version 1.1
 
 Name:           apache-resource-bundles
-Version:        2
-Release:        alt4_24jpp8
+Version:        30
+Release:        alt1_3jpp11
 Summary:        Apache Resource Bundles
 License:        ASL 2.0
-URL:            http://repo1.maven.org/maven2/org/apache/apache-resource-bundles/
+URL:            https://repo1.maven.org/maven2/org/apache/apache-resource-bundles/
 BuildArch:      noarch
 
-Source0:        http://repo1.maven.org/maven2/org/apache/%{name}/%{version}/%{name}-%{version}.pom
-Source1:        http://repo1.maven.org/maven2/org/apache/apache-jar-resource-bundle/%{jar_version}/apache-jar-resource-bundle-%{jar_version}-sources.jar
-Source2:        http://repo1.maven.org/maven2/org/apache/apache-jar-resource-bundle/%{jar_version}/apache-jar-resource-bundle-%{jar_version}.pom
-Source3:        http://repo1.maven.org/maven2/org/apache/apache-license-header-resource-bundle/%{lh_version}/apache-license-header-resource-bundle-%{lh_version}-sources.jar
-Source4:        http://repo1.maven.org/maven2/org/apache/apache-license-header-resource-bundle/%{lh_version}/apache-license-header-resource-bundle-%{lh_version}.pom
-Source5:        http://repo1.maven.org/maven2/org/apache/apache-incubator-disclaimer-resource-bundle/%{id_version}/apache-incubator-disclaimer-resource-bundle-%{id_version}-sources.jar
-Source6:        http://repo1.maven.org/maven2/org/apache/apache-incubator-disclaimer-resource-bundle/%{id_version}/apache-incubator-disclaimer-resource-bundle-%{id_version}.pom
+Source0:        https://repo1.maven.org/maven2/org/apache/apache/resources/%{name}/%{version}/%{name}-%{version}.pom
+Source1:        https://repo1.maven.org/maven2/org/apache/apache-jar-resource-bundle/%{jar_version}/apache-jar-resource-bundle-%{jar_version}-sources.jar
+Source2:        https://repo1.maven.org/maven2/org/apache/apache-jar-resource-bundle/%{jar_version}/apache-jar-resource-bundle-%{jar_version}.pom
+Source3:        https://repo1.maven.org/maven2/org/apache/apache-license-header-resource-bundle/%{lh_version}/apache-license-header-resource-bundle-%{lh_version}-sources.jar
+Source4:        https://repo1.maven.org/maven2/org/apache/apache-license-header-resource-bundle/%{lh_version}/apache-license-header-resource-bundle-%{lh_version}.pom
+Source5:        https://repo1.maven.org/maven2/org/apache/apache-incubator-disclaimer-resource-bundle/%{id_version}/apache-incubator-disclaimer-resource-bundle-%{id_version}-sources.jar
+Source6:        https://repo1.maven.org/maven2/org/apache/apache-incubator-disclaimer-resource-bundle/%{id_version}/apache-incubator-disclaimer-resource-bundle-%{id_version}.pom
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
+%endif
 Source44: import.info
 
 %description
@@ -36,12 +48,22 @@ and notices for all Apache releases.
 %prep
 %setup -cT
 cp -p %{SOURCE0} ./pom.xml
+%pom_xpath_inject 'pom:project' '
+<modules>
+  <module>apache-jar-resource-bundle</module>
+  <module>apache-license-header-resource-bundle</module>
+  <module>apache-incubator-disclaimer-resource-bundle</module>
+</modules>'
+
+%pom_xpath_set 'pom:project/pom:parent/pom:relativePath' '../pom/maven/pom.xml'
+%pom_xpath_set 'pom:project/pom:groupId' 'org.apache'
 
 # jar
 mkdir -p apache-jar-resource-bundle
 pushd apache-jar-resource-bundle
 jar xvf %{SOURCE1}
 cp -p %{SOURCE2} ./pom.xml
+%pom_xpath_set 'pom:project/pom:parent/pom:version' %{version}
 mkdir -p src/main/resources
 mv META-INF src/main/resources
 popd
@@ -51,6 +73,7 @@ mkdir -p apache-license-header-resource-bundle
 pushd apache-license-header-resource-bundle
 jar xvf %{SOURCE3}
 cp -p %{SOURCE4} ./pom.xml
+%pom_xpath_set 'pom:project/pom:parent/pom:version' %{version}
 mkdir -p src/main/resources
 mv META-INF src/main/resources
 popd
@@ -60,6 +83,7 @@ mkdir -p apache-incubator-disclaimer-resource-bundle
 pushd apache-incubator-disclaimer-resource-bundle
 jar xvf %{SOURCE5}
 cp -p %{SOURCE6} ./pom.xml
+%pom_xpath_set 'pom:project/pom:parent/pom:version' %{version}
 mkdir -p src/main/resources
 mv META-INF src/main/resources
 popd
@@ -69,7 +93,7 @@ popd
 %mvn_file :apache-incubator-disclaimer-resource-bundle apache-resource-bundles/incubator-disclaimer
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -77,6 +101,9 @@ popd
 %files -f .mfiles
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 1:30-alt1_3jpp11
+- new version
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1:2-alt4_24jpp8
 - fc update
 
