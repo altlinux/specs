@@ -2,8 +2,8 @@
 %define sover 1
 
 Name: python3-module-magic
-Version: 0.4.13
-Release: alt3
+Version: 0.4.22
+Release: alt1
 
 Summary: File type identification using libmagic
 
@@ -31,8 +31,8 @@ textual and MIME-type output.
 
 %prep
 %setup
-sed -i "s|@64@|%_libsuff|" magic.py
-sed -i "s|@SOVER@|%sover|" magic.py
+#sed -i "s|@64@|%_libsuff|" magic.py
+#sed -i "s|@SOVER@|%sover|" magic.py
 
 %build
 %python3_build_debug
@@ -46,14 +46,18 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %check
-export LC_ALL=en_US.UTF-8
-python3 setup.py test || :
+# TODO
+#export LC_ALL=en_US.UTF-8
+#python3 setup.py test || :
 
 %files
 %doc *.md
 %python3_sitelibdir/*
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 0.4.22-alt1
+- new version 0.4.22 (with rpmrb script)
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4.13-alt3
 - build python3 package separately, under more correct name
 
