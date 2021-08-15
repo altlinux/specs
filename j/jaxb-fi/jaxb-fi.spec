@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jaxb-fi
 Version:        1.2.18
-Release:        alt1_2jpp11
+Release:        alt1_4jpp11
 Summary:        Implementation of the Fast Infoset Standard for Binary XML
 # jaxb-fi is licensed ASL 2.0 and EDL-1.0 (BSD)
 # bundled org.apache.xerces.util.XMLChar.java is licensed ASL 1.1
@@ -62,7 +62,7 @@ popd
 %build
 pushd code
 # skip javadoc build due to https://github.com/fedora-java/xmvn/issues/58
-%mvn_build -j -- -DbuildNumber=unknown
+%mvn_build -f -j -- -DbuildNumber=unknown
 popd
 
 
@@ -78,6 +78,9 @@ popd
 
 
 %changelog
+* Sun Aug 15 2021 Igor Vlasenko <viy@altlinux.org> 1.2.18-alt1_4jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.2.18-alt1_2jpp11
 - unbootstrap build
 
