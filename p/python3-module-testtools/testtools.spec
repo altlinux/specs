@@ -3,7 +3,7 @@
 %define oname testtools
 
 Name: python3-module-%oname
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: Extensions to the Python standard library's unit testing framework
@@ -14,8 +14,6 @@ Url: http://pypi.python.org/pypi/testtools
 
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
-
-Patch1: %oname-1.8.0-fedora-py3.patch
 
 # https://github.com/testing-cabal/testtools/pull/271
 Patch2: %oname-2.3.0-py37.patch
@@ -55,7 +53,6 @@ This package contains documentation for %oname.
 
 %prep
 %setup
-%patch1 -p1
 %patch3 -p1
 
 %prepare_sphinx3 .
@@ -85,6 +82,9 @@ export PBR_VERSION=%version
 
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt1
+- new version 2.5.0 (with rpmrb script)
+
 * Wed Mar 31 2021 Vitaly Lipatov <lav@altlinux.ru> 2.4.0-alt1
 - new version 2.4.0 (with rpmrb script)
 
