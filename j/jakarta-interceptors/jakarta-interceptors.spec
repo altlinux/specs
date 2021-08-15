@@ -1,13 +1,13 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global srcname interceptor-api
 
 Name:           jakarta-interceptors
 Version:        2.0.0
-Release:        alt1_2jpp11
+Release:        alt1_3jpp11
 Summary:        Jakarta Interceptors
 License:        EPL-2.0 or GPLv2 with exceptions
 
@@ -26,6 +26,7 @@ BuildRequires:  mvn(org.glassfish.build:spec-version-maven-plugin)
 Provides:       geronimo-interceptor = %{version}-%{release}
 Obsoletes:      geronimo-interceptor < 1.0.1-25
 Source44: import.info
+Conflicts: geronimo-interceptor < 1.0.1-alt3
 
 %description
 Jakarta Interceptors defines a means of interposing on business method
@@ -98,6 +99,9 @@ sed -i -e 's/jakarta\./javax./g' $(find api/src/main/java/javax -name *.java)
 
 
 %changelog
+* Sun Aug 15 2021 Igor Vlasenko <viy@altlinux.org> 2.0.0-alt1_3jpp11
+- added conflict with jakarta-interceptors (closes: #40740)
+
 * Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 2.0.0-alt1_2jpp11
 - new version
 
