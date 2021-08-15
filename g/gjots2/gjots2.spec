@@ -1,26 +1,25 @@
 Name: gjots2
-Version: 2.3.15
+Version: 3.1.9
 Release: alt1
 
 Summary: A note jotter. Organise your ideas, notes, facts in a hierarchy
 
-License: GPL
+License: GPLv2
 Group: Text tools
 Url: http://bhepple.freeshell.org/gjots
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://bhepple.freeshell.org/gjots/%name-%version.tar.bz2
+# Source-url: https://downloads.sourceforge.net/project/gjots2/gjots2/%version/gjots2-%version.tgz
+Source: %name-%version.tar
 
 BuildArch: noarch
-Requires: python%__python_version(libglade) python%__python_version(bonobo)
 
-# manually removed: eric
-# Automatically added by buildreq on Wed Jan 25 2006
-BuildRequires: python-devel python-modules-compiler python-modules-encodings
-
-BuildPreReq: rpm-build-compat >= 1.2
+BuildRequires(pre): rpm-build-python3
 BuildRequires: desktop-file-utils
+
+# see %_libdir/girepository-1.0
+Requires: libgtk+3-gir libgtksourceview3-gir
 
 %description
 gjots2 ("gee-jots" or, if you prefer, "gyachts"!) is a way to marshall
@@ -36,16 +35,16 @@ structure them appropriately.
 This is a Python/GTK-2 version of the original gjots program by the same author.
 
 %prep
-%setup -q
-sed -i "s|lib/gjots2|%python_sitelibdir/%name|g" setup.py
-sed -i "s|prefix + '/lib/gjots2|'%python_sitelibdir/%name|g" setup.py bin/%name
+%setup
+subst 's|/usr/bin/bash|/bin/bash|' bin/*
+#sed -i "s|lib/gjots2|%python_sitelibdir/%name|g" setup.py
+#sed -i "s|prefix + '/lib/gjots2|'%python_sitelibdir/%name|g" setup.py bin/%name
 
 %build
-%python_build
+%python3_build
 
 %install
-
-%python_install
+%python3_install
 
 # fix strict python
 #sed -i "s,/usr/bin/python,/usr/bin/env python," %name
@@ -63,14 +62,24 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_bindir/gjots2docbook
 %_bindir/gjots2html
 %_bindir/gjots2lpr
-%python_sitelibdir/%name/
-%python_sitelibdir/gjots2-*.egg-info
+/usr/bin/gjots2emacs
+/usr/bin/gjots2html.py
+/usr/bin/gjots2org
+/usr/bin/org2gjots
+/usr/share/glib-2.0/schemas/org.gtk.gjots2.gschema.xml
+/usr/share/metainfo/gjots2.metainfo.xml
+%python3_sitelibdir/%name/
+%python3_sitelibdir/gjots2-*.egg-info
 %_desktopdir/*
 %_pixmapsdir/*
 %_datadir/%name/
 %_man1dir/*
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.9-alt1
+- new version (3.1.9) with rpmgs script
+- switch to python3
+
 * Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 2.3.15-alt1
 - new version 2.3.15 (with rpmrb script)
 
