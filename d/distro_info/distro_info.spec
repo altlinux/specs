@@ -1,5 +1,5 @@
 Name: distro_info
-Version: 2.2
+Version: 2.4
 Release: alt1
 
 Summary: Get various info about a system and used distro
@@ -32,6 +32,12 @@ install -m0644 -D man/distro_info.1 %buildroot%_man1dir/distro_info.1
 %_man1dir/*
 
 %changelog
+* Thu Aug 12 2021 Vitaly Lipatov <lav@altlinux.ru> 2.4-alt1
+- fix p10 name
+
+* Sun Jul 04 2021 Vitaly Lipatov <lav@altlinux.ru> 2.3-alt1
+- set Generic DISTRIB_ID after all
+
 * Sun Apr 11 2021 Vitaly Lipatov <lav@altlinux.ru> 2.2-alt1
 - fix c9f1 detection again
 
