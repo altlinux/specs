@@ -1,30 +1,25 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global srcname jaf
-
 Name:           jakarta-activation
 Version:        1.2.2
-Release:        alt1_1jpp11
+Release:        alt1_4jpp11
 Summary:        Jakarta Activation Specification and Implementation
 License:        BSD
-
 URL:            https://eclipse-ee4j.github.io/jaf/
-Source0:        https://github.com/eclipse-ee4j/jaf/archive/%{version}/%{srcname}-%{version}.tar.gz
-
 BuildArch:      noarch
+
+Source0:        https://github.com/eclipse-ee4j/jaf/archive/%{version}/jaf-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-
-Provides:       jaf = %{version}-%{release}
-Obsoletes:      jaf < 1.2.1-5
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 Source44: import.info
 
 %description
@@ -32,7 +27,6 @@ Jakarta Activation lets you take advantage of standard services to:
 determine the type of an arbitrary piece of data; encapsulate access to
 it; discover the operations available on it; and instantiate the
 appropriate bean to perform the operation(s).
-
 
 %package javadoc
 Group: Development/Java
@@ -42,46 +36,43 @@ BuildArch: noarch
 %description javadoc
 This package contains javadoc for %{name}.
 
-
 %prep
-%setup -q -n %{srcname}-%{version}
+%setup -q -n jaf-%{version}
 
-# remove unnecessary dependency on "org.eclipse.ee4j:project" (not packaged)
 %pom_remove_parent
+%pom_disable_module demo
 
-# remove unnecessary maven plugins
-%pom_remove_plugin :build-helper-maven-plugin
 %pom_remove_plugin :directory-maven-plugin
-%pom_remove_plugin :osgiversion-maven-plugin
+sed -i 's/${main.basedir}/${basedir}/' pom.xml
 
 # remove custom doclet configuration
 %pom_remove_plugin :maven-javadoc-plugin activation
 
-# disable demo submodule
-%pom_disable_module demo
-
 # set bundle version manually instead of with osgiversion-maven-plugin
 # (the plugin is only used to strip off -SNAPSHOT or -Mx qualifiers)
+%pom_remove_plugin :osgiversion-maven-plugin
 sed -i "s/\${activation.osgiversion}/%{version}/g" activation/pom.xml
 
-
 %build
-%mvn_build -- -Dmaven.compiler.source=9 -Dmaven.compiler.target=9 -Dmaven.javadoc.source=9 -Dmaven.compiler.release=9
-
+# javadoc temporairly disabled due to https://github.com/fedora-java/xmvn/issues/58
+%mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
-
 %files -f .mfiles
-%doc --no-dereference LICENSE.md NOTICE.md
 %doc README.md
-
-%files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE.md NOTICE.md
 
+# javadoc temporairly disabled due to https://github.com/fedora-java/xmvn/issues/58
+#%files javadoc -f .mfiles-javadoc
+%files javadoc
+%doc --no-dereference LICENSE.md NOTICE.md
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.2.2-alt1_4jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.2.2-alt1_1jpp11
 - new version
 
