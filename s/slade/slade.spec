@@ -1,6 +1,6 @@
 Name: slade
 Version: 3.2.0_b3
-Release: alt3
+Release: alt4
 
 Summary: SLADE3 Doom editor
 License: GPLv2
@@ -11,6 +11,7 @@ Url: https://slade.mancubus.net/
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: %name-%version.tar
+Patch: fix-aarch64-build.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
@@ -34,8 +35,6 @@ BuildRequires: libX11-devel
 BuildRequires: jackit-devel
 BuildRequires: liblua5.3-devel
 
-ExclusiveArch: %ix86 x86_64
-
 %description
 SLADE3 is a modern editor for Doom-engine based games and source
 ports. It has the ability to view, modify, and write many different
@@ -45,10 +44,17 @@ from/to other generic formats such as PNG.
 %prep
 %setup -n %name-%version
 
+%patch0 -p1
+
 %__subst '/#include <FreeImage.h>/a #undef _WINDOWS_ ' src/common.h
 
 # std::filesystem components can be used without -lstdc++fs with gcc >= 9
 %__subst '/lstdc++fs/d' src/CMakeLists.txt
+
+# delete SSE instructions for non-x86 arch
+%ifarch aarch64 ppc64le mipsel armh %e2k
+%__subst '/-D_USE_SSE -msse/d' src/CMakeLists.txt
+%endif
 
 %build
 %cmake_insource \
@@ -91,6 +97,9 @@ done
 %_desktopdir/%name.desktop
 
 %changelog
+* Sun Aug 15 2021 Artyom Bystrov <arbars@altlinux.org> 3.2.0_b3-alt4
+- Add patch for fixing build for aarch64 arch (2nd attempt)
+
 * Sun Aug 15 2021 Artyom Bystrov <arbars@altlinux.org> 3.2.0_b3-alt3
 - removing fix to build for non-x86 arch
 - add ExclusiveArch :-( (my apologizes to RPi4 owners)
