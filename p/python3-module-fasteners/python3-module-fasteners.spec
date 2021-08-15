@@ -1,8 +1,8 @@
 %define oname fasteners
 
 Name: python3-module-fasteners
-Version: 0.15
-Release: alt3
+Version: 0.16.3
+Release: alt1
 
 Summary: A python package that provides useful locks
 
@@ -22,6 +22,8 @@ BuildRequires: python3-module-six python3-module-monotonic
 # tests
 BuildRequires: python3-module-testtools
 BuildRequires: python3-module-nose
+BuildRequires: python3-module-more-itertools
+BuildRequires: python3-module-diskcache
 
 %description
 A python package that provides useful locks.
@@ -41,12 +43,15 @@ rm -f %python3_sitelibdir/%oname/test.py
 nosetests3
 
 %files
-%doc README.rst
+%doc README.*
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname-*.egg-info/
 
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 0.16.3-alt1
+- new version 0.16.3 (with rpmrb script)
+
 * Tue Aug 03 2021 Grigory Ustinov <grenka@altlinux.org> 0.15-alt3
 - Fixed BuildRequires.
 - Fixed license tag.
