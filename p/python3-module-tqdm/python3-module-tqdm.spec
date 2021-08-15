@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 4.48.0
+Version: 4.62.0
 Release: alt1
 
 Summary: A fast, extensible progress bar for Python and CLI
@@ -21,6 +21,7 @@ Conflicts: python-module-%oname
 Obsoletes: python-module-%oname
 
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
+BuildRequires: python3-module-setuptools_scm python3-module-toml
 BuildRequires: python3-module-nose python3-module-flake8 python3-module-coverage
 
 %py3_provides %oname
@@ -52,6 +53,9 @@ py.test3
 %python3_sitelibdir/*
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 4.62.0-alt1
+- new version 4.62.0 (with rpmrb script)
+
 * Fri Jul 17 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.48.0-alt1
 - 4.48.0 released
 
