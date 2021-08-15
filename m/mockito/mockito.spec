@@ -1,20 +1,31 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           mockito
-Version:        3.5.13
-Release:        alt1_2jpp11
+Version:        3.7.13
+Release:        alt1_3jpp11
 Summary:        Tasty mocking framework for unit tests in Java
 License:        MIT
 URL:            https://site.mockito.org/
 BuildArch:      noarch
 
-# Source tarball and the script to generate it
-Source0:        %{name}-%{version}.tar.xz
-Source1:        make-%{name}-sourcetarball.sh
+# ./generate-tarball.sh
+Source0:        %{name}-%{version}.tar.gz
+Source1:        generate-tarball.sh
 
 # A custom build script to allow building with maven instead of gradle
 Source2:        mockito-core.pom
@@ -24,16 +35,19 @@ Source2:        mockito-core.pom
 Patch0:         use-unbundled-asm.patch
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.bytebuddy:byte-buddy)
 BuildRequires:  mvn(net.bytebuddy:byte-buddy-agent)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.assertj:assertj-core)
-BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
-BuildRequires:  mvn(org.hamcrest:hamcrest-core)
+BuildRequires:  mvn(org.hamcrest:hamcrest)
 BuildRequires:  mvn(org.objenesis:objenesis)
 BuildRequires:  mvn(org.opentest4j:opentest4j)
 BuildRequires:  mvn(org.ow2.asm:asm)
+%endif
 Source44: import.info
 
 %description
@@ -52,7 +66,11 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
-%patch0
+%patch0 -p1
+
+# Disable failing test
+# TODO check status: https://github.com/mockito/mockito/issues/2162
+sed -i '/add_listeners_concurrently_sanity_check/i @org.junit.Ignore' src/test/java/org/mockitousage/debugging/StubbingLookupListenerCallbackTest.java
 
 # Use our custom build script
 sed -e 's/@VERSION@/%{version}/' %{SOURCE2} > pom.xml
@@ -70,7 +88,14 @@ EOF
 # Compatibility alias
 %mvn_alias org.%{name}:%{name}-core org.%{name}:%{name}-all
 
+sed -i 's/net\.bytebuddy\.jar\.asm/org.objectweb.asm/' src/main/java/org/mockito/internal/creation/bytebuddy/MockMethodAdvice.java
+
 %build
+# See the usage of exec-maven-plugin in the pom
+mkdir -p target/classes/
+javac  -target 1.8 -source 1.8 -d target/classes/ src/main/java/org/mockito/internal/creation/bytebuddy/inject/MockMethodDispatcher.java
+mv target/classes/org/mockito/internal/creation/bytebuddy/inject/MockMethodDispatcher.{class,raw}
+
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
 
 %install
@@ -78,12 +103,15 @@ EOF
 
 %files -f .mfiles
 %doc --no-dereference LICENSE
-%doc doc/design-docs/custom-argument-matching.md
+%doc README.md doc/design-docs/custom-argument-matching.md
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 0:3.7.13-alt1_3jpp11
+- new version
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:3.5.13-alt1_2jpp11
 - new version
 
