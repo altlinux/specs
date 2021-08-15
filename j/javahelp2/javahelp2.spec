@@ -5,9 +5,8 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %def_without demo
-%filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -42,7 +41,7 @@ BuildRequires: jpackage-11-compat
 
 Name:		javahelp2
 Version:	2.0.05
-Release:	alt4_30jpp11
+Release:	alt5_30jpp11
 Summary:	JavaHelp is a full-featured, platform-independent, extensible help system 
 License:	GPLv2 with exceptions
 Url:		https://javahelp.java.net/
@@ -92,12 +91,12 @@ find . -name "*.bat" -delete
 rm jhMaster/JavaHelp/src/new/javax/help/plaf/basic/BasicNativeContentViewerUI.java
 
 mkdir javahelp_nbproject/lib
-ln -s %{_javadir}/tomcat-jsp-api.jar javahelp_nbproject/lib/jsp-api.jar
-ln -s %{_javadir}/tomcat-servlet-api.jar javahelp_nbproject/lib/servlet-api.jar
+ln -s %{_javadir}/tomcat/tomcat-jsp-api.jar javahelp_nbproject/lib/jsp-api.jar
+ln -s %{_javadir}/tomcat/tomcat-servlet-api.jar javahelp_nbproject/lib/servlet-api.jar
 
 %build
 
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -f javahelp_nbproject/build.xml \
+ant -f javahelp_nbproject/build.xml \
  -Djavac.source=1.6 -Djavac.target=1.6 \
  -Djdic-jar-present=true -Djdic-zip-present=true \
  -Dservlet-jar-present=true -Dtomcat-zip-present=true \
@@ -132,6 +131,9 @@ touch $RPM_BUILD_ROOT/etc/jhsearch.conf
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Aug 15 2021 Igor Vlasenko <viy@altlinux.org> 0:2.0.05-alt5_30jpp11
+- fixed build
+
 * Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 0:2.0.05-alt4_30jpp11
 - rebuild with java11 and use jvm_run
 
