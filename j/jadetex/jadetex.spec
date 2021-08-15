@@ -1,38 +1,26 @@
-# tmp hack til tetex is dropped
-%filter_from_requires /^.usr.bin.etex/d
-%filter_from_requires /^.usr.bin.pdftex/d
-%filter_from_requires /^.usr.bin.pdfetex/d
-
-Summary(ru_RU.KOI8-R): íÁËÒÏÓ TeX ÄÌÑ ÐÏÌÕÞÅÎÉÑ DVI ÉÌÉ PDF ÉÚ ×Ù×ÏÄÁ OpenJade
+Summary(ru_RU.UTF-8): ÐœÐ°ÐºÑ€Ð¾Ñ TeX Ð´Ð»Ñ Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ñ DVI Ð¸Ð»Ð¸ PDF Ð¸Ð· Ð²Ñ‹Ð²Ð¾Ð´Ð° OpenJade
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:    jadetex
+#Epoch:   1
 Version: 3.13
-Release: alt4_13
+Release: alt4_17
 Group:   Publishing
 Summary: TeX macros used by Jade TeX output
 License: Freely redistributable without restriction
 URL:     http://sourceforge.net/projects/jadetex
-
+Source0: http://prdownloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Patch0: jadetex-tetex3.patch
+Patch1: jadetex-3.13-typoupstream.patch
+BuildArch: noarch
+BuildRequires: unzip
+BuildRequires: texlive
+BuildRequires: texlive-texmf
 Requires: sgml-common >= 0.5
 Requires: texlive-texmf
 Requires: openjade
-Requires(post): texlive
-Requires(postun): texlive
-Requires(post): texlive-texmf
-Requires(postun): texlive-texmf
-BuildRequires: unzip 
-BuildRequires: texlive 
-BuildRequires: texlive-texmf
-BuildConflicts: tetex tetex-core tetex-afm tetex-context tetex-latex
-Conflicts: tetex tetex-core tetex-afm tetex-context tetex-latex
-
-BuildArch: noarch
-Source0: http://prdownloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
-Source1: jadefmtutil.cnf
-Patch0: jadetex-tetex3.patch
-Patch1: jadetex-3.13-typoupstream.patch
 Source44: import.info
+
 
 
 %description
@@ -40,70 +28,49 @@ JadeTeX contains the additional LaTeX macros necessary for taking Jade
 TeX output files and processing them as TeX files (to obtain DVI,
 PostScript, or PDF files, for example).
 
-%description -l ru_RU.KOI8-R
-JadeTeX ÓÏÄÅÒÖÉÔ ÄÏÐÏÌÎÉÔÅÌØÎÙÊ ÍÁËÒÏÓ ÄÌÑ ÉÚÄÁÔÅÌØÓËÏÊ ÓÉÓÔÅÍÙ LaTeX
-ÎÅÏÂÈÏÄÉÍÙÊ ÄÌÑ ÐÒÅÏÂÒÁÚÏ×ÁÎÉÑ ×ÙÈÏÄÎÙÈ ÆÁÊÌÏ× tex-ÍÏÄÕÌÑ OpenJade ×
-ÆÏÒÍÁÔÙ DVI, Postscript ÉÌÉ PDF.
+%description -l ru_RU.UTF-8
+JadeTeX ÑÐ¾Ð´ÐµÑ€Ð¶Ð¸Ñ‚ Ð´Ð¾Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÐµÐ»ÑŒÐ½Ñ‹Ð¹ Ð¼Ð°ÐºÑ€Ð¾Ñ Ð´Ð»Ñ Ð¸Ð·Ð´Ð°Ñ‚ÐµÐ»ÑŒÑÐºÐ¾Ð¹ ÑÐ¸ÑÑ‚ÐµÐ¼Ñ‹ LaTeX
+Ð½ÐµÐ¾Ð±Ñ…Ð¾Ð´Ð¸Ð¼Ñ‹Ð¹ Ð´Ð»Ñ Ð¿Ñ€ÐµÐ¾Ð±Ñ€Ð°Ð·Ð¾Ð²Ð°Ð½Ð¸Ñ Ð²Ñ‹Ñ…Ð¾Ð´Ð½Ñ‹Ñ… Ñ„Ð°Ð¹Ð»Ð¾Ð² tex-Ð¼Ð¾Ð´ÑƒÐ»Ñ OpenJade Ð²
+Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚Ñ‹ DVI, Postscript Ð¸Ð»Ð¸ PDF.
 
 %prep
 %setup -q
-cp -p %{SOURCE1} .
-%patch0 -p1 -b .tetex3
-%patch1 -p1 -b .typoupstream
+%patch0 -p1
+%patch1 -p1
+
 
 %build
-make
-
+%make_build basic
 
 %install
-mkdir -p %{buildroot}
-make install DESTDIR=%{buildroot}
-
-mkdir -p %{buildroot}%{_datadir}/texmf-dist/tex/jadetex
-cp -p *.ini %{buildroot}%{_datadir}/texmf-dist/tex/jadetex
-cp -p *.sty %{buildroot}%{_datadir}/texmf-dist/tex/jadetex
-cp -p *.cnf %{buildroot}%{_datadir}/texmf-dist/tex/jadetex
+%makeinstall_std
 
 mkdir -p %{buildroot}%{_bindir}
 ln -s etex %{buildroot}%{_bindir}/jadetex
 ln -s pdfetex %{buildroot}%{_bindir}/pdfjadetex
 
 mkdir -p %{buildroot}%{_mandir}/man1
-cp -p jadetex.1 %{buildroot}%{_mandir}/man1
-ln -s jadetex.1.gz %{buildroot}%{_mandir}/man1/pdfjadetex.1
+cp -a jadetex.1 %{buildroot}%{_mandir}/man1
+cp -a pdfjadetex.1 %{buildroot}%{_mandir}/man1
 
-# touching all ghosts; hack for rpm 4.0.4
-for rpm404_ghost in %{_datadir}/texmf-dist/web2c/jadetex.fmt %{_datadir}/texmf-dist/web2c/pdfjadetex.fmt
-do
-    mkdir -p %buildroot`dirname "$rpm404_ghost"`
-    touch %buildroot"$rpm404_ghost"
-done
-
-
-%post
-%{_bindir}/env - PATH=$PATH:%{_bindir} fmtutil-sys \
-	       --cnffile %{_datadir}/texmf-dist/tex/jadetex/jadefmtutil.cnf \
-	       --all --fmtdir %{_datadir}/texmf-dist/web2c \
-	       > /tmp/jadetex-fmtutil-sys.log 2>&1
+mv %{buildroot}%{_datadir}/texmf/ %{buildroot}%{_datadir}/texmf-dist/
 
 %files
 %doc index.html
-%ghost %{_datadir}/texmf-dist/web2c/jadetex.fmt
-%ghost %{_datadir}/texmf-dist/web2c/pdfjadetex.fmt
+%{_datadir}/texmf-dist/web2c/jadetex.fmt
+%{_datadir}/texmf-dist/web2c/pdfjadetex.fmt
 %dir %{_datadir}/texmf-dist/tex/jadetex
 %{_datadir}/texmf-dist/tex/jadetex/*
-%{_datadir}/texmf-dist/web2c/*
 %{_mandir}/man1/jadetex.1*
-#%{_mandir}/man1/pdfjadetex.1*
+%{_mandir}/man1/pdfjadetex.1*
 %{_bindir}/jadetex
 %{_bindir}/pdfjadetex
 
-%triggerin -- texlive
-/usr/bin/env - PATH=$PATH:%{_bindir} fmtutil-sys --cnffile %{_datadir}/texmf-dist/tex/jadetex/jadefmtutil.cnf --all > /dev/null 2>&1
-exit 0
-
 
 %changelog
+* Fri Aug 06 2021 Igor Vlasenko <viy@altlinux.org> 3.13-alt4_17
+- new release (closes: #40598)
+
 * Tue Mar 06 2018 Igor Vlasenko <viy@altlinux.ru> 3.13-alt4_13
 - replaced with jadetex for texlive 2017
 
