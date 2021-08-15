@@ -3,7 +3,7 @@
 
 Name:    grass
 Version: 7.8.5
-Release: alt3
+Release: alt4
 
 %def_with mysql
 %def_with postgres
@@ -55,7 +55,7 @@ BuildRequires: python-module-simplejson
 BuildRequires: libfftw3-devel libjpeg-devel libpng-devel libtiff-devel zlib-devel
 BuildRequires: libncurses-devel libtinfo-devel
 BuildRequires: postgresql-devel libmariadb-devel libsqlite3-devel
-BuildRequires: libqt4-core libXmu-devel swig libfreetype-devel readline-devel libGLU-devel
+BuildRequires: libXmu-devel libfreetype-devel readline-devel libGLU-devel
 BuildRequires: proj-devel libgdal-devel libproj-nad proj
 BuildRequires: tcl-devel tk-devel
 BuildRequires: libICE-devel, libSM-devel, libX11-devel, libXau-devel, libXaw-devel
@@ -312,6 +312,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 7.8.5-alt4
+- drop BR: libqt4-devel swig
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 7.8.5-alt3
 - NMU: rename grass-devel to libgrass-devel, fix require libgrass in devel subpackage
 - NMU: drop unused python2 modules from BR
