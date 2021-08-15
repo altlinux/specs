@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jaxb-stax-ex
 Version:        1.8.3
-Release:        alt1_2jpp11
+Release:        alt1_4jpp11
 Summary:        Extended StAX API
 License:        BSD
 
@@ -55,7 +55,7 @@ the following areas:
 
 %build
 # skip javadoc build due to https://github.com/fedora-java/xmvn/issues/58
-%mvn_build -j -- -DbuildNumber=unknown
+%mvn_build -f -j -- -DbuildNumber=unknown
 
 
 %install
@@ -68,6 +68,9 @@ the following areas:
 
 
 %changelog
+* Sun Aug 15 2021 Igor Vlasenko <viy@altlinux.org> 1.8.3-alt1_4jpp11
+- update
+
 * Sat Jun 05 2021 Igor Vlasenko <viy@altlinux.org> 1.8.3-alt1_2jpp11
 - new version
 
