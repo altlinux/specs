@@ -13,8 +13,8 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           apache-commons-compress
-Version:        1.20
-Release:        alt1_7jpp11
+Version:        1.21
+Release:        alt1_1jpp11
 Summary:        Java API for working with compressed files and archivers
 License:        ASL 2.0
 URL:            https://commons.apache.org/proper/commons-compress/
@@ -24,7 +24,7 @@ Source0:        https://archive.apache.org/dist/commons/compress/source/commons-
 
 Patch0:         0001-Remove-Brotli-compressor.patch
 Patch1:         0002-Remove-ZSTD-compressor.patch
-Patch2:         0003-Avoid-use-of-internal-Mockito-API.patch
+Patch2:         0003-Remove-Pack200-compressor.patch
 
 BuildRequires:  maven-local
 %if %{with bootstrap}
@@ -34,6 +34,7 @@ BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.hamcrest:hamcrest)
 BuildRequires:  mvn(org.mockito:mockito-core)
 BuildRequires:  mvn(org.osgi:org.osgi.core)
 BuildRequires:  mvn(org.tukaani:xz)
@@ -68,8 +69,15 @@ rm -r src/{main,test}/java/org/apache/commons/compress/compressors/brotli
 rm -r src/{main,test}/java/org/apache/commons/compress/compressors/zstandard
 rm src/test/java/org/apache/commons/compress/compressors/DetectCompressorTestCase.java
 
-# Avoid using internal Mockito APIs
+# Remove support for pack200 which depends on ancient asm:asm:3.2
 %patch2 -p1
+%pom_remove_dep asm:asm
+rm -r src/{main,test}/java/org/apache/commons/compress/harmony
+rm -r src/main/java/org/apache/commons/compress/compressors/pack200
+rm src/main/java/org/apache/commons/compress/java/util/jar/Pack200.java
+rm src/test/java/org/apache/commons/compress/compressors/Pack200TestCase.java
+rm -r src/test/java/org/apache/commons/compress/compressors/pack200
+rm src/test/java/org/apache/commons/compress/java/util/jar/Pack200Test.java
 
 # remove osgi tests, we don't have deps for them
 %pom_remove_dep org.ops4j.pax.exam:::test
@@ -78,10 +86,9 @@ rm src/test/java/org/apache/commons/compress/compressors/DetectCompressorTestCas
 %pom_remove_dep :slf4j-api::test
 rm src/test/java/org/apache/commons/compress/OsgiITest.java
 
-# Remove test that requires powermock
-%pom_remove_dep org.powermock:
-%pom_add_dep org.mockito:mockito-core::test
-rm src/test/java/org/apache/commons/compress/compressors/z/ZCompressorInputStreamTest.java
+# Not packaged
+%pom_remove_dep com.github.marschall:memoryfilesystem
+rm src/test/java/org/apache/commons/compress/archivers/tar/TarMemoryFileSystemTest.java
 
 %build
 %mvn_file  : commons-compress %{name}
@@ -98,6 +105,9 @@ rm src/test/java/org/apache/commons/compress/compressors/z/ZCompressorInputStrea
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 0:1.21-alt1_1jpp11
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:1.20-alt1_7jpp11
 - update
 
