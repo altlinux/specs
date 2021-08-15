@@ -1,11 +1,11 @@
 # -*- rpm-spec -*-
 %define _unpackaged_files_terminate_build 1
 
-%def_with python2
+%def_without python2
 
 Name: nut
 Version: 2.7.4
-Release: alt5
+Release: alt6
 
 Summary: Network UPS Tools
 License: GPL
@@ -68,7 +68,10 @@ Patch109: nut-2.6.5-rmpidf.patch
 PreReq: shadow-utils
 PreReq: libupsclient = %EVR
 
-BuildRequires(pre): rpm-build-python3 rpm-build-python
+BuildRequires(pre): rpm-build-python3
+%if_with python2
+BuildRequires(pre): rpm-build-python
+%endif
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig libtool-common
 BuildRequires: libltdl-devel
@@ -645,6 +648,9 @@ fi
 %python3_sitelibdir/__pycache__/PyNUT.*
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 2.7.4-alt6
+- NMU: build without python2 subpackages (see also #39720)
+
 * Wed May 26 2021 Slava Aseev <ptrnine@altlinux.org> 2.7.4-alt5
 - Fix build due to missing rpm-build-python
 
