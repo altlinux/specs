@@ -18,7 +18,7 @@ BuildRequires: /usr/bin/desktop-file-install python3(sqlite3) python3-module-set
 Name:		mnemosyne
 Summary:	Flash-card learning tool
 Version:	2.6.1
-Release:	alt1_4
+Release:	alt2_4
 URL:		https://www.mnemosyne-proj.org/
 Source0:	https://downloads.sourceforge.net/sourceforge/mnemosyne-proj/Mnemosyne-%{version}.tar.gz
 # contains missing tests and LICENSE files from upstream repo
@@ -38,7 +38,7 @@ BuildRequires:	python3-module-distribute
 # unpackaged https://pypi.python.org/pypi/Cheroot
 #BuildRequires: python3-cheroot
 BuildRequires:	python3-module-cherrypy
-BuildRequires:	python-module-nose python3-module-nose
+BuildRequires:	python3-module-nose
 BuildRequires:	python3-module-PyQt5
 BuildRequires:	texlive-collection-latexrecommended
 BuildRequires:	texlive
@@ -105,6 +105,9 @@ popd
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sun Aug 15 2021 Igor Vlasenko <viy@altlinux.org> 2.6.1-alt2_4
+- no python2
+
 * Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 2.6.1-alt1_4
 - update to new release by fcimport
 
