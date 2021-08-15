@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -17,8 +17,8 @@ BuildRequires: jpackage-11-compat
 %global scala_version 2.13
 
 Name:           scalacheck
-Version:        1.15.3
-Release:        alt1_1jpp11
+Version:        1.15.4
+Release:        alt1_2jpp11
 Summary:        Property-based testing for Scala
 
 License:        BSD
@@ -35,6 +35,7 @@ Source3:       Generate.java
 BuildArch:      noarch
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.scala-sbt:test-interface)
 %if %{without sbt}
 BuildRequires:  mvn(org.scala-lang:scala-compiler)
@@ -105,6 +106,9 @@ sbt package deliverLocal publishM2Configuration
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 1.15.4-alt1_2jpp11
+- new version
+
 * Sat Jun 05 2021 Igor Vlasenko <viy@altlinux.org> 1.15.3-alt1_1jpp11
 - new version
 
