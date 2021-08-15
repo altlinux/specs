@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %majver.4
-Release: alt10
+Release: alt11
 Epoch: 1
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
@@ -39,7 +39,7 @@ BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: doxygen gcc-c++ gcc-fortran liblapack-devel
 BuildRequires: swig
-BuildRequires: python-module-Cython
+BuildRequires: python3-module-Cython
 
 # closes unmets in autoimports
 Provides: python-module-numpy-doc = %EVR
@@ -237,6 +237,9 @@ fi
 %python_sitelibdir/%oname/core/lib/npy-pkg-config
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1:1.15.4-alt11
+- build with python3-module-Cython
+
 * Thu Aug 05 2021 Vitaly Lipatov <lav@altlinux.ru> 1:1.15.4-alt10
 - drop python-module-numpydoc require from libnumpy-devel
 
