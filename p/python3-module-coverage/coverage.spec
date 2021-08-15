@@ -1,27 +1,28 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname coverage
 
 %def_without check
 %def_without doc
 
-Name: python-module-%oname
-Version: 5.3
-Release: alt2
+Name: python3-module-coverage
+Version: 5.5
+Release: alt1
+
 Summary: A tool for measuring code coverage of Python programs
+
 License: Apache-2.0
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.org/project/coverage/
 
-# https://github.com/nedbat/coveragepy.git
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
-%if_with doc
-BuildRequires: libenchant python-module-alabaster python-module-html5lib python-module-sphinxcontrib-spelling
-BuildRequires: python-module-sphinx_rtd_theme
-%endif
-
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
+
+%if_with doc
+BuildRequires: libenchant python3-module-sphinx
+#BuildRequires: python3-module-sphinx_rtd_theme
+%endif
 
 %if_with check
 BuildRequires: python3(eventlet)
@@ -34,8 +35,7 @@ BuildRequires: python3(tox)
 BuildRequires: python3(unittest_mixins)
 %endif
 
-%add_findreq_skiplist /usr/lib*/python2.7/site-packages/%oname/lab/genpy.py
-%add_python_req_skip lnotab
+Conflicts: python-module-coverage
 
 %description
 Coverage.py is a tool for measuring code coverage of Python programs. It
@@ -47,7 +47,6 @@ Coverage measurement is typically used to gauge the effectiveness of
 tests. It can show which parts of your product code are being exercised
 by tests, and which are not.
 
-%if_with doc
 %package doc
 Summary: Documentation for Coverage python module
 Group: Development/Documentation
@@ -61,107 +60,52 @@ executed but was not.
 
 This package contains documentation for Coverage.py.
 
-%package pickles
-Summary: Pickles for Coverage python module
-Group: Development/Python
-
-%description pickles
-Coverage.py is a tool for measuring code coverage of Python programs. It
-monitors your program, noting which parts of the code have been
-executed, then analyzes the source to identify code that could have been
-executed but was not.
-
-This package contains pickles for Coverage.py.
-%endif
-
-%package -n python3-module-%oname
-Summary: A tool for measuring code coverage of Python3 programs
-Group: Development/Python3
-
-%description -n python3-module-%oname
-Coverage.py is a tool for measuring code coverage of Python programs. It
-monitors your program, noting which parts of the code have been
-executed, then analyzes the source to identify code that could have been
-executed but was not.
-
-Coverage measurement is typically used to gauge the effectiveness of
-tests. It can show which parts of your product code are being exercised
-by tests, and which are not.
-
 %prep
 %setup
 
-cp -a . ../python3
-
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
+%python3_build_debug
 
 export PYTHONPATH=$PWD
 %if_with doc
 %make_build dochtml
-%make_build pickle
+#make_build pickle
 %endif
 
-pushd ../python3
-%python3_build_debug
-popd
-
 %install
-pushd ../python3
 %python3_install
-popd
-mv %buildroot%_bindir/coverage %buildroot%_bindir/coverage3
 ln -s coverage3 %buildroot%_bindir/python3-coverage
-
-%python_install
-
-# The lab directory is not part of the installed coverage.py code
-#install -d %buildroot%python_sitelibdir/%oname/lab
-#install -p -m644 lab/* %buildroot%python_sitelibdir/%oname/lab
 
 %if_with doc
 install -d %buildroot%_docdir/%name
 cp -fR doc/_build/html/* %buildroot%_docdir/%name/
-cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
+#cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %check
-# don't freeze versions
-sed -i 's/==/>=/g' tox.ini requirements/pytest.pip
-export PIP_NO_INDEX=YES
 # don't measure coverage of ourselves
 export COVERAGE_COVERAGE=no
-# run tests for Python3, Python2 needs more work
-export TOXENV=py%{python_version_nodots python3}
-# don't run in parallel
-tox.py3 --sitepackages -v
+pytest3
 
 %files
 %doc CHANGES.rst README.rst
 %_bindir/coverage
-%_bindir/coverage2
-%_bindir/coverage-%_python_version
-%python_sitelibdir/%oname
-%python_sitelibdir/*.egg-info
-%if_with doc
-%exclude %python_sitelibdir/%oname/pickle
-
-%files doc
-%_docdir/%name
-
-%files pickles
-%python_sitelibdir/%oname/pickle
-%endif
-
-%files -n python3-module-%oname
 %_bindir/coverage3
 %_bindir/coverage-%_python3_version
 %_bindir/python3-coverage
 %python3_sitelibdir/%oname
 %python3_sitelibdir/*.egg-info
 
+%if_with doc
+%files doc
+%_docdir/%name
+%endif
+
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 5.5-alt1
+- build python3 module separately, build from pypi release tarball
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 5.3-alt2
 - drop lab subdir (see README, it is not part of the installed coverage.py code)
 
