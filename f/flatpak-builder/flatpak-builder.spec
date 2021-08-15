@@ -1,3 +1,5 @@
+%def_disable snapshot
+
 %define _localstatedir %_var
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %_prefix/lib/systemd/user
@@ -6,7 +8,7 @@
 %{?_enable_docs:%def_enable docbook_docs}
 
 Name: flatpak-builder
-Version: 1.0.12
+Version: 1.0.14
 Release: alt1
 Epoch:1
 
@@ -15,8 +17,12 @@ Group: Development/Other
 License: LGPL-2.1
 Url: http://flatpak.org/
 
-# VCS: https://github.com/flatpak/flatpak-builder.git
+%if_disabled snapshot
 Source: https://github.com/flatpak/flatpak-builder/releases/download/%version/%name-%version.tar.xz
+%else
+Vcs: https://github.com/flatpak/flatpak-builder.git
+Source: %name-%version.tar
+%endif
 
 %define glib_ver 2.44
 %define ostree_ver 2017.14
@@ -25,7 +31,7 @@ Source: https://github.com/flatpak/flatpak-builder/releases/download/%version/%n
 Requires: flatpak >= %flatpak_ver
 Requires: libostree >= %ostree_ver
 Requires: /usr/bin/bzip2
-Requires: /usr/bin/bzr
+Requires: /usr/bin/brz
 Requires: /usr/bin/eu-strip
 Requires: /usr/bin/git
 Requires: /usr/bin/patch
@@ -78,6 +84,10 @@ See http://flatpak.org/ for more information.
 %{?_enable_docbook_docs:%doc %_docdir/%name}}
 
 %changelog
+* Sun Aug 15 2021 Yuri N. Sedunov <aris@altlinux.org> 1:1.0.14-alt1
+- 1.0.14
+- required brz instead of bzr
+
 * Thu Feb 18 2021 Yuri N. Sedunov <aris@altlinux.org> 1:1.0.12-alt1
 - 1.0.12
 
