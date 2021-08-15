@@ -1,13 +1,13 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global srcname metro-xmlstreambuffer
 
 Name:           xmlstreambuffer
 Version:        1.5.9
-Release:        alt1_1jpp11
+Release:        alt1_5jpp11
 Summary:        Stream Based Representation for XML Infoset
 License:        BSD
 
@@ -17,9 +17,7 @@ Source0:        %{url}/archive/%{version}/%{srcname}-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.fasterxml.woodstox:woodstox-core)
 BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.jvnet.staxex:stax-ex)
@@ -43,13 +41,16 @@ pushd streambuffer
 %pom_remove_plugin :buildnumber-maven-plugin
 %pom_remove_plugin :glassfish-copyright-maven-plugin
 %pom_remove_plugin :maven-enforcer-plugin
+
+%pom_remove_dep "com.fasterxml.woodstox:woodstox-core"
+%pom_remove_dep "junit:junit"
 popd
 
 
 %build
 pushd streambuffer
 # skip javadoc build due to https://github.com/fedora-java/xmvn/issues/58
-%mvn_build -j -- -DbuildNumber=unknown
+%mvn_build -f -j -- -DbuildNumber=unknown
 popd
 
 
@@ -65,6 +66,9 @@ popd
 
 
 %changelog
+* Sun Aug 15 2021 Igor Vlasenko <viy@altlinux.org> 1.5.9-alt1_5jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.5.9-alt1_1jpp11
 - new version; needs java9+
 
