@@ -1,34 +1,24 @@
-%define		svn 9421
+%define		svn 9506
 
 %define		rel alt1
 
 Name:		smplayer
-Summary:	A great MPlayer/MPV front-end (QT4)
-Summary(ru_RU.UTF8): Мощный интерфейс для MPlayer/MPV (QT4)
-Summary(uk_UA.UTF8): Потужний інтерфейс для MPlayer/MPV (QT4)
+Summary:	A great MPlayer/MPV front-end (QT5)
+Summary(ru_RU.UTF8): Мощный интерфейс для MPlayer/MPV (QT5)
+Summary(uk_UA.UTF8): Потужний інтерфейс для MPlayer/MPV (QT5)
 License:	GPLv2
 Group:		Video
 Url:		http://smplayer.sourceforge.net
-Version:	20.6.0
+Version:	21.1.0
 Release:	%rel.%svn
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Source0:	http://downloads.sourceforge.net/smplayer/%name-%version.tar.bz2
 Patch0:		smplayer-paths-fix-alt.patch
 Patch1:		smplayer-18.3-disable_update.patch
 
-BuildRequires:	gcc-c++ libqt4-devel >= 4.2
-Provides: %name
-
-
-%if "%rel" == "alt0.M70T"
-Requires: mplayer
-%endif
-%if "%rel" == "alt0.M60T"
-Requires: mplayer
-%endif
-%if "%rel" == "alt0.M51"
-Requires: mplayer
-%endif
+# Automatically added by buildreq on Sat Aug 14 2021 (-bi)
+# optimized out: elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libglvnd-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-widgets libqt5-xml libstdc++-devel libxcb-devel python-base qt5-base-devel qt5-tools sh4 xorg-proto-devel xz
+BuildRequires: libXext-devel qt5-script-devel qt5-tools-devel zlib-devel
 
 %description
 smplayer intends to be a complete front-end for MPlayer/MPV, from basic features
@@ -37,7 +27,7 @@ for MPlayer/MPV filters and more. One of the main features is the ability to
 remember the state of a played file, so when you play it later it will resume
 at the same point and with the same settings. smplayer is developed with
 the Qt toolkit, so it's multi-platform.
-Compiled with Qt4
+Compiled with Qt5
 
 %description -l ru_RU.UTF8
 SMPlayer стремится быть как можно более полным интерфейсом для MPlayer/MPV,
@@ -47,7 +37,7 @@ SMPlayer стремится быть как можно более полным �
 того, чтобы при следующем его открытии Вы могли смотреть его дальше с
 того же места и с теми же параметрами настроек. SMPlayer разработан на
 инструментарии Qt и является мультиплатформенным.
-Скомпилировано с Qt4
+Скомпилировано с Qt5
 
 %description -l uk_UA.UTF8
 SMPlayer направлений на те, щоб стати як можна більш повним інтерфейсом
@@ -57,12 +47,11 @@ SMPlayer направлений на те, щоб стати як можна б�
 відтворюється, для того, щоб при наступному його відкритті Ви мали змогу
 переглядати його далі з того ж місця і з тими ж параметрами налаштувань.
 SMPlayer розробено на інструментарії Qt і є мультиплатформним.
-Зібрано з Qt4
+Зібрано з Qt5
 
 
-%if "%rel" == "alt1"
 %package -n %name-mpv
-Summary: A great MPV front-end (QT4)
+Summary: A great MPV front-end (QT5)
 Group: Video
 Requires: %name mpv
 BuildArch: noarch
@@ -71,54 +60,13 @@ BuildArch: noarch
 Virtual package for SMPlayer, requires a MPV
 
 %package -n %name-mplayer
-Summary: A great MPlayer front-end (QT4)
+Summary: A great MPlayer front-end (QT5)
 Group: Video
 Requires: %name mplayer
 BuildArch: noarch
 
 %description -n %name-mplayer
 Virtual package for SMPlayer, requires a MPlayer
-%endif
-
-%if "%rel" == "alt0.M90P"
-%package -n %name-mpv
-Summary: A great MPV front-end (QT4)
-Group: Video
-Requires: %name mpv
-BuildArch: noarch
-
-%description -n %name-mpv
-Virtual package for SMPlayer, requires a MPV
-
-%package -n %name-mplayer
-Summary: A great MPlayer front-end (QT4)
-Group: Video
-Requires: %name mplayer
-BuildArch: noarch
-
-%description -n %name-mplayer
-Virtual package for SMPlayer, requires a MPlayer
-%endif
-
-%if "%rel" == "alt0.M80P"
-%package -n %name-mpv
-Summary: A great MPV front-end (QT4)
-Group: Video
-Requires: %name mpv
-BuildArch: noarch
-
-%description -n %name-mpv
-Virtual package for SMPlayer, requires a MPV
-
-%package -n %name-mplayer
-Summary: A great MPlayer front-end (QT4)
-Group: Video
-Requires: %name mplayer
-BuildArch: noarch
-
-%description -n %name-mplayer
-Virtual package for SMPlayer, requires a MPlayer
-%endif
 
 %prep
 %setup -q
@@ -128,7 +76,6 @@ sed -i 's|DOC_PATH=$(PREFIX)/share/doc/packages/smplayer|DOC_PATH=%_docdir/%name
 sed -i 's|0UNKNOWN|%svn|g' get_svn_revision.sh
 
 %build
-export PATH=$PATH:%_qt4dir/bin
 export OPTFLAGS="%optflags"
 %make_build
 
@@ -145,20 +92,14 @@ export OPTFLAGS="%optflags"
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_man1dir/*
 
-%if "%rel" == "alt1"
 %files -n %name-mpv
 %files -n %name-mplayer
-%endif
-%if "%rel" == "alt0.M90P"
-%files -n %name-mpv
-%files -n %name-mplayer
-%endif
-%if "%rel" == "alt0.M80P"
-%files -n %name-mpv
-%files -n %name-mplayer
-%endif
 
 %changelog
+* Sun Aug 15 2021 Motsyo Gennadi <drool@altlinux.ru> 21.1.0-alt1.9506
+- 21.1.0 (svn9506)
+- build with Qt5
+
 * Sun Jun 21 2020 Motsyo Gennadi <drool@altlinux.ru> 20.6.0-alt1.9421
 - 20.6.0 (svn9421)
 
