@@ -1,16 +1,16 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           felix-gogo-parent
-Version:        5
-Release:        alt1_1jpp11
+Version:        6
+Release:        alt1_2jpp11
 Summary:        Parent pom for Apache Felix Gogo
 License:        ASL 2.0
 URL:            http://felix.apache.org/documentation/subprojects/apache-felix-gogo.html
 
-Source0:        http://archive.apache.org/dist/felix/gogo-parent-%{version}-source-release.tar.gz
+Source0:        https://repo1.maven.org/maven2/org/apache/felix/gogo-parent/%{version}/gogo-parent-%{version}-source-release.tar.gz
 
 BuildArch:      noarch
 
@@ -48,6 +48,9 @@ line shell for OSGi. It is used in many OSGi runtimes and servers.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 6-alt1_2jpp11
+- new version
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 5-alt1_1jpp11
 - new version
 
