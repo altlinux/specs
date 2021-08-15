@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -9,32 +9,22 @@ BuildRequires: jpackage-11-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_with obr
-%bcond_without reporting
-
-%global srcname maven-bundle-plugin
+%bcond_with bootstrap
 
 Name:           maven-plugin-bundle
-Version:        4.2.1
+Version:        5.1.1
 Release:        alt1_3jpp11
 Summary:        Maven Bundle Plugin
 License:        ASL 2.0
-
 URL:            https://felix.apache.org
-Source0:        https://repo1.maven.org/maven2/org/apache/felix/%{srcname}/%{version}/%{srcname}-%{version}-source-release.tar.gz
-
-# Needs polishing to be sent upstream
-Patch0:         0001-Port-to-current-maven-dependency-tree.patch
-# New maven-archiver removed some deprecated methods we were using
-Patch1:         0002-Fix-for-new-maven-archiver.patch
-# Port to newer Plexus utils
-Patch2:         0003-Port-to-plexus-utils-3.0.24.patch
-# Port to newer Maven
-Patch3:         0004-Use-Maven-3-APIs.patch
-
 BuildArch:      noarch
 
+Source0:        https://repo1.maven.org/maven2/org/apache/felix/maven-bundle-plugin/%{version}/maven-bundle-plugin-%{version}-source-release.tar.gz
+
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(biz.aQute.bnd:biz.aQute.bndlib)
 BuildRequires:  mvn(org.apache.felix:felix-parent:pom:)
 BuildRequires:  mvn(org.apache.felix:org.apache.felix.utils)
@@ -45,18 +35,7 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-tree)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.osgi:osgi.core)
-BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.sonatype.plexus:plexus-build-api)
-%if %{with obr}
-BuildRequires:  mvn(net.sf.kxml:kxml2)
-BuildRequires:  mvn(org.apache.felix:org.apache.felix.bundlerepository)
-BuildRequires:  mvn(xpp3:xpp3)
-%endif
-%if %{with reporting}
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
-BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
 %endif
 Source44: import.info
 
@@ -74,40 +53,25 @@ BuildArch: noarch
 API documentation for %{name}.
 
 %prep
-%setup -q -n %{srcname}-%{version}
-
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%setup -q -n maven-bundle-plugin-%{version}
 
 find -name '*.jar' -delete
-
-%pom_change_dep :org.osgi.core :osgi.core
-
-# Bundled class from old maven-dependency-tree
-rm -r src/main/java/org/apache/maven/shared/dependency
-
-# Bundled classes from old maven
-rm -r src/main/java/org/apache/felix/bundleplugin/pom
 
 # There is forked version of maven-osgi in
 # src/{main,test}/java/org/apache/maven
 
-%if %{with obr}
-# Deps unbundled from felix-bundlerepository
-%pom_add_dep xpp3:xpp3
-%pom_add_dep net.sf.kxml:kxml2
-%else
-rm -r src/main/java/org/apache/felix/obrplugin/
+rm -rf src/main/java/org/apache/felix/obrplugin/
 %pom_remove_dep :org.apache.felix.bundlerepository
-%endif
 
-%if %{without reporting}
-rm src/main/java/org/apache/felix/bundleplugin/baseline/BaselineReport.java
+rm -f src/main/java/org/apache/felix/bundleplugin/baseline/BaselineReport.java
 %pom_remove_dep :doxia-sink-api
 %pom_remove_dep :doxia-site-renderer
-%endif
+%pom_remove_dep :maven-reporting-api
+
+%pom_remove_dep :org.osgi.core
+%pom_remove_dep :jdom
+
+%pom_remove_plugin :maven-invoker-plugin
 
 %build
 # Tests depend on bundled JARs
@@ -123,6 +87,9 @@ rm src/main/java/org/apache/felix/bundleplugin/baseline/BaselineReport.java
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 5.1.1-alt1_3jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 4.2.1-alt1_3jpp11
 - new version
 
