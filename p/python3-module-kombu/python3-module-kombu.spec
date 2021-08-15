@@ -9,7 +9,7 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 5.0.2
+Version: 5.1.0
 Release: alt1
 
 Group: Development/Python3
@@ -38,6 +38,8 @@ BuildRequires: python3-module-tox
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx
 %endif
+
+%add_python3_req_skip azure.core.exceptions azure.servicebus azure.servicebus.exceptions azure.servicebus.management
 
 %description
 AMQP is the Advanced Message Queuing Protocol, an open standard protocol
@@ -102,6 +104,9 @@ python3 setup.py test
 %endif
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1:5.1.0-alt1
+- new version 5.1.0 (with rpmrb script)
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1:5.0.2-alt1
 - new version 5.0.2 (with rpmrb script)
 
