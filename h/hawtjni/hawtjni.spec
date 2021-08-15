@@ -1,12 +1,15 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++
+# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             hawtjni
-Version:          1.17
-Release:          alt2_6jpp11
+Version:          1.18
+Release:          alt1_2jpp11
 Summary:          Code generator that produces the JNI code
 # Maven plugin is under ASL 2.0.
 # stdint.h, shipped in JAR as resource, used only with M$ VC++, is under BSD.
@@ -17,7 +20,7 @@ URL:              http://hawtjni.fusesource.org/
 Source0:          https://github.com/fusesource/hawtjni/archive/%{name}-project-%{version}.tar.gz
 
 # trivially port from commons-lang to commons-lang3
-Patch0:           00-port-to-commons-lang3.patch
+Patch0:           00-hawtjni-port-to-commons-lang3.patch
 
 BuildArch:        noarch
 
@@ -96,7 +99,7 @@ This package allows to use HawtJNI from a maven plugin.
 %pom_remove_plugin :maven-javadoc-plugin hawtjni-runtime
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -112,6 +115,9 @@ This package allows to use HawtJNI from a maven plugin.
 %files -n maven-hawtjni-plugin -f .mfiles-maven-plugin
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 0:1.18-alt1_2jpp11
+- new version
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0:1.17-alt2_6jpp11
 - fixed build
 
