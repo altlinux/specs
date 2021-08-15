@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gudev
-%define ver_major 236
+%define ver_major 237
 %define api_ver 1.0
 
 %def_disable static
@@ -18,7 +18,7 @@ Epoch: 1
 
 Summary: UDev GObject bindings
 Group: System/Libraries
-License: LGPLv2
+License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/%name
 
 %if_disabled snapshot
@@ -107,7 +107,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %files -f %name.lang
 %_libdir/%name-%api_ver.so.*
-%doc README NEWS
+%doc README* NEWS
 
 %files devel
 %_includedir/%_name-%api_ver
@@ -131,6 +131,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Sun Aug 15 2021 Yuri N. Sedunov <aris@altlinux.org> 1:237-alt1
+- 237
+
 * Tue Mar 16 2021 Yuri N. Sedunov <aris@altlinux.org> 1:236-alt1
 - 236 (ported to Meson build system)
 
