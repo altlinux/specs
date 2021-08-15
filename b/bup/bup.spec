@@ -1,6 +1,8 @@
+%def_enable doc
+
 Name:     bup
 Version:  0.32
-Release:  alt1
+Release:  alt2
 
 Summary:  Very efficient backup system based on the git packfile format
 # all of the code is licensed as GNU Lesser General Public License v2, except:
@@ -10,26 +12,26 @@ Summary:  Very efficient backup system based on the git packfile format
 # - definition of relpath() function in wvtest.py: Python License
 License:  LGPL-2.0 and BSD-2-Clause and Python
 Group:    Archiving/Backup
+
 URL:      https://bup.github.io/
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
-
-Source:   %name-%version.tar
+Source0:   %name-%version.tar
 # VCS:    https://github.com/bup/bup
 Source1:  bup-web.service
-
 Patch1:   bup-disable-test_from_path_error.patch
 Patch2:   bup-python.patch
 Patch3:   bup-fix_uint32.patch
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: git-core
-BuildRequires: pandoc
 BuildRequires: python3-module-fuse
 BuildRequires: python3-module-pyxattr
 BuildRequires: python3-module-libacl
 BuildRequires: python3-module-tornado
+%if_enabled doc
+BuildRequires: pandoc
+%endif
 
 %add_findreq_skiplist %_libexecdir/%name/cmd/bup*
 %add_python3_path %_libexecdir/%name/
@@ -73,21 +75,26 @@ Provides the "bup web" command which runs a web server for browsing through
 bup repositories.
 
 %prep
-%setup -q
+%setup
 #patch1 -p1
 #patch2 -p1
 %patch3 -p1
+%ifarch %e2k
+# _helpers.c:439 and on and on
+sed -i 's,-Werror,,;s,-O2,-O%_optlevel,' Makefile*
+%endif
 
 %build
 pushd config
+# NB: homemade one, do not try %%configure
 ./configure \
-       --prefix=%{_prefix} \
-       --execdir=%{_bindir} \
-       --sbindir=%{_sbindir} \
-       --confdir=%{_sysconfdir} \
-       --libdir=%{_libdir} \
-       --libexecdir=%{_libexecdir} \
-       --mandir=%{_mandir}
+       --prefix=%_prefix \
+       --execdir=%_bindir \
+       --sbindir=%_sbindir \
+       --confdir=%_sysconfdir \
+       --libdir=%_libdir \
+       --libexecdir=%_libexecdir \
+       --mandir=%_mandir
 popd
 %make_build PREFIX=%_prefix PYTHON=%__python3
 
@@ -109,21 +116,31 @@ rm -f %buildroot%_libexecdir/%name/bup/py2raise.py
 
 %files
 %doc README README.md DESIGN
+%if_enabled doc
 %doc %_defaultdocdir/%name/
+%endif
 %_bindir/%name
 %_libexecdir/%name/
+%if_enabled doc
 %_man1dir/%{name}*
+%exclude %_man1dir/bup-web.1*
+%endif
 %exclude %_libexecdir/%name/cmd/bup-web
 %exclude %_libexecdir/%name/web/
-%exclude %_man1dir/bup-web.1*
 
 %files web
 %_libexecdir/%name/cmd/bup-web
 %_libexecdir/%name/web/
 %_unitdir/bup-web.service
+%if_enabled doc
 %_man1dir/bup-web.1*
+%endif
 
 %changelog
+* Sun Aug 15 2021 Michael Shigorin <mike@altlinux.org> 0.32-alt2
+- introduce doc knob
+- spec cleanup
+
 * Sun Jan 10 2021 Andrey Cherepanov <cas@altlinux.org> 0.32-alt1
 - New version.
 
