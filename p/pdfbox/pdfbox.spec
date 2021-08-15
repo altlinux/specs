@@ -4,12 +4,12 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          pdfbox
-Version:       2.0.23
-Release:       alt1_1jpp11
+Version:       2.0.24
+Release:       alt1_2jpp11
 Summary:       Apache PDFBox library for working with PDF documents
 License:       ASL 2.0
 URL:           http://pdfbox.apache.org/
@@ -31,6 +31,7 @@ BuildRequires:  mvn(org.bouncycastle:bcmail-jdk15on)
 BuildRequires:  mvn(org.bouncycastle:bcprov-jdk15on)
 BuildRequires:  mvn(javax.xml.bind:jaxb-api)
 BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
+BuildRequires:  mvn(org.mockito:mockito-core)
 
 BuildRequires: fonts-ttf-dejavu
 BuildRequires: fonts-ttf-google-noto-emoji
@@ -227,6 +228,9 @@ rm pdfbox/src/test/java/org/apache/pdfbox/pdmodel/graphics/image/CCITTFactoryTes
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 0:2.0.24-alt1_2jpp11
+- new version
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:2.0.23-alt1_1jpp11
 - new version
 
