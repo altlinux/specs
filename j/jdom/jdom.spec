@@ -1,10 +1,22 @@
+Epoch: 0
 Group: Development/Other
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 # Copyright (c) 2000-2012, JPackage Project
 # All rights reserved.
 #
@@ -37,8 +49,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           jdom
 Version:        1.1.3
-Release:        alt3_23jpp11
-Epoch:          0
+Release:        alt3_26jpp11
 Summary:        Java alternative to DOM and SAX
 License:        Saxpath
 URL:            http://www.jdom.org/
@@ -47,11 +58,12 @@ Source1:        http://repo1.maven.org/maven2/org/jdom/jdom/%{version}/jdom-%{ve
 Patch0:         %{name}-crosslink.patch
 Patch1:         %{name}-1.1-OSGiManifest.patch
 
-BuildRequires:  ant
 BuildRequires:  javapackages-local
-
-BuildRequires:  mvn(jaxen:jaxen)
-BuildRequires:  mvn(xerces:xercesImpl)
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
+BuildRequires:  ant
+%endif
 
 BuildArch:      noarch
 Source44: import.info
@@ -75,7 +87,7 @@ Javadoc for %{name}.
 %package demo
 Group: Development/Other
 Summary:        Demos for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description demo
 Demonstrations and samples for %{name}.
@@ -88,11 +100,9 @@ Demonstrations and samples for %{name}.
 # remove all binary libs
 find . -name "*.jar" -exec rm -f {} \;
 find . -name "*.class" -exec rm -f {} \;
-sed -i -e "s|1.2|1.6|" build.xml
 
 %build
-export CLASSPATH=$(build-classpath xerces-j2 jaxen)
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dj2se.apidoc=%{_javadocdir}/java package javadoc-link
+%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dcompile.source=1.6 -Dcompile.target=1.6 -Dj2se.apidoc=%{_javadocdir}/java package javadoc-link
 
 %install
 %mvn_file : %{name}
@@ -116,6 +126,9 @@ cp -pr samples $RPM_BUILD_ROOT%{_datadir}/%{name}
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:1.1.3-alt3_26jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.1.3-alt3_23jpp11
 - update
 

@@ -1,6 +1,7 @@
+Epoch: 1
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -9,12 +10,11 @@ BuildRequires: jpackage-11-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_without  hsqldb
+%bcond_with bootstrap
 
 Name:           velocity
 Version:        1.7
-Release:        alt3_34jpp11
-Epoch:          1
+Release:        alt3_36jpp11
 Summary:        Java-based template engine
 License:        ASL 2.0
 URL:            http://velocity.apache.org/
@@ -26,31 +26,18 @@ Source1:        http://repo1.maven.org/maven2/org/apache/%{name}/%{name}/%{versi
 # Remove bundled binaries which cannot be easily verified for licensing
 Source2:        generate-tarball.sh
 
-Patch0:         0000-Remove-avalon-logkit.patch
-Patch2:         0002-Use-system-jars.patch
-Patch3:         0003-JDBC-41-compat.patch
-Patch4:         0004-Do-not-use-Werken-XPath.patch
-Patch5:         0005-Skip-Java-8-incompatible-test.patch
-Patch6:         0006-Run-javadoc-with-Xdoclint-none.patch
-Patch7:         0007-Fix-OSGi-metadata.patch
-Patch8:         0008-Port-to-apache-commons-lang3.patch
+Patch1:         0001-Port-to-apache-commons-lang3.patch
+Patch2:         0002-Force-use-of-JDK-log-chute.patch
+Patch3:         0003-CVE-2020-13936.patch
 
-BuildRequires:  ant
-BuildRequires:  ant-junit
-BuildRequires:  antlr
-BuildRequires:  apache-commons-collections
-BuildRequires:  apache-commons-lang3
-BuildRequires:  apache-parent
-BuildRequires:  bcel
-%if %{with hsqldb}
-BuildRequires:  hsqldb-lib
+BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
+BuildRequires:  mvn(commons-collections:commons-collections)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
+BuildRequires:  mvn(org.apache:apache:pom:)
 %endif
-BuildRequires:  glassfish-servlet-api
-BuildRequires:  jakarta-oro
-BuildRequires:  javapackages-local
-BuildRequires:  jaxen
-BuildRequires:  jdom
-BuildRequires:  junit
 Source44: import.info
 
 %description
@@ -74,14 +61,6 @@ template services for the Turbine web application framework.
 Velocity+Turbine provides a template service that will allow web
 applications to be developed according to a true MVC model.
 
-%package        manual
-Group: Development/Java
-Summary:        Manual for %{name}
-BuildArch: noarch
-
-%description    manual
-Documentation for %{name}.
-
 %package        javadoc
 Group: Development/Java
 Summary:        Javadoc for %{name}
@@ -90,129 +69,52 @@ BuildArch: noarch
 %description    javadoc
 Javadoc for %{name}.
 
-%package        demo
-Group: Development/Java
-Summary:        Demo for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
-
-%description    demo
-Demonstrations and samples for %{name}.
-
-# -----------------------------------------------------------------------------
-
 %prep
 %setup -q
+cp %{SOURCE1} ./pom.xml
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
-# remove bundled libs/classes (except those used for testing)
 find . -name '*.jar' ! -name 'test*.jar' -print -delete
 find . -name '*.class' ! -name 'Foo.class' -print -delete
 
-cp %{SOURCE1} ./pom.xml
-
-# remove rest of avalon logkit refences and default to JDK logging
-%patch0 -p1
-
-# Use system jar files instead of downloading from net
-%patch2 -p1
-
-%patch3 -p1
-
-# Use jdom instead of werken-xpath
-%patch4 -p1
-%pom_remove_dep werken-xpath:
-
-# Skip Java 8 incompatible test
-%patch5 -p1
-
-# Disable Java8 doclint
-%patch6 -p1
-
-# Remove werken-xpath Import/Export refences in OSGi manifest file
-%patch7 -p1
-
-# Port to apache commons-lang3
-%patch8 -p1
-
-# Remove dependency on avalon-logkit
-rm src/java/org/apache/velocity/runtime/log/AvalonLogChute.java
-rm src/java/org/apache/velocity/runtime/log/AvalonLogSystem.java
-rm src/java/org/apache/velocity/runtime/log/VelocityFormatter.java
-
-# Remove dependency on log4j12
-rm src/java/org/apache/velocity/runtime/log/Log4JLogChute.java
-rm src/java/org/apache/velocity/runtime/log/Log4JLogSystem.java
+# Disable unneeded features
+rm -r src/java/org/apache/velocity/{anakia,texen,servlet,convert}
+rm src/java/org/apache/velocity/runtime/log/{Avalon,Log4J}Log{Chute,System}.java
+rm src/java/org/apache/velocity/runtime/log/{CommonsLog,Servlet}LogChute.java
 rm src/java/org/apache/velocity/runtime/log/SimpleLog4JLogSystem.java
+rm src/java/org/apache/velocity/runtime/log/VelocityFormatter.java
+rm src/java/org/apache/velocity/app/event/implement/Escape{Html,JavaScript,Sql,Xml,}Reference.java
 
-# Remove dependency on commons-logging
-rm src/java/org/apache/velocity/runtime/log/CommonsLogLogChute.java
+%pom_remove_dep :oro
+%pom_remove_dep :jdom
+%pom_remove_dep :commons-logging
+%pom_remove_dep :log4j
+%pom_remove_dep :servlet-api
+%pom_remove_dep :logkit
+%pom_remove_dep :ant
+%pom_remove_dep :werken-xpath
 
-# need porting to new servlet API. We would just add a lot of empty functions
-rm src/test/org/apache/velocity/test/VelocityServletTestCase.java
-
-# This test doesn't work with new hsqldb
-rm src/test/org/apache/velocity/test/sql/DataSourceResourceLoaderTestCase.java
-
-%if %{without hsqldb}
-rm -r src/test/org/apache/velocity/test/sql/
-%endif
-
-# -----------------------------------------------------------------------------
+%mvn_alias : %{name}:%{name}
 
 %build
-export CLASSPATH=$(build-classpath \
-antlr \
-apache-commons-collections \
-commons-lang3 \
-glassfish-servlet-api \
-jakarta-oro \
-junit \
-jaxen \
-jdom \
-bcel \
-hsqldb \
-junit)
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  \
-  -buildfile build/build.xml \
-  -Dbuild.sysclasspath=first \
-  -Djavac.target=1.6 \
-  -Djavac.source=1.6 \
-  -Dtest.haltonfailure=false \
-  jar javadocs test
-
-# fix line-endings in generated files
-sed -i 's/\r//' docs/api/stylesheet.css docs/api/package-list
-
-# -----------------------------------------------------------------------------
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
-%mvn_file : %{name}
-%mvn_alias : %{name}:%{name}
-%mvn_artifact pom.xml bin/%{name}-%{version}.jar
-%mvn_install -J docs/api
-
-# zero-length file
-rm -r test/issues/velocity-537/compare/velocity537.vm.cmp
-# data
-install -d -m 755 %{buildroot}%{_datadir}/%{name}
-cp -pr examples test %{buildroot}%{_datadir}/%{name}
-
+%mvn_install
 
 %files -f .mfiles
 %doc README.txt
 %doc --no-dereference LICENSE NOTICE
 
-%files manual
-%doc --no-dereference LICENSE NOTICE
-%doc docs/*
-
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE NOTICE
 
-%files demo
-%doc --no-dereference LICENSE NOTICE
-%{_datadir}/%{name}
-
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1:1.7-alt3_36jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1:1.7-alt3_34jpp11
 - fc34 update
 
