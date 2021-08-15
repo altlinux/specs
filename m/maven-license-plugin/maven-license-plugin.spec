@@ -4,12 +4,12 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-license-plugin
 Version:        1.8.0
-Release:        alt6_30jpp11
+Release:        alt6_31jpp11
 Summary:        Maven plugin to update header licenses of source files
 
 License:        ASL 2.0
@@ -33,6 +33,7 @@ BuildRequires:  plexus-classworlds
 BuildRequires:  xml-commons-apis
 BuildRequires:  xmltool
 BuildRequires:  maven-source-plugin
+BuildRequires:  mvn(org.apache.maven:maven-project)
 
 Requires:       jpackage-utils
 Requires:       maven
@@ -77,7 +78,7 @@ sed -i 's/\r//' NOTICE.txt
 %pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration'
 
 %build
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -91,6 +92,9 @@ mkdir -p $RPM_BUILD_ROOT%{_javadir}
 %files javadoc  -f .mfiles-javadoc
 
 %changelog
+* Sun Aug 15 2021 Igor Vlasenko <viy@altlinux.org> 0:1.8.0-alt6_31jpp11
+- fixed build
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.8.0-alt6_30jpp11
 - update
 
