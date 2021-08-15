@@ -1,7 +1,7 @@
 %define major 3
 Name: libntirpc
-Version: %major.3
-Release: alt1.1
+Version: %major.5
+Release: alt1
 
 Summary: New Transport Independent RPC Library
 
@@ -71,6 +71,9 @@ ln -s %name.so.%version %buildroot%_libdir/%name.so.%major
 %_pkgconfigdir/libntirpc.pc
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 3.5-alt1
+- new version 3.5 (with rpmrb script)
+
 * Thu Jun 03 2021 Arseny Maslennikov <arseny@altlinux.org> 3.3-alt1.1
 - NMU: spec: adapted to new cmake macros.
 

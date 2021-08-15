@@ -71,7 +71,7 @@
 
 Name: nfs-ganesha
 Version: 3.5
-Release: alt1
+Release: alt2
 
 Summary: NFS-Ganesha is a NFS Server running in user space
 
@@ -86,6 +86,7 @@ Source: %name-%version.tar
 
 BuildRequires: rpm-macros-intro-conflicts
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
 BuildRequires: bison
 BuildRequires: flex
@@ -99,7 +100,7 @@ BuildRequires: libuuid-devel
 BuildRequires: librados2-devel >= 0.61
 %endif
 %if_with system_ntirpc
-BuildRequires: libntirpc-devel = 3.3
+BuildRequires: libntirpc-devel >= 3.3
 %endif
 BuildRequires: libuserspace-rcu-devel
 
@@ -557,6 +558,9 @@ rm -f %buildroot%_bindir/ganesha-rados-grace
 %endif
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 3.5-alt2
+- rebuild with libntirpc 3.5
+
 * Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 3.5-alt1
 - new version 3.5 (with rpmrb script)
 
