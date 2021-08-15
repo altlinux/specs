@@ -11,7 +11,7 @@
 
 Name: rdma-core
 Version: 34.0
-Release: alt1
+Release: alt2
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
 
@@ -31,7 +31,7 @@ BuildRequires: libudev-devel
 BuildRequires: pkgconfig(libnl-3.0)
 BuildRequires: pkgconfig(libnl-route-3.0)
 BuildRequires: libsystemd-devel
-BuildRequires: /usr/bin/rst2man
+BuildRequires: /usr/bin/rst2man.py
 BuildRequires: pandoc
 Conflicts: infiniband-diags < 2.0.0
 
@@ -219,6 +219,7 @@ discover and use SCSI devices via the SCSI RDMA Protocol over InfiniBand.
 %prep
 %setup
 %patch -p1
+subst 's|NAMES rst2man|& rst2man.py|' buildlib/Findrst2man.cmake
 
 %build
 
@@ -565,6 +566,9 @@ cp -r kernel-headers/rdma %buildroot%_includedir/
 %docdir/ibsrpdm.md
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 34.0-alt2
+- NMU: use /usr/bin/rst2man.py from python2-module-docutils
+
 * Sun Mar 14 2021 Alexey Shabalin <shaba@altlinux.org> 34.0-alt1
 - new version 34.0
 
