@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.10.0
+Version: 6.14.3
 Release: alt1
 
 Summary: A library for property based testing
@@ -68,6 +68,9 @@ tox.py3 --sitepackages -vvr --no-deps -- --numprocesses auto tests
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 6.14.3-alt1
+- new version 6.14.3
+
 * Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 6.10.0-alt1
 - new version 6.10.0
 
