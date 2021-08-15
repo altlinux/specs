@@ -1,6 +1,6 @@
 Name: liblogging
 Version: 1.0.6
-Release: alt1
+Release: alt2
 Summary: LibLogging stdlog library
 License: 2-clause BSD
 Group: System/Libraries
@@ -8,7 +8,7 @@ Url: http://www.liblogging.org
 Source: %name-%version.tar
 
 BuildRequires: pkgconfig(libsystemd) >= 209
-BuildRequires: /usr/bin/rst2man
+BuildRequires: /usr/bin/rst2man.py
 
 %description
 LibLogging stdlog library
@@ -53,6 +53,9 @@ developing programs which use liblogging library.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.6-alt2
+- NMU: use /usr/bin/rst2man.py from python3-module-docutils
+
 * Mon Mar 06 2017 Alexey Shabalin <shaba@altlinux.ru> 1.0.6-alt1
 - 1.0.6
 
