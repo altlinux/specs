@@ -1,5 +1,5 @@
 Name:    ibus-m17n
-Version: 1.4.6
+Version: 1.4.7
 Release: alt1
 Group:   System/Libraries
 Summary: The M17N engine for IBus platform
@@ -9,13 +9,8 @@ URL: https://github.com/ibus/ibus-m17n
 Source0: %name-%version.tar
 
 # Fedora specific patches:
-# Enable lv3:ralt_switch option for some Indic engines in default.xml.
-Patch100: ibus-m17n-xkb-options.patch
 # Don't make the status button clickable (maybe obsolete).
 Patch101: ibus-m17n-hide-title-status.patch
-# Use ar-kbd as default keymap for Arabic
-# https://bugzilla.redhat.com/show_bug.cgi?id=1076945
-Patch103: ibus-m17n-enable-ar-kbd.patch
 
 BuildRequires: gettext-tools libasprintf-devel
 BuildRequires: gcc-c++
@@ -33,9 +28,7 @@ the input table maps from m17n-db.
 
 %prep
 %setup
-%patch100 -p1
 %patch101 -p1
-%patch103 -p1
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -61,6 +54,9 @@ make check
 %_datadir/glib-2.0/schemas/org.freedesktop.ibus.engine.m17n.gschema.xml
 
 %changelog
+* Sun Aug 15 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.7-alt1
+- New version.
+
 * Sat Jul 17 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.6-alt1
 - New version.
 
