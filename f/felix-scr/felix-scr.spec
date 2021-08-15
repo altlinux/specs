@@ -1,24 +1,21 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global bundle  org.apache.felix.scr
 
 Name:          felix-scr
-Version:       2.1.16
-Release:       alt1_8jpp11
+Version:       2.1.26
+Release:       alt1_2jpp11
 Summary:       Apache Felix Service Component Runtime (SCR)
 License:       ASL 2.0
-URL:           http://felix.apache.org/documentation/subprojects/apache-felix-service-component-runtime.html
+URL:           https://felix.apache.org/documentation/subprojects/apache-felix-service-component-runtime.html
 
 Source0:       http://archive.apache.org/dist/felix/%{bundle}-%{version}-source-release.tar.gz
 
 # Don't embed deps, use import-package instead
 Patch0: 0001-Use-import-package-instead-of-embedding-dependencies.patch
-
-# Drop dep on kxml/xpp, use the system SAX implementation instead
-Patch1: 0002-Drop-the-dependencies-on-kxml-xpp3.patch
 
 BuildArch:     noarch
 
@@ -32,7 +29,7 @@ BuildRequires:  mvn(org.osgi:osgi.core) >= 7.0.0
 Source44: import.info
 
 %description
-Implementation of the OSGi Declarative Services Specification Version 1.3 (R6).
+Implementation of the OSGi Declarative Services Specification Version 1.4 (R7).
 
 %package javadoc
 Group: Development/Java
@@ -45,7 +42,6 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q -n %{bundle}-%{version}
 %patch0 -p1
-%patch1 -p1
 
 # All these OSGi deps are provided in the compendium jar
 %pom_add_dep org.osgi:osgi.cmpn:7.0.0:provided
@@ -70,7 +66,7 @@ sed -i -e '/IgnoreJRERequirement/d' src/main/java/org/apache/felix/scr/impl/mana
 
 %build
 # No test deps availables e.g org.ops4j.pax.url:pax-url-wrap
-%mvn_build --xmvn-javadoc -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dfelix.java.version=7
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dfelix.java.version=8
 
 %install
 %mvn_install
@@ -83,6 +79,9 @@ sed -i -e '/IgnoreJRERequirement/d' src/main/java/org/apache/felix/scr/impl/mana
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 2.1.26-alt1_2jpp11
+- new version
+
 * Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 2.1.16-alt1_8jpp11
 - new version
 
