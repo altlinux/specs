@@ -1,7 +1,7 @@
 %def_without build_docs
 
 Name:    synfigstudio
-Version: 1.4.2
+Version: 1.5.0
 Release: alt1
 
 Summary: Synfig studio - animation program
@@ -11,7 +11,7 @@ Group:   Office
 Url:     http://www.synfig.org
 #Source: https://github.com/synfig/synfig.git
 Source:  %name-%version.tar
-Patch:   %name-%version-%release.patch
+Patch:   synfigstudio-alt-fix-build.patch
 
 # FIXME: crippled zlib-devel (#40274)
 ExcludeArch: armh
@@ -73,7 +73,7 @@ Requires: lib%name = %version-%release
 %add_python3_compile_include %_datadir/synfig/plugins
 
 # internal dependency
-%add_python3_req_skip common
+%add_python3_req_skip common properties.shapePropKeyframe
 
 %description
 Synfig Animation Studio is a powerful, industrial-strength vector-based
@@ -189,13 +189,16 @@ subst '1i#!%__python3' `find %buildroot -name \*.py`
 %find_lang synfig
 %find_lang %name
 cat synfig.lang >> %name.lang
+echo /usr/share/locale/uz@Latn/LC_MESSAGES/synfig.mo >> %name.lang
+echo /usr/share/locale/uz@Latn/LC_MESSAGES/synfigstudio.mo >> %name.lang
+echo /usr/share/locale/zh-Hant/LC_MESSAGES/synfig.mo >> %name.lang
+echo /usr/share/locale/zh-Hant/LC_MESSAGES/synfigstudio.mo >> %name.lang
 
 %files -f %name.lang
 %doc synfig-studio/AUTHORS synfig-studio/NEWS synfig-studio/README synfig-studio/TODO
 %_bindir/*
 %config(noreplace) %_sysconfdir/synfig_modules.cfg
 %exclude %_bindir/synfig
-%_pixmapsdir/*
 %_iconsdir/*/*/*/*.png
 %_iconsdir/*/*/*/*.svg
 %_desktopdir/*.desktop
@@ -216,6 +219,9 @@ cat synfig.lang >> %name.lang
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Aug 15 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt1
+- New version.
+
 * Thu Jul 29 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt1
 - New version.
 
