@@ -3,31 +3,33 @@ Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           atinject
-Version:        1
-Release:        alt7_35.20100611svn86jpp11
+Version:        1.0.3
+Release:        alt1_3jpp11
 Summary:        Dependency injection specification for Java (JSR-330)
 License:        ASL 2.0
-URL:            http://code.google.com/p/atinject/
+URL:            https://github.com/eclipse-ee4j/injection-api
 BuildArch:      noarch
 
-# latest release doesn't generate javadocs and there is no source
-# tarball with pom.xml or ant build file
-#
-# svn export -r86 http://atinject.googlecode.com/svn/trunk atinject-1
-# rm -rf atinject-1/{lib,javadoc}/
-# tar caf atinject-1.tar.xz atinject-1
-Source0:        %{name}-%{version}.tar.xz
-# These manifests based on the ones shipped by eclipse.org
-Source1:        MANIFEST.MF
-Source2:        MANIFEST-TCK.MF
-Source3:        http://www.apache.org/licenses/LICENSE-2.0.txt
+Source0:        https://github.com/eclipse-ee4j/injection-api/archive/%{version}.tar.gz
 
-BuildRequires:  javapackages-local
-BuildRequires:  junit
+BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+%endif
 Source44: import.info
 
 %description
@@ -37,59 +39,30 @@ traditional approaches such as constructors, factories, and service
 locators (e.g., JNDI). This process, known as dependency injection, is
 beneficial to most nontrivial applications.
 
-%package        tck
-Group: Development/Java
-Summary:        TCK for testing %{name} compatibility with JSR-330
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       junit
-
-%description    tck
-%{summary}.
-
 %{?javadoc_package}
 
 %prep
-%setup -q
-cp %{SOURCE3} LICENSE
-mkdir lib
-build-jar-repository -p lib junit
+%setup -q -n injection-api-%{version}
 
-# Fix dep in TCK pom
-sed -i -e 's/pom\.groupId/project.groupId/' tck-pom.xml
+%pom_remove_parent
+%pom_remove_plugin -r :maven-javadoc-plugin
 
-# J2EE API symlinks
-%mvn_file :javax.inject atinject javax.inject/atinject
-
-# TCK sub-package
-%mvn_file :javax.inject-tck atinject-tck
-%mvn_package :javax.inject-tck tck
+%mvn_alias : javax.inject:javax.inject
+%mvn_file : atinject
 
 %build
-set -e
-alias rm=:
-alias xargs=:
-alias javac="javac -source 1.8 -target 1.8"
-alias javadoc="javadoc -source 1.8 -Xdoclint:none"
-. ./build.sh
-
-# Inject OSGi manifests required by Eclipse.
-jar umf %{SOURCE1} build/dist/javax.inject.jar
-jar umf %{SOURCE2} build/tck/dist/javax.inject-tck.jar
-
-%mvn_artifact pom.xml build/dist/javax.inject.jar
-%mvn_artifact tck-pom.xml build/tck/dist/javax.inject-tck.jar
-
-mv build/tck/javadoc build/javadoc/tck
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
-%mvn_install -J build/javadoc
+%mvn_install
 
-%files -f .mfiles
-%doc --no-dereference LICENSE
-
-%files tck -f .mfiles-tck
+%files -n %{?module_prefix}%{name} -f .mfiles
+%doc --no-dereference LICENSE.txt NOTICE.md
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 0:1.0.3-alt1_3jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1-alt7_35.20100611svn86jpp11
 - update
 
