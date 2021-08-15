@@ -1,8 +1,8 @@
 %define oname numexpr
 
 Name:           python3-module-%oname
-Version:        2.6.2
-Release:        alt6
+Version:        2.7.3
+Release:        alt1
 Epoch:          1
 
 Summary:        Fast numerical array expression evaluator for Python and NumPy
@@ -14,7 +14,6 @@ URL:            https://github.com/pydata/numexpr
 # Source-url: %__pypi_url %oname
 Source:         %name-%version.tar
 Source1:        site.cfg
-Patch1:         %oname-%version-alt-config.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
@@ -40,7 +39,7 @@ allows to use multiple cores in your computations.
 
 %prep
 %setup
-%patch1 -p1
+%__subst "s|'mkl'|'openblas_lapack'|" setup.py
 # don't require tests from the main module
 %__subst "s|from numexpr.tests.*||" numexpr/__init__.py
 
@@ -49,7 +48,6 @@ sed -i 's|@LIBDIR@|%_libdir|' site.cfg
 %ifnarch %ix86 x86_64 armh aarch64 ppc64le
 sed -i 's@ openblas,@ blas,@' site.cfg
 %endif
-#find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
 sed -i 's|@PYVER@|%_python3_version%_python3_abiflags|' \
 	site.cfg
 
@@ -67,10 +65,13 @@ PYTHONPATH=$(pwd) python3 -c 'import numexpr.tests; numexpr.tests.test()'
 popd
 
 %files
-%doc *.txt *.rst LICENSES
+%doc *.txt *.rst
 %python3_sitelibdir/*
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1:2.7.3-alt1
+- new version 2.7.3 (with rpmrb script)
+
 * Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 1:2.6.2-alt6
 - Fixed Build Requires.
 
