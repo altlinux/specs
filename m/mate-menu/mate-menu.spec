@@ -1,6 +1,6 @@
 Name:    mate-menu
 Version: 20.04.3
-Release: alt1
+Release: alt2
 
 Summary: An Advanced Menu for the MATE Desktop
 # MIT is needed for keybinding.py
@@ -10,15 +10,19 @@ URL:     https://github.com/ubuntu-mate/mate-menu
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: python3-dev
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-distutils-extra
 BuildRequires: intltool
 
+%add_python3_path %_libexecdir/%name
+
 Requires: menu-icons-default
 Requires: mate-menu-editor
 Requires: altlinux-mime-defaults > 0.17
+Requires: typelib(Gtk) = 3.0
+Requires: python3(cairo)
 
 BuildArch: noarch
 
@@ -61,6 +65,9 @@ Supports filtering, favorites, autosession, and many other features.
 %_man1dir/%name.1*
 
 %changelog
+* Sun Aug 15 2021 Anton Midyukov <antohami@altlinux.org> 20.04.3-alt2
+- Fix requires (ALT #39754)
+
 * Mon Apr 06 2020 Pavel Vasenkov <pav@altlinux.org> 20.04.3-alt1
 - new version 20.04.3
 
