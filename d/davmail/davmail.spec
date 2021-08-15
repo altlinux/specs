@@ -11,7 +11,7 @@
 
 Name:     davmail
 Version:  6.0.0
-Release:  alt2
+Release:  alt3
 Summary:  POP/IMAP/SMTP/Caldav/Carddav/LDAP gateway for Microsoft Exchange
 URL:      http://davmail.sourceforge.net/
 Group:    Networking/Other
@@ -26,7 +26,6 @@ Patch1: davmail-alt-disable-jrefx.patch
 
 Requires: %java_version
 Requires: javapackages-tools
-Requires: swig
 
 Provides: davmail6 = %EVR
 Obsoletes: davmail6 < %EVR
@@ -79,6 +78,9 @@ sed -i 's/\r//' releaseguide.txt
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 6.0.0-alt3
+- NMU: drop unused require swig
+
 * Tue Jul 27 2021 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt2
 - Rename to davmail.
 
