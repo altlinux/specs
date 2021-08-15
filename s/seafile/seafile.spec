@@ -1,5 +1,5 @@
 Name: seafile
-Version: 8.0.2
+Version: 8.0.3
 Release: alt1
 
 Summary: Full-fledged cloud storage platform
@@ -125,6 +125,9 @@ cp %SOURCE1 .
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 8.0.3-alt1
+- new version 8.0.3 (with rpmrb script)
+
 * Sun Apr 18 2021 Vitaly Lipatov <lav@altlinux.ru> 8.0.2-alt1
 - new version 8.0.2 (with rpmrb script)
 
