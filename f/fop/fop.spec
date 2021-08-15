@@ -3,17 +3,16 @@ Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^.usr.bin.run/d
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           fop
 Summary:        XSL-driven print formatter
-Version:        2.4
-Release:        alt2_1jpp8
+Version:        2.5
+Release:        alt1_2jpp11
 # ASL 1.1:
 # several files in fop-core/src/main/resources/org/apache/fop/render/awt/viewer/resources
 # rest is ASL 2.0
@@ -29,6 +28,10 @@ Patch2:         0002-Use-sRGB.icc-color-profile-from-colord-package.patch
 Patch3:         0003-Disable-javadoc-doclint.patch
 Patch4:         0004-Port-to-QDox-2.0.patch
 Patch5:         0005-Allow-javascript-in-javadoc.patch
+Patch6:		0006-Revert-Fix-compile-on-newer-mvn.patch
+Patch7:		0007-Revert-FOP-2895-Try-to-fix-Java-7.patch
+Patch8:		0008-Revert-FOP-2895-Build-at-root.patch
+Patch9:		0009-Revert-FOP-2895-Ant-build-should-use-mvn-jar-to-avoi.patch
 
 BuildArch:      noarch
 
@@ -56,6 +59,7 @@ BuildRequires:  qdox
 BuildRequires:  servlet
 BuildRequires:  xmlgraphics-commons >= 1.5
 BuildRequires:  xmlunit
+BuildRequires:  xmlunit-core
 Source44: import.info
 
 Provides: xmlgraphics-fop = %{epoch}:%version-%release
@@ -85,6 +89,10 @@ Javadoc for %{name}.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
 
 
 cp %{SOURCE4} LICENSE-1.1
@@ -95,16 +103,15 @@ rm -f fop/lib/*.jar fop/lib/build/*.jar
 ln -s %{_javadir}/qdox.jar fop/lib/build/qdox.jar
 
 %build
-# zerg's girar armh hack:
-(while true; do date; sleep 7m; done) &
-# end armh hack, kill it when girar will be fixed
 #qdox intentionally left off classpath -- see https://issues.apache.org/bugzilla/show_bug.cgi?id=50575
 export CLASSPATH=$(build-classpath apache-commons-logging apache-commons-io \
-    fontbox xmlgraphics-commons batik-all avalon-framework-api \
-    avalon-framework-impl servlet batik/batik-svg-dom xml-commons-apis \
+    fontbox xmlgraphics-commons batik-all \
+    servlet batik/batik-svg-dom xml-commons-apis \
     xml-commons-apis-ext objectweb-asm/asm-all xmlunit)
 export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
-ant -f fop/build.xml jar-main transcoder-pkg javadocs
+# FIXME no javadocs for now
+#ant -f fop/build.xml jar-main transcoder-pkg javadocs
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -f fop/build.xml jar-main transcoder-pkg
 
 %install
 # inject OSGi manifest
@@ -126,7 +133,8 @@ cp -rp fop/conf/* %{buildroot}%{_datadir}/%{name}/conf
 
 # javadoc
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -rp fop/build/javadocs/* %{buildroot}%{_javadocdir}/%{name}
+# FIXME no javadocs for now
+#cp -rp fop/build/javadocs/* %{buildroot}%{_javadocdir}/%{name}
 
 install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -p -m 644 %{SOURCE3} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
@@ -156,6 +164,9 @@ ln -s fop %buildroot%_bindir/xmlgraphics-fop
 
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 0:2.5-alt1_2jpp11
+- new version
+
 * Sat Dec 12 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt2_1jpp8
 - use zerg@'s hack for armh
 
