@@ -25,7 +25,7 @@ BuildRequires: jpackage-11-compat
 
 Name:             byteman
 Version:          4.0.11
-Release:          alt1_3jpp11
+Release:          alt2_3jpp11
 Summary:          Java agent-based bytecode injection tool
 License:          LGPLv2+
 URL:              http://www.jboss.org/byteman
@@ -55,6 +55,7 @@ BuildRequires:    objectweb-asm
 BuildRequires:    junit
 BuildRequires:    junit5
 BuildRequires:    testng
+BuildRequires:    mvn(org.apache.maven:maven-project)
 # JBoss modules byteman plugin requires it
 BuildRequires:    mvn(org.jboss.modules:jboss-modules)
 
@@ -229,6 +230,9 @@ ln -s %{_javadir}/byteman/byteman.jar $RPM_BUILD_ROOT%{apphomedir}/lib/byteman.j
 %{apphomedir}/lib/byteman-dtest.jar
 
 %changelog
+* Sun Aug 15 2021 Igor Vlasenko <viy@altlinux.org> 4.0.11-alt2_3jpp11
+- fixed build
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 4.0.11-alt1_3jpp11
 - new version
 
