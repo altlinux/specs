@@ -1,13 +1,13 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global upname RSyntaxTextArea
 
 Name:           rsyntaxtextarea
-Version:        3.1.1
-Release:        alt2_2jpp11
+Version:        3.1.3
+Release:        alt1_2jpp11
 Summary:        A syntax highlighting, code folding text editor for Java Swing applications
 
 License:        BSD
@@ -81,6 +81,9 @@ popd
 
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 3.1.3-alt1_2jpp11
+- new version
+
 * Thu May 13 2021 Igor Vlasenko <viy@altlinux.org> 3.1.1-alt2_2jpp11
 - built for java8
 
