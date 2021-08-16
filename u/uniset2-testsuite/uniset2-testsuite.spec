@@ -1,8 +1,8 @@
 %def_enable doc
 
 Name: uniset2-testsuite
-Version: 2.6
-Release: alt15
+Version: 2.7
+Release: alt1
 Summary: UniSet test suite
 Group: Development/Python
 License: LGPL
@@ -10,12 +10,12 @@ Url: http://github.com/Etersoft/uniset2-testsuite
 Source: %name-%version.tar
 # Automatically added by buildreq on Wed Jan 18 2017
 # optimized out: pkg-config python-base python-modules python3 python3-base
-BuildRequires: doxygen python-devel python-devel
-BuildRequires: python-module-uniset2 >= 2.6-alt10
+BuildRequires: doxygen python3-dev python3 python3-base
+BuildRequires: python3-module-uniset2 >= 2.14.1-alt1
 
-Requires: python-module-uniset2 >= 2.6-alt10
-Provides: python2.7(UTestInterface)
-Provides: python2.7(TestSuiteGlobal)
+Requires: python3-module-uniset2 >= 2.14.1-alt1
+Provides: python3(UTestInterface)
+Provides: python3(TestSuiteGlobal)
 BuildArch: noarch
 
 %if_enabled doc
@@ -68,6 +68,9 @@ SNMP Plugin for uniset2-testsuite
 %endif
 
 %changelog
+* Sun Aug 15 2021 Pavel Vainerman <pv@altlinux.ru> 2.7-alt1
+- python2 --> python3
+
 * Sat Nov 23 2019 Pavel Vainerman <pv@altlinux.ru> 2.6-alt15
 - python --> python2.7
 

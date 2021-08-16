@@ -25,8 +25,8 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.13.1
-Release: alt1
+Version: 2.14.1
+Release: alt2
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL-2.1
@@ -38,9 +38,9 @@ Packager: Pavel Vainerman <pv@altlinux.ru>
 # Git: http://git.etersoft.ru/projects/asu/uniset.git
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Fri Aug 26 2016
-# optimized out: fontconfig libgpg-error libsasl2-3 libsqlite3-devel libstdc++-devel libwayland-client libwayland-server perl pkg-config python-base python-devel python-module-omniidl python-modules python3
-BuildRequires: gcc-c++ libev-devel libomniORB-devel libpoco-devel libsigc++2-devel libxml2-devel xsltproc
+# Automatically added by buildreq on Sun Aug 15 2021
+# optimized out: fontconfig fonts-ttf-liberation-narrow glibc-kernheaders-generic glibc-kernheaders-x86 libcrypt-devel libgpg-error libpoco-net libsasl2-3 libsqlite3-devel libstdc++-devel perl pkg-config python-modules python2-base python3 python3-base python3-module-omniidl python3-module-paste sh4 tzdata
+BuildRequires: catch-devel gcc-c++ libev-devel libomniORB-devel libpoco-devel libsigc++2-devel libxml2-devel xsltproc
 
 # for uniset2-codegen
 BuildPreReq: xsltproc
@@ -79,8 +79,8 @@ BuildRequires: netdata
 %endif
 
 %if_enabled python
-BuildRequires: python-devel python-module-distribute
-BuildRequires(pre): rpm-build-python
+BuildRequires: python3-dev
+BuildRequires(pre): rpm-build-python3
 
 # swig
 # add_findprov_lib_path %python_sitelibdir/%oname
@@ -123,14 +123,14 @@ Libraries needed to develop for UniSet.
 
 
 %if_enabled python
-%package -n python-module-%oname
+%package -n python3-module-%oname
 Group: Development/Python
 Summary: python interface for libuniset
 Requires: %name = %version-%release
 
 # py_provides UGlobal UInterface UniXML uniset
 
-%description -n python-module-%oname
+%description -n python3-module-%oname
 Python interface for %name
 %endif
 
@@ -466,10 +466,10 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 %endif
 
 %if_enabled python
-%files -n python-module-%oname
-%python_sitelibdir/*
-%python_sitelibdir_noarch/%oname/*
-%dir %python_sitelibdir_noarch/%oname
+%files -n python3-module-%oname
+%python3_sitelibdir/*
+%python3_sitelibdir_noarch/%oname/*
+%dir %python3_sitelibdir_noarch/%oname
 %endif
 
 %if_enabled netdata
@@ -594,6 +594,12 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Mon Aug 16 2021 Pavel Vainerman <pv@altlinux.ru> 2.14.1-alt2
+- remove python-base require
+
+* Sun Aug 15 2021 Pavel Vainerman <pv@altlinux.ru> 2.14.1-alt1
+- python2 -> python3
+
 * Mon Jul 12 2021 Pavel Vainerman <pv@altlinux.ru> 2.13.1-alt1
 - [unet]: zero-copy optimization
 
