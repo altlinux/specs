@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-setup
-Version: 0.3.9
+Version: 0.3.10
 Release: alt1
 
 Summary: Perform initial setup of an OEM installation (warning!)
@@ -57,6 +57,22 @@ next boot!  Given that its sole purpose is the _initial_
 configuration of a new system (like setting root password)
 nobody should need that on an up-and-running host.
 
+%package -n installer-feature-%name-stage2
+Summary: Perform initial setup of an OEM installation (warning!)
+Group: System/Configuration/Other
+
+%description -n installer-feature-%name-stage2
+Perform initial setup of an OEM installation.
+This postinstall script for installer.
+
+%package -n installer-feature-%name-x11vnc-stage2
+Summary: Perform initial setup of an OEM installation through VNC (warning!)
+Group: System/Configuration/Other
+
+%description -n installer-feature-%name-x11vnc-stage2
+Perform initial setup of an OEM installation through VNC.
+This postinstall script for installer.
+
 %prep
 %setup
 
@@ -90,21 +106,11 @@ EOF
 %_alterator_datadir/steps/vnc.desktop
 %config(noreplace) %_sysconfdir/%name/steps-vnc
 
-# the restore is done in postinstall script
-# triggered by successful completion of the module
-# as it can be reused now (doesn't self destruct)
-%post
-[ ! -f /lib/systemd/system/setup-vnc.target ] || exit 0
-%post_service setup
-[ -d /etc/systemd/system ] || exit 0
-mv /etc/systemd/system/default.target /etc/systemd/system/default.target.bak ||:
-ln -sf /lib/systemd/system/setup.target /etc/systemd/system/default.target
+%files -n installer-feature-%name-stage2
+%_datadir/install2/postinstall.d/80-alterator-setup
 
-%post x11vnc
-%post_service setup-vnc
-[ -d /etc/systemd/system ] || exit 0
-mv /etc/systemd/system/default.target /etc/systemd/system/default.target.bak ||:
-ln -sf /lib/systemd/system/setup-vnc.target /etc/systemd/system/default.target
+%files -n installer-feature-%name-x11vnc-stage2
+%_datadir/install2/postinstall.d/81-alterator-setup-vnc
 
 # package is removed in postinstall hook, but
 # 'systemd stop' stops whole setup.service with hook.
@@ -119,6 +125,11 @@ if [ -x /sbin/sd_booted ]; then
 fi
 
 %changelog
+* Mon Aug 16 2021 Anton Midyukov <antohami@altlinux.org> 0.3.10-alt1
+- Not enable setup.target as default.target (Closes: 39546)
+- Add installer-feature-alterator-setup,
+  installer-feature-alterator-setup-vnc 
+
 * Mon Feb 22 2021 Anton Midyukov <antohami@altlinux.org> 0.3.9-alt1
 - Fix conflict with package preinstall (ALT bug 39715)
 
