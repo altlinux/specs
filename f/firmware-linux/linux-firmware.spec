@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20210719
+Version: 20210812
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,36 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Mon Aug 16 2021 Cronbuild Service <cronbuild@altlinux.org> 20210812-alt1
+- upstream changes (GIT 24c4a85):
+  + amdgpu: revert back to older raven2 sdma firmware (thx Alex Deucher)
+  + amdgpu: revert back to older raven sdma firmware (thx Alex Deucher)
+  + amdgpu: revert back to older picasso sdma firmware (thx Alex Deucher)
+  + amdgpu: add initial vangogh support (thx Alex Deucher)
+  + amdgpu: update vega20 firmware from 21.30 (thx Alex Deucher)
+  + amdgpu: update vega12 firmware from 21.30 (thx Alex Deucher)
+  + amdgpu: update vega10 firmware from 21.30 (thx Alex Deucher)
+  + amdgpu: update renoir firmware from 21.30 (thx Alex Deucher)
+  + amdgpu: update raven2 firmware from 21.30 (thx Alex Deucher)
+  + amdgpu: update raven firmware from 21.30 (thx Alex Deucher)
+  + amdgpu: update polaris12 firmware from 21.30 (thx Alex Deucher)
+  + amdgpu: update picasso firmware from 21.30 (thx Alex Deucher)
+  + amdgpu: update dimgrey cavefish firmware from 21.30 (thx Alex Deucher)
+  + amdgpu: update navy flounder firmware from 21.30 (thx Alex Deucher)
+  + amdgpu: update sienna cichlid firmware from 21.30 (thx Alex Deucher)
+  + amdgpu: update navi14 firmware from 21.30 (thx Alex Deucher)
+  + amdgpu: update navi12 firmware from 21.30 (thx Alex Deucher)
+  + amdgpu: update navi10 firmware from 21.30 (thx Alex Deucher)
+  + amdgpu: update green sardine firmware from 21.30 (thx Alex Deucher)
+  + amdgpu: update arcturus firmware from 21.30 (thx Alex Deucher)
+  + Update firmware file for Intel Bluetooth AX210 (thx Kiran K)
+  + update frimware for mediatek bluetooth chip (MT7921) (thx mark-yw.chen)
+  + add firmware for MT7922 (thx Deren Wu)
+  + QCA : Updated firmware files for WCN3991 (thx smagar)
+  + i915: Add v2.03 DMC for RKL (thx Anusha Srivatsa)
+  + i915: Add v2.12 DMC for TGL (thx Anusha Srivatsa)
+  + qca: Add firmware files for BT chip WCN6750. (thx smagar)
+
 * Mon Jul 19 2021 Cronbuild Service <cronbuild@altlinux.org> 20210719-alt1
 - upstream changes (GIT 168452e):
   + iwlwifi: add ty firmware from Core63-43 (thx Johannes Berg)
