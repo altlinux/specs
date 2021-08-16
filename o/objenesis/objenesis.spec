@@ -2,8 +2,16 @@ Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-1.8-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 # Copyright (c) 2000-2009, JPackage Project
 # All rights reserved.
 #
@@ -37,22 +45,26 @@ BuildRequires: jpackage-1.8-compat
 Summary:        A library for instantiating Java objects
 Name:           objenesis
 Version:        3.1
-Release:        alt1_4jpp8
+Release:        alt1_7jpp8
 License:        ASL 2.0
 URL:            http://objenesis.org/
+BuildArch:      noarch
+
 Source0:        https://github.com/easymock/%{name}/archive/%{version}.tar.gz
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+%endif
 # xmvn-builddep misses this:
+%if %{without bootstrap}
 BuildRequires:  mvn(org.apache:apache-jar-resource-bundle)
-
-BuildArch:      noarch
+%endif
 Source44: import.info
+
 
 %description
 Objenesis is a small Java library that serves one purpose: to instantiate 
@@ -74,7 +86,6 @@ when this is useful:
 * Container Frameworks - Objects can be dynamically instantiated in 
   non-standard ways.
 
-
 %package javadoc
 Group: Development/Java
 Summary:        Javadoc for %{name}
@@ -83,7 +94,6 @@ BuildArch:      noarch
 %description javadoc
 This package contains the API documentation for %{name}.
 
-
 %prep
 %setup -q
 
@@ -91,22 +101,18 @@ This package contains the API documentation for %{name}.
 %pom_xpath_remove pom:addMavenDescriptor
 
 %pom_remove_plugin :maven-timestamp-plugin
+%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin -r :maven-shade-plugin
 %pom_xpath_remove "pom:dependency[pom:scope='test']" tck
-%pom_xpath_remove pom:build/pom:extensions
 
-# Fix javadoc generation on java 11
-%pom_xpath_inject pom:pluginManagement/pom:plugins "<plugin>
-<artifactId>maven-javadoc-plugin</artifactId>
-<configuration><source>1.8</source></configuration>
-</plugin>" 
+%pom_xpath_remove pom:build/pom:extensions
 
 %build
 # tests are skipped because of missing dependency spring-osgi-test
-%mvn_build -- -Dyear=2009 -Dmaven.test.skip=true
+%mvn_build -f
 
 %install
 %mvn_install
-
 
 %files -f .mfiles
 %doc LICENSE.txt
@@ -114,8 +120,10 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
-
 %changelog
+* Mon Aug 16 2021 Igor Vlasenko <viy@altlinux.org> 0:3.1-alt1_7jpp8
+- update
+
 * Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 0:3.1-alt1_4jpp8
 - new version, use jvm8
 
