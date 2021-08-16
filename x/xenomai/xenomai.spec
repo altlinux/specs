@@ -6,7 +6,7 @@
 
 Name: xenomai
 Version: 3.1.1
-Release: alt1
+Release: alt2
 Summary: Real-Time Framework for Linux
 License: GPL-2.0+ and LGPL-2.0+ and LGPL-2.1 and MIT
 Group: System/Kernel and hardware
@@ -18,7 +18,7 @@ ExclusiveArch: x86_64
 BuildRequires: banner
 BuildRequires: libiniparser-devel
 %if_enabled docs
-BuildRequires: doxygen asciidoc asciidoc-a2x w3m
+BuildRequires: doxygen asciidoc-a2x asciidoc-latex w3m
 %endif
 
 %description
@@ -399,6 +399,9 @@ find /usr/share/doc/xenomai/demo -name a.out -delete
 %files checkinstall
 
 %changelog
+* Mon Aug 16 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.1-alt2
+- NMU: add BR: asciidoc-latex
+
 * Sat Jun 12 2021 Vitaly Chikunov <vt@altlinux.org> 3.1.1-alt1
 - Update to v3.1.1 (2021-05-31).
 
