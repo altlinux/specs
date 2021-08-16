@@ -17,7 +17,7 @@
 %def_enable ntlm
 
 Name: openldap
-Version: %_sover.57
+Version: %_sover.59
 Release: alt1
 
 Provides: openldap2.4 = %version-%release
@@ -94,6 +94,7 @@ Patch23: %_bname-2.4.31-rh-nss-default-cipher-suite-always-selected.patch
 Patch24: %_bname-2.4.31-rh-nss-multiple-tls-contexts.patch
 Patch25: openldap-2.4.32-alt-gcc5.1.patch
 Patch27: openldap-2.4.42-CVE-2015-3276.patch
+Patch28: openldap-cbinding-ITS-9215-fix-for-glibc-again.patch
 
 ### REQUIRE Section
 
@@ -274,6 +275,7 @@ HTML and TXT versions
 %patch14 -p1
 
 %patch27 -p1
+%patch28 -p1
 
 # Add some more schema for the sake of migration scripts and others
 pushd servers/slapd
@@ -282,10 +284,12 @@ popd
 
 
 %build
-
 # Options -lresolv in line below need for some bad configure scripts like in auth_ldap package
 #export LDFLAGS="$LDFLAGS -lresolv"
 export CPPFLAGS="$CPPFLAGS -DLOG_DAEMON=1"
+
+# enable experimental support for LDAP over UDP (LDAP_CONNECTIONLESS)
+export CFLAGS="${CFLAGS} ${LDFLAGS} -Wl,--as-needed -DLDAP_CONNECTIONLESS -DLDAP_USE_NON_BLOCKING_TLS -DOPENSSL_NO_MD2"
 
 shtoolize all
 aclocal
@@ -700,6 +704,14 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Mon Aug 16 2021 Andrey Cherepanov <cas@altlinux.org> 2.4.59-alt1
+- 2.4.59
+- Fixes:
+  + CVE-2021-27212 Fixed slapd validity checks for issuerAndThisUpdateCheck
+- Enable experimental support for LDAP over UDP (LDAP_CONNECTIONLESS)
+- Fix coverity issues
+- Build without MP_2 support
+
 * Sat Feb 13 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.57-alt1
 - 2.4.57
 - Fixes:
@@ -1000,7 +1012,7 @@ rm -f /var/lib/ldap/%_lib/*.so*
 - add samba.schema from samba-3.0.23a-alt1
 - decrease default in-memory cache size for BDB from 128Mb to 64Mb
 
-* Tue Aug 24 2006 Dmitry Lebkov <dlebkov@altlinux.ru> 2.3.27-alt1
+* Thu Aug 24 2006 Dmitry Lebkov <dlebkov@altlinux.ru> 2.3.27-alt1
 - 2.3.27
 
 * Tue Apr 25 2006 Dmitry Lebkov <dlebkov@altlinux.ru> 2.3.21-alt1
@@ -1123,7 +1135,7 @@ rm -f /var/lib/ldap/%_lib/*.so*
 * Mon Oct 11 2004 Serge A. Volkov <vserge@altlinux.org> 2.2.17-alt2
 - FIX creating soft link to libs liblber and libldap 
 
-* Sat Oct 01 2004 Serge A. Volkov <vserge@altlinux.org> 2.2.17-alt1
+* Fri Oct 01 2004 Serge A. Volkov <vserge@altlinux.org> 2.2.17-alt1
 - Update to new version
 
 * Thu Aug 05 2004 Serge A. Volkov <vserge@altlinux.org> 2.2.15-alt2
@@ -1134,17 +1146,17 @@ rm -f /var/lib/ldap/%_lib/*.so*
   + new version 2.2.15
   + alt-servers-path.patch
 
-* Thu Jul 6 2004 Serge A. Volkov <vserge@altlinux.org> 2.2.14-alt2
+* Tue Jul 6 2004 Serge A. Volkov <vserge@altlinux.org> 2.2.14-alt2
 - Update
   + ldv libs scripts
   + openldap-slapd.init script
   + spec cleanup: docs installation scripts
 
-* Sun Jul 1 2004 Serge A. Volkov <vserge@altlinux.org> 2.2.14-alt1
+* Thu Jul 1 2004 Serge A. Volkov <vserge@altlinux.org> 2.2.14-alt1
 - Spec cleanup
 - Update
   + to new version 2.2.14
-  + patch9 for fix location of slapd and slurpd 
+  + patch9 for fix location of slapd and slurpd
   + OLAG from CVS
   + patch19 %name-2.2.14-alt-pid.patch
   + qmail.shema from qmail-ldap.org (Thanks Konstantin Klimchev)
@@ -1152,7 +1164,7 @@ rm -f /var/lib/ldap/%_lib/*.so*
   - Patch22: %name-perl-PLD.patch
   - Patch15: %name-ALT-OLAG.patch
   - Patch17: %name-mark-benson-030616.patch
-  - disable krb!!! 
+  - disable krb!!!
 - Add
   + -DLOG_DAEMON=1 for log to syslog as a DAEMON
   + shtoolize (Update to new version of shtool scripts)
@@ -1241,7 +1253,7 @@ rm -f /var/lib/ldap/%_lib/*.so*
 - Added:
   + SQL backend build is optional now (needed for AW/XScale project)
 
-* Mon Sep 03 2003 Serge A. Volkov <vserge@altlinux.ru> 2.1.22-alt9
+* Wed Sep 03 2003 Serge A. Volkov <vserge@altlinux.ru> 2.1.22-alt9
 - Spec cleanup
 - Enable build with Cirus-sasl libs
 - Correct Requires for openldap-servers to openssl
@@ -1262,12 +1274,12 @@ rm -f /var/lib/ldap/%_lib/*.so*
 - Spec updated by Alexander Bokovoy <ab@altlinux.ru>, all --with moved to enable/disable
 - Spec cleanup, update openldap-README.ALT
 
-* Mon Aug 24 2003 Serge A. Volkov <vserge at altlinux dot ru> 2.1.22-alt6
+* Sun Aug 24 2003 Serge A. Volkov <vserge at altlinux dot ru> 2.1.22-alt6
 - Update slapd.conf (%name-ALT-0.8-slapd.conf.patch): add replogfile
 - Add dir %%_var/lib/ldap/replica for slurpd
 - Update %name.sysconfig: add SLURPDURLLIST
 
-* Mon Aug 24 2003 Serge A. Volkov <vserge at altlinux dot ru> 2.1.22-alt5
+* Sun Aug 24 2003 Serge A. Volkov <vserge at altlinux dot ru> 2.1.22-alt5
 - Replace all addons schemas by one tar file.
 - Replace old initscripts "ldap" to new two "slapd" and "slurpd" and update it for Sisyphus
 - Update BuildReq
@@ -1351,7 +1363,7 @@ rm -f /var/lib/ldap/%_lib/*.so*
 * Sat Apr 12 2003 Serge A. Volkov <vserge at altlinux dot ru> 2.1.17-alt0.3
 - Add to CFLAGS="-DNEW_LOGGING=1" for New loggig format!!!
 
-* Sat Apr 06 2003 Serge A. Volkov <vserge at altlinux dot ru> 2.1.17-alt0.2
+* Sun Apr 06 2003 Serge A. Volkov <vserge at altlinux dot ru> 2.1.17-alt0.2
 - Fix bdb module compile
 
 * Sat Apr 05 2003 Serge A. Volkov <vserge at altlinux dot ru> 2.1.17-alt0.1
@@ -1453,7 +1465,7 @@ now EXPORTs
   - remove install old files (ud programm)
 - Remove SQL-backend module not compile -- in TODO
 
-* Tue Aug 2 2002 Serge A. Volkov <vserge at altlinux dot ru> 2.1.3-alt1
+* Fri Aug 2 2002 Serge A. Volkov <vserge at altlinux dot ru> 2.1.3-alt1
 - First release for version 2.1.x
 - Remove files in man see CHANGELOG
 
@@ -1514,7 +1526,7 @@ now EXPORTs
 - Update to 2.0.19 release
 - Cleanup spec
 
-* Tue Dec 14 2001 Serge A. Volkov <vserge at altlinux dot ru> 2.0.18-alt2
+* Fri Dec 14 2001 Serge A. Volkov <vserge at altlinux dot ru> 2.0.18-alt2
 - Removed "reload" function in initscript
 - Update slapd.conf
 - added script for corretion syslog.conf
@@ -1522,7 +1534,7 @@ now EXPORTs
 * Fri Oct 26 2001 Serge	A. Volkov <vserge at altlinux dot ru> 2.0.18-alt1
 - Update to 2.0.18
 
-* Wed Oct 25 2001 Serge A. Volkov <vserge at altlinux dot ru> 2.0.17-alt3
+* Thu Oct 25 2001 Serge A. Volkov <vserge at altlinux dot ru> 2.0.17-alt3
 - Clean up spec
 - Correced slapd.conf patch
 
@@ -1545,7 +1557,7 @@ now EXPORTs
 * Fri Sep 21 2001 Volkov A. Serge <vserge@hotbox.ru> 2.0.15-alt1
 - Update to 2.0.15 release.
 
-* Tue Sep 10 2001 Volkov A.Serge <vserge@hotbox.ru> 2.0.14-alt1
+* Mon Sep 10 2001 Volkov A.Serge <vserge@hotbox.ru> 2.0.14-alt1
 - OpenLDAP 2.0.14
 
 * Mon Sep 10 2001 Volkov A.Serge <vserge@hotbox.ru> 2.0.13-alt1
@@ -1564,7 +1576,7 @@ now EXPORTs
 * Fri Aug 3 2001 Volkov A. Serge <vserge@menatepspb.msk.ru> 2.0.11-alt1
 - Devide 4 packeges to 7 packeges. Add Guide as package. Made libldap2-static and devel.
 
-* Wed Jul 3 2001 Volkov A. Serge <vserge@menatepspb.msk.ru> 2.0.11-alt1
+* Tue Jul 3 2001 Volkov A. Serge <vserge@menatepspb.msk.ru> 2.0.11-alt1
 - OpenLDAP 2.0.11 and Migration tool 38. It's my first redation. I look the spec file from Mandrake Linux.
 
 * Thu May 3 2001 Rider <rider@altlinux.ru> 2.0.7-ipl4
