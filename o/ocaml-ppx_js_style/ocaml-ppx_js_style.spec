@@ -2,8 +2,8 @@
 %define  modulename ppx_js_style
 
 Name:    ocaml-%modulename
-Version: 0.14.0
-Release: alt2
+Version: 0.14.1
+Release: alt1
 Summary: Code style checker for Jane Street Packages
 License: MIT
 Group:   Development/ML
@@ -46,6 +46,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Aug 16 2021 Anton Farygin <rider@altlinux.ru> 0.14.1-alt1
+- 0.14.1
+
 * Thu Sep 17 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
 - removed rpm-build-ocaml dependency for runtime package
 - migrated to rpm-build-ocaml 1.4
