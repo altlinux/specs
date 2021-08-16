@@ -1,5 +1,5 @@
 Name: corectrl
-Version: 1.1.3
+Version: 1.1.4
 Release: alt1
 
 Summary: Core control application
@@ -50,6 +50,9 @@ It aims to be flexible, comfortable and accessible to regular users.
 /usr/share/dbus-1/system.d/*
 
 %changelog
+* Mon Aug 16 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1.4-alt1
+- new version 1.1.4 (with rpmrb script)
+
 * Mon Jun 07 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1.3-alt1
 - new version 1.1.3 (with rpmrb script)
 
