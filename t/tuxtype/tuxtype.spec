@@ -1,26 +1,26 @@
-BuildRequires: desktop-file-utils
-%define oname tuxtype_w_fonts
 Name: tuxtype
-Version: 1.8.1
-Release: alt1.qa1
+Version: 1.8.3
+Release: alt1
 
 Summary: An educational typing tutor game starring Tux
 
 Group: Games/Educational
 License: GPLv2
-Url: http://tux4kids.alioth.debian.org/
+Url: https://github.com/tux4kids/tuxtype
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: %oname-%version.tar.gz
+# Source-url: https://github.com/tux4kids/tuxtype/archive/refs/tags/upstream/%version.tar.gz
+Source: %name-%version.tar
 Source1: %name-48x48.xpm
 Source2: %name-32x32.xpm
 Source3: %name-16x16.xpm
 Source4: ru.po
-Patch1:  %name-fix-install.patch
 
+BuildRequires: t4k_common-devel
 BuildRequires: libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libSDL_pango-devel
 BuildRequires: librsvg-devel
+BuildRequires: desktop-file-utils
 
 %description
 Educational typing tutor starring Tux, the Linux Penguin. Object of
@@ -31,12 +31,13 @@ word. Intended to be cute and fun for children learning to type and
 spell.
 
 %prep
-%setup -q -n %oname-%version
+%setup
 cp %SOURCE4 po/
-%patch1 -p2
+# fix install
+subst 's|	chown root:games|#&|' Makefile.am
 
 %build
-#%configure --without-sdlpango --without-rsvg --prefix=/usr --exec-prefix=/usr --sysconfdir=/usr/share/tuxtype/etc/ --localstatedir=/usr/share/tuxtype/var/
+%autoreconf
 %configure --localstatedir=%_localstatedir/games --sysconfdir=%_sysconfdir
 %make_build
 
@@ -82,6 +83,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %attr(0755,root,games) %config(noreplace) %_localstatedir/games/tuxtype
 
 %changelog
+* Mon Aug 16 2021 Vitaly Lipatov <lav@altlinux.ru> 1.8.3-alt1
+- new version 1.8.3 (with rpmrb script)
+
 * Tue Aug 28 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1.8.1-alt1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
