@@ -1,9 +1,8 @@
-%set_verify_elf_method textrel=relaxed
 %define  modulename integers
 
 Name:    ocaml-%modulename
-Version: 0.4.0
-Release: alt3
+Version: 0.5.1
+Release: alt1
 Summary: Various signed and unsigned integer types for OCaml
 License: MIT
 Group:   Development/ML
@@ -43,6 +42,9 @@ developing applications that use %name.
 %_libdir/ocaml/%{modulename}*/*.h
 
 %changelog
+* Mon Aug 16 2021 Anton Farygin <rider@altlinux.ru> 0.5.1-alt1
+- 0.5.1
+
 * Thu Oct 15 2020 Anton Farygin <rider@altlinux.ru> 0.4.0-alt3
 - added ocaml to BuildRequires
 

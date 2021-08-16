@@ -1,7 +1,7 @@
 %define ocamlmod yaml
 Name: ocaml-%ocamlmod
-Version: 2.1.0
-Release: alt3
+Version: 3.0.0
+Release: alt1
 Summary: Parse and generate YAML 1.1 files
 Group: Development/ML
 License: ISC
@@ -35,7 +35,7 @@ developing applications that use %name.
 %dune_build -p %ocamlmod
 
 %install
-%dune_install
+%dune_install %ocamlmod
 
 %files -f ocaml-files.runtime
 %doc README.md
@@ -43,6 +43,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Aug 16 2021 Anton Farygin <rider@altlinux.ru> 3.0.0-alt1
+- 3.0.0
+
 * Tue Mar 16 2021 Anton Farygin <rider@altlinux.org> 2.1.0-alt3
 - spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
 
