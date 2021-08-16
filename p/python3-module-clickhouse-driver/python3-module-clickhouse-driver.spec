@@ -2,7 +2,7 @@
 %define oname clickhouse-driver
 
 Name:       python3-module-%oname
-Version:    0.2.0
+Version:    0.2.1
 Release:    alt1
 License:    %mit
 Group:      Development/Python3
@@ -12,6 +12,7 @@ Source:     %name-%version.tar
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-tzlocal
 
 Requires: python3-module-clickhouse-cityhash
 
@@ -56,6 +57,9 @@ install -pm0644 docs/*/man/*.1 %buildroot/%_man1dir/
 %python3_sitelibdir/clickhouse_driver/tests/
 
 %changelog
+* Mon Aug 16 2021 Anton Farygin <rider@altlinux.ru> 0.2.1-alt1
+- 0.2.1
+
 * Thu Feb 11 2021 Anton Farygin <rider@altlinux.org> 0.2.0-alt1
 - 0.2.0
 
