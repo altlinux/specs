@@ -1,5 +1,5 @@
 Name: eget
-Version: 4.0
+Version: 4.1
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -33,6 +33,10 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Mon Aug 16 2021 Vitaly Lipatov <lav@altlinux.ru> 4.1-alt1
+- eget: add hack for skip mask if there ?...= (some args)
+- eget: fix get list of releases
+
 * Mon Oct 26 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0-alt1
 - full rewrite to support curl (and detect curl or wget is available)
 
