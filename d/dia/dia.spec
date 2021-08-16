@@ -1,27 +1,20 @@
-# INFO: For update, do git merge -s ours with new tag rom upstream repo
-%ifndef e2k
-%define e2k e2k e2kv4 e2kv5 e2kv6 e2k4c e2k8c e2k1cp e2k8c2 e2k12c e2k16c e2k2c3
-%endif
+# INFO: For update, do git merge -s ours with new tag from upstream repo
+# TODO: build new release with poppler for PDF import (experimental)
 
-%define major 0.97
 Name: dia
-Version: %major.4
-Release: alt0.7.2
+Version: 0.97.4
+Release: alt0.8
 
 Summary: A gtk+ based diagram creation program
 Summary(ru_RU.UTF-8): Программа для создания диаграмм, основанная на GTK+
 
-License: GPL
+License: GPLv2
 Group: Office
-Url: http://www.gnome.org/projects/dia
+Url: https://wiki.gnome.org/Apps/Dia
 
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
-
-%py_provides dia
 Obsoletes: %name-gnome %name-python
 
-# Do not use: http://ftp.gnome.org/pub/gnome/sources/dia/%major/%name-%version.tar
-# Source-git: https://git.gnome.org/browse/dia/
+# Source-git: https://gitlab.gnome.org/GNOME/dia.git
 Source: %name-%version.tar
 Source2: ru.po
 
@@ -30,13 +23,16 @@ Patch: alt-dia-fix-help.patch
 Patch2: alt-dia-improve-translation.patch
 Patch3: CVE-2019-19451-adapted-fix.patch
 
-BuildRequires: dblatex docbook-style-xsl docbook-utils gcc-c++ intltool libart_lgpl-devel libgtk+2-devel libxslt-devel
-BuildRequires: python-devel python-module-PyXML python-module-pygtk python-modules-email python-modules-encodings xsltproc
+BuildRequires: pkgconfig(gtk+-2.0) pkgconfig(libxml-2.0) pkgconfig(libart-2.0)
+BuildRequires: gcc-c++ libfreetype-devel libpng-devel
+BuildRequires: intltool gettext
+# for HTML doc
+BuildRequires: docbook-utils docbook-style-dsssl docbook-style-xsl xsltproc
+BuildRequires: desktop-file-utils
+
 %ifnarch %e2k %mips
 BuildRequires: libEMF-devel
 %endif
-BuildRequires: libpng-devel
-BuildRequires: desktop-file-utils
 
 %description
 Dia is a GNU program designed to be much like the Windows
@@ -56,8 +52,6 @@ formats such as EPS, SVG, CGM and PNG.
 формате .xml, а также экспортировать их в различные форматы, такие как
 PostScript(TM), SVG, CGM или PNG.
 
-%add_findprov_lib_path %_libdir/%name
-
 %prep
 %setup
 #patch -p1
@@ -69,8 +63,18 @@ cp -f %SOURCE2 po/ru.po
 
 install -m644 data/icons/48x48/apps/%name.png app/pixmaps/%name-app.png
 
+# fixes from Fedora:
+sed -i 's|libdia_la_LDFLAGS = -avoid-version|libdia_la_LDFLAGS = -avoid-version $(shell pkg-config --libs gtk+-2.0 libxml-2.0 libart-2.0)|' \
+  lib/Makefile.*
+chmod -x `find objects/AADL -type f`
+iconv -f WINDOWS-1252 -t UTF8 doc/en/usage-layers.xml > usage-layers.xml.UTF-8
+mv usage-layers.xml.UTF-8 doc/en/usage-layers.xml
+
+# run in single window mode (--integrated) by default (Fedora #910275)
+sed -i 's|Exec=dia|Exec=dia --integrated|' dia.desktop.in.in
+
 %build
-intltoolize --force
+# TODO: remove autoreconf when will build from a tarball
 %autoreconf
 %configure  \
 	--enable-db2html \
@@ -109,6 +113,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_mandir/fr/man1/*
 
 %changelog
+* Mon Aug 16 2021 Vitaly Lipatov <lav@altlinux.ru> 0.97.4-alt0.8
+- cleanup spec, drop obsoleted BR
+- run dia --integrated now
+
 * Mon Oct 05 2020 Ivan A. Melnikov <iv@altlinux.org> 0.97.4-alt0.7.2
 - disable libEMF on mipsel
 
