@@ -13,7 +13,7 @@
 
 Name:    apache2
 Version: 2.4.48
-Release: alt3.1
+Release: alt4
 Epoch: 1
 
 License: %asl
@@ -105,6 +105,10 @@ BuildRequires: perl-DBM perl-Digest-SHA1 zlib-devel
 
 #Fix libtool use
 BuildRequires: libtool >= 3:2.2.6
+
+#required by mod_md
+BuildRequires: libcurl-devel
+BuildRequires: libjansson-devel
 
 %description
 Apache is a powerful, full-featured, efficient and freely-available
@@ -758,6 +762,7 @@ EOF
 	--enable-xml2enc \
 	--enable-charset_lite=shared \
 	--enable-unixd --enable-mods-static='unixd' \
+	--enable-md \
 	$*
 
 %make_build
@@ -1530,6 +1535,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Mon Aug 16 2021 Egor Ignatov <egori@altlinux.org> 1:2.4.48-alt4
+- enable mod_md
+
 * Thu Jul 22 2021 Paul Wolneykien <manowar@altlinux.org> 1:2.4.48-alt3.1
 - Rebuild to reflect CVE close in the changelog (Fixes: CVE-2021-26691).
 
