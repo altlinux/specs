@@ -1,13 +1,13 @@
 Name: gramps
 Version: 4.2.8
-Release: alt1
+Release: alt2
 
 Summary: Genealogical Research and Analysis Management Programming System
 Summary(ru_RU.UTF-8): Программная система анализирования и управления генеалогическими изысканиями
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-License: GPL
+License: GPLv2
 Group: Databases
 Url: http://gramps.sourceforge.net/
 
@@ -17,18 +17,12 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-gir rpm-build-python3
 
-# manually removed: eric esound
-# Automatically added by buildreq on Mon Aug 07 2006
-BuildRequires: docbook-dtds esound GConf gnome-doc-utils gnome-vfs libavahi-glib perl-XML-Parser pkg-config python-devel python-module-pygnome-gconf python-module-pygobject python-module-pygtk-libglade python-modules python-modules-encodings intltool
-
-# Skipped all internal modules
-#add_python_req_skip grampslib AddMedia AutoComp BaseDoc Calendar Date Filter FrenchRepublic GedcomInfo GenericFilter GrampsCfg GraphLayout Gregorian Hebrew HtmlDoc ImgManip Julian ListModel MergeData OpenSpreadSheet Plugins QuestionDialog ReadXML RelLib Relationship Report SelectObject SelectPerson SpreadSheetDoc StyleEditor SubstKeywords TarFile WriteXML ansel_utf8 const latin_utf8 sort soundex Utils Errors DateDisplay DateHandler DateParser FontScale GrampsGconfKeys GrampsMime Sort
-#add_python_req_skip TreeTips DdTargets GrampsKeys MergePeople NameDisplay PeopleModel PluginMgr ReportOptions ReportUtils TreeTips Merge _winreg Lru PlaceUtils
-#add_python_req_skip GrampsDisplay Tool TransUtils Assistant BasicUtils Bookmarks Config DisplayModels DisplayTabs Editors Filters GrampsDb GrampsLocale GrampsWidgets LdsUtils ManagedWindow Mime Models ODSDoc PageView PluginUtils ReportBase Selectors Spell ToolTips TreeViews
+BuildRequires: intltool
 
 #Requires: typelib(GConf) typelib(GExiv2) typelib(OsmGpsMap) typelib(GLib) typelib(GObject) typelib(Gdk) typelib(GdkPixbuf) typelib(Gtk) typelib(GtkSpell) typelib(Pango) typelib(PangoCairo)
 
 AutoReq:yes,nopython
+AutoProv:no
 
 %add_typelib_req_skiplist typelib(GtkosxApplication) typelib(Gtkspell)
 
@@ -111,6 +105,9 @@ echo -n "%_datadir" > %buildroot%python3_sitelibdir/gramps/gen/utils/resource-pa
 %_iconsdir/gnome/*/mimetypes/*
 
 %changelog
+* Mon Aug 16 2021 Vitaly Lipatov <lav@altlinux.ru> 4.2.8-alt2
+- drop obsoleted BR
+
 * Mon Feb 26 2018 Vitaly Lipatov <lav@altlinux.ru> 4.2.8-alt1
 - new version 4.2.8 (with rpmrb script)
 
