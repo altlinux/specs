@@ -3,7 +3,7 @@ Group: Games/Other
 %define _localstatedir %{_var}
 Name:           opengl-games-utils
 Version:        0.2
-Release:        alt2_16
+Release:        alt2_20
 Summary:        Utilities to check proper 3d support before launching 3d games
 License:        Public Domain
 URL:            http://fedoraproject.org/wiki/SIGs/Games
@@ -13,6 +13,8 @@ Source2:        README
 BuildArch:      noarch
 Requires:       zenity glxgears glxinfo
 Source44: import.info
+# for autoimports
+Provides: /usr/share/opengl-games-utils/opengl-game-functions.sh
 
 %description
 This package contains various shell scripts which are intented for use by
@@ -48,6 +50,9 @@ fi
 
 
 %changelog
+* Mon Aug 16 2021 Igor Vlasenko <viy@altlinux.org> 0.2-alt2_20
+- added provides for external symlinks in autoimports
+
 * Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_16
 - update to new release by fcimport
 
