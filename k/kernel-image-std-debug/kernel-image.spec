@@ -1,8 +1,8 @@
 Name: kernel-image-std-debug
-Release: alt1.1
+Release: alt1
 epoch:2
 %define kernel_base_version	5.10
-%define kernel_sublevel .54
+%define kernel_sublevel .59
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -228,6 +228,22 @@ OpenGL implementations.
 
 These are modules for your ALT Linux system
 
+%ifarch aarch64
+%package -n kernel-modules-midgard-be-m1000-%flavour
+Summary: Non-DRM driver for Mali Midgard GPU for BE-M1000 SoC
+Group: System/Kernel and hardware
+Prereq: coreutils
+Prereq: module-init-tools >= 3.1
+Prereq: %name = %epoch:%version-%release
+Requires(postun): %name = %epoch:%version-%release
+
+%description -n kernel-modules-midgard-be-m1000-%flavour
+Kernel part of non-DRM driver for Mali T628 GPU. Requires a proprietary
+userspace library (libmali.so) to make use of GPU. Suitable for BE-M1000
+SoC only. Use the open source panfrost driver included in
+kernel-modules-drm-%flavour package unless you know what are you doing.
+%endif
+
 %package -n kernel-modules-ide-%flavour
 Summary: IDE  driver modules (obsolete by PATA)
 Group: System/Kernel and hardware
@@ -317,6 +333,15 @@ The documentation files contained in this package may be different
 from the similar files in upstream kernel distributions, because some
 patches applied to the corresponding kernel packages may change things
 in the kernel and update the documentation to reflect these changes.
+
+%package checkinstall
+Summary: Verify EFI-stub signature
+Group: System/Kernel and hardware
+Requires: %name = %EVR
+Requires(post): rpm-pesign-checkinstall
+
+%description checkinstall
+Verify EFI-stub signature.
 
 %prep
 %setup -cT -n kernel-image-%flavour-%kversion-%krelease
@@ -581,6 +606,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 	exit 1
 }
 
+%post checkinstall
+check-pesign-helper
+
 %files
 /boot/vmlinuz-%kversion-%flavour-%krelease
 /boot/System.map-%kversion-%flavour-%krelease
@@ -636,6 +664,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %exclude %modules_dir/kernel/drivers/gpu/drm/mga
 %exclude %modules_dir/kernel/drivers/gpu/drm/via
 %endif
+%ifarch aarch64
+%exclude %modules_dir/kernel/drivers/gpu/arm/midgard
+%endif
 
 %files -n kernel-modules-drm-ancient-%flavour
 %modules_dir/kernel/drivers/gpu/drm/mgag200
@@ -651,13 +682,42 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/ide/
 %endif
 
+%ifarch aarch64
+%files -n kernel-modules-midgard-be-m1000-%flavour
+%modules_dir/kernel/drivers/gpu/arm/midgard/
+%endif
+
 %files -n kernel-modules-drm-nouveau-%flavour
 %modules_dir/kernel/drivers/gpu/drm/nouveau
 
 %files -n kernel-modules-staging-%flavour
 %modules_dir/kernel/drivers/staging/
 
+%files checkinstall
+
 %changelog
+* Mon Aug 16 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.59-alt1
+- v5.10.59  (Fixes: CVE-2021-3573)
+
+* Thu Aug 12 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:5.10.58-alt1
+- Updated to v5.10.58.
+
+* Wed Aug 11 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:5.10.57-alt2
+- Bumped release to pesign (alt1 was not pesigned, sorry).
+- Added -checkinstall subpackage to verify EFI-stub signature.
+
+* Tue Aug 10 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:5.10.57-alt1
+- Updated to v5.10.57.
+- Reintroduced argv+env 512K size limit for suid/sgid programs and also enforce
+  the same limit for all AT_SECURE programs.
+
+* Fri Aug 06 2021 Dmitry Terekhin <jqt4@altlinux.org> 2:5.10.54-alt3
+- Enable panfrost driver by default.
+- Moved non-DRM Mali Midgard GPU driver into subpackage.
+
+* Tue Aug 03 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:5.10.54-alt2
+- Bumped release to pesign with new key.
+
 * Fri Jul 30 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.54-alt1.1
 - Null dereference fixed
 
