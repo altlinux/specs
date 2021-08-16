@@ -21,7 +21,7 @@ AutoProv: yes, nopython nopython3
 
 Name: extra-cmake-modules
 Version: 5.84.0
-Release: alt2
+Release: alt3
 
 Group: Development/Other
 Summary: Additional modules for CMake build system
@@ -48,8 +48,7 @@ Patch4: alt-remove-c90.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: cmake qt5-tools qt5-tools-devel
 %if_enabled doc
-#BuildRequires: python3-module-sphinx /usr/bin/sphinx-build
-BuildRequires: python-module-sphinx python-module-future
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
 %endif
 
 
@@ -89,6 +88,9 @@ fi
 %endif
 
 %changelog
+* Thu Aug 05 2021 Vitaly Lipatov <lav@altlinux.ru> 5.84.0-alt3
+- use python3 sphinx
+
 * Wed Jul 14 2021 Sergey V Turchin <zerg@altlinux.org> 5.84.0-alt2
 - drop requires to python3(PyQt5.Qt) (closes: 40483)
 
