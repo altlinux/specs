@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
-%def_enable snapshot
+%def_disable snapshot
 %define modname gidocgen
+%define ver_major 2021
 
 # mypy too old?
 %def_disable check
 
 Name: gi-docgen
-Version: 2021.6
-Release: alt0.5
+Version: %ver_major.7
+Release: alt1
 
 Summary: Documentation tool for GObject-based libraries
 Group: Development/Other
@@ -15,7 +16,8 @@ License: Apache-2.0 or GPL-3.0-or-later
 Url: https://pypi.org/project/gi-docgen/
 
 %if_disabled snapshot
-Source: https://pypi.io/packages/source/g/%name/%name-%version.tar.gz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: https://pypi.io/packages/source/g/%name/%name-%version.tar.gz
 %else
 Vcs: https://gitlab.gnome.org/GNOME/gi-docgen.git
 Source: %name-%version.tar
@@ -79,6 +81,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %_datadir/%modname/templates/
 
 %changelog
+* Mon Aug 16 2021 Yuri N. Sedunov <aris@altlinux.org> 2021.7-alt1
+- 2021.7
+
 * Thu Apr 15 2021 Yuri N. Sedunov <aris@altlinux.org> 2021.6-alt0.5
 - updated to 2021.5-3-g0b0c237
 
