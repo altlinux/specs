@@ -1,11 +1,10 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-emacs
-BuildRequires: /usr/bin/desktop-file-install
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -14,13 +13,12 @@ BuildRequires: jpackage-11-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_without desktop
-%bcond_without emacs
+%bcond_with bootstrap
 
 Summary:        Fast Scanner Generator
 Name:           jflex
 Version:        1.7.0
-Release:        alt1_5jpp11
+Release:        alt1_7jpp11
 License:        BSD
 URL:            http://jflex.de/
 BuildArch:      noarch
@@ -32,18 +30,17 @@ Source3:        %{name}.png
 Source4:        %{name}.1
 Source5:        create-tarball.sh
 
-BuildRequires:  jflex
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(java_cup:java_cup)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.ant:ant)
-
-%if %{with desktop}
-BuildRequires:  desktop-file-utils
 %endif
 
-%if %{with emacs}
-BuildRequires:  emacs
+%if %{without bootstrap}
+BuildRequires:  jflex
 %endif
 
 # Explicit javapackages-tools requires since scripts use
@@ -97,14 +94,11 @@ This package provides %{summary}.
 sed -i /%%inputstreamctor/d src/main/jflex/LexScan.flex
 
 %build
-java -jar $(find-jar java_cup) -parser LexParse -interface -destdir src/main/java src/main/cup/LexParse.cup
+%{?jpb_env}
+cup -parser LexParse -interface -destdir src/main/java src/main/cup/LexParse.cup
 jflex -d src/main/java/jflex --skel src/main/jflex/skeleton.nested src/main/jflex/LexScan.flex
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
-%if %{with emacs}
-# Compile Emacs jflex-mode source
-%byte_compile_file lib/jflex-mode.el
-%endif
 
 %install
 %mvn_install
@@ -116,35 +110,18 @@ jflex -d src/main/java/jflex --skel src/main/jflex/skeleton.nested src/main/jfle
 install -d -m 755 %{buildroot}%{_mandir}/man1
 install -p -m 644 %{SOURCE4} %{buildroot}%{_mandir}/man1
 
-# .desktop + icons
-%if %{with desktop}
-desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
-install -d -m 755 %{buildroot}%{_datadir}/pixmaps
-install -p -m 644 %{SOURCE3} %{buildroot}%{_datadir}/pixmaps/%{name}.png
-%endif
-
-# Emacs files
-%if %{with emacs}
-install -d -m 755 %{buildroot}%{_emacslispdir}/%{name}
-install -p -m 644 lib/jflex-mode.el %{buildroot}%{_emacslispdir}/%{name}
-install -p -m 644 lib/jflex-mode.elc %{buildroot}%{_emacslispdir}/%{name}
-%endif
-
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
+
+# .desktop + icons
+
+# Emacs files
 
 %files -f .mfiles
 %doc doc
 %doc COPYRIGHT
 %{_bindir}/%{name}
 %{_mandir}/man1/%{name}.1*
-%if %{with desktop}
-%{_datadir}/applications/%{name}.desktop
-%{_datadir}/pixmaps/%{name}.png
-%endif
-%if %{with emacs}
-%{_emacslispdir}/%{name}
-%endif
 %config(noreplace,missingok) /etc/java/%{name}.conf
 
 %files javadoc
@@ -153,6 +130,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 
 %changelog
+* Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:1.7.0-alt1_7jpp11
+- update
+
 * Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 0:1.7.0-alt1_5jpp11
 - rebuild with java11 and use jvm_run
 
