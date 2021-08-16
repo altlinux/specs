@@ -1,6 +1,6 @@
 %define  modulename ppx_optcomp
 Name:    ocaml-%modulename
-Version: 0.14.1
+Version: 0.14.2
 Release: alt1
 
 Summary: Optional compilation for OCaml
@@ -43,6 +43,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Aug 16 2021 Anton Farygin <rider@altlinux.ru> 0.14.2-alt1
+- 0.14.2
+
 * Sun Mar 28 2021 Anton Farygin <rider@altlinux.org> 0.14.1-alt1
 - 0.14.1
 
