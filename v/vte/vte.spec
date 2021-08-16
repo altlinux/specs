@@ -2,11 +2,11 @@
 
 Name: vte
 Version: %ver_major.2
-Release: alt3.1
+Release: alt4
 
 %def_enable pty_helper
 %def_disable static
-%def_enable python
+%def_disable python
 %define gtk_api_ver 2.0
 %define vte_api_ver 0.0
 
@@ -42,7 +42,6 @@ BuildRequires: gtk-doc >= 1.1.0
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgtk+2-devel >= %gtk_ver
 BuildRequires: libpango-devel >= %pango_ver
-BuildRequires: python-devel >= 2.4
 %{?_enable_python:BuildRequires: python-module-pygobject-devel python-module-pygtk-devel}
 BuildRequires: gobject-introspection-devel
 
@@ -130,6 +129,7 @@ language.
 %patch2 -p1
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %{?_enable_python:export PYTHON=%__python}
 %configure \
@@ -145,7 +145,7 @@ language.
 	%{subst_enable static} \
 	%{subst_enable python} \
 	--with-gtk=%gtk_api_ver
-
+%nil
 %make_build
 
 %install
@@ -212,6 +212,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Tue Aug 17 2021 Yuri N. Sedunov <aris@altlinux.org> 0.28.2-alt4
+- disabled useless python2 support
+
 * Sun Mar 18 2018 Yuri N. Sedunov <aris@altlinux.org> 0.28.2-alt3.1
 - added Url tag
 
