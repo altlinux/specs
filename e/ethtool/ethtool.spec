@@ -1,7 +1,7 @@
 %def_with check
 Name: ethtool
-Version: 5.12
-Release: alt2
+Version: 5.13
+Release: alt1
 Epoch: 1
 Summary: Ethernet settings tools for network cards
 License: GPLv2
@@ -52,6 +52,9 @@ make check
 %_datadir/bash-completion
 
 %changelog
+* Mon Aug 16 2021 Anton Farygin <rider@altlinux.ru> 1:5.13-alt1
+- 5.13
+
 * Tue Jun 15 2021 Anton Farygin <rider@altlinux.ru> 1:5.12-alt2
 - removed initscript (unusable in modern ALT environment)
 
