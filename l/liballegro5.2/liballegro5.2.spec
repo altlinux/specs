@@ -7,7 +7,7 @@
 %define sover 5.2
 
 Name: liballegro5.2
-Version: %major.%minor.%bugfix
+Version: %major.7
 Release: alt1
 
 Summary: Game programming library
@@ -21,15 +21,16 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
+BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: libalsa-devel dumb-devel libflac-devel libfreetype-devel
-BuildRequires: gtk2-devel libICE-devel libjpeg-devel libpng-devel
+BuildRequires: libICE-devel libjpeg-devel libpng-devel
 BuildRequires: libtheora-devel libvorbis-devel
 BuildRequires: libXcursor-devel libXext-devel libXxf86vm-devel
 BuildRequires: libXrandr-devel libXinerama-devel libXpm-devel
 BuildRequires: libGL-devel libGLU-devel
 BuildRequires: libopenal-devel libphysfs-devel
 BuildRequires: libpulseaudio-devel libopus-devel libopusfile-devel libwebp-devel
-
+BuildRequires: libfreeimage-devel libenet-devel
 
 
 
@@ -73,6 +74,11 @@ This package contains files needed to build programs using Allegro.
 %_pkgconfigdir/*
 
 %changelog
+* Mon Aug 16 2021 Vitaly Lipatov <lav@altlinux.ru> 5.2.7-alt1
+- new version 5.2.7 (with rpmrb script)
+- build with gtk3
+- add BR: libfreeimage-devel libenet-devel
+
 * Fri Oct 16 2020 Vitaly Lipatov <lav@altlinux.ru> 5.2.6.0-alt1
 - new version (5.2.6.0) with rpmgs script
 - rewrite spec, build allegro5.2 (ALT bug 38513)
