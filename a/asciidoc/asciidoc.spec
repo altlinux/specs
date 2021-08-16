@@ -3,7 +3,7 @@
 
 Name: asciidoc
 Version: 9.1.0
-Release: alt1
+Release: alt2
 
 Summary: asciidoc converts an AsciiDoc text file to DocBook, HTML or LinuxDoc
 
@@ -21,7 +21,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-vim rpm-build-tex
 BuildRequires: python3-devel
 BuildRequires: xsltproc docbook-style-xsl
-BuildRequires: source-highlight
+#BuildRequires: source-highlight
 #BuildRequires: graphviz
 
 
@@ -37,7 +37,10 @@ books and UNIX man pages.
 Summary: a2x converts AsciiDoc text file to PDF, XHTML, HTML Help, manpage or plain text
 Group: Text tools
 Requires: %name = %version-%release
-Requires: lynx xsltproc docbook-style-xsl source-highlight
+Requires: xsltproc docbook-style-xsl
+Requires: w3m
+# Requires: lynx
+# Requires: source-highlight
 
 %description a2x
 A DocBook toolchain wrapper script that translates an AsciiDoc text
@@ -48,6 +51,7 @@ toolchain. Plain text is produced by passing asciidoc(1) generated HTML
 through lynx(1). The htmlhelp format option generates .hhp, .hhc and
 .html files suitable for compilation to an HTML Help .chm file.
 
+Install asciidoc-latex if you need generate PDF files.
 
 %package latex
 Summary: Support for asciidoc LaTeX output
@@ -160,6 +164,10 @@ rm -rfv %buildroot%{_sysconfdir}/asciidoc/filters/music
 %endif
 
 %changelog
+* Mon Aug 16 2021 Vitaly Lipatov <lav@altlinux.ru> 9.1.0-alt2
+- use w3m (as default text generator) instead of lynx
+- drop source-highlight require (it is recommended only)
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 9.1.0-alt1
 - cleanup spec, build new version from tarball
 - switch to python3
