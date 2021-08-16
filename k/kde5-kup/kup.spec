@@ -1,17 +1,16 @@
 Name:     kde5-kup
 Version:  0.9.1
-Release:  alt1
+Release:  alt1.1
 
-Summary:  Kup is a KDE-based frontend for the very excellent bup backup software, that gives you easy and fast incremental backups!
+Summary:  KDE-based frontend for bup backup software and incremental backups
 License:  GPL-2.0+
 Group:    Archiving/Backup
-URL:      https://invent.kde.org/system/kup.git
 
+Url:      https://invent.kde.org/system/kup.git
+Source:   kup-%version.tar
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source:   kup-%version.tar
-
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: %ix86 x86_64 %e2k
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++
@@ -72,6 +71,10 @@ that gives you easy and fast incremental backups!
 %_datadir/qlogging-categories5/kup.categories
 
 %changelog
+* Mon Aug 16 2021 Michael Shigorin <mike@altlinux.org> 0.9.1-alt1.1
+- EA += %%e2k (builds just fine)
+- minor spec cleanup
+
 * Sat Jul 24 2021 Andrey Cherepanov <cas@altlinux.org> 0.9.1-alt1
 - New version.
 - New upstream URL.
