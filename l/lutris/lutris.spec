@@ -1,7 +1,7 @@
 %global appid net.lutris.Lutris
 Name: lutris
-Version: 0.5.8.4
-Release: alt1
+Version: 0.5.9
+Release: alt0.beta1
 Summary: Manager for game installation and execution
 License: GPL-2.0 and GPL-2.0+ and GPL-3.0+ and CC0-1.0 and LGPL-2.1+ and CC-BY-NC-SA-2.0 and CC-BY-SA-3.0
 Group: Games/Other
@@ -35,6 +35,9 @@ Recommends for install: psmisc p7zip curl cabextract xrandr glibc-gconv-modules 
 %prep
 %setup -n %name
 %patch -p2
+# hack for missing GdkPixbuf.InterpType.NEAREST in ALT
+sed -i 's|GdkPixbuf.InterpType.NEAREST|1|' \
+    lutris/gui/widgets/utils.py
 
 %build
 %meson
@@ -58,6 +61,10 @@ Recommends for install: psmisc p7zip curl cabextract xrandr glibc-gconv-modules 
 %_man1dir/%name.1.xz
 
 %changelog
+* Mon Aug 16 2021 Leontiy Volodin <lvol@altlinux.org> 0.5.9-alt0.beta1
+- New version (0.5.9-beta1).
+- Fixed runner manager (ALT #40748).
+
 * Mon Jul 05 2021 Leontiy Volodin <lvol@altlinux.org> 0.5.8.4-alt1
 - New version (0.5.8.4).
 
