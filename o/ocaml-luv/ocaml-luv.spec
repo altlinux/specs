@@ -1,8 +1,8 @@
 %def_with check
 %define  modulename luv
 Name:    ocaml-%modulename
-Version: 0.5.8
-Release: alt2
+Version: 0.5.10
+Release: alt1
 Summary: Binding to libuv for ocaml: cross-platform asynchronous I/O
 License: MIT
 Group:   Development/ML
@@ -11,7 +11,7 @@ Source:  %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 BuildRequires: dune
-BuildRequires: libuv-devel >= 1.41.0-alt2
+BuildRequires: libuv-devel >= 1.42.0-alt1
 BuildRequires: ocaml-base-devel
 BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-alcotest-devel
@@ -59,6 +59,9 @@ export TRAVIS=true
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Aug 16 2021 Anton Farygin <rider@altlinux.ru> 0.5.10-alt1
+- 0.5.10
+
 * Thu Jul 29 2021 Anton Farygin <rider@altlinux.ru> 0.5.8-alt2
 - increased version libluv in tests to fix the build with libluv 1.41.1
 
