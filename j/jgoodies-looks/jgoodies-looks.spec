@@ -1,32 +1,29 @@
-Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: /usr/bin/unzip
 # END SourceDeps(oneline)
+Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global shortname looks
 
 Name:           jgoodies-looks
-Version:        2.6.0
-Release:        alt1_16jpp11
+Version:        2.7.0
+Release:        alt1_1jpp11
 Summary:        Free high-fidelity Windows and multi-platform appearance
 
 License:        BSD
-URL:            http://www.jgoodies.com/freeware/looks/
-Source0:        http://www.jgoodies.com/download/libraries/%{shortname}/%{name}-%(tr "." "_" <<<%{version}).zip
+URL:            http://www.jgoodies.com/freeware/libraries/looks/
+# Upstream no longer distributes the library under an Open Source license. Latest
+# Open Source release is taken from Maven Central
+Source0:        https://repo1.maven.org/maven2/com/jgoodies/%{name}/%{version}/%{name}-%{version}-sources.jar
+Source1:        https://repo1.maven.org/maven2/com/jgoodies/%{name}/%{version}/%{name}-%{version}.pom
 # Fix build with JDK 11
-Patch0:         %{name}-2.6.0-jdk11.patch
+Patch0:         %{name}-2.7.0-jdk11.patch
 
-# Fontconfig and DejaVu fonts needed for tests
-BuildRequires:  fonts-ttf-dejavu
-BuildRequires:  fontconfig
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.jgoodies:jgoodies-common) >= 1.8.0
-# JGoodies Looks >= 2.4.2 doesn't provide demo jars anymore
-Provides:       %{name}-demo = %{version}-%{release}
-Obsoletes:      %{name}-demo < 2.4.2
+BuildRequires:  mvn(com.jgoodies:jgoodies-common)
 BuildArch:      noarch
 Source44: import.info
 
@@ -45,43 +42,24 @@ This package contains the API documentation for %{name}.
 
 
 %prep
-%setup -q
+%setup -q -c
+%patch0
 
-# Unzip source and test files from provided JARs
-mkdir -p src/main/java/ src/test/java/
-pushd src/main/java/
-jar -xf ../../../%{name}-%{version}-sources.jar
-popd
-pushd src/test/java/
-jar -xf ../../../%{name}-%{version}-tests.jar
-popd
+mkdir -p src/main/java/
+mv com/ src/main/java/
 
-# Move the resources into a "resources" directory so they end up packaged
-# properly
-mkdir -p src/main/resources/com/jgoodies/looks/plastic/
-mv src/main/java/com/jgoodies/looks/plastic/icons/ src/main/resources/com/jgoodies/looks/plastic/
-mkdir -p src/main/resources/com/jgoodies/looks/common
-mv src/main/java/com/jgoodies/looks/common/*.png src/main/resources/com/jgoodies/looks/common/
+cp %{SOURCE1} pom.xml
 
-%patch0 -p0 -b .jdk11
+# Remove unnecessary dependency on parent POM
+%pom_remove_parent
 
-# Delete prebuild JARs
-find -name "*.jar" -exec rm {} \;
+# Remove useless dependency on JUnit (no test available)
+%pom_remove_dep junit:junit
+
+%mvn_file :%{name} %{name} %{name}
 
 # Drop Windows L&F support files (unsupported on JDK 11)
 rm -r src/main/java/com/jgoodies/looks/windows/
-
-# Fix wrong end-of-line encoding
-for file in LICENSE.txt RELEASE-NOTES.txt; do
-  sed -i.orig "s/\r//" $file && \
-  touch -r $file.orig $file && \
-  rm $file.orig
-done
-
-# remove unnecessary dependency on parent POM
-%pom_remove_parent
-
-%mvn_file :%{name} %{name} %{name}
 
 
 %build
@@ -93,14 +71,15 @@ done
 
 
 %files -f .mfiles
-%doc README.html RELEASE-NOTES.txt
-%doc --no-dereference LICENSE.txt
 
 
 %files javadoc -f .mfiles-javadoc
 
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 2.7.0-alt1_1jpp11
+- new version
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.6.0-alt1_16jpp11
 - fc34 update
 
