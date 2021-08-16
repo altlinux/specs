@@ -2,7 +2,7 @@
 %define        confdir        ext/redhat
 
 Name:          gem-%pkgname
-Version:       7.9.0
+Version:       7.10.0
 Release:       alt1
 Summary:       A network tool for managing many disparate systems
 Group:         Development/Ruby
@@ -83,7 +83,6 @@ install -Dp -m0755 %SOURCE1 %buildroot%_initrddir/puppet
 install -Dp -m0644 %SOURCE2 %buildroot%_unitdir/puppet.service
 ln -s %_unitdir/puppet.service %buildroot%_unitdir/puppetagent.service
 
-install -Dp -m0644 %confdir/logrotate %buildroot%_sysconfdir/logrotate.d/puppet
 install -Dp -m0644 conf/fileserver.conf %buildroot%_sysconfdir/puppet/fileserver.conf
 
 # Create other configuration directories
@@ -174,7 +173,6 @@ sed -e "s,sample.server.name,$(hostname)," \
 %config(noreplace) %_sysconfdir/puppet/auto.conf
 %config(noreplace) %_sysconfdir/puppet/puppet.conf
 %config(noreplace) %_sysconfdir/sysconfig/puppet
-%config(noreplace) %_sysconfdir/logrotate.d/puppet
 %config(noreplace) %_sysconfdir/puppet/fileserver.conf
 %_sysconfdir/NetworkManager/dispatcher.d/98-%{name}
 %_datadir/puppet
@@ -191,6 +189,9 @@ sed -e "s,sample.server.name,$(hostname)," \
 %ruby_gemdocdir
 
 %changelog
+* Mon Aug 16 2021 Andrey Cherepanov <cas@altlinux.org> 7.10.0-alt1
+- New version.
+
 * Mon Jul 19 2021 Andrey Cherepanov <cas@altlinux.org> 7.9.0-alt1
 - New version.
 
