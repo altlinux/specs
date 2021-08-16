@@ -5,15 +5,13 @@
 %define oname matplotlib
 %define major 3.4
 
-%ifnarch riscv64
-%def_with qt4
-%endif
+%def_without qt4
 %def_with qt5
 %def_with wx
 
 Name: python3-module-%oname
 Version: %major.2
-Release: alt4
+Release: alt5
 
 Summary: Matlab(TM) style python plotting package
 
@@ -266,6 +264,9 @@ done
 %python3_sitelibdir/mpl_toolkits
 
 %changelog
+* Mon Aug 16 2021 Sergey V Turchin <zerg@altlinux.org> 3.4.2-alt5
+- Drop Qt4 subpackage
+
 * Wed Jun 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4.2-alt4
 - Updated build dependencies.
 
