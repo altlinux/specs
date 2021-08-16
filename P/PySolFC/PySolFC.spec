@@ -1,21 +1,30 @@
 Name: PySolFC
-Version: 2.8.0
+Version: 2.12.0
 Release: alt1
+
 Summary: A collection of solitare card games
-Group: Games/Cards
+
 License: GPL-2.0+
+Group: Games/Cards
 Url: http://pysolfc.sourceforge.net
+
 Source0: http://downloads.sourceforge.net/pysolfc/%name-%version.tar.bz2
 Source1: PySol.desktop
 Source2: pysol-start-script
+
 Patch0: pysolfc-setup.py-noglade.patch
 Patch1: PySolFC-pillow.patch
+Patch2: 06d2fd5b90c29cbfe9b938676cc85c514cbbcca1.patch
 
 Provides: pysol = 5.%version
 Requires: PySolFC-Cardsets
 
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
+
 BuildArch: noarch
+
+# we will use kivy
+%add_python3_req_skip gtk
 
 %description
 %name is a collection of more than 1000 solitaire card games. It is a fork
@@ -24,25 +33,26 @@ set), multiple cardsets and tableau backgrounds, sound, unlimited undo, player
 statistics, a hint system, demo games, a solitaire wizard, support for user
 written plug-ins, an integrated HTML help browser, and lots of documentation.
 
-%package -n python-module-PySolFC
+%package -n python3-module-PySolFC
 Summary: Supplemental python module for %name solitaire game collection
 Group: Games/Cards
 
-%description -n python-module-PySolFC
+%description -n python3-module-PySolFC
 Supplemental python module for %name solitaire game collection
 
 %prep
 %setup
 #patch0 -p0
 #patch1 -p1
+%patch2 -p1
 # Set correct python2 executable in shebang
-subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
+subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 #-O1
 # install desktop file
 rm %buildroot%_desktopdir/*.desktop
@@ -54,20 +64,29 @@ install -m755 %SOURCE2 %buildroot/%_bindir/pysol
 
 %find_lang pysol
 
+# we will use kivy
+rm -rf %buildroot%python3_sitelibdir/pysollib/pysolgtk
+
 %files -f pysol.lang
 %doc AUTHORS.md README.md PKG-INFO
 %dir %_datadir/%name
 %_bindir/pysol
 %_datadir/%name/*
-%_datadir/pixmaps/*
+#_datadir/pixmaps/*
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/pysol.png
 
-%files -n python-module-PySolFC
-%python_sitelibdir/pysollib/*
-%python_sitelibdir/*egg-info
+%files -n python3-module-PySolFC
+%python3_sitelibdir/pysollib/*
+%python3_sitelibdir/*egg-info
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 2.12.0-alt1
+- NMU: new version 2.12.0 (with rpmrb script)
+
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 2.8.0-alt2
+- NMU: build with python3
+
 * Sat May 30 2020 Andrey Cherepanov <cas@altlinux.org> 2.8.0-alt1
 - New version
 - Fix License tag according to SPDX
