@@ -2,11 +2,11 @@
 %define 	real_name	imagick
 
 Name:	 	php%_php_suffix-%{php_extension}
-Version:	3.5.0
+Version:	3.5.1
 Epoch:		1
-Release:	alt3.%_php_release_version
+Release:	alt1.%_php_release_version
 
-Summary:	PHP7 wrapper to the ImageMagick library
+Summary:	PHP wrapper to the ImageMagick library
 
 License:	PHP-3.01
 Group:		System/Servers
@@ -30,10 +30,6 @@ using the ImageMagick API.
 
 %build
 phpize
-
-BUILD_HAVE=`echo %php_extension | tr '[:lower:]-' '[:upper:]_'`
-%add_optflags -fPIC -L%_libdir
-export LDFLAGS=-lphp-%_php_version
 %configure \
 	--with-%php_extension \
 	--with-libdir=%_lib \
@@ -62,6 +58,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} 1:%version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Mon Aug 16 2021 Anton Farygin <rider@altlinux.ru> 1:3.5.1-alt1
+- updated to 3.5.1
 
 * Tue Jul 06 2021 Anton Farygin <rider@altlinux.ru> 1:3.5.0
 - updated to 3.5.0
