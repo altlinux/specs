@@ -13,10 +13,10 @@
 
 %def_with strict_deps
 # some packages aren't ready yet to use cmake files from boost,
-# particularly, packages using boost-python-devel
+# particularly, packages using boost-python3-devel
 %def_with cmake
 
-# Add compatibility links for boost-python-devel and boost-python3-devel
+# Add compatibility links for boost-python3-devel
 # TODO: consider removing them later
 %def_without python_compat_symlinks
 
@@ -43,6 +43,10 @@
 %define mpidir %_libdir/%mpiimpl
 %endif
 
+# legacy python2 script
+%add_findprov_skiplist %_datadir/boost-build/src/tools/doxproc.py
+%add_findreq_skiplist  %_datadir/boost-build/src/tools/doxproc.py
+
 %define ver_maj 1
 %define ver_min 76
 %define ver_rel 0
@@ -54,7 +58,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt2
+Release: alt3
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -89,10 +93,6 @@ Patch94: boost-1.73-fedora-locale-empty-vector.patch
 
 Patch1000: boost-1.63.0-alt-python-paths.patch
 Patch2000: boost-1.76-e2k-makecontext.patch
-
-# we use %%requires_python_ABI, introduced in rpm-build-python-0.36.6-alt1
-BuildRequires(pre): rpm-build-python >= 0.36.6-alt1
-BuildRequires: python-devel libnumpy-devel
 
 # we use %%_python3_abiflags
 # we use %%requires_python_ABI, introduced in rpm-build-python3-0.1.9.3-alt1
@@ -253,7 +253,6 @@ Requires: %name-mpi-devel = %EVR
 Requires: %name-msm-devel = %EVR
 Requires: %name-polygon-devel = %EVR
 Requires: %name-program_options-devel = %EVR
-Requires: %name-python-devel = %EVR
 Requires: %name-python3-devel = %EVR
 Requires: %name-signals-devel = %EVR
 Requires: %name-timer-devel = %EVR
@@ -566,35 +565,7 @@ AutoReq: yes, nocpp
 
 %description python-headers
 Header files for Boost.Python libraries. This files are shared between
-libraries compiled with Python 2 and Python 3.
-
-
-%package python-devel
-Summary: The Boost Python Library (Boost.Python) development files
-Group: Development/C++
-AutoReq: yes, nocpp
-
-Requires: python-devel = %_python_version
-Requires: %name-python-headers = %EVR
-Requires: libboost_python%version = %EVR
-Requires: libboost_numpy%version = %EVR
-PreReq: %name-devel = %EVR
-
-Obsoletes: boost-python-gcc2-devel, boost-python-gcc3-devel, boost-python-common-devel
-Provides: boost-python-gcc2-devel = %EVR
-Provides: boost-python-gcc3-devel = %EVR
-Provides: boost-python-common-devel = %EVR
-
-%description python-devel
-Use the Boost Python Library to quickly and easily export a C++ library
-to Python such that the Python interface is very similar to the C++
-interface. It is designed to be minimally intrusive on your C++ design.
-In most cases, you should not have to alter your C++ classes in any way
-in order to use them with Boost.Python. The system should simply
-``reflect'' your C++ classes and functions into Python.
-
-This package contains development files for Boost.Python build with
-Python 2.
+libraries compiled with Python 3.
 
 %package python3-devel
 Summary: The Boost Python Library (Boost.Python) development files
@@ -699,7 +670,6 @@ Requires: %name-mpi-devel = %EVR
 Requires: %name-locale-devel = %EVR
 Requires: %name-log-devel = %EVR
 Requires: %name-program_options-devel = %EVR
-Requires: %name-python-devel = %EVR
 Requires: %name-python3-devel = %EVR
 Requires: %name-signals-devel = %EVR
 Requires: %name-timer-devel = %EVR
@@ -711,10 +681,6 @@ Provides: boost-filesystem-devel-static = %EVR
 Provides: boost-graph-devel-static = %EVR
 Provides: boost-iostreams-devel-static = %EVR
 Provides: boost-program-options-devel-static = %EVR
-Provides: boost-python-common-devel-static = %EVR
-Provides: boost-python-devel-static = %EVR
-Provides: boost-python-gcc2-devel-static = %EVR
-Provides: boost-python-gcc3-devel-static = %EVR
 Provides: boost-regex-common-devel-static = %EVR
 Provides: boost-regex-devel-static = %EVR
 Provides: boost-regex-gcc2-devel-static = %EVR
@@ -1018,20 +984,6 @@ Requires: libboost_serialization%version = %EVR
 Boost.MPI is a library for message passing in high-performance parallel
 applications. This package contains shared library.
 
-%package -n libboost_mpi_python%version
-Summary: Boost.MPI python shared library
-Group: Development/C++
-Provides: boost-mpi-python = %EVR
-%if_with strict_deps
-Requires: libboost_python%version = %EVR
-%endif
-
-%requires_python_ABI_for_files %_libdir/*boost_mpi_python2*.so.*
-
-%description -n libboost_mpi_python%version
-Boost.MPI is a library for message passing in high-performance parallel
-applications. This package contains shared library for python bindings.
-
 %package -n libboost_mpi_python3-%version
 Summary: Boost.MPI python 3 shared library
 Group: Development/C++
@@ -1063,48 +1015,6 @@ The program_options library allows program developers to obtain program
 options, that is (name, value) pairs from the user, via conventional
 methods such as command line and config file.
 
-
-%package -n libboost_python%version
-Summary: The Boost Python Library (Boost.Python)
-Group: Development/C++
-
-Obsoletes: boost-python-gcc2, boost-python-gcc3
-Provides: boost-python-gcc2 = %EVR
-Provides: boost-python-gcc3 = %EVR
-Provides: boost-python = %EVR
-
-# Boost.Python shared libraries have unresolved symbols from libpythonX.X.so.
-# This is done intensionally to make it possible to load Python extensions
-# written with Boost.Python into programs that link with Python interpreter
-# statically (e.g. /usr/bin/python2.7 since 2.7.2-alt5). So, we have to
-# convince verify_elf that it is normal. See also thread starting from
-# http://lists.altlinux.org/pipermail/devel/2012-April/193731.html
-# and especially message where ldv@ suggested this hack (thanks):
-# http://lists.altlinux.org/pipermail/devel/2012-April/193827.html
-%requires_python_ABI_for_files %_libdir/*boost_python2*.so.*
-
-%description -n libboost_python%version
-Use the Boost Python Library to quickly and easily export a C++ library
-to Python such that the Python interface is very similar to the C++
-interface. It is designed to be minimally intrusive on your C++ design.
-In most cases, you should not have to alter your C++ classes in any way
-in order to use them with Boost.Python. The system should simply
-``reflect'' your C++ classes and functions into Python.
-
-%package -n libboost_numpy%version
-Summary: The Boost NumPy Library (Boost.NumPy)
-Group: Development/C++
-Requires: libboost_python%version = %EVR
-Requires: python-module-numpy
-
-%requires_python_ABI_for_files %_libdir/*boost_numpy2*.so.*
-
-%description -n libboost_numpy%version
-The Boost.Numpy library exposes quite a few methods to create ndarrays.
-ndarrays can be created in a variety of ways,
-include empty arrays and zero filled arrays.
-ndarrays can also be created from arbitrary python sequences
-as well as from data and dtypes.
 
 %package -n libboost_python3-%version
 Summary: The Boost Python Library (Boost.Python) for Python 3
@@ -1288,20 +1198,6 @@ The Boost TypeErasure Library.
 
 %if_with mpi
 %if_with devel
-%package -n python-module-boost-mpi
-Summary: Boost.MPI python module
-Group: Development/Python
-%if_with strict_deps
-Requires: libboost_mpi%version = %EVR
-Requires: libboost_mpi_python%version = %EVR
-Requires: libboost_python%version = %EVR
-Requires: libboost_serialization%version = %EVR
-%endif
-
-%description -n python-module-boost-mpi
-Boost.MPI is a library for message passing in high-performance parallel
-applications. This package contains python module.
-
 %package -n python3-module-boost-mpi
 Summary: Boost.MPI python module
 Group: Development/Python3
@@ -1411,19 +1307,6 @@ build_boost \
 %endif
 	#
 
-cp ./tools/build/src/user-config.jam user-config-py2.jam
-cat >> user-config-py2.jam <<'@@@'
-using python : %_python_version ;
-@@@
-build_boost \
-	--build-dir=build-py2 \
-	--user-config=$PWD/user-config-py2.jam \
-	--with-python \
-%if_with mpi
-	--with-mpi \
-%endif
-	python=%_python_version
-
 cp ./tools/build/src/user-config.jam user-config-py3.jam
 cat >> user-config-py3.jam <<'@@@'
 using python : %_python3_version ;
@@ -1495,36 +1378,6 @@ install_boost \
 	--without-coroutine \
 %endif
 	#
-
-install_boost \
-       --build-dir=build-py2 \
-       --user-config=$PWD/user-config-py2.jam \
-       --with-python \
-%if_with mpi
-       --with-mpi \
-%endif
-       python=%_python_version
-
-%if_with python_compat_symlinks
-pushd %buildroot%_libdir
-ln -s libboost_python%{python_version_nodots python}.so libboost_python.so
-ln -s libboost_numpy%{python_version_nodots python}.so libboost_numpy.so
-popd
-%endif
-
-# install mpi python module
-%if_with mpi
-%if_with devel
-mkdir -p %buildroot/%python_sitelibdir/boost
-install -Dm644 libs/mpi/build/__init__.py %buildroot/%python_sitelibdir/boost/
-mv %buildroot%_libdir/boost-python%{_python_version}/mpi.so %buildroot/%python_sitelibdir/boost/
-%else
-# The python module won't be created
-# if we are a building just library compat pkgs.
-# (mpi.so belongs exclusively to the python module.)
-rm %buildroot%_libdir/boost-python%{_python_version}/mpi.so
-%endif
-%endif
 
 install_boost \
 	--build-dir=build-py3 \
@@ -1693,11 +1546,6 @@ rm -f %buildroot%_libdir/*.a || :
 %exclude %_libdir/*_program_options*.so
 %exclude %_libdir/*_python*.so
 %exclude %_libdir/*_wave*.so
-%exclude %_libdir/*boost_numpy2*.so
-%if_with python_compat_symlinks
-%exclude %_libdir/libboost_numpy.so
-%exclude %_libdir/libboost_numpy-mt.so
-%endif
 %exclude %_libdir/*boost_numpy3*.so
 %if_with cmake
 %_libdir/cmake/*
@@ -1823,16 +1671,6 @@ rm -f %buildroot%_libdir/*.a || :
 %_libdir/cmake/boost_python*-%version
 %endif
 
-%files python-devel
-%_libdir/*boost_python2*.so
-%_libdir/*boost_numpy2*.so
-%if_with python_compat_symlinks
-%_libdir/libboost_python.so
-%_libdir/libboost_python-mt.so
-%_libdir/libboost_numpy.so
-%_libdir/libboost_numpy-mt.so
-%endif
-
 %files python3-devel
 %_libdir/*boost_python3*.so
 %_libdir/*boost_numpy3*.so
@@ -1940,9 +1778,6 @@ rm -f %buildroot%_libdir/*.a || :
 %files -n libboost_mpi%version
 %_libdir/*_mpi.so.*
 
-%files -n libboost_mpi_python%version
-%_libdir/*_mpi_python2*.so.*
-
 %files -n libboost_mpi_python3-%version
 %_libdir/*_mpi_python3*.so.*
 %endif
@@ -1952,12 +1787,6 @@ rm -f %buildroot%_libdir/*.a || :
 
 %files -n libboost_program_options%version
 %_libdir/*_program_options*.so.*
-
-%files -n libboost_python%version
-%_libdir/*boost_python2*.so.*
-
-%files -n libboost_numpy%version
-%_libdir/*boost_numpy2*.so.*
 
 %files -n libboost_python3-%version
 %_libdir/*boost_python3*.so.*
@@ -2004,9 +1833,6 @@ rm -f %buildroot%_libdir/*.a || :
 
 %if_with mpi
 %if_with devel
-%files -n python-module-boost-mpi
-%python_sitelibdir/boost
-
 %files -n python3-module-boost-mpi
 %python3_sitelibdir/boost
 %endif
@@ -2045,6 +1871,9 @@ done
 
 
 %changelog
+* Mon Aug 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.76.0-alt3
+- Rebuilt without python-2 support (Closes: #40722).
+
 * Wed Jun 23 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:1.76.0-alt2
 - added makecontext patch for Elbrus
 
