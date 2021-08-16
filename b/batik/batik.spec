@@ -7,22 +7,13 @@ AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-1.8-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# Allow conditionally building without optional deps on scripting libs rhino and jython
-%bcond_with jp_minimal
-
 %global classpath batik:xml-commons-apis:xml-commons-apis-ext:xmlgraphics-commons
 
 Name:           batik
 Version:        1.14
-Release:        alt1_1jpp8
+Release:        alt1_3jpp8
 Summary:        Scalable Vector Graphics for Java
 License:        ASL 2.0 and W3C
 URL:            https://xmlgraphics.apache.org/batik/
@@ -39,10 +30,6 @@ BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.apache.xmlgraphics:xmlgraphics-commons)
-%if %{without jp_minimal}
-BuildRequires:  mvn(org.mozilla:rhino)
-BuildRequires:  mvn(org.python:jython)
-%endif
 BuildRequires:  mvn(xalan:xalan)
 BuildRequires:  mvn(xml-apis:xml-apis)
 BuildRequires:  mvn(xml-apis:xml-apis-ext)
@@ -85,10 +72,6 @@ Summary:        Batik SVG browser
 Requires:       javapackages-tools
 # Requires AWT, so can't rely on java-headless alone
 Requires:       java
-%if %{without jp_minimal}
-# Soft requirement on optional scripting libs
-Requires: mvn(org.mozilla:rhino)
-%endif
 #19119
 Provides: xmlgraphics-batik-squiggle = 0:%version-%release
 Obsoletes: xmlgraphics-batik-squiggle < 0:%version
@@ -149,10 +132,6 @@ Summary:        Batik SVG rasterizer
 # Explicit requires for javapackages-tools since rasterizer-script
 # uses /usr/share/java-utils/java-functions
 Requires:       javapackages-tools
-%if %{without jp_minimal}
-# Soft requirement on optional scripting libs
-Requires: mvn(org.mozilla:rhino)
-%endif
 #19119
 Provides: xmlgraphics-batik-rasterizer = 0:%version-%release
 Obsoletes: xmlgraphics-batik-rasterizer < 0:%version
@@ -236,8 +215,7 @@ done
 # The "old-test" module cannot be built due to missing deps in Fedora
 %pom_disable_module batik-test-old
 
-%if %{with jp_minimal}
-# Remove optional deps on rhino and jython for minimal build
+# Remove optional deps on rhino and jython
 %pom_remove_dep :rhino batik-{bridge,script}
 %pom_remove_dep :jython batik-script
 rm -rf batik-script/src/main/java/org/apache/batik/script/{jpython,rhino}
@@ -248,7 +226,6 @@ rm batik-bridge/src/main/java/org/apache/batik/bridge/RhinoInterpreterFactory.ja
 rm batik-bridge/src/main/java/org/apache/batik/bridge/EventTargetWrapper.java
 rm batik-bridge/src/main/java/org/apache/batik/bridge/GlobalWrapper.java
 rm batik-bridge/src/main/java/org/apache/batik/bridge/WindowWrapper.java
-%endif
 
 %mvn_package :batik-squiggle squiggle
 %mvn_package :batik-squiggle-ext squiggle
@@ -274,9 +251,6 @@ rm batik-script/src/main/java/org/apache/batik/script/jacl/JaclInterpreter.java
 export ANT_OPTS="-Xmx512m"
 # due to javadoc x86_64 out of memory
 subst 's,maxmemory="128m",maxmemory="512m",' build.xml
-# zerg's girar armh hack:
-(while true; do date; sleep 7m; done) &
-# end armh hack, kill it when girar will be fixed
 %mvn_build
 
 %install
@@ -343,6 +317,9 @@ touch $RPM_BUILD_ROOT/etc/ttf2svg.conf
 
 
 %changelog
+* Mon Aug 16 2021 Igor Vlasenko <viy@altlinux.org> 0:1.14-alt1_3jpp8
+- update
+
 * Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 0:1.14-alt1_1jpp8
 - new version
 
