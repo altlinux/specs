@@ -1,6 +1,6 @@
 Name: postfix
-Version: 3.6.0
-Release: alt2
+Version: 3.6.2
+Release: alt1
 Epoch: 1
 
 Summary: Postfix Mail Transport Agent
@@ -365,10 +365,26 @@ make -C %name-%version non-interactive-package \
        static_libtls=yes \
        #
 
-for p in ldap mysql pcre pgsql; do
-	install -p -m644 %name-%version/lib/dict_$p.so \
-		%buildroot%plugin_directory/
-done
+%if_with ldap
+install -p -m644 %name-%version/lib/dict_ldap.so \
+	%buildroot%plugin_directory/
+%endif #with ldap
+
+%if_with mysql
+install -p -m644 %name-%version/lib/dict_mysql.so \
+	%buildroot%plugin_directory/
+%endif #with mysql
+
+%if_with pcre
+install -p -m644 %name-%version/lib/dict_pcre.so \
+	%buildroot%plugin_directory/
+%endif #with pcre
+
+%if_with pgsql
+install -p -m644 %name-%version/lib/dict_pgsql.so \
+	%buildroot%plugin_directory/
+%endif #with pgsql
+
 %if_with sasl
 install -p -m644 %name-%version/lib/xsasl_*.so \
 	%buildroot%plugin_directory/
@@ -671,6 +687,9 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %endif #with tls
 
 %changelog
+* Tue Aug 10 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.6.2-alt1
+- Updated to 3.6.2.
+
 * Mon Jun 07 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.6.0-alt2
 - Removed notes about mynetworks_style from COMPATIBILITY_README.
 - Changed postfix(1) to point to packaged version of COMPATIBILITY_README.
