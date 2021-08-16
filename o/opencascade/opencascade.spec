@@ -1,15 +1,14 @@
 Name: opencascade
-Version: 7.5.0
-Release: alt2
+Version: 7.5.3
+Release: alt1
 Summary: SDK intended for development of applications dealing with 3D CAD data
 License: LGPL-2.1-only-with-OCCT-exception-1.0
 Group: Development/Tools
 Url: http://www.opencascade.org
 
 # Upstream requires a login to download sources. 
-# https://www.opencascade.com/content/latest-release
-# The following URL (after expansion) will work using links from the command line.
-# https://www.opencascade.com/sites/default/files/private/occt/OCC_%%{version}_release/%%{name}-%%{version}.tgz
+# https://dev.opencascade.org/release
+# VCS: https://git.dev.opencascade.org/repos/occt.git
 Source: %name-%version.tar
 Patch1: opencascade-cmake.patch
 Patch2: opencascade-alt-arm-build.patch
@@ -82,10 +81,6 @@ This package contains documentation for Open CASCADE.
 %patch2 -p2
 %endif
 
-# Remove executable bit from sources and documentation files
-find src doc -type f -exec chmod -x {} \;
-chmod 0644 *.txt
-
 %build
 # opencascade does some manual install trickery that does not respect DESTDIR.
 # Make DESTDIR and environment variable that can be passed into the CMake config.
@@ -105,6 +100,8 @@ mv %buildroot%_bindir/DRAWEXE-%version %buildroot%_bindir/DRAWEXE
 
 # Install precompiled documentation
 cp -a doc/* %buildroot%_datadir/doc/%name/
+# Remove installed files with licenses
+rm -f /usr/share/doc/opencascade/*
 
 %files
 %doc LICENSE_LGPL_21.txt OCCT_LGPL_EXCEPTION.txt README.txt
@@ -130,6 +127,10 @@ cp -a doc/* %buildroot%_datadir/doc/%name/
 %_datadir/doc/%name
 
 %changelog
+* Mon Aug 16 2021 Andrey Cherepanov <cas@altlinux.org> 7.5.3-alt1
+- New version.
+- Build from upstream tag.
+
 * Wed May 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.5.0-alt2
 - Rebuilt with VTK-9.0.1.
 
