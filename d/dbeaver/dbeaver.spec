@@ -1,5 +1,5 @@
 Name: dbeaver
-Version: 21.1.4
+Version: 21.1.5
 Release: alt1
 
 Summary: Universal Database Manager
@@ -19,6 +19,8 @@ Source2: maven-local-repository.tar
 
 Patch0: %name-alt-arch.patch
 Patch1: %name-alt-autoupdate.patch
+
+BuildRequires: java-headless rpm-build-java
 
 BuildRequires: /proc
 BuildRequires: java-11-openjdk-headless
@@ -59,7 +61,7 @@ DBeaver is free and open source universal database tool for developers and datab
 %__mv -Tf ../.m2 ~/.m2
 
 %build
-xmvn --batch-mode --offline package
+mvn -o package
 
 %install
 # Create  directories
@@ -107,6 +109,9 @@ done
 %_pixmapsdir/%name.xpm
 
 %changelog
+* Mon Aug 16 2021 Nazarov Denis <nenderus@altlinux.org> 21.1.5-alt1
+- Version 21.1.5
+
 * Wed Aug 04 2021 Nazarov Denis <nenderus@altlinux.org> 21.1.4-alt1
 - Version 21.1.4
 
