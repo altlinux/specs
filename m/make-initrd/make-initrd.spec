@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.20.1
+Version: 2.22.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -223,6 +223,10 @@ make
 %install
 %make_install DESTDIR=%buildroot install
 
+sed -i \
+	-e 's@\.\./features/@%_datadir/%name/features/@g' \
+	Documentation/Features.md
+
 %triggerin -- %name < 0.8.1-alt1
 c="%_sysconfdir/initrd.mk"
 if [ -s "$c" ] && ! grep -qs '^AUTODETECT[[:space:]]*=[[:space:]]*all[[:space:]]*' "$c"; then
@@ -297,6 +301,20 @@ fi
 %_datadir/%name/features/smart-card
 
 %changelog
+* Mon Aug 16 2021 Alexey Gladkov <legion@altlinux.ru> 2.22.0-alt1
+- New version (2.22.0).
+- Runtime:
+  + ueventd: Process events that were already in the queue before the daemon
+    startup. This is a fix initramfs boot if ueventd is started after udevd due
+    to dependencies (ALT#40720).
+- Feature gpu-drm:
+  + Filter enabled and/or connected drm devices (ALT#40708).
+- Misc:
+  + Fix links in the docs (ALT#40682).
+
+* Sat Aug 14 2021 Alexey Gladkov <legion@altlinux.ru> 2.21.0-alt1
+- New version (2.21.0).
+
 * Sun Aug 08 2021 Alexey Gladkov <legion@altlinux.ru> 2.20.1-alt1
 - New version (2.20.1).
 - Fearure gpu-drm: Drop prefix from output which resulted in an image
