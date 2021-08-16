@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define oname boto3
-%def_without check
+%def_with check
 
 Name: python3-module-%oname
 Version: 1.17.96
-Release: alt1
+Release: alt2
 
 Summary: The AWS SDK for Python
 
@@ -22,11 +22,14 @@ Patch1: %oname-alt-docs.patch
 Patch2: %oname-alt-unvendor.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools python3-module-unittest2 python3-module-mock
-BuildRequires: python3-module-botocore python3-module-html5lib python3-module-nose python3-module-pbr
-BuildRequires: python3-module-sphinx
-BuildRequires: python3(s3transfer)
+BuildRequires: python3-devel
+BuildRequires: python3-module-pbr
 BuildRequires: python3(six)
+%if_with check
+BuildRequires: python3-module-unittest2 python3-module-mock
+BuildRequires: python3-module-botocore python3-module-html5lib python3-module-nose
+BuildRequires: python3(s3transfer) python3(jmespath)
+%endif
 
 %description
 Boto is the Amazon Web Services (AWS) Software Development Kit (SDK) for
@@ -61,6 +64,10 @@ nosetests3
 %python3_sitelibdir/%oname-%version-py*.egg-info
 
 %changelog
+* Sat Aug 14 2021 Ivan A. Melnikov <iv@altlinux.org> 1.17.96-alt2
+- minor build requirements cleanup
+- enable %%check
+
 * Thu Jun 17 2021 Vitaly Lipatov <lav@altlinux.ru> 1.17.96-alt1
 - new version 1.17.96 (with rpmrb script)
 - disable check (due internet depends)
