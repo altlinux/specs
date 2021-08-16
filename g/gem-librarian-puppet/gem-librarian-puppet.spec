@@ -1,35 +1,57 @@
-%define        pkgname librarian-puppet
+%define        gemname librarian-puppet
 
-Name:          gem-%pkgname
-Version:       3.0.0
+Name:          gem-librarian-puppet
+Version:       3.0.1
 Release:       alt1
 Summary:       Simplify deployment of your Puppet infrastructure
 License:       MIT
 Group:         Development/Ruby
 Url:           http://librarian-puppet.com
-%vcs           https://github.com/voxpupuli/librarian-puppet.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(librarianp) >= 0.6.3
+BuildRequires: gem(rsync) >= 0
+BuildRequires: gem(puppet_forge) >= 2.1 gem(puppet_forge) < 4
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(rspec) >= 0
+# BuildRequires: gem(cucumber) < 3.0.0
+# BuildRequires: gem(aruba) < 0.8.0
+BuildRequires: gem(puppet) >= 0
+BuildRequires: gem(minitest) >= 5 gem(minitest) < 6
+BuildRequires: gem(mocha) >= 0
+BuildRequires: gem(simplecov) >= 0.9.0 gem(simplecov) < 1
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency puppet_forge >= 3.0,puppet_forge < 4
+%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
+%ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
+Requires:      gem(librarianp) >= 0.6.3
+Requires:      gem(rsync) >= 0
+Requires:      gem(puppet_forge) >= 2.1 gem(puppet_forge) < 4
+Provides:      gem(librarian-puppet) = 3.0.1
+
 
 %description
 Librarian-puppet is a bundler for your puppet infrastructure. You can use
 librarian-puppet to manage the puppet modules your infrastructure depends on,
-whether the modules come from the Puppet Forge, Git repositories or just a path.
+whether the modules come from the Puppet Forge, Git repositories or just a
+path.
 
 * Librarian-puppet can reuse the dependencies listed in your Modulefile or
-  metadata.json
-* Forge modules can be installed from Puppetlabs Forge or an internal Forge
-  such as Pulp
+metadata.json
+* Forge modules can be installed from Puppetlabs Forge or an internal Forge such
+as Pulp
 * Git modules can be installed from a branch, tag or specific commit, optionally
-  using a path inside the repository
+using a path inside the repository
 * Modules can be installed from GitHub using tarballs, without needing Git
-  installed
+installed
 * Modules can be installed from a filesystem path
-* Module dependencies are resolved transitively without needing to list all
-  the modules explicitly
+* Module dependencies are resolved transitively without needing to list all the
+modules explicitly
 
 Librarian-puppet manages your modules/ directory for you based on your
 Puppetfile. Your Puppetfile becomes the authoritative source for what modules
@@ -43,22 +65,150 @@ It is based on Librarian, a framework for writing bundlers, which are tools that
 resolve, fetch, install, and isolate a project's dependencies.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
+%package       -n librarian-puppet
+Version:       3.0.1
+Release:       alt1
+Summary:       Simplify deployment of your Puppet infrastructure executable(s)
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета librarian-puppet
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(librarian-puppet) = 3.0.1
+
+%description   -n librarian-puppet
+Simplify deployment of your Puppet infrastructure
+executable(s).
+
+Librarian-puppet is a bundler for your puppet infrastructure. You can use
+librarian-puppet to manage the puppet modules your infrastructure depends on,
+whether the modules come from the Puppet Forge, Git repositories or just a
+path.
+
+* Librarian-puppet can reuse the dependencies listed in your Modulefile or
+metadata.json
+* Forge modules can be installed from Puppetlabs Forge or an internal Forge such
+as Pulp
+* Git modules can be installed from a branch, tag or specific commit, optionally
+using a path inside the repository
+* Modules can be installed from GitHub using tarballs, without needing Git
+installed
+* Modules can be installed from a filesystem path
+* Module dependencies are resolved transitively without needing to list all the
+modules explicitly
+
+Librarian-puppet manages your modules/ directory for you based on your
+Puppetfile. Your Puppetfile becomes the authoritative source for what modules
+you require and at what version, tag or branch.
+
+Once using Librarian-puppet you should not modify the contents of your modules
+directory. The individual modules' repos should be updated, tagged with a new
+release and the version bumped in your Puppetfile.
+
+It is based on Librarian, a framework for writing bundlers, which are tools that
+resolve, fetch, install, and isolate a project's dependencies.
+
+%description   -n librarian-puppet -l ru_RU.UTF-8
+Исполнямка для самоцвета librarian-puppet.
 
 
-%package       -n %pkgname
-Summary:       Executable for %gemname gem
+%package       -n gem-librarian-puppet-doc
+Version:       3.0.1
+Release:       alt1
+Summary:       Simplify deployment of your Puppet infrastructure documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета librarian-puppet
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   -n %pkgname
-Executable for %gemname gem.
+Requires:      gem(librarian-puppet) = 3.0.1
+
+%description   -n gem-librarian-puppet-doc
+Simplify deployment of your Puppet infrastructure documentation
+files.
+
+Librarian-puppet is a bundler for your puppet infrastructure. You can use
+librarian-puppet to manage the puppet modules your infrastructure depends on,
+whether the modules come from the Puppet Forge, Git repositories or just a
+path.
+
+* Librarian-puppet can reuse the dependencies listed in your Modulefile or
+metadata.json
+* Forge modules can be installed from Puppetlabs Forge or an internal Forge such
+as Pulp
+* Git modules can be installed from a branch, tag or specific commit, optionally
+using a path inside the repository
+* Modules can be installed from GitHub using tarballs, without needing Git
+installed
+* Modules can be installed from a filesystem path
+* Module dependencies are resolved transitively without needing to list all the
+modules explicitly
+
+Librarian-puppet manages your modules/ directory for you based on your
+Puppetfile. Your Puppetfile becomes the authoritative source for what modules
+you require and at what version, tag or branch.
+
+Once using Librarian-puppet you should not modify the contents of your modules
+directory. The individual modules' repos should be updated, tagged with a new
+release and the version bumped in your Puppetfile.
+
+It is based on Librarian, a framework for writing bundlers, which are tools that
+resolve, fetch, install, and isolate a project's dependencies.
+
+%description   -n gem-librarian-puppet-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета librarian-puppet.
+
+
+%package       -n gem-librarian-puppet-devel
+Version:       3.0.1
+Release:       alt1
+Summary:       Simplify deployment of your Puppet infrastructure development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета librarian-puppet
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(librarian-puppet) = 3.0.1
+Requires:      gem(rake) >= 0
+Requires:      gem(rspec) >= 0
+# Requires:      gem(cucumber) < 3.0.0
+# Requires:      gem(aruba) < 0.8.0
+Requires:      gem(puppet) >= 0
+Requires:      gem(minitest) >= 5 gem(minitest) < 6
+Requires:      gem(mocha) >= 0
+Requires:      gem(simplecov) >= 0.9.0 gem(simplecov) < 1
+
+%description   -n gem-librarian-puppet-devel
+Simplify deployment of your Puppet infrastructure development
+package.
+
+Librarian-puppet is a bundler for your puppet infrastructure. You can use
+librarian-puppet to manage the puppet modules your infrastructure depends on,
+whether the modules come from the Puppet Forge, Git repositories or just a
+path.
+
+* Librarian-puppet can reuse the dependencies listed in your Modulefile or
+metadata.json
+* Forge modules can be installed from Puppetlabs Forge or an internal Forge such
+as Pulp
+* Git modules can be installed from a branch, tag or specific commit, optionally
+using a path inside the repository
+* Modules can be installed from GitHub using tarballs, without needing Git
+installed
+* Modules can be installed from a filesystem path
+* Module dependencies are resolved transitively without needing to list all the
+modules explicitly
+
+Librarian-puppet manages your modules/ directory for you based on your
+Puppetfile. Your Puppetfile becomes the authoritative source for what modules
+you require and at what version, tag or branch.
+
+Once using Librarian-puppet you should not modify the contents of your modules
+directory. The individual modules' repos should be updated, tagged with a new
+release and the version bumped in your Puppetfile.
+
+It is based on Librarian, a framework for writing bundlers, which are tools that
+resolve, fetch, install, and isolate a project's dependencies.
+
+%description   -n gem-librarian-puppet-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета librarian-puppet.
 
 
 %prep
@@ -74,15 +224,25 @@ Executable for %gemname gem.
 %ruby_test
 
 %files
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         -n %pkgname
-%_bindir/%pkgname
+%files         -n librarian-puppet
+%doc README.md
+%_bindir/librarian-puppet
 
-%files         doc
+%files         -n gem-librarian-puppet-doc
+%doc README.md
 %ruby_gemdocdir
 
+%files         -n gem-librarian-puppet-devel
+%doc README.md
+
+
 %changelog
+* Thu Jul 15 2021 Pavel Skrylev <majioa@altlinux.org> 3.0.1-alt1
+- ^ 3.0.0 -> 3.0.1
+
 * Thu Jun 21 2019 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt1
 - Initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0.

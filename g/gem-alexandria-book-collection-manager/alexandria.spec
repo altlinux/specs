@@ -1,10 +1,10 @@
-%define        pkgname alexandria-book-collection-manager
+%define        gemname alexandria-book-collection-manager
 
-Name:          gem-%pkgname
-Version:       0.7.7
+Name:          gem-alexandria-book-collection-manager
+Version:       0.7.8
 Release:       alt1
 Summary:       Alexandria is a GNOME application to help you manage your book collection
-License:       GPLv2
+License:       GPL-2
 Group:         Development/Ruby
 Url:           https://github.com/mvz/alexandria-book-collection-manager
 Vcs:           https://github.com/mvz/alexandria-book-collection-manager.git
@@ -14,97 +14,177 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires(pre): rpm-build-gnome
-BuildRequires: gem(rake)
-BuildRequires: gem(rspec)
 BuildRequires: GConf
 BuildRequires: intltool
 BuildRequires: libGConf2-devel
+BuildRequires: gem(gettext) >= 3.1 gem(gettext) < 4
+BuildRequires: gem(gstreamer) >= 3.4.3 gem(gstreamer) < 3.5
+BuildRequires: gem(gtk3) >= 3.4.3 gem(gtk3) < 3.5
+BuildRequires: gem(hpricot) >= 0.8.5 gem(hpricot) < 0.9
+BuildRequires: gem(htmlentities) >= 4.3 gem(htmlentities) < 5
+BuildRequires: gem(image_size) >= 2.0 gem(image_size) < 3
+BuildRequires: gem(marc) >= 1.0.0 gem(marc) < 2
+BuildRequires: gem(psych) >= 3.2.0 gem(psych) < 5
+BuildRequires: gem(zoom) >= 0.5.0 gem(zoom) < 0.6
+BuildRequires: gem(gnome_app_driver) >= 0.3.0 gem(gnome_app_driver) < 0.4
+BuildRequires: gem(minitest) >= 5.0 gem(minitest) < 6
+BuildRequires: gem(rake) >= 13.0 gem(rake) < 14
+BuildRequires: gem(rspec) >= 3.0 gem(rspec) < 4
+BuildRequires: gem(rubocop) >= 0.93.1 gem(rubocop) < 2
+BuildRequires: gem(rubocop-i18n) >= 2.0.2 gem(rubocop-i18n) < 4
+BuildRequires: gem(rubocop-performance) >= 1.9.0 gem(rubocop-performance) < 2
+BuildRequires: gem(rubocop-rspec) >= 1.44.1 gem(rubocop-rspec) < 3
+BuildRequires: gem(webmock) >= 3.9 gem(webmock) < 4
 
-Requires(preun,post): GConf
-Requires:      alexandria
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency rubocop-i18n >= 3.0.0,rubocop-i18n < 4
+%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+%ruby_use_gem_dependency rubocop-rspec >= 2.4.0,rubocop-rspec < 3
+%ruby_use_gem_dependency marc >= 1.1.1,marc < 2
+%ruby_use_gem_dependency psych >= 3.0,psych < 5
+%ruby_alias_names alexandria-book-collection-manager,alexandria
+Requires:      gem(gettext) >= 3.1 gem(gettext) < 4
+Requires:      gem(gstreamer) >= 3.4.3 gem(gstreamer) < 3.5
+Requires:      gem(gtk3) >= 3.4.3 gem(gtk3) < 3.5
+Requires:      gem(hpricot) >= 0.8.5 gem(hpricot) < 0.9
+Requires:      gem(htmlentities) >= 4.3 gem(htmlentities) < 5
+Requires:      gem(image_size) >= 2.0 gem(image_size) < 3
+Requires:      gem(marc) >= 1.0.0 gem(marc) < 2
+Requires:      gem(psych) >= 3.2.0 gem(psych) < 5
+Requires:      gem(zoom) >= 0.5.0 gem(zoom) < 0.6
+Requires:      alexandria
+Provides:      gem(alexandria-book-collection-manager) = 0.7.8
+
+%ruby_on_build_rake_tasks pre_install
 
 %description
-Alexandria is a GNOME application to help you manage your book collection.
+Alexandria is a GNOME application to help you manage your book
+collection.
 
 Alexandria:
- * retrieves book information from Amazon (including cover pictures) ;
- * saves data using the YAML format ;
- * features an HIG-compliant user interface ;
- * shows books in different views (standard list or icons list).
+* retrieves book information from Amazon (including cover pictures)
+* saves data using the YAML format
+* features an HIG-compliant user interface
+* shows books in different views (standard list or icons list).
 
 
 %package       -n alexandria
-Summary:       HTML, XML, SAX, and Reader parser
-Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
+Version:       0.7.8
+Release:       alt1
+Summary:       Alexandria is a GNOME application to help you manage your book collection executable(s)
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета alexandria-book-collection-manager
 Group:         Books/Other
 BuildArch:     noarch
 
+Requires:      gem(alexandria-book-collection-manager) = 0.7.8
 Requires:      /usr/bin/update-desktop-database
 Requires:      /usr/sbin/update-menus
 
 %description   -n alexandria
-Alexandria is a GNOME application to help you manage your book collection.
+Alexandria is a GNOME application to help you manage your book collection
+executable(s).
+
+Alexandria:
+* retrieves book information from Amazon (including cover pictures)
+* saves data using the YAML format
+* features an HIG-compliant user interface
+* shows books in different views (standard list or icons list).
+
+%description   -n alexandria -l ru_RU.UTF-8
+Исполнямка для самоцвета alexandria-book-collection-manager.
 
 
-%package       -n gem-%pkgname-doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-alexandria-book-collection-manager-doc
+Version:       0.7.8
+Release:       alt1
+Summary:       Alexandria is a GNOME application to help you manage your book collection documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета alexandria-book-collection-manager
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   -n gem-%pkgname-doc
-Documentation files for %gemname gem.
+Requires:      gem(alexandria-book-collection-manager) = 0.7.8
 
-%description   -n gem-%pkgname-doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-alexandria-book-collection-manager-doc
+Alexandria is a GNOME application to help you manage your book collection
+documentation files.
+
+Alexandria:
+* retrieves book information from Amazon (including cover pictures)
+* saves data using the YAML format
+* features an HIG-compliant user interface
+* shows books in different views (standard list or icons list).
+
+%description   -n gem-alexandria-book-collection-manager-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета alexandria-book-collection-manager.
+
+
+%package       -n gem-alexandria-book-collection-manager-devel
+Version:       0.7.8
+Release:       alt1
+Summary:       Alexandria is a GNOME application to help you manage your book collection development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета alexandria-book-collection-manager
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(alexandria-book-collection-manager) = 0.7.8
+Requires:      gem(gnome_app_driver) >= 0.3.0 gem(gnome_app_driver) < 0.4
+Requires:      gem(minitest) >= 5.0 gem(minitest) < 6
+Requires:      gem(rake) >= 13.0 gem(rake) < 14
+Requires:      gem(rspec) >= 3.0 gem(rspec) < 4
+Requires:      gem(rubocop) >= 0.93.1 gem(rubocop) < 2
+Requires:      gem(rubocop-i18n) >= 2.0.2 gem(rubocop-i18n) < 4
+Requires:      gem(rubocop-performance) >= 1.9.0 gem(rubocop-performance) < 2
+Requires:      gem(rubocop-rspec) >= 1.44.1 gem(rubocop-rspec) < 3
+Requires:      gem(webmock) >= 3.9 gem(webmock) < 4
+
+%description   -n gem-alexandria-book-collection-manager-devel
+Alexandria is a GNOME application to help you manage your book collection
+development package.
+
+Alexandria:
+* retrieves book information from Amazon (including cover pictures)
+* saves data using the YAML format
+* features an HIG-compliant user interface
+* shows books in different views (standard list or icons list).
+
+%description   -n gem-alexandria-book-collection-manager-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета alexandria-book-collection-manager.
 
 
 %prep
 %setup
 
 %build
-%ruby_build --pre=pre_install --use=alexandria-book-collection-manager --alias=alexandria
+%ruby_build
 
 %install
 %ruby_install
 
-mkdir -p %buildroot%_desktopdir/ %buildroot%_datadir/sounds/alexandria/
-install -D -m 0644 schemas/alexandria.schemas %buildroot/%_sysconfdir/gconf/schemas/alexandria.schemas
-install -D -m 0644 alexandria.desktop %buildroot%_desktopdir/alexandria.desktop
-install -D -m 0644 misc/sounds/* %buildroot%_datadir/sounds/alexandria/
-
-%find_lang alexandria --with-gnome
-
 %check
 %ruby_test
 
-%post          -n alexandria
-%gconf2_install alexandria
-
-%preun         -n alexandria
-if [ $1 = 0 ]; then
-%gconf2_uninstall alexandria
-fi
-
 %files
-%doc README*
-%ruby_gemspecdir/alexandria-book-collection-manager-%version.gemspec
-%ruby_gemslibdir/alexandria-book-collection-manager-%version/
+%doc README.md
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files      -n gem-%pkgname-doc
-%ruby_gemsdocdir/alexandria-book-collection-manager-%version/
-
-%files      -n alexandria
+%files         -n alexandria
+%doc README.md
 %_bindir/alexandria
-%_mandir/*
-%_desktopdir/alexandria.desktop
-%config %gconf_schemasdir/*
-%_datadir/sounds/alexandria/
+
+%files         -n gem-alexandria-book-collection-manager-doc
+%doc README.md
+%ruby_gemdocdir
+
+%files         -n gem-alexandria-book-collection-manager-devel
+%doc README.md
 
 
 %changelog
+* Thu Jul 01 2021 Pavel Skrylev <majioa@altlinux.org> 0.7.8-alt1
+- ^ 0.7.7 -> 0.7.8
+
 * Sun Nov 22 2020 Pavel Skrylev <majioa@altlinux.org> 0.7.7-alt1
 - ^ 0.7.5 -> 0.7.7
 

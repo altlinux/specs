@@ -1,10 +1,10 @@
-%define        pkgname websocket-driver
+%define        gemname websocket-driver
 
-Name:          gem-%pkgname
-Version:       0.7.1
-Release:       alt1.1
+Name:          gem-websocket-driver
+Version:       0.7.5
+Release:       alt1
 Summary:       WebSocket protocol handler with pluggable I/O
-License:       MIT
+License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://github.com/faye/websocket-driver-ruby
 Vcs:           https://github.com/faye/websocket-driver-ruby.git
@@ -12,33 +12,82 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(websocket-extensions) >= 0.1.0
+BuildRequires: gem(eventmachine) >= 0
+BuildRequires: gem(permessage_deflate) >= 0
+BuildRequires: gem(rake-compiler) >= 0 gem(rake-compiler) < 2
+BuildRequires: gem(rspec) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     %pkgname-ruby
-Provides:      %pkgname-ruby
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
+Requires:      gem(websocket-extensions) >= 0.1.0
+Obsoletes:     websocket-driver-ruby < %EVR
+Provides:      websocket-driver-ruby = %EVR
+Provides:      gem(websocket-driver) = 0.7.5
+
 
 %description
-This module provides a complete implementation of the WebSocket
-protocols that can be hooked up to any TCP library. It aims to simplify
-things by decoupling the protocol details from the I/O layer, such that
-users only need to implement code to stream data in and out of it
-without needing to know anything about how the protocol actually works.
-Think of it as a complete WebSocket system with pluggable I/O.
+This module provides a complete implementation of the WebSocket protocols that
+can be hooked up to any TCP library. It aims to simplify things by decoupling
+the protocol details from the I/O layer, such that users only need to implement
+code to stream data in and out of it without needing to know anything about how
+the protocol actually works. Think of it as a complete WebSocket system with
+pluggable I/O.
 
 
-%package       -n gem-%pkgname-doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-websocket-driver-doc
+Version:       0.7.5
+Release:       alt1
+Summary:       WebSocket protocol handler with pluggable I/O documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета websocket-driver
 Group:         Development/Documentation
 BuildArch:     noarch
-Obsoletes:     %pkgname-ruby-doc
-Provides:      %pkgname-ruby-doc
 
-%description   -n gem-%pkgname-doc
-Documentation files for %gemname gem.
+Requires:      gem(websocket-driver) = 0.7.5
+Obsoletes:     websocket-driver-ruby-doc
+Provides:      websocket-driver-ruby-doc
 
-%description   -n gem-%pkgname-doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-websocket-driver-doc
+WebSocket protocol handler with pluggable I/O documentation files.
+
+This module provides a complete implementation of the WebSocket protocols that
+can be hooked up to any TCP library. It aims to simplify things by decoupling
+the protocol details from the I/O layer, such that users only need to implement
+code to stream data in and out of it without needing to know anything about how
+the protocol actually works. Think of it as a complete WebSocket system with
+pluggable I/O.
+
+%description   -n gem-websocket-driver-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета websocket-driver.
+
+
+%package       -n gem-websocket-driver-devel
+Version:       0.7.5
+Release:       alt1
+Summary:       WebSocket protocol handler with pluggable I/O development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета websocket-driver
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(websocket-driver) = 0.7.5
+Requires:      gem(eventmachine) >= 0
+Requires:      gem(permessage_deflate) >= 0
+Requires:      gem(rake-compiler) >= 0 gem(rake-compiler) < 2
+Requires:      gem(rspec) >= 0
+
+%description   -n gem-websocket-driver-devel
+WebSocket protocol handler with pluggable I/O development package.
+
+This module provides a complete implementation of the WebSocket protocols that
+can be hooked up to any TCP library. It aims to simplify things by decoupling
+the protocol details from the I/O layer, such that users only need to implement
+code to stream data in and out of it without needing to know anything about how
+the protocol actually works. Think of it as a complete WebSocket system with
+pluggable I/O.
+
+%description   -n gem-websocket-driver-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета websocket-driver.
 
 
 %prep
@@ -54,15 +103,23 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
-%ruby_gemextdir
 %ruby_gemlibdir
+%ruby_gemextdir
 
-%files         -n gem-%pkgname-doc
+%files         -n gem-websocket-driver-doc
+%doc README.md
 %ruby_gemdocdir
 
+%files         -n gem-websocket-driver-devel
+%doc README.md
+
+
 %changelog
+* Fri Jul 02 2021 Pavel Skrylev <majioa@altlinux.org> 0.7.5-alt1
+- ^ 0.7.1 -> 0.7.5
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 0.7.1-alt1.1
 - fixed (!) spec
 

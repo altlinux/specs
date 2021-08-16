@@ -3,7 +3,7 @@
 Name:          rpm-build-ruby
 Epoch:         1
 Version:       1.0.0
-Release:       alt13
+Release:       alt14
 Summary:       RPM helper scripts to calculate Ruby dependencies
 License:       GPLv2
 Group:         Development/Ruby
@@ -57,6 +57,9 @@ install -p -m 0644 ruby.env %buildroot%_rpmmacrosdir/
 %_rpmmacrosdir/ruby
 
 %changelog
+* Sat Apr 24 2021 Pavel Skrylev <majioa@altlinux.org> 1:1.0.0-alt14
+- + some macros to proceed on the gem file specs
+
 * Mon May 25 2020 Pavel Skrylev <majioa@altlinux.org> 1:1.0.0-alt13
 - + require dep to ruby executable
 - * to support alias in ruby_build macro

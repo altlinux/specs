@@ -1,18 +1,21 @@
 %define        pkgname winrm-fs
 
 Name:          gem-%pkgname
-Version:       1.3.2
+Version:       1.3.5
 Release:       alt1
-Summary:       WinRM File Manager 
+Summary:       WinRM File Manager
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://github.com/WinRb/winrm-fs
-# VCS:         https://github.com/WinRb/winrm-fs.git
+Vcs:           https://github.com/WinRb/winrm-fs.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
 %summary.
@@ -20,14 +23,6 @@ BuildRequires(pre): rpm-build-ruby
 Files may be copied from the local machine to the winrm endpoint. Individual
 files or directories, as well as arrays of files and directories may be
 specified.
-
-%package       doc
-Summary:       Documentation files for %gemname gem
-Group:         Development/Documentation
-BuildArch:     noarch
-
-%description   doc
-Documentation files for %gemname gem.
 
 
 %package       -n rwinrmcp
@@ -39,17 +34,30 @@ BuildArch:     noarch
 Executable file for %gemname gem.
 
 
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
+
 %prep
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %doc README*
@@ -62,6 +70,11 @@ Executable file for %gemname gem.
 %files         -n rwinrmcp
 %_bindir/rwinrmcp
 
+
 %changelog
+* Thu Dec 17 2020 Pavel Skrylev <majioa@altlinux.org> 1.3.5-alt1
+- ^ 1.3.2 -> 1.3.5
+- ! spec
+
 * Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 1.3.2-alt1
 - Initial build for Sisyphus, packaged as a gem, using Ruby Policy 2.0

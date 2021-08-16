@@ -1,7 +1,7 @@
-%define        pkgname psych
+%define        gemname psych
 
-Name:          gem-%pkgname
-Version:       3.2.0
+Name:          gem-psych
+Version:       4.0.1
 Release:       alt1
 Summary:       A libyaml wrapper for Ruby
 License:       MIT
@@ -9,12 +9,15 @@ Group:         Development/Ruby
 Url:           https://github.com/ruby/psych
 Vcs:           https://github.com/ruby/psych.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
-Source:        %name-%version.tar
 
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem-minitest
-BuildRequires: gem(rake-compiler)
-BuildRequires: gem(rake-compiler-dock)
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_ignore_names fixtures
+Provides:      gem(psych) = 4.0.1
+
 
 %description
 Psych is a YAML parser and emitter. Psych leverages libyaml for its YAML parsing
@@ -22,28 +25,53 @@ and emitting capabilities. In addition to wrapping libyaml, Psych also knows how
 to serialize and de-serialize most Ruby objects to and from the YAML format.
 
 
-%package       devel
-Summary:       Development files for %gemname gem
-Group:         Development/Ruby
-BuildArch:     noarch
-
-%description   devel
-Development files for %{name}.
-
-
-%package       doc
-Summary:       Documentation files for %gemname gem
+%package       -n gem-psych-doc
+Version:       4.0.1
+Release:       alt1
+Summary:       A libyaml wrapper for Ruby documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета psych
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %{name}.
+Requires:      gem(psych) = 4.0.1
+
+%description   -n gem-psych-doc
+A libyaml wrapper for Ruby documentation files.
+
+Psych is a YAML parser and emitter. Psych leverages libyaml for its YAML parsing
+and emitting capabilities. In addition to wrapping libyaml, Psych also knows how
+to serialize and de-serialize most Ruby objects to and from the YAML format.
+
+%description   -n gem-psych-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета psych.
+
+
+%package       -n gem-psych-devel
+Version:       4.0.1
+Release:       alt1
+Summary:       A libyaml wrapper for Ruby development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета psych
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(psych) = 4.0.1
+
+%description   -n gem-psych-devel
+A libyaml wrapper for Ruby development package.
+
+Psych is a YAML parser and emitter. Psych leverages libyaml for its YAML parsing
+and emitting capabilities. In addition to wrapping libyaml, Psych also knows how
+to serialize and de-serialize most Ruby objects to and from the YAML format.
+
+%description   -n gem-psych-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета psych.
+
 
 %prep
 %setup
 
 %build
-%ruby_build --use=%gemname --version-replace=%version
+%ruby_build
 
 %install
 %ruby_install
@@ -52,17 +80,24 @@ Documentation files for %{name}.
 %ruby_test
 
 %files
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         devel
-%ruby_includedir/*
-
-%files         doc
+%files         -n gem-psych-doc
+%doc README.md
 %ruby_gemdocdir
 
+%files         -n gem-psych-devel
+%doc README.md
+%ruby_includedir/*
+
+
 %changelog
+* Tue Jun 29 2021 Pavel Skrylev <majioa@altlinux.org> 4.0.1-alt1
+- ^ 3.2.0 -> 4.0.1
+
 * Mon Nov 23 2020 Pavel Skrylev <majioa@altlinux.org> 3.2.0-alt1
 - ^ 3.1.1pre -> 3.2.0
 

@@ -1,9 +1,8 @@
-%define        pkgname activerecord-session-store
 %define        gemname activerecord-session_store
 
-Name:          gem-%pkgname
-Version:       1.1.3
-Release:       alt1.1
+Name:          gem-activerecord-session-store
+Version:       2.0.0
+Release:       alt1
 Summary:       Active Record's Session Store extracted from Rails
 License:       MIT
 Group:         Development/Ruby
@@ -14,10 +13,25 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(activerecord) >= 5.2.4.1
+BuildRequires: gem(actionpack) >= 5.2.4.1
+BuildRequires: gem(railties) >= 5.2.4.1
+BuildRequires: gem(rack) >= 2.0.8 gem(rack) < 3
+BuildRequires: gem(multi_json) >= 1.11 gem(multi_json) < 2
+BuildRequires: gem(sqlite3) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%gemname
-Provides:      ruby-%gemname
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_alias_names activerecord-session_store,activerecord-session-store
+Requires:      gem(activerecord) >= 5.2.4.1
+Requires:      gem(actionpack) >= 5.2.4.1
+Requires:      gem(railties) >= 5.2.4.1
+Requires:      gem(rack) >= 2.0.8 gem(rack) < 3
+Requires:      gem(multi_json) >= 1.11 gem(multi_json) < 2
+Obsoletes:     ruby-activerecord-session_store < %EVR
+Provides:      ruby-activerecord-session_store = %EVR
+Provides:      gem(activerecord-session_store) = 2.0.0
+
 
 %description
 A session store backed by an Active Record class. A default class is provided,
@@ -25,21 +39,47 @@ but any object duck-typing to an Active Record Session class with text
 session_id and data attributes is sufficient.
 
 
-%description -l ru_RU.UTF8
-Хранилище сессий для Активной Записи извлечённое из Рельс.
-
-
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-activerecord-session-store-doc
+Version:       2.0.0
+Release:       alt1
+Summary:       Active Record's Session Store extracted from Rails documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета activerecord-session_store
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(activerecord-session_store) = 2.0.0
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-activerecord-session-store-doc
+Active Record's Session Store extracted from Rails documentation files.
+
+A session store backed by an Active Record class. A default class is provided,
+but any object duck-typing to an Active Record Session class with text
+session_id and data attributes is sufficient.
+
+%description   -n gem-activerecord-session-store-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета activerecord-session_store.
+
+
+%package       -n gem-activerecord-session-store-devel
+Version:       2.0.0
+Release:       alt1
+Summary:       Active Record's Session Store extracted from Rails development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета activerecord-session_store
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(activerecord-session_store) = 2.0.0
+Requires:      gem(sqlite3) >= 0
+
+%description   -n gem-activerecord-session-store-devel
+Active Record's Session Store extracted from Rails development package.
+
+A session store backed by an Active Record class. A default class is provided,
+but any object duck-typing to an Active Record Session class with text
+session_id and data attributes is sufficient.
+
+%description   -n gem-activerecord-session-store-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета activerecord-session_store.
 
 
 %prep
@@ -55,15 +95,22 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n gem-activerecord-session-store-doc
+%doc README.md
 %ruby_gemdocdir
+
+%files         -n gem-activerecord-session-store-devel
+%doc README.md
 
 
 %changelog
+* Tue Jun 22 2021 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt1
+- ^ 1.1.3 -> 2.0.0
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 1.1.3-alt1.1
 - fixed (!) spec
 

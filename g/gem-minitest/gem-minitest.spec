@@ -1,8 +1,8 @@
-%define        pkgname minitest
+%define        gemname minitest
 
-Name:          gem-%pkgname
-Version:       5.14.1
-Release:       alt0.1
+Name:          gem-minitest
+Version:       5.14.4
+Release:       alt1
 Summary:       Minitest provides a complete suite of testing facilities supporting TDD, BDD, mocking, and benchmarking
 License:       MIT
 Group:         Development/Ruby
@@ -13,12 +13,16 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-hoe
-BuildRequires: ruby-rdoc
+BuildRequires: gem(rdoc) >= 4.0 gem(rdoc) < 7
+BuildRequires: gem(hoe) >= 3.22 gem(hoe) < 4
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
+Obsoletes:     ruby-minitest < %EVR
+Provides:      ruby-minitest = %EVR
+Provides:      gem(minitest) = 5.14.4
+
 
 %description
 Minitest provides a complete suite of testing facilities supporting TDD, BDD,
@@ -37,29 +41,105 @@ co-worker doesn't replace your linear algorithm with an exponential one!
 minitest/mock by Steven Baker, is a beautifully tiny mock (and stub) object
 framework. minitest/pride shows pride in testing and adds coloring to your test
 output. I guess it is an example of how to write IO pipes too. :P minitest/test
-is meant to have a clean implementation for language implementors that need
-a minimal set of methods to bootstrap a working test suite. For example, there
-is no magic involved for test-case discovery. "Again, I can't praise enough
-the idea of a testing/specing framework that I can actually read in full in one
+is meant to have a clean implementation for language implementors that need a
+minimal set of methods to bootstrap a working test suite. For example, there is
+no magic involved for test-case discovery. "Again, I can't praise enough the
+idea of a testing/specing framework that I can actually read in full in one
 sitting!" -- Piotr Szotkowski Comparing to rspec: rspec is a testing DSL.
 minitest is ruby. -- Adam Hawkins, "Bow Before MiniTest" minitest doesn't
 reinvent anything that ruby already provides, like: classes, modules,
-inheritance, methods. This means you only have to learn ruby to use minitest
-and all of your regular OO practices like extract-method refactorings still
-apply.
+inheritance, methods. This means you only have to learn ruby to use minitest and
+all of your regular OO practices like extract-method refactorings still apply.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-minitest-doc
+Version:       5.14.4
+Release:       alt1
+Summary:       Minitest provides a complete suite of testing facilities supporting TDD, BDD, mocking, and benchmarking documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета minitest
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(minitest) = 5.14.4
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-minitest-doc
+Minitest provides a complete suite of testing facilities supporting TDD, BDD,
+mocking, and benchmarking documentation files.
+
+Minitest provides a complete suite of testing facilities supporting TDD, BDD,
+mocking, and benchmarking. "I had a class with Jim Weirich on testing last week
+and we were allowed to choose our testing frameworks. Kirk Haines and I were
+paired up and we cracked open the code for a few test frameworks... I MUST say
+that minitest is *very* readable / understandable compared to the 'other two'
+options we looked at. Nicely done and thank you for helping us keep our mental
+sanity." -- Wayne E. Seguin minitest/test is a small and incredibly fast unit
+testing framework. It provides a rich set of assertions to make your tests clean
+and readable. minitest/spec is a functionally complete spec engine. It hooks
+onto minitest/test and seamlessly bridges test assertions over to spec
+expectations. minitest/benchmark is an awesome way to assert the performance of
+your algorithms in a repeatable manner. Now you can assert that your newb
+co-worker doesn't replace your linear algorithm with an exponential one!
+minitest/mock by Steven Baker, is a beautifully tiny mock (and stub) object
+framework. minitest/pride shows pride in testing and adds coloring to your test
+output. I guess it is an example of how to write IO pipes too. :P minitest/test
+is meant to have a clean implementation for language implementors that need a
+minimal set of methods to bootstrap a working test suite. For example, there is
+no magic involved for test-case discovery. "Again, I can't praise enough the
+idea of a testing/specing framework that I can actually read in full in one
+sitting!" -- Piotr Szotkowski Comparing to rspec: rspec is a testing DSL.
+minitest is ruby. -- Adam Hawkins, "Bow Before MiniTest" minitest doesn't
+reinvent anything that ruby already provides, like: classes, modules,
+inheritance, methods. This means you only have to learn ruby to use minitest and
+all of your regular OO practices like extract-method refactorings still apply.
+
+%description   -n gem-minitest-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета minitest.
+
+
+%package       -n gem-minitest-devel
+Version:       5.14.4
+Release:       alt1
+Summary:       Minitest provides a complete suite of testing facilities supporting TDD, BDD, mocking, and benchmarking development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета minitest
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(minitest) = 5.14.4
+Requires:      gem(rdoc) >= 4.0 gem(rdoc) < 7
+Requires:      gem(hoe) >= 3.22 gem(hoe) < 4
+
+%description   -n gem-minitest-devel
+Minitest provides a complete suite of testing facilities supporting TDD, BDD,
+mocking, and benchmarking development package.
+
+Minitest provides a complete suite of testing facilities supporting TDD, BDD,
+mocking, and benchmarking. "I had a class with Jim Weirich on testing last week
+and we were allowed to choose our testing frameworks. Kirk Haines and I were
+paired up and we cracked open the code for a few test frameworks... I MUST say
+that minitest is *very* readable / understandable compared to the 'other two'
+options we looked at. Nicely done and thank you for helping us keep our mental
+sanity." -- Wayne E. Seguin minitest/test is a small and incredibly fast unit
+testing framework. It provides a rich set of assertions to make your tests clean
+and readable. minitest/spec is a functionally complete spec engine. It hooks
+onto minitest/test and seamlessly bridges test assertions over to spec
+expectations. minitest/benchmark is an awesome way to assert the performance of
+your algorithms in a repeatable manner. Now you can assert that your newb
+co-worker doesn't replace your linear algorithm with an exponential one!
+minitest/mock by Steven Baker, is a beautifully tiny mock (and stub) object
+framework. minitest/pride shows pride in testing and adds coloring to your test
+output. I guess it is an example of how to write IO pipes too. :P minitest/test
+is meant to have a clean implementation for language implementors that need a
+minimal set of methods to bootstrap a working test suite. For example, there is
+no magic involved for test-case discovery. "Again, I can't praise enough the
+idea of a testing/specing framework that I can actually read in full in one
+sitting!" -- Piotr Szotkowski Comparing to rspec: rspec is a testing DSL.
+minitest is ruby. -- Adam Hawkins, "Bow Before MiniTest" minitest doesn't
+reinvent anything that ruby already provides, like: classes, modules,
+inheritance, methods. This means you only have to learn ruby to use minitest and
+all of your regular OO practices like extract-method refactorings still apply.
+
+%description   -n gem-minitest-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета minitest.
 
 
 %prep
@@ -75,14 +155,22 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%doc README.rdoc
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         -n gem-minitest-doc
+%doc README.rdoc
+%ruby_gemdocdir
+
+%files         -n gem-minitest-devel
+%doc README.rdoc
 
 
 %changelog
+* Tue Jun 29 2021 Pavel Skrylev <majioa@altlinux.org> 5.14.4-alt1
+- ^ 5.14.1 -> 5.14.4
+
 * Thu Apr 09 2020 Pavel Skrylev <majioa@altlinux.org> 5.14.1-alt0.1
 - ^ 5.14.0 -> 5.14.1pre
 - ! spec syntax

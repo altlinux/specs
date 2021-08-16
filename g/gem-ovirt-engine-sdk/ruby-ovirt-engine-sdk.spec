@@ -1,13 +1,13 @@
-%define        pkgname ovirt-engine-sdk
+%define        gemname ovirt-engine-sdk
 
-Name:          gem-%pkgname
-Version:       4.3.0
-Release:       alt2
+Name:          gem-ovirt-engine-sdk
+Version:       4.4.1
+Release:       alt1
 Summary:       The oVirt Ruby SDK is a Ruby gem that simplyfies access to the oVirt Engine API
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://github.com/oVirt/ovirt-engine-sdk-ruby
-Vcs:           https://github.com/oVirt/ovirt-engine-sdk-ruby.git
+Vcs:           https://github.com/ovirt/ovirt-engine-sdk-ruby.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
@@ -15,56 +15,103 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: xmllint
 BuildRequires: libcurl-devel
 BuildRequires: libxml2-devel
-BuildRequires: gem(rake)
-BuildRequires: gem(rake-compiler)
-BuildRequires: gem(rubocop)
-BuildRequires: gem(yard)
-BuildRequires: gem(rspec-core)
+BuildRequires: gem(rake) >= 12.3 gem(rake) < 14
+BuildRequires: gem(rake-compiler) >= 1.0 gem(rake-compiler) < 2
+BuildRequires: gem(rspec) >= 3.7 gem(rspec) < 4
+BuildRequires: gem(rubocop) >= 0.79.0 gem(rubocop) < 2
+BuildRequires: gem(yard) >= 0.9.12 gem(yard) < 1
+BuildRequires: gem(json) >= 1 gem(json) < 3
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+%ruby_use_gem_dependency rake >= 13.0.1,rake < 14
+%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+%ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
+%ruby_use_gem_dependency json >= 2.3.0,json < 3
+Requires:      gem(json) >= 1 gem(json) < 3
+Obsoletes:     ruby-ovirt-engine-sdk < %EVR
+Provides:      ruby-ovirt-engine-sdk = %EVR
+Provides:      gem(ovirt-engine-sdk) = 4.4.1
+
 
 %description
-%summary.
+This project contains the Ruby SDK for the oVirt Engine API.
 
-This is a mirror from gerrit.ovirt.org http://www.ovirt.org, for issues use http://bugzilla.redhat.com
+Note that most of the code of this SDK is automatically generated. If you just
+installed the gem then you will have everything already, but if you downloaded
+the source then you will need to generate it, follow the instructions in the
+README.adoc file of the parent directory.
+
+This is a mirror from gerrit.ovirt.org http://www.ovirt.org, for issues use
+http://bugzilla.redhat.com
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-ovirt-engine-sdk-doc
+Version:       4.4.1
+Release:       alt1
+Summary:       The oVirt Ruby SDK is a Ruby gem that simplyfies access to the oVirt Engine API documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ovirt-engine-sdk
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(ovirt-engine-sdk) = 4.4.1
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-ovirt-engine-sdk-doc
+The oVirt Ruby SDK is a Ruby gem that simplyfies access to the oVirt Engine API
+documentation files.
+
+This project contains the Ruby SDK for the oVirt Engine API.
+
+Note that most of the code of this SDK is automatically generated. If you just
+installed the gem then you will have everything already, but if you downloaded
+the source then you will need to generate it, follow the instructions in the
+README.adoc file of the parent directory.
+
+This is a mirror from gerrit.ovirt.org http://www.ovirt.org, for issues use
+http://bugzilla.redhat.com
+
+%description   -n gem-ovirt-engine-sdk-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета ovirt-engine-sdk.
 
 
-%package       devel
-Summary:       Development files for %gemname gem
+%package       -n gem-ovirt-engine-sdk-devel
+Version:       4.4.1
+Release:       alt1
+Summary:       The oVirt Ruby SDK is a Ruby gem that simplyfies access to the oVirt Engine API development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ovirt-engine-sdk
 Group:         Development/Ruby
 BuildArch:     noarch
 
+Requires:      gem(ovirt-engine-sdk) = 4.4.1
+Requires:      gem(rake) >= 12.3 gem(rake) < 14
+Requires:      gem(rake-compiler) >= 1.0 gem(rake-compiler) < 2
+Requires:      gem(rspec) >= 3.7 gem(rspec) < 4
+Requires:      gem(rubocop) >= 0.79.0 gem(rubocop) < 2
+Requires:      gem(yard) >= 0.9.12 gem(yard) < 1
 Requires:      xmllint
 Requires:      libcurl-devel
 Requires:      libxml2-devel
 
-%description   devel
-Development files for %gemname gem.
+%description   -n gem-ovirt-engine-sdk-devel
+The oVirt Ruby SDK is a Ruby gem that simplyfies access to the oVirt Engine API
+development package.
 
-%description   devel -l ru_RU.UTF8
-Файлы заголовков для самоцвета %gemname.
+This project contains the Ruby SDK for the oVirt Engine API.
+
+Note that most of the code of this SDK is automatically generated. If you just
+installed the gem then you will have everything already, but if you downloaded
+the source then you will need to generate it, follow the instructions in the
+README.adoc file of the parent directory.
+
+This is a mirror from gerrit.ovirt.org http://www.ovirt.org, for issues use
+http://bugzilla.redhat.com
+
+%description   -n gem-ovirt-engine-sdk-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета ovirt-engine-sdk.
 
 
 %prep
 %setup
-# NOTE: create version.rb
-echo "module OvirtSDK4;VERSION = '$(xmllint pom.xml --xpath "/*[name()='project']/*[name()='version']/text()")';end" > sdk/lib/ovirtsdk4/version.rb
 
 %build
 %ruby_build
@@ -76,19 +123,24 @@ echo "module OvirtSDK4;VERSION = '$(xmllint pom.xml --xpath "/*[name()='project'
 %ruby_test
 
 %files
-%doc README*
+%doc README.adoc
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         doc
+%files         -n gem-ovirt-engine-sdk-doc
+%doc README.adoc
 %ruby_gemdocdir
 
-%files         devel
+%files         -n gem-ovirt-engine-sdk-devel
+%doc README.adoc
 %ruby_includedir/*
 
 
 %changelog
+* Thu Jun 24 2021 Pavel Skrylev <majioa@altlinux.org> 4.4.1-alt1
+- ^ 4.3.0 -> 4.4.1
+
 * Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 4.3.0-alt2
 - ! spec tags and syntax
 

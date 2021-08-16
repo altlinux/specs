@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       1.2.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby interface to PostgreSQL RDBMS
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -19,6 +19,7 @@ BuildRequires: uni2ascii
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_ignore_names ruby-pg,postgres
 Obsoletes:     ruby-%pkgname < %EVR
 Provides:      ruby-%pkgname = %EVR
 
@@ -83,6 +84,9 @@ Development files for %gemname gem.
 
 
 %changelog
+* Tue Jun 29 2021 Pavel Skrylev <majioa@altlinux.org> 1.2.3-alt1.1
+- + ignore names to spec
+
 * Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 1.2.3-alt1
 - ^ 1.1.4 -> 1.2.3
 - ! spec tags and syntax

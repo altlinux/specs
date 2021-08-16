@@ -1,8 +1,8 @@
-%define        pkgname rails
+%define        gemname rails
 
-Name:          gem-%pkgname
-Version:       5.2.4.4
-Release:       alt2
+Name:          gem-rails
+Version:       6.1.3.2
+Release:       alt1
 Summary:       Ruby on Rails
 License:       MIT
 Group:         Development/Ruby
@@ -14,265 +14,611 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 Source1:       railsctl
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(i18n) >= 1.6 gem(i18n) < 2
+#BuildRequires: gem(tzinfo) >= 2.0 gem(tzinfo) < 3
+BuildRequires: gem(concurrent-ruby) >= 1.0.2 gem(concurrent-ruby) < 2
+BuildRequires: gem(zeitwerk) >= 2.3 gem(zeitwerk) < 3
+BuildRequires: gem(minitest) >= 5.1 gem(minitest) < 6
+BuildRequires: gem(nokogiri) >= 1.8.5
+BuildRequires: gem(rack) >= 2.0.9 gem(rack) < 3
+BuildRequires: gem(rack-test) >= 0.6.3
+BuildRequires: gem(rails-html-sanitizer) >= 1.2.0 gem(rails-html-sanitizer) < 2
+BuildRequires: gem(rails-dom-testing) >= 2.0 gem(rails-dom-testing) < 3
+BuildRequires: gem(mail) >= 2.5.4 gem(mail) < 3
+BuildRequires: gem(globalid) >= 0.3.6
+BuildRequires: gem(rake) >= 0.8.7 gem(rake) < 14
+BuildRequires: gem(thor) >= 1.0 gem(thor) < 2
+BuildRequires: gem(method_source) >= 0
+BuildRequires: gem(builder) >= 3.1 gem(builder) < 4
+BuildRequires: gem(erubi) >= 1.4 gem(erubi) < 2
+BuildRequires: gem(marcel) >= 1.0.0 gem(marcel) < 1.1
+BuildRequires: gem(mini_mime) >= 1.0.2 gem(mini_mime) < 1.1
+BuildRequires: gem(bundler) >= 1.15.0 gem(bundler) < 3
+BuildRequires: gem(sprockets-rails) >= 2.0.0
+BuildRequires: gem(mail) >= 2.7.1
+BuildRequires: gem(nio4r) >= 2.0 gem(nio4r) < 3
+BuildRequires: gem(websocket-driver) >= 0.6.1
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+%ruby_use_gem_dependency bundler >= 2.1.4,bundler < 3
+%ruby_use_gem_dependency rake >= 13.0.1,rake < 14
+%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
+Requires:      gem(activesupport) = 6.1.3.2
+Requires:      gem(actionpack) = 6.1.3.2
+Requires:      gem(actionview) = 6.1.3.2
+Requires:      gem(activemodel) = 6.1.3.2
+Requires:      gem(activerecord) = 6.1.3.2
+Requires:      gem(actionmailer) = 6.1.3.2
+Requires:      gem(activejob) = 6.1.3.2
+Requires:      gem(actioncable) = 6.1.3.2
+Requires:      gem(activestorage) = 6.1.3.2
+Requires:      gem(actionmailbox) = 6.1.3.2
+Requires:      gem(actiontext) = 6.1.3.2
+Requires:      gem(railties) = 6.1.3.2
+Requires:      gem(bundler) >= 1.15.0 gem(bundler) < 3
+Requires:      gem(sprockets-rails) >= 2.0.0
 Requires:      rails = %EVR
+Obsoletes:     ruby-rails < %EVR
+Provides:      ruby-rails = %EVR
+Provides:      gem(rails) = 6.1.3.2
+
 
 %description
 Ruby on Rails metapackage gem.
 
-%package       doc
-Summary:       Documentation files for %name
-Summary(ru_RU.UTF-8): Файлы сведений для %name
-Group:         Development/Documentation
-BuildArch:     noarch
-Provides:      activerecord-gems-doc = %EVR
-Obsoletes:     activerecord-gems-doc < %EVR
-Provides:      activesupport-gems-doc = %EVR
-Obsoletes:     activesupport-gems-doc < %EVR
 
-%description   doc
-Documentation files for %{name}.
-
-
-%package       -n gem-actioncable
-Summary:       WebSocket framework for Rails
+%package       -n gem-activesupport
+Version:       6.1.3.2
+Release:       alt1
+Summary:       A toolkit of support libraries and Ruby core extensions extracted from the Rails framework
 Group:         Development/Ruby
-Provides:      ruby-actioncable
-Obsoletes:     ruby-actioncable
+BuildArch:     noarch
 
-%description   -n gem-actioncable
-Structure many real-time application concerns into channels over a
-single WebSocket connection.
+Requires:      gem(i18n) >= 1.6 gem(i18n) < 2
+Requires:      gem(tzinfo) >= 2.0 gem(tzinfo) < 3
+Requires:      gem(concurrent-ruby) >= 1.0.2 gem(concurrent-ruby) < 2
+Requires:      gem(zeitwerk) >= 2.3 gem(zeitwerk) < 3
+Requires:      gem(minitest) >= 5.1 gem(minitest) < 6
+Obsoletes:     activesupport-gems < %EVR
+Obsoletes:     ruby-activesupport < %EVR
+Provides:      activesupport-gems = %EVR
+Provides:      ruby-activesupport = %EVR
+Provides:      gem(activesupport) = 6.1.3.2
+
+%description   -n gem-activesupport
+A toolkit of support libraries and Ruby core extensions extracted from the Rails
+framework. Rich support for multibyte strings, internationalization, time zones,
+and testing.
 
 
-%package       -n gem-actioncable-doc
-Summary:       Documentation files for "gem-actioncable" gem
+%package       -n gem-activesupport-doc
+Version:       6.1.3.2
+Release:       alt1
+Summary:       A toolkit of support libraries and Ruby core extensions extracted from the Rails framework documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета activesupport
 Group:         Development/Documentation
 BuildArch:     noarch
-Provides:      ruby-actioncable-doc
-Obsoletes:     ruby-actioncable-doc
 
-%description   -n gem-actioncable-doc
-%summary
+Requires:      gem(activesupport) = 6.1.3.2
+Obsoletes:     ruby-activesupport-doc
+Provides:      ruby-activesupport-doc
+
+%description   -n gem-activesupport-doc
+A toolkit of support libraries and Ruby core extensions extracted from the Rails
+framework documentation files.
+
+A toolkit of support libraries and Ruby core extensions extracted from the Rails
+framework. Rich support for multibyte strings, internationalization, time zones,
+and testing.
+
+%description   -n gem-activesupport-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета activesupport.
 
 
-%package       -n gem-actionmailer
-Summary:       Email composition, delivery, and receiving framework (part of Rails)
+%package       -n gem-actiontext
+Version:       6.1.3.2
+Release:       alt1
+Summary:       Edit and display rich text in Rails applications
 Group:         Development/Ruby
-Provides:      ruby-actionmailer
-Obsoletes:     ruby-actionmailer
+BuildArch:     noarch
 
-%description   -n gem-actionmailer
-Email on Rails. Compose, deliver, receive, and test emails using the
-familiar controller/view pattern. First-class support for multipart
-email and attachments.
+Requires:      gem(activesupport) = 6.1.3.2
+Requires:      gem(activerecord) = 6.1.3.2
+Requires:      gem(activestorage) = 6.1.3.2
+Requires:      gem(actionpack) = 6.1.3.2
+Requires:      gem(nokogiri) >= 1.8.5
+Provides:      gem(actiontext) = 6.1.3.2
+
+%description   -n gem-actiontext
+Action Text brings rich text content and editing to Rails. It includes the Trix
+editor that handles everything from formatting to links to quotes to lists to
+embedded images and galleries. The rich text content generated by the Trix
+editor is saved in its own RichText model that's associated with any existing
+Active Record model in the application. Any embedded images (or other
+attachments) are automatically stored using Active Storage and associated with
+the included RichText model.
 
 
-%package       -n gem-actionmailer-doc
-Summary:       Documentation files for "gem-actionmailer" gem
+%package       -n gem-actiontext-doc
+Version:       6.1.3.2
+Release:       alt1
+Summary:       Edit and display rich text in Rails applications documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actiontext
 Group:         Development/Documentation
 BuildArch:     noarch
-Provides:      ruby-actionmailer-doc
-Obsoletes:     ruby-actionmailer-doc
 
-%description   -n gem-actionmailer-doc
-%summary
+Requires:      gem(actiontext) = 6.1.3.2
+
+%description   -n gem-actiontext-doc
+Edit and display rich text in Rails applications documentation files.
+
+Action Text brings rich text content and editing to Rails. It includes the Trix
+editor that handles everything from formatting to links to quotes to lists to
+embedded images and galleries. The rich text content generated by the Trix
+editor is saved in its own RichText model that's associated with any existing
+Active Record model in the application. Any embedded images (or other
+attachments) are automatically stored using Active Storage and associated with
+the included RichText model.
+
+%description   -n gem-actiontext-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета actiontext.
 
 
 %package       -n gem-actionpack
+Version:       6.1.3.2
+Release:       alt1
 Summary:       Web-flow and rendering framework putting the VC in MVC (part of Rails)
 Group:         Development/Ruby
-Provides:      ruby-actionpack
+BuildArch:     noarch
+
+Requires:      gem(activesupport) = 6.1.3.2
+Requires:      gem(rack) >= 2.0.9 gem(rack) < 3
+Requires:      gem(rack-test) >= 0.6.3
+Requires:      gem(rails-html-sanitizer) >= 1.2.0 gem(rails-html-sanitizer) < 2
+Requires:      gem(rails-dom-testing) >= 2.0 gem(rails-dom-testing) < 3
+Requires:      gem(actionview) = 6.1.3.2
 Obsoletes:     ruby-actionpack
+Provides:      ruby-actionpack
+Provides:      gem(actionpack) = 6.1.3.2
 
 %description   -n gem-actionpack
-Web apps on Rails. Simple, battle-tested conventions for building and
-testing MVC web applications. Works with any Rack-compatible server.
+Web apps on Rails. Simple, battle-tested conventions for building and testing
+MVC web applications. Works with any Rack-compatible server.
 
 
 %package       -n gem-actionpack-doc
-Summary:       Documentation files for "gem-actionpack" gem
+Version:       6.1.3.2
+Release:       alt1
+Summary:       Web-flow and rendering framework putting the VC in MVC (part of Rails) documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actionpack
 Group:         Development/Documentation
 BuildArch:     noarch
-Provides:      ruby-actionpack-doc
+
+Requires:      gem(actionpack) = 6.1.3.2
 Obsoletes:     ruby-actionpack-doc
+Provides:      ruby-actionpack-doc
 
 %description   -n gem-actionpack-doc
-%summary
+Web-flow and rendering framework putting the VC in MVC (part of Rails)
+documentation files.
+
+Web apps on Rails. Simple, battle-tested conventions for building and testing
+MVC web applications. Works with any Rack-compatible server.
+
+%description   -n gem-actionpack-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета actionpack.
 
 
-%package       -n gem-actionview
-Summary:       Rendering framework putting the V in MVC (part of Rails)
+%package       -n gem-activemodel
+Version:       6.1.3.2
+Release:       alt1
+Summary:       A toolkit for building modeling frameworks (part of Rails)
 Group:         Development/Ruby
-Provides:      ruby-actionview
-Obsoletes:     ruby-actionview
+BuildArch:     noarch
 
-%description   -n gem-actionview
-Simple, battle-tested conventions and helpers for building web pages.
+Requires:      gem(activesupport) = 6.1.3.2
+Obsoletes:     ruby-activemodel
+Provides:      ruby-activemodel
+Provides:      gem(activemodel) = 6.1.3.2
+
+%description   -n gem-activemodel
+A toolkit for building modeling frameworks like Active Record. Rich support for
+attributes, callbacks, validations, serialization, internationalization, and
+testing.
 
 
-%package       -n gem-actionview-doc
-Summary:       Documentation files for "gem-actionview" gem
+%package       -n gem-activemodel-doc
+Version:       6.1.3.2
+Release:       alt1
+Summary:       A toolkit for building modeling frameworks (part of Rails) documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета activemodel
 Group:         Development/Documentation
 BuildArch:     noarch
-Provides:      ruby-actionview-doc
-Obsoletes:     ruby-actionview-doc
 
-%description   -n gem-actionview-doc
-%summary
+Requires:      gem(activemodel) = 6.1.3.2
+Obsoletes:     ruby-activemodel-doc
+Provides:      ruby-activemodel-doc
+
+%description   -n gem-activemodel-doc
+A toolkit for building modeling frameworks (part of Rails) documentation
+files.
+
+A toolkit for building modeling frameworks like Active Record. Rich support for
+attributes, callbacks, validations, serialization, internationalization, and
+testing.
+
+%description   -n gem-activemodel-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета activemodel.
+
+
+%package       -n gem-actionmailer
+Version:       6.1.3.2
+Release:       alt1
+Summary:       Email composition, delivery, and receiving framework (part of Rails)
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(activesupport) = 6.1.3.2
+Requires:      gem(actionpack) = 6.1.3.2
+Requires:      gem(actionview) = 6.1.3.2
+Requires:      gem(activejob) = 6.1.3.2
+Requires:      gem(mail) >= 2.5.4 gem(mail) < 3
+Requires:      gem(rails-dom-testing) >= 2.0 gem(rails-dom-testing) < 3
+Obsoletes:     ruby-actionmailer
+Provides:      ruby-actionmailer
+Provides:      gem(actionmailer) = 6.1.3.2
+
+%description   -n gem-actionmailer
+Email on Rails. Compose, deliver, receive, and test emails using the familiar
+controller/view pattern. First-class support for multipart email and
+attachments.
+
+
+%package       -n gem-actionmailer-doc
+Version:       6.1.3.2
+Release:       alt1
+Summary:       Email composition, delivery, and receiving framework (part of Rails) documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actionmailer
+Group:         Development/Documentation
+BuildArch:     noarch
+
+Requires:      gem(actionmailer) = 6.1.3.2
+Obsoletes:     ruby-actionmailer-doc
+Provides:      ruby-actionmailer-doc
+
+%description   -n gem-actionmailer-doc
+Email composition, delivery, and receiving framework (part of Rails)
+documentation files.
+
+Email on Rails. Compose, deliver, receive, and test emails using the familiar
+controller/view pattern. First-class support for multipart email and
+attachments.
+
+%description   -n gem-actionmailer-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета actionmailer.
+
+
+%package       -n gem-activerecord
+Version:       6.1.3.2
+Release:       alt1
+Summary:       Object-relational mapper framework (part of Rails)
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(activesupport) = 6.1.3.2
+Requires:      gem(activemodel) = 6.1.3.2
+Obsoletes:     activerecord-gems < %EVR
+Obsoletes:     ruby-activerecord < %EVR
+Provides:      activerecord-gems = %EVR
+Provides:      ruby-activerecord = %EVR
+Provides:      gem(activerecord) = 6.1.3.2
+
+%description   -n gem-activerecord
+Databases on Rails. Build a persistent domain model by mapping database tables
+to Ruby classes. Strong conventions for associations, validations, aggregations,
+migrations, and testing come baked-in.
+
+
+%package       -n gem-activerecord-doc
+Version:       6.1.3.2
+Release:       alt1
+Summary:       Object-relational mapper framework (part of Rails) documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета activerecord
+Group:         Development/Documentation
+BuildArch:     noarch
+
+Requires:      gem(activerecord) = 6.1.3.2
+
+%description   -n gem-activerecord-doc
+Object-relational mapper framework (part of Rails) documentation
+files.
+
+Databases on Rails. Build a persistent domain model by mapping database tables
+to Ruby classes. Strong conventions for associations, validations, aggregations,
+migrations, and testing come baked-in.
+
+%description   -n gem-activerecord-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета activerecord.
 
 
 %package       -n gem-activejob
+Version:       6.1.3.2
+Release:       alt1
 Summary:       Job framework with pluggable queues
 Group:         Development/Ruby
-Provides:      ruby-activejob
-Obsoletes:     ruby-activejob
+BuildArch:     noarch
+
+Requires:      gem(activesupport) = 6.1.3.2
+Requires:      gem(globalid) >= 0.3.6
+Obsoletes:     ruby-activejob < %EVR
+Provides:      ruby-activejob = %EVR
+Provides:      gem(activejob) = 6.1.3.2
 
 %description   -n gem-activejob
 Declare job classes that can be run by a variety of queueing backends.
 
 
 %package       -n gem-activejob-doc
-Summary:       Documentation files for "gem-activejob" gem
+Version:       6.1.3.2
+Release:       alt1
+Summary:       Job framework with pluggable queues documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета activejob
 Group:         Development/Documentation
 BuildArch:     noarch
-Provides:      ruby-activejob-doc
-Obsoletes:     ruby-activejob-doc
+
+Requires:      gem(activejob) = 6.1.3.2
 
 %description   -n gem-activejob-doc
-%summary
+Job framework with pluggable queues documentation files.
+
+Declare job classes that can be run by a variety of queueing backends.
+
+%description   -n gem-activejob-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета activejob.
 
 
-%package       -n gem-activemodel
-Summary:       A toolkit for building modeling frameworks (part of Rails)
+%package       -n gem-railties
+Version:       6.1.3.2
+Release:       alt1
+Summary:       Tools for creating, working with, and running Rails applications
 Group:         Development/Ruby
-Provides:      ruby-activemodel
-Obsoletes:     ruby-activemodel
+BuildArch:     noarch
 
-%description   -n gem-activemodel
-A toolkit for building modeling frameworks like Active Record. Rich
-support for attributes, callbacks, validations, serialization,
-internationalization, and testing.
+Requires:      gem(activesupport) = 6.1.3.2
+Requires:      gem(actionpack) = 6.1.3.2
+Requires:      gem(rake) >= 0.8.7 gem(rake) < 14
+Requires:      gem(thor) >= 1.0 gem(thor) < 2
+Requires:      gem(method_source) >= 0
+Obsoletes:     ruby-railties < %EVR
+Provides:      ruby-railties = %EVR
+Provides:      gem(railties) = 6.1.3.2
+
+%description   -n gem-railties
+Rails internals: application bootup, plugins, generators, and rake tasks.
 
 
-%package       -n gem-activemodel-doc
-Summary:       Documentation files for "gem-activemodel" gem
+%package       -n rails
+Version:       6.1.3.2
+Release:       alt1
+Summary:       Tools for creating, working with, and running Rails applications executable(s)
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета railties
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(railties) = 6.1.3.2
+
+%description   -n rails
+Tools for creating, working with, and running Rails applications
+executable(s).
+
+Rails internals: application bootup, plugins, generators, and rake tasks.
+
+%description   -n rails -l ru_RU.UTF-8
+Исполнямка для самоцвета railties.
+
+
+%package       -n gem-railties-doc
+Version:       6.1.3.2
+Release:       alt1
+Summary:       Tools for creating, working with, and running Rails applications documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета railties
 Group:         Development/Documentation
 BuildArch:     noarch
-Provides:      ruby-activemodel-doc
-Obsoletes:     ruby-activemodel-doc
 
-%description   -n gem-activemodel-doc
-%summary
+Requires:      gem(railties) = 6.1.3.2
+
+%description   -n gem-railties-doc
+Tools for creating, working with, and running Rails applications documentation
+files.
+
+Rails internals: application bootup, plugins, generators, and rake tasks.
+
+%description   -n gem-railties-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета railties.
 
 
-%package       -n gem-activerecord
-Summary:       Object-relational mapper framework (part of Rails)
+%package       -n gem-actionview
+Version:       6.1.3.2
+Release:       alt1
+Summary:       Rendering framework putting the V in MVC (part of Rails)
 Group:         Development/Ruby
-Provides:      activerecord-gems = %EVR
-Obsoletes:     activerecord-gems < %EVR
-Provides:      ruby-activerecord
-Obsoletes:     ruby-activerecord
+BuildArch:     noarch
 
-%description   -n gem-activerecord
-Databases on Rails. Build a persistent domain model by mapping database
-tables to Ruby classes. Strong conventions for associations,
-validations, aggregations, migrations, and testing come baked-in.
+Requires:      gem(activesupport) = 6.1.3.2
+Requires:      gem(builder) >= 3.1 gem(builder) < 4
+Requires:      gem(erubi) >= 1.4 gem(erubi) < 2
+Requires:      gem(rails-html-sanitizer) >= 1.2.0 gem(rails-html-sanitizer) < 2
+Requires:      gem(rails-dom-testing) >= 2.0 gem(rails-dom-testing) < 3
+Obsoletes:     ruby-actionview < %EVR
+Provides:      ruby-actionview = %EVR
+Provides:      gem(actionview) = 6.1.3.2
+
+%description   -n gem-actionview
+Simple, battle-tested conventions and helpers for building web pages.
 
 
-%package       -n gem-activerecord-doc
-Summary:       Documentation files for "activerecord" gem
+%package       -n gem-actionview-doc
+Version:       6.1.3.2
+Release:       alt1
+Summary:       Rendering framework putting the V in MVC (part of Rails) documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actionview
 Group:         Development/Documentation
 BuildArch:     noarch
-Provides:      ruby-activerecord-doc
-Obsoletes:     ruby-activerecord-doc
 
-%description   -n gem-activerecord-doc
-%summary
+Requires:      gem(actionview) = 6.1.3.2
+
+%description   -n gem-actionview-doc
+Rendering framework putting the V in MVC (part of Rails) documentation
+files.
+
+Simple, battle-tested conventions and helpers for building web pages.
+
+%description   -n gem-actionview-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета actionview.
 
 
 %package       -n gem-activestorage
+Version:       6.1.3.2
+Release:       alt1
 Summary:       Local and cloud file storage framework
 Group:         Development/Ruby
-Provides:      ruby-activestorage
-Obsoletes:     ruby-activestorage
+BuildArch:     noarch
+
+Requires:      gem(activesupport) = 6.1.3.2
+Requires:      gem(actionpack) = 6.1.3.2
+Requires:      gem(activejob) = 6.1.3.2
+Requires:      gem(activerecord) = 6.1.3.2
+Requires:      gem(marcel) >= 1.0.0 gem(marcel) < 1.1
+Requires:      gem(mini_mime) >= 1.0.2 gem(mini_mime) < 1.1
+Obsoletes:     ruby-activestorage < %EVR
+Provides:      ruby-activestorage = %EVR
+Provides:      gem(activestorage) = 6.1.3.2
 
 %description   -n gem-activestorage
 Attach cloud and local files in Rails applications.
 
 
 %package       -n gem-activestorage-doc
-Summary:       Documentation files for "gem-activestorage" gem
+Version:       6.1.3.2
+Release:       alt1
+Summary:       Local and cloud file storage framework documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета activestorage
 Group:         Development/Documentation
 BuildArch:     noarch
-Provides:      ruby-activestorage-doc
-Obsoletes:     ruby-activestorage-doc
+
+Requires:      gem(activestorage) = 6.1.3.2
 
 %description   -n gem-activestorage-doc
-%summary
+Local and cloud file storage framework documentation files.
+
+Attach cloud and local files in Rails applications.
+
+%description   -n gem-activestorage-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета activestorage.
 
 
-%package       -n gem-activesupport
-Summary:       A toolkit of support libraries and Ruby core extensions extracted from the Rails framework
+%package       -n gem-actionmailbox
+Version:       6.1.3.2
+Release:       alt1
+Summary:       Receive and process incoming emails in Rails applications
 Group:         Development/Ruby
-Provides:      activesupport-gems = %EVR
-Obsoletes:     activesupport-gems < %EVR
-Provides:      ruby-activesupport
-Obsoletes:     ruby-activesupport
+BuildArch:     noarch
 
-%description   -n gem-activesupport
-A toolkit of support libraries and Ruby core extensions extracted from
-the Rails framework. Rich support for multibyte strings,
-internationalization, time zones, and testing.
+Requires:      gem(activesupport) = 6.1.3.2
+Requires:      gem(activerecord) = 6.1.3.2
+Requires:      gem(activestorage) = 6.1.3.2
+Requires:      gem(activejob) = 6.1.3.2
+Requires:      gem(actionpack) = 6.1.3.2
+Requires:      gem(mail) >= 2.7.1
+Provides:      gem(actionmailbox) = 6.1.3.2
+
+%description   -n gem-actionmailbox
+Action Mailbox routes incoming emails to controller-like mailboxes for
+processing in Rails. It ships with ingresses for Mailgun, Mandrill, Postmark,
+and SendGrid. You can also handle inbound mails directly via the built-in Exim,
+Postfix, and Qmail ingresses.
+
+The inbound emails are turned into InboundEmail records using Active Record and
+feature lifecycle tracking, storage of the original email on cloud storage via
+Active Storage, and responsible data handling with on-by-default
+incineration.
+
+These inbound emails are routed asynchronously using Active Job to one or
+several dedicated mailboxes, which are capable of interacting directly with the
+rest of your domain model.
 
 
-%package       -n gem-activesupport-doc
-Summary:       Documentation files for "gem-activesupport" gem
+%package       -n gem-actionmailbox-doc
+Version:       6.1.3.2
+Release:       alt1
+Summary:       Receive and process incoming emails in Rails applications documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actionmailbox
 Group:         Development/Documentation
 BuildArch:     noarch
-Provides:      ruby-activesupport-doc
-Obsoletes:     ruby-activesupport-doc
 
-%description   -n gem-activesupport-doc
-%summary
+Requires:      gem(actionmailbox) = 6.1.3.2
+
+%description   -n gem-actionmailbox-doc
+Receive and process incoming emails in Rails applications documentation
+files.
+
+Action Mailbox routes incoming emails to controller-like mailboxes for
+processing in Rails. It ships with ingresses for Mailgun, Mandrill, Postmark,
+and SendGrid. You can also handle inbound mails directly via the built-in Exim,
+Postfix, and Qmail ingresses.
+
+The inbound emails are turned into InboundEmail records using Active Record and
+feature lifecycle tracking, storage of the original email on cloud storage via
+Active Storage, and responsible data handling with on-by-default
+incineration.
+
+These inbound emails are routed asynchronously using Active Job to one or
+several dedicated mailboxes, which are capable of interacting directly with the
+rest of your domain model.
+
+%description   -n gem-actionmailbox-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета actionmailbox.
 
 
-%package       -n gem-railties
-Summary:       Tools for creating, working with, and running Rails applications
+%package       -n gem-actioncable
+Version:       6.1.3.2
+Release:       alt1
+Summary:       WebSocket framework for Rails
 Group:         Development/Ruby
-Provides:      ruby-railties
-Obsoletes:     ruby-railties
+BuildArch:     noarch
 
-%description   -n gem-railties
-Rails internals: application bootup, plugins, generators, and rake tasks.
+Requires:      gem(activesupport) = 6.1.3.2
+Requires:      gem(actionpack) = 6.1.3.2
+Requires:      gem(nio4r) >= 2.0 gem(nio4r) < 3
+Requires:      gem(websocket-driver) >= 0.6.1
+Obsoletes:     ruby-actioncable < %EVR
+Provides:      ruby-actioncable = %EVR
+Provides:      gem(actioncable) = 6.1.3.2
+
+%description   -n gem-actioncable
+Structure many real-time application concerns into channels over a single
+WebSocket connection.
 
 
-%package       -n gem-railties-doc
-Summary:       Documentation files for "gem-railties" gem
+%package       -n gem-actioncable-doc
+Version:       6.1.3.2
+Release:       alt1
+Summary:       WebSocket framework for Rails documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actioncable
 Group:         Development/Documentation
 BuildArch:     noarch
-Provides:      ruby-railties-doc
-Obsoletes:     ruby-railties-doc
 
-%description   -n gem-railties-doc
-%summary
+Requires:      gem(actioncable) = 6.1.3.2
 
+%description   -n gem-actioncable-doc
+WebSocket framework for Rails documentation files.
 
-%package       -n %pkgname
-Summary:       Executable file for %gemname gem
-Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
-Group:         Development/Ruby
-BuildArch:     noarch
+Structure many real-time application concerns into channels over a single
+WebSocket connection.
 
-%description   -n %pkgname
-Executable file for %gemname gem.
-
-%description   -n %pkgname -l ru_RU.UTF8
-Исполнямка для %gemname самоцвета.
+%description   -n gem-actioncable-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета actioncable.
 
 
 %prep
@@ -289,91 +635,135 @@ install -D -m 755 %SOURCE1 %buildroot%_sbindir/railsctl
 %ruby_test
 
 %files
-%ruby_gemspecdir/rails-%version.gemspec
-%ruby_gemslibdir/rails-%version
-
-%files         -n gem-actioncable
-%ruby_gemspecdir/actioncable-%version.gemspec
-%ruby_gemslibdir/actioncable-%version
-
-%files         -n gem-actioncable-doc
-%ruby_gemsdocdir/actioncable-%version
-
-%files         -n gem-actionmailer
-%ruby_gemspecdir/actionmailer-%version.gemspec
-%ruby_gemslibdir/actionmailer-%version
-
-%files         -n gem-actionmailer-doc
-%ruby_gemsdocdir/actionmailer-%version
-
-%files         -n gem-actionpack
-%ruby_gemspecdir/actionpack-%version.gemspec
-%ruby_gemslibdir/actionpack-%version
-
-%files         -n gem-actionpack-doc
-%ruby_gemsdocdir/actionpack-%version
-
-%files         -n gem-actionview
-%ruby_gemspecdir/actionview-%version.gemspec
-%ruby_gemslibdir/actionview-%version
-
-%files         -n gem-actionview-doc
-%ruby_gemsdocdir/actionview-%version
-
-%files         -n gem-activejob
-%ruby_gemspecdir/activejob-%version.gemspec
-%ruby_gemslibdir/activejob-%version
-
-%files         -n gem-activejob-doc
-%ruby_gemsdocdir/activejob-%version
-
-%files         -n gem-activemodel
-%ruby_gemspecdir/activemodel-%version.gemspec
-%ruby_gemslibdir/activemodel-%version
-
-%files         -n gem-activemodel-doc
-%ruby_gemsdocdir/activemodel-%version
-
-%files         -n gem-activerecord
-%ruby_gemspecdir/activerecord-%version.gemspec
-%ruby_gemslibdir/activerecord-%version
-
-%files         -n gem-activerecord-doc
-%ruby_gemsdocdir/activerecord-%version
-
-%files         -n gem-activestorage
-%ruby_gemspecdir/activestorage-%version.gemspec
-%ruby_gemslibdir/activestorage-%version
-
-%files         -n gem-activestorage-doc
-%ruby_gemsdocdir/activestorage-%version
+%doc README.md
+%ruby_gemspec
+%ruby_gemlibdir
 
 %files         -n gem-activesupport
-%ruby_gemspecdir/activesupport-%version.gemspec
-%ruby_gemslibdir/activesupport-%version
+%doc README.md
+%ruby_gemspecdir/activesupport-6.1.3.2.gemspec
+%ruby_gemslibdir/activesupport-6.1.3.2
 
 %files         -n gem-activesupport-doc
-%ruby_gemsdocdir/activesupport-%version
+%doc README.md
+%ruby_gemsdocdir/activesupport-6.1.3.2
+
+%files         -n gem-actiontext
+%doc actiontext/README.md
+%ruby_gemspecdir/actiontext-6.1.3.2.gemspec
+%ruby_gemslibdir/actiontext-6.1.3.2
+
+%files         -n gem-actiontext-doc
+%doc actiontext/README.md
+%ruby_gemsdocdir/actiontext-6.1.3.2
+
+%files         -n gem-actionpack
+%doc README.md
+%ruby_gemspecdir/actionpack-6.1.3.2.gemspec
+%ruby_gemslibdir/actionpack-6.1.3.2
+
+%files         -n gem-actionpack-doc
+%doc README.md
+%ruby_gemsdocdir/actionpack-6.1.3.2
+
+%files         -n gem-activemodel
+%doc README.md
+%ruby_gemspecdir/activemodel-6.1.3.2.gemspec
+%ruby_gemslibdir/activemodel-6.1.3.2
+
+%files         -n gem-activemodel-doc
+%doc README.md
+%ruby_gemsdocdir/activemodel-6.1.3.2
+
+%files         -n gem-actionmailer
+%doc README.md
+%ruby_gemspecdir/actionmailer-6.1.3.2.gemspec
+%ruby_gemslibdir/actionmailer-6.1.3.2
+
+%files         -n gem-actionmailer-doc
+%doc README.md
+%ruby_gemsdocdir/actionmailer-6.1.3.2
+
+%files         -n gem-activerecord
+%doc README.md
+%ruby_gemspecdir/activerecord-6.1.3.2.gemspec
+%ruby_gemslibdir/activerecord-6.1.3.2
+
+%files         -n gem-activerecord-doc
+%doc README.md
+%ruby_gemsdocdir/activerecord-6.1.3.2
+
+%files         -n gem-activejob
+%doc activejob/README.md
+%ruby_gemspecdir/activejob-6.1.3.2.gemspec
+%ruby_gemslibdir/activejob-6.1.3.2
+
+%files         -n gem-activejob-doc
+%doc activejob/README.md
+%ruby_gemsdocdir/activejob-6.1.3.2
 
 %files         -n gem-railties
-%ruby_gemspecdir/railties-%version.gemspec
-%ruby_gemslibdir/railties-%version
-%doc README*
+%doc README.md
+%ruby_gemspecdir/railties-6.1.3.2.gemspec
+%ruby_gemslibdir/railties-6.1.3.2
+
+%files         -n rails
+%doc README.md
+%_bindir/rails
+%_sbindir/railsctl
 
 %files         -n gem-railties-doc
-%ruby_gemsdocdir/railties-%version
+%doc README.md
+%ruby_gemsdocdir/railties-6.1.3.2
 
-%files         -n %pkgname
-%_bindir/*
-%_sbindir/*
+%files         -n gem-actionview
+%doc README.md
+%ruby_gemspecdir/actionview-6.1.3.2.gemspec
+%ruby_gemslibdir/actionview-6.1.3.2
+
+%files         -n gem-actionview-doc
+%doc README.md
+%ruby_gemsdocdir/actionview-6.1.3.2
+
+%files         -n gem-activestorage
+%doc activestorage/README.md
+%ruby_gemspecdir/activestorage-6.1.3.2.gemspec
+%ruby_gemslibdir/activestorage-6.1.3.2
+
+%files         -n gem-activestorage-doc
+%doc activestorage/README.md
+%ruby_gemsdocdir/activestorage-6.1.3.2
+
+%files         -n gem-actionmailbox
+%doc actionmailbox/README.md
+%ruby_gemspecdir/actionmailbox-6.1.3.2.gemspec
+%ruby_gemslibdir/actionmailbox-6.1.3.2
+
+%files         -n gem-actionmailbox-doc
+%doc actionmailbox/README.md
+%ruby_gemsdocdir/actionmailbox-6.1.3.2
+
+%files         -n gem-actioncable
+%doc actioncable/README.md
+%ruby_gemspecdir/actioncable-6.1.3.2.gemspec
+%ruby_gemslibdir/actioncable-6.1.3.2
+
+%files         -n gem-actioncable-doc
+%doc actioncable/README.md
+%ruby_gemsdocdir/actioncable-6.1.3.2
 
 
 %changelog
+* Tue Jun 15 2021 Pavel Skrylev <majioa@altlinux.org> 6.1.3.2-alt1
+- ^ 5.2.4.4 -> 6.1.3.2
+- ! CVE-2020-8185, CVE-2020-8166, CVE-2020-8167, CVE-2021-22880, CVE-2021-22902
+- ! spec
+
 * Mon Feb 15 2021 Pavel Skrylev <majioa@altlinux.org> 5.2.4.4-alt2
 - * refactoring railsctl conforming to rails foreman installation
 
 * Mon Nov 30 2020 Pavel Skrylev <majioa@altlinux.org> 5.2.4.4-alt1
-- ^ 5.2.4.1 -> 5.2.4.3
+- ^ 5.2.4.3 -> 5.2.4.4
 - ! CVE-2020-15169
 - * railsctl to support locale setup
 

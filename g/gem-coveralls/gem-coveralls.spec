@@ -1,8 +1,8 @@
-%define        pkgname coveralls
+%define        gemname coveralls
 
-Name:          gem-%pkgname
-Version:       0.8.23
-Release:       alt2
+Name:          gem-coveralls
+Version:       0.8.23.1
+Release:       alt0.1
 Summary:       Coveralls for Ruby
 Summary(ru_RU.UTF-8): Покрытия для рубина
 License:       MIT
@@ -14,52 +14,103 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(pry)
-BuildRequires: gem(bundler)
-BuildRequires: gem(vcr) >= 2.9
-BuildRequires: gem(webmock) >= 1.20
-BuildRequires: gem(rake) >= 10.3
-BuildRequires: gem(rspec) >= 3.2
-BuildRequires: gem(simplecov) >= 0.17.0
-BuildRequires: gem(truthy) >= 1.0
+BuildRequires: gem(json) >= 1.8 gem(json) < 3
+BuildRequires: gem(simplecov) >= 0.16.1 gem(simplecov) < 1
+BuildRequires: gem(tins) >= 1.6 gem(tins) < 2
+BuildRequires: gem(term-ansicolor) >= 1.3 gem(term-ansicolor) < 2
+BuildRequires: gem(thor) >= 0.19.4 gem(thor) < 2.0
+BuildRequires: gem(bundler) >= 2.0 gem(bundler) < 3
 
-%gem_replace_version simplecov ~> 0.17
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency simplecov >= 0.16.1,simplecov < 1
+Requires:      gem(json) >= 1.8 gem(json) < 3
+Requires:      gem(simplecov) >= 0.16.1 gem(simplecov) < 1
+Requires:      gem(tins) >= 1.6 gem(tins) < 2
+Requires:      gem(term-ansicolor) >= 1.3 gem(term-ansicolor) < 2
+Requires:      gem(thor) >= 0.19.4 gem(thor) < 2.0
+Provides:      gem(coveralls) = 0.8.23.1
+
+%ruby_use_gem_version coveralls:0.8.23.1
 
 %description
 Coveralls was designed with Ruby projects in mind, and we've made it as easy as
 we possibly can to get started.
 
-%description   -l ru_RU.UTF8
+%description   -l ru_RU.UTF-8
 Покрытия были разработаны для проектов рубина с умом, мы сделали его настолько
 простым на сколько могли, чтобы сразу начать разработку.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
-Group:         Development/Documentation
-BuildArch:     noarch
-
-%description   doc
-Documentation files for %gemname gem.
-
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
-
-
-%package       -n %pkgname
-Summary:       Executable file for %gemname gem
-Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
+%package       -n coveralls
+Version:       0.8.23.1
+Release:       alt0.1
+Summary:       Coveralls for Ruby executable(s)
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета coveralls
 Group:         Development/Ruby
 BuildArch:     noarch
 
+Requires:      gem(coveralls) = 0.8.23.1
 Conflicts:     python-module-z4r-coveralls
 
-%description   -n %pkgname
-Executable file for %gemname gem.
+%description   -n coveralls
+Coveralls for Ruby executable(s).
 
-%description   -n %pkgname -l ru_RU.UTF8
-Исполнямка для самоцвета %gemname.
+Coveralls was designed with Ruby projects in mind, and we've made it as easy as
+we possibly can to get started.
+
+%description   -n coveralls -l ru_RU.UTF-8
+Исполнямка для самоцвета coveralls.
+
+Покрытия были разработаны для проектов рубина с умом, мы сделали его настолько
+простым на сколько могли, чтобы сразу начать разработку.
+
+
+%package       -n gem-coveralls-doc
+Version:       0.8.23.1
+Release:       alt0.1
+Summary:       Coveralls for Ruby documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета coveralls
+Group:         Development/Documentation
+BuildArch:     noarch
+
+Requires:      gem(coveralls) = 0.8.23.1
+
+%description   -n gem-coveralls-doc
+Coveralls for Ruby documentation files.
+
+Coveralls was designed with Ruby projects in mind, and we've made it as easy as
+we possibly can to get started.
+
+%description   -n gem-coveralls-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета coveralls.
+
+Покрытия были разработаны для проектов рубина с умом, мы сделали его настолько
+простым на сколько могли, чтобы сразу начать разработку.
+
+
+%package       -n gem-coveralls-devel
+Version:       0.8.23.1
+Release:       alt0.1
+Summary:       Coveralls for Ruby development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета coveralls
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(coveralls) = 0.8.23.1
+Requires:      gem(bundler) >= 2.0 gem(bundler) < 3
+
+%description   -n gem-coveralls-devel
+Coveralls for Ruby development package.
+
+Coveralls was designed with Ruby projects in mind, and we've made it as easy as
+we possibly can to get started.
+
+%description   -n gem-coveralls-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета coveralls.
+
+Покрытия были разработаны для проектов рубина с умом, мы сделали его настолько
+простым на сколько могли, чтобы сразу начать разработку.
 
 
 %prep
@@ -75,20 +126,33 @@ Executable file for %gemname gem.
 %ruby_test
 
 %files
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n coveralls
+%doc README.md
+%_bindir/coveralls
+
+%files         -n gem-coveralls-doc
+%doc README.md
 %ruby_gemdocdir
 
-%files         -n %pkgname
-%_bindir/*
+%files         -n gem-coveralls-devel
+%doc README.md
+
 
 %changelog
-* Fri Mar 06 2020 Pavel Skrylev <majioa@altlinux.org> 0.8.23-alt2
+* Mon May 31 2021 Pavel Skrylev <majioa@altlinux.org> 0.8.23.1-alt0.1
+- ^ 0.8.23 -> 0.8.23.1
+
+* Mon May 31 2021 Pavel Skrylev <majioa@altlinux.org> 0.8.23-alt2
 - ! spec
  + + explicit conflict for bump to python-module-z4r-coveralls
  + * minor
+
+* Fri Jun 05 2020 Pavel Skrylev <majioa@altlinux.org> 0.8.23-alt1.1
+- - spec dep to pry
 
 * Wed Jul 10 2019 Pavel Skrylev <majioa@altlinux.org> 0.8.23-alt1
 - Bump to 0.8.23

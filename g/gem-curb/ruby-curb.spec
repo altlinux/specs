@@ -1,7 +1,7 @@
-%define        pkgname curb
+%define        gemname curb
 
-Name: 	       gem-%pkgname
-Version:       0.9.10
+Name:          gem-curb
+Version:       0.9.11
 Release:       alt1
 Summary:       Ruby bindings for libcurl
 License:       MIT
@@ -16,41 +16,67 @@ BuildRequires: libcurl-devel
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+%ruby_ignore_names bench
+Obsoletes:     ruby-curb < %EVR
+Provides:      ruby-curb = %EVR
+Provides:      gem(curb) = 0.9.11
+
 
 %description
-Curb (probably CUrl-RuBy or something) provides Ruby-language bindings for
-the libcurl(3), a fully-featured client-side URL transfer library. cURL and
-libcurl live at http://curl.haxx.se/ .
+Curb (probably CUrl-RuBy or something) provides Ruby-language bindings for the
+libcurl(3), a fully-featured client-side URL transfer library. cURL and libcurl
+live at http://curl.haxx.se/ .
 
 Curb is a work-in-progress, and currently only supports libcurl's 'easy' and
 'multi' modes.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-curb-doc
+Version:       0.9.11
+Release:       alt1
+Summary:       Ruby bindings for libcurl documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета curb
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(curb) = 0.9.11
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-curb-doc
+Ruby bindings for libcurl documentation files.
+
+Curb (probably CUrl-RuBy or something) provides Ruby-language bindings for the
+libcurl(3), a fully-featured client-side URL transfer library. cURL and libcurl
+live at http://curl.haxx.se/ .
+
+Curb is a work-in-progress, and currently only supports libcurl's 'easy' and
+'multi' modes.
+
+%description   -n gem-curb-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета curb.
 
 
-%package       devel
-Summary:       Development files for %gemname gem
+%package       -n gem-curb-devel
+Version:       0.9.11
+Release:       alt1
+Summary:       Ruby bindings for libcurl development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета curb
 Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   devel
-Development files for %gemname gem.
+Requires:      gem(curb) = 0.9.11
 
-%description   devel -l ru_RU.UTF8
-Файлы заголовков для самоцвета %gemname.
+%description   -n gem-curb-devel
+Ruby bindings for libcurl development package.
+
+Curb (probably CUrl-RuBy or something) provides Ruby-language bindings for the
+libcurl(3), a fully-featured client-side URL transfer library. cURL and libcurl
+live at http://curl.haxx.se/ .
+
+Curb is a work-in-progress, and currently only supports libcurl's 'easy' and
+'multi' modes.
+
+%description   -n gem-curb-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета curb.
 
 
 %prep
@@ -66,18 +92,24 @@ Development files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.markdown
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         doc
+%files         -n gem-curb-doc
+%doc README.markdown
 %ruby_gemdocdir
 
-%files         devel
+%files         -n gem-curb-devel
+%doc README.markdown
 %ruby_includedir/*
 
+
 %changelog
+* Thu Jul 01 2021 Pavel Skrylev <majioa@altlinux.org> 0.9.11-alt1
+- ^ 0.9.10 -> 0.9.11
+
 * Tue Mar 31 2020 Pavel Skrylev <majioa@altlinux.org> 0.9.10-alt1
 - ^ 0.9.9 -> 0.9.10
 - ! spec tags and syntax

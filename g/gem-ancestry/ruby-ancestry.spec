@@ -1,8 +1,8 @@
-%define        pkgname ancestry
+%define        gemname ancestry
 
-Name:          gem-%pkgname
-Version:       3.0.7
-Release:       alt1.1
+Name:          gem-ancestry
+Version:       4.0.0
+Release:       alt1
 Summary:       Organise ActiveRecord model into a tree structure
 License:       MIT
 Group:         Development/Ruby
@@ -13,28 +13,85 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(activerecord) >= 5.2.4.5
+BuildRequires: gem(appraisal) >= 0
+BuildRequires: gem(minitest) >= 0 gem(minitest) < 6
+BuildRequires: gem(rake) >= 13.0 gem(rake) < 14
+BuildRequires: gem(yard) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname
-Provides:      ruby-%pkgname
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Requires:      gem(activerecord) >= 5.2.4.5
+Obsoletes:     ruby-ancestry
+Provides:      ruby-ancestry
+Provides:      gem(ancestry) = 4.0.0
+
 
 %description
-%summary
+Ancestry is a gem that allows the records of a Ruby on Rails ActiveRecord model
+to be organised as a tree structure (or hierarchy). It employs the materialised
+path pattern and exposes all the standard tree structure relations (ancestors,
+parent, root, children, siblings, descendants), allowing all of them to
+be fetched in a single SQL query. Additional features include STI support,
+scopes, depth caching, depth constraints, easy migration from older gems,
+integrity checking, integrity restoration, arrangement of (sub)trees into
+hashes, and various strategies for dealing with orphaned records.
 
-%description -l ru_RU.UTF8
-Упорядочивание модели ActiveRecord в виде древовидной структуры
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-ancestry-doc
+Version:       4.0.0
+Release:       alt1
+Summary:       Organise ActiveRecord model into a tree structure documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ancestry
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(ancestry) = 4.0.0
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-ancestry-doc
+Organise ActiveRecord model into a tree structure documentation files.
+
+Ancestry is a gem that allows the records of a Ruby on Rails ActiveRecord model
+to be organised as a tree structure (or hierarchy). It employs the materialised
+path pattern and exposes all the standard tree structure relations (ancestors,
+parent, root, children, siblings, descendants), allowing all of them to
+be fetched in a single SQL query. Additional features include STI support,
+scopes, depth caching, depth constraints, easy migration from older gems,
+integrity checking, integrity restoration, arrangement of (sub)trees into
+hashes, and various strategies for dealing with orphaned records.
+
+%description   -n gem-ancestry-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета ancestry.
+
+
+%package       -n gem-ancestry-devel
+Version:       4.0.0
+Release:       alt1
+Summary:       Organise ActiveRecord model into a tree structure development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ancestry
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(ancestry) = 4.0.0
+Requires:      gem(appraisal) >= 0
+Requires:      gem(minitest) >= 0 gem(minitest) < 6
+Requires:      gem(rake) >= 13.0 gem(rake) < 14
+Requires:      gem(yard) >= 0
+
+%description   -n gem-ancestry-devel
+Organise ActiveRecord model into a tree structure development package.
+
+Ancestry is a gem that allows the records of a Ruby on Rails ActiveRecord model
+to be organised as a tree structure (or hierarchy). It employs the materialised
+path pattern and exposes all the standard tree structure relations (ancestors,
+parent, root, children, siblings, descendants), allowing all of them to
+be fetched in a single SQL query. Additional features include STI support,
+scopes, depth caching, depth constraints, easy migration from older gems,
+integrity checking, integrity restoration, arrangement of (sub)trees into
+hashes, and various strategies for dealing with orphaned records.
+
+%description   -n gem-ancestry-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета ancestry.
 
 
 %prep
@@ -50,15 +107,26 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n gem-ancestry-doc
+%doc README.md
 %ruby_gemdocdir
+
+%files         -n gem-ancestry-devel
+%doc README.md
 
 
 %changelog
+* Tue Jun 22 2021 Pavel Skrylev <majioa@altlinux.org> 4.0.0-alt1
+- ^ 3.2.1 -> 4.0.0
+
+* Wed Dec 16 2020 Pavel Skrylev <majioa@altlinux.org> 3.2.1-alt1
+- ^ 3.0.7 -> 3.2.1
+- ! spec
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 3.0.7-alt1.1
 - fixed (!) spec
 

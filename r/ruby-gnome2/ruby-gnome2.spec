@@ -1,6 +1,6 @@
 Name: 	       ruby-gnome2
 Version:       3.4.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby bindings for GNOME
 License:       MIT
 Group:         Development/Ruby
@@ -104,6 +104,8 @@ Requires:      gem(vte3-no-gi)
 Requires:      gem(webkit-gtk)
 Requires:      gem(webkit-gtk2)
 Requires:      gem(webkit2-gtk)
+%ruby_alias_names gdk_pixbuf2,gdk-pixbuf2
+%ruby_alias_names gdk_pixbuf2-no-gi,gdk-pixbuf2-no-gi
 
 %description
 This is a set of bindings for the GNOME 2.x and 3.x libraries to use
@@ -1413,6 +1415,9 @@ Documentation files for libsecret gem.
 
 
 %changelog
+* Thu Jul 01 2021 Pavel Skrylev <majioa@altlinux.org> 3.4.3-alt1.1
+- ! spec with settigns proper aliases
+
 * Tue Jun 30 2020 Pavel Skrylev <majioa@altlinux.org> 3.4.3-alt1
 - ^ 3.4.1 -> 3.4.3
 - + a few package task build depended gem

@@ -1,27 +1,26 @@
-%define        pkgname ffi
+%define        gemname ffi
 
-Name:          gem-%pkgname
-Version:       1.13.1
+Name:          gem-ffi
+Version:       1.15.0
 Release:       alt1
 Summary:       Ruby foreign function interface
+License:       BSD-3-Clause
 Group:         Development/Ruby
-License:       BSD
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Url:           https://github.com/ffi/ffi/wiki
 Vcs:           https://github.com/ffi/ffi.git
-Source:        %name-%version.tar
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libffi-devel
-BuildRequires: gem(rspec)
-BuildRequires: gem(rake)
-BuildRequires: gem(rake-compiler)
-BuildRequires: gem(rubygems-tasks)
+BuildRequires: gem(rake) >= 13.0 gem(rake) < 14
+BuildRequires: gem(rake-compiler) >= 1.0 gem(rake-compiler) < 2
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+Obsoletes:     ruby-ffi < %EVR
+Provides:      ruby-ffi = %EVR
+Provides:      gem(ffi) = 1.15.0
 
 %description
 Ruby-FFI is a gem for programmatically loading dynamically-linked native
@@ -31,30 +30,44 @@ JRuby, Rubinius and TruffleRuby. Discover why you should write your next
 extension using Ruby-FFI.
 
 
-%package       devel
-Summary:       Development headers files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета %gemname
+%package       -n gem-ffi-doc
+Version:       1.15.0
+Release:       alt1
+Summary:       Ruby FFI documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ffi
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   devel
-Development headers for %gemname gem.
+Requires:      gem(ffi) = 1.15.0
 
-%description   devel -l ru_RU.UTF8
-Файлы заголовков для самоцвета %gemname.
+%description   -n gem-ffi-doc
+Ruby FFI documentation files.
+
+Ruby FFI library
+
+%description   -n gem-ffi-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета ffi.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
-Group:         Development/Documentation
+%package       -n gem-ffi-devel
+Version:       1.15.0
+Release:       alt1
+Summary:       Ruby FFI development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ffi
+Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(ffi) = 1.15.0
+Requires:      gem(rake) >= 13.0 gem(rake) < 14
+Requires:      gem(rake-compiler) >= 1.0 gem(rake-compiler) < 2
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-ffi-devel
+Ruby FFI development package.
+
+Ruby FFI library
+
+%description   -n gem-ffi-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета ffi.
 
 
 %prep
@@ -70,17 +83,24 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         doc
+%files         -n gem-ffi-doc
+%doc README.md
 %ruby_gemdocdir
 
-%files         devel
-%ruby_includedir/ffi*
+%files         -n gem-ffi-devel
+%doc README.md
+%ruby_includedir/*
+
 
 %changelog
+* Wed May 12 2021 Pavel Skrylev <majioa@altlinux.org> 1.15.0-alt1
+- ^ 1.13.1 -> 1.15.0
+
 * Wed Jul 08 2020 Pavel Skrylev <majioa@altlinux.org> 1.13.1-alt1
 - ^ 1.12.2 -> 1.13.1
 
@@ -161,4 +181,3 @@ Documentation files for %gemname gem.
 
 * Sun Jun 28 2009 Alexey I. Froloff <raorn@altlinux.org> 0.3.5-alt1
 - Built for Sisyphus
-

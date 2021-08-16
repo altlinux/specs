@@ -1,8 +1,8 @@
 %define        pkgname cairo
 
 Name:          gem-%pkgname
-Version:       1.16.5
-Release:       alt1.1
+Version:       1.17.5
+Release:       alt1
 Summary:       ruby bindings for cairo
 Group:         Development/Ruby
 License:       GPLv2
@@ -121,6 +121,9 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Sat Apr 24 2021 Pavel Skrylev <majioa@altlinux.org> 1.17.5-alt1
+- ^ 1.16.5 -> 1.17.5
+
 * Tue May 26 2020 Pavel Skrylev <majioa@altlinux.org> 1.16.5-alt1.1
 - + lost build require dep to "libbrotli-devel"
 

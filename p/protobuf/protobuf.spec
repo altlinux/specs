@@ -29,7 +29,7 @@ Name: %oname
 Name: %oname%soversion
 %endif
 Version: 3.16.0
-Release: alt5
+Release: alt5.1
 Summary: Protocol Buffers - Google's data interchange format
 License: BSD-3-Clause
 %if_disabled legacy
@@ -38,6 +38,7 @@ Group: System/Libraries
 Group: System/Legacy libraries
 %endif
 Url: https://github.com/protocolbuffers/protobuf
+Vcs: https://github.com/protocolbuffers/protobuf.git
 
 # https://github.com/protocolbuffers/protobuf.git
 Source: %oname-%version.tar
@@ -60,6 +61,14 @@ BuildRequires: python3-devel libnumpy-py3-devel
 BuildRequires: python3-module-setuptools python-tools-2to3
 BuildRequires: python3-module-dateutil
 %endif
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(rake-compiler-dock) >= 1.1.0 gem(rake-compiler-dock) < 2.0
+BuildRequires: gem(rake-compiler) >= 1.1.0 gem(rake-compiler) < 1.2
+BuildRequires: gem(test-unit) >= 3.0 gem(test-unit) < 4
+BuildRequires: gem(rubygems-tasks) >= 0.2.4 gem(rubygems-tasks) < 0.3
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
 Protocol Buffers are a way of encoding structured data in
@@ -218,6 +227,61 @@ BuildArch: noarch
 Protocol Buffer BOM POM.
 %endif
 
+
+%package       -n gem-google-protobuf
+Version:       3.16.0
+Release:       alt3.1
+Summary:       Protocol Buffers
+Group:         Development/Ruby
+
+Provides:      gem(google-protobuf) = 3.16.0
+
+%description   -n gem-google-protobuf
+Protocol Buffers are Google's data interchange format.
+
+
+%package       -n gem-google-protobuf-doc
+Version:       3.16.0
+Release:       alt3.1
+Summary:       Protocol Buffers documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-protobuf
+Group:         Development/Documentation
+BuildArch:     noarch
+
+Requires:      gem(google-protobuf) = 3.16.0
+
+%description   -n gem-google-protobuf-doc
+Protocol Buffers documentation files.
+
+Protocol Buffers are Google's data interchange format.
+
+%description   -n gem-google-protobuf-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета google-protobuf.
+
+
+%package       -n gem-google-protobuf-devel
+Version:       3.16.0
+Release:       alt3.1
+Summary:       Protocol Buffers development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-protobuf
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(google-protobuf) = 3.16.0
+Requires:      gem(rake-compiler-dock) >= 1.1.0 gem(rake-compiler-dock) < 2.0
+Requires:      gem(rake-compiler) >= 1.1.0 gem(rake-compiler) < 1.2
+Requires:      gem(test-unit) >= 3.0 gem(test-unit) < 4
+Requires:      gem(rubygems-tasks) >= 0.2.4 gem(rubygems-tasks) < 0.3
+
+%description   -n gem-google-protobuf-devel
+Protocol Buffers development package.
+
+Protocol Buffers are Google's data interchange format.
+
+%description   -n gem-google-protobuf-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета google-protobuf.
+
+
 %prep
 %setup -n %oname-%version
 
@@ -300,8 +364,11 @@ popd
 %mvn_build -s -- -f java/pom.xml
 %endif
 
+%ruby_build
+
 %install
 %makeinstall_std
+%ruby_install
 
 %if_with python
 pushd python
@@ -378,7 +445,22 @@ popd
 %endif
 %endif
 
+%files         -n gem-google-protobuf
+%ruby_gemspecdir/google-protobuf-3.16.0.gemspec
+%ruby_gemslibdir/google-protobuf-3.16.0
+%ruby_gemsextdir/google-protobuf-3.16.0
+
+%files         -n gem-google-protobuf-doc
+%ruby_gemsdocdir/google-protobuf-3.16.0
+
+%files         -n gem-google-protobuf-devel
+%_includedir/google/protobuf_c/
+
+
 %changelog
+* Mon Aug 16 2021 Pavel Skrylev <majioa@altlinux.org> 3.16.0-alt5.1
+- + ruby gem packages support
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 3.16.0-alt5
 - drop unused BR: python3-module-mox
 

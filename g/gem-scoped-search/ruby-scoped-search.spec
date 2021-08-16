@@ -2,8 +2,8 @@
 %define        gemname scoped_search
 
 Name:          gem-%pkgname
-Version:       4.1.7
-Release:       alt1.1
+Version:       4.1.9
+Release:       alt1
 Summary:       Easily search you ActiveRecord models with a simple query language that converts to SQL
 License:       MIT
 Group:         Development/Ruby
@@ -16,8 +16,9 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname
-Provides:      ruby-%pkgname
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%pkgname < %EVR
+Provides:      ruby-%pkgname = %EVR
 
 %description
 The scoped_search gem makes it easy to search your ActiveRecord models.
@@ -67,12 +68,17 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Dec 16 2020 Pavel Skrylev <majioa@altlinux.org> 4.1.9-alt1
+- ^ 4.1.7 -> 4.1.9
+- ! spec
+
 * Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 4.1.7-alt1.1
-- fixed (!) spec
+- * policify name
+- ! spec
 
 * Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 4.1.7-alt1
-- updated (^) 4.1.5 -> 4.1.7
-- used (>) Ruby Policy 2.0
+- ^ 4.1.5 -> 4.1.7
+- > Ruby Policy 2.0
 
 * Wed Sep 19 2018 Andrey Cherepanov <cas@altlinux.org> 4.1.5-alt1
 - New version.

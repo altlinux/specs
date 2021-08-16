@@ -1,21 +1,23 @@
 %define        pkgname fog-vsphere
 
 Name:          gem-%pkgname
-Version:       3.2.3
+Version:       3.5.0
 Release:       alt1
 Summary:       Fog for vSphere
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/fog/fog-vsphere
-%vcs           https://github.com/fog/fog-vsphere.git
+Vcs:           https://github.com/fog/fog-vsphere.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
-Source:        %name-%version.tar
 
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
-Obsoletes:     ruby-%pkgname
-Provides:      ruby-%pkgname
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%gemname < %EVR
+Provides:      ruby-%gemname = %EVR
 
 %description
 The VMware vSphere provider allows you to use the abstractions of the Fog cloud
@@ -54,9 +56,14 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Wed Dec 16 2020 Pavel Skrylev <majioa@altlinux.org> 3.5.0-alt1
+- ^ 3.2.3 -> 3.5.0
+- ! spec
+
 * Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 3.2.3-alt1
-- updated (^) 3.2.1 -> 3.2.3
-- fixed (!) spec
+- ^ 3.2.1 -> 3.2.3
+- ! spec
+- * policify name
 
 * Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 3.2.1-alt1
 - updated (^) 3.1.0 -> 3.2.1

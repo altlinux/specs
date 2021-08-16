@@ -1,10 +1,10 @@
-%define        pkgname ohai
+%define        gemname ohai
 
-Name:          gem-%pkgname
-Version:       16.2.4
+Name:          gem-ohai
+Version:       16.13.2
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON
-License:       MIT
+License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://github.com/chef/ohai
 Vcs:           https://github.com/chef/ohai.git
@@ -13,39 +13,105 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(chef-config) >= 14.12 gem(chef-config) < 17
+BuildRequires: gem(chef-utils) >= 16.0 gem(chef-utils) < 17
+BuildRequires: gem(ffi) >= 1.9 gem(ffi) < 2
+BuildRequires: gem(ffi-yajl) >= 2.2 gem(ffi-yajl) < 3
+BuildRequires: gem(ipaddress) >= 0
+BuildRequires: gem(mixlib-cli) >= 1.7.0
+BuildRequires: gem(mixlib-config) >= 2.0 gem(mixlib-config) < 4.0
+BuildRequires: gem(mixlib-log) >= 2.0.1 gem(mixlib-log) < 4.0
+BuildRequires: gem(mixlib-shellout) >= 3.2.5 gem(mixlib-shellout) < 4
+BuildRequires: gem(plist) >= 3.1 gem(plist) < 4
+BuildRequires: gem(train-core) >= 0
+BuildRequires: gem(wmi-lite) >= 1.0 gem(wmi-lite) < 2
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+Requires:      gem(chef-config) >= 14.12 gem(chef-config) < 17
+Requires:      gem(chef-utils) >= 16.0 gem(chef-utils) < 17
+Requires:      gem(ffi) >= 1.9 gem(ffi) < 2
+Requires:      gem(ffi-yajl) >= 2.2 gem(ffi-yajl) < 3
+Requires:      gem(ipaddress) >= 0
+Requires:      gem(mixlib-cli) >= 1.7.0
+Requires:      gem(mixlib-config) >= 2.0 gem(mixlib-config) < 4.0
+Requires:      gem(mixlib-log) >= 2.0.1 gem(mixlib-log) < 4.0
+Requires:      gem(mixlib-shellout) >= 3.2.5 gem(mixlib-shellout) < 4
+Requires:      gem(plist) >= 3.1 gem(plist) < 4
+Requires:      gem(train-core) >= 0
+Requires:      gem(wmi-lite) >= 1.0 gem(wmi-lite) < 2
+Obsoletes:     ohai < %EVR
+Provides:      ohai = %EVR
+Provides:      gem(ohai) = 16.13.2
+
 
 %description
-Ohai is a tool that is used to detect attributes on a node, and then
-provide these attributes to the chef-client at the start of every
-chef-client run. Ohai is required by the chef-client and must be present
-on a node.
+Ohai is a tool that is used to detect attributes on a node, and then provide
+these attributes to the chef-client at the start of every chef-client run. Ohai
+is required by the chef-client and must be present on a node.
 
-%package       -n %pkgname
-Summary:       Executable for Ohai profiling your system and emits JSON
+
+%package       -n ohai
+Version:       16.13.2
+Release:       alt1
+Summary:       Ohai profiles your system and emits JSON executable(s)
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета ohai
 Group:         Development/Other
 BuildArch:     noarch
 
-%description   -n %pkgname
-%summary.
+Requires:      gem(ohai) = 16.13.2
 
-%description   -n %pkgname -l ru_RU.UTF8
-Исполнямка для %gemname самоцвета.
+%description   -n ohai
+Ohai profiles your system and emits JSON executable(s).
+
+Ohai is a tool that is used to detect attributes on a node, and then provide
+these attributes to the chef-client at the start of every chef-client run. Ohai
+is required by the chef-client and must be present on a node.
+
+%description   -n ohai -l ru_RU.UTF-8
+Исполнямка для самоцвета ohai.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-ohai-doc
+Version:       16.13.2
+Release:       alt1
+Summary:       Ohai profiles your system and emits JSON documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ohai
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(ohai) = 16.13.2
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-ohai-doc
+Ohai profiles your system and emits JSON documentation files.
+
+Ohai is a tool that is used to detect attributes on a node, and then provide
+these attributes to the chef-client at the start of every chef-client run. Ohai
+is required by the chef-client and must be present on a node.
+
+%description   -n gem-ohai-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета ohai.
+
+
+%package       -n gem-ohai-devel
+Version:       16.13.2
+Release:       alt1
+Summary:       Ohai profiles your system and emits JSON development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ohai
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(ohai) = 16.13.2
+
+%description   -n gem-ohai-devel
+Ohai profiles your system and emits JSON development package.
+
+Ohai is a tool that is used to detect attributes on a node, and then provide
+these attributes to the chef-client at the start of every chef-client run. Ohai
+is required by the chef-client and must be present on a node.
+
+%description   -n gem-ohai-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета ohai.
 
 
 %prep
@@ -61,19 +127,22 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
-%ruby_gemlibdir
 %ruby_gemspec
+%ruby_gemlibdir
 
-%files         -n %pkgname
-%doc README*
-%_bindir/%pkgname
+%files         -n ohai
+%_bindir/ohai
 
-%files         doc
+%files         -n gem-ohai-doc
 %ruby_gemdocdir
+
+%files         -n gem-ohai-devel
 
 
 %changelog
+* Tue Jul 13 2021 Pavel Skrylev <majioa@altlinux.org> 16.13.2-alt1
+- ^ 16.2.4 -> 16.13.2
+
 * Wed Jul 08 2020 Pavel Skrylev <majioa@altlinux.org> 16.2.4-alt1
 - ^ 15.0.30 -> 16.2.4
 

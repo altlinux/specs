@@ -1,6 +1,6 @@
 
-%global commit 122d4c67ab5d304725677834d5d8361ac00c0620
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
+%global commit 943005aa9d9d03a68cffb59a8e392ee5f784c832
+%global gitversion %(c=%{commit}; echo ${c:0:7})
 
 %define oneadmin_home /var/lib/one
 %define oneadmin_uid 9869
@@ -8,13 +8,18 @@
 
 %add_findreq_skiplist /var/lib/one/*
 
+# from firecracker.spec
+%ifarch x86_64 aarch64
+%def_with firecracker
+%endif
+
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
-Version: 5.10.5
-Release: alt8
+Version: 5.12.0.4
+Release: alt1.1
 License: Apache-2.0
 Group: System/Servers
-Url: https://opennebula.org
+Url: https://opennebula.io
 
 Source0: %name-%version.tar
 Source1: lxd-init.sh
@@ -25,24 +30,29 @@ BuildRequires: libcurl-devel
 BuildRequires: libxml2-devel libxmlrpc-devel liblzma-devel
 BuildRequires: libssl-devel
 BuildRequires: libmysqlclient-devel
+BuildRequires: postgresql-devel
 BuildRequires: libvncserver-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libsystemd-devel
 BuildRequires: libnsl2-devel
 BuildRequires: openssh
-BuildRequires: ruby-aws-sdk
+BuildRequires: ruby-aws-sdk ruby-treetop ruby-ipaddress
 BuildRequires: ruby-builder
 BuildRequires: gem-nokogiri
 BuildRequires: scons
+BuildRequires: python3-module-setuptools
 BuildRequires: java-1.8.0-openjdk-devel rpm-build-java ws-commons-util xmlrpc-common xmlrpc-client
 BuildRequires: zlib-devel
 BuildRequires: node node-gyp npm node-devel node-sass libsass
 BuildRequires: ronn
 BuildRequires: groff-base
 
-%gem_replace_version highline ~> 2.0
-%gem_replace_version i18n ~> 1.0
-%gem_replace_version activesupport ~> 5.2
+%ruby_use_gem_dependency faraday_middleware >= 0,faraday_middleware < 2
+%ruby_use_gem_dependency faraday >= 0,faraday < 2
+%ruby_use_gem_dependency rbvmomi >= 2,rbvmomi < 3
+%ruby_use_gem_dependency highline >= 2.0,highline < 3
+%ruby_use_gem_dependency i18n >= 1.0,i18n < 2
+%ruby_use_gem_dependency activesupport >= 6.0,faraday < 7
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
@@ -58,7 +68,7 @@ to support each other.
 OpenNebula is free software released under the Apache License.
 
 %package server
-Summary: Provides the OpenNebula servers
+Summary: OpenNebula Server and Scheduler
 Group: System/Servers
 Requires: openssh-server
 Requires: genisoimage
@@ -69,37 +79,36 @@ Requires: wget
 Requires: curl
 Requires: rsync
 Requires: iputils
+Requires: sqlite3
 Requires: %name-common = %EVR
 Requires: gem-%name-cli = %EVR
-Obsoletes: %name-ozones < %EVR
+Obsoletes: %name-addon-markets
+Obsoletes: %name-ozones
 #TODO: Requires http://rubygems.org/gems/net-ldap
 
 %description server
-This package provides the OpenNebula servers: oned (main daemon) and mm_sched
-(scheduler).
+OpenNebula Server and Scheduler daemons.
 
 %package common
-Summary: Provides the OpenNebula user
+Summary: Common OpenNebula package shared by various components
 Group: System/Servers
 BuildArch: noarch
 
 %description common
-This package creates the oneadmin user and group.
-
+Common package shared by various OpenNebula components.
 
 %package -n gem-%name
-Summary: Provides the OpenNebula Ruby libraries
+Summary: OpenNebula Ruby libraries
 Group: Development/Ruby
 BuildArch: noarch
 Provides: %name-ruby = %EVR ruby-%name = %EVR
 Obsoletes: %name-ruby < %EVR ruby-%name < %EVR
 
 %description -n gem-%name
-Ruby interface for OpenNebula.
-
+OpenNebula Ruby libraries.
 
 %package -n gem-%name-cli
-Summary: Provides the CLI for OpenNebula
+Summary: OpenNebula command line tools
 Group: Development/Ruby
 BuildArch: noarch
 Requires: gem-%name = %EVR
@@ -124,16 +133,17 @@ Ruby CLI for OpenNebula.
 # net-ldap   => Ldap authentication
 # parse-cron => OneFlow
 
-%package -n python3-module-pyone
-Summary: Provides the OpenNebula Python libraries
+%package -n python3-module-%name
+Summary: Python 3 bindings for OpenNebula Cloud API, OCA
 Group: Development/Python3
 BuildArch: noarch
+Provides: python3-module-pyone = %EVR
 
-%description -n python3-module-pyone
-Python interface for OpenNebula.
+%description -n python3-module-%name
+Python 3 bindings for OpenNebula Cloud API (OCA).
 
 %package sunstone
-Summary: Browser based UI and public cloud interfaces
+Summary: OpenNebula web interface Sunstone
 Group: System/Servers
 BuildArch: noarch
 
@@ -142,11 +152,10 @@ Requires: gem-%name = %EVR
 Requires: python3-module-numpy
 
 %description sunstone
-Browser based UI for administrating a OpenNebula cloud. Also includes
-the public cloud interface econe-server (AWS cloud API).
+Browser based UI for OpenNebula cloud management and usage.
 
 %package gate
-Summary: Transfer information from Virtual Machines to OpenNebula
+Summary: OpenNebula Gate server 
 Group: System/Servers
 BuildArch: noarch
 
@@ -154,10 +163,10 @@ Requires: %name-common = %EVR
 Requires: gem-%name = %EVR
 
 %description gate
-Transfer information from Virtual Machines to OpenNebula
+Server for information exchange between Virtual Machines and OpenNebula.
 
 %package flow
-Summary: Manage OpenNebula Services
+Summary: OpenNebula Flow server
 Group: System/Servers
 BuildArch: noarch
 
@@ -166,10 +175,18 @@ Requires: gem-%name = %EVR
 Requires: %name-sunstone = %EVR
 
 %description flow
-Manage OpenNebula Services
+Server for multi-VM orchestration.
+
+%package -n docker-machine-opennebula
+Summary: OpenNebula driver for Docker Machine
+Group: Development/Other
+
+%description -n docker-machine-opennebula
+OpenNebula driver for the Docker Machine (note: Docker Machine needs
+to be installed separately).
 
 %package java
-Summary: Java interface to OpenNebula Cloud API
+Summary: Java bindings for OpenNebula Cloud API, OCA
 Group: Development/Java
 BuildArch: noarch
 Requires: ws-commons-util
@@ -180,7 +197,7 @@ Requires: xmlrpc-client
 Java interface to OpenNebula Cloud API.
 
 %package node-kvm
-Summary: Configures an OpenNebula node providing kvm
+Summary: Services for OpenNebula KVM node
 Group: System/Servers
 BuildArch: noarch
 
@@ -193,13 +210,34 @@ Requires: libvirt-kvm libvirt-client polkit
 Requires: qemu-kvm
 Requires: qemu-img
 Requires: nfs-utils
-Requires: bridge-utils
 Requires: ipset
 Requires: pciutils
+Requires: augeas
 Requires: rsync
 
 %description node-kvm
-Configures an OpenNebula node providing kvm.
+Services and configurations for OpenNebula KVM node.
+
+%package node-firecracker
+Summary: Services for OpenNebula Firecracker node
+Group: System/Servers
+
+Conflicts: %name-node-xen
+Requires: %name-common = %EVR
+Requires: firecracker
+Requires: openssh-server
+Requires: openssh-clients
+Requires: rsync
+Requires: nfs-utils
+Requires: ipset
+Requires: screen
+Requires: bsdtar
+Requires: e2fsprogs
+Requires: lsof
+Requires: qemu-img
+
+%description node-firecracker
+Services and configurations for OpenNebula Firecracker node.
 
 # %package node-xen
 # Summary: Configures an OpenNebula node providing xen
@@ -238,7 +276,7 @@ Requires: systemd-settings-disable-kill-user-processes
 Configures an OpenNebula node providing lxd.
 
 %package provision
-Summary: OpenNebula provisioning tool
+Summary: OpenNebula infrastructure provisioning
 Group: System/Servers
 BuildArch: noarch
 Requires: %name-common = %EVR
@@ -252,9 +290,6 @@ OpenNebula provisioning tool
 
 ln -sf %nodejs_sitelib/node-gyp src/sunstone/public/node_modules/node-gyp
 ln -sf %nodejs_sitelib/node-sass src/sunstone/public/node_modules/node-sass
-
-find . -type f -exec subst 's,^#!/usr/bin/env ruby,#!%__ruby,' {} \;
-
 
 %build
 export PATH="$PATH:$PWD/src/sunstone/public/node_modules/.bin"
@@ -270,20 +305,30 @@ mv -f dist/main.js dist/main-dist.js
 popd
 
 # Compile OpenNebula
-scons -j2 mysql=yes new_xmlrpc=yes sunstone=no systemd=yes rubygems=yes gitversion=%shortcommit
+scons -j2 \
+	mysql=yes \
+	postgresql=yes \
+	new_xmlrpc=yes \
+	sunstone=no \
+	systemd=yes \
+	rubygems=yes \
+	gitversion="%{gitversion}" \
+	enterprise=no
 
-%ruby_build --ignore=packethost \
-            --use=install_gems --alias=opennebula-common --join=lib:bin \
-            --use=flow --alias=opennebula-flow --join=lib:bin --srclibdir= --srcconfdir= # --use=opennebula-cli --join=lib:bin
+
+%ruby_build \
+	--ignore-names=packethost \
+	--use=install_gems --alias=opennebula-common --join=lib:bin \
+	--use=flow --alias=opennebula-flow --join=lib:bin \
+	--srclibdir= --srcconfdir= # --use=opennebula-cli --join=lib:bin
 
 # build man pages
 pushd share/man
-./build.sh
+	./build.sh
 popd
 
-#../build_opennebula.sh
 pushd src/oca/java
-./build.sh -d
+	./build.sh -d
 popd
 
 
@@ -313,9 +358,15 @@ rm -rf  %buildroot%_libexecdir/one/ruby/cli
 
 # delete docs
 rm -rf %buildroot%_libexecdir/ruby/gems/*/doc
+rm -rf %buildroot%_datadir/doc/one
 
 # systemd units
 install -p -D -m 644 share/pkgs/ALT/opennebula.service %buildroot%_unitdir/opennebula.service
+install -p -D -m 644 share/pkgs/ALT/opennebula-ssh-agent.service %buildroot%_unitdir/opennebula-ssh-agent.service
+install -p -D -m 644 share/pkgs/ALT/opennebula-ssh-socks-cleaner.service %buildroot%_unitdir/opennebula-ssh-socks-cleaner.service
+install -p -D -m 644 share/pkgs/ALT/opennebula-ssh-socks-cleaner.timer %buildroot%_unitdir/opennebula-ssh-socks-cleaner.timer
+install -p -D -m 644 share/pkgs/ALT/opennebula-showback.service %buildroot%_unitdir/opennebula-showback.service
+install -p -D -m 644 share/pkgs/ALT/opennebula-showback.timer %buildroot%_unitdir/opennebula-showback.timer
 install -p -D -m 644 share/pkgs/ALT/opennebula-econe.service %buildroot%_unitdir/opennebula-econe.service
 install -p -D -m 644 share/pkgs/ALT/opennebula-flow.service  %buildroot%_unitdir/opennebula-flow.service
 install -p -D -m 644 share/pkgs/ALT/opennebula-gate.service  %buildroot%_unitdir/opennebula-gate.service
@@ -324,15 +375,6 @@ install -p -D -m 644 share/pkgs/ALT/opennebula-novnc.service %buildroot%_unitdir
 install -p -D -m 644 share/pkgs/ALT/opennebula-scheduler.service %buildroot%_unitdir/opennebula-scheduler.service
 install -p -D -m 644 share/pkgs/ALT/opennebula-sunstone.service %buildroot%_unitdir/opennebula-sunstone.service
 
-# Init scripts
-install -p -D -m 755 share/pkgs/ALT/opennebula %buildroot%_initdir/opennebula
-install -p -D -m 755 share/pkgs/ALT/opennebula-econe %buildroot%_initdir/opennebula-econe
-install -p -D -m 755 share/pkgs/ALT/opennebula-flow  %buildroot%_initdir/opennebula-flow
-install -p -D -m 755 share/pkgs/ALT/opennebula-gate  %buildroot%_initdir/opennebula-gate
-install -p -D -m 755 share/pkgs/ALT/opennebula-hem  %buildroot%_initdir/opennebula-hem
-install -p -D -m 755 share/pkgs/ALT/opennebula-novnc %buildroot%_initdir/opennebula-novnc
-install -p -D -m 755 share/pkgs/ALT/opennebula-sunstone %buildroot%_initdir/opennebula-sunstone
-
 install -p -D -m 644 share/pkgs/tmpfiles/opennebula.conf %buildroot%_tmpfilesdir/opennebula.conf
 install -p -D -m 644 share/pkgs/tmpfiles/opennebula-node.conf %buildroot%_tmpfilesdir/opennebula-node.conf
 
@@ -340,14 +382,20 @@ install -p -D -m 644 share/pkgs/ALT/opennebula-polkit.rules %buildroot%_sysconfd
 
 # sudoers
 mkdir -p %buildroot%_sysconfdir/sudoers.d
-install -p -D -m 440 share/pkgs/sudoers/alt/opennebula %buildroot%_sysconfdir/sudoers.d/opennebula
-install -p -D -m 440 share/pkgs/sudoers/opennebula-node %buildroot%_sysconfdir/sudoers.d/opennebula-node
-install -p -D -m 440 share/pkgs/sudoers/opennebula-node-lxd %buildroot%_sysconfdir/sudoers.d/opennebula-node-lxd
-install -p -D -m 440 share/pkgs/sudoers/opennebula-server %buildroot%_sysconfdir/sudoers.d/opennebula-server
+install -p -D -m 400 share/pkgs/sudoers/alt/opennebula %buildroot%_sysconfdir/sudoers.d/opennebula
+install -p -D -m 400 share/pkgs/sudoers/opennebula-server %buildroot%_sysconfdir/sudoers.d/opennebula-server
+install -p -D -m 400 share/pkgs/sudoers/opennebula-node %buildroot%_sysconfdir/sudoers.d/opennebula-node
+install -p -D -m 400 share/pkgs/sudoers/opennebula-node-lxd %buildroot%_sysconfdir/sudoers.d/opennebula-node-lxd
+%if_with firecracker
+install -p -D -m 400 share/pkgs/sudoers/opennebula-node-firecracker %buildroot%_sysconfdir/sudoers.d/opennebula-node-firecracker
+%endif
 
 # logrotate
 mkdir -p %buildroot%_logrotatedir
 install -p -D -m 644 share/pkgs/ALT/opennebula.logrotate %buildroot%_logrotatedir/opennebula
+
+# Shell completion
+install -p -D -m 644 share/shell/bash_completion %buildroot%_datadir/bash-completion/completions/one
 
 # Java
 install -p -D -m 644 src/oca/java/jar/org.opennebula.client.jar %buildroot%_javadir/org.opennebula.client.jar
@@ -356,25 +404,33 @@ install -p -D -m 644 src/oca/java/jar/org.opennebula.client.jar %buildroot%_java
 install -p -D -m 644 share/etc/sysctl.d/bridge-nf-call.conf %buildroot%_sysconfdir/sysctl.d/bridge-nf-call.conf
 
 # node-lxd
-install -p -D -m 755 src/vmm_mad/remotes/lib/lxd/svncterm_server/svncterm_server %buildroot%_bindir/svncterm_server
+install -p -D -m 755 src/svncterm_server/svncterm_server %buildroot%_bindir/svncterm_server
 install -p -D -m 755 src/vmm_mad/remotes/lib/lxd/catfstab %buildroot%_bindir/catfstab
 install -p -D -m 644 share/pkgs/ALT/opennebula-lxd.modprobe %buildroot%_sysconfdir/modprobe.d/opennebula-lxd.conf
 install -p -D -m 644 share/pkgs/ALT/opennebula-lxd.modules %buildroot%_sysconfdir/modules-load.d/opennebula-lxd.conf
 install -p -D -m 755 %SOURCE1 %buildroot%_sysconfdir/firsttime.d/opennebula-lxd-init
+
+# node-firecracker
+%if_with firecracker
+#install -p -D -m 755 src/svncterm_server/svncterm_server %buildroot%_bindir/svncterm_server
+install -p -D -m 755 src/vmm_mad/remotes/lib/firecracker/one-clean-firecracker-domain %buildroot%_sbindir/one-clean-firecracker-domain
+install -p -D -m 755 src/vmm_mad/remotes/lib/firecracker/one-prepare-firecracker-domain %buildroot%_sbindir/one-prepare-firecracker-domain
+%endif
 
 # cleanup
 rm -f %buildroot%_datadir/one/Gemfile
 rm -f %buildroot%_datadir/one/install_gems
 rm -rf %buildroot%_libexecdir/install_gems
 rm -rf %buildroot%_libexecdir/one/ruby/vendors
+rm -f %buildroot%_sbindir/install-firecracker
 
 # fix placement
 mv %buildroot%_libexecdir/flow %buildroot%_datadir/flow
 
 # Python
-#pushd src/oca/python
-#PYTHON=%__python3 make install ROOT=%buildroot
-#popd
+pushd src/oca/python
+PYTHON=%__python3 make install3 ROOT=%buildroot
+popd
 
 %pre common
 groupadd -r -f -g %oneadmin_gid oneadmin 2>/dev/null ||:
@@ -383,27 +439,53 @@ useradd -r -M -g oneadmin -G disk,wheel -c 'Opennebula Daemon User' \
 	-u %oneadmin_uid -g %oneadmin_gid \
 	oneadmin 2>/dev/null ||:
 
-%post server
-%post_service %name
+%post common
+if [ $1 = 1 ]; then
+    # install ~oneadmin/.ssh/config if not present on a fresh install only
+    if [ ! -e "%oneadmin_home/.ssh/config" ]; then
+        if [ ! -d "%oneadmin_home/.ssh" ]; then
+            mkdir -p %oneadmin_home/.ssh
+            chmod 0700 %oneadmin_home/.ssh
+            chown oneadmin:oneadmin %oneadmin_home/.ssh
+        fi
+        cp %_datadir/one/ssh/config %oneadmin_home/.ssh/config
+        chmod 0600 %oneadmin_home/.ssh/config
+        chown oneadmin:oneadmin %oneadmin_home/.ssh/config
+    fi
+fi
+systemd-tmpfiles --create %_tmpfilesdir/opennebula.conf || :
 
+%pre server
 if [ $1 = 1 ]; then
     if [ ! -e %oneadmin_home/.one/one_auth ]; then
         PASSWORD=$(echo $RANDOM$(date '+%s')|md5sum|cut -d' ' -f1)
         mkdir -p %oneadmin_home/.one
+	chmod 700 %oneadmin_home/.one
         echo oneadmin:$PASSWORD > %oneadmin_home/.one/one_auth
         chown -R oneadmin:oneadmin %oneadmin_home/.one
+	chmod 600 %oneadmin_home/.one/one_auth
     fi
 
-    if [ ! -d %oneadmin_home/.ssh ]; then
-        su oneadmin -c "ssh-keygen -N '' -t rsa -f %oneadmin_home/.ssh/id_rsa"
-        cp -p %oneadmin_home/.ssh/id_rsa.pub %oneadmin_home/.ssh/authorized_keys
-        chmod 600 %oneadmin_home/.ssh/authorized_keys
+    if [ ! -f %oneadmin_home/.ssh/id_rsa ]; then
+        su -c "ssh-keygen -N '' -t rsa -f %oneadmin_home/.ssh/id_rsa" -l oneadmin
+	if [ ! -f "%oneadmin_home/.ssh/authorized_keys" ]; then
+	    cp -p %oneadmin_home/.ssh/id_rsa.pub %oneadmin_home/.ssh/authorized_keys
+	    chmod 600 %oneadmin_home/.ssh/authorized_keys
+	fi
     fi
 fi
 
+%post server
+%post_service %name
+%post_service %name-scheduler
+%post_service %name-hem
+%post_service %name-ssh-agent
+
 %preun server
 %preun_service %name
-
+%preun_service %name-scheduler
+%preun_service %name-hem
+%preun_service %name-ssh-agent
 
 # %post node-xen
 # if [ $1 = 1 ]; then
@@ -436,7 +518,7 @@ if [ $1 = 1 ]; then
     fi
 elif [ $1 = 2 ]; then
     # Upgrade
-    PID=$(cat /tmp/one-collectd-client.pid 2> /dev/null)
+    PID=$(cat /tmp/one-monitord-client.pid 2> /dev/null)
     [ -n "$PID" ] && kill $PID 2> /dev/null || :
 fi
 
@@ -459,6 +541,20 @@ if [ $1 = 1 ]; then
    fi
 fi
 
+%post node-firecracker
+if [ $1 = 1 ]; then
+    # Changes ownership of chroot folder
+    mkdir -p /srv/jailer/firecracker
+    chown oneadmin:oneadmin /srv/jailer/firecracker
+    chmod 750 /srv/jailer/firecracker
+fi
+
+if [ $1 = 2 ]; then
+    # Upgrade
+    PID=$(cat /tmp/one-monitord-client.pid 2> /dev/null)
+    [ -n "$PID" ] && kill $PID 2> /dev/null || :
+fi
+
 #%post ruby
 #cat <<EOF
 #Please remember to execute %_datadir/one/install_gems to install all the
@@ -466,23 +562,25 @@ fi
 #EOF
 
 %files common
+%doc LICENSE NOTICE README.md
+
 %config(noreplace) %_sysconfdir/sudoers.d/opennebula
 %config(noreplace) %_sysconfdir/logrotate.d/opennebula
 
-%_datadir/docs/one/*
 %_tmpfilesdir/opennebula.conf
-
+%_tmpfilesdir/opennebula-node.conf
+%dir %_libexecdir/one
+%dir %_datadir/one
+%_datadir/one/ssh
 %dir %attr(0750, root, oneadmin) %_sysconfdir/one
 %dir %attr(0770, root, oneadmin) %_logdir/one
-%dir %attr(0775, root, oneadmin) %_runtimedir/one
-%dir %attr(0775, root, oneadmin) %_lockdir/one
 %dir %attr(0750, oneadmin, oneadmin) %oneadmin_home
 
 %files node-kvm
 %config(noreplace) %_sysconfdir/polkit-1/rules.d/50-opennebula.rules
 %config(noreplace) %_sysconfdir/sysctl.d/bridge-nf-call.conf
+#%config %_sysconfdir/cron.d/opennebula-node
 %config(noreplace) %_sysconfdir/sudoers.d/opennebula-node
-%_tmpfilesdir/opennebula-node.conf
 
 %files node-lxd
 %doc README.opennebula-lxd
@@ -492,6 +590,16 @@ fi
 %config(noreplace) %_sysconfdir/modules-load.d/opennebula-lxd.conf
 %config(noreplace) %_sysconfdir/sudoers.d/opennebula-node-lxd
 %_sysconfdir/firsttime.d/opennebula-lxd-init
+
+%if_with firecracker
+%files node-firecracker
+%config %_sysconfdir/sysctl.d/bridge-nf-call.conf
+#%config %_sysconfdir/cron.d/opennebula-node
+%_sbindir/one-clean-firecracker-domain
+%_sbindir/one-prepare-firecracker-domain
+%_bindir/svncterm_server
+%config(noreplace) %_sysconfdir/sudoers.d/opennebula-node-firecracker
+%endif
 
 # %files node-xen
 
@@ -520,8 +628,8 @@ fi
 #%rubygem_specdir/opennebula*
 #%exclude %rubygem_specdir/opennebula-cli*
 
-#%files -n python3-module-pyone
-#%%python3_sitelibdir/*
+%files -n python3-module-%name
+%python3_sitelibdir_noarch/*
 
 %files sunstone
 %_libexecdir/one/sunstone
@@ -561,9 +669,6 @@ fi
 %_unitdir/opennebula-sunstone.service
 %_unitdir/opennebula-econe.service
 %_unitdir/opennebula-novnc.service
-%_initdir/opennebula-sunstone
-%_initdir/opennebula-econe
-%_initdir/opennebula-novnc
 
 %_datadir/one/websockify
 
@@ -588,14 +693,12 @@ fi
 %_libexecdir/one/onegate
 %_bindir/onegate-server
 %_unitdir/opennebula-gate.service
-%_initdir/opennebula-gate
 
 %files flow
 %config(noreplace) %attr(0640, root, oneadmin) %_sysconfdir/one/oneflow-server.conf
 %_libexecdir/one/oneflow
 %_bindir/oneflow-server
 %_unitdir/opennebula-flow.service
-%_initdir/opennebula-flow
 %_datadir/flow
 
 %files provision
@@ -612,8 +715,11 @@ fi
 %_unitdir/opennebula.service
 %_unitdir/opennebula-scheduler.service
 %_unitdir/opennebula-hem.service
-%_initdir/opennebula
-%_initdir/opennebula-hem
+%_unitdir/opennebula-ssh-agent.service
+%_unitdir/opennebula-ssh-socks-cleaner.service
+%_unitdir/opennebula-ssh-socks-cleaner.timer
+%_unitdir/opennebula-showback.service
+%_unitdir/opennebula-showback.timer
 
 %_bindir/mm_sched
 
@@ -623,13 +729,15 @@ fi
 %_bindir/onehem-server
 %_bindir/onehook
 
-%_libexecdir/one/onehem
-
 %_datadir/one/examples
 %_datadir/one/esx-fw-vnc
 %_datadir/one/follower_cleanup
+%_datadir/one/start-scripts
+%_datadir/one/schemas
+%_datadir/one/context
 
 %_libexecdir/one/mads
+%_libexecdir/one/onehem
 %_libexecdir/one/ruby/az_driver.rb
 %_libexecdir/one/ruby/ec2_driver.rb
 %_libexecdir/one/ruby/onedb
@@ -637,11 +745,13 @@ fi
 %_libexecdir/one/ruby/opennebula_driver.rb
 %_libexecdir/one/ruby/ssh_stream.rb
 %_libexecdir/one/ruby/packet_driver.rb
+%_libexecdir/one/ruby/PublicCloudDriver.rb
 %_libexecdir/one/sh
+%_datadir/one/conf
+
 #%rubygem_specdir/opennebula-server/Gemfile
 
 %_man1dir/onedb.1.*
-%doc LICENSE NOTICE
 
 %dir %attr(0750, oneadmin, oneadmin) %oneadmin_home/datastores
 %dir %attr(0750, oneadmin, oneadmin) %oneadmin_home/remotes
@@ -656,6 +766,7 @@ fi
 %config(noreplace) %_sysconfdir/one/hm/*
 %config(noreplace) %_sysconfdir/one/oned.conf
 %config(noreplace) %_sysconfdir/one/sched.conf
+%config(noreplace) %_sysconfdir/one/monitord.conf
 %config(noreplace) %_sysconfdir/one/onehem-server.conf
 %config(noreplace) %_sysconfdir/one/vmm_exec/*
 %config(noreplace) %_sysconfdir/one/az_driver.conf
@@ -671,6 +782,7 @@ fi
 %ruby_gemslibdir/%name-cli-%version
 %config(noreplace) %_sysconfdir/one/cli/*
 %exclude %_sysconfdir/one/cli/oneprovision.yaml
+%_datadir/bash-completion/completions/one
 
 %_bindir/oneacct
 %_bindir/oneacl
@@ -712,6 +824,13 @@ fi
 %exclude %_man1dir/oneprovision.1*
 
 %changelog
+* Thu Jul 08 2021 Pavel Skrylev <majioa@altlinux.org> 5.12.0.4-alt1.1
+- * ruby macros, and call to ruby build
+
+* Tue Jun 22 2021 Alexey Shabalin <shaba@altlinux.org> 5.12.0.4-alt1
+- 5.12.0.4
+- drop support sysV init scripts
+
 * Wed May 26 2021 Mikhail Gordeev <obirvalger@altlinux.org> 5.10.5-alt8
 - node-lxd: setup lxd in post and firsttime.d
 - add requires to python3-module-numpy to improve vnc speed

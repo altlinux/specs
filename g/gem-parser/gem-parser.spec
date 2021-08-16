@@ -1,7 +1,7 @@
-%define        pkgname parser
+%define        gemname parser
 
-Name:          gem-%pkgname
-Version:       2.7.2.0
+Name:          gem-parser
+Version:       3.0.1.1
 Release:       alt1
 Summary:       A Ruby parser
 License:       MIT
@@ -10,22 +10,31 @@ Url:           https://github.com/whitequark/parser
 Vcs:           https://github.com/whitequark/parser.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
-Source:        %name-%version.tar
 
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(bundler) >= 1.15 gem(bundler) < 3.0.0
-BuildRequires: racc gem(racc) >= 1.4.15
-BuildRequires: gem(cliver) >= 0.3.2
-BuildRequires: gem(gauntlet)
-BuildRequires: gem(kramdown)
-BuildRequires: gem(minitest) >= 5.1
-BuildRequires: gem(rake) >= 13.0.1
-BuildRequires: gem(simplecov) >= 0.15.1
-BuildRequires: gem(yard)
 BuildRequires: ragel
+BuildRequires: racc
+BuildRequires: gem(ast) >= 2.4.1 gem(ast) < 2.5
+BuildRequires: gem(bundler) >= 1.15 gem(bundler) < 3.0.0
+BuildRequires: gem(rake) >= 13.0.1 gem(rake) < 13.1
+BuildRequires: gem(racc) >= 1.4.15
+BuildRequires: gem(cliver) >= 0.3.2 gem(cliver) < 0.4
+BuildRequires: gem(yard) >= 0
+BuildRequires: gem(kramdown) >= 0
+BuildRequires: gem(minitest) >= 5.10 gem(minitest) < 6
+BuildRequires: gem(simplecov) >= 0.15
+BuildRequires: gem(gauntlet) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency simplecov >= 0.15,simplecov < 1
+%ruby_alias_names parser,parse
+Requires:      gem(ast) >= 2.4.1 gem(ast) < 2.5
+Provides:      gem(parser) = 3.0.1.1
+
+%ruby_use_gem_version parser:3.0.1.1
+%ruby_on_build_rake_tasks build
 
 %description
 Parser is a production-ready Ruby parser written in pure Ruby. It recognizes as
@@ -36,36 +45,88 @@ You can also use unparser to produce equivalent source code from Parser's ASTs.
 
 
 %package       -n ruby-parse
-Summary:       Executable file for %gemname gem
-Summary(ru_RU.UTF-8): Исполнямки для самоцвета %gemname
+Version:       3.0.1.1
+Release:       alt1
+Summary:       A Ruby parser executable(s)
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета parser
 Group:         Development/Ruby
 BuildArch:     noarch
 
+Requires:      gem(parser) = 3.0.1.1
+
 %description   -n ruby-parse
-Executable file for %gemname gem.
+A Ruby parser executable(s).
+
+Parser is a production-ready Ruby parser written in pure Ruby. It recognizes as
+much or more code than Ripper, Melbourne, JRubyParser or ruby_parser, and is
+vastly more convenient to use.
+
+You can also use unparser to produce equivalent source code from Parser's ASTs.
 
 %description   -n ruby-parse -l ru_RU.UTF-8
-Исполнямки для самоцвета %gemname.
+Исполнямка для самоцвета parser.
 
 
-%package       -n gem-%pkgname-doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-parser-doc
+Version:       3.0.1.1
+Release:       alt1
+Summary:       A Ruby parser documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета parser
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   -n gem-%pkgname-doc
-Documentation files for %gemname gem.
+Requires:      gem(parser) = 3.0.1.1
 
-%description   -n gem-%pkgname-doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-parser-doc
+A Ruby parser documentation files.
+
+Parser is a production-ready Ruby parser written in pure Ruby. It recognizes as
+much or more code than Ripper, Melbourne, JRubyParser or ruby_parser, and is
+vastly more convenient to use.
+
+You can also use unparser to produce equivalent source code from Parser's ASTs.
+
+%description   -n gem-parser-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета parser.
+
+
+%package       -n gem-parser-devel
+Version:       3.0.1.1
+Release:       alt1
+Summary:       A Ruby parser development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета parser
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(parser) = 3.0.1.1
+Requires:      gem(bundler) >= 1.15 gem(bundler) < 3.0.0
+Requires:      gem(rake) >= 13.0.1 gem(rake) < 13.1
+Requires:      gem(racc) >= 1.4.15
+Requires:      gem(cliver) >= 0.3.2 gem(cliver) < 0.4
+Requires:      gem(yard) >= 0
+Requires:      gem(kramdown) >= 0
+Requires:      gem(minitest) >= 5.10 gem(minitest) < 6
+Requires:      gem(simplecov) >= 0.15.1
+Requires:      gem(gauntlet) >= 0
+
+%description   -n gem-parser-devel
+A Ruby parser development package.
+
+Parser is a production-ready Ruby parser written in pure Ruby. It recognizes as
+much or more code than Ripper, Melbourne, JRubyParser or ruby_parser, and is
+vastly more convenient to use.
+
+You can also use unparser to produce equivalent source code from Parser's ASTs.
+
+%description   -n gem-parser-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета parser.
 
 
 %prep
 %setup
 
 %build
-%ruby_build --pre=build --use=parser --alias=parse
+%ruby_build
 
 %install
 %ruby_install
@@ -77,15 +138,20 @@ Documentation files for %gemname gem.
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
-%ruby_gemdocdir
-
 %files         -n ruby-parse
 %_bindir/ruby-parse
 %_bindir/ruby-rewrite
 
+%files         -n gem-parser-doc
+%ruby_gemdocdir
+
+%files         -n gem-parser-devel
+
 
 %changelog
+* Thu May 27 2021 Pavel Skrylev <majioa@altlinux.org> 3.0.1.1-alt1
+- ^ 2.7.2.0 -> 3.0.1.1
+
 * Sun Nov 22 2020 Pavel Skrylev <majioa@altlinux.org> 2.7.2.0-alt1
 - ^ 2.7.1.4 -> 2.7.2.0
 

@@ -1,8 +1,8 @@
 %define        pkgname fog-aws
 
 Name:          gem-%pkgname
-Version:       3.5.2
-Release:       alt1.1
+Version:       3.7.0
+Release:       alt1
 Summary:       Module for the 'fog' gem to support Amazon Web Services
 License:       MIT
 Group:         Development/Ruby
@@ -15,8 +15,9 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname
-Provides:      ruby-%pkgname
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%pkgname < %EVR
+Provides:      ruby-%pkgname = %EVR
 
 %description
 %summary http://aws.amazon.com/.
@@ -57,6 +58,10 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Dec 16 2020 Pavel Skrylev <majioa@altlinux.org> 3.7.0-alt1
+- ^ 3.5.2 -> 3.7.0
+- ! spec
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 3.5.2-alt1.1
 - fixed (!) spec
 

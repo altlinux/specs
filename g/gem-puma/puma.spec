@@ -1,77 +1,96 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-%define        pkgname puma
+%define        gemname puma
 
-Name:          gem-%pkgname
-Version:       4.3.3
-Release:       alt1.1
+Name:          gem-puma
+Version:       5.3.2
+Release:       alt1
 Summary:       A Ruby/Rack web server built for concurrency
 License:       BSD-3-Clause
 Group:         Networking/WWW
 Url:           https://github.com/puma/puma
 Vcs:           https://github.com/puma/puma.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
-Source:        %name-%version.tar
 
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libssl-devel
-BuildRequires: gem(nio4r)
-BuildRequires: gem(rack)
 BuildRequires: gem-minitest
-BuildRequires: gem(minitest-retry)
-BuildRequires: gem(minitest-proveit)
-BuildRequires: gem(rubocop)
-BuildRequires: gem(m)
+BuildRequires: gem(nio4r) >= 2.0 gem(nio4r) < 3
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_ignore_names new_json_with_puma_stats_after_fork,old_json_with_puma_stats_after_fork,new_json,old_json,new_nio4r,old_nio4r,version2,version1
+Requires:      gem(nio4r) >= 2.0 gem(nio4r) < 3
+Provides:      gem(puma) = 5.3.2
+
 
 %description
-Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server
-for Ruby/Rack applications in development and production.
+Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server for
+Ruby/Rack applications in development and production.
 
 
-%package       -n %pkgname
-Summary:       Executable file for %gemname gem
-Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
+%package       -n puma
+Version:       5.3.2
+Release:       alt1
+Summary:       A Ruby/Rack web server built for concurrency executable(s)
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета puma
 Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   -n %pkgname
-Executable file for %gemname gem.
+Requires:      gem(puma) = 5.3.2
 
-%description   -n %pkgname -l ru_RU.UTF8
-Исполнямка для %gemname самоцвета.
+%description   -n puma
+A Ruby/Rack web server built for concurrency executable(s).
 
+Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server for
+Ruby/Rack applications in development and production.
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
-Group:         Development/Documentation
-BuildArch:     noarch
-Obsoletes:     %pkgname-doc
-Provides:      %pkgname-doc
-
-%description   doc
-Documentation files for %gemname gem.
-
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n puma -l ru_RU.UTF-8
+Исполнямка для самоцвета puma.
 
 
-%package       devel
-Summary:       Development headers files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета %gemname
+%package       -n gem-puma-doc
+Version:       5.3.2
+Release:       alt1
+Summary:       A Ruby/Rack web server built for concurrency documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puma
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Obsoletes:     %pkgname-devel
-Provides:      %pkgname-devel
+Requires:      gem(puma) = 5.3.2
+Obsoletes:     puma-doc
+Provides:      puma-doc
+
+%description   -n gem-puma-doc
+A Ruby/Rack web server built for concurrency documentation files.
+
+Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server for
+Ruby/Rack applications in development and production.
+
+%description   -n gem-puma-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета puma.
+
+
+%package       -n gem-puma-devel
+Version:       5.3.2
+Release:       alt1
+Summary:       A Ruby/Rack web server built for concurrency development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puma
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(puma) = 5.3.2
 Requires:      libssl-devel
+Obsoletes:     puma-devel
+Provides:      puma-devel
 
-%description   devel
-Development headers for %gemname gem.
+%description   -n gem-puma-devel
+A Ruby/Rack web server built for concurrency development package.
 
-%description   devel -l ru_RU.UTF8
-Файлы заголовков для самоцвета %gemname.
+Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server for
+Ruby/Rack applications in development and production.
+
+%description   -n gem-puma-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета puma.
 
 
 %prep
@@ -87,23 +106,29 @@ Development headers for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         -n %pkgname
-%doc README*
-%_bindir/%{pkgname}*
+%files         -n puma
+%doc README.md
+%_bindir/puma
+%_bindir/pumactl
 
-%files         doc
+%files         -n gem-puma-doc
+%doc README.md
 %ruby_gemdocdir
 
-%files         devel
+%files         -n gem-puma-devel
+%doc README.md
 %ruby_includedir/*
 
 
 %changelog
+* Fri Jun 25 2021 Pavel Skrylev <majioa@altlinux.org> 5.3.2-alt1
+- ^ 4.3.3 -> 5.3.2
+
 * Tue Mar 31 2020 Pavel Skrylev <majioa@altlinux.org> 4.3.3-alt1.1
 - ! spec tags
 

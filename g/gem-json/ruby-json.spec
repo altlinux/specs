@@ -1,10 +1,10 @@
-%define        pkgname json
+%define        gemname json
 
-Name:          gem-%pkgname
-Version:       2.3.1
-Release:       alt0.1
+Name:          gem-json
+Version:       2.5.1
+Release:       alt1
 Summary:       JSON parser and generator
-License:       MIT
+License:       Ruby
 Group:         Development/Ruby
 Url:           http://flori.github.io/json/
 Vcs:           https://github.com/flori/json.git
@@ -12,72 +12,131 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(test-unit) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
-Obsoletes:     ruby-json-utils ruby-json-pure
-Provides:      ruby-json-utils ruby-json-pure
+Obsoletes:     ruby-json < %EVR
+Obsoletes:     ruby-json-utils
+Provides:      ruby-json = %EVR
+Provides:      ruby-json-utils
+Provides:      gem(json) = 2.5.1
+
 
 %description
-This library can parse JSON texts and generate them from ruby data
-structures.
+This library can parse JSON texts and generate them from ruby data structures.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
-Group:         Development/Documentation
-BuildArch:     noarch
-
-%description   doc
-Documentation files for %gemname gem.
-
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
-
-
-%package       devel
-Summary:       Development files for %gemname gem
+%package       -n gem-json-pure
+Version:       2.5.1
+Release:       alt1
+Summary:       JSON parser and generator
 Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   devel
-Development files for %gemname gem.
+Obsoletes:     ruby-json-pure
+Provides:      ruby-json-pure
+Provides:      gem(json_pure) = 2.5.1
 
-%description   devel -l ru_RU.UTF8
-Файлы заголовков для самоцвета %gemname.
-
-
-%package       pure
-Summary:       JSON parser and generator
-Group:         Development/Documentation
-BuildArch:     noarch
-
-%description   pure
+%description   -n gem-json-pure
 This library can parse JSON texts and generate them from ruby data
 structures.
 
-The package is the compiled-less version of the %pkgname gem.
+The package is the compiled-less version of the json gem.
 
-%package       pure-doc
-Summary:       Documentation files for json_pure gem
+
+%package       -n gem-json-pure-doc
+Version:       2.5.1
+Release:       alt1
+Summary:       JSON parser and generator documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета json_pure
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   pure-doc
-Documentation files for json_pure gem
+Requires:      gem(json_pure) = 2.5.1
 
-%description   doc -l ru_RU.UTF8
+%description   -n gem-json-pure-doc
+JSON parser and generator documentation files.
+
+This library can parse JSON texts and generate them from ruby data
+structures.
+
+The package is the compiled-less version of the json gem.
+
+%description   -n gem-json-pure-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета json_pure.
+
+
+%package       -n gem-json-pure-devel
+Version:       2.5.1
+Release:       alt1
+Summary:       JSON parser and generator development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета json_pure
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(json_pure) = 2.5.1
+Requires:      gem(rake) >= 0 gem(rake) < 14
+Requires:      gem(test-unit) >= 0 gem(test-unit) < 4
+
+%description   -n gem-json-pure-devel
+JSON parser and generator development package.
+
+This library can parse JSON texts and generate them from ruby data
+structures.
+
+The package is the compiled-less version of the json gem.
+
+%description   -n gem-json-pure-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета json_pure.
+
+
+%package       -n gem-json-doc
+Version:       2.5.1
+Release:       alt1
+Summary:       JSON parser and generator documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета json
+Group:         Development/Documentation
+BuildArch:     noarch
+
+Requires:      gem(json) >= 2.3.0 gem(json) < 3
+
+%description   -n gem-json-doc
+JSON parser and generator documentation files.
+
+This library can parse JSON texts and generate them from ruby data structures.
+
+%description   -n gem-json-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета json.
+
+
+%package       -n gem-json-devel
+Version:       2.5.1
+Release:       alt1
+Summary:       JSON parser and generator development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета json
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(json) >= 2.3.0 gem(json) < 3
+Requires:      gem(rake) >= 0 gem(rake) < 14
+Requires:      gem(test-unit) >= 0 gem(test-unit) < 4
+
+%description   -n gem-json-devel
+JSON parser and generator development package.
+
+This library can parse JSON texts and generate them from ruby data structures.
+
+%description   -n gem-json-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета json.
 
 
 %prep
 %setup
 
 %build
-%ruby_build --use=%gemname --version-replace=%version --use=%{gemname}_pure --version-replace=%version
+%ruby_build
 
 %install
 %ruby_install
@@ -86,24 +145,36 @@ Documentation files for json_pure gem
 %ruby_test
 
 %files
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         doc
+%files         -n gem-json-pure
+%doc README.md
+%ruby_gemspecdir/json_pure-2.5.1.gemspec
+%ruby_gemslibdir/json_pure-2.5.1
+
+%files         -n gem-json-pure-doc
+%doc README.md
+%ruby_gemsdocdir/json_pure-2.5.1
+
+%files         -n gem-json-pure-devel
+%doc README.md
+
+%files         -n gem-json-doc
+%doc README.md
 %ruby_gemdocdir
 
-%files         devel
+%files         -n gem-json-devel
+%doc README.md
 %ruby_includedir/*
 
-%files         pure
-%ruby_gemspecdir/json_pure-%version.gemspec
-%ruby_gemslibdir/json_pure-%version
-
-%files         pure-doc
-%ruby_gemsdocdir/json_pure-%version
 
 %changelog
+* Thu Jun 24 2021 Pavel Skrylev <majioa@altlinux.org> 2.5.1-alt1
+- ^ 2.3.1 -> 2.5.1
+
 * Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 2.3.1-alt0.1
 - ^ 2.2.0 -> 2.3.1
 - ! spec tags and syntax

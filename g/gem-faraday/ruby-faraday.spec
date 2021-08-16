@@ -1,42 +1,59 @@
-%define        pkgname faraday
+%define        gemname faraday
 
-Name:          gem-%pkgname
-Version:       0.17.3
+Name:          gem-faraday
+Version:       1.4.2
 Release:       alt1
-Summary:       Simple, but flexible HTTP client library, with support for multiple backends
+Summary:       HTTP/REST API client library
 License:       MIT
 Group:         Development/Ruby
-Url:           https://github.com/lostisland/faraday
+Url:           https://lostisland.github.io/faraday
 Vcs:           https://github.com/lostisland/faraday.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Pavel Skrylev <majioa@altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-multipart-post
+BuildRequires: gem(faraday-em_http) >= 1.0 gem(faraday-em_http) < 2
+BuildRequires: gem(faraday-em_synchrony) >= 1.0 gem(faraday-em_synchrony) < 2
+BuildRequires: gem(faraday-excon) >= 1.1 gem(faraday-excon) < 2
+BuildRequires: gem(faraday-net_http) >= 1.0 gem(faraday-net_http) < 2
+BuildRequires: gem(faraday-net_http_persistent) >= 1.1 gem(faraday-net_http_persistent) < 2
+BuildRequires: gem(multipart-post) >= 1.2 gem(multipart-post) < 3
+BuildRequires: gem(ruby2_keywords) >= 0.0.4
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%gemname < %EVR
-Provides:      ruby-%gemname = %EVR
+%ruby_ignore_names docs
+Requires:      gem(faraday-em_http) >= 1.0 gem(faraday-em_http) < 2
+Requires:      gem(faraday-em_synchrony) >= 1.0 gem(faraday-em_synchrony) < 2
+Requires:      gem(faraday-excon) >= 1.1 gem(faraday-excon) < 2
+Requires:      gem(faraday-net_http) >= 1.0 gem(faraday-net_http) < 2
+Requires:      gem(faraday-net_http_persistent) >= 1.1 gem(faraday-net_http_persistent) < 2
+Requires:      gem(multipart-post) >= 1.2 gem(multipart-post) < 3
+Requires:      gem(ruby2_keywords) >= 0.0.4
+Provides:      gem(faraday) = 1.4.2
 
 %description
-Faraday is an HTTP client lib that provides a common interface over many
+Faraday is an HTTP client library that provides a common interface over many
 adapters (such as Net::HTTP) and embraces the concept of Rack middleware when
 processing the request/response cycle.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-faraday-doc
+Version:       1.4.2
+Release:       alt1
+Summary:       HTTP/REST API client library documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета faraday
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(faraday) = 1.4.2
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-faraday-doc
+HTTP/REST API client library documentation files.
+
+%description   -n gem-faraday-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета faraday.
 
 
 %prep
@@ -52,34 +69,15 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n gem-faraday-doc
+%doc README.md
 %ruby_gemdocdir
 
 
 %changelog
-* Wed Dec 02 2020 Pavel Skrylev <majioa@altlinux.org> 0.17.3-alt1
-- ^ 0.15.4 -> 0.17.3
-- ! spec tags
-
-* Fri Jun 21 2019 Pavel Skrylev <majioa@altlinux.org> 0.15.4-alt1
-- > Ruby Policy 2.0
-- ^ 0.15.2 -> 0.15.4
-
-* Mon Sep 03 2018 Andrey Cherepanov <cas@altlinux.org> 0.15.2-alt1.1
-- Rebuild for new Ruby autorequirements.
-
-* Mon Jul 30 2018 Mikhail Gordeev <obirvalger@altlinux.org> 0.15.2-alt1
-- new version 0.15.2
-
-* Sat Oct 21 2017 Mikhail Gordeev <obirvalger@altlinux.org> 0.13.1-alt1
-- new version 0.13.1
-
-* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 0.12.1-alt1.1
-- Rebuild with Ruby 2.4.1
-
-* Mon May 15 2017 Gordeev Mikhail <obirvalger@altlinux.org> 0.12.1-alt1
-- Initial build in Sisyphus
+* Sat Jun 05 2021 Pavel Skrylev <majioa@altlinux.org> 1.4.2-alt1
+- + packaged gem with Ruby Policy 2.0

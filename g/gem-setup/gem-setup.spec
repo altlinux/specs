@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.4
-Release:       alt8
+Release:       alt9
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -65,7 +65,7 @@ sed "/version/i \$:.unshift('/usr/src/RPM/BUILD/gem-setup-5.999.4/lib')" -i bin/
 
 %build
 export PATH=$PATH:$(pwd)/bin
-%__setup_rb build --use=setup --alias=setup-rb
+%__setup_rb build --use=setup --alias=setup-rb --version-replace=%version
 
 %install
 export PATH=$PATH:$(pwd)/bin
@@ -76,7 +76,7 @@ export PATH=$PATH:$(pwd)/bin
 %__setup_rb test
 
 %files
-%doc README* HISTORY* MANIFEST
+%doc README* HISTORY*
 %ruby_gemspec
 %ruby_gemlibdir
 
@@ -89,6 +89,10 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Sun Apr 25 2021 Pavel Skrylev <majioa@altlinux.org> 5.999.4-alt9
+- ! replaces req prefix ruby-gem with gem
+- ! other things
+
 * Tue Dec 29 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.4-alt8
 - ! ls-files of git to list proper files
 - * renamed compile to make action

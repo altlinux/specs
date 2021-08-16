@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       1.0.1
-Release:       alt1
+Release:       alt1.1
 Summary:       A gem that configures gettext for internationalization
 License:       MIT
 Group:         Development/Ruby
@@ -18,7 +18,8 @@ BuildRequires(pre): rpm-build-ruby
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Obsoletes:     ruby-%gemname < %EVR
 Provides:      ruby-%gemname = %EVR
-%gem_replace_version gettext >= 3.0.2
+%ruby_use_gem_dependency fast_gettext >= 1,fast_gettext < 3
+%ruby_use_gem_dependency gettext >= 3.0.2,gettext < 4
 
 %description
 This is a simple gem to set up i18n for Ruby projects (including Sinatra
@@ -65,6 +66,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Fri Jul 02 2021 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt1.1
+- ! ruby dep tags
+
 * Wed Dec 02 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt1
 - ^ 0.30 -> 1.0post
 
