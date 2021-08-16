@@ -7,7 +7,7 @@
 
 Name: qt5-webkit
 Version: 5.212.0
-Release: alt21
+Release: alt22
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -22,6 +22,8 @@ Patch3: qtwebkit-5.212.0-add-riscv64.patch
 Patch7: qtwebkit-5.212.0_pre20200309-icu-68.patch
 # ALT
 Patch10: alt-flags.patch
+# Elbrus
+Patch2000: qtwebkit-e2k.patch
 
 # Automatically added by buildreq on Mon Sep 30 2013 (-bi)
 # optimized out: elfutils fontconfig glib2-devel glibc-devel-static gstreamer-devel libGL-devel libX11-devel libXfixes-devel libfreetype-devel libgst-plugins libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-v8 libqt5-widgets libstdc++-devel libxml2-devel pkg-config python-base python-modules python-modules-compiler python-modules-encodings python-modules-xml python3 python3-base qt5-base-devel qt5-declarative-devel ruby ruby-stdlibs xorg-compositeproto-devel xorg-fixesproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
@@ -93,11 +95,16 @@ Requires: libqt5-core = %_qt5_version
 %prep
 %setup -n %qt_module-everywhere-src-%version
 %patch2 -p1
+%ifnarch %e2k
 %patch3 -p1
+%endif
 #
 %patch7 -p1
 #
 %patch10 -p1
+%ifarch %e2k
+%patch2000 -p1
+%endif
 syncqt.pl-qt5 Source -version %version
 
 # remove rpath
@@ -115,7 +122,13 @@ syncqt.pl-qt5 Source -version %version
 export LDFLAGS="${LDFLAGS:-} -Wl,--no-as-needed -latomic"
 %endif
 %remove_optflags '-g'
+%ifarch %e2k
+# because of this error on linking:
+# "relocation truncated to fit: R_E2K_32_ABS"
+%add_optflags -g0 -fpermissive
+%else
 %add_optflags -g1 -fpermissive
+%endif
 export LDFLAGS="$LDFLAGS -Wl,--no-keep-memory"
 %if_disabled bootstrap
 export QT_HASH_SEED=0
@@ -207,6 +220,9 @@ done
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Sat Aug 14 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 5.212.0-alt22
+- add elbrus support
+
 * Thu Jun 10 2021 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt21
 - fix to build with new icu
 
