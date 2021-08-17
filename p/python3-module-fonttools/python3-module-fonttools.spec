@@ -2,7 +2,7 @@
 
 Name: python3-module-fonttools
 Version: 4.26.1
-Release: alt1
+Release: alt2
 
 Summary: Converts OpenType and TrueType fonts to and from XML
 
@@ -43,6 +43,9 @@ BuildRequires: xorg-sdk
 
 # TODO: add skia-pathops
 %add_python3_req_skip pathops
+
+# optional
+%add_python3_req_skip sympy matplotlib mpl_toolkits.mplot3d
 
 
 %global desc \
@@ -87,6 +90,9 @@ rm -fv %buildroot%python3_sitelibdir/%modulename/pens/quartzPen.py
 
 
 %changelog
+* Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 4.26.1-alt2
+- add_python3_req_skip sympy matplotlib mpl_toolkits.mplot3d
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 4.26.1-alt1
 - new version 4.26.1 (with rpmrb script)
 
