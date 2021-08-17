@@ -1,11 +1,19 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           plexus-sec-dispatcher
 Version:        1.4
-Release:        alt4_29jpp8
+Release:        alt4_34jpp11
 Summary:        Plexus Security Dispatcher Component
 License:        ASL 2.0
 URL:            https://github.com/codehaus-plexus/plexus-sec-dispatcher
@@ -20,48 +28,48 @@ Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 Patch0:         %{name}-pom.patch
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.sonatype.plexus:plexus-cipher)
-BuildRequires:  mvn(org.sonatype.spice:spice-parent:pom:)
+BuildRequires:  %{?module_prefix}mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  %{?module_prefix}mvn(org.sonatype.plexus:plexus-cipher)
+%endif
 Source44: import.info
 
 %description
 Plexus Security Dispatcher Component
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
+%{?module_package}
+%{?javadoc_package}
 
 %prep
 %setup -q
-
 %patch0 -p1
 
 cp %{SOURCE1} .
 
+%pom_remove_parent
+%pom_xpath_inject "pom:dependency[pom:artifactId='junit']" "<scope>test</scope>"
+
 %mvn_file : plexus/%{name}
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
-%files -f .mfiles
-%doc --no-dereference LICENSE-2.0.txt
-
-%files javadoc -f .mfiles-javadoc
+%files -n %{?module_prefix}%{name} -f .mfiles
 %doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 1.4-alt4_34jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.4-alt4_29jpp8
 - fc update
 
