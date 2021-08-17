@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -9,34 +9,30 @@ BuildRequires: jpackage-11-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# unit tests do not finish or crash the JVM
-%bcond_with tests
-
-%global srcname commons-io
+%bcond_with bootstrap
 
 Name:           apache-commons-io
 Epoch:          1
 Version:        2.8.0
-Release:        alt1_3jpp11
+Release:        alt1_5jpp11
 Summary:        Utilities to assist with developing IO functionality
 License:        ASL 2.0
-
 URL:            https://commons.apache.org/io
-Source0:        https://archive.apache.org/dist/commons/io/source/%{srcname}-%{version}-src.tar.gz
-
-Patch0: 0001-Fix-Files.size-failing-when-symlink-target-is-non-ex.patch
-
 BuildArch:      noarch
 
+Source0:        https://archive.apache.org/dist/commons/io/source/commons-io-%{version}-src.tar.gz
+
+Patch0:         0001-Fix-Files.size-failing-when-symlink-target-is-non-ex.patch
+
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-
-%if %{with tests}
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.junit.jupiter:junit-jupiter)
 BuildRequires:  mvn(org.mockito:mockito-core)
-BuildRequires:  mvn(org.apache.maven.surefire:surefire-junit-platform)
 %endif
 Source44: import.info
 
@@ -45,57 +41,53 @@ Commons-IO contains utility classes, stream implementations,
 file filters, and endian classes. It is a library of utilities
 to assist with developing IO functionality.
 
-
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
-
+%{?javadoc_package}
 
 %prep
-%setup -q -n %{srcname}-%{version}-src
+%setup -q -n commons-io-%{version}-src
 %patch0 -p1
 sed -i 's/\r//' *.txt
 
-%if %{with tests}
-# com.google.jimfs:jimfs is not packaged for fedora
-%pom_remove_dep com.google.jimfs:jimfs
-rm src/test/java/org/apache/commons/io/input/ReversedLinesFileReaderTestParamFile.java
-
-# junit-pioneer is not packaged for fedora
-%pom_remove_dep :junit-pioneer
-rm src/test/java/org/apache/commons/io/input/XmlStreamReaderTest.java
-rm src/test/java/org/apache/commons/io/output/XmlStreamWriterTest.java
-%endif
+# Run tests in multiple reusable forks to improve test performance
+sed -i -e /reuseForks/d -e /forkCount/d pom.xml
+sed -i '/<argLine>/d' pom.xml
 
 %mvn_file  : commons-io %{name}
 %mvn_alias : org.apache.commons:
 
+%pom_remove_dep org.junit-pioneer:junit-pioneer
+%pom_remove_dep com.google.jimfs:jimfs
+
+# Test depends on com.google.jimfs:jimfs
+rm src/test/java/org/apache/commons/io/input/ReversedLinesFileReaderTestParamFile.java
+
+# This annotation is part of junitpioneer
+sed -i '/DefaultLocale/d' src/test/java/org/apache/commons/io/output/XmlStreamWriterTest.java
+sed -i '/DefaultLocale/d' src/test/java/org/apache/commons/io/input/XmlStreamReaderTest.java
 
 %build
-%if %{with tests}
-%mvn_build -- -Dmaven.test.skip.exec=true  -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dcommons.osgi.symbolicName=org.apache.commons.io
-%else
-%mvn_build -f -- -Dmaven.test.skip.exec=true  -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dcommons.osgi.symbolicName=org.apache.commons.io
-%endif
+# See "-DcommonsIoVersion" in maven-surefire for the tested version
 
+# The following tests fail on tmpfs/nfs:
+#  * PathUtilsDeleteDirectoryTest.testDeleteDirectory1FileSize0OverrideReadOnly:80->testDeleteDirectory1FileSize0:68 » FileSystem
+#  * PathUtilsDeleteFileTest.testDeleteReadOnlyFileDirectory1FileSize1:114 » FileSystem
+#  * PathUtilsDeleteFileTest.testSetReadOnlyFileDirectory1FileSize1:134 » FileSystem
+#  * PathUtilsDeleteTest.testDeleteDirectory1FileSize0OverrideReadonly:97->testDeleteDirectory1FileSize0:69 » FileSystem
+#  * PathUtilsDeleteTest.testDeleteDirectory1FileSize1OverrideReadOnly:145->testDeleteDirectory1FileSize1:117 » FileSystem
+
+%mvn_build -f -- -Dmaven.test.skip.exec=true  -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dcommons.osgi.symbolicName=org.apache.commons.io
 
 %install
 %mvn_install
-
 
 %files -f .mfiles
 %doc --no-dereference LICENSE.txt NOTICE.txt
 %doc RELEASE-NOTES.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt NOTICE.txt
-
-
 %changelog
+* Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 1:2.8.0-alt1_5jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1:2.8.0-alt1_3jpp11
 - new version
 
