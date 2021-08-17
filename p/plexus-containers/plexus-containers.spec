@@ -3,27 +3,37 @@ Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           plexus-containers
-Summary:        Containers for Plexus
 Version:        2.1.0
-Release:        alt1_2jpp8
+Release:        alt1_7jpp11
+Summary:        Containers for Plexus
 # Most of the files are either under ASL 2.0 or MIT
 # The following files are under xpp:
 # plexus-component-metadata/src/main/java/org/codehaus/plexus/metadata/merge/Driver.java
 # plexus-component-metadata/src/main/java/org/codehaus/plexus/metadata/merge/MXParser.java
 License:        ASL 2.0 and MIT and xpp
+URL:            https://github.com/codehaus-plexus/plexus-containers
+BuildArch:      noarch
 
-URL:            https://github.com/codehaus-plexus/%{name}
-Source0:        %{url}/archive/%{name}-%{version}.tar.gz
+Source0:        https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{version}.tar.gz
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 Source2:        LICENSE.MIT
 
-BuildArch:      noarch
-
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(com.google.guava:guava)
 BuildRequires:  mvn(com.thoughtworks.qdox:qdox)
 BuildRequires:  mvn(junit:junit)
@@ -39,10 +49,8 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.jdom:jdom2)
 BuildRequires:  mvn(org.ow2.asm:asm)
-
-Obsoletes:      plexus-containers-component-javadoc < 2.0.0-1
+%endif
 Source44: import.info
-
 
 %description
 The Plexus project seeks to create end-to-end developer tools for
@@ -63,7 +71,7 @@ Summary:        Component metadata from %{name}
 Group: Development/Java
 Summary:        Component API from %{name}
 
-%description component-annotations
+%description -n %{?module_prefix}%{name}-component-annotations
 %{summary}.
 
 %package container-default
@@ -73,13 +81,7 @@ Summary:        Default Container from %{name}
 %description container-default
 %{summary}.
 
-%package javadoc
-Group: Development/Java
-Summary:        API documentation for all plexus-containers packages
-BuildArch: noarch
-
-%description javadoc
-%{summary}.
+%{?javadoc_package}
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
@@ -121,12 +123,10 @@ rm plexus-component-metadata/src/test/java/org/codehaus/plexus/metadata/merge/Co
 rm plexus-component-metadata/src/test/java/org/codehaus/plexus/metadata/DefaultComponentDescriptorWriterTest.java
 
 %build
-%mvn_build -s -f
-
+%mvn_build -s -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
-
 
 # plexus-containers pom goes into main package
 %files -f .mfiles-plexus-containers
@@ -141,11 +141,10 @@ rm plexus-component-metadata/src/test/java/org/codehaus/plexus/metadata/DefaultC
 %files component-metadata -f .mfiles-plexus-component-metadata
 %doc --no-dereference LICENSE-2.0.txt LICENSE.MIT
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE-2.0.txt LICENSE.MIT
-
-
 %changelog
+* Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 0:2.1.0-alt1_7jpp11
+- update
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:2.1.0-alt1_2jpp8
 - new version
 
