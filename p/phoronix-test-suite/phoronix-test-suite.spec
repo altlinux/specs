@@ -2,7 +2,7 @@
 
 Name: phoronix-test-suite
 Version: 10.4.0
-Release: alt1
+Release: alt2
 Summary: An Automated, Open-Source Testing Framework
 Summary(ru_RU.UTF8): Автоматизированная среда тестирования с открытым исходным кодом
 License: GPLv3+
@@ -10,6 +10,8 @@ Group: Other
 
 URL: https://%name.com/
 Source0: %name-%version.tar.gz
+
+BuildArch: noarch
 
 BuildRequires: rpm-build-xdg
 BuildRequires: desktop-file-utils
@@ -26,6 +28,8 @@ Requires: php7-posix
 Requires: php7-curl
 Requires: php7-sockets
 Requires: hicolor-icon-theme
+
+%add_findreq_skiplist %_datadir/phoronix-test-suite/ob-cache/test-profiles/*
 
 %description
 The Phoronix Test Suite is the most comprehensive testing and benchmarking
@@ -57,6 +61,8 @@ desktop-file-validate %buildroot/%_desktopdir/%name-launcher.desktop
 appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/*.appdata.xml
 install -vdm755 %buildroot/%_unitdir
 mv %buildroot/%_prefix/%_unitdir/* %buildroot/%_unitdir
+# drop packaging scripts
+rm -rfv %buildroot%_datadir/phoronix-test-suite/deploy/
 
 %files
 %doc %_defaultdocdir/%name
@@ -74,6 +80,11 @@ mv %buildroot/%_prefix/%_unitdir/* %buildroot/%_unitdir
 %_unitdir/phoronix-result-server.service
 
 %changelog
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 10.4.0-alt2
+- NMU: build as noarch
+- NMU: skip requires from test-profiles subdir
+- NMU: drop /usr/share/phoronix-test-suite/deploy packing
+
 * Wed May 26 2021 Evgeny Sinelnikov <sin@altlinux.org> 10.4.0-alt1
 - Update to latest release
 
