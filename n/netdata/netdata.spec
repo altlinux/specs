@@ -14,7 +14,7 @@
 %define netdatauser netdata
 Name: netdata
 Version: 1.31.0
-Release: alt1
+Release: alt2
 
 Summary: Real-time performance monitoring, done right!
 
@@ -180,6 +180,8 @@ done
 
 # drop python2 version
 rm -rf %buildroot%_libexecdir/netdata/python.d/python_modules/pyyaml2/
+# drop bundled urllib3
+rm -rf %buildroot%_libexecdir/netdata/python.d/python_modules/urllib3/
 
 mkdir -p %buildroot%_sysconfdir/%name/
 install -m 644 -p system/netdata.conf %buildroot%_sysconfdir/%name/netdata.conf
@@ -291,6 +293,9 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 
 
 %changelog
+* Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 1.31.0-alt2
+- drop bundled urllib3
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.31.0-alt1
 - new version 1.31.0 (with rpmrb script)
 
