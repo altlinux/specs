@@ -1,25 +1,35 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:           jsoup
-Summary:        Java library for working with real-world HTML
-Version:        1.13.1
-Release:        alt1_4jpp11
-License:        MIT
+%bcond_with bootstrap
 
+Name:           jsoup
+Version:        1.13.1
+Release:        alt1_7jpp11
+Summary:        Java library for working with real-world HTML
+License:        MIT
 URL:            http://jsoup.org/
+BuildArch:      noarch
 
 # ./generate-tarball.sh
 Source0:        %{name}-%{version}.tar.gz
 # The sources contain non-free scraped web pages as test data
 Source1:        generate-tarball.sh
 
-BuildArch:      noarch
-
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+%endif
 Source44: import.info
 
 %description
@@ -41,14 +51,8 @@ jsoup is designed to deal with all varieties of HTML found in the wild;
 from pristine and validating, to invalid tag-soup;
 jsoup will create a sensible parse tree.
 
-
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
+%{?module_package}
+%{?javadoc_package}
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
@@ -68,14 +72,14 @@ API documentation for %{name}.
 %install
 %mvn_install
 
-%files -f .mfiles
+%files -n %{?module_prefix}%{name} -f .mfiles
 %doc README.md CHANGES
 %doc --no-dereference LICENSE
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE
-
 %changelog
+* Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 1.13.1-alt1_7jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.13.1-alt1_4jpp11
 - new version
 
