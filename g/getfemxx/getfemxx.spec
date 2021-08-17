@@ -6,7 +6,7 @@
 %define rname getfem
 Name: getfemxx
 Version: 5.3
-Release: alt5
+Release: alt6
 
 Group: Development/C++
 Summary: Generic and efficient C++ library for finite element methods
@@ -20,8 +20,8 @@ Source0: getfem-%version.tar
 Patch1: alt-ppc64le.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: boost-devel gcc-c++ gcc-fortran glibc-devel-static libnumpy-devel
-BuildRequires: python3-module-scipy-devel python3-module-mpi4py-devel
+BuildRequires: boost-devel gcc-c++ gcc-fortran glibc-devel-static python3-devel
+BuildRequires: libnumpy-py3-devel python3-module-scipy python3-module-mpi4py
 %ifnarch %{arm} aarch64 ppc64le
 #BuildRequires: scilab
 %endif
@@ -110,6 +110,10 @@ install -m 0644 \
 %python3_sitelibdir/*getfem*.so
 
 %changelog
+* Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 5.3-alt6
+- NMU: s/libnumpy-devel/libnumpy-py3-devel
+- NMU: use python3-module-scipy python3-module-mpi4py without -devel
+
 * Mon Jul 12 2021 Sergey V Turchin <zerg@altlinux.org> 5.3-alt5
 - fix to find python (closes: 40456)
 
