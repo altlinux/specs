@@ -2,7 +2,6 @@
 BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
 BuildRequires: waf
 # END SourceDeps(oneline)
-BuildRequires: libnumpy-devel
 BuildRequires: gcc-c++
 Group: System/Libraries
 %add_optflags %optflags_shared
@@ -17,7 +16,7 @@ Group: System/Libraries
 
 Name:       liblilv
 Version:    0.24.10
-Release:    alt1_3
+Release:    alt1_3.1
 Summary:    An LV2 Resource Description Framework Library
 
 License:    MIT
@@ -31,7 +30,7 @@ BuildRequires:  graphviz libgraphviz
 BuildRequires:  libsord-devel >= 0.14.0
 BuildRequires:  libsratom-devel >= 0.4.4
 BuildRequires:  lv2-devel >= 1.18.0
-BuildRequires:  python3
+BuildRequires:  python3 python3-module-numpy
 BuildRequires:  python3-devel
 BuildRequires:  swig
 BuildRequires:  libserd-devel >= 0.30.0
@@ -124,6 +123,9 @@ python3 waf test
 %{python3_sitelibdir_noarch}/__pycache__/*
 
 %changelog
+* Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 0.24.10-alt1_3.1
+- NMU: fix libnumpy-devel BR
+
 * Wed Jun 30 2021 Igor Vlasenko <viy@altlinux.org> 0.24.10-alt1_3
 - FTBFS quick fix (closes: #40334)
 
