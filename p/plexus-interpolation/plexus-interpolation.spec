@@ -1,23 +1,38 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           plexus-interpolation
 Version:        1.26
-Release:        alt1_2jpp8
+Release:        alt1_8jpp11
 Summary:        Plexus Interpolation API
+# Most of the code is ASL 2.0, a few source files are ASL 1.1 and some tests are MIT
 License:        ASL 2.0 and ASL 1.1 and MIT
-URL:            https://github.com/codehaus-plexus/%{name}
+URL:            https://github.com/codehaus-plexus/plexus-interpolation
 BuildArch:      noarch
 
-Source0:        %{url}/archive/%{name}-%{version}/%{name}-%{version}.tar.gz
+Source0:        https://github.com/codehaus-plexus/plexus-interpolation/archive/plexus-interpolation-%{version}.tar.gz
+
+Patch0:         0001-Use-PATH-env-variable-instead-of-JAVA_HOME.patch
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+%endif
 Source44: import.info
 
 %description
@@ -26,30 +41,27 @@ focused on providing a more modular, flexible interpolation framework for
 the expression language style commonly seen in Maven, Plexus, and other
 related projects.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
+%{?javadoc_package}
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}
+%setup -q -n plexus-interpolation-plexus-interpolation-%{version}
+%patch0 -p1
 %pom_remove_plugin :maven-release-plugin
+%pom_remove_plugin :maven-scm-publish-plugin
 
 %build
 %mvn_file : plexus/interpolation
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
 %files -f .mfiles
 
-%files javadoc -f .mfiles-javadoc
-
 %changelog
+* Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 0:1.26-alt1_8jpp11
+- update
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.26-alt1_2jpp8
 - new version
 
