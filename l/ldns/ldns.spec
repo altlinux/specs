@@ -6,7 +6,7 @@
 
 Name: ldns
 Version: 1.7.1
-Release: alt1.git.e99accb9
+Release: alt2.git.e99accb9
 License: BSD
 Url: http://www.nlnetlabs.nl/%name/
 Group: System/Libraries
@@ -160,6 +160,9 @@ install -pD -m644 libdns.vim %buildroot%_sysconfdir/vim/libldns
 %endif
 
 %changelog
+* Tue Aug 17 2021 Paul Wolneykien <manowar@altlinux.org> 1.7.1-alt2.git.e99accb9
+- Changelog update (Fixes: CVE-2017-1000231, CVE-2017-1000232).
+
 * Thu Feb 06 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.1-alt1.git.e99accb9
 - Updated to current upstream snapshot
 - Switched to python-3
