@@ -4,8 +4,8 @@
 %define soname 3
 
 Name: embree
-Version: 3.13.0
-Release: alt3
+Version: 3.13.1
+Release: alt1
 Summary: Collection of high-performance ray tracing kernels developed at Intel
 Group: Graphics
 License: Apache-2.0
@@ -117,6 +117,9 @@ rm -rf %buildroot%_docdir/%{name}%{libsuffix}
 %_man3dir/*
 
 %changelog
+* Tue Aug 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.13.1-alt1
+- Updated to upstream version 3.13.1.
+
 * Wed Jun 23 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.13.0-alt3
 - enabled build on ix86 and aarch64 architectures
 - added patch for Elbrus
