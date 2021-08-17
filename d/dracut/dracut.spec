@@ -12,7 +12,7 @@
 
 Name: dracut
 Version: 055
-Release: alt2
+Release: alt3
 
 Summary: Initramfs generator using udev
 Group: System/Base
@@ -73,13 +73,24 @@ BuildArch: noarch
 Requires: %name = %EVR
 Requires: iputils
 Requires: iproute
-Requires: NetworkManager
 Requires: curl
 AutoReq: noshell, noshebang
 
 %description network
 This package requires everything which is needed to build a generic
 all purpose initramfs with network support with dracut.
+
+%package network-manager
+Summary: Dracut modules to build a dracut initramfs with network manager
+Group: System/Base
+BuildArch: noarch
+Requires: %name = %EVR
+Requires: NetworkManager
+AutoReq: noshell, noshebang
+
+%description network-manager
+This package requires everything which is needed to build a generic
+all purpose initramfs with NetworkManager dracut module.
 
 %package caps
 Summary: Dracut modules to build a dracut initramfs which drops capabilities
@@ -404,7 +415,6 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 
 %files network
 %dracutlibdir/modules.d/01systemd-networkd
-%dracutlibdir/modules.d/35network-manager
 %dracutlibdir/modules.d/35network-legacy
 %dracutlibdir/modules.d/35network-wicked
 %dracutlibdir/modules.d/40network
@@ -423,6 +433,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/95znet
 %endif
 %dracutlibdir/modules.d/99uefi-lib
+
+%files network-manager
+%dracutlibdir/modules.d/35network-manager
 
 %files caps
 %dracutlibdir/modules.d/02caps
@@ -464,6 +477,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 #%dracutlibdir/modules.d/98integrity
 
 %changelog
+* Wed Aug 11 2021 Andrey Sokolov <keremet@altlinux.org> 055-alt3
+- Move network-manager module to separate package (closes 40705)
+
 * Fri Jul 30 2021 Andrey Sokolov <keremet@altlinux.org> 055-alt2
 - Move url-lib module to network package, add dependency on curl (closes 40591)
 
