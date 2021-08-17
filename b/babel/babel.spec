@@ -5,7 +5,7 @@
 
 Name: babel
 Version: 2.0.0
-Release: alt3.1
+Release: alt4
 Summary: Language tool for high-performance scientific computing community
 
 License: LGPLv2.1
@@ -30,7 +30,10 @@ BuildRequires(pre): rpm-build-compat rpm-build-python
 BuildRequires: gcc-fortran gcc-c++ %mpiimpl-devel libltdl7-devel
 BuildRequires: libxml2-devel libparsifal-devel
 BuildRequires: jpackage-utils gnu-getopt
-BuildRequires: python-devel libnumpy-devel /proc chrpath
+%if_with python
+BuildRequires: python-devel libnumpy-devel
+%endif
+BuildRequires: /proc chrpath
 %if "%version" == "2.0.0"
 # old version requires old java
 BuildRequires: jpackage-1.8-compat
@@ -383,6 +386,9 @@ done
 %_docdir/%name
 
 %changelog
+* Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt4
+- disable BR: libnumpy-devel when build without python
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 2.0.0-alt3.1
 - NMU: java BR: cleanup
 
