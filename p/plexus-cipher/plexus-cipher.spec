@@ -1,11 +1,19 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           plexus-cipher
 Version:        1.7
-Release:        alt3_21jpp11
+Release:        alt3_24jpp11
 Summary:        Plexus Cipher: encryption/decryption Component
 License:        ASL 2.0
 # project moved to GitHub and it looks like there is no official website anymore
@@ -19,26 +27,26 @@ BuildArch:      noarch
 Source0:        %{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(javax.enterprise:cdi-api)
 BuildRequires:  mvn(javax.inject:javax.inject)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.sonatype.plugins:sisu-maven-plugin)
-BuildRequires:  mvn(org.sonatype.spice:spice-parent:pom:)
+%endif
 Source44: import.info
 
 %description
 Plexus Cipher: encryption/decryption Component
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
+%{?javadoc_package}
 
 %prep
 %setup -q
+
+%pom_remove_parent
+%pom_xpath_inject "pom:dependency[pom:artifactId='junit']" "<scope>test</scope>"
 
 # replace %{version}-SNAPSHOT with %{version}
 %pom_xpath_replace pom:project/pom:version "<version>%{version}</version>"
@@ -50,29 +58,23 @@ API documentation for %{name}.
 %pom_add_dep javax.inject:javax.inject:1:provided
 %pom_add_dep javax.enterprise:cdi-api:1.0:provided
 
+%pom_xpath_set "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/*" 1.6
+
 %mvn_file : plexus/%{name}
 
-sed -i -e "s|1.5|1.8|" pom.xml
-# Fix javadoc generation on java 11
-%pom_xpath_inject pom:build/pom:plugins "<plugin>
-<artifactId>maven-javadoc-plugin</artifactId>
-<configuration><source>1.8</source></configuration>
-</plugin>" 
-
 %build
-# Tests depend on sisu-guice
 %mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 1.7-alt3_24jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.7-alt3_21jpp11
 - update
 
