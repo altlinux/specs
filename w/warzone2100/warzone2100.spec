@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: warzone2100
-Version: 4.1.1
+Version: 4.1.3
 Release: alt1
 
 Summary: Warzone 2100 Resurrection Project (RTS 3D game)
@@ -118,6 +118,9 @@ rm -rf %buildroot%_iconsdir/warzone2100.png
 %_datadir/warzone2100
 
 %changelog
+* Tue Aug 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.3-alt1
+- Updated to upstream version 4.1.3.
+
 * Wed Jul 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.1-alt1
 - Updated to upstream version 4.1.1.
 
