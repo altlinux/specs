@@ -1,8 +1,8 @@
 %define rname syntax-highlighting
 
 Name: kf5-%rname
-Version: 5.84.0
-Release: alt3
+Version: 5.85.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -75,6 +75,9 @@ KF5 library
 %_K5lib/libKF5SyntaxHighlighting.so.*
 
 %changelog
+* Mon Aug 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.85.0-alt1
+- new version
+
 * Fri Jul 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.84.0-alt3
 - fix build requires
 

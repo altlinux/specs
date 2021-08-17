@@ -1,7 +1,7 @@
 %define rname kservice
 
 Name: kf5-%rname
-Version: 5.84.0
+Version: 5.85.0
 Release: alt1
 %K5init altplace
 
@@ -89,6 +89,9 @@ sed -i '/num_to_alloc.*\/\//s|//\(.*\)|/* \1 */|' BUILD//src/lex.c
 %_K5srvtyp/*.desktop
 
 %changelog
+* Mon Aug 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.85.0-alt1
+- new version
+
 * Tue Jul 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.84.0-alt1
 - new version
 

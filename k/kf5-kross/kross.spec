@@ -1,7 +1,7 @@
 %define rname kross
 
 Name: kf5-%rname
-Version: 5.84.0
+Version: 5.85.0
 Release: alt1
 %K5init altplace
 
@@ -92,6 +92,9 @@ KF5 library
 %_K5lib/libKF5KrossUi.so.*
 
 %changelog
+* Mon Aug 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.85.0-alt1
+- new version
+
 * Tue Jul 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.84.0-alt1
 - new version
 

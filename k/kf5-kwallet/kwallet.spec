@@ -1,8 +1,8 @@
 %define rname kwallet
 
 Name: kf5-%rname
-Version: 5.84.0
-Release: alt3
+Version: 5.85.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -115,6 +115,9 @@ BUILD/bin/fdo_secrets_test
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Mon Aug 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.85.0-alt1
+- new version
+
 * Wed Jul 21 2021 Oleg Solovyov <mcpain@altlinux.org> 5.84.0-alt3
 - create wallet when user refuses to set password
 

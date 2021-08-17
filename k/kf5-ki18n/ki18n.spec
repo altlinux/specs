@@ -7,8 +7,8 @@
 %add_python3_path %_libdir/cmake
 
 Name: kf5-%rname
-Version: 5.84.0
-Release: alt2
+Version: 5.85.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -140,6 +140,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Mon Aug 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.85.0-alt1
+- new version
+
 * Wed Jul 28 2021 Sergey V Turchin <zerg@altlinux.org> 5.84.0-alt2
 - fix build requires
 

@@ -3,7 +3,7 @@
 %def_enable streebog
 
 Name: kf5-%rname
-Version: 5.84.0
+Version: 5.85.0
 Release: alt1
 %K5init altplace
 
@@ -26,6 +26,7 @@ BuildRequires: qt5-script-devel qt5-x11extras-devel qt5-tools-devel qt5-declarat
 BuildRequires: docbook-style-xsl extra-cmake-modules
 BuildRequires: libxslt-devel xsltproc zlib-devel
 BuildRequires: libacl-devel libattr-devel libkrb5-devel
+BuildRequires: libmount-devel libblkid-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel
 BuildRequires: kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-kdbusaddons-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kglobalaccel-devel
@@ -167,6 +168,9 @@ KF5 library
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Mon Aug 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.85.0-alt1
+- new version
+
 * Tue Jul 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.84.0-alt1
 - new version
 

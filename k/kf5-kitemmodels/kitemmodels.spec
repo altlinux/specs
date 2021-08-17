@@ -6,7 +6,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.84.0
+Version: 5.85.0
 Release: alt1
 %K5init altplace
 
@@ -23,7 +23,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5
 %if_enabled python
 BuildRequires(pre): python3-module-sip-devel python-module-sip-devel
-BuildRequires: python-module-PyQt5-devel
+BuildRequires: python3-module-PyQt5-devel
 %endif
 BuildRequires: extra-cmake-modules qt5-declarative-devel qt5-tools-devel
 
@@ -130,6 +130,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %_K5qml/org/kde/kitemmodels/
 
 %changelog
+* Mon Aug 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.85.0-alt1
+- new version
+
 * Tue Jul 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.84.0-alt1
 - new version
 

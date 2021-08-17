@@ -20,8 +20,8 @@ AutoProv: yes, nopython nopython3
 %add_python3_path %_datadir/ECM/find-modules
 
 Name: extra-cmake-modules
-Version: 5.84.0
-Release: alt3
+Version: 5.85.0
+Release: alt1
 
 Group: Development/Other
 Summary: Additional modules for CMake build system
@@ -60,7 +60,7 @@ Additional modules for CMake build system needed by KDE Frameworks.
 %patch1 -p1
 %patch2 -p1
 #%patch3 -p1
-%patch4 -p1
+#%patch4 -p1
 
 # can't do %%ifarch here becouse noarch build
 if [ "$(arch)" = "e2k" ]; then
@@ -88,6 +88,9 @@ fi
 %endif
 
 %changelog
+* Mon Aug 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.85.0-alt1
+- new version
+
 * Thu Aug 05 2021 Vitaly Lipatov <lav@altlinux.ru> 5.84.0-alt3
 - use python3 sphinx
 

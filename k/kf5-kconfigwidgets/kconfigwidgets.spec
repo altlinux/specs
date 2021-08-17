@@ -6,7 +6,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.84.0
+Version: 5.85.0
 Release: alt1
 %K5init altplace
 
@@ -23,9 +23,9 @@ Source: %rname-%version.tar
 #BuildRequires: docbook-style-xsl extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kguiaddons-devel kf5-ki18n-devel kf5-kwidgetsaddons-devel python-module-google qt5-base-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
 %if_enabled python
-BuildRequires(pre): python3-module-sip-devel python-module-sip-devel
-BuildRequires: python-module-kcodecs-devel python-module-kwidgetsaddons-devel python-module-kconfig-devel python-module-kauth-devel python-module-kcoreaddons-devel
-BuildRequires: python-module-PyQt5-devel
+BuildRequires(pre): python3-module-sip-devel
+BuildRequires: python3-module-kcodecs-devel python3-module-kwidgetsaddons-devel python3-module-kconfig-devel python3-module-kauth-devel python3-module-kcoreaddons-devel
+BuildRequires: python3-module-PyQt5-devel
 %endif
 BuildRequires: qt5-base-devel qt5-tools-devel
 BuildRequires: docbook-style-xsl extra-cmake-modules
@@ -133,10 +133,10 @@ mkdir -p %buildroot/%_K5data/kconfigwidgets/
 %_K5lib/libKF5ConfigWidgets.so.*
 
 %if_enabled python
-%files -n python-module-%rname
-%python_sitelibdir/PyKF5/*.so
-%files -n python-module-%rname-devel
-%_datadir/sip/PyKF5/KConfigWidgets/
+#%files -n python-module-%rname
+#%python_sitelibdir/PyKF5/*.so
+#%files -n python-module-%rname-devel
+#%_datadir/sip/PyKF5/KConfigWidgets/
 %files -n python3-module-%rname
 %python3_sitelibdir/PyKF5/*.so
 %files -n python3-module-%rname-devel
@@ -144,6 +144,9 @@ mkdir -p %buildroot/%_K5data/kconfigwidgets/
 %endif
 
 %changelog
+* Mon Aug 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.85.0-alt1
+- new version
+
 * Tue Jul 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.84.0-alt1
 - new version
 

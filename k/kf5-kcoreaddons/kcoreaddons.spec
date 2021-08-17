@@ -6,7 +6,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.84.0
+Version: 5.85.0
 Release: alt1
 %K5init altplace
 
@@ -25,7 +25,7 @@ Patch2: alt-kreslimit-integration.patch
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 %if_enabled python
 BuildRequires(pre): python3-module-sip-devel python-module-sip-devel
-BuildRequires: python-module-PyQt5-devel
+BuildRequires: python3-module-PyQt5-devel
 %endif
 BuildRequires: gcc-c++ extra-cmake-modules qt5-base-devel qt5-tools-devel
 BuildRequires: shared-mime-info
@@ -165,6 +165,9 @@ Sip files for python3-module-%rname
 %endif
 
 %changelog
+* Mon Aug 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.85.0-alt1
+- new version
+
 * Tue Jul 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.84.0-alt1
 - new version
 
