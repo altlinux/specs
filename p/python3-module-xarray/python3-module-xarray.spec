@@ -3,7 +3,7 @@
 
 Name: python3-module-xarray
 Version: 0.18.2
-Release: alt1
+Release: alt2
 
 License: MIT
 Group: Development/Python
@@ -44,6 +44,7 @@ or file-based execution of Python code inside Spyder.
 
 %install
 %python3_install
+%python3_prune
 
 %if_with test
 %check
@@ -54,6 +55,9 @@ or file-based execution of Python code inside Spyder.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 0.18.2-alt2
+- don't pack tests
+
 * Tue Jun 08 2021 Vitaly Lipatov <lav@altlinux.ru> 0.18.2-alt1
 - new version 0.18.2 (with rpmrb script)
 
