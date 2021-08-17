@@ -1,19 +1,22 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_disable static
+%def_disable python
 %define sname keybinder
 
 Name: libkeybinder
 Version: 0.3.0
-Release: alt6.git20120617
+Release: alt7.git20120617
 Summary: keybinder is a library for registering global keyboard shortcuts
 License: GPLv2
 Group: System/Libraries
 Url: https://github.com/engla/keybinder
 
-BuildRequires: libgtk+2-devel xorg-server-common python-devel
-BuildRequires: python-module-pygtk-devel libXext-devel
-BuildRequires: gobject-introspection-devel
+BuildRequires: libgtk+2-devel xorg-server-common libXext-devel gobject-introspection-devel
+BuildRequires: python-devel
+%if_enabled python
+BuildRequires: python-module-pygtk-devel
+%endif
 BuildRequires: gtk-doc
 
 # https://github.com/engla/keybinder.git
@@ -82,6 +85,7 @@ Python binding to %name
 	--disable-gtk-doc \
 	--with-html-dir=%_docdir \
 	--disable-lua \
+	%{subst_enable python} \
 	%nil
 
 %make_build V=1
@@ -103,8 +107,10 @@ Python binding to %name
 %_libdir/lib%name.a
 %endif
 
+%if_enabled python
 %files -n python-module-%sname
 %python_sitelibdir/%sname
+%endif
 
 %files gir
 %_typelibdir/*
@@ -113,6 +119,9 @@ Python binding to %name
 %_girdir/*
 
 %changelog
+* Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 0.3.0-alt7.git20120617
+- NMU: build without python2 module (add def_disable python)
+
 * Tue Aug 20 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.0-alt6.git20120617
 - Disabled generation of documentation.
 
