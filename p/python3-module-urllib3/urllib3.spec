@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.26.6
-Release: alt2
+Release: alt3
 
 Epoch: 2
 
@@ -85,6 +85,9 @@ ln -s ../objects.inv docs/
 %install
 %python3_install
 
+# drop deprecated ntlm support
+rm -fv %buildroot%python3_sitelibdir/%oname/contrib/ntlmpool.py
+
 %if_with docs
 export PYTHONPATH=%buildroot%python3_sitelibdir
 pushd docs
@@ -112,6 +115,9 @@ py.test-3
 %endif
 
 %changelog
+* Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 2:1.26.6-alt3
+- drop deprecated ntlm support
+
 * Sun Aug 01 2021 Vitaly Lipatov <lav@altlinux.ru> 2:1.26.6-alt2
 - drop circle requires python3-module-ndg-httpsclient
 
