@@ -1,6 +1,6 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
-Version: 2.9.24
+Version: 2.9.25
 Release: alt1
 
 Group:   System/Configuration/Other
@@ -47,6 +47,7 @@ Requires: ca-certificates >= 2015.10.29
 %py3_provides ansible.module_utils.six.moves.urllib.request
 
 %filter_from_requires /^eepm-yum$/d
+%filter_from_requires /pip$/d
 
 %description
 Ansible is a radically simple model-driven configuration management,
@@ -88,6 +89,10 @@ find %buildroot%python3_sitelibdir/ansible_test/_data -name \*.ps1 -delete
 %doc README.rst changelogs/CHANGELOG-v*.rst CODING_GUIDELINES.md MODULE_GUIDELINES.md
 
 %changelog
+* Tue Aug 17 2021 Andrey Cherepanov <cas@altlinux.org> 2.9.25-alt1
+- New version.
+- Remove pip requirement (ALT #40735).
+
 * Tue Jul 20 2021 Andrey Cherepanov <cas@altlinux.org> 2.9.24-alt1
 - New version.
 
