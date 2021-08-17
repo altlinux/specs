@@ -1,5 +1,5 @@
 Name: startup-rescue
-Version: 0.37
+Version: 0.38
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
@@ -43,7 +43,7 @@ install -pm755 rescue-shell %buildroot%_bindir/
 install -pm755 fixmbr %buildroot/sbin/
 %endif
 install -pm755 find-fstab %buildroot/sbin/
-install -pm755 mount-fstab mount-system %buildroot/sbin/
+install -pm755 mount-fstab mount-system unmount-system %buildroot/sbin/
 install -pm644 inittab.rescue mdadm-ro.conf %buildroot/etc/
 install -pm755 rc.sysinit.rescue %buildroot/etc/rc.d/
 install -pm755 sysreport.init %buildroot%_initdir/sysreport
@@ -65,6 +65,11 @@ install -pm755 rescue-remote.init %buildroot%_initdir/rescue-remote
 %_initdir/rescue-remote
 
 %changelog
+* Tue Aug 17 2021 Anton Midyukov <antohami@altlinux.org> 0.38-alt1
+- mount-system: do not mount tmpfs to /mnt
+- mount-fstab: ignore noauto option for /boot and /boot/efi mountpoints
+- unmount-system: initial script for unmounting mountpoints /mnt/system*
+
 * Wed Jul 07 2021 Anton Midyukov <antohami@altlinux.org> 0.37-alt1
 - Use standalone versions of systemd utilities.
 
