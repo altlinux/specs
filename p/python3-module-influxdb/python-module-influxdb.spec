@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 5.2.2
-Release: alt3
+Release: alt4
 
 Summary: Python client for InfluxDB
 
@@ -15,6 +15,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+
+%add_python3_req_skip pandas
 
 %description
 InfluxDB-Python is a client for interacting with InfluxDB.
@@ -45,6 +47,9 @@ This package contains tests for %oname.
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 5.2.2-alt4
+- make pandas requirement optional
+
 * Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 5.2.2-alt3
 - Rename package, spec cleanup.
 
