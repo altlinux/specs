@@ -3,12 +3,20 @@ Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           plexus-classworlds
 Version:        2.6.0
-Release:        alt1_2jpp8
+Release:        alt1_8jpp11
 Summary:        Plexus Classworlds Classloader Framework
 License:        ASL 2.0 and Plexus
 URL:            https://github.com/codehaus-plexus/plexus-classworlds
@@ -17,17 +25,13 @@ BuildArch:      noarch
 Source0:        https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
-
-# test deps missed by builddep
-BuildRequires:  mvn(org.apache.ant:ant)
-BuildRequires:  mvn(commons-logging:commons-logging)
-BuildRequires:  mvn(xml-apis:xml-apis)
+%endif
 Source44: import.info
-
 
 %description
 Classworlds is a framework for container developers
@@ -39,32 +43,33 @@ loading of components or otherwise represent a 'container'
 can benefit from the classloading control provided by
 classworlds.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
+%{?javadoc_package}
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 %mvn_file : %{name} plexus/classworlds
 %mvn_alias : classworlds:classworlds
 
+%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :maven-dependency-plugin
+
+# These tests depend on artifacts that are not packaged
+sed -i /testConfigure_Valid/s/./@org.junit.Ignore/ $(find -name ConfiguratorTest.java)
+sed -i /testConfigure_Optionally_Existent/s/./@org.junit.Ignore/ $(find -name ConfiguratorTest.java)
+
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt LICENSE-2.0.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt LICENSE-2.0.txt
+%doc --no-dereference LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 0:2.6.0-alt1_8jpp11
+- update
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt1_2jpp8
 - new version
 
