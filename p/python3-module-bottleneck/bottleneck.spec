@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.2.1
-Release: alt4
+Release: alt5
 
 Summary: Fast NumPy array functions written in Cython
 License: BSD
@@ -18,7 +18,6 @@ BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-devel
 BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-numpy-testing
 
 %description
 Bottleneck is a collection of fast NumPy array functions written in
@@ -58,6 +57,9 @@ ln -s ../objects.inv doc/source/
 %python3_sitelibdir/*
 
 %changelog
+* Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt5
+- drop BR: python3-module-numpy-testing
+
 * Tue Nov 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt4
 - drop BR: libnumpy-devel
 
