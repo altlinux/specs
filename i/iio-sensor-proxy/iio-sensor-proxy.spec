@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: iio-sensor-proxy
-Version: %ver_major.1
+Version: %ver_major.3
 Release: alt1
 
 Summary: IIO sensors to input device proxy
@@ -25,7 +25,7 @@ Patch: %name-%version-%release.patch
 
 %define meson_ver 0.54
 %define glib_ver 2.56
-%define gudev_ver 232
+%define gudev_ver 237
 
 BuildRequires(pre): meson >= %meson_ver
 BuildRequires: libgio-devel >= %glib_ver pkgconfig(systemd)
@@ -92,6 +92,9 @@ dbus-run-session %__meson_test -t 2
 
 
 %changelog
+* Tue Aug 17 2021 Yuri N. Sedunov <aris@altlinux.org> 3.3-alt1
+- 3.3
+
 * Tue Jun 15 2021 Yuri N. Sedunov <aris@altlinux.org> 3.1-alt1
 - 3.1 (ported to Meson build system)
 - fixed License tag
