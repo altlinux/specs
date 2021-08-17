@@ -2,9 +2,9 @@
 
 %def_disable check
 
-Name: python3-module-%oname
+Name: python3-module-tqdm
 Version: 4.62.0
-Release: alt1
+Release: alt2
 
 Summary: A fast, extensible progress bar for Python and CLI
 
@@ -24,7 +24,8 @@ BuildRequires(pre): rpm-build-python3 rpm-build-intro
 BuildRequires: python3-module-setuptools_scm python3-module-toml
 BuildRequires: python3-module-nose python3-module-flake8 python3-module-coverage
 
-%py3_provides %oname
+# make optional
+%add_python3_req_skip dask.callbacks rich.progress
 
 %description
 tqdm means "progress" in Arabic (taqadum) and an abbreviation
@@ -53,6 +54,9 @@ py.test3
 %python3_sitelibdir/*
 
 %changelog
+* Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 4.62.0-alt2
+- make dask, rich module requirement optional
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 4.62.0-alt1
 - new version 4.62.0 (with rpmrb script)
 
