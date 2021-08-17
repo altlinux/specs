@@ -1,6 +1,6 @@
 Name: PySolFC
 Version: 2.12.0
-Release: alt1
+Release: alt2
 
 Summary: A collection of solitare card games
 
@@ -12,8 +12,6 @@ Source0: http://downloads.sourceforge.net/pysolfc/%name-%version.tar.bz2
 Source1: PySol.desktop
 Source2: pysol-start-script
 
-Patch0: pysolfc-setup.py-noglade.patch
-Patch1: PySolFC-pillow.patch
 Patch2: 06d2fd5b90c29cbfe9b938676cc85c514cbbcca1.patch
 
 Provides: pysol = 5.%version
@@ -25,6 +23,9 @@ BuildArch: noarch
 
 # we will use kivy
 %add_python3_req_skip gtk
+
+# never use jnius
+%add_python3_req_skip jnius_never_use
 
 %description
 %name is a collection of more than 1000 solitaire card games. It is a fork
@@ -42,11 +43,11 @@ Supplemental python module for %name solitaire game collection
 
 %prep
 %setup
-#patch0 -p0
-#patch1 -p1
 %patch2 -p1
 # Set correct python2 executable in shebang
 subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
+# force skip jinus if it is installed
+subst 's|jnius|jnius_never_use|' pysollib/init.py
 
 %build
 %python3_build
@@ -81,6 +82,10 @@ rm -rf %buildroot%python3_sitelibdir/pysollib/pysolgtk
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 2.12.0-alt2
+- NMU: ignore pyjnius (used as sign we are running on Android)
+- drop old python2 patches
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 2.12.0-alt1
 - NMU: new version 2.12.0 (with rpmrb script)
 
