@@ -1,19 +1,21 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global		upstream_name    scram
-%global		upstream_version 1.0.0-beta.2
+%global		upstream_version 2.1
 
 Name:		ongres-%upstream_name
-Version:	%(echo %upstream_version | sed 's/-/_/g')
-Release:	alt1_7jpp8
+Version:	%(echo %upstream_version | sed 's/-/~/g')
+Release:	alt1_3jpp11
 Summary:	Salted Challenge Response Authentication Mechanism (SCRAM) - Java Implementation
 License:	BSD
-URL:		https://github.com/ongres/%upstream_name
-Source0:	https://github.com/ongres/%upstream_name/archive/%upstream_version/%upstream_name-%upstream_version.tar.gz
+URL:           https://github.com/ongres/%upstream_name
+Source0:       https://github.com/ongres/%upstream_name/archive/%upstream_version/%upstream_name-%upstream_version.tar.gz
 BuildRequires:	maven-local
+BuildRequires:  ongres-stringprep
+BuildRequires:  junit
 BuildArch:	noarch
 Source44: import.info
 
@@ -54,8 +56,12 @@ find \( -name '*.jar' -o -name '*.class' \) -delete
 %pom_remove_plugin :maven-dependency-plugin client
 %pom_remove_plugin -r :maven-javadoc-plugin
 
+# Retired in Fedora; not required for build
+%pom_remove_dep com.google.code.findbugs:annotations
+sed -i 's/.*SuppressFBWarnings.*//' common/src/main/java/com/ongres/scram/common/message/ServerFinalMessage.java
+
 %build
-%mvn_build -s
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -73,6 +79,9 @@ find \( -name '*.jar' -o -name '*.class' \) -delete
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 2.1-alt1_3jpp11
+- new version
+
 * Fri Jul 19 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0_beta.2-alt1_7jpp8
 - fc update & java 8 build
 
