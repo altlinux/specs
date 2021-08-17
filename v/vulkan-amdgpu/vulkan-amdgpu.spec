@@ -13,7 +13,7 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2021.Q2.5
+Version: 2021.Q3.4
 Release: alt2
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
@@ -61,6 +61,9 @@ pushd %_builddir/spvgen
 popd
 
 %build
+# FIXME! should be fixed in next build
+%add_optflags -Wno-error=return-type
+
 # build amdvlk.so
 pushd %_builddir/xgl
 export GCC_VERSION=9 \
@@ -93,6 +96,18 @@ install -p -m644 %SOURCE6 %buildroot%_vkdir/amd_icd.json
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Mon Aug 16 2021 L.A. Kostis <lakostis@altlinux.ru> 2021.Q3.4-alt2
+- add llvm build workaround (-Wno-error=return-type).
+
+* Mon Aug 16 2021 L.A. Kostis <lakostis@altlinux.ru> 2021.Q3.4-alt1
+- 2021-8-11 update:
+  + icd: bump vulkan version to 1.2.185.
+  + llvm: Updated to d3ad9a01687d
+  + spvgen: Updated to 051b6997c7c3
+  + llpc: Updated to 9a3ae083e740
+  + pal: Updated to f2be9e29a870
+  + xgl: Updated to ec89b84f0b8a
+
 * Mon Jun 14 2021 L.A. Kostis <lakostis@altlinux.ru> 2021.Q2.5-alt2
 - .spec: update cmake macros
 - update spvgen -alt-shared patch.
