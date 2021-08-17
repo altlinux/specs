@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Term-UI
 Name: perl-%dist
-Version: 0.46
+Version: 0.50
 Release: alt1
 
 Summary: User interfaces via Term::ReadLine made easy
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Term-UI-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BI/BINGOS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ as simple yes/no questions via a Term::ReadLine interface using a
 template. It can also parse options per unix style.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +35,9 @@ template. It can also parse options per unix style.
 %perl_vendor_privlib/Term
 
 %changelog
+* Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 0.50-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.46-alt1
 - automated CPAN update
 
