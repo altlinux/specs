@@ -3,26 +3,38 @@ Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           apache-commons-codec
 Version:        1.15
-Release:        alt1_2jpp11
+Release:        alt1_4jpp11
 Summary:        Implementations of common encoders and decoders
 License:        ASL 2.0
-URL:            http://commons.apache.org/codec/
+URL:            https://commons.apache.org/codec/
 BuildArch:      noarch
 
-Source0:        http://archive.apache.org/dist/commons/codec/source/commons-codec-%{version}-src.tar.gz
+Source0:        https://archive.apache.org/dist/commons/codec/source/commons-codec-%{version}-src.tar.gz
 # Data in DoubleMetaphoneTest.java originally has an inadmissible license.
 # The author gives MIT in e-mail communication.
 Source1:        aspell-mail.txt
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+%endif
 Source44: import.info
 
 %description
@@ -55,6 +67,9 @@ export MAVEN_OPTS="-Xmx1024m"
 %doc RELEASE-NOTES*
 
 %changelog
+* Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 0:1.15-alt1_4jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:1.15-alt1_2jpp11
 - new version
 
