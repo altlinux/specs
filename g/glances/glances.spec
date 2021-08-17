@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: glances
-Version: 3.2.0
+Version: 3.2.3
 Release: alt1
 
 Summary: CLI curses based monitoring tool
@@ -52,7 +52,7 @@ Requires: python3-module-%name = %EVR
 %add_python3_req_skip wifi
 %add_python3_req_skip zeroconf
 
-%{?!_without_check:%{?!_disable_check:BuildRequires: /proc python3-module-psutil}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: /proc python3-module-psutil python3-module-defusedxml }}
 
 
 %description
@@ -93,6 +93,9 @@ Glances uses the PsUtil library to get information from your system.
 
 
 %changelog
+* Tue Aug 17 2021 Egor Ignatov <egori@altlinux.org> 3.2.3-alt1
+- new version
+
 * Fri Jul 09 2021 Egor Ignatov <egori@altlinux.org> 3.2.0-alt1
 - new version
 
