@@ -1,27 +1,43 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:             jansi
-Version:          2.1.1
-Release:          alt1_3jpp11
-Summary:          Generate and interpret ANSI escape sequences in Java
+%bcond_with bootstrap
 
+Name:             jansi
+Version:          2.3.3
+Release:          alt1_2jpp11
+Summary:          Generate and interpret ANSI escape sequences in Java
 License:          ASL 2.0
 URL:              http://fusesource.github.io/jansi/
-Source0:          https://github.com/fusesource/jansi/archive/jansi-%{version}.tar.gz
+
+# ./generate-tarball.sh
+Source0:          %{name}-%{version}.tar.gz
+# Remove bundled binaries which cannot be easily verified for licensing
+Source1:          generate-tarball.sh
+
 # Change the location of the native artifact to where Fedora wants it
 Patch0:           %{name}-jni.patch
 
 BuildRequires:    gcc
 BuildRequires:    maven-local
+%if %{with bootstrap}
+BuildRequires:    javapackages-bootstrap
+%else
 BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:    mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:    mvn(org.apache.maven.surefire:surefire-junit-platform)
 BuildRequires:    mvn(org.fusesource:fusesource-pom:pom:)
 BuildRequires:    mvn(org.junit.jupiter:junit-jupiter-engine)
+%endif
 Source44: import.info
 
 %description
@@ -56,8 +72,7 @@ This package contains the API documentation for %{name}.
 %pom_remove_dep :picocli-codegen
 
 # Build for JDK 1.8 at a minimum
-%pom_xpath_set "//pom:plugin[pom:artifactId='maven-compiler-plugin']//pom:source" 1.8
-%pom_xpath_set "//pom:plugin[pom:artifactId='maven-compiler-plugin']//pom:target" 1.8
+%pom_xpath_set "//pom:properties/pom:jdkTarget" 1.8
 
 # Remove prebuilt shared objects
 rm -fr src/main/resources/org/fusesource/jansi/internal
@@ -108,6 +123,9 @@ ln -s ../../../lib/java/%name/%{name}.jar %{buildroot}%{_javadir}/%name/%{name}.
 %doc --no-dereference license.txt
 
 %changelog
+* Mon Aug 16 2021 Igor Vlasenko <viy@altlinux.org> 0:2.3.3-alt1_2jpp11
+- new version
+
 * Sun Jun 13 2021 Igor Vlasenko <viy@altlinux.org> 0:2.1.1-alt1_3jpp11
 - new version
 
