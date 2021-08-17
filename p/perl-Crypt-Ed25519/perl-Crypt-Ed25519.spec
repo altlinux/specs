@@ -3,8 +3,8 @@
 
 
 Name: perl-%dist
-Version: 1.04
-Release: alt1.2
+Version: 1.05
+Release: alt1
 
 Summary: bare-bones Ed25519 public key signing/verification system
 License: %perl_license
@@ -50,6 +50,9 @@ http://ed25519.cr.yp.to/index.html.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 1.05-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1.2
 - rebuild with new perl 5.28.1
 
