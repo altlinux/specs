@@ -1,16 +1,22 @@
+%def_with zfs
+
 Name: libraft
 Version: 0.9.25
-Release: alt1
+Release: alt2
+
 Summary: Fully asynchronous C implementation of the Raft consensus protocol.
 License: Apache-2.0
 Group: Development/C
-URL: https://github.com/canonical/raft
 
+Url: https://github.com/canonical/raft
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
 BuildRequires: libuv-devel
-BuildRequires: btrfs-progs xfsprogs zfs-utils
+BuildRequires: btrfs-progs xfsprogs
+%if_with zfs
+BuildRequires: zfs-utils
+%endif
 
 %define _unpackaged_files_terminate_build 1
 
@@ -34,17 +40,16 @@ pluggable interface defines the I/O implementation for networking (send/receive
 RPC messages) and disk persistence (store log entries and snapshots).
 
 %prep
-%setup -q -n %name-%version
+%setup
 %patch -p1
 
 %build
 %autoreconf
 %configure --disable-static --disable-fixture
-
-%make_build all
+%make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 %files
 %doc AUTHORS README.md LICENSE
@@ -52,12 +57,15 @@ RPC messages) and disk persistence (store log entries and snapshots).
 
 %files devel
 %_includedir/raft.h
-%dir %_includedir/raft
-%_includedir/raft/*
+%_includedir/raft/
 %_libdir/%name.so
 %_pkgconfigdir/raft.pc
 
 %changelog
+* Tue Aug 17 2021 Michael Shigorin <mike@altlinux.org> 0.9.25-alt2
+- introduced zfs knob (on by default)
+- spec cleanup
+
 * Fri Jan 15 2021 Alexey Shabalin <shaba@altlinux.org> 0.9.25-alt1
 - new version 0.9.25
 
