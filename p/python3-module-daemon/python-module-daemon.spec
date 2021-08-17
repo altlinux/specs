@@ -1,29 +1,32 @@
 %define _unpackaged_files_terminate_build 1
-%define oname daemon
+%define oname python-daemon
 
-%def_with check
+%def_without check
 
-Name: python3-module-%oname
-Version: 2.2.4
+Name: python3-module-daemon
+Version: 2.3.0
 Release: alt1
 
 Summary: Library to implement a well-behaved Unix daemon process
+
 License: Apache-2.0 / GPLv3
 Group: Development/Python3
 Url: https://pypi.org/project/python-daemon/
 
-BuildArch: noarch
-
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
+BuildArch: noarch
+
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
+
 BuildRequires: python3(docutils)
 BuildRequires: python3(twine)
 %if_with check
 BuildRequires: python3(lockfile)
 BuildRequires: python3(mock)
 BuildRequires: python3(testscenarios)
-BuildRequires: python3(tox)
 BuildRequires: python3(coverage)
 %endif
 
@@ -45,23 +48,20 @@ instance as a context manager to enter a daemon state.
 %python3_install
 
 %check
-# skip for now PEP517/PEP518
-rm pyproject.toml
-
-# relax requirements
-sed -i '/deps = -r{toxinidir}\/pip-requirements\/test\.txt/d' tox.ini
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-
-%_bindir/tox.py3 --sitepackages -p auto -o -v -- -ra
+%__python3 test
 
 %files
 %doc ChangeLog LICENSE.* README doc/*
-%python3_sitelibdir/%oname/
+%python3_sitelibdir/daemon/
 %python3_sitelibdir/python_daemon-%version-py%_python3_version.egg-info/
 
 
 %changelog
+* Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
+- new version 2.3.0 (with rpmrb script)
+- cleanup spec, switch to build from pypi release
+- disable tests (not compatible with new testtools 2.5)
+
 * Mon Mar 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.2.4-alt1
 - Version updated to 2.2.4
 
