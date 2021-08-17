@@ -7,7 +7,7 @@
 
 Name: recoll
 Version: 1.31.0
-Release: alt3
+Release: alt4
 
 Summary: A personal full text search package
 License: %gpl2plus
@@ -36,7 +36,7 @@ BuildRequires: libchm-devel
 BuildRequires: libxslt-devel
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: rpm-build-python
+BuildRequires: rpm-build-python3
 
 %if_enabled qtgui
 BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools-devel libXt-devel xorg-cf-files
@@ -76,7 +76,7 @@ BuildArch: noarch
 Requires: %name-extras = %version
 Requires: perl-Image-ExifTool
 Requires: antiword unrtf wv
-Requires: python-module-pychm python3-module-lxml
+Requires: python3-module-pychm python3-module-lxml
 Requires: aspell aspell-ru-rk
 Requires: xpdf-utils ghostscript-utils
 
@@ -86,7 +86,7 @@ that might be of use with Recoll.
 
 %package -n python3-module-%name
 Summary: Python bindings for Recoll
-Group: Development/Python
+Group: Development/Python3
 Obsoletes: python-module-%name
 
 %description -n python3-module-%name
@@ -160,6 +160,9 @@ sed -i "s|#!/usr/bin/env python3|#!%__python3|" \
 %python3_sitelibdir/recollchm/
 
 %changelog
+* Tue Aug 17 2021 Grigory Ustinov <grenka@altlinux.org> 1.31.0-alt4
+- fixed requires (closes: #40741)
+
 * Fri Apr 30 2021 Michael Shigorin <mike@altlinux.org> 1.31.0-alt3
 - more python and translations tweaking (thx ldv@, iv@, andy@)
 
