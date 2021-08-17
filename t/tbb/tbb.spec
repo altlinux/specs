@@ -2,7 +2,7 @@
 
 Name: tbb
 Version: 2020.3
-Release: alt1
+Release: alt2
 Summary: Threading Building Blocks
 License: Apache-2.0
 Group: Development/Tools
@@ -34,6 +34,9 @@ Patch3: tbb-2019-test-task-scheduler-init.patch
 # Fix compilation on aarch64 and s390x.  See
 # https://github.com/intel/tbb/issues/186
 Patch4: tbb-2019-fetchadd4.patch
+
+# Elbrus support
+Patch2000: tbb-e2k.patch
 
 Requires: lib%name = %EVR
 
@@ -127,6 +130,9 @@ This package contains python3 module for Threading Building Blocks.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 %build
 export CFLAGS="${CFLAGS:-%optflags} -DDO_ITT_NOTIFY -DUSE_PTHREAD"
@@ -231,6 +237,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/cmake/%{name}/README.rst
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Mon Aug 16 2020 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2020.3-alt2
+- Added patch with Elbrus support.
+
 * Fri Aug 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2020.3-alt1
 - Updated to upstream version 2020.3.
 
