@@ -1,14 +1,24 @@
-%global soname   2
+%define _unpackaged_files_terminate_build 1
+
+%global soname 2
+
 Name: cctz
 Version: 2.3
-Release: alt2.1
-License: ASL 2.0
+Release: alt3
+License: Apache-2.0
 Summary: Translating between absolute and civil times using time zone rules
 Group: Development/C++
 Url: https://github.com/google/cctz
-Source0: %name-%version.tar
+
+Source: %name-%version.tar
+
 # https://sources.debian.org/patches/cctz/2.2+dfsg1-1/0001-Compile-shared-lib-and-install-it.patch/
 Patch0: cctz-2.3-debian-compile-library-as-shared.patch
+
+# https://github.com/google/cctz/pull/116
+# https://github.com/google/cctz/pull/119
+Patch1: cctz-2.3-upstream-updates.patch
+
 BuildRequires: tzdata
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -33,7 +43,7 @@ zones in a simple and correct manner. The libraries in CCTZ are:
 %package devel
 Summary: %summary
 Group: Development/C++
-Requires: %name%{?_isa} = %version-%release
+Requires: %name = %EVR
 Requires: cmake
 
 %description devel
@@ -42,6 +52,7 @@ Development files for %name library.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 %cmake -DVERSION=%version -DSOVERSION=%soname
@@ -67,6 +78,10 @@ LD_LIBRARY_PATH=./ ctest -V
 %_libdir/cmake/cctz
 
 %changelog
+* Tue Jun 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3-alt3
+- Applied changes from upstream needed by clickhouse.
+- Cleaned up spec.
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.3-alt2.1
 - NMU: spec: adapted to new cmake macros.
 
