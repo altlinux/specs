@@ -1,8 +1,9 @@
 %def_without kde4
+%def_without python2
 
 Name: gwyddion
 Version: 2.59
-Release: alt1
+Release: alt2
 
 Summary: An SPM data visualization and analysis tool
 Summary(ru_RU.UTF-8):  Программа для визуализации и анализа данных АСМ
@@ -14,18 +15,19 @@ Url: http://gwyddion.net/
 # Source-url: http://sourceforge.net/projects/gwyddion/files/gwyddion/%version/gwyddion-%version.tar.xz/download
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-intro libGConf-devel
+BuildRequires(pre): rpm-build-intro rpm-build-python libGConf-devel
 
-BuildRequires: GConf gcc-c++  libfftw3-devel libgtkglext-devel libgtksourceview-devel libicu-devel
-BuildRequires: libxml2-devel perl-Pod-Usage python-module-distribute python-module-pygtk-devel
+BuildRequires: GConf gcc-c++ libfftw3-devel libgtkglext-devel libgtksourceview-devel libicu-devel
+BuildRequires: libxml2-devel
 BuildRequires: libgtk+2-devel pkg-config chrpath libruby-devel
+%{?_with_python2:BuildRequires: python-module-distribute python-module-pygtk-devel}
 
 # File Format and some features support
 BuildRequires: libminizip-devel libwebp-devel openexr-devel libcfitsio-devel libunique-devel
 
-BuildPreReq: perl-podlators libpng-devel
+BuildRequires: perl-podlators libpng-devel
 
-BuildRequires: /proc 
+BuildRequires: /proc
 
 %{?_with_kde4:BuildRequires: kde4libs-devel}
 
@@ -35,8 +37,10 @@ BuildRequires: /proc
 %define pkgdatadir %_datadir/%name
 %define pkgincludedir %_includedir/%name
 %define libname lib%{name}2
+%if_with python2
 %add_python_req_skip %pkglibdir
 %add_python_req_skip %pkgdatadir
+%endif
 
 # Stop auto picking wrong deps!
 %add_findreq_skiplist %pkglibexecdir/plugins/*
@@ -142,8 +146,10 @@ find %buildroot -name \*.la -print0 | xargs -0 rm -f
 # Perl, Python, and Ruby modules are private, remove the Perl man page.
 rm -f %buildroot%_man3dir/Gwyddion::dump.*
 
+%if_with python2
 mkdir -p %buildroot%python_sitelibdir
 mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
+%endif
 
 %files -f %name.lang
 %_bindir/%name
@@ -156,7 +162,6 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 %pkgdatadir/pixmaps/*.ico
 %pkgdatadir/gradients/
 %pkgdatadir/glmaterials/
-%pkgdatadir/pygwy/
 %pkgdatadir/ui/
 %pkgdatadir/user-guide-modules/
 %_man1dir/%name.1*
@@ -236,18 +241,24 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 %doc %dir %_gtkdocdir/libgwymodule
 %doc %dir %_gtkdocdir
 %doc %dir %_datadir/gtk-doc
-%doc %_docdir/%name/*
+%doc %_docdir/%name/
 
 %if_with kde4
 %files thumbnailer-kde4
 %_libdir/kde4/gwythumbcreator.so
 %endif
 
+%if_with python2
 %files -n python-module-pygwy
+%pkgdatadir/pygwy/
 %python_sitelibdir/*
 %_datadir/gtksourceview-2.0/language-specs/*.lang
+%endif
 
 %changelog
+* Mon Aug 16 2021 Vitaly Lipatov <lav@altlinux.ru> 2.59-alt2
+- NMU: build without using pygtk (add def_without python2)
+
 * Mon Jul 12 2021 Alexei Mezin <alexvm@altlinux.org> 2.59-alt1
 - new version
 
