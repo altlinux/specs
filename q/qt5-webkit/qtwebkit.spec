@@ -7,7 +7,7 @@
 
 Name: qt5-webkit
 Version: 5.212.0
-Release: alt22
+Release: alt23
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -121,14 +121,14 @@ syncqt.pl-qt5 Source -version %version
 %ifarch riscv64
 export LDFLAGS="${LDFLAGS:-} -Wl,--no-as-needed -latomic"
 %endif
-%remove_optflags '-g'
 %ifarch %e2k
 # because of this error on linking:
 # "relocation truncated to fit: R_E2K_32_ABS"
-%add_optflags -g0 -fpermissive
+%define optflags_debug -g0
 %else
-%add_optflags -g1 -fpermissive
+%define optflags_debug -g1
 %endif
+%add_optflags -fpermissive
 export LDFLAGS="$LDFLAGS -Wl,--no-keep-memory"
 %if_disabled bootstrap
 export QT_HASH_SEED=0
@@ -220,6 +220,9 @@ done
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Tue Aug 17 2021 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt23
+- define optflags_debug when build (closes: 40751)
+
 * Sat Aug 14 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 5.212.0-alt22
 - add elbrus support
 
