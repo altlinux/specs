@@ -3,12 +3,20 @@ Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           plexus-utils
 Version:        3.3.0
-Release:        alt1_2jpp11
+Release:        alt1_7jpp11
 Summary:        Plexus Common Utilities
 # ASL 1.1: several files in src/main/java/org/codehaus/plexus/util/ 
 # xpp: src/main/java/org/codehaus/plexus/util/xml/pull directory
@@ -26,13 +34,13 @@ Source0:        https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{ver
 Source1:        http://apache.org/licenses/LICENSE-2.0.txt
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires:  mvn(org.apache.maven.shared:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
-
-# some tests require "mvn" on $PATH
-BuildRequires:  maven
+%endif
 Source44: import.info
 
 %description
@@ -43,24 +51,12 @@ reusable components for hibernate, form processing, jndi, i18n,
 velocity, etc. Plexus also includes an application server which
 is like a J2EE application server, without all the baggage.
 
-%package javadoc
-Group: Development/Java
-Summary:          Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-Javadoc for %{name}.
+%{?javadoc_package}
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 
 cp %{SOURCE1} .
-
-# unpackaged dependencies for some tests
-%pom_remove_dep -r org.openjdk.jmh:jmh-core
-%pom_remove_dep -r org.openjdk.jmh:jmh-generator-annprocess
-rm src/test/java/org/codehaus/plexus/util/introspection/ReflectionValueExtractorTest.java
-rm src/test/java/org/codehaus/plexus/util/xml/Xpp3DomPerfTest.java
 
 %mvn_file : plexus/utils
 %mvn_alias : plexus:plexus-utils
@@ -81,18 +77,18 @@ rm src/test/java/org/codehaus/plexus/util/xml/Xpp3DomPerfTest.java
         </plugin>"
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc NOTICE.txt LICENSE-2.0.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc NOTICE.txt LICENSE-2.0.txt
+%doc --no-dereference NOTICE.txt LICENSE-2.0.txt
 
 %changelog
+* Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 0:3.3.0-alt1_7jpp11
+- update
+
 * Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 0:3.3.0-alt1_2jpp11
 - new version
 
