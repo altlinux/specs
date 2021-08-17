@@ -1,10 +1,10 @@
+Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -13,55 +13,46 @@ BuildRequires: jpackage-11-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_with     scm
-%bcond_with     ssh
+%bcond_with bootstrap
 
 Name:           maven-wagon
-Epoch:          0
 Version:        3.4.2
-Release:        alt1_1jpp11
+Release:        alt1_4jpp11
 Summary:        Tools to manage artifacts and deployment
 License:        ASL 2.0
-
 URL:            https://maven.apache.org/wagon
-Source0:        https://repo1.maven.org/maven2/org/apache/maven/wagon/wagon/%{version}/wagon-%{version}-source-release.zip
-
 BuildArch:      noarch
 
+Source0:        https://repo1.maven.org/maven2/org/apache/maven/wagon/wagon/%{version}/wagon-%{version}-source-release.zip
+
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(commons-net:commons-net)
 BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
 BuildRequires:  mvn(org.apache.httpcomponents:httpcore)
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.jsoup:jsoup)
 BuildRequires:  mvn(org.slf4j:jcl-over-slf4j)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
-
-%if %{with ssh}
-BuildRequires:  mvn(com.jcraft:jsch)
-BuildRequires:  mvn(com.jcraft:jsch.agentproxy.connector-factory)
-BuildRequires:  mvn(com.jcraft:jsch.agentproxy.jsch)
 %endif
 
-%if %{with scm}
-BuildRequires:  mvn(org.apache.maven.scm:maven-scm-api)
-BuildRequires:  mvn(org.apache.maven.scm:maven-scm-manager-plexus)
-%endif
+Provides:       maven-wagon-file = %{version}-%{release}
+Provides:       maven-wagon-http = %{version}-%{release}
+Provides:       maven-wagon-http-shared = %{version}-%{release}
+Provides:       maven-wagon-provider-api = %{version}-%{release}
+Provides:       maven-wagon-providers = %{version}-%{release}
 
-Obsoletes:      %{name}-manual < %{epoch}:%{version}-%{release}
-Obsoletes:      %{name}-provider-test < %{epoch}:%{version}-%{release}
-
-%if %{without scm}
-Obsoletes:      %{name}-scm < %{epoch}:%{version}-%{release}
-%endif
-
-%if %{without ssh}
-Obsoletes:      %{name}-ssh < %{epoch}:%{version}-%{release}
-%endif
+Obsoletes:      maven-wagon-file < 3.4.2-2
+Obsoletes:      maven-wagon-http < 3.4.2-2
+Obsoletes:      maven-wagon-http-shared < 3.4.2-2
+Obsoletes:      maven-wagon-provider-api < 3.4.2-2
+Obsoletes:      maven-wagon-providers < 3.4.2-2
+Obsoletes:      maven-wagon-ftp < 3.4.2-2
+Obsoletes:      maven-wagon-http-lightweight < 3.4.2-2
 Source44: import.info
 
 %description
@@ -75,96 +66,7 @@ following providers:
 * WebDAV
 * SCM (in progress)
 
-%package provider-api
-Group: Development/Java
-Summary:        provider-api module for %{name}
-Obsoletes:      %{name} < 2.6-4
-Obsoletes:      %{name}-webdav-jackrabbit < 2.9-2
-
-%description provider-api
-provider-api module for %{name}.
-
-%package providers
-Group: Development/Java
-Summary:        providers module for %{name}
-
-%description providers
-providers module for %{name}
-
-%package file
-Group: Development/Java
-Summary:        file module for %{name}
-
-%description file
-file module for %{name}.
-
-%package ftp
-Group: Development/Java
-Summary:        ftp module for %{name}
-
-%description ftp
-ftp module for %{name}.
-
-%package http
-Group: Development/Java
-Summary:        http module for %{name}
-
-%description http
-http module for %{name}.
-
-%package http-shared
-Group: Development/Java
-Summary:        http-shared module for %{name}
-
-%description http-shared
-http-shared module for %{name}.
-
-%package http-lightweight
-Group: Development/Java
-Summary:        http-lightweight module for %{name}
-
-%description http-lightweight
-http-lightweight module for %{name}.
-
-%if %{with scm}
-%package scm
-Group: Development/Java
-Summary:        scm module for %{name}
-
-%description scm
-scm module for %{name}.
-%endif
-
-%if %{with ssh}
-%package ssh-external
-Group: Development/Java
-Summary:        ssh-external module for %{name}
-
-%description ssh-external
-ssh-external module for %{name}.
-
-%package ssh-common
-Group: Development/Java
-Summary:        ssh-common module for %{name}
-
-%description ssh-common
-ssh-common module for %{name}.
-
-%package ssh
-Group: Development/Java
-Summary:        ssh module for %{name}
-
-%description ssh
-ssh module for %{name}.
-%endif
-
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-Javadoc for %{name}.
+%{?javadoc_package}
 
 %prep
 %setup -q -n wagon-%{version}
@@ -175,61 +77,43 @@ Javadoc for %{name}.
 
 # disable tests, missing dependencies
 %pom_disable_module wagon-tcks
-%pom_disable_module wagon-ssh-common-test wagon-providers/pom.xml
+%pom_disable_module wagon-ssh-common-test wagon-providers
 %pom_disable_module wagon-provider-test
 %pom_remove_dep :wagon-provider-test
 %pom_remove_dep :wagon-provider-test wagon-providers
 
 # missing dependencies
-%pom_disable_module wagon-webdav-jackrabbit wagon-providers
-
-%if %{without scm}
+%pom_disable_module wagon-ftp wagon-providers
+%pom_disable_module wagon-http-lightweight wagon-providers
 %pom_disable_module wagon-scm wagon-providers
-%endif
-%if %{without ssh}
 %pom_disable_module wagon-ssh wagon-providers
 %pom_disable_module wagon-ssh-common wagon-providers
 %pom_disable_module wagon-ssh-external wagon-providers
-%endif
+%pom_disable_module wagon-webdav-jackrabbit wagon-providers
 
-%build
+%pom_remove_plugin :maven-shade-plugin wagon-providers/wagon-http
+
 %mvn_file ":wagon-{*}" %{name}/@1
-
 %mvn_package ":wagon"
 
+%build
 # tests are disabled because of missing dependencies
-%mvn_build -f -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 # Maven requires Wagon HTTP with classifier "shaded"
 %mvn_alias :wagon-http :::shaded:
-
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE DEPENDENCIES
-%files provider-api -f .mfiles-wagon-provider-api
-%dir %{_javadir}/%{name}
-%files providers -f .mfiles-wagon-providers
-%files file -f .mfiles-wagon-file
-%files ftp -f .mfiles-wagon-ftp
-%files http -f .mfiles-wagon-http
-%files http-shared -f .mfiles-wagon-http-shared
-%files http-lightweight -f .mfiles-wagon-http-lightweight
-%if %{with scm}
-%files scm -f .mfiles-wagon-scm
-%endif
-%if %{with ssh}
-%files ssh-external -f .mfiles-wagon-ssh-external
-%files ssh-common -f .mfiles-wagon-ssh-common
-%files ssh -f .mfiles-wagon-ssh
-%endif
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE DEPENDENCIES
+%doc --no-dereference LICENSE NOTICE
+%doc DEPENDENCIES
 
 %changelog
+* Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 0:3.4.2-alt1_4jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:3.4.2-alt1_1jpp11
 - new version
 
