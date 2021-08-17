@@ -6,7 +6,7 @@
 
 Name: gtk-doc
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: API documentation generation tool for GTK+ and GNOME
 Group: Development/Other
@@ -14,10 +14,10 @@ License: GPLv2+
 Url: http://www.gtk.org/gtk-doc/
 
 %define pkgdocdir %_docdir/%name-%version
-%define python_ver 2.7
+%define python_ver 3.2
 %define dblatex_ver 0.3.10
 
-Requires: python >= %python_ver
+Requires: python3 >= %python_ver
 Requires: sgml-common >= 0.6.3-alt11
 Requires: docbook-dtds >= 4.3-alt1
 Requires: docbook-style-xsl
@@ -41,7 +41,7 @@ Provides: python3(gtkdoc)
 
 %add_python3_path %_datadir/%name/python/gtkdoc
 
-BuildRequires(pre): rpm-build-python3 rpm-build-licenses
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel >= %python_ver python3-module-Pygments
 BuildRequires: docbook-dtds xml-common xml-utils
 BuildRequires: docbook-dtds >= 1.0-alt7
@@ -73,7 +73,7 @@ This package provides utility for saving documentation in PDF format
 %package manual
 Summary: Manual for gtk-doc
 Group: Development/Other
-License: %fdl
+License: FDL-1.1
 
 %description manual
 Manual for gtk-doc, a tool for generating API reference documentation
@@ -152,6 +152,9 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/COPYING-DOCS
 
 %changelog
+* Tue Aug 17 2021 Yuri N. Sedunov <aris@altlinux.org> 1.33.2-alt1.1
+- fixed python dependendencies (ALT #40763)
+
 * Tue Jan 19 2021 Yuri N. Sedunov <aris@altlinux.org> 1.33.2-alt1
 - 1.33.2
 
