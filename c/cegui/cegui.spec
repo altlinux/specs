@@ -1,13 +1,13 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/ccache boost-devel boost-python-devel cmake glib2-devel libGL-devel libGLES-devel libSDL2-devel libSDL2_image-devel libatk-devel libcairo-devel libgtk+2-devel libminizip-devel libpango-devel pkgconfig(tinyxml2) python-devel rpm-build-python
+BuildRequires: boost-devel cmake glib2-devel libGL-devel libGLES-devel libSDL2-devel libSDL2_image-devel libatk-devel libcairo-devel libgtk+2-devel libminizip-devel libpango-devel pkgconfig(tinyxml2) 
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           cegui
 Version:        0.8.7
-Release:        alt7_14
+Release:        alt8_14
 Summary:        Free library providing windowing and widgets for graphics APIs / engines
 License:        MIT
 URL:            http://www.cegui.org.uk
@@ -270,6 +270,9 @@ find $RPM_BUILD_ROOT -name "CEGUITests-0.8" -exec rm -f {} ';'
 %{_libdir}/cegui-0.8/libCEGUITinyXMLParser.so
 
 %changelog
+* Tue Aug 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.7-alt8_14
+- Updated build dependencies.
+
 * Mon Jan 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.7-alt7_14
 - Disabled tests failing to build with new gcc.
 
