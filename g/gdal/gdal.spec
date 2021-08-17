@@ -9,7 +9,7 @@
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 3.0.4
-Release: alt1.4
+Release: alt1.5
 Group: Sciences/Geosciences
 
 License: MIT
@@ -28,7 +28,7 @@ Patch8: %name-3.0.4-arch-jpeg2000-issue-vendor.patch
 
 %define libname lib%name
 
-BuildRequires: doxygen gcc-c++ libMySQL-devel libcfitsio-devel libcurl-devel libexpat-devel libgeos-devel libgif-devel libhdf5-devel libjasper-devel libjpeg-devel libnumpy-devel libpng-devel libsqlite3-devel libunixODBC-devel perl-devel postgresql-devel swig
+BuildRequires: doxygen gcc-c++ libMySQL-devel libcfitsio-devel libcurl-devel libexpat-devel libgeos-devel libgif-devel libhdf5-devel libjasper-devel libjpeg-devel libpng-devel libsqlite3-devel libunixODBC-devel perl-devel postgresql-devel swig
 
 BuildRequires: chrpath libnetcdf-devel
 BuildRequires: libproj-devel
@@ -255,6 +255,9 @@ sed -i 's|__bool__ = __nonzero__||' \
 %endif
 
 %changelog
+* Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0.4-alt1.5
+- NMU: drop libnumpy-devel (it is unused python2 only package)
+
 * Thu Jul 01 2021 Andrey Cherepanov <cas@altlinux.org> 3.0.4-alt1.4
 - FTBFS: build with libxerces-c-devel (ALT #40327)
 
