@@ -1,6 +1,6 @@
 Name:    guake
 Version: 3.7.0
-Release: alt2
+Release: alt3
 Summary: guake - a drop-down terminal
 Summary(ru.UTF-8):guake — выпадающий эмулятор терминала
 
@@ -9,6 +9,9 @@ Group:   Terminals
 URL: 	 http://guake.org/
 # VCS:	 https://github.com/Guake/guake.git
 Source0: %name-%version.tar
+
+Patch1: guake-alt-fix-ru-l10n.patch
+Patch3: guake-alt-add-glade-l10n.patch
 
 BuildArch: noarch
 
@@ -19,15 +22,13 @@ BuildRequires: python3-module-pbr
 BuildRequires: python3-module-pip
 BuildRequires: libgio
 BuildRequires: desktop-file-utils
-
-Requires: dconf
-Requires: dbus
-Requires: notification-daemon
-
-Patch1: guake-alt-fix-ru-l10n.patch
-Patch3: guake-alt-add-glade-l10n.patch
-
 BuildRequires: desktop-file-utils
+
+Requires: dbus
+Requires: dconf
+Requires: libutempter
+Requires: notification-daemon
+%py3_requires pbr
 
 %description
 Guake is a drop-down terminal for Gnome Desktop Environment, so you
@@ -63,6 +64,9 @@ rm -f %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Aug 17 2021 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt3
+- Add requirement of pbr and libutempter (ALT #40759).
+
 * Thu Apr 29 2021 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt2
 - FTBFS: add python3-module-pip to build requirements.
 
