@@ -20,7 +20,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt25
+Release: alt26
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -580,6 +580,11 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Tue Aug 17 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0.1-alt26
+- Fixed posttrans filetrigger to save old file list on error.
+- Changed posttrans filetrigger to raise error instead of warning if
+  %%_rpmscript_werror macro is enabled.
+
 * Thu Aug 05 2021 Vitaly Chikunov <vt@altlinux.org> 4.13.0.1-alt25
 - rpmio: Add support for BLAKE2b in rpmpgp (over beecrypt interface).
 
