@@ -1,12 +1,20 @@
 Epoch: 0
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           apache-commons-cli
 Version:        1.4
-Release:        alt1_11jpp11
+Release:        alt1_14jpp11
 Summary:        Command Line Interface Library for Java
 License:        ASL 2.0
 URL:            http://commons.apache.org/cli/
@@ -18,9 +26,13 @@ Source0:        http://www.apache.org/dist/commons/cli/source/commons-cli-%{vers
 Patch0:         CLI-253-workaround.patch
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+%endif
 Source44: import.info
 Provides: jakarta-commons-cli = %version
 
@@ -39,14 +51,8 @@ command line arguments and options.
 %mvn_alias : org.apache.commons:commons-cli
 %mvn_file : commons-cli %{name}
 
-# Fix javadoc generation on java 11
-%pom_xpath_inject pom:pluginManagement/pom:plugins "<plugin>
-<artifactId>maven-javadoc-plugin</artifactId>
-<configuration><source>1.6</source></configuration>
-</plugin>" 
-
 %build
-%mvn_build -- -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6
 
 %install
 %mvn_install
@@ -56,6 +62,9 @@ command line arguments and options.
 %doc README.md RELEASE-NOTES.txt
 
 %changelog
+* Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 0:1.4-alt1_14jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.4-alt1_11jpp11
 - update
 
