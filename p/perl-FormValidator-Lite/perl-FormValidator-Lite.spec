@@ -1,5 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-FormValidator-Lite
-Version: 0.40
+Version: 0.41
 Release: alt1
 
 Summary: FormValidator::Lite perl module
@@ -26,11 +27,14 @@ BuildRequires: perl-devel perl-Class-Load perl-Test-Requires perl-CGI perl-Class
 %perl_vendor_install
 
 %files
-%doc TODO README.md Changes LICENSE
+%doc README.md Changes
 %perl_vendor_privlib/FormValidator/Lite*
-%doc TODO Changes
+%doc Changes
 
 %changelog
+* Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 0.41-alt1
+- new version
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.40-alt1
 - automated CPAN update
 
