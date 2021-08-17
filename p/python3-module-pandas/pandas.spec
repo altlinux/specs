@@ -8,7 +8,7 @@
 
 Name: python3-module-%oname
 Version: 1.3.1
-Release: alt1
+Release: alt2
 Summary: Python Data Analysis Library
 License: BSD-3-Clause
 Group: Development/Python3
@@ -46,7 +46,7 @@ BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 %py3_requires scipy bs4 xlrd openpyxl xlsxwriter xlwt
 %py3_requires tables
 %if_without bootstrap
-%py3_requires statsmodels
+BuildRequires: python3-module-scikits.statsmodels
 %endif
 
 %description
@@ -145,6 +145,9 @@ xvfb-run python3 setup.py test
 %endif
 
 %changelog
+* Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt2
+- NMU: statsmodels is a dev dependency (see requirements-dev.txt)
+
 * Fri Aug 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.1-alt1
 - Updated to upstream version 1.3.1.
 
