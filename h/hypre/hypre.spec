@@ -9,7 +9,7 @@
 
 Name: hypre
 Version: 2.20.0
-Release: alt1.1
+Release: alt2
 
 Summary: Scalable algorithms for solving linear systems of equations
 
@@ -24,11 +24,10 @@ Patch: hypre-2.20.0-shared.patch
 BuildRequires(pre): rpm-build-java rpm-macros-cmake /proc
 BuildRequires: gcc-fortran gcc-c++ %mpiimpl-devel emacs-nox
 BuildRequires: liblapack-devel netpbm
-BuildRequires: libsuperlu-devel babel cmake texlive-base-bin
+BuildRequires: libsuperlu-devel cmake
 BuildRequires: java-devel-default
-BuildRequires: libnumpy-devel libxml2-devel
-# python-module-libxml2
-BuildRequires: libltdl-devel ghostscript-classic
+BuildRequires: libxml2-devel
+BuildRequires: libltdl-devel
 
 %description
 The goal of the Scalable Linear Solvers project is to develop scalable
@@ -154,6 +153,9 @@ rm -f %buildroot%_libdir/libsidl*
 %endif
 
 %changelog
+* Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 2.20.0-alt2
+- cleanup BR
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.20.0-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
