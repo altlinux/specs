@@ -3,6 +3,7 @@
 %else
 %def_disable gfxboot
 %endif
+%def_disable save_release_file
 
 %define Theme Workstation K
 %define smalltheme kworkstation
@@ -18,7 +19,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -62,7 +63,8 @@ Distro-specific packages with design and texts
 Group: System/Configuration/Boot and Init
 Summary: Graphical boot logo for grub2, lilo and syslinux
 License: GPL
-Requires(pre,postun): coreutils
+Requires(pre): coreutils
+Requires(pre): /etc/sysconfig/i18n
 Provides: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
 Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
 %description bootloader
@@ -172,6 +174,7 @@ BuildArch: noarch
 Summary: GNOME settings for %ProductName
 License: Distributable
 Group: Graphical desktop/GNOME
+Requires(pre): /usr/bin/gconftool-2
 Requires: gtk2-theme-mist
 #PreReq: gnome-panel
 Provides: gnome-theme-%brand-%theme = %version-%release
@@ -279,10 +282,8 @@ SUPPORT_URL="https://support.basealt.ru/"
 __EOF__
 # save release
 mkdir -p %buildroot/%branding_data_dir/release/
-mv %buildroot/%_sysconfdir/altlinux-release %buildroot/%branding_data_dir/release/
-> %buildroot/%_sysconfdir/altlinux-release
-mv %buildroot/%_sysconfdir/os-release %buildroot/%branding_data_dir/release/
-> %buildroot/%_sysconfdir/os-release
+cp -ar %buildroot/%_sysconfdir/altlinux-release %buildroot/%branding_data_dir/release/altlinux-release
+cp -ar %buildroot/%_sysconfdir/os-release %buildroot/%branding_data_dir/release/os-release
 
 #notes
 pushd notes
@@ -376,12 +377,14 @@ shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER /boot/grub/themes/%theme/gr
 sed -i "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf ||:
 
 %post release
+%if_enabled save_release_file
 if ! [ -e %_sysconfdir/altlinux-release ]; then
        cp -a %branding_data_dir/release/altlinux-release %_sysconfdir/altlinux-release ||:
 fi
 if ! [ -e %_sysconfdir/os-release ]; then
        cp -a %branding_data_dir/release/os-release %_sysconfdir/os-release ||:
 fi
+%endif
 
 %post gnome-settings
 %gconf2_set string /desktop/gnome/interface/font_name Sans 11
@@ -418,8 +421,13 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/plymouth/themes/%theme/*
 
 %files release
+%if_enabled save_release_file
 %ghost %config(noreplace) %_sysconfdir/os-release
 %ghost %config(noreplace) %_sysconfdir/altlinux-release
+%else
+%_sysconfdir/os-release
+%_sysconfdir/altlinux-release
+%endif
 %config(noreplace) %_sysconfdir/fedora-release
 %config(noreplace) %_sysconfdir/redhat-release
 %config(noreplace) %_sysconfdir/system-release
@@ -460,6 +468,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Aug 17 2021 Sergey V Turchin <zerg at altlinux dot org> 9.2.0-alt2
+- don't save original os-release on system upgrade
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg at altlinux dot org> 9.2.0-alt1
 - new version
 
