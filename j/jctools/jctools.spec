@@ -6,7 +6,7 @@ BuildRequires: jpackage-1.8-compat
 %global srcname JCTools
 
 Name:           jctools
-Version:        3.2.0
+Version:        3.3.0
 Release:        alt1_1jpp8
 Summary:        Java Concurrency Tools for the JVM
 License:        ASL 2.0
@@ -112,6 +112,9 @@ rm -r jctools-core/src/test/java/org/jctools/maps/linearizability_test/
 
 
 %changelog
+* Mon Aug 16 2021 Igor Vlasenko <viy@altlinux.org> 3.3.0-alt1_1jpp8
+- new version
+
 * Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 3.2.0-alt1_1jpp8
 - fc update
 
