@@ -1,8 +1,8 @@
 %def_without test
 
 Name: conan
-Version: 1.37.1
-Release: alt2
+Version: 1.39.0
+Release: alt1
 
 Summary: Conan - The open-source C/C++ package manager
 
@@ -38,7 +38,7 @@ AutoProv: no
 %py3_use patch-ng < 1.18
 %py3_use patch-ng >= 1.17.4
 %py3_use fasteners >= 0.14.1
-%py3_use six <= 1.15.0
+%py3_use six <= 1.16.0
 %py3_use six >= 1.10.0
 %py3_use node_semver >= 0.6.1
 %py3_use distro <= 1.5.0
@@ -51,6 +51,7 @@ AutoProv: no
 %py3_use deprecation >= 2.0
 %py3_use tqdm < 5
 %py3_use tqdm >= 4.28.1
+#py3_use jinja2 < 3
 %py3_use jinja2 >= 2.9
 %py3_use dateutil < 3
 %py3_use dateutil >= 2.7.0
@@ -100,6 +101,9 @@ rm -rfv %buildroot%python_sitelibdir/conans/test_integration/
 %doc README.rst LICENSE.md
 
 %changelog
+* Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 1.39.0-alt1
+- new version 1.39.0 (with rpmrb script)
+
 * Tue Jun 22 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.37.1-alt2
 - drop artificial upper bound for jinja2 req
 
