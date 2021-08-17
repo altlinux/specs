@@ -9,7 +9,7 @@
 
 Name: python3-module-%modulename
 Version: 0.11.0
-Release: alt2.rc0
+Release: alt3.rc0
 
 Summary: Scientific Graphics and GUI Library for Python
 License: MIT
@@ -21,7 +21,7 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-build-intro
 BuildRequires: python3-devel
 
 BuildRequires: python3-module-setuptools
@@ -30,7 +30,7 @@ BuildRequires: python3-module-numpy
 BuildRequires: python3-module-OpenGL
 # For Tests
 %if_with check
-BuildRequires: python3-module-pytest python3-module-six python3-module-numpy-testing
+BuildRequires: python3-module-pytest python3-module-six
 BuildRequires: python3-module-six
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-h5py
@@ -56,6 +56,7 @@ GraphicsView framework for fast display.
 
 %install
 %python3_install
+%python3_prune
 
 rm -r %buildroot/%python3_sitelibdir/pyqtgraph/examples
 
@@ -68,6 +69,9 @@ PYTHONDONTWRITEBYTECODE=1 xvfb-run -a py.test3 -k "not (test_ImageItem or test_I
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 0.11.0-alt3.rc0
+- NMU: don't pack tests
+
 * Sun Jan 26 2020 Anton Midyukov <antohami@altlinux.org> 0.11.0-alt2.rc0
 - skip optional dependencies (PyQt4, PySide)
 
