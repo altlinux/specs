@@ -12,7 +12,7 @@
 
 Name: blender
 Version: 2.93.2
-Release: alt3
+Release: alt4
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -259,11 +259,7 @@ fi
 	-DWITH_SYSTEM_GFLAGS:BOOL=ON \
 	-DWITH_SYSTEM_GLOG:BOOL=ON \
 	-DWITH_IMAGE_OPENEXR=ON \
-%ifarch %e2k
-	-DWITH_TBB:BOOL=OFF \
-%else
 	-DWITH_TBB:BOOL=ON \
-%endif
 	-DPYTHON_VERSION="%_python3_version" \
 	-DBUILDINFO_OVERRIDE_DATE="$BUILD_DATE" \
 	-DBUILDINFO_OVERRIDE_TIME="$BUILD_TIME" \
@@ -311,6 +307,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Mon Aug 16 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.93.2-alt4
+- Fixed build with TBB on Elbrus.
+
 * Wed Aug 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.93.2-alt3
 - Disabled provides autogeneration (Closes: #40706).
 
