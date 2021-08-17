@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ perl(LWP/UserAgent.pm)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -18,8 +18,8 @@ BuildRequires: jpackage-11-compat
 
 Summary:        High-performance, full-featured text search engine
 Name:           lucene
-Version:        8.6.3
-Release:        alt1_2jpp11
+Version:        8.8.2
+Release:        alt1_1jpp11
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -425,6 +425,9 @@ popd
 %doc --no-dereference lucene/LICENSE.txt lucene/NOTICE.txt
 
 %changelog
+* Mon Aug 16 2021 Igor Vlasenko <viy@altlinux.org> 0:8.8.2-alt1_1jpp11
+- new version
+
 * Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 0:8.6.3-alt1_2jpp11
 - new version
 
