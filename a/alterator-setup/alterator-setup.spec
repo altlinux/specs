@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-setup
-Version: 0.3.10
+Version: 0.3.11
 Release: alt1
 
 Summary: Perform initial setup of an OEM installation (warning!)
@@ -125,6 +125,10 @@ if [ -x /sbin/sd_booted ]; then
 fi
 
 %changelog
+* Wed Aug 18 2021 Anton Midyukov <antohami@altlinux.org> 0.3.11-alt1
+- postinstall.d: do not copy setup.target or setup-vnc.target, if not
+  available (Closes: 40770)
+
 * Mon Aug 16 2021 Anton Midyukov <antohami@altlinux.org> 0.3.10-alt1
 - Not enable setup.target as default.target (Closes: 39546)
 - Add installer-feature-alterator-setup,
