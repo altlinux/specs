@@ -8,7 +8,7 @@
 
 Name:       token-manager
 Version:    0.12
-Release:    alt6.git%rev
+Release:    alt7
 
 Summary:    Certificate manager for CryptoPro CSP
 License:    MIT
@@ -25,7 +25,7 @@ Source2:    token-manager
 Patch0:    port-to-python3.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: libpam-devel python3-module-PyQt4
+BuildRequires: libpam-devel python3-module-PyQt5
 BuildRequires: python-tools-2to3
 
 Requires: consolehelper opensc
@@ -43,6 +43,8 @@ Federal Bailiffs' Service of Russia.
 
 sed -i 's|python|python3|' $(find ./ \( -name '%{name}.py' \
                                      -o -name '%{name}.desktop' \) )
+sed -i 's|PyQt4|PyQt5|' token-manager.py
+sed -i 's|QtGui|QtWidgets|' token-manager.py
 
 %install
 mkdir -p %buildroot/%_bindir
@@ -63,6 +65,9 @@ install -Dm 0644 cpconfig-%cpro_arch %buildroot%_sysconfdir/security/console.app
 
 
 %changelog
+* Wed Aug 18 2021 Sergey V Turchin <zerg@altlinux.org> 0.12-alt7
+- Ugly port to PyQt5
+
 * Mon Feb 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.12-alt6.git51687e2
 - Porting on python3.
 
