@@ -3,7 +3,7 @@
 
 Name: libstfl0
 Version: 0.24
-Release: alt7
+Release: alt8
 
 %define oname stfl
 
@@ -22,8 +22,6 @@ Patch1: stfl-0.24-alt-as-needed.patch
 #Patch2: stfl-0.24-alt-ruby-linkage-fix.patch
 Patch3: stfl-0.24-alt-warnings.patch
 
-# Automatically added by buildreq on Fri Mar 03 2017
-# optimized out: libncurses-devel libtinfo-devel perl perl-devel python-base python-modules ruby ruby-stdlibs swig-data
 BuildRequires: libncursesw-devel perl-Encode swig
 %{?_with_python: BuildRequires: python-devel}
 
@@ -44,7 +42,8 @@ Headers for building software that uses %name
 
 %package -n perl-%oname
 Group: Terminals
-Requires: perl swig libstfl0
+Requires: perl
+Requires: %name = %EVR
 Summary: Perl binding to stfl
 
 %description -n perl-%oname
@@ -52,7 +51,8 @@ Perl binding to stfl
 
 %package -n python-module-%oname
 Group: Terminals
-Requires: python swig libstfl0
+Requires: python
+Requires: %name = %EVR
 Summary: Python binding to stfl
 #%%setup_python_module %%oname
 
@@ -107,6 +107,9 @@ rm %buildroot%_libdir/*.a
 %endif # ruby
 
 %changelog
+* Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 0.24-alt8
+- NMU: drop unused swig require, make interdeps more strong
+
 * Thu Apr 09 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.24-alt7
 - Disabled Ruby module.
 
