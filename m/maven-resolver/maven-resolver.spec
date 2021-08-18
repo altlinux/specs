@@ -3,33 +3,38 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           maven-resolver
 Epoch:          1
-Version:        1.4.2
+Version:        1.6.1
 Release:        alt1_5jpp11
-Summary:        Apache Maven Artifact Resolver library
 License:        ASL 2.0
-
+Summary:        Apache Maven Artifact Resolver library
 URL:            https://maven.apache.org/resolver/
 Source0:        https://archive.apache.org/dist/maven/resolver/%{name}-%{version}-source-release.zip
-
-# keep deprecated and removed aether CacheUtils for a while longer
-# some packages still depend on this and things break without it
-Patch0:         00-keep-deprecated-aether-CacheUtils.patch
-
 BuildArch:      noarch
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(javax.inject:javax.inject)
 BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
-BuildRequires:  mvn(org.apache.httpcomponents:httpcore)
-BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
+BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-classworlds)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.inject)
@@ -37,10 +42,31 @@ BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
 BuildRequires:  mvn(org.hamcrest:hamcrest-core)
 BuildRequires:  mvn(org.mockito:mockito-core)
-BuildRequires:  mvn(org.slf4j:jcl-over-slf4j)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.slf4j:slf4j-simple)
 BuildRequires:  mvn(org.sonatype.sisu:sisu-guice::no_aop:)
+%endif
+
+Provides:       maven-resolver-api = %{epoch}:%{version}-%{release}
+Provides:       maven-resolver-spi = %{epoch}:%{version}-%{release}
+Provides:       maven-resolver-impl = %{epoch}:%{version}-%{release}
+Provides:       maven-resolver-util = %{epoch}:%{version}-%{release}
+Provides:       maven-resolver-connector-basic = %{epoch}:%{version}-%{release}
+Provides:       maven-resolver-transport-wagon = %{epoch}:%{version}-%{release}
+Provides:       maven-resolver-transport-http = %{epoch}:%{version}-%{release}
+Provides:       maven-resolver-transport-file = %{epoch}:%{version}-%{release}
+Provides:       maven-resolver-transport-classpath = %{epoch}:%{version}-%{release}
+
+Obsoletes:      maven-resolver-api < 1:1.4.2-6
+Obsoletes:      maven-resolver-spi < 1:1.4.2-6
+Obsoletes:      maven-resolver-impl < 1:1.4.2-6
+Obsoletes:      maven-resolver-util < 1:1.4.2-6
+Obsoletes:      maven-resolver-connector-basic < 1:1.4.2-6
+Obsoletes:      maven-resolver-transport-wagon < 1:1.4.2-6
+Obsoletes:      maven-resolver-transport-http < 1:1.4.2-6
+Obsoletes:      maven-resolver-transport-file < 1:1.4.2-6
+Obsoletes:      maven-resolver-transport-classpath < 1:1.4.2-6
+Obsoletes:      maven-resolver-test-util < 1:1.4.2-6
 Source44: import.info
 
 %description
@@ -49,95 +75,20 @@ repositories and dependency resolution. Maven Artifact Resolver deals with the
 specification of local repository, remote repository, developer workspaces,
 artifact transports and artifact resolution.
 
-%package api
-Group: Development/Java
-Summary:   Maven Artifact Resolver API
-
-%description api
-The application programming interface for the repository system.
-
-%package spi
-Group: Development/Java
-Summary:   Maven Artifact Resolver SPI
-
-%description spi
-The service provider interface for repository system implementations and
-repository connectors.
-
-%package util
-Group: Development/Java
-Summary:   Maven Artifact Resolver Utilities
-
-%description util
-A collection of utility classes to ease usage of the repository system.
-
-%package impl
-Group: Development/Java
-Summary:   Maven Artifact Resolver Implementation
-
-%description impl
-An implementation of the repository system.
-
-%package test-util
-Group: Development/Java
-Summary:   Maven Artifact Resolver Test Utilities
-
-%description test-util
-A collection of utility classes to ease testing of the repository system.
-
-%package connector-basic
-Group: Development/Java
-Summary:   Maven Artifact Resolver Connector Basic
-
-%description connector-basic
-A repository connector implementation for repositories using URI-based layouts.
-
-%package transport-classpath
-Group: Development/Java
-Summary:   Maven Artifact Resolver Transport Classpath
-
-%description transport-classpath
-A transport implementation for repositories using classpath:// URLs.
-
-%package transport-file
-Group: Development/Java
-Summary:   Maven Artifact Resolver Transport File
-
-%description transport-file
-A transport implementation for repositories using file:// URLs.
-
-%package transport-http
-Group: Development/Java
-Summary:   Maven Artifact Resolver Transport HTTP
-
-%description transport-http
-A transport implementation for repositories using http:// and https:// URLs.
-
-%package transport-wagon
-Group: Development/Java
-Summary:   Maven Artifact Resolver Transport Wagon
-
-%description transport-wagon
-A transport implementation based on Maven Wagon.
-
-%package        javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-
-%description    javadoc
-This package provides %{summary}.
-
+%{?javadoc_package}
 
 %prep
 %setup -q
-%patch0 -p1
 
-# tests require jetty 7
-%pom_remove_dep :::test maven-resolver-transport-http
-rm -r maven-resolver-transport-http/src/test
+%pom_remove_plugin -r :bnd-maven-plugin
 
 %pom_disable_module maven-resolver-demos
+%pom_disable_module maven-resolver-synccontext-global
+%pom_disable_module maven-resolver-synccontext-redisson
+%pom_disable_module maven-resolver-transport-classpath
+%pom_disable_module maven-resolver-transport-file
+%pom_disable_module maven-resolver-transport-http
+%mvn_package :maven-resolver-test-util __noinstall
 
 # generate OSGi manifests
 for pom in $(find -mindepth 2 -name pom.xml) ; do
@@ -164,36 +115,22 @@ done
   </archive>
 </configuration>"
 
-%mvn_package :maven-resolver
 %mvn_alias 'org.apache.maven.resolver:maven-resolver{*}' 'org.eclipse.aether:aether@1'
 %mvn_file ':maven-resolver{*}' %{name}/maven-resolver@1 aether/aether@1
 
 %build
-%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
-
 %files -f .mfiles
 %doc --no-dereference LICENSE NOTICE
 
-%files api -f .mfiles-%{name}-api
-%doc --no-dereference LICENSE NOTICE
-%files spi -f .mfiles-%{name}-spi
-%files util -f .mfiles-%{name}-util
-%files impl -f .mfiles-%{name}-impl
-%files test-util -f .mfiles-%{name}-test-util
-%files connector-basic -f .mfiles-%{name}-connector-basic
-%files transport-classpath -f .mfiles-%{name}-transport-classpath
-%files transport-file -f .mfiles-%{name}-transport-file
-%files transport-http -f .mfiles-%{name}-transport-http
-%files transport-wagon -f .mfiles-%{name}-transport-wagon
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE NOTICE
-
 %changelog
+* Wed Aug 18 2021 Igor Vlasenko <viy@altlinux.org> 1:1.6.1-alt1_5jpp11
+- new version
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1:1.4.2-alt1_5jpp11
 - fc34 update
 
