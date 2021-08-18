@@ -3,13 +3,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-%define fedora 33
+BuildRequires: jpackage-default
+%define fedora 34
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		canl-java
-Version:	2.6.0
-Release:	alt1_9jpp11
+Version:	2.7.0
+Release:	alt1_2jpp11
 Summary:	EMI Common Authentication library - bindings for Java
 
 #		The main parts of the code are BSD
@@ -22,22 +22,16 @@ URL:		https://github.com/eu-emi/%{name}/
 Source0:	https://github.com/eu-emi/%{name}/archive/canl-%{version}/%{name}-%{version}.tar.gz
 #		Disable tests that require network connections
 Patch0:		%{name}-test.patch
-#		Adapt to bouncycastle 1.63. Still builds with older versions.
-#		https://github.com/eu-emi/canl-java/pull/102
-Patch1:		%{name}-tagged-seq.patch
-#		Fix javadoc issues with JDK 11
-#		https://github.com/eu-emi/canl-java/pull/103
-Patch2:		%{name}-jdk11-javadoc.patch
 
 BuildArch:	noarch
 
 BuildRequires:	maven-local
 BuildRequires:	mvn(commons-io:commons-io) >= 2.4
 BuildRequires:	mvn(junit:junit) >= 4.8
-BuildRequires:	mvn(org.bouncycastle:bcpkix-jdk15on) >= 1.54
-BuildRequires:	mvn(org.bouncycastle:bcprov-jdk15on) >= 1.54
-Requires:	mvn(org.bouncycastle:bcpkix-jdk15on) >= 1.54
-Requires:	mvn(org.bouncycastle:bcprov-jdk15on) >= 1.54
+BuildRequires:	mvn(org.bouncycastle:bcpkix-jdk15on) >= 1.68
+BuildRequires:	mvn(org.bouncycastle:bcprov-jdk15on) >= 1.68
+Requires:	mvn(org.bouncycastle:bcpkix-jdk15on) >= 1.68
+Requires:	mvn(org.bouncycastle:bcprov-jdk15on) >= 1.68
 Source44: import.info
 
 %description
@@ -54,8 +48,6 @@ Javadoc documentation for EMI caNl.
 %prep
 %setup -q -n %{name}-canl-%{version}
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 # Remove maven-wagon-webdav-jackrabbit dependency
 %pom_xpath_remove pom:build/pom:extensions
@@ -90,6 +82,9 @@ Javadoc documentation for EMI caNl.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 2.7.0-alt1_2jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.6.0-alt1_9jpp11
 - update
 

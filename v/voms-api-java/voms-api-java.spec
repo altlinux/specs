@@ -3,13 +3,13 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-%define fedora 33
+BuildRequires: jpackage-default
+%define fedora 34
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		voms-api-java
 Version:	3.3.2
-Release:	alt1_2jpp11
+Release:	alt1_3jpp11
 Summary:	Virtual Organization Membership Service Java API
 
 License:	ASL 2.0
@@ -83,6 +83,9 @@ Virtual Organization Membership Service (VOMS) Java API Documentation.
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed Aug 18 2021 Igor Vlasenko <viy@altlinux.org> 3.3.2-alt1_3jpp11
+- rebuild with new bouncycastle
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 3.3.2-alt1_2jpp11
 - new version
 
