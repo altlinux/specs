@@ -1,27 +1,27 @@
-Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: /usr/bin/unzip
 # END SourceDeps(oneline)
+Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define shortname forms
 
 Name:           jgoodies-forms
-Version:        1.8.0
-Release:        alt1_15jpp11
+Version:        1.9.0
+Release:        alt1_1jpp11
 Summary:        Framework to lay out and implement elegant Swing panels in Java
 
 License:        BSD
-URL:            http://www.jgoodies.com/freeware/forms/
-Source0:        http://www.jgoodies.com/download/libraries/%{shortname}/%{name}-%(tr "." "_" <<<%{version}).zip
+URL:            https://www.jgoodies.com/freeware/libraries/forms/
+# Upstream no longer distributes the library under an Open Source license. Latest
+# Open Source release is taken from Maven Central
+Source0:        https://repo1.maven.org/maven2/com/jgoodies/%{name}/%{version}/%{name}-%{version}-sources.jar
+Source1:        https://repo1.maven.org/maven2/com/jgoodies/%{name}/%{version}/%{name}-%{version}.pom
 
-# Fontconfig and DejaVu fonts needed for tests
-BuildRequires:  fonts-ttf-dejavu
-BuildRequires:  fontconfig
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.jgoodies:jgoodies-common) >= 1.8.0
+BuildRequires:  mvn(com.jgoodies:jgoodies-common)
 BuildArch:      noarch
 Source44: import.info
 
@@ -41,39 +41,18 @@ This package contains the API documentation for %{name}.
 
 
 %prep
-%setup -q
+%setup -q -c
 
+mkdir -p src/main/java/
+mv com/ src/main/java/
 
-# Unzip source and test files from provided JARs
-mkdir -p src/main/java/ src/test/java/
-pushd src/main/java/
-jar -xf ../../../%{name}-%{version}-sources.jar
-popd
-pushd src/test/java/
-jar -xf ../../../%{name}-%{version}-tests.jar
-popd
+cp %{SOURCE1} pom.xml
 
-# Delete prebuild JARs
-find -name "*.jar" -exec rm {} \;
-
-# Drop tests that require a running X11 server
-rm src/test/java/com/jgoodies/forms/layout/SerializationTest.java
-sed -i "/SerializationTest.class,/d" src/test/java/com/jgoodies/forms/layout/AllFormsTests.java
-
-# Delete ClassLoader test
-# TODO: fix it to make it work
-rm src/test/java/com/jgoodies/forms/layout/ClassLoaderTest.java
-sed -i "/ClassLoaderTest.class,/d" src/test/java/com/jgoodies/forms/layout/AllFormsTests.java
-
-# Fix wrong end-of-line encoding
-for file in LICENSE.txt RELEASE-NOTES.txt; do
-  sed -i.orig "s/\r//" $file && \
-  touch -r $file.orig $file && \
-  rm $file.orig
-done
-
-# remove unnecessary dependency on parent POM
+# Remove unnecessary dependency on parent POM
 %pom_remove_parent
+
+# Remove useless dependency on JUnit (no test available)
+%pom_remove_dep junit:junit
 
 %mvn_file :%{name} %{name} %{name}
 
@@ -87,14 +66,15 @@ done
 
 
 %files -f .mfiles
-%doc README.html RELEASE-NOTES.txt
-%doc --no-dereference LICENSE.txt
 
 
 %files javadoc -f .mfiles-javadoc
 
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 1.9.0-alt1_1jpp11
+- new version
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.8.0-alt1_15jpp11
 - fc34 update
 
