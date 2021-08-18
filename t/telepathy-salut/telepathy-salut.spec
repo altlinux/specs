@@ -5,7 +5,7 @@
 
 Name: telepathy-salut
 Version: 0.8.1
-Release: alt4
+Release: alt4.1
 
 Summary: A link-local XMPP connection manager
 License: LGPLv2.1+
@@ -24,7 +24,7 @@ Patch: telepathy-salut-0.8.1-fc-python3.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libtelepathy-glib-devel >= 0.23
 BuildRequires: gtk-doc libasyncns-devel libavahi-gobject-devel libdbus-glib-devel
-BuildRequires: libsasl2-devel libsoup-devel libxml2-devel python-module-PyXML valgrind
+BuildRequires: libsasl2-devel libsoup-devel libxml2-devel valgrind
 BuildRequires: libgnutls-devel libgcrypt-devel libsqlite3-devel libcheck-devel libuuid-devel
 %{?_enable_check:BuildRequires: /proc dbus-tools-gui
 %{?_enable_avahi_tests: python3-module-twisted-web python3-module-twisted-words
@@ -64,6 +64,9 @@ rm -rf %buildroot%_docdir/%name/
 %exclude %_libdir/telepathy/salut-0/lib/*.la
 
 %changelog
+* Wed Aug 18 2021 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt4.1
+- fixed BR
+
 * Wed Nov 18 2020 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt4
 - fixed build with Python3 (fc), updated BR
 
