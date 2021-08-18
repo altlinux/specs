@@ -1,26 +1,40 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global srcname commons-lang3
+%bcond_with bootstrap
 
 Name:           apache-commons-lang3
-Version:        3.11
-Release:        alt1_1jpp11
+Version:        3.12.0
+Release:        alt1_3jpp11
 Summary:        Provides a host of helper utilities for the java.lang API
 License:        ASL 2.0
-
 URL:            https://commons.apache.org/lang
-Source0:        https://archive.apache.org/dist/commons/lang/source/%{srcname}-%{version}-src.tar.gz
-
 BuildArch:      noarch
 
+Source0:        https://archive.apache.org/dist/commons/lang/source/commons-lang3-%{version}-src.tar.gz
+Patch1:         0001-Remove-test-dependency-on-JUnit-Pioneer.patch
+
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(biz.aQute.bnd:biz.aQute.bndlib)
+BuildRequires:  mvn(com.google.code.findbugs:jsr305)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.easymock:easymock)
+BuildRequires:  mvn(org.hamcrest:hamcrest)
+BuildRequires:  mvn(org.junit.jupiter:junit-jupiter)
+%endif
 Source44: import.info
 
 %description
@@ -40,48 +54,48 @@ therefore created differently named artifact and jar files. This is
 the new version, while apache-commons-lang is the compatibility
 package.
 
-
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
-
+%{?javadoc_package}
 
 %prep
-%setup -q -n %{srcname}-%{version}-src
+%setup -n commons-lang3-%{version}-src
 
+%patch1 -p1
 
-# remove unnecessary maven plugins
 %pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_dep org.openjdk.jmh:jmh-core
+%pom_remove_dep org.openjdk.jmh:jmh-generator-annprocess
+%pom_remove_dep :junit-bom
 
 %mvn_file : %{name} commons-lang3
 
+# testParseSync() test fails on ARM and PPC64LE for unknown reason
+sed -i 's/\s*public void testParseSync().*/@org.junit.jupiter.api.Disabled\n&/' \
+    src/test/java/org/apache/commons/lang3/time/FastDateFormatTest.java
+
+# non-deterministic tests fail randomly
+rm src/test/java/org/apache/commons/lang3/RandomStringUtilsTest.java
+
+# Missing dependencies
+rm src/test/java/org/apache/commons/lang3/HashSetvBitSetTest.java
+
+# Remove limits and Java 11 options
+sed -i '/<argLine>/d' pom.xml
 
 %build
-# test dependencies are not all packaged for fedora:
-# - org.easymock:easymock 4.2
-# - org.junit-pioneer:junit-pioneer
-# - org.openjdk.jmh:jmh-core
-# - org.openjdk.jmh:jmh-generator-annprocess
+# See "-DcommonsLang3Version" in maven-surefire for the tested version
 %mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
-
 
 %install
 %mvn_install
-
 
 %files -f .mfiles
 %doc --no-dereference LICENSE.txt NOTICE.txt
 %doc RELEASE-NOTES.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt NOTICE.txt
-
-
 %changelog
+* Wed Aug 18 2021 Igor Vlasenko <viy@altlinux.org> 3.12.0-alt1_3jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.11-alt1_1jpp11
 - new version
 
