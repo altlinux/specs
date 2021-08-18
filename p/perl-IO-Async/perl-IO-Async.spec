@@ -3,7 +3,7 @@
 
 Name: perl-%oname
 Version: 0.78
-Release: alt1
+Release: alt2
 
 Summary: Asynchronous event-driven programming
 Group: Development/Perl
@@ -42,6 +42,8 @@ Future::IO Implementation using IO::Async
 
 %install
 %perl_vendor_install
+rm -rfv %buildroot%perl_vendor_privlib/IO/Async/LoopTests.pm
+rm -rfv %buildroot%perl_vendor_privlib/IO/Async/Test.pm
 
 %files
 %doc Changes README examples
@@ -51,6 +53,9 @@ Future::IO Implementation using IO::Async
 %perl_vendor_privlib/Future/IO/Impl/IOAsync.pm
 
 %changelog
+* Wed Aug 18 2021 Vitaly Lipatov <lav@altlinux.ru> 0.78-alt2
+- don't pack IO/Async/LoopTests.pm IO/Async/Test.pm
+
 * Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 0.78-alt1
 - new version
 
