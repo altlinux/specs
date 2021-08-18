@@ -1,6 +1,6 @@
 Name: fontconfig
 Version: 2.13.1
-Release: alt1
+Release: alt2
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -23,7 +23,6 @@ Provides: lib%name = %version
 Obsoletes: lib%name < %version
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: docbook-utils elinks gperf libexpat-devel libfreetype-devel libuuid-devel
-BuildRequires: python2.7(urllib2) python2.7(lxml) python2.7(six) python2.7(distutils)
 
 %description
 Fontconfig is designed to locate fonts within the system and
@@ -142,6 +141,9 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Wed Aug 18 2021 Sergey V Turchin <zerg@altlinux.org> 2.13.1-alt2
+- fix build requires
+
 * Wed Oct 31 2018 Sergey V Turchin <zerg@altlinux.org> 2.13.1-alt1
 - new version
 
