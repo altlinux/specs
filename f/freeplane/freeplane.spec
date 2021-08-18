@@ -14,7 +14,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:		freeplane
 Version:	1.3.15
-Release:	alt3_7jpp8
+Release:	alt4_7jpp8
 Summary:	Mind mapping, knowledge management and project management tool
 Group:		Office
 License:	GPLv2+
@@ -32,6 +32,8 @@ Source91:	%{__fp_github}/freeplane/lib/idw-gpl.jar
 Source92:	%{__fp_github}/freeplane_plugin_script/lib/jsyntaxpane.jar
 Source33:	groovy-1.8.jar
 Source34:	SimplyHTML.jar
+Source35:	jgoodies-forms.jar
+
 # 3rd-party .jars still kept in the package:
 # freeplane: knopflerfish, idw-gpl
 # freeplane_plugin_script: jsyntaxpane (see Source.. above)
@@ -156,12 +158,11 @@ sed -i 's/lookandfeel = default/lookandfeel = com.sun.java.swing.plaf.gtk.GTKLoo
 
 %build
 mkdir lib
-install -m 644 %{SOURCE33} %{SOURCE34} lib/
-CLASSPATH=`pwd`/lib/groovy-1.8.jar:`pwd`/lib/SimplyHTML.jar
+install -m 644 %{SOURCE33} %{SOURCE34} %{SOURCE35} lib/
+CLASSPATH=`pwd`/lib/groovy-1.8.jar:`pwd`/lib/SimplyHTML.jar:`pwd`/lib/jgoodies-forms.jar
 for cp in \
     avalon-framework-api \
     objectweb-asm3/asm-distroshaded \
-    jgoodies-forms \
     commons-lang \
     commons-io \
     commons-codec \
@@ -269,6 +270,9 @@ cp -ap -t %{buildroot}%{_javadir}/%{name}/org.freeplane.core/lib/ \
 
 
 %changelog
+* Wed Aug 18 2021 Igor Vlasenko <viy@altlinux.org> 1.3.15-alt4_7jpp8
+- bundled jgoodies-forms to fix build
+
 * Thu May 13 2021 Igor Vlasenko <viy@altlinux.org> 1.3.15-alt3_7jpp8
 - bundled SimplyHTML to fix build
 
