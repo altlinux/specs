@@ -1,9 +1,9 @@
 %def_disable hacks
-%define tested_version 8.3.7.1949
+%define tested_version 8.3.18.1208
 
 Name:    1c-preinstall
 Version: 8.3
-Release: alt12
+Release: alt13
 
 Summary: Set correct environment for 1C:Enterprise client
 License: GPL
@@ -51,8 +51,8 @@ This metapackage is intend to deploy correct environment for
 Tested with 1C:Enterprise client version %tested_version
 
 %package full
-Summary:  Set correct environment for 1C:Enterprise client with Microsoft (tm) fonts
-Group:    System/Libraries
+Summary: Set correct environment for 1C:Enterprise client with Microsoft (tm) fonts
+Group: System/Libraries
 BuildArch: noarch
 Requires: %name
 Requires: fonts-ttf-ms
@@ -60,8 +60,19 @@ Requires: fonts-ttf-ms
 %description full
 This metapackage is intend to deploy correct environment for
 1C:Enterprise client installation. This package also install
-Microsoft (tm) fonts are needed by 1C:Enterprise client and haspd
-for HASP key support.
+Microsoft (tm) fonts are needed by 1C:Enterprise client.
+
+%package server
+Summary: Set correct environment for 1C:Enterprise server
+Group: Databases
+BuildArch:noarch
+Requires: %name
+Requires: postgresql12-1C-server
+Requires: postgresql12-1C-contrib
+
+%description server
+This metapackage is intend to deploy the correct environment for
+installing 1C:Enterprise server.
 
 %install
 %if_enabled hacks
@@ -92,7 +103,14 @@ mkdir -p %buildroot
 %exclude %_datadir/fonts/ttf/ms
 %endif
 
+%files server
+
 %changelog
+* Wed Aug 11 2021 Anna Khrustova <khab@altlinux.org> 8.3-alt13
+- Add for server:
+- Requires postgresql12-1C-server.
+- Requires postgresql12-1C-contrib.
+
 * Thu Mar 26 2020 Andrey Cherepanov <cas@altlinux.org> 8.3-alt12
 - Requires file package (ALT #31214).
 - Requires libnsl1 (ALT #37176).
