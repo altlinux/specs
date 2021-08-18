@@ -22,7 +22,7 @@ BuildRequires: perl(Digest/SHA.pm) perl(Exporter.pm) perl(Fcntl.pm) perl(File/Sp
 
 Name: perl-Net-BitTorrent
 Version: 0.052
-Release: alt3
+Release: alt4
 
 Summary: Net-BitTorrent - Perl module
 
@@ -34,6 +34,9 @@ Packager: Igor Vlasenko <viy@altlinux.ru>
 
 BuildArch: noarch
 Source: http://search.cpan.org/CPAN/authors/id/S/SA/SANKO/%m_distro-%version.tar.gz
+
+# mask ConfigData.pm requires
+%add_findreq_skiplist perl(Module/Build.pm)
 
 %description
 None.
@@ -65,6 +68,9 @@ scripts for %name
 
 
 %changelog
+* Wed Aug 18 2021 Vitaly Lipatov <lav@altlinux.ru> 0.052-alt4
+- drop perl(Module/Build.pm) from requires (mask ConfigData.pm require)
+
 * Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 0.052-alt3
 - fixed unpackaged files
 
