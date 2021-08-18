@@ -3,27 +3,39 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           httpcomponents-core
 Summary:        Set of low level Java HTTP transport components for HTTP services
-Version:        4.4.12
-Release:        alt2_4jpp11
+Version:        4.4.13
+Release:        alt1_4jpp11
 License:        ASL 2.0
 URL:            http://hc.apache.org/
-Source0:        http://www.apache.org/dist/httpcomponents/httpcore/source/httpcomponents-core-%{version}-src.tar.gz
+Source0:        https://www.apache.org/dist/httpcomponents/httpcore/source/httpcomponents-core-%{version}-src.tar.gz
 Patch0:         0001-Port-to-mockito-2.patch
 
 BuildArch:      noarch
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.httpcomponents:httpcomponents-parent:pom:)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.mockito:mockito-core)
+%endif
 Source44: import.info
 
 Obsoletes: hc-httpcore < 4.1.1
@@ -42,14 +54,7 @@ appropriate for high latency scenarios where raw data throughput is
 less important than the ability to handle thousands of simultaneous
 HTTP connections in a resource efficient manner.
 
-%package        javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-
-%description    javadoc
-%{summary}.
-
+%{?javadoc_package}
 
 %prep
 %setup -q
@@ -63,6 +68,10 @@ sed -i '/Thread.sleep/s/100/2000/' httpcore-nio/src/test/java/org/apache/http/ni
 %pom_remove_plugin :apache-rat-plugin
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :maven-javadoc-plugin
+
+# We don't have conscrypt for testing
+%pom_remove_dep :conscrypt-openjdk-uber httpcore-nio
+rm httpcore-nio/src/test/java/org/apache/http/nio/integration/TestJSSEProviderIntegration.java
 
 # we don't need these artifacts right now
 %pom_disable_module httpcore-osgi
@@ -94,18 +103,19 @@ done
 %mvn_file ":{*}" httpcomponents/@1
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt README.txt RELEASE_NOTES.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
+%doc README.txt RELEASE_NOTES.txt
 
 %changelog
+* Wed Aug 18 2021 Igor Vlasenko <viy@altlinux.org> 4.4.13-alt1_4jpp11
+- new version
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 4.4.12-alt2_4jpp11
 - fixed build
 
