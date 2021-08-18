@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -12,42 +12,38 @@ BuildRequires: jpackage-11-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_with        memcached
-%bcond_with        ehcache
+%bcond_with bootstrap
 
 Name:              httpcomponents-client
 Summary:           HTTP agent implementation based on httpcomponents HttpCore
-Version:           4.5.10
-Release:           alt2_6jpp11
+Version:           4.5.13
+Release:           alt1_2jpp11
 License:           ASL 2.0
 URL:               http://hc.apache.org/
-Source0:           http://www.apache.org/dist/httpcomponents/httpclient/source/%{name}-%{version}-src.tar.gz
+Source0:           https://www.apache.org/dist/httpcomponents/httpclient/source/%{name}-%{version}-src.tar.gz
+BuildArch:         noarch
 
 Patch0:            0001-Use-system-copy-of-effective_tld_names.dat.patch
 Patch1:            0002-Port-to-mockito-2.patch
 
-BuildArch:         noarch
-
 BuildRequires:     maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:     mvn(commons-codec:commons-codec)
 BuildRequires:     mvn(commons-logging:commons-logging)
 BuildRequires:     mvn(junit:junit)
-%if %{with ehcache}
-BuildRequires:     mvn(net.sf.ehcache:ehcache-core)
-%endif
-%if %{with memcached}
-BuildRequires:     mvn(net.spy:spymemcached)
-%endif
 BuildRequires:     mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:     mvn(org.apache.httpcomponents:httpcomponents-parent:pom:)
 BuildRequires:     mvn(org.apache.httpcomponents:httpcore)
 BuildRequires:     mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:     mvn(org.mockito:mockito-core)
+%endif
 
+%if %{without bootstrap}
 BuildRequires:     publicsuffix-list
+%endif
 Requires:          publicsuffix-list
-
-Obsoletes:         %{name}-tests < 4.4
 Source44: import.info
 
 Obsoletes: hc-httpclient < 4.1.1
@@ -61,20 +57,7 @@ management. HttpComponents Client is a successor of and replacement
 for Commons HttpClient 3.x. Users of Commons HttpClient are strongly
 encouraged to upgrade.
 
-%package        cache
-Group: Development/Java
-Summary:        Cache module for %{name}
-
-%description    cache
-This package provides client side caching for %{name}.
-
-%package        javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-
-%description    javadoc
-%{summary}.
+%{?javadoc_package}
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -82,11 +65,16 @@ BuildArch: noarch
 %patch1 -p1
 
 %mvn_package :::tests: __noinstall
-%mvn_package :httpclient-cache cache
+
+# Change scope of commons-logging to provided
+%pom_change_dep :commons-logging :::provided httpclient
 
 # Remove optional build deps not available in Fedora
 %pom_disable_module httpclient-osgi
 %pom_disable_module httpclient-win
+%pom_disable_module fluent-hc
+%pom_disable_module httpmime
+%pom_disable_module httpclient-cache
 %pom_remove_plugin :docbkx-maven-plugin
 %pom_remove_plugin :clirr-maven-plugin
 %pom_remove_plugin :maven-checkstyle-plugin
@@ -97,12 +85,6 @@ BuildArch: noarch
 
 # Fails due to strict crypto policy - uses DSA in test data
 rm httpclient/src/test/java/org/apache/http/conn/ssl/TestSSLSocketFactory.java
-
-# Don't compile/run httpclient-cache tests - they are incompatible with EasyMock 3.3
-%pom_remove_dep org.easymock:easymockclassextension
-%pom_remove_dep org.slf4j:slf4j-jcl httpclient-cache
-%pom_remove_dep :::test httpclient-cache
-rm -rf httpclient-cache/src/test
 
 %pom_remove_plugin :download-maven-plugin httpclient
 
@@ -144,56 +126,25 @@ rm -rf httpclient-cache/src/test
 </pluginManagement>
 " httpclient
 
-%pom_xpath_inject pom:build "
-<pluginManagement>
-  <plugins>
-    <plugin>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>maven-bundle-plugin</artifactId>
-      <extensions>true</extensions>
-      <configuration>
-        <instructions>
-          <Export-Package>*</Export-Package>
-          <Import-Package>net.sf.ehcache;resolution:=optional,net.spy.memcached;resolution:=optional,*</Import-Package>
-          <Private-Package></Private-Package>
-          <_nouses>true</_nouses>
-        </instructions>
-        <excludeDependencies>true</excludeDependencies>
-      </configuration>
-    </plugin>
-  </plugins>
-</pluginManagement>" httpclient-cache
-
 # requires network
 rm httpclient/src/test/java/org/apache/http/client/config/TestRequestConfig.java
 
-%if %{without memcached}
-rm -r httpclient-cache/src/*/java/org/apache/http/impl/client/cache/memcached
-%pom_remove_dep :spymemcached httpclient-cache
-%endif
-%if %{without ehcache}
-rm -r httpclient-cache/src/*/java/org/apache/http/impl/client/cache/ehcache
-%pom_remove_dep :ehcache-core httpclient-cache
-%endif
-
+%build
 %mvn_file ":{*}" httpcomponents/@1
 
-%build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
-
-%files -f .mfiles
-%doc LICENSE.txt NOTICE.txt README.txt RELEASE_NOTES.txt
-
-%files cache -f .mfiles-cache
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%files -n %{?module_prefix}%{name} -f .mfiles
+%doc --no-dereference LICENSE.txt NOTICE.txt
+%doc README.txt RELEASE_NOTES.txt
 
 %changelog
+* Wed Aug 18 2021 Igor Vlasenko <viy@altlinux.org> 4.5.13-alt1_2jpp11
+- new version
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 4.5.10-alt2_6jpp11
 - fc34 update
 
