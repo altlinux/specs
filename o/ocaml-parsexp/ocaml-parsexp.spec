@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 %define libname parsexp
 Name: ocaml-%libname
-Version: 0.14.0
-Release: alt3
+Version: 0.14.1
+Release: alt1
 Summary: S-expression parsing library for ocaml
 Group: Development/ML
 License: Apache-2.0
@@ -64,6 +64,9 @@ rm -rf %buildroot/usr/share/doc
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Aug 18 2021 Anton Farygin <rider@altlinux.ru> 0.14.1-alt1
+- 0.14.1
+
 * Fri Sep 18 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt3
 - mirated to rpm-build-ocaml 1.4
 - added ocaml-base-devel dependency to devel package
