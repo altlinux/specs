@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-weather
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Access current weather conditions and forecasts
@@ -45,8 +45,8 @@ Requires: typelib(Gtk) = 3.0
 Requires: typelib(GWeather)
 Requires: typelib(Handy) = 1
 
-BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
-BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
+BuildRequires: meson yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgtk+3-devel >= %gtk_ver libgjs-devel >= %gjs_ver
 BuildRequires: libgweather-devel >= %gweather_ver pkgconfig(geoclue-2.0)
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
@@ -85,6 +85,9 @@ access updated forecasts provided by various internet services.
 %doc NEWS
 
 %changelog
+* Wed Aug 18 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
+- 40.1
+
 * Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 

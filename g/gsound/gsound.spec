@@ -3,11 +3,13 @@
 %define ver_major 1.0
 %define api_ver 1.0
 
+%def_enable vala
 %def_enable gtk_doc
+%def_enable check
 
 Name: gsound
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: GSound is a small library for playing system sounds
 Group: Sound
@@ -19,18 +21,17 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
-Patch: %name-1.0.2-alt-tools_makefile.patch
 
 Requires: lib%name = %version-%release
 
 %define glib_ver 2.36.0
 %define gtk_doc_ver 1.20
 
-BuildRequires(pre): rpm-build-gir rpm-build-vala
-BuildRequires: autoconf-archive
-BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: libcanberra-devel gobject-introspection-devel gtk-doc >= %gtk_doc_ver
-BuildRequires: vala-tools libcanberra-vala
+BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-vala
+BuildRequires: meson libgio-devel >= %glib_ver
+BuildRequires: libcanberra-devel gobject-introspection-devel
+%{?_enable_vala:BuildRequires: vala-tools libcanberra-vala}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc >= %gtk_doc_ver}
 
 %description
 GSound is a small library for playing system sounds. It's designed to be
@@ -87,27 +88,26 @@ GObject introspection devel data for the GSound library.
 
 %prep
 %setup
-%patch
-%ifarch %e2k
-# unsupported as of lcc 1.23.20
-sed -i 's,--warn-all,-Wall,;s,--warn-error,-Werror,' m4/ax_compiler_flags_gir.m4
-%endif
 
 %build
-%autoreconf
-%configure --disable-static \
-    %{?_enable_gtk_doc:--enable-gtk-doc}
+%meson \
+    %{?_enable_gtk_doc:-Dgtk_doc=true} \
+    %{?_disable_vala:-Dvapi=false}
 %nil
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang %name
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files -f %name.lang
 %_bindir/%name-play
-%doc NEWS README
+%{?_enable_gtk_doc:%_man1dir/%name-play.1*}
+%doc README*
 
 %files -n lib%name
 %_libdir/lib%name.so.*
@@ -116,12 +116,12 @@ sed -i 's,--warn-all,-Wall,;s,--warn-error,-Werror,' m4/ax_compiler_flags_gir.m4
 %_includedir/*.h
 %_libdir/lib%name.so
 %_pkgconfigdir/%name.pc
-%_vapidir/%name.deps
-%_vapidir/%name.vapi
+%{?_enable_vala:%_vapidir/%name.deps
+%_vapidir/%name.vapi}
 
 %if_enabled gtk_doc
 %files -n lib%name-devel-doc
-%_datadir/gtk-doc/html/%name/
+%_datadir/gtk-doc/html/%{name}*/
 %endif
 
 %files -n lib%name-gir
@@ -131,6 +131,9 @@ sed -i 's,--warn-all,-Wall,;s,--warn-error,-Werror,' m4/ax_compiler_flags_gir.m4
 %_girdir/GSound-%api_ver.gir
 
 %changelog
+* Wed Aug 18 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
+- 1.0.3 (ported to Meson build system)
+
 * Fri Nov 20 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt2
 - updated to 1.0.2-4-g7f42599 (gsound-play: fixed setlocale call)
 - fixed build with automake-1.16.3, updated BRs

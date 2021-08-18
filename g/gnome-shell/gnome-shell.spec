@@ -12,7 +12,7 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -119,8 +119,8 @@ Requires: typelib(TelepathyLogger)
 Requires: typelib(UPowerGlib)
 Requires: typelib(WebKit2)
 
-BuildRequires(pre): meson rpm-build-gir rpm-build-python3 rpm-build-xdg
-BuildRequires: gcc-c++ gtk-doc xsltproc asciidoc-a2x sassc
+BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3 rpm-build-xdg
+BuildRequires: meson gcc-c++ gtk-doc xsltproc asciidoc-a2x sassc
 BuildRequires: %_bindir/appstream-util desktop-file-utils
 BuildRequires: bash-completion
 BuildRequires: python3-devel
@@ -280,6 +280,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %endif
 
 %changelog
+* Wed Aug 18 2021 Yuri N. Sedunov <aris@altlinux.org> 40.4-alt1
+- 40.4
+
 * Mon Jul 12 2021 Yuri N. Sedunov <aris@altlinux.org> 40.3-alt1
 - 40.3
 

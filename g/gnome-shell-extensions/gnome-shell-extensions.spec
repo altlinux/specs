@@ -8,7 +8,7 @@
 %def_enable classic_mode
 
 Name: gnome-shell-extensions
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 
 Summary: GNOME Shell Extensions
@@ -32,8 +32,8 @@ Requires: gnome-shell >= %version
 # } = imports.gi;
 %{?_enable_classic_mode:Requires: typelib(GMenu) = 3.0}
 
-BuildRequires(pre): meson rpm-build-gir
-BuildRequires: libgjs-devel libmozjs78-tools sassc
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson libgjs-devel libmozjs78-tools sassc
 
 %description
 GNOME Shell Extensions is a collection of extensions providing additional
@@ -158,6 +158,9 @@ See %_docdir/%name-%version/README for more information.
 %doc NEWS README.md
 
 %changelog
+* Wed Aug 18 2021 Yuri N. Sedunov <aris@altlinux.org> 40.4-alt1
+- 40.4
+
 * Mon Jul 12 2021 Yuri N. Sedunov <aris@altlinux.org> 40.3-alt1
 - 40.3
 

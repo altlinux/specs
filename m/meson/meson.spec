@@ -1,22 +1,24 @@
 %def_disable snapshot
 
-%define ver_major 0.58
+%define ver_major 0.59
 %define libname mesonbuild
 %define pkgdocdir %_docdir/%name-%version
 
 # pkexec may be used to "gain elevated privileges" during install
 %def_without polkit
-%def_enable docs
+# since 0.59 https://wrapdb.mesonbuild.com/v2/releases.json
+# required for tools/regenerate_docs.py
+%def_disable docs
 %def_disable check
 
 Name: meson
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: High productivity build system
 Group: Development/Python3
 License: Apache-2.0
-Url: http://mesonbuild.com/
+Url: https://mesonbuild.com/
 
 %if_disabled snapshot
 Source: https://github.com/mesonbuild/meson/archive/%version/%name-%version.tar.gz
@@ -30,6 +32,7 @@ Source2: %name.env
 BuildArch: noarch
 
 %define python_ver 3.6
+Requires: rpm-macros-%name = %EVR
 Requires: python3 >= %python_ver
 Requires: ninja-build >= 1.7
 # since 0.58.0 some builds fail for 64-bit without /proc, need investigate.
@@ -70,6 +73,13 @@ Meson is a build system designed to optimize programmer productivity.
 It aims to do this by providing simple, out-of-the-box support for modern
 software development tools and practices, such as unit tests, coverage
 reports, Valgrind, CCache and the like.
+
+%package -n rpm-macros-%name
+Summary: RPM macros for Meson build system
+Group: Development/Other
+
+%description -n rpm-macros-%name
+This package provides RPM macros for Meson build system.
 
 %package doc
 Summary: Meson build system documetation
@@ -113,17 +123,22 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 %{?_without_polkit:
 %exclude %_datadir/polkit-1/actions/com.mesonbuild.install.policy}
 %_man1dir/%name.1.*
+%{?_disabled_docs:%doc COPYING README.*}
+
+%files -n rpm-macros-%name
 %_rpmmacrosdir/%name
 %_rpmmacrosdir/%name.env
-%{?_disabled_docs:%doc COPYING README.*}
 
 %if_enabled docs
 %files doc
 %pkgdocdir/
 %endif
 
-
 %changelog
+* Wed Aug 18 2021 Yuri N. Sedunov <aris@altlinux.org> 0.59.1-alt1
+- 0.59.1
+- new rpm-macros-meson subpackage
+
 * Tue Jul 20 2021 Yuri N. Sedunov <aris@altlinux.org> 0.58.2-alt1
 - 0.58.2
 

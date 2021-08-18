@@ -3,13 +3,13 @@
 %define _name json-glib
 %define ver_major 1.6
 %define api_ver 1.0
-%def_enable gtk_doc
+%def_disable gtk_doc
 %def_enable man
 %def_enable introspection
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: GLib-based JSON manipulation library
@@ -21,16 +21,16 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 
 # https://gitlab.gnome.org/GNOME/json-glib/-/issues/33
 # --default-symver breaks set-versioned dependencies, revert it
-Patch: json-glib-1.6.0-up-ef7fb78a5370a5e36272e3bbe91e1864b766a565.patch
+Patch: json-glib-1.6.4-alt-remove_symbol_versioning.patch
 
 %define glib_ver 2.54
 %define gi_ver 0.10.5
 
-BuildRequires(pre): meson
-BuildRequires: glib2-devel >= %glib_ver
-%{?_enable_static:BuildPreReq: glibc-devel-static}
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson glib2-devel >= %glib_ver
+%{?_enable_static:BuildRequires: glibc-devel-static}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
-%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_gtk_doc:BuildRequires: gi-docgen}
 %{?_enable_man:BuildRequires: xsltproc docbook-dtds docbook-style-xsl}
 
 %description
@@ -75,7 +75,6 @@ Conflicts: lib%name < %version
 %description devel-doc
 This package contains developer documentation for the JSON-GLib library.
 
-
 %package tests
 Summary: Tests for the %_name package
 Group: Development/Other
@@ -88,18 +87,17 @@ the functionality of the installed %_name library.
 
 %prep
 %setup -n %_name-%version
-%patch -p1 -R
+%patch -p1 -b .symver
 
 %build
-%meson %{?_disable introspection:-Ddisable-introspection=true} \
+%meson %{?_disable_introspection:-Dintrospection=disabled} \
 	%{?_disable_gtk_doc:-Dgtk_doc=disabled} \
 	%{?_enable_man:-Dman=true}
-
+%nil
 %meson_build
 
 %install
 %meson_install
-
 %find_lang --output=%_name.lang %_name-%api_ver
 
 %check
@@ -118,11 +116,8 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %files devel
 %_libdir/*.so
-%_pkgconfigdir/*
-%_includedir/*
-%if_enabled docs
-%_datadir/gtk-doc/html/*
-%endif
+%_includedir/%_name-%api_ver/
+%_pkgconfigdir/%_name-%api_ver.pc
 
 %if_enabled introspection
 %files gir
@@ -142,6 +137,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/installed-tests/%_name-%api_ver/
 
 %changelog
+* Tue Aug 17 2021 Yuri N. Sedunov <aris@altlinux.org> 1.6.4-alt1
+- 1.6.4
+
 * Tue Feb 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.6.2-alt1
 - 1.6.2
 

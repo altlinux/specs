@@ -18,7 +18,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -57,10 +57,10 @@ Obsoletes: gscript
 %define gi_ver 0.9.5
 %define hb_ver 2.2.0
 %define thai_ver 0.1.9
-%define fribidi_ver 0.19.7
+%define fribidi_ver 1.0.6
 
-BuildRequires(pre): meson >= %meson_ver rpm-build-gnome
-BuildRequires: gcc-c++
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires: meson >= %meson_ver gcc-c++
 BuildRequires: glib2-devel >= %glib_ver libgio-devel
 BuildRequires: libharfbuzz-devel >= %hb_ver
 BuildRequires: libfribidi-devel >= %fribidi_ver
@@ -215,6 +215,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Wed Aug 18 2021 Yuri N. Sedunov <aris@altlinux.org> 1.48.9-alt1
+- 1.48.9
+
 * Thu Aug 12 2021 Yuri N. Sedunov <aris@altlinux.org> 1.48.8-alt1
 - 1.48.8
 
