@@ -1,5 +1,5 @@
 Name: alt-csp-cryptopro
-Version: 0.2.4
+Version: 0.2.5
 Release: alt1
 
 Group: File tools
@@ -42,6 +42,9 @@ install -m 0644 %_cmake__builddir/*.qm %buildroot/%_qt5_translationdir/
 %_datadir/file-manager/actions/alt-csp-cryptopro.desktop
 
 %changelog
+* Wed Aug 18 2021 Oleg Solovyov <mcpain@altlinux.org> 0.2.5-alt1
+- support newer version of cryptopro (Closes: #40749)
+
 * Fri Jul 23 2021 Oleg Solovyov <mcpain@altlinux.org> 0.2.4-alt1
 - sign using multiple certificates at once
 
