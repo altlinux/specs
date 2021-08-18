@@ -4,14 +4,14 @@ Group: Development/Other
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global bundle org.osgi.core
 
 Name:           felix-osgi-core
 Version:        1.4.0
-Release:        alt5_26jpp8
+Release:        alt6_26jpp11
 Summary:        Felix OSGi R4 Core Bundle
 License:        ASL 2.0
 URL:            http://felix.apache.org/site/apache-felix-osgi-core.html
@@ -39,7 +39,8 @@ This package contains API documentation for %{name}.
 %setup -q -n %{bundle}-%{version}
 
 %mvn_file :%{bundle} "felix/%{bundle}"
-%mvn_alias "org.apache.felix:%{bundle}" "org.osgi:%{bundle}"
+# let org.osgi:org.osgi.core be in osgi-core
+#mvn_alias "org.apache.felix:%{bundle}" "org.osgi:%{bundle}"
 
 %build
 export LC_ALL=C.utf8
@@ -55,6 +56,10 @@ export LC_ALL=C.utf8
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Aug 18 2021 Igor Vlasenko <viy@altlinux.org> 0:1.4.0-alt6_26jpp11
+- java11 build
+- disabled org.osgi:org.osgi.core
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.4.0-alt5_26jpp8
 - new version
 
