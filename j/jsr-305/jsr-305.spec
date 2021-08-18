@@ -1,51 +1,56 @@
 Epoch: 1
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           jsr-305
-Version:        0
-Release:        alt4_0.30.20130910svnjpp11
+Version:        3.0.2
+Release:        alt1_3jpp11
 Summary:        Correctness annotations for Java code
 
 # The majority of code is BSD-licensed, but some Java sources
 # are licensed under CC-BY license, see: $ grep -r Creative .
 License:        BSD and CC-BY
-URL:            http://jsr-305.googlecode.com/
+URL:            https://code.google.com/p/jsr-305
 BuildArch:      noarch
 
-# There has been no official release yet.  This is a snapshot of the Subversion
-# repository as of 10 Sep 2013.  Use the following commands to generate the
-# tarball:
-#   svn export -r 51 http://jsr-305.googlecode.com/svn/trunk jsr-305
-#   tar -czvf jsr-305-20130910svn.tgz jsr-305
-Source0:        jsr-305-20130910svn.tgz
+# ./generate-tarball.sh
+Source0:        %{name}-%{version}.tar.gz
 # File containing URL to CC-BY license text
 Source1:        NOTICE-CC-BY.txt
 
-Patch0:         %{name}-java8.patch
-
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+%endif
 Source44: import.info
-
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc documentation for %{name}
-BuildArch: noarch
 
 %description
 This package contains reference implementations, test cases, and other
 documents for Java Specification Request 305: Annotations for Software Defect
 Detection.
 
-%description javadoc
-This package contains the API documentation for %{name}.
+%{?javadoc_package}
 
 %prep
-%setup -q -n %{name}
+%setup -q
 cp %{SOURCE1} NOTICE-CC-BY
-%patch0 -p1
+
+%pom_xpath_set "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/*" 1.6
+
+sed -i 's|<groupId>com\.google\.code\.findbugs</groupId>|<groupId>org.jsr-305</groupId>|' ri/pom.xml
+sed -i 's|<artifactId>jsr305</artifactId>|<artifactId>ri</artifactId>|' ri/pom.xml
 
 %mvn_file :ri %{name}
 %mvn_alias :ri com.google.code.findbugs:jsr305
@@ -54,6 +59,14 @@ cp %{SOURCE1} NOTICE-CC-BY
 # do not build sampleUses module - it causes Javadoc generation to fail
 %pom_disable_module sampleUses
 
+%pom_remove_parent ri
+%pom_add_parent org.jsr-305:jsr-305:0.1-SNAPSHOT ri
+
+%pom_remove_plugin org.sonatype.plugins:nexus-staging-maven-plugin ri
+%pom_remove_plugin org.apache.maven.plugins:maven-source-plugin ri
+%pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin ri
+%pom_remove_plugin org.apache.maven.plugins:maven-gpg-plugin ri
+
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
@@ -61,14 +74,13 @@ cp %{SOURCE1} NOTICE-CC-BY
 %mvn_install
 
 %files -f .mfiles
-%doc NOTICE-CC-BY sampleUses
-%doc --no-dereference ri/LICENSE
-
-%files javadoc -f .mfiles-javadoc
-%doc NOTICE-CC-BY
-%doc --no-dereference ri/LICENSE
+%doc --no-dereference ri/LICENSE NOTICE-CC-BY
+%doc sampleUses
 
 %changelog
+* Wed Aug 18 2021 Igor Vlasenko <viy@altlinux.org> 1:3.0.2-alt1_3jpp11
+- new version
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 1:0-alt4_0.30.20130910svnjpp11
 - new version
 
