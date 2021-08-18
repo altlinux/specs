@@ -1,5 +1,5 @@
 Name: ghostscript
-Version: 9.53.3
+Version: 9.54.0
 Release: alt1
 
 %define ijsver	0.35
@@ -40,7 +40,6 @@ Patch113: Ubuntu-CVE-2020-15900.patch
 Patch500: ghostscript-alt-ijs-version.patch
 Patch501: alt-urw-fonts-naming.patch
 Patch502: ghostscript-9.23-100-run-dvipdf-securely.patch
-
 
 #compatibility requires
 Requires: %name-classic = %version-%release
@@ -272,37 +271,29 @@ mkdir -p %buildroot/%_datadir/ghostscript/conf.d
 cp -a examples %buildroot%_docdir/%name-%version
 
 %files
-%files common
 %doc %_docdir/%name-%version
+
+%files common
 %_datadir/ghostscript
 %_datadir/ghostscript/conf.d
-%_bindir/pdf2dsc
-%_bindir/pdf2ps
-%_bindir/gsnd
 
 %files classic
 %doc pcl/examples
 %doc xps/tools
-%_bindir/gs
-%_bindir/gxps
-%_bindir/gpcl6
-%_bindir/gpdl
+%_bindir/*
+%_man1dir/*
+%exclude %_bindir/unix*
+%exclude %_bindir/dvi*
+%exclude %_bindir/gsx
+%exclude %_man1dir/dvi*
 
 %files gtk
 %_bindir/gsx
 
 %files utils
-%_bindir/*
-#common excludes
-%exclude %_bindir/gs
-%exclude %_bindir/gsx
-%exclude %_bindir/pdf2dsc
-%exclude %_bindir/pdf2ps
-%exclude %_bindir/gsnd
-%exclude %_bindir/gxps
-%exclude %_bindir/gpcl6
-%exclude %_bindir/gpdl
-%_man1dir/*
+%_bindir/dvi*
+%_bindir/unix*
+%_man1dir/dvi*
 
 %files module-X
 %_libdir/ghostscript
@@ -327,6 +318,10 @@ cp -a examples %buildroot%_docdir/%name-%version
 %_includedir/ijs
 
 %changelog
+* Tue Aug 17 2021 Fr. Br. George <george@altlinux.ru> 9.54.0-alt1
+- Autobuild version bump to 9.54.0
+- Rearrange packages content
+
 * Fri Oct 23 2020 Fr. Br. George <george@altlinux.ru> 9.53.3-alt1
 - Autobuild version bump to 9.53.3
 - CMap data license was freed long ago in 2015
