@@ -1,5 +1,5 @@
 Name: rpmidentity
-Version: 0.8
+Version: 0.9
 Release: alt1
 
 Summary: Calculate rpm package identity
@@ -19,19 +19,19 @@ This package contains utility that is used to calculate rpm package identity.
 %prep
 %setup -n %name-%version-%release
 
-%build
-make PREFIX=%_prefix
-
 %install
-make DESTDIR=%buildroot PREFIX=%_prefix install
+install -pDm755 %name %buildroot%_bindir/%name
 
 %files
 %doc CHANGES
 %_bindir/rpmidentity
-%dir %_datadir/rpmidentity
-%_datadir/rpmidentity/taglist
 
 %changelog
+* Thu Jul 29 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9-alt1
+- Updated to 0.9.
+- Changed hashsum to BLAKE2.
+- Added --filter-cmd argument.
+
 * Thu Jul 15 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8-alt1
 - Updated to 0.8.
 - taglist: Added more tags to hash.
