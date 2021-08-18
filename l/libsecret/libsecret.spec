@@ -12,7 +12,7 @@
 
 Name: libsecret
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: A client library for the Secret Service DBus API
 Group: System/Libraries
@@ -22,10 +22,12 @@ Url: https://wiki.gnome.org/Projects/Libsecret
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
-#VCS: git://git.gnome.org/libsecret
+Vcs: https://gitlab.gnome.org/GNOME/libsecret.git
 Source: %name-%version.tar
 %endif
 Patch: %name-0.20.0-alt-python3_shebang.patch
+# "Create default collection after DBus.Error.UnknownObject" (ALT #40714)
+Patch10: libsecret-0.20.4-up-d620c79d83acc1bae0bbd7153a691f952b74ca31.patch
 
 %define glib_ver 2.44.0
 %define vala_ver 0.17.2.12
@@ -98,6 +100,7 @@ GObject introspection devel data for %name.
 %prep
 %setup
 %patch -p1
+%patch10 -p1
 
 %build
 %meson \
@@ -147,6 +150,11 @@ dbus-run-session %meson_test
 
 
 %changelog
+* Wed Aug 18 2021 Yuri N. Sedunov <aris@altlinux.org> 0.20.4-alt2
+- libsecret/secret-methods.c: applied upstream patch
+  "Create default collection after DBus.Error.UnknownObject"
+  (ALT #40714)
+
 * Fri Oct 23 2020 Yuri N. Sedunov <aris@altlinux.org> 0.20.4-alt1
 - 0.20.4
 
