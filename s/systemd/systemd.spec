@@ -87,15 +87,12 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
 License: LGPLv2.1+
-
-
-Packager: Alexey Shabalin <shaba@altlinux.ru>
 
 Source: %name-%version.tar
 Source2: systemd-sysv-install
@@ -423,6 +420,7 @@ Obsoletes: zsh-completion-%name < %EVR
 Obsoletes: zsh-completion-journalctl < %EVR
 Requires: %name-utils-filetriggers = %EVR
 Requires: %name-tmpfiles-common = %EVR
+Requires: %name-sysctl-common = %EVR
 
 %description utils
 This package contains utils from systemd:
@@ -634,6 +632,7 @@ Obsoletes: %name-sysusers-standalone < %EVR
 Obsoletes: %name-tmpfiles-standalone < %EVR
 Requires: %name-utils-filetriggers = %EVR
 Requires: %name-tmpfiles-common = %EVR
+Requires: %name-sysctl-common = %EVR
 
 %description utils-standalone
 This package contains standalone utils from systemd:
@@ -661,6 +660,14 @@ BuildArch: noarch
 
 %description tmpfiles-common
 %summary
+
+%package sysctl-common
+Group: System/Configuration/Boot and Init
+Summary: Common sysctl configs
+
+%description sysctl-common
+%summary
+
 
 %prep
 %setup -q
@@ -909,6 +916,10 @@ touch %buildroot%_sysconfdir/hostname
 touch %buildroot%_sysconfdir/vconsole.conf
 touch %buildroot%_sysconfdir/locale.conf
 touch %buildroot%_sysconfdir/machine-info
+
+# Make sure the shutdown/sleep drop-in dirs exist
+mkdir -p %buildroot/lib/systemd/system-shutdown
+mkdir -p %buildroot/lib/systemd/system-sleep
 
 # fix pam.d/systemd-user for ALTLinux
 install -m644 %SOURCE14 %buildroot%_sysconfdir/pam.d/systemd-user
@@ -1622,6 +1633,9 @@ udevadm hwdb --update &>/dev/null
 %endif
 %endif
 
+%dir /lib/systemd/system-shutdown
+%dir /lib/systemd/system-sleep
+
 %dir /lib/systemd/system-preset
 /lib/systemd/system-preset/85-display-manager.preset
 /lib/systemd/system-preset/90-default.preset
@@ -1751,6 +1765,16 @@ udevadm hwdb --update &>/dev/null
 %_tmpfilesdir/var.conf
 %_tmpfilesdir/home.conf
 
+%files sysctl-common
+%config(noreplace) %_sysconfdir/sysctl.d/99-sysctl.conf
+/lib/sysctl.d/49-coredump-disable.conf
+/lib/sysctl.d/50-default.conf
+/lib/sysctl.d/50-net.conf
+/lib/sysctl.d/50-mmap-min-addr.conf
+%if %_lib == lib64
+/lib/sysctl.d/50-pid-max.conf
+%endif
+
 %files utils
 %dir /lib/systemd
 /lib/systemd/libsystemd-shared-%ver_major.so
@@ -1794,14 +1818,6 @@ udevadm hwdb --update &>/dev/null
 /lib/systemd/systemd-sysctl
 /sbin/systemd-sysctl.shared
 %_altdir/systemd-sysctl-shared
-%config(noreplace) %_sysconfdir/sysctl.d/99-sysctl.conf
-/lib/sysctl.d/49-coredump-disable.conf
-/lib/sysctl.d/50-default.conf
-/lib/sysctl.d/50-net.conf
-/lib/sysctl.d/50-mmap-min-addr.conf
-%if %_lib == lib64
-/lib/sysctl.d/50-pid-max.conf
-%endif
 %_mandir/*/*sysctl*
 
 /lib/systemd/systemd-backlight
@@ -2181,6 +2197,12 @@ udevadm hwdb --update &>/dev/null
 %exclude /lib/udev/rules.d/99-systemd.rules
 
 %changelog
+* Wed Aug 18 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.3-alt1
+- v249-stable snapshot
+- Move common sysctl configs to new systemd-sysctl-common package (ALT #40588).
+- Package /lib/systemd/system-shutdown and /lib/systemd/system-sleep dirs (ALT #39349).
+- Delete resovconf(openresolv) settings before add (ALT #33589).
+
 * Wed Jul 21 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.1-alt2
 - Move sysusers configs to stateless package (ALT #40396).
 - Move common tmpfiles configs to new systemd-tmpfiles-common package (ALT #40396).
