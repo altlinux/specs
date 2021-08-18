@@ -1,6 +1,6 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: /usr/bin/desktop-file-validate gcc-c++ libGLU-devel libSDL2-devel libglvnd-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -9,7 +9,7 @@ BuildRequires: /usr/bin/desktop-file-validate gcc-c++ libGLU-devel libSDL2-devel
 
 Name:           cdogs-sdl
 Version:        0.7.3
-Release:        alt1_1
+Release:        alt1_5
 Summary:        C-Dogs is an arcade shoot-em-up
 # The game-engine is GPLv2+
 # The game art is CC
@@ -24,13 +24,7 @@ BuildRequires:  libncurses++-devel libncurses-devel libncursesw-devel libtic-dev
 BuildRequires:  desktop-file-utils libappstream-glib
 Requires:       icon-theme-hicolor
 Obsoletes:      cdogs-data < 0.5
-Provides:       cdogs-data = %EVR
-
-# don't depend on blender just for helper scripts
-%add_findreq_skiplist %_datadir/%{name}/graphics/chars/*/render.py*
-%add_findreq_skiplist %_datadir/%{name}/graphics/chars/*/make_spritesheet.sh
-%add_findprov_skiplist %_datadir/%{name}/graphics/chars/*/render.py*
-%add_findprov_skiplist %_datadir/%{name}/graphics/chars/*/make_spritesheet.sh
+Provides:       cdogs-data = %{version}-%{release}
 Source44: import.info
 
 %description
@@ -54,14 +48,23 @@ rm -r src/cdogs/enet
 sed -i 's/\r//' doc/original_readme.txt
 find graphics sounds -name "*.sh" -delete
 
+%ifarch %e2k
+# unsupported as of lcc 1.25.17
+sed -i 's,-freg-struct-return,,' CMakeLists.txt
+%endif
+
+
 
 %build
-%{fedora_cmake} -DCDOGS_DATA_DIR=/usr/share/cdogs-sdl/ -DUSE_SHARED_ENET=1
-%make_build
+%{fedora_v2_cmake} -DCDOGS_DATA_DIR=/usr/share/cdogs-sdl/ -DUSE_SHARED_ENET=1
+%fedora_v2_cmake_build
 
 
 %install
-%makeinstall_std
+%fedora_v2_cmake_install
+
+
+%check
 desktop-file-validate \
   $RPM_BUILD_ROOT%{_datadir}/applications/io.github.cxong.%{name}.desktop
 appstream-util validate-relax --nonet \
@@ -79,6 +82,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Wed Aug 18 2021 Igor Vlasenko <viy@altlinux.org> 0.7.3-alt1_5
+- e2k support
+
 * Thu Apr 02 2020 Igor Vlasenko <viy@altlinux.ru> 0.7.3-alt1_1
 - update to new release by fcimport
 
