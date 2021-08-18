@@ -4,12 +4,12 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             jline
-Version:          3.19.0
-Release:          alt1_1jpp11
+Version:          3.20.0
+Release:          alt1_2jpp11
 Summary:          Java library for handling console input
 License:          BSD
 URL:              https://github.com/jline/jline3
@@ -222,6 +222,9 @@ sed -i -e 's/org.apache.sshd.server.subsystem.sftp/org.apache.sshd.sftp.server/'
 %files remote-telnet -f .mfiles-jline-remote-telnet
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 0:3.20.0-alt1_2jpp11
+- new version
+
 * Mon Jun 14 2021 Igor Vlasenko <viy@altlinux.org> 0:3.19.0-alt1_1jpp11
 - new version
 
