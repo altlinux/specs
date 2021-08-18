@@ -1,6 +1,6 @@
 Name: 	  nagwad
 Version:  0.9.12
-Release:  alt2
+Release:  alt3
 
 Summary:  Nagios watch daemon
 License:  GPLv3
@@ -10,20 +10,31 @@ Url: 	  http://git.altlinux.org/people/nbr/packages/nagwad.git
 
 Source:   %name-%version.tar
 
-BuildArch: noarch
 BuildRequires: discount
-
-Requires:  systemd audit
-Requires:  osec-cronjob
-Requires:  nagios-nrpe >= 3.2.1-alt4
 
 %description
 Daemon that listens to journald and generates alerts based on journal messages
 Example configuration works with alterator-ports-access. It provides Nagios
 alerts when unauthorized USB devices are inserted.
 
-%prep
-%setup
+%package service
+Summary: Nagios watch daemon
+Group:   Monitoring
+
+BuildArch: noarch
+
+Provides: %name = %version-%release
+Obsoletes: %name <= 0.9.12-alt2
+
+Requires: systemd
+Requires: osec-cronjob
+Requires: nagios-nrpe >= 3.2.1-alt4
+Requires: %name-audit = %version-%release
+
+%description service
+Daemon that listens to journald and generates alerts based on journal messages
+Example configuration works with alterator-ports-access. It provides Nagios
+alerts when unauthorized USB devices are inserted.
 
 %package templates
 Summary: Nagios templates for a nagwad node
@@ -31,7 +42,8 @@ Group:   Monitoring
 Obsoletes: %name-server
 Conflicts: %name-server
 Conflicts: nagios < 3.0.6-alt9
-Requires: xvt openssh-clients
+
+BuildArch: noarch
 
 %description templates
 These are Nagios configuration templates for monitoring a nagwad-node.
@@ -41,8 +53,21 @@ Summary: Nagstamon actions for a nagwad node
 Group:   Monitoring
 Requires: xvt openssh-clients
 
+BuildArch: noarch
+
 %description actions
 These are Nagstamon action commands suitable for a nagwad-node.
+
+%package audit
+Summary: Audit rules for a nagwad node
+Group:   Monitoring
+Requires: audit
+
+%description audit
+Contains audit rules for the 'audit' facility of %{name}.
+
+%prep
+%setup
 
 %build
 
@@ -55,6 +80,18 @@ install -Dm 0755 scripts/nrpe/check_nagwad %buildroot/%_libexecdir/nagios/plugin
 install -Dm 0755 scripts/nrpe/check_osec %buildroot/%_libexecdir/nagios/plugins/check_osec
 
 install -Dm 0644 conf/audit/rules.d/50-nagwad.rules %buildroot%_sysconfdir/audit/rules.d/50-nagwad.rules
+
+%ifarch x86_64
+install -Dm 0644 conf/audit/rules.d/50-nagwad-64.rules %buildroot%_sysconfdir/audit/rules.d/50-nagwad-64.rules
+%endif
+
+%ifarch aarch64 mips64 mips64el ppc64le riscv64
+install -Dm 0644 conf/audit/rules.d/50-nagwad-64.rules %buildroot%_sysconfdir/audit/rules.d/50-nagwad-64.rules
+%else
+# Install 32-bit rules for x86_64 too. Please FIXME for other arches.
+install -Dm 0644 conf/audit/rules.d/50-nagwad-32.rules %buildroot%_sysconfdir/audit/rules.d/50-nagwad-32.rules
+%endif
+
 install -Dm 0644 conf/nagios/templates/50-nagwad.cfg %buildroot%_sysconfdir/nagios/templates/50-nagwad.cfg
 install -Dm 0644 conf/nagwad/audit.regexp %buildroot%_sysconfdir/nagwad/audit.regexp
 install -Dm 0644 conf/nagwad/authdata.regexp %buildroot%_sysconfdir/nagwad/authdata.regexp
@@ -93,17 +130,19 @@ if [ -e %_sysconfdir/nagwad/osec/osec.regexp ]; then
        %_sysconfdir/nagwad/osec.regexp ||:
 fi
 
-%files
+%files service
 %doc README.md signal.html signal.md
 %_bindir/nsca-shell
 %_sbindir/nagwad
 %_unitdir/nagwad.*
 %_libexecdir/nagios/plugins/*
 %_sysconfdir/nagwad
-%config(noreplace) %_sysconfdir/audit/rules.d/*nagwad*.rules
 %config(noreplace) %_sysconfdir/nagwad/*.regexp
 %config(noreplace) %_sysconfdir/nagios/nrpe-commands/nagwad.cfg
 /var/log/nagwad
+
+%files audit
+%config(noreplace) %_sysconfdir/audit/rules.d/*nagwad*.rules
 
 %files templates
 %doc README.md signal.html signal.md
@@ -113,6 +152,12 @@ fi
 %config(noreplace) %_sysconfdir/nagstamon/actions/*.conf
 
 %changelog
+* Wed Aug 18 2021 Paul Wolneykien <manowar@altlinux.org> 0.9.12-alt3
+- Fixed *-actions subpackage dependencies.
+- Provide different set of audit rules on different arches.
+- Document connection method selection in Nagstamon.
+- Fix: Set server_address=0.0.0.0 in nrpe.cfg.
+
 * Thu Aug 27 2020 Paul Wolneykien <manowar@altlinux.org> 0.9.12-alt2
 - Fix: Copy the old configuration files instead of moving them.
 
