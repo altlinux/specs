@@ -1,5 +1,5 @@
 Name: texmaker
-Version: 5.1.0
+Version: 5.1.1
 Release: alt1
 
 Summary: free cross-platform LaTeX editor with a Qt interface
@@ -58,6 +58,9 @@ rm -fr hunspell singleapp
 
 
 %changelog
+* Thu Aug 19 2021 Ilya Mashkin <oddity@altlinux.ru> 5.1.1-alt1
+- 5.1.1
+
 * Wed Aug 18 2021 Ilya Mashkin <oddity@altlinux.ru> 5.1.0-alt1
 - 5.1.0
 
