@@ -1,5 +1,5 @@
 Name: kernel-build-tools
-Version: 0.114
+Version: 0.115
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -14,8 +14,7 @@ Requires: rpm-build-kernel = %version-%release
 # due to RPM macro expansion support
 Requires: gear >= 1.3.1
 
-# Automatically added by buildreq on Mon Apr 14 2008
-BuildRequires: asciidoc help2man python-modules-encodings
+BuildRequires: help2man
 
 %package -n rpm-build-kernel
 Summary: RPM macros to build kernel packages
@@ -63,7 +62,6 @@ kernel packaging conventions.
 
 %build
 %make_build
-asciidoc README.ru.koi8
 
 %install
 %makeinstall_std
@@ -75,7 +73,7 @@ install -Dpm0755 query-kEVR.sh \
 %files
 %_bindir/*
 %_mandir/man?/*
-%doc README* config.sh.sample kernel-policy.txt kernel-spec-example.txt
+%doc config.sh.sample
 
 %files -n rpm-build-kernel
 %_rpmmacrosdir/kernel
@@ -83,6 +81,10 @@ install -Dpm0755 query-kEVR.sh \
 %_rpmlibdir/kernel.req*
 
 %changelog
+* Tue Aug 17 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.115-alt1
+- Dropped old outdated documentation files.
+- km-create-tag: added armh to default karch value.
+
 * Thu Mar 11 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.114-alt1
 - added finding requires for kernel modules
 
