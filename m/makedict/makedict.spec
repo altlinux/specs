@@ -1,6 +1,6 @@
 Name: makedict
 Version: 0.4.1_beta1
-Release: alt4.git.ga70119
+Release: alt5.git.ga70119
 
 Summary: XDXF based converter from any dictionary format to any
 
@@ -10,22 +10,24 @@ Url: http://xdxf.sf.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# from git://github.com/soshial/xdxf_makedict.git
-Source: %name.tar
+# Source-git: https://github.com/soshial/xdxf_makedict.git
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Fri May 31 2013
 # optimized out: cmake-modules libstdc++-devel pkg-config
 BuildRequires: cmake ctest discount gcc-c++ glib2-devel libexpat-devel zlib-devel
 
-BuildRequires: rpm-build-python
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-tools
 
 %description
 XDXF based converter from any dictionary format to any.
 
 %prep
-%setup -n %name
+%setup
 %__subst "s|lib/makedict-codecs|share/makedict-codecs|g" CMakeLists.txt
-%__subst "s|/usr/bin/env python\$|/usr/bin/env python2|" src/*.py
+find -type f -name '*.py' -exec python3-2to3 -w -n '{}' +
+%__subst "s|/usr/bin/env python\$|/usr/bin/env python3|" src/*.py
 
 %build
 cmake -DCMAKE_INSTALL_PREFIX:=%prefix \
@@ -48,6 +50,9 @@ make test
 %_man1dir/*
 
 %changelog
+* Wed Aug 18 2021 Vitaly Lipatov <lav@altlinux.ru> 0.4.1_beta1-alt5.git.ga70119
+- switch to python3
+
 * Mon May 17 2021 Vitaly Lipatov <lav@altlinux.ru> 0.4.1_beta1-alt4.git.ga70119
 - add BR: rpm-build-python
 

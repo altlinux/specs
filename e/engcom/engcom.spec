@@ -1,8 +1,10 @@
+%def_without stardict
+
 %define	dict_name engcom
 %define dictdesc The Open English-Russian Dictionary of Computer Terms
 
 Name: engcom
-Version: 1.39
+Version: 1.40
 Release: alt1
 
 Summary: The Open English-Russian Dictionary of Computer Terms
@@ -19,8 +21,6 @@ Source: ftp://download.etersoft.ru/pub/Etersoft/Sisyphus/sources/tarball/%name-%
 BuildArchitectures: noarch
 
 BuildRequires: dict-tools makedict stardict-tools
-BuildRequires: perl-Unicode-String perl-Unicode-Map8 python-module-PyXML
-BuildRequires: python2-base python-modules-compiler python-modules-email python-modules-encodings python-modules-logging
 
 %description
 The %name package contains free (as speech) English-Russian
@@ -94,14 +94,15 @@ mv EngCom.koi %dict_name.koi
 #makedict -i mueller7 -o xdxf %dict_name.koi %dict_name
 
 # Specially modified makedict convertor
-./engcom_parser.py %dict_name.koi >%dict_name.tmp
+./engcom_parser.py EngCom.source >%dict_name.tmp
 grep -v "<meta_info>" %dict_name.tmp >%dict_name
 
 mkdir -p out
 # CHECKME: makes broken dict?
 makedict -i xdxf -o dictd %dict_name -d out
 
-makedict -i xdxf -o stardict %dict_name -d out
+# BROKEN:
+#makedict -i xdxf -o stardict %dict_name -d out
 
 %install
 # install mova files
@@ -116,6 +117,7 @@ do
 done
 cd -
 
+%if_with stardict
 # install stardict files
 cd out/stardict-%dict_name-2.4.2
 cat << EOF >> %dict_name.ifo
@@ -131,6 +133,7 @@ do
 	install -p -m644 -D %dict_name.$i %buildroot%_datadir/stardict/dic/%dict_name.$i
 done
 cd -
+%endif
 
 %post -n dict-%name
 %_sbindir/dictdconfig -w
@@ -146,11 +149,17 @@ cd -
 %doc docs
 %_datadir/dictd/*
 
+%if_with stardict
 %files -n stardict-%name
 %doc docs
 %_datadir/stardict/dic/*
+%endif
 
 %changelog
+* Wed Aug 18 2021 Vitaly Lipatov <lav@altlinux.ru> 1.40-alt1
+- switch to python3
+- disable stardict dictionary packing
+
 * Sat Feb 15 2020 Vitaly Lipatov <lav@altlinux.ru> 1.39-alt1
 - cleanup spec, use python2
 
