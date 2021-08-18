@@ -1,8 +1,8 @@
 %define rname qmlkonsole
 
 Name: kde5-%rname
-Version: 21.06
-Release: alt2
+Version: 21.07
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -75,6 +75,9 @@ Requires: %name-common
 #%_K5lib/libqmlkonsole.so.*
 
 %changelog
+* Wed Aug 18 2021 Sergey V Turchin <zerg@altlinux.org> 21.07-alt1
+- new version
+
 * Tue Jun 15 2021 Sergey V Turchin <zerg@altlinux.org> 21.06-alt2
 - add conflict with cool-retro-term
 

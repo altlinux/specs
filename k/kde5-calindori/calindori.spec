@@ -4,7 +4,7 @@
 %define libcalindori libcalindori%sover
 
 Name: kde5-%rname
-Version: 1.1
+Version: 21.07
 Release: alt1
 %K5init altplace no_appdata
 
@@ -23,7 +23,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-quickcontrols2-devel qt5-svg-devel qt5-wayland-devel
 BuildRequires: kf5-kcalcore-devel kf5-kdbusaddons-devel kf5-ki18n-devel kf5-kirigami-devel kf5-knotifications-devel
-BuildRequires: kf5-kservice-devel
+BuildRequires: kf5-kservice-devel kf5-kpeople-devel
 
 %description
 Calindori is a touch friendly calendar application. It has been designed for mobile devices but it can also run on desktop environments. It offers:
@@ -50,7 +50,11 @@ Calindori is a touch friendly calendar application. It has been designed for mob
 %_K5start/*calind*.desktop
 %_K5icon/*/*/apps/*calind*.*
 %_K5notif/*calind*.notifyrc
+%_K5dbus_srv/*calind*.service
 
 %changelog
+* Wed Aug 18 2021 Sergey V Turchin <zerg@altlinux.org> 21.07-alt1
+- new version
+
 * Thu Mar 19 2020 Sergey V Turchin <zerg@altlinux.org> 1.1-alt1
 - initial build

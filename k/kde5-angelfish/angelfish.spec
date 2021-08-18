@@ -1,10 +1,10 @@
-%define rname plasma-angelfish
+%define rname angelfish
 
 %define sover 3
 %define libfalkonprivate libfalkonprivate%sover
 
-Name: kde5-plasma-angelfish
-Version: 21.06
+Name: kde5-%rname
+Version: 21.07
 Release: alt1
 %K5init altplace
 
@@ -15,6 +15,8 @@ Url: https://anongit.kde.org/plasma-angelfish.git
 
 Requires(post,preun): alternatives >= 0.2
 Provides: webclient
+Provides: kde5-plasma-angelfish = %EVR
+Obsoletes: kde5-plasma-angelfish < %EVR
 
 Source: %rname-%version.tar
 Patch1: alt-def-size.patch
@@ -72,6 +74,9 @@ __EOF__
 %_K5notif/*angelfish*
 
 %changelog
+* Wed Aug 18 2021 Sergey V Turchin <zerg@altlinux.org> 21.07-alt1
+- new version
+
 * Fri Jun 11 2021 Sergey V Turchin <zerg@altlinux.org> 21.06-alt1
 - new version
 
