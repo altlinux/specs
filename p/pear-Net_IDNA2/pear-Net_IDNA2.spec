@@ -1,6 +1,6 @@
 %define pear_name Net_IDNA2
 Name: pear-%pear_name
-Version: 0.1.1
+Version: 0.2.0
 Release: alt1
 
 Summary: Punycode encoding and decoding
@@ -39,10 +39,13 @@ This package helps you to encode and decode punycode strings easily.
 %files
 %pear_dir/Net/
 %pear_xmldir/%pear_name.xml
-%pear_docdir/%pear_name/
+#pear_docdir/%pear_name/
 %pear_testdir/%pear_name/
 
 %changelog
+* Thu Aug 19 2021 Vitaly Lipatov <lav@altlinux.ru> 0.2.0-alt1
+- new version 0.2.0 (with rpmrb script)
+
 * Sun Nov 22 2015 Vitaly Lipatov <lav@altlinux.ru> 0.1.1-alt1
 - initial build for ALT Linux Sisyphus
 
