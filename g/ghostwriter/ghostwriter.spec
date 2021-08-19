@@ -1,19 +1,25 @@
 Name: ghostwriter
-Version: 1.8.1
-Release: alt2
+Version: 2.0.2
+Release: alt1
 
 Summary: Cross-platform, aesthetic, distraction-free Markdown editor
 
-Group: Graphics
 License: GPLv3+ and CC-BY and CC-BY-SA and MPLv1.1 and BSD and LGPLv3 and MIT and ISC
+Group: Graphics
 Url: https://github.com/wereturtle/ghostwriter
 
-# Source-url: %url/archive/v%version.tar.gz
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+# Source-url: https://github.com/wereturtle/ghostwriter/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
 Patch: ghostwriter-qt5.15-fix.patch
+
+BuildRequires(pre): rpm-macros-qt5
+
+BuildRequires(pre): rpm-macros-qt5-webengine
+# Required qt5-qtwebengine is not available on some arches.
+ExclusiveArch: %qt5_qtwebengine_arches
 
 BuildRequires: qt5-base-devel libqt5-core libqt5-network libqt5-gui libqt5-dbus
 BuildRequires: qt5-webengine-devel qt5-svg-devel qt5-tools
@@ -37,9 +43,6 @@ BuildRequires: gcc-c++
 
 #Requires: hicolor-icon-theme
 
-BuildRequires(pre): rpm-macros-qt5-webengine
-# Required qt5-qtwebengine is not available on some arches.
-ExclusiveArch: %qt5_qtwebengine_arches
 
 %description
 Ghostwriter is a text editor for Markdown, which is a plain text markup
@@ -52,7 +55,7 @@ or your novel.
 
 %prep
 %setup
-%patch -p2
+#patch -p2
 sed -i 's@appdata/@metainfo/@g' %name.pro
 
 %build
@@ -71,10 +74,12 @@ sed -i 's@appdata/@metainfo/@g' %name.pro
  %_datadir/ghostwriter
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.*
-%_pixmapsdir/%name.xpm
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Thu Aug 19 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.2-alt1
+- new version 2.0.2 (with rpmrb script)
+
 * Sat Sep 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.8.1-alt2
 - fix build with Qt 5.15+
 
