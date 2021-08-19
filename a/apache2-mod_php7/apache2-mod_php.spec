@@ -1,9 +1,16 @@
 %define php_sapi apache2-mod_php
 %define so_file  mod_php%_php_suffix.so
 
+# https://php.watch/versions/8.0/mod_php-rename
+%if "%_php_suffix" == "7"
+%define apache_module_name php%{_php_suffix}_module
+%else
+%define apache_module_name php_module
+%endif
+
 Name: apache2-mod_php%_php_suffix
 Version: %php_version
-Release: %php_release.1
+Release: %php_release.2
 
 Summary: The php HTML-embedded scripting language for use with Apache2
 
@@ -73,10 +80,10 @@ mkdir -p \
 cp .libs/%so_file %buildroot/%apache2_moduledir
 
 cat > %buildroot/%apache2_mods_available/mod_php%_php_suffix.load <<EOF
-LoadModule php%{_php_suffix}_module %apache2_moduledir/mod_php%_php_suffix.so
+LoadModule %apache_module_name %apache2_moduledir/%so_file
 EOF
 
-cat > %buildroot/%apache2_mods_available/mod_php7.conf <<EOF
+cat > %buildroot/%apache2_mods_available/mod_php%_php_suffix.conf <<EOF
 <IfModule mod_php%{_php_suffix}.c>
     AddType    application/x-httpd-php-source   .phps
     AddType    application/x-httpd-php         .php .phtml
@@ -85,7 +92,7 @@ cat > %buildroot/%apache2_mods_available/mod_php7.conf <<EOF
 EOF
 
 cat > %buildroot/%apache2_mods_start/mod_php%{_php_suffix}.conf << EOF
-mod_php7=yes
+mod_php%_php_suffix=yes
 EOF
 
 cat > %buildroot/%_rpmlibdir/90-php%{_php_suffix}-%name.filetrigger << EOF
