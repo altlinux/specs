@@ -1,7 +1,7 @@
 %define pear_name Mail_Mime
 
 Name: pear-Mail_Mime
-Version: 1.10.2
+Version: 1.10.10
 Release: alt1
 
 Summary: Mail_Mime provides classes to create mime messages
@@ -12,12 +12,14 @@ Url: http://pear.php.net/package/Mail_Mime
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://pear.php.net/get/Mail_Mime-%version.tar
+# Source-url: http://download.pear.php.net/package/Mail_Mime-%version.tgz
+Source: %name-%version.tar
 
 BuildArchitectures: noarch
 
+BuildRequires(pre): rpm-build-pear
+BuildRequires: pear-core
 Requires: pear-core
-BuildRequires: pear-core rpm-build-pear
 
 %description
 Mail_Mime provides classes to deal with the creation and manipulation of
@@ -28,9 +30,6 @@ It allows people to create Email messages consisting of:
 * Inline HTML Images
 * Attachments
 * Attached messages
-
-Starting with version 1.4.0, it also allows non US-ASCII chars in
-filenames, subjects, recipients, etc, etc.
 
 %prep
 %setup -c
@@ -52,10 +51,13 @@ filenames, subjects, recipients, etc, etc.
 %pear_testdir/Mail_Mime/
 %pear_dir/Mail/
 #pear_datadir/Mail_Mime/
-%pear_docdir/%pear_name/
+#pear_docdir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Aug 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.10.10-alt1
+- new version 1.10.10 (with rpmrb script)
+
 * Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1.10.2-alt1
 - new version 1.10.2 (with rpmrb script)
 
