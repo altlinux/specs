@@ -2,7 +2,7 @@
 
 Name:     imagescan
 Version:  3.65.0
-Release:  alt1
+Release:  alt2
 
 Summary:  EPSON Image Scan v3 front-end for scanners and all-in-ones
 License:  GPL-3.0+
@@ -68,6 +68,9 @@ line option.
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
+%ifarch %e2k
+sed -ie "s|v = \\(utsushi::value (.*)\\);|v = sane::value (\\1);|" sane/handle.cpp
+%endif
 
 %build
 %undefine _configure_gettext
@@ -135,6 +138,9 @@ chmod +x %buildroot%_bindir/imagescan
 %_datadir/utsushi/drivers
 
 %changelog
+* Sat Jan 16 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.65.0-alt2
+- Added fix for Elbrus build.
+
 * Sat Jan 16 2021 Andrey Cherepanov <cas@altlinux.org> 3.65.0-alt1
 - New version.
 
