@@ -1,6 +1,6 @@
 Name: alterator
 Version: 5.4.1
-Release: alt4
+Release: alt5
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -21,13 +21,16 @@ Obsoletes: %name-common, %name-menu, %name-help, %name-sdk, %name-autoinstall
 Requires: rpm-macros-%name = %version-%release
 Requires: alterator-l10n >= 2.0-alt2
 Requires: alterator-sh-functions
+
+## Set up Guile version and continuations flavour:
 %ifarch %e2k
-Requires: guile20 libguile20
-%def_with guile20
+%def_without guile20 # Guile 2.2 is now ported to E2K
+%def_with delimited_continuations
 %else
-Requires: guile22
 %def_without guile20
+%def_without delimited_continuations
 %endif
+
 %{?!_with_bootstrap:Requires: alterator-lookout}
 
 Requires(pre): libguile-vhttpd >= 0.7.8-alt1
@@ -41,10 +44,12 @@ Conflicts: alterator-vm <= 0.3-alt31
 Conflicts: installer-stage2 <= 0.8-alt1
 
 BuildRequires: /proc
-%ifarch %e2k
+%if_with guile20
 BuildRequires: guile20-devel libguile20-devel libexpat-devel pam_userpass-devel
+Requires: guile20 libguile20
 %else
 BuildRequires: guile22-devel >= 2.2.0-alt2 libexpat-devel pam_userpass-devel
+Requires: guile22
 %endif
 BuildRequires: libguile-vhttpd
 
@@ -77,17 +82,11 @@ Conflicts: %name < 4.7-alt6
 Set of RPM macros for packaging %name-based applications for ALT Linux.
 Install this package if you want to create RPM packages that use %name.
 
-%ifarch %e2k
-%def_with delimited_continuations
-%else
-%def_without delimited_continuations
-%endif
-
 %prep
 %setup
 %patch0 -p2
 
-%ifarch %e2k
+%if_with guile20
 sed -i "s:guile/2.2:guile/2.0:g" build/guile-ext.mak
 %patch1 -p2
 %endif
@@ -184,6 +183,9 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Aug 19 2021 Paul Wolneykien <manowar@altlinux.org> 5.4.1-alt5
+- Switch to Guile 2.2 on %e2k.
+
 * Mon Jun 21 2021 Paul Wolneykien <manowar@altlinux.org> 5.4.1-alt4
 - Use additional fixes for delimited continuations with Guile 2.0.
 
