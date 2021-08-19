@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: java-devel-default perl(Compress/Zlib.pm) perl(JSON/PP.pm) perl(Term/ANSIColor.pm)
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 Name:           openjfx
 Epoch:          3
 Version:        11.0.9.2
-Release:        alt1_3jpp11
+Release:        alt1_6jpp11
 Summary:        Rich client application platform for Java
 
 License:        GPL v2 with exceptions and BSD
@@ -156,11 +156,12 @@ sed -i '/PythonInterp/s,2.7.0,3,' modules/javafx.web/src/main/native/Source/cmak
 #set openjdk11 for build
 export JAVA_HOME=%{_jvmdir}/java-11-openjdk
 export CFLAGS="${RPM_OPT_FLAGS}"
-export CXXFLAGS="${RPM_OPT_FLAGS}" 
+export CXXFLAGS="${RPM_OPT_FLAGS}"
 
 %mvn_build --skip-javadoc
 
-%{fedora_v2_cmake} -DPython_EXECUTABLE=/usr/bin/python3 -DPORT="Java" --icu-unicode --64-bit --cmakeargs= -DENABLE_TOOLS=1 -DCMAKE_C_COMPILER='gcc' -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=x86_64 -DCMAKE_C_FLAGS='-fno-strict-aliasing -fPIC -fno-omit-frame-pointer -fstack-protector -Wextra -Wall -Wformat-security -Wno-unused -Wno-parentheses -Werror=implicit-function-declaration -DGLIB_DISABLE_DEPRECATION_WARNINGS' -DCMAKE_CXX_FLAGS='-fno-strict-aliasing -fPIC -fno-omit-frame-pointer -fstack-protector -Wextra -Wall -Wformat-security -Wno-unused -Wno-parentheses -Werror=implicit-function-declaration -DGLIB_DISABLE_DEPRECATION_WARNINGS' -DCMAKE_SHARED_LINKER_FLAGS='-static-libgcc -static-libstdc++ -shared -fno-strict-aliasing -fPIC -fno-omit-frame-pointer -fstack-protector -Wextra -Wall -Wformat-security -Wno-unused -Wno-parentheses -Werror=implicit-function-declaration -DGLIB_DISABLE_DEPRECATION_WARNINGS -z relro -Wl,--gc-sections' -DCMAKE_EXE_LINKER_FLAGS='-static-libgcc -static-libstdc++  -fno-strict-aliasing -fPIC -fno-omit-frame-pointer -fstack-protector -Wextra -Wall -Wformat-security -Wno-unused -Wno-parentheses -Werror=implicit-function-declaration -DGLIB_DISABLE_DEPRECATION_WARNINGS -z relro -Wl,--gc-sections' -DJAVAFX_RELEASE_VERSION=11 ./modules/javafx.web/src/main/native
+# added -Wno-expansion-to-defined
+%{fedora_v2_cmake} -DPORT="Java" -DENABLE_TOOLS=1 -DCMAKE_C_COMPILER='gcc' -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=x86_64 -DCMAKE_C_FLAGS='-Wno-expansion-to-defined -fno-strict-aliasing -fPIC -fno-omit-frame-pointer -fstack-protector -Wextra -Wall -Wformat-security -Wno-unused -Wno-parentheses -Werror=implicit-function-declaration -DGLIB_DISABLE_DEPRECATION_WARNINGS' -DCMAKE_CXX_FLAGS='-Wno-expansion-to-defined -fno-strict-aliasing -fPIC -fno-omit-frame-pointer -fstack-protector -Wextra -Wall -Wformat-security -Wno-unused -Wno-parentheses -Werror=implicit-function-declaration -DGLIB_DISABLE_DEPRECATION_WARNINGS' -DCMAKE_SHARED_LINKER_FLAGS='-static-libgcc -static-libstdc++ -shared -fno-strict-aliasing -fPIC -fno-omit-frame-pointer -fstack-protector -Wextra -Wall -Wformat-security -Wno-unused -Wno-parentheses -Werror=implicit-function-declaration -DGLIB_DISABLE_DEPRECATION_WARNINGS -z relro -Wl,--gc-sections' -DCMAKE_EXE_LINKER_FLAGS='-static-libgcc -static-libstdc++  -fno-strict-aliasing -fPIC -fno-omit-frame-pointer -fstack-protector -Wextra -Wall -Wformat-security -Wno-unused -Wno-parentheses -Werror=implicit-function-declaration -DGLIB_DISABLE_DEPRECATION_WARNINGS -z relro -Wl,--gc-sections' -DJAVAFX_RELEASE_VERSION=11 ./modules/javafx.web/src/main/native
 %fedora_v2_cmake_build
 strip -g %{_builddir}/%{rtdir}/%_target_platform/lib/libjfxwebkit.so
 
@@ -188,6 +189,9 @@ cp -a %_target_platform/lib/libjfxwebkit.so %{buildroot}%{openjfxdir}
 %doc README
 
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 3:11.0.9.2-alt1_6jpp11
+- fixed build
+
 * Mon Jan 18 2021 Igor Vlasenko <viy@altlinux.ru> 3:11.0.9.2-alt1_3jpp11
 - new version
 
