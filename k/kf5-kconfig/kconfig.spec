@@ -2,13 +2,12 @@
 %def_enable notify
 %def_disable python
 %if_enabled python
-%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
 %define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
 %endif
 
 Name: kf5-%rname
 Version: 5.85.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -25,7 +24,7 @@ Patch2: alt-kconfig-notify-via-dbus.patch
 #BuildRequires: extra-cmake-modules gcc-c++ python-module-google qt5-tools-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 %if_enabled python
-BuildRequires(pre): python3-module-sip-devel python-module-sip-devel
+BuildRequires(pre): python3-module-sip-devel
 BuildRequires: python3-module-PyQt5-devel
 %endif
 BuildRequires: gcc-c++ extra-cmake-modules qt5-base-devel qt5-tools-devel
@@ -63,23 +62,6 @@ Requires: %name-common = %version-%release
 KF5 library
 
 %if_enabled python
-%package -n python-module-%rname
-Summary: Python bindings for KConfig
-License: GPLv2+ / LGPLv2+
-Group: Development/Python
-Requires: %name-common = %version-%release
-Requires: python-module-pykf5
-Requires: python-module-sip = %sipver2
-%description -n python-module-%rname
-Python bindings for KConfig
-
-%package -n python-module-%rname-devel
-Summary: Sip files for python-module-%rname
-Group: Development/Python
-BuildArch: noarch
-%description -n python-module-%rname-devel
-Sip files for python-module-%rname
-
 %package -n python3-module-%rname
 Summary: Python3 bindings for KConfig
 License: GPLv2+ / LGPLv2+
@@ -146,11 +128,6 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %_K5lib/libKF5ConfigGui.so.*
 
 %if_enabled python
-%files -n python-module-%rname
-%python_sitelibdir/PyKF5/*.so
-%files -n python-module-%rname-devel
-%_datadir/sip/PyKF5/KConfigGui/
-%_datadir/sip/PyKF5/KConfigCore/
 %files -n python3-module-%rname
 %python3_sitelibdir/PyKF5/*.so
 %files -n python3-module-%rname-devel
@@ -159,6 +136,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Thu Aug 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.85.0-alt2
+- clean build requires
+
 * Mon Aug 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.85.0-alt1
 - new version
 
