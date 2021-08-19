@@ -1,7 +1,7 @@
 %global pypi_name jsonfield
 
 Name:           python3-module-django-%pypi_name
-Version:        2.0.2
+Version:        3.1.0
 Release:        alt1
 Epoch:          1
 
@@ -32,11 +32,14 @@ add the field to one of your models.
 %python3_install
 
 %files
-%doc README.rst LICENSE
+%doc README.rst CHANGES.rst
 %python3_sitelibdir/*
 
 
 %changelog
+* Wed Aug 18 2021 Alexey Shabalin <shaba@altlinux.org> 1:3.1.0-alt1
+- Version updated to 3.1.0
+
 * Wed Dec 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 1:2.0.2-alt1
 - Version updated to 2.0.2
 - build for python2 disabled

@@ -1,16 +1,15 @@
-%define branch 2.2
+%define branch 3.2
 %define origname Django
 %define oname django
 
 %def_disable check
 
-%add_python3_req_skip cx_Oracle
 %add_python3_req_skip hotshot StringIO
 %add_findreq_skiplist %python3_sitelibdir/%oname/contrib/gis/db/backends/*/*
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: python3-module-%oname
-Version: 2.2.24
+Version: %branch.6
 Release: alt1
 Source0: %origname-%version.tar
 License: BSD
@@ -24,9 +23,6 @@ Obsoletes: %name%branch-tests < %EVR
 Provides: %name-tests = %EVR
 Obsoletes: %name-tests < %EVR
 
-%py3_provides django.utils.six.moves
-%py3_provides django.utils.six.moves.urllib.parse
-%py3_provides django.utils.six.moves.urllib.request
 %py3_provides django.core.management.commands.loaddata
 %py3_provides django.core.management.commands.test
 %py3_provides django.core.management.commands.runserver
@@ -37,7 +33,7 @@ Conflicts: python3-module-django1.11-tests
 %add_python3_req_skip django.test.signals
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-six bash-completion
+BuildRequires: bash-completion
 
 %if_enabled check
 BuildRequires: python3(sqlparse)
@@ -55,7 +51,7 @@ BuildRequires: python3(selenium)
 %summary
 
 %package dbbackend-mysql
-Summary: MySQLSQL support for Django (Python 3)
+Summary: MySQLSQL support for Django
 Group: Development/Python3
 Requires: %name = %EVR
 Provides: %name%branch-dbbackend-mysql = %EVR
@@ -66,28 +62,19 @@ Conflicts: python3-module-django1.11-dbbackend-mysql
 %description dbbackend-mysql
 %summary
 
-%package dbbackend-psycopg
-Summary: PostgreSQL support for Django. (via psycopg) (Python 3)
+%package dbbackend-postgresql
+Summary: PostgreSQL support for Django.
 Group: Development/Python3
 Requires: %name = %EVR
 Provides: %name%branch-dbbackend-psycopg = %EVR
 Obsoletes: %name%branch-dbbackend-psycopg < %EVR
-Conflicts: python3-module-django1.11-dbbackend-psycopg
-%py3_requires psycopg
-
-%description dbbackend-psycopg
-%summary
-
-%package dbbackend-psycopg2
-Summary: PostgreSQL support for Django. (via psycopg2) (Python 3)
-Group: Development/Python3
-Requires: %name = %EVR
 Provides: %name%branch-dbbackend-psycopg2 = %EVR
 Obsoletes: %name%branch-dbbackend-psycopg2 < %EVR
+Conflicts: python3-module-django1.11-dbbackend-psycopg
 Conflicts: python3-module-django1.11-dbbackend-psycopg2
 %py3_requires psycopg2
 
-%description dbbackend-psycopg2
+%description dbbackend-postgresql
 %summary
 
 %package dbbackend-sqlite3
@@ -100,6 +87,17 @@ Conflicts: python3-module-django1.11-dbbackend-sqlite3
 %py3_requires sqlite3
 
 %description dbbackend-sqlite3
+%summary
+
+%package dbbackend-oracle
+Summary: Oracle support for Django (Python 3)
+Group: Development/Python3
+Requires: %name = %EVR
+Provides: %name%branch-dbbackend-oracle = %EVR
+Obsoletes: %name%branch-dbbackend-oracle < %EVR
+%add_python3_req_skip cx_Oracle
+
+%description dbbackend-oracle
 %summary
 
 %package doc
@@ -161,10 +159,10 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 #exclude %python3_sitelibdir/%oname/core/handlers/modpython.py*
 #exclude %python3_sitelibdir/%oname/contrib/auth/handlers/modpython.py*
 
-%exclude %python3_sitelibdir/%oname/db/backends/mysql/
-#exclude %python3_sitelibdir/%oname/db/backends/postgresql/
-%exclude %python3_sitelibdir/%oname/db/backends/postgresql_psycopg2/
-%exclude %python3_sitelibdir/%oname/db/backends/sqlite3/
+%exclude %python3_sitelibdir/%oname/db/backends/mysql
+%exclude %python3_sitelibdir/%oname/db/backends/postgresql
+%exclude %python3_sitelibdir/%oname/db/backends/sqlite3
+%exclude %python3_sitelibdir/%oname/db/backends/oracle
 
 %files doc
 %doc docs
@@ -172,16 +170,23 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %files dbbackend-mysql
 %python3_sitelibdir/%oname/db/backends/mysql
 
-#files dbbackend-psycopg
-#python3_sitelibdir/%oname/db/backends/postgresql
+%files dbbackend-postgresql
+%python3_sitelibdir/%oname/db/backends/postgresql
 
-%files dbbackend-psycopg2
-%python3_sitelibdir/%oname/db/backends/postgresql_psycopg2
+%files dbbackend-oracle
+%python3_sitelibdir/%oname/db/backends/oracle
 
 %files dbbackend-sqlite3
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Wed Aug 18 2021 Alexey Shabalin <shaba@altlinux.org> 3.2.6-alt1
+- new version 3.2.6
+- Rename dbbackend-psycopg2 to dbbackend-postgresql
+- Add dbbackend-oracle package
+- Fixes for the following security vulnerabilities:
+  + CVE-2021-35042 Potential SQL injection via unsanitized QuerySet.order_by() input
+
 * Tue Jul 13 2021 Alexey Shabalin <shaba@altlinux.org> 2.2.24-alt1
 - new version 2.2.24
 - Fixes for the following security vulnerabilities:

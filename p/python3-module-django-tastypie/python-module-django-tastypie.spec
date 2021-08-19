@@ -2,13 +2,13 @@
 %define module_name django-tastypie
 
 Name: python3-module-%module_name
-Version: 0.14.2
-Release: alt2
+Version: 0.14.3
+Release: alt1
 
 Summary: Creating delicious APIs for Django apps since 2010
 License: BSD License
 Group: Development/Python3
-URL: https://github.com/toastdriven/django-tastypie.git
+URL: https://github.com/django-tastypie/django-tastypie.git
 
 Source: %name-%version.tar
 
@@ -59,14 +59,15 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %files
 %doc AUTHORS LICENSE README.rst TODO
 %doc BACKWARDS-INCOMPATIBLE.txt CONTRIBUTING
-%python3_sitelibdir/tastypie*
-%python3_sitelibdir/django_tastypie*
+%python3_sitelibdir/*
 
 %files docs
 %doc docs/_build/html/*
 
-
 %changelog
+* Wed Aug 18 2021 Alexey Shabalin <shaba@altlinux.org> 0.14.3-alt1
+- 0.14.3
+
 * Mon Dec 16 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.14.2-alt2
 - build for python2 disabled
 

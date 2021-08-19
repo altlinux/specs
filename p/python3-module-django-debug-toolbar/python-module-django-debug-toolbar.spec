@@ -1,27 +1,25 @@
 %define oname django-debug-toolbar
 
 Name: python3-module-%oname
-Version: 1.9.1
-Release: alt2
+Version: 3.2.2
+Release: alt1
 
-Summary: A debug/profiling overlay for Django
-License: GPL
+Summary: A configurable set of panels that display various debug information about the current request/response.
+License: BSD
 Group: Development/Python3
-Url: http://github.com/dcramer/django-debug-toolbar
+Url: https://github.com/jazzband/django-debug-toolbar
 BuildArch: noarch
 
-Source: %oname-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-django
-BuildRequires: python3-module-sphinx
-BuildRequires: python-tools-2to3
-
+#BuildRequires: python3-module-sphinx
 
 %description
-This is a fork of Rob Hudson's Debug Toolbar. It includes an
-alternative style, performance optimizations, and some panels which
-may not be available in the main repository.
+The Django Debug Toolbar is a configurable set of panels that
+display various debug information about the current request/response
+and when clicked, display more details about the panel's content.
 
 %package docs
 Summary: Documentation for %name
@@ -36,14 +34,12 @@ may not be available in the main repository.
 This package contains documentation for %name
 
 %prep
-%setup -n %oname-%version
+%setup
 
 sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 
 sed -i 's|from.*Command|# from.*Command|' \
     $(find ./ -name 'debugsqlshell.py')
-
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
@@ -51,21 +47,24 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 %build
 %python3_build
 
-export PYTHONPATH=$PWD
-%make -C docs man
+#export PYTHONPATH=$PWD
+#%%make -C docs man
 
 %install
 %python3_install
 
 %files
-%doc README.rst LICENSE example/
+%doc README.rst LICENSE 
 %python3_sitelibdir/*
 
-%files docs
-%doc docs/_build/*
-
+#%%files docs
+#%%doc docs/_build/* example
 
 %changelog
+* Wed Aug 18 2021 Alexey Shabalin <shaba@altlinux.org> 3.2.2-alt1
+- new version 3.2.2
+- disable build docs
+
 * Thu Dec 19 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.9.1-alt2
 - build for python2 disabled
 
