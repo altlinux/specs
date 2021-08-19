@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: python3-module-%oname
-Version: 4.6.3
+Version: 4.7.1
 Release: alt1
 Summary: Jupyter core package
 License: BSD-3-Clause
@@ -15,8 +15,6 @@ Url: https://pypi.org/project/jupyter-core
 
 # https://github.com/jupyter/jupyter_core.git
 Source: %name-%version.tar
-
-Patch1: %oname-%version-alt-tests.patch
 
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
@@ -40,7 +38,6 @@ This package contains tests for %oname.
 
 %prep
 %setup
-%patch1 -p1
 
 %prepare_sphinx3 .
 ln -s ../objects.inv docs/
@@ -56,8 +53,7 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 
 %check
 rm -fR build
-export NOT_INSTALLED=true
-LC_ALL=en_US.UTF-8 PYTHONPATH=%buildroot%python3_sitelibdir py.test3 -vv
+LC_ALL=en_US.UTF-8 PYTHONPATH=%buildroot%python3_sitelibdir py.test3 -vv -k 'not test_not_on_path and not test_path_priority and not test_jupyter_path_prefer_env'
 
 %files
 %doc *.md docs/_build/html
@@ -72,6 +68,9 @@ LC_ALL=en_US.UTF-8 PYTHONPATH=%buildroot%python3_sitelibdir py.test3 -vv
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Thu Aug 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.7.1-alt1
+- Updated to upstream version 4.7.1.
+
 * Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.6.3-alt1
 - Updated to upstream version 4.6.3.
 - Disabled build for python-2.
