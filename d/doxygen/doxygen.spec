@@ -1,6 +1,6 @@
 Name: doxygen
-Version: 1.8.17
-Release: alt2.1
+Version: 1.9.1
+Release: alt1
 Epoch: 1
 
 Summary: Doxygen is a documentation system for C, C++ and IDL
@@ -13,18 +13,22 @@ Source: %name-%version.src.tar.gz
 Source500: %name.unused
 
 ## FC patches
-Patch1: FC-doxgen-1.8.17-broken-urls-in-the-xml-output.patch
-Patch2: FC-1.8.17-test-suite-is-failing.patch
+Patch1: FC-doxgen-1.9.1-crash-when-parsing-config-file.patch
+Patch2: FC-doxgen-1.9.1-crash-when-parsing-config-file-part2.patch
+Patch3: FC-1.9.1-Coverity_issues.patch
+Patch4: FC-1.9.1-crash_in_docparser.patch
 
 ## Ubuntu patches
 Patch101: Ubuntu-manpages.patch
 Patch102: Ubuntu-dot-config.patch
 Patch103: Ubuntu-no-timestamps.patch
 Patch104: Ubuntu-avoid-compass.patch
-Patch105: Ubuntu-llvm_libs.patch
+Patch105: Ubuntu-fix-pdflatex-invocation.patch
 Patch106: Ubuntu-faketime_pdflatex.patch
 Patch107: Ubuntu-libatomic.patch
-Patch108: Ubuntu-sass_fix.patch
+Patch108: Ubuntu-reproducible_changelog.patch
+Patch109: Ubuntu-reproducible_manpages.patch
+Patch110: Ubuntu-sass_fix.patch
 
 ## ALT patches
 
@@ -66,9 +70,14 @@ pdf formats.
 %prep
 %setup
 
+## Remove junk
+rm src/._xmlgen.cpp
+
 ## FC apply patches
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 ## Ubuntu apply patches
 %patch101 -p1
@@ -76,9 +85,11 @@ pdf formats.
 %patch103 -p1
 %patch104 -p1
 %patch105 -p1
-%patch106 -p1
+#patch106 -p1
 %patch107 -p1
 %patch108 -p1
+%patch109 -p1
+%patch110 -p1
 
 ## ALT apply patches
 
@@ -86,38 +97,18 @@ pdf formats.
 %define _cmake__builddir BUILD
 export QTDIR=%_libdir/qt4
 export PATH="$QTDIR/bin:$PATH"
-#./configure --prefix %prefix --release --with-doxywizard
-#make_build
-#make pdf
+
 %cmake -G "Unix Makefiles" \
 	-Dbuild_doc=ON -Dbuild_wizard=ON -Dbuild_xmlparser=ON \
 	-Dbuild_search=OFF \
 	-DMAN_INSTALL_DIR=%_mandir/man1 \
 	-DDOC_INSTALL_DIR=share/doc/%name-%version \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix
-#cmake_build docs
 %cmake_build
+export NPROCS=1
 %cmake_build -t docs
-#cmake_build pdf
 
 %install
-##cd BUILD
-##mkdir -p %buildroot{%_bindir,%_man1dir}
-##install -pm755 bin/* %buildroot%_bindir/
-##install -pm644 doc/*.1 %buildroot%_man1dir/
-##
-##%define docdir %_docdir/%name-%version
-##mkdir -p %buildroot%docdir/pdf
-##install -pm644 latex/*.pdf %buildroot%docdir/pdf/
-##cp -a html examples %buildroot%docdir/
-##find %buildroot%docdir/ -type f -name Makefile.\* -delete
-##find %buildroot%docdir/ -type f -name Makefile -print0 |
-##	xargs -r0 perl -pi -e '
-##	s|/bin/doxygen||g;
-##	s|^(DOXYGEN\s*=\s*).*|$1%_bindir/doxygen|;
-##	s|^(TMAKE\s*=\s*).*|$1%_bindir/tmake|;
-##	s/^(TMAKEPATH|INST|DOXYDOCS).*//g;
-##	' --
 %cmakeinstall_std
 
 %check
@@ -139,6 +130,9 @@ cd BUILD && make tests
 %exclude %_man1dir/doxy[is]*
 
 %changelog
+* Wed Aug 18 2021 Fr. Br. George <george@altlinux.ru> 1:1.9.1-alt1
+- Autobuild version bump to 1.9.1
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1:1.8.17-alt2.1
 - NMU: spec: adapted to new cmake macros.
 
