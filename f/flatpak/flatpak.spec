@@ -16,7 +16,7 @@
 
 Name: flatpak
 Version: 1.10.2
-Release: alt2
+Release: alt3
 
 Summary: Application deployment framework for desktop apps
 Group: Development/Tools
@@ -78,6 +78,8 @@ BuildRequires: /proc
 # since 1.10.0 (optional  dependencies)
 BuildRequires: pkgconfig(libzstd) >= %zstd_ver
 BuildRequires: pkgconfig(malcontent-0) >= %malcontent_ver
+# variant-schema-compiler
+BuildRequires: python3-module-pyparsing
 
 %description
 Flatpak is a system for building, distributing and running sandboxed desktop
@@ -210,6 +212,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Thu Aug 19 2021 Yuri N. Sedunov <aris@altlinux.org> 1.10.2-alt3
+- BR: +python3-module-pyparsing
+
 * Mon May 03 2021 Yuri N. Sedunov <aris@altlinux.org> 1.10.2-alt2
 - BR: +rpm-build-python3
 
