@@ -10,7 +10,7 @@
 
 Name: inkscape
 Version: %major
-Release: alt5
+Release: alt6
 
 Summary: A Vector Drawing Application
 
@@ -40,8 +40,11 @@ BuildRequires: boost-devel-headers boost-filesystem-devel cmake gcc-c++ intltool
 BuildRequires: libgc-devel libgsl-devel libpopt-devel libxslt-devel perl-devel zlib-devel libsoup-devel libaspell-devel libdbus-devel libgspell-devel libreadline-devel
 BuildRequires: lib2geom-devel >= 1.1
 
-# Checking for modules 'gtkmm-3.0>=3.22;gdkmm-3.0>=3.22;gtk+-3.0>=3.22;gdk-3.0>=3.22;gdl-3.0>=3.4'
-BuildRequires: libgtkmm3-devel >= 3.22 libgdl3-devel >= 3.4
+# Checking for modules 'gtkmm-3.0>=3.24;gdkmm-3.0>=3.24;gtk+-3.0>=3.24;gdk-3.0>=3.24'
+BuildRequires: pkgconfig(gtkmm-3.0) >= 3.24
+BuildRequires: pkgconfig(gdkmm-3.0) >= 3.24
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.24
+BuildRequires: pkgconfig(gdk-3.0) >= 3.24
 
 %{?_with_gnome_vfs:BuildRequires: gnome-vfs-devel}
 %{?_with_dbus: BuildRequires: libdbus-devel}
@@ -224,6 +227,9 @@ true
 %files checkinstall
 
 %changelog
+* Thu Aug 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt6
+- update build requires
+
 * Wed Aug 11 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.1-alt5
 - e2k: fixed OpenMP pragmas for LCC
 
