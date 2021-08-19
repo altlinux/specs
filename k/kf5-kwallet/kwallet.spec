@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.85.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -81,7 +81,7 @@ cat %SOURCE1 >> po/ru/kwalletd5.po
 %K5make
 
 %check
-BUILD/bin/fdo_secrets_test
+LD_LIBRARY_PATH=BUILD/bin BUILD/bin/fdo_secrets_test
 
 %install
 %K5install
@@ -115,6 +115,11 @@ BUILD/bin/fdo_secrets_test
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Thu Aug 19 2021 Slava Aseev <ptrnine@altlinux.org> 5.85.0-alt2
+- Secret Service API patch:
+  + fix mangling of invalid collection object paths
+  + allow any characters to be used in wallet names
+
 * Mon Aug 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.85.0-alt1
 - new version
 
