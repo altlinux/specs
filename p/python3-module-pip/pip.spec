@@ -6,7 +6,7 @@
 
 Name: python3-module-pip
 Version: 21.2.1
-Release: alt4
+Release: alt5
 
 Summary: The PyPA recommended tool for installing Python packages
 License: MIT
@@ -87,6 +87,9 @@ mkdir -p %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %endif
 
+# drop deprecated ntlm support
+rm -v %buildroot%python3_sitelibdir/pip/_vendor/urllib3/contrib/ntlmpool.py
+
 %if_without bootstrap
 %{python3_setup:} bdist_wheel --dist-dir %buildroot%system_wheels_path/
 %endif
@@ -116,6 +119,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
 %endif
 
 %changelog
+* Wed Aug 18 2021 Vitaly Lipatov <lav@altlinux.ru> 21.2.1-alt5
+- NMU: drop ntlm support from urllib3
+
 * Wed Aug 04 2021 Stanislav Levin <slev@altlinux.org> 21.2.1-alt4
 - Built pip package as arch-independent.
 
