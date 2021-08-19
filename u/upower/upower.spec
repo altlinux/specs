@@ -1,9 +1,13 @@
 %define _libexecdir %_prefix/libexec/upower
 %def_enable gtk_doc
+%ifarch %ix86
+%def_disable check
+%else
 %def_enable check
+%endif
 
 Name: upower
-Version: 0.99.12
+Version: 0.99.13
 Release: alt1
 
 Summary: Power Management Service
@@ -21,16 +25,19 @@ Patch: %name-%version-%release.patch
 
 %define glib_ver 2.34
 %define dbus_ver 1.9.18
+%define gudev_ver 235
 %define imobiledevice_ver 1.3
 %define plist_ver 2.2.0
+%define dbusmock_ver 0.23.1
 
 Requires: dbus >= %dbus_ver
 
 BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: gtk-doc libusb-devel libgudev-devel libdbus-devel >= %dbus_ver
+BuildRequires: gtk-doc libusb-devel libgudev-devel >= %gudev_ver libdbus-devel >= %dbus_ver
 BuildRequires: libpolkit-devel libudev-devel gobject-introspection-devel
 BuildRequires: libimobiledevice-devel > %imobiledevice_ver pkgconfig(libplist-2.0) pkgconfig(systemd)
-%{?_enable_check:BuildRequires: /proc python3 python3-module-dbusmock libumockdev-gir python3-module-dbus}
+%{?_enable_check:BuildRequires: /proc python3 python3-module-dbusmock >= %dbusmock_ver
+BuildRequires: python3-module-packaging libumockdev-gir python3-module-dbus}
 
 %description
 UPower provides a daemon, API and command line tools for
@@ -97,9 +104,7 @@ rm -f acinclude.m4
 %find_lang %name
 
 %check
-%ifnarch %ix86
-PYTHON=%__python3 %make check
-%endif
+PYTHON=%__python3 %make -k check VERBOSE=1
 
 %files -f %name.lang
 %doc AUTHORS NEWS README
@@ -131,6 +136,9 @@ PYTHON=%__python3 %make check
 %_girdir/*.gir
 
 %changelog
+* Thu Aug 19 2021 Yuri N. Sedunov <aris@altlinux.org> 0.99.13-alt1
+- 0.99.13
+
 * Sun Jun 20 2021 Yuri N. Sedunov <aris@altlinux.org> 0.99.12-alt1
 - updated to UPOWER_0_99_12-2-gb64902e
 
