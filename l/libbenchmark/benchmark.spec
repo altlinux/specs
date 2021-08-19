@@ -1,6 +1,6 @@
 Name:       libbenchmark
-Version:    1.5.5
-Release:    alt2
+Version:    1.5.6
+Release:    alt1
 URL:        https://github.com/google/benchmark
 Summary:    A library to benchmark code snippets
 Source:     benchmark-%version.tar.gz
@@ -75,6 +75,9 @@ install *.a %buildroot/%_libdir
 %_libdir/lib*.a
 
 %changelog
+* Thu Aug 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.5.6-alt1
+- new version 1.5.6
+
 * Sun Jul 11 2021 Fr. Br. George <george@altlinux.ru> 1.5.5-alt2
 - Separate static library
 - Introduce tests
