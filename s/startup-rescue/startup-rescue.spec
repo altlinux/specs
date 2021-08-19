@@ -1,5 +1,5 @@
 Name: startup-rescue
-Version: 0.38
+Version: 0.39
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
@@ -65,6 +65,9 @@ install -pm755 rescue-remote.init %buildroot%_initdir/rescue-remote
 %_initdir/rescue-remote
 
 %changelog
+* Thu Aug 19 2021 Anton Midyukov <antohami@altlinux.org> 0.39-alt1
+- unmount-system: make unmounting more reliable
+
 * Tue Aug 17 2021 Anton Midyukov <antohami@altlinux.org> 0.38-alt1
 - mount-system: do not mount tmpfs to /mnt
 - mount-fstab: ignore noauto option for /boot and /boot/efi mountpoints
