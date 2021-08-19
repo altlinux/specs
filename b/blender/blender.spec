@@ -11,8 +11,8 @@
 %def_with jemalloc
 
 Name: blender
-Version: 2.93.2
-Release: alt4
+Version: 2.93.3
+Release: alt1
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -307,6 +307,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Thu Aug 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.93.3-alt1
+- Updated to upstream version 2.93.3.
+
 * Mon Aug 16 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.93.2-alt4
 - Fixed build with TBB on Elbrus.
 
