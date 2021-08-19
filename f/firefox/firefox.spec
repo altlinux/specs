@@ -5,12 +5,13 @@
 %define nss_version   3.69.0
 %define rust_version  1.54.0
 %define cargo_version 1.54.0
+%define llvm_version  11.0
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        91.0
+Version:        91.0.1
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -56,10 +57,10 @@ BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-firefox
 BuildRequires(pre): browser-plugins-npapi-devel
 
-BuildRequires: clang11.0
-BuildRequires: clang11.0-devel
-BuildRequires: llvm11.0-devel
-BuildRequires: lld11.0-devel
+BuildRequires: clang%llvm_version
+BuildRequires: clang%llvm_version-devel
+BuildRequires: llvm%llvm_version-devel
+BuildRequires: lld%llvm_version-devel
 BuildRequires: libstdc++-devel
 BuildRequires: rpm-macros-alternatives
 BuildRequires: rust >= %rust_version
@@ -274,6 +275,7 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export RANLIB="llvm-ranlib"
 export LLVM_PROFDATA="llvm-profdata"
+export ALTWRAP_LLVM_VERSION="%llvm_version"
 
 export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export SHELL=/bin/sh
@@ -463,6 +465,11 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Aug 18 2021 Alexey Gladkov <legion@altlinux.ru> 91.0.1-alt1
+- New release (91.0.1).
+- Security fixes:
+  + CVE-2021-29991: Header Splitting possible with HTTP/3 Responses
+
 * Tue Aug 10 2021 Alexey Gladkov <legion@altlinux.ru> 91.0-alt1
 - New release (91.0).
 - Security fixes:
