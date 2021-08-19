@@ -7,7 +7,7 @@
 Name: libtorrent-rasterbar
 Epoch: 4
 Version: 2.0.4
-Release: alt2
+Release: alt3
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 License: BSD-3-Clause and BSL-1.0
 Group: System/Libraries
@@ -22,6 +22,9 @@ Source2: %name-%version-deps-try_signal.tar
 Source3: %name-%version-simulation-libsimulator.tar
 
 Patch1: libtorrent-fedora-python-sha256.patch
+
+# https://github.com/arvidn/libtorrent/issues/6405
+Patch2: libtorrent-upstream-boost-compat.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
@@ -113,6 +116,7 @@ python-3 bindings to libTorrent.
 %prep
 %setup -a1 -a2 -a3
 %patch1 -p1
+%patch2 -p1
 
 %build
 %ifarch %mips32
@@ -156,6 +160,9 @@ export LIBS=-latomic
 %endif
 
 %changelog
+* Wed Aug 18 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4:2.0.4-alt3
+- Fixed build with boost-1.77.0.
+
 * Thu Jun 24 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4:2.0.4-alt2
 - Rebuilt without python module because deluge doesn't work
   with libtorrent-rasterbar >= 2.0 yet.

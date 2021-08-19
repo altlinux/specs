@@ -10,7 +10,7 @@
 
 Name: kea
 Version: 1.8.2
-Release: alt2
+Release: alt3
 Summary: DHCPv4, DHCPv6 and DDNS server from ISC
 
 License: MPLv2.0 and Boost
@@ -228,6 +228,9 @@ rm -f %buildroot%python3_sitelibdir_noarch/kea/kea_connector2.py
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Thu Aug 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.2-alt3
+- Rebuilt with boost-1.77.0.
+
 * Fri Jun 04 2021 Alexey Shabalin <shaba@altlinux.org> 1.8.2-alt2
 - fixed build docs with new sphinx
 

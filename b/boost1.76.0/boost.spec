@@ -2,7 +2,7 @@
 %define boost_include %_includedir/%name
 %define boost_doc %_docdir/%name
 
-%def_with devel
+%def_without devel
 %if_with devel
 %def_with boost_build
 %def_with devel_static
@@ -12,6 +12,13 @@
 %endif
 
 %def_with strict_deps
+# some packages aren't ready yet to use cmake files from boost,
+# particularly, packages using boost-python3-devel
+%def_with cmake
+
+# Add compatibility links for boost-python3-devel
+# TODO: consider removing them later
+%def_without python_compat_symlinks
 
 # mpi
 %def_with mpi
@@ -41,17 +48,15 @@
 %add_findreq_skiplist  %_datadir/boost-build/src/tools/doxproc.py
 
 %define ver_maj 1
-%define ver_min 77
+%define ver_min 76
 %define ver_rel 0
 
 %define namesuff %{ver_maj}.%{ver_min}.%{ver_rel}
 
-%define _unpackaged_files_terminate_build 1
-
-Name: boost
+Name: boost%ver_maj.%ver_min.%ver_rel
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt4
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -551,6 +556,9 @@ conventional methods.
 %package python-headers
 Summary: Boost.Python header files.
 Group: Development/C++
+%if_without cmake
+BuildArch: noarch
+%endif
 AutoReq: yes, nocpp
 
 %description python-headers
@@ -1214,7 +1222,7 @@ applications. This package contains python module.
 %patch83 -p2
 %patch88 -p1
 %patch94 -p1
-%patch1000 -p2
+%patch1000 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -1266,6 +1274,9 @@ build_boost() {
 	-j$NPROCS \
 	--layout=system \
 	--toolset=gcc \
+%if_without cmake
+	--no-cmake-config \
+%endif
 	variant=release \
 	threading=multi \
 	link=$LINK_BOOST \
@@ -1334,6 +1345,9 @@ install_boost() {
 	-j$NPROCS \
 	--layout=system \
 	--toolset=gcc \
+%if_without cmake
+	--no-cmake-config \
+%endif
 	variant=release \
 	threading=multi \
 	link=$LINK_BOOST \
@@ -1371,6 +1385,13 @@ install_boost \
 	--with-mpi \
 %endif
 	python=%_python3_version
+
+%if_with python_compat_symlinks
+pushd %buildroot%_libdir
+ln -s libboost_python%{python_version_nodots python3}.so libboost_python3.so
+ln -s libboost_numpy%{python_version_nodots python3}.so libboost_numpy3.so
+popd
+%endif
 
 # install mpi python3 module
 %if_with mpi
@@ -1524,6 +1545,7 @@ rm -f %buildroot%_libdir/*.a || :
 %exclude %_libdir/*_python*.so
 %exclude %_libdir/*_wave*.so
 %exclude %_libdir/*boost_numpy3*.so
+%if_with cmake
 %_libdir/cmake/*
 %if_with context
 %exclude %_libdir/cmake/boost_context-%version
@@ -1542,6 +1564,7 @@ rm -f %buildroot%_libdir/*.a || :
 %exclude %_libdir/cmake/boost_program_options-%version
 %exclude %_libdir/cmake/boost_python*-%version
 %exclude %_libdir/cmake/boost_wave-%version
+%endif
 
 %dir %boost_doc/
 %doc %boost_doc/LICENSE_1_0.txt
@@ -1555,20 +1578,26 @@ rm -f %buildroot%_libdir/*.a || :
 %files context-devel
 %_includedir/%name/context
 %_libdir/*_context*.so
+%if_with cmake
 %_libdir/cmake/boost_context-%version
+%endif
 
 %if_with coroutine
 %files coroutine-devel
 %_includedir/%name/coroutine
 %_libdir/*_coroutine*.so
+%if_with cmake
 %_libdir/cmake/boost_coroutine-%version
+%endif
 %endif
 %endif
 
 %files filesystem-devel
 %_includedir/%name/filesystem*
 %_libdir/*_filesystem*.so
+%if_with cmake
 %_libdir/cmake/boost_filesystem-%version
+%endif
 
 %files flyweight-devel
 %_includedir/%name/flyweight*
@@ -1581,7 +1610,9 @@ rm -f %buildroot%_libdir/*.a || :
 %_includedir/%name/graph/parallel/
 %_includedir/%name/graph/distributed/
 %_libdir/*_graph_parallel*.so
+%if_with cmake
 %_libdir/cmake/boost_graph_parallel-%version
+%endif
 %endif
 
 %files interprocess-devel
@@ -1590,7 +1621,9 @@ rm -f %buildroot%_libdir/*.a || :
 %files locale-devel
 %_includedir/%name/locale*
 %_libdir/*_locale*.so
+%if_with cmake
 %_libdir/cmake/boost_locale-%version
+%endif
 
 %files lockfree-devel
 %_includedir/%name/lockfree
@@ -1598,17 +1631,23 @@ rm -f %buildroot%_libdir/*.a || :
 %files log-devel
 %_includedir/%name/log/
 %_libdir/*_log*.so
+%if_with cmake
 %_libdir/cmake/boost_log-%version
+%endif
 
 %files math-devel
 %_libdir/*_math*.so
+%if_with cmake
 %_libdir/cmake/boost_math*-%version
+%endif
 
 %if_with mpi
 %files mpi-devel
 %_includedir/%name/mpi
 %_libdir/*_mpi*.so
+%if_with cmake
 %_libdir/cmake/boost_mpi*-%version
+%endif
 %endif
 
 %files msm-devel
@@ -1620,11 +1659,15 @@ rm -f %buildroot%_libdir/*.a || :
 %files program_options-devel
 %_includedir/%name/program_options*
 %_libdir/*_program_options*.so
+%if_with cmake
 %_libdir/cmake/boost_program_options-%version
+%endif
 
 %files python-headers
 %_includedir/%name/python*
+%if_with cmake
 %_libdir/cmake/boost_python*-%version
+%endif
 
 %files python3-devel
 %_libdir/*boost_python3*.so
@@ -1636,7 +1679,9 @@ rm -f %buildroot%_libdir/*.a || :
 %files wave-devel
 %_includedir/%name/wave*
 %_libdir/*_wave*.so
+%if_with cmake
 %_libdir/cmake/boost_wave-%version
+%endif
 
 
 %files doc
@@ -1824,8 +1869,8 @@ done
 
 
 %changelog
-* Mon Aug 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.77.0-alt1
-- Updated to upstream version 1.77.0.
+* Tue Aug 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.76.0-alt4
+- Built boost-1.76.0 legacy libraries package.
 
 * Mon Aug 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.76.0-alt3
 - Rebuilt without python-2 support (Closes: #40722).

@@ -1,7 +1,7 @@
 %define mjversion 3.7
 Name: povray
 Version: %mjversion.0.8
-Release: alt4
+Release: alt5
 
 Summary: Persistence of Vision Ray Tracer (POV-Ray)
 License: AGPL-3.0 and CC-BY-NC-SA-2.5 and CC-BY-SA-3.0
@@ -84,6 +84,9 @@ find %buildroot%_datadir/povray-%mjversion/scripts/ -type f -print0 |\
 %doc %_man1dir/*
 
 %changelog
+* Thu Aug 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.7.0.8-alt5
+- Rebuilt with boost-1.77.0.
+
 * Fri Jul 10 2020 Michael Shigorin <mike@altlinux.org> 3.7.0.8-alt4
 - fixed build on %%e2k (and riscv64, hopefully)
 - License: clarification (3.7+)
