@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-qt5platform-plugins
-Version: 5.0.23
+Version: 5.0.40
 Release: alt1
 Summary: Qt platform integration plugins for Deepin Desktop Environment
 License: GPL-2.0+ and LGPL-3.0 and MIT
@@ -72,6 +72,9 @@ sed -i '/wayland/d' qt5platform-plugins.pro
 %_qt5_plugindir/platforms/libdxcb.so
 
 %changelog
+* Thu Aug 19 2021 Leontiy Volodin <lvol@altlinux.org> 5.0.40-alt1
+- New version (5.0.40) with rpmgs script.
+
 * Fri May 14 2021 Leontiy Volodin <lvol@altlinux.org> 5.0.23-alt1
 - New version (5.0.23) with rpmgs script.
 

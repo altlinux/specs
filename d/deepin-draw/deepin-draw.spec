@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-draw
-Version: 5.9.4
+Version: 5.9.7
 Release: alt1
 Summary: A lightweight drawing tool for Linux Deepin
 License: GPL-3.0+
@@ -77,6 +77,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/draw/
 
 %changelog
+* Thu Aug 19 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.7-alt1
+- New version (5.9.7).
+
 * Mon Jun 07 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.4-alt1
 - New version (5.9.4).
 - Built with gcc-c++ and cmake instead clang and qmake.

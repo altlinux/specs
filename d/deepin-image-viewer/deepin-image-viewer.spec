@@ -2,7 +2,7 @@
 %def_enable cmake
 
 Name: deepin-image-viewer
-Version: 5.7.11
+Version: 5.8.2
 Release: alt1
 Summary: Image viewer for Deepin
 License: GPL-3.0+
@@ -97,6 +97,9 @@ sed -i '/FIF_FAXG3/d' src/src/utils/unionimage.cpp
 %_qt5_plugindir/imageformats/libxraw.so
 
 %changelog
+* Thu Aug 19 2021 Leontiy Volodin <lvol@altlinux.org> 5.8.2-alt1
+- New version (5.8.2).
+
 * Wed Jul 14 2021 Leontiy Volodin <lvol@altlinux.org> 5.7.11-alt1
 - New version (5.7.11).
 
