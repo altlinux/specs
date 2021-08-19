@@ -4,17 +4,19 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.6.0
-Release: alt2
+Version: 0.7.0
+Release: alt1
 
 Summary: Run a subprocess in a pseudo terminal
+
 License: ISCL
 Group: Development/Python3
-# Source-git: https://github.com/pexpect/ptyprocess.git
 Url: https://pypi.python.org/pypi/ptyprocess
 
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
@@ -56,6 +58,9 @@ py.test3 -v
 %python3_sitelibdir/ptyprocess-*.egg-info
 
 %changelog
+* Thu Aug 19 2021 Vitaly Lipatov <lav@altlinux.ru> 0.7.0-alt1
+- new version 0.7.0 (with rpmrb script)
+
 * Sun Jul 25 2021 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt2
 - Drop python2 support.
 
