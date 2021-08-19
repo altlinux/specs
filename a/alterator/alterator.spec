@@ -1,6 +1,6 @@
 Name: alterator
 Version: 5.4.1
-Release: alt5
+Release: alt6
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -183,8 +183,11 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Aug 19 2021 Paul Wolneykien <manowar@altlinux.org> 5.4.1-alt6
+- Fixed the last changelog entry with %%e2k macro.
+
 * Thu Aug 19 2021 Paul Wolneykien <manowar@altlinux.org> 5.4.1-alt5
-- Switch to Guile 2.2 on %e2k.
+- Switch to Guile 2.2 on %%e2k.
 
 * Mon Jun 21 2021 Paul Wolneykien <manowar@altlinux.org> 5.4.1-alt4
 - Use additional fixes for delimited continuations with Guile 2.0.
