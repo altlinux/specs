@@ -1,7 +1,7 @@
 
 Name: kde5-set
-Version: 21.04.0
-Release: alt2
+Version: 21.04.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -38,6 +38,7 @@ Requires: webclient
 #
 Requires: icon-theme-breeze
 Requires: kf5-kwallet kf5-kconfig kf5-kglobalaccel kf5-kimageformats kde5-svgpart
+Requires: kf5-baloo
 Requires: kde5-display-manager
 Requires: plasma5-polkit-kde-agent kf5-kio-extras plasma5-breeze plasma5-oxygen plasma5-powerdevil plasma5-systemmonitor
 Requires: plasma5-drkonqi plasma5-milou plasma5-systemsettings plasma5-integration
@@ -61,7 +62,7 @@ Requires: gtk3-theme-breeze
 Requires: gtk2-theme-breeze
 Requires: kf5-qqc2-desktop-style
 Requires: kde5-plasma-applet-places-widget
-Requires: plasma5-kde-gtk-config kf5-baloo plasma5-bluedevil plasma5-kscreen plasma5-ksshaskpass
+Requires: plasma5-kde-gtk-config plasma5-bluedevil plasma5-kscreen plasma5-ksshaskpass
 Requires: plasma5-khotkeys plasma5-kinfocenter plasma5-addons plasma5-browser-integration
 Requires: plasma5-disks
 Requires: kde5-khelpcenter kde5-kolourpaint kde5-kio-audiocd kde5-kgpg
@@ -202,6 +203,9 @@ Requires: kde5-kaddressbook kde5-pim-addons
 %files -n kde5-pim
 
 %changelog
+* Thu Aug 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
+- move kf5-baloo to small subpackage
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.0-alt2
 - move kde5-konversation to maxi subpackage
 
