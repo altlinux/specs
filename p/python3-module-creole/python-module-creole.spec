@@ -1,20 +1,23 @@
-%define oname creole
+%define oname python-creole
+%define modname creole
 
-Name: python3-module-%oname
-Version: 1.2.0
-Release: alt2
+Name: python3-module-creole
+Version: 1.4.10
+Release: alt1
 
 Summary: Markup converter in pure Python for: creole2html, html2creole, html2ReSt, html2textile
+
 License: GPLv3+
 Group: Development/Python3
-BuildArch: noarch
-Url: http://code.google.com/p/python-creole
+Url: https://github.com/jedie/python-creole
 
-# sourcecode: http://github.com/jedie/python-creole
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
+BuildArch: noarch
 
+BuildRequires(pre): rpm-build-intro >= 2.2.5
+BuildRequires(pre): rpm-build-python3
 
 %description
 Python lib for:
@@ -26,25 +29,34 @@ the MoinMoin project by Radomir Dopieralski and Thomas Waldmann.
 
 %prep
 %setup
-
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
+# need only for developing and tests
+rm creole/{publish.py,setup_utils.py}
 
 %build
 %python3_build
 
 %install
 %python3_install
+%python3_prune
+
+# don't pack internal tools
+rm -v %buildroot%_bindir/{publish,update_rst_readme}
 
 %files
-%_bindir/*
-%python3_sitelibdir/%oname
-%exclude %python3_sitelibdir/%oname/tests
-%python3_sitelibdir/python_%oname-*.egg-info
-%doc AUTHORS README.%oname LICENSE
+%doc AUTHORS README.rst LICENSE
+%_bindir/creole2html
+%_bindir/html2creole
+%_bindir/html2rest
+%_bindir/html2textile
+%python3_sitelibdir/%modname
+%python3_sitelibdir/*.egg-info
 
 
 %changelog
+* Thu Aug 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.10-alt1
+- new version (1.4.10) with rpmgs script
+- cleanup spec, switch to build from pypi tarball
+
 * Wed Nov 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.2.0-alt2
 - python2 disabled
 
