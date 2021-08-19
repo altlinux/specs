@@ -1,13 +1,12 @@
 %define rname kcoreaddons
 %def_disable python
 %if_enabled python
-%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
 %define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
 %endif
 
 Name: kf5-%rname
 Version: 5.85.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -24,7 +23,7 @@ Patch2: alt-kreslimit-integration.patch
 #BuildRequires: extra-cmake-modules gcc-c++ python-module-google qt5-tools-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 %if_enabled python
-BuildRequires(pre): python3-module-sip-devel python-module-sip-devel
+BuildRequires(pre): python3-module-sip-devel
 BuildRequires: python3-module-PyQt5-devel
 %endif
 BuildRequires: gcc-c++ extra-cmake-modules qt5-base-devel qt5-tools-devel
@@ -60,24 +59,6 @@ Requires: %name-common = %version-%release
 KF5 library
 
 %if_enabled python
-%package -n python-module-pykf5
-Summary: common package for KF5 python bindings
-License: GPLv2+ / LGPLv2+
-Group: Development/Python
-Requires: %name-common = %version-%release
-%description -n python-module-pykf5
-common package for KF5 python bindings
-
-%package -n python-module-%rname
-Summary: Python bindings for KCoreAddons
-License: GPLv2+ / LGPLv2+
-Group: Development/Python
-Requires: %name-common = %version-%release
-Requires: python-module-pykf5
-Requires: python-module-sip = %sipver2
-%description -n python-module-%rname
-Python bindings for KCoreAddons
-
 %package -n python-module-%rname-devel
 Summary: Sip files for python-module-%rname
 Group: Development/Python
@@ -145,14 +126,6 @@ Sip files for python3-module-%rname
 %_K5lib/libKF5CoreAddons.so.*
 
 %if_enabled python
-%files -n python-module-pykf5
-%dir %python_sitelibdir/PyKF5/
-%python_sitelibdir/PyKF5/__init__.py*
-%dir %_datadir/sip/PyKF5/
-%files -n python-module-%rname
-%python_sitelibdir/PyKF5/*.so
-%files -n python-module-%rname-devel
-%_datadir/sip/PyKF5/KCoreAddons/
 %files -n python3-module-pykf5
 %dir %python3_sitelibdir/PyKF5/
 %python3_sitelibdir/PyKF5/__init__.py
@@ -165,6 +138,9 @@ Sip files for python3-module-%rname
 %endif
 
 %changelog
+* Thu Aug 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.85.0-alt2
+- clean build requires
+
 * Mon Aug 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.85.0-alt1
 - new version
 
