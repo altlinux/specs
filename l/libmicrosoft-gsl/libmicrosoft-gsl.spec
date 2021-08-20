@@ -1,5 +1,5 @@
 Name: libmicrosoft-gsl
-Version: 3.0.1
+Version: 3.1.0
 Release: alt1
 Epoch: 1
 
@@ -11,7 +11,7 @@ License: MIT
 Url: https://github.com/Microsoft/GSL
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/microsoft/GSL/archive/%version.tar.gz
+# Source-url: https://github.com/microsoft/GSL/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++ cmake
@@ -69,6 +69,9 @@ make test
 /usr/share/cmake/Microsoft.GSL/
 
 %changelog
+* Thu Aug 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1:3.1.0-alt1
+- new version (3.1.0) with rpmgs script
+
 * Mon May 04 2020 Vitaly Lipatov <lav@altlinux.ru> 1:3.0.1-alt1
 - new version (3.0.1) with rpmgs script
 - switch from catch2 to google test (disable google test for a time)
