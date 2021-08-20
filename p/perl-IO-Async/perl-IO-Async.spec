@@ -2,8 +2,8 @@
 %global oname IO-Async
 
 Name: perl-%oname
-Version: 0.78
-Release: alt2
+Version: 0.79
+Release: alt1
 
 Summary: Asynchronous event-driven programming
 Group: Development/Perl
@@ -33,9 +33,7 @@ Future::IO Implementation using IO::Async
 %setup -q -n %oname-%version
 
 # on ppc64le, but ifarch did not expand here :(
-#ifarch ppc64le
-[ %version = 0.78 ] && rm -f t/70future-io.t
-#endif
+[ `uname -m` = "ppc64le" ] && rm -f t/70future-io.t
 
 %build
 %perl_vendor_build
@@ -53,6 +51,9 @@ rm -rfv %buildroot%perl_vendor_privlib/IO/Async/Test.pm
 %perl_vendor_privlib/Future/IO/Impl/IOAsync.pm
 
 %changelog
+* Fri Aug 20 2021 Igor Vlasenko <viy@altlinux.org> 0.79-alt1
+- new version
+
 * Wed Aug 18 2021 Vitaly Lipatov <lav@altlinux.ru> 0.78-alt2
 - don't pack IO/Async/LoopTests.pm IO/Async/Test.pm
 
