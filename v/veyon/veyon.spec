@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.5.6
-Release: alt2
+Version: 4.5.7
+Release: alt1
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -112,6 +112,9 @@ rm -rf ./3rdparty
 %_datadir/%name
 
 %changelog
+* Fri Aug 20 2021 Egor Ignatov <egori@altlinux.org> 4.5.7-alt1
+- new version
+
 * Tue Jun 29 2021 Egor Ignatov <egori@altlinux.org> 4.5.6-alt2
 - update build dependencies
 
