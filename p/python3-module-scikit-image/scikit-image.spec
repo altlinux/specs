@@ -6,21 +6,17 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 0.17.2
-Release: alt3
-
+Version: 0.18.2
+Release: alt1
 Summary: Image processing routines for SciPy
 License: BSD-3-Clause and MIT
 Group: Development/Python3
-
 Url: https://pypi.org/project/scikit-image/
+
 # https://github.com/scikit-image/scikit-image.git
 Source: %name-%version.tar
+
 Patch1: %oname-alt-build.patch
-# https://github.com/scikit-image/scikit-image/pull/4731
-Patch2: %oname-upstream-fix-1.patch
-# TODO: try removing this test skip on next update
-Patch3: %oname-alt-numpy-test-skip.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-macros-sphinx3
@@ -86,8 +82,6 @@ This package contains documentation for %oname.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %if_enabled docs
 %prepare_sphinx3 doc
@@ -121,8 +115,6 @@ cd build/lib.linux*
 #rm -f %buildroot%python3_sitelibdir/skimage/io/tests/test_io.py
 #rm -f %buildroot%python3_sitelibdir/skimage/io/tests/__pycache__/test_io.*
 
-# TODO: remove NUMPY_TOO_FRESH export when patch3 is removed
-export NUMPY_TOO_FRESH=1
 export PYTHONDONTWRITEBYTECODE=1
 export PYTEST_ADDOPTS='-p no:cacheprovider'
 pytest-3 -v skimage
@@ -150,6 +142,9 @@ pytest-3 -v skimage
 %endif
 
 %changelog
+* Thu Aug 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.18.2-alt1
+- Updated to upstream version 0.18.2.
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 0.17.2-alt3
 - NMU: add if_enabled docs for sphinx using
 - NMU: drop tests packing, disable tests (need review)
