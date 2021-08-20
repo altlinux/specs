@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		892ce506db
+%define svnrev		4bb187a11c
 
 %def_with pgsql
 %def_enable java
@@ -20,7 +20,7 @@
 %endif
 
 Name: zabbix
-Version: 5.0.14
+Version: 5.4.3
 Release: alt1
 Epoch: 1
 
@@ -645,6 +645,7 @@ fi
 %_initdir/%{name}_agent2
 %_unitdir/*agent2*
 %_sbindir/%{name}_agent2
+%_man8dir/%{name}_agent2.*
 
 %files agent-sudo
 %config(noreplace) %attr(0400,root,root) %_sysconfdir/sudoers.d/%name
@@ -670,6 +671,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Fri Aug 20 2021 Alexei Takaseev <taf@altlinux.org> 1:5.4.3-alt1
+- 5.4.3
+
 * Sat Jul 17 2021 Alexei Takaseev <taf@altlinux.org> 1:5.0.14-alt1
 - 5.0.14
 
