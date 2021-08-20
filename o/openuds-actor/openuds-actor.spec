@@ -4,9 +4,9 @@
 
 Name: openuds-actor
 Version: 3.0.0
-Release: alt1
+Release: alt2
 Summary: Actor for Universal Desktop Services (UDS) Broker
-License: BSD3
+License: BSD-3-Clause
 Group: Networking/Remote access
 URL: https://github.com/dkmstr/openuds
 
@@ -67,6 +67,9 @@ install -p -D -m 600 %SOURCE4 %buildroot%_sysconfdir/%oname/%oname.cfg
 %_datadir/polkit-1/actions/org.openuds.pkexec.UDSActorConfig.policy
 
 %changelog
+* Sat Aug 21 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt2
+- v3.0 snapshot 51b0cec5365698dffdb9a3a468d52bbba4656ba4
+
 * Thu Nov 05 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt1
 - 3.0.0 Release
 

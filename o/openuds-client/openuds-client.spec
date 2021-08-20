@@ -3,9 +3,9 @@
 
 Name: openuds-client
 Version: 3.0.0
-Release: alt2
+Release: alt3
 Summary: Client for Universal Desktop Services (UDS) Broker
-License: BSD3
+License: BSD-3-Clause
 Group: Networking/Remote access
 URL: https://github.com/dkmstr/openuds
 Provides: udsclient = %EVR
@@ -42,6 +42,9 @@ popd
 %_desktopdir/UDSClient.desktop
 
 %changelog
+* Sat Aug 21 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt3
+- v3.0 snapshot 51b0cec5365698dffdb9a3a468d52bbba4656ba4
+
 * Fri Jul 09 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt2
 - Update requires
 

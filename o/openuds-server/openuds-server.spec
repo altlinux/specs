@@ -10,7 +10,7 @@
 
 Name: openuds-server
 Version: 3.0.0
-Release: alt8
+Release: alt9
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -152,6 +152,9 @@ cert-sh generate nginx-openuds ||:
 %_unitdir/openuds-web.socket
 
 %changelog
+* Wed Aug 18 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt9
+- v3.0 snapshot 51b0cec5365698dffdb9a3a468d52bbba4656ba4
+
 * Fri Jul 09 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt8
 - Fix Russian translation
 - Update SECRET_KEY config for install only in %%post
