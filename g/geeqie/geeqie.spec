@@ -7,7 +7,7 @@
 
 Name: geeqie
 Version: 1.6
-Release: alt3
+Release: alt4
 
 Summary: Graphics file browser utility
 License: GPLv2+
@@ -24,6 +24,8 @@ Source: %name-%version.tar
 Patch: %name-1.5-libdir-fix.patch
 Patch1: %name-1.6-up-doc-build.patch
 Patch2: geeqie-1.6-up-clutter.patch
+Patch3: geeqie-1.6-up-wayland.patch
+Patch4: geeqie-1.6-up-image-not-shown.patch
 
 Provides: gqview = %version-%release
 Obsoletes: gqview < %version
@@ -52,6 +54,8 @@ ExifTool.
 %patch -b .libdir
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 sed -i 's/\-Werror//' configure.ac
 
@@ -83,6 +87,10 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %doc NEWS README.*
 
 %changelog
+* Thu Aug 19 2021 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt4
+- applied upstream fixes for "Run time check on GDK display backend"
+  and "Images fail to render on MacOS"
+
 * Sat Aug 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt3
 - applied upstream fixes for "segfault with clutter-gtk"
   https://github.com/BestImageViewer/geeqie/issues/829 (ALT #40734)
