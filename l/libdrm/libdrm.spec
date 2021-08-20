@@ -1,6 +1,6 @@
 Name: libdrm
 Version: 2.4.107
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Userspace interface to kernel DRM service
 License: GPL
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 Patch: %name-%version.patch
 
 BuildRequires(pre): meson
-BuildRequires: docbook-style-xsl libudev-devel libpciaccess-devel xorg-util-macros xsltproc python-module-docutils
+BuildRequires: docbook-style-xsl libudev-devel libpciaccess-devel xorg-util-macros xsltproc python3-module-docutils
 
 %description
 This library implements the userspace interface to the kernel DRM
@@ -62,6 +62,9 @@ develop programs which make use of %name
 %_man7dir/*.7*
 
 %changelog
+* Fri Aug 20 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.107-alt2
+- use python3-module-docutils for /usr/bin/rst2man.py
+
 * Thu Jul 15 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.107-alt1
 - 2.4.107
 

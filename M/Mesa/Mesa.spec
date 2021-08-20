@@ -73,10 +73,11 @@
 %ifarch %armsoc_arches
 %vulkan_drivers_add freedreno
 %vulkan_drivers_add broadcom
+%vulkan_drivers_add panfrost
 %endif
 
 Name: Mesa
-Version: 21.2.0
+Version: 21.2.1
 Release: alt1
 Epoch: 4
 License: MIT
@@ -520,15 +521,20 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n xorg-dri-armsoc -f xorg-dri-armsoc.list
 %_libdir/libvulkan_freedreno.so
 %_libdir/libvulkan_broadcom.so
+%_libdir/libvulkan_panfrost.so
 %dir %_datadir/vulkan
 %dir %_datadir/vulkan/icd.d
 %_datadir/vulkan/icd.d/freedreno_icd*.json
 %_datadir/vulkan/icd.d/broadcom_icd*.json
+%_datadir/vulkan/icd.d/panfrost_icd*.json
 %endif
 
 %files -n mesa-dri-drivers
 
 %changelog
+* Fri Aug 20 2021 Valery Inozemtsev <shrek@altlinux.ru> 4:21.2.1-alt1
+- 21.2.1
+
 * Thu Aug 05 2021 Valery Inozemtsev <shrek@altlinux.ru> 4:21.2.0-alt1
 - 21.2.0
 
