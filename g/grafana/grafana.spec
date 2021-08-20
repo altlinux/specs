@@ -4,7 +4,7 @@
 %define _runtimedir /run
 
 Name:		grafana
-Version:	7.5.4
+Version:	8.1.2
 Release:	alt1
 Summary:	Metrics dashboard and graph editor
 
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 Patch: %name-%version.patch
 
 Source100: %name-server.sysconfig
-#Source101: %name.logrotate
+#Source101: %%name.logrotate
 Source102: %name-server.init
 Source103: %name-server.service
 Source104: %name.tmpfiles
@@ -25,7 +25,7 @@ Source104: %name.tmpfiles
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang rpm-macros-nodejs
 BuildRequires: npm yarn
-BuildRequires: node node-devel node-gyp node-iltorb node-sass libsass
+BuildRequires: node >= 14 node-devel node-gyp
 BuildRequires: fontconfig libfreetype
 BuildRequires: /proc
 
@@ -38,8 +38,6 @@ for Graphite, Elasticsearch, OpenTSDB, Prometheus and InfluxDB.
 # $ npm install yarn
 # $ ./node_modules/.bin/yarn install --pure-lockfile
 # $ npm run build
-# $ rm -rf node_modules/iltorb
-# $ rm -rf node_modules/node-sass
 # $ rm -rf node_modules/node-gyp
 # $ git add -f node_modules
 # $ git add -f packages/*/node_modules
@@ -61,8 +59,6 @@ ln -s %_includedir/node node_modules/.node-gyp/$node_ver/include/node
 echo "9" > node_modules/.node-gyp/$node_ver/installVersion
 
 ln -sf %nodejs_sitelib/node-gyp node_modules/node-gyp
-ln -sf %nodejs_sitelib/node-sass node_modules/node-sass
-ln -sf %nodejs_sitelib/iltorb node_modules/iltorb
 
 %build
 
@@ -75,8 +71,8 @@ export VERSION=%version
 export COMMIT=%release
 export BRANCH=altlinux
 
-#%golang_prepare
-#cd .gopath/src/%import_path
+#%%golang_prepare
+#cd .gopath/src/%%import_path
 mkdir -p $BUILDDIR/src/github.com/grafana
 ln -s %_builddir/%name-%version \
     $BUILDDIR/src/%import_path
@@ -146,7 +142,7 @@ install -d -m 775 %buildroot%_runtimedir/%name
 # Install sysconfig
 install -p -D -m 644 %SOURCE100 %buildroot%_sysconfdir/sysconfig/%name-server
 # Install logrotate
-#install -p -D -m 644 %%SOURCE101 %buildroot%_logrotatedir/%name
+#install -p -D -m 644 %%SOURCE101 %%buildroot%%_logrotatedir/%%name
 # Install sysv init scripts
 install -p -D -m 755 %SOURCE102 %buildroot%_initdir/%name-server
 # Install systemd unit services
@@ -155,8 +151,8 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 
 %pre
 %_sbindir/groupadd -r -f %name 2>/dev/null ||:
-%_sbindir/useradd -r -g %name -G %name  -c 'Grafana Daemon' \
-        -s /sbin/nologin  -d %_sharedstatedir/%name %name 2>/dev/null ||:
+%_sbindir/useradd -r -g %name -G %name -c 'Grafana Daemon' \
+    -s /sbin/nologin  -d %_sharedstatedir/%name %name 2>/dev/null ||:
 
 %post
 %post_service %name-server
@@ -194,13 +190,19 @@ fi
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/%name.ini
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/ldap.toml
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/provisioning/*/*.yaml
-#%config(noreplace) %_logrotatedir/%name
+#%%config(noreplace) %%_logrotatedir/%%name
 %dir %attr(0775, root, %name) %_logdir/%name
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 %dir %attr(0755, %name, %name) %dir %_sharedstatedir/%name/plugins
 %_datadir/%name
 
 %changelog
+* Sat Aug 21 2021 Alexey Shabalin <shaba@altlinux.org> 8.1.2-alt1
+- 8.1.2
+
+* Wed Aug 18 2021 Alexey Shabalin <shaba@altlinux.org> 8.1.1-alt1
+- 8.1.1
+
 * Fri Apr 23 2021 Alexey Shabalin <shaba@altlinux.org> 7.5.4-alt1
 - 7.5.4
 
