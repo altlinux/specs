@@ -1,9 +1,10 @@
+%define _cmake__builddir BUILD
 %define repo dde-kwin
 
 %def_disable clang
 
 Name: deepin-kwin
-Version: 5.3.9
+Version: 5.3.14
 Release: alt1
 
 Summary: KWin configuration for Deepin Desktop Environment
@@ -25,7 +26,7 @@ Patch4: deepin-kwin-crash.patch
 Patch11: deepin-kwin-5.3.7-ALT-cmake-bad-elfs.patch
 
 %if_enabled clang
-BuildRequires(pre): clang11.0-devel
+BuildRequires(pre): clang12.0-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
@@ -60,6 +61,7 @@ Header files and libraries for %name.
 sed -i 's|lrelease|lrelease-qt5|' plugins/platforms/plugin/translate_generation.sh
 sed -i 's|${CMAKE_INSTALL_PREFIX}/share/kwin/scripts|%_K5data/kwin/scripts/|' scripts/CMakeLists.txt
 sed -i 's|${CMAKE_INSTALL_PREFIX}/share/kwin/tabbox|%_K5data/kwin/tabbox|' tabbox/CMakeLists.txt
+sed -i 's|/usr/include/KWaylandServer|%_K5inc/KWaylandServer|' CMakeLists.txt
 # sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
 #     plugins/kwineffects/multitasking/background.cpp \
 #     deepin-wm-dbus/deepinwmfaker.cpp
@@ -69,21 +71,6 @@ sed -i 's|/usr/lib|/%_libdir|' \
     plugins/platforms/plugin/main.cpp
 # Fix wm error
 sed -i 's|kwin_x11 -platform|%_K5bin/kwin_x11 -platform|' configures/kwin_no_scale.in
-# Fix build future version with kwin 5.20
-# sed -i '/m_blurManager->create();/d' plugins/kwineffects/blur/blur.cpp
-sed -i 's|#include "kwinutils.h"|#include "../platforms/lib/kwinutils.h"|' \
-    plugins/kdecoration/chameleon.cpp \
-    plugins/kdecoration/chameleonconfig.cpp \
-    plugins/kdecoration/chameleonwindowtheme.cpp
-sed -i 's|#include "kwinutils.h"|#include "../../platforms/lib/kwinutils.h"|' \
-    plugins/kwineffects/blur/blur.cpp \
-    plugins/kwineffects/blur/blur.h \
-    plugins/kwineffects/scissor-window/scissorwindow.cpp \
-    plugins/kwineffects/multitasking/multitasking.h \
-    plugins/platforms/plugin/libkwinpreload.cpp \
-    plugins/platforms/plugin/libkwinpreload.h \
-    plugins/platforms/plugin/main.cpp \
-    plugins/platforms/plugin/main_wayland.cpp
 
 %build
 %if_enabled clang
@@ -98,10 +85,10 @@ ln -s %_libdir/libkwin.so.5 libs/libkwin.so
     -GNinja \
     -DCMAKE_INSTALL_LIBDIR=%_K5lib \
     -DKWIN_LIBRARY_PATH=`pwd`/libs
-%ninja_build -C BUILD
+%cmake_build
 
 %install
-%ninja_install -C BUILD
+%cmake_install
 chmod +x %buildroot%_bindir/kwin_no_scale
 # install debian/dde-kwin.postinst %%buildroot%%_datadir/kwin/scripts/
 # chmod 755 %%buildroot%%_datadir/kwin/scripts/dde-kwin.postinst
@@ -139,6 +126,9 @@ chmod +x %buildroot%_bindir/kwin_no_scale
 %_K5lib/libkwin-xcb.so
 
 %changelog
+* Fri Aug 20 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.14-alt1
+- New version (5.3.14).
+
 * Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.9-alt1
 - New version (5.3.9) with rpmgs script.
 
