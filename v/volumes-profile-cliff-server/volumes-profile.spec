@@ -1,13 +1,15 @@
 Name: volumes-profile-cliff-server
-Version: 0.17
+Version: 0.17.1
 Release: alt1
 
 Summary: Volumes description for Centaurus distribution
 License: GPL
 Group: System/Configuration/Other
+
 Url: http://www.altlinux.org/Installer/beans
-BuildArch: noarch
 Source: %name-%version.tar
+
+BuildArch: noarch
 
 %description
 Volumes description for Centaurus distribution
@@ -28,6 +30,9 @@ install -pm755 20-*.sh %buildroot%hook2dir/
 %hook2dir/*
 
 %changelog
+* Fri Aug 20 2021 Michael Shigorin <mike@altlinux.org> 0.17.1-alt1
+- E2K: increase /boot size from 512 Mb to 1 Gb for serviceability
+
 * Wed Mar 27 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.17-alt1
 - no swap in profile (security reasons)
 
