@@ -13,7 +13,7 @@
 
 Name:    apache2
 Version: 2.4.48
-Release: alt4
+Release: alt5
 Epoch: 1
 
 License: %asl
@@ -109,6 +109,9 @@ BuildRequires: libtool >= 3:2.2.6
 #required by mod_md
 BuildRequires: libcurl-devel
 BuildRequires: libjansson-devel
+
+#required by mod_systemd
+BuildRequires: libsystemd-devel
 
 %description
 Apache is a powerful, full-featured, efficient and freely-available
@@ -763,6 +766,7 @@ EOF
 	--enable-charset_lite=shared \
 	--enable-unixd --enable-mods-static='unixd' \
 	--enable-md \
+	--enable-systemd \
 	$*
 
 %make_build
@@ -1535,6 +1539,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Wed Aug 18 2021 Egor Ignatov <egori@altlinux.org> 1:2.4.48-alt5
+- enable mod_systemd, drop apachectl2 in unit file (closes: #40688)
+
 * Mon Aug 16 2021 Egor Ignatov <egori@altlinux.org> 1:2.4.48-alt4
 - enable mod_md
 
