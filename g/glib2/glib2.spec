@@ -23,7 +23,7 @@
 %def_disable check
 
 Name: glib2
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -56,6 +56,7 @@ Patch4: glib-2.50.1-alt-dbus_socket_path.patch
 
 # mike@: fix build with lcc 1.23 (lacks some gcc5 builtins)
 Patch10: glib-2.60.1-alt-e2k-lcc.patch
+Patch11: glib-2.68.3-alt-e2k-gmacros.patch
 
 %def_with locales
 %if_with locales
@@ -68,9 +69,6 @@ Obsoletes: lib%name < %version
 Provides: %name-core = %version
 Obsoletes: %name-core < %version
 
-# use python3
-#AutoReqProv: nopython
-#%define __python %nil
 %add_python3_path %_datadir/glib-2.0/codegen
 %allow_python3_import_path %_datadir/glib-2.0/codegen
 %if_enabled installed_tests
@@ -85,8 +83,8 @@ Requires: pcre-config(utf8) pcre-config(unicode-properties)
 BuildPreReq: pcre-config(utf8) pcre-config(unicode-properties)
 %endif
 
-BuildRequires(pre): meson rpm-build-licenses rpm-build-python3
-BuildRequires: gcc-c++ gtk-doc >= %gtk_doc_ver indent
+BuildRequires(pre): rpm-macros-meson rpm-build-licenses rpm-build-python3
+BuildRequires: meson gcc-c++ gtk-doc >= %gtk_doc_ver indent
 BuildRequires: glibc-kernheaders libdbus-devel libpcre-devel
 BuildRequires: libffi-devel zlib-devel libelf-devel
 %{?_enable_libmount:BuildRequires: libmount-devel}
@@ -95,9 +93,9 @@ BuildRequires: libffi-devel zlib-devel libelf-devel
 %{?_enable_systemtap:BuildRequires: libsystemtap-sdt-devel}
 %{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 
-# for check  & tests
+%{?_enable_check:
 BuildRequires: /proc dbus-tools-gui desktop-file-utils chrpath
-BuildRequires: xdg-desktop-portal python3-module-dbusmock
+BuildRequires: xdg-desktop-portal python3-module-dbusmock}
 
 %description
 GLib is the low-level core library that forms the basis for projects
@@ -250,6 +248,7 @@ subst '/exit 1/d' check-abis.sh
 %ifarch %e2k
 subst "/subdir('fuzzing')/d" meson.build
 %patch10 -p1
+%patch11 -b .e2k
 %endif
 
 %build
@@ -442,6 +441,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Aug 19 2021 Yuri N. Sedunov <aris@altlinux.org> 2.68.4-alt1
+- 2.68.4
+
 * Thu Jun 10 2021 Yuri N. Sedunov <aris@altlinux.org> 2.68.3-alt1
 - 2.68.3
 
