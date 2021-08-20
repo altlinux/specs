@@ -1,15 +1,17 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-Name: compton
-Version: 5.1
-Release: alt2
-Summary: fork of xcompmgr
-Summary(ru_RU.UTF-8): Форк xcompmgr
+Name: picom
+Version: 8.2
+Release: alt1
+Summary: A lightweight compositor for X11
 License: MPL-2.0 or MIT
 Group: System/X11
-Url: https://github.com/yshui/compton
+Url: https://github.com/yshui/picom
 Source: %name-%version.tar
+Source44: %name.watch
+Obsoletes: compton < %EVR
+Provides: compton = %version
 
 BuildRequires: rpm-build-python3
 BuildRequires: meson
@@ -20,25 +22,23 @@ BuildRequires: libpcre-devel
 BuildRequires: libGL-devel
 BuildRequires: libdbus-devel
 BuildRequires: libev-devel
+BuildRequires: libuthash-devel
 BuildRequires: pkgconfig(xcb-renderutil)
 BuildRequires: pkgconfig(xcb-image)
 BuildRequires: pkgconfig(pixman-1)
 BuildRequires: pkgconfig(libxdg-basedir)
 
 %description
-Compton is a compositor for X, and a fork of xcompmgr-dana.
+This is forked from the original Compton because it seems to have become
+unmaintained.
 
-I was frustrated by the low amount of standalone lightweight compositors. 
-Compton was forked from Dana Jansens' fork of xcompmgr and refactored. 
-I fixed whatever bug I found, and added features I wanted. 
-Things seem stable, but don't quote me on it. 
-I will most likely be actively working on this until I get the features I want. 
-This is also a learning experience for me. 
-That is, I'm partially doing this out of a desire to learn Xlib. 
+The current battle plan of this fork is to refactor it to make the code
+possible to maintain, so potential contributors won't be scared away when they
+take a look at the code.
 
-%description -l ru_RU.UTF-8
-Лёгкий композитный менеджер окон. Является форком xcompmgr-dana, который в свою очередь
-тоже является форком xcompmgr. В общем - исправленное и дополненое.
+We also try to fix bugs.
+
+You can leave your feedbacks or thoughts in the discussion tab.
 
 %prep
 %setup
@@ -53,11 +53,15 @@ That is, I'm partially doing this out of a desire to learn Xlib.
 %find_lang %name
 
 %files -f %name.lang
-%_bindir/compton*
-%_datadir/applications/%name.desktop
+%doc CONTRIBUTORS LICENSE.* README* dbus-examples man/%{name}* picom.sample.conf
+%_bindir/*
+%_datadir/applications/*.desktop
 %_iconsdir/hicolor/*/*/*
 
 %changelog
+* Fri Aug 13 2021 Ildar Mulyukov <ildar@altlinux.ru> 8.2-alt1
+- upstream renamed compton to picom
+
 * Sun Jun 20 2021 Anton Midyukov <antohami@altlinux.org> 5.1-alt2
 - Add missing buildrequires rpm-build-python3
 
