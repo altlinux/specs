@@ -30,7 +30,7 @@
 
 Name: qt5-webengine
 Version: 5.15.2
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -49,7 +49,7 @@ Patch6:  qtwebengine-everywhere-src-5.10.1-no-sse2.patch
 Patch7:  qtwebengine-opensource-src-5.9.2-arm-fpu-fix.patch
 #
 Patch9: qtwebengine-opensource-src-5.15.0-webrtc-neon-detect.patch
-Patch10: qtwebengine-everywhere-src-5.15.0-gn-bootstrap-verbose.patch
+#
 Patch11: qtwebengine-everywhere-src-5.11.3-aarch64-new-stat.patch
 Patch12: qtwebengine-everywhere-src-5.15.2-#1904652.patch
 Patch13: qtwebengine-everywhere-src-5.15.2-sandbox-time64-syscalls.patch
@@ -59,6 +59,8 @@ Patch31: armv6-ffmpeg-no-thumb.patch
 Patch32: disable-gpu-when-using-nouveau-boo-1005323.diff
 Patch33: 0001-Fix-build-with-system-ICU-69.patch
 Patch34: 0001-Fix-build-with-GCC-11.patch
+#
+Patch40: verbose-gn-bootstrap.patch
 
 # ALT
 Patch101: alt-pepflashplayer.patch
@@ -189,7 +191,7 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 #%patch7 -p1
 #
 %patch9 -p1
-#%patch10 -p1
+#
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
@@ -199,6 +201,8 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch32 -p1
 %patch33 -p1
 %patch34 -p1
+#
+%patch40 -p1
 #
 %patch101 -p1
 %patch102 -p1
@@ -276,9 +280,9 @@ cat /sys/fs/cgroup/user.slice/user-${UID}.slice/memory.high ||:
 ulimit -a | grep mem
 MEM_PER_PROC=10000000
 MAX_MEM=`grep ^MemTotal: /proc/meminfo | sed -e 's|^\(.*\)[[:space:]].*|\1|' -e 's|.*[[:space:]]||'`
-NUM_PROCS="$(($MAX_MEM / $MEM_PER_PROC))"
+#NUM_PROCS="$(($MAX_MEM / $MEM_PER_PROC))"
 [ "$NUM_PROCS" -ge 2  ] || NUM_PROCS=2
-[ "$NUM_PROCS" -le 32  ] || NUM_PROCS=32
+[ "$NUM_PROCS" -le 16  ] || NUM_PROCS=16
 
 export NPROCS=$NUM_PROCS
 export STRIP=strip
@@ -313,8 +317,8 @@ pushd %_target_platform
     QMAKE_EXTRA_ARGS+="-system-webengine-ffmpeg" \
 %endif
     ..
-(while true; do date; sleep 7m; done) &
-%make_build
+#(while true; do date; sleep 7m; done) &
+%make_build -Onone
 %if %qdoc_found
 export QT_HASH_SEED=0
 %make docs
@@ -407,6 +411,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Fri Aug 20 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt4
+- fix debug output when build (thanks iv@alt)
+
 * Tue Jun 29 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt3
 - fix compile
 
