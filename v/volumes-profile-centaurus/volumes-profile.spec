@@ -1,5 +1,5 @@
 Name: volumes-profile-centaurus
-Version: 0.13
+Version: 0.14
 Release: alt1
 
 Summary: Volumes description for Centaurus distribution
@@ -29,6 +29,9 @@ install -pm755 20-*.sh %buildroot%hook2dir/
 %hook2dir/*
 
 %changelog
+* Fri Aug 20 2021 Michael Shigorin <mike@altlinux.org> 0.14-alt1
+- E2K: increase /boot size from 512 Mb to 1 Gb for serviceability
+
 * Wed Mar 27 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.13-alt1
 - no swap (security reasons)
 

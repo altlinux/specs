@@ -1,14 +1,16 @@
 Name: volumes-profile-lite
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: Volumes description for School Lite distribution
 License: GPL
 Group: System/Configuration/Other
+
 Url: http://www.altlinux.org/Installer/beans
-BuildArch: noarch
-Packager: Andrey Cherepanov <cas@altlinux.org> 
 Source: %name-%version.tar
+Packager: Andrey Cherepanov <cas@altlinux.org> 
+
+BuildArch: noarch
 
 %description
 Volumes description for School Lite distribution
@@ -25,6 +27,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Fri Aug 20 2021 Michael Shigorin <mike@altlinux.org> 0.4.2-alt1
+- E2K: increase /boot size from 512 Mb to 1 Gb for serviceability
+
 * Mon Aug 05 2019 Michael Shigorin <mike@altlinux.org> 0.4.1-alt1
 - e2k support (/boot)
 

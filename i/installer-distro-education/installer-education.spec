@@ -1,6 +1,6 @@
 Name:    installer-distro-education
 Version: 9.2
-Release: alt4
+Release: alt5
 
 Summary: Installer common files for ALT Education
 License: GPL-2.0
@@ -116,6 +116,9 @@ rm -rf %buildroot%_datadir/alterator/help/ru_RU \
 %_datadir/install2/initinstall.d/10-vm-profile.sh
 
 %changelog
+* Fri Aug 20 2021 Michael Shigorin <mike@altlinux.org> 9.2-alt5
+- E2K: increase /boot size from 512 Mb to 1 Gb for serviceability.
+
 * Wed Jul 28 2021 Michael Shigorin <mike@altlinux.org> 9.2-alt4
 - E2K: added /boot support to volumes-profile-education.
 
