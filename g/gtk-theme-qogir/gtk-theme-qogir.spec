@@ -1,5 +1,5 @@
 Name: gtk-theme-qogir
-Version: 2021.06.25
+Version: 2021.08.02
 Release: alt1
 Epoch: 1
 Summary: Qogir GTK theme
@@ -38,6 +38,11 @@ mkdir -p %buildroot%_datadir/themes/Qogir
 %_datadir/themes/Qogir*
 
 %changelog
+* Fri Aug 20 2021 Leontiy Volodin <lvol@altlinux.org> 1:2021.08.02-alt1
+- New version.
+- Upstream:
+  + Fixed gtk themes and gnome-shell issues.
+
 * Fri Jul 02 2021 Leontiy Volodin <lvol@altlinux.org> 1:2021.06.25-alt1
 - New version.
 - Upstream:
