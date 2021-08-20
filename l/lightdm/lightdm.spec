@@ -7,7 +7,7 @@
 
 Name: lightdm
 Version: 1.30.0
-Release: alt14
+Release: alt15
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -32,7 +32,7 @@ Patch14: %name-1.30.0-alt-shells.patch
 Patch15: %name-1.30.0-alt-04-systemd.patch
 Patch16: %name-1.30.0-alt-05-tmpfiles.patch
 Patch17: %name-1.30.0-alt-i18n.patch
-Patch18: lightdm-1.30.0-reread-dmrc-alt.patch
+#Patch18: lightdm-1.30.0-reread-dmrc-alt.patch
 Patch19: %name-1.30.0-alt-wayland-session.patch
 Patch20: %name-1.30.0-alt-lock-tty.patch
 Patch21: %name-1.30.0-alt-select-vt.patch
@@ -150,7 +150,7 @@ manager via D-Bus.
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
-%patch18 -p2
+#%patch18 -p2
 %patch19 -p1
 %patch20 -p1
 %patch21 -p1
@@ -286,6 +286,10 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Fri Aug 20 2021 Paul Wolneykien <manowar@altlinux.org> 1.30.0-alt15
+- Revoke the "reread-dmrc" patch (closes: 40585).
+- ALTBUG 30329 should now be reopened.
+
 * Thu Jul 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.30.0-alt14
 - Fixed tty locking: enabled it only for wayland sessions.
 
