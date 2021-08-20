@@ -1,20 +1,20 @@
-%define major 1.1
-
+# pack shared libinkscape library
 %def_with shared
+
 %def_without gnome_vfs
 %def_without dbus
 %def_disable check
-%def_disable test
+
 # some reasons to prefer GraphicsMagick over ImageMagick: http://www.graphicsmagick.org/
 %def_with graphicsmagick
 
 Name: inkscape
-Version: %major
-Release: alt6
+Version: 1.1
+Release: alt7
 
 Summary: A Vector Drawing Application
 
-License: GPL
+License: GPLv2
 Group: Graphics
 Url: http://inkscape.org
 
@@ -27,17 +27,14 @@ Source1: inkview.desktop
 
 Patch: inkscape-1.1-fix-build-witch-gcc7.5.patch
 
-# Typical environment for GTK program
-Requires(post,postun): desktop-file-utils
-BuildRequires: desktop-file-utils
+# a program package can't have any provides
+AutoProv:no
 
-AutoProv:yes,nopython3
 BuildRequires(pre): rpm-build-python3
-%add_python3_lib_path %_datadir/%name/extensions
-BuildRequires: python3-module-Cython
 
-BuildRequires: boost-devel-headers boost-filesystem-devel cmake gcc-c++ intltool
-BuildRequires: libgc-devel libgsl-devel libpopt-devel libxslt-devel perl-devel zlib-devel libsoup-devel libaspell-devel libdbus-devel libgspell-devel libreadline-devel
+BuildRequires: cmake gcc-c++ intltool
+BuildRequires: boost-devel-headers boost-filesystem-devel
+BuildRequires: libgc-devel libgsl-devel libpopt-devel libxslt-devel zlib-devel libsoup-devel libaspell-devel libdbus-devel libgspell-devel libreadline-devel
 BuildRequires: lib2geom-devel >= 1.1
 
 # Checking for modules 'gtkmm-3.0>=3.24;gdkmm-3.0>=3.24;gtk+-3.0>=3.24;gdk-3.0>=3.24'
@@ -61,6 +58,8 @@ BuildRequires: libgomp-devel
 BuildRequires: libdouble-conversion-devel
 BuildRequires: perl-podlators
 
+%add_python3_lib_path %_datadir/%name/extensions
+
 Requires: icc-profiles
 
 # For extensions
@@ -69,10 +68,12 @@ Requires: wmf-utils
 # Recommends: skencil pstoedit
 
 # mike: work around https://bugzilla.altlinux.org/24586
-Requires: gnome-icon-theme
+#Requires: gnome-icon-theme
 
-# TODO
-#Requires: inkscape-data = %EVR
+# to support svg in libgdk-pixbuf
+Requires: librsvg
+
+Requires: %name-data = %EVR
 Requires: inkscape-tutorial
 Requires: lib%name = %EVR
 
@@ -94,15 +95,23 @@ Inkscape -- это программа векторного рисования о
 Summary: Viewer for Inkscape files
 Group: Graphics
 Requires: lib%name = %EVR
+# TODO: uses
+# /usr/share/inkscape/ui/menus.xml
+# /usr/share/inkscape/ui/style.css
+# /usr/share/inkscape/fonts
+#Requires: %name-data = %EVR
 
 %description viewer
 inkview is standalone viewer for Inkscape files (SVG).
 
-# TODO: move /usr/share/inkscape to data package?
 %package data
-Summary: Inkscape data files
+Summary: Inkscape common data files
 Group: Graphics
 BuildArch: noarch
+Requires: icon-theme-hicolor
+
+# a data package can't have any provides
+AutoProv:no
 
 %description data
 Inkview tutorial.
@@ -175,17 +184,15 @@ rm -rfv src/3rdparty/2geom/
 %install
 %makeinstall_std
 
-rm -rf %buildroot%_docdir/inkscape/
 # remove unneeded man
-rm -rf %buildroot%_mandir/??/
-rm -rf %buildroot%_mandir/??_??/
+rm -rv %buildroot%_mandir/??/
+rm -rv %buildroot%_mandir/??_??/
 
 subst "s|/usr/bin/env python$|%__python3|" %buildroot%_datadir/%name/extensions/*.py
 
 # remove tests
-rm -rf %buildroot%_datadir/%name/extensions/tests/
-rm -rf %buildroot%_datadir/%name/extensions/inkex/tester/
-rm -rf %buildroot%_datadir/%name/extensions/{setup.py,setup.cfg}
+rm -rv %buildroot%_datadir/%name/extensions/inkex/tester/
+rm -rv %buildroot%_datadir/%name/extensions/{setup.py,setup.cfg}
 
 %find_lang %name
 
@@ -199,17 +206,17 @@ true
 %files -f %name.lang
 %doc AUTHORS CONTRIBUTING.md NEWS.md COPYING README.md doc
 %_bindir/inkscape
-#_libdir/libinkscape_base.so
-%_datadir/%name/
-%exclude %_datadir/inkscape/tutorials/
-#_datadir/appdata/inkscape*
 %_desktopdir/org.inkscape.Inkscape.desktop
-%_iconsdir/hicolor/*/apps/*.png
-%_iconsdir/hicolor/*/apps/*.svg
 %_man1dir/inkscape*
 #_mandir/??/man1/inkscape.??.1.*
 %_datadir/metainfo/org.inkscape.Inkscape.appdata.xml
 /usr/share/bash-completion/completions/inkscape
+
+%files data
+%_datadir/%name/
+%exclude %_datadir/inkscape/tutorials/
+%_iconsdir/hicolor/*/apps/*.png
+%_iconsdir/hicolor/*/apps/*.svg
 
 %files viewer
 %_bindir/inkview
@@ -218,15 +225,23 @@ true
 
 %if_with shared
 %files -n lib%name
+%dir %_libdir/inkscape/
 %_libdir/inkscape/libinkscape_base.so
 %endif
 
 %files tutorial
+%dir %_datadir/%name/
 %_datadir/inkscape/tutorials/
 
 %files checkinstall
 
 %changelog
+* Fri Aug 20 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt7
+- move add noarch files to data subpackage
+- rearrange build requires and requires
+- drop gnome icons requirement (see https://bugzilla.altlinux.org/24586)
+- add librsvg require to support svg in libgdk-pixbuf
+
 * Thu Aug 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt6
 - update build requires
 
