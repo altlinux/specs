@@ -1,7 +1,7 @@
 %define mjversion 3.7
 Name: povray
-Version: %mjversion.0.8
-Release: alt5
+Version: %mjversion.0.10
+Release: alt1
 
 Summary: Persistence of Vision Ray Tracer (POV-Ray)
 License: AGPL-3.0 and CC-BY-NC-SA-2.5 and CC-BY-SA-3.0
@@ -71,6 +71,10 @@ sed -i \
 # remove carriage return symbols
 find %buildroot%_datadir/povray-%mjversion/scripts/ -type f -print0 |\
 	xargs -r0 sed -i -e 's,\r$,,g'
+
+%check
+make check
+
 %files
 %_bindir/povray
 
@@ -84,6 +88,9 @@ find %buildroot%_datadir/povray-%mjversion/scripts/ -type f -print0 |\
 %doc %_man1dir/*
 
 %changelog
+* Fri Aug 20 2021 Anton Farygin <rider@altlinux.ru> 3.7.0.10-alt1
+- 3.7.0.10
+
 * Thu Aug 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.7.0.8-alt5
 - Rebuilt with boost-1.77.0.
 
