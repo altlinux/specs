@@ -1,7 +1,7 @@
 %define pear_name PHP_CompatInfo
 
 Name: pear-PHP_CompatInfo
-Version: 1.7.0
+Version: 1.9.0
 Release: alt1
 
 Summary: Find out the minimum version and the extensions required for a piece of code to run
@@ -45,12 +45,17 @@ which shows which functions require which version and CLI output script
 %doc LICENSE CHANGELOG
 %pear_dir/PHP/
 %_bindir/pci
+%_bindir/pciconf
 %pear_docdir/%pear_name/
+%pear_datadir/%pear_name/
 %pear_xmldir/%pear_name.xml
 %pear_testdir/%pear_name/
 
 
 %changelog
+* Sat Aug 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1.9.0-alt1
+- new version 1.9.0 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.7.0-alt1
 - new version 1.7.0 (with rpmrb script)
 
