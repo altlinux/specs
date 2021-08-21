@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 0.2.3
-Release: alt0.1
+Release: alt1
 
 Summary: PSD to SVG converter based on psd-tools and svgwrite
 
@@ -29,8 +29,10 @@ BuildRequires(pre): rpm-build-python3
 %py3_use psd-tools >= 1.8.11
 %py3_use future
 
+Provides: %oname
+
 %description
-PSD to SVG converter based on psd-tools and svgwrite.
+psd2svg - PSD to SVG converter based on psd-tools and svgwrite.
 
 %prep
 %setup
@@ -55,6 +57,9 @@ PSD to SVG converter based on psd-tools and svgwrite.
 %python3_sitelibdir/%oname/
 
 %changelog
+* Sat Aug 21 2021 Vitaly Lipatov <lav@altlinux.ru> 0.2.3-alt1
+- add Provides: psd2svg
+
 * Sat Oct 17 2020 Vitaly Lipatov <lav@altlinux.ru> 0.2.3-alt0.1
 - new version (0.2.3) with rpmgs script
 
