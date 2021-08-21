@@ -1,6 +1,6 @@
 # TODO: build from sources
 Name: electron13
-Version: 13.1.6
+Version: 13.1.9
 Release: alt1
 
 Summary: Build cross platform desktop apps with JavaScript, HTML, and CSS
@@ -63,6 +63,9 @@ ln -rs %buildroot%_libdir/%name/electron %buildroot/%_bindir/%name
 %endif
 
 %changelog
+* Sat Aug 21 2021 Vitaly Lipatov <lav@altlinux.ru> 13.1.9-alt1
+- new version 13.1.9 (with rpmrb script)
+
 * Fri Jul 09 2021 Vitaly Lipatov <lav@altlinux.ru> 13.1.6-alt1
 - new version (13.1.6) with rpmgs script
 
