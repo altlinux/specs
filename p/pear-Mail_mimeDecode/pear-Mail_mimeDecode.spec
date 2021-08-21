@@ -1,7 +1,7 @@
 %define pear_name Mail_mimeDecode
 
 Name: pear-Mail_mimeDecode
-Version: 1.5.5
+Version: 1.5.6
 Release: alt1
 
 Summary: Provides a class to decode mime messages
@@ -47,9 +47,15 @@ off.
 %doc LICENSE CHANGELOG
 %pear_testdir/Mail_mimeDecode/
 %pear_dir/Mail
+%pear_datadir/Mail_mimeDecode/xmail.dtd
+%pear_datadir/Mail_mimeDecode/xmail.xsl
 %pear_xmldir/%pear_name.xml
 
+
 %changelog
+* Sat Aug 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1.5.6-alt1
+- new version 1.5.6 (with rpmrb script)
+
 * Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.5.5-alt1
 - new version 1.5.5 (with rpmrb script)
 
