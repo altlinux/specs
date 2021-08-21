@@ -3,7 +3,7 @@
 
 Name: perl-%oname
 Version: 0.79
-Release: alt1
+Release: alt2
 
 Summary: Asynchronous event-driven programming
 Group: Development/Perl
@@ -29,6 +29,15 @@ Requires: %name = %EVR
 %description -n perl-Future-IO-Impl-IOAsync
 Future::IO Implementation using IO::Async
 
+%package tests
+Summary: Test modules for IO::Async
+Group: Development/Perl
+Requires: %name = %EVR
+
+%description tests
+
+This package contains tests for %name.
+
 %prep
 %setup -q -n %oname-%version
 
@@ -40,17 +49,24 @@ Future::IO Implementation using IO::Async
 
 %install
 %perl_vendor_install
-rm -rfv %buildroot%perl_vendor_privlib/IO/Async/LoopTests.pm
-rm -rfv %buildroot%perl_vendor_privlib/IO/Async/Test.pm
 
 %files
 %doc Changes README examples
 %perl_vendor_privlib/IO/Async*
+%exclude %perl_vendor_privlib/IO/Async/LoopTests.pm
+%exclude %perl_vendor_privlib/IO/Async/Test.pm
 
 %files -n perl-Future-IO-Impl-IOAsync
 %perl_vendor_privlib/Future/IO/Impl/IOAsync.pm
 
+%files tests
+%perl_vendor_privlib/IO/Async/LoopTests.pm
+%perl_vendor_privlib/IO/Async/Test.pm
+
 %changelog
+* Sat Aug 21 2021 Vitaly Lipatov <lav@altlinux.ru> 0.79-alt2
+- pack tests to the submodule
+
 * Fri Aug 20 2021 Igor Vlasenko <viy@altlinux.org> 0.79-alt1
 - new version
 
