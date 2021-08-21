@@ -2,7 +2,7 @@
 
 Name: perl-Mojolicious-Plugin-RenderFile
 Version: 0.12
-Release: alt1
+Release: alt2
 Summary: Mojolicious plugin allowing customization to force file download
 # See lib/Mojolicious/Plugin/RenderFile.pm
 License: GPL+ or Artistic
@@ -11,7 +11,6 @@ Url: http://search.cpan.org/dist/Mojolicious-Plugin-RenderFile/
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-module-dukpy
 BuildRequires: perl-devel
 BuildRequires: perl-Package-Generator
 BuildRequires: perl(Encode.pm)
@@ -51,5 +50,8 @@ rm -f %buildroot%perl_vendorlib/Mojolicious/Plugin/README.pod
 %perl_vendorlib/Mojolicious/Plugin*
 
 %changelog
+* Sat Aug 21 2021 Vitaly Lipatov <lav@altlinux.ru> 0.12-alt2
+- NMU: drop BR python2 module
+
 * Tue Jun 19 2018 Alexandr Antonov <aas@altlinux.org> 0.12-alt1
 - initial build for ALT
