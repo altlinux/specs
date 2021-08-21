@@ -1,7 +1,7 @@
 %def_without libnm_glib
 
 Name: NetworkManager-strongswan
-Version: 1.5.0
+Version: 1.5.2
 Release: alt1
 
 Summary: NetworkManager strongSwan IPSec VPN plug-in
@@ -73,7 +73,7 @@ with the graphical desktop.
 %_libexecdir/NetworkManager/nm-strongswan-auth-dialog
 %_libdir/NetworkManager/libnm-vpn-plugin-strongswan.so
 %exclude %_libdir/NetworkManager/libnm-vpn-plugin-strongswan.la
-%_datadir/appdata/NetworkManager-strongswan.appdata.xml
+#_datadir/appdata/NetworkManager-strongswan.appdata.xml
 
 %if_with libnm_glib
 %_libdir/NetworkManager/libnm-*-properties.so
@@ -82,6 +82,9 @@ with the graphical desktop.
 %endif
 
 %changelog
+* Sat Aug 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1.5.2-alt1
+- new version 1.5.2 (with rpmrb script)
+
 * Wed Jul 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
 - initial build for ALT Sisyphus
 
