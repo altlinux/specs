@@ -1,8 +1,8 @@
 %define pear_name Math_Numerical_RootFinding
 
 Name: pear-Math_Numerical_RootFinding
-Version: 1.0.0
-Release: alt3
+Version: 1.1.0a2
+Release: alt1
 
 Summary: Numerical Methods Root-Finding collection package
 
@@ -47,6 +47,9 @@ Newton-Raphson, Fixed Point, Secant etc
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sat Aug 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1.0a2-alt1
+- new version 1.1.0a2 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
