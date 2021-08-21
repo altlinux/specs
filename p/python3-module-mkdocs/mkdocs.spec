@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.2.2
-Release: alt1
+Release: alt2
 
 Summary: Python tool to create HTML documentation from markdown sources
 License: BSD-2-Clause
@@ -31,6 +31,7 @@ BuildRequires: python3(yaml_env_tag)
 BuildRequires: python3(importlib_metadata)
 BuildRequires: python3(packaging)
 BuildRequires: python3(mergedeep)
+BuildRequires: python3(babel)
 
 BuildRequires: python3(tox)
 BuildRequires: python3(tox_no_deps)
@@ -68,6 +69,9 @@ tox.py3 --sitepackages --no-deps -vvr -s false
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sat Aug 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt2
+- fix build requires
+
 * Mon Jul 19 2021 Stanislav Levin <slev@altlinux.org> 1.2.2-alt1
 - 1.0.4 -> 1.2.2.
 - Enabled testing.
