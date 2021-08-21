@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.15.0
-Release: alt2
+Version: 1.16.0
+Release: alt1
 
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
@@ -83,15 +83,18 @@ tox.py3 --sitepackages -vvr -s false
 %files
 %doc README.rst documentation/index.rst
 %python_sitelibdir/six.py*
-%python_sitelibdir/six-*.egg-info/
+%python_sitelibdir/%oname-%version-py%_python_version.egg-info/
 
 %files -n python3-module-%oname
 %doc README.rst documentation/index.rst
 %python3_sitelibdir/six.py
 %python3_sitelibdir/__pycache__/
-%python3_sitelibdir/six-*.egg-info/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Aug 20 2021 Stanislav Levin <slev@altlinux.org> 1.16.0-alt1
+- 1.15.0 -> 1.16.0 (closes: #40787).
+
 * Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 1.15.0-alt2
 - Disabled testing for Python2.
 
