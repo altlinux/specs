@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        92.0.4515.131
+Version:        92.0.4515.159
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -437,6 +437,17 @@ EOF
 %_altdir/%name
 
 %changelog
+* Sat Aug 21 2021 Alexey Gladkov <legion@altlinux.ru> 92.0.4515.159-alt1
+- New version (92.0.4515.159).
+- Security fixes:
+  - CVE-2021-30598: Type Confusion in V8.
+  - CVE-2021-30599: Type Confusion in V8.
+  - CVE-2021-30600: Use after free in Printing.
+  - CVE-2021-30601: Use after free in Extensions API.
+  - CVE-2021-30602: Use after free in WebRTC.
+  - CVE-2021-30603: Race in WebAudio.
+  - CVE-2021-30604: Use after free in ANGLE.
+
 * Wed Aug 11 2021 Alexey Gladkov <legion@altlinux.ru> 92.0.4515.131-alt1
 - New version (92.0.4515.131).
 - Use python3.
