@@ -7,7 +7,7 @@
 
 Name: lightdm
 Version: 1.30.0
-Release: alt17
+Release: alt18
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -286,6 +286,9 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Sat Aug 21 2021 Paul Wolneykien <manowar@altlinux.org> 1.30.0-alt18
+- Fixed memory leak when setting language in the greeter.
+
 * Fri Aug 20 2021 Paul Wolneykien <manowar@altlinux.org> 1.30.0-alt17
 - Run the PAM session with the locale currently set in the greeter.
 
