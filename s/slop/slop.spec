@@ -1,5 +1,5 @@
 Name:     slop
-Version:  7.4
+Version:  7.5
 Release:  alt1
 
 Summary:  slop (Select Operation) is an application that queries for a selection from the user and prints the region to stdout.
@@ -9,6 +9,7 @@ Url:      https://github.com/naelstrof/slop
 
 Packager: Pavel Skrylev <majioa@altlinux.org>
 
+# Source-git: https://github.com/naelstrof/slop.git
 Source:   %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
@@ -75,5 +76,8 @@ Libraries for %name.
 %_libdir/*.so.%version
 
 %changelog
+* Sat Aug 21 2021 Vitaly Lipatov <lav@altlinux.ru> 7.5-alt1
+- new version 7.5
+
 * Wed Oct 10 2018 Pavel Skrylev <majioa@altlinux.org> 7.4-alt1
 - Initial build for Sisyphus

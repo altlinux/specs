@@ -1,6 +1,6 @@
 Name: maim
-Version:  5.5.2
-Release: alt2
+Version:  5.7.4
+Release: alt1
 
 Summary:  maim (make image) takes screenshots of your desktop.
 License: GPLv3
@@ -13,11 +13,11 @@ Source:   %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
-BuildRequires: libslop-devel
+BuildRequires: libslop-devel >= 7.5
 BuildRequires: zlib-devel
 BuildRequires: libpng-devel libjpeg-devel
 BuildRequires: libXrandr-devel libXfixes-devel libXcomposite-devel libglvnd-devel
-BuildRequires: libicu-devel libXext-devel libglm-devel libGL-devel
+BuildRequires: libicu-devel libXext-devel libglm-devel libGL-devel libwebp-devel
 
 %description
 maim (make image) takes screenshots of your desktop. It has options to take only
@@ -52,6 +52,9 @@ Features:
 %doc COPYING README.md
 
 %changelog
+* Sat Aug 21 2021 Vitaly Lipatov <lav@altlinux.ru> 5.7.4-alt1
+- new version 5.7.4
+
 * Wed Jan 09 2019 Pavel Skrylev <majioa@altlinux.org> 5.5.2-alt2
 - Fixed lost build dependency to GLX_INCLUDE_DIR.
 
