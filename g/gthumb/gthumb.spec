@@ -15,7 +15,7 @@
 %def_enable gstreamer
 
 Name: gthumb
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -47,8 +47,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 Requires: %name-data = %version-%release
 
-BuildRequires(pre): meson
-BuildRequires: glib2-devel >= %glib_ver
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libclutter-devel libclutter-gtk3-devel >= %clutter_gtk_ver
 %{?_enable_gstreamer:BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver gst-plugins%gst_api_ver-devel >= %gst_ver}
@@ -167,6 +167,9 @@ This package contains headers needed to build extensions for gThumb.
 %_pkgconfigdir/*
 
 %changelog
+* Sun Aug 22 2021 Yuri N. Sedunov <aris@altlinux.org> 3.10.4-alt1
+- 3.10.4
+
 * Sun Apr 11 2021 Yuri N. Sedunov <aris@altlinux.org> 3.10.3-alt1
 - 3.10.3
 
