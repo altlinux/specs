@@ -1,6 +1,6 @@
 Name: outwiker
 Version: 3.0.0.888
-Release: alt1
+Release: alt2
 
 Summary: OutWiker is designed to store notes in a tree
 
@@ -17,6 +17,9 @@ BuildRequires: rpm-build-python3
 BuildArch: noarch
 
 %add_python3_path %_datadir/%name/
+
+# See https://bugzilla.altlinux.org/40796
+Requires: python3-module-cyhunspell
 
 %description
 OutWiker is designed to store notes in a tree. Such programs are called
@@ -59,6 +62,9 @@ find %buildroot%_datadir/%name -name '*.py' | xargs sed -i \
 %_pixmapsdir/*
 
 %changelog
+* Sun Aug 22 2021 Anton Midyukov <antohami@altlinux.org> 3.0.0.888-alt2
+- Add Requires: python3-module-cyhunspell (ALT bug #40796)
+
 * Fri May 14 2021 Anton Midyukov <antohami@altlinux.org> 3.0.0.888-alt1
 - new version 3.0.0.888
 
