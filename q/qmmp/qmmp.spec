@@ -1,5 +1,5 @@
 %define branch 0.12
-%define svn svn10121
+%define svn svn10242
 
 %define rel alt1
 
@@ -29,7 +29,12 @@ BuildRequires: libmpcdec-devel libpulseaudio-devel >= 0.9.15 libqt4-devel
 BuildRequires: libsoxr-devel libtag-devel >= 1.6 libvorbis-devel
 BuildRequires: libwavpack-devel libalsa-devel libflac-devel libbs2b-devel >= 3.0
 BuildRequires: libprojectM-devel >= 2.0.1 jackit-devel xorg-xf86miscproto-devel
-BuildRequires: libenca-devel libcddb-devel libmms-devel >= 0.4 libwildmidi-devel >= 0.2.3.4
+BuildRequires: libenca-devel libcddb-devel libmms-devel >= 0.4
+
+%if "%rel" != "alt1"
+BuildRequires: libwildmidi-devel >= 0.2.3.4
+%endif
+
 BuildRequires: libgme-devel libGLU-devel libsidplayfp-devel >= 1.0.3 libshout2-devel
 BuildRequires: libcdio-paranoia-devel libarchive-devel libopusfile-devel
 
@@ -340,14 +345,17 @@ Requires: qmmp = %version-%release
 %description -n %name-in-cdaudio
 Qmmp CDAudio Plugin
 
+%if "%rel" != "alt1"
 %package -n %name-in-midi
 Summary: Qmmp Midi Plugin
 Group: Sound
 Requires: qmmp = %version-%release
 Requires: libwildmidi
 
+
 %description -n %name-in-midi
 Qmmp Midi Plugin, used WildMidi
+%endif
 
 %package -n %name-in-gme
 Summary: Qmmp GME Audio Plugin
@@ -659,7 +667,12 @@ Summary: QMMP - Qt-based multimedia player
 Group: Sound
 Requires: qmmp qmmp-in-wavpack qmmp-mpris qmmp-notifier
 Requires: qmmp-eff-soxr qmmp-in-ffmpeg qmmp-in-mplayer
-Requires: qmmp-in-flac qmmp-out-alsa qmmp-in-modplug qmmp-in-midi
+Requires: qmmp-in-flac qmmp-out-alsa qmmp-in-modplug
+
+%if "%rel" != "alt1"
+Requires: qmmp-in-midi
+%endif
+
 Requires: qmmp-in-musepack qmmp-statusicon qmmp-in-sndfile qmmp-in-cue
 Requires: qmmp-vis-analyzer qmmp-scrobbler qmmp-hal qmmp-hotkey qmmp-gnomehotkey
 Requires: qmmp-eff-bs2b qmmp-vis-projectm qmmp-fileops qmmp-converter
@@ -781,8 +794,10 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-in-cdaudio
 %_libdir/%name-%branch/Input/libcdaudio*
 
+%if "%rel" != "alt1"
 %files -n %name-in-midi
 %_libdir/%name-%branch/Input/libwildmidi*
+%endif
 
 %files -n %name-in-gme
 %_libdir/%name-%branch/Input/libgme*
@@ -903,6 +918,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Sun Aug 22 2021 Motsyo Gennadi <drool@altlinux.ru> 1:0.12.14-alt1.svn10242
+- build withoud wildmidi for Sisyphus
+
 * Mon Jun 28 2021 Motsyo Gennadi <drool@altlinux.ru> 1:0.12.14-alt1.svn10121
 - 0.12.14 svn10121 version
 
