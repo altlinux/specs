@@ -1,24 +1,26 @@
 %def_disable snapshot
 %define _name soundtouch
+%def_enable openmp
 %def_enable check
 
 Name: libsoundtouch
-Version: 2.2
+Version: 2.3.0
 Release: alt1
 
 Summary: SoundTouch audio processing library
 Group: System/Libraries
 License: LGPLv2.1
 Url: http://www.surina.net/soundtouch/
-Vcs: https://gitlab.com/soundtouch/soundtouch
 
 %if_disabled snapshot
 Source: https://gitlab.com/%_name/%_name/-/archive/%version/%_name-%version.tar.gz
 %else
+Vcs: https://gitlab.com/soundtouch/soundtouch
 Source: %_name-%version.tar
 %endif
 
 BuildRequires: gcc-c++ libstdc++-devel
+%{?_enable_openmp:BuildRequires: libgomp-devel}
 
 %description
 SoundTouch is an open-source audio processing library that allows changing
@@ -43,7 +45,9 @@ Libraries/include files for development with %name.
 #touch NEWS README AUTHORS ChangeLog
 #%autoreconf
 ./bootstrap
-%configure --disable-static
+%configure --disable-static \
+    %{subst_enable openmp}
+%nil
 %make_build
 
 %install
@@ -65,6 +69,10 @@ rm -rf %buildroot/%_prefix/doc
 %_pkgconfigdir/%_name.pc
 
 %changelog
+* Sun Aug 22 2021 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
+- 2.3.0
+- enabled OpenMP support
+
 * Tue Oct 27 2020 Yuri N. Sedunov <aris@altlinux.org> 2.2-alt1
 - 2.2
 
