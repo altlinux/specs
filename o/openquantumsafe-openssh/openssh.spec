@@ -1,15 +1,15 @@
 # SPDX-License-Identifier: GPL-2.0-only
-# Based on openssh.spec for openssh and openssh-gostcrypto.
+# Based on openssh.spec from openssh and openssh-gostcrypto by glebfm.
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
 Name: openquantumsafe-openssh
-Version: 7.9p1.202008
-Release: alt2
+Version: 8.6p1.202108
+Release: alt1
 
 Summary: OQS-OpenSSH is a fork of OpenSSH that adds quantum-safe algorithms
-License: BSD-3-Clause
+License: SSH-OpenSSH and ALT-Public-Domain and BSD-3-Clause and Beerware
 Group: Networking/Remote access
 Url: https://openquantumsafe.org/applications/ssh.html
 Vcs: https://github.com/open-quantum-safe/openssh
@@ -18,13 +18,14 @@ Source: %name-%version.tar
 %define confdir %_sysconfdir/openssh
 %define _chrootdir /var/empty
 %define docdir %_docdir/%name-%version
-%def_with kerberos5
-%def_with libaudit
-%def_with libedit
-%def_with openssl
 %def_with pam_userpass
+%def_with libedit
+%def_with libaudit
+%def_with kerberos5
 %def_with selinux
-%def_with ssh1
+%def_with openssl
+%def_without security_key_builtin
+%def_with zlib
 
 %{expand: %%global _libexecdir %_libexecdir/openssh}
 %define _pamdir /etc/pam.d
@@ -36,12 +37,12 @@ Requires: %name-server  = %EVR
 BuildRequires: liboqs-devel
 BuildRequires: libssl-devel
 BuildRequires: pam_userpass-devel
-BuildRequires: zlib-devel
-%{?_with_kerberos5:BuildRequires: libkrb5-devel}
-%{?_with_libaudit:BuildRequires: libaudit-devel}
+%{?_with_zlib:BuildRequires: zlib-devel}
 %{?_with_libedit:BuildRequires: libedit-devel}
+%{?_with_libaudit:BuildRequires: libaudit-devel}
+%{?_with_kerberos5:BuildRequires: libkrb5-devel}
 %{?_with_selinux:BuildRequires: libselinux-devel}
-# Generate algorithms
+# To generate algorithms
 BuildRequires: python3-module-jinja2
 BuildRequires: python3-module-yaml
 
@@ -174,8 +175,8 @@ export ac_cv_path_xauth_path=/usr/bin/xauth
 	%{subst_with libedit} \
 	%{subst_with openssl} \
 	%{subst_with selinux} \
-	%{subst_with ssh1} \
 	%{?_with_libaudit:--with-audit=linux} \
+	%{?_with_security_key_builtin:--with-security-key-builtin} \
 	--with-liboqs-dir=%_prefix \
 	%nil
 %make_build
@@ -217,8 +218,15 @@ install -p -m755 alt/ssh-askpass.{sh,csh} \
 	%buildroot%_sysconfdir/profile.d/
 
 mkdir -p %buildroot%docdir
-install -pm644 CREDITS LICENCE README* PROTOCOL* \
+install -pm644 CREDITS LICENCE README* PROTOCOL* alt/[CR]* alt/faq.html \
 	%buildroot%docdir/
+
+%check
+./ssh -V
+# Query all available algorithms
+for q in `./ssh -Q help`; do
+	./ssh -Q $q | sed "s/^/ $q : /"
+done | sort -V
 
 %pre clients
 /usr/sbin/groupadd -r -f sshagent
@@ -265,6 +273,7 @@ fi
 %_bindir/ssh-keyscan
 %attr(751,root,root) %dir %_libexecdir
 %_libexecdir/ssh-pkcs11-helper
+%_libexecdir/ssh-sk-helper
 %_man1dir/sftp.*
 %_man1dir/ssh.*
 %_man1dir/ssh-add.*
@@ -273,6 +282,7 @@ fi
 %_man1dir/ssh-keyscan.*
 %_man5dir/ssh_config.*
 %_man8dir/ssh-pkcs11-helper.*
+%_man8dir/ssh-sk-helper.*
 
 %files keysign
 %attr(751,root,root) %dir %_libexecdir
@@ -304,6 +314,10 @@ fi
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Sun Aug 22 2021 Vitaly Chikunov <vt@altlinux.org> 8.6p1.202108-alt1
+- Update to OQS-OpenSSH-snapshot-2021-08 (2021-08-11).
+- Dilithium algorithms temporary disabled.
+
 * Wed Jun 23 2021 Vitaly Chikunov <vt@altlinux.org> 7.9p1.202008-alt2
 - Build on all arches (add x86 and ppc64le).
 - Make server-control and askpass-common noarch.
