@@ -46,6 +46,7 @@
 %def_enable bzip2
 %def_enable lz4
 %def_enable zstd
+%def_enable tests
 
 %def_disable smack
 %def_enable seccomp
@@ -88,7 +89,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -202,6 +203,8 @@ BuildRequires: pkgconfig(fdisk) >= 2.33
 # for make check
 #BuildRequires: /proc
 #BuildRequires: lz4
+# for tests
+%{?_enable_tests:BuildRequires: rpm-build-python3}
 
 Requires: dbus >= %dbus_ver
 Requires: filesystem >= 2.3.10-alt1
@@ -619,6 +622,16 @@ License: LGPLv2.1+
 %description -n libudev-devel-static
 Static library for libudev.
 
+%package tests
+Summary: Internal unit tests for systemd
+Requires: %name = %EVR
+Group: Development/Other
+License: LGPLv2+
+ 
+%description tests
+"Installed tests" that are usually run as part of the build system.
+They can be useful to test systemd internals.
+
 %package utils-standalone
 Group: System/Configuration/Boot and Init
 Summary: Standalone systemd utils
@@ -789,7 +802,8 @@ Summary: Common sysctl configs
 %endif
 	-Db_pie=true \
 	-Dman=true \
-	-Dtests=true \
+	-Dtests=unsafe \
+	-Dinstall-tests=true \
 	-Dversion-tag=v%version-%release \
 	-Dcertificate-root=/etc/pki/tls \
 	-Ddocdir=%_defaultdocdir/%name-%version
@@ -921,6 +935,10 @@ touch %buildroot%_sysconfdir/machine-info
 mkdir -p %buildroot/lib/systemd/system-shutdown
 mkdir -p %buildroot/lib/systemd/system-sleep
 
+# Make sure the *-environment-generators dirs exist
+mkdir -p %buildroot/usr/lib/systemd/user-environment-generators
+mkdir -p %buildroot/lib/systemd/system-environment-generators
+
 # fix pam.d/systemd-user for ALTLinux
 install -m644 %SOURCE14 %buildroot%_sysconfdir/pam.d/systemd-user
 
@@ -940,6 +958,8 @@ install -m 0644 %SOURCE38 %buildroot/lib/systemd/system-preset/
 install -D -m 0644 -t %buildroot/lib/systemd/oomd.conf.d/ %SOURCE44
 install -D -m 0644 -t %buildroot%_unitdir/-.slice.d/ %SOURCE45
 install -D -m 0644 -t %buildroot%_unitdir/user@.service.d/ %SOURCE46
+
+sed -i 's|#!/usr/bin/env python3|#!%__python3|' %buildroot/usr/lib/systemd/tests/run-unit-tests.py
 
 mkdir -p %buildroot%_sysconfdir/systemd/network
 
@@ -1626,11 +1646,15 @@ udevadm hwdb --update &>/dev/null
 
 %_prefix/lib/systemd
 /lib/systemd/system-generators
+/lib/systemd/system-environment-generators
 %if_enabled efi
 %exclude /lib/systemd/system-generators/systemd-bless-boot-generator
 %if_enabled gnuefi
 %exclude %_prefix/lib/systemd/boot
 %endif
+%endif
+%if_enabled tests
+%exclude %_prefix/lib/systemd/tests
 %endif
 
 %dir /lib/systemd/system-shutdown
@@ -2146,6 +2170,11 @@ udevadm hwdb --update &>/dev/null
 %_rpmlibdir/systemd-modules-load.filetrigger
 %_rpmlibdir/systemd-sysctl.filetrigger
 
+%if_enabled tests
+%files tests
+%_prefix/lib/systemd/tests
+%endif
+
 %files -n libudev1
 /%_lib/libudev.so.*
 
@@ -2197,6 +2226,12 @@ udevadm hwdb --update &>/dev/null
 %exclude /lib/udev/rules.d/99-systemd.rules
 
 %changelog
+* Sun Aug 22 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.3-alt2
+- Fix read env from /lib/environment.d/*.conf.
+- Allow execute system-generators from /usr/lib for compat.
+- Add tests package.
+- Execute systemctl reload-or-restart --marked services in rpm filetrigger.
+
 * Wed Aug 18 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.3-alt1
 - v249-stable snapshot
 - Move common sysctl configs to new systemd-sysctl-common package (ALT #40588).
