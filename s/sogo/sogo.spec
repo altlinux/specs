@@ -3,7 +3,7 @@
 
 Summary: SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:    sogo
-Version: 5.1.1
+Version: 5.2.0
 Release: alt1
 
 License: GPL-2.0+ and LGPL-2.1+
@@ -25,9 +25,9 @@ Source1: sogo.init
 Source2: angular-material.tar
 Patch1: sogo-alt-fix-enter-letters-in-address-field.patch
 Patch2: sogo-alt-fixes.patch
-Patch3: sogo-angular-css-update.patch
 Patch4: sogo-alt-fix-timeZoneWithAbbreviation.patch
 Patch5: sogo-alt-libzip-includes.patch
+Patch6: sogo-alt-libytnef-includes.patch
 
 Requires: stmpclean
 Requires: tzdata
@@ -56,9 +56,10 @@ BuildRequires: liblasso-devel
 BuildRequires: libmemcached-devel
 BuildRequires: libnanomsg-devel
 BuildRequires: libobjc-devel
-BuildRequires: libssl-devel
 BuildRequires: libsodium-devel
+BuildRequires: libssl-devel
 BuildRequires: libwbxml-devel
+BuildRequires: libytnef-devel
 %if_with openchange
 BuildRequires: openchange-devel
 %endif
@@ -256,9 +257,9 @@ SOGo backend for OpenChange
 tar xf %SOURCE2
 %patch1 -p1
 %patch2 -p1
-#patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 # Set correct python3 executable in shebang
 subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
@@ -433,13 +434,15 @@ fi
 
 %post
 %post_service sogo
-dovecot_service="/lib/systemd/system/dovecot.service"
-test -e "$dovecot_service" && %post_service dovecot
 
 %preun
 %preun_service sogo
 
 %changelog
+* Fri Aug 20 2021 Andrey Cherepanov <cas@altlinux.org> 5.2.0-alt1
+- New version.
+- Do not restart dovecot if it is running on sogo update.
+
 * Wed Jun 02 2021 Andrey Cherepanov <cas@altlinux.org> 5.1.1-alt1
 - New version.
 
