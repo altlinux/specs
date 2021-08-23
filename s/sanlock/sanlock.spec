@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define _localstatedir /var
 
 Name: sanlock
-Version: 3.8.2
+Version: 3.8.4
 Release: alt1
 Summary: A shared storage lock manager
 
@@ -78,7 +79,7 @@ common sanlock lockspace.
 # upstream does not support _smp_mflags
 CFLAGS=$RPM_OPT_FLAGS make -C wdmd
 CFLAGS=$RPM_OPT_FLAGS make -C src
-CFLAGS=$RPM_OPT_FLAGS make -C python PY_VERSION=3
+CFLAGS=$RPM_OPT_FLAGS make -C python
 CFLAGS=$RPM_OPT_FLAGS make -C fence_sanlock
 CFLAGS=$RPM_OPT_FLAGS make -C reset
 
@@ -91,7 +92,7 @@ make -C wdmd \
         DESTDIR=%buildroot
 make -C python \
         install LIBDIR=%_libdir \
-        DESTDIR=%buildroot PY_VERSION=3
+        DESTDIR=%buildroot
 make -C fence_sanlock \
         install LIBDIR=%_libdir \
         DESTDIR=%buildroot
@@ -201,6 +202,9 @@ install -Dd -m 0775 %buildroot/run/fence_sanlockd
 %_man8dir/sanlk-reset*
 
 %changelog
+* Mon Aug 23 2021 Alexey Shabalin <shaba@altlinux.org> 3.8.4-alt1
+- 3.8.4
+
 * Wed Nov 25 2020 Alexey Shabalin <shaba@altlinux.org> 3.8.2-alt1
 - 3.8.2
 
