@@ -1,5 +1,5 @@
 Name: eget
-Version: 4.1
+Version: 5.0
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -33,6 +33,13 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Tue Aug 24 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0-alt1
+- eget: make list always returns absolute URL
+- eget: fix double slash in URL to download
+- eget: don't fall in download by mask without a mask or if we have a direct url
+- eget: allow separated mask for urls
+- eget: concatenate filenames with base url if need
+
 * Mon Aug 16 2021 Vitaly Lipatov <lav@altlinux.ru> 4.1-alt1
 - eget: add hack for skip mask if there ?...= (some args)
 - eget: fix get list of releases
