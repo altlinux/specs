@@ -1,5 +1,5 @@
 Name: startup
-Version: 0.9.9.11
+Version: 0.9.9.12
 Release: alt1
 
 Summary: The system startup scripts
@@ -30,9 +30,9 @@ Requires: /sbin/fsck
 # due to systemd-sysctl, systemd-tmpfiles, and systemd-modules-load (see ALT#29537).
 # We need a separate version of the utilities because they have less
 # dependencies (see ALT#39444).
-Requires: systemd-modules-load-standalone
-Requires: systemd-sysctl-standalone
-Requires: systemd-tmpfiles-standalone
+Requires: /sbin/systemd-modules-load
+Requires: /sbin/systemd-sysctl
+Requires: /sbin/systemd-tmpfiles
 
 # due to update_wms
 Conflicts: xinitrc < 0:2.4.13-alt1
@@ -152,6 +152,9 @@ done
 %ghost %config(noreplace,missingok) %verify(not md5 mtime size) %attr(600,root,root) %_localstatedir/random/random-seed
 
 %changelog
+* Mon Aug 23 2021 Alexey Gladkov <legion@altlinux.ru> 0.9.9.12-alt1
+- Use alternatives instead of standalone systemd utilities.
+
 * Wed Jan 27 2021 Alexey Gladkov <legion@altlinux.ru> 0.9.9.11-alt1
 - Use standalone versions of systemd utilities.
 
