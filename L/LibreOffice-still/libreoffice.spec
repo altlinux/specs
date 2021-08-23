@@ -6,7 +6,7 @@
 %def_without fetch
 %def_without lto
 %def_with dconf
-%def_without orcus
+%def_with orcus
 
 # enable kde5 UI
 %def_enable kde5
@@ -24,14 +24,14 @@
 %def_disable mergelibs
 
 Name: LibreOffice-still
-%define hversion 7.0
-%define urelease 6.2
+%define hversion 7.1
+%define urelease 5.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt1
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -55,34 +55,53 @@ Conflicts: LibreOffice
 #Requires: gst-plugins-bad1.0 gst-plugins-good1.0 gst-plugins-nice1.0 gst-plugins-ugly1.0 gst-plugins-base1.0
 Requires: gst-libav
 
-Source:		libreoffice-%version.tar.xz
-Source1:	libreoffice-dictionaries-%version.tar.xz
-Source2:	libreoffice-help-%version.tar.xz
-Source3:	libreoffice-translations-%version.tar.xz
+Source:	libreoffice-%version.tar.xz
+Source1: libreoffice-dictionaries-%version.tar.xz
+Source2: libreoffice-help-%version.tar.xz
+Source3: libreoffice-translations-%version.tar.xz
 
-Source10:	libreoffice-ext_sources.%version.tar
-Source100:	forky.c
-Source200:	key.gpg
-Source300:	libreoffice.unused
-Source400:	images_oxygen.zip
+Source10: libreoffice-ext_sources.%version.tar
+Source100: forky.c
+Source200: key.gpg
+Source300: libreoffice.unused
+Source400: images_oxygen.zip
+
+# Scalable symbolic icons from https://raw.githubusercontent.com/gnome-design-team/gnome-icons/master/apps-symbolic/Adwaita/scalable/apps/
+Source501: libreoffice-base-symbolic.svg
+Source502: libreoffice-calc-symbolic.svg
+Source503: libreoffice-draw-symbolic.svg
+Source504: libreoffice-impress-symbolic.svg
+Source505: libreoffice-main-symbolic.svg
+Source506: libreoffice-math-symbolic.svg
+Source507: libreoffice-writer-symbolic.svg
 
 ## FC patches
-Patch1: FC-0001-disable-libe-book-support.patch
-Patch2: FC-0001-disble-tip-of-the-day-dialog-by-default.patch
-Patch3: FC-0001-don-t-suppress-crashes.patch
-Patch4: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
-Patch5: FC-0001-rhbz-1870501-crash-on-reexport-of-odg.patch
+Patch0: 0001-don-t-suppress-crashes.patch
+# disable tip-of-the-day dialog by default
+Patch1: 0001-disble-tip-of-the-day-dialog-by-default.patch
+# rhbz#1736810 disable opencl by default again
+Patch2: 0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
+# backported
+Patch3: 0001-fix-detecting-qrcodegen.patch
+Patch4: 0001-rhbz-1918152-fix-FTBFS.patch
+Patch5: 0001-Get-rid-of-apache-commons-logging.patch
+Patch6: 0001-gtk3-workaround-missing-gdk_threads_enter-calls-in-e.patch
+Patch7: 0001-Replace-inet_ntoa-with-inet_ntop.patch
+Patch8: 0001-Simplify-construction-of-a-hardcoded-IPv4-address.patch
+Patch9: 0001-Remove-unused-DOCTYPE-from-odk-examples-xcu-file.patch
+Patch10: 0001-math.desktop-include-Spreadsheet-category.patch
+Patch11: 0001-rhbz-1980800-allow-convert-to-csv-to-write-each-shee.patch
+Patch12: 0001-make-with-idlc-cpp-cpp-work-for-gcc-cpp-as-a-ucpp-re.patch
+Patch13: 0001-Resolves-tdf-132739-two-style-tags-where-there-shoul.patch
+# not upstreamed
+Patch14: 0001-disable-libe-book-support.patch
 
 ## ALT patches
 Patch401: alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
 Patch402: alt-002-tmpdir.patch
 Patch404: alt-004-shortint.patch
 Patch410: alt-006-unversioned-desktop-files.patch
-Patch411: alt-007-libqrcodegen-include-path.patch
 Patch412: alt-008-mkdir-for-external-project.patch
-
-## Upstream fixes
-Patch500: 3236020.diff
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
@@ -129,7 +148,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: qt5-base-devel qt5-x11extras-devel
 BuildRequires: kf5-kconfig-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-kwindowsystem-devel
-BuildRequires: kf5-kdelibs4support
+BuildRequires: kf5-kdelibs4support-devel
 %endif
 # 6.1.5.2
 #BuildRequires: libpoppler-devel
@@ -149,8 +168,11 @@ BuildRequires: libeot-devel
 BuildRequires: libgraphite2-devel
 %if_with java
 # 7.0.4.2
-BuildRequires:  java-9-openjdk-devel
+BuildRequires: java-devel >= 9.0.0
 %endif
+# 7.1.5.2
+BuildRequires: libbox2d-devel
+BuildRequires: libpixman-devel
 
 %if_without python
 BuildRequires: python3-dev
@@ -316,22 +338,28 @@ echo Direct build
 %setup -q -n libreoffice-%version -a10 -b1 -b2 -b3
 
 ## FC apply patches
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
 
 ## ALT apply patches
 %patch401 -p0
 %patch402 -p1
 %patch404 -p1
 %patch410 -p1
-%patch411 -p1
 %patch412 -p1
-
-# Apply upstream patches
-%patch500 -p1
 
 # Hack in proper LibreOffice PATH in libreofficekit
 sed -i 's@/libreoffice/@/LibreOffice/@g' libreofficekit/Library_libreofficekitgtk.mk
@@ -431,7 +459,7 @@ fi
 	--enable-gtk3 \
 	--enable-cipher-openssl-backend \
 %if_enabled kde5
-        --enable-kde5 \
+        --enable-gtk3-kde5 \
 %endif
 %if_with lto
   	--enable-lto \
@@ -516,7 +544,7 @@ find %buildroot%lodir -name "*_gtk3*" ! -name "*_kf5*" | sed 's@^%buildroot@@' >
 find %buildroot%lodir -name "*qt5*"   | sed 's@^%buildroot@@' > files.qt5
 
 # Create kde5 plugin list
-find %buildroot%lodir -name "*_kf5*" -o -name "libkf5*" | sed 's@^%buildroot@@' > files.kde5
+find %buildroot%lodir -name "*_kde5*" | sed 's@^%buildroot@@' > files.kde5
 
 # Generate base filelist by removing files from  separated packages
 { cat %buildroot/gid_* | sort -u ; cat *.lang files.gtk3 files.kde5 files.qt5; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
@@ -554,11 +582,8 @@ for f in %buildroot%lodir/share/xdg/*.desktop; do
 done
 
 # TODO some other hack with .mime (?)
-mkdir -p %buildroot%_datadir/mime-info %buildroot%_datadir/mimelnk/application %buildroot%_datadir/application-registry
-install sysui/desktop/mimetypes/*.keys %buildroot%_datadir/mime-info/
-install sysui/desktop/mimetypes/*.mime %buildroot%_datadir/mime-info/
+mkdir -p %buildroot%_datadir/mimelnk/application
 install sysui/desktop/mimetypes/*.desktop %buildroot%_datadir/mimelnk/application/
-install sysui/desktop/mimetypes/*.applications %buildroot%_datadir/application-registry/
 
 # Install mime package bundle for LibreOffice MIME types
 install -Dm0644 workdir/CustomTarget/sysui/share/output/usr/share/mime/packages/libreoffice%hversion.xml %buildroot%_datadir/mime/packages/libreoffice%hversion.xml
@@ -573,7 +598,7 @@ mv %buildroot%lodir/program/liblibreofficekitgtk.so %buildroot%_libdir/
 mkdir -p %buildroot%_includedir/LibreOfficeKit
 install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 
-# Make symkinks for x-office-* icons
+# Make symlinks for x-office-* icons
 # oasis-text -> x-office-document
 # oasis-spreadsheet -> x-office-spreadsheet
 # oasis-presentation -> x-office-presentation
@@ -603,6 +628,16 @@ cp -a sysui/desktop/appstream-appdata/*.xml %buildroot%_datadir/metainfo
 # Install man pages
 install -Dpm0644 sysui/desktop/man/libreoffice.1 %buildroot%_man1dir/libreoffice.1
 install -Dpm0644 sysui/desktop/man/unopkg.1 %buildroot%_man1dir/unopkg.1
+
+# Install symbolc icons
+mkdir -p %buildroot%_iconsdir/hicolor/symbolic/apps
+install -pm0644 %SOURCE501 %buildroot%_iconsdir/hicolor/symbolic/apps
+install -pm0644 %SOURCE502 %buildroot%_iconsdir/hicolor/symbolic/apps
+install -pm0644 %SOURCE503 %buildroot%_iconsdir/hicolor/symbolic/apps
+install -pm0644 %SOURCE504 %buildroot%_iconsdir/hicolor/symbolic/apps
+install -pm0644 %SOURCE505 %buildroot%_iconsdir/hicolor/symbolic/apps
+install -pm0644 %SOURCE506 %buildroot%_iconsdir/hicolor/symbolic/apps
+install -pm0644 %SOURCE507 %buildroot%_iconsdir/hicolor/symbolic/apps
 
 %files
 
@@ -646,9 +681,7 @@ install -Dpm0644 sysui/desktop/man/unopkg.1 %buildroot%_man1dir/unopkg.1
 
 %files mimetypes
 %_datadir/mime/packages/libreoffice%hversion.xml
-%_datadir/mime-info/*
 %_datadir/mimelnk/application/*
-%_datadir/application-registry/*
 
 %langpack -m -h -l ru -n Russian
 %langpack    -h -l be -n Belorussian
@@ -670,6 +703,10 @@ install -Dpm0644 sysui/desktop/man/unopkg.1 %buildroot%_man1dir/unopkg.1
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Aug 20 2021 Andrey Cherepanov <cas@altlinux.org> 7.1.5.2-alt1
+- New version.
+- Use gtk3-kde5 vcl instead of kde5 due to incorrect icon scaling.
+
 * Wed May 19 2021 Andrey Cherepanov <cas@altlinux.org> 7.0.6.2-alt2
 - Build with bundled liborcus-0.15.
 
