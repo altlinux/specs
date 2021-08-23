@@ -1,6 +1,6 @@
 Name: gnupg
 Version: 1.4.23
-Release: alt2
+Release: alt3
 
 Summary: The GNU Privacy Guard
 # see e.e. keyserver subdirectory
@@ -133,6 +133,9 @@ rm -rv %buildroot%_datadir/%name
 %endif #enabled ldap
 
 %changelog
+* Tue Aug 24 2021 Vitaly Chikunov <vt@altlinux.org> 1.4.23-alt3
+- gpg: Default to SHA-256 for all signature types on RSA keys.
+
 * Sun Dec 20 2020 Dmitry V. Levin <ldv@altlinux.org> 1.4.23-alt2
 - Fixed build with gcc-10.
 
