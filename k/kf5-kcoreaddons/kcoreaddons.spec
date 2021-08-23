@@ -6,7 +6,7 @@
 
 Name: kf5-%rname
 Version: 5.85.0
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: System/Libraries
@@ -17,6 +17,7 @@ License: GPLv2+ / LGPLv2+
 Source: %rname-%version.tar
 Patch1: alt-simplify-kde4home.patch
 Patch2: alt-kreslimit-integration.patch
+Patch3: alt-smb-share.patch
 
 # Automatically added by buildreq on Thu Dec 25 2014 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-gui libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-tools ruby ruby-stdlibs shared-mime-info
@@ -95,6 +96,7 @@ Sip files for python3-module-%rname
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %K5build \
@@ -138,6 +140,9 @@ Sip files for python3-module-%rname
 %endif
 
 %changelog
+* Mon Aug 23 2021 Sergey V Turchin <zerg@altlinux.org> 5.85.0-alt3
+- add smb share mimetype
+
 * Thu Aug 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.85.0-alt2
 - clean build requires
 
