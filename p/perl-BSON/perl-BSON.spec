@@ -4,11 +4,11 @@
 BuildRequires: perl(B.pm) perl(Carp.pm) perl(Data/Dumper.pm) perl(DateTime.pm) perl(DateTime/Tiny.pm) perl(Digest/MD5.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(JSON/MaybeXS.pm) perl(MIME/Base64.pm) perl(Mango/BSON/Time.pm) perl(Math/BigInt.pm) perl(Module/Runtime.pm) perl(Moo.pm) perl(Path/Tiny.pm) perl(Scalar/Util.pm) perl(Sys/Hostname.pm) perl(Test/Deep.pm) perl(Test/More.pm) perl(Tie/IxHash.pm) perl(Time/HiRes.pm) perl(Time/Local.pm) perl(Time/Moment.pm) perl(base.pm) perl(boolean.pm) perl(constant.pm) perl(if.pm) perl(lib.pm) perl(namespace/clean.pm) perl(overload.pm) perl(re.pm) perl(strict.pm) perl(threads/shared.pm) perl(utf8.pm) perl(version.pm) perl(warnings.pm) perl(Crypt/URandom.pm)
 # END SourceDeps(oneline)
 #BuildRequires: perl(MongoDB.pm) perl(MongoDB/BSON.pm) perl(MongoDB/BSON/Binary.pm) perl(MongoDB/OID.pm)
-BuildRequires: rpm-build-perl perl-devel perl-podlators
+BuildRequires: rpm-build-perl perl-devel perl-podlators perl(Test/Fatal.pm)
 
 Name: perl-%module_name
 Version: 1.12.2
-Release: alt1
+Release: alt2
 Summary: Pure Perl implementation of MongoDB's BSON serialization
 Group: Development/Perl
 License: apache
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/B*
 
 %changelog
+* Mon Aug 23 2021 Igor Vlasenko <viy@altlinux.org> 1.12.2-alt2
+- fixed build
+
 * Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.12.2-alt1
 - automated CPAN update
 
