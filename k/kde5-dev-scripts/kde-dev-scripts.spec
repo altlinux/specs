@@ -6,7 +6,7 @@
 
 Name: kde5-dev-scripts
 Version: 21.04.3
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -45,15 +45,15 @@ sed -i \
   %buildroot/%_K5bin/*
 
 # fix scripts for strong /usr/lib/rpm/find-requires
-pushd %buildroot/%_K5bin
-for f in `(file ./* | grep bash; file ./* | grep shell) | awk -F: '{print $1}' | xargs grep -l ^=head`
+for f in  %buildroot/%_K5bin/*
 do
+    file $f | grep -q shell || continue
+    grep -q ^=head $f || continue
     mv "$f" "$f.tmp"
     awk 'BEGIN{found=0;} /^=head/ {if (found==0){print "cat <<\\__EOF__";found=1;};} {print} END{if (found!=0) print "__EOF__";}' <"$f.tmp" >"$f"
     rm -f "$f.tmp"
     chmod a+x $f
 done
-popd
 
 
 %find_lang %name --with-kde --all-name
@@ -65,6 +65,9 @@ popd
 %_K5data/*/
 
 %changelog
+* Mon Aug 23 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt2
+- fix to build
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 
