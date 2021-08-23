@@ -5,7 +5,7 @@
 
 Name: breezy
 Version: 3.2.0
-Release: alt1
+Release: alt3
 
 Summary: Breezy is a fork of decentralized revision control system Bazaar
 License: GPL-2.0-or-later
@@ -39,6 +39,8 @@ BuildRequires: python3-module-subunit
 
 Conflicts: %name-doc < %version-%release
 Conflicts: bzr-git-remote
+Provides: bzr = %EVR
+Obsoletes: bzr
 
 %description
 Breezy (or brz) is a distributed version control system that is powerful, friendly, and scalable.
@@ -80,6 +82,8 @@ package contain documentation and examples for using Bazaar.
 
 %python3_install --install-data=%_datadir
 
+ln -s brz %buildroot%_bindir/bzr
+
 %define breezy_docdir %_docdir/%name-%version
 
 install -dm0755 %buildroot%breezy_docdir
@@ -98,9 +102,10 @@ cp -a breezy/locale %buildroot%_datadir
 
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/breezy/tests
+%exclude %python3_sitelibdir/breezy/bzr/tests
 %exclude %python3_sitelibdir/breezy/git/tests
-%exclude %python3_sitelibdir/breezy/plugins/*/tests
 %exclude %python3_sitelibdir/breezy/util/tests
+%exclude %python3_sitelibdir/breezy/plugins/*/tests
 
 %breezy_docdir
 %exclude %breezy_docdir/doc
@@ -108,9 +113,10 @@ cp -a breezy/locale %buildroot%_datadir
 
 %files -n python3-module-breezy-tests
 %python3_sitelibdir/breezy/tests
+%python3_sitelibdir/breezy/bzr/tests
 %python3_sitelibdir/breezy/git/tests
-%python3_sitelibdir/breezy/plugins/*/tests
 %python3_sitelibdir/breezy/util/tests
+%python3_sitelibdir/breezy/plugins/*/tests
 
 %files doc
 %dir %breezy_docdir
@@ -118,6 +124,12 @@ cp -a breezy/locale %buildroot%_datadir
 %breezy_docdir/contrib
 
 %changelog
+* Mon Aug 23 2021 Anatoly Kitaykin <cetus@altlinux.org> 3.2.0-alt3
+- Fixed package dependencies
+
+* Mon Aug 23 2021 Anatoly Kitaykin <cetus@altlinux.org> 3.2.0-alt2
+- Replaces bzr (closes #40738)
+
 * Wed May 05 2021 Anatoly Kitaikin <cetus@altlinux.org> 3.2.0-alt1
 - Release 3.2.0
 
