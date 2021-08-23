@@ -3,7 +3,7 @@
 %define oname tifffile
 
 Name: python3-module-%oname
-Version: 2020.7.24
+Version: 2021.8.8
 Release: alt1
 Summary: Read and write TIFF(r) files
 License: BSD-3-Clause
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: pytest3 python3-module-numpy-testing python3-module-lxml
+BuildRequires: pytest3 python3-module-numpy-testing python3-module-lxml python3(fsspec)
 
 %description
 Tifffile is a Python library to
@@ -81,9 +81,14 @@ pytest-3 -v tests \
 %doc README.rst ACKNOWLEDGEMENTS.rst CHANGES.rst
 %_bindir/lsm2bin
 %_bindir/tifffile
+%_bindir/tiff2fsspec
+%_bindir/tiffcomment
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Fri Aug 20 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2021.8.8-alt1
+- Updated to upstream version 2021.8.8.
+
 * Tue Aug 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2020.7.24-alt1
 - Initial build for ALT.
