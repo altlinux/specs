@@ -2,7 +2,7 @@
 
 Name:		python3-module-%oname
 Version:	3.2.0
-Release:	alt3
+Release:	alt4
 
 Summary:	An implementation of JSON Schema validation for Python
 
@@ -27,6 +27,9 @@ BuildRequires: python3-module-attrs
 BuildRequires: python3-module-pyrsistent
 BuildRequires: python3-module-twisted-core-tests
 BuildRequires: python3-module-pyperf
+
+# https://bugzilla.altlinux.org/38673
+Conflicts: python-module-jsonschema < 2.6.0-alt3
 
 %description
 jsonschema is JSON Schema validator currently based on
@@ -69,6 +72,9 @@ nosetests3 -v
 %endif
 
 %changelog
+* Mon Aug 23 2021 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt4
+- add Conflicts to old python-module-jsonschema (ALT bug 38673)
+
 * Thu Nov 12 2020 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt3
 - use python3-module-twisted-core-tests for tests
 - cleanup spec: add URL for tarball, don't pack sources to gz
