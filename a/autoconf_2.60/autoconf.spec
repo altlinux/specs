@@ -4,7 +4,7 @@
 
 Name: %realname%dialect
 Version: 2.69
-Release: alt8
+Release: alt9
 Epoch: 2
 
 Summary: A GNU tool for automatically configuring source code
@@ -106,6 +106,11 @@ done
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Mon Aug 23 2021 Dmitry V. Levin <ldv@altlinux.org> 2:2.69-alt9
+- AC_INIT: backported --runstatedir option to configure.
+- AC_LANG_FUNC_LINK_TRY_GCC_BUILTIN: defeated -flto optimization.
+- autoreconf: backported AM_GNU_GETTEXT_REQUIRE_VERSION support.
+
 * Sun Dec 20 2020 Dmitry V. Levin <ldv@altlinux.org> 2:2.69-alt8
 - Moved config.* man pages to gnu-config.
 
