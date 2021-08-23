@@ -33,7 +33,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium-gost
-Version:        92.0.4515.107
+Version:        92.0.4515.131
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -42,7 +42,6 @@ Group:          Networking/WWW
 Url:            https://www.chromium.org
 
 Source0:        chromium.tar.zst
-Source1:        depot_tools.tar
 
 Source30:       master_preferences
 Source31:       default_bookmarks.html
@@ -94,6 +93,7 @@ Patch020: 0020-ALT-Do-not-use-no-canonical-prefixes-clang-option.patch
 Patch021: 0021-ALT-Disable-NOMERGE-attribute.patch
 Patch022: 0022-IWYU-include-limits-for-std-numeric_limits.patch
 Patch023: 0023-ALT-Hide-some-utilities-from-rpm-build.patch
+Patch024: 0024-FEDORA-bootstrap-with-python3.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -129,7 +129,6 @@ BuildRequires:  pkgconfig(dbus-glib-1)
 BuildRequires:  pkgconfig(gconf-2.0)
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gnome-keyring-1)
-BuildRequires:  pkgconfig(gtk+-2.0)
 BuildRequires:  pkgconfig(gtk+-3.0)
 %if_enabled ffmpeg
 BuildRequires:  pkgconfig(opus)
@@ -171,14 +170,15 @@ BuildRequires:  pkgconfig(wayland-client)
 BuildRequires:  pkgconfig(wayland-server)
 BuildRequires:  pkgconfig(wayland-egl)
 BuildRequires:  pkgconfig(wayland-cursor)
+BuildRequires:  pkgconfig(wayland-scanner)
 BuildRequires:  pkgconfig(dri)
-BuildRequires:  python
-BuildRequires:  python-modules-json
-BuildRequires:  python-modules-distutils
-BuildRequires:  python-module-pkg_resources
 BuildRequires:  node
 BuildRequires:  usbids
 BuildRequires:  xdg-utils
+
+BuildRequires:  python
+BuildRequires:  python-modules-json
+BuildRequires:  python3
 
 Requires: libva
 
@@ -188,7 +188,6 @@ faster, and more stable way for all Internet users to experience the web.
 
 %prep
 %setup -q -n chromium -a 300
-tar -xf %SOURCE1
 %autopatch -p1
 
 
@@ -197,31 +196,19 @@ sed -E 's@^((diff --git|[-+]{3}) a)/(.*)@\1/third_party/boringssl/src/\3@; s@ret
 # Try to fix #39677
 sed -i 's/std::string data_dir_basename = "chromium"/std::string data_dir_basename = "chromium-gost"/' chrome/common/chrome_paths_linux.cc
 
-# lost sources
-for f in .rpm/blinkpy-common/*.py; do
-	t="third_party/blink/tools/blinkpy/common/${f##*/}"
-	[ -f "$t" ] || install -D "$f" "$t"
-done
-touch third_party/blink/tools/blinkpy/__init__.py
-
 sed -i \
 	-e '/"-Wno-non-c-typedef-for-linkage"/d' \
 	build/config/compiler/BUILD.gn
 
-sed -i \
-	-e 's/^\([%%#]define CONFIG_PIC\) 0/\1 1/' \
-	third_party/libaom/source/config/linux/ia32/config/aom_config.asm \
-	third_party/libaom/source/config/linux/ia32/config/aom_config.h
-
 mkdir -p third_party/node/linux/node-linux-x64/bin
-ln -s %_bindir/node third_party/node/linux/node-linux-x64/bin/
+ln -s %_bindir/node third_party/node/linux/node-linux-x64/bin/node
 
 mkdir -p buildtools/third_party/eu-strip/bin
 ln -sf %_bindir/strip buildtools/third_party/eu-strip/bin/eu-strip
 
-rm -f -- .rpm/depot_tools/ninja
-ln -s %_bindir/ninja .rpm/depot_tools/ninja
-ln -s %_bindir/python2 .rpm/depot_tools/python
+rm -f -- third_party/depot_tools/ninja
+ln -s %_bindir/ninja third_party/depot_tools/ninja
+ln -s %_bindir/python3 third_party/depot_tools/python
 
 # GOST icons
 egrep "^perl -pi -e|^cp -f" chromium-gost/build_linux/chromium-gost-prepare.sh > prepare.sh
@@ -252,7 +239,7 @@ export READELF="readelf"
 bits=$(getconf LONG_BIT)
 
 export RANLIB="ranlib"
-export PATH="$PWD/.rpm/depot_tools:$PATH"
+export PATH="$PWD/third_party/depot_tools:$PATH"
 export CHROMIUM_RPATH="%_libdir/%name"
 
 CHROMIUM_GN_DEFINES=
@@ -287,6 +274,8 @@ gn_arg use_allocator=\"none\"
 gn_arg use_icf=false
 gn_arg enable_js_type_check=false
 gn_arg use_system_libwayland=true
+gn_arg use_system_wayland_scanner=true
+gn_arg use_bundled_weston=false
 
 # Remove debug
 gn_arg is_debug=false
@@ -346,7 +335,7 @@ tools/gn/bootstrap/bootstrap.py --gn-gen-args="$CHROMIUM_GN_DEFINES" --build-pat
 %target/gn gen --args="$CHROMIUM_GN_DEFINES" %target
 
 n=%build_parallel_jobs
-[ "$n" -lt %max_parallel_jobs ] || n=%max_parallel_jobs
+[ "$n" -gt %max_parallel_jobs ] || n=%max_parallel_jobs
 
 %ifnarch %{ix86} x86_64
 %define GOSTCFLAGS -DPROCESSOR_TYPE=-1 -O2 -g
@@ -371,6 +360,7 @@ mkdir -p -- \
 	%buildroot/%_sysconfdir/%name \
 #
 install -m 755 %SOURCE100 %buildroot%_bindir/%name
+# XXX ?
 ln -s %name %buildroot%_libdir/%name/chromium
 install -m 644 %SOURCE200 %buildroot%_sysconfdir/%name/default
 
@@ -481,6 +471,21 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Aug 20 2021 Fr. Br. George <george@altlinux.ru> 92.0.4515.131-alt1
+- Build GOST version
+
+* Wed Aug 11 2021 Alexey Gladkov <legion@altlinux.ru> 92.0.4515.131-alt0
+- New version (92.0.4515.131).
+- Use python3.
+- Security fixes:
+  - CVE-2021-30590: Heap buffer overflow in Bookmarks.
+  - CVE-2021-30591: Use after free in File System API.
+  - CVE-2021-30592: Out of bounds write in Tab Groups.
+  - CVE-2021-30593: Out of bounds read in Tab Strip.
+  - CVE-2021-30594: Use after free in Page Info UI.
+  - CVE-2021-30596: Incorrect security UI in Navigation.
+  - CVE-2021-30597: Use after free in Browser UI.
+
 * Tue Aug 03 2021 Fr. Br. George <george@altlinux.ru> 92.0.4515.107-alt1
 - Build GOST version
 
