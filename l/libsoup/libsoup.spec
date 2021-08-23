@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define api_ver 2.4
-%define ver_major 2.72
+%define ver_major 2.74
 %def_disable static
 %def_enable gtk_doc
 %def_with gnome
@@ -9,6 +9,7 @@
 %def_enable vala
 %def_with gssapi
 %def_disable debug
+%def_disable sysprof
 # fails server-test in hasher
 %def_disable check
 
@@ -42,18 +43,18 @@ Obsoletes: soup < %version libsoup%api_ver < %version
 %define gi_ver 1.33.3
 %define psl_ver 0.20.0
 
-BuildRequires(pre): meson rpm-build-gir
-BuildRequires: python3-base
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson python3-base
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libxml2-devel libsqlite3-devel zlib-devel
-
 BuildRequires: docbook-dtds docbook-style-xsl
 BuildRequires: gtk-doc xml-common xsltproc
 BuildRequires: glib-networking libpsl-devel >= %psl_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_with_gssapi:BuildRequires: libkrb5-devel}
+%{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 # for check
 BuildRequires: /proc curl
 
@@ -178,7 +179,8 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
     %{?_enable_gtk_doc:-Dgtk_doc=true} \
     %{?_enable_snapshot:-Dgtk_doc=true} \
     %{?_disable_introspection:-Dintrospection=disabled} \
-    %{?_disable_gssapi:-Dgssapi=disabled}
+    %{?_disable_gssapi:-Dgssapi=disabled} \
+    %{?_enable_sysprof:-Dsysprof=enabled}
 %meson_build
 
 %install
@@ -233,6 +235,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon Aug 23 2021 Yuri N. Sedunov <aris@altlinux.org> 2.74.0-alt1
+- 2.74.0
+
 * Mon Sep 14 2020 Yuri N. Sedunov <aris@altlinux.org> 2.72.0-alt1
 - 2.72.0
 
