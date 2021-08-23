@@ -1,7 +1,7 @@
 %define oname eigen
 Name: %{oname}3
-Version: 3.3.9
-Release: alt2
+Version: 3.4.0
+Release: alt1
 
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
@@ -13,11 +13,11 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # Install FindEigen3.cmake
 # Fix pkg-config file
-Patch1:         eigen_pkgconfig.patch
+Patch1: eigen_pkgconfig.patch
 # Fix the include paths in the new Eigen3Config.cmake file
-Patch2:         eigen3-3.3.1-fixcmake.patch
+Patch2: eigen3-3.3.1-fixcmake.patch
 # Avoid SSE4.2/AVX on e2k
-Patch3:		eigen3-3.3.7-alt-e2k.patch
+Patch3: eigen3-3.3.7-alt-e2k.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -77,9 +77,9 @@ export PATH=$PATH:%_libdir/pastix/bin
 
 %cmake -GNinja \
 	-Wno-dev \
-	-DINCLUDE_INSTALL_DIR=include/%name \
-	-DPKGCONFIG_INSTALL_DIR=%_lib/pkgconfig \
-	-DCMAKEPACKAGE_INSTALL_DIR=%_lib/cmake/%name \
+	-DINCLUDE_INSTALL_DIR=%_includedir/%name \
+	-DPKGCONFIG_INSTALL_DIR=%_libdir/pkgconfig \
+	-DCMAKEPACKAGE_INSTALL_DIR=%_libdir/cmake/%name \
 	-DOpenGL_GL_PREFERENCE=GLVND \
 %ifarch %e2k
 	-DEIGEN_TEST_AVX512=OFF \
@@ -128,6 +128,9 @@ cd -
 %endif
 
 %changelog
+* Mon Aug 23 2021 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt1
+- New version.
+
 * Wed Jun 30 2021 Andrey Cherepanov <cas@altlinux.org> 3.3.9-alt2
 - FTBFS: completely remove qt4 and phonon support.
 
