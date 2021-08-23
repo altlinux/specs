@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.15
+Version: 1.4.16
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,31 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Aug 23 2021 Anton Midyukov <antohami@altlinux.org> 1.4.16-alt1
+- efi: add mokutil, pesign to COMMON_PACKAGES (for Secure Boot,
+  requset by nikel@)
+- build.mk: fix build without APTCONF parameter
+- image.in/Makefile: fix save-profile (exclude .work)
+- bin/metadep-expander: fix output redirection to /dev/null
+- bin/metadep-expander: do not abort build, if metapackage not available
+- adapt bin/check-pkg-list for mkimage-profiles. Use for build without
+  parameter CHECK=0
+- reports.mk: fix build with REPORT=1, CHECK=1 and undefined DEBUG
+- test.mk: add package availability test in all package lists.
+  Usage: make CHECK=1 DEBUG=1 check-all-pkglists.iso
+- add missing README for features: mipsel-bfk3, mipsel-mitx, lxc
+- ve.mk, vm.mk: replace systemd to use/init/systemd (request by obirvalger@)
+- net: Add networkd/resolved and networkd/resolved-stub subfeatures
+  (thanks obirvalger@)
+- education, slinux, workstation: fix build for non e2k ARCH.
+  See also commit 'e2k: add a stub for non e2k%'
+- education, slinux, workstation: add use/arm-rpi4 to vm/ targets
+  on aarch64, armh
+- fix build vm/alt-workstation-cloud
+- fix build vm/regular-cnc-rt-efi
+- drop armh.conf, target use/slinux/arm and linux-arm list
+- cleanup unavailable packages for p10 from package lists
+
 * Tue Aug 10 2021 Anton Midyukov <antohami@altlinux.org> 1.4.15-alt1
 - reports.mk: convert targets.svgz to pdf, if rsvg-convert is available
 - reports.mk: save distcfg.mk to report directory, when check build (CHECK=1)
