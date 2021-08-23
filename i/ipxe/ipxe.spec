@@ -23,7 +23,7 @@
 
 Name: ipxe
 Version: %date
-Release: alt2.git%{hash}
+Release: alt3.git%{hash}
 Epoch: 1
 
 Summary: PXE boot firmware
@@ -42,6 +42,7 @@ Patch: %name-%version.patch
 Requires: ipxe-bootimgs
 BuildRequires: genisoimage mtools syslinux binutils-devel edk2-tools
 BuildRequires: liblzma-devel
+BuildRequires: gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu
 
 %description
 iPXE is the leading open source network boot firmware.
@@ -127,6 +128,10 @@ make_ipxe bin-i386-efi/ipxe.efi \
 	bin-x86_64-efi/ipxe.efi \
 	bin-x86_64-efi/snponly.efi
 
+make_ipxe ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- \
+	bin-arm64-efi/ipxe.efi \
+	bin-arm64-efi/snponly.efi
+
 make_ipxe ISOLINUX_BIN=/usr/lib/syslinux/isolinux.bin \
 	bin/undionly.kpxe \
 	bin/ipxe.{dsk,iso,usb,lkrn} \
@@ -177,6 +182,8 @@ cp -a src/bin-i386-efi/ipxe.efi %buildroot/%_datadir/%name/ipxe-i386.efi
 cp -a src/bin-i386-efi/snponly.efi %buildroot/%_datadir/%name/snponly-i386.efi
 cp -a src/bin-x86_64-efi/ipxe.efi %buildroot/%_datadir/%name/ipxe-x86_64.efi
 cp -a src/bin-x86_64-efi/snponly.efi %buildroot/%_datadir/%name/snponly-x86_64.efi
+cp -a src/bin-arm64-efi/ipxe.efi %buildroot/%_datadir/%name/ipxe-arm64.efi
+cp -a src/bin-arm64-efi/snponly.efi %buildroot/%_datadir/%name/snponly-arm64.efi
 
 # the roms supported by qemu will be packaged separatedly
 # remove from the main rom list and add them to qemu.list
@@ -212,6 +219,8 @@ pxe_link 15ad07b0 vmxnet3
 %_datadir/%name/ipxe-x86_64.efi
 %_datadir/%name/snponly-x86_64.efi
 %_datadir/%name/undionly.kpxe
+%_datadir/%name/ipxe-arm64.efi
+%_datadir/%name/snponly-arm64.efi
 %doc COPYING COPYING.GPLv2 COPYING.UBDL
 
 %files roms -f rom.list
@@ -225,6 +234,9 @@ pxe_link 15ad07b0 vmxnet3
 %_datadir/%name.efi/efi-*.rom
 
 %changelog
+* Wed Jul 28 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:20201218-alt3.git47098d7c
+- Build ARM64 UEFI images
+
 * Thu Jul 15 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:20201218-alt2.git47098d7c
 - Build snponly.efi (for chainloading on EFI systems)
 
