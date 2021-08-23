@@ -1,6 +1,6 @@
 Name: lldpd
-Version: 1.0.8
-Release: alt2
+Version: 1.0.12
+Release: alt1
 Summary: Link Layer Discovery Protocol Daemon
 Source: %name-%version.tar
 Group: Networking/Other
@@ -147,6 +147,9 @@ fi
 %_pkgconfigdir/*
 
 %changelog
+* Mon Aug 23 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.12-alt1
+- new version 1.0.12
+
 * Thu Feb 18 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.8-alt2
 - disable seccomp
 
