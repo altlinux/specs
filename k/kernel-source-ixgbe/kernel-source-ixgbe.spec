@@ -5,7 +5,7 @@
 
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt1
+Release: alt2
 
 Group: Development/Kernel
 Summary: Linux %module_name modules sources
@@ -17,7 +17,7 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires: kernel-build-tools
+BuildRequires: rpm-build-kernel
 
 %description
 %module_name modules sources for ixgbe Linux kernel driver
@@ -33,6 +33,9 @@ tar -cjf %kernel_srcdir/kernel-source-%module_name-%version.tar.bz2 %name-%versi
 %_usrsrc/*
 
 %changelog
+* Mon Aug 23 2021 Alexei Takaseev <taf@altlinux.org> 5.12.5-alt2
+- Change BR: kernel-build-tools -> rpm-build-kernel
+
 * Wed Jul 14 2021 Alexei Takaseev <taf@altlinux.org> 5.12.5-alt1
 - 5.12.5
 
