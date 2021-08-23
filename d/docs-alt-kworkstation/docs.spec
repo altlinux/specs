@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 9.2
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -49,6 +49,11 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Fri Aug 20 2021 Elena Mishina <lepata@altlinux.org> 9.2-alt2
+- server-network delete alterator-net-domain, squid, squidmill, dhcp, ulogd
+- update screenshots
+- typo fixes, small improvements
+
 * Wed Jul 07 2021 Elena Mishina <lepata@altlinux.org> 9.2-alt1
 - update to ALT Kworkstation 9.2
 
