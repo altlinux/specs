@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname
 Version: 5.22.4
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace
 
@@ -24,7 +24,7 @@ Patch2: alt-def-font.patch
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libgtk+2-devel libgtk+3-devel python-module-google qt5-base-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-svg-devel
-BuildRequires: /usr/bin/sass
+BuildRequires: sassc
 BuildRequires: libgtk+2-devel libgtk+3-devel libXcursor-devel
 BuildRequires: plasma5-kdecoration-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel
@@ -95,6 +95,9 @@ ADD_OPTFLAGS=`pkg-config --cflags harfbuzz`
 %_datadir/themes/Breeze/window_decorations.css
 
 %changelog
+* Mon Aug 23 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.4-alt2
+- fix build requries
+
 * Tue Jul 27 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.4-alt1
 - new version
 
