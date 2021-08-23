@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 21.04.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -15,7 +15,7 @@ Patch1: alt-libraw-ver.patch
 
 # Automatically added by buildreq on Tue Jan 12 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ libEGL-devel libGL-devel libqt5-core libqt5-gui libstdc++-devel pkg-config python-base python-modules python3 python3-base ruby ruby-stdlibs
-BuildRequires: extra-cmake-modules libraw-devel python-module-google qt5-base-devel
+BuildRequires: extra-cmake-modules libraw-devel qt5-base-devel
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: libraw-devel
@@ -72,6 +72,9 @@ KF5 library
 %_K5lib/libKF5KDcraw.so.*
 
 %changelog
+* Mon Aug 23 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt2
+- fix build requires
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 
