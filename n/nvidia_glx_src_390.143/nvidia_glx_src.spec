@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 143
 %define nv_minor %nil
-%define pkg_rel alt213
+%define pkg_rel alt214
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -103,7 +103,7 @@ Patch2: alt-ignore-dma-remap.patch
 Patch10: buildfix_kernel_5.13.patch
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: kernel-build-tools rpm-macros-alternatives
+BuildRequires: rpm-build-kernel rpm-macros-alternatives
 BuildRequires: libXext-devel libEGL-devel
 BuildRequires: libwayland-client-devel libwayland-server-devel
 BuildRequires: libGLdispatch libGLX
@@ -352,6 +352,9 @@ fi
 %endif
 
 %changelog
+* Tue Aug 24 2021 Sergey V Turchin <zerg@altlinux.org> 390.143-alt214
+- fix build requries
+
 * Tue Aug 10 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 390.143-alt213
 - Fixed build of kernel modules for linux 5.13 (thx Alberto Milone for patch).
 
