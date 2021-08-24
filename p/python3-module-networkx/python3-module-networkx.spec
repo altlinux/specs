@@ -4,8 +4,8 @@
 
 Name:           python3-module-%oname
 Epoch:          2
-Version:        2.5.1
-Release:        alt2
+Version:        2.6.2
+Release:        alt1
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python3
 License:        BSD-3-Clause
@@ -21,12 +21,6 @@ Patch1:         %oname-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-decorator >= 4.3.0
-#BuildRequires: python3-module-numpy >= 1.15.0
-#BuildRequires: python3-module-scipy >= 1.1.0
-#BuildRequires: python3-module-pandas >= 0.23.3
-#BuildRequires: python3-module-matplotlib >= 2.2.2
-#BuildRequires: python3-module-pygraphviz >= 1.5
-#BuildRequires: python3-module-pydot >= 1.2.4
 BuildRequires: python3-module-yaml >= 5.3
 BuildRequires: python3-module-lxml >= 4.5
 BuildRequires: python3-module-gdal >= 1.10.0
@@ -42,8 +36,6 @@ Summary: Creates and Manipulates Graphs and Networks (Python 3)
 Group: Development/Python3
 Requires: python3-module-decorator
 Requires: python3-module-yaml
-#Requires: python3-module-numpy
-#Requires: python3-module-scipy
 %add_python3_req_skip tests
 %add_python3_req_skip networkx.tests.test
 
@@ -104,6 +96,7 @@ rm -rf %buildroot%_defaultdocdir
 %exclude %python3_sitelibdir/%oname/readwrite/__pycache__/nx_shp.*
 %exclude %python3_sitelibdir/%oname/tests
 %exclude %python3_sitelibdir/%oname/conftest.py
+%exclude %python3_sitelibdir/%oname/__pycache__/conftest.*
 %exclude %python3_sitelibdir/%oname/testing
 %exclude %python3_sitelibdir/%oname/*/tests
 %exclude %python3_sitelibdir/%oname/*/*/tests
@@ -116,12 +109,16 @@ rm -rf %buildroot%_defaultdocdir
 
 %files tests
 %python3_sitelibdir/%oname/conftest.py
+%python3_sitelibdir/%oname/__pycache__/conftest.*
 %python3_sitelibdir/%oname/tests
 %python3_sitelibdir/%oname/testing
 %python3_sitelibdir/%oname/*/tests
 %python3_sitelibdir/%oname/*/*/tests
 
 %changelog
+* Tue Aug 24 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2:2.6.2-alt1
+- Updated to upstream version 2.6.2.
+
 * Tue Jul 13 2021 Vitaly Lipatov <lav@altlinux.ru> 2:2.5.1-alt2
 - make scipy and numpy optional
 - update requires
