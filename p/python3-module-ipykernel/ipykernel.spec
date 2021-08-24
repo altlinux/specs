@@ -3,8 +3,8 @@
 %define oname ipykernel
 
 Name: python3-module-%oname
-Version: 5.3.4
-Release: alt2
+Version: 6.2.0
+Release: alt1
 Summary: IPython Kernel for Jupyter
 License: BSD-3-Clause
 Group: Development/Python3
@@ -12,6 +12,7 @@ Url: https://ipython.readthedocs.io/en/stable/
 
 BuildArch: noarch
 
+# https://github.com/ipython/ipykernel.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -65,6 +66,9 @@ PYTHONPATH=$(pwd) py.test3 -vv
 %python3_sitelibdir/%oname/*/tests
 
 %changelog
+* Tue Aug 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.0-alt1
+- Updated to upstream version 6.2.0.
+
 * Thu Jun 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.3.4-alt2
 - Updated build dependencies.
 
