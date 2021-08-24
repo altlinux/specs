@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 5.4.0
-Release: alt1
+Release: alt2
 
 Summary: Tryton module with currencies
 License: GPL
@@ -13,7 +13,8 @@ BuildArch: noarch
 
 Source0: https://pypi.python.org/packages/14/b2/b636a2644d3f3401e6ec8e1618e2f669f3239d55359dacea7802df8ffbd1/%{oname}-%{version}.tar.gz
 
-BuildPreReq: python-module-setuptools rpm-build-python3
+BuildRequires(pre): rpm-build-python3
+#BuildRequires: python3-module-setuptools
 
 
 %description
@@ -49,6 +50,9 @@ This package contains tests for %oname.
 
 
 %changelog
+* Tue Aug 24 2021 Vitaly Lipatov <lav@altlinux.ru> 5.4.0-alt2
+- s/python-module-setuptools//
+
 * Tue Mar 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 5.4.0-alt1
 - Version updated to 5.4.0.
 
