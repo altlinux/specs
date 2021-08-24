@@ -1,6 +1,6 @@
 Name: pcre
 Version: 8.45
-Release: alt1
+Release: alt2
 
 Summary: Perl-compatible regular expression library
 License: BSD-style
@@ -204,6 +204,7 @@ regular expressions.
 rm aclocal.m4 m4/{libtool,lt*}.m4
 
 %build
+%global optflags_lto %optflags_lto -ffat-lto-objects
 %autoreconf
 %define docdir %_docdir/%name-%version
 %configure --includedir=%_includedir/%name \
@@ -297,6 +298,9 @@ rm %buildroot%_libdir/*.la
 %_man1dir/pcretest.*
 
 %changelog
+* Tue Aug 24 2021 Dmitry V. Levin <ldv@altlinux.org> 8.45-alt2
+- Added -ffat-lto-objects to %%optflags_lto.
+
 * Tue Jun 15 2021 Dmitry V. Levin <ldv@altlinux.org> 8.45-alt1
 - 8.44 -> 8.45.
 
