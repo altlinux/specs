@@ -3,16 +3,16 @@
 %define oname jose
 
 Name: python3-module-%oname
-Version: 3.2.0
+Version: 3.3.0
 Release: alt1
 Summary: JOSE implementation in Python
 Group: Development/Python3
 License: MIT
-URL: http://github.com/mpdavis/python-jose
+URL: https://github.com/mpdavis/python-jose
 
 BuildArch: noarch
 
-# http://github.com/mpdavis/python-jose.git
+# https://github.com/mpdavis/python-jose.git
 Source: %name-%version.tar
 
 # Due to version of ecdsa 0.15, which is available in YUM repo already
@@ -82,6 +82,9 @@ python3 -m pytest tests
 %python3_sitelibdir/python_jose-%version-py*.egg-info
 
 %changelog
+* Tue Aug 24 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3.0-alt1
+- Updated to upstream version 3.3.0.
+
 * Wed Sep 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.0-alt1
 - Initial build for ALT.
 
