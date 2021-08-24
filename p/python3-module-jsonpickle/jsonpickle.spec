@@ -3,16 +3,19 @@
 %define oname jsonpickle
 
 Name: python3-module-%oname
-Version: 1.4.1
+Version: 2.0.0
 Release: alt1
 Summary: Python library for serializing any arbitrary object graph into JSON
 License: BSD-3-Clause
 Group: Development/Python3
-BuildArch: noarch
 Url: https://pypi.org/project/jsonpickle/
+
+BuildArch: noarch
 
 # git://github.com/jsonpickle/jsonpickle.git
 Source: %name-%version.tar
+
+Patch1: %oname-alt-disable-pytest-black.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -21,6 +24,8 @@ BuildRequires: python3-module-demjson python3-module-jsonlib
 BuildRequires: python3-module-yajl python3-module-ujson
 BuildRequires: python3-module-numpy
 BuildRequires: python3-module-numpy-testing
+BuildRequires: /usr/bin/pytest-3 python3-module-pytest-flake8 python3-module-pytest-cov
+BuildRequires: python3(pandas)
 
 %py3_provides %oname
 %py3_requires demjson jsonlib yajl ujson
@@ -30,7 +35,7 @@ jsonpickle converts complex Python objects to and from JSON.
 
 %prep
 %setup
-sed -i 's|feedparser|speedparser|g' tests/*.py
+%patch1 -p1
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -40,6 +45,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 
+%check
+pytest3 -vv
+
 %files
 %doc LICENSE
 %doc *.rst contrib
@@ -47,6 +55,10 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version-py*.egg-info
 
 %changelog
+* Tue Aug 24 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt1
+- Updated to upstream version 2.0.0.
+- Enabled tests.
+
 * Mon Sep 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.1-alt1
 - Updated to upstream version 1.4.1.
 - Disabled build for python-2.
