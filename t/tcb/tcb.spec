@@ -1,6 +1,6 @@
 Name: tcb
 Version: 1.2
-Release: alt1
+Release: alt2
 
 Summary: Libraries and tools implementing the %name password shadowing scheme
 License: GPL-2.0-or-later or BSD-3-Clause
@@ -117,6 +117,10 @@ install -pD -m755 %_sourcedir/tcb_chkpwd.control \
 	%buildroot%_controldir/tcb_chkpwd
 mkdir -p %buildroot/etc/tcb
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %pre -n %pam_name
 groupadd=/usr/sbin/groupadd
 $groupadd -r -f chkpwd >/dev/null 2>&1 ||:
@@ -146,9 +150,6 @@ fi
 %_libdir/lib*.so
 %_includedir/*
 
-%files -n lib%name-devel-static
-%_libdir/*.a
-
 %files -n nss_%name
 /%_lib/libnss_*
 
@@ -166,6 +167,9 @@ fi
 %_man8dir/tcb_*
 
 %changelog
+* Tue Aug 24 2021 Dmitry V. Levin <ldv@altlinux.org> 1.2-alt2
+- Disabled build and packaging of libtcb.a.
+
 * Wed Jan 20 2021 Dmitry V. Levin <ldv@altlinux.org> 1.2-alt1
 - 1.1.9.1 -> 1.2.
 
