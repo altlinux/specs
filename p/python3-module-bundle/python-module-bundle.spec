@@ -2,7 +2,7 @@
 
 Name: python3-module-%module_name
 Version: 1.1.2
-Release: alt3
+Release: alt4
 
 Summary: Manages installed Bundle packages
 License: BSD License
@@ -24,7 +24,7 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py.*')
 
 %build
-%python_build
+%python3_build
 
 %install
 %python3_install
@@ -39,6 +39,9 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 
 
 %changelog
+* Tue Aug 24 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt4
+- s/python_build/python3_build/
+
 * Mon Nov 25 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.1.2-alt3
 - python2 disabled
 
