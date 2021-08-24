@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt172
+Release: alt174
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -361,6 +361,7 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %rpmattr %_rpmlibdir/find-requires
 %rpmattr %_rpmlibdir/find-debuginfo-files
 %rpmattr %_rpmlibdir/process-debuginfo
+%rpmattr %_rpmlibdir/process-lto
 %rpmattr %_rpmlibdir/find-scriptlet-requires
 %rpmattr %_rpmlibdir/fixup-*
 %rpmattr %_rpmlibdir/files.*
@@ -412,6 +413,13 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Tue Aug 24 2021 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt174
+- Added support for --runstatedir configure option.
+
+* Mon Aug 23 2021 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt173
+- platform.in: Enable LTO by default.
+- brp: Add brp-strip-lto & process-lto scripts.
+
 * Wed Aug 18 2021 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt172
 - Fix regression introduced by forgotten file usage.
 
