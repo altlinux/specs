@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gtk
-%define ver_major 4.2
+%define ver_major 4.4
 %define api_ver_major 4
 %define api_ver %api_ver_major.0
 %define binary_ver 4.0.0
@@ -10,18 +10,18 @@
 %def_enable x11
 %def_disable static
 %def_enable man
-%def_disable gtk_doc
+%def_enable gtk_doc
 %def_enable introspection
 %def_enable colord
 # wayland gdk backend
 %def_enable wayland
 # broadway (HTML5) gdk backend
 %def_enable broadway
-%def_enable cloudprint
 %def_enable cloudproviders
 %def_enable tracker3
 %def_enable vulkan
 # media backends
+# gstreamer enabled by default
 %def_enable gstreamer
 %def_enable ffmpeg
 
@@ -32,7 +32,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -58,8 +58,8 @@ Patch: gtk+-2.16.5-alt-stop-spam.patch
 %define gtk_doc_ver 1.32.1
 %define colord_ver 0.1.9
 %define cups_ver 1.6
-%define wayland_ver 1.15.0
-%define wayland_protocols_ver 1.12
+%define wayland_ver 1.17.0
+%define wayland_protocols_ver 1.21
 %define xkbcommon_ver 0.2.0
 %define epoxy_ver 1.4
 %define graphene_ver 1.9.1
@@ -91,7 +91,7 @@ BuildRequires: libfribidi-devel
 BuildRequires: gtk-update-icon-cache docbook-utils zlib-devel
 
 %if_enabled x11
-BuildRequires: libXdamage-devel libXcomposite-devel libX11-devel libXcursor-devel
+BuildRequires: libXdamage-devel libX11-devel libXcursor-devel
 BuildRequires: libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel
 BuildRequires: libXrender-devel libXt-devel
 %endif
@@ -100,7 +100,6 @@ BuildRequires: libXrender-devel libXt-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver libpango-gir-devel libatk-gir-devel >= %atk_ver libgdk-pixbuf-gir-devel libgraphene-gir-devel}
 %{?_enable_colord:BuildRequires: libcolord-devel >= %colord_ver}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel >= %xkbcommon_ver wayland-protocols >= %wayland_protocols_ver}
-%{?_enable_cloudprint:BuildRequires: librest-devel libjson-glib-devel}
 %{?_enable_cloudproviders:BuildRequires: libcloudproviders-devel >= %cloudproviders_ver}
 %{?_enable_tracker3:BuildRequires: tracker3-devel}
 %{?_enable_vulkan:BuildRequires: vulkan-devel}
@@ -223,7 +222,7 @@ the functionality of the installed GTK+3 packages.
     %{?_enable_install_tests:-Dinstall-tests=true} \
     %{?_disable_vulkan:-Dvulkan=disabled} \
     %{?_disable_gstreamer:-Dmedia-gstreamer=disabled} \
-    %{?_disable_ffmpeg:-Dmedia-ffmpeg=disabled}
+    %{?_enable_ffmpeg:-Dmedia-ffmpeg=enabled}
 %nil
 %meson_build
 
@@ -338,7 +337,12 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 %if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/*
+#%_datadir/gtk-doc/html/*
+%_datadir/doc/gdk4/
+%_datadir/doc/gdk4-wayland/
+%_datadir/doc/gdk4-x11/
+%_datadir/doc/gsk4/
+%_datadir/doc/gtk4/
 %endif
 
 %files devel-doc-examples
@@ -366,6 +370,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Mon Aug 23 2021 Yuri N. Sedunov <aris@altlinux.org> 4.4.0-alt1
+- 4.4.0
+
 * Tue May 04 2021 Yuri N. Sedunov <aris@altlinux.org> 4.2.1-alt1
 - 4.2.1
 
