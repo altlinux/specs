@@ -3,7 +3,7 @@
 %define oname qtpy
 
 Name: python3-module-%oname
-Version: 1.9.0
+Version: 1.10.0
 Release: alt1
 Summary: Provides an uniform layer to support PyQt5, PySide2, PyQt4 and PySide with a single codebase
 License: MIT
@@ -14,9 +14,6 @@ BuildArch: noarch
 
 # https://github.com/spyder-ide/qtpy.git
 Source: %name-%version.tar
-
-# https://github.com/spyder-ide/qtpy/pull/239
-Patch1: %oname-%version-upstream-tests.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -57,7 +54,6 @@ This package contains tests for %oname.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %python3_build_debug
@@ -79,6 +75,9 @@ xvfb-run py.test3 -vv
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Tue Aug 24 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.10.0-alt1
+- Updated to upstream version 1.10.0.
+
 * Tue Aug 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.0-alt1
 - Updated to upstream version 1.9.0.
 - Enabled tests.
