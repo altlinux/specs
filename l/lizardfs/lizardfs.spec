@@ -7,7 +7,7 @@
 %define liz_pam_d %_sysconfdir/pam.d/lizardfs
 %define nprocs 16
 
-%def_without docs
+%def_with docs
 %def_without ganesha
 %def_with fuse3
 
@@ -17,11 +17,11 @@
 Summary: LizardFS - distributed, fault tolerant file system
 Name: lizardfs
 Version: 3.13.0
-Release: alt0.rc3.60
+Release: alt0.rc3.72
 License: GPLv3
 Group: System/Servers
 Url: https://www.lizardfs.org/
-# git-vcs: https://github.com/lizardfs/lizardfs.git
+Vcs: https://github.com/lizardfs/lizardfs.git
 Source: %name-%version.tar
 Source1: pam-lizardfs
 Source2: 10-lizardfs.conf
@@ -30,7 +30,6 @@ Source2: 10-lizardfs.conf
 Source4: nfs-ganesha-2.5-stable.zip
 Source5: ntirpc-1.5.zip
 %endif
-# Patch: %name-%version.patch
 
 Conflicts: moosefs
 
@@ -197,10 +196,7 @@ for i in src/cgi/chart.cgi.in src/cgi/lizardfs-cgiserver.py.in src/cgi/mfs.cgi.i
 done
 
 %build
-%cmake  \
-%ifnarch i586
-        -DLIB64=YES \
-%endif
+%cmake	\
 	-DCMAKE_BUILD_TYPE=Release \
 	-DENABLE_TESTS=NO \
 	-DCMAKE_INSTALL_PREFIX=/ \
@@ -255,11 +251,7 @@ for f in *.init ; do
 done
 popd
 
-%if_with fuse3
-%if_with docs
-ln -sf mfsmount.1 %buildroot%_man1dir/mfsmount3.1
-%endif
-%endif
+rm -f %buildroot%_libdir/*.a
 
 %pre master
 %_sbindir/groupadd -r -f %_groupname 2>/dev/null ||:
@@ -395,17 +387,13 @@ ln -sf mfsmount.1 %buildroot%_man1dir/mfsmount3.1
 %_libdir/liblizardfs-client.so
 
 %files -n lib%name-client-devel
-%_libdir/liblizardfs-client-cpp.a
-%_libdir/liblizardfs-client-cpp_pic.a
-%_libdir/liblizardfs-client.a
-%_libdir/liblizardfs-client_pic.a
 %_includedir/lizardfs
 
 %if_with ganesha
 %files nfs-ganesha
 %_libdir/ganesha/libfsallizardfs.so
-#%_libdir/ganesha/libfsallizardfs.so.4
-#%_libdir/ganesha/libfsallizardfs.so.4.2.0
+#%%_libdir/ganesha/libfsallizardfs.so.4
+#%%_libdir/ganesha/libfsallizardfs.so.4.2.0
 %endif
 
 %files cgi
@@ -449,6 +437,10 @@ ln -sf mfsmount.1 %buildroot%_man1dir/mfsmount3.1
 %_unitdir/lizardfs-uraft.lizardfs-ha-master.service
 
 %changelog
+* Tue Aug 24 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc3.72
+- update to b5f6b576b7f3941f98ebf50473e6e741ff760403 from upstream
+- remove static libraries
+
 * Wed Jul 28 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc3.60
 - update to 73a011cc4ba43b3ef0d81a4733c46fc6f67136b4 from upstream
 - fuse3 support
