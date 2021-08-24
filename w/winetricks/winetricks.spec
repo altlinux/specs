@@ -1,5 +1,5 @@
 Name: winetricks
-Version: 20210206
+Version: 20210815
 Release: alt1
 
 Summary: Work around common problems in Wine
@@ -10,6 +10,7 @@ Url: https://github.com/Winetricks/winetricks
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+##Source-url: https://github.com/Winetricks/winetricks/archive/refs/heads/master.zip
 # Source-url: %url/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
@@ -67,6 +68,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 #exclude %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Tue Aug 24 2021 Vitaly Lipatov <lav@altlinux.ru> 20210815-alt1
+- new version 20210815 (formally 20210206-next) with rpmgs script
+
 * Tue Feb 09 2021 Vitaly Lipatov <lav@altlinux.ru> 20210206-alt1
 - new version 20210206 (with rpmrb script)
 
