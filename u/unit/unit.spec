@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%global optflags_lto %optflags_lto -ffat-lto-objects
 
 %def_enable perl
 %def_enable php
@@ -8,7 +9,7 @@
 %def_disable devel
 
 Name: unit
-Version: 1.24.0
+Version: 1.25.0
 Release: alt1
 
 Summary: NGINX Unit - Web Application Server
@@ -185,6 +186,9 @@ build/tests
 %endif
 
 %changelog
+* Tue Aug 24 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.25.0-alt1
+- Update to 1.25.0 (2021-08-19).
+
 * Mon May 31 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.24.0-alt1
 - Update to 1.24.0 (2021-05-27).
 
