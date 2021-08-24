@@ -30,7 +30,7 @@
 
 Name:           chromium
 Version:        92.0.4515.159
-Release:        alt1
+Release:        alt2
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -164,6 +164,7 @@ BuildRequires:  pkgconfig(wayland-egl)
 BuildRequires:  pkgconfig(wayland-cursor)
 BuildRequires:  pkgconfig(wayland-scanner)
 BuildRequires:  pkgconfig(dri)
+BuildRequires:  pkgconfig(libpipewire-0.3)
 BuildRequires:  node
 BuildRequires:  usbids
 BuildRequires:  xdg-utils
@@ -261,6 +262,9 @@ gn_arg enable_nacl=false
 gn_arg is_component_ffmpeg=%{is_enabled shared_libraries}
 gn_arg is_component_build=%{is_enabled shared_libraries}
 gn_arg enable_widevine=%{is_enabled widevine}
+
+gn_arg rtc_use_pipewire=true
+gn_arg rtc_link_pipewire=true
 
 %if_enabled clang
 gn_arg clang_base_path=\"%_prefix/lib/llvm-%{llvm_version}\"
@@ -437,6 +441,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Aug 24 2021 Alexey Gladkov <legion@altlinux.ru> 92.0.4515.159-alt2
+- Enable pipewire support (ALT#40806).
+
 * Sat Aug 21 2021 Alexey Gladkov <legion@altlinux.ru> 92.0.4515.159-alt1
 - New version (92.0.4515.159).
 - Security fixes:
