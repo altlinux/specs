@@ -5,12 +5,14 @@
 
 Name: python3-module-%oname
 Version: 4.0.0
-Release: alt1
+Release: alt2
 
 Summary: A Django plugin for py.test
+
 License: BSD
 Group: Development/Python3
 Url: https://pypi.org/project/pytest-django/
+
 # https://github.com/pytest-dev/pytest-django.git
 BuildArch: noarch
 
@@ -20,9 +22,9 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools_scm)
 
 %if_with check
-BuildRequires: python3-module-django2.2
-BuildRequires: python3-module-django2.2-tests
-BuildRequires: python3-module-django2.2-dbbackend-sqlite3
+BuildRequires: python3-module-django
+BuildRequires: python3-module-django-tests
+BuildRequires: python3-module-django-dbbackend-sqlite3
 BuildRequires: python3(pytest-xdist)
 BuildRequires: python3(tox)
 %endif
@@ -75,6 +77,9 @@ tox.py3 --sitepackages -v
 %python3_sitelibdir/*
 
 %changelog
+* Tue Aug 24 2021 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt2
+- fix BR
+
 * Mon Oct 19 2020 Stanislav Levin <slev@altlinux.org> 4.0.0-alt1
 - 3.9.0 -> 4.0.0.
 
