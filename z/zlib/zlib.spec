@@ -1,10 +1,10 @@
 Name: zlib
 Version: 1.2.11
-Release: alt1
+Release: alt2
 
 Summary: The zlib compression and decompression library
 Summary(ru_RU.UTF-8): Библиотека сжатия данных zlib
-License: zlib
+License: Zlib
 Group: System/Libraries
 Url: http://zlib.net/
 # http://git.altlinux.org/gears/z/zlib.git
@@ -70,6 +70,7 @@ xz -9k FAQ doc/algorithm.txt
 iconv -fcp1252 -tutf8 < ChangeLog | xz -9 > ChangeLog.xz
 
 %build
+%global optflags_lto %optflags_lto -ffat-lto-objects
 %define _optlevel 3
 
 %if_enabled asm
@@ -145,6 +146,9 @@ make test
 %_pkgconfigdir/minizip.pc
 
 %changelog
+* Tue Aug 24 2021 Dmitry V. Levin <ldv@altlinux.org> 1.2.11-alt2
+- Added -ffat-lto-objects to %%optflags_lto.
+
 * Sun Dec 02 2018 Dmitry V. Levin <ldv@altlinux.org> 1.2.11-alt1
 - v1.2.8 -> v1.2.11.
 - libminizip-devel: removed %_includedir/minizip/crypt.h (closes: #35061).
