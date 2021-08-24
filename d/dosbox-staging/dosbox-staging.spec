@@ -1,17 +1,19 @@
 Name: dosbox-staging
-Version: 0.76.0
+Version: 0.77.0
 Release: alt1
 License: GPLv2
 Summary: An attempt to revitalize DOSBox, an emulator that recreates a MS-DOS compatible environment
 Group: Emulators
 Source: %name-%version.tar.gz
+Patch: dosbox-staging-0.77.0-ne2000.patch
+
 %ifarch %ix86
 %set_verify_elf_method textrel=relaxed
 %endif
 
-# Automatically added by buildreq on Fri Dec 18 2020
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libSDL2-devel libglvnd-devel libgpg-error libogg-devel libopus-devel libstdc++-devel perl pkg-config python2-base sh4 zlib-devel
-BuildRequires: gcc-c++ libSDL2-devel libSDL2_net-devel libalsa-devel libfluidsynth-devel libopusfile-devel libpng-devel
+# Automatically added by buildreq on Tue Aug 24 2021
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libSDL2-devel libX11-devel libcrypt-devel libglvnd-devel libgmock-devel libgpg-error libogg-devel libopus-devel libp11-kit libstdc++-devel libxcb-devel ninja-build perl pkg-config python3 python3-base sh4 xz zlib-devel
+BuildRequires: ctags gcc-c++ git-core libSDL2_net-devel libalsa-devel libfluidsynth-devel libgtest-devel libmt32emu-devel libopusfile-devel libpcap-devel libpng-devel meson
 
 %description
 dosbox-staging is an attempt to revitalize DOSBox's development process.
@@ -35,26 +37,34 @@ hardware.
 
 %prep
 %setup
+%patch -p1
 sed -i 's/=dosbox$/=dosbox-staging/' contrib/linux/dosbox-staging.desktop
+%meson -Duse_pcap=true
 
 %build
-%autoreconf
-%configure --program-suffix=-staging
-%make_build CXXFLAGS=-pthread
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 install -D contrib/icons/dosbox-staging.svg %buildroot%_iconsdir/hicolor/scalable/apps/dosbox-staging.svg
 install -D contrib/linux/dosbox-staging.desktop %buildroot/%_desktopdir/dosbox-staging.desktop
+mv %buildroot/%_bindir/dosbox %buildroot/%_bindir/%name
 
 %files
 %doc docs
+%doc %_defaultdocdir/%name
 %_bindir/*
 %_man1dir/*
-%_iconsdir/hicolor/scalable/apps/*
+%_iconsdir/hicolor/*/apps/*
 %_desktopdir/*
+%_datadir/metainfo/*
+
 
 %changelog
+* Sun Aug 22 2021 Fr. Br. George <george@altlinux.ru> 0.77.0-alt1
+- Autobuild version bump to 0.77.0
+- Enable NE2000 emulation
+
 * Fri Dec 18 2020 Fr. Br. George <george@altlinux.ru> 0.76.0-alt1
 - Autobuild version bump to 0.76.0
 - Fix build on i686 (allow textrel)
