@@ -2,7 +2,7 @@
 %define _scriptdir %_libexecdir/%name
 
 Name: ploop
-Version: 7.0.260
+Version: 7.0.261
 Release: alt1
 Group: System/Base
 License: GPLv2
@@ -33,15 +33,6 @@ Requires: parted gdisk e2fsprogs lsof
 
 %description -n lib%name
 Parallels loopback (ploop) block device API library
-
-%package -n lib%name-devel-static
-Summary: Static ploop library
-Group: Development/C
-License: LGPLv2.1
-Requires: lib%name-devel = %EVR
-
-%description -n lib%name-devel-static
-Static version of ploop library
 
 %package -n lib%name-devel
 Summary: Headers for development with ploop library
@@ -80,6 +71,9 @@ make \
     MODULESLOADDIR=%_modulesloaddir \
     install
 
+rm -f %buildroot%_libdir/libploop.a
+ 
+
 %files
 /sbin/*
 %_sbindir/*
@@ -97,9 +91,6 @@ make \
 %dir %_scriptdir-test
 %_scriptdir-test/*
 
-%files -n lib%name-devel-static
-%_libdir/libploop.a
-
 %files -n lib%name-devel
 %_libdir/lib%name.so
 %_includedir/%name
@@ -109,6 +100,10 @@ make \
 %python3_sitelibdir/*
 
 %changelog
+* Tue Aug 24 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.261-alt1
+- 7.0.261
+- remove static library
+
 * Thu Jul 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.260-alt1
 - 7.0.260
 
