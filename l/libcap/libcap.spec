@@ -1,6 +1,6 @@
 Name: libcap
 Version: 2.27.0.2.ac1e
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Library for getting and setting POSIX.1e capabilities
@@ -66,6 +66,7 @@ for users specified in configuration file.
 %setup -n %name-%version-%release
 
 %build
+%global optflags_lto %optflags_lto -ffat-lto-objects
 %make_build CC=%__cc CFLAGS="%optflags" \
 	lib=%_lib DEBUG= INDENT=
 
@@ -83,8 +84,9 @@ mv %buildroot/%_lib/libcap.a %buildroot%_libdir/
 # For backwards compatibility.
 ln -rsnf %buildroot/%_lib/"$soname" "%buildroot%_libdir/libcap.so.1"
 
-%set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %files
 /%_lib/*.so.*
@@ -110,6 +112,9 @@ ln -rsnf %buildroot/%_lib/"$soname" "%buildroot%_libdir/libcap.so.1"
 %_pam_modules_dir/*
 
 %changelog
+* Tue Aug 24 2021 Dmitry V. Levin <ldv@altlinux.org> 1:2.27.0.2.ac1e-alt4
+- Added -ffat-lto-objects to %optflags_lto.
+
 * Wed Aug 12 2020 Dmitry V. Levin <ldv@altlinux.org> 1:2.27.0.2.ac1e-alt3
 - Build and package static library (closes: #37718).
 
