@@ -1,11 +1,11 @@
 Name: pam_userpass
 Version: 1.0.2
-Release: alt6
+Release: alt7
 
 Summary: Pluggable authentication module for USER/PASS-style protocols
 License: LGPLv2+
 Group: System/Base
-Url: http://www.openwall.com/pam/
+Url: https://www.openwall.com/pam/
 
 # ftp://ftp.openwall.com/pub/projects/pam/modules/pam_userpass/pam_userpass-%version.tar.gz
 Source: pam_userpass-%version.tar
@@ -93,6 +93,10 @@ install -p -m644 example_userpass.c \
 install -p -m644 conf/example_userpass \
 	%buildroot%docdir/example/example_userpass.pamd
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %files -n %pam_name
 %_libdir/*.so.*
 /%_lib/security/*
@@ -105,10 +109,10 @@ install -p -m644 conf/example_userpass \
 %dir %docdir
 %docdir/example
 
-%files devel-static
-%_libdir/*.a
-
 %changelog
+* Tue Aug 24 2021 Dmitry V. Levin <ldv@altlinux.org> 1.0.2-alt7
+- Disabled build and packaging of libpam_userpass.a.
+
 * Thu Jan 24 2013 Dmitry V. Levin <ldv@altlinux.org> 1.0.2-alt6
 - Fixed interpackage dependencies.
 
