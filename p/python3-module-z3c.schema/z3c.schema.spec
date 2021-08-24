@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.0
-Release: alt2
+Release: alt3
 
 Summary: Additional schema fields for Zope 3
 License: ZPLv2.1
@@ -35,7 +35,7 @@ This package contains tests for z3c.schema.
 %setup -q -n %{oname}-%{version}
 
 %build
-%python_build
+%python3_build
 
 %install
 %python3_install
@@ -59,6 +59,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Tue Aug 24 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt3
+- s/python_build/python3_build/
+
 * Tue Dec 10 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.1.0-alt2
 - build for python2 disabled
 
