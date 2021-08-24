@@ -5,7 +5,7 @@
 %define libkf5pimcommonakonadi libkf5pimcommonakonadi%sover
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init
 
@@ -98,6 +98,9 @@ KF5 library
 %_K5lib/libKF5PimCommonAkonadi.so.*
 
 %changelog
+* Thu Aug 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

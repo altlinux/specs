@@ -1,7 +1,7 @@
 %define rname kldap
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init altplace
 
@@ -62,7 +62,7 @@ KF5 library
 %files common -f %name.lang
 %doc LICENSES/*
 %_datadir/qlogging-categories5/*.*categories
-%_K5srv/ldap*.protocol
+#%_K5srv/ldap*.protocol
 
 %files devel
 %_K5inc/kldap_version.h
@@ -76,6 +76,9 @@ KF5 library
 %_K5plug/kf5/kio/ldap.so
 
 %changelog
+* Thu Aug 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

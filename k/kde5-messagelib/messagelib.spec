@@ -10,8 +10,8 @@
 %define libkf5webengineviewer libkf5webengineviewer%sover
 
 Name: kde5-%rname
-Version: 21.04.3
-Release: alt2
+Version: 21.08.0
+Release: alt1
 %K5init
 
 Group: System/Libraries
@@ -21,7 +21,6 @@ License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
 Patch1: alt-gpgme17.patch
-Patch2: alt-apply-filter.patch
 
 # Automatically added by buildreq on Thu Apr 28 2016 (-bi)
 # optimized out: boost-devel-headers cmake cmake-modules elfutils gcc-c++ glibc-devel-static kde5-akonadi-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libgpg-error-devel libgst-plugins1.0 libical-devel libjson-c libkf5gpgmepp-pthread libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sensors libqt5-sql libqt5-svg libqt5-test libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libstdc++-devel libxcbutil-keysyms perl pkg-config python-base python-modules python3 python3-base qt5-base-devel qt5-tools-devel qt5-webkit-devel rpm-build-python3 ruby ruby-stdlibs
@@ -113,7 +112,6 @@ KF5 library
 %prep
 %setup -n %rname-%version
 #%patch1 -p1
-%patch2 -p1
 
 %build
 %K5build \
@@ -177,6 +175,9 @@ KF5 library
 %_K5lib/libKF5WebEngineViewer.so.*
 
 %changelog
+* Thu Aug 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Tue Aug 03 2021 Oleg Solovyov <mcpain@altlinux.org> 21.04.3-alt2
 - fix kde bug 440541
 

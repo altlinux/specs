@@ -14,9 +14,11 @@
 %define libdkimverifyconfigure libdkimverifyconfigure%sover
 %define libexpireaccounttrashfolderconfig libexpireaccounttrashfolderconfig%sover
 %define libfolderconfiguresettings libfolderconfiguresettings%sover
+%define libkmailconfirmbeforedeleting libkmailconfirmbeforedeleting%sover
+
 
 Name: kde5-pim-addons
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init
 
@@ -101,6 +103,13 @@ Group: Graphical desktop/KDE
 Requires: %name-common
 %description plugins
 %summary.
+
+%package -n %libkmailconfirmbeforedeleting
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common = %version-%release
+%description -n %libkmailconfirmbeforedeleting
+%name library
 
 %package -n %libkaddressbookmergelibprivate
 Group: System/Libraries
@@ -283,8 +292,14 @@ KF5 library
 %files -n %libfolderconfiguresettings
 %_K5lib/libfolderconfiguresettings.so.%sover
 %_K5lib/libfolderconfiguresettings.so.*
+%files -n %libkmailconfirmbeforedeleting
+%_K5lib/libkmailconfirmbeforedeleting.so.%sover
+%_K5lib/libkmailconfirmbeforedeleting.so.*
 
 %changelog
+* Thu Aug 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

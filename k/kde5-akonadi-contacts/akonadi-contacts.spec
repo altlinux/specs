@@ -1,7 +1,7 @@
 %define rname akonadi-contacts
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init
 
@@ -21,7 +21,7 @@ BuildRequires: boost-devel extra-cmake-modules qt5-base-devel qt5-webengine-deve
 BuildRequires: grantlee5-devel
 BuildRequires: kde5-akonadi-devel kde5-akonadi-mime-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-kmime-devel
 BuildRequires: kde5-grantleetheme-devel kde5-libkleo-devel
-BuildRequires: kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel kf5-prison-devel
+BuildRequires: kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel kf5-prison-devel kf5-kcmutils-devel
 
 %description
 Libraries and daemons to implement Contact Management in Akonadi.
@@ -83,8 +83,7 @@ KF5 library
 
 %files -n libkf5akonadicontact
 %_K5lib/libKF5AkonadiContact.so.*
-%_K5plug/*akonadicontact*.so
-#%_K5srv/akonadi/contact/
+%_K5plug/pim/kcms/kaddressbook/*.so
 %_K5srv/*akonadicontact*.desktop
 #
 %_K5plug/akonadi_serializer_addressee.so
@@ -103,6 +102,9 @@ KF5 library
 %_datadir/akonadi5/plugins/serializer/akonadi_serializer_contactgroup.desktop
 
 %changelog
+* Thu Aug 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

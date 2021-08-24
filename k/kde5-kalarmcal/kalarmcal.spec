@@ -1,7 +1,7 @@
 %define rname kalarmcal
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init altplace
 
@@ -82,6 +82,9 @@ KF5 library
 %_datadir/akonadi5/plugins/serializer/*.desktop
 
 %changelog
+* Thu Aug 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

@@ -6,7 +6,7 @@
 %define libkleopatraclientgui libkleopatraclientgui%kleopatraclientgui_sover
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init no_appdata
 
@@ -89,9 +89,10 @@ Requires: %name-common = %version-%release
 %_K5xdgapp/kleopatra_import.desktop
 %_K5data/kleopatra/
 %_K5cf_upd/*kleopatra*
-%_K5plug/kcm_kleopatra.so
+%_K5plug/pim/kcms/kleopatra/*.so
 %_K5srv/kleopatra_*.desktop
 %_K5icon/*/*/apps/kleopatra.*
+%_K5srv/ServiceMenus/*kleopatra*.desktop
 #
 %_K5bin/kwatchgnupg
 %_K5data/kwatchgnupg/
@@ -104,6 +105,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkleopatraclientgui.so.*
 
 %changelog
+* Thu Aug 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

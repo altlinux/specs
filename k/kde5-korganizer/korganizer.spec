@@ -6,7 +6,7 @@
 %define libkorganizerprivate libkorganizerprivate%pim_sover
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init no_appdata
 
@@ -97,34 +97,33 @@ Requires: %name-common = %version-%release
 %files
 %_K5bin/korgac
 %_K5bin/korganizer
-#%_K5bin/ical2vcal
 %_K5plug/*korganizer*.so
-%_K5plug/kcm_apptsummary.so
-%_K5plug/kcm_todosummary.so
-%_K5plug/kcm_sdsummary.so
+%_K5plug/pim/kcms/korganizer/
+%_K5plug/pim/kcms/summary/kcmapptsummary.so
+%_K5plug/pim/kcms/summary/kcmsdsummary.so
+%_K5plug/pim/kcms/summary/kcmtodosummary.so
 %_K5plug/kontact5/kontact_*.so
 %_K5start/org.kde.korgac.desktop
 %_K5xdgapp/*korganizer*.desktop
-%_K5data/korgac/
+#%_K5data/korgac/
 %_K5data/korganizer/
 %_K5data/kontact/ksettingsdialog/*
 %_K5data/knsrcfiles/*korganizer*
 %_K5cfg/*korganizer*
 %_K5cf_upd/*korganizer*
-#%_K5xmlgui/korganizer/
 %_K5srv/kontact/korganizerplugin.desktop
 %_K5srv/korganizer_*.desktop
-%_K5srv/webcal.protocol
+#%_K5srv/webcal.protocol
 %_K5srv/kcmapptsummary.desktop
 %_K5srv/kcmsdsummary.desktop
 %_K5srv/kcmtodosummary.desktop
 %_K5srv/kontact/journalplugin.desktop
 %_K5srv/kontact/specialdatesplugin.desktop
-#%_K5srv/kontact/summaryplugin.desktop
 %_K5srv/kontact/todoplugin.desktop
 %_K5icon/*/*/apps/korganizer.*
 %_K5icon/*/*/apps/korg-*.*
 %_K5icon/*/*/apps/quickview.*
+%_K5icon/*/*/apps/*korgac*.*
 %_K5dbus_srv/*korga*.service
 
 %files devel
@@ -146,6 +145,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkorganizerprivate.so.*
 
 %changelog
+* Thu Aug 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

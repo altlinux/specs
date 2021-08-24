@@ -5,7 +5,7 @@
 %define libnotesharedprivate libnotesharedprivate%pim_sover
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init no_appdata
 
@@ -85,7 +85,8 @@ Requires: %name-common = %version-%release
 
 %files
 %_K5bin/*note*
-%_K5plug/*note*.so
+%_K5plug/pim/kcms/knotes/
+%_K5plug/pim/kcms/summary/*knotes*.so
 %_K5plug/kontact5/*knotes*.so
 %_K5xdgapp/org.kde.*note*.desktop
 %_K5data/*note*/
@@ -117,6 +118,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libnotesharedprivate.so.*
 
 %changelog
+* Thu Aug 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

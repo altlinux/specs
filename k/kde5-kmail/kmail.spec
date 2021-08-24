@@ -4,7 +4,7 @@
 %define libkmailprivate libkmailprivate%pim_sover
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init no_appdata
 
@@ -86,6 +86,8 @@ Requires: %name-common = %version-%release
 %_K5bin/kmail*
 %_K5bin/akonadi_*_agent
 %_K5plug/*.so
+%_K5plug/pim/kcms/kmail/
+%_K5plug/pim/kcms/summary/*summary*.so
 %_K5plug/kontact5/*.so
 %_K5plug/akonadi/config/*.so
 %_K5xdgapp/org.kde.*.desktop
@@ -132,6 +134,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkmailprivate.so.*
 
 %changelog
+* Thu Aug 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

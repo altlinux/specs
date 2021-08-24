@@ -1,7 +1,7 @@
 %define rname akonadi-search
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init altplace
 
@@ -13,7 +13,6 @@ License: GPLv2+ / LGPLv2+
 Requires: kde5-akonadi
 
 Source: %rname-%version.tar
-Patch1: alt-def-krunners.patch
 
 # Automatically added by buildreq on Thu Aug 13 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python3 python3-base ruby ruby-stdlibs
@@ -79,7 +78,9 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
+
+# disable krunner by default
+sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=false|' runner/plasma-krunner-pimcontacts.desktop
 
 %build
 %K5build
@@ -118,6 +119,9 @@ KF5 library
 %_K5lib/libKF5AkonadiSearchDebug.so.*
 
 %changelog
+* Thu Aug 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 
