@@ -1,6 +1,6 @@
 Name: bzip2
 Version: 1.0.8
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A file compression utility
@@ -65,6 +65,7 @@ library.
 %setup -n %name-%version-%release
 
 %build
+%global optflags_lto %optflags_lto -ffat-lto-objects
 %define _optlevel 3
 %add_optflags -Winline
 %ifarch %ix86 x86_64
@@ -133,8 +134,9 @@ rm -rf %buildroot%docdir
 mkdir -p %buildroot%docdir
 install -pm644 CHANGES LICENSE README %buildroot%docdir/
 
-%set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %files -n bzlib
 /%_lib/*
@@ -160,6 +162,9 @@ install -pm644 CHANGES LICENSE README %buildroot%docdir/
 %docdir/[CR]*
 
 %changelog
+* Tue Aug 24 2021 Dmitry V. Levin <ldv@altlinux.org> 1:1.0.8-alt2
+- Added -ffat-lto-objects to %%optflags_lto.
+
 * Mon Mar 02 2020 Dmitry V. Levin <ldv@altlinux.org> 1:1.0.8-alt1
 - 1.0.6 -> 1.0.8.
 - Removed symbol versioning stub.
