@@ -1,11 +1,11 @@
 Name: attr
 Version: 2.5.1
-Release: alt1
+Release: alt2
 
 Summary: Utilities for managing filesystem extended attributes
 License: GPLv2+
 Group: File tools
-Url: http://savannah.nongnu.org/projects/attr
+Url: https://savannah.nongnu.org/projects/attr
 # git://git.altlinux.org/gears/a/attr.git
 Source: %name-%version-%release.tar
 
@@ -60,6 +60,7 @@ statically linked programs which make use of extended attributes.
 %setup
 
 %build
+%global optflags_lto %optflags_lto -ffat-lto-objects
 ./autogen.sh
 %configure %{subst_enable static}
 %make_build V=1
@@ -76,6 +77,8 @@ done
 mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 
 %find_lang %name
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
 %check
@@ -107,6 +110,9 @@ fi
 %endif
 
 %changelog
+* Tue Aug 24 2021 Dmitry V. Levin <ldv@altlinux.org> 2.5.1-alt2
+- Added -ffat-lto-objects to %%optflags_lto.
+
 * Tue Mar 16 2021 Dmitry V. Levin <ldv@altlinux.org> 2.5.1-alt1
 - v2.4.48-9-gcb4786f -> v2.5.1.
 - xattr.conf: removed entries for NFSv4 ACLs namespaces (thx Kamil Dudka).
