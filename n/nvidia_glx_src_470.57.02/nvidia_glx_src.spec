@@ -27,7 +27,7 @@
 %define nv_version 470
 %define nv_release 57
 %define nv_minor   02
-%define pkg_rel alt223
+%define pkg_rel alt224
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -111,7 +111,7 @@ Patch4: kernel-5.11-aarch64.patch
 Patch5: kernel-5.13-aarch64.patch
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: kernel-build-tools rpm-macros-alternatives
+BuildRequires: rpm-build-kernel rpm-macros-alternatives
 BuildRequires: libXext-devel libEGL-devel
 BuildRequires: libwayland-client-devel libwayland-server-devel
 BuildRequires: libGLdispatch libGLX
@@ -373,6 +373,9 @@ fi
 %endif
 
 %changelog
+* Mon Aug 23 2021 Sergey V Turchin <zerg@altlinux.org> 470.57.02-alt224
+- fix build requires
+
 * Tue Aug 10 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 470.57.02-alt223
 - Reverted previous change.
 - Actually fixed nvidia module build for linux 5.13 on aarch64 architecture.
