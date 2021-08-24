@@ -1,11 +1,11 @@
 Name: beecrypt
 Version: 4.2.1
-Release: alt7
+Release: alt8
 
 Summary: The BeeCrypt Cryptography Library
 License: LGPLv2+
 Group: System/Libraries
-Url: http://sourceforge.net/projects/beecrypt
+Url: https://sourceforge.net/projects/beecrypt
 
 Source: beecrypt-%version.tar
 Patch1: beecrypt-4.1.2-rh-biarch.patch
@@ -73,12 +73,13 @@ BeeCrypt-based statically linked software.
 %patch3 -p2
 %patch4 -p2
 bzip2 -9k BENCHMARKS
+sed -i 's/^AC_PROG_CC/&\nAC_SYS_LARGEFILE/' configure.ac
 
 %build
 %autoreconf
 
 %configure \
-	--enable-static \
+	--disable-static \
 	%{subst_enable debug} \
 	--with-cplusplus=no \
 	--with-java=no \
@@ -92,6 +93,10 @@ bzip2 -9k BENCHMARKS
 iconv -f ISO-8859-1 -t UTF-8 CONTRIBUTORS -o CONTRIBUTORS.utf8
 mv -f CONTRIBUTORS.utf8 CONTRIBUTORS
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %check
 %make_build -k check
 
@@ -103,10 +108,11 @@ mv -f CONTRIBUTORS.utf8 CONTRIBUTORS
 %_libdir/*.so
 %_includedir/*
 
-%files -n lib%name-devel-static
-%_libdir/*.a
-
 %changelog
+* Tue Aug 24 2021 Dmitry V. Levin <ldv@altlinux.org> 4.2.1-alt8
+- Disabled build and packaging of libbeecrypt.a.
+- Built with LFS support enabled.
+
 * Thu Apr 07 2011 Dmitry V. Levin <ldv@altlinux.org> 4.2.1-alt7
 - Rebuilt for debuginfo.
 
@@ -115,7 +121,6 @@ mv -f CONTRIBUTORS.utf8 CONTRIBUTORS
 
 * Wed Oct 20 2010 Dmitry V. Levin <ldv@altlinux.org> 4.2.1-alt5
 - Rebuilt for soname set-versions.
-=======
 
 * Tue Aug 17 2010 Kirill A. Shutemov <kas@altlinux.org> 4.2.1-alt4
 - Fix build on ARM.
