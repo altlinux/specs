@@ -1,3 +1,5 @@
+%define optflags_lto %nil
+
 %define set_disable() %{expand:%%force_disable %{1}} %{expand:%%undefine _enable_%{1}}
 %define set_enable() %{expand:%%force_enable %{1}} %{expand:%%undefine _disable_%{1}}
 %define set_without() %{expand:%%force_without %{1}} %{expand:%%undefine _with_%{1}}
@@ -299,7 +301,7 @@
 
 Name: %lname
 Version: 1.4
-Release: alt7.%svnrev.1
+Release: alt7.%svnrev.2
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -1132,6 +1134,9 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Tue Aug 24 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4-alt7.38313.2
+- Fixed FTBFS: explicitly disabled LTO.
+
 * Wed Jun 02 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4-alt7.38313.1
 - Updated to SVN snapshot (revision 38313).
 - Fixed FTBFS: added rpm-build-python to BR.
