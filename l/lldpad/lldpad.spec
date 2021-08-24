@@ -2,7 +2,7 @@
 
 Name: lldpad
 Version: 1.1
-Release: alt1
+Release: alt2
 Summary: Intel LLDP Agent
 
 Group: Networking/Other
@@ -73,6 +73,9 @@ rm -f %buildroot%_libdir/*.{a,la}
 %_man3dir/*
 
 %changelog
+* Wed Aug 25 2021 Alexey Shabalin <shaba@altlinux.org> 1.1-alt2
+- Increased release for greater than in autoimports.
+
 * Mon Aug 23 2021 Alexey Shabalin <shaba@altlinux.org> 1.1-alt1
 - Initial build.
 
