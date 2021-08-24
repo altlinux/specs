@@ -5,12 +5,12 @@ Name: readline
 %define rl_patch .3
 %define srcname readline-%rl_version
 Version: %rl_version%rl_patch
-Release: alt3
+Release: alt4
 
 Summary: A library for editing typed in command lines
 License: GPLv2+
 Group: System/Libraries
-Url: http://www.gnu.org/software/readline/
+Url: https://www.gnu.org/software/readline/
 
 # ftp://ftp.gnu.org/gnu/readline/readline-%rl_version.tar.gz
 # ftp://ftp.gnu.org/gnu/readline/readline-%rl_version-patches/
@@ -70,6 +70,8 @@ and more intuitive command line interface for users.
 rm examples/*.tar*
 
 %build
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 # This is required to fix some "implicit declaration" warnings.
 %add_optflags -D_GNU_SOURCE
 
@@ -108,11 +110,12 @@ GROUP(/%_lib/$soname AS_NEEDED(-lhistory))
 __EOF__
 
 # Relocate and fix documentation.
-%define docdir %_docdir/readline-%version
+%define docdir %_docdir/readline
+rm -rf %buildroot%docdir
 mkdir -p %buildroot%docdir
 cp -a README CHANGE* USAGE examples \
 	%buildroot%docdir/
-bzip2 -9 %buildroot%docdir/CHANGE*
+xz -9 %buildroot%docdir/CHANGE*
 cp -p config.h posixstat.h xmalloc.h \
 	%buildroot%docdir/examples/
 pushd %buildroot%docdir/examples
@@ -121,6 +124,8 @@ pushd %buildroot%docdir/examples
 	make clean
 popd
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
 %files -n lib%name%sover
@@ -137,6 +142,9 @@ popd
 %_libdir/*.a
 
 %changelog
+* Tue Aug 24 2021 Dmitry V. Levin <ldv@altlinux.org> 7.0.3-alt4
+- Added -ffat-lto-objects to %%optflags_lto.
+
 * Wed Dec 26 2018 Igor Vlasenko <viy@altlinux.ru> 7.0.3-alt3
 - NMU: reintroduced rl_tty_set_echoing (required by perl-Term-ReadLine-Gnu)
   patch from https://savannah.gnu.org/patch/?9649
