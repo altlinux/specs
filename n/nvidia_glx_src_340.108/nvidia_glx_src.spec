@@ -14,7 +14,7 @@
 %define nv_version 340
 %define nv_release 108
 %define nv_minor %nil
-%define pkg_rel alt171
+%define pkg_rel alt172
 %def_enable egl
 %def_enable kernelsource
 %def_disable package_wfb
@@ -95,7 +95,7 @@ Patch10: xf86-video-nvidia-legacy-0006-fix-5.10.patch
 Patch11: nvidia-340.108-fix-5.11-kernel-compile.patch
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: kernel-build-tools rpm-macros-alternatives
+BuildRequires: rpm-build-kernel rpm-macros-alternatives
 BuildRequires: libXext-devel
 ExclusiveArch: %ix86 x86_64
 #ExcludeArch: ppc64 x86_64 ppc s390 s390x ia64
@@ -328,6 +328,9 @@ fi
 %endif
 
 %changelog
+* Tue Aug 24 2021 Sergey V Turchin <zerg@altlinux.org> 340.108-alt172
+- fix build requries
+
 * Wed Mar 03 2021 Sergey V Turchin <zerg@altlinux.org> 340.108-alt171
 - add fix against 5.11 kernel
 
