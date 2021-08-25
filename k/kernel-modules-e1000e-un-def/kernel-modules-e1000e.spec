@@ -1,12 +1,13 @@
 %define module_name             e1000e
 %define module_version          3.8.7
-%define module_release          alt1
+%define module_release          alt2
 %define flavour                 un-def
 %define karch                   %ix86 x86_64
 
 %setup_kernel_module %flavour
 
-%define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
+%define module_dir /lib/modules/%kversion-%flavour-%krelease/updates
+%add_verify_elf_skiplist %module_dir/*
 
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
@@ -17,7 +18,6 @@ License: GPLv2
 Group: System/Kernel and hardware
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 URL: https://sourceforge.net/projects/e1000
-Patch: e1000e-rename.patch
 
 ExclusiveOS: Linux
 BuildRequires(pre): rpm-build-kernel
@@ -46,7 +46,6 @@ To learn more about Intel Ethernet visit http://communities.intel.com/community/
 rm -rf kernel-source-%module_name-%module_version
 tar xf %kernel_src/kernel-source-%module_name-%module_version.tar*
 %setup -D -T -n kernel-source-%module_name-%module_version
-%patch -p2
 
 %build
 cd src
@@ -57,13 +56,10 @@ cd src
 
 %install
 install -d %buildroot/%module_dir
-install -m644 -D src/%module_name.ko %buildroot/%module_dir/%{module_name}-ext.ko
-install -d %buildroot/etc/modprobe.d
-echo "blacklist e1000e" > %buildroot/etc/modprobe.d/blacklist-e1000e.conf
+install -m644 -D src/%module_name.ko %buildroot/%module_dir/%module_name.ko
 
 %files
 %module_dir/*
-/etc/modprobe.d/*
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
