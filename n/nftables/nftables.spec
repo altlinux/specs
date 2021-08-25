@@ -1,7 +1,7 @@
 Name:           nftables
 Epoch:          1
 Version:        1.0.0
-Release:        alt1
+Release:        alt2
 Summary:        nftables is the project that aims to replace the existing {ip,ip6,arp,eb}tables framework
 Group:          System/Libraries
 License:        GPL-2.0-only
@@ -58,6 +58,8 @@ sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
 ##
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 %autoreconf
 %configure --enable-debug \
 	   --enable-python \
@@ -107,6 +109,9 @@ install -pDm0644 nftables.service %buildroot%_unitdir/nftables.service
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Wed Aug 25 2021 Alexei Takaseev <taf@altlinux.org> 1:1.0.0-alt2
+- Added -ffat-lto-objects to %optflags_lto.
+
 * Fri Aug 20 2021 Alexei Takaseev <taf@altlinux.org> 1:1.0.0-alt1
 - Version 1.0.0
 
