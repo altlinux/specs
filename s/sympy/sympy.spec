@@ -3,12 +3,10 @@
 %def_without doc
 
 Name: sympy
-Version: 1.7.1
-Release: alt1
 Epoch: 1
-
+Version: 1.8
+Release: alt1
 Summary: A Python library for symbolic mathematics
-
 License: BSD-3-Clause
 Group: Sciences/Mathematics
 Url: https://sympy.org/
@@ -17,6 +15,7 @@ BuildArch: noarch
 
 # https://github.com/sympy/sympy.git
 Source: %name-%version.tar
+
 Patch1: %name-%version-alt-build.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
@@ -166,6 +165,9 @@ python3 bin/doctest -v ||:
 %endif
 
 %changelog
+* Wed Aug 25 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.8-alt1
+- Updated to upstream version 1.8.
+
 * Thu Jan 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.7.1-alt1
 - Updated to upstream version 1.7.1.
 
