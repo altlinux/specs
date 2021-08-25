@@ -5,7 +5,7 @@
 Name: libsodium
 Summary: A modern, portable, easy to use crypto library
 Version: 1.0.18
-Release: alt1
+Release: alt2
 License: ISC
 Group: System/Libraries
 Url: https://libsodium.org/
@@ -45,20 +45,17 @@ Group: Development/C
 %description devel
 %summary.
 
-%package devel-static
-Summary: Development files for libsodium
-Group: Development/C
-Requires: %name-devel
-
-%description devel-static
-%summary.
-
 %prep
 %setup
 
 %build
+# libsoidum uses asm() which is not supportable with LTO.
+# Adding -ffat-lto-objects is workaround to this problem:
+#   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=89147
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 %autoreconf
-%configure
+%configure --disable-static
 %make_build
 
 %install
@@ -74,13 +71,14 @@ Requires: %name-devel
 %_includedir/sodium.h
 %_includedir/sodium
 
-%files devel-static
-%_libdir/libsodium.a
-
 %files -n libsodium23
 %_libdir/libsodium.so.23*
 
 %changelog
+* Thu Aug 26 2021 Vitaly Chikunov <vt@altlinux.org> 1.0.18-alt2
+- Do not build libsodium-devel-static package.
+- spec: Fix build with LTO.
+
 * Tue May 25 2021 Vitaly Chikunov <vt@altlinux.org> 1.0.18-alt1
 - Update to 1.0.18 (2019-05-30).
 
