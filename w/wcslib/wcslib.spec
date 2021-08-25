@@ -4,7 +4,7 @@
 
 Name: wcslib
 Version: 5.19.1
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: An implementation of the FITS World Coordinate System standard
@@ -16,7 +16,6 @@ Source: %name-%version.tar
 # Automatically added by buildreq on Mon Nov 11 2013 (-bi)
 # optimized out: elfutils gnu-config pkg-config python-base python3 python3-base ruby ruby-stdlibs
 #BuildRequires: flex libcfitsio-devel rpm-build-python3 rpm-build-ruby
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: flex libcfitsio-devel zlib-devel
 
 %description
@@ -47,6 +46,8 @@ Utils provided with %name
 
 %prep
 %setup
+
+%autoreconf
 
 %build
 %add_optflags %optflags_shared
@@ -80,13 +81,16 @@ rm -rf %buildroot/%_docdir/wcslib-*
 %_man1dir/*
 
 %changelog
-* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 5.19.1-alt2
-- NMU: remove %ubt from release
+* Wed Aug 25 2021 Sergey V Turchin <zerg@altlinux.org> 5.19.1-alt3
+- fix to build
 
-* Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 5.19.1-alt1%ubt
+* Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 5.19.1-alt2
+- NMU: remove ubt macro from release
+
+* Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 5.19.1-alt1
 - new version
 
-* Fri Jul 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.18-alt1%ubt
+* Fri Jul 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.18-alt1
 - new version
 
 * Tue Mar 22 2016 Sergey V Turchin <zerg@altlinux.org> 5.14-alt1
