@@ -14,7 +14,7 @@
 
 Name: rpcs3
 Version: 0.0.17
-Release: alt3
+Release: alt4
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -113,6 +113,8 @@ echo "// This is a generated file.
 " > %name/git-version.h
 
 %build
+%remove_optflags %optflags_lto
+
 export CC="clang-%clang_version"
 export CXX="clang++-%clang_version"
 export LINKER="lld-%clang_version"
@@ -151,6 +153,9 @@ export RANLIB="llvm-ranlib-%clang_version"
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Wed Aug 25 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.17-alt4
+- Disable LTO
+
 * Thu Jul 08 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.17-alt3
 - Build with system wolfssl
 
