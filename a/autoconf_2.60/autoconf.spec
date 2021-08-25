@@ -4,7 +4,7 @@
 
 Name: %realname%dialect
 Version: 2.69
-Release: alt9
+Release: alt10
 Epoch: 2
 
 Summary: A GNU tool for automatically configuring source code
@@ -106,6 +106,11 @@ done
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Wed Aug 25 2021 Dmitry V. Levin <ldv@altlinux.org> 2:2.69-alt10
+- Reverted the change that introduced --runstatedir option.
+  It caused build regressions in a few packages,
+  let's delay that change till autoconf 2.7x update.
+
 * Mon Aug 23 2021 Dmitry V. Levin <ldv@altlinux.org> 2:2.69-alt9
 - AC_INIT: backported --runstatedir option to configure.
 - AC_LANG_FUNC_LINK_TRY_GCC_BUILTIN: defeated -flto optimization.

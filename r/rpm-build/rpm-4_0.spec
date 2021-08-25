@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt175
+Release: alt177
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -413,6 +413,12 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Wed Aug 25 2021 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt177
+- Reverted the change introduced in 4.0.4-alt174.
+
+* Wed Aug 25 2021 Alexey Shabalin <shaba@altlinux.org> 4.0.4-alt176
+- platform.in: Added more systemd macros.
+
 * Tue Aug 24 2021 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt175
 - platform.in: Parallelize LTO with -flto=auto.
 - process-lto: Fix suggestion text.

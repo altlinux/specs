@@ -1,11 +1,11 @@
 Name: flex
 Version: 2.6.4.0.88.9801
-Release: alt1
+Release: alt2
 
 Summary: A fast lexical analyzer generator
 License: BSD-3-Clause
 Group: Development/Other
-Url: http://flex.sourceforge.net/
+Url: https://github.com/westes/flex
 
 # git://git.altlinux.org/gears/f/%name.git
 Source: %name-%version-%release.tar
@@ -39,6 +39,7 @@ C mode.  The package flex-old provides the older behaviour.
 %setup -n %name-%version-%release
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %autoreconf
 %configure --disable-shared
 %make_build CFLAGS="$RPM_OPT_FLAGS -fPIC" dist_doc_DATA=
@@ -54,8 +55,9 @@ ln -s flex.1 %buildroot%_man1dir/flex++.1
 
 %find_lang %name
 
-%set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %check
 %make_build -k check dist_doc_DATA=
@@ -70,6 +72,9 @@ ln -s flex.1 %buildroot%_man1dir/flex++.1
 %_infodir/flex.info*
 
 %changelog
+* Wed Aug 25 2021 Dmitry V. Levin <ldv@altlinux.org> 2.6.4.0.88.9801-alt2
+- Added -ffat-lto-objects to %%optflags_lto.
+
 * Wed Jan 02 2019 Dmitry V. Levin <ldv@altlinux.org> 2.6.4.0.88.9801-alt1
 - v2.6.0-8-g9ba6e52 -> v2.6.4-88-g98018e3.
 - Reverted 2.5.37-alt2 (closes: #35141).
