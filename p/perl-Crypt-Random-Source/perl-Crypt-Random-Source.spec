@@ -16,7 +16,7 @@
 
 Name: perl-Crypt-Random-Source
 Version: 0.14
-Release: alt1
+Release: alt2
 
 Summary: Get weak or strong random data from pluggable sources
 
@@ -24,14 +24,12 @@ License: Artistic
 Group: Development/Perl
 Url: http://www.cpan.org
 
-Packager: Denis Baranov <baraka@altlinux.ru>
-
 BuildArch: noarch
 Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon May 02 2011 (-bi)
 # optimized out: perl-B-Hooks-EndOfScope perl-Data-OptList perl-Package-Stash perl-Params-Util perl-Sub-Exporter perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Sub-Uplevel perl-Variable-Magic perl-devel
-BuildRequires: perl-Any-Moose perl-Capture-Tiny perl-Module-Find perl-Mouse perl-Test-Exception perl-Test-use-ok perl-namespace-clean perl(Sub/Exporter.pm) perl(Module/Build.pm) perl(Class/Load.pm) perl(Class/Load.pm) perl(namespace/autoclean.pm) perl(Moo.pm) perl(Types/Standard.pm)
+BuildRequires: perl-Any-Moose perl-Capture-Tiny perl-Module-Find perl-Mouse perl-Test-Exception perl-Test-use-ok perl-namespace-clean perl(Sub/Exporter.pm) perl(Module/Build.pm) perl(Class/Load.pm) perl(Class/Load.pm) perl(namespace/autoclean.pm) perl(Moo.pm) perl(Types/Standard.pm) perl(Test/Fatal.pm)
 
 %description
 None.
@@ -50,6 +48,9 @@ None.
 %perl_vendor_privlib/Crypt/Random/Source.pm
 
 %changelog
+* Wed Aug 25 2021 Igor Vlasenko <viy@altlinux.org> 0.14-alt2
+- fixed build
+
 * Thu Apr 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - automated CPAN update
 
