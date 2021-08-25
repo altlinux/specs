@@ -1,3 +1,4 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %def_disable static
 %define origname xview
 %define rel %nil
@@ -5,7 +6,7 @@
 
 Name: lib%origname
 Version: 3.2p1.4
-Release: alt12
+Release: alt13
 
 Summary: XView libraries for X11
 License: Distributable
@@ -172,6 +173,9 @@ ln -sf libxview.so.3.2.4 %buildroot%_libdir/libxview.so
 %endif
 
 %changelog
+* Wed Aug 25 2021 Igor Vlasenko <viy@altlinux.org> 3.2p1.4-alt13
+- added optflags_lto -ffat-lto-objects
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 3.2p1.4-alt12
 - built with libtirc
 
