@@ -5,7 +5,7 @@
 
 Name: rpm-build-vm
 Version: 1.23
-Release: alt1
+Release: alt2
 
 Summary: RPM helper to run tests in virtualised environment
 License: GPL-2.0-only
@@ -104,6 +104,7 @@ Run checkinstall tests for vm-run.
 
 %ifarch %supported_arches
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 [ -x /usr/bin/musl-gcc ] && export CC=musl-gcc
 [ -x /usr/bin/klcc     ] && export CC=klcc
 CFLAGS="%optflags" make
@@ -189,6 +190,9 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Wed Aug 25 2021 Vitaly Chikunov <vt@altlinux.org> 1.23-alt2
+- Fix compiling with LTO.
+
 * Tue May 11 2021 Vitaly Chikunov <vt@altlinux.org> 1.23-alt1
 - Improve `--udevd' support of mount.
 
