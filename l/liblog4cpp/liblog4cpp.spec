@@ -1,12 +1,10 @@
 Name: liblog4cpp
 Version: 1.1.1
-Release: alt2
+Release: alt3
 Summary: Log for C++
 Group: Development/C++
 
-Packager: Alexei Takaseev <taf@altlinux.ru>
-
-License: LGPL
+License: LGPL-2.1
 Url: http://log4cpp.sourceforge.net/
 Source: %name-%version.tar
 
@@ -32,7 +30,7 @@ needed for development with %name.
 
 %build
 ./autogen.sh
-%configure 	--enable-doxygen
+%configure 	--enable-doxygen --disable-static
 
 %make_build
 
@@ -52,6 +50,10 @@ needed for development with %name.
 %_datadir/aclocal/*.m4
 
 %changelog
+* Wed Aug 25 2021 Alexei Takaseev <taf@altlinux.org> 1.1.1-alt3
+- Disable static
+- Fix License:
+
 * Wed Jun 03 2015 Alexei Takaseev <taf@altlinux.org> 1.1.1-alt2
 - rebuild with gcc-c++ 5.1
 
