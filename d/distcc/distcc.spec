@@ -2,7 +2,7 @@
 
 Name: distcc
 Version: 3.4
-Release: alt4
+Release: alt5
 
 Summary: distcc is a program to distribute builds C/C++/ Objective C/C++
 
@@ -83,11 +83,9 @@ touch %buildroot%_sysconfdir/buildreqs/packages/ignore.d/distcc
 rm -rf %buildroot/etc/default/
 rm -rf %buildroot/%_docdir/
 
-%post
-/usr/sbin/update-distcc-symlinks || :
-
 %preun
-find /usr/lib/distcc -type l -print0 | xargs -r -0 rm -f || :
+# 0 means "last" unininstall
+[ "$1" -ne 0 ] || find /usr/lib/distcc -type l -delete ||:
 
 %pre server
 %groupadd distccd || :
@@ -132,6 +130,10 @@ find /usr/lib/distcc -type l -print0 | xargs -r -0 rm -f || :
 %python3_sitelibdir/include_server*
 
 %changelog
+* Thu Aug 19 2021 Ivan A. Melnikov <iv@altlinux.org> 3.4-alt5
+- don't clean symlinks on upgrade;
+- update symlinks from filetrigger only.
+
 * Mon Jul 26 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.4-alt4
 - Avoid circular dependencies between distcc and distcc-server
 
