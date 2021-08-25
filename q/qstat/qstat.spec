@@ -1,21 +1,21 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qstat
-Version: 2.14
-Release: alt2.git.502167b
+Version: 2.16
+Release: alt1
 Summary: Game server browsing utility
-License: Artistic-1.0
+License: Artistic-2.0
 Group: Networking/Other
 URL: https://github.com/multiplay/qstat
 
 Source: %name-%version.tar
 
-%description 
+%description
 QStat is a command-line program that displays information about
 Internet game servers. The servers are either down, non-responsive,
 or running a game. For servers running a game, the server name, map
 name, current number of players, and response time are displayed.
-Server rules and player information may also be displayed.                                                                            
+Server rules and player information may also be displayed.
 Games supported include Quake, QuakeWorld, Hexen II, Quake II,
 HexenWorld, Unreal, Half-Life, Sin, Shogo, Tribes, Tribes 2,
 Quake III: Arena, BFRIS, Kingpin, and Heretic II, Unreal Tournament,
@@ -24,9 +24,10 @@ Descent 3, Drakan, KISS, Nerf Arena Blast, Rally Master,
 Terminous, Wheel of Time, and Daikatana.
 
 %prep
-%setup -q
+%setup
 
 %build
+export QSTAT_VERSION=v%version
 %autoreconf
 %configure --enable-dump
 
@@ -41,11 +42,14 @@ Terminous, Wheel of Time, and Daikatana.
 rm -f template/Makefile*
 
 %files
-%doc *.txt *.html *.cfg template
+%doc *.txt *.md *.html *.cfg template
 %config %_sysconfdir/qstat.cfg
 %_bindir/qstat
 
 %changelog
+* Wed Aug 25 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.16-alt1
+- Updated to upstream version 2.16.
+
 * Fri Dec 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.14-alt2.git.502167b
 - Updated to latest upstream commit.
 - Updated license.
