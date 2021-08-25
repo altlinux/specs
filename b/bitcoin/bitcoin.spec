@@ -1,6 +1,6 @@
 Name: bitcoin
 Version: 0.21.1
-Release: alt3
+Release: alt4
 
 Summary: peer-to-peer network based anonymous digital currency
 License: MIT
@@ -36,6 +36,8 @@ Before each transaction the coin's validity will be checked.
 %patch0 -p1
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 ./autogen.sh
 export OBJC=clang
 export OBJCXX=clang++
@@ -57,6 +59,9 @@ rm -f %_bindir/%name
 %doc doc/*
 
 %changelog
+* Wed Aug 25 2021 Alexei Takaseev <taf@altlinux.org> 0.21.1-alt4
+- Added -ffat-lto-objects to %optflags_lto.
+
 * Thu Aug 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.21.1-alt3
 - Rebuilt with boost-1.77.0.
 
