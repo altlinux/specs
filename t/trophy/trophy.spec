@@ -1,18 +1,19 @@
-Name: trophy
-Version: 2.0.3
-Release: alt2
+%define _unpackaged_files_terminate_build 1
 
+Name: trophy
+Version: 2.0.4
+Release: alt1
 Summary: Trophy is a 2D car racing action game
 License: GPLv2
 Group: Games/Sports
-
 Url: http://trophy.sourceforge.net/
-Source: http://downloads.sourceforge.net/trophy/trophy-%version.tar.gz
+
+# http://downloads.sourceforge.net/trophy/trophy-%version.tar.gz
+Source: %name-%version.tar
 Source2: trophy.16.png
 Source3: trophy.32.png
 Source4: trophy.48.png
 Source5: trophy.desktop
-Patch: trophy-1.1.6-asneeded.patch
 
 # Automatically added by buildreq on Fri Nov 26 2010
 BuildRequires: clanlib0.8-devel gcc-c++ libGLU-devel
@@ -37,7 +38,6 @@ Game data for Trophy car racing game.
 
 %prep
 %setup
-#%patch -p1
 
 %build
 %configure --bindir=%_gamesbindir --datadir=%_gamesdatadir
@@ -63,6 +63,9 @@ install -pD -m644 %SOURCE5 %buildroot%_desktopdir/trophy.desktop
 %_man6dir/*
 
 %changelog
+* Wed Aug 25 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.4-alt1
+- Updated to upstream version 2.0.4.
+
 * Wed Oct 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.3-alt2
 - Rebuilt with updated clanlib0.8.
 
