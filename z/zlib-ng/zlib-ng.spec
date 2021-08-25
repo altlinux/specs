@@ -1,6 +1,8 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 Name: zlib-ng
 Version: 2.0.5
-Release: alt1
+Release: alt1.1
 
 Summary: Zlib replacement with optimizations
 License: Zlib
@@ -43,6 +45,10 @@ developing application that use %name.
 %endif
 
 %build
+%ifarch %arm
+%remove_optflags %optflags_lto
+%endif
+
 %cmake -DCMAKE_SKIP_RPATH:BOOL=OFF
 %cmake_build
 
@@ -65,6 +71,9 @@ developing application that use %name.
 %_libdir/libz-ng.a
 
 %changelog
+* Wed Aug 25 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.5-alt1.1
+- Fix LTO
+
 * Sat Jun 26 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.5-alt1
 - Version 2.0.5
 
