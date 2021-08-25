@@ -1,10 +1,10 @@
 Name:		qnetstatview
-Version:	1.5.6
+Version:	1.5.7
 Release:	alt1
 Summary:	Shows detailed listings of all TCP and UDP endpoints
 Group:		Networking/Other
 License:	GPLv3+
-URL:		http://dansoft.krasnokamensk.ru/more.html?id=1016
+URL:		https://dansoft.ru/more.html?id=1016
 Source0:	%{name}-%{version}.tar
 
 BuildRequires:	qt5-tools
@@ -36,6 +36,11 @@ Shows detailed listings of all TCP and UDP endpoints.
 %{_datadir}/polkit-1/actions/org.pkexec.qnetstatview.policy
 
 %changelog
+* Wed Aug 25 2021 Alexander Danilov  <admsasha@altlinux.org> 1.5.7-alt1
+- add icons
+- add Ukrainian translation
+- change url homepage
+
 * Mon Feb 3 2020 Alexander Danilov  <admsasha@altlinux.org> 1.5.6-alt1
 - release 1.5.6
 
