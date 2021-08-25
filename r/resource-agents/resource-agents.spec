@@ -4,8 +4,8 @@
 
 Name: resource-agents
 Summary: Open Source HA Reusable Cluster Resource Scripts
-Version: 4.8.0
-Release: alt2
+Version: 4.9.0
+Release: alt1
 License: GPLv2+ and LGPLv2+
 Url: https://github.com/ClusterLabs/resource-agents
 Group: System/Base
@@ -122,7 +122,7 @@ BuildArch: noarch
 
 %description xen
 Manages Xen virtual machine instances by mapping cluster resource
-start and stop,  to Xen create and shutdown, respectively.
+start and stop, to Xen create and shutdown, respectively.
 
 %package lvm
 Group: System/Base
@@ -170,6 +170,7 @@ mkdir -p m4
 # Use python3 explicitly
 sed -i '1 i #!%__python3' heartbeat/ocf.py
 
+
 %build
 export PYTHON=%__python3
 %autoreconf
@@ -181,6 +182,7 @@ export PYTHON=%__python3
 
 %make_build
 
+
 %install
 %makeinstall_std
 
@@ -190,11 +192,16 @@ rm -rf %buildroot/usr/share/doc/resource-agents
 
 mkdir -p %buildroot%_var/run/resource-agents
 
+# Use drbd.sh and drbd.metadata from drbd-utils-rgmanager package:
+rm -f %buildroot%_datadir/cluster/drbd.*
+
+
 %preun -n ldirectord
 %preun_service ldirectord
 
 %post -n ldirectord
 %post_service ldirectord
+
 
 %files
 %doc AUTHORS COPYING COPYING.GPLv3 COPYING.LGPL ChangeLog doc/README.webapps heartbeat/README.galera
@@ -348,6 +355,10 @@ mkdir -p %buildroot%_var/run/resource-agents
 %_mandir/man8/ldirectord.8*
 
 %changelog
+* Sat Aug 21 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.9.0-alt1
+- 4.9.0
+- remove drbd.sh,drbd.metadata (closes: #40747)
+
 * Thu May 20 2021 Slava Aseev <ptrnine@altlinux.org> 4.8.0-alt2
 - fix FTBFS due to python.{req,prov}
 
