@@ -1,6 +1,6 @@
 Name: openhantek
 Version: 3.2.4
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: OpenHantek is a DSO software for Hantek (Voltcraft/Darkwire/Protek/Acetech) USB digital signal oscilloscopes
@@ -12,10 +12,9 @@ Url: http://openhantek.org/
 # Source-url: https://github.com/OpenHantek/OpenHantek6022/archive/%version.tar.gz
 Source: %name-%version.tar
 
-
 # Automatically added by buildreq on Thu Dec 28 2017
 # optimized out: cmake cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libEGL-devel libGL-devel libqt5-core libqt5-gui libqt5-opengl libqt5-printsupport libqt5-widgets libstdc++-devel lsb-release python-base python-modules python3 python3-base qt5-base-devel qt5-tools sssd-client
-BuildRequires: binutils-devel cmake doxygen libGLU-devel libfftw3-devel libssl-devel libusb-devel qt5-imageformats qt5-tools-devel
+BuildRequires: cmake doxygen libGLU-devel libfftw3-devel libssl-devel libusb-devel qt5-imageformats qt5-tools-devel
 
 Requires: xkeyboard-config
 
@@ -51,6 +50,9 @@ ln -s OpenHantek %buildroot%_bindir/%name
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Thu Aug 26 2021 Vitaly Lipatov <lav@altlinux.ru> 1:3.2.4-alt2
+- drop BR: binutils-devel
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1:3.2.4-alt1
 - new version 3.2.4 (with rpmrb script)
 
