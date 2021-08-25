@@ -2,7 +2,7 @@
 
 Name: xpa
 Version: 2.1.20
-Release: alt1
+Release: alt2
 Summary: The XPA Messaging System
 License: MIT
 Group: Development/Tools
@@ -16,6 +16,8 @@ Patch0: xpa-2.1.20-alt-makefile-path-fix.patch
 BuildPreReq: libX11-devel libgtk+2-devel libXt-devel tcl-devel
 
 Requires: lib%name = %EVR
+
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 %description
 The XPA messaging system provides seamless communication between many
@@ -145,6 +147,9 @@ rm -f doc/Makefile
 %doc doc/*
 
 %changelog
+* Wed Aug 25 2021 Egor Ignatov <egori@altlinux.org> 2.1.20-alt2
+- add -ffat-lto-objects to build static libs with -flto enabled
+
 * Tue Feb 16 2021 Egor Ignatov <egori@altlinux.org> 2.1.20-alt1
 - Version 2.1.20
 

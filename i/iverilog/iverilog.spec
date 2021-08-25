@@ -2,7 +2,7 @@
 
 Name: iverilog
 Version: 11.0
-Release: alt2
+Release: alt3
 Summary: Verilog simulation and synthesis tool
 
 Group: Engineering
@@ -34,6 +34,8 @@ versions of the standard, portions of SystemVerilog, and some extensions.
 # See developer-quick-start.txt
 %set_verify_elf_method unresolved=relaxed
 
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 %prep
 %setup
 
@@ -62,6 +64,9 @@ install -m644 examples/* %buildroot%_docdir/%name-%version/examples/
 %exclude %_docdir/%name-%version/mingw.txt
 
 %changelog
+* Wed Aug 25 2021 Egor Ignatov <egori@altlinux.org> 11.0-alt3
+- add -ffat-lto-objects to build static libs with -flto enabled
+
 * Thu Apr 29 2021 Egor Ignatov <egori@altlinux.org> 11.0-alt2
 - Add bzip2 and zlib build dependencies (Closes: #37929)
 
