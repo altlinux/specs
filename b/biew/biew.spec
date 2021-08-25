@@ -5,7 +5,7 @@
 
 Name: biew
 Version: 6.1.0
-Release: alt1
+Release: alt2
 Packager: Fr. Br. George <george@altlinux.ru>
 Summary: %name - console hex viewer/editor and disassembler
 License: GPL
@@ -13,7 +13,7 @@ Group: Development/Other
 URL: http://biew.sourceforge.net
 Source0: %name-%src_version-src.tar.bz2
 Patch: biew-5.6.2-alt-lvalue.patch.gz
-#ExclusiveArch: i586
+ExclusiveArch: i586 x86_64
 # Automatically added by buildreq on Sat Apr 11 2009
 BuildRequires: libgpm-devel
 
@@ -52,6 +52,9 @@ cp -a bin_rc/{xlt,skn,*.hlp} %buildroot/%_datadir/%name
 %_man1dir/*
 
 %changelog
+* Wed Aug 25 2021 Fr. Br. George <george@altlinux.ru> 6.1.0-alt2
+- Exclusive build (Closes: #40429)
+
 * Sat Feb 27 2010 Fr. Br. George <george@altlinux.ru> 6.1.0-alt1
 - Version up
 
