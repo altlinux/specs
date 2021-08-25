@@ -1,6 +1,6 @@
 Name:    msd_lite
 Version: 1.08
-Release: alt5
+Release: alt6
 License: BSD
 Group:	 Networking/Other
 URL: http://www.netlab.linkpc.net/wiki/ru:software:msd:lite
@@ -26,6 +26,7 @@ one HTTP connection to be given away to the set of connected clients.
 %setup
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -52,6 +53,9 @@ install -pDm0644 %name.service		%buildroot%_unitdir/%name.service
 %doc AUTHORS COPYING README
 
 %changelog
+* Wed Aug 25 2021 Alexei Takaseev <taf@altlinux.org> 1.08-alt6
+- Add %%autoreconf macro
+
 * Thu Dec 24 2020 Alexei Takaseev <taf@altlinux.org> 1.08-alt5
 - Fix build with glibc-2.32
 - Add BR: glibc-kernheaders-generic
