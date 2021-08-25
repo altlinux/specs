@@ -1,9 +1,9 @@
 Summary: Extracts information from java class files
 Name: jclassinfo
 Version: 0.19.1
-Release: alt5
+Release: alt6
 Packager: Igor Vlasenko <viy@altlinux.ru>
-License: GPL2
+License: GPLv2+
 URL: http://jclassinfo.sourceforge.net/
 Group: Development/Java
 
@@ -53,6 +53,7 @@ Documentation for libjclass. The documentation can either be viewed
 %autoreconf -fisv
 
 %configure \
+ --disable-static \
  --with-html-dir=%_datadir/doc/libjclass-docs-%version/html
 
 # regenerete gtk-doc (no need)
@@ -74,7 +75,7 @@ mkdir -p $RPM_BUILD_ROOT%_datadir/doc/libjclass-docs-%version/html
 %_libdir/jclass
 %_libdir/libjclass.so
 %_pkgconfigdir/jclass.pc
-%exclude %_libdir/libjclass.a
+#exclude %_libdir/libjclass.a
 
 %files -n libjclass-docs
 %doc %_datadir/doc/libjclass-docs-%version/html
@@ -91,6 +92,9 @@ mkdir -p $RPM_BUILD_ROOT%_datadir/doc/libjclass-docs-%version/html
 /usr/share/xml/jclassinfo
 
 %changelog
+* Wed Aug 25 2021 Igor Vlasenko <viy@altlinux.org> 0.19.1-alt6
+- fixed build
+
 * Sat Jun 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.19.1-alt5
 - fixed unpackaged files
 
