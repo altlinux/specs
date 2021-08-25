@@ -1,6 +1,6 @@
 Name: dosbox-staging
 Version: 0.77.0
-Release: alt1
+Release: alt2
 License: GPLv2
 Summary: An attempt to revitalize DOSBox, an emulator that recreates a MS-DOS compatible environment
 Group: Emulators
@@ -39,9 +39,10 @@ hardware.
 %setup
 %patch -p1
 sed -i 's/=dosbox$/=dosbox-staging/' contrib/linux/dosbox-staging.desktop
-%meson -Duse_pcap=true
+sed -i 's/>dosbox</>dosbox-staging</' contrib/linux/dosbox-staging.metainfo.xml
 
 %build
+%meson -Duse_pcap=true
 %meson_build
 
 %install
@@ -49,18 +50,24 @@ sed -i 's/=dosbox$/=dosbox-staging/' contrib/linux/dosbox-staging.desktop
 install -D contrib/icons/dosbox-staging.svg %buildroot%_iconsdir/hicolor/scalable/apps/dosbox-staging.svg
 install -D contrib/linux/dosbox-staging.desktop %buildroot/%_desktopdir/dosbox-staging.desktop
 mv %buildroot/%_bindir/dosbox %buildroot/%_bindir/%name
+mv %buildroot/%_man1dir/dosbox.1 %buildroot/%_man1dir/dosbox-staging.1
 
 %files
-%doc docs
-%doc %_defaultdocdir/%name
+%doc docs/*
+%doc ?[A-Z]*
 %_bindir/*
 %_man1dir/*
 %_iconsdir/hicolor/*/apps/*
 %_desktopdir/*
 %_datadir/metainfo/*
+%exclude %_defaultdocdir/%name
+%exclude %_datadir/licenses
 
 
 %changelog
+* Wed Aug 25 2021 Fr. Br. George <george@altlinux.ru> 0.77.0-alt2
+- Fix original DOSBox file conflicts
+
 * Sun Aug 22 2021 Fr. Br. George <george@altlinux.ru> 0.77.0-alt1
 - Autobuild version bump to 0.77.0
 - Enable NE2000 emulation
