@@ -4,7 +4,7 @@
 
 Name: libnftnl
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: Netfilter nf_tables infrastructure library
 License: GPL-2.0-only
@@ -49,6 +49,8 @@ The %name-examples package contains examples files for %name.
 %setup
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 %autoreconf
 %configure --with-xml-parsing --with-json-parsing --enable-static
 %make_build
@@ -83,6 +85,9 @@ cp -a examples/.libs/* %buildroot%_sbindir/
 %endif
 
 %changelog
+* Wed Aug 25 2021 Alexei Takaseev <taf@altlinux.org> 1.2.0-alt2
+- Added -ffat-lto-objects to %optflags_lto.
+
 * Thu May 27 2021 Alexei Takaseev <taf@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
