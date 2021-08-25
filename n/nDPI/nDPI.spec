@@ -1,13 +1,11 @@
 Name: nDPI
 Version: 2.2
-Release: alt1
+Release: alt2
 Summary: Open source deep packet inspection
 Group: System/Libraries
 
 Url: http://www.ntop.org/products/ndpi/
 License: LGPLv3
-
-Packager: Alexei Takaseev <taf@altlinux.ru>
 
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
@@ -77,6 +75,8 @@ Demo for nDPI
 %patch0 -p1
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 sh autogen.sh
 %configure --with-pic
 %make_build
@@ -100,6 +100,9 @@ rmdir %buildroot%_includedir/libndpi-%version.0
 %_bindir/ndpiReader
 
 %changelog
+* Wed Aug 25 2021 Alexei Takaseev <taf@altlinux.org> 2.2-alt2
+- Added -ffat-lto-objects to %optflags_lto.
+
 * Mon Dec 04 2017 Alexei Takaseev <taf@altlinux.org> 2.2-alt1
 - 2.2
 
