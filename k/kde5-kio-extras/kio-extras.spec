@@ -8,7 +8,7 @@
 %def_enable exiv2
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init altplace
 
@@ -96,8 +96,8 @@ KF5 library
 %install
 %K5install
 
-%K5install_move data kio_bookmarks kio_desktop kio_docfilter kio_info konqsidebartng konqueror remoteview
-%K5install_move data doc solid
+%K5install_move data kio_bookmarks kio_desktop kio_docfilter kio_info konqueror remoteview
+%K5install_move data doc solid dbus-1/services
 
 # workaround against man compressor
 rm -rf %buildroot/%_K5doc/*/kioslave5/man
@@ -107,19 +107,18 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %files common -f %name.lang
 %doc LICENSES/*
 %_datadir/qlogging-categories5/*.*categories
-%_K5xdgmime/*.xml
+#%_K5xdgmime/*.xml
 
 %files
 %_K5exec/smbnotifier
 %_K5plug/kf5/*/*.so
 %_K5plug/*.so
 %_K5data/kio_*/
-%_K5data/konqsidebartng
+#%_K5data/konqsidebartng
 %_K5data/konqueror
 %_K5data/remoteview
 %_K5srv/*.desktop
-#%_K5srv/kded/*.desktop
-%_K5srv/*.protocol
+#%_K5srv/*.protocol
 %_K5srvtyp/*.desktop
 %_K5data/solid/actions/*.desktop
 %_K5cfg/*.kcfg
@@ -132,17 +131,20 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 #%_K5link/lib*.so
 %_K5lib/cmake/Kio*/
 #%_K5archdata/mkspecs/modules/qt_KIO*.pri
-%_K5dbus_iface/*.xml
+#%_K5dbus_iface/*.xml
 
-%files -n %libmolletnetwork
-%_K5lib/libmolletnetwork5.so.*
-%_K5lib/libmolletnetwork5.so.%molletnetwork_sover
+#%files -n %libmolletnetwork
+#%_K5lib/libmolletnetwork5.so.*
+#%_K5lib/libmolletnetwork5.so.%molletnetwork_sover
 
 %files -n %libkioarchive
 %_K5lib/libkioarchive.so.*
 %_K5lib/libkioarchive.so.%kioarchive_sover
 
 %changelog
+* Mon Aug 23 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

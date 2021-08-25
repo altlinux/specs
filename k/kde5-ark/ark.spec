@@ -6,7 +6,7 @@
 %def_disable libzip
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init altplace
 
@@ -84,10 +84,9 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 
 %files
 %_K5bin/ark
-%_K5plug/arkpart.so
+%_K5plug/kf5/parts/arkpart.so
 %_K5plug/kf5/kio_dnd/extracthere.so
 %_K5plug/kf5/kfileitemaction/*.so
-#%_K5xmlgui/ark/
 %_K5xdgapp/*ark*.desktop
 %_K5srv/ark*.desktop
 %_K5cfg/*ark*.kcfg
@@ -108,6 +107,9 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 %_K5lib/libkerfuffle.so.*
 
 %changelog
+* Mon Aug 23 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define libkrdccore libkrdccore%sover
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init
 
@@ -71,7 +71,9 @@ KF5 library
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
+%_datadir/qlogging-categories5/*.*categories
+%_K5srvtyp/krdc_*.desktop
 
 %files
 %_K5bin/krdc
@@ -80,10 +82,7 @@ KF5 library
 %_K5xdgapp/org.kde.krdc.desktop
 %_K5cfg/krdc.kcfg
 %_K5srv/krdc_*.desktop
-%_K5srv/rdp.protocol
-%_K5srv/vnc.protocol
 %_K5srv/ServiceMenus/smb2rdc.desktop
-%_K5xmlgui/krdc/
 
 %files devel
 %_K5inc/krdccore_export.h
@@ -95,6 +94,9 @@ KF5 library
 %_K5lib/libkrdccore.so.*
 
 %changelog
+* Mon Aug 23 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

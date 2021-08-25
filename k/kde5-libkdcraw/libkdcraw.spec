@@ -1,8 +1,8 @@
 %define rname libkdcraw
 
 Name: kde5-%rname
-Version: 21.04.3
-Release: alt2
+Version: 21.08.0
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -72,6 +72,9 @@ KF5 library
 %_K5lib/libKF5KDcraw.so.*
 
 %changelog
+* Mon Aug 23 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Mon Aug 23 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt2
 - fix build requires
 

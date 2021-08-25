@@ -1,7 +1,7 @@
 %define rname kruler
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init altplace
 
@@ -45,6 +45,9 @@ BuildRequires: kf5-ki18n-devel kf5-knotifications-devel kf5-kwidgetsaddons-devel
 
 
 %changelog
+* Mon Aug 23 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

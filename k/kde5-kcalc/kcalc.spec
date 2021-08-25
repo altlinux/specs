@@ -1,7 +1,7 @@
 %define rname kcalc
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init altplace
 
@@ -63,14 +63,15 @@ KF5 library
 %files -f %name.lang
 %doc COPYING*
 %_K5bin/kcalc
-%_K5lib/libkdeinit5_kcalc.so
 %_K5data/kcalc/
 %_K5xdgapp/org.kde.kcalc.desktop
-%_K5xmlgui/kcalc/
 %_K5conf_up/kcalc*
 %_K5cfg/kcalc*
 
 %changelog
+* Mon Aug 23 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

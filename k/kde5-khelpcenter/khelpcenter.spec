@@ -1,7 +1,7 @@
 %define rname khelpcenter
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init altplace
 
@@ -19,8 +19,8 @@ Requires: libgrantlee_templates5
 
 Source: %rname-%version.tar
 
-Patch4: %rname-alt-contents-tree-synchronization.patch
-Patch5: %rname-alt-hide-links-on-contents-screen.patch
+Patch4: khelpcenter-alt-contents-tree-synchronization.patch
+Patch5: khelpcenter-alt-hide-links-on-contents-screen.patch
 
 # Automatically added by buildreq on Mon Apr 25 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils
@@ -40,7 +40,7 @@ KDE help center.
 %prep
 %setup -n %rname-%version
 #%patch4 -p2
-%patch5 -p2
+#%patch5 -p2
 
 %build
 %K5build \
@@ -55,18 +55,19 @@ KDE help center.
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5bin/*
 %_K5exec/*
-%_K5lib/libkdeinit5_*.so
 %_K5xdgapp/*
 %_K5cfg/*
 %_K5data/khelpcenter/
 %_K5srv/*
-%_K5xmlgui/*
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Mon Aug 23 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

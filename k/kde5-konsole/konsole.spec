@@ -11,10 +11,11 @@
 
 %define sover 21
 %define libkonsoleprivate libkonsoleprivate%sover
+%define libkonsoleapp libkonsoleapp%sover
 
 Name: kde5-%rname
-Version: 21.04.3
-Release: alt2
+Version: 21.08.0
+Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{?_enable_obsolete_kde4:appdata}%{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Terminals
@@ -81,10 +82,17 @@ developing applications that use %name.
 
 %package -n %libkonsoleprivate
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common = %version-%release
 %description -n %libkonsoleprivate
-KF5 library
+%name library
+
+%package -n %libkonsoleapp
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common = %version-%release
+%description -n %libkonsoleapp
+%name library
 
 %prep
 %setup -q -n %rname-%version
@@ -125,7 +133,6 @@ __EOF__
 #%attr(2711,root,utempter) %_K5bin/konsole
 %_K5bin/konsole
 %_K5bin/konsoleprofile
-%_K5lib/libkdeinit5_konsole.so
 %_K5plug/konsole*.so
 %_K5xdgapp/org.kde.konsole.desktop
 %if_enabled obsolete_kde4
@@ -155,7 +162,14 @@ __EOF__
 %_K5lib/libkonsoleprivate.so.*
 %_K5lib/libkonsoleprivate.so.%sover
 
+%files -n %libkonsoleapp
+%_K5lib/libkonsoleapp.so.*
+%_K5lib/libkonsoleapp.so.%sover
+
 %changelog
+* Mon Aug 23 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 22 2021 Oleg Solovyov <mcpain@altlinux.org> 21.04.3-alt2
 - fix empty profile when ran from desktop action
 

@@ -10,7 +10,7 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init
 
@@ -81,7 +81,7 @@ KF5 library
 %setup -n %rname-%version
 %patch2 -p1
 %patch3 -p1
-%patch4 -p2
+#%patch4 -p2
 
 %build
 %K5build \
@@ -114,7 +114,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %files
 #%config(noreplace) %_K5xdgconf/*
 %_K5bin/*
-%_K5lib/libkdeinit5_dolphin.so
+#%_K5lib/libkdeinit5_dolphin.so
 %_K5plug/*dolphin*.so
 %_K5plug/kf5/parts/*dolphin*.so
 %_K5xdgapp/*dolphin*.desktop
@@ -140,6 +140,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Mon Aug 23 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

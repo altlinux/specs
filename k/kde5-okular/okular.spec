@@ -14,7 +14,7 @@
 %define libokularcore libokular5core%sover
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{!?_enable_obsolete_kde4:no_appdata}
 
@@ -140,7 +140,7 @@ rm -f "$tmp_file"
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5srvtyp/*.desktop
 %_K5icon/hicolor/*/apps/okular.*
 %_datadir/qlogging-categories5/*.*categories
@@ -187,8 +187,7 @@ rm -f "$tmp_file"
 %_K5cfg/*okular*
 %_K5cfg/*settings*
 %if_enabled msits
-%_K5plug/kio_msits.so
-%_K5srv/ms-its.protocol
+%_K5plug/kf5/kio/kio_msits.so
 %endif
 %if_enabled obsolete_kde4
 %_datadir/metainfo/org.kde.okular-*.metainfo.xml
@@ -204,6 +203,9 @@ rm -f "$tmp_file"
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Mon Aug 23 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

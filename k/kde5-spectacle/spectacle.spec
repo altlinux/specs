@@ -5,7 +5,7 @@
 %define service_name app-org.kde.spectacle
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init altplace no_appdata
 
@@ -80,7 +80,8 @@ developing applications that use %name.
 %_K5notif/spectacle.notifyrc
 %_K5data/kglobalaccel/*spectacle*.desktop
 %_K5dbus_srv/org.kde.Spectacle.service
-%_K5conf_up/spectacle_shortcuts.upd
+%_K5conf_up/*.upd
+%_K5conf_up/*.py
 %_datadir/qlogging-categories5/*.*categories
 %_unitdir_user/%service_name.service
 
@@ -88,6 +89,9 @@ developing applications that use %name.
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Mon Aug 23 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

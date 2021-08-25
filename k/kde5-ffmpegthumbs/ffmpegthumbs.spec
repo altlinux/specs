@@ -1,7 +1,7 @@
 %define rname ffmpegthumbs
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init
 
@@ -37,13 +37,16 @@ Video thumbnail generator for KDE.
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_datadir/qlogging-categories5/*.*categories
 %_K5cfg/ffmpegthumb*.kcfg
 %_K5plug/ffmpegthumbs.so
 %_K5srv/ffmpegthumbs.desktop
 
 %changelog
+* Mon Aug 23 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

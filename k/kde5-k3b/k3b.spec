@@ -23,7 +23,7 @@
 
 %define rname k3b
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
@@ -142,15 +142,14 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 
 
 %files -f %name.lang
-%doc README.txt FAQ.txt PERMISSIONS.txt ChangeLog
+%doc LICENSES/* README.txt FAQ.txt PERMISSIONS.txt
 %_K5bin/%rname
-%_K5plug/%{rname}*.so
+%_K5plug/%{rname}/
 %_K5plug/kcm_%{rname}*.so
 %_K5xdgapp/org.kde.%rname.desktop
 %_K5data/solid/actions/%{rname}_*.desktop
 %_K5data/%rname/
 %_K5xdgmime/*%{rname}*.xml
-%_K5srv/%{rname}*.*
 %_K5srv/kcm_%{rname}*.*
 %_K5srv/ServiceMenus/%{rname}*.desktop
 %_K5srvtyp/%{rname}plugin.desktop
@@ -163,7 +162,6 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5plug/kf5/kio/videodvd.so
 %_K5data/konqsidebartng/virtual_folders/services/videodvd.desktop
 %_K5data/knsrcfiles/k3btheme.knsrc
-%_K5srv/videodvd.protocol
 # permhelper
 %_K5libexecdir/kauth/k3bhelper
 %_K5dbus_sys_srv/org.kde.k3b.service
@@ -183,6 +181,9 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5inc/k3b*.h
 
 %changelog
+* Mon Aug 23 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 
