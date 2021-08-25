@@ -1,10 +1,10 @@
 %def_disable snapshot
-%define ver_major 2.5
+%define ver_major 2.6
 %define xdg_name org.openshot.OpenShot
 
 Name: openshot
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Non Linear Video Editor using Python and MLT
 Group: Video
@@ -22,7 +22,7 @@ Source: %name-%version.tar.gz
 # blender > 2.80 doesn't support 32-bit
 ExcludeArch: i586 armh
 
-Requires: python3-module-%name >= 0.2.5
+Requires: python3-module-%name >= 0.2.6
 Requires: blender inkscape xdg-utils
 
 %add_typelib_req_skiplist typelib(Unity)
@@ -33,7 +33,6 @@ Requires: blender inkscape xdg-utils
 # drop obsolete QtWebkit deps
 %add_python3_req_skip QtWebKitWidgets
 
-%define __python %nil
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: python3-devel python3-module-setuptools python3-module-PyQt5
 
@@ -52,9 +51,6 @@ Xbox, and many more common formats.
 %install
 %python3_install --install-lib=%python3_sitelibdir
 
-#%find_lang --with-qt %name OpenShot
-#-f OpenShot.lang
-
 %files
 %_bindir/*
 %python3_sitelibdir/%{name}_qt/
@@ -68,6 +64,9 @@ Xbox, and many more common formats.
 
 
 %changelog
+* Wed Aug 25 2021 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
 * Fri Jul 02 2021 Yuri N. Sedunov <aris@altlinux.org> 2.5.2-alt2
 - removed QtWebKitWidgets dependency (ALT #40362)
 

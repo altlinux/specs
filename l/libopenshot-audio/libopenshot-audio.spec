@@ -1,14 +1,14 @@
 %define _name libopenshot
 %define ver_major 0.2
 %define api_ver 7
-%define libopenshot_ver 0.2.5
+%define libopenshot_ver 0.2.6
 
 # no tests
 %def_disable check
 
 Name: %_name-audio
-Version: %ver_major.0
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: OpenShot Audio Library
 Group: System/Libraries
@@ -19,8 +19,10 @@ Vcs: https://github.com/OpenShot/libopenshot-audio.git
 #Source: %url/%ver_major/%libopenshot_ver/+download/%name-%version.tar.gz
 Source: https://github.com/OpenShot/%name/archive/v%version/%name-%version.tar.gz
 
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++ zlib-devel libalsa-devel libfreetype-devel
+%define python_ver 3.0
+
+BuildRequires(pre): rpm-macros-cmake rpm-build-python3
+BuildRequires: cmake gcc-c++ python3 >= %python_ver zlib-devel libalsa-devel libfreetype-devel
 BuildRequires: libX11-devel libXrandr-devel libXext-devel libXinerama-devel libXcursor-devel
 %{?_enable_check:BuildRequires: ctest}
 
@@ -41,6 +43,7 @@ that are needed to write applications that use %name.
 %setup
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %cmake
 %cmake_build
 
@@ -48,20 +51,23 @@ that are needed to write applications that use %name.
 %cmake_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-make -C BUILD test
+%cmake_build -t test
 
 %files
-%_bindir/openshot-audio-test-sound
+%_bindir/openshot-audio-demo
 %_libdir/%name.so.*
-%_man1dir/openshot-audio-test-sound.1.*
+%_man1dir/openshot-audio-demo.1.*
 %doc AUTHORS README*
 
 %files devel
 %_includedir/%name/
 %_libdir/%name.so
+%_libdir/cmake/OpenShotAudio/
 
 %changelog
+* Wed Aug 25 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
+- 0.2.1
+
 * Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1.1
 - rebuild with new cmake macros
 
