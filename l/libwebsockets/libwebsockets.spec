@@ -1,6 +1,6 @@
 Name: libwebsockets
 Version: 4.2.0
-Release: alt2
+Release: alt3
 
 Summary: A lightweight C library for Websockets
 
@@ -16,10 +16,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/warmcat/libwebsockets/archive/v%version.tar.gz#/%name-%version.tar.gz
 Source: %name-%version.tar
-
-# Automatically added by buildreq on Tue Jun 29 2021
-# optimized out: cmake-modules libsasl2-3 libssl-devel libstdc++-devel pkg-config python-modules python2-base python3 python3-base python3-module-paste ruby ruby-stdlibs sh4
-BuildRequires: cmake cvs gcc-c++ gem-did-you-mean git-core libcap-devel libssl-devel-static openssl python3-dev python3-module-mpl_toolkits subversion valgrind
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -98,6 +94,9 @@ find %buildroot -name '*_static.pc' -exec rm -f {} ';'
 %_datadir/%name-test-server/
 
 %changelog
+* Wed Aug 25 2021 Vitaly Lipatov <lav@altlinux.ru> 4.2.0-alt3
+- drop BR thrown in 4.2.0-alt1
+
 * Wed Jul 07 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.2.0-alt2
 - Disabled -Werror for Elbrus
 
