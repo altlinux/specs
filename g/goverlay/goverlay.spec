@@ -1,5 +1,5 @@
 Name: goverlay
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: Graphical UI to help manage Linux overlays
@@ -50,6 +50,9 @@ help manage Linux overlays. Currently supported:
 %_man1dir/%name.1*
 
 %changelog
+* Fri Aug 27 2021 Ilya Mashkin <oddity@altlinux.ru> 0.6.2-alt1
+- 0.6.2
+
 * Sat Jul 31 2021 Ilya Mashkin <oddity@altlinux.ru> 0.6.1-alt1
 - 0.6.1
 
