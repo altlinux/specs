@@ -1,5 +1,5 @@
 Name: eepm
-Version: 3.10.2
+Version: 3.10.4
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -135,6 +135,18 @@ mkdir -p %buildroot/var/lib/eepm/
 %_bindir/yum
 
 %changelog
+* Thu Aug 26 2021 Vitaly Lipatov <lav@altlinux.ru> 3.10.4-alt1
+- epm-repolist: --quiet support
+- epm search-file: fix error introduced by the new repolist code, add --quiet support
+- epm-removerepo: fix after new repolist
+
+* Thu Aug 26 2021 Vitaly Lipatov <lav@altlinux.ru> 3.10.3-alt1
+- epm-autoremove: fix bug with next cycle in direct mode
+- epm-repolist: improve repolist
+- epm-removerepo: improve remove repo by mask
+- allow uninitialized sudo with password too (for interactive run)
+- epm-whatdepends: allow --short mode, disable verbose mode by default
+
 * Tue Aug 24 2021 Vitaly Lipatov <lav@altlinux.ru> 3.10.2-alt1
 - add epmwd alias for epm wd command
 - epm-autoorphans: add confirm step before removing
