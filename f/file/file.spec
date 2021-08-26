@@ -5,7 +5,7 @@
 
 Name: file
 Version: 5.40
-Release: alt2
+Release: alt3
 
 Summary: File type guesser
 License: BSD-2-Clause
@@ -13,8 +13,6 @@ Group: File tools
 Url: http://www.darwinsys.com/file/
 # Sources archive: ftp://ftp.astron.com/pub/file/
 Vcs: https://github.com/file/file
-
-%def_enable static
 
 Source: %name-%version.tar
 
@@ -46,15 +44,6 @@ Requires: libmagic = %EVR
 This package contains development files to build applications that handle
 magic files.
 
-%package -n libmagic-devel-static
-Summary: Static library to build statically linked applications that handle magic files
-Group: Development/C
-Requires: libmagic-devel = %EVR
-
-%description -n libmagic-devel-static
-This package contains static library to build statically linked
-applications that handle magic files.
-
 %prep
 %setup
 
@@ -63,7 +52,7 @@ applications that handle magic files.
 %configure \
 	--enable-fsect-man5 \
 	--disable-rpath \
-	%{subst_enable static}
+	--disable-static
 %make_build
 
 %install
@@ -114,12 +103,10 @@ make check
 %_pkgconfigdir/libmagic.pc
 %_man3dir/libmagic.3*
 
-%if_enabled static
-%files -n libmagic-devel-static
-%_libdir/*.a
-%endif
-
 %changelog
+* Thu Aug 26 2021 Vitaly Chikunov <vt@altlinux.org> 5.40-alt3
+- Do not build libmagic-devel-static package.
+
 * Fri Aug 13 2021 Vitaly Chikunov <vt@altlinux.org> 5.40-alt2
 - seccomp: Allow running compression helpers.
 
