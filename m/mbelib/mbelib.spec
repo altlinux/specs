@@ -1,6 +1,6 @@
 Name:     mbelib
 Version:  1.3.0
-Release:  alt3.1
+Release:  alt4
 
 Summary:  P25 Phase 1 and ProVoice vocoder
 License:  ISC
@@ -39,16 +39,21 @@ Development files for mbelib
 %install
 %cmakeinstall_std
 
+# remove unpackaged static libraries
+rm %buildroot%_libdir/*.a
+
 %files
 %doc README.md COPYRIGHT CHANGELOG
 %_libdir/libmbe.so.*
-%exclude %_libdir/libmbe.a
 
 %files devel
 %_includedir/mbelib.h
 %_libdir/libmbe.so
 
 %changelog
+* Thu Aug 26 2021 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt4
+- remove unpackaged static libraries
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt3.1
 - NMU: remove rpm-build-ubt from BR:
 
