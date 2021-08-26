@@ -1,6 +1,6 @@
 Name: lzo
 Version: 2.10
-Release: alt1
+Release: alt2
 
 Summary: Data compression library with very fast (de)compression
 License: GPL-2.0-or-later
@@ -8,6 +8,8 @@ Group: System/Libraries
 Url: https://www.oberhumer.com/opensource/lzo/
 # https://www.oberhumer.com/opensource/lzo/download/lzo-%version.tar.gz
 Source: %name-%version.tar
+
+%def_disable static
 
 %description
 LZO is a portable lossless data compression library written in ANSI C.
@@ -71,9 +73,10 @@ sed -i 's/\$host_cpu-\$ac_cv_sizeof_void_p/$target_cpu-$ac_cv_sizeof_void_p/' \
 	configure{.ac,}
 
 %build
+%{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 %add_optflags -fvisibility=hidden
 %define docdir %_docdir/liblzo2
-%configure --enable-shared --docdir=%docdir --disable-silent-rules
+%configure %{subst_enable static} --enable-shared --docdir=%docdir --disable-silent-rules
 printf '%s\n' \
 	'#undef __LZO_EXPORT1' \
 	'#define __LZO_EXPORT1 __attribute__((__visibility__("default")))' \
@@ -94,8 +97,9 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %check
 %make_build -k check
 
-%set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %files -n liblzo2
 /%_lib/liblzo2.so.2*
@@ -106,10 +110,15 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_libdir/liblzo2.so
 %_pkgconfigdir/lzo2.pc
 
+%if_enabled static
 %files -n liblzo2-devel-static
 %_libdir/liblzo2.a
+%endif #static
 
 %changelog
+* Thu Aug 26 2021 Dmitry V. Levin <ldv@altlinux.org> 2.10-alt2
+- Disabled build and packaging of the static library.
+
 * Sat Mar 16 2019 Dmitry V. Levin <ldv@altlinux.org> 2.10-alt1
 - 2.08 -> 2.10
 - Restricted the list of global symbols exported by the library.
