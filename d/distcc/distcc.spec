@@ -2,7 +2,7 @@
 
 Name: distcc
 Version: 3.4
-Release: alt5
+Release: alt6
 
 Summary: distcc is a program to distribute builds C/C++/ Objective C/C++
 
@@ -16,7 +16,7 @@ Source1: distccd.init
 Source2: distccd.conf
 Source3: distcc.filetrigger
 
-BuildRequires: glibc-devel-static binutils-devel
+BuildRequires: binutils-devel
 BuildRequires: libavahi-devel libpopt-devel
 BuildRequires: python3-devel
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
@@ -130,6 +130,9 @@ rm -rf %buildroot/%_docdir/
 %python3_sitelibdir/include_server*
 
 %changelog
+* Thu Aug 26 2021 Vitaly Lipatov <lav@altlinux.ru> 3.4-alt6
+- remove unused BR: glibc-devel-static
+
 * Thu Aug 19 2021 Ivan A. Melnikov <iv@altlinux.org> 3.4-alt5
 - don't clean symlinks on upgrade;
 - update symlinks from filetrigger only.
