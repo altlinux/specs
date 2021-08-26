@@ -2,11 +2,10 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_without docs
-%def_without static
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.9.0
-Release: alt0.3.20210801
+Release: alt0.4.20210826
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -91,14 +90,6 @@ Requires: %name = %EVR
 
 %description -n liblinuxcnc-devel
 Development files for %name
-
-%package -n liblinuxcnc-devel-static
-Summary: Static version of linuxcnc libraries
-Group: Development/C++
-Requires: %name-devel = %EVR
-
-%description -n liblinuxcnc-devel-static
-Static version of linuxcnc libraries
 
 %package -n lib%name
 Summary: Library for %name
@@ -223,6 +214,9 @@ pushd %buildroot%_mandir
 xz `find -name *.?`
 popd
 
+# remove unpackaged static libraries
+rm %buildroot%_libdir/*.a
+
 %find_lang %name gmoccapy --output=%name.lang
 
 %files -f %name.lang
@@ -256,16 +250,10 @@ popd
 
 %files -n lib%name
 %_libdir/*.so.*
-%exclude %_libdir/*.a
 
 %files -n lib%name-devel
 %_includedir/%name
 %_libdir/*.so
-
-%if_with static
-%files -n lib%name-devel-static
-%_libdir/*.a
-%endif
 
 %if_with docs
 %files doc
@@ -280,6 +268,11 @@ popd
 %endif
 
 %changelog
+* Thu Aug 26 2021 Anton Midyukov <antohami@altlinux.org> 2.9.0-alt0.4.20210826
+- new snapshot
+- remove unpackaged static libraries (fix build with LTO flag)
+- cleanup spec
+
 * Sun Aug 01 2021 Anton Midyukov <antohami@altlinux.org> 2.9.0-alt0.3.20210801
 - new snapshot
 
