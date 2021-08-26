@@ -1,10 +1,11 @@
 #%%set_automake_version 1.11
+%define optflags_lto %nil
 
 %define upstreamname lxappearance
-%define gtkver 2
+%define gtkver 3
 Name: lxde-%upstreamname
 Version: 0.6.3
-Release: alt1
+Release: alt3
 
 Summary: %name is desktop-independent theme swither for GTK+.
 License: GPL
@@ -63,6 +64,12 @@ mkdir -p %buildroot%_libdir/%upstreamname/plugins
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Aug 26 2021 Anton Midyukov <antohami@altlinux.org> 0.6.3-alt3
+- disable LTO flag
+
+* Fri Jan 17 2020 Anton Midyukov <antohami@altlinux.org> 0.6.3-alt2
+- rebuild with gtk3
+
 * Wed Feb 15 2017 Anton Midyukov <antohami@altlinux.org> 0.6.3-alt1
 - new version 0.6.3
 
