@@ -2,7 +2,7 @@
 %define gtkver 2
 Name: lxde-lxappearance-%upstreamname
 Version: 0.2.3
-Release: alt1
+Release: alt2
 
 Summary: %name is tool for configuring openbox within LXDE.
 License: GPL
@@ -25,10 +25,11 @@ This plugin allows to configure openbox.
 %build
 %autoreconf
 %if %gtkver==3
-    %configure --enable-gtk3
+    %configure --enable-gtk3 \
 %else
-    %configure
+    %configure \
 %endif
+	--disable-static
 #touch -r po/Makefile po/stamp-it
 %make_build
 
@@ -39,11 +40,12 @@ This plugin allows to configure openbox.
 %files -f lxappearance-%upstreamname.lang
 %doc CHANGELOG README
 %_libdir/lxappearance/plugins/%upstreamname.so
-%exclude %_libdir/lxappearance/plugins/%upstreamname.a
-%exclude %_libdir/lxappearance/plugins/%upstreamname.la
 %_datadir/lxappearance/%upstreamname
 
 %changelog
+* Thu Aug 26 2021 Anton Midyukov <antohami@altlinux.org> 0.2.3-alt2
+- disable building static libraries
+
 * Tue May 17 2016 2016 Anton Midyukov <antohami@altlinux.org> 0.2.3-alt1
 - New version.
 
