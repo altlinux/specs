@@ -3,8 +3,8 @@
 %def_disable check
 
 Name: python3-module-tqdm
-Version: 4.62.0
-Release: alt2
+Version: 4.62.1
+Release: alt1
 
 Summary: A fast, extensible progress bar for Python and CLI
 
@@ -54,6 +54,9 @@ py.test3
 %python3_sitelibdir/*
 
 %changelog
+* Thu Aug 26 2021 Vitaly Lipatov <lav@altlinux.ru> 4.62.1-alt1
+- new version 4.62.1 (with rpmrb script)
+
 * Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 4.62.0-alt2
 - make dask, rich module requirement optional
 
