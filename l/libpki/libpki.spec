@@ -1,6 +1,6 @@
 Name: libpki
 Version: 0.8.9
-Release: alt4.git20180603
+Release: alt5.git20180603
 
 Summary: Library for PKI enabled application development.
 License: %asl
@@ -44,21 +44,13 @@ Requires: %name = %version-%release
 This package contains the header files and development libraries needed
 to develop programs that use the PKI library.
 
-%package devel-static
-Summary: The PKI static library
-Group: Development/C
-Requires: %name-devel = %version-%release
-
-%description devel-static
-This package contains the PKI static library.
-
 %prep
 %setup -n %name-%version
 %patch0 -p1
 
 %build
 %autoreconf
-%configure
+%configure --disable-static
 %make
 
 %install
@@ -85,10 +77,10 @@ rm -fr %buildroot%_includedir/%name/drivers/kmf
 %_libdir/*.so
 %_includedir/*
 
-%files devel-static
-%_libdir/*.a
-
 %changelog
+* Thu Aug 26 2021 Vladimir Didenko <cow@altlinux.ru> 0.8.9-alt5.git20180603
+- Don't build static library
+
 * Fri Nov 8 2019 Vladimir Didenko <cow@altlinux.ru> 0.8.9-alt4.git20180603
 - Fix build deps
 
