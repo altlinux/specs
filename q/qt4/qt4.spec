@@ -8,7 +8,7 @@
 
 %define my_gcc_ver 5
 %qIF_ver_gteq %ubt_id M90
-%define my_gcc_ver 0
+%define my_gcc_ver %nil
 %endif
 
 %define binutils_ver %{get_version binutils}
@@ -42,7 +42,7 @@
 %define minor	8
 %define bugfix	7
 %define beta	%nil
-%define rlz alt23
+%define rlz alt24
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -169,7 +169,7 @@ Patch9106: 9107-qt-webkit-fix_graphicscontextqt.patch
 # Automatically added by buildreq on Thu Apr 07 2011 (-bi)
 # optimized out: alternatives elfutils fontconfig fontconfig-devel glib2-devel gstreamer-devel libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXcursor-devel libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libXv-devel libatk-devel libcairo-devel libcom_err-devel libdbus-devel libfreetype-devel libgdk-pixbuf-devel libgio-devel libgst-plugins libkrb5-devel libpango-devel libpng-devel libpq-devel libqt4-devel libqt4-sql-sqlite libssl-devel libstdc++-devel libtiff-devel libunixODBC-devel libxml2-devel pkg-config python-base ruby xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: firebird-devel gcc-c++ glibc-devel-static gst-plugins-devel libalsa-devel libcups-devel libfreetds-devel libgtk+2-devel libjpeg-devel libmng-devel libmysqlclient-devel libpulseaudio-devel libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 libsqlite-devel libsqlite3-devel makedepend phonon-devel postgresql-devel rpm-build-ruby
-%if "%my_gcc_ver" == "0"
+%if "%my_gcc_ver" == "%nil"
 BuildRequires: gcc-c++
 %else
 %set_gcc_version %my_gcc_ver
@@ -192,7 +192,7 @@ BuildRequires: libGLES-devel
 BuildRequires: libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libXv-devel
 BuildRequires: xorg-proto-devel libXtst-devel
 %{?_enable_sql_tds:BuildRequires: libfreetds-devel}
-%{?_enable_sql_pgsql:BuildRequires: postgresql-devel postgresql-devel-static}
+%{?_enable_sql_pgsql:BuildRequires: postgresql-devel}
 %{?_enable_sql_ibase:BuildRequires: firebird-devel}
 %{?_enable_gtkstyle:BuildRequires: libgtk+2-devel}
 %{?_enable_glib:BuildRequires: glib2-devel}
@@ -797,6 +797,7 @@ sed -i "s|^CFG_DEBUG=.*|CFG_DEBUG=no|" ./configure
 sed -i /meego/d src/plugins/graphicssystems/graphicssystems.pro
 
 %build
+%define optflags_lto %nil
 %add_optflags -std=gnu++98 -Wno-deprecated -DOPENSSL_LOAD_CONF -DOPENSSL_NO_SSL2
 # install %%optflags
 subst "s|^\s*QMAKE_CFLAGS\s*=.*$|QMAKE_CFLAGS = %optflags -DGLX_GLXEXT_LEGACY|" mkspecs/*/qmake.conf
@@ -1488,6 +1489,10 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Thu Aug 26 2021 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt24
+- update build requires
+- disable LTO by default
+
 * Mon Jun 21 2021 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt23
 - build in bootstrap mode to relax requires
 
