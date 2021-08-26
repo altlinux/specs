@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: libpopt
-Version: 1.16
+Version: 1.18
 Release: alt1
 Epoch: 1
 
@@ -12,20 +14,19 @@ Url: http://www.rpm5.org/
 
 Source: popt.tar
 
-Patch1: popt-1.16-alt-automake.patch
-Patch2: popt-1.16-alt-alloc-checks.patch
-Patch3: popt-1.16-alt-context-checks.patch
-Patch4: popt-1.14-alt-man.patch
-Patch5: popt-1.14-alt-poptBadOption.patch
-Patch6: popt-1.16-alt-vers.patch
-Patch7: popt-1.16-alt-secure_getenv.patch
-Patch8: popt-1.16-alt-automake-tests.patch
-Patch9: popt-1.16-pkgconfig.patch
+Patch1: popt-1.18-alt-alloc-checks.patch
+Patch2: popt-1.18-alt-context-checks.patch
+Patch3: popt-1.14-alt-man.patch
+Patch4: popt-1.18-alt-poptBadOption.patch
+Patch5: popt-1.16-alt-vers.patch
+Patch6: popt-1.18-alt-doxygen-src-path.patch
 
 Provides: popt = %version-%release
 Obsoletes: popt
 
 %{?_with_apidocs:BuildPreReq: doxygen graphviz fonts-ttf-dejavu}
+
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 # Automatically added by buildreq on Thu May 01 2003
 BuildRequires: glibc-devel-static
@@ -35,7 +36,7 @@ Summary: Developement environment for the popt library
 Group: Development/C
 Provides: popt-devel = %version-%release
 Obsoletes: popt-devel
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 Requires: glibc-devel
 
 %package devel-static
@@ -43,13 +44,13 @@ Summary: Static popt library
 Group: Development/C
 Provides: popt-devel-static = %version-%release
 Obsoletes: popt-devel-static
-Requires: %name-devel = %epoch:%version-%release
+Requires: %name-devel = %EVR
 
 %package doc
 Summary: Development documentation for libpopt
 Group: Development/C
 BuildArch: noarch
-Requires: %name-devel = %epoch:%version-%release
+Requires: %name-devel = %EVR
 
 %description
 Popt is a C library for parsing command line parameters.  Popt was
@@ -74,15 +75,12 @@ This package contains developement documentation for libpopt.
 
 %prep
 %setup -n popt
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%patch1 -p2
+%patch2 -p2
+%patch3 -p2
 %patch4 -p2
 %patch5 -p2
 %patch6 -p2
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
 
 %build
 %add_optflags -DHAVE_MCHECK_H
@@ -91,7 +89,6 @@ autoreconf -fisv -I m4
 %configure --disable-rpath %{subst_with apidocs}
 
 %make_build
-./testit.sh
 
 %{?_with_apidocs:make doxygen}
 
@@ -110,11 +107,13 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %{?_with_apidocs:install -pm644 doxygen/man/man3/{popt.h,poptAlias,poptArg_u,poptContext_s,poptDone_s,poptItem_s,poptOption}.3 %buildroot%_man3dir/}
 %define docdir %_docdir/popt-%version
 mkdir -p %buildroot%docdir
-install -pm644 README CHANGES *.ps %buildroot%docdir/
-xz -9 %buildroot%docdir/*.ps
+install -pm644 README CHANGES popt.pdf %buildroot%docdir/
 %{?_with_apidocs:cp -a doxygen/html %buildroot%docdir/}
 
 %find_lang popt
+
+%check
+%make_build check
 
 %files -f popt.lang
 /%_lib/*.so.*
@@ -134,9 +133,24 @@ xz -9 %buildroot%docdir/*.ps
 %files doc
 %dir %docdir
 %{?_with_apidocs:%docdir/html}
-%docdir/*.ps.xz
+%docdir/popt.pdf
 
 %changelog
+* Mon Aug 23 2021 Egor Ignatov <egori@altlinux.org> 1:1.18-alt1
+- 1.18
+- enable tests
+- convert old postscript documentation to pdf
+- add -ffat-lto-objects to build static libs with -flto enabled
+- update poptBadOption patch
+- rediff alloc-checks patch
+- rediff context-checks patch
+- rediff vers patch
+- drop automake-tests patch (obsolete)
+- drop automake patch (obsolete)
+- drop secure_getenv patch (merged)
+- drop pkgconfig patch (merged)
+- add doxygen-src-path patch
+
 * Tue Jun 20 2017 Anton Farygin <rider@altlinux.ru> 1:1.16-alt1
 - 1.16 (closes: 32186).
 
