@@ -1,13 +1,13 @@
 Name: ncurses
 Version: 6.2.20210123
-Release: alt1
+Release: alt2
 
 %define rootdatadir /lib
 
 Summary: A CRT screen handling and optimization package
 License: MIT
 Group: System/Base
-Url: http://invisible-island.net/%name/%name.html
+Url: https://invisible-island.net/ncurses/
 
 # ftp://invisible-island.net/%name/%name-%version.tar.gz
 Source: %name-%version.tgz
@@ -307,6 +307,7 @@ s/TINFO_LIST="$SHLIB_LIST"/TINFO_LIST=/' ./configure
 xz -9k NEWS
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %remove_optflags %optflags_notraceback %optflags_nocpp
 %ifarch %ix86
 %add_optflags -momit-leaf-frame-pointer
@@ -528,6 +529,9 @@ done < %SOURCE101 | sort -u > base.list
 find %buildroot%_datadir/terminfo -type f -mindepth 2 |
 	sed "s|%buildroot||g" > extra.list
 
+# Remove /usr/lib/terminfo if any.
+rm -f %buildroot/usr/lib/terminfo
+
 # Prepare docs.
 rm -rf %buildroot%_docdir/%name-%version
 mkdir -p %buildroot%_docdir/%name-%version
@@ -546,6 +550,10 @@ for i in ncurses ncursesw; do
 	GROUP(%_libdir/lib$i.so.5 -ltinfo)
 	EOF
 done
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %files
 # ncurses is a pure virtual package.
@@ -592,6 +600,7 @@ done
 %files -n termutils
 /bin/tput
 %_bindir/clear
+%_bindir/infocmp
 %_bindir/reset*
 %_bindir/toe
 %_bindir/tput
@@ -599,6 +608,7 @@ done
 %_bindir/tabs
 %_man7dir/*
 %_man1dir/clear.*
+%_man1dir/infocmp.*
 %_man1dir/reset.*
 %_man1dir/toe.*
 %_man1dir/tput.*
@@ -606,10 +616,12 @@ done
 %_man1dir/tabs.*
 
 %files -n termutils-devel
-%_bindir/*info*
+%_bindir/captoinfo
+%_bindir/infotocap
 #_bindir/tack
 %_bindir/tic
-%_man1dir/*info*
+%_man1dir/captoinfo.*
+%_man1dir/infotocap.*
 #_man1dir/tack.*
 %_man1dir/tic.*
 
@@ -680,6 +692,10 @@ done
 %endif # with_utf8
 
 %changelog
+* Thu Aug 26 2021 Dmitry V. Levin <ldv@altlinux.org> 6.2.20210123-alt2
+- Moved infocmp from termutils-devel to termutils (closes: #40808).
+- Added -ffat-lto-objects to %%optflags_lto.
+
 * Thu Jan 28 2021 Fr. Br. George <george@altlinux.ru> 6.2.20210123-alt1
 - Autobuild version bump to 6.2.20210123
 - Add screen kcbt (shift+tab) field
