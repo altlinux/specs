@@ -4,7 +4,7 @@
 
 Name: ltp
 Version: 20210524
-Release: alt3
+Release: alt4
 
 Summary: Linux Test Project
 License: GPL-2.0-only
@@ -71,6 +71,12 @@ This testsuite is maintained by the IBM Real-Time team.
 %prep
 %setup
 
+# /usr/include/sys/wait.h:88:16: error: variable 'wait' redeclared as function
+#    88 | extern __pid_t wait (int *__stat_loc);
+# nptl01.c:58:17: note: previously declared here
+#    58 | pthread_mutex_t wait;
+# lto1: fatal error: errors during merging of translation units
+%define optflags_lto %nil
 # From LTP's travis.
 %add_optflags -Werror=implicit-function-declaration -fno-common
 # Just reduce amount of warnings for too old code.
@@ -134,6 +140,9 @@ fi
 /usr/lib/realtime_testsuite
 
 %changelog
+* Thu Aug 26 2021 Vitaly Chikunov <vt@altlinux.org> 20210524-alt4
+- spec: Disable build with LTO.
+
 * Fri Jul 23 2021 Vitaly Chikunov <vt@altlinux.org> 20210524-alt3
 - Move ALT specific lists into ltp-alt-lists.
 
