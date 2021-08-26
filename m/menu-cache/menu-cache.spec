@@ -3,7 +3,7 @@
 
 Name: menu-cache
 Version: 1.1.0
-Release: alt2
+Release: alt3
 
 Summary: Library and utils to speed up the manipulation for freedesktop.org menu
 License: LGPLv2+ and GPLv2+
@@ -70,6 +70,9 @@ This package contains development headers for libmenu-cache.
 %makeinstall_std
 %find_lang %name
 
+# remove unpackaged static libraries
+rm %buildroot/%_libdir/*.a
+
 %files -f %name.lang
 %doc ChangeLog README
 %_libexecdir/%name
@@ -81,9 +84,11 @@ This package contains development headers for libmenu-cache.
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 %_includedir/%name
-%exclude %_libdir/*.a
 
 %changelog
+* Thu Aug 26 2021 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt3
+- remove unpackaged static libraries
+
 * Thu Dec 10 2020 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt2
 - Fix compilation with gcc10 -fno-common
 
