@@ -1,7 +1,7 @@
 %define _sover 4.7
 Name: libdb%_sover
 Version: %_sover.25
-Release: alt11
+Release: alt12
 %define srcname db-%version
 
 Summary: Berkeley database library
@@ -49,6 +49,7 @@ Conflicts: glibc <= 6:2.1.3
 #endif
 %def_disable posixmutexes
 %def_disable rpc
+%def_disable static
 %def_disable tcl
 %def_disable test
 %def_disable uimutexes
@@ -323,6 +324,7 @@ This package contains documentation for developers.
 %patch104 -p1
 
 %build
+%{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 %add_optflags -fno-strict-aliasing%{?_enable_rpc: -I/usr/include/tirpc}
 %define _configure_script ../dist/configure
 export ac_cv_prog_STRIP=:
@@ -339,6 +341,7 @@ pushd build_unix
 		%{subst_enable java} \
 		%{subst_enable posixmutexes} \
 		%{subst_enable rpc} \
+		%{subst_enable static} \
 		%{subst_enable tcl} \
 		%{subst_enable test} \
 		%{subst_enable uimutexes} \
@@ -382,6 +385,7 @@ pushd %buildroot
 	done
 	ln -s ../../%_lib/%_libdb_so .%_libdir/
 
+%if_enabled static
 	# Correct static libraries.
 	pushd .%_libdir
 	for f in libdb*.a; do
@@ -390,6 +394,7 @@ pushd %buildroot
 	done
 	popd
 	rm .%_libdir/libdb_int-*.a
+%endif
 
 %if_enabled tcl
 	mv .%_libdir/libdb_tcl* .%_tcllibdir/
@@ -410,10 +415,10 @@ mv %buildroot%_libdir/*.jar %buildroot%_datadir/java/
 
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 for n in db%_sover-utils \
-	 %name{,-devel{,-static}} \
-	 %{name}_cxx{,-devel{,-static}} \
-	 %{?_enable_tcl:%{name}_tcl{,-devel{,-static}}} \
-	 %{?_enable_java:%{name}_java{,-devel{,-static}}} \
+	 %name{,-devel%{?_enable_static:{,-static}}} \
+	 %{name}_cxx{,-devel%{?_enable_static:{,-static}}} \
+	 %{?_enable_tcl:%{name}_tcl{,-devel%{?_enable_static:{,-static}}}} \
+	 %{?_enable_java:%{name}_java{,-devel%{?_enable_static:{,-static}}}} \
 	 ; do
 	echo "${n/%_sover/4}" >"%buildroot%_sysconfdir/buildreqs/packages/substitute.d/$n"
 done
@@ -439,11 +444,13 @@ done
 %_libdir/*_cxx.so
 %_libdir/*_cxx-[0-9].so
 %_includedir/*/*cxx*
+%endif #cxx
 
+%if %{enabled cxx} && %{enabled static}
 %files -n %{name}_cxx-devel-static
 %config %_sysconfdir/buildreqs/packages/substitute.d/%{name}_cxx-devel-static
 %_libdir/*_cxx*.a
-%endif #cxx
+%endif #cxx && static
 
 %if_enabled tcl
 %files -n %{name}_tcl
@@ -455,11 +462,13 @@ done
 %config %_sysconfdir/buildreqs/packages/substitute.d/%{name}_tcl-devel
 %_tcllibdir/*_tcl.so
 %_tcllibdir/*_tcl-[0-9].so
+%endif #tcl
 
+%if %{enabled tcl} && %{enabled static}
 %files -n %{name}_tcl-devel-static
 %config %_sysconfdir/buildreqs/packages/substitute.d/%{name}_tcl-devel-static
 %_tcllibdir/*_tcl*.a
-%endif #tcl
+%endif #tcl && static
 
 %if_enabled java
 %files -n %{name}_java
@@ -472,11 +481,13 @@ done
 %_libdir/*_java.so
 %_libdir/*_java-[0-9].so
 %_libdir/*_java-[0-9].[0-9]_g.so
+%endif #java
 
+%if %{enabled java} && %{enabled static}
 %files -n %{name}_java-devel-static
 %config %_sysconfdir/buildreqs/packages/substitute.d/%{name}_java-devel-static
 %_libdir/*_java*.a
-%endif #java
+%endif #java && static
 
 %files -n db%_sover-utils
 %config %_sysconfdir/buildreqs/packages/substitute.d/db%_sover-utils
@@ -503,12 +514,17 @@ done
 %_libdir/*_int.so
 %_libdir/*_int-[0-9].so
 
+%if_enabled static
 %files devel-static
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name-devel-static
 %_libdir/libdb.a
 %_libdir/libdb-[0-9]*.a
+%endif #static
 
 %changelog
+* Wed Aug 25 2021 Dmitry V. Levin <ldv@altlinux.org> 4.7.25-alt12
+- Disabled build and packaging of static libraries.
+
 * Mon Jul 19 2021 Dmitry V. Levin <ldv@altlinux.org> 4.7.25-alt11
 - Enabled debuginfo for utils subpackage.
 
