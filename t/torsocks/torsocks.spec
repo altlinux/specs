@@ -1,6 +1,6 @@
 Name: torsocks
 Version: 2.3.0
-Release: alt1
+Release: alt2
 
 Summary: Use SOCKS-friendly applications with Tor
 Group: Security/Networking
@@ -26,7 +26,7 @@ rejects UDP traffic from the application you are using.
 
 %build
 %autoreconf
-%configure
+%configure --disable-static
 %make_build
 
 %install
@@ -47,14 +47,15 @@ install -p -m755 %SOURCE2 %buildroot%_bindir/torify
 # torsocks requires this file so it has not been placed in -devel subpackage
 %{_libdir}/%name/lib%name.so
 %{_libdir}/%name/lib%name.so.0*
-%exclude %{_libdir}/%name/lib%name.a
 %exclude %{_libdir}/%name/lib%name.la
-%{_libdir}/%name/lib%name.so.0*
 %config(noreplace) %{_sysconfdir}/bash_completion.d/%name
 %config(noreplace) %{_sysconfdir}/tor/%name.conf
 %exclude %_datadir/doc/%name
 
 %changelog
+* Thu Aug 26 2021 Vladimir Didenko <cow@altlinux.org> 2.3.0-alt2
+- don't build static libraries
+
 * Fri Nov 23 2018 Vladimir Didenko <cow@altlinux.org> 2.3.0-alt1
 - new version
 
