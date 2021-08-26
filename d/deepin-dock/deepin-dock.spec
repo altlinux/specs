@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-dock
-Version: 5.4.28
+Version: 5.4.39
 Release: alt1
 Summary: Deepin desktop-environment - Dock module
 License: GPL-3.0+
@@ -89,6 +89,9 @@ export AR="llvm-ar"
 %_datadir/%repo/
 %_datadir/polkit-1/actions/com.deepin.dde.dock.overlay.policy
 %_datadir/glib-2.0/schemas/com.deepin.dde.dock.module.gschema.xml
+%dir %_sysconfdir/%repo/
+%dir %_sysconfdir/%repo/indicator/
+%_sysconfdir/%repo/indicator/keybord_layout.json
 
 %files devel
 %doc plugins/plugin-guide
@@ -97,6 +100,9 @@ export AR="llvm-ar"
 %_libdir/cmake/DdeDock/DdeDockConfig.cmake
 
 %changelog
+* Fri Aug 20 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.39-alt1
+- New version (5.4.39).
+
 * Wed Jul 14 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.28-alt1
 - New version (5.4.28).
 

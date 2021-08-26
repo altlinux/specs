@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-polkit-agent
-Version: 5.4.7
+Version: 5.4.12
 Release: alt1
 Summary: Deepin Polkit Agent
 License: GPL-3.0+
@@ -67,6 +67,9 @@ sed -i '/setCancel/d' policykitlistener.cpp
 %_includedir/dpa/agent-extension.h
 
 %changelog
+* Fri Aug 20 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.12-alt1
+- New version (5.4.12).
+
 * Thu Jul 01 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.7-alt1
 - New version (5.4.7).
 

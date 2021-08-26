@@ -2,7 +2,7 @@
 %def_disable cmake
 
 Name: deepin-screen-recorder
-Version: 5.9.10
+Version: 5.10.2
 Release: alt1
 Summary: Default screen recorder application for Deepin
 License: GPL-3.0+
@@ -109,6 +109,9 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/deepin-manual/manual-assets/application/%name/screen-capture/
 
 %changelog
+* Fri Aug 20 2021 Leontiy Volodin <lvol@altlinux.org> 5.10.2-alt1
+- New version (5.10.2).
+
 * Wed Jul 14 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.10-alt1
 - New version (5.9.10).
 

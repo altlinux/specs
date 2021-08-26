@@ -1,8 +1,8 @@
 %define repo dde-launcher
 
 Name: deepin-launcher
-Version: 5.4.11
-Release: alt2
+Version: 5.4.37
+Release: alt1
 Summary: Deepin desktop-environment - Launcher module
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -66,6 +66,9 @@ sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
 %_includedir/%repo/
 
 %changelog
+* Fri Aug 20 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.37-alt1
+- New version (5.4.37).
+
 * Thu Jul 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.11-alt2
 - Fixed build with libgmock.so.1.11.0.
 

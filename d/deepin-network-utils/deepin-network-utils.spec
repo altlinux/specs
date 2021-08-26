@@ -1,7 +1,7 @@
 %global repo dde-network-utils
 
 Name: deepin-network-utils
-Version: 5.4.9
+Version: 5.4.12
 Release: alt1
 Summary: Deepin desktop-environment - network utils
 License: GPL-3.0-or-later
@@ -62,6 +62,9 @@ sed -i 's|/lib$|/%_lib|' dde-network-utils/dde-network-utils.pro
 %_libdir/lib%{repo}.so
 
 %changelog
+* Fri Aug 20 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.12-alt1
+- New version (5.4.12).
+
 * Thu Jul 01 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.9-alt1
 - New version (5.4.9).
 

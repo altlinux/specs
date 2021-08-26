@@ -1,6 +1,6 @@
 Name: deepin-desktop-schemas
-Version: 5.9.16
-Release: alt2
+Version: 5.9.18
+Release: alt1
 Summary: GSettings deepin desktop-wide schemas
 License: GPL-3.0
 Group: Graphical desktop/Other
@@ -17,12 +17,12 @@ BuildRequires: python3
 BuildRequires: glib2
 BuildRequires: libgio
 BuildRequires: golang-deepin-go-lib-devel
-# Requires: dconf deepin-gtk-theme deepin-icon-theme deepin-sound-theme
-Requires: dconf
+# Requires: deepin-sound-theme
 Requires: gnome-backgrounds
 Requires: icon-theme-deepin
 Requires: gtk-theme-deepin
-# Requires: gsettings-desktop-schemas deepin-daemon
+Requires(post): dconf gsettings-desktop-schemas
+Requires(postun): dconf gsettings-desktop-schemas
 
 %description
 %summary.
@@ -51,13 +51,30 @@ cp -a \
     %buildroot%_datadir/deepin-desktop-schemas/server-override \
     %buildroot%_datadir/glib-2.0/schemas/91_deepin_product.gschema.override
 
+# force change the value of the "Lock screen after" variable
+mkdir -p %buildroot%_sysconfdir/dconf/profile
+
+cat > %buildroot%_sysconfdir/dconf/profile/user <<EOF
+user-db:user
+system-db:local
+EOF
+
+mkdir -p %buildroot%_sysconfdir/dconf/db/local.d
+
+cat > %buildroot%_sysconfdir/dconf/db/local.d/01-deepin-disable-timeout-lockscreen <<EOF
+[com/deepin/dde/power]
+line-power-lock-delay=0
+battery-lock-delay=0
+EOF
+
 %check
 make test
 
-# %%post
-# force change the value of the "Lock screen after" variable
-# gsettings set com.deepin.dde.power line-power-lock-delay 0
-# gsettings set com.deepin.dde.power battery-lock-delay 0
+%post
+dconf update
+
+%postun
+dconf update
 
 %files
 %doc README.md
@@ -66,8 +83,13 @@ make test
 %_datadir/%name/
 %exclude %_datadir/deepin-app-store/
 %exclude %_datadir/deepin-appstore/
+%_sysconfdir/dconf/profile/user
+%_sysconfdir/dconf/db/local.d/01-deepin-disable-timeout-lockscreen
 
 %changelog
+* Fri Aug 20 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.18-alt1
+- New version (5.9.18).
+
 * Fri Jul 30 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.16-alt2
 - Fixed broken lockscreen after 15 minutes.
 
