@@ -1,6 +1,6 @@
 Name: PySolFC
 Version: 2.12.0
-Release: alt2
+Release: alt3
 
 Summary: A collection of solitare card games
 
@@ -21,11 +21,14 @@ BuildRequires(pre): rpm-build-python3
 
 BuildArch: noarch
 
-# we will use kivy
+# we will use tk
 %add_python3_req_skip gtk
 
 # never use jnius
 %add_python3_req_skip jnius_never_use
+
+# python3-module-six have no requirements to support six.moves.tkinter (https://bugzilla.altlinux.org/40809)
+Requires: python3-modules-tkinter
 
 %description
 %name is a collection of more than 1000 solitaire card games. It is a fork
@@ -65,8 +68,12 @@ install -m755 %SOURCE2 %buildroot/%_bindir/pysol
 
 %find_lang pysol
 
-# we will use kivy
-rm -rf %buildroot%python3_sitelibdir/pysollib/pysolgtk
+# we will use tk
+rm -rv %buildroot%python3_sitelibdir/pysollib/pysolgtk
+rm -rv %buildroot%python3_sitelibdir/pysollib/kivy
+
+# drop shell script with extra deps
+rm -v %buildroot%_datadir/PySolFC/themes/clearlooks/convert_imgs.sh
 
 %files -f pysol.lang
 %doc AUTHORS.md README.md PKG-INFO
@@ -82,6 +89,9 @@ rm -rf %buildroot%python3_sitelibdir/pysollib/pysolgtk
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Thu Aug 26 2021 Vitaly Lipatov <lav@altlinux.ru> 2.12.0-alt3
+- NUM: use tk interface really (kivy for tablets only) (ALT bug 40809)
+
 * Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 2.12.0-alt2
 - NMU: ignore pyjnius (used as sign we are running on Android)
 - drop old python2 patches
