@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat
@@ -38,8 +39,8 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-11-openjdk
-%define version 11.0.9.11
-%define release 0.3.ea
+%define version 11.0.12.0.7
+%define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
 # http://rpm.org/user_doc/conditional_builds.html
@@ -200,8 +201,7 @@ BuildRequires: /proc rpm-build-java
 %global debug_targets images static-libs-image
 
 # Disable LTO as this causes build failures at the moment.
-# See RHBZ#1861401
-%define _lto_cflags %{nil}
+%define optflags_lto %nil
 
 # Filter out flags from the optflags macro that cause problems with the OpenJDK build
 # We filter out -O flags so that the optimization of HotSpot is not lowered from O3 to O2
@@ -264,8 +264,6 @@ BuildRequires: /proc rpm-build-java
 %global archinstall %{_arch}
 %endif
 
-
-
 %ifarch %{systemtap_arches}
 %global with_systemtap 1
 %else
@@ -278,7 +276,7 @@ BuildRequires: /proc rpm-build-java
 # Used via new version scheme. JDK 11 was
 # GA'ed in September 2018 => 18.9
 %global vendor_version_string 18.9
-%global securityver 9
+%global securityver 12
 # buildjdkver is usually same as %%{majorver},
 # but in time of bootstrap of next jdk, it is majorver-1, 
 # and this it is better to change it here, on single place
@@ -293,15 +291,15 @@ BuildRequires: /proc rpm-build-java
 %endif
 
 # Define IcedTea version used for SystemTap tapsets and desktop file
-%global icedteaver      3.15.0
+%global icedteaver      6.0.0pre00-c848b93a8598
 
 # Standard JPackage naming and versioning defines
 %global origin          openjdk
 %global origin_nice     OpenJDK
 %global top_level_dir_name   %{origin}
 %global minorver        0
-%global buildver        11
-%global rpmrelease      3
+%global buildver        7
+%global rpmrelease      2
 #%%global tagsuffix      ""
 # priority must be 8 digits in total; untill openjdk 1.8 we were using 18..... so when moving to 11 we had to add another digit
 %if %is_system_jdk
@@ -373,10 +371,7 @@ BuildRequires: /proc rpm-build-java
 %global __requires_exclude_from ^.*/%{uniquesuffix -- %{debug_suffix_unquoted}}/.*$
 %else
 # Don't generate provides/requires for JDK provided shared libraries at all.
-
-
 %endif
-
 
 %global etcjavasubdir     %{_sysconfdir}/java/java-%{javaver}-%{origin}
 %define etcjavadir()      %{expand:%{etcjavasubdir}/%{uniquesuffix}}
@@ -406,46 +401,12 @@ BuildRequires: /proc rpm-build-java
 # not-duplicated scriptlets for normal/debug packages
 %global update_desktop_icons /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# not-duplicated requires/provides/obsoletes for normal/debug packages
-
-
-
-
-
-
-
-
 # Prevent brp-java-repack-jars from being run
 %global __jar_repack 0
 
 Name:    java-%{javaver}-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt2_0.3.eajpp10
+Release: alt1_0jpp10
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -479,7 +440,7 @@ URL:      http://openjdk.java.net/
 
 # to regenerate source0 (jdk) run update_package.sh
 # update_package.sh contains hard-coded repos, revisions, tags, and projects to regenerate the source archives
-Source0: jdk-updates-jdk%{majorver}u-jdk-%{newjavaver}+%{buildver}%{?tagsuffix:-%{tagsuffix}}-4curve.tar.xz
+Source0: jdk-updates-jdk%{majorver}u-jdk-%{newjavaver}+%{buildver}%{?tagsuffix:-%{tagsuffix}}-4curve-clean.tar.xz
 
 # Use 'icedtea_sync.sh' to update the following
 # They are based on code contained in the IcedTea project (3.x).
@@ -543,22 +504,8 @@ Patch4: pr3694-rh1340845-support_fedora_rhel_system_crypto_policy.patch
 Patch6:    rh1566890-CVE_2018_3639-speculative_store_bypass.patch
 # PR3695: Allow use of system crypto policy to be disabled by the user
 Patch7: pr3695-toggle_system_crypto_policy.patch
-
-#############################################
-#
-# Patches appearing in 11.0.10
-#
-# This section includes patches which are present
-# in the listed OpenJDK 11u release and should be
-# able to be removed once that release is out
-# and used by this RPM.
-#############################################
-# JDK-8222286: S390 ambiguous log2_intptr call
-Patch8: s390-8214206_fix.patch
-# JDK-8254177: (tz) Upgrade time-zone data to tzdata2020b
-Patch9: jdk8254177-tzdata2020b.patch
-# JDK-8250861: Crash in MinINode::Ideal(PhaseGVN*, bool)
-Patch10: jdk8250861-crash_in_MinINode_Ideal.patch
+# JDK-8269668, RH1977671: [aarch64] java.library.path not including /usr/lib64
+Patch8: jdk8269668-rh1977671-aarch64_lib_path_fix.patch
 
 BuildRequires: autoconf
 BuildRequires: automake
@@ -714,7 +661,6 @@ The %{origin_nice} runtime environment %{majorver} without audio and video suppo
 Group: Development/Java
 Summary: %{origin_nice} Runtime Environment %{debug_on}
 
-
 %description headless-slowdebug
 The %{origin_nice} runtime environment %{majorver} without audio and video support.
 %{debug_warning}
@@ -752,7 +698,6 @@ The %{origin_nice} development tools %{majorver}.
 Group: Development/Java
 Summary: %{origin_nice} Development Environment %{majorver} %{debug_on}
 
-
 %description devel-slowdebug
 The %{origin_nice} development tools %{majorver}.
 %{debug_warning}
@@ -773,7 +718,6 @@ The %{origin_nice} libraries for static linking %{majorver}.
 %package static-libs-slowdebug
 Group: Development/Java
 Summary: %{origin_nice} libraries for static linking %{majorver} %{debug_on}
-
 
 %description static-libs-slowdebug
 The %{origin_nice} libraries for static linking %{majorver}.
@@ -804,7 +748,6 @@ The JMods for %{origin_nice}.
 Group: Development/Java
 Summary: JMods for %{origin_nice} %{majorver} %{debug_on}
 
-
 %description jmods-slowdebug
 The JMods for %{origin_nice} %{majorver}.
 %{debug_warning}
@@ -833,7 +776,6 @@ The %{origin_nice} demos %{majorver}.
 %package demo-slowdebug
 Group: Development/Java
 Summary: %{origin_nice} Demos %{majorver} %{debug_on}
-
 
 %description demo-slowdebug
 The %{origin_nice} demos %{majorver}.
@@ -864,7 +806,6 @@ class library source code for use by IDE indexers and debuggers.
 %package src-slowdebug
 Group: Development/Java
 Summary: %{origin_nice} Source Bundle %{majorver} %{for_debug}
-
 
 %description src-slowdebug
 The java-%{origin}-src-slowdebug sub-package contains the complete %{origin_nice} %{majorver}
@@ -948,12 +889,10 @@ pushd %{top_level_dir_name}
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
+#patch4 -p1
 %patch6 -p1
-%patch7 -p1
+#patch7 -p1
 %patch8 -p1
-%patch9 -p1
-%patch10 -p1
 popd # openjdk
 
 %patch1000
@@ -964,7 +903,6 @@ tar --strip-components=1 -x -I xz -f %{SOURCE8}
 %if %{include_debug_build}
 cp -r tapset tapset%{debug_suffix}
 %endif
-
 
 for suffix in %{build_loop} ; do
   for file in "tapset"$suffix/*.in; do
@@ -1004,7 +942,6 @@ done
 # Setup nss.cfg
 sed -e "s:@NSS_LIBDIR@:%{NSS_LIBDIR}:g" %{SOURCE11} > nss.cfg
 %patch33 -p0
-
 
 %build
 # How many CPU's do we have?
@@ -1061,7 +998,6 @@ bash ../configure \
     --with-version-pre="%{ea_designator}" \
     --with-version-opt=%{lts_designator} \
     --with-version-patch=1 \
-    --with-version-date="2020-11-04" \
     --with-vendor-version-string="%{vendor_version_string}" \
     --with-vendor-name="Red Hat, Inc." \
     --with-vendor-url="https://www.redhat.com/" \
@@ -1125,7 +1061,6 @@ ln -s %{_datadir}/javazi-1.8/tzdb.dat $JAVA_HOME/lib/tzdb.dat
 done
 
 %check
-
 # We test debug first as it will give better diagnostics on a crash
 for suffix in %{rev_build_loop} ; do
 
@@ -1275,7 +1210,6 @@ pushd %{buildoutputdir}/images/%{jdkimage}
     ln -sf %{sdkdir} %{jrelnk}
   popd
 
-
   # Install man pages
   install -d -m 755 $RPM_BUILD_ROOT%{_mandir}/man1
   for manpage in man/man1/*
@@ -1295,13 +1229,12 @@ mkdir -p $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/lib/static/linux-%{archinstall}/gli
 cp -a %{buildoutputdir}/images/%{static_libs_image}/lib/*.a \
   $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/lib/static/linux-%{archinstall}/glibc
 
-
 if ! echo $suffix | grep -q "debug" ; then
   # Install Javadoc documentation
   install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}
   cp -a %{buildoutputdir}/images/docs $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}
   #cp -a %{buildoutputdir}/bundles/jdk-%{newjavaver}%{ea_designator_zip}+%{buildver}%{lts_designator_zip}-docs.zip $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}.zip
-  cp -a %{buildoutputdir}/bundles/jdk-11.0.9.1+1%{lts_designator_zip}-docs.zip $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}.zip
+  cp -a %{buildoutputdir}/bundles/jdk-11.0.12.1+1%{lts_designator_zip}-docs.zip $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}.zip
 fi
 
 # Install release notes
@@ -1356,7 +1289,6 @@ do
     mkdir -p %buildroot`dirname "$rpm404_ghost"`
     touch %buildroot"$rpm404_ghost"
 done
-
 
 %if %{include_normal_build}
 # intentionally only for non-debug
@@ -1483,7 +1415,6 @@ cat <<EOF >>%buildroot%_altdir/%name-java-headless
 EOF
 # ----- end: JPackage compatibility alternatives ------
 
-
 # Javac alternative
 cat <<EOF >%buildroot%_altdir/%name-javac
 %_bindir/javac	%{_jvmdir}/%{sdkdir}/bin/javac	%priority
@@ -1529,8 +1460,6 @@ done
 ##################################################
 # - END alt linux specific, shared with openjdk -#
 ##################################################
-
-
 echo "install passed past alt linux specific."
 
 %post headless
@@ -1560,7 +1489,6 @@ fi
 %files
 # placeholder
 %endif
-
 
 %if %{include_normal_build}
 %files headless
@@ -1632,6 +1560,8 @@ fi
 %{_jvmdir}/%{sdkdir}/lib/libunpack.so
 %{_jvmdir}/%{sdkdir}/lib/libverify.so
 %{_jvmdir}/%{sdkdir}/lib/libzip.so
+%{_jvmdir}/%{sdkdir}/lib/libharfbuzz.so
+%{_jvmdir}/%{sdkdir}/lib/libsunec.so
 %dir %{_jvmdir}/%{sdkdir}/lib/jfr
 %{_jvmdir}/%{sdkdir}/lib/jfr/default.jfc
 %{_jvmdir}/%{sdkdir}/lib/jfr/profile.jfc
@@ -1854,8 +1784,81 @@ fi
 %files src-slowdebug
 %endif
 
-
 %changelog
+* Wed Aug 25 2021 Andrey Cherepanov <cas@altlinux.org> 0:11.0.12.7-alt1_0jpp10
+- new version
+- security fixes:
+  + CVE-2021-2341: Improve file transfers
+  + CVE-2021-2369: Better jar file validation
+  + CVE-2021-2388: Enhance compiler validation
+  + CVE-2021-2161: Less ambiguous processing
+  + CVE-2021-2163: Enhance opening JARs
+  + CVE-2020-14779: Enhance support of Proxy class
+  + CVE-2020-14781: Enhanced LDAP contexts
+  + CVE-2020-14782: Enhance certificate processing
+  + CVE-2020-14792: Better range handling
+  + CVE-2020-14796: Improved URI Support
+  + CVE-2020-14797: Better Path Validation
+  + CVE-2020-14798: Enhanced buffer support
+  + CVE-2020-14803: Improved Buffer supports
+  + CVE-2020-14562: Enhance TIFF support
+  + CVE-2020-14573: Enhance Graal interface handling
+  + CVE-2020-14556: Better ForkJoinPool behavior
+  + CVE-2020-14577: Enhance certificate verification
+  + CVE-2020-14581: Better matrix operations
+  + CVE-2020-14583: Better Buffer support
+  + CVE-2020-14593: Less Affine Transformations
+  + CVE-2020-14621: Better XML namespace handling
+  + CVE-2020-2754: Forward references to Nashorn
+  + CVE-2020-2755: Improve Nashorn matching
+  + CVE-2020-2756: Better mapping of serial ENUMs
+  + CVE-2020-2757: Less Blocking Array Queues
+  + CVE-2020-2773: Better signatures in XML
+  + CVE-2020-2778: More constrained algorithms
+  + CVE-2020-2767: Improve TLS verification
+  + CVE-2020-2781: Improve TLS session handling
+  + CVE-2020-2800: Better Headings for HTTP Servers
+  + CVE-2020-2803: Enhance buffering of byte buffers
+  + CVE-2020-2805: Enhance typing of methods
+  + CVE-2020-2816: Enhance TLS connectivity
+  + CVE-2020-2830: Better Scanner conversions
+  + CVE-2020-2583: Unlink Set of LinkedHashSets
+  + CVE-2020-2590: Improve Kerberos interop capabilities
+  + CVE-2020-2593: Normalize normalization for all
+  + CVE-2020-2601: Better Ticket Granting Services
+  + CVE-2020-2604: Better serial filter handling
+  + CVE-2020-2655: Better TLS messaging support
+  + CVE-2020-2654: Improve Object Identifier Processing
+  + CVE-2019-2933: Windows file handling redux
+  + CVE-2019-2945: Better socket support
+  + CVE-2019-2949: Better Kerberos ccache handling
+  + CVE-2019-2958: Build Better Processes
+  + CVE-2019-2964: Better support for patterns
+  + CVE-2019-2962: Better Glyph Images
+  + CVE-2019-2973: Better pattern compilation
+  + CVE-2019-2975: Unexpected exception in jjs
+  + CVE-2019-2978: Improved handling of jar files
+  + CVE-2019-2977: Improve String index handling
+  + CVE-2019-2981: Better Path supports
+  + CVE-2019-2983: Better serial attributes
+  + CVE-2019-2987: Better rendering of native glyphs
+  + CVE-2019-2988: Better Graphics2D drawing
+  + CVE-2019-2989: Improve TLS connection support
+  + CVE-2019-2992: Enhance font glyph mapping
+  + CVE-2019-2999: Commentary on Javadoc comments
+  + CVE-2019-2894: Enhance ECDSA operations
+  + CVE-2019-2762: Exceptional throw cases
+  + CVE-2019-2766: Improve file protocol handling
+  + CVE-2019-2769: Better copies of CopiesList
+  + CVE-2019-2786: More limited privilege usage
+  + CVE-2019-7317: Improve PNG support options
+  + CVE-2019-2818: Better Poly1305 support
+  + CVE-2019-2816: Normalize normalization
+  + CVE-2019-2821: Improve TLS negotiation
+  + CVE-2019-2602: Better String parsing
+  + CVE-2019-2684: More dynamic RMI interactions
+  + CVE-2019-2698: Fuzzing TrueType fonts: setCurrGlyphID()
+
 * Thu Dec 31 2020 Igor Vlasenko <viy@altlinux.ru> 0:11.0.9.11-alt2_0.3.eajpp10
 - added alternatives for keytool, policytool, etc
 
