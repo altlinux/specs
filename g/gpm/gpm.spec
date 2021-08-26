@@ -1,6 +1,6 @@
 Name: gpm
 Version: 1.20.1
-Release: alt18.2
+Release: alt19
 
 Summary: A mouse server for the Linux console
 License: GPLv2+
@@ -159,9 +159,6 @@ bzip2 -9 Changelog ||:
 %_libdir/*.so
 %_includedir/*
 
-%files -n lib%name-devel-static
-%_libdir/*.a
-
 %files
 %_initdir/gpm
 %_unitdir/gpm.service
@@ -181,6 +178,9 @@ bzip2 -9 Changelog ||:
 %_man1dir/gpm-root.1*
 
 %changelog
+* Fri Aug 27 2021 Dmitry V. Levin <ldv@altlinux.org> 1.20.1-alt19
+- Disabled build and packaging of the static library.
+
 * Wed Apr 07 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.20.1-alt18.2
 - build with gcc10 hackarounded
 
@@ -357,7 +357,7 @@ bzip2 -9 Changelog ||:
 - Fix typo in gpm.init (#59).
 - Fix building as user.
 
-* Sun Aug  9 1999 Bernhard Rosenkraenzer <bero@linux-mandrake.com>
+* Mon Aug  9 1999 Bernhard Rosenkraenzer <bero@linux-mandrake.com>
 - 1.17.9
 
 * Wed Jul 07 1999 Axalon Bloodstone <axalon@linux-mandrake.com>
