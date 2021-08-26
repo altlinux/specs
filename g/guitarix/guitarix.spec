@@ -1,9 +1,11 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
+%define optflags_lto %nil
+
 Name: guitarix
 Version: 0.42.1
-Release: alt1
+Release: alt2
 Summary: Mono amplifier to JACK
 Group: Sound
 License: GPL-2.0-or-later
@@ -167,6 +169,9 @@ install -p -m644 %SOURCE1 %buildroot%_datadir/metainfo
 %_libdir/lv2/*
 
 %changelog
+* Thu Aug 26 2021 Anton Midyukov <antohami@altlinux.org> 0.42.1-alt2
+- disable LTO flag
+
 * Sun Jun 27 2021 Anton Midyukov <antohami@altlinux.org> 0.42.1-alt1
 - new version (0.42.1) with rpmgs script
 
