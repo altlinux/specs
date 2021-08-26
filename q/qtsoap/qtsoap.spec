@@ -1,6 +1,6 @@
 Name: qtsoap
 Version: 2.7
-Release: alt7
+Release: alt8
 
 Summary: The Simple Object Access Protocol Qt-based client side library
 License: LGPLv2 with exceptions or GPLv3
@@ -13,7 +13,7 @@ Source: qtsoap-%version.tar.gz
 Patch1: qtsoap-2.7_1-opensource-install-pub-headers.patch
 Patch2: qtsoap-2.7_1-qt5-cleanups.patch
 
-BuildRequires: gcc-c++ glibc-devel-static qt5-base-devel
+BuildRequires: gcc-c++ glibc-devel qt5-base-devel
 
 %description
 The SOAP (Simple Object Access Protocol) library uses the XML standard
@@ -98,6 +98,9 @@ popd
 %_includedir/qt5/QtSoap/
 
 %changelog
+* Thu Aug 26 2021 Sergey V Turchin <zerg@altlinux.org> 2.7-alt8
+- fix build requires
+
 * Tue Jun 29 2021 Sergey V Turchin <zerg@altlinux.org> 2.7-alt7
 - don't build qt4 part
 
@@ -111,9 +114,9 @@ popd
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.7-alt3
-- NMU: remove %ubt from release
+- NMU: remove ubt macro from release
 
-* Fri Jan 05 2017 Anton Midyukov <antohami@altlinux.org> 2.7-alt2%ubt
+* Fri Jan 05 2017 Anton Midyukov <antohami@altlinux.org> 2.7-alt2
 - build qtsoap5
 
 * Wed Sep 21 2011 Sergey V Turchin <zerg@altlinux.org> 2.7-alt1
