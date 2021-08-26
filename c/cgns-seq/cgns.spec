@@ -21,7 +21,7 @@ Practice.
 
 Name: %oname-%seqmpi
 Version: 3.2
-Release: alt5.svn20150317
+Release: alt6.svn20150317
 Summary: CFD General Notation System (%desc version)
 
 Group: Sciences/Mathematics
@@ -188,6 +188,9 @@ find $RPM_BUILD_ROOT -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -
 # the find below is useful in case those CVS/.svn/.git/.hg/.bzr/_MTN directory is added as %%doc
 find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o -name '.bzr' -o -name '_MTN' \) -print -exec rm -rf {} \; ||:
 
+# remove unpackaged static libraries
+rm %buildroot%_libdir/*.a
+
 %files
 %doc license.txt
 %_bindir/*
@@ -209,6 +212,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %endif
 
 %changelog
+* Thu Aug 26 2021 Anton Midyukov <antohami@altlinux.org> 3.2-alt6.svn20150317
+- remove unpackaged static libraries
+
 * Fri Apr 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2-alt5.svn20150317
 - Rebuilt with new libhdf5.
 
