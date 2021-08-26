@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 3.3.1
-Release: alt1
+Release: alt2
 
 Summary: A Scientific Plotting Package
 License: GPLv2+
@@ -15,7 +15,7 @@ Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
-BuildRequires: /usr/bin/pod2man /usr/bin/man texlive-dist
+BuildRequires: /usr/bin/pod2man /usr/bin/man
 BuildRequires: python3-devel libnumpy-py3-devel
 BuildRequires: qt5-base-devel python3-module-PyQt5-devel
 BuildRequires: python3-module-sip5
@@ -103,6 +103,9 @@ find ./ -type f -name '*.py' -exec \
 
 
 %changelog
+* Thu Aug 26 2021 Vitaly Lipatov <lav@altlinux.ru> 3.3.1-alt2
+- drop unused BR: texlive-dist
+
 * Wed Jul 14 2021 Vitaly Lipatov <lav@altlinux.ru> 3.3.1-alt1
 - new version 3.3.1, build with sip5
 
