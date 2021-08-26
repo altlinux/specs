@@ -1,6 +1,6 @@
 Name: hackrf
 Version: 2021.03.1
-Release: alt1
+Release: alt2
 Summary: HackRF Utilities
 
 Group: Development/Other
@@ -9,6 +9,7 @@ Url: https://github.com/mossmann/%name
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+Patch: disable_building_static_libraries.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -39,16 +40,9 @@ Requires: %name = %version-%release
 Supplemental documentation for HackRF. For more information, visit the wiki at
 https://github.com/mossmann/hackrf/wiki
 
-%package devel-static
-Summary: Static libraries for libhackrf
-Group: Development/Other
-Requires: %name-devel = %version-%release
-
-%description devel-static
-Static libraries for libhackrf.
-
 %prep
 %setup
+%autopatch -p1
 
 # Fix "plugdev" nonsense
 %__subst 's/GROUP="@HACKRF_GROUP@"/ENV{ID_SOFTWARE_RADIO}="1"/g' host/libhackrf/53-hackrf.rules.in
@@ -81,13 +75,13 @@ popd
 %_pkgconfigdir/libhackrf.pc
 %_libdir/libhackrf.so
 
-%files devel-static
-%_libdir/libhackrf.a
-
 %files doc
 %doc doc/*
 
 %changelog
+* Thu Aug 26 2021 Anton Midyukov <antohami@altlinux.org> 2021.03.1-alt2
+- disable building static libraries
+
 * Sun Jun 27 2021 Anton Midyukov <antohami@altlinux.org> 2021.03.1-alt1
 - new version 2021.03.1
 
