@@ -1,5 +1,5 @@
 Name: e2fsprogs
-Version: 1.46.2.0.16.f114
+Version: 1.46.4.0.5.4cda
 Release: alt1
 
 Summary: The filesystem utilities for the ext2/ext3 filesystems
@@ -230,6 +230,7 @@ mv tests/m_no_opt/expect.1{,.ext2}
 mv tests/m_no_opt/expect.1{.tmpfs,}
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %add_optflags -D_LARGEFILE64_SOURCE -fno-strict-aliasing
 # e2fsprogs's LD=$CC breaks autoconf test
 export acl_cv_prog_gnu_ld=yes
@@ -393,6 +394,9 @@ mv tests/m_no_opt/expect.1{.ext2,}
 %endif # libuuid
 
 %changelog
+* Sun Aug 22 2021 Dmitry V. Levin <ldv@altlinux.org> 1.46.4.0.5.4cda-alt1
+- v1.46.2-16-gf1144831 -> v1.46.4-5-g4cda2545.
+
 * Fri May 07 2021 Dmitry V. Levin <ldv@altlinux.org> 1.46.2.0.16.f114-alt1
 - v1.44.7 -> v1.46.2-16-gf1144831.
 
