@@ -1,16 +1,17 @@
 %define module_name             ixgbe
 %define module_version          5.12.5
-%define module_release          alt1
+%define module_release          alt2
 
-%define flavour		std-def
-%define karch	x86_64 aarch64 ppc64le
+%define flavour std-def
+%define karch x86_64 aarch64 ppc64le
 
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-std-def
 
 %setup_kernel_module %flavour
 
-%define module_dir /lib/modules/%kversion-%flavour-%krelease/ixgbe
+%define module_dir /lib/modules/%kversion-%flavour-%krelease/updates
+%add_verify_elf_skiplist %module_dir/*
 
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
@@ -28,7 +29,6 @@ BuildRequires(pre): rpm-build-kernel
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name
 
-Patch0: ixgbe-rename.patch
 Patch1: allow-all-sfp.patch
 
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
@@ -45,7 +45,6 @@ ExclusiveArch: %karch
 rm -rf %module_name-%module_version
 tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
-%patch0 -p1
 %patch1 -p1
 
 %build
@@ -55,17 +54,17 @@ pushd src
 popd
 
 %install
-install -Dp -m600 src/%module_name.ko %buildroot/%module_dir/%module_name-ext.ko
-install -d %buildroot/etc/modprobe.d
-echo "blacklist %module_name" > %buildroot/etc/modprobe.d/blacklist-%module_name.conf
+install -Dp -m600 src/%module_name.ko %buildroot/%module_dir/%module_name.ko
 
 %files
-/etc/modprobe.d/*
-%module_dir
+%module_dir/*
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Aug 25 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.12.5-alt2
+- put module to "updates" directory, no blacklisting necessary
 
 * Wed Jul 14 2021 Alexei Takaseev <taf@altlinux.org> 5.12.5-alt1
 - 5.12.5
