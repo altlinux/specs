@@ -48,10 +48,16 @@
 
 %define _unpackaged_files_terminate_build 1
 
+
+# https://lore.altlinux.org/devel/20210824182050.GA5179@altlinux.org/
+# https://lore.altlinux.org/devel/20210825003351.GA9752@altlinux.org/
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
+
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt2
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -1238,6 +1244,7 @@ using gcc : : : <compileflags>"$COMPILER_FLAGS" ;
 %if_with mpi
 using mpi ;
 %endif
+using python : %_python3_version ;
 EOF
 
 %build
@@ -1260,10 +1267,8 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 # library in particular) end up being built second time during
 # installation.  Unsure why that is, but all sub-builds need to be
 # built with pch=off to avoid this.
-build_boost() {
-	[ -n "$NPROCS" ] || NPROCS=%__nprocs
-	./b2 -d+2 -q \
-	-j$NPROCS \
+./b2 -d+2 -q \
+        -j${NPROCS:=%__nprocs} \
 	--layout=system \
 	--toolset=gcc \
 	variant=release \
@@ -1279,12 +1284,6 @@ build_boost() {
 	-sHAVE_ICU=1 \
 	--prefix=%{_prefix} \
 	--libdir=%{_libdir} \
-	"$@" \
-	#
-}
-
-build_boost \
-	--without-python \
 %if_without context
 	--without-context \
 	--without-fiber \
@@ -1292,20 +1291,11 @@ build_boost \
 %if_without coroutine
 	--without-coroutine \
 %endif
-	#
-
-cp ./tools/build/src/user-config.jam user-config-py3.jam
-cat >> user-config-py3.jam <<'@@@'
-using python : %_python3_version ;
-@@@
-build_boost \
-	--build-dir=build-py3 \
-	--user-config=$PWD/user-config-py3.jam \
-	--with-python \
-%if_with mpi
-	--with-mpi \
+%if_without mpi
+	--without-mpi \
 %endif
 	python=%_python3_version
+
 
 %if_with boost_build
 pushd tools/build
@@ -1326,12 +1316,8 @@ source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 %endif
 
-
-#libraries and headers are installed by bjam
-install_boost() {
-	[ -n "$NPROCS" ] || NPROCS=%__nprocs
-	./b2 -d+2 -q \
-	-j$NPROCS \
+./b2 -d+2 -q \
+	-j${NPROCS:=%__nprocs} \
 	--layout=system \
 	--toolset=gcc \
 	variant=release \
@@ -1347,13 +1333,6 @@ install_boost() {
 	-sHAVE_ICU=1 \
 	--prefix=%{buildroot}%{_prefix} \
 	--libdir=%{buildroot}%{_libdir} \
-	"$@" \
-	install \
-	#
-}
-
-install_boost \
-	--without-python \
 %if_without context
 	--without-context \
 	--without-fiber \
@@ -1361,16 +1340,11 @@ install_boost \
 %if_without coroutine
 	--without-coroutine \
 %endif
-	#
-
-install_boost \
-	--build-dir=build-py3 \
-	--user-config=$PWD/user-config-py3.jam \
-	--with-python \
-%if_with mpi
-	--with-mpi \
+%if_without mpi
+	--without-mpi \
 %endif
-	python=%_python3_version
+	python=%_python3_version \
+	install
 
 # install mpi python3 module
 %if_with mpi
@@ -1824,6 +1798,10 @@ done
 
 
 %changelog
+* Thu Aug 26 2021 Ivan A. Melnikov <iv@altlinux.org> 1:1.77.0-alt2
+- Fix build with lto-enabling rpm-build.
+- Simplified build and install.
+
 * Mon Aug 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.77.0-alt1
 - Updated to upstream version 1.77.0.
 
