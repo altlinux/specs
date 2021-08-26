@@ -1,5 +1,6 @@
 %def_disable snapshot
 %def_enable static
+%{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 %def_enable check
 
 %define Name Exempi
@@ -7,7 +8,7 @@
 
 Name: lib%_name
 Version: 2.5.2
-Release: alt1
+Release: alt1.1
 
 Summary: Library for easy parsing of XMP metadata
 Group: System/Libraries
@@ -17,6 +18,7 @@ Url: http://libopenraw.freedesktop.org/wiki/%Name
 %if_disabled snapshot
 Source: http://libopenraw.freedesktop.org/download/%_name-%version.tar.bz2
 %else
+Vcs: https://gitlab.freedesktop.org/libopenraw/exempi.git
 Source: %_name-%version.tar
 %endif
 
@@ -83,6 +85,9 @@ sed -i~ 's|\^\(boost-lib-version\)|\1|' m4/boost.m4
 
 
 %changelog
+* Thu Aug 26 2021 Yuri N. Sedunov <aris@altlinux.org> 2.5.2-alt1.1
+- added -ffat-lto-objects to %%optflags_lto if static build enabled
+
 * Sat Aug 29 2020 Yuri N. Sedunov <aris@altlinux.org> 2.5.2-alt1
 - 2.5.2 release
 
