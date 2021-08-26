@@ -9,7 +9,7 @@
 
 Name: choqok
 Version: 1.7.0
-Release: alt2
+Release: alt3
 %K5init no_altplace appdata
 
 Group: Networking/Instant messaging
@@ -34,7 +34,7 @@ BuildRequires: kf5-kcmutils-devel kf5-kdelibs4support
 %if_enabled webkit
 BuildRequires: kf5-kdewebkit-devel
 %endif
-BuildRequires: kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kglobalaccel-devel
+BuildRequires: kf5-kdoctools-devel kf5-kemoticons-devel kf5-kglobalaccel-devel
 BuildRequires: kf5-kguiaddons-devel kf5-kio-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-ktextwidgets-devel
 BuildRequires: kf5-kwallet-devel kf5-purpose-devel
 
@@ -136,6 +136,9 @@ sed -i '/find_package.*KF5WebKit/d' plugins/CMakeLists.txt
 
 
 %changelog
+* Thu Aug 26 2021 Sergey V Turchin <zerg@altlinux.org> 1.7.0-alt3
+- fix build requires
+
 * Thu Mar 26 2020 Sergey V Turchin <zerg@altlinux.org> 1.7.0-alt2
 - add upstream fixes
 
