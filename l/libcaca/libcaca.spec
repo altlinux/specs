@@ -5,7 +5,7 @@
 
 Name: libcaca
 Version: 0.99
-Release: alt20
+Release: alt21
 Summary: Text mode graphics library
 Group: System/Libraries
 License: WTFPL
@@ -106,6 +106,8 @@ find . -type f -print0 |
 	xargs -r0 sed -E -i '1 s@^(#![[:space:]]*)%_bindir/(env[[:space:]]+)?python\>@\1%__python3@' --
 
 %build
+# -ffat-lto-objects is needed even if static libraries are disabled
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 touch ChangeLog
 %autoreconf
 export PYTHON=%__python3
@@ -174,6 +176,10 @@ mv %buildroot%_datadir/doc/%name-dev %buildroot%_docdir/%name-%version
 %endif
 
 %changelog
+* Thu Aug 26 2021 Dmitry V. Levin <ldv@altlinux.org> 0.99-alt21
+- NMU.
+- v0.99.beta19-60-g813baea -> v0.99.beta19-62-ge4968ba (fixes: CVE-2021-3410).
+
 * Thu Apr 09 2020 Dmitry V. Levin <ldv@altlinux.org> 0.99-alt20
 - NMU.
 - Fixed and enabled python3 bindings.
