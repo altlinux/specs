@@ -72,7 +72,7 @@
 %endif
 
 Name:    samba
-Version: 4.14.6
+Version: 4.14.7
 Release: alt1
 
 Group:   System/Servers
@@ -1922,6 +1922,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Tue Aug 24 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.7-alt1
+- Update to latest release of Samba 4.14 with smbd fixes
+
 * Mon Jul 19 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.6-alt1
 - Update to latest release of Samba 4.14 with smbd and samba-tool fixes
 
