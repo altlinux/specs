@@ -1,12 +1,26 @@
 
+# openblas does not build with LTO
+%global optflags_lto %nil
+
 %def_without lapack
 %ifnarch %e2k
 %def_enable dynamic_arch
 %endif
 
+%ifarch armh
+%define oblas_target ARMV7
+%endif
+%ifarch aarch64
+%define oblas_target ARMV8
+%endif
+%ifarch riscv64
+%define oblas_target RISCV64_GENERIC
+%endif
+
+
 Name: openblas
-Version: 0.3.9
-Release: alt2
+Version: 0.3.17
+Release: alt1
 
 Summary: Optimized BLAS library based on GotoBLAS2 1.13 
 License: BSD
@@ -97,12 +111,7 @@ F_COMPILER="GFORTRAN" C_COMPILER="GCC" \
 %else
 	BINARY=32 \
 %endif
-%ifarch armh
-	TARGET=ARMV7 \
-%endif
-%ifarch aarch64
-	TARGET=ARMV8 \
-%endif
+	%{?oblas_target:TARGET=%oblas_target} \
 	COMMON_OPT="$FLAGS" \
 	%{?_enable_dynamic_arch:DYNAMIC_ARCH=1} \
 	ALLOC_HUGETLB=1 \
@@ -116,7 +125,8 @@ F_COMPILER="GFORTRAN" C_COMPILER="GCC" \
 sed -i 's,%buildroot,,' %buildroot%_pkgconfigdir/openblas.pc
 
 %check
-make tests \
+%make_build tests \
+	%{?oblas_target:TARGET=%oblas_target} \
 	%{?_enable_dynamic_arch:DYNAMIC_ARCH=1} \
 	%{?_without_lapack:NO_LAPACK=1} \
 	%{nil}
@@ -133,6 +143,11 @@ make tests \
 %_includedir/openblas
 
 %changelog
+* Thu Aug 26 2021 Ivan A. Melnikov <iv@altlinux.org> 0.3.17-alt1
+- Version 0.3.17
+- riscv64 support
+- disable LTO
+
 * Sat Jun 05 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.3.9-alt2
 - fixed passing of compiler options, added check
 - added patch with e2k architecture support (no optimizations)
