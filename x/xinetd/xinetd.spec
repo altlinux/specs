@@ -1,6 +1,6 @@
 Name: xinetd
 Version: 2.3.15
-Release: alt5
+Release: alt6
 
 Summary: xinetd is a powerful replacement for inetd
 Group: System/Base
@@ -102,6 +102,7 @@ install -p -m644 %_sourcedir/{faq.html,xinetd-tutorial.html} .
 find -type f -name \*.orig -delete
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %{expand:%%add_optflags -Wno-unused -Wno-switch %(pkg-config --cflags libtirpc)}
 %def_without libwrap
 %def_with loadavg
@@ -177,6 +178,9 @@ rm %buildroot%_mandir/*.3
 %doc README.*
 
 %changelog
+* Thu Aug 26 2021 Dmitry V. Levin <ldv@altlinux.org> 2.3.15-alt6
+- Added -ffat-lto-objects to %%optflags_lto.
+
 * Fri Apr 23 2021 Dmitry V. Levin <ldv@altlinux.org> 2.3.15-alt5
 - Built with libtirpc to fix build after removal of Sun RPC interfaces
   from glibc.
