@@ -1,5 +1,5 @@
 Name: winetricks
-Version: 20210825
+Version: 20210825.2
 Release: alt1
 
 Summary: Work around common problems in Wine
@@ -13,6 +13,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 ##Source-url: https://github.com/Winetricks/winetricks/archive/refs/heads/master.zip
 # Source-url: %url/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
+
+Patch1: winetricks_msado15.patch
+Patch2: winetricks_vcrun2019.patch
 
 BuildArch: noarch
 
@@ -39,6 +42,8 @@ or tweak various Wine settings individually.
  
 %prep
 %setup
+%patch1 -p0
+%patch2 -p1
 
 # fix req. Disable autoreq at all?
 %__subst 's|fusermount|a= fusermount|' src/winetricks
@@ -47,6 +52,7 @@ sed -i -e "s:steam::" -e "s:flash::" tests/*
 
 %build
 # not needed
+subst 's|WINETRICKS_VERSION=.*|WINETRICKS_VERSION=%version-%release|' src/winetricks
 
 %install
 %makeinstall_std
@@ -68,6 +74,13 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 #exclude %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Thu Aug 26 2021 Vitaly Lipatov <lav@altlinux.ru> 20210825.2-alt1
+- add vcrun2019 update sha256sum
+- set our winetricks version during build
+
+* Wed Aug 25 2021 Vitaly Lipatov <lav@altlinux.ru> 20210825.1-alt1
+- add msado15 install
+
 * Wed Aug 25 2021 Vitaly Lipatov <lav@altlinux.ru> 20210825-alt1
 - new version 20210825 (with rpmrb script)
 
