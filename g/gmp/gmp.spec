@@ -4,7 +4,7 @@
 
 Name: gmp
 Version: 6.2.1
-Release: alt2
+Release: alt3
 
 Summary: GNU MP arbitrary precision arithmetic library
 License: LGPLv3+
@@ -19,6 +19,7 @@ Patch: gmp-%version-%release.patch
 # optimized out: elfutils libstdc++-devel perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore python-base xz
 BuildRequires: flex gcc-c++ libreadline-devel makeinfo
 
+%def_disable static
 %def_enable cxx
 %ifarch %ix86
 %def_enable fat
@@ -119,8 +120,10 @@ arithmetic library.
 %patch -p1
 
 %build
+# -ffat-lto-objects is needed even if static libraries are disabled
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %autoreconf
-%configure %{subst_enable cxx} %{subst_enable fat}
+%configure %{subst_enable static} %{subst_enable cxx} %{subst_enable fat}
 LANG=C awk 'NR>=3&&$1=="#define"&&$2~/^[a-z_0-9]+$/&&$3~/^__/{print gensub("^__MPN\\(([^)]+)\\)","__gmpn_\\1",1,$3)}' \
 	gmp.h > libgmp.sym
 sed -n 's/^[^ ]\+ \(__gmp_[^ ]\+\) .*/\1/p' rand/randmt.h >> libgmp.sym
@@ -255,8 +258,10 @@ install -pm644 gmp-mparam.h rand/randmt.h %buildroot%_includedir/
 %_infodir/*.info*
 %_pkgconfigdir/gmp.pc
 
+%if_enabled static
 %files -n libgmp-devel-static
 %_libdir/libgmp.a
+%endif #static
 
 %if_enabled cxx
 %files -n %libgmpxx
@@ -266,12 +271,17 @@ install -pm644 gmp-mparam.h rand/randmt.h %buildroot%_includedir/
 %_libdir/*xx*.so
 %_includedir/*xx*
 %_pkgconfigdir/gmpxx.pc
-
-%files -n libgmpxx-devel-static
-%_libdir/*xx*.a
 %endif #cxx
 
+%if %{enabled cxx} && %{enabled static}
+%files -n libgmpxx-devel-static
+%_libdir/*xx*.a
+%endif #cxx && static
+
 %changelog
+* Thu Aug 26 2021 Dmitry V. Levin <ldv@altlinux.org> 6.2.1-alt3
+- Disabled build and packaging of static libraries.
+
 * Tue Aug 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.1-alt2
 - Packaged pkgconfig files.
 
@@ -425,7 +435,7 @@ install -pm644 gmp-mparam.h rand/randmt.h %buildroot%_includedir/
 * Wed Oct 20 1999 Chmouel Boudjnah <chmouel@mandrakesoft.com>
 - Release version.
 
-* Tue Jul 22 1999 Thierry Vignaud <tvignaud@mandrakesoft.com>
+* Thu Jul 22 1999 Thierry Vignaud <tvignaud@mandrakesoft.com>
 - add french description
 
 * Sat Apr 10 1999 Bernhard Rosenkraenzer <bero@linux-mandrake.com>
@@ -448,7 +458,7 @@ install -pm644 gmp-mparam.h rand/randmt.h %buildroot%_includedir/
 * Wed Sep  2 1998 Michael Fulbright <msf@redhat.com>
 - looked over before inclusion in RH 5.2
 
-* Sat May 24 1998 Dick Porter <dick@cymru.net>
+* Sun May 24 1998 Dick Porter <dick@cymru.net>
 - Patch Makefile.in, not Makefile
 - Don't specify i586, let configure decide the arch
 
