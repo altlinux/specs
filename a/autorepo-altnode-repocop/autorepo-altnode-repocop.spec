@@ -1,7 +1,7 @@
 %filter_from_requires /^repocop-unittest-build-logs/d
 
 Name: autorepo-altnode-repocop
-Version: 0.26
+Version: 0.28
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -16,6 +16,7 @@ BuildRequires: perl(Pod/Text.pm) repocop-resource-html repocop > 0.79
 Requires: repocop > 0.79
 Requires: pigz pzstd
 Conflicts: repocop-unittest-unmet-dependency < 0.10
+Conflicts: repocop-report-prometheus < 0.36
 
 %description
 scripts for an automated repocop node
@@ -54,6 +55,12 @@ install -m 755 repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/repocop-tasktest-*
 
 %changelog
+* Wed Aug 25 2021 Igor Vlasenko <viy@altlinux.org> 0.28-alt1
+- support for repocop-report-prometheus 0.37
+
+* Thu Aug 19 2021 Igor Vlasenko <viy@altlinux.org> 0.27-alt1
+- added repocop-report-packages.altlinux support
+
 * Fri Sep 18 2020 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
 - added metadata fix support
 

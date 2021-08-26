@@ -1,5 +1,5 @@
 Name: repocop-report-prometheus
-Version: 0.36
+Version: 0.38
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -10,12 +10,10 @@ License: GPLv2+ or Artistic-2.0
 Url: http://repocop.altlinux.org
 
 Requires: repocop > 0.80
-#Requires: perl-JSON-XS
 Obsoletes: repocop-prometeus < 0.22
 Obsoletes: repocop-report-prometeus < 0.31
 
-BuildRequires: perl-devel perldoc
-#perl-JSON
+BuildRequires: rpm-build-perl perl-devel perldoc
 BuildRequires: repocop
 
 Source: %name-%version.tar
@@ -46,6 +44,29 @@ Requires: repocop > 0.80
 Repocop is a repository unit tests platform.
 %summary
 
+%package -n repocop-report-packages.altlinux
+Summary: repocop report script that dumps test results to packages.altlinux json format
+Group: Development/Other
+License: GPLv2+ or Artistic-2.0
+Requires: repocop > 0.80
+Requires: perl-JSON-XS
+BuildRequires: perl-JSON perl-JSON-XS
+
+%description -n repocop-report-packages.altlinux
+Repocop is a repository unit tests platform.
+%summary
+
+%package -n perl-Repocop-Report-Tools
+Summary: shared library for repocop report scripts
+Group: Development/Other
+License: GPLv2+ or Artistic-2.0
+#Requires: repocop > 0.80
+BuildRequires: perl(IO/Compress/Bzip2.pm) perl(IO/Compress/Gzip.pm)
+
+%description -n perl-Repocop-Report-Tools
+Repocop is a repository unit tests platform.
+This is shared library for some repocop-reports.
+
 %prep
 %setup
 rm -f *.spec
@@ -54,7 +75,16 @@ rm -f *.spec
 
 %install
 mkdir -p %buildroot/%_bindir
-install -m 755 repocop-report-prometheus2* repocop-report-prometheus-* repocop-report-broken-metadata %buildroot/%_bindir/
+install -m 755 repocop-report-prometheus2* %buildroot/%_bindir/
+# sisyphus.ru
+# exclude repocop-report-prometheus-mysql
+install -m 755 repocop-report-prometheus-dump %buildroot/%_bindir/
+# new geiser
+install -m 755 repocop-report-packages.altlinux %buildroot/%_bindir/
+# tool
+install -m 755 repocop-report-broken-metadata %buildroot/%_bindir/
+# common lib
+install -D -m 644 lib/Test/Repocop/Report/Tools.pm %buildroot%perl_vendor_privlib/Test/Repocop/Report/Tools.pm
 
 %files
 #doc README ChangeLog
@@ -64,10 +94,22 @@ install -m 755 repocop-report-prometheus2* repocop-report-prometheus-* repocop-r
 %files -n repocop-report-prometheus2
 %_bindir/repocop-report-prometheus2*
 
+%files -n repocop-report-packages.altlinux
+%_bindir/repocop-report-packages.altlinux
+
 %files -n repocop-report-broken-metadata
 %_bindir/repocop-report-broken-metadata
 
+%files -n perl-Repocop-Report-Tools
+%perl_vendor_privlib/Test/Repocop/Report*
+
 %changelog
+* Thu Aug 26 2021 Igor Vlasenko <viy@altlinux.org> 0.38-alt1
+- support for --out in prometheus-dump
+
+* Thu Aug 19 2021 Igor Vlasenko <viy@altlinux.org> 0.37-alt1
+- added repocop-report-packages.altlinux
+
 * Thu Sep 17 2020 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
 - added repocop-report-broken-metadata
 
