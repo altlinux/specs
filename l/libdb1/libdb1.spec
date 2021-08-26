@@ -1,6 +1,6 @@
 Name: libdb1
 Version: 1.85
-Release: alt8
+Release: alt9
 
 Summary: Berkeley database library version %version
 License: BSD
@@ -105,7 +105,6 @@ pushd PORT/linux
 	ln -s db1_dump185 %buildroot%_bindir/db_dump185
 	sover=`echo libdb.so.* |sed -e 's/libdb\.so\.//'`
 	install -pm755 libdb.so.$sover %buildroot%_libdir/%name.so.$sover
-	install -pm644 libdb.a %buildroot%_libdir/%name.a
 	ln -s %name.so.$sover %buildroot%_libdir/libdb.so.$sover
 	ln -s %name.so.$sover %buildroot%_libdir/%name.so
 popd
@@ -115,6 +114,9 @@ install -pm644 PORT/include/ndbm.h include/{db,mpool}.h \
 %define docdir %_docdir/%name-%version
 install -pDm644 changelog %buildroot%docdir/ChangeLog
 install -pm644 README LICENSE docs/*usenix*.ps.* %buildroot%docdir/
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 %files
 %_libdir/*.so.*
@@ -128,14 +130,14 @@ install -pm644 README LICENSE docs/*usenix*.ps.* %buildroot%docdir/
 %_libdir/*.so
 %_includedir/*
 
-%files devel-static
-%_libdir/*.a
-
 %files doc
 %dir %docdir
 %docdir/*.ps.*
 
 %changelog
+* Thu Aug 26 2021 Dmitry V. Levin <ldv@altlinux.org> 1.85-alt9
+- Disabled packaging of libdb1.a.
+
 * Sun Apr 07 2013 Dmitry V. Levin <ldv@altlinux.org> 1.85-alt8
 - Rebuilt for debuginfo.
 
