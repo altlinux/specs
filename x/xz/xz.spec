@@ -1,6 +1,6 @@
 Name: xz
 Version: 5.2.5
-Release: alt2
+Release: alt3
 
 Summary: LZMA/XZ compression programs
 # We don't package scripts to grep, diff, and view compressed files here
@@ -59,6 +59,7 @@ This package contains static liblzma compression library.
 %patch -p1
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %ifarch %ix86
 # liblzma uses crc*_x86.S asm code on i686
 %add_optflags -Wa,--generate-missing-build-notes=yes
@@ -145,6 +146,10 @@ make -k check
 %_libdir/liblzma.a
 
 %changelog
+* Thu Aug 26 2021 Dmitry V. Levin <ldv@altlinux.org> 5.2.5-alt3
+- Reduced maximum possible memory limit on MIPS32 (by Ivan A. Melnikov).
+- Added -ffat-lto-objects to %%optflags_lto.
+
 * Thu Apr 15 2021 Andrew Savchenko <bircoph@altlinux.org> 5.2.5-alt2
 - Fix profiling on e2k by adapting to lcc peculiarities.
 
