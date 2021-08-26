@@ -3,7 +3,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 0.10.1
+Version: 0.11.1
 Release: alt1
 
 Summary: Terminals served by tornado websockets
@@ -117,6 +117,9 @@ nosetests3 -v
 #%doc doc/_build/html/*
 
 %changelog
+* Thu Aug 26 2021 Vitaly Lipatov <lav@altlinux.ru> 0.11.1-alt1
+- new version 0.11.1 (with rpmrb script)
+
 * Thu Aug 19 2021 Vitaly Lipatov <lav@altlinux.ru> 0.10.1-alt1
 - new version 0.10.1 (with rpmrb script)
 
