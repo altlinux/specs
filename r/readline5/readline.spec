@@ -3,12 +3,12 @@ Name: readline5
 %define rl_patch 14
 %define srcname readline-%rl_version
 Version: %rl_version.%rl_patch
-Release: alt6
+Release: alt7
 
 Summary: A library for editing typed in command lines
 License: GPLv2+
-Group: System/Libraries
-Url: http://www.gnu.org/software/readline/
+Group: System/Legacy libraries
+Url: https://www.gnu.org/software/readline/
 
 # ftp://ftp.gnu.org/gnu/readline/readline-%rl_version.tar.gz
 # ftp://ftp.gnu.org/gnu/readline/readline-%rl_version-patches/
@@ -17,6 +17,8 @@ Source: readline-%version.tar
 Patch: readline-%version-%release.patch
 
 BuildRequires: libtinfo-devel makeinfo
+
+%def_disable static
 
 %package -n lib%name
 Summary: A library for editing typed in command lines
@@ -66,6 +68,8 @@ and more intuitive command line interface for users.
 %patch -p1
 
 %build
+%{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
+
 # This is required to fix some "implicit declaration" warnings.
 %add_optflags -D_GNU_SOURCE
 
@@ -79,7 +83,7 @@ export bash_cv_termcap_lib=libtinfo
 sed -i 's,/tmp/,,g' *.m4
 autoconf
 
-%configure
+%configure %{subst_enable static}
 rm doc/*.info
 
 %make_build all examples documentation
@@ -117,6 +121,8 @@ pushd %buildroot%docdir/examples
 	make clean
 popd
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
 %files -n lib%name
@@ -129,10 +135,15 @@ popd
 %_infodir/*.info*
 %docdir
 
+%if_enabled static
 %files -n lib%name-devel-static
 %_libdir/*.a
+%endif #static
 
 %changelog
+* Thu Aug 26 2021 Dmitry V. Levin <ldv@altlinux.org> 5.2.14-alt7
+- Disabled build and packaging of the static library.
+
 * Fri Mar 01 2019 Dmitry V. Levin <ldv@altlinux.org> 5.2.14-alt6
 - Use AC_SYS_LARGEFILE to fix strict build on x86.
 - Use makeinfo instead of texinfo in BR.
