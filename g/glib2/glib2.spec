@@ -1,4 +1,6 @@
 %def_disable snapshot
+%def_enable static
+%{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 2.68
@@ -24,7 +26,7 @@
 
 Name: glib2
 Version: %ver_major.4
-Release: alt1
+Release: alt1.1
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -253,7 +255,7 @@ subst "/subdir('fuzzing')/d" meson.build
 
 %build
 %meson \
-    --default-library=both \
+    %{?_enable_static:--default-library=both} \
     -Dgio_module_dir='%gio_module_dir' \
     %{?_disable_selinux:-Dselinux=false} \
     %{?_disable_xattr:-Dxattr=false} \
@@ -358,6 +360,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man1dir/gtester*
 %endif
 
+%if_enabled static
 %files devel-static
 %_libdir/libglib-%api_ver.a
 %_libdir/libgobject-%api_ver.a
@@ -368,6 +371,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %if_enabled fam
 %exclude %_libdir/gio/modules/libgiofam.a
 %exclude %_libdir/gio/modules/libgiofam.la
+%endif
 %endif
 
 %files doc
@@ -441,6 +445,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Aug 26 2021 Yuri N. Sedunov <aris@altlinux.org> 2.68.4-alt1.1
+- added -ffat-lto-objects to %%optflags_lto if static build enabled
+
 * Thu Aug 19 2021 Yuri N. Sedunov <aris@altlinux.org> 2.68.4-alt1
 - 2.68.4
 
