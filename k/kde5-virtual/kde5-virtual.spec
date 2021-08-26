@@ -1,7 +1,7 @@
 
 Name: kde5-virtual
 Version: 5.21.5
-Release: alt1
+Release: alt1.1
 
 Group: Graphical desktop/KDE
 Summary: Virtual packages for KDE 5
@@ -263,7 +263,7 @@ Requires: sddm sddm-theme-breeze plasma5-sddm-kcm
 
 %files -n kde5-email-client-0-dummy
 %files -n kde5-email-client-2-kmail
-%ifnarch ppc64le
+%ifnarch armh
 %files -n kde5-email-client-4-thunderbird
 %endif
 
@@ -281,6 +281,9 @@ Requires: sddm sddm-theme-breeze plasma5-sddm-kcm
 %files -n kde5-display-manager-5-sddm
 
 %changelog
+* Thu Aug 26 2021 Andrey Cherepanov <cas@altlinux.org> 5.21.5-alt1.1
+- NMU: thunderbird is built for pc64le, but not for armh
+
 * Wed Jul 21 2021 Sergey V Turchin <zerg@altlinux.org> 5.21.5-alt1
 - drop all requires from kde5-messenger-client-mix exept psi-plus
 

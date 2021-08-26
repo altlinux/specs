@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.4.6
-Release: alt2
+Release: alt3
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
 Group:   Education
@@ -215,7 +215,7 @@ Requires: color-prompt-and-man
 Requires: shutter
 Requires: screenkey
 # Mozilla
-%ifnarch ppc64le
+%ifnarch armh
 Requires: thunderbird
 %endif
 # Search
@@ -593,6 +593,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Thu Aug 26 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.6-alt3
+- Thunderbird do not build for armh.
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.6-alt2
 - NMU: temp. disable childsplay (was python2 only)
 

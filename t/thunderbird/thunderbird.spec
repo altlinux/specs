@@ -1,16 +1,13 @@
-%def_without google_calendar
-%def_with    bundled_cbindgen
-%def_enable  mach_build
 %define r_name thunderbird
+%def_with bundled_cbindgen
+%def_with mach_build
 %ifndef build_parallel_jobs
 %define build_parallel_jobs 32
 %endif
-
-%define gdata_version     2.6
-%define llvm_version      11.0
+%define llvm_version 12.0
 
 Name: 	 thunderbird
-Version: 78.13.0
+Version: 91.0.2
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -21,7 +18,7 @@ URL: 	 https://www.thunderbird.net
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source0: %name-%version.tar
-Source2: rpm-build.tar
+Source2: rpm.macros
 Source3: thunderbird.desktop
 Source4: thunderbird-mozconfig
 Source5: thunderbird-default-prefs.js
@@ -35,7 +32,6 @@ Patch12: alt-use-vorbis-on-arm-too.patch
 
 Patch21: mozilla-1353817.patch
 Patch23: build-aarch64-skia.patch
-Patch25: Bug-1238661---fix-mozillaSignalTrampoline-to-work-.patch
 Patch29: thunderbird-60.7.2-alt-ppc64le-disable-broken-getProcessorLineSize-code.patch
 Patch30: thunderbird-68.2.2-alt-ppc64le-fix-clang-error-invalid-memory-operand.patch
 Patch31:  mozilla-1512162.patch
@@ -49,14 +45,8 @@ Patch38: Bug-628252-os2.cc-fails-to-compile-against-GCC-4.6-m.patch
 Patch39: Load-dependent-libraries-with-their-real-path-to-avo.patch
 Patch40: Properly-launch-applications-set-in-HOME-.mailcap.patch
 Patch41: fix-function-nsMsgComposeAndSend-to-respect-Replo.patch
-#Patch42: thunderbird-update-packed_simd-for-rust-1.48.patch
 
-Patch120: 0020-MOZILLA-1666567-land-NSS-8ebee3cec9cf-UPGRADE_NSS_RE.patch
-Patch121: 0021-MOZILLA-1666567-land-NSS-8fdbec414ce2-UPGRADE_NSS_RE.patch
-Patch122: 0022-MOZILLA-1666567-land-NSS-NSS_3_58_BETA1-UPGRADE_NSS_.patch
-Patch124: 0024-MOZILLA-1605273-only-run-CRLite-on-certificates-with.patch
-
-ExcludeArch: ppc64le
+ExcludeArch: armh
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -65,7 +55,6 @@ BuildRequires(pre): browser-plugins-npapi-devel
 %ifarch %{arm} %{ix86}
 BuildRequires: gcc-c++
 %endif
-BuildRequires: clang%llvm_version
 BuildRequires: clang%llvm_version-devel
 BuildRequires: llvm%llvm_version-devel
 BuildRequires: lld%llvm_version-devel
@@ -75,24 +64,24 @@ BuildRequires: rust-cargo
 BuildRequires: /proc
 BuildRequires: /dev/shm
 BuildRequires: doxygen gcc-c++ imake libIDL-devel makedepend
-BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel libXcomposite-devel libXdamage-devel
+BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
 BuildRequires: libXcursor-devel libXi-devel libxkbcommon-devel
-BuildRequires: libcurl-devel libgtk+3-devel libhunspell-devel libjpeg-devel
-BuildRequires: libgtk+2-devel
+BuildRequires: libcurl-devel
+BuildRequires: libgtk+3-devel >= 3.14
+#BuildRequires: libgtk+2-devel
+BuildRequires: libhunspell-devel libjpeg-devel
 BuildRequires: xorg-cf-files chrpath alternatives yasm
-BuildRequires: bzlib-devel zlib-devel
+BuildRequires: bzlib-devel
 BuildRequires: mozldap-devel
 BuildRequires: zip unzip
-BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
-BuildRequires: libcairo-devel libpixman-devel
+BuildRequires: gst-plugins1.0-devel
+BuildRequires: libpixman-devel
 BuildRequires: libGL-devel
 BuildRequires: libwireless-devel
 BuildRequires: libalsa-devel
 BuildRequires: libnotify-devel
 BuildRequires: libevent-devel
 BuildRequires: libvpx-devel
-BuildRequires: libgio-devel
-BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
 BuildRequires: libffi-devel
 BuildRequires: libproxy-devel
@@ -107,12 +96,6 @@ BuildRequires: libxkbcommon-devel
 BuildRequires: libdrm-devel
 
 # Python requires
-BuildRequires: python-module-distribute
-BuildRequires: python-modules-compiler
-BuildRequires: python-modules-logging
-BuildRequires: python-modules-sqlite3
-BuildRequires: python-modules-json
-
 BuildRequires: python3-base
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pip
@@ -154,18 +137,18 @@ Requires: libnss >= 3.13.1-alt1
 BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
 
-%define tbird_cid             \{3550f703-e582-4d05-9a08-453d09bdfdc6\}
-%define tbird_prefix          %_libdir/%r_name
-%define tbird_datadir         %_datadir/%r_name
-%define tbird_idldir          %_datadir/idl/%r_name
-%define tbird_includedir      %_includedir/%r_name
-%define tbird_develdir        %tbird_prefix-devel
+%define tbird_cid        \{3550f703-e582-4d05-9a08-453d09bdfdc6\}
+%define tbird_prefix     %_libdir/%r_name
+%define tbird_datadir    %_datadir/%r_name
+%define tbird_idldir     %_datadir/idl/%r_name
+%define tbird_includedir %_includedir/%r_name
+%define tbird_develdir   %tbird_prefix-devel
 
 %description
-Thunderbird is Mozilla's next generation e-mail client.
-Thunderbird makes emailing safer, faster and easier than
-ever before and can also scale to meet the most sophisticated
-organizational needs.
+Thunderbird is Mozilla's next generation e-mail client. Thunderbird makes
+emailing safer, faster and easier than ever before and can also scale to meet
+the most sophisticated organizational needs.
+
 The package contains Lightning - an integrated calendar for Thunderbird.
 
 %package wayland
@@ -177,37 +160,6 @@ Requires: %name
 %description wayland
 The thunderbird-wayland package contains launcher and desktop file
 to run Thunderbird natively on Wayland.
-
-%if_with google_calendar
-%package google-calendar
-%define google_calendar_ciddir %mozilla_noarch_extdir/%tbird_cid/\{a62ef8ec-5fdc-40c2-873c-223b8a6925cc\}
-Summary: Provider for Google Calendar
-Group: Office
-Url: https://www.mozilla.org/projects/calendar
-
-Provides: %name-google-calendar = %gdata_version-%release
-Requires: %name = %version-%release
-
-Provides: gdata-provider = %gdata_version-%release
-Provides:  %name-esr-google-calendar = %version-%release
-Obsoletes: %name-esr-google-calendar < %version-%release
-
-%description google-calendar
-Allows bidirectional access to Google Calendar
-%endif
-
-%package devel
-Summary: Thunderbird development kit.
-Group: Development/C++
-Requires: %name = %version-%release
-
-Requires: python-base
-AutoReq: yes, nopython
-Provides: %name-esr-devel = %version-%release
-Obsoletes: %name-esr-devel < %version-%release
-
-%description devel
-Thunderbird development kit.
 
 %package -n rpm-build-%name
 Summary:  RPM helper macros to rebuild thunderbird packages
@@ -223,15 +175,11 @@ thunderbird packages by some Alt Linux Team Policy compatible way.
 
 %prep
 %setup -q
-tar -xf %SOURCE2
 tar -xf %SOURCE6
 %patch11 -p2
 %patch12 -p2
 %patch21 -p2
 %patch23 -p2
-%ifarch %arm
-%patch25 -p1
-%endif
 %patch29 -p2
 %patch30 -p2
 %patch31 -p2
@@ -243,15 +191,9 @@ tar -xf %SOURCE6
 %patch35 -p1
 %patch36 -p1
 %patch38 -p1
-%patch39 -p1
+%patch39 -p2
 %patch40 -p1
 %patch41 -p1
-#patch42 -p0
-
-%patch120 -p2
-%patch121 -p2
-%patch122 -p2
-%patch124 -p2
 
 #echo %version > mail/config/version.txt
 
@@ -285,6 +227,7 @@ echo 'export NODEJS="/tmp/node-stdout-nonblocking-wrapper"' >> .mozconfig
 sed -i -e '\,hyphenation/,d' comm/mail/installer/removed-files.in
 
 %build
+%define optflags_lto %nil
 %add_optflags %optflags_shared
 %add_findprov_lib_path %tbird_prefix
 
@@ -369,9 +312,6 @@ export SHELL=/bin/sh
 export MOZILLA_OBJDIR="$PWD"
 export PATH="$CBINDGEN_BINDIR:$PATH"
 
-#__autoconf
-#mkdir objdir
-
 # Do not use desktop notify during build process
 export MOZ_NOSPAM=1
 
@@ -388,10 +328,11 @@ export NPROCS=16
 export NPROCS=8
 %endif
 
-python3 ./mach python --exec-file /dev/null
+#python3 ./mach python --exec-file /dev/null
+export MACH_USE_SYSTEM_PYTHON=yes
 ./mach configure
 
-%if_enabled mach_build
+%if_with mach_build
 ./mach build -j $NPROCS
 ./mach buildsymbols
 %else
@@ -506,16 +447,10 @@ chmod 755 %buildroot/%_bindir/thunderbird
 
 # rpm-build-thunderbird files
 mkdir -p %buildroot%_rpmmacrosdir
-sed -e 's,@tbird_version@,%version,' \
-    -e 's,@tbird_release@,%release,' \
-    rpm-build/rpm.macros \
+cat %SOURCE2 | \
+  sed -e 's,@tbird_version@,%version,' \
+      -e 's,@tbird_release@,%release,' \
     > %buildroot%_rpmmacrosdir/%r_name
-
-%if_with google_calendar
-mkdir -p %buildroot/%google_calendar_ciddir
-unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
-	$PWD/objdir/dist/xpi-stage/gdata-provider*.xpi
-%endif
 
 # Add real RPATH
 (set +x
@@ -562,28 +497,38 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_iconsdir/hicolor/*/apps/thunderbird.png
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
-%if_with google_calendar
-%exclude %google_calendar_ciddir
-%endif
-
 %files wayland
 %_bindir/thunderbird-wayland
 %_datadir/applications/thunderbird-wayland.desktop
-
-%if_with google_calendar
-%files google-calendar
-%google_calendar_ciddir
-%endif
-
-#%%files devel
-#%%tbird_idldir
-#%%tbird_includedir
-#%%tbird_develdir
 
 %files -n rpm-build-%name
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Mon Aug 23 2021 Andrey Cherepanov <cas@altlinux.org> 91.0.2-alt1
+- New version.
+- Build using LLVM 12.0.
+- Do not build for armh.
+- Security fixes in 91.0.1:
+  + CVE-2021-29991 Header Splitting possible with HTTP/3 Responses
+
+* Tue Aug 17 2021 Andrey Cherepanov <cas@altlinux.org> 91.0.1-alt1
+- New version.
+
+* Thu Aug 12 2021 Andrey Cherepanov <cas@altlinux.org> 91.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2021-29986 Race condition when resolving DNS names could have led to memory corruption
+  + CVE-2021-29981 Live range splitting could have led to conflicting assignments in the JIT
+  + CVE-2021-29988 Memory corruption as a result of incorrect style treatment
+  + CVE-2021-29984 Incorrect instruction reordering during JIT optimization
+  + CVE-2021-29980 Uninitialized memory in a canvas object could have led to memory corruption
+  + CVE-2021-29987 Users could have been tricked into accepting unwanted permissions on Linux
+  + CVE-2021-29985 Use-after-free media channels
+  + CVE-2021-29982 Single bit data leak due to incorrect JIT optimization and type confusion
+  + CVE-2021-29989 Memory safety bugs fixed in Thunderbird 91
+- Remove deprecated packages like google-calendar.
+
 * Tue Aug 10 2021 Andrey Cherepanov <cas@altlinux.org> 78.13.0-alt1
 - New version (78.13.0).
 - Security fixes:
