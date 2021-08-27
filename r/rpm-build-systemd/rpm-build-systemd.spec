@@ -2,7 +2,7 @@
 
 Name: rpm-build-%oname
 Version: 2
-Release: alt1
+Release: alt2
 
 Summary: RPM helper macros to build packages with systemd support
 License: LGPL-2.1-or-later
@@ -35,9 +35,12 @@ install -D -m644 %SOURCE1 -p %buildroot%_rpmmacrosdir/%oname
 %_rpmmacrosdir/*
 
 %changelog
+* Fri Aug 27 2021 Alexey Shabalin <shaba@altlinux.org> 2-alt2
+- Fixed rpm changelog for 2-alt1.
+
 * Thu Aug 26 2021 Alexey Shabalin <shaba@altlinux.org> 2-alt1
 - Added macroses:
-  %post_systemd, %preun_systemd, %post_systemd_restart_late
+  %%post_systemd, %%preun_systemd, %%post_systemd_restart_later
 
 * Mon Aug 23 2021 Alexey Shabalin <shaba@altlinux.org> 1-alt1
 - Initial build.
