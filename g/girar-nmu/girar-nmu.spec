@@ -4,7 +4,7 @@
 #set_compress_method none
 %set_compress_method %mansuff
 Name: girar-nmu
-Version: 2.013.0
+Version: 2.014.0
 Release: alt1
 
 Summary: girar client utilities for NMU automation
@@ -23,6 +23,7 @@ Source: %name-%version.tar
 #BuildRequires: help2man
 BuildRequires: m4
 BuildRequires: perl-devel perl-podlators perl(RPM/Header.pm) perl-RPM-Source-Editor perl-RPM-Source-Convert perl(Pod/Usage.pm) perl(Date/Parse.pm) /usr/bin/pod2man perl-Gear-Rules perl(Source/Shared/Utils/GlobList.pm) perl(Source/Repository/RPM/ALTLinuxSrcList.pm) perl(Source/Shared/FindMirror/ALTLinux.pm) perl(ALTLinux/RepoList.pm)
+BuildRequires: altlinux-repolist-utils
 
 Requires: gear
 Requires: perl-RPM-Source-Editor >= 0.9233
@@ -109,6 +110,9 @@ EOF
 %_man1dir/girar-*
 
 %changelog
+* Fri Aug 27 2021 Igor Vlasenko <viy@altlinux.org> 2.014.0-alt1
+- new version
+
 * Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 2.013.0-alt1
 - new version
 
