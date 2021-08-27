@@ -1,13 +1,14 @@
-%def_enable static
+%def_disable static
+%{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 %def_enable check
 
 Name: pcre2
 Version: 10.37
-Release: alt1
+Release: alt1.1
 
 Summary: Perl-compatible regular expression library
 Group: System/Libraries
-License: BSD
+License: BSD-style
 Url: http://www.pcre.org/
 
 Source: https://ftp.pcre.org/pub/pcre/%name-%version.tar.gz
@@ -83,10 +84,10 @@ Utilities demonstrating PCRE2 capabilities like pcre2grep or pcre2test.
     --disable-rebuild-chartables \
     --enable-shared \
     --enable-stack-for-recursion \
-    --enable-static \
     --enable-unicode \
     --disable-valgrind \
     %{subst_enable static}
+%nil
 %make_build
 
 %install
@@ -136,6 +137,9 @@ mv %buildroot%_libdir/lib%name-{8,16,32,posix}.so.* %buildroot/%_lib/
 %exclude %_docdir/%name
 
 %changelog
+* Fri Aug 27 2021 Yuri N. Sedunov <aris@altlinux.org> 10.37-alt1.1
+- disabled build of static libraries
+
 * Thu May 27 2021 Yuri N. Sedunov <aris@altlinux.org> 10.37-alt1
 - 10.37
 
