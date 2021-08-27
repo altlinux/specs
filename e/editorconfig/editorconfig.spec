@@ -1,8 +1,10 @@
 %def_enable docs
+%def_disable static
+%{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 
 Name: editorconfig
 Version: 0.12.5
-Release: alt1
+Release: alt1.1
 
 Summary: Parser for EditorConfig files written in C
 Group: Development/Other
@@ -10,8 +12,9 @@ License: BSD-2-Clause
 Url: https://%name.org
 
 %define srcname %name-core-c
-#VCS: https://github.com/%name/%srcname
+Vcs: https://github.com/%name/%srcname
 Source: https://github.com/%name/%srcname/archive/v%version/%srcname-%version.tar.gz
+Patch: %srcname-0.12.5-alt-static_build.patch
 
 Requires: lib%name = %EVR
 
@@ -55,10 +58,14 @@ This package contains files needed for development EditorConfig plugins.
 
 %prep
 %setup -n %srcname-%version
+%patch -b .static
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
-%cmake %{?_disable_docs:-DBUILD_DOCUMENTATION=OFF}
+%cmake %{?_disable_docs:-DBUILD_DOCUMENTATION=OFF} \
+    %{?_disable_static:-DBUILD_STATIC_LIBS=OFF}
+%nil
+%cmake_build
 
 %install
 %cmakeinstall_std
@@ -72,8 +79,7 @@ This package contains files needed for development EditorConfig plugins.
 
 %files -n lib%name
 %_libdir/lib%name.so.0*
-
-%exclude %_libdir/*.a
+%{?_enable_static:%exclude %_libdir/*.a}
 
 %files -n lib%name-devel
 %_includedir/%name/
@@ -83,6 +89,9 @@ This package contains files needed for development EditorConfig plugins.
 %{?_enable_docs:%_man3dir/%{name}*}
 
 %changelog
+* Fri Aug 27 2021 Yuri N. Sedunov <aris@altlinux.org> 0.12.5-alt1.1
+- disabled static build
+
 * Sun Jun 20 2021 Yuri N. Sedunov <aris@altlinux.org> 0.12.5-alt1
 - 0.12.5
 
