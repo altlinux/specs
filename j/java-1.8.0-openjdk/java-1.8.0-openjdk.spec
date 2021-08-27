@@ -146,6 +146,9 @@ BuildRequires: /proc rpm-build-java
 # No docs nor bootcycle for debug builds
 %global debug_targets images
 
+# Disable LTO as this causes build failures at the moment.
+%define optflags_lto %nil
+
 # Filter out flags from the optflags macro that cause problems with the OpenJDK build
 # We filter out -Wall which will otherwise cause HotSpot to produce hundreds of thousands of warnings (100+mb logs)
 # We filter out -O flags so that the optimization of HotSpot is not lowered from O3 to O2
@@ -378,7 +381,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}.%{buildver}
-Release: alt1_0jpp8
+Release: alt2_0jpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -2146,6 +2149,9 @@ fi
 %endif
 
 %changelog
+* Fri Aug 27 2021 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.302.b08-alt2_0jpp8
+- FTBFS: disable LTO.
+
 * Sun Aug 08 2021 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.302.b08-alt1_0jpp8
 - New version
 - Security fixes since 1.8.0.282.b08-alt1_0jpp8:
