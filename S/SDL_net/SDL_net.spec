@@ -1,11 +1,16 @@
+%def_disable static
+
 %define lib_name lib%name
+%if_enabled static
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%endif
 
 Name: SDL_net
 Version: 1.2.8
-Release: alt2.git9a629d6
+Release: alt3.git9a629d6
 
 Summary: Simple DirectMedia Layer - network
-License: zlib
+License: Zlib
 Group: System/Libraries
 Url: http://www.libsdl.org/projects/SDL_net/
 # https://github.com/libsdl-org/SDL_net/tree/SDL-1.2
@@ -40,6 +45,7 @@ Requires: %lib_name = %version-%release
 This package contains the headers that programmers will need to develop
 applications which will use %name.
 
+%if_enabled static
 %package -n %lib_name-devel-static
 Summary: Static libraries for developing programs that will use %name
 Group: Development/C
@@ -48,6 +54,7 @@ Requires: %lib_name-devel = %version-%release
 %description -n %lib_name-devel-static
 This package contains the static libraries that programmers will need to develop
 applications which will use %name.
+%endif
 
 %prep
 %setup -q
@@ -61,6 +68,10 @@ touch NEWS AUTHORS ChangeLog
 %install
 %make_install DESTDIR=%buildroot install
 
+%if_disabled static
+rm -f %buildroot%_libdir/*.a
+%endif
+
 %files -n %lib_name
 %doc CHANGES COPYING README
 %_libdir/*.so.*
@@ -70,10 +81,15 @@ touch NEWS AUTHORS ChangeLog
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
+%if_enabled static
 %files -n %lib_name-devel-static
 %_libdir/*.a
+%endif
 
 %changelog
+* Fri Aug 27 2021 Leontiy Volodin <lvol@altlinux.org> 1.2.8-alt3.git9a629d6
+- Disabled static libraries.
+
 * Tue Jul 13 2021 Leontiy Volodin <lvol@altlinux.org> 1.2.8-alt2.git9a629d6
 - Built git snapshot.
 
