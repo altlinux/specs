@@ -1,13 +1,12 @@
 %def_disable clang
 
 Name: deepin-editor
-Version: 5.9.7
+Version: 5.9.11
 Release: alt1
 Summary: Simple editor for Linux Deepin
 License: GPL-3.0+
 Group: Editors
 Url: https://github.com/linuxdeepin/deepin-editor
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch: deepin-editor-5.9.7-gcc10.patch
@@ -37,8 +36,8 @@ BuildRequires: deepin-qt-dbus-factory-devel
 BuildRequires: libgtest-devel
 BuildRequires: libgmock-devel
 BuildRequires: dtk5-common
-# use system libuchardet.a
-BuildRequires: libuchardet-devel-static
+BuildRequires: libuchardet-devel
+BuildRequires: libenca-devel
 # Requires: deepin-session-shell deepin-qt5integration
 
 %description
@@ -46,12 +45,14 @@ BuildRequires: libuchardet-devel-static
 
 %prep
 %setup
+%if_disabled clang
 %patch -p1
+%endif
 sed -i 's|lrelease|lrelease-qt5|; s|lupdate|lupdate-qt5|' translate_generation.sh
 # use system libuchardet.a
-sed -i 's|${CMAKE_CURRENT_SOURCE_DIR}/../3rdparty/lib/lib/libuchardet.a|%_libdir/libuchardet.a|' \
-	src/CMakeLists.txt \
-	tests/CMakeLists.txt
+# sed -i 's|${CMAKE_CURRENT_SOURCE_DIR}/../3rdparty/lib/lib/libuchardet.a|%%_libdir/libuchardet.a|' \
+# 	src/CMakeLists.txt \
+# 	tests/CMakeLists.txt
 
 %build
 %if_enabled clang
@@ -63,11 +64,7 @@ export READELF="llvm-readelf"
 %endif
 %cmake \
     -GNinja \
-%if_enabled clang
-    -DCMAKE_INSTALL_PREFIX=%llvm_prefix \
-%else
     -DCMAKE_INSTALL_PREFIX=%_prefix \
-%endif
     -DCMAKE_BUILD_TYPE=Release \
     -DAPP_VERSION=%version \
     -DVERSION=%version \
@@ -102,6 +99,10 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/editor/
 
 %changelog
+* Fri Aug 27 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.11-alt1
+- New version (5.9.11).
+- Checkout from euler into dev branch.
+
 * Wed Jun 30 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.7-alt1
 - New version (5.9.7).
 
