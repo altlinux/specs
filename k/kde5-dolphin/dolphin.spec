@@ -11,7 +11,7 @@
 
 Name: kde5-%rname
 Version: 21.08.0
-Release: alt1
+Release: alt2
 %K5init
 
 Group: File tools
@@ -81,7 +81,7 @@ KF5 library
 %setup -n %rname-%version
 %patch2 -p1
 %patch3 -p1
-#%patch4 -p2
+%patch4 -p2
 
 %build
 %K5build \
@@ -140,6 +140,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Fri Aug 27 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.08.0-alt2
+- Restored stopping of preview generation jobs on unmount request.
+
 * Mon Aug 23 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
 - new version
 
