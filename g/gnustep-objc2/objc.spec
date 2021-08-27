@@ -7,7 +7,7 @@
 
 Name: gnustep-%oname
 Version: 2.1
-Release: alt1
+Release: alt2
 Summary: GNUstep Objective-C Runtime
 License: BSD
 Group: Development/Objective-C
@@ -100,6 +100,7 @@ cp -fR objc objc2
 #chmod +x build_opts.sh
 
 %build
+%define optflags_lto %nil
 #./build_opts.sh
 %add_optflags -I$PWD %optflags_shared -fpermissive
 %add_optflags -D__STDC_LIMIT_MACROS -D__STDC_CONSTANT_MACROS
@@ -195,6 +196,9 @@ ln -s objc2 %buildroot%_includedir/objc
 %endif
 
 %changelog
+* Fri Aug 27 2021 Andrey Cherepanov <cas@altlinux.org> 2.1-alt2
+- FTBFS: disable LTO.
+
 * Thu Aug 27 2020 Andrey Cherepanov <cas@altlinux.org> 2.1-alt1
 - New version.
 - Exclude armh from build architectures.
