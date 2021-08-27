@@ -1,15 +1,15 @@
+%define optflags_lto %nil
+
 Name: lzdoom
 Version: 3.87c
-Release: alt3
+Release: alt4
 
-Summary: Enhanced Doom engine
-Summary(ru_RU.UTF-8): Продвинутый порт движка Doom
+Summary: Enhanced Doom engine - version for old systems
+Summary(ru_RU.UTF-8): Продвинутый порт движка Doom - версия для слабых систем
 License: GPLv3
 Group: Games/Arcade
 
 Url: http://zdoom.org
-
-Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: %name-%version.tar
 Source1: ico_%name.png
@@ -86,6 +86,10 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Fri Aug 27 2021 Artyom Bystrov <arbars@altlinux.org> 3.87c-alt4
+- disable link-time optimization;
+- delete "Packager" tag
+
 * Sat Aug 07 2021 Artyom Bystrov <arbars@altlinux.org> 3.87c-alt3
 - Add patch for fixing paths for soundfont (thx to jan@ FROM aur)
 - Add fluid-soundfont in Requires list
