@@ -3,7 +3,8 @@ Group: Development/Tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
-%define fedora 32
+%brp_strip_none /usr/avr/lib/*
+%define fedora 34
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
  # FORCE NOARCH
@@ -15,7 +16,7 @@ BuildRequires: gcc-c++ unzip
 
 Name:           avr-libc
 Version:        2.0.0
-Release:        alt6_10
+Release:        alt6_12
 Summary:        C library for use with GCC on Atmel AVR microcontrollers
 License:        BSD
 URL:            http://www.nongnu.org/avr-libc/
@@ -141,6 +142,9 @@ chmod -R u=rwX,g=rX,o=rX $RPM_BUILD_ROOT%{_docdir}/%{name}/html
 %doc %{_docdir}/%{name}/%{name}*.pdf
 
 %changelog
+* Fri Aug 27 2021 Igor Vlasenko <viy@altlinux.org> 1:2.0.0-alt6_12
+- fixed build with added process-lto
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 1:2.0.0-alt6_10
 - update to new release by fcimport
 
