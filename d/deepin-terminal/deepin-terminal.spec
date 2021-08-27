@@ -1,14 +1,15 @@
+%define optflags_lto %nil
+
 Name: deepin-terminal
-Version: 5.4.6
-Release: alt2
+Version: 5.4.12
+Release: alt1
 Summary: Default terminal emulation application for Deepin
 License: GPL-3.0+ and (LGPL-2.0+ and GPL-2.0+ and BSD-3-Clause)
 Group: Terminals
 Url: https://github.com/linuxdeepin/deepin-terminal
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-terminal-5.4.0.13-qt5.15.patch
+Patch: deepin-terminal-5.4.12-gcc10.patch
 
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
@@ -52,7 +53,10 @@ Group: System/Libraries
 BuildRequires: lxqt-build-tools libutf8proc-devel
 
 %description -n libterminalwidget5
-QTermWidget is an opensource project based on KDE4 Konsole application. The main goal of this project is to provide unicode-enabled, embeddable QT5 widget for using as a built-in console or terminal emulation widget.
+QTermWidget is an opensource project based on KDE4 Konsole application.
+
+The main goal of this project is to provide unicode-enabled,
+embeddable QT5 widget for using as a built-in console or terminal emulation widget.
 
 %package -n terminalwidget5-data
 Summary: Data files of QTermWidget
@@ -71,7 +75,7 @@ Development package for QTermWidget. Contains headers and dev-libs.
 
 %prep
 %setup
-# %patch -p2
+%patch -p1
 # Much upstream weirdness
 # sed -i '/<QHash>/i#include <QObject>\n#include <QMap>' 3rdparty/terminalwidget/lib/SessionManager.h
 sed -i '/LXQtCompilerSettings/a remove_definitions(-DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII)' 3rdparty/terminalwidget/CMakeLists.txt
@@ -121,6 +125,10 @@ sed -i '/LXQtCompilerSettings/a remove_definitions(-DQT_NO_CAST_FROM_ASCII -DQT_
 %_includedir/terminalwidget5/
 
 %changelog
+* Thu Aug 26 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.12-alt1
+- New version (5.4.12).
+- Temporarily disabled link-time optimization.
+
 * Wed Jun 23 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.6-alt2
 - Added terminalwidget5-data in requires.
 
