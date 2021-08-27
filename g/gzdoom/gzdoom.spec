@@ -1,6 +1,8 @@
+%define optflags_lto %nil
+
 Name: gzdoom
-Version: 4.6.0
-Release: alt1
+Version: 4.6.1
+Release: alt3
 
 Summary: Enhanced Doom engine
 Summary(ru_RU.UTF-8): Продвинутый порт движка Doom
@@ -9,16 +11,17 @@ Group: Games/Arcade
 
 Url: http://zdoom.org
 
-Packager: Artyom Bystrov <arbars@altlinux.org>
-
 ExclusiveArch: x86_64
 
 Source: %name-%version.tar
 Source1: %name.png
 
+Patch: fix-soundfont-paths.patch
+
 BuildRequires: cmake gcc-c++ rpm-macros-cmake nasm glslang-devel libspirv-tools-devel bzip2
 BuildRequires: libSDL2-devel zlib-devel libgme-devel libpng-devel libfluidsynth-devel libjpeg-devel libgomp5-devel libtimidity-devel xz zmusic-devel
 BuildRequires: libopenal1-devel libGLU-devel libsndfile-devel libmpg123-devel flac libogg-devel libvorbis-devel ImageMagick-tools
+Requires: fluidsynth fluid-soundfont-gs
 
 %description
 GZDoom is a Doom source port based on ZDoom. It features an OpenGL renderer
@@ -45,6 +48,8 @@ GZDoom - порт движка Doom, основанный на ZDoom. Основ
 %prep
 %setup -n %name-%version
 
+%patch0 -p1
+
 %build
 %cmake_insource \
 	-DCMAKE_BUILD_TYPE=Release \
@@ -56,6 +61,11 @@ GZDoom - порт движка Doom, основанный на ZDoom. Основ
 
 %install
 %makeinstall_std
+
+mkdir -p %buildroot%_datadir/%name/soundfonts/
+
+install -D -m 0644 fm_banks/* -t %buildroot%_datadir/%name/fm_banks
+install -D -m 0644 soundfont/%name.sf2 %buildroot%_datadir/%name/soundfonts/
 
 # install menu entry
 mkdir -p %buildroot%_desktopdir
@@ -78,17 +88,30 @@ install -D -m 0644 $N.png %buildroot%_iconsdir/hicolor/${N}x${N}/apps/%name.png
 done
 
 %files
-%dir /usr/share/icons/hicolor/64x64
-%dir /usr/share/icons/hicolor/64x64/apps
-%dir /usr/share/icons/hicolor/128x128
-%dir /usr/share/icons/hicolor/128x128/apps
+#icons
+
+#fm_banks
+%_datadir/%name/fm_banks/
+
+%doc docs/{console,rh-log,skins}.*
+
 %_bindir/%name
-%_docdir/%name
+%_docdir/%name/
 %_datadir/doom
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.png
+%_datadir/%name/soundfonts/%name.sf2
 
 %changelog
+* Fri Aug 27 2021 Artyom Bystrov <arbars@altlinux.org> 4.6.1-alt3
+- disable link-time optimization;
+- delete "Packager" tag
+
+* Tue Aug 10 2021 Artyom Bystrov <arbars@altlinux.org> 4.6.1-alt1
+- Update version to 4.6.1
+- Add patch for fixing paths for soundfont (thx to jan@ FROM aur)
+- Add fluid-soundfont in Requires list
+
 * Sat May 29 2021 Artyom Bystrov <arbars@altlinux.org> 4.6.0-alt1
 - Widescreen graphics for Heretic and Hexen
 - Sprite shadows like in the Build engine. Both in software and hardware renderer.
