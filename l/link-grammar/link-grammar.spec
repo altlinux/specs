@@ -1,5 +1,7 @@
 %def_disable snapshot
 
+%def_disable static
+%{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 %def_disable java
 # don't use aspell as Abiword uses hanspell via libenchant
 %def_disable aspell
@@ -11,7 +13,7 @@
 
 Name: link-grammar
 Version: 5.9.1
-Release: alt1
+Release: alt1.1
 
 Summary: The link grammar parsing system for Unix
 License: BSD-3-Clause and LGPL-2.1
@@ -22,7 +24,7 @@ Url: https://github.com/opencog/link-grammar
 #Source: http://www.abisource.com/downloads/%name/%version/%name-%version.tar.gz
 Source: %url/archive/%name-%version.tar.gz
 %else
-# VCS: https://github.com/opencog/link-grammar.git
+Vcs: https://github.com/opencog/link-grammar.git
 Source: %name-%version.tar
 %endif
 
@@ -67,11 +69,13 @@ Perl bindings for %name library.
 %build
 %autoreconf
 %configure \
+	%{subst_enable static} \
 	--with-hunspell-dictdir=%dictdir \
 	%{?_disable_java:--disable-java-bindings} \
 	%{subst_enable aspell} \
 	%{subst_enable hunspell} \
 	%{?_disable_system_minisat:--enable-sat-solver=bundled}
+%nil
 %make_build
 
 %install
@@ -94,7 +98,7 @@ Perl bindings for %name library.
 %_includedir/%name/*
 %_libdir/*.so
 %_pkgconfigdir/%name.pc
-%exclude %_libdir/*.a
+#%exclude %_libdir/*.a
 
 %if_enabled perl
 %files -n perl-%name
@@ -102,6 +106,9 @@ Perl bindings for %name library.
 %endif
 
 %changelog
+* Fri Aug 27 2021 Yuri N. Sedunov <aris@altlinux.org> 5.9.1-alt1.1
+- disabled build of static libraries
+
 * Tue Jul 06 2021 Yuri N. Sedunov <aris@altlinux.org> 5.9.1-alt1
 - 5.9.1
 
