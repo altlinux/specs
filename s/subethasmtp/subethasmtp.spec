@@ -3,13 +3,13 @@ Group: Development/Java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global githash db8a995386c9808c893384023eee78e087ad9ad7
 Name:          subethasmtp
 Version:       3.1.7
-Release:       alt1_14jpp8
+Release:       alt2_14jpp8
 Summary:       A SMTP mail server for Java
 # BSD: src/main/java/org/subethamail/smtp/util/Base64.java
 License:       ASL 2.0 and BSD
@@ -100,6 +100,9 @@ sed -i.java8 "s|MDC.setContextMap(parentLoggingMdcContext);|MDC.setContextMap((M
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri Aug 27 2021 Igor Vlasenko <viy@altlinux.org> 3.1.7-alt2_14jpp8
+- java8 build
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.1.7-alt1_14jpp8
 - new version
 
