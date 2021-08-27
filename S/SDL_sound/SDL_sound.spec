@@ -1,6 +1,8 @@
+%def_disable static
+
 Name: SDL_sound
 Version: 1.0.3
-Release: alt5.git4a8ecd7
+Release: alt6.git4a8ecd7
 %define lib_name lib%name
 
 Summary: An abstract soundfile decoder
@@ -27,10 +29,12 @@ Group: Development/C
 Requires: %lib_name = %version-%release
 Provides: %name-devel = %version-%release
 
+%if_enabled static
 %package -n %lib_name-devel-static
 Summary: Static libraries for develop SDL_sound applications
 Group: Development/C
 Requires: %lib_name-devel = %version-%release
+%endif
 
 %description
 SDL_sound is a library that handles the decoding of several popular
@@ -61,8 +65,10 @@ programmer desires.
 %description -n %lib_name-devel
 Header files and more to develop SDL_sound applications.
 
+%if_enabled static
 %description -n %lib_name-devel-static
 Static library for develop SDL_sound applications.
+%endif
 
 %prep
 %setup
@@ -109,6 +115,9 @@ popd
 mkdir -p %buildroot%docdir
 cp -a *.txt docs/html %buildroot%docdir/
 
+%if_disabled static
+rm -f %buildroot%_libdir/*.a
+%endif
 
 %files -n %lib_name
 %_bindir/*
@@ -123,10 +132,15 @@ cp -a *.txt docs/html %buildroot%docdir/
 %dir %docdir
 %docdir/html
 
+%if_enabled static
 %files -n %lib_name-devel-static
 %_libdir/*.a
+%endif
 
 %changelog
+* Fri Aug 27 2021 Leontiy Volodin <lvol@altlinux.org> 1.0.3-alt6.git4a8ecd7
+- Disabled static libraries.
+
 * Tue Jul 13 2021 Leontiy Volodin <lvol@altlinux.org> 1.0.3-alt5.git4a8ecd7
 - Built final-lgpl-revision version.
 
