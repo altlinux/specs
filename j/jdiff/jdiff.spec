@@ -2,16 +2,16 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
+BuildRequires: rpm-build-java /usr/bin/native2ascii
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 
 Name:          jdiff
 Version:       1.1.1
-Release:       alt4_17jpp11
+Release:       alt5_17jpp11
 Summary:       An HTML Report of API Differences
 License:       GPL+ and LGPLv2+
 URL:           http://javadiff.sourceforge.net/
@@ -120,6 +120,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri Aug 27 2021 Igor Vlasenko <viy@altlinux.org> 0:1.1.1-alt5_17jpp11
+- fixed build
+
 * Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 0:1.1.1-alt4_17jpp11
 - use jvm_run
 - java11 build
