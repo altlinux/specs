@@ -1,4 +1,7 @@
 %def_disable snapshot
+%ifarch armh
+%define optflags_lto %nil
+%endif
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.3
@@ -26,7 +29,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.33
+Version: %ver_major.34
 Release: alt1
 
 Summary: Media Sharing Server
@@ -179,6 +182,7 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_datadir/%name/media-session.d/with-pulseaudio
 %dir %_datadir/%name/filter-chain
 %_datadir/%name/filter-chain/demonic.conf
+%_datadir/%name/filter-chain/sink-convolver.conf
 %_datadir/%name/filter-chain/sink-dolby-surround.conf
 %_datadir/%name/filter-chain/sink-eq6.conf
 %_datadir/%name/filter-chain/sink-matrix-spatialiser.conf
@@ -258,6 +262,10 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Thu Aug 26 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.34-alt1
+- 0.3.34
+- disabled LTO for armh
+
 * Thu Aug 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.33-alt1
 - 0.3.33
 - temporarily disabled libcamera support
