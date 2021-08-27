@@ -1,11 +1,16 @@
 %def_disable snapshot
+%def_disable static
+%{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
+
 %define _name LibRaw
+%define ver_major 0.20
+%define sover 20
 # demosaic pack version
 %define dmp_ver 0.18.8
 
 Name: libraw
-Version: 0.20.2
-Release: alt1
+Version: %ver_major.2
+Release: alt1.1
 
 Summary: library for reading RAW files obtained from digital photo cameras
 Group: System/Libraries
@@ -78,11 +83,14 @@ This package contains static library.
 export LIBS+="-lpthread -lomp"
 %endif
 %autoreconf
-%configure --docdir=%_datadir/doc/libraw-%version \
+%configure \
+    %{subst_enable static} \
+    --docdir=%_datadir/doc/libraw-%version \
     --enable-jasper \
     --enable-lcms \
     --enable-jpeg \
     --enable-openmp
+%nil
 %make_build
 
 %install
@@ -106,11 +114,16 @@ export LIBS+="-lpthread -lomp"
 %_pkgconfigdir/libraw.pc
 %_pkgconfigdir/libraw_r.pc
 
+%if_enabled static
 %files devel-static
 %_libdir/libraw.a
 %_libdir/libraw_r.a
+%endif
 
 %changelog
+* Fri Aug 27 2021 Yuri N. Sedunov <aris@altlinux.org> 0.20.2-alt1.1
+- disabled build of static libraries
+
 * Sun Nov 01 2020 Yuri N. Sedunov <aris@altlinux.org> 0.20.2-alt1
 - 0.20.2
 
