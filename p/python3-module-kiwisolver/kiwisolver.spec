@@ -1,6 +1,6 @@
 %define oname kiwisolver
 Name: python3-module-%oname
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 Summary: A fast implementation of the Cassowary constraint solver
 License: BSD
@@ -43,6 +43,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Fri Aug 27 2021 Andrey Cherepanov <cas@altlinux.org> 1.3.2-alt1
+- New version.
+
 * Mon Nov 02 2020 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt1
 - New version.
 
