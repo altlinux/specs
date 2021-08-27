@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 21.08.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -40,7 +40,7 @@ KDE help center.
 %prep
 %setup -n %rname-%version
 #%patch4 -p2
-#%patch5 -p2
+%patch5 -p2
 
 %build
 %K5build \
@@ -65,6 +65,9 @@ KDE help center.
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Fri Aug 27 2021 Oleg Solovyov <mcpain@altlinux.org> 21.08.0-alt2
+- reapply "Hidden links to empty pages on contents screen"
+
 * Mon Aug 23 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
 - new version
 
