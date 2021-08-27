@@ -1,6 +1,6 @@
 Name: picolisp
-Version: 20.6
-Release: alt2
+Version: 21.6
+Release: alt1
 
 Summary: Interpreted Lisp
 License: MIT
@@ -10,17 +10,20 @@ Url: http://picolisp.com
 Source: http://software-lab.de/picoLisp-%version.tgz
 Source100: picolisp.watch
 
-# 64-bit build bootstraps using 32-bit one or Java
-BuildRequires: java /proc
 
+
+BuildRequires:  clang llvm libreadline-devel libssl-devel libffi-devel
+# 64-bit build bootstraps using 32-bit one or Java
+#BuildRequires: java /proc
 # armh-alt-linux-gnueabi-gcc: error: unrecognized command line option '-m32'; did you mean '-mbe32'?
-ExcludeArch: armh
+ExcludeArch: armh %ix86
 
 # trickery inside
 %set_verify_elf_method textrel=none
 
 # pretty much hardwired
-%define _libdir %_usr/lib
+#define _libdir %_usr/lib
+#- undefine usrlib (Closes: #32231)
 
 %description
 PicoLisp can be viewed from two different aspects:
@@ -28,14 +31,15 @@ PicoLisp can be viewed from two different aspects:
      and a dedicated application server framework.
 
 %prep
-%setup -n picoLisp
+%setup -n pil21
 
 %build
-if [ %_lib = lib64 ]; then
-	cd src64
-else
-	cd src
-fi
+# :)
+#if [ %_lib = lib64 ]; then
+cd src
+#else
+#	cd src
+#fi
 make
 cd ..
 
@@ -47,15 +51,21 @@ rm -rf lib/el
 # lib/ and lib.l
 cp -a lib* %buildroot%_libdir/%name/
 # as per INSTALL
-ln -s ../lib/%name %buildroot%_datadir/%name
+ln -s ../lib64/%name %buildroot%_datadir/%name
+#ln -s ../lib64/%name %buildroot%_datadir/%name
 
 %files
-%doc CHANGES CREDITS README
+%doc README
 %_bindir/*
 %_libdir/%name/
 %_datadir/%name/
 
 %changelog
+* Fri Aug 27 2021 Ilya Mashkin <oddity@altlinux.ru> 21.6-alt1
+- 21.6
+- build with clang, llvm etc
+- undefine usrlib (Closes: #32231)
+
 * Tue Jun 30 2020 Michael Shigorin <mike@altlinux.org> 20.6-alt2
 - ExcludeArch: armh
 
