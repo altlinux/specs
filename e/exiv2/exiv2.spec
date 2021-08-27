@@ -9,6 +9,7 @@
 
 %ifnarch %e2k
 %define gcc_ver 9
+%define optflags_lto %nil
 %set_gcc_version %gcc_ver
 %else
 %define gcc_ver %nil
@@ -16,7 +17,7 @@
 
 Name: exiv2
 Version: 0.27.4
-Release: alt1.1%beta
+Release: alt1.2%beta
 
 Summary: Command line tool to access EXIF data in image files
 License: GPL-2.0-or-later
@@ -105,6 +106,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Aug 27 2021 Yuri N. Sedunov <aris@altlinux.org> 0.27.4-alt1.2
+- set optflags_lto to %%nil while we use gcc-9 to build
+
 * Fri Jun 18 2021 Yuri N. Sedunov <aris@altlinux.org> 0.27.4-alt1.1
 - fixed build on %%e2k
 
