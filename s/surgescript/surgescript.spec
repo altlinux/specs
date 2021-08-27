@@ -21,11 +21,10 @@ Summary: A scripting language for games
 License: %license_main
 
 Version: 0.5.5
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Url: https://opensurge2d.org
-Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -78,6 +77,7 @@ using static linking.
 
 %prep
 %setup
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 %build
 %cmake \
@@ -95,7 +95,7 @@ using static linking.
 %doc README.md
 %doc LICENSE
 %_bindir/%name
-%_datadir/pixmaps/%name.png
+%_pixmapsdir/%name.png
 %_datadir/metainfo/%name.appdata.xml
 %_libdir/lib%name.so.%version
 %_libdir/lib%name.so.%version.1
@@ -111,6 +111,9 @@ using static linking.
 %_pkgconfigdir/%name-static.pc
 
 %changelog
+* Fri Aug 27 2021 Artyom Bystrov <arbars@altlinux.org> 0.5.5-alt2
+- add link-time optimization
+- delete "Packager" tag
+
 * Thu Aug 12 2021 Artyom Bystrov <arbars@altlinux.org> 0.5.5-alt1
 - initial build for ALT Sisyphus
-
