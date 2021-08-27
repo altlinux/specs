@@ -2,7 +2,7 @@ Name: apache2-mod_fcgid
 Summary: Apache2 module for high-performance server-side scripting 
 
 Version: 2.3.9
-Release: alt2
+Release: alt3
 License: %asl
 Group: System/Servers
 URL: https://httpd.apache.org/mod_fcgid/
@@ -11,9 +11,11 @@ Source0: mod_fcgid-%{version}.tar.gz
 Source1: %name-fcgid.conf
 Source2: %name-fcgid.load
 Source3: %name.init
+Source4: %name.service
+Source5: %name.preset
 
 Provides: mod_fcgid = %version-%release
-PreReq: apache2
+Requires(pre): apache2
 
 BuildRequires: rpm-build-licenses
 
@@ -46,6 +48,10 @@ APXS="/usr/bin/apxs2" ./configure.apxs
 %__mkdir_p %buildroot%_initdir
 %__sed -e 's|@apache2_user@|%apache2_user|' -e 's|@apache2_group@|%apache2_group|' < %SOURCE3 > %buildroot%_initdir/mod_fcgid
 
+%__mkdir_p %buildroot%_unitdir
+%__sed -e 's|@apache2_user@|%apache2_user|' -e 's|@apache2_group@|%apache2_group|' < %SOURCE4 > %buildroot%_unitdir/mod_fcgid.service
+install -Dm 644 %SOURCE5 %buildroot%_presetdir/90-mod_fcgid.preset
+
 install -m 644 %SOURCE1 %buildroot%apache2_confdir/mods-available/fcgid.conf
 install -m 644 %SOURCE2 %buildroot%apache2_confdir/mods-available/fcgid.load
 
@@ -70,8 +76,13 @@ rm -rf %buildroot%webserver_datadir/apache2
 %apache2_confdir/mods-available/*
 
 %attr(0755,root,root) %_initdir/mod_fcgid
+%_unitdir/mod_fcgid.service
+%_presetdir/90-mod_fcgid.preset
 
 %changelog
+* Fri Aug 27 2021 Egor Ignatov <egori@altlinux.org> 2.3.9-alt3
+- Add systemd service to create subdirectories in %%_runtimedir
+
 * Mon Oct 24 2016 Sergey Y. Afonin <asy@altlinux.ru> 2.3.9-alt2
 - Added init script for check subdirectories in %%_runtimedir
 - Changed configuration for new directives (from git of misha@altlinux)
