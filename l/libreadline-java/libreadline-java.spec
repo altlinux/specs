@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global editline_ver    3.1-15
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          libreadline-java
 Version:       0.8.0
-Release:       alt5_50jpp8
+Release:       alt6_50jpp8
 Summary:       Java wrapper for the EditLine library
 License:       LGPLv2+
 URL:           http://java-readline.sf.net/
@@ -24,7 +24,7 @@ Patch1:        %{name}-libdir.patch
 Patch2:        %{name}-editline.patch
 
 BuildRequires: gcc
-BuildRequires: java-devel >= 1.4.2
+#BuildRequires: java-devel >= 1.4.2
 BuildRequires: javapackages-local
 BuildRequires: libedit-devel >= %{editline_ver}
 BuildRequires: libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
@@ -89,6 +89,9 @@ ln -sf %{_jnidir}/%{name}.jar %{buildroot}%{_libdir}/%{name}/%{name}.jar
 %doc --no-dereference COPYING.LIB
 
 %changelog
+* Fri Aug 27 2021 Igor Vlasenko <viy@altlinux.org> 0:0.8.0-alt6_50jpp8
+- java8 build
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:0.8.0-alt5_50jpp8
 - new version
 
