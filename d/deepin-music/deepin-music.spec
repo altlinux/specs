@@ -1,15 +1,16 @@
 %def_disable clang
+%def_disable static
 
 %define repo dmusic
+%define optflags_lto %nil
 
 Name: deepin-music
 Version: 6.1.7
-Release: alt1
+Release: alt2
 Summary: Awesome music player with brilliant and tweakful UI Deepin-UI based
 License: GPL-3.0+ and LGPL-2.1+
 Group: Sound
 Url: https://github.com/linuxdeepin/deepin-music
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
@@ -42,12 +43,13 @@ BuildRequires: dbusextended-qt5-devel
 BuildRequires: udisks2-qt5-devel
 BuildRequires: deepin-qt-dbus-factory-devel
 Requires: vlc-mini ffmpeg
-Requires: lib%repo-static = %version
+# Requires: lib%%repo-static = %%version
 
 %description
 %summary.
 
-%package -n lib%repo-static
+%if_enabled static
+%package -n lib%repo-devel-static
 Summary: Static libraries for %name
 Group: Development/Other
 Provides: lib%name = %version
@@ -57,8 +59,9 @@ Obsoletes: %name-devel < %version
 # Provides: lib%name-static = %version
 # Obsoletes: lib%name-static < %version
 
-%description -n lib%repo-static
+%description -n lib%repo-devel-static
 This package provides static libraries for %name.
+%endif
 
 %prep
 %setup
@@ -76,16 +79,21 @@ export READELF="llvm-readelf"
 
 %cmake \
     -GNinja \
-    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DLIB_INSTALL_DIR=%_libdir \
     -DAPP_VERSION=%version \
     -DVERSION=%version
-%cmake_build
+# %%cmake_build
+cmake --build %_cmake__builddir -j%__nprocs
 
 %install
 %cmake_install
 %find_lang %name
+
+%if_disabled static
+rm -f %buildroot%_libdir/lib%repo.a
+%endif
 
 %files -f %name.lang
 %doc CHANGELOG.md COPYING LICENSE README.md
@@ -102,10 +110,16 @@ export READELF="llvm-readelf"
 %dir %_datadir/deepin-manual/manual-assets/application/%name/
 %_datadir/deepin-manual/manual-assets/application/%name/music/
 
-%files -n lib%repo-static
-%_libdir/*.a
+%if_enabled static
+%files -n lib%repo-devel-static
+%_libdir/lib%repo.a
+%endif
 
 %changelog
+* Fri Aug 27 2021 Leontiy Volodin <lvol@altlinux.org> 6.1.7-alt2
+- Disabled static library.
+- Temporarily disabled link-time optimization.
+
 * Thu Jul 01 2021 Leontiy Volodin <lvol@altlinux.org> 6.1.7-alt1
 - New version (6.1.7).
 - Built with gcc10 instead clang12.
