@@ -2,7 +2,7 @@
 BuildRequires: gcc-c++ libX11-devel libXext-devel libalsa-devel libncurses-devel
 # END SourceDeps(oneline)
 Name: atari++
-Version: 1.83
+Version: 1.84
 Release: alt1
 Summary: Unix based emulator of the Atari eight bit computers
 
@@ -88,6 +88,9 @@ desktop-file-install \
 
 
 %changelog
+* Sat Aug 28 2021 Ilya Mashkin <oddity@altlinux.ru> 1.84-alt1
+- 1.84
+
 * Thu Mar 18 2021 Ilya Mashkin <oddity@altlinux.ru> 1.83-alt1
 - 1.83
 
