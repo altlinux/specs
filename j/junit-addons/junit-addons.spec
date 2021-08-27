@@ -1,15 +1,15 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: rpm-build-java unzip /usr/bin/native2ascii
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          junit-addons
 Version:       1.4
-Release:       alt3_18jpp8
+Release:       alt4_18jpp8
 Summary:       JUnitX helper classes for JUnit
 License:       ASL 1.1
 Url:           http://sourceforge.net/projects/junit-addons/
@@ -120,6 +120,9 @@ export OPT_JAR_LIST=:
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Aug 27 2021 Igor Vlasenko <viy@altlinux.org> 0:1.4-alt4_18jpp8
+- java8 build
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt3_18jpp8
 - new version
 
