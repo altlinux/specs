@@ -4,7 +4,7 @@
 
 Name: wvstreams
 Version: 4.6.1
-Release: alt6
+Release: alt7
 
 Summary: C++ libraries for rapid application development
 License: LGPL-2.0
@@ -194,6 +194,7 @@ bzip2 -9fk ChangeLog
 %patch10 -p1
 
 %build
+%global optflags_lto %optflags_lto -ffat-lto-objects
 %autoreconf
 %configure
 
@@ -289,6 +290,9 @@ mv %buildroot%_localstatedir/lib/uniconf/uniconfd.ini \
 %_libdir/pkgconfig/libwvqt.pc
 
 %changelog
+* Fri Aug 27 2021 Andrey Cherepanov <cas@altlinux.org> 4.6.1-alt7
+- FTBFS: fix build with LTO by default.
+
 * Tue Jan 05 2021 Andrey Cherepanov <cas@altlinux.org> 4.6.1-alt6
 - FTBFS: fix build with GCC 10.
 - Fix License tag.
