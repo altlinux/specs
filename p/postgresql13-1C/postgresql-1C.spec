@@ -5,8 +5,8 @@
 %def_with icu
 
 %define prog_name            postgresql
-%define postgresql_major     12
-%define postgresql_minor     7
+%define postgresql_major     13
+%define postgresql_minor     3
 %define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
@@ -208,6 +208,12 @@ database.
 %patch101 -p1
 
 %build
+%ifnarch armh
+ %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%else
+%remove_optflags %optflags_lto
+%endif
+
 %autoreconf
 
 %configure --includedir=%_includedir/%PGSQL \
@@ -322,13 +328,16 @@ cp -a COPYRIGHT README \
 %find_lang pltcl-%postgresql_major
 %find_lang postgres-%postgresql_major
 %find_lang psql-%postgresql_major
+%find_lang pg_checksums-%postgresql_major
+%find_lang pg_verifybackup-%postgresql_major
 
 cat psql-%postgresql_major.lang \
     pg_dump-%postgresql_major.lang \
     pgscripts-%postgresql_major.lang \
     pg_basebackup-%postgresql_major.lang \
     pg_test_fsync-%postgresql_major.lang \
-    pg_test_timing-%postgresql_major.lang > main.lang
+    pg_test_timing-%postgresql_major.lang \
+    pg_verifybackup-%postgresql_major.lang > main.lang
 
 cat postgres-%postgresql_major.lang \
     pg_controldata-%postgresql_major.lang \
@@ -338,7 +347,8 @@ cat postgres-%postgresql_major.lang \
     pg_rewind-%postgresql_major.lang \
     pg_upgrade-%postgresql_major.lang \
     pg_resetwal-%postgresql_major.lang \
-    pg_waldump-%postgresql_major.lang > server.lang
+    pg_waldump-%postgresql_major.lang \
+    pg_checksums-%postgresql_major.lang > server.lang
 
 cat pg_config-%postgresql_major.lang > devel.lang
 
@@ -411,12 +421,12 @@ if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
 
-%triggerpostun -- %{prog_name}12-1C-server
+%triggerpostun -- %{prog_name}13-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
 
-%triggerpostun -- %{prog_name}13-server
+%triggerpostun -- %{prog_name}13-1C-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
@@ -438,6 +448,7 @@ fi
 %_bindir/pg_test_timing
 %_bindir/pg_isready
 %_bindir/pg_recvlogical
+%_bindir/pg_verifybackup
 %_man1dir/clusterdb.1*
 %_man1dir/createdb.1*
 %_man1dir/createuser.1*
@@ -454,6 +465,7 @@ fi
 %_man1dir/pg_basebackup.1*
 %_man1dir/pg_isready.1*
 %_man1dir/pg_recvlogical.1*
+%_man1dir/pg_verifybackup.1*
 %_man7dir/*
 %dir %docdir
 %docdir/KNOWN_BUGS
@@ -550,9 +562,7 @@ fi
 %_datadir/%PGSQL/extension/hstore_plperl*.control
 %_libdir/pgsql/hstore_plpython3.so
 %_datadir/%PGSQL/extension/hstore_plpython3u-*.sql
-%_datadir/%PGSQL/extension/hstore_plpythonu-*.sql
 %_datadir/%PGSQL/extension/hstore_plpython3u.control
-%_datadir/%PGSQL/extension/hstore_plpythonu.control
 %_libdir/pgsql/insert_username.so
 %_datadir/%PGSQL/extension/insert_username-*.sql
 %_datadir/%PGSQL/extension/insert_username.control
@@ -569,8 +579,6 @@ fi
 %_libdir/pgsql/jsonb_plpython3.so
 %_datadir/%PGSQL/extension/jsonb_plpython3u-*.sql
 %_datadir/%PGSQL/extension/jsonb_plpython3u.control
-%_datadir/%PGSQL/extension/jsonb_plpythonu-*.sql
-%_datadir/%PGSQL/extension/jsonb_plpythonu.control
 %_libdir/pgsql/lo.so
 %_datadir/%PGSQL/extension/lo-*.sql
 %_datadir/%PGSQL/extension/lo.control
@@ -580,8 +588,6 @@ fi
 %_libdir/pgsql/ltree_plpython3.so
 %_datadir/%PGSQL/extension/ltree_plpython3u-*.sql
 %_datadir/%PGSQL/extension/ltree_plpython3u.control
-%_datadir/%PGSQL/extension/ltree_plpythonu-*.sql
-%_datadir/%PGSQL/extension/ltree_plpythonu.control
 %_libdir/pgsql/mchar.so
 %_datadir/%PGSQL/extension/mchar-*.sql
 %_datadir/%PGSQL/extension/mchar.control
@@ -670,6 +676,7 @@ fi
 %_bindir/pg_receivewal
 %_bindir/pg_resetwal
 %_bindir/pg_waldump
+%_bindir/pg_checksums
 
 %_man1dir/initdb.1*
 %_man1dir/pg_controldata.1*
@@ -681,6 +688,7 @@ fi
 %_man1dir/pg_receivewal.1*
 %_man1dir/pg_resetwal.1*
 %_man1dir/pg_waldump.1*
+%_man1dir/pg_checksums.1*
 
 %dir %_libdir/%PGSQL
 %dir %_datadir/%PGSQL/extension
@@ -702,8 +710,6 @@ fi
 %dir %_datadir/%PGSQL/tsearch_data
 %_datadir/%PGSQL/tsearch_data/*
 %_datadir/%PGSQL/postgres.bki
-%_datadir/%PGSQL/postgres.description
-%_datadir/%PGSQL/postgres.shdescription
 %_datadir/%PGSQL/*.sample
 %_datadir/%PGSQL/information_schema.sql
 %_datadir/%PGSQL/sql_features.txt
@@ -728,6 +734,10 @@ fi
 %files -f plperl-%postgresql_major.lang perl
 %dir %_libdir/%PGSQL
 %_libdir/%PGSQL/plperl.so
+%_datadir/%PGSQL/extension/bool_plperl--1.0.sql
+%_datadir/%PGSQL/extension/bool_plperl.control
+%_datadir/%PGSQL/extension/bool_plperlu--1.0.sql
+%_datadir/%PGSQL/extension/bool_plperlu.control
 %_datadir/%PGSQL/extension/plperl-*.sql
 %_datadir/%PGSQL/extension/plperl.control
 %_datadir/%PGSQL/extension/plperlu-*.sql
@@ -780,6 +790,13 @@ fi
 %endif
 
 %changelog
+* Wed Aug 25 2021 Alexei Takaseev <taf@altlinux.org> 13.3-alt2
+- Added -ffat-lto-objects to %optflags_lto
+
+* Fri Aug 20 2021 Alexei Takaseev <taf@altlinux.org> 13.3-alt1
+- 13.3
+- Update 1C patch
+
 * Wed Aug 11 2021 Alexei Takaseev <taf@altlinux.org> 12.7-alt2
 - Fixes CVE-2021-3677
 

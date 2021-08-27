@@ -7,7 +7,7 @@
 %define prog_name            postgresql
 %define postgresql_major     11
 %define postgresql_minor     13
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -44,7 +44,7 @@ Provides: %prog_name = %EVR
 Conflicts: %prog_name < %EVR
 Conflicts: %prog_name > %EVR
 # 1C
-Conflicts: %{prog_name}12-1C
+Conflicts: %{prog_name}13-1C
 
 BuildRequires: OpenSP docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python3-dev setproctitle-devel tcl-devel xsltproc zlib-devel
 BuildRequires: libselinux-devel libkrb5-devel
@@ -134,7 +134,7 @@ Summary: Extra documentation for PostgreSQL
 Group: Databases
 BuildArch: noarch
 # 1C
-Conflicts: %{prog_name}12-1C-docs
+Conflicts: %{prog_name}13-1C-docs
 
 %description docs
 The postgresql-docs package includes the SGML source for the documentation
@@ -148,7 +148,7 @@ Group: Databases
 Requires: %name-server = %EVR
 Provides: %prog_name-contrib = %EVR
 # 1C
-Conflicts: %{prog_name}12-1C-contrib
+Conflicts: %{prog_name}13-1C-contrib
 
 %description contrib
 The postgresql-contrib package includes the contrib tree distributed with
@@ -163,7 +163,7 @@ Requires: %name = %EVR
 Requires: glibc-locales
 Provides: %prog_name-server = %EVR
 # 1C
-Conflicts: %{prog_name}12-1C-server
+Conflicts: %{prog_name}13-1C-server
 
 %description server
 The postgresql-server package includes the programs needed to create
@@ -183,7 +183,7 @@ Group: Databases
 Requires: %name-server = %EVR
 Provides: postgresql-tcl
 # 1C
-Conflicts: %{prog_name}12-1C-tcl
+Conflicts: %{prog_name}13-1C-tcl
 
 %description tcl
 PostgreSQL is an advanced Object-Relational database management
@@ -196,7 +196,7 @@ Group: Databases
 Requires: %name-server = %EVR
 Provides: postgresql-perl = %EVR
 # 1C
-Conflicts: %{prog_name}12-1C-perl
+Conflicts: %{prog_name}13-1C-perl
 
 %description perl
 PostgreSQL is an advanced Object-Relational database management
@@ -209,7 +209,7 @@ Group: Databases
 Requires: %name-server = %EVR
 Provides: postgresql-python = %EVR
 # 1C
-Conflicts: %{prog_name}12-1C-python
+Conflicts: %{prog_name}13-1C-python
 
 %description python
 PostgreSQL is an advanced Object-Relational database management
@@ -227,6 +227,12 @@ database.
 %patch8 -p1
 
 %build
+%ifnarch armh
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%else
+%remove_optflags %optflags_lto
+%endif
+
 %autoreconf
 
 %configure --includedir=%_includedir/%PGSQL \
@@ -430,12 +436,12 @@ if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
 
-%triggerpostun -- %{prog_name}12-1C-server
+%triggerpostun -- %{prog_name}13-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
 
-%triggerpostun -- %{prog_name}13-server
+%triggerpostun -- %{prog_name}13-1C-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
@@ -565,9 +571,7 @@ fi
 %_datadir/%PGSQL/extension/hstore_plperl*.control
 %_libdir/pgsql/hstore_plpython3.so
 %_datadir/%PGSQL/extension/hstore_plpython3u-*.sql
-%_datadir/%PGSQL/extension/hstore_plpythonu-*.sql
 %_datadir/%PGSQL/extension/hstore_plpython3u.control
-%_datadir/%PGSQL/extension/hstore_plpythonu.control
 %_libdir/pgsql/insert_username.so
 %_datadir/%PGSQL/extension/insert_username-*.sql
 %_datadir/%PGSQL/extension/insert_username.control
@@ -584,8 +588,6 @@ fi
 %_libdir/pgsql/jsonb_plpython3.so
 %_datadir/%PGSQL/extension/jsonb_plpython3u-*.sql
 %_datadir/%PGSQL/extension/jsonb_plpython3u.control
-%_datadir/%PGSQL/extension/jsonb_plpythonu-*.sql
-%_datadir/%PGSQL/extension/jsonb_plpythonu.control
 %_libdir/pgsql/lo.so
 %_datadir/%PGSQL/extension/lo-*.sql
 %_datadir/%PGSQL/extension/lo.control
@@ -595,8 +597,6 @@ fi
 %_libdir/pgsql/ltree_plpython3.so
 %_datadir/%PGSQL/extension/ltree_plpython3u-*.sql
 %_datadir/%PGSQL/extension/ltree_plpython3u.control
-%_datadir/%PGSQL/extension/ltree_plpythonu-*.sql
-%_datadir/%PGSQL/extension/ltree_plpythonu.control
 %_libdir/pgsql/moddatetime.so
 %_datadir/%PGSQL/extension/moddatetime-*.sql
 %_datadir/%PGSQL/extension/moddatetime.control
@@ -794,6 +794,10 @@ fi
 %endif
 
 %changelog
+* Wed Aug 25 2021 Alexei Takaseev <taf@altlinux.org> 11.13-alt2
+- Change conflict 1C 12 -> 1C 13
+- Added -ffat-lto-objects to -flto=auto -ffat-lto-objects
+
 * Wed Aug 11 2021 Alexei Takaseev <taf@altlinux.org> 11.13-alt1
 - 11.13 (Fixes CVE-2021-3677)
 

@@ -3,7 +3,7 @@
 
 Name:    1c-preinstall
 Version: 8.3
-Release: alt13
+Release: alt14
 
 Summary: Set correct environment for 1C:Enterprise client
 License: GPL
@@ -67,8 +67,8 @@ Summary: Set correct environment for 1C:Enterprise server
 Group: Databases
 BuildArch:noarch
 Requires: %name
-Requires: postgresql12-1C-server
-Requires: postgresql12-1C-contrib
+Requires: postgresql13-1C-server
+Requires: postgresql13-1C-contrib
 
 %description server
 This metapackage is intend to deploy the correct environment for
@@ -106,6 +106,10 @@ mkdir -p %buildroot
 %files server
 
 %changelog
+* Fri Aug 27 2021 Alexei Takaseev <taf@altlinux.org> 8.3-alt14
+- Requires postgresql12-1C-server -> postgresql13-1C-server.
+- Requires postgresql12-1C-contrib -> postgresql13-1C-contrib.
+
 * Wed Aug 11 2021 Anna Khrustova <khab@altlinux.org> 8.3-alt13
 - Add for server:
 - Requires postgresql12-1C-server.
