@@ -10,7 +10,7 @@
 %define _cmake__builddir build
 
 Name: cmake
-Version: 3.21.1
+Version: 3.21.2
 Release: alt1
 
 Summary: Cross-platform, open-source make system
@@ -39,8 +39,9 @@ BuildRequires: libcurl-devel libexpat-devel libncurses-devel libxml2-devel
 BuildRequires: liblzma-devel jsoncpp-devel doxygen graphviz zlib-devel
 BuildRequires: librhash-devel libuv-devel
 BuildRequires: shared-mime-info rpm-build-vim
-%{?!_disable_docs:BuildRequires: python3-module-sphinx-sphinx-build-symlink}
-%{?!_disable_gui:BuildRequires: qt5-base-devel}
+
+%{?_enable_docs:BuildRequires: python3-module-sphinx-sphinx-build-symlink}
+%{?_enable_gui:BuildRequires: qt5-base-devel}
 
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc gcc-fortran java-devel cvs subversion mercurial git-core}}
 
@@ -189,6 +190,7 @@ export LD_LIBRARY_PATH=$PWD/Source:$PWD/Source/kwsys/:$PWD/Source/CursesDialog/f
 %make_build VERBOSE=1
 popd
 %else
+# without bootstrap
 %cmake -DCMAKE_USE_SYSTEM_LIBRARIES=ON \
     -DCMAKE_DATA_DIR=share/%name \
     -DCMAKE_DOC_DIR=share/doc/%name-%version \
@@ -333,6 +335,10 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Fri Aug 27 2021 Vitaly Lipatov <lav@altlinux.ru> 3.21.2-alt1
+- new version
+- fix BR for bootstrap case (thanks, @iv)
+
 * Thu Jul 29 2021 Vitaly Lipatov <lav@altlinux.ru> 3.21.1-alt1
 - new version
 
