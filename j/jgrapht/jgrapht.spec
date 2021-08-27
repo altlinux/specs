@@ -5,7 +5,7 @@
 Name:    jgrapht
 Epoch:   1
 Version: 1.0.1
-Release: alt1
+Release: alt1_jpp11
 Summary: A free Java graph library that provides mathematical graph objs and algorithms
 License: LGPLv2+
 Group:   Development/Java
@@ -20,8 +20,8 @@ Patch1: %oname-%version-alt-build-core.patch
 
 BuildRequires: rpm-build-java
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-BuildRequires: java-devel >= 1.6
+BuildRequires: jpackage-default
+#BuildRequires: java-devel >= 1.6
 BuildRequires: javapackages-local
 BuildRequires: maven-local
 BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
@@ -48,7 +48,7 @@ This package contains the API documentation for %{oname}.
 %pom_remove_plugin :maven-shade-plugin jgrapht-touchgraph/pom.xml
 
 %build
-%mvn_build --skip-tests
+%mvn_build --skip-tests -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -62,6 +62,9 @@ This package contains the API documentation for %{oname}.
 %doc license-EPL.txt license-LGPL.txt
 
 %changelog
+* Fri Aug 27 2021 Igor Vlasenko <viy@altlinux.org> 1:1.0.1-alt1_jpp11
+- java11 build
+
 * Fri Nov 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.0.1-alt1
 - Updated to version 1.0.1.
 
