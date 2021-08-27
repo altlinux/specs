@@ -3,7 +3,7 @@
 %def_disable webkit
 
 Name: psi-plus
-Version: 1.5.1543
+Version: 1.5.1552
 Release: alt1
 
 Summary: Psi+ Jabber client
@@ -21,6 +21,7 @@ Patch1: %name-disable-sm-alt.patch
 Patch2: %name-doubleclick-alt.patch
 Patch3: %name-events-alt.patch
 Patch4: %name-disable-omemo-alt.patch
+Patch5: psi-fix-crashes.patch
 
 Requires: qt5-translations
 Requires: qca-qt5-ossl
@@ -576,6 +577,7 @@ mv usrsctp/ iris/3rdparty/
 %patch2 -p1
 %patch3 -p2
 %patch4 -p2
+%patch5 -p1
 
 rm -rf src/libpsi/tools/zip/minizip
 
@@ -735,6 +737,9 @@ rm %buildroot%_libdir/%name/plugins/lib{battleshipgame,openpgp}plugin.so
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Fri Jul 23 2021 Oleg Solovyov <mcpain@altlinux.org> 1.5.1552-alt1
+- Version 1.5.1552
+
 * Wed Jun 02 2021 Oleg Solovyov <mcpain@altlinux.org> 1.5.1543-alt1
 - Version 1.5.1543
 
