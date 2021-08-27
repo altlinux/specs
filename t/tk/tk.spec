@@ -1,10 +1,12 @@
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 %define major 8.6
 
 %add_tcl_req_skip ttk::theme::default
 
 Name: tk
 Version: 8.6.11.1
-Release: alt1
+Release: alt2
 
 Summary: The Tk toolkit fot Tcl scripting language
 License: TCL
@@ -166,6 +168,9 @@ popd
 %_tcldatadir/%name%major/demos
 
 %changelog
+* Fri Aug 27 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.11.1-alt2
+- Enabled LTO.
+
 * Tue Apr 13 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.11.1-alt1
 - Updated to 8.6.11.1.
 - devel: Packed tkFont.h (closes #39923).

@@ -1,3 +1,5 @@
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 %def_with test
 %define major 8.6
 %define itcl 4.2.1
@@ -6,7 +8,7 @@
 
 Name: tcl
 Version: 8.6.11
-Release: alt1
+Release: alt2
 
 Summary: The Tool Command Language (TCL)
 License: TCL
@@ -275,6 +277,9 @@ popd
 %files pkgs-devel
 
 %changelog
+* Fri Aug 27 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.11-alt2
+- Enabled LTO.
+
 * Thu Jan 07 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.11-alt1
 - Updated to 8.6.11.
 - Revised patches.
