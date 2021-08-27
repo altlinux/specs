@@ -5,8 +5,8 @@
 %add_findreq_skiplist %_K5bin/kde-systemsettings-tree.py
 
 Name: kde5-dev-scripts
-Version: 21.04.3
-Release: alt2
+Version: 21.08.0
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -65,6 +65,9 @@ done
 %_K5data/*/
 
 %changelog
+* Thu Aug 26 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Mon Aug 23 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt2
 - fix to build
 

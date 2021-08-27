@@ -4,7 +4,7 @@
 %define libelisalib libelisalib%sover
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init no_appdata
 
@@ -26,7 +26,7 @@ BuildRequires: extra-cmake-modules
 BuildRequires: qt5-declarative-devel qt5-multimedia-devel qt5-quickcontrols2-devel qt5-svg-devel qt5-wayland-devel
 BuildRequires: kf5-kcmutils-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel
 BuildRequires: kf5-kdoctools-devel kf5-kfilemetadata-devel kf5-ki18n-devel kf5-kio-devel
-BuildRequires: kf5-kirigami-devel kf5-kpackage-devel
+BuildRequires: kf5-kirigami-devel kf5-kpackage-devel kf5-kiconthemes-devel
 
 
 %description
@@ -91,6 +91,9 @@ sed -i '/find_package.*UPNPQT/s|UPNPQT|UPNPQT_disabled|' CMakeLists.txt
 %_K5lib/libelisaLib.so.*
 
 %changelog
+* Thu Aug 26 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

@@ -1,14 +1,14 @@
 %define rname zeroconf-ioslave
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init no_appdata
 
 Group: Graphical desktop/KDE
 Summary: DNS-SD Service Discovery for KDE
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: GPL-2.0-or-later or LGPL-2.0-only
 
 Source: %rname-%version.tar
 Patch1: alt-zeroconf-autonet.patch
@@ -67,13 +67,15 @@ Requires: %name-common = %version-%release
 %find_lang %name --with-kde --all-name
 
 %files -n kde5-kio-zeroconf -f %name.lang
-%doc COPYING*
-%_K5plug/*dnssd*.so
+%doc LICENSES/*
+%_K5plug/kf5/kded/dnssdwatcher.so
 %_K5plug/kf5/kio/zeroconf.so
-%_K5srv/kded/*dnssd*.desktop
 %_K5data/remoteview/*
 
 %changelog
+* Thu Aug 26 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

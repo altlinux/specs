@@ -1,14 +1,14 @@
 %define rname kdesdk-thumbnailers
 
 Name: kde5-sdk-thumbnailers
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init no_appdata
 
 Group: Graphical desktop/KDE
 Summary: KDE SDK Thumbnailers
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: GPL-2.0-only or GPL-3.0-only or LicenseRef-KDE-Accepted-GPL
 
 Source: %rname-%version.tar
 
@@ -37,12 +37,15 @@ BuildRequires: kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5plug/*thumbnail*.so
 %_K5cfg/*.kcfg
 %_K5srv/*thumbnail*.desktop
 
 %changelog
+* Thu Aug 26 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

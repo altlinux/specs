@@ -1,14 +1,14 @@
 %define rname dolphin-plugins
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
 Summary: KDE Dolphin plugins
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: GPL-2.0-or-later
 
 Source: %rname-%version.tar
 
@@ -50,13 +50,16 @@ Requires: kf5-filesystem
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc COPYING*
-%_K5plug/fileview*plugin.so
+%doc LICENSES/*
+%_K5plug/dolphin/vcs/*fileview*.so
 %_K5plug/kf5/kfileitemaction/*.so
 %_K5cfg/fileview*pluginsettings.kcfg
-%_K5srv/fileview*plugin.desktop
+#%_K5srv/fileview*plugin.desktop
 
 %changelog
+* Thu Aug 26 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 
