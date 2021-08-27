@@ -9,7 +9,7 @@
 %define sover 6
 
 Name: libgranite
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Extension of GTK+3 libraries
@@ -20,7 +20,7 @@ Url: https://github.com/elementary/%_name
 %if_disabled snapshot
 Source: %url/archive/%version/%_name-%version.tar.gz
 %else
-#VCS: https://github.com/elementary/granite.git
+Vcs: https://github.com/elementary/granite.git
 Source: %_name-%version.tar
 %endif
 
@@ -28,8 +28,8 @@ Source: %_name-%version.tar
 %define gtk_ver 3.22
 %define vala_ver 0.40
 
-BuildRequires(pre): meson rpm-build-gir
-BuildRequires: libgio-devel >= %glib_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson libgio-devel >= %glib_ver
 BuildRequires: vala-tools >= %vala_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libgee0.8-devel gobject-introspection-devel
 BuildRequires: libgtk+3-gir-devel libgee0.8-gir-devel
@@ -135,6 +135,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/vala/vapi/%_name.vapi
 
 %changelog
+* Fri Aug 27 2021 Yuri N. Sedunov <aris@altlinux.org> 6.1.1-alt1
+- 6.1.1
+
 * Mon Jul 19 2021 Yuri N. Sedunov <aris@altlinux.org> 6.1.0-alt1
 - 6.1.0
 
