@@ -8,7 +8,7 @@
 %define rdn_name io.elementary.%_name
 
 Name: pantheon-files
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The file manager of the Pantheon desktop
@@ -32,10 +32,10 @@ Requires: polkit zeitgeist tumbler elementary-icon-theme
 
 %define granite_ver 6.1.0
 
-BuildRequires(pre): meson
-BuildRequires: flatpak-builder
-BuildRequires: intltool libappstream-glib-devel
-BuildRequires: vala-tools libsqlite3-devel libgtk+3-devel
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson vala-tools
+BuildRequires: intltool libappstream-glib-devel flatpak-builder
+BuildRequires: libsqlite3-devel libgtk+3-devel
 BuildRequires: libgee0.8-devel libgranite-devel
 BuildRequires: libgail3-devel libdbus-glib-devel libnotify-devel
 BuildRequires: libxkbcommon-devel libgranite-vala >= %granite_ver
@@ -111,6 +111,9 @@ This package provides Vala language bindings for the pantheon-files.
 %endif
 
 %changelog
+* Fri Aug 27 2021 Yuri N. Sedunov <aris@altlinux.org> 6.0.2-alt1
+- updated to 6.0.2-36-g6d824249f
+
 * Wed Aug 04 2021 Yuri N. Sedunov <aris@altlinux.org> 6.0.1-alt1
 - updated to 6.0.1-1-g2cdf65659
 
