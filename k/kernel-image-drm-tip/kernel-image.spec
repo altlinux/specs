@@ -7,7 +7,7 @@ Name: kernel-image-drm-tip
 %define kernel_source_version	5.12
 %define kernel_base_version	5.14
 %define kernel_sublevel .0
-%define kernel_extra_version	+rc6.20210820
+%define kernel_extra_version	+rc7.20210827
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1
 
@@ -217,6 +217,6 @@ fi
 %modules_dir/build
 
 %changelog
-* Sat Aug 21 2021 Kernel Pony <kernelpony@altlinux.org> 5.14.0+rc6.20210820-alt1
-- drm-tip 2021y-08m-20d-21h-22m-56s (7c36ed237585).
+* Sat Aug 28 2021 Kernel Pony <kernelpony@altlinux.org> 5.14.0+rc7.20210827-alt1
+- drm-tip 2021y-08m-27d-09h-13m-03s (63bca765c920).
 
