@@ -4,7 +4,7 @@
 
 Name: libbpf
 Version: 0.4.0
-Release: alt1
+Release: alt2
 Summary: Stand-alone build of libbpf from the Linux kernel
 Group: System/Libraries
 License: BSD-2-Clause or LGPL-2.1
@@ -28,25 +28,16 @@ Requires: %name = %EVR
 %description devel
 Library and header files to build with libbpf.
 
-%package devel-static
-Summary: Libbpf static library
-Group: Development/C
-License: LGPLv2 or BSD
-Requires: %name-devel = %EVR
-
-%description devel-static
-Static libbpf library.
-
 %prep
 %setup
 
 %build
 cd src
-%make_build CFLAGS="%optflags -fPIC" V=1
+%make_build CFLAGS="%optflags -fPIC" V=1 STATIC_LIBS=
 
 %install
 cd src
-%makeinstall_std LIBSUBDIR=%_lib
+%makeinstall_std LIBSUBDIR=%_lib STATIC_LIBS=
 
 %files
 %_libdir/libbpf.so.*
@@ -57,10 +48,11 @@ cd src
 %_libdir/libbpf.so
 %_pkgconfigdir/libbpf.pc
 
-%files devel-static
-%_libdir/libbpf.a
-
 %changelog
+* Fri Aug 27 2021 Vitaly Chikunov <vt@altlinux.org> 0.4.0-alt2
+- Fix build with latest gcc/binutils with LTO.
+- Do not build libbpf-devel-static package.
+
 * Mon May 31 2021 Vitaly Chikunov <vt@altlinux.org> 0.4.0-alt1
 - Update to v0.4.0 (2021-05-22).
 
