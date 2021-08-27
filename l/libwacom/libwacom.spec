@@ -13,7 +13,7 @@
 
 Name: libwacom
 Version: %ver_major
-Release: alt1
+Release: alt1.1
 
 Summary: A Wacom tablets library
 Group: System/Libraries
@@ -81,7 +81,8 @@ developing applications that use %name.
 %meson \
     -Dudev-dir='/lib/udev' \
     %{?_disable_docs:-Ddocumentation=disabled} \
-    %{?_disable_tests:-Dtests=disabled}
+    %{?_disable_tests:-Dtests=disabled} \
+    %{?optflags_lto:-Db_lto=true}
 %nil
 %meson_build
 
@@ -122,6 +123,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Aug 27 2021 Yuri N. Sedunov <aris@altlinux.org> 1.11-alt1.1
+- rebuild with -Db_lto=true
+
 * Fri Jul 16 2021 Yuri N. Sedunov <aris@altlinux.org> 1.11-alt1
 - 1.11
 
