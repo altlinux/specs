@@ -1,5 +1,6 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 %define ver_major 3.40
 %define api_ver 4
@@ -12,7 +13,7 @@
 
 Name: sysprof
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Sysprof kernel based performance profiler for Linux
 Group: Development/Tools
@@ -105,6 +106,10 @@ developing applications that use GtkGHex library.
 %_pkgconfigdir/%name-capture-%api_ver.pc
 
 %changelog
+* Fri Aug 27 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.1-alt2
+- updated to 3.40.1-5-g5f25540
+- added -ffat-lto-objects to %%optflags_lto
+
 * Tue Mar 23 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.1-alt1
 - 3.40.1
 
