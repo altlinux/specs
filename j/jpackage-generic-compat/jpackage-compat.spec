@@ -1,28 +1,28 @@
 Name: jpackage-generic-compat
-Version: 0.37
+Version: 0.38
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
 Group: Development/Java
-License: GPL2+ or Apache
+License: GPLv2+ or Apache-2.0 or ALT-Public-Domain
 Url: http://www.sisyphus.ru/packages/viy/srpms
 
 BuildArch: noarch
 
 # tested && dropped
 #Requires: docbook-style-xsl
-
-# sun java requires it
-Requires: /proc
-Requires(pre): rpm-build-java
 # should be detected by logoved or by peering in SOURCEDIR
 # Requires: unzip
+%define jpackage_common_requires \
+Requires(pre): rpm-build-java \
+Requires: /proc \
+Requires: java-stub-javadoc
 
 # hack til migration on 1.8-compat
 Requires: java-devel = 0:1.8.0
 #Requires: java-devel java-headless java
-Requires: java-javadoc
-
+#Requires: java-javadoc
+%jpackage_common_requires
 
 %description
 JPackage compatibility package. The main goal is to provide all nessssary
@@ -34,19 +34,19 @@ compatible with JPackage.org.
 Summary: JPackage build environment with java-1.8.0.
 Group: Development/Java
 
-Requires(pre): java-devel >= 1.8.0 java >= 1.8.0
+# does not work
+#Requires(pre): java-devel >= 0:1.8.0 java >= 0:1.8.0
+#Requires(pre): java-javadoc >= 0:1.8.0
+# does work
+Requires(pre): java-1.8.0-openjdk-devel
+#Requires(pre): java-1.8.0-openjdk-javadoc-zip
 # hack
 Conflicts: java-devel > 1.8.99 java > 1.8.99 java-headless > 1.8.99
+#java-javadoc > 1.8.99
 
-Requires: jpackage-generic-compat
-Obsoletes: jpackage-1.4-compat < %version
-Obsoletes: jpackage-1.5-compat < %version
-Obsoletes: jpackage-1.6-compat < %version
-Obsoletes: jpackage-1.6-core < %version
+#Requires: jpackage-generic-compat
+%jpackage_common_requires
 Obsoletes: jpackage-1.7-compat < %version
-Obsoletes: jpackage-1.5.0-compat < %version
-Obsoletes: jpackage-1.6.0-core < %version
-Obsoletes: jpackage-1.6.0-compat < %version
 Obsoletes: jpackage-1.7.0-compat < %version
 
 %description -n jpackage-1.8-compat
@@ -61,11 +61,12 @@ Obsoletes: jpackage-9-compat < %version
 Obsoletes: jpackage-10-compat < %version
 Provides: jpackage-default = %version-%release
 
-Requires: jpackage-generic-compat
 Requires(pre): java-11-devel >= 11 java-11
+#Requires(pre): java-11-openjdk-javadoc-zip
 # hack
-Conflicts: java-devel > 11.99 java > 11.99 java-headless > 11.99
-
+Conflicts: java-devel > 11.99 java > 11.99 java-headless > 11.99 java-javadoc > 11.99
+#Requires: jpackage-generic-compat
+%jpackage_common_requires
 
 %description -n jpackage-11-compat
 JPackage compatibility package. the main goal is to provide all nessssary symlinks,
@@ -79,11 +80,14 @@ Provides JPackage build environment with java-11.
 %install
 install -d $RPM_BUILD_ROOT%_datadir
 
-%files
+%files -n jpackage-generic-compat
 %files -n jpackage-1.8-compat
 %files -n jpackage-11-compat
 
 %changelog
+* Thu Aug 26 2021 Igor Vlasenko <viy@altlinux.org> 0.38-alt1
+- jpackage-generic-compat no more common
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 0.37-alt1
 - dropped jpackage-compat
 
