@@ -10,14 +10,13 @@
 %def_enable big_endian
 %endif
 
-
 %if "%(rpmvercmp '%{get_version libicu-devel}' '6.7.1')" < "0"
 %def_without system_icu
 %endif
 
 Name: libmozjs%ver_major
 Version: %ver_major.11.0
-Release: alt1
+Release: alt1.1
 
 Summary: JavaScript interpreter and libraries
 Group: System/Libraries
@@ -101,6 +100,7 @@ ln -s ../python3/site-packages _build/_virtualenvs/init_py3/lib/python%__python3
 export srcdir="$PWD"
 cd _build
 
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %add_optflags %optflags_shared %(getconf LFS_CFLAGS)
 
 # error: compiler is incompatible with sanitize options, so
@@ -125,7 +125,8 @@ export PYTHON=%__python3
 	--with-system-zlib \
 	%{?_with_system_icu:--with-system-icu} \
 	--with-intl-api \
-
+	--enable-lto
+%nil
 %if_enabled big_endian
 echo "Generate big endian version of config/external/icu/data/icud67l.dat"
 pushd ../..
@@ -178,6 +179,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 
 
 %changelog
+* Fri Aug 27 2021 Yuri N. Sedunov <aris@altlinux.org> 78.11.0-alt1.1
+- added -ffat-lto-objects to %%optflags_lto
+
 * Thu Jun 17 2021 Yuri N. Sedunov <aris@altlinux.org> 78.11.0-alt1
 - 78.11.0
 
