@@ -1,18 +1,15 @@
 Name: ladspa_sdk
-Version: 1.13
-Release: alt1.qa3
+Version: 1.15
+Release: alt1
 
 Summary: The Linux Audio Developer's Simple Plugin API (LADSPA)
 License: LGPL
 Group: Sound
 
 Url: http://www.ladspa.org
-Source: http://www.ladspa.org/download/%name.tgz
-Patch0: %name-1.11-alt-makefile.patch
-Patch1: %name-1.11-alt-silent.build.patch
-Patch2: %name-1.11-alt-notmp_makefile.patch
-Patch3: %name-1.12-alt-libs.patch
-Patch4: %name-1.12-alt-gcc4.1.patch
+Source: http://www.ladspa.org/download/%{name}_%version.tgz
+Patch0: %name-1.15-alt-Makefile.patch
+Patch1: %name-1.15-alt-libs.patch
 
 Requires: common-licenses
 
@@ -42,14 +39,9 @@ Set of RPM macros for packaging %name-based applications for ALT Linux.
 Install this package if you want to create RPM packages that use %name.
 
 %prep
-%setup -n %name
+%setup -n %{name}_%version
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-
-sed -i 's,mkdirhier,mkdir -p,' src/makefile
 
 %build
 %define _optlevel 3
@@ -125,6 +117,9 @@ install -pDm644 ladspa.rpm_macros %buildroot%_rpmlibdir/macros.d/%name
 %_rpmmacrosdir/*
 
 %changelog
+* Fri Aug 27 2021 Yuri N. Sedunov <aris@altlinux.org> 1.15-alt1
+- updated to 1.15
+
 * Fri Dec 28 2018 Michael Shigorin <mike@altlinux.org> 1.13-alt1.qa3
 - support e2kv4, lcc-1.23
 
