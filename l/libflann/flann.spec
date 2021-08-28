@@ -1,7 +1,8 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3 rpm-macros-cmake rpm-macros-fedora-compat
-BuildRequires: /usr/bin/dpkg /usr/bin/mkoctfile boost-devel boost-mpi-devel openmpi-devel python-devel rpm-build-python
+BuildRequires: /usr/bin/dpkg /usr/bin/mkoctfile boost-devel boost-mpi-devel openmpi-devel
 # END SourceDeps(oneline)
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Group: Development/C
 %add_optflags %optflags_shared
 %define oldname flann
@@ -13,7 +14,7 @@ Group: Development/C
 
 Name:           libflann
 Version:        1.9.1
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Fast Library for Approximate Nearest Neighbors
 
 License:        BSD
@@ -31,10 +32,11 @@ BuildRequires:  zlib-devel
 
 BuildRequires:  hdf5-tools libhdf5-devel
 BuildRequires:  libgtest-devel
-BuildRequires:  libgmock-devel
 
 BuildRequires:  latex2html
 BuildRequires:  texlive texlive-collection-basic texlive-dist
+BuildRequires:  texlive texlive-collection-basic
+BuildRequires:  texlive-dist
 
 BuildRequires:  python3-devel
 Source44: import.info
@@ -126,6 +128,9 @@ rm -rf %{buildroot}%{_datadir}/doc/flann
 %{python3_sitelibdir}/flann-%{version}*.egg-info
 
 %changelog
+* Sat Aug 28 2021 Igor Vlasenko <viy@altlinux.org> 1.9.1-alt1_5
+- fixed build with LTO
+
 * Tue Jul 06 2021 Igor Vlasenko <viy@altlinux.org> 1.9.1-alt1_4
 - new version (closes: #40407)
 
