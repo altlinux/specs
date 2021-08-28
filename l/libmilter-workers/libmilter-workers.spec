@@ -1,3 +1,4 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define debug_package	%{nil}
@@ -8,7 +9,7 @@
 
 Name:		libmilter-workers
 Version:	%(echo %realversion | sed 's/-/_/g')
-Release:	alt1_11
+Release:	alt1_12
 Summary:	Libmilter and a pool of threads
 License:	GPLv1
 Group:		Development/C
@@ -77,6 +78,9 @@ cp obj.`uname -s`.`uname -r`.`uname -m`/libmilter/libmilter.a %{buildroot}%{_lib
 
 
 %changelog
+* Sat Aug 28 2021 Igor Vlasenko <viy@altlinux.org> 8.14.3_1-alt1_12
+- fixed build with LTO
+
 * Sun Sep 29 2019 Igor Vlasenko <viy@altlinux.ru> 8.14.3_1-alt1_11
 - new version
 
