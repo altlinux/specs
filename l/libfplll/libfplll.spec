@@ -1,3 +1,4 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 # BEGIN SourceDeps(oneline):
 BuildRequires: libgmp-devel mpir-devel
 # END SourceDeps(oneline)
@@ -8,7 +9,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libfplll
 Version:        5.3.1
-Release:        alt1_1
+Release:        alt2_1
 Summary:        LLL-reduces euclidean lattices
 License:        LGPLv2+
 URL:            https://github.com/fplll/fplll
@@ -129,6 +130,10 @@ LD_LIBRARY_PATH=$PWD/src/.libs make check
 
 
 %changelog
+* Sat Aug 28 2021 Igor Vlasenko <viy@altlinux.org> 5.3.1-alt2_1
+- NMU for unknown reason:
+  the person above was too neglectant to add --changelog "- NMU: <reason>" option.
+
 * Fri Dec 27 2019 Igor Vlasenko <viy@altlinux.ru> 5.3.1-alt1_1
 - update to new release by fcimport
 
