@@ -16,7 +16,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name tomcat
-%define version 9.0.50
+%define version 9.0.52
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -50,7 +50,7 @@ BuildRequires: jpackage-default
 %global jspspec 2.3
 %global major_version 9
 %global minor_version 0
-%global micro_version 50
+%global micro_version 52
 %global packdname apache-tomcat-%{version}-src
 %global servletspec 4.0
 %global elspec 3.0
@@ -75,7 +75,7 @@ BuildRequires: jpackage-default
 Name:          tomcat
 Epoch:         1
 Version:       %{major_version}.%{minor_version}.%{micro_version}
-Release:       alt2_2jpp11
+Release:       alt1_1jpp11
 Summary:       Apache Servlet/JSP Engine, RI for Servlet %{servletspec}/JSP %{jspspec} API
 
 License:       Apache-2.0
@@ -485,26 +485,26 @@ exit 0
 %files jsp-%{jspspec}-api -f .mfiles-tomcat-jsp-api
 %_altdir/jsp_tomcat-jsp-2.3-api
 %{_javadir}/%{name}-jsp-%{jspspec}*.jar
-%exclude %{libdir}/tomcat-jsp-api.jar
 
 %files servlet-%{servletspec}-api -f .mfiles-tomcat-servlet-api
 %_altdir/servlet_tomcat-servlet-4.0-api
 %doc LICENSE
 %{_javadir}/%{name}-servlet-%{servletspec}*.jar
-%exclude %{libdir}/tomcat-servlet-api.jar
 
 %files el-%{elspec}-api -f .mfiles-tomcat-el-api
 %_altdir/elspec_tomcat-el-3.0-api
 %doc LICENSE
 %{_javadir}/%{name}-el-%{elspec}-api.jar
 %{libdir}/%{name}-el-%{elspec}-api.jar
-%exclude %{libdir}/tomcat-el-api.jar
 
 %files webapps
 %defattr(0644,tomcat,tomcat,0755)
 %{appdir}/ROOT
 
 %changelog
+* Sat Aug 28 2021 Igor Vlasenko <viy@altlinux.org> 1:9.0.52-alt1_1jpp11
+- new version
+
 * Fri Aug 27 2021 Stanislav Levin <slev@altlinux.org> 1:9.0.50-alt2_2jpp11
 - Packaged missing jars (closes: #40819).
 
