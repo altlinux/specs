@@ -3,6 +3,7 @@ BuildRequires(pre): rpm-macros-generic-compat
 BuildRequires: libossp-uuid-devel
 # END SourceDeps(oneline)
 BuildRequires: /usr/bin/groff
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 BuildRequires: chrpath
 Group: Development/Other
 %add_optflags %optflags_shared
@@ -11,7 +12,7 @@ Group: Development/Other
 Name: libdap
 Summary: The C++ DAP2 library from OPeNDAP
 Version: 3.20.6
-Release: alt1_1
+Release: alt1_4
 
 License: LGPLv2+
 URL: http://www.opendap.org/
@@ -139,6 +140,9 @@ done
 
 
 %changelog
+* Sat Aug 28 2021 Igor Vlasenko <viy@altlinux.org> 3.20.6-alt1_4
+- fixed build with LTO
+
 * Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 3.20.6-alt1_1
 - update to new release by fcimport
 
