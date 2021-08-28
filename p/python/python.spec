@@ -1,10 +1,14 @@
 # -*- rpm-spec -*-
 
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
+%def_enable			static
+
 %define real_name               python
 Name: %real_name
 
 Version: 2.7.18
-Release: alt6
+Release: alt7
 
 %define package_name		%real_name
 %define weight			1001
@@ -791,6 +795,7 @@ cc --version | grep -q '^lcc:1.21' && export LIBS+="-lcxa"
 	--with-system-expat \
 	--with-libs="$LIBS" \
 	--enable-ipv6 \
+	%{subst_enable static} \
 	$*
 
 %make_build LDFLAGS="-L$PWD" $_Target
@@ -1191,8 +1196,10 @@ rm %buildroot%_man1dir/python.1
 #%doc Lib/*.doc
 #%doc PQR%suffix_ver.pdf PQR%suffix_ver/*
 
+%if_enabled static
 %files devel-static
 %_libdir/lib%python_name.a
+%endif
 
 %if_with tk
 %files modules-tkinter
@@ -1203,6 +1210,9 @@ rm %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Sat Aug 28 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.18-alt7
+- Enabled LTO.
+
 * Mon Aug 02 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.18-alt6
 - Adopted patches from Fedora project (fixed CVE-2020-27619, CVE-2021-3177 and
   CVE-2021-23336).
