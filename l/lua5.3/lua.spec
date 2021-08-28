@@ -1,11 +1,13 @@
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 %define oname lua
 %global major_version 5.3
 # no tests for 5.3.5
 %global test_version 5.3.4
 
 Name: lua%major_version
-Version: %major_version.5
-Release: alt3
+Version: %major_version.6
+Release: alt1
 
 Summary: Powerful light-weight programming language
 License: MIT
@@ -28,7 +30,6 @@ Patch1: %oname-5.3.0-idsize.patch
 #Patch2:         %%{oname}-5.3.0-luac-shared-link-fix.patch
 Patch3: %oname-5.2.2-configure-linux.patch
 Patch4: %oname-5.3.0-configure-compat-module.patch
-Patch5: CVE-2019-6706-use-after-free-lua_upvaluejoin.patch
 
 BuildRequires: automake-common autoconf-common libtool-common readline-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 Requires: liblua = %version
@@ -114,7 +115,6 @@ mv src/luaconf.h src/luaconf.h.template.in
 #%% patch2 -p1 -z .luac-shared
 %patch3 -p1 -z .configure-linux
 %patch4 -p1 -z .configure-compat-all
-%patch5 -p1
 
 %build
 %autoreconf
@@ -209,6 +209,9 @@ echo lua-devel-static >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/li
 %config %_sysconfdir/buildreqs/packages/substitute.d/lib%name-devel-static
 
 %changelog
+* Sat Aug 28 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.3.6-alt1
+- 5.3.6.
+
 * Fri Sep 20 2019 Vladimir Didenko <cow@altlinux.org> 5.3.5-alt3
 - Move lua(abi) provides to liblua sub-package
 
