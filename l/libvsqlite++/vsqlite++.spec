@@ -1,13 +1,14 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+Group: Development/Other
 %add_optflags %optflags_shared
 %define oldname vsqlite++
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:        libvsqlite++
 Version:    0.3.13
-Release:    alt2_21
+Release:    alt2_28
 Summary:    Well designed C++ sqlite 3.x wrapper library
 
-Group:      Development/Other
 License:    BSD
 URL:        http://vsqlite.virtuosic-bytes.com
 Source0:    http://evilissimo.fedorapeople.org/releases/vsqlite--/%{version}/%{oldname}-%{version}.tar.gz
@@ -27,8 +28,8 @@ VSQLite++ is a C++ wrapper for sqlite3 using the C++ standard library and boost.
 VSQLite++ is designed to be easy to use and focuses on simplicity.
 
 %package devel
+Group: Development/Other
 Summary:        Development files for %{oldname}
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 Provides: vsqlite++-devel = %{version}-%{release}
 
@@ -36,9 +37,9 @@ Provides: vsqlite++-devel = %{version}-%{release}
 This package contains development files for %{oldname}.
 
 %package doc
+Group: Development/Other
 BuildArch:      noarch
 Summary:        Development documentation for %{oldname}
-Group:          Development/Other
 Provides: vsqlite++-doc = %{version}-%{release}
 
 %description doc
@@ -66,6 +67,8 @@ install -p -m 755 -d %{buildroot}%{_docdir}
 # build for all
 make DESTDIR=%{buildroot} install
 
+
+
 %files doc
 %doc ChangeLog README COPYING examples/sqlite_wrapper.cpp html/*
 
@@ -81,6 +84,9 @@ make DESTDIR=%{buildroot} install
 %{_libdir}/libvsqlitepp.so.*
 
 %changelog
+* Sat Aug 28 2021 Igor Vlasenko <viy@altlinux.org> 0.3.13-alt2_28
+- fixed build with LTO
+
 * Thu Jul 05 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.13-alt2_21
 - use boost-complete
 
