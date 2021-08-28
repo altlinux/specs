@@ -1,7 +1,7 @@
 Summary:	Netscape Portable Runtime (NSPR)
 Name:		nspr
 Version:	4.32
-Release:	alt1
+Release:	alt2
 Epoch:		1
 License:	MPL-2.0
 Group:		System/Libraries
@@ -44,6 +44,8 @@ Provides: %name-devel-static = %version-%release
 
 %description -n lib%name-devel-static
 NSPR development kit (static libs)
+
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 %prep
 %setup -q
@@ -105,6 +107,9 @@ sed -e "s,@libdir@,%_libdir,g" \
 %_libdir/*.a
 
 %changelog
+* Sat Aug 28 2021 Alexey Gladkov <legion@altlinux.ru> 1:4.32-alt2
+- Fix build with LTO.
+
 * Tue Aug 10 2021 Alexey Gladkov <legion@altlinux.ru> 1:4.32-alt1
 - New version (4.32).
 
