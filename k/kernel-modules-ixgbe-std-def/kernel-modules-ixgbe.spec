@@ -1,6 +1,6 @@
 %define module_name             ixgbe
 %define module_version          5.12.5
-%define module_release          alt3
+%define module_release          alt4
 
 %define flavour std-def
 %define karch x86_64 aarch64 ppc64le
@@ -36,8 +36,8 @@ Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
 # Due to /etc/modprobe.d/blacklist-ixgbe.conf
-Conflicts: kernel-modules-ixgbe-std-def <= 5.12.5-alt1
-Conflicts: kernel-modules-ixgbe-un-def <= 5.12.5-alt1
+Conflicts: kernel-modules-ixgbe-std-def < 5.12.5-alt2
+Conflicts: kernel-modules-ixgbe-un-def < 5.12.5-alt2
 
 Requires(pre): kernel-image-%flavour = %kepoch%kversion-%krelease
 ExclusiveArch: %karch
@@ -61,13 +61,13 @@ popd
 install -Dp -m600 src/%module_name.ko %buildroot/%module_dir/%module_name.ko
 
 # Warning about the conflicted module version
-%triggerpostun -- kernel-modules-ixgbe-std-def <= 5.12.5-alt1
+%triggerpostun -- kernel-modules-ixgbe-std-def < 5.12.5-alt2
 if [ "$2" -gt 0 ]; then
         echo "Warning! Conflicted ixgbe module for std-def kernel flavor removed."
         echo "Do not forget to manually install ixgbe kernel modules for all the needed kernel flavours if you need them."
 fi
 
-%triggerpostun -- kernel-modules-ixgbe-un-def <= 5.12.5-alt1
+%triggerpostun -- kernel-modules-ixgbe-un-def < 5.12.5-alt2
 if [ "$2" -gt 0 ]; then
         echo "Warning! Conflicted ixgbe module for un-def kernel flavor removed."
         echo "Do not forget to manually install ixgbe kernel modules for all the needed kernel flavours if you need them."
