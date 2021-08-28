@@ -1,8 +1,9 @@
 %define uname   MangoHud
 %define srcname %uname-v%version-Source
+%define srcpath %uname-v%version
 
 Name: mangohud
-Version: 0.6.1
+Version: 0.6.5
 Release: alt1
 
 Summary: A Vulkan overlay layer for monitoring FPS, temperatures, CPU/GPU load and more
@@ -11,7 +12,7 @@ Group: Games/Arcade
 
 Url: https://github.com/flightlessmango/MangoHud
 # DFSG tarball excludes nonfree nvml.h
-Source: https://github.com/flightlessmango/MangoHud/releases/download/v%version/%srcname-DFSG.tar.gz
+Source: https://github.com/flightlessmango/MangoHud/releases/download/v%version/%srcname-DFSG.tar.xz
 
 BuildRequires: gcc-c++
 BuildRequires: meson
@@ -34,7 +35,7 @@ The `goverlay` package provides a third-party GUI frontend for MangoHud.
 %endif
 
 %prep
-%setup -n %srcname
+%setup -n %srcpath
 
 %build
 %meson \
@@ -58,6 +59,9 @@ The `goverlay` package provides a third-party GUI frontend for MangoHud.
 %_man1dir/%name.1*
 
 %changelog
+* Sat Aug 28 2021 Ilya Mashkin <oddity@altlinux.ru> 0.6.5-alt1
+- 0.6.5
+
 * Wed Apr 21 2021 Michael Shigorin <mike@altlinux.org> 0.6.1-alt1
 - initial build for ALT Sisyphus (thx Mageia)
 
