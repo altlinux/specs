@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/valgrind
 %define _localstatedir %{_var}
 Name:			ppl
 Version:		1.2
-Release:		alt1_20
+Release:		alt2_20
 Summary:		The Parma Polyhedra Library: a library of numerical abstractions
 License:		GPLv3+
 URL:			http://www.bugseng.com/ppl
@@ -159,6 +159,7 @@ sed -i 's,== 201103L,>= 201103L,g' m4/ac_check_cxx11.m4
 autoreconf -fiv
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 CPPFLAGS="-I`swipl --dump-runtime-variables | grep PLBASE= | sed 's/PLBASE="\(.*\)";/\1/'`/include"
 # This is the explicit list of arches gprolog supports
 %if 0
@@ -302,6 +303,9 @@ mv \
 %doc %{_datadir}/doc/%{name}/ppl-user-prolog-interface-%{version}.ps.gz
 
 %changelog
+* Sat Aug 28 2021 Igor Vlasenko <viy@altlinux.org> 1.2-alt2_20
+- fixed build with LTO
+
 * Mon Aug 02 2021 Igor Vlasenko <viy@altlinux.org> 1.2-alt1_20
 - new version
 
