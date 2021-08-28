@@ -1,6 +1,6 @@
 Name: keepassxc
 Version:  2.6.6
-Release:  alt2
+Release:  alt3
 
 Summary: KeePassXC Password Safe - light-weight cross-platform password manager
 License: GPLv2+
@@ -54,7 +54,11 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 cp -v %SOURCE1 share/translations/keepassx_ru.ts
 
 %build
+# LTO is not supported yet, see https://github.com/keepassxreboot/keepassxc/issues/5801
+%define optflags_lto %{nil}
+
 %cmake \
+  -DWITH_TESTS=OFF \
   -DWITH_CXX11=ON \
   -DWITH_XC_BROWSER=ON \
   -DWITH_XC_NETWORKING=ON \
@@ -91,6 +95,10 @@ cp -v %SOURCE1 share/translations/keepassx_ru.ts
 %endif
 
 %changelog
+* Sat Aug 28 2021 Pavel Nakonechnyi <zorg@altlinux.org> 2.6.6-alt3
+- LTO explicitly disabled as it is not supported yet
+- disable building tests: we don't run them anyway
+
 * Mon Jul 19 2021 Pavel Nakonechnyi <zorg@altlinux.org> 2.6.6-alt2
 - Updated Russian translation from https://www.transifex.com/keepassxc/keepassxc/language/ru/
   last updated: May 30th 2021, fixes #40503
