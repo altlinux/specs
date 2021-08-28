@@ -1,6 +1,6 @@
 Name: wsjtx
 Version: 2.2.2
-Release: alt1
+Release: alt2
 Summary: WSJT-X implements communication protocols or "modes" called JT4, JT9, JT65, and WSPR
 License: GPL-3.0
 Group: Engineering
@@ -87,6 +87,8 @@ dos2unix *.ui *.iss *.rc *.txt
 popd
 
 %build
+%define optflags_lto %nil
+
 pushd %name
 %cmake -DWSJT_GENERATE_DOCS=TRUE \
        -Dhamlib_STATIC=FALSE \
@@ -134,6 +136,9 @@ mv %buildroot%_docdir/%name %buildroot%_docdir/WSJT-X
 %_docdir/WSJT-X
 
 %changelog
+* Sat Aug 28 2021 Anton Midyukov <antohami@altlinux.org> 2.2.2-alt2
+- disable LTO compiler flag
+
 * Sun Aug 16 2020 Anton Midyukov <antohami@altlinux.org> 2.2.2-alt1
 - new version (2.2.2) with rpmgs script
 
