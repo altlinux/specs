@@ -1,25 +1,34 @@
-%define somver 2
-%define sover %somver.3.14
+# TODO: fix for ALT:
+# Fortran module directory
+%{!?_fmoddir: %global _fmoddir %_libdir/gfortran/modules}
+
 %def_without check
+%def_disable fortran
 
 Name: qd
-Version: 2.3.14
-Release: alt2
+Version: 2.3.23
+Release: alt1
 
 Summary: C++/Fortran-90 double-double and quad-double package
 
 License: BSD
 Group: Sciences/Mathematics
-Url: http://crd.lbl.gov/~dhbailey/mpdist/
+Url: https://www.davidhbailey.com/dhbsoftware/
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/aoki-t/libqd/issues/5
+# Source-url: https://www.davidhbailey.com/dhbsoftware/qd-%version.tar.gz
 Source: %name-%version.tar
 
-Requires: lib%name = %version-%release
+Patch1: qd-lto.patch
 
-BuildPreReq: gcc-fortran libgfortran-devel gcc-c++
+BuildRequires: gcc-c++
+%if_enabled fortran
+BuildRequires: gcc-fortran libgfortran-devel
+%add_verify_elf_skiplist %_libdir/libqd_f_main.so.0.0.0
+%endif
+
+Requires: lib%name = %EVR
 
 %description
 This package provides numeric types of twice the precision of IEEE
@@ -84,70 +93,75 @@ This package contains documentation for QD.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
+%ifarch s390x aarch64 ppc64le
+%global optflags %optflags -ffp-contract=off
+%endif
+
 %add_optflags %optflags_shared
+
+export CC=gcc
+export CXX=g++
+export FC=gfortran
+export FCFLAGS="%optflags"
+
 %autoreconf
 %configure \
 	--enable-shared \
-	--enable-static=no \
-	--enable-fortran \
+	--disable-static \
+	%{subst_enable fortran} \
 	--enable-ieee-add \
 	--enable-debug
-sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
-%make -C fortran f_main.o
+
+# Get rid of undesirable hardcoded rpaths; workaround libtool reordering
+# -Wl,--as-needed after all the libraries.
+sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
+    -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
+    -e 's|CC="gfortran"|CC="gfortran -Wl,--as-needed"|' \
+    -e 's|CC=.g[c+][c+]|& -Wl,--as-needed|' \
+    -i libtool
+
+# Supply missing fortran tags
+%__subst '/F77/s/\$(AM_V_lt)/& --tag=FC/' fortran/Makefile
+
+#make -C fortran f_main.o
 %make_build
+%make cpp-demo
+%if_enabled fortran
 %make cpp-demo fortran-demo
+%endif
 
 %install
 %makeinstall_std
 
-install -d %buildroot%_datadir/%name
+# Fix location of documentation
+mv %buildroot%_docdir/qd/* .
+rm -rf %buildroot%_datadir
 
-install -m755 \
-	fortran/.libs/quad* tests/.libs/* \
-	%buildroot%_bindir
-install -p -m644 tests/coeff.dat %buildroot%_datadir/%name
-
-# shared libraries
-
-#pushd %buildroot%_libdir
-#echo "int f_main_() {}" > f_main.c
-#gcc -g -c -fPIC f_main.c
-#ar r libqd_f_main.a f_main.o
-#ranlib libqd_f_main.a
-#mkdir tmp
-#pushd tmp
-#for i in libqd libqd_f_main libqdmod; do
-#	if [ "$i" != "libqd" ]; then
-#		ADDLIBS="-L.. -lqd"
-#	else
-#		ADDLIBS=
-#	fi
-#	ar x ../$i.a
-#	f77 -shared * $ADDLIBS -lstdc++ \
-#		-Wl,-soname,$i.so.%somver -o ../$i.so.%sover
-#	ln -s $i.so.%sover ../$i.so.%somver
-#	ln -s $i.so.%somver ../$i.so
-#	rm -f *
-#done
-#popd
-#rmdir tmp
-#ar d libqd_f_main.a f_main.o
-#ranlib libqd_f_main.a
-#popd
-
-%if_with check
-%check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%make check time
+%if_enabled fortran
+# Move Fortran modules to %_fmoddir
+mkdir -p %buildroot%_fmoddir/%name
+mv %buildroot%_includedir/qd/*.mod %buildroot%_fmoddir/%name
 %endif
 
+# Remove la file
+rm %buildroot%_libdir/*.la
+
+# Fix pkgconfig file on 64-bit systems
+if [ "%_lib" = "lib64" ]; then
+  sed -i 's/^libdir=.*/&64/' %buildroot%_pkgconfigdir/qd.pc
+fi
+
+%check
+LD_LIBRARY_PATH=$PWD/src/.libs:$PWD/fortran/.libs make check
+
 %files
-%doc *.doc AUTHORS ChangeLog COPYING NEWS README* TODO
+%doc AUTHORS COPYING NEWS README* TODO
 %_bindir/*
 %exclude %_bindir/qd-config
-%_datadir/%name
+#_datadir/%name
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -156,11 +170,18 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/qd-config
 %_libdir/*.so
 %_includedir/*
+%_pkgconfigdir/qd.pc
 
 %files -n lib%name-devel-doc
-%_docdir/%name
+%doc docs/qd.pdf
 
 %changelog
+* Sat Aug 28 2021 Vitaly Lipatov <lav@altlinux.ru> 2.3.23-alt1
+- new version 2.3.23 (with rpmrb script) (ALT bug 40821)
+- package qd.pc (ALT bug 40821)
+- add fixes from Fedora
+- disable build with fortran libs
+
 * Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 2.3.14-alt2
 - cleanup spec and repo, drop obsoletes itself
 - temp. disable check ([ppc64le] FAIL: qd_test)
