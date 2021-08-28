@@ -1,12 +1,12 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install cppunit-devel gcc-c++ imake libSDL-devel libX11-devel liballegro-devel xorg-cf-files
+BuildRequires: /usr/bin/desktop-file-install cppunit-devel imake libSDL-devel libX11-devel liballegro-devel xorg-cf-files
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           pinball
 Version:        0.3.4
-Release:        alt1_1
+Release:        alt1_8
 Summary:        Emilia 3D Pinball Game
 # core license is GPLv2+
 # gnu table licenses are (GFDL or Free Art or CC-BY-SA) and GPLv3 and CC-BY-SA
@@ -14,11 +14,12 @@ Summary:        Emilia 3D Pinball Game
 License: GPLv2+ and (GFDL or Free Art or CC-BY-SA) and GPLv3 and CC-BY-SA
 URL:            http://pinball.sourceforge.net
 Source0:        https://github.com/sergiomb2/pinball/archive/%{version}/%{name}-%{version}.tar.gz
+BuildRequires:  gcc-c++
 BuildRequires:  libXt-devel
 BuildRequires:  libfreeglut-devel
 BuildRequires:  libSDL_image-devel
 BuildRequires:  libSDL_mixer-devel
-BuildRequires:  libpng-devel
+BuildRequires:  libpng-devel libpng17-tools
 BuildRequires:  libvorbis-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
@@ -52,6 +53,7 @@ sed -i 's/Exec=pinball/Exec=pinball-wrapper/' pinball.desktop
 
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %configure --disable-static
 %make_build
 
@@ -79,7 +81,6 @@ install -p -m 644 pinball.appdata.xml $RPM_BUILD_ROOT%{_datadir}/appdata
 appstream-util validate-relax --nonet \
   $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
-
 %files -f %{name}.lang
 %doc README ChangeLog
 %doc --no-dereference COPYING
@@ -101,6 +102,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Sat Aug 28 2021 Igor Vlasenko <viy@altlinux.org> 0.3.4-alt1_8
+- fixed build
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.4-alt1_1
 - update to new release by fcimport
 
