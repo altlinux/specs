@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: yara
-Version: 4.1.1
-Release: alt2
+Version: 4.1.2
+Release: alt1
 License: BSD-3-Clause and Apache-2.0
 Group: Development/Tools
 Summary: The pattern matching swiss knife for malware researchers (and everyone else)
@@ -83,6 +83,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %buildroot%_bindir/yara --version
 %_pkgconfigdir/yara.pc
 
 %changelog
+* Sun Aug 29 2021 Vitaly Chikunov <vt@altlinux.org> 4.1.2-alt1
+- Update to v4.1.2 (2021-08-23).
+
 * Sun Aug 01 2021 Vitaly Chikunov <vt@altlinux.org> 4.1.1-alt2
 - Build on all architectures.
 
