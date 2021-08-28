@@ -1,5 +1,3 @@
-%set_automake_version 1.11
-
 %define oname rarian
 %define major 0.8
 # The version of Scrollkeeper that Rarian obsoletes
@@ -9,7 +7,7 @@
 
 Name: librarian
 Version: %major.1
-Release: alt6
+Release: alt7
 
 Summary: A documentation meta-data library
 
@@ -32,11 +30,11 @@ Provides: libscrollkeeper = %skversion.rarian.%version-%release
 Obsoletes: scrollkeeper < %skversion.rarian
 Obsoletes: libscrollkeeper < %skversion.rarian
 
-PreReq: xml-common, xml-utils, docbook-dtds
+Requires(pre): xml-common, xml-utils, docbook-dtds
 
-BuildPreReq: rpm-build-compat rpm-build-licenses
-BuildPreReq: rpm-build-gnome >= 0.8
-BuildPreReq: xsltproc gcc-c++
+BuildRequires(pre): rpm-build-compat rpm-build-licenses
+BuildRequires(pre): rpm-build-gnome >= 0.8
+BuildRequires: gcc-c++ xsltproc
 
 %description
 Rarian is a documentation meta-data library that allows access to
@@ -64,23 +62,24 @@ Static Rarian library (librarian).
 %endif
 
 %prep
-%setup -q -n %oname-%version
+%setup -n %oname-%version
 
 %build
 # all mainstreams sets localstatedir in var, but ALT sets it in /var/lib :(
 %autoreconf
 %configure \
+	%{subst_enable static} \
 	--enable-omf-read \
 	--disable-skdb-update \
 	--localstatedir=%_var
-
+%nil
 %make_build
 
 %install
 install -d %buildroot%_omfdir
 install -d %buildroot%_localstatedir/%oname/
 
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 # dtds
 install -pD -m 644 %SOURCE1 %buildroot%_datadir/xml/scrollkeeper/dtds/scrollkeeper-omf.dtd
@@ -127,11 +126,13 @@ install -pD -m 755 %SOURCE3 %buildroot%_rpmlibdir/scrollkeeper.filetrigger
 %if_enabled static
 %files static
 %_libdir/librarian.a
-%else
-%exclude %_libdir/*.a
 %endif
 
 %changelog
+* Sat Aug 28 2021 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt7
+- disabled build of static library
+- used newer automake
+
 * Mon Nov 11 2013 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt6
 - used automake_1.11
 
