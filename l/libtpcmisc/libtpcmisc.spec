@@ -1,13 +1,15 @@
-Group: Development/C
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+Group: Development/C
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %add_optflags -fcommon
 Name:           libtpcmisc
 Version:        1.4.8
-Release:        alt2_24
+Release:        alt2_26
 Summary:        Miscellaneous PET functions
 
 License:        LGPLv2+
@@ -95,6 +97,9 @@ popd
 %{_libdir}/%{name}.a
 
 %changelog
+* Sat Aug 28 2021 Igor Vlasenko <viy@altlinux.org> 1.4.8-alt2_26
+- fixed build with LTO
+
 * Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 1.4.8-alt2_24
 - fixed build with new gcc10
 
