@@ -2,6 +2,8 @@
 BuildRequires: libXext-devel libfreetype-devel
 # END SourceDeps(oneline)
 BuildRequires: zlib-devel
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -14,8 +16,7 @@ BuildRequires: zlib-devel
 Summary:        Library of Assorted Spiffy Things
 Name:           libast
 Version:        0.7.1
-Release:        alt5_0.21.%{cvs}cvs
-Group:          System/Libraries
+Release:        alt5_0.29.%{cvs}cvs
 License:        BSD
 URL:            http://www.eterm.org/
 # Sources are pulled from cvs:
@@ -25,7 +26,7 @@ URL:            http://www.eterm.org/
 Source:        libast-%{cvs}.tar.gz
 Source1:       libast-wrapper.h
 BuildRequires: imlib2-devel libpcre-devel libpcrecpp-devel libXt-devel
-BuildRequires: automake-common autoconf-common libtool-common
+BuildRequires: automake autoconf libtool
 Source44: import.info
 
 %description
@@ -38,8 +39,8 @@ It's not documented yet, mostly because it's not finished.  Hence the
 version number that begins with 0.
 
 %package devel
+Group: Development/Other
 Summary:  Header files, libraries and development documentation for %{name}
-Group:    Development/Other
 Requires: %{name} = %{version}-%{release}
 
 %description devel
@@ -53,21 +54,21 @@ you will need to install %{name}-devel.
 %build
 ./autogen.sh
 %configure
-%{__make} %{?_smp_mflags}
+make %{?_smp_mflags}
 
 %install
-%{__make} DESTDIR=%{buildroot} install
+make DESTDIR=%{buildroot} install
 
 # Fix multiarch stuff
 %ifarch %{multilib_arches}
 for header in sysdefs types ; do
     mv %{buildroot}%{_includedir}/%{name}/$header.h \
        %{buildroot}%{_includedir}/%{name}/$header-%{_arch}.h
-    %{__install} -m 0644 -c %{SOURCE1} %{buildroot}%{_includedir}/%{name}/$header.h
-    %{__sed} -i -e 's/<HEADER>/'$header'/g' %{buildroot}%{_includedir}/%{name}/$header.h
+    install -m 0644 -c %{SOURCE1} %{buildroot}%{_includedir}/%{name}/$header.h
+    sed -i -e 's/<HEADER>/'$header'/g' %{buildroot}%{_includedir}/%{name}/$header.h
     touch -r ChangeLog %{buildroot}%{_includedir}/%{name}/$header.h
 done
-%{__sed} -i -e '/^LDFLAGS=/d' %{buildroot}%{_bindir}/%{name}-config
+sed -i -e '/^LDFLAGS=/d' %{buildroot}%{_bindir}/%{name}-config
 touch -r ChangeLog %{buildroot}%{_bindir}/%{name}-config
 %endif
 # alt #28250
@@ -75,6 +76,8 @@ touch -r ChangeLog %{buildroot}%{_bindir}/%{name}-config
 mv %buildroot%_includedir/libast/sysdefs-%{_arch}.h %buildroot%_includedir/libast/sysdefs-i386.h
 mv %buildroot%_includedir/libast/types-%{_arch}.h %buildroot%_includedir/libast/types-i386.h
 %endif
+
+
 
 
 %files
@@ -91,6 +94,9 @@ mv %buildroot%_includedir/libast/types-%{_arch}.h %buildroot%_includedir/libast/
 %exclude %{_libdir}/*.a
 
 %changelog
+* Sat Aug 28 2021 Igor Vlasenko <viy@altlinux.org> 0.7.1-alt5_0.29.20080502cvs
+- fixed build with LTO
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt5_0.21.20080502cvs
 - update to new release by fcimport
 
