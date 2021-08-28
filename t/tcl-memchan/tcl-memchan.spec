@@ -1,11 +1,13 @@
 # -*- rpm-spec -*-
 # $Id: tcl-memchan,v 1.12 2006/07/21 22:00:14 me Exp $
 
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 %define teaname Memchan
 
 Name: tcl-memchan
 Version: 2.3
-Release: alt2
+Release: alt3
 
 Summary: A tcl extension implementing memory channels
 License: TCL
@@ -20,6 +22,7 @@ Source: %teaname%version.tar
 %endif
 
 Patch0: tcl-memchan-2.2-alt-warn.patch
+Patch1: tcl-memchan-2.3-deb-randinit-fix.patch
 
 Requires: tcl >= 8.4.0-alt1
 BuildRequires: rpm-build >= 4.0.4-alt41 rpm-build-tcl >= 0.5.2-alt1 tcl-devel >= 8.4.0-alt1 tcllib
@@ -32,6 +35,7 @@ placed into them in memory, not on disk.
 %prep
 %setup -q %{?snapshot:-c}%{!?snapshot:-n %teaname%version}
 %patch0 -p1
+%patch1 -p1
 %tea_patch
 
 %build
@@ -51,6 +55,10 @@ make test
 %_mandir/mann/*
 
 %changelog
+* Sat Aug 28 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3-alt3
+- Fixed FTBFS: built fat LTO objects.
+- Applied Debian patch randinit.diff.
+
 * Sun Jul 04 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3-alt2
 - Built with %%tea_patch.
 
