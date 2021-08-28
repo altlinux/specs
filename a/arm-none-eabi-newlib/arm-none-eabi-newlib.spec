@@ -7,10 +7,11 @@
 %define pkg_version 3.3.0
 %define _libexecdir /usr/libexec
 %add_verify_elf_skiplist %_libexecdir/%target/lib/*
+%brp_strip_none %_libexecdir/%target/lib/*
 
 Name: arm-none-eabi-newlib
 Version: %pkg_version
-Release: alt1
+Release: alt2
 Summary: C library intended for use on %target embedded systems
 Group: Development/Tools
 # For a breakdown of the licensing, see NEWLIB-LICENSING
@@ -114,6 +115,9 @@ rm -rf $NANO_ROOT
 %_libexecdir/%target/lib/*
 
 %changelog
+* Fri Aug 27 2021 Anton Midyukov <antohami@altlinux.org> 3.3.0-alt2
+- brp_strip_none %_libexecdir/%target/lib/*
+
 * Sat Feb 06 2021 Anton Midyukov <antohami@altlinux.org> 3.3.0-alt1
 - New version 3.3.0
 
