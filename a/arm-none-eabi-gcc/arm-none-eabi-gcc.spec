@@ -6,6 +6,7 @@
 %global gcc_ver        10.2.0
 %global gcc_short_ver  10.2
 %define _libexecdir /usr/libexec
+%brp_strip_none %_libexecdir/*
 
 # we need newlib to compile complete gcc, but we need gcc to compile newlib,
 # so compile minimal gcc first
@@ -13,7 +14,7 @@
 
 Name: arm-none-eabi-gcc
 Version: %gcc_ver
-Release: alt5
+Release: alt6
 Summary: GNU GCC for cross-compilation for %target target
 Group: Development/Tools
 
@@ -279,6 +280,9 @@ popd
 %endif
 
 %changelog
+* Sat Aug 28 2021 Anton Midyukov <antohami@altlinux.org> 10.2.0-alt6
+- brp_strip_none %_libexecdir/*
+
 * Sun Feb 28 2021 Anton Midyukov <antohami@altlinux.org> 10.2.0-alt5
 - Fix twice packaged files
 
