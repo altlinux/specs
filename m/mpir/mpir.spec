@@ -1,6 +1,6 @@
 Name: mpir
 Version: 3.0.0
-Release: alt5
+Release: alt6
 Summary: A library for arbitrary precision arithmetic
 
 License: LGPLv3+
@@ -43,6 +43,8 @@ done
 cp -p %_datadir/texmf/tex/texinfo/texinfo.tex doc
 
 %build
+%define optflags_lto %nil
+
 %autoreconf
 %ifarch ppc64le
 export ABI=mode64
@@ -87,6 +89,9 @@ mv doc/devel doc/html
 %_infodir/mpir.info*
 
 %changelog
+* Sat Aug 28 2021 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt6
+- disable LTO flag compiler
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt5
 - NMU: remove rpm-build-ubt from BR:
 
