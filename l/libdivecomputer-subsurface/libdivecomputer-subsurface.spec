@@ -17,7 +17,7 @@ BuildRequires: /usr/bin/doxygen pkgconfig(bluez) pkgconfig(libmtp)
 
 Name:           libdivecomputer-subsurface
 Summary:        Library for communication with dive computers
-Version:        5.0.1
+Version:        5.0.3
 Release:        alt1_1
 # includes "Public domain" portions from https://github.com/kokke/tiny-AES128-C :
 # aes.c
@@ -48,6 +48,7 @@ Header files and development libraries for %{name}.
 %setup -q -n libdivecomputer-subsurface-branch-%{version}
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 # generate configure
 autoreconf -fi
 
@@ -80,6 +81,9 @@ rm -f %{buildroot}%{_libdir}/lib*.la
 
 
 %changelog
+* Sat Aug 28 2021 Igor Vlasenko <viy@altlinux.org> 5.0.3-alt1_1
+- fixed build with LTO
+
 * Fri Apr 16 2021 Igor Vlasenko <viy@altlinux.org> 5.0.1-alt1_1
 - update by mgaimport
 
