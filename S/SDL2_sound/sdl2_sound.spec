@@ -20,7 +20,7 @@ BuildRequires: /usr/bin/doxygen gcc-c++
 
 Name:           SDL2_sound
 Version:        1.0.4
-Release:        alt2_%{rel}.%{hgrev}
+Release:        alt3_%{rel}.%{hgrev}
 Summary:        An abstract SDL2 sound-file decoder
 License:        zlib
 Group:          System/Libraries
@@ -28,7 +28,7 @@ Url:            https://hg.icculus.org/icculus/SDL_sound/archive/
 Source0:        SDL_sound-%{srcversion}.tar.bz2
 Patch0:         sdl2_sound-1.0.4-includedir.patch
 
-BuildRequires:  ccmake cmake ctest
+BuildRequires:  cmake
 BuildRequires:  pkgconfig(sdl2)
 BuildRequires:  pkgconfig(flac)
 BuildRequires:  pkgconfig(libmikmod)
@@ -93,6 +93,7 @@ cp src/SDL_sound.h .
 popd
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 export CFLAGS="%{optflags} -lm"
 %{mageia_cmake} -DCMAKE_STATIC_LIBS:BOOL=ON \
        -DCMAKE_SHARED_LIBS:BOOL=ON
@@ -118,6 +119,9 @@ export CFLAGS="%{optflags} -lm"
 
 
 %changelog
+* Sat Aug 28 2021 Igor Vlasenko <viy@altlinux.org> 1.0.4-alt3_5.hg653
+- fixed build with LTO
+
 * Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt2_5.hg653
 - fixed build
 
