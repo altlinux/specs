@@ -1,5 +1,4 @@
 %def_enable snapshot
-
 %define ver_major 0.4
 %def_enable gtk_doc
 
@@ -13,7 +12,7 @@
 
 Name: orc
 Version: %ver_major.32
-Release: alt1
+Release: alt1.1
 
 Summary: The Oil Runtime Compiler
 Group: Development/Other
@@ -26,6 +25,7 @@ Source: https://github.com/GStreamer/orc/archive/%version/%name-%version.tar.gz
 Vcs: https://anongit.freedesktop.org/gstreamer/orc
 Source: %name-%version.tar
 %endif
+Patch: orc-0.4.32-alt-disable_orc-test_static_library.patch
 
 BuildRequires(pre): meson >= 0.54 rpm-macros-valgrind
 BuildRequires: glib2-devel >= 2.10.0 gtk-doc
@@ -109,6 +109,7 @@ This package contains documentation for Orc.
 
 %prep
 %setup
+%patch -p1 -b .static
 
 %build
 %meson \
@@ -149,6 +150,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Sat Aug 28 2021 Yuri N. Sedunov <aris@altlinux.org> 0.4.32-alt1.1
+- orc-test/meson.build: don't build static orc-test library by default
+
 * Sat Jul 10 2021 Yuri N. Sedunov <aris@altlinux.org> 0.4.32-alt1
 - updated to 0.4.32-3-g1e9bf08
 - skipped known broken tests for armh
