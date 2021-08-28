@@ -5,7 +5,7 @@
 
 Name: file
 Version: 5.40
-Release: alt3
+Release: alt4
 
 Summary: File type guesser
 License: BSD-2-Clause
@@ -17,9 +17,11 @@ Vcs: https://github.com/file/file
 Source: %name-%version.tar
 
 BuildRequires: bzlib-devel
+BuildRequires: libcap-devel
 BuildRequires: liblzma-devel
 BuildRequires: libseccomp-devel
 BuildRequires: zlib-devel
+%{?!_without_check:%{?!_disable_check:BuildRequires: strace}}
 
 %description
 The file command is "a file type guesser", that is, a command-line tool that
@@ -67,22 +69,29 @@ cat magic/magic/* > %buildroot%_datadir/file/magic
 xz ChangeLog
 
 %check
-src/file -m /dev/null		ChangeLog.xz | grep ': data'
-src/file -m magic/magic/	ChangeLog.xz | grep ': XZ compressed data'
-src/file -m magic/magic.mgc	ChangeLog.xz | grep ': XZ compressed data'
-src/file -m magic/magic.mgc -z	ChangeLog.xz | grep ': ASCII text (XZ compressed data'
-
+set -o pipefail
+strace_file() {
+	local ret=0
+	strace -nfo strace.log -- src/file "$@" > stdout.log || ret=$?
+	! grep -w -e EPERM -e SIGSYS strace.log >&2 || ret=$?
+	cat < stdout.log >&2
+	cat < stdout.log
+	return $ret
+}
+strace_file -m /dev/null	  ChangeLog.xz | grep ': data'
+strace_file -m magic/magic/	  ChangeLog.xz | grep ': XZ compressed data'
+strace_file -m magic/magic.mgc	  ChangeLog.xz | grep ': XZ compressed data'
+strace_file -m magic/magic.mgc -z ChangeLog.xz | grep ': ASCII text (XZ compressed data'
+# Zstd uses external helper.
 tar cf ChangeLog.tar.zst ChangeLog.xz --zstd
-src/file -z ChangeLog.tar.zst | grep ': POSIX tar archive (GNU) (Zstandard compressed data'
+strace_file -z ChangeLog.tar.zst | grep ': POSIX tar archive (GNU) (Zstandard compressed data'
 
-tar czf ChangeLog.tar.gz ChangeLog.xz
-src/file -z ChangeLog.tar.gz | grep ': POSIX tar archive (GNU) (gzip compressed data'
+# Check seccomp was enabled.
+grep 'prctl(PR_SET_NO_NEW_PRIVS, 1,.* = 0' strace.log
+grep 'seccomp(SECCOMP_SET_MODE_FILTER,.* = 0' strace.log
 
-tar cjf ChangeLog.tar.bz2 ChangeLog.xz
-src/file -z ChangeLog.tar.bz2 | grep ': POSIX tar archive (GNU) (bzip2 compressed data'
-
-tar cJf ChangeLog.tar.xz ChangeLog.xz
-src/file -z ChangeLog.tar.xz | grep ': POSIX tar archive (GNU) (XZ compressed data'
+# Check capabilities are dropping.
+grep 'capset(.*{effective=0, permitted=0, inheritable=0}.* = 0' strace.log
 
 make check
 
@@ -104,6 +113,10 @@ make check
 %_man3dir/libmagic.3*
 
 %changelog
+* Thu Aug 26 2021 Vitaly Chikunov <vt@altlinux.org> 5.40-alt4
+- spec: Test seccomp filtering in %%check.
+- Add more hardening measures (seccomp, setrlimit, capset).
+
 * Thu Aug 26 2021 Vitaly Chikunov <vt@altlinux.org> 5.40-alt3
 - Do not build libmagic-devel-static package.
 
