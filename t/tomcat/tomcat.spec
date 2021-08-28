@@ -75,7 +75,7 @@ BuildRequires: jpackage-default
 Name:          tomcat
 Epoch:         1
 Version:       %{major_version}.%{minor_version}.%{micro_version}
-Release:       alt1_2jpp11
+Release:       alt2_2jpp11
 Summary:       Apache Servlet/JSP Engine, RI for Servlet %{servletspec}/JSP %{jspspec} API
 
 License:       Apache-2.0
@@ -481,31 +481,33 @@ exit 0
 %exclude %{_javadir}/%{name}-servlet-%{servletspec}*.jar
 %exclude %{_javadir}/%{name}-el-%{elspec}-api.jar
 %exclude %{_javadir}/%{name}-jsp-%{jspspec}*.jar
-# Don't package files twice
-    %exclude %_javadir/%name-el-api.jar
-%exclude %_javadir/%name-servlet-api.jar
-%exclude %_javadir/%name-jsp-api.jar
 
 %files jsp-%{jspspec}-api -f .mfiles-tomcat-jsp-api
 %_altdir/jsp_tomcat-jsp-2.3-api
 %{_javadir}/%{name}-jsp-%{jspspec}*.jar
+%exclude %{libdir}/tomcat-jsp-api.jar
 
 %files servlet-%{servletspec}-api -f .mfiles-tomcat-servlet-api
 %_altdir/servlet_tomcat-servlet-4.0-api
 %doc LICENSE
 %{_javadir}/%{name}-servlet-%{servletspec}*.jar
+%exclude %{libdir}/tomcat-servlet-api.jar
 
 %files el-%{elspec}-api -f .mfiles-tomcat-el-api
 %_altdir/elspec_tomcat-el-3.0-api
 %doc LICENSE
 %{_javadir}/%{name}-el-%{elspec}-api.jar
 %{libdir}/%{name}-el-%{elspec}-api.jar
+%exclude %{libdir}/tomcat-el-api.jar
 
 %files webapps
 %defattr(0644,tomcat,tomcat,0755)
 %{appdir}/ROOT
 
 %changelog
+* Fri Aug 27 2021 Stanislav Levin <slev@altlinux.org> 1:9.0.50-alt2_2jpp11
+- Packaged missing jars (closes: #40819).
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 1:9.0.50-alt1_2jpp11
 - new version
 
