@@ -1,10 +1,12 @@
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 %def_with lua_compat
 
 %global abi_version 5.1
 
 Name: lua5.1
 Version: 5.1.5
-Release: alt17
+Release: alt18
 
 Summary: Embeddable programming language
 License: MIT
@@ -274,6 +276,9 @@ fi
 %pkgdocdir/test
 
 %changelog
+* Sat Aug 28 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.1.5-alt18
+- Fixed FTBFS: built fat LTO objects.
+
 * Sat Nov 14 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.1.5-alt17
 - lua5.1-compat-devel: do not provide pkgconfig(lua)
 
