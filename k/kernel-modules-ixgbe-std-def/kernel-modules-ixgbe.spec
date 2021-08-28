@@ -1,6 +1,6 @@
 %define module_name             ixgbe
 %define module_version          5.12.5
-%define module_release          alt2
+%define module_release          alt3
 
 %define flavour std-def
 %define karch x86_64 aarch64 ppc64le
@@ -35,6 +35,10 @@ Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%r
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
+# Due to /etc/modprobe.d/blacklist-ixgbe.conf
+Conflicts: kernel-modules-ixgbe-std-def <= 5.12.5-alt1
+Conflicts: kernel-modules-ixgbe-un-def <= 5.12.5-alt1
+
 Requires(pre): kernel-image-%flavour = %kepoch%kversion-%krelease
 ExclusiveArch: %karch
 
@@ -56,12 +60,28 @@ popd
 %install
 install -Dp -m600 src/%module_name.ko %buildroot/%module_dir/%module_name.ko
 
+# Warning about the conflicted module version
+%triggerpostun -- kernel-modules-ixgbe-std-def <= 5.12.5-alt1
+if [ "$2" -gt 0 ]; then
+        echo "Warning! Conflicted ixgbe module for std-def kernel flavor removed."
+        echo "Do not forget to manually install ixgbe kernel modules for all the needed kernel flavours if you need them."
+fi
+
+%triggerpostun -- kernel-modules-ixgbe-un-def <= 5.12.5-alt1
+if [ "$2" -gt 0 ]; then
+        echo "Warning! Conflicted ixgbe module for un-def kernel flavor removed."
+        echo "Do not forget to manually install ixgbe kernel modules for all the needed kernel flavours if you need them."
+fi
+
 %files
 %module_dir/*
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sat Aug 28 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.12.5-alt3
+- remove old modules to avoid ixgbe blacklisting
 
 * Wed Aug 25 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.12.5-alt2
 - put module to "updates" directory, no blacklisting necessary
