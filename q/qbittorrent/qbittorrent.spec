@@ -1,8 +1,8 @@
 %define ltr libtorrent-rasterbar-devel
-%define rel alt2
+%define rel alt1
 
 Name: qbittorrent
-Version: 4.3.7
+Version: 4.3.8
 Epoch: 1
 Release: %rel
 
@@ -107,6 +107,9 @@ make clean
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Aug 30 2021 Ilya Mashkin <oddity@altlinux.ru> 1:4.3.8-alt1
+- 4.3.8
+
 * Thu Aug 12 2021 Ilya Mashkin <oddity@altlinux.ru> 1:4.3.7-alt2
 - fix build on e2k, ppc64le
 
