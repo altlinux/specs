@@ -1,5 +1,5 @@
 Name: qdirstat
-Version: 1.7.1
+Version: 1.8
 Release: alt1
 Summary: Qt-based directory statistics
 Group: File tools
@@ -68,6 +68,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%name.appdata
 %_datadir/icons/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Mon Aug 30 2021 Ilya Mashkin <oddity@altlinux.ru> 1.8-alt1
+- 1.8
+
 * Wed Apr 21 2021 Ilya Mashkin <oddity@altlinux.ru> 1.7.1-alt1
 - 1.7.1
 - add man pages
