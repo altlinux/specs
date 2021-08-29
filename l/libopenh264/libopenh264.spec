@@ -1,10 +1,11 @@
 %define oname openh264
 %def_enable check
 %def_without meson
+%def_disable static
 
 Name: libopenh264
 Version: 2.1.1
-Release: alt2
+Release: alt3
 
 Summary: H.264 codec library
 
@@ -81,6 +82,10 @@ sed -i -e 's|^SHAREDLIB_DIR=.*$|SHAREDLIB_DIR=%{_libdir}|' Makefile
 %makeinstall_std
 %endif
 
+%if_disabled static
+rm -v %buildroot%_libdir/%name.a
+%endif
+
 %check
 %if_with meson
 export LD_LIBRARY_PATH=%buildroot%_libdir
@@ -96,10 +101,15 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/%name.so
 %_pkgconfigdir/%oname.pc
 
+%if_enabled static
 %files devel-static
 %_libdir/%name.a
+%endif
 
 %changelog
+* Sun Aug 29 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt3
+- disable devel-static subpackage (contains __gnu_lto_slim)
+
 * Sun Jul 04 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt2
 - cleanup spec, drop ExclusiveArch
 - switch build to makefile (thanks, zerg@!), fix build (ALT bug 38832)
