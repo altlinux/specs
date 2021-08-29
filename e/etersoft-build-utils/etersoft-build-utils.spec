@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.0.8
+Version: 3.0.9
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -69,6 +69,12 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Mon Aug 30 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0.9-alt1
+- gitask: add Add support (and & run)
+- gitask: add ls -w [N] to watch the list
+- gitask ls: print ls via head -n20 by default
+- gitask: add sleep 2 before next command
+
 * Thu Aug 19 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0.8-alt1
 - repos/srpms: add Cauldron repos
 - assure we have gear before using (ALT bug 39882)
