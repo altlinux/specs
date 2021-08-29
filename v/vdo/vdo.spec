@@ -1,16 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 
-Summary: Management tools for Virtual Data Optimizer
 Name: vdo
 Version: 6.2.5.41
-Release: alt1
-Group: System/Base
+Release: alt1.1
+
+Summary: Management tools for Virtual Data Optimizer
 License: GPLv2
-Source: %name-%version.tar
-Patch: %name-%version.patch
+Group: System/Base
 
 Url: http://github.com/dm-vdo/vdo
-ExclusiveArch: x86_64 aarch64 ppc64le ppc64 s390 s390x
+Source: %name-%version.tar
+Patch0: %name-%version.patch
+Patch1: vdo-6.2.4-e2k.patch
+
+ExclusiveArch: x86_64 aarch64 ppc64le ppc64 s390 s390x %e2k
 
 Requires: lvm2
 
@@ -39,7 +42,12 @@ This package provides the user-space support tools for VDO.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p1
+%ifarch %e2k
+# as of lcc 1.25.12
+sed -i 's,-Werror,& -Wno-error=ignored-qualifiers,' utils/vdo/base/Makefile
+%endif
 
 %build
 %make
@@ -101,6 +109,10 @@ This package provides the user-space support tools for VDO.
 %_man8dir/vdoregenerategeometry.8*
 
 %changelog
+* Sun Aug 29 2021 Michael Shigorin <mike@altlinux.org> 6.2.5.41-alt1.1
+- E2K: added arch support patch by Ilya Kurdyukov (64 bit cacheline)
+- minor spec cleanup
+
 * Mon Jul 05 2021 Alexey Shabalin <shaba@altlinux.org> 6.2.5.41-alt1
 - 6.2.5.41
 
