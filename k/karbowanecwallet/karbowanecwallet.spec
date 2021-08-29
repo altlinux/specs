@@ -1,5 +1,7 @@
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 Name:		karbowanecwallet
-Version:	1.4.7
+Version:	1.6.0
 Release:	alt2
 Summary:	Karbowanec (Karbo) KRB wallet
 Url:		https://karbo.io/
@@ -10,7 +12,6 @@ Source1:	cryptonote.tar.xz
 Source2:	karbowanec.png
 
 Patch0:		%name-1.4.4-alt_lang_dir.patch
-Patch1:		%name-g++8.patch
 
 BuildRequires:	boost-asio-devel boost-devel-headers boost-devel-static cmake qt5-base-devel qt5-tools-devel git-core libssl-devel
 BuildRequires:	/usr/bin/convert
@@ -27,7 +28,6 @@ tar -xf %SOURCE1
 mv ./git ./.git
 mv ./cryptonote/git ./cryptonote/.git
 %patch0 -p1
-# #%patch1 -p2
 
 %build
 subst 's|Categories=Office;Finance;|Categories=Qt;Office;Finance;|g' ./src/%name.desktop.in
@@ -59,6 +59,15 @@ convert -resize 16x16 %SOURCE2 %buildroot%_miconsdir/karbowanec.png
 %_liconsdir/karbowanec.png
 
 %changelog
+* Mon Aug 30 2021 Motsyo Gennadi <drool@altlinux.ru> 1.6.0-alt2
+- fix LTO
+
+* Sun Aug 29 2021 Motsyo Gennadi <drool@altlinux.ru> 1.6.0-alt1
+- 1.6.0
+
+* Mon Dec 28 2020 Motsyo Gennadi <drool@altlinux.ru> 1.4.8-alt1
+- 1.4.8
+
 * Sat Sep 19 2020 Motsyo Gennadi <drool@altlinux.ru> 1.4.7-alt2
 - ExclusiveArch x86_64 armh aarch64
 
