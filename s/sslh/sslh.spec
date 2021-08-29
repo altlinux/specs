@@ -1,10 +1,10 @@
 Name: sslh
-Version: 1.21c
+Version: 1.22b
 Release: alt1
 
 Summary: A ssl/ssh multiplexer
 
-License: GPL
+License: GPLv2
 Group: System/Servers
 Url: http://www.rutschle.net/tech/sslh.shtml
 
@@ -15,19 +15,14 @@ Source2: sslh.config
 Source3: sslh.service
 Source4: sslh.cfg
 
-#BuildRequires: tcpd-devel perl gcc make gzip
-
-# Automatically added by buildreq on Sat Aug 04 2012
-# optimized out: perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators
-BuildRequires: libconfig-devel perl-Pod-Parser libpcre-devel libsystemd-devel libcap-devel
+# Automatically added by buildreq on Sun Aug 29 2021
+BuildRequires: libcap-devel libconfig-devel libpcre2-devel libsystemd-devel perl-Pod-Parser
 
 %description
 sslh lets one accept both HTTPS and SSH connections on the
 same port. It makes it possible to connect to an SSH server
 on port 443 (e.g. from inside a corporate firewall) while
 still serving HTTPS on that port.
-
-Author: Yves Rutschle
 
 %prep
 %setup
@@ -60,6 +55,9 @@ install -m 644 %SOURCE4 %buildroot%_sysconfdir/%name/sslh.cfg
 %config(noreplace) %_sysconfdir/%name/sslh.cfg
 
 %changelog
+* Sun Aug 29 2021 Vitaly Lipatov <lav@altlinux.ru> 1.22b-alt1
+- new version 1.22b (with rpmrb script)
+
 * Wed Aug 26 2020 Vitaly Lipatov <lav@altlinux.ru> 1.21c-alt1
 - new version 1.21c (with rpmrb script)
 
