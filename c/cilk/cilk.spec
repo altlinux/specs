@@ -1,19 +1,28 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+# LTO causes errors, disable it
+%global optflags_lto %nil
+
 Name: cilk
 Version: 5.4.6
-Release: alt12
+Release: alt13
 Summary: Language for multithreaded parallel programming based on ANSI C
-License: GPL v2 or later
+License: GPL-2.0+
 Group: Development/C
 Url: http://supertech.csail.mit.edu/cilk/
 
-Source: http://supertech.csail.mit.edu/cilk/cilk-5.4.6.tar.gz
+# http://supertech.csail.mit.edu/cilk/cilk-5.4.6.tar.gz
+Source: %name-%version.tar
 Patch2000: %name-e2k.patch
 
-Requires: lib%name-devel = %version-%release
-Conflicts: lib%name-devel-static < %version-%release
-Obsoletes: lib%name-devel-static < %version-%release
+Requires: lib%name-devel = %EVR
+Conflicts: lib%name-devel-static < %EVR
+Obsoletes: lib%name-devel-static < %EVR
 
 BuildRequires: flex chrpath
+
 ExcludeArch: armh aarch64
 
 %description
@@ -55,7 +64,7 @@ This package contains shared libraries of Cilk.
 %package -n lib%name-devel
 Summary: Development files of Cilk
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Cilk is a language for multithreaded parallel programming based on ANSI
@@ -77,7 +86,7 @@ This package contains development files of Cilk.
 %package -n lib%name-devel-static
 Summary: Static libraries of Cilk
 Group: Development/C
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-devel-static
 Cilk is a language for multithreaded parallel programming based on ANSI
@@ -147,10 +156,13 @@ This package contains documentation for Cilk.
 %endif
 
 %build
-%add_optflags %optflags_shared -DHAVE_SYS_TIME_H -fgnu89-inline
+%add_optflags -DHAVE_SYS_TIME_H -fgnu89-inline
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
-	--with-perfctr=no
+	--with-perfctr=no \
+	%nil
+
 %make_build
 
 %install
@@ -163,18 +175,6 @@ install -d %buildroot%_docdir/%name/FAQ
 install -p -m644 doc/*.pdf %buildroot%_docdir/%name
 install -m644 FAQ/%name-faq.html/* \
 	%buildroot%_docdir/%name/FAQ
-
-#cp -fR examples %buildroot%_libdir/%name/
-#rm -f %buildroot%_libdir/%name/examples/*.o
-
-#pushd %buildroot%_libdir/%name/examples
-#for i in $(ls); do
-#	TYPE="$(file $i|sed 's|.*\(ELF\).*|\1|')"
-#	if [ "$TYPE" = "ELF" -a "$(readelf -a $i|grep RPATH)" != "" ]; then
-#		chrpath -d $i
-#	fi
-#done
-#popd
 
 %check
 %make check
@@ -193,18 +193,20 @@ install -m644 FAQ/%name-faq.html/* \
 %_libdir/*.so
 %_includedir/*
 
-#files -n lib%name-devel-static
-#_libdir/*.a
+%files -n lib%name-devel-static
+%_libdir/*.a
 
 %files doc
 %_infodir/*
 %_docdir/%name
 
 %files examples
-#_libdir/%name/examples
 %doc examples
 
 %changelog
+* Mon Aug 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.4.6-alt13
+- Disabled LTO.
+
 * Mon Jul 05 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 5.4.6-alt12
 - Added e2k support
 - Excluded unsupported armh and aarch64
