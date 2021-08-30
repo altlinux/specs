@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.16
+Version: 1.4.17
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,18 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Tue Aug 31 2021 Anton Midyukov <antohami@altlinux.org> 1.4.17-alt1
+- Add COMMON_LISTS variable support by analogy COMMON_PACKAGES.
+  Fix use/efi (the list 'base+efi' was not added to rescue, base,
+  live)
+- kernel: add drivers/soc to VM_INITRDMODULES (needed for rk3399
+  support)
+- uboot: Added HiFive Unmatched support (thanks jqt4@)
+- lib/profile.mk: do not abort build with CHECK=0, if unavailable ARCH
+- base+rescue: add eepm (request by lav@)
+- stage2: update 50-stage2-sbc-aarch64. Use directories instead of
+  specifying modules 
+
 * Mon Aug 23 2021 Anton Midyukov <antohami@altlinux.org> 1.4.16-alt1
 - efi: add mokutil, pesign to COMMON_PACKAGES (for Secure Boot,
   requset by nikel@)
