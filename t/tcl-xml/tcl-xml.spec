@@ -1,8 +1,10 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 %define teaname tclxml
 
 Name: tcl-xml
 Version: 3.2
-Release: alt2
+Release: alt3
 
 Summary: XML parsers for Tcl
 License: BSD
@@ -76,6 +78,9 @@ xz ChangeLog
 %_tcllibdir/Tclxml%version/libTclxmlstub%version.a
 
 %changelog
+* Mon Aug 30 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.2-alt3
+- Fixed FTBSF: built fat LTO objects.
+
 * Sun Dec 01 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.2-alt2
 - Built and packed manpages.
 
