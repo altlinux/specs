@@ -1,9 +1,9 @@
 Name: libcxxtools
 Version: 2.2.1
-Release: alt1
+Release: alt2
 
 Summary: Set of reusable C++ components
-License: LGPL
+License: LGPL-2.1
 Group: Development/C++
 Url: http://www.tntnet.org/
 
@@ -26,6 +26,7 @@ Requires: %name = %version-%release
 %setup
 
 %build
+%define optflags_lto %nil
 %autoreconf
 %configure --disable-static \
 %ifnarch %ix86 x86_64
@@ -48,6 +49,9 @@ Requires: %name = %version-%release
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Aug 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.1-alt2
+- kept out of lto
+
 * Mon Mar 07 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.1-alt1
 - 2.2.1 released
 
