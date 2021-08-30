@@ -2,7 +2,7 @@
 
 Name: alterator-update-kernel
 Version: 1.4
-Release: alt3
+Release: alt4
 
 Source:%name-%version.tar
 
@@ -55,6 +55,10 @@ export GUILE_LOAD_PATH=/usr/share/alterator/lookout
 %_datadir/dbus-1/interfaces/*.xml
 
 %changelog
+* Fri Aug 27 2021 Ivan Savin <svn17@altlinux.org> 1.4-alt4
+- Add the creation of tmpfs for make-initrd (env TMPDIR) when installing
+  the kernel. (Closes: 40650)
+
 * Thu Aug 05 2021 Ivan Savin <svn17@altlinux.org> 1.4-alt3
 - Add error message when updating kernel when /tmp is mounted with noexec.
 - Fix computation of package version in several functions in the backend.
