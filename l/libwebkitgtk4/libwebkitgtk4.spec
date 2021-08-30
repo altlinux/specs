@@ -1,4 +1,6 @@
 %set_verify_elf_method textrel=relaxed
+%{?optflags_lto:%global optflags_lto %nil}
+
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
 %define api_ver 4.0
@@ -13,7 +15,7 @@
 
 %def_enable ninja
 %def_disable gtkdoc
-%def_enable gold
+%def_disable gold
 %def_enable x11
 %def_enable wayland
 %def_enable systemd
@@ -27,7 +29,7 @@
 
 Name: libwebkitgtk4
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -42,6 +44,8 @@ Patch: webkitgtk-2.26.1-alt-bwrap_check.patch
 # python->python3
 Patch1: webkitgtk-2.31.1-alt-python3.patch
 Patch2: webkitgtk-2.30.0-alt-arm64-return-type.patch
+Patch3: webkitgtk-2.32.1-alt-e2k-dtoa.patch
+Patch4: webkitgtk-2.32.1-alt-e2k-cpu.patch
 
 %define bwrap_ver 0.3.1
 
@@ -219,6 +223,10 @@ GObject introspection devel data for the JavaScriptCore library
 %ifarch aarch64
 %patch2 -b .arm64
 %endif
+%ifarch %e2k
+%patch3 -p1
+%patch4 -p1
+%endif
 
 # Remove bundled libraries
 rm -rf Source/ThirdParty/gtest/
@@ -270,6 +278,11 @@ export PYTHON=%__python3
 -DUSER_AGENT_BRANDING:STRING="ALTLinux" \
 %{?_disable_systemd:-DUSE_SYSTEMD:BOOL=OFF}
 %nil
+%ifarch aarch64
+%define smp %__nprocs
+n=%smp
+[  "$n"  -lt  64  ]  || %define _smp_build_ncpus 64
+%endif
 %cmake_build
 
 %install
@@ -337,6 +350,10 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Sat Aug 28 2021 Yuri N. Sedunov <aris@altlinux.org> 2.32.3-alt1.1
+- disabled LTO and ld.gold
+- try to decrease nprocs limit for aarch64 to avoid cc crash
+
 * Fri Jul 23 2021 Yuri N. Sedunov <aris@altlinux.org> 2.32.3-alt1
 - 2.32.3
 
