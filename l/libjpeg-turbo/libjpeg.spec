@@ -3,7 +3,7 @@
 
 Name: libjpeg-turbo
 Version: 2.0.6
-Release: alt3
+Release: alt4
 Epoch: 2
 
 Summary: A SIMD-accelerated library for manipulating JPEG image format files
@@ -127,6 +127,7 @@ local: *;
 EOF
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 # using PGO makes the code about 10% faster
 # up to 50% on e2k for progressive JPEG decoding
 %if_enabled profiling
@@ -196,6 +197,9 @@ install -pm644 README* change.log \
 %_pkgconfigdir/libturbojpeg.pc
 
 %changelog
+* Mon Aug 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2:2.0.6-alt4
+- rebuilt with lto on
+
 * Tue Jun 29 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2:2.0.6-alt3
 - added PGO (profile-guided optimization)
 
