@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %def_disable docs
 
 Name: clanlib0.8
 Version: 0.8.1
-Release: alt7
-
+Release: alt8
 Summary: The ClanLib Game SDK
 License: LGPL
 Group: System/Libraries
@@ -58,16 +59,6 @@ Obsoletes: lib%name-devel < %version
 %description devel
 This package contains the headers that programmers will need to develop
 applications which will use %name.
-
-%package devel-static
-Summary: Static libraries for developing programs that will use %name
-Group: Development/C++
-Requires: %name-devel = %EVR
-Provides: lib%name-devel-static = %version
-
-%description devel-static
-This package contains the static libraries that programmers will need
-to develop applications which will use %name.
 
 %package sound
 Summary: ClanLib Sound module
@@ -172,6 +163,8 @@ work for game developers. This package contains the documentation.
 %patch7 -p2
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 echo >> acinclude.m4
 %autoreconf
 %configure \
@@ -181,6 +174,7 @@ echo >> acinclude.m4
 %if_disabled docs
 	--disable-docs \
 %endif
+	--disable-static \
 	%nil
 
 %make_build all
@@ -220,9 +214,6 @@ install -pD -m755 %SOURCE1 %buildroot%_bindir/launch_x11_clanapp
 %_includedir/*
 %_pkgconfigdir/*
 
-%files devel-static
-%_libdir/*.a
-
 %if_enabled docs
 %files docs
 %dir %_docdir/clanlib-%version
@@ -255,6 +246,9 @@ install -pD -m755 %SOURCE1 %buildroot%_bindir/launch_x11_clanapp
 %_libdir/libclanGUIStyleSilver-*.so.*
 
 %changelog
+* Mon Aug 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.1-alt8
+- Disabled installation of static libraries.
+
 * Wed Dec 02 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.1-alt7
 - Spec cleanup.
 - Disabled docs due to too new perl version.
