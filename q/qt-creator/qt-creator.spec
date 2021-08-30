@@ -8,7 +8,7 @@
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 4.15.2
+Version: 5.0.0
 Release: alt1
 
 Summary: Cross-platform IDE for Qt
@@ -30,6 +30,8 @@ Provides: qtcreator = %EVR
 Obsoletes: qtcreator-clangcodemodel
 Provides: qtcreator-clangcodemodel = %EVR
 
+BuildRequires(pre): cmake
+BuildRequires(pre): rpm-build-ninja
 BuildRequires(pre): qt5-base-devel >= %qt_version
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
@@ -43,15 +45,31 @@ BuildRequires: qt5-webkit-devel >= %qt_version
 BuildRequires: qt5-x11extras-devel >= %qt_version
 BuildRequires: qt5-xmlpatterns-devel >= %qt_version
 BuildRequires: qt5-tools-devel >= %qt_version
+BuildRequires: qt5-serialport-devel
+BuildRequires: qt5-webengine-devel >= %qt_version
+BuildRequires: qt5-svg-devel >= %qt_version
+BuildRequires: qt5-quickcontrols2-devel
+BuildRequires: kf5-syntax-highlighting-devel
 %if_with ClangCodeModel
-BuildRequires: llvm%llvm_version-devel
-BuildRequires: llvm%llvm_version-devel-static
+BuildRequires: clang%llvm_version
 BuildRequires: clang%llvm_version-devel
 BuildRequires: clang%llvm_version-devel-static
-BuildRequires: clang%llvm_version
+BuildRequires: clang%llvm_version-tools
+BuildRequires: clangd%llvm_version
 BuildRequires: lld%llvm_version
+BuildRequires: llvm%llvm_version-devel
+BuildRequires: llvm%llvm_version-devel-static
+BuildRequires: llvm%llvm_version-tools
 %endif
 BuildRequires: libsystemd-devel
+BuildRequires: elfutils-devel
+BuildRequires: libzstd-devel
+BuildRequires: zlib-devel
+# Qbs documentation
+#BuildRequires: python3-module-lxml
+#BuildRequires: python3-module-bs4
+# Missing build requirements
+#BuildRequires: litehtml-devel
 
 Requires: %name-core = %EVR
 # Add Qt5 build environment to build Qt project
@@ -92,6 +110,7 @@ Group: Documentation
 BuildArch: noarch
 Requires: %name
 Requires: qt5-base-doc
+Requires: qt5-tools
 
 %description doc
 Documentation for %name
@@ -125,6 +144,7 @@ subst 's@#!.*python[23]\?@#!%__python3@' `find . -name \*.py` \
 	src/libs/qt-breakpad/qtbreakpadsymbols
 
 %build
+%define optflags_lto %nil
 export QTDIR=%_qt5_prefix
 export PATH="%{_qt5_bindir}:$PATH"
 %ifarch %e2k
@@ -136,22 +156,23 @@ export LLVM_INSTALL_DIR="%_prefix"
 %remove_optflags -frecord-gcc-switches
 %endif
 
-%qmake_qt5 -r IDE_LIBRARY_BASENAME=%_lib \
-	CONFIG+="disable_external_rpath" \
-	QMAKE_STRIP= \
-	CONFIG+="journald" \
-%if_with ClangCodeModel
-	-spec linux-clang \
-	QMAKE_LFLAGS+="-fuse-ld=lld" \
-%endif
-	%nil
+%cmake -GNinja \
+    -Wno-dev \
+    -DWITH_DOCS=ON \
+    -Djournald=ON \
+    -DBUILD_DEVELOPER_DOCS=OFF \
+    -DCMAKE_INSTALL_LIBDIR=%_lib \
+    -DCMAKE_EXE_LINKER_FLAGS="$LDFLAGS -Wl,-rpath,%_libdir/qtcreator -Wl,-rpath,%_libdir/qtcreator/plugins" \
+    -DCMAKE_SHARED_LINKER_FLAGS="$LDFLAGS -Wl,-rpath,%_libdir/qtcreator -Wl,-rpath,%_libdir/qtcreator/plugins"
 
-%make_build
-%make_build qch_docs
+%ninja_build -C "%_cmake__builddir"
+%ninja_build -C "%_cmake__builddir" qch_docs
 
 %install
-%install_qt5 INSTALL_ROOT=%buildroot/%_prefix
-%install_qt5 INSTALL_ROOT=%buildroot/%_prefix install_inst_qch_docs
+%ninja_install -C "%_cmake__builddir"
+# Unable to install documentstion using ninja-build
+#%%ninja_install -C "%_cmake__builddir" qch_docs
+install -Dpm0644 %_cmake__builddir/share/doc/qtcreator/qtcreator.qch %buildroot%_defaultdocdir/qtcreator/qtcreator.qch
 
 # Remove Windows cdb debugger support to prevent unmet python2.7(cdbext)
 rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
@@ -166,7 +187,6 @@ ln -s en.lproj %buildroot%_datadir/qtcreator/qbs/share/qbs/examples/cocoa-applic
 %doc README* LICENSE*
 %_bindir/*
 %_libdir/qtcreator
-%dir %_libdir/qtcreator/plugins
 %_prefix/libexec/qtcreator
 %_iconsdir/hicolor/*/apps/QtProject-qtcreator.png
 %_desktopdir/*.desktop
@@ -180,6 +200,10 @@ ln -s en.lproj %buildroot%_datadir/qtcreator/qbs/share/qbs/examples/cocoa-applic
 %_datadir/qtcreator/*
 
 %changelog
+* Fri Aug 27 2021 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt1
+- New version (ALT #40822).
+- Build using ninja-build.
+
 * Wed Jul 14 2021 Andrey Cherepanov <cas@altlinux.org> 4.15.2-alt1
 - New version.
 
