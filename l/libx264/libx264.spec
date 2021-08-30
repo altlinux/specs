@@ -1,9 +1,9 @@
 Name: libx264
 Version: 148
-Release: alt3
+Release: alt4
 
 Summary: H.264 codec shared library
-License: GPL
+License: GPLv2
 Group: System/Libraries
 Url: http://www.videolan.org/x264.html
 
@@ -71,6 +71,7 @@ software.
 
 %build
 %define _optlevel 3
+%define optflags_lto %nil
 %ifarch %ix86
 # prevent use of -mfoo part of CFLAGS on x86 with YASM
 export ASFLAGS=' '
@@ -106,6 +107,9 @@ export ASFLAGS=' '
 %_libdir/libx264.so
 
 %changelog
+* Mon Aug 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 148-alt4
+- rebuilt with lto disabled
+
 * Thu Apr 15 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 148-alt3
 - added SIMD patch for Elbrus
 - added checkasm run
