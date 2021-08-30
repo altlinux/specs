@@ -3,7 +3,7 @@
 
 Name: vkd3d
 Version: 1.2
-Release: alt1
+Release: alt1.1
 Summary: The vkd3d 3D Graphics Library
 
 Group: System/Libraries
@@ -21,6 +21,9 @@ BuildRequires: libxcb-devel libxcbutil-devel libxcbutil-keysyms-devel libxcbutil
 
 # same as wine
 ExclusiveArch: %ix86 x86_64 aarch64
+
+# fix LTO
+%global optflags_lto %optflags_lto -ffat-lto-objects
 
 %description
 Vkd3d is a 3D graphics library built on top of Vulkan. It has an API very
@@ -97,6 +100,9 @@ done
 %endif
 
 %changelog
+* Mon Aug 30 2021 L.A. Kostis <lakostis@altlinux.ru> 1.2-alt1.1
+- Fix LTO linking.
+
 * Fri Oct 02 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2-alt1
 - Updated to upstream release version 1.2 (ALT #39002).
 
