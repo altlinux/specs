@@ -1,6 +1,6 @@
 Name: live555
 Version: 20201201
-Release: alt1
+Release: alt2
 
 Summary: Live555.com Streaming Media Library Utilities
 License: LGPLv3
@@ -57,6 +57,7 @@ sh genMakefiles linux
 
 %install
 %makeinstall_std PREFIX=%prefix LIBDIR=%_libdir
+rm -v %buildroot%_libdir/*.a
 for f in BasicUsageEnvironment UsageEnvironment groupsock; do
 echo 'INPUT(AS_NEEDED(%_libdir/libliveMedia.so))' >%buildroot%_libdir/lib$f.so
 done
@@ -76,6 +77,9 @@ done
 %_includedir/liveMedia
 
 %changelog
+* Mon Aug 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 20201201-alt2
+- unpackaged static libraries dropped
+
 * Tue Dec 01 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 20201201-alt1
 - 2020.12.01 released
 
