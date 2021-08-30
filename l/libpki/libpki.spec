@@ -1,13 +1,13 @@
 Name: libpki
 Version: 0.8.9
-Release: alt5.git20180603
+Release: alt6.git20180603
 
 Summary: Library for PKI enabled application development.
 License: %asl
 Group: System/Libraries
 Url: https://pki.openca.org/projects/libpki/
 Packager: Vladimir Didenko <cow@altlinux.ru>
-ExclusiveArch: i586 x86_64
+ExclusiveArch: i586 x86_64 %e2k
 
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -47,6 +47,10 @@ to develop programs that use the PKI library.
 %prep
 %setup -n %name-%version
 %patch0 -p1
+%ifarch %e2k
+sed -i "s|\\*amd64)|e2k)|" configure.ac
+sed -i "s|MYLDADD =|& @openssl_ldadd@|" src/tools/Makefile.am
+%endif
 
 %build
 %autoreconf
@@ -78,6 +82,9 @@ rm -fr %buildroot%_includedir/%name/drivers/kmf
 %_includedir/*
 
 %changelog
+* Mon Aug 30 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.8.9-alt6.git20180603
+- Fixed build for Elbrus
+
 * Thu Aug 26 2021 Vladimir Didenko <cow@altlinux.ru> 0.8.9-alt5.git20180603
 - Don't build static library
 
