@@ -3,8 +3,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: pam_pkcs11
-Version: 0.6.11
-Release: alt4
+Version: 0.6.12
+Release: alt1
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -186,8 +186,14 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ll_isbc.so
 
 %changelog
+* Fri Aug 27 2021 Paul Wolneykien <manowar@altlinux.org> 0.6.12-alt1
+- Fresh up to v0.6.12.
+- Fixed segfault in CRL check (thx Komarov Egor).
+- Fixed libpasswdqc initialization (closes: 39790).
+- Fixed memory corruption in mapper modules (closes: 40814).
+
 * Thu Mar 18 2021 Paul Wolneykien <manowar@altlinux.org> 0.6.11-alt4
-- Build with  libpasswdqc (closes: 39790)
+- Build with libpasswdqc (closes: 39790)
 - Warn about undefined symbols when linking the module.
 
 * Thu Sep 03 2020 Paul Wolneykien <manowar@altlinux.org> 0.6.11-alt3
