@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20210812
+Version: 20210820
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,12 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Mon Aug 30 2021 Cronbuild Service <cronbuild@altlinux.org> 20210820-alt1
+- upstream changes (GIT 2e271f2):
+  + rtl_bt: Update RTL8852A BT USB firmware to 0xD9A9_127B (thx Hilda Wu)
+  + rtl_nic: update firmware of RTL8153C (thx Hayes Wang)
+  + ice: update package file to 1.3.26.0 (thx Tony Nguyen)
+
 * Mon Aug 16 2021 Cronbuild Service <cronbuild@altlinux.org> 20210812-alt1
 - upstream changes (GIT 24c4a85):
   + amdgpu: revert back to older raven2 sdma firmware (thx Alex Deucher)
