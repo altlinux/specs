@@ -1,6 +1,6 @@
 Name: trousers
 Version: 0.3.15
-Release: alt1
+Release: alt2
 
 Summary: Implementation of the TCG's Software Stack
 License: BSD-3-Clause
@@ -51,6 +51,7 @@ applications.
 
 %install
 %makeinstall_std
+rm -v %buildroot%_libdir/*.a
 
 %files
 %doc AUTHORS LICENSE NEWS README* ChangeLog
@@ -70,6 +71,9 @@ applications.
 %_man3dir/Tspi_*.3*
 
 %changelog
+* Mon Aug 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.3.15-alt2
+- unpackaged static library dropped
+
 * Tue Jan 26 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.3.15-alt1
 - 0.3.15 released
 - Corrected mutliple security issues in tcsd
