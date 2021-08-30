@@ -1,16 +1,18 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 Name: tcl-tdom
-Version: 0.9.1
-Release: alt2
+Version: 0.9.2
+Release: alt1
 
 Summary: A XML/DOM/XPath/XSLT implementation for Tcl
-License: MPL-1.1
+License: MPL-2.0
 Group: Development/Tcl
 Url: http://www.tdom.org
 
 # repacked http://tdom.org/downloads/tdom-%version-src.tgz
 Source: tdom-%version.tar
+Source1: tdom.watch
 Patch2: 0002-ALT-install-test-targets-fixed.patch
-Patch3: 0003-ALT-TEA.patch
 
 BuildRequires: tcl-devel libexpat-devel libgumbo-devel
 
@@ -21,8 +23,8 @@ placed into them in memory, not on disk.
 
 %prep
 %setup -n tdom-%version
+%tea_patch
 %patch2 -p2
-%patch3 -p2
 # remove needless stuff
 rm -r macosx/ win/
 
@@ -43,12 +45,18 @@ rm -r macosx/ win/
 make test
 
 %files
-%_tcllibdir/libtdom%version.so
-%_tcllibdir/tdom%version
+%_tcllibdir/tdom%version/libtdom%version.so
+%_tcllibdir/tdom%version/pkgIndex.tcl
 %_tcldatadir/tdom%version
 %_mandir/mann/*
 
 %changelog
+* Mon Aug 30 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.2-alt1
+- Updated to 0.9.2.
+- Changed license by upsteram.
+- Packed according new ALT Tcl/Tk policy.
+- Packed watch file.
+
 * Tue Sep 24 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1-alt2
 - Fixed build with external expat.
 - Built with HTLM5 parser support.
