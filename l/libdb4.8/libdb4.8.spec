@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 %define _sover 4.8
-Name: libdb%_sover
-Version: %_sover.30
-Release: alt4
 %define srcname db-%version
 
+Name: libdb%_sover
+Version: %_sover.30
+Release: alt5
 Summary: Berkeley database library
 License: BSD-style
 Group: System/Libraries
@@ -49,82 +50,47 @@ BuildPreReq: rpm-build >= 4.0.4-alt1
 %package -n db%_sover-utils
 Summary: Command line tools for managing Berkeley DB databases
 Group: Databases
-#Provides: db4-utils = %version-%release
 Conflicts: db3-utils, db4.0-utils, db4.1-utils, db4.2-utils, db4.3-utils, db4.4-utils, db4.7-utils
 
 %package devel
 Summary: Development environment for Berkeley database library
 Group: Development/C
-#Provides: libdb4-devel = %version-%release, db4-devel = %version-%release
 Requires: %name = %EVR
 Conflicts: libdb3-devel, libdb4.0-devel, libdb4.1-devel, libdb4.2-devel, libdb4.3-devel, libdb4.4-devel, libdb4.6-devel, libdb4.7-devel, libdb2-devel < 0:2.4.14-alt3
-
-%package devel-static
-Summary: Static version of Berkeley database library
-Group: Development/C
-#Provides: libdb4-devel-static = %version-%release, db4-devel-static = %version-%release
-Requires: %name-devel = %EVR
 
 %package -n %{name}_cxx
 Summary: C++ bindings for Berkeley database library
 Group: System/Libraries
-#Provides: libdb4_cxx = %version-%release
 
 %package -n %{name}_cxx-devel
 Summary: C++ development bindings for Berkeley database library
 Group: Development/C++
-#Provides: libdb4_cxx-devel = %version-%release
 Requires: %name-devel = %EVR
 Requires: %{name}_cxx = %EVR
 Conflicts: libdb4.0_cxx-devel, libdb4.1_cxx-devel, libdb4.2_cxx-devel, libdb4.3_cxx-devel, libdb4.4_cxx-devel, libdb4.6_cxx-devel, libdb4.7_cxx-devel
 
-%package -n %{name}_cxx-devel-static
-Summary: C++ development bindings for Berkeley database library
-Group: Development/C++
-#Provides: libdb4_cxx-devel-static = %version-%release
-Requires: %name-devel-static = %EVR
-Requires: %{name}_cxx-devel = %EVR
-
 %package -n %{name}_tcl
 Summary: Tcl bindings for Berkeley database library
 Group: System/Libraries
-#Provides: libdb4_tcl = %version-%release
 Conflicts: libdb3_tcl, libdb4.0_tcl, libdb4.1_tcl, libdb4.2_tcl, libdb4.3_tcl, libdb4.4_tcl, libdb4.6_tcl, libdb4.7_tcl
 
 %package -n %{name}_tcl-devel
 Summary: Tcl development bindings for Berkeley database library
 Group: Development/Tcl
-#Provides: libdb4_tcl-devel = %version-%release
 Requires: %name-devel = %EVR
 Requires: %{name}_tcl = %EVR
 Conflicts: libdb4.0_tcl-devel, libdb4.1_tcl-devel, libdb4.2_tcl-devel, libdb4.3_tcl-devel, libdb4.4_tcl-devel, libdb4.6_tcl-devel, libdb4.7_tcl-devel
 
-%package -n %{name}_tcl-devel-static
-Summary: Tcl development bindings for Berkeley database library
-Group: Development/Tcl
-#Provides: libdb4_tcl-devel-static = %version-%release
-Requires: %name-devel-static = %EVR
-Requires: %{name}_tcl-devel = %EVR
-
 %package -n %{name}_java
 Summary: Java bindings for Berkeley database library
 Group: System/Libraries
-#Provides: libdb4_java = %version-%release
 Conflicts: libdb4.0_java, libdb4.1_java, libdb4.2_java, libdb4.3_java, libdb4.4_java, libdb4.6_java, libdb4.7_java
 
 %package -n %{name}_java-devel
 Summary: Java development bindings for Berkeley database library
 Group: Development/Java
-#Provides: libdb4_java-devel = %version-%release
 Requires: %name-devel = %EVR
 Requires: %{name}_java = %EVR
-
-%package -n %{name}_java-devel-static
-Summary: Java development bindings for Berkeley database library
-Group: Development/Java
-#Provides: libdb4_java-devel-static = %version-%release
-Requires: %name-devel-static = %EVR
-Requires: %{name}_java-devel = %EVR
 
 %package doc
 Summary: Documentation for Berkeley database library
@@ -157,16 +123,6 @@ and database recovery.  DB supports C, C++, Java and Perl APIs.
 This package contains the header files and libraries for
 building programs which use Berkeley DB.
 
-%description devel-static
-The Berkeley Database (Berkeley DB) is a programmatic toolkit that provides
-embedded database support for both traditional and client/server applications.
-Berkeley DB includes B+tree, Extended Linear Hashing, Fixed and Variable-length
-record access methods, transactions, locking, logging, shared memory caching
-and database recovery.  DB supports C, C++, Java and Perl APIs.
-
-This package contains static libraries for building statically linked programs
-which use Berkeley DB.
-
 %description -n %{name}_cxx
 The Berkeley Database (Berkeley DB) is a programmatic toolkit that provides
 embedded database support for both traditional and client/server applications.
@@ -185,15 +141,6 @@ and database recovery.  DB supports C, C++, Java and Perl APIs.
 
 This package contains libraries and header files for building programs using C++ API.
 
-%description -n %{name}_cxx-devel-static
-The Berkeley Database (Berkeley DB) is a programmatic toolkit that provides
-embedded database support for both traditional and client/server applications.
-Berkeley DB includes B+tree, Extended Linear Hashing, Fixed and Variable-length
-record access methods, transactions, locking, logging, shared memory caching
-and database recovery.  DB supports C, C++, Java and Perl APIs.
-
-This package contains static libraries for C++ API.
-
 %description -n %{name}_tcl
 The Berkeley Database (Berkeley DB) is a programmatic toolkit that provides
 embedded database support for both traditional and client/server applications.
@@ -211,15 +158,6 @@ record access methods, transactions, locking, logging, shared memory caching
 and database recovery.  DB supports C, C++, Java and Perl APIs.
 
 This package contains libraries for building programs using Tcl API.
-
-%description -n %{name}_tcl-devel-static
-The Berkeley Database (Berkeley DB) is a programmatic toolkit that provides
-embedded database support for both traditional and client/server applications.
-Berkeley DB includes B+tree, Extended Linear Hashing, Fixed and Variable-length
-record access methods, transactions, locking, logging, shared memory caching
-and database recovery.  DB supports C, C++, Java and Perl APIs.
-
-This package contains static libraries for Tcl API.
 
 %description -n %{name}_java
 The Berkeley Database (Berkeley DB) is a programmatic toolkit that provides
@@ -240,15 +178,6 @@ and database recovery.  DB supports C, C++, Java and Perl APIs.
 This package contains libraries and header files for building programs using
 Java API.
 
-%description -n %{name}_java-devel-static
-The Berkeley Database (Berkeley DB) is a programmatic toolkit that provides
-embedded database support for both traditional and client/server applications.
-Berkeley DB includes B+tree, Extended Linear Hashing, Fixed and Variable-length
-record access methods, transactions, locking, logging, shared memory caching
-and database recovery.  DB supports C, C++, Java and Perl APIs.
-
-This package contains static libraries for Java API.
-
 %description doc
 The Berkeley Database (Berkeley DB) is a programmatic toolkit that provides
 embedded database support for both traditional and client/server applications.
@@ -264,6 +193,8 @@ This package contains documentation for developers.
 %build
 %add_optflags -fno-strict-aliasing
 %define _configure_script ../dist/configure
+
+export STRIP=/bin/echo
 
 pushd build_unix
 	%configure \
@@ -281,7 +212,8 @@ pushd build_unix
 		%{subst_enable uimutexes} \
 		%{subst_enable umrw} \
 		%{?_enable_tcl:--with-tcl=%_libdir} \
-		#
+		--disable-static \
+		%nil
 	# Remove libtool predep_objects and postdep_objects wonkiness
 	sed -i 's/-shared -nostdlib/-shared/' libtool
 	sed -i 's/^\(predep_objects="\|postdep_objects="\).*$/\1"/' libtool
@@ -296,6 +228,8 @@ popd
 rm -f examples_*/tags
 
 %install
+export STRIP=/bin/echo
+
 mkdir -p %buildroot{/%_lib,%_libdir,%_includedir/db4}
 %{?_enable_tcl:mkdir -p %buildroot{%_tcllibdir,%_tcldatadir/Db_tcl}}
 
@@ -308,7 +242,6 @@ install -pm644 man/*.1 %buildroot%_man1dir/
 install -pm644 README LICENSE %buildroot%docdir/
 cp -pRL examples_* %buildroot%docdir/
 
-%define _libdb_a	libdb-%_sover.a
 %define _libdb_so	libdb-%_sover.so
 
 pushd %buildroot
@@ -318,14 +251,6 @@ pushd %buildroot
 		ln -snf ../../%_lib/%_libdb_so "$f"
 	done
 	ln -s ../../%_lib/%_libdb_so .%_libdir/
-
-	# Correct static libraries.
-	pushd .%_libdir
-	for f in libdb*.a; do
-		[ -n "${f%%%%*-%_sover.a}" ] || continue
-		ln -snf "${f%%.a}-%_sover.a" "$f"
-	done
-	popd
 
 %if_enabled tcl
 	mv .%_libdir/libdb_tcl* .%_tcllibdir/
@@ -346,10 +271,10 @@ mv %buildroot%_libdir/*.jar %buildroot%_datadir/java/
 
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 for n in db%_sover-utils \
-	 %name{,-devel{,-static}} \
-	 %{name}_cxx{,-devel{,-static}} \
-	 %{?_enable_tcl:%{name}_tcl{,-devel{,-static}}} \
-	 %{?_enable_java:%{name}_java{,-devel{,-static}}} \
+	 %name{,-devel} \
+	 %{name}_cxx{,-devel} \
+	 %{?_enable_tcl:%{name}_tcl{,-devel}} \
+	 %{?_enable_java:%{name}_java{,-devel}} \
 	 ; do
 	echo "${n/%_sover/4}" >"%buildroot%_sysconfdir/buildreqs/packages/substitute.d/$n"
 done
@@ -359,7 +284,6 @@ done
 /%_lib/*.so
 %dir %docdir
 %doc %docdir/[A-Z]*
-
 
 %if_enabled cxx
 %files -n %{name}_cxx
@@ -371,10 +295,6 @@ done
 %_libdir/*_cxx.so
 %_libdir/*_cxx-[0-9].so
 %_includedir/*/*cxx*
-
-%files -n %{name}_cxx-devel-static
-%config %_sysconfdir/buildreqs/packages/substitute.d/%{name}_cxx-devel-static
-%_libdir/*_cxx*.a
 %endif #cxx
 
 %if_enabled tcl
@@ -387,10 +307,6 @@ done
 %config %_sysconfdir/buildreqs/packages/substitute.d/%{name}_tcl-devel
 %_tcllibdir/*_tcl.so
 %_tcllibdir/*_tcl-[0-9].so
-
-%files -n %{name}_tcl-devel-static
-%config %_sysconfdir/buildreqs/packages/substitute.d/%{name}_tcl-devel-static
-%_tcllibdir/*_tcl*.a
 %endif #tcl
 
 %if_enabled java
@@ -404,10 +320,6 @@ done
 %_libdir/*_java.so
 %_libdir/*_java-[0-9].so
 %_libdir/*_java-[0-9].[0-9]_g.so
-
-%files -n %{name}_java-devel-static
-%config %_sysconfdir/buildreqs/packages/substitute.d/%{name}_java-devel-static
-%_libdir/*_java*.a
 %endif #java
 
 %files -n db%_sover-utils
@@ -428,12 +340,10 @@ done
 %exclude %_includedir/*/*cxx*
 %endif
 
-%files devel-static
-%config %_sysconfdir/buildreqs/packages/substitute.d/%name-devel-static
-%_libdir/libdb.a
-%_libdir/libdb-[0-9]*.a
-
 %changelog
+* Mon Aug 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.30-alt5
+- Removed static libraries.
+
 * Wed Dec 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.30-alt4
 - Fixed build with new toolchain.
 
