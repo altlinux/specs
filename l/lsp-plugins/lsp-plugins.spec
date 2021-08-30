@@ -3,7 +3,7 @@
 
 Name: lsp-plugins
 Version: 1.1.30
-Release: alt1
+Release: alt2
 
 Summary: Linux Studio Plugins
 Group: Sound
@@ -21,7 +21,7 @@ BuildRequires: libsndfile-devel libcairo-devel
 BuildRequires: libGL-devel
 BuildRequires: %_bindir/php
 
-ExclusiveArch: %ix86 x86_64 aarch64
+ExclusiveArch: %ix86 x86_64 aarch64 %e2k
 
 %description
 LSP (Linux Studio Plugins) is a collection of open-source plugins
@@ -65,6 +65,9 @@ Documentation for LSP (Linux Studio Plugins) plugins.
 
 %prep
 %setup -n %name-%version
+%ifarch %e2k
+sed -i "s|VSTCALLBACK __cdecl|VSTCALLBACK|" include/3rdparty/steinberg/vst2.h
+%endif
 
 %build
 export PLATFORM=Linux SYSTEM=Linux
@@ -110,6 +113,9 @@ export VERSION=%version
 
 
 %changelog
+* Mon Aug 30 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.30-alt2
+- fixed build for %%e2k (ilyakurdyukov@)
+
 * Sun Apr 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.30-alt1
 - 1.1.30
 
