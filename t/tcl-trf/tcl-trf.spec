@@ -1,6 +1,8 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 Name: tcl-trf
 Version: 2.1.4
-Release: alt3
+Release: alt4
 
 Summary: A tcl extension called Tcl Data transformations
 License: TCL
@@ -62,9 +64,14 @@ TCLLIBPATH=%buildroot%_tcllibdir ./test.tcl
 
 %files
 %doc ChangeLog README doc/license.terms
-%_tcllibdir/Trf%version
+%_tcllibdir/Trf%version/libTrf%version.so
+%_tcllibdir/Trf%version/pkgIndex.tcl
 
 %changelog
+* Mon Aug 30 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.1.4-alt4
+- Fixed built with LTO.
+- Do no pack stub.
+
 * Mon Jul 05 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.1.4-alt3
 - Built with %%tea_patch.
 - Fixed license field.
