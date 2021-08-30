@@ -1,8 +1,12 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
+# clang doesn't know used LTO flags
+%global optflags_lto %nil
 
 Name:    castxml
 Version: 0.4.3
-Release: alt1.1
+Release: alt2
 Summary: C-family abstract syntax tree XML output tool
 Group:   Development/Other
 License: Apache-2.0
@@ -45,7 +49,6 @@ may support alternative output formats.
 %build
 export CC=clang
 export CXX=clang++
-%remove_optflags -frecord-gcc-switches
 
 %cmake \
        -DLLVM_LINK_LLVM_DYLIB:BOOL=ON \
@@ -86,6 +89,9 @@ popd
 %_datadir/%name/empty.cpp
 
 %changelog
+* Mon Aug 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.3-alt2
+- Disabled LTO.
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.4.3-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
