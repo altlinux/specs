@@ -1,6 +1,6 @@
 Name: liri-eglfs
 Version: 0.0.20210726
-Release: alt1
+Release: alt2
 
 Summary: Qt platform plugin with DRM/KMS support.
 License: GPLv3
@@ -43,6 +43,7 @@ this package contains development part of %name
 
 %install
 %cmakeinstall_std
+rm -v %buildroot%_libdir/*.a
 
 %files
 %doc README.md
@@ -57,6 +58,9 @@ this package contains development part of %name
 %_pkgconfigdir/Liri1PlatformHeaders.pc
 
 %changelog
+* Mon Aug 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20210726-alt2
+- unpackaged static libraries dropped
+
 * Tue Aug 10 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20210726-alt1
 - updated form git.0b2e81c
 
