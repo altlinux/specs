@@ -1,4 +1,5 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 %define oname libdb
 %define __soversion_major 5
@@ -8,7 +9,7 @@
 Summary: The Berkeley DB database library for C
 Name: libdb%{__soversion}
 Version: 5.3.28
-Release: alt4
+Release: alt5
 Group: System/Libraries
 License: BSD and LGPLv2 and Sleepycat
 URL: http://www.oracle.com/database/berkeley-db/
@@ -124,18 +125,6 @@ The Berkeley Database (Berkeley DB) is a programmatic toolkit that
 provides embedded database support for both traditional and
 client/server applications. This package contains the header files,
 libraries, and documentation for building programs which use the
-Berkeley DB.
-
-%package devel-static
-Summary: Berkeley DB static libraries
-Group: Development/C
-Requires: %name-devel = %EVR
-
-%description devel-static
-The Berkeley Database (Berkeley DB) is a programmatic toolkit that
-provides embedded database support for both traditional and
-client/server applications. This package contains static libraries
-needed for applications that require static linking of
 Berkeley DB.
 
 %package cxx
@@ -283,7 +272,7 @@ pushd dist/dist-tls
 	--enable-compat185 \
 	--enable-dump185 \
 	--enable-shared \
-	--enable-static \
+	--disable-static \
 	--enable-cxx \
 	--enable-sql \
 	--enable-test \
@@ -312,9 +301,6 @@ mkdir -p %buildroot%_man1dir
 
 %makeinstall_std STRIP=/bin/true -C dist/dist-tls
 
-# XXX Nuke non-versioned archives and symlinks
-rm -f %buildroot%_libdir/{libdb.a,libdb_cxx.a,libdb_tcl.a,libdb_sql.a}
-
 chmod +x %buildroot%_libdir/*.so*
 
 # Move the header files to a subdirectory, in case we're deploying on a
@@ -328,10 +314,10 @@ for i in db.h db_cxx.h db_185.h; do
 done
 
 # Eliminate installed doco
-rm -rf ${RPM_BUILD_ROOT}%{_prefix}/docs
+rm -rf %buildroot%_prefix/docs
 
 # XXX Avoid Permission denied. strip when building as non-root.
-chmod u+w ${RPM_BUILD_ROOT}%{_bindir} ${RPM_BUILD_ROOT}%{_bindir}/*
+chmod u+w %buildroot%_bindir %buildroot%_bindir/*
 
 # remove unneeded .la files (#225675)
 rm -f %buildroot%_libdir/*.la
@@ -362,12 +348,6 @@ mv man/* %buildroot%_man1dir
 
 %files devel-doc
 %doc docs/*
-
-%files devel-static
-%_libdir/libdb-%{__soversion}.a
-%_libdir/libdb_cxx-%{__soversion}.a
-%_libdir/libdb_tcl-%{__soversion}.a
-%_libdir/libdb_sql-%{__soversion}.a
 
 %files -n db%{__soversion}-utils
 %_bindir/db*_archive
@@ -411,6 +391,9 @@ mv man/* %buildroot%_man1dir
 %_includedir/%name/dbsql.h
 
 %changelog
+* Mon Aug 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.3.28-alt5
+- Removed static libraries.
+
 * Thu Sep 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.3.28-alt4
 - Updated conflicts.
 
