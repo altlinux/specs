@@ -1,6 +1,8 @@
+%define optflags_lto %nil
+
 Name: syslinux
 Version: 4.04
-Release: alt18
+Release: alt19
 Serial: 2
 
 Summary: Simple kernel loader which boots from a FAT filesystem
@@ -169,6 +171,9 @@ install -m 0755 %SOURCE1 %buildroot/%_bindir
 /boot/extlinux
 
 %changelog
+* Mon Aug 30 2021 Sergey V Turchin <zerg@altlinux.org> 2:4.04-alt19
+- build without LTO
+
 * Thu Mar 18 2021 Slava Aseev <ptrnine@altlinux.org> 2:4.04-alt18
 - revert "fix asm constraints" patch
 - add -fno-pie flag (closes: #39805)
