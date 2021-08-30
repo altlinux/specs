@@ -2,8 +2,10 @@
 
 %def_with tests
 
+%define optflags_lto %{nil}
+
 Name: bear
-Version: 3.0.12
+Version: 3.0.13
 Release: alt1
 
 Summary: Tool that generates a compilation database for clang tooling
@@ -66,6 +68,10 @@ done
 %doc COPYING README.md
 
 %changelog
+* Mon Aug 30 2021 Vladimir Didenko <cow@altlinux.org> 3.0.13-alt1
+- New version.
+- Disable lto build flag.
+
 * Wed Jun 23 2021 Arseny Maslennikov <arseny@altlinux.org> 3.0.12-alt1
 - 3.0.11-alt1.gitdfa9e262 -> 3.0.12.
 
