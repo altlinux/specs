@@ -1,14 +1,13 @@
 Name: make-initrd-propagator
-Version: 0.46
+Version: 0.47
 Release: alt1
 
 Summary: Put propagator into make-initrd generated image
-
 License: GPLv2+
 Group: System/Base
-URL: https://www.altlinux.org/Make-initrd-propagator
 
-Source0: %name-%version.tar
+Url: https://www.altlinux.org/Make-initrd-propagator
+Source: %name-%version.tar
 
 Requires: console-vt-tools fdisk /sbin/addpart grep
 Requires: sysvinit-utils net-tools
@@ -39,6 +38,9 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Mon Aug 30 2021 Michael Shigorin <mike@altlinux.org> 0.47-alt1
+- Do not fail if 60-persistent-storage.rules is missing
+
 * Wed Jun 09 2021 Alexey Gladkov <legion@altlinux.ru> 0.46-alt1
 - Add a dependency on add-udev-rules
 
