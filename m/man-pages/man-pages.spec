@@ -1,5 +1,5 @@
 Name: man-pages
-Version: 5.12
+Version: 5.13
 Release: alt1
 
 Summary: Man (manual) pages from the Linux Documentation Project
@@ -95,6 +95,9 @@ find %buildroot%_mandir -type f -print0 |
 %_datadir/%name/
 
 %changelog
+* Fri Aug 27 2021 Dmitry V. Levin <ldv@altlinux.org> 5.13-alt1
+- 5.12 -> 5.13.
+
 * Tue Jun 22 2021 Dmitry V. Levin <ldv@altlinux.org> 5.12-alt1
 - 5.11 -> 5.12.
 
