@@ -1,9 +1,9 @@
-%define kernel_base_version 5.13
+%define kernel_base_version 5.14
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
 Version: %kernel_base_version
-Release: alt2
+Release: alt1
 
 Summary: Linux kernel C header files for use by glibc and other userspace software
 # grep -Fhwr SPDX-License-Identifier: /usr/include/linux-default/include |sort |uniq -c |sort -n
@@ -322,6 +322,9 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Sun Aug 29 2021 Dmitry V. Levin <ldv@altlinux.org> 5.14-alt1
+- v5.13 -> v5.14.
+
 * Fri Jul 02 2021 Dmitry V. Levin <ldv@altlinux.org> 5.13-alt2
 - Temporarily reintroduced <linux/cyclades.h> which is still used
   by a few packages.
