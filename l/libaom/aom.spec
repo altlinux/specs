@@ -1,4 +1,6 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %define oname aom
 %define soname 3
@@ -13,7 +15,7 @@
 
 Name: lib%oname
 Version: 3.1.2
-Release: alt1
+Release: alt2
 Summary: AV1 Codec Library
 Group: System/Libraries
 License: BSD-2-Clause
@@ -25,6 +27,7 @@ Source: %name-%version.tar
 Source1: rush_hour_420.yuv
 
 Patch1: %name-alt-version.patch
+Patch2: %name-alt-dont-install-static-libs.patch
 Patch2000: %name-e2k-simd.patch
 
 BuildRequires: cmake gcc-c++ doxygen /usr/bin/dot
@@ -58,15 +61,6 @@ Requires: %libname = %EVR
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package devel-static
-Summary: Static development files for %name
-Group: Development/C
-Requires: %name-devel = %EVR
-
-%description devel-static
-The %name-devel-static package contains static libraries for
-developing applications that use %name.
-
 %package tools
 Summary: Tools for %name
 Group: Other
@@ -87,6 +81,7 @@ The %name-docs package contains documentation files for %name.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 cp -p %SOURCE1 .
 %ifarch %e2k
 %patch2000 -p1
@@ -140,9 +135,6 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/%_cmake__builddir/third_party/g
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
-%files devel-static
-%_libdir/*.a
-
 %files tools
 %_bindir/*
 
@@ -150,6 +142,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/%_cmake__builddir/third_party/g
 %doc %_cmake__builddir/docs/html
 
 %changelog
+* Mon Aug 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.2-alt2
+- Disabled installation of static libraries.
+
 * Tue Jul 27 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.2-alt1
 - Updated to upstream version 3.1.2.
 
