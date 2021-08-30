@@ -1,6 +1,6 @@
 Name: neovim
 Version: 0.5.0
-Release: alt1
+Release: alt2
 
 Summary: heavily refactored vim fork
 
@@ -11,6 +11,7 @@ Url: https://neovim.io/
 # git://git.altlinux.org/gears/n/neovim.git
 Source: %name-%version-%release.tar
 Source1: %name.watch
+Source2: sysinit.vim
 
 BuildRequires(pre): rpm-macros-cmake cmake
 
@@ -72,6 +73,8 @@ gzip -9 LICENSE
 install -pm0644 runtime/nvim.desktop -Dt %buildroot%_desktopdir
 install -pm0644 runtime/nvim.png -Dt %buildroot%_pixmapsdir
 
+install -pm0644 %SOURCE2 %buildroot%_datadir/nvim
+
 %files -f nvim.lang
 %doc LICENSE.gz
 %_bindir/nvim
@@ -85,8 +88,12 @@ install -pm0644 runtime/nvim.png -Dt %buildroot%_pixmapsdir
 %dir %_datadir/nvim
 %dir %_datadir/nvim/runtime
 %_datadir/nvim/runtime/*
+%_datadir/nvim/sysinit.vim
 
 %changelog
+* Mon Aug 30 2021 Vladimir Didenko <cow@altlinux.org> 0.5.0-alt2
+- Add /usr/share/vim/vimfiles into the runtimepath (closes: #40825)
+
 * Tue Jul 6 2021 Vladimir Didenko <cow@altlinux.org> 0.5.0-alt1
 - New version
 - Enable package build on aarch64
