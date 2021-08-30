@@ -1,5 +1,5 @@
 %def_enable shared
-%def_enable static
+%def_disable static
 %def_enable compat
 
 %ifarch %e2k
@@ -51,7 +51,7 @@
 Name: %Name
 %define lname lib%name
 Version: 1.3.36
-Release: alt1.1
+Release: alt2
 Summary: An X application for displaying and manipulating images
 Summary(ru_RU.UTF-8): Программа для отображения и редактирования изображений
 License: %mit
@@ -512,6 +512,9 @@ __MENU__
 %endif
 
 %changelog
+* Mon Aug 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.36-alt2
+- devel-static subpackage dropped
+
 * Thu Apr 29 2021 Michael Shigorin <mike@altlinux.org> 1.3.36-alt1.1
 - E2K: support e2kv4+ either
 
