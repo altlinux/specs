@@ -4,7 +4,7 @@
 
 Name: liboqs
 Version: 0.7.0
-Release: alt1
+Release: alt2
 Summary: C library for prototyping and experimenting with quantum-resistant cryptography
 License: MIT
 Group: System/Libraries
@@ -94,6 +94,9 @@ export LD_LIBRARY_PATH=$PWD/build/lib
 %_libdir/liboqs.so
 
 %changelog
+* Mon Aug 30 2021 Vitaly Chikunov <vt@altlinux.org> 0.7.0-alt2
+- Increase SOVERSION (to 1) to fix dynamic linking to older libs.
+
 * Sat Aug 14 2021 Vitaly Chikunov <vt@altlinux.org> 0.7.0-alt1
 - Update to 0.7.0 (2021-08-11).
 
