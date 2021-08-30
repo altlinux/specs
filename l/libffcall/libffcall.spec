@@ -1,9 +1,9 @@
 Name: libffcall
 Version: 2.1
-Release: alt2
+Release: alt3
 
 Summary: Foreign Function Call Libraries
-License: GPL
+License: GPLv2
 Group: System/Libraries
 Url: https://www.gnu.org/software/libffcall/
 
@@ -31,6 +31,9 @@ This package contains development headers for FFCall libraries
 %patch -p1
 
 %build
+%ifarch armh
+%define optflags_lto %nil
+%endif
 %configure --disable-static
 make
 
@@ -39,6 +42,7 @@ make check
 
 %install
 %makeinstall_std
+rm -v %buildroot%_libdir/*.a
 
 %files
 %doc COPYING NEWS PLATFORMS README
@@ -51,6 +55,9 @@ make check
 %_mandir/man?/*
 
 %changelog
+* Mon Aug 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1-alt3
+- unpackaged static library dropped
+
 * Fri Jul 19 2019 Ivan A. Melnikov <iv@altlinux.org> 2.1-alt2
 - Applied patch from Debian to fix FPXX support on mipsel
 - Added %%check
