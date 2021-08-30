@@ -1,15 +1,10 @@
-%define _unpackaged_files_terminate_build 1
-%undefine __libtoolize
-
-### Header
 Summary: A collection of basic system utilities
 Name: util-linux
-Version: 2.36.1
-Release: alt3
+Version: 2.37.2
+Release: alt1
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.1-or-later and BSD-3-Clause and BSD-4-Clause-UC and ALT-Public-Domain
 Group: System/Base
 URL: https://kernel.org/pub/linux/utils/util-linux/
-Packager: Alexey Gladkov <legion@altlinux.ru>
 
 ### Macros
 %def_enable raw
@@ -32,8 +27,14 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 %def_disable mountpoint
 %def_disable eject
 
+%define _unpackaged_files_terminate_build 1
+%undefine __libtoolize
+
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 ### Dependences
 BuildRequires: /proc,/dev/pts
+BuildRequires: asciidoctor
 BuildRequires: bash4
 BuildRequires: glibc-devel-static
 BuildRequires: zlib-devel
@@ -99,8 +100,6 @@ Patch06: 0006-FEDORA-Add-documentation-about-etc-sysconfig-rawdevi.patch
 Patch07: 0007-ALT-some-tests-use-bash4.patch
 Patch08: 0008-ALT-Allow-to-display-altlinux-release-in-the-message.patch
 Patch09: 0009-ALT-Drop-documentation-about-journald-option-since-w.patch
-Patch10: 0010-ALT-use-the-O_NOFOLLOW-flag-when-compare-files.patch
-Patch11: 0011-libmount-don-t-use-symfollow-for-helpers-on-user-mou.patch
 
 %description
 The util-linux package contains a large variety of low-level system
@@ -459,23 +458,9 @@ useful when all directories specified are on the same filesystem.
 
 %prep
 %setup -q
+%autopatch -p2
+
 cp -r -- %SOURCE8 %SOURCE9 %SOURCE10 %SOURCE11 %SOURCE12 .
-
-%patch01 -p2
-%patch02 -p2
-%patch03 -p2
-%patch04 -p2
-%patch05 -p2
-%patch06 -p2
-%patch07 -p2
-%patch08 -p2
-
-%if_without systemd
-%patch09 -p2
-%endif
-
-%patch10 -p2
-%patch11 -p2
 
 echo %version > .tarball-version
 
@@ -559,7 +544,8 @@ klcc \
 # ipcs/limits*: failed in hasher.
 # lsblk: 'failed to access sysfs directory: /sys/dev/block: No such file or directory' in hasher.
 rm -rf tests/ts/{cal,fincore,login,look,ipcs/limits*,libmount/{lock,utils},lsblk,misc/{setarch,ionice},more/regexp}
-LANG=C %make check-local-tests
+rm -rf tests/ts/lsns/ioctl_ns
+LANG=C %make check
 
 %install
 mkdir -p %buildroot/{bin,sbin,etc/pam.d}
@@ -762,7 +748,7 @@ ln -s /proc/mounts %buildroot/etc/mtab
 rm -f -- %buildroot/%_infodir/dir
 
 # remove getopt docs
-rm -rf -- %buildroot/%_defaultdocdir/%name/getopt
+rm -rf -- %buildroot/%_defaultdocdir/%name/getopt{,-example.{bash,tcsh}}
 
 mkdir -p %buildroot/lib/tmpfiles.d
 cat > %buildroot/lib/tmpfiles.d/losetup-loop.conf <<EOF
@@ -971,6 +957,9 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Sat Aug 28 2021 Alexey Gladkov <legion@altlinux.ru> 2.37.2-alt1
+- New version (2.37.2).
+
 * Wed Jul 28 2021 Alexey Gladkov <legion@altlinux.ru> 2.36.1-alt3
 - losetup cannot use hashalot package and therefore should not require it (ALT#40590).
 
