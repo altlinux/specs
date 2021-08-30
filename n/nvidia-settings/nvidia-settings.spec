@@ -2,7 +2,7 @@
 
 Name: nvidia-settings
 Version: 470.57.02
-Release: alt1
+Release: alt2
 
 Group: System/Configuration/Hardware
 Summary: Tool for configuring the NVIDIA driver
@@ -74,6 +74,7 @@ sed -i 's|@GUI_LIB_PREFIX@|%_libdir/nvidia-settings|' src/nvidia-settings.c
 sed -i -E 's|LIBDIR[[:space:]]+=[[:space:]].*|LIBDIR = $(DESTDIR)$(PREFIX)/%_lib|' utils.mk
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %add_optflags %optflags_shared
 %make_build PREFIX=%prefix CFLAGS="%optflags" NV_VERBOSE=1 -C src/libXNVCtrl
 %make_build PREFIX=%prefix LOCAL_CFLAGS="%optflags" NV_VERBOSE=1
@@ -125,6 +126,9 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Mon Aug 30 2021 Sergey V Turchin <zerg@altlinux.org> 470.57.02-alt2
+- fix to build
+
 * Tue Jul 20 2021 Sergey V Turchin <zerg@altlinux.org> 470.57.02-alt1
 - new version
 
