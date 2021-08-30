@@ -8,7 +8,7 @@
 
 Name: bluez
 Version: 5.58
-Release: alt2
+Release: alt2.1
 
 Summary: Bluetooth utilities
 License: GPL-2.0-or-later
@@ -91,7 +91,7 @@ Zsh completion for %name.
 
 %build
 %autoreconf
-export CFLAGS="$CFLAGS %(getconf LFS_CFLAGS)"
+export MISC_CFLAGS="%optflags %(getconf LFS_CFLAGS)"
 # ugly workaround until
 # https://github.com/bluez/bluez/issues/125 fixed
 mkdir ell ||:
@@ -199,6 +199,9 @@ fi
 %_datadir/zsh/site-functions/_bluetoothctl
 
 %changelog
+* Mon Aug 30 2021 L.A. Kostis <lakostis@altlinux.ru> 5.58-alt2.1
+- fix cflags (and enable debuginfo).
+
 * Fri Jun 11 2021 L.A. Kostis <lakostis@altlinux.ru> 5.58-alt2
 - Fix patches:
   - 0001-Allow-using-obexd-without-systemd-in-the-user-sessio.patch
