@@ -6,7 +6,7 @@
 
 Name: certmonger
 Version: 0.79.14
-Release: alt1
+Release: alt2
 Summary: Certificate status monitor and PKI enrollment client
 
 Group: System/Base
@@ -21,7 +21,7 @@ BuildRequires: libdbus-devel
 BuildRequires: libidn2-devel
 BuildRequires: libkrb5-devel
 BuildRequires: libldap-devel
-BuildRequires: libnss-devel
+BuildRequires: libnss-devel >= 3.69.0-alt1
 BuildRequires: libpopt-devel
 BuildRequires: libssl-devel
 BuildRequires: libtalloc-devel
@@ -160,6 +160,9 @@ getcert refresh-ca -a >/dev/null 2>&1 || help
 %_man8dir/certmonger.8.*
 
 %changelog
+* Mon Aug 30 2021 Stanislav Levin <slev@altlinux.org> 0.79.14-alt2
+- Bumped required libnss (MBZ#1721476).
+
 * Mon Jun 21 2021 Stanislav Levin <slev@altlinux.org> 0.79.14-alt1
 - 0.79.13 -> 0.79.14.
 
