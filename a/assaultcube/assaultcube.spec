@@ -1,18 +1,31 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %define origname AssaultCube_v1.2.0.2
 %define rev 779627cb
+
+# clang doesn't know used LTO flags
+%global optflags_lto %nil
+
 Name: assaultcube
 Version: 1.2.0.2
-Release: alt5.%rev
+Release: alt6.%rev
 Summary: Free first-person-shooter based on the game Cube
 Group: Games/Arcade
 License: Creative Commons
-Packager: Andrew Clark <andyc@altlinux.org>
-Url: http://assault.cubers.net/
-Source: http://assault.cubers.net/download.html/%origname.tar.bz2
+Url: https://assault.cubers.net
+
+ExcludeArch: ppc64le
+
+# git: https://github.com/assaultcube/AC
+# http://assault.cubers.net/download.html/%origname.tar.bz2
+Source: %name-%version.tar
 Source1: assaultcube_client.sh
 Source2: assaultcube_server.sh
 Source3: %name.desktop
 Source4: %name.png
+
 Patch1: %name-%version-alt-gcc.patch
 
 # Automatically added by buildreq on Sun Mar 23 2014
@@ -28,12 +41,12 @@ possible with this engine, while gameplay stays fast and arcade. This
 game is all about team oriented multiplayer fun.
 
 %prep
-%setup -q -n %origname
+%setup
 %patch1 -p2
 
 %build
 %add_optflags -D__STRICT_ANSI__
-%remove_optflags -frecord-gcc-switches
+%add_optflags -D_FILE_OFFSET_BITS=64
 %make_build -C source/src CFLAGS="%optflags" CXXOPTFLAGS="%optflags" CXXFLAGS="%optflags"
 
 %install
@@ -50,11 +63,11 @@ install -pD -m 644 %SOURCE4 %buildroot%_liconsdir/%name.png
 mkdir -p %buildroot%_docdir/%name/
 mkdir -p %buildroot%_gamesdatadir/%name/
 
-mv %_builddir/%origname/source/src/ac_client %buildroot%_bindir/
-mv %_builddir/%origname/source/src/ac_server %buildroot%_bindir/
-mv %_builddir/%origname/docs %buildroot/%_docdir/%name/
-mv %_builddir/%origname/mods %buildroot/%_docdir/%name/
-mv %_builddir/%origname/README.html %buildroot/%_docdir/%name/
+mv source/src/ac_client %buildroot%_bindir/
+mv source/src/ac_server %buildroot%_bindir/
+mv docs %buildroot/%_docdir/%name/
+mv mods %buildroot/%_docdir/%name/
+mv README.html %buildroot/%_docdir/%name/
 
 %files
 %_bindir/*
@@ -63,6 +76,9 @@ mv %_builddir/%origname/README.html %buildroot/%_docdir/%name/
 %_liconsdir/*.png
 
 %changelog
+* Mon Aug 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0.2-alt6.779627cb
+- Disabled LTO.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0.2-alt5.779627cb
 - Fixed build with new toolchain.
 
