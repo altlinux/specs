@@ -1,9 +1,9 @@
 Name: fstrcmp
 Version: 0.7
-Release: alt1
+Release: alt2
 
 Summary: Fuzzy string compare library
-License: GPL
+License: GPLv3
 Group: File tools
 Url: http://fstrcmp.sourceforge.net/
 
@@ -43,6 +43,7 @@ This package contains development part of fstrcmp.
 
 %install
 %makeinstall_std
+rm -v %buildroot%_libdir/libfstrcmp.a
 
 %files
 %_bindir/fstrcmp
@@ -58,5 +59,8 @@ This package contains development part of fstrcmp.
 %_man3dir/*
 
 %changelog
+* Mon Aug 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7-alt2
+- unpackaged static library removed
+
 * Wed Jan 30 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7-alt1
 - initial
