@@ -5,10 +5,11 @@
 %define itcl 4.2.1
 %define tdbc 1.1.2
 %define thread 2.8.6
+%define zlib 2.0.1
 
 Name: tcl
 Version: 8.6.11
-Release: alt2
+Release: alt3
 
 Summary: The Tool Command Language (TCL)
 License: TCL
@@ -35,6 +36,10 @@ Patch14: 0014-ALT-pkgs-tclstub-linkage.patch
 
 BuildRequires(pre): rpm-build-tcl >= 0.4-alt1
 %{?_with_test:BuildConflicts: tcl-vfs}
+%{?_with_test:BuildRequires: libmariadb-devel}
+%{?_with_test:BuildRequires: postgresql-devel}
+%{?_with_test:BuildRequires: libiodbc-devel}
+%{?_with_test:BuildRequires: tcl-sqlite3}
 BuildRequires: zlib-devel
 
 Provides: tcl(TclOO)
@@ -68,6 +73,9 @@ Summary: The Tool Command Language (TCL) - shared library
 Group: System/Libraries
 Provides: %_tcllibdir
 Provides: %_tcldatadir
+Provides: tcl(zlib) = %zlib
+Provides: tcl(zlib)-%(echo %zlib |cut -c 1) = %zlib
+Obsoletes: tcl-zlib <= %zlib
 
 %package devel
 Summary: Header files and C programming manual for TCL
@@ -205,8 +213,22 @@ mv pkgsmans{.tmp,}
 # skip clock.test due lack of /etc/localtime in the build environment (ALT#35848)
 rm -f tests/clock.test
 pushd unix
-make test
+make test |tee check.log
+sed -n '/^all.tcl/{/Failed\s\+[^0]/q1}'
+! grep -qF "Test files exiting with errors" check.log
 popd
+
+# zlib guard
+cat <<EOF > zlib_guard.tcl
+if {![catch {package present zlib} version]} {
+	if {[string equal \$version "%zlib"]} {
+		exit 0
+	}
+}
+
+exit 1
+EOF
+%__tclsh zlib_guard.tcl
 
 %files -f exclude_pkgsmans
 %dir %docdir
@@ -277,6 +299,10 @@ popd
 %files pkgs-devel
 
 %changelog
+* Mon Aug 30 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.11-alt3
+- spec: enhanced %%check.
+- libtcl: obsoleted tcl-zlib.
+
 * Fri Aug 27 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.11-alt2
 - Enabled LTO.
 
