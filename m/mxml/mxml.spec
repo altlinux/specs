@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: mxml
 Version: 3.2
-Release: alt1
+Release: alt2
 
 Summary: Small XML file parsing library
 License: Apache-2.0
@@ -118,6 +119,9 @@ This package includes Mini-XML static library.
 %_libdir/*.a
 
 %changelog
+* Mon Aug 30 2021 Danil Shein <dshein@altlinux.org> 3.2-alt2
+- added -ffat-lto-objects to %%optflags_lto
+
 * Tue Jan 19 2021 Danil Shein <dshein@altlinux.org> 3.2-alt1
 - Version 3.2
 
