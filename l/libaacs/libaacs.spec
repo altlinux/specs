@@ -1,9 +1,9 @@
 Name: libaacs
 Version: 0.8.1
-Release: alt3
+Release: alt4
 
 Summary: BD AACS library
-License: LGPL
+License: LGPL-2.1
 Group: System/Libraries
 Url: http://bd.videolan.org/
 
@@ -35,6 +35,7 @@ export cc_cv_cflags__Werror_implicit_function_declaration=no
 
 %install
 %makeinstall
+rm -v %buildroot%_libdir/libaacs.a
 
 %files
 %_bindir/aacs_info
@@ -46,6 +47,9 @@ export cc_cv_cflags__Werror_implicit_function_declaration=no
 %_libdir/pkgconfig/*
 
 %changelog
+* Mon Aug 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.1-alt4
+- unpackaged static library dropped
+
 * Fri Jul 06 2018 Michael Shigorin <mike@altlinux.org> 0.8.1-alt3
 - worked around ftbfs on e2k
 
