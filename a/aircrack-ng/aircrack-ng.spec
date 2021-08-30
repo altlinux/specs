@@ -1,8 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
+# LTO causes errors, disable it
+%global optflags_lto %nil
+
 Name: aircrack-ng
 Version: 1.6
-Release: alt2
+Release: alt3
 
 Summary: 802.11 WEP and WPA-PSK key recovery program
 License: GPLv2+
@@ -83,6 +86,9 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %_includedir/*
 
 %changelog
+* Mon Aug 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6-alt3
+- Disabled LTO.
+
 * Fri Dec 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6-alt2
 - Fixed build with -fno-common.
 - Introduced %name-devel package.
