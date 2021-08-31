@@ -30,7 +30,7 @@
 
 Name:           chromium
 Version:        92.0.4515.159
-Release:        alt2
+Release:        alt3
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -84,8 +84,7 @@ Patch019: 0019-Move-offending-function-to-chromeos-only.patch
 Patch020: 0020-ALT-Do-not-use-no-canonical-prefixes-clang-option.patch
 Patch021: 0021-ALT-Disable-NOMERGE-attribute.patch
 Patch022: 0022-IWYU-include-limits-for-std-numeric_limits.patch
-Patch023: 0023-ALT-Hide-some-utilities-from-rpm-build.patch
-Patch024: 0024-FEDORA-bootstrap-with-python3.patch
+Patch024: 0023-FEDORA-bootstrap-with-python3.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -174,6 +173,7 @@ BuildRequires:  python-modules-json
 BuildRequires:  python3
 
 Requires: libva
+Requires: xdg-utils
 
 %description
 Chromium is an open-source browser project that aims to build a safer,
@@ -364,8 +364,7 @@ strip %buildroot%_libdir/%name/chromedriver
 
 ln -s -- %_libdir/%name/chromedriver %buildroot/%_bindir/chromedriver
 
-for f in *.bin *.so* *.pak swiftshader locales icudtl.dat \
-	xdg-mime xdg-settings MEIPreload; do
+for f in *.bin *.so* *.pak swiftshader locales icudtl.dat MEIPreload; do
 	[ ! -e "$f" ] ||
 		cp -at %buildroot%_libdir/%name -- "$f"
 done
@@ -441,6 +440,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Aug 31 2021 Alexey Gladkov <legion@altlinux.ru> 92.0.4515.159-alt3
+- Drop extra dependencies and remove own xdg-settings and xdg-mime.
+
 * Tue Aug 24 2021 Alexey Gladkov <legion@altlinux.ru> 92.0.4515.159-alt2
 - Enable pipewire support (ALT#40806).
 
