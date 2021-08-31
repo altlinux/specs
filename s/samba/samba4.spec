@@ -73,7 +73,7 @@
 
 Name:    samba
 Version: 4.14.7
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -212,6 +212,7 @@ Summary: Files used by MIT and Heimdal Active Directory Domain Services servers
 Group: System/Servers
 BuildArch: noarch
 Requires: admx-samba = %version-%release
+Requires: lmdb-utils
 
 %description dc-common
 %rname-dc-common provides files necessary for both MIT and Heimdal
@@ -1922,6 +1923,10 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Tue Aug 31 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.7-alt2
+- Add dependency lmdb-utils to samba-dc-common due it is necessary
+  for mdb store backend permits database sizes greater than 4Gb
+
 * Tue Aug 24 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.7-alt1
 - Update to latest release of Samba 4.14 with smbd fixes
 
