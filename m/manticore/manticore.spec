@@ -3,9 +3,13 @@
 # * old home dir in rpm: useradd -M -r -d /var/lib/sphinx
 # * JEMALLOC (support in service file?)
 
+# check needs https://github.com/google/googletest/archive/master.zip
+# extracted to manticore/googletest
+%def_disable check
+
 Name: manticore
 Version: 3.6.0
-Release: alt1
+Release: alt2
 
 Summary: Manticore full-text search server
 
@@ -20,6 +24,7 @@ Source: %name-%version.tar
 Source2: %name-files-%version.tar
 
 Patch: 0001-use-RE2-Options.set_encoding-instead-of-set_utf8.patch
+Patch2000: %name-e2k.patch
 
 Conflicts: mnogosearch
 Conflicts: sphinx
@@ -31,6 +36,9 @@ BuildRequires: libexpat-devel libmysqlclient21-devel libre2-devel libssl-devel l
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
+%if_enabled check
+BuildRequires: ctest php mysql python3
+%endif
 
 %description
 Manticore Search is a database designed specifically for search,
@@ -72,6 +80,13 @@ Manticore Search 3.x format.
 %prep
 %setup
 %patch -p1
+%ifarch %e2k
+%patch2000 -p1
+%endif
+%if_enabled check
+mkdir -p ../cache
+cp -r googletest ../cache/googletest-src
+%endif
 subst "s|.*Boost_USE_STATIC_LIBS ON.*||" cmake/GetBoostContext.cmake
 subst "s|.*Boost_USE_STATIC_RUNTIME ON.*||" cmake/GetBoostContext.cmake
 # broken usage of CMAKE_INSTALL_PREFIX
@@ -83,12 +98,17 @@ subst 's|SET ( FULL_SHARE_DIR .*|SET ( FULL_SHARE_DIR "/usr/share/manticore" )|'
 %build
 # DISABLE_TESTING=ON need for enable api build
 %cmake_insource -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+%if_disabled check
     -DDISTR_BUILD=rhel8 \
+%endif
     -DUSE_GALERA=OFF -DWITH_ICU=OFF -DWITH_COLUMNAR=OFF -DUSE_JEMALLOC=OFF \
     -DWITH_RE2_LIBS=%_libdir \
     -DWITH_STEMMER=OFF \
     -DSYSCONFDIR=/etc/manticoresearch
 %make_build
+
+%check
+ctest -C Debug
 
 %install
 %makeinstall_std
@@ -136,6 +156,10 @@ tar xfv %SOURCE2
 %_bindir/index_converter
 
 %changelog
+* Tue Aug 31 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.6.0-alt2
+- added patch for Elbrus
+- added check
+
 * Thu May 13 2021 Vitaly Lipatov <lav@altlinux.ru> 3.6.0-alt1
 - new version 3.6.0 (with rpmrb script)
 
