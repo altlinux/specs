@@ -1,3 +1,5 @@
+%define optflags_lto %nil
+
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
 %define api_ver 1.0
@@ -20,7 +22,7 @@
 
 Name: libwebkitgtk2
 Version: 2.4.11
-Release: alt13
+Release: alt13.1
 
 Summary: Web browser engine
 License: LGPL-2.0 and LGPL-2.1 and BSD-2-Clause
@@ -43,6 +45,10 @@ Patch9: webkitgtk-2.4.11-alt-python2.patch
 Patch10: webkitgtk-2.4.11-alt-bison-3.7-workaround.patch
 # https://aur.archlinux.org/cgit/aur.git/tree/icu68.patch?h=webkitgtk
 Patch11: webkitgtk-2.4.11-arch-icu68.patch
+Patch12: webkitgtk-2.4.11-arch-glib-2.68.0.patch
+Patch13: webkitgtk-2.4.11-arch-volatile.patch
+# based on https://trac.webkit.org/changeset/238805/webkit
+Patch14: webkitgtk-2.4.11-alt-SoupSession.patch
 
 Requires: libjavascriptcoregtk2 = %version-%release
 %{?_enable_geolocation:Requires: geoclue2}
@@ -206,6 +212,9 @@ GObject introspection devel data for the JavaScriptCore library
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1 -b .glib-2.68
+%patch13 -p1 -b .volatile
+%patch14 -p1 -b .SoupSession
 
 # fix build translations
 %__subst 's|^all-local:|all-local: stamp-po|' GNUmakefile.am
@@ -305,6 +314,9 @@ xvfb-run make check
 %endif
 
 %changelog
+* Sat Aug 28 2021 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt13.1
+- disabled LTO
+
 * Wed Jun 09 2021 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt13
 - rebuilt against libicu*.so.69
 
