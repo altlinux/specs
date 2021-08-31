@@ -1,6 +1,6 @@
 Name: git
-Version: 2.32.0
-Release: alt1
+Version: 2.33.0
+Release: alt2
 
 Summary: Git core and tools
 License: GPLv2
@@ -528,6 +528,12 @@ popd
 %endif #doc
 
 %changelog
+* Tue Aug 31 2021 Dmitry V. Levin <ldv@altlinux.org> 2.33.0-alt2
+- Adjust test suite for gnupg-1.4.23-alt3.
+
+* Mon Aug 16 2021 Dmitry V. Levin <ldv@altlinux.org> 2.33.0-alt1
+- 2.32.0 -> 2.33.0.
+
 * Mon Jul 26 2021 Dmitry V. Levin <ldv@altlinux.org> 2.32.0-alt1
 - 2.29.3 -> 2.32.0.
 
