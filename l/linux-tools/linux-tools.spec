@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 5.13
+%define kernel_base_version 5.14
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/traceevent/plugins/*
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
@@ -509,6 +509,7 @@ fi
 %files -n perf
 %_bindir/perf
 %_bindir/trace
+%_includedir/perf
 %_man1dir/perf*
 %_sysconfdir/bash_completion.d/perf
 %_libexecdir/traceevent
@@ -583,6 +584,9 @@ fi
 %_libexecdir/kselftests
 
 %changelog
+* Tue Aug 31 2021 Vitaly Chikunov <vt@altlinux.org> 5.14-alt1
+- Update to v5.14 (2021-08-29).
+
 * Wed Jun 30 2021 Vitaly Chikunov <vt@altlinux.org> 5.13-alt1
 - Update to v5.13 (2021-06-27).
 
