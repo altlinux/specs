@@ -1,15 +1,17 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: libhtp
 Epoch: 1
-Version: 0.5.36
+Version: 0.5.38
 Release: alt1
 Summary: LibHTP is a security-aware parser for the HTTP protocol and the related bits and pieces
 License: BSD-3-Clause
 Group: Security/Networking
 Url: https://github.com/OISF/libhtp
 
-Source0: %name-%version.tar
+Source: %name-%version.tar
 
 BuildRequires: zlib-devel
 
@@ -43,20 +45,17 @@ Group: Development/C
 %description devel
 Development headers and libraries for %name.
 
-%package devel-static
-Summary: Static libraries for %name
-Requires: %name-devel = %EVR
-Group: Development/C
-
-%description devel-static
-Static libraries for %name.
-
 %prep
 %setup
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %autoreconf
-%configure
+%configure \
+	--disable-static \
+	%nil
+
 %make_build
 
 %install
@@ -70,10 +69,11 @@ Static libraries for %name.
 %_includedir/htp
 %_libdir/pkgconfig/htp.pc
 
-%files devel-static
-%_libdir/*.a
-
 %changelog
+* Tue Aug 31 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.5.38-alt1
+- Updated to upstream version 0.5.38.
+- Disabled static libraries.
+
 * Mon Dec 21 2020 Alexey Shabalin <shaba@altlinux.org> 1:0.5.36-alt1
 - new version 0.5.36
 
