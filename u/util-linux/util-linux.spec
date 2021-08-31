@@ -1,13 +1,12 @@
 Summary: A collection of basic system utilities
 Name: util-linux
 Version: 2.37.2
-Release: alt1
+Release: alt2
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.1-or-later and BSD-3-Clause and BSD-4-Clause-UC and ALT-Public-Domain
 Group: System/Base
 URL: https://kernel.org/pub/linux/utils/util-linux/
 
 ### Macros
-%def_enable raw
 %def_enable uuidd
 %def_with setarch
 %def_enable runuser
@@ -96,10 +95,9 @@ Patch02: 0002-OWL-write-1-improvements.patch
 Patch03: 0003-ALT-Replace-vidattr-by-own-function-that-works-like-.patch
 Patch04: 0004-ALT-Add-pamconsole-mount-option-to-allow-users-at-co.patch
 Patch05: 0005-ALT-Do-not-accept-gecos-field-sizes-longer-than-64.patch
-Patch06: 0006-FEDORA-Add-documentation-about-etc-sysconfig-rawdevi.patch
-Patch07: 0007-ALT-some-tests-use-bash4.patch
-Patch08: 0008-ALT-Allow-to-display-altlinux-release-in-the-message.patch
-Patch09: 0009-ALT-Drop-documentation-about-journald-option-since-w.patch
+Patch06: 0006-ALT-some-tests-use-bash4.patch
+Patch07: 0007-ALT-Allow-to-display-altlinux-release-in-the-message.patch
+Patch08: 0008-ALT-Drop-documentation-about-journald-option-since-w.patch
 
 %description
 The util-linux package contains a large variety of low-level system
@@ -494,7 +492,6 @@ automake --add-missing --force-missing
 	--enable-partx \
 	--enable-write \
 	--enable-rdev \
-	%{subst_enable raw} \
 	%{subst_enable runuser} \
 	%{subst_enable login} \
 	%{subst_enable sulogin} \
@@ -564,11 +561,6 @@ install -p -m755 pause %buildroot/%_bindir
 install -p -m755 nologin %buildroot/sbin/
 install -p -m644 nologin.8 %buildroot/%_man8dir/
 
-%if_enabled raw
-echo '.so man8/raw.8' > %buildroot/%_man8dir/rawdevices.8
-ln -sf ../../bin/raw %buildroot/%_bindir/raw
-%endif
-
 %if_enabled runuser
 	install -m 644 %SOURCE2 %buildroot/%_sysconfdir/pam.d/runuser
 	install -m 644 %SOURCE3 %buildroot/%_sysconfdir/pam.d/runuser-l
@@ -633,12 +625,6 @@ for I in getopt taskset; do
 	mv -- %buildroot/%_bindir/$I %buildroot/bin/$I
 	path="$(relative "%buildroot/bin/$I" "%buildroot/%_bindir/$I")"
 	ln -s "$path" %buildroot/%_bindir/$I
-done
-
-# /sbin -> /bin
-for I in raw; do
-	[ ! -e %buildroot/sbin/$I ] ||
-		mv -- %buildroot/sbin/$I %buildroot/bin/$I
 done
 
 %if_without systemd
@@ -957,6 +943,9 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Tue Aug 31 2021 Alexey Gladkov <legion@altlinux.ru> 2.37.2-alt2
+- Remove obsolete raw utility.
+
 * Sat Aug 28 2021 Alexey Gladkov <legion@altlinux.ru> 2.37.2-alt1
 - New version (2.37.2).
 
