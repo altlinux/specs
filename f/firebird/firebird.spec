@@ -2,6 +2,9 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
+# LTO causes errors, disable it
+%global optflags_lto %nil
+
 %define major 4.0.0.2496
 %define minor 0
 %define pkgname Firebird
@@ -10,7 +13,7 @@
 
 Name: firebird
 Version: %major.%minor
-Release: alt3
+Release: alt4
 Summary: Firebird SQL Database, fork of InterBase
 Group: Databases
 License: IPL
@@ -404,6 +407,9 @@ fi
 %_datadir/%name/examples
 
 %changelog
+* Tue Aug 31 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0.2496.0-alt4
+- Disabled LTO.
+
 * Sat Aug 14 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.0.0.2496.0-alt3
 - Added patch for Elbrus.
 
