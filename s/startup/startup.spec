@@ -1,5 +1,5 @@
 Name: startup
-Version: 0.9.9.12
+Version: 0.9.9.13
 Release: alt1
 
 Summary: The system startup scripts
@@ -80,7 +80,6 @@ chmod -R +x %buildroot%_sysconfdir/rc.d
 mkdir -p %buildroot%_sysconfdir/sysconfig/harddisk
 
 mkdir -p %buildroot%_sysconfdir/firsttime.d
-mkdir -p %buildroot%_localstatedir/rsbac
 
 mkdir -p %buildroot%_localstatedir/random
 touch %buildroot%_localstatedir/random/random-seed
@@ -90,7 +89,6 @@ if [ $1 -eq 1 ]; then
 	/sbin/chkconfig --add fbsetfont
 	/sbin/chkconfig --add netfs
 	/sbin/chkconfig --add random
-	/sbin/chkconfig --add rawdevices
 	touch /etc/firsttime.flag
 fi
 
@@ -107,11 +105,10 @@ if [ $1 -eq 0 ]; then
 	/sbin/chkconfig --del fbsetfont
 	/sbin/chkconfig --del netfs
 	/sbin/chkconfig --del random
-	/sbin/chkconfig --del rawdevices
 fi
 
 %triggerpostun -- initscripts < 1:5.49.1-alt1
-for f in %_sysconfdir/{inittab,modules,sysctl.conf,sysconfig/{clock,framebuffer,i18n,init,mouse,rawdevices,system}}; do
+for f in %_sysconfdir/{inittab,modules,sysctl.conf,sysconfig/{clock,framebuffer,i18n,init,mouse,system}}; do
 	if [ ! -f "$f" ]; then
 	        if [ -f "$f".rpmsave ]; then
 	                cp -pf "$f".rpmsave "$f"
@@ -123,7 +120,6 @@ done
 /sbin/chkconfig --add fbsetfont
 /sbin/chkconfig --add netfs
 /sbin/chkconfig --add random
-/sbin/chkconfig --add rawdevices
 
 %triggerpostun -- startup < 0:0.2-alt1
 /sbin/chkconfig --add fbsetfont
@@ -147,11 +143,16 @@ done
 %ghost %attr(664,root,utmp) /var/run/utmp
 %ghost %config(missingok) /etc/firsttime.flag
 %dir %_sysconfdir/firsttime.d
-%dir %_localstatedir/rsbac
 %dir %_localstatedir/random
 %ghost %config(noreplace,missingok) %verify(not md5 mtime size) %attr(600,root,root) %_localstatedir/random/random-seed
 
 %changelog
+* Tue Aug 31 2021 Alexey Gladkov <legion@altlinux.ru> 0.9.9.13-alt1
+- Drop raw character device support. The support of raw devices has been removed
+  from the kernel.
+- Drop %%_localstatedir/rsbac directory. It was used by rsbac_autotune which was
+  removed earlier.
+
 * Mon Aug 23 2021 Alexey Gladkov <legion@altlinux.ru> 0.9.9.12-alt1
 - Use alternatives instead of standalone systemd utilities.
 
