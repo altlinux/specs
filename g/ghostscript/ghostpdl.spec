@@ -1,6 +1,6 @@
 Name: ghostscript
 Version: 9.54.0
-Release: alt1
+Release: alt2
 
 %define ijsver	0.35
 %global origver %version
@@ -198,6 +198,7 @@ rm -rf expat freetype icclib jasper jpeg lcms lcms2 libpng openjpeg zlib cups/li
 %patch502 -p1
 
 sed -i 's/FT_CALLBACK_DEF(\(.*\))/static \1/g' base/fapi_ft.c
+sed -i 's/ -dNO/ -dNOSAFER -dNO/' lib/pfbtopfa
 
 %build
 export CFLAGS=-DA4
@@ -318,6 +319,9 @@ cp -a examples %buildroot%_docdir/%name-%version
 %_includedir/ijs
 
 %changelog
+* Tue Aug 31 2021 Fr. Br. George <george@altlinux.ru> 9.54.0-alt2
+- Fix redundant SAFER usage (Closes: #40817)
+
 * Tue Aug 17 2021 Fr. Br. George <george@altlinux.ru> 9.54.0-alt1
 - Autobuild version bump to 9.54.0
 - Rearrange packages content
