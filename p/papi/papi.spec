@@ -1,6 +1,8 @@
+%define optflags_lto %nil
+
 Name: papi
 Version: 6.0.0
-Release: alt3
+Release: alt5
 
 Summary: Performance Application Programming Interface
 
@@ -15,6 +17,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 Patch1: papi-6.0.0-alt-fix-mips-warning.patch
+Patch2000: papi-e2k.patch
 
 Requires: lib%name = %EVR
 
@@ -73,6 +76,12 @@ This package contains documentation for PAPI.
 %setup
 
 %patch1 -p2
+%ifarch %e2k
+%patch2000 -p2
+sed -ri "s|PAPILIB = (.*)/@LINKLIB@|& \\1/libpfm4/lib/libpfm.so.4|" \
+	src/components/Makefile_comp_tests.target.in \
+	src/{ctests,ftests,utils,validation_tests}/Makefile.target.in
+%endif
 
 #rm -fR src/perfctr-*
 #cp -f src/Rules.pfm src/Rules.perfctr
@@ -139,6 +148,12 @@ rm -f %buildroot%_libdir/*.a
 %_docdir/%name
 
 %changelog
+* Tue Aug 31 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 6.0.0-alt5
+- disabled LTO because of build errors
+
+* Tue Aug 31 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 6.0.0-alt4
+- added patch for Elbrus
+
 * Tue Aug 10 2021 Ivan A. Melnikov <iv@altlinux.org> 6.0.0-alt3
 - fix build on mipsel
 
