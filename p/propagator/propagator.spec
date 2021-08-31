@@ -3,7 +3,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20210721
+Version: 20210823
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -39,6 +39,9 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Mon Aug 23 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 20210823-alt1
+- Avoid deadlock between udev probing stage2 and stage1 mounting it (closes: #40687)
+
 * Wed Jul 21 2021 Egor Ignatov <egori@altlinux.org> 20210721-alt1
 - mkmodpack: include leading directories for firmware files
   The kernel needs leading directories in the cpio archive when
