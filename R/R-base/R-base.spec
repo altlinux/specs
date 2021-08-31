@@ -1,6 +1,6 @@
 Name: R-base
 Version: 4.0.5
-Release: alt1
+Release: alt2
 
 Summary: A language for data analysis and graphics
 License: GPLv2
@@ -13,6 +13,7 @@ Patch: R-%version-%release.patch
 
 # Automatically added by buildreq on Thu Mar 03 2011
 BuildRequires: bzlib-devel gcc-c++ gcc-fortran libXmu-devel libjpeg-devel liblzma-devel libpango-devel libpcre2-devel libpng-devel libreadline-devel libtiff-devel texlive-collection-latex texlive-dist tk-devel zlib-devel makeinfo texi2dvi libcurl-devel libcairo-devel libtre-devel rpm-build-java java-devel-default
+BuildRequires: libopenblas-devel
 
 BuildPreReq: liblapack-devel libicu-devel libgomp8-devel
 
@@ -340,6 +341,9 @@ classification, clustering, ...).
 %_infodir/R-*.info*
 
 %changelog
+* Tue Aug 31 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.0.5-alt2
+- added missing openblas req (need for e2k build)
+
 * Sun Apr 04 2021 Kirill Maslinsky <kirill@altlinux.org> 4.0.5-alt1
 - Version 4.0.5
 
