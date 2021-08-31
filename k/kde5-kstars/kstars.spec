@@ -1,8 +1,10 @@
 %define rname kstars
+%def_disable indi
+%define optflags_lto %nil
 
 Name: kde5-%rname
 Version: 3.5.2
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init
 
@@ -11,7 +13,9 @@ Summary: Desktop Planetarium
 Url: http://www.kde.org
 License: GPL-2.0-or-later AND GPL-3.0-or-later
 
+%if_enabled indi
 Requires: indi
+%endif
 
 Source: %rname-%version.tar
 
@@ -23,7 +27,10 @@ BuildRequires: extra-cmake-modules qt5-base-devel qt5-declarative-devel qt5-mult
 BuildRequires: qt5-datavis3d-devel
 BuildRequires: libsecret-devel libqtkeychain-qt5-devel
 BuildRequires: xplanet eigen3 libGLU-devel zlib-devel
-BuildRequires: libcfitsio-devel libindi-devel wcslib-devel libraw-devel
+BuildRequires: libcfitsio-devel wcslib-devel libraw-devel
+%if_enabled indi
+BuildRequires: libindi-devel
+%endif
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static
 BuildRequires: kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemviews-devel
@@ -69,6 +76,10 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 %_K5cfg/kstars.kcfg
 
 %changelog
+* Mon Aug 30 2021 Sergey V Turchin <zerg@altlinux.org> 1:3.5.2-alt2
+- build without LTO
+- build without indi
+
 * Mon Mar 01 2021 Sergey V Turchin <zerg@altlinux.org> 1:3.5.2-alt1
 - new version
 
