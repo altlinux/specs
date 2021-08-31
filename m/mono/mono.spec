@@ -1,5 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
+# LTO causes errors, disable it
+%global optflags_lto %nil
+
 %def_enable bootstrap
 %def_disable ibmlibs
 %set_verify_elf_method no
@@ -9,7 +12,7 @@
 
 Name: mono
 Version: 6.12.0.147
-Release: alt1
+Release: alt2
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -1402,6 +1405,9 @@ done
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Mon Aug 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.12.0.147-alt2
+- Disabled LTO.
+
 * Wed Aug 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.12.0.147-alt1
 - Updated to upstream version 6.12.0.147.
 - Reverted some changes and patches from Fedora.
