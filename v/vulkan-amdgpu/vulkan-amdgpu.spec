@@ -13,8 +13,8 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2021.Q3.4
-Release: alt2
+Version: 2021.Q3.5
+Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
@@ -96,6 +96,14 @@ install -p -m644 %SOURCE6 %buildroot%_vkdir/amd_icd.json
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Tue Aug 31 2021 L.A. Kostis <lakostis@altlinux.ru> 2021.Q3.5-alt1
+- 2021-8-24 update:
+  + llvm: Updated to e32a5e65b5a2
+  + spvgen: Updated to 985d66ad5f62
+  + llpc: Updated to 72c9697660a9
+  + pal: Updated to cd4f8b28b5d9
+  + xgl: Updated to e6ae9d1025c8
+
 * Mon Aug 16 2021 L.A. Kostis <lakostis@altlinux.ru> 2021.Q3.4-alt2
 - add llvm build workaround (-Wno-error=return-type).
 
