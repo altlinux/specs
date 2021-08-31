@@ -3,7 +3,7 @@
 
 Name: vulkan
 Version: 1.2.182
-Release: alt1
+Release: alt1.1
 Summary: Khronos group Vulkan API SDK
 
 Group: System/Libraries
@@ -159,6 +159,9 @@ mkdir -p %buildroot%_datadir/vulkan/icd.d ||:
 # remove RPATH
 chrpath -d %buildroot%_bindir/vulkaninfo
 
+# remove static libs to make LTO checks happy
+rm -rf %buildroot%_libdir/libVkLayer*.a ||:
+
 %files tools
 %_bindir/*
 
@@ -183,7 +186,6 @@ chrpath -d %buildroot%_bindir/vulkaninfo
 %exclude %_includedir/vk_video
 %_datadir/vulkan/explicit_layer.d/*.json
 %_libdir/libVkLayer*.so
-%_libdir/libVkLayer*.a
 
 %files filesystem
 %dir %_sysconfdir/vulkan
@@ -194,6 +196,9 @@ chrpath -d %buildroot%_bindir/vulkaninfo
 %dir %_datadir/vulkan/implicit_layer.d
 
 %changelog
+* Mon Aug 30 2021 L.A. Kostis <lakostis@altlinux.ru> 1.2.182-alt1.1
+- validation-layers: remove static libraries (fix LTO compile).
+
 * Sun Jun 27 2021 L.A. Kostis <lakostis@altlinux.ru> 1.2.182-alt1
 - Updated to 1.2.182.
 
