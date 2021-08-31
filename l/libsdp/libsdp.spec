@@ -1,15 +1,18 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
-%def_enable static
+%def_disable static
 
 Name: libsdp
 Summary: LD_PRELOAD-able library for using SDP
 Version: 1.1.108
-Release: alt1.0.17.ga6958ef
+Release: alt2.0.17.ga6958ef
 License: %gpl2only
 Group: System/Libraries
-Url: http://www.openfabrics.org
+Url: https://www.openfabrics.org
 
+# https://www.openfabrics.org/downloads/libsdp/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
@@ -42,6 +45,8 @@ Static %name library.
 %setup
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 ./autogen.sh
 %configure %{subst_enable static}
 %make_build
@@ -70,6 +75,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Tue Aug 31 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.108-alt2.0.17.ga6958ef
+- Disabled static libraries.
+
 * Tue Nov 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.108-alt1.0.17.ga6958ef
 - Updated to upstream version 1.1.108-0.17.ga6958ef (Fixes: CVE-2010-4173).
 
