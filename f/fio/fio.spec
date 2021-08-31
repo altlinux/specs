@@ -10,7 +10,7 @@
 %def_enable http
 
 Name: fio
-Version: 3.26
+Version: 3.27
 Release: alt1
 
 Summary: IO testing tool
@@ -105,6 +105,10 @@ find tools -type f | xargs subst "s|/usr/bin/python2.7|%__python3|"
 %_bindir/gfio
 
 %changelog
+* Tue Aug 31 2021 Vitaly Lipatov <lav@altlinux.ru> 3.27-alt1
+- new version 3.27
+- add upstream fix: remove raw device support
+
 * Tue Mar 16 2021 Vitaly Lipatov <lav@altlinux.ru> 3.26-alt1
 - new version 3.26
 
