@@ -1,4 +1,5 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
@@ -9,7 +10,7 @@
 %define sover 2
 Name: lib%origname
 Version: 2.1.0
-Release: alt2
+Release: alt3
 Summary: Scalable LAPACK library
 License: BSD-style
 Group: Sciences/Mathematics
@@ -104,14 +105,6 @@ Requires: %name = %EVR
 %description devel
 Development files of ScaLAPACK.
 
-%package devel-static
-Summary: Static library of ScaLAPACK
-Group: Development/Other
-Requires: %name-devel = %EVR
-
-%description devel-static
-Static library of ScaLAPACK.
-
 %package manpages
 Summary: Man pages of ScaLAPACK
 Group: Sciences/Mathematics
@@ -125,10 +118,6 @@ Man pages of ScaLAPACK.
 %patch1 -p2
 %patch2 -p1
 %patch3 -p2
-
-pushd ..
-cp -rv %name-%version %name-%version-static
-popd
 
 %build
 %define build_fflags %(echo %build_fflags -fallow-argument-mismatch| sed 's|-Werror=format-security||g')
@@ -146,27 +135,12 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %cmake_build
 
-pushd ../%name-%version-static
-%cmake \
-	-DBUILD_SHARED_LIBS:BOOL=OFF \
-	-DBUILD_STATIC_LIBS:BOOL=ON \
-	-DLAPACK_LIBRARIES="$(pkg-config --libs lapack)" \
-	-DBLAS_LIBRARIES="$(pkg-config --libs openblas)" \
-	%nil
-
-%cmake_build
-popd
-
 %install
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %cmakeinstall_std
-
-pushd ../%name-%version-static
-%cmakeinstall_std
-popd
 
 install -d %buildroot%_includedir/blacs
 install -m644 BLACS/SRC/*.h %buildroot%_includedir/blacs/
@@ -189,13 +163,13 @@ install -m644 MANPAGES/man/manl/* %buildroot%_mandir/manl/
 %_libdir/cmake/*
 %_pkgconfigdir/*
 
-%files devel-static
-%_libdir/*.a
-
 %files manpages
 %_mandir/manl/*
 
 %changelog
+* Tue Aug 31 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt3
+- Disabled static libraries.
+
 * Fri Apr 23 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt2
 - Fixed build dependencies.
 
