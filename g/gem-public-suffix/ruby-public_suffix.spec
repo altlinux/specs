@@ -1,8 +1,7 @@
-%define        pkgname public-suffix
 %define        gemname public_suffix
 
-Name: 	       gem-%pkgname
-Version:       4.0.3
+Name:          gem-public-suffix
+Version:       4.0.6
 Release:       alt1
 Summary:       Domain name parser for Ruby based on the Public Suffix List
 License:       MIT
@@ -16,25 +15,37 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%gemname
-Provides:      ruby-%gemname
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_alias_names public_suffix,public-suffix
+Obsoletes:     ruby-public_suffix < %EVR
+Provides:      ruby-public_suffix = %EVR
+Provides:      gem(public_suffix) = 4.0.6
+
 
 %description
-PublicSuffix can parse and decompose a domain name into top level
-domain, domain and subdomains.
+PublicSuffix can parse and decompose a domain name into top level domain, domain
+and subdomains.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-public-suffix-doc
+Version:       4.0.6
+Release:       alt1
+Summary:       Domain name parser for Ruby based on the Public Suffix List documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета public_suffix
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(public_suffix) >= 4.0.3 gem(public_suffix) < 5
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-public-suffix-doc
+Domain name parser for Ruby based on the Public Suffix List documentation
+files.
+
+PublicSuffix can parse and decompose a domain name into top level domain, domain
+and subdomains.
+
+%description   -n gem-public-suffix-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета public_suffix.
 
 
 %prep
@@ -50,15 +61,19 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n gem-public-suffix-doc
+%doc README.md
 %ruby_gemdocdir
 
 
 %changelog
+* Sun Jul 18 2021 Pavel Skrylev <majioa@altlinux.org> 4.0.6-alt1
+- ^ 4.0.3 -> 4.0.6
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 4.0.3-alt1
 - updated (^) 4.0.1 -> 4.0.3
 - fixed (!) spec

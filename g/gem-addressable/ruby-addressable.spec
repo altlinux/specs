@@ -1,45 +1,84 @@
-%define        pkgname addressable
+%define        gemname addressable
 
-Name:          gem-%pkgname
-Version:       2.7.0
-Release:       alt1.1
+Name:          gem-addressable
+Version:       2.8.0
+Release:       alt1
 Summary:       Addressable is a replacement for the URI implementation that is part of Ruby's standard library
 Summary(ru_RU.UTF-8): "Адресуемый" есть заменою воплощения URI, который является частью стандартной библиотеки рубина
-Group:         Development/Ruby
 License:       Apache-2.0
-URL:           http://addressable.rubyforge.org/
+Group:         Development/Ruby
+Url:           https://github.com/sporkmonger/addressable
 Vcs:           https://github.com/sporkmonger/addressable.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(public_suffix) >= 2.0.2 gem(public_suffix) < 5.0
+BuildRequires: gem(bundler) >= 1.0 gem(bundler) < 3.0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname
-Provides:      ruby-%pkgname
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Requires:      gem(public_suffix) >= 2.0.2 gem(public_suffix) < 5.0
+Obsoletes:     ruby-addressable < %EVR
+Provides:      ruby-addressable = %EVR
+Provides:      gem(addressable) = 2.8.0
+
 
 %description
-Addressable is a replacement for the URI implementation that is part of
-Ruby's standard library. It more closely conforms to RFC 3986, RFC 3987,
-and RFC 6570 (level 4), providing support for IRIs and URI templates.
+Addressable is a replacement for the URI implementation that is part of Ruby's
+standard library. It more closely conforms to RFC 3986, RFC 3987, and RFC 6570
+(level 4), providing support for IRIs and URI templates.
 
-%description   -l ru_RU.UTF-8
+%description         -l ru_RU.UTF-8
 "Адресуемый" есть замена воплощения URI, который является частью стандартной
-библиотеки рубина. Бн более точно удовлетворяет стандартам RFC 3986, RFC 3987,
-и RFC 6570 (уровня 4), поддержиивая IRI и URI шаблоны.
+библиотеки рубина. Бн более точно удовлетворяет стандартам RFC 3986, RFC 3987, и
+RFC 6570 (уровня 4), поддержиивая IRI и URI шаблоны.
 
 
-%package       doc
-Summary:       Documentation for %name
+%package       -n gem-addressable-doc
+Version:       2.8.0
+Release:       alt1
+Summary:       Addressable is a replacement for the URI implementation that is part of Ruby's standard library documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета addressable
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation for %{name}.
+Requires:      gem(addressable) = 2.8.0
 
-%description   -l ru_RU.UTF-8 doc
-Документация для %{name}.
+%description   -n gem-addressable-doc
+Addressable is a replacement for the URI implementation that is part of Ruby's
+standard library documentation files.
+
+Addressable is a replacement for the URI implementation that is part of Ruby's
+standard library. It more closely conforms to RFC 3986, RFC 3987, and RFC 6570
+(level 4), providing support for IRIs and URI templates.
+
+%description   -n gem-addressable-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета addressable.
+
+
+%package       -n gem-addressable-devel
+Version:       2.8.0
+Release:       alt1
+Summary:       Addressable is a replacement for the URI implementation that is part of Ruby's standard library development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета addressable
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(addressable) = 2.8.0
+Requires:      gem(bundler) >= 1.0 gem(bundler) < 3.0
+
+%description   -n gem-addressable-devel
+Addressable is a replacement for the URI implementation that is part of Ruby's
+standard library development package.
+
+Addressable is a replacement for the URI implementation that is part of Ruby's
+standard library. It more closely conforms to RFC 3986, RFC 3987, and RFC 6570
+(level 4), providing support for IRIs and URI templates.
+
+%description   -n gem-addressable-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета addressable.
 
 
 %prep
@@ -55,15 +94,22 @@ Documentation for %{name}.
 %ruby_test
 
 %files
-%doc README*
-%ruby_gemlibdir
+%doc README.md
 %ruby_gemspec
+%ruby_gemlibdir
 
-%files         doc
+%files         -n gem-addressable-doc
+%doc README.md
 %ruby_gemdocdir
+
+%files         -n gem-addressable-devel
+%doc README.md
 
 
 %changelog
+* Sun Jul 18 2021 Pavel Skrylev <majioa@altlinux.org> 2.8.0-alt1
+- ^ 2.7.0 -> 2.8.0
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 2.7.0-alt1.1
 - fixed (!) spec
 

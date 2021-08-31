@@ -1,10 +1,10 @@
-%define        pkgname net-ping
+%define        gemname net-ping
 
-Name:          gem-%pkgname
-Version:       2.0.6
-Release:       alt1.1
-Summary:       A collection of classes that provide different ways to ping computers.
-License:       Artistic 2.0
+Name:          gem-net-ping
+Version:       2.0.8
+Release:       alt1
+Summary:       A collection of classes that provide different ways to ping computers
+License:       Artistic-2.0
 Group:         Development/Ruby
 Url:           https://github.com/chernesk/net-ping
 Vcs:           https://github.com/chernesk/net-ping.git
@@ -13,26 +13,61 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(test-unit) >= 0
+# BuildRequires: gem(fakeweb) >= 0
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(pry-byebug) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname
-Provides:      ruby-%pkgname
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency test-unit >= 3.3.5,test-unit < 4
+Obsoletes:     ruby-net-ping < %EVR
+Provides:      ruby-net-ping = %EVR
+Provides:      gem(net-ping) = 2.0.8
+
 
 %description
-%summary.
+A collection of classes that provide different ways to ping computers.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-net-ping-doc
+Version:       2.0.8
+Release:       alt1
+Summary:       A collection of classes that provide different ways to ping computers documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета net-ping
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(net-ping) = 2.0.8
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-net-ping-doc
+A collection of classes that provide different ways to ping computers
+documentation files.
+
+%description   -n gem-net-ping-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета net-ping.
+
+
+%package       -n gem-net-ping-devel
+Version:       2.0.8
+Release:       alt1
+Summary:       A collection of classes that provide different ways to ping computers development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета net-ping
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(net-ping) = 2.0.8
+Requires:      gem(test-unit) >= 0 gem(test-unit) < 4
+Requires:      gem(fakeweb) >= 0
+Requires:      gem(rake) >= 0 gem(rake) < 14
+Requires:      gem(pry-byebug) >= 0
+
+%description   -n gem-net-ping-devel
+A collection of classes that provide different ways to ping computers
+development package.
+
+%description   -n gem-net-ping-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета net-ping.
 
 
 %prep
@@ -48,15 +83,22 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n gem-net-ping-doc
+%doc README.md
 %ruby_gemdocdir
+
+%files         -n gem-net-ping-devel
+%doc README.md
 
 
 %changelog
+* Sat Jul 17 2021 Pavel Skrylev <majioa@altlinux.org> 2.0.8-alt1
+- ^ 2.0.6 -> 2.0.8
+
 * Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 2.0.6-alt1.1
 - fixed (!) spec
 
