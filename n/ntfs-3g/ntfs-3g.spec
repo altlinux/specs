@@ -1,6 +1,6 @@
 Name: ntfs-3g
-Version: 2017.3.23
-Release: alt3
+Version: 2021.8.22
+Release: alt1
 Epoch: 2
 Summary: third generation Linux NTFS driver
 URL: http://www.ntfs-3g.org/
@@ -12,9 +12,8 @@ Requires: lib%name = %epoch:%version-%release
 Provides: ntfsprogs = %epoch:%version-%release fuse-ntfs = %epoch:%version-%release
 Obsoletes: ntfsprogs fuse-ntfs
 
-Source0: %{name}_ntfsprogs-%version.tgz
-
-Patch0: ntfs-3g-CVE-2019-9755.patch
+Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildRequires: libattr-devel libfuse-devel libgcrypt-devel libgnutls-devel libuuid-devel
 
@@ -58,7 +57,7 @@ changing the file ownerships and the access rights.
 This package contains header files for %name
 
 %prep
-%setup -q -n %{name}_ntfsprogs-%version
+%setup -q
 %patch0 -p1
 
 %build
@@ -87,7 +86,7 @@ done
 mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 
 %files
-%doc AUTHORS CREDITS ChangeLog NEWS
+%doc README AUTHORS CREDITS ChangeLog NEWS
 /sbin/*
 /bin/*
 %_man8dir/*
@@ -101,6 +100,13 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Aug 31 2021 Valery Inozemtsev <shrek@altlinux.ru> 2:2021.8.22-alt1
+- 2021.8.22 (Fixes: CVE-2021-33285, CVE-2021-35269, CVE-2021-35268, CVE-2021-33289,
+  CVE-2021-33286, CVE-2021-35266, CVE-2021-33287, CVE-2021-35267, CVE-2021-39251,
+  CVE-2021-39252, CVE-2021-39253, CVE-2021-39254, CVE-2021-39255, CVE-2021-39256,
+  CVE-2021-39257, CVE-2021-39258, CVE-2021-39259, CVE-2021-39260, CVE-2021-39261,
+  CVE-2021-39262, CVE-2021-39263)
+
 * Fri Oct 23 2020 Valery Inozemtsev <shrek@altlinux.ru> 2:2017.3.23-alt3
 - add upstream fix for CVE-2019-9755
 
