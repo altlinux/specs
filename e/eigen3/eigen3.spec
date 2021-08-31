@@ -1,7 +1,7 @@
 %define oname eigen
 Name: %{oname}3
 Version: 3.4.0
-Release: alt1
+Release: alt2
 
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
@@ -18,6 +18,8 @@ Patch1: eigen_pkgconfig.patch
 Patch2: eigen3-3.3.1-fixcmake.patch
 # Avoid SSE4.2/AVX on e2k
 Patch3: eigen3-3.3.7-alt-e2k.patch
+# Temporarily disable EIGEN_ALTIVEC_DISABLE_MMA on PPC64le
+Patch4: eigen_mma.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -70,6 +72,9 @@ This package contains examples for Eigen.
 %patch2 -p0 -b .fixcmake
 %ifarch %e2k
 %patch3 -p2 -b .e2k
+%endif
+%ifarch ppc64le
+%patch4 -p1
 %endif
 
 %build
@@ -128,6 +133,9 @@ cd -
 %endif
 
 %changelog
+* Tue Aug 31 2021 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt2
+- Temporarily disable EIGEN_ALTIVEC_DISABLE_MMA on ppc64le (ALT #40833).
+
 * Mon Aug 23 2021 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt1
 - New version.
 
