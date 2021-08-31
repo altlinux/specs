@@ -1,7 +1,7 @@
 %define rname libkmahjongg
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init
 
@@ -63,16 +63,17 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-#%_K5inc/libkmahjongg_version.h
-%_K5inc/KF5KMahjongg/
+%_K5inc/KMahjongg/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5KMahjongglib/
-#%_K5archdata/mkspecs/modules/qt_libkmahjongg.pri
 
 %files -n libkf5kmahjongglib
 %_K5lib/libKF5KMahjongglib.so.*
 
 %changelog
+* Tue Aug 31 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Fri Jul 09 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 
