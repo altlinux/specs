@@ -1,5 +1,5 @@
 Name: estrlist
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: estrlist - string operation utility
@@ -30,6 +30,11 @@ install -D bin/%name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Mon Aug 30 2021 Vitaly Lipatov <lav@altlinux.ru> 0.3-alt1
+- estrlist: add is_empty alias
+- estrlist: add has_space
+- estrlist: add -- support
+
 * Sat Oct 10 2020 Vitaly Lipatov <lav@altlinux.ru> 0.2-alt1
 - estrlist: fix exclude, fix exclude tests
 
