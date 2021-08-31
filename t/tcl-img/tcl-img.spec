@@ -1,9 +1,11 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 %define teaname img
 %define major 1.4
 
 Name: tcl-img
 Version: 1.4.13
-Release: alt1
+Release: alt2
 
 Summary: Tcl Image Formats (Img)
 License: TCL
@@ -89,6 +91,9 @@ make test 2>&1 |tee "$log"
 %_mandir/mann/*
 
 %changelog
+* Tue Aug 31 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.13-alt2
+- Fixed FTBFS: built fat LTO objects.
+
 * Mon Feb 15 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.13-alt1
 - Updated to 1.14.13.
 
