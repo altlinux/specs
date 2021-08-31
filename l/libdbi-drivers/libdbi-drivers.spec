@@ -1,19 +1,19 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 %def_with firebird
 %def_without sqlite2
 %def_disable doc
 
 Name: libdbi-drivers
-Version: 0.9.0
-Release: alt6
 Epoch: 1
-
+Version: 0.9.0
+Release: alt7
 Summary: Database drivers for libdbi
 License: LGPL
 Group: System/Libraries
-
 Url: http://libdbi-drivers.sourceforge.net/
+
 Source: %name-%version.tar
 Patch: 0001-freetds-resolve-compile-error-with-1.0.patch
 
@@ -133,20 +133,6 @@ connections by using this framework.
 
 This package contains header files.
 
-%package devel-static
-Summary: Static library for the %name library drivers
-Group: Development/C
-Provides: %name-drivers-devel
-Requires: libdbi-devel >= 0.8.2
-
-%description devel-static
-libdbi implements a database-independent abstraction layer in C, similar to the
-DBI/DBD layer in Perl. Writing one generic set of code, programmers can
-leverage the power of multiple databases and multiple simultaneous database
-connections by using this framework.
-
-This package contains the static libraries.
-
 %package doc
 Summary: Docs for the %name library drivers
 Group: Development/C
@@ -169,8 +155,11 @@ This package contains the doc.
 sed -i "s|/lib\b|/%_lib|g" acinclude.m4
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %autoreconf
 %configure \
+    --disable-static \
     --with-mysql \
     --with-pgsql \
 %if_with sqlite2
@@ -185,7 +174,8 @@ sed -i "s|/lib\b|/%_lib|g" acinclude.m4
     --localstatedir=%_var \
     --sharedstatedir=%_var \
     %{subst_with firebird} \
-    %{subst_enable docs}
+    %{subst_enable docs} \
+    %nil
 
 %make_build
 
@@ -256,9 +246,6 @@ rm -f %buildroot%_libdir/dbd/*.la
 %doc AUTHORS ChangeLog INSTALL README TODO*
 %_includedir/dbi/*.h
 
-%files devel-static
-%_libdir/dbd/*.a
-
 %if_enabled docs
 %files doc
 %_docdir/*
@@ -266,6 +253,9 @@ rm -f %buildroot%_libdir/dbd/*.la
 %endif
 
 %changelog
+* Tue Aug 31 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.9.0-alt7
+- Disabled static libraries.
+
 * Fri Jan 24 2020 Vitaly Lipatov <lav@altlinux.ru> 1:0.9.0-alt6
 - build without sqlite2 support
 

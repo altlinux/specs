@@ -1,16 +1,19 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %def_disable docs
 %define develname libdbi-devel
 
 Name: libdbi
 Epoch: 1
 Version: 0.9.0
-Release: alt2
-
+Release: alt3
 Summary: Database Independent Abstraction Layer for C
 License: LGPL
 Group: System/Libraries
-
 Url: http://libdbi.sourceforge.net/
+
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Mon Feb 09 2009
@@ -39,19 +42,6 @@ connections by using this framework.
 
 This package contains the header files.
 
-%package -n %develname-static
-Summary: Statis library for the %name library
-Group: Development/C
-Requires: %develname = %EVR
-
-%description -n %develname-static
-libdbi implements a database-independent abstraction layer in C, similar to the
-DBI/DBD layer in Perl. Writing one generic set of code, programmers can
-leverage the power of multiple databases and multiple simultaneous database
-connections by using this framework.
-
-This package contains the static library.
-
 %prep
 %setup
 %if_enabled docs
@@ -60,8 +50,14 @@ touch doc/libdbi-versioning.sgml
 sed -i 's,-O20,%optflags_optimization,g' configure*
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %autoreconf
-%configure %{subst_enable docs}
+%configure \
+	%{subst_enable docs} \
+	--disable-static \
+	%nil
+
 %make_build
 
 %install
@@ -80,10 +76,10 @@ sed -i 's,-O20,%optflags_optimization,g' configure*
 %_libdir/*.so
 %_pkgconfigdir/dbi.pc
 
-%files -n %develname-static
-%_libdir/*.a
-
 %changelog
+* Tue Aug 31 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.9.0-alt3
+- Disabled static libraries.
+
 * Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 1:0.9.0-alt2
 - just set proper optimization level
 
