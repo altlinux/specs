@@ -15,8 +15,8 @@
 %endif
 
 Name: NetworkManager-applet-gtk
-Version: 1.22.0
-Release: alt2%git_hash
+Version: 1.24.0
+Release: alt1%git_hash
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Summary: Panel applet for use with NetworkManager
@@ -99,6 +99,9 @@ mkdir -p %buildroot/%_datadir/gnome-vpn-properties
 %dir %_datadir/gnome-vpn-properties
 
 %changelog
+* Tue Aug 31 2021 Mikhail Efremov <sem@altlinux.org> 1.24.0-alt1
+- Updated to 1.24.0.
+
 * Thu Jun 10 2021 Mikhail Efremov <sem@altlinux.org> 1.22.0-alt2
 - Remove 'disabled' IPv6 method with NM < 1.20.
 - Support of NMU_SEC_SAE is added to NM-1.18.10-alt3.

@@ -4,7 +4,7 @@
 %def_with gcr
 
 Name: libnma
-Version: 1.8.30
+Version: 1.8.32
 Release: alt1
 License: GPLv2+ and LGPLv2.1+
 Group: Graphical desktop/GNOME
@@ -112,6 +112,9 @@ This package contains development documentation for libnma-devel-doc.
 %doc %_datadir/gtk-doc/html/libnma
 
 %changelog
+* Tue Aug 31 2021 Mikhail Efremov <sem@altlinux.org> 1.8.32-alt1
+- Updated to 1.8.32.
+
 * Fri Jul 03 2020 Mikhail Efremov <sem@altlinux.org> 1.8.30-alt1
 - Updated to 1.8.30.
 
