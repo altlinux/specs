@@ -1,3 +1,6 @@
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %define sover 0.14
 
 %def_with devel
@@ -10,7 +13,7 @@ Name: hiredis
 Name: hiredis%sover
 %endif
 Version: 0.14.1
-Release: alt1
+Release: alt2
 Summary: The official C client for Redis
 Group: System/Libraries
 License: BSD-3-Clause
@@ -18,6 +21,8 @@ Url: https://github.com/redis/hiredis
 
 # https://github.com/redis/hiredis.git
 Source: hiredis-%version.tar
+
+Patch1: hiredis-alt-no-static-libraries.patch
 
 BuildRequires: gcc-c++ libevent-devel libev-devel glib2-devel
 
@@ -50,21 +55,15 @@ Conflicts: libhiredis0.10
 %description -n libhiredis-devel
 The hiredis-devel package contains the header files and
 libraries to develop applications using a Redis database.
-
-%package -n libhiredis-devel-static
-Summary: Static libraries for hiredis C development
-Group: Development/C
-Requires: libhiredis-devel = %EVR
-
-%description -n libhiredis-devel-static
-The hiredis-devel package contains static libraries
-to develop applications using a Redis database.
 %endif
 
 %prep
 %setup -n hiredis-%version
+%patch1 -p1
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %make_build \
 	OPTIMIZATION= \
 	DEBUG_FLAGS= \
@@ -109,12 +108,12 @@ cp hiredis-test %buildroot%_bindir/
 %_includedir/hiredis
 %_libdir/*.so
 %_libdir/pkgconfig/hiredis.pc
-
-%files -n libhiredis-devel-static
-%_libdir/*.a
 %endif
 
 %changelog
+* Tue Aug 31 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.14.1-alt2
+- Disabled static libraries.
+
 * Tue Oct 27 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.14.1-alt1
 - Updated to upstream version 0.14.1 (Fixes: CVE-2020-7105).
 
