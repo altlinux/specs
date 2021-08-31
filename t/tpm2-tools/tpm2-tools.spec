@@ -3,7 +3,7 @@
 
 Name: tpm2-tools
 Version: 5.1.1
-Release: alt1
+Release: alt2
 Summary: A bunch of TPM testing toolS build upon tpm2-tss
 Group: System/Configuration/Other
 
@@ -49,6 +49,9 @@ echo %version > VERSION
 %_man1dir/*
 
 %changelog
+* Tue Aug 31 2021 Alexey Shabalin <shaba@altlinux.org> 5.1.1-alt2
+- Up release for greater then in fedoraimport.
+
 * Sat Aug 28 2021 Alexey Shabalin <shaba@altlinux.org> 5.1.1-alt1
 - Initial build.
 
