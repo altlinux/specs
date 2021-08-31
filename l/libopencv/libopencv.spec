@@ -1,5 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
+# LTO causes errors, disable it
+%global optflags_lto %nil
+
 # TODO: remove later this fix for documentation
 %define _cmake__builddir BUILD
 
@@ -41,7 +44,7 @@
 Name: lib%bname
 Epoch: 1
 Version: 4.5.3
-Release: alt2
+Release: alt3
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -70,6 +73,7 @@ BuildRequires: libucil-devel libtbb-devel bzlib-devel
 BuildRequires: pkgconfig(glproto) pkgconfig(dri2proto) pkgconfig(xext)
 BuildRequires: pkgconfig(xdamage) pkgconfig(xxf86vm)
 BuildRequires: libGLU-devel libXau-devel libXdmcp-devel
+BuildRequires: python3-module-sphinx-devel python3-module-Pygments python3-module-sphinx-sphinx-build-symlink
 BuildRequires: texlive-latex-base
 BuildRequires: libprotobuf-devel protobuf-compiler libwebp-devel
 BuildRequires: libgflags-devel
@@ -89,7 +93,6 @@ BuildRequires: ceres-solver-devel
 %{?_with_python:
 BuildRequires: python-devel
 BuildRequires: libnumpy-devel
-BuildRequires: python-module-sphinx-devel python-module-Pygments
 }
 %{?_with_python3:
 BuildRequires(pre): rpm-build-python3
@@ -372,6 +375,9 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* %_cmake__builddir/downloads/xfea
 %_datadir/%Name/quality
 
 %changelog
+* Mon Aug 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.5.3-alt3
+- Disabled LTO.
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1:4.5.3-alt2
 - disable python2 subpackage, disable provides for python examples
 
