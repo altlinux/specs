@@ -29,8 +29,11 @@
 %define tests no
 %endif
 
-# There is no sources in debuginfo with LTO
+%ifarch %e2k
 %def_disable lto
+%else
+%def_enable lto
+%endif
 
 # NOTE: ONLY use sanitizers for debug purposes
 %def_disable sanitizers
@@ -55,7 +58,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.32.8
+Version: 1.32.10
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -159,6 +162,21 @@ services.
 
 This package contents NetworkManager daemon itself and other
 utilities.
+
+%package config-server
+Summary: NetworkManager config file for "server-like" defaults
+Group: System/Configuration/Networking
+BuildArch: noarch
+Requires: %_name = %version-%release
+
+%description config-server
+This adds a NetworkManager configuration file for "server-like" defaults.
+In particular, it stops NetworkManager from automatically running DHCP
+on unconfigured ethernet devices, and allows connections with static IP
+addresses to be brought up even on ethernet devices with no carrier.
+
+This package is intended to be installed by default for server
+deployments.
 
 %package adsl
 License: GPLv2+
@@ -438,6 +456,9 @@ cp -a examples/nm-conf.d/* %buildroot%_defaultdocdir/%name-%version/examples/con
 # https://bugzilla.gnome.org/show_bug.cgi?id=777523
 mv %buildroot%_defaultdocdir/%name-%version/examples/conf.d/31-mac-addr-change.conf %buildroot%nmlibdir/conf.d/
 
+# Install 00-server.conf
+install -Dm0644 contrib/fedora/rpm/00-server.conf %buildroot%nmlibdir/conf.d/00-server.conf
+
 %check
 make check
 
@@ -550,6 +571,9 @@ fi
 %exclude %_man7dir/nm-openvswitch.*
 %endif
 
+%files config-server
+%config %nmlibdir/conf.d/00-server.conf
+
 %files adsl
 %nmplugindir/libnm-device-plugin-adsl.so
 
@@ -620,6 +644,12 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Aug 31 2021 Mikhail Efremov <sem@altlinux.org> 1.32.10-alt1
+- Added config-server subpackage.
+- Disabled LTO on e2k.
+- Explicitly enabled LTO.
+- Updated to 1.32.10.
+
 * Fri Aug 13 2021 Mikhail Efremov <sem@altlinux.org> 1.32.8-alt1
 - Updated to 1.32.8.
 
