@@ -1,10 +1,10 @@
 Name: lxqt
-Version: 0.15
+Version: 0.17
 Release: alt1
 Summary: Meta package for install LxQt
 Group: Graphical desktop/Other
 License: GPL
-Url: https://lxqt.org
+Url: https://lxqt-project.org
 BuildArch: noarch
 
 %description
@@ -32,7 +32,7 @@ Requires: qterminal >= %version
 Requires: lxqt-policykit >= %version
 # system configuration tools
 Requires: lxqt-config >= %version
-Requires: obconf-qt >= %version
+Requires: obconf-qt
 # themes
 Requires: icon-theme-oxygen
 # system components
@@ -89,6 +89,9 @@ Requires: lxqt-sudo
 %files regular
 
 %changelog
+* Tue Aug 31 2021 Anton Midyukov <antohami@altlinux.org> 0.17-alt1
+- Update URL tag
+
 * Sun Apr 26 2020 Anton Midyukov <antohami@altlinux.org> 0.15-alt1
 - lxqt-regular: requires lxqt-sudo
 - lxqt-regular: requires lxqt-archiver instead file-roller
