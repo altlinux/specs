@@ -1,12 +1,12 @@
 %def_without static
 
 Name: pstoedit
-Version: 3.75
+Version: 3.76
 Release: alt1
 
 Summary: converts Postscript(TM) and PDF files to other vector graphic formats
 Summary(ru_RU.UTF-8): преобразует файлы Postscript(TM) и PDF в другие векторные форматы
-License: GPL
+License: GPLv2+
 Group: Graphics
 URL: http://www.pstoedit.net/pstoedit
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -165,6 +165,10 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %endif
 
 %changelog
+* Tue Aug 31 2021 Ilya Mashkin <oddity@altlinux.ru> 3.76-alt1
+- 3.76
+- Update License to GPLv2+
+
 * Tue Feb 02 2021 Ilya Mashkin <oddity@altlinux.ru> 3.75-alt1
 - 3.75
 
