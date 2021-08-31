@@ -1,7 +1,7 @@
 %define rname parley
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init no_appdata
 
@@ -10,7 +10,7 @@ Release: alt1
 Group: Education
 Summary: Vocabulary training application
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: GPL-2.0-or-later or GPL-3.0-only
 
 Requires: kde5-kdeedu-data
 
@@ -49,7 +49,7 @@ also known as flash cards.
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5bin/parley
 %_K5data/parley/
 %_K5xmlgui/parley/
@@ -63,6 +63,9 @@ also known as flash cards.
 %_K5data/knsrcfiles/*parley*.knsrc
 
 %changelog
+* Fri Aug 27 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Fri Jul 09 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

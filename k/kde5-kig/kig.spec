@@ -4,14 +4,14 @@
 %define add_python3_requires() %(echo -n "Requires: "; for p in %*; do echo -n "python3($p) "; done; echo)
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init no_appdata
 
 Group: Education
 Summary: Interactive Geometry
 Url: http://www.kde.org
-License: GPLv2+ or LGPLv2+
+License: GPL-2.0-or-later and LGPL-2.1-or-later
 
 %add_python3_requires traceback os math getopt xml.sax.saxutils
 
@@ -58,10 +58,10 @@ PY3_VER_WO_DOTS=`echo "%_python3_abi_version"| sed 's|\.||g'`
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5bin/kig
 %_K5bin/pykig.py
-%_K5plug/kigpart.so
+%_K5plug/kf5/parts/*kig*.so
 %_K5data/kig/
 %_datadir/katepart5/syntax/*-kig.xml
 %_K5icon/*/*/apps/kig.*
@@ -71,6 +71,9 @@ PY3_VER_WO_DOTS=`echo "%_python3_abi_version"| sed 's|\.||g'`
 %_K5srv/kig_part.desktop
 
 %changelog
+* Fri Aug 27 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Fri Jul 09 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

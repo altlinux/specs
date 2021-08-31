@@ -3,9 +3,11 @@
 %define marblewidget_sover 28
 %define libmarblewidget libmarblewidget-qt5%marblewidget_sover
 
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 Name: kde5-%rname
-Version: 21.04.3
-Release: alt2
+Version: 21.08.0
+Release: alt1
 %K5init no_appdata
 
 Group: Education
@@ -142,6 +144,9 @@ rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 %_K5lib/libmarblewidget-qt5.so.*
 
 %changelog
+* Fri Aug 27 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Thu Jul 15 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt2
 - fix package service files
 

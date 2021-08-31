@@ -10,14 +10,14 @@
 %define libcantor_config libcantor_config%cantor_config_sover
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init no_appdata
 
 Group: Education
 Summary: KDE Frontend to Mathematical Software
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: GPL-2.0-or-later or GPL-3.0-only
 
 Requires: kde5-kalgebra
 Requires: epstool
@@ -31,7 +31,7 @@ Patch3: cantor-20.12.3-alt-octave-backend-default-settings.patch
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ gtk-update-icon-cache kf5-attica-devel kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libqt5-xmlpatterns libstdc++-devel libxcbutil-keysyms pkg-config python-base python-devel python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils
 #BuildRequires: extra-cmake-modules kde5-analitza-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdelibs4support kf5-kdoctools-devel-static kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libcln-devel liblua5-devel libluajit-devel libspectre-devel python-module-google python3-dev qt5-svg-devel qt5-xmlpatterns-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules qt5-svg-devel qt5-xmlpatterns-devel
+BuildRequires: extra-cmake-modules qt5-svg-devel qt5-xmlpatterns-devel qt5-tools-devel qt5-webengine-devel
 BuildRequires: libcln-devel libspectre-devel libdiscount-devel libpoppler-qt5-devel
 %{?_enable_python2:BuildRequires: python-devel}
 %{?_enable_python3:BuildRequires: python3-devel}
@@ -104,12 +104,12 @@ mv %buildroot/%_K5xdgmime/cantor{,-kde5}.xml
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 
 %files
 %_K5bin/cantor*
 %_K5lib/cantor_pythonbackend.so
-%_K5plug/libcantorpart.so
+%_K5plug/kf5/parts/*cantor*.so
 %_K5plug/cantor/
 %_K5data/cantor/
 %_K5cfg/*.kcfg
@@ -134,6 +134,9 @@ mv %buildroot/%_K5xdgmime/cantor{,-kde5}.xml
 %_K5lib/libcantor_config.so.*
 
 %changelog
+* Fri Aug 27 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Fri Jul 09 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

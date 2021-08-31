@@ -1,14 +1,14 @@
 %define rname ktouch
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init no_appdata
 
 Group: Education
 Summary: A program for learning touch typing
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: GPL-2.0-or-later or LGPL-2.0-or-later
 
 Requires: kde5-kqtquickcharts
 
@@ -51,7 +51,7 @@ chmod 0755 %buildroot/%_K5xdgapp/org.kde.ktouch.desktop
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5bin/ktouch
 %_K5xdgapp/org.kde.ktouch.desktop
 %_K5icon/*/*/apps/ktouch.*
@@ -59,6 +59,9 @@ chmod 0755 %buildroot/%_K5xdgapp/org.kde.ktouch.desktop
 %_K5cfg/ktouch.kcfg
 
 %changelog
+* Fri Aug 27 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Fri Jul 09 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

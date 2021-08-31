@@ -1,14 +1,14 @@
 %define rname kturtle
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init no_appdata
 
 Group: Education
 Summary: An educational programming environment
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: GPL-2.0-only or GPL-2.0-or-later
 
 Source: %rname-%version.tar
 Patch1: alt-def-language.patch
@@ -42,7 +42,7 @@ and... programming.
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %config(noreplace) %_K5xdgconf/kturtle.knsrc
 %_K5bin/kturtle
 %_K5icon/*/*/apps/kturtle.*
@@ -52,6 +52,9 @@ and... programming.
 %_K5data/kturtle/
 
 %changelog
+* Fri Aug 27 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Fri Jul 09 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

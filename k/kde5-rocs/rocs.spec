@@ -4,14 +4,14 @@
 %define librocsgraphtheory librocsgraphtheory%rocsgraphtheory_sover
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init no_appdata
 
 Group: Education
 Summary: Graph Theory
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: GPL-2.0-or-later
 
 Source: %rname-%version.tar
 
@@ -70,7 +70,7 @@ KF5 library
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 #%_K5data/rocsgraphtheory/
 
 %files
@@ -92,6 +92,9 @@ KF5 library
 %_K5lib/librocsgraphtheory.so.*
 
 %changelog
+* Fri Aug 27 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Fri Jul 09 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 

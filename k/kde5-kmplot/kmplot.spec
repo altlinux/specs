@@ -1,14 +1,14 @@
 %define rname kmplot
 
 Name: kde5-%rname
-Version: 21.04.3
+Version: 21.08.0
 Release: alt1
 %K5init no_appdata
 
 Group: Education
 Summary: Mathematical Function Plotter
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: GPL-2.0-or-later
 
 Source: %rname-%version.tar
 
@@ -39,9 +39,9 @@ KmPlot is a program to plot graphs of functions, their integrals or derivatives.
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5bin/kmplot
-%_K5plug/kmplotpart.so
+%_K5plug/kf5/parts/*kmplot*.so
 %_K5xmlgui/kmplot/
 %_K5icon/*/*/apps/kmplot.*
 %_K5xdgapp/org.kde.kmplot.desktop
@@ -49,6 +49,9 @@ KmPlot is a program to plot graphs of functions, their integrals or derivatives.
 %_K5srv/kmplot_part.desktop
 
 %changelog
+* Fri Aug 27 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- new version
+
 * Fri Jul 09 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.3-alt1
 - new version
 
