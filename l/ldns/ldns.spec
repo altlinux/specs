@@ -6,7 +6,7 @@
 
 Name: ldns
 Version: 1.7.1
-Release: alt2.git.e99accb9
+Release: alt3.git.e99accb9
 License: BSD
 Url: http://www.nlnetlabs.nl/%name/
 Group: System/Libraries
@@ -48,16 +48,6 @@ lowlevel DNS/DNSSEC operations are supported. We also define a higher
 level API which allows a programmer to (for instance) create or sign
 packets.
 
-%package -n lib%name-devel-static
-Summary: Lowlevel DNS(SEC) static library with API
-Group: System/Libraries
-
-%description -n lib%name-devel-static
-libldns is a static library with the aim to simplify DNS programing in C. 
-All lowlevel DNS/DNSSEC operations are supported. We also define a higher
-level API which allows a programmer to (for instance) create or sign
-packets.
-
 %package -n lib%name-devel
 Summary: Development package that includes the ldns header files
 Group: Development/C
@@ -88,8 +78,16 @@ Python extensions for ldns
 
 %build
 %autoreconf
-%configure --disable-rpath --with-drill --with-examples \
-	--enable-rrtype-ninfo --enable-rrtype-rkey --enable-rrtype-cds --enable-rrtype-uri --enable-rrtype-ta \
+%configure \
+	--disable-rpath \
+	--disable-static \
+	--with-drill \
+	--with-examples \
+	--enable-rrtype-ninfo \
+	--enable-rrtype-rkey \
+	--enable-rrtype-cds \
+	--enable-rrtype-uri \
+	--enable-rrtype-ta \
 %if_with python3
 	--with-pyldns \
 	PYTHON=$(which python3) \
@@ -97,6 +95,7 @@ Python extensions for ldns
 %if_without dane_ta_usage
 	--disable-dane-ta-usage \
 %endif
+	%nil
 
 %make_build
 %make doc
@@ -114,7 +113,6 @@ rm -rf doc/.svn
 rm -rf doc/man
 # remove .la files
 rm -rf %buildroot%python3_sitelibdir/*.la
-rm -rf %buildroot%python3_sitelibdir/*.a
 
 install -pD -m644 packaging/libldns.pc %buildroot%_pkgconfigdir/libldns.pc
 install -pD -m644 libdns.vim %buildroot%_sysconfdir/vim/libldns
@@ -129,9 +127,6 @@ install -pD -m644 libdns.vim %buildroot%_sysconfdir/vim/libldns
 %files -n lib%name
 %_libdir/libldns*.so.*
 %doc README LICENSE
-
-%files -n lib%name-devel-static
-%_libdir/libldns.a
 
 %files -n lib%name-devel
 %_bindir/ldns-config
@@ -160,6 +155,9 @@ install -pD -m644 libdns.vim %buildroot%_sysconfdir/vim/libldns
 %endif
 
 %changelog
+* Tue Aug 31 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.1-alt3.git.e99accb9
+- Disabled static libraries.
+
 * Tue Aug 17 2021 Paul Wolneykien <manowar@altlinux.org> 1.7.1-alt2.git.e99accb9
 - Changelog update (Fixes: CVE-2017-1000231, CVE-2017-1000232).
 
