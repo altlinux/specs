@@ -5,10 +5,11 @@
 # since 5.44 the following tools marked as deprecated:
 # hciattach hciconfig hcitool hcidump rfcomm sdptool ciptool gatttool
 %def_enable deprecated
+%def_enable experimental
 
 Name: bluez
-Version: 5.58
-Release: alt2.1
+Version: 5.61
+Release: alt1.1
 
 Summary: Bluetooth utilities
 License: GPL-2.0-or-later
@@ -29,7 +30,7 @@ Conflicts: udev-extras < 169
 Requires(post,preun): /bin/systemctl
 
 BuildRequires: glib2-devel libudev-devel libdbus-devel libreadline-devel
-BuildRequires: systemd-devel gtk-doc
+BuildRequires: systemd-devel gtk-doc python3-module-docutils
 %{?_enable_obex:BuildRequires: libical-devel libicu-devel}
 %{?_enable_btpclient:BuildRequires: libell-devel >= 0.39}
 # for check
@@ -105,7 +106,8 @@ mkdir ell ||:
 	--enable-tools \
 	--enable-hid2hci \
 	--localstatedir=%_var \
-	%{subst_enable deprecated}
+	%{subst_enable deprecated} \
+	%{subst_enable experimental}
 %make_build
 
 %install
@@ -118,6 +120,7 @@ ln -s bluetooth.service %buildroot%_unitdir/bluetoothd.service
 mkdir -p %buildroot%_libdir/bluetooth/plugins %buildroot%_localstatedir/bluetooth
 # configdir
 mkdir -p %buildroot%_sysconfdir/bluetooth
+cp -a src/main.conf %buildroot%_sysconfdir/bluetooth/
 
 find %buildroot%_libdir -name \*.la -delete
 
@@ -143,6 +146,7 @@ fi
 %files
 %doc AUTHORS ChangeLog README
 %dir %_sysconfdir/bluetooth
+%config %_sysconfdir/bluetooth/main.conf
 %_initdir/bluetoothd
 %config %_sysconfdir/dbus-1/system.d/bluetooth.conf
 %_unitdir/*.service
@@ -199,6 +203,14 @@ fi
 %_datadir/zsh/site-functions/_bluetoothctl
 
 %changelog
+* Mon Aug 30 2021 L.A. Kostis <lakostis@altlinux.ru> 5.61-alt1.1
+- Enable experimental features.
+- Package main.conf for extra configuration.
+
+* Mon Aug 30 2021 L.A. Kostis <lakostis@altlinux.ru> 5.61-alt1
+- 5.61.
+- use python3-module-docutils to generate manpages.
+
 * Mon Aug 30 2021 L.A. Kostis <lakostis@altlinux.ru> 5.58-alt2.1
 - fix cflags (and enable debuginfo).
 
