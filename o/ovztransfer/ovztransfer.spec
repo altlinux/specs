@@ -1,6 +1,6 @@
 
 Name: ovztransfer
-Version: 1.1.1
+Version: 1.2.0
 Release: alt1
 
 Summary: OpenVZ 6 to 7 transfer tool
@@ -8,6 +8,8 @@ License: GPLv2
 Group: System/Configuration/Other
 Url: http://openvz.org/
 Vcs: https://src.openvz.org/scm/ovzl/ovztransfer.git
+
+Packager: Andrew A. Vasilyev <andy@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -40,6 +42,9 @@ install -pm 755 %name.sh %buildroot%_sbindir
 %_sbindir/*
 
 %changelog
+* Wed Sep 01 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Thu Jan 28 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.1.1-alt1
 - 1.1.1
 
