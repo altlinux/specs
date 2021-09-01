@@ -1,11 +1,11 @@
 %def_disable   static
 %def_disable   doc
-%def_disable   ruby
+%def_enable    ruby
 %def_enable    python
 
 Name: libcaca
 Version: 0.99
-Release: alt21
+Release: alt22
 Summary: Text mode graphics library
 Group: System/Libraries
 License: WTFPL
@@ -165,7 +165,7 @@ mv %buildroot%_datadir/doc/%name-dev %buildroot%_docdir/%name-%version
 
 %if_enabled ruby
 %files -n ruby-caca
-%ruby__sitelibdir/caca.rb
+%ruby_sitelibdir/caca.rb
 %ruby_sitearchdir/caca.*
 %endif
 
@@ -176,6 +176,10 @@ mv %buildroot%_datadir/doc/%name-dev %buildroot%_docdir/%name-%version
 %endif
 
 %changelog
+* Fri Aug 27 2021 Pavel Skrylev <majioa@altlinux.org> 0.99-alt22
+- Reenabled packaging of ruby site module.
+- Fixed ruby sitelibdir variable name.
+
 * Thu Aug 26 2021 Dmitry V. Levin <ldv@altlinux.org> 0.99-alt21
 - NMU.
 - v0.99.beta19-60-g813baea -> v0.99.beta19-62-ge4968ba (fixes: CVE-2021-3410).
