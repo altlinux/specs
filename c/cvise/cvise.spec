@@ -1,6 +1,6 @@
 Name: cvise
 Version: 2.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: Super-parallel Python port of the C-Reduce
 
@@ -17,20 +17,25 @@ BuildRequires: astyle
 BuildRequires: clang-devel
 # https://bugzilla.altlinux.org/show_bug.cgi?id=39734
 
+%ifarch %e2k
+BuildRequires: llvm-devel-static clang-devel-static
+%else
 # rpm-build-info gives _distro_version
 %if %_vendor == "alt" && %_distro_version == "Sisyphus"
 BuildRequires: clang11.0-tools clangd11.0
 %endif
 # FIXME
+BuildRequires: llvm-devel >= 10
+BuildRequires: llvm-devel-static >= 10
 BuildRequires: clang-devel-static >= 10
+%endif
+
 BuildRequires: cmake ctest
 BuildRequires: flex
 BuildRequires: gcc-c++
 BuildRequires: indent
-BuildRequires: llvm-devel >= 10
-# FIXME
-BuildRequires: llvm-devel-static >= 10
 BuildRequires: libncurses-devel
+BuildRequires: zlib-devel
 #BuildRequires: ninja
 
 BuildRequires: python3-module-pebble
@@ -99,6 +104,10 @@ rm -rfv %buildroot%_datadir/cvise/tests/
 %_libexecdir/cvise/topformflat
 
 %changelog
+* Wed Sep 01 2021 Michael Shigorin <mike@altlinux.org> 2.3.0-alt1.1
+- build on e2k too (llvm9 for now)
+- add missing BR: zlib-devel
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
 - new version 2.3.0 (with rpmrb script)
 
