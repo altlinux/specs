@@ -4,7 +4,7 @@
 
 Name: hub
 Version: 2.14.2
-Release: alt1
+Release: alt2
 
 Summary: A command-line wrapper for git with github shortcuts
 
@@ -22,7 +22,7 @@ ExclusiveArch: %go_arches
 
 BuildRequires: golang >= 1.7
 # for man and help
-BuildRequires: ronn
+#BuildRequires: ronn
 
 BuildRequires: /usr/bin/groff
 
@@ -72,7 +72,7 @@ features and commands that make working with GitHub easier.
 make
 
 # use system ronn, skip build from Internet
-ln -s %_bindir/ronn bin/ronn
+#ln -s %_bindir/ronn bin/ronn
 
 # col needs UTF-8 locale for UTF-8 input
 # https://github.com/karelzak/util-linux/issues/1198
@@ -124,6 +124,9 @@ find . -maxdepth 2 -name '*.go' '!' -name '*_test.go' | \
 /usr/share/vim/vimfiles/syntax/pullrequest.vim
 
 %changelog
+* Wed Sep 01 2021 Vitaly Lipatov <lav@altlinux.ru> 2.14.2-alt2
+- drop unused BR: ronn
+
 * Mon Nov 23 2020 Vitaly Lipatov <lav@altlinux.ru> 2.14.2-alt1
 - new version 2.14.2 (with rpmrb script)
 
