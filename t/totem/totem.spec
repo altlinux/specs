@@ -1,4 +1,5 @@
 %def_disable snapshot
+%define optflags_lto %nil
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 3.38
@@ -37,7 +38,7 @@
 
 Name: totem
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Movie player for GNOME 3
 Group: Video
@@ -70,13 +71,10 @@ Requires: gst-libav
 Requires: iso-codes
 Requires: grilo-plugins >= %grilo_plugins_ver
 
-# use python3
-AutoReqProv: nopython
-%define __python %nil
 %add_python3_compile_include %_libdir/%name/plugins
 
-BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
-BuildRequires: gcc-c++ gtk-doc perl-podlators
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
+BuildRequires: meson gcc-c++ gtk-doc perl-podlators
 BuildRequires: desktop-file-utils db2latex-xsl yelp-tools
 BuildRequires: libappstream-glib-devel
 %{?_enable_nvtv:BuildRequires: libnvtv-devel >= 0.4.5}
@@ -358,6 +356,9 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Wed Sep 01 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1.1
+- disabled LTO
+
 * Wed Jun 16 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
 - 3.38.1
 
