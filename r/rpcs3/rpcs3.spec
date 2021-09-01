@@ -1,20 +1,19 @@
 %define clang_version 12
 
-%define git_ver 12433
-%define git_commit 020fdcc781a9d279ce654eb8725b7f424c5b4b99
+%define git_ver 12699
+%define git_commit 9c0c8f2bc7a09aa09825992964e8a916b25d888b
 
-%define glslang_version 11.4.0
+%define glslang_version 11.5.0
 %define asmjit_commit 723f58581afc0f4cb16ba13396ff77e425896847
 %define hidapi_commit 01f601a1509bf9c67819fbf521df39644bab52d5
 %define yaml_cpp_commit 6a211f0bc71920beef749e6c35d7d1bcc2447715
 %define llvm_commit 5836324d6443a62ed09b84c125029e98324978c3
-%define faudio_version 21.04
 %define spirv_headers_version 1.5.3.reservations1
 %define spirv_tools_version 2020.4
 
 Name: rpcs3
-Version: 0.0.17
-Release: alt4
+Version: 0.0.18
+Release: alt1
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -37,12 +36,10 @@ Source3: hidapi-%hidapi_commit.tar
 Source4: yaml-cpp-%yaml_cpp_commit.tar
 # https://github.com/RPCS3/llvm-mirror/archive/%llvm_commit/llvm-mirror-%llvm_commit.tar.gz
 Source5: llvm-mirror-%llvm_commit.tar
-# https://github.com/FNA-XNA/FAudio/archive/%faudio_version/FAudio-%faudio_version.tar.gz
-Source6: FAudio-%faudio_version.tar
 # https://github.com/KhronosGroup/SPIRV-Headers/archive/%spirv_headers_version/SPIRV-Headers-%spirv_headers_version.tar.gz
-Source7: SPIRV-Headers-%spirv_headers_version.tar
+Source6: SPIRV-Headers-%spirv_headers_version.tar
 # https://github.com/KhronosGroup/SPIRV-Tools/archive/v%spirv_tools_version/SPIRV-Tools-%spirv_tools_version.tar.gz
-Source8: SPIRV-Tools-%spirv_tools_version.tar
+Source7: SPIRV-Tools-%spirv_tools_version.tar
 
 Patch0: %name-alt-git.patch
 
@@ -85,16 +82,15 @@ BuildPreReq: python3-module-Pygments
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7
 
 %patch0 -p1
 
 %__mv -Tf ../glslang-%glslang_version 3rdparty/glslang/glslang
 %__mv -Tf ../asmjit-%asmjit_commit 3rdparty/asmjit/asmjit
 %__mv -Tf ../hidapi-%hidapi_commit 3rdparty/hidapi/hidapi
-%__mv -Tf ../yaml-cpp-%yaml_cpp_commit 3rdparty/yaml-cpp
+%__mv -Tf ../yaml-cpp-%yaml_cpp_commit 3rdparty/yaml-cpp/yaml-cpp
 %__mv -Tf ../llvm-mirror-%llvm_commit llvm
-%__mv -Tf ../FAudio-%faudio_version 3rdparty/FAudio
 %__mv -Tf ../SPIRV-Headers-%spirv_headers_version 3rdparty/SPIRV/SPIRV-Headers
 %__mv -Tf ../SPIRV-Tools-%spirv_tools_version 3rdparty/SPIRV/SPIRV-Tools
 
@@ -134,6 +130,7 @@ export RANLIB="llvm-ranlib-%clang_version"
 	-DUSE_SYSTEM_PUGIXML:BOOL=TRUE \
 	-DUSE_SYSTEM_XXHASH:BOOL=TRUE \
 	-DUSE_SYSTEM_WOLFSSL:BOOL=TRUE \
+	-DUSE_SYSTEM_FAUDIO:BOOL=TRUE \
 	-DLLVM_USE_LINKER:STRING="$LINKER" \
 	-DPython3_EXECUTABLE="%__python3" \
 	-Wno-dev
@@ -153,6 +150,9 @@ export RANLIB="llvm-ranlib-%clang_version"
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Wed Sep 01 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.18-alt1
+- Version 0.0.18
+
 * Wed Aug 25 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.17-alt4
 - Disable LTO
 
