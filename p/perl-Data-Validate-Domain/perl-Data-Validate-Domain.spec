@@ -1,12 +1,13 @@
+%define _unpackaged_files_terminate_build 1
 %define bname Data-Validate-Domain
 Name: perl-%bname
-Version: 0.14
+Version: 0.15
 Release: alt1
 Summary: Domain validation methods Perl module
 Group: Development/Perl
 License: Perl (GPL or Artistic)
 URL: http://search.cpan.org/dist/%bname
-Source: http://search.cpan.org/CPAN/authors/id/N/NE/NEELY/%bname-%version.tar
+Source0: http://www.cpan.org/authors/id/D/DR/DROLSKY/Data-Validate-Domain-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires: rpm-build-perl perl-devel perl(Net/Domain/TLD.pm) perl(Test2/Plugin/UTF8.pm)
@@ -17,7 +18,7 @@ untainting easier and more readable.
 
 
 %prep
-%setup -q -n %bname-%version
+%setup -q -n Data-Validate-Domain-%{version}
 
 
 %build
@@ -29,11 +30,14 @@ untainting easier and more readable.
 
 
 %files
-%doc Changes README*
+%doc Changes README* CONTRIBUTING.md
 %perl_vendor_privlib/*
 
 
 %changelog
+* Wed Sep 01 2021 Igor Vlasenko <viy@altlinux.org> 0.15-alt1
+- automated CPAN update
+
 * Thu Sep 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - automated CPAN update
 
