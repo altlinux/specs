@@ -1,5 +1,5 @@
 Name: livecd-save-nfs
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: tell NetworkManager not touch already UP ifaces
@@ -31,6 +31,11 @@ install -pD -m0644 livecd-save-nfs/livecd-save-nfs.service %buildroot%_unitdir/l
 %_unitdir/livecd-save-nfs.service
 
 %changelog
+* Wed Sep 01 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.4.2-alt1
+- Ignore interfaces which are down or have no carrier (closes: #40800)
+- Immediately fork dhcpcd into the background (related: #40800)
+- Act only when booted via NFS or CIFS (related: #40800)
+
 * Tue Jul 16 2013 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt1
 - Fix regexp for interface name.
 
