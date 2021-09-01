@@ -1,6 +1,6 @@
 Name: valgrind
 Version: 3.17.0
-Release: alt2
+Release: alt3
 
 Summary: Valgrind, an open-source memory debugger for GNU/Linux
 License: GPLv2+
@@ -8,18 +8,25 @@ Group: Development/Other
 URL: http://www.valgrind.org/
 Source: https://sourceware.org/pub/valgrind/%name-%version.tar
 
-Patch0: valgrind-alt-arm.patch
-Patch1: valgrind-alt-loongson-is-mips.patch
-Patch2: valgrind-alt-vki_siginfo.patch
-Patch3: valgrind-rh-cachegrind-improvements.patch
-Patch4: valgrind-rh-helgrind-race-supp.patch
-Patch5: valgrind-rh-ldso-supp.patch
-Patch6: valgrind-rh-alt-some-stack-protector.patch
-Patch7: valgrind-rh-some-Wl-z-now.patch
-Patch8: valgrind-rh-ppc64-isa-3.1.patch
-Patch9: valgrind-rh-ppc64-isa-3.1-tests.patch
-Patch10: valgrind-rh-debuginfod.patch
-Patch11: valgrind-rh-clone-parent-res.patch
+Patch1: gdbserver_tests-update-filters-for-newer-glibc-gdb.patch
+Patch2: helgrind-and-drd-suppression-libc-and-libpthread.patch
+Patch3: valgrind-alt-arm.patch
+Patch4: valgrind-alt-loongson-is-mips.patch
+Patch5: valgrind-alt-vki_siginfo.patch
+Patch6: valgrind-rh-cachegrind-improvements.patch
+Patch7: valgrind-rh-ldso-supp.patch
+Patch8: valgrind-rh-alt-some-stack-protector.patch
+Patch9: valgrind-rh-some-Wl-z-now.patch
+Patch10: valgrind-rh-ppc64-isa-3.1.patch
+Patch11: valgrind-rh-ppc64-isa-3.1-tests.patch
+Patch12: valgrind-rh-debuginfod.patch
+Patch13: valgrind-rh-clone-parent-res.patch
+Patch14: valgrind-rh-clone3.patch
+Patch15: valgrind-rh-_start.patch
+Patch16: valgrind-rh-ppc64-statfs64.patch
+Patch17: valgrind-rh-vgdb-queued-signals.patch
+Patch18: valgrind-rh-ppc64-test-isa-3-1.patch
+Patch19: valgrind-rh-ppc64-pstxvp.patch
 
 # Apparently, nobody cares whether valgrind works on arm or not.
 %ifarch %arm
@@ -76,17 +83,21 @@ needed to compile Valgrind tools separately from the Valgrind core.
 %autopatch -p1
 
 %build
-%ifarch %arm
-# On arm valgrind explicitly sets -marm -mcpu=cortex-a8.
-%remove_optflags -mthumb -march=armv7-a
-%endif
-autoreconf -vi
-
 # Filter out some flags that cause lots of valgrind test failures.
 # Also filter away -O2, valgrind adds it wherever suitable, but
 # not for tests which should be -O0, as they aren't meant to be
 # compiled with -O2 unless explicitely requested.
 %define optflags_optimization %nil
+
+# LTO triggers undefined symbols, and configure --enable-lto doesn't help.
+%define optflags_lto %nil
+
+%ifarch %arm
+# On arm valgrind explicitly sets -marm -mcpu=cortex-a8.
+%remove_optflags -mthumb -march=armv7-a
+%endif
+
+autoreconf -vi
 
 # Use gdb-light as gdb.
 export ac_cv_path_GDB=%_bindir/gdb-light
@@ -150,6 +161,9 @@ echo "===============END TESTING==============="
 
 
 %changelog
+* Wed Sep 01 2021 Dmitry V. Levin <ldv@altlinux.org> 3.17.0-alt3
+- Synced with valgrind-3.17.0-12 from Fedora.
+
 * Mon Jul 19 2021 Dmitry V. Levin <ldv@altlinux.org> 3.17.0-alt2
 - Disabled %%check on arm (closes: #40446).
 
