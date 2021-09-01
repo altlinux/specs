@@ -1,5 +1,5 @@
 Name: jpackage-generic-compat
-Version: 0.38
+Version: 0.39
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
@@ -9,18 +9,12 @@ Url: http://www.sisyphus.ru/packages/viy/srpms
 
 BuildArch: noarch
 
-# tested && dropped
-#Requires: docbook-style-xsl
-# should be detected by logoved or by peering in SOURCEDIR
-# Requires: unzip
 %define jpackage_common_requires \
 Requires(pre): rpm-build-java \
 Requires: /proc \
 Requires: java-stub-javadoc
 
-# hack til migration on 1.8-compat
-Requires: java-devel = 0:1.8.0
-#Requires: java-devel java-headless java
+Requires: java-devel java-headless java
 #Requires: java-javadoc
 %jpackage_common_requires
 
@@ -85,6 +79,9 @@ install -d $RPM_BUILD_ROOT%_datadir
 %files -n jpackage-11-compat
 
 %changelog
+* Wed Sep 01 2021 Igor Vlasenko <viy@altlinux.org> 0.39-alt1
+- restored jpackage-generic-compat dependency on latest jvm
+
 * Thu Aug 26 2021 Igor Vlasenko <viy@altlinux.org> 0.38-alt1
 - jpackage-generic-compat no more common
 
