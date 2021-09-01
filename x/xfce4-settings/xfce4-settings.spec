@@ -1,6 +1,6 @@
 Name: xfce4-settings
 Version: 4.16.2
-Release: alt1
+Release: alt2
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
 
@@ -88,6 +88,9 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %_iconsdir/*/*/*/*.*
 
 %changelog
+* Wed Sep 01 2021 Mikhail Efremov <sem@altlinux.org> 4.16.2-alt2
+- Added chromium-gost.desktop file (thx mcpain@) (closes: #40502).
+
 * Tue Jun 08 2021 Mikhail Efremov <sem@altlinux.org> 4.16.2-alt1
 - Updated to 4.16.2.
 
