@@ -1,5 +1,5 @@
 %define branch 0.12
-%define svn svn10242
+%define svn svn10262
 
 %define rel alt1
 
@@ -918,6 +918,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Tue Aug 31 2021 Motsyo Gennadi <drool@altlinux.ru> 1:0.12.14-alt1.svn10262
+- 0.12.14 svn10262 (rebuild with new libsidplayfp 2.2.2)
+
 * Sun Aug 22 2021 Motsyo Gennadi <drool@altlinux.ru> 1:0.12.14-alt1.svn10242
 - build withoud wildmidi for Sisyphus
 

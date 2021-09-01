@@ -1,6 +1,8 @@
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 Name:		libsidplayfp
-Version:	1.8.7
-Release:	alt1
+Version:	2.2.2
+Release:	alt2
 Summary:	SID chip music module playing library
 Group:		System/Libraries
 License:	GPLv2+
@@ -54,7 +56,7 @@ make DESTDIR=%buildroot install
 
 %files
 %doc AUTHORS COPYING NEWS README TODO
-%_libdir/libsidplayfp.so.4*
+%_libdir/libsidplayfp.so.6*
 %_libdir/libstilview.so.0*
 
 %files devel
@@ -71,6 +73,12 @@ make DESTDIR=%buildroot install
 %doc docs/html
 
 %changelog
+* Mon Aug 30 2021 Motsyo Gennadi <drool@altlinux.ru> 2.2.2-alt2
+- fix LTO
+
+* Sun Aug 29 2021 Motsyo Gennadi <drool@altlinux.ru> 2.2.2-alt1
+- 2.2.2
+
 * Tue Sep 12 2017 Motsyo Gennadi <drool@altlinux.ru> 1.8.7-alt1
 - 1.8.7 (#33884)
 
