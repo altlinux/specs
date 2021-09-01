@@ -1,10 +1,12 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %define libsepol_ver 3.2
 
 Name: setools
 Version: 4.4.0
-Release: alt1
+Release: alt2
 License: %gpl2plus
 URL: https://github.com/SELinuxProject/setools/wiki
 Summary: Policy analysis tools for SELinux
@@ -119,6 +121,9 @@ egrep 'apol\.1' %name.lang > %name-gui.lang
 %python3_sitelibdir/setoolsgui
 
 %changelog
+* Wed Sep 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.0-alt2
+- Rebuilt with LTO.
+
 * Mon Mar 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.0-alt1
 - Updated to upstream version 4.4.0.
 

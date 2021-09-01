@@ -1,4 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%global optflags_lto %optflags_lto -ffat-lto-objects
 
 %define _libexecdir %prefix/libexec
 
@@ -7,7 +11,7 @@
 Name: libsemanage
 Epoch: 1
 Version: 3.2
-Release: alt1
+Release: alt2
 Summary: Library, which provides an interface for SELinux management
 Group: System/Libraries
 License: LGPLv2.1+
@@ -81,6 +85,8 @@ binary policies.
 %patch0 -p1
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=%_lib LIBEXECDIR=%_libexecdir all
 %make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=%_lib LIBEXECDIR=%_libexecdir pywrap PYTHON=python3
 
@@ -115,6 +121,9 @@ binary policies.
 %python3_sitelibdir/*
 
 %changelog
+* Wed Sep 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.2-alt2
+- Fixed build with LTO.
+
 * Mon Mar 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.2-alt1
 - Updated to upstream version 3.2.
 

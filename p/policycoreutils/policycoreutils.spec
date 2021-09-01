@@ -1,4 +1,5 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 %define _libexecdir %prefix/libexec
 
@@ -9,7 +10,7 @@ Summary: SELinux policy core utilities
 Name: policycoreutils
 Epoch:   1
 Version: 3.2
-Release: alt3
+Release: alt4
 License: GPLv2
 Group: System/Base
 Url: https://github.com/SELinuxProject/selinux
@@ -428,6 +429,9 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 %python3_sitelibdir/sepolicy/sepolicy.glade
 
 %changelog
+* Wed Sep 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.2-alt4
+- Rebuilt with LTO.
+
 * Wed Jul 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.2-alt3
 - Updated dependencies.
 

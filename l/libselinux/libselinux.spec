@@ -1,9 +1,13 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: libselinux
 Epoch: 1
 Version: 3.2
-Release: alt1
+Release: alt2
 Summary: SELinux library
 License: Public Domain
 Group: System/Libraries
@@ -64,6 +68,8 @@ This package contains SELinux python 3.x bindings.
 %patch0 -p1
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %make_build CFLAGS="%optflags $(pkg-config libpcre --cflags)" LIBDIR=%_libdir all
 %make_build CFLAGS="%optflags" LIBDIR=%_libdir PYTHON=%_bindir/python3 pywrap
 
@@ -113,6 +119,9 @@ fi
 %python3_sitelibdir/*
 
 %changelog
+* Wed Sep 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.2-alt2
+- Fixed build with LTO.
+
 * Mon Mar 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.2-alt1
 - Updated to upstream version 3.2.
 
