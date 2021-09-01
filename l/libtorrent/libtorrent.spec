@@ -1,4 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+# LTO causes errors, disable it
+%global optflags_lto %nil
 
 %define _optlevel s
 %define soname 21
@@ -6,8 +11,7 @@
 Name: libtorrent
 Epoch: 3
 Version: 0.13.8
-Release: alt1
-
+Release: alt2
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 Group: System/Libraries
 License: GPLv2+
@@ -109,6 +113,9 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %_pkgconfigdir/*
 
 %changelog
+* Wed Sep 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3:0.13.8-alt2
+- Disabled LTO.
+
 * Thu Jun 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3:0.13.8-alt1
 - Updated to upstream version 0.13.8.
 
