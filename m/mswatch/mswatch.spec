@@ -1,7 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: mswatch
 Version: 1.2.0
-Release: alt1.svn20120312.1
-
+Release: alt2.svn20120312
 Summary: Watch mailstores for changes and initiate mailbox syncs
 License: GPLv2+
 Group: Networking/Mail
@@ -11,7 +14,7 @@ Source: %name-%version.tar
 
 Patch1: %name-%version-debian-gcc6.patch
 
-BuildPreReq: flex gcc-c++ glib2-devel
+BuildRequires: flex gcc-c++ glib2-devel
 
 %description
 mswatch is a command line unix program that keeps two mailboxes
@@ -30,22 +33,32 @@ is planned.
 %prep
 %setup
 %patch1 -p1
-%autoreconf
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
+%autoreconf
 %configure \
-	--enable-static
+	--disable-static \
+	%nil
+
 %make_build
 
 %install
 %makeinstall
 
+# libraries are unused, remove them
+rm -f %buildroot%_libdir/*.so*
+
 %files
+%doc AUTHORS ChangeLog INTERFACES NEWS README THANKS TODO generalized mswatchrc.sample
 %_bindir/*
 %_man1dir/*
-%doc AUTHORS ChangeLog INTERFACES NEWS README THANKS TODO generalized mswatchrc.sample
 
 %changelog
+* Wed Sep 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt2.svn20120312
+- Fixed build with LTO.
+
 * Fri Sep 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt1.svn20120312.1
 - Fixed build with gcc-6.
 
