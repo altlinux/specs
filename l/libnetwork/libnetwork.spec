@@ -4,7 +4,7 @@
 
 %global provider_prefix %{provider}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          026aabaa659832804b01754aaadd2c0f420c68b6
+%global commit          64b7a4574d1426139437d20e81c0b6d391130ec8
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -15,8 +15,8 @@
 %brp_strip_none %_bindir/*
 
 Name:           libnetwork
-Version:        19.03.13
-Release:        alt2.git%shortcommit
+Version:        20.10.8
+Release:        alt1.git%shortcommit
 Summary:        Networking for containers
 Group:          Development/Other
 License:        Apache-2.0
@@ -64,6 +64,9 @@ install -p -m 755 bin/docker-proxy %buildroot/%_bindir
 %_bindir/*
 
 %changelog
+* Wed Sep 1 2021 Vladimir Didenko <cow@altlinux.org> 20.10.8-alt1.git64b7a45
+- Update to the latest master branch (fixes: #40835)
+
 * Sat Feb 20 2021 Vladimir Didenko <cow@altlinux.org> 19.03.13-alt2.git026aaba
 - Fix build with golang 1.16
 
