@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.11
+%define ver_major 1.12
 %def_disable docs
 
 %ifnarch %valgrind_arches
@@ -13,7 +13,7 @@
 
 Name: libwacom
 Version: %ver_major
-Release: alt1.1
+Release: alt1
 
 Summary: A Wacom tablets library
 Group: System/Libraries
@@ -123,6 +123,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Sep 01 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12-alt1
+- 1.12
+
 * Fri Aug 27 2021 Yuri N. Sedunov <aris@altlinux.org> 1.11-alt1.1
 - rebuild with -Db_lto=true
 
