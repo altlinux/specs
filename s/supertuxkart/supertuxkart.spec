@@ -1,6 +1,6 @@
 Name: supertuxkart
-Version: 1.2
-Release: alt3.1
+Version: 1.3
+Release: alt0.rc1
 
 License: GPL-2.0-or-later and GPL-3.0-or-later and CC-BY-SA-3.0
 Url: http://supertuxkart.sourceforge.net
@@ -29,13 +29,20 @@ SuperTuxCart is a kart racing game
 
 %prep
 %setup -n %name-%version
-%patch -p1
+# %%patch -p1
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|' data/po/update_po_authors.py
 
 %build
-%cmake -GNinja -DCMAKE_BUILD_TYPE=Debug -DUSE_SYSTEM_ANGELSCRIPT=OFF -DBUILD_RECORDER=OFF -DCHECK_ASSETS=OFF
-%cmake_build
+%cmake \
+    -GNinja \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DUSE_SYSTEM_ANGELSCRIPT=OFF \
+    -DBUILD_RECORDER=OFF \
+    -DCHECK_ASSETS=OFF \
+#
+cmake --build %_cmake__builddir -j%__nprocs
+#%%cmake_build
 
 %install
 #install -d %%buildroot%%_niconsdir
@@ -48,6 +55,9 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|' data/po/update_po_authors.p
 find %buildroot -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o -name '.bzr' -o -name '_MTN' \) -print -exec rm -rf {} \; ||:
 # the find below is useful in case those CVS/.svn/.git/.hg/.bzr/_MTN directory is added as %%doc
 find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o -name '.bzr' -o -name '_MTN' \) -print -exec rm -rf {} \; ||:
+# built in separate libwiiuse-devel
+rm -f %buildroot%_libdir/libwiiuse.a
+rm -f %buildroot%_includedir/wiiuse.h
 
 %files
 #doc README.md CHANGELOG.md NETWORKING.md
@@ -56,7 +66,7 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %dir %_datadir/%name
 %_datadir/%name/*
 %_datadir/metainfo/*
-%_pixmapsdir/*
+# %%_pixmapsdir/*
 %_iconsdir/hicolor/16x16/apps/*
 %_iconsdir/hicolor/32x32/apps/*
 %_iconsdir/hicolor/48x48/apps/*
@@ -65,11 +75,11 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %_iconsdir/hicolor/256x256/apps/*
 %_iconsdir/hicolor/512x512/apps/*
 %_iconsdir/hicolor/1024x1024/apps/*
-# built in separate libwiiuse-devel
-%exclude %_includedir/wiiuse.h
-%exclude %_libdir/libwiiuse.a
 
 %changelog
+* Wed Sep 01 2021 Leontiy Volodin <lvol@altlinux.org> 1.3-alt0.rc1
+- Update to release candidate 1 (1.3).
+
 * Sun May 09 2021 Arseny Maslennikov <arseny@altlinux.org> 1.2-alt3.1
 - NMU: spec: adapted to new cmake macros.
 
