@@ -9,7 +9,7 @@
 %def_without ffmpeg_static
 
 Name: telegram-desktop
-Version: 2.9.2
+Version: 3.0.0
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -50,7 +50,7 @@ BuildRequires: cmake >= 3.16
 BuildRequires: extra-cmake-modules
 
 BuildRequires: qt5-base-devel >= %tg_qt5_version
-BuildRequires: libqt5-core libqt5-network libqt5-gui qt5-imageformats qt5-wayland-devel
+BuildRequires: libqt5-core libqt5-network libqt5-gui qt5-imageformats qt5-wayland-devel qt5-svg-devel
 BuildRequires: libwebkit2gtk-devel
 # needs for smiles and emojicons
 Requires: qt5-imageformats
@@ -238,6 +238,12 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Wed Sep 01 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0.0-alt1
+- new version 3.0.0 (with rpmrb script)
+
+* Tue Aug 24 2021 Vitaly Lipatov <lav@altlinux.ru> 2.9.11-alt1
+- new version 2.9.11 (with rpmrb script)
+
 * Wed Aug 11 2021 Vitaly Lipatov <lav@altlinux.ru> 2.9.2-alt1
 - new version 2.9.2 (with rpmrb script)
 
