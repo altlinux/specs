@@ -1,15 +1,20 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: libspf2
 Version: 1.2.10
-Release: alt3
-
+Release: alt4
 Summary: Implementation of the SPF specification
 License: LGPLv2.1+
 Group: System/Libraries
-
 URL: http://www.libspf2.org/
-Source0: http://libspf2.org/spf/libspf2-%version.tar.gz
+
+# http://libspf2.org/spf/libspf2-%version.tar.gz
+Source0: %name-%version.tar
 
 Patch1: libspf2-alt-newgcc.patch
+Patch2: libspf2-alt-disable-static-binaries.patch
 
 # Automatically added by buildreq on Mon Nov 03 2008
 BuildRequires: gcc-c++
@@ -21,7 +26,7 @@ http://tools.ietf.org/html/rfc7208
 %package tools
 Summary: Tools distributed with libspf2
 Group: Networking/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tools
 Tools distributed with libspf2; at the time of writing: spf_example,
@@ -30,7 +35,7 @@ spf_example_2mx, spfd, spfquery and spftest.
 %package devel
 Summary: Development files for libspf2 library
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Development files for libspf2 library.
@@ -38,8 +43,11 @@ Development files for libspf2 library.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p2
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 # The configure script checks for the existence of __ns_get16 and uses the
 # system-supplied version if found, otherwise one from src/libreplace.
 # However, this function is marked GLIBC_PRIVATE in recent versions of glibc
@@ -50,7 +58,11 @@ cat > config.cache << EOF
 ac_cv_func___ns_get16=no
 EOF
 
-%configure --cache-file=config.cache
+%configure \
+	--cache-file=config.cache \
+	--disable-static \
+	%nil
+
 # fix rpath libtool issues
 subst 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
@@ -60,19 +72,20 @@ subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %makeinstall_std
 
 %files
+%doc LICENSES
 %_libdir/lib*.so.*
 
 %files tools
 %_bindir/*
-%exclude %_bindir/*_static
 
 %files devel
-%doc LICENSES
 %_includedir/*
 %_libdir/*.so
-%exclude %_libdir/*.a
 
 %changelog
+* Wed Sep 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.10-alt4
+- Fixed build with LTO.
+
 * Mon Jun 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.10-alt3
 - Fix build with gcc-6
 
