@@ -7,11 +7,11 @@
 %define        ridir %_datadir/ri
 %define        vendordir %libdir/vendor_%name
 %define        lname lib%name
-%define        _version 2.7.3
+%define        _version 2.7.4
 
 Name:          ruby
 Version:       %_version
-Release:       alt1.3
+Release:       alt1
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -39,9 +39,11 @@ BuildRequires: valgrind-devel
 %endif
 BuildRequires: gcc-c++
 %{?_with_bootstrap:BuildRequires: ruby-miniruby-src = %EVR}
+BuildRequires: gem(rake) >= 13.0 gem(rake) < 14
+BuildRequires: gem(rspec) >= 3.8 gem(rspec) < 4
 
-%gem_replace_version rake ~> 13.0
-%gem_replace_version rspec ~> 3.8
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%ruby_ignore_names observer,rake,psych,rdoc,gettext,test-unit,net-telnet,minitest,xmlrpc,did_you_mean,power_assert,readline-ext,fiddle,etc,zlib,strscan,fcntl,bigdecimal,gdbm,stringio,io-console,sdbm,dbm,json,openssl,date,bar,rubyforge,pstore,net-smtp,net-pop,reline,bundler,matrix,delegate,yaml,csv,uri,ostruct,racc,tracer,getoptlong,singleton,readline,mutex_m,fileutils,prime,ipaddr,webrick,logger,rss,forwardable,cgi,rexml,open3,benchmark,irb,timeout,mspec,03-tompng,templates,thor
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findreq_skiplist %libdir/*
 Requires:      %lname = %version-%release
@@ -151,26 +153,7 @@ extensible.
 This package contains standard Ruby runtime libraries.
 
 
-%package       -n gem
-Epoch:         2
-Version:       3.1.2
-Summary:       Ruby gem executable and framefork
-Group:         Development/Ruby
-BuildArch:     noarch
-Requires:      %name-stdlibs = %_version
-Provides:      %{name}gems = 3.1.2
-Provides:      %name-tools
-Obsoletes:     %{name}gems
-Obsoletes:     %name-tools
-AutoReq:       yes,noshell
-
-%description   -n gem
-Ruby gem executable and framework.
-
-
 %package       -n erb
-Epoch:         0
-Version:       %_version
 Summary:       ERB template library
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -244,6 +227,24 @@ on different arches.
 %endif
 
 
+%package       -n gem
+Epoch:         2
+Version:       3.1.6
+Release:       alt1
+Summary:       Ruby gem executable and framefork
+Group:         Development/Ruby
+BuildArch:     noarch
+Requires:      %name-stdlibs = %_version
+Provides:      %{name}gems = 3.1.2
+Provides:      %name-tools
+Obsoletes:     %{name}gems
+Obsoletes:     %name-tools
+AutoReq:       yes,noshell
+
+%description   -n gem
+Ruby gem executable and framework.
+
+
 %prep
 %setup -q
 #́# More strict shebang
@@ -259,10 +260,10 @@ sed -i -e '/doc\/capi/s|"/capi|"/html/capi|' -e '/doc\/capi/s|doc/capi|&/html|' 
 cp -a /usr/share/gnu-config/config.* tool
 # FIX: automatize
 echo "
-#define RUBY_REVISION \"647ee6f091\"
-#define RUBY_FULL_REVISION \"647ee6f091eafcce70ffb75ddf7e121e192ab217\"
-#define RUBY_BRANCH_NAME \"%version\"
-#define RUBY_RELEASE_DATETIME \"2019-12-25T09:50:58Z\"
+#define RUBY_REVISION \"a21a3b7d23\"
+#define RUBY_FULL_REVISION \"a21a3b7d23704a01d34bd79d09dc37897e00922a\"
+#define RUBY_BRANCH_NAME \"%_version\"
+#define RUBY_RELEASE_DATETIME \"2021-07-07T12:06:44Z\"
 " > revision.h
 # NOTE: fix default path to support older ruby versions of gems
 sed "s/path << default_dir/path |= [ default_dir ] | Dir.glob(File.join(RbConfig::CONFIG['rubylibprefix'], 'gems', '*'))/" -i lib/rubygems/defaults.rb
@@ -279,10 +280,10 @@ my_configure() {
         %{subst_enable rubygems} \
         --with-rubylibprefix=%libdir \
         --with-rubyhdrdir=%includedir \
-        --with-sitearchdir=%libdir/site_ruby/%version/%ruby_arch \
-        --with-vendorarchdir=%libdir/vendor_ruby/%version/%ruby_arch \
+        --with-sitearchdir=%libdir/site_ruby/%_version/%ruby_arch \
+        --with-vendorarchdir=%libdir/vendor_ruby/%_version/%ruby_arch \
         --with-ridir=%ridir \
-        --docdir=%_docdir/%name-%version \
+        --docdir=%_docdir/%name-%_version \
         %{?ruby_version:--with-ruby-version=%ruby_version} \
         --disable-rpath "$@"
 }
@@ -293,25 +294,25 @@ my_configure() {
 # separate directory
 
 cd %_builddir
-cp -a %name-%version %name-%version-miniruby
-cd %name-%version-miniruby
+cp -a %name-%_version %name-%_version-miniruby
+cd %name-%_version-miniruby
 dducp %SOURCE3 %SOURCE4 .
 
 my_configure --with-baseruby=$PWD/fakeruby.sh
-patch -p1 -l < %_datadir/%name-%version-miniruby/miniruby-src.patch
+patch -p1 -l < %_datadir/%name-%_version-miniruby/miniruby-src.patch
 %make_build miniruby
 
 # *** 2nd stage ***
 # Build ruby with host miniruby frome 1st stage as baseruby
-cd %_builddir/%name-%version
-my_configure --with-baseruby=%_builddir/%name-%version-miniruby/miniruby.sh
+cd %_builddir/%name-%_version
+my_configure --with-baseruby=%_builddir/%name-%_version-miniruby/miniruby.sh
 
 %else #_with_bootstrap
 my_configure
 
 #́ Copy sources after configure, so that generated files for
 # miniruby can be extracted later to facilitate bootstrapping.
-cp -a %_builddir/%name-%version %_builddir/%name-%version-configured
+cp -a %_builddir/%name-%_version %_builddir/%name-%_version-configured
 
 # Build miniruby only, so that we can diff only minimal generated data.
 %make_build miniruby
@@ -320,13 +321,13 @@ cp -a %_builddir/%name-%version %_builddir/%name-%version-configured
 # For diff !0 exit status is normal.
 pushd %_builddir
 diff -Nur -x "*.o" -x miniruby -x "*.log" -x autom4te.cache \
-    %name-%version-configured %name-%version > miniruby-src.patch || :
+    %name-%_version-configured %name-%_version > miniruby-src.patch || :
 popd
 %endif #_with_bootstrap
 
 %make_build
-%ruby_setup_rb config --prefixes=gem,ruby,rails-engine --gem-version-replace="$RPM_RUBY_GEMVERSION_REPLACE_LIST" --use=rdoc --join=doc:lib --ignore=03-tompng --use=stdlibs --alias=psych,bar,yaml,webrick,uri,tracer,timeout,singleton,rss,rexml,readline,prime,mutex_m,ipaddr,fileutils,rdoc,racc,pstore,ostruct,open3,observer,net-smtp,net-pop,matrix,logger,irb,getoptlong,forwardable,did_you_mean,delegate,csv,cgi,bundler,benchmark,zlib,strscan,stringio,sdbm,readline-ext,openssl,json,io-console,gdbm,fiddle,fcntl,etc,dbm,date,bigdecimal
-%ruby_setup_rb document
+%__setup_rb config --prefixes=gem,ruby,rails-engine --gem-version-replace="$RPM_RUBY_GEMVERSION_REPLACE_LIST" --use=rdoc --join=doc:lib --ignore=03-tompng --use=stdlibs --alias=psych,bar,yaml,webrick,uri,tracer,timeout,singleton,rss,rexml,readline,prime,mutex_m,ipaddr,fileutils,rdoc,racc,pstore,ostruct,open3,observer,net-smtp,net-pop,matrix,logger,irb,getoptlong,forwardable,did_you_mean,delegate,csv,cgi,bundler,benchmark,zlib,strscan,stringio,sdbm,readline-ext,openssl,json,io-console,gdbm,fiddle,fcntl,etc,dbm,date,bigdecimal
+%__setup_rb document
 
 %install
 %makeinstall_std
@@ -334,29 +335,29 @@ echo "VENDOR_SPECIFIC=true" > %buildroot%vendordir/vendor-specific.rb
 install -Dm 0755 %lname-static.a %buildroot%_libdir/%lname-static.a
 ln -s %lname-static.a %buildroot%_libdir/%lname.a
 mv %buildroot%_pkgconfigdir/%name{*,}.pc
-install -d -m 0755 %buildroot%_docdir/%name-%version
+install -d -m 0755 %buildroot%_docdir/%name-%_version
 mkdir -p %buildroot%ridir/%ruby_version
 mv %buildroot%ridir/system %buildroot%ridir/%ruby_version/
 install -d -m 0755 %buildroot%ridir/%ruby_version/site
-install -p -m 0644 COPYING* LEGAL NEWS README* %buildroot%_docdir/%name-%version/
+install -p -m 0644 COPYING* LEGAL NEWS README* %buildroot%_docdir/%name-%_version/
 # install compiled header config.h
 install -D .ext/include/%ruby_arch/ruby/config.h %buildroot%ruby_includedir/ruby/config.h
 
 %define ruby_libdir %libdir
-%define __ruby env LD_LIBRARY_PATH=%buildroot%_libdir RUBYLIB=%buildroot%libdir:%buildroot%libdir/%ruby_arch:%buildroot%libdir/site_ruby:%buildroot%libdir/%ruby_arch:%buildroot%libdir/site_ruby/%version/%ruby_arch:%buildroot%libdir/site_ruby/%version/%ruby_arch GEM_PATH=%buildroot%libdir/gems/%version:%buildroot%libdir/gems/%version:$(echo $(find %libdir/gems/ -maxdepth 1 -mindepth 1) | tr ' ' ':') %buildroot%_bindir/%name
+%define __ruby env LD_LIBRARY_PATH=%buildroot%_libdir RUBYLIB=%buildroot%libdir:%buildroot%libdir/%ruby_arch:%buildroot%libdir/site_ruby:%buildroot%libdir/%ruby_arch:%buildroot%libdir/site_ruby/%_version/%ruby_arch:%buildroot%libdir/site_ruby/%_version/%ruby_arch GEM_PATH=%buildroot%libdir/gems/%_version:%buildroot%libdir/gems/%_version:$(echo $(find %libdir/gems/ -maxdepth 1 -mindepth 1) | tr ' ' ':') %buildroot%_bindir/%name
 
-export RUBYLIB=%buildroot%libdir:%buildroot%libdir/site_ruby/%version/%ruby_arch
-export LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libdir/site_ruby/%version/%ruby_arch
+export RUBYLIB=%buildroot%libdir:%buildroot%libdir/site_ruby/%_version/%ruby_arch
+export LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libdir/site_ruby/%_version/%ruby_arch
 
 %if_without bootstrap
-mkdir -p %buildroot%_datadir/%name-%version-miniruby
-mv %_builddir/miniruby-src.patch %buildroot%_datadir/%name-%version-miniruby/
+mkdir -p %buildroot%_datadir/%name-%_version-miniruby
+mv %_builddir/miniruby-src.patch %buildroot%_datadir/%name-%_version-miniruby/
 %endif
 
 %ruby_install
 
 # Make empty dir for ri documentation
-mkdir -p %buildroot%_datadir/ri/site/%version
+mkdir -p %buildroot%_datadir/ri/site/%_version
 rm -rf %buildroot%_bindir/{ri,rdoc,bundle,bundler,racc}
 
 %ifarch armh
@@ -371,12 +372,12 @@ ln -s armh-linux "${EX}/armh-linux-eabi"
 %ruby_test
 
 %files
-%doc %dir %_docdir/%name-%version
-%doc %_docdir/%name-%version/COPYING
-%doc %_docdir/%name-%version/LEGAL
-%doc %_docdir/%name-%version/NEWS
-%doc %_docdir/%name-%version/README.*
-%lang(ja) %doc %_docdir/%name-%version/*.ja
+%doc %dir %_docdir/%name-%_version
+%doc %_docdir/%name-%_version/COPYING
+%doc %_docdir/%name-%_version/LEGAL
+%doc %_docdir/%name-%_version/NEWS
+%doc %_docdir/%name-%_version/README.*
+%lang(ja) %doc %_docdir/%name-%_version/*.ja
 %_bindir/%name
 %_bindir/*racc*
 %_man1dir/%name.*
@@ -426,10 +427,14 @@ ln -s armh-linux "${EX}/armh-linux-eabi"
 
 %if_without bootstrap
 %files miniruby-src
-%_datadir/%name-%version-miniruby/miniruby-src.patch
+%_datadir/%name-%_version-miniruby/miniruby-src.patch
 %endif
 
 %changelog
+* Sun Jul 18 2021 Pavel Skrylev <majioa@altlinux.org> 2.7.4-alt1
+- ^ 2.7.3 -> 2.7.4
+- ! build of LTE errors
+
 * Sat Apr 24 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.7.3-alt1.3
 - ^ ruby 2.7.2 -> 2.7.3
 
@@ -514,7 +519,7 @@ ln -s armh-linux "${EX}/armh-linux-eabi"
 - Fix version in provides.
 
 * Mon May 28 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.1-alt2
-- Package %ruby_ridir and %ruby_ri_sitedir directories in ruby.
+- Package %%ruby_ridir and %%ruby_ri_sitedir directories in ruby.
 
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.1-alt1
 - New version.
@@ -1209,7 +1214,7 @@ ln -s armh-linux "${EX}/armh-linux-eabi"
 * Wed Oct 09 2002 Alexander Bokovoy <ab@altlinux.ru> 1.7.3-alt4
 - New snapshot (2002/10/09)
 - Changed:
-    + Emacs support moved to %%name-doc and placed in %%_docdir/%%name-%%version/misc
+    + Emacs support moved to %%name-doc and placed in %%_docdir/%%name-%%%version/misc
       unless XEmacs and GNU Emacs maintaining teams decide where and how
       to put third-party program modes. Also, XEmacs already has (an outdated)
       ruby-mode.
