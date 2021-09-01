@@ -2,11 +2,11 @@
 
 Name: dmraid
 Version: 1.0.0.rc16
-Release: alt2
+Release: alt3
 
 Summary: dmraid (Device-mapper RAID tool and library)
 Group: System/Base
-License: GPL
+License: GPL-2.0-or-later and LGPL-2.1
 Url: http://people.redhat.com/heinzm/sw/dmraid
 
 Source: dmraid-%version.tar.bz2
@@ -83,6 +83,7 @@ mv tools/dmraid tools/dmraid.static
 %install
 %makeinstall_std
 install -m 755 tools/dmraid.static %buildroot/sbin/dmraid.static
+rm -f %buildroot/%_libdir/lib%name.a
 
 %files
 /sbin/dmevent_tool
@@ -95,14 +96,16 @@ install -m 755 tools/dmraid.static %buildroot/sbin/dmraid.static
 %doc CHANGELOG CREDITS KNOWN_BUGS LICENSE 
 %doc README TODO doc/dmraid_design.txt
 
-%exclude %_libdir/lib%name.a
-
 %files devel
 %_includedir/%name/
 %_libdir/lib%name.so
 %_libdir/lib%name-events-isw.so
 
 %changelog
+* Wed Sep 01 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.0.rc16-alt3
+- fixed build with LTO
+- fixed License tag
+
 * Wed Mar 07 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.0.0.rc16-alt2
 - NMU: fixed FTBFS with static libdevmapper
 
