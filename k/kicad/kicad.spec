@@ -4,20 +4,22 @@
 %define majver 5.0
 
 Name: kicad
+Version: 5.1.9
+Release: alt3
+Epoch: 1
+
 Summary: An open source software for the creation of electronic schematic diagrams
 Summary(ru_RU.UTF-8): Программа с открытым исходным кодом для проектирования электронных схем
-Version: 5.1.9
-Release: alt2.1
-Epoch: 1
-Packager: Anton Midyukov <antohami@altlinux.org>
 License: AGPL-3-or-later
 Group: Engineering
-Url: https://gitlab.com/kicad/code/kicad.git
 
+Url: https://gitlab.com/kicad/code/kicad.git
 Source: %name-%version.tar
 Source1: pcbnew.py
 Patch1: kicad-5.1.0-nostrip.patch
 Patch2: fix-python3.patch
+Patch2000: kicad-e2k.patch
+Packager: Anton Midyukov <antohami@altlinux.org>
 
 BuildRequires(pre): cmake rpm-macros-cmake
 BuildRequires(pre): rpm-build-python3
@@ -37,6 +39,7 @@ BuildRequires: opencascade-devel
 BuildRequires: openmpi-devel
 BuildRequires: ImageMagick-tools
 BuildRequires: desktop-file-utils
+
 Requires: %name-data = %EVR
 #Requires: kicad-packages3D >= %majver
 Requires: kicad-symbols >= %majver
@@ -114,11 +117,19 @@ gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом 
 Пакет содержит архитектурно-независимые файлы.
 
 %prep
-%setup -n %name-%version
+%setup
 %patch1 -p1
 %patch2 -p1
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 %build
+%ifarch %e2k
+# LCC produces an insane amount of debug info (14Gb)
+# -g1 is the same as default
+%define optflags_debug -g0
+%endif
 %cmake \
     %_cmake_skip_rpath \
     -DKICAD_USE_OCC:BOOL=ON \
@@ -172,6 +183,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/mime/packages/*
 
 %changelog
+* Wed Sep 01 2021 Michael Shigorin <mike@altlinux.org> 1:5.1.9-alt3
+- E2K: add architecture support (patch by ilyakurdyukov@)
+- minor spec cleanup
+
 * Tue Jun 01 2021 Arseny Maslennikov <arseny@altlinux.org> 1:5.1.9-alt2.1
 - NMU: fixed FTBFS: explicitly skip rpaths.
 
