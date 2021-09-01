@@ -1,6 +1,6 @@
 Name: alsa-plugins
-Version: 1.2.2
-Release: alt2
+Version: 1.2.5
+Release: alt1
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) plugins
@@ -83,6 +83,9 @@ done
 %_datadir/alsa/alsa.conf.d/99-pulse.conf
 
 %changelog
+* Mon Aug 23 2021 Egor Ignatov <egori@altlinux.org> 1:1.2.5-alt1
+- 1.2.5
+
 * Mon Feb 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.2.2-alt2
 - Imported config files from Debian for alsa-plugins-pulse.
   Upstream config 50-pulseaudio.conf alone sometimes isn't enough.
