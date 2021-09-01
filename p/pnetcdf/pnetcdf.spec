@@ -1,6 +1,6 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: tex(dehypht.tex)
-# END SourceDeps(oneline)
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
@@ -8,7 +8,7 @@ BuildRequires: tex(dehypht.tex)
 
 Name: pnetcdf
 Version: 1.8.1
-Release: alt2.3
+Release: alt3
 Summary: Parallel netCDF: A High Performance API for NetCDF File Access
 License: Open source
 Group: File tools
@@ -21,6 +21,7 @@ Patch1: %name-%version-alt-build.patch
 BuildRequires(pre): %mpiimpl-devel
 BuildRequires: flex gcc-fortran
 BuildRequires: ghostscript-utils texlive-latex-base
+BuildRequires: tex(dehypht.tex)
 
 %description
 Parallel netCDF (PnetCDF) is a library providing high-performance I/O
@@ -51,7 +52,7 @@ This package contains shared library of Parallel netCDF.
 %package -n lib%name-devel
 Summary: Development files of Parallel netCDF
 Group: Development/Other
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Requires: %mpiimpl-devel
 
 %description -n lib%name-devel
@@ -107,7 +108,9 @@ export F90FLAGS="%optflags"
 	--with-mpi=%mpidir \
 	--enable-mpi-io-test \
 	--enable-fortran \
-	--enable-strict
+	--enable-strict \
+	%nil
+
 %make SOVER=%sover LIB_SUFFIX=%_libsuff
 %make -C doc
 
@@ -121,6 +124,7 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 sed -i -e "s|%buildroot||" %buildroot%_pkgconfigdir/*.pc
 
 rm -f %buildroot%_libdir/*.so.
+rm -f %buildroot%_libdir/*.a
 
 %files
 %doc COPYRIGHT CREDITS README*
@@ -140,6 +144,9 @@ rm -f %buildroot%_libdir/*.so.
 %doc doc/*.pdf doc/*.txt examples
 
 %changelog
+* Wed Sep 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.1-alt3
+- Fixed build with LTO.
+
 * Tue Apr 13 2021 Grigory Ustinov <grenka@altlinux.org> 1.8.1-alt2.3
 - Fixed -fallow-argument-mismatch for %%e2k arches.
 
