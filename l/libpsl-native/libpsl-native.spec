@@ -3,7 +3,7 @@
 
 Name: libpsl-native
 Version: 7.1.0
-Release: alt1
+Release: alt2
 
 Summary: PowerShell Native library
 
@@ -24,6 +24,8 @@ BuildRequires(pre): rpm-macros-cmake rpm-macros-dotnet
 BuildRequires: cmake gcc-c++
 BuildRequires: libgtest-devel ctest
 
+%add_optflags %optflags_shared
+
 %description
 This library provides functionality missing from .NET Core via system calls,
 that are called from from the CorePsPlatform.cs file of PowerShell.
@@ -33,11 +35,13 @@ which is C#'s Foreign Function Interface to C code (and C++ by way of extern C).
 %prep
 %setup
 %patch -p2
+# use only optflags from rpm
+subst 's|.*CMAKE_CXX_FLAGS.*||' src/libpsl-native/CMakeLists.txt
 
 %build
 pushd src/libpsl-native/
 %cmake_insource -DCMAKE_BUILD_TYPE=Debug
-%make_build
+%make_build VERBOSE=1
 
 %install
 mkdir -p %buildroot%targetdir/
@@ -62,5 +66,8 @@ LANG=en_US.utf8 LD_LIBRARY_PATH=$(pwd)/../powershell-unix/ ctest --verbose || tr
 %targetdir/libpsl-native.so
 
 %changelog
+* Wed Sep 01 2021 Vitaly Lipatov <lav@altlinux.ru> 7.1.0-alt2
+- use optflags+optflags_shared instead of embedded cflags
+
 * Mon Feb 22 2021 Vitaly Lipatov <lav@altlinux.ru> 7.1.0-alt1
 - initial build for ALT Sisyphus
