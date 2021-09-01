@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.0.9
+Version: 3.0.10
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -69,6 +69,10 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Wed Sep 01 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0.10-alt1
+- gitask: show both quota
+- gitask: add support for 'gita add repo <gear repo>.git=<gear tag> ...'
+
 * Mon Aug 30 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0.9-alt1
 - gitask: add Add support (and & run)
 - gitask: add ls -w [N] to watch the list
