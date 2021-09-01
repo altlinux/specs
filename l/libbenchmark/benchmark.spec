@@ -1,13 +1,24 @@
-Name:       libbenchmark
-Version:    1.5.6
-Release:    alt1
-URL:        https://github.com/google/benchmark
-Summary:    A library to benchmark code snippets
-Source:     benchmark-%version.tar.gz
-Patch:      benchmark-1.5.4-extbuild.patch
-Patch2000:  libbenchmark-e2k.patch
-License:    Apache-2.0
-Group:      Development/C++
+%def_disable static
+
+Name: libbenchmark
+Version: 1.5.6
+Release: alt2
+
+Summary: A library to benchmark code snippets
+
+License: Apache-2.0
+Group: Development/C++
+Url: https://github.com/google/benchmark
+
+# Source-url: https://github.com/google/benchmark/archive/refs/tags/v%version.tar.gz
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
+Source: benchmark-%version.tar
+
+Patch: benchmark-1.5.4-extbuild.patch
+Patch2000: libbenchmark-e2k.patch
+
+BuildRequires(pre): rpm-macros-cmake
 
 # Automatically added by buildreq on Sun Jul 11 2021
 # optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libgmock-devel libsasl2-3 libstdc++-devel python3-base sh4
@@ -25,22 +36,22 @@ To run the benchmark, compile and link against the `benchmark` library
 be under the build directory you created.
 
 %package devel
-Summary:    %summary; development environment
-Group:      Development/C++
+Summary: %summary; development environment
+Group: Development/C++
 
 %description devel
 %summary; development environment
 
 %package devel-static
-Summary:    %summary (static)
-Group:      Development/C++
+Summary: %summary (static)
+Group: Development/C++
 
 %description devel-static
 %summary (static)
 
 %prep
 %setup -n benchmark-%version
-%patch -p1 
+%patch -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -55,7 +66,9 @@ rm -rf %_cmake__builddir
 
 %install
 %cmake_install
+%if_enabled static
 install *.a %buildroot/%_libdir
+%endif
 
 %check
 %make_build -C %_cmake__builddir test
@@ -71,10 +84,15 @@ install *.a %buildroot/%_libdir
 %_libdir/lib*.so
 %_includedir/*
 
+%if_enabled static
 %files devel-static
 %_libdir/lib*.a
+%endif
 
 %changelog
+* Wed Sep 01 2021 Vitaly Lipatov <lav@altlinux.ru> 1.5.6-alt2
+- disable devel-static packing, cleanup spec
+
 * Thu Aug 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.5.6-alt1
 - new version 1.5.6
 
