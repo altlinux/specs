@@ -1,4 +1,4 @@
-%define ver_major 1.21
+%define ver_major 1.22
 
 Name: wayland-protocols
 Version: %ver_major
@@ -7,13 +7,16 @@ Release: alt1
 Summary: Wayland protocols
 License: MIT
 Group: System/X11
-Url: http://wayland.freedesktop.org/
+Url: https://wayland.freedesktop.org/
 
-Source: http://wayland.freedesktop.org/releases/%name-%version.tar.xz
+Source: https://wayland.freedesktop.org/releases/%name-%version.tar.xz
 
 BuildArch: noarch
-# wayland-scanner required
-BuildRequires: wayland-devel >= 1.18
+
+%define wayland_ver 1.18
+
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++ libwayland-client-devel >= %wayland_ver libwayland-server-devel
 
 %description
 wayland-protocols contains Wayland protocols that adds functionality not
@@ -25,15 +28,15 @@ protocol either in Wayland core, or some other protocol in wayland-protocols.
 %setup
 
 %build
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %check
-%make check
+%__meson_test
 
 %files -f %name.lang
 %_datadir/%name/
@@ -41,6 +44,9 @@ protocol either in Wayland core, or some other protocol in wayland-protocols.
 %doc README.md
 
 %changelog
+* Wed Sep 01 2021 Yuri N. Sedunov <aris@altlinux.org> 1.22-alt1
+- 1.22 (ported to Meson build system)
+
 * Fri Apr 30 2021 Yuri N. Sedunov <aris@altlinux.org> 1.21-alt1
 - 1.21
 
