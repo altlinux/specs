@@ -5,9 +5,12 @@
 
 %define unpackaged_files_terminate_build 1
 
+# A workaround for libturnclient.a.
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 Name:		coturn
-Version:	4.5.1.1
-Release:	alt3
+Version:	4.5.2
+Release:	alt1
 Summary:	Coturn TURN Server
 
 License:	BSD
@@ -300,6 +303,9 @@ mkdir -p %{buildroot}/run/%name
 %{_includedir}/turn/client/TurnMsgLib.h
 
 %changelog
+* Tue Aug 31 2021 Arseny Maslennikov <arseny@altlinux.org> 4.5.2-alt1
+- 4.5.1.1 -> 4.5.2.
+
 * Tue Oct 27 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.5.1.1-alt3
 - Don't explicitly depend on libhiredis0.13, let correct dependency be autodetected.
 
