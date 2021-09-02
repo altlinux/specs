@@ -9,8 +9,8 @@
 %add_findreq_skiplist %_unitdir/initrd-switch-root.service
 %add_findreq_skiplist %_unitdir/systemd-volatile-root.service
 
-%def_enable static_libsystemd
-%def_enable static_libudev
+%def_disable static_libsystemd
+%def_disable static_libudev
 %def_enable elfutils
 %def_enable libcryptsetup
 %def_enable logind
@@ -88,8 +88,8 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -137,6 +137,7 @@ Source76: systemd-binfmt.filetrigger
 Source77: journal-catalog.filetrigger
 Source78: systemd-sysusers.filetrigger
 Source79: systemd-modules-load.filetrigger
+Source80: systemd-user.filetrigger
 
 Source81: systemd-modules-load-shared.alternatives
 Source82: systemd-modules-load-standalone.alternatives
@@ -698,7 +699,6 @@ Summary: Common sysctl configs
 	%{?_enable_static_libudev:-Dstatic-libudev=pic} \
 	%{?_enable_standalone_binaries:-Dstandalone-binaries=true} \
 	-Dxinitrcdir=%_sysconfdir/X11/xinit.d \
-	-Drpmmacrosdir=no \
 	-Drootlibdir=/%_lib \
 	-Dpamlibdir=/%_lib/security \
 	-Dsplit-usr=true \
@@ -988,6 +988,7 @@ install -pD -m755 %SOURCE76 %buildroot%_rpmlibdir/systemd-binfmt.filetrigger
 install -pD -m755 %SOURCE77 %buildroot%_rpmlibdir/journal-catalog.filetrigger
 install -pD -m755 %SOURCE78 %buildroot%_rpmlibdir/systemd-sysusers.filetrigger
 install -pD -m755 %SOURCE79 %buildroot%_rpmlibdir/systemd-modules-load.filetrigger
+install -pD -m755 %SOURCE80 %buildroot%_rpmlibdir/systemd-user.filetrigger
 
 # alternatives
 for f in systemd-modules-load systemd-sysusers systemd-sysctl systemd-tmpfiles; do
@@ -1430,6 +1431,7 @@ udevadm hwdb --update &>/dev/null
 %_datadir/dbus-1/system.d/org.freedesktop.systemd1.conf
 
 %_rpmlibdir/systemd.filetrigger
+%_rpmlibdir/systemd-user.filetrigger
 /sbin/systemd
 /sbin/systemd-ask-password
 /bin/systemd-inhibit
@@ -1486,6 +1488,7 @@ udevadm hwdb --update &>/dev/null
 /lib/systemd/systemd-sleep
 /lib/systemd/systemd-socket-proxyd
 /lib/systemd/systemd-update-done
+/lib/systemd/systemd-update-helper
 /lib/systemd/systemd-update-utmp
 /lib/systemd/systemd-user-runtime-dir
 /lib/systemd/systemd-user-sessions
@@ -1720,8 +1723,10 @@ udevadm hwdb --update &>/dev/null
 %exclude %_man3dir/udev*
 %exclude %_man3dir/libudev*
 
+%if_enabled static_libsystemd
 %files -n libsystemd-devel-static
 /%_lib/libsystemd.a
+%endif
 
 %files -n libnss-systemd
 /%_lib/libnss_systemd.so.*
@@ -2186,8 +2191,10 @@ udevadm hwdb --update &>/dev/null
 %_man3dir/udev*
 %_man3dir/libudev*
 
+%if_enabled static_libudev
 %files -n libudev-devel-static
 /%_lib/libudev.a
+%endif
 
 %files -n udev
 %dir %_sysconfdir/udev
@@ -2226,6 +2233,14 @@ udevadm hwdb --update &>/dev/null
 %exclude /lib/udev/rules.d/99-systemd.rules
 
 %changelog
+* Thu Sep 02 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.4-alt1
+- 249.4
+- Disable build static libudev and libsystemd.
+- Moved kernel.core_uses_pid=1 from 50-default.conf to 50-coredump.conf.
+- Packaged /lib/systemd/systemd-update-helper for use in rpm macroses and filetriggers.
+- Switched to use systemd-update-helper in systemd.filetrigger.
+- Added filetrigger for sustemd user units.
+
 * Sun Aug 22 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.3-alt2
 - Fix read env from /lib/environment.d/*.conf.
 - Allow execute system-generators from /usr/lib for compat.
