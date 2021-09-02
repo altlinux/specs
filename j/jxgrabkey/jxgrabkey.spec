@@ -1,6 +1,6 @@
 Name: jxgrabkey
 Version: 0.3.2
-Release: alt3.r55
+Release: alt4.r55
 
 Summary: Using global X11 hotkeys on Linux from Java.
 License: MIT
@@ -29,6 +29,9 @@ originally created as a subproject of Coopnet
 %patch2 -p2
 %patch3 -p2
 
+sed -i '/default.javac/s,1\.4,1.6,g' JXGrabKey/Java/nbproject/build-impl.xml
+sed -i '/javac/s,1\.5,1.6,g' JXGrabKey/Java/nbproject/project.properties
+
 %build
 pushd misc/Ant
 ant
@@ -47,6 +50,9 @@ popd
 %_javadir/JXGrabKey.jar
 
 %changelog
+* Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 0.3.2-alt4.r55
+- NMU: java 11 support
+
 * Tue May 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.2-alt3.r55
 - NMU: fixed build.
 
