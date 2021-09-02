@@ -5,7 +5,7 @@
 
 Name: libtool_%ltversion
 Version: 2.4.6
-Release: alt3
+Release: alt4
 
 Summary: The GNU libtool, which simplifies the use of shared libraries
 License: GPLv2+
@@ -83,6 +83,18 @@ sed -i '/@direntry/,/@end direntry/ s/^\(\*[[:space:]]\+[[:alnum:].]\+\)\(:[[:sp
 	doc/libtool.texi
 
 %build
+# Libtool is not ready for LTO yet:
+# libltdl/.libs/libltdlS.c:27:12: warning: type of 'dlopen_LTX_get_vtable' does not match original declaration [-Wlto-type-mismatch]
+# libltdl/loaders/dlopen.c:61:1: note: return value type mismatch
+#    61 | get_vtable (lt_user_data loader_data)
+#       | ^
+# libltdl/loaders/dlopen.c:61:1: note: 'dlopen_LTX_get_vtable' was previously declared here
+# libltdl/loaders/dlopen.c:61:1: note: code may be misoptimized unless '-fno-strict-aliasing' is used
+#  70: Runpath in libtool library files                FAILED (runpath-in-lalib.at:61)
+# 117: enforced lib prefix                             FAILED (need_lib_prefix.at:182)
+# 170: Run tests with low max_cmd_len                  FAILED (cmdline_wrap.at:47)
+%define optflags_lto %nil
+
 ./bootstrap --skip-po --skip-git --gnulib-srcdir=%_datadir/gnulib
 %configure --program-suffix=-%ltversion --disable-silent-rules
 
@@ -90,10 +102,6 @@ sed -i '/@direntry/,/@end direntry/ s/^\(\*[[:space:]]\+[[:alnum:].]\+\)\(:[[:sp
 # Do not hardcode gcc path information, and do not use -nostdlib.
 sed -i -e 's/^\(predep_objects\|postdep_objects\|compiler_lib_search_path\)=.*/\1=""/' \
        -e 's/^\(archive\(_expsym\)\?_cmds=\".*\) -nostdlib /\1 /' libtool
-
-%check
-# Remove -frecord-gcc-switches because it confuses demo-hardcode.test.
-%make_build -k check VERBOSE=1 CFLAGS="${RPM_OPT_FLAGS/-frecord-gcc-switches/}"
 
 %install
 %makeinstall_std
@@ -129,6 +137,10 @@ ln -rsnf %buildroot/usr/share/gnu-config/config.{guess,sub} \
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
+%check
+# Remove -frecord-gcc-switches because it confuses demo-hardcode.test.
+%make_build -k -Onone check VERBOSE=1 CFLAGS="${RPM_OPT_FLAGS/-frecord-gcc-switches/}"
+
 %files
 %_bindir/*
 %_datadir/%libtool
@@ -154,6 +166,9 @@ ln -rsnf %buildroot/usr/share/gnu-config/config.{guess,sub} \
 %_libdir/*.a
 
 %changelog
+* Wed Sep 01 2021 Dmitry V. Levin <ldv@altlinux.org> 2.4.6-alt4
+- Disabled LTO.
+
 * Tue Apr 13 2021 Dmitry V. Levin <ldv@altlinux.org> 2.4.6-alt3
 - Updated build with gnulib v0.1-4550-g2a7948aad.
 
