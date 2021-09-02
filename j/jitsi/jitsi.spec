@@ -3,7 +3,7 @@
 
 Name:           jitsi
 Version:        2.11.%buildrev
-Release:        alt2
+Release:        alt2.1
 
 Summary:        Multiprotocol (SIP, XMPP/Jabber, ecc.) VoIP and instant messaging software
 Group:          Networking/Instant messaging
@@ -30,7 +30,7 @@ Patch3:		jitsi-2.10-harfbuzz-header-path.patch
 Patch100:	jitsi-2.11-alt-build-native-modules.patch
 
 BuildRequires(pre): rpm-build-java
-BuildRequires:  java-devel-default
+BuildRequires:  java-1.8.0-devel
 BuildRequires:  ant
 BuildRequires:  gcc-c++
 BuildRequires:  gnome-vfs-devel
@@ -118,6 +118,9 @@ install -Dm0644 resources/install/debian/jitsi.svg %buildroot%_iconsdir/hicolor/
 %_iconsdir/hicolor/scalable/apps/%{name}.svg
 
 %changelog
+* Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 2.11.5630-alt2.1
+- build with java8
+
 * Fri Apr 17 2020 Igor Vlasenko <viy@altlinux.ru> 2.11.5630-alt2
 - aarch64 support
 
