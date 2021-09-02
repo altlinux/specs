@@ -1,10 +1,12 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %def_enable minimal
 
 Name: reiser4progs
 Version: 1.2.1
-Release: alt2
+Release: alt3
 Summary: Utilities for reiser4 filesystems
 License: GPLv2
 Group: System/Kernel and hardware
@@ -15,9 +17,10 @@ URL: http://reiser4.sourceforge.net/
 Source: %name-%version.tar
 Patch1: %name-1.1.0-alt-format.patch
 Patch2: %name-1.1.0-alt-linking.patch
+Patch3: %name-1.2.1-alt-libaal-check-dynamic-library.patch
 
 # Automatically added by buildreq on Wed Mar 17 2010
-BuildRequires: libaal-devel-static libaal-minimal-devel libaal-minimal-devel-static libncurses-devel libreadline-devel libuuid-devel
+BuildRequires: libaal-devel libaal-minimal-devel libncurses-devel libreadline-devel libuuid-devel
 
 %description
 Utilities for manipulating reiser4 filesystems.
@@ -32,23 +35,17 @@ Libraries for use by reiser4 tools.
 %package -n libreiser4-devel
 Summary: Development libraries and headers for developing reiser4 tools
 Group: Development/C
-Requires: libreiser4 = %version-%release, libaal-devel
+Requires: libreiser4 = %EVR
+Requires: libaal-devel
 
 %description -n libreiser4-devel
 Development libraries and headers for developing reiser4 tools.
 
-%package -n libreiser4-devel-static
-Summary: Static libraries for developing reiser4 tools
-Group: Development/C
-Requires: libreiser4-devel = %version-%release
-
-%description -n libreiser4-devel-static
-Static libraries for developing reiser4 tools.
-
 %package -n libreiser4-minimal
 Summary: Minimal utilities for reiser4 filesystem
 Group: Development/C
-Requires: libaal-minimal, libreiser4 = %version-%release
+Requires: libaal-minimal
+Requires: libreiser4 = %EVR
 
 %description -n libreiser4-minimal
 Development libraries and headers for developing minimal reiser4 tools.
@@ -56,26 +53,22 @@ Development libraries and headers for developing minimal reiser4 tools.
 %package -n libreiser4-minimal-devel
 Summary: Development libraries and headers for developing minimal reiser4 tools
 Group: Development/C
-Requires: libreiser4-minimal = %version-%release, libaal-minimal-devel, libreiser4-devel = %version-%release
+Requires: libreiser4-minimal = %EVR
+Requires: libaal-minimal-devel
+Requires: libreiser4-devel = %EVR
 
 %description -n libreiser4-minimal-devel
 Development libraries and headers for developing minimal reiser4 tools.
-
-%package -n libreiser4-minimal-devel-static
-Summary: Static libraries for developing minimal reiser4 tools
-Group: Development/C
-Requires: libreiser4-minimal-devel = %version-%release, libaal-minimal-devel, libreiser4-devel = %version-%release
-
-%description -n libreiser4-minimal-devel-static
-Static libraries for developing minimal reiser4 tools.
 
 %prep
 %setup
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
 sed -i -r '/^[[:blank:]]+\.\/run-ldconfig/d' Makefile.{am,in}
 
 %build
+%autoreconf
 %configure \
 	--sbindir=/sbin \
 	--libdir=/%_lib \
@@ -91,7 +84,9 @@ sed -i -r '/^[[:blank:]]+\.\/run-ldconfig/d' Makefile.{am,in}
 	--disable-ext_3_fibre \
 	--disable-lexic_fibre \
 %endif
-	--with-readline
+	--with-readline \
+	--disable-static \
+	%nil
 
 # Hackish way to fix underlinking in 1.0.7:
 subst 's@LDFLAGS =@LDFLAGS = ../libmisc/.libs/libmisc.a -luuid@' libreiser4/Makefile
@@ -113,7 +108,7 @@ for f in ./%_lib/*.so; do
 done
 popd
 
-mv %buildroot{/%_lib/*.{so,a},%_libdir/}
+mv %buildroot{/%_lib/*.so,%_libdir/}
 
 %files
 /sbin/*
@@ -130,22 +125,18 @@ mv %buildroot{/%_lib/*.{so,a},%_libdir/}
 %_libdir/libreiser4.so
 %_libdir/librepair.so
 
-%files -n libreiser4-devel-static
-%_libdir/libreiser4.a
-%_libdir/librepair*.a
-
 %if_enabled minimal
 %files -n libreiser4-minimal
 /%_lib/libreiser4-minimal-%{reiser_libver}.so.*
 
 %files -n libreiser4-minimal-devel
 %_libdir/libreiser4-minimal.so
-
-%files -n libreiser4-minimal-devel-static
-%_libdir/libreiser4-minimal.*a
 %endif
 
 %changelog
+* Thu Sep 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.1-alt3
+- Disabled static libraries.
+
 * Mon Feb 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.1-alt2
 - Fixed build.
 
