@@ -1,9 +1,9 @@
 Name: pjx
 Version: 1.4.0
-Release: alt2_jpp5
+Release: alt2_jpp6
 
 Summary: PJX is a general purpose PDF programming library for Java
-License: GPL
+License: GPLv2+
 Group: Development/Java
 Packager: Eugeny A. Rostovtsev (REAL) <real@altlinux.org>
 
@@ -43,6 +43,7 @@ Javadoc for pjx.
 %setup -n %name-%version
 
 %build
+%define targetjvm 1.6
 cd src
 %__sed -i \
 	-e 's/enum/_enum/g' \
@@ -51,12 +52,12 @@ cd src
 	-e 's/enum/_enum/g' \
 	-e 's/_enumb/enumb/g' \
 	com/etymon/pj/object/PjDictionary.java
-%javac `find ./ -type f -name '*.java'`
+%javac -target %targetjvm -source %targetjvm `find ./ -type f -name '*.java'`
 %jar cvf pjx.jar `find ./ -type f -name '*.class'`
 mkdir -pv javadoc
-pkglist=`find com -type d|sed 's/\//./g'`
+pkglist=`find com/etymon/* -type d|sed 's/\//./g'`
 cd javadoc
-%javadoc -private -sourcepath .. -overview ../overview.html \
+%javadoc -source %targetjvm -private -sourcepath .. -overview ../overview.html \
 	-use -splitIndex $pkglist ||:
 #cd ../../doc
 #%make
@@ -87,6 +88,9 @@ cd $curdir
 %_javadocdir/%name
 
 %changelog
+* Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 1.4.0-alt2_jpp6
+- prepared for java11 migration
+
 * Tue Feb 23 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt2_jpp5
 - fixed build
 
