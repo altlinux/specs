@@ -17,12 +17,12 @@
 # wait for xstream
 Name: freemind
 Version: 1.0.1
-Release: alt2
+Release: alt3
 
 Summary: A Program for creating and viewing Mindmaps
 
 Group: Text tools
-License: GPL
+License: GPLv2+
 Url: http://freemind.sourceforge.net/wiki/index.php/Main_Page
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -37,7 +37,13 @@ Requires: java >= 1.5.0
 BuildRequires: ant gnu-regexp xerces-j2
 #BuildRequires: batik batik-squiggle gnu-regexp groovy jtidy rhino
 
+%if "%{version}" == "1.0.1"
+# this old wersion can't be built with java 11
+BuildRequires: java-1.8.0-devel
+%else
+# but next version might be ok
 BuildRequires: java-devel-default
+%endif
 
 BuildRequires: rpm-build-java
 
@@ -59,7 +65,7 @@ subst "s|�|oe|g" freemind/main/XHTMLWriter.java freemind/main/FixedHTMLWriter.
 JAVA_HOME=%java_home
 export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
 sed -i s,./doc/freemind.mm,%_docdir/freemind.mm, freemind.properties
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dfile.encoding=UTF8 dist browser
+ant -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6 -Dfile.encoding=UTF8 dist browser
 
 %install
 mkdir -p %buildroot/{%_datadir,%_bindir}
@@ -86,6 +92,9 @@ install -D -m644 images/FreeMindWindowIcon.png %buildroot%_pixmapsdir/%name.png
 %_pixmapsdir/*.png
 
 %changelog
+* Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 1.0.1-alt3
+- NMU: java 11 support
+
 * Mon Oct 28 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt2
 - fix desktop file (ALT bug #36809)
 
