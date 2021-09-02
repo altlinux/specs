@@ -406,7 +406,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{javaver}-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt1_0jpp10
+Release: alt2_0jpp10
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -520,6 +520,7 @@ BuildRequires: libfreetype-devel
 BuildRequires: libgif-devel
 BuildRequires: gcc-c++
 BuildRequires: gdb libgdb-devel
+BuildRequires: libharfbuzz-devel
 BuildRequires: liblcms2-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libpng-devel
@@ -1007,11 +1008,12 @@ bash ../configure \
     --with-debug-level=$debugbuild \
     --with-native-debug-symbols=internal \
     --enable-unlimited-crypto \
-    --with-zlib=system \
-    --with-libjpeg=system \
     --with-giflib=system \
+    --with-libjpeg=system \
     --with-libpng=system \
     --with-lcms=system \
+    --with-harfbuzz=system \
+    --with-zlib=system \
     --with-stdc++lib=dynamic \
     --with-extra-cxxflags="$EXTRA_CPP_FLAGS" \
     --with-extra-cflags="$EXTRA_CFLAGS" \
@@ -1560,7 +1562,6 @@ fi
 %{_jvmdir}/%{sdkdir}/lib/libunpack.so
 %{_jvmdir}/%{sdkdir}/lib/libverify.so
 %{_jvmdir}/%{sdkdir}/lib/libzip.so
-%{_jvmdir}/%{sdkdir}/lib/libharfbuzz.so
 %{_jvmdir}/%{sdkdir}/lib/libsunec.so
 %dir %{_jvmdir}/%{sdkdir}/lib/jfr
 %{_jvmdir}/%{sdkdir}/lib/jfr/default.jfc
@@ -1785,6 +1786,9 @@ fi
 %endif
 
 %changelog
+* Wed Sep 01 2021 Andrey Cherepanov <cas@altlinux.org> 0:11.0.12.7-alt2_0jpp10
+- Use system libharfbuzz.
+
 * Wed Aug 25 2021 Andrey Cherepanov <cas@altlinux.org> 0:11.0.12.7-alt1_0jpp10
 - new version
 - security fixes:
