@@ -2,7 +2,7 @@
 
 Name: jpicedt
 Version: 1.4.1.03
-Release: alt4_jpp5
+Release: alt4_jpp6
 
 Summary: Interactive picture editor for LaTeX and PSTricks.
 License: GPL
@@ -59,7 +59,7 @@ find . -name "*.class" -exec rm -f {} \;
 %build
 export LANG=en_US.ISO8859-1
 export CLASSPATH=$(build-classpath junit bsh)
-%ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
+%ant  -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6 \
 	-Dbuild.sysclasspath=only \
 	all
 #	dist
@@ -112,6 +112,9 @@ install -m755 -D jpicedt.sh %buildroot%_bindir/jpicedt
 #%doc dist/docs/*
 
 %changelog
+* Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 1.4.1.03-alt4_jpp6
+- ready for java11 migration
+
 * Thu Jan 28 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.1.03-alt4_jpp5
 - use junit
 
