@@ -1,14 +1,11 @@
 Group: System/Libraries
-# BEGIN SourceDeps(oneline):
-BuildRequires: java-devel-default perl(File/Spec/Functions.pm) perl(IO/File.pm)
-# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           tomcat-native
 Version:        1.2.23
-Release:        alt1_3jpp8
+Release:        alt1_5jpp11
 Summary:        Tomcat native library
 
 License:        ASL 2.0
@@ -68,6 +65,9 @@ rm -rf ${RPM_BUILD_ROOT}%{_includedir}/*.h
 
 
 %changelog
+* Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 1.2.23-alt1_5jpp11
+- java11 migration
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.23-alt1_3jpp8
 - new version
 
