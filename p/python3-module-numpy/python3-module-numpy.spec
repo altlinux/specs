@@ -1,12 +1,16 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+# LTO causes errors, disable it
+%global optflags_lto %nil
 
 %define oname numpy
 
 Name: python3-module-%oname
 Epoch: 1
 Version: 1.21.1
-Release: alt1
-
+Release: alt2
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD-3-Clause
 Group: Development/Python3
@@ -16,7 +20,8 @@ Url: https://www.numpy.org/
 Source: %name-%version.tar
 Source2: site.cfg
 
-Patch0: %oname-1.20.2-Remove-strict-dependency-on-testing-package.patch
+Patch: %oname-1.20.2-Remove-strict-dependency-on-testing-package.patch
+Patch1: %oname-1.21.1-alt-use-system-fallocate-declaration.patch
 
 # E2K patchset with MCST numbering scheme
 Patch1001: 0001-arch_e2k_define.patch
@@ -115,7 +120,8 @@ This package contains pickles for NumPy.
 
 %prep
 %setup
-%patch0 -p1
+%patch -p1
+%patch1 -p1
 
 %ifarch %e2k
 %patch1001 -p1
@@ -239,6 +245,9 @@ cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Wed Sep 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.21.1-alt2
+- Disabled LTO.
+
 * Wed Jul 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.21.1-alt1
 - Updated to upstream version 1.21.1.
 
