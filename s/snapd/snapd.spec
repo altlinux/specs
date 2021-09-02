@@ -29,7 +29,7 @@
 #%%define _libexecdir %_prefix/libexec
 
 Name: snapd
-Version: 2.51.6
+Version: 2.51.7
 Release: alt1
 Summary: A transactional software package manager
 License: GPLv3
@@ -450,5 +450,8 @@ fi
 %endif
 
 %changelog
+* Thu Sep 02 2021 Alexey Shabalin <shaba@altlinux.org> 2.51.7-alt1
+- 2.51.7.
+
 * Mon Aug 23 2021 Alexey Shabalin <shaba@altlinux.org> 2.51.6-alt1
 - Initial build for ALT
