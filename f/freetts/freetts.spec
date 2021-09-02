@@ -1,7 +1,7 @@
 
 Name: freetts
 Version: 1.2.1
-Release: alt3.1
+Release: alt3.2
 BuildArch: noarch
 License: Custom, see license.terms for further information
 Group: Development/Java
@@ -60,6 +60,11 @@ rm -rf ./META-INF
 
 %setup -q 
 %patch0 -p1
+
+# java 11 does not support targets < 1.6
+sed -i -e '/\(source\|target\)/s,1\.4,1.6,' build.xml
+
+
 %build
 cd lib
 chmod 755 jsapi.sh
@@ -115,6 +120,9 @@ cd ..
 
 
 %changelog
+* Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 1.2.1-alt3.2
+- NMU: java 11 support
+
 * Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt3.1
 - NMU: corrected java BuildRequires.
 
