@@ -1,9 +1,11 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: smpeg
 Summary: summary SDL MPEG Library
 Version: 0.4.5
-Release: alt3.svn20120121
+Release: alt4.svn20120121
 License: LGPL
 Group: Video
 URL: http://icculus.org/smpeg/
@@ -17,7 +19,7 @@ Source12: gtv_48x48.xpm
 Patch1: %name-%version-debian-gcc-6.patch
 
 # Automatically added by buildreq on Mon Feb 13 2006
-BuildRequires: gcc-c++ glibc-devel-static gtk+2-devel imake libICE-devel libSDL-devel libX11-devel libXt-devel libstdc++-devel xorg-cf-files
+BuildRequires: gcc-c++ gtk+2-devel imake libICE-devel libSDL-devel libX11-devel libXt-devel libstdc++-devel xorg-cf-files
 BuildRequires: libGL-devel libGLU-devel
 
 %description
@@ -43,15 +45,6 @@ Requires: lib%name = %EVR
 This package contains the headers that programmers will need to develop
 applications which will use %name.
 
-%package -n lib%name-devel-static
-Summary: Static libraries for developing programs that will use %name
-Group: Development/C
-Requires: lib%name-devel = %EVR
-
-%description -n lib%name-devel-static
-This package contains the static libraries that programmers will need to develop
-applications which will use %name.
-
 %package player
 Summary: Simple MPEG player baed on %name library
 Group: Video
@@ -64,11 +57,17 @@ This package contains a MPEG player based on %name.
 %patch1 -p1
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 # Needed for snapshot releases.
 if [ ! -f configure ]; then
   CFLAGS="%optflags" ./autogen.sh --prefix=%_prefix
 fi
-%configure --disable-opengl-player
+%configure \
+	--disable-opengl-player \
+	--disable-static \
+	%nil
+
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
 
@@ -116,10 +115,10 @@ EOF
 %_libdir/*.so
 %_datadir/aclocal/*.m4
 
-%files -n lib%name-devel-static
-%_libdir/*.a
-
 %changelog
+* Thu Sep 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.5-alt4.svn20120121
+- Disabled static libraries.
+
 * Mon Mar 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.5-alt3.svn20120121
 - Updated build dependencies (Closes: #36254)
 
