@@ -1,6 +1,6 @@
 Name: gettext-doclet
 Version: 1.0.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: Standard doclet based doclet with localization support
 License: GPLv3
@@ -36,6 +36,8 @@ using GNU Gettext localization tools.
 %prep
 %setup -n %name-%version
 
+sed -i -e '/\(source\|target\)/s,1\.5,1.6,' build.xml
+
 %build
 %ant dist
 
@@ -58,6 +60,9 @@ ln -s %name-%version.jar %buildroot%_javadir/%name.jar
 #%doc %_javadocdir/%name
 
 %changelog
+* Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 1.0.3-alt1.qa1
+- NMU: java11 support
+
 * Fri Aug 27 2010 Paul Wolneykien <manowar@altlinux.ru> 1.0.3-alt1
 - Do not remove some usual spacing when tight the text.
 - Properly comment multiline values.
