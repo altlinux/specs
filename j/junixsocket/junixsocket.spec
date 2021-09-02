@@ -5,13 +5,15 @@ BuildRequires: java-devel-default
 
 Name:           junixsocket
 Version:        1.3
-Release:        alt6
+Release:        alt6_jpp11
 Summary:        Java/JNI library that allows the use of Unix Domain Sockets
-License:        Apache Software License 2.0
+License:        Apache-2.0
 Group:          Development/Java
 URL:            http://junixsocket.googlecode.com/
 Source0:        http://junixsocket.googlecode.com/files/%{name}-%{version}-src.tar.bz2
 BuildRequires: jpackage-utils rpm-build-java ant junit ant-junit
+
+Patch: junixsocket-1.3-alt-java11.patch
 
 %description
 junixsocket is a Java/JNI library that allows the use of Unix Domain Sockets (AF_UNIX sockets) from Java.
@@ -26,18 +28,22 @@ Group:          Development/Documentation
 %{summary}.
 
 %prep
-%setup -q 
+%setup -q
+%patch -p1
+
 # bad biarch in alt...
 #grep -v 'param name="gccM" value="-m32"' build.xml > build.xml.0
 #mv build.xml.0 build.xml
 
 sed -i -e 's!name="jars" depends="test"!name="jars" depends="init,compile,javah,gcc"!' build.xml
+sed -i -e '/app.javaversion/s,1\.5,1.6,' build.xml
+
 
 %build
 export LANG=en_US.ISO8859-1
 export CLASSPATH=`build-classpath junit hamcrest/core`
 
-ant  -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6 -DgccArch='native' -DgccM='-g' jars javadoc
+ant -Dapp.javaversion=1.6 -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6 -DgccArch='native' -DgccM='-g' jars javadoc
 
 %install
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}/
@@ -66,6 +72,9 @@ install -m 755 lib-native/libjunixsocket-linux*.so $RPM_BUILD_ROOT%{_libdir}/
 %doc %{_javadocdir}/*
 
 %changelog
+* Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 1.3-alt6_jpp11
+- prepared for java11 migration
+
 * Tue Jun 18 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3-alt6
 - Fixed build on ppc64le and aarch64 architectures.
 
