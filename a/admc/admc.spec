@@ -1,7 +1,12 @@
 %define _unpackaged_files_terminate_build 1
+%define _development 0
+%if %_development
+%define _git_commit %(git rev-parse --short HEAD)
+%define _development_release (development release %_git_commit)
+%endif
 
 Name: admc
-Version: 0.6.4
+Version: 0.7.0
 Release: alt1
 
 Summary: AD editor
@@ -95,6 +100,7 @@ Tests for ADMC
 %_bindir/admc_test_delegation_edit
 %_bindir/admc_test_string_other_edit
 %_bindir/admc_test_account_option_edit
+%_bindir/admc_test_protect_deletion_edit
 %_bindir/admc_test_gpoptions_edit
 %_bindir/admc_test_octet_editor
 %_bindir/admc_test_bool_editor
@@ -105,6 +111,9 @@ Tests for ADMC
 %_bindir/admc_test_policy_results_widget
 
 %changelog
+* %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Build for admc-%version-%release%{?_development_release: %_development_release}.
+
 * Thu Aug 05 2021 Dmitry Degtyarev <kevl@altlinux.org> 0.6.4-alt1
 - 0.6.4
 - closes: 40653
