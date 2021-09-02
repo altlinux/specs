@@ -5,7 +5,7 @@
 
 Name:           jitsi-videobridge
 Version:        2.1
-Release:        alt0.5
+Release:        alt0.6
 
 Summary:        Jitsi Videobridge - WebRTC compatible Selective Forwarding Unit
 #Group:          Networking/Instant messaging
@@ -22,7 +22,7 @@ Source1:        m2-%name-%version.tar
 Source2:        jitsi-videobridge-configure
 
 BuildRequires(pre): rpm-build-java
-BuildRequires:  java-devel-default
+BuildRequires:  java-1.8.0-devel
 BuildRequires:  maven
 BuildRequires:  unzip
 
@@ -111,6 +111,9 @@ fi
 %dir %attr(0755,_jvb,_jvb) %_localstatedir/log/jitsi
 
 %changelog
+* Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 2.1-alt0.6
+- build with java8
+
 * Mon Jul 06 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.1-alt0.5
 - /var/log/jitsi ownership fixed
 
