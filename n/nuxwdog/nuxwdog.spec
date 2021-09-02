@@ -2,7 +2,7 @@
 
 Name: nuxwdog
 Version: 1.0.5
-Release: alt1.1
+Release: alt1.2
 
 Summary: Watchdog server to start and stop processes, and prompt for passwords
 License: %lgpl2plus, %perl_license
@@ -15,7 +15,15 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses rpm-macros-java
 
-BuildRequires: gcc-c++ ant java-devel-default jpackage-utils
+%if "%{version}" == "1.0.5"
+# this old wersion can't be  built with java 11
+BuildRequires: java-1.8.0-devel
+%else
+# but latest upstream versions shoud be ok
+BuildRequires: java-devel-default
+%endif
+BuildRequires: ant jpackage-utils
+BuildRequires: gcc-c++
 BuildRequires: libnspr-devel
 BuildRequires: libnss-devel
 BuildRequires: libselinux-devel
@@ -141,6 +149,9 @@ chrpath -d %buildroot%_libdir/perl5/auto/Nuxwdogclient/Nuxwdogclient.so
 #_man3dir/Nuxwdogclient.3pm*
 
 %changelog
+* Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 1.0.5-alt1.2
+- NMU: java 11 migration support
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1.1
 - rebuild with new perl 5.28.1
 
