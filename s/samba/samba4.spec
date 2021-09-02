@@ -73,7 +73,7 @@
 
 Name:    samba
 Version: 4.14.7
-Release: alt2
+Release: alt3
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1923,6 +1923,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Wed Sep 01 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.7-alt3
+- Fix net ads join segmentation fault problem if ldap SRV host record not found.
+
 * Tue Aug 31 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.7-alt2
 - Add dependency lmdb-utils to samba-dc-common due it is necessary
   for mdb store backend permits database sizes greater than 4Gb
