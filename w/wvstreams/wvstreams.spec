@@ -4,7 +4,7 @@
 
 Name: wvstreams
 Version: 4.6.1
-Release: alt7
+Release: alt8
 
 Summary: C++ libraries for rapid application development
 License: LGPL-2.0
@@ -32,6 +32,8 @@ Patch7: wvstreams-4.6.1-magic.patch
 Patch8: 0001-Use-explicit-cast-and-prevent-compiler-error.patch
 Patch9: wvstreams-4.6.1-openssl1.1.patch
 Patch10: wvstreams-4.6.1-gcc10.patch
+Patch11: wvstreams-4.6.1-tripledes-cast.patch
+Patch2000: %name-e2k.patch
 
 BuildPreReq: gcc-c++
 BuildPreReq: OpenSP /proc
@@ -192,6 +194,12 @@ bzip2 -9fk ChangeLog
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
+%ifarch %e2k
+%patch2000 -p1
+# _BSD_SOURCE is deprecated
+sed -i "s|-D_BSD_SOURCE||" wvrules.mk
+%endif
 
 %build
 %global optflags_lto %optflags_lto -ffat-lto-objects
@@ -290,6 +298,10 @@ mv %buildroot%_localstatedir/lib/uniconf/uniconfd.ini \
 %_libdir/pkgconfig/libwvqt.pc
 
 %changelog
+* Thu Sep 02 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.6.1-alt8
+- Fixed passing of **data instead of *data in wvtripledes.cc
+- Added patch for Elbrus
+
 * Fri Aug 27 2021 Andrey Cherepanov <cas@altlinux.org> 4.6.1-alt7
 - FTBFS: fix build with LTO by default.
 
