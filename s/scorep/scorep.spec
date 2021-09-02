@@ -1,11 +1,14 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
+%global optflags_lto %optflags_lto -ffat-lto-objects
 
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
 Name: scorep
 Version: 6.0
-Release: alt2
+Release: alt3
 Summary: Score-P (Scalable Performance Measurement Infrastructure for Parallel Codes)
 License: BSD
 Group: Development/Tools
@@ -130,6 +133,9 @@ find %buildroot -type f -name libtool -print -delete
 %_docdir/%name
 
 %changelog
+* Thu Sep 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0-alt3
+- Fixed build with LTO.
+
 * Mon Dec 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0-alt2
 - Moved static libraries from lib%name-devel into lib%name-devel-static.
 
