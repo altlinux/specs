@@ -1,6 +1,6 @@
 Name: javazi
 Version: %{get_version tzdata}
-Release: %{get_release tzdata}
+Release: %{get_release tzdata}.1
 
 Summary: Timezone data for Java
 License: Public Domain
@@ -62,7 +62,7 @@ pacificnew backward etcetera'
 
 # Java 6/7 tzdata
 pushd %javazic16
-	javac -source 1.5 -target 1.5 -classpath . $(find -name '*.java')
+	javac -source 1.6 -target 1.6 -classpath . $(find -name '*.java')
 popd
 pushd tzdata
 	java -classpath ../%javazic16 alt.tools.javazic.Main \
@@ -73,7 +73,7 @@ popd
 
 # Java 8 tzdata
 pushd %javazic18
-	javac -source 1.7 -target 1.7 -classpath . $(find -name '*.java')
+	javac -source 1.8 -target 1.8 -classpath . $(find -name '*.java')
 popd
 pushd tzdata
 	java -classpath ../%javazic18 build.tools.tzdb.TzdbZoneRulesCompiler \
@@ -96,6 +96,10 @@ install -pm644 tzdata/tzdb.dat %buildroot%_datadir/javazi-1.8/
 %files checkinstall
 
 %changelog
+* Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 2021a-alt1.1
+- java 11 migration: java-devel-default moves to java 11,
+  -source 1.5 -target 1.5 no more supported
+
 * Wed Apr 04 2018 Dmitry V. Levin <ldv@altlinux.org> %{get_SVR tzdata}
 - Rebuilt with new tzdata.
 
