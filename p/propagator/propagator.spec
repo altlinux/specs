@@ -3,7 +3,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20210823
+Version: 20210831
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -39,6 +39,9 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Tue Aug 31 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 20210831-alt1
+- Network boot: automatically select interface with a carrier (closes: #40616)
+
 * Mon Aug 23 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 20210823-alt1
 - Avoid deadlock between udev probing stage2 and stage1 mounting it (closes: #40687)
 
