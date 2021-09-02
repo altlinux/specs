@@ -1,7 +1,7 @@
 
 Name: acpica
 Version: 20201113
-Release: alt1
+Release: alt2
 Summary: ACPICA tools for the development and debug of ACPI tables
 
 Group: System/Kernel and hardware
@@ -177,17 +177,23 @@ cp -p %SOURCE14 converterSample.asl.result
 cp -p %SOURCE15 tests/run-misc-tests.sh
 chmod a+x tests/run-misc-tests.sh
 
+%ifarch %e2k
+sed -i 's,-Werror ,,' generate/unix/iasl/Makefile
+%endif
+
 %build
 CWARNINGFLAGS="\
     -std=c99 \
     -Wall \
     -Wbad-function-cast \
     -Wdeclaration-after-statement \
+%ifnarch %e2k
     -Werror \
+%endif
     -Wformat=2 \
     -Wmissing-declarations \
     -Wmissing-prototypes \
-    -Wstrict-aliasing=0 \
+    -Wstrict-aliasing \
     -Wstrict-prototypes \
     -Wswitch-default \
     -Wpointer-arith \
@@ -239,6 +245,11 @@ cd tests
 %_man1dir/*
 
 %changelog
+* Wed Sep 01 2021 Michael Shigorin <mike@altlinux.org> 20201113-alt2
+- fix -Wstrict-aliasing use; see also mcst#4656 and the suggested
+  http://gcc.gnu.org/onlinedocs/gcc-7.5.0/gcc/Warning-Options.html#Warning-Options
+- E2K: ftbfs workarounds (still the warnings might be real)
+
 * Sat Dec 12 2020 Alexey Shabalin <shaba@altlinux.org> 20201113-alt1
 - 20201113
 
