@@ -36,7 +36,7 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.22.4
+Version: 5.22.5
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -300,6 +300,9 @@ msgcat --use-first po/ru/plasma_lookandfeel_org.kde.lookandfeel.po %SOURCE3 > po
 cat po/ru/plasma_lookandfeel_org.kde.lookandfeel.po.tmp > po/ru/plasma_lookandfeel_org.kde.lookandfeel.po
 rm -f po/ru/plasma_lookandfeel_org.kde.lookandfeel.po.tmp
 
+# disable find PackageKitQt5
+sed -i 's|PackageKitQt5|PackageKitQt5_UBUNTU_ONLY|' CMakeLists.txt
+
 # disable krunners by default
 for d in runners/*/*.desktop ; do
     sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=false|' $d
@@ -495,6 +498,9 @@ done
 
 
 %changelog
+* Wed Sep 01 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.5-alt1
+- new version
+
 * Tue Jul 27 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.4-alt1
 - new version
 

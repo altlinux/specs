@@ -12,7 +12,7 @@
 %define libpowerdevilcore libpowerdevilcore%powerdevilcore_sover
 
 Name: plasma5-%rname
-Version: 5.22.4
+Version: 5.22.5
 Release: alt1
 %K5init altplace
 
@@ -99,6 +99,8 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p2
 
+sed -i 's|Libcap|setcap_EXEC_ALREADY_IN_RPM_POST_SCRIPT|' CMakeLists.txt
+
 find ./ -type f | \
 while read f ; do
     sed -i 's|org.kde.powerdevil.backlighthelper|org.kde5.powerdevil.backlighthelper|g' $f
@@ -157,6 +159,9 @@ done
 %_K5lib/libpowerdevilcore.so.%powerdevilcore_sover
 
 %changelog
+* Wed Sep 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt1
+- new version
+
 * Tue Jul 27 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.4-alt1
 - new version
 

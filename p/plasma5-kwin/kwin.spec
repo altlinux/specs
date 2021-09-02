@@ -18,7 +18,7 @@
 %define libkcmkwincommon libkcmkwincommon%kcmkwincommon_sover
 
 Name: plasma5-%rname
-Version: 5.22.4
+Version: 5.22.5
 Release: alt1
 %K5init altplace
 
@@ -210,6 +210,9 @@ KF5 library
 
 
 %changelog
+* Wed Sep 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt1
+- new version
+
 * Tue Jul 27 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.4-alt1
 - new version
 

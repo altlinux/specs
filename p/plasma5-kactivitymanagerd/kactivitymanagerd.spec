@@ -5,7 +5,7 @@
 %define rname kactivitymanagerd
 
 Name: plasma5-kactivitymanagerd
-Version: 5.22.4
+Version: 5.22.5
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -65,6 +65,9 @@ Obsoletes: kf5-kactivitymanagerd < %EVR
 %_K5data/krunner/dbusplugins/plasma-runnners-activities.desktop
 
 %changelog
+* Wed Sep 01 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.5-alt1
+- new version
+
 * Tue Jul 27 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.4-alt1
 - new version
 

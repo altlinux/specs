@@ -2,8 +2,8 @@
 
 
 Name: plasma5-desktop
-Version: 5.22.4
-Release: alt2
+Version: 5.22.5
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -238,6 +238,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Wed Sep 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt1
+- new version
+
 * Tue Aug 31 2021 Oleg Solovyov <mcpain@altlinux.org> 5.22.4-alt2
 - make "Show Desktop" widget opaque
 
