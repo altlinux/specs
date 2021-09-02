@@ -4,7 +4,7 @@
 
 Name: uwsgi
 Version: 2.0.18
-Release: alt1
+Release: alt2
 
 Summary: fast (pure C), self-healing, developer-friendly WSGI server
 License: GPLv2
@@ -18,6 +18,7 @@ Source2: %name.logrotate
 Source3: %name.sysconfig
 Patch1: %name-2.0.15-alt-no-rpath.patch
 Patch2: %name-2.0.18-alt-use-python3.patch
+Patch2000: %name-e2k.patch
 
 BuildRequires: libxml2-devel python3-devel
 
@@ -41,6 +42,9 @@ Erlang message exchanger are already available.
 %setup
 %patch1 -p1
 %patch2 -p1
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 %build
 %make
@@ -68,6 +72,9 @@ install -pDm0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/%name
 %doc README contrib
 
 %changelog
+* Thu Sep 02 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.0.18-alt2
+- Added patch for Elbrus
+
 * Mon Nov 18 2019 Oleg Solovyov <mcpain@altlinux.org> 2.0.18-alt1
 - update to 2.0.18
 - built with python3
