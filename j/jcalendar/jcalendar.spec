@@ -1,9 +1,9 @@
 
 Name: jcalendar
 Version: 1.3.2
-Release: alt3
+Release: alt3_jpp11
 
-License: LGPL
+License: LGPLv2+
 Group: Development/Java
 Summary: Graphic component to peek date in Java applications
 
@@ -18,6 +18,7 @@ Packager: Michael Pozhidaev <msp@altlinux.ru>
 Source: http://www.toedter.com/download/jcalendar-1.3.2.zip
 
 Patch0: jcalendar-1.3.2-alt-build.diff
+Patch1: jcalendar-1.3.2-alt-java11.diff
 
 %description
 JCalendar is a Java date chooser bean for graphically picking a date.
@@ -38,16 +39,17 @@ Auto-generated API documentation for the %name.jar.
 
 %prep
 %setup -q
-%patch -p1
+%patch0 -p1
+%patch1 -p2
 rm -rf ./doc/api
 rm -rf ./lib/%name-%version.jar ./looks-2.0.1.jar
 ln -s %_javadir/jgoodies-looks.jar ./lib/looks.jar
 
 %build
 cd src
-ant javadocs
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  javadocs
 mv ../doc/api ../doc/api_
-ant jar
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jar
 cd ..
 mv doc/api_ doc/api
 
@@ -67,6 +69,9 @@ cp -r ./doc/api/* %buildroot/%_javadocdir/%name
 %_javadocdir/*
 
 %changelog
+* Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 1.3.2-alt3_jpp11
+- prepared for java11 migration
+
 * Sat Sep 19 2009 Michael Pozhidaev <msp@altlinux.ru> 1.3.2-alt3
 - jpackage-utils build req replaced by rpm-build-java (closes: #21514)
 
