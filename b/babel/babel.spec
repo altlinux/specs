@@ -5,15 +5,15 @@
 
 Name: babel
 Version: 2.0.0
-Release: alt4
-Summary: Language tool for high-performance scientific computing community
+Release: alt5
 
+Summary: Language tool for high-performance scientific computing community
 License: LGPLv2.1
 Group: Sciences/Mathematics
-Url: http://www.llnl.gov/CASC/components/babel.html
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+Url: http://www.llnl.gov/CASC/components/babel.html
 Source: %name-%version.tar.gz
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Requires: %name-common = %version-%release
 Requires: lib%name = %version-%release
@@ -268,12 +268,21 @@ export JAVAFLAGS=""
 export MPI_VENDOR=%mpiimpl
 source %mpidir/bin/mpivars.sh
 
+%ifnarch %e2k
+# unsupported as of lcc 1.25.17 (mcst#6419); NB: fortran-only
 %add_optflags -fallow-argument-mismatch
+%endif
 %configure \
 	--enable-pure-static-runtime=no \
 	--enable-static=no \
 	--with-gnu-ld \
+%ifarch %e2k
+	--disable-fortran90 \
+	--disable-fortran03 \
+	--disable-fortran77 \
+%else
 	--with-F90-vendor=GNU \
+%endif
 	--with-libparsifal=%prefix \
 	--with-libxml2=%prefix \
 	--with-mpi=%mpidir/bin \
@@ -386,6 +395,10 @@ done
 %_docdir/%name
 
 %changelog
+* Thu Sep 02 2021 Michael Shigorin <mike@altlinux.org> 2.0.0-alt5
+- E2K: avoid lcc-unsupported option (and fortran altogether)
+- minor spec cleanup
+
 * Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt4
 - disable BR: libnumpy-devel when build without python
 
