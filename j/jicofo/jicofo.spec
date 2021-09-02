@@ -4,7 +4,7 @@
 
 Name:           jicofo
 Version:        1.1
-Release:        alt0.3
+Release:        alt0.4
 
 Summary:        JItsi Meet COnference FOcus
 #Group:          Networking/Instant messaging
@@ -24,7 +24,7 @@ Source1:        m2-%name-%version.tar
 AutoReqProv: yes,noosgi
 
 BuildRequires(pre): rpm-build-java
-BuildRequires:  java-devel-default
+BuildRequires:  java-1.8.0-devel
 BuildRequires:  maven
 BuildRequires:  unzip
 
@@ -71,6 +71,9 @@ install -m644 resources/alt-jicofo.service %buildroot%_unitdir/%name.service
         2> /dev/null > /dev/null ||:
 
 %changelog
+* Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 1.1-alt0.4
+- build with java 8
+
 * Wed Jun 10 2020 Arseny Maslennikov <arseny@altlinux.org> 1.1-alt0.3
 - Added launcher executable.
 - Added a systemd service unit.
