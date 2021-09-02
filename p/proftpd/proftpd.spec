@@ -1,8 +1,8 @@
-%define ver 1.3.6
+%define ver 1.3.7
 
 Name: proftpd
 Version: %ver
-Release: alt0.4.ga73dbfe3b
+Release: alt0.1.c
 
 %define _libexecdir %{expand:%_libdir}
 %def_disable tests
@@ -48,7 +48,7 @@ Release: alt0.4.ga73dbfe3b
 #def_shared mod_wrap2_sql
 
 Summary: ProFTPd -- Professional FTP Server
-License: GPL
+License: GPL-2
 Group: System/Servers
 Url: http://www.%name.org/
 
@@ -68,29 +68,24 @@ Patch6: %name-1.3.2rc1-mod_sql_mysql.patch
 Patch7: %name-1.3.6-mod_sql_postgres.patch
 Patch9: %name-1.3.0-alt-ltdl.patch
 Patch10: %name-1.3.6-inc-pcre.patch
-Patch11: %name-1.3.5-alt-mysql8-transition.patch
 
 # Debian patches
 Patch50: %name-deb-change_pam_name.patch
 Patch51: %name-deb-core_create-home.patch
 
 # Upstream security fixes
-Patch100: upstream-fix-for-CVE-2019-18217.patch
-Patch101: upstream-fix-for-CVE-2019-19269-and-CVE-2019-19270.patch
-Patch102: upstream-fix-for-CVE-2020-9272.patch
-Patch103: upstream-fix-for-CVE-2020-9273.patch
 
 Provides: ftpserver
 Requires: locale-en
 PreReq: anonftp
 AutoReq: yes, noshell, noperl
 
-Packager: Afanasov Dmitry <ender@altlinux.org>
-
 BuildRequires: gcc-c++ libncurses-devel libtinfo-devel zlib-devel libltdl-devel libpcre-devel
 # ftpmail findreq
 BuildRequires: perl-Mail-Sendmail
 BuildRequires: libcap-devel
+# Argon2 hash support
+BuildRequires: libsodium-devel
 
 %{?_with_mod_auth_pam:BuildRequires: pam-devel}
 
@@ -378,21 +373,19 @@ See control(8) for details.
 %patch2 -p1
 %patch4 -p1
 #patch5 -p1
-%patch6 -p1
+#patch6 -p1
+subst 's,^#include <mysql\.h,#include <mysql/mysql.h,' contrib/mod_sql_mysql.c
 %patch7 -p2
 #%%patch9 -p1
-%patch10 -p2
-%patch11 -p0
+#patch10 -p2
+subst 's,^# include\ <\(pcre.*\),#include <pcre/\1,' include/regexp.h
+subst 's,^#include\ <\(pcre.*\),#include <pcre/\1,' src/regexp.c
 
 # debian patches
 %patch50 -p1
 %patch51 -p1
 
 # Upstream security fixes
-%patch100 -p1
-%patch101 -p1
-%patch102 -p1
-%patch103 -p1
 
 %build
 #__libtoolize --ltdl
@@ -686,6 +679,15 @@ fi
 %_controldir/%name
 
 %changelog
+* Thu Sep 02 2021 L.A. Kostis <lakostis@altlinux.ru> 1.3.7-alt0.1.c
+- 1.3.7c release.
+- .spec:
+  + Remove obsoleted patches.
+  + Use subst for sql_mysql and regexp.
+  + Fix License tag.
+  + Add libsodium-devel to support Argon2 hash.
+  - Remove Packager tag.
+
 * Thu Oct 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.6-alt0.4.ga73dbfe3b
 - Applied security fixes from upstream (Fixes: CVE-2020-9272, CVE-2020-9273).
 - Built with system libcap.
