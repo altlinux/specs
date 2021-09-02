@@ -1,6 +1,6 @@
 Name: jabbix
 Version: 1.0.1
-Release: alt3.1
+Release: alt3.2
 
 Summary: The set of Java classes providing Zabbix monitoring system agent functionality
 License: LGPLv3
@@ -71,6 +71,8 @@ This package provides a shell command to launch the JabbixAgent program.
 ln -sf /usr/share/java/json-20080425.jar .lib/json.jar
 sed -i -e s,json,json-20080425, cmd/jabbix
 
+sed -i -e '/\(source\|target\)/s,1\.5,1.6,' build.xml
+
 %build
 %ant dist
 
@@ -108,6 +110,9 @@ install -D -m 0755 cmd/jabbix %buildroot%_bindir/jabbix
 %_bindir/jabbix
 
 %changelog
+* Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 1.0.1-alt3.2
+- NMU: java 11 support
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3.1
 - NMU: fixed build
 -  (json is now compat package, so symlinks had to be changed)
