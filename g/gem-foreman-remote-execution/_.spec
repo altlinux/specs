@@ -1,70 +1,79 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-%define        pkgname foreman-remote-execution
 %define        gemname foreman_remote_execution
-%define        _version 4.2.1
-%define        core_version 1.4.0
 
-Name:          gem-%pkgname
-Version:       %_version
+Name:          gem-foreman-remote-execution
+Version:       4.7.0
 Release:       alt1
 Summary:       A plugin bringing remote execution to the Foreman
-License:       GPLv3
+License:       GPL-3.0
 Group:         Development/Ruby
 Url:           https://github.com/theforeman/foreman_remote_execution
 Vcs:           https://github.com/theforeman/foreman_remote_execution.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Pavel Skrylev <majioa@altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(deface) >= 0
+BuildRequires: gem(dynflow) >= 1.0.2 gem(dynflow) < 2.0.0
+BuildRequires: gem(foreman-tasks) >= 5.0.0
+BuildRequires: gem(factory_bot_rails) >= 4.8.0 gem(factory_bot_rails) < 7
+BuildRequires: gem(rdoc) >= 0 gem(rdoc) < 7
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
+%ruby_use_gem_dependency factory_bot_rails >= 6.2.0,factory_bot_rails < 7
+Requires:      gem(deface) >= 0
+Requires:      gem(dynflow) >= 1.0.2 gem(dynflow) < 2.0.0
+Requires:      gem(foreman-tasks) >= 5.0.0
+Provides:      gem(foreman_remote_execution) = 4.7.0
+
 
 %description
 A plugin bringing remote execution to the Foreman, completing the config
 management functionality with remote management functionality.
 
 
-%package       core
-Version:       %core_version
-Summary:       Library code for %{gemname}_core gem
-Summary(ru_RU.UTF-8): Библиотечный код для самоцвета %{gemname}_core
+%package       -n gem-foreman-remote-execution-doc
+Version:       4.7.0
+Release:       alt1
+Summary:       A plugin bringing remote execution to the Foreman documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_remote_execution
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   core
-Library code for %{gemname}_core gem.
+Requires:      gem(foreman_remote_execution) = 4.7.0
 
-%description   core -l ru_RU.UTF8
-Библиотечный код для самоцвета %{gemname}_core.
+%description   -n gem-foreman-remote-execution-doc
+A plugin bringing remote execution to the Foreman documentation files.
+
+A plugin bringing remote execution to the Foreman, completing the config
+management functionality with remote management functionality.
+
+%description   -n gem-foreman-remote-execution-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета foreman_remote_execution.
 
 
-%package       core-doc
-Summary:       Documentation files for %{gemname}_core gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %{gemname}_core
-Group:         Development/Documentation
+%package       -n gem-foreman-remote-execution-devel
+Version:       4.7.0
+Release:       alt1
+Summary:       A plugin bringing remote execution to the Foreman development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman_remote_execution
+Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   core-doc
-Documentation files for %{gemname}_core gem.
+Requires:      gem(foreman_remote_execution) = 4.7.0
+Requires:      gem(factory_bot_rails) >= 4.8.0 gem(factory_bot_rails) < 7
+Requires:      gem(rdoc) >= 0 gem(rdoc) < 7
 
-%description   core-doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %{gemname}_core.
+%description   -n gem-foreman-remote-execution-devel
+A plugin bringing remote execution to the Foreman development package.
 
+A plugin bringing remote execution to the Foreman, completing the config
+management functionality with remote management functionality.
 
-%package       doc
-Version:       %_version
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
-Group:         Development/Documentation
-BuildArch:     noarch
-
-%description   doc
-Documentation files for %gemname gem.
-
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-foreman-remote-execution-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета foreman_remote_execution.
 
 
 %prep
@@ -80,22 +89,21 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n gem-foreman-remote-execution-doc
+%doc README.md
 %ruby_gemdocdir
 
-%files         core
-%doc README*
-%ruby_gemspecdir/%{gemname}_core-%core_version.gemspec
-%ruby_gemslibdir/%{gemname}_core-%core_version
-
-%files         core-doc
-%ruby_gemsdocdir/%{gemname}_core-%core_version
+%files         -n gem-foreman-remote-execution-devel
+%doc README.md
 
 
 %changelog
+* Wed Sep 01 2021 Pavel Skrylev <majioa@altlinux.org> 4.7.0-alt1
+- ^ 4.2.1 -> 4.7.0
+
 * Mon Dec 07 2020 Pavel Skrylev <majioa@altlinux.org> 4.2.1-alt1
 - + packaged gem with usage Ruby Policy 2.0

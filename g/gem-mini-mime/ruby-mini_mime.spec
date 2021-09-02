@@ -1,9 +1,8 @@
-%define        pkgname mini-mime
 %define        gemname mini_mime
 
-Name:          gem-%pkgname
-Version:       1.0.2
-Release:       alt1.1
+Name:          gem-mini-mime
+Version:       1.1.0
+Release:       alt1
 Summary:       Minimal mime type library for Ruby
 License:       MIT
 Group:         Development/Ruby
@@ -14,26 +13,67 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(bundler) >= 1.13 gem(bundler) < 3
+BuildRequires: gem(rake) >= 10.0 gem(rake) < 14
+BuildRequires: gem(minitest) >= 5.0 gem(minitest) < 6
+BuildRequires: gem(rubocop) >= 0
+BuildRequires: gem(rubocop-discourse) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%gemname
-Provides:      ruby-%gemname
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency bundler >= 2.1.4,bundler < 3
+%ruby_use_gem_dependency rake >= 13.0.1,rake < 14
+%ruby_alias_names mini_mime,mini-mime
+Obsoletes:     ruby-mini_mime
+Provides:      ruby-mini_mime
+Provides:      gem(mini_mime) = 1.1.0
+
 
 %description
 Minimal mime type implementation for use with the mail and rest-client gem.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-mini-mime-doc
+Version:       1.1.0
+Release:       alt1
+Summary:       Minimal mime type library for Ruby documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета mini_mime
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(mini_mime) = 1.1.0
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-mini-mime-doc
+Minimal mime type library for Ruby documentation files.
+
+Minimal mime type implementation for use with the mail and rest-client gem.
+
+%description   -n gem-mini-mime-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета mini_mime.
+
+
+%package       -n gem-mini-mime-devel
+Version:       1.1.0
+Release:       alt1
+Summary:       Minimal mime type library for Ruby development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета mini_mime
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(mini_mime) = 1.1.0
+Requires:      gem(bundler) >= 1.13 gem(bundler) < 3
+Requires:      gem(rake) >= 10.0 gem(rake) < 14
+Requires:      gem(minitest) >= 5.0 gem(minitest) < 6
+Requires:      gem(rubocop) >= 0 gem(rubocop) < 2
+Requires:      gem(rubocop-discourse) >= 0
+
+%description   -n gem-mini-mime-devel
+Minimal mime type library for Ruby development package.
+
+Minimal mime type implementation for use with the mail and rest-client gem.
+
+%description   -n gem-mini-mime-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета mini_mime.
 
 
 %prep
@@ -49,15 +89,22 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n gem-mini-mime-doc
+%doc README.md
 %ruby_gemdocdir
+
+%files         -n gem-mini-mime-devel
+%doc README.md
 
 
 %changelog
+* Wed Sep 01 2021 Pavel Skrylev <majioa@altlinux.org> 1.1.0-alt1
+- ^ 1.0.2 -> 1.1.0
+
 * Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.2-alt1.1
 - fixed (!) spec
 

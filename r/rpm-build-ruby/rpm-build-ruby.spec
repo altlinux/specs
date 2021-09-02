@@ -3,7 +3,7 @@
 Name:          rpm-build-ruby
 Epoch:         1
 Version:       1.0.0
-Release:       alt15
+Release:       alt16
 Summary:       RPM helper scripts to calculate Ruby dependencies
 License:       GPLv2
 Group:         Development/Ruby
@@ -56,6 +56,9 @@ install -p -m 0644 ruby.env %buildroot%_rpmmacrosdir/
 %_rpmmacrosdir/ruby
 
 %changelog
+* Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 1:1.0.0-alt16
+- - alias %%gemname to %%pkgname in default build configuration
+
 * Wed Aug 25 2021 Pavel Skrylev <majioa@altlinux.org> 1:1.0.0-alt15
 - - obsolete macros by cleanup
 - - dep to ruby-tool-setup

@@ -1,14 +1,10 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-%define        pkgname foreman-ansible
 %define        gemname foreman_ansible
-%define        _version 6.0.1
-%define        core_version 3.0.2
 
-Name:          gem-%pkgname
-Version:       %_version
+Name:          gem-foreman-ansible
+Version:       6.4.1
 Release:       alt1
 Summary:       Ansible integration in Foreman
-License:       GPLv3
+License:       GPL-3.0
 Group:         Development/Ruby
 Url:           https://github.com/theforeman/foreman_ansible
 Vcs:           https://github.com/theforeman/foreman_ansible.git
@@ -17,9 +13,20 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(acts_as_list) >= 1.0.3 gem(acts_as_list) < 1.1
+BuildRequires: gem(deface) < 2.0
+BuildRequires: gem(foreman_remote_execution) >= 4.4.0
+BuildRequires: gem(ipaddress) >= 0.8.0 gem(ipaddress) < 1.0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_alias_names foreman_ansible,foreman-ansible
+Requires:      gem(acts_as_list) >= 1.0.3 gem(acts_as_list) < 1.1
+Requires:      gem(deface) < 2.0
+Requires:      gem(foreman_remote_execution) >= 4.4.0
+Requires:      gem(ipaddress) >= 0.8.0 gem(ipaddress) < 1.0
+Provides:      gem(foreman_ansible) = 6.4.1
+
 
 %description
 Reporting and facts import from Ansible to Foreman.
@@ -27,51 +34,64 @@ Reporting and facts import from Ansible to Foreman.
 * Import facts
 * Monitor playbook and Ansible runs runtime
 * Sends Ansible reports to Foreman that contain what changed on your system
-  after an ansible run.
+after an ansible run.
 * Stores a list of roles applicable to your hosts and 'plays' them
 * Looking for an Ansible dynamic inventory for Foreman? Use
-  foreman_ansible_inventory
+foreman_ansible_inventory
 
 
-%package       core
-Version:       %core_version
-Summary:       Library code for %{gemname}_core gem
-Summary(ru_RU.UTF-8): Библиотечный код для самоцвета %{gemname}_core
+%package       -n gem-foreman-ansible-doc
+Version:       6.4.1
+Release:       alt1
+Summary:       Ansible integration in Foreman documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_ansible
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   core
-Library code for %{gemname}_core gem.
+Requires:      gem(foreman_ansible) = 6.4.1
 
-%description   core -l ru_RU.UTF8
-Библиотечный код для самоцвета %{gemname}_core.
+%description   -n gem-foreman-ansible-doc
+Ansible integration in Foreman documentation files.
+
+Reporting and facts import from Ansible to Foreman.
+
+* Import facts
+* Monitor playbook and Ansible runs runtime
+* Sends Ansible reports to Foreman that contain what changed on your system
+after an ansible run.
+* Stores a list of roles applicable to your hosts and 'plays' them
+* Looking for an Ansible dynamic inventory for Foreman? Use
+foreman_ansible_inventory
+
+%description   -n gem-foreman-ansible-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета foreman_ansible.
 
 
-%package       core-doc
-Summary:       Documentation files for %{gemname}_core gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %{gemname}_core
-Group:         Development/Documentation
+%package       -n gem-foreman-ansible-devel
+Version:       6.4.1
+Release:       alt1
+Summary:       Ansible integration in Foreman development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman_ansible
+Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   core-doc
-Documentation files for %{gemname}_core gem.
+Requires:      gem(foreman_ansible) = 6.4.1
 
-%description   core-doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %{gemname}_core.
+%description   -n gem-foreman-ansible-devel
+Ansible integration in Foreman development package.
 
+Reporting and facts import from Ansible to Foreman.
 
-%package       doc
-Version:       %_version
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
-Group:         Development/Documentation
-BuildArch:     noarch
+* Import facts
+* Monitor playbook and Ansible runs runtime
+* Sends Ansible reports to Foreman that contain what changed on your system
+after an ansible run.
+* Stores a list of roles applicable to your hosts and 'plays' them
+* Looking for an Ansible dynamic inventory for Foreman? Use
+foreman_ansible_inventory
 
-%description   doc
-Documentation files for %gemname gem.
-
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-foreman-ansible-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета foreman_ansible.
 
 
 %prep
@@ -87,22 +107,22 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n gem-foreman-ansible-doc
+%doc README.md
 %ruby_gemdocdir
 
-%files         core
-%doc README*
-%ruby_gemspecdir/%{gemname}_core-%core_version.gemspec
-%ruby_gemslibdir/%{gemname}_core-%core_version
-
-%files         core-doc
-%ruby_gemsdocdir/%{gemname}_core-%core_version
+%files         -n gem-foreman-ansible-devel
+%doc README.md
+#%ruby_includedir/*
 
 
 %changelog
+* Wed Sep 01 2021 Pavel Skrylev <majioa@altlinux.org> 6.4.1-alt1
+- ^ 6.0.1 -> 6.4.1
+
 * Mon Dec 07 2020 Pavel Skrylev <majioa@altlinux.org> 6.0.1-alt1
 - + packaged gem with usage Ruby Policy 2.0
