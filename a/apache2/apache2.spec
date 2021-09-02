@@ -13,7 +13,7 @@
 
 Name:    apache2
 Version: 2.4.48
-Release: alt6
+Release: alt7
 Epoch: 1
 
 License: %asl
@@ -1153,7 +1153,6 @@ if [ ! -e %apache2_conf ] && \
 		[ -e %apache2_conf.rpmnew ]; then
 	mv %apache2_conf.rpmnew %apache2_conf
 fi
-%post_service %apache2_dname
 exit 0
 
 
@@ -1540,6 +1539,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Thu Sep 02 2021 Egor Ignatov <egori@altlinux.org> 1:2.4.48-alt7
+- add 'systemctl daemon-reload' to 90-apache2-base-httpd.filetrigger
+
 * Fri Aug 27 2021 Egor Ignatov <egori@altlinux.org> 1:2.4.48-alt6
 - fix systemd service: use mpm from $HTTPD
 
