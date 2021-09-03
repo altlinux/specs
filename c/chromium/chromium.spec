@@ -1,7 +1,7 @@
 %def_enable  clang
 %def_disable shared_libraries
 %def_enable  widevine
-%def_enable  ffmpeg
+%def_disable ffmpeg
 %def_enable  google_api_keys
 
 %ifndef build_parallel_jobs
@@ -29,8 +29,8 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        92.0.4515.159
-Release:        alt3
+Version:        93.0.4577.63
+Release:        alt1
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -61,31 +61,23 @@ Obsoletes:      chromium-desktop-gnome
 # Unsupported target_cpu
 ExcludeArch: ppc64le armh
 
-### Start Patches
-Patch001: 0001-OPENSUSE-enables-reading-of-the-master-preference.patch
-Patch002: 0002-OPENSUSE-Compile-the-sandbox-with-fPIE-settings.patch
-Patch003: 0003-ALT-Set-appropriate-desktop-file-name-for-default-br.patch
-Patch004: 0004-DEBIAN-manpage-fixes.patch
-Patch005: 0005-ALT-gcc6-fixes.patch
-Patch006: 0006-DEBIAN-add-ps-printing-capability-gtk2.patch
-Patch007: 0007-ALT-fix-shrank-by-one-character.patch
-Patch008: 0008-ALT-Fix-last-commit-position-issue.patch
-Patch009: 0009-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
-Patch010: 0010-ALT-Use-rpath-link-and-absolute-rpath.patch
-Patch011: 0011-FEDORA-Fix-gcc-round.patch
-Patch012: 0012-ALT-openh264-always-pic-on-x86.patch
-Patch013: 0013-ALT-allow-to-override-clang-through-env-variables.patch
-Patch014: 0014-ALT-Hack-to-avoid-build-error-with-clang7.patch
-Patch015: 0015-ALT-Add-missing-header-on-aarch64.patch
-Patch016: 0016-FEDORA-vtable-symbol-undefined.patch
-Patch017: 0017-FEDORA-remove-noexcept.patch
-Patch018: 0018-ALT-disable-asm-on-x86-in-dav1d.patch
-Patch019: 0019-Move-offending-function-to-chromeos-only.patch
-Patch020: 0020-ALT-Do-not-use-no-canonical-prefixes-clang-option.patch
-Patch021: 0021-ALT-Disable-NOMERGE-attribute.patch
-Patch022: 0022-IWYU-include-limits-for-std-numeric_limits.patch
-Patch024: 0023-FEDORA-bootstrap-with-python3.patch
-### End Patches
+Patch0001: 0001-OPENSUSE-enables-reading-of-the-master-preference.patch
+Patch0002: 0002-ALT-Set-appropriate-desktop-file-name-for-default-br.patch
+Patch0003: 0003-DEBIAN-manpage-fixes.patch
+Patch0004: 0004-DEBIAN-add-ps-printing-capability-gtk2.patch
+Patch0005: 0005-ALT-fix-shrank-by-one-character.patch
+Patch0006: 0006-ALT-Fix-last-commit-position-issue.patch
+Patch0008: 0008-ALT-Use-rpath-link-and-absolute-rpath.patch
+Patch0009: 0009-ALT-openh264-always-pic-on-x86.patch
+Patch0010: 0010-ALT-allow-to-override-clang-through-env-variables.patch
+Patch0011: 0011-ALT-Hack-to-avoid-build-error-with-clang7.patch
+Patch0012: 0012-ALT-disable-asm-on-x86-in-dav1d.patch
+Patch0013: 0013-Move-offending-function-to-chromeos-only.patch
+Patch0014: 0014-ALT-Do-not-use-no-canonical-prefixes-clang-option.patch
+Patch0015: 0015-ALT-Disable-NOMERGE-attribute.patch
+Patch0016: 0016-IWYU-include-limits-for-std-numeric_limits.patch
+Patch0017: 0017-FEDORA-bootstrap-with-python3.patch
+Patch0018: 0018-ALT-Add-headers-to-fix-build.patch
 
 BuildRequires: /proc
 BuildRequires: /dev/shm
@@ -240,8 +232,6 @@ gn_arg optimize_webui=false
 gn_arg use_system_freetype=false
 gn_arg use_system_harfbuzz=false
 gn_arg link_pulseaudio=true
-gn_arg ffmpeg_branding=\"Chrome\"
-gn_arg proprietary_codecs=true
 gn_arg enable_hangout_services_extension=true
 gn_arg fieldtrial_testing_like_official_build=true
 gn_arg treat_warnings_as_errors=false
@@ -253,6 +243,10 @@ gn_arg enable_js_type_check=false
 gn_arg use_system_libwayland=true
 gn_arg use_system_wayland_scanner=true
 gn_arg use_bundled_weston=false
+
+# ffmpeg
+gn_arg ffmpeg_branding=\"Chrome\"
+gn_arg proprietary_codecs=true
 
 # Remove debug
 gn_arg is_debug=false
@@ -440,6 +434,30 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Sep 01 2021 Alexey Gladkov <legion@altlinux.ru> 93.0.4577.63-alt1
+- New version (93.0.4577.63).
+- Use internal ffmpeg.
+- Security fixes:
+  - CVE-2021-30606: Use after free in Blink.
+  - CVE-2021-30607: Use after free in Permissions.
+  - CVE-2021-30608: Use after free in Web Share.
+  - CVE-2021-30609: Use after free in Sign-In.
+  - CVE-2021-30610: Use after free in Extensions API.
+  - CVE-2021-30611: Use after free in WebRTC.
+  - CVE-2021-30612: Use after free in WebRTC.
+  - CVE-2021-30613: Use after free in Base internals.
+  - CVE-2021-30614: Heap buffer overflow in TabStrip.
+  - CVE-2021-30615: Cross-origin data leak in Navigation.
+  - CVE-2021-30616: Use after free in Media.
+  - CVE-2021-30617: Policy bypass in Blink.
+  - CVE-2021-30618: Inappropriate implementation in DevTools.
+  - CVE-2021-30619: UI Spoofing in Autofill.
+  - CVE-2021-30620: Insufficient policy enforcement in Blink.
+  - CVE-2021-30621: UI Spoofing in Autofill.
+  - CVE-2021-30622: Use after free in WebApp Installs.
+  - CVE-2021-30623: Use after free in Bookmarks.
+  - CVE-2021-30624: Use after free in Autofill.
+
 * Tue Aug 31 2021 Alexey Gladkov <legion@altlinux.ru> 92.0.4515.159-alt3
 - Drop extra dependencies and remove own xdg-settings and xdg-mime.
 
