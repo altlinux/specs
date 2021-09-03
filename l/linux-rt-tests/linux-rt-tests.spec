@@ -5,7 +5,7 @@
 
 # rt-tests is taken by perl tests for RT
 Name:     linux-rt-tests
-Version:  2.1
+Version:  2.2
 Release:  alt1
 
 Summary:  Programs that test various rt-linux features
@@ -39,6 +39,9 @@ hwlatdetect, hackbench) to test various Real Time Linux features.
 %_man8dir/*.8*
 
 %changelog
+* Fri Sep 03 2021 Vitaly Chikunov <vt@altlinux.org> 2.2-alt1
+- Update to v2.2 (2021-08-30).
+
 * Fri Jul 02 2021 Vitaly Chikunov <vt@altlinux.org> 2.1-alt1
 - Update to v2.1 (2021-06-29).
 
