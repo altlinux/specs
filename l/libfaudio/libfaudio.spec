@@ -5,7 +5,7 @@
 %def_disable static
 
 Name: libfaudio
-Version: 21.02
+Version: 21.08
 Release: alt0.1
 Summary: Accuracy-focused XAudio reimplementation for open platforms
 
@@ -56,6 +56,7 @@ linked against %name library.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %_cmake
@@ -72,7 +73,7 @@ chrpath -d %buildroot%{_libdir}/*.so.*.*
 %files -n %name-devel
 %_includedir/*
 %_libdir/*.so
-%_libdir/cmake/FAudio
+%_datadir/cmake/FAudio
 %_pkgconfigdir/*.pc
 
 %if_enabled static
@@ -81,6 +82,13 @@ chrpath -d %buildroot%{_libdir}/*.so.*.*
 %endif
 
 %changelog
+* Fri Sep 03 2021 L.A. Kostis <lakostis@altlinux.ru> 21.08-alt0.1
+- 21.08.
+
+* Tue Jun 15 2021 L.A. Kostis <lakostis@altlinux.ru> 21.06-alt0.1
+- 21.06.
+- Fix cmake files location.
+
 * Mon Feb 15 2021 L.A. Kostis <lakostis@altlinux.ru> 21.02-alt0.1
 - 21.02.
 - Add pkgconfig support.
