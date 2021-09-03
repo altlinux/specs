@@ -1,4 +1,5 @@
 %define		php_extension	opcache
+%{?optflags_lto:%global optflags_lto %nil}
 
 Name:	 	php%_php_suffix-%php_extension
 Version:	%php_version

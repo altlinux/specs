@@ -1,4 +1,6 @@
 %define php_sapi cli
+#  https://bugs.php.net/bug.php?id=77445
+%{?optflags_lto:%global optflags_lto %nil}
 
 %ifarch %mips
 %add_optflags -DSLJIT_IS_FPU_AVAILABLE=0
@@ -7,7 +9,7 @@
 %define _php_version  %version
 %define _php_major  7
 %define _php_minor  4
-%define _php_release_version 22
+%define _php_release_version 23
 %define _php_suffix %_php_major
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -58,6 +60,7 @@ Provides: php-engine = %EVR
 Provides: php = %EVR
 
 BuildRequires: chrpath libmm-devel libxml2-devel ssmtp termutils zlib-devel re2c bison alternatives libsqlite3-devel
+BuildRequires: libargon2-devel
 
 # for tests
 BuildRequires: /proc
@@ -206,6 +209,7 @@ touch configure.ac
 	--with-config-file-path=%php_sysconfdir/ \
 	--with-config-file-scan-dir=%php_sysconfdir/%php_sapi/php.d/ \
 	--with-pic \
+	--with-password-argon2 \
 	--enable-rtld-now \
 	--enable-cli \
 	--disable-cgi \
@@ -446,6 +450,10 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Thu Sep 02 2021 Anton Farygin <rider@altlinux.ru> 7.4.23-alt1
+- 7.4.23
+- built with libargon2
+
 * Mon Aug 02 2021 Anton Farygin <rider@altlinux.ru> 7.4.22-alt1
 - 7.4.22
 

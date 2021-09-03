@@ -10,7 +10,7 @@
 
 Name: apache2-mod_php%_php_suffix
 Version: %php_version
-Release: %php_release.2
+Release: %php_release
 
 Summary: The php HTML-embedded scripting language for use with Apache2
 
@@ -27,6 +27,7 @@ BuildRequires: php-devel = %php_version
 
 BuildRequires(pre): rpm-macros-apache2
 BuildRequires: apache2-devel apache2-httpd-worker libmm-devel libxml2-devel zlib-devel libsqlite3-devel
+BuildRequires: libargon2-devel
 
 Requires: php%_php_suffix = %php_version
 Requires: php%_php_suffix >= %php_version-%php_release
