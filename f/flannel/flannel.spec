@@ -1,10 +1,10 @@
 
-%global import_path github.com/coreos/flannel
+%global import_path github.com/flannel-io/flannel
 %global _unpackaged_files_terminate_build 1
 %define _libexecdir /usr/libexec
 
 Name: flannel
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 Summary: flannel is a network fabric for containers
 Group: Development/Other
@@ -38,7 +38,7 @@ CGO_ENABLED=0 \
 %endif
 go build -ldflags " \
     -s -w \
-    -X github.com/coreos/flannel/version.Version=%version \
+    -X github.com/flannel-io/flannel/version.Version=%version \
     " -o dist ./...
 
 %install
@@ -60,6 +60,9 @@ install -D -p -m 0755 %SOURCE4 %buildroot%_tmpfilesdir/%name.conf
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Sat Sep 04 2021 Alexey Shabalin <shaba@altlinux.org> 0.14.0-alt1
+- new version 0.14.0
+
 * Sat Nov 14 2020 Alexey Shabalin <shaba@altlinux.org> 0.13.0-alt1
 - new version 0.13.0
 
