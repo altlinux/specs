@@ -3,8 +3,8 @@
 %define modname ceph-deploy
 
 Name: ceph-deploy
-Version: 2.0.1
-Release: alt3
+Version: 2.1.0
+Release: alt1
 
 Summary: Deploy Ceph with minimal infrastructure
 License: MIT
@@ -13,21 +13,18 @@ Url: https://github.com/ceph/ceph-deploy
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch1: change-version.patch
 
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: openssh-clients
-BuildRequires: git
 
-BuildRequires: python3-module-virtualenv
 BuildRequires: python3-module-remoto >= 1.1.4
 BuildRequires: python3-module-sphinx
 
 # Tox tests requirements
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-mock
-BuildRequires: python3-module-tox
+#BuildRequires: python3-module-pytest
+#BuildRequires: python3-module-mock
+#BuildRequires: python3-module-tox
 
 Requires: python3-module-%name = %EVR
 
@@ -74,9 +71,6 @@ This package contains tests for python3-module-%name
 %prep
 %setup
 
-# Use only for version after release, delete when updating to a new version
-%patch1 -p1
-
 sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
@@ -107,6 +101,9 @@ install -pDm644 docs/build/man/%name.1 %buildroot%_man1dir/%name.1
 
 
 %changelog
+* Sat Sep 04 2021 Alexey Shabalin <shaba@altlinux.org> 2.1.0-alt1
+- 2.1.0
+
 * Tue Feb 18 2020 Alexey Shabalin <shaba@altlinux.org> 2.0.1-alt3
 - master snapshot bcb968a13e0f2643507b06aa8f6249e360e8e742
 
