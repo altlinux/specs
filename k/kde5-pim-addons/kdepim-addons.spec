@@ -18,7 +18,7 @@
 
 
 Name: kde5-pim-addons
-Version: 21.08.0
+Version: 21.08.1
 Release: alt1
 %K5init
 
@@ -297,6 +297,9 @@ KF5 library
 %_K5lib/libkmailconfirmbeforedeleting.so.*
 
 %changelog
+* Thu Sep 02 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt1
+- new version
+
 * Thu Aug 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
 - new version
 

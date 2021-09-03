@@ -1,7 +1,7 @@
 %define rname akonadi-search
 
 Name: kde5-%rname
-Version: 21.08.0
+Version: 21.08.1
 Release: alt1
 %K5init altplace
 
@@ -119,6 +119,9 @@ sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefau
 %_K5lib/libKF5AkonadiSearchDebug.so.*
 
 %changelog
+* Thu Sep 02 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt1
+- new version
+
 * Thu Aug 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
 - new version
 
