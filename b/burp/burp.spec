@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name:		burp
-Version:	2.5.2
+Version:	2.5.4
 Release:	alt1
 Summary:	Burp is a network-based backup and restore program
 License:	AGPL-3.0 and BSD and GPLv2+ and LGPLv2+
@@ -97,6 +97,9 @@ fi
 %preun_service burp-server
 
 %changelog
+* Fri Sep 03 2021 Vitaly Chikunov <vt@altlinux.org> 2.5.4-alt1
+- Update to 2.5.4 (2021-08-14).
+
 * Sat Jul 03 2021 Vitaly Chikunov <vt@altlinux.org> 2.5.2-alt1
 - Update to 2.5.2 (2021-07-02).
 - Make burp configs non-root by default.
