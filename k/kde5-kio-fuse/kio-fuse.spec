@@ -6,13 +6,15 @@
 
 Name: kde5-%rname
 Version: 5.0.1
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
 Summary: Fuse interface for KIO
 Url: http://www.kde.org
 License: GPL-3.0-or-later
+
+Requires: /usr/bin/fusermount3
 
 Source: %rname-%version.tar
 Patch1: alt-tmpfiles-dir.patch
@@ -65,5 +67,8 @@ developing applications that use %name.
 /lib/tmpfiles.d/kio-fuse-tmpfiles.conf
 
 %changelog
+* Fri Sep 03 2021 Sergey V Turchin <zerg@altlinux.org> 5.0.1-alt2
+- fix requires
+
 * Thu Sep 02 2021 Sergey V Turchin <zerg@altlinux.org> 5.0.1-alt1
 - initial build (closes: 40679)
