@@ -72,7 +72,7 @@
 %def_with storage_zfs
 %def_without storage_sheepdog
 %def_without storage_vstorage
-%ifarch %ix86 x86_64 ppc64le
+%ifarch %ix86 x86_64 ppc64le aarch64 s390x
 %def_with numactl
 %else
 %def_without numactl
@@ -168,7 +168,7 @@
 %endif
 
 Name: libvirt
-Version: 7.4.0
+Version: 7.7.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -797,6 +797,7 @@ tar -xf %SOURCE2 -C src/keycodemapdb --strip-components 1
 		-Ddriver_vmware=%{enabled_ifwith vmware} \
 		-Ddriver_esx=%{enabled_ifwith esx} \
 		-Ddriver_hyperv=%{enabled_ifwith hyperv} \
+		-Ddriver_ch=disabled \
 		-Ddriver_network=%{enabled_ifwith network} \
 		-Dstorage_fs=%{enabled_ifwith storage_fs} \
 		-Dstorage_lvm=%{enabled_ifwith storage_lvm} \
@@ -1359,6 +1360,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Thu Sep 02 2021 Alexey Shabalin <shaba@altlinux.org> 7.7.0-alt1
+- 7.7.0 (Fixes: CVE-2021-3667, CVE-2021-3631)
+
 * Tue Jun 15 2021 Alexey Shabalin <shaba@altlinux.org> 7.4.0-alt1
 - 7.4.0
 

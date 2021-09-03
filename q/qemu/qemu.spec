@@ -30,6 +30,7 @@
 %def_enable vhost_scsi
 %def_enable vhost_vsock
 %def_enable vhost_user_fs
+%def_enable bpf
 %def_enable opengl
 %def_enable guest_agent
 %def_enable tools
@@ -46,7 +47,7 @@
 %def_enable glusterfs
 %def_enable gtk
 %def_enable gnutls
-%def_enable nettle
+%def_disable nettle
 %def_disable gcrypt
 %def_enable virglrenderer
 %def_enable tpm
@@ -116,21 +117,21 @@
 %define block_drv_list curl dmg %{?_enable_glusterfs:gluster} %{?_enable_libiscsi:iscsi} %{?_enable_libnfs:nfs} %{?_enable_rbd:rbd} %{?_enable_libssh:ssh}
 %define ui_list %{?_enable_gtk:gtk} %{?_enable_curses:curses} %{?_enable_sdl:sdl} %{?_enable_opengl:opengl}
 %define ui_spice_list %{?_enable_spice:app core}
-%define device_usb_list redirect smartcard
-%define device_display_list virtio-gpu-pci %{?_enable_virglrenderer:virtio-gpu} virtio-vga
-%define qemu_arches aarch64 alpha arm avr cris hppa m68k microblaze mips moxie nios2 or1k ppc riscv rx s390x sh4 sparc tricore x86 xtensa
+%define device_usb_list redirect smartcard host
+%define device_display_list virtio-gpu-pci %{?_enable_virglrenderer:virtio-gpu virtio-gpu-gl virtio-gpu-pci-gl virtio-vga-gl} virtio-vga %{?_enable_spice:qxl}
+%define qemu_arches aarch64 alpha arm avr cris hppa m68k microblaze mips nios2 or1k ppc riscv rx s390x sh4 sparc tricore x86 xtensa
 
 %global _group vmusers
 %global rulenum 90
 %global _libexecdir /usr/libexec
 %global _localstatedir /var
-%global firmwarepath /usr/share/qemu:/usr/share/seabios:/usr/share/seavgabios:/usr/share/ipxe:/usr/share/ipxe.efi
+%global firmwaredirs "%_datadir/qemu:%_datadir/seabios:%_datadir/seavgabios:%_datadir/ipxe:%_datadir/ipxe.efi"
 
 # }}}
 
 Name: qemu
-Version: 6.0.0
-Release: alt2
+Version: 6.1.0
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -165,8 +166,8 @@ Requires: %name-user = %EVR
 BuildRequires(pre): rpm-build-python3
 BuildRequires: meson
 BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static libpcre-devel-static libattr-devel-static
-BuildRequires: glib2-devel >= 2.48 libgio-devel
-BuildRequires: makeinfo perl-devel python3-module-sphinx
+BuildRequires: glib2-devel >= 2.56 libgio-devel
+BuildRequires: makeinfo perl-devel python3-module-sphinx python3-module-sphinx_rtd_theme
 BuildRequires: libcap-ng-devel
 BuildRequires: libxfs-devel
 BuildRequires: zlib-devel libcurl-devel >= 7.29.0 libpci-devel glibc-kernheaders
@@ -185,27 +186,28 @@ BuildRequires: python3-devel
 %{?_enable_vde:BuildRequires: libvde-devel}
 %{?_enable_aio:BuildRequires: libaio-devel}
 %{?_enable_io_uring:BuildRequires: liburing-devel}
+%{?_enable_bpf:BuildRequires: libbpf-devel}
 %{?_enable_spice:BuildRequires: libspice-server-devel >= 0.12.5 spice-protocol >= 0.12.3}
 BuildRequires: libuuid-devel
 %{?_enable_smartcard:BuildRequires: libcacard-devel >= 2.5.1}
 %{?_enable_usb_redir:BuildRequires: libusbredir-devel >= 0.5}
 %{?_enable_opengl:BuildRequires: libepoxy-devel libgbm-devel}
 %{?_enable_guest_agent:BuildRequires: glib2-devel >= 2.38}
-%{?_enable_rbd:BuildRequires: ceph-devel}
+%{?_enable_rbd:BuildRequires: ceph-devel >= 1.12.0}
 %{?_enable_libiscsi:BuildRequires: libiscsi-devel >= 1.9.0}
 %{?_enable_libnfs:BuildRequires: libnfs-devel >= 1.9.3}
 %{?_enable_zstd:BuildRequires: libzstd-devel >= 1.4.0}
 %{?_enable_seccomp:BuildRequires: libseccomp-devel >= 2.3.0}
 %{?_enable_glusterfs:BuildRequires: pkgconfig(glusterfs-api)}
-%{?_enable_gtk:BuildRequires: libgtk+3-devel >= 3.22.0 libvte3-devel >= 0.32.0}
-%{?_enable_gnutls:BuildRequires: libgnutls-devel >= 3.1.18}
-%{?_enable_nettle:BuildRequires: libnettle-devel >= 2.7.1}
-%{?_enable_gcrypt:BuildRequires: libgcrypt-devel >= 1.5.0}
+%{?_enable_gtk:BuildRequires: libgtk+3-devel >= 3.22.0 pkgconfig(vte-2.91)}
+%{?_enable_gnutls:BuildRequires: libgnutls-devel >= 3.5.18}
+%{?_enable_nettle:BuildRequires: libnettle-devel >= 3.4}
+%{?_enable_gcrypt:BuildRequires: libgcrypt-devel >= 1.8.0}
 BuildRequires: libpam-devel
 BuildRequires: libtasn1-devel
 BuildRequires: libslirp-devel
 %{?_enable_virglrenderer:BuildRequires: pkgconfig(virglrenderer)}
-%{?_enable_libssh:BuildRequires: libssh-devel}
+%{?_enable_libssh:BuildRequires: libssh-devel >= 0.8.7}
 %{?_enable_libusb:BuildRequires: libusb-devel >= 1.0.13}
 %{?_enable_rdma:BuildRequires: rdma-core-devel}
 %{?_enable_numa:BuildRequires: libnuma-devel}
@@ -246,8 +248,13 @@ Requires: %name-block-dmg = %EVR     \
 Requires: %name-device-display-virtio-gpu-pci = %EVR        \
 Requires: %name-device-display-virtio-vga = %EVR            \
 %{?_enable_virglrenderer:Requires: %name-device-display-virtio-gpu = %EVR} \
+%{?_enable_virglrenderer:Requires: %name-device-display-virtio-gpu-gl = %EVR} \
+%{?_enable_virglrenderer:Requires: %name-device-display-virtio-gpu-pci-gl = %EVR} \
+%{?_enable_virglrenderer:Requires: %name-device-display-virtio-vga-gl = %EVR} \
+%{?_enable_virglrenderer:Requires: %name-device-display-vhost-user-gpu = %EVR} \
 %{?_enable_brlapi:Requires: %name-char-baum = %EVR}         \
 %{?_enable_spice:Requires: %name-char-spice = %EVR}         \
+Requires: %name-device-usb-host = %EVR                  \
 Requires: %name-device-usb-redirect = %EVR                  \
 Requires: %name-device-usb-smartcard = %EVR
 
@@ -276,7 +283,6 @@ to use.
 %package common
 Summary: QEMU CPU Emulator - common files
 Group: Emulators
-BuildArch: noarch
 Requires(pre): control >= 0.7.2
 Requires(pre): shadow-utils sysvinit-utils
 Requires: %name-img = %EVR
@@ -293,6 +299,7 @@ Group: Emulators
 BuildArch: noarch
 Requires: %name-common = %EVR
 Requires: %name-tools = %EVR
+%{?_enable_mpath:Requires: %name-pr-helper = %EVR}
 Conflicts: %name-img < %EVR
 %{expand:%(for i in %qemu_arches; do echo Requires: %%name-system-$i = %%EVR; done)}
 
@@ -421,6 +428,29 @@ Conflicts: %name-system < 2.11.0-alt2
 This package contains various QEMU related tools, including a bridge helper,
 a virtfs helper.
 
+%package pr-helper
+Summary: qemu-pr-helper utility for %name
+Group: Emulators
+
+%description pr-helper
+This package provides the qemu-pr-helper utility that is required for certain
+SCSI features.
+
+%package tests
+Summary: tests for the %name package
+Group: Emulators
+Requires: %name = %EVR
+
+%define testsdir %_libdir/%name/tests-src
+%add_python3_path %testsdir
+
+%description tests
+The %name-tests rpm contains tests that can be used to verify
+the functionality of the installed %name package
+
+Install this package if you want access to the avocado_qemu
+tests, or qemu-iotests.
+
 %global do_package_block() \
 %%package block-%%{1} \
 Summary: QEMU %%{1} block driver \
@@ -454,10 +484,10 @@ This package provides the additional %%{1} audio driver for QEMU. \
 Summary: QEMU %%{1} UI driver \
 Group: Emulators \
 Requires: %%name-common = %%EVR \
-%%if %%{1} == gtk \
+%%if "%%{1}" == "gtk" \
 Requires: %%name-ui-opengl = %%EVR \
 %%endif \
-%%if %%{1} == sdl \
+%%if "%%{1}" == "sdl" \
 Requires: %%name-ui-opengl = %%EVR \
 %%endif \
 \
@@ -474,10 +504,10 @@ This package provides the additional %%{1} UI for QEMU. \
 Summary: QEMU spice-%%{1} UI driver \
 Group: Emulators \
 Requires: %%name-common = %%EVR \
-%%if %%{1} == "core" \
+%%if "%%{1}" == "core" \
 Requires: %%name-ui-opengl = %%EVR \
 %%endif \
-%%if %%{1} == "app" \
+%%if "%%{1}" == "app" \
 Requires: %%name-ui-spice-core = %%EVR \
 Requires: %%name-char-spice = %%EVR \
 %%endif \
@@ -490,7 +520,7 @@ This package provides the additional %%{1} UI for QEMU. \
 
 %{expand:%(for i in %ui_spice_list; do echo %%do_package_ui_spice $i; done)}
 
-%package  ui-egl-headless
+%package ui-egl-headless
 Summary: QEMU EGL headless driver
 Group: Emulators
 Requires: %name-common = %EVR
@@ -499,14 +529,13 @@ Requires: %name-ui-opengl = %EVR
 %description ui-egl-headless
 This package provides the additional egl-headless UI for QEMU.
 
-%package device-display-qxl
-Summary: QEMU QXL display device
+%package device-display-vhost-user-gpu
 Group: Emulators
+Summary: QEMU vhost-user-gpu display device
 Requires: %name-common = %EVR
-Requires: %name-ui-spice-core = %EVR
 
-%description device-display-qxl
-This package provides the QXL display device for QEMU.
+%description device-display-vhost-user-gpu
+This package provides the vhost-user-gpu display device for QEMU.
 
 %package device-display-virtio-gpu-ccw
 Group: Emulators
@@ -521,6 +550,9 @@ This package provides the virtio-gpu-ccw display device for QEMU.
 Summary: QEMU display-%%{1} device \
 Group: Emulators \
 Requires: %%name-common = %%EVR \
+%%if "%%{1}" == "qxl" \
+Requires: %%name-ui-spice-core = %%EVR \
+%%endif \
 \
 %%description device-display-%%{1} \
 This package provides the additional device display-%%{1} for QEMU. \
@@ -611,13 +643,13 @@ Group: Emulators \
 Requires: %%name-common = %%EVR  \
 Conflicts: %%name-system < 2.10.1-alt1 \
 \
-%%if %%{1} == x86 \
+%%if "%%{1}" == "x86" \
 Requires: seabios >= 1.7.4-alt2 seavgabios edk2-ovmf libseccomp >= 2.2.3 qboot \
 %%endif \
-%%if %%{1} == aarch64 \
+%%if "%%{1}" == "aarch64" \
 Requires: edk2-aarch64 \
 %%endif \
-%%if %%{1} == ppc \
+%%if "%%{1}" == "ppc" \
 Requires: seavgabios \
 %%endif \
 \
@@ -625,9 +657,11 @@ Requires: seavgabios \
 This package provides the system emulator for %%{1}. \
 %%files system-%%{1}-core \
 \
-%%if %%{1} == x86 \
+%%if "%%{1}" == "x86" \
 %%_bindir/qemu-system-i386 \
 %%_man1dir/qemu-system-i386.1* \
+%%_libdir/%%name/accel-tcg-i386.so \
+%%_libdir/%%name/accel-tcg-x86_64.so \
 %%_datadir/%%name/bios* \
 %%_datadir/%%name/sgabios.bin \
 %%_datadir/%%name/linuxboot* \
@@ -636,32 +670,32 @@ This package provides the system emulator for %%{1}. \
 %%_datadir/%%name/pvh.bin \
 %%endif \
 \
-%%if %%{1} == alpha \
+%%if "%%{1}" == "alpha" \
 %%_datadir/%%name/palcode-clipper \
 %%endif \
 \
-%%if %%{1} == arm \
+%%if "%%{1}" == "arm" \
 %%_datadir/%%name/npcm7xx_bootrom.bin \
 %%endif \
 \
-%%if %%{1} == hppa \
+%%if "%%{1}" == "hppa" \
 %%_datadir/%%name/hppa-firmware.img \
 %%endif \
 \
-%%if %%{1} == microblaze \
+%%if "%%{1}" == "microblaze" \
 %%_datadir/%%name/petalogix*.dtb \
 %%endif \
 \
-%%if %%{1} == s390x \
+%%if "%%{1}" == "s390x" \
 %%_datadir/%%name/s390-*.img \
 %%endif \
 \
-%%if %%{1} == sparc \
+%%if "%%{1}" == "sparc" \
 %%_datadir/%%name/QEMU* \
 %%_datadir/%%name/openbios-sparc* \
 %%endif \
 \
-%%if %%{1} == ppc \
+%%if "%%{1}" == "ppc" \
 %%_datadir/%%name/bamboo.dtb \
 %%_datadir/%%name/canyonlands.dtb \
 %%_datadir/%%name/qemu_vga.ndrv \
@@ -671,7 +705,7 @@ This package provides the system emulator for %%{1}. \
 %%_datadir/%%name/slof.bin \
 %%endif \
 \
-%%if %%{1} == riscv \
+%%if "%%{1}" == "riscv" \
 %%_datadir/%%name/opensbi* \
 %%endif \
 \
@@ -691,11 +725,6 @@ tar -xf %SOURCE102 -C tests/fp/berkeley-softfloat-3 --strip-components 1
 cp -f %SOURCE2 qemu-kvm.control.in
 
 %build
-export CFLAGS="%optflags"
-# --build-id option is used for giving info to the debug packages.
-export extraldflags="-Wl,--build-id"
-export buildldflags="VL_LDFLAGS=-Wl,--build-id"
-
 run_configure() {
 # non-GNU configure
     ../configure \
@@ -706,12 +735,13 @@ run_configure() {
 	--mandir=%_mandir \
 	--libexecdir=%_libexecdir \
 	--localstatedir=%_localstatedir \
+	--extra-cflags="%optflags" \
 	--with-pkgversion=%name-%version-%release \
 	--disable-werror \
 	--disable-debug-tcg \
 	--disable-sparse \
 	--disable-strip \
-	--firmwarepath=%firmwarepath \
+	--firmwarepath="%firmwaredirs" \
 	 "$@"
 }
 
@@ -721,11 +751,12 @@ pushd build-static
 # non-GNU configure
 run_configure \
 	--static \
+	--disable-lto \
 	--enable-user \
 	--enable-linux-user \
 	--enable-attr \
 	--enable-tcg \
-	--extra-ldflags="$extraldflags -Wl,-Ttext-segment=0x60000000" \
+	--extra-ldflags="-Wl,-Ttext-segment=0x60000000" \
 	--audio-drv-list="" \
 	--disable-auth-pam \
 	--disable-avx2 \
@@ -747,6 +778,7 @@ run_configure \
 	--disable-debug-tcg \
 	--disable-dmg \
 	--disable-docs \
+	--disable-bpf \
 	--disable-fdt \
 	--disable-gcrypt \
 	--disable-glusterfs \
@@ -794,12 +826,12 @@ run_configure \
 	--disable-sdl \
 	--disable-sdl-image \
 	--disable-seccomp \
-	--disable-sheepdog \
 	--disable-slirp \
 	--disable-smartcard \
 	--disable-snappy \
 	--disable-sparse \
 	--disable-spice \
+	--disable-spice-protocol \
 	--disable-system \
 	--disable-tcmalloc \
 	--disable-tools \
@@ -867,6 +899,7 @@ run_configure \
 	--enable-user \
 	--enable-linux-user \
 	--enable-pie \
+	--enable-lto \
 	--enable-modules \
 	%{?_enable_sdl:--enable-sdl} \
 	%{?_disable_curses:--disable-curses} \
@@ -887,6 +920,7 @@ run_configure \
 	--enable-curl \
 	%{subst_enable virglrenderer} \
 	%{subst_enable tpm} \
+	%{subst_enable bpf} \
 	%{subst_enable xen} \
 	%{?_enable_vhost_crypto:--enable-vhost-crypto} \
 	%{?_enable_vhost_net:--enable-vhost-net} \
@@ -996,6 +1030,37 @@ install -m 0644 %SOURCE12 %buildroot%_sysconfdir/%name
 install -D -p -m 0644 qemu.sasl %buildroot%_sysconfdir/sasl2/%name.conf
 %endif
 
+install -m 0644 scripts/dump-guest-memory.py %buildroot%_datadir/%name
+
+# Install simpletrace
+install -m 0755 scripts/simpletrace.py %buildroot%_datadir/%name/simpletrace.py
+mkdir -p %buildroot%_datadir/%name/tracetool
+install -m 0644 -t %buildroot%_datadir/%name/tracetool scripts/tracetool/*.py
+mkdir -p %buildroot%_datadir/%name/tracetool/backend
+install -m 0644 -t %buildroot%_datadir/%name/tracetool/backend scripts/tracetool/backend/*.py
+mkdir -p %buildroot%_datadir/%name/tracetool/format
+install -m 0644 -t %buildroot%_datadir/%name/tracetool/format scripts/tracetool/format/*.py
+
+
+# TODO: add tests subpackage
+# Create new directories and put them all under tests-src
+#mkdir -p %buildroot%testsdir/python
+#mkdir -p %buildroot%testsdir/tests
+#mkdir -p %buildroot%testsdir/tests/acceptance
+#mkdir -p %buildroot%testsdir/tests/qemu-iotests
+#mkdir -p %buildroot%testsdir/scripts/qmp
+
+# Install avocado_qemu tests
+#cp -R tests/acceptance/* %buildroot%testsdir/tests/acceptance/
+
+# Install qemu.py and qmp/ scripts required to run avocado_qemu tests
+#cp -R python/qemu %buildroot%testsdir/python
+#cp -R scripts/qmp/* %buildroot%testsdir/scripts/qmp
+#install -p -m 0755 tests/Makefile.include %buildroot%testsdir/tests/
+
+# Install qemu-iotests
+#cp -R tests/qemu-iotests/* %buildroot%testsdir/tests/qemu-iotests/
+
 %find_lang %name
 
 # todo: build new openbios and SLOF
@@ -1017,12 +1082,11 @@ rm -f %buildroot%_datadir/%name/bios-microvm.bin
 # Provided by package qboot
 rm -f %buildroot%_datadir/%name/qboot.rom
 # Provided by package edk2
-rm %buildroot%_datadir/%name/edk2-*
-rm %buildroot%_datadir/%name/firmware/*
+rm -f %buildroot%_datadir/%name/edk2-*
+rm -f %buildroot%_datadir/%name/firmware/*
 
-rm %buildroot%_datadir/%name/qemu-nsis.bmp
-
-
+rm -f %buildroot%_datadir/%name/qemu-nsis.bmp
+rm -rf %buildroot%_includedir
 # the pxe ipxe images will be symlinks to the images on
 # /usr/share/ipxe, as QEMU doesn't know how to look
 # for other paths, yet.
@@ -1102,9 +1166,9 @@ echo "%_binfmtdir/qemu-i486-static.conf" >> user-static-binfmt-x86.list
 %ifnarch %archs_skip_tests
 
 %if_enabled archs_ignore_test_failures
-%make V=1 check ||:
+%make_build V=1 check ||:
 %else
-%make V=1 check
+%make_build V=1 check
 %endif # archs_ignore_test_failures
 
 %endif # archs_skip_tests
@@ -1122,12 +1186,17 @@ fi
 %post_control -s vmusers kvm
 
 %files
+
+%files aux
+%dir %_sysconfdir/%name
+%dir %docdir/
+%docdir/LICENSE
+
 %files common
 %dir %_datadir/%name
 %_desktopdir/qemu.desktop
 %_iconsdir/hicolor/*/apps/*
 %_datadir/%name/keymaps
-%_datadir/%name/trace-events-all
 %_datadir/%name/*.rom
 %_datadir/%name/vgabios*.bin
 %dir %_datadir/%name/firmware
@@ -1141,10 +1210,19 @@ fi
 %_man7dir/qemu-ga-ref.*
 %_man7dir/qemu-qmp-ref.*
 %_man7dir/qemu-cpu-models.*
-%_man7dir/qemu-storage-daemon-qmp-ref.*
+
+%config(noreplace) %_sysconfdir/%name/bridge.conf
+%attr(4710,root,vmusers) %_libexecdir/qemu-bridge-helper
+
+%_libexecdir/virtiofsd
+%_man1dir/virtiofsd.*
+%dir %_datadir/qemu/vhost-user
+%_datadir/qemu/vhost-user/50-qemu-virtiofsd.json
+
+%_libexecdir/virtfs-proxy-helper
+%_man1dir/virtfs-proxy-helper.*
 
 %files system -f %name.lang
-
 %if_enabled have_kvm
 %files kvm
 %files kvm-core
@@ -1158,7 +1236,6 @@ fi
 
 %files user
 %files user-binfmt
-
 %if_enabled user_static
 %files user-static
 %files user-static-binfmt
@@ -1170,30 +1247,30 @@ fi
 %_bindir/qemu-nbd
 %_man1dir/qemu-img.1*
 %_man8dir/qemu-nbd.8*
-
-%files tools
-%_libexecdir/virtfs-proxy-helper
-%_man1dir/virtfs-proxy-helper.*
-%attr(4710,root,vmusers) %_libexecdir/qemu-bridge-helper
-%if_enabled virglrenderer
-%_libexecdir/vhost-user-gpu
-%_datadir/%name/vhost-user/50-qemu-gpu.json
-%endif
-%_libexecdir/virtiofsd
-%_man1dir/virtiofsd.*
-%_datadir/qemu/vhost-user/50-qemu-virtiofsd.json
 %_bindir/qemu-storage-daemon
 %_man1dir/qemu-storage-daemon.*
+%_man7dir/qemu-storage-daemon-qmp-ref.*
+
 %if_enabled mpath
+%files -n qemu-pr-helper
 %_bindir/qemu-pr-helper
 %_unitdir/qemu-pr-helper.service
 %_unitdir/qemu-pr-helper.socket
 %_man8dir/qemu-pr-helper.*
 %endif
+
+%files tools
 %_bindir/elf2dmp
 %_bindir/qemu-edid
 %_bindir/qemu-keymap
-%config(noreplace) %_sysconfdir/%name/bridge.conf
+%_datadir/%name/dump-guest-memory.*
+%_datadir/%name/simpletrace.*
+%_datadir/%name/tracetool
+%_datadir/%name/trace-events-all
+
+%files tests
+#%testsdir
+%_libdir/%name/accel-qtest-*.so
 
 %if_enabled opengl
 %files ui-egl-headless
@@ -1208,13 +1285,16 @@ fi
 %if_enabled spice
 %files char-spice
 %_libdir/qemu/chardev-spice.so
-
-%files device-display-qxl
-%_libdir/qemu/hw-display-qxl.so
 %endif
 
 %files device-display-virtio-gpu-ccw
 %_libdir/qemu/hw-s390x-virtio-gpu-ccw.so
+
+%if_enabled virglrenderer
+%files device-display-vhost-user-gpu
+%_libexecdir/vhost-user-gpu
+%_datadir/%name/vhost-user/50-qemu-gpu.json
+%endif
 
 %files guest-agent
 %_bindir/qemu-ga
@@ -1232,12 +1312,31 @@ fi
 %docdir/
 %exclude %docdir/LICENSE
 
-%files aux
-%dir %_sysconfdir/%name
-%dir %docdir/
-%docdir/LICENSE
-
 %changelog
+* Thu Sep 02 2021 Alexey Shabalin <shaba@altlinux.org> 6.1.0-alt1
+- 6.1.0.
+- Enabled build with bpf support.
+- Disabled build with nettle support.
+- Added subpackages:
+  + device-display-virtio-gpu-gl
+  + device-display-virtio-gpu-pci-gl
+  + device-display-virtio-vga-gl
+  + device-display-vhost-user-gpu
+  + device-usb-host
+- Split out qemu-pr-helper subpackage.
+- Moved qemu-storage-daemon from qemu-tools to qemu-img subpackage.
+- Moved virtfs-proxy-helper, qemu-bridge-helper, virtiofsd
+  from tools to common subpackage.
+- Fixes for the following security vulnerabilities:
+  + CVE-2021-3582
+  + CVE-2021-3607
+  + CVE-2021-3608
+  + CVE-2021-3545
+  + CVE-2021-3544
+  + CVE-2021-3546
+  + CVE-2021-3527
+  + CVE-2021-3713
+
 * Fri May 28 2021 Alexey Shabalin <shaba@altlinux.org> 6.0.0-alt2
 - Update udev rules and control facilities.
 
