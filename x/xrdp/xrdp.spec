@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
-Version: 0.9.16
-Release: alt2
+Version: 0.9.17
+Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
 
@@ -33,6 +33,7 @@ Patch12: xrdp-alt-startwm.patch
 Patch13: alt-add-russian-keyboard.patch
 Patch14: xrdp-alt-add-comment-about-windows_xp.patch
 Patch16: xrdp-alt-ppc64le-support.patch
+Patch17: xrdp-alt-fix-rfb_get_eds_status_msg.patch
 
 # Fedora patches
 Patch21: xrdp-0.9.4-service.patch
@@ -105,6 +106,7 @@ tar xf %SOURCE6
 %patch13 -p1
 %patch14 -p1
 %patch16 -p1
+%patch17 -p1
 %patch21 -p1
 %patch22 -p1
 %patch25 -p1
@@ -268,6 +270,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Wed Sep 01 2021 Andrey Cherepanov <cas@altlinux.org> 0.9.17-alt1
+- New version.
+
 * Fri Jun 11 2021 Andrey Cherepanov <cas@altlinux.org> 0.9.16-alt2
 - Do not replace sesman.ini and xrdp.ini during package update.
 
