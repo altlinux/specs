@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _libexecdir %_usr/libexec
 
 Name: vdo
-Version: 6.2.5.41
-Release: alt1.1
+Version: 6.2.5.74
+Release: alt1
 
 Summary: Management tools for Virtual Data Optimizer
 License: GPLv2
@@ -53,10 +54,16 @@ sed -i 's,-Werror,& -Wno-error=ignored-qualifiers,' utils/vdo/base/Makefile
 %make
 
 %install
-%make install DESTDIR=%buildroot INSTALLOWNER= bindir=%_bindir \
-  defaultdocdir=%_defaultdocdir name=%name \
-  python3_sitelib=/%python3_sitelibdir mandir=%_mandir \
-  unitdir=%_unitdir presetdir=%_presetdir sysconfdir=%_sysconfdir
+%make install DESTDIR=%buildroot INSTALLOWNER= name=%name \
+  bindir=%_bindir defaultdocdir=%_defaultdocdir libexecdir=%_libexecdir \
+  mandir=%_mandir presetdir=%_presetdir \
+  python3_sitelib=%python3_sitelibdir sysconfdir=%_sysconfdir \
+  unitdir=%_unitdir
+
+# Fix installed
+mkdir -p %buildroot{%_udevrulesdir,%_datadir/bash-completion/completions}
+mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
+mv %buildroot%_sysconfdir/bash_completion.d/* %buildroot%_datadir/bash-completion/completions/
 
 %post
 %post_service vdo
@@ -66,31 +73,30 @@ sed -i 's,-Werror,& -Wno-error=ignored-qualifiers,' utils/vdo/base/Makefile
 
 %files
 %_bindir/vdo
-%_bindir/vdo2lvm
-%_bindir/vdostats
+%_bindir/vdo-by-dev
 %_bindir/vdodmeventd
 %_bindir/vdodumpconfig
 %_bindir/vdoforcerebuild
 %_bindir/vdoformat
 %_bindir/vdosetuuid
-%_bindir/vdo-by-dev
+%_bindir/vdostats
+%_libexecdir/vdoprepareforlvm
 %python3_sitelibdir/*
-%_unitdir/vdo.service
-%_unitdir/vdo-start-by-dev@.service
+%_unitdir/*
 %_presetdir/97-vdo.preset
-%_sysconfdir/udev/rules.d/69-vdo-start-by-dev.rules
+%_udevrulesdir/69-vdo-start-by-dev.rules
 %dir %_defaultdocdir/%name
 %doc %_defaultdocdir/%name/COPYING
 %_defaultdocdir/%name/examples
 %_man8dir/vdo.8*
-%_man8dir/vdo2lvm.8*
-%_man8dir/vdostats.8*
 %_man8dir/vdodmeventd.8*
 %_man8dir/vdodumpconfig.8*
 %_man8dir/vdoforcerebuild.8*
 %_man8dir/vdoformat.8*
+%_man8dir/vdoprepareforlvm.8*
 %_man8dir/vdosetuuid.8*
-%_sysconfdir/bash_completion.d/vdo*
+%_man8dir/vdostats.8*
+%_datadir/bash-completion/completions/vdo*
 
 %files support
 %_bindir/vdoaudit
@@ -109,6 +115,9 @@ sed -i 's,-Werror,& -Wno-error=ignored-qualifiers,' utils/vdo/base/Makefile
 %_man8dir/vdoregenerategeometry.8*
 
 %changelog
+* Fri Sep 03 2021 Alexey Shabalin <shaba@altlinux.org> 6.2.5.74-alt1
+- 6.2.5.74
+
 * Sun Aug 29 2021 Michael Shigorin <mike@altlinux.org> 6.2.5.41-alt1.1
 - E2K: added arch support patch by Ilya Kurdyukov (64 bit cacheline)
 - minor spec cleanup
