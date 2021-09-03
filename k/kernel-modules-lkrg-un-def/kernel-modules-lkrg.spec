@@ -1,5 +1,5 @@
 %define module_name	lkrg
-%define module_version	0.9.1.0.8.git0fba5fe
+%define module_version	0.9.1.0.19.git51ea889
 %define module_release	alt1
 
 %define flavour		un-def
@@ -281,6 +281,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Fri Sep 03 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.19.git51ea889-alt1.%kcode.%kbuildrelease
+- Updated to v0.9.1-19-g51ea889.
 
 * Sat May 29 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.8.git0fba5fe-alt1
 - Updated to v0.9.1-8-g0fba5fe.
