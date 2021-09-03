@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %def_enable seccomp
 %def_enable extstore
 %def_enable sasl
 %def_enable tls
 
 Name: memcached
-Version: 1.6.9
+Version: 1.6.10
 Release: alt1
 
 Summary: memcached - memory caching daemon
@@ -109,6 +110,9 @@ fi
 %_man1dir/%name-tool.*
 
 %changelog
+* Sat Sep 04 2021 Alexey Shabalin <shaba@altlinux.org> 1.6.10-alt1
+- new version 1.6.10
+
 * Tue Nov 24 2020 Alexey Shabalin <shaba@altlinux.org> 1.6.9-alt1
 - new version 1.6.9
 
