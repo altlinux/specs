@@ -5,8 +5,8 @@
 %define kflavour		rt
 Name: kernel-image-%kflavour
 %define kernel_base_version	5.10
-%define kernel_sublevel		.56
-%define kernel_rt_release	rt48
+%define kernel_sublevel		.59
+%define kernel_rt_release	rt52
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -434,6 +434,9 @@ check-pesign-helper /boot/vmlinuz-%kversion-%flavour-%krelease
 %files checkinstall
 
 %changelog
+* Thu Sep 02 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.59-alt1.rt52
+- Update to v5.10.59-rt52 (2021-08-25).
+
 * Mon Aug 09 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.56-alt1.rt48
 - Update to v5.10.56-rt48 (2021-08-06).
 - Enable modules signing.
