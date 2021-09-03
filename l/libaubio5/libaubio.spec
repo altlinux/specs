@@ -4,7 +4,7 @@
 
 Name: libaubio%sover
 Version: 0.4.9
-Release: alt3
+Release: alt4
 Summary: Aubio is a library for real time audio labelling
 Url: http://www.aubio.org/
 License: GPLv3
@@ -144,6 +144,9 @@ waf install --destdir=%buildroot
 %_docdir/lib%origname-doc
 
 %changelog
+* Fri Sep 03 2021 Anton Farygin <rider@altlinux.ru> 0.4.9-alt4
+- FTBFS: use python3 to prepare data for tests (closes: #40405)
+
 * Mon Mar 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.9-alt3
 - Fixed build with numpy.
 
