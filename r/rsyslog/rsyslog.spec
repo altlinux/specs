@@ -26,7 +26,7 @@
 
 Name: rsyslog
 Version: 8.2108.0
-Release: alt1
+Release: alt2
 
 Summary: Enhanced system logging and kernel message trapping daemon
 License: Apache-2.0 AND GPL-3.0-or-later
@@ -679,6 +679,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Fri Sep 03 2021 Alexey Shabalin <shaba@altlinux.org> 8.2108.0-alt2
+- Fixed configs.
+
 * Tue Aug 17 2021 Alexey Shabalin <shaba@altlinux.org> 8.2108.0-alt1
 - new version 8.2108.0
 
