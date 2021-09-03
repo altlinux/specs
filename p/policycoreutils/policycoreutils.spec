@@ -10,7 +10,7 @@ Summary: SELinux policy core utilities
 Name: policycoreutils
 Epoch:   1
 Version: 3.2
-Release: alt4
+Release: alt5
 License: GPLv2
 Group: System/Base
 Url: https://github.com/SELinuxProject/selinux
@@ -354,8 +354,6 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 
 %files devel -f %name-devel.lang
 %_bindir/sepolgen
-%_bindir/sepolgen-ifgen
-%_bindir/sepolgen-ifgen-attr-helper
 %_bindir/sepolicy
 %_bindir/semodule_expand
 %_bindir/semodule_link
@@ -382,6 +380,8 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 %files gui -f %name-gui.lang
 %_bindir/system-config-selinux
 %_bindir/selinux-polgengui
+%_bindir/sepolgen-ifgen
+%_bindir/sepolgen-ifgen-attr-helper
 
 %_iconsdir/hicolor/*/apps/system-config-selinux.png
 %_pixmapsdir/system-config-selinux.png
@@ -429,6 +429,9 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 %python3_sitelibdir/sepolicy/sepolicy.glade
 
 %changelog
+* Fri Sep 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.2-alt5
+- Fixed selinux-polgengui (Closes: #30183).
+
 * Wed Sep 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.2-alt4
 - Rebuilt with LTO.
 
