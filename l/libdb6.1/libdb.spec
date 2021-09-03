@@ -1,7 +1,7 @@
 %define _sover 6.1
 Name: libdb%_sover
 Version: %_sover.19
-Release: alt6
+Release: alt7
 %define srcname db-%version
 
 Summary: Berkeley database library
@@ -35,7 +35,7 @@ Patch1: java8-fix.patch
 
 %{?_enable_cxx:BuildPreReq: gcc-c++}
 %{?_enable_dump185:BuildPreReq: libdb1-devel}
-%{?_enable_java:BuildPreReq: java-devel-default, sharutils, /proc}
+%{?_enable_java:BuildPreReq: java-1.8.0-devel, sharutils, /proc}
 %{?_enable_tcl:BuildPreReq: tcl-devel >= 8.4.0-alt1}
 
 BuildRequires: libsocket-devel
@@ -405,6 +405,9 @@ done
 %endif
 
 %changelog
+* Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 6.1.19-alt7
+- NMU: build with java 8 explicitly
+
 * Thu Jan 25 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.1.19-alt6
 - fixed build on armh
 
