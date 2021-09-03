@@ -1,11 +1,10 @@
-# -*- rpm-spec -*-
-# $Id: dialog,v 1.5 2003/09/05 10:17:48 grigory Exp $
 %define major 1.3
 %define snapshot 20171209
+%def_disable static
 
 Name: dialog
 Version: %major.%snapshot
-Release: alt1
+Release: alt2
 
 Summary: A utility for creating TTY dialog boxes
 
@@ -80,7 +79,11 @@ Static dialog library.
 %makeinstall_std install-lib
 
 # hack due obsoleted configure
-rm -rf %buildroot%_libdir/.libs/
+rm -rv %buildroot%_libdir/.libs/
+
+%if_disabled static
+rm -v %buildroot%_libdir/*.a
+%endif
 
 %find_lang %name
 
@@ -98,10 +101,15 @@ rm -rf %buildroot%_libdir/.libs/
 %_includedir/*.h
 %_man3dir/dialog.*
 
+%if_enabled static
 %files -n lib%name-devel-static
 %_libdir/*.a
+%endif
 
 %changelog
+* Fri Sep 03 2021 Vitaly Lipatov <lav@altlinux.ru> 1.3.20171209-alt2
+- disable build devel-static subpackage
+
 * Wed Jun 20 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.20171209-alt1
 - new version (sync with Fedora)
 
