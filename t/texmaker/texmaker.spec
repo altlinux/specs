@@ -1,5 +1,5 @@
 Name: texmaker
-Version: 5.1.1
+Version: 5.1.2
 Release: alt1
 
 Summary: free cross-platform LaTeX editor with a Qt interface
@@ -36,7 +36,7 @@ needed to develop documents with LaTeX.
 %patch2
 
 # get rid of zero-length space
-sed -i 's/\xe2\x80\x8b//g' utilities/%{name}.appdata.xml
+sed -i 's/\xe2\x80\x8b//g' utilities/%{name}.metainfo.xml
 
 # remove bundled stuff (hunspell and qtsingleapplication)
 rm -fr hunspell singleapp
@@ -54,10 +54,13 @@ rm -fr hunspell singleapp
 %_datadir/%name
 %_datadir/applications/%name.desktop
 %_datadir/pixmaps/%name.png
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/%name.metainfo.xml
 
 
 %changelog
+* Sat Sep 04 2021 Ilya Mashkin <oddity@altlinux.ru> 5.1.2-alt1
+- 5.1.2
+
 * Thu Aug 19 2021 Ilya Mashkin <oddity@altlinux.ru> 5.1.1-alt1
 - 5.1.1
 
