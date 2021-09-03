@@ -21,7 +21,7 @@
 
 Name: zabbix
 Version: 5.4.4
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A network monitor
@@ -162,7 +162,7 @@ BuildArch: noarch
 %package phpfrontend-php7
 Summary: zabbix web frontend, edition for php7
 Group: Monitoring
-Requires: php7-gd2 php7-mysqli php7-pgsql php7-sockets php7-mbstring php7-dom
+Requires: php7-gd2 php7-mysqli php7-pgsql php7-sockets php7-mbstring php7-dom php7-openssl
 BuildArch: noarch
 
 %package phpfrontend-apache2
@@ -307,6 +307,9 @@ zabbix web frontend, edition for php7
 %patch0 -p1
 
 %build
+%ifarch armh
+export CFLAGS=-fPIC
+%endif
 # fix ZABBIX_REVISION
 sed -i -e "s,{ZABBIX_REVISION},%svnrev," include/version.h src/zabbix_java/src/com/zabbix/gateway/GeneralInformation.java src/go/pkg/version/version.go
 
@@ -671,6 +674,10 @@ fi
 %_includedir/%name
 
 %changelog
+* Fri Sep 03 2021 Alexei Takaseev <taf@altlinux.org> 1:5.4.4-alt2
+- Add Req: to php7-openssl for -phpfrontend-php7 subpackage
+  (ALT #40841)
+
 * Tue Aug 31 2021 Alexei Takaseev <taf@altlinux.org> 1:5.4.4-alt1
 - 5.4.4
 
