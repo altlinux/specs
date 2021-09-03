@@ -2,7 +2,7 @@
 %global import_path github.com/containers/podman
 
 Name:     podman
-Version:  3.2.3
+Version:  3.3.1
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -104,7 +104,6 @@ pushd .gopath/src/%import_path
     install.bin-nobuild \
     install.remote-nobuild \
     install.man-nobuild \
-    install.cni \
     install.completions \
     install.systemd \
     install.docker \
@@ -122,14 +121,12 @@ install -p -m 644 %name.conf %buildroot%_sysconfdir/modules-load.d/
 %_datadir/zsh/site-functions/_%name
 %_datadir/fish/vendor_completions.d/%name.fish
 %_unitdir/*
-%_prefix/lib/systemd/user/*
-%config(noreplace) %_sysconfdir/cni/net.d/87-podman-bridge.conflist
+%_userunitdir/*
 %config(noreplace) %_sysconfdir/modules-load.d/%name.conf
 %_man1dir/*
 %exclude %_man1dir/%name-remote*
 %exclude %_man1dir/docker*
 %_man5dir/*
-%exclude %_man5dir/containers-mounts*
 %doc *.md
 %_tmpfilesdir/%name.conf
 
@@ -148,14 +145,17 @@ install -p -m 644 %name.conf %buildroot%_sysconfdir/modules-load.d/
 %_tmpfilesdir/%name-docker.conf
 
 %changelog
+* Fri Sep 03 2021 Alexey Shabalin <shaba@altlinux.org> 3.3.1-alt1
+- new version 3.3.1
+
 * Mon Jul 19 2021 Alexey Shabalin <shaba@altlinux.org> 3.2.3-alt1
-- new version 3.2.3
+- new version 3.2.3 (Fixes: CVE-2021-3602)
 
 * Fri Jun 25 2021 Alexey Shabalin <shaba@altlinux.org> 3.2.1-alt1
 - new version 3.2.1
 
 * Thu Apr 22 2021 Alexey Shabalin <shaba@altlinux.org> 3.1.2-alt1
-- new version 3.1.2
+- new version 3.1.2 (Fixes: CVE-2021-20291, CVE-2021-20199)
 
 * Tue Jan 19 2021 Alexey Shabalin <shaba@altlinux.org> 2.2.1-alt1
 - new version 2.2.1
@@ -164,7 +164,7 @@ install -p -m 644 %name.conf %buildroot%_sysconfdir/modules-load.d/
 - new version 2.2.0
 
 * Tue Nov 10 2020 Alexey Shabalin <shaba@altlinux.org> 2.1.1-alt1
-- new version 2.1.1
+- new version 2.1.1 (Fixes: CVE-2020-14370)
 
 * Wed Sep 09 2020 Alexey Shabalin <shaba@altlinux.org> 2.0.6-alt1
 - new version 2.0.6
