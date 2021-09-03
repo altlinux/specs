@@ -6,7 +6,7 @@
 
 
 Name: cross-toolchain-%target
-Version: 20210804
+Version: 20210831
 Release: alt1
 Summary: GCC cross-toolchain for %target
 License: LGPL-2.1-or-later and LGPL-3.0-or-later and GPL-2.0-or-later and GPL-3.0-or-later and GPL-3.0-or-later with GCC-exception-3.1
@@ -298,6 +298,7 @@ find %buildroot%prefix/lib/gcc/%target/%gcc_branch -type f -name 'lib*-gdb.py' -
 install -d -m 755 %buildroot%sysroot/usr/lib
 
 # Leave alone $target libraries
+%brp_strip_none %sysroot/* %prefix/lib/gcc/%target/%gcc_branch/*.a %prefix/lib/gcc/%target/%gcc_branch/*.o
 %add_verify_elf_skiplist %sysroot/* %prefix/lib/gcc/%target/%gcc_branch/*
 %add_findreq_skiplist %sysroot/* %prefix/lib/gcc/%target/%gcc_branch/*
 %add_findprov_skiplist %sysroot/* %prefix/lib/gcc/%target/%gcc_branch/*
@@ -437,6 +438,9 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %prefix/libexec/gcc/%target/lib/*
 
 %changelog
+* Tue Aug 31 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 20210831-alt1
+- Fixed build failure due to (inappropriate) LTO enforcement
+
 * Wed Aug 04 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 20210804-alt1
 - Avoid breaking whenever GCC, binutils, or glibc gets updated
 
