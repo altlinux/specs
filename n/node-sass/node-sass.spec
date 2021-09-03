@@ -1,8 +1,8 @@
 %define pname node-sass
 
 Name: node-sass
-Version: 4.14.1
-Release: alt3
+Version: 6.0.1
+Release: alt1
 
 Summary: Node.js bindings to libsass
 
@@ -77,6 +77,9 @@ cp -a vendor %buildroot/%nodejs_sitelib/%pname/
 %nodejs_sitelib/%pname/
 
 %changelog
+* Fri Sep 03 2021 Vitaly Lipatov <lav@altlinux.ru> 6.0.1-alt1
+- new version 6.0.1 (with rpmrb script)
+
 * Thu Nov 12 2020 Vitaly Lipatov <lav@altlinux.ru> 4.14.1-alt3
 - drop tests from packing, disable modules provides
 
