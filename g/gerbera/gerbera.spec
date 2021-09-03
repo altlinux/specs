@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gerbera
-Version: 1.8.1
+Version: 1.9.1
 Release: alt1
 
 Summary: UPnP Media Server
@@ -16,8 +16,8 @@ Requires: %name-data = %EVR
 BuildRequires: cmake >= 3.14
 BuildRequires: gcc-c++
 BuildRequires: libupnp-devel >= 1.14.0
-BuildRequires: libfmt-devel
-BuildRequires: libspdlog-devel >= 1.4
+BuildRequires: libfmt-devel >= 7.1.3
+BuildRequires: libspdlog-devel >= 1.8.2
 BuildRequires: libuuid-devel
 BuildRequires: libexpat-devel
 BuildRequires: libsqlite3-devel
@@ -30,6 +30,7 @@ BuildRequires: libexif-devel
 BuildRequires: libexiv2-devel
 BuildRequires: libavformat-devel
 BuildRequires: libavutil-devel
+BuildRequires: libavcodec-devel
 BuildRequires: libffmpegthumbnailer-devel
 BuildRequires: zlib-devel
 BuildRequires: libebml-devel libmatroska-devel
@@ -124,6 +125,9 @@ useradd -r -n -g %name -d %_localstatedir/%name -s /dev/null \
 %config(noreplace) %_datadir/%name/js/common.js
 
 %changelog
+* Sat Sep 04 2021 Alexey Shabalin <shaba@altlinux.org> 1.9.1-alt1
+- new version 1.9.1
+
 * Fri May 28 2021 Alexey Shabalin <shaba@altlinux.org> 1.8.1-alt1
 - new version 1.8.1
 
