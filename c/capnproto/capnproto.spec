@@ -5,11 +5,12 @@
 
 Name: capnproto
 Version: 0.8.0
-Release: alt2
+Release: alt3
 Summary: A data interchange format and capability-based RPC system
 License: MIT
 Url: https://capnproto.org
 Source: %name-%version.tar
+Patch2000: %name-e2k.patch
 Group: Development/C
 
 BuildRequires: cmake >= 3.1.0 rpm-macros-cmake ctest
@@ -42,8 +43,25 @@ developing applications that use %name.
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p1
+# because of "multiple definition of typeinfo" errors at linking
+%define typeinfo_fix() \
+  sed -i "1i #define TransformPromiseNode TransformPromiseNode_$(echo %1 | tr "-" "_")" c++/src/capnp/%1.c++
+%typeinfo_fix ez-rpc
+%typeinfo_fix any-test
+%typeinfo_fix capability-test
+%typeinfo_fix membrane-test
+%typeinfo_fix rpc-test
+%typeinfo_fix rpc-twoparty-test
+%typeinfo_fix ez-rpc-test
+%endif
 
 %build
+%ifarch %e2k
+# too many warnings of this type on tests
+%add_optflags -Wno-unused-variable
+%endif
 %add_optflags %(getconf LFS_CFLAGS) -pthread
 cd c++
 %autoreconf
@@ -73,6 +91,9 @@ subst '/TEST(AsyncIo, SimpleNetwork)/,/^}/s/^/\/\//' src/kj/async-io-test.c++
 %_libdir/cmake/CapnProto/
 
 %changelog
+* Fri Sep 03 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.8.0-alt3
+- Added patch for Elbrus
+
 * Fri Aug 27 2021 Vitaly Chikunov <vt@altlinux.org> 0.8.0-alt2
 - Do not package static library (fixes build with LTO).
 - spec: Fix linking libkj with pthread library.
