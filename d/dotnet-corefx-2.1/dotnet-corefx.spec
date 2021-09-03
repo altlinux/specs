@@ -10,7 +10,7 @@
 
 Name: dotnet-corefx-%_dotnet_major
 Version: 2.1.25
-Release: alt1
+Release: alt2
 
 Summary: .NET Core foundational libraries, called CoreFX
 
@@ -45,8 +45,10 @@ BuildRequires: dotnet
 Requires: dotnet-common >= %version
 Requires: dotnet-coreclr-%_dotnet_major = %version
 
-%remove_optflags -frecord-gcc-switches
-BuildRequires: clang llvm cmake libstdc++-devel
+# clang-12: error: unsupported argument 'auto' to option 'flto='
+%define optflags_lto -flto=thin
+
+BuildRequires: clang llvm llvm-devel cmake libstdc++-devel
 
 BuildRequires: libcurl-devel libssl-devel zlib-devel libkrb5-devel
 
@@ -143,6 +145,10 @@ chmod 0755 %buildroot%_rpmlibdir/%name.filetrigger
 %_dotnet_shared/System.Security.Cryptography.Native.OpenSsl.a
 
 %changelog
+* Sat Sep 04 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.25-alt2
+- set -flto=thin for clang
+- add llvm-devel
+
 * Wed Feb 17 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.25-alt1
 - new version (2.1.25) with rpmgs script
 
