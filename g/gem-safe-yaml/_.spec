@@ -1,55 +1,74 @@
-%define        pkgname safe-yaml
 %define        gemname safe_yaml
 
-Name:          gem-%pkgname
+Name:          gem-safe-yaml
 Version:       1.0.5
-Release:       alt2
+Release:       alt2.1
 Summary:       Parse YAML safely
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/dtao/safe_yaml
-%vcs           https://github.com/dtao/safe_yaml.git
+Vcs:           https://github.com/dtao/safe_yaml.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-Obsoletes:     ruby-%gemname
-Provides:      ruby-%gemname
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_alias_names safe_yaml,safe-yaml
+Obsoletes:     ruby-safe_yaml
+Provides:      ruby-safe_yaml
+Provides:      gem(safe_yaml) = 1.0.5
+
 
 %description
-%summary.
+SameYAML provides an alternative implementation of YAML, load suitable for
+accepting user input in Ruby applications
 
-%package       -n %pkgname
-Summary:       Executable file for %gemname gem
-Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
+
+%package       -n safe-yaml
+Version:       1.0.5
+Release:       alt2.1
+Summary:       Parse YAML safely executable(s)
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета safe_yaml
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Obsoletes:     %gemname
-Provides:      %gemname
+Requires:      gem(safe_yaml) = 1.0.5
+Obsoletes:     safe_yaml
+Provides:      safe_yaml
 
-%description   -n %pkgname
-Executable file for %gemname gem.
+%description   -n safe-yaml
+Parse YAML safely executable(s).
 
-%description   -n %pkgname -l ru_RU.UTF8
-Исполнямка для %gemname самоцвета.
+SameYAML provides an alternative implementation of YAML, load suitable for
+accepting user input in Ruby applications
+
+%description   -n safe-yaml -l ru_RU.UTF-8
+Исполнямка для самоцвета safe_yaml.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-safe-yaml-doc
+Version:       1.0.5
+Release:       alt2.1
+Summary:       Parse YAML safely documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета safe_yaml
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Obsoletes:     ruby-%gemname-doc
-Provides:      ruby-%gemname-doc
+Requires:      gem(safe_yaml) = 1.0.5
+Obsoletes:     ruby-safe_yaml-doc
+Provides:      ruby-safe_yaml-doc
 
-%description   doc
-Documentation files for %gemname gem.
+%description   -n gem-safe-yaml-doc
+Parse YAML safely documentation files.
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+SameYAML provides an alternative implementation of YAML, load suitable for
+accepting user input in Ruby applications
+
+%description   -n gem-safe-yaml-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета safe_yaml.
 
 
 %prep
@@ -65,18 +84,23 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         -n %pkgname
-%_bindir/%{gemname}*
+%files         -n safe-yaml
+%doc README.md
+%_bindir/safe_yaml
 
-%files         doc
+%files         -n gem-safe-yaml-doc
+%doc README.md
 %ruby_gemdocdir
 
 
 %changelog
+* Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 1.0.5-alt2.1
+- ! spec
+
 * Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.5-alt2
 - + obsoleting ruby-self_yaml package
 

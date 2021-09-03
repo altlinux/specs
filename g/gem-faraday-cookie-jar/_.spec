@@ -1,40 +1,83 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-%define        pkgname faraday-cookie-jar
 %define        gemname faraday-cookie_jar
 
-Name:          gem-%pkgname
-Version:       0.0.6
-Release:       alt1.1
+Name:          gem-faraday-cookie-jar
+Version:       0.0.7
+Release:       alt1
 Summary:       Cookie jar middleware for Faraday
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/miyagawa/faraday-cookie_jar
-%vcs           https://github.com/miyagawa/faraday-cookie_jar.git
+Vcs:           https://github.com/miyagawa/faraday-cookie_jar.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(faraday) >= 0.8.0
+BuildRequires: gem(http-cookie) >= 1.0.0 gem(http-cookie) < 1.1
+BuildRequires: gem(bundler) >= 1.3 gem(bundler) < 3
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(rspec) >= 3.2 gem(rspec) < 4
+BuildRequires: gem(sinatra) >= 0
+BuildRequires: gem(sham_rack) >= 0
+
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency bundler >= 2.1.4,bundler < 3
+%ruby_alias_names faraday-cookie_jar,faraday-cookie-jar
+Requires:      gem(faraday) >= 0.8.0
+Requires:      gem(http-cookie) >= 1.0.0 gem(http-cookie) < 1.1
+Provides:      gem(faraday-cookie_jar) = 0.0.7
+
 
 %description
-%summary.
-
 This gem is a piece of Faraday middleware that adds client-side Cookies
 management, using http-cookie gem.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-faraday-cookie-jar-doc
+Version:       0.0.7
+Release:       alt1
+Summary:       Cookie jar middleware for Faraday documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета faraday-cookie_jar
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(faraday-cookie_jar) = 0.0.7
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-faraday-cookie-jar-doc
+Cookie jar middleware for Faraday documentation files.
+
+This gem is a piece of Faraday middleware that adds client-side Cookies
+management, using http-cookie gem.
+
+%description   -n gem-faraday-cookie-jar-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета faraday-cookie_jar.
+
+
+%package       -n gem-faraday-cookie-jar-devel
+Version:       0.0.7
+Release:       alt1
+Summary:       Cookie jar middleware for Faraday development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета faraday-cookie_jar
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(faraday-cookie_jar) = 0.0.7
+Requires:      gem(bundler) >= 1.3 gem(bundler) < 3
+Requires:      gem(rake) >= 0 gem(rake) < 14
+Requires:      gem(rspec) >= 3.2 gem(rspec) < 4
+Requires:      gem(sinatra) >= 0
+Requires:      gem(sham_rack) >= 0
+
+%description   -n gem-faraday-cookie-jar-devel
+Cookie jar middleware for Faraday development package.
+
+This gem is a piece of Faraday middleware that adds client-side Cookies
+management, using http-cookie gem.
+
+%description   -n gem-faraday-cookie-jar-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета faraday-cookie_jar.
 
 
 %prep
@@ -50,15 +93,22 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n gem-faraday-cookie-jar-doc
+%doc README.md
 %ruby_gemdocdir
+
+%files         -n gem-faraday-cookie-jar-devel
+%doc README.md
 
 
 %changelog
+* Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 0.0.7-alt1
+- ^ 0.0.6 -> 0.0.7
+
 * Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 0.0.6-alt1.1
 - ! spec according to changelog rules
 

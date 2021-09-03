@@ -1,52 +1,69 @@
-%define        pkgname libyajl2
+%define        gemname libyajl2
 
-Name:          gem-%pkgname
-Version:       1.2.0
+Name:          gem-libyajl2
+Version:       2.1.0
 Release:       alt1
 Summary:       gem to install the libyajl2 c-library for distributions which do not have it
+License:       Apache-2.0
 Group:         Development/Ruby
-License:       MIT/Ruby
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Url:           https://github.com/chef/libyajl2-gem
-# VCS:         https://github.com/chef/libyajl2-gem.git
+Vcs:           https://github.com/chef/libyajl2-gem.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
-Source:        %pkgname-%version.tar
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
-%add_findreq_skiplist *.sh
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Provides:      gem(libyajl2) = 2.1.0
+
 
 %description
-%summary.
+gem to install the libyajl2 c-library for distributions which do not have it.
 
-%package       doc
-Summary:       Documentation files for %name
-Group:         Documentation
+
+%package       -n gem-libyajl2-doc
+Version:       2.1.0
+Release:       alt1
+Summary:       gem to install the libyajl2 c-library for distributions which do not have it documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета libyajl2
+Group:         Development/Documentation
 BuildArch:     noarch
 
-%description doc
-Documentation files for %name.
+Requires:      gem(libyajl2) = 2.1.0
+
+%description   -n gem-libyajl2-doc
+gem to install the libyajl2 c-library for distributions which do not have it
+documentation files.
+
+%description   -n gem-libyajl2-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета libyajl2.
+
 
 %prep
-%setup -n %pkgname-%version
+%setup
 
 %build
-%gem_build
+%ruby_build --mode=flex
 
 %install
-%gem_install --mode=flex
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
-%doc *.md
-%ruby_gemlibdir/*
-%ruby_gemspecdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_gemdocdir/*
+%files         -n gem-libyajl2-doc
+%ruby_gemdocdir
+
 
 %changelog
+* Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt1
+- ^ 1.2.0 -> 2.1.0
+
 * Tue Feb 05 2019 Pavel Skrylev <majioa@altlinux.org> 1.2.0-alt1
 - Initial build to ALT of 1.2.0 with usage of Ruby Policy 2.0.

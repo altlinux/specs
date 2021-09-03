@@ -1,7 +1,7 @@
-%define        pkgname parallel
+%define        gemname parallel
 
-Name:          gem-%pkgname
-Version:       1.20.1
+Name:          gem-parallel
+Version:       1.20.2
 Release:       alt1
 Summary:       Run any kind of code in parallel processes
 License:       MIT
@@ -16,46 +16,58 @@ BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+Provides:      gem(parallel) = 1.20.2
+
 
 %description
-Run any code in parallel Processes(> use all CPUs) or Threads(> speedup
-blocking operations).
-Best suited for map-reduce or e.g. parallel downloads/uploads.
+Run any code in parallel Processes(> use all CPUs) or Threads(> speedup blocking
+operations). Best suited for map-reduce or e.g. parallel downloads/uploads.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-parallel-doc
+Version:       1.20.2
+Release:       alt1
+Summary:       Run any kind of code in parallel processes documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета parallel
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(parallel) = 1.20.2
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-parallel-doc
+Run any kind of code in parallel processes documentation files.
+
+Run any code in parallel Processes(> use all CPUs) or Threads(> speedup blocking
+operations). Best suited for map-reduce or e.g. parallel downloads/uploads.
+
+%description   -n gem-parallel-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета parallel.
 
 
 %prep
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n gem-parallel-doc
 %ruby_gemdocdir
 
+
 %changelog
+* Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 1.20.2-alt1
+- ^ 1.20.1 -> 1.20.2
+
 * Thu Jan 28 2021 Pavel Skrylev <majioa@altlinux.org> 1.20.1-alt1
 - ^ 1.17.0 -> 1.20.1
 

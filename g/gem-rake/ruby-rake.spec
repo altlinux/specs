@@ -1,10 +1,9 @@
-%define        pkgname rake
+%define        gemname rake
 
-Name:          gem-%pkgname
-Version:       13.0.1
+Name:          gem-rake
+Version:       13.0.5
 Release:       alt1
 Summary:       Ruby based make-like utility
-Summary(ru_RU.UTF-8): Make-подобная утилита для рубина
 License:       MIT
 Group:         Development/Ruby
 Url:           https://ruby.github.io/rake/
@@ -14,77 +13,93 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(bundler)
-BuildRequires: gem(minitest)
-BuildRequires: gem(rdoc)
-BuildRequires: gem(coveralls)
-BuildRequires: gem(rubocop)
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_alias_names %gemname
+Provides:      gem(rake) = 13.0.5
+
 
 %description
-Rake is a Make-like program implemented in Ruby. Tasks and dependencies
-are specified in standard Ruby syntax.
+Rake is a Make-like program implemented in Ruby. Tasks and dependencies are
+specified in standard Ruby syntax.
 
-%description -l ru_RU.UTF-8
-Rake есть Make-подобная утилита и набор модулей, исполненные на рубине.
-Задачи и зависимости описываются в рядовом правописании рубина.
+%description         -l ru_RU.UTF-8
+Rake есть Make-подобная утилита и набор модулей, исполненные на рубине. Задачи и
+зависимости описываются в рядовом правописании рубина.
 
 
-%package       -n %pkgname
-Summary:       Executable file for %gemname gem
+%package       -n rake
+Version:       13.0.5
+Release:       alt1
+Summary:       Ruby based make-like utility executable(s)
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета rake
 Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   -n %pkgname
-Executable file for %gemname gem.
+Requires:      gem(rake) = 13.0.5
 
-%description   -n %pkgname -l ru_RU.UTF8
-Исполнямка для %gemname самоцвета
+%description   -n rake
+Ruby based make-like utility executable(s).
+
+Rake is a Make-like program implemented in Ruby. Tasks and dependencies are
+specified in standard Ruby syntax.
+
+%description   -n rake -l ru_RU.UTF-8
+Исполнямка для самоцвета rake.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-rake-doc
+Version:       13.0.5
+Release:       alt1
+Summary:       Ruby based make-like utility documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rake
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(rake) = 13.0.5
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-rake-doc
+Ruby based make-like utility documentation files.
+
+Rake is a Make-like program implemented in Ruby. Tasks and dependencies are
+specified in standard Ruby syntax.
+
+%description   -n gem-rake-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета rake.
 
 
 %prep
 %setup
 
 %build
-%ruby_build --use=%gemname --version-replace=%version
+%ruby_build
 
 %install
 %ruby_install
 
 %check
-%rake_test
+%ruby_test
 
 %files
-%doc README*
+%doc README.rdoc
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
-%ruby_gemdocdir
+%files         -n rake
+%doc README.rdoc
+%_bindir/rake
 
-%files         -n %pkgname
-%_bindir/%pkgname
-%_mandir/*
+%files         -n gem-rake-doc
+%doc README.rdoc
+%ruby_gemdocdir
 
 
 %changelog
-* Tue Mar 31 2020 Pavel Skrylev <majioa@altlinux.org> 13.0.1-alt1
+* Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 13.0.5-alt1
+- ^ 13.0.1 -> 13.0.5
+
+* Tue Mar 31 2020 Pavel Skrylev <majioa@altlinux.org> 13.0.1-alt0.1
 - ^ 12.3.3 -> 13.0.1
 - ! spec tags
 
@@ -135,4 +150,3 @@ Documentation files for %gemname gem.
 
 * Wed Aug 31 2005 Mikhail Yakshin <greycat@altlinux.ru> 0.5.4-alt1
 - Initial build for ALT Linux
-

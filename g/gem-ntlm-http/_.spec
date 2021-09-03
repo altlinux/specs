@@ -1,32 +1,77 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-%define        pkgname ntlm-http
+%define        gemname ntlm-http
 
-Name:          gem-%pkgname
+Name:          gem-ntlm-http
 Version:       0.1.3.3
-Release:       alt1
-Summary:       Ruby/NTLM HTTP provides NTLM authentication over http
-License:       MIT
+Release:       alt1.1
+Summary:       Ruby/NTLM HTTP library
+License:       Unlicense
 Group:         Development/Ruby
 Url:           https://github.com/pyu10055/ntlm-http
-%vcs           https://github.com/pyu10055/ntlm-http.git
+Vcs:           https://github.com/pyu10055/ntlm-http.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Provides:      gem(ntlm-http) = 0.1.3.3
+
+
 %description
-%summary.
+Ruby/NTLM HTTP provides NTLM authentication over http.
 
 
-%package       -n gem-pyu-%gemname
+%package       -n gem-pyu-ntlm-http
 Version:       0.1.3.2
-Summary:       %summary
+Release:       alt1.1
+Summary:       Ruby/NTLM HTTP library
 Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   -n gem-pyu-%pkgname
-%summary.
+Provides:      gem(pyu-ntlm-http) = 0.1.3.2
+
+%description   -n gem-pyu-ntlm-http
+Ruby/NTLM HTTP provides NTLM authentication over http.
+
+
+%package       -n gem-pyu-ntlm-http-doc
+Version:       0.1.3.2
+Release:       alt1.1
+Summary:       Ruby/NTLM HTTP library documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета pyu-ntlm-http
+Group:         Development/Documentation
+BuildArch:     noarch
+
+Requires:      gem(pyu-ntlm-http) = 0.1.3.2
+
+%description   -n gem-pyu-ntlm-http-doc
+Ruby/NTLM HTTP library documentation files.
+
+Ruby/NTLM HTTP provides NTLM authentication over http.
+
+%description   -n gem-pyu-ntlm-http-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета pyu-ntlm-http.
+
+
+%package       -n gem-ntlm-http-doc
+Version:       0.1.3.3
+Release:       alt1.1
+Summary:       Ruby/NTLM HTTP library documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ntlm-http
+Group:         Development/Documentation
+BuildArch:     noarch
+
+Requires:      gem(ntlm-http) = 0.1.3.3
+
+%description   -n gem-ntlm-http-doc
+Ruby/NTLM HTTP library documentation files.
+
+Ruby/NTLM HTTP provides NTLM authentication over http.
+
+%description   -n gem-ntlm-http-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета ntlm-http.
 
 
 %prep
@@ -42,16 +87,27 @@ BuildArch:     noarch
 %ruby_test
 
 %files
-%doc README*
-%ruby_gemspecdir/%gemname-0.1.3.3.gemspec
-%ruby_gemslibdir/%gemname-0.1.3.3
+%doc README
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files         -n gem-pyu-%gemname
-%doc README*
-%ruby_gemspecdir/pyu-%gemname-0.1.3.2.gemspec
-%ruby_gemslibdir/pyu-%gemname-0.1.3.2
+%files         -n gem-pyu-ntlm-http
+%doc README
+%ruby_gemspecdir/pyu-ntlm-http-0.1.3.2.gemspec
+%ruby_gemslibdir/pyu-ntlm-http-0.1.3.2
+
+%files         -n gem-pyu-ntlm-http-doc
+%doc README
+%ruby_gemsdocdir/pyu-ntlm-http-0.1.3.2
+
+%files         -n gem-ntlm-http-doc
+%doc README
+%ruby_gemdocdir
 
 
 %changelog
+* Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 0.1.3.3-alt1.1
+- ! spec
+
 * Tue Jul 23 2019 Pavel Skrylev <majioa@altlinux.org> 0.1.3.3-alt1
 - Initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0.

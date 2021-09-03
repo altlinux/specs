@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       2.5.0
-Release:       alt0.1
+Release:       alt0.2
 Summary:       An application that automates the lifecycle of servers
 License:       GPLv3
 Group:         System/Servers
@@ -80,7 +80,7 @@ BuildRequires: gem(dynflow) >= 1.4.4 gem(dynflow) < 2.0.0
 BuildRequires: gem(daemons) >= 0
 BuildRequires: gem(bcrypt) >= 3.1 gem(bcrypt) < 4
 BuildRequires: gem(get_process_mem) >= 0
-BuildRequires: gem(rack-cors) >= 1.0.2 gem(rack-cors) < 1.1
+BuildRequires: gem(rack-cors) >= 1.0.2 gem(rack-cors) < 2
 BuildRequires: gem(jwt) >= 2.2.1 gem(jwt) < 3
 BuildRequires: gem(graphql) >= 1.8.0 gem(graphql) < 2
 BuildRequires: gem(graphql-batch) >= 0
@@ -102,7 +102,7 @@ BuildRequires: gem(gitlab-sidekiq-fetcher) >= 0
 BuildRequires: gem(sd_notify) >= 0.1 gem(sd_notify) < 1
 BuildRequires: gem(rack-openid) >= 1.3 gem(rack-openid) < 2
 BuildRequires: gem(prometheus-client) >= 1.0 gem(prometheus-client) < 3
-BuildRequires: gem(statsd-instrument) < 3
+BuildRequires: gem(statsd-instrument) < 4
 BuildRequires: gem(maruku) >= 0.7 gem(maruku) < 1
 BuildRequires: gem(gettext) >= 3.2.1 gem(gettext) < 4.0.0
 BuildRequires: gem(immigrant) >= 0.1 gem(immigrant) < 1
@@ -156,6 +156,8 @@ BuildRequires: gem(webmock) >= 0
 %add_findreq_skiplist %_libexecdir/%name/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %_libexecdir/%name/**/*
+%ruby_use_gem_dependency statsd-instrument >= 3.0,statsd-instrument < 4
+%ruby_use_gem_dependency rack-cors >= 1.0,rack-cors < 2
 %ruby_use_gem_dependency bundler >= 2.1.4,bundler < 3
 %ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
 %ruby_use_gem_dependency jwt >= 2.2.1,jwt < 3
@@ -216,7 +218,7 @@ Requires:      gem(dynflow) >= 1.4.4 gem(dynflow) < 2.0.0
 Requires:      gem(daemons) >= 0
 Requires:      gem(bcrypt) >= 3.1 gem(bcrypt) < 4
 Requires:      gem(get_process_mem) >= 0
-Requires:      gem(rack-cors) >= 1.0.2 gem(rack-cors) < 1.1
+Requires:      gem(rack-cors) >= 1.0.2 gem(rack-cors) < 2
 Requires:      gem(jwt) >= 2.2.1 gem(jwt) < 3
 Requires:      gem(graphql) >= 1.8.0 gem(graphql) < 2
 Requires:      gem(graphql-batch) >= 0
@@ -238,7 +240,7 @@ Requires:      gem(gitlab-sidekiq-fetcher) >= 0
 Requires:      gem(sd_notify) >= 0.1 gem(sd_notify) < 1
 Requires:      gem(rack-openid) >= 1.3 gem(rack-openid) < 2
 Requires:      gem(prometheus-client) >= 1.0 gem(prometheus-client) < 3
-Requires:      gem(statsd-instrument) < 3
+Requires:      gem(statsd-instrument) < 4
 Requires:      gem(maruku) >= 0.7 gem(maruku) < 1
 Requires:      gem(gettext) >= 3.2.1 gem(gettext) < 4.0.0
 Requires:      gem(immigrant) >= 0.1 gem(immigrant) < 1
@@ -384,6 +386,7 @@ An application that automates the lifecycle of servers documentation files.
 %description   -n foreman-doc -l ru_RU.UTF-8
 Файлы сведений для приложения foreman.
 
+
 %package       -n foreman-devel
 Version:       2.5.0
 Release:       alt0.1
@@ -455,8 +458,9 @@ rm -rf %buildroot%_libexecdir/%name/extras/{jumpstart,spec}
 rm -rf %buildroot%_bindir/{bundle,rails,rake,spring}
 rm -rf %buildroot%_sysconfdir/%name
 rm -rf %buildroot%_libexecdir/%name/config
-rm -rf %buildroot%ruby__sitelibdir
+rm -rf %buildroot%ruby_sitelibdir
 rm -rf %buildroot%_libexecdir/%name/lib
+rm -rf %buildroot%_localstatedir/%name
 cp -rf config %buildroot%_libexecdir/%name/config
 cp -rf lib %buildroot%_libexecdir/%name/
 mkdir -p %buildroot%webserver_datadir \
@@ -504,7 +508,7 @@ install -d %buildroot%_logdir/%name
 # Add the "foreman" user and group
 getent group foreman >/dev/null || %_sbindir/groupadd -r foreman
 getent passwd _foreman >/dev/null || \
-   %_sbindir/useradd -r -g foreman -G foreman -d %_localstatedir/%name -s /bin/bash -c "Foreman" _foreman
+   %_sbindir/useradd -r -g foreman -G foreman -M -d %_localstatedir/%name -s /bin/bash -c "Foreman" _foreman
 getent group puppet >/dev/null || \
    %_sbindir/usermod -a -G puppet _foreman
 rm -rf %_libexecdir/%name/db/openid-store
@@ -541,7 +545,7 @@ railsctl cleanup %name
 %dir %attr(770,_foreman,foreman) %_cachedir/%name/_
 %dir %attr(770,_foreman,foreman) /run/%name
 %dir %attr(770,_foreman,foreman) %_logdir/%name
-#%dir %attr(770,_foreman,foreman) %_localstatedir/%name
+%dir %attr(770,_foreman,foreman) %_localstatedir/%name
 %dir %attr(770,_foreman,foreman) %_spooldir/%name
 # %_man8dir/*.8*
 #%attr(770,_foreman,foreman) %_cachedir/%name/bootsnap
@@ -557,12 +561,16 @@ railsctl cleanup %name
 #%ruby_gemsdocdir/font-awesome-sass-4.7.0
 #
 %files         -n foreman-doc
-%ruby_ridir/*
+%ruby_sitedocdir/*
 
 %files         -n foreman-devel
 
 
 %changelog
+* Wed Aug 25 2021 Pavel Skrylev <majioa@altlinux.org> 2.5.0-alt0.2
+- ! require deps
+- ! sitedocdir folder
+
 * Wed Jul 14 2021 Pavel Skrylev <majioa@altlinux.org> 2.5.0-alt0.1
 - ^ 1.24.3.2 -> 2.5.0(pre)
 
