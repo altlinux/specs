@@ -1,6 +1,8 @@
+%def_disable static
+
 Name: libavc1394
 Version: 0.5.4
-Release: alt1.qa1
+Release: alt2
 
 Summary: A library to control AV firewire devices
 
@@ -62,7 +64,7 @@ subst "s|@libdir@|\$(libdir)|" Makefile.am
 
 %build
 %autoreconf
-%configure
+%configure %{subst_enable static}
 %make_build
 
 %install
@@ -81,14 +83,19 @@ rm -f %buildroot%_libdir/*.la
 %_libdir/*.so
 %_pkgconfigdir/*
 
+%if_enabled static
 %files devel-static
 %_libdir/*.a
+%endif
 
 %files utils
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Sat Sep 04 2021 Vitaly Lipatov <lav@altlinux.ru> 0.5.4-alt2
+- disable deve-static subpackage
+
 * Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.4-alt1.qa1
 - NMU: removed redundant libraw1394 and libraw1394-devel requirements.
 
