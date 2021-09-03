@@ -15,11 +15,11 @@
 %nil
 %endif
 
-%define t_requires perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(Config/IniFiles.pm) perl(SQL/Translator.pm) perl(Date/Format.pm) perl(File/Copy/Recursive.pm) perl(DateTime/Format/Pg.pm) perl(Net/OpenID/Consumer.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(Text/Markdown.pm) perl(Net/DBus.pm) perl(IPC/Run.pm) perl(Archive/Extract.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Time/ParseDate.pm) perl(Time/Piece.pm) perl(Time/Seconds.pm) perl(Sort/Versions.pm) perl(BSD/Resource.pm) perl(Cpanel/JSON/XS.pm) perl(YAML/PP.pm) perl(YAML/XS.pm) perl(IPC/Run.pm) perl(CommonMark.pm) perl(DBIx/Class.pm) perl-Package-Generator perl(Mojo/SQLite.pm) perl(Mojolicious.pm) perl(Mojolicious/Plugin/AssetPack.pm) perl(Mojo/IOLoop/ReadWriteProcess.pm) perl(Minion.pm) perl(Minion/Backend/SQLite.pm) perl(Test/Compile.pm) perl(Test/Fatal.pm) perl(Test/MockModule.pm) perl(Test/MockObject.pm) perl(Test/Mojo.pm) perl(Test/Output.pm) perl(Test/Pod.pm) perl(Test/Warnings.pm) perl(Perl/Critic.pm) perl(DBD/SQLite.pm) perl(DBIx/Class/DeploymentHandler.pm) perl(SQL/SplitStatement.pm) perl(IPC/Cmd.pm) perl(Module/Load/Conditional.pm) perl(CPAN/Meta/YAML.pm) perl(JSON/Validator.pm) perl(Test/Exception.pm) perl(Text/Diff.pm) perl(Test/Strict.pm) perl(Mojo/RabbitMQ/Client.pm) perl(Test/Most.pm) python3-module-setuptools yamllint jq curl shellcheck perl(Test/More.pm) perl(Mojolicious/Plugin/OAuth2.pm) python3-module-jsbeautifier git-core perl(File/Map.pm) perl(Filesys/Df.pm)
+%define t_requires perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(Config/IniFiles.pm) perl(SQL/Translator.pm) perl(Date/Format.pm) perl(File/Copy/Recursive.pm) perl(DateTime/Format/Pg.pm) perl(Net/OpenID/Consumer.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(Text/Markdown.pm) perl(Net/DBus.pm) perl(IPC/Run.pm) perl(Archive/Extract.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Time/ParseDate.pm) perl(Time/Piece.pm) perl(Time/Seconds.pm) perl(Sort/Versions.pm) perl(BSD/Resource.pm) perl(Cpanel/JSON/XS.pm) perl(YAML/PP.pm) perl(YAML/XS.pm) perl(IPC/Run.pm) perl(CommonMark.pm) perl(DBIx/Class.pm) perl-Package-Generator perl(Mojo/SQLite.pm) perl(Mojolicious.pm) perl(Mojolicious/Plugin/AssetPack.pm) perl(Mojo/IOLoop/ReadWriteProcess.pm) perl(Minion.pm) perl(Minion/Backend/SQLite.pm) perl(Test/Compile.pm) perl(Test/Fatal.pm) perl(Test/MockModule.pm) perl(Test/MockObject.pm) perl(Test/Mojo.pm) perl(Test/Output.pm) perl(Test/Pod.pm) perl(Test/Warnings.pm) perl(Perl/Critic.pm) perl(DBD/SQLite.pm) perl(DBIx/Class/DeploymentHandler.pm) perl(SQL/SplitStatement.pm) perl(IPC/Cmd.pm) perl(Module/Load/Conditional.pm) perl(CPAN/Meta/YAML.pm) perl(JSON/Validator.pm) perl(Test/Exception.pm) perl(Text/Diff.pm) perl(Test/Strict.pm) perl(Mojo/RabbitMQ/Client.pm) perl(Test/Most.pm) python3-module-setuptools yamllint jq curl shellcheck perl(Test/More.pm) perl(Mojolicious/Plugin/OAuth2.pm) python3-module-jsbeautifier git-core perl(File/Map.pm) perl(Filesys/Df.pm) perl(Module/Loaded.pm)
 
 Name: openqa
 Version: 4.6
-Release: alt2
+Release: alt3
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -34,10 +34,11 @@ Source0: %name-%version.tar
 Source1: cache.tar
 #Please check $ git grep geekotest
 Patch0: addpseudouser.patch
+Patch1: rmsysusers.patch
 #BuildArch: noarch
 
 BuildRequires: %t_requires
-BuildRequires: spectool postgresql10-server systemd ruby-sass ruby-rb-inotify ruby-sass-listen os-autoinst osc
+BuildRequires: spectool postgresql10-server systemd ruby-rb-inotify sass ruby-sass-listen os-autoinst osc
 BuildRequires: python3-devel
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-requests
@@ -167,6 +168,7 @@ writing, etc., covering both openQA and the os-autoinst test engine.
 %setup -n %name-%version
 tar xf %SOURCE1 -C assets
 %patch0 -p1
+%patch1 -p1
 sed -i -e 's|../webfonts/|https://use.fontawesome.com/releases/v5.0.10/webfonts/|g' assets/cache/use.fontawesome.com/releases/v5.0.10/css/all.css
 sed -i -e 's|/usr/lib/systemd/|/lib/systemd/|'  systemd/systemd-openqa-generator
 sed -i -e 's|/usr/lib/systemd/|/lib/systemd/|' -e 's|/usr/lib/tmpfiles.d|/lib/tmpfiles.d|'  Makefile
@@ -183,6 +185,8 @@ rm -rf systemd/openqa-slirpvde.service
 rm -rf script/openqa-slirpvde
 rm -rf script/openqa-vde_switch
 rm -rf script/openqa-auto-update
+rm -rf usr/lib/sysusers.d/geekotest.conf
+rm -rf usr/lib/sysusers.d/openQA-worker.conf
 
 %build
 %make_build
@@ -230,6 +234,7 @@ rm -f t/25-cache-client.t
 rm -f t/25-cache-service.t
 rm -f t/40-script_openqa-clone-custom-git-refspec.t
 rm -f t/42-screenshots.t
+rm -f t/43-scheduling-and-worker-scalability.t
 rm -f t/ui/*.t
 # we don't really need the tidy test
 rm -f t/00-tidy.t
@@ -438,6 +443,9 @@ fi
 %files single-instance
 
 %changelog
+* Fri Aug 27 2021 Alexandr Antonov <aas@altlinux.org> 4.6-alt3
+- update to current version
+
 * Wed May 12 2021 Alexandr Antonov <aas@altlinux.org> 4.6-alt2
 - update to current version
 
