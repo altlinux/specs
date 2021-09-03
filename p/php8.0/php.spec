@@ -1,5 +1,7 @@
 %define php_sapi cli
 %def_with check
+#  https://bugs.php.net/bug.php?id=77445
+%{?optflags_lto:%global optflags_lto %nil}
 
 %ifarch %mips
 %add_optflags -DSLJIT_IS_FPU_AVAILABLE=0
@@ -8,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  0
-%define _php_release_version 9
+%define _php_release_version 10
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -60,6 +62,7 @@ Provides: php-engine = %EVR
 Provides: php = %EVR
 
 BuildRequires: chrpath libmm-devel libxml2-devel ssmtp termutils zlib-devel re2c bison alternatives libsqlite3-devel
+BuildRequires: libargon2-devel
 
 # for tests
 BuildRequires: /proc
@@ -207,6 +210,7 @@ touch configure.ac
 	--with-config-file-path=%php_sysconfdir/ \
 	--with-config-file-scan-dir=%php_sysconfdir/%php_sapi/php.d/ \
 	--with-pic \
+	--with-password-argon2 \
 	--enable-rtld-now \
 	--enable-cli \
 	--disable-cgi \
@@ -453,6 +457,11 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Thu Sep 02 2021 Anton Farygin <rider@altlinux.ru> 8.0.10-alt1
+- 8.0.10
+- disabled LTO due to lack support in php upstream
+- built with libargon2 support
+
 * Mon Aug 02 2021 Anton Farygin <rider@altlinux.ru> 8.0.9-alt1
 - 8.0.9
 
