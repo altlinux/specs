@@ -21,14 +21,14 @@
 %endif
 
 Name: nvidia_glx_src
-Version: 470.57.02
+Version: 470.63.01
 Release: alt1
 
 Source0: null
 Source201: http://http.download.nvidia.com/XFree86/Linux-x86_64/%version/%tbname-%version.run
 Source202: http://http.download.nvidia.com/XFree86/Linux-x86_64/%version/%tbname-%version.run
 
-BuildRequires: kernel-build-tools rpm-macros-alternatives
+BuildRequires: rpm-macros-alternatives
 BuildRequires: libXext-devel libEGL-devel
 BuildRequires: libwayland-client-devel libwayland-server-devel
 #BuildRequires: libGLdispatch libGLX
@@ -171,6 +171,12 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %_libdir/libnvidia-encode.so.%version
 
 %changelog
+* Fri Sep 03 2021 Sergey V Turchin <zerg@altlinux.org> 470.63.01-alt1
+- new version
+
+* Tue Aug 24 2021 Sergey V Turchin <zerg@altlinux.org> 470.57.02-alt2
+- fix build requires
+
 * Tue Jul 20 2021 Sergey V Turchin <zerg@altlinux.org> 470.57.02-alt1
 - new version
 
