@@ -1,15 +1,22 @@
-%def_disable doc
+# Error: invalid attempt to declare external version name as default in symbol `comedi_set_buffer_size@@v0.7.18'
+# FIXME: #define EXPORT_ALIAS_DEFAULT(a,b,c) __asm__(".symver " #a "," #b "@@v" #c )
+%define optflags_lto %nil
+
+%def_with doc
+%def_enable python
+%def_disable static
 
 %define oname comedilib
+%define oversion %(echo "%version" | sed -e "s|\\.|_|g")
+
 Name: libcomedi
 Version: 0.12.0
-Release: alt1
-%define oversion %(echo "%version" | sed -e "s|\\.|_|g")
+Release: alt2
 
 Summary: Data Acquisition library for the Comedi DAQ driver
 Summary(ru_RU.UTF-8): Библиотека получения данных для драйвера Comedi DAQ
 
-License: LGPL
+License: LGPLv2
 Group: Development/Other
 Url: http://www.comedi.org
 
@@ -17,19 +24,18 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 AutoReq: noshell
 
 # Source-url: https://github.com/Linux-Comedi/comedilib/archive/r%oversion.tar.gz
-Source: %oname-%version.tar
-Source1: http://www.comedi.org/download/comedi_examples.tar.gz
-Patch: %name-as-needed.patch
+Source: %name-%version.tar
 
 # for correct _localstatedir
 BuildRequires: rpm-macros-intro-conflicts
 
-# manually removed: hostinfo eric gcc-g77
-# Automatically added by buildreq on Sun Nov 07 2004
-BuildRequires: flex gcc-c++ libstdc++-devel python-devel python-modules-encodings swig
+BuildRequires: flex gcc-c++ libstdc++-devel swig
+%if_enabled python
+BuildRequires: python3-devel
+%endif
 
-%if_enabled doc
-BuildRequires: docbook-utils-print xmlto dblatex 
+%if_with doc
+BuildRequires: xmlto
 %endif
 
 %description
@@ -47,7 +53,7 @@ Comedilib -- это библиотека для драйвера получен�
 Summary: The files needed for %name application development
 Summary(ru_RU.UTF-8): Файлы, требующиеся для разработки приложений с использованием %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 # https://bugzilla.altlinux.org/show_bug.cgi?id=19191
 #Requires: kernel-headers-comedi
 
@@ -63,16 +69,16 @@ See demo dir in the source repository for examples.
 
 Посмотрите в каталог demo в исходниках проекта, там есть примеры.
 
-%package -n python-module-comedi
+%if_with python-bindings
+%package -n python3-module-comedi
 Summary: Python interface for %name
-Group: Development/Python
-Requires: %name = %version-%release
-Provides: %name-python
-Obsoletes: %name-python
-%setup_python_module comedi
+Group: Development/Python3
+Requires: %name = %EVR
 
-%description -n python-module-comedi
-Python interface for %name
+%description -n python3-module-comedi
+Python interface for %name.
+
+%endif
 
 %package devel-static
 Summary: Static library for %name application development
@@ -88,71 +94,61 @@ for developing applications with %name
 для разработки приложений, которые используют %name.
 
 %prep
-%setup -n %oname-%version
-#patch
-# unpack examples
-#tar xfz %SOURCE1
-#__subst 's|comedi_data_read_n|comedi_data_read_n_obsolete|' ./comedi_examples/monitor/sv.c
-#__subst 's|demo doc|demo|' Makefile.in
+%setup
 
 %build
 %autoreconf
-%configure --disable-ruby-binding
+%configure --disable-ruby-binding \
+           %{subst_enable static} \
+%if_enabled python
+           --enable-python-binding
+%endif
 %make_build
-#cd comedi_examples/monitor
-#	make
-#cd -
 
 %install
 %makeinstall_std
-#install -d %buildroot%_datadir/%name/examples
-#install -s -D -m 755 comedi_examples/monitor/monitor %buildroot%_bindir/comedi_monitor
-#mv %buildroot%_datadir/comedilib %buildroot%_datadir/%name
-
-#cd comedi_examples
-#cp --target-directory %buildroot%_datadir/%name/examples/$i * -R
-#cd -
-#install -d %buildroot%_datadir/%name/demo/perl
-#cd demo
-#cp --target-directory %buildroot%_datadir/%name/demo/$i $(ls | grep -v \\.o) -R
-#cd -
 
 %files
 %doc AUTHORS README ChangeLog NEWS doc/FAQ
 %_libdir/%name.so.*
 %_sbindir/comedi_config
-#exclude %_bindir/%{name}_monitor
 %_bindir/comedi_board_info
 %_bindir/comedi_test
-#_sysconfdir/hotplug/usb/*
 %dir %_sysconfdir/pcmcia
 %config(noreplace) %_sysconfdir/pcmcia/*
-#_sysconfdir/pcmcia/*
 %_man1dir/*
 %_man7dir/*
 %_man8dir/*
 
-%files -n python-module-comedi
-%python_sitelibdir/*.so
-%python_sitelibdir/comedi.py*
+
+%if_enabled python-bindings
+%files -n python3-module-comedi
+%python3_sitelibdir/*.so
+%python3_sitelibdir/comedi.py*
+%endif
 
 %files devel
-#doc demo
-#_bindir/comedi_monitor
 %_includedir/comedi*
 %_libdir/%name.so
 %_docdir/%oname/
 %_pkgconfigdir/*
-%if_enabled doc
+%if_with doc
 %_man3dir/*
 %endif
 
+%if_enabled static
 %files devel-static
 %_libdir/%name.a
-#_libdir/_comedi.a
-#_libdir/_comedi.la
+%endif
 
 %changelog
+* Fri Sep 03 2021 Vitaly Lipatov <lav@altlinux.ru> 0.12.0-alt2
+- cleanup spec, fix build
+- disable lto (have no idea)
+- disable pack devel-static subpackage
+- enable man3 packing
+- switch to python3
+
 * Sun Jan 24 2021 Pavel Vainerman <pv@altlinux.ru> 0.12.0-alt1
 - new version (0.12.0) with rpmgs script
 
