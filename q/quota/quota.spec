@@ -1,6 +1,6 @@
 Name: quota
-Version: 4.06.0.4.43b6
-Release: alt2
+Version: 4.06.0.7.100b
+Release: alt1
 Epoch: 2
 
 %def_enable rpc
@@ -113,6 +113,10 @@ gzip -c9n Changelog > %buildroot%docdir/Changelog.gz
 %endif # rpc
 
 %changelog
+* Wed Sep 01 2021 Dmitry V. Levin <ldv@altlinux.org> 2:4.06.0.7.100b-alt1
+- v4.06-4-g43b6e31 -> v4.06-7-g100b8a8.
+- Fixed issues uncovered by gcc -flto.
+
 * Sat Dec 19 2020 Dmitry V. Levin <ldv@altlinux.org> 2:4.06.0.4.43b6-alt2
 - Fixed build with glibc-utils >= 2.32 no longer providing rpcgen
   by adding rpcgen to BuildRequires.
