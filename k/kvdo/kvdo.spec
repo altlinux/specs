@@ -1,5 +1,5 @@
 Name: kvdo
-Version: 6.2.5.41
+Version: 6.2.5.72
 Release: alt1
 
 Summary: Kernel Modules for Virtual Data Optimizer
@@ -35,6 +35,9 @@ install -pDm0644 %_sourcedir/%name-%version.tar %kernel_srcdir/kernel-source-%na
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar
 
 %changelog
+* Fri Sep 03 2021 Alexey Shabalin <shaba@altlinux.org> 6.2.5.72-alt1
+- 6.2.5.72
+
 * Mon Jul 05 2021 Alexey Shabalin <shaba@altlinux.org> 6.2.5.41-alt1
 - 6.2.5.41
 
