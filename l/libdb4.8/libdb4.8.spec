@@ -6,7 +6,7 @@
 
 Name: libdb%_sover
 Version: %_sover.30
-Release: alt5
+Release: alt6
 Summary: Berkeley database library
 License: BSD-style
 Group: System/Libraries
@@ -44,7 +44,7 @@ BuildConflicts: %name-devel, libdb4.0-devel, libdb4.1-devel, libdb4.2-devel, lib
 BuildPreReq: rpm-build >= 4.0.4-alt1
 %{?_enable_cxx:BuildPreReq: gcc-c++}
 %{?_enable_dump185:BuildPreReq: libdb1-devel}
-%{?_enable_java:BuildPreReq: java-devel-default, sharutils, /proc}
+%{?_enable_java:BuildPreReq: java-1.8.0-devel, sharutils, /proc}
 %{?_enable_tcl:BuildPreReq: tcl-devel >= 8.4.0-alt1}
 
 %package -n db%_sover-utils
@@ -341,6 +341,9 @@ done
 %endif
 
 %changelog
+* Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 4.8.30-alt6
+- NMU: build with java 8 explicitly
+
 * Mon Aug 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.30-alt5
 - Removed static libraries.
 
