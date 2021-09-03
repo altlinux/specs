@@ -10,8 +10,8 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
-Version: 21.08.0
-Release: alt2
+Version: 21.08.1
+Release: alt1
 %K5init
 
 Group: File tools
@@ -140,6 +140,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Thu Sep 02 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt1
+- new version
+
 * Fri Aug 27 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.08.0-alt2
 - Restored stopping of preview generation jobs on unmount request.
 
