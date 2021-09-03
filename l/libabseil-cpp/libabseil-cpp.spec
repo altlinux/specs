@@ -1,8 +1,9 @@
-# wait for GTEST_ALLOW_UNINSTANTIATED_PARAMETERIZED_TEST
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 %def_without test
 Name: libabseil-cpp
 Version: 20210324.2
-Release: alt1
+Release: alt2
 
 Summary: C++ Common Libraries
 
@@ -52,7 +53,7 @@ Development headers for %name
 %cmake_insource -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DCMAKE_CXX_STANDARD=17 \
 %if_with test
-    -DABSL_RUN_TESTS=ON -DABSL_USE_EXTERNAL_GOOGLETEST=ON \
+    -DBUILD_TESTING=ON -DABSL_USE_EXTERNAL_GOOGLETEST=ON \
 %endif
     -DABSL_ENABLE_INSTALL=ON
 %make_build
@@ -60,10 +61,8 @@ Development headers for %name
 %install
 %makeinstall_std
 
-%if_with test
 %check
 ctest
-%endif
 
 %files devel
 %doc LICENSE
@@ -75,6 +74,9 @@ ctest
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Sep 03 2021 Vitaly Lipatov <lav@altlinux.ru> 20210324.2-alt2
+- set optflags_lto to -ffat-lto-objects
+
 * Sun Jul 04 2021 Vitaly Lipatov <lav@altlinux.ru> 20210324.2-alt1
 - Abseil LTS branch, March 2021, Patch 2
 - new version 20210324.2 (with rpmrb script)
