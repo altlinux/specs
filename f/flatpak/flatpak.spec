@@ -1,7 +1,5 @@
 %define _localstatedir %_var
 %define _libexecdir %_prefix/libexec
-%define _userunitdir %_prefix/lib/systemd/user
-%define _sysusersdir %_prefix/lib/sysusers.d
 
 %define xdg_name org.freedesktop.Flatpak
 %define api_ver 1.0
@@ -15,8 +13,8 @@
 %def_disable check
 
 Name: flatpak
-Version: 1.10.2
-Release: alt3
+Version: 1.10.3
+Release: alt1
 
 Summary: Application deployment framework for desktop apps
 Group: Development/Tools
@@ -48,7 +46,7 @@ Requires: ostree >= %ostree_ver
 Requires: dconf
 Requires: fuse
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-build-systemd
 BuildRequires: gtk-doc gobject-introspection-devel
 BuildRequires: pkgconfig(gio-unix-2.0) >= %glib_ver
 BuildRequires: pkgconfig(json-glib-1.0)
@@ -212,6 +210,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Fri Sep 03 2021 Yuri N. Sedunov <aris@altlinux.org> 1.10.3-alt1
+- 1.10.3
+
 * Thu Aug 19 2021 Yuri N. Sedunov <aris@altlinux.org> 1.10.2-alt3
 - BR: +python3-module-pyparsing
 
