@@ -2,8 +2,8 @@
 %define dracutlibdir %{_prefix}/lib/dracut
 
 Name:     ignition
-Version:  2.11.0
-Release:  alt2
+Version:  2.12.0
+Release:  alt1
 
 Summary:  First boot installer and configuration tool
 License:  Apache-2.0
@@ -77,15 +77,17 @@ pushd .build/src/%import_path
 popd
 
 %files
-%doc README.md docs
+%doc README.md NEWS docs
 %dracutlibdir/modules.d/*
-%_unitdir/*
 
 %files validate
 %doc README.md
 %_bindir/%name-validate
 
 %changelog
+* Sat Sep 04 2021 Alexey Shabalin <shaba@altlinux.org> 2.12.0-alt1
+- new version 2.12.0
+
 * Fri Jul 30 2021 Andrey Sokolov <keremet@altlinux.org> 2.11.0-alt2
 - compile without relabeling support
 
