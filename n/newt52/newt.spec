@@ -1,56 +1,57 @@
-%define abiversion 52
-%define main_version 0.%abiversion.16
 %define _name newt
+%def_disable static
+%def_enable tk
 
-Name: %_name%abiversion
-Version: %main_version
+Name: newt52
+Version: 0.52.21
 Release: alt1
 
-%def_enable tk
- 
-Summary: A development library for text mode user interfaces.
-License: LGPL
+Summary: A development library for text mode user interfaces
+
+License: LGPLv2
 Group: System/Libraries
 Url: https://fedorahosted.org/releases/n/e/newt/
+
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
-Source: %url/%name-%version.tar
-Patch: %name-%version-%release.patch
+# Source-url: https://releases.pagure.org/newt/newt-%version.tar.gz
+Source: %name-%version.tar
 
-Requires: slang, lib%name = %version-%release
+Requires: lib%name = %EVR
+Requires: slang
 Provides: snack = %version-%release
 
-# Automatically added by buildreq on Tue Oct 22 2002
-BuildRequires: libpopt-devel libslang2-devel python-devel docbook-utils
+BuildRequires: libpopt-devel libslang2-devel docbook-utils python3-devel
 %if_enabled tk
-BuildRequires: tkinter
+BuildRequires: python3-modules-tkinter
 %endif
+
+# FIXME: more correct way
+%add_optflags %(pkg-config --cflags slang)
 
 %package -n lib%name
 Summary: Newt windowing toolkit development files library.
 Group: System/Libraries
-Provides: lib%_name = %version-%release
+Provides: lib%_name = %EVR
 
-%package -n python-module-%name
-Summary: Python files for the %name.
-Version: %{main_version}_%_python_version
+%package -n python3-module-%name
+Summary: Python files for the %name
 Group: System/Libraries
-Requires: python = %_python_version, lib%name = %{main_version}-%release
-Provides: python-module-%_name = %version-%release
+Requires: lib%name = %EVR
+Provides: python3-module-%_name = %version-%release
 
 %package -n lib%_name-devel
-Summary: Newt windowing toolkit development files.
+Summary: Newt windowing toolkit development files
 Group: Development/C
-Version: %main_version
-Requires: lib%name = %version-%release, libslang2-devel
-Provides: lib%_name-devel = %version-%release lib%name-devel = %version-%release
+Requires: lib%name = %EVR, libslang2-devel
+Provides: lib%name-devel = %version-%release
 Obsoletes: %_name-devel
 
 %package -n lib%_name-devel-static
-Summary: Newt windowing toolkit development files.
+Summary: Newt windowing toolkit development files
 Group: Development/C
-Requires: lib%name-devel = %version-%release
-Provides: lib%_name-devel-static = %version-%release lib%name-devel-static = %version-%release
+Requires: lib%name-devel = %EVR
+Provides: lib%name-devel-static = %version-%release
 
 %description
 Newt is a programming library for color text mode, widget based user
@@ -68,7 +69,7 @@ etc., to text mode user interfaces.  This package contains the
 shared library needed by programs built with %name.
 Newt is based on the slang library.
 
-%description -n python-module-%name
+%description -n python3-module-%name
 python stuff for the %name
 
 %description -n lib%_name-devel
@@ -81,24 +82,28 @@ Install lib%name-devel if you want to develop applications which will
 use %name.
 
 %description -n lib%_name-devel-static
-Static libraries for  lib%name-devel 
+Static libraries for  lib%name-devel
 
 %prep
 %setup
-%patch -p1
+#patch -p1
 
-subst s/^PYTHONVERS.*/PYTHONVERS=python%_python_version/ Makefile.in
+#subst s/^PYTHONVERS.*/PYTHONVERS=python%_python_version/ Makefile.in
 
 %build
-./autogen.sh
-%configure --with-gpm-support 
+#./autogen.sh
+%configure --with-gpm-support %{subst_enable static}
 # NO SMP
-%make PYTHON_LIBS="-lpython%_python_version"
+#make PYTHON_LIBS="-lpython%_python3_version"
+%make_build
 docbook2html -u tutorial.sgml
 
 %install
-%makeinstall 
+%makeinstall_std
 
+%if_disabled static
+rm -v %buildroot%_libdir/*.*a
+%endif
 %find_lang --with-gnome %_name
 
 %check
@@ -107,14 +112,13 @@ docbook2html -u tutorial.sgml
 %files -n lib%name -f %_name.lang
 %_libdir/*.so.*
 
-%files 
+%files
 %_bindir/*
 %doc CHANGES
 %_man1dir/*
 
-%files -n python-module-%name
-%_libdir/python%_python_version/*/*.py*
-%_libdir/python%_python_version/*/*.so
+%files -n python3-module-%name
+%python3_sitelibdir/*
 
 %files -n lib%_name-devel
 %_libdir/*.so
@@ -122,10 +126,17 @@ docbook2html -u tutorial.sgml
 %_pkgconfigdir/*
 %doc tutorial.html
 
+%if_enabled static
 %files -n lib%_name-devel-static
 %_libdir/*.*a
+%endif
 
 %changelog
+* Sat Sep 04 2021 Vitaly Lipatov <lav@altlinux.ru> 0.52.21-alt1
+- new version (0.52.21) with rpmgs script, cleanup spec
+- switch to build from release tarball
+- disable devel-static packing
+
 * Mon Oct 07 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.52.16-alt1
 - 0.52.16
 
