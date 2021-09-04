@@ -1,6 +1,6 @@
 Name: sylpheed
 Version: 3.7.0
-Release: alt0.5
+Release: alt0.6
 
 Summary: a GTK+ based, lightweight, and fast e-mail client
 License: GPLv2+
@@ -11,6 +11,7 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 %def_enable ldap
 %def_disable jpilot
 %def_enable gtkspell
+%global optflags_lto %nil
 
 Source: %name-%version.tar.bz2
 
@@ -168,6 +169,8 @@ autoconf
 %_includedir/sylpheed/
 
 %changelog
+* Sun Sep 05 2021 Ilya Mashkin <oddity@altlinux.ru> 3.7.0-alt0.6
+- Disabled LTO
 
 * Thu Aug 12 2021 Ilya Mashkin <oddity@altlinux.ru> 3.7.0-alt0.5
 - harden link checker (RH#1988552) (Fixes: CVE-2021-37746)
