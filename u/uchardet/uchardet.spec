@@ -1,15 +1,16 @@
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 Name:		uchardet
-Version:	0.0.5
-Release:	alt1.1
+Version:	0.0.7
+Release:	alt1
 
 Summary:	Universal charset detection
 
 Group:		Development/Tools
 License:	MPLv1.1
-Url:		https://github.com/BYVoid/uchardet
+Url:		https://www.freedesktop.org/wiki/Software/uchardet/
 
-# Source-url: https://github.com/BYVoid/uchardet/archive/v%version.tar.gz
-Source:	%name-%version.tar
+Source:		https://www.freedesktop.org/software/uchardet/releases/uchardet-0.0.7.tar.xz
 
 Requires:	lib%name = %EVR
 
@@ -61,7 +62,7 @@ Static library to build statically linked applications that lib%name
 %files
 %doc COPYING AUTHORS
 %_bindir/%name
-%_mandir/man1/%name.1.*
+%_man1dir/%name.1.*
 
 %files -n lib%name
 %_libdir/lib%name.so.*
@@ -75,6 +76,11 @@ Static library to build statically linked applications that lib%name
 %_libdir/lib%name.a
 
 %changelog
+* Sat Sep 04 2021 Motsyo Gennadi <drool@altlinux.ru> 0.0.7-alt1
+- 0.0.7
+- fix LTO
+- change home URL
+
 * Mon Mar 15 2021 Leontiy Volodin <lvol@altlinux.org> 0.0.5-alt1.1
 - recompile with -fPIE
 
