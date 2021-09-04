@@ -1,5 +1,5 @@
 Name:		xmrig
-Version:	6.13.1
+Version:	6.15.0
 Release:	alt1
 Summary:	RandomX, CryptoNight, AstroBWT and Argon2 miner
 Url:		https://github.com/xmrig/xmrig
@@ -11,9 +11,9 @@ Patch0:		%name-6.3.0-minimum_donate_0.diff
 Patch1:		%name-5.10.0-Wno-class-memaccess_alt_rm.diff
 Patch2:		%name-6.8.1-maes_armh.diff
 
-BuildRequires:	cmake gcc-c++ libmicrohttpd-devel libssl-devel-static libstdc++-devel-static libuv-devel libkrb5-devel zlib-devel libcpuid-devel
+BuildRequires:	cmake gcc-c++ libmicrohttpd-devel libssl-devel-static libstdc++-devel-static libuv-devel libkrb5-devel zlib-devel libcpuid-devel libhwloc-devel >= 2.5
 
-ExcludeArch:	ppc64le aarch64 armh
+ExcludeArch:	ppc64le armh
 
 %description
 XMRig is a high performance, open source, cross platform RandomX, KawPow, CryptoNight
@@ -39,7 +39,7 @@ cmake		../. \
 		-DCMAKE_BUILD_TYPE=Release \
 		-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 		-DCMAKE_C_FLAGS:STRING="%optflags" \
-		-DWITH_HWLOC=OFF \
+		-DWITH_HWLOC=ON \
 		-DWITH_EMBEDDED_CONFIG=ON
 %make_build
 
@@ -52,6 +52,9 @@ install -Dp -m 0755 ./%name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Sat Sep 04 2021 Motsyo Gennadi <drool@altlinux.ru> 6.15.0-alt1
+- 6.15.0
+
 * Thu Jul 08 2021 Motsyo Gennadi <drool@altlinux.ru> 6.13.1-alt1
 - 6.13.1
 
