@@ -2,7 +2,7 @@
 %define child  bootchain
 
 Name: %parent-%child
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: %child modules set for %name
@@ -179,6 +179,9 @@ cp -av %child-* %buildroot%_datadir/%parent/features/
 %_datadir/%parent/features/%child-liverw
 
 %changelog
+* Sat Sep 04 2021 Leonid Krivoshein <klark@altlinux.org> 0.1.1-alt1
+- localdev: label globbing and 'fuid' option support added.
+
 * Mon Aug 30 2021 Leonid Krivoshein <klark@altlinux.org> 0.1.0-alt1
 - Experimental build for Sisyphus: WiP!
 
