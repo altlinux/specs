@@ -18,7 +18,7 @@
 %def_with snmp
 
 Name: cyrus-imapd
-Version: 3.2.7
+Version: 3.2.8
 Release: alt1
 
 Summary: A high-performance email, contacts and calendar server
@@ -504,6 +504,9 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Sun Sep 05 2021 Sergey Y. Afonin <asy@altlinux.org> 3.2.8-alt1
+- 3.2.8 (fixes: CVE-2021-33582)
+
 * Thu Jun 10 2021 Sergey Y. Afonin <asy@altlinux.org> 3.2.7-alt1
 - 3.2.7 (fixes: CVE-2021-32056)
 
