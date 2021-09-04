@@ -1,15 +1,19 @@
+%def_disable static
+
 Name: libmcrypt
 Version: 2.5.8
-Release: alt1
+Release: alt2
 
 Summary: Encryption/decryption library
+
 License: LGPL
 Group: System/Libraries
 Url: http://mcrypt.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://dl.sf.net/%name/%name-%version.tar.bz2
+# Source-url: http://dl.sf.net/%name/%name-%version.tar.bz2
+Source: %name-%version.tar
 Patch: libmcrypt-2.5.7-alt-libdl.patch
 Patch1: libmcrypt-2.5.1-dlopen.patch
 Patch2: libmcrypt-2.5.1-symbols.patch
@@ -67,7 +71,7 @@ rm -f acinclude.m4
 %build
 %autoreconf 
 # Since 2.5.4 libmcrypt does not use dynamic loading for the modules by default
-%configure --enable-static --disable-ltdl \
+%configure %{subst_enable static} --disable-ltdl \
            --disable-libtool-lock --disable-dynamic-loading
 
 cp %SOURCE1 lib
@@ -82,8 +86,9 @@ mkdir -p %buildroot%_libdir/%name
 for i in  modes algorithms
 do
     cp modules/$i/.libs/*.so %buildroot%_libdir/%name
-    #cp modules/$i/.libs/*.la %buildroot%_libdir/%name
+%if_enabled static
     cp modules/$i/.libs/*.a %buildroot%_libdir/%name
+%endif
 done
 
 %files
@@ -99,14 +104,19 @@ done
 %_mandir/man?/*
 %_datadir/aclocal/*
 
+%if_enabled static
 %files devel-static
 %_libdir/*.a
 %_libdir/%name/*.a
+%endif
 
 # TODO: add test for module working (from example?)
 # TODO: remove strange hacking for build & install
 
 %changelog
+* Sat Sep 04 2021 Vitaly Lipatov <lav@altlinux.ru> 2.5.8-alt2
+- cleanup spec, disable devel-static packing
+
 * Sun May 27 2012 Andrew Clark <andyc@altlinux.ru> 2.5.8-alt1
 - version update to 2.5.8
 
