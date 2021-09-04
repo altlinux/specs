@@ -1,5 +1,5 @@
 Name: eepm
-Version: 3.13.0
+Version: 3.13.2
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -37,7 +37,8 @@ See detailed description here: http://wiki.etersoft.ru/EPM
 Summary: Etersoft EPM package manager (repack requirements)
 Group: System/Configuration/Packaging
 Requires: %name = %EVR
-Requires: fakeroot alien rpm-build dpkg
+Requires: fakeroot alien dpkg
+Requires: /usr/bin/rpmbuild
 
 %description repack
 This package has requirements needed for using epm repack on ALT
@@ -135,6 +136,25 @@ mkdir -p %buildroot/var/lib/eepm/
 %_bindir/yum
 
 %changelog
+* Sat Sep 04 2021 Vitaly Lipatov <lav@altlinux.ru> 3.13.2-alt1
+- separate 'installed' from 'query' command
+- epm-release_upgrade: mute screen checking
+- epm-upgrade: restore repo list after error
+- epm reposave: fix run under user
+- epm dedup: fix rpm -e remove for common removing
+- add --force to epm-remove (pass packages to apt in any case) and use it in autoorphans
+
+* Fri Sep 03 2021 Vitaly Lipatov <lav@altlinux.ru> 3.13.1-alt1
+- require /usr/bin/rpmbuild, not rpm-build package
+- epm-release_upgrade: say install screen only it is not installed yet
+- epm: fix parse options after main command
+- epm: add separated release_downgrade command
+- epm play sferum: add to the list
+- epm-removerepo: check for a full string
+- epm release-upgrade: install altlinux-release-* if needed
+- epm upgrade: fix removing repo after upgrade
+- epm: drop direct arg for info command
+
 * Thu Sep 02 2021 Vitaly Lipatov <lav@altlinux.ru> 3.13.0-alt1
 - big arg parsing rewrite
 - epm-release_upgrade: add checking for local console, for screen using, for logind
