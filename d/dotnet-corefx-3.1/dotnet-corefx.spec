@@ -6,11 +6,11 @@
 
 %define _dotnet_major 3.1
 
-%remove_optflags -frecord-gcc-switches
+%define optflags_lto -flto=thin
 
 Name: dotnet-corefx-%_dotnet_major
 Version: 3.1.16
-Release: alt1
+Release: alt2
 
 Summary: .NET Core foundational libraries, called CoreFX
 
@@ -43,7 +43,7 @@ BuildRequires: dotnet
 %define bootstrapdir %_dotnetdir
 %endif
 
-BuildRequires: clang llvm cmake libstdc++-devel
+BuildRequires: clang llvm llvm-devel cmake libstdc++-devel
 BuildRequires: libcurl-devel libssl-devel zlib-devel libkrb5-devel
 
 #Requires: dotnet-common
@@ -144,6 +144,10 @@ chmod 0755 %buildroot%_rpmlibdir/%name.filetrigger
 %_dotnet_shared/System.Security.Cryptography.Native.OpenSsl.a
 
 %changelog
+* Sat Sep 04 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.16-alt2
+- use -flto=thin for clang
+- add BR: llvm-devel
+
 * Wed Jun 30 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.16-alt1
 - new version (3.1.16) with rpmgs script
 
