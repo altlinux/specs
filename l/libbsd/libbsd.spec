@@ -1,15 +1,21 @@
 Name: libbsd
-Version: 0.10.0
+Version: 0.11.3
 Release: alt1
 
 Summary: Library providing BSD-compatible functions for portability
+
 License: BSD and ISC and Copyright only and Public Domain
 Group: System/Libraries
-
 Url: http://libbsd.freedesktop.org/
+
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
 Source: http://libbsd.freedesktop.org/releases/%name-%version.tar
 Patch: libbsd-0.9.1-alt-e2k.patch
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+# patches from Fedora
+Patch3: %name-symver.patch
+
+BuildRequires: libmd-devel
 
 %description
 libbsd provides useful functions commonly found on BSD systems, and
@@ -20,7 +26,7 @@ code over and over again on each project.
 %package devel
 Summary: Development files for libbsd
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: pkg-config
 
 %description devel
@@ -31,6 +37,7 @@ Development files for the libbsd library.
 %ifarch %e2k
 %patch -p1
 %endif
+%patch3 -p1
 
 %build
 %configure --disable-static
@@ -61,6 +68,10 @@ rm %buildroot/%_man3dir/setproctitle*
 %_pkgconfigdir/%name-overlay.pc
 
 %changelog
+* Sat Sep 04 2021 Vitaly Lipatov <lav@altlinux.ru> 0.11.3-alt1
+- new version 0.11.3 (with rpmrb script)
+- add LTO fix from Fedora
+
 * Wed Sep 02 2020 Vitaly Lipatov <lav@altlinux.ru> 0.10.0-alt1
 - new version 0.10.0 (with rpmrb script)
 
