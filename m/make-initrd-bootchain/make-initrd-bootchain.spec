@@ -2,7 +2,7 @@
 %define child  bootchain
 
 Name: %parent-%child
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: %child modules set for %name
@@ -179,6 +179,9 @@ cp -av %child-* %buildroot%_datadir/%parent/features/
 %_datadir/%parent/features/%child-liverw
 
 %changelog
+* Sun Sep 05 2021 Leonid Krivoshein <klark@altlinux.org> 0.1.2-alt1
+- major fixes, prepare to p10 netinstall, sample config updated.
+
 * Sat Sep 04 2021 Leonid Krivoshein <klark@altlinux.org> 0.1.1-alt1
 - localdev: label globbing and 'fuid' option support added.
 
