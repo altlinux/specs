@@ -1,7 +1,7 @@
 %def_without static
 
 Name: pstoedit
-Version: 3.76
+Version: 3.77
 Release: alt1
 
 Summary: converts Postscript(TM) and PDF files to other vector graphic formats
@@ -165,6 +165,10 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %endif
 
 %changelog
+
+* Sun Sep 05 2021 Ilya Mashkin <oddity@altlinux.ru> 3.77-alt1
+- 3.77
+
 * Tue Aug 31 2021 Ilya Mashkin <oddity@altlinux.ru> 3.76-alt1
 - 3.76
 - Update License to GPLv2+
