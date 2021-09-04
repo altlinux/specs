@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name gtksourceview
 %define ver_major 4.8
@@ -16,8 +16,8 @@
 %endif
 
 Name: lib%{_name}4
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: GtkSourceView text widget library
 License: LGPLv2+
@@ -162,6 +162,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Sat Sep 04 2021 Yuri N. Sedunov <aris@altlinux.org> 4.8.2-alt1
+- 4.8.2
+
 * Tue Aug 31 2021 Yuri N. Sedunov <aris@altlinux.org> 4.8.1-alt2
 - updated to 4.8.1-32-g3c7ac24c
 
