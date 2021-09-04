@@ -1,5 +1,5 @@
 Name: ocaml-migrate-parsetree
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 Summary: Convert OCaml parsetrees between different major versions
 Group: Development/ML
@@ -43,6 +43,9 @@ files for developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Jul 28 2021 Anton Farygin <rider@altlinux.ru> 2.2.0-alt1
+- 2.2.0
+
 * Sat Mar 20 2021 Anton Farygin <rider@altlinux.org> 2.1.0-alt1
 - 2.1.0
 
