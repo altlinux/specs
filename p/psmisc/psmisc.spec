@@ -3,7 +3,7 @@
 
 Name: psmisc
 Version: 23.3
-Release: alt2
+Release: alt3
 
 Summary: Miscellaneous utilities that use proc filesystem
 License: GPL-2.0-only
@@ -135,6 +135,9 @@ make check
 %doc AUTHORS ChangeLog COPYING README.md
 
 %changelog
+* Sat Sep 04 2021 Vitaly Chikunov <vt@altlinux.org> 23.3-alt3
+- Fix output redirect (closes: #40857).
+
 * Wed Jul 08 2020 Vitaly Chikunov <vt@altlinux.org> 23.3-alt2
 - spec: Simplify binaries packing.
 
