@@ -1,8 +1,11 @@
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 Name:		bs2b
 Summary:	The Bauer stereophonic-to-binaural DSP (bs2b) library and plugins
 Summary(ru_RU.UTF8): Библиотека стереофонически-бинауральной обработки звука Бауэра с подключаемыми модулями
+Summary(uk_UA.UTF8): Бібліотека стереофонічно-бінауральної обробки звуку Бауера з приєднуваними модулями
 Version:	3.1.0
-Release:	alt1.3
+Release:	alt1.4
 Group:		System/Libraries
 License:	Distributable (see COPYING file)
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
@@ -30,6 +33,13 @@ Author: Boris Mikhaylov
 наушниках. Рекомендуется при длительном прослушивании аудиозаписей в наушниках
 для уменьшения утомляемости из-за суперстерео эффекта, не вносит заметных
 искажений звука.
+
+%description -l uk_UA.UTF8
+Бібліотека стереофонічно-бінауральної обробки звуку Бауера з приєднуваними
+модулями призначена для покращення звучання стереофонічних звукозаписів в
+навушниках. Рекомендується при тривалому прослуховуванні аудіозаписів в навушниках
+для зменшення втомлюваності через ефект суперстерео, не вносить помітних
+спотворень до звуку.
 
 %package -n lib%name
 Summary: Shared libraries for bs2b
@@ -96,6 +106,9 @@ find doc -name 'Makefile*' | xargs %__rm
 %_libdir/*.a
 
 %changelog
+* Sat Sep 04 2021 Motsyo Gennadi <drool@altlinux.ru> 3.1.0-alt1.4
+- fix LTO
+
 * Thu Jan 26 2012 Motsyo Gennadi <drool@altlinux.ru> 3.1.0-alt1.3
 - dropped RPATH on the floor
 
