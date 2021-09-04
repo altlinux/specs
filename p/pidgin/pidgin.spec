@@ -32,7 +32,7 @@
 %def_enable vv
 
 Name: pidgin
-Version: 2.14.3
+Version: 2.14.6
 Release: alt1
 
 Summary: A GTK+ based multiprotocol instant messaging client
@@ -259,8 +259,8 @@ cp %SOURCE2 prefs.xml
 
 # Bug #528796: Get rid of #!/usr/bin/env python
 # Upstream refuses to use ./configure --python-path= in these scripts.
-for file in finch/plugins/pietray.py libpurple/purple-remote libpurple/plugins/dbus-buddyicons-example.py \
-            libpurple/plugins/startup.py libpurple/purple-url-handler libpurple/purple-notifications-example; do
+for file in finch/plugins/pietray.py libpurple/plugins/dbus-buddyicons-example.py \
+            libpurple/plugins/startup.py libpurple/purple-notifications-example; do
     sed -i 's/env python/python3/' $file
 done
 
@@ -351,7 +351,7 @@ fi
 %_bindir/%name
 %_libdir/%name
 %_desktopdir/%name.desktop
-%_datadir/appdata/*.appdata.xml
+%_datadir/metainfo/*.appdata.xml
 %_pixmapsdir/%name
 %_iconsdir/hicolor/*/apps/*
 %_man1dir/%name.*
@@ -453,6 +453,9 @@ fi
 %endif
 
 %changelog
+* Sat Sep 04 2021 Alexey Shabalin <shaba@altlinux.org> 2.14.6-alt1
+- 2.14.6
+
 * Tue Apr 20 2021 Alexey Shabalin <shaba@altlinux.org> 2.14.3-alt1
 - 2.14.3
 - Removed the AIM protocol plugin. AIM has been shut down since December
