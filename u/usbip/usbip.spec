@@ -1,13 +1,15 @@
 %define kernel_version   4.18
 %define kernel_source /usr/src/kernel/sources/kernel-source-%kernel_version.tar
 %define source_dir tools/usb/usbip
+%define lname lib%name
+
+%def_disable static
 
 Name: usbip
-Summary: Utility for manage usbip devices
 Version: 2.0.4
-Release: alt7
+Release: alt8
 
-%define lname lib%name
+Summary: Utility for manage usbip devices
 
 Group: System/Configuration/Networking
 License: GPLv2+
@@ -75,7 +77,7 @@ rm -rf kernel-source-%kernel_version
  %__subst 's| -Werror||g' configure.ac
 ./autogen.sh
 %add_optflags -fcommon
-%configure --with-usbids-dir=%_datadir/misc
+%configure %{subst_enable static} --with-usbids-dir=%_datadir/misc
 %make_build
 
 %install
@@ -111,10 +113,15 @@ install -D -m0644 usbip-client.modules.conf %buildroot%_sysconfdir/modules-load.
 %_includedir/*
 %_libdir/*.so
 
+%if_enabled static
 %files -n %lname-devel-static
 %_libdir/*.a
+%endif
 
 %changelog
+* Sun Sep 05 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.4-alt8
+- disable build devel-static
+
 * Wed Apr 07 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.4-alt7
 - Fixed FTBFS with -fcommon.
 
