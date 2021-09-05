@@ -5,7 +5,7 @@
 %define caddy_group _caddy
 
 Name: caddy
-Version: 2.3.0
+Version: 2.4.5
 Release: alt1
 Summary: Web server with automatic HTTPS
 License: Apache-2.0
@@ -25,7 +25,7 @@ Source5: https://raw.githubusercontent.com/caddyserver/dist/master/scripts/compl
 Source6: https://raw.githubusercontent.com/caddyserver/dist/master/scripts/completions/_caddy
 
 ExclusiveArch: %go_arches
-BuildRequires(pre): rpm-build-golang rpm-macros-webserver-common
+BuildRequires(pre): rpm-build-golang rpm-macros-webserver-common rpm-macros-systemd
 
 Requires: webserver-common
 Provides: webserver
@@ -88,10 +88,10 @@ useradd -r -N -g %caddy_group -G %webserver_group -c 'Caddy web server' \
         -s /sbin/nologin -M -d %_sharedstatedir/%name %caddy_user 2>/dev/null ||:
 
 %post
-%post_service %name
+%post_systemd_restart_later %name
 
 %preun
-%preun_service %name
+%preun_systemd %name
 
 %files
 %doc AUTHORS LICENSE README.md
@@ -107,6 +107,9 @@ useradd -r -N -g %caddy_group -G %webserver_group -c 'Caddy web server' \
 %_datadir/zsh/site-functions/_caddy
 
 %changelog
+* Sun Sep 05 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.5-alt1
+- new version 2.4.5
+
 * Wed Feb 17 2021 Alexey Shabalin <shaba@altlinux.org> 2.3.0-alt1
 - Initial Caddy v2 package
 
