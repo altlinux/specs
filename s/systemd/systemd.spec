@@ -89,7 +89,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1075,8 +1075,8 @@ export LD_LIBRARY_PATH=$(pwd)/%{__builddir}/src/shared:$(pwd)/%{__builddir}
 %pre
 groupadd -r -f systemd-journal >/dev/null 2>&1 ||:
 groupadd -r -f systemd-oom >/dev/null 2>&1 ||:
-useradd -g systemd-omm -c 'systemd Userspace OOM Killer' \
-    -d /var/empty -s /dev/null -r -l -M systemd-omm >/dev/null 2>&1 ||:
+useradd -g systemd-oom -c 'systemd Userspace OOM Killer' \
+    -d /var/empty -s /dev/null -r -l -M systemd-oom >/dev/null 2>&1 ||:
 
 %post
 # Move old stuff around in /var/lib
@@ -2233,6 +2233,9 @@ udevadm hwdb --update &>/dev/null
 %exclude /lib/udev/rules.d/99-systemd.rules
 
 %changelog
+* Sun Sep 05 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.4-alt2
+- Fixed systemd-oom user name typo.
+
 * Thu Sep 02 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.4-alt1
 - 249.4
 - Disable build static libudev and libsystemd.
