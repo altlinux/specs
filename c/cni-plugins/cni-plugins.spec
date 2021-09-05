@@ -1,8 +1,5 @@
 
 %global import_path github.com/containernetworking/plugins
-%global commit 8de0287741e448a0a398b571030bcfa9243e4504
-#%%global shortcommit %(c=%commit; echo ${c:0:7})
-
 %global _unpackaged_files_terminate_build 1
 %define _libexecdir /usr/libexec
 %define cni_dir %_libexecdir/cni
@@ -10,7 +7,7 @@
 
 Name: cni-plugins
 Version: 1.0.0
-Release: alt0.rc1
+Release: alt1
 Summary: Container Network Interface plugins
 Group: Development/Other
 License: Apache-2.0
@@ -69,6 +66,9 @@ install -p -m0644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
 %_tmpfilesdir/*
 
 %changelog
+* Sun Sep 05 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.0-alt1
+- new version 1.0.0
+
 * Mon Jul 19 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.0-alt0.rc1
 - new version 1.0.0-rc1
 - package cni-dhcp.service and cni-dhcp.socket
