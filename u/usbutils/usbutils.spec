@@ -1,5 +1,5 @@
 Name: usbutils
-Version: 013
+Version: 014
 Release: alt1
 
 Summary: Linux USB utilities
@@ -38,6 +38,9 @@ rm -f %buildroot%_bindir/lsusb.py
 %doc NEWS README.md
 
 %changelog
+* Sun Sep 05 2021 Alexey Shabalin <shaba@altlinux.org> 014-alt1
+- new version 014
+
 * Sat Jan 16 2021 Alexey Shabalin <shaba@altlinux.org> 013-alt1
 - new version 013
 
