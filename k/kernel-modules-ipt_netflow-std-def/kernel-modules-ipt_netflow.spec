@@ -1,7 +1,7 @@
 %define module_name	ipt_netflow
-%define module_version	2.5
+%define module_version	2.6
 
-%define module_release alt1.k
+%define module_release alt1
 
 %define flavour		std-def
 %define karch %ix86 x86_64 aarch64 ppc64le
@@ -12,7 +12,7 @@ BuildRequires(pre): kernel-headers-modules-std-def
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
 
-Summary: Netflow iptables module for Linux kernel 
+Summary: Netflow iptables module for Linux kernel
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
 Release: %module_release.%kcode.%kbuildrelease
