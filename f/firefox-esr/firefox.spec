@@ -3,20 +3,19 @@
 
 %define firefox_cid     \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
 %define firefox_prefix  %_libdir/firefox
-%define firefox_datadir %_datadir/firefox
 
 %define gst_version   1.0
-%define nspr_version  4.26
-%define nss_version   3.54.0
-%define rust_version  1.42.0
-%define cargo_version 1.42.0
+%define nspr_version  4.32
+%define nss_version   3.69.0
+%define rust_version  1.54.0
+%define cargo_version 1.54.0
 %define llvm_version  11.0
 
-Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
-Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
+Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR version)
+Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
-Version: 78.13.0
+Version: 91.0.1
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -39,27 +38,25 @@ Source11: l10n.tar
 Source12: firefox-privacy-prefs.js
 
 ### Start Patches
-Patch001: 0001-SUSE-NonGnome-KDE-integration.patch
-Patch002: 0002-ALT-Use-system-nspr-headers.patch
-Patch003: 0003-FEDORA-build-arm-libopus.patch
-Patch004: 0004-FEDORA-build-arm.patch
-Patch005: 0005-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
-Patch006: 0006-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
-Patch007: 0007-ALT-Fix-aarch64-build.patch
-Patch008: 0008-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
-Patch009: 0009-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
-Patch010: 0010-arm-js-src-wasm-add-struct-user_vfp-definition.patch
-Patch011: 0011-Bug-1640982-Set-CARGO_PROFILE_RELEASE_LTO-true-when-.patch
-Patch012: 0012-use-floats-for-audio-on-arm-too.patch
-Patch020: 0020-MOZILLA-1666567-land-NSS-8ebee3cec9cf-UPGRADE_NSS_RE.patch
-Patch021: 0021-MOZILLA-1666567-land-NSS-8fdbec414ce2-UPGRADE_NSS_RE.patch
-Patch022: 0022-MOZILLA-1666567-land-NSS-NSS_3_58_BETA1-UPGRADE_NSS_.patch
-Patch024: 0024-MOZILLA-1605273-only-run-CRLite-on-certificates-with.patch
-#Patch025: 0025-update-packed_simd-for-rust-1.48.patch
+Patch001: 0001-ALT-Use-system-nspr-headers.patch
+Patch002: 0002-FEDORA-build-arm-libopus.patch
+Patch003: 0003-FEDORA-build-arm.patch
+Patch004: 0004-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
+Patch005: 0005-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
+Patch006: 0006-ALT-Fix-aarch64-build.patch
+Patch007: 0007-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
+Patch008: 0008-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
+Patch009: 0009-arm-js-src-wasm-add-struct-user_vfp-definition.patch
+Patch010: 0010-use-floats-for-audio-on-arm-too.patch
+Patch011: 0011-bmo-847568-Support-system-harfbuzz.patch
+Patch012: 0012-bmo-847568-Support-system-graphite2.patch
+Patch013: 0013-bmo-1559213-Support-system-av1.patch
+Patch014: 0014-VAAPI-Add-extra-frames.patch
+Patch015: 0015-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 ### End Patches
 
 # Hang up on build browser/components/about
-ExcludeArch: ppc64le
+#ExcludeArch: ppc64le
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -108,6 +105,9 @@ BuildRequires: node
 BuildRequires: nasm
 BuildRequires: libxkbcommon-devel
 BuildRequires: libdrm-devel
+# 91.0
+BuildRequires: libaom-devel
+BuildRequires: libdav1d-devel
 
 # Python requires
 BuildRequires: /dev/shm
@@ -203,11 +203,9 @@ Most likely you don't need to use this package.
 %patch010 -p1
 %patch011 -p1
 %patch012 -p1
-%patch020 -p1
-%patch021 -p1
-%patch022 -p1
-%patch024 -p1
-#patch025 -p0 -d mozilla
+%patch013 -p1
+%patch014 -p1
+%patch015 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -241,6 +239,7 @@ find third_party \
 
 
 %build
+export ALTWRAP_LLVM_VERSION="%llvm_version"
 # compile cbindgen
 CBINDGEN_HOME="$PWD/cbindgen"
 CBINDGEN_BINDIR="$CBINDGEN_HOME/bin"
@@ -313,7 +312,7 @@ python3 ./mach python --exec-file /dev/null
 python3 ./mach build
 
 while read -r loc; do
-	./mach build chrome-$loc
+	python3 ./mach build chrome-$loc
 done < %SOURCE10
 
 make -C objdir/browser/installer multilocale.txt
@@ -449,6 +448,16 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Sat Sep 04 2021 Andrey Cherepanov <cas@altlinux.org> 91.0.1-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2021-29991: Header Splitting possible with HTTP/3 Responses
+  + CVE-2021-29981: Live range splitting could have led to conflicting assignments in the JIT
+  + CVE-2021-29983: Firefox for Android could get stuck in fullscreen mode
+  + CVE-2021-29987: Users could have been tricked into accepting unwanted permissions on Linux
+  + CVE-2021-29982: Single bit data leak due to incorrect JIT optimization and type confusion
+  + CVE-2021-29990: Memory safety bugs fixed in Firefox 91
+
 * Tue Aug 10 2021 Andrey Cherepanov <cas@altlinux.org> 78.13.0-alt1
 - New version (78.13.0).
 - Security fixes:
