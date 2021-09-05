@@ -1,5 +1,5 @@
 Name: livecd-net-eth
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
 
 Summary: Try to autoconfigure ethernet interfaces
@@ -30,6 +30,10 @@ install -pDm644 %name.service %buildroot%_unitdir/%name.service
 %_unitdir/%name.service
 
 %changelog
+* Sat Sep 04 2021 Anton Midyukov <antohami@altlinux.org> 0.4.4-alt1
+- livecd-net-eth.init: shift startup of the service from 05 to 07
+- livecd-net-eth.service: fix dependencies
+
 * Sat Feb 15 2020 Anton Midyukov <antohami@altlinux.org> 0.4.3-alt1
 - Do not configure wlan interfaces
 
