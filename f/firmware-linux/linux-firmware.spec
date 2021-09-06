@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20210820
+Version: 20210903
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,16 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Mon Sep 06 2021 Cronbuild Service <cronbuild@altlinux.org> 20210903-alt1
+- upstream changes (GIT 2984e26):
+  + Revert "iwlwifi: add FW for new So/Gf device type" (thx Luca Coelho)
+  + update frimware for mediatek bluetooth chip (MT7921) (thx mark-yw.chen)
+  + rtl_bt: Update RTL8852A BT USB firmware to 0xD9A9_1D69 (thx Hilda Wu)
+  + rtl_bt: Update RTL8822C BT UART firmware to 0x05A9_1A4A (thx Hilda Wu)
+  + rtl_bt: Update RTL8822C BT USB firmware to 0x09A9_1A4A (thx Hilda Wu)
+  + Mellanox: Add new mlxsw_spectrum firmware xx.2008.3326 (thx Petr Machata)
+  + iwlwifi: add FW for new So/Gf device type (thx Luca Coelho)
+
 * Mon Aug 30 2021 Cronbuild Service <cronbuild@altlinux.org> 20210820-alt1
 - upstream changes (GIT 2e271f2):
   + rtl_bt: Update RTL8852A BT USB firmware to 0xD9A9_127B (thx Hilda Wu)
