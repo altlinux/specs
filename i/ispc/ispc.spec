@@ -1,9 +1,11 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: ispc
-Version: 1.15.0
-Release: alt3
+Version: 1.16.1
+Release: alt1
 Summary: Intel Implicit SPMD Program Compiler
 License: BSD-3-Clause
 Group: Development/C
@@ -32,7 +34,9 @@ BuildRequires: zlib-devel
 BuildRequires: /proc
 
 # armh: clang-11: error: unsupported option '--with-fpu=hardfp'
-ExclusiveArch: %ix86 x86_64 aarch64
+# i586: Even though it builds it's not working until this fixed:
+#       https://github.com/ispc/ispc/issues/2105
+ExclusiveArch: x86_64 aarch64
 
 %description
 ispc is a compiler for a variant of the C programming language, with
@@ -60,8 +64,11 @@ This package will try to build all %name examples.
 
 %prep
 %setup
+sed -i 's/clangFrontend.*clangLex/clang-cpp/' CMakeLists.txt
 
 %build
+%define optflags_lto -flto=thin
+
 # -DISPC_INCLUDE_TESTS=OFF = we don't have FileCheck
 # -DISPC_NO_DUMPS=ON       =
 #	CMake Warning at cmake/LLVMConfig.cmake:105 (message):
@@ -92,7 +99,7 @@ This package will try to build all %name examples.
 set -ex
 mkdir /tmp/BUILD
 cd /tmp/BUILD
-cmake %docdir/examples
+cmake %docdir/examples/cpu
 # Fix: aarch64-alt-linux-g++: error: unrecognized command-line option '-m64'
 [ $(arch) = aarch64 ] && find -name flags.make | xargs sed -i 's/-m64//'
 make -j$(nproc)
@@ -135,6 +142,11 @@ ispc --support-matrix
 %endif
 
 %changelog
+* Mon Sep 06 2021 Vitaly Chikunov <vt@altlinux.org> 1.16.1-alt1
+- Update to v1.16.1 (2021-07-15).
+- spec: Fix build with LTO.
+- spec: Do not build for i586.
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.15.0-alt3
 - NMU: spec: adapt to new cmake macros.
 
