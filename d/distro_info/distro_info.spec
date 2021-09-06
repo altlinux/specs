@@ -1,5 +1,5 @@
 Name: distro_info
-Version: 2.5
+Version: 2.6
 Release: alt1
 
 Summary: Get various info about a system and used distro
@@ -32,6 +32,10 @@ install -m0644 -D man/distro_info.1 %buildroot%_man1dir/distro_info.1
 %_man1dir/*
 
 %changelog
+* Sun Sep 05 2021 Vitaly Lipatov <lav@altlinux.ru> 2.6-alt1
+- fix override VENDOR_ID
+- distro_info: fix message output
+
 * Thu Aug 26 2021 Vitaly Lipatov <lav@altlinux.ru> 2.5-alt1
 - distro_info: ignore dot part of the version for ALT (9.0 -> p9)
 
