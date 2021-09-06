@@ -1,12 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define softhsm_module "SoftHSM PKCS #11 Module"
 
-Name: softhsm
-Version: 2.5.0
+# https://github.com/opendnssec/SoftHSMv2/issues/575
+%define optflags_lto %nil
 
-Release: alt2
+Name: softhsm
+Version: 2.6.1
+
+Release: alt1
 Summary: Software version of a PKCS#11 Hardware Security Module
-License: BSD
+License: BSD-2-Clause
 Group: System/Configuration/Other
 # Source-git: https://github.com/opendnssec/SoftHSMv2.git
 Url: http://www.opendnssec.org/
@@ -16,7 +19,6 @@ Patch: %name-%version-alt.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libssl-devel
-BuildRequires: libnss-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: zlib-devel
 BuildRequires: sqlite3
@@ -51,14 +53,11 @@ The devel package contains the libsofthsm include files.
 %prep
 %setup
 %patch -p1
+# remove softhsm/ subdir auto-added to --libdir
+sed -i 's:^full_libdir=":#full_libdir=":g' configure.ac
 
 %build
 %autoreconf
-
-# remove softhsm/ subdir auto-added to --libdir
-sed -i "s:full_libdir/softhsm:full_libdir:g" configure
-sed -i 's:^full_libdir=":#full_libdir=":g' configure.ac
-sed -i "s:libdir)/@PACKAGE@:libdir):" Makefile.in
 
 %configure \
 	--localstatedir=/var \
@@ -85,12 +84,11 @@ mkdir -p %buildroot%_includedir/softhsm
 cp src/lib/*.h %buildroot%_includedir/softhsm
 mkdir -p %buildroot/%_sharedstatedir/softhsm/tokens
 
-# leave a softlink where softhsm-1 installed its library. Programs like
-# opendnssec have that filename in their configuration file.
+# opendnssec 2.x expects _libdir/softhsm/libsofthsm2.so
 mkdir -p %buildroot/%_libdir/softhsm/
-ln -s ../pkcs11/libsofthsm2.so %buildroot/%_libdir/softhsm/libsofthsm.so
+ln -sr %buildroot/%_libdir/pkcs11/libsofthsm2.so %buildroot/%_libdir/softhsm/
 # rhbz#1272423 NSS needs it to be in the search path too
-ln -s pkcs11/libsofthsm2.so %buildroot/%_libdir
+ln -sr %buildroot/%_libdir/pkcs11/libsofthsm2.so %buildroot/%_libdir/
 
 %pre
 getent group ods >/dev/null || groupadd -r ods
@@ -114,7 +112,7 @@ exit 0
 
 %files -n lib%name
 %dir %_libdir/softhsm
-%_libdir/softhsm/libsofthsm.so
+%_libdir/softhsm/libsofthsm2.so
 %_libdir/libsofthsm2.so
 %_libdir/pkcs11/libsofthsm2.so
 %config(noreplace) %_sysconfdir/softhsm2.conf
@@ -124,6 +122,9 @@ exit 0
 %_includedir/softhsm/
 
 %changelog
+* Tue Aug 17 2021 Stanislav Levin <slev@altlinux.org> 2.6.1-alt1
+- 2.5.0 -> 2.6.1.
+
 * Wed Sep 11 2019 Stanislav Levin <slev@altlinux.org> 2.5.0-alt2
 - Applied upstream fixes for FreeIPA DNSSEC.
 

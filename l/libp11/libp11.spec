@@ -1,15 +1,15 @@
-
+%define _unpackaged_files_terminate_build 1
 %define engines_dir $(pkg-config --variable=enginesdir --silence-errors libcrypto)
 
 %def_with check
 
 Name: libp11
-Version: 0.4.10
-Release: alt2
+Version: 0.4.11
+Release: alt1
 
 Summary: Library for using PKCS#11 modules
 Group: System/Libraries
-License: LGPLv2+
+License: LGPLv2.1
 
 Url: https://github.com/OpenSC/libp11/wiki
 Source: %name-%version.tar
@@ -25,10 +25,9 @@ BuildRequires: doxygen xsltproc
 %if_with check
 BuildRequires: /proc
 BuildRequires: openssl
+BuildRequires: softhsm
+BuildRequires: opensc
 %endif
-
-# needed for testsuite
-BuildRequires: softhsm opensc
 
 %description
 Libp11 is a library implementing a small layer on top of PKCS#11 API
@@ -85,26 +84,29 @@ chmod 0644 README.ALT
 %install
 %makeinstall_std
 
-
 # Cleanup
-rm -f %buildroot%_libdir/*.la
-rm -f %buildroot%engines_dir/*.la
-rm -rf %buildroot%_docdir/%name
+rm %buildroot%_libdir/*.la
+rm %buildroot%engines_dir/*.la
+rm -r %buildroot%_docdir/%name
 
 %check
 %make check || { cat ./tests/test-suite.log; exit 1; }
 
 %files
 %doc COPYING NEWS README.md README.ALT
-%_libdir/*.so.*
-%_libdir/openssl/*/*.so*
+%_libdir/libp11.so.*
+%_libdir/openssl/engines*/libpkcs11.so*
+%_libdir/openssl/engines*/pkcs11.so*
 
 %files devel
 %_libdir/libp11.so
-%_pkgconfigdir/*.pc
+%_pkgconfigdir/libp11.pc
 %_includedir/*
 
 %changelog
+* Tue Aug 24 2021 Stanislav Levin <slev@altlinux.org> 0.4.11-alt1
+- 0.4.10 -> 0.4.11.
+
 * Wed Sep 11 2019 Stanislav Levin <slev@altlinux.org> 0.4.10-alt2
 - Set RSA_FLAG_EXT_PKEY flag on priv key stored on HSM.
 - Added pin-source feature for pkcs11 uri.
@@ -143,7 +145,7 @@ rm -rf %buildroot%_docdir/%name
 - NMU: rebuilt for debuginfo.
 
 * Thu Nov 25 2010 Igor Vlasenko <viy@altlinux.ru> 0.2.7-alt1.qa1
-- rebuild using girar-nmu to require/provide setversion 
+- rebuild using girar-nmu to require/provide setversion
   by request of mithraen@
 
 * Tue Jun 29 2010 Alexey I. Froloff <raorn@altlinux.org> 0.2.7-alt1
