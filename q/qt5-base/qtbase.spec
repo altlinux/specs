@@ -29,13 +29,14 @@
 %endif
 %define harfbuzz_req 2.0
 %define harfbuzz_ver %{get_version libharfbuzz-devel}
+%define optflags_lto %nil
 
 %global qt_module  qtbase
 %define gname  qt5
 Name: qt5-base
 %define major  5
 Version: 5.15.2
-Release: alt4
+Release: alt5
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -829,6 +830,10 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Mon Sep 06 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt5
+- disable LTO
+- update kde/5.15 branch patches
+
 * Tue Jul 20 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt4
 - revert fix for QTBUG-88431
 
