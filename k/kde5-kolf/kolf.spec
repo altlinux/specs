@@ -4,7 +4,7 @@
 %define libkolfprivate libkolfprivate%sover
 
 Name: kde5-%rname
-Version: 21.08.0
+Version: 21.08.1
 Release: alt1
 %K5init
 
@@ -71,6 +71,9 @@ Requires: %name-common = %version-%release
 %_K5xmlgui/kolf/
 
 %changelog
+* Mon Sep 06 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt1
+- new version
+
 * Tue Aug 31 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
 - new version
 

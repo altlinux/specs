@@ -7,7 +7,7 @@
 
 
 Name: kde5-%rname
-Version: 21.08.0
+Version: 21.08.1
 Release: alt1
 %K5init
 
@@ -108,6 +108,9 @@ KF5 library
 %_K5lib/libKF5KDEGamesPrivate.so.*
 
 %changelog
+* Mon Sep 06 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt1
+- new version
+
 * Tue Aug 31 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
 - new version
 

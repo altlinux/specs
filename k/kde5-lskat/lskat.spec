@@ -1,7 +1,7 @@
 %define rname lskat
 
 Name: kde5-%rname
-Version: 21.08.0
+Version: 21.08.1
 Release: alt1
 %K5init
 
@@ -54,6 +54,9 @@ where the second player is either live opponent, or built in artificial intellig
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Mon Sep 06 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt1
+- new version
+
 * Tue Aug 31 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
 - new version
 
