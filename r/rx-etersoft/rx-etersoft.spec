@@ -2,7 +2,7 @@
 %define hooksroot rx-etersoft
 
 Name: rx-etersoft
-Version: 1.4.5
+Version: 1.4.6
 Release: alt1
 
 Summary: RX@Etersoft - NX based application/thin-client server
@@ -113,8 +113,11 @@ install -m755 %SOURCE2 %buildroot%_datadir/misc/
 %endif
 
 install -Dp -m644 data/logrotate %buildroot%_sysconfdir/logrotate.d/%name
-install -Dp -m644 nx-session-launcher/ConsoleKit-NX.conf %buildroot%_sysconfdir/dbus-1/system.d/ConsoleKit-NX.conf
+#install -Dp -m644 nx-session-launcher/ConsoleKit-NX.conf %buildroot%_sysconfdir/dbus-1/system.d/ConsoleKit-NX.conf
 mv nx-session-launcher/README nx-session-launcher/README.suid
+
+rm -v %buildroot%_bindir/nx-session-launcher
+rm -v %buildroot%_bindir/nx-session-launcher-suid
 
 cat >> %buildroot%_sysconfdir/cron.d/%name << EOF
 # Terminate suspend sessions if needed
@@ -133,7 +136,8 @@ if [ -r %_sysconfdir/sysconfig/%oname ] && [ ! -r %_sysconfdir/sysconfig/%name ]
 fi
 
 %files
-%doc AUTHORS CONTRIB nx-session-launcher/README.suid
+%doc AUTHORS CONTRIB
+#docnx-session-launcher/README.suid
 %dir %_sysconfdir/%name/
 %dir %_sysconfdir/%name/node.conf.d/
 %dir %_sysconfdir/%name/acls/
@@ -144,7 +148,7 @@ fi
 %attr (0755,root,root) %config(noreplace) %_sysconfdir/%name/commands/*
 %config(noreplace) %_sysconfdir/logrotate.d/%name
 %attr(0400,root,root) %config(noreplace) %_sudoersdir/rxetersoft
-%config(noreplace) %_sysconfdir/dbus-1/system.d/ConsoleKit-NX.conf
+#%config(noreplace) %_sysconfdir/dbus-1/system.d/ConsoleKit-NX.conf
 %config(noreplace) %_sysconfdir/%name/Xkbmap
 %_sysconfdir/%name/fixkeyboard
 %_sysconfdir/%name/Xsession
@@ -192,6 +196,10 @@ fi
 %attr(2750,root,nx) %_var/lib/%name/db/
 
 %changelog
+* Sun Sep 05 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.6-alt1
+- nxdialog: fix requote function
+- don't pack nx-session-launcher*
+
 * Tue Mar 16 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.5-alt1
 - remove bashisms (eterbug #14996)
 - use client.id_rsa.key instead of client.id_dsa.key for server forwarding
