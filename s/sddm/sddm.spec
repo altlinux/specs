@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.19.0
-Release: alt1
+Release: alt2
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -47,6 +47,7 @@ Patch111: alt-sddm-ignore-locales.patch
 Patch112: alt-sddm-etc.sysconfig.i18n.patch
 Patch113: alt-sddm-greeter-swbackend.patch
 Patch114: alt-detect-keyboard.patch
+Patch115: alt-x11-first.patch
 #
 Patch200: alt-fix-unable-handle-request.patch
 Patch201: alt-new-breeze-theme-compat.patch
@@ -92,6 +93,7 @@ ability to create smooth, animated user interfaces.
 %patch112 -p1
 %patch113 -p1 -b .software_render
 #%patch114 -p1 -b .detect_keyboard
+%patch115 -p1
 
 %patch200 -p1
 %patch201 -p1
@@ -178,6 +180,9 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Mon Sep 06 2021 Sergey V Turchin <zerg@altlinux.org> 0.19.0-alt2
+- show X11 sessions before Wayland in greeter
+
 * Wed Apr 28 2021 Oleg Solovyov <mcpain@altlinux.org> 0.19.0-alt1
 - new version
 
