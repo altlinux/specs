@@ -2,25 +2,25 @@
 %define mname k5test
 
 Name: python3-module-%mname
-Version: 0.9.2
-Release: alt5
+Version: 0.10.0
+Release: alt1
 Summary: Library for setting up self-contained Kerberos 5 environments
 
 Group: Development/Python3
-License: ISC
+License: ISC and MIT
 # Source git: https://github.com/pythongssapi/k5test.git
 Url: https://pypi.python.org/pypi/k5test
 
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3-module-six
 BuildRequires: python3-module-setuptools
 
 BuildArch: noarch
 
-Requires: libkrb5-devel
+Requires: /usr/bin/krb5-config
 Requires: krb5-kdc
 Requires: krb5-kinit
 
@@ -31,6 +31,7 @@ same name found alongside the MIT Kerberos 5 unit tests.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %python3_build_debug
@@ -43,6 +44,9 @@ same name found alongside the MIT Kerberos 5 unit tests.
 %python3_sitelibdir/%mname-%version-*.egg-info
 
 %changelog
+* Wed Sep 01 2021 Stanislav Levin <slev@altlinux.org> 0.10.0-alt1
+- 0.9.2 -> 0.10.0.
+
 * Tue Jul 27 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.2-alt5
 - Drop python2 support.
 
