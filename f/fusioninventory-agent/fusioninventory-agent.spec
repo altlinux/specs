@@ -1,6 +1,6 @@
 Name:     fusioninventory-agent
 Version:  2.6
-Release:  alt1
+Release:  alt2
 
 Summary:  FusionInventory Agent
 License:  GPL-2.0+
@@ -43,6 +43,7 @@ BuildRequires: perl-Test-MockModule
 BuildRequires: perl-Test-MockObject
 BuildRequires: perl-Test-NoWarnings
 BuildRequires: perl-Text-Template
+BuildRequires: perl-UNIVERSAL-require
 BuildRequires: perl-XML-TreePP
 BuildRequires: perl-XML-XPath
 
@@ -123,6 +124,9 @@ find %buildroot -name .packlist -delete
 %dir %_localstatedir/%name
 
 %changelog
+* Mon Sep 06 2021 Andrey Cherepanov <cas@altlinux.org> 2.6-alt2
+- FTBFS: add perl-UNIVERSAL-require.
+
 * Sun Nov 29 2020 Andrey Cherepanov <cas@altlinux.org> 2.6-alt1
 - New version.
 
