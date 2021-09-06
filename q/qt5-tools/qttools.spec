@@ -1,3 +1,4 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 %define qdoc_found %{expand:%%(if [ -e %_qt5_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 %global qt_module qttools
@@ -8,7 +9,7 @@
 
 Name: qt5-tools
 Version: 5.15.2
-Release: alt2
+Release: alt3
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -357,6 +358,9 @@ fi
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Mon Sep 06 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt3
+- fix to build with LTO
+
 * Mon Apr 26 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt2
 - build docs
 
