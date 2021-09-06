@@ -1,5 +1,5 @@
 Name: libXaw
-Version: 1.0.12
+Version: 1.0.14
 Release: alt1
 Summary: X Athena Widgets Library
 License: MIT/X11
@@ -50,6 +50,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Mon Sep 06 2021 Valery Inozemtsev <shrek@altlinux.ru> 1.0.14-alt1
+- 1.0.14
+
 * Thu Jan 30 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.0.12-alt1
 - 1.0.12
 

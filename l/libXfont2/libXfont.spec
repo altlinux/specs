@@ -1,5 +1,5 @@
 Name: libXfont2
-Version: 2.0.4
+Version: 2.0.5
 Release: alt1
 Summary: X.Org libXfont runtime library
 License: MIT/X11
@@ -55,6 +55,9 @@ This package contains the libXfont development library and header files
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Sep 06 2021 Valery Inozemtsev <shrek@altlinux.ru> 2.0.5-alt1
+- 2.0.5
+
 * Thu Mar 12 2020 Valery Inozemtsev <shrek@altlinux.ru> 2.0.4-alt1
 - 2.0.4
 
