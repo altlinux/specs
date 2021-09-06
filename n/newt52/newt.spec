@@ -1,10 +1,9 @@
 %define _name newt
-%def_disable static
 %def_enable tk
 
 Name: newt52
 Version: 0.52.21
-Release: alt1
+Release: alt2
 
 Summary: A development library for text mode user interfaces
 
@@ -22,9 +21,12 @@ Requires: slang
 Provides: snack = %version-%release
 
 BuildRequires: libpopt-devel libslang2-devel docbook-utils python3-devel
+BuildRequires: libslang2-devel-static
 %if_enabled tk
 BuildRequires: python3-modules-tkinter
 %endif
+
+%global optflags_lto %optflags_lto -ffat-lto-objects
 
 # FIXME: more correct way
 %add_optflags %(pkg-config --cflags slang)
@@ -51,6 +53,7 @@ Obsoletes: %_name-devel
 Summary: Newt windowing toolkit development files
 Group: Development/C
 Requires: lib%name-devel = %EVR
+Requires: libslang2-devel-static
 Provides: lib%name-devel-static = %version-%release
 
 %description
@@ -101,9 +104,6 @@ docbook2html -u tutorial.sgml
 %install
 %makeinstall_std
 
-%if_disabled static
-rm -v %buildroot%_libdir/*.*a
-%endif
 %find_lang --with-gnome %_name
 
 %check
@@ -126,12 +126,13 @@ rm -v %buildroot%_libdir/*.*a
 %_pkgconfigdir/*
 %doc tutorial.html
 
-%if_enabled static
 %files -n lib%_name-devel-static
 %_libdir/*.*a
-%endif
 
 %changelog
+* Mon Sep 06 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.52.21-alt2
+- Unconditionally enabled -devel-static, required for propagator (closes: #40863)
+
 * Sat Sep 04 2021 Vitaly Lipatov <lav@altlinux.ru> 0.52.21-alt1
 - new version (0.52.21) with rpmgs script, cleanup spec
 - switch to build from release tarball
