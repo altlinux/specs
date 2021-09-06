@@ -1,12 +1,15 @@
 
+%def_disable check
+
 Name: gf-complete
 Version: 1.0.2
-Release: alt1.gita6862d
+Release: alt2.gita6862d
 Summary: Galois Field Arithmetic
 License: BSD-3-Clause
 Group: System/Libraries
 Url: http://jerasure.org/jerasure/gf-complete
 Source: %name-%version.tar
+Patch2000: %name-e2k-simd.patch
 
 %description
 Galois Field arithmetic forms the backbone of erasure-coded storage systems,
@@ -60,6 +63,9 @@ Various utilities that come with the %name library.
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 %build
 %autoreconf
@@ -67,10 +73,16 @@ Various utilities that come with the %name library.
 %ifarch %ix86
 	--disable-sse \
 %endif
+%ifarch %e2k
+	--disable-neon \
+%endif
 	--disable-static \
 	--disable-silent-rules \
 	--disable-rpath
 %make_build
+
+%check
+%make_build check
 
 %install
 %makeinstall_std
@@ -89,5 +101,9 @@ rm -f %buildroot%_bindir/gf_example*
 %_bindir/*
 
 %changelog
+* Mon Sep 06 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.0.2-alt2.gita6862d
+- Added SIMD patch for Elbrus.
+- Added check (can be slow, disabled).
+
 * Fri Mar 19 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.2-alt1.gita6862d
 - Initial build.
