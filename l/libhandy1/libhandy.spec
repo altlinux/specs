@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name libhandy
-%define ver_major 1.2
+%define ver_major 1.4
 %define api_ver 1
 
 %def_enable introspection
@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: %_name%api_ver
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Library with GTK+3 widgets for mobile devices (API version 1)
@@ -124,6 +124,9 @@ xvfb-run -s -noreset %meson_test
 %endif
 
 %changelog
+* Sun Sep 05 2021 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Mon Jun 21 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
 - 1.2.3
 
