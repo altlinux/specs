@@ -7,7 +7,7 @@
 
 
 Name: kf5-%rname
-Version: 2.7.0
+Version: 2.8.0
 Release: alt1
 %K5init
 
@@ -91,6 +91,9 @@ KF5 library
 %_K5lib/libKGantt.so.*
 
 %changelog
+* Mon Sep 06 2021 Sergey V Turchin <zerg@altlinux.org> 2.8.0-alt1
+- new version
+
 * Thu Aug 27 2020 Sergey V Turchin <zerg@altlinux.org> 2.7.0-alt1
 - new version
 
