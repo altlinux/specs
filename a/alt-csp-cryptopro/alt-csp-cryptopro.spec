@@ -1,5 +1,5 @@
 Name: alt-csp-cryptopro
-Version: 0.2.5
+Version: 0.2.6
 Release: alt1
 
 Group: File tools
@@ -42,6 +42,16 @@ install -m 0644 %_cmake__builddir/*.qm %buildroot/%_qt5_translationdir/
 %_datadir/file-manager/actions/alt-csp-cryptopro.desktop
 
 %changelog
+* Fri Sep 03 2021 Oleg Solovyov <mcpain@altlinux.org> 0.2.6-alt1
+- minor fixes and improvements:
+  + automatically select file and signature when archive is selected
+  + fix: select signature after compressing
+  + fix: don't insert ".0" into signature name if only one signature is requested
+  + fix: after creating archive controls were disabled
+  + UI: show error if containers are missing
+  + fix: after creating archive no result given
+  + UI: give user a clue that archive can be selected
+
 * Wed Aug 18 2021 Oleg Solovyov <mcpain@altlinux.org> 0.2.5-alt1
 - support newer version of cryptopro (Closes: #40749)
 
