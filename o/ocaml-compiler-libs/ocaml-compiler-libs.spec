@@ -1,7 +1,6 @@
-%set_verify_elf_method textrel=relaxed
 %define libname ocaml-compiler-libs
 Name: %libname
-Version: 0.12.3
+Version: 0.12.4
 Release: alt1
 Summary: OCaml compiler libraries repackaged
 License: Apache-2.0
@@ -38,6 +37,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Sep 06 2021 Anton Farygin <rider@altlinux.ru> 0.12.4-alt1
+- 0.12.4
+
 * Mon Sep 28 2020 Anton Farygin <rider@altlinux.ru> 0.12.3-alt1
 - 0.12.3
 
