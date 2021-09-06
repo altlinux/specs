@@ -2,13 +2,15 @@
 
 Name: kde5-%rname
 Version: 21.07
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
 Summary: Convergent calculator
 Url: http://www.kde.org
 License: GPL-3.0-or-later
+
+Requires: qt5-feedback
 
 Source: %rname-%version.tar
 
@@ -77,5 +79,8 @@ Requires: %name-common
 #%_K5lib/libkalk.so.*
 
 %changelog
+* Mon Sep 06 2021 Sergey V Turchin <zerg@altlinux.org> 21.07-alt2
+- fix requires
+
 * Wed Aug 18 2021 Sergey V Turchin <zerg@altlinux.org> 21.07-alt1
 - new version
