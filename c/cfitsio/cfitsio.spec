@@ -1,3 +1,4 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 %define rname cfitsio
 %define sover 9
@@ -6,7 +7,7 @@
 
 Name: cfitsio
 Version: 3.490
-Release: alt1
+Release: alt2
 %define sversion %(echo %version | tr -d .)
 
 Group: System/Libraries
@@ -138,6 +139,9 @@ install -m755 f{,un}pack %buildroot/%_bindir/
 #%_libdir/*.a
 
 %changelog
+* Mon Sep 06 2021 Sergey V Turchin <zerg@altlinux.org> 3.490-alt2
+- fix to build with LTO
+
 * Wed May 26 2021 Sergey V Turchin <zerg@altlinux.org> 3.490-alt1
 - new version
 
