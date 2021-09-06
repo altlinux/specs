@@ -1,11 +1,11 @@
 %global import_path golang.org/x/sys
 
-%global commit 43e1dd70ce54ee5b1711930029ae5b4926f78f72
+%global commit 97244b99971b253e564db131f988a3fde9c556ca
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 Name: golang-golang-x-sys
 Version: 0
-Release: alt4.git%abbrev
+Release: alt5.git%abbrev
 Summary: Go packages for low-level interaction with the operating system
 License: MIT
 Group: Development/Other
@@ -52,6 +52,9 @@ export GOPATH="%go_path"
 %go_path/src/*
 
 %changelog
+* Mon Sep 06 2021 Leontiy Volodin <lvol@altlinux.org> 0-alt5.git97244b99
+- Update
+
 * Fri Apr 02 2021 Leontiy Volodin <lvol@altlinux.org> 0-alt4.git43e1dd70
 - Update
 

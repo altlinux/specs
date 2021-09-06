@@ -3,7 +3,7 @@
 %global goipath github.com/rogpeppe/go-internal
 
 Name: golang-github-rogpeppe-internal
-Version: 1.6.2
+Version: 1.8.0
 Release: alt1
 Summary: Selected Go-internal packages factored out from the standard library
 
@@ -62,6 +62,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Mon Sep 06 2021 Leontiy Volodin <lvol@altlinux.org> 1.8.0-alt1
+- New version.
+
 * Mon Dec 28 2020 Leontiy Volodin <lvol@altlinux.org> 1.6.2-alt1
 - New version.
 - Updated source link.

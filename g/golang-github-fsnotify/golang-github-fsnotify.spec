@@ -4,15 +4,15 @@
 %global goaltipaths     gopkg.in/fsnotify/fsnotify.v1 gopkg.in/fsnotify/v1/fsnotify
 
 Name: golang-github-fsnotify
-Version: 1.4.9
+Version: 1.5.1
 Release: alt1
 Summary: Cross-platform file system notifications for Go
 Group: Development/Other
 License: BSD-3-Clause
-Url: https://github.com/fsnotify/fsnotify
+Url: https://fsnotify.org/
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: %url/archive/%version/fsnotify-%version.tar.gz
+Source: https://github.com/fsnotify/fsnotify/archive/%version/fsnotify-%version.tar.gz
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang-golang-x-sys-devel
@@ -59,5 +59,8 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Mon Sep 06 2021 Leontiy Volodin <lvol@altlinux.org> 1.5.1-alt1
+- New version (1.5.1).
+
 * Wed Sep 09 2020 Leontiy Volodin <lvol@altlinux.org> 1.4.9-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
