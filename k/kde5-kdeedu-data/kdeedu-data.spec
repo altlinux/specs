@@ -1,7 +1,7 @@
 %define rname kdeedu-data
 
 Name: kde5-%rname
-Version: 21.08.0
+Version: 21.08.1
 Release: alt1
 %K5init no_appdata
 
@@ -41,6 +41,9 @@ BuildRequires: extra-cmake-modules qt5-base-devel kf5-ki18n-devel
 %_K5icon/*/*/actions/*.*
 
 %changelog
+* Mon Sep 06 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt1
+- new version
+
 * Fri Aug 27 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
 - new version
 
