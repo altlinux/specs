@@ -26,7 +26,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.302.b08
+%define version 1.8.0.312.b01
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -296,7 +296,7 @@ BuildRequires: /proc rpm-build-java
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
 %global shenandoah_project	aarch64-port
 %global shenandoah_repo		jdk8u-shenandoah
-%global shenandoah_revision    	aarch64-shenandoah-jdk8u302-b08
+%global shenandoah_revision aarch64-shenandoah-jdk8u312-b01
 # Define old aarch64/jdk8u tree variables for compatibility
 %global project         %{shenandoah_project}
 %global repo            %{shenandoah_repo}
@@ -317,7 +317,7 @@ BuildRequires: /proc rpm-build-java
 # Release will be (where N is usually a number starting at 1):
 # - 0.N%%{?extraver}%%{?dist} for EA releases,
 # - N%%{?extraver}{?dist} for GA releases
-%global is_ga           1
+%global is_ga           0
 %if %{is_ga}
 %global milestone          fcs
 %global milestone_version  %{nil}
@@ -381,7 +381,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}.%{buildver}
-Release: alt2_0jpp8
+Release: alt1_0.1.eajpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -420,7 +420,7 @@ URL:      http://openjdk.java.net/
 Source0: %{shenandoah_project}-%{shenandoah_repo}-%{shenandoah_revision}-4curve.tar.xz
 
 # Custom README for -src subpackage
-Source2:  README.md
+Source2: README.md
 
 # Release notes
 Source7: NEWS
@@ -2149,6 +2149,9 @@ fi
 %endif
 
 %changelog
+* Sun Sep 05 2021 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.312.b01-alt1_0.1.eajpp8
+- New version
+
 * Fri Aug 27 2021 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.302.b08-alt2_0jpp8
 - FTBFS: disable LTO.
 
