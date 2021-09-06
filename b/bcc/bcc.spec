@@ -20,8 +20,8 @@
 #   (merge) git merge --continue
 
 Name:		bcc
-Version:	0.19.0
-Release:	alt1.1
+Version:	0.21.0
+Release:	alt1
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -154,10 +154,11 @@ linked (and built in bcc package).
 
 %prep
 %setup -q
-mkdir src/cc/libbpf
 tar -xf %SOURCE1 -C src/cc/libbpf
 
 %build
+%define optflags_lto -flto=thin
+
 %if_without luajit
 subst '/add_subdirectory(lua)/d' examples/CMakeLists.txt
 %endif
@@ -266,6 +267,10 @@ fi
 %endif
 
 %changelog
+* Mon Sep 06 2021 Vitaly Chikunov <vt@altlinux.org> 0.21.0-alt1
+- Update to v0.21.0 (2021-07-18).
+- spec: Fix build with LTO.
+
 * Sun May 30 2021 Arseny Maslennikov <arseny@altlinux.org> 0.19.0-alt1.1
 - NMU: spec: migrate to new cmake macros.
 
