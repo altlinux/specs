@@ -1,6 +1,6 @@
 Name:     colobot
-Version:  0.1.12
-Release:  alt0.2.alpha
+Version:  0.2.0
+Release:  alt0.1.alpha
 
 Summary:  Source code of open-source Colobot: Gold Edition project developed by Epsitec and TerranovaTeam
 License:  GPL-3.0+
@@ -15,7 +15,6 @@ Source1: colobot-data.tar
 Source2: colobot-music_ogg_latest.tar.gz
 Patch1: colobot-std-includes.patch
 Patch2: colobot-install-library-to-libdir.patch
-Patch3: colobot-alt-gcc10-compat.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -49,7 +48,6 @@ You can save the humanity and get programming skills!
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 tar xf %SOURCE1
 tar xf %SOURCE2 -C data/music
 
@@ -74,6 +72,9 @@ tar xf %SOURCE2 -C data/music
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Sep 06 2021 Andrey Cherepanov <cas@altlinux.org> 0.2.0-alt0.1.alpha
+- New version.
+
 * Tue Feb 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.12-alt0.2.alpha
 - Fixed build with gcc-10 and rebuilt with new boost libraries.
 
