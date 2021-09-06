@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %def_disable static
 # libsndfile & alsa for testing and examples
 %def_enable libsndfile
@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: libsamplerate
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: Sample Rate Converter audio library
@@ -15,7 +15,7 @@ Group: System/Libraries
 Url: http://libsndfile.github.io/libsamplerate/
 
 %if_disabled snapshot
-Source: https://github.com/libsndfile/%name/releases/download/%version/%name-%version.tar.bz2
+Source: https://github.com/libsndfile/%name/releases/download/%version/%name-%version.tar.xz
 %else
 Vcs: https://github.com/libsndfile/libsamplerate.git
 Source: %name-%version.tar
@@ -98,6 +98,9 @@ This package contains utilites and example programs from %name package.
 %endif
 
 %changelog
+* Sun Sep 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt1
+- 0.2.2
+
 * Mon May 03 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
 - updated to 0.2.1-10-gaae58e2 (new Url/Vcs,
   sndfile-resample moved to sndfile-tools package)
