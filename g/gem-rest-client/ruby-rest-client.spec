@@ -2,7 +2,7 @@
 
 Name:          gem-rest-client
 Version:       2.1.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Ruby
 License:       MIT
 Group:         Development/Ruby
@@ -19,7 +19,7 @@ BuildRequires: gem(pry) >= 0
 BuildRequires: gem(pry-doc) >= 0
 BuildRequires: gem(rdoc) >= 2.4.2 gem(rdoc) < 7
 BuildRequires: gem(rubocop) >= 0.49 gem(rubocop) < 2
-BuildRequires: gem(http-accept) >= 1.7.0 gem(http-accept) < 2.0
+BuildRequires: gem(http-accept) >= 1.7.0 gem(http-accept) < 3
 BuildRequires: gem(http-cookie) >= 1.0.2 gem(http-cookie) < 2.0
 BuildRequires: gem(mime-types) >= 1.16 gem(mime-types) < 4.0
 BuildRequires: gem(netrc) >= 0.8 gem(netrc) < 1
@@ -29,8 +29,9 @@ BuildRequires: gem(netrc) >= 0.8 gem(netrc) < 1
 %ruby_use_gem_dependency webmock >= 3.13.0,webmock < 4
 %ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+%ruby_use_gem_dependency http-accept >= 2.0,http-accept < 3
 %ruby_alias_names restclient,rest-client
-Requires:      gem(http-accept) >= 1.7.0 gem(http-accept) < 2.0
+Requires:      gem(http-accept) >= 1.7.0 gem(http-accept) < 3
 Requires:      gem(http-cookie) >= 1.0.2 gem(http-cookie) < 2.0
 Requires:      gem(mime-types) >= 1.16 gem(mime-types) < 4.0
 Requires:      gem(netrc) >= 0.8 gem(netrc) < 1
@@ -140,6 +141,9 @@ microframework style of specifying actions: get, put, post, delete.
 
 
 %changelog
+* Mon Sep 06 2021 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt1.2
+- ^ http-accept ~1 -> ~2
+
 * Sun Jul 18 2021 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt1.1
 - ! spec
 
