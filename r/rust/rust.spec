@@ -1,7 +1,7 @@
 Name: rust
 Epoch: 1
 Version: 1.54.0
-Release: alt1
+Release: alt2
 Summary: The Rust Programming Language
 
 Group: Development/Other
@@ -43,7 +43,7 @@ BuildRequires: pkgconfig(libffi)
 BuildRequires: clang%{llvm_version}
 BuildRequires: clang%{llvm_version}-devel
 BuildRequires: llvm%{llvm_version}-devel
-BuildRequires: llvm%{llvm_version}-devel-static
+BuildRequires:  lld%{llvm_version}-devel
 %else
 BuildRequires: gcc-c++
 BuildRequires: ninja-build
@@ -282,6 +282,7 @@ export RUSTFLAGS="-Clink-arg=-Wl,-z,relro,-z,now -Clink-args=-fPIC -Copt-level=2
 export LIBGIT2_SYS_USE_PKG_CONFIG=1
 export LIBSSH2_SYS_USE_PKG_CONFIG=1
 export DESTDIR="%buildroot"
+export ALTWRAP_LLVM_VERSION="%llvm_version"
 EOF
 
 cat > config.toml <<EOF
@@ -472,6 +473,9 @@ rm -rf %rustdir
 %rustlibdir/%rust_triple/analysis
 
 %changelog
+* Sun Sep 05 2021 Alexey Gladkov <legion@altlinux.ru> 1:1.54.0-alt2
+- Build with llvm12.0 (ALT#40847).
+
 * Tue Aug 10 2021 Alexey Gladkov <legion@altlinux.ru> 1:1.54.0-alt1
 - New version (1.54.0).
 
