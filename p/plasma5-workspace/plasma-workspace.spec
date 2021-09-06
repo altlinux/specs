@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.22.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -308,7 +308,7 @@ for d in runners/*/*.desktop ; do
     sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=false|' $d
 done
 # enable some krunners by default
-for d in shell
+for d in shell services
 do
     sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=true|' runners/${d}/plasma-runner-${d}.desktop
 done
@@ -498,6 +498,9 @@ done
 
 
 %changelog
+* Mon Sep 06 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.5-alt2
+- enable services runner by default
+
 * Wed Sep 01 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.5-alt1
 - new version
 
