@@ -1,9 +1,11 @@
 %define _name newt
+# devel-static subpackage needed for propagator (see altbug #40863)
+%def_enable static
 %def_enable tk
 
 Name: newt52
 Version: 0.52.21
-Release: alt2
+Release: alt3
 
 Summary: A development library for text mode user interfaces
 
@@ -21,12 +23,14 @@ Requires: slang
 Provides: snack = %version-%release
 
 BuildRequires: libpopt-devel libslang2-devel docbook-utils python3-devel
-BuildRequires: libslang2-devel-static
 %if_enabled tk
 BuildRequires: python3-modules-tkinter
 %endif
 
+%if_enabled static
+BuildRequires: libslang2-devel-static
 %global optflags_lto %optflags_lto -ffat-lto-objects
+%endif
 
 # FIXME: more correct way
 %add_optflags %(pkg-config --cflags slang)
@@ -94,15 +98,15 @@ Static libraries for  lib%name-devel
 #subst s/^PYTHONVERS.*/PYTHONVERS=python%_python_version/ Makefile.in
 
 %build
-#./autogen.sh
 %configure --with-gpm-support %{subst_enable static}
-# NO SMP
-#make PYTHON_LIBS="-lpython%_python3_version"
 %make_build
 docbook2html -u tutorial.sgml
 
 %install
 %makeinstall_std
+%if_disabled static
+rm -v %buildroot%_libdir/*.*a
+%endif
 
 %find_lang --with-gnome %_name
 
@@ -126,10 +130,15 @@ docbook2html -u tutorial.sgml
 %_pkgconfigdir/*
 %doc tutorial.html
 
+%if_enabled static
 %files -n lib%_name-devel-static
 %_libdir/*.*a
+%endif
 
 %changelog
+* Mon Sep 06 2021 Vitaly Lipatov <lav@altlinux.ru> 0.52.21-alt3
+- restore control for devel-static, cleanup spec
+
 * Mon Sep 06 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.52.21-alt2
 - Unconditionally enabled -devel-static, required for propagator (closes: #40863)
 
