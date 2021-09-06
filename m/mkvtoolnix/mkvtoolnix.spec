@@ -1,4 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+# LTO causes errors on armh, disable it
+%global optflags_lto %nil
 
 %def_disable debug
 %def_disable profiling
@@ -10,7 +15,7 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 60.0.0
+Version: 61.0.0
 Release: alt1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
@@ -153,6 +158,9 @@ rake V=1 tests:run_unit
 %endif
 
 %changelog
+* Fri Sep 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 61.0.0-alt1
+- Updated to upstream version 61.0.0.
+
 * Thu Aug 05 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 60.0.0-alt1
 - Updated to upstream version 60.0.0.
 
