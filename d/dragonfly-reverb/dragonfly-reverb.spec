@@ -2,10 +2,11 @@
 %define _unpackaged_files_terminate_build 1
 %define _customdocdir %_defaultdocdir/%name
 
+%define _optlevel 3
 
 Name:     dragonfly-reverb
 Version:  3.2.5
-Release:  alt1
+Release:  alt2
 
 Summary:  A set of free reverb effects
 License:  GPL-3.0
@@ -17,6 +18,8 @@ Source:   %name-%version.tar
 
 # https://github.com/DISTRHO/DPF.git
 Source10: DPF-226f219c4d35ca8fa6e82b69d87be823cb785a0d.tar
+
+Patch1:   alt-3.2.5-fix-build-with-lto.patch
 
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(cairo)
@@ -57,6 +60,7 @@ This package contains these effects built as LV2 plugins.
 %package docs
 Group: Documentation
 Summary: The documentation for Dragonfly Reverb
+BuildArch: noarch
 
 %description docs
 %summary
@@ -66,8 +70,13 @@ Summary: The documentation for Dragonfly Reverb
 %setup
 tar -xf %SOURCE10 -C 'dpf' --strip-components 1
 
+%autopatch -p1
+
+# don't build VST targets, we don't ship them
+sed -i '/TARGETS += vst/d'  plugins/*/Makefile
+
 %build
-%make_build BASE_OPTS='%optflags' SHELL='sh -x' SKIP_STRIPPING=true
+%make_build BASE_OPTS='%optflags' VERBOSE=true SKIP_STRIPPING=true AR=gcc-ar
 
 %install
 names='DragonflyEarlyReflections DragonflyHallReverb DragonflyPlateReverb DragonflyRoomReverb'
@@ -96,5 +105,9 @@ find %buildroot%_libdir/lv2 -type f -exec chmod 644 '{}' ';'
 
 
 %changelog
+* Mon Sep 06 2021 Ivan A. Melnikov <iv@altlinux.org> 3.2.5-alt2
+- Fix build with LTO
+- Mark docs subpackage as noarch (thx repocop@)
+
 * Wed Jul 07 2021 Ivan A. Melnikov <iv@altlinux.org> 3.2.5-alt1
 - Initial build for Sisyphus
