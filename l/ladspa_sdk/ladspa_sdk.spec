@@ -1,21 +1,19 @@
 Name: ladspa_sdk
-Version: 1.15
+Version: 1.16
 Release: alt1
 
 Summary: The Linux Audio Developer's Simple Plugin API (LADSPA)
-License: LGPL
+License: LGPL-2.1
 Group: Sound
 
 Url: http://www.ladspa.org
 Source: http://www.ladspa.org/download/%{name}_%version.tgz
-Patch0: %name-1.15-alt-Makefile.patch
-Patch1: %name-1.15-alt-libs.patch
+Patch: %name-1.16-alt-Makefile.patch
 
 Requires: common-licenses
-
-# Automatically added by buildreq on Tue Dec 02 2008
-BuildRequires: gcc-c++ time
 Requires: rpm-macros-%name = %version-%release
+
+BuildRequires: gcc-c++ libsndfile-devel %_bindir/sndfile-play time
 
 %description
 The Linux Audio Developer's Simple Plugin API (LADSPA) attempts
@@ -40,8 +38,7 @@ Install this package if you want to create RPM packages that use %name.
 
 %prep
 %setup -n %{name}_%version
-%patch0 -p1
-%patch1 -p1
+%patch0 -p1 -b .makefile
 
 %build
 %define _optlevel 3
@@ -52,7 +49,7 @@ cc --version | grep -q '^lcc:1.21' && export LIBS+=" -lcxa"
 # lcc: "analyseplugin.c", line 353: error: nonstandard first parameter
 #   "const int" of "main", expected "int" [-Werror=main]
 %else
-%add_optflags -Werror
+%add_optflags -Werror %(getconf LFS_CFLAGS)
 %endif
 pushd src
 %make_build CFLAGS="\$(INCLUDES) -fPIC %optflags $LIBS"
@@ -61,7 +58,7 @@ popd
 %install
 mkdir -p %buildroot%_datadir/ladspa/rdf
 pushd src
-%makeinstall_std PREFIX=%prefix INSTALL_PLUGINS_DIR=%_ladspa_path
+%makeinstall_std PREFIX=%_prefix INSTALL_PLUGINS_DIR=%_ladspa_path
 popd
 
 # install docs and license
@@ -117,6 +114,10 @@ install -pDm644 ladspa.rpm_macros %buildroot%_rpmlibdir/macros.d/%name
 %_rpmmacrosdir/*
 
 %changelog
+* Mon Sep 06 2021 Yuri N. Sedunov <aris@altlinux.org> 1.16-alt1
+- 1.16
+- fixed license tag
+
 * Fri Aug 27 2021 Yuri N. Sedunov <aris@altlinux.org> 1.15-alt1
 - updated to 1.15
 
