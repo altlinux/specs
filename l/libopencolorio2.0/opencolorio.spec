@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%def_without openimageio
+%def_with openimageio
 
 # TODO: build docs
 
@@ -11,7 +11,7 @@
 
 Name:           lib%oname%soname
 Version:        2.0.2
-Release:        alt1
+Release:        alt2
 Summary:        Enables color transforms and image display across graphics apps
 Group:          System/Libraries
 
@@ -23,6 +23,7 @@ Source:         %name-%version.tar
 
 Patch1: opencolorio-alt-install.patch
 Patch2: opencolorio-alt-armh-multiple-definition.patch
+Patch3: opencolorio-alt-openimageio-linking.patch
 
 # Utilities
 BuildRequires: cmake gcc-c++
@@ -87,16 +88,13 @@ Group:          Development/Python3
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
 
 # disable debugging wrappers
 %add_optflags -DNDEBUG
-
-%ifarch %e2k
-%add_optflags -std=c++11
-%endif
 
 %cmake \
 	-DBUILD_SHARED_LIBS:BOOL=ON \
@@ -113,6 +111,7 @@ Group:          Development/Python3
 	-DOCIO_USE_GLVND:BOOL=ON \
 	-DOpenGL_GL_PREFERENCE=GLVND \
 %endif
+	-DCMAKE_CXX_STANDARD=14 \
 	%nil
 
 %cmake_build
@@ -163,6 +162,9 @@ popd
 %python3_sitelibdir/*.so
 
 %changelog
+* Mon Sep 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.2-alt2
+- Rebuilt with openimageio support.
+
 * Mon Sep 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.2-alt1
 - Updated to upstream version 2.0.2.
 - Built without openimageio support.
