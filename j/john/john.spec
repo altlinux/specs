@@ -1,6 +1,6 @@
 Name: john
 Version: 1.9
-Release: alt1
+Release: alt2
 %define charsets_version 20130529
 
 Summary: John the Ripper password cracker
@@ -13,8 +13,9 @@ Url: https://www.openwall.com/john/
 Source0: %name-%version-%release.tar
 # ftp://ftp.openwall.com/pub/projects/john/john-charsets-%charsets_version.tar.gz
 Source1: john-charsets-%charsets_version.tar
+Patch2000: %name-e2k.patch
 
-ExclusiveArch: x86_64 %ix86 aarch64 %arm ppc64le
+ExclusiveArch: x86_64 %ix86 aarch64 %arm ppc64le %e2k
 
 %def_enable avx
 %def_enable xop
@@ -38,6 +39,12 @@ of other hash types are supported as well.
 
 %prep
 %setup -n %name-%version-%release -a1
+%ifarch %e2k
+%patch2000 -p1
+%endif
+
+# -flto fix
+sed -i "s|\$(JOHN_OBJS) \$(LDFLAGS)|\$(filter-out -c,\$(CFLAGS)) &|" src/Makefile
 
 %define arg_cc CC='%__cc'
 %ifarch %ix86
@@ -146,7 +153,7 @@ make linux-arm64le CFLAGS="%cflags"
 %if_enabled omp
 mv_john arm64le
 OMP_FALLBACK='\"john-arm64le\"'
-make linux-x86-64 CFLAGS="%cflags -fopenmp -DOMP_FALLBACK=1 -DOMP_FALLBACK_BINARY='$OMP_FALLBACK'" OMPFLAGS=-fopenmp
+make linux-arm64le CFLAGS="%cflags -fopenmp -DOMP_FALLBACK=1 -DOMP_FALLBACK_BINARY='$OMP_FALLBACK'" OMPFLAGS=-fopenmp
 %endif #omp
 %endif #aarch64
 
@@ -173,9 +180,20 @@ make linux-ppc64 CFLAGS="%cflags"
 %if_enabled omp
 mv_john ppc64
 OMP_FALLBACK='\"john-ppc64\"'
-make linux-x86-64 CFLAGS="%cflags -fopenmp -DOMP_FALLBACK=1 -DOMP_FALLBACK_BINARY='$OMP_FALLBACK'" OMPFLAGS=-fopenmp
+make linux-ppc64 CFLAGS="%cflags -fopenmp -DOMP_FALLBACK=1 -DOMP_FALLBACK_BINARY='$OMP_FALLBACK'" OMPFLAGS=-fopenmp
 %endif #omp
 %endif #ppc64
+
+%ifarch %e2k
+# non-OpenMP builds
+make linux-e2k CFLAGS="%cflags"
+# OpenMP builds
+%if_enabled omp
+mv_john e2k
+OMP_FALLBACK='\"john-e2k\"'
+make linux-e2k CFLAGS="%cflags -fopenmp -DOMP_FALLBACK=1 -DOMP_FALLBACK_BINARY='$OMP_FALLBACK'" OMPFLAGS=-fopenmp
+%endif #omp
+%endif #e2k
 
 %install
 mkdir -p %buildroot{%_bindir,%john_execdir,{/etc,%_datadir}/john}
@@ -203,6 +221,11 @@ install -pm644 run/{mailer,makechr,relbench} doc/
 %_datadir/john/
 
 %changelog
+* Tue Sep 07 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.9-alt2
+- Added Elbrus support.
+- Fixed OpenMP build target for aarch64 and ppc64.
+- Fixed -flto.
+
 * Thu Apr 22 2021 Dmitry V. Levin <ldv@altlinux.org> 1.9-alt1
 - Synced with 1.9-owl1.
 - Fixed build on x86 when gcc produces pie executables by default.
