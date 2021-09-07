@@ -1,14 +1,16 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 # TODO: dependency on Field3D
 
 # TODO: build and run tests
 
 %define oname openimageio
-%define soname 2.2
+%define soname 2.3
 
 Name:           lib%oname
-Version:        2.2.17.0
+Version:        2.3.7.2
 Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
@@ -25,6 +27,7 @@ Source0:        %name-%version.tar
 Source2: %oname.watch
 
 Patch1: %oname-alt-armh-disable-neon.patch
+Patch2: %oname-alt-disable-tests.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires:  python3-devel
@@ -53,6 +56,8 @@ BuildRequires:  openvdb-devel
 BuildRequires:  libdcmtk-devel
 BuildRequires:  libopencv-devel
 %endif
+BuildRequires: libavcodec-devel libavformat-devel libswscale-devel
+BuildRequires: libheif-devel
 
 # WARNING: OpenColorIO and OpenImageIO are cross dependent.
 # If an ABI incompatible update is done in one, the other also needs to be
@@ -136,6 +141,7 @@ Development files for package %name
 %ifarch armh
 %patch1 -p1
 %endif
+%patch2 -p1
 
 # Remove bundled pugixml
 rm -fr src/include/OpenImageIO/detail/pugixml/
@@ -149,13 +155,16 @@ sed -ri '/Qt5_FOUND AND OPENGL_FOUND/ s,iv_enabled,FALSE,' src/iv/CMakeLists.txt
 %endif
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 # disable debugging stuff
 %add_optflags -DNDEBUG
-
 %ifarch %e2k
 # skip x86 asm (reported upstream); suggested by darktemplar@
 %add_optflags -DOIIO_NO_AVX=1 -DOIIO_NO_SSE=1 -U__AES__
 %endif
+
+# set -DCMAKE_BUILD_TYPE=RelWithDebInfo to skip stripping debuginfo from python modules built via pybind11
 %cmake \
 	-DINCLUDE_INSTALL_DIR:PATH=%_includedir/%oname \
 	-DPYTHON_VERSION=%_python3_version \
@@ -173,6 +182,7 @@ sed -ri '/Qt5_FOUND AND OPENGL_FOUND/ s,iv_enabled,FALSE,' src/iv/CMakeLists.txt
 %endif
 	-DOIIO_BUILD_TESTS:BOOL=FALSE \
 	-DPLUGIN_SEARCH_PATH=%_libdir/OpenImageIO-%soname \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	%nil
 
 %cmake_build
@@ -219,6 +229,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_datadir/cmake/Modules/FindOpenImageIO.cmake
 
 %changelog
+* Mon Sep 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.7.2-alt1
+- Updated to upstream version 2.3.7.2.
+
 * Mon Aug 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.17.0-alt1
 - Updated to upstream version 2.2.17.0.
 

@@ -1,10 +1,12 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %define oname oidn
 %define soname 1
 
 Name: openimagedenoise
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 Summary: Intel Open Image Denoise library
 Group: Development/Other
@@ -16,6 +18,8 @@ ExclusiveArch: x86_64
 
 # https://github.com/OpenImageDenoise/oidn/releases/download/v%version/oidn-%version.src.tar.gz
 Source: %oname-%version.tar
+
+Source2: %name.watch
 
 BuildRequires: cmake gcc-c++
 BuildRequires: ispc
@@ -84,5 +88,8 @@ rm -rf %buildroot%_defaultdocdir/OpenImageDenoise
 %_libdir/cmake/*
 
 %changelog
+* Mon Sep 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.1-alt1
+- Updated to upstream version 1.4.1.
+
 * Wed Jun 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.0-alt1
 - Initial build for ALT.

@@ -1,6 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
-%def_with openimageio
+%def_without openimageio
 
 # TODO: build docs
 
@@ -8,8 +10,8 @@
 %define soname 2.0
 
 Name:           lib%oname%soname
-Version:        2.0.1
-Release:        alt3
+Version:        2.0.2
+Release:        alt1
 Summary:        Enables color transforms and image display across graphics apps
 Group:          System/Libraries
 
@@ -86,6 +88,9 @@ Group:          Development/Python3
 %patch1 -p1
 %patch2 -p1
 
+%build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 # disable debugging wrappers
 %add_optflags -DNDEBUG
 
@@ -93,7 +98,6 @@ Group:          Development/Python3
 %add_optflags -std=c++11
 %endif
 
-%build
 %cmake \
 	-DBUILD_SHARED_LIBS:BOOL=ON \
 	-DOCIO_BUILD_PYTHON:BOOL=ON \
@@ -153,11 +157,16 @@ popd
 %_includedir/OpenColorIO/
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%_libdir/cmake/OpenColorIO/
 
 %files -n python3-module-%oname
 %python3_sitelibdir/*.so
 
 %changelog
+* Mon Sep 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.2-alt1
+- Updated to upstream version 2.0.2.
+- Built without openimageio support.
+
 * Mon Jun 07 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.1-alt3
 - Enabled tests.
 

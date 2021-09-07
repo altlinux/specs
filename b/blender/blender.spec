@@ -1,4 +1,6 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %def_with docs
 
@@ -12,8 +14,7 @@
 
 Name: blender
 Version: 2.93.4
-Release: alt1
-
+Release: alt2
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -47,6 +48,7 @@ Patch27: blender-2.90.0-alt-embree-components.patch
 Patch28: blender-2.90.0-alt-doc.patch
 Patch29: blender-2.90-alt-non-x86_64-linking.patch
 Patch30: blender-2.93.0-suse-reproducible.patch
+Patch31: blender-2.93.4-alt-openimageio-compat.patch
 
 Patch2000: blender-e2k-support.patch
 
@@ -190,6 +192,7 @@ This package contains documentation for Blender.
 %patch28 -p1
 %patch29 -p1
 %patch30 -p1
+%patch31 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -307,6 +310,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Mon Sep 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.93.4-alt2
+- Rebuilt with new OpenColorIO and OpenImageIO.
+
 * Fri Sep 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.93.4-alt1
 - Updated to upstream version 2.93.4.
 

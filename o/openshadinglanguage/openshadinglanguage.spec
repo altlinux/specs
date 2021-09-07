@@ -1,9 +1,11 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %define soname 1.11
 
 Name: openshadinglanguage
-Version: 1.11.14.2
+Version: 1.11.15.0
 Release: alt1
 Summary: Advanced shading language for production GI renderers
 Group: Development/Other
@@ -15,6 +17,8 @@ ExcludeArch: %ix86 %arm
 
 # https://github.com/AcademySoftwareFoundation/OpenShadingLanguage.git
 Source: %name-%version.tar
+
+Source2: %name.watch
 
 Patch1: openshadinglanguage-alt-python3-compat.patch
 
@@ -188,6 +192,9 @@ mv %buildroot%_libdir/osl.imageio.so %buildroot%_libdir/OpenImageIO-%{oiio_major
 %python3_sitelibdir/*.so
 
 %changelog
+* Mon Sep 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.11.15.0-alt1
+- Updated to upstream version 1.11.15.0.
+
 * Fri Jul 23 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.11.14.2-alt1
 - Updated to upstream version 1.11.14.2.
 
