@@ -1,5 +1,5 @@
 Name:     vml
-Version:  0.1.2
+Version:  0.1.3
 Release:  alt1
 
 Summary:  Tool for easily and transparently work with qemu virtual machines
@@ -11,9 +11,8 @@ Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 Source:   %name-%version.tar
 
-ExclusiveArch: x86_64 aarch64
-
-BuildRequires: rust-cargo libssl-devel
+BuildRequires: libssl-devel
+BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc
 
 Requires: rsync socat openssh-clients /usr/bin/kvm cloud-utils
@@ -28,15 +27,10 @@ and Ubuntu could be created with just one command.
 %setup
 
 %build
-export RUSTFLAGS="-g"
-cargo build \
-    --release \
-    %{?_smp_mflags} \
-    --offline \
-    --target %_arch-unknown-linux-gnu
+%rust_build
 
 %install
-install -Dm 755 target/%_arch-unknown-linux-gnu/release/%name %buildroot%_bindir/%name
+%rust_install
 install -Dm 644 files/config.toml %buildroot%_sysconfdir/%name/config.toml
 install -Dm 644 files/images.toml %buildroot%_sysconfdir/%name/images.toml
 
@@ -58,6 +52,9 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %doc doc *.md
 
 %changelog
+* Mon Sep 06 2021 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.3-alt1
+- Update images
+
 * Wed Jun 23 2021 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.2-alt1
 - 0.1.2
 
