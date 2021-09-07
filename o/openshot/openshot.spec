@@ -3,7 +3,7 @@
 %define xdg_name org.openshot.OpenShot
 
 Name: openshot
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Non Linear Video Editor using Python and MLT
@@ -22,7 +22,7 @@ Source: %name-%version.tar.gz
 # blender > 2.80 doesn't support 32-bit
 ExcludeArch: i586 armh
 
-Requires: python3-module-%name >= 0.2.6
+Requires: python3-module-%name >= 0.2.7
 Requires: blender inkscape xdg-utils
 
 %add_typelib_req_skiplist typelib(Unity)
@@ -64,6 +64,9 @@ Xbox, and many more common formats.
 
 
 %changelog
+* Tue Sep 07 2021 Yuri N. Sedunov <aris@altlinux.org> 2.6.1-alt1
+- 2.6.1
+
 * Wed Aug 25 2021 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
 - 2.6.0
 

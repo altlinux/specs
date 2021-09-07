@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: OpenShot Video Library
@@ -28,7 +28,7 @@ Source: %name-%version.tar
 %endif
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
-BuildRequires: %name-audio-devel >= 0.2.1
+BuildRequires: %name-audio-devel >= 0.2.2
 BuildRequires: /proc cmake gcc-c++ libgomp-devel libunittest-cpp-devel jsoncpp-devel
 BuildRequires: libalsa-devel qt5-multimedia-devel qt5-svg-devel libzeromq-cpp-devel
 BuildRequires: libImageMagick-devel zlib-devel
@@ -99,6 +99,9 @@ This package provides Python3 bindings for OpenShot Video Library.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Sep 07 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.7-alt1
+- 0.2.7
+
 * Wed Aug 25 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.6-alt1
 - 0.2.6
 

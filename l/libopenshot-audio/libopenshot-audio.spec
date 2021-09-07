@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: %_name-audio
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: OpenShot Audio Library
@@ -65,6 +65,9 @@ that are needed to write applications that use %name.
 %_libdir/cmake/OpenShotAudio/
 
 %changelog
+* Tue Sep 07 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt1
+- 0.2.2
+
 * Wed Aug 25 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
 - 0.2.1
 
