@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.9.16
+Version: 0.9.17
 Release: alt1
 
 Summary: Permanently install Live system
@@ -63,6 +63,10 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Tue Sep 07 2021 Anton Midyukov <antohami@altlinux.org> 0.9.17-alt1
+- zdg-user-dirs-install.sh: make trusted livecd-install.desktop for
+  lxqt, xfce (Closes: 40640)
+
 * Tue Mar 23 2021 Anton Midyukov <antohami@altlinux.org> 0.9.16-alt1
 - fix kernel detection/installation for ISO builded by new
   mkimage-profiles
