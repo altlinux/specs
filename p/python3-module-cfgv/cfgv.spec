@@ -1,7 +1,7 @@
 %define  modulename cfgv
 
 Name:    python3-module-%modulename
-Version: 3.3.0
+Version: 3.3.1
 Release: alt1
 
 Summary: Validate configuration and produce human readable error messages
@@ -37,6 +37,9 @@ Source:  %modulename-%version.tar
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Sep 07 2021 Grigory Ustinov <grenka@altlinux.org> 3.3.1-alt1
+- Automatically updated to 3.3.1.
+
 * Sun Jun 06 2021 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1
 - Automatically updated to 3.3.0.
 
