@@ -2,7 +2,7 @@
 %define module Text-Template
 
 Name: perl-Text-Template
-Version: 1.59
+Version: 1.60
 Release: alt1
 
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -46,6 +46,9 @@ ages functional separation.
 %perl_vendor_privlib/Text*
 
 %changelog
+* Mon Sep 06 2021 Igor Vlasenko <viy@altlinux.org> 1.60-alt1
+- automated CPAN update
+
 * Sat Jul 04 2020 Igor Vlasenko <viy@altlinux.ru> 1.59-alt1
 - automated CPAN update
 
