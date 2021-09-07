@@ -1,10 +1,10 @@
 %define rname minizip
-%define sover 3.0
+%define sover 3
 
 %filter_from_provides /^pkgconfig(%rname)/d
 
 Name: %rname-ng
-Version: %sover.2
+Version: %sover.0.3
 Release: alt1
 
 Summary: Fork of the popular zip manipulation library found in the zlib distribution
@@ -119,6 +119,9 @@ developing applications that use %name.
 %_libdir/lib%rname.so
 
 %changelog
+* Tue Sep 07 2021 Nazarov Denis <nenderus@altlinux.org> 3.0.3-alt1
+- Version 3.0.3
+
 * Mon May 10 2021 Nazarov Denis <nenderus@altlinux.org> 3.0.2-alt1
 - Version 3.0.2
 
