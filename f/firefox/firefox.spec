@@ -2,16 +2,16 @@
 
 %define gst_version   1.0
 %define nspr_version  4.32
-%define nss_version   3.69.0
+%define nss_version   3.69.1
 %define rust_version  1.54.0
 %define cargo_version 1.54.0
-%define llvm_version  11.0
+%define llvm_version  12.0
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        91.0.2
+Version:        92.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -34,21 +34,19 @@ Source12:       firefox-privacy-prefs.js
 Source13:       firefox-search-provider.ini
 
 ### Start Patches
-Patch001: 0001-ALT-Use-system-nspr-headers.patch
-Patch002: 0002-FEDORA-build-arm-libopus.patch
-Patch003: 0003-FEDORA-build-arm.patch
-Patch004: 0004-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
-Patch005: 0005-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
-Patch006: 0006-ALT-Fix-aarch64-build.patch
-Patch007: 0007-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
-Patch008: 0008-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
-Patch009: 0009-arm-js-src-wasm-add-struct-user_vfp-definition.patch
-Patch010: 0010-use-floats-for-audio-on-arm-too.patch
-Patch011: 0011-bmo-847568-Support-system-harfbuzz.patch
-Patch012: 0012-bmo-847568-Support-system-graphite2.patch
-Patch013: 0013-bmo-1559213-Support-system-av1.patch
-Patch014: 0014-VAAPI-Add-extra-frames.patch
-Patch015: 0015-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
+Patch001: 0001-FEDORA-build-arm-libopus.patch
+Patch002: 0002-FEDORA-build-arm.patch
+Patch003: 0003-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
+Patch004: 0004-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
+Patch005: 0005-ALT-Fix-aarch64-build.patch
+Patch006: 0006-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
+Patch007: 0007-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
+Patch008: 0008-use-floats-for-audio-on-arm-too.patch
+Patch009: 0009-bmo-847568-Support-system-harfbuzz.patch
+Patch010: 0010-bmo-847568-Support-system-graphite2.patch
+Patch011: 0011-bmo-1559213-Support-system-av1.patch
+Patch012: 0012-VAAPI-Add-extra-frames.patch
+Patch013: 0013-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 ### End Patches
 
 #ExcludeArch: ppc64le
@@ -201,8 +199,6 @@ Most likely you don't need to use this package.
 %patch011 -p1
 %patch012 -p1
 %patch013 -p1
-%patch014 -p1
-%patch015 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -465,6 +461,18 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Sep 07 2021 Alexey Gladkov <legion@altlinux.ru> 92.0-alt1
+- New release (92.0).
+- Security fixes:
+  + CVE-2021-29993: Handling custom intents could lead to crashes and UI spoofs
+  + CVE-2021-38491: Mixed-Content-Blocking was unable to check opaque origins
+  + CVE-2021-38492: Navigating to `mk:` URL scheme could load Internet Explorer
+  + CVE-2021-38493: Memory safety bugs fixed in Firefox 92, Firefox ESR 78.14 and Firefox ESR 91.1
+  + CVE-2021-38494: Memory safety bugs fixed in Firefox 92
+
+* Tue Sep 07 2021 Alexey Gladkov <legion@altlinux.ru> 91.0.2-alt2
+- Rebuild with llvm12.0.
+
 * Wed Aug 25 2021 Alexey Gladkov <legion@altlinux.ru> 91.0.2-alt1
 - New release (91.0.2).
 
