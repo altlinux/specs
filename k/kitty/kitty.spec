@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kitty
-Version: 0.21.2
+Version: 0.23.1
 Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
@@ -13,21 +13,38 @@ Requires: %name-terminfo = %EVR
 
 # Upstream: https://github.com/kovidgoyal/kitty
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
+Patch1: alt-sphinx-use-classic-theme.patch
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: libXcursor-devel libXrandr-devel libXi-devel libXinerama-devel
-BuildRequires: python3-devel python3-module-sphinx-sphinx-build-symlink
-BuildRequires: libxkbcommon-x11-devel libGL-devel fontconfig-devel
-BuildRequires: libharfbuzz-devel libpng-devel liblcms2-devel libdbus-devel
-BuildRequires: wayland-protocols libwayland-client-devel libwayland-cursor-devel
+BuildRequires: libXi-devel
+BuildRequires: libXrandr-devel
+BuildRequires: libXcursor-devel
+BuildRequires: libXinerama-devel
+BuildRequires: libxkbcommon-x11-devel
+
+BuildRequires: wayland-protocols
+BuildRequires: libwayland-client-devel
+BuildRequires: libwayland-cursor-devel
+
+BuildRequires: libGL-devel
+BuildRequires: libpng-devel
+BuildRequires: libdbus-devel
+BuildRequires: liblcms2-devel
+BuildRequires: fontconfig-devel
+BuildRequires: libharfbuzz-devel
+
+BuildRequires: python3-module-sphinx-copybutton
+BuildRequires: python3-module-sphinx-inline-tabs
+BuildRequires: python3-module-sphinxext-opengraph
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
 # For tic
 BuildRequires: ncurses
 
 # For tests
 BuildRequires: /proc
-BuildRequires: kitty
 BuildRequires: fonts-ttf-gnu-freefont-mono
 
 %add_python3_path %_libexecdir/%name
@@ -77,11 +94,21 @@ The terminfo file for kitty
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
 
 # Changing shebangs to python3
-find -type f -name "*.py" -exec sed -e 's|/usr/bin/env python3|%{__python3}|g'  \
-                                    -e 's|/usr/bin/env python|%{__python3}|g'   \
+find -type f -name "*.py" -exec sed -e 's|/usr/bin/env python3|%__python3|g'  \
+                                    -e 's|/usr/bin/env python|%__python3|g'   \
                                     -i "{}" \;
+%ifarch %e2k
+# ftbfs workaround with lcc 1.25.17:
+# kitty/screen.c:1437,1463: pointless comparison of unsigned integer with zero
+sed -i "s/-Werror//g" setup.py
+%endif
+
+%build
+%python3_build_debug
 
 %install
 mkdir -p %buildroot%_prefix
@@ -89,6 +116,15 @@ python3 setup.py linux-package \
 	--prefix=%buildroot%_prefix \
 	--update-check-interval=0 \
 	--debug
+
+python3 __main__.py + complete setup bash | \
+	install -Dm644 /dev/stdin %buildroot%_datadir/bash-completion/completions/kitty
+
+python3 __main__.py + complete setup zsh | \
+	install -Dm644 /dev/stdin  %buildroot%_datadir/zsh/site-functions/_kitty
+
+python3 __main__.py + complete setup fish | \
+	install -Dm644 /dev/stdin %buildroot%_datadir/fish/vendor_completions.d/kitty.fish
 
 %check
 python3 setup.py test --prefix=%buildroot%_prefix
@@ -98,14 +134,24 @@ python3 setup.py test --prefix=%buildroot%_prefix
 %_datadir/doc/%name/
 %_libexecdir/%name/
 %_desktopdir/*.desktop
-%_iconsdir/hicolor/*/*/*.png
+%_iconsdir/hicolor/*/apps/*
 %_man1dir/*
 %_man5dir/*
+%_datadir/bash-completion/completions/kitty
+%_datadir/zsh/site-functions/_kitty
+%_datadir/fish/vendor_completions.d/kitty.fish
 
 %files terminfo
 %_datadir/terminfo/*/*
 
 %changelog
+* Tue Sep 07 2021 Egor Ignatov <egori@altlinux.org> 0.23.1-alt1
+- new version 0.23.1
+- cleanup spec
+- add bash, zsh and fish completions
+- add alt-sphinx-use-classic-theme patch
+- disable -Werror for e2k (@mike)
+
 * Mon Jun 28 2021 Egor Ignatov <egori@altlinux.org> 0.21.2-alt1
 - new version 0.21.2
 
