@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.9.1
+Version: 3.9.2
 Release: alt1
 
 Summary: Code checking using pep8 and pyflakes
@@ -70,9 +70,12 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr
 %doc README.rst LICENSE
 %_bindir/flake8
 %python3_sitelibdir/flake8/
-%python3_sitelibdir/flake8-*.egg-info/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Sep 07 2021 Stanislav Levin <slev@altlinux.org> 3.9.2-alt1
+- 3.9.1 -> 3.9.2.
+
 * Tue Apr 20 2021 Stanislav Levin <slev@altlinux.org> 3.9.1-alt1
 - 3.8.4 -> 3.9.1.
 
