@@ -3,7 +3,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20210831
+Version: 20210902
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -39,6 +39,10 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Thu Sep 02 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 20210902-alt1
+- When mounting a cifs share try older protocol versions (related: #40554)
+- Log messages to ttyprintk for easier debugging
+
 * Tue Aug 31 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 20210831-alt1
 - Network boot: automatically select interface with a carrier (closes: #40616)
 
