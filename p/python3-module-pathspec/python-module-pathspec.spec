@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%define pypi_name pathspec
 
 %def_with check
 
-Name: python3-module-pathspec
-Version: 0.8.1
+Name: python3-module-%pypi_name
+Version: 0.9.0
 Release: alt1
 Summary: Utility library for gitignore style pattern matching of file paths
 License: MPL-2.0-no-copyleft-exception
@@ -21,7 +22,7 @@ BuildRequires: python3(tox)
 %endif
 
 %description
-pathspec is a utility library for pattern matching of file paths. So
+%pypi_name is a utility library for pattern matching of file paths. So
 far this only includes Git's wildmatch pattern matching which itself
 is derived from Rsync's wildmatch. Git uses wildmatch for its
 gitignore files.
@@ -35,7 +36,7 @@ gitignore files.
 %install
 %python3_install
 # don't package tests
-rm -r %buildroot%python3_sitelibdir/pathspec/tests/
+rm -r %buildroot%python3_sitelibdir/%pypi_name/tests/
 
 %check
 cat > tox.ini <<EOF
@@ -48,10 +49,14 @@ export TOXENV=py3
 tox.py3 --sitepackages -vvr
 
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%pypi_name-%version-py%_python3_version.egg-info/
 %doc *.rst
 
 %changelog
+* Tue Sep 07 2021 Stanislav Levin <slev@altlinux.org> 0.9.0-alt1
+- 0.8.1 -> 0.9.0.
+
 * Tue May 11 2021 Stanislav Levin <slev@altlinux.org> 0.8.1-alt1
 - 0.8.0 -> 0.8.1.
 

@@ -1,10 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define oname black
 
+%define typing_extensions %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 10)))')
+
 %def_with check
 
 Name: python3-module-%oname
-Version: 21.7b0
+Version: 21.8b0
 Release: alt1
 
 Summary: The Uncompromising Code Formatter
@@ -22,11 +24,14 @@ BuildRequires: python3-module-setuptools_scm
 %if_with check
 # install_requires=
 BuildRequires: python3(click)
-BuildRequires: python3(appdirs)
+BuildRequires: python3(platformdirs)
 BuildRequires: python3(tomli)
 BuildRequires: python3(regex)
 BuildRequires: python3(pathspec)
 BuildRequires: python3(mypy_extensions)
+%if %typing_extensions
+BuildRequires: python3(typing_extensions)
+%endif
 
 # tests
 BuildRequires: python3(aiohttp)
@@ -36,6 +41,10 @@ BuildRequires: python3(click.testing)
 BuildRequires: python3(parameterized)
 BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
+%endif
+
+%if %typing_extensions
+%py3_requires typing_extensions
 %endif
 
 %description
@@ -90,6 +99,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/blib2to3/
 
 %changelog
+* Tue Sep 07 2021 Stanislav Levin <slev@altlinux.org> 21.8b0-alt1
+- 21.7b0 -> 21.8b0.
+
 * Mon Jul 26 2021 Stanislav Levin <slev@altlinux.org> 21.7b0-alt1
 - 21.6b0 -> 21.7b0.
 

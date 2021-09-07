@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.1.0
+Version: 2.3.0
 Release: alt1
 
 Summary: Determining appropriate platform-specific dirs
@@ -63,5 +63,8 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- tests
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Sep 07 2021 Stanislav Levin <slev@altlinux.org> 2.3.0-alt1
+- 2.1.0 -> 2.3.0.
+
 * Mon Jul 26 2021 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
 - Initial build for Sisyphus.

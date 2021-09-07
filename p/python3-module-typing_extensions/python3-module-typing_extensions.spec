@@ -1,8 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %global modname typing_extensions
 
+%def_with check
+
 Name: python3-module-%modname
-Version: 3.7.4.3
-Release: alt2
+Version: 3.10.0.2
+Release: alt1
 Summary: Python Typing Extensions
 Group: Development/Python3
 License: Python
@@ -13,8 +16,11 @@ BuildArch: noarch
 Provides: python3-module-typing-extensions = %EVR
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
-# For tests
+
+%if_with check
 BuildRequires: python3-test
+BuildRequires: python3(tox)
+%endif
 
 %description
 Typing Extensions - Backported and Experimental Type Hints for Python
@@ -43,13 +49,27 @@ must be compatible with multiple Python versions or requires experimental types.
 %python3_install
 
 %check
-%__python3 src_py3/test_typing_extensions.py
+cat > tox.ini <<EOF
+[testenv]
+usedevelop=True
+changedir = src_py3
+commands = python -m unittest discover
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vvr -s false
 
 %files
 %doc README.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/typing_extensions.py
+%python3_sitelibdir/__pycache__/typing_extensions.cpython*
+%python3_sitelibdir/%modname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Sep 07 2021 Stanislav Levin <slev@altlinux.org> 3.10.0.2-alt1
+- 3.7.4.3 -> 3.10.0.2.
+
 * Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 3.7.4.3-alt2
 - Fixed BuildRequires.
 
