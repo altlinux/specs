@@ -8,10 +8,10 @@
 %define rev %nil
 
 Name: courier-authlib
-Version: 0.66.4
-Release: alt0.3.1%rev
+Version: 0.71.3
+Release: alt1%rev
 Summary: Courier authentication library -- tool and utilities
-License: GPL
+License: GPL-3
 Group: System/Libraries
 URL: http://www.courier-mta.org
 Requires: libcourier-authlib = %version-%release
@@ -25,14 +25,14 @@ Source2: courier-authlib.README-ALT.utf8
 Source3: courier-authdaemon.service
 
 Patch0: %name-%version-alt-makefiles.patch
-Patch1: %name-%version-alt-dat2db.patch
-Patch2: %name-%version-alt-config.patch
+Patch1: %name-0.71.3-alt-dat2db.patch
+Patch2: %name-0.66.4-alt-config.patch
 Patch3: %name-0.59.1-alt-addlock.patch
 
 # Automatically added by buildreq on Mon May 23 2005
 BuildRequires: gcc-c++ libMySQL-devel libssl-devel libdb4-devel libldap-devel libltdl-devel
 BuildRequires: libpam-devel libstdc++-devel postgresql-devel zlib-devel expect
-BuildRequires: libsqlite3-devel courier-unicode-devel libidn-devel
+BuildRequires: libsqlite3-devel courier-unicode-devel >= 2.2.3 libidn-devel
 
 %add_findprov_lib_path %_libdir/%name
 
@@ -146,7 +146,8 @@ SQLite as datasource.
  --with-authldaprc=%_sysconfdir/%c_dirname/authdaemon-ldap.conf \
  --with-authpgsqlrc=%_sysconfdir/%c_dirname/authdaemon-pgsql.conf \
  --with-authmysqlrc=%_sysconfdir/%c_dirname/authdaemon-mysql.conf \
- --with-authsqliterc=%_sysconfdir/%c_dirname/authdaemon-sqlite.conf
+ --with-authsqliterc=%_sysconfdir/%c_dirname/authdaemon-sqlite.conf \
+ --disable-static
 
 %make_build
 
@@ -255,20 +256,10 @@ chown courier:courier %_sysconfdir/%name/authdaemon-sqlite.conf
 %preun_service courier-authdaemon
 
 %postun userdb
-chown courier:courier %_sysconfdir/%name/userdb*
-%post_service courier-authdaemon
+[ -s %_sysconfdir/%name/userdb* ] && chown courier:courier %_sysconfdir/%name/userdb* ||:
 
-%postun ldap
-%post_service courier-authdaemon
-
-%postun pgsql
-%post_service courier-authdaemon
-
-%postun mysql
-%post_service courier-authdaemon
-
-%postun sqlite
-%post_service courier-authdaemon
+%triggerpostun -- courier-authlib-userdb, courier-authlib-ldap, courier-authlib-pgsql, courier-authlib-mysql, courier-authlib-sqlite
+/sbin/service courier-authdaemon condrestart
 
 %files
 %config(noreplace) %attr(0660,courier,courier) %_sysconfdir/%name/authdaemon.conf
@@ -318,7 +309,6 @@ chown courier:courier %_sysconfdir/%name/userdb*
 %_libdir/%name/libcourierauth.so.0
 %_libdir/%name/libcourierauth.so.0.0.0
 
-%exclude %_libdir/%name/*.a
 %exclude %_libdir/%name/*.la
 
 %files -n lib%name-devel
@@ -360,8 +350,21 @@ chown courier:courier %_sysconfdir/%name/userdb*
 %_libdir/%name/libauthsqlite*.so.*
 
 %changelog
-* Sat Oct 05 2019 Alexei Takaseev <taf@altlinux.org> 0.66.4-alt0.3.1
-- Remove unneeded BuildRequires libpq-devel
+* Fri Sep 03 2021 L.A. Kostis <lakostis@altlinux.ru> 0.71.3-alt1
+- 0.71.3.
+- fix typo in .service (tnx to @mike)
+- .spec file:
+  + fix License
+  + remove static libraries.
+  + -alt-makefiles: optimize for LTO
+  + -alt-dat2db patch: update
+  + fix postun actions.
+  + remove unneeded BuildRequires libpq-devel (tnx taf@)
+
+* Tue Jan 16 2018 L.A. Kostis <lakostis@altlinux.ru> 0.68.0-alt0.1
+- Updated to 0.68.0:
+  + init: Added LSB header.
+  + update -alt-makefile.patch.
 
 * Mon Jan 09 2017 L.A. Kostis <lakostis@altlinux.ru> 0.66.4-alt0.3
 - .spec: cleanups:

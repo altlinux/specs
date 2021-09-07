@@ -1,27 +1,41 @@
 %def_disable static
+%define soname 7
 
 Summary: Courier Unicode Library
 Name: courier-unicode
-Version: 1.4
+Version: 2.2.3
 Release: alt0.1
 License: GPLv3
 Group: System/Libraries
 Url: http://www.courier-mta.org/unicode/
-Source: http://download.sourceforge.net/courier/%{name}-%{version}.tar.bz2
+Source: https://sourceforge.net/projects/courier/files/courier-unicode/%{version}/%{name}-%{version}.tar.bz2
 
 Buildrequires: gcc-c++
 
+%package -n lib%{name}%{soname}
+Summary: Courier Unicode Library
+Group: System/Libraries
+Provides: %{name} = %EVR
+
 %package devel
 Summary: Courier Unicode Library development files
-Group: Development/C
-Requires: %name = %version-%release
+Group: Development/C++
+Requires: lib%{name}%{soname} = %EVR
 
 %package -n %name-devel-static
 Summary: %name static development environment
-Group: Development/C
-Requires: %name-devel = %version-%release
+Group: Development/C++
+Requires: %name-devel = %EVR
 
 %description
+This library implements several algorithms related to the Unicode
+Standard.
+
+This package installs only the run-time libraries needed by applications
+that use this library. Install the "courier-unicode-devel" package if you
+want to develop new applications using this library.
+
+%description -n lib%{name}%{soname}
 This library implements several algorithms related to the Unicode
 Standard.
 
@@ -49,7 +63,7 @@ linked against %name library.
 %install
 %make install DESTDIR=%buildroot
 
-%files
+%files -n lib%{name}%{soname}
 %doc README COPYING ChangeLog AUTHORS
 %_libdir/*.so.*
 
@@ -57,12 +71,24 @@ linked against %name library.
 %_mandir/*/*
 %_includedir/*
 %_libdir/*.so
+%_datadir/aclocal/*.m4
 %if_enabled static
 %files -n %name-devel-static
 %_libdir/*.a
 %endif # static
 
 %changelog
+* Fri Sep 03 2021 L.A. Kostis <lakostis@altlinux.ru> 2.2.3-alt0.1
+- 2.2.3.
+
+* Wed Mar 10 2021 L.A. Kostis <lakostis@altlinux.ru> 2.1.2-alt0.1
+- Updated to 2.1.2.
+- Create lib soname package according Shared Libs Policy.
+- Define -devel package as C++.
+
+* Tue Jan 16 2018 L.A. Kostis <lakostis@altlinux.ru> 2.0-alt0.1
+- Updated to 2.0.
+
 * Wed Jan 04 2017 L.A. Kostis <lakostis@altlinux.ru> 1.4-alt0.1
 - Updated to 1.4.
 

@@ -7,11 +7,11 @@
 %define origname maildrop
 
 Name: courier-maildrop
-Version: 2.8.4
-Release: alt0.3
+Version: 3.0.3
+Release: alt0.1
 
 Summary: maildrop mail filter/mail delivery agent
-License: GPL
+License: GPL-3
 Group: Networking/Mail
 Url: http://www.courier-mta.org/maildrop/
 
@@ -23,13 +23,13 @@ Obsoletes: maildrop-common < %version-%release
 Source0: %url/%origname-%version.tar.bz2
 Source1: %origname.README-ALT
 
-Patch1: %origname-%version-alt-authlib.patch
+Patch1: %origname-2.8.4-alt-authlib.patch
 
-BuildPreReq: libcourier-authlib-devel = 0.66.4
+BuildPreReq: libcourier-authlib-devel >= 0.68.0
 
 # Automatically added by buildreq on Sun Nov 27 2005
 BuildRequires: gcc-c++ libdb4-devel libfam-devel libpcre-devel libstdc++-devel
-BuildRequires: courier-unicode-devel
+BuildRequires: courier-unicode-devel libidn-devel
 
 %description
 Maildrop - mail delivery agent with filtering capabilities and
@@ -126,11 +126,27 @@ install -m 0644 libs/maildrop/maildroptips.html %buildroot%_docdir/%name-%versio
 %_bindir/maildirmake
 %_bindir/deliverquota
 %_bindir/makedat*
+%_bindir/maildirwatch
+%_bindir/maildirkw
 %_man1dir/makedat*
 %_man1dir/maildirmake.1*
+%_man1dir/maildirwatch.1*
+%_man1dir/maildirkw.1*
 %_man8dir/deliverquota.8*
 
 %changelog
+* Mon Sep 06 2021 L.A. Kostis <lakostis@altlinux.ru> 3.0.3-alt0.1
+- Updated to 3.0.3.
+- Added maildirwatch and maildirkw into -utils.
+- Fix License tag.
+
+* Tue Jan 16 2018 L.A. Kostis <lakostis@altlinux.ru> 2.9.3-alt0.2
+- Compile with libidn support.
+- Bump libcourier-authlib required version.
+
+* Tue Jan 16 2018 L.A. Kostis <lakostis@altlinux.ru> 2.9.3-alt0.1
+- Updated to 2.9.3.
+
 * Sun Jan 08 2017 L.A. Kostis <lakostis@altlinux.ru> 2.8.4-alt0.3
 - .spec cleanup.
 - disabled authlib-tempreject.
