@@ -1,7 +1,7 @@
 %def_without test
 
 Name: conan
-Version: 1.39.0
+Version: 1.40.0
 Release: alt1
 
 Summary: Conan - The open-source C/C++ package manager
@@ -12,8 +12,6 @@ Url: https://conan.io
 
 # Source-url: https://github.com/conan-io/conan/archive/%version.tar.gz
 Source: %name-%version.tar
-
-#Patch0: %name-%version-alt.patch
 
 Packager: Pavel Vainerman <pv@altlinux.org>
 
@@ -29,8 +27,8 @@ AutoProv: no
 %py3_use jwt >= 1.4.0
 %py3_use requests < 3.0.0
 %py3_use requests >= 2.8.1
-#py3_use urllib3 < 1.26
-%py3_use urllib3 >= 1.25.8
+%py3_use urllib3 < 1.27
+%py3_use urllib3 >= 1.26.6
 %py3_use colorama < 0.5.0
 %py3_use colorama >= 0.3.3
 %py3_use yaml < 6.0
@@ -41,14 +39,12 @@ AutoProv: no
 %py3_use six <= 1.16.0
 %py3_use six >= 1.10.0
 %py3_use node_semver >= 0.6.1
-%py3_use distro <= 1.5.0
+%py3_use distro <= 1.6.0
 %py3_use distro >= 1.0.2
 %py3_use future < 0.19.0
 %py3_use future >= 0.16.0
 %py3_use Pygments < 3.0
 %py3_use Pygments >= 2.0
-%py3_use deprecation < 2.1
-%py3_use deprecation >= 2.0
 %py3_use tqdm < 5
 %py3_use tqdm >= 4.28.1
 #py3_use jinja2 < 3
@@ -66,7 +62,6 @@ AutoProv: no
 %py3_buildrequires webtest < 2.1.0
 %py3_buildrequires webtest >= 2.0.18
 %py3_buildrequires bottle
-
 
 # conans/requirements_server.txt
 %py3_use bottle >= 0.12.8
@@ -101,6 +96,10 @@ rm -rfv %buildroot%python_sitelibdir/conans/test_integration/
 %doc README.rst LICENSE.md
 
 %changelog
+* Mon Sep 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.40.0-alt1
+- new version 1.40.0 (with rpmrb script)
+- update (build)requires
+
 * Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 1.39.0-alt1
 - new version 1.39.0 (with rpmrb script)
 
