@@ -7,6 +7,8 @@
 %def_without only_client
 %endif
 
+%def_without docs
+
 %if_without only_client
 %def_with fastlint
 %def_with fasttest
@@ -28,23 +30,27 @@
 %define etc_systemd_dir %_sysconfdir/systemd/system
 
 # versions defines
-%define apache_version 2.4.41-alt3
+# https://bugzilla.altlinux.org/40688
+%define apache_version 1:2.4.48-alt5
+
 %define bind_version 9.11
 %define bind_dyndb_ldap_version 11.1-alt7
 %define certmonger_version 0.79.7
-%define ds_version 1.4.1.6
+%define ds_version 1.4.3.24
 %define gssproxy_version 0.8.0-alt2
 %define krb5_version 1.16.3
-%define pki_version 10.9.2
+%define pki_version 10.10.5
 %define python_ldap_version 3.2.0
 %define samba_version 4.7.6
 %define slapi_nis_version 0.56.3
 %define sssd_version 1.16.3
 %define openldap_version 2.4.47-alt2
+%define opendnssec_version 2.1.9-alt1
+%define libp11_version 0.4.10-alt2
 
 Name: freeipa
-Version: 4.8.9
-Release: alt5
+Version: 4.9.6
+Release: alt1
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -64,7 +70,8 @@ BuildRequires: libpopt-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libssl-devel
 BuildRequires: libsystemd-devel
-BuildRequires: libxmlrpc-devel
+BuildRequires: libjansson-devel
+BuildRequires: libcurl-devel
 BuildRequires: openldap-devel >= %openldap_version
 
 %if_without only_client
@@ -112,6 +119,11 @@ BuildRequires: python3(twine)
 BuildRequires: python3(wheel)
 %endif
 
+%if_with docs
+BuildRequires: python3(sphinx)
+BuildRequires: python3(m2r)
+%endif
+
 #
 # Build dependencies for lint and fastcheck
 #
@@ -119,10 +131,12 @@ BuildRequires: python3(wheel)
 BuildRequires: git-core
 BuildRequires: softhsm
 BuildRequires: jsl
+BuildRequires: nss-utils
+
+BuildRequires: python3-modules-sqlite3
 
 BuildRequires: python3-module-augeas
 BuildRequires: python3-module-cryptography
-BuildRequires: python3-module-custodia
 BuildRequires: python3-module-dateutil
 BuildRequires: python3-module-dbus
 BuildRequires: python3-module-dns
@@ -137,8 +151,10 @@ BuildRequires: python3-module-lxml
 BuildRequires: python3-module-netaddr
 BuildRequires: python3-module-netifaces
 BuildRequires: python3-module-paste
+BuildRequires: python3-module-pexpect
 BuildRequires: python3-module-pki-base >= %pki_version
 BuildRequires: python3-module-polib
+BuildRequires: python3-module-psutil
 BuildRequires: python3-module-pyasn1
 BuildRequires: python3-module-pyasn1-modules
 BuildRequires: python3-module-pycodestyle
@@ -147,6 +163,7 @@ BuildRequires: python3-module-pytest-multihost
 BuildRequires: python3-module-pytest_sourceorder
 BuildRequires: python3-module-qrcode
 BuildRequires: python3-module-samba
+BuildRequires: python3(sphinx)
 BuildRequires: python3-module-sss
 BuildRequires: python3-module-sss_nss_idmap
 BuildRequires: python3-module-sss-murmur
@@ -176,9 +193,11 @@ Requires: gssproxy >= %gssproxy_version
 Requires: sssd-dbus >= %sssd_version
 Requires: pki-ca >= %pki_version
 Requires: pki-kra >= %pki_version
+Requires: pki-acme >= %pki_version
 Requires: certmonger >= %certmonger_version
 Requires: 389-ds-base >= %ds_version
-Requires: openssl
+# https://pagure.io/freeipa/issue/8632
+Requires: openssl > 1.1.1j
 Requires: softhsm
 Requires: libp11-kit
 Requires: gzip
@@ -226,6 +245,7 @@ Requires: python3-module-ldap >= %python_ldap_version
 Requires: python3-module-pki-base >= %pki_version
 Requires: python3-module-sssdconfig >= %sssd_version
 Requires: python3-module-samba
+Requires: python3-module-psutil
 Requires: librpm
 Obsoletes: python3-module-ipaserver-ntp < %EVR
 Provides: python3-module-ipaserver-ntp = %EVR
@@ -265,7 +285,8 @@ Requires: %name-server = %EVR
 Requires: bind-dyndb-ldap >= %bind_dyndb_ldap_version
 Requires: bind >= %bind_version
 Requires: bind-utils >= %bind_version
-Requires: opendnssec
+Requires: opendnssec >= %opendnssec_version
+Requires: libp11 >= %libp11_version
 
 %description server-dns
 IPA integrated DNS server with support for automatic DNSSEC signing.
@@ -474,6 +495,7 @@ Requires: python3-module-sssdconfig >= %sssd_version
 Requires: openssh-clients
 Requires: sshpass
 Requires: iptables
+Requires: drill
 # Tests have a huge amount useless Provides
 %set_findprov_skiplist %python3_sitelibdir/ipatests/*
 
@@ -517,6 +539,7 @@ export PYTHON=%__python3
 %configure --with-vendor-suffix=-%release \
 %if_without only_client
            --enable-server \
+           --with-password-quality-lib=no \
            --with-ipatests \
 %else
            --disable-server \
@@ -527,6 +550,14 @@ export PYTHON=%__python3
 
 %install
 %makeinstall_std
+
+%if_without only_client
+# don't package ipasphinx for now
+rm -r \
+    %buildroot%python3_sitelibdir_noarch/ipasphinx \
+    %buildroot%python3_sitelibdir_noarch/ipasphinx-%version-py%_python3_version.egg-info \
+    %nil
+%endif
 
 # remove files which are useful only for make uninstall
 find %buildroot -wholename '*/site-packages/*/install_files.txt' -exec rm {} \;
@@ -808,9 +839,10 @@ fi
 %_sbindir/ipa-pkinit-manage
 %_sbindir/ipa-crlgen-manage
 %_sbindir/ipa-cert-fix
+%_sbindir/ipa-acme-manage
 %_libexecdir/certmonger/dogtag-ipa-ca-renew-agent-submit
 %_libexecdir/certmonger/ipa-server-guard
-%dir %_libexecdir/ipa
+%_libexecdir/ipa/ipa-ccache-sweeper
 %_libexecdir/ipa/ipa-custodia
 %_libexecdir/ipa/ipa-custodia-check
 %_libexecdir/ipa/ipa-httpd-kdcproxy
@@ -835,6 +867,8 @@ fi
 %attr(644,root,root) %_unitdir/ipa.service
 %attr(644,root,root) %_unitdir/ipa-otpd.socket
 %attr(644,root,root) %_unitdir/ipa-otpd@.service
+%attr(644,root,root) %_unitdir/ipa-ccache-sweep.service
+%attr(644,root,root) %_unitdir/ipa-ccache-sweep.timer
 # END
 %attr(755,root,root) %plugin_dir/libipa_pwd_extop.so
 %attr(755,root,root) %plugin_dir/libipa_enrollment_extop.so
@@ -874,6 +908,7 @@ fi
 %_man1dir/ipa-pkinit-manage.1*
 %_man1dir/ipa-crlgen-manage.1*
 %_man1dir/ipa-cert-fix.1*
+%_man1dir/ipa-acme-manage.1*
 %_man8dir/ipactl.8*
 
 %_rpmlibdir/freeipa-server.filetrigger
@@ -985,6 +1020,8 @@ fi
 %_sbindir/ipa-rmkeytab
 %_sbindir/ipa-join
 %_bindir/ipa
+%dir %_libexecdir/ipa/acme
+%_libexecdir/ipa/acme/certbot-dns-ipa
 %config %_sysconfdir/bash_completion.d
 %config %_sysconfdir/sysconfig/certmonger
 %_mandir/man1/ipa.1*
@@ -1039,6 +1076,7 @@ fi
 %files common -f ipa.lang
 %doc COPYING README.md Contributors.txt
 %dir %_datadir/ipa
+%dir %_libexecdir/ipa
 
 %files -n python3-module-freeipa
 %python3_sitelibdir/ipapython/
@@ -1049,6 +1087,9 @@ fi
 %python3_sitelibdir/ipaplatform-*.egg-info/
 
 %changelog
+* Wed Aug 04 2021 Stanislav Levin <slev@altlinux.org> 4.9.6-alt1
+- 4.8.9 -> 4.9.6.
+
 * Fri Jul 02 2021 Stanislav Levin <slev@altlinux.org> 4.8.9-alt5
 - Improved error message for missing supported NTP (closes: #40343).
 
@@ -1185,7 +1226,7 @@ fi
 * Sat Oct 07 2017 Stanislav Levin <slev@altlinux.org> 4.6.1-alt1
 - 4.4.4 -> 4.6.1
 
-* Thu Oct 06 2017 Stanislav Levin <slev@altlinux.org> 4.4.4-alt4
+* Fri Oct 06 2017 Stanislav Levin <slev@altlinux.org> 4.4.4-alt4
 - Fix ipa client schema cache: Handle malformed server info data gracefully
 - Fix ipa client requirements
 - Import patches from 4.3.3-alt9
@@ -1194,10 +1235,10 @@ fi
 - selinux: Allow digits in SELinux user names (closes: #33838).
 - Require zip.
 
-* Thu Oct 4 2017 Stanislav Levin <slev@altlinux.org> 4.4.4-alt3
+* Wed Oct 4 2017 Stanislav Levin <slev@altlinux.org> 4.4.4-alt3
 - Fix ipa server upgrade
 
-* Thu Oct 2 2017 Stanislav Levin <slev@altlinux.org> 4.4.4-alt2
+* Mon Oct 2 2017 Stanislav Levin <slev@altlinux.org> 4.4.4-alt2
 - Import patches from 4.3.3-alt8
 
 * Wed Sep 27 2017 Mikhail Efremov <sem@altlinux.org> 4.3.3-alt8
@@ -1205,7 +1246,7 @@ fi
     + Don't try to use bundled urllib3 in the python-module-request.
     + Use ipa CA certificate for https checks.
 
-* Thu Sep 25 2017 Stanislav Levin <slev@altlinux.org> 4.4.4-alt1
+* Mon Sep 25 2017 Stanislav Levin <slev@altlinux.org> 4.4.4-alt1
 - Update to upstream's 4.4.4 version
 
 * Thu Aug 24 2017 Mikhail Efremov <sem@altlinux.org> 4.3.3-alt7
