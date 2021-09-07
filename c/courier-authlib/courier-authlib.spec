@@ -9,7 +9,7 @@
 
 Name: courier-authlib
 Version: 0.71.3
-Release: alt1%rev
+Release: alt2%rev
 Summary: Courier authentication library -- tool and utilities
 License: GPL-3
 Group: System/Libraries
@@ -350,6 +350,9 @@ chown courier:courier %_sysconfdir/%name/authdaemon-sqlite.conf
 %_libdir/%name/libauthsqlite*.so.*
 
 %changelog
+* Tue Sep 07 2021 L.A. Kostis <lakostis@altlinux.ru> 0.71.3-alt2
+- fix systemd service.
+
 * Fri Sep 03 2021 L.A. Kostis <lakostis@altlinux.ru> 0.71.3-alt1
 - 0.71.3.
 - fix typo in .service (tnx to @mike)
