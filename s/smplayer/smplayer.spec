@@ -1,4 +1,4 @@
-%define		svn 9506
+%define		svn 9932
 
 %define		rel alt1
 
@@ -9,15 +9,15 @@ Summary(uk_UA.UTF8): Потужний інтерфейс для MPlayer/MPV (QT5
 License:	GPLv2
 Group:		Video
 Url:		http://smplayer.sourceforge.net
-Version:	21.1.0
+Version:	21.8.0
 Release:	%rel.%svn
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Source0:	http://downloads.sourceforge.net/smplayer/%name-%version.tar.bz2
 Patch0:		smplayer-paths-fix-alt.patch
 Patch1:		smplayer-18.3-disable_update.patch
 
-# Automatically added by buildreq on Sat Aug 14 2021 (-bi)
-# optimized out: elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libglvnd-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-widgets libqt5-xml libstdc++-devel libxcb-devel python-base qt5-base-devel qt5-tools sh4 xorg-proto-devel xz
+# Automatically added by buildreq on Tue Sep 07 2021 (-bi)
+# optimized out: debugedit elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libctf-nobfd0 libglvnd-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-widgets libqt5-xml libstdc++-devel libxcb-devel python3 python3-base qt5-base-devel qt5-tools sh4 xorg-proto-devel xz
 BuildRequires: libXext-devel qt5-script-devel qt5-tools-devel zlib-devel
 
 %description
@@ -68,6 +68,13 @@ BuildArch: noarch
 %description -n %name-mplayer
 Virtual package for SMPlayer, requires a MPlayer
 
+%package -n %name-webserver
+Summary: Simple Chromecast web server
+Group: Networking/File transfer
+
+%description -n %name-webserver
+This is a simple web server to serve local files for Chromecast
+
 %prep
 %setup -q
 %patch0 -p1
@@ -84,18 +91,24 @@ export OPTFLAGS="%optflags"
 
 %files
 %_bindir/%name
-%_bindir/simple_web_server
 %_desktopdir/*.desktop
 %_docdir/%name-%version
 %_datadir/%name
+%_datadir/metainfo/*.xml
 %_iconsdir/hicolor/*/apps/%name.png
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_man1dir/*
+
+%files -n %name-webserver
+%_bindir/simple_web_server
 
 %files -n %name-mpv
 %files -n %name-mplayer
 
 %changelog
+* Tue Sep 07 2021 Motsyo Gennadi <drool@altlinux.ru> 21.8.0-alt1.9932
+- 21.8.0 (rev9932)
+
 * Sun Aug 15 2021 Motsyo Gennadi <drool@altlinux.ru> 21.1.0-alt1.9506
 - 21.1.0 (svn9506)
 - build with Qt5
