@@ -3,7 +3,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20210902
+Version: 20210907
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -39,6 +39,10 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Tue Sep 07 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 20210907-alt1
+- Improved IO errors handling when loading stage2 (closes: #40803)
+- Support loading stage2 images >= 2GB (related: #40710)
+
 * Thu Sep 02 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 20210902-alt1
 - When mounting a cifs share try older protocol versions (related: #40554)
 - Log messages to ttyprintk for easier debugging
