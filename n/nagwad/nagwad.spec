@@ -1,5 +1,5 @@
 Name: 	  nagwad
-Version:  0.9.12
+Version:  0.9.13
 Release:  alt3
 
 Summary:  Nagios watch daemon
@@ -10,7 +10,7 @@ Url: 	  http://git.altlinux.org/people/nbr/packages/nagwad.git
 
 Source:   %name-%version.tar
 
-BuildRequires: discount
+BuildRequires: discount libaudit-devel
 
 %description
 Daemon that listens to journald and generates alerts based on journal messages
@@ -61,54 +61,37 @@ These are Nagstamon action commands suitable for a nagwad-node.
 %package audit
 Summary: Audit rules for a nagwad node
 Group:   Monitoring
-Requires: audit
+Requires: audit mk-syscall-rules
+
+BuildArch: noarch
 
 %description audit
 Contains audit rules for the 'audit' facility of %{name}.
+
+%package -n mk-syscall-rules
+Summary: A tool to generate audit rules based on a configuration file
+License:  GPLv3
+Group:   Monitoring
+Requires: which
+
+%description -n mk-syscall-rules
+Contains 'mk-syscall-rules' and 'aunormarch' utils.
 
 %prep
 %setup
 
 %build
-
-markdown -f links,smarty,toc,autolink -o signal.html signal.md
+%autoreconf
+%configure
+%make_build
 
 %install
-install -Dm 0755 scripts/nsca-shell %buildroot%_bindir/nsca-shell
-install -Dm 0755 scripts/nagwad %buildroot%_sbindir/nagwad
-install -Dm 0755 scripts/nrpe/check_nagwad %buildroot/%_libexecdir/nagios/plugins/check_nagwad
-install -Dm 0755 scripts/nrpe/check_osec %buildroot/%_libexecdir/nagios/plugins/check_osec
-
-install -Dm 0644 conf/audit/rules.d/50-nagwad.rules %buildroot%_sysconfdir/audit/rules.d/50-nagwad.rules
-
-%ifarch x86_64
-install -Dm 0644 conf/audit/rules.d/50-nagwad-64.rules %buildroot%_sysconfdir/audit/rules.d/50-nagwad-64.rules
-%endif
-
-%ifarch aarch64 mips64 mips64el ppc64le riscv64
-install -Dm 0644 conf/audit/rules.d/50-nagwad-64.rules %buildroot%_sysconfdir/audit/rules.d/50-nagwad-64.rules
-%else
-# Install 32-bit rules for x86_64 too. Please FIXME for other arches.
-install -Dm 0644 conf/audit/rules.d/50-nagwad-32.rules %buildroot%_sysconfdir/audit/rules.d/50-nagwad-32.rules
-%endif
-
-install -Dm 0644 conf/nagios/templates/50-nagwad.cfg %buildroot%_sysconfdir/nagios/templates/50-nagwad.cfg
-install -Dm 0644 conf/nagwad/audit.regexp %buildroot%_sysconfdir/nagwad/audit.regexp
-install -Dm 0644 conf/nagwad/authdata.regexp %buildroot%_sysconfdir/nagwad/authdata.regexp
-install -Dm 0644 conf/nagwad/device.regexp %buildroot%_sysconfdir/nagwad/device.regexp
-install -Dm 0644 conf/nagwad/login.regexp %buildroot%_sysconfdir/nagwad/login.regexp
-install -Dm 0644 conf/nagwad/osec.regexp %buildroot%_sysconfdir/nagwad/osec.regexp
-install -Dm 0644 conf/nagwad/print.regexp %buildroot%_sysconfdir/nagwad/print.regexp
-install -Dm 0644 conf/nagios/nrpe/nagwad.cfg %buildroot%_sysconfdir/nagios/nrpe-commands/nagwad.cfg
-install -Dm 0644 conf/nagstamon/actions/action_Lock_host.conf %buildroot%_sysconfdir/nagstamon/actions/action_Lock_host.conf
-install -Dm 0644 conf/nagstamon/actions/action_NSCA_shell.conf %buildroot%_sysconfdir/nagstamon/actions/action_NSCA_shell.conf
-
-install -Dm 0644 unit/nagwad.service %buildroot/%_unitdir/nagwad.service
-
+%makeinstall_std
 mkdir -p %buildroot/var/log/nagwad
+# Touch the file for %%ghost below.
+touch %buildroot%_sysconfdir/audit/rules.d/50-nagwad-arch.rules
 
 %pre
-
 if [ -e %_sysconfdir/nagwad/audit/audit.regexp ]; then
     cp -nv %_sysconfdir/nagwad/audit/audit.regexp \
        %_sysconfdir/nagwad/audit.regexp ||:
@@ -130,19 +113,30 @@ if [ -e %_sysconfdir/nagwad/osec/osec.regexp ]; then
        %_sysconfdir/nagwad/osec.regexp ||:
 fi
 
+%post audit
+_mk_syscall_rules_relax=
+if [ $1 = 1 -a -d /.host -a -d /.in -a -d /.out ]; then
+    _mk_syscall_rules_relax=1
+fi
+%_sbindir/mk-syscall-rules -v \
+                           ${_mk_syscall_rules_relax:+--relax} \
+                           -c %_sysconfdir/nagwad/audit-rules.conf
+
 %files service
 %doc README.md signal.html signal.md
 %_bindir/nsca-shell
 %_sbindir/nagwad
 %_unitdir/nagwad.*
 %_libexecdir/nagios/plugins/*
-%_sysconfdir/nagwad
+%dir %_sysconfdir/nagwad
 %config(noreplace) %_sysconfdir/nagwad/*.regexp
 %config(noreplace) %_sysconfdir/nagios/nrpe-commands/nagwad.cfg
 /var/log/nagwad
 
 %files audit
-%config(noreplace) %_sysconfdir/audit/rules.d/*nagwad*.rules
+%config(noreplace) %_sysconfdir/audit/rules.d/*-nagwad*-noarch.rules
+%ghost %_sysconfdir/audit/rules.d/50-nagwad-arch.rules
+%config(noreplace) %_sysconfdir/nagwad/audit-rules.conf
 
 %files templates
 %doc README.md signal.html signal.md
@@ -151,7 +145,25 @@ fi
 %files actions
 %config(noreplace) %_sysconfdir/nagstamon/actions/*.conf
 
+%files -n mk-syscall-rules
+%_bindir/aunormarch
+%_sbindir/mk-syscall-rules
+
 %changelog
+* Tue Sep 07 2021 Paul Wolneykien <manowar@altlinux.org> 0.9.13-alt3
+- mk-syscall-rules: Add --relax option to relax on undetected arch.
+- Run mk-syscall-rules in relaxed mode when installing the package
+  in Hasher.
+- Extract mk-syscall-rules into the separate package.
+
+* Mon Sep 06 2021 Paul Wolneykien <manowar@altlinux.org> 0.9.13-alt2
+- %name-audit: Explicitly require 'which' that isn't detected
+  automatically as a requirement.
+
+* Mon Sep 06 2021 Paul Wolneykien <manowar@altlinux.org> 0.9.13-alt1
+- Replace static rules with a tool to generate architecture-dependent
+  rules. Run it after the package is installed.
+
 * Wed Aug 18 2021 Paul Wolneykien <manowar@altlinux.org> 0.9.12-alt3
 - Fixed *-actions subpackage dependencies.
 - Provide different set of audit rules on different arches.
