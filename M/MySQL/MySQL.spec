@@ -13,7 +13,7 @@
 
 Name: MySQL
 Version: 8.0.26
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -514,6 +514,8 @@ rm -f %buildroot%_libdir/libmysqlclient*.a
 %if_without mysql_router
 rm -f %buildroot%_tmpfilesdir/mysqlrouter.conf
 rm -f %buildroot%_unitdir/mysqlrouter.service
+rm -f %buildroot%_sysconfdir/logrotate.d/mysqlrouter
+rm -f %buildroot%_man1dir/mysqlrouter*
 %endif
 
 # broken manpages referencing missing paths
@@ -723,10 +725,13 @@ fi
 %_bindir/zlib_decompress
 %_mandir/man?/*
 %exclude %_man1dir/mysql_config.1*
+%{?_with_mysql_router:%exclude %_man1dir/mysqlrouter*}
+%exclude %_man8dir/mysqld.8*
 
 %if_with mysql_router
 %files router
 %config(noreplace) %_sysconfdir/mysqlrouter/mysqlrouter.conf
+%config(noreplace) %_sysconfdir/logrotate.d/mysqlrouter
 %_tmpfilesdir/mysqlrouter.conf
 %_unitdir/mysqlrouter.service
 %dir %_libdir/mysqlrouter
@@ -740,6 +745,7 @@ fi
 %attr(750,mysqlrouter,mysqlrouter) %ROUTER_ROOT/data/keyring
 %attr(3770,root,mysqlrouter) %dir %ROUTER_ROOT/run
 %attr(3770,root,mysqlrouter) %dir %ROUTER_ROOT/log
+%_man1dir/mysqlrouter*
 %endif
 
 %files server-perl
@@ -748,7 +754,7 @@ fi
 %files server
 %_initdir/*
 %config(noreplace) %_sysconfdir/sysconfig/*
-%config(noreplace) %_sysconfdir/logrotate.d/*
+%config(noreplace) %_sysconfdir/logrotate.d/mysql
 %config(noreplace) %_sysconfdir/control.d/facilities/*
 %config %_sysconfdir/chroot.d/*
 %config(noreplace) %_sysconfdir/my.cnf
@@ -776,6 +782,7 @@ fi
 %attr(0700,mysql,mysql) %dir %_localstatedir/mysql-keyring
 %dir %_docdir/MySQL-%version
 %_docdir/MySQL-%version/README*
+%_man8dir/mysqld.8*
 %attr(3771,root,mysql) %dir %ROOT
 %attr(710,root,mysql) %dir %ROOT/%_lib
 %attr(710,root,mysql) %dir %ROOT/%_libdir
@@ -802,6 +809,10 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Tue Sep 07 2021 Nikolai Kostrigin <nickel@altlinux.org> 8.0.26-alt2
+- spec: fix packaging error for mysqlrouter logrotate script (closes: #40870)
+- spec: fix man pages' packaging
+
 * Fri Aug 06 2021 Nikolai Kostrigin <nickel@altlinux.org> 8.0.26-alt1
 - new version
   + (fixes: CVE-2021-22901, CVE-2019-17543, CVE-2021-2417, CVE-2021-2389)
