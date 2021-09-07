@@ -1,11 +1,13 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %define oname ipython
 
 %def_with doc
 
 Name: ipython3
-Version: 7.26.0
+Version: 7.27.0
 Release: alt1
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
@@ -201,6 +203,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Tue Sep 07 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.27.0-alt1
+- Updated to upstream version 7.27.0.
+
 * Mon Aug 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.26.0-alt1
 - Updated to upstream version 7.26.0.
 
