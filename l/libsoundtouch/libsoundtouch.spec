@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: libsoundtouch
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 
 Summary: SoundTouch audio processing library
@@ -69,6 +69,9 @@ rm -rf %buildroot/%_prefix/doc
 %_pkgconfigdir/%_name.pc
 
 %changelog
+* Tue Sep 07 2021 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1
+- 2.3.1
+
 * Sun Aug 22 2021 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
 - 2.3.0
 - enabled OpenMP support
