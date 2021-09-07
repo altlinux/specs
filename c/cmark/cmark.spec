@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: cmark
-Version: 0.29.0
-Release: alt1.1
+Version: 0.30.1
+Release: alt1
 Summary: CommonMark parsing and rendering
 License: BSD and MIT
 Group: Text tools
@@ -10,6 +12,8 @@ URL: https://github.com/commonmark/cmark
 
 # https://github.com/commonmark/cmark.git
 Source: %name-%version.tar
+
+Source2: %name.watch
 
 BuildRequires: gcc-c++ cmake ctest
 
@@ -43,6 +47,8 @@ This package provides the cmark library.
 %setup
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %cmake \
 	-DCMARK_STATIC=OFF \
 	%nil
@@ -74,6 +80,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Tue Sep 07 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.30.1-alt1
+- Updated to upstream version 0.30.1.
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 0.29.0-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
