@@ -4,9 +4,13 @@
 # Refer to https://github.com/rhboot/shim/blob/main/SBAT.md
 %global alt_gen_number 1
 
+# grub modules' architecture is heavily dependent on custom ELF sections.
+# LTO crashes that fragile house of cards, so should be disabled.
+%global optflags_lto %nil
+
 Name: grub
 Version: 2.06
-Release: alt1.rc1
+Release: alt3
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -45,7 +49,7 @@ Patch2: grub-2.02-altlinux-theme.patch
 Patch4: grub-2.04-os-alt-xen.patch
 Patch5: grub-2.02-debian-disable_floppies.patch
 Patch6: grub-2.04-add-fw_path-variable.patch
-Patch8: grub-2.04-debian-install_signed.patch
+Patch8: grub-2.06-debian-install_signed.patch
 Patch9: grub-2.00-fedora-unrestricted.patch
 Patch10: grub2-stfu.patch
 Patch11: grub-2.02-shift-interrupt-timeout.patch
@@ -53,12 +57,13 @@ Patch13: grub-2.02-check_writes-alt.patch
 Patch14: grub-2.04-alt-luks-use-uuid.patch
 Patch20: grub-2.02-alt-os-prober-compat.patch
 Patch21: grub-2.04-alt-set-default-bootloader_id.patch
-Patch22: grub-2.02-debian-grub-install-extra-removable.patch
-Patch23: grub-2.02-debian-grub-install-removable-shim.patch
+Patch22: grub-2.06-debian-grub-install-extra-removable.patch
+Patch23: grub-2.06-debian-grub-install-removable-shim.patch
 Patch24: grub-2.04-alt-grub-install-no-fallback-for-removable.patch
 Patch25: grub-2.04-alt-add-file-with-Russian-translation.patch
 Patch26: grub-2.04-alt-add-strings-and-translation-for-OS-ALT.patch
 Patch27: grub-2.06-alt-fix-build-with-new-gnulib.patch
+Patch28: grub-2.06-alt-gfxterm-backspace-workaround.patch
 
 # add a rhboot/grub-2.02-sb set of patches to ensure SecureBoot safe operation
 # refer to url:  https://github.com/rhboot/grub2/commits/grub-2.02-sb
@@ -72,6 +77,7 @@ Patch106: grub-2.06-sb-0006-Handle-multi-arch-64-on-32-boot-in-linuxefi-loader.p
 Patch190: grub-2.06-fedora-Rework-how-the-fdt-command-builds.patch
 Patch191: grub-2.06-fedora-Revert-templates-Properly-disable-the-os-prober-by-d.patch
 Patch192: grub-2.06-fedora-Revert-templates-Disable-the-os-prober-by-default.patch
+Patch193: grub-2.06-fedora-blscfg-add-blscfg-module-to-parse-Boot-Loader-Specif.patch
 
 BuildRequires(pre): rpm-macros-uefi
 BuildRequires: flex fonts-bitmap-misc fonts-ttf-dejavu libfreetype-devel python-modules ruby autogen
@@ -223,6 +229,7 @@ when one can't disable it easily, doesn't want to, or needs not to.
 %patch25 -p2
 %patch26 -p2
 %patch27 -p2
+%patch28 -p1
 
 #SB patches
 %patch101 -p1
@@ -235,6 +242,7 @@ when one can't disable it easily, doesn't want to, or needs not to.
 %patch190 -p1
 %patch191 -p1
 %patch192 -p1
+%patch193 -p1
 
 sed -i "/^AC_INIT(\[GRUB\]/ s/%version[^]]\+/%version-%release/" configure.ac
 sed -i "/^AC_PREREQ/ s/2\.63/2.64/" configure.ac
@@ -491,6 +499,18 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Wed Aug 18 2021 Nikolai Kostrigin <nickel@altlinux.org> 2.06-alt3
+- new version
+- update debian-install_signed patch
+- update debian-grub-install-extra-removable patch
+- update debian-grub-install-removable-shim patch
+- update fedora-Revert-templates-Properly-disable-the-os-prober-by-d patch
+- spec: disable LTO due to modules' build system incompatibility
+
+* Sat Aug 14 2021 Nikolai Kostrigin <nickel@altlinux.org> 2.06-alt2.rc1
+- add fedora patch to add blscfg command (keremet@) (closes: #40512)
+- add alt-gfxterm-backspace-workaround patch (egori@)
+
 * Wed May 19 2021 Nikolai Kostrigin <nickel@altlinux.org> 2.06-alt1.rc1
 - new version
   + includes fixes for BootHole vulnerabilities so drop corresponding patches
