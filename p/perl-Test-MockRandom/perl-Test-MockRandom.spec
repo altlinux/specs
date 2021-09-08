@@ -2,7 +2,7 @@
 
 Name: perl-Test-MockRandom
 Version: 1.01
-Release: alt1
+Release: alt3
 Summary: Replaces random number generation with non-random number generation
 License: Apache-2.0
 Group: Development/Perl
@@ -37,5 +37,8 @@ fractionally less than one.
 %perl_vendorlib/*
 
 %changelog
+* Fri Aug 27 2021 Alexandr Antonov <aas@altlinux.org> 1.01-alt3
+- release greater for autoimports
+
 * Fri Aug 27 2021 Alexandr Antonov <aas@altlinux.org> 1.01-alt1
 - initial build for ALT
