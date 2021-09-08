@@ -1,9 +1,9 @@
 Name: rpm-macros-uefi
-Version: 0.5
+Version: 0.6
 Release: alt1
 
 Summary: A set of RPM macros to help package UEFI related things
-License: Public domain
+License: ALT-Public-Domain
 Group: Development/Other
 
 Url: http://www.altlinux.org/UEFI
@@ -33,12 +33,19 @@ cat > %buildroot%macrofile << EOF
 %ifarch %ix86
 %%_efi_arch ia32
 %endif
+%ifarch aarch64
+%%_efi_arch aa64
+%endif
 EOF
 
 %files
 %macrofile
 
 %changelog
+* Wed Sep 08 2021 Nikolai Kostrigin <nickel@altlinux.org> 0.6-alt1
+- added %%_efi_arch definition for aarch64
+- spec: clarified the license (mike@)
+
 * Wed Dec 11 2013 Michael Shigorin <mike@altlinux.org> 0.5-alt1
 - restored %%_efi_keydir to provide cacert
 
