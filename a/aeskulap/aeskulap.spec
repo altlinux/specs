@@ -1,10 +1,14 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 %add_optflags %optflags_shared 
 
 Name: aeskulap
 Version: 0.2.2
-Release: alt7.git8787e95
-
-Summary: Medial image viewer for DICOM images
+Release: alt8.git8787e95
+Summary: Medical image viewer for DICOM images
 License: GPL/LGPL
 Group: Graphics
 
@@ -34,6 +38,8 @@ any platform were these packages are available.
 %setup
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %autoreconf
 %configure --with-gsettings --disable-schemas-install
 
@@ -57,6 +63,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc ABOUT-NLS AUTHORS ChangeLog COPYING COPYING.LIB NEWS README
 
 %changelog
+* Tue Sep 07 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.2-alt8.git8787e95
+- Fixed build with LTO.
+
 * Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 0.2.2-alt7.git8787e95
 - NMU: drop obsoleted gconfmm2, use gsettings
 
