@@ -1,5 +1,5 @@
 Name: kernel-build-tools
-Version: 0.115
+Version: 0.116
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -28,8 +28,7 @@ Provides: kernel-headers-modules-std-def
 Provides: kernel-headers-modules-un-def
 Provides: kernel-headers-modules-std-debug
 %endif
-%ifnarch %ix86 x86_64
-Provides: kernel-headers-modules-ovz-el
+%ifnarch x86_64
 Provides: kernel-headers-modules-ovz-el7
 %endif
 %ifnarch %ix86
@@ -81,6 +80,9 @@ install -Dpm0755 query-kEVR.sh \
 %_rpmlibdir/kernel.req*
 
 %changelog
+* Wed Sep 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 0.116-alt1
+- Updated the list of fake provides related to ovz kernel flavours.
+
 * Tue Aug 17 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.115-alt1
 - Dropped old outdated documentation files.
 - km-create-tag: added armh to default karch value.

@@ -6,7 +6,7 @@
 %define flavour %base_flavour-%sub_flavour
 
 #     rh7-3.10.0-1160.31.1.vz7.181.10
-%define orelease 1160.31.1.vz7.181.10
+%define orelease 1160.31.1.vz7.181.10.1
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -25,7 +25,7 @@ Epoch: 1
 # Build options
 # You can change compiler version by editing this line:
 %define kgcc_version %__gcc_version_base
-#define __nprocs 8
+%define __nprocs 4
 
 %def_disable verbose
 %def_with src
@@ -36,7 +36,7 @@ Epoch: 1
 %def_disable module_sig
 %def_without firmware
 %def_without perf
-%def_without objtool
+%def_with objtool
 
 %def_enable debug_section_mismatch
 
@@ -327,6 +327,10 @@ export CC=gcc-$GCC_VERSION
 %make_build kernelrelease
 export KCFLAGS=-Wno-missing-attributes # Avoid flood of gcc9 warnings
 export HOST_EXTRACFLAGS="-fcommon"
+# Race while building objtool:
+%if_with objtool
+make -j1 %{?_enable_verbose:V=1} CC=gcc-$GCC_VERSION tools/objtool
+%endif
 %make_build %{?_enable_verbose:V=1} CC=gcc-$GCC_VERSION bzImage
 %make_build %{?_enable_verbose:V=1} CC=gcc-$GCC_VERSION modules
 
@@ -403,12 +407,16 @@ if grep -q CONFIG_STACK_VALIDATION=y .config; then
     [ -f tools/objtool/objtool ] && {
     mkdir -p %buildroot%kbuild_dir/tools/objtool
     cp -a tools/objtool/objtool %buildroot%kbuild_dir/tools/objtool
+    cp -a tools/objtool/fixdep %buildroot%kbuild_dir/tools/objtool
+    # Copy .config to include/config/auto.conf so "make prepare" is unnecessary.
+    cp %buildroot%kbuild_dir/.config %buildroot%kbuild_dir/include/config/auto.conf
     }
 fi
 find %buildroot%kbuild_dir -type f -a \( -name .install -o -name ..install.cmd \) -delete
 find %buildroot%kbuild_dir -type f -name '*.cmd' -delete
 find %buildroot%kbuild_dir -type l -follow -delete
-find %buildroot%kbuild_dir/scripts -type f -name '*.[cho]' -delete
+find %buildroot%kbuild_dir/scripts -type f -name '*.o' -delete
+# find %buildroot%kbuild_dir/scripts -type f -name '*.[cho]' -delete
 
 # Provide kbuild directory with old name (without %%krelease)
 ln -s "$(relative %kbuild_dir %old_kbuild_dir)" %buildroot%old_kbuild_dir
@@ -585,6 +593,9 @@ grep beancounter boot.log
 
 
 %changelog
+* Tue Sep 07 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.31.1.vz7.181.10.1
+- try to fix objtool building race
+
 * Sun Jul 25 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.31.1.vz7.181.10
 - Build rh7-3.10.0-1160.31.1.vz7.181.10
 
