@@ -1,6 +1,6 @@
 Name: gnupg
 Version: 1.4.23
-Release: alt3
+Release: alt4
 
 Summary: The GNU Privacy Guard
 # see e.e. keyserver subdirectory
@@ -29,6 +29,7 @@ Conflicts: gnupg2-common < 2.0.13
 %def_enable ldap
 
 BuildPreReq: bzlib-devel libreadline-devel makeinfo zlib-devel
+BuildRequires: libsha1detectcoll-devel
 %if_enabled ldap
 BuildPreReq: libldap-devel
 %endif #enabled ldap
@@ -91,6 +92,10 @@ make -C po update-gmo
 
 %check
 %make_build -k check
+# Simplest non-colliding KAT. sha1 is now alias for sha1dc, so both return the
+# same sha1 value.
+printf abc | g10/gpg --print-md sha1   | grep -x 'A999 3E36 4706 816A BA3E  2571 7850 C26C 9CD0 D89D'
+printf abc | g10/gpg --print-md sha1dc | grep -x 'A999 3E36 4706 816A BA3E  2571 7850 C26C 9CD0 D89D'
 
 %install
 %makeinstall_std
@@ -133,6 +138,9 @@ rm -rv %buildroot%_datadir/%name
 %endif #enabled ldap
 
 %changelog
+* Fri Sep 03 2021 Vitaly Chikunov <vt@altlinux.org> 1.4.23-alt4
+- Use sha1dc for sha1.
+
 * Tue Aug 24 2021 Vitaly Chikunov <vt@altlinux.org> 1.4.23-alt3
 - gpg: Default to SHA-256 for all signature types on RSA keys.
 
