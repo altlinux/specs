@@ -1,7 +1,7 @@
 %global appid net.lutris.Lutris
 Name: lutris
 Version: 0.5.9
-Release: alt0.beta1
+Release: alt0.beta2
 Summary: Manager for game installation and execution
 License: GPL-2.0 and GPL-2.0+ and GPL-3.0+ and CC0-1.0 and LGPL-2.1+ and CC-BY-NC-SA-2.0 and CC-BY-SA-3.0
 Group: Games/Other
@@ -61,6 +61,9 @@ sed -i 's|GdkPixbuf.InterpType.NEAREST|1|' \
 %_man1dir/%name.1.xz
 
 %changelog
+* Wed Sep 08 2021 Leontiy Volodin <lvol@altlinux.org> 0.5.9-alt0.beta2
+- New version (0.5.9-beta2).
+
 * Mon Aug 16 2021 Leontiy Volodin <lvol@altlinux.org> 0.5.9-alt0.beta1
 - New version (0.5.9-beta1).
 - Fixed runner manager (ALT #40748).
