@@ -1,9 +1,9 @@
 # NOTE check viosock support in qemu and remove patch if it works
 # The source directory.
-%global source_directory 1.43-development
+%global source_directory 1.44-development
 
 Name: virt-v2v
-Version: 1.43.4
+Version: 1.44.0
 Release: alt1
 Summary: Convert a virtual machine to run on KVM
 Group: Development/Other
@@ -12,7 +12,6 @@ Url: https://github.com/libguestfs/virt-v2v
 
 Source0: http://download.libguestfs.org/virt-v2v/%source_directory/%name-%version.tar.gz
 Patch1: 0001-fix-fatal-error-pcreh-No-such-file-or-directory.patch
-Patch3: set-lang-in-parse_ova.patch
 Patch4: fix-new-qemu-options.patch
 Patch5: remove-viosock-support.patch
 
@@ -33,7 +32,7 @@ BuildRequires: libosinfo-devel
 BuildRequires: libvirt-devel
 BuildRequires: libvirt-kvm
 BuildRequires: libxml2-devel
-BuildRequires: libpcre-devel
+BuildRequires: libpcre2-devel
 BuildRequires: perl-Sys-Guestfs
 BuildRequires: /usr/bin/virsh
 BuildRequires: genisoimage zip unzip db4-utils
@@ -59,7 +58,6 @@ install virtio drivers so it will run quickly.
 
 %prep
 %setup
-%patch3 -p1
 %patch4 -p1
 %patch5 -p1
 pushd common
@@ -92,6 +90,9 @@ rm -r %buildroot%_libdir/ocaml/stublibs/dllv2v_test_harness*
 %_datadir/bash-completion/completions/virt-v2v*
 
 %changelog
+* Tue Sep 07 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.44.0-alt1
+- new version 1.44.0
+
 * Wed Apr 07 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.43.4-alt1
 - new version 1.43.4
 
