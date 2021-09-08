@@ -1,6 +1,13 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+# LTO causes errors, disable it
+%global optflags_lto %nil
+
 Name: adns
 Version: 1.6.0
-Release: alt1
+Release: alt2
 
 Summary: GNU adns, an asynchronous DNS resolver
 License: GPLv2+
@@ -10,7 +17,7 @@ URL: http://www.gnu.org/software/adns/
 Source: adns-%version.tar
 Patch0: %name-%version-alt.patch
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package -n lib%name
 Summary: GNU adns, an asynchronous DNS resolver (shared library)
@@ -19,12 +26,12 @@ Group: System/Libraries
 %package -n lib%name-devel
 Summary: GNU adns, an asynchronous DNS resolver (header files)
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %package -n lib%name-devel-static
 Summary: GNU adns, an asynchronous DNS resolver (static library)
 Group: Development/C
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel = %EVR
 
 %description
 adns is a resolver library for C (and C++) programs,
@@ -57,6 +64,8 @@ development of statically linked %name-based software.
 %patch0 -p1
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %autoreconf
 %configure
 %make
@@ -83,6 +92,9 @@ make check
 %_libdir/lib%name.a
 
 %changelog
+* Wed Sep 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.0-alt2
+- Disabled LTO.
+
 * Sat Jun 27 2020 Anton Farygin <rider@altlinux.ru> 1.6.0-alt1
 - 1.6.0
 
