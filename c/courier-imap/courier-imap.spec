@@ -1,4 +1,5 @@
 %define courier_confdir	%_sysconfdir/%name
+%define courier_authdir %_sysconfdir/courier-authlib
 %define courier_datadir	%_datadir/%name
 %define courier_localstatedir %_localstatedir/%name
 %define courier_piddir %_var/run
@@ -8,7 +9,7 @@
 
 Name: courier-imap
 Version: 5.1.4
-Release: alt0.1%rev
+Release: alt1%rev
 
 Summary: IMAP/POP3 server with Maildir support
 License: GPL-3
@@ -35,7 +36,7 @@ Patch4: %name-4.17.2-alt-pamconf.patch
 Patch5: %name-4.17.2-alt-quotawarn.patch
 Patch6: %name-%version-alt-shareddir.patch
 Patch7: %name-4.17.2-alt-sysconftool.patch
-Patch8: %name-4.17.2-alt-tls-enforce-config.patch
+Patch8: %name-%version-alt-tls-enforce-config.patch
 Patch9: %name-4.17.2-alt-config.patch
 
 BuildPreReq: libcourier-authlib-devel >= 0.71.0
@@ -73,10 +74,10 @@ cp %SOURCE8 libs/imap/
     --localstatedir=%courier_localstatedir \
     --datadir=%courier_datadir \
     --enable-unicode \
-    --with-userdb=%courier_confdir/userdb \
+    --with-userdb=%courier_authdir/userdb \
     --with-makedatprog=%_bindir/makedatprog \
     --with-db=db \
-    --with-certsdir=%_localstatedir/ssl/private \
+    --with-certsdir=%courier_confdir/ssl \
     --with-certdb=%_datadir/ca-certificates/ca-bundle.crt \
     --with-piddir=%courier_piddir \
     --with-mailer=%_sbindir/sendmail \
@@ -90,7 +91,7 @@ cp %SOURCE8 libs/imap/
 mkdir -p %buildroot%_sysconfdir/pam.d
 mkdir -p %buildroot%_initdir
 mkdir -p %buildroot%courier_localstatedir
-touch %buildroot%courier_localstatedir/couriersslcache
+touch %buildroot%courier_localstatedir/{couriersslimapcache,couriersslpop3cache}
 
 make DESTDIR=%buildroot install
 
@@ -107,9 +108,8 @@ install -m 0755 %SOURCE2 %buildroot%_initdir/courier-imaps
 install -m 0755 %SOURCE3 %buildroot%_initdir/courier-pop3d
 install -m 0755 %SOURCE4 %buildroot%_initdir/courier-pop3s
 
-mkdir -p -m 0755 %buildroot%_pemdir
-touch %buildroot%_pemdir/imapd.pem
-touch %buildroot%_pemdir/pop3d.pem
+mkdir -p -m 0755 %buildroot%courier_confdir/ssl
+touch %buildroot%courier_confdir/ssl/{imapd.pem,pop3d.pem,imapd.dh,pop3d.dh}
 
 mv %buildroot%courier_confdir/quotawarnmsg.example %buildroot%courier_confdir/quotawarnmsg
 
@@ -157,8 +157,6 @@ echo 'WARNING! WARNING! non-UTF-8 friendly configuration detected!'
 echo 'Outdated mailboxes need UTF-8 conversion, manual intervention needed!'
 echo 'Please read INSTALL documentation about upgrade from courier-imap < 4.18.0'
 echo 'and earlier'
-
-%triggerun -- courier-imap < 5.0.13
 echo 'WARNING! WARNING!'
 echo 'Courier-imap have switched to inotify instead of gamin'
 echo 'Please read INSTALL documentation about adjusting kernel parameters'
@@ -196,6 +194,7 @@ done
 %_initdir/courier-pop3d
 %_initdir/courier-pop3s
 %dir %courier_confdir
+%dir %courier_confdir/ssl
 %courier_confdir/ssl-sh-functions
 %config %courier_confdir/imapd
 %config %courier_confdir/pop3d
@@ -224,13 +223,24 @@ done
 %_man8dir/makeimapaccess.8*
 %dir %_docdir/%name-%version
 %doc %_docdir/%name-%version/*
-%ghost %attr(0640,root,root) %config(noreplace,missingok) %_pemdir/imapd.pem
-%ghost %attr(0640,root,root) %config(noreplace,missingok) %_pemdir/pop3d.pem
-%dir %attr(-,root,root) %courier_localstatedir
-%dir %attr(0750,root,root) %courier_localstatedir/imapaccess
-%ghost %attr(0600,root,root) %courier_localstatedir/couriersslcache
+%ghost %attr(0640,root,courier) %config(noreplace,missingok) %courier_confdir/ssl/imapd.dh
+%ghost %attr(0640,root,courier) %config(noreplace,missingok) %courier_confdir/ssl/pop3d.dh
+%ghost %attr(0600,courier,courier) %config(noreplace,missingok) %courier_confdir/ssl/imapd.pem
+%ghost %attr(0600,courier,courier) %config(noreplace,missingok) %courier_confdir/ssl/pop3d.pem
+%dir %attr(0750,root,courier) %courier_localstatedir
+%dir %attr(0750,root,courier) %courier_localstatedir/imapaccess
+%ghost %attr(0600,courier,courier) %courier_localstatedir/couriersslimapcache
+%ghost %attr(0600,courier,courier) %courier_localstatedir/couriersslpop3cache
 
 %changelog
+* Wed Sep 08 2021 L.A. Kostis <lakostis@altlinux.ru> 5.1.4-alt1
+- .spec:
+  + fix permissions for ssl cache.
+  + fix userdb location.
+  + relocate ssl certs into /etc/courier-imap/ssl dir due access problems.
+- sh-ssl-function: improve DH and TLS certs handling.
+- update tls-enforce patch.
+
 * Tue Sep 07 2021 L.A. Kostis <lakostis@altlinux.ru> 5.1.4-alt0.1
 - 5.1.4.
 - .spec:
