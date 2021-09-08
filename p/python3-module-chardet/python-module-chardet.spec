@@ -1,43 +1,15 @@
 %define pkgname	chardet
-%def_with python3
 
-%define python3_dirsetup \
-%if_with python3 \
-rm -rf ../python3 \
-cp -a . ../python3 \
-%endif \
-%nil
-
-#find ../python3 -name "*.py" | xargs %__subst "s|^#!/usr/bin/env python$|#!/usr/bin/python3|g"
-
-%define python3_dirbuild \
-%if_with python3 \
-pushd ../python3 \
-%python3_build \
-popd \
-%endif \
-%nil
-
-%define python3_dirinstall \
-%if_with python3 \
-pushd ../python3 \
-%python3_install \
-popd \
-%endif \
-%nil
-
-#TODO: python3_dircheck
-
-Name: python-module-chardet
+Name: python3-module-chardet
 Version: 3.0.4
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Character encoding auto-detection in Python
 
 License: LGPL-2.1
 Url: https://pypi.python.org/pypi/%pkgname
-Group: Development/Python
+Group: Development/Python3
 
 Packager: Evgenii Terechkov <evg@altlinux.ru>
 
@@ -45,52 +17,30 @@ Source: https://pypi.python.org/packages/source/c/chardet/%pkgname-%version.tar
 
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-setuptools
+BuildRequires(pre): rpm-build-python3
 
 %description
 Character encoding auto-detection in Python.
 
-%if_with python3
-%package -n python3-module-%pkgname
-Summary: Character encoding auto-detection in Python
-Group: Development/Python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-
-%description -n python3-module-%pkgname
-Character encoding auto-detection in Python.
-%endif
-
-
 %prep
 %setup -n %pkgname-%version
 
-%python3_dirsetup
-
 %build
-%python_build
-%python3_dirbuild
+%python3_build
 
 %install
-%python_install
-%python3_dirinstall
+%python3_install
 
 rm -rf %buildroot%_bindir/
 
 %files
-# FIXME: makes checker think it use python3 libs
-#_bindir/chardetect
-%python_sitelibdir/%pkgname/
-%python_sitelibdir/%pkgname-*egg-info/
-#doc docs
-
-%if_with python3
-%files -n python3-module-%pkgname
 %python3_sitelibdir/%pkgname/
 %python3_sitelibdir/*.egg-info/
-%endif
 
 %changelog
+* Wed Sep 08 2021 Grigory Ustinov <grenka@altlinux.org> 1:3.0.4-alt3
+- Build without python2 support.
+
 * Sun Dec 13 2020 Andrey Cherepanov <cas@altlinux.org> 1:3.0.4-alt2
 - Downgrade to version 3.0.4.
 
