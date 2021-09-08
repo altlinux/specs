@@ -5,7 +5,7 @@
 
 Name: darktable
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPL-3.0
@@ -70,6 +70,9 @@ light table. It also enables you to develop raw images and enhance them.
 %patch1 -p1
 
 %build
+%ifarch ppc64le
+%define optflags_lto %nil
+%endif
 %define _optlevel 3
 %cmake \
 -DCMAKE_SKIP_RPATH:BOOL=OFF \
@@ -111,6 +114,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %exclude /usr/share/doc/%name/
 
 %changelog
+* Wed Sep 08 2021 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1.1
+- disabled LTO for ppc64le (ALT #40876)
+
 * Sun Jul 04 2021 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 
