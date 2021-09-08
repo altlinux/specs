@@ -1,6 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 Name: SDL
 Version: 1.2.14
-Release: alt9
+Release: alt10
 
 Summary: Simple DirectMedia Layer
 License: LGPL
@@ -52,6 +58,8 @@ to develop %name applications.
 %patch -p1
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 cat acinclude/* > aclocal.m4
 autoconf
 %configure \
@@ -77,6 +85,7 @@ autoconf
 %_includedir/*
 %_bindir/*
 %_libdir/*.so
+%_libdir/*.a
 %_pkgconfigdir/*.pc
 %_datadir/aclocal/*
 %_mandir/man?/*
@@ -84,6 +93,9 @@ autoconf
 # TODO: 1.2.15+
 
 %changelog
+* Wed Sep 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.14-alt10
+- Fixed build with LTO.
+
 * Sun Nov 08 2020 Michael Shigorin <mike@altlinux.org> 1.2.14-alt9
 - srpm_cleanup related ftbfs fixup
 
