@@ -1,6 +1,9 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 Name: alsa-oss
 Version: 1.1.8
-Release: alt1
+Release: alt2
 
 Summary: Advanced Linux Sound Architecture (ALSA) OSS compatibility library
 License: GPL
@@ -50,6 +53,9 @@ e.g. with dmix software multichannel mixer.
 %setup
 %patch -p1
 
+# disable oss-redir, it's not packaged in package, and not used in other components
+sed -i -e 's: oss-redir : :' Makefile.am
+
 %build
 %autoreconf
 %configure --disable-static
@@ -64,6 +70,9 @@ e.g. with dmix software multichannel mixer.
 %_man1dir/*
 
 %changelog
+* Wed Sep 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.8-alt2
+- Fixed build with LTO.
+
 * Thu Sep 26 2019 Michael Shigorin <mike@altlinux.org> 1.1.8-alt1
 - 1.1.8
 
