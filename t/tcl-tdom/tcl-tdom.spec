@@ -2,7 +2,7 @@
 
 Name: tcl-tdom
 Version: 0.9.2
-Release: alt1
+Release: alt2
 
 Summary: A XML/DOM/XPath/XSLT implementation for Tcl
 License: MPL-2.0
@@ -12,7 +12,6 @@ Url: http://www.tdom.org
 # repacked http://tdom.org/downloads/tdom-%version-src.tgz
 Source: tdom-%version.tar
 Source1: tdom.watch
-Patch2: 0002-ALT-install-test-targets-fixed.patch
 
 BuildRequires: tcl-devel libexpat-devel libgumbo-devel
 
@@ -24,7 +23,6 @@ placed into them in memory, not on disk.
 %prep
 %setup -n tdom-%version
 %tea_patch
-%patch2 -p2
 # remove needless stuff
 rm -r macosx/ win/
 
@@ -46,11 +44,14 @@ make test
 
 %files
 %_tcllibdir/tdom%version/libtdom%version.so
+%_tcllibdir/tdom%version/tdom.tcl
 %_tcllibdir/tdom%version/pkgIndex.tcl
-%_tcldatadir/tdom%version
 %_mandir/mann/*
 
 %changelog
+* Wed Sep 08 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.2-alt2
+- Fixed extension loading (closes #40877).
+
 * Mon Aug 30 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.2-alt1
 - Updated to 0.9.2.
 - Changed license by upsteram.
