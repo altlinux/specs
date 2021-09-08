@@ -3,7 +3,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20210907
+Version: 20210908
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -39,6 +39,11 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Wed Sep 08 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 20210908-alt1
+- Figure out stage2 size at the run time instead of relying on
+  ramdisk_size kernel command line parameter. As a result `ramdisk_size`
+  parameter is not required any more (closes: #40629)
+
 * Tue Sep 07 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 20210907-alt1
 - Improved IO errors handling when loading stage2 (closes: #40803)
 - Support loading stage2 images >= 2GB (related: #40710)
