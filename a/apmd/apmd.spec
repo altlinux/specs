@@ -1,6 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 Name: apmd
 Version: 3.2.2
-Release: alt8
+Release: alt9
 Epoch: 1
 %define subver 3
 
@@ -31,7 +37,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 # Automatically added by buildreq on Wed May 13 2009
 BuildRequires: libXaw-devel libXext-devel
 
-Requires: libapm = %{?epoch:%epoch:}%version-%release
+Requires: libapm = %EVR
 PreReq: powermgmt-base
 Requires(post): %post_service
 Requires(preun): %preun_service
@@ -42,8 +48,8 @@ Summary(ru_RU.UTF-8): Утилиты управления системой пи�
 Summary: The X11 utility that displays APM BIOS information
 Summary(ru_RU.UTF-8): Графическая утилита для показа информации BIOS об APM
 Group: System/XFree86
-Requires: %name = %{?epoch:%epoch:}%version-%release
-Provides: %name-x11 = %version-%release
+Requires: %name = %EVR
+Provides: %name-x11 = %EVR
 Obsoletes: %name-x11
 
 %package -n libapm
@@ -55,8 +61,8 @@ Group: System/Libraries
 Summary: The development library and header files for APM
 Summary(ru_RU.UTF-8): Средства разработки для доступа к APM
 Group: Development/C
-Requires: libapm = %{?epoch:%epoch:}%version-%release
-Provides: apmd-devel = %version-%release
+Requires: libapm = %EVR
+Provides: apmd-devel = %EVR
 Obsoletes: apmd-devel
 
 %if_with static
@@ -64,7 +70,7 @@ Obsoletes: apmd-devel
 Summary: The development library for linking APM access functions statically
 Summary(ru_RU.UTF-8): Статическая библиотека для работы с APM
 Group: Development/C
-Requires: libapm-devel = %{?epoch:%epoch:}%version-%release
+Requires: libapm-devel = %EVR
 %endif
 
 %description
@@ -177,6 +183,8 @@ install -p -m644 %SOURCE4 README.ALT
 echo "LIB = %_lib" > config.make
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 #make_build
 make
 
@@ -225,6 +233,9 @@ install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
 %endif
 
 %changelog
+* Wed Sep 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.2.2-alt9
+- Fixed build with LTO.
+
 * Thu Feb 14 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.2.2-alt8
 - Removed ExclusiveArch tag.
 
