@@ -29,7 +29,7 @@
 
 Name: libwebkitgtk4
 Version: %ver_major.3
-Release: alt1.1
+Release: alt2
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -44,8 +44,7 @@ Patch: webkitgtk-2.26.1-alt-bwrap_check.patch
 # python->python3
 Patch1: webkitgtk-2.31.1-alt-python3.patch
 Patch2: webkitgtk-2.30.0-alt-arm64-return-type.patch
-Patch3: webkitgtk-2.32.1-alt-e2k-dtoa.patch
-Patch4: webkitgtk-2.32.1-alt-e2k-cpu.patch
+Patch2000: webkitgtk-2.32.3-alt-e2k.patch
 
 %define bwrap_ver 0.3.1
 
@@ -224,8 +223,7 @@ GObject introspection devel data for the JavaScriptCore library
 %patch2 -b .arm64
 %endif
 %ifarch %e2k
-%patch3 -p1
-%patch4 -p1
+%patch2000 -p2 -b .e2k
 %endif
 
 # Remove bundled libraries
@@ -235,14 +233,25 @@ rm -rf Source/ThirdParty/qunit/
 subst 's|Q\(unused-arguments\)|W\1|' Source/cmake/WebKitCompilerFlags.cmake
 
 %build
+%ifarch %e2k
+# because of this error on linking:
+# "relocation truncated to fit: R_E2K_32_ABS"
+%define optflags_debug -g0
+%else
 # Decrease debuginfo verbosity and use linker flags to reduce memory consumption
 %define optflags_debug -g1
+%endif
 %add_optflags -Wl,--no-keep-memory
 %{?_disable_gold: %add_optflags -Wl,--reduce-memory-overheads}
 %add_optflags %(getconf LFS_CFLAGS)
 %ifarch %ix86
 # since 2.24.1 sse2 required for %%ix86
 %add_optflags -msse2 -mfpmath=sse
+%endif
+%ifarch %e2k
+# EDG frontend mistakenly sees it everywhere
+# after each "if constexpr {} else {}" constuct
+%add_optflags -Wno-return-type
 %endif
 
 %ifarch x86_64
@@ -350,6 +359,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Tue Sep 07 2021 Yuri N. Sedunov <aris@altlinux.org> 2.32.3-alt2
+- fixed build for %%e2k by ilyakurdyukov@
+
 * Sat Aug 28 2021 Yuri N. Sedunov <aris@altlinux.org> 2.32.3-alt1.1
 - disabled LTO and ld.gold
 - try to decrease nprocs limit for aarch64 to avoid cc crash
