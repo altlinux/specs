@@ -2,7 +2,7 @@
 
 Name: slapi-nis
 Version: 0.56.7
-Release: alt1
+Release: alt2
 
 Summary: NIS Server and Schema Compatibility plugins for Directory Server
 License: GPLv2
@@ -71,6 +71,9 @@ sed -i -e 's,%_libdir/dirsrv/plugins/,,g' -e 's,.so$,,g' doc/examples/*.ldif
 %exclude %_libdir/dirsrv/plugins/*.la
 
 %changelog
+* Wed Sep 08 2021 Stanislav Levin <slev@altlinux.org> 0.56.7-alt2
+- Applied upstream fixes (RHBZ#1958909, RHBZ#1967906).
+
 * Tue May 18 2021 Stanislav Levin <slev@altlinux.org> 0.56.7-alt1
 - 0.56.6 -> 0.56.7 (fixes: CVE-2021-3480).
 

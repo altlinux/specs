@@ -42,14 +42,16 @@
 %define pki_version 10.10.5
 %define python_ldap_version 3.2.0
 %define samba_version 4.7.6
-%define slapi_nis_version 0.56.3
+# RHBZ#1958909, RHBZ#1967906
+%define slapi_nis_version 0.56.7-alt2
 %define sssd_version 1.16.3
 %define openldap_version 2.4.47-alt2
 %define opendnssec_version 2.1.9-alt1
 %define libp11_version 0.4.10-alt2
 
 Name: freeipa
-Version: 4.9.6
+# don't forget to update .gear/rules
+Version: 4.9.7
 Release: alt1
 
 Summary: The Identity, Policy and Audit system
@@ -490,7 +492,6 @@ Requires: python3-module-ipaclient = %EVR
 Requires: python3-module-ipaserver = %EVR
 Requires: tar
 Requires: xz
-Requires: python3-module-coverage
 Requires: python3-module-sssdconfig >= %sssd_version
 Requires: openssh-clients
 Requires: sshpass
@@ -851,6 +852,7 @@ fi
 %_libexecdir/ipa/ipa-pki-wait-running
 %_libexecdir/ipa/ipa-otpd
 %_libexecdir/ipa/ipa-print-pac
+%_libexecdir/ipa/ipa-subids
 %dir %_libexecdir/ipa/custodia
 %attr(755,root,root) %_libexecdir/ipa/custodia/ipa-custodia-dmldap
 %attr(755,root,root) %_libexecdir/ipa/custodia/ipa-custodia-pki-tomcat
@@ -1087,6 +1089,9 @@ fi
 %python3_sitelibdir/ipaplatform-*.egg-info/
 
 %changelog
+* Tue Sep 07 2021 Stanislav Levin <slev@altlinux.org> 4.9.7-alt1
+- 4.9.6 -> 4.9.7.
+
 * Wed Aug 04 2021 Stanislav Levin <slev@altlinux.org> 4.9.6-alt1
 - 4.8.9 -> 4.9.6.
 
