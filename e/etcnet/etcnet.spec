@@ -1,6 +1,6 @@
 Name:		etcnet
-Version:	0.9.20
-Release:	alt2
+Version:	0.9.21
+Release:	alt1
 
 Summary:	/etc/net network configuration system
 License:	GPL-2
@@ -9,7 +9,7 @@ Url:		https://www.altlinux.org/Etcnet
 
 Source:		%name-%version.tar
 
-PreReq:		setup service
+Requires(pre,postun):	setup service
 Requires:	grep, sed, iproute2 >= 4.4.0, ifrename >= 28-alt5.pre10, chkconfig
 Requires:	etcnet-defaults = %version-%release
 
@@ -141,6 +141,10 @@ fi
 %files full
 
 %changelog
+* Wed Sep 08 2021 Mikhail Efremov <sem@altlinux.org> 0.9.21-alt1
+- Don't use deprecated PreReq.
+- systemd: Fixed network.service dependencies (closes: #40780).
+
 * Fri Jun 11 2021 Alexey Shabalin <shaba@altlinux.org> 0.9.20-alt2
 - Drop Requires: startup.
 
