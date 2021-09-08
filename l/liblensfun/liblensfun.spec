@@ -1,20 +1,24 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: liblensfun
-Version: 0.3.2
-Release: alt5.1
-
+Version: 0.3.95
+Release: alt1
 Summary: A library to rectifying the defects introduced by your photographic equipment
 Group: System/Libraries
 License: LGPLv3 and CC-BY-SA-3.0
 Url: https://lensfun.github.io
 
 # https://github.com/lensfun/lensfun.git
-Source: lensfun-%version.tar
+Source: %name-%version.tar
+
 Patch1: lensfun-0.3.2-alt-pkexec.patch
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: cmake gcc-c++ glib2-devel libpng-devel
-BuildRequires: doxygen rpm-build-python3 python3-module-setuptools python3-module-docutils
+BuildRequires: doxygen
+BuildRequires: python3-devel python3-module-setuptools python3-module-docutils
 
 %description
 A library to rectifying the defects introduced by your photographic equipment.
@@ -39,18 +43,21 @@ This package contains tools to fetch lens database, updates and manage lens
 adapters in lensfun.
 
 %prep
-%setup -n lensfun-%version
+%setup
 %patch1 -p2
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %cmake \
-	-DCMAKE_BUILD_TYPE:STRING=Release \
+	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
 %ifnarch %ix86 x86_64
 	-DBUILD_FOR_SSE:BOOL=OFF \
 	-DBUILD_FOR_SSE2:BOOL=OFF \
 %endif
 	-DBUILD_TESTS:BOOL=OFF \
-	-DBUILD_DOC:BOOL=ON
+	-DBUILD_DOC:BOOL=ON \
+	%nil
 
 %cmake_build
 %cmake_build -t man
@@ -76,10 +83,14 @@ popd
 %_bindir/g-lensfun-update-data
 %_bindir/lensfun-add-adapter
 %_bindir/lensfun-update-data
+%_bindir/lensfun-convert-lcp
 %python3_sitelibdir_noarch/*
 %_man1dir/*
 
 %changelog
+* Tue Sep 07 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.95-alt1
+- Updated to upstream version 0.3.95.
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.3.2-alt5.1
 - NMU: spec: adapted to new cmake macros.
 
