@@ -1,13 +1,9 @@
 %define oname zc
 %define version 1.0.0
-%define release alt6.2
-
-%def_with python3
-
-%setup_python_module %oname
+%define release alt7
 
 Summary: The ``zc`` package is a pure namespace package
-Name: %packagename
+Name: python3-module-%oname
 Version: %version
 Release: %release
 License: ZPL
@@ -15,30 +11,17 @@ Group: Development/Python
 Packager: Python Development Team <python@packages.altlinux.org>
 
 # need for links with some Zope modules
-Requires: python-module-z3c
-%if_with python3
+Requires: python3-module-z3c
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-%endif
 
 ### Don't set BuildArch to noarch - other zc packages arch-dependent.
 
 %description
 %summary
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: The ``zc`` package is a pure namespace package (Python 3)
-Group: Development/Python3
-Requires: python3-module-z3c
-
-%description -n python3-module-%oname
-%summary
-%endif
-
 %install
-mkdir -p %buildroot/%python_sitelibdir/%modulename
-cat <<EOF > %buildroot/%python_sitelibdir/%modulename/__init__.py
+mkdir -p %buildroot/%python3_sitelibdir/%oname
+cat <<EOF > %buildroot/%python3_sitelibdir/%oname/__init__.py
 try:
     # Declare this a namespace package if pkg_resources is available.
     import pkg_resources
@@ -47,25 +30,16 @@ except ImportError:
     pass
 EOF
 
-%if_with python3
-install -d %buildroot/%python3_sitelibdir/%oname
-install -m644 %buildroot/%python_sitelibdir/%modulename/__init__.py \
-	%buildroot/%python3_sitelibdir/%oname/
-%endif
-
 %files
-%dir %python_sitelibdir/%modulename
-%python_sitelibdir/%modulename/__init__.py*
-
-%if_with python3
-%files -n python3-module-%oname
 %dir %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname/__init__.py*
 %dir %python3_sitelibdir/%oname/__pycache__
 %python3_sitelibdir/%oname/__pycache__/__init__.*
-%endif
 
 %changelog
+* Wed Sep 08 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt7
+- Drop python2 support.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.0-alt6.2
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
