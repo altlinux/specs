@@ -1,9 +1,7 @@
-%set_verify_elf_method textrel=relaxed
 %define  modulename magic-mime
-
 Name:    ocaml-%modulename
-Version: 1.1.2
-Release: alt2
+Version: 1.2.0
+Release: alt1
 Summary: An OCaml library for mapping filenames to common MIME types
 License: ISC
 Group:   Development/ML
@@ -42,6 +40,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Sep 08 2021 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1
+- 1.2.0
+
 * Thu Oct 15 2020 Anton Farygin <rider@altlinux.ru> 1.1.2-alt2
 - migrated to rpm-build-ocaml-1.4
 
