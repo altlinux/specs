@@ -4,8 +4,8 @@
 %define libfalkonprivate libfalkonprivate%sover
 
 Name: kde5-%rname
-Version: 21.07
-Release: alt2
+Version: 21.08
+Release: alt1
 %K5init altplace
 
 Summary: Webbrowser designed for mobile devices
@@ -74,6 +74,9 @@ __EOF__
 %_K5notif/*angelfish*
 
 %changelog
+* Wed Sep 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08-alt1
+- new version
+
 * Fri Aug 27 2021 Sergey V Turchin <zerg@altlinux.org> 21.07-alt2
 - build with qtfeedback
 

@@ -1,7 +1,7 @@
 %define rname plasma-settings
 
 Name: kde5-%rname
-Version: 21.07
+Version: 21.08
 Release: alt1
 %K5init altplace no_appdata
 
@@ -81,5 +81,8 @@ Requires: %name-common
 #%_K5lib/libplasma-settings.so.*
 
 %changelog
+* Wed Sep 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08-alt1
+- new version
+
 * Wed Aug 18 2021 Sergey V Turchin <zerg@altlinux.org> 21.07-alt1
 - initial build
