@@ -4,9 +4,12 @@
 %define libname libhyperscan%major
 %define develname libhyperscan-devel
 
+# builds are broken with LTO - disable for for now
+%define optflags_lto %nil
+
 Name: hyperscan
 Version: %major.0
-Release: alt1
+Release: alt2
 
 Summary: High-performance regular expression matching library
 
@@ -89,6 +92,9 @@ needed for developing Hyperscan applications.
 %_includedir/hs/
 
 %changelog
+* Wed Sep 08 2021 Vitaly Lipatov <lav@altlinux.ru> 5.4.0-alt2
+- disable LTO for now
+
 * Mon Mar 29 2021 Vitaly Lipatov <lav@altlinux.ru> 5.4.0-alt1
 - new version 5.4.0 (with rpmrb script)
 
