@@ -10,7 +10,7 @@
 %define krelease %release
 
 %define kernel_base_version     5.10
-%define kernel_sublevel .58
+%define kernel_sublevel .62
 %define kernel_extra_version    %nil
 
 %define kernel_extra_version_numeric 1.0.0
@@ -32,7 +32,7 @@ Release: alt1
 %define kgcc_version    %__gcc_version_base
 
 License: GPL-2.0
-Summary: Linux kernel with Clear Linux KVM config
+Summary: Linux kernel with Clear Linux KVM config for running inside KVM
 Url: http://www.kernel.org/
 Group: System/Kernel and hardware
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
@@ -166,6 +166,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/*
 
 %changelog
+* Wed Sep 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.10.62-alt1
+- 5.10.62
+
 * Sat Aug 14 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.10.58-alt1
 - 5.10.58
 
