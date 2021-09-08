@@ -4,10 +4,11 @@
 %def_with jemalloc
 %else
 %def_without jemalloc
+%global optflags_lto %nil
 %endif
 
 Name: clickhouse
-Version: 21.8.3.44
+Version: 21.8.5.7
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -250,6 +251,10 @@ rm -fv %buildroot%_prefix/lib/*.a
 # CAP_SYS_NICE capability is needef for os_thread_priority feature
 setcap -q cap_ipc_lock,cap_sys_nice=+ep %_bindir/clickhouse 2>/dev/null ||:
 
+if [ -f /proc/cpuinfo ] ; then
+	grep -sq sse4_2 /proc/cpuinfo || echo "Warning: No SSE4.2 detected on this CPU, clickhouse may fail." >&2
+fi
+
 %files common-static
 %_bindir/clickhouse
 %_bindir/clickhouse-odbc-bridge
@@ -293,6 +298,9 @@ setcap -q cap_ipc_lock,cap_sys_nice=+ep %_bindir/clickhouse 2>/dev/null ||:
 %_datadir/clickhouse-test
 
 %changelog
+* Mon Sep 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.8.5.7-alt1
+- Updated to lts upstream version 21.8.5.7.
+
 * Fri Aug 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.8.3.44-alt1
 - Updated to lts upstream version 21.8.3.44.
 
