@@ -1,8 +1,8 @@
 %define modulename acme
 
 Name: python3-module-acme
-Version: 1.18.0
-Release: alt2
+Version: 1.19.0
+Release: alt1
 
 Summary: Python library for the ACME protocol
 
@@ -73,6 +73,9 @@ Documentation for the ACME python libraries
 #%doc docs/_build/html
 
 %changelog
+* Wed Sep 08 2021 Vitaly Lipatov <lav@altlinux.ru> 1.19.0-alt1
+- new version 1.19.0 (with rpmrb script)
+
 * Thu Aug 05 2021 Vitaly Lipatov <lav@altlinux.ru> 1.18.0-alt2
 - new version 1.18.0 (with rpmrb script)
 

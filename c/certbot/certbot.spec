@@ -4,7 +4,7 @@
 %def_without dns_route53
 
 Name: certbot
-Version: 1.18.0
+Version: 1.19.0
 Release: alt1
 
 Summary: A free, automated certificate authority client
@@ -265,6 +265,9 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Wed Sep 08 2021 Vitaly Lipatov <lav@altlinux.ru> 1.19.0-alt1
+- new version 1.19.0 (with rpmrb script)
+
 * Thu Aug 05 2021 Vitaly Lipatov <lav@altlinux.ru> 1.18.0-alt1
 - new version 1.18.0 (with rpmrb script)
 
