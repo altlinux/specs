@@ -2,7 +2,7 @@
 
 Name: plasma5-%{rname}
 Version: 5.22.5
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -13,6 +13,7 @@ License: GPL-2.0-or-later
 Source: %rname-%version.tar
 Source10: alt.logo.16.png
 Source11: alt.logo.32.png
+Patch1: alt-font-patch.patch
 
 # Automatically added by buildreq on Thu Sep 09 2021 (-bi)
 # optimized out: cmake cmake-modules debugedit elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libctf-nobfd0 libsasl2-3 libstdc++-devel pkg-config python-modules python2-base python3 python3-base python3-module-paste rpm-build-file rpm-build-python3 rpm-macros-python sh4 tzdata
@@ -57,6 +58,7 @@ Plymouth breeze theme.
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 cat breeze/images/16bit/plasma.logo.png >breeze/images/16bit/os.logo.png
 #cat %SOURCE10 >breeze/images/16bit/os.logo.png
 cat %SOURCE11 >breeze/images/os.logo.png
@@ -64,10 +66,10 @@ cat %SOURCE11 >breeze/images/os.logo.png
 %build
 %K5build \
     -DDISTRO_NAME='ALT' \
-    -DDISTRO_VERSION='9.2' \
+    -DDISTRO_VERSION='10' \
     -DDISTRO_LOGO='os' \
     -DBACKGROUND_TOP_COLOR='blue' \
-    -DBACKGROUND_BOTTOM_COLOR='green' \
+    -DBACKGROUND_BOTTOM_COLOR='black' \
     #
 
 %install
@@ -86,5 +88,8 @@ cat %SOURCE11 >breeze/images/os.logo.png
 /usr/share/plymouth/themes/breeze/
 
 %changelog
+* Thu Sep 09 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt2
+- fix text font
+
 * Wed Sep 08 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt1
 - new version
