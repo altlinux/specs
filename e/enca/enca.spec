@@ -2,7 +2,7 @@
 
 Name: enca
 Version: 1.19
-Release: alt1
+Release: alt2
 
 Summary: A program that guesses encoding of text files
 License: GPL
@@ -124,6 +124,9 @@ linked programs using the Extremely Naive Charset Analyser library.
 # - fix devel-docs/html/ build
 
 %changelog
+* Thu Sep 09 2021 Ilya Mashkin <oddity@altlinux.ru> 1.19-alt2
+- NMU: rebuild with new recode
+
 * Thu Sep 08 2016 Michael Shigorin <mike@altlinux.org> 1.19-alt1
 - 1.19
 

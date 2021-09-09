@@ -4,11 +4,60 @@
 %def_disable static
 
 Name: recode
-Version: 3.6
-Release: alt13
+Version: 3.7.9
+Release: alt1
 
 Summary: The `recode' library converts files between character sets and usages
-License: GPL
+# COPYING:              GPLv3 text
+# COPYING-LIB:          LGPLv3 text
+# doc/recode.info:      OFSFDL
+# doc/recode.texi:      OFSFDL
+# lib/error.h:              GPLv3+
+# lib/strerror-override.c:  GPLv3+
+# lib/vasnprintf.c:         GPLv3+
+# src/ansellat1.l:      BSD
+# src/lat1asci.c:       GPLv3+
+# src/merged.c:         BSD
+# src/recode.h:         LGPLv3+
+# src/ucs.c:            LGPLv3+
+## Not in any binary package
+# aclocal.m4:               FSFULLR
+# build-aux/bootstrap.in:   MIT or GPLv3+ (bundled gnulib-modules/bootstrap)
+# build-aux/compile:        GPLv2+ with exceptions
+# build-aux/config.guess:   GPLv3+ with exceptions
+# build-aux/config.rpath:   FSFULLR
+# build-aux/config.sub:     GPLv3+ with exceptions
+# build-aux/depcomp:        GPLv2+ with exceptions
+# build-aux/extract-trace:  MIT or GPLv3+ (bundled gnulib-modules/bootstrap)
+# build-aux/funclib.sh:     MIT or GPLv3+ (bundled gnulib-modules/bootstrap)
+# build-aux/inline-source:  MIT or GPLv3+ (bundled gnulib-modules/bootstrap)
+# build-aux/install-sh:     MIT
+# build-aux/ltmain.sh:      GPLv2+ with exceptions and GPLv3+ with exceptions
+#                           and GPLv3+
+# build-aux/mdate-sh:       GPLv2+ with exceptions
+# build-aux/missing:        GPLv2+ with exceptions
+# build-aux/options-parser: MIT or GPLv3+ (bundled gnulib-modules/bootstrap)
+# build-aux/texinfo.tex:    GPLv3+ with exceptions
+# config.rpath:         FSFULLR
+# configure:            FSFUL and GPLv2+ with exceptions
+# doc/Makefile.am:      GPLv3+
+# doc/Makefile.in:      FSFULLR and GPLv3+
+# doc/texinfo.tex:      GPLv2+ with exceptions
+# INSTALL:              FSFAP
+# Makefile.am:          GPLv3+
+# m4/gettext.m4:        FSFULLR
+# m4/gnulib-cache.m4:   GPLv3+ with exceptions
+# m4/libtool.m4:        GPLv2+ with exceptions and FSFUL
+# m4/mbstate_t.m4:      FSFULLR
+# m4/minmax.m4:         FSFULLR
+# m4/ssize_t.m4:        FSFULLR
+# m4/sys_stat_h.m4:     FSFULLR
+# tables.py:            GPLv3+
+# tests/Makefile.am:    GPLv3+
+# tests/Makefile.in:    FSFULLR and GPLv3+
+# tests/Recode.pyx:     GPLv3+
+License:    GPLv3+ and LGPLv3+ and BSD and OFSFDL
+
 Group: Text tools
 
 Url: http://recode.progiciels-bpi.ca
@@ -17,10 +66,16 @@ Patch0: recode4python.patch
 Patch1: recode-3.6-debian-boolsize.patch
 Patch2: recode-3.6-alt-unicode-in-docs.patch
 Patch3: recode-3.6-alt-e2k.patch
+Patch5:     recode-3.7.1-Rename-coliding-hash-functions.patch
+
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Requires: lib%name = %version-%release
 BuildRequires: chrpath
+
+BuildRequires: python3-devel
+BuildRequires: rpm-build-python3
+
 
 # explicitly added texinfo for info files
 BuildRequires: texinfo
@@ -72,15 +127,16 @@ files to allow you to develop applications using the `recode' libraries.
 %prep
 %setup -n %name-%version%beta
 #patch0 -p1
-%patch1 -p1
-%patch2 -p2
+#patch1 -p1
+#patch2 -p2
 %ifarch %e2k
 %patch3 -p1
 %endif
+%patch5 -p1
 
 %build
-rm acinclude.m4 m4/libtool.m4 m4/flex.m4
-sed -i 's/ad_AC_PROG_FLEX/AC_PROG_LEX/' configure.in
+#rm acinclude.m4 m4/libtool.m4 m4/flex.m4
+#sed -i 's/ad_AC_PROG_FLEX/AC_PROG_LEX/' configure.in
 %autoreconf
 sed -i 's/--no-verify//' configure
 %configure %{subst_enable static}
@@ -95,7 +151,7 @@ chrpath -d %buildroot%_bindir/%name
 %_bindir/*
 %_infodir/*
 %_man1dir/*
-%doc ABOUT-NLS AUTHORS BACKLOG COPYING COPYING-LIB ChangeLog INSTALL THANKS TODO
+%doc ABOUT-NLS AUTHORS COPYING COPYING-LIB ChangeLog INSTALL THANKS TODO
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -114,6 +170,12 @@ chrpath -d %buildroot%_bindir/%name
 # - configure.in:18: error: automatic de-ANSI-fication support has been removed
 
 %changelog
+* Wed Sep 08 2021 Ilya Mashkin <oddity@altlinux.ru> 3.7.9-alt1
+- 3.7.9
+- Add BR: python3
+- Skip patches
+- Copy list of licenses from FC
+
 * Thu May 27 2021 Michael Shigorin <mike@altlinux.org> 3.6-alt13
 - re-added lcc build fix by sem@ (3.6-alt11.1.1.E2K.1)
 - converted spec to utf-8

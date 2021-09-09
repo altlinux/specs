@@ -2,7 +2,7 @@
 
 Name: fortune-mod
 Version: 2.28.0
-Release: alt1
+Release: alt2
 
 Summary: A program which will display a fortune
 License: BSD-4-Clause-UC
@@ -99,6 +99,9 @@ mv %{buildroot}/usr/games/fortune %{buildroot}/usr/bin/fortune
 %_datadir/%_gamesdir/fortune/off/*
 
 %changelog
+* Thu Sep 09 2021 Ilya Mashkin <oddity@altlinux.ru> 2.28.0-alt2
+- NMU: rebuild with new recode
+
 * Wed Jun 24 2020 Konstantin Rybakov <kastet@altlinux.org> 2.28.0-alt1
 - Updated to upstream version 2.28.0
 
