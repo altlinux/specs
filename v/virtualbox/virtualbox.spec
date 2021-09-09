@@ -17,6 +17,8 @@
 %define distname VirtualBox
 %define distarchive %distname-%{version}_OSE
 
+%define optflagsN -O -g
+
 %def_disable debug
 
 %def_with manual
@@ -63,7 +65,7 @@
 
 Name: virtualbox
 Version: 6.1.26
-Release: alt1
+Release: alt2
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -454,10 +456,9 @@ echo "VBOX_WITH_PCI_PASSTHROUGH := 1" >> LocalConfig.kmk
 %endif
 
 # respect RPM optflags
-echo "TOOL_GCC3_CFLAGS := %optflags" >> LocalConfig.kmk
-echo "TOOL_GCC3_CXXFLAGS := %optflags" >> LocalConfig.kmk
-echo "VBOX_GCC_OPT := %optflags" >> LocalConfig.kmk
-
+echo "TOOL_GCC3_CFLAGS := %optflagsN" >> LocalConfig.kmk
+echo "TOOL_GCC3_CXXFLAGS := %optflagsN" >> LocalConfig.kmk
+echo "VBOX_GCC_OPT := %optflagsN" >> LocalConfig.kmk
 %if_with manualsdk
 echo "VBOX_WITH_DOCS_SDKREF      := 1" >> LocalConfig.kmk
 %endif
@@ -952,6 +953,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Tue Sep 07 2021 Valery Sinelnikov <greh@altlinux.org> 6.1.26-alt2
+- Added patch for kernel 5.14
+
 * Thu Jul 29 2021 Valery Sinelnikov <greh@altlinux.org> 6.1.26-alt1
 - Update to newest version 6.1.26
 
