@@ -1,8 +1,8 @@
-Name: rpm-build-features
+Name: rpm-macros-features
 Version: 0.1
 Release: alt1
 
-Summary: RPM macros to check if build with a feature (a library is possible)
+Summary: RPM macros to check if can build with a feature
 License: GPLv2
 Group: Development/Other
 
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %description
-RPM macros to check if build with a feature (a library is possible).
+RPM macros to check if can build with a feature (a library is possible).
 
 Usage:
 if_with feature_vulkan
