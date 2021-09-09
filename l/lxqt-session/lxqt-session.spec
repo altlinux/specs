@@ -3,7 +3,7 @@
 
 Name: lxqt-session
 Version: 0.17.0
-Release: alt1
+Release: alt2
 
 Summary: Session manager
 License: LGPL
@@ -12,6 +12,7 @@ Group: Graphical desktop/Other
 Url: https://lxqt.org
 Source0: %name-%version.tar
 Source1: 08lxqt
+Patch: fix_XDG_CONFIG_DIRS.patch
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
 BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel
@@ -33,6 +34,8 @@ Conflicts: lxqt-common <= 0.11.0
 
 %prep
 %setup
+%patch -p1
+
 # https://bugzilla.altlinux.org/32657
 sed -i 's,Exec=,Exec=%_bindir/,' xsession/lxqt.desktop.in
 
@@ -49,7 +52,7 @@ install -pDm644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/08lxqt
 %files
 %_man1dir/*
 %_bindir/*
-%_xdgconfigdir/*/*
+%_xdgconfigdir/autostart/lxqt-xscreensaver-autostart.desktop
 %_desktopdir/*.desktop
 %_datadir/xsessions/*.desktop
 %_datadir/kdm/sessions/*.desktop
@@ -58,6 +61,9 @@ install -pDm644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/08lxqt
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Fri Sep 10 2021 Anton Midyukov <antohami@altlinux.org> 0.17.0-alt2
+- add /usr/share to XDG_CONFIG_DIRS, if variable is defined (Closes: 40879)
+
 * Fri Apr 16 2021 Anton Midyukov <antohami@altlinux.org> 0.17.0-alt1
 - new version 0.17.0
 
