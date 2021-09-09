@@ -1,3 +1,7 @@
+# disable LTO to avoid build failures:
+# https://gitlab.freedesktop.org/xorg/xserver/-/issues/1060
+%define optflags_lto %nil
+
 %define mesaversion 19.0
 %define xorgversion 7.7.0
 
@@ -24,7 +28,7 @@
 
 Name: xorg-server
 Version: 1.20.13
-Release: alt1
+Release: alt2
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -311,6 +315,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Thu Sep 09 2021 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.13-alt2
+- revert "revert 249a12c5, 74b7427c, 5c96eb5f" (see: #38854)
+
 * Fri Jul 30 2021 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.13-alt1
 - 1.20.13
 
