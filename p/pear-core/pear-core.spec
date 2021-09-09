@@ -1,6 +1,6 @@
 Name: pear-core
-Version: 1.10.1
-Release: alt2
+Version: 1.10.13
+Release: alt1
 
 Summary: PHP Extension and Application Repository
 
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 Requires: /usr/bin/php
 
-BuildRequires: php7
+BuildRequires: /usr/bin/php
 BuildRequires: rpm-build-pear >= 0.5
 
 Obsoletes: php-pear
@@ -51,7 +51,7 @@ for i in PEAR Archive_Tar Structures_Graph Console_Getopt XML_Util ; do
 done
 INCARG="-d include_path='$INCPATH'"
 
-php7 -C -q $INCARG -d output_buffering=1 -d variables_order=EGPCS -d open_basedir="" \
+php -C -q $INCARG -d output_buffering=1 -d variables_order=EGPCS -d open_basedir="" \
     -d safe_mode=0 -d register_argc_argv="On" -d auto_prepend_file="" -d auto_append_file="" \
     PEAR/scripts/pearcmd.php install --force --offline --packagingroot=%buildroot $XMLLIST
 
@@ -67,6 +67,14 @@ install -m 755 scripts/peardev.sh %buildroot%_bindir/peardev
 %_bindir/peardev
 
 %changelog
+* Thu Sep 09 2021 Vitaly Lipatov <lav@altlinux.ru> 1.10.13-alt1
+- use /usr/bin/php
+- new versions:
+  + PEAR 1.10.13
+  + Archive_Tar 1.4.14
+  + Console_Getopt 1.4.3
+  + XML_Util 1.4.5
+
 * Wed Feb 13 2019 Vitaly Lipatov <lav@altlinux.ru> 1.10.1-alt2
 - switch to php7 only
 - Obsoletes pear-XML_Util (ALT bug 34669)

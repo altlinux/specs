@@ -1,6 +1,6 @@
 Name: rpm-build-pear
 Version: 0.6
-Release: alt1
+Release: alt2
 
 Summary: RPM helper scripts for build PEAR packages
 
@@ -13,8 +13,10 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-php rpm-build-compat
-Requires: rpm-build-php php7 php7-simplexml
+
+BuildRequires: rpm-build-php
+Requires: rpm-build-php
+Requires: /usr/bin/php
 
 %description
 RPM helper scripts for build PEAR packages.
@@ -37,6 +39,9 @@ install -D -m644 PHP-LICENSE-3.01 %buildroot/%php_peardir/PHP-LICENSE-3.01
 %php_peardir/PHP-LICENSE-3.01
 
 %changelog
+* Thu Sep 09 2021 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt2
+- use /usr/bin/php instead of php7
+
 * Thu Jul 08 2021 Dmitry V. Levin <ldv@altlinux.org> 0.6-alt1
 - Fixed build.
 
