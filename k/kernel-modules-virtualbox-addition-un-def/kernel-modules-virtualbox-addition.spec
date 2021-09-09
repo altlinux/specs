@@ -1,6 +1,6 @@
 %define module_name	virtualbox-addition
 %define module_version  6.1.26
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		un-def
 %define karch x86_64 %ix86
@@ -28,6 +28,8 @@ ExclusiveOS: Linux
 Url: http://www.virtualbox.org/
 
 Patch0: vboxcommon-5.4.patch
+Patch1: fixes_for_5.14.patch
+Patch2: fixes_drm_for_5.14.patch
 
 BuildPreReq: gcc-c++
 BuildRequires: perl
@@ -115,8 +117,12 @@ popd
 tar jxvf %kernel_src/kernel-source-%vfs_module_name-%module_version.tar.bz2
 pushd kernel-source-%vfs_module_name-%module_version
 %patch0 -p1
+%patch1 -p6
 popd
 tar jxvf %kernel_src/kernel-source-%video_module_name-%module_version.tar.bz2
+pushd kernel-source-%video_module_name-%module_version
+%patch2 -p7
+popd
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -152,6 +158,9 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Sep 09 2021 Valery Sinelnikov <greh@altlinux.org> 6.1.26-alt2
+- Fixed build with kernel-5.14
 
 * Thu Jul 29 2021 Valery Sinelnikov <greh@altlinux.org> 6.1.26-alt1
 - Updated template for virtualbox 6.1.26
