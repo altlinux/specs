@@ -2,11 +2,13 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
+%define optflags_lto -flto=thin
+
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name:		bpftrace
 Version:	0.12.1
-Release:	alt2
+Release:	alt3
 Summary:	High-level tracing language for Linux eBPF
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -118,6 +120,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Thu Sep 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.12.1-alt3
+- Rebuilt with LTO.
+
 * Wed May 12 2021 Arseny Maslennikov <arseny@altlinux.org> 0.12.1-alt2
 - NMU: spec: adapt to new cmake macros.
 
