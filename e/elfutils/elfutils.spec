@@ -1,5 +1,5 @@
 Name: elfutils
-Version: 0.185
+Version: 0.185.0.54.b561
 Release: alt1
 
 Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
@@ -223,6 +223,7 @@ This package contains debuginfod daemon.
 %setup -n %name-%version-%release
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %add_optflags -fexceptions
 %autoreconf
 rm -rf %buildtarget
@@ -342,6 +343,7 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %files -n libdebuginfod
 %_libdir/libdebuginfod-*.so
 %_libdir/libdebuginfod.so.*
+%_man7dir/debuginfod-client-config.7*
 
 %files -n libdebuginfod-devel
 %dir %_includedir/elfutils/
@@ -367,6 +369,10 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Sep 09 2021 Dmitry V. Levin <ldv@altlinux.org> 0.185.0.54.b561-alt1
+- elfutils-0.185 -> elfutils-0.185-54-gb561b51a.
+- Fixed LTO build.
+
 * Sat May 22 2021 Dmitry V. Levin <ldv@altlinux.org> 0.185-alt1
 - elfutils-0.184-4-g806c1f7a -> elfutils-0.185.
 
