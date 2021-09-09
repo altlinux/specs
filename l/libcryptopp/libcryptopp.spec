@@ -1,10 +1,15 @@
 %def_without autotools
+%def_disable static
 
 %define oname	cryptopp
 
+%ifarch armh
+%add_optflags -mfpu=neon
+%endif
+
 Name: libcryptopp
 Version: 8.5.0
-Release: alt1
+Release: alt2
 
 # convert 5.6.2 -> 562 format
 %define orig_version	%(echo %version | sed -e "s/\\.//g")
@@ -74,7 +79,7 @@ rm -f GNUmakefile
 %add_optflags -fpermissive
 %if_with autotools
 %autoreconf
-%configure
+%configure %{subst_enable static}
 %ifnarch x86_64
 # Does not build with PIC by default on x86, see
 # http://groups.google.com/group/cryptopp-users/browse_thread/thread/d639907b0b1816b9
@@ -102,6 +107,10 @@ make install DESTDIR=%buildroot PREFIX=%_prefix LIBDIR=%_libdir
 mv %buildroot%_bindir/cryptest.exe %buildroot%_bindir/cryptest
 %endif
 
+%if_disabled static
+rm -v %buildroot%_libdir/libcryptopp.a
+%endif
+
 mkdir -p %buildroot%_pkgconfigdir/
 cat >%buildroot%_pkgconfigdir/libcrypto++.pc <<EOF
 Name: libcrypto++
@@ -122,8 +131,10 @@ EOF
 %_includedir/cryptopp/
 %_pkgconfigdir/*
 
+%if_enabled static
 %files devel-static
 %_libdir/libcryptopp.a
+%endif
 
 %files progs
 %_bindir/cryptest
@@ -131,6 +142,9 @@ EOF
 %_datadir/cryptopp/
 
 %changelog
+* Wed Sep 08 2021 Vitaly Lipatov <lav@altlinux.ru> 8.5.0-alt2
+- disable build devel-static package (due LTO error)
+
 * Thu Jul 01 2021 Vitaly Lipatov <lav@altlinux.ru> 8.5.0-alt1
 - new version 8.5.0 (with rpmrb script)
 
