@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.13.1
-Release: alt2
+Version: 1.0.0
+Release: alt1
 
 Summary: Plugin and hook calling mechanisms for python
 License: MIT
@@ -22,6 +22,8 @@ BuildRequires: python3(setuptools_scm)
 
 %if_with check
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 %description
@@ -51,26 +53,18 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-sed -i -e '/^\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' \
--e '/^setenv[ ]*=/a\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3' \
-tox.ini
-tox.py3 --sitepackages -p auto -o -v -r
-
+export TOXENV=py3
+tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
 
 %files
 %doc LICENSE CHANGELOG.rst README.rst
 %python3_sitelibdir/pluggy/
-%python3_sitelibdir/pluggy-*.egg-info/
-
+%python3_sitelibdir/pluggy-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Sep 08 2021 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1
+- 0.13.1 -> 1.0.0.
+
 * Sun May 03 2020 Stanislav Levin <slev@altlinux.org> 0.13.1-alt2
 - Dropped BR on importlib_metadata.
 

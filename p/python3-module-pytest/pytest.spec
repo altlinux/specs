@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.2.4
-Release: alt2
+Version: 6.2.5
+Release: alt1
 
 Summary: Python test framework
 License: MIT
@@ -113,6 +113,9 @@ tox.py3 --sitepackages -vvr -s false
 %_bindir/pytest-3
 
 %changelog
+* Wed Sep 08 2021 Stanislav Levin <slev@altlinux.org> 6.2.5-alt1
+- 6.2.4 -> 6.2.5.
+
 * Thu Jul 29 2021 Stanislav Levin <slev@altlinux.org> 6.2.4-alt2
 - Fixed build without check (thanks to grenka@).
 
