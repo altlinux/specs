@@ -1,5 +1,5 @@
 Name: matrix-synapse
-Version: 1.41.1
+Version: 1.42.0
 Release: alt1
 
 Summary: Synapse: Matrix reference homeserver
@@ -156,6 +156,9 @@ fi
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Thu Sep 09 2021 Vitaly Lipatov <lav@altlinux.ru> 1.42.0-alt1
+- new version 1.42.0 (with rpmrb script)
+
 * Wed Sep 01 2021 Vitaly Lipatov <lav@altlinux.ru> 1.41.1-alt1
 - new version 1.41.1 (with rpmrb script)
 
