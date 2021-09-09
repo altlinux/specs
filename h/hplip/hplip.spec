@@ -28,7 +28,7 @@
 %endif
 
 Name:    hplip
-Version: 3.21.6
+Version: 3.21.8
 Release: alt1
 Epoch:   1
 
@@ -95,6 +95,8 @@ Requires: python-modules-ctypes
 %endif
 
 Requires: service => 0.5.9-alt1
+# For Fax coverpage
+%py3_requires reportlab
 
 BuildRequires(pre): libsane-devel
 
@@ -1210,6 +1212,21 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Thu Sep 09 2021 Andrey Cherepanov <cas@altlinux.org> 1:3.21.8-alt1
+- New version.
+- Added support for the following new printers:
+  + HP Smart Tank 500 series
+  + HP Smart Tank 530 series
+  + HP Smart Tank Plus 570 series
+  + HP Smart Tank 7600
+  + HP Smart Tank 750
+  + HP Smart Tank 790
+  + HP Smart Tank Plus 710-720
+  + HP Smart Tank Plus 7000
+  + HP Smart Tank Plus 660-670
+  + HP Smart Tank Plus 6000
+  + HP DeskJet Ink Advantage Ultra 4800 All-in-One Printer series
+
 * Sat Jul 10 2021 Andrey Cherepanov <cas@altlinux.org> 1:3.21.6-alt1
 - New version.
 - Added support for the following new printers:
