@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: %_name-ugly%api_ver
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: A set of encumbered GStreamer plugins
@@ -30,8 +30,8 @@ Provides: %_name%api_ver-mad = %version-%release
 
 Source: http://gstreamer.freedesktop.org/src/%_name-ugly/%_name-ugly-%version.tar.xz
 
-BuildRequires(pre): meson
-BuildRequires: gcc-c++ orc liborc-test-devel gst-plugins%api_ver-devel >= %version
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++ orc liborc-test-devel gst-plugins%api_ver-devel >= %version
 BuildRequires: liba52-devel libcdio-devel libid3tag-devel
 BuildRequires: libmad-devel libmpeg2-devel liboil-devel libx264-devel
 BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel libdvdread-devel
@@ -86,6 +86,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Sep 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1
+- 1.18.5
+
 * Mon Mar 15 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt1
 - 1.18.4
 

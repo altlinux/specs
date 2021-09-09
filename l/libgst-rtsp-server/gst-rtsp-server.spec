@@ -9,7 +9,7 @@
 %{?_with_test_package:%def_enable examples}
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: GStreamer-%api_ver RTSP server library
@@ -24,8 +24,8 @@ Source: https://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
 
 Requires: gst-plugins-base%api_ver >= %gst_ver gst-plugins-good%api_ver gst-plugins-bad%api_ver
 
-BuildRequires(pre): meson rpm-build-gir
-BuildRequires: glib2-devel >= %glib_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson glib2-devel >= %glib_ver
 BuildRequires: gstreamer%api_ver-devel >= %gst_ver
 BuildRequires: gst-plugins%api_ver-devel >= %gst_ver gst-plugins-good%api_ver gst-plugins-bad%api_ver-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel gst-plugins%api_ver-gir-devel}
@@ -131,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Thu Sep 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1
+- 1.18.5
+
 * Mon Mar 15 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt1
 - 1.18.4
 

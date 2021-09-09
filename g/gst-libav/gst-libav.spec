@@ -56,7 +56,7 @@
 %endif
 
 Name: gst-libav
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: GStreamer (%gst_api_ver API) streaming media framework plug-in using FFmpeg
@@ -66,8 +66,8 @@ Url: http://gstreamer.freedesktop.org/
 
 Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
 
-BuildRequires(pre): meson
-BuildRequires: gcc-c++ orc
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++ orc
 BuildRequires: gst-plugins%gst_api_ver-devel >= %version
 BuildRequires: liborc-test-devel zlib-devel bzlib-devel liblzma-devel
 %{?_enable_doc:BuildRequires: hotdoc gtk-doc gstreamer%api_ver-utils}
@@ -148,6 +148,9 @@ plug-in.
 %endif
 
 %changelog
+* Thu Sep 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1
+- 1.18.5
+
 * Mon Mar 15 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt1
 - 1.18.4
 

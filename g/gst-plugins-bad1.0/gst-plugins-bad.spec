@@ -12,10 +12,7 @@
 %def_enable faad
 %def_enable srtp
 %def_disable rtmp
-
-%ifarch x86_64
 %def_enable openh264
-%endif
 
 %ifnarch %e2k
 %def_enable liblilv
@@ -37,7 +34,7 @@
 %def_disable gtk_doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -59,9 +56,10 @@ Provides: gst-transcoder = %EVR
 Requires: lib%_name%api_ver >= %ver_major
 Requires: gstreamer%api_ver >= %ver_major
 
-BuildRequires(pre): meson rpm-build-gir
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson gcc-c++ 
 BuildRequires: gst-plugins%api_ver-devel >= %version gst-plugins%api_ver-gir-devel
-BuildRequires: bzlib-devel gcc-c++ libSDL-devel libX11-devel
+BuildRequires: bzlib-devel libSDL-devel libX11-devel
 BuildRequires: libalsa-devel libcdaudio-devel libdca-devel libdirac-devel libdvdnav-devel libexif-devel
 BuildRequires: libgio-devel libgsm-devel libjasper-devel libmms-devel
 %{?_enable_mjpegtools:BuildRequires: libmjpegtools-devel}
@@ -192,6 +190,10 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Thu Sep 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1
+- 1.18.5
+- enabled openh264 plugin for all arhes
+
 * Mon Mar 15 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt1
 - 1.18.4
 

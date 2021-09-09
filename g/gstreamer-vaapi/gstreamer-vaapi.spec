@@ -8,7 +8,7 @@
 %def_disable doc
 
 Name: gstreamer-vaapi
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: GStreamer plugins to use VA-API video acceleration
@@ -27,8 +27,8 @@ Source: %name/%name-%version.tar
 %define gst_ver %version
 %define va_ver 1.1
 
-BuildRequires(pre): meson
-BuildRequires: glib2-devel >= %glib_ver libgtk+3-devel
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson glib2-devel >= %glib_ver libgtk+3-devel
 BuildRequires: gst-plugins%gst_api_ver-devel >= %gst_ver
 BuildRequires: gst-plugins-bad%gst_api_ver-devel >= %gst_ver
 BuildRequires: libva-devel >= %va_ver
@@ -79,6 +79,9 @@ GStreamer applications.
 %endif
 
 %changelog
+* Thu Sep 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1
+- 1.18.5
+
 * Mon Mar 15 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt1
 - 1.18.4
 

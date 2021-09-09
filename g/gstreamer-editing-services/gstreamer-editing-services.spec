@@ -7,7 +7,7 @@
 %def_disable doc
 
 Name: gstreamer-editing-services
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: GStreamer Editing Services (GES)
@@ -29,9 +29,10 @@ AutoReqProv: nopython
 %define __python %nil
 %add_python3_path %_libdir/gst-validate-launcher/python
 
-BuildRequires(pre): meson rpm-build-gir rpm-build-python3
+BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
+BuildRequires: meson gcc-c++ flex
 BuildRequires: python3-devel python3-module-pygobject3-devel
-BuildRequires: gcc-c++ flex gst-plugins%gst_api_ver-devel >= %gst_ver gst-plugins-base%gst_api_ver
+BuildRequires: gst-plugins%gst_api_ver-devel >= %gst_ver gst-plugins-base%gst_api_ver
 BuildRequires: gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver-devel
 BuildRequires: libgst-devtools-devel libxml2-devel
 BuildRequires: gobject-introspection-devel gst-plugins%gst_api_ver-gir-devel
@@ -133,6 +134,9 @@ library.
 %endif
 
 %changelog
+* Thu Sep 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1
+- 1.18.5
+
 * Mon Mar 15 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt1
 - 1.18.4
 

@@ -11,8 +11,8 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.5
+Release: alt1
 
 Summary: GStreamer streaming media framework runtime
 License: LGPLv2+
@@ -27,10 +27,12 @@ Requires(pre): libcap-utils
 Requires: lib%name = %version-%release
 
 %define glib_ver 2.44.0
+%define meson_ver 0.54
 
-BuildRequires(pre): meson rpm-build-gir rpm-build-python3
+BuildRequires(pre): rpm-macros-meson >= %meson_ver rpm-build-gir rpm-build-python3
+BuildRequires: meson flex gcc-c++
 BuildRequires: glib2-devel >= %glib_ver
-BuildRequires: flex gcc-c++ ghostscript-utils libcheck-devel libxml2-devel
+BuildRequires: ghostscript-utils libcheck-devel libxml2-devel
 BuildRequires: python-modules sgml-common transfig xml-utils gobject-introspection-devel
 BuildRequires: libgsl-devel libgmp-devel
 BuildRequires: libcap-devel libcap-utils
@@ -189,6 +191,9 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 %_libexecdir/%_name-%api_ver/gst-plugins-doc-cache-generator
 
 %changelog
+* Thu Sep 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1
+- 1.18.5
+
 * Mon May 03 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt2
 - BR: +rpm-build-python3
 

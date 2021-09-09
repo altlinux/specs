@@ -8,7 +8,7 @@
 %def_disable gtk_doc
 
 Name: gst-devtools
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: GStreamer development and validation tools
@@ -31,14 +31,10 @@ Provides: gst-validate = %EVR
 Requires: lib%name = %version-%release
 Requires: gst-plugins-base%gst_api_ver
 
-# use python3
-AutoReqProv: nopython
-%define __python %nil
 %add_python3_path %_libdir/gst-validate-launcher/python
 
-
-BuildRequires(pre): meson rpm-build-gir rpm-build-python3
-BuildRequires: gcc-c++ gst-plugins%gst_api_ver-devel >= %gst_ver gst-plugins-base%gst_api_ver libxml2-devel
+BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
+BuildRequires: meson gcc-c++ gst-plugins%gst_api_ver-devel >= %gst_ver gst-plugins-base%gst_api_ver libxml2-devel
 BuildRequires: libcairo-devel gobject-introspection-devel gst-plugins%gst_api_ver-gir-devel
 BuildRequires: libjson-glib-devel python3-devel
 %{?_enable_gtk_doc:BuildRequires: hotdoc gtk-doc gstreamer%api_ver-utils}
@@ -151,6 +147,9 @@ GObject introspection devel data for the Gst Validate library.
 %endif
 
 %changelog
+* Thu Sep 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1
+- 1.18.5
+
 * Mon Mar 15 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt1
 - 1.18.4
 

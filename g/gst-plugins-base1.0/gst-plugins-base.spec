@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name gst-plugins
 %define ver_major 1.18
 %define api_ver 1.0
@@ -20,8 +20,8 @@
 %def_disable check
 
 Name: %_name-base%api_ver
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.5
+Release: alt1
 
 Summary: An essential set of GStreamer plugins
 Group: System/Libraries
@@ -45,8 +45,8 @@ Provides: gstreamer%api_ver(audio-hardware-source) = %version
 
 %define opus_ver 0.9.4
 
-BuildRequires(pre): meson rpm-build-gir
-BuildRequires: gcc-c++ orc >= 0.4.18 liborc-test-devel
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson gcc-c++ orc >= 0.4.18 liborc-test-devel
 BuildRequires: gstreamer%api_ver-devel >= %version libgstreamer%api_ver-gir-devel
 BuildRequires: libgudev-devel libglvnd-devel libdrm-devel libgbm-devel
 BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel wayland-protocols
@@ -204,6 +204,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Thu Sep 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1
+- 1.18.5
+
 * Thu May 27 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt2
 - updated to 1.18.4-16-g0f86fca8d
 

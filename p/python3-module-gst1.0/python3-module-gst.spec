@@ -12,7 +12,7 @@
 %endif
 
 Name: python3-module-gst%gst_api_ver
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: GStreamer overrides for PyGobject3
@@ -28,8 +28,8 @@ Source: http://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
 Source: %_name-%version.tar
 %endif
 
-BuildRequires(pre): meson rpm-build-gir rpm-build-python3 rpm-macros-valgrind
-BuildRequires: orc liborc-test-devel  gcc-c++ gst-plugins%gst_api_ver-devel >= %version
+BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3 rpm-macros-valgrind
+BuildRequires: meson orc liborc-test-devel  gcc-c++ gst-plugins%gst_api_ver-devel >= %version
 BuildRequires: python3-devel python3-module-pygobject3-devel python3-module-pytest
 %if_enabled valgrind
 BuildRequires: valgrind-tool-devel
@@ -61,6 +61,9 @@ This package provides GStreamer overrides for PyGobject3.
 %doc AUTHORS RELEASE NEWS
 
 %changelog
+* Thu Sep 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1
+- 1.18.5
+
 * Mon Mar 15 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt1
 - 1.18.4
 

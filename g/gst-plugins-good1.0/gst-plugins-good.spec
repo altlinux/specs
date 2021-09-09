@@ -19,7 +19,7 @@
 %def_disable check
 
 Name: %_name-good%api_ver
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: A set of GStreamer plugins considered good
@@ -31,8 +31,8 @@ Source: http://gstreamer.freedesktop.org/src/%_name-good/%_name-good-%version.ta
 
 Provides: %_name-good = %version-%release
 
-BuildRequires(pre): meson
-BuildRequires: bzlib-devel gcc-c++ gst-plugins%api_ver-devel >= %version
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++ bzlib-devel gst-plugins%api_ver-devel >= %version
 BuildRequires: libSM-devel libXdamage-devel libXext-devel libXfixes-devel
 BuildRequires: libXv-devel libavc1394-devel libcairo-devel libdv-devel libflac-devel libiec61883-devel libjpeg-devel
 BuildRequires: libshout2-devel libsoup-devel libtag-devel libv4l-devel libwavpack-devel
@@ -109,6 +109,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Sep 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1
+- 1.18.5
+
 * Mon Mar 15 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt1
 - 1.18.4
 
