@@ -1,13 +1,14 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 %define _unpackaged_files_terminate_build 1
 
-%def_with    check
+%def_with check
+%def_with bzr
 
 Name: breezy
-Version: 3.2.0
-Release: alt3
+Version: 3.2.1
+Release: alt1
 
-Summary: Breezy is a fork of decentralized revision control system Bazaar
+Summary: Breezy is a fork of the Bazaar version control system
 License: GPL-2.0-or-later
 Group: Development/Other
 
@@ -16,7 +17,7 @@ Packager: Anatoly Kitaykin <cetus@altlinux.ru>
 
 Source: %name-%version.tar
 
-#Patch0: %name-%version-alt.patch
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -39,16 +40,14 @@ BuildRequires: python3-module-subunit
 
 Conflicts: %name-doc < %version-%release
 Conflicts: bzr-git-remote
-Provides: bzr = %EVR
-Obsoletes: bzr
 
 %description
-Breezy (or brz) is a distributed version control system that is powerful, friendly, and scalable.
-Breezy is a fork of the Bazaar version control system.
+Breezy (or brz) is a fork of the Bazaar version control system.
+Breezy is a distributed version control system that is powerful, friendly, and scalable.
 By default, Breezy provides support for both the Bazaar and Git file formats.
 
 %package -n python3-module-breezy-tests
-Summary: Tools for testing Bazaar
+Summary: Tools for testing Breezy
 Group: Development/Other
 #BuildArch: noarch
 
@@ -56,7 +55,8 @@ Requires: %name = %version-%release
 Provides: brz-selftest = %version-%release
 
 %description -n python3-module-breezy-tests
-This package contain tools and test suites for testing Bazaar.
+Breezy is a fork of the Bazaar version control system.
+This package contain tools and test suites for testing Breezy.
 
 %package doc
 Summary: %name documentation and examples
@@ -66,12 +66,26 @@ BuildArch: noarch
 Conflicts: %name < %version
 
 %description doc
-Bazaar is a decentralized revision control system. This
-package contain documentation and examples for using Bazaar.
+Breezy is a fork of the Bazaar version control system.
+This package contains documentation and examples for using Breezy.
+
+%if_with bzr
+%package bzr
+Summary: 'bzr' alias for Breezy
+Group: Development/Other
+BuildArch: noarch
+Requires: %name
+Provides: bzr = %EVR
+Obsoletes: bzr
+
+%description bzr
+Breezy is a fork of the Bazaar version control system.
+This package contains 'bzr' alias for breezy 'brz' command.
+%endif
 
 %prep
 %setup
-#patch0 -p1
+%patch0 -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -82,7 +96,9 @@ package contain documentation and examples for using Bazaar.
 
 %python3_install --install-data=%_datadir
 
+%if_with bzr
 ln -s brz %buildroot%_bindir/bzr
+%endif
 
 %define breezy_docdir %_docdir/%name-%version
 
@@ -98,6 +114,7 @@ cp -a breezy/locale %buildroot%_datadir
 
 %files -f %name.lang
 %_bindir/*
+%exclude %_bindir/bzr
 %_man1dir/*
 
 %python3_sitelibdir/*
@@ -123,7 +140,16 @@ cp -a breezy/locale %buildroot%_datadir
 %breezy_docdir/doc
 %breezy_docdir/contrib
 
+%if_with bzr
+%files bzr
+%_bindir/bzr
+%endif
+
 %changelog
+* Thu Sep 09 2021 Anatoly Kitaykin <cetus@altlinux.org> 3.2.1-alt1
+- Release 3.2.1
+- Symlink 'bzr' separated to breezy-bzr subpackage
+
 * Mon Aug 23 2021 Anatoly Kitaykin <cetus@altlinux.org> 3.2.0-alt3
 - Fixed package dependencies
 
