@@ -1,3 +1,9 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 %def_enable static
 %def_enable docs
 %def_enable flac
@@ -10,7 +16,7 @@
 
 Name: audiofile
 Version: 0.3.6
-Release: alt4
+Release: alt5
 
 Summary: Library to handle various audio file formats
 License: LGPL-2.1-or-later
@@ -20,7 +26,7 @@ Url: http://www.68k.org/~michael/%name
 Vcs: https://github.com/mpruett/audiofile.git
 Source: %url/%name-%version.tar
 
-Patch: %name-%version-%release.patch
+Patch: %name-%version-alt4.patch
 Patch1: %name-0.3.6-alt-configure.patch
 
 # debian patches
@@ -34,7 +40,7 @@ Patch10: 10_Check-for-division-by-zero-in-BlockCodec-runPull.patch
 Patch11: 11_CVE-2018-13440.patch
 Patch12: 12_CVE-2018-17095.patch
 
-Requires: lib%name%sover = %version-%release
+Requires: lib%name%sover = %EVR
 
 BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: gcc-c++ glibc-devel-static libalsa-devel
@@ -50,14 +56,14 @@ Group: System/Libraries
 %package -n lib%name-devel
 Summary: Includes and other files to develop %name applications
 Group: Development/C
-Requires: lib%name%sover = %version-%release
+Requires: lib%name%sover = %EVR
 Provides: %name-devel = %version
 Obsoletes: %name-devel
 
 %package -n lib%name-devel-static
 Summary: Static libraries to develop %name applications
 Group: Development/C
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel = %EVR
 
 %description
 The Audio File Library handles reading and writing audio files in many
@@ -153,6 +159,9 @@ Static libraries you can use to develop
 %endif
 
 %changelog
+* Thu Sep 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.6-alt5
+- Fixed build with LTO.
+
 * Fri Jul 02 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.6-alt4
 - applied debian patchset (fixed CVE-2018-13440, CVE-2018-17095)
 - made flac support optional (enabled by default)
