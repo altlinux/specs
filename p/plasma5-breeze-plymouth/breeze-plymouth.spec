@@ -1,0 +1,90 @@
+%define rname breeze-plymouth
+
+Name: plasma5-%{rname}
+Version: 5.22.5
+Release: alt1
+%K5init no_altplace
+
+Group: Graphical desktop/KDE
+Summary: Plymouth splash theme
+Url: http://www.kde.org
+License: GPL-2.0-or-later
+
+Source: %rname-%version.tar
+Source10: alt.logo.16.png
+Source11: alt.logo.32.png
+
+# Automatically added by buildreq on Thu Sep 09 2021 (-bi)
+# optimized out: cmake cmake-modules debugedit elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libctf-nobfd0 libsasl2-3 libstdc++-devel pkg-config python-modules python2-base python3 python3-base python3-module-paste rpm-build-file rpm-build-python3 rpm-macros-python sh4 tzdata
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: extra-cmake-modules gcc-c++ glibc-devel
+BuildRequires:  plymouth-devel
+
+%description
+Plymouth splash Breeze themes for KDE Plasma.
+
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+#Requires: kf5-filesystem
+%description common
+%name common package
+
+%package -n plymouth-plugin-breeze-text
+Group: System/Base
+Summary: Plymouth breeze-text plugin
+Requires: %name-common
+%description -n plymouth-plugin-breeze-text
+Plymouth breeze-text plugin.
+
+%package -n plymouth-theme-breeze-text
+Group: System/Base
+Summary: Plymouth breeze-text theme
+Requires: %name-common
+Requires: plymouth-plugin-breeze-text
+%description -n plymouth-theme-breeze-text
+Plymouth breeze-text theme.
+
+%package -n plymouth-theme-breeze
+Group: System/Base
+Summary: Plymouth breeze theme
+Requires: %name-common
+Requires: plymouth-plugin-script
+Requires: plymouth-plugin-label
+%description -n plymouth-theme-breeze
+Plymouth breeze theme.
+
+%prep
+%setup -n %rname-%version
+cat breeze/images/16bit/plasma.logo.png >breeze/images/16bit/os.logo.png
+#cat %SOURCE10 >breeze/images/16bit/os.logo.png
+cat %SOURCE11 >breeze/images/os.logo.png
+
+%build
+%K5build \
+    -DDISTRO_NAME='ALT' \
+    -DDISTRO_VERSION='9.2' \
+    -DDISTRO_LOGO='os' \
+    -DBACKGROUND_TOP_COLOR='blue' \
+    -DBACKGROUND_BOTTOM_COLOR='green' \
+    #
+
+%install
+%K5install
+
+%files common
+%doc LICENSES/*
+
+%files -n plymouth-plugin-breeze-text
+%_libdir/plymouth/breeze-text.so
+
+%files -n plymouth-theme-breeze-text
+/usr/share/plymouth/themes/breeze-text/
+
+%files -n plymouth-theme-breeze
+/usr/share/plymouth/themes/breeze/
+
+%changelog
+* Wed Sep 08 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt1
+- new version
