@@ -4,7 +4,7 @@
 
 Name: freeipa-healthcheck
 Version: 0.9
-Release: alt1
+Release: alt2
 
 Summary: Check the health of a FreeIPA installation
 License: GPLv3
@@ -108,6 +108,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/ipaclustercheck/
 
 %changelog
+* Thu Sep 09 2021 Stanislav Levin <slev@altlinux.org> 0.9-alt2
+- Applied upstream fix (GH#213).
+
 * Fri Jun 18 2021 Stanislav Levin <slev@altlinux.org> 0.9-alt1
 - 0.8 -> 0.9.
 
