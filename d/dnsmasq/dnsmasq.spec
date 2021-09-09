@@ -1,7 +1,7 @@
 %def_with libidn2
 
 Name: dnsmasq
-Version: 2.85
+Version: 2.86
 
 Release: alt1
 Summary: A lightweight caching nameserver
@@ -138,9 +138,14 @@ useradd -r -g _dnsmasq -d /dev/null -s /dev/null -N _dnsmasq >/dev/null 2>&1 ||:
 %_man1dir/dhcp_*
 
 %changelog
+* Thu Sep 09 2021 Mikhail Efremov <sem@altlinux.org> 2.86-alt1
+- Fix bogus date in changelog.
+- Fix changelog.
+- Updated to 2.86.
+
 * Fri Apr 09 2021 Mikhail Efremov <sem@altlinux.org> 2.85-alt1
 - Dropped obsoleted patch.
-- Updated to 2.83 (fixes: CVE-2021-3448).
+- Updated to 2.85 (fixes: CVE-2021-3448).
 
 * Fri Jan 22 2021 Mikhail Efremov <sem@altlinux.org> 2.83-alt1
 - Use useradd -N instead of -n.
@@ -448,7 +453,7 @@ useradd -r -g _dnsmasq -d /dev/null -s /dev/null -N _dnsmasq >/dev/null 2>&1 ||:
 * Wed Aug  4 2004 Ilya Evseev <evseev@altlinux.ru> 2.10-alt2
 - added 'Requires: initscripts' for preventing problems with automated building
 
-* Tue Jul 29 2004 Ilya Evseev <evseev@altlinux.ru> 2.10-alt1
+* Thu Jul 29 2004 Ilya Evseev <evseev@altlinux.ru> 2.10-alt1
 - initial build
 
 ## EOF ##
