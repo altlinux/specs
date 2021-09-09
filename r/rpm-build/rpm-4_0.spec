@@ -1,11 +1,8 @@
-# python-module-rpm overrides %%version
-%define rpm_version 4.0.4
-
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4
-Release: alt177
+Version: 4.0.4.178
+Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -15,7 +12,6 @@ Release: alt177
 %define if_without() %if %{expand:%%{?_without_%{1}:1}%%{!?_without_%{1}:0}}
 %define _rpmlibdir %_prefix/lib/rpm
 
-%def_without python
 %def_with libelf
 %def_without apidocs
 %def_without db
@@ -80,7 +76,6 @@ Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
 Source: rpm-%version-%release.tar
 
-%{?_with_python:BuildPreReq: python-devel}
 %{?_with_apidocs:BuildPreReq: ctags doxygen}
 %{?_with_libelf:BuildPreReq: libelf-devel}
 %{?_with_selinux:BuildPreReq: libselinux-devel >= 2.0.96}
@@ -184,24 +179,6 @@ This package contains RPM package installation and build directory tree.
 %description static
 This package contains statically linked version of the RPM program.
 
-%if_with python
-%package -n python-module-rpm
-Version: %{rpm_version}_%__python_version
-Summary: Python bindings for apps which will manipulate RPM packages
-Summary(ru_RU.UTF-8): Интерфейс для разработки Python-приложений, взаимодействующих с RPM-пакетами
-License: GPLv2+ or LGPLv2.1+
-Group: Development/Python
-Requires: lib%oname = %rpm_version-%release
-Requires: python = %__python_version
-Provides: rpm-python = %{rpm_version}_%__python_version-%release
-Obsoletes: rpm-python
-
-%description -n python-module-rpm
-This package contains a module which permits applications written in
-the Python programming language to use the interface supplied by RPM
-(RPM Package Manager) libraries.
-%endif #with python
-
 %package checkinstall
 Summary: Run tests for %name immediately when this package is installed
 Group: Other
@@ -216,7 +193,7 @@ Requires: rpminstall-tests-checkinstall
 %summary
 
 %prep
-%setup -n rpm-%rpm_version-%release
+%setup -n rpm-%version-%release
 
 %build
 gettextize --force --quiet --no-changelog --symlink
@@ -231,7 +208,6 @@ export ac_cv_path___GPG=/usr/bin/gpg
 export ac_cv_path___SSH=/usr/bin/ssh
 export LDFLAGS="-L$PWD/stub"
 %configure \
-	%{?_with_python} %{?_without_python} \
 	%{?_with_apidocs} %{?_without_apidocs} \
 	%{?_with_db} %{?_without_db} \
 	%{subst_with selinux} \
@@ -405,14 +381,12 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %attr(2775,root,%oname) %dir %_usrsrc/RPM/RPMS/*
 %endif #with build_topdir
 
-%if_with python
-%files -n python-module-rpm
-%_libdir/python*/site-packages/*module.so
-%endif #with python
-
 %files checkinstall
 
 %changelog
+* Thu Sep 09 2021 Dmitry V. Levin <ldv@altlinux.org> 4.0.4.178-alt1
+- process-lto: enhanced error diagnostics.
+
 * Wed Aug 25 2021 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt177
 - Reverted the change introduced in 4.0.4-alt174.
 
