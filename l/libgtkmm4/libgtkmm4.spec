@@ -1,14 +1,14 @@
 %def_disable snapshot
 %define rname gtkmm
-%define ver_major 4.0
-%define api_ver %ver_major
+%define ver_major 4.4
+%define api_ver 4.0
 
 %def_disable demos
 %def_enable check
 %def_enable docs
 
 Name: lib%{rname}4
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A C++ interface for GTK4 library
@@ -24,7 +24,7 @@ Source: %rname-%version.tar
 
 Provides: %rname-%api_ver = %version
 
-%define gtk_ver 4.0.0
+%define gtk_ver 4.4.0
 %define glibmm_api_ver 2.68
 %define glibmm_ver 2.68.0
 %define pangomm_api_ver 2.48
@@ -114,6 +114,9 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Thu Sep 09 2021 Yuri N. Sedunov <aris@altlinux.org> 4.4.0-alt1
+- 4.4.0
+
 * Fri May 21 2021 Yuri N. Sedunov <aris@altlinux.org> 4.0.2-alt1
 - 4.0.2
 
