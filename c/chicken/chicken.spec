@@ -1,6 +1,11 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 Name: chicken
 Version: 5.2.0
-Release: alt1
+Release: alt2
 License: BSD style (see LICENSE)
 Group: Development/Scheme
 Url: http://www.call-with-current-continuation.org/
@@ -29,7 +34,7 @@ Runtime libraries for programs produced with chicken compiler
 %package -n libchicken-devel
 Summary: Development libraries for using with chicken scheme-to-c compiler
 Group: Development/Scheme
-Requires: libchicken = %version-%release
+Requires: libchicken = %EVR
 
 %description -n libchicken-devel
 Development libraries for using with chicken scheme-to-c compiler
@@ -37,7 +42,7 @@ Development libraries for using with chicken scheme-to-c compiler
 %package -n libchicken-devel-static
 Summary: Static libraries for using with chicken scheme-to-c compiler
 Group: Development/Scheme
-Requires: libchicken-devel = %version-%release
+Requires: libchicken-devel = %EVR
 
 %description -n libchicken-devel-static
 Static libraries for using with chicken scheme-to-c compiler
@@ -45,7 +50,7 @@ Static libraries for using with chicken scheme-to-c compiler
 %package docs
 Summary: Manual for Chicken scheme-to-c compiler
 Group: Development/Documentation
-Requires: chicken = %version-%release
+Requires: chicken = %EVR
 BuildArch: noarch
 
 %description docs
@@ -91,6 +96,9 @@ done
 %_libdir/lib*.a
 
 %changelog
+* Thu Sep 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.2.0-alt2
+- Fixed build with LTO.
+
 * Sun Jun 28 2020 Anton Farygin <rider@altlinux.ru> 5.2.0-alt1
 - 5.2.0
 
