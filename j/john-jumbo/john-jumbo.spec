@@ -1,11 +1,12 @@
 Name: john-jumbo
 Version: 1.9.0
-Release: alt4
+Release: alt5
 License: GPLv2
 Group: System/Base
 Url: http://www.openwall.com/john/
 Source: john-%version-jumbo-1.tar.xz
 Patch: john-1.9.0-alt-bash_completion.patch
+Patch2000: %name-e2k.patch
 
 #set_perl_req_method relaxed
 # TODO: fix it!
@@ -104,6 +105,12 @@ Jumbo version of John the Ripper
 %setup -n john-%version-jumbo-1
 
 %patch -p0
+%ifarch %e2k
+%patch2000 -p1
+%endif
+
+# -flto fix
+sed -i '/AC_CONFIG_FILES/i LDFLAGS="$CPU_BEST_FLAGS $CFLAGS $LDFLAGS"' src/configure.ac
 
 sed -i 's@\$prefix/bin@%jlibexec@
 s@\$prefix/share/john@%jdata@' src/configure.ac
@@ -226,6 +233,10 @@ rm %buildroot%jdata/john.conf && \
 %exclude %jlibexec/zip2john
 
 %changelog
+* Wed Sep 08 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.9.0-alt5
+- added Elbrus support
+- fixed -flto
+
 * Fri May 07 2021 Fr. Br. George <george@altlinux.ru> 1.9.0-alt4
 - fix python2/3 findreq
 
