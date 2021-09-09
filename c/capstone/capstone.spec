@@ -1,7 +1,12 @@
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 Summary: A disassembly framework
 Name: capstone
 Version: 4.0.2
-Release: alt1
+Release: alt2
 License: BSD
 Group: Development/Tools
 Url: http://capstone-engine.org/
@@ -17,7 +22,7 @@ An ultimate disassembly framework for binary analysis and reversing.
 
 %package devel
 Summary: Development files for %name
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Group: Development/C
 %description devel
 An ultimate disassembly framework for binary analysis and reversing.
@@ -25,7 +30,7 @@ This package contains libraries and headers for developing.
 
 %package -n python-module-%name
 Summary: Python bindings for %name
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Group: Development/Python
 %description -n python-module-%name
 An ultimate disassembly framework for binary analysis and reversing.
@@ -33,7 +38,7 @@ This package contains python bindings for %name.
 
 %package -n python3-module-%name
 Summary: Python 3 bindings for %name
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Group: Development/Python3
 %description -n python3-module-%name
 An ultimate disassembly framework for binary analysis and reversing.
@@ -41,7 +46,7 @@ This package contains python 3 bindings for %name.
 
 %package java
 Summary: Java bindings for %name
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Group: Development/Java
 BuildArch: noarch
 %description java
@@ -112,6 +117,9 @@ LD_LIBRARY_PATH="%buildroot%_libdir" make check
 %_javadir/
 
 %changelog
+* Thu Sep 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.2-alt2
+- Fixed build with LTO.
+
 * Fri May 29 2020 Nikita Ermakov <arei@altlinux.org> 4.0.2-alt1
 - Updated to 4.0.2.
 
