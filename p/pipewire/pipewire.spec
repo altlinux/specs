@@ -29,7 +29,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.34
+Version: %ver_major.35
 Release: alt1
 
 Summary: Media Sharing Server
@@ -51,8 +51,8 @@ Requires: rtkit
 
 %define gst_ver 1.10
 
-BuildRequires(pre): meson
-BuildRequires: libgio-devel libudev-devel libdbus-devel
+BuildRequires(pre): rpm-macros-meson rpm-build-systemd
+BuildRequires: meson libgio-devel libudev-devel libdbus-devel
 BuildRequires: libalsa-devel libpulseaudio-devel
 BuildRequires: libjack-devel
 BuildRequires: libv4l-devel libsndfile-devel
@@ -79,7 +79,7 @@ BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
 %{?_enable_webrtc:BuildRequires: pkgconfig(webrtc-audio-processing)}
 %{?_enable_sdl:BuildRequires: libSDL2-devel}
 %{?_enable_docs:BuildRequires: doxygen graphviz fonts-otf-adobe-source-sans-pro fonts-ttf-google-droid-sans}
-%{?_enable_man:BuildRequires: xmltoman}
+%{?_enable_man:BuildRequires: python3-module-docutils}
 %{?_enable_check:BuildRequires: /proc gcc-c++ libcap-devel}
 
 %description
@@ -182,19 +182,20 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_datadir/%name/media-session.d/with-pulseaudio
 %dir %_datadir/%name/filter-chain
 %_datadir/%name/filter-chain/demonic.conf
-%_datadir/%name/filter-chain/sink-convolver.conf
 %_datadir/%name/filter-chain/sink-dolby-surround.conf
 %_datadir/%name/filter-chain/sink-eq6.conf
 %_datadir/%name/filter-chain/sink-matrix-spatialiser.conf
+%_datadir/%name/filter-chain/sink-virtual-surround-5.1-kemar.conf
+%_datadir/%name/filter-chain/sink-virtual-surround-7.1-hesuvi.conf
 %_datadir/%name/filter-chain/source-rnnoise.conf
 %_udevrulesdir/90-%name-alsa.rules
 %_datadir/alsa-card-profile/
 %if_enabled systemd
-%_prefix/lib/systemd/user/%name.service
-%_prefix/lib/systemd/user/%name.socket
-%_prefix/lib/systemd/user/%name-pulse.service
-%_prefix/lib/systemd/user/%name-pulse.socket
-%_prefix/lib/systemd/user/%name-media-session.service
+%_userunitdir/%name.service
+%_userunitdir/%name.socket
+%_userunitdir/%name-pulse.service
+%_userunitdir/%name-pulse.socket
+%_userunitdir/%name-media-session.service
 
 %{?_enable_systemd_system_service:
 %_unitdir/%name.service
@@ -262,6 +263,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Thu Sep 09 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.35-alt1
+- 0.3.35
+
 * Thu Aug 26 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.34-alt1
 - 0.3.34
 - disabled LTO for armh
