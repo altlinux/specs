@@ -9,7 +9,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 4.0.2
-Release: alt1
+Release: alt2
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
@@ -37,6 +37,7 @@ Source3: refcounting.py
 
 Patch1: %oname-alt-tests-offline.patch
 Patch2: sphinx-4.0.1-man_1.patch
+Patch3: sphinx-4.0.2-Fix-test-Tests-has-been-broken-with-pygments-2.10.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-sphinx-objects.inv
@@ -150,6 +151,10 @@ This packages contains RPM macros for build with Sphinx.
 %setup -n sphinx-%version
 %patch1 -p1
 #patch2 -p1
+%patch3 -p1
+
+# ship the stable releases
+sed -i '/^tag_build =.*/d;/^tag_date =.*/d' setup.cfg
 
 install -pm644 %SOURCE1 .
 
@@ -245,7 +250,7 @@ tox.py3 --sitepackages -vvr -s false -- -vra
 %exclude %sphinx3_dir/pickle
 %exclude %sphinx3_dir/doctrees
 %endif
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/Sphinx-%version-py%_python3_version.egg-info/
 
 %files devel
 %files tests
@@ -266,6 +271,9 @@ tox.py3 --sitepackages -vvr -s false -- -vra
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Thu Sep 09 2021 Stanislav Levin <slev@altlinux.org> 1:4.0.2-alt2
+- Fixed FTBFS (new Pygments 2.10).
+
 * Sat May 22 2021 Fr. Br. George <george@altlinux.ru> 1:4.0.2-alt1
 - Autobuild version bump to 4.0.2
 
