@@ -1,10 +1,16 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 Name: catch2
 Version: 2.13.4
-Release: alt1.1
+Release: alt2
 
 Summary: C++ Unit Test framework ("all in one header")
 
-License: Boost Software License, Version 1.0
+License: BSL-1.0
 Group: Development/C++
 Url: https://github.com/catchorg/Catch2
 
@@ -61,6 +67,9 @@ ctest -V
 %_datadir/pkgconfig/catch2.pc
 
 %changelog
+* Thu Sep 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.13.4-alt2
+- Fixed build with LTO.
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.13.4-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
