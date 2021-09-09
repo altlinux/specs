@@ -1,6 +1,6 @@
 Name: mate-panel
 Version: 1.26.0
-Release: alt1
+Release: alt2
 Epoch: 2
 Summary: MATE Desktop panel and applets
 License: GPLv2+
@@ -86,6 +86,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gir-1.0/MatePanelApplet-4.0.gir
 
 %changelog
+* Thu Sep 09 2021 Valery Inozemtsev <shrek@altlinux.ru> 2:1.26.0-alt2
+- upsteram: fix mate-desktop-item-edit executable
+
 * Fri Aug 06 2021 Valery Inozemtsev <shrek@altlinux.ru> 2:1.26.0-alt1
 - 1.26.0
 
