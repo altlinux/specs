@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 3.12.4
-Release: alt2
+Release: alt3
 Summary: Web APIs for Django, made easy
 License: BSD
 Group: Development/Python3
@@ -30,9 +30,9 @@ BuildRequires: python3(livereload)
 BuildRequires: python3(tox)
 BuildRequires: python3(tox_no_deps)
 BuildRequires: python3(pytest_django)
-BuildRequires: python3-module-django2.2
-BuildRequires: python3-module-django2.2-tests
-BuildRequires: python3-module-django2.2-dbbackend-sqlite3
+BuildRequires: python3-module-django
+BuildRequires: python3-module-django-tests
+BuildRequires: python3-module-django-dbbackend-sqlite3
 %endif
 
 # we have several versions of Django
@@ -84,6 +84,10 @@ tox.py3 --sitepackages --no-deps -vvr
 
 
 %changelog
+* Thu Sep 09 2021 Alexey Shabalin <shaba@altlinux.org> 3.12.4-alt3
+- Fix BR.
+- Backport upstream patches for fix tests with Django-3.2.
+
 * Fri Apr 16 2021 Stanislav Levin <slev@altlinux.org> 3.12.4-alt2
 - Applied upstream fix for new Pygments.
 
