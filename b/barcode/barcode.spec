@@ -1,11 +1,18 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 Name: barcode
 Version: 0.99
-Release: alt2
+Release: alt3
 Group: Graphics
 Summary: Utility to generate printable barcodes in PostScript format
 Summary(ru_RU.UTF-8): Утилита для генерации штрих-кодов для печати в формате PostScript
 License: GPLv3
 Url: http://www.gnu.org/software/barcode/barcode.html
+
 Source: %name-%version.tar
 Patch0: barcode-0.99-info.patch
 Patch1: barcode-0.98-leak-fix.patch
@@ -60,7 +67,11 @@ The package includes a static library.
 %patch2 -p1
 %patch3 -p2
 
+# don't build unpackaged binary
+sed -i -e 's:barcode sample:barcode:' Makefile.am
+
 %build
+%autoreconf
 %configure
 
 %make
@@ -82,6 +93,9 @@ sed -i '/^#include.*config.h"$/d' %buildroot%_includedir/barcode.h
 %_libdir/libbarcode.a
 
 %changelog
+* Thu Sep 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.99-alt3
+- Fixed build with LTO.
+
 * Fri Mar 12 2021 Slava Aseev <ptrnine@altlinux.org> 0.99-alt2
 - Fixed build with gcc-10
 - Rename libbarcode-static-devel to libbarcode-devel-static (closes: #36963)
