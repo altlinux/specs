@@ -16,18 +16,14 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
 %define pkg     epson-inkjet-printer-escpr
-%define ver     1.7.16
-%define rel     1
+%define ver     1.7.17
 
-# used in RPM macro set for the LSB Driver Development Kit
 %define drivername      epson-inkjet-printer-escpr
 %define driverstr       epson-inkjet-printer-escpr
 %define distribution    LSB
 %define manufacturer    EPSON
 %define supplier        %{drivername}
 %define lsbver          3.2
-
-%define extraversion    -%{rel}lsb%{lsbver}
 %define supplierstr     Seiko Epson Corporation
 
 AutoReqProv: no
@@ -85,6 +81,16 @@ gzip -n9 %buildroot%_datadir/cups/model/%name/*.ppd
 %_datadir/cups/model/%name
 
 %changelog
+* Thu Sep 09 2021 Andrey Cherepanov <cas@altlinux.org> 1.7.17-alt1
+- New version.
+- Supported new models:
+  + Epson WF-2820 Series
+  + Epson WF-2840 Series
+  + Epson WF-2870 Series
+  + Epson XP-2150 Series
+  + Epson XP-3150 Series
+  + Epson XP-4150 Series
+
 * Wed Aug 11 2021 Andrey Cherepanov <cas@altlinux.org> 1.7.16-alt1
 - New version.
 - Supported new models:
