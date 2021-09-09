@@ -1,6 +1,6 @@
 Name: bitcoin
-Version: 0.21.1
-Release: alt4
+Version: 22.0
+Release: alt1
 
 Summary: peer-to-peer network based anonymous digital currency
 License: MIT
@@ -12,7 +12,7 @@ Patch0: %name-%version-%release.patch
 
 # Automatically added by buildreq on Thu Sep 14 2017
 # optimized out: boost-devel boost-devel-headers gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libcom_err-devel libdb4-devel libgpg-error libkrb5-devel libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-test libqt5-widgets libqt5-xml libstdc++-devel llvm perl pkg-config python-base python-modules qt5-base-common
-BuildRequires: boost-filesystem-devel boost-interprocess-devel boost-program_options-devel boost-signals-devel
+BuildRequires: boost-filesystem-devel boost-interprocess-devel boost-program_options-devel boost-signals-devel boost-asio-devel
 BuildRequires: clang libevent-devel libminiupnpc-devel libprotobuf-devel libqrencode-devel
 BuildRequires: libssl-devel protobuf-compiler python3-dev qt5-base-devel qt5-tools libdb4.8_cxx-devel
 
@@ -59,6 +59,9 @@ rm -f %_bindir/%name
 %doc doc/*
 
 %changelog
+* Thu Sep 09 2021 Alexei Takaseev <taf@altlinux.org> 22.0-alt1
+- 22.0
+
 * Wed Aug 25 2021 Alexei Takaseev <taf@altlinux.org> 0.21.1-alt4
 - Added -ffat-lto-objects to %optflags_lto.
 
