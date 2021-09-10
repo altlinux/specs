@@ -2,7 +2,7 @@
 
 Name: plasma5-%{rname}
 Version: 5.22.5
-Release: alt2
+Release: alt3
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -66,9 +66,9 @@ cat %SOURCE11 >breeze/images/os.logo.png
 %build
 %K5build \
     -DDISTRO_NAME='ALT' \
-    -DDISTRO_VERSION='10' \
+    -DDISTRO_VERSION='LINUX' \
     -DDISTRO_LOGO='os' \
-    -DBACKGROUND_TOP_COLOR='blue' \
+    -DBACKGROUND_TOP_COLOR='neon_green' \
     -DBACKGROUND_BOTTOM_COLOR='black' \
     #
 
@@ -88,6 +88,9 @@ cat %SOURCE11 >breeze/images/os.logo.png
 /usr/share/plymouth/themes/breeze/
 
 %changelog
+* Fri Sep 10 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt3
+- fix color
+
 * Thu Sep 09 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt2
 - fix text font
 
