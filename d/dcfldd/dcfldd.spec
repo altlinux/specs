@@ -1,15 +1,14 @@
 Name: dcfldd
-%define flavour 1
-%define mainver 1.3.4
-Version: %mainver.%flavour
-Release: alt1.qa1
+Version: 1.7.1
+Release: alt1
 
-Summary: dcfldd is an enhanced version of GNU dd with features useful for forensics and security
+Summary: enhanced version of dd for forensics and security
 Group: File tools
-License: GPL
-Url: http://dcfldd.sourceforge.net/
+License: GPL-2.0
+Url: https://github.com/resurrecting-open-source-projects/dcfldd
 
-Source0: %name-%mainver-%flavour.tar.gz
+Source: %name-%version.tar
+# Source-url: https://github.com/resurrecting-open-source-projects/dcfldd/archive/refs/tags/v%version.tar.gz
 
 %description
 dcfldd is an enhanced version of GNU dd with features useful for forensics 
@@ -31,20 +30,24 @@ dcfldd has the following additional features:
    commands as well as files natively.
 
 %prep
-%setup -n %name-%mainver-%flavour
+%setup
 
 %build
+%autoreconf
 %configure
-%make
+%make_build
 
 %install
-%makeinstall
+%makeinstall_std
 
 %files
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Sat Sep 11 2021 Anton Midyukov <antohami@altlinux.org> 1.7.1-alt1
+- new version (1.7.1) with rpmgs script
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.4.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
