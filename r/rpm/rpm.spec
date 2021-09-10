@@ -20,7 +20,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt26
+Release: alt27
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -55,6 +55,7 @@ BuildRequires: readline-devel zlib-devel
 %if_with beecrypt
 BuildRequires: libbeecrypt-devel
 BuildRequires: libblake2-devel
+BuildRequires: libsha1detectcoll-devel
 %else
 BuildRequires: nss-devel
 %endif
@@ -580,6 +581,9 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Thu Sep 09 2021 Vitaly Chikunov <vt@altlinux.org> 4.13.0.1-alt27
+- rpmio: Add sha1dc algorithm to replace sha1.
+
 * Tue Aug 17 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0.1-alt26
 - Fixed posttrans filetrigger to save old file list on error.
 - Changed posttrans filetrigger to raise error instead of warning if
