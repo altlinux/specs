@@ -1,7 +1,7 @@
 %define oname remoto
 
 Name: python3-module-%oname
-Version: 1.1.4
+Version: 1.2.1
 Release: alt1
 Summary: Execute remote commands or processes
 Group: Development/Python3
@@ -44,6 +44,9 @@ py.test3 -v remoto/tests
 %doc LICENSE README.rst
 
 %changelog
+* Fri Sep 10 2021 Alexey Shabalin <shaba@altlinux.org> 1.2.1-alt1
+- new version 1.2.1
+
 * Tue Feb 18 2020 Alexey Shabalin <shaba@altlinux.org> 1.1.4-alt1
 - build python3 package
 
