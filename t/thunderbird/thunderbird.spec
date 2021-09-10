@@ -7,7 +7,7 @@
 %define llvm_version 12.0
 
 Name: 	 thunderbird
-Version: 91.0.3
+Version: 91.1.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -29,6 +29,7 @@ Source8: thunderbird-wayland.desktop
 
 Patch11: thunderbird-alt-allow-send-in-windows-1251.patch
 Patch12: alt-use-vorbis-on-arm-too.patch
+Patch13: thunderbird-alt-fix-redefinition-double_t.patch
 
 Patch21: mozilla-1353817.patch
 Patch23: build-aarch64-skia.patch
@@ -178,6 +179,7 @@ thunderbird packages by some Alt Linux Team Policy compatible way.
 tar -xf %SOURCE6
 %patch11 -p2
 %patch12 -p2
+%patch13 -p2
 %patch21 -p2
 %patch23 -p2
 %patch29 -p2
@@ -505,6 +507,12 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Wed Sep 08 2021 Andrey Cherepanov <cas@altlinux.org> 91.1.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2021-38492 Navigating to `mk:` URL scheme could load Internet Explorer
+  + CVE-2021-38495 Memory safety bugs fixed in Thunderbird 91.1
+
 * Fri Aug 27 2021 Andrey Cherepanov <cas@altlinux.org> 91.0.3-alt1
 - New version.
 
