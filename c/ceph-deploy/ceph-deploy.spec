@@ -4,7 +4,7 @@
 
 Name: ceph-deploy
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: Deploy Ceph with minimal infrastructure
 License: MIT
@@ -101,6 +101,9 @@ install -pDm644 docs/build/man/%name.1 %buildroot%_man1dir/%name.1
 
 
 %changelog
+* Fri Sep 10 2021 Alexey Shabalin <shaba@altlinux.org> 2.1.0-alt2
+- Revert "osd: decode output from remoto" (Closed: 40875)
+
 * Sat Sep 04 2021 Alexey Shabalin <shaba@altlinux.org> 2.1.0-alt1
 - 2.1.0
 
