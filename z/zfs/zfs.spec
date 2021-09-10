@@ -3,7 +3,7 @@
 
 Name: zfs
 Version: 2.1.0
-Release: alt1
+Release: alt2
 Summary: ZFS on Linux
 License: CDDL-1.0
 Group: System/Kernel and hardware
@@ -201,6 +201,9 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Fri Sep 10 2021 Anton Farygin <rider@altlinux.ru> 2.1.0-alt2
+- added fix from the zfs upstream to build with a kernel 5.14
+
 * Tue Aug 10 2021 Anton Farygin <rider@altlinux.ru> 2.1.0-alt1
 - 2.1.0
 
