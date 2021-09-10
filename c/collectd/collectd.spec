@@ -1,3 +1,6 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 %ifarch x86_64 %ix86 aarch64 ppc64le
 %def_with libdpdk
 %else
@@ -33,7 +36,7 @@
 
 Name: collectd
 Version: 5.12.0
-Release: alt1
+Release: alt2
 
 Summary: (Multi-)System statistics collection
 License: GPLv2 AND MIT
@@ -531,7 +534,9 @@ mkdir libltdl
 	%{subst_enable tokyotyrant} \
 	%{subst_enable xmms} \
 	%{subst_enable static} \
-    --localstatedir=%_var
+    --localstatedir=%_var \
+    --disable-werror \
+    %nil
 
 # </configure>
 %make_build INSTALLMAN1DIR=%_man1dir
@@ -562,6 +567,9 @@ EOF
 %endif
 
 install -pDm644 contrib/systemd.collectd.service %buildroot%_unitdir/collectd.service
+
+# remove unpackaged perl plugin
+rm -fv %buildroot%perl_vendor_privlib/Collectd/Plugins/OpenVZ.pm
 
 %pre
 # Plugin libvirt renamed to virt in 5.5.0
@@ -811,6 +819,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Fri Sep 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.12.0-alt2
+- Disabled Werror due to false positives and rebuilt with LTO.
+
 * Tue Sep 29 2020 Anton Farygin <rider@altlinux.ru> 5.12.0-alt1
 - 5.11.0 -> 5.12.0
 
