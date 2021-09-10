@@ -1,61 +1,60 @@
+%define _unpackaged_files_terminate_build 1
 %define oname tokenlib
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.3.1
-Release: alt3
+Version: 2.0.0
+Release: alt1
 
 Summary: Generic support library for signed-token-based auth schemes
-License: MPLv2.0
+License: MPL-2.0
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/tokenlib/
 # https://github.com/mozilla-services/tokenlib.git
 BuildArch: noarch
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
-%py3_provides %oname
-
+%if_with check
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+BuildRequires: python3(tox_console_scripts)
+%endif
 
 %description
 This is generic support library for doing token-based authentication.
 You might use it to build a login system using bearer tokens, two-legged
 oauth, or MAC Access authentication.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-This is generic support library for doing token-based authentication.
-You might use it to build a login system using bearer tokens, two-legged
-oauth, or MAC Access authentication.
-
-This package contains tests for %oname.
-
 %prep
 %setup
+%autopatch -p1
 
 %build
 %python3_build_debug
 
 %install
 %python3_install
+# don't ship tests
+rm -r %buildroot%python3_sitelibdir/%oname/tests/
 
 %check
-%__python3 setup.py test
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
 
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-
-%files tests
-%python3_sitelibdir/*/tests
-
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Sep 10 2021 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
+- 0.3.1 -> 2.0.0.
+
 * Wed Nov 20 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.3.1-alt3
 - python2 disabled
 
