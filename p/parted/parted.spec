@@ -1,3 +1,4 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %def_enable snapshot
 %set_verify_elf_method unresolved=relaxed
 
@@ -23,15 +24,15 @@
 %define Name Parted
 Name: parted
 %define lname lib%name
-Version: 3.2
+Version: 3.4
 %define prerel %nil
 %define git_version %{version}.46-e4ae
-Release: alt6
+Release: alt1
 
 Summary: Flexible partitioning tool
 Summary(uk_UA.UTF-8): Универсальний інструмент для роботи з разділами диску
 Summary(ru_RU.UTF-8): Универсальный инструмент для работы с разделами диска
-License: GPL3+
+License: GPLv3
 Group: System/Configuration/Hardware
 URL: http://www.gnu.org/software/%name
 
@@ -43,7 +44,7 @@ Source: %name-%git_version.tar.xz
 Source1: %name-pam
 Source2: %name-security
 
-Patch1: linux-Include-sys-sysmacros.h-for-major-macro.patch
+Patch0: parted-3.4-fix-segfault-on-exit.patch
 
 Requires: %lname = %version-%release
 
@@ -142,7 +143,8 @@ with %lname.
 %else
 %setup -n %name-%git_version
 %endif
-%patch1 -p1
+
+%patch0 -p1
 
 %build
 %autoreconf
@@ -238,6 +240,9 @@ __MENU__
 
 
 %changelog
+* Thu Sep 09 2021 Anton Farygin <rider@altlinux.ru> 3.4-alt1
+- 3.2 -> 3.4 (closes: #40175)
+
 * Mon Mar 30 2020 Nikita Ermakov <arei@altlinux.org> 3.2-alt6
 - Fix building with glibc >= 2.27.
 
