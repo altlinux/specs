@@ -1,4 +1,4 @@
-%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%define optflags_lto %nil
 
 %define qdoc_found %{expand:%%(if [ -e %_qt5_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 %global qt_module qttools
@@ -9,7 +9,7 @@
 
 Name: qt5-tools
 Version: 5.15.2
-Release: alt3
+Release: alt4
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -71,12 +71,15 @@ Summary: Development files for %name
 Requires: %name-common = %EVR
 Requires: qt5-base-devel
 Requires: %name
+Provides: %name-devel-static = %EVR
+Obsoletes: %name-devel-static < %EVR
 %description devel
 %summary.
 
 %package devel-static
 Group: Development/KDE and QT
 Summary: Development files for %name
+BuildArch: noarch
 Requires: %name-common = %EVR
 Requires: %name-devel
 %description devel-static
@@ -332,8 +335,7 @@ fi
 %_qt5_libdir/pkgconfig/Qt*UiPlugin.pc
 %_qt5_archdatadir/mkspecs/modules/*.pri
 %_libdir/cmake/Qt*/
-
-%files devel-static
+# devel-static
 %_qt5_libdir/libQt?*.a
 %_qt5_libdatadir/libQt?*.a
 %_pkgconfigdir/Qt?UiTools.pc
@@ -358,6 +360,10 @@ fi
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Fri Sep 10 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt4
+- move static libs to devel subpackage (closes: 40884)
+- disable LTO
+
 * Mon Sep 06 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt3
 - fix to build with LTO
 
