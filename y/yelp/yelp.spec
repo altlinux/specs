@@ -8,7 +8,7 @@
 
 Name: yelp
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 Summary: Lightweight help browser for GNOME
 License: %gpl2plus
@@ -27,6 +27,9 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 Requires: lib%name = %version-%release
 Requires: yelp-xsl >= %yelpxsl_ver
 Requires: dconf gnome-icon-theme gnome-icon-theme-symbolic
+%ifarch %e2k
+Obsoletes: yelp.sh
+%endif
 
 BuildRequires(pre): rpm-build-licenses rpm-build-gnome
 BuildRequires: gnome-common itstool gtk-doc
@@ -124,6 +127,9 @@ Yelp.
 %_datadir/gtk-doc/html/lib%name/
 
 %changelog
+* Fri Sep 10 2021 Yuri N. Sedunov <aris@altlinux.org> 40.3-alt1.1
+- E2k: Obsoletes yelp.sh
+
 * Fri Jul 09 2021 Yuri N. Sedunov <aris@altlinux.org> 40.3-alt1
 - 40.3
 
