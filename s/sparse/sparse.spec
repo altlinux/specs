@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name:		sparse
-Version:	0.6.3
+Version:	0.6.4
 Release:	alt1
 Summary: 	A semantic parser for C
 License:	MIT
@@ -37,7 +38,8 @@ Sparse is primarily used in the development and debugging of the Linux kernel.
 %setup
 
 %build
-%make_build
+%add_optflags %(getconf LFS_CFLAGS)
+%make_build CFLAGS="%optflags" V=1
 %make_build -C Documentation SPHINXBUILD=sphinx-build-3 html
 
 %install
@@ -56,6 +58,9 @@ Sparse is primarily used in the development and debugging of the Linux kernel.
 %_man1dir/*.1*
 
 %changelog
+* Fri Sep 10 2021 Vitaly Chikunov <vt@altlinux.org> 0.6.4-alt1
+- Update to v0.6.4 (2021-09-06).
+
 * Fri Oct 23 2020 Vitaly Chikunov <vt@altlinux.org> 0.6.3-alt1
 - Update to v0.6.3 (2020-10-17).
 - spec: Build html documentation.
