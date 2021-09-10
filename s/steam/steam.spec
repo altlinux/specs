@@ -1,5 +1,5 @@
 Name: steam
-Version: 1.0.0.71
+Version: 1.0.0.72
 Release: alt1
 
 Summary: Launcher for the Steam software distribution service
@@ -61,6 +61,9 @@ savegame and screenshot functionality, and many social features.
 %config %_udevrulesdir/60-%name-vr.rules
 
 %changelog 
+* Fri Sep 10 2021 Nazarov Denis <nenderus@altlinux.org> 1.0.0.72-alt1
+- Version 1.0.0.72
+
 * Mon Jul 26 2021 Nazarov Denis <nenderus@altlinux.org> 1.0.0.71-alt1
 - Version 1.0.0.71
 
