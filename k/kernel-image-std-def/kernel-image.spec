@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt2
 epoch:2
 %define kernel_base_version	5.10
 %define kernel_sublevel .63
@@ -696,8 +696,14 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Sep 09 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.63-alt2
+- merge in "Disable all sleep states on BE-M1000 based boards."
+
 * Thu Sep 09 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.63-alt1
 - v5.10.63
+
+* Mon Sep 06 2021 Dmitry Terekhin <jqt4@altlinux.org> 2:5.10.62-alt2
+- Disable all sleep states on BE-M1000 based boards.
 
 * Fri Sep 03 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.62-alt1
 - v5.10.62
