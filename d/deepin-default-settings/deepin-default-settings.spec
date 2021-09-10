@@ -1,8 +1,8 @@
 %define repo default-settings
 
 Name: deepin-default-settings
-Version: 2020.10.21
-Release: alt2
+Version: 2020.12.18
+Release: alt1
 Summary: deepin-default-settings
 License: GPL-3.0
 Group: Graphical desktop/Other
@@ -14,20 +14,24 @@ Source: %url/archive/%version/%repo-%version.tar.xz
 BuildArch: noarch
 
 BuildRequires: rpm-build-python3
-Requires: icon-theme-deepin
+#Requires: icon-theme-deepin
 
 %description
 deepin-default-settings
 
 %prep
 %setup -n %repo-%version
-%__subst 's|%_libexecdir/sysctl.d/|%_sysctldir/|' Makefile
+subst 's|%_libexecdir/sysctl.d/|%_sysctldir/|' Makefile
 
 %install
 %makeinstall_std
 
 mkdir -p %buildroot%_binfmtdir/
 mv -f %buildroot/etc/binfmt.d/wine.conf %buildroot%_binfmtdir/wine.conf
+# conflicts with xorg-drv-libinput
+rm -f %buildroot%_sysconfdir/X11/xorg.conf.d/40-libinput.conf
+# conflicts with altlinux-mime-defaults
+rm -f %buildroot%_desktopdir/mimeapps.list
 
 %files
 %doc CHANGELOG.md LICENSE
@@ -35,26 +39,22 @@ mv -f %buildroot/etc/binfmt.d/wine.conf %buildroot%_binfmtdir/wine.conf
 %_sysctldir/deepin.conf
 %_sysconfdir/X11/xinit/xinitrc.d/50-systemd-user.sh
 %config(noreplace) %_sysconfdir/X11/xorg.conf.d/*.conf
-# conflicts with xorg-drv-libinput
-%exclude %_sysconfdir/X11/xorg.conf.d/40-libinput.conf
 %_binfmtdir/wine.conf
 %config(noreplace) %_sysconfdir/fonts/conf.d/*.conf
 %config(noreplace) %_sysconfdir/gimp/2.0/fonts.conf
 %_sysconfdir/lscolor-256color
 %config(noreplace) %_sysconfdir/modprobe.d/*.conf
-%_sysconfdir/skel/.config/Trolltech.conf
-%_sysconfdir/skel/.config/user-dirs.dirs
-%_sysconfdir/skel/.config/SogouPY/sogouEnv.ini
-%_sysconfdir/skel/.config/autostart/dde-first-run.desktop
-%_sysconfdir/skel/.config/deepin/qt-theme.ini
-%_sysconfdir/skel/.icons/default/index.theme
-%_sysconfdir/skel/Music/bensound-sunny.mp3
+#%_sysconfdir/skel/.config/Trolltech.conf
+#%_sysconfdir/skel/.config/user-dirs.dirs
+#%_sysconfdir/skel/.config/SogouPY/sogouEnv.ini
+#%_sysconfdir/skel/.config/autostart/dde-first-run.desktop
+#%_sysconfdir/skel/.config/deepin/qt-theme.ini
+#%_sysconfdir/skel/.icons/default/index.theme
+#%_sysconfdir/skel/Music/bensound-sunny.mp3
 %_sysconfdir/sudoers.d/01_always_set_sudoers_home
 %_udevrulesdir/99-deepin.rules
 %dir %_desktopdir/deepin/
 %_desktopdir/deepin/dde-mimetype.list
-# conflicts with altlinux-mime-defaults
-%exclude %_desktopdir/mimeapps.list
 %dir %_datadir/%name/
 %_datadir/%name/fontconfig.json
 %_datadir/fontconfig/conf.avail/*.conf
@@ -64,6 +64,10 @@ mv -f %buildroot/etc/binfmt.d/wine.conf %buildroot%_binfmtdir/wine.conf
 %_datadir/music/bensound-sunny.mp3
 
 %changelog
+* Thu Sep 09 2021 Leontiy Volodin <lvol@altlinux.org> 2020.12.18-alt1
+- New version (2020.12.18).
+- Fixed default folders in $$HOME.
+
 * Thu May 06 2021 Leontiy Volodin <lvol@altlinux.org> 2020.10.21-alt2
 - Added rpm-build-python3 into BR.
 
