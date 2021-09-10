@@ -1,6 +1,8 @@
+%def_disable static
+
 Name:    libomniORB
 Version: 4.2.4
-Release: alt3
+Release: alt4
 
 Summary: ORB from AT&T (core libraries)
 
@@ -126,6 +128,7 @@ subst "s|AM_PATH_PYTHON|AM_PATH_PYTHON(3.3)|" configure.ac
 %build
 %autoreconf
 %configure \
+	%{subst_enable static} \
 	--disable-thread-tracing \
 	--with-openssl=%_prefix \
 	--with-omniORB-config=%_sysconfdir/omniORB.cfg \
@@ -213,13 +216,18 @@ install -p -D -m 644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/omninames
 %_libdir/libCOS*.so
 %_libdir/pkgconfig/omniCOS*
 
+%if_enabled static
 %files devel-static
 %_libdir/libomni*.a
 
 %files devel-static-COS
 %_libdir/libCOS*.a
+%endif
 
 %changelog
+* Fri Sep 10 2021 Vitaly Lipatov <lav@altlinux.ru> 4.2.4-alt4
+- disable build devel-static subpackages
+
 * Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 4.2.4-alt3
 - switch to python3
 
