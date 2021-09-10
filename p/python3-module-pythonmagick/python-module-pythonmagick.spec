@@ -2,10 +2,10 @@
 
 Name: python3-module-%oname
 Version: 0.9.64
-Release: alt3
+Release: alt4
 
 Summary: Object-oriented Python interface to ImageMagick
-License: Apache License 2.0
+License: Apache-2.0
 Group: Development/Python3
 Url: https://github.com/ImageMagick/PythonMagick
 
@@ -31,15 +31,17 @@ Python 2 version.
 
 %install
 %makeinstall_std
+rm -vf %buildroot%python3_sitelibdir/PythonMagick/*.*a
 
 %files
 %doc README LICENSE ChangeLog
 %python3_sitelibdir/PythonMagick
-%exclude %python3_sitelibdir/PythonMagick/*.a
-%exclude %python3_sitelibdir/PythonMagick/*.la
-
 
 %changelog
+* Fri Sep 10 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.64-alt4
+- Fixed removing of static libraries.
+- Fixed license tag.
+
 * Thu Nov 07 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.64-alt3
 - disable python2
 
