@@ -6,7 +6,7 @@
 
 Name: breezy
 Version: 3.2.1
-Release: alt1
+Release: alt2
 
 Summary: Breezy is a fork of the Bazaar version control system
 License: GPL-2.0-or-later
@@ -146,6 +146,9 @@ cp -a breezy/locale %buildroot%_datadir
 %endif
 
 %changelog
+* Fri Sep 10 2021 Anatoly Kitaykin <cetus@altlinux.org> 3.2.1-alt2
+- Fixed binary version
+
 * Thu Sep 09 2021 Anatoly Kitaykin <cetus@altlinux.org> 3.2.1-alt1
 - Release 3.2.1
 - Symlink 'bzr' separated to breezy-bzr subpackage
