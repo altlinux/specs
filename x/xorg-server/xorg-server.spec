@@ -28,7 +28,7 @@
 
 Name: xorg-server
 Version: 1.20.13
-Release: alt2
+Release: alt3
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -315,6 +315,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Fri Sep 10 2021 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.13-alt3
+- revert previous commits (closes: #38854)
+
 * Thu Sep 09 2021 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.13-alt2
 - revert "revert 249a12c5, 74b7427c, 5c96eb5f" (see: #38854)
 
