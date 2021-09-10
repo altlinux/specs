@@ -15,7 +15,7 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR ver
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
-Version: 91.0.1
+Version: 91.1.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -46,13 +46,13 @@ Patch005: 0005-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
 Patch006: 0006-ALT-Fix-aarch64-build.patch
 Patch007: 0007-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
 Patch008: 0008-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
-Patch009: 0009-arm-js-src-wasm-add-struct-user_vfp-definition.patch
 Patch010: 0010-use-floats-for-audio-on-arm-too.patch
 Patch011: 0011-bmo-847568-Support-system-harfbuzz.patch
 Patch012: 0012-bmo-847568-Support-system-graphite2.patch
 Patch013: 0013-bmo-1559213-Support-system-av1.patch
 Patch014: 0014-VAAPI-Add-extra-frames.patch
 Patch015: 0015-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
+Patch016: 0016-ALT-Fix-redefinition-double_t.patch
 ### End Patches
 
 # Hang up on build browser/components/about
@@ -199,13 +199,13 @@ Most likely you don't need to use this package.
 %patch006 -p1
 %patch007 -p1
 %patch008 -p1
-%patch009 -p1
 %patch010 -p1
 %patch011 -p1
 %patch012 -p1
 %patch013 -p1
 %patch014 -p1
 %patch015 -p1
+%patch016 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -448,6 +448,12 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Sep 07 2021 Andrey Cherepanov <cas@altlinux.org> 91.1.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2021-38492 Navigating to `mk:` URL scheme could load Internet Explorer
+  + CVE-2021-38495 Memory safety bugs fixed in Firefox 92 and Firefox ESR 91.1
+
 * Sat Sep 04 2021 Andrey Cherepanov <cas@altlinux.org> 91.0.1-alt1
 - New ESR version.
 - Security fixes:
