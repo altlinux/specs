@@ -70,7 +70,7 @@
 
 Name: aprutil%aprver
 Version: 1.6.1
-Release: alt3
+Release: alt4
 
 Summary: Apache Portable Runtime Utility shared library
 Group: System/Libraries
@@ -296,6 +296,9 @@ rm -rf %buildroot%_libdir/apr-util-%aprver/*.la
 %_libdir/apr-util-%aprver/apr_dbd_odbc*.so
 
 %changelog
+* Fri Sep 10 2021 Ivan A. Melnikov <iv@altlinux.org> 1.6.1-alt4
+- Update mysql patch to avoid calling absent my_init function
+
 * Fri Jan 24 2020 Vitaly Lipatov <lav@altlinux.ru> 1.6.1-alt3
 - rebuild with sqlite2 disabled
 
