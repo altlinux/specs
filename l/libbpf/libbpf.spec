@@ -1,10 +1,11 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: libbpf
-Version: 0.4.0
-Release: alt2
+Version: 0.5.0
+Release: alt1
 Summary: Stand-alone build of libbpf from the Linux kernel
 Group: System/Libraries
 License: BSD-2-Clause or LGPL-2.1
@@ -49,6 +50,9 @@ cd src
 %_pkgconfigdir/libbpf.pc
 
 %changelog
+* Fri Sep 10 2021 Vitaly Chikunov <vt@altlinux.org> 0.5.0-alt1
+- Update to v0.5.0 (2021-09-07).
+
 * Fri Aug 27 2021 Vitaly Chikunov <vt@altlinux.org> 0.4.0-alt2
 - Fix build with latest gcc/binutils with LTO.
 - Do not build libbpf-devel-static package.
