@@ -29,7 +29,7 @@
 
 Name: libwebkitgtk4
 Version: %ver_major.3
-Release: alt2
+Release: alt2.1
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -44,7 +44,7 @@ Patch: webkitgtk-2.26.1-alt-bwrap_check.patch
 # python->python3
 Patch1: webkitgtk-2.31.1-alt-python3.patch
 Patch2: webkitgtk-2.30.0-alt-arm64-return-type.patch
-Patch2000: webkitgtk-2.32.3-alt-e2k.patch
+Patch2000: webkitgtk-2.32.3-1-alt-e2k.patch
 
 %define bwrap_ver 0.3.1
 
@@ -359,6 +359,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Fri Sep 10 2021 Yuri N. Sedunov <aris@altlinux.org> 2.32.3-alt2.1
+- ilyakurdyukov@: improved %%e2k patch
+
 * Tue Sep 07 2021 Yuri N. Sedunov <aris@altlinux.org> 2.32.3-alt2
 - fixed build for %%e2k by ilyakurdyukov@
 
