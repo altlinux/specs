@@ -5,7 +5,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.9.0
-Release: alt0.4.20210826
+Release: alt0.5.20210910
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -30,6 +30,7 @@ BuildRequires: libgtk+3-gir-devel
 BuildRequires: python3-module-pygobject3
 BuildRequires: libGL-devel libGLU-devel
 BuildRequires: libXaw-devel libXinerama-devel libXmu-devel libXt-devel xorg-cf-files
+BuildRequires: libepoxy-devel
 BuildRequires: pkgconfig(libmodbus)
 BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: pkgconfig(libudev)
@@ -53,8 +54,13 @@ BuildRequires: desktop-file-utils ImageMagick-tools
 
 Obsoletes: %name-data =< %EVR
 Requires: lib%name = %EVR
+
 # for qtvcp
 Requires: python3-module-PyQt5-devel
+
+# for gmoccapy
+Requires: libgtksourceview3-gir
+Requires: libX11-devel
 
 Requires: tclx tcl-blt
 %py3_requires Xlib
@@ -135,13 +141,6 @@ sed -i 's|LDFLAGS := |LDFLAGS := -ltirpc |' src/Makefile
 #fix make install
 sed 's/ -o root//g' -i src/Makefile
 
-# explicitly set python-3
-find . -type f -name *.py | xargs sed -i \
-	-e '1s:^#!/usr/bin/env python$:#!/usr/bin/python%__python3_version:' \
-	-e '1s:^#!/usr/bin/python$:#!/usr/bin/python%__python3_version:' \
-	-e '1s:^#!/usr/bin/python2$:#!/usr/bin/python%__python3_version:' \
-	%nil
-
 %ifarch %e2k
 # unsupported as of lcc 1.25.17
 sed -i 's,-fno-fast-math,,' src/Makefile*
@@ -154,6 +153,7 @@ pushd src
     --enable-non-distributable=yes \
     --with-realtime=uspace \
     --disable-gtk2 \
+    --disable-gtk \
     %if_with docs
     --enable-build-documentation=pdf
     %endif
@@ -228,9 +228,6 @@ rm %buildroot%_libdir/*.a
 %_initdir/realtime
 %_udevrulesdir/*.rules
 %_desktopdir/*.desktop
-# Fix me!!! Exclude not working with python3 application:
-%exclude %_desktopdir/linuxcnc-pncconf.desktop
-%exclude %_desktopdir/linuxcnc-stepconf.desktop
 %_sysconfdir/X11/app-defaults/*
 %_datadir/axis
 %_datadir/%name
@@ -268,6 +265,12 @@ rm %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Fri Sep 10 2021 Anton Midyukov <antohami@altlinux.org> 2.9.0-alt0.5.20210910
+- new snapshot
+- include pncconf, stepconf again
+- disable gtk-1.0 build
+- add missing requires for gmoccapy
+
 * Thu Aug 26 2021 Anton Midyukov <antohami@altlinux.org> 2.9.0-alt0.4.20210826
 - new snapshot
 - remove unpackaged static libraries (fix build with LTO flag)
