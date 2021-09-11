@@ -1,6 +1,6 @@
 Name: ghostscript
 Version: 9.54.0
-Release: alt2
+Release: alt3
 
 %define ijsver	0.35
 %global origver %version
@@ -40,6 +40,7 @@ Patch113: Ubuntu-CVE-2020-15900.patch
 Patch500: ghostscript-alt-ijs-version.patch
 Patch501: alt-urw-fonts-naming.patch
 Patch502: ghostscript-9.23-100-run-dvipdf-securely.patch
+Patch600: CVE-2021-3781.patch
 
 #compatibility requires
 Requires: %name-classic = %version-%release
@@ -196,6 +197,7 @@ rm -rf expat freetype icclib jasper jpeg lcms lcms2 libpng openjpeg zlib cups/li
 %patch500 -p1
 %patch501 -p1
 %patch502 -p1
+%patch600 -p1
 
 sed -i 's/FT_CALLBACK_DEF(\(.*\))/static \1/g' base/fapi_ft.c
 sed -i 's/ -dNO/ -dNOSAFER -dNO/' lib/pfbtopfa
@@ -319,6 +321,9 @@ cp -a examples %buildroot%_docdir/%name-%version
 %_includedir/ijs
 
 %changelog
+* Sat Sep 11 2021 Fr. Br. George <george@altlinux.ru> 9.54.0-alt3
+- (Fixes: CVE-2021-3781)
+
 * Tue Aug 31 2021 Fr. Br. George <george@altlinux.ru> 9.54.0-alt2
 - Fix redundant SAFER usage (Closes: #40817)
 
