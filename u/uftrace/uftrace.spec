@@ -1,5 +1,9 @@
+# https://github.com/namhyung/uftrace/issues/1343
+%define optflags_lto %nil
+%def_with test
+
 Name: uftrace
-Version: 0.9.4
+Version: 0.10
 Release: alt1
 
 Summary: Function (graph) tracer for user-space
@@ -19,6 +23,10 @@ BuildRequires: libelf-devel
 BuildRequires: libdw-devel
 
 BuildRequires: pandoc
+%if_with test
+BuildRequires: /proc
+BuildRequires: python3
+%endif
 
 %description
 The uftrace tool is to trace and analyze execution of a program written in
@@ -29,13 +37,24 @@ and performance.
 
 %prep
 %setup
+subst 's|python$|python3|' tests/runtest.py
+# build only tests
+subst 's|test_unit|unittest|' Makefile
 
 %build
 %configure --libdir=%_libdir/%name
 %make_build
+%if_with test
+# build only here
+%make_build unittest
+%endif
 
 %install
 %makeinstall_std
+
+%check
+# segfaults without /proc
+make test
 
 %files
 %_bindir/%name
@@ -47,6 +66,10 @@ and performance.
 %doc README.md
 
 %changelog
+* Sat Sep 11 2021 Vitaly Lipatov <lav@altlinux.ru> 0.10-alt1
+- new version 0.10 (with rpmrb script)
+- enable tests
+
 * Tue Oct 20 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.4-alt1
 - new version 0.9.4 (with rpmrb script)
 
