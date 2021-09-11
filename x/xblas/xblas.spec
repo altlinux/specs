@@ -1,8 +1,9 @@
 %define sover 0
+%def_disable static
 
 Name: xblas
 Version: 1.0.248
-Release: alt1.3
+Release: alt2
 
 Summary: Extended and Mixed Precision version of BLAS
 License: MIT
@@ -80,7 +81,7 @@ This package contains development documentation for XBLAS.
 
 %build
 %autoreconf
-%configure --enable-fortran --disable-plain-blas
+%configure %{subst_enable static} --enable-fortran --disable-plain-blas
 %make_build lib
 # non SMP build
 %make test-lib
@@ -103,6 +104,10 @@ g77 -shared -lm -Wl,--whole-archive lib%name.a -Wl,--no-whole-archive \
 ln -s lib%name.so.%sover lib%name.so
 popd
 
+%if_disabled static
+rm -v %buildroot%_libdir/*.a
+%endif
+
 %check
 %make tests
 
@@ -116,13 +121,18 @@ popd
 %_libdir/*.so
 %_includedir/*
 
+%if_enabled static
 %files -n lib%name-devel-static
 %_libdir/*.a
+%endif
 
 %files -n lib%name-devel-doc
 %_docdir/lib%name-devel
 
 %changelog
+* Sat Sep 11 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.248-alt2
+- disable devel-static subpackage
+
 * Thu May 09 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0.248-alt1.3
 - fix source url
 - move test to check section, fix concurrent build issue
