@@ -9,9 +9,13 @@
 %def_enable seccomp
 %endif
 
+# clsync handles IPO including LTO on its own,
+# interference is not welcome
+%define optflags_lto %nil
+
 Name: clsync
 Version: 0.4.5
-Release: alt3
+Release: alt4
 
 Summary: Live sync tool based on inotify
 License: GPLv3+
@@ -170,6 +174,9 @@ mv doc/doxygen/html %buildroot%_docdir/%name/
 %_docdir/%name/html
 
 %changelog
+* Sun Sep 12 2021 Andrew Savchenko <bircoph@altlinux.org> 0.4.5-alt4
+- Fix build after gross LTO enforcement.
+
 * Wed Jul 28 2021 Ivan A. Melnikov <iv@altlinux.org> 0.4.5-alt3
 - Disable seccomp on %%mips (porting is required)
 
