@@ -1,10 +1,11 @@
 Name: make-initrd
-Version: 2.22.0
+Version: 2.23.0
 Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL-3.0
 Group: System/Base
+Url: https://github.com/osboot/make-initrd
 
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
@@ -18,6 +19,11 @@ BuildRequires: liblzma-devel
 BuildRequires: libzstd-devel
 BuildRequires: libelf-devel
 BuildRequires: libtirpc-devel
+
+# bootloader feature
+BuildRequires: libiniparser-devel
+BuildRequires: libnewt-devel
+BuildRequires: libslang2-devel
 
 Provides: make-initrd(crc32c) = 1
 
@@ -199,6 +205,16 @@ AutoReq: noshell, noshebang
 %description smartcard
 Feature adds smart card daemon and smart card utilities.
 
+%package boot
+Summary: Bootloader feature for %name
+Group: System/Base
+Requires: %name = %version-%release
+Requires: kexec-tools
+AutoReq: noshell, noshebang
+
+%description boot
+Make-initrd bootloader feature.
+
 %define _libexecdir %_prefix/libexec
 
 %prep
@@ -211,6 +227,8 @@ Feature adds smart card daemon and smart card utilities.
 	--with-bootdir=/boot \
 	--with-runtimedir=/lib/initrd \
 	--with-kbddir=/lib/kbd \
+	--with-imagename='initrd-$(KERNEL)$(IMAGE_SUFFIX).img' \
+	--with-feature-bootloader \
 	--with-busybox \
 	--with-libelf \
 	--with-zlib \
@@ -257,6 +275,7 @@ fi
 %exclude %_datadir/%name/guess/smart-card
 %exclude %_datadir/%name/features/sshfsroot
 %exclude %_datadir/%name/features/smart-card
+%exclude %_datadir/%name/features/bootloader
 %doc Documentation/*.md
 
 %files devmapper
@@ -300,7 +319,16 @@ fi
 %_datadir/%name/guess/smart-card
 %_datadir/%name/features/smart-card
 
+%files boot
+%_libexecdir/%name/features/bootloader
+%_datadir/%name/features/bootloader
+
 %changelog
+* Sat Sep 11 2021 Alexey Gladkov <legion@altlinux.ru> 2.23.0-alt1
+- New version (2.23.0).
+- Feature ucode: The absence of the firmware file is not an error (ALT#40790).
+- Set mtime of all initramfs files and directories to 01-01-1970 (ALT#40873).
+
 * Mon Aug 16 2021 Alexey Gladkov <legion@altlinux.ru> 2.22.0-alt1
 - New version (2.22.0).
 - Runtime:
