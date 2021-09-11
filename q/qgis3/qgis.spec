@@ -8,7 +8,7 @@
 %define rname qgis
 
 Name:    qgis3
-Version: 3.20.2
+Version: 3.20.3
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -201,13 +201,14 @@ export LD_LIBRARY_PATH=`pwd`/output/%_lib
 	-DGDAL_INCLUDE_DIR:PATH=%_includedir/gdal \
 	-DGDAL_LIBRARY:PATH=%_libdir/libgdal.so \
 	-DGEOS_LIBRARY:PATH=%_libdir/libgeos_c.so \
-        -DQWT_INCLUDE_DIR=%_includedir/qt5/qwt \
-        -DQWT_LIBRARY=%_libdir/libqwt-qt5.so \
+    -DQWT_INCLUDE_DIR=%_includedir/qt5/qwt \
+    -DQWT_LIBRARY=%_libdir/libqwt-qt5.so \
 	-DENABLE_TESTS:BOOL=FALSE \
 	-DWITH_QTMOBILITY:BOOL=FALSE \
-        -DLIBZIP_INCLUDE_DIR:PATH=%_includedir/libzip \
-        -DLIBZIP_CONF_INCLUDE_DIR:PATH=%_libdir/libzip/include \
-        -DQCA_INCLUDE_DIR:PATH=%_includedir/qt5/Qca-qt5/QtCrypto \
+    -DLIBZIP_INCLUDE_DIR:PATH=%_includedir/libzip \
+    -DLIBZIP_CONF_INCLUDE_DIR:PATH=%_libdir/libzip/include \
+    -DQCA_INCLUDE_DIR:PATH=%_includedir/qt5/Qca-qt5/QtCrypto \
+    -DWITH_OAUTH2_PLUGIN=OFF \
 	.
 %ifarch %ix86
 export NPROCS=8
@@ -361,6 +362,9 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %endif
 
 %changelog
+* Fri Sep 10 2021 Andrey Cherepanov <cas@altlinux.org> 3.20.3-alt1
+- New version.
+
 * Fri Aug 13 2021 Andrey Cherepanov <cas@altlinux.org> 3.20.2-alt1
 - New version.
 
