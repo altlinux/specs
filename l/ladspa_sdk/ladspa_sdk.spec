@@ -1,5 +1,5 @@
 Name: ladspa_sdk
-Version: 1.16
+Version: 1.17
 Release: alt1
 
 Summary: The Linux Audio Developer's Simple Plugin API (LADSPA)
@@ -38,7 +38,7 @@ Install this package if you want to create RPM packages that use %name.
 
 %prep
 %setup -n %{name}_%version
-%patch0 -p1 -b .makefile
+%patch -p1 -b .makefile
 
 %build
 %define _optlevel 3
@@ -114,6 +114,9 @@ install -pDm644 ladspa.rpm_macros %buildroot%_rpmlibdir/macros.d/%name
 %_rpmmacrosdir/*
 
 %changelog
+* Sat Sep 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.17-alt1
+- 1.17
+
 * Mon Sep 06 2021 Yuri N. Sedunov <aris@altlinux.org> 1.16-alt1
 - 1.16
 - fixed license tag
