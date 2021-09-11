@@ -1,6 +1,6 @@
 Name: wmhdplop
 Version: 0.9.9
-Release: alt7
+Release: alt8
 
 Summary: Cute hard drive monitoring applet
 License: GPL-2.0
@@ -26,6 +26,8 @@ BuildRequires: gkrellm-devel imake imlib2-devel libSM-devel libXext-devel xorg-c
 # fonts shuffle should hopefully settle down
 Requires: fonts-ttf-vera >= 1.10-alt3
 #Recommends: hddtemp
+
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 %description
 wmhdplop is yet another dockapp for WindowMaker, or any
@@ -92,6 +94,9 @@ install -pD -m644 %SOURCE3 %buildroot%_man1dir/%name.1
 %_libdir/gkrellm2/plugins/gkhdplop.so
 
 %changelog
+* Sat Sep 11 2021 Michael Shigorin <mike@altlinux.org> 0.9.9-alt8
+- fix LTO ftbfs
+
 * Wed Jul 14 2021 L.A. Kostis <lakostis@altlinux.ru> 0.9.9-alt7
 - add NVME support.
 - Fix License tag.
