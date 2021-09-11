@@ -4,7 +4,7 @@
 Name: qt5-enginio
 Summary: Qt5 - Enginio component
 Version: 1.6.2
-Release: alt2
+Release: alt3
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://doc.qt.io/qt-5/licensing.html
@@ -56,6 +56,10 @@ This package contains documentation for Qt5 %qt_module
 %setup
 %patch -p1
 
+# this code is trash, "nodiscard" should be at the beginning, not the end 
+sed -i "/Q_REQUIRED_RESULT;\{0,1\}$/{s|Q_REQUIRED_RESULT||;s|^|Q_REQUIRED_RESULT|}" \
+  src/enginio_{client,plugin}/enginio*.h tests/auto/common/common.h
+
 %build
 %qmake_qt5
 %make_build
@@ -105,6 +109,9 @@ popd
 %_qt5_examplesdir/*
 
 %changelog
+* Sat Sep 11 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.6.2-alt3
+- Fixed incorrect placement of "nodiscard"
+
 * Mon Aug 31 2020 Anton Midyukov <antohami@altlinux.org> 1.6.2-alt2
 - Fix build with qt5 5.15
 
