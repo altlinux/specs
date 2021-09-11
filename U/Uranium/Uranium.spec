@@ -6,8 +6,8 @@
 %add_python3_compile_include %_libexecdir/uranium
 
 Name:    Uranium
-Version: 4.8
-Release: alt2.1
+Version: 4.11.0
+Release: alt1
 
 Summary:  A Python framework for building Desktop applications.
 License: LGPL-3.0
@@ -37,6 +37,7 @@ BuildRequires:  python3-module-twisted-web
 BuildArch: noarch
 
 Source: %name-%version.tar
+# Source-url: https://github.com/Ultimaker/%name/archive/refs/tags/%version.tar.gz
 Patch: Uranium-4.7.1-set-default-languages.patch
 
 %description
@@ -92,6 +93,9 @@ python3 -m pytest -v
 %doc html LICENSE
 
 %changelog
+* Sat Sep 11 2021 Anton Midyukov <antohami@altlinux.org> 4.11.0-alt1
+- new version (4.11.0) with rpmgs script
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 4.8-alt2.1
 - NMU: spec: adapted to new cmake macros.
 

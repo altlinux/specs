@@ -3,7 +3,7 @@
 
 Name: CuraEngine
 Epoch: 1
-Version: 4.8
+Version: 4.11.0
 Release: alt1
 
 Summary: Engine for processing 3D models into G-code instructions for 3D printers
@@ -14,12 +14,7 @@ Url: https://github.com/Ultimaker/CuraEngine
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-
-# The cmake stuff would attempt to git clone this:
-# TODO package on it's own
-%define stb_commit e6afb9cbae4064da8c3e69af3ff5c4629579c1d2
-# https://github.com/nothings/stb/archive/%{stb_commit}.tar.gz
-Source1: stb.tar
+# Source-url: https://github.com/Ultimaker/%name/archive/refs/tags/%version.tar.gz
 
 Patch1: %name-rpath.patch
 Patch2: %name-static-libstdcpp.patch
@@ -35,6 +30,7 @@ BuildRequires: pkgconfig(protobuf)
 BuildRequires: libpolyclipping-devel
 BuildRequires: pkgconfig(RapidJSON)
 BuildRequires: libArcus-devel = %version
+BuildRequires: libstb-devel
 
 %description
 CuraEngine is a powerful, fast and robust engine for processing 3D
@@ -48,7 +44,6 @@ to the old Skeinforge engine.
 
 %prep
 %setup
-tar -xf %SOURCE1
 
 %patch1 -p1
 %patch2 -p1
@@ -62,7 +57,7 @@ rm -rf libs
        -DCURA_ENGINE_VERSION:STRING=%version \
        -DUSE_SYSTEM_LIBS:BOOL=ON \
        -DCMAKE_CXX_FLAGS_RELEASE_INIT:STRING="%optflags -fPIC" \
-       -DStb_INCLUDE_DIRS:PATH=./stb
+       -DStb_INCLUDE_DIRS:PATH=%_includedir/stb
 
 %cmake_build
 
@@ -78,6 +73,9 @@ rm -rf libs
 %doc LICENSE README.md
 
 %changelog
+* Sat Sep 11 2021 Anton Midyukov <antohami@altlinux.org> 1:4.11.0-alt1
+- new version (4.11.0) with rpmgs script
+
 * Sun Nov 15 2020 Anton Midyukov <antohami@altlinux.org> 1:4.8-alt1
 - New version 4.8
 

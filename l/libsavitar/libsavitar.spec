@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libsavitar
-Version: 4.8
-Release: alt2
+Version: 4.11.0
+Release: alt1
 Summary: C++ implementation of 3mf loading with SIP Python bindings
 License: LGPLv3+
 Group: Development/Other
@@ -11,6 +11,7 @@ Url: https://github.com/Ultimaker/libSavitar
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+# Source-url: https://github.com/Ultimaker/%name/archive/refs/tags/%version.tar.gz
 Patch: %name-no-pugixml.patch
 Patch1: find-sip3.patch
 
@@ -82,6 +83,9 @@ rm pugixml -rf
 %python3_sitelibdir/Savitar.so
 
 %changelog
+* Sat Sep 11 2021 Anton Midyukov <antohami@altlinux.org> 4.11.0-alt1
+- new version (4.11.0) with rpmgs script
+
 * Wed Jul 14 2021 Vitaly Lipatov <lav@altlinux.ru> 4.8-alt2
 - add python3-module-sip requirement
 

@@ -1,10 +1,10 @@
 %define oname keyring
 
-%def_without check
+#%%def_disable check
 
 Name: python3-module-%oname
-Version: 12.0.0
-Release: alt6
+Version: 21.8.0
+Release: alt1
 Summary: Keyring provides an easy way to access the system keyring service
 
 License: MIT
@@ -13,13 +13,15 @@ Url: https://pypi.python.org/pypi/keyring
 BuildArch: noarch
 
 Source: %oname-%version.tar
-Patch0: fix_deps.patch
+# Source-url: https://files.pythonhosted.org/packages/source/k/keyring/keyring-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools_scm
 
-%if_with check
+%if_disabled check
+%else
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-sugar
+BuildRequires: python3-module-importlib-metadata
 %endif
 
 %py3_requires ctypes entrypoints json logging pluggy secretstorage
@@ -32,21 +34,15 @@ The Python keyring lib provides an easy way to access the system
 keyring service from python. It can be used in any application 
 that needs safe password storage.
 
-%package tests
-Summary: Tests for keyring
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-The Python keyring lib provides an easy way to access the system 
-keyring service from python. It can be used in any application 
-that needs safe password storage.
-
-This package contains tests for keyring.
-
 %prep
 %setup -n %oname-%version
-%patch0 -p0
+
+rm -frv keyring.egg-info
+# Drop redundant shebangs.
+sed -i '1{\@^#!/usr/bin/env python@d}' keyring/cli.py
+# Drop slags from upstream of using his own versioning system.
+sed -i -e "\@use_vcs_version@s/^.*$/\tversion = \"%version\",/g" \
+       -e {/\'hgtools\'/d} setup.py
 
 %build
 %python3_build_debug
@@ -54,16 +50,20 @@ This package contains tests for keyring.
 %install
 %python3_install
 
+%check
+export PYTHONPATH=%buildroot/%python3_sitelibdir/
+py.test3 -v
+
 %files
-%doc *.rst *.txt LICENSE
+%doc *.rst LICENSE
 %_bindir/*
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-
-%files tests
-%python3_sitelibdir/*/tests
 
 %changelog
+* Sat Sep 11 2021 Anton Midyukov <antohami@altlinux.org> 21.8.0-alt1
+- new version (21.8.0) with rpmgs script
+- drop subpackage tests
+
 * Sat Jul 24 2021 Grigory Ustinov <grenka@altlinux.org> 12.0.0-alt6
 - Fixed BuildRequires.
 

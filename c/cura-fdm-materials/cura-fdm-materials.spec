@@ -1,5 +1,5 @@
 Name: cura-fdm-materials
-Version: 4.8
+Version: 4.11.0
 Release: alt1
 Summary: Cura FDM Material database
 License: Public Domain
@@ -8,6 +8,8 @@ Url: https://github.com/Ultimaker/fdm_materials
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+# Source-url: https://github.com/Ultimaker/fdm_materials/archive/refs/tags/%version.tar.gz
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-cmake
@@ -34,6 +36,9 @@ These files are needed to work with printers like Ultimaker 2+ and Ultimaker 3.
 %_datadir/cura/resources/materials
 
 %changelog
+* Sat Sep 11 2021 Anton Midyukov <antohami@altlinux.org> 4.11.0-alt1
+- new version (4.11.0) with rpmgs script
+
 * Sun Nov 15 2020 Anton Midyukov <antohami@altlinux.org> 4.8-alt1
 - new version 4.8
 

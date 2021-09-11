@@ -6,8 +6,8 @@
 
 Name: cura
 Epoch: 1
-Version: 4.8
-Release: alt2
+Version: 4.11.0
+Release: alt1
 Summary: 3D printer control software
 License: LGPLv3+
 
@@ -16,6 +16,7 @@ Url: https://github.com/Ultimaker/Cura
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+# Source-url: https://github.com/Ultimaker/%name/archive/refs/tags/%version.tar.gz
 
 # OpenSUSE path
 # PATCH-FIX-OPENSUSE disable-code-style-check.patch code style is no distro buisiness
@@ -41,6 +42,8 @@ BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pip
 BuildRequires: python3-module-savitar
 BuildRequires: python3-module-requests
+BuildRequires: python3-module-keyring >= 21
+BuildRequires: python3-module-dbus
 %endif
 
 %py3_requires serial zeroconf
@@ -52,7 +55,7 @@ Requires: qt5-graphicaleffects
 Requires: CuraEngine = %epoch:%version
 Requires: cura-fdm-materials = %version
 Requires: 3dprinter-udev-rules
-
+Requires: python3-module-keyring >= 21
 
 %description
 Cura is a project which aims to be an single software solution for 3D printing.
@@ -80,6 +83,19 @@ dos2unix docs/How_to_use_the_flame_graph_profiler.md
 # Wrong shebang
 %__subst '1s=^#!%_bindir/\(python\|env python\)3*=#!%__python3=' cura_app.py
 
+# create empty keyrings
+mkdir -p $HOME/.local/share/keyrings
+echo 'default' > $HOME/.local/share/keyrings/default
+
+cat > $HOME/.local/share/keyrings/default.keyring << EOF
+[keyring]
+display-name=default
+ctime=1559811805
+mtime=0
+lock-on-idle=false
+lock-after=false
+EOF
+
 %build
 %cmake -DCURA_VERSION:STRING=%version \
        -DCURA_BUILDTYPE=RPM \
@@ -100,20 +116,23 @@ dos2unix docs/How_to_use_the_flame_graph_profiler.md
 %__python3 -m pytest -v
 %endif
 
-desktop-file-validate %buildroot%_datadir/applications/%name.desktop
+desktop-file-validate %buildroot%_datadir/applications/com.ultimaker.cura.desktop
 
 %files -f %name.lang
 %doc LICENSE README.md
 %python3_sitelibdir/%name
 %_datadir/%name
-%_desktopdir/%name.desktop
-%_datadir/metainfo/%name.appdata.xml
+%_desktopdir/com.ultimaker.cura.desktop
+%_datadir/metainfo/com.ultimaker.cura.appdata.xml
 %_iconsdir/hicolor/*/apps/%name-icon.png
 %_datadir/mime/packages/%name.xml
 %_bindir/%name
 %_libexecdir/%name
 
 %changelog
+* Sat Sep 11 2021 Anton Midyukov <antohami@altlinux.org> 1:4.11.0-alt1
+- new version (4.11.0) with rpmgs script
+
 * Tue Apr 20 2021 Anton Midyukov <antohami@altlinux.org> 1:4.8-alt2
 - merge with p9
 

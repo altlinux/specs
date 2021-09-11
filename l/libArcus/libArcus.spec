@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libArcus
-Version: 4.8
-Release: alt2
+Version: 4.11.0
+Release: alt1
 
 Summary: Communication library between internal components for Ultimaker software
 License: LGPLv3+
@@ -13,6 +13,7 @@ Url: https://github.com/Ultimaker/libArcus
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+# Source-url: https://github.com/Ultimaker/%name/archive/refs/tags/%version.tar.gz
 Patch: fix_find_sip.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
@@ -24,7 +25,7 @@ BuildRequires: python3-dev cmake gcc-c++ pkgconfig(protobuf) python3-module-sip-
 %package devel
 Summary: Development files for %name
 Group:   Development/Other
-Requires: %name
+Requires: %name = %EVR
 
 %description devel
 Development files for %name.
@@ -67,6 +68,9 @@ sed -i 's/Python3_SITELIB/Python3_SITEARCH/' cmake/SIPMacros.cmake
 %python3_sitelibdir/*
 
 %changelog
+* Sat Sep 11 2021 Anton Midyukov <antohami@altlinux.org> 4.11.0-alt1
+- new version (4.11.0) with rpmgs script
+
 * Thu Jul 15 2021 Vitaly Lipatov <lav@altlinux.ru> 4.8-alt2
 - add python3-module-sip requirement
 
