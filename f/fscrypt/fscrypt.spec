@@ -2,7 +2,7 @@
 
 Name:		fscrypt
 Version:	0.3.0.0.5.e479779
-Release:	alt1
+Release:	alt2
 Summary:	A high-level tool for the management of Linux kernel filesystem encryption
 
 Group:		System/Kernel and hardware
@@ -15,6 +15,10 @@ ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-build-golang
 BuildRequires: libpam0-devel
 %{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm e2fsprogs expect keyutils}}
+
+# cgo can't handle LTO till golang 1.17
+# https://github.com/golang/go/commit/24e9707cbfa6b1ed6abdd4b11f9ddaf3aac5ad88
+%define optflags_lto %nil
 
 %description
 Fscrypt is a high-level tool for the management of Linux filesystem
@@ -54,6 +58,9 @@ vm-run --kvm=cond --sbin --udevd \
 %doc *.md
 
 %changelog
+* Sun Sep 12 2021 Andrew Savchenko <bircoph@altlinux.org> 0.3.0.0.5.e479779-alt2
+- Fix build after LTO enforement: disable LTO for now due to golang < 1.17 bug.
+
 * Fri May 14 2021 Vitaly Chikunov <vt@altlinux.org> 0.3.0.0.5.e479779-alt1
 - Run tests in %%check.
 
