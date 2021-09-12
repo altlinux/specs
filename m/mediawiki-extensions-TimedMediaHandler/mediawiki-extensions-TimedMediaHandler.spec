@@ -1,33 +1,30 @@
 %define ShortName TimedMediaHandler
 
 Name: mediawiki-extensions-%ShortName
-Version: 0.4.0
+Version: 1.36
 Release: alt1
+
+Summary: Mediawiki extension for isplay audio and video files in wiki pages
+
+License: GPLv2
+Group: Networking/WWW
+Url: http://www.mediawiki.org/wiki/Extension:%ShortName
 
 BuildArch: noarch
 
-Group: Networking/WWW
-Summary: Mediawiki extension for isplay audio and video files in wiki pages
-Url: http://www.mediawiki.org/wiki/Extension:%ShortName
+%setup_mediawiki_ext %version %ShortName
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+# Source-url: https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/TimedMediaHandler/+archive/refs/heads/%MWREL.tar.gz
+Source: %name-%version.tar
 
-License: GPL2
+BuildRequires(pre): rpm-build-mediawiki >= 0.2
+BuildRequires(pre): rpm-build-intro
 
-BuildPreReq: rpm-build-mediawiki >= 0.2
-BuildPreReq: rpm-build-intro
-Requires: mediawiki-common >= 1.15.1-alt4
-
-Requires: mediawiki-extensions-MwEmbedSupport >= 0.3.0
+Requires: mediawiki-common >= %mwversion
 
 AutoReq:yes,noosgi
 AutoProv:yes,noosgi
-# fixme
-#add_findprov_skiplist /usr/share/mediawiki/extensions/TimedMediaHandler/MwEmbedModules/EmbedPlayer/binPlayers/cortado/
 
-# It is new feature etersoft-build-utils since 1.7.6: supports commented real url
-# Source-url: https://git.wikimedia.org/zip/?r=mediawiki/extensions/%ShortName&h=REL1_23&format=zip
-Source: %name-%version.tar
 
 %description
 The TimedMediaHandler extension allows you to display
@@ -51,5 +48,11 @@ for scheduling transcoding jobs.
 %files -f %ShortName.files
 
 %changelog
+* Sun Sep 12 2021 Vitaly Lipatov <lav@altlinux.ru> 1.36-alt1
+- switch to build according to MW version
+
+* Mon Sep 06 2021 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt1
+- new version 0.6.0 (with rpmrb script)
+
 * Fri Oct 10 2014 Vitaly Lipatov <lav@altlinux.ru> 0.4.0-alt1
 - initial build for ALT Linux Sisyphus
