@@ -1,7 +1,7 @@
 %define pear_name Mail_Mime
 
 Name: pear-Mail_Mime
-Version: 1.10.10
+Version: 1.10.11
 Release: alt1
 
 Summary: Mail_Mime provides classes to create mime messages
@@ -55,6 +55,9 @@ It allows people to create Email messages consisting of:
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sun Sep 12 2021 Vitaly Lipatov <lav@altlinux.ru> 1.10.11-alt1
+- new version 1.10.11 (with rpmrb script)
+
 * Thu Aug 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.10.10-alt1
 - new version 1.10.10 (with rpmrb script)
 
