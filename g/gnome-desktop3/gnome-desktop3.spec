@@ -17,7 +17,7 @@
 %def_enable libseccomp
 
 Name: %{_name}3
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 
 Summary: Library with common API for various GNOME 3 modules
@@ -31,13 +31,13 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version%beta.tar.xz
 Source: %_name-%version.tar
 %endif
 # add e2k to list of libseccomp incompatible cpus
-Patch: gnome-desktop-3.36.0-alt-e2k.patch
+Patch: gnome-desktop-40.3-alt-e2k.patch
 
 Obsoletes: %_name
 Provides: %_name = %version-%release
 
-BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
-BuildRequires: yelp-tools
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
+BuildRequires: meson yelp-tools
 BuildRequires: libgdk-pixbuf-devel >= 2.36.5
 BuildRequires: libgtk+3-devel >= 3.3.6
 BuildRequires: libgio-devel >= 2.54.0
@@ -188,6 +188,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Sun Sep 12 2021 Yuri N. Sedunov <aris@altlinux.org> 40.4-alt1
+- 40.4
+- E2K: updated seccomp-related patch (mike@)
+
 * Thu Jul 15 2021 Yuri N. Sedunov <aris@altlinux.org> 40.3-alt1
 - 40.3
 
