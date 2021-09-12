@@ -1,7 +1,7 @@
 %def_enable python
 
 Name: sudo
-Version: 1.9.7
+Version: 1.9.7p2
 Release: alt1
 Epoch: 1
 
@@ -240,6 +240,11 @@ fi
 %_man8dir/sudo_plugin.8*
 
 %changelog
+* Sat Sep 11 2021 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.7p2-alt1
+- Update to latest stable release with bugfixes and improvements:
+ + Sudo now can handle the getgroups() function returning a different
+   number of groups for subsequent invocations.
+
 * Fri May 14 2021 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.7-alt1
 - Update to latest stable release
 
@@ -294,40 +299,40 @@ fi
 - Replace libsudo_util.so to libexecdir
 - Add new cvtsudoers utility
 
-* Fri Apr 27 2018 Evgeny Sinelnikov <sin@altlinux.org> 1:1.8.22-alt1%ubt
+* Fri Apr 27 2018 Evgeny Sinelnikov <sin@altlinux.org> 1:1.8.22-alt1
 - Update to latest winter release
 - Add sudowheel control with rule "ALL=(ALL) ALL" for wheel users enabled
   by default (closes: 18344)
 
-* Thu Nov 23 2017 Evgeny Sinelnikov <sin@altlinux.org> 1:1.8.21p2-alt1%ubt
+* Thu Nov 23 2017 Evgeny Sinelnikov <sin@altlinux.org> 1:1.8.21p2-alt1
 - Update to latest autumn release
 
-* Fri Jun 02 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.20p2-alt1%ubt
+* Fri Jun 02 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.20p2-alt1
 - Update to first summer security release
 
-* Wed May 31 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.20p1-alt1%ubt
+* Wed May 31 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.20p1-alt1
 - Update to spring security release ((Fixes: CVE-2017-1000367)
 
-* Mon May 29 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.20-alt1%ubt
+* Mon May 29 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.20-alt1
 - Update to latest spring release
 
-* Tue Jan 10 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.19p1-alt6%ubt
+* Tue Jan 10 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.19p1-alt6
 - Add compatibility trigger for /etc/sudoers.d and /etc/sudo.d
 - Avoid sudoreplay pre and post control warnings
 
-* Mon Jan 02 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.19p1-alt5%ubt
+* Mon Jan 02 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.19p1-alt5
 - Add warning if /etc/sudo.d directory exixsts
 
-* Wed Dec 28 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.19p1-alt4%ubt
+* Wed Dec 28 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.19p1-alt4
 - Disable sudo rule for root by default
 
-* Tue Dec 27 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.19p1-alt3%ubt
+* Tue Dec 27 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.19p1-alt3
 - Fixed relaxed control rule for sudoers
 
-* Mon Dec 26 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.19p1-alt2%ubt
+* Mon Dec 26 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.19p1-alt2
 - Build without *.la files in modules directory
 
-* Wed Dec 21 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.19p1-alt1%ubt
+* Wed Dec 21 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.19p1-alt1
 - Updated to last stable release 1.8.19p1 with sssd features
 
 * Thu Aug 04 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.17p1-alt2
