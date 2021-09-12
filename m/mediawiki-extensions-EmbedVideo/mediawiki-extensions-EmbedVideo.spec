@@ -1,29 +1,22 @@
 %define ShortName EmbedVideo
 
 Name: mediawiki-extensions-%ShortName
-Version: 2.1.3
+Version: 2.9.0
 Release: alt1
-
-BuildArch: noarch
-
-Group: Networking/WWW
-Url: http://www.mediawiki.org/wiki/Extension:%ShortName
-License: GPL
-
-%define mwversion 1.22
-# convert version for Source URL (set before Summary:)
-%define REL %(echo "REL%mwversion" | sed -e "s|\\.|_|g")
 
 Summary: MediaWiki extension which adds a parser function called #ev for embedding video clips
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+Group: Networking/WWW
+Url: http://www.mediawiki.org/wiki/Extension:%ShortName
+License: GPLv2
 
-
-BuildPreReq: rpm-build-mediawiki >= 0.2
-Requires: mediawiki-common >= %mwversion
-
-# Source-git: https://github.com/Alexia/mediawiki-embedvideo
+# Source-url: https://gitlab.com/hydrawiki/extensions/EmbedVideo/-/archive/v%version/EmbedVideo-v%version.tar.bz2
 Source: %name-%version.tar
+
+BuildArch: noarch
+
+BuildRequires(pre): rpm-build-mediawiki >= 0.2
+
 
 %description
 The EmbedVideo Extension is a MediaWiki extension which adds a parser function
@@ -39,5 +32,8 @@ in multiple languages and countries.
 %files -f %ShortName.files
 
 %changelog
+* Sun Sep 12 2021 Vitaly Lipatov <lav@altlinux.ru> 2.9.0-alt1
+- new version (2.9.0) with rpmgs script
+
 * Sun Sep 14 2014 Vitaly Lipatov <lav@altlinux.ru> 2.1.3-alt1
 - initial build for ALT Linux Sisyphus
