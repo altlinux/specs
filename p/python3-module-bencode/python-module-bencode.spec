@@ -1,7 +1,8 @@
-%define modulename bencode
+%define oname bencode.py
+%define modulename bencodepy
 
 Name: python3-module-bencode
-Version: 2.1.0
+Version: 4.0.0
 Release: alt1
 
 Summary: The BitTorrent bencode module as light-weight, standalone package
@@ -10,18 +11,20 @@ Group: Development/Python
 License: LGPLv2+
 Url: http://pypi.python.org/pypi/bencode.py
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-#Source-url: http://pypi.python.org/packages/source/b/bencode.py/bencode.py-%version.tar
-# Source-url: https://files.pythonhosted.org/packages/3d/cf/f4c737f89a66c8156e0aec627d82cb25154d5444e4cceee236d33a0c6923/bencode.py-2.1.0.tar.gz
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3 rpm-build-intro
+BuildRequires(pre): rpm-build-intro >= 2.2.5
+BuildRequires(pre): rpm-build-python3
+
 BuildRequires: python3-module-setuptools
 
 %py3_use pbr >= 1.9
+
+Provides: python3-module-%oname = %EVR
+Provides: python3-module-%modulename = %EVR
 
 %description
 This package simply re-packages the existing bencoding and bdecoding
@@ -42,10 +45,15 @@ Forked from the bencode package by Thomas Rampelberg.
 %python3_install
 
 %files
+%python3_sitelibdir/bencode/
 %python3_sitelibdir/%modulename/
-%python3_sitelibdir/%{modulename}*.egg-info
+%python3_sitelibdir/%{oname}*.egg-info
 
 %changelog
+* Sun Sep 12 2021 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt1
+- new version 4.0.0 (with rpmrb script)
+- cleanup spec
+
 * Thu Jun 20 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
 - new version 2.1.0, switch to fork bencode.py
 - build python3 only module
