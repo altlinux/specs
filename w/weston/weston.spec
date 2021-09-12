@@ -104,10 +104,12 @@
 # disabled by default
 %def_disable doc
 
+# running logind or seatd required
+%def_disable check
 
 Name: weston
 Version: %ver_major.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: Reference compositor for Wayland
 Group: Graphical desktop/Other
@@ -116,6 +118,8 @@ Url: http://wayland.freedesktop.org/
 
 Vcs: https://gitlab.freedesktop.org/wayland/weston.git
 Source: %name-%version.tar
+# https://gitlab.freedesktop.org/wayland/weston/-/issues/517
+Patch: weston-9.0.0-alt-ivi-shell-test_LTO.patch
 
 Requires: lib%name = %EVR
 Requires: xkeyboard-config
@@ -126,6 +130,7 @@ Requires: xorg-dri-swrast
 
 BuildRequires(pre): meson
 BuildRequires(pre): rpm-build-xdg
+%{?_enable_systemd:BuildRequires(pre): rpm-build-systemd}
 BuildRequires: libGLES-devel libglvnd-devel
 BuildRequires: libdrm-devel
 BuildRequires: libgbm-devel
@@ -143,7 +148,6 @@ BuildRequires: libinput-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libdbus-devel
 BuildRequires: libpam0-devel
-%{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
 %{?_enable_image_jpeg:BuildRequires: libjpeg-devel}
 %{?_enable_image_webp:BuildRequires: libwebp-devel}
 %{?_enable_color_management_colord:BuildRequires: libcolord-devel}
@@ -160,6 +164,7 @@ BuildRequires: pkgconfig(xcursor) pkgconfig(cairo-xcb)}
 BuildRequires: pkgconfig(gstreamer-%gst_api_ver) pkgconfig(gstreamer-allocators-%gst_api_ver)
 BuildRequires: pkgconfig(gstreamer-app-%gst_api_ver) pkgconfig(gstreamer-video-%gst_api_ver)}
 %{?_enable_test_junit_xml:BuildRequires: libxml2-devel}
+%{?_enable_check:BuildRequires: xkeyboard-config /%_bindir/Xwayland}
 
 %description
 Weston is the reference wayland compositor that can run on KMS, under X11
@@ -199,6 +204,7 @@ Header files for doing development with the weston.
 
 %prep
 %setup
+%patch -p1 -b .ivi
 
 %build
 %meson \
@@ -207,6 +213,7 @@ Header files for doing development with the weston.
 	%{?_disable_backend_rdp:-Dbackend-rdp=false} \
 	%{?_disable_xwayland:-Dxwayland=false} \
 	%{?_disable_remoting:-Dremoting=false} \
+	%{?_disable_shell_ivi:-Dshell-ivi=false} \
 	%{?_disable_pipewire:-Dpipewire=false} \
 	%{?_disable_test_junit_xml:-Dtest-junit-xml=false}
 %nil
@@ -221,6 +228,9 @@ sed \
 	.gear/%name.ini > %buildroot/%_xdgconfigdir/%name/%name.ini
 
 chmod +s %buildroot/%_bindir/%name-launch
+
+%check
+%__meson_test
 
 %files
 %dir %_xdgconfigdir/%name
@@ -279,6 +289,9 @@ chmod +s %buildroot/%_bindir/%name-launch
 %_datadir/pkgconfig/lib%name-%api_ver-protocols.pc
 
 %changelog
+* Sun Sep 12 2021 Yuri N. Sedunov <aris@altlinux.org> 9.0.0-alt1.1
+- tests/ivi-layout-test-plugin.c: fixed for build with LTO
+
 * Thu Mar 25 2021 Yuri N. Sedunov <aris@altlinux.org> 9.0.0-alt1
 - 9.0.0
 
