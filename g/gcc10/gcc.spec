@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 10.3.1
-Release: alt3
+Release: alt4
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -97,7 +97,7 @@ Url: https://gcc.gnu.org/
 # and changes interpackage dependencies to non-strict (>=);
 # this gcc is expected to be installable at stage 2.
 # NB: compat and precompat are mutually exclusive.
-%def_disable precompat
+%def_enable precompat
 %def_disable compat
 
 # For some architectures we do not want multilib support.
@@ -1206,6 +1206,9 @@ fi
 
 %define _configure_script ../configure
 %define _configure_target --host=%_target_platform --build=%_target_platform --target=%gcc_target_platform
+# Remove lto flags, these flags break GCC build, but GCC supports
+# special bootstrap-lto build config.
+%global optflags_lto %nil
 %remove_optflags -frecord-gcc-switches %optflags_nocpp %optflags_notraceback %optflags_warnings
 export CC=%__cc \
 	CFLAGS="%optflags" \
@@ -1293,7 +1296,11 @@ CONFIGURE_OPTS="\
 %ifarch %libvtv_arches
 	--enable-vtable-verify \
 %endif
-	%{subst_enable bootstrap} \
+%if_enabled bootstrap
+	--enable-bootstrap \
+	--with-build-config=bootstrap-lto \
+	--enable-link-serialization=1 \
+%endif
 	--enable-languages="c,c++%{?_with_fortran:,fortran}%{?_with_objc:,objc,obj-c++}%{?_with_ada:,ada}%{?_with_go:,go}%{?_enable_d:,d},lto" \
 	--enable-plugin \
 	%{?_with_objc:%{?_enable_objc_gc:--enable-objc-gc}} \
@@ -2162,6 +2169,11 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Sat Aug 28 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.3.1-alt4
+- Rebuilt in precompat mode to prepare for gcc11 build.
+- Fixed FTBFS with global link-time optimization flags (by disabling them,
+  but using internal LTO build capabilities).
+
 * Sat Jul 31 2021 Vitaly Chikunov <vt@altlinux.org> 10.3.1-alt3
 - Move contents of libexecdir to libdir (ALT#40611).
 
