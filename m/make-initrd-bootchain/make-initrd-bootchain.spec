@@ -2,7 +2,7 @@
 %define child  bootchain
 
 Name: %parent-%child
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: %child modules set for %name
@@ -32,6 +32,15 @@ Source0: %name-%version.tar
 
 %description
 Meta-package with full set of the %child modules for %parent
+
+%package doc
+Summary: %parent-%child documentation
+Group: Documentation
+BuildArch: noarch
+AutoReq: noshell, noshebang
+
+%description doc
+Documentation, testing and development files for %parent-%child
 
 %package core
 Summary: %child-core module for %parent
@@ -141,8 +150,10 @@ liverw sub-module for %name
 %setup -q
 
 %install
-mkdir -p -m 755 %buildroot%_datadir/%parent/features
-cp -av %child-* %buildroot%_datadir/%parent/features/
+./mix-altboot.sh
+mkdir -p -- "%buildroot%_datadir/%parent"/features "%buildroot%_docdir"
+cp -aRf -- %child-* "%buildroot%_datadir/%parent"/features/
+mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%name"
 
 %ifnarch %e2k
 %check
@@ -150,6 +161,9 @@ cp -av %child-* %buildroot%_datadir/%parent/features/
 %endif
 
 %files
+
+%files doc
+%_docdir/%name
 
 %files core
 %_datadir/%parent/features/%child-core
@@ -179,6 +193,11 @@ cp -av %child-* %buildroot%_datadir/%parent/features/
 %_datadir/%parent/features/%child-liverw
 
 %changelog
+* Sun Sep 12 2021 Leonid Krivoshein <klark@altlinux.org> 0.1.4-alt1
+- major fixes and improvements around using RAM-disks and tmpfs.
+- package documentation reorganized and separated.
+- old feature code and logs complete removed.
+
 * Mon Sep 06 2021 Leonid Krivoshein <klark@altlinux.org> 0.1.3-alt1
 - localdev: no more choice dialog, if found single device.
 - altboot/get_free_ramdisk(): added hack for RT kernels.
