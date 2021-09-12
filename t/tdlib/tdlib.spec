@@ -1,11 +1,11 @@
 # TODO: use system sqlite
 
-%def_enable static
+%def_disable static
 # Enable or disable clang compiler...
 %def_with clang
 
 Name: tdlib
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: Cross-platform library for building Telegram clients
@@ -35,17 +35,26 @@ BuildRequires: cmake
 
 BuildRequires(pre): rpm-build-intro >= 2.1.5
 
+# Building with default settings require at least 16 GB of free RAM.
+# Builds on ARM and other low-memory architectures are failing.
+#ExclusiveArch: %ix86 x86_64 arch64
+ExcludeArch: armh
+
+# minimalize memory using
+%ifarch %ix86 armh
+%define optflags_debug -g0
+%endif
+
+
 %if_with clang
 BuildRequires: clang
-BuildRequires: llvm
+BuildRequires: llvm llvm-devel
+# clang-12: error: unsupported argument 'auto' to option 'flto='
+%define optflags_lto -flto=thin
 %remove_optflags -frecord-gcc-switches
 %endif
 
-# Building with default settings require at least 16 GB of free RAM.
-# Builds on ARM and other low-memory architectures are failing.
-#ExclusiveArch: %ix86 x86_64
-
-# use no more than system_memory/2300 build procs (see https://bugzilla.altlinux.org/show_bug.cgi?id=35112)
+# use no more than system_memory/6300 build procs (see https://bugzilla.altlinux.org/show_bug.cgi?id=35112)
 %_tune_parallel_build_by_procsize 6300
 
 %description
@@ -71,7 +80,7 @@ Requires: %name-devel = %EVR
 
 %prep
 %setup
-%patch -p1
+%patch -p2
 
 %if_with packaged_sqlite
 rm -rfv sqlite/
@@ -105,6 +114,7 @@ rm -fv %buildroot%_libdir/*.a
 %files devel
 %_includedir/td
 %_libdir/libtd*.so
+%_pkgconfigdir/*.pc
 %_libdir/cmake/Td
 
 %if_enabled static
@@ -113,6 +123,10 @@ rm -fv %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Sat Sep 11 2021 Vitaly Lipatov <lav@altlinux.ru> 1.7.0-alt1
+- new version 1.7.0 (with rpmrb script)
+- fix build, disable build for armh (due clang segfault)
+
 * Mon Sep 28 2020 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1
 - new version 1.6.0 (with rpmrb script)
 - cleanup spec, enable static subpackage
