@@ -2,7 +2,7 @@
 
 Name: cifs-utils
 Version: 6.13
-Release: alt2
+Release: alt3
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
 License: GPLv3+
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 
 Patch2: cifs-utils-alt-python3.patch
 Patch3: cifs-utils-alt-docutils.patch
+Patch4: cifs-utils-6.13_fix-regression-in-kerberos-mount.patch
 
 BuildRequires(pre): rpm-macros-pam0
 BuildRequires: libcap-ng-devel libkeyutils-devel libkrb5-devel libtalloc-devel libwbclient-devel libpam-devel
@@ -53,6 +54,7 @@ provide these credentials to the kernel automatically at login.
 %setup
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %autoreconf
@@ -119,13 +121,17 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 %endif
 
 %changelog
+* Sun Sep 12 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.13-alt3
+- Fix kerberos mount regression in commit e461afd (Arch).
+  This is the fix for CVE-2021-20208 (Closes: 40887)
+
 * Thu Jul 29 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.13-alt2
 - Rebuild with explicitly enabled man pages and other build options
 - Added rst2man.py3 to configure search list for compatibility with branch p9
 
 * Sat May 15 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.13-alt1
 - Update to latest release supported cifs.upcall trying to use container
-  ipc/uts/net/pid/mnt/user namespaces
+  ipc/uts/net/pid/mnt/user namespaces (Fixes: CVE-2021-20208)
 
 * Sat May 15 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.12-alt2
 - Rebuild with python3 only
