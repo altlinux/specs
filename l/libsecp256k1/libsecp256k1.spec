@@ -11,8 +11,8 @@ BuildRequires: gcc-c++ valgrind-devel
 
 Name:		libsecp256k1
 Summary:	Optimized C library for EC operations on curve secp256k1
-Version:	0.22.0
-Release:	alt2_1
+Version:	0.24.1
+Release:	alt1
 License:	MIT
 Group:		System/Libraries
 Url:		https://github.com/Bitcoin-ABC/secp256k1
@@ -66,6 +66,10 @@ export CC_FOR_BUILD=gcc
 export CFLAGS_FOR_BUILD="%{optflags}"
 %configure \
 	--enable-module-recovery \
+	--enable-module-ecdh \
+%ifnarch x86_64
+	--with-asm=no \
+%endif
 	--disable-static
 %make_build
 
@@ -83,6 +87,7 @@ make check
 
 %files -n %{devname}
 %{_includedir}/secp256k1.h
+%{_includedir}/secp256k1_ecdh.h
 %{_includedir}/secp256k1_preallocated.h
 %{_includedir}/secp256k1_schnorr.h
 %{_includedir}/secp256k1_recovery.h
@@ -91,6 +96,10 @@ make check
 
 
 %changelog
+* Sun Sep 12 2021 Vitaly Lipatov <lav@altlinux.ru> 0.24.1-alt1
+- new version (0.24.1) with rpmgs script
+- add --enable-module-ecdh, disable asm for non x86_64
+
 * Fri Aug 13 2021 Igor Vlasenko <viy@altlinux.org> 0.22.0-alt2_1
 - enabled module recovery (closes: #40719)
 
