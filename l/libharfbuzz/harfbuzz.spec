@@ -1,19 +1,19 @@
 %def_disable snapshot
 
 %define _name harfbuzz
-%define ver_major 2.8
+%define ver_major 2.9
 %def_with graphite2
 %def_with icu
 %def_with gobject
 %def_enable introspection
-%def_enable gtk_doc
+%def_enable docs
 
 %ifnarch armh
 %def_enable check
 %endif
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: HarfBuzz is an OpenType text shaping engine
@@ -28,11 +28,12 @@ Vcs: https://github.com/harfbuzz/harfbuzz.git
 Source: %_name-%version.tar
 %endif
 
-BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: gtk-doc gcc-c++ glib2-devel libfreetype-devel libcairo-devel
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
+BuildRequires: meson gcc-c++ glib2-devel libfreetype-devel libcairo-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_with_graphite2:BuildRequires: libgraphite2-devel}
 %{?_with_icu:BuildRequires: libicu-devel}
+%{?_enable_docs:BuildRequires: gtk-doc}
 %{?_enable_check:BuildRequires: python3-test fonttools}
 
 %description
@@ -108,26 +109,23 @@ GObject introspection devel data for the HarfBuzz library
 %setup -n %_name-%version
 
 %build
-export PYTHON=%__python3
-%add_optflags %(getconf LFS_CFLAGS)
-%autoreconf
-%configure --disable-static \
-	--with-glib \
-	--with-freetype \
-	--with-cairo \
-	%{subst_with icu} \
-	%{subst_with graphite2} \
-        %{subst_with gobject} \
-        %{subst_enable introspection} \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
+%meson \
+	-Dglib=enabled \
+	-Dfreetype=enabled \
+	-Dcairo=enabled \
+	%{?_with_icu:-Dicu=enabled} \
+	%{?_with_graphite2:-Dgraphite=enabled} \
+        %{?_enable_gobject:-Dgobject=enabled} \
+        %{?_enable_introspection:-Dintrospection=enabled} \
+	%{?_disable_docs:-Ddocs=disabled}
 %nil
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-%make check
+%__meson_test
 
 %files
 %_libdir/%name.so.*
@@ -150,7 +148,7 @@ export PYTHON=%__python3
 %_pkgconfigdir/%_name-gobject.pc
 %endif
 
-%if_enabled gtk_doc
+%if_enabled docs
 %files devel-doc
 %_datadir/gtk-doc/html/*
 %endif
@@ -180,6 +178,9 @@ export PYTHON=%__python3
 %endif
 
 %changelog
+* Sun Sep 12 2021 Yuri N. Sedunov <aris@altlinux.org> 2.9.1-alt1
+- 2.9.1 (ported to Meson build system)
+
 * Fri Jul 09 2021 Yuri N. Sedunov <aris@altlinux.org> 2.8.2-alt1
 - 2.8.2
 
