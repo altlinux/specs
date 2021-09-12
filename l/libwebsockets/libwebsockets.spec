@@ -1,6 +1,6 @@
 Name: libwebsockets
-Version: 4.2.0
-Release: alt3
+Version: 4.2.2
+Release: alt1
 
 Summary: A lightweight C library for Websockets
 
@@ -94,6 +94,9 @@ find %buildroot -name '*_static.pc' -exec rm -f {} ';'
 %_datadir/%name-test-server/
 
 %changelog
+* Sun Sep 12 2021 Vitaly Lipatov <lav@altlinux.ru> 4.2.2-alt1
+- new version 4.2.2 (with rpmrb script)
+
 * Wed Aug 25 2021 Vitaly Lipatov <lav@altlinux.ru> 4.2.0-alt3
 - drop BR thrown in 4.2.0-alt1
 
