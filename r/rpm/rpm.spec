@@ -5,7 +5,7 @@
 %def_disable rpmbuild
 %def_with xz
 %def_with zstd
-%def_with beecrypt
+%define crypto libgcrypt
 %def_with memcached
 %def_enable default_priority_distbranch
 %def_with profile
@@ -20,7 +20,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt27
+Release: alt28
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -52,12 +52,16 @@ BuildRequires: gawk
 BuildRequires: elfutils-devel >= 0.112
 BuildRequires: libelf-devel
 BuildRequires: readline-devel zlib-devel
-%if_with beecrypt
+BuildRequires: libsha1detectcoll-devel
+%if "%crypto" == "libgcrypt"
+BuildRequires: libgcrypt-devel
+%else
+%if "%crypto" == "beecrypt"
 BuildRequires: libbeecrypt-devel
 BuildRequires: libblake2-devel
-BuildRequires: libsha1detectcoll-devel
 %else
 BuildRequires: nss-devel
+%endif
 %endif
 #BuildRequires: nss-softokn-freebl-devel
 # The popt version here just documents an older known-good version
@@ -301,7 +305,7 @@ done;
 	--with-external-db \
 	%{subst_enable plugins} \
 	--with-lua \
-	%{subst_with beecrypt} \
+	--with-crypto=%crypto \
 	--with-selinux \
 	--with-cap \
 	--with-acl \
@@ -416,7 +420,8 @@ ls -A tests/rpmtests.dir 2>/dev/null ||:
 [ ! -s tests/rpmtests.log ] || cat tests/rpmtests.log
 
 # Run no-pass-on-failure test(s).
-rpmio/test_digest
+rpmio/test_digest_blake2b
+rpmio/test_digest_sha1dc
 
 #%%pre
 #[ ! -L %%_rpmlibdir/noarch-alt-%%_target_os ] || rm -f %%_rpmlibdir/noarch-alt-%%_target_os ||:
@@ -581,6 +586,9 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Sun Sep 12 2021 Vitaly Chikunov <vt@altlinux.org> 4.13.0.1-alt28
+- Use libgcrypt instead of libbeecrypt.
+
 * Thu Sep 09 2021 Vitaly Chikunov <vt@altlinux.org> 4.13.0.1-alt27
 - rpmio: Add sha1dc algorithm to replace sha1.
 
