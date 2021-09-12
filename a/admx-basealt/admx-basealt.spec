@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,12 @@ done
 %_destdir
 
 %changelog
+* Sun Sep 12 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.1.6-alt1
+- Added new categories and policies for Mate settings:
+ + background;
+ + screensaver;
+ + user restrictions.
+
 * Sun Jul 18 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.1.5-alt1
 - Add new categories and policies:
  + SSHD and Systemd categories

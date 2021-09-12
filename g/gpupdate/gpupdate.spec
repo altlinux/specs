@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpupdate
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 
 Summary: GPT applier
@@ -23,6 +23,8 @@ Requires: pam-config >= 1.9.0
 Requires: autofs
 # This is needed by shortcuts_applier
 Requires: desktop-file-utils
+# This is needed for smb file cache support
+Requires: python3-module-smbc >= 1.0.23-alt3
 
 Source0: %name-%version.tar
 
@@ -48,6 +50,7 @@ mkdir -p \
 	%buildroot%_bindir/ \
 	%buildroot%_sbindir/ \
 	%buildroot%_cachedir/%name/ \
+	%buildroot%_cachedir/%{name}_file_cache/ \
 	%buildroot%_cachedir/%name/creds
 
 ln -s %python3_sitelibdir/gpoa/gpoa \
@@ -105,6 +108,7 @@ fi
 %config(noreplace) %_sysconfdir/%name/%name.ini
 %config(noreplace) %_sysconfdir/pam.d/system-policy-%name
 %dir %attr(0700, root, root) %_cachedir/%name
+%dir %attr(0755, root, root) %_cachedir/%{name}_file_cache
 %dir %attr(0700, root, root) %_cachedir/%name/creds
 %exclude %python3_sitelibdir/gpoa/.pylintrc
 %exclude %python3_sitelibdir/gpoa/.prospector.yaml
@@ -112,6 +116,14 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Mon Sep 06 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.9.3-alt1
+- Use NetBIOS name for Kerberos authentification
+- Add support actions (create, update, delete, replace) for Shortcuts
+- Add support GSettings with locks feature
+- Add support file cache for special GSettings policy:
+  Software\BaseALT\Policies\GSettings\org.mate.background.picture-filename
+  (requires python smbc module with use_kerberos option support)
+
 * Wed Jul 28 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.9.2-alt1
 - Fix Shortcuts applier double running in user context
 - Add LogonUser variable to expand_windows_var() function
