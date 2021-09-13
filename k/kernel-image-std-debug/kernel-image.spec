@@ -2,7 +2,7 @@ Name: kernel-image-std-debug
 Release: alt1
 epoch:2
 %define kernel_base_version	5.10
-%define kernel_sublevel .63
+%define kernel_sublevel .64
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -696,8 +696,17 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Sep 13 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.64-alt1
+- v5.10.64
+
+* Thu Sep 09 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.63-alt2
+- merge in "Disable all sleep states on BE-M1000 based boards."
+
 * Thu Sep 09 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.63-alt1
 - v5.10.63
+
+* Mon Sep 06 2021 Dmitry Terekhin <jqt4@altlinux.org> 2:5.10.62-alt2
+- Disable all sleep states on BE-M1000 based boards.
 
 * Fri Sep 03 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.62-alt1
 - v5.10.62
