@@ -1,8 +1,8 @@
 %def_without pam
 
 Name: moodle
-Version: 3.11.2
-Release: alt3
+Version: 3.11.3
+Release: alt1
 
 Summary: The world's open source learning platform
 License: GPLv3
@@ -234,6 +234,9 @@ for ar in *.zip;do unzip "$ar" >/dev/null && rm -f "$ar";done
 %endif
 
 %changelog
+* Mon Sep 13 2021 Andrey Cherepanov <cas@altlinux.org> 3.11.3-alt1
+- New version.
+
 * Fri Aug 06 2021 Andrey Cherepanov <cas@altlinux.org> 3.11.2-alt3
 - Requires recommended php7-sodium.
 
