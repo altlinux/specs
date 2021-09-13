@@ -1,7 +1,7 @@
 %def_without nautilus
 
 Name: tortoisehg
-Version: 5.8
+Version: 5.9.1
 Release: alt1
 
 Summary: Mercurial GUI command line tool thg
@@ -12,7 +12,6 @@ Group: Development/Other
 Url: https://tortoisehg.bitbucket.io
 
 Source: %name-%version.tar
-Patch: tortoisehg-5.8-fix_building_docs.patch
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -49,7 +48,6 @@ Note that the nautilus extension has been deprecated upstream.
 
 %prep
 %setup
-%patch -p2
 
 cat > tortoisehg/util/config.py << EOT
 bin_path     = "%_bindir"
@@ -98,6 +96,9 @@ rm -rf %buildroot%_datadir/nautilus-python/extensions/nautilus-thg.py*
 %endif
 
 %changelog
+* Mon Sep 13 2021 Grigory Ustinov <grenka@altlinux.org> 5.9.1-alt1
+- Build new version.
+
 * Tue May 25 2021 Grigory Ustinov <grenka@altlinux.org> 5.8-alt1
 - Build new version.
 
