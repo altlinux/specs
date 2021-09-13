@@ -1,12 +1,19 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%global optflags_lto %nil
+
 Name: dhcdrop
 Version: 0.5
-Release: alt2
+Release: alt3
 Summary: Drop dhcp offers from illegitimate dhcp server.
 Group: System/Servers
-License: GPL
-Packager: Andrew Clark <andyc@altlinux.org>
+License: GPL-2.0
 Url: http://www.netpatch.ru/projects/dhcdrop/
-Source0: http://www.netpatch.ru/projects/dhcdrop/%name-%version.tar.bz2
+
+# http://www.netpatch.ru/projects/dhcdrop/%name-%version.tar.bz2
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Tue Jul 14 2009 (-bi)
 BuildRequires: libpcap-devel
@@ -15,15 +22,14 @@ BuildRequires: libpcap-devel
 Drop dhcp offers from illegitimate dhcp server
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure --bindir=%_sbindir --enable-static=no
-
-%make
+%make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %name
 
@@ -34,6 +40,9 @@ Drop dhcp offers from illegitimate dhcp server
 %_mandir/ru/man8/*
 
 %changelog
+* Mon Sep 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5-alt3
+- Disabled LTO.
+
 * Wed Apr 17 2013 Andrew Clark <andyc@altlinux.org> 0.5-alt2
 - rebuilt for debuginfo
 
