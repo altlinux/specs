@@ -2,9 +2,10 @@
 
 %define zmuser apache2
 %define zmgroup _webserver
+ExcludeArch: armh
 
 Name: zoneminder
-Version: 1.36.5
+Version: 1.36.6
 Release: alt1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
@@ -24,7 +25,7 @@ Source9: php7-fpm-zoneminder.conf
 Conflicts: zm <= 1.22.3
 BuildRequires(pre): rpm-macros-webserver-common
 Requires: libgnutls libgnutls-openssl zlib ffmpeg
-Requires: php7-pdo_mysql php7-openssl php7-gd
+Requires: php7-pdo_mysql php7-openssl php7-gd php7-apcu
 Requires: su
 Requires: perl-Data-Entropy perl-Crypt-Eksblowfish perl-Sys-Mmap webserver perl-Pod-Usage 
 Requires: perl-Sys-MemInfo perl-Number-Bytes-Human perl-JSON-MaybeXS perl-Sys-CPU 
@@ -47,7 +48,6 @@ too much degradation of performance. This package includes cambozola.jar.
 Summary: Zoneminder Web API
 Group: Networking/WWW
 Requires: zoneminder
-BuildArch: noarch
 
 %description api
 The API is built in CakePHP and lives under the /api directory. It provides a RESTful service 
@@ -163,6 +163,11 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Fri Sep 10 2021 Anton Farygin <rider@altlinux.ru> 1.36.6-alt1
+- 1.36.6
+- added php7-apcu to Requires (closes: #39340)
+- exclude the armh architecture due to build errors
+
 * Thu Jul 08 2021 Anton Farygin <rider@altlinux.ru> 1.36.5-alt1
 - 1.36.5
 
