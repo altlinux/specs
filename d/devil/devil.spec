@@ -1,11 +1,14 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%global optflags_lto %optflags_lto -ffat-lto-objects
 
 %define realname DevIL
 
 Name: devil
 Version: 1.7.8
-Release: alt3
-
+Release: alt4
 Summary: Cross-platform image loading and manipulation toolkit
 Group: System/Libraries
 License: LGPLv2+
@@ -82,6 +85,8 @@ for a developer to learn and use. This package contains documentation
 %patch3 -p1
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %configure \
 	--disable-win32 \
 	--disable-directx \
@@ -111,6 +116,9 @@ rm -rf %buildroot%_infodir/*
 %doc README Libraries.txt TODO CREDITS AUTHORS
 
 %changelog
+* Mon Sep 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.8-alt4
+- Fixed build with LTO.
+
 * Tue Sep 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.8-alt3
 - NMU: fixed build with new libjasper.
 
