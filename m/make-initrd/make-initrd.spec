@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 2.23.0
-Release: alt1
+Release: alt2
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -62,6 +62,7 @@ Requires: util-linux >= 2.17.2-alt1
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
+Patch0: 0001-Reset-mtime-time-only-for-regular-files.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -219,6 +220,7 @@ Make-initrd bootloader feature.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 ./autogen.sh
@@ -324,6 +326,9 @@ fi
 %_datadir/%name/features/bootloader
 
 %changelog
+* Mon Sep 13 2021 Alexey Gladkov <legion@altlinux.ru> 2.23.0-alt2
+- Set mtime only for regular files (ALT#40900).
+
 * Sat Sep 11 2021 Alexey Gladkov <legion@altlinux.ru> 2.23.0-alt1
 - New version (2.23.0).
 - Feature ucode: The absence of the firmware file is not an error (ALT#40790).
