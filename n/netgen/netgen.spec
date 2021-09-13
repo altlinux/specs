@@ -15,7 +15,7 @@
 
 Name: netgen
 Version: 6.2.2104
-Release: alt1
+Release: alt2
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPLv2
 Group: Sciences/Mathematics
@@ -200,6 +200,10 @@ This package contains Python bindings of NETGEN.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%ifarch %e2k
+sed -i "/data{_mm/{s|{|(|;s|}|)|}" libsrc/core/simd_{sse,avx}.hpp
+sed -i "s|defined(__FMA__) && !defined(__AVX512F__)|& \&\& !defined(__e2k__)|" libsrc/core/simd_avx.hpp
+%endif
 
 echo -n v%version > version.txt
 
@@ -229,6 +233,13 @@ sed -i 's|<tkInt.h>|<tk/generic/tkInt.h>|' ng/Togl2.1/togl.c
 %endif
 
 %build
+%ifarch %e2k
+%add_optflags -DNETGEN_ARCH_AMD64 -Wno-return-type -Wno-sign-compare
+%endif
+%ifarch aarch64
+# clang doesn't support -flto=auto
+%define optflags_lto %nil
+%endif
 
 ###########################################################################
 ###################          SERIAL VER           #########################
@@ -387,6 +398,10 @@ rm -rf %buildroot%_datadir/%name/doc
 %endif #openmpi
 
 %changelog
+* Mon Sep 13 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 6.2.2104-alt2
+- Added e2k architecture support.
+- Disabled -flto for Clang on aarch64.
+
 * Thu Jul 15 2021 Andrey Cherepanov <cas@altlinux.org> 6.2.2104-alt1
 - New version.
 
