@@ -1,6 +1,7 @@
+%def_disable static
 Name: ustr
 Version: 1.0.4
-Release: alt4
+Release: alt5
 Summary: String library, very low memory overhead, simple to import
 Group: System/Libraries
 License: MIT or LGPLv2+ or BSD
@@ -81,6 +82,9 @@ Requires: lib%name-devel-debug = %version-%release
 
 %install
 %makeinstall
+%if_disabled static
+rm -v %buildroot%_libdir/*.a
+%endif
 
 %files -n lib%name
 %_libdir/libustr-1.0.so.*
@@ -98,8 +102,10 @@ Requires: lib%name-devel-debug = %version-%release
 %_mandir/man1/*
 %_mandir/man3/*
 
+%if_enabled static
 %files -n lib%name-devel-static
 %_libdir/libustr.a
+%endif
 
 %files -n lib%name-devel-debug
 %_libdir/libustr-debug-1.0.so.*
@@ -107,10 +113,15 @@ Requires: lib%name-devel-debug = %version-%release
 %_includedir/ustr*debug*.h
 %_libdir/pkgconfig/ustr-debug.pc
 
+%if_enabled static
 %files -n lib%name-devel-debug-static
 %_libdir/libustr-debug.a
+%endif
 
 %changelog
+* Mon Sep 13 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.4-alt5
+- disable devel-*static packing
+
 * Wed Feb 10 2016 Sergey V Turchin <zerg@altlinux.org> 1.0.4-alt4
 - build with gcc5
 
