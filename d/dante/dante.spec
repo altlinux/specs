@@ -1,10 +1,19 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
+ExcludeArch: ppc64le
+
 Summary: A free SOCKS v4/v5 client implementation
 Name: dante
 Version: 1.4.2
-Release: alt2
+Release: alt3
 License: BSD-type
 Group: Security/Networking
 Url: http://www.inet.no/dante/
+
 Source: ftp://ftp.inet.no/pub/socks/%name-%version.tar.gz
 Source1: sockd.init
 Source2: pam_userdb.passwd
@@ -111,6 +120,9 @@ test -r %_sharedstatedir/sockd/passwd.db || sockd.passwd -r
 %_includedir/socks.h
 
 %changelog
+* Mon Sep 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.2-alt3
+- Fixed build with LTO.
+
 * Wed Oct 10 2018 Grigory Ustinov <grenka@altlinux.org> 1.4.2-alt2
 - Rebuild without libwrap.
 
