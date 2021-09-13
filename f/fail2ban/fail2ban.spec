@@ -1,5 +1,5 @@
 Name: fail2ban
-Version: 0.11.1
+Version: 0.11.2
 Release: alt1
 
 Summary: Fail2Ban is an intrusion prevention framework
@@ -17,11 +17,14 @@ Source4: paths-altlinux.conf
 Source5: paths-altlinux-systemd.conf
 
 BuildArch: noarch
+
 BuildRequires: help2man
 BuildRequires(pre): rpm-build-python3
-
+BuildRequires(pre): rpm-build-intro
 BuildRequires: python3-module-urllib3
-BuildRequires: python-tools-2to3
+BuildRequires: python3-tools
+
+AutoProv: no
 
 # due to /etc/fail2ban/action.d/badips.py
 %add_python3_lib_path /etc/fail2ban
@@ -38,21 +41,25 @@ programming language. It is able to run on POSIX systems that have an
 interface to a packet-control system or firewall installed locally
 (for example, iptables or TCP Wrapper).
 
-Requirements: python3-module-systemd
+Recommends: python3-module-systemd
 
 %prep
 %setup
 %__subst "s|paths-debian.conf|paths-altlinux.conf|g" config/jail.conf
 
-%build
-./fail2ban-2to3
+python3-2to3 -w --no-diffs bin/* fail2ban
 %__subst "s|/usr/bin/env python|%__python3|" bin/*
+
+%build
 %python3_build
 export PYTHONPATH=$PWD
 cd man
 ./generate-man
 
 %install
+%python3_install
+%python3_prune
+
 mkdir -p %buildroot%_man1dir/
 cp man/*.1 %buildroot%_man1dir/
 mkdir -p %buildroot%_man5dir/
@@ -68,10 +75,9 @@ install -pD -m 644 %SOURCE5 %buildroot%_sysconfdir/%name/paths-altlinux-systemd.
 mkdir -p %buildroot%_tmpfilesdir/
 echo "d /var/run/fail2ban 0755 root root -" >%buildroot%_tmpfilesdir/%name.conf
 
-%python3_install --optimize=2
-
-rm -rf %buildroot/%_docdir/%name/
-rm -f %buildroot%_sysconfdir/%name/paths-{arch,debian,fedora,freebsd,osx,opensuse}.conf
+rm -rv %buildroot/%_docdir/%name/
+rm -v %buildroot%_sysconfdir/%name/paths-{arch,debian,fedora,freebsd,osx,opensuse}.conf
+rm -v %buildroot/usr/bin/fail2ban-testcases
 
 mkdir -p %buildroot%_var/lib/fail2ban/
 
@@ -90,7 +96,6 @@ mkdir -p %buildroot%_var/lib/fail2ban/
 %_bindir/%name-client
 %_bindir/%name-server
 %_bindir/%name-regex
-#_bindir/%name-testcases
 %dir %_sysconfdir/%name/
 %dir %_sysconfdir/%name/*.d
 %dir %_sysconfdir/%name/filter.d/ignorecommands
@@ -109,6 +114,10 @@ mkdir -p %buildroot%_var/lib/fail2ban/
 %_logrotatedir/%name
 
 %changelog
+* Mon Sep 13 2021 Vitaly Lipatov <lav@altlinux.ru> 0.11.2-alt1
+- new version 0.11.2 (with rpmrb script) (ALT bug 40859)
+- don't pack tests, disable AutoProv
+
 * Thu Mar 12 2020 Vitaly Lipatov <lav@altlinux.ru> 0.11.1-alt1
 - new major version 0.11.1 (with rpmrb script)
 - switch to python3
