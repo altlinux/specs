@@ -4,7 +4,7 @@
 
 Name: shim
 Version: 15.4
-Release: alt2
+Release: alt3
 
 Summary: First-stage UEFI bootloader
 License: BSD
@@ -16,11 +16,28 @@ Source: %name-%version.tar
 Source1: altlinux-ca.cer
 Source2: %name-%version-gnu-efi.tar
 
-Patch1: shim-15.4-upstream-fix-a-broken-file-header-on-ia32.patch
-Patch2: shim-15.4-upstream-fix-mokutil--disable-validation-does-not-work.patch
-Patch3: shim-15.4-upstream-mok-config-table-as-bootservicesdata.patch
-Patch4: shim-15.4-upstream-don-t-call-queryvariableinfo-on-efi-1.10.patch
-Patch5: shim-15.4-upstream-fix-build-with-old-binutils-on-aarch64.patch
+Patch101: shim-15.4-upstream-0001-Fix-handling-of-ignore_db-and-user_insecure_mode.patch
+Patch103: shim-15.4-upstream-0003-Fix-a-broken-file-header-on-ia32.patch
+Patch104: shim-15.4-upstream-0004-mok-allocate-MOK-config-table-as-BootServicesData.patch
+Patch105: shim-15.4-upstream-0005-Don-t-call-QueryVariableInfo-on-EFI-1.10-machines.patch
+Patch106: shim-15.4-upstream-0006-Post-process-our-PE-to-be-sure.patch
+Patch107: shim-15.4-upstream-0007-Relax-the-check-for-import_mok_state.patch
+Patch110: shim-15.4-upstream-0010-shim-another-attempt-to-fix-load-options-handling.patch
+Patch120: shim-15.4-upstream-0020-shim-move-the-bulk-of-set_second_stage-to-its-own-fi.patch
+Patch122: shim-15.4-upstream-0022-shim-don-t-fail-on-the-odd-LoadOptions-length.patch
+Patch123: shim-15.4-upstream-0023-arm-aa64-fix-the-size-of-.rela-sections.patch
+Patch124: shim-15.4-upstream-0024-mok-fix-potential-buffer-overrun-in-import_mok_state.patch
+Patch125: shim-15.4-upstream-0025-mok-relax-the-maximum-variable-size-check.patch
+Patch126: shim-15.4-upstream-0026-Don-t-unhook-ExitBootServices-when-EBS-protection-is.patch
+Patch127: shim-15.4-upstream-0027-fallback-find_boot_option-needs-to-return-the-index-.patch
+Patch128: shim-15.4-upstream-0028-httpboot-Ignore-case-when-checking-HTTP-headers.patch
+Patch129: shim-15.4-upstream-0029-fallback-incorrect-check-after-AllocateZeroPool.patch
+Patch130: shim-15.4-upstream-0030-fallback-free-the-right-variable-on-the-read_file-er.patch
+Patch131: shim-15.4-upstream-0031-shim-avoid-BOOTx64.EFI-in-message-on-other-architect.patch
+Patch132: shim-15.4-upstream-0032-str-remove-duplicate-parameter-check.patch
+Patch133: shim-15.4-upstream-0033-fallback-Print-info-on-GetNextVariableName-errors.patch
+Patch134: shim-15.4-upstream-0034-fallback-Use-a-dynamic-buffer-when-list-var-names.patch
+Patch135: shim-15.4-upstream-0035-fallback-add-compile-option-FALLBACK_NONINTERACTIVE.patch
 
 BuildRequires(pre): rpm-macros-uefi
 BuildRequires: pesign >= 0.106
@@ -56,11 +73,29 @@ Includes both ia32 and x64 EFI binaries.
 
 %prep
 %setup -a 2
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
+
+%patch101 -p1
+%patch103 -p1
+%patch104 -p1
+%patch105 -p1
+%patch106 -p1
+%patch107 -p1
+%patch110 -p1
+%patch120 -p1
+%patch122 -p1
+%patch123 -p1
+%patch124 -p1
+%patch125 -p1
+%patch126 -p1
+%patch127 -p1
+%patch128 -p1
+%patch129 -p1
+%patch130 -p1
+%patch131 -p1
+%patch132 -p1
+%patch133 -p1
+%patch134 -p1
+%patch135 -p1
 
 # fill in SBAT section with ALT data
 echo "shim.altlinux,%alt_gen_number,ALT Linux,shim,%version-%release,http://git.altlinux.org/gears/s/shim.git" > data/sbat.altlinux.csv
@@ -111,6 +146,9 @@ popd
 %_datadir/shim/%version/ia32/*
 
 %changelog
+* Mon Sep 06 2021 Nikolai Kostrigin <nickel@altlinux.org> 15.4-alt3
+- rearrange patch set to include recent upstream commits
+
 * Tue Apr 27 2021 Nikolai Kostrigin <nickel@altlinux.org> 15.4-alt2
 - fix critical issues discovered recently
   + add upstream-fix-mokutil--disable-validation-does-not-work patch
