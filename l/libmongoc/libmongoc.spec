@@ -1,11 +1,11 @@
 %def_disable tests
 
 Name: libmongoc
-Version: 1.18.0
+Version: 1.19.0
 Release: alt1
 Summary: Client library written in C for MongoDB
 Group: System/Libraries
-License: ASL 2.0 and ISC and MIT and zlib
+License: Apache-2.0 and ISC and MIT and Zlib
 Url: https://github.com/mongodb/mongo-c-driver
 #vsc-git https://github.com/mongodb/mongo-c-driver.git
 Source: %name-%version.tar
@@ -15,7 +15,7 @@ BuildRequires: cmake >= 3.1
 BuildRequires: python3-module-sphinx
 BuildRequires: libssl-devel libsasl2-devel libicu-devel
 BuildRequires: zlib-devel libsnappy-devel
-BuildRequires:	sphinx
+BuildRequires: sphinx
 BuildRequires(pre): rpm-macros-cmake
 
 %{?_enable_tests:BuildRequires: mongodb-server openssl}
@@ -34,7 +34,7 @@ for mongo-c-driver
 
 %package -n libbson
 Group: System/Libraries
-License: ASLv2.0
+License: Apache-2.0
 Summary: A BSON utility library
 
 %description -n libbson
@@ -116,6 +116,7 @@ exit $ret
 %_pkgconfigdir/libmongoc*.pc
 %_man3dir/mongoc*
 %_libdir/cmake/libmongoc*
+%_libdir/cmake/mongoc*/*.cmake
 
 %files -n libbson
 %doc NEWS README.rst
@@ -127,9 +128,13 @@ exit $ret
 %_pkgconfigdir/libbson*.pc
 %_man3dir/bson*
 %_libdir/cmake/libbson*
+%_libdir/cmake/bson*/*.cmake
 
 
 %changelog
+* Mon Sep 13 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.19.0-alt1
+- 1.19.0
+
 * Tue Aug 03 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.18.0-alt1
 - 1.18.0
 
