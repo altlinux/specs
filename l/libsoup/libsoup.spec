@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define api_ver 2.4
 %define ver_major 2.74
@@ -8,6 +8,7 @@
 %def_enable introspection
 %def_enable vala
 %def_with gssapi
+%def_enable brotli
 %def_disable debug
 %def_disable sysprof
 # fails server-test in hasher
@@ -15,7 +16,7 @@
 
 Name: libsoup
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: HTTP client/server library for GNOME
 Group: System/Libraries
@@ -54,6 +55,7 @@ BuildRequires: glib-networking libpsl-devel >= %psl_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_with_gssapi:BuildRequires: libkrb5-devel}
+%{?_enable_brotli:BuildRequires: libbrotli-devel}
 %{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 # for check
 BuildRequires: /proc curl
@@ -180,7 +182,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
     %{?_enable_snapshot:-Dgtk_doc=true} \
     %{?_disable_introspection:-Dintrospection=disabled} \
     %{?_disable_gssapi:-Dgssapi=disabled} \
+    %{?_disable_brotli:-Dbrotli=disabled} \
     %{?_enable_sysprof:-Dsysprof=enabled}
+%nil
 %meson_build
 
 %install
@@ -235,6 +239,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon Sep 13 2021 Yuri N. Sedunov <aris@altlinux.org> 2.74.0-alt1.1
+- updated to 2.74.0-3-g80a7e4fb (fixed for vala < 0.54)
+- enabled Brotli decompression support
+
 * Mon Aug 23 2021 Yuri N. Sedunov <aris@altlinux.org> 2.74.0-alt1
 - 2.74.0
 
