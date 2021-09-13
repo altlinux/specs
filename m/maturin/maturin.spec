@@ -1,5 +1,5 @@
 Name: maturin
-Version: 0.10.3
+Version: 0.11.3
 Release: alt1
 
 Summary: Build and publish rust crates as python packages
@@ -20,8 +20,13 @@ ExcludeArch: ppc64le
 
 BuildRequires: rust-cargo
 BuildRequires(pre): rpm-build-intro
+BuildRequires(pre): rpm-macros-rust
 BuildRequires: rust /proc
 BuildRequires: rpm-build-rust
+
+# https://bugzilla.altlinux.org/40901
+Requires: /proc
+Requires: rust-cargo
 
 %description
 Build and publish crates with pyo3, rust-cpython and cffi bindings as
@@ -53,6 +58,10 @@ EOF
 %attr(755,root,root) %_bindir/maturin
 
 %changelog
+* Mon Sep 13 2021 Vitaly Lipatov <lav@altlinux.ru> 0.11.3-alt1
+- new version 0.11.3 (with rpmrb script)
+- add requires: rust-cargo, rust
+
 * Mon Sep 13 2021 Vitaly Lipatov <lav@altlinux.ru> 0.10.3-alt1
 - initial build for ALT Sisyphus
 
