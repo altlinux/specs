@@ -1,6 +1,6 @@
 Name:     gwenhywfar
-Version:  5.6.0
-Release:  alt2
+Version:  5.7.1
+Release:  alt1
 
 Summary:  A multi-platform helper library for other libraries
 License:  LGPL-2.1+
@@ -138,8 +138,15 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %_datadir/%name/typemaker2/*
 %_datadir/aclocal/gwenhywfar.m4
 %_libdir/cmake/*
+# gwenbuild
+%_bindir/gwbuild
+%_datadir/gwenbuild/templates/project.tmpl
+%_datadir/gwenhywfar/gwenbuild/builders
 
 %changelog
+* Mon Sep 13 2021 Andrey Cherepanov <cas@altlinux.org> 5.7.1-alt1
+- New version.
+
 * Fri Jul 02 2021 Andrey Cherepanov <cas@altlinux.org> 5.6.0-alt2
 - Build without qt4.
 
