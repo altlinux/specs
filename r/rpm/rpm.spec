@@ -20,7 +20,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt28
+Release: alt29
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -83,8 +83,6 @@ BuildRequires: libzstd-devel
 %if_with libarchive
 BuildRequires: libarchive-devel
 %endif
-# Only required by sepdebugcrcfix patch
-BuildRequires: binutils-devel
 # Couple of patches change makefiles so, require for now...
 BuildRequires: automake libtool
 
@@ -415,9 +413,10 @@ touch %buildroot%_localstatedir/%name/delay-posttrans-filetriggers
 touch %buildroot%_localstatedir/%name/files-awaiting-filetriggers
 
 %check
-make check
-ls -A tests/rpmtests.dir 2>/dev/null ||:
-[ ! -s tests/rpmtests.log ] || cat tests/rpmtests.log
+if ! make check; then
+	[ ! -s tests/rpmtests.log ] || sed '\!## ../config.log ##!q' tests/rpmtests.log
+	exit 1
+fi
 
 # Run no-pass-on-failure test(s).
 rpmio/test_digest_blake2b
@@ -552,10 +551,7 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 
 %rpmhome/brp-*
 %rpmhome/check-*
-%rpmhome/debugedit
 %rpmhome/rpm2cpio.sh
-#%%{rpmhome}/sepdebugcrcfix
-%rpmhome/find-debuginfo.sh
 %rpmhome/find-lang.sh
 %rpmhome/*provides*
 %rpmhome/*requires*
@@ -586,6 +582,10 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Mon Sep 13 2021 Vitaly Chikunov <vt@altlinux.org> 4.13.0.1-alt29
+- Do not package debuginfo tooling.
+- Make build tests work.
+
 * Sun Sep 12 2021 Vitaly Chikunov <vt@altlinux.org> 4.13.0.1-alt28
 - Use libgcrypt instead of libbeecrypt.
 
