@@ -2,10 +2,16 @@
 # Please do not edit!
 # Created by specgen utility from files in specs/ subdir
 #============================================================================
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 Name: freehdl
 Summary: VHDL simulator
 Version: 0.0.8
-Release: alt6
+Release: alt7
 License: GPL
 Group: Development/Other
 BuildRequires: flex gcc-c++
@@ -13,8 +19,10 @@ BuildRequires: flex gcc-c++
 %set_verify_elf_method unresolved=relaxed
 Url: http://www.freehdl.seul.org/
 Packager: Denis Smirnov <mithraen@altlinux.ru>
-Requires: lib%name-devel = %version-%release
-Requires: lib%name = %version-%release
+
+Requires: lib%name-devel = %EVR
+Requires: lib%name = %EVR
+
 Source: %name-%version.tar
 Patch1: %name-%version-alt-gcc6.patch
 Patch2: %name-0.0.8-gcc8-fix.patch
@@ -29,7 +37,7 @@ VHDL simulator
 %package -n libfreehdl-devel
 Summary: VHDL simulator
 Group: Development/Other
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n libfreehdl-devel
 VHDL simulator
@@ -37,7 +45,7 @@ VHDL simulator
 %package -n libfreehdl-devel-static
 Summary: VHDL simulator
 Group: Development/Other
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel = %EVR
 
 %description -n libfreehdl-devel-static
 VHDL simulator
@@ -124,6 +132,9 @@ sed -i 's!FREEHDL/lib!%_libdir!g' v2cc/gvhdl.in
 %_libdir/libfreehdl-vaul.a
 
 %changelog
+* Mon Sep 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.8-alt7
+- Fixed build with LTO.
+
 * Fri Apr 09 2021 Leontiy Volodin <lvol@altlinux.org> 0.0.8-alt6
 - fix build
 
