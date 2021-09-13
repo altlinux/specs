@@ -34,6 +34,9 @@
 %define optflags_debug -g1
 %endif
 
+# LTO-related flags are set by CMake.
+%global optflags_lto %nil
+
 %define hwasan_symbolize_arches x86_64 aarch64
 %define lldb_arches x86_64 %arm
 
@@ -53,7 +56,7 @@
 
 Name: %llvm_name
 Version: %v_full
-Release: alt1
+Release: alt2
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -81,7 +84,10 @@ Patch11: hwasan_symbolize-python3.patch
 Patch14: llvm-10-alt-riscv64-config-guess.patch
 Patch15: llvm-cmake-resolve-symlinks-in-LLVMConfig.cmake.patch
 Patch16: clang-cmake-resolve-symlinks-in-ClangConfig.cmake.patch
+Patch17: llvm-cmake-pass-ffat-lto-objects-if-using-the-GNU-toolcha.patch
 Patch18: lld-compact-unwind-encoding.h.patch
+
+Patch101: clang-ALT-bug-40628-grecord-command-line.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -372,7 +378,10 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' lib/Support/Unix/Path.inc
 %patch14 -p1
 %patch15 -p2
 %patch16 -p1
+%patch17 -p1
 %patch18 -p1
+
+%patch101 -p1
 
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
@@ -380,6 +389,10 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' lib/Support/Unix/Path.inc
 subst '/^#!.*python$/s|python$|python3|' $(grep -Rl '#!.*python$' *)
 
 %build
+export NPROCS="%__nprocs"
+if [ "$NPROCS" -gt 64 ]; then
+	export NPROCS=64
+fi
 %define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 %define _cmake__builddir BUILD
 %cmake -G Ninja \
@@ -388,6 +401,7 @@ subst '/^#!.*python$/s|python$|python3|' $(grep -Rl '#!.*python$' *)
 	-DCMAKE_INSTALL_PREFIX=%llvm_prefix \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
+	-DPACKAGE_VENDOR="ALT Linux Team" \
 	-DLLVM_TARGETS_TO_BUILD="all" \
 	-DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD='AVR' \
 	-DLLVM_ENABLE_LIBCXX:BOOL=OFF \
@@ -455,7 +469,7 @@ subst '/^#!.*python$/s|python$|python3|' $(grep -Rl '#!.*python$' *)
 	-DPYTHON_EXECUTABLE=%_bindir/python3
 
 sed -i 's|man\ tools/lld/docs/docs-lld-html|man|' BUILD/build.ninja
-ninja -vvv -j %__nprocs -C BUILD
+ninja -vvv -j $NPROCS -C BUILD
 
 %install
 pushd BUILD
@@ -833,6 +847,13 @@ ninja -C BUILD check-all || :
 #doc %llvm_docdir/lldb
 
 %changelog
+* Sun Sep 05 2021 Arseny Maslennikov <arseny@altlinux.org> 12.0.1-alt2
+- Marked the package as built by ALT Linux Team (-DPACKAGE_VENDOR) so it's
+  easier to distinguish from custom builds.
+- If compiled with gcc, we now pass -ffat-lto-objects to it.
+- Enabled -grecord-command-line by default (closes: bug 40628).
+  Code generation is unaffected.
+
 * Tue Aug 10 2021 Arseny Maslennikov <arseny@altlinux.org> 12.0.1-alt1
 - 12.0.0 -> 12.0.1. (Closes: bug 40358)
 
