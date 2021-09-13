@@ -6,7 +6,7 @@
 
 Name: audit
 Version: 3.0.5
-Release: alt1
+Release: alt2
 Summary: User space tools for Linux kernel 2.6+ auditing
 License: GPL
 Group: Monitoring
@@ -227,6 +227,11 @@ fi
 %endif
 
 %changelog
+* Mon Sep 06 2021 Egor Ignatov <egori@altlinux.org> 3.0.5-alt2
+- Fix bi-arch check (closes: #40852)
+- Add armv8l support
+- ausyscall: Add support for 'b32' and 'b64' aliases
+
 * Fri Aug 13 2021 Egor Ignatov <egori@altlinux.org> 3.0.5-alt1
 - new version 3.0.5
 
