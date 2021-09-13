@@ -1,14 +1,18 @@
-Name: dosemu
-Version: 1.4.1
-Release: alt0.4
-Epoch: 1
+%define _unpackaged_files_terminate_build 1
+%set_verify_elf_method strict,unresolved=normal
 
+%global optflags_lto %nil
+
+Name: dosemu
+Epoch: 1
+Version: 1.4.1
+Release: alt0.5
 Summary: The Linux DOS emulator
 Summary(ru_RU.UTF-8): Эмулятор DOS под Linux
 License: GPLv2
 Group: Emulators
 Url: http://dosemu.sourceforge.net/
-Packager: Grigory Batalov <bga@altlinux.ru>
+
 ExclusiveArch: %ix86 x86_64
 
 # https://dosemu.svn.sourceforge.net/svnroot/dosemu/trunk
@@ -57,7 +61,7 @@ DOSEmu позволяет запускать программы MS-DOS под Li
 %package plugins-x-sdl
 Summary: Dosemu X11 and SDL plugins
 Group: Emulators
-Requires: dosemu = %epoch:%version-%release
+Requires: dosemu = %EVR
 Obsoletes: xdosemu
 Obsoletes: dosemu-bin-x
 
@@ -67,7 +71,7 @@ The Linux DOS Emulator XFree86/Xorg and SDL plugins.
 %package plugins-sound
 Summary: Dosemu ALSA and Sndfile plugins
 Group: Emulators
-Requires: dosemu = %epoch:%version-%release
+Requires: dosemu = %EVR
 
 %description plugins-sound
 The Linux DOS Emulator ALSA and Sndfile plugins.
@@ -89,6 +93,8 @@ gzip etc/*.pcf
 #touch configure.ac configure
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 # TODO: why not try to disable these plugins?
 sed -i -e "s! x off! x on!g" compiletime-settings
 sed -i -e "s! plugin_sdl off! plugin_sdl on!g" compiletime-settings
@@ -162,6 +168,8 @@ fi
 %docdir
 %exclude %_man1dir/xdosemu.*
 %_man1dir/*
+%_mandir/ru/man1/*
+%exclude %_mandir/ru/man1/xdosemu.*
 %dir %_libdir/%name/
 %_libdir/%name/libplugin_gpm.so
 %_libdir/%name/libplugin_term.so
@@ -175,13 +183,17 @@ fi
 %_niconsdir/xdosemu.xpm
 %_miconsdir/xdosemu.xpm
 %_liconsdir/xdosemu.xpm
-%doc %_man1dir/xdosemu.*
+%_man1dir/xdosemu.*
+%_mandir/ru/man1/xdosemu.*
 
 %files plugins-sound
 %_libdir/%name/libplugin_alsa.so
 %_libdir/%name/libplugin_sndfile.so
 
 %changelog
+* Mon Sep 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.4.1-alt0.5
+- Disabled LTO.
+
 * Tue Feb 12 2019 Ivan A. Melnikov <iv@altlinux.org> 1:1.4.1-alt0.4
 - build on %%ix86 and x86_64 only
 
