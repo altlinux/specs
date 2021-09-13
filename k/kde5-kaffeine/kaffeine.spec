@@ -1,8 +1,14 @@
+%ifarch %e2k
+# dvb plugin fails to build with lcc 1.25 anyways
+%define have_no_dvb -DHAVE_DVB=0
+%else
+%define have_no_dvb %nil
+%endif
 
 %define rname kaffeine
 Name: kde5-%rname
 Version: 2.0.18
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Video
@@ -47,7 +53,7 @@ BuildRequires: kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-kw
 
 %description
 Kaffeine provides fast access to the most important media sources.
-It also handles Video CDs, DVDs, and DVB cards.
+It also handles DVDs and DVB cards.
 
 %prep
 %setup -q
@@ -58,7 +64,7 @@ It also handles Video CDs, DVDs, and DVB cards.
 mv .gear/po ./
 
 %build
-%K5build -DDATA_INSTALL_DIR=%_K5data
+%K5build -DDATA_INSTALL_DIR=%_K5data %have_no_dvb
 
 
 %install
@@ -79,6 +85,9 @@ mv .gear/po ./
 %_K5xdgapp/org.kde.kaffeine.desktop
 
 %changelog
+* Mon Sep 13 2021 Sergey V Turchin <zerg@altlinux.org> 2.0.18-alt2
+- E2K: dvb plugin ftbfs workaround (thanks mike@alt)
+
 * Wed May 27 2020 Sergey V Turchin <zerg@altlinux.org> 2.0.18-alt1
 - new version
 
