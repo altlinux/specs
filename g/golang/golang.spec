@@ -38,7 +38,7 @@
 %def_disable check
 
 Name:    golang
-Version: 1.16.7
+Version: 1.17.1
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -173,7 +173,7 @@ export LDFLAGS="$RPM_LD_FLAGS"
 
 # build
 cd src
-./make.bash --no-clean
+./make.bash
 cd ..
 
 %if_enabled shared
@@ -196,21 +196,21 @@ cd src
 %install
 # create the top level directories
 mkdir -p -- \
-	%buildroot/%_bindir \
-	%buildroot/%go_root \
-	%buildroot/%_datadir/%name
+	%buildroot%_bindir \
+	%buildroot%go_root \
+	%buildroot%_datadir/%name
 
-cp -afv api bin doc favicon.ico lib pkg robots.txt src misc test VERSION \
-	%buildroot/%go_root/
+cp -afv api bin doc lib pkg src misc test VERSION \
+	%buildroot%go_root/
 
-find %buildroot/%go_root -exec touch -r $PWD/VERSION "{}" \;
+find %buildroot%go_root -exec touch -r $PWD/VERSION "{}" \;
 
 # remove bootstrap files
-rm -rfv -- %buildroot/%go_root/pkg/bootstrap
+rm -rfv -- %buildroot%go_root/pkg/bootstrap
 
 # remove testdata, tests, and non-go files
 find \
-	%buildroot/%go_root/src \
+	%buildroot%go_root/src \
 	\( \
 		\( -type d -name 'testdata'   \) -o \
 		\( -type f -name 'Makefile'   \) -o \
@@ -224,7 +224,7 @@ find \
 
 # remove scripts for other platform.
 find \
-	%buildroot/%go_root/src \
+	%buildroot%go_root/src \
 		-maxdepth 1 \
 	\( \
 		\( -type f -name '*.rc'  \) -o \
@@ -234,16 +234,16 @@ find \
 	xargs -0 rm -fv --
 
 # remove test for other platforms scripts
-rm %buildroot/%go_root/test/winbatch.go
+rm %buildroot%go_root/test/winbatch.go
 
 # remove the unnecessary zoneinfo file (Go will always use the system one first)
 rm -rfv -- \
-	%buildroot/%go_root/lib/time
+	%buildroot%go_root/lib/time
 
 %if_enabled shared
 mkdir -p %buildroot%golibdir
-for file in $(find %buildroot/%go_root/pkg/linux_%{go_hostarch}_dynlink  -iname "*.so" ); do
-    mv  $file %buildroot/%golibdir
+for file in $(find %buildroot%go_root/pkg/linux_%{go_hostarch}_dynlink  -iname "*.so" ); do
+    mv  $file %buildroot%golibdir
     pushd $(dirname $file)
     ln -fs %golibdir/$(basename $file) $(basename $file)
     popd
@@ -255,9 +255,9 @@ for z in %buildroot%go_root/bin/*; do
 	[ -x "$z" ] || continue
 
 	n="${z##*/}"
-	path="$(relative "$z" "%buildroot/%_bindir/$n")"
+	path="$(relative "$z" "%buildroot%_bindir/$n")"
 
-	ln -sv -- "$path" %buildroot/%_bindir/$n
+	ln -sv -- "$path" %buildroot%_bindir/$n
 done
 
 # https://golang.org/doc/go1.5#moving
@@ -270,36 +270,36 @@ for z in cover vet; do
 	[ -x "$z" ] || continue
 
 	n="${z##*/}"
-	path="$(relative "$z" "%buildroot/%_bindir/$n")"
+	path="$(relative "$z" "%buildroot%_bindir/$n")"
 
-	ln -sv -- "$path" %buildroot/%_bindir/$n
+	ln -sv -- "$path" %buildroot%_bindir/$n
 done
 
 # restore the gdb debugging script, needed at runtime by gdb
-mkdir -p -- %buildroot/%_datadir/%name/gdb
+mkdir -p -- %buildroot%_datadir/%name/gdb
 sed \
     -e 's,@GOROOT@,%go_root,g' \
-    %SOURCE1 > %buildroot/%_datadir/%name/gdb/golang-gdbinit
+    %SOURCE1 > %buildroot%_datadir/%name/gdb/golang-gdbinit
 
-mkdir -p -- %buildroot/%_datadir/%name/src
+mkdir -p -- %buildroot%_datadir/%name/src
 for n in syscall regexp; do
-	mkdir -- %buildroot/%_datadir/%name/src/$n
+	mkdir -- %buildroot%_datadir/%name/src/$n
 
-	find %buildroot/%go_root/src/$n \
+	find %buildroot%go_root/src/$n \
 		\( \
 			\( -type f -name '*.sh' \) -o \
 			\( -type f -name '*.pl' \)    \
 		\) \
 			-print0 |
-		xargs -0 mv -fvt %buildroot/%_datadir/%name/src/$n --
+		xargs -0 mv -fvt %buildroot%_datadir/%name/src/$n --
 done
 
 # ensure these exist and are owned
 mkdir -p -- \
-	%buildroot/%go_path/src/github.com \
-	%buildroot/%go_path/src/bitbucket.org \
-	%buildroot/%go_path/src/code.google.com/p \
-	%buildroot/%go_path/src/golang.org/x \
+	%buildroot%go_path/src/github.com \
+	%buildroot%go_path/src/bitbucket.org \
+	%buildroot%go_path/src/code.google.com/p \
+	%buildroot%go_path/src/golang.org/x \
 #
 
 %files
@@ -342,6 +342,11 @@ mkdir -p -- \
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Mon Sep 13 2021 Alexey Shabalin <shaba@altlinux.org> 1.17.1-alt1
+- New version (1.17.1).
+- Fixes:
+  + CVE-2021-39293
+
 * Mon Aug 09 2021 Alexey Shabalin <shaba@altlinux.org> 1.16.7-alt1
 - New version (1.16.7).
 - Fixes:
