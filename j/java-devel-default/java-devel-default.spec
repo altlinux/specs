@@ -1,7 +1,6 @@
-%define defjavaver 1.8.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 Name: java-devel-default
-Version: 1.7.0
+Version: 9
 Release: alt1
 
 Summary: chooser of default ALT Linux java compiler.
@@ -11,7 +10,7 @@ Url: http://www.sisyphus.ru/packages/viy/srpms
 
 BuildArch: noarch
 Requires(pre): rpm-build-java /proc
-Requires(pre): java-devel = %defjavaver java = %defjavaver
+Requires(pre): java-11-devel java-11
 
 Requires: java-javadoc
 Requires: jpackage-utils
@@ -31,6 +30,9 @@ install -d $RPM_BUILD_ROOT/usr
 %files
 
 %changelog
+* Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 9-alt1
+- selected java11 as default
+
 * Thu Jan 28 2016 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1
 - selected java8 as default
 
