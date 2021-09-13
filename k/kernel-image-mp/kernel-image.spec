@@ -1,5 +1,5 @@
 %define kernel_base_version	5.13
-%define kernel_sublevel        .12
+%define kernel_sublevel        .16
 %define kernel_extra_version	%nil
 
 Name: kernel-image-mp
@@ -131,6 +131,9 @@ echo "Building Kernel $KernelVer"
 %make_build mrproper
 
 cp -vf config-%_target_cpu .config
+for f in arch/arm/boot/dts/Makefile arch/arm64/boot/dts/*/Makefile; do
+	echo -e '\nDTC_FLAGS += -@' >> $f
+done
 
 %make_build oldconfig
 %make_build %Image modules dtbs
@@ -261,6 +264,9 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Mon Sep 13 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.13.16-alt1
+- 5.13.16
+
 * Wed Aug 18 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.13.12-alt1
 - 5.13.12
 
