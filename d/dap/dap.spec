@@ -1,11 +1,17 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 Name: dap
 Version: 3.10
-Release: alt1.1
+Release: alt2
 Summary: A small statistics and graphics package based on C
 Url: http://www.gnu.org/software/dap/
 Group: Sciences/Mathematics
 License: GPL
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 # explicitly added texinfo for info files
 BuildRequires: texinfo
 
@@ -33,6 +39,8 @@ Summary: Development environment for %name, %summary
 %setup
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %configure --with-pic
 %make_build
 
@@ -50,6 +58,9 @@ Summary: Development environment for %name, %summary
 %_includedir/*
 
 %changelog
+* Mon Sep 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.10-alt2
+- Fixed build with LTO.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 3.10-alt1.1
 - NMU: added BR: texinfo
 
