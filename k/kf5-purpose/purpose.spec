@@ -7,7 +7,7 @@
 %define libreviewboardhelpers libreviewboardhelpers%sover
 
 Name: kf5-%rname
-Version: 5.85.0
+Version: 5.86.0
 Release: alt1
 %K5init altplace
 
@@ -140,6 +140,9 @@ mkdir -p %buildroot/%_datadir/accounts/services/kde/
 %_K5lib/libKF5PurposeWidgets.so.*
 
 %changelog
+* Mon Sep 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.86.0-alt1
+- new version
+
 * Mon Aug 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.85.0-alt1
 - new version
 

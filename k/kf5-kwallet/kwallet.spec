@@ -1,14 +1,17 @@
 %define rname kwallet
 
 Name: kf5-%rname
-Version: 5.85.0
-Release: alt2
+Version: 5.86.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
 Summary: KDE Frameworks 5 safe desktop-wide storage for passwords
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
+
+# For secrets API tests
+BuildRequires: qca-qt5-ossl
 
 Source: %rname-%version.tar
 Source1: kwalletd5.po
@@ -29,9 +32,6 @@ BuildRequires: kf5-kiconthemes-devel kf5-kitemviews-devel kf5-knotifications-dev
 BuildRequires: kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
 BuildRequires: kf5-kdoctools-devel-static kf5-kdoctools
 BuildRequires: libqca-qt5-devel
-
-# For secrets API tests
-BuildRequires: qca-qt5-ossl
 
 %description
 This framework contains two main components:
@@ -115,6 +115,9 @@ LD_LIBRARY_PATH=BUILD/bin BUILD/bin/fdo_secrets_test
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Mon Sep 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.86.0-alt1
+- new version
+
 * Thu Aug 19 2021 Slava Aseev <ptrnine@altlinux.org> 5.85.0-alt2
 - Secret Service API patch:
   + fix mangling of invalid collection object paths

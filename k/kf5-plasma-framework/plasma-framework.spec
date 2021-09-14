@@ -3,14 +3,14 @@
 %add_findreq_skiplist %_K5data/plasma/plasma_scriptengine_ruby/*.rb
 
 Name: kf5-%rname
-Version: 5.85.0
+Version: 5.86.0
 Release: alt1
 %K5init altplace
 
 Group: System/Libraries
 Summary: KDE Frameworks 5 plasma framework
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: GPL-2.0-or-later or LGPL-2.1-or-later
 
 Source: %rname-%version.tar
 Source10: ru-libplasma5.po
@@ -21,7 +21,7 @@ Patch3: alt-armh.patch
 # Automatically added by buildreq on Thu Feb 19 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libwayland-server libxcb-devel libxcbutil-keysyms libxkbfile-devel pkg-config python-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kpackage-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libGLU-devel python-module-google qt5-declarative-devel qt5-script-devel qt5-svg-devel qt5-x11extras-devel rpm-build-gir rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: libGLU-devel
 BuildRequires: rpm-build-ruby
@@ -119,8 +119,9 @@ KF5 library
 %dir %_K5plug/kpackage/packagestructure/
 %_K5lib/libKF5PlasmaQuick.so.*
 %_K5bin/*
-%_K5plug/plasma/scriptengines/plasma_appletscript_declarative.so
+%_K5plug/kf5/kirigami/*.so
 %_K5plug/kpackage/packagestructure/*.so
+%_K5plug/plasma/scriptengines/plasma_appletscript_declarative.so
 %_K5data/plasma/*
 %exclude %_K5data/plasma/desktoptheme
 %_K5qml/QtQuick/
@@ -131,6 +132,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Mon Sep 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.86.0-alt1
+- new version
+
 * Mon Aug 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.85.0-alt1
 - new version
 
@@ -244,82 +248,82 @@ KF5 library
 * Wed Oct 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.51.0-alt1
 - new version
 
-* Mon Sep 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.50.0-alt1%ubt
+* Mon Sep 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.50.0-alt1
 - new version
 
-* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1%ubt
+* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1
 - new version
 
-* Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1%ubt
+* Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1
 - new version
 
-* Fri Jun 15 2018 Sergey V Turchin <zerg@altlinux.org> 5.47.0-alt1%ubt
+* Fri Jun 15 2018 Sergey V Turchin <zerg@altlinux.org> 5.47.0-alt1
 - new version
 
-* Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.46.0-alt2%ubt
+* Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.46.0-alt2
 - udpate russian translation
 
-* Mon May 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.46.0-alt1%ubt
+* Mon May 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.46.0-alt1
 - new version
 
-* Fri May 04 2018 Sergey V Turchin <zerg@altlinux.org> 5.45.0-alt1%ubt
+* Fri May 04 2018 Sergey V Turchin <zerg@altlinux.org> 5.45.0-alt1
 - new version
 
-* Tue Mar 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt1%ubt
+* Tue Mar 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt1
 - new version
 
-* Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.42.0-alt1%ubt
+* Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.42.0-alt1
 - new version
 
-* Tue Dec 12 2017 Sergey V Turchin <zerg@altlinux.org> 5.41.0-alt1%ubt
+* Tue Dec 12 2017 Sergey V Turchin <zerg@altlinux.org> 5.41.0-alt1
 - new version
 
-* Tue Nov 21 2017 Sergey V Turchin <zerg@altlinux.org> 5.40.0-alt1%ubt
+* Tue Nov 21 2017 Sergey V Turchin <zerg@altlinux.org> 5.40.0-alt1
 - new version
 
-* Tue Oct 24 2017 Sergey V Turchin <zerg@altlinux.org> 5.39.0-alt1%ubt
+* Tue Oct 24 2017 Sergey V Turchin <zerg@altlinux.org> 5.39.0-alt1
 - new version
 
-* Tue Sep 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.38.0-alt1%ubt
+* Tue Sep 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.38.0-alt1
 - new version
 
-* Mon Aug 21 2017 Sergey V Turchin <zerg@altlinux.org> 5.37.0-alt2%ubt
+* Mon Aug 21 2017 Sergey V Turchin <zerg@altlinux.org> 5.37.0-alt2
 - fix requires
 
-* Wed Aug 16 2017 Sergey V Turchin <zerg@altlinux.org> 5.37.0-alt1%ubt
+* Wed Aug 16 2017 Sergey V Turchin <zerg@altlinux.org> 5.37.0-alt1
 - new version
 
-* Mon Jul 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.36.0-alt1%ubt
+* Mon Jul 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.36.0-alt1
 - new version
 
-* Thu Jun 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.35.0-alt1%ubt
+* Thu Jun 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.35.0-alt1
 - new version
 
-* Thu Jun 01 2017 Sergey V Turchin <zerg@altlinux.org> 5.34.0-alt4%ubt
+* Thu Jun 01 2017 Sergey V Turchin <zerg@altlinux.org> 5.34.0-alt4
 - revert previous changes
 
-* Tue May 30 2017 Sergey V Turchin <zerg@altlinux.org> 5.34.0-alt3%ubt
+* Tue May 30 2017 Sergey V Turchin <zerg@altlinux.org> 5.34.0-alt3
 - fix plasma packages install directory
 
-* Tue May 30 2017 Sergey V Turchin <zerg@altlinux.org> 5.34.0-alt2%ubt
+* Tue May 30 2017 Sergey V Turchin <zerg@altlinux.org> 5.34.0-alt2
 - fix plasma packages install directory
 
-* Fri May 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.34.0-alt1%ubt
+* Fri May 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.34.0-alt1
 - new version
 
-* Mon Apr 17 2017 Sergey V Turchin <zerg@altlinux.org> 5.33.0-alt1%ubt
+* Mon Apr 17 2017 Sergey V Turchin <zerg@altlinux.org> 5.33.0-alt1
 - new version
 
-* Wed Mar 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.32.0-alt1%ubt
+* Wed Mar 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.32.0-alt1
 - new version
 
-* Mon Feb 13 2017 Sergey V Turchin <zerg@altlinux.org> 5.31.0-alt1%ubt
+* Mon Feb 13 2017 Sergey V Turchin <zerg@altlinux.org> 5.31.0-alt1
 - new version
 
-* Wed Feb 08 2017 Sergey V Turchin <zerg@altlinux.org> 5.30.0-alt1%ubt
+* Wed Feb 08 2017 Sergey V Turchin <zerg@altlinux.org> 5.30.0-alt1
 - new version
 
-* Tue Dec 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.29.0-alt1%ubt
+* Tue Dec 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.29.0-alt1
 - new version
 
 * Fri Nov 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt0.M80P.1
