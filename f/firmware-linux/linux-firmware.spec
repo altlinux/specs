@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20210903
+Version: 20210913
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,11 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Sep 14 2021 Cronbuild Service <cronbuild@altlinux.org> 20210913-alt1
+- upstream changes (GIT 090a34d):
+  + add frimware for mediatek bluetooth chip (MT7922) (thx mark-yw.chen)
+  + Update AMD SEV firmware (thx John Allen)
+
 * Mon Sep 06 2021 Cronbuild Service <cronbuild@altlinux.org> 20210903-alt1
 - upstream changes (GIT 2984e26):
   + Revert "iwlwifi: add FW for new So/Gf device type" (thx Luca Coelho)
