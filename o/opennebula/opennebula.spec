@@ -16,7 +16,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 5.12.0.4
-Release: alt1.1
+Release: alt2
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.io
@@ -25,6 +25,7 @@ Source0: %name-%version.tar
 Source1: lxd-init.sh
 
 BuildRequires(pre): rpm-build-ruby rpm-build-python3 rpm-macros-nodejs
+BuildRequires(pre): rpm-build-java
 BuildRequires: gcc-c++
 BuildRequires: libcurl-devel
 BuildRequires: libxml2-devel libxmlrpc-devel liblzma-devel
@@ -36,12 +37,13 @@ BuildRequires: libsqlite3-devel
 BuildRequires: libsystemd-devel
 BuildRequires: libnsl2-devel
 BuildRequires: openssh
-BuildRequires: ruby-aws-sdk ruby-treetop ruby-ipaddress
+BuildRequires: ruby-aws-sdk ruby-treetop
+BuildRequires: gem(ipaddress)
 BuildRequires: ruby-builder
 BuildRequires: gem-nokogiri
 BuildRequires: scons
 BuildRequires: python3-module-setuptools
-BuildRequires: java-1.8.0-openjdk-devel rpm-build-java ws-commons-util xmlrpc-common xmlrpc-client
+BuildRequires: java-1.8.0-openjdk-devel ws-commons-util xmlrpc-common xmlrpc-client
 BuildRequires: zlib-devel
 BuildRequires: node node-gyp npm node-devel node-sass libsass
 BuildRequires: ronn
@@ -625,8 +627,8 @@ fi
 %_libexecdir/one/ruby/nsx_driver.rb
 %_libexecdir/one/ruby/nsx_driver
 
-#%rubygem_specdir/opennebula*
-#%exclude %rubygem_specdir/opennebula-cli*
+#%ruby_gemspecdir/opennebula*
+#%exclude %ruby_gemspecdir/opennebula-cli*
 
 %files -n python3-module-%name
 %python3_sitelibdir_noarch/*
@@ -749,7 +751,7 @@ fi
 %_libexecdir/one/sh
 %_datadir/one/conf
 
-#%rubygem_specdir/opennebula-server/Gemfile
+#%ruby_gemspecdir/opennebula-server/Gemfile
 
 %_man1dir/onedb.1.*
 
@@ -824,6 +826,9 @@ fi
 %exclude %_man1dir/oneprovision.1*
 
 %changelog
+* Tue Sep 14 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.12.0.4-alt2
+- FTBFS: gem deps
+
 * Thu Jul 08 2021 Pavel Skrylev <majioa@altlinux.org> 5.12.0.4-alt1.1
 - * ruby macros, and call to ruby build
 
