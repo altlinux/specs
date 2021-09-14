@@ -2,7 +2,7 @@
 
 Name: libkqueue
 Version: 2.0.1
-Release: alt4
+Release: alt5
 Summary: Portable implementation of the kqueue() and kevent() system calls
 License: MIT / BSD
 Group: System/Libraries
@@ -40,6 +40,9 @@ This package contains development files of libkqueue.
 %patch4 -p2
 
 %build
+%ifarch %e2k
+%add_optflags -D_GNU_SOURCE=
+%endif
 %add_optflags %optflags_shared
 %configure --disable-static
 %make_build
@@ -57,6 +60,9 @@ This package contains development files of libkqueue.
 %_man2dir/*
 
 %changelog
+* Tue Sep 14 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.0.1-alt5
+- Fixed build for Elbrus.
+
 * Wed Dec 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.1-alt4
 - Fixed build with new toolchain.
 
