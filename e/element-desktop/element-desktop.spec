@@ -1,5 +1,5 @@
 Name: element-desktop
-Version: 1.7.23
+Version: 1.8.4
 Release: alt1
 
 Summary: A glossy Matrix collaboration client
@@ -30,10 +30,12 @@ BuildRequires: /proc yarn
 
 BuildRequires: element-web = %version
 
-Requires: electron9 >= 9.0.5
+Requires: electron13 >= 13.1.9
 
 Provides: riot-desktop = %version-%release
 Obsoletes: riot-desktop
+
+BuildRequires: node-typescript
 
 %description
 Element Desktop is a Matrix client for desktop platforms with Element Web at its core.
@@ -47,7 +49,8 @@ cp -a /var/www/html/element-web webapp
 cat element.io/release/config.json | grep -v "update_base_url" > webapp/config.json
 # TODO: support hak and build matrix-seshat
 #yarn run hak
-
+yarn run build:ts
+yarn run build:res
 #npm run build
 #yarn build
 #yarn dist
@@ -60,7 +63,7 @@ asar pack . resources/app.asar
 
 cat <<EOF >%name
 #!/bin/sh
-electron9 %_datadir/%name/resources/app.asar "\$@"
+electron13 %_datadir/%name/resources/app.asar "\$@"
 EOF
 
 %install
@@ -88,6 +91,14 @@ install -D -m644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Sep 13 2021 Vitaly Lipatov <lav@altlinux.ru> 1.8.4-alt1
+- new version (1.8.4) with rpmgs script
+- switch to electron13
+- CVE-2021-40823, CVE-2021-40824
+
+* Mon Jun 07 2021 Vitaly Lipatov <lav@altlinux.ru> 1.7.30-alt1
+- new version 1.7.30 (with rpmrb script)
+
 * Tue Mar 16 2021 Vitaly Lipatov <lav@altlinux.ru> 1.7.23-alt1
 - new version 1.7.23 (with rpmrb script)
 

@@ -1,14 +1,14 @@
 # TODO: check .gear/predownloaded-preinstall-hook
 
 Name: element-web
-Version: 1.7.23
+Version: 1.8.4
 Release: alt1
 
 Summary: A glossy Matrix collaboration client
 
-License: Apache 2.0
-Url: https://element.io/
+License: Apache-2.0
 Group: Networking/Instant messaging
+Url: https://element.io/
 
 BuildArch: noarch
 
@@ -56,6 +56,19 @@ cp -a webapp %buildroot/var/www/html/%name/
 /var/www/html/%name/
 
 %changelog
+* Mon Sep 13 2021 Vitaly Lipatov <lav@altlinux.ru> 1.8.4-alt1
+- new version 1.8.4 (with rpmrb script)
+- CVE-2021-40823, CVE-2021-40824
+
+* Wed Sep 01 2021 Vitaly Lipatov <lav@altlinux.ru> 1.8.2-alt1
+- new version 1.8.2 (with rpmrb script)
+
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.7.32-alt1
+- new version 1.7.32 (with rpmrb script)
+
+* Mon Jun 07 2021 Vitaly Lipatov <lav@altlinux.ru> 1.7.30-alt1
+- new version 1.7.30 (with rpmrb script)
+
 * Tue Mar 16 2021 Vitaly Lipatov <lav@altlinux.ru> 1.7.23-alt1
 - new version 1.7.23 (with rpmrb script)
 
