@@ -3,7 +3,7 @@
 
 Name: spawn-fcgi
 Version: 1.6.4
-Release: alt4
+Release: alt5
 
 Summary: spawn FastCGI applications
 License: BSD
@@ -36,37 +36,39 @@ Patch0: %name-%version-alt.patch
 
 %install
 %makeinstall
-
-mkdir -p %buildroot%_var/run/spawn-fcgi
 install -pDm755 altlinux/spawn-fcgi.init %buildroot%_initdir/spawn-fcgi
 install -pDm644 altlinux/spawn-fcgi.sysconfig %buildroot%_sysconfdir/sysconfig/spawn-fcgi
 
+mkdir -p %buildroot/%_tmpfilesdir/
+cat <<EOF >%buildroot/%_tmpfilesdir/%name.conf
+d %_runtimedir/%name 1770 root %spawn_fcgi_group
+EOF
+
+
 %pre
 %_sbindir/groupadd -r -f %spawn_fcgi_group ||:
-%_sbindir/useradd -r -g %spawn_fcgi_group -d /dev/null -s /dev/null -n %spawn_fcgi_user \
+%_sbindir/useradd -r -g %spawn_fcgi_group -d /dev/null -s /dev/null -N %spawn_fcgi_user \
         2> /dev/null > /dev/null ||:
-
-%post
-%post_service spawn-fcgi
-
-%preun
-%preun_service spawn-fcgi
 
 %files
 %_bindir/spawn-fcgi
 %_man1dir/spawn-fcgi*
 %config(noreplace) %_sysconfdir/sysconfig/spawn-fcgi
+%config(noreplace) %_tmpfilesdir/%name.conf
 %_initdir/spawn-fcgi
-%dir %attr(1770,root,%spawn_fcgi_group) %_var/run/spawn-fcgi
 
 %changelog
+* Tue Sep 14 2021 Anton Farygin <rider@altlinux.ru> 1.6.4-alt5
+- switched to tmpfiles.d for run directory (closes: #38183)
+- added LSB header to initscript
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.4-alt4
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.4-alt3
 - NMU: remove %ubt from release
 
-* Wed Dec 21 2016 Anton Farygin <rider@altlinux.ru> 1.6.4-alt2%ubt
+* Wed Dec 21 2016 Anton Farygin <rider@altlinux.ru> 1.6.4-alt2
 - fixes fcgiwrap location in default config
 
 * Mon May 30 2016 Anton Farygin <rider@altlinux.ru> 1.6.4-alt1
