@@ -8,7 +8,7 @@
 %def_enable install_tests
 
 Name: libinput
-Version: 1.18.1
+Version: 1.19.0
 Release: alt1
 
 Summary: Input devices library
@@ -19,7 +19,7 @@ Url: http://www.freedesktop.org/wiki/Software/libinput/
 %if_disabled snapshot
 Source: http://www.freedesktop.org/software/%name/%name-%version.tar.xz
 %else
-# VCS: https://gitlab.freedesktop.org/libinput/libinput.git
+Vcs: https://gitlab.freedesktop.org/libinput/libinput.git
 Source: %name-%version.tar
 %endif
 
@@ -36,7 +36,7 @@ BuildRequires: libmtdev-devel >= %mtdev_ver libevdev-devel >= %evdev_ver
 BuildRequires: libudev-devel libsystemd-devel
 BuildRequires: libcheck-devel
 %{?_enable_libwacom:BuildRequires: libwacom-devel}
-%{?_enable_debug_gui:BuildRequires: libgtk+3-devel}
+%{?_enable_debug_gui:BuildRequires: libgtk4-devel wayland-protocols}
 %{?_enable_documentation:BuildRequires: doxygen graphviz}
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: /proc gdb python3-module-pyparsing
@@ -151,6 +151,9 @@ This package contains visual debug helper for %name.
 
 
 %changelog
+* Tue Sep 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1.19.0-alt1
+- 1.19.0
+
 * Tue Aug 03 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.1-alt1
 - 1.18.1
 
