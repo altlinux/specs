@@ -1,7 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: hts_engine
 Version: 1.03
-Release: alt1.qa1
+Release: alt2
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 
 Summary: API version of hts_engine speech synthesis system
@@ -33,6 +38,7 @@ This package contains library used for static linking of llibHTSEngien.
 %prep
 %setup -q -n %{name}_API-%version
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %configure
 %make_build
 
@@ -50,6 +56,9 @@ make DESTDIR=%buildroot install
 %_libdir/*.a
 
 %changelog
+* Tue Sep 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.03-alt2
+- Fixed build with LTO.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.03-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
