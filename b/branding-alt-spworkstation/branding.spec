@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 8.3
-Release: alt1
+Release: alt2
 Url: https://altsp.su
 
 %ifarch %ix86 x86_64
@@ -348,6 +348,9 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed Sep 08 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.3-alt2
+- design changed
+
 * Thu Jul 15 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.3-alt1
 - version bump
 
