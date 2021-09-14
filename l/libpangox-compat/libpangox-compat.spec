@@ -3,17 +3,15 @@
 
 Name: lib%_name
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: Obsolete pangox library
 License: LGPL-2.0+
-Group: System/Libraries
+Group: System/Legacy libraries
 Url: ftp://ftp.gnome.org
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
-Patch1: 0002-disable-shaper.patch
-
-Conflicts: libpango < 1.32.0
+Patch1: %name-%version-archlinux-disable-shaper.patch
 
 %define glib_ver 2.31
 
@@ -24,13 +22,26 @@ BuildRequires: libpango-devel libX11-devel
 This is a compatibility library providing the obsolete pangox library
 that is not shipped by Pango itself anymore.
 
-%package devel
+%package -n libpangox1.0-compat
+Summary: Obsolete pangox library
+Group: System/Legacy libraries
+Provides: libpangox-compat = %version-%release
+Obsoletes: libpangox-compat < %version-%release
+Conflicts: libpango < 1.32.0
+
+%description -n libpangox1.0-compat
+This is a compatibility library providing the obsolete pangox library
+that is not shipped by Pango itself anymore.
+
+%package -n libpangox1.0-compat-devel
 Summary: Libraries and include files for developing with %_name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: libpangox1.0-compat = %version-%release
+Provides: libpangox-compat-devel = %version-%release
+Obsoletes: libpangox-compat-devel < %version-%release
 Conflicts: libpango-devel < 1.32.0
 
-%description devel
+%description -n libpangox1.0-compat-devel
 This package provides the necessary development libraries and include
 files to develop with %_name.
 
@@ -40,7 +51,6 @@ files to develop with %_name.
 
 %build
 %configure --disable-static
-sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
 %make_build
 
 %install
@@ -49,10 +59,10 @@ sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
 %check
 %make check
 
-%files
+%files -n libpangox1.0-compat
 %_libdir/*.so.*
 
-%files devel
+%files -n libpangox1.0-compat-devel
 %_sysconfdir/pango/pangox.aliases
 %_includedir/*
 %_libdir/*.so
@@ -60,6 +70,10 @@ sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
 
 
 %changelog
+* Mon Sep 13 2021 Leontiy Volodin <lvol@altlinux.org> 0.0.2-alt3
+- Adjusted to Shared Libs Policy.
+- Returned for ibm_lotus_notes (redmine #51324).
+
 * Mon Sep 13 2021 Leontiy Volodin <lvol@altlinux.org> 0.0.2-alt2
 - Returned for libpangox-1.0.so.0.
 - Applied the patch from archlinux.
