@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: local-policy
-Version: 0.4.8
+Version: 0.5.0
 Release: alt1
 
 Summary: ALT Local policies
@@ -65,6 +65,10 @@ mkdir -p "%buildroot%_sysconfdir/%name"
 %_datadir/%name/*
 
 %changelog
+* Tue Sep 14 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.5.0-alt1
+- Adjust local policy templates
+- Add control system-policy for gpupdate
+
 * Fri Mar 05 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.4.8-alt1
 - Add sssd-drop-privileges control
 - Fix sssd-ad-gpo-access-control with more appropriate designations

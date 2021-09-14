@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpupdate
-Version: 0.9.3
+Version: 0.9.5
 Release: alt1
 
 Summary: GPT applier
@@ -18,7 +18,7 @@ Requires: python3-module-rpm
 Requires: python3-module-dbus
 Requires: oddjob-%name >= 0.2.0
 Requires: libnss-role >= 0.5.0
-Requires: local-policy >= 0.4.0
+Requires: local-policy >= 0.4.9
 Requires: pam-config >= 1.9.0
 Requires: autofs
 # This is needed by shortcuts_applier
@@ -68,7 +68,7 @@ mkdir -p %buildroot%_sysconfdir/%name
 touch %buildroot%_sysconfdir/%name/environment
 
 install -Dm0644 dist/%name.service %buildroot%_unitdir/%name.service
-install -Dm0644 dist/%name.service %buildroot/usr/lib/systemd/user/%name-user.service
+install -Dm0644 dist/%name-user.service %buildroot/usr/lib/systemd/user/%name-user.service
 install -Dm0644 dist/system-policy-%name %buildroot%_sysconfdir/pam.d/system-policy-%name
 install -Dm0644 dist/%name.ini %buildroot%_sysconfdir/%name/%name.ini
 install -Dm0644 doc/gpoa.1 %buildroot/%_man1dir/gpoa.1
@@ -116,6 +116,16 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Tue Sep 14 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.9.5-alt1
+- Refix local policy path detection
+- gpupdate-setup: revert settings to default when disabled
+
+* Tue Sep 14 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.9.4-alt1
+- Add improvement with new local-policy system-policy control
+- Fix gpupdate-setup and user service installation regressions
+- Set empty local policy and local backend by default
+- Fix local policy path detection
+
 * Mon Sep 06 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.9.3-alt1
 - Use NetBIOS name for Kerberos authentification
 - Add support actions (create, update, delete, replace) for Shortcuts
