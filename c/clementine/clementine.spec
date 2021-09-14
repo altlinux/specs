@@ -2,7 +2,7 @@
 
 Name: clementine
 Version: 1.4.0
-Release: alt4.git67a947f11
+Release: alt5.git67a947f11
 Summary: A music player and library organiser
 
 Group: Sound
@@ -43,6 +43,11 @@ Clementine is a modern music player and library organizer
 
 %prep
 %setup
+%ifarch %e2k
+%add_optflags -Winvalid-offsetof
+sed -i "s|== Separator|== QChar(Separator)|" \
+	ext/libclementine-tagreader/fmpsparser.cpp
+%endif
 
 %build
 %cmake
@@ -65,6 +70,9 @@ Clementine is a modern music player and library organizer
 
 
 %changelog
+* Tue Sep 14 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.4.0-alt5.git67a947f11
+- Fixed build for Elbrus
+
 * Tue Jun 29 2021 Vladimir Didenko <cow@altlinux.org> 1.4.0-alt4.git67a947f11
 - Update upstream source to 1.4.0-alt4.git67a947f11
 - Build without liblastfm
