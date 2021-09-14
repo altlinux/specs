@@ -11,14 +11,14 @@ BuildRequires: waf
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 
 Name:           lv2
-Version:        1.18.0
-Release:        alt1_1
+Version:        1.18.2
+Release:        alt1
 Summary:        Audio Plugin Standard
 
 # lv2specgen template.html is CC-AT-SA
 License:        ISC
 URL:            http://lv2plug.in
-Source:         http://lv2plug.in/spec/lv2-%{version}.tar.bz2
+Source: http://lv2plug.in/spec/lv2-%{version}.tar.bz2
 
 BuildRequires:  doxygen
 BuildRequires:  graphviz libgraphviz
@@ -138,6 +138,9 @@ done
 %{_docdir}/%{name}/
 
 %changelog
+* Tue Sep 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.2-alt1
+- 1.18.2 (ALT #40919)
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 1.18.0-alt1_1
 - update to new release by fcimport
 
