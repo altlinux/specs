@@ -1,6 +1,6 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
-Version: 2.9.25
+Version: 2.9.26
 Release: alt1
 
 Group:   System/Configuration/Other
@@ -89,6 +89,9 @@ find %buildroot%python3_sitelibdir/ansible_test/_data -name \*.ps1 -delete
 %doc README.rst changelogs/CHANGELOG-v*.rst CODING_GUIDELINES.md MODULE_GUIDELINES.md
 
 %changelog
+* Tue Sep 14 2021 Andrey Cherepanov <cas@altlinux.org> 2.9.26-alt1
+- New version.
+
 * Tue Aug 17 2021 Andrey Cherepanov <cas@altlinux.org> 2.9.25-alt1
 - New version.
 - Remove pip requirement (ALT #40735).
