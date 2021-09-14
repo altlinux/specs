@@ -1,7 +1,13 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 Summary: Generator Tools for Coding SOAP/XML Web Services in C and C++
 Name: gsoap
 Version: 2.8.102
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: Development/Tools
 URL: http://gsoap2.sourceforge.net
@@ -49,6 +55,8 @@ dos2unix README.txt LICENSE.txt NOTES.txt
 
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 # patches change autoconf and automake files, so we must reconfigure
 autoreconf --install --force
 
@@ -318,6 +326,9 @@ make check
 %_datadir/gsoap/plugin/curlapi.h
 
 %changelog
+* Tue Sep 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.8.102-alt2
+- Fixed build with LTO.
+
 * Wed May 06 2020 Evgeny Sinelnikov <sin@altlinux.org> 2.8.102-alt1
 - Update to latest release
 
