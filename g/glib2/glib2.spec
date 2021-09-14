@@ -15,7 +15,11 @@
 %def_with sys_pcre
 %def_enable selinux
 %def_disable fam
+%ifarch %e2k
+%def_disable installed_tests
+%else
 %def_enable installed_tests
+%endif
 %def_enable gtk_doc
 %def_enable man
 %def_enable libmount
@@ -26,7 +30,7 @@
 
 Name: glib2
 Version: %ver_major.4
-Release: alt1.1
+Release: alt2
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -55,10 +59,7 @@ Patch1: glib-2.53.5-alt-deprecated_paths-nowarning.patch
 Patch2: glib-2.61.3-alt-add-xvt.patch
 Patch3: glib-2.38.2-alt-lfs.patch
 Patch4: glib-2.50.1-alt-dbus_socket_path.patch
-
-# mike@: fix build with lcc 1.23 (lacks some gcc5 builtins)
-Patch10: glib-2.60.1-alt-e2k-lcc.patch
-Patch11: glib-2.68.3-alt-e2k-gmacros.patch
+Patch2000: glib-2.64.5-alt-e2k.patch
 
 %def_with locales
 %if_with locales
@@ -230,6 +231,10 @@ the functionality of the installed glib2/libgio packages.
 %patch2 -p1 -b .xvt
 %patch3 -p1
 %patch4
+%ifarch %e2k
+subst "/subdir('fuzzing')/d" meson.build
+%patch2000 -p1
+%endif
 
 %if_with sys_pcre
 rm glib/pcre/*.[ch]
@@ -246,12 +251,6 @@ install -p -m644 %_sourcedir/gio-compat-2.57.lds gio/compat.lds
 
 # abicheck always ok
 subst '/exit 1/d' check-abis.sh
-
-%ifarch %e2k
-subst "/subdir('fuzzing')/d" meson.build
-%patch10 -p1
-%patch11 -b .e2k
-%endif
 
 %build
 %meson \
@@ -445,6 +444,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Tue Sep 14 2021 Yuri N. Sedunov <aris@altlinux.org> 2.68.4-alt2
+- updated %%e2k patchset by ilyakurdyukov@
+
 * Thu Aug 26 2021 Yuri N. Sedunov <aris@altlinux.org> 2.68.4-alt1.1
 - added -ffat-lto-objects to %%optflags_lto if static build enabled
 
