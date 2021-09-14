@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        93.0.4577.63
+Version:        93.0.4577.82
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -434,6 +434,19 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Sep 14 2021 Alexey Gladkov <legion@altlinux.ru> 93.0.4577.82-alt1
+- New version (93.0.4577.82).
+- Security fixes:
+  - CVE-2021-30625: Use after free in Selection API.
+  - CVE-2021-30626: Out of bounds memory access in ANGLE.
+  - CVE-2021-30627: Type Confusion in Blink layout.
+  - CVE-2021-30628: Stack buffer overflow in ANGLE.
+  - CVE-2021-30629: Use after free in Permissions.
+  - CVE-2021-30630: Inappropriate implementation in Blink .
+  - CVE-2021-30631: Type Confusion in Blink layout.
+  - CVE-2021-30632: Out of bounds write in V8.
+  - CVE-2021-30633: Use after free in Indexed DB API.
+
 * Wed Sep 01 2021 Alexey Gladkov <legion@altlinux.ru> 93.0.4577.63-alt1
 - New version (93.0.4577.63).
 - Use internal ffmpeg.
