@@ -1,6 +1,6 @@
 Name: dblatex
-Version: 0.3.11
-Release: alt2
+Version: 0.3.12
+Release: alt1
 
 Summary: DocBook to LaTeX/ConTeXt Publishing
 License: GPL-2.0-or-later and MIT and W3C
@@ -98,6 +98,9 @@ sed -i 's|\(/usr/bin/\)env \(python\)$|\1\23|' %buildroot%_bindir/%name
 
 
 %changelog
+* Tue Sep 14 2021 Grigory Ustinov <grenka@altlinux.org> 0.3.12-alt1
+- Build new version.
+
 * Mon Nov 09 2020 Vitaly Lipatov <lav@altlinux.ru> 0.3.11-alt2
 - NMU: require /usr/bin/convert instead of ImageMagick-tools
 
