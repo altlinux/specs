@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.2.8
+Version: 3.2.9
 Release: alt1
 
 Source:%name-%version.tar
@@ -82,6 +82,9 @@ __EOF__
 
 
 %changelog
+* Tue Sep 14 2021 Sergey V Turchin <zerg at altlinux dot org> 3.2.9-alt1
+- hide screenshot message for timeout
+
 * Mon Sep 13 2021 Sergey V Turchin <zerg at altlinux dot org> 3.2.8-alt1
 - allow to take screenshot (closes: 40604)
 
