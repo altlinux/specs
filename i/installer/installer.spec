@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.10.10
+Version: 1.10.11
 Release: alt1
 
 Summary: Installer common parts
@@ -111,6 +111,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Tue Sep 14 2021 Anton Midyukov <antohami@altlinux.org> 1.10.11-alt1
+- Add copying screenshots taken by alterator-browser-qt to the installed system
+
 * Fri Apr 09 2021 Oleg Solovyov <mcpain@altlinux.org> 1.10.10-alt1
 - generate hostname via pwqgen, if it's longer than 13 chars (Closes: 39761)
 
