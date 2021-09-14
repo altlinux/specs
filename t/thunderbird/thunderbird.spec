@@ -8,7 +8,7 @@
 
 Name: 	 thunderbird
 Version: 91.1.0
-Release: alt1
+Release: alt2
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -95,6 +95,7 @@ BuildRequires: node
 BuildRequires: nasm
 BuildRequires: libxkbcommon-devel
 BuildRequires: libdrm-devel
+BuildRequires: libotr-devel
 
 # Python requires
 BuildRequires: python3-base
@@ -134,6 +135,9 @@ Obsoletes: %name-enigmail < %EVR
 
 # Protection against fraudulent DigiNotar certificates
 Requires: libnss >= 3.13.1-alt1
+
+# ALT #40907
+Requires: libotr5
 
 BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
@@ -507,6 +511,9 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Mon Sep 13 2021 Andrey Cherepanov <cas@altlinux.org> 91.1.0-alt2
+- Fix unreadable text in chat (ALT #40907).
+
 * Wed Sep 08 2021 Andrey Cherepanov <cas@altlinux.org> 91.1.0-alt1
 - New version.
 - Security fixes:
