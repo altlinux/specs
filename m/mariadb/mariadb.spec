@@ -7,6 +7,8 @@
 # default plugin dir is %_libdir/mysql/plugin
 %define plugindir %_lib/%name/plugin
 
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 %def_with server
 %def_with libs
 %def_with devel
@@ -49,7 +51,7 @@
 
 Name: mariadb
 Version: 10.5.11
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -119,6 +121,8 @@ Patch33: mariadb-covscan-signexpr.patch
 
 Patch101: rocksdb-6.8.0-alt-add-libatomic-if-needed.patch
 Patch102: mariadb-10.5.11-alt-link-with-latomic-if-needed.patch
+
+Patch2000: mariadb-e2k.patch
 
 Requires: %name-server = %EVR
 Requires: %name-client = %EVR
@@ -436,6 +440,15 @@ tar -xf %SOURCE106 -C storage/maria/libmarias3
 %patch101 -p1 -d ./storage/rocksdb/rocksdb
 %patch102 -p1
 
+%ifarch %e2k
+%patch2000 -p1
+sed -i 's|-fno-sanitize=shift|""|' \
+	plugin/auth_ed25519/CMakeLists.txt \
+	libmariadb/plugins/auth/CMakeLists.txt
+sed -i 's|WSREP_NORETURN|__attribute__((noreturn))|' \
+	wsrep-lib/include/wsrep/thread_service.hpp
+%endif
+
 # Replace that horror.
 sed 's,@datadir@,%_datadir,g' <%SOURCE15 >scripts/mysql_install_db.sh
 
@@ -447,13 +460,6 @@ chmod -R a-s,go-w sql-bench
 
 #fix shebang.req: ERROR: /usr/src/tmp/mariadb-buildroot/usr/share/mysql/sql-bench/innotest1: trailing <CR> in interpreter: #!/usr/bin/perl<CR>
 find sql-bench -type f -name 'innotest*' | xargs dos2unix
-
-%ifarch %e2k
-# FIXME: just like libzio
-sed -i 's,makecontext,makecontext_e2k,' mysys/my_context.c
-# FIXME: fails
-:> cmake/do_abi_check.cmake
-%endif
 
 %build
 CFLAGS="%optflags -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE"
@@ -1036,6 +1042,10 @@ fi
 %endif
 
 %changelog
+* Tue Sep 14 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 10.5.11-alt2
+- Proper patch for Elbrus
+- Fixed -flto
+
 * Mon Jul 12 2021 Alexey Shabalin <shaba@altlinux.org> 10.5.11-alt1
 - 10.5.11
 - Drop tokudb build support
