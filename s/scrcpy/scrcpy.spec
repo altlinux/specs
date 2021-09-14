@@ -4,7 +4,7 @@
 %def_disable build_server
 
 Name: scrcpy
-Version: 1.16
+Version: 1.19
 Release: alt1
 Summary: Display and control your Android device screen
 License: Apache-2.0
@@ -20,15 +20,16 @@ Source1: scrcpy-server.jar
 # Android SDK is not free and is not redistributable.
 # If you want to build server application download it here:
 # https://developer.android.com/studio#downloads
-Source2: commandlinetools-linux-6609375_latest.zip
+# SHA256 (commandlinetools-linux-7583922_latest.zip) = 124f2d5115eee365df6cf3228ffbca6fc3911d16f8025bebd5b1c6e2fcfa7faf
+Source2: commandlinetools-linux-7583922_latest.zip
 
 BuildPreReq: java-devel unzip
 %endif
 
 BuildRequires(pre): meson
-# Automatically added by buildreq on Fri May 29 2020
-# optimized out: fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavutil-devel libcairo-gobject libgdk-pixbuf libglvnd-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit libx265-176 ninja-build pkg-config python2-base python3 python3-base python3-module-pkg_resources sh4 xz
-BuildRequires: libSDL2-devel libavformat-devel meson
+# Automatically added by buildreq on Tue Sep 14 2021
+# optimized out: fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavformat-devel libavutil-devel libcairo-gobject libcdio-paranoia libdc1394-22 libgdk-pixbuf libglvnd-devel libgpg-error libopencore-amrnb0 libopencore-amrwb0 libp11-kit librabbitmq-c libraw1394-11 libx265-199 ninja-build pkg-config python3 python3-base sh4 xz
+BuildRequires: libSDL2-devel libavdevice-devel meson
 
 Requires: android-tools
 
@@ -47,7 +48,7 @@ unzip %SOURCE2
 %build
 %if_enabled build_server
 export ANDROID_SDK_ROOT=$PWD/android-sdk
-yes | $ANDROID_SDK_ROOT/tools/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT --licenses
+yes | "$ANDROID_SDK_ROOT"/cmdline-tools/bin/sdkmanager --sdk_root="$ANDROID_SDK_ROOT" --licenses
 %meson \
 %else
 %meson \
@@ -66,9 +67,13 @@ export ANDROID_SDK_ROOT=$PWD/android-sdk
 %doc README.md DEVELOP.md FAQ.md LICENSE
 %_bindir/%name
 %_datadir/%name
+%_datadir/%name/%name-server
 %_mandir/man1/scrcpy.1.*
 
 %changelog
+* Tue Sep 14 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.19-alt1
+- Updated to v1.19.
+
 * Mon Oct 12 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.16-alt1
 - Updated to v1.16.
 - Fixed package summary and description.
