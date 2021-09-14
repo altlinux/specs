@@ -1,7 +1,13 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 Summary: Tools for reading and writing Macintosh HFS volumes
 Name: hfsutils
 Version: 3.2.6
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: Archiving/Compression
 Source: ftp://ftp.mars.org/pub/hfs/%name-%version.tar.gz
@@ -16,7 +22,7 @@ BuildRequires: libXft-devel tcl-devel tk-devel gcc
 
 %package devel
 Summary: A C library for reading and writing Macintosh HFS volumes
-Provides: %name-static = %version-%release
+Provides: %name-static = %EVR
 Group: Development/C
 
 %package x11
@@ -117,6 +123,9 @@ ln -sf hfsck $RPM_BUILD_ROOT/%_bindir/fsck.hfs
 %_includedir/rsrc.h
 
 %changelog
+* Tue Sep 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.6-alt2
+- Fixed build with LTO.
+
 * Thu Feb 20 2020 Fr. Br. George <george@altlinux.ru> 3.2.6-alt1
 - Initial build for ALT
 
