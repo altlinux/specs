@@ -10,7 +10,7 @@
 %endif
 
 Name: dune%subpackagename
-Version: 2.9.0
+Version: 2.9.1
 Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
@@ -156,6 +156,9 @@ sed -i '/^(name/a (version %version)' dune-project
 %endif
 
 %changelog
+* Tue Sep 14 2021 Anton Farygin <rider@altlinux.ru> 2.9.1-alt1
+- 2.9.1
+
 * Tue Jul 27 2021 Anton Farygin <rider@altlinux.ru> 2.9.0-alt1
 - 2.9.0
 
