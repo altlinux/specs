@@ -9,11 +9,13 @@
 
 %def_with sysprofd
 %def_enable gtk
+%ifnarch %e2k
 %def_enable libunwind
+%endif
 
 Name: sysprof
 Version: %ver_major.1
-Release: alt2
+Release: alt2.1
 
 Summary: Sysprof kernel based performance profiler for Linux
 Group: Development/Tools
@@ -106,6 +108,9 @@ developing applications that use GtkGHex library.
 %_pkgconfigdir/%name-capture-%api_ver.pc
 
 %changelog
+* Tue Sep 14 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.1-alt2.1
+- E2K: disabled libunwind support
+
 * Fri Aug 27 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.1-alt2
 - updated to 3.40.1-5-g5f25540
 - added -ffat-lto-objects to %%optflags_lto
