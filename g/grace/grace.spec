@@ -1,11 +1,16 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%global optflags_lto %optflags_lto -ffat-lto-objects
+
 %def_with netcdf
 %def_without pdflib
 %def_with lpr
 
 Name: grace
 Version: 5.1.25
-Release: alt5
-
+Release: alt6
 Summary: WYSIWYG tool to make two-dimensional plots of scientific data
 License: GPL
 Group: Sciences/Mathematics
@@ -68,7 +73,7 @@ Grace -- это программа для подготовки двумерны�
 Summary: A library for interfacing with Grace using pipes
 Summary(ru_RU.UTF-8): Библиотека для взаимодействия с Grace через каналы (pipes)
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 A library for interfacing with Grace using pipes
@@ -77,7 +82,7 @@ A library for interfacing with Grace using pipes
 Библиотека для взаимодействия с Grace через каналы (pipes)
 
 %prep
-%setup -n %name-%version
+%setup
 %patch1 -p1
 %patch2 -p1
 #patch3 -p1
@@ -88,6 +93,7 @@ A library for interfacing with Grace using pipes
 cp -a %SOURCE7 set_default_enc
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %add_optflags -I%_includedir/netcdf-3
 %configure \
 	--prefix=%_datadir \
@@ -144,6 +150,9 @@ GRACE_HOME=%_datadir/grace %_datadir/grace/auxiliary/set_default_enc
 # - look into printing support
 
 %changelog
+* Tue Sep 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.25-alt6
+- Fixed build with LTO.
+
 * Fri Apr 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.25-alt5
 - Rebuilt with new libnetcdf and libhdf5.
 
