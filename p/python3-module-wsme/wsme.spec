@@ -3,8 +3,8 @@
 %def_with bootstrap
 
 Name:           python3-module-%lpypi_name
-Version:        0.8.0
-Release:        alt3
+Version:        0.11.0
+Release:        alt1
 Summary:        Web Services Made Easy
 Group:          Development/Python3
 
@@ -14,7 +14,8 @@ Source:        %lpypi_name-%version.tar
 Patch:         %lpypi_name-namespace-disable.patch
 BuildArch:      noarch
 
-BuildRequires: python3-module-html5lib python3-module-netaddr python3-module-pbr python3-module-pytz rpm-build-python3
+BuildRequires: rpm-build-python3
+BuildRequires: python3-module-pbr
 
 #see wsmeext/soap/simplegeneric.py
 Requires: python3-module-simplegeneric
@@ -54,6 +55,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %python3_sitelibdir/*
 
 %changelog
+* Tue Sep 14 2021 Grigory Ustinov <grenka@altlinux.org> 0.11.0-alt1
+- Build new version.
+
 * Wed Jun 02 2021 Grigory Ustinov <grenka@altlinux.org> 0.8.0-alt3
 - Drop python2 support.
 
