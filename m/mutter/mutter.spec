@@ -17,7 +17,7 @@
 
 Name: mutter
 Version: %ver_major.4
-Release: alt1%beta
+Release: alt1.1%beta
 Epoch: 1
 
 Summary: Clutter based compositing GTK3 Window Manager
@@ -174,7 +174,12 @@ echo 'DRIVERS=="baikal-vdu", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-m
 	%{?_enable_remote_desktop:-Dremote_desktop=true} \
 	%{?_enable_egl_device:-Degl_device=true} \
 	%{?_enable_wayland_eglstream:-Dwayland_eglstream=true} \
-	%{?_disable_installed_tests:-Dinstalled_tests=false}
+	%{?_disable_sysprof:-Dsysprof=false} \
+	%{?_disable_installed_tests:-Dinstalled_tests=false} \
+%ifarch %e2k
+	-Dclutter_tests=false
+%endif
+%nil
 %meson_build
 
 %install
@@ -228,6 +233,9 @@ echo 'DRIVERS=="baikal-vdu", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-m
 
 
 %changelog
+* Tue Sep 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1:40.4-alt1.1
+- E2K: disabled Clutter tests
+
 * Wed Aug 18 2021 Yuri N. Sedunov <aris@altlinux.org> 1:40.4-alt1
 - 40.4
 
