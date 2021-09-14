@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nheko
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 
 Summary: Desktop client (QT) for the Matrix protocol
@@ -65,6 +65,9 @@ and less like an IRC client.
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Tue Sep 14 2021 Paul Wolneykien <manowar@altlinux.org> 0.8.2-alt1
+- Updated to v0.8.2.
+
 * Sun Feb 14 2021 Paul Wolneykien <manowar@altlinux.org> 0.8.1-alt1
 - Fixed build requirements for new version.
 - Fresh up to v0.8.1.

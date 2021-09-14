@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nlohmann-json
-Version: 3.8.0
-Release: alt3.1
+Version: 3.10.2
+Release: alt1
 
 Summary: JSON for Modern C++ (c++11) ("single header file")
 
@@ -62,8 +62,12 @@ ln -sf ../json_test_data-2.0.0 %_cmake__builddir/json_test_data
 %files devel
 %_includedir/nlohmann
 %_libdir/cmake/nlohmann_json
+%_pkgconfigdir/nlohmann_json.pc
 
 %changelog
+* Tue Sep 14 2021 Paul Wolneykien <manowar@altlinux.org> 3.10.2-alt1
+- Updated to v3.10.2.
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 3.8.0-alt3.1
 - NMU: spec: adapted to new cmake macros.
 
