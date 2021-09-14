@@ -1,7 +1,7 @@
 %define Name QXmlEdit
 Name: qxmledit
 Version: 0.9.16
-Release: alt1
+Release: alt2
 
 Summary: Simple XML editor and XSD viewer
 
@@ -53,8 +53,15 @@ lrelease-qt5 src/QXmlEdit.pro
 lrelease-qt5 src/QXmlEditWidget.pro
 lrelease-qt5 src/sessions/QXmlEditSessions.pro
 
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 %qmake_qt5 "CONFIG+=release staticlib" %Name.pro
+# DISABLE_COMPILE_WARNINGS disables -Werror, not warnings
 %make_build \
+%ifarch %e2k
+	QXMLEDIT_INST_AVOID_PRECOMP_HEADERS=yes \
+	QXMLEDIT_INST_DISABLE_COMPILE_WARNINGS=yes \
+%endif
 	QXMLEDIT_INST_DATA_DIR=%_datadir/%name \
 	QXMLEDIT_INST_DIR=%_bindir \
 	QXMLEDIT_INST_DOC_DIR=%_docdir/%name-%version \
@@ -85,6 +92,10 @@ mv %buildroot%_datadir/%name/%Name.desktop %buildroot%_desktopdir/%Name.desktop
 
 
 %changelog
+* Tue Sep 14 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.9.16-alt2
+- fixed build for Elbrus
+- fixed -flto
+
 * Thu Oct 01 2020 Sergey V Turchin <zerg@altlinux.org> 0.9.16-alt1
 - new version
 
