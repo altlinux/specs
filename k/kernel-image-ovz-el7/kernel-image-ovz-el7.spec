@@ -6,7 +6,7 @@
 %define flavour %base_flavour-%sub_flavour
 
 #     rh7-3.10.0-1160.36.2.vz7.182.2
-%define orelease 1160.36.2.vz7.182.2
+%define orelease 1160.36.2.vz7.182.2.1
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -277,6 +277,8 @@ echo "%kgcc_version" \
 %__cc -dumpversion | cut -d. -f1-2 \
 %endif
 	>> gcc_version.inc
+
+subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := gcc-%kgcc_version/g' Makefile
 
 %if_with src
 cd ..
@@ -593,6 +595,11 @@ grep beancounter boot.log
 
 
 %changelog
+* Wed Sep 15 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.36.2.vz7.182.2.1
+- fix partial merge of 6faadbbb7f9 commit (thnx glebfm@)
+- change the name of gcc compiler in Makefile (as in std-def)
+- objtool: Don't fail on missing symbol table (1d489151e9f9)
+
 * Wed Sep 15 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.36.2.vz7.182.2
 - Build rh7-3.10.0-1160.36.2.vz7.182.2
 
