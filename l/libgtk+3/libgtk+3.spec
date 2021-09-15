@@ -23,7 +23,7 @@
 
 Name: libgtk+3
 Version: %ver_major.30
-Release: alt1
+Release: alt2
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -248,6 +248,10 @@ the functionality of the installed GTK+3 packages.
 %setup -n %_name-%version
 %patch -p1
 #%%patch1 -b .cloudprov
+# fix wrong GLIB define names
+sed -i.glib -e "s|GLIB_MIN_REQUIRED_VERSION|GLIB_VERSION_MIN_REQUIRED|" \
+     -e "s|GLIB_MAX_ALLOWED_VERSION|GLIB_VERSION_MAX_ALLOWED|" \
+     meson.build configure{,.ac}
 
 %{?_enable_snapshot:touch README INSTALL}
 
@@ -462,6 +466,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Wed Sep 15 2021 Yuri N. Sedunov <aris@altlinux.org> 3.24.30-alt2
+- meson.build,configure*: fixed wrong GLIB define names (ilyakurdyukov@)
+
 * Thu Jul 08 2021 Yuri N. Sedunov <aris@altlinux.org> 3.24.30-alt1
 - 3.24.30
 
