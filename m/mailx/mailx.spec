@@ -1,6 +1,6 @@
 Name: mailx
 Version: 8.1.2
-Release: alt8
+Release: alt9
 
 %def_without lockspool
 
@@ -46,6 +46,10 @@ bzip2 -9 USD.doc/USD.txt
 %doc USD.doc/*.bz2
 
 %changelog
+* Wed Sep 15 2021 Michael Shigorin <mike@altlinux.org> 8.1.2-alt9
+- Un-nested function to facilitate build with non-gcc
+  (EDG-based lcc/e2k, particularly).
+
 * Sat Apr 17 2021 Dmitry V. Levin <ldv@altlinux.org> 8.1.2-alt8
 - %%add_optflags -fcommon.
 
