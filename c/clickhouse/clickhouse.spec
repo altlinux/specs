@@ -9,7 +9,7 @@
 
 Name: clickhouse
 Version: 21.8.5.7
-Release: alt1
+Release: alt2
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
 Group: Databases
@@ -298,6 +298,9 @@ fi
 %_datadir/clickhouse-test
 
 %changelog
+* Tue Sep 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.8.5.7-alt2
+- Updated generated version information.
+
 * Mon Sep 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.8.5.7-alt1
 - Updated to lts upstream version 21.8.5.7.
 
