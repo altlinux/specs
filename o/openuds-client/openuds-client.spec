@@ -3,7 +3,7 @@
 
 Name: openuds-client
 Version: 3.0.0
-Release: alt3
+Release: alt4
 Summary: Client for Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause
 Group: Networking/Remote access
@@ -42,6 +42,9 @@ popd
 %_desktopdir/UDSClient.desktop
 
 %changelog
+* Wed Sep 15 2021 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt4
+- Run usbip-export to redirect USB devices before connect to session.
+
 * Sat Aug 21 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt3
 - v3.0 snapshot 51b0cec5365698dffdb9a3a468d52bbba4656ba4
 
