@@ -1,5 +1,5 @@
 Name: libtiff
-Version: 4.2.0
+Version: 4.3.0
 Release: alt1
 
 Summary: Library of functions for manipulating TIFF format image files
@@ -122,7 +122,7 @@ EOF
 rm libtiff.sym
 
 %build
-./autogen.sh
+%autoreconf
 %define docdir %_docdir/%name-%version
 %configure --with-docdir=%docdir --enable-ld-version-script \
 	%{subst_enable static} %{subst_enable cxx}
@@ -174,11 +174,15 @@ xz -9 %buildroot%docdir/ChangeLog
 %endif
 
 %changelog
+* Wed Sep 15 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.3.0-alt1
+- Updated to v4.3.0.
+
 * Fri Dec 25 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.2.0-alt1
-- Updated to v4.2.0.
+- Updated to v4.2.0 (fixed CVE-2020-35521, CVE-2020-35522, CVE-2020-35523 and
+  CVE-2020-35524).
 
 * Thu Nov 14 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.1.0-alt1
-- Updated to 4.1.0.
+- Updated to 4.1.0 (fixed CVE-2019-17546).
 - Dropped tiff-CVE-2018-12900.patch.
 
 * Tue Jun 04 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.10.0.93.91480d3d-alt1
