@@ -1,5 +1,3 @@
-%define _userinitdir %(pkg-config systemd --variable systemduserunitdir)
-
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 %define ver_major 40
@@ -9,7 +7,7 @@
 %def_enable rdp
 
 Name: gnome-remote-desktop
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: GNOME Remote Desktop
@@ -36,8 +34,8 @@ Source: %name-%version.tar
 Requires: pipewire >= %pw_ver
 Requires: fuse3 >= %fuse_ver
 
-BuildRequires(pre): meson pkgconfig(systemd)
-BuildRequires: libgio-devel >= %glib_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-systemd
+BuildRequires: meson libgio-devel >= %glib_ver
 BuildRequires: pkgconfig(libpipewire-%pw_api_ver) >= %pw_ver
 %{?_enable_vnc:BuildRequires: libvncserver-devel >= %vnc_ver}
 %{?_enable_rdp:BuildRequires: libfreerdp-devel >= %freerdp_ver}
@@ -54,7 +52,7 @@ Remote desktop daemon for GNOME using pipewire.
 %build
 %meson \
     %{?_disable_rdp:-Drdp=false} \
-    -Dsystemd_user_unit_dir=%_userinitdir
+    -Dsystemd_user_unit_dir=%_userunitdir
 %nil
 %meson_build
 
@@ -63,12 +61,15 @@ Remote desktop daemon for GNOME using pipewire.
 
 %files
 %_libexecdir/%name-daemon
-%_userinitdir/%name.service
+%_userunitdir/%name.service
 %_datadir/glib-2.0/schemas/org.gnome.desktop.remote-desktop.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.remote-desktop.enums.xml
 %doc README
 
 %changelog
+* Wed Sep 15 2021 Yuri N. Sedunov <aris@altlinux.org> 40.2-alt1
+- 40.2
+
 * Sun May 02 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
 - 40.1
 
