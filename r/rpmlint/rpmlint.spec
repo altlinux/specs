@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: rpmlint
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
 Summary: Tool for checking common errors in RPM packages
@@ -30,7 +30,7 @@ BuildRequires: /usr/bin/desktop-file-validate
 %endif
 
 Requires: rpm-build glibc-utils binutils
-Requires: /usr/bin/appstream-util
+#Requires: /usr/bin/appstream-util
 Requires: /usr/bin/bzip2
 Requires: /usr/bin/checkbashisms
 Requires: /bin/cpio
@@ -73,6 +73,11 @@ python3 -m pytest
 %python3_sitelibdir/*
 
 %changelog
+* Wed Sep 15 2021 Alexey Shabalin <shaba@altlinux.org> 2.1.0-alt1
+- 2.1.0
+- Filter no-cleaning-of-buildroot, setup-not-quiet in ALT config
+- Disable R: /usr/bin/appstream-util
+
 * Fri Aug 06 2021 Alexey Shabalin <shaba@altlinux.org> 2.0.0-alt1
 - 2.0.0 (ALT #39550)
 
