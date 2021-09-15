@@ -1,6 +1,6 @@
 Name: grsync
 Version: 1.3.0
-Release: alt1
+Release: alt2
 
 Summary: Grsync is a GUI for rsync
 License: GPLv2
@@ -12,6 +12,9 @@ Source: http://www.opbyte.it/release/grsync-%version.tar.gz
 Source1: grsync16.png
 Source2: grsync32.png
 Source3: grsync48.png
+
+# EDG frontend doesn't support nested functions
+Patch2000: %name-e2k-remove-nested.patch
 
 Requires: rsync
 
@@ -25,6 +28,9 @@ directory synchronization tool.
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p2
+%endif
 dos2unix AUTHORS NEWS README
 
 %build
@@ -56,6 +62,9 @@ install -pD -m644 %_sourcedir/grsync16.png %buildroot%_miconsdir/grsync.png
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Sep 15 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.3.0-alt2
+- Removed nested function for Elbrus build.
+
 * Fri Mar 26 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
 - Build new version.
 
