@@ -1,15 +1,13 @@
 %def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
-
 %define _name vte
 %define ver_major 0.64
 %define api_ver 2.91
 
 Name: %{_name}3
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 %def_disable static
 %def_enable introspection
@@ -37,8 +35,8 @@ Source: %_name-%version.tar
 %define gir_ver 0.10.2
 %define tls_ver 3.2.7
 
-BuildRequires(pre): meson
-BuildRequires: gcc-c++ gperf
+BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-systemd
+BuildRequires: meson gcc-c++ gperf
 BuildRequires: libncurses-devel libcairo-devel
 BuildRequires: gtk-doc >= 1.1.0
 BuildRequires: libgio-devel >= %glib_ver
@@ -127,6 +125,10 @@ GObject introspection devel data for the %name library
 
 %prep
 %setup -n %_name-%version
+%ifarch %e2k
+# fixes "multiple definition of" error at linking
+sed -i "1i #define set_child_setup set_child_setup2" src/spawn.cc
+%endif
 
 %build
 %meson \
@@ -196,6 +198,11 @@ LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Sep 15 2021 Yuri N. Sedunov <aris@altlinux.org> 0.64.2-alt2
+- updated to 0.64.2-5-g2ea994e2
+- updated to use rpm-build-systemd
+- fixed build for %%e2k (ilyakurdyukov@)
+
 * Sat Jun 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.64.2-alt1
 - 0.64.2
 
