@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.86.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -46,6 +46,14 @@ Obsoletes: %name-devel-static < %EVR
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
+%package devel-static
+Group: Development/KDE and QT
+Summary: Development files for %name
+BuildArch: noarch
+Requires: %name-devel
+%description devel-static
+Static libraries for %name.
+
 %package -n libkf5doctools
 Group: System/Libraries
 Summary: KF5 library
@@ -81,10 +89,16 @@ KF5 library
 %_K5link/lib*.so
 %_K5lib/cmake/KF5DocTools
 
+%files devel-static
+#%_K5lib/lib*.a
+
 %files -n libkf5doctools
 %_K5lib/libKF5DocTools.so.*
 
 %changelog
+* Wed Sep 15 2021 Sergey V Turchin <zerg@altlinux.org> 5.86.0-alt2
+- package empty devel-static package for compatibility
+
 * Mon Sep 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.86.0-alt1
 - new version
 
