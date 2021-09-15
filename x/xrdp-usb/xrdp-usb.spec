@@ -1,5 +1,5 @@
 Name:    xrdp-usb
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: Infrastructure for redirect USB devices to XRDP session
@@ -73,5 +73,8 @@ fi
 %_sbindir/usbip-attach
 
 %changelog
+* Wed Sep 15 2021 Andrey Cherepanov <cas@altlinux.org> 1.1-alt1
+- usbip-export: use sudo in non-interactive mode.
+
 * Mon Sep 13 2021 Andrey Cherepanov <cas@altlinux.org> 1.0-alt1
 - Initial build for Sisyphus.
