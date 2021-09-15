@@ -3,7 +3,7 @@
 # TODO: async
 %define opamodules cstruct,cstruct-unix,cstruct-lwt,cstruct-sexp
 Name:    ocaml-%modulename
-Version: 6.0.0
+Version: 6.0.1
 Release: alt1
 Summary: access C-like structures directly from OCaml
 License: ISC
@@ -56,6 +56,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Sep 14 2021 Anton Farygin <rider@altlinux.ru> 6.0.1-alt1
+- 6.0.1
+
 * Fri Mar 26 2021 Anton Farygin <rider@altlinux.org> 6.0.0-alt1
 - 6.0.0
 
