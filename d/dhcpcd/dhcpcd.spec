@@ -8,19 +8,17 @@
 
 Name: dhcpcd
 Epoch: 1
-Version: 9.3.4
-Release: alt2
+Version: 9.4.0
+Release: alt1
 
 Summary: DHCP Client
 License: BSD-2-Clause
 Group: System/Servers
 
 URL: https://roy.marples.name/projects/%name
+Vcs: git://roy.marples.name/dhcpcd.git
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-
-# From upstream git.
-Patch1: privsep-Fix-Linux-i386-for-SECCOMP-as-it-just-uses-s.patch
 
 AutoReq: yes, noshell
 
@@ -41,7 +39,6 @@ which it is running. It also tries to renew the lease time according to RFC2131.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %add_optflags -fpie
@@ -107,6 +104,11 @@ fi
 %exclude %_datadir/%name/
 
 %changelog
+* Fri Jan 22 2021 Mikhail Efremov <sem@altlinux.org> 1:9.4.0-alt1
+- Added Vcs tag.
+- Dropped obsoleted patch.
+- Updated to 9.4.0.
+
 * Wed Dec 16 2020 Mikhail Efremov <sem@altlinux.org> 1:9.3.4-alt2
 - Fix privsep on i586 (closes: #39414).
 
