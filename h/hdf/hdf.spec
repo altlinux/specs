@@ -1,3 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%global optflags_lto %optflags_lto -ffat-lto-objects
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/diff /usr/bin/makeinfo /usr/bin/neqn /usr/bin/tbl
@@ -10,7 +17,7 @@ BuildRequires: /usr/bin/diff /usr/bin/makeinfo /usr/bin/neqn /usr/bin/tbl
 
 Name: hdf
 Version: 4.2.15
-Release: alt1
+Release: alt2
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 URL: https://portal.hdfgroup.org/
@@ -152,6 +159,9 @@ make -j1 check
 %{_docdir}/%{name}/examples/
 
 %changelog
+* Tue Sep 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.15-alt2
+- Fixed build with LTO.
+
 * Mon May 03 2021 Ilya Mashkin <oddity@altlinux.ru> 4.2.15-alt1
 - 4.2.15
 
