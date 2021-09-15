@@ -7,7 +7,7 @@
 %def_enable gtk_doc
 
 Name: libgupnp-av
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A library to handle UPnP A/V profiles
@@ -15,12 +15,17 @@ Group: System/Libraries
 License: LGPL-2.1
 Url: http://www.gupnp.org/
 
+Vcs: https://gitlab.gnome.org/GNOME/gupnp-av.git
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildRequires(pre): meson
-BuildRequires: glib2-devel >= 2.58 libxml2-devel
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel}
-%{?_enable_vala:BuildRequires: vala-tools}
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson glib2-devel >= 2.58 libxml2-devel
+%{?_enable_introspection:
+BuildRequires(pre): rpm-build-gir
+BuildRequires: gobject-introspection-devel}
+%{?_enable_vala:
+BuildRequires(pre): rpm-build-vala
+BuildRequires: vala-tools}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 
 %description
@@ -83,6 +88,9 @@ GObject introspection devel data for the GUPnP A/V library
 %setup -n %_name-%version
 
 %build
+%ifarch %e2k
+%add_optflags -Wno-error=deprecated-declarations
+%endif
 %meson \
 %{?_disable_introspection:-Dintrospection=false} \
 %{?_disable_vala:-Dvapi=false} \
@@ -123,6 +131,10 @@ GObject introspection devel data for the GUPnP A/V library
 
 
 %changelog
+* Mon Aug 16 2021 Yuri N. Sedunov <aris@altlinux.org> 0.13.1-alt1
+- 0.13.1
+- fixed build for %%e2k
+
 * Thu Jul 08 2021 Yuri N. Sedunov <aris@altlinux.org> 0.13.0-alt1
 - 0.13.0 (ported to Meson build system)
 
