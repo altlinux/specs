@@ -33,7 +33,8 @@ cp -pr %php_extsrcdir/%php_extension/* .
 
 %build
 phpize
-
+%add_optflags -fPIC -L%_libdir
+export LDFLAGS=-lphp-%_php_version
 %configure \
 	--with-libdir=%_lib \
 	--with-%php_extension
