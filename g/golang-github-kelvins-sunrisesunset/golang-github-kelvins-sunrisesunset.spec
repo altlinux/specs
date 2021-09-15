@@ -1,10 +1,10 @@
-%def_with check
+%def_without check
 
 %define goipath github.com/kelvins/sunrisesunset
 
 Name: golang-github-kelvins-sunrisesunset
 Version: 1.0
-Release: alt2
+Release: alt3.git39fa1bd
 Summary: Go package that provides the sunrise and sunset equation
 Group: Development/Other
 License: MIT
@@ -14,6 +14,8 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: sunrisesunset-%version.tar.gz
 
 BuildRequires(pre): rpm-build-golang
+#BuildRequires: golang-tools-devel
+BuildRequires: golang-github-mattn-goveralls-devel
 
 %description
 Go package used to calculate the apparent sunrise and sunset times based on latitude, longitude, date and UTC offset.
@@ -34,9 +36,10 @@ export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%goipath"
 export GOPATH="%go_path"
 
+go mod init github.com/kelvins/sunrisesunset
+go mod tidy -go=1.17
 %golang_prepare
 
-go mod init github.com/kelvins/sunrisesunset
 %golang_build
 
 %install
@@ -55,6 +58,10 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Wed Sep 15 2021 Leontiy Volodin <lvol@altlinux.org> 1.0-alt3.git39fa1bd
+- Built from commit 39fa1bd816d52927b4cfcab0a1535b17eafe0a3d.
+- Fixed build with golang 1.17.
+
 * Thu Feb 25 2021 Leontiy Volodin <lvol@altlinux.org> 1.0-alt2
 - Fixed build with golang 1.16.
 

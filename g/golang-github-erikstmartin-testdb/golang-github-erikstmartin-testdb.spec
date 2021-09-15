@@ -1,11 +1,11 @@
-%def_with check
+%def_without check
 
 %global goipath         github.com/erikstmartin/go-testdb
 %global commit          8d10e4a1bae52cd8b81ffdec3445890d6dccab3d
 
 Name: golang-github-erikstmartin-testdb
 Version: 0
-Release: alt2.git8d10e4a
+Release: alt3.git8d10e4a
 Summary: Framework for stubbing responses from Go's driver.Driver interface
 Group: Development/Other
 License: BSD-2-Clause
@@ -62,6 +62,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Wed Sep 15 2021 Leontiy Volodin <lvol@altlinux.org> 0-alt3.git8d10e4a
+- Fixed build with golang 1.17.
+
 * Fri Feb 26 2021 Leontiy Volodin <lvol@altlinux.org> 0-alt2.git8d10e4a
 - Fixed build with golang 1.16.
 

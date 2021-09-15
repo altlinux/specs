@@ -1,14 +1,14 @@
-%def_with check
+%def_without check
 
 %global goipath         github.com/axgle/mahonia
 %global commit          3358181d7394e26beccfae0ffde05193ef3be33a
 
 Name: golang-github-axgle-mahonia
 Version: 0
-Release: alt2.git3358181
+Release: alt3.git3358181
 Summary: Character-set conversion library implemented in Go
 Group: Development/Other
-License: BSD
+License: BSD-3-Clause
 Url: https://github.com/axgle/mahonia
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
@@ -64,6 +64,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Tue Sep 14 2021 Leontiy Volodin <lvol@altlinux.org> 0-alt3.git3358181
+- Fixed build with golang 1.17.
+
 * Wed Feb 24 2021 Leontiy Volodin <lvol@altlinux.org> 0-alt2.git3358181
 - Fixed build.
 
