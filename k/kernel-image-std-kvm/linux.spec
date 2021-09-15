@@ -10,7 +10,7 @@
 %define krelease %release
 
 %define kernel_base_version     5.10
-%define kernel_sublevel .62
+%define kernel_sublevel .64
 %define kernel_extra_version    %nil
 
 %define kernel_extra_version_numeric 1.0.0
@@ -146,7 +146,7 @@ qemu_opts=""
 timeout --foreground 600 qemu-system-"$qemu_arch" $qemu_opts \
 	-bios bios.bin \
         -nographic -no-reboot -m 256M \
-	-kernel %buildroot/boot/vmlinux-$KernelVer \
+	-kernel %buildroot/boot/vmlinuz-$KernelVer \
         -append "console=ttyS0 panic=-1 no_timer_check debug" \
 	-initrd initrd.img > boot.log &&
 grep -q "^$msg" boot.log &&
@@ -166,6 +166,10 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/*
 
 %changelog
+* Wed Sep 15 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.10.64-alt1
+- 5.10.64
+- %%check vmlinuz kernel, not vmlinux one
+
 * Wed Sep 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.10.62-alt1
 - 5.10.62
 
