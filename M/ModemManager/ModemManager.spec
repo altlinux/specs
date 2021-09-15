@@ -1,16 +1,23 @@
+# Some tests can fail in girar (due to timeout for service start),
+# but they work well in a local hasher.
+# Just don't forget to enable them for local build when new version
+# is released,
+%def_disable check
+
 #define git_date .git20160601
 %define git_date %nil
 
 %define dbus_version 1.1
 %define libgudev_version 143
 
+%def_with qrtr
 %def_with qmi
 %def_with mbim
 %def_enable introspection
 %def_disable vala
 
 Name: ModemManager
-Version: 1.16.10
+Version: 1.18.0
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -22,9 +29,9 @@ Patch: %name-%version-%release.patch
 
 Requires: dbus >= %dbus_version
 
-BuildRequires: autoconf-archive >= 2021.02.19-alt1
 BuildRequires: libgudev-devel >= %libgudev_version
 BuildRequires: libgio-devel
+%{?_with_qrtr:BuildRequires: libqrtr-glib-devel >= 1.0.0}
 %{?_with_qmi:BuildRequires: libqmi-glib-devel >= 1.28.0}
 %{?_with_mbim:BuildRequires: libmbim-glib-devel >= 1.18.0}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
@@ -140,6 +147,7 @@ GTKDOCIZE="true" %autoreconf
 	--with-systemd-suspend-resume=yes \
 	--with-systemd-journal=yes \
 	--with-udev \
+	%{subst_with qrtr} \
 	%{subst_with qmi} \
 	%{subst_with mbim} \
 	%{subst_enable introspection} \
@@ -234,6 +242,13 @@ fi
 %endif
 
 %changelog
+* Wed Sep 15 2021 Mikhail Efremov <sem@altlinux.org> 1.18.0-alt1
+- Disabled tests.
+- Explicitly enabled libqrtr-glib support.
+- Do not add --no-as-needed to LDFLAGS.
+- Dropped autoconf-archive from BR.
+- Updated to 1.18.0.
+
 * Fri Aug 13 2021 Mikhail Efremov <sem@altlinux.org> 1.16.10-alt1
 - Updated to 1.16.10.
 

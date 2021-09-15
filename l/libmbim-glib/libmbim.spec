@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: %_name-glib
-Version: 1.24.8
+Version: 1.26.0
 Release: alt1
 
 Summary: MBIM modem protocol helper library
@@ -16,9 +16,8 @@ Source: %name-%version.tar
 
 Patch: %_name-%version-%release.patch
 
-BuildRequires: glib2-devel libgio-devel libgudev-devel
+BuildRequires: glib2-devel libgio-devel
 BuildRequires: python-modules-json
-BuildRequires: autoconf-archive
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 BuildRequires: gtk-doc help2man
 
@@ -94,10 +93,9 @@ touch README ChangeLog
 GTKDOCIZE="true" %autoreconf
 %configure \
 	--disable-static \
-	--with-udev \
 	%{subst_enable introspection} \
 	--enable-gtk-doc \
-	--enable-more-warnings=%more_warnings
+	--enable-compile-warnings=%more_warnings
 %make_build
 
 # Fix mbimcli name in the man page
@@ -136,6 +134,15 @@ make check
 
 
 %changelog
+* Wed Sep 15 2021 Mikhail Efremov <sem@altlinux.org> 1.26.0-alt1
+- Fixed build on armh.
+- Fixed gcc maybe-uninitialized warning in test.
+- Fixed configure option.
+- Do not add --no-as-needed to LDFLAGS.
+- Dropped libgudev-devel from BR.
+- Dropped autoconf-archive from BR.
+- Updated to 1.26.0.
+
 * Tue Jun 08 2021 Mikhail Efremov <sem@altlinux.org> 1.24.8-alt1
 - Disabled gtkdocize in autoreconf.
 - Updated Vcs and Url tags.

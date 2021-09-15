@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: %_name-glib
-Version: 1.28.8
+Version: 1.30.2
 Release: alt1
 
 Summary: QMI modem protocol helper library
@@ -20,8 +20,7 @@ BuildRequires: glib2-devel libgio-devel
 BuildRequires: libmbim-glib-devel >= 1.18.0
 BuildRequires: libgudev-devel
 BuildRequires: libqrtr-glib-devel
-BuildRequires: python-modules-json
-BuildRequires: autoconf-archive >= 2021.02.19-alt1
+BuildRequires: python3
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libqrtr-glib-gir-devel}
 BuildRequires: gtk-doc help2man
 
@@ -137,6 +136,12 @@ make check
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Sep 15 2021 Mikhail Efremov <sem@altlinux.org> 1.30.2-alt1
+- Use python3 everywhere.
+- Do not add --no-as-needed to LDFLAGS.
+- Dropped autoconf-archive from BR.
+- Updated to 1.30.2.
+
 * Fri Aug 13 2021 Mikhail Efremov <sem@altlinux.org> 1.28.8-alt1
 - Updated to 1.28.8.
 
