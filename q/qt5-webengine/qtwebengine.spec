@@ -29,8 +29,8 @@
 %endif
 
 Name: qt5-webengine
-Version: 5.15.2
-Release: alt4
+Version: 5.15.5
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -39,28 +39,26 @@ License: GPLv2 / GPLv3 / LGPLv3
 ExclusiveArch: %qt5_qtwebengine_arches
 
 Source: %qt_module-everywhere-src-%version.tar
+Source100: pako.min.js
+Source101: d3.min.js
 # FC
-Patch1:  qtwebengine-everywhere-src-5.15.0-linux-pri.patch
-#
 Patch3:  qtwebengine-opensource-src-5.15.0-fix-extractcflag.patch
 Patch4:  qtwebengine-everywhere-src-5.10.0-system-nspr-prtime.patch
-Patch5:  qtwebengine-everywhere-src-5.11.0-no-icudtl-dat.patch
+Patch5:  qtwebengine-everywhere-src-5.15.5-no-icudtl-dat.patch
 Patch6:  qtwebengine-everywhere-src-5.10.1-no-sse2.patch
 Patch7:  qtwebengine-opensource-src-5.9.2-arm-fpu-fix.patch
-#
-Patch9: qtwebengine-opensource-src-5.15.0-webrtc-neon-detect.patch
-#
-Patch11: qtwebengine-everywhere-src-5.11.3-aarch64-new-stat.patch
-Patch12: qtwebengine-everywhere-src-5.15.2-#1904652.patch
-Patch13: qtwebengine-everywhere-src-5.15.2-sandbox-time64-syscalls.patch
+Patch8: qtwebengine-everywhere-src-5.11.3-aarch64-new-stat.patch
+Patch9: qtwebengine-opensource-src-5.15.5-webrtc-neon-detect.patch
 # SuSE
 Patch30: chromium-non-void-return.patch
 Patch31: armv6-ffmpeg-no-thumb.patch
 Patch32: disable-gpu-when-using-nouveau-boo-1005323.diff
-Patch33: 0001-Fix-build-with-system-ICU-69.patch
-Patch34: 0001-Fix-build-with-GCC-11.patch
-#
+# Debian
 Patch40: verbose-gn-bootstrap.patch
+Patch41: sandbox-fstatat-syscalls.patch
+Patch42: sandbox-time64-syscalls.patch
+Patch43: python2.patch
+Patch44: remove-benchmark-from-inputs.patch
 
 # ALT
 Patch101: alt-pepflashplayer.patch
@@ -69,7 +67,8 @@ Patch103: qtwebengine-everywhere-src-5.15.0-chromium-add-ppc64le-support.patch
 Patch104: qtwebengine-everywhere-src-5.15.0-add-ppc64le-support.patch
 Patch105: alt-openh264-x86-no-asm.patch
 Patch106: qtwebengine-everywhere-src-5.12.6-alt-armh.patch
-Patch107: alt-ftbfs.patch
+Patch107: alt-js-check-size.patch
+Patch108: alt-ftbfs.patch
 
 # Automatically added by buildreq on Sun Apr 03 2016
 # optimized out: fontconfig fontconfig-devel gcc-c++ glib2-devel kf5-attica-devel kf5-kjs-devel libEGL-devel libGL-devel libX11-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXext-devel libXfixes-devel libXi-devel libXrandr-devel libXrender-devel libXtst-devel libfreetype-devel libgpg-error libharfbuzz-devel libharfbuzz-icu libicu-devel libnspr-devel libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-positioning libqt5-qml libqt5-quick libqt5-sql libqt5-webchannel libqt5-widgets libstdc++-devel libxml2-devel pkg-config python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-multiprocessing python-modules-xml python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-phonon-devel qt5-tools qt5-webchannel-devel qt5-webkit-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
@@ -86,10 +85,11 @@ BuildRequires: /proc
 BuildRequires: flex libicu-devel libEGL-devel
 BuildRequires: libgio-devel libkrb5-devel
 BuildRequires: git-core gperf libalsa-devel libcap-devel libdbus-devel libevent-devel libexpat-devel libjpeg-devel libminizip-devel libnss-devel
-BuildRequires: fontconfig-devel libdrm-devel yasm gyp libudev-devel libxml2-devel jsoncpp-devel liblcms2-devel
+BuildRequires: fontconfig-devel libdrm-devel gyp libudev-devel libxml2-devel jsoncpp-devel liblcms2-devel
 BuildRequires: libopus-devel libpci-devel libpng-devel libprotobuf-devel libpulseaudio-devel libre2-devel libsnappy-devel libsrtp2-devel
 BuildRequires: libwebp-devel libxslt-devel ninja-build protobuf-compiler libva-devel libvdpau-devel
-BuildRequires: python-devel python-module-simplejson python-modules-json
+BuildRequires: node-yargs node-terser
+BuildRequires: python-devel python-modules-json
 BuildRequires: qt5-connectivity-devel qt5-multimedia-devel qt5-script-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel
 BuildRequires: qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel qt5-declarative-devel qt5-location-devel qt5-webchannel-devel
 BuildRequires: qt5-phonon-devel
@@ -180,8 +180,6 @@ Requires: libqt5-core = %_qt5_version
 %endif
 %setup -n %qt_module-everywhere-src-%version
 ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
-%patch1 -p1
-#
 %patch3 -p1
 #patch4 -p1
 %patch5 -p1
@@ -189,20 +187,18 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch6 -p1
 %endif
 #%patch7 -p1
-#
+%patch8 -p1
 %patch9 -p1
-#
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
 #
 #%patch30 -p1
 %patch31 -p1
 %patch32 -p1
-%patch33 -p1
-%patch34 -p1
 #
 %patch40 -p1
+%patch41 -p1
+%patch42 -p1
+%patch43 -p1
+%patch44 -p1
 #
 %patch101 -p1
 %patch102 -p1
@@ -211,14 +207,8 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch105 -p1
 %patch106 -p1
 %patch107 -p1
+%patch108 -p1
 
-# fix // in #include in content/renderer/gpu to avoid debugedit failure
-#sed -i -e 's!gpu//!gpu/!g' \
-#  src/3rdparty/chromium/content/renderer/gpu/compositor_forwarding_message_filter.cc
-# and another one in 2 files in WebRTC
-sed -i -e 's!audio_processing//!audio_processing/!g' \
-  src/3rdparty/chromium/third_party/webrtc/modules/audio_processing/utility/ooura_fft.cc \
-  src/3rdparty/chromium/third_party/webrtc/modules/audio_processing/utility/ooura_fft_sse2.cc
 # delete all "toolprefix = " lines from build/toolchain/linux/BUILD.gn, as we
 # never cross-compile in native Fedora RPMs, fixes ARM and aarch64 FTBFS
 sed -i -e '/toolprefix = /d' -e 's/\${toolprefix}//g' \
@@ -248,6 +238,23 @@ do
     sed -i 's|_FORTIFY_SOURCE=[[:digit:]]|_FORTIFY_SOURCE=1|g' $f
 done
 
+# install missing files
+for f in \
+    src/3rdparty/chromium/third_party/devtools-frontend/src/front_end/third_party/lighthouse/lighthouse-dt-bundle.js \
+    src/3rdparty/chromium/third_party/devtools-frontend/src/front_end/third_party/lighthouse/report-assets/report-generator.js \
+    src/3rdparty/chromium/third_party/devtools-frontend/src/front_end/diff/diff_match_patch.js \
+    src/3rdparty/chromium/third_party/devtools-frontend/src/front_end/third_party/acorn/package/dist/acorn.js \
+    src/3rdparty/chromium/third_party/catapult/common/py_vulcanize/third_party/rjsmin/bench/jsmin.py \
+    src/3rdparty/chromium/third_party/web-animations-js/sources/web-animations-next-lite.min.js
+do mkdir -p `dirname $f`; touch $f; done
+mkdir -p src/3rdparty/chromium/third_party/catapult/tracing/third_party/pako/
+install -m 0644 %SOURCE100 src/3rdparty/chromium/third_party/catapult/tracing/third_party/pako/
+mkdir -p src/3rdparty/chromium/third_party/catapult/tracing/third_party/d3/
+install -m 0644 %SOURCE101 src/3rdparty/chromium/third_party/catapult/tracing/third_party/d3/
+pushd src/3rdparty/chromium/third_party/jstemplate
+    cat util.js jsevalcontext.js jstemplate.js exports.js >jstemplate_compiled.js
+popd
+
 # generate qtwebengine-3rdparty.qdoc, it is missing from the tarball
 pushd src/3rdparty
 %__python chromium/tools/licenses.py \
@@ -264,6 +271,8 @@ mkdir -p bin
 ln -s %_bindir/ninja-build bin/ninja
 # fix find system python
 ln -s %__python bin/python
+
+syncqt.pl-qt5  -version %version
 
 %build
 %add_optflags %optflags_shared -Wno-error=return-type
@@ -411,6 +420,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Fri Aug 20 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.5-alt1
+- new version
+
 * Fri Aug 20 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt4
 - fix debug output when build (thanks iv@alt)
 
