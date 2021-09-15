@@ -3,7 +3,7 @@
 %def_without svgalib
 
 Name: links2
-Version: 2.23
+Version: 2.24
 Release: alt1
 
 Summary: Lynx-like text and graphics WWW browser
@@ -134,6 +134,9 @@ chmod +x %buildroot%_bindir/x%name
 # - consider system publicsuffix like debian
 
 %changelog
+* Wed Sep 15 2021 Michael Shigorin <mike@altlinux.org> 2.24-alt1
+- new version (watch file uupdate)
+
 * Tue May 25 2021 Michael Shigorin <mike@altlinux.org> 2.23-alt1
 - new version (watch file uupdate)
 
