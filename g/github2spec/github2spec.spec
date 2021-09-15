@@ -1,7 +1,7 @@
 Name:     github2spec
 # NOTE update version in github2spec
-Version:  1.4.12
-Release:  alt2
+Version:  1.4.13
+Release:  alt1
 
 Summary:  Script for generation RPM spec file from github using genspec
 License:  MIT
@@ -13,7 +13,7 @@ BuildArch: noarch
 
 BuildPrereq: rpm-build-ruby
 
-Requires: genspec >= 1.3.11
+Requires: genspec >= 1.3.12
 
 Source:   %name-%version.tar
 
@@ -34,6 +34,9 @@ install -Dm755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sat Sep 11 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.13-alt1
+- Add rust support
+
 * Fri Mar 19 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.12-alt2
 - Switch back to ruby type (ALT #39821)
 

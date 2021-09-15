@@ -1,5 +1,5 @@
 Name:     genspec
-Version:  1.3.11
+Version:  1.3.12
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
@@ -34,6 +34,10 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_man1dir/*
 
 %changelog
+* Sat Sep 11 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.12-alt1
+- Add rust template
+- Add option to run command after main git actions done
+
 * Thu Jul 09 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.11-alt1
 - Add empty branch options
 - Add ocaml support
