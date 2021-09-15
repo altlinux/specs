@@ -1,7 +1,8 @@
 %define soversion 1
+%define optflags_lto %nil
 
 Name: protobuf-c
-Version: 1.3.3
+Version: 1.4.0
 Release: alt1
 Summary: Google's Protocol Buffers implementation in C
 
@@ -54,6 +55,8 @@ This package contains development files required for packaging
 %build
 %autoreconf
 %configure --disable-static
+# protoc -I. failes to import google/protobuf/descriptor.proto from /usr/include
+ln -s /usr/include/google google
 %make_build
 
 %check
@@ -76,6 +79,9 @@ This package contains development files required for packaging
 %doc TODO ChangeLog README.md LICENSE
 
 %changelog
+* Wed Sep 15 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Fri Mar 13 2020 Alexey Shabalin <shaba@altlinux.org> 1.3.3-alt1
 - 1.3.3
 
