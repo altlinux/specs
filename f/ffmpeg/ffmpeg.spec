@@ -105,7 +105,7 @@
 %def_disable libopenmpt
 %def_disable librav1e
 %def_disable libshine
-%def_disable libsrt
+%def_enable libsrt
 %def_disable libtensorflow
 %def_disable libtesseract
 %def_disable libvmaf
@@ -146,11 +146,18 @@
 %define avresamplever 4
 %define swscalever 5
 %define avutilver 56
+%ifarch ppc64le armh
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%endif
+
+%ifarch %ix86
+%global optflags_lto %nil
+%endif
 
 Name:		ffmpeg
 Epoch:		2
 Version:	4.4
-Release:	alt5
+Release:	alt6
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -205,6 +212,7 @@ BuildRequires:	yasm
 %{?_enable_librubberband:BuildRequires: librubberband-devel libstdc++-devel}
 %{?_enable_librtmp:BuildRequires: librtmp-devel}
 %{?_enable_libsnappy:BuildRequires: libsnappy-devel}
+%{?_enable_libsrt:BuildRequires: libsrt-devel}
 %{?_enable_libsoxr:BuildRequires: libsoxr-devel}
 %{?_enable_libssh:BuildRequires: libssh-devel}
 %{?_enable_libspeex:BuildRequires: libspeex-devel}
@@ -703,6 +711,13 @@ xz Changelog
 	--disable-stripping \
 	--enable-pic \
 	--extra-cflags="%optflags" \
+%ifarch ppc64le armh
+	 --extra-ldflags='-flto -fuse-linker-plugin' \
+	 --ar=gcc-ar \
+%endif	
+%ifarch x86_64 aarch64
+	%{?optflags_lto:--enable-lto } \
+%endif
 	--extra-version='%release' \
 	#
 %make_build all checkasm
@@ -875,6 +890,10 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
+* Mon Sep 13 2021 Anton Farygin <rider@altlinux.ru> 2:4.4-alt6
+- built with LTO if lto_optflags macros defined
+- built with libsrt (closes: #39534)
+
 * Wed Jul 14 2021 Slava Aseev <ptrnine@altlinux.org> 2:4.4-alt5
 - fixed build on arm (closes: #40437)
 
