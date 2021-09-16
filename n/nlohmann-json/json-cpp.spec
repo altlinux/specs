@@ -2,7 +2,7 @@
 
 Name: nlohmann-json
 Version: 3.10.2
-Release: alt1
+Release: alt2
 
 Summary: JSON for Modern C++ (c++11) ("single header file")
 
@@ -44,12 +44,14 @@ This package contains the single header C++ file and CMake dependency files.
 %setup -a1
 rm -rf test/cmake_fetch_content
 sed -i -e '/add_subdirectory(cmake_fetch_content)/ d' test/CMakeLists.txt
-%ifarch %mips
-sed -i -e '/unit-unicode.cpp/ d' test/CMakeLists.txt
-%endif
 
 %build
-%cmake
+%cmake \
+%ifarch %mips riscv64
+    -DJSON_FastTests:BOOL=ON \
+%endif
+    %nil
+
 %cmake_build
 
 %install
@@ -65,6 +67,9 @@ ln -sf ../json_test_data-2.0.0 %_cmake__builddir/json_test_data
 %_pkgconfigdir/nlohmann_json.pc
 
 %changelog
+* Thu Sep 16 2021 Ivan A. Melnikov <iv@altlinux.org> 3.10.2-alt2
+- Disable slower tests on %%mips and riscv64 to avoid timeouts.
+
 * Tue Sep 14 2021 Paul Wolneykien <manowar@altlinux.org> 3.10.2-alt1
 - Updated to v3.10.2.
 
