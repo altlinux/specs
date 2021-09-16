@@ -2,7 +2,7 @@
 
 Name: perl-Log-Dispatchouli
 Version: 2.023
-Release: alt1
+Release: alt2
 
 Summary: a simple wrapper around Log::Dispatch
 
@@ -19,9 +19,9 @@ Source: %real_name-%version.tar
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Thu May 02 2019
-# optimized out: gem-power-assert perl perl-B-Hooks-EndOfScope perl-CPAN-Meta-Requirements perl-Class-Data-Inheritable perl-Cpanel-JSON-XS perl-Data-OptList perl-Devel-StackTrace perl-Encode perl-Eval-Closure perl-Exception-Class perl-JSON-MaybeXS perl-JSON-PP perl-Log-Dispatch perl-MRO-Compat perl-Module-Implementation perl-Module-Runtime perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Params-ValidationCompiler perl-Parse-CPAN-Meta perl-Role-Tiny perl-Specio perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Test-Fatal perl-Try-Tiny perl-Variable-Magic perl-devel perl-namespace-autoclean perl-namespace-clean perl-parent python-base python-modules python3 python3-base python3-dev ruby ruby-coderay ruby-method_source ruby-pry ruby-rake ruby-rdoc ruby-stdlibs sh4
-BuildRequires: perl-CPAN-Meta perl-Class-XSAccessor perl-Log-Dispatch-Array perl-Ref-Util perl-Ref-Util-XS perl-String-Flogger perl-Sub-Exporter-GlobExporter perl-Test-Deep
+# Automatically added by buildreq on Fri Sep 17 2021
+# optimized out: perl perl-B-Hooks-EndOfScope perl-CPAN-Meta-Requirements perl-Class-Data-Inheritable perl-Cpanel-JSON-XS perl-Data-OptList perl-Devel-StackTrace perl-Encode perl-Eval-Closure perl-Exception-Class perl-JSON-MaybeXS perl-JSON-PP perl-Log-Dispatch perl-MRO-Compat perl-Module-Implementation perl-Module-Runtime perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Params-ValidationCompiler perl-Parse-CPAN-Meta perl-Role-Tiny perl-Specio perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Try-Tiny perl-Variable-Magic perl-devel perl-namespace-autoclean perl-namespace-clean perl-parent python3 python3-base python3-module-paste python3-module-repoze sh4 sssd-client tzdata
+BuildRequires: perl-CPAN-Meta perl-Class-XSAccessor perl-Log-Dispatch-Array perl-Ref-Util perl-Ref-Util-XS perl-String-Flogger perl-Sub-Exporter-GlobExporter perl-Test-Deep perl-Test-Fatal
 
 %description
 Perl module Log::Dispatchouli is a thin layer above Log::Dispatch
@@ -50,6 +50,9 @@ memory. That last one is mostly useful for testing.
 %perl_vendor_privlib/Log/Dispatchouli*
 
 %changelog
+* Fri Sep 17 2021 Vitaly Lipatov <lav@altlinux.ru> 2.023-alt2
+- update BR
+
 * Mon Jun 21 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.023-alt1
 - New version
 
