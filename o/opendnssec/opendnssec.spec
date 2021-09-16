@@ -7,7 +7,7 @@
 %define _pseudouser_home     %_sharedstatedir/opendnssec
 
 Name: opendnssec
-Version: 2.1.9
+Version: 2.1.10
 Release: alt1
 
 Summary: DNSSEC key and zone management software
@@ -160,6 +160,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Wed Sep 15 2021 Stanislav Levin <slev@altlinux.org> 2.1.10-alt1
+- 2.1.9 -> 2.1.10.
+
 * Tue Aug 17 2021 Stanislav Levin <slev@altlinux.org> 2.1.9-alt1
 - 1.4.14 -> 2.1.9.
 
