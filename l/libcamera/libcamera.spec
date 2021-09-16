@@ -1,6 +1,6 @@
 Name: libcamera
 Version: 0.0.20210204
-Release: alt2
+Release: alt3
 
 Summary: A complex camera support library for Linux
 License: LGPL-2.1-or-later
@@ -52,6 +52,12 @@ This package contains development part of libcamera.
 
 %prep
 %setup
+%ifarch %e2k
+sed -i "s|_symbol('QOpenGLWidget', |(|" src/qcam/meson.build
+# workaround for EDG frontend
+sed -i "s|g_autofree gchar \*|g_autofree_edg(gchar) |" src/gstreamer/gstlibcamerasrc.cpp
+sed -i "s|\"caps\", caps|\"caps\", (GstCaps*)caps|" src/gstreamer/gstlibcameraprovider.cpp
+%endif
 
 %ifarch armh
 %define platdefs simple,raspberrypi,uvcvideo
@@ -93,6 +99,9 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 %_pkgconfigdir/camera.pc
 
 %changelog
+* Thu Sep 16 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.0.20210204-alt3
+- fixes for Elbrus build
+
 * Fri Apr 02 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20210204-alt2
 - fix build with recent gstreamer
 
