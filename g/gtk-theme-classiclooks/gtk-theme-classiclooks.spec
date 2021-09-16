@@ -1,7 +1,7 @@
 %define theme_name "ClassicLooks"
 
 Name: gtk-theme-classiclooks
-Version: 1.5.0
+Version: 2.2.0
 Release: alt1
 Epoch: 1
 Summary: ClassicLooks is a Gtk2 & Gtk3 themes
@@ -29,8 +29,8 @@ OpenOffice3/4); additionally, ClassicLooks tries to be "compatible"
 with the default Gtk3 theme 'Adwaita' in the sense that an application GUI
 designed to look good on Adwaita should also look good on ClassicLooks.
 
-ClassicLooks currently supports only the XFCE desktop (the XFCE panels and
-the XFWM4 window manager); support for other desktop environments is planned
+ClassicLooks currently supports only the Xfce desktop (the Xfce panels and
+the Xfwm4 window manager); support for other desktop environments is planned
 for future releases.
 
 ClassicLooks relies upon, and/or is derived from:
@@ -98,6 +98,10 @@ done
 %_datadir/themes/*/xfwm4/
 
 %changelog
+* Thu Sep 16 2021 Mikhail Efremov <sem@altlinux.org> 1:2.2.0-alt1
+- Fixed capitalization in description.
+- Updated to 2.2.0.
+
 * Mon Oct 19 2020 Mikhail Efremov <sem@altlinux.org> 1:1.5.0-alt1
 - Updated to 1.5.0.
 
