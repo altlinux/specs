@@ -5,7 +5,7 @@
 
 Name: entangle
 Version: 3.0
-Release: alt2
+Release: alt3
 
 Summary: Tethered Camera Control and Capture tool
 Group: Graphics
@@ -53,6 +53,9 @@ and 'hands off' shooting directly from the controlling computer.
 
 %build
 %meson -Denable-gtk-doc=true
+%ifarch %e2k
+export LD_LIBRARY_PATH=$(pwd)/%__builddir/src/backend:$(pwd)/%__builddir/src/frontend
+%endif
 %meson_build -j 1
 
 %install
@@ -83,6 +86,9 @@ and 'hands off' shooting directly from the controlling computer.
 %_girdir/Entangle-%api_ver.gir
 
 %changelog
+* Thu Sep 16 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt3
+- fixed build for %%e2k (ilyakurdyukov@)
+
 * Sat Apr 24 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt2
 - updated to v3.0-8-g1debc4b
 - updated BR

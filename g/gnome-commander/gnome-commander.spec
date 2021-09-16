@@ -9,7 +9,7 @@
 
 Name: gnome-commander
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 %define xdg_name org.gnome.%name
 
@@ -42,6 +42,10 @@ all standard file operations and some extra features like FTP support.
 
 %prep
 %setup
+%ifarch %e2k
+# workaround for EDG frontend
+sed -i "/g_autofree gchar/{s|g_autofree gchar|g_autofree_edg(gchar)|;s|\*||g}" src/gnome-cmd-data.cc
+%endif
 
 %build
 %autoreconf
@@ -78,6 +82,9 @@ all standard file operations and some extra features like FTP support.
 
 
 %changelog
+* Thu Sep 16 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt2
+- fixed build for %%e2k (ilyakurdyukov@)
+
 * Sun May 30 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt1
 - 1.12.2
 
