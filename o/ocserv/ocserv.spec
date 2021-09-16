@@ -1,19 +1,20 @@
-
 %global _unpackaged_files_terminate_build 1
 %define _localstatedir /var
 %def_with maxmind
+%def_enable man
 
 Name: ocserv
 Version: 1.1.3
-Release: alt1
+Release: alt1.1
+
 Summary: OpenConnect SSL VPN server
-Group: System/Servers
 License: GPLv2+
+Group: System/Servers
+
 Url: http://www.infradead.org/ocserv/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: /usr/bin/ronn
 BuildRequires: libnettle-devel >= 2.7
 BuildRequires: libgnutls-devel >= 3.3.0
 BuildRequires: libprotobuf-c-devel protobuf-c-compiler
@@ -43,6 +44,9 @@ BuildRequires: openconnect
 BuildRequires: curl
 BuildRequires: gssntlmssp
 BuildRequires: /proc
+%if_enabled man
+BuildRequires: /usr/bin/ronn
+%endif
 
 Requires: gnutls-utils
 Requires: iproute2
@@ -117,7 +121,9 @@ export PATH=/sbin:/usr/sbin:$PATH
 %dir %_sysconfdir/ocserv
 %config(noreplace) %_sysconfdir/ocserv/ocserv.conf
 %config(noreplace) %_sysconfdir/pam.d/ocserv
+%if_enabled man
 %_man8dir/*
+%endif
 %_bindir/ocpasswd
 %_bindir/occtl
 %_bindir/%name-fw
@@ -130,6 +136,9 @@ export PATH=/sbin:/usr/sbin:$PATH
 %_initdir/%name
 
 %changelog
+* Thu Sep 16 2021 Michael Shigorin <mike@altlinux.org> 1.1.3-alt1.1
+- introduce man knob (on by default)
+
 * Mon Jul 19 2021 Alexey Shabalin <shaba@altlinux.org> 1.1.3-alt1
 - new version 1.1.3
 
