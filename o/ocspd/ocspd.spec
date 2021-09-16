@@ -1,14 +1,14 @@
 %define ocspduser _ocspd
 %define ocspd_root %_localstatedir/%name
 
-
 Name: ocspd
 Version: 3.1.2
-Release: alt1.2
+Release: alt1.3
 
 Summary: OCSP Responder
-Group: System/Servers
 License: License: %asl
+Group: System/Servers
+
 Url: https://pki.openca.org/projects/ocspd/
 Packager: Vladimir Didenko <cow@altlinux.ru>
 
@@ -17,7 +17,8 @@ Source1: %name.init
 Source2: %name.service
 Source3: %name.sysconf
 Patch: %name-%version-%release.patch
-ExclusiveArch: %{ix86} x86_64
+
+ExclusiveArch: %ix86 x86_64 %e2k
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: libpki-devel
@@ -37,13 +38,13 @@ of such a server is to provide an on-line tool to verify the status of a
 certificate (such as Mozilla/Firefox/Netscape7).
 
 %prep
-%setup -n %name-%version
-%patch0 -p1
+%setup
+%patch -p1
 
 %build
 cp src/global-vars.in src/global-vars
 %autoreconf
-%configure --with-ocspd-user=%{ocspduser} --with-ocspd-group=%{ocspduser}
+%configure --with-ocspd-user=%ocspduser --with-ocspd-group=%ocspduser
 %make
 
 %install
@@ -59,7 +60,8 @@ mv %buildroot%_sysconfdir/%name/ca.d/* %buildroot%_sysconfdir/%name/ca-samples.d
 
 %pre
 %_sbindir/groupadd -r -f %ocspduser ||:
-/usr/sbin/useradd -r -g %ocspduser -d /dev/null -s /dev/null -c 'OCSPD user' %ocspduser >/dev/null 2>&1 ||:
+%_sbindir/useradd -r -g %ocspduser -d /dev/null -s /dev/null \
+	-c 'OCSPD user' %ocspduser >/dev/null 2>&1 ||:
 
 %post
 %post_service %name
@@ -83,6 +85,10 @@ mv %buildroot%_sysconfdir/%name/ca.d/* %buildroot%_sysconfdir/%name/ca-samples.d
 %_man3dir/*.3.*
 
 %changelog
+* Thu Sep 16 2021 Michael Shigorin <mike@altlinux.org> 3.1.2-alt1.3
+- E2K: builds fine
+- minor spec cleanup
+
 * Wed Aug 29 2018 Vladimir Didenko <cow@altlinux.ru> 3.1.2-alt1.2
 - use ExclusiveArch instead of BuildArch
 
