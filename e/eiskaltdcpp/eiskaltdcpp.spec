@@ -1,6 +1,6 @@
 Name: eiskaltdcpp
 Version: 2.4.2
-Release: alt2
+Release: alt3
 
 Summary: EiskaltDC++ - Direct Connect client
 
@@ -90,6 +90,10 @@ command line interface for XML-RPC Daemon
 %prep
 %setup
 %patch -p1
+%ifarch %e2k
+# workaround for EDG frontend
+sed -i "s|g_autofree gchar \*|g_autofree_edg_ex(gchar,std::string) |" eiskaltdcpp-gtk/src/{adlsearch,hub,mainwindow,uploadqueue}.cc
+%endif
 
 %build
 %add_optflags -fno-strict-aliasing $(pkg-config libpcre --cflags) $(pkg-config harfbuzz --cflags)
@@ -172,6 +176,9 @@ command line interface for XML-RPC Daemon
 %_datadir/%name/cli
 
 %changelog
+* Thu Sep 16 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.4.2-alt3
+- Fixes for Elbrus build.
+
 * Fri Apr 09 2021 Grigory Ustinov <grenka@altlinux.org> 2.4.2-alt2
 - Removed php from requires (Closes: #39859).
 
