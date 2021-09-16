@@ -2,7 +2,7 @@
 
 Name: perl-Dist-Zilla
 Version: 6.023
-Release: alt1
+Release: alt2
 
 Summary: scary tools for building CPAN distributions
 
@@ -32,7 +32,7 @@ BuildRequires: perl-autobox perl-autodie perl-common-sense perl-CPAN-Uploader pe
 BuildRequires: perl-MooseX-SetOnce perl-Data-Section perl-DateTime perl-JSON perl-Log-Dispatchouli perl-Software-License perl-Perl-PrereqScanner perl-PPI perl-Pod-Eventual
 BuildRequires: perl-Sub-Exporter-ForMethods perl-File-Find-Rule perl-File-pushd perl-Hash-Merge-Simple perl-MooseX-Types-Path-Class perl-MooseX-Types-Perl perl-Test-Deep perl-Text-Glob
 BuildRequires: perl-Config-MVP-Reader-INI perl-Perl-Version perl-Term-UI perl-Devel-StackTrace perl-CPAN-Meta perl-List-AllUtils perl-Test-Pod perl-Test-Script
-BuildRequires: perl-DateTime-Locale
+BuildRequires: perl-DateTime-Locale perl-Test-Fatal
 
 %description
 Dist::Zilla is a program to make it easier to write, package,
@@ -80,6 +80,9 @@ rm -f --  t/plugins/filefinders.t
 
 
 %changelog
+* Thu Sep 16 2021 Vitaly Lipatov <lav@altlinux.ru> 6.023-alt2
+- add missed BR: perl-Test-Fatal
+
 * Sun Jul 11 2021 Nikolay A. Fetisov <naf@altlinux.org> 6.023-alt1
 - New version
 
