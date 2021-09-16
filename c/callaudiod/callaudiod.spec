@@ -2,7 +2,7 @@
 %define libname libcallaudio
 
 Name: callaudiod
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: Daemon for dealing with audio routing during phone calls
@@ -38,6 +38,7 @@ This package provides %name library.
 %package -n %libname-devel
 Summary: Development files for %name
 Group: Development/C++
+Requires: %libname = %EVR
 
 %description -n %libname-devel
 This package contains libraries and header files for developing
@@ -69,6 +70,9 @@ applications that use %libname.
 %_pkgconfigdir/%libname-%api_ver.pc
 
 %changelog
+* Thu Sep 16 2021 Yuri N. Sedunov <aris@altlinux.org> 0.1.1-alt1
+- 0.1.1
+
 * Fri Jul 16 2021 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt1
 - first build for Sisyphus
 
