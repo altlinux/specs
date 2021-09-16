@@ -2,7 +2,7 @@
 
 Name: plasma5-%{rname}
 Version: 5.22.5
-Release: alt3
+Release: alt4
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -68,7 +68,7 @@ cat %SOURCE11 >breeze/images/os.logo.png
     -DDISTRO_NAME='ALT' \
     -DDISTRO_VERSION='LINUX' \
     -DDISTRO_LOGO='os' \
-    -DBACKGROUND_TOP_COLOR='neon_green' \
+    -DBACKGROUND_TOP_COLOR='black' \
     -DBACKGROUND_BOTTOM_COLOR='black' \
     #
 
@@ -88,6 +88,9 @@ cat %SOURCE11 >breeze/images/os.logo.png
 /usr/share/plymouth/themes/breeze/
 
 %changelog
+* Thu Sep 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt4
+- fix color
+
 * Fri Sep 10 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt3
 - fix color
 
