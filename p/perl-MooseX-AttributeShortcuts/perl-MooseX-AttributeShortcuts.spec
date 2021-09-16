@@ -2,7 +2,7 @@
 
 Name: perl-MooseX-AttributeShortcuts
 Version: 0.037
-Release: alt1
+Release: alt2
 
 Summary: Perl module to shorthand for common attribute options
 
@@ -19,9 +19,9 @@ Source: %real_name-%version.tar
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Tue Sep 26 2017
-# optimized out: perl perl-B-Hooks-EndOfScope perl-CPAN-Meta perl-CPAN-Meta-Check perl-CPAN-Meta-Requirements perl-Carp-Clan perl-Class-Load perl-Class-Tiny perl-Data-OptList perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Devel-StackTrace perl-Encode perl-Eval-Closure perl-Exporter-Tiny perl-JSON-PP perl-List-MoreUtils perl-MRO-Compat perl-Module-Implementation perl-Module-Metadata perl-Module-Runtime perl-Moose perl-MooseX-TraitFor-Meta-Class-BetterAnonClassNames perl-MooseX-Types perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Parse-CPAN-Meta perl-Path-Class perl-Scope-Guard perl-Sub-Exporter perl-Sub-Exporter-ForMethods perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Syntax-Keyword-Junction perl-Test-Fatal perl-Try-Tiny perl-Variable-Magic perl-Want perl-autobox perl-autobox-Core perl-devel perl-namespace-autoclean perl-namespace-clean perl-parent python-base python-modules python3 python3-base
-BuildRequires: perl-Devel-PartialDump perl-MooseX-Meta-TypeConstraint-Mooish perl-MooseX-Role-Parameterized perl-MooseX-SemiAffordanceAccessor perl-MooseX-Types-Common perl-MooseX-Types-Path-Class perl-MooseX-Util perl-Test-CheckDeps perl-Test-Moose-More perl-Test-Requires perl-aliased
+# Automatically added by buildreq on Fri Sep 17 2021
+# optimized out: perl perl-B-Hooks-EndOfScope perl-CPAN-Meta perl-CPAN-Meta-Check perl-CPAN-Meta-Requirements perl-Carp-Clan perl-Class-Load perl-Class-Tiny perl-Data-OptList perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Devel-StackTrace perl-Encode perl-Eval-Closure perl-Exporter-Tiny perl-Getopt-Long-Descriptive perl-JSON-PP perl-List-MoreUtils perl-List-MoreUtils-XS perl-MRO-Compat perl-Module-Implementation perl-Module-Metadata perl-Module-Runtime perl-Moose perl-MooseX-Role-Parameterized perl-MooseX-TraitFor-Meta-Class-BetterAnonClassNames perl-MooseX-Types perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Params-Validate perl-Parse-CPAN-Meta perl-Path-Class perl-Scope-Guard perl-Sub-Exporter perl-Sub-Exporter-ForMethods perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Syntax-Keyword-Junction perl-Try-Tiny perl-Variable-Magic perl-Want perl-autobox perl-autobox-Core perl-devel perl-namespace-autoclean perl-namespace-clean perl-parent python3 python3-base python3-module-paste python3-module-repoze sh4 sssd-client tzdata
+BuildRequires: perl-Devel-PartialDump perl-MooseX-Getopt perl-MooseX-Meta-TypeConstraint-Mooish perl-MooseX-SemiAffordanceAccessor perl-MooseX-Types-Common perl-MooseX-Types-Path-Class perl-MooseX-Util perl-Test-CheckDeps perl-Test-Fatal perl-Test-Moose-More perl-Test-Requires perl-aliased
 
 %description
 Perl module MooseX::AttributeShortcuts causes an attribute trait
@@ -43,6 +43,9 @@ the above variations.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Fri Sep 17 2021 Vitaly Lipatov <lav@altlinux.ru> 0.037-alt2
+- update BR
+
 * Sat Dec 09 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.037-alt1
 - New version
 
