@@ -3,10 +3,11 @@
 %define api_ver 1.0
 
 %def_enable gtk_doc
+# /sys/devices/ required
 %def_disable check
 
 Name: lib%_name
-Version: 0.16.2
+Version: 0.16.3
 Release: alt1
 
 Summary: Hardware devices mocking library for creating unit tests and bug reporting
@@ -98,8 +99,8 @@ GObject introspection devel data for the %_name library.
 install -pD -m644 NEWS %buildroot%pkg_docdir
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+export PATH=/sbin:$PATH
+%__meson_test
 
 %files
 %_bindir/%_name-record
@@ -128,6 +129,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_girdir/UMockdev-%api_ver.gir
 
 %changelog
+* Thu Sep 16 2021 Yuri N. Sedunov <aris@altlinux.org> 0.16.3-alt1
+- 0.16.3
+
 * Wed Aug 25 2021 Yuri N. Sedunov <aris@altlinux.org> 0.16.2-alt1
 - 0.16.2
 
