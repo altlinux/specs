@@ -70,6 +70,8 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %endif
 
 %global _optlevel 3
+# details at https://www.altlinux.org/LTO
+%global optflags_lto %optflags_lto -ffat-lto-objects
 
 %def_with gdbm
 %def_with bluez
@@ -84,8 +86,8 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %endif
 
 Name: python3
-Version: %{pybasever}.6
-Release: alt2
+Version: %{pybasever}.7
+Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
 
@@ -134,13 +136,6 @@ Source10: idle3.desktop
 # Fixup distutils/unixccompiler.py to remove standard library path from rpath:
 # Was Patch0 in ivazquez' python3000 specfile:
 Patch1: 00001-rpath.patch
-
-# 00111 #
-# Patch the Makefile.pre.in so that the generated Makefile doesn't try to build
-# a libpythonMAJOR.MINOR.a
-# See https://bugzilla.redhat.com/show_bug.cgi?id=556092
-# Downstream only: not appropriate for upstream
-Patch111: 00111-no-static-lib.patch
 
 # 00251 #
 # Set values of prefix and exec_prefix in distutils install command
@@ -357,8 +352,6 @@ done
 # Apply patches:
 #
 %patch1 -p1
-
-%patch111 -p1
 
 %patch251 -p1
 %patch353 -p1
@@ -698,11 +691,7 @@ LD_LIBRARY_PATH="$(pwd)" $(pwd)/python -m test.pythoninfo
 WITHIN_PYTHON_RPM_BUILD= \
 LD_LIBRARY_PATH="$(pwd)" \
 $(pwd)/python -m test.regrtest \
-    --verbose  %_smp_mflags \
-    -x test_distutils \
-%ifarch %ix86
-    -x test_math
-%endif
+    --verbose  %_smp_mflags
 
 %files
 %doc LICENSE README.rst
@@ -1000,6 +989,9 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Tue Sep 14 2021 Grigory Ustinov <grenka@altlinux.org> 3.9.7-alt1
+- Updated to upstream version 3.9.7.
+
 * Wed Jun 30 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.9.6-alt2
 - Removed changes from ALT39329, restores -O3 and -g flags (Closes: #40278).
 - Updated Elbrus fixes.
