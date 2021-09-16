@@ -1,6 +1,6 @@
 Name: pam_mount
-Version: 2.16
-Release: alt1.3
+Version: 2.18
+Release: alt1
 
 Summary: Pluggable Authentication Module that can mount volumes for a user session 
 License: GPLv2+ and LGPLv2+
@@ -8,10 +8,13 @@ Group: System/Libraries
 Url: http://pam-mount.sourceforge.net/
 
 BuildRequires: glib2-devel pam-devel openssl-devel libHX-devel libxml2-devel libavahi-devel
-BuildRequires: libcryptsetup-devel libmount-devel libpcre-devel
+BuildRequires: libcryptsetup-devel libmount-devel libpcre2-devel
 
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
+
+Requires: ofl
+Requires: fd0ssh
 
 %description
 This module is aimed at environments with central file servers that
@@ -19,6 +22,13 @@ a user wishes to mount on login and unmount on logout, such as
 (semi-)diskless stations where many users can logon and where statically
 mounting the entire /home from a server is a security risk, or listing
 all possible volumes in /etc/fstab is not feasible.
+
+%package -n libcryptmount-devel
+Summary: Develoment files for libcryptmount
+Group: Development/Other
+
+%description -n libcryptmount-devel
+%summary
 
 %prep
 %setup -q
@@ -28,12 +38,11 @@ all possible volumes in /etc/fstab is not feasible.
 %autoreconf
 %configure \
 	--with-slibdir=/%_lib \
-	--with-ssbindir=/sbin
+	--libdir=/%_lib
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
-mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
+%makeinstall_std pkgconfigdir=%_libdir/pkgconfig
 
 %files
 %doc doc/*.txt
@@ -44,7 +53,17 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 /%_lib/*.so.*
 %_mandir/man?/*
 
+%files -n libcryptmount-devel
+%_includedir/*
+/%_lib/*.so
+%_libdir/pkgconfig/*.pc
+
 %changelog
+* Mon Aug 30 2021 Andrey Cherepanov <cas@altlinux.org> 2.18-alt1
+- New version.
+- Requires ofl and fd0ssh (ALT #37026).
+- Package libcryptmount-devel.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.16-alt1.3
 - NMU: Rebuild with new openssl 1.1.0.
 
