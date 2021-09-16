@@ -2,7 +2,7 @@
 
 Name:    appstream
 Version: 0.14.5
-Release: alt1
+Release: alt2
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
 # lib LGPLv2+, tools GPLv2+
@@ -91,6 +91,11 @@ BuildArch: noarch
 
 %prep
 %setup
+%ifarch %e2k
+# workaround for EDG frontend
+sed -i "s|g_autofree gchar \*\*|g_autofree_edg(gchar*)|" qt/pool.cpp
+sed -i "s|g_autofree gchar \*|g_autofree_edg(gchar)|" qt/spdx.cpp
+%endif
 
 %build
 %meson  -Dqt=true \
@@ -100,6 +105,9 @@ BuildArch: noarch
 	-Ddocs=false \
 %endif
 	-Dstemming=true
+%ifarch %e2k
+export LD_LIBRARY_PATH=$(pwd)/%__builddir/src
+%endif
 %meson_build
 
 %install
@@ -152,6 +160,9 @@ touch %{buildroot}/var/cache/app-info/cache.watch
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Thu Sep 16 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.14.5-alt2
+- Fixes for Elbrus build.
+
 * Wed Sep 01 2021 Andrey Cherepanov <cas@altlinux.org> 0.14.5-alt1
 - New version.
 
