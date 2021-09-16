@@ -1,5 +1,5 @@
-%define kernel_base_version	5.13
-%define kernel_sublevel        .16
+%define kernel_base_version	5.14
+%define kernel_sublevel        .4
 %define kernel_extra_version	%nil
 
 Name: kernel-image-mp
@@ -16,7 +16,7 @@ Release: alt1
 
 # Build options
 # You can change compiler version by editing this line:
-%define kgcc_version	8
+%define kgcc_version	10
 
 ## Don't edit below this line ##################################
 
@@ -47,14 +47,6 @@ BuildRequires: gcc%kgcc_version
 BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeric
 BuildRequires: libssl-devel
 BuildRequires: rsync
-
-%if_enabled ccache
-BuildRequires: ccache
-%endif
-
-%ifdef use_ccache
-BuildRequires: ccache
-%endif
 
 Requires: bootloader-utils >= 0.5.2-alt3
 Provides: kernel = %kversion
@@ -117,7 +109,7 @@ tar -xf %kernel_src/kernel-source-%kernel_base_version.tar
 echo 'export GCC_VERSION=%kgcc_version' > gcc_version.inc
 
 subst 's/EXTRAVERSION[[:space:]]*=.*/EXTRAVERSION = %kernel_extra_version-%flavour-%krelease/g' Makefile
-subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := $(shell echo $${GCC_USE_CCACHE:+ccache}) gcc-%kgcc_version/g' Makefile
+subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := gcc-%kgcc_version/g' Makefile
 
 # get rid of unwanted files resulting from patch fuzz
 find . -name "*.orig" -delete -or -name "*~" -delete
@@ -264,6 +256,12 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Wed Sep 15 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.14.4-alt1
+- 5.14.4
+
+* Tue Sep 14 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.14.0-alt1
+- 5.14
+
 * Mon Sep 13 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.13.16-alt1
 - 5.13.16
 
