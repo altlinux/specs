@@ -1,9 +1,9 @@
 Name: confuse
-Version: 2.7
-Release: alt1.1
+Version: 3.3
+Release: alt1
 
 Summary: A library for parsing configuration files
-License: %bsdstyle
+License: ISC
 Group: System/Libraries
 Url: http://www.nongnu.org/confuse
 
@@ -72,7 +72,8 @@ install doc/man/man3/* %buildroot%_man3dir/
 
 %files -n lib%name -f %name.lang
 %_libdir/*.so.*
-%doc AUTHORS NEWS README
+%doc AUTHORS README.md LICENSE
+
 
 %files -n lib%name-devel
 %_includedir/*
@@ -85,6 +86,9 @@ install doc/man/man3/* %buildroot%_man3dir/
 
 
 %changelog
+* Thu Sep 16 2021 Ilya Mashkin <oddity@altlinux.ru> 3.3-alt1
+- 3.3
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7-alt1.1
 - Rebuilt for debuginfo
 

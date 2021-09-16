@@ -1,6 +1,6 @@
 Name: bmon
 Version: 4.0
-Release: alt1
+Release: alt2
 
 Summary: A portable bandwidth monitor
 License: %bsd %mit
@@ -49,6 +49,9 @@ rm -rf $RPM_BUILD_ROOT/usr/share/doc/bmon/examples
 %doc NEWS examples/ LICENSE.BSD LICENSE.MIT
 
 %changelog
+* Thu Sep 16 2021 Ilya Mashkin <oddity@altlinux.ru> 4.0-alt2
+- Rebuild with libconfuse-3.3
+
 * Wed Nov 01 2017 Sergey Y. Afonin <asy@altlinux.ru> 4.0-alt1
 - New version
 - changed URL
