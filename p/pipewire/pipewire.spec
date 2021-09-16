@@ -11,6 +11,7 @@
 
 %def_enable gstreamer
 %def_enable systemd
+%def_disable wireplumber
 %def_enable libusb
 %def_disable libcamera
 %def_enable avahi
@@ -29,7 +30,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.35
+Version: %ver_major.36
 Release: alt1
 
 Summary: Media Sharing Server
@@ -47,6 +48,7 @@ Source: %name-%version.tar
 Patch: %name-0.3.19-alt-rpath.patch
 
 Requires: %name-libs = %version-%release
+%{?_enable_wireplumber:Requires: wireplumber}
 Requires: rtkit
 
 %define gst_ver 1.10
@@ -55,7 +57,7 @@ BuildRequires(pre): rpm-macros-meson rpm-build-systemd
 BuildRequires: meson libgio-devel libudev-devel libdbus-devel
 BuildRequires: libalsa-devel libpulseaudio-devel
 BuildRequires: libjack-devel
-BuildRequires: libv4l-devel libsndfile-devel
+BuildRequires: libv4l-devel libsamplerate-devel libsndfile-devel
 BuildRequires: libavformat-devel libavcodec-devel libavfilter-devel
 BuildRequires: libbluez-devel
 # BT codecs
@@ -72,6 +74,7 @@ BuildRequires: pkgconfig(gstreamer-net-%gst_api_ver)
 BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
 %endif
 %{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
+%{?_enable_wireplumber:BuildRequires: libwireplumber-devel}
 %{?_enable_vulkan:BuildRequires: libvulkan-devel}
 %{?_enable_libusb:BuildRequires: pkgconfig(libusb-1.0)}
 %{?_enable_libcamera:BuildRequires: libcamera-devel libdrm-devel}
@@ -140,7 +143,8 @@ export LIB=%_lib
 	%{?_disable_sdl:-Dsdl=disabled} \
 	%{?_disable_systemd:-Dsystemd=disabled} \
 	%{?_enable_systemd_system_service:-Dsystemd-system-service=enabled} \
-	%{?_disable_examples:-Dexamples=disabled}
+	%{?_disable_examples:-Dexamples=disabled} \
+	%{?_enable_wireplumber:-Dmedia-session='wireplumber'}
 %nil
 %meson_build
 
@@ -263,6 +267,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Thu Sep 16 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.36-alt1
+- 0.3.36
+
 * Thu Sep 09 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.35-alt1
 - 0.3.35
 
