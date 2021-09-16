@@ -1,6 +1,6 @@
 Name: livecd-webkiosk
 Version: 0.6.1
-Release: alt3
+Release: alt4
 
 Summary: start the browser for a suitable webkiosk environment
 License: Public domain
@@ -139,7 +139,7 @@ chmod +x %wrapper
 %files firefox
 
 %ifarch %ix86 x86_64
-%files seamonkey
+#files seamonkey
 #ifarch x86_64
 %files chromium
 #endif
@@ -147,6 +147,9 @@ chmod +x %wrapper
 %endif
 
 %changelog
+* Thu Sep 16 2021 Andrey Cherepanov <cas@altlinux.org> 0.6.1-alt4
+- Build without %name-seamonkey.
+
 * Mon Jan 04 2021 Andrey Cherepanov <cas@altlinux.org> 0.6.1-alt3
 - ExcludeArch: armh for all and %%ix86 and x86_64 for seamonkey.
 
