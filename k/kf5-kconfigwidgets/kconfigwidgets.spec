@@ -7,7 +7,7 @@
 
 Name: kf5-%rname
 Version: 5.86.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -20,7 +20,7 @@ Source: %rname-%version.tar
 
 # Automatically added by buildreq on Thu Feb 12 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel python-base ruby ruby-stdlibs xml-common xml-utils
-#BuildRequires: docbook-style-xsl extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kguiaddons-devel kf5-ki18n-devel kf5-kwidgetsaddons-devel python-module-google qt5-base-devel rpm-build-ruby
+#BuildRequires: docbook-style-xsl extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kdoctools kf5-kdoctools-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kwidgetsaddons-devel python-module-google qt5-base-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
 %if_enabled python
 BuildRequires(pre): python3-module-sip-devel
@@ -31,7 +31,7 @@ BuildRequires: qt5-base-devel qt5-tools-devel
 BuildRequires: docbook-style-xsl extra-cmake-modules
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kcoreaddons-devel kf5-kguiaddons-devel kf5-ki18n-devel
-BuildRequires: kf5-kdoctools kf5-kdoctools-devel-static
+BuildRequires: kf5-kdoctools kf5-kdoctools-devel
 
 %description
 KConfigWidgets provides easy-to-use classes to create configuration dialogs, as
@@ -48,7 +48,7 @@ Requires: kf5-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kwidgetsaddons-devel
+Requires: kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kwidgetsaddons-devel kf5-kguiaddons-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -144,6 +144,9 @@ mkdir -p %buildroot/%_K5data/kconfigwidgets/
 %endif
 
 %changelog
+* Thu Sep 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.86.0-alt2
+- fix requires
+
 * Mon Sep 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.86.0-alt1
 - new version
 
