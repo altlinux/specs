@@ -2,7 +2,7 @@
 %define ucddir %unicodedir/ucd
 
 Name: unicode-ucd
-Version: 13.0.0
+Version: 14.0.0
 Release: alt1
 
 Summary: Unicode Character Database
@@ -42,6 +42,9 @@ cp -p %SOURCE2 .
 %doc copyright.html
 
 %changelog
+* Thu Sep 16 2021 Yuri N. Sedunov <aris@altlinux.org> 14.0.0-alt1
+- 14.0.0
+
 * Tue Mar 17 2020 Yuri N. Sedunov <aris@altlinux.org> 13.0.0-alt1
 - 13.0.0
 
