@@ -1,7 +1,7 @@
 %def_enable check
 
 Name:    cloud-init
-Version: 21.2
+Version: 21.3
 Release: alt1
 
 Summary: Cloud instance init scripts
@@ -26,6 +26,8 @@ Patch1: %name-%version-%release.patch
 
 BuildArch: noarch
 
+%filter_from_requires /^open-vm-tools/d
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-distribute python3-module-nose python3-module-mocker
 BuildRequires: python3-module-yaml python3-module-oauthlib
@@ -38,6 +40,7 @@ BuildRequires: /proc
 BuildRequires: python3-module-requests python3-module-jsonpatch
 BuildRequires: python3-module-configobj python3-module-mock
 BuildRequires: python3-module-oauthlib python3-module-pytest
+BuildRequires: python3(netifaces)
 BuildRequires: shadow-utils passwd
 %endif
 
@@ -145,6 +148,9 @@ make unittest
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Wed Sep 01 2021 Mikhail Gordeev <obirvalger@altlinux.org> 21.3-alt1
+- Update tp 21.3
+
 * Wed May 26 2021 Mikhail Gordeev <obirvalger@altlinux.org> 21.2-alt1
 - Update to 21.2
 
