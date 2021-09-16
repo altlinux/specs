@@ -3,7 +3,7 @@
 
 Name: crtools-ovz
 Version: 3.15.2.9
-Release: alt1
+Release: alt2
 
 Summary: Utility to checkpoint/restore tasks for OpenVZ containers
 License: GPL-2.0-only
@@ -93,6 +93,9 @@ vm-run --kvm=cond make test || :
 %_man8dir/crtools.8*
 
 %changelog
+* Thu Sep 16 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.15.2.9-alt2
+- FTBFS: remove leading underscores in structs
+
 * Tue Aug 24 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.15.2.9-alt1
 - 3.15.2.9
 - disable LTO
