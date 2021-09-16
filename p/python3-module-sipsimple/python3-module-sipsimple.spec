@@ -1,7 +1,7 @@
 %define modulename sipsimple
 
 Name: python3-module-%modulename
-Version: 5.2.3
+Version: 5.2.6
 Release: alt1
 
 Summary: SIP SIMPLE implementation for Python
@@ -64,6 +64,9 @@ sed -i 's,^#elif defined(__aarch64__),& || defined(__e2k__),' \
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Sep 16 2021 Andrey Cherepanov <cas@altlinux.org> 5.2.6-alt1
+- New version.
+
 * Mon Jul 05 2021 Andrey Cherepanov <cas@altlinux.org> 5.2.3-alt1
 - New version.
 
