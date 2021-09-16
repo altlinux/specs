@@ -15,7 +15,7 @@
 
 Name: perl-Crypt-Primes
 Version: 0.50
-Release: alt2.1
+Release: alt3
 
 Summary: Crypt-Primes - Provable Prime Number Generator suitable for Cryptographic Applications
 
@@ -27,6 +27,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 Source: http://search.cpan.org/CPAN/authors/id/V/VI/VIPUL/%m_distro-%version.tar.bz2
+Patch0:		Crypt-Primes-0.50-more-stack.patch
 
 # Automatically added by buildreq on Sat Aug 27 2005
 BuildRequires: perl-Class-Loader perl-Crypt-Random perl-Math-Pari perl-devel
@@ -51,6 +52,7 @@ Random numbers are gathered with Crypt::Random, a perl interface to
 
 %prep
 %setup -q -n %m_distro-%version
+%patch0
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -64,6 +66,9 @@ Random numbers are gathered with Crypt::Random, a perl interface to
 %_man1dir/*
 
 %changelog
+* Thu Sep 16 2021 Vitaly Lipatov <lav@altlinux.ru> 0.50-alt3
+- fix build (thanks, Fedora!)
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.50-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
