@@ -9,7 +9,7 @@
 
 Name: dhcp
 Version: 4.4.2.P1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -255,7 +255,7 @@ find server -type f -not -name Makefile\* -print0 |
 	xargs -r0 sed -i 's,%ROOT/dhcpd/state/dhcpd6,%ROOT/dhcpd6/state/dhcpd6,g' --
 
 %build
-%add_optflags -fpie -fno-strict-aliasing -Wno-unused -Dlint
+%add_optflags -fpie -fno-strict-aliasing -Wno-unused -Wno-error=stringop-overflow -Dlint
 %ifnarch %e2k
 # lcc: omapi.c:854: -Werror=array-bounds
 %add_optflags -Werror
@@ -325,6 +325,10 @@ for dhcpd in dhcpd dhcpd6; do
 	mkdir -p %buildroot%ROOT/$dhcpd{/etc,/%_lib,/var/{nis,yp/binding}}
 	touch %buildroot%ROOT/$dhcpd{/etc/{localtime,hosts,services,{host,nsswitch,resolv}.conf},/var/nis/NIS_COLD_START}
 done
+
+# Don't package static libraries.
+# Remove them to avoid LTO check.
+rm %buildroot%_libdir/lib*.a
 
 # dhcrelay
 install -pD -m750 %SOURCE24 %buildroot%_sbindir/dhcrelay6
@@ -560,11 +564,13 @@ fi
 %_libdir/libdhcpctl.so.*
 %_libdir/libomapi.so.*
 
-%exclude %_libdir/lib*.a
-
 # }}}
 
 %changelog
+* Tue Sep 07 2021 Mikhail Efremov <sem@altlinux.org> 1:4.4.2.P1-alt2
+- Don't treat stringop-overflow warnings as error.
+- Fixed build with LTO.
+
 * Tue Jun 01 2021 Mikhail Efremov <sem@altlinux.org> 1:4.4.2.P1-alt1
 - Updated to 4.4.2-P1 (fixes: CVE-2021-25217).
 
