@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: verilator
-Version: 4.210
+Version: 4.212
 Release: alt1
 Summary: A fast and free Verilog HDL simulator
 
@@ -15,6 +15,7 @@ BuildRequires: rpm-build-python3
 BuildRequires: perl-podlators tex(dehypht.tex)
 BuildRequires: python3-module-sphinx_rtd_theme
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
+BuildRequires: gdb /proc
 
 %description
 Verilator is the fastest free Verilog HDL simulator, and beats most commercial
@@ -36,6 +37,9 @@ simulators. This package contains documentation and examples.
 %setup
 
 %build
+%ifarch armh
+%define optflags_lto %nil
+%endif
 autoconf
 %configure
 %make_build all info
@@ -62,6 +66,9 @@ mv %buildroot%_datadir/%name/examples %buildroot%_docdir/%name/
 %_docdir/%name/
 
 %changelog
+* Mon Sep 13 2021 Egor Ignatov <egori@altlinux.org> 4.212-alt1
+- new version 4.212
+
 * Fri Jul 09 2021 Egor Ignatov <egori@altlinux.org> 4.210-alt1
 - new version 4.210
 - remove 0001-Fix-V3Hash-when-building-m32 patch
