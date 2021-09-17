@@ -2,7 +2,7 @@
 %define module_name Module-ExtractUse
 
 Name: perl-%module_name
-Version: 0.343
+Version: 0.344
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -34,10 +34,13 @@ used by the parsed code.
 %perl_vendor_install
 
 %files
-%doc README Changes LICENSE example
+%doc README Changes example
 %perl_vendor_privlib/Module/
 
 %changelog
+* Fri Sep 17 2021 Igor Vlasenko <viy@altlinux.org> 0.344-alt1
+- automated CPAN update
+
 * Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.343-alt1
 - automated CPAN update
 
