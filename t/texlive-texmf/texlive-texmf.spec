@@ -97,7 +97,7 @@ BuildRequires: perl(Test/More.pm) perl(Text/Unidecode.pm) perl(Tk.pm) perl(Tk/Ad
 
 Name:		texlive-texmf
 Version:	%relYear
-Release:	alt1_3
+Release:	alt1_4
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -342,6 +342,8 @@ Requires(post):	texlive-collection-basic = %{version}
 #Requires(postun):	texlive-collection-basic
 Requires(post):	texlive >= %{tl_version}
 Requires(postun):	texlive >= %{tl_version}
+# cyrillic fonts support: hack for #40813
+Requires: texlive-fonts-sources
 Obsoletes: tetex-latex-feynmf <= 1.08-alt3.1.1
 Obsoletes: texmf-fonts-kerkis <= 2.0-alt2_26
 Obsoletes: texmf-latex-biblatex <= 2.5-alt1
@@ -937,10 +939,10 @@ pushd %{buildroot}%{texmfbindir}
 	ln -sf %{texmfdistdir}/scripts/texlive-extra/kpsetool.sh kpsepath
 	ln -sf %{texmfdistdir}/scripts/texlive-extra/kpsetool.sh kpsexpand
 	ln -sf %{texmfdistdir}/scripts/texlive/fmtutil.pl mktexfmt
-	ln -sf %{texmfdistdir}/scripts/texlive/mktexlsr texhash
-	ln -sf %{texmfdistdir}/scripts/texlive/mktexlsr mktexlsr
 	ln -sf %{texmfdistdir}/scripts/texlive/mktextfm mktextfm
 	ln -sf %{texmfdistdir}/scripts/texlive/mktexmf mktexmf
+	ln -sf %{texmfdistdir}/scripts/texlive/mktexlsr texhash
+	ln -sf %{texmfdistdir}/scripts/texlive/mktexlsr mktexlsr
 	ln -sf %{texmfdistdir}/scripts/texlive/rungs.tlu rungs
 #    ln -sf %{texmfdistdir}/scripts/fontools/showglyphs showglyphs
 	ln -sf %{texmfdistdir}/scripts/splitindex/splitindex.pl splitindex
@@ -1087,6 +1089,9 @@ EOF
 
 
 %changelog
+* Fri Sep 17 2021 Igor Vlasenko <viy@altlinux.org> 2021-alt1_4
+- added requires on texlive-fonts-sources for #40813
+
 * Mon Aug 09 2021 Igor Vlasenko <viy@altlinux.org> 2021-alt1_3
 - restored mktextfm, mktexmf, mktexlsr
 
