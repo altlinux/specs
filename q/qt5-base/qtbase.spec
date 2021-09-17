@@ -36,7 +36,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.15.2
-Release: alt5
+Release: alt6
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -830,6 +830,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Fri Sep 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.15.2-alt6
+- Updated fix for QTBUG-49771, fixing QTBUG-95108 and QTBUG-95289.
+
 * Mon Sep 06 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt5
 - disable LTO
 - update kde/5.15 branch patches
