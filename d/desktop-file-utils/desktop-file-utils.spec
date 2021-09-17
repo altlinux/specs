@@ -3,8 +3,8 @@
 %define _emacs_startscriptsdir %_sysconfdir/emacs/site-start.d
 
 Name: desktop-file-utils
-Version: 0.23
-Release: alt2
+Version: 0.26
+Release: alt1
 
 Summary: Utilities for manipulating .desktop files
 Group: Graphical desktop/Other
@@ -108,13 +108,16 @@ touch %buildroot/%_desktopdir/mimeinfo.cache
 %if_with emacs
 %files -n emacs-mode-%emacs_mode
 %config(noreplace) %_emacs_startscriptsdir/%emacs_mode-init.el
-%_emacslispdir/%emacs_mode-mode.elc
+#%_emacslispdir/%emacs_mode-mode.elc
 
 %files -n emacs-mode-%emacs_mode-el
 %_emacslispdir/%emacs_mode-mode.el
 %endif
 
 %changelog
+* Fri Sep 17 2021 Sergey V Turchin <zerg@altlinux.org> 0.26-alt1
+- new version
+
 * Mon Apr 08 2019 Michael Shigorin <mike@altlinux.org> 0.23-alt2
 - introduce emacs knob (on by default)
 
