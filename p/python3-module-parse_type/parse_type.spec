@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.5.6
-Release: alt1
+Release: alt2
 Summary: parse_type extends the parse module (opposite of string.format())
 License: BSD
 Group: Development/Python
@@ -51,6 +51,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false
 %python3_sitelibdir/parse_type-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Sep 16 2021 Stanislav Levin <slev@altlinux.org> 0.5.6-alt2
+- Fixed FTBFS (setuptools 58).
+
 * Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 0.5.6-alt1
 - 0.4.2 -> 0.5.6.
 - Stopped build for Python2.

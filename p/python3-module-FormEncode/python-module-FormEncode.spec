@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define modulename FormEncode
 
-%def_with doc
+%def_with check
 
 Name: python3-module-%modulename
-Version: 1.3.1
-Release: alt2
+Version: 2.0.0
+Release: alt1
 Epoch: 1
 
 Summary: HTML form validation, generation, and convertion package for Python
-License: PSF
+License: MIT
 Group: Development/Python3
 
 URL: http://formencode.org
@@ -16,71 +17,64 @@ BuildArch: noarch
 
 # git://github.com/formencode/formencode.git
 Source0: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-dns python3-module-sphinx
+BuildRequires: python3(setuptools_scm)
+BuildRequires: python3(setuptools_scm_git_archive)
+
+%if_with check
+BuildRequires: python3(dns)
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+BuildRequires: python3(tox_console_scripts)
+%endif
 
 %description
 FormEncode validates and converts nested structures. It allows for
 a declarative form of defining the validation, and decoupled processes
 for filling and generating forms.
 
-%package doc
-Summary: This package contains documentation and examples for FormEncode
-Group: Development/Documentation
-
-%description doc
-FormEncode validates and converts nested structures. It allows for
-a declarative form of defining the validation, and decoupled processes
-for filling and generating forms.
-
-%package pickles
-Summary: This package contains pickles for FormEncode
-Group: Development/Python3
-
-%description pickles
-FormEncode validates and converts nested structures. It allows for
-a declarative form of defining the validation, and decoupled processes
-for filling and generating forms.
-
 %prep
 %setup
-
-%prepare_sphinx3 .
+%autopatch -p1
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_build
 
 %install
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
-rm -rf %buildroot%python3_sitelibdir/docs
 
-%if_with doc
-pushd docs
-export PYTHONPATH=%buildroot%python3_sitelibdir
-%make SPHINXBUILD="sphinx-build-3" html
-%make SPHINXBUILD="sphinx-build-3" pickle
-cp -fR _build/pickle %buildroot%python3_sitelibdir/formencode/
-popd
-%endif
+# don't ship tests
+rm -r %buildroot/%python3_sitelibdir/formencode/tests/
+
+%check
+cat > tox.ini <<EOF
+[testenv]
+usedevelop=True
+commands =
+    {envbindir}/pytest {posargs:-vra}
+EOF
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+
+# test_unicode_ascii_subgroup requires internet
+tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
+-k 'not test_unicode_ascii_subgroup'
 
 %files
-%doc docs/*.txt
-%python3_sitelibdir/*
-%if_with doc
-%exclude %python3_sitelibdir/*/pickle
-%endif
-
-%if_with doc
-%files doc
-%doc docs/_build/html examples
-
-%files pickles
-%python3_sitelibdir/*/pickle
-%endif
+%doc README.rst
+%python3_sitelibdir/formencode/
+%python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Sep 17 2021 Stanislav Levin <slev@altlinux.org> 1:2.0.0-alt1
+- 1.3.1 -> 2.0.0.
+
 * Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 1:1.3.1-alt2
 - Drop python2 support.
 

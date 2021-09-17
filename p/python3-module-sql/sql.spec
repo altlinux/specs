@@ -2,38 +2,35 @@
 
 %define oname sql
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.8
-Release: alt2
+Version: 1.3.0
+Release: alt1
 
 Summary: Library to write SQL queries
 License: BSD
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/python-sql/
+Url: https://pypi.org/project/python-sql/
 BuildArch: noarch
 
 # https://github.com/Tyba/python-sql.git
-Source0: https://pypi.python.org/packages/c5/4b/c8c15049bc683428c8248eb37a0f22e9ad20e7853f8215ca8deb023ed689/python-%{oname}-%{version}.tar.gz
+Source0: python-%oname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-%py3_provides %oname
 
+%if_with check
+BuildRequires: python3(tox)
+%endif
+
+# PyPI name
+%py3_provides python-sql
 
 %description
 python-sql is a library to write SQL queries in a pythonic way.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-python-sql is a library to write SQL queries in a pythonic way.
-
-This package contains tests for %oname.
-
 %prep
-%setup -q -n python-%{oname}-%{version}
+%setup -n python-%oname-%version
 
 %build
 %python3_build_debug
@@ -41,19 +38,25 @@ This package contains tests for %oname.
 %install
 %python3_install
 
+# don't ship tests
+rm -r %buildroot%python3_sitelibdir/%oname/tests/
+
 %check
-%__python3 setup.py test
+# `test` command of setuptools is deprecated
+sed -i 's/{envpython} setup.py test/python -m unittest discover/' tox.ini
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vvr -s false
 
 %files
 %doc CHANGELOG README
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-
-%files tests
-%python3_sitelibdir/*/tests
-
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/python_sql-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Sep 17 2021 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
+- 0.8 -> 1.3.0.
+
 * Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.8-alt2
 - Build for python2 disabled.
 

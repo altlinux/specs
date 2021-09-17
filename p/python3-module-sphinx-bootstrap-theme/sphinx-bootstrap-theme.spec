@@ -2,12 +2,12 @@
 %define oname sphinx-bootstrap-theme
 
 Name: python3-module-%oname
-Version: 0.6.0
-Release: alt3
+Version: 0.8.0
+Release: alt1
 Summary: Sphinx Bootstrap Theme
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/sphinx-bootstrap-theme/
+Url: https://pypi.org/project/sphinx-bootstrap-theme/
 BuildArch: noarch
 
 # https://github.com/ryan-roemer/sphinx-bootstrap-theme.git
@@ -16,6 +16,8 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 
 %py3_requires sphinx
+# PyPI name
+%py3_provides %oname
 
 %description
 This Sphinx theme integrates the Twitter Bootstrap CSS / JavaScript
@@ -34,9 +36,13 @@ can use any number of different Bootswatch CSS themes.
 
 %files
 %doc LICENSE.txt *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/sphinx_bootstrap_theme/
+%python3_sitelibdir/sphinx_bootstrap_theme-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Sep 16 2021 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1
+- 0.6.0 -> 0.8.0.
+
 * Thu Mar 18 2021 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt3
 - Drop python2 support.
 

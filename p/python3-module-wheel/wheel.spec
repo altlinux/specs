@@ -6,7 +6,7 @@
 %def_without bootstrap
 
 Name: python3-module-%oname
-Version: 0.36.2
+Version: 0.37.0
 Release: alt1
 Summary: A built-package format for Python3
 License: MIT
@@ -21,7 +21,6 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python3(packaging)
 BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
 BuildRequires: python3(tox_no_deps)
@@ -86,8 +85,9 @@ tox.py3 --sitepackages --no-deps -vvr
 
 %files
 %doc *.txt
-%_bindir/*
-%python3_sitelibdir/*
+%_bindir/wheel
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %if_without bootstrap
 %files wheel
@@ -95,6 +95,9 @@ tox.py3 --sitepackages --no-deps -vvr
 %endif
 
 %changelog
+* Fri Sep 10 2021 Stanislav Levin <slev@altlinux.org> 0.37.0-alt1
+- 0.36.2 -> 0.37.0.
+
 * Fri Apr 23 2021 Stanislav Levin <slev@altlinux.org> 0.36.2-alt1
 - 0.34.2 -> 0.36.2.
 - Enabled testing.

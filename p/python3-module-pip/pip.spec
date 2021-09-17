@@ -5,8 +5,8 @@
 %def_without bootstrap
 
 Name: python3-module-pip
-Version: 21.2.1
-Release: alt5
+Version: 21.2.4
+Release: alt1
 
 Summary: The PyPA recommended tool for installing Python packages
 License: MIT
@@ -119,6 +119,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
 %endif
 
 %changelog
+* Fri Sep 10 2021 Stanislav Levin <slev@altlinux.org> 21.2.4-alt1
+- 21.2.1 -> 21.2.4.
+
 * Wed Aug 18 2021 Vitaly Lipatov <lav@altlinux.ru> 21.2.1-alt5
 - NMU: drop ntlm support from urllib3
 

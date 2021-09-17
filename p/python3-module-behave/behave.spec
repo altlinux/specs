@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.2.6
-Release: alt4
+Release: alt5
 Summary: behave is behaviour-driven development, Python style
 License: BSD
 Group: Development/Python3
@@ -27,6 +27,8 @@ BuildRequires: python3(parse)
 BuildRequires: python3(parse_type)
 BuildRequires: python3(path)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 Requires: %oname-common = %EVR
@@ -76,19 +78,11 @@ install -d %buildroot%_sysconfdir
 cp -fR etc/* %buildroot%_sysconfdir/
 
 %check
-sed -i -e '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' \
--e '/setenv =$/a \
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3' \
--e '/behave --format=/d' \
-tox.ini
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-%_bindir/tox.py3 --sitepackages -p auto -o -v
+export TOXENV=py3
+sed -i -e '/behave --format=/d' tox.ini
+
+%_bindir/tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
 
 %files
 %doc *.rst *features
@@ -106,6 +100,9 @@ export TOXENV=py%{python_version_nodots python3}
 %_sysconfdir/junit.xml/junit-4.xsd
 
 %changelog
+* Wed Sep 15 2021 Stanislav Levin <slev@altlinux.org> 1.2.6-alt5
+- Fixed FTBFS (setuptools 58).
+
 * Mon Oct 05 2020 Stanislav Levin <slev@altlinux.org> 1.2.6-alt4
 - Stopped Python2 package build.
 - Applied upstream patches.

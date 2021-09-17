@@ -1,8 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname tempita
+
+%def_with check
 
 Name: python3-module-%oname
 Version: 0.5.3
-Release: alt1.hg20131219.3
+Release: alt2.hg20131219.3
 Summary: A very small text templating language
 License: MIT
 Group: Development/Python3
@@ -11,20 +14,37 @@ BuildArch: noarch
 
 # hg clone http://bitbucket.org/ianb/tempita
 Source: Tempita-%version.tar.gz
+Patch0: tempita-0.5.3-Drop-dynamic-conversion-with-2to3.patch
+Patch1: tempita-0.5.3-Migrate-from-cgi.escape.patch
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+
+%if_with check
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+%endif
 
 %description
 Tempita is a small templating language for text substitution.
 
 This isn't meant to be the Next Big Thing in templating; it's just a
 handy little templating language for when your project outgrows
-``string.Template`` or ``%`` substitution.  It's small, it embeds
+``string.Template`` or ``%%`` substitution.  It's small, it embeds
 Python in strings, and it doesn't do much else.
 
 %prep
 %setup
+%autopatch -p1
+
+# remove snapshot tag
+sed -i \
+    -e 's/^tag_build[[:space:]]*=.*$/tag_build =/' \
+    -e 's/^tag_date[[:space:]]*=.*$/tag_date =/' \
+    -e 's/^tag_svn_revision[[:space:]]*=.*$/tag_svn_revision =/' \
+setup.cfg
 
 %build
 find -type f -exec sed -i 's|%_bindir/python|%_bindir/python3|' -- '{}' +
@@ -34,11 +54,26 @@ find -type f -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
 %install
 %python3_install
 
+%check
+cat > tox.ini <<EOF
+[testenv]
+usedevelop=True
+commands =
+    pytest {posargs:-vra} tests
+EOF
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr -s false
+
 %files
 %doc docs/*
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/Tempita-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Sep 17 2021 Stanislav Levin <slev@altlinux.org> 0.5.3-alt2.hg20131219.3
+- Fixed FTBFS (setuptools 58).
+
 * Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 0.5.3-alt1.hg20131219.3
 - Drop python2 support.
 

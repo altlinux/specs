@@ -3,7 +3,7 @@
 
 Name: 	 odoo
 Version: 14.0
-Release: alt1.%snapshot
+Release: alt2.%snapshot
 
 Summary: Odoo is a suite of web based open source business apps
 License: LGPL-3.0
@@ -39,7 +39,7 @@ Obsoletes: openerp-httpd-fonts-access < %version-%release
 
 %filter_from_requires /python3(xmlrpclib)/d
 %filter_from_requires /python3(odoo.addons.hw_drivers.tools)/d
-%py3_requires feedparser gevent mako mock ofxparse PIL psutil pydot ldap pyparsing serial usb qrcode vatnumber vobject xlsxwriter xlwt num2words phonenumbers sassc
+%py3_requires feedparser gevent mako mock ofxparse PIL psutil pydot ldap pyparsing serial usb qrcode vobject xlsxwriter xlwt num2words phonenumbers sassc
 Requires: python3-module-suds
 Requires: wkhtmltopdf
 Requires: lessjs >= 3.0.0
@@ -140,6 +140,9 @@ getent passwd _odoo > /dev/null || \
 #%%attr(-,openerp,openerp) %ghost %_logdir/openerp/openerp-server.log
 
 %changelog
+* Thu Sep 16 2021 Stanislav Levin <slev@altlinux.org> 14.0-alt2.20210112
+- Dropped no longer used dependency on vatnumber(odoo#36978).
+
 * Tue Jan 12 2021 Andrey Cherepanov <cas@altlinux.org> 14.0-alt1.20210112
 - New version.
 - Disable python2 requirement (ALT #39287).

@@ -1,33 +1,34 @@
 %define _unpackaged_files_terminate_build 1
 
 %define oname mockito
+%def_with check
 
 Name: python3-module-%oname
-Version: 0.7.1
-Release: alt2
+Version: 1.2.2
+Release: alt1
 
 Summary: Spying framework
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/mockito/
+Url: https://pypi.org/project/mockito/
 BuildArch: noarch
 
-Source0: https://pypi.python.org/packages/a8/20/ee40b6b6c6ee28b0358c677822c784ba51715f0369873b8e3acc50ea417a/%{oname}-%{version}.tar.gz
+Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose
-BuildRequires: python-tools-2to3
 
-%py3_provides %oname
-
+%if_with check
+BuildRequires: python3(numpy)
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+%endif
 
 %description
 Mockito is a spying framework based on Java library with the same name.
 
 %prep
-%setup -q -n %{oname}-%{version}
-
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%setup
 
 %build
 %python3_build_debug
@@ -36,14 +37,25 @@ find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_install
 
 %check
-%__python3 setup.py test
+cat > tox.ini <<EOF
+[testenv]
+usedevelop=True
+commands =
+    {envbindir}/pytest {posargs:-vra}
+EOF
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr
 
 %files
 %doc AUTHORS *.rst
-%python3_sitelibdir/*
-
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Sep 10 2021 Stanislav Levin <slev@altlinux.org> 1.2.2-alt1
+- 0.7.1 -> 1.2.2.
+
 * Mon Feb 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.7.1-alt2
 - Build for python2 disabled.
 

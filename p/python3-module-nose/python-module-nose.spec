@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define oname nose
 
-%def_without check
+%def_with check
 
 Name: python3-module-%oname
 Epoch: 1
 Version: 1.3.7
-Release: alt8.git20160316
+Release: alt9.git20160316
 
 Summary: A unittest-based testing framework for python that makes writing and running tests easier
 
@@ -36,6 +37,11 @@ Patch4: python-nose-fedora-py36.patch
 # Remove a SyntaxWarning (other projects may treat it as error)
 Patch5: python-nose-fedora-py38.patch
 
+# setuptools 58
+Patch6: nose-1.3.7-2to3-Replace-dynamic-conversion-with-the-static-one.patch
+Patch7: nose-1.3.7-build-Migrate-to-setuptools-58.patch
+Patch8: nose-1.3.7-tests-Fix-assumptions-for-coverage5.patch
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-coverage
 
@@ -46,11 +52,7 @@ as is reasonably possible without resorting to too much magic.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
+%autopatch -p1
 
 sed -i "s|man/man1|share/man/man1|g" setup.py
 
@@ -63,6 +65,9 @@ sed -i "s|man/man1|share/man/man1|g" setup.py
 ln -s nosetests-%_python3_version %buildroot%_bindir/nosetests3
 ln -s nosetests-%_python3_version %buildroot%_bindir/nosetests-3
 
+# was packaged in python2-nose, I don't want to add conflict for now
+rm %buildroot%_bindir/nosetests
+
 %check
 python3 setup.py build_tests
 python3 ./selftest.py
@@ -71,10 +76,14 @@ python3 ./selftest.py
 %_bindir/nosetests3
 %_bindir/nosetests-3
 %_bindir/nosetests-%_python3_version
+%_man1dir/nosetests.1.*
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Sep 16 2021 Stanislav Levin <slev@altlinux.org> 1:1.3.7-alt9.git20160316
+- Fixed FTBFS (setuptools 58).
+
 * Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 1:1.3.7-alt8.git20160316
 - Drop python2 support.
 

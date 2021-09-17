@@ -1,22 +1,28 @@
 %define _unpackaged_files_terminate_build 1
 %define oname demjson
 
-%def_disable check
+%def_with check
 
 Name: python3-module-%oname
 Version: 2.2.4
-Release: alt2
+Release: alt3
 Summary: encoder, decoder, and lint/validator for JSON compliant with RFC 7159
-License: LGPLv3.0
+License: LGPLv3+
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/demjson/
 
 # https://github.com/dmeranda/demjson.git
 Source0: https://pypi.python.org/packages/96/67/6db789e2533158963d4af689f961b644ddd9200615b8ce92d6cad695c65a/%{oname}-%{version}.tar.gz
+Patch0: demjson-2.2.4-ALT-Make-the-result-of-2to3-conversion-static.patch
+Patch1: demjson-2.2.4-ALT-Drop-2to3-converion-on-build-via-setuptools.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-tools-2to3 python3-module-pytest
+
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
+
 %py3_provides %oname
 
 Conflicts: python-module-%oname
@@ -37,8 +43,7 @@ JavaScript data which may not strictly be valid JSON data.
 
 %prep
 %setup -n %{oname}-%{version}
-
-find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%autopatch -p2
 
 %build
 %python3_build
@@ -48,7 +53,7 @@ find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %check
 export PYTHONPATH=$PWD
-py.test-%_python3_version
+py.test3
 
 %files
 %doc *.txt *.md docs/*
@@ -56,6 +61,9 @@ py.test-%_python3_version
 %python3_sitelibdir/*
 
 %changelog
+* Wed Sep 15 2021 Stanislav Levin <slev@altlinux.org> 2.2.4-alt3
+- Fixed FTBFS (setuptools 58).
+
 * Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 2.2.4-alt2
 - Drop python2 support.
 

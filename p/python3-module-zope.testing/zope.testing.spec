@@ -1,30 +1,27 @@
+%define _unpackaged_files_terminate_build 1
 %define oname zope.testing
 
-%def_without check
+%def_with check
 %def_enable light_version
 
 Name: python3-module-%oname
-Version: 4.4.0
-Release: alt3
+Version: 4.9
+Release: alt1
 Summary: Zope testing helpers
-License: ZPL
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.testing/
+Url: https://pypi.org/project/zope.testing/
 
 # https://github.com/zopefoundation/zope.testing.git
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
-%if_disabled light_version
-#BuildPreReq: python-module-zope.testrunner
-%endif
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pytest python3-module-zope.exceptions
-%endif
 
-%if_disabled light_version
-#BuildPreReq: python3-module-zope.testrunner
-#BuildPreReq: python-tools-2to3
+%if_with check
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+BuildRequires: python3(zope.testrunner)
 %endif
 
 %py3_requires zope.exceptions zope.interface
@@ -38,6 +35,7 @@ flexible test runner, and supports both doctest and unittest.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %python3_build
@@ -52,14 +50,20 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-python3 setup.py test
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr -s false
 
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/zope/testing/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 %exclude %python3_sitelibdir/*.pth
 
 %changelog
+* Fri Sep 17 2021 Stanislav Levin <slev@altlinux.org> 4.9-alt1
+- 4.4.0 -> 4.9.
+
 * Wed Jul 07 2021 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt3
 - Drop python2 support.
 

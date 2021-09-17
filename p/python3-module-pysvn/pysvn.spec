@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.9.12
-Release: alt2
+Release: alt3
 Summary: Subversion support for python
 License: Apache-1.1
 Group: Development/Python3
@@ -14,7 +14,6 @@ BuildRequires: gcc-c++ libcom_err-devel libexpat-devel libkrb5-devel libsubversi
 BuildRequires: libaprutil1-devel
 BuildRequires: subversion-server-common
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pyutilib-svn
 BuildRequires: python3-module-pycxx-devel
 BuildPreReq: python3-devel
 
@@ -43,6 +42,9 @@ cp -r Source/pysvn %buildroot%python3_sitelibdir
 %python3_sitelibdir/pysvn
 
 %changelog
+* Thu Sep 16 2021 Stanislav Levin <slev@altlinux.org> 1.9.12-alt3
+- Fixed FTBFS (removed pyutilib).
+
 * Sat Nov 14 2020 Grigory Ustinov <grenka@altlinux.org> 1.9.12-alt2
 - Build without python2 support. (Closes: #39286)
 

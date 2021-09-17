@@ -1,18 +1,24 @@
 %define _unpackaged_files_terminate_build 1
 %define oname isodate
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.5.4
-Release: alt2
+Version: 0.6.0
+Release: alt1
 Summary: An ISO 8601 date/time/duration parser and formater
 License: BSD
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/isodate
+Url: https://pypi.org/project/isodate/
 
-Source0: https://pypi.python.org/packages/f4/5b/fe03d46ced80639b7be9285492dc8ce069b841c0cebe5baacdd9b090b164/%{oname}-%{version}.tar.gz
+Source0: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+
+%if_with check
+BuildRequires: python3(tox)
+%endif
 
 %description
 This module implements ISO 8601 date, time and duration parsing. The
@@ -49,7 +55,7 @@ allowed option.
 This package contains tests for isodate.
 
 %prep
-%setup -n %{oname}-%{version}
+%setup
 
 %build
 %python3_build
@@ -57,15 +63,26 @@ This package contains tests for isodate.
 %install
 %python3_install
 
+%check
+# setuptools' `test` command is deprecated
+sed -i 's/{envpython} setup.py test/python -m unittest discover src/' tox.ini
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vvr -s false
+
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 
 %changelog
+* Thu Sep 16 2021 Stanislav Levin <slev@altlinux.org> 0.6.0-alt1
+- 0.5.4 -> 0.6.0.
+
 * Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 0.5.4-alt2
 - Drop python2 support.
 

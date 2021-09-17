@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.24.0
+Version: 3.24.4
 Release: alt1
 
 Summary: virtualenv-based automation of test activities
@@ -94,6 +94,12 @@ export TOXENV=py3
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Sep 17 2021 Stanislav Levin <slev@altlinux.org> 3.24.4-alt1
+- 3.24.3 -> 3.24.4.
+
+* Fri Sep 10 2021 Stanislav Levin <slev@altlinux.org> 3.24.3-alt1
+- 3.24.0 -> 3.24.3.
+
 * Mon Jul 26 2021 Stanislav Levin <slev@altlinux.org> 3.24.0-alt1
 - 3.23.1 -> 3.24.0.
 
