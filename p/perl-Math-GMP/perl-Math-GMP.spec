@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Math-GMP
 Name: perl-%dist
-Version: 2.20
+Version: 2.21
 Release: alt1
 
 Summary: High speed arbitrary size integer math
@@ -35,6 +35,9 @@ Perl functions.  This can result in speed improvements.
 %perl_vendor_autolib/Math
 
 %changelog
+* Fri Sep 17 2021 Igor Vlasenko <viy@altlinux.org> 2.21-alt1
+- automated CPAN update
+
 * Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 2.20-alt1
 - automated CPAN update
 
