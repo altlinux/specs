@@ -7,7 +7,7 @@ BuildRequires: perl(Test/Run/CmdLine/Iface.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-String-Random
-Version:        0.31
+Version:        0.32
 Release:        alt1
 Summary:        Perl module to generate random strings based on a pattern
 License:        GPL+ or Artistic
@@ -58,6 +58,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 
 %changelog
+* Fri Sep 17 2021 Igor Vlasenko <viy@altlinux.org> 0.32-alt1
+- automated CPAN update
+
 * Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
 - automated CPAN update
 
