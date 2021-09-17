@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 21.08.1
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Configuration/Printing
@@ -19,6 +19,7 @@ Requires: cups printer-drivers-X11
 Source: %rname-%version.tar
 Patch1: alt-lib-sover.patch
 Patch2: alt-queue-window.patch
+Patch3: alt-remove-help-button.patch
 
 # Automatically added by buildreq on Mon Aug 24 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python3 python3-base qt5-base-devel ruby ruby-stdlibs
@@ -61,6 +62,7 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %K5build
@@ -90,6 +92,9 @@ KF5 library
 %_K5lib/libkcupslib.so.*
 
 %changelog
+* Fri Sep 17 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt2
+- remove help button from AddPrinterAssistant
+
 * Thu Sep 02 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt1
 - new version
 
