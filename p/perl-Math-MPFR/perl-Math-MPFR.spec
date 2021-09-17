@@ -16,7 +16,7 @@ BuildRequires: libquadmath-devel
 ExcludeArch: aarch64 %arm
 
 Name: perl-%module_name
-Version: 4.16
+Version: 4.17
 Release: alt1
 Summary: perl interface to the MPFR (floating point) library..
 Group: Development/Perl
@@ -55,6 +55,9 @@ rm t/LongDouble.t
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Sep 17 2021 Igor Vlasenko <viy@altlinux.org> 4.17-alt1
+- automated CPAN update
+
 * Tue Feb 16 2021 Igor Vlasenko <viy@altlinux.ru> 4.16-alt1
 - automated CPAN update
 
