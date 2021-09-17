@@ -1,6 +1,6 @@
 Name: libowt-tg
 Version: 4.3.0.5
-Release: alt3
+Release: alt4
 
 Summary: Open WebRTC Toolkit with Telegram desktop patches
 
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 
 Patch5: ad47b06841f36702ec6ce4d8609ce358c5155cbf.patch
 Patch6: c22f796fe1eb6b37f8f891068941bb0e6e19f6cb.patch
+Patch2000: %name-e2k.patch
 
 ExcludeArch: armh ppc64le
 
@@ -73,6 +74,9 @@ develop programs which make use of %name.
 %setup
 %patch5 -p1
 %patch6 -p1
+%ifarch %e2k
+%patch2000 -p2
+%endif
 rm -rfv src/third_party/{libvpx,openh264,pipewire,usrsctp} src/base/third_party/libevent/
 rm -fv cmake/{libvpx,libopenh264,libusrsctp,libevent,libyuv}.cmake
 rm -rfv src/base/android/
@@ -115,6 +119,9 @@ rm -rfv %buildroot%_includedir/tg_owt/modules/audio_device/android
 %_libdir/cmake/tg_owt/
 
 %changelog
+* Fri Sep 17 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.3.0.5-alt4
+- added patch for Elbrus
+
 * Thu Jul 08 2021 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.5-alt3
 - don't pack symlink
 
