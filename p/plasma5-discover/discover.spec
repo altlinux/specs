@@ -12,7 +12,7 @@
 
 Name: plasma5-%rname
 Version: 5.22.5
-Release: alt1
+Release: alt2
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -36,6 +36,7 @@ Patch5: alt-soversion.patch
 #BuildRequires: appstream-qt-devel extra-cmake-modules kf5-karchive-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-ki18n-devel kf5-kio-devel kf5-kirigami-devel kf5-kitemmodels-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kpackage-devel kf5-plasma-framework-devel libflatpak-devel libssl-devel packagekit-qt-devel python3-dev qt5-declarative-devel qt5-translations rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: libssl-devel qt5-declarative-devel qt5-x11extras-devel
+BuildRequires: desktop-file-utils
 BuildRequires: pkgconfig(libmarkdown)
 %if_enabled fwupd
 BuildRequires: pkgconfig(fwupd)
@@ -153,8 +154,10 @@ mv %buildroot/%_libdir/plasma-discover/lib*.so* %buildroot/%_libdir/
 mkdir -p %buildroot/%_K5xdgconf/plasma-workspace/env/
 install -m 0755 %SOURCE1 %buildroot/%_K5xdgconf/plasma-workspace/env/%{name}-flatpak.sh
 
-for f in %buildroot/%_K5xdgapp/org.kde.discover{.,-}*.desktop ; do
-    sed -i '/^X-DocPath=/d' $f
+for f in %buildroot/%_K5xdgapp/org.kde.discover*.desktop ; do
+    desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
+	--remove-key="X-DocPath" \
+	$f
 done
 
 %find_lang %name --with-kde --all-name
@@ -221,6 +224,9 @@ done
 
 
 %changelog
+* Fri Sep 17 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt2
+- remove entry from khelpcenter
+
 * Wed Sep 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt1
 - new version
 
