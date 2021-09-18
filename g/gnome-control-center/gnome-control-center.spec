@@ -1,4 +1,5 @@
 %def_disable snapshot
+%define optflags_lto %nil
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
@@ -14,7 +15,7 @@
 %def_enable doc
 
 Name: gnome-control-center
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -65,8 +66,8 @@ Requires: accountsservice
 Requires: gnome-online-accounts >= %goa_ver
 %{?_with_cheese:Requires: cheese >= %cheese_ver}
 
-BuildRequires(pre): meson rpm-build-gnome
-BuildPreReq: desktop-file-utils gtk-doc xsltproc libappstream-glib-devel
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildPreReq: meson desktop-file-utils gtk-doc xsltproc libappstream-glib-devel
 BuildPreReq: fontconfig-devel >= %fontconfig_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: glib2-devel >= %glib_ver
@@ -91,7 +92,7 @@ BuildRequires: libgnome-online-accounts-devel >= %goa_ver
 BuildRequires: libaccountsservice-devel >= %acc_ver
 BuildRequires: libwacom-devel >= %wacom_ver
 BuildRequires: libclutter-gtk3-devel
-BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel
+BuildRequires: pkgconfig(systemd) >= %systemd_ver
 BuildRequires: libgrilo-devel >= %grilo_ver
 BuildRequires: libsecret-devel
 BuildRequires: libudisks2-devel
@@ -185,6 +186,9 @@ you'll want to install this package.
 
 
 %changelog
+* Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
+- 40.1
+
 * Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 
