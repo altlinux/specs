@@ -1,6 +1,6 @@
 Name: libsigsegv
 Version: 2.13.0.5.8107
-Release: alt1
+Release: alt2
 
 Summary: Library for handling page faults in user mode
 License: GPL-2.0-or-later
@@ -83,6 +83,9 @@ GNULIB_SRCDIR=%_datadir/gnulib sh -x ./autogen.sh
 %_includedir/*
 
 %changelog
+* Fri Sep 17 2021 Dmitry V. Levin <ldv@altlinux.org> 2.13.0.5.8107-alt2
+- Fixed build with LTO enabled.
+
 * Tue Apr 13 2021 Dmitry V. Levin <ldv@altlinux.org> 2.13.0.5.8107-alt1
 - libsigsegv: v2.12-11-gf2e3824 -> v2.13-5-g8107f54.
 - gnulib BR: v0.1-2433-g3043e43a7 -> v0.1-4550-g2a7948aad.
