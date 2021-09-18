@@ -1,8 +1,9 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: ocaml-lablgl
 Version: 1.06
-Release: alt2
+Release: alt3
 Summary: OpenGL library for OCaml
-License: BSD-style
+License: BSD-3-Clause
 Group: Development/ML
 Url: https://forge.ocamlcore.org/projects/lablgl/
 # git https://forge.ocamlcore.org/anonscm/git/lablgl/lablgl.git
@@ -110,6 +111,9 @@ install -p -m644 META %buildroot%_libdir/ocaml/lablGL/META
 %exclude %_libdir/ocaml/lablGL/togl.ml
 
 %changelog
+* Sat Sep 18 2021 Anton Farygin <rider@altlinux.ru> 1.06-alt3
+- fixed build with enabled LTO
+
 * Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 1.06-alt2
 - ocaml-labltk have been renamed to ocaml-labltk-devel
 
