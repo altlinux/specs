@@ -1,6 +1,7 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: ocaml-camlbz2
 Version: 0.7.0
-Release: alt1
+Release: alt2
 Summary: OCaml bindings for the libbz2
 License: LGPLv2 with OCaml-LGPL-linking-exception
 Group: Development/ML
@@ -63,6 +64,9 @@ make install
 %_libdir/ocaml/bz2/*.mli
 
 %changelog
+* Sat Sep 18 2021 Anton Farygin <rider@altlinux.ru> 0.7.0-alt2
+- fixed build with emabled LTO
+
 * Mon Mar 22 2021 Anton Farygin <rider@altlinux.org> 0.7.0-alt1
 - 0.7.0
 
