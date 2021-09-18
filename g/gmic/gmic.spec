@@ -1,6 +1,12 @@
 %def_disable snapshot
 %define gimpplugindir %(gimptool-2.0 --gimpplugindir)
 %def_enable zart
+%ifarch %e2k
+# it's impossible to use such a bad OpenMP implementation for such complex code
+%def_disable openmp
+%else
+%def_enable openmp
+%endif
 
 # https://github.com/c-koi/zart
 # no tags
@@ -12,7 +18,7 @@
 
 Name: gmic
 Version: 2.9.9
-Release: alt1
+Release: alt2
 
 Summary: GREYC's Magic Image Converter
 License: CECILL-2.0 and GPL-3.0
@@ -34,7 +40,8 @@ Requires: lib%name = %version-%release
 BuildRequires: dos2unix
 BuildRequires: gcc-c++ imake libGraphicsMagick-c++-devel libImageMagick-devel libXext-devel libXrandr-devel
 BuildRequires: libavformat-devel libfftw3-devel libgimp-devel libjpeg-devel libopencv-devel libpng-devel
-BuildRequires: libswscale-devel libtiff-devel openexr-devel xorg-cf-files zlib-devel libgomp-devel
+BuildRequires: libswscale-devel libtiff-devel openexr-devel xorg-cf-files zlib-devel
+%{?_enable_openmp:BuildRequires: libgomp-devel}
 BuildRequires: libcurl-devel
 BuildRequires: bash-completion
 # for -zart and -qt
@@ -103,6 +110,12 @@ multi-spectral image datasets.
 
 %prep
 %setup -n gmic-%version -a1 -a2 -a3
+
+%if_disabled openmp
+sed -i "s|-fopenmp -Dcimg_use_openmp||;s|-lgomp||" src/Makefile
+sed -i "s|cimg_use_openmp||;s|-fopenmp||" gmic-qt/gmic_qt.pro zart/zart.pro
+%endif
+
 dos2unix src/Makefile
 # fix libdir
 subst 's|\$(USR)/\$(LIB)/|$(USR)/%_lib/|' src/Makefile
@@ -190,6 +203,9 @@ popd
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 2.9.9-alt2
+- disabled OpenMP support for %%e2k (ilyakurdyukov@)
+
 * Fri Sep 03 2021 Yuri N. Sedunov <aris@altlinux.org> 2.9.9-alt1
 - 2.9.9
 
