@@ -5,7 +5,7 @@
 %define xdg_name org.gnome.Maps
 
 Name: gnome-maps
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1%beta
 
 Summary: Maps is a map application for GNOME
@@ -52,8 +52,8 @@ Requires: typelib(Secret)
 Requires: typelib(Soup) = 2.4
 Requires: typelib(WebKit2) = 4.0
 
-BuildRequires(pre): meson rpm-build-gir
-BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgjs-devel >= %gjs_ver gobject-introspection-devel
 BuildRequires: pkgconfig(geoclue-2.0) >= %geoclue_ver
@@ -92,6 +92,9 @@ Maps is a map application for GNOME.
 %exclude %_datadir/%name/gir-1.0/GnomeMaps-%api_ver.gir
 
 %changelog
+* Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 40.5-alt1
+- 40.5
+
 * Fri Aug 13 2021 Yuri N. Sedunov <aris@altlinux.org> 40.4-alt1
 - 40.4
 
