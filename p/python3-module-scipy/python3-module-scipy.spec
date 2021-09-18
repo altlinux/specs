@@ -10,7 +10,7 @@
 
 Name: python3-module-%modname
 Version: %ver_major.%ver_minor
-Release: alt2.2
+Release: alt2.3
 
 Summary: SciPy is the library of scientific codes
 License: BSD-3-Clause
@@ -90,7 +90,7 @@ sed -i 's|^\(backend\).*|\1 : Agg|' ~/.matplotlib/matplotlibrc
 # as of lcc 1.25.17 (mcst#6255)
 %add_optflags -DPOCKETFFT_NO_VECTORS
 # fixup "EML instead of OpenBLAS/LAPACK" setup
-sed -i -e 's/lapack, /clapack, /g' -e 's/openblas, /blas, /g' site.cfg
+sed -i -e 's/lapack, /clapack, eml_algebra_mt, /g' -e 's/openblas, /blas, /g' site.cfg
 %endif
 %add_optflags -I%_includedir/suitesparse -fno-strict-aliasing %optflags_shared
 %python3_build_debug build_ext build_py build_clib \
@@ -152,6 +152,9 @@ done
 %_includedir/%modname-py3
 
 %changelog
+* Sat Sep 18 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.6.1-alt2.3
+- E2K: fixed issue with "chla_transtype_" for Cura
+
 * Tue Jul 27 2021 Michael Shigorin <mike@altlinux.org> 1.6.1-alt2.2
 - E2K: fix build with EML
 
