@@ -1,5 +1,5 @@
 Name: libmediainfo
-Version: 21.03
+Version: 21.09
 Release: alt1
 
 Group: System/Libraries
@@ -85,6 +85,9 @@ popd
 %_libdir/%name.so
 
 %changelog
+* Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 21.09-alt1
+- 21.09
+
 * Sat Mar 27 2021 Yuri N. Sedunov <aris@altlinux.org> 21.03-alt1
 - 21.03
 
