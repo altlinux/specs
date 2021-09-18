@@ -16,7 +16,7 @@
 
 Name: pcp
 Version: 5.2.0
-Release: alt1
+Release: alt2
 Summary: System-level performance monitoring and performance management
 License: GPLv2+ and LGPLv2+ and CC-BY-SA-3.0
 Group: Monitoring
@@ -62,6 +62,7 @@ BuildRequires: postfix
 BuildRequires: man-db
 
 Requires: libpcopilot = %EVR
+Requires(post): pcp-conf
 
 # PCP discovery service now provided by pmfind
 Obsoletes: pcp-manager-debuginfo < 5.2.0
@@ -1231,6 +1232,9 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_datadir/pcp/demos/tutorials/*.tar.gz
 
 %changelog
+* Sat Sep 18 2021 Stanislav Levin <slev@altlinux.org> 5.2.0-alt2
+- Fixed FTBFS.
+
 * Fri Sep 18 2020 Igor Vlasenko <viy@altlinux.ru> 5.2.0-alt1
 - NMU: fixed build by updating to 5.2.0
 - (closes: #38912)
