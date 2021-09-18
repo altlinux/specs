@@ -1,6 +1,6 @@
 Name: fail2ban
 Version: 0.11.2
-Release: alt1
+Release: alt2
 
 Summary: Fail2Ban is an intrusion prevention framework
 
@@ -15,6 +15,12 @@ Source2: fail2ban.service
 Source3: fail2ban-logrotate
 Source4: paths-altlinux.conf
 Source5: paths-altlinux-systemd.conf
+
+# CVE-2021-32749
+Patch1: 410a6ce5c80dd981c22752da034f2529b5eee844.patch
+Patch2: 747d4683221b5584f9663695fb48145689b42ceb.patch
+# python 3.10 fix
+Patch3: ea26509594a3220b012071604d73bb42d0ecae2c.patch
 
 BuildArch: noarch
 
@@ -45,8 +51,12 @@ Recommends: python3-module-systemd
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 %__subst "s|paths-debian.conf|paths-altlinux.conf|g" config/jail.conf
-
+# setuptools>=58 breaks support for use_2to3
+%__subst "s|.*use_2to3.*||" setup.py
 python3-2to3 -w --no-diffs bin/* fail2ban
 %__subst "s|/usr/bin/env python|%__python3|" bin/*
 
@@ -114,6 +124,11 @@ mkdir -p %buildroot%_var/lib/fail2ban/
 %_logrotatedir/%name
 
 %changelog
+* Sat Sep 18 2021 Vitaly Lipatov <lav@altlinux.ru> 0.11.2-alt2
+- fix build, apply patches from upstream
+- .service: use /run instead of /var/run
+- CVE-2021-32749
+
 * Mon Sep 13 2021 Vitaly Lipatov <lav@altlinux.ru> 0.11.2-alt1
 - new version 0.11.2 (with rpmrb script) (ALT bug 40859)
 - don't pack tests, disable AutoProv
