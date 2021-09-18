@@ -1,4 +1,4 @@
-%set_verify_elf_method textrel=relaxed
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %global pkgname curl
 %define ocamlsitelib %_libdir/ocaml
 %define pkgsitelib %ocamlsitelib/%pkgname
@@ -6,7 +6,7 @@
 
 Name: ocaml-%pkgname
 Version: 0.9.1
-Release: alt1
+Release: alt2
 Summary: OCaml Curl library (ocurl)
 License: MIT
 Group: Development/ML
@@ -65,6 +65,9 @@ make -C examples clean
 %pkgsitelib/*.mli
 
 %changelog
+* Sat Sep 18 2021 Anton Farygin <rider@altlinux.ru> 0.9.1-alt2
+- fixed build with enabled LTO
+
 * Tue Feb 25 2020 Anton Farygin <rider@altlinux.ru> 0.9.1-alt1
 - 0.9.1
 
