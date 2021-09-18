@@ -1,3 +1,4 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %def_without java
 %ifarch riscv64
 %def_without qt
@@ -9,7 +10,7 @@
 
 Name: zbar
 Version: 0.23.92
-Release: alt1
+Release: alt2
 %define libname libzbar
 
 Summary: A library for scanning and decoding bar codes
@@ -268,6 +269,9 @@ export LIBS=-lm
 %endif
 
 %changelog
+* Sat Sep 18 2021 Anton Farygin <rider@altlinux.ru> 0.23.92-alt2
+- fixed build with enabled LTO
+
 * Wed Apr 14 2021 Anton Farygin <rider@altlinux.org> 0.23.92-alt1
 - update to 0.23.92
 
