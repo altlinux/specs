@@ -1,8 +1,9 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %global pkgname zarith
 %define ocamlstublib %_ocamldir/stublibs/
 Name: ocaml-%pkgname
 Version: 1.12
-Release: alt1
+Release: alt2
 Summary: OCaml interface to GMP
 Group: Development/ML
 # The license has a static linking exception
@@ -93,6 +94,9 @@ make install INSTALLDIR=%buildroot%_libdir/ocaml
 %_ocamldir/%pkgname/*.cmxa
 
 %changelog
+* Sat Sep 18 2021 Anton Farygin <rider@altlinux.ru> 1.12-alt2
+- fixed build with enabled LTO
+
 * Fri Mar 19 2021 Anton Farygin <rider@altlinux.org> 1.12-alt1
 - 1.12
 
