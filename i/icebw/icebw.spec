@@ -8,7 +8,7 @@
 %define oversion 14_14
 
 Name:    icebw
-Version: 15.3
+Version: 15.4
 Release: alt1
 Summary: Free financial accounting system with GTK interface
 
@@ -67,6 +67,9 @@ cp -v desktop/pixmaps/*.png %buildroot%_pixmapsdir
 %_datadir/locale/uk/LC_MESSAGES/%oname.mo
 
 %changelog
+* Sat Sep 18 2021 Cronbuild Service <cronbuild@altlinux.org> 15.4-alt1
+- new version 15.4
+
 * Sat May 29 2021 Cronbuild Service <cronbuild@altlinux.org> 15.3-alt1
 - new version 15.3
 
