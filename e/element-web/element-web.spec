@@ -1,7 +1,7 @@
 # TODO: check .gear/predownloaded-preinstall-hook
 
 Name: element-web
-Version: 1.8.4
+Version: 1.8.5
 Release: alt1
 
 Summary: A glossy Matrix collaboration client
@@ -56,6 +56,9 @@ cp -a webapp %buildroot/var/www/html/%name/
 /var/www/html/%name/
 
 %changelog
+* Fri Sep 17 2021 Vitaly Lipatov <lav@altlinux.ru> 1.8.5-alt1
+- new version 1.8.5 (with rpmrb script)
+
 * Mon Sep 13 2021 Vitaly Lipatov <lav@altlinux.ru> 1.8.4-alt1
 - new version 1.8.4 (with rpmrb script)
 - CVE-2021-40823, CVE-2021-40824
