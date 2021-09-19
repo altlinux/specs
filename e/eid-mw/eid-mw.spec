@@ -1,4 +1,4 @@
-%define mainline_ver 4.4.23
+%define mainline_ver 5.0.8
 
 Name: eid-mw
 Version: %mainline_ver
@@ -18,7 +18,8 @@ Patch1: alt-fix-underlinked.patch
 BuildRequires(pre): rpm-build-firefox
 BuildRequires: gcc-c++
 BuildRequires: libpcsclite-devel, libgtk+3-devel, libssl-devel, libxml2-devel
-BuildRequires: libcurl-devel, libproxy-devel, libp11-kit-devel
+BuildRequires: libcurl-devel, libproxy-devel, libp11-kit-devel, libassuan-devel
+BuildRequires: autoconf-archive
 # for /usr/bin/c_rehash
 BuildRequires: openssl
 # for browser extension
@@ -113,7 +114,7 @@ for libeidviewer.
 %prep
 %setup -n %name
 %patch0 -p1
-%patch1 -p1
+#%patch1 -p1
 
 echo "#\!/bin/sh" > scripts/build-aux/genver.sh
 echo "echo %mainline_ver" >> scripts/build-aux/genver.sh
@@ -146,9 +147,9 @@ popd
 cat eid-viewer.lang dialogs-beid.lang > all.lang
 
 rm -f %{buildroot}/etc/xdg/autostart/beid-update-nssdb.desktop
-rm -f %{buildroot}/usr/bin/beid-update-nssdb
-rm -f %{buildroot}/usr/lib64/libbeidpkcs11.a
-rm -f %{buildroot}/usr/lib64/libeidviewer.a
+rm -f %{buildroot}%{_bindir}/beid-update-nssdb
+rm -f %{buildroot}%{_libdir}/libbeidpkcs11.a
+rm -f %{buildroot}%{_libdir}/libeidviewer.a
 
 %postun -n firefox-beid
 if [ "$1" = 0 ]; then
@@ -169,7 +170,6 @@ fi
 %_libdir/libbeidpkcs11.so
 
 %files -n libbeidpkcs11-bin
-%_libexecdir/beid*
 %_bindir/about-eid-mw
 
 %files -n firefox-beid
@@ -181,6 +181,7 @@ fi
 %_datadir/eid-mw
 %_datadir/glib-2.0/schemas/eid-viewer.gschema.xml
 %_iconsdir/hicolor/*/apps/eid-viewer.png
+%_datadir/metainfo/*
 
 %files -n libeidviewer
 %_libdir/libeidviewer.so.*
@@ -191,6 +192,13 @@ fi
 %_libdir/libeidviewer.so
 
 %changelog
+* Sun Sep 19 2021 Pavel Nakonechnyi <zorg@altlinux.org> 5.0.8-alt1
+- updated to version 5.0.8
+- add more build requires
+- omit unneeded Makefile patch
+- cover new installation files
+- remove unneeded files from all architectures
+
 * Sun Oct 06 2019 Pavel Nakonechnyi <zorg@altlinux.org> 4.4.23-alt1
 - updated to version 4.4.23
 
