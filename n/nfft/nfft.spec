@@ -1,16 +1,16 @@
 Name: nfft
 Version: 3.2.3
-Release: alt1
+Release: alt2
+
 Summary: Nonequispaced FFT, generalisations, inversion, and applications
 License: GPLv2+
 Group: Sciences/Mathematics
+
 Url: http://www-user.tu-chemnitz.de/~potts/nfft/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 Source: %name-%version.tar
 
 BuildPreReq: libfftw3-devel
-
 Requires: lib%name = %version-%release
 
 %description
@@ -73,6 +73,9 @@ This package contains development documentation for NFFT3.
 %setup
 
 %build
+%ifarch %e2k
+export LIBS+=' -lm'
+%endif
 ./bootstrap.sh
 %configure \
 	--enable-static=no \
@@ -119,6 +122,9 @@ mv %buildroot%_bindir/reconstruct_data_gridding \
 %doc %_docdir/%name
 
 %changelog
+* Sun Sep 19 2021 Michael Shigorin <mike@altlinux.org> 3.2.3-alt2
+- E2K: ftbfs workaround
+
 * Fri Nov 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.3-alt1
 - Version 3.2.3
 
