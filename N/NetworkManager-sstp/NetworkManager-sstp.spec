@@ -9,13 +9,13 @@
 
 Name: NetworkManager-sstp
 Version: 1.2.6
-Release: alt2
+Release: alt3
+
+Summary:  NetworkManager VPN plugin for SSTP
 License: %gpl2plus
 Group: System/Configuration/Networking
-Summary:  NetworkManager VPN plugin for SSTP
 
 Url: https://github.com/enaess/network-manager-sstp/
-
 Source: %name-%version.tar
 Patch100: 0001-Fixing-up-a-compiler-warning-that-broke-the-build-for-Eoan.patch
 
@@ -72,7 +72,11 @@ rm -f m4/{intltool,libtool,lt~obsolete,ltoptions,ltsugar,ltversion}.m4
     --without-libnm-glib \
 %endif
     --with-dist-version=%version-%release \
+%ifnarch %e2k
     --enable-more-warnings=error
+%else
+    --enable-more-warnings=no
+%endif
 
 %make_build
 
@@ -103,6 +107,10 @@ rm -f m4/{intltool,libtool,lt~obsolete,ltoptions,ltsugar,ltversion}.m4
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Sun Sep 19 2021 Michael Shigorin <mike@altlinux.org> 1.2.6-alt3
+- E2K: ftbfs workaround
+- minor spec cleanup
+
 * Tue Mar 03 2020 Alexey Shabalin <shaba@altlinux.org> 1.2.6-alt2
 - fixed build
 
