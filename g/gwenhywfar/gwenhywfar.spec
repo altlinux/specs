@@ -1,5 +1,5 @@
 Name:     gwenhywfar
-Version:  5.7.1
+Version:  5.7.2
 Release:  alt1
 
 Summary:  A multi-platform helper library for other libraries
@@ -144,6 +144,9 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %_datadir/gwenhywfar/gwenbuild/builders
 
 %changelog
+* Sun Sep 19 2021 Andrey Cherepanov <cas@altlinux.org> 5.7.2-alt1
+- New version.
+
 * Mon Sep 13 2021 Andrey Cherepanov <cas@altlinux.org> 5.7.1-alt1
 - New version.
 
