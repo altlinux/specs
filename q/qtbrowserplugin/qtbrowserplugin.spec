@@ -1,6 +1,6 @@
 Name:           qtbrowserplugin
 Version:        2.4
-Release:        alt2
+Release:        alt3
 Summary:        Qt Solutions Component: Browser Plugin
 
 License:        BSD
@@ -37,6 +37,7 @@ for web browser.
 %patch0 -p1
 
 %build
+%global optflags_lto %optflags_lto -ffat-lto-objects
 %{qmake_qt4}
 %make_build
 
@@ -52,6 +53,9 @@ cp -p src/*.h %buildroot%_includedir
 %_libdir/lib%name.a
 
 %changelog
+* Sun Sep 19 2021 Andrey Cherepanov <cas@altlinux.org> 2.4-alt3
+- FTBFS: fix build with LTO.
+
 * Sat Sep 09 2017 Andrey Cherepanov <cas@altlinux.org> 2.4-alt2
 - Build in Sisyphus
 
