@@ -8,7 +8,7 @@
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 5.0.0
+Version: 5.0.1
 Release: alt1
 
 Summary: Cross-platform IDE for Qt
@@ -144,9 +144,10 @@ subst 's@#!.*python[23]\?@#!%__python3@' `find . -name \*.py` \
 	src/libs/qt-breakpad/qtbreakpadsymbols
 
 %build
-%define optflags_lto %nil
+%global optflags_lto %optflags_lto -ffat-lto-objects
 export QTDIR=%_qt5_prefix
 export PATH="%{_qt5_bindir}:$PATH"
+export ALTWRAP_LLVM_VERSION="%llvm_version"
 %ifarch %e2k
 # fool sqlite into building with lcc
 sed -i 's,^QMAKE_CFLAGS_WARN_ON.*$,& -D__INTEL_COMPILER,' src/libs/3rdparty/sqlite/sqlite.pri
@@ -200,6 +201,12 @@ ln -s en.lproj %buildroot%_datadir/qtcreator/qbs/share/qbs/examples/cocoa-applic
 %_datadir/qtcreator/*
 
 %changelog
+* Thu Sep 16 2021 Andrey Cherepanov <cas@altlinux.org> 5.0.1-alt1
+- New version.
+
+* Mon Aug 30 2021 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt2
+- Set ALTWRAP_LLVM_VERSION to select correct LLVM version.
+
 * Fri Aug 27 2021 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt1
 - New version (ALT #40822).
 - Build using ninja-build.
