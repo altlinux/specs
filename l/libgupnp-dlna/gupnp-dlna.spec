@@ -1,5 +1,5 @@
 %define _name gupnp-dlna
-%define ver_major 0.11
+%define ver_major 0.12
 %define api_ver 2.0
 
 %def_enable introspection
@@ -115,6 +115,9 @@ Contains developer documentation for %_name.
 %_datadir/gtk-doc/html/*}
 
 %changelog
+* Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 0.12.0-alt1
+- 0.12.0
+
 * Thu Jul 08 2021 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
 - 0.11.0
 

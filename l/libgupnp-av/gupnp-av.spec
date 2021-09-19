@@ -1,5 +1,5 @@
 %define _name gupnp-av
-%define ver_major 0.13
+%define ver_major 0.14
 %define api_ver 1.0
 
 %def_enable introspection
@@ -7,7 +7,7 @@
 %def_enable gtk_doc
 
 Name: libgupnp-av
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library to handle UPnP A/V profiles
@@ -131,6 +131,9 @@ GObject introspection devel data for the GUPnP A/V library
 
 
 %changelog
+* Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
+- 0.14.0
+
 * Mon Aug 16 2021 Yuri N. Sedunov <aris@altlinux.org> 0.13.1-alt1
 - 0.13.1
 - fixed build for %%e2k

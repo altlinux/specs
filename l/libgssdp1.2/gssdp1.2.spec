@@ -1,5 +1,5 @@
 %define _name gssdp
-%define ver_major 1.3
+%define ver_major 1.4
 %define api_ver 1.2
 
 %def_disable static
@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.0
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: Resource discovery and announcement over SSDP
@@ -125,6 +125,12 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 1.4.0.1-alt1
+- 1.4.0.1
+
+* Sat Aug 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt1
+- 1.3.1
+
 * Mon Jul 05 2021 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 

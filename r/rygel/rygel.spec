@@ -8,7 +8,7 @@
 %def_disable tracker_plugin
 %def_enable tracker3_plugin
 %def_enable lms_plugin
-%def_enable gtk 
+%def_enable gtk
 %define media_engine gstreamer
 
 %if %media_engine == gstreamer
@@ -22,8 +22,8 @@
 %endif
 
 Name: rygel
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.2
+Release: alt1
 
 Summary: A UPnP v2 Media Server
 Group: System/Servers
@@ -70,7 +70,8 @@ Requires: gstreamer-editing-services
 Requires: gst-libav
 Requires: lsdvd
 
-BuildRequires(pre): meson rpm-build-gir
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson
 BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: pkgconfig(gssdp-1.2) >= %gssdp_ver
 BuildRequires: pkgconfig(gupnp-1.2) >= %gupnp_ver
@@ -238,6 +239,9 @@ sed -E -i 's|(/>)(<)|\1\n\2|g' %buildroot%_girdir/*.gir
 %_girdir/*.gir
 
 %changelog
+* Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 0.40.2-alt1
+- 0.40.2
+
 * Tue Jul 06 2021 Yuri N. Sedunov <aris@altlinux.org> 0.40.1-alt1.1
 - fixed build
 

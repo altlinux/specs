@@ -1,5 +1,5 @@
 %define _name gupnp
-%define ver_major 1.3
+%define ver_major 1.4
 %define api_ver 1.2
 
 %def_disable static
@@ -21,7 +21,7 @@ Vcs: https://gitlab.gnome.org/GNOME/gupnp.git
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 BuildRequires(pre): meson rpm-build-gir rpm-build-python3
-BuildRequires: libgssdp%api_ver-devel >= 1.3.0 libgio-devel >= 2.66.0
+BuildRequires: libgssdp%api_ver-devel >= 1.4.0 libgio-devel >= 2.66.0
 BuildRequires: libxml2-devel libsoup-devel >= 2.48 libuuid-devel
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libsoup-gir-devel libgssdp%api_ver-gir-devel}
@@ -121,6 +121,12 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
+* Sat Aug 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt1
+- 1.3.1
+
 * Mon Jul 05 2021 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 
