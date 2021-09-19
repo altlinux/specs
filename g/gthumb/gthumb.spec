@@ -1,8 +1,8 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_base 3.10
-%define ver_major 3.10
+%define ver_base 3.12
+%define ver_major 3.12
 %define gst_api_ver 1.0
 %define xdg_name org.gnome.gThumb
 
@@ -11,11 +11,12 @@
 %def_enable webservices
 %def_disable libchamplain
 %def_enable libraw
+%def_enable libheif
 %def_enable colord
 %def_enable gstreamer
 
 Name: gthumb
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -37,6 +38,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define gst_ver 1.0
 %define exiv2_ver 0.20
 %define libraw_ver 0.16
+%define heif_ver 1.11
 %define brasero_ver 3.2.0
 %define soup_ver 2.42
 %define gnome_common_ver 2.8.0
@@ -58,6 +60,7 @@ BuildRequires: librsvg-devel intltool perl-XML-Parser gnome-common yelp-tools
 BuildRequires: gsettings-desktop-schemas-devel libwebp-devel >= %webp_ver libjson-glib-devel
 BuildRequires: libwebkitgtk4-devel >= %webkit_ver
 %{?_enable_libraw:BuildRequires: libraw-devel >= %libraw_ver libgomp-devel}
+%{?_enable_libheif:BuildRequires: libheif-devel >= %heif_ver}
 %{?_enable_libbrasero:BuildRequires: libbrasero-devel >= %brasero_ver}
 %{?_enable_webservices:BuildRequires: bison flex}
 %{?_enabled_libchamplain:BuildRequires: libchamplain-gtk3-devel >= %champlain_ver}
@@ -115,6 +118,7 @@ This package contains headers needed to build extensions for gThumb.
     %{?_disable_libbrasero:-Dlibbrasero=false} \
     %{?_enable_libchamplain:-Dlibchamplain=true} \
     %{?_disable_libraw:-Dlibraw=false} \
+    %{?_disable_libheif:-Dlibheif=false} \
     %{?_disable_colord:-Dcolord=false} \
     %{?_disable_gstreamer:-Dgstreamer=false}
 %meson_build
@@ -167,6 +171,12 @@ This package contains headers needed to build extensions for gThumb.
 %_pkgconfigdir/*
 
 %changelog
+* Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
+* Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Sun Aug 22 2021 Yuri N. Sedunov <aris@altlinux.org> 3.10.4-alt1
 - 3.10.4
 
