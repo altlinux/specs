@@ -4,8 +4,8 @@
 %def_disable libavif
 
 Name: darktable
-Version: %ver_major.0
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPL-3.0
@@ -112,8 +112,12 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %_libexecdir/%name/tools/profiling-shot.xmp
 %_libexecdir/%name/tools/subr.sh}
 %exclude /usr/share/doc/%name/
+%doc README* RELEASE_NOTES*
 
 %changelog
+* Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Wed Sep 08 2021 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1.1
 - disabled LTO for ppc64le (ALT #40876)
 
