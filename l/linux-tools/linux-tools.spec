@@ -14,7 +14,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt1
+Release: alt2
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
@@ -25,6 +25,7 @@ Requires: perf
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): rpm-build-python3
 BuildRequires: asciidoc
+BuildRequires: banner
 BuildRequires: binutils-devel
 BuildRequires: elfutils-devel
 BuildRequires: flex
@@ -69,6 +70,8 @@ Source23: hypervfcopyd.service
 Source31: hypervkvpd.rules
 Source32: hypervvssd.rules
 Source33: hypervfcopyd.rules
+
+Patch1: 0001-bootconfig-Fix-missing-return-check-of-xbc_node_comp.patch
 
 %description
 Various tools from the Linux Kernel source tree.
@@ -203,7 +206,9 @@ and booting a kernel.
 %prep
 %setup -cT
 tar -xf %kernel_src/%kernel_source.tar
-cd %kernel_source/tools
+cd %kernel_source
+%autopatch -p1
+cd tools
 
 # Avoid conflict with trace-cmd which installs same plug-ins in
 # %%_libdir/traceevent/plugins
@@ -228,6 +233,7 @@ sed -i 's/-std=gnu99/& -g/' testing/selftests/vDSO/Makefile
 sed -Ei '\!^CFLAGS!s!(-Wl,-rpath=)\./!\1/usr/lib/kselftests/rseq!' testing/selftests/rseq/Makefile
 
 %build
+banner build
 cd %kernel_source/tools
 
 # Use rst2man from python3-module-docutils
@@ -296,6 +302,7 @@ sed -i /^install:/s/runqslower_install// bpf/Makefile
 make acpi
 
 %make_build ASFLAGS=-g \
+	bootconfig \
 	cgroup \
 	firmware \
 	freefall \
@@ -303,11 +310,12 @@ make acpi
 	iio \
 	leds \
 	objtool \
+	selftests \
 	tmon \
 	vm \
-	selftests
 
 %install
+banner install
 cd %kernel_source/tools
 
 ### Install perf
@@ -413,6 +421,7 @@ mv %buildroot%_sbindir/acpidump   %buildroot%_sbindir/acpidump-linux
 mv %buildroot%_sbindir/ec         %buildroot%_sbindir/ec-linux
 mv %buildroot%_man8dir/acpidump.8 %buildroot%_man8dir/acpidump-linux.8
 
+make %install_opts bootconfig_install
 make %install_opts freefall_install
 make %install_opts gpio_install
 make %install_opts iio_install
@@ -434,9 +443,14 @@ mkdir -p %buildroot%_libexecdir/kselftests
 popd
 
 %check
+banner check
+cd %kernel_source/tools
+
 # Simplistic test
 %buildroot%_bindir/perf version --build-options
 # To run more comprehensive test run: perf test
+
+make -C bootconfig test
 
 %post -n hypervkvpd
 # auto enable service for Hyper-V guest
@@ -505,6 +519,7 @@ fi
 %_sbindir/page-types
 %_sbindir/slabinfo
 %_sbindir/page_owner_sort
+%_bindir/bootconfig
 
 %files -n perf
 %_bindir/perf
@@ -584,6 +599,9 @@ fi
 %_libexecdir/kselftests
 
 %changelog
+* Sun Sep 19 2021 Vitaly Chikunov <vt@altlinux.org> 5.14-alt2
+- Package bootconfig tool (closes: #40956).
+
 * Tue Aug 31 2021 Vitaly Chikunov <vt@altlinux.org> 5.14-alt1
 - Update to v5.14 (2021-08-29).
 
