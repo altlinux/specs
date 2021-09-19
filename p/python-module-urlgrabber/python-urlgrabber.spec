@@ -4,7 +4,7 @@
 
 Name: python-module-urlgrabber
 Version: 4.0.0
-Release: alt2
+Release: alt3
 
 Summary: High-level cross-protocol url-grabber
 
@@ -78,13 +78,14 @@ popd
 %endif
 
 %python_install --prefix="%_prefix"
-mv %buildroot/usr/libexec/urlgrabber-ext-down %buildroot%_bindir/
+ln -s ../libexec/urlgrabber-ext-down %buildroot%_bindir/urlgrabber-ext-down
 
 %files
 %doc ChangeLog README TODO
 %_docdir/%oname-%version/*
 %_bindir/%oname
 %_bindir/urlgrabber-ext-down
+%_prefix/libexec/urlgrabber-ext-down
 %python_sitelibdir/%oname/
 %python_sitelibdir/%oname-*.egg-info/
 
@@ -97,6 +98,9 @@ mv %buildroot/usr/libexec/urlgrabber-ext-down %buildroot%_bindir/
 %endif
 
 %changelog
+* Sun Sep 19 2021 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt3
+- Stay urlgrabber-ext-down to /usr/libexec because it uses from code at this location
+
 * Fri Apr 17 2020 Pavel Vasenkov <pav@altlinux.org> 4.0.0-alt2
 - Set correct python2 executable in shebang and scripts
 
