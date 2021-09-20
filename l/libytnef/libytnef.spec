@@ -2,16 +2,16 @@
 %define rev %nil
 
 Name: lib%_name
-Version: 1.9.3
+Version: 2.0
 Release: alt1
 
 Summary: TNEF Stream Parser Library
 Group: System/Libraries
-License: GPL2
+License: GPL-2.0
 Url: https://github.com/Yeraze/%_name
 
-# VCS: https://github.com/Yeraze/ytnef.git
-Source: %_name-%version%rev.tar.gz
+Vcs: https://github.com/Yeraze/ytnef.git
+Source: https://github.com/Yeraze/%_name/archive/v%version/%_name-%version%rev.tar.gz
 
 BuildRequires: perl-MIME-tools
 
@@ -71,6 +71,9 @@ popd
 
 
 %changelog
+* Mon Sep 20 2021 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt1
+- 2.0 (fixed CVE-2021-3403, CVE-2021-3404)
+
 * Mon Jul 23 2018 Yuri N. Sedunov <aris@altlinux.org> 1.9.3-alt1
 - 1.9.3 (fixed CVE-2017-9470, CVE-2017-9471, CVE-2017-9474, CVE-2017-9058,
   CVE-2017-12142, CVE-2017-12141, CVE-2017-12144)
