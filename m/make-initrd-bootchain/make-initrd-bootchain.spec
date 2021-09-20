@@ -2,7 +2,7 @@
 %define child  bootchain
 
 Name: %parent-%child
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: %child modules set for %name
@@ -22,25 +22,17 @@ Requires: %name-waitdev     = %version-%release
 Requires: %name-interactive = %version-%release
 Requires: %name-altboot     = %version-%release
 Requires: %name-localdev    = %version-%release
+Requires: %name-liverw      = %version-%release
+Requires: %name-waitnet     = %version-%release
 Requires: %name-nfs         = %version-%release
 Requires: %name-cifs        = %version-%release
-Requires: %name-liverw      = %version-%release
 
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
 
 %description
-Meta-package with full set of the %child modules for %parent
-
-%package doc
-Summary: %parent-%child documentation
-Group: Documentation
-BuildArch: noarch
-AutoReq: noshell, noshebang
-
-%description doc
-Documentation, testing and development files for %parent-%child
+Meta-package with the full set of the %child modules for %parent
 
 %package core
 Summary: %child-core module for %parent
@@ -109,30 +101,6 @@ AutoReq: noshell, noshebang
 %description localdev
 localdev sub-module for %name
 
-%package nfs
-Summary: nfs sub-module for %name
-Group: System/Base
-BuildArch: noarch
-Requires: %name-altboot = %version-%release
-Requires: nfs-utils
-Requires: iproute2
-AutoReq: noshell, noshebang
-
-%description nfs
-nfs sub-module for %name
-
-%package cifs
-Summary: cifs sub-module for %name
-Group: System/Base
-BuildArch: noarch
-Requires: %name-altboot = %version-%release
-Requires: cifs-utils
-Requires: hostinfo
-AutoReq: noshell, noshebang
-
-%description cifs
-cifs sub-module for %name
-
 %package liverw
 Summary: liverw sub-module for %name
 Group: System/Base
@@ -145,6 +113,49 @@ AutoReq: noshell, noshebang
 
 %description liverw
 liverw sub-module for %name
+
+%package waitnet
+Summary: waitnet sub-module for %name
+Group: System/Base
+BuildArch: noarch
+Requires: %name-altboot = %version-%release
+AutoReq: noshell, noshebang
+
+%description waitnet
+waitnet sub-module for %name
+
+%package nfs
+Summary: nfs sub-module for %name
+Group: System/Base
+BuildArch: noarch
+Requires: %name-waitnet = %version-%release
+Requires: nfs-utils
+Requires: iproute2
+AutoReq: noshell, noshebang
+
+%description nfs
+nfs sub-module for %name
+
+%package cifs
+Summary: cifs sub-module for %name
+Group: System/Base
+BuildArch: noarch
+Requires: %name-waitnet = %version-%release
+Requires: cifs-utils
+Requires: hostinfo
+AutoReq: noshell, noshebang
+
+%description cifs
+cifs sub-module for %name
+
+%package doc
+Summary: %parent-%child documentation
+Group: Documentation
+BuildArch: noarch
+AutoReq: noshell, noshebang
+
+%description doc
+Documentation, testing and development files for %parent-%child
 
 %prep
 %setup -q
@@ -161,9 +172,6 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %endif
 
 %files
-
-%files doc
-%_docdir/%name
 
 %files core
 %_datadir/%parent/features/%child-core
@@ -183,16 +191,26 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %files localdev
 %_datadir/%parent/features/%child-localdev
 
+%files liverw
+%_datadir/%parent/features/%child-liverw
+
+%files waitnet
+%_datadir/%parent/features/%child-waitnet
+
 %files nfs
 %_datadir/%parent/features/%child-nfs
 
 %files cifs
 %_datadir/%parent/features/%child-cifs
 
-%files liverw
-%_datadir/%parent/features/%child-liverw
+%files doc
+%_docdir/%name
 
 %changelog
+* Sun Sep 19 2021 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt1
+- introduce bootchain-waitnet sub-module and function bc_reboot().
+- major fixes and improvements around networking boot methods.
+
 * Sun Sep 12 2021 Leonid Krivoshein <klark@altlinux.org> 0.1.4-alt1
 - major fixes and improvements around using RAM-disks and tmpfs.
 - package documentation reorganized and separated.
