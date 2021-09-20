@@ -1,6 +1,6 @@
 Name:    libarpack-ng
 Version: 3.8.0
-Release: alt1
+Release: alt2
 Summary: Fortran 77 subroutines for solving large scale eigenvalue problems
 
 License: BSD
@@ -17,6 +17,8 @@ BuildRequires: libopenblas-devel
 BuildRequires: liblapack-devel
 
 Provides:  arpack = %version-%release
+
+%global optflags_lto %optflags_lto -ffat-lto-objects
 
 %description
 ARPACK is a collection of Fortran 77 subroutines designed to solve large
@@ -89,6 +91,9 @@ rm -rf %buildroot%_libdir/*.la
 %_libdir/libarpack.a
 
 %changelog
+* Mon Sep 20 2021 Andrey Cherepanov <cas@altlinux.org> 3.8.0-alt2
+- FTBFS: fix build with LTO.
+
 * Mon Dec 07 2020 Andrey Cherepanov <cas@altlinux.org> 3.8.0-alt1
 - New version.
 
