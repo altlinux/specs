@@ -1,6 +1,6 @@
 Name: libcdaudio
 Version: 0.99.12p2
-Release: alt3.qa1
+Release: alt4
 
 Summary: A library of functions for controlling audio CD-ROM players
 License: GPL
@@ -39,6 +39,8 @@ needed for libcdaudio development.
 
 %build
 %configure --disable-static
+# ignore getmntinfo presence
+subst 's|.*HAVE_GETMNTINFO.*||' config.h
 %make_build
 
 %install
@@ -55,6 +57,9 @@ needed for libcdaudio development.
 %_pkgconfigdir/*
 
 %changelog
+* Tue Sep 21 2021 Vitaly Lipatov <lav@altlinux.ru> 0.99.12p2-alt4
+- fix build: drop getmntinfo from detected list
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.99.12p2-alt3.qa1
 - NMU: rebuilt for updated dependencies.
 
