@@ -16,7 +16,7 @@
 ###############################################################################
 
 Name: cockpit
-Version: 247
+Version: 253
 Release: alt1
 
 Summary: Web Console for Linux servers
@@ -448,8 +448,6 @@ ln -s cockpit.css.gz %buildroot%_datadir/cockpit/base1/patternfly.css.gz
 %doc %_man5dir/cockpit.conf.5.*
 %doc %_man8dir/cockpit-ws.8.*
 %doc %_man8dir/cockpit-tls.8.*
-%doc %_man8dir/remotectl.8.*
-%doc %_man8dir/pam_cockpit_cert.8.*
 %doc %_man8dir/pam_ssh_add.8.*
 %config(noreplace) %_sysconfdir/cockpit/ws-certs.d/
 %config(noreplace) %_sysconfdir/pam.d/cockpit
@@ -473,7 +471,6 @@ ln -s cockpit.css.gz %buildroot%_datadir/cockpit/base1/patternfly.css.gz
 %_unitdir/cockpit-wsinstance-https@.service
 %_unitdir/system-cockpithttps.slice
 %_tmpfilesdir/cockpit-tempfiles.conf
-%_sbindir/remotectl
 %_pam_modules_dir/pam_ssh_add.so
 %_pam_modules_dir/pam_cockpit_cert.so
 %_libexecdir/cockpit-ws
@@ -552,6 +549,9 @@ systemd-tmpfiles --create cockpit-tempfiles.conf >/dev/null 2>&1 ||:
 %endif # build optional extension packages
 
 %changelog
+* Mon Sep 20 2021 Stanislav Levin <slev@altlinux.org> 253-alt1
+- 247 -> 253.
+
 * Mon Jun 28 2021 Stanislav Levin <slev@altlinux.org> 247-alt1
 - 209 -> 247.
 
