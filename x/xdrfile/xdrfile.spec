@@ -1,11 +1,16 @@
+%def_disable static
 Name: xdrfile
-Version: 1.1.1
-Release: alt2.qa1
+Version: 1.1.4
+Release: alt1
+
 Summary: Reading and writing trr and xtc files
-License: LGPL v3
+
+License: LGPLv3
 Group: Development/Tools
 Url: http://wiki.gromacs.org/index.php/XTC_Library
-Source: ftp://ftp.gromacs.org/pub/contrib/xdrfile-1.1.1.tar.gz
+
+Source: ftp://ftp.gromacs.org/pub/contrib/xdrfile-%version.tar.gz
+
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Requires: lib%name = %version-%release
@@ -50,7 +55,7 @@ This package contains static version of XTC library.
 %setup
 
 %build
-%configure --enable-fortran --enable-shared
+%configure --enable-fortran --enable-shared %{subst_enable static}
 %make_build
 %make test
 
@@ -70,10 +75,16 @@ chrpath -d %buildroot%_bindir/trr2xtc
 %_libdir/*.so
 %_includedir/*
 
+%if_enabled static
 %files -n lib%name-devel-static
 %_libdir/*.a
+%endif
 
 %changelog
+* Tue Sep 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1.4-alt1
+- new version 1.1.4 (with rpmrb script)
+- disable build devel-static subpackage
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.1-alt2.qa1
 - NMU: rebuilt for updated dependencies.
 
