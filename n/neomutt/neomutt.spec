@@ -5,7 +5,7 @@
 
 Name: neomutt
 Version: 20210205
-Release: alt2
+Release: alt2.1
 
 %define docdir %_docdir/%name-%version
 %undefine _configure_gettext
@@ -24,6 +24,8 @@ Vcs: https://github.com/neomutt/neomutt.git
 Requires: mailcap
 
 Source: %name-%version.tar
+Patch0: %name-color-group.patch
+
 BuildRequires: docbook-style-xsl
 BuildRequires: elinks
 BuildRequires: libdb4.8-devel
@@ -51,6 +53,7 @@ mode.
 %ifarch armh
 sed -i 's/armle-/armh-/' autosetup/autosetup-config.sub
 %endif
+%autopatch -p1
 
 %build
 %configure \
@@ -91,6 +94,9 @@ make -s test
 %docdir
 
 %changelog
+* Mon Jul 05 2021 Alexey Gladkov <legion@altlinux.ru> 20210205-alt2.1
+- Add color groups for header and body.
+
 * Sun Jul 04 2021 Vitaly Chikunov <vt@altlinux.org> 20210205-alt2
 - Fix CVE-2021-32055.
 
