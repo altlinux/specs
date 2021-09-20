@@ -4,7 +4,7 @@
 
 Name: perl-MooX-Types-MooseLike
 Version: 0.29
-Release: alt2
+Release: alt3
 
 Summary: Perl module with some Moosish types and a type builder
 
@@ -23,9 +23,9 @@ BuildArch: noarch
 AutoReqProv: perl, yes
 BuildPreReq: rpm-build-licenses
 
-# Automatically added by buildreq on Tue Mar 09 2021
-# optimized out: perl perl-CPAN-Meta-Requirements perl-Class-Load perl-Data-OptList perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Encode perl-Eval-Closure perl-JSON-PP perl-MRO-Compat perl-Module-Implementation perl-Module-Runtime perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Parse-CPAN-Meta perl-Role-Tiny perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Sub-Quote perl-Test-Fatal perl-Try-Tiny perl-devel perl-parent python-modules python2-base python3 python3-base python3-module-paste ruby ruby-stdlibs sh4
-BuildRequires: perl-CPAN-Meta perl-Class-XSAccessor perl-Moo perl-Moose
+# Automatically added by buildreq on Fri Sep 17 2021
+# optimized out: perl perl-CPAN-Meta-Requirements perl-Class-Load perl-Data-OptList perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Encode perl-Eval-Closure perl-JSON-PP perl-MRO-Compat perl-Module-Implementation perl-Module-Runtime perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Parse-CPAN-Meta perl-Role-Tiny perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Install perl-Sub-Name perl-Sub-Quote perl-Try-Tiny perl-devel perl-parent python3 python3-base python3-module-paste python3-module-repoze sh4 sssd-client tzdata
+BuildRequires: perl-CPAN-Meta perl-Class-XSAccessor perl-Moo perl-Moose perl-Test-Fatal
 
 %description
 Perl module MooX::Types::MooseLike provides a list of some Moosish types
@@ -46,6 +46,9 @@ tar xvf %SOURCE1
 %perl_vendor_privlib/MooX*
 
 %changelog
+* Fri Sep 17 2021 Vitaly Lipatov <lav@altlinux.ru> 0.29-alt3
+- update BR
+
 * Tue Mar 09 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.29-alt2
 - Update BuildRequires
 
