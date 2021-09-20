@@ -1,7 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%def_with check
+
 Name: rng-tools
-Version: 6.13
-Release: alt1
+Version: 6.14
+Release: alt1.git82f665c4
 
 Summary: Random number generator related utilities
 License: GPLv2+
@@ -14,6 +16,8 @@ Source1: %name.init
 Source2: %name.default
 Source3: %name.service
 
+Patch0: %name-%version.patch
+
 # Automatically added by buildreq on Wed Apr 03 2019
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config
 # libsasl2-3 libssl-devel perl pkg-config python-base sh4
@@ -23,6 +27,9 @@ BuildRequires: libp11-devel
 BuildRequires: jitterentropy-devel
 BuildRequires: libjansson-devel
 BuildRequires: rtl-sdr-devel
+%if_with check
+BuildRequires: /proc
+%endif
 
 Obsoletes: kernel-utils
 
@@ -33,6 +40,7 @@ to the system kernel's /dev/random machinery.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 ./autogen.sh
@@ -60,11 +68,18 @@ make check
 %_initdir/rngd
 %_unitdir/rngd.service
 %_bindir/rngtest
+%_bindir/randstat
 %_sbindir/rngd
 %_man1dir/rngtest.1*
 %_man8dir/rngd.8*
 
 %changelog
+* Mon Sep 20 2021 Nikolai Kostrigin <nickel@altlinux.org> 6.14-alt1.git82f665c4
+- Version 6.14 plus latest upstream fixes
+  + pack new randstat utility
+- spec: add /proc to BR: due to test scripts requirement
+  + add check handle
+
 * Fri Jun 18 2021 Nikolai Kostrigin <nickel@altlinux.org> 6.13-alt1
 - Version 6.13
 

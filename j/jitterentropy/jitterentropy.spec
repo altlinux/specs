@@ -1,5 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+%define soname 3
+
 Name: jitterentropy
-Version: 2.2.0
+Version: 3.3.0
 Release: alt1
 
 Summary: Library implementing the jitter entropy source
@@ -9,8 +12,8 @@ Group: System/Kernel and hardware
 Url: https://github.com/smuellerDD/jitterentropy-library
 Source: %name-%version.tar
 
-# Disable Upstream Makefiles debuginfo strip on install
-Patch: jitterentropy-nostrip.patch
+# build with debug info and do not strip early
+Patch: jitterentropy-3.2.0-alt-nostrip.patch
 
 %description
 Library implementing the CPU jitter entropy source
@@ -40,8 +43,8 @@ mkdir -p %buildroot%_includedir
 %makeinstall_std PREFIX=%_usr LIBDIR=%_lib
 
 %files
-%doc README* COPYING*
-%_libdir/libjitterentropy.so.2*
+%doc README* LICENSE* CHANGES*
+%_libdir/libjitterentropy.so.%{soname}*
 
 %files devel
 %_includedir/*
@@ -49,6 +52,14 @@ mkdir -p %buildroot%_includedir
 %_man3dir/*
 
 %changelog
+* Mon Sep 20 2021 Nikolai Kostrigin <nickel@altlinux.org> 3.3.0-alt1
+- New version
+
+* Mon Sep 20 2021 Nikolai Kostrigin <nickel@altlinux.org> 3.2.0-alt1
+- New version
+  + update nostrip patch
+- Spec: rearrange %%doc section
+
 * Thu Oct 03 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.2.0-alt1
 - New version
 
