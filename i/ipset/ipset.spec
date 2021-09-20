@@ -4,7 +4,7 @@
 %define soname 13
 Name: ipset
 Version: 7.15
-Release: alt1
+Release: alt2
 
 Summary: Tools for managing sets of IP or ports with iptables
 License: GPLv2
@@ -65,7 +65,7 @@ Kernel source modules ipset.
 
 %build
 %autoreconf
-%configure --with-kmod=no 
+%configure --with-kmod=no --enable-static=no
 %make_build LIBDIR=/%_lib/ BINDIR=/sbin/
 %install
 %makeinstall_std exec_prefix=/ sbindir=/sbin libdir=/%_lib pkgconfigdir=/%_pkgconfigdir
@@ -101,6 +101,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Mon Sep 20 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 7.15-alt2
+- fixed -flto (disabled static)
+
 * Tue Aug 10 2021 Anton Farygin <rider@altlinux.ru> 7.15-alt1
 - 7.15
 
