@@ -1,7 +1,8 @@
+%def_disable static
 
 Name: ipmiutil
 Version: 3.1.3
-Release: alt2
+Release: alt3
 
 Summary: IPMI server management utilities
 License: BSD
@@ -78,13 +79,17 @@ sed -i "s|TMPDIR|TMPDIR1|g" Makefile*
 %build
 export NPROCS=8
 ./beforeconf.sh
-%configure --enable-gpl
+%configure --enable-gpl %{subst_enable static}
 %make_build
 
 %install
 %makeinstall_std
 install -pDm755 scripts/checksel %buildroot%_sysconfdir/cron.daily/checksel
 install -dm700 %buildroot%_localstatedir/%name
+# configure is broken with --disable-static
+%if_disabled static
+rm -v %buildroot%_libdir/*.a
+%endif
 
 %files
 %_bindir/*
@@ -100,13 +105,18 @@ install -dm700 %buildroot%_localstatedir/%name
 %_libdir/libipmiutil.so
 %_includedir/ipmicmd.h
 
+%if_enabled static
 %files -n lib%name-devel-static
 %_libdir/libipmiutil.a
+%endif
 
 %files cronjob
 %_sysconfdir/cron.daily/checksel
 
 %changelog
+* Tue Sep 21 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.3-alt3
+- disable devel-static subpackage
+
 * Thu Jul 08 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.1.3-alt2
 - fixed Elbrus build
 
