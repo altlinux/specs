@@ -11,7 +11,7 @@
 Name: libtorrent
 Epoch: 3
 Version: 0.13.8
-Release: alt2
+Release: alt3
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 Group: System/Libraries
 License: GPLv2+
@@ -86,6 +86,9 @@ to develop applications using libTorrent.
 
 %prep
 %setup
+%ifarch %e2k
+sed -i "/private:/{N;s|private:||;s|$|private:|}" src/torrent/poll_select.h
+%endif
 
 mv -f COPYING COPYING.orig
 ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
@@ -113,6 +116,9 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %_pkgconfigdir/*
 
 %changelog
+* Mon Sep 20 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3:0.13.8-alt3
+- Fixed build for Elbrus.
+
 * Wed Sep 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3:0.13.8-alt2
 - Disabled LTO.
 
