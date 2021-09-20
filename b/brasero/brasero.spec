@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 3.12
 %define brasero_api_ver 3
@@ -17,8 +17,8 @@
 %def_enable introspection
 
 Name: brasero
-Version: %ver_major.2
-Release: alt6
+Version: %ver_major.3
+Release: alt1
 
 Summary: CD/DVD burning tool for GNOME.
 Group: Archiving/Cd burning
@@ -33,7 +33,6 @@ Source: %name-%version.tar
 Patch: %name-2.27.90-alt-link.patch
 Patch1: %name-2.28.1-alt-button-underline.patch
 Patch2: %name-2.32.1-schemas_convert_typo.patch
-Patch3: %name-3.12.2-alt-gtk-doc-1.30.patch
 
 Requires: lib%name = %version-%release
 
@@ -147,7 +146,6 @@ GObject introspection devel data for the Brasero
 %patch -p1 -b .link
 %patch1 -p1 -b .button_underline
 %patch2 -b .schemas_convert
-%patch3 -b .gtk_doc 
 
 %build
 %autoreconf
@@ -242,6 +240,9 @@ GObject introspection devel data for the Brasero
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/libnautilus-%name-extension.la
 
 %changelog
+* Mon Sep 20 2021 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt1
+- 3.12.3
+
 * Tue Feb 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt6
 - updated to 3.12.2-73-g3e31ccd5
 - fixed build with gtk-doc-1.30
