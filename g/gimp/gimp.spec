@@ -7,8 +7,8 @@
 %define brushes_ver 1.0
 
 Name: gimp
-Version: %ver_major.24
-Release: alt1.1
+Version: %ver_major.28
+Release: alt1
 
 Summary: The GNU Image Manipulation Program
 License: %gpl3only
@@ -125,6 +125,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/aclocal/*
 
 %changelog
+* Mon Sep 20 2021 Valery Inozemtsev <shrek@altlinux.ru> 2.10.28-alt1
+- 2.10.28
+
 * Thu Apr 01 2021 Michael Shigorin <mike@altlinux.org> 2.10.24-alt1.1
 - E2K: worked around ftbfs with lcc 1.25.14
   and sisyphus_e2k's current libgraphite2/libharfbuzz
