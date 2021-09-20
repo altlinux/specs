@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpupdate
-Version: 0.9.5
+Version: 0.9.6
 Release: alt1
 
 Summary: GPT applier
@@ -83,7 +83,7 @@ install -Dm0644 doc/gpupdate.1 %buildroot/%_man1dir/gpupdate.1
 # Remove storage in case we've lost compatibility between versions.
 # The storage will be regenerated on GPOA start.
 %define active_policy %_sysconfdir/local-policy/active
-%triggerpostun -- %name < 0.8.0
+%triggerpostun -- %name < 0.9.6
 rm -f %_cachedir/%name/registry.sqlite
 if test -L %active_policy; then
 	sed -i "s|^\s*local-policy\s*=.*|local-policy = $(readlink -f %active_policy)|" \
@@ -116,6 +116,9 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Mon Sep 20 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.9.6-alt1
+- Add support changed GPO List Processing for '**DelVals.' value name
+
 * Tue Sep 14 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.9.5-alt1
 - Refix local policy path detection
 - gpupdate-setup: revert settings to default when disabled
