@@ -1,9 +1,6 @@
-%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
-%define ubt_id %__ubt_branch_id
-
 Name: python3-module-PySide2
 Version: 5.15.0
-Release: alt4
+Release: alt5
 
 Summary: Python bindings for the Qt 5 cross-platform application and UI framework
 Group: Development/Python3
@@ -15,7 +12,7 @@ Source: pyside-setup-opensource-src-%version.tar
 Patch1: pyside2-link-with-python.patch
 Patch2: pyside2-python3.9-support.patch
 
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf5
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -54,6 +51,7 @@ Provides: python3-pyside2 = %EVR
 
 %filter_from_requires /^python3(shibokensupport.signature.typing)/d
 %filter_from_requires /^python3(signature_bootstrap)/d
+%global optflags_lto %nil
 
 %description
 PySide2 is the official Python module from the Qt for Python project,
@@ -132,11 +130,7 @@ the previous versions (without the 2) refer to Qt 4.
 %patch2 -p2
 
 %build
-%_K5if_ver_gt %ubt_id M95
 export CXX=/usr/bin/clang++
-%else
-export CXX=g++
-%endif
 %cmake -DUSE_PYTHON_VERSION=3
 %cmake_build
 
@@ -191,6 +185,9 @@ done
 %python3_sitelibdir/shiboken2_generator-*.egg-info/
 
 %changelog
+* Mon Sep 20 2021 Andrey Cherepanov <cas@altlinux.org> 5.15.0-alt5
+- FTBFS: fix build with LTO.
+
 * Tue Feb 16 2021 Grigory Ustinov <grenka@altlinux.org> 5.15.0-alt4
 - Fixed build with python3.9.
 
