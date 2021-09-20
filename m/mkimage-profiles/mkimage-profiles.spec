@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.17
+Version: 1.4.18
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,28 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Sep 20 2021 Anton Midyukov <antohami@altlinux.org> 1.4.18-alt1
+- If the BRANCH variable is not empty, and the BRANDING variable on
+  the contrary is empty, then BRANDING is assigned to alt-starterkit.
+- Revert commit "base+rescue: add eepm"
+- Fixed conditions with variable BRANCH
+- Drop STARTERKIT variable
+- grub: add submenu "Network installation"
+- Do not use udev-rule-generator-net in regulars/starterkits
+- initrd-bootchain: Initial feature
+- stage1: allow creating stage1 without stage2
+- ntp: fix add fallbck THE_NTPD_SERVICE
+- Makefile: check *_PACKAGES* variables as lists
+- vmguest: fix build with use/vmguest/kvm/x11 for BRANCH=p9
+- grub, syslinux: replace 'splash=0' to 'nosplash' in rescue
+- drop features: aarch64-dbm, armh-cubox, armh-dovefb, nexus7,
+  armh-tegra, armh
+- build-vm: add FEATURES and MODULES_TRY_ADD from /etc/initrd.mk
+- syslinux: Generate isolinux.cfg for any BOOTLOADER
+- build-vm, stage2: set GLOBAL_HSH_PROC=1
+- vm.mk: Add sr_mod to initrd modules for vm/cloud-system
+  (thanks obirvalger@)
+
 * Tue Aug 31 2021 Anton Midyukov <antohami@altlinux.org> 1.4.17-alt1
 - Add COMMON_LISTS variable support by analogy COMMON_PACKAGES.
   Fix use/efi (the list 'base+efi' was not added to rescue, base,
