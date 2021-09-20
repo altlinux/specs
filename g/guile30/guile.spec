@@ -1,9 +1,9 @@
 Name: guile30
-Version: 3.0.5
+Version: 3.0.7
 Release: alt1
 
 Summary: A GNU implementation of Scheme
-License: GPL
+License: GPLv3
 Group: Development/Scheme
 Url: http://www.gnu.org/software/guile/ 
 
@@ -11,7 +11,7 @@ Source: %name-%version-%release.tar
 
 BuildRequires: libltdl-devel libgmp-devel libunistring-devel
 BuildRequires: libffi-devel libgc-devel libreadline-devel
-BuildRequires: flex makeinfo
+BuildRequires: flex gperf makeinfo
 BuildRequires: /proc /dev/pts
 
 %description
@@ -79,6 +79,9 @@ make check
 %_infodir/*.info*
 
 %changelog
+* Mon Sep 20 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.7-alt1
+- 3.0.7 released
+
 * Mon Mar 01 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.5-alt1
 - 3.0.5 released
 
