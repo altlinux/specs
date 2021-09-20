@@ -1,6 +1,6 @@
 Name: dump
-Version: 0.4b44
-Release: alt3
+Version: 0.4b47
+Release: alt1
 
 Summary: Programs for backing up and restoring ext2/ext3 filesystems
 License: BSD
@@ -8,16 +8,14 @@ Group: Archiving/Backup
 
 URL: http://dump.sourceforge.net/
 Source: http://downloads.sourceforge.net/dump/dump-%version.tar.gz
-Patch1: dump-0.4b28-alt-makefile.patch
 Patch2: dump-0.4b40-include.patch
-Patch3: dump-0.4b44-alt-DSO.patch
 
 Requires: rmt = %version-%release
 
 BuildPreReq: glibc-kernheaders
 
 # Automatically added by buildreq on Fri Jun 26 2009
-BuildRequires: bzlib-devel libdevmapper-devel libe2fs-devel libncurses-devel libreadline-devel libselinux-devel libsepol-devel zlib-devel
+BuildRequires: bzlib-devel libdevmapper-devel libe2fs-devel liblzo2-devel libncurses-devel libreadline-devel libselinux-devel libsepol-devel zlib-devel
 
 %package -n rmt
 Summary: Provides certain programs with access to remote tape devices
@@ -39,28 +37,26 @@ backup) and tar (an archiving program).
 
 %prep
 %setup
-%patch1 -p1
 %patch2 -p1
-%patch3 -p2
 
-subst s,termcap,tinfo,g ./configure.in
+subst s,termcap,tinfo,g ./configure.ac
 sed -i '/^#include <sys.un.h>/ a#include <sys/sysmacros.h>' restore/tape.c
 
 %build
-%add_optflags -fcommon
-#autoconf
 %autoreconf
 %configure \
-	--with-manowner=root \
-	--with-mangrp=root \
-	--with-binmode=755 \
-	--with-manmode=644 \
+	--sbindir=/sbin \
 	--enable-rmt \
 	--enable-readline \
 	--enable-largefile
-make OPT="%optflags -Wpointer-arith -Wstrict-prototypes -Wmissing-prototypes -Wno-char-subscripts"
 
 %install
+%makeinstall_std
+mkdir %buildroot%_sysconfdir
+ln -snfr  %buildroot/sbin/rmt %buildroot%_sysconfdir/rmt
+:> %buildroot%_sysconfdir/dumpdates
+
+exit 0
 mkdir -p %buildroot{/sbin,%_man8dir}
 
 make install SBINDIR=%buildroot/sbin BINDIR=%buildroot/sbin MANDIR=%buildroot%_man8dir
@@ -77,20 +73,23 @@ pushd %buildroot
 popd
 
 %files
+%doc AUTHORS COPYING ChangeLog KNOWNBUGS MAINTAINERS NEWS README
 /sbin/*dump
 /sbin/*restore
 %_man8dir/*dump.*
 %_man8dir/*restore.*
 %attr(664,root,disk) %config(noreplace) %_sysconfdir/dumpdates
-%doc CHANGES COPYRIGHT KNOWNBUGS README THANKS MAINTAINERS
 
 %files -n rmt
+%doc COPYING
 /sbin/rmt
 %_sysconfdir/rmt
 %_man8dir/rmt.*
-%doc COPYRIGHT
 
 %changelog
+* Mon Sep 20 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4b47-alt1
+- 0.4b47
+
 * Thu Dec 10 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4b44-alt3
 - fixed build with gcc10
 
