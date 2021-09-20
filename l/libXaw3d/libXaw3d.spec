@@ -1,6 +1,6 @@
 Name: libXaw3d
 Version: 1.6.3
-Release: alt1
+Release: alt2
 
 Summary: A version of the MIT Athena widget set for X
 License: MIT
@@ -47,7 +47,7 @@ for building programs that take full advantage of Xaw3d's features.
 
 %build
 %autoreconf
-%configure
+%configure --disable-static
 %make
 
 %install
@@ -63,9 +63,11 @@ for building programs that take full advantage of Xaw3d's features.
 %dir %_docdir/libXaw3d
 %_docdir/libXaw3d/*
 %_libdir/pkgconfig/xaw3d.pc
-%exclude %_libdir/*.a
 
 %changelog
+* Mon Sep 20 2021 Vladislav Zavjalov <slazav@altlinux.org> 1.6.3-alt2
+- fix build with LTO by disabling static library
+
 * Fri Aug 03 2018 Vladislav Zavjalov <slazav@altlinux.org> 1.6.3-alt1
 - 1.6.3
 
