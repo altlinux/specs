@@ -1,11 +1,10 @@
 Name: ebtables
-Version: 2.0.10
-Release: alt4
+Version: 2.0.11
+Release: alt1
 
 Summary: A filtering tool for a bridging firewall
-License: GPL
+License: GPLv2
 Group: System/Kernel and hardware
-
 Url: http://ebtables.sourceforge.net
 
 Source: %name-%version-%release.tar
@@ -20,28 +19,29 @@ Ethernet MAC addresses and implement a brouter.
 %setup
 
 %build
-make CFLAGS="%optflags" LIBDIR=/%_lib/ebtables
+%autoreconf
+%configure
+%make_build
 
 %install
-%make_install install \
-    DESTDIR=%buildroot \
-    LIBDIR=/%_lib/ebtables \
-    BINDIR=/sbin MANDIR=%_mandir
-mv %buildroot/%_lib/ebtables/libebtc.so %buildroot/%_lib/libebtc.so.0.0.0
+%makeinstall_std
+mkdir -p %buildroot/sbin
+ln -sfvr %buildroot%_sbindir/ebtables-legacy %buildroot/sbin/ebtables
+ln -sfvr %buildroot%_sbindir/ebtables-legacy-save %buildroot/sbin/ebtables-save
+ln -sfvr %buildroot%_sbindir/ebtables-legacy-restore %buildroot/sbin/ebtables-restore
 
 %files
 %doc ChangeLog THANKS
-
 %config %_sysconfdir/ethertypes
-
-/%_lib/libebtc.so.*
-/%_lib/ebtables
- 
-/sbin/*
-
+/sbin/ebtables*
+%_sbindir/*
+%_libdir/libebtc.so.*
 %_man8dir/*
 
 %changelog
+* Mon Sep 20 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.11-alt1
+- 2.0.11 released
+
 * Thu Nov 24 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.10-alt4
 - properly link ebtables-restore (closes: #32792)
 
