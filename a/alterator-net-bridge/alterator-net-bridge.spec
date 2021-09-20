@@ -1,5 +1,5 @@
 Name: alterator-net-bridge
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Source:%name-%version.tar
@@ -44,6 +44,9 @@ Alterator module for bridge network interfaces
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Sep 20 2021 Sergey V Turchin <zerg@altlinux.org> 0.2.2-alt1
+- don't hardcode window size
+
 * Mon Feb 10 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.2.1-alt1
 - Add support of different bridge types
 
