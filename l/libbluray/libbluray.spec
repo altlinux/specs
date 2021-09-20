@@ -1,10 +1,10 @@
 Name: libbluray
-Version: 1.2.1
+Version: 1.3.0
 Release: alt1
-Summary: BD library
 
-Group: System/Libraries
+Summary: BD library
 License: LGPLv2.1
+Group: System/Libraries
 Url: http://www.videolan.org/developers/libbluray.html
 
 Source: %name-%version-%release.tar
@@ -53,6 +53,9 @@ This package contains various utilities using libbluray library.
 %_bindir/*
 
 %changelog
+* Mon Sep 20 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.0-alt1
+- 1.3.0 released
+
 * Tue Jan 26 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.1-alt1
 - 1.2. released
 
