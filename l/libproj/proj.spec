@@ -1,6 +1,8 @@
+%def_disable static
+
 Name: libproj
 Version: 6.3.1
-Release: alt1
+Release: alt2
 
 Summary: PROJ.4 - cartographic projections library
 Group: Sciences/Geosciences
@@ -52,7 +54,7 @@ Empty package. US and Canadian datum shift grids moved to libproj
 # do autoreconf to avoid RPATH with standard paths
 # see: http://lists.altlinux.org/pipermail/devel/2011-December/192727.html
 %autoreconf
-%configure
+%configure %{subst_enable static}
 %make_build
 
 %install
@@ -84,6 +86,9 @@ Empty package. US and Canadian datum shift grids moved to libproj
 %files nad
 
 %changelog
+* Mon Sep 20 2021 Vladislav Zavjalov <slazav@altlinux.org> 6.3.1-alt2
+- fix build with LTO by disabling static library
+
 * Thu Mar 19 2020 Vladislav Zavjalov <slazav@altlinux.org> 6.3.1-alt1
 - 6.3.1
 
