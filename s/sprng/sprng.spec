@@ -1,9 +1,10 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
 Name: sprng
 Version: 4.4
-Release: alt2
+Release: alt3
 Summary: The Scalable Parallel Random Number Generators Library
 License: GPL v2
 Group: Sciences/Mathematics
@@ -131,6 +132,9 @@ install -p -m644 TESTS/mpitests/*.cpp TESTS/mpitests/*.h \
 %_datadir/%name/examples
 
 %changelog
+* Mon Sep 20 2021 Ivan Razzhivin <underwit@altlinux.org> 4.4-alt3
+- LTO fix
+
 * Tue Feb 12 2019 Ivan Razzhivin <underwit@altlinux.org> 4.4-alt2
 - GCC8 fix
 
