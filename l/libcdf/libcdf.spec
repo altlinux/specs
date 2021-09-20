@@ -1,7 +1,7 @@
 %define oversion 33_0
 Name: libcdf
 Version: 3.3.0
-Release: alt2.qa1
+Release: alt3
 
 Summary: Common Data Format (CDF)
 
@@ -64,6 +64,10 @@ touch NEWS README AUTHORS
 rm -rf cdfjava/lib
 
 %build
+%ifarch %e2k armh aarch64
+%add_optflags -DIBMPC
+%endif
+
 %autoreconf
 %configure --disable-static
 %make_build
@@ -97,6 +101,9 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 %endif
 
 %changelog
+* Mon Sep 20 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.3.0-alt3
+- fixed build for Elbrus and ARM
+
 * Tue Aug 28 2012 Repocop Q. A. Robot <repocop@altlinux.org> 3.3.0-alt2.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
