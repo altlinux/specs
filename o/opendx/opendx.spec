@@ -2,16 +2,17 @@
 
 Name: opendx
 Version: 4.4.4
-Release: alt8
+Release: alt9
+
 Summary: Open Visualization Data Explorer
 License: IBM Public License
 Group: Graphics
+
 Url: http://www.opendx.org/
-
-ExclusiveArch: %ix86 x86_64
-
 Source: %name-%version.tar
-Patch1: %name-%version-alt.patch
+Patch: %name-%version-alt.patch
+
+ExclusiveArch: %ix86 x86_64 %e2k
 
 BuildRequires: libhdf5-devel libtiff-devel flex
 BuildRequires: libnetcdf-devel libX11-devel libcdf-devel gcc-c++
@@ -80,7 +81,7 @@ This package contains documentation for OpenDX.
 
 %prep
 %setup
-%patch1 -p1
+%patch -p1
 rm -f aclocal.m4
 
 %build
@@ -132,6 +133,10 @@ install -d %buildroot%_mandir/manl
 %_libexecdir/dx/html
 
 %changelog
+* Sat Apr 10 2021 Michael Shigorin <mike@altlinux.org> 4.4.4-alt9
+- EA += %%e2k
+- Minor spec cleanup
+
 * Mon Feb 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.4-alt8
 - Fixed build with gcc-8.
 
