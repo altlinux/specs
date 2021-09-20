@@ -1,6 +1,6 @@
 Name:         xfig
-Version:      3.2.8
-Release:      alt2
+Version:      3.2.8b
+Release:      alt1
 
 Summary:      An X Window System tool for drawing basic vector graphics.
 Group:        Graphics
@@ -100,6 +100,9 @@ install -D -m 644 %SOURCE5 %buildroot/%_desktopdir/xfig.desktop
 /usr/share/doc/xfig
 
 %changelog
+* Mon Sep 20 2021 Vladislav Zavjalov <slazav@altlinux.org> 3.2.8b-alt1
+- 3.2.8b
+
 * Fri Jan 08 2021 Vladislav Zavjalov <slazav@altlinux.org> 3.2.8-alt2
 - Fix scalable fonts support. Use Paratype fonts.
 
