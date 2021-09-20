@@ -1,11 +1,11 @@
 Name: libaacs
-Version: 0.8.1
-Release: alt4
+Version: 0.11.0
+Release: alt1
 
 Summary: BD AACS library
 License: LGPL-2.1
 Group: System/Libraries
-Url: http://bd.videolan.org/
+Url: https://www.videolan.org/developers/libaacs.html
 
 Source: %name-%version-%release.tar
 
@@ -26,9 +26,6 @@ This package contains the headers and libraries for libaacs development.
 %setup
 
 %build
-%ifarch %e2k
-export cc_cv_cflags__Werror_implicit_function_declaration=no
-%endif
 %autoreconf
 %configure
 %make_build
@@ -47,6 +44,9 @@ rm -v %buildroot%_libdir/libaacs.a
 %_libdir/pkgconfig/*
 
 %changelog
+* Mon Sep 20 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.11.0-alt1
+- 0.11.0 released
+
 * Mon Aug 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.1-alt4
 - unpackaged static library dropped
 
