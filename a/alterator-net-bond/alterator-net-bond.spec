@@ -1,6 +1,6 @@
 Name: alterator-net-bond
-Version: 1.1.0
-Release: alt1.1.1
+Version: 1.1.1
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -44,6 +44,9 @@ alterator module for bonding network interfaces
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Sep 20 2021 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt1
+- don't hardcode window size
+
 * Fri Apr 13 2018 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1.1.1
 - NMU: Replace BuildRequires for guile on e2k arch.
 
