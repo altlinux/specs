@@ -2,13 +2,13 @@
 %define soname_ixml 11
 
 Name: libupnp
-Version: 1.14.5
+Version: 1.14.10
 Release: alt1
 
 Summary: Linux SDK for UPnP Devices
 License: BSD
 Group: System/Libraries
-Url: http://pupnp.sourceforge.net/
+Url: https://github.com/pupnp/pupnp
 
 Source: %name-%version-%release.tar
 
@@ -70,6 +70,9 @@ applications using libupnp.
 %_pkgconfigdir/*
 
 %changelog
+* Mon Sep 20 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.14.10-alt1
+- 1.14.10 released
+
 * Fri Jul 23 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.14.5-alt1
 - 1.14.5 released (fixes: CVE-2021-28302)
 
