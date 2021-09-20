@@ -1,11 +1,11 @@
 Name: aoetools
-Version: 31
+Version: 37
 Release: alt1
 
 Summary: ATA over Ethernet Tools
 License: GPLv2
 Group: System/Kernel and hardware
-Url: http://sourceforge.net/projects/aoetools/
+Url: https://github.com/OpenAoE/aoetools
 
 Source: %name-%version-%release.tar
 
@@ -30,6 +30,9 @@ install -pm0644 -D 60-aoe.rules %buildroot/lib/udev/rules.d/60-aoe.rules
 %_man8dir/*
 
 %changelog
+* Mon Sep 20 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 37-alt1
+- 37 released
+
 * Thu Jun 02 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 31-alt1
 - 31 released
 
