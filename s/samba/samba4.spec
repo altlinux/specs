@@ -43,12 +43,12 @@
 %def_enable avahi
 %def_enable spotlight
 
-%ifarch %ix86 %arm %mips32 ppc %e2k
-%def_without libcephfs
-%def_disable cephfs
-%else
+%ifarch x86_64 aarch64 ppc64le
 %def_with libcephfs
 %def_enable cephfs
+%else
+%def_without libcephfs
+%def_disable cephfs
 %endif
 
 %ifarch %e2k
@@ -73,7 +73,7 @@
 
 Name:    samba
 Version: 4.14.7
-Release: alt3
+Release: alt4
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -842,19 +842,17 @@ pushd ../%rname-%version-separate-heimdal-server
 	--with-privatelibdir=%_samba_dc_mod_libdir \
 	--without-pam
 
-[ -n "$NPROCS" ] || NPROCS=%__nprocs; export JOBS=$NPROCS
-%make_build NPROCS=%__nprocs
+%make_build NPROCS=%__nprocs V=2 -Onone
 
 popd
 %endif
 
-[ -n "$NPROCS" ] || NPROCS=%__nprocs; export JOBS=$NPROCS
-%make_build NPROCS=%__nprocs
+%make_build NPROCS=%__nprocs V=2 -Onone
 
 pushd pidl
 %__perl Makefile.PL PREFIX=%_prefix
 
-%make_build
+%make_build V=2 -Onone
 popd
 
 %if_with doc
@@ -862,18 +860,18 @@ pushd docs-xml
 export XML_CATALOG_FILES="file:///etc/xml/catalog file://$(pwd)/build/catalog.xml"
 %autoreconf
 %configure
-%make_build smbdotconf/parameters.all.xml
-%make_build release
+%make_build smbdotconf/parameters.all.xml V=2 -Onone
+%make_build release V=2 -Onone
 popd
 %endif
 
 %install
 %if_without separate_heimdal_server
-%makeinstall_std
+%makeinstall_std V=2 -Onone %_smp_mflags
 %else
 pushd ../%rname-%version-separate-heimdal-server
 
-%makeinstall_std
+%makeinstall_std V=2 -Onone %_smp_mflags
 
 popd
 
@@ -898,7 +896,7 @@ printf '#!/bin/bash\nexport PYTHONPATH="%_samba_dc_mod_libdir/python%_python3_ve
 printf "%_sbindir/samba_downgrade_db\t%_samba_dc_mod_libdir/sbin/samba_downgrade_db\t50\n" >> %buildroot%_altdir/samba-heimdal
 chmod 0755 %buildroot%_samba_dc_mod_libdir/sbin/samba_downgrade_db
 
-%makeinstall_std
+%makeinstall_std V=2 -Onone %_smp_mflags
 
 rm -f %buildroot%_altdir/samba-mit
 touch %buildroot%_altdir/samba-mit
@@ -1092,7 +1090,7 @@ install -m755 script/traffic_replay %buildroot%_bindir/traffic_replay
 
 %if_with testsuite
 %check
-TDB_NO_FSYNC=1 %make_build test
+TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %endif
 
 %post
@@ -1923,6 +1921,12 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Mon Sep 20 2021 Ivan A. Melnikov <iv@altlinux.org> 4.14.7-alt4
+- Use parallel make install.
+- Make building and installing more verbose.
+- Explicitly list architectures where ceph is enabled
+  (fixes build on riscv64).
+
 * Wed Sep 01 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.7-alt3
 - Fix net ads join segmentation fault problem if ldap SRV host record not found.
 
