@@ -3,7 +3,7 @@
 
 Name: crtools-ovz
 Version: 3.15.2.9
-Release: alt2
+Release: alt3
 
 Summary: Utility to checkpoint/restore tasks for OpenVZ containers
 License: GPL-2.0-only
@@ -93,6 +93,9 @@ vm-run --kvm=cond make test || :
 %_man8dir/crtools.8*
 
 %changelog
+* Mon Sep 20 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.15.2.9-alt3
+- protobuf: remove leading underscores from protobuf structs (from criu upstream)
+
 * Thu Sep 16 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.15.2.9-alt2
 - FTBFS: remove leading underscores in structs
 
