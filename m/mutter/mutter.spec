@@ -16,8 +16,8 @@
 %def_enable wayland_eglstream
 
 Name: mutter
-Version: %ver_major.4
-Release: alt1.1%beta
+Version: %ver_major.5
+Release: alt1%beta
 Epoch: 1
 
 Summary: Clutter based compositing GTK3 Window Manager
@@ -233,6 +233,9 @@ echo 'DRIVERS=="baikal-vdu", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-m
 
 
 %changelog
+* Tue Sep 21 2021 Yuri N. Sedunov <aris@altlinux.org> 1:40.5-alt1
+- 40.5
+
 * Tue Sep 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1:40.4-alt1.1
 - E2K: disabled Clutter tests
 
