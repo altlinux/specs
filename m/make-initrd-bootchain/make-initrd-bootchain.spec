@@ -3,7 +3,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt1
+Release: alt2
 
 Summary: %child modules set for %name
 License: GPL-3.0
@@ -207,6 +207,13 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Tue Sep 21 2021 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt2
+- download: rewrited reaction to returned http/ftp status codes.
+- don't count whole disk drive with the same first partition.
+- don't connect to default router anymore, only suggests.
+- checksum: reboot the computer if checksum mismatch.
+- waitnet: back to the main menu if network not ready.
+
 * Sun Sep 19 2021 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt1
 - introduce bootchain-waitnet sub-module and function bc_reboot().
 - major fixes and improvements around networking boot methods.
