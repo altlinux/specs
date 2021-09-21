@@ -1,7 +1,7 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat rpm-macros-ninja-build
-BuildRequires: /usr/bin/clang-format /usr/bin/cppcheck /usr/bin/desktop-file-validate /usr/bin/doxygen /usr/bin/wx-config-3.0 libX11-devel libpcre-devel pkgconfig(glib-2.0) python-devel rpm-build-python zlib-devel
+BuildRequires: /usr/bin/clang-format /usr/bin/cppcheck /usr/bin/desktop-file-validate /usr/bin/doxygen /usr/bin/wx-config-3.0 libX11-devel libpcre-devel pkgconfig(glib-2.0) python3-devel rpm-build-python3 zlib-devel
 # END SourceDeps(oneline)
 # undefined symbol: L_*, LOG_*, parse32 in libFileSystem
 # those are from static libUtil, in main binary
@@ -14,7 +14,7 @@ BuildRequires: boost-devel boost-filesystem-devel boost-signals-devel libpng-dev
 
 Name:           springlobby
 Version:        0.271
-Release:        alt1_1
+Release:        alt1_6
 Summary:        Free cross-platform lobby client for the Spring RTS project
 
 # License clarification: http://springlobby.info/issues/show/810
@@ -98,6 +98,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 
 
 %changelog
+* Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 0.271-alt1_6
+- update to new release by fcimport
+
 * Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 0.271-alt1_1
 - update to new release by fcimport
 
