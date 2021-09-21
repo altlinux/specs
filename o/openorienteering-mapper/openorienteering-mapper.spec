@@ -3,8 +3,8 @@
 %def_with check
 
 Name: openorienteering-mapper
-Version: 0.9.4
-Release: alt1.1
+Version: 0.9.5
+Release: alt1
 
 Summary: OpenOrienteering Mapper program for orienteering mapmaking
 License: GPLv3
@@ -25,6 +25,7 @@ BuildRequires: qt5-location-devel
 BuildRequires: qt5-sensors-devel
 BuildRequires: qt5-sql-sqlite3
 BuildRequires: qt5-tools-devel
+BuildRequires: qt5-serialport-devel
 BuildRequires: sqlite3
 %if_with check
 # NAD grids are needed for tests (github #1062).
@@ -57,13 +58,15 @@ are happy about feedback to the program.
 
 #provide licensing information search path patterns specific for Altlinux
 cp doc/licensing/fedora-licensing.cmake doc/licensing/altlinux-licensing.cmake
-sed -i 's|doc/gdal-libs|gdal|g' doc/licensing/altlinux-licensing.cmake
+sed -i 's|doc\/\(.*\)-libs|\1|g' doc/licensing/altlinux-licensing.cmake
 
 #fix qt assistant search by default paths
 sed -i 's|"assistant"|"assistant-qt5"|g' src/gui/util_gui.cpp
 
 %build
-%cmake
+%cmake \
+	-DCMAKE_DISABLE_FIND_PACKAGE_ClangTidy:BOOL=TRUE \
+	-DCMAKE_DISABLE_FIND_PACKAGE_IWYU:BOOL=TRUE
 %cmake_build
 
 %install
@@ -85,6 +88,9 @@ cmake --build %_cmake__builddir/test -j%__nprocs
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Sep 21 2021 Nikolai Kostrigin <nickel@altlinux.org> 0.9.5-alt1
+- New version
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 0.9.4-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
