@@ -1,14 +1,15 @@
+Group: Text tools
 BuildRequires: xml-utils
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global date    20020801
+%global baserelease 14
 
 Name:           xhtml1-dtds
 Version:        1.0
-Release:        alt1_%{date}.13.3
+Release:        alt1_%{date}.%{baserelease}
 Summary:        XHTML 1.0 document type definitions
 
-Group:          Text tools
 # W3C Software License for DTDs etc:
 # http://www.w3.org/Consortium/Legal/IPR-FAQ-20000620#DTD
 License:        W3C
@@ -84,13 +85,12 @@ cd $RPM_BUILD_ROOT%{_sysconfdir}/sgml
 touch %{name}-%{version}-%{release}.soc
 ln -s %{name}-%{version}-%{release}.soc %{name}.soc
 cd -
-
-# touching all ghosts; hack for rpm 4.0.4
-for rpm_404_ghost in %{_sysconfdir}/sgml/%{name}-%{version}-%{release}.soc
+for rpm404_ghost in %{_sysconfdir}/sgml/%{name}-%{version}-%{release}.soc
 do
-    mkdir -p %buildroot`dirname "$rpm_404_ghost"`
-    touch %buildroot"$rpm_404_ghost"
+    mkdir -p %buildroot`dirname "$rpm404_ghost"`
+    touch %buildroot"$rpm404_ghost"
 done
+
 
 
 
@@ -123,6 +123,9 @@ cd - >/dev/null
 
 
 %changelog
+* Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 1.0-alt1_20020801.14
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_20020801.13.3
 - update to new release by fcimport
 
