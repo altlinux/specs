@@ -1,11 +1,11 @@
 Name: yasm
-Version: 1.2.0
-Release: alt2
+Version: 1.3.0
+Release: alt1
 
 Summary: Rewrite of the NASM assembler under the "new" BSD License
 License: BSD
 Group: Development/Other
-Url: http://www.tortall.net/projects/yasm/
+Url: https://yasm.tortall.net/
 
 Source: yasm-%version.tar
 
@@ -41,6 +41,9 @@ This package contains static development files for YASM.
 %make_install DESTDIR="%buildroot" install
 ln -s ytasm %buildroot%_bindir/tasm
 
+%check
+make check
+
 %files
 %doc AUTHORS ChangeLog COPYING NEWS README
 %_bindir/ytasm
@@ -56,6 +59,9 @@ ln -s ytasm %buildroot%_bindir/tasm
 %_libdir/*.a
 
 %changelog
+* Tue Sep 21 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.0-alt1
+- 1.3.0 release
+
 * Mon Aug 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.0-alt2
 - rebuilt with lto enabled
 
