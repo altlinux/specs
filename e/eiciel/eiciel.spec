@@ -5,15 +5,12 @@ BuildRequires: /usr/bin/desktop-file-validate pkgconfig(giomm-2.4) pkgconfig(gtk
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: eiciel
-Version: 0.9.13
+Version: 0.9.13.1
 Release: alt1_1
 Summary: Graphical editor for ACLs and xattr
 License: GPLv2+
 URL: http://rofi.roger-ferrer.org/eiciel
 Source0: http://rofi.roger-ferrer.org/eiciel/files/eiciel-%{version}.tar.bz2
-
-# upstream PR #6
-Patch2: eiciel-0.9.13-missing-file.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libgnomeui-devel
@@ -40,7 +37,6 @@ utility.
 
 %prep
 %setup -q
-%patch2 -p1
 
 sed -i -e 's!attr/xattr\.h!sys/xattr\.h!g' configure
 [ "$(cksum ChangeLog|cut -d ' ' -f 1,2)" != "960335718 502" ] && exit -1
@@ -80,6 +76,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 
 
 %changelog
+* Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 0.9.13.1-alt1_1
+- update to new release by fcimport
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 0.9.13-alt1_1
 - update to new release by fcimport
 
