@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -9,10 +10,9 @@ BuildRequires: unzip
 
 Name:        fonts-otf-saab
 Version:     0.91
-Release:     alt3_15
-Summary:     Free Punjabi Unicode OpenType Font
+Release:     alt3_24
+Summary:     Free Punjabi Unicode OpenType Serif Font
 
-Group:       System/Fonts/True type
 
 License:     GPLv2+ with exceptions
 URL:         http://guca.sourceforge.net/typography/fonts/saab/
@@ -26,8 +26,8 @@ BuildRequires: fontpackages-devel
 Source44: import.info
 
 %description 
-This package provides a free OpenType Punjabi (Gurmukhi) font. 
-Developed by Bhupinder Singh
+This package provides a free OpenType Punjabi (Gurmukhi) Serif font.
+Developed by Bhupinder Singh.
 
 
 %prep
@@ -86,10 +86,14 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Saab.otf
 %doc License_font_exception.txt
 
 %changelog
+* Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 0.91-alt3_24
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.91-alt3_15
 - update to new release by fcimport
 
