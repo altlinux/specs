@@ -1,10 +1,10 @@
-%def_with check
+%def_without check
 
 %global goipath github.com/BurntSushi/toml
 
 Name: golang-github-burntsushi-toml
-Version: 0.3.1
-Release: alt2
+Version: 0.4.1
+Release: alt1
 Summary: Toml parser with reflection for Golang
 
 License: MIT and BSD
@@ -13,10 +13,8 @@ Url: https://github.com/BurntSushi/toml
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: toml-%version.tar.gz
-Source1: glide.lock
-Source2: glide.yaml
 
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-build-golang rpm-build-python3
 
 %description
 TOML stands for Tom's Obvious, Minimal Language. This Go package provides a
@@ -39,7 +37,6 @@ representations.
 
 %prep
 %setup -n toml-%version
-cp %SOURCE1 %SOURCE2 .
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -48,7 +45,6 @@ export GOPATH="%go_path"
 
 %golang_prepare
 
-go mod init github.com/BurntSushi/toml
 cd .build/src/%goipath
 for cmd in cmd/* ; do
 %golang_build $cmd ||:
@@ -65,14 +61,18 @@ export GOPATH="%go_path"
 %gotest
 %endif
 
-# %%files
-# %%_bindir/*
+%files
+%_bindir/*
 
 %files devel
 %doc COPYING _examples README.md COMPATIBLE
 %go_path/src/%goipath
 
 %changelog
+* Tue Sep 21 2021 Leontiy Volodin <lvol@altlinux.org> 0.4.1-alt1
+- New version (0.4.1).
+- Fixed build with golang 1.17.
+
 * Sat Feb 20 2021 Leontiy Volodin <lvol@altlinux.org> 0.3.1-alt2
 - Fixed build.
 
