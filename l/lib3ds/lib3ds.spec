@@ -8,7 +8,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           lib3ds
 Version:        1.3.0
-Release:        alt2_28
+Release:        alt2_36
 
 Summary:        3D Studio file format library
 
@@ -22,9 +22,9 @@ Patch1:         lib3ds-1.3.0-lib3ds-mesh.c.diff
 
 Patch2:         lib3ds-1.2.0-pkgconfig.diff
 
-Patch3:         lib3ds-1.3.0-config.patch
-
 BuildRequires:  gcc
+# RHBZ 1987639: rpm corrupts older libtool sources
+BuildRequires: autoconf automake libtool
 Source44: import.info
 
 %description
@@ -40,8 +40,8 @@ usually integrates well with OpenGL. In addition, some diagnostic and
 conversion tools are included.
 
 %package        tools
+Group: Graphics
 Summary:        %summary
-Group:          Graphics
 
 %description    tools
 Some tools to process 3ds files.
@@ -53,8 +53,8 @@ Some tools to process 3ds files.
 %{_mandir}/man1/3dsdump.1*
 
 %package        devel
+Group: Development/Other
 Summary:        %summary
-Group:          Development/Other
 Requires:	pkgconfig
 Requires:	lib3ds = %{version}-%{release}
 
@@ -67,8 +67,8 @@ Development files for lib3ds
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
+autoreconf -fi
 
 %build
 %configure  --disable-static
@@ -101,6 +101,9 @@ done
 %doc --no-dereference COPYING
 %{_libdir}/*.so.*
 
+
+
+
 %files devel
 %{_bindir}/lib3ds-config
 %{_libdir}/*.so
@@ -110,6 +113,9 @@ done
 %{_datadir}/aclocal/*
 
 %changelog
+* Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 1.3.0-alt2_36
+- update to new release by fcimport
+
 * Wed Oct 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_28
 - converted for ALT Linux by srpmconvert tools
 
