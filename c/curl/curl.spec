@@ -4,7 +4,7 @@
 
 Name: curl
 Version: 7.79.0
-Release: alt1
+Release: alt2
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -157,6 +157,11 @@ echo "1184" >> tests/data/DISABLED
 %_libdir/*.a
 
 %changelog
+* Tue Sep 21 2021 Anton Farygin <rider@altlinux.ru> 7.79.0-alt2
+- added patches from curl upstream:
+  * b2e72d2 http: fix the broken >3 digit response code detection
+  * e0742ce Curl_http2_setup: don't change connection data on repeat invokes
+
 * Wed Sep 15 2021 Anton Farygin <rider@altlinux.ru> 7.79.0-alt1
 - 7.79.0
 - Fixes:
