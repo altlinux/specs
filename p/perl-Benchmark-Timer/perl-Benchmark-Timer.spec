@@ -1,9 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(UNIVERSAL/require.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define module Benchmark-Timer
 
 Name: perl-%module
 Version: 0.7112
-Release: alt1
+Release: alt2
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -40,6 +43,10 @@ out and profile your code.
 %perl_vendor_privlib/Benchmark
 
 %changelog
+* Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 0.7112-alt2
+- NMU for unknown reason:
+  the person above was too neglectant to add --changelog "- NMU: <reason>" option.
+
 * Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.7112-alt1
 - automated CPAN update
 
