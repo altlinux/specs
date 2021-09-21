@@ -1,9 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(UNIVERSAL/require.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define module_name Getargs-Long
 
 Name: perl-%module_name
 Version: 1.1012
-Release: alt1
+Release: alt2
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -39,6 +42,10 @@ common cases of all-mandatory and all-optional parameter lists.
 %perl_vendor_privlib/Getargs/
 
 %changelog
+* Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 1.1012-alt2
+- NMU for unknown reason:
+  the person above was too neglectant to add --changelog "- NMU: <reason>" option.
+
 * Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 1.1012-alt1
 - automated CPAN update
 
