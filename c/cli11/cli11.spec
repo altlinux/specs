@@ -1,7 +1,7 @@
 Group: Development/C++
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
-BuildRequires: boost-devel python-devel rpm-build-python
+BuildRequires: /usr/bin/clang-tidy boost-devel rpm-build-python3
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -11,15 +11,14 @@ BuildRequires: boost-devel python-devel rpm-build-python
 %global debug_package %{nil}
 
 Name:           cli11
-Version:        1.9.1
-Release:        alt1_3
+Version:        2.0.0
+Release:        alt1_1
 Summary:        Command line parser for C++11
 
 License:        BSD
 URL:            https://github.com/CLIUtils/CLI11
 Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
-# Use the system gmock/gtest instead of requiring that they be downloaded
-Patch0:         %{name}-gtest.patch
+Patch0:         static-catch.patch
 
 BuildRequires:  boost-complete
 BuildRequires:  ctest cmake
@@ -53,7 +52,7 @@ Documentation for CLI11.
 
 %prep
 %setup -q -n CLI11-%{version}
-%patch0 -p0
+%patch0 -p1
 
 
 %build
@@ -61,7 +60,7 @@ Documentation for CLI11.
 %fedora_v2_cmake_build
 
 # Build the documentation
-make -C %{__cmake_builddir} docs
+%fedora_v2_cmake_build --target docs
 
 %install
 %fedora_v2_cmake_install
@@ -74,12 +73,16 @@ make -C %{__cmake_builddir} docs
 %doc --no-dereference LICENSE
 %{_includedir}/CLI/
 %{_libdir}/cmake/CLI11/
+%{_libdir}/pkgconfig/CLI11.pc
 
 %files docs
-%doc %{__cmake_builddir}/docs/html
+%doc %{_vpath_builddir}/docs/html
 %doc docs/CLI11.svg docs/CLI11_100.png docs/CLI11_300.png
 
 %changelog
+* Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 2.0.0-alt1_1
+- update to new release by fcimport
+
 * Tue Nov 10 2020 Igor Vlasenko <viy@altlinux.ru> 1.9.1-alt1_3
 - new version
 
