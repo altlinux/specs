@@ -1,14 +1,13 @@
 Group: System/Base
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-alternatives
-BuildRequires: rpm-build-python3
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global vimdatadir %{_datadir}/vim/vimfiles
 
 Name:           environment-modules
-Version:        4.7.1
+Version:        5.0.0
 Release:        alt1_1
 Summary:        Provides dynamic modification of a user's environment
 
@@ -22,12 +21,9 @@ BuildRequires:  sed
 BuildRequires:  less
 BuildRequires:  coreutils
 BuildRequires:  libprocps procps
-# specific requirements to build compat version and extension library
+# specific requirements to build extension library
 BuildRequires:  gcc
 BuildRequires:  tcl-devel
-# specific requirements to build compat version
-BuildRequires:  libX11-devel
-BuildRequires:  tclx
 Requires:       libtcl tcl
 Requires:       sed
 Requires:       less
@@ -35,6 +31,7 @@ Requires:       libprocps procps
 Requires:       man-db
 Requires(post): coreutils
 Provides:       environment(modules)
+Obsoletes:      environment-modules-compat <= 4.8.99
 Source44: import.info
 
 %description
@@ -61,18 +58,6 @@ suite of different applications.
 NOTE: You will need to get a new shell after installing this package to
 have access to the module alias.
 
-%package compat
-Group: System/Base
-Summary:        Environment Modules compatibility version
-Requires:       environment-modules = %{version}-%{release}
-Requires:       coreutils
-
-%description compat
-The Environment Modules package provides for the dynamic modification of
-a user's environment via modulefiles.
-
-This package provides Environment Modules compatibility version (3.2).
-
 
 
 %package -n rpm-macros-%name
@@ -98,12 +83,9 @@ Install this package if you want to create RPM packages that use GNAT.
            --mandir=%{_mandir} \
            --vimdatadir=%{vimdatadir} \
            --enable-multilib-support \
-           --enable-compat-version \
            --disable-doc-install \
-           --enable-dotmodulespath \
-           --disable-set-shell-startup \
+           --enable-modulespath \
            --with-python=/usr/bin/python3 \
-           --with-initconf-in=etcdir \
            --with-modulepath=%{_datadir}/Modules/modulefiles:%{_sysconfdir}/modulefiles:%{_datadir}/modulefiles \
            --with-quarantine-vars='LD_LIBRARY_PATH LD_PRELOAD'
 
@@ -127,17 +109,11 @@ rm -f %{buildroot}%{_datadir}/Modules/bin/modulecmd
 # major utilities go to regular bin dir
 mv %{buildroot}%{_datadir}/Modules/bin/envml %{buildroot}%{_bindir}/
 
-# rename compat docs to find them in files section
-mv compat/ChangeLog ChangeLog-compat
-mv compat/NEWS NEWS-compat
-
 mv {doc/build/,}NEWS.txt
 mv {doc/build/,}MIGRATING.txt
 mv {doc/build/,}CONTRIBUTING.txt
-mv {doc/build/,}diff_v3_v4.txt
-mv {doc/,}example.txt
-
-cp -p script/createmodule.sh %{buildroot}%{_datadir}/Modules/bin
+mv {doc/build/,}INSTALL.txt
+mv {doc/build/,}changes.txt
 
 # install the rpm config file
 install -Dpm 644 contrib/rpm/macros.%{name} %{buildroot}/%{_rpmmacrosdir}/%{name}
@@ -150,11 +126,6 @@ install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/modules.sh_en
 %{_sysconfdir}/profile.d/modules.sh	%{_datadir}/Modules/init/profile.sh	40
 %{_sysconfdir}/profile.d/modules.csh	%{_datadir}/Modules/init/profile.csh	%{_datadir}/Modules/init/profile.sh
 %{_bindir}/modulecmd	%{_libdir}/Modules/libexec/modulecmd.tcl	%{_datadir}/Modules/init/profile.sh
-EOF
-install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/modules.sh_environment-modules-compat<<EOF
-%{_sysconfdir}/profile.d/modules.sh	%{_datadir}/Modules/init/profile-compat.sh	10
-%{_sysconfdir}/profile.d/modules.csh	%{_datadir}/Modules/init/profile-compat.csh	%{_datadir}/Modules/init/profile-compat.sh
-%{_bindir}/modulecmd	%{_libdir}/Modules/libexec/modulecmd-compat	%{_datadir}/Modules/init/profile-compat.sh
 EOF
 
 
@@ -174,7 +145,7 @@ fi
 %files
 %_altdir/modules.sh_environment-modules
 %doc --no-dereference COPYING.GPLv2
-%doc ChangeLog README NEWS.txt MIGRATING.txt CONTRIBUTING.txt diff_v3_v4.txt example.txt
+%doc ChangeLog README NEWS.txt MIGRATING.txt INSTALL.txt CONTRIBUTING.txt changes.txt
 %{_sysconfdir}/modulefiles
 %{_bindir}/envml
 %{_libdir}/libtclenvmodules.so
@@ -197,19 +168,15 @@ fi
 %{vimdatadir}/ftplugin/modulefile.vim
 %{vimdatadir}/syntax/modulefile.vim
 
-%files compat
-%_altdir/modules.sh_environment-modules-compat
-%doc ChangeLog-compat NEWS-compat
-%{_libdir}/Modules/libexec/modulecmd-compat
-%{_mandir}/man1/module-compat.1*
-%{_mandir}/man4/modulefile-compat.4*
-
 %files -n rpm-macros-%name
 %_rpmmacrosdir/*
 
 
 
 %changelog
+* Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 5.0.0-alt1_1
+- update to new release by fcimport
+
 * Tue May 18 2021 Igor Vlasenko <viy@altlinux.org> 4.7.1-alt1_1
 - new version
 
