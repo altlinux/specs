@@ -4,7 +4,7 @@ Group: Other
 %global debug_package %{nil}
 
 Name:           elfio
-Version:        3.8
+Version:        3.9
 Release:        alt1_1
 Summary:        C++ library for reading and generating ELF files
 
@@ -75,6 +75,9 @@ examples/elfdump/elfdump %{_bindir}/make
 
 
 %changelog
+* Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 3.9-alt1_1
+- update to new release by fcimport
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 3.8-alt1_1
 - update to new release by fcimport
 
