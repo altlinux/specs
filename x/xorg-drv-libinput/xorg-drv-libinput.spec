@@ -3,8 +3,10 @@
 %define _name xf86-input-libinput
 %define _xconfdir %_sysconfdir/X11/xorg.conf.d
 
+%def_enable check
+
 Name: xorg-drv-libinput
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: Xorg libinput input driver
@@ -20,13 +22,14 @@ Source: ftp://ftp.x.org/pub/individual/driver/%_name-%version.tar.bz2
 Patch: xf86-input-libinput-0.14.0-alt-include.patch
 
 %define libinput_ver 1.11
+%define xproto_ver 2.3.99.1
 
 Requires(pre): XORG_ABI_XINPUT = %get_xorg_abi_xinput
 Requires: libinput >= %libinput_ver
 Requires: xkeyboard-config
 
 BuildRequires(pre): xorg-sdk >= 1.19
-BuildRequires: libinput-devel >= %libinput_ver xorg-proto-devel
+BuildRequires: libinput-devel >= %libinput_ver xorg-proto-devel >= %xproto_ver
 
 %description
 This is an X driver based on libinput. It is a thin wrapper around libinput,
@@ -59,6 +62,9 @@ Xorg libinput input driver development files.
 %install
 %makeinstall_std
 
+%check
+%make -k check VERBOSE=1
+
 %files
 %config(noreplace) %_xconfdir/40-libinput.conf
 %_x11modulesdir/input/libinput_drv.so
@@ -72,6 +78,10 @@ Xorg libinput input driver development files.
 %_includedir/xorg/libinput-properties.h
 
 %changelog
+* Tue Sep 21 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+- enabled %%check
+
 * Thu Jun 24 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 
