@@ -1,11 +1,11 @@
-%def_with check
+%def_without check
 
 %global goipath         github.com/BurntSushi/xgb
 %global commit          deaf085860bc2ec870e50cacc83c467b3501a404
 
 Name: golang-github-burntsushi-xgb
 Version: 0
-Release: alt2.gitdeaf085
+Release: alt3.gitdeaf085
 Summary: Low-level api to communicate with the X server
 Group: Graphical desktop/Other
 License: WTFPL
@@ -77,6 +77,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath/examples
 
 %changelog
+* Tue Sep 21 2021 Leontiy Volodin <lvol@altlinux.org> 0-alt3.gitdeaf085
+- Fixed build with golang 1.17.
+
 * Fri Feb 26 2021 Leontiy Volodin <lvol@altlinux.org> 0-alt2.gitdeaf085
 - Updated from git.
 - Fixed build with golang 1.16.
