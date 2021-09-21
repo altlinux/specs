@@ -1,7 +1,7 @@
 %define oname userspace-rcu
 Name: libuserspace-rcu
 Version: 0.13.0
-Release: alt1
+Release: alt2
 
 Summary: RCU (read-copy-update) implementation in user space
 
@@ -15,6 +15,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 Patch: userspace-rcu-aarch64.patch
+Patch2000: userspace-rcu-e2k.patch
 
 BuildRequires: autoconf automake libtool
 
@@ -50,6 +51,9 @@ developing applications that use %name.
 %prep
 %setup
 #patch0 -p1
+%ifarch %e2k
+%patch2000 -p2
+%endif
 
 %build
 # Patch for AArch64 and PPC64LE needs it
@@ -77,8 +81,8 @@ done
 cd doc/examples && make clean
 
 %check
-# TODO: still failed in hasher
-make check || true
+export LD_LIBRARY_PATH=$(pwd)/src/.libs
+make check
 
 %files
 /%_lib/liburcu*.so.*
@@ -91,6 +95,10 @@ make check || true
 %_pkgconfigdir/liburcu*.pc
 
 %changelog
+* Tue Sep 21 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.13.0-alt2
+- added patch for Elbrus (uses generic code)
+- added LD_LIBRARY_PATH for tests
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 0.13.0-alt1
 - new version 0.13.0 (with rpmrb script)
 
