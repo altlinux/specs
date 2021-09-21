@@ -1,6 +1,6 @@
 Name: liblttng-ust
 Version: 2.12.2
-Release: alt1
+Release: alt2
 
 Summary: Linux Trace Toolkit Userspace Tracer library
 
@@ -47,6 +47,10 @@ This package includes documentation and examples for developing programs using L
 %prep
 %setup
 %patch100 -p1
+%ifarch %e2k
+# this is wrong code, but GCC allows it
+sed -i '/asm volatile/s|)\[0\])|)[0][0])|' liblttng-ust/lttng-context-procname.c
+%endif
 
 %build
 # to fix rpath
@@ -88,6 +92,9 @@ rm -rf %buildroot/tmp/lttng-ust-divert
 %_man3dir/tracepoint_enabled.3.*
 
 %changelog
+* Tue Sep 21 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.12.2-alt2
+- fixed build for Elbrus
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 2.12.2-alt1
 - new version 2.12.2 (with rpmrb script)
 
