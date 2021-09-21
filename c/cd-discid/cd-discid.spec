@@ -3,13 +3,15 @@ Group: Sound
 %define _localstatedir %{_var}
 Name:           cd-discid
 Version:        1.4
-Release:        alt1_13
+Release:        alt1_20
 Summary:        Utility to get CDDB discid information
 
 # Also "Larry Wall's Artistic" upstream, but that's not accepted in Fedora
 License:        GPLv2+
 URL:            http://linukz.org/cd-discid.shtml
 Source0:        http://linukz.org/download/%{name}-%{version}.tar.gz
+# https://github.com/taem/cd-discid/issues/5
+Patch0:         https://patch-diff.githubusercontent.com/raw/taem/cd-discid/pull/6.patch
 BuildRequires:  gcc
 Source44: import.info
 
@@ -21,6 +23,7 @@ can be used for any purpose requiring CDDB data.
 
 %prep
 %setup -q
+%patch0 -p1
 
 
 %build
@@ -40,6 +43,9 @@ can be used for any purpose requiring CDDB data.
 
 
 %changelog
+* Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 1.4-alt1_20
+- update to new release by fcimport
+
 * Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_13
 - update to new release by fcimport
 
