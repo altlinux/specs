@@ -5,7 +5,7 @@ Group: Networking/WWW
 
 Name:       axel
 Version:    2.17.10
-Release:    alt1_1
+Release:    alt1_3
 Summary:    Light command line download accelerator for Linux and Unix
 
 License:    GPLv2+
@@ -54,6 +54,9 @@ install -m 644 -p -T doc/axelrc.example %{buildroot}%{_sysconfdir}/axelrc
 
 
 %changelog
+* Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 2.17.10-alt1_3
+- update to new release by fcimport
+
 * Thu Jul 08 2021 Igor Vlasenko <viy@altlinux.org> 2.17.10-alt1_1
 - update to new release by fcimport
 
