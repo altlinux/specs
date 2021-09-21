@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20210913
+Version: 20210916
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,19 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Sep 21 2021 Cronbuild Service <cronbuild@altlinux.org> 20210916-alt1
+- upstream changes (GIT d526e04):
+  + qed: Add firmware 8.59.1.0 (thx Prabhakar Kushwaha)
+  + Update firmware file for Intel Bluetooth AX211 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX210 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX200 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9560 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9260 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 8265 (thx Kiran K)
+  + iwlwifi: add FWs for new So device types with multiple RF modules (thx Luca Coelho)
+  + amdgpu: add initial firmware for Yellow Carp (thx Alex Deucher)
+
 * Tue Sep 14 2021 Cronbuild Service <cronbuild@altlinux.org> 20210913-alt1
 - upstream changes (GIT 090a34d):
   + add frimware for mediatek bluetooth chip (MT7922) (thx mark-yw.chen)
