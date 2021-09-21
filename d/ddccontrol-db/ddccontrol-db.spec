@@ -1,12 +1,9 @@
 Group: System/Base
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/perl
-# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             ddccontrol-db
 URL:              https://github.com/ddccontrol/ddccontrol-db
-Version:          20210505
+Version:          20210804
 Release:          alt1_1
 # Agreed by usptream to be GPLv2+
 # http://sourceforge.net/mailarchive/message.php?msg_id=29762202
@@ -43,6 +40,9 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/%{name}
 
 %changelog
+* Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 20210804-alt1_1
+- update to new release by fcimport
+
 * Thu Jul 08 2021 Igor Vlasenko <viy@altlinux.org> 20210505-alt1_1
 - update to new release by fcimport
 
