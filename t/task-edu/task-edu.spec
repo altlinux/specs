@@ -1,6 +1,6 @@
 Name:    task-edu
-Version: 1.4.6
-Release: alt3
+Version: 1.5.0
+Release: alt1
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
 Group:   Education
@@ -68,7 +68,6 @@ Requires: imagination
 Requires: connector
 %ifarch %ix86 x86_64 aarch64
 Requires: chromium
-Requires: chromium-disable-webfonts
 %endif
 Requires: fonts-otf-mozilla-fira
 %ifarch %ix86 x86_64 %e2k
@@ -104,36 +103,8 @@ Requires: netpolice-main
 Requires: ddclient
 %endif
 Requires: perl-IO-Socket-SSL
-# New utilites
-Requires: autossh
-Requires: inxi
-Requires: screenfetch
-Requires: ntpdate
-Requires: fdisk
-Requires: debhelper
-Requires: keyutils
-Requires: krb5-kinit
-Requires: xdg-user-dirs-gtk
-Requires: openresolv-bind
-# GUI utilities
-Requires: gparted
-Requires: rosa-imagewriter
-%ifnarch %e2k armh
-Requires: grub-customizer
-%endif
-# Additional filesystem support
-Requires: fuse-exfat
-# Electronic board support
-%ifarch %ix86 x86_64
-Requires: starboard-preinstall
-%endif
-# Authenticate with Active Directory and FreeIPA by SSSD
-Requires: task-auth-ad-sssd
-Requires: task-auth-freeipa
-Requires: sssd-ldap
-Requires: pam_pkcs11
-Requires: gvfs-shares
-Requires: shared-desktop-icons
+# For search exercises
+Requires: docx2txt odt2txt
 # Mass management and remote assistance
 %ifnarch %e2k
 Requires: puppet
@@ -161,86 +132,40 @@ Requires: pentaho-reporting-flow-engine
 Requires: perl-DBD-mysql
 Requires: postgresql-jdbc
 Requires: mysql-connector-java
-# Alterator modules
-Requires: alterator-notes
-Requires: alterator-groups
-Requires: alterator-logs
-Requires: alterator-net-general
-Requires: alterator-net-openvpn
-Requires: alterator-net-wifi
-Requires: alterator-sslkey
-Requires: alterator-updates
-# Communications
-Requires: pidgin
-Requires: pidgin-libnotify
-# Other stuff
-Requires: htop
-Requires: apt-rsync
-Requires: avplay
-%ifarch %ix86 x86_64
-Requires: bumblebee
-%endif
-Requires: cabextract
-Requires: cheese
-Requires: libsqlite
-Requires: lm_sensors3-utils
-Requires: man-pages-ru
-Requires: mc-full
-Requires: media-player-info
-Requires: nano
-Requires: quick-usb-formatter
-Requires: rpm-build
-Requires: sane
-Requires: sane-frontends
-Requires: setbranding
-Requires: system-report
-Requires: udev-rule-generator-cdrom
-%ifarch %ix86 x86_64
-Requires: virtualbox-guest-utils
-Requires: xorg-dri-intel
-%endif
-Requires: xorg-drv-synaptics
-Requires: xorg-conf-synaptics
-Requires: zbar
-Requires: audit
-Requires: vixie-cron
-# New stuff
-Requires: xfce4-whiskermenu-plugin
-Requires: menulibre
-Requires: mugshot
-Requires: xfce-polkit
-# New utilites
-Requires: disable-usb-autosuspend
-Requires: color-prompt-and-man
-Requires: shutter
-Requires: screenkey
 # Mozilla
 %ifnarch armh
 Requires: thunderbird
 %endif
-# Search
-Requires: recoll-full
-# Append all modules from xscreensaver
-Requires: desktop-screensaver-modules-xscreensaver
-Requires: desktop-screensaver-modules-xscreensaver-gl
-Requires: systemd-settings-enable-showstatus
-Requires: systemd-settings-disable-dumpcore
-Requires: systemd-settings-enable-log-to-tty12
-# Helper to deploy system services
-Requires: deploy
-# Network
-Requires: ipset
-# Group policy management
-Requires: alterator-gpupdate
+Summary(ru_RU.UTF-8): Базовый образовательный комплект
+Summary: Educational software (base set)
+%description
+%{summary}.
+
+%package tools
+Summary(ru_RU.UTF-8): Вспомогательные программы для Альт Образование
+Summary: Utilities for ALT Education
+Group: Other
+%ifnarch %e2k armh
+Requires: grub-customizer
+%endif
+# Electronic board support
+%ifarch %ix86 x86_64
+Requires: starboard-preinstall
+%endif
+%ifarch %ix86 x86_64
+Requires: bumblebee
+%endif
+%ifarch %ix86 x86_64
+Requires: virtualbox-guest-utils
+Requires: xorg-dri-intel
+%endif
 %ifnarch armh
 Requires: adp
 %endif
 %ifarch %e2k
 Requires: rtc
 %endif
-Summary(ru_RU.UTF-8): Базовый образовательный комплект
-Summary: Educational software (base set)
-%description
+%description tools
 %{summary}.
 
 %package preschool
@@ -471,17 +396,9 @@ Requires: puppetdb
 %ifnarch %e2k armh
 Requires: semaphore
 %endif
-Requires: ansible
-Requires: clamav
-Requires: clamav-db
 Requires: mariadb-server
 Requires: mariadb-client
 Requires: nano
-Requires: apt-rsync
-Requires: apt-repo
-Requires: setbranding
-Requires: htop
-Requires: bash-completion
 Requires: dansguardian
 Requires: perl-DBD-mysql
 #Requires: ejudge
@@ -489,10 +406,10 @@ Requires: ejabberd
 Requires: alterator-datetime
 Requires: alterator-console
 Requires: apache2-httpd-worker
-Requires: mariadb-server
 Requires: installed-db-office-server-mediawiki
 Requires: installed-db-office-server-nextcloud
 Requires: installed-db-office-server-moodle
+Requires: alt-domain-server
 Requires: alterator-fbi
 #Requires: alterator-bacula
 Requires: alterator-ca
@@ -504,7 +421,6 @@ Requires: alterator-ldap-groups
 Requires: alterator-ldap-users
 Requires: alterator-mirror
 Requires: alterator-net-domain
-Requires: alt-domain-server
 Requires: alterator-net-eth
 Requires: alterator-net-pppoe
 Requires: alterator-net-pptp
@@ -517,18 +433,19 @@ Requires: alterator-net-bond
 Requires: alterator-net-bridge
 Requires: alterator-net-iptables
 Requires: alterator-openldap
-Requires: samba4
 Requires: alterator-openvpn-server
 Requires: alterator-squid
 Requires: alterator-squidmill
 Requires: alterator-quota
 Requires: alterator-trust
-Requires: anonftp
 Requires: alterator-vsftpd
 Requires: alterator-xinetd
 Requires: alterator-postfix-dovecot
 Requires: alterator-ulogd
+Requires: anonftp
+Requires: samba4
 Requires: xauth
+# Terminal services
 Requires: xrdp
 Requires: pulseaudio-module-xrdp
 %ifarch %ix86 x86_64
@@ -568,6 +485,8 @@ Requires: task-edu-teacher
 
 %files
 
+%files tools
+
 %files preschool
 
 %files gradeschool
@@ -593,6 +512,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Mon Sep 20 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt1
+- Move utilities to distribution profile and package task-edu-tools.
+
 * Thu Aug 26 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.6-alt3
 - Thunderbird do not build for armh.
 

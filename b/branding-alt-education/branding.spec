@@ -3,8 +3,8 @@
 %define theme education
 %define Theme Education
 %define codename FalcoRusticolus
-%define status %nil
-%define status_en %nil
+%define status beta
+%define status_en beta
 %define flavour %brand-%theme
 
 %define gtk_theme Breeze
@@ -25,8 +25,8 @@
 %define design_graphics_abi_bugfix 0
 
 Name: branding-%flavour
-Version: 9.2
-Release: alt5
+Version: 10.0
+Release: alt0.1.beta
 
 %ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
@@ -62,7 +62,7 @@ Summary: Graphical boot logo for grub2, lilo and syslinux
 Summary(ru_RU.UTF-8): Тема для экрана выбора вариантов загрузки (lilo и syslinux)
 License: GPL-2.0
 
-Requires(pre):    coreutils
+Requires(pre): coreutils
 Provides:  design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
 %branding_add_conflicts %flavour bootloader
 
@@ -84,7 +84,7 @@ License:  Distributable
 Group:    System/Configuration/Boot and Init
 Provides: plymouth-theme-%theme
 Requires: plymouth-plugin-script
-Requires(pre):   plymouth
+Requires(pre): plymouth
 
 %branding_add_conflicts %flavour bootsplash
 
@@ -322,6 +322,13 @@ make
 
 %install
 %makeinstall
+
+# Move os-release to /usr/lib
+mkdir -p %buildroot%_libexecdir
+mv %buildroot%_sysconfdir/os-release %buildroot%_libexecdir/os-release
+touch %buildroot%_sysconfdir/os-release
+install -Dm0755 release.filetrigger %buildroot%_rpmlibdir/%flavour-release.filetrigger
+
 find %buildroot -name \*.in -delete
 
 #bootloader
@@ -409,8 +416,14 @@ subst 's/^#\?clock-format=.*/clock-format=%A, %x %H:%M/' /etc/lightdm/lightdm-gt
 %_pixmapsdir/system-logo.png
 
 %files release
-%_sysconfdir/*-release
+%_sysconfdir/altlinux-release
+%_sysconfdir/fedora-release
+%_sysconfdir/redhat-release
+%_sysconfdir/system-release
+%ghost %_sysconfdir/os-release
+%_libexecdir/os-release
 %_sysconfdir/buildreqs/packages/ignore.d/*
+%_rpmlibdir/*.filetrigger
 
 %files notes
 %_datadir/alt-notes/*
@@ -466,6 +479,10 @@ subst 's/^#\?clock-format=.*/clock-format=%A, %x %H:%M/' /etc/lightdm/lightdm-gt
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Mon Sep 20 2021 Andrey Cherepanov <cas@altlinux.org> 10.0-alt0.1.beta
+- 10.0 beta.
+- Store old values in /etc/os-release with ALT_installed_ prefix.
+
 * Thu Aug 05 2021 Andrey Cherepanov <cas@altlinux.org> 9.2-alt5
 - Fix trembling hovered buttons in ahttpd.
 - Move templates to package document-templates.
