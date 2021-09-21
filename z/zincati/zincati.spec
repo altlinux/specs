@@ -10,9 +10,9 @@
 
 Name:     zincati
 Version:  0.0.22
-Release:  alt4
+Release:  alt5
 
-Summary:  An auto-update agent for Fedora CoreOS hosts.
+Summary:  An auto-update agent for ALT Container OS hosts.
 License:  Apache-2.0
 Group:    Development/Tools
 Url:      https://github.com/coreos/zincati
@@ -44,6 +44,7 @@ install dist/dbus-1/system.d/org.coreos.zincati.conf %buildroot%zincati_dbus_sys
 install -Dm 755 alt-ostree %buildroot%_bindir/alt-ostree
 ln -s alt-ostree %buildroot%_bindir/rpm-ostree
 install -d -m 0755 %buildroot%zincati_home
+install -d -m 0755 %buildroot/var/log/alt-ostree
 
 %pre
 groupadd -r -f %zincati_group >/dev/null 2>&1 ||:
@@ -56,11 +57,16 @@ useradd -g %zincati_group -G root,wheel -c 'Zincati user for auto-updates' -M -d
 %_unitdir/*
 %_tmpfilesdir/*
 %attr(-,%zincati_user,%zincati_group) %dir %zincati_home
+%attr(-,%zincati_user,%zincati_group) %dir /var/log/alt-ostree
 %zincati_confdir1
 %zincati_confdir2
 %doc *.md
 
 %changelog
+* Tue Sep 21 2021 Andrey Sokolov <keremet@altlinux.org> 0.0.22-alt5
+- Change alt-ostree log location (closes 40974)
+- Fix summary
+
 * Wed Sep 15 2021 Andrey Sokolov <keremet@altlinux.org> 0.0.22-alt4
 - Fix trailing whitespace
 - Use rust macros
