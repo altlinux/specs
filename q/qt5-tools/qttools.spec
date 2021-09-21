@@ -9,7 +9,7 @@
 
 Name: qt5-tools
 Version: 5.15.2
-Release: alt4
+Release: alt5
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -340,6 +340,8 @@ fi
 %_qt5_libdatadir/libQt?*.a
 %_pkgconfigdir/Qt?UiTools.pc
 
+%files  devel-static
+
 %files doc
 %if_disabled bootstrap
 %_qt5_docdir/*
@@ -360,6 +362,9 @@ fi
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Tue Sep 21 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt5
+- package empty devel-static package to solve autorebuild tests
+
 * Fri Sep 10 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt4
 - move static libs to devel subpackage (closes: 40884)
 - disable LTO
