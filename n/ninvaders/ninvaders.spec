@@ -1,17 +1,15 @@
+Group: Games/Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           ninvaders
 Version:        0.1.1
-Release:        alt3_16
+Release:        alt3_20
 Summary:        Space Invaders clone written in ncurses for cli gaming
-
-Group:          Games/Other
 License:        GPLv2+
 URL:            http://ninvaders.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Patch0:         ninvaders-0.1.1-fedora.patch
-
-
+BuildRequires:  gcc
 BuildRequires:  libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 Source44: import.info
 
@@ -25,9 +23,9 @@ line.
 %patch0 -p0
 iconv -f iso-8859-1 -t utf8 ChangeLog > ChangeLog.new && \
 touch -r ChangeLog ChangeLog.new && mv ChangeLog.new ChangeLog
+sed -i 's|-lncurses|-lncurses -Wl,--allow-multiple-definition|' Makefile
 
 %build
-%add_optflags -fcommon
 %make_build
 
 %install
@@ -37,8 +35,10 @@ install -Dp -m0755 nInvaders %{buildroot}%{_bindir}/nInvaders
 %doc ChangeLog README gpl.txt
 %{_bindir}/nInvaders
 
-
 %changelog
+* Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 0.1.1-alt3_20
+- update to new release by fcimport
+
 * Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt3_16
 - fixed build with gcc10
 
