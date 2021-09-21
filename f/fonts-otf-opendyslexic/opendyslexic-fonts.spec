@@ -4,19 +4,19 @@ Group: System/Fonts/True type
 %define _localstatedir %{_var}
 %global fontname opendyslexic
 %global fontconf 60-%{fontname}.conf
-%global gitdate 20121008
-%global gitrev 0c6748ab6b
+%global gitdate 20210904
+%global gitrev e7ac50a
 
 Name:		fonts-otf-opendyslexic
-Version:	0.600
-Release:	alt1_9
+# This is the version from the compiled fonts (thanks fontforge)
+Version:	0.940
+Release:	alt1_1
 Summary:	Font designed for dyslexics and high readability
-License:	Bitstream Vera and CC-BY
+License:	OFL
 URL:		http://dyslexicfonts.com/
 # No source tarballs that I could find, so we get it from github
-# git clone https://github.com/antijingoist/open-dyslexic
-# mv open-dyslexic opendyslexic
-# tar cfj opendyslexic-20121008git0c6748ab6b.tar.bz2 opendyslexic
+# git clone https://github.com/antijingoist/opendyslexic
+# tar cfj opendyslexic-20210904gite7ac50a.tar.bz2 opendyslexic
 Source0:	%{fontname}-%{gitdate}git%{gitrev}.tar.bz2
 Source1:	%{oldname}-fontconfig.conf
 Source2:	%{fontname}.metainfo.xml
@@ -38,7 +38,7 @@ input from dyslexic users.
 
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p otf/*.otf %{buildroot}%{_fontdir}
+install -m 0644 -p compiled/OpenDyslexic*.otf %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
 		%{buildroot}%{_fontconfig_confdir}
@@ -90,11 +90,16 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.otf
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 %doc README.md
+%doc --no-dereference OFL.txt
 
 %changelog
+* Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 0.940-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.600-alt1_9
 - update to new release by fcimport
 
