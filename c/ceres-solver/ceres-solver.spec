@@ -2,7 +2,7 @@ Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 # END SourceDeps(oneline)
-%define fedora 32
+%define fedora 34
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           ceres-solver
@@ -10,7 +10,7 @@ Version:        2.0.0
 # Release candidate versions are messy. Give them a release of
 # e.g. "0.1.0%%{?dist}" for RC1 (and remember to adjust the Source0
 # URL). Non-RC releases go back to incrementing integers starting at 1.
-Release:        alt1_4
+Release:        alt1_6
 Summary:        A non-linear least squares minimizer
 
 License:        BSD
@@ -20,8 +20,11 @@ Source0:        http://%{name}.org/%{name}-%{version}.tar.gz
 
 %if 0%{?fedora} >= 33 || 0%{?rhel} >= 9
 %global blaslib flexiblas
+%global cmake_blas_flags -DBLA_VENDOR=FlexiBLAS
 %else
 %global blaslib openblas
+%global blasvar o
+%global cmake_blas_flags -DBLAS_LIBRARIES=%{_libdir}/lib%{blaslib}%{blasvar}.so
 %endif
 
 %if 0%{?rhel} > 0 && 0%{?rhel} < 7
@@ -105,7 +108,7 @@ developing applications that use %{name}.
 %build
 %{fedora_v2_cmake} \
   -DCXSPARSE_INCLUDE_DIR:PATH=%{_includedir}/suitesparse \
-  -DBLAS_LIBRARIES=-l%{blaslib} \
+  %{cmake_blas_flags} \
   -DGFLAGS_INCLUDE_DIR=%{_includedir}
 %fedora_v2_cmake_build
 
@@ -142,6 +145,9 @@ developing applications that use %{name}.
 
 
 %changelog
+* Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 2.0.0-alt1_6
+- update to new release by fcimport
+
 * Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 2.0.0-alt1_4
 - update to new release by fcimport
 
