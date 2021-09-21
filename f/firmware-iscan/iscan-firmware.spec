@@ -5,7 +5,7 @@ Group: System/Base
 Summary:	Firmware for Epson flatbed scanners
 Name:		firmware-iscan
 Version:	20190508
-Release:	alt1_1
+Release:	alt1_6
 License:	Redistributable, no modification permitted
 URL:		http://download.ebz.epson.net/dsc/search/01/search/
 BuildArch:	noarch
@@ -51,11 +51,7 @@ Source15:   imagescan-plugin-gt-s650-1.0.1-1epson4fedora30.x86_64.rpm
 # GT-X830
 Source16:   iscan-plugin-gt-x830-1.0.0-5.x86_64.rpm
 
-%if 0%{?rhel} == 6
-Requires:	udev
-%else
 Requires:	linux-firmware
-%endif
 Source44: import.info
 
 %description
@@ -77,7 +73,7 @@ Firmware for the following Epson flatbed scanners:
 * esfwdd: Perfection V37/V370 / GT-F740 / GT-S640
 * esfweb: Perfection V550 PHOTO
 * esfw010c: Perfection V19/V39 / GT-S650
-* Esfw0111: GT-X830
+* esfw0111: GT-X830
 
 %prep
 %setup -n %{oldname}-%{version} -c -T
@@ -104,12 +100,14 @@ mkdir -p %{buildroot}/lib/firmware/epson
 install -pm644 .%{_datadir}/{iscan,esci,utsushi}/*.bin %{buildroot}/lib/firmware/epson
 
 %files
-%{!?_licensedir:%global license %%doc}
 %doc --no-dereference AVASYSPL.en.txt EAPL.en.txt LICENSE.EPSON.en.txt
 %lang(ja) %doc --no-dereference AVASYSPL.ja.txt EAPL.ja.txt LICENSE.EPSON.ja.txt
 /lib/firmware/epson
 
 %changelog
+* Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 20190508-alt1_6
+- update to new release by fcimport
+
 * Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 20190508-alt1_1
 - update to new release by fcimport
 
