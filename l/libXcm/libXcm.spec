@@ -1,10 +1,13 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: pkgconfig(x11)
+# END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libXcm
 Version:        0.5.3
-Release:        alt1_17
+Release:        alt1_20
 Summary:        X Color Management Library
 License:        MIT
 URL:            http://www.oyranos.org
@@ -12,9 +15,10 @@ Source0:        http://downloads.sourceforge.net/oyranos/libXcm-%{version}.tar.b
 BuildRequires:  ctest cmake
 BuildRequires:  doxygen
 BuildRequires:  graphviz libgraphviz
+BuildRequires:  libtool
 BuildRequires:  libXfixes-devel
 BuildRequires:  libXmu-devel
-BuildRequires:  libX11-devel libXvMC-devel xorg-proto-devel
+BuildRequires:  xorg-proto-devel
 BuildRequires:  xorg-util-macros
 Source44: import.info
 Patch33: libXcm-0.5.3-alt-linkage.patch
@@ -39,17 +43,19 @@ developing applications that use %{name}.
 
 %build
 autoreconf -fisv
+autoreconf -vif
 %configure --disable-static --enable-shared
 %make_build
 
 %install
-make install DESTDIR=%{buildroot} INSTALL="install -p"
+%makeinstall_std
 find %{buildroot} -name '*.la' -delete -print
 
 
 
 %files
-%doc AUTHORS COPYING ChangeLog README
+%doc AUTHORS ChangeLog README
+%doc --no-dereference COPYING
 %{_libdir}/*.so.*
 
 %files devel
@@ -61,6 +67,9 @@ find %{buildroot} -name '*.la' -delete -print
 %{_mandir}/man3/*.3*
 
 %changelog
+* Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 0.5.3-alt1_20
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt1_17
 - update to new release by fcimport
 
