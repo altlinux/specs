@@ -1,5 +1,5 @@
 Name: startup-installer-acos
-Version: 0.2
+Version: 0.2.1
 Release: alt1
 #Architectures which grub-common exists on
 ExclusiveArch: %ix86 x86_64 aarch64 ppc64le riscv64
@@ -42,6 +42,9 @@ install -pm444 config_example.ign %buildroot%_datadir/acos/
 %_datadir/acos
 
 %changelog
+* Thu Sep 21 2021 Andrey Sokolov <keremet@altlinux.org> 0.2.1-alt1
+- Fix example ignition config. User acos has already been created before starting of ignition. Ignition should set password only
+
 * Wed Sep 1 2021 Andrey Sokolov <keremet@altlinux.org> 0.2-alt1
 - Show unpacking progress
 - Add hint how to change password hash
