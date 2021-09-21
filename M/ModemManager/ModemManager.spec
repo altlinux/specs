@@ -17,7 +17,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.18.0
+Version: 1.18.2
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -242,6 +242,9 @@ fi
 %endif
 
 %changelog
+* Tue Sep 21 2021 Mikhail Efremov <sem@altlinux.org> 1.18.2-alt1
+- Updated to 1.18.2.
+
 * Wed Sep 15 2021 Mikhail Efremov <sem@altlinux.org> 1.18.0-alt1
 - Disabled tests.
 - Explicitly enabled libqrtr-glib support.
