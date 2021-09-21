@@ -1,5 +1,5 @@
 Name: imlib2
-Version: 1.7.3
+Version: 1.7.4
 Release: alt1
 
 Summary: Image loading, saving, rendering, and manipulation library
@@ -105,6 +105,9 @@ find %buildroot%_libdir/ -name '*.la' -delete
 %endif
 
 %changelog
+* Tue Sep 21 2021 Leontiy Volodin <lvol@altlinux.org> 1.7.4-alt1
+- New version (1.7.4) with rpmgs script.
+
 * Mon Aug 16 2021 Leontiy Volodin <lvol@altlinux.org> 1.7.3-alt1
 - New version (1.7.3) with rpmgs script.
 
