@@ -1,8 +1,8 @@
 %define binutils_sourcedir /usr/src/binutils-source
 
 Name: binutils
-Version: 2.35.2
-Release: alt2
+Version: 2.37
+Release: alt1
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -18,11 +18,9 @@ Source3: g++.sh
 Source4: ld.sh
 Source5: output-format.sed
 
-Patch: binutils-2_35-branch.patch
+Patch: binutils-2_37-branch.patch
 
 # Backports from upstream
-Patch1001: 0001-ld-elf-x86-Don-t-compare-IFUNC-address-in-the-shared.patch
-Patch1002: 0002-gold-Remove-the-circular-IFUNC-dependency-in-ifuncma.patch
 
 # ALT patches
 Patch01: 0001-ld-testsuite-ld-ifunc-pr18808b.c-pass-Wno-return-typ.patch
@@ -32,15 +30,22 @@ Patch04: 0004-ld-add-no-warn-shared-textrel-option.patch
 Patch05: 0005-ld-enable-optimization-by-default.patch
 Patch06: 0006-ld-testsuite-restore-upstream-default-options.patch
 Patch07: 0007-gold-testsuite-use-sysv-hash-style-for-two-tests.patch
-Patch08: 0008-readelf-objdump-enable-wide-unconditionally.patch
+Patch08: 0008-gas-testsuite-gas-aarch64-codealign.d-fix-pattern.patch
 Patch09: 0009-Drop-redundant-and-misleading-test-headers.patch
-Patch10: 0010-Dropped-unused-test-file.patch
+Patch10: 0010-ld-testsuite-ld-aarch64-disable-textrel-warning-for-.patch
 Patch11: 0011-Use-wide-output-of-readelf-and-objdump-in-tests.patch
-Patch12: 0012-Load-libdebuginfod-library-on-demand.patch
-Patch13: 0013-ld-testsuite-ld-cdtest-cdtest.exp-disable-Wstringop-.patch
-Patch14: 0014-gold-testsuite-disable-PIE.patch
-Patch15: 0015-ld-testsuite-ld-i386-use-z-lazy-binding-for-tests-fa.patch
+Patch12: 0012-readelf-objdump-add-no-wide-option-support.patch
+Patch13: 0013-readelf-objdump-enable-wide-option-by-default.patch
+Patch14: 0014-Dropped-unused-test-file.patch
+Patch15: 0015-Load-libdebuginfod-library-on-demand.patch
+Patch16: 0016-ld-testsuite-ld-cdtest-cdtest.exp-disable-Wstringop-.patch
+Patch17: 0017-gold-testsuite-disable-PIE.patch
+Patch18: 0018-ld-testsuite-ld-i386-use-z-lazy-binding-for-tests-fa.patch
+Patch19: 0019-libctf-testsuite-disable-all-warnings-enabled-by-Wal.patch
+Patch20: 0020-ld-testsuite-ld-bootstrap-bootstrap.exp-disable-Wpsa.patch
+Patch21: 0021-Fix-libtool-parts-inlined-into-pregenerated-files.patch
 
+%def_enable pgo_lto
 %def_with debuginfod
 
 # List of architectures worthy to care about test results.
@@ -107,8 +112,6 @@ This package contains source code of GNU Binutils.
 chmod +x gold/testsuite/plugin_pr22868.sh
 
 # Backports from upstream
-%patch1001 -p1
-%patch1002 -p1
 
 # ALT patches
 %patch01 -p1
@@ -126,20 +129,12 @@ chmod +x gold/testsuite/plugin_pr22868.sh
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
-
-# Replay libtool commits
-# a042d335197ac7afb824ab54c3aab91f3e79a2d0
-# 9e68384a4fac10585e54519a3f1925cb99d338e8
-sed -i -e '
-/^      \*32-bit\*)$/ a \
-	libsuff=x32
-/^      \*64-bit\*)$/ a \
-	libsuff=64
-s,sys_lib_search_path_spec="/lib /usr/lib /usr/local/lib",sys_lib_search_path_spec="/lib$libsuff /usr/lib$libsuff /usr/local/lib$libsuff",
-s,sys_lib_dlsearch_path_spec="/lib /usr/lib",sys_lib_dlsearch_path_spec="/lib$libsuff /usr/lib$libsuff",
-s,sys_lib_dlsearch_path_spec="/lib /usr/lib \$lt_ld_extra",sys_lib_dlsearch_path_spec="$sys_lib_dlsearch_path_spec $lt_ld_extra",
-s,x86_64-\*kfreebsd\*-gnu|x86_64-\*linux\*|powerpc\*-\*linux\*|,aarch64*-*linux*|riscv64*-*linux*|mips64*-*linux*|&,
-' libtool.m4 */configure
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
+%patch20 -p1
+%patch21 -p1
 
 sed -i 's/%%{release}/%release/g' bfd/Makefile{.am,.in}
 
@@ -156,7 +151,11 @@ ADDITIONAL_TARGETS="--enable-targets=i386-alt-linux"
 %ifarch ppc
 ADDITIONAL_TARGETS="--enable-targets=powerpc64-alt-linux --enable-targets=spu --enable-64-bit-bfd"
 %endif
+%{?optflags_lto:%global optflags_lto %nil}
 %configure \
+%if_enabled pgo_lto
+	--enable-pgo-build=lto \
+%endif
 	%{subst_with debuginfod} \
 	--with-system-zlib \
 	--enable-shared \
@@ -175,9 +174,7 @@ ADDITIONAL_TARGETS="--enable-targets=powerpc64-alt-linux --enable-targets=spu --
 	--enable-deterministic-archives \
 	$ADDITIONAL_TARGETS
 
-for t in configure-host maybe-all-{libiberty,bfd,opcodes} all; do
-	%make_build MAKEINFOFLAGS=--no-split tooldir=%_prefix $t
-done
+%make_build MAKEINFOFLAGS=--no-split tooldir=%_prefix
 
 %install
 %makeinstall_std tooldir=%_prefix install-info
@@ -272,6 +269,8 @@ cp %PATCH0 %buildroot%binutils_sourcedir/
 %find_lang binutils bfd gas gold gprof ld opcodes --append --output files.lst
 
 %set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 %check
 [ -w /dev/ptmx -a -f /proc/self/maps ] || exit
@@ -296,6 +295,8 @@ XFAIL_TESTS="$XFAIL_TESTS script_test_12i"
 %_bindir/*
 %_prefix/lib/ldscripts/
 %_mandir/man?/*
+%dir %_libdir/bfd-plugins
+%_libdir/bfd-plugins/libdep.so
 %_libdir/libopcodes-*.so
 %_libdir/libbfd-*.so
 %_libdir/libctf.so.0*
@@ -320,6 +321,10 @@ XFAIL_TESTS="$XFAIL_TESTS script_test_12i"
 %binutils_sourcedir
 
 %changelog
+* Sat Sep 11 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.37-alt1
+- Updated to 2.37 20210908.
+- Added --no-wide option to objdump and readelf utilities.
+
 * Tue Jul 06 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.35.2-alt2
 - Enabled deterministic mode in ar(1) and objcopy(1) by default.
 
@@ -337,7 +342,7 @@ XFAIL_TESTS="$XFAIL_TESTS script_test_12i"
 
 * Tue Dec 01 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.35.1-alt1
 - Updated to 2.35.1 20201123.
-- enabled features in objdump and readelf:
+- Enabled features in objdump and readelf:
   + unconditional --wide;
   + libdebuginfod support.
 

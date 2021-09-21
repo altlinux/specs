@@ -1,8 +1,8 @@
-%define gcc_branch 10
+%define gcc_branch 11
 
 Name: gcc%gcc_branch
-Version: 10.3.1
-Release: alt5
+Version: 11.2.1
+Release: alt1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -17,7 +17,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20210703
+%define snapshot 20210910
 
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
@@ -49,6 +49,7 @@ Url: https://gcc.gnu.org/
 %define gnat_arches		%ix86 x86_64
 %define go_arches		%ix86 x86_64
 %define libasan_arches		%ix86 x86_64 %arm aarch64 ppc64le
+%define libhwasan_arches	aarch64
 %define libatomic_arches	%ix86 x86_64 %arm aarch64 mips mipsel s390x riscv64 ppc64le
 %define libitm_arches		%ix86 x86_64 %arm aarch64 s390x ppc64le
 %define liblsan_arches		x86_64 aarch64 ppc64le
@@ -62,6 +63,9 @@ Url: https://gcc.gnu.org/
 %def_with go
 %endif
 %ifarch %libasan_arches
+%def_with libsanitizer
+%endif
+%ifarch %libhwasan_arches
 %def_with libsanitizer
 %endif
 %ifarch %libtsan_arches
@@ -98,7 +102,7 @@ Url: https://gcc.gnu.org/
 # this gcc is expected to be installable at stage 2.
 # NB: compat and precompat are mutually exclusive.
 %def_disable precompat
-%def_enable compat
+%def_disable compat
 
 # For some architectures we do not want multilib support.
 %ifarch riscv64
@@ -138,7 +142,6 @@ Source: %srcfilename.tar
 
 # Fedora patches.
 Patch100: gcc-hack.patch
-Patch101: gcc-i386-libgomp.patch
 Patch102: gcc-sparc-config-detection.patch
 Patch103: gcc-libgomp-omp_h-multilib.patch
 Patch104: gcc-libtool-no-rpath.patch
@@ -318,6 +321,26 @@ Requires: libasan6 %REQ %EVR
 
 %description -n libasan%gcc_branch-devel-static
 This package contains Address Sanitizer static library.
+
+####################################################################
+# Hardware-assisted Address Sanitizer library
+
+%package -n libhwasan0
+Summary: The Hardware-assisted Address Sanitizer runtime library
+Group: System/Libraries
+Requires: libgcc1 %REQ %EVR
+
+%description -n libhwasan0
+This package contains the Hardware-assisted Address Sanitizer runtime
+library which is used for -fsanitize=hwaddress instrumented programs.
+
+%package -n libhwasan%gcc_branch-devel-static
+Summary: The Hardware-assisted Address Sanitizer static library
+Group: Development/C
+Requires: libhwasan0 %REQ %EVR
+
+%description -n libhwasan%gcc_branch-devel-static
+This package contains Hardware-assisted Address Sanitizer static library.
 
 ####################################################################
 # Thread Sanitizer library
@@ -625,18 +648,18 @@ in order to explicitly use the GNU C++ compiler version %version.
 ####################################################################
 # D Runtime
 
-%package -n libgdruntime1
+%package -n libgdruntime2
 Summary: D runtime
 Group: System/Libraries
 
-%description -n libgdruntime1
+%description -n libgdruntime2
 This package contains DRuntime shared library which is the
 low-level runtime library backing the D programming language.
 
 %package -n libgdruntime%gcc_branch-devel
 Summary: Development files for DRuntime library
 Group: Development/Other
-Requires: libgdruntime1 = %EVR
+Requires: libgdruntime2 = %EVR
 
 %description -n libgdruntime%gcc_branch-devel
 This package contains development files for DRuntime library.
@@ -644,24 +667,24 @@ This package contains development files for DRuntime library.
 %package -n libgdruntime%gcc_branch-devel-static
 Summary: Static DRuntime library
 Group: Development/Other
-Requires: libgdruntime1 = %EVR
+Requires: libgdruntime2 = %EVR
 Requires: libgdruntime%gcc_branch-devel = %EVR
 
 %description -n libgdruntime%gcc_branch-devel-static
 This package contains static DRuntime library.
 
-%package -n libgphobos1
+%package -n libgphobos2
 Summary: D runtime
 Group: System/Libraries
 
-%description -n libgphobos1
+%description -n libgphobos2
 This packages contains the standard library for the D Programming
 Language which is needed to run D dynamically linked programs.
 
 %package -n libgphobos%gcc_branch-devel
 Summary: Development files for DRuntime library
 Group: Development/Other
-Requires: libgphobos1 = %EVR
+Requires: libgphobos2 = %EVR
 
 %description -n libgphobos%gcc_branch-devel
 This package contains development files for DRuntime library.
@@ -841,8 +864,8 @@ Group: Development/Other
 # This is not a noarch subpackage because of libquadmath_arches.
 #BuildArch: noarch
 Requires: %name-doc = %EVR
-Conflicts: gcc9-fortran-doc gcc8-fortran-doc gcc7-fortran-doc
-Obsoletes: gcc9-fortran-doc gcc8-fortran-doc gcc7-fortran-doc
+Conflicts: gcc10-fortran-doc gcc9-fortran-doc gcc8-fortran-doc gcc7-fortran-doc
+Obsoletes: gcc10-fortran-doc gcc9-fortran-doc gcc8-fortran-doc gcc7-fortran-doc
 
 %description fortran-doc
 This package contains documentation for the GNU Fortran Compiler
@@ -891,7 +914,7 @@ package includes the static libraries needed for Ada 95 development.
 %package gnat
 Summary: The GNU Ada Compiler
 Group: Development/Other
-Obsoletes: gcc9-gnat gcc8-gnat gcc7-gnat gcc6-gnat gcc5-gnat gcc4.9-gnat gcc4.8-gnat gcc4.7-gnat gcc4.6-gnat gcc4.5-gnat gcc4.4-gnat gcc4.3-gnat gcc4.2-gnat gcc4.1-gnat
+Obsoletes: gcc10-gnat gcc9-gnat gcc8-gnat gcc7-gnat gcc6-gnat gcc5-gnat gcc4.9-gnat gcc4.8-gnat gcc4.7-gnat gcc4.6-gnat gcc4.5-gnat gcc4.4-gnat gcc4.3-gnat gcc4.2-gnat gcc4.1-gnat
 Requires(pre): gcc-gnat-common
 Requires: %name = %EVR
 Requires: libgnat%gcc_branch-devel = %EVR
@@ -914,8 +937,8 @@ Group: Development/Other
 # This is not a noarch subpackage because of gnat_arches.
 #BuildArch: noarch
 Requires: %name-doc = %EVR
-Conflicts: gcc9-gnat-doc gcc8-gnat-doc gcc7-gnat-doc
-Obsoletes: gcc9-gnat-doc gcc8-gnat-doc gcc7-gnat-doc
+Conflicts: gcc10-gnat-doc gcc9-gnat-doc gcc8-gnat-doc gcc7-gnat-doc
+Obsoletes: gcc10-gnat-doc gcc9-gnat-doc gcc8-gnat-doc gcc7-gnat-doc
 
 %description gnat-doc
 This package contains documentation for the GNU Ada Compiler
@@ -924,12 +947,12 @@ version %version.
 ####################################################################
 # Go Libraries
 
-%package -n libgo16
+%package -n libgo19
 Summary: Go runtime libraries
 Group: System/Libraries
 Requires: libgcc1 %REQ %EVR
 
-%description -n libgo16
+%description -n libgo19
 This package contains the shared libraries required to run programs
 compiled with the GNU Go compiler if they are compiled to use
 shared libraries.
@@ -938,7 +961,7 @@ shared libraries.
 Summary: Header files and libraries for Go development
 Group: Development/Other
 Requires(pre): gcc-common >= 1.4.7
-Requires: libgo16 %REQ %EVR
+Requires: libgo19 %REQ %EVR
 
 %description -n libgo%gcc_branch-devel
 This package includes the include files and libraries needed for
@@ -980,8 +1003,8 @@ Group: Development/Other
 # This is not a noarch subpackage because of go_arches.
 #BuildArch: noarch
 Requires: %name-doc = %EVR
-Conflicts: gcc9-go-doc gcc8-go-doc gcc7-go-doc
-Obsoletes: gcc9-go-doc gcc8-go-doc gcc7-go-doc
+Conflicts: gcc10-go-doc gcc9-go-doc gcc8-go-doc gcc7-go-doc
+Obsoletes: gcc10-go-doc gcc9-go-doc gcc8-go-doc gcc7-go-doc
 
 %description go-doc
 This package contains documentation for the GNU compiler version %version
@@ -1034,7 +1057,8 @@ Conflicts: gcc6-doc
 Conflicts: gcc7-doc
 Conflicts: gcc8-doc
 Conflicts: gcc9-doc
-Obsoletes: gcc3.0-doc gcc3.1-doc gcc3.2-doc gcc3.3-doc gcc3.4-doc gcc4.1-doc gcc4.3-doc gcc4.4-doc gcc4.5-doc gcc4.6-doc gcc4.7-doc gcc4.8-doc gcc4.9-doc gcc5-doc gcc6-doc gcc7-doc gcc8-doc gcc9-doc
+Conflicts: gcc10-doc
+Obsoletes: gcc3.0-doc gcc3.1-doc gcc3.2-doc gcc3.3-doc gcc3.4-doc gcc4.1-doc gcc4.3-doc gcc4.4-doc gcc4.5-doc gcc4.6-doc gcc4.7-doc gcc4.8-doc gcc4.9-doc gcc5-doc gcc6-doc gcc7-doc gcc8-doc gcc9-doc gcc10-doc
 
 %description doc
 This package contains documentation for the GNU Compiler Collection
@@ -1047,7 +1071,6 @@ version %version.
 
 # Fedora patches.
 %patch100 -p0
-%patch101 -p0
 %patch102 -p0
 %patch103 -p0
 %patch104 -p0
@@ -1550,6 +1573,9 @@ for n in \
 %ifarch %libasan_arches
     libasan-devel-static \
 %endif
+%ifarch %libhwasan_arches
+    libhwasan-devel-static \
+%endif
 %ifarch %libtsan_arches
     libtsan-devel-static \
 %endif
@@ -1725,6 +1751,10 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %gcc_target_libdir/libasan_preinit.o
 %gcc_target_libdir/libasan.so
 %endif
+%ifarch %libhwasan_arches
+%gcc_target_libdir/include/sanitizer/hwasan_interface.h
+%gcc_target_libdir/libhwasan.so
+%endif
 %ifarch %libitm_arches
 %gcc_target_libdir/libitm.so
 %gcc_target_libdir/libitm.spec
@@ -1788,6 +1818,11 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %_libdir/libasan.so.6*
 %endif
 
+%ifarch %libhwasan_arches
+%files -n libhwasan0
+%_libdir/libhwasan.so.0*
+%endif
+
 %ifarch %libtsan_arches
 %files -n libtsan0
 %_libdir/libtsan.so.0*
@@ -1841,6 +1876,13 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %dir %gcc_target_libdir/include/sanitizer/
 %gcc_target_libdir/include/sanitizer/asan_interface.h
 %gcc_target_libdir/libasan.a
+%endif
+
+%ifarch %libhwasan_arches
+%files -n libhwasan%gcc_branch-devel-static
+%config %_sysconfdir/buildreqs/packages/substitute.d/libhwasan%gcc_branch-devel-static
+%dir %gcc_target_libdir/
+%gcc_target_libdir/libhwasan.a
 %endif
 
 %ifarch %libtsan_arches
@@ -1954,6 +1996,7 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %_bindir/%gcc_target_platform-g++%psuffix
 %_man1dir/g++%psuffix.*
 %gcc_target_libdir/cc1plus
+%gcc_target_libdir/g++-mapper-server
 %ifarch %libvtv_arches
 %gcc_target_libdir/vtv_*.o
 %gcc_target_libdir/include/vtv_*.h
@@ -1961,8 +2004,8 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 
 %if_enabled d
 %ifarch %d_runtime_arches
-%files -n libgphobos1
-%_libdir/libgphobos.so.1*
+%files -n libgphobos2
+%_libdir/libgphobos.so.2*
 
 %files -n libgphobos%gcc_branch-devel
 %gcc_target_libdir/include/d
@@ -1972,8 +2015,8 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %files -n libgphobos%gcc_branch-devel-static
 %gcc_target_libdir/libgphobos.a
 
-%files -n libgdruntime1
-%_libdir/libgdruntime.so.1*
+%files -n libgdruntime2
+%_libdir/libgdruntime.so.2*
 
 %files -n libgdruntime%gcc_branch-devel
 %gcc_target_libdir/libgdruntime.so
@@ -2106,8 +2149,8 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %files go-doc
 %_infodir/gccgo.info*
 
-%files -n libgo16
-%_libdir/libgo.so.16*
+%files -n libgo19
+%_libdir/libgo.so.19*
 
 %files -n libgo%gcc_branch-devel
 %dir %gcc_doc_dir/
@@ -2169,13 +2212,13 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
-* Sun Sep 12 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.3.1-alt5
-- Rebuilt in gcc11 compatibility mode.
-
-* Sat Aug 28 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.3.1-alt4
-- Rebuilt in precompat mode to prepare for gcc11 build.
-- Fixed FTBFS with global link-time optimization flags (by disabling them,
-  but using internal LTO build capabilities).
+* Sun Sep 12 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 11.2.1-alt1
+- Updated to merged branches from git://gcc.gnu.org/git/gcc.git:
+  + vendors/redhat/heads/gcc-11-branch
+  commit b558c8e931f0c36cda40bd60f5cdeb92452e91b5;
+  + releases/gcc-11
+  commit r11-8978-ga22c0458cb5605a79d4c2c192e05afabe511e320.
+- Synced with Fedora gcc 11.2.1-3 and Debian gcc-11 11.2.0-3.
 
 * Sat Jul 31 2021 Vitaly Chikunov <vt@altlinux.org> 10.3.1-alt3
 - Move contents of libexecdir to libdir (ALT#40611).
@@ -2197,7 +2240,7 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 - Updated to merged branches from git://gcc.gnu.org/git/gcc.git (ALT#39798):
   + vendors/redhat/heads/gcc-10-branch
   commit 966e4575ccd8b618811b4871e44c31bb2d11a82a;
-  + origin/releases/gcc-10
+  + releases/gcc-10
   commit a07015ad4dc18a1167720aece205deca702a1ab1.
 - %name-plugin-devel: added R: libgmp-devel.
 

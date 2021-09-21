@@ -1,11 +1,12 @@
 %set_compress_method none
 
-%define gcc_branch 10
+%define gcc_branch 11
 %define psuffix -%gcc_branch
 
 %define gnat_arches		%ix86 x86_64
 %define go_arches		%ix86 x86_64
 %define libasan_arches		%ix86 x86_64 %arm aarch64 ppc64le
+%define libhwasan_arches	aarch64
 %define libatomic_arches	%ix86 x86_64 %arm aarch64 mips mipsel s390x riscv64 ppc64le
 %define libitm_arches		%ix86 x86_64 %arm aarch64 s390x ppc64le
 %define liblsan_arches		x86_64 aarch64 ppc64le
@@ -16,7 +17,7 @@
 
 Name: gcc-defaults
 Version: %gcc_branch
-Release: alt2
+Release: alt1
 License: None
 Group: Development/Other
 
@@ -184,6 +185,9 @@ This is metapackage for %{1}-%{2}. \
 %ifarch %libasan_arches
 %do_package libasan devel-static 1 #
 %endif
+%ifarch %libhwasan_arches
+%do_package libhwasan devel-static 1 #
+%endif
 %ifarch %libatomic_arches
 %do_package libatomic devel-static 1 #
 %endif
@@ -324,6 +328,10 @@ ln_bin gnat gnatbind gnatchop gnatclean gnatfind gnatkr gnatlink gnatls \
 %endif
 
 %changelog
+* Sun Sep 12 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 11-alt1
+- Changed the default compiler to gcc11.
+- Added libhwasan-devel-static subpackage.
+
 * Fri Jul 30 2021 Vitaly Chikunov <vt@altlinux.org> 10-alt2
 - Install LTO linker plugin for BFD.
 
