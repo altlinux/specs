@@ -56,7 +56,7 @@
 
 Name: %llvm_name
 Version: %v_full
-Release: alt2
+Release: alt3
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -136,6 +136,9 @@ Summary: Libraries and header files for LLVM
 %requires_filesystem
 Requires: llvm-devel >= %_llvm_version
 Requires: %name = %EVR
+# Compatibility note:
+# The gold plugin was located in llvm-devel prior to 12.0.1-alt3.
+Requires: %name-gold
 
 %description devel
 This package contains library and header files needed to develop new
@@ -152,10 +155,23 @@ Requires: %name-devel = %EVR
 This package contains static libraries needed to develop new
 native programs that use the LLVM infrastructure.
 
+%package gold
+Summary: gold linker plugin for LLVM
+Group: Development/Tools
+%requires_filesystem
+# requires: libLLVM
+Requires: %name-libs
+
+%description gold
+This package contains the gold plugin for LLVM objects.
+
 %package libs
 Group: Development/C
 Summary: LLVM shared libraries
 %requires_filesystem
+# We pull in the gold plugin for e. g. Clang's -flto=thin to work
+# out of the box with gold.
+Requires: %name-gold
 
 %description libs
 This package contains shared libraries needed to develop new
@@ -401,7 +417,7 @@ fi
 	-DCMAKE_INSTALL_PREFIX=%llvm_prefix \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
-	-DPACKAGE_VENDOR="ALT Linux Team" \
+	-DPACKAGE_VENDOR="%vendor" \
 	-DLLVM_TARGETS_TO_BUILD="all" \
 	-DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD='AVR' \
 	-DLLVM_ENABLE_LIBCXX:BOOL=OFF \
@@ -683,13 +699,15 @@ ninja -C BUILD check-all || :
 %llvm_includedir/llvm-c
 %llvm_libdir/libLLVM.so
 %llvm_libdir/libLTO.so
-%llvm_libdir/LLVMgold.so
 %llvm_libdir/libRemarks.so
 %llvm_libdir/LLVMHello.so
 %llvm_libdir/BugpointPasses.so
 %dir %llvm_libdir/cmake
 %llvm_libdir/cmake/llvm
 %exclude %llvm_libdir/cmake/llvm/LLVMStaticExports.cmake
+
+%files gold
+%llvm_libdir/LLVMgold.so
 
 %files devel-static
 %llvm_libdir/*.a
@@ -768,6 +786,8 @@ ninja -C BUILD check-all || :
 %_bindir/c-index-test-%v_major
 %llvm_bindir/clang-*
 %_bindir/clang-*
+%llvm_bindir/git-clang-format
+%_bindir/git-clang-format-%v_major
 %exclude %llvm_bindir/clang-%v_major
 %exclude %llvm_bindir/clang
 %exclude %_bindir/*clang-%v_major
@@ -847,6 +867,11 @@ ninja -C BUILD check-all || :
 #doc %llvm_docdir/lldb
 
 %changelog
+* Tue Sep 21 2021 Arseny Maslennikov <arseny@altlinux.org> 12.0.1-alt3
+- Included git-clang-format in clang-tools (closes: bug 40912).
+  Split off LLVMgold.so to its own package.
+  Added a requirement on llvmN-gold from llvmN-libs.
+
 * Sun Sep 05 2021 Arseny Maslennikov <arseny@altlinux.org> 12.0.1-alt2
 - Marked the package as built by ALT Linux Team (-DPACKAGE_VENDOR) so it's
   easier to distinguish from custom builds.
