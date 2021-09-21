@@ -1,6 +1,6 @@
 Name: alterator-kiosk
-Version: 1.5
-Release: alt2
+Version: 1.6
+Release: alt1
 
 Source: %name-%version.tar
 Source1: activate-kiosk.sh
@@ -54,6 +54,9 @@ install -Dm 0644 %SOURCE2 %buildroot%_unitdir/kiosk.service
 %_sysconfdir/alterator/kiosk/profiles/
 
 %changelog
+* Tue Sep 21 2021 Ivan Razzhivin <underwit@altlinux.org> 1.6-alt1
+- add okular and projectlibre to profiles
+
 * Fri Aug 28 2020 Oleg Solovyov <mcpain@altlinux.org> 1.5-alt2
 - require kiosk-profiles
 
