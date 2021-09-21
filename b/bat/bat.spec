@@ -1,5 +1,5 @@
 Name: bat
-Version: 0.18.2
+Version: 0.18.3
 Release: alt1
 Summary: A cat(1) clone with syntax highlighting and Git integration
 License: MIT or Apache-2.0
@@ -11,6 +11,7 @@ Packager: Alexander Makeenkov <amakeenk@altlinux.org>
 BuildRequires: rust-cargo
 BuildRequires: /proc
 Conflicts: bacula9-bat
+Conflicts: bacula11-bat
 
 %description
 A cat(1) clone which supports syntax highlighting for a large number of
@@ -48,6 +49,10 @@ install -Dm 0644 target/release/build/%name-*/out/assets/completions/bat.fish %b
 %doc README.md LICENSE-MIT LICENSE-APACHE
 
 %changelog
+* Tue Sep 21 2021 Alexander Makeenkov <amakeenk@altlinux.org> 0.18.3-alt1
+- Updated to version 0.18.3
+- Added conflict with bacula11-bat package
+
 * Thu Aug 12 2021 Egor Ignatov <egori@altlinux.org> 0.18.2-alt1
 - Update to version 0.18.2
 - add bash, zsh and fish completions
