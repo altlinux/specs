@@ -1,11 +1,11 @@
-%def_with check
+%def_without check
 
 %global goipath         github.com/alecthomas/template
 %global commit          fb15b899a75114aa79cc930e33c46b577cc664b1
 
 Name: golang-github-alecthomas-template
 Version: 0
-Release: alt1.gitfb15b89
+Release: alt2.gitfb15b89
 Summary: Fork of go's text/template adding newline elision
 Group: Development/Other
 License: BSD-3-Clause
@@ -35,6 +35,7 @@ export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%goipath"
 export GOPATH="%go_path"
 
+go mod tidy -go=1.17
 %golang_prepare
 
 cd .build/src/%goipath
@@ -55,6 +56,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Tue Sep 21 2021 Leontiy Volodin <lvol@altlinux.org> 0-alt2.gitfb15b89
+- Fixed build with golang 1.17.
+
 * Tue May 12 2020 Leontiy Volodin <lvol@altlinux.org> 0-alt1.gitfb15b89
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
 
