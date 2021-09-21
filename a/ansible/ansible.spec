@@ -1,7 +1,7 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
 Version: 2.9.26
-Release: alt1
+Release: alt2
 
 Group:   System/Configuration/Other
 License: GPL-3.0
@@ -76,9 +76,11 @@ mkdir -p %buildroot/%_man1dir
 make PYTHON=python3 docs
 cp -v docs/man/man1/*.1 %buildroot/%_man1dir/
 
+# ansible-test is a tool for ansible development only
+rm -rf %buildroot%python3_sitelibdir/ansible_test
+rm -rf %buildroot%prefix/bin/ansible-test
 # Fix shebangs
 grep -Rl '^#!.*python$' %buildroot | xargs subst 's|^#!.*python$|#!%__python3|'
-find %buildroot%python3_sitelibdir/ansible_test/_data -name \*.ps1 -delete
 
 %files
 %_bindir/%{name}*
@@ -89,6 +91,10 @@ find %buildroot%python3_sitelibdir/ansible_test/_data -name \*.ps1 -delete
 %doc README.rst changelogs/CHANGELOG-v*.rst CODING_GUIDELINES.md MODULE_GUIDELINES.md
 
 %changelog
+* Mon Sep 20 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.9.26-alt2
+- Don't package ansible-test tool (it's for ansible development only)
+- Avoid false dependencies on perl-Package (closes: #40957)
+
 * Tue Sep 14 2021 Andrey Cherepanov <cas@altlinux.org> 2.9.26-alt1
 - New version.
 
