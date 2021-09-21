@@ -16,7 +16,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 5.12.0.4
-Release: alt2
+Release: alt3
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.io
@@ -37,9 +37,9 @@ BuildRequires: libsqlite3-devel
 BuildRequires: libsystemd-devel
 BuildRequires: libnsl2-devel
 BuildRequires: openssh
-BuildRequires: ruby-aws-sdk ruby-treetop
+BuildRequires: gem(aws-sdk) gem(bundler)
 BuildRequires: gem(ipaddress)
-BuildRequires: ruby-builder
+BuildRequires: gem(builder)
 BuildRequires: gem-nokogiri
 BuildRequires: scons
 BuildRequires: python3-module-setuptools
@@ -826,6 +826,9 @@ fi
 %exclude %_man1dir/oneprovision.1*
 
 %changelog
+* Tue Sep 21 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.12.0.4-alt3
+- FTBFS: yet another gem deps
+
 * Tue Sep 14 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.12.0.4-alt2
 - FTBFS: gem deps
 
