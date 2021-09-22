@@ -3,10 +3,10 @@
 
 Name: %{oname}13
 Version: %major.5
-Release: alt0.1.rc1
+Release: alt0.2.rc1
 
 Summary: Multiplatform C++ GUI Fast Light ToolKit
-License: LGPL
+License: LGPLv2
 Group: System/Libraries
 URL: http://www.fltk.org/
 
@@ -95,6 +95,8 @@ install -d %buildroot%_mandir
 cp -p ANNOUNCEMENT CHANGES CREDITS README %buildroot%_docdir/fltk-%version/
 cp -fR fltk-%{version}rc1/documentation/html %buildroot%_docdir/fltk-%version/
 
+find %buildroot -name '*.a' -exec rm -f {} ';'
+
 %files
 %_bindir/fluid
 %_libdir/*.so.*
@@ -119,6 +121,9 @@ cp -fR fltk-%{version}rc1/documentation/html %buildroot%_docdir/fltk-%version/
 %exclude %_docdir/fltk-%version/README
 
 %changelog
+* Wed Sep 22 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.5-alt0.2.rc1
+- Fixed FTBFS.
+
 * Wed Feb 13 2019 Grigory Ustinov <grenka@altlinux.org> 1.3.5-alt0.1.rc1
 - Build new version.
 
