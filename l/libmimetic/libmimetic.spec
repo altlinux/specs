@@ -1,6 +1,6 @@
 Name: libmimetic
 Version: 0.9.8
-Release: alt1
+Release: alt2
 Summary: A full featured C++ MIME library
 License: MIT
 Group: System/Libraries
@@ -41,7 +41,7 @@ developing applications that use %name.
 %prep
 %setup -n mimetic-%version
 %patch -p1
-# %%patch1 -p1
+%patch1 -p1
 
 %build
 %set_automake_version 1.11
@@ -66,5 +66,8 @@ make docs -C doc
 %_libdir/libmimetic.so
 
 %changelog
+* Wed Sep 22 2021 Leontiy Volodin <lvol@altlinux.org> 0.9.8-alt2
+- Enabled the patch for gcc11.
+
 * Tue Oct 06 2020 Leontiy Volodin <lvol@altlinux.org> 0.9.8-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
