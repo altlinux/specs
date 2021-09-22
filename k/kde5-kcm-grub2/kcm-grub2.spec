@@ -7,7 +7,7 @@
 
 Name: kde5-kcm-grub2
 Version: 0.6.4
-Release: alt3
+Release: alt4
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -69,6 +69,9 @@ A KDE Control Module for configuring the GRUB2 bootloader.
 
 
 %changelog
+* Wed Sep 22 2021 Sergey V Turchin <zerg@altlinux.org> 0.6.4-alt4
+- update from upstream/master
+
 * Thu Nov 21 2019 Sergey V Turchin <zerg@altlinux.org> 0.6.4-alt3
 - add GRUB_WALLPAPER support
 
