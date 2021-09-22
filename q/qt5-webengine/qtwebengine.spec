@@ -30,7 +30,7 @@
 
 Name: qt5-webengine
 Version: 5.15.5
-Release: alt1
+Release: alt6
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -41,6 +41,9 @@ ExclusiveArch: %qt5_qtwebengine_arches
 Source: %qt_module-everywhere-src-%version.tar
 Source100: pako.min.js
 Source101: d3.min.js
+# upstream
+Patch1: chromium-harfbuzz-3.0.0.patch
+Patch2: skia-harfbuzz-3.0.0.patch
 # FC
 Patch3:  qtwebengine-opensource-src-5.15.0-fix-extractcflag.patch
 Patch4:  qtwebengine-everywhere-src-5.10.0-system-nspr-prtime.patch
@@ -180,6 +183,13 @@ Requires: libqt5-core = %_qt5_version
 %endif
 %setup -n %qt_module-everywhere-src-%version
 ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
+pushd src/3rdparty/chromium
+%patch1 -p1
+pushd third_party/skia
+%patch2 -p1
+popd
+popd
+#
 %patch3 -p1
 #patch4 -p1
 %patch5 -p1
@@ -420,6 +430,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Wed Sep 22 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.5-alt6
+- fix to build with new harfbuz
+
 * Fri Aug 20 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.5-alt1
 - new version
 
