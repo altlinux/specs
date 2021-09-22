@@ -7,8 +7,8 @@
 Summary: libGringotts, a strongbox library
 Name: libgringotts
 Version: 1.2.1
-Release: alt1.1.qa2
-License: GPL
+Release: alt1.2
+License: GPLv2
 Group: System/Libraries
 URL: http://devel.pluto.linux.it/projects/Gringotts/
 Packager: Mykola Grechukh <gns@altlinux.ru>
@@ -44,19 +44,22 @@ These are the files needed to develop applications with libGringotts
 %install
 make DESTDIR=%buildroot install
 
+find %buildroot -name '*.a' -exec rm -f {} ';'
+
 %files
 %doc AUTHORS ChangeLog NEWS README TODO
 %{_libdir}/*.so.*
 
 %files devel
 %doc docs/manual.htm
-%{_libdir}/*.a
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*
 %{_includedir}/*.h
-%exclude %{_libdir}/*.a
 
 %changelog
+* Wed Sep 22 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1.2
+- Fixed FTBFS.
+
 * Thu Apr 15 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1.1.qa2
 - Fixed FTBFS.
 
