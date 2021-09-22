@@ -1,5 +1,5 @@
 Name: guile-evms
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: Guile bindings for EVMS
@@ -33,6 +33,9 @@ make install DESTDIR=%buildroot
 %guile_godir/evms.go
 
 %changelog
+* Tue Sep 21 2021 Slava Aseev <ptrnine@altlinux.org> 0.6.2-alt1
+- remove deletion of twice-assigned mountpoint from old volume
+
 * Tue Jul 21 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.1-alt1
 - always mount volume with associated mount options
 

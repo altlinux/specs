@@ -1,5 +1,5 @@
 Name: alterator-vm
-Version: 0.4.23
+Version: 0.4.24
 Release: alt1
 
 Summary: Alterator module for volume management
@@ -38,6 +38,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Tue Sep 21 2021 Slava Aseev <ptrnine@altlinux.org> 0.4.24-alt1
+- show popup-critical if multiple filesystems are assigned the same mountpoint
+
 * Tue Sep 21 2021 Oleg Solovyov <mcpain@altlinux.org> 0.4.23-alt1
 - choice: make dialog wider
 

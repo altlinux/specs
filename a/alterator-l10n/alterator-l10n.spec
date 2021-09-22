@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.95
+Version: 2.9.96
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -115,6 +115,9 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Tue Sep 21 2021 Slava Aseev <ptrnine@altlinux.org> 2.9.96-alt1
+- alterator-vm: update translation
+
 * Tue Aug 24 2021 Ivan Razzhivin <underwit@altlinux.org> 2.9.95-alt1
 - alterator-net-shares: add help
 - alterator-limits: add help
