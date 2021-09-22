@@ -3,20 +3,19 @@
 
 %define _localstatedir /var
 
-%def_without monitor
+%def_with monitor
 
 Name: thermald
-Version: 2.2
+Version: 2.4.6
 Release: alt1
 
 Summary: Thermal daemon for IA
 
 License: GPLv2+
 Group: System/Kernel and hardware
-Url: https://github.com/01org/thermal_daemon
-# Source-url: https://github.com/01org/thermal_daemon/archive/v%version.tar.gz
 
-Packager: Anton Midyukov <antohami@altlinux.org>
+Url: https://github.com/intel/thermal_daemon
+# Git: https://github.com/intel/thermal_daemon.git
 
 Source: %name-%version.tar
 Source1: thermald.init
@@ -182,6 +181,15 @@ exit 0
 %endif
 
 %changelog
+* Mon Sep 20 2021 Nikolai Kostrigin <nickel@altlinux.org> 2.4.6-alt1
+- new version 2.4.6
+
+* Mon Dec 21 2020 Nikolai Kostrigin <nickel@altlinux.org> 2.4.1-alt1
+- new version 2.4.1
+- turn TermalMonitor build on
+- spec: remove obsolete Packager tag
+  + update upstream URL
+
 * Mon Nov 09 2020 Nikolai Kostrigin <nickel@altlinux.org> 2.2-alt1
 - new version 2.2
   + change packaging scheme to git subtree
