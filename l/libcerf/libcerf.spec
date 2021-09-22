@@ -1,8 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-mageia-compat
-BuildRequires: gcc-c++
+BuildRequires: ctest gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: /usr/bin/pod2man /usr/bin/pod2html
+%global optflags_lto %nil
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define major	1
@@ -13,15 +14,13 @@ BuildRequires: /usr/bin/pod2man /usr/bin/pod2html
 
 Name:		libcerf
 Summary:	Complex error functions, Dawson, Faddeeva, and Voigt function
-Version:	1.13
-Release:	alt3_4
+Version:	1.14
+Release:	alt1_1
 Group:		System/Libraries
 License:	MIT
-Url:		http://apps.jcns.fz-juelich.de/libcerf
-Source0:	http://apps.jcns.fz-juelich.de/src/libcerf/libcerf-%{version}.tgz
-Patch1:		0001-Fix-64bit-library-location.patch
-Patch2:		0001-Fix-64bit-pkgconfig-.pc-file-location.patch
-BuildRequires:	ccmake cmake ctest
+Url:		https://jugit.fz-juelich.de/mlz/libcerf
+Source0:	https://jugit.fz-juelich.de/mlz/libcerf/-/archive/v%{version}/%{name}-v%{version}.tar.gz
+BuildRequires:	cmake
 BuildRequires:	clang
 Source44: import.info
 
@@ -47,16 +46,23 @@ and a Lorentzian.
 Summary:	Development files for %{name}
 Group:		Development/Other
 Requires:	%{libname} = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
+#Provides:	%{name}-devel = %{version}-%{release}
 
 %description -n %{devname}
 This package contains the development files for %{name}.
 
 %prep
-%setup -q
-%patch1 -p1
-%patch2 -p1
+%setup -q -n %{name}-v%{version}
 
+
+# Force cmake to use the paths passed at configure time
+sed -i -e 's|lib/pkgconfig/|%{_lib}/pkgconfig/|' CMakeLists.txt
+sed -i -e 's|DESTINATION lib|DESTINATION %{_lib}|' lib/CMakeLists.txt
+sed -i -e 's|${prefix}/lib|@LIB_INSTALL_DIR@|' libcerf.pc.in
+sed -i -e 's|@destination@|@CMAKE_INSTALL_PREFIX@|' libcerf.pc.in
+
+# remove cruft
+rm -rf fortran/__MACOSX
 
 %build
 %remove_optflags -frecord-gcc-switches
@@ -69,11 +75,13 @@ export CC=clang
 %mageia_cmake_install
 
 %check
+%ifnarch %{ix86}
 %{mageia_ctest}
+%endif
 
 %files -n %{libname}
-%doc CHANGELOG README
-%doc --no-dereference COPYING
+%doc CHANGELOG README*
+%doc --no-dereference LICENSE
 %{_libdir}/%{name}.so.%{major}
 %{_libdir}/%{name}.so.%{version}
 
@@ -86,6 +94,9 @@ export CC=clang
 
 
 %changelog
+* Thu Aug 26 2021 Igor Vlasenko <viy@altlinux.org> 1.14-alt1_1
+- new version
+
 * Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.13-alt3_4
 - fixed build
 
