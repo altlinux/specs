@@ -1,7 +1,7 @@
 
 Name: vzstat
 Version: 7.0.25
-Release: alt2
+Release: alt3
 Summary: vzstat utility for node monitoring
 
 Group: System/Base
@@ -24,6 +24,7 @@ This package contains statistic monitoring utility for OpenVZ HW node.
 %patch -p1
 
 %build
+export CFLAGS="%optflags -Wno-error=stringop-truncation -Wno-stringop-truncation -Wno-error=misleading-indentation"
 %make_build
 
 %install
@@ -36,6 +37,10 @@ This package contains statistic monitoring utility for OpenVZ HW node.
 %doc README.md COPYING
 
 %changelog
+* Wed Sep 22 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.25-alt3
+- FTBFS: -Werror=misleading-indentation (gcc11)
+- move ALT CFLAGS to spec
+
 * Tue Mar 30 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.25-alt2
 - fix FTBFS
 
