@@ -15,7 +15,7 @@
 
 Name: lib%truename-3.14
 Version: %somajor.%sominor.%sobuild.%sotiny
-Release: alt3
+Release: alt4
 Summary: JavaScript Engine
 Group: System/Libraries
 License: BSD
@@ -154,6 +154,9 @@ Patch30: v8-3.14.5.10-gcc8.patch
 # Python3
 Patch31: v8-314-python3.patch
 
+# gcc-11 diagnostics
+Patch32: v8-314-gcc11.patch
+
 %description
 V8 is Google's open source JavaScript engine. V8 is written in C++ and is used
 in Google Chrome, the open source browser from Google. V8 implements ECMAScript
@@ -204,6 +207,7 @@ Development headers and libraries for v8 3.14.
 %patch29 -p1 -b .ppc-harder
 %patch30 -p1 -b .gcc8
 %patch31 -p1 -b .python3
+%patch32 -p1 -b .gcc11
 
 # Do not need this lying about.
 rm -rf src/third_party/valgrind
@@ -344,6 +348,9 @@ popd
 %_libdir/*.so
 
 %changelog
+* Wed Sep 22 2021 Anton Midyukov <antohami@altlinux.org> 3.14.5.10-alt4
+- fix build with gcc11
+
 * Sun Aug 09 2020 Anton Midyukov <antohami@altlinux.org> 3.14.5.10-alt3
 - fix build with scons
 
