@@ -7,8 +7,8 @@
 %define llvm_version 12.0
 
 Name: 	 thunderbird
-Version: 91.1.0
-Release: alt2
+Version: 91.1.1
+Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -511,6 +511,9 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Wed Sep 22 2021 Andrey Cherepanov <cas@altlinux.org> 91.1.1-alt1
+- New version.
+
 * Mon Sep 13 2021 Andrey Cherepanov <cas@altlinux.org> 91.1.0-alt2
 - Fix unreadable text in chat (ALT #40907).
 
