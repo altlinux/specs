@@ -8,7 +8,7 @@
 
 Name: opendnssec
 Version: 2.1.10
-Release: alt1
+Release: alt2
 
 Summary: DNSSEC key and zone management software
 License: BSD-2-Clause
@@ -35,9 +35,6 @@ BuildRequires: java
 
 # softhsm 2.6.1-alt1 provides /usr/lib64/softhsm/libsofthsm2.so
 Requires: softhsm >= 2.6.1-alt1
-
-# upstream migration tool relies on /usr/bin/mysql implying that it is MySQL
-Requires: MySQL-client
 
 %if_with check
 BuildRequires: CUnit-devel
@@ -160,6 +157,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Wed Sep 22 2021 Stanislav Levin <slev@altlinux.org> 2.1.10-alt2
+- Fixed migration of default installations.
+
 * Wed Sep 15 2021 Stanislav Levin <slev@altlinux.org> 2.1.10-alt1
 - 2.1.9 -> 2.1.10.
 
