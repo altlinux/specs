@@ -1,3 +1,5 @@
+%define optflags_lto %nil
+
 %def_enable egl
 %def_enable gles2
 
@@ -77,7 +79,7 @@
 %endif
 
 Name: Mesa
-Version: 21.2.1
+Version: 21.2.2
 Release: alt1
 Epoch: 4
 License: MIT
@@ -173,6 +175,20 @@ This package contains the mesa implementation of the OpenCL (Open Compute
 Language) library, which is intended for use with an ICD loader. OpenCL
 provides a standardized interface for computational analysis on graphical
 processing units.
+
+%package -n libOSMesa
+Summary: Mesa offscreen rendering libraries
+Group: System/Libraries
+
+%description -n libOSMesa
+%summary
+
+%package -n libOSMesa-devel
+Summary: Mesa offscreen rendering development package
+Group: Development/C
+
+%description -n libOSMesa-devel
+%summary
 
 %package -n xorg-dri-swrast
 Summary: Mesa software rendering libraries
@@ -313,6 +329,7 @@ Mesa-based DRI drivers
 %ifarch armh
 	-Dlibunwind=false \
 %endif
+	-Dosmesa=true \
 	-Dgles1=false \
 	-Dopengl=true \
 	-Dselinux=true \
@@ -428,6 +445,14 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %_libdir/libMesaOpenCL.so.*
 %endif
 
+%files -n libOSMesa
+%_libdir/libOSMesa.so.*
+
+%files -n libOSMesa-devel
+%_includedir/GL/osmesa.h
+%_libdir/libOSMesa.so
+%_pkgconfigdir/osmesa.pc
+
 %files -n xorg-dri-swrast
 %ghost %_sysconfdir/drirc
 %_datadir/drirc.d
@@ -469,6 +494,7 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 
 %ifarch %intel_arches
 %files -n xorg-dri-intel
+%_libdir/X11/modules/dri/i8?0_dri.so
 %_libdir/X11/modules/dri/i9?5_dri.so
 %_libdir/X11/modules/dri/iris_dri.so
 %ifarch %vulkan_intel_arches
@@ -532,6 +558,10 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Wed Sep 22 2021 Valery Inozemtsev <shrek@altlinux.ru> 4:21.2.2-alt1
+- 21.2.2
+- enabled libOSMesa (closes: #29347)
+
 * Fri Aug 20 2021 Valery Inozemtsev <shrek@altlinux.ru> 4:21.2.1-alt1
 - 21.2.1
 
