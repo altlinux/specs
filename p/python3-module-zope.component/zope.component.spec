@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.6.2
+Version: 5.0.1
 Release: alt1
 
 Summary: Zope Component Architecture (Python3)
@@ -32,6 +32,7 @@ BuildRequires: python3-module-zope.deferredimport
 BuildRequires: python3-module-zope.hookable
 BuildRequires: python3-module-zope.deprecation
 BuildRequires: python3-module-zope.security
+BuildRequires: python3-module-zope.interface-tests
 %endif
 
 %py3_requires zope
@@ -96,6 +97,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*/*/*/test*
 
 %changelog
+* Wed Sep 22 2021 Nikolai Kostrigin <nickel@altlinux.org> 5.0.1-alt1
+- 4.6.2 -> 5.0.1
+
 * Mon Nov 16 2020 Nikolai Kostrigin <nickel@altlinux.org> 4.6.2-alt1
 - 4.6.1 -> 4.6.2
 
