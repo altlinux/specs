@@ -27,7 +27,7 @@
 %define nv_version 470
 %define nv_release 63
 %define nv_minor   01
-%define pkg_rel alt225
+%define pkg_rel alt226
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -106,7 +106,7 @@ Source100: nvidia_create_xinf
 
 Patch1: alt-fix-build-kernel.patch
 Patch2: alt-ignore-dma-remap.patch
-Patch3: kernel-5.7.patch
+#
 Patch4: kernel-5.11-aarch64.patch
 Patch5: kernel-5.13-aarch64.patch
 
@@ -174,7 +174,7 @@ cd %tbname-%tbver%dirsuffix
 pushd kernel
 #%patch1 -p1
 %patch2 -p1
-%patch3 -p2
+#
 %ifarch aarch64
 %patch4 -p1
 %patch5 -p1
@@ -373,6 +373,9 @@ fi
 %endif
 
 %changelog
+* Wed Sep 22 2021 Sergey V Turchin <zerg@altlinux.org> 470.63.01-alt226
+- drop kernel-5.7.patch
+
 * Fri Sep 03 2021 Sergey V Turchin <zerg@altlinux.org> 470.63.01-alt225
 - new version
 
