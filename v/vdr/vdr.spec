@@ -1,6 +1,6 @@
 Name: vdr
 Version: 2.2.0
-Release: alt9
+Release: alt10
 
 Summary: Digital satellite receiver box with advanced features
 License: GPLv2
@@ -9,7 +9,7 @@ Url: http://www.tvdr.de
 
 Source: %name-%version-%release.tar
 
-BuildRequires: gcc-c++ fontconfig-devel
+BuildRequires: gcc10-c++ fontconfig-devel
 BuildRequires: libalsa-devel libbluray-devel libcap-devel libncursesw-devel
 BuildRequires: libfreetype-devel libjpeg-devel libssl-devel libudev-devel
 BuildRequires: libGraphicsMagick-c++-devel libxine2-devel libzvbi-devel
@@ -207,6 +207,8 @@ Additional Xine plugins for use with VDR frontends.
 %define	plugindir	%_libdir/vdr
 %define	resdir		%_datadir/vdr
 %define videodir	%_localstatedir/vdr
+
+%set_gcc_version 10
 
 %prep
 %setup
@@ -545,6 +547,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 %_libdir/xine/plugins/*/xineplug_inp_xvdr.so
 
 %changelog
+* Wed Sep 22 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt10
+- avoid builds with gcc11
+
 * Mon Jan 25 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt9
 - fixed build with recent glibc
 
