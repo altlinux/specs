@@ -1,6 +1,6 @@
 Name: v4l-utils
 Version: 1.20.0
-Release: alt1
+Release: alt2
 
 Summary: Collection of video4linux support libraries and utilities
 License: GPLv2+
@@ -79,6 +79,7 @@ also serve as a generic video/TV viewer application.
 
 %build
 [ -x bootstrap.sh ] && ./bootstrap.sh
+%add_optflags -std=gnu++14
 %configure --disable-static
 %make_build
 
@@ -108,6 +109,7 @@ also serve as a generic video/TV viewer application.
 
 %files -n ir-keytable
 %config(noreplace) %_sysconfdir/rc_maps.cfg
+%_unitdir/systemd-udevd.service.d/50-rc_keymap.conf
 /lib/udev/rules.d/70-infrared.rules
 /lib/udev/rc_keymaps
 %_bindir/ir-keytable
@@ -143,6 +145,9 @@ also serve as a generic video/TV viewer application.
 %endif
 
 %changelog
+* Wed Sep 22 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.20.0-alt2
+- rebuilt with gcc11
+
 * Fri May 22 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.20.0-alt1
 - 1.20.0 released
 
