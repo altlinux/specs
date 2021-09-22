@@ -2,7 +2,7 @@
 
 Name: sigviewer
 Version: 0.6.4
-Release: alt4.git.f62f8d9
+Release: alt5.git.f62f8d9
 Summary: SigViewer is a viewing application for biosignals
 Group: Sciences/Medicine
 License: GPL-3.0+
@@ -66,6 +66,9 @@ fi
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Tue Sep 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.4-alt5.git.f62f8d9
+- Fixed typo in translation.
+
 * Tue Sep 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.4-alt4.git.f62f8d9
 - Added translation by Sergey Kazorin.
 - Fixed issues related to translation.
