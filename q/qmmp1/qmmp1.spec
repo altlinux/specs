@@ -5,7 +5,7 @@
 
 %define rname qmmp
 Name: qmmp1
-Version: 1.4.6
+Version: 1.5.1
 Release: alt1
 %K5init no_altplace
 
@@ -35,7 +35,7 @@ Patch6: alt-fix-skins-dir.patch
 BuildRequires(pre): rpm-build-kf5 rpm-build-wlskins
 BuildRequires: cmake doxygen qt5-tools-devel qt5-x11extras-devel
 BuildRequires: libmms-devel libprojectM-devel libtag-devel
-BuildRequires: libalsa-devel libjack-devel libpulseaudio-devel qt5-multimedia-devel
+BuildRequires: libalsa-devel libjack-devel libpulseaudio-devel qt5-multimedia-devel pipewire-libs-devel
 BuildRequires: libbs2b-devel libcddb-devel libcdio-paranoia-devel libcurl-devel libenca-devel
 BuildRequires: libavformat-devel libwildmidi-devel
 BuildRequires: libfaad-devel libflac-devel libgme-devel libopusfile-devel libsamplerate-devel libsoxr-devel
@@ -281,6 +281,9 @@ ln -s `relative %_wlskindir %_datadir/%rname/skins` %buildroot/%_datadir/%rname/
 %_K5link/lib*.so
 
 %changelog
+* Wed Sep 22 2021 Sergey V Turchin <zerg@altlinux.org> 1.5.1-alt1
+- new version
+
 * Fri Jul 02 2021 Sergey V Turchin <zerg@altlinux.org> 1.4.6-alt1
 - new version
 
