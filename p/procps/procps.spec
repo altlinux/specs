@@ -1,6 +1,6 @@
 Name: procps
 Version: 3.3.17
-Release: alt4.g37f1060
+Release: alt5.g37f1060
 
 Summary: System and process monitoring utilities
 License: GPLv2+ and LGPLv2+
@@ -110,6 +110,9 @@ make check
 %_includedir/*
 %_pkgconfigdir/*.pc
 %changelog
+* Wed Sep 22 2021 Mikhail Efremov <sem@altlinux.org> 3.3.17-alt5.g37f1060
+- Fixed build with gcc11.
+
 * Tue Jul 13 2021 Mikhail Efremov <sem@altlinux.org> 3.3.17-alt4.g37f1060
 - Moved slabtop man page 1 -> 8.
 - Moved slabtop from /usr/bin to /sbin.
