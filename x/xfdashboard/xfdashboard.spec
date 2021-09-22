@@ -1,5 +1,5 @@
 Name: xfdashboard
-Version: 0.8.1
+Version: 0.9.4
 Release: alt1
 
 Summary: A Gnome shell like dashboard for Xfce
@@ -15,8 +15,8 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 BuildRequires(pre): rpm-build-xdg
 
 BuildPreReq: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
-BuildPreReq: libxfconf-devel libgarcon-devel libxfce4util-devel libxfce4ui-gtk3-devel
-BuildRequires: libgtk+3-devel libwnck3-devel libclutter-devel libdbus-glib-devel
+BuildPreReq: libxfconf-devel >= 4.14.0 libgarcon-devel libxfce4util-devel libxfce4ui-gtk3-devel
+BuildRequires: libgtk+3-devel libwnck3-devel libclutter-devel
 BuildRequires: libXinerama-devel
 
 %define _unpackaged_files_terminate_build 1
@@ -75,10 +75,6 @@ This package contains development files required to build
 %_datadir/themes/%{name}*/
 %_datadir/%name/
 
-# Don't package example-search-provider plugin:
-# it is just a skeleton for creating new search provider plugins.
-%exclude %_libdir/%name/plugins/example-search-provider.so
-
 %files -n lib%name
 %_libdir/*.so.*
 
@@ -88,6 +84,9 @@ This package contains development files required to build
 %_libdir/*.so
 
 %changelog
+* Wed Sep 22 2021 Mikhail Efremov <sem@altlinux.org> 0.9.4-alt1
+- Updated to 0.9.4.
+
 * Wed Mar 10 2021 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt1
 - Updated to 0.8.1.
 
