@@ -4,7 +4,7 @@
 
 Name: libvzctl
 Summary: OpenVZ Containers API library
-Version: 7.0.697
+Version: 7.0.698
 Release: alt1
 License: LGPLv2.1
 Group: System/Libraries
@@ -56,6 +56,7 @@ OpenVZ Containers API development library
 
 %build
 %autoreconf
+export CFLAGS="%optflags -Wno-error=format-truncation -Wno-error=stringop-truncation -Wno-error=format-overflow"
 %configure %{?_without_vcmmd}
 %make_build
 
@@ -72,6 +73,11 @@ OpenVZ Containers API development library
 %_includedir/vzctl
 
 %changelog
+* Wed Sep 22 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.698-alt1
+- 7.0.698
+- move all ALT CFLAGS to spec
+- fix -Warray-parameter in vzctl2_env_open_conf() declaration (gcc11)
+
 * Fri Sep 10 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.697-alt1
 - 7.0.697
 
