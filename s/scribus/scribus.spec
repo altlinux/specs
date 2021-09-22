@@ -1,6 +1,6 @@
 Name: scribus
 Version: 1.5.7
-Release: alt1.1
+Release: alt1.2
 Epoch: 1
 
 Summary: Desktop Publishing application written in Qt
@@ -13,8 +13,9 @@ Packager: Paul Wolneykien <manowar@altlinux.ru>
 
 ##Source-url: https://github.com/scribusproject/scribus/archive/master.zip
 # Source-url: http://prdownloads.sf.net/%name/%version/%name-%version.tar.xz
+Vcs: https://github.com/scribusproject/scribus.git
 Source: %name-%version.tar
-
+Patch: scribus-1.5.7-up-harfbuzz-3.0.0.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake zlib-devel libssl-devel
@@ -110,6 +111,7 @@ BuildArch: noarch
 
 %prep
 %setup
+%patch -p1 -b .harfbuzz
 # don't
 # brain damage with #if (PODOFO_VERSION < PODOFO_MAKE_VERSION(0, 9, 7))
 subst 's|\(pBase->SetOwner\)|//\1|' scribus/pdf_analyzer.cpp
@@ -181,6 +183,9 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Wed Sep 22 2021 Yuri N. Sedunov <aris@altlinux.org> 1:1.5.7-alt1.2
+- applied upstream patches for Harfbuzz 3.0.0
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 1:1.5.7-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
