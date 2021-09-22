@@ -2,7 +2,7 @@
 %define dist File-LibMagic
 Name: perl-File-LibMagic
 Version: 1.23
-Release: alt1
+Release: alt2
 
 Summary: Perl wrapper for libmagic
 License: GPL or Artistic
@@ -22,7 +22,7 @@ the file-4.x package from Christos Zoulas (ftp://ftp.astron.com/pub/file/).
 %setup -q -n %{dist}-%{version}
 
 #if [ %version == 1.16 ];then
-sed -i -e s,us-ascii,7bit, t/oo-api.t t/constructor-params.t
+#sed -i -e s,us-ascii,7bit, t/oo-api.t t/constructor-params.t
 #fi
 
 %build
@@ -37,6 +37,9 @@ sed -i -e s,us-ascii,7bit, t/oo-api.t t/constructor-params.t
 %perl_vendor_autolib/File
 
 %changelog
+* Wed Sep 22 2021 Igor Vlasenko <viy@altlinux.org> 1.23-alt2
+- fixed build
+
 * Sun Nov 08 2020 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1
 - automated CPAN update
 
