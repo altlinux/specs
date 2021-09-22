@@ -5,7 +5,7 @@
 %def_with bootstrap
 
 Name: python3-module-%oname
-Version: 4.7.2
+Version: 4.9.2
 Release: alt1
 
 Summary: Scalable persistent object containers
@@ -40,7 +40,7 @@ BuildRequires: python3-module-ZODB-tests
 
 %py3_requires zope.interface
 
-%filter_from_requires /BTrees\.[BFILOQU]\{3\}Tree/d
+%filter_from_requires /BTrees\.[BFILOQUfs]\{3\}Tree/d
 
 %define overview							   \
 BTrees: scalable persistent components.					   \
@@ -119,6 +119,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*/tests
 
 %changelog
+* Fri Jun 18 2021 Nikolai Kostrigin <nickel@altlinux.org> 4.9.2-alt1
+- 4.7.2 -> 4.9.2
+
 * Tue Aug 11 2020 Nikolai Kostrigin <nickel@altlinux.org> 4.7.2-alt1
 - 4.6.1 -> 4.7.2
 
