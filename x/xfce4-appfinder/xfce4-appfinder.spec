@@ -1,5 +1,5 @@
 Name: xfce4-appfinder
-Version: 4.16.1
+Version: 4.17.0
 Release: alt1
 
 Summary: Application finder for the Xfce4 Desktop Environment
@@ -56,6 +56,9 @@ Desktop entry format.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Sep 22 2021 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt1
+- Updated to 4.17.0.
+
 * Mon Jan 18 2021 Mikhail Efremov <sem@altlinux.org> 4.16.1-alt1
 - Updated to 4.16.1.
 
