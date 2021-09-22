@@ -1,6 +1,6 @@
 Name: upmpdcli
-Version: 1.4.14
-Release: alt2
+Version: 1.5.11
+Release: alt1
 
 Summary: UPnP front-end to the Music Player Daemon
 License: LGPLv2.1
@@ -9,7 +9,7 @@ Url: http://www.lesbonscomptes.com/upmpdcli
 
 Source: %name-%version-%release.tar
 
-BuildRequires: gcc-c++ libmpdclient-devel libupnpp-devel >= 0.14.1
+BuildRequires: gcc-c++ libmpdclient-devel libupnpp-devel >= 0.21.0
 BuildRequires: libmicrohttpd-devel jsoncpp-devel rpm-build-python3
 
 %package plugins
@@ -75,9 +75,10 @@ rm -rf %buildroot%_datadir/%name/web
 %add_python3_req_skip StreamDecoder
 %add_python3_req_skip cmdtalkplugin
 %add_python3_req_skip conftree routing session
+%add_python3_req_skip deezersession
 %add_python3_req_skip tidalapi tidalapi.models
 %add_python3_req_skip upmplgutils
-%add_python3_req_skip uprclindex uprclinit uprclsearch uprclutils
+%add_python3_req_skip minimconfig uprclindex uprclinit uprclsearch uprclutils
 # conditional(py2):
 %add_python3_req_skip ConfigParser
 %add_python3_req_skip Cookie
@@ -123,6 +124,9 @@ rm -rf %buildroot%_datadir/%name/web
 %_datadir/%name/src_scripts
 
 %changelog
+* Wed Sep 22 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.11-alt1
+- 1.5.11 released
+
 * Tue May 11 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.14-alt2
 - fix build with recent changes in rpm-build-python*
 

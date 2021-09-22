@@ -1,5 +1,5 @@
 Name: upplay
-Version: 1.4.8
+Version: 1.4.10
 Release: alt1
 
 Summary: UPnP/OpenHome audio Control Point
@@ -37,6 +37,9 @@ make install INSTALL_ROOT=%buildroot
 %_pixmapsdir/upplay.png
 
 %changelog
+* Tue Sep 21 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.10-alt1
+- 1.4.10 released
+
 * Wed Feb 03 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.8-alt1
 - 1.4.8 released
 
