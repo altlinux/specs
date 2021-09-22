@@ -17,8 +17,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 8.3
-Release: alt2
+Version: 8.4
+Release: alt1
 Url: https://altsp.su
 
 %ifarch %ix86 x86_64
@@ -265,10 +265,7 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 
 #release
 %post release
-if ! [ -e %_sysconfdir/altlinux-release ] && \
-   ! [ -e %_sysconfdir/os-release ]; then
-	cp -a %data_cur_dir/release/*-release %_sysconfdir/
-fi
+cp -a %data_cur_dir/release/*-release %_sysconfdir/
 
 #notes
 %post notes
@@ -318,6 +315,10 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Sep 21 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.4-alt1
+- version bump
+- os-release updating
+
 * Tue Sep 14 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.3-alt2
 - design changed
 
