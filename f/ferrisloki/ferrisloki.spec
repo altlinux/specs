@@ -1,6 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: ferrisloki
 Version: 3.0.13
-Release: alt3
+Release: alt4
 Summary: Loki C++ library from Modern C++ Design
 License: GPL
 Group: System/Libraries
@@ -52,6 +56,7 @@ find -name '*.h' -exec sed -i '/sigc++\/object.h/d' {} + || die
 find -name '*.hh' -exec sed -i '/sigc++\/object.h/d' {} + || die
 
 %build
+%add_optflags -std=c++14
 %configure
 %make_build
 
@@ -70,11 +75,14 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Wed Sep 22 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.13-alt4
+- Fixed build with gcc-11.
+
 * Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.13-alt3
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.13-alt2
-- NMU: remove %ubt from release
+- NMU: remove %%ubt from release
 
 * Wed Oct 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.13-alt1%ubt
 - Initial build for ALT.
