@@ -1,12 +1,14 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name:    eppic
 # git tag 4.0 c2a25643ea2d479a450fc54339adba57b54516b9
 # git describe origin/master --tags
 # 4.0-13-gdc60e00
 Version: 4.0.0.13.gdc60e00
-Release: alt1
+Release: alt2
 Summary: Eppic is a C interpreter
 Group:   Development/C
 License: GPL-2.0-or-later
@@ -37,11 +39,13 @@ embedded in any tools that is C friendly.
 
 %prep
 %setup
+# Fix for binutils 2.37 (remove previously unused modifier 'l')
+sed -i '/\$(AR)/s/l//' libeppic/Makefile
 
 %build
 cd libeppic
-%add_optflags %optflags_shared
-%make_build
+%add_optflags %optflags_shared -ffat-lto-objects
+%make_build CFLAGS="%optflags"
 
 %install
 cd libeppic
@@ -55,5 +59,8 @@ make ROOT=%buildroot LIBDIR=%_libdir install
 %_libdir/libeppic.a
 
 %changelog
+* Wed Sep 22 2021 Vitaly Chikunov <vt@altlinux.org> 4.0.0.13.gdc60e00-alt2
+- Fix build with binutils 2.37.
+
 * Thu Jun 25 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.0.13.gdc60e00-alt1
 - First import of 4.0-13-gdc60e00 (2019-03-29).
