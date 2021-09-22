@@ -2,9 +2,9 @@
 %define sover %somver.3.2
 Name: spai
 Version: 3.2
-Release: alt8
+Release: alt9
 Summary: SParse Approximate Inverse Preconditioner
-License: GPL v2
+License: GPLv2
 Group: Sciences/Mathematics
 Url: http://www.computational.unibas.ch/software/spai/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -115,6 +115,8 @@ ln -s lib%name.so.%sover lib%name.so.%somver
 ln -s lib%name.so.%somver lib%name.so
 popd
 
+find %buildroot -name '*.a' -exec rm -f {} ';'
+
 %files
 %doc AUTHORS ChangeLog COPYING README
 %_bindir/*
@@ -131,6 +133,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Wed Sep 22 2021 Grigory Ustinov <grenka@altlinux.org> 3.2-alt9
+- Fixed FTBFS.
+
 * Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 3.2-alt8
 - Fixed FTBFS.
 
