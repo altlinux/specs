@@ -58,7 +58,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.32.10
+Version: 1.32.12
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -644,6 +644,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Sep 22 2021 Mikhail Efremov <sem@altlinux.org> 1.32.12-alt1
+- Fixed build with gcc11.
+- Updated to 1.32.12.
+
 * Tue Aug 31 2021 Mikhail Efremov <sem@altlinux.org> 1.32.10-alt1
 - Added config-server subpackage.
 - Disabled LTO on e2k.
