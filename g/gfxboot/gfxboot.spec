@@ -1,5 +1,5 @@
 Name:         gfxboot
-Version:      4.5.49
+Version:      4.5.79
 Release:      alt1
 
 Group:        Development/Other
@@ -37,11 +37,14 @@ sed -i 's|/usr/share/syslinux|/usr/lib/syslinux|' gfxboot
   install -d -m 755 $RPM_BUILD_ROOT/usr/share/gfxboot
 
 %files
-%doc changelog doc/gfxboot.html
+%doc doc/gfxboot.html
 %_sbindir/*
 %_datadir/gfxboot/
 
 %changelog
+* Wed Sep 22 2021 Sergey V Turchin <zerg@altlinux.org> 4.5.79-alt1
+- new version
+
 * Wed Mar 20 2019 Sergey V Turchin <zerg@altlinux.org> 4.5.49-alt1
 - new version
 - fix path to syslinux data
