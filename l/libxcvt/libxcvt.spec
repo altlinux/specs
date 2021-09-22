@@ -1,7 +1,7 @@
 %define upstream_commit_id 69fb7bf48
 Name: libxcvt
 Version: 0.1.0
-Release: alt1.git%{upstream_commit_id}
+Release: alt2.git%{upstream_commit_id}
 License: MIT
 Summary: VESA CVT standard timing modelines generator
 Group: System/Libraries
@@ -44,6 +44,7 @@ VESA CVT standard timing modeline generator - command line tool
 %_libdir/libxcvt.so.*
 
 %files devel
+%_includedir/libxcvt/*.h
 %_libdir/libxcvt.so
 %_libdir/pkgconfig/libxcvt.pc
 
@@ -52,6 +53,9 @@ VESA CVT standard timing modeline generator - command line tool
 %_man1dir/cvt.1.*
 
 %changelog
+
+* Wed Sep 22 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.1.0-alt2.git69fb7bf48
+- Added headers to -devel
 
 * Tue Sep 21 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.1.0-alt1.git69fb7bf48
 - Initial build
