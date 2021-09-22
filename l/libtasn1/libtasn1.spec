@@ -1,15 +1,17 @@
 Name: libtasn1
 Version: 4.17.0
-Release: alt1
+Release: alt2
 
 Summary: The ASN.1 library used in GNUTLS
 Group: System/Libraries
 License: LGPLv2.1+
 URL: http://www.gnu.org/software/libtasn1/
+Vcs: https://gitlab.com/gnutls/libtasn1
 # git://git.altlinux.org/gears/l/libtasn1.git
 Source: %name-%version.tar
 Patch1: fix-for-werror.patch
 Patch2: Enable-LFS-support.patch
+Patch3: Fix-build-with-gcc11.patch
 
 BuildRequires: gtk-doc texinfo help2man
 
@@ -69,6 +71,7 @@ This package contains libtasn1 development documentation.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %def_enable Werror
@@ -118,6 +121,10 @@ install -pm644 doc/reference/html/* %buildroot%docdir/reference/html/
 %docdir/reference/
 
 %changelog
+* Wed Sep 22 2021 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt2
+- Added Vcs tag.
+- Fixed build with gcc11.
+
 * Tue Jun 01 2021 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt1
 - Updated to 4.17.0.
 
