@@ -7,7 +7,7 @@
 Name: qca-qt5
 %define major 2
 %define minor 3
-%define bugfix 1
+%define bugfix 4
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -21,6 +21,8 @@ Requires: lib%name = %version-%release
 Source: %name-%version.tar
 # ALT
 Patch10: qca-2.0.3-alt-paths.patch
+# SuSE
+Patch30: qca-2.3.0-fixDSA.patch
 
 BuildRequires: cmake gcc-c++ glibc-devel ca-certificates
 BuildRequires: qt5-base-devel
@@ -206,6 +208,8 @@ This plugin provides features based on Botan. It implements:
 %prep
 %setup -q -n %name-%version
 %patch10 -p1
+#
+%patch30 -p1
 
 
 %build
@@ -272,6 +276,9 @@ done
 #%_qt5_headerdir/Qca-qt5/QtCrypto
 
 %changelog
+* Wed Sep 22 2021 Sergey V Turchin <zerg@altlinux.org> 2.3.4-alt1
+- new version
+
 * Fri Sep 18 2020 Sergey V Turchin <zerg@altlinux.org> 2.3.1-alt1
 - new version
 
