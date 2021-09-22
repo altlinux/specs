@@ -1,6 +1,6 @@
 Name: libtomcrypt
 Version: 1.18.2
-Release: alt3
+Release: alt4
 Summary: A comprehensive, portable cryptographic toolkit
 Group: System/Libraries
 License: WTFPL
@@ -32,15 +32,6 @@ Requires: %name = %version-%release
 
 %description devel
 The %name-devel package contains libraries and header files for
-developing applications that use %name.
-
-%package devel-static
-Summary: Static development files for %name
-Group: Development/C
-Requires: %name-devel = %version-%release
-
-%description devel-static
-The %name-devel-static package contains static libraries files for
 developing applications that use %name.
 
 %package doc
@@ -83,6 +74,7 @@ find %buildroot -name '*.h' -exec chmod 644 {} ';'
 # remove unneeded files
 find %buildroot -name '*.la' -exec rm -f {} ';'
 find %buildroot -name 'libtomcrypt_prof*' -exec rm -f {} ';'
+find %buildroot -name '*.a' -exec rm -f {} ';'
 
 %files
 %doc LICENSE
@@ -94,13 +86,13 @@ find %buildroot -name 'libtomcrypt_prof*' -exec rm -f {} ';'
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
-%files devel-static
-%_libdir/*.a
-
 %files doc
 %doc LICENSE doc/crypt.pdf
 
 %changelog
+* Tue Sep 21 2021 Grigory Ustinov <grenka@altlinux.org> 1.18.2-alt4
+- Drop devel-static subpackage.
+
 * Tue Dec 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.18.2-alt3
 - Applied security fix from upstream (Fixes: CVE-2019-17362).
 
