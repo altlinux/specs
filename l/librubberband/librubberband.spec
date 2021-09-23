@@ -1,8 +1,9 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %def_disable static
 
 Name: librubberband
 Version: 1.8.1
-Release: alt1.hg20140905.1
+Release: alt2.hg20140905.1
 
 Summary: high quality library for audio time-stretching and pitch-shifting
 License: %gpl2plus
@@ -146,6 +147,9 @@ install -m644 lib/rubberband.jar %buildroot%_javadir/
 %_datadir/ladspa/rdf/ladspa-rubberband*
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 1.8.1-alt2.hg20140905.1
+- NMU: fixed build with LTO
+
 * Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.8.1-alt1.hg20140905.1
 - Rebuilt for gcc5 C++11 ABI.
 
