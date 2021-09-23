@@ -1,3 +1,4 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/gtkdocize libICE-devel libSM-devel libX11-devel
 # END SourceDeps(oneline)
@@ -5,7 +6,7 @@ BuildRequires: /usr/bin/gtkdocize libICE-devel libSM-devel libX11-devel
 Summary: utility functions for the Xsettings protocol (GPE)
 Name: libxsettings-client0
 Version: 0.17
-Release: alt3
+Release: alt4
 Packager: Igor Vlasenko <viy@altlinux.ru>
 License: BSD-like, LGPL
 Group: System/Libraries
@@ -81,6 +82,9 @@ make install DESTDIR=%buildroot
 %_datadir/gtk-doc/html/libXsettings-client
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 0.17-alt4
+- fixed build with LTO
+
 * Fri Apr 16 2021 Igor Vlasenko <viy@altlinux.org> 0.17-alt3
 - exclude static lib
 
