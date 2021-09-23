@@ -1,3 +1,4 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %def_with readline
 %def_with xml
 
@@ -5,7 +6,7 @@ Summary: Mozilla SpiderMonkey (JavaScript-C) Engine
 Name: js
 %define lname lib%name
 Version: 1.7.0
-Release: alt9
+Release: alt10
 License: %lgpl2only
 URL: http://www.mozilla.org/%name/spidermonkey/
 Group: Development/Other
@@ -113,6 +114,9 @@ install -m 0644 dist/include/* %name/src/jsutil.h %buildroot/%_includedir/%name/
 
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 1.7.0-alt10
+- NMU: fixed build with LTO
+
 * Tue Jun 25 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.7.0-alt9
 - Fixed build on architectures with %%_lib != lib .
 
