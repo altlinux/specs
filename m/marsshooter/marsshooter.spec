@@ -2,18 +2,19 @@ Name: marsshooter
 Summary: M.A.R.S. - A Ridiculous Shooter
 Group: Games/Arcade
 Version: 0.7.6
-Release: alt1
+Release: alt2
 
 License: GPLv3+
 Url: http://www.marsshooter.org/
-Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: %name-%version.tar
-Patch0: marsshooter-0.7.6-shader.patch
+Patch: marsshooter-0.7.6-shader.patch
 Patch1: marsshooter-0.7.6-no-return-in-nonvoid-fix.patch
 Patch2: marsshooter-0.7.6-remove-glu.patch
 # Thnx Fedora Team!
 Patch3: marsshooter-0.7.6-CMakelists-fix.patch
+# https://www.mail-archive.com/devel@lists.fedoraproject.org/msg161636.html
+Patch4: marsshooter-gcc11-fix.patch
 BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: gcc
@@ -71,6 +72,7 @@ This package contains audio, icons and XML files for %name.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 rm -fr cmake data_src ext_libs_for_windows
 for i in data/locales/Polish.txt \
@@ -82,7 +84,6 @@ done
 dos2unix credits.txt license.txt
 
 %build
-
 %cmake_insource
 
 %make_build
@@ -93,7 +94,6 @@ dos2unix credits.txt license.txt
 desktop-file-validate %buildroot%_desktopdir/%name.desktop
 appstream-util validate-relax --nonet \
 %buildroot%_datadir/appdata/%name.appdata.xml
-
 %files
 %doc README.md
 %doc license.txt credits.txt
@@ -108,5 +108,8 @@ appstream-util validate-relax --nonet \
 %_gamesdatadir/%name/
 
 %changelog
+* Fri Sep 24 2021 Artyom Bystrov <arbars@altlinux.org> 0.7.6-alt2
+- Add patch for fixing build on GCC11
+
 * Wed Mar 18 2020 Artyom Bystrov <arbars@altlinux.org> 0.7.6-alt1
 - initial build for ALT Sisyphus
