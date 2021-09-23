@@ -3,7 +3,7 @@
 %define rdn_name im.dino.Dino
 
 Name: dino
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: Modern Jabber/XMPP client
@@ -89,6 +89,9 @@ This package provides libraries and headers needed to develop Dino plugins.
 #%_vapidir/*
 
 %changelog
+* Thu Sep 23 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt1
+- 0.2.2
+
 * Mon Jun 07 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
 - 0.2.1 (fixed CVE-2021-33896)
 
