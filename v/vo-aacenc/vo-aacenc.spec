@@ -1,6 +1,7 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name:           vo-aacenc
 Version:        0.1.3
-Release:        alt1
+Release:        alt2
 Summary:        VisualOn AAC encoder library
 Group:          System/Libraries
 License:        Apache License v2
@@ -51,5 +52,8 @@ developing applications that use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 0.1.3-alt2
+- fixed build with LTO
+
 * Tue Feb 25 2014 Slava Dubrovskiy <dubrsl@altlinux.org> 0.1.3-alt1
 - first build for ALT Linux
