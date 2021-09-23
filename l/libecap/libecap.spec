@@ -1,10 +1,11 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %def_enable shared
 %def_enable static
 
 %define bname ecap
 Name: lib%bname
 Version: 1.0.1
-Release: alt1
+Release: alt2
 Summary: libecap library implements eCAP API in C++
 License: BSD
 Group: System/Legacy libraries
@@ -110,6 +111,9 @@ install -p -m 0644 LICENSE CREDITS NOTICE README %buildroot%_docdir/%name-%versi
 
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 1.0.1-alt2
+fixed build with LTO
+
 * Tue Oct 20 2015 Alexey Shabalin <shaba@altlinux.ru> 1.0.1-alt1
 - 1.0.1
 
