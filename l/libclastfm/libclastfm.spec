@@ -1,6 +1,7 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name:		libclastfm
 Version:	0.5
-Release:	alt2.git20130316
+Release:	alt3.git20130316
 Summary:	Unofficial C-API for the Last.fm web service
 
 Group:		System/Libraries
@@ -45,6 +46,9 @@ This package contains the development files for %{name}.
 %_pkgconfigdir/libclastfm.pc
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 0.5-alt3.git20130316
+- NMU: fixed build with LTO
+
 * Wed Sep 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt2.git20130316
 - New snapshot
 
