@@ -39,7 +39,7 @@
 
 Name:    golang
 Version: 1.17.1
-Release: alt2
+Release: alt3
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -48,7 +48,6 @@ URL:     http://golang.org/
 Source0: golang-%version.tar
 Source1: golang-gdbinit
 Patch2:  golang-alt-certs-path.patch
-Patch3:  alt-pkgdir-fix-build.patch
 Patch100: 0001-Don-t-use-the-bundled-tzdata-at-runtime-except-for-t.patch
 Patch101: 0001-avoid-requires-libselinux-utils.patch
 
@@ -57,7 +56,7 @@ ExclusiveArch: %go_arches
 %set_verify_elf_method skip
 %add_debuginfo_skiplist %go_root
 %brp_strip_none %go_root/bin/*
-%brp_strip_none %go_root/pkg/**/*
+%brp_strip_none %go_root/pkg/*
 
 AutoReq: nocpp
 
@@ -149,7 +148,6 @@ BuildArch: noarch
 %setup -q
 
 %patch2 -p1
-%patch3 -p1
 %patch100 -p1
 %patch101 -p1
 
@@ -343,6 +341,9 @@ mkdir -p -- \
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Thu Sep 23 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.17.1-alt3
+- Remove workaround patch for building golang itself
+
 * Wed Sep 22 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.17.1-alt2
 - Fix golang build
 
