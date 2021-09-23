@@ -1,13 +1,13 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install ElectricFence libgmock-devel libgtest-devel libreadline-devel
+BuildRequires: /usr/bin/desktop-file-install libgmock-devel libgtest-devel libreadline-devel
 # END SourceDeps(oneline)
-%define fedora 32
+%define fedora 34
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           teg
 Version:        0.12.0
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Turn based strategy game
 License:        GPLv2
 URL:            https://github.com/wfx/teg/
@@ -104,6 +104,9 @@ popd
 %{_datadir}/GConf/gsettings/teg.convert
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 0.12.0-alt1_2
+- fixed build
+
 * Thu Apr 15 2021 Igor Vlasenko <viy@altlinux.org> 0.12.0-alt1_1
 - update to new release by fcimport
 
