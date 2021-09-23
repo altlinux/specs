@@ -1,6 +1,7 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: libmhash
 Version: 0.9.9.9
-Release: alt1
+Release: alt1.qa1
 
 Summary: Thread-safe hash library
 License: LGPL
@@ -63,6 +64,9 @@ Static libraries for %name.
 %_libdir/*.a
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 0.9.9.9-alt1.qa1
+- NMU: fixed build with LTO
+
 * Tue Jun 12 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.9.9.9-alt1
 - 0.9.9.9
 
