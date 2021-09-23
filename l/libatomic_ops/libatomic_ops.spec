@@ -1,3 +1,4 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %define _unpackaged_files_terminate_build 1
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -12,7 +13,7 @@
 
 Name:		libatomic_ops
 Version:	7.6.8
-Release:	alt1
+Release:	alt2
 Summary:	A library for accessing hardware provided atomic memory operations
 Group:		Development/C
 # libatomic_ops MIT, libatomic_ops_gpl GPLv2
@@ -159,6 +160,9 @@ taskset -c 0 make check
 %_libdir/lib%{rawname}*.so
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 7.6.8-alt2
+- fixed build with LTO
+
 * Wed Feb 13 2019 Igor Vlasenko <viy@altlinux.ru> 7.6.8-alt1
 - new version 7.6.8
 - added devel subpackage
