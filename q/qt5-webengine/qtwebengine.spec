@@ -30,7 +30,7 @@
 
 Name: qt5-webengine
 Version: 5.15.6
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -88,7 +88,8 @@ BuildRequires: /proc
 BuildRequires: flex libicu-devel libEGL-devel
 BuildRequires: libgio-devel libkrb5-devel
 BuildRequires: git-core gperf libalsa-devel libcap-devel libdbus-devel libevent-devel libexpat-devel libjpeg-devel libminizip-devel libnss-devel
-BuildRequires: fontconfig-devel libdrm-devel gyp libudev-devel libxml2-devel jsoncpp-devel liblcms2-devel
+BuildRequires: libharfbuzz-devel fontconfig-devel
+BuildRequires: libdrm-devel gyp libudev-devel libxml2-devel jsoncpp-devel liblcms2-devel
 BuildRequires: libopus-devel libpci-devel libpng-devel libprotobuf-devel libpulseaudio-devel libre2-devel libsnappy-devel libsrtp2-devel
 BuildRequires: libwebp-devel libxslt-devel ninja-build protobuf-compiler libva-devel libvdpau-devel
 BuildRequires: node-yargs node-terser
@@ -176,6 +177,7 @@ Requires: libqt5-core = %_qt5_version
 
 %prep
 %define icu_ver %{get_version libicu-devel}
+%define harfbuzz_ver %{get_version libharfbuzz-devel}
 %IF_ver_gteq %icu_ver 5.9
 %def_enable system_icu
 %else
@@ -183,12 +185,14 @@ Requires: libqt5-core = %_qt5_version
 %endif
 %setup -n %qt_module-everywhere-src-%version
 ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
+%IF_ver_gteq %harfbuzz_ver 3.0
 pushd src/3rdparty/chromium
 %patch1 -p1
 pushd third_party/skia
 %patch2 -p1
 popd
 popd
+%endif
 #
 %patch3 -p1
 #patch4 -p1
@@ -430,6 +434,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Thu Sep 23 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.6-alt2
+- don't apply harfbuzz patches with old harfbuzz
+
 * Wed Sep 22 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.6-alt1
 - new version
 
