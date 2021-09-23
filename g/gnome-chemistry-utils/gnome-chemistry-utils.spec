@@ -2,7 +2,7 @@
 %define api_ver 0.14
 %define _libexecdir %_prefix/libexec
 %def_disable mozilla
-%def_disable gnumeric
+%def_enable gnumeric
 %if_enabled gnumeric
 %define gnumeric_api_ver 1.12
 %define gnumeric_plugindir %(pkg-config --variable PluginDir libspreadsheet-%gnumeric_api_ver)
@@ -13,7 +13,7 @@
 
 Name: gnome-chemistry-utils
 Version: %ver_major.17
-Release: alt8
+Release: alt9
 
 Summary: A set of chemical utilities
 Group: Sciences/Chemistry
@@ -22,11 +22,18 @@ Url: http://gchemutils.nongnu.org/
 
 Source: http://download.savannah.gnu.org/releases/gchemutils/%ver_major/%name-%version.tar.xz
 Patch1: %name-0.10.12-alt-mozplugindir.patch
+# debian
+Patch11: gnome-chemistry-utils-0.14.17-deb-gnumeric-ftbfs.patch
+Patch12: gnome-chemistry-utils-0.14.17-deb-openbabel-v3.patch
+Patch13: gnome-chemistry-utils-0.14.17-deb-use-yelp.patch
+Patch14: gnome-chemistry-utils-0.14.17-deb-remove-gnome-common.patch
+Patch15: gnome-chemistry-utils-0.14.17-deb-gdk-use-x11-backend.patch
+Patch16: gnome-chemistry-utils-0.14.17-deb-gchempaint-merge-molecules-fix.patch
 
 Requires: %name-data = %version-%release bodr chemical-mime-data
 
-BuildRequires: gcc-c++ doxygen docbook-dtds
-BuildRequires: gnome-doc-utils gnome-common intltool scrollkeeper man
+BuildRequires: autoconf-archive gcc-c++ doxygen docbook-dtds
+BuildRequires: yelp-tools intltool man
 BuildRequires: libgio-devel libgnomeoffice%goffice_api_ver-devel
 %{?_enable_gnumeric:BuildRequires: libspreadsheet-devel}
 BuildRequires: libgsf-devel libopenbabel-devel libGLU-devel
@@ -75,10 +82,18 @@ spreadsheet program.
 %prep
 %setup
 %patch1 -b .mozplugindir
+%patch11 -p1
+#%%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
 
 [ ! -d m4 ] && mkdir m4
 
 %build
+# document.h:187:32: error: ISO C++17 does not allow dynamic exception specifications
+%add_optflags -std=c++14
 %autoreconf
 %configure --disable-update-databases \
            --disable-schemas-compile \
@@ -135,6 +150,11 @@ spreadsheet program.
 %endif
 
 %changelog
+* Thu Sep 23 2021 Yuri N. Sedunov <aris@altlinux.org> 0.14.17-alt9
+- applied debian patchset
+- enabled gnimeric plugin again
+- fixed build with gcc-11
+
 * Fri Aug 10 2018 Yuri N. Sedunov <aris@altlinux.org> 0.14.17-alt8
 - disabled gnumeric support incompatible with 1.12.42
 
