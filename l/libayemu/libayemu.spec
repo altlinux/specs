@@ -1,6 +1,7 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: libayemu
 Version: 1.0.0
-Release: alt2.qa1
+Release: alt3.qa1
 
 Summary: AY/YM emulation library 
 License: GPL
@@ -65,6 +66,9 @@ You'll only need this package if you are doing development.
 %_libdir/libayemu.a*
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 1.0.0-alt3.qa1
+- NMU: fixed build with LTO
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.0-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
