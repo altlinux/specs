@@ -75,7 +75,7 @@ BuildRequires: /usr/bin/hg
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	%relYear
-Release:	alt1_2
+Release:	alt1_3
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -427,6 +427,9 @@ export CXXFLAGS="%{optflags} -std=c++14"
 
 #for dvisvgm system libs patches
 autoreconf -vfi texk/dvisvgm
+# viy: LTO
+#autoreconf -fisv libs/cairo does not work
+rm -rf libs/cairo
 
 mkdir -p Work
 pushd Work
@@ -671,6 +674,9 @@ rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R %{texmfconfdir}/ls-R
 
 #-----------------------------------------------------------------------
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 2021-alt1_3
+- fixed build
+
 * Thu Aug 05 2021 Igor Vlasenko <viy@altlinux.org> 2021-alt1_2
 - new version
 
