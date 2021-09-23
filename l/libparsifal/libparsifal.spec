@@ -1,8 +1,9 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %define major 1
 
 Name: libparsifal
 Version: 1.1.0
-Release: alt4
+Release: alt5
 Summary: Parsifal is a validating XML 1.0 parser based on SAX2
 License: Public
 Group: System/Libraries
@@ -84,6 +85,9 @@ cp -fR doc/* %buildroot%_docdir/%name/
 %_docdir/%name
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 1.1.0-alt5
+- NMU: fixed build with LTO
+
 * Thu Feb 10 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt4
 - Rebuilt for debuginfo
 
