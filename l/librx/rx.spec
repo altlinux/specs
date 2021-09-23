@@ -1,10 +1,11 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Summary: POSIX regexp functions
 Name: librx
 Version: 1.5
 
 Packager: Alexey Voinov <voins@altlinux.ru>
 
-Release: alt8.1
+Release: alt9.1
 License: GPL
 Group: Development/C
 Url: http://www.gnu.org/software/rx/rx.html
@@ -75,6 +76,9 @@ install -m 644 doc/rx.info $RPM_BUILD_ROOT%_infodir
 %_libdir/*.a
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 1.5-alt9.1
+- NMU: fixed build with LTO
+
 * Sat Dec 05 2015 Igor Vlasenko <viy@altlinux.ru> 1.5-alt8.1
 - NMU: added BR: texinfo
 
