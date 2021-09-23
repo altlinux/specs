@@ -4,7 +4,7 @@
 
 Name:     openmodelica
 Version:  1.17.0
-Release:  alt3
+Release:  alt4
 
 Summary:  OpenModelica is an open-source Modelica-based modeling and simulation environment intended for industrial and academic usage
 License:  GPL-3.0+ and OSMC-PL
@@ -117,6 +117,7 @@ echo -e "#!/bin/sh\necho %version" > OMCompiler/common/semver.sh
 rm testsuite/Makefile
 
 %build
+%global optflags_lto %nil
 export PATH=%_qt5_prefix/bin:$PATH
 %autoreconf
 %configure \
@@ -175,6 +176,9 @@ cp -a libraries/build/* %buildroot%_libexecdir/omlibrary
 %endif
 
 %changelog
+* Thu Sep 23 2021 Andrey Cherepanov <cas@altlinux.org> 1.17.0-alt4
+- FTBFS: disable LTO.
+
 * Sun Aug 01 2021 Vitaly Lipatov <lav@altlinux.ru> 1.17.0-alt3
 - NMU: don't req python2 modules
 
