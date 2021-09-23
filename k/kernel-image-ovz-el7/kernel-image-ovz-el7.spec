@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1160.36.2.vz7.182.2
-%define orelease 1160.36.2.vz7.182.2.1
+#     rh7-3.10.0-1160.41.1.vz7.183.2
+%define orelease 1160.41.1.vz7.183.2
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -366,6 +366,9 @@ install -Dp -m644 .config %buildroot/boot/config-%kversion-%flavour-%krelease
 	%{!?_enable_debug:%{?strip_mod_opts:INSTALL_MOD_STRIP="%strip_mod_opts"}} \
 	modules_install
 
+install -d %buildroot%modules_dir/misc
+install -d %buildroot%modules_dir/updates
+
 install -d -m 0755 %buildroot%kbuild_dir
 cp -aL include %buildroot%kbuild_dir/
 for t in f d; do
@@ -538,6 +541,8 @@ grep beancounter boot.log
 %ghost %modules_dir/modules.devname
 %ghost %modules_dir/modules.softdep
 %modules_dir/kernel
+%modules_dir/misc
+%modules_dir/updates
 
 
 %files -n kernel-headers-%flavour
@@ -595,6 +600,9 @@ grep beancounter boot.log
 
 
 %changelog
+* Thu Sep 23 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.41.1.vz7.183.2
+- Build rh7-3.10.0-1160.41.1.vz7.183.2
+
 * Wed Sep 15 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.36.2.vz7.182.2.1
 - fix partial merge of 6faadbbb7f9 commit (thnx glebfm@)
 - change the name of gcc compiler in Makefile (as in std-def)
