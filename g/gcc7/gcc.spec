@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 7.3.1
-Release: alt10
+Release: alt11
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -206,7 +206,8 @@ Requires: libitm1 %REQ %EVR
 Requires: libtsan0 %REQ %EVR
 %endif
 BuildPreReq: rpm-build >= 4.0.4-alt39, %binutils_deps
-BuildPreReq: gcc-c++ coreutils flex makeinfo
+%set_gcc_version 10
+BuildPreReq: gcc%_gcc_version-c++ coreutils flex makeinfo
 BuildPreReq: libelf-devel libmpc-devel libmpfr-devel
 # due to manpages
 BuildPreReq: perl-Pod-Parser
@@ -1154,6 +1155,8 @@ fi
 
 %define _configure_script ../configure
 %define _configure_target --host=%_target_platform --build=%_target_platform --target=%gcc_target_platform
+# Remove lto flags, these flags break GCC build.
+%global optflags_lto %nil
 %remove_optflags -frecord-gcc-switches %optflags_nocpp %optflags_notraceback
 export CC=%__cc \
 	CFLAGS="%optflags" \
@@ -2098,6 +2101,9 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Thu Sep 23 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.3.1-alt11
+- Fixed FTBFS by using gcc 10 for build and disabling global lto flags.
+
 * Sat Apr 24 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.3.1-alt10
 - Fixed build with glibc >= 2.31.
 
