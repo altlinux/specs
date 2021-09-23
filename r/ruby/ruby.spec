@@ -1,4 +1,4 @@
-%def_without   bootstrap
+%def_with      bootstrap
 %def_enable    shared
 %def_enable    rubygems
 %define        ruby_version 2.7.0
@@ -11,7 +11,7 @@
 
 Name:          ruby
 Version:       %_version
-Release:       alt1
+Release:       alt2
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -19,7 +19,6 @@ Url:           http://www.%name-lang.org/
 Vcs:           https://github.com/ruby/ruby.git
 
 Source0:       %name-%version.tar
-Source3:       fakeruby.sh
 Source4:       miniruby.sh
 BuildRequires(pre): rpm-macros-ruby >= 1:1.0.0
 BuildRequires(pre): rpm-macros-valgrind
@@ -38,11 +37,12 @@ BuildRequires: libyaml-devel
 BuildRequires: valgrind-devel
 %endif
 BuildRequires: gcc-c++
-%{?_with_bootstrap:BuildRequires: ruby-miniruby-src = %EVR}
+%{?_with_bootstrap:BuildRequires: ruby-miniruby-src = %_version}
 BuildRequires: gem(rake) >= 13.0 gem(rake) < 14
 BuildRequires: gem(rspec) >= 3.8 gem(rspec) < 4
 
-%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+# Ruby built using LTO cannot rebuild itself because of segfaults
+%define optflags_lto %nil
 %ruby_ignore_names observer,rake,psych,rdoc,gettext,test-unit,net-telnet,minitest,xmlrpc,did_you_mean,power_assert,readline-ext,fiddle,etc,zlib,strscan,fcntl,bigdecimal,gdbm,stringio,io-console,sdbm,dbm,json,openssl,date,bar,rubyforge,pstore,net-smtp,net-pop,reline,bundler,matrix,delegate,yaml,csv,uri,ostruct,racc,tracer,getoptlong,singleton,readline,mutex_m,fileutils,prime,ipaddr,webrick,logger,rss,forwardable,cgi,rexml,open3,benchmark,irb,timeout,mspec,03-tompng,templates,thor
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findreq_skiplist %libdir/*
@@ -296,11 +296,29 @@ my_configure() {
 cd %_builddir
 cp -a %name-%_version %name-%_version-miniruby
 cd %name-%_version-miniruby
-dducp %SOURCE3 %SOURCE4 .
+cp %SOURCE4 .
+
+cat > fakeruby.sh << "EOF"
+#!/bin/bash
+echo "$@" >> ~/fakeruby.log
+case "$@" in
+*"print 42"*) echo 42 ;;
+*"file2lastrev.rb"*) echo "
+#define RUBY_REVISION \"647ee6f091\"
+#define RUBY_FULL_REVISION \"647ee6f091eafcce70ffb75ddf7e121e192ab217\"
+#define RUBY_BRANCH_NAME \"%_version\"
+#define RUBY_RELEASE_DATETIME \"2019-12-25T09:50:58Z\"
+" ;;
+esac
+EOF
+chmod +x fakeruby.sh
 
 my_configure --with-baseruby=$PWD/fakeruby.sh
 patch -p1 -l < %_datadir/%name-%_version-miniruby/miniruby-src.patch
 %make_build miniruby
+
+# miniruby cannot generate these files
+cp *.inc ../%name-%_version/
 
 # *** 2nd stage ***
 # Build ruby with host miniruby frome 1st stage as baseruby
@@ -431,6 +449,11 @@ ln -s armh-linux "${EX}/armh-linux-eabi"
 %endif
 
 %changelog
+* Thu Sep 23 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.7.4-alt2
+- fixed miniruby bootstrap mode
+- LTO disabled (ruby built using LTO is broken)
+- enabled bootstrap to fix broken 2.7.4-alt1 build
+
 * Sun Jul 18 2021 Pavel Skrylev <majioa@altlinux.org> 2.7.4-alt1
 - ^ 2.7.3 -> 2.7.4
 - ! build of LTE errors
