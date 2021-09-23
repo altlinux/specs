@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.4.0
-Release: alt2
+Version: 4.5.0
+Release: alt1
 
 Summary: Definition of authentication basics for the Zope Framework
 License: ZPL-2.1
@@ -86,6 +86,9 @@ TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e py%{python_version_no
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Thu Sep 23 2021 Nikolai Kostrigin <nickel@altlinux.org> 4.5.0-alt1
+- 4.4.0 -> 4.5.0
+
 * Thu Apr 02 2020 Nikolai Kostrigin <nickel@altlinux.org> 4.4.0-alt2
 - Fix tests by adding zope.security to BR:
 - Fix license
