@@ -1,5 +1,6 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20140417.2
+Release: alt2.git20140417.2
 %define mpiimpl openmpi
 %define mpidir %_libexecdir/%mpiimpl
 %define somver 0
@@ -149,6 +150,9 @@ mv doxygen/html %buildroot%_docdir/%name/
 %doc examples
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 1:5.1.0-alt2.git20140417.2
+- NMU: fixed build with LTO
+
 * Mon Mar 05 2018 Igor Vlasenko <viy@altlinux.ru> 1:5.1.0-alt1.git20140417.2
 - NMU: rebuild with new tex(...) requires
 
