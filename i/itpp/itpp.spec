@@ -1,9 +1,13 @@
 %define sover   8
 %define libname lib%name%sover
 
+%ifarch %ix86
+%def_disable check
+%endif
+
 Name: itpp
 Version: 4.3.1
-Release: alt3.1
+Release: alt4
 Summary: C++ library of math, signal processing and communication routines
 License: GPL-2.0+
 Group: Development/C
@@ -20,6 +24,8 @@ Patch2: itpp-4.3.1_memmove.patch
 Patch3: itpp-respect_dlib_suffix.diff
 # PATCH-FIX-UPSTREAM itpp-reproducible.patch bmwiedemann -- https://sourceforge.net/p/itpp/git/merge-requests/3/
 Patch4: itpp-reproducible.patch
+# PATCH from Debian
+Patch5: itpp-gcc11.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -93,6 +99,7 @@ IT++ similar to MATLAB or GNU Octave.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 # fix wrong permission in the source tarball for lapack.h
 chmod 664 itpp/base/algebra/lapack.h
@@ -105,7 +112,7 @@ chmod 664 itpp/base/algebra/lapack.h
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
-build/gtests/itpp_gtests |:
+%_cmake__builddir/gtests/itpp_gtests
 
 %install
 %cmakeinstall_std
@@ -127,6 +134,11 @@ fdupes -s %buildroot%_docdir
 %_docdir/%name
 
 %changelog
+* Thu Sep 23 2021 Anton Midyukov <antohami@altlinux.org> 4.3.1-alt4
+- fix build with gcc11
+- fix check
+- disable check for %ix86
+
 * Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 4.3.1-alt3.1
 - NMU: remove rpm-build-ubt from BR:
 
