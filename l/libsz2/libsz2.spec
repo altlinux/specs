@@ -1,6 +1,7 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: libsz2
 Version: 2.1
-Release: alt4
+Release: alt5
 Summary: SZIP compression library for HDF5
 License: Free for non-commercial using
 Group: System/Libraries
@@ -57,6 +58,9 @@ export CPPFLAGS="%optflags"
 %_libdir/*.a
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 2.1-alt5
+- NMU: fixed build with LTO
+
 * Sun Mar 20 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1-alt4
 - Added -g into compiler flags
 
