@@ -1,25 +1,24 @@
+%def_with check
 %define oname keyring
-
-#%%def_disable check
 
 Name: python3-module-%oname
 Version: 21.8.0
-Release: alt1
-Summary: Keyring provides an easy way to access the system keyring service
+Release: alt2
 
+Summary: Keyring provides an easy way to access the system keyring service
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/keyring
-BuildArch: noarch
 
+Url: https://pypi.python.org/pypi/keyring
 Source: %oname-%version.tar
 # Source-url: https://files.pythonhosted.org/packages/source/k/keyring/keyring-%version.tar.gz
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools_scm
+BuildArch: noarch
 
-%if_disabled check
-%else
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools_scm python3-module-toml
+
+%if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-importlib-metadata
 %endif
@@ -30,8 +29,8 @@ Conflicts: python-module-%oname
 Obsoletes: python-module-%oname
 
 %description
-The Python keyring lib provides an easy way to access the system 
-keyring service from python. It can be used in any application 
+The Python keyring lib provides an easy way to access the system
+keyring service from python. It can be used in any application
 that needs safe password storage.
 
 %prep
@@ -60,6 +59,10 @@ py.test3 -v
 %python3_sitelibdir/*
 
 %changelog
+* Thu Sep 23 2021 Michael Shigorin <mike@altlinux.org> 21.8.0-alt2
+- fix build --without check (no pytest => no toml then)
+- minor spec cleanup
+
 * Sat Sep 11 2021 Anton Midyukov <antohami@altlinux.org> 21.8.0-alt1
 - new version (21.8.0) with rpmgs script
 - drop subpackage tests
