@@ -1,11 +1,12 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %define libname libmpeg2
 
 Name: mpeg2dec
 Version: 0.5.1
-Release: alt3.svn20120718
+Release: alt4.svn20120718
 
 Summary: mpeg-1 and mpeg-2 streams decoder
-License: GPL
+License: GPLv2+
 Group: Video
 Url: http://%libname.sourceforge.net
 
@@ -83,6 +84,9 @@ rm -f %buildroot%_libdir/*.la
 %_libdir/*.a
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 0.5.1-alt4.svn20120718
+- NMU: fixed build with LTO
+
 * Tue Sep 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt3.svn20120718
 - Snapshot from svn
 
