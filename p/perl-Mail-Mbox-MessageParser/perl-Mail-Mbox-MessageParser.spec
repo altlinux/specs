@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(UNIVERSAL/require.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define dist Mail-Mbox-MessageParser
 Name: perl-%dist
 Version: 1.5111
-Release: alt1
+Release: alt2
 
 Summary: A fast and simple mbox folder reader
 License: GPL
@@ -39,6 +42,9 @@ cached folder information, GNU grep, or highly optimized Perl.
 %perl_vendor_privlib/Mail/Mbox/MessageParser/*.pm
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 1.5111-alt2
+- fixed build
+
 * Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 1.5111-alt1
 - automated CPAN update
 
