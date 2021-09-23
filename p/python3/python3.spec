@@ -87,7 +87,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 
 Name: python3
 Version: %{pybasever}.7
-Release: alt1
+Release: alt2
 
 Summary: Version 3 of the Python programming language aka Python 3000
 
@@ -411,12 +411,12 @@ cp -rl * ../build-shared/
 # Configuring and building the code:
 # ======================================================
 %build
+build() {
 # Note: "computed-gotos" are automatically detected by the configure script,
 # must be turned off on e2k due to slow implementation.
 %configure \
   --with-platlibdir=%{_lib} \
   --enable-ipv6 \
-  --enable-shared \
 %ifnarch armh
   --enable-optimizations \
 %endif
@@ -436,11 +436,26 @@ cp -rl * ../build-shared/
   $*
 
 %make_build
+}
+
+pushd ../build-shared
+build --enable-shared
+popd
+
+build
 
 # ======================================================
 # Installing the built code:
 # ======================================================
 %install
+
+# shared build only needed for libpython3
+pushd ../build-shared
+make install DESTDIR=%buildroot INSTALL="install -p"
+popd
+
+# static build is installed over shared because it's much faster
+# the reason for such performance difference is unknown
 find build -exec touch {} \;
 make install DESTDIR=%buildroot INSTALL="install -p"
 
@@ -658,6 +673,9 @@ rm -rf %buildroot%_bindir/__pycache__
 %ifarch %e2k
 rm -f %buildroot%dynload_dir/nis.cpython-%pyshortver%pyabi.so
 %endif
+
+# Clean after static build
+rm -vf %buildroot/%_libdir/libpython%pybasever%pyabi.a
 
 %check
 # ALT#32008:
@@ -989,6 +1007,9 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Mon Sep 20 2021 Grigory Ustinov <grenka@altlinux.org> 3.9.7-alt2
+- Bring back static build (thx to ilyakurdyukov@) (Closes: #40939).
+
 * Tue Sep 14 2021 Grigory Ustinov <grenka@altlinux.org> 3.9.7-alt1
 - Updated to upstream version 3.9.7.
 
