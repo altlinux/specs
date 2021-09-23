@@ -6,7 +6,7 @@
 
 Name: %gst_plugins-base
 Version: %ver_major.36
-Release: alt3
+Release: alt4
 Summary: An essential set of GStreamer plugins (legacy version)
 Group: System/Libraries
 License: LGPL-2.0
@@ -69,7 +69,7 @@ Patch1: gst-plugins-base-make43.patch
 
 BuildRequires: gstreamer0.10-devel gtk-doc intltool libSM-devel libXext-devel libXv-devel libalsa-devel libgtk+2-devel
 BuildRequires: libcdparanoia-devel liboil-devel libtheora-devel libvorbis-devel orc liborc-test-devel gstreamer0.10-gir-devel
-BuildRequires: python-module-PyXML python-modules-encodings gobject-introspection-devel
+BuildRequires: gobject-introspection-devel
 
 %description
 GStreamer Base Plug-ins is a well-groomed and well-maintained
@@ -118,6 +118,9 @@ subst '/.PHONY/d' Makefile.am
 %_libdir/*.so.*
 
 %changelog
+* Thu Sep 23 2021 Andrey Cherepanov <cas@altlinux.org> 0.10.36-alt4
+- FTBFS: remove python-module-PyXML.
+
 * Mon Apr 20 2020 Andrey Cherepanov <cas@altlinux.org> 0.10.36-alt3
 - Apply patches from Debian.
 - Fixes:
