@@ -1,6 +1,7 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: libfacet
 Version: 0.0.1
-Release: alt3.qa4
+Release: alt3.qa5
 
 Summary: extented c++ std::locale facets for multitran
 License: LGPL
@@ -51,6 +52,9 @@ Contents static libraries for %name
 %_libdir/*.a
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 0.0.1-alt3.qa5
+- fixed build with LTO
+
 * Sun Nov 08 2015 Michael Shigorin <mike@altlinux.org> 0.0.1-alt3.qa4
 - rebuilt for gcc5 C++ ABI
 
