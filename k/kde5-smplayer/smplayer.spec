@@ -2,12 +2,11 @@
 %def_enable mpv
 
 %define rname smplayer
-%define svn 9475
 %define xde kde5
 %define XDE KDE5
 %define xapp kf5
 Name: %xde-%rname
-Version: 21.1.0.%svn
+Version: 21.8.0
 Release: alt1
 
 %define qt_bin_dir %_qt5_bindir
@@ -113,7 +112,8 @@ sed -i 's|^THEMES_PATH=.*|THEMES_PATH=%_datadir/smplayer/themes|' Makefile
 sed -i 's|^SHORTCUTS_PATH=.*|SHORTCUTS_PATH=%_datadir/%name/shortcuts|' Makefile
 
 pushd src
-echo '#define SVN_REVISION "%svn"' > svn_revision.h
+SVNREV=`grep -E '^#define[[:space:]]+SVN_REVISION' version.cpp | sed -e 's|.*"\(.*\)".*|\1|'`
+echo "#define SVN_REVISION \"$SVNREV\"" > svn_revision.h
 %configure_qmake smplayer.pro
 popd
 
@@ -121,7 +121,7 @@ popd
 %build
 export PATH=%qt_bin_dir:$PATH
 export QMAKE=%qt_qmake
-%make_build src/smplayer
+%make_build -Onone src/smplayer
 
 
 %install
@@ -170,6 +170,9 @@ done
 
 
 %changelog
+* Thu Sep 23 2021 Sergey V Turchin <zerg@altlinux.org> 21.8.0-alt1
+- new version
+
 * Mon Feb 15 2021 Sergey V Turchin <zerg@altlinux.org> 21.1.0.9475-alt1
 - new version
 
