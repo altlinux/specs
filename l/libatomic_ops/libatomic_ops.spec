@@ -12,8 +12,8 @@
 %def_enable shared
 
 Name:		libatomic_ops
-Version:	7.6.8
-Release:	alt2
+Version:	7.6.12
+Release:	alt1
 Summary:	A library for accessing hardware provided atomic memory operations
 Group:		Development/C
 # libatomic_ops MIT, libatomic_ops_gpl GPLv2
@@ -160,6 +160,9 @@ taskset -c 0 make check
 %_libdir/lib%{rawname}*.so
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 7.6.12-alt1
+- new version 7.6.12
+
 * Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 7.6.8-alt2
 - fixed build with LTO
 
