@@ -1,9 +1,9 @@
 Name: rtl_433
-Version: 20.11
+Version: 21.05
 Release: alt1
 
 Summary: Generic radio data receiver
-License: GPL
+License: GPLv2
 Group: Communications
 Url: https://github.com/merbanan/rtl_433
 
@@ -52,6 +52,9 @@ touch %buildroot%_sysconfdir/rtl_433/rtl_433.conf
 %_pkgconfigdir/rtl433.pc
 
 %changelog
+* Thu Sep 23 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 21.05-alt1
+- 21.05 released
+
 * Mon Mar 29 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.11-alt1
 - 20.11 released
 
