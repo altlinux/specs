@@ -1,6 +1,6 @@
 Name: panzerchasm
 Version: 0.3
-Release: alt1
+Release: alt2
 
 Summary: Free software reconstruction of game "Chasm: The Rift"
 License: GPL-3.0-only
@@ -10,11 +10,14 @@ Url: https://github.com/Panzerschrek/Chasm-Reverse
 
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
-Source0: %name-%version.tar
+Source: %name-%version.tar
 Source1: panzerchasm-wrapper.sh
 
 Patch0: in_udp_port.patch
 
+# Adding <limits> to headers in map_bsp_tree.cpp, thanks to:
+# https://github.com/onnx/onnx-tensorrt/issues/474
+Patch1: add_limits.patch
 BuildRequires(pre): ImageMagick-tools
 
 BuildRequires: cmake rpm-macros-cmake
@@ -37,17 +40,15 @@ You have to put them under '~/.config/panzerchasm/'.
 %setup -n %name-%version
 
 %patch0 -p1
+%patch1 -p1
 
 %build
-
 mkdir BUILD
 cd BUILD
 cmake ..
 %make
 
-
-%install 
-
+%install
 mkdir -p %buildroot%_desktopdir
 cat > %buildroot%_desktopdir/%name.desktop << EOF
 [Desktop Entry]
@@ -62,12 +63,11 @@ EOF
 
 mkdir -p %buildroot%_iconsdir
 
-install -D -m0755 BUILD/PanzerChasm/PanzerChasm %{buildroot}/%{_libexecdir}/%{name}/%{name}
-install -D -m0755 %{SOURCE1} %{buildroot}/%{_bindir}/%{name}
+install -D -m0755 BUILD/PanzerChasm/PanzerChasm %buildroot/%_libexecdir/%name/%name
+install -D -m0755 %SOURCE1 %buildroot/%_bindir/%name
 install -D -m0644 PanzerChasm/PanzerChasm.ico %buildroot%_iconsdir/%name.ico
 
 %files
-
 %doc README.md docs/* PanzerChasm/readme.txt
 %_bindir/%name
 %dir %_libexecdir/%name
@@ -76,5 +76,9 @@ install -D -m0644 PanzerChasm/PanzerChasm.ico %buildroot%_iconsdir/%name.ico
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Sep 23 2021 Artyom Bystrov <arbars@altlinux.org> 0.3-alt2
+- Add patch for adding <limits> headers in map_bsp_tree source file
+- fix build on new GCC
+
 * Thu Jan 07 2021 Artyom Bystrov <arbars@altlinux.org> 0.3-alt1
 - initial build for ALT Sisyphus
