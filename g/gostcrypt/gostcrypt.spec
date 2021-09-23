@@ -1,6 +1,6 @@
 Name: 	  gostcrypt
 Version:  1.3
-Release:  alt3
+Release:  alt4
 
 Summary:  Fork of the (late) Truecrypt project
 License:  GPLv3
@@ -31,9 +31,9 @@ and richness of encryption solutions is THE solution.
 %patch -p2
 
 %build
-export GST_EXTRA_CFLAGS="-Wno-narrowing -fgnu89-inline"
-export GST_EXTRA_CXXFLAGS="-Wno-narrowing -fgnu89-inline"
-%make_build NOTEST=1 VERBOSE=1
+export GST_EXTRA_CFLAGS="-Wno-narrowing -fgnu89-inline -std=gnu++14"
+export GST_EXTRA_CXXFLAGS="-Wno-narrowing -fgnu89-inline -std=gnu++14"
+%make_build NOTEST=1
 
 %install
 install -Dm0755 Main/%name %buildroot%_bindir/%name
@@ -46,6 +46,9 @@ install -Dm0755 Main/%name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Thu Sep 23 2021 Andrey Cherepanov <cas@altlinux.org> 1.3-alt4
+- FTBFS: fix build with gcc11.
+
 * Mon May 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3-alt3
 - NMU: fixed build with current toolchain.
 
