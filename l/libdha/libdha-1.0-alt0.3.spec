@@ -1,4 +1,4 @@
-Packager: Repocop Q. A. Robot <repocop@altlinux.org>
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %define subst_enable_to() %{expand:%%{?_enable_%{1}:--enable-%{2}}} %{expand:%%{?_disable_%{1}:--disable-%{2}}}
 
 %def_enable static
@@ -9,7 +9,7 @@ Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 
 Name: libdha
 Version: 1.0
-Release: alt1.qa1
+Release: alt1.qa2
 Summary: Library of Direct Hardware Access
 License: GPL
 Group: System/Libraries
@@ -24,6 +24,8 @@ Patch1: %name-svn-r21861-bswap.patch.gz
 
 BuildRequires: awk
 %{?_enable_svgalib_helper:BuildRequires: svgalib-devel}
+
+ExclusiveArch: x86_64 %{ix86}
 
 %description
 %name - Library of Direct Hardware Access.
@@ -107,6 +109,9 @@ install -m 0644 pci_*.h %buildroot%_includedir/%name/
 
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 1.0-alt1.qa2
+- NMU: fixed build with LTO
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
