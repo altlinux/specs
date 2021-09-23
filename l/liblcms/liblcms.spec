@@ -1,3 +1,4 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %define rname lcms
 %define major 1
 %define minor 19
@@ -5,7 +6,7 @@
 
 Name: lib%rname
 Version: %major.%minor
-Release: alt5
+Release: alt6
 
 Summary: Little cms color engine
 License: LGPL
@@ -114,6 +115,9 @@ popd
 %_libdir/*.a
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 1.19-alt6
+- NMU: fixed build with LTO
+
 * Tue Nov 06 2012 Sergey V Turchin <zerg@altlinux.org> 1.19-alt5
 - rebuilt with new libtiff
 
