@@ -1,12 +1,15 @@
+%define _unpackaged_files_terminate_build 1
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %define sover 0
 
 Name: sexpr
 Version: 1.3
-Release: alt1
+Release: alt2
 Summary: Small, fast s-expression library (sexpr)
 License: LGPLv2.1+
 Group: Development/Tools
-Url: http://sexpr.sourceforge.net/
+Url: https://github.com/mjsottile/sfsexp
+VCS: https://github.com/mjsottile/sfsexp
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
@@ -74,6 +77,9 @@ install -m644 doxygen/man/man3/* %buildroot%_man3dir/
 
 rm -f examples/Makefile.in tests/Makefile.in
 
+# static lib
+rm -f %buildroot%_libdir/libsexp.a
+
 %files -n lib%name
 %doc COPYING README
 %_libdir/*.so.*
@@ -87,6 +93,9 @@ rm -f examples/Makefile.in tests/Makefile.in
 %doc doxygen/html examples tests
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 1.3-alt2
+- fixed build with LTO
+
 * Wed Nov 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1
 - Version 1.3
 
