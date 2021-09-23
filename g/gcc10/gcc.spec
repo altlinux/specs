@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 10.3.1
-Release: alt5
+Release: alt6
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -214,7 +214,8 @@ Requires: libitm1 %REQ %EVR
 Requires: libtsan0 %REQ %EVR
 %endif
 BuildPreReq: rpm-build >= 4.0.4-alt39, %binutils_deps
-BuildPreReq: gcc-c++ coreutils flex makeinfo
+%set_gcc_version 10
+BuildPreReq: gcc%_gcc_version-c++ coreutils flex makeinfo
 BuildPreReq: libelf-devel libmpc-devel libmpfr-devel
 # due to manpages
 BuildPreReq: perl-Pod-Parser
@@ -1207,7 +1208,9 @@ fi
 %define _configure_script ../configure
 %define _configure_target --host=%_target_platform --build=%_target_platform --target=%gcc_target_platform
 # Remove lto flags, these flags break GCC build, but GCC supports
-# special bootstrap-lto build config.
+# special bootstrap-lto build config.  Unfortunately, LTO builds of GCC 10 is
+# known to occasionally ICE while building some packages, so bootstrap-lto build
+# config is not enabled too.
 %global optflags_lto %nil
 %remove_optflags -frecord-gcc-switches %optflags_nocpp %optflags_notraceback %optflags_warnings
 export CC=%__cc \
@@ -1296,11 +1299,7 @@ CONFIGURE_OPTS="\
 %ifarch %libvtv_arches
 	--enable-vtable-verify \
 %endif
-%if_enabled bootstrap
-	--enable-bootstrap \
-	--with-build-config=bootstrap-lto \
-	--enable-link-serialization=1 \
-%endif
+	%{subst_enable bootstrap} \
 	--enable-languages="c,c++%{?_with_fortran:,fortran}%{?_with_objc:,objc,obj-c++}%{?_with_ada:,ada}%{?_with_go:,go}%{?_enable_d:,d},lto" \
 	--enable-plugin \
 	%{?_with_objc:%{?_enable_objc_gc:--enable-objc-gc}} \
@@ -2169,6 +2168,10 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Thu Sep 23 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.3.1-alt6
+- Fixed FTBFS by using gcc 10 for build.
+- Rebuilt without LTO flags.
+
 * Sun Sep 12 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.3.1-alt5
 - Rebuilt in gcc11 compatibility mode.
 
