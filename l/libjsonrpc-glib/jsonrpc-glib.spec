@@ -4,7 +4,7 @@
 %define _name jsonrpc-glib
 # probably meson bug
 %define libname libjsonrpc-glib
-%define ver_major 3.38
+%define ver_major 3.40
 %define api_ver 1.0
 
 %def_enable introspection
@@ -110,6 +110,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Sep 23 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
+- 3.40.0
+
 * Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 
