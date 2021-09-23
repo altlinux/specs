@@ -1,4 +1,4 @@
-%def_with      bootstrap
+%def_without   bootstrap
 %def_enable    shared
 %def_enable    rubygems
 %define        ruby_version 2.7.0
@@ -11,7 +11,7 @@
 
 Name:          ruby
 Version:       %_version
-Release:       alt2
+Release:       alt2.1
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -449,6 +449,9 @@ ln -s armh-linux "${EX}/armh-linux-eabi"
 %endif
 
 %changelog
+* Thu Sep 23 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.7.4-alt2.1
+- disabled bootstrap
+
 * Thu Sep 23 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.7.4-alt2
 - fixed miniruby bootstrap mode
 - LTO disabled (ruby built using LTO is broken)
