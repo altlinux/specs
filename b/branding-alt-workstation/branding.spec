@@ -2,9 +2,9 @@
 %define Brand ALT
 %define theme workstation
 %define Theme Workstation
-%define codename Laertes
-%define status %nil
-%define status_en %nil
+%define codename unknown
+%define status alpha
+%define status_en alpha
 %define flavour %brand-%theme
 
 %define gtk_theme BlueMenta
@@ -24,7 +24,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 9.2
+Version: 9.900
 Release: alt1
 Url: https://basealt.ru
 
@@ -365,6 +365,11 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Sep 23 2021 Mikhail Efremov <sem@altlinux.org> 9.900-alt1
+- Set status to alpha.
+- Set codename to unknown.
+- Bump version.
+
 * Tue Jul 27 2021 Mikhail Efremov <sem@altlinux.org> 9.2-alt1
 - Bump version.
 
