@@ -1,21 +1,23 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %def_disable static
+%def_disable java
+%def_disable docs
 
 Name: librubberband
-Version: 1.8.1
-Release: alt2.hg20140905.1
+Version: 1.9.2
+Release: alt1
 
 Summary: high quality library for audio time-stretching and pitch-shifting
 License: %gpl2plus
 Group: System/Libraries
 Url: http://www.breakfastquay.com/rubberband/
-
-# hg clone https://bitbucket.org/breakfastquay/rubberband
+Vcs: https://github.com/breakfastquay/rubberband.git
 Source0: %name-%version.tar
 
-BuildPreReq: rpm-build-licenses doxygen java-devel-default graphviz
-# Automatically added by buildreq on Fri Aug 07 2009
-BuildRequires: gcc-c++ ladspa_sdk libfftw3-devel libsamplerate-devel libsndfile-devel libvamp-devel
+BuildRequires(pre): rpm-build-licenses
+BuildRequires: gcc-c++ meson
+BuildRequires: doxygen java-devel-default graphviz
+BuildRequires: ladspa_sdk libfftw3-devel libsamplerate-devel libsndfile-devel libvamp-devel
 
 %description
 Rubber Band Library is a high quality software library for audio time-stretching
@@ -100,34 +102,43 @@ An audio time-stretching and pitch-shifting LADSPA plugin
 %setup
 
 %build
-%autoreconf
-%configure %{subst_enable static} --libdir=%_libdir
-%make_build
-%make_build jni
-doxygen
+%meson -Dfft=fftw -Dresampler=libsamplerate
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
+%if_enabled java
 install -d %buildroot%_javadir
 install -m644 lib/rubberband.jar %buildroot%_javadir/
+%endif
+
+%if_disabled static
+rm -f %buildroot%_libdir/librubberband.a
+%endif
 
 %files
 %_libdir/*.so.*
-%doc README.txt CHANGELOG
+%doc README* CHANGELOG
 
+%if_enabled java
 %files jni
 %_libdir/librubberband-jni.so
 
 %files j
 %_javadir/*
+%endif
 
+%if_enabled docs
 %files docs
 %doc doc/html/*
+%endif
 
 %files devel
 %_libdir/*.so
+%if_enabled java
 %exclude %_libdir/librubberband-jni.so
+%endif
 %_includedir/rubberband
 %_pkgconfigdir/*.pc
 
@@ -147,6 +158,10 @@ install -m644 lib/rubberband.jar %buildroot%_javadir/
 %_datadir/ladspa/rdf/ladspa-rubberband*
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 1.9.2-alt1
+- new version
+- switched to the official git
+
 * Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 1.8.1-alt2.hg20140905.1
 - NMU: fixed build with LTO
 
