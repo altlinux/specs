@@ -1,6 +1,7 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: vmfs-tools
 Version: 0.2.5
-Release: alt1
+Release: alt2
 
 Summary: Tools to access VMFS filesystems
 License: GPLv2+
@@ -46,6 +47,9 @@ install -pD -m0644 libvmfs/libvmfs.a %buildroot%_libdir/libvmfs.a
 %_libdir/libvmfs.a
 
 %changelog
+* Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 0.2.5-alt2
+- NMU: fixed build with LTO
+
 * Sun Mar 03 2013 Michael Shigorin <mike@altlinux.org> 0.2.5-alt1
 - 0.2.5
 
