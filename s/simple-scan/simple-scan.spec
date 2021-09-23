@@ -6,7 +6,7 @@
 %def_enable packagekit
 
 Name: simple-scan
-Version: %ver_major.1
+Version: %ver_major.5
 Release: alt1%beta
 
 Summary: Simple scanning utility
@@ -19,6 +19,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %else
 Source: %name-%version.tar
 %endif
+Patch: simple-scan-40.5-alt-fix_PageSide_schema.patch
 
 Requires: sane xdg-utils gnome-icon-theme colord
 %{?_enable_packagekit:Requires: packagekit}
@@ -27,8 +28,8 @@ Requires: sane xdg-utils gnome-icon-theme colord
 %define gusb_ver 0.2.7
 %define handy_ver 1.1.90
 
-BuildRequires(pre): meson
-BuildRequires: yelp-tools libappstream-glib-devel
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson yelp-tools libappstream-glib-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver libgusb-devel >= %gusb_ver
 BuildRequires: libsane-devel zlib-devel
 BuildRequires: vala-tools libcolord-vala
@@ -42,7 +43,7 @@ scanner and quickly have the image/document in an appropriate format.
 
 %prep
 %setup -n %name-%version%beta
-#find ./ -name "*.stamp" -delete
+%patch -p1 -b .pageside
 
 %build
 %meson %{?_disable_packagekit:-Dpackagekit=false}
@@ -62,6 +63,10 @@ scanner and quickly have the image/document in an appropriate format.
 %_man1dir/*
 
 %changelog
+* Thu Sep 23 2021 Yuri N. Sedunov <aris@altlinux.org> 40.5-alt1
+- 40.5
+- data/org.gnome.SimpleScan.gschema.xml: fixed PageSide enum (ALT #40970)
+
 * Tue May 25 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
 - 40.1
 
