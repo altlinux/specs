@@ -1,26 +1,22 @@
 Name: kbdd
 Version: 0.7.1
-Release: alt1.git.7.g9dca0b7
-License: GPLv3
+Release: alt1.git.8.3145099
+License: GPLv2
 Summary: Simple daemon and library to make per window layout using XKB.
 Group: System/X11
 URL: https://github.com/qnikst/kbdd
-Packager: Sergey Alembekov <rt@altlinux.ru>
-
-Source: %name.tar
-
-BuildRequires: autoconf libX11-devel libdbus-glib-devel
+Source: %name-%version.tar
+BuildRequires: libX11-devel libdbus-glib-devel
 
 %description
 Simple daemon and library to make per window layout using XKB
 (X KeyBoard Extension).
 
 %prep
-%setup -n %name
+%setup
 
 %build
-aclocal
-autoreconf -i
+%autoreconf
 %configure
 %make
 
@@ -28,13 +24,16 @@ autoreconf -i
 %make install DESTDIR=%buildroot
 
 %files
-%defattr(-, root, root, 0755)
 %_bindir/kbdd
 %_datadir/dbus-1/interfaces/kbdd-service-interface.xml
 %_man1dir/*
 
-
 %changelog
+* Thu Sep 23 2021 Anton Farygin <rider@altlinux.ru> 0.7.1-alt1.git.8.3145099
+- updated from upstream git commit 3145099
+- license changed according upstream
+- cleanup spec
+
 * Fri Nov 25 2016 Ildar Mulyukov <ildar@altlinux.ru> 0.7.1-alt1.git.7.g9dca0b7
 - new version
 
