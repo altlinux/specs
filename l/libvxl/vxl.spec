@@ -11,7 +11,7 @@
 
 Name: libvxl
 Version: 2.0.2
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: C++ Libraries for Computer Vision Research and Implementation
@@ -121,6 +121,9 @@ rm -rf v3p/{bzlib,dcmtk,geotiff,j2k,png,rply,tiff,zlib,jpeg}
 %endif
 
 %changelog
+* Wed Sep 22 2021 Slava Aseev <ptrnine@altlinux.org> 2.0.2-alt4
+- Include missing "limits" std header
+
 * Fri May 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.2-alt3
 - Backported from upstream changes required by new ITK.
 - Fixed build with new cmake macros.
