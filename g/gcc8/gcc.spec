@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 8.4.1
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -213,7 +213,8 @@ Requires: libitm1 %REQ %EVR
 Requires: libtsan0 %REQ %EVR
 %endif
 BuildPreReq: rpm-build >= 4.0.4-alt39, %binutils_deps
-BuildPreReq: gcc-c++ coreutils flex makeinfo
+%set_gcc_version 10
+BuildPreReq: gcc%_gcc_version-c++ coreutils flex makeinfo
 BuildPreReq: libelf-devel libmpc-devel libmpfr-devel
 # due to manpages
 BuildPreReq: perl-Pod-Parser
@@ -1135,6 +1136,8 @@ fi
 
 %define _configure_script ../configure
 %define _configure_target --host=%_target_platform --build=%_target_platform --target=%gcc_target_platform
+# Remove lto flags, these flags break GCC build.
+%global optflags_lto %nil
 %remove_optflags -frecord-gcc-switches %optflags_nocpp %optflags_notraceback
 export CC=%__cc \
 	CFLAGS="%optflags" \
@@ -2070,6 +2073,9 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Thu Sep 23 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.4.1-alt2
+- Fixed FTBFS by using gcc 10 for build and disabling global lto flags.
+
 * Thu Mar 05 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.4.1-alt1
 - Updated to git://gcc.gnu.org/git/gcc.git releases/gcc-8
   commit 7191ace5b8e96c6ed63ccdda25de978876c73ab1.
