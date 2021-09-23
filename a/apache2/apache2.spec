@@ -12,8 +12,8 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.48
-Release: alt7
+Version: 2.4.49
+Release: alt1
 Epoch: 1
 
 License: %asl
@@ -1539,6 +1539,10 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Thu Sep 23 2021 Anton Farygin <rider@altlinux.ru> 1:2.4.49-alt1
+- 2.4.48 -> 2.4.49 (Fixes: CVE-2021-40438, CVE-2021-39275, CVE-2021-36160,
+			   CVE-2021-34798,  CVE-2021-33193)
+
 * Thu Sep 02 2021 Egor Ignatov <egori@altlinux.org> 1:2.4.48-alt7
 - add 'systemctl daemon-reload' to 90-apache2-base-httpd.filetrigger
 
