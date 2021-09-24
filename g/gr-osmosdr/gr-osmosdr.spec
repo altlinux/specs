@@ -1,7 +1,7 @@
 Name: gr-osmosdr
 Url: http://sdr.osmocom.org/trac/wiki/GrOsmoSDR
 Version: 0.2.3
-Release: alt1.20210129
+Release: alt2.20210129
 License: GPL-3.0-or-later
 Group: Engineering
 Summary: Common software API for various radio hardware
@@ -31,6 +31,9 @@ BuildRequires: libsndfile-devel
 BuildRequires: libnumpy-py3-devel
 BuildRequires: libunwind-devel
 
+# uhd not available for %ix86 %arm
+ExcludeArch: %ix86 %arm
+
 %description
 Primarily gr-osmosdr supports the OsmoSDR hardware, but it also
 offers a wrapper functionality for FunCube Dongle,  Ettus UHD
@@ -49,7 +52,6 @@ Development files for gr-osmosdr.
 %package doc
 Summary: Documentation files for gr-osmosdr
 Group: Engineering
-Requires: %name = %version-%release
 BuildArch: noarch
 
 %description doc
@@ -113,6 +115,9 @@ EOF
 %doc %_docdir/%name/xml
 
 %changelog
+* Fri Sep 24 2021 Anton Midyukov <antohami@altlinux.org> 0.2.3-alt2.20210129
+- ExcludeArch: %ix86 %arm
+
 * Sat May 08 2021 Anton Midyukov <antohami@altlinux.org> 0.2.3-alt1.20210129
 - new snapshot
 

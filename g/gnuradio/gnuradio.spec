@@ -7,8 +7,8 @@
 %define _libexec %prefix/libexec
 
 Name: gnuradio
-Version: 3.9.1.0
-Release: alt1
+Version: 3.9.2.0
+Release: alt2
 Summary: Software defined radio framework
 License: GPLv2+
 Group: Engineering
@@ -19,7 +19,11 @@ Source: %name-%version.tar
 Patch0: fix-gnuradio-qtgui.pc.patch
 Patch1: gnuradio-3.9.1.0-python3-fix.patch
 
+# uhd not available for i586, armh
+ExcludeArch: %ix86 %arm
+
 %add_python3_path %_datadir/%name
+%add_findreq_skiplist %_datadir/%name/examples/*.grc
 
 BuildRequires(pre): rpm-macros-cmake rpm-macros-python3
 BuildRequires: rpm-build-python3 rpm-build-gir
@@ -79,6 +83,7 @@ BuildRequires: desktop-file-utils xdg-utils
 
 Obsoletes: gnuradio-data < 3.8
 Obsoletes: libgnuradio < 3.8
+Obsoletes: gnuradio-examples < 3.9.2.0-alt2
 
 %description
 GNU Radio is a collection of software that when combined with minimal
@@ -95,16 +100,6 @@ Requires: %name = %EVR
 
 %description docs
 GNU Radio Documentation.
-
-%package examples
-Summary: GNU Radio Examples
-Group: Engineering
-Buildarch: noarch
-Requires: %name = %EVR
-%add_findreq_skiplist %_datadir/%name/examples/*.grc
-
-%description examples
-GNU Radio Examples.
 
 %package devel
 Group: Development/C++
@@ -162,7 +157,6 @@ find %buildroot%_datadir/%name -name '*.py' | xargs sed -i \
 %_libdir/*.so.*
 %_libexec/%name
 %_datadir/%name
-%exclude %_datadir/%name/examples
 %_docdir/%name-%version
 %python3_sitelibdir/%name
 %python3_sitelibdir/pmt
@@ -178,9 +172,6 @@ find %buildroot%_datadir/%name -name '*.py' | xargs sed -i \
 %_docdir/%name-%version/html
 %endif #docs
 
-%files examples
-%_datadir/%name/examples
-
 %files devel
 %_libdir/*.so
 %_libdir/cmake/%name
@@ -189,6 +180,13 @@ find %buildroot%_datadir/%name -name '*.py' | xargs sed -i \
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Sep 24 2021 Anton Midyukov <antohami@altlinux.org> 3.9.2.0-alt2
+- ExcludeArch: %ix86 %arm
+- Drop examples subpackage
+
+* Mon Jun 28 2021 Anton Midyukov <antohami@altlinux.org> 3.9.2.0-alt1
+- new version 3.9.2.0
+
 * Sat May 08 2021 Anton Midyukov <antohami@altlinux.org> 3.9.1.0-alt1
 - new version 3.9.1.0
 - update buildrequires

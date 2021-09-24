@@ -1,6 +1,6 @@
 Name: gqrx
 Version: 2.14.4
-Release: alt1
+Release: alt2
 
 Summary: Software defined radio receiver powered by GNU Radio and Qt.
 License: GPL-3.0
@@ -40,6 +40,9 @@ BuildRequires: libsndfile-devel
 BuildRequires: libnumpy-py3-devel
 BuildRequires: libunwind-devel
 
+# uhd not available for %ix86 %arm
+ExcludeArch: %ix86 %arm
+
 %description
 %summary
 
@@ -77,6 +80,9 @@ appstream-util validate-relax --nonet \
 %doc COPYING LICENSE-CTK README.md
 
 %changelog
+* Fri Sep 24 2021 Anton Midyukov <antohami@altlinux.org> 2.14.4-alt2
+- ExcludeArch: %ix86 %arm
+
 * Sat May 08 2021 Anton Midyukov <antohami@altlinux.org> 2.14.4-alt1
 - new version 2.14.4
 

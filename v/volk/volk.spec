@@ -1,5 +1,5 @@
 Name: volk
-Version: 2.4.1
+Version: 2.5.0
 Release: alt1
 Summary: Vector-Optimized Library of Kernels
 License: GPLv3
@@ -88,6 +88,9 @@ rm -fr %buildroot%_libdir/cmake/CpuFeatures
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jun 28 2021 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- new version 2.5.0
+
 * Wed May 05 2021 Anton Midyukov <antohami@altlinux.org> 2.4.1-alt1
 - new version 2.4.1
 

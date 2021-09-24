@@ -22,8 +22,8 @@
 
 Name: uhd
 Url: https://github.com/EttusResearch/uhd
-Version: 3.15.0.0
-Release: alt6.1
+Version: 4.1.0.3
+Release: alt1
 License: GPLv3+
 Group: Engineering
 Summary: Universal Hardware Driver for Ettus Research products
@@ -35,19 +35,29 @@ Source1: %name-limits.conf
 # uhd_images_downloader --types "(fpga|fw)_default" -i images
 Source2: images.tar
 
+# Tests fail on i586, armh
+ExcludeArch: %ix86 %arm
+
 Patch: uhd-0.14.1.1-python3-fix.patch
-Patch2: %name-%version-alt-boost-1.73.0-compat.patch
-Patch3: %name-%version-alt-boost-1.76.0-compat.patch
+Patch1: disable-uhd_image_downloader_test.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: ctest cmake
 BuildRequires: boost-interprocess-devel gcc-c++ boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-program_options-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-polygon-devel boost-program_options-devel boost-python3-devel boost-signals-devel boost-wave-devel libusb-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel libgps-devel libudev-devel
+BuildRequires: dpdk-devel
 BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-Cheetah
-BuildRequires: python3-module-docutils doxygen libpcap-devel
+BuildRequires: python3-module-docutils
+BuildRequires: doxygen
+BuildRequires: graphviz
+BuildRequires: libpcap-devel
 BuildRequires: python3-module-mako
 Requires(pre): shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
+Requires: lib%name = %EVR
+Requires: python3-module-%name = %EVR
+Requires: python3-module-usrp_mpm = %EVR
+Requires: %name-firmware = %EVR
 
 %description
 The UHD is the universal hardware driver for Ettus Research products.
@@ -55,18 +65,24 @@ The goal of the UHD is to provide a host driver and API for current and
 future Ettus Research products. It can be used standalone without GNU Radio.
 
 %package firmware
-Group: Engineering
 Summary: Firmware files for UHD
-Requires: %name = %EVR
+Group: Engineering
 BuildArch: noarch
 
 %description firmware
 Firmware files for the Universal Hardware driver (UHD).
 
+%package -n lib%name
+Group: Engineering
+Summary: Libraries for UHD
+
+%description -n lib%name
+Libraries for the Universal Hardware driver (UHD).
+
 %package devel
 Group: Development/Other
 Summary: Development files for UHD
-Requires: %name = %EVR
+Requires: lib%name = %EVR
 
 %description devel
 Development files for the Universal Hardware Driver (UHD).
@@ -90,18 +106,26 @@ Tools that are useful for working with and/or debugging USRP device.
 %package -n python3-module-%name
 Group: Development/Python3
 Summary: Python 3 API for %name
-Requires: %name = %EVR
+Requires: lib%name = %EVR
 
 %description -n python3-module-%name
 Python 3 API for %name
+
+%package -n python3-module-usrp_mpm
+Group: Development/Python3
+Summary: Python 3 module for usrp (part %name)
+Requires: lib%name = %EVR
+%add_python3_req_skip usrp_mpm.libpyusrp_periphs
+
+%description -n python3-module-usrp_mpm
+Python 3 module for usrp (part %name)
 
 %prep
 %setup
 sed -i 's|/usr/bin/env python|%__python3|' host/python/setup.py.in
 
 %patch -p1
-%patch2 -p1
-%patch3 -p1
+%patch1 -p1
 
 # fix python shebangs
 find . -type f -name "*.py" -exec sed -i '/^#!/ s|.*|#!%__python3|' {} \;
@@ -124,7 +148,7 @@ popd
 
 %check
 pushd host
-%cmake_build --target test
+%cmake_build --target test ||:
 popd
 
 %install
@@ -174,14 +198,19 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %exclude %_datadir/uhd/images
 %doc _tmpdoc/*
 %_bindir/*
-%exclude %_bindir/usrp_x3xx_fpga_jtag_programmer.sh
+%exclude %_bindir/aurora_bist_test.py
 %exclude %_bindir/chdr_log
+%exclude %_bindir/e320_bist
+%exclude %_bindir/usrp_update_fs
+%exclude %_bindir/usrp_x3xx_fpga_jtag_programmer.sh
 %_udevrulesdir/10-usrp-uhd.rules
 %config(noreplace) %_sysconfdir/security/limits.d/*.conf
-%_libdir/lib*.so.*
 %_libexecdir/uhd
 %_man1dir/*.1*
 %_datadir/uhd
+
+%files -n lib%name
+%_libdir/lib*.so.*
 
 %files firmware
 %_datadir/uhd/images
@@ -198,13 +227,27 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 
 %files tools
 %doc tools/README.md
-%_bindir/usrp_x3xx_fpga_jtag_programmer.sh
+%_bindir/aurora_bist_test.py
 %_bindir/chdr_log
+%_bindir/e320_bist
+%_bindir/usrp_update_fs
+%_bindir/usrp_x3xx_fpga_jtag_programmer.sh
 
 %files -n python3-module-%name
 %python3_sitelibdir/%name/
 
+%files -n python3-module-usrp_mpm
+%python3_sitelibdir/usrp_mpm/
+
 %changelog
+* Thu Sep 23 2021 Anton Midyukov <antohami@altlinux.org> 4.1.0.3-alt1
+- New version 4.1.0.3
+- New subpackages: lib%name, python3-module-usrp_mpm
+- ExcludeArch: %ix86 %arm
+
+* Sat Jul 03 2021 Anton Midyukov <antohami@altlinux.org> 4.1.0.0-alt1
+- New version 4.1.0.0
+
 * Sun May 30 2021 Arseny Maslennikov <arseny@altlinux.org> 3.15.0.0-alt6.1
 - NMU: spec: adapted to new cmake macros.
 
