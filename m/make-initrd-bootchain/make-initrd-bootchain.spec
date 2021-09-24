@@ -3,7 +3,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt2
+Release: alt3
 
 Summary: %child modules set for %name
 License: GPL-3.0
@@ -207,6 +207,11 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Thu Sep 23 2021 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt3
+- hot plug "on the fly" new network settings, if not defined.
+- fixed problem with the first handshake by ftp protocol.
+- fixed typo: show ISO name when netstart download image.
+
 * Tue Sep 21 2021 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt2
 - download: rewrited reaction to returned http/ftp status codes.
 - don't count whole disk drive with the same first partition.
