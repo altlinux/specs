@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.7.0
+Version: 4.8.0
 Release: alt1
 
 Summary: Zope Internationalization Support
@@ -94,6 +94,9 @@ zope-testrunner3 --test-path=src -vv
 %python3_sitelibdir/zope/i18n/locales/tests
 
 %changelog
+* Fri Sep 24 2021 Nikolai Kostrigin <nickel@altlinux.org> 4.8.0-alt1
+- 4.7.0 -> 4.8.0
+
 * Fri Dec 20 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.7.0-alt1
 - NMU: 4.6.2 -> 4.7.0
 - Remove python2 module build
