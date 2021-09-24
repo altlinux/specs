@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           manaworld
 Version:        0.5.2
-Release:        alt4_9
+Release:        alt5_9
 Summary:        2D MMORPG world
 
 Group:          Games/Other
@@ -21,6 +21,7 @@ BuildRequires:  libSDL_gfx-devel gzip ctest cmake gettext
 Source44: import.info
 
 Patch55: manaworld-DSO-X11.patch
+Patch33: tmw-0.5.2-gcc11.patch
 
 %description
 The Mana World (TMW) is a serious effort to create an innovative free and open
@@ -31,6 +32,7 @@ interactive world.
 %setup -q -c -n tmw-%{version}
 %patch0 -p0
 %patch55 -p0
+%patch33 -p1
 
 
 %build
@@ -72,6 +74,9 @@ gzip -c docs/mana.6 > $RPM_BUILD_ROOT%{_datadir}/man/man6/mana.6.gz
 %doc AUTHORS COPYING NEWS README docs/*.txt
 
 %changelog
+* Fri Sep 24 2021 Igor Vlasenko <viy@altlinux.org> 0.5.2-alt5_9
+- NMU: fixed build with g++11
+
 * Tue Mar 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt4_9
 - rebuild with new libpng
 
