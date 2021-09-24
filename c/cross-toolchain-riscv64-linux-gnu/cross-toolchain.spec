@@ -3,6 +3,7 @@
 # %%define target_arch aarch64
 # %%define target_arch mipsel
 %define target_arch riscv64
+# %%define target_arch mips64el
 
 
 %if "%target_arch" == "aarch64"
@@ -19,6 +20,12 @@
 %define target_libdir lib
 %endif
 
+%if "%target_arch" == "mips64el"
+%define target_kernel mips
+%define target_qemu_arch mips64el
+%define target_ld_linux /lib64/ld.so.1
+%define target_libdir lib64
+%endif
 
 %if "%target_arch" == "riscv64"
 %define target_kernel riscv
@@ -34,7 +41,7 @@
 %brp_strip_none %sysroot/*  %prefix/lib/gcc/*.a %prefix/lib/gcc/*.o
 
 Name: cross-toolchain-%target
-Version: 20210826
+Version: 20210923
 Release: alt1
 Summary: GCC cross-toolchain for %target
 License: LGPL-2.1-or-later and LGPL-3.0-or-later and GPL-2.0-or-later and GPL-3.0-or-later and GPL-3.0-or-later with GCC-exception-3.1
@@ -42,26 +49,17 @@ Group: Development/C
 
 ExclusiveArch: x86_64
 
-%if "%target_arch" == "mipsel"
-# mipsel-specific GCC patches
-Patch1: alt-mips-shared-implies-mshared.patch
-Patch2: alt-upstream-fix-up-mips_atomic_assign_expand_fenv.patch
-%endif
-
-%if "%target_arch" == "riscv64"
-# riscv64-specific glibc patches
-Patch3: glibc-alt-Use-the-64-bit-wide-seen-variable.patch
-Patch4: glibc-upstream-Workaround-gcc-PR-95115.patch
-
 # gcc patches
 Patch5: gcc-alt-riscv64-not-use-lp64d.patch
-%endif
+
+# binutils patches
+Patch7: binutils-riscv-fix-pie-tls-textrels.patch
 
 
-%define gcc_version %{get_version gcc-source}
+%define gcc_version 10.3.1
 %define gcc_branch %(v=%gcc_version; v=${v%%%%.*}; echo $v)
-%define binutils_version %{get_version binutils-source}
-%define glibc_version %{get_version glibc-source}
+%define binutils_version 2.35.2
+%define glibc_version 2.32
 %define kernel_version 5.10
 
 
@@ -70,12 +68,13 @@ BuildPreReq: libmpc-devel libmpfr-devel libgmp-devel zlib-devel
 BuildPreReq: coreutils flex bison makeinfo perl-Pod-Parser findutils
 # Linux' headers_install uses rsync
 BuildPreReq: rsync
-BuildRequires(pre): gcc-source
-BuildRequires(pre): binutils-source
-BuildRequires(pre): glibc-source
 BuildPreReq: kernel-source-%kernel_version
 BuildRequires: /usr/bin/qemu-%target_qemu_arch-static
 BuildRequires: python3
+
+Source0: gcc-10.3.1-20210703.tar
+Source1: binutils-2.35.2.tar
+Source2: glibc-2.32-alt4.rv64.tar
 
 %description
 GCC cross-toolchain for %target
@@ -132,27 +131,20 @@ static glibc for %target_arch. Should be used for cross-compilation only
 %setup -cT
 mkdir -p -m755 linux binutils gcc glibc
 
-find /usr/src/gcc-source -type f -name 'gcc-*.tar' | xargs -I {} -n1 tar -x --strip-components=1 -f {} -C gcc
-find /usr/src/binutils-source -type f -name 'binutils-*.tar' | xargs -I {} -n1 tar -x --strip-components=1 -f {} -C binutils
+tar -x --strip-components=1 -f %SOURCE0 -C gcc
+tar -x --strip-components=1 -f %SOURCE1 -C binutils
+tar -x --strip-components=1 -f %SOURCE2 -C glibc
+
 find /usr/src/kernel/sources -type f -name 'kernel-source-*.tar' | xargs -I {} -n1 tar -x --strip-components=1 -f {} -C linux
-find /usr/src/glibc-source -type f -name 'glibc-*.tar' | xargs -I {} -n1 tar -x --strip-components=1 -f {} -C glibc
 
 rm -rf stage
 
-%if "%target_arch" == "mipsel"
-pushd gcc
-%patch1 -p2
-%patch2 -p1
-popd
-%endif
-
 %if "%target_arch" == "riscv64"
-pushd glibc
-%patch3 -p1
-%patch4 -p1
-popd
 pushd gcc
 %patch5 -p1
+popd
+pushd binutils
+%patch7 -p1
 popd
 %endif
 
@@ -228,6 +220,13 @@ cd ../obj_gcc
 	--with-lxc1-sxc1=no \
 	--with-madd4=no \
 %endif
+%if "%target_arch" == "mips64el"
+	--with-arch-64=mips64r2 \
+	--with-abi=64 \
+	--with-lxc1-sxc1=no \
+	--with-madd4=no \
+	--with-fix-loongson3-llsc=yes \
+%endif
 %if "%target_arch" == "riscv64"
 	--with-arch=rv64gc \
 	--with-abi=lp64d \
@@ -257,9 +256,9 @@ cd ../obj_glibc
 # glibc: headers, C runtime
 %_make_bin -j%__nprocs install-bootstrap-headers=yes install-headers DESTDIR=${stagedir}%sysroot
 %_make_bin -j%__nprocs csu/subdir_lib
-install -d -m755 ${stagedir}%sysroot/usr/lib
-install csu/crt1.o csu/crti.o csu/crtn.o ${stagedir}%sysroot/usr/lib
-%target-gcc -nostdlib -nostartfiles -shared -x c /dev/null -o "${stagedir}%sysroot/usr/lib/libc.so"
+install -d -m755 ${stagedir}%sysroot/usr/%target_libdir
+install csu/crt1.o csu/crti.o csu/crtn.o ${stagedir}%sysroot/usr/%target_libdir
+%target-gcc -nostdlib -nostartfiles -shared -x c /dev/null -o "${stagedir}%sysroot/usr/%target_libdir/libc.so"
 touch ${stagedir}/%sysroot/usr/include/gnu/stubs.h
 touch ${stagedir}/%sysroot/usr/include/bits/stdio_lim.h
 
@@ -433,7 +432,7 @@ _start:
 EOF
 %endif
 
-%if "%target_arch" == "mipsel"
+%if "%target_arch" == "mipsel" || "%target_arch" == "mips64el"
 cat > bye.S <<EOF
 #include <sys/syscall.h>
 .text
@@ -574,6 +573,15 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 
 %changelog
+* Thu Sep 23 2021 Ivan A. Melnikov <iv@altlinux.org> 20210923-alt1
+- Put source tarballs into SRPM.
+
+* Thu Sep 09 2021 Ivan A. Melnikov <iv@altlinux.org> 20210909-alt1
+- riscv: Fix for binutils PR/25694
+
+* Tue Aug 31 2021 Ivan A. Melnikov <iv@altlinux.org> 20210831-alt1
+- Build mips64el cross-toolchain with loongson3 fixes support.
+
 * Thu Aug 26 2021 Ivan A. Melnikov <iv@altlinux.org> 20210826-alt1
 - Build riscv64 cross-toolchain, based on aarch64 cross-toolchain
   from asheplyakov@.
