@@ -85,7 +85,11 @@ LoadModule %apache_module_name %apache2_moduledir/%so_file
 EOF
 
 cat > %buildroot/%apache2_mods_available/mod_php%_php_suffix.conf <<EOF
+%if "%_php_suffix" == "7"
 <IfModule mod_php%{_php_suffix}.c>
+%else
+<IfModule php_module>
+%endif
     AddType    application/x-httpd-php-source   .phps
     AddType    application/x-httpd-php         .php .phtml
     AddHandler application/x-httpd-php         .php .phtml
