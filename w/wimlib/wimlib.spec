@@ -1,16 +1,14 @@
 %define libname libwim
+
 Name: wimlib
 Version: 1.13.4
-Release: alt1
+Release: alt1.1
 
 Summary: Library to extract, create, modify, and mount WIM files
-
 License: GPLv3+
 Group: System/Libraries
+
 Url: https://wimlib.net/
-
-ExclusiveArch: %ix86 x86_64
-
 Source: https://wimlib.net/downloads/wimlib-%version.tar
 
 BuildRequires: libattr-devel libfuse-devel libntfs-3g-devel libssl-devel libxml2-devel mt-st
@@ -40,7 +38,10 @@ Development files for wimlib.
 %package -n wimtools
 Summary: Tools to create, extract, modify, and mount WIM files
 Group: File tools
-Requires: syslinux, %libname = %version-%release
+Requires: %libname = %version-%release
+%ifarch x86_64 %ix86
+Requires: syslinux
+%endif
 
 %description -n wimtools
 Tools to create, extract, modify, and mount files in the
@@ -87,6 +88,11 @@ make check
 %_pkgconfigdir/wimlib.pc
 
 %changelog
+* Fri Sep 24 2021 Michael Shigorin <mike@altlinux.org> 1.13.4-alt1.1
+- drop unneeded ExclusiveArch:
+  + verified to build on e2kv4, ppc64le, aarch64, armh
+  + wimtools R: syslinux dependency is x86-specific indeed
+
 * Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 1.13.4-alt1
 - new version 1.13.4 (with rpmrb script)
 
