@@ -10,12 +10,12 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.2.10
+Version: 3.2.11
 Release: alt1
 
 Source:%name-%version.tar
 
-Summary: X11 Qt interface driver for alterator
+Summary: Qt GUI interface driver for Alterator
 License: GPL
 Group: System/Configuration/Other
 Packager: Sergey V Turchin <zerg at altlinux dot org>
@@ -42,7 +42,7 @@ BuildRequires: libudev-devel
 BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools
 
 %description
-X11 Qt interface driver for alterator
+Qt GUI interface driver for Alterator.
 
 %prep
 %setup -q
@@ -82,6 +82,9 @@ __EOF__
 
 
 %changelog
+* Fri Sep 24 2021 Sergey V Turchin <zerg at altlinux dot org> 3.2.11-alt1
+- more information when first screenshot
+
 * Wed Sep 15 2021 Sergey V Turchin <zerg at altlinux dot org> 3.2.10-alt1
 - don't hardcode screenshot path
 
