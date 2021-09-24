@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.0
-Release: alt2.b1.git20141211
+Version: 1.1
+Release: alt1
 Summary: Simplified ZCML directives, reduced dependencies
 License: BSD
 Group: Development/Python3
@@ -83,6 +83,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*/*/*/tests.*
 
 %changelog
+* Fri Sep 24 2021 Nikolai Kostrigin <nickel@altlinux.org> 1.1-alt1
+- 1.0b1 -> 1.1
+
 * Fri Jan 10 2020 Nikolai Kostrigin <nickel@altlinux.org> 1.0-alt2.b1.git20141211
 - NMU: Remove python2 module build
 - Add unittests execution
