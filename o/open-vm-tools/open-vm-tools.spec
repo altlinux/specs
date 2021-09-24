@@ -16,15 +16,15 @@
 %def_with gtkmm3
 
 %global majorversion    11.3
-%global minorversion    0
-%global toolsbuild      18090558
+%global minorversion    5
+%global toolsbuild      18557794
 %global toolsversion    %majorversion.%minorversion
 %global toolsdaemon     vmtoolsd
 %global vgauthdaemon    vgauthd
 
 Name: open-vm-tools
 Version: %toolsversion
-Release: alt2
+Release: alt1
 Summary: Open Virtual Machine Tools for virtual machines hosted on VMware
 Group: System/Kernel and hardware
 License: GPLv2
@@ -165,9 +165,6 @@ find %buildroot%_libdir -name '*.la' -delete
 rm -fr %buildroot%_defaultdocdir
 rm -f docs/api/build/html/FreeSans.ttf
 
-# Remove mount.vmhgfs & symlink
-rm -fr %buildroot%_sbindir %buildroot/sbin/mount.vmhgfs
-
 # Systemd unit files
 install -p -m 644 -D %SOURCE1 %buildroot%_unitdir/%toolsdaemon.service
 install -p -m 644 -D %SOURCE11 %buildroot%_unitdir/%vgauthdaemon.service
@@ -298,6 +295,9 @@ fi
 
 
 %changelog
+* Fri Sep 24 2021 Andrew A. Vasilyev <andy@altlinux.org> 11.3.5-alt1
+- 11.3.5
+
 * Thu Aug 12 2021 Andrew A. Vasilyev <andy@altlinux.org> 11.3.0-alt2
 - set enable-custom-scripts=true by default
 
