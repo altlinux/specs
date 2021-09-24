@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Convert-ASN1
 Name: perl-%dist
-Version: 0.31
+Version: 0.33
 Release: alt1
 
 Summary: Perl ASN.1 parser module
@@ -41,6 +41,9 @@ and decode to perl data structures using a hierarchy of references.
 	%perl_vendor_privlib/Convert/ASN1/*.pm
 
 %changelog
+* Fri Sep 24 2021 Igor Vlasenko <viy@altlinux.org> 0.33-alt1
+- automated CPAN update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0.31-alt1
 - automated CPAN update
 
