@@ -1,6 +1,6 @@
 Name: x16-emulator
 Version: r38
-Release: alt1
+Release: alt2
 
 Summary: Emulator for the Commander X16 computer system
 License: BSD-2-Clause License
@@ -8,10 +8,13 @@ Group: Emulators
 
 Url: https://www.commanderx16.com
 
-Packager: Artyom Bystrov <arbars@altlinux.org>
-
-Source0: %name-%version.tar
+Source: %name-%version.tar
 Source1: commanderx16-logo.png
+Patch0: fix-rom-path.patch
+
+# https://github.com/commanderx16/x16-emulator/pull/362/commits/fa963e7dc20c4782f29c390ef9d028180f6ae5da
+Patch1: gcc11_workaround.patch
+
 BuildRequires(pre): ImageMagick-tools
 BuildRequires: libSDL2-devel
 BuildRequires: pandoc
@@ -25,12 +28,15 @@ operating systems.
 %prep
 %setup -n %name-%version
 
+%patch0 -p1
+%patch1 -p1
+
 %build
 pandoc --from gfm --to html -c github-pandoc.css --standalone --metadata pagetitle="X16 Emulator" README.md --output README.html
 
-%make_build
+make
 
-%install 
+%install
 mkdir -p %buildroot%_docdir/%name/
 
 install -Dm0644 %SOURCE1 %buildroot%_liconsdir/%name.png
@@ -59,12 +65,11 @@ install -D -m 0644 $N.png %buildroot%_iconsdir/hicolor/${N}x${N}/apps/%name.png
 done
 
 %files
-
-%dir /usr/share/icons/hicolor/64x64
-%dir /usr/share/icons/hicolor/64x64/apps
-%dir /usr/share/icons/hicolor/128x128
-%dir /usr/share/icons/hicolor/128x128/apps
-%doc README.md LICENSE  
+%dir %_iconsdir/hicolor/64x64
+%dir %_iconsdir/hicolor/64x64/apps
+%dir %_iconsdir/hicolor/128x128
+%dir %_iconsdir/hicolor/128x128/apps
+%doc README.md LICENSE
 %_bindir/%name
 %_iconsdir/hicolor/*/apps/%name.png
 %_desktopdir/%name.desktop
@@ -72,5 +77,8 @@ done
 %_docdir/%name/github-pandoc.css
 
 %changelog
+* Fri Sep 24 2021 Artyom Bystrov <arbars@altlinux.org> r38-alt2
+- fixing build on gcc11
+
 * Thu Jan 07 2021 Artyom Bystrov <arbars@altlinux.org> r38-alt1
 - initial build for ALT Sisyphus
