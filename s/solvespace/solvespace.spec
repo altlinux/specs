@@ -1,8 +1,8 @@
-%def_without gtk3
+%def_with gtk3
 
 Name: 	 solvespace
-Version: 2.3
-Release: alt1.qa1
+Version: 3.0
+Release: alt1
 Epoch:   1
 
 Summary: SolveSpace parametric 2d/3d CAD
@@ -14,10 +14,11 @@ Url: 	 http://solvespace.com/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 Source0:  %name-%version.tar
 Source1:  libdxfrw.tar
+Source2:  mimalloc.tar
 Patch1:   use-explicit-git-hash.patch
-Patch2:   0001-Rename-TextWindow-CHAR_WIDTH-to-CHAR_WIDTH_.patch
 
 BuildRequires(pre): cmake
+BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: fontconfig-devel
 BuildRequires: libGL-devel
@@ -80,23 +81,32 @@ This package includes development files for libslvs.
 %prep
 %setup -q
 tar xf %SOURCE1
+tar xf %SOURCE2
 %patch1 -p1
-%patch2 -p1
 
 %build
-%cmake
-%cmake_build
+%cmake \
+    -GNinja \
+    -Wno-dev \
+    -DCMAKE_BUILD_TYPE=Release
+%ninja_build -C "%_cmake__builddir"
 
 %install
-%cmakeinstall_std
+%ninja_install -C "%_cmake__builddir"
 %find_lang %name
 
 %files -f %name.lang
 %doc COPYING.txt README.md wishlist.txt
 %_bindir/%name
+%_bindir/%name-cli
 %_iconsdir/hicolor/*/apps/%name.png
 %_iconsdir/hicolor/*/mimetypes/application.x-solvespace.png
+%_iconsdir/hicolor/*/apps/%name.svg
+%_iconsdir/hicolor/*/mimetypes/application.x-solvespace.svg
 %_desktopdir/%name.desktop
+%_pixmapsdir/*.xpm
+%_datadir/%name
+%_datadir/mime/packages/solvespace-slvs.xml
 
 %files -n libslvs
 %_libdir/libslvs.so.*
@@ -106,6 +116,10 @@ tar xf %SOURCE1
 %_includedir/slvs.h
 
 %changelog
+* Sun Apr 18 2021 Andrey Cherepanov <cas@altlinux.org> 1:3.0-alt1
+- New version.
+- Build with GTK 3.
+
 * Fri Apr 07 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.3-alt1.qa1
 - Fixed build with glibc >= 2.25.
 
