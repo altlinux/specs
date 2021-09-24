@@ -1,6 +1,6 @@
 Name: whdd
 Version: 3.0
-Release: alt2
+Release: alt3
 
 Summary: Diagnostic and recovery tool for block devices
 License: GNU GPL
@@ -11,6 +11,7 @@ Packager: Pavel Isopenko <pauli@altlinux.org>
 Summary: HDD diagnostic and data recovery tool for Linux
 Summary(ru_RU.UTF-8): Инструмент диагностики HDD и восстановления данных под Linux
 Source: %name-%version.tar
+Patch1: %name-remove-nested.patch
 
 BuildRequires: gcc-c++ libdialog-devel libncursesw-devel
 
@@ -34,6 +35,10 @@ WHDD может работать с жёстким диском на низко�
 
 %prep
 %setup
+%ifarch %e2k
+# EDG frontend doesn't support nested functions
+%patch1 -p1
+%endif
 
 %build
 %make_build
@@ -46,6 +51,9 @@ WHDD может работать с жёстким диском на низко�
 %attr(4711, root, root) %_bindir/%name
 
 %changelog
+* Fri Sep 24 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.0-alt3
+- e2k: removed nested function
+
 * Wed Jun 20 2018 Vitaly Lipatov <lav@altlinux.ru> 3.0-alt2
 - rebuild with libdialog.so.14
 
