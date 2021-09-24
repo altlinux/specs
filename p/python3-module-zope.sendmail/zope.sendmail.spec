@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.0
+Version: 5.2
 Release: alt1
 Summary: Zope sendmail
 License: ZPLv2.1
@@ -87,6 +87,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Fri Sep 24 2021 Nikolai Kostrigin <nickel@altlinux.org> 5.2-alt1
+- 5.0 -> 5.2
+
 * Tue Dec 24 2019 Nikolai Kostrigin <nickel@altlinux.org> 5.0-alt1
 - NMU: 4.0.2 -> 5.0
 - Remove python2 module build
