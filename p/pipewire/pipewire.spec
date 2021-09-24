@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %ifarch armh
 %define optflags_lto %nil
 %endif
@@ -30,7 +30,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.36
+Version: %ver_major.37
 Release: alt1
 
 Summary: Media Sharing Server
@@ -179,7 +179,7 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %dir %_datadir/%name/media-session.d
 %_datadir/%name/media-session.d/alsa-monitor.conf
 %_datadir/%name/media-session.d/bluez-monitor.conf
-%_datadir/%name/media-session.d/bluez-hardware.conf
+#%_datadir/%name/media-session.d/bluez-hardware.conf
 %_datadir/%name/media-session.d/media-session.conf
 %_datadir/%name/media-session.d/v4l2-monitor.conf
 %_datadir/%name/media-session.d/with-jack
@@ -192,6 +192,10 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_datadir/%name/filter-chain/sink-virtual-surround-5.1-kemar.conf
 %_datadir/%name/filter-chain/sink-virtual-surround-7.1-hesuvi.conf
 %_datadir/%name/filter-chain/source-rnnoise.conf
+%dir %_datadir/spa-%spa_api_ver
+%dir %_datadir/spa-%spa_api_ver/bluez5
+%_datadir/spa-%spa_api_ver/bluez5/bluez-hardware.conf
+
 %_udevrulesdir/90-%name-alsa.rules
 %_datadir/alsa-card-profile/
 %if_enabled systemd
@@ -237,6 +241,7 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_bindir/pw-cat
 %_bindir/pw-cli
 %_bindir/pw-dot
+%_bindir/pw-dsdplay
 %_bindir/pw-dump
 %_bindir/pw-link
 %_bindir/pw-loopback
@@ -267,6 +272,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Fri Sep 24 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.37-alt1
+- updated to 0.3.37-5-gf1f5cbc0a
+
 * Thu Sep 16 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.36-alt1
 - 0.3.36
 
