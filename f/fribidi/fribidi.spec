@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: fribidi
-Version: 1.0.10
+Version: 1.0.11
 Release: alt1
 
 Summary: Bi-directional scripts support
@@ -16,13 +16,14 @@ Url: https://github.com/%name/%name
 %if_disabled snapshot
 Source: %url/releases/download/v%version/%name-%version.tar.xz
 %else
-#VCS: https://github.com/fribidi/fribidi.git
+Vcs: https://github.com/fribidi/fribidi.git
 Source: %name-%version.tar
 %endif
 
 Requires: lib%name = %version-%release
 
-BuildRequires(pre): meson rpm-build-licenses
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
 %{?_enable_docs:BuildRequires: c2man}
 %{?_enabled_static:BuildRequires: glibc-devel-static}
 
@@ -103,6 +104,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Sep 24 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.11-alt1
+- 1.0.11
+
 * Mon Jul 06 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.10-alt1
 - 1.0.10
 
