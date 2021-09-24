@@ -1,6 +1,6 @@
 Name: libunwind
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
 Summary: An unwinding library
 License: MIT
@@ -9,6 +9,7 @@ Url: http://savannah.nongnu.org/projects/libunwind
 
 Source: %name-%version.tar
 Patch0: libunwind-1.5.0-fix-linking.patch
+Patch1: libunwind-1.5.0-LFS-support.patch
 
 %description
 Libunwind provides a C ABI to determine the call-chain of a program.
@@ -24,17 +25,23 @@ libunwind.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 %autoreconf
-%configure --disable-static
+%configure \
+	--enable-setjmp=no \
+	--disable-static \
+	#
 make
 
 %install
 %makeinstall
 
+%set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 %files
 %doc COPYING README NEWS
@@ -46,6 +53,11 @@ make
 %_includedir/*
 
 %changelog
+* Fri Sep 24 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.5.0-alt2
+- Fixed FTBFS with gcc11 (by disabling libunwind-setjmp library, it's no longer
+  compatible with glibc anyway).
+- Fixed and enabled LFS support.
+
 * Thu Jan 21 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.5.0-alt1
 - Updated to 1.5.0.
 
