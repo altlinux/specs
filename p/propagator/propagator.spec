@@ -3,7 +3,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20210908
+Version: 20210922
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -33,12 +33,24 @@ including init and various helpers for hw probing and bootstrapping.
 %install
 %makeinstall_std libdir=%_libdir
 
+%check
+%make_build \
+	%{?_with_cifs:WITH_CIFS=t} \
+	%{?_with_shell:WITH_SHELL=t} \
+	%{?_with_splash:WITH_SPLASH=t} \
+	version=%version-%release \
+	libdir=%_libdir \
+	test
+
 %files
 %_bindir/gencpio
 %_bindir/mkmodpack
 %_sbindir/propagator
 
 %changelog
+* Thu Sep 22 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 20210922-alt1
+- Support booting complete ISOs via HTTP (closes: #40710)
+
 * Wed Sep 08 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 20210908-alt1
 - Figure out stage2 size at the run time instead of relying on
   ramdisk_size kernel command line parameter. As a result `ramdisk_size`
