@@ -5,12 +5,13 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.2.2
-Release: alt2
+Version: 1.2.3
+Release: alt1
 Summary: Base common calendaring features: Convinience or not coverd yet
 License: GPL
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/bda.calendar.base/
+#Git: https://github.com/bluedynamics/bda.calendar.base.git
 
 Source: %name-%version.tar
 
@@ -37,7 +38,6 @@ webapps).
 Summary: Core files of %mname
 Group: Development/Python3
 %py3_provides %mname
-%py3_requires bda
 
 %description -n python3-module-%mname
 Core files of %mname.
@@ -74,6 +74,11 @@ python3 setup.py test
 %python3_sitelibdir/bda/calendar/__init__.py*
 
 %changelog
+* Fri Sep 24 2021 Nikolai Kostrigin <nickel@altlinux.org> 1.2.3-alt1
+- 1.2.2 -> 1.2.3
+  + switch to github upstream
+- spec: remove erroneous %%py3_requires bda
+
 * Sat Jan 11 2020 Nikolai Kostrigin <nickel@altlinux.org> 1.2.2-alt2
 - NMU: Remove python2 module build
 
