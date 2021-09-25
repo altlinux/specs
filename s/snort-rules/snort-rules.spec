@@ -1,5 +1,5 @@
 Name:     snort-rules
-Version:  2.9.6.1
+Version:  2.9.9.0
 Release:  alt1
 
 Summary:  Rules for Snort, popular network intrusion detection system
@@ -13,7 +13,7 @@ Source2:  snort-mergesidmaps
 BuildArch: noarch
 Requires: snort-base
 
-Summary(ru_RU.KOI8-R): Настроечные сигнатуры для системы обнаружения сетевых вторжений Snort
+Summary(ru_RU.UTF-8): п²п╟я│я┌я─п╬п╣я┤п╫я▀п╣ я│п╦пЁп╫п╟я┌я┐я─я▀ п╢п╩я▐ я│п╦я│я┌п╣п╪я▀ п╬п╠п╫п╟я─я┐п╤п╣п╫п╦я▐ я│п╣я┌п╣п╡я▀я┘ п╡я┌п╬я─п╤п╣п╫п╦п╧ Snort
 
 %define   myconfdir   %_sysconfdir/snort
 %define   myrulesdir  %myconfdir/rules
@@ -22,33 +22,23 @@ Summary(ru_RU.KOI8-R): Настроечные сигнатуры для системы обнаружения сетевых вто
 Rules for Snort, popular network intrusion detection system.
 Standard pack distributed under GNU GPL license.
 
-%description -l ru_RU.KOI8-R
-Стандартный набор правил, свободно распространяемых разработчиками
-обнаружителя сетевых вторжений Snort. Правила включают в себя т.н. сигнатуры,
-т.е. наборы условий, которым должны соответствовать заголовок и содержимое
-сетевых пакетов, просматриваемых Snort'ом, а также реакцию на возможное
-соответствие - удаление пакета, уведомление администратора и т.д.
+%description -l ru_RU.UTF-8
+п║я┌п╟п╫п╢п╟я─я┌п╫я▀п╧ п╫п╟п╠п╬я─ п©я─п╟п╡п╦п╩, я│п╡п╬п╠п╬п╢п╫п╬ я─п╟я│п©я─п╬я│я┌я─п╟п╫я▐п╣п╪я▀я┘ я─п╟п╥я─п╟п╠п╬я┌я┤п╦п╨п╟п╪п╦
+п╬п╠п╫п╟я─я┐п╤п╦я┌п╣п╩я▐ я│п╣я┌п╣п╡я▀я┘ п╡я┌п╬я─п╤п╣п╫п╦п╧ Snort. п÷я─п╟п╡п╦п╩п╟ п╡п╨п╩я▌я┤п╟я▌я┌ п╡ я│п╣п╠я▐ я┌.п╫. я│п╦пЁп╫п╟я┌я┐я─я▀,
+я┌.п╣. п╫п╟п╠п╬я─я▀ я┐я│п╩п╬п╡п╦п╧, п╨п╬я┌п╬я─я▀п╪ п╢п╬п╩п╤п╫я▀ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╬п╡п╟я┌я▄ п╥п╟пЁп╬п╩п╬п╡п╬п╨ п╦ я│п╬п╢п╣я─п╤п╦п╪п╬п╣
+я│п╣я┌п╣п╡я▀я┘ п©п╟п╨п╣я┌п╬п╡, п©я─п╬я│п╪п╟я┌я─п╦п╡п╟п╣п╪я▀я┘ Snort'п╬п╪, п╟ я┌п╟п╨п╤п╣ я─п╣п╟п╨я├п╦я▌ п╫п╟ п╡п╬п╥п╪п╬п╤п╫п╬п╣
+я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦п╣ - я┐п╢п╟п╩п╣п╫п╦п╣ п©п╟п╨п╣я┌п╟, я┐п╡п╣п╢п╬п╪п╩п╣п╫п╦п╣ п╟п╢п╪п╦п╫п╦я│я┌я─п╟я┌п╬я─п╟ п╦ я┌.п╢.
 
 %package -n snort-base
 Summary: Create base directory structure for Snort NIDS configuration
-Summary(ru_RU.KOI8-R): Набор каталогов, используемых разными пакетами IDS Snort
+Summary(ru_RU.UTF-8): п²п╟п╠п╬я─ п╨п╟я┌п╟п╩п╬пЁп╬п╡, п╦я│п©п╬п╩я▄п╥я┐п╣п╪я▀я┘ я─п╟п╥п╫я▀п╪п╦ п©п╟п╨п╣я┌п╟п╪п╦ IDS Snort
 Group: Security/Networking
 Conflicts: snort < 2.4
 %description -n snort-base
 Create base directory structure for Snort NIDS configuration files.
-%description -n snort-base -l ru_RU.KOI8-R
-Пустой пакет, создающий каталоги, совместно используемые остальными пакетами,
-на которые разбит обнаружитель сетевых атак (IDS) Snort.
-
-#%package doc
-#Summary: Detailed descriptions for standard rules used by Snort NIDS.
-#Summary(ru_RU.KOI8-R): Описания стандартных сигнатур для анализатору сетевого трафика Snort
-#Group: Security/Networking
-#%description doc
-#Tons of detailed textual listings describing all network intrusions known by Snort.
-#%description doc -l ru_RU.KOI8-R
-#Детальная документация по сигнатурам сетевых атак, входящим в базовый комплект
-#поставки свободной версии Snort - системы обнаружения сетевых вторжений.
+%description -n snort-base -l ru_RU.UTF-8
+п÷я┐я│я┌п╬п╧ п©п╟п╨п╣я┌, я│п╬п╥п╢п╟я▌я┴п╦п╧ п╨п╟я┌п╟п╩п╬пЁп╦, я│п╬п╡п╪п╣я│я┌п╫п╬ п╦я│п©п╬п╩я▄п╥я┐п╣п╪я▀п╣ п╬я│я┌п╟п╩я▄п╫я▀п╪п╦ п©п╟п╨п╣я┌п╟п╪п╦,
+п╫п╟ п╨п╬я┌п╬я─я▀п╣ я─п╟п╥п╠п╦я┌ п╬п╠п╫п╟я─я┐п╤п╦я┌п╣п╩я▄ я│п╣я┌п╣п╡я▀я┘ п╟я┌п╟п╨ (IDS) Snort.
 
 %prep
 %setup -q
@@ -61,12 +51,6 @@ install -pm 644 *.rules %buildroot%myrulesdir
 install -p %SOURCE2 %buildroot%_bindir
 install -pm 644 *sid-msg.map %buildroot%myconfdir
 
-#echo "Generate maps..."
-#d=$PWD
-#cd %buildroot%myconfdir
-#%SOURCE2 $d/etc/*sid-msg.map
-#cd -
-#echo "...done!"
 
 %files -n snort-base
 %dir %myconfdir
@@ -76,10 +60,11 @@ install -pm 644 *sid-msg.map %buildroot%myconfdir
 %config(noreplace) %myrulesdir
 %config(noreplace) %myconfdir/sid-msg.map
 
-#%files doc
-#%doc doc/signatures/* docs/*
-
 %changelog
+* Sat Sep 25 2021 Anton Farygin <rider@altlinux.ru> 2.9.9.0-alt1
+- update to latest release of the community-rules on 25 Sep 2021
+- cleanup specfile
+
 * Wed May 28 2014 Timur Aitov <timonbl4@altlinux.org> 2.9.6.1-alt1
 - use only community rules
 
