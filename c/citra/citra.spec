@@ -1,9 +1,9 @@
 # git describe --always upstream/citra
-%define git_desc 86b775bd8f
+%define git_desc 19617f7edb
 
 Name: citra
-Version: 1704
-Release: alt1.1
+Version: 1724
+Release: alt1
 
 Summary: Nintendo 3DS emulator
 License: GPLv2
@@ -150,6 +150,9 @@ ctest
 %_man6dir/%name-qt.6*
 
 %changelog
+* Sat Sep 25 2021 Nazarov Denis <nenderus@altlinux.org> 1724-alt1
+- Version Nightly 1724
+
 * Sun May 02 2021 Arseny Maslennikov <arseny@altlinux.org> 1704-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
