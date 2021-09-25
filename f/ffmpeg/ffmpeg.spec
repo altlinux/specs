@@ -157,7 +157,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version:	4.4
-Release:	alt6
+Release:	alt7
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -890,6 +890,11 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
+* Sat Sep 25 2021 Anton Farygin <rider@altlinux.ru> 2:4.4-alt7
+- Fixes:
+  * CVE-2021-38171 in FFmpeg 4.4 does not check the return value of the init_vlc function
+  * CVE-2021-38114 libavformat/adtsenc.c in FFmpeg 4.4 does not check the init_get_bits return value
+
 * Mon Sep 13 2021 Anton Farygin <rider@altlinux.ru> 2:4.4-alt6
 - built with LTO if lto_optflags macros defined
 - built with libsrt (closes: #39534)
