@@ -1,6 +1,6 @@
 Name: squashfs-tools
 Version: 4.5
-Release: alt1
+Release: alt2.19fcc936
 
 Summary: squashfs support
 License: GPLv2
@@ -40,6 +40,9 @@ ln -sf ../../sbin/mksquashfs %buildroot%_bindir/mksquashfs
 %_bindir/*
 
 %changelog
+* Sat Sep 25 2021 Anton Farygin <rider@altlinux.ru> 4.5-alt2.19fcc936
+- update to upstream git 19fcc936 (Fixes: CVE-2021-40153, CVE-2021-41072)
+
 * Mon Jul 26 2021 Anton Farygin <rider@altlinux.ru> 4.5-alt1
 - 4.5
 
