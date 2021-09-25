@@ -2,7 +2,8 @@
 
 Name:    nx-libs
 Version: 3.5.99.26
-Release: alt1
+Release: alt2
+
 Summary: NX X11 protocol compression libraries
 
 Group:   System/Libraries
@@ -13,6 +14,9 @@ URL:     https://github.com/ArcticaProject/nx-libs/
 Source0: %name-%version.tar
 #Source1: Makefile.alt
 Source2: patches.etersoft.tar
+
+# fix building with binutils >= 2.36
+Patch1: 605a266911b50ababbb3f8a8b224efb42743379c.patch
 
 BuildRequires: gcc-c++
 BuildRequires: fontconfig-devel
@@ -106,6 +110,7 @@ This package provides the NX proxy (client) binary.
 
 %prep
 %setup
+%patch1 -p1
 
 # Apply all patches from debian/patches
 cat debian/patches/series | while read patchfile;do 
@@ -281,6 +286,9 @@ cp -a nx-X11/programs/Xserver/hw/nxagent/nxagent.xpm %buildroot%_datadir/pixmaps
 %_datadir/nx/VERSION.nxproxy
 
 %changelog
+* Sat Sep 25 2021 Vitaly Lipatov <lav@altlinux.ru> 3.5.99.26-alt2
+- fix building with binutils >= 2.36
+
 * Thu Mar 25 2021 Slava Aseev <ptrnine@altlinux.org> 3.5.99.26-alt1
 - new version 3.5.99.26 (with rpmrb script)
 
