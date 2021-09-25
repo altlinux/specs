@@ -1,6 +1,6 @@
 Name: engineering-meta
 Version: p10
-Release: alt2
+Release: alt3
 Summary: Metapackage for install Engineering Applications
 Summary(ru_RU.UTF-8): Метапакет для установки инженерных приложений
 Group: Engineering
@@ -125,7 +125,9 @@ Requires: camotics
 %endif
 Requires: pycam
 Requires: flatcam
+%ifnarch %ix86 %arm
 Requires: pcb2gcodeGUI
+%endif
 Requires: rastercarve
 
 %description -n engineering-CAM
@@ -200,6 +202,9 @@ Engineering applications not included in any category.
 %files -n engineering-misc
 
 %changelog
+* Sat Sep 25 2021 Anton Midyukov <antohami@altlinux.org> p10-alt3
+- CAM: do not require pcb2gcodeGUI on %ix86, %arm
+
 * Sat Jul 03 2021 Anton Midyukov <antohami@altlinux.org> p10-alt2
 - Add ktechlab to engineering-EDA
 - Change License to GPL-2.0

@@ -1,6 +1,6 @@
 Name: pcb2gcode
 Version: 2.4.0
-Release: alt1
+Release: alt2
 Summary: Command-line software for the isolation, routing and drilling of PCBs
 
 Group: Engineering
@@ -9,6 +9,9 @@ Url: https://github.com/pcb2gcode/pcb2gcode/
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+
+# Tests fails
+ExcludeArch: %ix86 %arm
 
 BuildRequires: gcc-c++
 BuildRequires: boost-program_options-devel boost-geometry-devel
@@ -27,6 +30,7 @@ dynamic calibration of the milling depth.
 %setup
 
 %build
+export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS"
 %autoreconf
 %configure
 %make_build
@@ -35,8 +39,7 @@ dynamic calibration of the milling depth.
 %makeinstall_std
 
 %check
-# failed on i586
-%make_build check || :
+%make_build check
 
 %files
 %_bindir/*
@@ -44,6 +47,10 @@ dynamic calibration of the milling depth.
 %doc AUTHORS README.md
 
 %changelog
+* Sat Sep 25 2021 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt2
+- add compiler flag '-std=c++14' (fix build with gcc-c++ >= 11)
+- ExcludeArch: %ix86 %arm (tests fails)
+
 * Thu May 13 2021 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
 - new version 2.4.0
 

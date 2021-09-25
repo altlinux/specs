@@ -1,6 +1,6 @@
 Name: pcb2gcodeGUI
 Version: 1.3.3
-Release: alt1
+Release: alt2
 Summary: A GUI for pcb2gcode
 
 Group: Engineering
@@ -14,6 +14,8 @@ Source1: pcb.png
 BuildRequires: gcc-c++ pkgconfig(Qt5) pkgconfig(Qt5Core) pkgconfig(Qt5Widgets) pkgconfig(Qt5Svg) desktop-file-utils ImageMagick-tools
 
 Requires: pcb2gcode
+
+ExcludeArch: %ix86 %arm
 
 %description
 A GUI for pcb2gcode, a software for the isolation, routing and drilling
@@ -55,6 +57,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sat Sep 25 2021 Anton Midyukov <antohami@altlinux.org> 1.3.3-alt2
+- ExcludeArch: %ix86 %arm
+
 * Thu May 13 2021 Anton Midyukov <antohami@altlinux.org> 1.3.3-alt1
 - new version 1.3.3
 
