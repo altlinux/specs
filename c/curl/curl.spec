@@ -3,8 +3,8 @@
 %def_with check
 
 Name: curl
-Version: 7.79.0
-Release: alt2
+Version: 7.79.1
+Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -130,8 +130,6 @@ applications that utilize lib%name.
 %makeinstall_std -C docs/libcurl
 
 %check
-# introduced in version 7.79.0 test 1184 fails with no visibility reason.
-echo "1184" >> tests/data/DISABLED
 %make -k test-full
 
 %files
@@ -157,6 +155,9 @@ echo "1184" >> tests/data/DISABLED
 %_libdir/*.a
 
 %changelog
+* Sat Sep 25 2021 Anton Farygin <rider@altlinux.ru> 7.79.1-alt1
+- 7.79.1
+
 * Tue Sep 21 2021 Anton Farygin <rider@altlinux.ru> 7.79.0-alt2
 - added patches from curl upstream:
   * b2e72d2 http: fix the broken >3 digit response code detection
