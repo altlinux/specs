@@ -1,8 +1,8 @@
 %define  oname PlayOnLinux
 
 Name:    playonlinux
-Version: 4.3.4
-Release: alt3
+Version: 4.4
+Release: alt1
 
 Summary: Play your Windows games on Linux
 License: GPLv3
@@ -10,13 +10,14 @@ Group:   Games/Other
 Url:     http://www.playonlinux.com
 Packager: Denis Medvedev <nbr@altlinux.org>
 
-Source: http://www.playonlinux.com/script_files/%oname/%version/%{oname}_%version.tar.gz
+Source: %name-%version.tar
+# Source-url: https://github.com/PlayOnLinux/POL-POM-4/archive/%version/POL-POM-4-%version.tar.gz
 Source1: playonlinux.sh
 Source2: %oname.desktop
 Patch: playonlinux-remove-capture-plugin.patch
+Patch1: playonlinux-4.4-gita8fe4bb.patch
 
-BuildRequires: rpm-build-python
-BuildRequires: python-module-wx3.0
+BuildRequires: rpm-build-python3
 Requires: ImageMagick-tools
 Requires: wget
 Requires: gettext
@@ -25,11 +26,11 @@ Requires: cabextract
 Requires: xterm
 Requires: binutils
 Requires: icoutils
-Requires: python-module-wx3.0
 Requires: jq
 
 %add_findreq_skiplist %_datadir/%name/bash/*
 %add_findreq_skiplist %_datadir/%name/lib/scripts.lib
+%add_python3_path %_datadir/%name/python
 
 ExclusiveArch: %ix86
 
@@ -43,18 +44,9 @@ accessible and efficient solution to this problem, cost-free
 and respectful of the free software.
 
 %prep
-%setup -n %name
+%setup
 %patch -p1
-
-# fix python shebangs
-find . -type f -print0 |
-    xargs -r0 sed -i 's@!/usr/bin/python@!%__python@' --
-
-find . -type f -print0 |
-    xargs -r0 sed -i 's@/usr/bin/env python@%__python@' --
-
-find . -type f -print0 |
-    xargs -r0 sed -i 's@exec python@exec %__python@' --
+%patch1 -p1
 
 %install
 mkdir %buildroot
@@ -88,6 +80,10 @@ ln -sf /lib/libnss_db.so.2 %buildroot%_libdir/%name/libnss_db.so.2
 %_libdir/%name/*
 
 %changelog
+* Sat Sep 25 2021 Anton Midyukov <antohami@altlinux.org> 4.4-alt1
+- new version (4.4) with rpmgs script
+- build with python3-module-wx
+
 * Sun Jun 27 2021 Grigory Ustinov <grenka@altlinux.org> 4.3.4-alt3
 - Fixed BR's (Closes: #40289).
 
