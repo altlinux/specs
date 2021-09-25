@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: feh
-Version: 3.7.1
+Version: 3.7.2
 Release: alt1
 Summary: Image viewer using Imlib 2
 Group: Graphics
@@ -57,6 +57,9 @@ export PREFIX="%_prefix"
 %doc COPYING
 
 %changelog
+* Sat Sep 25 2021 Ilya Mashkin <oddity@altlinux.ru> 3.7.2-alt1
+- 3.7.2
+
 * Mon Jul 26 2021 Ilya Mashkin <oddity@altlinux.ru> 3.7.1-alt1
 - 3.7.1
 
