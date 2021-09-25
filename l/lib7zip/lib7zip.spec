@@ -6,7 +6,7 @@
 
 Name: lib7zip
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Summary: C++ library wrapper of 7zip
 
@@ -22,7 +22,8 @@ Source: %name-%version.tar
 # Source1-url: https://github.com/btolab/p7zip/archive/%p7zip_version.tar.gz
 Source1: p7zip.tar
 
-Patch: lib7zip-fix-linking.patch
+Patch1: lib7zip-fix-linking.patch
+Patch2: lib7zip-fix-gcc10.patch
 
 BuildRequires: cmake gcc-c++
 
@@ -42,7 +43,8 @@ software that uses %name.
 
 %prep
 %setup -a1
-%patch -p2
+%patch1 -p2
+%patch2 -p2
 
 %build
 %cmake_insource -DBUILD_SHARED_LIB=ON -DP7ZIP_SOURCE_DIR=p7zip
@@ -63,5 +65,8 @@ cp -a src/lib7zip.so* %buildroot%_libdir/
 %_includedir/lib7zip.h
 
 %changelog
+* Sat Sep 25 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0.0-alt2
+- fix build with gcc 10
+
 * Sun Dec 16 2018 Vitaly Lipatov <lav@altlinux.ru> 3.0.0-alt1
 - initial build for ALT Sisyphus
