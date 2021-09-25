@@ -2,7 +2,7 @@
 
 Name:     touchegg
 Version:  2.0.11
-Release:  alt1
+Release:  alt2
 
 Summary:  Linux multi-touch gesture recognizer
 License:  GPL-3.0
@@ -35,7 +35,17 @@ make on your touchpad into visible actions in your desktop.
 
 %prep
 %setup
+%ifarch %e2k
+# because of "multiple definition of" errors at linking
+%define lcc_fix() \
+  sed -i "1i #define preferred_separator preferred_separator_$(echo %1 | tr /- __)" src/%1.cpp
+%lcc_fix config/xml-config-loader
+%lcc_fix utils/client-lock
+%lcc_fix utils/paths
+%lcc_fix main
+%else
 %patch1 -p1
+%endif
 
 %build
 %cmake -GNinja -Wno-dev
@@ -58,6 +68,9 @@ make on your touchpad into visible actions in your desktop.
 %_unitdir/%name.service
 
 %changelog
+* Sat Sep 25 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.0.11-alt2
+- Fixed build for Elbrus.
+
 * Mon Jul 05 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.11-alt1
 - New version.
 
