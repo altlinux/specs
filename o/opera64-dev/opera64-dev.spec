@@ -1,5 +1,5 @@
-%define		softver 77.0
-%define		buildver 4046.0
+%define		softver 81.0
+%define		buildver 4175.0
 
 Name:		opera64-dev
 Version:	%softver.%buildver
@@ -11,6 +11,7 @@ License:	Distributable
 Vendor:		Opera Software ASA
 Url:		http://www.opera.com/
 Source0:	opera-%softver.%buildver.x86_64.linux.tar.bz2
+Source1:	opera-lib_extra-libffmpeg.so
 
 ExclusiveArch:	x86_64
 
@@ -37,6 +38,7 @@ cp -a ./lib/* %buildroot%_libdir/
 cp -a ./share/* %buildroot%_datadir
 ln -s %_libdir/x86_64-linux-gnu/opera-developer/opera-developer %buildroot%_bindir/opera-developer
 subst 's|usr/lib/|%_libdir/|g' %buildroot%_datadir/lintian/overrides/opera-developer
+cp -a %SOURCE1 %buildroot%_libdir/x86_64-linux-gnu/opera-developer/lib_extra/libffmpeg.so
 
 %post
 chmod 4755 %_libdir/x86_64-linux-gnu/opera-developer/opera_sandbox
@@ -51,6 +53,15 @@ chmod 4755 %_libdir/x86_64-linux-gnu/opera-developer/opera_sandbox
 %_datadir/mime/packages/*.xml
 
 %changelog
+* Sun Sep 26 2021 Motsyo Gennadi <drool@altlinux.ru> 81.0.4175.0-alt1
+- 81.0.4175.0 snapshot
+
+* Thu Sep 02 2021 Motsyo Gennadi <drool@altlinux.ru> 80.0.4162.0-alt1
+- 80.0.4162.0 snapshot
+
+* Sat Jul 10 2021 Motsyo Gennadi <drool@altlinux.ru> 79.0.4105.0-alt1
+- 79.0.4105.0 snapshot
+
 * Sun May 09 2021 Motsyo Gennadi <drool@altlinux.ru> 77.0.4046.0-alt1
 - 77.0.4046.0 snapshot
 
