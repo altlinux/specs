@@ -1,6 +1,6 @@
 Name: snes9x
 Version: 1.60
-Release: alt2
+Release: alt3
 
 Summary: Super Nintendo Entertainment System emulator
 License: Distributable
@@ -9,7 +9,10 @@ Group: Emulators
 Url: http://www.snes9x.com/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source: https://github.com/snes9xgit/%name/archive/%version/%name-%version.tar.gz
+# https://github.com/%{name}git/%name/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
+
+Patch0: %name-alt-gcc11.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libSDL2-devel
@@ -54,6 +57,7 @@ This package contains a graphical user interface using GTK+.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 # Build CLI version
@@ -105,6 +109,9 @@ popd
 %_iconsdir/hicolor/256x256/apps/%name.png
 
 %changelog
+* Sun Sep 26 2021 Nazarov Denis <nenderus@altlinux.org> 1.60-alt3
+- Add patch to fix compilation error in gcc11
+
 * Fri May 03 2019 Nazarov Denis <nenderus@altlinux.org> 1.60-alt2
 - Fix post-install unowned files
 
