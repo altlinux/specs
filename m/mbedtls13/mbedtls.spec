@@ -6,7 +6,7 @@
 
 Name: %pkgname%so_tls_version
 Version: 2.27.0
-Release: alt1.1
+Release: alt2
 
 Summary: Transport Layer Security protocol suite
 License: Apache-2.0
@@ -17,6 +17,8 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/ARMmbed/%pkgname/archive/v%version/%pkgname-%version.tar.gz
 Source: %pkgname-%version.tar
+
+Patch0: %pkgname-alt-gcc11.patch
 
 BuildRequires: cmake
 BuildRequires: libpkcs11-helper-devel
@@ -82,6 +84,7 @@ that use mbed TLS
 
 %prep
 %setup -n %pkgname-%version
+%patch0 -p1
 %ifarch %e2k
 # unsupported as of lcc 1.25.17
 sed -i 's,-Wformat-overflow=2,,' CMakeLists.txt
@@ -132,6 +135,9 @@ sed -i 's,-Wformat-overflow=2,,' CMakeLists.txt
 %endif
 
 %changelog
+* Sun Sep 26 2021 Nazarov Denis <nenderus@altlinux.org> 2.27.0-alt2
+- Add patch to fix build on gcc11
+
 * Thu Jul 22 2021 Michael Shigorin <mike@altlinux.org> 2.27.0-alt1.1
 - E2K: avoid lcc-unsupported option
 
