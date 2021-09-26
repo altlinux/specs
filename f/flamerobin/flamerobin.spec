@@ -1,32 +1,35 @@
-Summary: Graphical client for Firebird
 Name: flamerobin
-Version: 0.9.0
-Release: alt2.qa2
-License: BSD style
+Summary: Graphical client for Firebird
+Version: 0.9.3.9
+Release: alt1
+License: MIT
 Group: Databases
-Packager: Boris Savelev <boris@altlinux.org>
 
-Source: %name-%version-src.tar.gz
-Patch: flamerobin-0.9.0-gcc4.patch
+Source: %name-%version.tar
 Url: http://www.flamerobin.org/
+# Source-url: https://github.com/mariuz/flamerobin/archive/refs/tags/%version.tar.gz
 
-# Automatically added by buildreq on Sat Oct 04 2008
-BuildRequires: firebird-devel gcc-c++ wxGTK-contrib-stc-devel wxGTK-devel ImageMagick
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: boost-devel
+BuildRequires: firebird-devel
+BuildRequires: libwxGTK3.0-devel
+BuildRequires: ImageMagick-tools
 
 %description
 FlameRobin is a database administration tool for Firebird DBMS based on wxgtk
 toolkit.
 
 %prep
-%setup -q -n %name-%version-src
-%patch0 -p1
+%setup
 
 %build
-%configure
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 install -d %buildroot{%_niconsdir,%_miconsdir,%_liconsdir}
 convert -size 16x16 ./res/fricon128.png %buildroot%_miconsdir/%name.png
@@ -45,6 +48,11 @@ convert -size 48x48 ./res/fricon128.png %buildroot%_liconsdir/%name.png
 %_miconsdir/%name.png
 
 %changelog
+* Sun Sep 26 2021 Anton Midyukov <antohami@altlinux.org> 0.9.3.9-alt1
+- new version (0.9.3.9) with rpmgs script
+- build with libwxGTK3.0
+- update License tag
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.0-alt2.qa2
 - NMU: rebuilt for debuginfo.
 
