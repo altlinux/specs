@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20210916
+Version: 20210923
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,13 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Mon Sep 27 2021 Cronbuild Service <cronbuild@altlinux.org> 20210923-alt1
+- upstream changes (GIT 0268c1b):
+  + update frimware for mediatek bluetooth chip (MT7921) (thx mark-yw.chen)
+  + Update firmware file for Intel Bluetooth AX211 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9560 (thx Kiran K)
+
 * Tue Sep 21 2021 Cronbuild Service <cronbuild@altlinux.org> 20210916-alt1
 - upstream changes (GIT d526e04):
   + qed: Add firmware 8.59.1.0 (thx Prabhakar Kushwaha)
