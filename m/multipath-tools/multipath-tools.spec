@@ -8,7 +8,7 @@
 
 Name: multipath-tools
 Version: 0.8.6
-Release: alt1
+Release: alt2
 
 Summary: Tools to manage multipath devices with device-mapper
 License: GPL-2.0-only
@@ -91,6 +91,9 @@ device-mapper-multipath's libdmmp C API library
 %prep
 %setup -q
 %patch1 -p1
+%ifarch %e2k
+sed -i "s|-Werror -Wall|-Wall|" Makefile.inc
+%endif
 
 %build
 unset RPM_OPT_FLAGS
@@ -177,6 +180,9 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_pkgconfigdir/libdmmp.pc
 
 %changelog
+* Mon Sep 27 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.8.6-alt2
+- fixed build for Elbrus
+
 * Sun Apr 11 2021 Alexey Shabalin <shaba@altlinux.org> 0.8.6-alt1
 - 0.8.6
 
