@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fprintd
-Version: 1.92.0
+Version: 1.94.0
 Release: alt1
 Summary: D-Bus service for Fingerprint reader access
 Group: System/Servers
@@ -17,7 +17,7 @@ Patch: %name-%version.patch
 
 BuildRequires(pre): meson
 BuildRequires: libdbus-glib-devel
-BuildRequires: pkgconfig(libfprint-2) > 0.1.0
+BuildRequires: pkgconfig(libfprint-2) > 1.94.0
 BuildRequires: libfprint2-gir-devel
 BuildRequires: pkgconfig(glib-2.0) pkgconfig(dbus-glib-1)
 BuildRequires: pkgconfig(gmodule-2.0) pkgconfig(polkit-gobject-1) >= 0.91 pkgconfig(gio-2.0) >= 2.26
@@ -108,6 +108,9 @@ install -m0644 -p %SOURCE2 %buildroot%_sysconfdir/pam.d/
 %_bindir/%name-*
 
 %changelog
+* Thu Sep 02 2021 Anton Farygin <rider@altlinux.ru> 1.94.0-alt1
+- 1.94.0
+
 * Tue Jul 27 2021 Anton Farygin <rider@altlinux.ru> 1.92.0-alt1
 - 1.92.0
 
