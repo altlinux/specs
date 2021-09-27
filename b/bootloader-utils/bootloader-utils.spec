@@ -1,6 +1,6 @@
 Name: bootloader-utils
 Version: 0.5.3
-Release: alt1
+Release: alt2
 
 Summary: Bootloader utilities
 License: GPL
@@ -88,6 +88,9 @@ mv $f.install $f
 %_rpmlibdir/*.filetrigger
 
 %changelog
+* Wed Jun 16 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.5.3-alt2
+- installkernel: support call from Linux' install.sh for real
+
 * Sat Dec 07 2019 Vitaly Chikunov <vt@altlinux.org> 0.5.3-alt1
 - installkernel: support call from Linux install.sh on `make install'
 
