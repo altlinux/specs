@@ -5,14 +5,14 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 20.8.0
+Version: 20.8.1
 Release: alt1
 
 Summary: Virtual Python Environment builder
 License: MIT
 Group: Development/Python3
 # git://github.com/pypa/virtualenv.git
-Url: http://pypi.python.org/pypi/virtualenv
+Url: https://pypi.org/project/virtualenv/
 
 Source: %name-%version.tar.gz
 Patch: %name-%version-alt.patch
@@ -103,6 +103,9 @@ tox.py3 --sitepackages --no-deps -vvr -s false
 %python3_sitelibdir/virtualenv-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Sep 27 2021 Stanislav Levin <slev@altlinux.org> 20.8.1-alt1
+- 20.8.0 -> 20.8.1.
+
 * Fri Sep 17 2021 Stanislav Levin <slev@altlinux.org> 20.8.0-alt1
 - 20.7.2 -> 20.8.0.
 
