@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define installdir %webserver_webappsdir/%name
 %define otrs_user otrs
 
 Name: otrs
-Version: 6.0.29
-Release: alt2
+Version: 6.0.30
+Release: alt1
 
 Summary: Open source Ticket Request System
 Group: Networking/WWW
@@ -40,6 +41,7 @@ Requires: perl-CPAN-Meta
 %add_findreq_skiplist */Kernel/*
 %add_findreq_skiplist */scripts/*
 %add_findreq_skiplist */examples/*
+%add_findreq_skiplist */development/*
 
 %description
 OTRS is an Open source Ticket Request System (also well known
@@ -121,7 +123,6 @@ cd %installdir/bin/
 #./Cron.sh start %otrs_user >/dev/null 2>&1
 
 %files
-%doc ARCHIVE
 %doc AUTHORS.md
 %doc CHANGES.md
 %doc CONTRIBUTING.md
@@ -143,6 +144,7 @@ cd %installdir/bin/
 %installdir/doc
 %installdir/var
 %installdir/i18n
+%installdir/development
 %installdir/RELEASE
 
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/apt/apt.conf.d/%name-hold.conf
@@ -151,6 +153,10 @@ cd %installdir/bin/
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %changelog
+* Mon Sep 27 2021 Sergey Y. Afonin <asy@altlinux.org> 6.0.30-alt1
+- New version
+  final release of "((OTRS)) Community Edition 6" from OTRS AG
+
 * Fri May 21 2021 Anton Farygin <rider@altlinux.ru> 6.0.29-alt2
 - removed all apache post scripts (they moved to filetriggers from apache2)
 
