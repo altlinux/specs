@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.5.7
+Version: 4.6.0
 Release: alt1
 Group: Education
 License: GPLv2
@@ -19,12 +19,11 @@ Source: %name-%version.tar
 Source1: %name-%version-3rdparty.tar
 Source2: veyon-config-dm-login.sh
 
-Patch1: Unbundle-some-libraries-and-fix-build-alt.patch
+Patch1: alt-veyon-libdir.patch
 Patch3: alt-fix-builtindirectory-computers-list-display.patch
 Patch4: alt-fix-dm-login.patch
 
 BuildRequires: rpm-build-kf5
-BuildRequires: extra-cmake-modules
 BuildRequires: gcc-c++ make cmake
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools-devel
@@ -112,6 +111,9 @@ rm -rf ./3rdparty
 %_datadir/%name
 
 %changelog
+* Mon Sep 27 2021 Egor Ignatov <egori@altlinux.org> 4.6.0-alt1
+- new version
+
 * Fri Aug 20 2021 Egor Ignatov <egori@altlinux.org> 4.5.7-alt1
 - new version
 
