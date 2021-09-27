@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name dleyna
@@ -6,26 +6,27 @@
 %define gupnp_api_ver 1.2
 
 Name: %_name-server
-Version: 0.6.0
-Release: alt2
+Version: 0.7.1
+Release: alt1
 
 Summary: Service for interacting with Digital Media Servers
 Group: System/Servers
-License: LGPLv2.1
-Url: https://01.org/%_name/
+License: LGPL-2.1
+Url: https://github.com/phako/%name
 
 %if_disabled snapshot
-Source: https://01.org/%_name/sites/default/files/downloads/%name-%version.tar.gz
+Source: %url/archive/v%version/%name-%version.tar.gz
 %else
-#VCS: https://github.com/01org/dleyna-server.git
+Vcs: https://github.com/phako/dleyna-server.git
 Source: %name-%version.tar
 %endif
 
 Requires: %_name-connector-dbus
 
-BuildRequires: libgio-devel libgssdp%gupnp_api_ver-devel libgupnp%gupnp_api_ver-devel
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson libgio-devel libgssdp%gupnp_api_ver-devel libgupnp%gupnp_api_ver-devel
 BuildRequires: libgupnp-av-devel libgupnp-dlna-devel libsoup-devel
-BuildRequires: libdleyna-core-devel
+BuildRequires: libdleyna-core-devel >= 0.7
 
 %description
 This package contains shared %name library and D-Bus service to
@@ -44,12 +45,11 @@ developing applications that use %name-service.
 %setup
 
 %build
-%autoreconf
-%configure  --disable-static
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %files
 %_libexecdir/%name-service
@@ -57,17 +57,18 @@ developing applications that use %name-service.
 %_libdir/%name/lib%name-%api_ver.so.*
 %_datadir/dbus-1/services/com.intel.%name.service
 %_sysconfdir/%name-service.conf
-%doc AUTHORS ChangeLog README
+%doc AUTHORS ChangeLog README*
 
 %files devel
 %_includedir/%_name-%api_ver/lib%_name/server/
 %_libdir/%name/lib%name-%api_ver.so
 %_pkgconfigdir/%name-service-%api_ver.pc
 
-%exclude %_libdir/%name/*.la
-
 
 %changelog
+* Mon Sep 27 2021 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
+- 0.7.1 (new upstream, ported to Meson build system)
+
 * Mon Dec 30 2019 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt2
 - updated to 0.6.0-2-geb895ae (ported to (gssdp/gupnp)-1.2)
 

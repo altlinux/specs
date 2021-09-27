@@ -1,26 +1,27 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name dleyna
 %define api_ver 1.0
 %define gupnp_api_ver 1.2
 
 Name: %_name-core
-Version: 0.6.0
-Release: alt2
+Version: 0.7.0
+Release: alt1
 
 Summary: Utilities for higher level %_name libraries
 Group: System/Libraries
 License: LGPLv2.1
-Url: https://01.org/%_name/
+Url: https://github.com/phako/%name
 
 %if_disabled snapshot
-Source: https://01.org/%_name/sites/default/files/downloads/%name-%version.tar.gz
+Source: %url/archive/v%version/%name-%version.tar.gz
 %else
-#VCS: https://github.com/01org/dleyna-core.git
+Vcs: https://github.com/phako/dleyna-core.git
 Source: %name-%version.tar
 %endif
 
-BuildRequires: libgio-devel libgupnp%gupnp_api_ver-devel >= 1.2.1
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson libgio-devel libgupnp%gupnp_api_ver-devel >= 1.2.1
 
 %description
 dleyna-core is a library of utility functions that are used by the higher
@@ -53,16 +54,16 @@ developing applications that use %name library.
 %setup
 
 %build
-%autoreconf
-%configure  --disable-static
-%make_build
+
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %files -n lib%name
 %_libdir/lib%_name-core-%api_ver.so.*
-%doc AUTHORS ChangeLog README
+%doc AUTHORS ChangeLog README*
 
 %files -n lib%name-devel
 %_includedir/%_name-%api_ver/
@@ -71,6 +72,9 @@ developing applications that use %name library.
 
 
 %changelog
+* Mon Sep 27 2021 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
+- 0.7.0 (new upstream, ported to Meson build system)
+
 * Mon Dec 30 2019 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt2
 - updated to v0.6.0-2-g1c6853f (ported to gupnp-1.2)
 
