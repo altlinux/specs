@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        93.0.4577.82
+Version:        94.0.4606.54
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -61,23 +61,26 @@ Obsoletes:      chromium-desktop-gnome
 # Unsupported target_cpu
 ExcludeArch: ppc64le armh
 
-Patch0001: 0001-OPENSUSE-enables-reading-of-the-master-preference.patch
-Patch0002: 0002-ALT-Set-appropriate-desktop-file-name-for-default-br.patch
-Patch0003: 0003-DEBIAN-manpage-fixes.patch
-Patch0004: 0004-DEBIAN-add-ps-printing-capability-gtk2.patch
-Patch0005: 0005-ALT-fix-shrank-by-one-character.patch
-Patch0006: 0006-ALT-Fix-last-commit-position-issue.patch
-Patch0008: 0008-ALT-Use-rpath-link-and-absolute-rpath.patch
-Patch0009: 0009-ALT-openh264-always-pic-on-x86.patch
-Patch0010: 0010-ALT-allow-to-override-clang-through-env-variables.patch
-Patch0011: 0011-ALT-Hack-to-avoid-build-error-with-clang7.patch
-Patch0012: 0012-ALT-disable-asm-on-x86-in-dav1d.patch
-Patch0013: 0013-Move-offending-function-to-chromeos-only.patch
-Patch0014: 0014-ALT-Do-not-use-no-canonical-prefixes-clang-option.patch
-Patch0015: 0015-ALT-Disable-NOMERGE-attribute.patch
-Patch0016: 0016-IWYU-include-limits-for-std-numeric_limits.patch
-Patch0017: 0017-FEDORA-bootstrap-with-python3.patch
-Patch0018: 0018-ALT-Add-headers-to-fix-build.patch
+### Start Patches
+Patch001: 0001-OPENSUSE-enables-reading-of-the-master-preference.patch
+Patch002: 0002-ALT-Set-appropriate-desktop-file-name-for-default-br.patch
+Patch003: 0003-DEBIAN-manpage-fixes.patch
+Patch004: 0004-DEBIAN-add-ps-printing-capability-gtk2.patch
+Patch005: 0005-ALT-fix-shrank-by-one-character.patch
+Patch006: 0006-ALT-Fix-last-commit-position-issue.patch
+Patch007: 0007-ALT-Use-rpath-link-and-absolute-rpath.patch
+Patch008: 0008-ALT-openh264-always-pic-on-x86.patch
+Patch009: 0009-ALT-allow-to-override-clang-through-env-variables.patch
+Patch010: 0010-ALT-Hack-to-avoid-build-error-with-clang7.patch
+Patch011: 0011-ALT-disable-asm-on-x86-in-dav1d.patch
+Patch012: 0012-Move-offending-function-to-chromeos-only.patch
+Patch013: 0013-ALT-Do-not-use-no-canonical-prefixes-clang-option.patch
+Patch014: 0014-ALT-Disable-NOMERGE-attribute.patch
+Patch015: 0015-IWYU-include-limits-for-std-numeric_limits.patch
+Patch016: 0016-FEDORA-bootstrap-with-python3.patch
+Patch017: 0017-sql-make-VirtualCursor-standard-layout-type.patch
+Patch018: 0018-IWYU-add-memory-for-std-unique_ptr-in-blink-CustomSp.patch
+### End Patches
 
 BuildRequires: /proc
 BuildRequires: /dev/shm
@@ -177,6 +180,7 @@ faster, and more stable way for all Internet users to experience the web.
 
 sed -i \
 	-e '/"-Wno-non-c-typedef-for-linkage"/d' \
+	-e 's/"-ffile-compilation-dir=."//g' \
 	build/config/compiler/BUILD.gn
 
 mkdir -p third_party/node/linux/node-linux-x64/bin
@@ -347,7 +351,7 @@ sed -i -e 's,/usr/lib/chromium,%_libdir/%name,g' %buildroot%_bindir/%name
 pushd %target
 cp -a chrome           %buildroot%_libdir/%name/%name
 cp -a chrome_sandbox   %buildroot%_libdir/%name/chrome-sandbox
-cp -a crashpad_handler %buildroot%_libdir/%name/crashpad_handler
+cp -a chrome_crashpad_handler %buildroot%_libdir/%name/chrome_crashpad_handler
 
 for chromedriver in chromedriver chromedriver.unstripped; do
 	[ ! -x $chromedriver ] || break
@@ -434,6 +438,27 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Sep 23 2021 Alexey Gladkov <legion@altlinux.ru> 94.0.4606.54-alt1
+- New version (94.0.4606.54).
+- Security fixes:
+  - CVE-2021-37956: Use after free in Offline use.
+  - CVE-2021-37957 : Use after free in WebGPU.
+  - CVE-2021-37958 : Inappropriate implementation in Navigation.
+  - CVE-2021-37959 : Use after free in Task Manager.
+  - CVE-2021-37960 : Inappropriate implementation in Blink graphics.
+  - CVE-2021-37961 : Use after free in Tab Strip.
+  - CVE-2021-37962 : Use after free in Performance Manager.
+  - CVE-2021-37963 : Side-channel information leakage in DevTools.
+  - CVE-2021-37964 : Inappropriate implementation in ChromeOS Networking.
+  - CVE-2021-37965 : Inappropriate implementation in Background Fetch API.
+  - CVE-2021-37966 : Inappropriate implementation in Compositing.
+  - CVE-2021-37967 : Inappropriate implementation in Background Fetch API.
+  - CVE-2021-37968 : Inappropriate implementation in Background Fetch API.
+  - CVE-2021-37969 : Inappropriate implementation in Google Updater.
+  - CVE-2021-37970 : Use after free in File System API.
+  - CVE-2021-37971 : Incorrect security UI in Web Browser UI.
+  - CVE-2021-37972 : Out of bounds read in libjpeg-turbo.
+
 * Tue Sep 14 2021 Alexey Gladkov <legion@altlinux.ru> 93.0.4577.82-alt1
 - New version (93.0.4577.82).
 - Security fixes:
