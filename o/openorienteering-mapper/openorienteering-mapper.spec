@@ -4,7 +4,7 @@
 
 Name: openorienteering-mapper
 Version: 0.9.5
-Release: alt1
+Release: alt2
 
 Summary: OpenOrienteering Mapper program for orienteering mapmaking
 License: GPLv3
@@ -55,6 +55,11 @@ are happy about feedback to the program.
 
 %prep
 %setup
+%ifarch %e2k
+# workaround for a bug in the EDG frontend 
+sed -i '/\[\](/{N;/Symbol::duplicate/s|\[\]|[this]|}' \
+	src/core/symbols/{combined,point}_symbol.cpp
+%endif
 
 #provide licensing information search path patterns specific for Altlinux
 cp doc/licensing/fedora-licensing.cmake doc/licensing/altlinux-licensing.cmake
@@ -88,6 +93,9 @@ cmake --build %_cmake__builddir/test -j%__nprocs
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Sep 27 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.9.5-alt2
+- Fixed build for Elbrus
+
 * Tue Sep 21 2021 Nikolai Kostrigin <nickel@altlinux.org> 0.9.5-alt1
 - New version
 
