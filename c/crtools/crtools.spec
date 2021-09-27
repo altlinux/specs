@@ -1,6 +1,9 @@
+# FIXME
+%define optflags_lto %nil
+
 Name: crtools
-Version: 3.15
-Release: alt2
+Version: 3.16
+Release: alt1
 
 Summary: Utility to checkpoint/restore tasks
 License: GPL-2.0-only
@@ -12,6 +15,7 @@ Source: criu-%version.tar
 Source1: criu.watch
 Patch1: 0001-FEDORA-aio-fix.patch
 Patch2: 0002-ALT-build-against-python3.patch
+Patch3: 0003-ALT-criu-ns-uses-python3.patch
 
 Provides: criu = %EVR
 ExclusiveArch: x86_64 aarch64 ppc64le
@@ -99,12 +103,14 @@ find %buildroot -name 'lib*.a' -delete
 %files
 %doc README.md COPYING CREDITS
 %_sbindir/criu
+%_sbindir/criu-ns
 %_sbindir/crtools
 %_bindir/compel
 %_libexecdir/criu
 %_libexecdir/compel
 %_man1dir/compel.1*
 %_man8dir/criu.8*
+%_man1dir/criu-ns.1*
 %_man8dir/crtools.8*
 
 %files -n python3-module-criu
@@ -126,6 +132,9 @@ find %buildroot -name 'lib*.a' -delete
 %_pkgconfigdir/criu.pc
 
 %changelog
+* Mon Sep 27 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.16-alt1
+- Update to 3.16.
+
 * Tue Jul 13 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.15-alt2
 - Do not build on armh (closes #40335).
 
