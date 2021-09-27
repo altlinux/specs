@@ -11,7 +11,7 @@
 
 Name: kde5-%rname
 Version: 21.08.1
-Release: alt1
+Release: alt2
 %K5init no_appdata
 
 Group: Networking/WWW
@@ -29,15 +29,16 @@ Provides: kf5-konqueror-plugins = %version-%release
 Obsoletes: kf5-konqueror-plugins < %version-%release
 
 Source: %rname-%version.tar
+Patch1: alt-kio-5.86.patch
 
 # Automatically added by buildreq on Wed Mar 29 2017 (-bi)
 # optimized out: alternatives cmake cmake-modules desktop-file-utils docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ gtk-update-icon-cache kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbusmenu-qt52 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-script libqt5-svg libqt5-test libqt5-webchannel libqt5-webenginecore libqt5-webenginewidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms libxkbfile-devel perl python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-webchannel-devel rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
-#BuildRequires: extra-cmake-modules kf5-kactivities-devel kf5-kcmutils-devel kf5-kded kf5-kded-devel kf5-kdelibs4support-devel kf5-kdesu-devel kf5-kdoctools-devel-static kf5-khtml-devel kf5-kio-devel kf5-kjs-devel kf5-kpty-devel libXres-devel libtidy-devel python-module-google python3-dev qt5-script-devel qt5-webengine-devel qt5-x11extras-devel rpm-build-ruby zlib-devel-static
+#BuildRequires: extra-cmake-modules kf5-kactivities-devel kf5-kcmutils-devel kf5-kded kf5-kded-devel kf5-kdelibs4support-devel kf5-kdesu-devel kf5-kdoctools-devel kf5-khtml-devel kf5-kio-devel kf5-kjs-devel kf5-kpty-devel libXres-devel libtidy-devel python-module-google python3-dev qt5-script-devel qt5-webengine-devel qt5-x11extras-devel rpm-build-ruby zlib-devel-static
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-script-devel qt5-webengine-devel qt5-x11extras-devel
 BuildRequires: libXres-devel libtidy-devel zlib-devel
 BuildRequires: kf5-kactivities-devel kf5-kcmutils-devel kf5-kded kf5-kded-devel kf5-kdelibs4support-devel
-BuildRequires: kf5-kdesu-devel kf5-kdoctools-devel-static kf5-khtml-devel kf5-kio-devel kf5-kjs-devel kf5-kpty-devel
+BuildRequires: kf5-kdesu-devel kf5-kdoctools-devel kf5-khtml-devel kf5-kio-devel kf5-kjs-devel kf5-kpty-devel
 BuildRequires: kf5-kwallet-devel
 
 %if_enabled text2speech
@@ -87,6 +88,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -198,6 +200,9 @@ done
 %_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Mon Sep 27 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt2
+- add upstream fix against kio-5.86
+
 * Thu Sep 02 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt1
 - new version
 
