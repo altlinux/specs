@@ -1,29 +1,27 @@
+%define _unpackaged_files_terminate_build 1
+
 Summary: CUPS driver for Brother P-touch label printers
 
 %define orig_name ptouch-driver
 
 Name: printer-driver-ptouch
-Version: 1.4.2
-Release: alt3
+Version: 1.6
+Release: alt1
 
 Provides: %orig_name = %version
 Obsoletes: %orig_name
 
-Packager: Stanislav Ievlev <inger@altlinux.org>
-
 Group: Publishing
 License: GPL
 
-URL: https://bitbucket.org/philpem/printer-driver-ptouch
-#Source: https://bitbucket.org/philpem/printer-driver-ptouch/get/%version.tar.gz
+URL: https://github.com/philpem/printer-driver-ptouch
+#Source: https://github.com/philpem/printer-driver-ptouch/archive/refs/tags/v%version.tar.gz
 Source: %orig_name-%version.tar
-Patch: ptouch-%version-alt-fix-build.patch
-Patch1: alt-fix-ftbfs.patch
 
 Requires: cups
 
 # Automatically added by buildreq on Wed Nov 07 2007
-BuildRequires: libcups-devel
+BuildRequires: libcups-devel libpng-devel perl-XML-LibXML
 
 %description
 This is a CUPS raster filter for Brother P-touch label printers.  It is
@@ -32,10 +30,9 @@ the foomatic package.
 
 %prep
 %setup -q -n %orig_name-%version
-%patch -p2
-%patch1 -p1
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -51,6 +48,9 @@ rm -rf %buildroot%_datadir/foomatic/db/source/printer/
 %_prefix/lib/cups/filter/*
 
 %changelog
+* Tue Sep 28 2021 Oleg Solovyov <mcpain@altlinux.org> 1.6-alt1
+- New version 1.6
+
 * Mon Feb 08 2021 Oleg Solovyov <mcpain@altlinux.org> 1.4.2-alt3
 - fix build
 
