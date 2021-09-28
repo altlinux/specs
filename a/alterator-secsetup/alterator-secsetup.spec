@@ -1,6 +1,6 @@
 Name: alterator-secsetup
-Version: 2.0
-Release: alt4
+Version: 2.1
+Release: alt1
 
 Source: %name-%version.tar
 
@@ -42,6 +42,10 @@ install -m 0644 secsetup.conf %buildroot%_sysctldir/
 %_datadir/alterator-secsetup/*
 
 %changelog
+* Tue Sep 28 2021 Ivan Razzhivin <underwit@altlinux.org> 2.1-alt1
+- add web interface to secsetup (Closes: #37902)
+- add web interface to blockterm
+
 * Thu Jun 24 2021 Denis Medvedev <nbr@altlinux.org> 2.0-alt4
 - added rpm-build-python3 needed to satisfy dep checks
 
