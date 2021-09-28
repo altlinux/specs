@@ -1,6 +1,6 @@
 Name: motion
 Version: 4.3.2
-Release: alt1
+Release: alt2
 
 Summary: %name - Detect motion using a video4linux device
 License: GPL
@@ -53,14 +53,17 @@ install -pDm0644 data/%name.service %buildroot/%_unitdir/%name.service
 
 %files -f %name.lang
 %doc README.md
-%config %attr(0644,root,root) %_sysconfdir/%name/%name.conf
 %dir %_sysconfdir/%name
-%_sysconfdir/%name/camera?.conf
+%config(noreplace) %_sysconfdir/%name/%name.conf
+%config(noreplace) %_sysconfdir/%name/camera?.conf
 %_unitdir/*.service
 %_bindir/%name
 %_man1dir/*
 
 %changelog
+* Tue Sep 28 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.3.2-alt2
+- Add noreplace to global config files (closes: 41020)
+
 * Sat Apr 24 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.3.2-alt1
 - update to latest release
 
