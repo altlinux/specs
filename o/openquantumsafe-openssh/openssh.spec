@@ -6,7 +6,7 @@
 
 Name: openquantumsafe-openssh
 Version: 8.6p1.202108
-Release: alt2
+Release: alt3
 
 Summary: OQS-OpenSSH is a fork of OpenSSH that adds quantum-safe algorithms
 License: SSH-OpenSSH and ALT-Public-Domain and BSD-3-Clause and Beerware
@@ -314,6 +314,9 @@ fi
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Tue Sep 28 2021 Vitaly Chikunov <vt@altlinux.org> 8.6p1.202108-alt3
+- Backported upstream fix for CVE-2021-41617 (AuthorizedKeysCommand).
+
 * Sun Aug 29 2021 Vitaly Chikunov <vt@altlinux.org> 8.6p1.202108-alt2
 - Dilithium algorithms re-enabled.
 
