@@ -3,7 +3,7 @@
 %define libnvidia_egl_wayland libnvidia-egl-wayland%sover
 
 Name: egl-wayland
-Version: 1.1.7
+Version: 1.1.8
 Release: alt1
 Epoch: 1
 
@@ -21,7 +21,7 @@ Patch1: alt-ftbfs.patch
 #BuildRequires: eglexternalplatform-devel gcc-c++ libEGL-devel libstdc++-devel-static libwayland-egl-devel libwayland-server-devel python3-module-mpl_toolkits
 BuildRequires: autoconf-archive
 BuildRequires: eglexternalplatform-devel libEGL-devel
-BuildRequires: libwayland-egl-devel libwayland-server-devel libwayland-client-devel wayland-devel
+BuildRequires: libwayland-egl-devel libwayland-server-devel libwayland-client-devel wayland-devel wayland-protocols
 
 %description
 %summary
@@ -70,6 +70,9 @@ install -pDm644 %SOURCE1 \
 %_datadir/wayland-eglstream/
 
 %changelog
+* Mon Sep 27 2021 Sergey V Turchin <zerg@altlinux.org> 1:1.1.8-alt1
+- new version
+
 * Fri May 14 2021 Sergey V Turchin <zerg@altlinux.org> 1:1.1.7-alt1
 - new version
 
