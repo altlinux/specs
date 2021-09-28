@@ -1,5 +1,5 @@
 Name: pgagent
-Version: 3.4.1
+Version: 4.2.1
 Release: alt1
 
 Summary: Job scheduler for PostgreSQL which may be managed using pgAdmin
@@ -15,7 +15,9 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # Source-url: https://github.com/postgres/pgagent/archive/REL-%REL.tar.gz
 Source: %name-%version.tar
 
-BuildPreReq: cmake postgresql-devel libwxGTK-devel gcc-c++
+# Automatically added by buildreq on Wed Sep 29 2021
+# optimized out: boost-devel boost-devel-headers cmake cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libsasl2-3 libstdc++-devel python3 python3-base python3-module-paste python3-module-repoze sh4 sssd-client tzdata
+BuildRequires: boost-asio-devel boost-filesystem-devel cmake gcc-c++ libssl-devel postgresql-devel
 
 %description
 pgAgent is a job scheduler for PostgreSQL which may be managed using
@@ -54,6 +56,10 @@ rm -f %buildroot/usr/{LICENSE,README}
 %_datadir/pgsql
 
 %changelog
+* Wed Sep 29 2021 Vitaly Lipatov <lav@altlinux.ru> 4.2.1-alt1
+- new version 4.2.1 (with rpmrb script)
+- update buildreqs
+
 * Wed Dec 06 2017 Vitaly Lipatov <lav@altlinux.ru> 3.4.1-alt1
 - set Source-url
 - new version 3.4.1 (with rpmrb script)
