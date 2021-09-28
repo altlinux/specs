@@ -27,7 +27,7 @@
 %define nv_version 470
 %define nv_release 74
 %define nv_minor   %nil
-%define pkg_rel alt227
+%define pkg_rel alt228
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -180,8 +180,11 @@ pushd kernel
 %patch5 -p1
 %endif
 rm -rf precompiled
+%ifarch aarch64
+fgrep -rl MT_DEVICE_GRE |xargs sed -i s,MT_DEVICE_GRE,MT_NORMAL_NC,
+sed -ri '/NV_ASM_SET_MEMORY_H_PRESENT/atypedef _Bool bool;' conftest.sh
+%endif
 popd
-
 
 %build
 
@@ -373,6 +376,9 @@ fi
 %endif
 
 %changelog
+* Tue Sep 28 2021 Sergey V Turchin <zerg@altlinux.org> 470.74-alt228
+- fix kernel module for arm64 (thanks sbolshakov@alt)
+
 * Mon Sep 27 2021 Sergey V Turchin <zerg@altlinux.org> 470.74-alt227
 - new version
 
