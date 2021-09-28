@@ -3,7 +3,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt3
+Release: alt4
 
 Summary: %child modules set for %name
 License: GPL-3.0
@@ -207,6 +207,13 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Tue Sep 28 2021 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt4
+- prepare to upstreaming started for core, getimage and waitdev.
+- many fixes for synchronize code and style with the upstream.
+- bootchain-core: fixed addressation in resolve_target().
+- bootchain-core: resolve_devname() function added.
+- bootchain-altboot: introduce new step 'copyfile'.
+
 * Thu Sep 23 2021 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt3
 - hot plug "on the fly" new network settings, if not defined.
 - fixed problem with the first handshake by ftp protocol.
