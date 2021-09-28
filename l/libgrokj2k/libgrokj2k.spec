@@ -3,7 +3,7 @@
 
 Name: libgrokj2k
 Version: 9.2.0
-Release: alt1
+Release: alt2
 
 Summary: World's Leading Open Source JPEG 2000 Codec
 License: AGPL-3.0
@@ -55,6 +55,10 @@ Compress and decompress tools for grokj2k:
 
 %prep
 %setup
+%ifarch %e2k
+sed -i 's|set(CMAKE_CXX_STANDARD 20)|string(APPEND CMAKE_CXX_FLAGS " -std=gnu++2a")|' src/{bin,lib}/jp2/CMakeLists.txt
+%add_optflags -mno-sse
+%endif
 
 %build
 %cmake_insource \
@@ -84,6 +88,9 @@ Compress and decompress tools for grokj2k:
 %_pkgconfigdir/*
 
 %changelog
+* Tue Sep 28 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 9.2.0-alt2
+- fixed build for Elbrus
+
 * Sun Jul 04 2021 Vitaly Lipatov <lav@altlinux.ru> 9.2.0-alt1
 - initial build for ALT Sisyphus
 
