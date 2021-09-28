@@ -1,7 +1,7 @@
 %define msxver 0.4.0
 %define sfxver 1.0.1
 Name: openttd-3rd-party
-Version: 0.6.1
+Version: 7.1
 Release: alt1
 
 Summary: 3rd Party data files for openttd
@@ -39,6 +39,9 @@ cp openmsx-%msxver/*.{mid,obm} %buildroot%_datadir/games/openttd/gm
 
 
 %changelog
+* Tue Sep 28 2021 Anton Farygin <rider@altlinux.ru> 7.1-alt1
+- opengfx: 0.6.1 -> 7.1
+
 * Wed Apr 07 2021 Anton Farygin <rider@altlinux.org> 0.6.1-alt1
 - opengfx: 0.6.0 -> 0.6.1
 - opensfx: 0.2.3 -> 1.0.1
