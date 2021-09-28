@@ -2,7 +2,7 @@ Summary: Wrapper for apt-rpm utilities
 
 Name: papt
 Version: 0.1.0
-Release: alt1
+Release: alt2
 
 License: GPL-2.0-or-later
 Group: System/Configuration/Packaging
@@ -18,6 +18,9 @@ BuildRequires: perl-CryptX
 BuildRequires: perl-JSON
 BuildRequires: perl-Number-Format
 BuildRequires: perl-ph
+
+Requires: curl
+Requires: apt
 
 %description
 This utility allows to simultaneously download the packages required for
@@ -39,6 +42,9 @@ install -D -m644 papt.1 %buildroot%_man1dir/papt.1
 %_man1dir/papt.1*
 
 %changelog
+* Tue Sep 28 2021 Alexey Gladkov <legion@altlinux.ru> 0.1.0-alt2
+- Fix requires.
+
 * Tue Sep 28 2021 Alexey Gladkov <legion@altlinux.ru> 0.1.0-alt1
 - First build.
 
