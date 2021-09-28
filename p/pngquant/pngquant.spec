@@ -6,7 +6,7 @@ BuildRequires: libgomp-devel /proc
 
 Name:           pngquant
 Version:        2.15.1
-Release:        alt1_2
+Release:        alt1_2.2
 Summary:        PNG quantization tool for reducing image file size
 
 License:        GPLv3+
@@ -15,6 +15,7 @@ URL:            http://%{name}.org
 Source0:        https://github.com/pornel/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
 # Comment out failing test on EL < 8 due to old libpng
 Patch1:         pngquant-old_libpng.patch
+Patch2000:      %name-e2k.patch
 
 BuildRequires:  gcc
 BuildRequires:  libpng-devel libpng17-tools
@@ -41,6 +42,10 @@ their 24/32-bit version. %{name} uses the median cut algorithm.
 %if 0%{?rhel} &&  0%{?rhel} < 8
 %patch1 -p1 -b .oldlibpng
 %endif
+%ifarch %e2k
+%patch2000 -p2
+%endif
+
 
 
 %build
@@ -66,6 +71,12 @@ export CFLAGS="%{optflags} -fno-math-errno -funroll-loops -fomit-frame-pointer -
 
 
 %changelog
+* Tue Sep 28 2021 Michael Shigorin <mike@altlinux.org> 2.15.1-alt1_2.2
+- built for sisyphus
+
+* Tue Sep 28 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.15.1-alt1_2.1
+- added patch for Elbrus build
+
 * Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 2.15.1-alt1_2
 - update to new release by fcimport
 
