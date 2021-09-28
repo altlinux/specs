@@ -3,7 +3,7 @@
 
 Name: ltp-alt-lists
 Summary: ALT specific testcase and skiplist for LTP
-Version: 1
+Version: 2
 Release: alt1
 License: GPL-2.0-only
 Group: Development/Tools
@@ -51,5 +51,8 @@ install -p -m644 skiplist-alt-vm %buildroot/usr/lib/ltp/
 /usr/lib/ltp/runtest/kernel-alt-vm
 
 %changelog
+* Tue Sep 28 2021 Vitaly Chikunov <vt@altlinux.org> 2-alt1
+- Skip new tests after ltp-20210927 release.
+
 * Fri Jul 23 2021 Vitaly Chikunov <vt@altlinux.org> 1-alt1
 - First version.

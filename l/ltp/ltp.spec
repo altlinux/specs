@@ -3,8 +3,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: ltp
-Version: 20210524
-Release: alt4
+Version: 20210927
+Release: alt1
 
 Summary: Linux Test Project
 License: GPL-2.0-only
@@ -136,10 +136,13 @@ fi
 /usr/lib/openposix_testsuite
 
 %files realtime-testsuite
-%doc testcases/realtime/{00_Descriptions.txt,README,COPYING,doc}
+%doc testcases/realtime/{00_Descriptions.txt,README,doc}
 /usr/lib/realtime_testsuite
 
 %changelog
+* Tue Sep 28 2021 Vitaly Chikunov <vt@altlinux.org> 20210927-alt1
+- Update to 20210927.
+
 * Thu Aug 26 2021 Vitaly Chikunov <vt@altlinux.org> 20210524-alt4
 - spec: Disable build with LTO.
 
