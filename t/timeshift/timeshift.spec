@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: timeshift
-Version: 20.11.1
+Version: 21.09.1
 Summary: System restore tool for Linux
 Release: alt1
 License: GPLv3
@@ -46,6 +46,9 @@ rm -f %buildroot%_bindir/%name-uninstall
 %doc README.md
 
 %changelog
+* Tue Sep 28 2021 Alexander Makeenkov <amakeenk@altlinux.org> 21.09.1-alt1
+- Updated to version 21.09.1
+
 * Tue Nov 24 2020 Alexander Makeenkov <amakeenk@altlinux.org> 20.11.1-alt1
 - Updated to version 20.11.1
 
