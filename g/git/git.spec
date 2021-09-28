@@ -1,6 +1,6 @@
 Name: git
 Version: 2.33.0
-Release: alt2
+Release: alt3
 
 Summary: Git core and tools
 License: GPLv2
@@ -128,6 +128,8 @@ BuildArch: noarch
 Requires: perl-Git = %EVR
 # Workaround for ALT#23407.
 Requires: perl(MIME/Base64.pm) perl(Authen/SASL.pm)
+# Workaround for f4dc9432fd ("send-email: lazily load modules for a big speedup").
+Requires: perl(Email/Valid.pm) perl(Term/ReadLine.pm)
 
 %description email
 Git is a fast, scalable, distributed revision control system with an
@@ -386,6 +388,10 @@ popd
 # Hardlink identical files together.
 %define __spec_install_custom_post  hardlink -vc %buildroot
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %pre server
 /usr/sbin/groupadd -r -f _gitd
 /usr/sbin/useradd -r -g _gitd -d /dev/null -s /dev/null -c 'The git server' -n _gitd >/dev/null 2>&1 ||:
@@ -528,6 +534,9 @@ popd
 %endif #doc
 
 %changelog
+* Tue Sep 28 2021 Vitaly Chikunov <vt@altlinux.org> 2.33.0-alt3
+- Workaround lost git-email Requires.
+
 * Tue Aug 31 2021 Dmitry V. Levin <ldv@altlinux.org> 2.33.0-alt2
 - Adjust test suite for gnupg-1.4.23-alt3.
 
