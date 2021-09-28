@@ -7,7 +7,7 @@
 %define prog_name            postgresql
 %define postgresql_major     13
 %define postgresql_minor     3
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -790,6 +790,9 @@ fi
 %endif
 
 %changelog
+* Tue Sep 28 2021 Alexei Takaseev <taf@altlinux.org> 13.3-alt3
+- Update 1C patch
+
 * Wed Aug 25 2021 Alexei Takaseev <taf@altlinux.org> 13.3-alt2
 - Added -ffat-lto-objects to %optflags_lto
 
