@@ -1,6 +1,6 @@
 Name: supertuxkart
 Version: 1.3
-Release: alt0.rc1
+Release: alt1
 
 License: GPL-2.0-or-later and GPL-3.0-or-later and CC-BY-SA-3.0
 Url: http://supertuxkart.sourceforge.net
@@ -13,7 +13,7 @@ Source: %name-%version-src.tar.gz
 #Patch: supertuxkart-0.9.3-debian-irrlicht.patch
 Patch: supertuxkart-1.2-debian-ftbfs_sdl.patch
 
-BuildRequires(pre): cmake rpm-build-ninja
+BuildRequires(pre): rpm-build-ninja
 # for aarch64 support
 BuildRequires(pre): libGLES
 # Automatically added by buildreq on Thu Jan 30 2020 (-bi)
@@ -77,6 +77,9 @@ rm -f %buildroot%_includedir/wiiuse.h
 %_iconsdir/hicolor/1024x1024/apps/*
 
 %changelog
+* Tue Sep 28 2021 Leontiy Volodin <lvol@altlinux.org> 1.3-alt1
+- New version (1.3).
+
 * Wed Sep 01 2021 Leontiy Volodin <lvol@altlinux.org> 1.3-alt0.rc1
 - Update to release candidate 1 (1.3).
 

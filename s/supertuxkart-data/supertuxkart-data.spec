@@ -1,6 +1,6 @@
 Name: supertuxkart-data
 Version: 1.3
-Release: alt0.rc1
+Release: alt1
 
 License: GPL-3.0-or-later and CC-BY-SA-3.0 and CC-BY-SA-4.0
 Url: http://supertuxkart.sourceforge.net
@@ -42,14 +42,17 @@ rm %buildroot%_datadir/supertuxkart/data/SVN-CONFIG
 rm %buildroot%_datadir/supertuxkart/data/check_licenses.php
 
 # remove these assets because supertuxkart-0.9.2 fails to load with them
-rm -rf %buildroot%_datadir/supertuxkart/data/karts/sara_the_racer
-rm -rf %buildroot%_datadir/supertuxkart/data/karts/sara_the_wizard
+#rm -rf %buildroot%_datadir/supertuxkart/data/karts/sara_the_racer
+#rm -rf %buildroot%_datadir/supertuxkart/data/karts/sara_the_wizard
 
 %files
 %doc licenses.txt
 %_datadir/supertuxkart/data
 
 %changelog
+* Tue Sep 28 2021 Leontiy Volodin <lvol@altlinux.org> 1.3-alt1
+- New version (1.3).
+
 * Wed Sep 01 2021 Leontiy Volodin <lvol@altlinux.org> 1.3-alt0.rc1
 - Update to release candidate 1 (1.3).
 
