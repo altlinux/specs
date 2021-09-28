@@ -6,8 +6,8 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ libX11-devel libqt4-devel l
 %define _localstatedir %{_var}
 %define fontpkgname texstudio
 Name:           texstudio
-Version:        3.1.2
-Release:        alt2
+Version:        4.0.0
+Release:        alt1
 
 Summary:        A feature-rich editor for LaTeX documents
 # texstudio binary: GPLv3 due to static linkage of bundled qcodeedit
@@ -35,12 +35,12 @@ BuildRequires:  libqtsingleapplication-devel
 BuildRequires:  libqtsingleapplication-qt5-devel
 BuildRequires:  libqtermwidget-devel
 BuildRequires:  libquazip-qt5-devel
-BuildRequires:  zlib-devel
+BuildRequires:  zlib-devel libpoppler-cpp-devel qt5-declarative-devel
 
 Requires:       tex(latex)
 Requires:       tex(preview.sty)
 Requires:       texlive
-Requires:       libqt5-svg
+Requires:       libqt5-svg libqt5-qml
 Requires:       libqtermwidget
 Provides:       bundled(qcodeedit) 
 Provides:       texmakerx = %{version}-%{release}
@@ -59,7 +59,7 @@ all necessary LaTeX tools.
 %setup -q -n %{name}-%{version}
 #patch1 -p1 -b .qtsingle
 %patch2 -p1 -b .update_check
-%patch3 -p1 -b .wtf_flags
+#patch3 -p1 -b .wtf_flags
 
 rm -rf {hunspell,qtsingleapplication,quazip}
 
@@ -126,6 +126,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE1}
 %doc utilities/AUTHORS utilities/COPYING utilities/manual/CHANGELOG.txt
 
 %changelog
+* Tue Sep 28 2021 Ilya Mashkin <oddity@altlinux.ru> 4.0.0-alt1
+- 4.0.0.
+
 * Sun Aug 01 2021 Ilya Mashkin <oddity@altlinux.ru> 3.1.2-alt2
 - Build for Sisyphus, thanks for Igor Vlasenko
 - Build with bundled qtsingleapplication
