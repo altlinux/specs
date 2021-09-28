@@ -1,6 +1,6 @@
 Name: x2gobroker
 Version: 0.0.4.1
-Release: alt14
+Release: alt15
 Summary: X2Go Session Broker
 License: AGPLv3+
 Group: Communications
@@ -16,6 +16,7 @@ Patch4: alt-iterate-listsessions.patch
 Patch5: alt-include-loadfactors.patch
 Patch6: alt-fix-tests.patch
 Patch7: alt-%name-daemon-user.patch
+Patch8: alt-disable-2to3.patch
 
 BuildRequires: python3-module-setuptools
 BuildRequires: perl-File-Which
@@ -261,6 +262,7 @@ installed on your to-be-managed X2Go servers.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 %build
 echo "Files where we will be patching libexecedir:"
@@ -419,6 +421,9 @@ touch ~/.ssh/id_rsa
 %_man8dir/x2gobroker-pubkeyauthorizer.8*
 
 %changelog
+* Tue Sep 28 2021 Oleg Solovyov <mcpain@altlinux.org> 0.0.4.1-alt15
+- fix build
+
 * Fri Nov 15 2019 Oleg Solovyov <mcpain@altlinux.org> 0.0.4.1-alt14
 - run daemon with x2gobroker:x2gobroker perms
 
