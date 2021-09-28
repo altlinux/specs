@@ -1,7 +1,7 @@
 %define oname openssh
 Name: openssh-gostcrypto
 Version: 8.6p1
-Release: alt1.gost
+Release: alt2.gost
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
 License: SSH-OpenSSH and ALT-Public-Domain and BSD-3-clause and Beerware
@@ -333,6 +333,14 @@ fi
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Mon Sep 27 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.6p1-alt2.gost
+- Updated -gostcrypto version.
+
+* Mon Sep 27 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.6p1-alt2
+- Backported upstream security fix for missing initialization of supplemental
+  groups in handling of AuthorizedKeysCommandUser and
+  AuthorizedPrincipalsCommandUser options.
+
 * Tue Jul 27 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.6p1-alt1.gost
 - Updated -gostcrypto version.
 

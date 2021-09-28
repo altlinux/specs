@@ -1,6 +1,6 @@
 Name: openssh
 Version: 8.6p1
-Release: alt1
+Release: alt2
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
 License: SSH-OpenSSH and ALT-Public-Domain and BSD-3-clause and Beerware
@@ -352,6 +352,11 @@ sed -i '1 i\# Added automatically by openssh update script:\nPubkeyAcceptedKeyTy
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Mon Sep 27 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.6p1-alt2
+- Backported upstream security fix for missing initialization of supplemental
+  groups in handling of AuthorizedKeysCommandUser and
+  AuthorizedPrincipalsCommandUser options.
+
 * Tue Jul 27 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.6p1-alt1
 - Updated to 8.6p1.
 
