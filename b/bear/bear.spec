@@ -5,7 +5,7 @@
 %define optflags_lto %{nil}
 
 Name: bear
-Version: 3.0.13
+Version: 3.0.16
 Release: alt1
 
 Summary: Tool that generates a compilation database for clang tooling
@@ -64,10 +64,13 @@ done
 %define _libexecdir %_prefix/libexec
 %_bindir/*
 %_man1dir/*.1*
-%_libexecdir/%name
+%_libdir/%name
 %doc COPYING README.md
 
 %changelog
+* Tue Sep 28 2021 Vladimir Didenko <cow@altlinux.org> 3.0.16-alt1
+- New version.
+
 * Mon Aug 30 2021 Vladimir Didenko <cow@altlinux.org> 3.0.13-alt1
 - New version.
 - Disable lto build flag.
