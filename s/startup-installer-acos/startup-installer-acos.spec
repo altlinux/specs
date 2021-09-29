@@ -1,14 +1,14 @@
 Name: startup-installer-acos
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 #Architectures which grub-common exists on
 ExclusiveArch: %ix86 x86_64 aarch64 ppc64le riscv64
 
-Summary: The system startup and install scripts for ACOS installation disk
+Summary: The system startup and install scripts for ALTCOS installation disk
 License: GPL-3.0-or-later
 Group: System/Base
 
-Source: acos-%version.tar
+Source: altcos-%version.tar
 
 Requires: bash, /etc/rc.d/init.d/functions, /etc/rc.d/scripts/framebuffer_init, /sbin/reboot
 Requires: coreutils, e2fsprogs, grep, grub-common, kmod, mount, ostree, parted, procps
@@ -22,26 +22,29 @@ Requires: grub-pc
 %filter_from_requires /^\/etc\/rc.d\/init.d\/gpm$/d
 
 %description
-This package contains scripts used to boot from ACOS (ALT Container OS) installation disk and to install ACOS.
+This package contains scripts used to boot from ALTCOS (ALT Container OS) installation disk and to install ALTCOS.
 
 %prep
-%setup -n acos-%version
+%setup -n altcos-%version
 
 %install
-mkdir -p -- %buildroot{%_bindir,%_initdir,%_datadir/acos}
+mkdir -p -- %buildroot{%_bindir,%_initdir,%_datadir/altcos}
 
-install -pm755 acos-shell acos-installer.sh %buildroot%_bindir/
-install -pm644 inittab.acos %buildroot/etc/
-install -pm755 rc.sysinit.acos %buildroot/etc/rc.d/
-install -pm444 config_example.ign %buildroot%_datadir/acos/
+install -pm755 altcos-shell altcos-installer.sh %buildroot%_bindir/
+install -pm644 inittab.altcos %buildroot/etc/
+install -pm755 rc.sysinit.altcos %buildroot/etc/rc.d/
+install -pm444 config_example.ign %buildroot%_datadir/altcos/
 
 %files
 %_bindir/*
-/etc/inittab.acos
-/etc/rc.d/rc.sysinit.acos
-%_datadir/acos
+/etc/inittab.altcos
+/etc/rc.d/rc.sysinit.altcos
+%_datadir/altcos
 
 %changelog
+* Wed Sep 29 2021 Andrey Sokolov <keremet@altlinux.org> 0.2.3-alt1
+- Rename ACOS to ALTCOS
+
 * Thu Sep 23 2021 Andrey Sokolov <keremet@altlinux.org> 0.2.2-alt1
 - Change remote repository name to fix ACOS updating
 
