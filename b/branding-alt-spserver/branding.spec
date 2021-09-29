@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 8.4
-Release: alt1
+Release: alt2
 Url: https://altsp.su
 
 %ifarch %ix86 x86_64
@@ -315,6 +315,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed Sep 29 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.4-alt2
+- color scheme in browser-qt fixed
+
 * Tue Sep 21 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.4-alt1
 - version bump
 - os-release updating
