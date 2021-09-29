@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
 Release: alt1
 epoch:1 
-%define kernel_base_version	5.13
-%define kernel_sublevel .19
+%define kernel_base_version	5.14
+%define kernel_sublevel .8
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -227,28 +227,6 @@ and to the kernel.  The first major use for the DRI is to create fast
 OpenGL implementations.
 
 These are modules for your ALT Linux system
-
-%package -n kernel-modules-ide-%flavour
-Summary: IDE  driver modules (obsolete by PATA)
-Group: System/Kernel and hardware
-Provides:  kernel-modules-ide-%kversion-%flavour-%krelease = %version-%release
-Conflicts: kernel-modules-ide-%kversion-%flavour-%krelease < %version-%release
-Conflicts: kernel-modules-ide-%kversion-%flavour-%krelease > %version-%release
-Prereq: coreutils
-Prereq: module-init-tools >= 3.1
-Prereq: %name = %epoch:%version-%release
-Requires(postun): %name = %epoch:%version-%release
-
-%description -n kernel-modules-ide-%flavour
-This package contains  IDE driver modules for the Linux kernel
-package %name-%version-%release.
-
-These drivers are declared obsolete by the kernel maintainers; PATA
-drivers should be used instead.  However, the older IDE drivers may be
-still useful for some hardware, if the corresponding PATA drivers do
-not work well.
-
-Install this package only if you really need it.
 
 %package -n kernel-modules-staging-%flavour
 Summary:  Kernel modules under development
@@ -606,9 +584,6 @@ check-pesign-helper
 %exclude %modules_dir/kernel/drivers/media/
 %exclude %modules_dir/kernel/drivers/staging/
 %exclude %modules_dir/kernel/drivers/gpu/
-%ifnarch aarch64
-%exclude %modules_dir/kernel/drivers/ide/
-%endif
 %ghost %modules_dir/modules.alias.bin
 %ghost %modules_dir/modules.dep.bin
 %ghost %modules_dir/modules.symbols.bin
@@ -660,8 +635,6 @@ check-pesign-helper
 %modules_dir/kernel/drivers/gpu/drm/mga
 %modules_dir/kernel/drivers/gpu/drm/via
 
-%files -n kernel-modules-ide-%flavour
-%modules_dir/kernel/drivers/ide/
 %endif
 
 %files -n kernel-modules-drm-nouveau-%flavour
@@ -673,23 +646,14 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Sep 29 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.14.8-alt1
+- v5.14.8
+
 * Thu Sep 23 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.13.19-alt1
 - v5.13.19
 
-* Thu Sep 16 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.13.18-alt1
-- v5.13.18
-
-* Wed Sep 15 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.13.17-alt1
-- v5.13.17
-
-* Mon Sep 13 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.13.16-alt1
-- v5.13.16
-
-* Thu Sep 09 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.13.15-alt1
-- v5.13.15
-
-* Fri Sep 03 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.13.14-alt1
-- v5.13.14
+* Wed Sep 01 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.14.0-alt1
+- v5.14
 
 * Fri Aug 27 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.13.13-alt1
 - v5.13.13
