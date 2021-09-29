@@ -3,15 +3,15 @@
 %define otrs_user otrs
 
 Name: otrs
-Version: 6.0.30
+Version: 6.0.36
 Release: alt1
 
-Summary: Open source Ticket Request System
+Summary: Open source Ticket Request System Community Edition
 Group: Networking/WWW
 License: GPL-3.0-only
-Url: http://www.otrs.org/
+Url: https://www.znuny.org/en
 
-Source0: https://ftp.otrs.org/pub/otrs/%name-%version.tar.bz2
+Source0: https://download.znuny.org/releases/znuny-%version.tar.bz2
 Source1: README.ALT.rus
 Source2: otrs-hold.conf
 Source3: apache2.conf
@@ -41,7 +41,6 @@ Requires: perl-CPAN-Meta
 %add_findreq_skiplist */Kernel/*
 %add_findreq_skiplist */scripts/*
 %add_findreq_skiplist */examples/*
-%add_findreq_skiplist */development/*
 
 %description
 OTRS is an Open source Ticket Request System (also well known
@@ -49,6 +48,8 @@ as trouble ticket system) with many features to manage customer
 telephone calls and e-mails. The system is built to allow your
 support, sales, pre-sales, billing, internal IT, helpdesk, e.t.c.
 departments to react quickly to inbound inquiries.
+
+This is the ((OTRS)) Community Edition Fork by Znuny GmbH
 
 %package apache2
 Summary: Apache 2.x web-server configuration for %name
@@ -58,7 +59,7 @@ Requires: %name = %version-%release, apache2, apache2-mod_perl perl-Apache-DBI
 Apache 2.x web-server configuration for %name
 
 %prep
-%setup
+%setup -n znuny-%version
 
 %install
 # install apache config
@@ -138,13 +139,12 @@ cd %installdir/bin/
 %dir %installdir
 %config(noreplace) %attr(0660,root,%webserver_group) %installdir/Kernel/Config.pm
 #config(noreplace) %attr(0660,root,%webserver_group) %installdir/Kernel/Config/GenericAgent.pm
-%installdir/bin
 %installdir/Kernel
+%installdir/bin
 %installdir/scripts
 %installdir/doc
 %installdir/var
 %installdir/i18n
-%installdir/development
 %installdir/RELEASE
 
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/apt/apt.conf.d/%name-hold.conf
@@ -153,6 +153,12 @@ cd %installdir/bin/
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %changelog
+* Wed Sep 29 2021 Sergey Y. Afonin <asy@altlinux.org> 6.0.36-alt1
+- New version
+  the "((OTRS)) Community Edition Fork" by Znuny GmbH
+- changed URL
+- updated README.ALT.rus
+
 * Mon Sep 27 2021 Sergey Y. Afonin <asy@altlinux.org> 6.0.30-alt1
 - New version
   final release of "((OTRS)) Community Edition 6" from OTRS AG
