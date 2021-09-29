@@ -7,7 +7,7 @@
 %define prog_name            postgresql
 %define postgresql_major     10
 %define postgresql_minor     18
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -394,11 +394,6 @@ chown postgres:postgres ~postgres/.bash_profile
 
 # $2, holds the number of instances of the target package that will remain
 # after the operation if $2 is 0, the target package will be removed
-%triggerpostun -- %{prog_name}9.5-server
-if [ "$2" -eq 0 ]; then
-       %post_service %prog_name
-fi
-
 %triggerpostun -- %{prog_name}9.6-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
@@ -425,6 +420,11 @@ if [ "$2" -eq 0 ]; then
 fi
 
 %triggerpostun -- %{prog_name}13-1C-server
+if [ "$2" -eq 0 ]; then
+       %post_service %prog_name
+fi
+
+%triggerpostun -- %{prog_name}14-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
@@ -769,6 +769,9 @@ fi
 %endif
 
 %changelog
+* Wed Sep 29 2021 Alexei Takaseev <taf@altlinux.org> 10.18-alt3
+- Add %%triggerpostun for PG 14
+
 * Wed Aug 25 2021 Alexei Takaseev <taf@altlinux.org> 10.18-alt2
 - Change conflict 1C 12 -> 1C 13
 - Added -ffat-lto-objects to -flto=auto -ffat-lto-objects

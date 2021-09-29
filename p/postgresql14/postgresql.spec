@@ -1,11 +1,13 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
-%def_without devel
+%def_with devel
+
+# Use ICU
+%def_with icu
 
 %define prog_name            postgresql
-%define postgresql_major     9
-%define postgresql_minor     6
-%define postgresql_subminor  23
-%define postgresql_altrel    2
+%define postgresql_major     14
+%define postgresql_minor     0
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -16,8 +18,8 @@
 %define libpq_name    libpq%libpq_major
 %define libecpg_name  libecpg%libecpg_major
 
-Name: %prog_name%postgresql_major.%postgresql_minor
-Version: %postgresql_major.%postgresql_minor.%postgresql_subminor
+Name: %prog_name%postgresql_major
+Version: %postgresql_major.%postgresql_minor
 Release: alt%postgresql_altrel
 
 Summary: PostgreSQL client programs and libraries
@@ -48,6 +50,9 @@ BuildRequires: OpenSP docbook-style-dsssl docbook-style-dsssl-utils docbook-styl
 BuildRequires: libselinux-devel libkrb5-devel
 %if_without devel
 BuildRequires: postgresql-devel
+%endif
+%if_with icu
+BuildRequires: libicu-devel
 %endif
 
 %description
@@ -92,6 +97,9 @@ Summary: PostgreSQL development header files
 Group: Development/Databases
 Requires: %libpq_name = %EVR
 Requires: %libecpg_name = %EVR
+# TODO remove
+Provides: libpq-devel, libecpg-devel
+Obsoletes: libpq-devel, libecpg-devel
 
 %description -n postgresql-devel
 The postgresql-devel package contains the header files needed to compile applications
@@ -103,6 +111,9 @@ with a PostgreSQL server.
 Summary:  Development static library for postgresql-devel
 Group: Development/Databases
 Requires: postgresql-devel = %EVR
+# TODO remove
+Provides: libpq-devel-static, libecpg-devel-static
+Obsoletes: libpq-devel-static, libecpg-devel-static
 
 %description -n postgresql-devel-static
 Development static library for postgresql-devel
@@ -159,7 +170,7 @@ to install the postgresql package.
 %package tcl
 Summary: The PL/Tcl procedural language for PostgreSQL
 Group: Databases
-Requires: %name-server = %EVR, tcl >= 8.4.0-alt1
+Requires: %name-server = %EVR
 Provides: postgresql-tcl
 # 1C
 Conflicts: %{prog_name}13-1C-tcl
@@ -199,7 +210,7 @@ database.
 %prep
 %setup
 
-%patch2 -p2
+%patch2 -p1
 %patch3 -p2
 %patch4 -p2
 %patch6 -p2
@@ -207,7 +218,7 @@ database.
 
 %build
 %ifnarch armh
- %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %else
 %remove_optflags %optflags_lto
 %endif
@@ -220,6 +231,9 @@ database.
     --disable-rpath \
     --enable-nls \
     --enable-thread-safety \
+%if_with icu
+    --with-icu \
+%endif
     --with-docdir=%docdir \
     --with-includes=%_includedir/krb5 \
     --with-pam \
@@ -258,14 +272,12 @@ ln -s /usr/include/pgsql %buildroot%_libdir/%PGSQL/pgxs/src/include
 pushd altlinux
 
 # The initscripts....
-install -p -m755 -D %prog_name.init.in %buildroot%_initdir/%prog_name
+install -p -m 755 -D %prog_name.init.in %buildroot%_initdir/%prog_name
+install -p -m 644 -D %prog_name.service %buildroot%_unitdir/%prog_name.service
 
 # README.ALT
 install -p -m 644 -D README.ALT-ru_RU.UTF-8 %buildroot%docdir/README.ALT-ru_RU.UTF-8
 install -p -m 644 -D README.rpm-dist %buildroot%docdir/README.rpm-dist
-
-install -p -m 644 -D postgresql.service %buildroot%_unitdir/postgresql.service
-
 
 popd
 ##### end ALT-stuff
@@ -277,15 +289,14 @@ touch -r postgresql-check-db-dir postgresql-check-db-dir
 install -m 755 postgresql-check-db-dir %buildroot%_bindir/postgresql-check-db-dir
 
 # Fix initscript versions
-
-sed -i 's,@VERSION@,%postgresql_major.%postgresql_minor,' %buildroot%_initdir/%prog_name
+sed -i 's,@VERSION@,%postgresql_major,' %buildroot%_initdir/%prog_name
 sed -i 's,@FULLVERSION@,%version,' %buildroot%_initdir/%prog_name
 
 # PGDATA needs removal of group and world permissions due to pg_pwd hole.
-install -d -m700 %buildroot%_localstatedir/%PGSQL/data
+install -d -m 700 %buildroot%_localstatedir/%PGSQL/data
 
 # backups of data go here...
-install -d -m700 %buildroot%_localstatedir/%PGSQL/backups
+install -d -m 700 %buildroot%_localstatedir/%PGSQL/backups
 
 # Fix a dangling symlink
 mkdir -p %buildroot%_includedir/%PGSQL/port
@@ -293,61 +304,68 @@ cp src/include/port/linux.h %buildroot%_includedir/%PGSQL/port/
 ln -s port/linux.h %buildroot%_includedir/%PGSQL/os.h
 ln -s %_includedir/%PGSQL %buildroot%_includedir/postgresql
 
-install -dm700 %buildroot%_localstatedir/%PGSQL
-
 pushd contrib
 %make_build install DESTDIR=%buildroot pkglibdir=%_libdir/%PGSQL docdir=%docdir
 popd
 
 cp -a COPYRIGHT README README.git \
-    doc/{KNOWN_BUGS,MISSING_FEATURES,TODO,bug.template} \
+    doc/{KNOWN_BUGS,MISSING_FEATURES,TODO} \
     src/tutorial %buildroot%docdir/
 
-%find_lang ecpglib%libecpg_major-%postgresql_major.%postgresql_minor
-%find_lang ecpg-%postgresql_major.%postgresql_minor
-%find_lang initdb-%postgresql_major.%postgresql_minor
-%find_lang libpq%libpq_major-%postgresql_major.%postgresql_minor
-%find_lang pg_archivecleanup-%postgresql_major.%postgresql_minor
-%find_lang pg_basebackup-%postgresql_major.%postgresql_minor
-%find_lang pg_config-%postgresql_major.%postgresql_minor
-%find_lang pg_controldata-%postgresql_major.%postgresql_minor
-%find_lang pg_ctl-%postgresql_major.%postgresql_minor
-%find_lang pg_dump-%postgresql_major.%postgresql_minor
-%find_lang pg_resetxlog-%postgresql_major.%postgresql_minor
-%find_lang pg_test_fsync-%postgresql_major.%postgresql_minor
-%find_lang pg_test_timing-%postgresql_major.%postgresql_minor
-%find_lang pg_upgrade-%postgresql_major.%postgresql_minor
-%find_lang pg_rewind-%postgresql_major.%postgresql_minor
-%find_lang pgscripts-%postgresql_major.%postgresql_minor
-%find_lang plperl-%postgresql_major.%postgresql_minor
-%find_lang plpgsql-%postgresql_major.%postgresql_minor
-%find_lang plpython-%postgresql_major.%postgresql_minor
-%find_lang pltcl-%postgresql_major.%postgresql_minor
-%find_lang postgres-%postgresql_major.%postgresql_minor
-%find_lang psql-%postgresql_major.%postgresql_minor
+%find_lang ecpglib%libecpg_major-%postgresql_major
+%find_lang ecpg-%postgresql_major
+%find_lang initdb-%postgresql_major
+%find_lang libpq%libpq_major-%postgresql_major
+%find_lang pg_amcheck-%postgresql_major
+%find_lang pg_archivecleanup-%postgresql_major
+%find_lang pg_basebackup-%postgresql_major
+%find_lang pg_checksums-%postgresql_major
+%find_lang pg_config-%postgresql_major
+%find_lang pg_controldata-%postgresql_major
+%find_lang pg_ctl-%postgresql_major
+%find_lang pg_dump-%postgresql_major
+%find_lang pg_resetwal-%postgresql_major
+%find_lang pg_rewind-%postgresql_major
+%find_lang pg_test_fsync-%postgresql_major
+%find_lang pg_test_timing-%postgresql_major
+%find_lang pg_upgrade-%postgresql_major
+%find_lang pg_waldump-%postgresql_major
+%find_lang pgscripts-%postgresql_major
+%find_lang plperl-%postgresql_major
+%find_lang plpgsql-%postgresql_major
+%find_lang plpython-%postgresql_major
+%find_lang pltcl-%postgresql_major
+%find_lang postgres-%postgresql_major
+%find_lang psql-%postgresql_major
+%find_lang pg_verifybackup-%postgresql_major
 
-cat psql-%postgresql_major.%postgresql_minor.lang \
-    pg_dump-%postgresql_major.%postgresql_minor.lang \
-    pgscripts-%postgresql_major.%postgresql_minor.lang \
-    pg_basebackup-%postgresql_major.%postgresql_minor.lang \
-    pg_test_fsync-%postgresql_major.%postgresql_minor.lang \
-    pg_test_timing-%postgresql_major.%postgresql_minor.lang  > main.lang
 
-cat postgres-%postgresql_major.%postgresql_minor.lang \
-    pg_controldata-%postgresql_major.%postgresql_minor.lang \
-    initdb-%postgresql_major.%postgresql_minor.lang \
-    pg_ctl-%postgresql_major.%postgresql_minor.lang \
-    plpgsql-%postgresql_major.%postgresql_minor.lang \
-    pg_resetxlog-%postgresql_major.%postgresql_minor.lang \
-    pg_upgrade-%postgresql_major.%postgresql_minor.lang \
-    pg_rewind-%postgresql_major.%postgresql_minor.lang > server.lang
+cat psql-%postgresql_major.lang \
+    pg_dump-%postgresql_major.lang \
+    pgscripts-%postgresql_major.lang \
+    pg_basebackup-%postgresql_major.lang \
+    pg_verifybackup-%postgresql_major.lang \
+    pg_test_fsync-%postgresql_major.lang \
+    pg_test_timing-%postgresql_major.lang \
+    pg_amcheck-%postgresql_major.lang > main.lang
 
-cat pg_config-%postgresql_major.%postgresql_minor.lang > devel.lang
+cat postgres-%postgresql_major.lang \
+    pg_controldata-%postgresql_major.lang \
+    pg_checksums-%postgresql_major.lang \
+    initdb-%postgresql_major.lang \
+    pg_ctl-%postgresql_major.lang \
+    plpgsql-%postgresql_major.lang \
+    pg_rewind-%postgresql_major.lang \
+    pg_upgrade-%postgresql_major.lang \
+    pg_resetwal-%postgresql_major.lang \
+    pg_waldump-%postgresql_major.lang > server.lang
 
-cat ecpg-%postgresql_major.%postgresql_minor.lang \
-    ecpglib%libecpg_major-%postgresql_major.%postgresql_minor.lang > ecpg.lang
+cat pg_config-%postgresql_major.lang > devel.lang
 
-cat pg_archivecleanup-%postgresql_major.%postgresql_minor.lang > contrib.lang
+cat ecpg-%postgresql_major.lang \
+    ecpglib%libecpg_major-%postgresql_major.lang > ecpg.lang
+
+cat pg_archivecleanup-%postgresql_major.lang > contrib.lang
 
 %pre
 # Need to make backups of some executables if an upgrade
@@ -388,11 +406,6 @@ chown postgres:postgres ~postgres/.bash_profile
 
 # $2, holds the number of instances of the target package that will remain
 # after the operation if $2 is 0, the target package will be removed
-%triggerpostun -- %{prog_name}9.5-server
-if [ "$2" -eq 0 ]; then
-       %post_service %prog_name
-fi
-
 %triggerpostun -- %{prog_name}9.6-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
@@ -423,14 +436,18 @@ if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
 
+%triggerpostun -- %{prog_name}14-server
+if [ "$2" -eq 0 ]; then
+       %post_service %prog_name
+fi
+
 %files -f main.lang
 %_bindir/clusterdb
 %_bindir/createdb
-%_bindir/createlang
 %_bindir/createuser
 %_bindir/dropdb
-%_bindir/droplang
 %_bindir/dropuser
+%_bindir/pg_amcheck
 %_bindir/pg_dump
 %_bindir/pg_dumpall
 %_bindir/pg_restore
@@ -438,17 +455,17 @@ fi
 %_bindir/reindexdb
 %_bindir/vacuumdb
 %_bindir/pg_basebackup
+%_bindir/pg_verifybackup
 %_bindir/pg_test_fsync
 %_bindir/pg_test_timing
 %_bindir/pg_isready
 %_bindir/pg_recvlogical
 %_man1dir/clusterdb.1*
 %_man1dir/createdb.1*
-%_man1dir/createlang.1*
 %_man1dir/createuser.1*
 %_man1dir/dropdb.1*
-%_man1dir/droplang.1*
 %_man1dir/dropuser.1*
+%_man1dir/pg_amcheck.1*
 %_man1dir/pg_dump.1*
 %_man1dir/pg_restore.1*
 %_man1dir/pg_dumpall.1*
@@ -460,6 +477,7 @@ fi
 %_man1dir/pg_basebackup.1*
 %_man1dir/pg_isready.1*
 %_man1dir/pg_recvlogical.1*
+%_man1dir/pg_verifybackup.1*
 %_man7dir/*
 %dir %docdir
 %docdir/KNOWN_BUGS
@@ -468,29 +486,25 @@ fi
 %docdir/COPYRIGHT
 %docdir/README
 %docdir/README.git
-%docdir/bug.template
 
 %files docs
 %dir %docdir
 %dir %docdir/html
 %docdir/html/*.html
 %docdir/html/*.css
+%docdir/html/*.svg
 %dir %docdir/tutorial
 %docdir/tutorial/*
 %docdir/extension
 
 %files -f contrib.lang contrib
 %_bindir/oid2name
-%_bindir/pg_standby
 %_bindir/pgbench
 %_bindir/vacuumlo
 %_bindir/pg_archivecleanup
-%_bindir/pg_xlogdump
 
 %_man1dir/oid2name.1*
 %_man1dir/pg_archivecleanup.1*
-%_man1dir/pg_standby.1*
-%_man1dir/pg_xlogdump.1*
 %_man1dir/pgbench.1*
 %_man1dir/vacuumlo.1*
 
@@ -503,6 +517,9 @@ fi
 %_libdir/pgsql/adminpack.so
 %_datadir/%PGSQL/extension/adminpack-*.sql
 %_datadir/%PGSQL/extension/adminpack.control
+%_libdir/pgsql/amcheck.so
+%_datadir/%PGSQL/extension/amcheck-*.sql
+%_datadir/%PGSQL/extension/amcheck.control
 %_libdir/pgsql/auth_delay.so
 %_libdir/pgsql/auto_explain.so
 %_libdir/pgsql/autoinc.so
@@ -520,9 +537,6 @@ fi
 %_libdir/pgsql/citext.so
 %_datadir/%PGSQL/extension/citext-*.sql
 %_datadir/%PGSQL/extension/citext.control
-%_libdir/pgsql/chkpass.so
-%_datadir/%PGSQL/extension/chkpass-*.sql
-%_datadir/%PGSQL/extension/chkpass.control
 %_libdir/pgsql/cube.so
 %_datadir/%PGSQL/extension/cube-*.sql
 %_datadir/%PGSQL/extension/cube.control
@@ -548,13 +562,8 @@ fi
 %_datadir/%PGSQL/extension/hstore-*.sql
 %_datadir/%PGSQL/extension/hstore.control
 %_libdir/pgsql/hstore_plperl.so
-%_datadir/%PGSQL/extension/hstore_plperl-*.sql
-%_datadir/%PGSQL/extension/hstore_plperl.control
-%_datadir/%PGSQL/extension/hstore_plperlu-*.sql
-%_datadir/%PGSQL/extension/hstore_plperlu.control
-%_libdir/pgsql/hstore_plpython3.so
-%_datadir/%PGSQL/extension/hstore_plpython3u-*.sql
-%_datadir/%PGSQL/extension/hstore_plpython3u.control
+%_datadir/%PGSQL/extension/hstore_plperl*.sql
+%_datadir/%PGSQL/extension/hstore_plperl*.control
 %_libdir/pgsql/insert_username.so
 %_datadir/%PGSQL/extension/insert_username-*.sql
 %_datadir/%PGSQL/extension/insert_username.control
@@ -563,18 +572,23 @@ fi
 %_libdir/pgsql/isn.so
 %_datadir/%PGSQL/extension/isn-*.sql
 %_datadir/%PGSQL/extension/isn.control
+%_libdir/pgsql/jsonb_plperl.so
+%_datadir/%PGSQL/extension/jsonb_plperl-*.sql
+%_datadir/%PGSQL/extension/jsonb_plperl.control
+%_datadir/%PGSQL/extension/jsonb_plperlu-*.sql
+%_datadir/%PGSQL/extension/jsonb_plperlu.control
 %_libdir/pgsql/lo.so
 %_datadir/%PGSQL/extension/lo-*.sql
 %_datadir/%PGSQL/extension/lo.control
 %_libdir/pgsql/ltree.so
 %_datadir/%PGSQL/extension/ltree-*.sql
 %_datadir/%PGSQL/extension/ltree.control
-%_libdir/pgsql/ltree_plpython3.so
-%_datadir/%PGSQL/extension/ltree_plpython3u-*.sql
-%_datadir/%PGSQL/extension/ltree_plpython3u.control
 %_libdir/pgsql/moddatetime.so
 %_datadir/%PGSQL/extension/moddatetime-*.sql
 %_datadir/%PGSQL/extension/moddatetime.control
+%_libdir/pgsql/old_snapshot.so
+%_datadir/%PGSQL/extension/old_snapshot-*.sql
+%_datadir/%PGSQL/extension/old_snapshot.control
 %_libdir/pgsql/pageinspect.so
 %_datadir/%PGSQL/extension/pageinspect-*.sql
 %_datadir/%PGSQL/extension/pageinspect.control
@@ -591,6 +605,9 @@ fi
 %_libdir/pgsql/pg_stat_statements.so
 %_datadir/%PGSQL/extension/pg_stat_statements-*.sql
 %_datadir/%PGSQL/extension/pg_stat_statements.control
+%_libdir/pgsql/pg_surgery.so
+%_datadir/%PGSQL/extension/pg_surgery-*.sql
+%_datadir/%PGSQL/extension/pg_surgery.control
 %_libdir/pgsql/pg_trgm.so
 %_datadir/%PGSQL/extension/pg_trgm-*.sql
 %_datadir/%PGSQL/extension/pg_trgm.control
@@ -600,6 +617,7 @@ fi
 %_libdir/pgsql/pgcrypto.so
 %_datadir/%PGSQL/extension/pgcrypto-*.sql
 %_datadir/%PGSQL/extension/pgcrypto.control
+%_libdir/pgsql/pgoutput.so
 %_libdir/pgsql/pgrowlocks.so
 %_datadir/%PGSQL/extension/pgrowlocks-*.sql
 %_datadir/%PGSQL/extension/pgrowlocks.control
@@ -630,12 +648,6 @@ fi
 %_datadir/%PGSQL/extension/tcn-*.sql
 %_datadir/%PGSQL/extension/tcn.control
 %_libdir/pgsql/test_decoding.so
-%_libdir/pgsql/timetravel.so
-%_datadir/%PGSQL/extension/timetravel-*.sql
-%_datadir/%PGSQL/extension/timetravel.control
-%_libdir/pgsql/tsearch2.so
-%_datadir/%PGSQL/extension/tsearch2-*.sql
-%_datadir/%PGSQL/extension/tsearch2.control
 %_libdir/pgsql/tsm_system_rows.so
 %_datadir/%PGSQL/extension/tsm_system_rows-*.sql
 %_datadir/%PGSQL/extension/tsm_system_rows.control
@@ -653,28 +665,31 @@ fi
 %config %_initdir/%prog_name
 %_bindir/initdb
 %_bindir/postgresql-check-db-dir
+%_bindir/pg_checksums
 %_bindir/pg_controldata
 %_bindir/pg_ctl
-%_bindir/pg_receivexlog
-%_bindir/pg_resetxlog
 %_bindir/postgres
 %_bindir/postmaster
 %_bindir/pg_upgrade
 %_bindir/pg_rewind
+%_bindir/pg_receivewal
+%_bindir/pg_resetwal
+%_bindir/pg_waldump
 
 %_man1dir/initdb.1*
 %_man1dir/pg_controldata.1*
+%_man1dir/pg_checksums.1*
 %_man1dir/pg_ctl.1*
-%_man1dir/pg_receivexlog.1*
-%_man1dir/pg_resetxlog.1*
 %_man1dir/pg_upgrade.1*
-%_man1dir/pg_rewind.1*
 %_man1dir/postgres.1*
 %_man1dir/postmaster.1*
+%_man1dir/pg_rewind.1*
+%_man1dir/pg_receivewal.1*
+%_man1dir/pg_resetwal.1*
+%_man1dir/pg_waldump.1*
 
 %dir %_libdir/%PGSQL
 %dir %_datadir/%PGSQL/extension
-%_datadir/%PGSQL/unknown.pltcl
 %_libdir/%PGSQL/plpgsql.so
 %_datadir/%PGSQL/extension/plpgsql-*.sql
 %_datadir/%PGSQL/extension/plpgsql.control
@@ -683,6 +698,7 @@ fi
 %_libdir/%PGSQL/euc2004_sjis2004.so
 %_libdir/%PGSQL/libpqwalreceiver.so
 %dir %_datadir/%PGSQL
+%_datadir/%PGSQL/errcodes.txt
 %dir %_datadir/%PGSQL/timezone
 %_datadir/%PGSQL/timezone/*
 %dir %_datadir/%PGSQL/timezonesets
@@ -690,12 +706,11 @@ fi
 %dir %_datadir/%PGSQL/tsearch_data
 %_datadir/%PGSQL/tsearch_data/*
 %_datadir/%PGSQL/postgres.bki
-%_datadir/%PGSQL/postgres.description
-%_datadir/%PGSQL/postgres.shdescription
 %_datadir/%PGSQL/*.sample
-%_datadir/%PGSQL/conversion_create.sql
 %_datadir/%PGSQL/information_schema.sql
 %_datadir/%PGSQL/sql_features.txt
+%_datadir/%PGSQL/system_constraints.sql
+%_datadir/%PGSQL/system_functions.sql
 %_datadir/%PGSQL/system_views.sql
 %_datadir/%PGSQL/snowball_create.sql
 %_localstatedir/%PGSQL
@@ -706,34 +721,45 @@ fi
 %attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL/data
 %_unitdir/*
 
-%files -f pltcl-%postgresql_major.%postgresql_minor.lang tcl
+%files -f pltcl-%postgresql_major.lang tcl
 %dir %_libdir/%PGSQL
-%_bindir/pltcl_delmod
-%_bindir/pltcl_listmod
-%_bindir/pltcl_loadmod
 %_libdir/%PGSQL/pltcl.so
 %_datadir/%PGSQL/extension/pltcl-*.sql
 %_datadir/%PGSQL/extension/pltcl.control
 %_datadir/%PGSQL/extension/pltclu-*.sql
 %_datadir/%PGSQL/extension/pltclu.control
 
-%files -f plperl-%postgresql_major.%postgresql_minor.lang perl
+%files -f plperl-%postgresql_major.lang perl
 %dir %_libdir/%PGSQL
 %_libdir/%PGSQL/plperl.so
 %_datadir/%PGSQL/extension/plperl-*.sql
 %_datadir/%PGSQL/extension/plperl.control
 %_datadir/%PGSQL/extension/plperlu-*.sql
 %_datadir/%PGSQL/extension/plperlu.control
+%_libdir/pgsql/bool_plperl.so
+%_datadir/%PGSQL/extension/bool_plperl-*.sql
+%_datadir/%PGSQL/extension/bool_plperl.control
+%_datadir/%PGSQL/extension/bool_plperlu-*.sql
+%_datadir/%PGSQL/extension/bool_plperlu.control
 
-%files -f plpython-%postgresql_major.%postgresql_minor.lang python
+%files -f plpython-%postgresql_major.lang python
 %dir %docdir
 %dir %_libdir/%PGSQL
 %_libdir/%PGSQL/plpython3.so
 %_datadir/%PGSQL/extension/plpython3u-*.sql
 %_datadir/%PGSQL/extension/plpython3u.control
+%_libdir/pgsql/hstore_plpython3.so
+%_datadir/%PGSQL/extension/hstore_plpython3u-*.sql
+%_datadir/%PGSQL/extension/hstore_plpython3u.control
+%_libdir/pgsql/jsonb_plpython3.so
+%_datadir/%PGSQL/extension/jsonb_plpython3u-*.sql
+%_datadir/%PGSQL/extension/jsonb_plpython3u.control
+%_libdir/pgsql/ltree_plpython3.so
+%_datadir/%PGSQL/extension/ltree_plpython3u-*.sql
+%_datadir/%PGSQL/extension/ltree_plpython3u.control
 
 %if_with devel
-%files -f libpq%libpq_major-%postgresql_major.%postgresql_minor.lang -n %libpq_name
+%files -f libpq%libpq_major-%postgresql_major.lang -n %libpq_name
 %_libdir/libpq.so.%libpq_major
 %_libdir/libpq.so.%libpq_major.*
 
@@ -765,57 +791,76 @@ fi
 %files -n postgresql-devel-static
 %_libdir/libecpg*.a
 %_libdir/libpgcommon.a
+%_libdir/libpgcommon_shlib.a
 %_libdir/libpgfeutils.a
 %_libdir/libpgtypes.a
 %_libdir/libpgport.a
+%_libdir/libpgport_shlib.a
 %_libdir/libpq*.a
 %endif
 
 %changelog
-* Wed Aug 25 2021 Alexei Takaseev <taf@altlinux.org> 9.6.23-alt2
+* Wed Sep 29 2021 Alexei Takaseev <taf@altlinux.org> 14.0-alt1
+- 14.0
+
+* Wed Aug 25 2021 Alexei Takaseev <taf@altlinux.org> 13.4-alt2
 - Change conflict 1C 12 -> 1C 13
-- Added -ffat-lto-objects to -flto=auto -ffat-lto-objects
+- Added -ffat-lto-objects to %optflags_lto
 
-* Wed Aug 11 2021 Alexei Takaseev <taf@altlinux.org> 9.6.23-alt1
-- 9.6.23
+* Wed Aug 11 2021 Alexei Takaseev <taf@altlinux.org> 13.4-alt1
+- 13.4 (Fixes CVE-2021-3677)
 
-* Mon May 17 2021 Alexei Takaseev <taf@altlinux.org> 9.6.22-alt1
-- 9.6.22 (Fixes CVE-2021-32027, CVE-2021-32028)
+* Mon May 17 2021 Alexei Takaseev <taf@altlinux.org> 13.3-alt1
+- 13.3 (Fixes CVE-2021-32027, CVE-2021-32028, CVE-2021-32029)
 - Build with python3
 
-* Thu Feb 11 2021 Alexei Takaseev <taf@altlinux.org> 9.6.21-alt1
-- 9.6.21
+* Thu Feb 11 2021 Alexei Takaseev <taf@altlinux.org> 13.2-alt1
+- 13.2 (Fixes CVE-2021-20229, CVE-2021-3393)
 
-* Wed Nov 18 2020 Alexei Takaseev <taf@altlinux.org> 9.6.20-alt2
+* Wed Nov 18 2020 Alexei Takaseev <taf@altlinux.org> 13.1-alt2
 - Change conflict 1C 11 -> 1C 12 (ALT #39313)
 - Add %%triggerpostun for PG 13
 
-* Mon Nov 16 2020 Alexei Takaseev <taf@altlinux.org> 9.6.20-alt1
-- 9.6.20 (Fixes CVE-2020-25694, CVE-2020-25695, CVE-2020-25696)
+* Mon Nov 16 2020 Alexei Takaseev <taf@altlinux.org> 13.1-alt1
+- 13.1 (Fixes CVE-2020-25694, CVE-2020-25695, CVE-2020-25696)
 
-* Wed Aug 12 2020 Alexei Takaseev <taf@altlinux.org> 9.6.19-alt1
-- 9.6.19 (Fixes CVE-2020-14350)
+* Wed Sep 23 2020 Alexei Takaseev <taf@altlinux.org> 13.0-alt1
+- 13.0
 
-* Fri May 22 2020 Alexei Takaseev <taf@altlinux.org> 9.6.18-alt1
-- 9.6.18
+* Wed Aug 12 2020 Alexei Takaseev <taf@altlinux.org> 12.4-alt1
+- 12.4 (Fixes CVE-2020-14349, CVE-2020-14350)
 
-* Wed Feb 12 2020 Alexei Takaseev <taf@altlinux.org> 9.6.17-alt1
-- 9.6.17 (Fixes CVE-2020-1720)
+* Fri May 22 2020 Alexei Takaseev <taf@altlinux.org> 12.3-alt1
+- 12.3
 
-* Wed Nov 13 2019 Alexei Takaseev <taf@altlinux.org> 9.6.16-alt1
-- 9.6.16
+* Wed Feb 12 2020 Alexei Takaseev <taf@altlinux.org> 12.2-alt1
+- 12.2 (Fixes CVE-2020-1720)
 
-* Wed Aug 07 2019 Alexei Takaseev <taf@altlinux.org> 9.6.15-alt1
-- 9.6.15 (Fixes CVE-2019-10208)
+* Wed Nov 13 2019 Alexei Takaseev <taf@altlinux.org> 12.1-alt1
+- 12.1
 
-* Thu Jun 20 2019 Alexei Takaseev <taf@altlinux.org> 9.6.14-alt1
-- 9.6.14
+* Mon Oct 07 2019 Alexei Takaseev <taf@altlinux.org> 12.0-alt2
+- Add temporary provides libpq-devel and libecpg-devel to
+  postgresql-devel (ALT #37297)
 
-* Wed May 08 2019 Alexei Takaseev <taf@altlinux.org> 9.6.13-alt1
-- 9.6.13
-- (Fixes CVE-2019-10130)
+* Wed Oct 02 2019 Alexei Takaseev <taf@altlinux.org> 12.0-alt1
+- 12.0
 
-* Thu Apr 04 2019 Alexei Takaseev <taf@altlinux.org> 9.6.12-alt2
+* Wed Aug 07 2019 Alexei Takaseev <taf@altlinux.org> 11.5-alt1
+- 11.5 (Fixes CVE-2019-10208, CVE-2019-10209)
+
+* Thu Jun 20 2019 Alexei Takaseev <taf@altlinux.org> 11.4-alt1
+- 11.4 (Fixes CVE-2019-10164)
+
+* Wed May 08 2019 Alexei Takaseev <taf@altlinux.org> 11.3-alt1
+- 11.3
+- (Fixes CVE-2019-10129, CVE-2019-10130)
+
+* Fri Apr 05 2019 Alexei Takaseev <taf@altlinux.org> 11.2-alt3
+- Add temporary provides libpq-devel and libecpg-devel to
+  postgresql-devel
+
+* Fri Mar 29 2019 Alexei Takaseev <taf@altlinux.org> 11.2-alt2
 - Move *.control and *.sql files from -server to -contrib subpackage
   (Fixes ALT#36271)
 - Removed unnecessary minor version in package name libpq and libecpg
@@ -825,73 +870,89 @@ fi
 - Remove unneeded Conflicts < and > for all subpackages
 - Rename postgresqlX-devel to postgresql-devel
 - Add Requires to -server for -contrib, -perl, -python and -tcl and subpackages
+- Remove unneeded Requires tcl >= 8.4.0-alt1 for -tcl subpackages
 
-* Thu Feb 14 2019 Alexei Takaseev <taf@altlinux.org> 9.6.12-alt1
-- 9.6.12
-- Replace PreReq to Requires(pre)
-- Remove deadcode for chroot
+* Thu Feb 14 2019 Alexei Takaseev <taf@altlinux.org> 11.2-alt1
+- 11.2
+- Build with ICU
 
-* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 9.6.11-alt1.1
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 11.1-alt1.1
 - rebuild with new perl 5.28.1
 
-* Thu Nov 08 2018 Alexei Takaseev <taf@altlinux.org> 9.6.11-alt1
-- 9.6.11
+* Thu Nov 08 2018 Alexei Takaseev <taf@altlinux.org> 11.1-alt1
+- 11.1
+- (Fixes CVE-2018-16850)
 
-* Fri Oct 19 2018 Alexei Takaseev <taf@altlinux.org> 9.6.10-alt5
+* Fri Oct 19 2018 Alexei Takaseev <taf@altlinux.org> 11.0-alt2
 - Disable package libs for --without devel. This will provide
   one set of libraries for all versions of the PG.
 
-* Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 9.6.10-alt4
-- NMU: removed Provides: postgresql-perl from old postgresses
+* Thu Oct 18 2018 Alexei Takaseev <taf@altlinux.org> 11.0-alt1
+- 11.0
 
-* Tue Sep 04 2018 Alexei Takaseev <taf@altlinux.org> 9.6.10-alt3
+* Thu Sep 27 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt7
+- Drop online_analyze and plantuner contribs - performance
+  degradation
+
+* Mon Sep 10 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt6
+- Another fix conflicts with libpq5.10-1C
+
+* Fri Sep 07 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt5
+- Add Obsolete to libpq-1C
+
+* Wed Sep 05 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt4
+- Add online_analyze and plantuner contribs
+
+* Tue Sep 04 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt3
 - Add BR: libkrb5-devel
 - Rebuild with OpenSSL 1.1.x
 
-* Tue Aug 14 2018 Alexei Takaseev <taf@altlinux.org> 9.6.10-alt2
-- Remove conflict with postgresql for 1C
+* Tue Aug 14 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt2
+- Change conflict 1C 9.6 -> 1C 10
 
-* Sat Aug 11 2018 Alexei Takaseev <taf@altlinux.org> 9.6.10-alt1
-- 9.6.10
+* Sat Aug 11 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt1
+- 10.5
 - (Fixes CVE-2018-10915, CVE-2018-10925)
 
-* Wed May 09 2018 Alexei Takaseev <taf@altlinux.org> 9.6.9-alt1
-- 9.6.9
+* Wed May 09 2018 Alexei Takaseev <taf@altlinux.org> 10.4-alt1
+- 10.4
 - (Fixes CVE-2018-1115)
 
-* Sun Mar 25 2018 Alexei Takaseev <taf@altlinux.org> 9.6.8-alt3
-- Disable build 9.6-devel subpackages
-
-* Wed Mar 21 2018 Alexei Takaseev <taf@altlinux.org> 9.6.8-alt2
-- Enable build 9.6-devel subpackages
-
-* Fri Mar 02 2018 Alexei Takaseev <taf@altlinux.org> 9.6.8-alt1
-- 9.6.8
+* Fri Mar 02 2018 Alexei Takaseev <taf@altlinux.org> 10.3-alt1
+- 10.3
 - (Fixes CVE-2018-1058)
 
-* Wed Feb 07 2018 Alexei Takaseev <taf@altlinux.org> 9.6.7-alt1
-- 9.6.7
+* Wed Feb 07 2018 Alexei Takaseev <taf@altlinux.org> 10.2-alt1
+- 10.2
 
-* Fri Feb 02 2018 Alexei Takaseev <taf@altlinux.org> 9.6.6-alt2
+* Fri Feb 02 2018 Alexei Takaseev <taf@altlinux.org> 10.1-alt2
 - Rename pg_rewind's copy_file_range() to avoid conflict with new linux syscall
 
-* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 9.6.6-alt1.1
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 10.1-alt1.1
 - rebuild with new perl 5.26.1
 
-* Thu Nov 09 2017 Alexei Takaseev <taf@altlinux.org> 9.6.6-alt1
-- 9.6.6
+* Thu Nov 09 2017 Alexei Takaseev <taf@altlinux.org> 10.1-alt1
+- 10.1
 - Remove conflicts to PG 9.1, 9.2
+- Cleanup spec
+- Remove chroot dead code
 
-* Thu Oct 05 2017 Alexei Takaseev <taf@altlinux.org> 9.6.5-alt2
-- Disable -devel
-- Add conflict to PG 10
+* Thu Oct 05 2017 Alexei Takaseev <taf@altlinux.org> 10.0-alt1
+- 10.0
+- Enable -devel
+
+* Wed Sep 20 2017 Alexei Takaseev <taf@altlinux.org> 10.0-alt0.rc1
+- 10.0 rc1
+
+* Wed Aug 30 2017 Alexei Takaseev <taf@altlinux.org> 10.0-alt0.b4
+- 10.0 beta4
 
 * Wed Aug 30 2017 Alexei Takaseev <taf@altlinux.org> 9.6.5-alt1
 - 9.6.5
 
 * Wed Aug 09 2017 Alexei Takaseev <taf@altlinux.org> 9.6.4-alt1
 - 9.6.4
-- (Fixes CVE-2017-7547)
+- (Fix CVE-2017-7547)
 
 * Thu May 11 2017 Alexei Takaseev <taf@altlinux.org> 9.6.3-alt2
 - Add conflict with postgresql for 1C
