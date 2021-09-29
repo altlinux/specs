@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.96
+Version: 2.9.97
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -115,6 +115,10 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Wed Sep 29 2021 Ivan Razzhivin <underwit@altlinux.org> 2.9.97-alt1
+- alterator-multiseat: update translation
+- alterator-secsetup: update translation
+
 * Tue Sep 21 2021 Slava Aseev <ptrnine@altlinux.org> 2.9.96-alt1
 - alterator-vm: update translation
 
