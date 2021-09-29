@@ -1,7 +1,11 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %def_enable qsort
 
 Name: nnn
-Version: 4.2
+Version: 4.3
 Release: alt1
 
 Summary: A full-featured terminal file manager
@@ -45,6 +49,9 @@ install -D -m644 misc/auto-completion/bash/nnn-completion.bash \
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Wed Sep 29 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.3-alt1
+- 4.2 -> 4.3
+
 * Wed Jul 21 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.2-alt1
 - 4.1.1 -> 4.2
 
