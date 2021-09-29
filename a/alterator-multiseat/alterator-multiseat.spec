@@ -1,5 +1,5 @@
 Name: alterator-multiseat
-Version: 0.0.5
+Version: 0.0.6
 Release: alt1
 
 Source: %name-%version.tar
@@ -31,6 +31,10 @@ alterator module for setup multiseat configuration
 %_datadir/alterator/ui/*
 
 %changelog
+* Wed Sep 29 2021 Ivan Razzhivin <underwit@altlinux.org> 0.0.6-alt1
+- change pop-up message (closes: #40205)
+- update translation
+
 * Mon May 31 2021 Ivan Razzhivin <underwit@altlinux.org> 0.0.5-alt1
 - refactoring get_device_name function (closes: #40097)
 - add the ability to save and restore the config
