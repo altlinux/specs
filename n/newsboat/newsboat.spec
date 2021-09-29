@@ -1,8 +1,8 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name:	 newsboat
-Version: 2.24
-Release: alt2
+Version: 2.25
+Release: alt1
 
 Summary: an RSS/Atom feed reader for the text console
 
@@ -83,6 +83,9 @@ cargo test
 %_iconsdir/hicolor/scalable/apps/newsboat.svg
 
 %changelog
+* Wed Sep 29 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.25-alt1
+- Updated to 2.25.
+
 * Sat Aug 28 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.24-alt2
 - Fixed FTBFS: built fat LTO objects.
 
