@@ -4,7 +4,7 @@
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 14.17
+%define major 14.18
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -20,19 +20,23 @@
 %def_without systemv8
 
 
-# https://bugzilla.altlinux.org/show_bug.cgi?id=39716
-%define openssl_version 1.1.1k
+%define openssl_version 1.1.1l
 %def_with systemssl
 
-%global libuv_abi 1.41.1-alt1
+%global libuv_abi 1.42.0
 %def_with systemuv
 
+# FIXME
 %global libicu_abi 6.5
 # rpm-build-info gives _distro_version
 %if %_vendor == "alt" && (%_distro_version == "Sisyphus")
 %def_with systemicu
 # TODO: node has to use icu:: for ICU names
 #add_optflags -DU_USING_ICU_NAMESPACE=1
+%endif
+
+%ifarch armh
+%global optflags_lto %nil
 %endif
 
 %global libnghttp2_abi 1.41.0
@@ -50,13 +54,13 @@
 %define oversion %version
 
 Name: node
-Version: %major.5
+Version: %major.0
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
 
 Group: Development/Tools
-License: MIT License
+License: MIT
 Url: http://nodejs.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -382,6 +386,17 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Tue Sep 28 2021 Vitaly Lipatov <lav@altlinux.ru> 14.18.0-alt1
+- new version 14.18.0 (with rpmrb script)
+- disable LTO on armh
+- set libuv >= 1.42.0
+
+* Wed Sep 01 2021 Vitaly Lipatov <lav@altlinux.ru> 14.17.6-alt1
+- new version 14.17.6 (with rpmrb script)
+- set npm >= 6.14.15
+- set openssl >= 1.1.1l
+- CVE-2021-32803, CVE-2021-32804, CVE-2021-37701, CVE-2021-37712, CVE-2021-37713, CVE-2021-39134, CVE-2021-39135
+
 * Wed Aug 11 2021 Vitaly Lipatov <lav@altlinux.ru> 14.17.5-alt1
 - new version 14.17.5 (with rpmrb script)
 - set c-ares >= 1.17.2

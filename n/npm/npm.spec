@@ -1,11 +1,11 @@
 Name: npm
-Version: 6.14.14
+Version: 6.14.15
 Release: alt1
 
 Summary: A package manager for node
 
 Group: Development/Tools
-License: MIT License
+License: MIT
 Url: http://nodejs.org/
 
 # Source-url: https://github.com/npm/cli/archive/v%version.tar.gz
@@ -74,6 +74,10 @@ rm -rf %buildroot%nodejs_sitelib/%name/node_modules/request/node_modules/node-uu
 %nodejs_sitelib/%name/
 
 %changelog
+* Wed Sep 01 2021 Vitaly Lipatov <lav@altlinux.ru> 6.14.15-alt1
+- new version 6.14.15 (with rpmrb script)
+- CVE-2021-32803, CVE-2021-32804, CVE-2021-37701, CVE-2021-37712, CVE-2021-37713, CVE-2021-39134, CVE-2021-39135
+
 * Fri Jul 30 2021 Vitaly Lipatov <lav@altlinux.ru> 6.14.14-alt1
 - new version 6.14.14 (with rpmrb script)
 
