@@ -1,6 +1,6 @@
 Name:    hxtools
-Version: 20210803
-Release: alt2
+Version: 20210928
+Release: alt1
 
 Summary: A collection of several tools
 License: GPLv2+ or LGPLv2 or LGPLv3
@@ -66,6 +66,9 @@ install -Dpm0644 doc/fd0ssh.1 %buildroot%_man1dir/fd0ssh.1
 %_man1dir/fd0ssh.1*
 
 %changelog
+* Wed Sep 29 2021 Andrey Cherepanov <cas@altlinux.org> 20210928-alt1
+- New version.
+
 * Mon Aug 30 2021 Andrey Cherepanov <cas@altlinux.org> 20210803-alt2
 - Package fd0ssh.
 - Fix licenses.
