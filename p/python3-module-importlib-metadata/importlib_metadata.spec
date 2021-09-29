@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.6.1
+Version: 4.8.1
 Release: alt1
 Summary: Library to access the metadata for a Python package
 License: Apache-2.0
@@ -74,6 +74,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
 %python3_sitelibdir/importlib_metadata/
 
 %changelog
+* Wed Sep 29 2021 Stanislav Levin <slev@altlinux.org> 4.8.1-alt1
+- 4.6.1 -> 4.8.1.
+
 * Tue Jul 20 2021 Stanislav Levin <slev@altlinux.org> 4.6.1-alt1
 - 1.5.0 -> 4.6.1 (restored for features from Python 3.10).
 
