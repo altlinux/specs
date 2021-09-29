@@ -11,7 +11,7 @@
 
 Name:           lib%oname
 Version:        2.3.7.2
-Release:        alt1
+Release:        alt2
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -54,8 +54,8 @@ BuildRequires:  libfmt-devel
 BuildRequires:  openvdb-devel
 %ifnarch %e2k
 BuildRequires:  libdcmtk-devel
-BuildRequires:  libopencv-devel
 %endif
+BuildRequires:  libopencv-devel
 BuildRequires: libavcodec-devel libavformat-devel libswscale-devel
 BuildRequires: libheif-devel
 
@@ -128,9 +128,7 @@ Requires:       %oname-utils = %EVR
 %ifnarch armh
 Requires:       %oname-iv = %EVR
 %endif
-%ifnarch %e2k
 Requires:       libopencv-devel
-%endif
 
 %description devel
 Development files for package %name
@@ -162,6 +160,8 @@ sed -ri '/Qt5_FOUND AND OPENGL_FOUND/ s,iv_enabled,FALSE,' src/iv/CMakeLists.txt
 %ifarch %e2k
 # skip x86 asm (reported upstream); suggested by darktemplar@
 %add_optflags -DOIIO_NO_AVX=1 -DOIIO_NO_SSE=1 -U__AES__
+# e2k backend for Clang doesn't support x86 intrinsics and SIMD
+sed -i 's/) || defined(__e2k__)/ || (defined(__e2k__) \&\& defined(__LCC__)))/' src/include/OpenImageIO/simd.h
 %endif
 
 # set -DCMAKE_BUILD_TYPE=RelWithDebInfo to skip stripping debuginfo from python modules built via pybind11
@@ -177,9 +177,6 @@ sed -ri '/Qt5_FOUND AND OPENGL_FOUND/ s,iv_enabled,FALSE,' src/iv/CMakeLists.txt
 	-DOPENJPEG_INCLUDE_DIR=$(pkg-config --variable=includedir libopenjp2) \
 	-DOpenGL_GL_PREFERENCE=GLVND \
 	-DVERBOSE=TRUE \
-%ifarch %e2k
-	-DUSE_SIMD=0 \
-%endif
 	-DOIIO_BUILD_TESTS:BOOL=FALSE \
 	-DPLUGIN_SEARCH_PATH=%_libdir/OpenImageIO-%soname \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -229,6 +226,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_datadir/cmake/Modules/FindOpenImageIO.cmake
 
 %changelog
+* Wed Sep 29 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.3.7.2-alt2
+- E2K: enabled OpenCV, fixed issue with Clang
+
 * Mon Sep 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.7.2-alt1
 - Updated to upstream version 2.3.7.2.
 
