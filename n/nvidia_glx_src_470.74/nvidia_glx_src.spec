@@ -27,7 +27,7 @@
 %define nv_version 470
 %define nv_release 74
 %define nv_minor   %nil
-%define pkg_rel alt228
+%define pkg_rel alt229
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -376,6 +376,9 @@ fi
 %endif
 
 %changelog
+* Wed Sep 29 2021 Sergey V Turchin <zerg@altlinux.org> 470.74-alt229
+- don't force add to list 10DE:0FD1
+
 * Tue Sep 28 2021 Sergey V Turchin <zerg@altlinux.org> 470.74-alt228
 - fix kernel module for arm64 (thanks sbolshakov@alt)
 
