@@ -1,5 +1,5 @@
 Name: make-initrd-propagator
-Version: 0.47
+Version: 0.48
 Release: alt1
 
 Summary: Put propagator into make-initrd generated image
@@ -38,6 +38,9 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Wed Sep 29 2021 Anton Midyukov <antohami@altlinux.org> 0.48-alt1
+- propagator/config.mk: add interface naming udev rules
+
 * Mon Aug 30 2021 Michael Shigorin <mike@altlinux.org> 0.47-alt1
 - Do not fail if 60-persistent-storage.rules is missing
 
