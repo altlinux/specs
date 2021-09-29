@@ -1,88 +1,66 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: woeusb
-Version: 3.3.0
+Version: 5.1.2
 Release: alt1
 Summary: Windows USB installation media creator
 Summary(ru_RU.UTF-8): Утилита для создания установочного USB накопителя с Windows
 Group: Archiving/Cd burning
 License: GPLv3+
-Url: https://github.com/slacka/WoeUSB
-ExclusiveArch: %ix86 x86_64
-Packager: Artyom Bystrov <arbars@altlinux.org>
-Source0: %name-%version.tar.gz
+Url: https://github.com/WoeUSB/WoeUSB
 
-BuildRequires: grub-pc
-BuildRequires: gcc-c++
-BuildRequires: libwxGTK-devel
-BuildRequires: gettext-tools
-BuildRequires: libpolkit1-devel
+Source0: %name-%version.tar
+
+Requires: bash4
+Requires: dosfstools
+Requires: gawk
+Requires: grep
+Requires: grub
+Requires: ntfs-3g
+Requires: parted
+Requires: wget
+
+ExclusiveArch: %ix86 x86_64
 
 %description
-This package contains two programs:
+A utility that enables you to create your own bootable Windows installation
+USB storage device from an existing Windows Installation disc or disk image.
 
- o woeusb: A command-line utility that enables you to create your own bootable
-Windows installation USB storage device from an existing Windows
-Installation disc or disk image
-
- o woeusbgui: A GUI wrapper of woeusb based on WxWidgets
-
-Supported images:
-
-Windows Vista, Windows 7, Window 8.x, Windows 10. All languages and any version
-(home, pro...) and Windows PE are supported.
-
-Supported bootmodes:
-
-Legacy/MBR-style/IBM PC compatible bootmode
-Native UEFI booting is supported for Windows 7 and later images
-(limited to the FAT filesystem as the target)
-
+Attention! For using WoeUSB with graphical interfase, please, install woeusb-ng package.
 
 %description -l ru_RU.UTF-8
-Этот пакет содержит две программы:
+Утилита, которая поможет создать загрузочный носитель с ОС Windows из образа
+или реального диска.
 
- o woeusb: Утилита командной строки, помогающая создавать загрузочный
-накопитель для установки Windows из образа диска или непосредственно
-установочного диска.
-
- o woeusbgui: Графическая обёртка для woeusb на базе WxWidgets
-
-Поддерживаемые образы:
-
-Windows Vista, Windows 7, Window 8.x, Windows 10. Поддерживаются все
-языки и версии (home, pro...) и Windows PE.
-
-Поддерживаемые режимы загрузки:
-
-Legacy/MBR-стиль/IBM PC-совместимый
-Нативный UEFI режим поддерживается для  Windows 7 и поздних систем
-(с учётом ограничений файловой системы FAT)
+Внимание! Для использования WoeUSB с графическим интерфейсом, пожалуйста,
+установите пакет woeusb-ng.
 
 %prep
 %setup -n %name-%version
 
 %build
 
-%autoreconf
-%configure
-
 find ./* -type f -exec sed -i "s/@@WOEUSB_VERSION@@/%{version}/g" {} \+
-%make_build
+
+for shell in ./sbin/woeusb
+do
+  sed -i '1s|!/usr/bin/env bash|!/bin/bash|' $shell
+done
 
 %install
-%makeinstall_std
+install -d -m 777 %buildroot%_bindir
+install -m 755 sbin/woeusb %buildroot%_bindir/woeusb
+mkdir -p -m 777 %buildroot%_man1dir
+install -m 444 ./share/man/man1/woeusb.1 %buildroot%_man1dir/woeusb.1
 
-%find_lang %name
-
-%files -f %name.lang
-%_bindir/%name
-%_bindir/%{name}gui
-%_man1dir/%name.*
-%_man1dir/%{name}gui.*
-%_pixmapsdir/%{name}gui-icon.png
-%_datadir/%name
-
-%_desktopdir/%{name}gui.desktop
+%files
+%doc LICENSES/GPL-3.0-or-later.txt
+%_bindir/woeusb
+%_man1dir/woeusb.1.xz
 
 %changelog
+* Sun Sep 26 2021 Artyom Bystrov <arbars@altlinux.org> 5.1.2-alt1
+- Update to new version after rework of project
+
 * Mon Aug 26 2019 Artyom Bystrov <arbars@altlinux.org> 3.3.0-alt1
 - initial build for ALT Sisyphus from Open Mandriva
