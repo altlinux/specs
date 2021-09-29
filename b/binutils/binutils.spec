@@ -2,7 +2,7 @@
 
 Name: binutils
 Version: 2.37
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -10,40 +10,8 @@ License: GPLv3+
 Group: Development/Other
 Url: http://sourceware.org/binutils/
 
-# ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.xz
-Source: %name-%version.tar
-Source1: bfd.h
-Source2: gcc.sh
-Source3: g++.sh
-Source4: ld.sh
-Source5: output-format.sed
-
-Patch: binutils-2_37-branch.patch
-
-# Backports from upstream
-
-# ALT patches
-Patch01: 0001-ld-testsuite-ld-ifunc-pr18808b.c-pass-Wno-return-typ.patch
-Patch02: 0002-ld-testsuite-ld-elf-pr22269-1.c-pass-Wno-return-type.patch
-Patch03: 0003-bfd-export-demangle.h-and-hashtab.h.patch
-Patch04: 0004-ld-add-no-warn-shared-textrel-option.patch
-Patch05: 0005-ld-enable-optimization-by-default.patch
-Patch06: 0006-ld-testsuite-restore-upstream-default-options.patch
-Patch07: 0007-gold-testsuite-use-sysv-hash-style-for-two-tests.patch
-Patch08: 0008-gas-testsuite-gas-aarch64-codealign.d-fix-pattern.patch
-Patch09: 0009-Drop-redundant-and-misleading-test-headers.patch
-Patch10: 0010-ld-testsuite-ld-aarch64-disable-textrel-warning-for-.patch
-Patch11: 0011-Use-wide-output-of-readelf-and-objdump-in-tests.patch
-Patch12: 0012-readelf-objdump-add-no-wide-option-support.patch
-Patch13: 0013-readelf-objdump-enable-wide-option-by-default.patch
-Patch14: 0014-Dropped-unused-test-file.patch
-Patch15: 0015-Load-libdebuginfod-library-on-demand.patch
-Patch16: 0016-ld-testsuite-ld-cdtest-cdtest.exp-disable-Wstringop-.patch
-Patch17: 0017-gold-testsuite-disable-PIE.patch
-Patch18: 0018-ld-testsuite-ld-i386-use-z-lazy-binding-for-tests-fa.patch
-Patch19: 0019-libctf-testsuite-disable-all-warnings-enabled-by-Wal.patch
-Patch20: 0020-ld-testsuite-ld-bootstrap-bootstrap.exp-disable-Wpsa.patch
-Patch21: 0021-Fix-libtool-parts-inlined-into-pregenerated-files.patch
+# http://git.altlinux.org/gears/b/binutils.git
+Source: binutils-%version-%release.tar
 
 %def_enable pgo_lto
 %def_with debuginfod
@@ -106,35 +74,10 @@ libiberty.
 This package contains source code of GNU Binutils.
 
 %prep
-%setup
+%setup -n %name-%version-%release
 
-%patch -p1
-chmod +x gold/testsuite/plugin_pr22868.sh
-
-# Backports from upstream
-
-# ALT patches
-%patch01 -p1
-%patch02 -p1
-%patch03 -p1
-%patch04 -p1
-%patch05 -p1
-%patch06 -p1
-%patch07 -p1
-%patch08 -p1
-%patch09 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
+# Remove directories we are not going to build for this package.
+rm -r gdb gdbserver gdbsupport sim
 
 sed -i 's/%%{release}/%release/g' bfd/Makefile{.am,.in}
 
@@ -184,7 +127,7 @@ rm %buildroot%_libdir/libctf*.a
 
 # Install ld.default and ld wrapper.
 ln -snf ld.bfd %buildroot%_bindir/ld.default
-install -pm755 %_sourcedir/ld.sh %buildroot%_bindir/ld
+install -pm755 alt/ld.sh %buildroot%_bindir/ld
 
 # Install PIC version of the libiberty.a
 install -pm644 libiberty/pic/libiberty.a %buildroot%_libdir/
@@ -213,7 +156,7 @@ OUTPUT_FORMAT="\
 /* Ensure this .so library will not be used by a link for a different format
    on a multi-architecture system.  */
 $(gcc $CFLAGS $LDFLAGS -shared -x c /dev/null -o /dev/null -Wl,--verbose -v 2>&1 |
-	sed -n -f "%_sourcedir/output-format.sed")"
+	sed -n -f "alt/output-format.sed")"
 
 cat >%buildroot%_libdir/libbfd.so <<EOF
 /* GNU ld script */
@@ -249,7 +192,7 @@ sed -i '/HAVE_STDINT_H/,/^#endif/d; /#include <sys\/types.h>/i#include <stdint.h
 # Workaround multilib issues
 wordsize=$(printf '%%s\n%%s' '#include <bits/wordsize.h>' '__WORDSIZE' | gcc -E -P -)
 mv %buildroot%_includedir/bfd/bfd{,-$wordsize}.h
-install -pm644 %_sourcedir/bfd.h %buildroot%_includedir/bfd/
+install -pm644 alt/bfd.h %buildroot%_includedir/bfd/
 
 # Add more include files.
 install -pm644 include/libiberty.h %buildroot%_includedir/
@@ -264,7 +207,6 @@ done
 
 mkdir -p %buildroot%binutils_sourcedir
 cp %SOURCE0 %buildroot%binutils_sourcedir/
-cp %PATCH0 %buildroot%binutils_sourcedir/
 
 %find_lang binutils bfd gas gold gprof ld opcodes --append --output files.lst
 
@@ -284,7 +226,7 @@ XFAIL_TESTS=
 XFAIL_TESTS="$XFAIL_TESTS script_test_12i"
 %endif
 
-%make_build -k check CC="%_sourcedir/gcc.sh" CXX="%_sourcedir/g++.sh" \
+%make_build -k check CC="$PWD/alt/gcc.sh" CXX="$PWD/alt/g++.sh" \
 	XFAIL_TESTS="$XFAIL_TESTS" RUNTESTFLAGS="$RUNTESTFLAGS" \
 %ifnarch %check_arches
     || : \
@@ -321,6 +263,12 @@ XFAIL_TESTS="$XFAIL_TESTS script_test_12i"
 %binutils_sourcedir
 
 %changelog
+* Wed Sep 29 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.37-alt2
+- Changed build scheme to git branches instead of patches (ALT#40904).
+- Fixed preserving dates in ar archives processed with strip/objcopy
+  with -p/--preserve-dates option.
+- Fixed FTBFS with gcc 11 (by switching some test back to DWARF version 4).
+
 * Sat Sep 11 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.37-alt1
 - Updated to 2.37 20210908.
 - Added --no-wide option to objdump and readelf utilities.
