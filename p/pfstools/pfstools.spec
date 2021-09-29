@@ -5,8 +5,8 @@
 %def_without opencv
 
 Name: pfstools
-Version: 2.1.0
-Release: alt4.1
+Version: 2.2.0
+Release: alt1
 
 Summary: High Dynamic Range (HDR) Images and Video manipulation tools
 License: GPLv2+
@@ -20,6 +20,7 @@ BuildRequires: gcc-c++ libImageMagick-devel libfftw3-devel libGLUT-devel libgeos
 BuildRequires: libjpeg-devel liblapack-devel libncurses-devel libnetpbm-devel
 BuildRequires: libreadline-devel openexr-devel cmake libgsl-devel libexif-devel
 BuildRequires: libgomp-devel libtbb-devel zlib-devel
+BuildRequires: rpm-build-python3
 
 %if_with opencv
 BuildRequires: libopencv-devel-static
@@ -92,6 +93,7 @@ channels or luminance channels in pfs stream using Octave.
 %if_with opencv
 %_bindir/pfsalign
 %endif
+%_bindir/pfs_automerge
 %_bindir/pfscolortransform
 %_bindir/pfshdrcalibrate
 %_bindir/pfsinhdrgen
@@ -127,6 +129,7 @@ channels or luminance channels in pfs stream using Octave.
 %_bindir/pfsoutppm
 %_bindir/pfsoutrgbe
 %_bindir/pfsouttiff
+%_bindir/pfs_split_exposures.py
 %_bindir/pfspad
 %_bindir/pfspanoramic
 %_bindir/pfsrotate
@@ -151,6 +154,7 @@ channels or luminance channels in pfs stream using Octave.
 %if_with opencv
 %_man1dir/pfsalign.*
 %endif
+%_man1dir/pfs_automerge.*
 %_man1dir/pfscolortransform.*
 %_man1dir/pfshdrcalibrate.*
 %_man1dir/pfsinhdrgen.*
@@ -225,6 +229,9 @@ channels or luminance channels in pfs stream using Octave.
 %endif
 
 %changelog
+* Wed Sep 29 2021 Anton Farygin <rider@altlinux.ru> 2.2.0-alt1
+- 2.2.0
+
 * Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt4.1
 - NMU: autorebuild with libnetpbm.so.11
 
