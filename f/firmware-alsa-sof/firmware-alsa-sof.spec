@@ -1,7 +1,7 @@
 %global _firmwarepath  /lib/firmware
 Summary: Firmware and topology files for Sound Open Firmware project
 Name: firmware-alsa-sof
-Version: 1.6.1
+Version: 1.8
 Release: alt1
 # See later in the spec for a breakdown of licensing
 License: BSD
@@ -29,11 +29,9 @@ This package contains the debug files for the Sound Open Firmware project.
 %build
 
 %install
-mkdir -p  %buildroot%_firmwarepath
-export SOF_VERSION=v%version
-ROOT=%buildroot ./go.sh
-# remove NXP firmware files
-rm -rf %buildroot%_firmwarepath/nxp
+mkdir -p  %buildroot%_firmwarepath/intel/
+cp -a v%version.x/sof-tplg-v%version  %buildroot%_firmwarepath/intel/sof-tplg
+cp -a v%version.x/sof-v%version  %buildroot%_firmwarepath/intel/sof
 
 # gather files and directories
 FILEDIR=$(pwd)
@@ -52,19 +50,19 @@ cat alsa-sof-firmware.files
 
 %files -f alsa-sof-firmware.files
 %doc LICENCE*  README*
-
 %dir %_firmwarepath/intel
-
-# Licence: 3-clause BSD
-# .. for files with suffix .tplg
 %_firmwarepath/intel/sof-tplg
 
-# Licence: SOF (3-clause BSD plus others)
-# .. for files with suffix .ri
 
 %files debug -f alsa-sof-firmware.debug-files
 
 %changelog
+* Thu Sep 30 2021 Anton Farygin <rider@altlinux.ru> 1.8-alt1
+- 1.8
+
+* Sun Apr 25 2021 Anton Farygin <rider@altlinux.ru> 1.7-alt1
+- 1.7
+
 * Fri Feb 05 2021 Anton Farygin <rider@altlinux.org> 1.6.1-alt1
 - 1.6.1
 
