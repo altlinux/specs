@@ -3,7 +3,7 @@
 
 %define rname kid3
 Name: kde5-%rname
-Version: 3.8.6
+Version: 3.8.7
 Release: alt1
 %K5init altplace
 
@@ -154,6 +154,7 @@ done
     -DWITH_DOCDIR=%_docdir/%name \
     -DWITH_QT4:BOOL=OFF \
     -DWITH_QT5:BOOL=ON \
+    -DWITH_FFMPEG=ON \
     -DWITH_TAGLIB:BOOL=ON \
     -DWITH_ID3LIB:BOOL=ON \
     -DWITH_VORBIS:BOOL=ON \
@@ -210,6 +211,9 @@ done
 #%_K5dbus_iface/*id3*
 
 %changelog
+* Thu Sep 30 2021 Sergey V Turchin <zerg@altlinux.org> 3.8.7-alt1
+- new version
+
 * Mon May 24 2021 Sergey V Turchin <zerg@altlinux.org> 3.8.6-alt1
 - new version
 
