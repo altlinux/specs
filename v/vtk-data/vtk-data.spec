@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
-%define ver 9.0
 Name: vtk-data
-Version: %ver.1
-Release: alt1
+Version: 9.0.1
+Release: alt6
 Summary: Data files for examples of The Visualization Toolkit (VTK)
 License: MIT
 Group: Development/Other
@@ -21,27 +22,18 @@ surface reconstruction, implicit modelling, decimation) and rendering techniques
 
 This package contains data files for examples of VTK.
 
-%package -n %name%ver
-Summary: Data files for examples of The Visualization Toolkit (VTK)
-Group: Development/Other
-
-%description -n %name%ver
-VTK is an open-source software system for image processing, 3D graphics, volume
-rendering and visualization. VTK includes many advanced algorithms (e.g.,
-surface reconstruction, implicit modelling, decimation) and rendering techniques
-(e.g., hardware-accelerated volume rendering, LOD control).
-
-This package contains data files for examples of VTK.
-
 %install
 install -d %buildroot%_datadir
 cd %buildroot%_datadir
 tar -xf %SOURCE0
 
-%files -n %name%ver
-%_datadir/vtk-%ver
+%files
+%_datadir/vtk-*
 
 %changelog
+* Thu Sep 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.1-alt6
+- Renamed vtk-data9.0 package to vtk-data.
+
 * Tue May 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.1-alt1
 - Updated to upstream version 9.0.1.
 

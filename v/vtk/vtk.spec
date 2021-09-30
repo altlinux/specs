@@ -1,4 +1,6 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 # TODO: remove later this fix for p9 support
 %define _cmake__builddir BUILD
@@ -10,7 +12,7 @@
 %define ver 9.0
 Name: %oname
 Version: %ver.1
-Release: alt5
+Release: alt6
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -76,6 +78,8 @@ Patch18: %oname-%version-upstream-doubleclick-command.patch
 
 Patch19: %oname-%version-alt-fix-uninitialized-memory-use-in-openslide-wrapper.patch
 
+Patch20: %oname-%version-alt-gcc11-compat.patch
+
 Requires: lib%oname%ver = %EVR
 
 BuildRequires(pre): rpm-build-ubt
@@ -85,7 +89,7 @@ BuildRequires: gcc-c++ tk-devel cmake libGLU-devel libXt-devel
 BuildRequires: libmysqlclient-devel postgresql-devel
 BuildRequires: boost-devel boost-filesystem-devel
 BuildRequires: boost-graph-parallel-devel
-BuildRequires: vtk-data%ver
+BuildRequires: vtk-data
 BuildRequires: libfreetype-devel libjpeg-devel
 BuildRequires: libxml2-devel libexpat-devel libftgl220-devel libpng-devel
 BuildRequires: libtiff-devel zlib-devel libhdf5-devel libsqlite3-devel
@@ -150,7 +154,7 @@ Requires: python3-module-%name = %EVR
 Requires: python3-module-%name-tests = %EVR
 Requires: %name-doc = %EVR
 Requires: %name-examples = %EVR
-Requires: %name-data = %EVR
+Requires: %name-data%ver = %EVR
 # Following dependencies are duplicates from build dependencies
 Requires: qt5-base-devel
 Requires: libfreetype-devel
@@ -258,7 +262,7 @@ This package contains tests for Python bindings to VTK.
 Summary: The Visualization Toolkit (VTK) examples
 Group: Development/Tools
 Requires: %name = %EVR
-Requires: %name-data = %EVR
+Requires: %name-data%ver = %EVR
 %add_python3_req_skip numeric
 
 %description examples
@@ -270,11 +274,11 @@ surface reconstruction, implicit modelling, decimation) and rendering techniques
 This package contains VTK examples. For correct work of all examples and tests
 You need set environment variable VTK_DATA_ROOT=/usr/share/vtk-%ver.
 
-%package data
+%package data%ver
 Summary: The Visualization Toolkit (VTK) data
 Group: Development/Tools
 
-%description data
+%description data%ver
 VTK is an open-source software system for image processing, 3D graphics, volume
 rendering and visualization. VTK includes many advanced algorithms (e.g.,
 surface reconstruction, implicit modelling, decimation) and rendering techniques
@@ -311,6 +315,7 @@ popd
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
+%patch20 -p1
 
 cp -rv %_datadir/vtk-%ver/.ExternalData/* ./.ExternalData/
 
@@ -331,6 +336,7 @@ export VTK_DATA_ROOT=%_datadir/%oname-%ver
 %add_optflags -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_SOCKET_H
 %add_optflags -D__USE_LARGEFILE64 -DH5_HAVE_SIGSETJMP -D__USE_POSIX
 %add_optflags -DH5_HAVE_SETJMP_H
+%add_optflags -D_FILE_OFFSET_BITS=64
 
 # remote module flags go last
 %cmake \
@@ -451,10 +457,13 @@ cp -alL %_cmake__builddir/ExternalData/* %buildroot%_datadir/%oname-%ver
 %files -n python3-module-%name-tests
 %python3_sitelibdir/vtkmodules/test
 
-%files data
+%files data%ver
 %_datadir/%oname-%ver
 
 %changelog
+* Thu Sep 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.1-alt6
+- Renamed vtk-data package to vtk-data9.0.
+
 * Thu Jun 24 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.1-alt5
 - Fixed crash in uninitialized memory in OpenSlide wrapper (Closes: #40280, #40282).
 
