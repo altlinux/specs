@@ -3,12 +3,12 @@
 %def_disable test
 
 Name: python3-module-%oname
-Version: 3.4.7
+Version: 35.0.0
 Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers
 
-License: %asl
+License: Apache License 2.0
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/cryptography/
 
@@ -24,7 +24,7 @@ Source1: %name-development-%version.tar
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3-devel python3-module-cffi python3-module-setuptools rpm-build-licenses
+BuildRequires: python3-devel python3-module-cffi python3-module-setuptools
 BuildRequires: libssl-devel
 BuildRequires: /proc
 BuildRequires: rust rust-cargo python3-module-setuptools_rust
@@ -69,6 +69,7 @@ export CARGO_NET_OFFLINE=true
 %filter_from_requires /python3[(]cryptography.hazmat.bindings._constant_time[)]/d
 %filter_from_requires /python3[(]cryptography.hazmat.bindings._openssl[)]/d
 %filter_from_requires /python3[(]cryptography.hazmat.bindings._padding[)]/d
+%filter_from_requires /python3[(]cryptography.hazmat.bindings._rust[)]/d
 
 %if_enabled test
 %check
@@ -81,6 +82,9 @@ py.test3
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Thu Sep 30 2021 Vladimir Didenko <cow@altlinux.ru> 35.0.0-alt1
+- new version (35.0.0)
+
 * Sun Apr 25 2021 Vitaly Lipatov <lav@altlinux.ru> 3.4.7-alt1
 - new version (3.4.7) with rpmgs script (ALT bug 39889)
 - update src/rust/vendor separately
