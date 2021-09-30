@@ -17,7 +17,7 @@ BuildRequires: gcc-c++
 
 Name:		htmlcxx
 Version:	0.87
-Release:	alt2_2
+Release:	alt3_2
 Summary:	htmlcxx is a simple non-validating css1 and html parser for C++
 Group:		Development/Other 
 License:	LGPLv2
@@ -78,6 +78,7 @@ Libraries containing the libcss_* files
 
 
 %build
+%add_optflags -std=c++14
 autoreconf -vfi
 %configure
 %make_build
@@ -113,6 +114,9 @@ find %{buildroot} -name *.*a -delete
 
 
 %changelog
+* Fri Oct 01 2021 Igor Vlasenko <viy@altlinux.org> 0.87-alt3_2
+- fixed build with gcc11
+
 * Mon Oct 05 2020 Igor Vlasenko <viy@altlinux.ru> 0.87-alt2_2
 - to Sisyphus (closes: #39037)
 
