@@ -5,7 +5,7 @@ Group: Development/Other
 %define _localstatedir %{_var}
 Name:           libvarconf
 Version:        1.0.1
-Release:        alt1_16
+Release:        alt2_16
 Summary:        Configuration library used by WorldForge clients
 
 License:        LGPLv2+
@@ -40,6 +40,7 @@ Development libraries and headers for linking against the varconf library.
 
 
 %build
+%add_optflags -std=c++14
 %configure
 %make_build
 
@@ -72,6 +73,9 @@ cd tests ; ./conftest < conf.cfg
 
 
 %changelog
+* Fri Oct 01 2021 Igor Vlasenko <viy@altlinux.org> 1.0.1-alt2_16
+- fixed build with gcc11
+
 * Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_16
 - update to new release by fcimport
 
