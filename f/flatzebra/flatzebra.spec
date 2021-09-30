@@ -11,7 +11,7 @@ BuildRequires: gcc-c++
 
 Name:		flatzebra
 Version:	0.1.6
-Release:	alt1_8
+Release:	alt1_10
 Summary:	A Generic Game Engine library for 2D double-buffering animation
 Group:		System/Libraries
 License:	GPLv2
@@ -51,6 +51,7 @@ applications which will use %{name}.
 %setup -q
 
 %build
+%add_optflags -std=c++14
 # fix build on aarch64
 autoreconf -vfi
 
@@ -76,6 +77,9 @@ rm -rf %{buildroot}%{_docdir}/%{name}-%{version}
 
 
 %changelog
+* Fri Oct 01 2021 Igor Vlasenko <viy@altlinux.org> 0.1.6-alt1_10
+- fixed build with gcc11
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.6-alt1_8
 - update by mgaimport
 
