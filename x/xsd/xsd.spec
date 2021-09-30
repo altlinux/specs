@@ -2,12 +2,12 @@ Group: Development/Tools
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
-%define fedora 29
+%define fedora 34
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: xsd
 Version: 4.1.0
-Release: alt1_0.1.a11
+Release: alt1_0.7.a11
 Summary: W3C XML schema to C++ data binding compiler
 # Exceptions permit otherwise GPLv2 incompatible combination with ASL 2.0
 License: GPLv2 with exceptions and ASL 2.0  
@@ -52,17 +52,19 @@ This package contains API documentation for %{name}.
 
 %prep
 %setup -q -n xsd-%{version}.a11+dep
-%patch0 -p0
-%patch1 -p0
+%patch0
+%patch1
+
 
 ##Unbundle libcutl
 rm -rf libcutl
 
 %build
+%add_optflags -std=c++14
 %if 0%{?rhel} < 7
 %{!?__global_ldflags: %global __global_ldflags -Wl,-z,relro}
 %endif
-%make_build verbose=1 CXX=g++ CC=gcc CXXFLAGS="$RPM_OPT_FLAGS -fPIC -pie -Wl,-z,now" LDFLAGS="%{__global_ldflags} -fPIC -pie -Wl,-z,now" BOOST_LINK_SYSTEM=y EXTERNAL_LIBCUTL=y
+%make_build verbose=1 CXX=g++ CC=gcc CXXFLAGS="$RPM_OPT_FLAGS -std=c++14 -fPIC -pie -Wl,-z,now" LDFLAGS="%{__global_ldflags} -fPIC -pie -Wl,-z,now" BOOST_LINK_SYSTEM=y EXTERNAL_LIBCUTL=y
 
 %install
 rm -rf apidocdir
@@ -125,6 +127,9 @@ make -j 1 test EXTERNAL_LIBCUTL=y BOOST_LINK_SYSTEM=y
 %doc apidocdir/*
 
 %changelog
+* Fri Oct 01 2021 Igor Vlasenko <viy@altlinux.org> 4.1.0-alt1_0.7.a11
+- fixed build with gcc11
+
 * Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 4.1.0-alt1_0.1.a11
 - update to new release by fcimport
 
