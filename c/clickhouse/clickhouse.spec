@@ -4,12 +4,14 @@
 %def_with jemalloc
 %else
 %def_without jemalloc
-%global optflags_lto %nil
 %endif
 
+# LTO causes random crashes, disable it
+%global optflags_lto %nil
+
 Name: clickhouse
-Version: 21.8.5.7
-Release: alt2
+Version: 21.8.7.22
+Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
 Group: Databases
@@ -60,6 +62,9 @@ Patch1: %name-base64-ppc64le.patch
 Patch2: %name-avro-gcc10-compat.patch
 Patch3: %name-grpc-abseil-cxx17-compat.patch
 Patch4: %name-system-libuv.patch
+Patch5: %name-fastops-gcc-compat.patch
+Patch6: %name-nanodbc-compat.patch
+Patch7: %name-llvm-compat.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: cmake libicu-devel libreadline-devel python3 gperf tzdata cctz-devel
@@ -162,6 +167,18 @@ popd
 
 pushd contrib/cassandra
 %patch4 -p1
+popd
+
+pushd contrib/fastops
+%patch5 -p1
+popd
+
+pushd contrib/nanodbc
+%patch6 -p1
+popd
+
+pushd contrib/llvm
+%patch7 -p1
 popd
 
 # remove third-party headers which must not be used
@@ -298,6 +315,10 @@ fi
 %_datadir/clickhouse-test
 
 %changelog
+* Tue Sep 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.8.7.22-alt1
+- Updated to lts upstream version 21.8.7.22.
+- Disabled LTO which caused random crashes.
+
 * Tue Sep 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.8.5.7-alt2
 - Updated generated version information.
 
