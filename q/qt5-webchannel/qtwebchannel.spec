@@ -3,9 +3,11 @@
 %global qt_module qtwebchannel
 %def_disable bootstrap
 
+%add_findreq_skiplist %_qt5_examplesdir/*
+
 Name: qt5-webchannel
 Version: 5.15.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - WebChannel component
@@ -114,6 +116,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Thu Sep 30 2021 Ivan A. Melnikov <iv@altlinux.org> 5.15.2-alt2
+- exclude examples from findreq to avoid node dependency
+
 * Mon Jan 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt1
 - new version
 
