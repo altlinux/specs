@@ -1,10 +1,10 @@
 %global import_path github.com/containers/skopeo
-%global commit 2b4097bc13e7ba1d16a5225e2292a5cf88072f63
+%global commit 130f32f047b7bf9b1fb4f95c4c5b1da6255e4829
 
 %global _unpackaged_files_terminate_build 1
 
 Name: skopeo
-Version: 1.2.0
+Version: 1.4.1
 Release: alt1
 
 Summary: skopeo is a command line utility that performs various operations on container images and image repositories
@@ -88,7 +88,7 @@ export GOPATH="%go_path"
 # export IGNORE_SOURCES=1
 #%%golang_install
 pushd .gopath/src/%import_path
-%make DESTDIR=%buildroot install
+%make DESTDIR=%buildroot PREFIX=%_prefix install
 popd
 
 install -dp %buildroot%_sysconfdir/containers/{certs.d,oci/hooks.d}
@@ -111,10 +111,12 @@ mkdir -p %buildroot%_datadir/containers
 install -m0644 %SOURCE3 %buildroot%_datadir/containers/mounts.conf
 install -m0644 %SOURCE7 %buildroot%_datadir/containers/seccomp.json
 install -m0644 %SOURCE13 %buildroot%_datadir/containers/containers.conf
+mkdir -p %buildroot%_datadir/alt/secrets
 
 %files -n containers-common
 %config(noreplace) %_sysconfdir/containers
 %_datadir/containers
+%_datadir/alt
 %_man5dir/*
 
 %files
@@ -124,6 +126,10 @@ install -m0644 %SOURCE13 %buildroot%_datadir/containers/containers.conf
 %doc *.md
 
 %changelog
+* Wed Sep 29 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1-alt1
+- new version 1.4.1
+- add /usr/share/alt/secrets to containers-common package, fix mounts.conf
+
 * Tue Nov 10 2020 Alexey Shabalin <shaba@altlinux.org> 1.2.0-alt1
 - new version 1.2.0
 
