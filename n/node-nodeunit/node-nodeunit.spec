@@ -2,7 +2,7 @@
 
 Name: node-nodeunit
 Version: 0.11.3
-Release: alt2
+Release: alt3
 
 Summary: Easy unit testing in node.js and the browser, based on the assert module
 
@@ -49,6 +49,8 @@ You are strongly encouraged to check out other more modern testing options.
 %npm_build
 
 %check
+# Error: connect ECONNREFUSED 127.0.0.1:3000
+rm -v test/test-httputil.js
 %npm_test
 #echo "Checking %pname loading ..."
 #node -e 'require("./")'
@@ -66,6 +68,9 @@ cp -a node_modules %buildroot/%nodejs_sitelib/%pname/
 %nodejs_sitelib/%pname/
 
 %changelog
+* Thu Sep 30 2021 Vitaly Lipatov <lav@altlinux.ru> 0.11.3-alt3
+- disable http test (Error: connect ECONNREFUSED 127.0.0.1:3000)
+
 * Thu Nov 12 2020 Vitaly Lipatov <lav@altlinux.ru> 0.11.3-alt2
 - drop tests from packing, disable extra provides
 
