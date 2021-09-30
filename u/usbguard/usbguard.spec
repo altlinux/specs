@@ -5,11 +5,11 @@
 %def_enable dbus
 %def_disable applet
 
-%define sover 0
+%define sover 1
 %define libusbguard libusbguard%sover
 
 Name: usbguard
-Version: 0.7.8
+Version: 1.0.0
 Release: alt1
 
 Group: System/Servers
@@ -183,6 +183,9 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/usbguard/usbguard-daemon.conf
 %endif
 
 %changelog
+* Thu Sep 30 2021 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt1
+- new version
+
 * Tue Jul 07 2020 Sergey V Turchin <zerg@altlinux.org> 0.7.8-alt1
 - new version
 
