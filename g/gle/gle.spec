@@ -4,10 +4,10 @@
 Name: gle
 Version: 4.2.5
 %define trueversion %{version}
-Release: alt2
+Release: alt3
 Summary: GLE - Graphics language that produces ps/eps/pdf/png/jpg ouput
 Summary(ru_RU.UTF-8): GLE - язык создания изображений. Вывод в ps/eps/pdf/png/jpg
-Copyright: GPL
+License: GPLv2+
 Group: Graphics
 Packager: Igor Vlasenko <viy@altlinux.org>
 URL: http://glx.sourceforge.net/
@@ -22,6 +22,7 @@ Source8:http://glx.sourceforge.net/download/makeani.pl
 
 Patch: gle-graphics-4.2.4c-alt-autoconf.patch
 Patch2: gle-graphics-4.2.5-alt-glibc-compat.patch
+Patch3: gle-graphics-4.2.5-alt-use-system-cxxflags.patch
 
 # Automatically added by buildreq on Thu Sep 21 2006
 BuildRequires: gcc-c++ libjpeg-devel libncurses-devel libtiff-devel libpng-devel libcairo-devel
@@ -36,6 +37,9 @@ BuildRequires: imake libXt-devel xorg-cf-files
 %if_with qt
 BuildRequires: libqt4-devel
 %endif
+
+# wait for https://bugzilla.altlinux.org/show_bug.cgi?id=41035
+ExcludeArch: armh
 
 %description
 GLE is a graphics language that produces postscript, EPS, PDF, PNG, or JPG ouput from a simple script file. The GLE scripting language is full featured with variables, subroutines, logic control, looping, and graphing tools. It is great for plotting and charting data.
@@ -64,10 +68,13 @@ This package contains QGLE - A Graphical Interface to GLE.
 %setup -q -n %{truename}-%{trueversion} -a3
 %patch
 %patch2 -p2
+%patch3 -p1
 
 %build
+%add_optflags -std=c++14
 %autoreconf -fisv
-%configure --with-manip \
+%configure \
+	--with-manip \
 	--with-x \
 	--with-qt=%{_libdir}/qt4 \
 	--with-rpath=no \
@@ -126,6 +133,9 @@ install -m644 platform/autopackage/gle.png $RPM_BUILD_ROOT/%_liconsdir/
 %endif
 
 %changelog 
+* Thu Sep 30 2021 Igor Vlasenko <viy@altlinux.org> 4.2.5-alt3
+- fixed build with gcc11
+
 * Fri May 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.5-alt2
 - NMU: fixed build with new glibc.
 
@@ -208,6 +218,3 @@ install -m644 platform/autopackage/gle.png $RPM_BUILD_ROOT/%_liconsdir/
 
 * Fri Aug 26 2005 Igor Vlasenko <viy@altlinux.ru> 4.0.9-alt1
 - new version
-
-* Tue Jun 23 2005 Igor Vlasenko <viy@altlinux.ru> 4.0.8-alt0.1
-- first build for Sisyphus
