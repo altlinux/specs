@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 Summary:		Minisip library providing various C++ network classes
 Name:			libmnetutil
 Version:		0.8.0
-Release:		alt5_0.3.20100629svn3775.qa1
+Release:		alt6_0.3.20100629svn3775
 License:		LGPLv2+
 URL:			http://www.minisip.org/
 Group:			System/Libraries
@@ -42,6 +42,7 @@ This package contains the development files for library %{name}.
 %patch1 -p2
 
 %build
+%add_optflags -std=c++14
 sh ./bootstrap
 %configure --disable-static
 make %{?_smp_mflags}
@@ -66,6 +67,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 
 %changelog
+* Thu Sep 30 2021 Igor Vlasenko <viy@altlinux.org> 51104:0.8.0-alt6_0.3.20100629svn3775
+- fixed build with gcc11
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 51104:0.8.0-alt5_0.3.20100629svn3775.qa1
 - NMU: applied repocop patch
 
