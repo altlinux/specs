@@ -1,6 +1,7 @@
+%{?optflags_lto:%global optflags_lto %nil}
 Name: freeswitch
 Version: 1.10.6
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -16,7 +17,7 @@ Source3: %name.sysconfig
 Source4: modules.conf
 Source5: fs_cli.conf
 
-BuildRequires: gcc-c++ gsmlib-devel libalsa-devel
+BuildRequires: gcc-c++ libalsa-devel
 BuildRequires: libgnutls-devel libncurses-devel libssl-devel libunixODBC-devel
 BuildRequires: gdbm-devel db4-devel libldap-devel libcurl-devel libjpeg-devel
 BuildRequires: libspeex-devel libspeexdsp-devel libsqlite3-devel libX11-devel libmp4v2-devel
@@ -387,7 +388,6 @@ fi
 %_libdir/%name/mod_shout.so
 %_libdir/%name/mod_silk.so
 %_libdir/%name/mod_siren.so
-%_libdir/%name/mod_skinny.so
 %_libdir/%name/mod_sms.so
 %_libdir/%name/mod_snapshot.so
 %_libdir/%name/mod_sndfile.so
@@ -539,6 +539,12 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Thu Sep 30 2021 Anton Farygin <rider@altlinux.ru> 1:1.10.6-alt2
+- fixed build with gcc-11.2
+- removed build dependency to external gsmlib (removed from Sisyphus)
+- disabled lto to fix unresolved symbols
+- disabled endpoints/mod_skinny due to the quality of code
+
 * Tue Apr 13 2021 Anton Farygin <rider@altlinux.org> 1:1.10.6-alt1
 - 1.10.6
 
