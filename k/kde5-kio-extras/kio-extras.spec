@@ -9,7 +9,7 @@
 
 Name: kde5-%rname
 Version: 21.08.1
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -21,6 +21,9 @@ Requires: %name-common = %version-%release
 Requires: kf5-kio
 Provides: kf5-kio-extras = %EVR
 Obsoletes: kf5-kio-extras < %EVR
+
+# Bug 40997
+Requires: djvu-utils
 
 Source: %rname-%version.tar
 # ALT
@@ -142,6 +145,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libkioarchive.so.%kioarchive_sover
 
 %changelog
+* Wed Sep 29 2021 Oleg Solovyov <mcpain@altlinux.org> 21.08.1-alt2
+- require ddjvu (Closes: #40997)
+
 * Thu Sep 02 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt1
 - new version
 
