@@ -1,9 +1,9 @@
 
-Name: jsoncpp
-Version: 1.9.4
-Release: alt1
+%define sover 19
+Name: jsoncpp%sover
+Version: 1.8.4
+Release: alt6
 %define rname jsoncpp
-%define sover 24
 %define libname lib%rname%sover
 
 Group: System/Libraries
@@ -53,38 +53,41 @@ This package contains the documentation for %name
 
 %build
 %Kbuild \
-  -DJSONCPP_VERSION="%version" \
   -DJSONCPP_WITH_CMAKE_PACKAGE=ON \
   -DJSONCPP_WITH_PKGCONFIG_SUPPORT=ON \
   -DJSONCPP_WITH_TESTS=OFF \
   -DBUILD_STATIC_LIBS=OFF \
   -DBUILD_SHARED_LIBS=ON \
   #
-echo "%version" >version
-# build docs
-%__python3 doxybuild.py --with-dot --doxygen %_bindir/doxygen
 
 %install
 %Kinstall
+# cleanup
+rm -rf %buildroot/%_includedir
+rm -rf %buildroot/%_libdir/cmake
+rm -rf %buildroot/%_pkgconfigdir
+rm -rf %buildroot/%_libdir/lib*.so
 
 %files -n %libname
 %doc AUTHORS LICENSE
 %_libdir/lib%rname.so.%sover
 %_libdir/lib%rname.so.*
 
+%if 0
 %files devel
 %doc dist/doxygen/jsoncpp-api-html-*
 %_libdir/lib%rname.so
 %_includedir/json/
 %_libdir/pkgconfig/%rname.pc
 %_libdir/cmake/%rname/
+%endif
 
 #%files doc
 #%_docdir/%name/
 
 %changelog
-* Thu Sep 30 2021 Sergey V Turchin <zerg@altlinux.org> 1.9.4-alt1
-- new version
+* Thu Sep 30 2021 Sergey V Turchin <zerg@altlinux.org> 1.8.4-alt6
+- build compat package
 
 * Sat Dec 28 2019 Sergey V Turchin <zerg@altlinux.org> 1.8.4-alt5
 - build with python3
