@@ -2,8 +2,8 @@
 # $Id: alterator-control.spec,v 1.15 2006/04/28 10:48:26 inger Exp $ 
 
 Name: alterator-wizardface
-Version: 2.1
-Release: alt3
+Version: 2.2
+Release: alt1
 
 Url: http://altlinux.org/alterator
 Source: %name-%version.tar
@@ -95,6 +95,9 @@ EOF
 %_bindir/*
 
 %changelog
+* Wed Sep 29 2021 Paul Wolneykien <manowar@altlinux.org> 2.2-alt1
+- Disable auto-compilation.
+
 * Wed Jan 17 2018 Paul Wolneykien <manowar@altlinux.org> 2.1-alt3
 - Fix: Load lookout AJAX module instead of the default (HTTP).
 - Adapd build for the E2K platform.
