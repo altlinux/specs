@@ -1,7 +1,7 @@
 %define _name exo
 
 Name: lib%_name
-Version: 4.17.0
+Version: 4.17.1
 Release: alt1
 
 Summary: Extension library to Xfce
@@ -15,7 +15,7 @@ Vcs: https://gitlab.xfce.org/xfce/exo.git
 Source: %_name-%version.tar
 Patch: %_name-%version-%release.patch
 
-BuildRequires: rpm-build-xfce4  xfce4-dev-tools >= 4.15 libxfce4util-devel
+BuildRequires: rpm-build-xfce4  xfce4-dev-tools >= 4.15 libxfce4util-devel >= 4.17.0
 BuildRequires: libgtk+3-devel libxfce4ui-gtk3-devel
 BuildRequires: glib2-devel >= 2.27
 BuildRequires: gtk-doc intltool
@@ -128,6 +128,9 @@ make check
 %_datadir/gtk-doc/html/%{_name}*
 
 %changelog
+* Thu Sep 30 2021 Mikhail Efremov <sem@altlinux.org> 4.17.1-alt1
+- Updated to 4.17.1.
+
 * Thu Jul 22 2021 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt1
 - Cleanup BR.
 - Updated to 4.17.0.
