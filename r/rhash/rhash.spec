@@ -1,7 +1,8 @@
+%def_disable static
 Summary:        Utility for computing hash sums and creating magnet links.
 Name:           rhash
 Version:        1.3.5
-Release:        alt2
+Release:        alt3
 License:        MIT
 Group:          File tools
 URL:            http://rhash.sourceforge.net/
@@ -77,6 +78,10 @@ make test-shared
 make PREFIX=%_prefix DESTDIR="%buildroot" MANDIR="%_mandir" LIBDIR="%_libdir" install install-lib-static install-lib-shared install-shared-binary
 make PREFIX=%_prefix DESTDIR="%buildroot" MANDIR="%_mandir" LIBDIR="%_libdir" -C librhash install-so-link install-headers
 
+%if_disabled static
+rm -v %buildroot%_libdir/librhash.a
+%endif
+
 %files
 %_bindir/*
 %config %_sysconfdir/rhashrc
@@ -86,14 +91,19 @@ make PREFIX=%_prefix DESTDIR="%buildroot" MANDIR="%_mandir" LIBDIR="%_libdir" -C
 %_libdir/librhash.so
 %_includedir/*.h
 
+%if_enabled static
 %files -n lib%name-devel-static
 %_libdir/librhash.a
+%endif
 
 %files -n lib%name
 %doc COPYING README ChangeLog
 %_libdir/librhash.so.*
 
 %changelog
+* Thu Sep 30 2021 Vitaly Lipatov <lav@altlinux.ru> 1.3.5-alt3
+- NMU: disable build devel-static subpackage
+
 * Mon Sep 11 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.5-alt2
 - fix requires for static package
 
