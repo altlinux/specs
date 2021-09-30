@@ -26,15 +26,14 @@
 %global libuv_abi 1.42.0
 %def_with systemuv
 
-# FIXME
+# see deps/v8/src/objects/intl-objects.h for V8_MINIMUM_ICU_VERSION
 %global libicu_abi 6.5
-# rpm-build-info gives _distro_version
-%if %_vendor == "alt" && (%_distro_version == "Sisyphus")
+# see rpm-macros-features
+%if_feature icu %libicu_abi
 %def_with systemicu
-# TODO: node has to use icu:: for ICU names
-#add_optflags -DU_USING_ICU_NAMESPACE=1
 %endif
 
+# TODO: some strange build error
 %ifarch armh
 %global optflags_lto %nil
 %endif
@@ -55,7 +54,7 @@
 
 Name: node
 Version: %major.0
-Release: alt1
+Release: alt2
 
 Summary: Evented I/O for V8 Javascript
 
@@ -74,6 +73,7 @@ Patch: 8699aa501c4d4e1567ebe8901e5ec80cadaa9323.patch
 
 BuildRequires(pre): rpm-macros-nodejs
 BuildRequires(pre): rpm-build-intro >= 2.1.14
+BuildRequires(pre): rpm-macros-features
 
 BuildRequires: python3-devel gcc-c++ zlib-devel
 
@@ -386,6 +386,9 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Thu Sep 30 2021 Vitaly Lipatov <lav@altlinux.ru> 14.18.0-alt2
+- use rpm-macros-features to check icu version
+
 * Tue Sep 28 2021 Vitaly Lipatov <lav@altlinux.ru> 14.18.0-alt1
 - new version 14.18.0 (with rpmrb script)
 - disable LTO on armh
