@@ -1,6 +1,6 @@
 Name: quick-usb-formatter
 Version: 0.6
-Release: alt17
+Release: alt18
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -27,8 +27,8 @@ Patch9: alt-detect-exfatprogs.patch
 # Automatically added by buildreq on Thu Oct 06 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3
 #BuildRequires: extra-cmake-modules kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel python-module-google python3-dev ruby ruby-stdlibs
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules gettext qt5-base-devel
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: libX11-devel extra-cmake-modules gettext qt5-base-devel
 BuildRequires: kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel
 BuildRequires: libcryptsetup-devel libcryptsetup
 
@@ -47,6 +47,8 @@ device notifier, an additional option for quick format usb sticks.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+
+sed -ri '/find_package.*MSGFMT/afind_package(X11)' CMakeLists.txt
 
 install -m 0644 %SOURCE10 translations/
 
@@ -71,6 +73,9 @@ install -m 0644 %SOURCE10 translations/
 
 
 %changelog
+* Thu Sep 30 2021 Sergey V Turchin <zerg@altlinux.org> 0.6-alt18
+- fix to build
+
 * Fri May 14 2021 Sergey V Turchin <zerg@altlinux.org> 0.6-alt17
 - detect exfatprogs
 
@@ -107,13 +112,13 @@ install -m 0644 %SOURCE10 translations/
 * Wed Nov 07 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.6-alt7
 - formatting crypto-luks usb devices added
 
-* Fri Jul 13 2018 Sergey V Turchin <zerg@altlinux.org> 0.6-alt6%ubt
+* Fri Jul 13 2018 Sergey V Turchin <zerg@altlinux.org> 0.6-alt6
 - fix big statusbar message
 
-* Mon Jul 02 2018 Sergey V Turchin <zerg@altlinux.org> 0.6-alt5%ubt
+* Mon Jul 02 2018 Sergey V Turchin <zerg@altlinux.org> 0.6-alt5
 - show menu entry only in KDE
 
-* Fri Nov 17 2017 Sergey V Turchin <zerg@altlinux.org> 0.6-alt4%ubt
+* Fri Nov 17 2017 Sergey V Turchin <zerg@altlinux.org> 0.6-alt4
 - port to KF5
 
 * Thu Oct 06 2016 Sergey V Turchin <zerg@altlinux.org> 0.6-alt3
