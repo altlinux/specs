@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		1765c4f1bc
+%define svnrev		7d6ebba1ba
 
 %def_with pgsql
 %def_enable java
@@ -20,8 +20,8 @@
 %endif
 
 Name: zabbix
-Version: 5.4.4
-Release: alt2
+Version: 5.4.5
+Release: alt1
 Epoch: 1
 
 Summary: A network monitor
@@ -674,6 +674,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Fri Oct 01 2021 Alexei Takaseev <taf@altlinux.org> 1:5.4.5-alt1
+- 5.4.5
+
 * Fri Sep 03 2021 Alexei Takaseev <taf@altlinux.org> 1:5.4.4-alt2
 - Add Req: to php7-openssl for -phpfrontend-php7 subpackage
   (ALT #40841)
