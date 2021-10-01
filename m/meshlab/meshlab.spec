@@ -1,7 +1,7 @@
-%global vcglibver 2020.12
+%global vcglibver 2021.07
 
 Name: meshlab
-Version: 2020.12
+Version: 2021.07
 Release: alt1
 
 Summary: A system for processing and editing unstructured 3D triangular meshes
@@ -13,15 +13,14 @@ Provides: bundled(vcglib) = %vcglibver
 
 ExcludeArch: armh
 
-# https://github.com/cnr-isti-vclab/meshlab/archive/v%version.tar.gz
+# Source0-url: https://github.com/cnr-isti-vclab/meshlab/archive/refs/tags/Meshlab-%version.tar.gz
 Source0: %name-%version.tar
 # Probably belongs in its own package, but nothing else seems to depend on it.
-# https://github.com/cnr-isti-vclab/vcglib/archive/v%vcglibver.tar.gz
+# Source1-url: https://github.com/cnr-isti-vclab/vcglib/archive/refs/tags/%vcglibver.tar.gz
 Source1: vcglib-%vcglibver.tar
-Source2: meshlab-48x48.xpm
 
-# PATCH-FIX-OPENSUSE -- put shaders in appropriate directories
-Patch1: meshlab-2016.12-shader-path.patch
+Patch0: meshlab-2021.07-MESHLAB_LIB_INSTALL_DIR-fix.patch
+Patch1: meshlab-2021.07-system-levmar.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -29,19 +28,23 @@ BuildRequires: cmake
 BuildRequires: libgomp-devel
 BuildRequires: bzlib-devel
 BuildRequires: pkgconfig(glew)
-#BuildRequires: levmar-devel
+BuildRequires: levmar-devel
 BuildRequires: lib3ds-devel
-#BuildRequires: libgmp-devel
-#BuildRequires: qhull-devel
+BuildRequires: libgmpxx-devel
+BuildRequires: libxerces-c-devel
+BuildRequires: qhull-devel qhull
 BuildRequires: qt5-base-devel
 BuildRequires: eigen3
 BuildRequires: pkgconfig(Qt5XmlPatterns)
 BuildRequires: pkgconfig(Qt5Script)
 BuildRequires: qt5-declarative-devel
 BuildRequires: qtsoap5-devel
-#BuildRequires: libmuparser-devel
+#BuildRequires: libexif-devel
+BuildRequires: boost-devel
+BuildRequires: cgal-devel
+BuildRequires: libmuparser-devel
 #BuildRequires: chrpath
-BuildRequires: patchelf
+#BuildRequires: patchelf
 BuildRequires: desktop-file-utils
 BuildRequires: ImageMagick-tools
 %ifnarch ppc64le
@@ -59,22 +62,14 @@ these kinds of meshes.
 
 %prep
 %setup -a1
-%patch1 -p1 -b .shader-path
-
-# Turn of execute permissions on source files to avoid rpmlint
-# errors and warnings for the debuginfo package
-find . \( -name *.h -o -name *.cpp -o -name *.inl \) -a -executable \
-    -exec chmod -x {} \;
+%patch0 -p1 -b .MESHLAB_LIB_INSTALL_DIR-fix
+%patch1 -p1 -b .system-levmar
 
 rmdir src/vcglib
 mv vcglib-%vcglibver src/vcglib
 
-# Remove bundled library sources, since we use the packaged libraries
-rm -rf vcglib/wrap/system/multithreading vcglib/wrap/system/*getopt* vcglib/wrap/system/time
-#rm -r src/external/{levmar*,lib3ds*,muparser*}
-
 # plugin path
-sed -i -e 's|"lib"|"%{_lib}"|g' src/common/pluginmanager.cpp
+sed -i -e 's|"lib"|"%{_lib}"|g' src/common/globals.cpp
 
 %ifarch %e2k
 # lcc 1.23 only got OpenMP 2.5, hope 1.24 will deliver 5.0
@@ -84,48 +79,78 @@ find src/meshlabplugins/filter_screened_poisson/ \
 %endif
 
 %build
-pushd src
-export CXXFLAGS=`echo %{optflags} -fopenmp`
-%cmake
-%cmake_build
-popd
+export CXXFLAGS=`echo %{optflags} -fopenmp -DSYSTEM_QHULL -I/usr/include/libqhull`
 
-# process icon
-convert %SOURCE2 meshlab.png
+%cmake src \
+	-DCMAKE_SKIP_RPATH=ON \
+	-DCMAKE_VERBOSE_MAKEFILE=OFF \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	-DALLOW_BUNDLED_EIGEN=OFF \
+	-DALLOW_BUNDLED_GLEW=OFF \
+	-DALLOW_BUNDLED_LEVMAR=OFF \
+	-DALLOW_BUNDLED_LIB3DS=OFF \
+	-DALLOW_BUNDLED_MUPARSER=OFF \
+	-DALLOW_BUNDLED_NEWUOA=ON \
+	-DALLOW_BUNDLED_OPENCTM=ON \
+	-DALLOW_BUNDLED_QHULL=OFF \
+	-DALLOW_BUNDLED_SSYNTH=ON \
+	-DALLOW_BUNDLED_XERCES=OFF \
+	-DALLOW_SYSTEM_EIGEN=ON \
+	-DALLOW_SYSTEM_GLEW=ON \
+	-DALLOW_SYSTEM_GMP=ON \
+	-DALLOW_SYSTEM_LIB3DS=ON \
+	-DALLOW_SYSTEM_MUPARSER=ON \
+	-DALLOW_SYSTEM_OPENCTM=ON \
+	-DALLOW_SYSTEM_QHULL=ON \
+	-DALLOW_SYSTEM_XERCES=ON \
+	-DEigen3_DIR=usr/include/eigen3 \
+	-DGlew_DIR=/usr/include/GL \
+	-DQhull_DIR=/usr/include/libqhull
+
+%cmake_build
+
+%install
+%cmakeinstall_std
 
 # create desktop file
-cat <<EOF >meshlab.desktop
+cat <<EOF >%buildroot%_desktopdir/meshlab.desktop
 [Desktop Entry]
-Name=meshlab
+Name=MeshLab
 GenericName=MeshLab 3D triangular mesh processing and editing
-Exec=meshlab
+Exec=env QT_QPA_PLATFORM=xcb meshlab
 Icon=meshlab
 Terminal=false
 Type=Application
-Categories=Graphics;3DGraphics;
+Categories=Graphics;
 EOF
 
-%install
-pushd src
-%cmakeinstall_std
-popd
-
-patchelf --set-rpath %_libdir/meshlab %buildroot/%_bindir/%name \
-    %buildroot/%_libdir/%name/plugins/*.so
-
 desktop-file-validate %buildroot%_desktopdir/meshlab.desktop
+
+# convert icon
+for x in 16 32 48; do
+	mkdir -p %buildroot%_iconsdir/hicolor/$x'x'$x/apps/
+	  convert %buildroot%_iconsdir/hicolor/512x512/apps/%name.png \
+	  -resize $x'x'$x %buildroot/%_iconsdir/hicolor/$x'x'$x/apps/%name.png
+done
+
+# remove static library
+rm %buildroot%_libdir/*.a
 
 %files
 %doc README.md
 %doc docs/readme.txt
 %doc docs/privacy.txt
 %_bindir/%name
+%_libdir/*.so
 %_libdir/%name
 %_datadir/%name
 %_desktopdir/%name.desktop
-%_pixmapsdir/%name.png
+%_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Thu Sep 30 2021 Anton Midyukov <antohami@altlinux.org> 2021.07-alt1
+- new version (2021.07) with rpmgs script
+
 * Sun Jan 10 2021 Anton Midyukov <antohami@altlinux.org> 2020.12-alt1
 - 2020.12
 
