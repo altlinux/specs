@@ -7,8 +7,8 @@ Group: Development/C
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libimagequant
-Version:        2.15.1
-Release:        alt1_1.2
+Version:        2.16.0
+Release:        alt1_1
 Summary:        Palette quantization library
 
 License:        GPLv3+ and MIT
@@ -17,7 +17,6 @@ Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 
 # Fix shared library permissions
 Patch0:         libimagequant_solibperm.patch
-Patch2000:      %name-e2k.patch
 
 BuildRequires:  gcc
 Source44: import.info
@@ -40,9 +39,6 @@ developing applications that use %{name}.
 %prep
 %setup -q
 %patch0 -p1
-%ifarch %e2k
-%patch2000 -p2
-%endif
 
 
 
@@ -73,6 +69,9 @@ rm -f %{buildroot}%{_libdir}/%{name}.a
 
 
 %changelog
+* Fri Oct 01 2021 Igor Vlasenko <viy@altlinux.org> 2.16.0-alt1_1
+- update to new release by fcimport
+
 * Tue Sep 28 2021 Michael Shigorin <mike@altlinux.org> 2.15.1-alt1_1.2
 - built for sisyphus
 
