@@ -2,11 +2,12 @@
 Summary: Firmware and topology files for Sound Open Firmware project
 Name: firmware-alsa-sof
 Version: 1.8
-Release: alt1
+Release: alt2
 # See later in the spec for a breakdown of licensing
 License: BSD
 Group: Sound
 Url: https://github.com/thesofproject/sof-bin
+BuildRequires: alsa-utils alsa-topology-conf
 Source: %name-%version.tar
 Provides: alsa-sof-firmware = %EVR
 # noarch, since the package is firmware
@@ -27,11 +28,17 @@ This package contains the debug files for the Sound Open Firmware project.
 %setup
 
 %build
+# build generic topology file from alsa-topology
+alsatplg -c /usr/share/alsa/topology/hda-dsp/skl_hda_dsp_generic-tplg.conf \
+         -o skl_hda_dsp_generic-tplg.bin
 
 %install
 mkdir -p  %buildroot%_firmwarepath/intel/
-cp -a v%version.x/sof-tplg-v%version  %buildroot%_firmwarepath/intel/sof-tplg
-cp -a v%version.x/sof-v%version  %buildroot%_firmwarepath/intel/sof
+cp -a v%version.x/sof-tplg-v%version  %buildroot%_firmwarepath/intel/sof-tplg-v%version
+cp -a v%version.x/sof-v%version  %buildroot%_firmwarepath/intel/sof-v%version
+ln -s sof-v%version %buildroot%_firmwarepath/intel/sof
+ln -s sof-tplg-v%version %buildroot%_firmwarepath/intel/sof-tplg
+install -m0644 skl_hda_dsp_generic-tplg.bin %buildroot%_firmwarepath/
 
 # gather files and directories
 FILEDIR=$(pwd)
@@ -50,13 +57,22 @@ cat alsa-sof-firmware.files
 
 %files -f alsa-sof-firmware.files
 %doc LICENCE*  README*
+%dir %_firmwarepath
+%_firmwarepath/skl_hda_dsp_generic-tplg.bin
 %dir %_firmwarepath/intel
 %_firmwarepath/intel/sof-tplg
+%_firmwarepath/intel/sof
+
 
 
 %files debug -f alsa-sof-firmware.debug-files
 
 %changelog
+* Fri Oct 01 2021 Anton Farygin <rider@altlinux.ru> 1.8-alt2
+- RPM does not know how to replace the symlinks to the directory.
+  Switched to symlink back (for sof and sof-tplg).
+- Added generic SST topology file for Skylake SST driver.
+
 * Thu Sep 30 2021 Anton Farygin <rider@altlinux.ru> 1.8-alt1
 - 1.8
 
