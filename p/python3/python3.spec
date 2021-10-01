@@ -87,7 +87,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 
 Name: python3
 Version: %{pybasever}.7
-Release: alt2
+Release: alt3
 
 Summary: Version 3 of the Python programming language aka Python 3000
 
@@ -458,6 +458,15 @@ popd
 # the reason for such performance difference is unknown
 find build -exec touch {} \;
 make install DESTDIR=%buildroot INSTALL="install -p"
+
+# Here we copy some config files to make python suggest to compile with shared
+# library, not static. This can be verified by:
+# python3 -c 'import sys ; import distutils.sysconfig ; sys.stdout.write(distutils.sysconfig.get_config_var("BLDLIBRARY"))'
+# See more in ALT#40939
+cp -av ../build-shared/Makefile %buildroot%pylibdir/config-%pybasever%pyabi-%pyarch/Makefile
+cp -av ../build-shared/python-config %buildroot%_bindir/python3-config
+cp -av ../build-shared/pyconfig.h %buildroot%include_dir
+cp -av ../build-shared/build/lib.linux-*-%pybasever/_sysconfigdata__linux_%pyarch.py %buildroot%pylibdir
 
 mv %buildroot%_bindir/2to3 %buildroot%_bindir/python3-2to3
 
@@ -1007,6 +1016,9 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Fri Oct 01 2021 Grigory Ustinov <grenka@altlinux.org> 3.9.7-alt3
+- Fix previous change to make python link as shared library (Closes: #40939).
+
 * Mon Sep 20 2021 Grigory Ustinov <grenka@altlinux.org> 3.9.7-alt2
 - Bring back static build (thx to ilyakurdyukov@) (Closes: #40939).
 
