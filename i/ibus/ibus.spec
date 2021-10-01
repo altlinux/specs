@@ -21,7 +21,7 @@
 %def_disable installed_tests
 
 Name: ibus
-Version: 1.5.24
+Version: 1.5.25
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
@@ -69,7 +69,8 @@ BuildRequires: gtk-doc
 BuildRequires: iso-codes-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: gnome-icon-theme-symbolic
-BuildRequires: libXi-devel libXtst-devel
+BuildRequires: libXi-devel libXtst-devel libXfixes-devel
+BuildRequires: xkeyboard-config-devel
 BuildRequires: libnotify-devel
 %{?_enable_unicode_dict:BuildRequires: unicode-ucd}
 %{?_enable_python:BuildRequires: python3-devel python3-module-dbus-devel python3-module-pygobject3-devel}
@@ -350,6 +351,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Sat Aug 21 2021 Yuri N. Sedunov <aris@altlinux.org> 1.5.25-alt1
+- 1.5.25
+
 * Mon Feb 22 2021 Yuri N. Sedunov <aris@altlinux.org> 1.5.24-alt1
 - 1.5.24
 - new -gtk4 subpackage
