@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
 Name: deepin-terminal
-Version: 5.4.12
+Version: 5.4.13
 Release: alt1
 Summary: Default terminal emulation application for Deepin
 License: GPL-3.0+ and (LGPL-2.0+ and GPL-2.0+ and BSD-3-Clause)
@@ -15,16 +15,18 @@ BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: qt5-base-devel
+BuildRequires: qt5-tools-devel
+BuildRequires: qt5-x11extras-devel
 BuildRequires: dtk5-widget-devel
 BuildRequires: dtk5-gui-devel
 BuildRequires: dtk5-core-devel
+BuildRequires: deepin-qt-dbus-factory-devel
 BuildRequires: glib2-devel
 BuildRequires: libat-spi2-core-devel
-BuildRequires: deepin-qt-dbus-factory-devel
-BuildRequires: qt5-tools-devel
 BuildRequires: libsecret-devel
 BuildRequires: libgtest-devel
 BuildRequires: libgmock-devel
+BuildRequires: libxcbutil-icccm-devel
 # right-click menu style
 Requires: deepin-menu
 # run command by create_from_commandline
@@ -90,7 +92,7 @@ sed -i '/LXQtCompilerSettings/a remove_definitions(-DQT_NO_CAST_FROM_ASCII -DQT_
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DAPP_VERSION=%version \
     -DVERSION=%version
-%cmake_build
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
@@ -125,6 +127,9 @@ sed -i '/LXQtCompilerSettings/a remove_definitions(-DQT_NO_CAST_FROM_ASCII -DQT_
 %_includedir/terminalwidget5/
 
 %changelog
+* Fri Oct 01 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.13-alt1
+- New version (5.4.13).
+
 * Thu Aug 26 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.12-alt1
 - New version (5.4.12).
 - Temporarily disabled link-time optimization.
