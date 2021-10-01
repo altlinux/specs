@@ -1,9 +1,10 @@
 %define unicodedir %_datadir/unicode
 %define emojidir %unicodedir/emoji
-%define unicode_ver 13.0.0
+%define unicode_ver 14.0.0
+%define emoji_ver 14.0
 
 Name: unicode-emoji
-Version: 13.0
+Version: %emoji_ver
 Release: alt1
 
 Summary: Unicode Emoji Data Files
@@ -41,6 +42,9 @@ cp -a %_sourcedir/{copyright.html,ReadMe.txt} .
 %doc copyright.html ReadMe.txt
 
 %changelog
+* Sun Sep 26 2021 Yuri N. Sedunov <aris@altlinux.org> 14.0-alt1
+- 14.0
+
 * Tue Mar 17 2020 Yuri N. Sedunov <aris@altlinux.org> 13.0-alt1
 - 13.0
 
