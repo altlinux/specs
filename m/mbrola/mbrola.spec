@@ -3,7 +3,7 @@
 #
 # spec file for package mbrola
 #
-# Copyright (c) 2020 Packman Team <packman@links2linux.de>
+# Copyright (c) 2021 Packman Team <packman@links2linux.de>
 # Copyright (c) 2016-2019 Bernhard M. Wiedemann <bernhard+packman@lsmod.de>
 # Copyright (c) 2005-2009 Manfred Tremmel <Manfred.Tremmel@iiv.de>
 #
@@ -23,7 +23,7 @@
 %define tver    0.96
 Name:           mbrola
 Version:        3.3
-Release:        alt1_1.10
+Release:        alt1_2.9
 Summary:        Speech Synthesis System
 Summary(de):    Sprachsynthese System
 License:        AGPL-3.0-or-later
@@ -33,6 +33,8 @@ Source0:        https://github.com/numediart/MBROLA/archive/%{version}.tar.gz#/%
 Source2:        https://github.com/GHPS/txt2pho/archive/%{tver}.tar.gz#/txt2pho-%{tver}.tar.gz
 Source3:        say
 Source4:        txt2phorc
+# PATCH-FIX-OPENSUSE txt2pho-gcc11.patch
+Patch0:         txt2pho-gcc11.patch
 BuildRequires:  fdupes
 BuildRequires:  gcc-c++
 Requires:       sox-base
@@ -63,14 +65,18 @@ mbrola-de Pakete.
 
 %prep
 %setup -q -n MBROLA-%{version} -a 0 -a 2
+%patch0 -p1
 mkdir txt2pho-%{tver}/lib txt2pho-%{tver}/obj
+sed -i 's/SYNTH_VERSION.*/SYNTH_VERSION \"%{version}\"/' Misc/common.h
+# e2k: fix optlevel (lcc won't accept insane values)
 sed -i 's,-O6,-O%_optlevel,g' Makefile MBROLA-%version/Makefile
 
 %build
 export CFLAGS="%{optflags}"
 %make_build -j1
 pushd txt2pho-%{tver}
-%make_build -j1 CFLAGS="%{optflags}"
+# not parallel-safe
+make CFLAGS="%{optflags}"
 popd
 
 %install
@@ -103,6 +109,10 @@ fdupes %{buildroot}%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Fri Oct 01 2021 Igor Vlasenko <viy@altlinux.org> 3.3-alt1_2.9
+- fixed build with gcc11
+- TODO: need freespeech on arm/aarch64/ppc64le
+
 * Wed Aug 11 2021 Michael Shigorin <mike@altlinux.org> 3.3-alt1_1.10
 - fix optlevel (lcc won't accept insane values)
 
