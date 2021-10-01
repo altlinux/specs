@@ -20,7 +20,7 @@ BuildRequires: /usr/bin/protoc /usr/bin/protoc-c binutils-devel libdw-devel libs
 Summary:        WLAN detector, sniffer and IDS
 Name:           kismet
 Version:        %_rpmversion
-Release:        alt1_2
+Release:        alt2_2
 License:        GPLv2+
 URL:            http://www.kismetwireless.net/
 Source0:        http://www.kismetwireless.net/code/%{name}-%_version.tar.xz
@@ -38,6 +38,7 @@ BuildRequires:  libmicrohttpd-devel libprotobuf-devel libprotobuf-c-devel
 BuildRequires:  libnm-devel libnm-gir-devel libusb-devel
 BuildRequires:  libsqlite3-devel
 Source44: import.info
+Conflicts: kismet-server < 2014.02.R4
 
 %description
 Kismet is an 802.11 layer2 wireless network detector, sniffer, and
@@ -91,6 +92,9 @@ BIN=$RPM_BUILD_ROOT/bin ETC=$RPM_BUILD_ROOT/etc %makeinstall_std
 %{_libdir}/pkgconfig/kismet.pc
 
 %changelog
+* Fri Oct 01 2021 Igor Vlasenko <viy@altlinux.org> 1:0.0.2020.09.R4-alt2_2
+- added conflict with kismet-server (closes: #41029)
+
 * Sun Nov 22 2020 Igor Vlasenko <viy@altlinux.ru> 1:0.0.2020.09.R4-alt1_2
 - picked up from orphaned to fix unmets in autoimports
 
