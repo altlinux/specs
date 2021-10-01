@@ -10,16 +10,17 @@ BuildRequires: python3-module-setuptools
 
 Name:           battray
 Version:        2.3
-Release:        alt1_11
+Release:        alt1_19
 Summary:        Tool for displaying a laptop's battery status in the system traiy
 License:        MIT
 URL:            http://arp242.net/code/battray/
-Source0:        https://github.com/Carpetsmoker/battray/archive/version-%{version}/%{name}-version-%{version}.tar.gz
+Source0:        https://github.com/Carpetsmoker/battray/archive/version-%{version}/%{name}-version-%{version}.tar.bz2
 
 BuildArch:      noarch
 BuildRequires:  python3-module-distribute
 BuildRequires:  python3-devel
 Requires:       python3
+Requires:       python3-module-notify2
 Source44: import.info
 
 %description
@@ -47,6 +48,9 @@ low, dim the screen when you switch from AC to battery, etc.
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Oct 01 2021 Igor Vlasenko <viy@altlinux.org> 2.3-alt1_19
+- update to new release by fcimport
+
 * Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_11
 - update to new release by fcimport
 
