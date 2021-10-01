@@ -5,13 +5,13 @@ Group: Development/C
 %define _localstatedir %{_var}
 Name:       librtmidi
 Version:    3.0.0
-Release:    alt1_9
+Release:    alt1_12
 Summary:    Library for realtime MIDI input/output (ALSA support)
 License:    MIT
 URL:        http://www.music.mcgill.ca/~gary/rtmidi/index.html
 Source0:    http://www.music.mcgill.ca/~gary/rtmidi/release/%{oldname}-%{version}.tar.gz
 Patch0:     rtmidi-3.0.0-buildfix.patch
-BuildRequires:  libalsa-devel, libjack-devel
+BuildRequires:  libalsa-devel, pkgconfig(jack)
 BuildRequires:  autoconf, automake, libtool, /usr/bin/dos2unix
 BuildRequires:  doxygen
 BuildRequires:  gcc-c++
@@ -55,6 +55,7 @@ This package contains shared library for %name.
 Group: Development/C
 Summary:    Development headers and libraries for rtmidi
 Requires:   librtmidi4 = %{version}-%{release}
+Requires:   pkgconfig(jack)
 Provides: rtmidi-devel = %{version}-%{release}
 
 %description devel
@@ -109,6 +110,9 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 %{_libdir}/pkgconfig/%{oldname}.pc
 
 %changelog
+* Fri Oct 01 2021 Igor Vlasenko <viy@altlinux.org> 3.0.0-alt1_12
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_9
 - update to new release by fcimport
 
