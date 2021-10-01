@@ -42,7 +42,7 @@
 %define minor	8
 %define bugfix	7
 %define beta	%nil
-%define rlz alt24
+%define rlz alt25
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -123,6 +123,8 @@ Patch322: Better-handling-of-invalid-font-tables.patch
 Patch323: dont_crash_on_broken_gif_images.patch
 Patch324: xmlpatterns_stack_overflow_fix.diff
 Patch325: qtdoc-build-offline-docs.patch
+# Arch
+Patch340: qt4-gcc11.patch
 # ALT
 Patch501: qt-4.8.5-alt-honor-SUSv3-locales.patch
 Patch502: qt-4.7.2-alt-ca-certificates-path.patch
@@ -746,6 +748,8 @@ Install this package if you want to create RPM packages that use %name
 %patch323 -p1
 %patch324 -p1
 %patch325 -p1
+# Arch
+%patch340 -p0
 # ALT
 %patch501 -p1
 %patch502 -p1
@@ -1489,6 +1493,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Fri Oct 01 2021 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt25
+- fix to build with gcc11
+
 * Thu Aug 26 2021 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt24
 - update build requires
 - disable LTO by default
