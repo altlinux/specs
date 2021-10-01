@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        94.0.4606.54
+Version:        94.0.4606.71
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -438,6 +438,13 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Oct 01 2021 Alexey Gladkov <legion@altlinux.ru> 94.0.4606.71-alt1
+- New version (94.0.4606.71).
+- Security fixes:
+  - CVE-2021-37974 : Use after free in Safe Browsing.
+  - CVE-2021-37975 : Use after free in V8.
+  - CVE-2021-37976 : Information leak in core.
+
 * Thu Sep 23 2021 Alexey Gladkov <legion@altlinux.ru> 94.0.4606.54-alt1
 - New version (94.0.4606.54).
 - Security fixes:
