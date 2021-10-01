@@ -1,6 +1,6 @@
 Name: libspandsp
 Version: 0.0.6
-Release: alt2
+Release: alt3
 
 Summary: DSP library for VoIP, FAX and T.38 support
 License: LGPL
@@ -33,7 +33,7 @@ Obsoletes: libspandsp6-devel
 %build
 %autoreconf
 %configure \
-%ifarch %ix86 x86_64
+%ifarch x86_64
 	--enable-sse2 \
 %endif
 	--enable-shared \
@@ -53,6 +53,9 @@ Obsoletes: libspandsp6-devel
 %_includedir/spandsp.h
 
 %changelog
+* Fri Oct 01 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.6-alt3
+- built without sse2 on i586
+
 * Mon Jul 12 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.6-alt2
 - do not package conflicting spandsp.pc (closes: 40419)
 
