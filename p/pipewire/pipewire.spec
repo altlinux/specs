@@ -30,7 +30,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.37
+Version: %ver_major.38
 Release: alt1
 
 Summary: Media Sharing Server
@@ -66,6 +66,8 @@ BuildRequires: libsbc-devel libfdk-aac-devel libldac-devel
 BuildRequires: libfreeaptx-devel
 # for pw-top
 BuildRequires: libncursesw-devel
+# for pw-cli
+BuildRequires: libreadline-devel
 %if_enabled gstreamer
 BuildRequires: pkgconfig(gstreamer-%gst_api_ver) >= %gst_ver
 BuildRequires: pkgconfig(gstreamer-base-%gst_api_ver)
@@ -272,6 +274,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Fri Oct 01 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.38-alt1
+- updated to 0.3.38-12-g9a76feb91
+
 * Fri Sep 24 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.37-alt1
 - updated to 0.3.37-5-gf1f5cbc0a
 
