@@ -14,7 +14,7 @@
 
 Name: blender
 Version: 2.93.4
-Release: alt2
+Release: alt2.1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -81,9 +81,7 @@ BuildRequires: libgmp-devel libgmpxx-devel
 BuildRequires: libharu-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: libpotrace-devel
-%ifnarch %e2k
 BuildRequires: openshadinglanguage-devel
-%endif
 BuildRequires: opensubdiv-devel
 
 %ifarch x86_64
@@ -195,6 +193,8 @@ This package contains documentation for Blender.
 %patch31 -p1
 %ifarch %e2k
 %patch2000 -p1
+# lcc 1.25.15's EDG bug would fail building OPENVDB+TBB otherwise
+sed -i "/-Werror=return-type/d" CMakeLists.txt
 %endif
 
 %ifnarch %ix86 x86_64
@@ -310,6 +310,10 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Fri Oct 01 2021 Michael Shigorin <mike@altlinux.org> 2.93.4-alt2.1
+- Build with openshadinglanguage on %%e2k too (thx ilyakurdyukov@).
+- Fixed bogus date in 2008's changelog.
+
 * Mon Sep 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.93.4-alt2
 - Rebuilt with new OpenColorIO and OpenImageIO.
 
@@ -615,7 +619,7 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 - 2.48
 - gimp used as external image editor
 
-* Wed Oct 10 2008 Sergey Kurakin <kurakin@altlinux.ru> 2.47-alt2
+* Fri Oct 10 2008 Sergey Kurakin <kurakin@altlinux.ru> 2.47-alt2
 - summary and description updated
 - libtiff4 patch restored and updated,
   fixing libtiff.so.4 loading on x86_64
