@@ -1,36 +1,20 @@
-%define gimpdatadir %(gimptool-2.0 --gimpdatadir)
-%define gimphelpdir %gimpdatadir/help
+%define gimphelpdir %_datadir/gimp/2.0/help
 
 Name: gimp-help
-Version: 2.6.1
-Release: alt2
-
+Version: 2.10.0
+Release: alt1
 Summary: Help files for the GIMP
 License: GFDL
 Group: Graphics
 
 Url: http://docs.gimp.org/
-Source0: http://ftp.gimp.org/pub/gimp/help/gimp-help-%version-html-en.tar
-Source1: http://ftp.gimp.org/pub/gimp/help/gimp-help-%version-html-de.tar
-Source2: http://ftp.gimp.org/pub/gimp/help/gimp-help-%version-html-fr.tar
-Source3: http://ftp.gimp.org/pub/gimp/help/gimp-help-%version-html-ru.tar
+Source0: https://download.gimp.org/mirror/pub/gimp/help/%name-%version.tar.bz2
+Patch0: gimp-help-2.10.0-python3.patch
 
-Requires: gimp >= 2.6
+Requires: gimp >= 2.10
 BuildArch: noarch
 
-# Upstream ships ready-made HTML-formatted helps. I see no sense in rebuilding
-# them from docbook source in this package. Such build is quite time-consuming.
-# This is just waste of build system time.
-# BTW, ArchLinux and Mandriva went the same way.
-
-# Automatically added by buildreq on Wed Apr 20 2011 (-bi)
-BuildRequires: libgimp-devel
-
-# Just to speed build up a little... :)
-%set_fixup_method skip
-%set_cleanup_method skip
-%set_compress_method none
-%set_verify_elf_method skip
+BuildRequires: libgimp-devel xsltproc pngcrush python3-module-translate python3-module-libxml2 docbook-style-xsl
 
 %description
 GIMP-Help is a help system designed for use with the internal GIMP 2
@@ -70,13 +54,16 @@ Obsoletes: %name-common < %version-%release
 Russian help files for the GIMP.
 
 %prep
-%setup -c -a 1 -a 2 -a 3
+%setup -q
+%patch0 -p1
 
 %build
+export ALL_LINGUAS="de en fr ru"
+%configure
+%make
 
 %install
-mkdir -p %buildroot%gimphelpdir
-cp -r gimp-help-2/html/* %buildroot%gimphelpdir
+%make DESTDIR=%buildroot install
 
 %files en
 %dir %gimphelpdir
@@ -95,6 +82,9 @@ cp -r gimp-help-2/html/* %buildroot%gimphelpdir
 %gimphelpdir/ru
 
 %changelog
+* Fri Oct 01 2021 Valery Inozemtsev <shrek@altlinux.ru> 2.10.0-alt1
+- 2.10.0
+
 * Fri Sep 23 2011 Alexey Tourbin <at@altlinux.ru> 2.6.1-alt2
 - removed set_strip_method macro
 
