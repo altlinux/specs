@@ -29,8 +29,8 @@
 %define libringclient libringclient%ringclient_sover
 
 Name: ring-project
-Version: 20201118
-Release: alt3
+Version: 20210917
+Release: alt1
 
 Group: Networking/Instant messaging
 Summary: SIP and IAX2 compatible softphone
@@ -42,12 +42,9 @@ Requires(post,preun): alternatives >= 0.2
 #Requires: %name-common >= %EVR
 
 Source: %name-%version.tar
-Patch1: alt-fix-linking.patch
-Patch2: alt-pcre-include.patch
 Patch3: alt-armh.patch
-Patch4: alt-changelog.patch
+Patch4: alt-ppc.patch
 Patch5: alt-qt-build.patch
-Patch6: alt-load-l10n.patch
 
 BuildRequires(pre): rpm-build-ubt
 %IF_ver_gteq %ubt_id M90
@@ -163,12 +160,9 @@ developing applications that use %name.
 
 %prep
 %setup -qn %name-%version
-%patch1 -p1
-#%patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
-%patch6 -p1
+#%patch5 -p1
 
 # don't build internal vpx
 rm -rf daemon/contrib/src/vpx
@@ -233,10 +227,12 @@ popd
 popd
 
 pushd client-qt
-%qmake_qt5 \
-    LRC=%builddir/lrc/src \
+%cmake \
+    -DLRC=%builddir/lrc \
     #
+pushd BUILD
 %make_build
+popd
 lrelease-qt5 translations/*.ts
 popd
 
@@ -244,8 +240,8 @@ popd
 %makeinstall -C daemon
 make install -C lrc/BUILD DESTDIR=%buildroot
 make install -C client-gnome/BUILD DESTDIR=%buildroot
-#make install -C client-qt DESTDIR=%buildroot
-install -m 0755 client-qt/jami-qt %buildroot/%_bindir/
+make install -C client-qt/BUILD DESTDIR=%buildroot
+#install -m 0755 client-qt/jami-qt %buildroot/%_bindir/
 cp -ar %buildroot/%_desktopdir/jami-gnome.desktop %buildroot/%_desktopdir/jami-qt.desktop
 desktop-file-install \
     --vendor="" \
@@ -273,7 +269,7 @@ do
     fi
 done
 
-chrpath --delete %buildroot/%_libdir/ring/dring
+#chrpath --delete %buildroot/%_libexecdir/jamid
 
 # install alternatives
 mkdir -p %buildroot/%_bindir/
@@ -310,7 +306,7 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir/
 %find_lang jami-client-gnome
 
 %files common
-%_iconsdir/hicolor/*/apps/jami.*
+%_iconsdir/hicolor/*/apps/jami*.*
 
 %files -n ring-daemon
 %doc daemon/AUTHORS daemon/COPYING daemon/README
@@ -319,14 +315,16 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir/
 %_bindir/ring
 %_bindir/ring.cx
 %_bindir/jami-client-dummy
-%_libdir/ring/
+%_libexecdir/jamid
 %_datadir/dbus-1/services/cx.ring.*
-%_datadir/ring/
+%dir %_datadir/ring/
+%_datadir/jami/
+%_man1dir/jamid.*
 
 %files -n ring-client-gnome -f jami-client-gnome.lang
 %config %_sysconfdir/alternatives/packages.d/jami-client-gnome
 %_bindir/jami-gnome
-%_datadir/jami-gnome
+%_datadir/jami-gnome/
 %_desktopdir/jami-gnome.desktop
 %_datadir/sounds/jami-gnome/
 %_datadir/glib-2.0/schemas/net.jami.*.gschema.xml
@@ -336,6 +334,7 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir/
 %dir %_datadir/ring/translations/
 %config %_sysconfdir/alternatives/packages.d/jami-client-qt
 %_bindir/jami-qt
+%_datadir/jami-qt/
 %_desktopdir/jami-qt.desktop
 
 %files -n %libring
@@ -350,17 +349,18 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir/
 
 %files devel
 %_libdir/lib*.so
-%_includedir/dring/
+%_includedir/jami/
 %_includedir/libringclient/
-%_includedir/jami*.h
 %_datadir/dbus-1/interfaces/cx.ring.Ring.*.xml
 %_libdir/cmake/LibRingClient/
-%_man1dir/dring.*
 
 %files devel-static
 #%_libdir/libring.a
 
 %changelog
+* Thu Sep 23 2021 Sergey V Turchin <zerg@altlinux.org> 20210917-alt1
+- new version
+
 * Mon May 31 2021 Sergey V Turchin <zerg@altlinux.org> 20201118-alt3
 - fix to build with new cmake
 
