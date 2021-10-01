@@ -13,7 +13,7 @@
 
 Name:    apache2
 Version: 2.4.49
-Release: alt1
+Release: alt2
 Epoch: 1
 
 License: %asl
@@ -1539,6 +1539,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Fri Oct 01 2021 Egor Ignatov <egori@altlinux.org> 1:2.4.49-alt2
+- a2dismod: disable mod also in mods-start.d
+
 * Thu Sep 23 2021 Anton Farygin <rider@altlinux.ru> 1:2.4.49-alt1
 - 2.4.48 -> 2.4.49 (Fixes: CVE-2021-40438, CVE-2021-39275, CVE-2021-36160,
 			   CVE-2021-34798,  CVE-2021-33193)
