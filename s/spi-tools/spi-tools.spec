@@ -1,10 +1,10 @@
 Name:     spi-tools
-Version:  0.8.7
+Version:  1.0.0
 Release:  alt1
 
 Summary:  Simple command line tools to help using Linux spidev devices
 License:  GPL-2.0
-Group:    Other
+Group:    System/Kernel and hardware
 Url:      https://github.com/cpb-/spi-tools
 
 Packager: Anton Midyukov <antohami@altlinux.org>
@@ -33,6 +33,10 @@ Buildrequires: help2man
 %doc *.md
 
 %changelog
+* Sat Oct 02 2021 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt1
+- new version 1.0.0
+- fix Group tag
+
 * Sun Jun 27 2021 Anton Midyukov <antohami@altlinux.org> 0.8.7-alt1
 - new version 0.8.7
 
