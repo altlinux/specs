@@ -1,9 +1,11 @@
 %define qdoc_found %{expand:%%(if [ -e %_qt5_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 %global qt_module qtscript
 
+%define optflags_lto %nil
+
 Name: qt5-script
 Version: 5.15.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtScript component
@@ -99,6 +101,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Fri Oct 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt2
+- build without LTO enabled
+
 * Mon Jan 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt1
 - new version
 
