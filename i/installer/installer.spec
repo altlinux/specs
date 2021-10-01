@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.10.11
+Version: 1.10.12
 Release: alt1
 
 Summary: Installer common parts
@@ -111,6 +111,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Thu Sep 30 2021 Anton Midyukov <antohami@altlinux.org> 1.10.12-alt1
+- 71-copy-cmdline-parameters.sh: copy usbcore.autosuspend=-1
+
 * Tue Sep 14 2021 Anton Midyukov <antohami@altlinux.org> 1.10.11-alt1
 - Add copying screenshots taken by alterator-browser-qt to the installed system
 
