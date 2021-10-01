@@ -2,9 +2,11 @@
 %global qt_module qtdeclarative
 %def_disable bootstrap
 
+%define optflags_lto %nil
+
 Name: qt5-declarative
 Version: 5.15.2
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Qt5 - QtDeclarative component
@@ -17,9 +19,10 @@ Source1: qml
 Source2: qml.env
 Source3: find-provides.sh
 Source4: find-requires.sh
-Patch0: kde-5.15.patch
-Patch1: Link-with-libatomic-on-riscv32-64.patch
-Patch2: alt-remove-createSize.patch
+Patch1: kde-5.15.patch
+Patch2: kde-5.15-rev-568763928a7.patch
+Patch10: Link-with-libatomic-on-riscv32-64.patch
+Patch11: alt-remove-createSize.patch
 
 %include %SOURCE1
 %qml_req_skipall 0
@@ -151,9 +154,10 @@ QML modules by some Alt Linux Team Policy compatible way.
 mv rpm-build-qml src/
 mkdir bin_add
 ln -s %__python3 bin_add/python
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch10 -p1
+%patch11 -p1
 
 %build
 export PATH=$PWD/bin_add:$PATH
@@ -279,6 +283,10 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 %_bindir/rpmbqml-qmlinfo
 
 %changelog
+* Fri Oct 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt4
+- build without LTO enabled
+- update fixes from kde/qt-5.15
+
 * Mon Jul 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt3
 - add fixes from kde/qt-5.15
 
