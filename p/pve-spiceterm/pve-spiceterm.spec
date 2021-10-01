@@ -3,8 +3,8 @@
 
 Name: pve-%sname
 Summary: SPICE Terminal Emulator
-Version: 3.1.1
-Release: alt4
+Version: 3.2.2
+Release: alt1
 License: GPLv2
 Group: Networking/WWW
 Url: https://git.proxmox.com/
@@ -38,6 +38,9 @@ sed -i 's|\ -Werror||' src/Makefile
 %_man1dir/%sname.1*
 
 %changelog
+* Thu Sep 30 2021 Valery Inozemtsev <shrek@altlinux.ru> 3.2.2-alt1
+- 3.2-2
+
 * Mon Jan 18 2021 Valery Inozemtsev <shrek@altlinux.ru> 3.1.1-alt4
 - fixed keymaps path (closes: #39553)
 

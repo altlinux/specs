@@ -1,7 +1,7 @@
 %define rname lxc
 
 Name: pve-%rname
-Version: 4.0.3
+Version: 4.0.9
 Release: alt1
 Summary: Linux containers usersapce tools
 Group: System/Configuration/Other
@@ -17,23 +17,23 @@ Source: %rname-%version.tar.gz
 Source1: %rname-config.tar
 
 Patch1: 0001-allow-running-lxc-monitord-as-a-system-daemon.patch
-Patch2: 0002-systemd-Add-Documentation-key.patch
-Patch3: 0003-introduce-lxc.cgroup.dir.-monitor-container-containe.patch
-Patch4: 0004-doc-s-lxc.cgroup.container.namespace-lxc.cgroup.cont.patch
-Patch5: 0005-confile-coding-style-fixes-for-set_config_cgroup_con.patch
-Patch6: 0006-api-extensions-add-and-document-cgroup_advanced_isol.patch
-Patch7: 0007-doc-Add-lxc.cgroup.dir.-monitor-container-container..patch
-Patch8: 0008-confile-fix-jump-table-order.patch
-Patch9: 0009-get-the-right-path-in-get_cgroup-command.patch
-Patch10: 0010-cgroups-adhere-to-boolean-return.patch
-Patch11: 0011-PVE-Config-lxc.service-start-after-a-potential-syslo.patch
-Patch12: 0012-PVE-Config-deny-rw-mounting-of-sys-and-proc.patch
-Patch13: 0013-PVE-Config-attach-always-use-getent.patch
-Patch14: 0014-apparmor-Allow-ro-remount-of-boot_id.patch
+Patch2: 0002-introduce-lxc.cgroup.dir.-monitor-container-containe.patch
+Patch3: 0003-doc-s-lxc.cgroup.container.namespace-lxc.cgroup.cont.patch
+Patch4: 0004-confile-coding-style-fixes-for-set_config_cgroup_con.patch
+Patch5: 0005-api-extensions-add-and-document-cgroup_advanced_isol.patch
+Patch6: 0006-doc-Add-lxc.cgroup.dir.-monitor-container-container..patch
+Patch7: 0007-PVE-Config-lxc.service-start-after-a-potential-syslo.patch
+Patch8: 0008-PVE-Config-deny-rw-mounting-of-sys-and-proc.patch
+Patch9: 0009-PVE-Config-attach-always-use-getent.patch
+Patch10: 0010-conf-userns.conf-include-userns.conf.d.patch
+Patch11: 0011-confile-allow-including-nonexisting-directories.patch
+Patch12: 0012-cgroups-populate-hierarchy-for-device-cgroup.patch
+Patch13: 0013-cgroups-remove-unneeded-variables-from-cgroup_tree_c.patch
 
 Patch20: lxc-alt.patch
 Patch21: lxc-altlinux-lxc.patch
 Patch23: lxc-alt-remove-dependency-on-policycoreutils.patch
+Patch24: lxc-monitord-service.patch
 
 BuildRequires: docbook2X libcap-devel libdbus-devel libgnutls-devel libseccomp-devel libselinux-devel
 
@@ -62,11 +62,11 @@ an applications or a system.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
-%patch14 -p1
 
 %patch20 -p1 -b .alt
 %patch21 -p1 -b .altlinux
 %patch23 -p1 -b .pol
+%patch24 -p1
 
 %build
 %autoreconf
@@ -75,7 +75,7 @@ an applications or a system.
     --disable-rpath \
     --with-distro=altlinux \
     --with-init-script=systemd \
-    --disable-apparmor \
+    --enable-apparmor \
     --enable-selinux \
     --enable-bash \
     --disable-examples \
@@ -112,6 +112,9 @@ rm -fr %buildroot/usr/lib/%rname/%rname-apparmor-load
 %_man7dir/*.7*
 
 %changelog
+* Wed Sep 29 2021 Valery Inozemtsev <shrek@altlinux.ru> 4.0.9-alt1
+- 4.0.9-4
+
 * Thu Sep 03 2020 Valery Inozemtsev <shrek@altlinux.ru> 4.0.3-alt1
 - 4.0.3-1
 

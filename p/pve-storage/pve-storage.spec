@@ -1,6 +1,6 @@
 Name: pve-storage
 Summary: PVE storage management library
-Version: 6.3.3
+Version: 7.0.10
 Release: alt1
 License: GPLv3
 Group: Development/Perl
@@ -14,7 +14,6 @@ Requires: multipath-tools ceph >= 12.2.1 zfs-utils
 
 Source: pve-storage.tar.xz
 Patch: pve-storage-alt.patch
-Patch1: pve-storage-linstor-drbd.patch
 
 BuildRequires: librados2-perl pve-common pve-cluster pve-doc-generator pve-access-control xmlto
 BuildRequires: perl(File/chdir.pm) perl(Net/DBus.pm)
@@ -24,8 +23,7 @@ This package contains the storage management library used by PVE
 
 %prep
 %setup -q -n %name
-%patch -p1
-%patch1 -p1
+%patch -p1 -b .alt
 
 %install
 %make DESTDIR=%buildroot install
@@ -44,6 +42,12 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Thu Sep 23 2021 Valery Inozemtsev <shrek@altlinux.ru> 7.0.10-alt1
+- 7.0-10
+
+* Wed Jul 28 2021 Valery Inozemtsev <shrek@altlinux.ru> 7.0.9-alt1
+- 7.0-9
+
 * Mon Dec 07 2020 Valery Inozemtsev <shrek@altlinux.ru> 6.3.3-alt1
 - 6.3-3
 

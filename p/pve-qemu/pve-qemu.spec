@@ -7,8 +7,8 @@
 %define _localstatedir /var
 
 Name: pve-%rname
-Version: 5.1.0
-Release: alt6
+Version: 6.0.0
+Release: alt1
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: GPL-1 and LGPLv2 and BSD
@@ -27,78 +27,75 @@ Source12: bridge.conf
 
 Source100: Logo.bmp
 
-Patch100: qemu-3.0.1-uuid.patch
+Patch10: 0001-monitor-qmp-fix-race-on-CHR_EVENT_CLOSED-without-OOB.patch
+Patch11: 0002-block-io_uring-resubmit-when-result-is-EAGAIN.patch
+Patch12: 0003-monitor-qmp-fix-race-with-clients-disconnecting-earl.patch
+Patch13: 0001-drive-mirror-add-support-for-sync-bitmap-mode-never.patch
+Patch14: 0002-drive-mirror-add-support-for-conditional-and-always-.patch
+Patch15: 0003-mirror-add-check-for-bitmap-mode-without-bitmap.patch
+Patch16: 0004-mirror-switch-to-bdrv_dirty_bitmap_merge_internal.patch
+Patch17: 0005-iotests-add-test-for-bitmap-mirror.patch
+Patch18: 0006-mirror-move-some-checks-to-qmp.patch
+Patch19: 0001-PVE-Config-block-file-change-locking-default-to-off.patch
+Patch20: 0002-PVE-Config-Adjust-network-script-path-to-etc-kvm.patch
+Patch21: 0003-PVE-Config-set-the-CPU-model-to-kvm64-32-instead-of-.patch
+Patch22: 0004-PVE-Config-ui-spice-default-to-pve-certificates.patch
+Patch23: 0005-PVE-Config-glusterfs-no-default-logfile-if-daemonize.patch
+Patch24: 0006-PVE-Config-rbd-block-rbd-disable-rbd_cache_writethro.patch
+Patch25: 0007-PVE-Up-qmp-add-get_link_status.patch
+Patch26: 0008-PVE-Up-glusterfs-allow-partial-reads.patch
+Patch27: 0009-PVE-Up-qemu-img-return-success-on-info-without-snaps.patch
+Patch28: 0010-PVE-Up-qemu-img-dd-add-osize-and-read-from-to-stdin-.patch
+Patch29: 0011-PVE-Up-qemu-img-dd-add-isize-parameter.patch
+Patch30: 0012-PVE-Up-qemu-img-dd-add-n-skip_create.patch
+Patch31: 0013-PVE-virtio-balloon-improve-query-balloon.patch
+Patch32: 0014-PVE-qapi-modify-query-machines.patch
+Patch33: 0015-PVE-qapi-modify-spice-query.patch
+Patch34: 0016-PVE-add-savevm-async-for-background-state-snapshots.patch
+Patch35: 0017-PVE-add-optional-buffer-size-to-QEMUFile.patch
+Patch36: 0018-PVE-block-add-the-zeroinit-block-driver-filter.patch
+Patch37: 0019-PVE-Add-dummy-id-command-line-parameter.patch
+Patch38: 0020-PVE-Config-Revert-target-i386-disable-LINT0-after-re.patch
+Patch39: 0021-PVE-Up-Config-file-posix-make-locking-optiono-on-cre.patch
+Patch40: 0022-PVE-monitor-disable-oob-capability.patch
+Patch41: 0023-PVE-Compat-4.0-used-balloon-qemu-4-0-config-size-fal.patch
+Patch42: 0024-PVE-Allow-version-code-in-machine-type.patch
+Patch43: 0025-PVE-Backup-add-vma-backup-format-code.patch
+Patch44: 0026-PVE-Backup-add-backup-dump-block-driver.patch
+Patch45: 0027-PVE-Backup-proxmox-backup-patches-for-qemu.patch
+Patch46: 0028-PVE-Backup-pbs-restore-new-command-to-restore-from-p.patch
+Patch47: 0029-PVE-Backup-Add-dirty-bitmap-tracking-for-incremental.patch
+Patch48: 0030-PVE-various-PBS-fixes.patch
+Patch49: 0031-PVE-Add-PBS-block-driver-to-map-backup-archives-into.patch
+Patch50: 0032-PVE-add-query_proxmox_support-QMP-command.patch
+Patch51: 0033-PVE-add-query-pbs-bitmap-info-QMP-call.patch
+Patch52: 0034-PVE-redirect-stderr-to-journal-when-daemonized.patch
+Patch53: 0035-PVE-Add-sequential-job-transaction-support.patch
+Patch54: 0036-PVE-Backup-Use-a-transaction-to-synchronize-job-stat.patch
+Patch55: 0037-PVE-Backup-Don-t-block-on-finishing-and-cleanup-crea.patch
+Patch56: 0038-PVE-Migrate-dirty-bitmap-state-via-savevm.patch
+Patch57: 0039-migration-block-dirty-bitmap-migrate-other-bitmaps-e.patch
+Patch58: 0040-PVE-fall-back-to-open-iscsi-initiatorname.patch
+Patch59: 0041-PVE-Use-coroutine-QMP-for-backup-cancel_backup.patch
+Patch60: 0042-PBS-add-master-key-support.patch
+Patch61: 0043-PVE-block-pbs-fast-path-reads-without-allocation-if-.patch
+Patch62: 0044-PVE-block-stream-increase-chunk-size.patch
+Patch63: 0045-block-io-accept-NULL-qiov-in-bdrv_pad_request.patch
+Patch64: 0046-block-add-alloc-track-driver.patch
+Patch65: 0047-PVE-whitelist-invalid-QAPI-names-for-backwards-compa.patch
+Patch66: 0048-PVE-savevm-async-register-yank-before-migration_inco.patch
 
-Patch10: 0001-block-block-copy-always-align-copied-region-to-clust.patch
-Patch11: 0002-Revert-qemu-img-convert-Don-t-pre-zero-images.patch
-Patch12: 0003-usb-fix-setup_len-init-CVE-2020-14364.patch
-Patch13: 0001-PVE-Config-block-file-change-locking-default-to-off.patch
-Patch14: 0002-PVE-Config-Adjust-network-script-path-to-etc-kvm.patch
-Patch15: 0003-PVE-Config-set-the-CPU-model-to-kvm64-32-instead-of-.patch
-Patch16: 0004-PVE-Config-ui-spice-default-to-pve-certificates.patch
-Patch17: 0005-PVE-Config-smm_available-false.patch
-Patch18: 0006-PVE-Config-glusterfs-no-default-logfile-if-daemonize.patch
-Patch19: 0007-PVE-Config-rbd-block-rbd-disable-rbd_cache_writethro.patch
-Patch20: 0008-PVE-Up-qmp-add-get_link_status.patch
-Patch21: 0009-PVE-Up-glusterfs-allow-partial-reads.patch
-Patch22: 0010-PVE-Up-qemu-img-return-success-on-info-without-snaps.patch
-Patch23: 0011-PVE-Up-qemu-img-dd-add-osize-and-read-from-to-stdin-.patch
-Patch24: 0012-PVE-Up-qemu-img-dd-add-isize-parameter.patch
-Patch25: 0013-PVE-Up-qemu-img-dd-add-n-skip_create.patch
-Patch26: 0014-PVE-virtio-balloon-improve-query-balloon.patch
-Patch27: 0015-PVE-qapi-modify-query-machines.patch
-Patch28: 0016-PVE-qapi-modify-spice-query.patch
-Patch29: 0017-PVE-internal-snapshot-async.patch
-Patch30: 0018-add-optional-buffer-size-to-QEMUFile.patch
-Patch31: 0019-PVE-block-add-the-zeroinit-block-driver-filter.patch
-Patch32: 0020-PVE-Add-dummy-id-command-line-parameter.patch
-Patch33: 0021-PVE-Config-Revert-target-i386-disable-LINT0-after-re.patch
-Patch34: 0022-PVE-Up-Config-file-posix-make-locking-optiono-on-cre.patch
-Patch35: 0023-PVE-monitor-disable-oob-capability.patch
-Patch36: 0024-PVE-Compat-4.0-used-balloon-qemu-4-0-config-size-fal.patch
-Patch37: 0025-PVE-Allow-version-code-in-machine-type.patch
-Patch38: 0026-PVE-Backup-add-vma-backup-format-code.patch
-Patch39: 0027-PVE-Backup-add-backup-dump-block-driver.patch
-Patch40: 0028-PVE-Backup-proxmox-backup-patches-for-qemu.patch
-Patch41: 0029-PVE-Backup-pbs-restore-new-command-to-restore-from-p.patch
-Patch42: 0030-PVE-Backup-avoid-coroutines-to-fix-AIO-freeze-cleanu.patch
-Patch43: 0031-drive-mirror-add-support-for-sync-bitmap-mode-never.patch
-Patch44: 0032-drive-mirror-add-support-for-conditional-and-always-.patch
-Patch45: 0033-mirror-add-check-for-bitmap-mode-without-bitmap.patch
-Patch46: 0034-mirror-switch-to-bdrv_dirty_bitmap_merge_internal.patch
-Patch47: 0035-iotests-add-test-for-bitmap-mirror.patch
-Patch48: 0036-mirror-move-some-checks-to-qmp.patch
-Patch49: 0037-PVE-Backup-Add-dirty-bitmap-tracking-for-incremental.patch
-Patch50: 0038-PVE-backup-rename-incremental-to-use-dirty-bitmap.patch
-Patch51: 0039-PVE-fixup-pbs-restore-API.patch
-Patch52: 0040-PVE-always-set-dirty-counter-for-non-incremental-bac.patch
-Patch53: 0041-PVE-use-proxmox_backup_check_incremental.patch
-Patch54: 0042-PVE-fixup-pbs-backup-add-compress-and-encrypt-option.patch
-Patch55: 0043-PVE-Add-PBS-block-driver-to-map-backup-archives-into.patch
-Patch56: 0044-PVE-add-query_proxmox_support-QMP-command.patch
-Patch57: 0045-pbs-fix-missing-crypt-and-compress-parameters.patch
-Patch58: 0046-PVE-handle-PBS-write-callback-with-big-blocks-correc.patch
-Patch59: 0047-PVE-add-zero-block-handling-to-PBS-dump-callback.patch
-Patch60: 0048-PVE-add-query-pbs-bitmap-info-QMP-call.patch
-Patch61: 0049-PVE-redirect-stderr-to-journal-when-daemonized.patch
-Patch62: 0050-PVE-Add-sequential-job-transaction-support.patch
-Patch63: 0051-PVE-Backup-Use-a-transaction-to-synchronize-job-stat.patch
-Patch64: 0052-PVE-Backup-Use-more-coroutines-and-don-t-block-on-fi.patch
-Patch65: 0053-PVE-fix-and-clean-up-error-handling-for-create_backu.patch
-Patch66: 0054-migration-block-dirty-bitmap-fix-larger-granularity-.patch
-Patch67: 0055-PVE-Migrate-dirty-bitmap-state-via-savevm.patch
-Patch68: 0056-migration-block-dirty-bitmap-migrate-other-bitmaps-e.patch
-Patch69: 0057-cpu-add-Kunpeng-920-cpu-support.patch
+Patch100: 0057-cpu-add-Kunpeng-920-cpu-support.patch
 
 ExclusiveArch: x86_64 aarch64
 BuildRequires: acpica bzlib-devel glib2-devel flex libaio-devel libalsa-devel libcap-devel
 BuildRequires: libcap-ng-devel libcurl-devel libfdt-devel libgnutls-devel libiscsi-devel libjpeg-devel
 BuildRequires: liblzo2-devel libncurses-devel libnettle-devel libnuma-devel libpixman-devel libpng-devel ceph-devel
 BuildRequires: libsasl2-devel libseccomp-devel libspice-server-devel libssh2-devel libusbredir-devel libxfs-devel
-BuildRequires: makeinfo perl-Pod-Usage pkgconfig(glusterfs-api) pkgconfig(virglrenderer)
+BuildRequires: makeinfo perl-Pod-Usage pkgconfig(glusterfs-api) pkgconfig(virglrenderer) liburing-devel
 BuildRequires: libsystemd-devel ipxe-roms-qemu seavgabios seabios
 #BuildRequires: librdmacm-devel libibverbs-devel libibumad-devel
-BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx ninja-build
 BuildRequires: libpve-backup-qemu-devel
 
 %description
@@ -139,7 +136,7 @@ This package contains common files for qemu.
 %package system
 Summary: QEMU CPU Emulator - full system emulation
 Group: Emulators
-Requires: %name-common = %EVR pve-backup-client
+Requires: %name-common = %EVR pve-backup-client pve-backup-file-restore
 Conflicts: %rname-system %rname-ivshmem-tools %rname-tools %rname-kvm-core
 
 %description system
@@ -218,9 +215,6 @@ This package provides a command line tool for manipulating disk images
 %patch64 -p1
 %patch65 -p1
 %patch66 -p1
-%patch67 -p1
-%patch68 -p1
-%patch69 -p1
 
 %patch100 -p1
 
@@ -258,15 +252,15 @@ export CFLAGS="%optflags"
         --enable-libiscsi \
         --enable-libusb \
         --enable-linux-aio \
+        --enable-linux-io-uring \
         --enable-numa \
         --enable-rbd \
         --enable-seccomp \
         --enable-spice \
         --enable-usb-redir \
         --enable-virtfs \
+        --enable-virtiofsd \
         --enable-xfsctl
-
-sed -i 's|^QEMU_CFLAGS=|QEMU_CFLAGS=-I$(SRC_PATH) |' config-host.mak
 
 %make_build V=1
 
@@ -274,7 +268,6 @@ sed -i 's/@GROUP@/%_group/g' qemu-kvm.control.in
 
 %install
 %makeinstall_std
-install -m755 pbs-restore %buildroot%_bindir/
 
 %define docdir %_docdir/%name-%version
 #mv %buildroot%_docdir/qemu
@@ -286,8 +279,6 @@ install -m 0755 %SOURCE5 %buildroot%_bindir/qemu-kvm
 ln -r -s %buildroot%_bindir/qemu-kvm %buildroot%_bindir/kvm
 ln -r -s %buildroot%_bindir/qemu-kvm %buildroot%_bindir/qemu
 ln -sf qemu.1.xz %buildroot%_man1dir/qemu-kvm.1.xz
-
-install -m 0755 vma %buildroot%_bindir/vma
 
 rm -f %buildroot%_bindir/check-*
 rm -f %buildroot%_sysconfdir/udev/rules.d/*
@@ -375,22 +366,19 @@ fi
 %files system -f %rname.lang
 %_bindir/elf2dmp
 %_bindir/qemu*system*
-%_bindir/vma
 %_bindir/qemu-edid
 %_bindir/qemu-storage-daemon
 %_bindir/qemu-kvm
 %_bindir/kvm
 %_bindir/qemu
+%_bindir/pbs-restore
+%_bindir/vma
 %_man1dir/qemu.*
 %_man1dir/qemu-kvm.1*
-%_bindir/ivshmem-client
-%_bindir/ivshmem-server
-%_bindir/pbs-restore
 %attr(4710,root,vmusers) %_libexecdir/qemu-bridge-helper
 %config(noreplace) %_sysconfdir/%name/bridge.conf
-%_libexecdir/qemu-pr-helper
 # TODO:
-#%_bindir/qemu-pr-helper
+%_bindir/qemu-pr-helper
 #%_unitdir/qemu-pr-helper.service
 #%_unitdir/qemu-pr-helper.socket
 %_libexecdir/virtfs-proxy-helper
@@ -406,6 +394,9 @@ fi
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Wed Sep 29 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:6.0.0-alt1
+- 6.0.0-4
+
 * Mon Mar 29 2021 Alexey Shabalin <shaba@altlinux.org> 1:5.1.0-alt6
 - install /usr/bin/qemu-kvm script
 - update udev rules and control

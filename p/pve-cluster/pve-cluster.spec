@@ -1,6 +1,6 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
-Version: 6.2.1
+Version: 7.0.3
 Release: alt1
 License: GPLv3
 Group: System/Servers
@@ -34,7 +34,7 @@ on all nodes.
 
 %package -n pve-access-control
 Summary: PVE access control library
-Version: 6.1.3
+Version: 7.0.4
 Group: Development/Perl
 
 %description -n pve-access-control
@@ -43,10 +43,10 @@ control function used by PVE.
 
 %prep
 %setup -q -n %name -a1 -a2
-%patch0 -p1
-%patch1 -p0
-%patch2 -p1
-%patch3 -p1
+%patch0 -p1 -b .alt
+%patch1 -p0 -b .acc
+%patch2 -p1 -b .vzdump
+%patch3 -p1 -b .ggcp
 
 grep '/var/run' * -rl | while read f; do
     sed -i 's|/var/run|/run|' $f
@@ -57,10 +57,10 @@ install -pD -m644 debian/%name.service %buildroot%systemd_unitdir/%name.service
 install -pD -m644 debian/sysctl.d/pve.conf %buildroot%_sysconfdir/sysctl.d/pve-cluster.conf
 cd data
 %make -C PVE/Cluster DESTDIR=%buildroot install
-%make PERL_DOC_INC_DIRS=" .. . ../../pve-access-control ../../pve-apiclient" DESTDIR=%buildroot install
-cd ../pve-access-control
+%make PERL_DOC_INC_DIRS=" .. . ../../pve-access-control/src ../../pve-apiclient" DESTDIR=%buildroot install
+cd ../pve-access-control/src
 %make DESTDIR=%buildroot install
-cd ../pve-apiclient
+cd ../../pve-apiclient
 %make DESTDIR=%buildroot install
 
 install -pD -m0755 %SOURCE3 %buildroot%_prefix/lib/rpm/%name.filetrigger
@@ -183,6 +183,16 @@ fi
 %_man1dir/pveum.1*
 
 %changelog
+* Tue Jul 27 2021 Valery Inozemtsev <shrek@altlinux.ru> 7.0.3-alt1
+- pve-cluster 7.0-3
+- pve-access-control 7.0-4
+- pve-apiclient 3.2-1
+
+* Mon Jun 07 2021 Valery Inozemtsev <shrek@altlinux.ru> 6.4.1-alt1
+- pve-cluster 6.2-1
+- pve-access-control 6.4-1
+- pve-apiclient 3.1-3
+
 * Tue Dec 08 2020 Valery Inozemtsev <shrek@altlinux.ru> 6.2.1-alt1
 - pve-cluster 6.2-1
 - pve-access-control 6.1-3

@@ -1,6 +1,6 @@
 Name: pve-docs
 Summary: PVE Documentation
-Version: 6.3.1
+Version: 7.0.5
 Release: alt1
 License: GPLv3
 Group: Documentation
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 
 ExclusiveArch: x86_64 aarch64
 BuildArch: noarch
-BuildRequires: asciidoc-a2x source-highlight xmlto librsvg-utils mailcap pve-common
+BuildRequires: asciidoc-a2x asciidoc-latex source-highlight xmlto librsvg-utils mailcap pve-common
 BuildRequires: perl(MediaWiki/API.pm) perl(JSON.pm)
 
 %description
@@ -32,11 +32,11 @@ Tool to auto-generate various Proxmox VE Documentation files
 grep 'proxmox.com' * -rl | while read f; do
 	sed -i 's|proxmox.com|basealt.ru|' $f
 done
-
+sed -i 's|{python}|python3|' asciidoc/*.conf
 rm -f getting-help.adoc howto-improve-pve-docs.adoc pve-package-repos.adoc pve-faq.adoc pve-installation.adoc pve-system-requirements.adoc translation.adoc pve-installation-media.adoc system-booting.adoc cpu-models.conf.adoc
 
 %build
-%make
+%make DOCRELEASE=%version
 
 %install
 mkdir -p %buildroot%_datadir/pve-doc-generator/asciidoc
@@ -59,6 +59,12 @@ install -m644 images/screenshot/*.png %buildroot%_datadir/%name/images/screensho
 %_datadir/pve-doc-generator
 
 %changelog
+* Tue Jul 27 2021 Valery Inozemtsev <shrek@altlinux.ru> 7.0.5-alt1
+- 7.0-5
+
+* Thu Jun 03 2021 Valery Inozemtsev <shrek@altlinux.ru> 6.4.2-alt1
+- 6.4-2
+
 * Mon Nov 30 2020 Valery Inozemtsev <shrek@altlinux.ru> 6.3.1-alt1
 - 6.3-1
 

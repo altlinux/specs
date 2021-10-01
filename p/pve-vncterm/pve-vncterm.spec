@@ -2,7 +2,7 @@
 
 Name: pve-%sname
 Summary: VNC Terminal Emulator
-Version: 1.6.2
+Version: 1.7.1
 Release: alt1
 License: GPLv2
 Group: Networking/WWW
@@ -40,6 +40,9 @@ install -m0644 %SOURCE2 .
 %_man1dir/%sname.1*
 
 %changelog
+* Wed Sep 29 2021 Valery Inozemtsev <shrek@altlinux.ru> 1.7.1-alt1
+- 1.7-1
+
 * Fri Sep 04 2020 Valery Inozemtsev <shrek@altlinux.ru> 1.6.2-alt1
 - 1.6-2
 

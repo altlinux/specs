@@ -1,0 +1,37 @@
+Name: pve-acme
+Summary: PVE ACME integration perl library
+Version: 1.3.0
+Release: alt1
+License: GPLv3
+Group: Development/Perl
+Url: https://git.proxmox.com/
+Packager: Valery Inozemtsev <shrek@altlinux.ru>
+
+ExclusiveArch: x86_64 aarch64
+BuildRequires: pve-common python3 perl(Date/Parse.pm) perl(JSON.pm) perl(HTTP/Daemon.pm)
+
+Source: pve-acme.tar.xz
+
+Conflicts: pve-manager < 7.0.11-alt1
+
+%description
+Used in perl-based PVE project as common interface for DNS and HTTP ACME challenges
+
+%add_findreq_skiplist %perl_vendor_privlib/PVE/ACME.pm
+%add_findreq_skiplist %perl_vendor_privlib/PVE/ACME/DNSChallenge.pm
+
+%prep
+%setup -q -n %name
+
+%install
+%make DESTDIR=%buildroot -C src install
+
+%files
+%perl_vendor_privlib/PVE/ACME.pm
+%perl_vendor_privlib/PVE/ACME
+%_datadir/proxmox-acme
+
+%changelog
+* Mon Sep 27 2021 Valery Inozemtsev <shrek@altlinux.ru> 1.3.0-alt1
+- initial release
+

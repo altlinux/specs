@@ -1,6 +1,6 @@
 Name: librados2-perl
 Summary: Perl bindings for librados
-Version: 1.1.2
+Version: 1.2.1
 Release: alt1
 License: GPLv3
 Group: Development/Perl
@@ -27,6 +27,9 @@ This package contains librados perl binding used by PVE
 %perl_vendor_autolib/PVE
 
 %changelog
+* Wed Jul 28 2021 Valery Inozemtsev <shrek@altlinux.ru> 1.2.1-alt1
+- 1.2-1
+
 * Tue Jul 30 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.1.2-alt1
 - 1.1-2
 

@@ -2,7 +2,7 @@
 
 Name: pve-common
 Summary: PVE base library
-Version: 6.3.2
+Version: 7.0.6
 Release: alt1
 License: GPLv3
 Group: Development/Perl
@@ -39,6 +39,8 @@ BuildRequires: perl(Net/LDAP.pm)
 # alt regressive tests
 BuildRequires: perl(TAP/Harness.pm)
 BuildRequires: perl(Test/MockModule.pm)
+BuildRequires: perl(Term/ReadLine.pm)
+BuildRequires: perl(NetAddr/IP.pm)
 
 %description
 This package contains the base library used by other PVE components.
@@ -66,6 +68,15 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Thu Sep 23 2021 Valery Inozemtsev <shrek@altlinux.ru> 7.0.6-alt1
+- 7.0-6
+
+* Tue Jul 27 2021 Valery Inozemtsev <shrek@altlinux.ru> 7.0.5-alt1
+- 7.0-5
+
+* Mon May 31 2021 Valery Inozemtsev <shrek@altlinux.ru> 6.4.3-alt1
+- 6.4-3
+
 * Mon Dec 07 2020 Valery Inozemtsev <shrek@altlinux.ru> 6.3.2-alt1
 - 6.3-2
 

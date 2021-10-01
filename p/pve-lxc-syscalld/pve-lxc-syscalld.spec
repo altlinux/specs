@@ -2,7 +2,7 @@
 
 Name: pve-lxc-syscalld
 Summary: PVE LXC syscall daemon
-Version: 0.9.1
+Version: 1.0.0
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -10,7 +10,7 @@ Url: https://git.proxmox.com/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source0: %name.tar.xz
-Source1: %name-cargo.tar
+Source1: cargo.tar
 Patch0: pve-lxc-syscalld-aarch64-u8.patch
 
 ExclusiveArch: x86_64 aarch64
@@ -28,11 +28,11 @@ containers.
 %endif
 
 rm -fr .cargo
-tar -xf %SOURCE1 -C %_builddir
+tar -xf %SOURCE1 -C %_builddir/%name
 sed -i 's|roxmox ||' etc/pve-lxc-syscalld.service.in
 
 %build
-CARGO_HOME=%_builddir/cargo cargo build --release --offline
+CARGO_HOME=%_builddir/%name/cargo cargo build --release --offline
 
 %install
 install -pD -m755 target/release/%name %buildroot%_libexecdir/pve-lxc-syscalld/pve-lxc-syscalld
@@ -44,6 +44,9 @@ sed "s|%LIBEXECDIR%|%_libexecdir|" etc/pve-lxc-syscalld.service.in > %buildroot%
 %_libexecdir/pve-lxc-syscalld/pve-lxc-syscalld
 
 %changelog
+* Wed Sep 29 2021 Valery Inozemtsev <shrek@altlinux.ru> 1.0.0-alt1
+- 1.0.0-1
+
 * Thu Dec 10 2020 Valery Inozemtsev <shrek@altlinux.ru> 0.9.1-alt1
 - initial release
 

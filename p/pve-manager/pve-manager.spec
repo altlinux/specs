@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 6.3.3
-Release: alt5
+Version: 7.0.11
+Release: alt1
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -9,7 +9,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64 aarch64
 Requires: cstream lzop pve-vncterm pve-novnc pve-spiceterm pve-xtermjs pve-docs
-Requires: perl-LWP-Protocol-https pve-cluster schedutils
+Requires: perl-LWP-Protocol-https pve-cluster schedutils pve-acme
 
 Source0: pve-manager.tar.xz
 Source1: pve-container.tar.xz
@@ -23,9 +23,9 @@ Source12: extjs.tar.xz
 Source13: pve-widget-toolkit.tar.xz
 Source14: pve-i18n.tar.xz
 Source15: pve-mini-journalreader.tar.xz
-Source16: jquery-3.3.1.min.js
+Source16: jquery-3.5.1.min.js
 Source17: bootstrap-3.4.1-dist.zip
-Source18: pve-acme.tar.xz
+Source18: marked.min.js
 
 Source5: pve-manager-ru.po
 Source6: basealt_logo.png
@@ -81,20 +81,22 @@ Patch50: pve-container-ENV.patch
 Patch51: pve-manager-ver-v.patch
 Patch52: pve-qmeventd.patch
 Patch53: pve-container-syscalld.patch
+Patch54: pve-manager-rs-apt.patch
+Patch55: pve-manager-eslint.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
 BuildRequires: perl-IO-Multiplex perl-Locale-PO perl-UUID unzip xmlto pve-lxc libnetfilter_conntrack-devel
 BuildRequires: perl(File/Sync.pm) perl(Net/DNS/Resolver.pm) perl(Pod/Select.pm) perl(Crypt/Eksblowfish/Bcrypt.pm)
 BuildRequires: perl(Template.pm) perl(IPC/Run.pm) perl(Term/ReadLine.pm) libjson-c-devel libsystemd-devel
-BuildRequires: perl(HTTP/Daemon.pm) gnupg
+BuildRequires: perl(HTTP/Daemon.pm) gnupg pve-acme
 
 %description
 This package contains the PVE management tools
 
 %package -n pve-container
 Summary: PVE Container management tool
-Version: 3.3.2
+Version: 4.0.9
 Group: Development/Perl
 PreReq: shadow-submap
 Requires: pve-lxc dtach pve-lxc-syscalld
@@ -104,7 +106,7 @@ Tool to manage Linux Containers on PVE
 
 %package -n pve-firewall
 Summary: PVE Firewall
-Version: 4.1.3
+Version: 4.2.3
 Group: System/Servers
 Requires: ebtables ipset iptables iptables-ipv6 shorewall shorewall6 iproute2 >= 4.10.0
 
@@ -113,7 +115,7 @@ This package contains the PVE Firewall
 
 %package -n pve-ha-manager
 Summary: PVE HA Manager
-Version: 3.1.1
+Version: 3.3.1
 Group: System/Servers
 
 %description -n pve-ha-manager
@@ -121,7 +123,7 @@ HA Manager PVE
 
 %package -n pve-ha-simulator
 Summary: PVE HA Simulator
-Version: 3.1.1
+Version: 3.3.1
 Group: System/Servers
 
 %description -n pve-ha-simulator
@@ -129,7 +131,7 @@ PVE HA Simulator
 
 %package -n pve-qemu-server
 Summary: Qemu Server Tools
-Version: 6.3.2
+Version: 7.0.13
 Group: System/Servers
 Requires: socat genisoimage pve-qemu-system >= 4.1.1-alt1
 Provides: qemu-server = %version-%release
@@ -140,7 +142,7 @@ This package contains the Qemu Server tools used by PVE
 
 %package -n pve-guest-common
 Summary: PVE common guest-related modules
-Version: 3.1.3
+Version: 4.0.2
 Group: System/Servers
 
 %description -n pve-guest-common
@@ -148,7 +150,7 @@ This package contains a common code base used by pve-container and qemu-server
 
 %package -n pve-http-server
 Summary: PVE Asynchrounous HTTP Server Implementation
-Version: 3.1.1
+Version: 4.0.2
 Group: System/Servers
 Requires: fonts-font-awesome
 
@@ -160,9 +162,11 @@ This is used to implement the PVE REST API
 %add_findreq_skiplist %_datadir/pve-ha-simulator/PVE/HA/*.pm
 %add_findreq_skiplist %_datadir/pve-ha-simulator/PVE/HA/Sim/*.pm
 %add_findreq_skiplist %_datadir/pve-ha-simulator/PVE/HA/Sim/Resources/*.pm
+%add_findreq_skiplist %perl_vendor_privlib/PVE/ExtMetric.pm
+%add_findreq_skiplist %perl_vendor_privlib/PVE/Status/InfluxDB.pm
 
 %prep
-%setup -q -c -n pve -a1 -a2 -a3 -a4 -a10 -a11 -a12 -a13 -a14 -a15 -a18
+%setup -q -c -n pve -a1 -a2 -a3 -a4 -a10 -a11 -a12 -a13 -a14 -a15
 %patch0 -p0 -b .altwww
 %patch1 -p0 -b .alt
 %patch2 -p0 -b .alt
@@ -209,6 +213,8 @@ This is used to implement the PVE REST API
 %patch51 -p0 -b .ver-v
 %patch52 -p0 -b .qmevent
 %patch53 -p0 -b .syscall
+%patch54 -p0 -b .rs
+%patch55 -p0 -b .eslint
 
 find -name Makefile | while read m; do
 	sed -i '/^.*\/usr\/share\/dpkg.*/d' $m;
@@ -219,16 +225,17 @@ grep '/var/run' * -rl | while read f; do
 done
 
 install -m0644 %SOURCE5 pve-i18n/ru.po
+install -m0644 %SOURCE18 pve-widget-toolkit/src/
 
 %build
 for d in pve-manager pve-firewall/src pve-ha-manager/src pve-widget-toolkit/src pve-mini-journalreader/src; do
     pushd $d
-    %make PACKAGE="pve-manager" VERSION="6.3-3" PVERELEASE="6.3" REPOID="17558967"
+    %make PACKAGE="pve-manager" VERSION="7.0-11" PVERELEASE="7.0" REPOID="63d82f4e"
     popd
 done
 
 %install
-for d in pve-manager pve-firewall/src pve-ha-manager/src pve-container/src qemu-server pve-guest-common pve-http-server extjs pve-widget-toolkit/src pve-i18n pve-mini-journalreader/src pve-acme/src; do
+for d in pve-manager pve-firewall/src pve-ha-manager/src pve-container/src qemu-server pve-guest-common/src pve-http-server/src extjs pve-widget-toolkit/src pve-i18n pve-mini-journalreader/src; do
     pushd $d
     %make DESTDIR=%buildroot install
     popd
@@ -328,6 +335,7 @@ __EOF__
 %_datadir/zsh/vendor-completions/_vzdump
 %_datadir/zsh/vendor-completions/_pvesh
 %_datadir/zsh/vendor-completions/_pve5to6
+%_datadir/zsh/vendor-completions/_pve6to7
 %_sysconfdir/logrotate.d/pve
 %config(noreplace) %_sysconfdir/vzdump.conf
 #systemd_unitdir/pvebanner.service
@@ -362,6 +370,7 @@ __EOF__
 %_bindir/vzdump
 %_bindir/mini-journalreader
 %_bindir/pve5to6
+%_bindir/pve6to7
 %_datadir/pve-i18n
 %dir %perl_vendor_privlib/PVE
 %dir %perl_vendor_privlib/PVE/API2
@@ -382,14 +391,12 @@ __EOF__
 %perl_vendor_privlib/PVE/VZDump.pm
 %perl_vendor_privlib/PVE/ExtMetric.pm
 %perl_vendor_privlib/PVE/CertCache.pm
-%perl_vendor_privlib/PVE/ACME.pm
-%perl_vendor_privlib/PVE/ACME
 %perl_vendor_privlib/PVE/API2/ACME.pm
 %perl_vendor_privlib/PVE/API2/ACMEAccount.pm
 %perl_vendor_privlib/PVE/API2/ACMEPlugin.pm
 %perl_vendor_privlib/PVE/API2/APT.pm
 %perl_vendor_privlib/PVE/API2/Backup.pm
-%perl_vendor_privlib/PVE/API2/BackupInfo.pm
+%perl_vendor_privlib/PVE/API2/Capabilities.pm
 %perl_vendor_privlib/PVE/API2/Ceph.pm
 %perl_vendor_privlib/PVE/API2/Certificates.pm
 %perl_vendor_privlib/PVE/API2/Cluster.pm
@@ -414,7 +421,9 @@ __EOF__
 %perl_vendor_privlib/PVE/API2/Ceph/MGR.pm
 %perl_vendor_privlib/PVE/API2/Ceph/MON.pm
 %perl_vendor_privlib/PVE/API2/Ceph/OSD.pm
+%perl_vendor_privlib/PVE/API2/Ceph/Pools.pm
 %dir %perl_vendor_privlib/PVE/API2/Cluster
+%perl_vendor_privlib/PVE/API2/Cluster/BackupInfo.pm
 %perl_vendor_privlib/PVE/API2/Cluster/Ceph.pm
 %perl_vendor_privlib/PVE/API2/Cluster/MetricServer.pm
 %perl_vendor_privlib/PVE/CLI/pveceph.pm
@@ -424,6 +433,7 @@ __EOF__
 %perl_vendor_privlib/PVE/CLI/vzdump.pm
 %perl_vendor_privlib/PVE/CLI/pvesh.pm
 %perl_vendor_privlib/PVE/CLI/pve5to6.pm
+%perl_vendor_privlib/PVE/CLI/pve6to7.pm
 %perl_vendor_privlib/PVE/Ceph/Services.pm
 %perl_vendor_privlib/PVE/Ceph/Tools.pm
 %perl_vendor_privlib/PVE/Service/pvedaemon.pm
@@ -434,7 +444,6 @@ __EOF__
 %perl_vendor_privlib/PVE/Status/InfluxDB.pm
 %perl_vendor_privlib/PVE/Status/Plugin.pm
 %perl_vendor_privlib/PVE/CLI/pveam.pm
-%_datadir/proxmox-acme
 %_datadir/pve-manager
 %_localstatedir/pve-manager
 %dir %_localstatedir/vz/images
@@ -448,6 +457,7 @@ __EOF__
 %_man1dir/pvesh.1*
 %_man1dir/pvesr.1*
 %_man1dir/pve5to6.1*
+%_man1dir/pve6to7.1*
 #_man1dir/pvesubscription.1*
 #_man1dir/pveupgrade.1*
 %_man1dir/pveversion.1*
@@ -574,6 +584,7 @@ __EOF__
 %perl_vendor_privlib/PVE/API2/Qemu/Agent.pm
 %perl_vendor_privlib/PVE/API2/Qemu.pm
 %perl_vendor_privlib/PVE/API2/Qemu/CPU.pm
+%perl_vendor_privlib/PVE/API2/Qemu/Machine.pm
 %perl_vendor_privlib/PVE/CLI/qm.pm
 %perl_vendor_privlib/PVE/CLI/qmrestore.pm
 %perl_vendor_privlib/PVE/VZDump/QemuServer.pm
@@ -613,6 +624,17 @@ __EOF__
 %perl_vendor_privlib/PVE/APIServer
 
 %changelog
+* Thu Sep 23 2021 Valery Inozemtsev <shrek@altlinux.ru> 7.0.11-alt1
+- pve-manager 7.0-11
+- pve-container 4.0-9
+- pve-firewall 4.2-2
+- pve-ha-manager 3.3-1
+- qemu-server 7.0-13
+- pve-guest-common 4.0-2
+- pve-http-server 4.0-2
+- pve-widget-toolkit 3.3-6
+- pve-i18n 2.5-1
+
 * Thu Jul 08 2021 Valery Inozemtsev <shrek@altlinux.ru> 6.3.3-alt5
 - pve-container@.service wants pve-lxc-syscalld.service
 
