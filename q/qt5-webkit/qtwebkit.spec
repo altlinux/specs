@@ -2,12 +2,13 @@
 %add_verify_elf_skiplist %_qt5_libdir/libQt5WebKit.so.*
 %add_verify_elf_skiplist %_qt5_libdir/libQt5WebKitWidgets.so.*
 
+%define optflags_lto %nil
 %global qt_module qtwebkit
 %def_disable bootstrap
 
 Name: qt5-webkit
 Version: 5.212.0
-Release: alt23
+Release: alt24
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -39,7 +40,8 @@ BuildRequires: pkgconfig(glib-2.0) pkgconfig(gio-2.0)
 # pkgconfig(gstreamer-1.0) pkgconfig(gstreamer-plugins-base-1.0) pkgconfig(gstreamer-app-1.0)
 BuildRequires: libXcomposite-devel libXext-devel libXrender-devel libdrm-devel
 # libGL-devel
-BuildRequires: python-module-distribute python-module-simplejson python-module-json rpm-build-python
+#BuildRequires: python-module-distribute python-module-simplejson python-module-json rpm-build-python
+BuildRequires: python-module-distribute python-module-json rpm-build-python
 BuildRequires: ruby ruby-libs
 BuildRequires: perl(Term/ANSIColor.pm) perl(Perl/Version.pm) perl(Digest/Perl/MD5.pm)
 BuildRequires: zlib-devel libxml2-devel
@@ -220,6 +222,9 @@ done
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Fri Oct 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt24
+- build without LTO enabled
+
 * Tue Aug 17 2021 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt23
 - define optflags_debug when build (closes: 40751)
 
