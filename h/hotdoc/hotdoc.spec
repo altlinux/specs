@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: hotdoc
-Version: %ver_major.5
+Version: %ver_major.7
 Release: alt1
 
 Summary: Hotdoc is a documentation framework
@@ -83,6 +83,9 @@ mv %name-%version-bootstrap_theme.tar %_sourcedir/
 %doc README.md
 
 %changelog
+* Fri Oct 01 2021 Yuri N. Sedunov <aris@altlinux.org> 0.13.7-alt1
+- 0.13.7
+
 * Sun Sep 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.13.5-alt1
 - 0.13.5
 
