@@ -2,7 +2,7 @@
 
 Name: ocaml-mysql
 Version: 1.2.4
-Release: alt1
+Release: alt2
 
 Summary: MySQL bindings for OCaml
 License: LGPLv2.1
@@ -31,6 +31,8 @@ a module Mysql intended for application development.
 ocaml-mysql is a package for OCaml that provides access to MySQL
 databases. It consists of low level functions implemented in C and
 a module Mysql intended for application development.
+
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 %prep
 %setup -q
@@ -63,6 +65,9 @@ mv %buildroot%_libdir/ocaml/site-lib/mysql/dllmysql_stubs.so %buildroot%_libdir/
 %_libdir/ocaml/stublibs/dll*.so
 
 %changelog
+* Fri Oct 01 2021 Egor Ignatov <egori@altlinux.org> 1.2.4-alt2
+- fix build with lto
+
 * Tue Feb 25 2020 Anton Farygin <rider@altlinux.ru> 1.2.4-alt1
 - 1.2.4
 
