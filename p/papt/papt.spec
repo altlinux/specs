@@ -1,7 +1,7 @@
 Summary: Wrapper for apt-rpm utilities
 
 Name: papt
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 License: GPL-2.0-or-later
@@ -17,6 +17,7 @@ BuildRequires: perl-AptPkg
 BuildRequires: perl-CryptX
 BuildRequires: perl-JSON
 BuildRequires: perl-Number-Format
+BuildRequires: perl-RPM2
 BuildRequires: perl-WWW-Curl
 BuildRequires: perl-ph
 
@@ -37,11 +38,17 @@ make
 install -D -m755 papt   %buildroot%_bindir/papt
 install -D -m644 papt.1 %buildroot%_man1dir/papt.1
 
+install -D -m755 papt-query   %buildroot%_bindir/papt-query
+install -D -m644 papt-query.1 %buildroot%_man1dir/papt-query.1
+
 %files
-%_bindir/papt
-%_man1dir/papt.1*
+%_bindir/papt*
+%_man1dir/papt*.1*
 
 %changelog
+* Fri Oct 01 2021 Alexey Gladkov <legion@altlinux.ru> 0.3.0-alt1
+- Add utility to search packages in the apt-cache.
+
 * Thu Sep 30 2021 Alexey Gladkov <legion@altlinux.ru> 0.2.0-alt1
 - Use WWW::Curl to download packages.
 
