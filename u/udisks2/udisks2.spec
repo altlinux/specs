@@ -26,7 +26,7 @@
 %endif
 
 Name: %{_name}2
-Version: 2.9.3
+Version: 2.9.4
 Release: alt1
 
 Summary: Disk Management Service (Second Edition)
@@ -55,6 +55,7 @@ Obsoletes: %_name
 Requires(pre): control
 Requires: lib%name = %version-%release
 Requires: /lib/udev/rules.d
+Requires: polkit
 Requires: /usr/sbin/cryptsetup
 Requires: dbus >= %dbus_ver dbus-tools-gui
 Requires: mdadm ntfsprogs parted gdisk dosfstools xfsprogs
@@ -348,6 +349,9 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Sat Oct 02 2021 Yuri N. Sedunov <aris@altlinux.org> 2.9.4-alt1
+- 2.9.4
+
 * Thu Aug 05 2021 Yuri N. Sedunov <aris@altlinux.org> 2.9.3-alt1
 - 2.9.3
 
