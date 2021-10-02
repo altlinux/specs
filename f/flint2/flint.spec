@@ -1,7 +1,7 @@
 %define soname 16
 
 Name: flint2
-Version: 2.8.0
+Version: 2.8.1
 Release: alt1
 Summary: Fast Library for Number Theory
 
@@ -72,6 +72,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/libflint.so
 
 %changelog
+* Sat Oct 02 2021 Leontiy Volodin <lvol@altlinux.org> 2.8.1-alt1
+- New version (2.8.1).
+
 * Wed Sep 29 2021 Leontiy Volodin <lvol@altlinux.org> 2.8.0-alt1
 - Initial build for ALT Sisyphus (thanks fedora for the spec).
 - Built as require for libpynac.
