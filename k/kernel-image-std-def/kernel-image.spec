@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt2
 epoch:2
 %define kernel_base_version	5.10
 %define kernel_sublevel .70
@@ -696,6 +696,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Oct 02 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.70-alt2
+- ES8336 support fixed
+
 * Thu Sep 30 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.70-alt1
 - v5.10.70
 
