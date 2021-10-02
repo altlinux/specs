@@ -1,7 +1,7 @@
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
 Version: 3.0.23
-Release: alt1
+Release: alt2
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
 Url: http://www.freeradius.org/
@@ -192,6 +192,9 @@ This plugin provides the unixODBC support for the FreeRADIUS server project.
 %prep
 %setup -q
 %patch1 -p1
+%ifarch %e2k
+sed -i "s|defined(HAVE_BUILTIN_CHOOSE_EXPR)|0|" src/include/conffile.h
+%endif
 
 %build
 
@@ -695,6 +698,9 @@ fi
 #%_libdir/freeradius/rlm_sql_unixodbc-%version.so
 
 %changelog
+* Tue Sep 28 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.0.23-alt2
+- Fixed build for Elbrus
+
 * Tue Jun 15 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.23-alt1
 - 3.0.23
 
