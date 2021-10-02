@@ -6,7 +6,7 @@
 Name: simde
 Summary: SIMD Everywhere: Portable implementations of SIMD intrinsics
 Version: 0.7.2
-Release: alt1
+Release: alt2
 License: MIT
 Group: Development/C
 Url: https://simd-everywhere.github.io/blog/
@@ -52,5 +52,8 @@ cp -a simde %buildroot%_includedir
 %_includedir/simde
 
 %changelog
+* Sat Oct 02 2021 Vitaly Chikunov <vt@altlinux.org> 0.7.2-alt2
+- sse2: ignore broken _mm_loadu_si{16,32} on GCC(11).
+
 * Sun Aug 15 2021 Vitaly Chikunov <vt@altlinux.org> 0.7.2-alt1
 - First import of v0.7.2 (2021-01-24).
