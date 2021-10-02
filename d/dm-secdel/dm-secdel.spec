@@ -3,7 +3,7 @@
 
 Name: dm-secdel
 Version: 1.0.7
-Release: alt4
+Release: alt5
 
 Summary: dm-linear with secure deletion on discard
 License: GPL-2.0-only
@@ -41,10 +41,10 @@ echo '# <target name> <source device> <options>' > %buildroot/etc/secdeltab
 
 %check
 # Do dummy build of the module.
-banner un-def
-make KDIR=$(echo /lib/modules/*-un-def-*/build) VERSION=%version all clean
 banner std-def
 make KDIR=$(echo /lib/modules/*-std-def-*/build) VERSION=%version all clean
+banner un-def
+make KDIR=$(echo /lib/modules/*-un-def-*/build) VERSION=%version all clean
 
 %files -n kernel-source-%name
 %kernel_src/kernel-source-%name-%version.tar
@@ -63,6 +63,9 @@ systemctl -q enable secdeltab
 %preun_service secdeltab
 
 %changelog
+* Sun Oct 03 2021 Vitaly Chikunov <vt@altlinux.org> 1.0.7-alt5
+- Fix building for v5.14.
+
 * Sat Jun 12 2021 Vitaly Chikunov <vt@altlinux.org> 1.0.7-alt4
 - Fix building for v5.12.
 
