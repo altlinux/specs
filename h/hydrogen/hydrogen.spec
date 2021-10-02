@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hydrogen
-Version: 1.0.2
-Release: alt1.1
+Version: 1.1.0
+Release: alt1
 
 Summary: Hydrogen Drum Machine
 License: GPL
@@ -14,29 +14,36 @@ URL: http://www.hydrogen-music.org
 Source0: %name-%version.tar
 
 BuildRequires: ccmake ctest doxygen gcc-c++ graphviz ladspa_sdk libalsa-devel libarchive-devel libjack-devel liblo-devel liblrdf-devel
-BuildRequires: libportaudio2-devel libportmidi librubberband-devel libsndfile-devel libtar-devel libpulseaudio-devel cppunit-devel
+BuildRequires: libportaudio2-devel libportmidi-devel librubberband-devel libsndfile-devel libtar-devel libpulseaudio-devel cppunit-devel
 BuildRequires: qt5-base-devel qt5-tools-devel qt5-xmlpatterns-devel zlib-devel
 
 BuildRequires: desktop-file-utils
 
 %description
-Hydrogen is a sample based drum machine with:
- Graphical user interface based on QT
- Sample based real-time audio engine
- Oss Audio driver
- Jack Audio driver
- Export to disk audio driver
- Alsa Midi input
- Ability to import/export xml-based song file
- 64 ticks per pattern
- 16 voices with volume, mute, solo, pan capabilities
- Import of samples in wav, au, aiff format
+Hydrogen is an advanced sample-based drum machine. Its main
+goal is to bring professional yet simple and intuitive
+pattern-based drum programming. Its features include:
+* Very user-friendly, modular, fast and intuitive graphical
+  interface based on Qt5.
+* Sample-based stereo audio engine, with import of sound
+  samples in wav, au and aiff formats.
+* Support of samples in compressed FLAC file.
+* Separate command-line interface (h2cli)
+* Pattern-based sequencer, with unlimited number of patterns
+  and ability to chain patterns into a song.
+* Playlist with scripting support.
+* Multi layer support for instruments (up to 16 samples
+  for each instrument).
+* Sample Editor, with basic cut and loop functions.
+* JACK, ALSA, PulseAudio, PortAudio, CoreAudio and OSS audio
+  drivers.
+* Export song to wav, aiff, flac or midi file.
 
 %prep
 %setup
 
 %build
-%cmake -DWANT_RUBBERBAND=ON
+%cmake -DWANT_RUBBERBAND=ON -DWANT_PORTAUDIO=ON -DWANT_PORTMIDI=ON
 %cmake_build
 
 %install
@@ -60,6 +67,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude /usr/include/%name
 
 %changelog
+* Thu Sep 23 2021 Ivan A. Melnikov <iv@altlinux.org> 1.1.0-alt1
+- 1.1.0
+- Enable PortAudio and PortMidi support.
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 1.0.2-alt1.1
 - NMU: spec: adapt to new cmake macros.
 
