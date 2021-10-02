@@ -1,7 +1,7 @@
 %define repo memory_allocator
 
 Name: python3-module-memory-allocator
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 Summary: An extension class to allocate memory easily with cython
 License: LGPL-3.0+ and GPL-3.0
@@ -30,6 +30,9 @@ This extension class started as part of the Sage software.
 %python3_sitelibdir/%{repo}*
 
 %changelog
+* Sat Oct 02 2021 Leontiy Volodin <lvol@altlinux.org> 0.1.1-alt1
+- New version (0.1.1).
+
 * Wed Sep 29 2021 Leontiy Volodin <lvol@altlinux.org> 0.1.0-alt1
 - Initial build for ALT Sisyphus.
 - Built as part of sagemath.
