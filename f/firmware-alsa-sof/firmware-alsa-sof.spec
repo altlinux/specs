@@ -2,7 +2,7 @@
 Summary: Firmware and topology files for Sound Open Firmware project
 Name: firmware-alsa-sof
 Version: 1.8
-Release: alt2
+Release: alt3
 # See later in the spec for a breakdown of licensing
 License: BSD
 Group: Sound
@@ -35,8 +35,7 @@ alsatplg -c /usr/share/alsa/topology/hda-dsp/skl_hda_dsp_generic-tplg.conf \
 %install
 mkdir -p  %buildroot%_firmwarepath/intel/
 cp -a v%version.x/sof-tplg-v%version  %buildroot%_firmwarepath/intel/sof-tplg-v%version
-cp -a v%version.x/sof-v%version  %buildroot%_firmwarepath/intel/sof-v%version
-ln -s sof-v%version %buildroot%_firmwarepath/intel/sof
+cp -a v%version.x/sof-v%version  %buildroot%_firmwarepath/intel/sof
 ln -s sof-tplg-v%version %buildroot%_firmwarepath/intel/sof-tplg
 install -m0644 skl_hda_dsp_generic-tplg.bin %buildroot%_firmwarepath/
 
@@ -61,13 +60,15 @@ cat alsa-sof-firmware.files
 %_firmwarepath/skl_hda_dsp_generic-tplg.bin
 %dir %_firmwarepath/intel
 %_firmwarepath/intel/sof-tplg
-%_firmwarepath/intel/sof
 
 
 
 %files debug -f alsa-sof-firmware.debug-files
 
 %changelog
+* Sun Oct 03 2021 Anton Farygin <rider@altlinux.ru> 1.8-alt3
+- reverted back to using directory for /lib/firmware/alsa/sof (closes: #41045)
+
 * Fri Oct 01 2021 Anton Farygin <rider@altlinux.ru> 1.8-alt2
 - RPM does not know how to replace the symlinks to the directory.
   Switched to symlink back (for sof and sof-tplg).
