@@ -1,3 +1,4 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %def_enable ocaml
 %def_enable perl
 %def_enable python
@@ -6,7 +7,7 @@
 
 Name: hivex
 Version: 1.3.21
-Release: alt1
+Release: alt2
 Summary: Read and write Windows Registry binary hive files
 
 Group: Development/Other
@@ -230,6 +231,9 @@ rm -f %buildroot%python3_sitelibdir/libhivexmod.la
 %endif
 
 %changelog
+* Sun Oct 03 2021 Anton Farygin <rider@altlinux.ru> 1.3.21-alt2
+- fixed build with LTO
+
 * Wed Aug 18 2021 Anton Farygin <rider@altlinux.ru> 1.3.21-alt1
 - 1.3.21 (Fixes: CVE-2021-3622)
 
