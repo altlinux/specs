@@ -1,6 +1,6 @@
 %define libname cppo_ocamlbuild
 Name: ocaml-cppo
-Version: 1.6.7
+Version: 1.6.8
 Release: alt1
 Summary: Equivalent of the C preprocessor for OCaml programs
 License: BSD
@@ -63,6 +63,9 @@ developing applications that use %name-ocamlbuild.
 %exclude %_libdir/ocaml/cppo/dune-package
 
 %changelog
+* Sun Oct 03 2021 Anton Farygin <rider@altlinux.ru> 1.6.8-alt1
+- 1.6.8
+
 * Mon Mar 22 2021 Anton Farygin <rider@altlinux.org> 1.6.7-alt1
 - 1.6.7
 
