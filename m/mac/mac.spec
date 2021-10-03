@@ -1,46 +1,25 @@
 # [for (x)emacs] -*-  mode: RPM-SPEC; coding: utf-8 -*-
-%define codec_ver 3.99-u4
-%define pack_ver %(echo %codec_ver | sed -e 's/-/./')
-
-%define license_file %_defaultdocdir/%name-%pack_ver/License.htm
-%define permission_file %_defaultdocdir/%name-%pack_ver/MAC-ALTLinux-permission.html
-%define permission_url http://www.monkeysaudio.com/cgi-bin/YaBB/YaBB.cgi?board=general;action=display;num=1088841050
-
 Name: mac
-Version: 3.99.u4
-Release: alt6.b5.4
+Version: 7.09
+Release: alt1
 
 Summary: Monkey's Audio Codec
-License: Distributable (see License.htm)
+License: Distributable (see license.html)
 Group: Sound
 
 Url: http://www.monkeysaudio.com
-Source0: %name-%version.tar
+Source0: %name-%version.zip
 Source1: MAC-ALTLinux-permission.html
+Source2: license.html
 
-Patch1: %name-%version-alt-gcc6.patch
-Patch2: %name-%version-alt-error-details.patch
-
-Packager: Vladimir V Kamarzin <vvk@altlinux.ru>
-Requires: libmac = %version-%release
-BuildRequires: gcc-c++ libstdc++-devel nasm
-
-%def_disable static
+# Automatically added by buildreq on Sun Oct 03 2021
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libstdc++-devel python3-base sh4
+BuildRequires: gcc-c++ unzip
 
 %description
 Monkey's Audio Codec is a lossless audio codec w/ good
 correspondence of compression (and decompresssion) ratio
 and time.
-
-Monkey's Audio Codec can be used for personal, educational
-and non-commercial purposes. Commercial usage requires
-prior written permission from Monkey's Audio author.
-See %license_file before usage.
-
-MAC's author Matthew T. Ashland permitted ALTLinux to include
-the codec and its SDK into ALTLinux distributions. Text of
-the permission can be found in %permission_file or
-at %permission_url
 
 %package -n libmac
 Summary: Monkey's Audio Codec shared libraries
@@ -49,16 +28,6 @@ Group: System/Libraries
 Monkey's Audio Codec is a lossless audio codec w/ good
 correspondence of compression (and decompresssion) ratio
 and time.
-
-Monkey's Audio Codec can be used for personal, educational
-and non-commercial purposes. Commercial usage requires
-prior written permission from Monkey's Audio author.
-See %license_file before usage.
-
-MAC's author Matthew T. Ashland permitted ALTLinux to include
-the codec and its SDK into ALTLinux distributions. Text of
-the permission can be found in %permission_file or
-at %permission_url
 
 This package contains shared libraries from
 Monkey's Audio Codec SDK
@@ -74,82 +43,40 @@ Monkey's Audio Codec is a lossless audio codec w/ good
 correspondence of compression (and decompresssion) ratio
 and time.
 
-Monkey's Audio Codec can be used for personal, educational
-and non-commercial purposes. Commercial usage requires
-prior written permission from Monkey's Audio author.
-See %license_file before usage.
-
-MAC's author Matthew T. Ashland permitted ALTLinux to include
-the codec and its SDK into ALTLinux distributions. Text of
-the permission can be found in %permission_file or
-at %permission_url
-
 This package contains header files from
 Monkey's Audio Codec SDK
 
-%if_enabled static
-%package -n libmac-devel-static
-Summary: Static libraries from Monkey's Audio Codec SDK
-Group: Development/C++
-Requires: libmac-devel = %version-%release
-BuildRequires: libstdc++-devel-static
-
-%description -n libmac-devel-static
-Monkey's Audio Codec is a lossless audio codec w/ good
-correspondence of compression (and decompresssion) ratio
-and time.
-
-Monkey's Audio Codec can be used for personal, educational
-and non-commercial purposes. Commercial usage requires
-prior written permission from Monkey's Audio author.
-See %license_file before usage.
-
-MAC's author Matthew T. Ashland permitted ALTLinux to include
-the codec and its SDK into ALTLinux distributions. Text of
-the permission can be found in %permission_file or
-at %permission_url
-
-This package contains static libraries from
-Monkey's Audio Codec SDK
-
-%endif
-
 %prep
-%setup
-%patch1 -p2
-%patch2 -p2
-install -p -m644 %SOURCE1 .
-mv src/License.htm .
+%setup -c
+cp %SOURCE1 %SOURCE2 .
+sed -i 's@(includedir)/MAC@(includedir)/mac@;s@libMAC@libmac@g' Source/Projects/NonWindows/Makefile
+sed -i '1i#define PLATFORM_LINUX' Shared/All.h
+sed -i '/\\\r*$/{N; s/\\\r*\n//}' Shared/All.h
 
 %build
-%autoreconf
-%configure %{subst_enable static}
-%make_build
+%make -f Source/Projects/NonWindows/Makefile libdir=%_libdir
 
 %install
-%makeinstall
+%makeinstall -f Source/Projects/NonWindows/Makefile libdir=%buildroot%_libdir
 
 %files
-%doc License.htm NEWS README TODO AUTHORS ChangeLog MAC-ALTLinux-permission.html
-%doc src/Credits.txt src/Readme.htm src/History.txt
+%doc *html *txt
 %_bindir/mac
 
 %files -n libmac
-%doc License.htm MAC-ALTLinux-permission.html
+%doc *html *txt
 %_libdir/libmac.so.*
 
 %files -n libmac-devel
-%doc License.htm MAC-ALTLinux-permission.html
+%doc *html *txt
 %_libdir/libmac.so
 %_includedir/*
 
-%if_enabled static
-%files -n libmac-devel-static
-%doc License.htm MAC-ALTLinux-permission.html
-%_libdir/libmac.a
-%endif
-
 %changelog
+* Sun Oct 03 2021 Fr. Br. George <george@altlinux.ru> 7.09-alt1
+- Major version update
+- License updated (it's permissive now)
+
 * Mon Jul 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.99.u4-alt6.b5.4
 - Patch console application to print error code descriptions
 

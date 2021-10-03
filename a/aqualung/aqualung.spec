@@ -1,20 +1,19 @@
 Name: aqualung
 Summary: Aqualung is a music player for the GNU/Linux operating system
 Version: 1.1
-Release: alt1
+Release: alt2
 License: GPL
 Group: Sound
-# http://aqualung.factorial.hu/download.php?key=svntgzd
 Source: %name-%version.tar.gz
-Patch: use_glib_instead_of_libmac_for_charconv.patch
 Patch1: %name-%version-ifp.patch
 Patch2: %name-%version-var-collision.patch
-#Source:			%name-%version.tar.gz
-Url: http://aqualung.sf.net
+Patch3: aqualung-ALT-new_mac.patch
+Patch4: aqualung-ALT-C11.patch
+Url: http://aqualung.jeremyevans.net
 
-# Automatically added by buildreq on Mon Sep 14 2015
-# optimized out: fontconfig fontconfig-devel glib2-devel libatk-devel libavcodec-devel libavutil-devel libcairo-devel libcdio-devel libcdio-paranoia libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libjson-c libogg-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit libpango-devel libstdc++-devel libusb-compat libwayland-client libwayland-server pkg-config raptor2-devel xz zlib-devel
-BuildRequires: gcc-c++ libalsa-devel libavformat-devel libcddb-devel libcdio-paranoia-devel libflac-devel libgtk+2-devel libifp-devel libjack-devel liblame-devel liblrdf-devel lua-devel libmac-devel libmad-devel libmodplug-devel libmpcdec-devel liboggz-devel libpulseaudio-devel libsamplerate-devel libsndfile-devel libspeex-devel libusb-compat-devel libvorbis-devel libwavpack-devel libxml2-devel
+# Automatically added by buildreq on Sun Oct 03 2021
+# optimized out: fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libatk-devel libavcodec-devel libavutil-devel libcairo-devel libcairo-gobject libcdio-devel libcdio-paranoia libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libogg-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit libpango-devel librabbitmq-c libsasl2-3 libstdc++-devel libusb-compat libx265-199 perl pkg-config python3 python3-base raptor2-devel sh4 shared-mime-info xz zlib-devel
+BuildRequires: gcc-c++ libalsa-devel libavformat-devel libcddb-devel libcdio-paranoia-devel libflac-devel libgtk+2-devel libifp-devel libjack-devel liblame-devel liblrdf-devel libmac-devel libmad-devel libmodplug-devel libmpcdec-devel liboggz-devel libpulseaudio-devel libsamplerate-devel libsndfile-devel libspeex-devel libusb-compat-devel libvorbis-devel libwavpack-devel libxml2-devel lua-devel
 
 %description
 Aqualung is a music player for the GNU/Linux operating system.
@@ -59,9 +58,10 @@ Author: Tom Szilagyi <tszilagyi@users.sourceforge.net>
 
 %prep
 %setup
-%patch
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 sed -i 's/\[mad], \[mad],/[mad], [libmad],/' configure.ac
 
@@ -130,6 +130,9 @@ install -m 0644 %name.desktop \
 %_desktopdir/%name.desktop
 
 %changelog
+* Sun Oct 03 2021 Fr. Br. George <george@altlinux.ru> 1.1-alt2
+- build with new libmac
+
 * Thu Mar 11 2021 Slava Aseev <ptrnine@altlinux.org> 1.1-alt1
 - Updated to upstream version 1.1
 
