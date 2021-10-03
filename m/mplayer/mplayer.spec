@@ -9,7 +9,7 @@
 %define subst_o_post() %{expand:%%{?_enable_%{1}:%{1}%{2},}}
 
 %define prerel %nil
-%define svnrev 38313
+%define svnrev 38314
 %define lname mplayer
 %define gname g%lname
 %define Name MPlayer
@@ -95,6 +95,7 @@
 %def_enable ffmpeg
 %def_enable shared_ffmpeg
 %def_enable postproc
+%def_enable libxml2
 %def_disable vf_lavfi
 %def_disable libavcodec_mpegaudio_hp
 %def_enable faad
@@ -202,7 +203,15 @@
 %def_enable 3dnowext
 %def_enable sse
 %def_enable sse2
+%def_enable sse3
 %def_enable ssse3
+%def_enable sse4
+%def_enable sse42
+%def_enable avx
+%def_enable avx2
+%def_enable xop
+%def_enable fma3
+%def_enable fma4
 %def_disable altivec
 %endif
 %def_enable fastmemcpy
@@ -210,6 +219,11 @@
 %def_disable profile
 %def_enable sighandler
 %def_disable gdb
+%ifarch i586
+%def_disable relocatable
+%else
+%def_enable relocatable
+%endif
 %def_enable dynamic_plugins
 
 %define termcaplib tinfo
@@ -301,7 +315,7 @@
 
 Name: %lname
 Version: 1.4
-Release: alt7.%svnrev.2
+Release: alt8.%svnrev.1
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -439,6 +453,7 @@ BuildRequires: rpm-build-python
 %{?_enable_ass:BuildRequires: libass-devel}
 %{?_enable_twolame:BuildRequires: libtwolame-devel}
 %{?_enable_postproc:BuildRequires: libpostproc-devel}
+%{?_enable_libxml2:BuildRequires: libxml2-devel}
 
 %{?_enable_xvmc:BuildRequires: libXvMC-devel}
 %if_enabled mplayer
@@ -679,9 +694,7 @@ export CFLAGS="%optflags"
 	--libdir=%_libdir \
 	--datadir=%_datadir/%name \
 	--confdir=%_sysconfdir/%name \
-%ifarch i586
-	--disable-relocatable \
-%endif
+	%{subst_enable relocatable} \
 	--extra-cflags="%optflags %{?_enable_smb:$(pkg-config --cflags smbclient)}" \
 	%{subst_enable mplayer} \
 	--extra-libs-mplayer="-lvorbisenc" \
@@ -768,6 +781,7 @@ export CFLAGS="%optflags"
 	--disable-ffmpeg_so \
 %endif
 	%{subst_enable postproc} \
+	%{subst_enable libxml2} \
 	%{subst_enable_to vf_lavfi vf-lavfi} \
 	%{subst_enable libavcodec_mpegaudio_hp} \
 	%{subst_enable tremor} \
@@ -865,7 +879,15 @@ export CFLAGS="%optflags"
 	%{subst_enable 3dnowext} \
 	%{subst_enable sse} \
 	%{subst_enable sse2} \
+	%{subst_enable sse3} \
 	%{subst_enable ssse3} \
+	%{subst_enable sse4} \
+	%{subst_enable sse42} \
+	%{subst_enable avx} \
+	%{subst_enable avx2} \
+	%{subst_enable xop} \
+	%{subst_enable fma3} \
+	%{subst_enable fma4} \
 	%{subst_enable altivec} \
 	%{subst_enable fastmemcpy} \
 	%{subst_enable profile} \
@@ -1134,6 +1156,11 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Sun Oct 03 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4-alt8.38314.1
+- Updated to SVN snapshot (revision 38314).
+- Explicitly enabled libxml2.
+- Added more knobs for CPU instruction sets (enabled by default).
+
 * Tue Aug 24 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4-alt7.38313.2
 - Fixed FTBFS: explicitly disabled LTO.
 
