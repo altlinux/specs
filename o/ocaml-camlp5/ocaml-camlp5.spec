@@ -1,6 +1,6 @@
 %define module camlp5
 Name: ocaml-camlp5
-Version: 8.00.01
+Version: 8.00.02
 Release: alt1
 
 Summary: preprocessor-pretty-printer of OCaml
@@ -43,6 +43,9 @@ install -p -m644 compile/pa_o_fast.cmi %buildroot%_libdir/ocaml/%module/
 %_man1dir/*5*.1*
 
 %changelog
+* Sun Oct 03 2021 Anton Farygin <rider@altlinux.ru> 8.00.02-alt1
+- 8.00.02
+
 * Thu Mar 18 2021 Anton Farygin <rider@altlinux.org> 8.00.01-alt1
 - 8.00.01
 
