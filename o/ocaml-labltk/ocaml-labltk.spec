@@ -1,8 +1,9 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %define pkgname labltk
 
 Name: ocaml-%pkgname
 Version: 8.06.10
-Release: alt1
+Release: alt2
 
 Summary: Tcl/Tk interface for OCaml
 Group: Development/ML
@@ -91,6 +92,9 @@ make install \
 %_bindir/ocamlbrowser
 
 %changelog
+* Sun Oct 03 2021 Anton Farygin <rider@altlinux.ru> 8.06.10-alt2
+- fixed build with LTO
+
 * Thu Mar 18 2021 Anton Farygin <rider@altlinux.org> 8.06.10-alt1
 - 8.06.10
 
