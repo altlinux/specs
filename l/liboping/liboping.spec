@@ -1,8 +1,6 @@
-%def_disable static
-
 Name: liboping
 Version: 1.10.0
-Release: alt1
+Release: alt2
 
 Summary: Liboping library
 License: LGPLv2.1
@@ -38,29 +36,12 @@ It is like ping, ping6, and fping rolled into one.
 
 %package devel
 Summary: Header files for liboping library
-Summary(pl.UTF-8): Pliki nagłówkowe biblioteki liboping
 Group: Development/C
 Requires: %name = %version-%release
 
 %description devel
 Header files for liboping library.
 
-%description devel -l pl.UTF-8
-Pliki nagłówkowe biblioteki liboping.
-
-%if_enabled static
-%package devel-static
-Summary: Static liboping library
-Summary(pl.UTF-8): Statyczna biblioteka liboping
-Group: Development/C
-Requires: %name-devel = %version-%release
-
-%description devel-static
-Static liboping library.
-
-%description devel-static -l pl.UTF-8
-Statyczna biblioteka liboping.
-%endif
 
 %prep
 %setup
@@ -68,7 +49,9 @@ Statyczna biblioteka liboping.
 
 %build
 %autoreconf
-%configure --with-perl-bindings=no
+%configure --with-perl-bindings=no \
+	   --disable-static \
+#
 %make_build
 
 %install
@@ -85,18 +68,19 @@ Statyczna biblioteka liboping.
 %files devel
 %_libdir/*.so
 %_includedir/*
+%_pkgconfigdir/*.pc
 %_man3dir/*
-
-%if_enabled static
-%files devel-static
-%_libdir/*.a
-%endif
 
 # TODO:
 # - package perl modules
 # - scrap gear repo, redo with git://git.verplant.org/liboping.git
 
 %changelog
+* Sun Oct 03 2021 Anton Farygin <rider@altlinux.ru> 1.10.0-alt2
+- cleanup spec
+- disabled static library build
+- added pkgconfig file to the devel package
+
 * Tue Feb 18 2020 Anton Farygin <rider@altlinux.ru> 1.10.0-alt1
 - 1.10.0
 - removed suid bit for oping binary and this tool now work only under
