@@ -1,6 +1,6 @@
 Name: libudfread
 Version: 1.1.2
-Release: alt1
+Release: alt2
 Summary: library for reading UDF from raw devices and image file
 License: LGPLv2.1
 Group: Development/C
@@ -26,7 +26,7 @@ developing applications that use %name.
 
 %build
 autoreconf -fisv
-%configure
+%configure --disable-static
 %make
 
 %install
@@ -42,6 +42,9 @@ autoreconf -fisv
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Oct 03 2021 Anton Farygin <rider@altlinux.ru> 1.1.2-alt2
+- disabled static library build
+
 * Wed Apr 14 2021 Anton Farygin <rider@altlinux.org> 1.1.2-alt1
 - 1.1.2
 
