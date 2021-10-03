@@ -1,6 +1,6 @@
-%set_verify_elf_method textrel=relaxed
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: ocaml-curses
-Version: 1.0.6
+Version: 1.0.8
 Release: alt1
 Summary: OCaml bindings for ncurses
 
@@ -62,6 +62,9 @@ ocamlfind install curses META *.cmi *.cmx *.cma *.cmxa *.a *.so *.mli
 %_libdir/ocaml/curses/*.mli
 
 %changelog
+* Sun Oct 03 2021 Anton Farygin <rider@altlinux.ru> 1.0.8-alt1
+- 1.0.8
+
 * Sun Jun 28 2020 Anton Farygin <rider@altlinux.ru> 1.0.6-alt1
 - 1.0.6
 
