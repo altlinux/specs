@@ -1,7 +1,7 @@
-%set_verify_elf_method textrel=relaxed
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: ocaml-libvirt
 Version: 0.6.1.5
-Release: alt1
+Release: alt2
 Summary: OCaml binding for libvirt
 Group: System/Libraries
 
@@ -71,6 +71,9 @@ make install-opt
 %_libdir/ocaml/libvirt/*.mli
 
 %changelog
+* Sun Oct 03 2021 Anton Farygin <rider@altlinux.ru> 0.6.1.5-alt2
+- fixed build with LTO
+
 * Wed Feb 26 2020 Anton Farygin <rider@altlinux.ru> 0.6.1.5-alt1
 - 0.6.1.5
 
