@@ -1,11 +1,11 @@
 %define module_name tornado
 
 Name: python3-module-%module_name
-Version: 5.1.1
-Release: alt3
+Version: 6.1.0
+Release: alt1
 Summary: Scalable, non-blocking web server and tools
 
-License: Apache
+License: Apache-2.0
 Group: Development/Python3
 Url: http://www.tornadoweb.org
 
@@ -40,11 +40,23 @@ pushd %buildroot%python3_sitelibdir/%module_name
 rm -rf ca-certificates.crt
 ln -sf /usr/share/ca-certificates/ca-bundle.crt ca-certificates.crt
 
+# do not install tests
+rm -r %buildroot%python3_sitelibdir/tornado/test
+
+%check
+export ASYNC_TEST_TIMEOUT=10
+%__python3 -m tornado.test.runtests --verbose
+
 %files
 %python3_sitelibdir/*
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Sun Oct 03 2021 Grigory Ustinov <grenka@altlinux.org> 6.1.0-alt1
+- Build new version (Closes: #40697).
+- Fix license tag.
+- Enable check.
+
 * Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 5.1.1-alt3
 - Drop python2 support.
 
