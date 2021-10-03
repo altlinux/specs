@@ -1,6 +1,6 @@
 Name: ocaml-pcre
-Version: 7.4.6
-Release: alt2
+Version: 7.5.0
+Release: alt1
 
 Summary: Perl compatibility regular expressions (PCRE) for OCaml
 License: LGPLv2.1 with OCaml-LGPL-linking-exception
@@ -50,6 +50,9 @@ developing applications that use %name.
 %doc README.md
 
 %changelog
+* Sun Oct 03 2021 Anton Farygin <rider@altlinux.ru> 7.5.0-alt1
+- 7.5.0
+
 * Wed Mar 17 2021 Anton Farygin <rider@altlinux.org> 7.4.6-alt2
 - spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
 - spec: use SPDX for ocaml linking exception in license tag
