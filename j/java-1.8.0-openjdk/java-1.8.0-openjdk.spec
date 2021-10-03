@@ -26,7 +26,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.312.b01
+%define version 1.8.0.312.b04
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -164,12 +164,10 @@ BuildRequires: /proc rpm-build-java
 # Always set this so the nss.cfg file is not broken
 %global NSS_LIBDIR %(pkg-config --variable=libdir nss)
 %global NSS_LIBS %(pkg-config --libs nss)
-%global NSS_CFLAGS %(pkg-config --cflags nss-softokn)
+%global NSS_CFLAGS %(pkg-config --cflags nss)
 # see https://bugzilla.redhat.com/show_bug.cgi?id=1332456
-%global NSSSOFTOKN_BUILDTIME_NUMBER %(pkg-config --modversion nss-softokn || : )
 %global NSS_BUILDTIME_NUMBER %(pkg-config --modversion nss || : )
 # this is workaround for processing of requires during srpm creation
-%global NSSSOFTOKN_BUILDTIME_VERSION %(if [ "x%{NSSSOFTOKN_BUILDTIME_NUMBER}" == "x" ] ; then echo "" ;else echo ">= %{NSSSOFTOKN_BUILDTIME_NUMBER}" ;fi)
 %global NSS_BUILDTIME_VERSION %(if [ "x%{NSS_BUILDTIME_NUMBER}" == "x" ] ; then echo "" ;else echo ">= %{NSS_BUILDTIME_NUMBER}" ;fi)
 
 # Fix for https://bugzilla.redhat.com/show_bug.cgi?id=1111349.
@@ -296,7 +294,7 @@ BuildRequires: /proc rpm-build-java
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
 %global shenandoah_project	aarch64-port
 %global shenandoah_repo		jdk8u-shenandoah
-%global shenandoah_revision aarch64-shenandoah-jdk8u312-b01
+%global shenandoah_revision aarch64-shenandoah-jdk8u312-b04
 # Define old aarch64/jdk8u tree variables for compatibility
 %global project         %{shenandoah_project}
 %global repo            %{shenandoah_repo}
@@ -504,6 +502,8 @@ Patch600: rh1750419-redhat_alt_java.patch
 # JDK-8218811: replace open by os::open in hotspot coding
 # This fixes a GCC 10 build issue
 Patch111: jdk8218811-perfMemory_linux.patch
+# Similar for GCC 11
+Patch112: %name-gcc11.patch
 
 #############################################
 #
@@ -1093,6 +1093,7 @@ sh %{SOURCE12}
 %patch571
 %patch574
 %patch111
+%patch112
 %patch539
 %patch600
 
@@ -2149,6 +2150,16 @@ fi
 %endif
 
 %changelog
+* Thu Sep 30 2021 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.312.b04-alt1_0.1.eajpp8
+- New version.
+- Remove nss-softokn mentions.
+
+* Wed Sep 22 2021 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.312.b03-alt1_0.1.eajpp8
+- New version.
+
+* Mon Sep 13 2021 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.312.b02-alt1_0.1.eajpp8
+- New version.
+
 * Sun Sep 05 2021 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.312.b01-alt1_0.1.eajpp8
 - New version
 
