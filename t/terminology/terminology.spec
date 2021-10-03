@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.9
+%define ver_major 1.10
 
 %def_enable check
 
@@ -67,6 +67,9 @@ EOF
 %doc AUTHORS ChangeLog COPYING README.md
 
 %changelog
+* Sun Oct 03 2021 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Tue Jan 19 2021 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
 - 1.9.0
 
