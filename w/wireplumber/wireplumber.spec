@@ -1,5 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_enable doc
 %def_enable introspection
 
 # These come from meson.build.
@@ -7,7 +8,7 @@
 %define soversion 0
 
 Name: wireplumber
-Version: 0.3.60.103.g9609a79903ab
+Version: 0.4.2
 Release: alt1
 
 Summary: a modular session/policy manager for PipeWire
@@ -21,10 +22,15 @@ BuildRequires: pkgconfig(gobject-2.0) >= 2.58
 BuildRequires: pkgconfig(gmodule-2.0) >= 2.58
 BuildRequires: pkgconfig(gio-2.0) >= 2.58
 BuildRequires: pkgconfig(gio-unix-2.0) >= 2.58
-BuildRequires: pkgconfig(libpipewire-0.3) >= 0.3.23
+BuildRequires: pkgconfig(libpipewire-0.3) >= 0.3.32
 BuildRequires: liblua5.3-devel
 %if_enabled introspection
-BuildRequires: gobject-introspection-devel
+BuildRequires(pre): gobject-introspection-devel
+%endif
+%if_enabled doc
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-breathe
+BuildRequires: doxygen >= 1.8.0
 %endif
 
 Source: %name-%version.tar
@@ -98,6 +104,12 @@ This package contains GObject introspection development data for lib%name.
 %build
 %meson \
     -Dsystem-lua=true \
+%if_enabled doc
+    -Ddocs=enabled \
+%endif
+%if_enabled introspection
+    -Dintrospection=enabled \
+%endif
     #
 
 %meson_build
@@ -106,10 +118,10 @@ This package contains GObject introspection development data for lib%name.
 %meson_install
 
 %files
-%doc NEWS.md README.md
-%_sysconfdir/wireplumber
+%doc NEWS.rst README.rst
 %_bindir/wireplumber
 %_bindir/wpctl
+%_bindir/wpexec
 %_datadir/wireplumber
 
 %files -n lib%name
@@ -132,6 +144,12 @@ This package contains GObject introspection development data for lib%name.
 %endif
 
 %changelog
+* Sun Oct 03 2021 Arseny Maslennikov <arseny@altlinux.org> 0.4.2-alt1
+- 0.3.96-alt1 -> 0.4.2-alt1.
+
+* Sat Jun 05 2021 Arseny Maslennikov <arseny@altlinux.org> 0.3.96-alt1
+- 0.3.60.103.g9609a79903ab-alt1 -> 0.3.96-alt1.
+
 * Thu Mar 18 2021 Arseny Maslennikov <arseny@altlinux.org> 0.3.60.103.g9609a79903ab-alt1
 - 0.3.60.63.g24a260030bab -> 0.3.60.103.g9609a79903ab.
 
