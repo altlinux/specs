@@ -1,7 +1,7 @@
 Summary: Inotify cron system
 Name: incron
 Version: 0.5.12
-Release: alt2
+Release: alt3
 
 Group: System/Base
 License: GPLv2
@@ -27,7 +27,7 @@ filesystem events rather than time periods.
 %patch0 -p1
 
 %build
-%make CXXFLAGS="%optflags"
+%make CXXFLAGS="%optflags -std=c++14"
 
 %install
 #install files manually since source Makefile tries to do it as root
@@ -70,6 +70,9 @@ make install-man MANPATH="%buildroot%_mandir" INSTALL="install -D -p"
 %_unitdir/incrond.service
 
 %changelog
+* Sun Oct 03 2021 Anton Farygin <rider@altlinux.ru> 0.5.12-alt3
+- fixed FTBFS: force C++14
+
 * Wed Jan 16 2019 Anton Farygin <rider@altlinux.ru> 0.5.12-alt2
 - removed ubt
 
