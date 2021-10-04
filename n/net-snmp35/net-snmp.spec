@@ -8,7 +8,7 @@
 
 Name: %_name%abiversion
 Version: 5.8
-Release: alt1
+Release: alt2
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
@@ -311,6 +311,7 @@ for run-time access to parsed MIB data.
 sed -i "s|LIB_LD_LIBS)|LIB_LD_LIBS) \$\{ADD_HELPER\}|g" agent/Makefile.in
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %autoreconf
 #export NETSNMP_DONT_CHECK_VERSION=1
 export LIBS='-lcrypto'
@@ -598,6 +599,9 @@ echo "===== start test ====="
 %doc python/README
 
 %changelog
+* Mon Oct 04 2021 Egor Ignatov <egori@altlinux.org> 5.8-alt2
+- Fix build with LTO
+
 * Wed Aug 28 2019 Alexey Shabalin <shaba@altlinux.org> 5.8-alt1
 - 5.8
 
