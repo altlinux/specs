@@ -32,7 +32,7 @@
 
 Name: lsb
 Version: 5.0
-Release: alt1
+Release: alt2
 
 Summary: The skeleton package defining packages needed for LSB compliance
 
@@ -588,7 +588,7 @@ ln -sf "/lib64/ld-linux.so.2" "%buildroot/lib64/ld-lsb.so.3"
 ln -sf "/lib/ld.so.1" "%buildroot/lib/ld-lsb-mipsel.so.3"
 %endif
 %ifarch ppc64le
-ln -sf "/lib64/ld-2.32.so" "%buildroot/lib64/ld-lsb-ppc64.so.3"
+ln -sf "/lib64/ld64.so.2" "%buildroot/lib64/ld-lsb-ppc64.so.3"
 %endif
 
 touch %buildroot%_sysconfdir/lsb-release.d/core-%compat_version-%lsb_arch
@@ -669,6 +669,9 @@ touch %buildroot%_sysconfdir/lsb-release.d/trialuse-%version-noarch
 %_sysconfdir/lsb-release.d/trialuse-%version-noarch
 
 %changelog
+* Tue Oct 05 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.0-alt2
+- Fixed ppc64le support.
+
 * Sat Jul 31 2021 Andrey Cherepanov <cas@altlinux.org> 5.0-alt1
 - New version of LSB.
 - lsb-cxx is now part of lsb-core.
