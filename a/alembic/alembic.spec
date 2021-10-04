@@ -1,9 +1,11 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %define soname 1.8
 
 Name: alembic
-Version: 1.8.2
+Version: 1.8.3
 Release: alt1
 Summary: Open framework for storing and sharing scene data
 Group: Graphics
@@ -63,6 +65,8 @@ iconv -f iso8859-1 -t utf-8 ACKNOWLEDGEMENTS.txt > ACKNOWLEDGEMENTS.txt.conv && 
 	mv -f ACKNOWLEDGEMENTS.txt.conv ACKNOWLEDGEMENTS.txt
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %cmake \
 	%_cmake_skip_rpath \
 	-DALEMBIC_LIB_INSTALL_DIR=%_libdir \
@@ -107,6 +111,9 @@ iconv -f iso8859-1 -t utf-8 ACKNOWLEDGEMENTS.txt > ACKNOWLEDGEMENTS.txt.conv && 
 %_libdir/libAlembic.so
 
 %changelog
+* Mon Oct 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.3-alt1
+- Updated to upstream version 1.8.3.
+
 * Fri Jun 18 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.2-alt1
 - Updated to upstream version 1.8.2.
 
