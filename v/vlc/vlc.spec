@@ -1,3 +1,4 @@
+ %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %def_disable freerdp
 %def_disable goom
 %def_enable firewire
@@ -6,7 +7,7 @@
 
 Name: vlc
 Version: 3.0.16
-Release: alt1
+Release: alt2
 
 Summary: VLC media player
 License: GPLv2
@@ -1405,6 +1406,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Sun Oct 03 2021 Anton Farygin <rider@altlinux.ru> 3.0.16-alt2
+- fixed build with LTO
+
 * Tue Jun 29 2021 Anton Farygin <rider@altlinux.ru> 3.0.16-alt1
 - 3.0.16
 
