@@ -2,7 +2,7 @@
 
 Summary: A popular and easy to use graphical IRC (chat) client
 Name: hexchat
-Version: 2.14.3
+Version: 2.16.0
 Release: alt1
 License: GPLv2+
 Group: Networking/IRC
@@ -11,6 +11,7 @@ Url: https://hexchat.github.io
 # https://github.com/hexchat/hexchat.git
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: meson
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(gtk+-2.0)
@@ -24,6 +25,7 @@ BuildRequires: pkgconfig(python3)
 BuildRequires: pkgconfig(libpci)
 BuildRequires: pkgconfig(lua)
 BuildRequires: perl-devel perl(ExtUtils/Embed.pm)
+BuildRequires: python3(cffi)
 
 Requires: enchant2
 
@@ -31,6 +33,10 @@ Provides: xchat = %EVR
 Obsoletes: xchat
 Provides: xchat2 = %EVR
 Obsoletes: xchat2
+
+%add_python3_path %_libdir/hexchat/python
+
+%add_python3_req_skip _hexchat_embedded
 
 %description
 HexChat is an easy to use graphical IRC chat client for the X Window System.
@@ -69,6 +75,7 @@ This package contains the development files for %name.
 %_libdir/hexchat/plugins/sysinfo.so
 %_libdir/hexchat/plugins/perl.so
 %_libdir/hexchat/plugins/python.so
+%_libdir/hexchat/python
 %_desktopdir/*.desktop
 %_iconsdir//hicolor/*/apps/%name.*
 %_datadir/metainfo/*.appdata.xml
@@ -80,6 +87,9 @@ This package contains the development files for %name.
 %_pkgconfigdir/*
 
 %changelog
+* Mon Oct 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.16.0-alt1
+- Updated to upstream version 2.16.0.
+
 * Fri Apr 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.14.3-alt1
 - Updated to version 2.14.3.
 
