@@ -1,6 +1,6 @@
 Name: ebtables
 Version: 2.0.11
-Release: alt1
+Release: alt2
 
 Summary: A filtering tool for a bridging firewall
 License: GPLv2
@@ -39,6 +39,9 @@ ln -sfvr %buildroot%_sbindir/ebtables-legacy-restore %buildroot/sbin/ebtables-re
 %_man8dir/*
 
 %changelog
+* Mon Oct 04 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.11-alt2
+- fix path to ebtables-legacy in ebtables-save (closes: 41051)
+
 * Mon Sep 20 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.11-alt1
 - 2.0.11 released
 
