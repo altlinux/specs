@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.1.7
+Version: 0.1.8
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,9 @@ done
 %_destdir
 
 %changelog
+* Mon Oct 04 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.1.8-alt1
+- Fix typos in Russian translations
+
 * Mon Sep 20 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.1.7-alt1
 - Added remote settings category and Vino settngs:
  + authentication-methods and vnc-password;
