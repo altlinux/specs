@@ -1,10 +1,11 @@
 Name: farmhash
 Version: 1.1
-Release: alt2
+Release: alt3
 Summary: FarmHash, a family of hash functions 
 Group: Development/C++
 # https://github.com/google/farmhash
 Source: %name-%version.tar
+Patch0: 61c7939-upstream-namespace-std.patch
 License: MIT
 Url: http://code.google.com/p/farmhash 
 BuildRequires: gcc-c++
@@ -32,6 +33,7 @@ Static development environment for %name, %summary
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %autoreconf
@@ -59,6 +61,9 @@ export CXXFLAGS="-g -O3"
 %_libdir/*.a
 
 %changelog
+* Mon Oct 04 2021 Anton Farygin <rider@altlinux.ru> 1.1-alt3
+- add patch from upstream PR to fix FTBFS
+
 * Tue Jun 25 2019 Anton Farygin <rider@altlinux.ru> 1.1-alt2
 - enabled build for i586 and aarch64
 
