@@ -5,8 +5,8 @@
 %def_without prelude
 
 Name: audit
-Version: 3.0.5
-Release: alt2
+Version: 3.0.6
+Release: alt1
 Summary: User space tools for Linux kernel 2.6+ auditing
 License: GPL
 Group: Monitoring
@@ -227,6 +227,9 @@ fi
 %endif
 
 %changelog
+* Mon Oct 04 2021 Egor Ignatov <egori@altlinux.org> 3.0.6-alt1
+- new version 3.0.6
+
 * Mon Sep 06 2021 Egor Ignatov <egori@altlinux.org> 3.0.5-alt2
 - Fix bi-arch check (closes: #40852)
 - Add armv8l support
