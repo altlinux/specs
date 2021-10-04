@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-editor
-Version: 5.9.11
+Version: 5.9.14
 Release: alt1
 Summary: Simple editor for Linux Deepin
 License: GPL-3.0+
@@ -77,7 +77,7 @@ export READELF="llvm-readelf"
     -DLLVM_ENABLE_ZLIB:BOOL=ON \
 %endif
 #
-%cmake_build
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
@@ -99,6 +99,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/editor/
 
 %changelog
+* Mon Oct 04 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.14-alt1
+- New version (5.9.14).
+
 * Fri Aug 27 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.11-alt1
 - New version (5.9.11).
 - Checkout from euler into dev branch.
