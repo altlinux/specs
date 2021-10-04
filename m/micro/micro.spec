@@ -1,6 +1,6 @@
 Name: micro
-Version: 1.4.1
-Release: alt2
+Version: 2.0.10
+Release: alt1
 Summary: A modern and intuitive terminal-based text editor
 License: MIT/BSD/Apache-2.0/MPL-2.0
 Group: Editors
@@ -22,20 +22,14 @@ me), or because you need to (over ssh).
 
 %prep
 %setup -q
-sed -i.bak '9s/terminal;//' assets/packaging/micro.desktop
 
 %build
-mkdir -p "$PWD/_build/src/github.com/zyedidia"
-ln -s $PWD "$PWD/_build/src/github.com/zyedidia/micro"
-export GOPATH="$PWD/_build"
-export LDFLAGS="-s -w -X main.Version=%version"
-export GO111MODULE=off
-%gobuild -o micro ./_build/src/github.com/zyedidia/micro/cmd/micro
+%gobuild -mod=vendor ./cmd/micro
 
 %install
 install -D -m 0755 ./micro %buildroot/%_bindir/micro
 install -D -m 0744 ./assets/packaging/micro.1 %buildroot/%_man1dir/micro.1
-install -D -m 0744 ./assets/logo.svg %buildroot/%_iconsdir/hicolor/scalable/apps/micro.svg
+install -D -m 0744 ./assets/micro-logo.svg %buildroot/%_iconsdir/hicolor/scalable/apps/micro.svg
 desktop-file-install --dir=%buildroot%_desktopdir ./assets/packaging/micro.desktop
 
 %files
@@ -46,6 +40,9 @@ desktop-file-install --dir=%buildroot%_desktopdir ./assets/packaging/micro.deskt
 %_desktopdir/micro.desktop
 
 %changelog
+* Mon Oct 04 2021 Ivan Razzhivin <underwit@altlinux.org> 2.0.10-alt1
+- new version
+
 * Thu Apr 22 2021 Leontiy Volodin <lvol@altlinux.org> 1.4.1-alt2
 - fix build with golang 1.16
 
