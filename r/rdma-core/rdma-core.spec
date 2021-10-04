@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define sysmodprobedir /lib/modprobe.d
 %define _libexecdir  /usr/libexec
 %define _localstatedir %_var
@@ -10,8 +11,8 @@
 
 
 Name: rdma-core
-Version: 34.0
-Release: alt2
+Version: 37.0
+Release: alt1
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
 
@@ -55,7 +56,6 @@ Obsoletes: libibumad-devel < %EVR
 Requires: librdmacm = %EVR
 Provides: librdmacm-devel = %EVR
 Obsoletes: librdmacm-devel < %EVR
-Requires: ibacm = %EVR
 Provides: ibacm-devel = %EVR
 Obsoletes: ibacm-devel < %EVR
 Requires: libibmad = %EVR
@@ -97,10 +97,11 @@ fast path operations.
 Device-specific plug-in ibverbs userspace drivers are included:
 
 - libcxgb4: Chelsio T4 iWARP HCA
+- libefa: Amazon Elastic Fabric Adapter
 - libhfi1: Intel Omni-Path HFI
 - libhns: HiSilicon Hip06 SoC
-- libi40iw: Intel Ethernet Connection X722 RDMA
 - libipathverbs: QLogic InfiniPath HCA
+- libirdma: Intel Ethernet Connection RDMA
 - libmlx4: Mellanox ConnectX-3 InfiniBand HCA (except arm, s390)
 - libmlx5: Mellanox Connect-IB/X-4+ InfiniBand HCA (except arm, s390, s390x)
 - libmthca: Mellanox InfiniBand HCA
@@ -277,6 +278,8 @@ install -D -m0644 ibacm_opts.cfg %buildroot%_sysconfdir/rdma/
 
 # copy linux kernel headers to /usr/include/rdma
 cp -r kernel-headers/rdma %buildroot%_includedir/
+
+rm -f %buildroot%_sbindir/srp_daemon.sh
 
 %post -n ibacm
 %post_service ibacm
@@ -566,6 +569,9 @@ cp -r kernel-headers/rdma %buildroot%_includedir/
 %docdir/ibsrpdm.md
 
 %changelog
+* Mon Oct 04 2021 Alexey Shabalin <shaba@altlinux.org> 37.0-alt1
+- new version 37.0
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 34.0-alt2
 - NMU: use /usr/bin/rst2man.py from python2-module-docutils
 
