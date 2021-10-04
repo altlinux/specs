@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 4.3.21
-Release: alt1
+Release: alt2
 Summary: Python utility / library to sort Python imports
 Group: Development/Python3
 License: MIT
@@ -20,6 +20,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
 %endif
+
+%add_python3_req_skip pylama.lint
 
 %description
 Python utility / library to sort Python imports
@@ -52,6 +54,9 @@ tox.py3 --sitepackages -p auto -o -v -- -v
 %python3_sitelibdir/%oname-%version-py3*.egg-info
 
 %changelog
+* Tue Oct 05 2021 Ivan A. Melnikov <iv@altlinux.org> 4.3.21-alt2
+- Get rid of pylama dependency.
+
 * Thu Oct 17 2019 Stanislav Levin <slev@altlinux.org> 4.3.21-alt1
 - 4.2.15 -> 4.3.21.
 
