@@ -1,8 +1,9 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %def_without ocfs2console
 Summary: Tools for managing the Oracle Cluster Filesystem 2
 Name: ocfs2-tools
 Version: 1.8.7
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: System/Kernel and hardware
 # https://github.com/markfasheh/ocfs2-tools
@@ -137,6 +138,9 @@ sed -i -e '1s,^#!/usr/bin/python *,#!/usr/bin/python2 ,' %buildroot/usr/sbin/ocf
 %_includedir/ocfs2-kernel/*.h
 
 %changelog
+* Mon Oct 04 2021 Anton Farygin <rider@altlinux.ru> 1.8.7-alt2
+- fixed build with LTO
+
 * Mon Jun 07 2021 Anton Farygin <rider@altlinux.ru> 1.8.7-alt1
 - 1.8.7
 - disabled the ocfs2console due to dependency on python2
