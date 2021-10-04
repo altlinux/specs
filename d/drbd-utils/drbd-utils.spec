@@ -1,10 +1,11 @@
 %def_without xen
-%define githash bd7a08c4ec9cad113c4e5ad448a15c8900a67b68
+%define githash 9f2aa37c2e0438bc3e6336eb8f697cfc6c0b8243
 %define gitdiff c6e62702d5e4fb2cf6b3fa27e67cb0d4b399a30b
 %define _localstatedir %_var
+%global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: drbd-utils
-Version: 9.18.2
+Version: 9.19.0
 Release: alt1
 
 Summary: DRBD user-land tools and scripts
@@ -16,9 +17,18 @@ Source0: %name-%version.tar
 Source1: %name-headers-%version.tar
 Patch0: %name-%version-%release.patch
 
+%define check_arches x86_64 %ix86
+%ifarch %check_arches
+%def_with check
+%else
+%def_without check
+%endif
+
+
 BuildRequires: docbook-style-xsl flex xsltproc
 BuildRequires: gcc-c++ po4a udev libudev-devel libsystemd-devel
 BuildRequires: asciidoctor resource-agents
+%{?!_without_check:%{?!_disable_check:BuildRequires: /proc clitest}}
 
 Requires: linux-ha-common
 
@@ -88,13 +98,19 @@ sed -i 's,-Wshadow,,' user/drbdmon/Makefile*
 %build
 %autoreconf
 %configure \
-    --with-udev \
     %{subst_with xen} \
+    --with-udev \
     --with-pacemaker \
     --with-rgmanager \
+    --with-heartbeat \
     --with-distro=generic
-sed -i "s|WITH_DRBDMON[[:space:]]*=[[:space:]]*no|WITH_DRBDMON = yes|" Makefile user/drbdmon/Makefile
+
+# Bug in configure.ac, enabling WITH_DRBDMON anyway:
+sed -i "s|WITH_DRBDMON[[:space:]]*=[[:space:]]*no|WITH_DRBDMON = yes|" \
+  Makefile user/drbdmon/Makefile documentation/common/Makefile_v9_com
+# Bug in compiler option:
 sed -i "s|--pedantic-errors|-pedantic-errors|" user/drbdmon/Makefile
+
 %make_build
 
 %install
@@ -102,7 +118,6 @@ sed -i "s|--pedantic-errors|-pedantic-errors|" user/drbdmon/Makefile
 
 rm -rf %buildroot%_mandir/ja
 rm -f  %buildroot/etc/init.d/drbd	# NB: _not_ %%_initdir here
-# install -pDm644 drbd.service %buildroot%_unitdir
 pushd scripts
 install -pDm644 -t %buildroot%_unitdir *.service
 install -pDm644 -t %buildroot%_unitdir *.target
@@ -115,6 +130,9 @@ popd
 
 %preun
 %preun_service drbd
+
+%check
+make test
 
 %files
 %doc scripts/drbd.conf.example COPYING ChangeLog README.md
@@ -177,6 +195,10 @@ popd
 %_sysconfdir/bash_completion.d
 
 %changelog
+* Mon Oct 04 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.19.0-alt1
+- 9.19.0
+- add %%check for x86_64 and %%ix86
+
 * Thu Aug 05 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.18.2-alt1
 - 9.18.2
 
