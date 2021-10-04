@@ -1,6 +1,6 @@
 Name: sauerbraten
 Version: 20130404
-Release: alt1
+Release: alt1.qa1
 Summary: Sauerbraten is a free multiplayer/singleplayer FPS
 
 Group: Games/Arcade
@@ -27,6 +27,7 @@ shooter, built as a major redesign of the Cube FPS.
 %setup
 
 %build
+install -pm755 -- /usr/share/gnu-config/config.{sub,guess} src/enet/
 %make_build -C src/ CFLAGS="%optflags" CXXOPTFLAGS="%optflags"
 
 %install
@@ -56,6 +57,9 @@ mv server-init.cfg %buildroot/%_gamesdatadir/%name/
 %_gamesdatadir/%name/server-init.cfg
 
 %changelog
+* Mon Oct 04 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 20130404-alt1.qa1
+- Updated gnu-config files to fix FTBFS on ppc64le.
+
 * Fri Feb 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 20130404-alt1
 - Updated to upstream version 2013.04.04.
 
