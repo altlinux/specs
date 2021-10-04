@@ -1,6 +1,6 @@
 Name: xfce4-dev-tools
 Version: 4.17.0
-Release: alt1
+Release: alt2
 
 Summary: Development tools for Xfce
 Summary (ru): Инструменты для разработчика Xfce
@@ -52,6 +52,10 @@ make check
 %_man1dir/*
 
 %changelog
+* Mon Oct 04 2021 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt2
+- Don't pull git.
+- Don't pull docker (closes: #41043).
+
 * Tue Jul 27 2021 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt1
 - Dropped exo-csource symlink.
 - Updated to 4.17.0.
