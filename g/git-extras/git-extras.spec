@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: git-extras
-Version: 6.2.0
+Version: 6.3.0
 Release: alt1
 
 Summary: Little git extras
@@ -49,6 +49,9 @@ install -D etc/git-extras-completion.zsh \
 %_datadir/zsh/Completion/Unix/_git-extras
 
 %changelog
+* Mon Oct 04 2021 Vitaly Chikunov <vt@altlinux.org> 6.3.0-alt1
+- Update to 6.3.0 (2021-10-02).
+
 * Fri Mar 26 2021 Vitaly Chikunov <vt@altlinux.org> 6.2.0-alt1
 - Update to 6.2.0 (2021-03-26).
 
