@@ -1,12 +1,13 @@
 %define libname stdcompat
 Name: ocaml-%libname
-Version: 15
+Version: 17
 Release: alt1
 Summary: Compatibility module for OCaml standard library
 License: BSD-3-Clause
 Group: Development/ML
 Url: https://github.com/thierry-martinez/stdcompat
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 BuildRequires: ocaml-result-devel dune opam
 
 %description
@@ -25,6 +26,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 make -f Makefile.bootstrap
@@ -42,6 +44,7 @@ make -f Makefile.bootstrap
 %doc README.md ChangeLog COPYING 
 %dir %_libdir/ocaml/%libname
 %_libdir/ocaml/%libname/*
+%_libdir/ocaml/stublibs/*.so*
 %exclude %_libdir/ocaml/%libname/*.cmx
 %exclude %_libdir/ocaml/%libname/*.cmt*
 %exclude %_libdir/ocaml/%libname/*.ml
@@ -57,6 +60,9 @@ make -f Makefile.bootstrap
 %_libdir/ocaml/%libname/*.cmxs
 
 %changelog
+* Mon Oct 04 2021 Anton Farygin <rider@altlinux.ru> 17-alt1
+- 15 -> 17
+
 * Fri Mar 19 2021 Anton Farygin <rider@altlinux.org> 15-alt1
 - 14 -> 15
 
