@@ -1,16 +1,14 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %def_without java
-%ifarch riscv64
-%def_without qt
-%def_without qt5
-%else
-%def_with qt
+
 %def_with qt5
+%if_without qt5
+%def_without qt
 %endif
 
 Name: zbar
 Version: 0.23.92
-Release: alt2
+Release: alt3
 %define libname libzbar
 
 Summary: A library for scanning and decoding bar codes
@@ -230,7 +228,9 @@ export LIBS=-lm
 %_includedir/%name.h
 %_includedir/%name/*.h
 %exclude %_includedir/%name/*gtk.h
+%if_with qt5
 %exclude %_includedir/%name/Q*
+%endif
 
 %files -n %libname-devel-static
 %_libdir/%libname.a
@@ -269,6 +269,9 @@ export LIBS=-lm
 %endif
 
 %changelog
+* Mon Oct 04 2021 Ivan A. Melnikov <iv@altlinux.org> 0.23.92-alt3
+- re-enable Qt5 support on riscv64
+
 * Sat Sep 18 2021 Anton Farygin <rider@altlinux.ru> 0.23.92-alt2
 - fixed build with enabled LTO
 
