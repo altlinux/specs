@@ -2,7 +2,7 @@
 
 Name: I2util
 Version: 4.3.4
-Release: alt1
+Release: alt2
 Summary: I2 Utility Library & Tools
 
 License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause
@@ -55,6 +55,7 @@ static %name library.
 cp %SOURCE1 ./
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %autoreconf
 %configure
 %make_build
@@ -80,6 +81,9 @@ cp %SOURCE1 ./
 %{_includedir}/*
 
 %changelog
+* Mon Oct 04 2021 Egor Ignatov <egori@altlinux.org> 4.3.4-alt2
+- fix build with LTO
+
 * Tue Apr 20 2021 Egor Ignatov <egori@altlinux.org> 4.3.4-alt1
 - new version
 - cleanup spec
