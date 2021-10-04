@@ -1,7 +1,8 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %define shver 2.1
 
 Name: mjpegtools
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 Summary: Tools for recording, editing, playing back mpeg-encoding video under linux
@@ -135,6 +136,9 @@ rm -f %buildroot%_infodir/dir
 %_libdir/*.a
 
 %changelog
+* Mon Oct 04 2021 Anton Farygin <rider@altlinux.ru> 2.2.1-alt1
+- 2.2.1
+
 * Sat Apr 10 2021 Anton Farygin <rider@altlinux.org> 2.2.0-alt1
 - 2.2.0
 - added patches for explicit linking against FTBFS
