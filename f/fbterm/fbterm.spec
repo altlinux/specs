@@ -1,11 +1,14 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libgpm-devel libx86-devel pkgconfig(freetype2)
+BuildRequires: gcc-c++ libgpm-devel pkgconfig(freetype2)
 # END SourceDeps(oneline)
+%ifarch x86_64 %ix86
+BuildRequires: libx86-devel
+%endif
 BuildRequires: termutils-devel terminfo-extra
 %define fedora 21
 Name: fbterm
 Version: 1.7
-Release: alt3
+Release: alt3.qa1
 License: GPLv2+
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group: File tools
@@ -113,6 +116,9 @@ EOF
 %endif
 
 %changelog
+* Tue Oct 05 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.7-alt3.qa1
+- Fixed build on aarch64 and ppc64le.
+
 * Fri Jun 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7-alt3
 - Updated build for gcc-6
 
