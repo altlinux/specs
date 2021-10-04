@@ -15,11 +15,12 @@
 %def_disable rust
 %def_disable static
 %def_enable bash_completion
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
 Version: 1.44.1
-Release: alt1
+Release: alt2
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -575,6 +576,9 @@ rm -f %buildroot%_man1dir/guestfs-release-notes*
 %endif #erlang
 
 %changelog
+* Mon Oct 04 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.44.1-alt2
+- Fix build via -ffat-lto-objects
+
 * Mon Apr 05 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.44.1-alt1
 - 1.44.1
 
