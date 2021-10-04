@@ -1,13 +1,14 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %define _unpackaged_files_terminate_build 1
 %define soname 3
 
 Name: wxsvg
 Version: 1.5.22
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: wxSVG is viewer SVG files
-License: GPL
+License: wxWindows-Library-3.0
 Group: Graphics
 
 Url: http://wxsvg.sourceforge.net
@@ -78,6 +79,10 @@ Development shared library for wxSVG
 %_pkgconfigdir/*
 
 %changelog
+* Mon Oct 04 2021 Anton Farygin <rider@altlinux.ru> 1:1.5.22-alt3
+- fixed build with LTO
+- fixed infromation about License
+
 * Wed Apr 29 2020 Anton Farygin <rider@altlinux.ru> 1:1.5.22-alt2
 - built with gtk3
 
