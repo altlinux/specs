@@ -1,11 +1,13 @@
 %define oname jsonrpcclient
 
-Name: python3-module-%oname
-Version: 2.5.2
-Release: alt3
+%def_with check
 
-Summary: JSON-RPC 2.0 client library for Python 3
-License: LGPL
+Name: python3-module-%oname
+Version: 4.0.1
+Release: alt1
+
+Summary: Generate JSON-RPC requests and parse responses in Python
+License: MIT
 Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.python.org/pypi/jsonrpcclient/
@@ -13,14 +15,12 @@ Url: https://pypi.python.org/pypi/jsonrpcclient/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pytest python3-module-mock
-BuildRequires: python3-module-jsonschema python3(future)
-BuildRequires: python3-module-requests
-BuildRequires: python3(zmq) python3(tornado)
-BuildRequires: python3-module-responses python3(testfixtures)
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %description
-JSON-RPC 2.0 client library for Python 3.
+Generate JSON-RPC requests and parse responses in Python.
 
 %prep
 %setup
@@ -41,6 +41,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir py.test3
 %python3_sitelibdir/*
 
 %changelog
+* Mon Oct 04 2021 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt1
+- Build new version.
+
 * Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 2.5.2-alt3
 - fix build (add missed mock buildrequires)
 
