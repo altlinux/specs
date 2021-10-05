@@ -1,12 +1,15 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: libmusicbrainz
 Version: 2.1.5
-Release: alt8
-
+Release: alt9
 Summary: A software library for accesing MusicBrainz servers
 License: LGPL
 Group: System/Libraries
-
 Url: http://www.musicbrainz.org
+
 Source: %name-%version.tar.gz
 Patch0: libmusicbrainz-2.1.5-alt-comsocket.patch
 Patch1: libmusicbrainz-2.1.5-alt-gcc43.patch
@@ -21,7 +24,7 @@ create CD Index Disk ids from audio CD roms.
 %package devel
 Summary: Headers for developing programs that will use lib%name
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains the headers that programmers will need to develop
@@ -34,6 +37,8 @@ applications which will use lib%name.
 
 %build
 %add_optflags -Wno-error=narrowing
+%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags -std=c++14
 %autoreconf
 %configure --disable-static
 %make_build
@@ -51,6 +56,9 @@ applications which will use lib%name.
 %_pkgconfigdir/*
 
 %changelog
+* Tue Oct 05 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.5-alt9
+- Fixed build with gcc-11.
+
 * Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 2.1.5-alt8
 - E2K: generic build as of lcc 1.21.24
 
