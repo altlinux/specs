@@ -1,5 +1,5 @@
 Name: python3-module-emoji
-Version: 1.2.1
+Version: 1.5.0
 Release: alt1
 
 Summary: Emoji for Python
@@ -29,6 +29,9 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %python3_sitelibdir/emoji-%version-*-info
 
 %changelog
+* Mon Oct 04 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.0-alt1
+- 1.5.0 released
+
 * Tue Mar 16 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.1-alt1
 - 1.2.1 released
 

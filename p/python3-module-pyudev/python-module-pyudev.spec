@@ -4,8 +4,8 @@
 %def_without pyside
 
 Name: python3-module-pyudev
-Version: 0.21.0
-Release: alt4
+Version: 0.22.0
+Release: alt1
 
 Group: System/Libraries
 Summary: Udev bindings for Python
@@ -113,6 +113,9 @@ service found in modern linux systems.
 %endif
 
 %changelog
+* Mon Oct 04 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.22.0-alt1
+- 0.22.0
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 0.21.0-alt4
 - Drop python2 support.
 

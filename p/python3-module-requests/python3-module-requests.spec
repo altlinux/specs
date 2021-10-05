@@ -4,8 +4,8 @@
 %def_disable check
 
 Name:           python3-module-%pkgname
-Version:        2.25.1
-Release:        alt2
+Version:        2.26.0
+Release:        alt1
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python3
 
@@ -25,12 +25,6 @@ Patch2:         Remove-tests-that-use-the-tarpit.patch
 # could technically be IPv6 or something, and our no-network env is
 # a pretty odd one so this is a niche requirement.
 Patch3:         requests-2.12.4-tests_nonet.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=1653223
-Patch5:         requests-2.20.0-no-py2-httpbin.patch
-
-# https://github.com/psf/requests/issues/5710
-Patch6:         requests-2.25.1-fix-build-with-new-idna.patch
 
 BuildArch:      noarch
 
@@ -53,8 +47,6 @@ designed to make HTTP requests easy for developers.
 %patch0 -p1
 %patch2 -p1
 %patch3 -p1
-%patch5 -p1
-%patch6 -p1
 
 # Unbundle the certificate bundle from mozilla.
 rm -rf requests/cacert.pem
@@ -70,6 +62,9 @@ rm -rf requests/cacert.pem
 %python3_sitelibdir/*
 
 %changelog
+* Mon Oct 04 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.26.0-alt1
+- 2.26.0
+
 * Thu Mar 4 2021 Vladimir Didenko <cow@altlinux.org> 2.25.1-alt2
 - fix build with idna >= 3.0
 

@@ -1,5 +1,5 @@
 Name: python3-module-ciso8601
-Version: 2.1.3
+Version: 2.2.0
 Release: alt1
 
 Summary: ISO8601/RFC3339 date time strings converter
@@ -33,5 +33,8 @@ BuildRequires: python3(pytz)
 %python3_sitelibdir/ciso8601-%version-*-info
 
 %changelog
+* Mon Oct 04 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt1
+- 2.2.0 released
+
 * Mon Jul 06 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.3-alt1
 - initial

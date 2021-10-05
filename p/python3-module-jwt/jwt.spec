@@ -2,15 +2,15 @@
 %define oname jwt
 
 Name: python3-module-%oname
-Version: 1.7.1
-Release: alt2
+Version: 2.1.0
+Release: alt1
 Summary: JSON Web Token implementation in Python
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/PyJWT/
 
 # https://github.com/progrium/pyjwt.gi
-Source0: https://files.pythonhosted.org/packages/2f/38/ff37a24c0243c5f45f5798bd120c0f873eeed073994133c084e1cf13b95c/PyJWT-%{version}.tar.gz
+Source0: https://files.pythonhosted.org/packages/0c/c6/3cdc7cb1289b35186fd7fd61836b6d83632ca0f7eee552516777361667b1/PyJWT-2.1.0.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -33,11 +33,13 @@ export LC_ALL=en_US.UTF-8
 %python3_install
 
 %files
-%doc AUTHORS *.md
-%_bindir/*
+%doc AUTHORS* *.md
 %python3_sitelibdir/*
 
 %changelog
+* Mon Oct 04 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.0-alt1
+- 2.1.0 released
+
 * Tue Aug 03 2021 Grigory Ustinov <grenka@altlinux.org> 1.7.1-alt2
 - Drop python2 support.
 
