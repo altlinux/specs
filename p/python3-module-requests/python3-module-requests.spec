@@ -5,7 +5,7 @@
 
 Name:           python3-module-%pkgname
 Version:        2.26.0
-Release:        alt1
+Release:        alt2
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python3
 
@@ -34,6 +34,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-urllib3
 %{?_enable_check:BuildRequires: python3-module-httpbin}
 %py3_requires json
+%py3_requires charset_normalizer
 
 %description
 Most existing Python modules for sending HTTP requests are extremely verbose and
@@ -62,6 +63,9 @@ rm -rf requests/cacert.pem
 %python3_sitelibdir/*
 
 %changelog
+* Tue Oct 05 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.26.0-alt2
+- add explicit charset_normalizer req
+
 * Mon Oct 04 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.26.0-alt1
 - 2.26.0
 
