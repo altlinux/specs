@@ -3,15 +3,17 @@
 %def_enable check
 
 Name: pcre2
-Version: 10.37
-Release: alt1.1
+Version: 10.38
+Release: alt1
 
 Summary: Perl-compatible regular expression library
 Group: System/Libraries
 License: BSD-style
 Url: http://www.pcre.org/
 
-Source: https://ftp.pcre.org/pub/pcre/%name-%version.tar.gz
+Vcs: https://github.com/PhilipHazel/pcre2.git
+Source: https://github.com/PhilipHazel/%name/releases/download/%name-%version/%name-%version.tar.gz
+#Source: https://ftp.pcre.org/pub/pcre/%name-%version.tar.gz
 
 BuildRequires: libreadline-devel zlib-devel bzlib-devel
 
@@ -137,6 +139,9 @@ mv %buildroot%_libdir/lib%name-{8,16,32,posix}.so.* %buildroot/%_lib/
 %exclude %_docdir/%name
 
 %changelog
+* Tue Oct 05 2021 Yuri N. Sedunov <aris@altlinux.org> 10.38-alt1
+- 10.38
+
 * Fri Aug 27 2021 Yuri N. Sedunov <aris@altlinux.org> 10.37-alt1.1
 - disabled build of static libraries
 
