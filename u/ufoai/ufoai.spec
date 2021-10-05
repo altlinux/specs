@@ -1,8 +1,10 @@
-%set_verify_elf_method unresolved=strict
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: ufoai
 Version: 2.5
-Release: alt5
+Release: alt6
 Summary: UFO: Alien Invasion - build your team and stop the aliens
 License: GPL
 Group: Games/Strategy
@@ -75,6 +77,8 @@ scripts for modelling.
 %patch5 -p2
 
 %build
+%add_optflags -std=c++14
+%add_optflags -D_FILE_OFFSET_BITS=64
 %add_optflags -Wno-narrowing
 export CFLAGS="${CFLAGS:-%optflags}"
 export CXXFLAGS="${CXXFLAGS:-%optflags}"
@@ -171,6 +175,9 @@ install -m 644 -pD debian/uforadiant.6 %buildroot%_man6dir
 %_docdir/ufoai-data/ufo-manual_EN.pdf
 
 %changelog
+* Tue Oct 05 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5-alt6
+- Fixed build with gcc-11.
+
 * Tue Aug 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5-alt5
 - Fixed build and added patches from Debian.
 
