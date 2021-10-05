@@ -1,7 +1,7 @@
 
 Name: jsoncpp
 Version: 1.9.4
-Release: alt1
+Release: alt2
 %define rname jsoncpp
 %define sover 24
 %define libname lib%rname%sover
@@ -59,6 +59,7 @@ This package contains the documentation for %name
   -DJSONCPP_WITH_TESTS=OFF \
   -DBUILD_STATIC_LIBS=OFF \
   -DBUILD_SHARED_LIBS=ON \
+  -DBUILD_OBJECT_LIBS=OFF \
   #
 echo "%version" >version
 # build docs
@@ -83,6 +84,9 @@ echo "%version" >version
 #%_docdir/%name/
 
 %changelog
+* Tue Oct 05 2021 Sergey V Turchin <zerg@altlinux.org> 1.9.4-alt2
+- don't build object targets
+
 * Thu Sep 30 2021 Sergey V Turchin <zerg@altlinux.org> 1.9.4-alt1
 - new version
 
