@@ -1,11 +1,13 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: scourge
 Version: 0.21.1
+Release: alt7.svn3264
 Summary: Rogue-like RPG
 Summary(de): Rogue-artiges Rollenspiel
 Group: Games/Adventure
-Release: alt6.svn3264
 License: GPL2
 URL: https://sourceforge.net/projects/scourge/
 
@@ -50,6 +52,8 @@ tar xf %SOURCE1
 %patch1 -p2
 
 %build
+%add_optflags -std=c++14
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure --with-data-dir=%_datadir/%name
 
@@ -94,6 +98,9 @@ ln -srf %buildroot%_datadir/fonts/ttf/dejavu-lgc/DejaVuLGCSansMono.ttf %buildroo
 %_datadir/%name
 
 %changelog
+* Tue Oct 05 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.21.1-alt7.svn3264
+- Fixed build with gcc-11.
+
 * Tue Jun 26 2018 Grigory Ustinov <grenka@altlinux.org> 0.21.1-alt6.svn3264
 - Removed bundled fonts (Closes: #25635).
 
