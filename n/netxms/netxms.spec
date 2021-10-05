@@ -1,6 +1,6 @@
 Name: netxms
 Version: 2.2.11
-Release: alt2
+Release: alt3
 
 Summary: Open source network monitoring system
 License: GPL
@@ -19,6 +19,8 @@ Patch1: netxms-2.2.11-alt-mysql8-transition.patch
 BuildRequires: flex gcc-c++ zlib-devel libexpat-devel libssl-devel libgd2-devel libreadline-devel libsqlite3-devel libmysqlclient-devel postgresql-devel libunixODBC-devel libsensors3-devel libldap-devel libcurl-devel libssh-devel
 
 %set_verify_elf_method unresolved=relaxed
+
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 %description
 NetXMS is an enterprise grade multi-platform open source network management and monitoring system.
@@ -247,6 +249,9 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %_libdir/%name/dbdrv/odbc.ddr
 
 %changelog
+* Tue Oct 05 2021 Egor Ignatov <egori@altlinux.org> 2.2.11-alt3
+- fix build with LTO
+
 * Sat Mar 02 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.2.11-alt2
 - fix FTBFS against libmysqlclient21
 
