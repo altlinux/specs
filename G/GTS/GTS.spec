@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: GTS
 Version: 2.5.1
-Release: alt1
+Release: alt2
 Summary: A scanning tool developed by Studio Ghibli
 Group: Graphics
 License: BSD-3-Clause
@@ -12,6 +14,7 @@ URL: https://opentoonz.github.io/e/
 Source: %name-%version.tar
 
 Patch1: %name-%version-alt-return-type.patch
+Patch2: %name-%version-alt-gcc11-compat.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libtiff-devel
@@ -37,6 +40,7 @@ The interface is in English and scanned images are saved as TIFF/Targa.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 # remove unbundled libraries
 rm -rf thirdparty
@@ -56,5 +60,8 @@ rm -rf thirdparty
 %_datadir/%name
 
 %changelog
+* Tue Oct 05 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5.1-alt2
+- Fixed build with gcc-11.
+
 * Thu Jul 30 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5.1-alt1
 - Initial build for ALT
