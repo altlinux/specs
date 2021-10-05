@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20210923
+Version: 20210926
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,21 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Oct 05 2021 Cronbuild Service <cronbuild@altlinux.org> 20210926-alt1
+- upstream changes (GIT 7a30050):
+  + brcm: Add 43455 based AP6255 NVRAM for the ACEPC T8 Mini PC (thx Hans de Goede)
+  + Update firmware file for Intel Bluetooth 9462 (thx Kiran K)
+  + amdgpu: update VCN firmware for dimgrey cavefish (thx Alex Deucher)
+  + amdgpu: update VCN firmware for navy flounder (thx Alex Deucher)
+  + amdgpu: update VCN firmware for sienna cichlid (thx Alex Deucher)
+  + amdgpu: update VCN firmware for vangogh (thx Alex Deucher)
+  + amdgpu: update VCN firmware for renoir (thx Alex Deucher)
+  + amdgpu: update VCN firmware for picasso (thx Alex Deucher)
+  + amdgpu: update VCN firmware for raven2 (thx Alex Deucher)
+  + amdgpu: update VCN firmware for raven (thx Alex Deucher)
+  + amdgpu: Add initial firmware for Beige Goby (thx Alex Deucher)
+  + cxgb4: Update firmware to revision 1.26.2.0 (thx Rahul Lakkireddy)
+
 * Mon Sep 27 2021 Cronbuild Service <cronbuild@altlinux.org> 20210923-alt1
 - upstream changes (GIT 0268c1b):
   + update frimware for mediatek bluetooth chip (MT7921) (thx mark-yw.chen)
