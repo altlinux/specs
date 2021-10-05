@@ -5,7 +5,7 @@
 
 Name: deepin-kwin
 Version: 5.3.14
-Release: alt1
+Release: alt2
 
 Summary: KWin configuration for Deepin Desktop Environment
 License: GPL-3.0+ and MIT
@@ -17,11 +17,12 @@ Source: %url/archive/%version/%repo-%version.tar.gz
 
 # upstream patches
 Patch: deepin-kwin-5.3.7-compile-kwin5.21.patch
+Patch1: deepin-kwin-5.3.14-fix-library-links.patch
 # archlinux patches
-Patch1: %name-added-functions-from-their-forked-kwin.patch
-Patch2: %name-tabbox-chameleon-rename.patch
-Patch3: %name-unload-blur.patch
-Patch4: deepin-kwin-crash.patch
+Patch2: %name-added-functions-from-their-forked-kwin.patch
+Patch3: %name-tabbox-chameleon-rename.patch
+Patch4: %name-unload-blur.patch
+Patch5: deepin-kwin-crash.patch
 # ALT patches
 Patch11: deepin-kwin-5.3.7-ALT-cmake-bad-elfs.patch
 
@@ -52,10 +53,11 @@ Header files and libraries for %name.
 %prep
 %setup -n %repo-%version
 # %patch -p2
-%patch1 -R -p1
-%patch2 -p1
-# %patch3 -p1
-%patch4 -p1
+%patch1 -p1
+%patch2 -R -p1
+%patch3 -p1
+# %patch4 -p1
+%patch5 -p1
 # %patch11 -p2
 
 sed -i 's|lrelease|lrelease-qt5|' plugins/platforms/plugin/translate_generation.sh
@@ -126,6 +128,9 @@ chmod +x %buildroot%_bindir/kwin_no_scale
 %_K5lib/libkwin-xcb.so
 
 %changelog
+* Tue Oct 05 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.14-alt2
+- Fixed library links with x11.
+
 * Fri Aug 20 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.14-alt1
 - New version (5.3.14).
 
