@@ -2,8 +2,8 @@
 %def_enable check
 
 Name: polkit
-Version: 0.119
-Release: alt2
+Version: 0.120
+Release: alt1
 
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
@@ -18,7 +18,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Patch1: %name-0.109-alt-helper_path.patch
 
-BuildRequires: gcc-c++ gobject-introspection-devel gtk-doc intltool libexpat-devel libpam-devel
+BuildRequires: gcc-c++ gobject-introspection-devel gtk-doc libexpat-devel libpam-devel
 BuildRequires: libmozjs78-devel pkgconfig(systemd)
 %{?_enable_check:BuildRequires: /proc dbus-tools-gui python3-module-dbusmock}
 
@@ -142,6 +142,9 @@ touch ChangeLog
 %exclude %_datadir/polkit-1/actions/org.freedesktop.policykit.examples.pkexec.policy
 
 %changelog
+* Tue Oct 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.120-alt1
+- 0.120
+
 * Thu Sep 16 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.119-alt2
 - Fix the ability to add user_of_subject to user_identities
 - Refactoring the addition_to_user_identities_user_of_subject function
