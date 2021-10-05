@@ -10,7 +10,7 @@
 %global optflags_lto %nil
 
 Name: clickhouse
-Version: 21.8.7.22
+Version: 21.8.8.29
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -315,6 +315,9 @@ fi
 %_datadir/clickhouse-test
 
 %changelog
+* Mon Oct 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.8.8.29-alt1
+- Updated to lts upstream version 21.8.8.29.
+
 * Tue Sep 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.8.7.22-alt1
 - Updated to lts upstream version 21.8.7.22.
 - Disabled LTO which caused random crashes.
