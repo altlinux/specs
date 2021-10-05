@@ -1,13 +1,12 @@
 %define _unpackaged_files_terminate_build 1
-
-# stable branches support uses this macro
-%define qIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %define itkver 4.12
 
 Name: itk-snap
 Version: 3.8.0
-Release: alt6
+Release: alt7
 Summary: Software application used to segment structures in 3D medical images
 Group: Sciences/Medicine
 License: GPLv3
@@ -78,14 +77,14 @@ with the bulk of the development effort dedicated to the user interface.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%qIF_ver_lt S1 %ubt_id
 %patch4 -p1
-%endif
 
 # remove unbundled libraries
 rm -rf Common/JSon
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 # get SNAP_VERSION_GIT_ data from upstream commit being used to build this package
 # git rev-parse --abbrev-ref HEAD
 # git rev-parse HEAD
@@ -98,6 +97,7 @@ rm -rf Common/JSon
 	-DOpenGL_GL_PREFERENCE=GLVND \
 %endif
 	-DSNAP_PACKAGE_QT_PLUGINS:BOOL=OFF \
+	-DCMAKE_CXX_STANDARD=14 \
 	%nil
 
 %cmake_build
@@ -125,6 +125,9 @@ install -m644 GUI/Qt/Resources/logo_square.png %buildroot%_datadir/%name/
 %_datadir/%name/logo_square.png
 
 %changelog
+* Tue Oct 05 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.8.0-alt7
+- Fixed build with gcc-11.
+
 * Tue Jun 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.8.0-alt6
 - Added compatibility to p9.
 
