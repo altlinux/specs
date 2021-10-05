@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt2
+Release: alt3
 epoch:2
 %define kernel_base_version	5.10
 %define kernel_sublevel .70
@@ -696,6 +696,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Tue Oct 05 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.70-alt3
+- don't use SOF on Cannon Point-LP by default
+
 * Sat Oct 02 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.70-alt2
 - ES8336 support fixed
 
