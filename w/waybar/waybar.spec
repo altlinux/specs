@@ -1,6 +1,6 @@
 Name: waybar
-Version: 0.9.7
-Release: alt2
+Version: 0.9.8
+Release: alt1
 License: MIT
 Summary: Highly customizable Wayland bar for Sway and Wlroots based compositors
 URL: https://github.com/Alexays/Waybar.git
@@ -31,6 +31,9 @@ BuildRequires: pkgconfig(spdlog)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-protocols)
+
+# language module
+BuildRequires: pkgconfig(xkbregistry)
 
 # sni module
 BuildRequires: pkgconfig(dbusmenu-gtk3-0.4)
@@ -85,6 +88,9 @@ install -m 755 -- %SOURCE2 %buildroot/%helperdir/
 %_man5dir/*
 
 %changelog
+* Tue Oct 05 2021 Alexey Gladkov <legion@altlinux.ru> 0.9.8-alt1
+- New version (0.9.8).
+
 * Sat May 08 2021 Alexey Gladkov <legion@altlinux.ru> 0.9.7-alt2
 - Add rpm-build-python3 BR.
 
