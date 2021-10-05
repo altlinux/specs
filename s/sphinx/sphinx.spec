@@ -2,7 +2,7 @@
 %global _localstatedir %_var
 Name: sphinx
 Version: 2.3.2
-Release: alt3
+Release: alt4
 
 Summary: Free open-source SQL full-text search engine
 
@@ -81,6 +81,7 @@ sed -i 's/\r//' api/ruby/spec/fixtures/keywords.php
 sed -i 's/\r//' api/ruby/lib/sphinx/response.rb
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %configure --sysconfdir=/etc/sphinx --with-mysql --with-pgsql --with-libstemmer
 
 %make_build
@@ -185,6 +186,9 @@ make install DESTDIR=%buildroot INSTALL="%__install -p -c"
 %_libdir/libsphinxclient.a
 
 %changelog
+* Tue Oct 05 2021 Egor Ignatov <egori@altlinux.org> 2.3.2-alt4
+- fix build with LTO
+
 * Thu Mar 18 2021 Vitaly Lipatov <lav@altlinux.ru> 2.3.2-alt3
 - add Conflicts: mnogosearch
 
