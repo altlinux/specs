@@ -1,14 +1,15 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: opendx
 Version: 4.4.4
-Release: alt9
-
+Release: alt10
 Summary: Open Visualization Data Explorer
 License: IBM Public License
 Group: Graphics
-
 Url: http://www.opendx.org/
+
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
@@ -86,6 +87,7 @@ rm -f aclocal.m4
 
 %build
 %add_optflags -Wno-error=narrowing
+%add_optflags -std=c++14
 %autoreconf
 INCS="-I%_libexecdir/hdf5-seq/include -I%_libexecdir/hdf5-seq/include/netcdf-3"
 INCS="$INCS -I%_includedir/ImageMagick"
@@ -133,6 +135,9 @@ install -d %buildroot%_mandir/manl
 %_libexecdir/dx/html
 
 %changelog
+* Tue Oct 05 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.4-alt10
+- Fixed build with gcc-11.
+
 * Sat Apr 10 2021 Michael Shigorin <mike@altlinux.org> 4.4.4-alt9
 - EA += %%e2k
 - Minor spec cleanup
