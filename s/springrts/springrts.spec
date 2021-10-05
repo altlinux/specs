@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %def_enable debug
 
 Name: springrts
 Version: 105.0
-Release: alt1.1
-
+Release: alt2
 Summary: Real time strategy game engine with many mods
 License: GPL-2.0+ and BSD-3-Clause
 Group: Games/Strategy
@@ -31,6 +32,7 @@ Source10: %name-%version-tools-unitsync-python.tar
 Patch1: %name-alt-linking.patch
 Patch2: %name-alt-unbundle-libs.patch
 Patch3: %name-alt-unbundle-libs-pr-downloader.patch
+Patch4: %name-alt-gcc11-compat.patch
 
 BuildRequires(pre): rpm-build-xdg rpm-macros-cmake
 BuildRequires: cmake cmake-modules java-devel /proc libGL-devel libGLU-devel gcc-c++
@@ -81,6 +83,8 @@ data files for Spring RTS engine
 pushd tools/pr-downloader
 %patch3 -p1
 popd
+
+%patch4 -p1
 
 # TODO: remove remaining bundled libraries. They're either missing or patched.
 rm -rf tools/pr-downloader/src/lib/{jsoncpp,minizip}
@@ -147,6 +151,9 @@ sed -i -e '/NoDisplay=true/d' \
 %_man6dir/*
 
 %changelog
+* Tue Oct 05 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 105.0-alt2
+- Fixed build with gcc-11 and new jsoncpp.
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 105.0-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
