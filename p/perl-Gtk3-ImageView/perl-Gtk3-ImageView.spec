@@ -3,7 +3,7 @@
 %def_disable test
 
 Name: perl-Gtk3-ImageView
-Version: 9
+Version: 10
 Release: alt1
 
 Summary: Image viewer widget for GTK 3
@@ -78,11 +78,14 @@ sed -i -e "3iuse Gtk3;" lib/Gtk3/ImageView/Tool.pm
 #xvfb-run -d make test
 
 %files
-%doc README.md
+%doc README.md Changes README
 %perl_vendor_privlib/*
 #_man3dir/*
 
 %changelog
+* Tue Oct 05 2021 Igor Vlasenko <viy@altlinux.org> 10-alt1
+- automated CPAN update
+
 * Tue May 18 2021 Igor Vlasenko <viy@altlinux.org> 9-alt1
 - automated CPAN update
 
