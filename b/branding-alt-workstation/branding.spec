@@ -2,9 +2,9 @@
 %define Brand ALT
 %define theme workstation
 %define Theme Workstation
-%define codename unknown
-%define status alpha
-%define status_en alpha
+%define codename Autolycus
+%define status %nil
+%define status_en %nil
 %define flavour %brand-%theme
 
 %define gtk_theme BlueMenta
@@ -24,7 +24,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 9.900
+Version: 9.910
 Release: alt1
 Url: https://basealt.ru
 
@@ -151,6 +151,7 @@ Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "
 Obsoletes: %obsolete_list
 %branding_add_conflicts %flavour release
 Requires: pam-limits-desktop
+Requires: alt-os-release
 
 %description release
 %distro_name release file.
@@ -305,13 +306,6 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 [ "$1" -eq 1 ] || exit 0
 /usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas
 
-#release
-%post release
-if ! [ -e %_sysconfdir/altlinux-release ] && \
-   ! [ -e %_sysconfdir/os-release ]; then
-	cp -a %data_cur_dir/release/*-release %_sysconfdir/
-fi
-
 #notes
 %post notes
 if ! [ -e %_datadir/alt-notes/license.all.html ]; then
@@ -332,8 +326,8 @@ fi
 %_datadir/plymouth/themes/%theme/*
 
 %files release
-%dir %data_cur_dir
-%data_cur_dir/release/
+%_sysconfdir/*-release
+%_prefix/lib/os-release
 %_sysconfdir/buildreqs/packages/ignore.d/*
 %ghost %config(noreplace) %_sysconfdir/*-release
 
@@ -365,6 +359,15 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Oct 05 2021 Mikhail Efremov <sem@altlinux.org> 9.910-alt1
+- Drop alpha status.
+- Update images.
+- Update progressbar.
+- os-release.in: Add BUILD_ID.
+- Package /etc/altlinux-release again.
+- Package /usr/lib/os-relese.
+- Set codename Autolycus.
+
 * Thu Sep 23 2021 Mikhail Efremov <sem@altlinux.org> 9.900-alt1
 - Set status to alpha.
 - Set codename to unknown.
