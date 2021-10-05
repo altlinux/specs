@@ -4,20 +4,18 @@
 %def_disable check
 
 Name: grilo
-Version: %ver_major.13
+Version: %ver_major.14
 Release: alt1
 
 Summary: Content discovery framework
 Group: Sound
-License: LGPL-2.0-or-later
+License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/Grilo
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define __python %nil
-
-BuildRequires(pre): meson rpm-build-python3 rpm-build-gir
-BuildRequires: gnome-common intltool >= 0.40.0
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
+BuildRequires: meson
 BuildRequires: libgio-devel >= 2.58
 BuildRequires: libxml2-devel
 BuildRequires: libgtk+3-devel >= 3.0
@@ -151,6 +149,9 @@ mkdir -p %buildroot%_libdir/grilo-%ver_major %buildroot%_datadir/grilo-%ver_majo
 %endif
 
 %changelog
+* Tue Oct 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.14-alt1
+- 0.3.14
+
 * Thu Sep 03 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.13-alt1
 - 0.3.13
 

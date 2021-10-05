@@ -8,12 +8,12 @@
 %def_enable tracker3
 
 Name: grilo-plugins
-Version: %ver_major.13
+Version: %ver_major.14
 Release: alt1
 
 Summary: Plugins for the Grilo framework
 Group: Sound
-License: LGPL-2.0-or-later
+License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/Grilo
 
 %if_disabled snapshot
@@ -27,8 +27,8 @@ Source: %name-%version.tar
 Requires: grilo-tools >= %version
 Requires: tracker3 >= %tracker3_ver
 
-BuildRequires(pre): meson
-BuildRequires: gperf
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gperf
 BuildRequires: gtk-doc yelp-tools
 BuildRequires: libgio-devel >= 2.44
 BuildRequires: libgrilo-devel >= %ver_major.13
@@ -135,6 +135,9 @@ This package contains the pkg-config file for Grilo plugins package.
 
 
 %changelog
+* Tue Oct 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.14-alt1
+- 0.3.14
+
 * Fri Apr 09 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.13-alt1
 - 0.3.13
 
