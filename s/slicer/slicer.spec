@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 %define slicerver 4.11
 
 Name: slicer
 Version: %slicerver.20210226
-Release: alt1
+Release: alt2
 Summary: Multi-platform, free open source software for visualization and image computing
 License: BSD-like
 Group: Sciences/Medicine
@@ -26,6 +27,7 @@ Source3: slicer.desktop
 Patch1: %name-alt-build.patch
 Patch2: %name-alt-python3-compat.patch
 Patch3: %name-upstream-python39-compat.patch
+Patch4: %name-alt-gcc11-compat.patch
 
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires(pre): rpm-build-python3
@@ -109,6 +111,7 @@ This package contains Slicer plugins for qt5 designer.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 install %SOURCE2 ./CMake/
 
@@ -119,6 +122,8 @@ find . -name '*.py' | xargs sed -i \
 	%nil
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 jqplotdir="$(pwd)/jqPlot"
 
 %cmake \
@@ -179,6 +184,9 @@ find %buildroot%_libdir -name '*.a' -delete
 rm -rf %buildroot%_libdir/cmake
 rm -rf %buildroot%_libdir/Slicer-%slicerver/lib/Slicer-%slicerver/cmake
 
+# fix qt designer launch
+ln -sr %buildroot%_bindir/designer-qt5 %buildroot%_libdir/Slicer-%slicerver/bin/designer-real
+
 %files
 %doc COPYRIGHT.txt License.txt
 %doc README.txt CONTRIBUTING.md AUTHORS.rst
@@ -206,5 +214,9 @@ rm -rf %buildroot%_libdir/Slicer-%slicerver/lib/Slicer-%slicerver/cmake
 %_qt5_plugindir/designer/*.so
 
 %changelog
+* Tue Oct 05 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.11.20210226-alt2
+- Fixed build with gcc-11.
+- Fixed launch of qt designer.
+
 * Fri May 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.11.20210226-alt1
 - Initial build for ALT.
