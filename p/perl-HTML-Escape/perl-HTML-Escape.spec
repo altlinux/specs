@@ -2,25 +2,24 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: libsowing-devel perl(Benchmark.pm) perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Devel/PPPort.pm) perl(Exporter.pm) perl(ExtUtils/CBuilder.pm) perl(HTML/Entities.pm) perl(Module/Build.pm) perl(Module/Build/Pluggable/PPPort.pm) perl(Test/More.pm) perl(Test/Requires.pm) perl(XSLoader.pm) perl(autodie.pm) perl(parent.pm)
 # END SourceDeps(oneline)
-%define module_version 1.10
 %define module_name HTML-Escape
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.10
-Release: alt1.2
+Version: 1.11
+Release: alt1
 Summary: Extremely fast HTML escape
 Group: Development/Perl
 License: perl
 URL: https://github.com/tokuhirom/HTML-Escape
 
-Source: http://www.cpan.org/authors/id/T/TO/TOKUHIROM/HTML-Escape-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TO/TOKUHIROM/%{module_name}-%{version}.tar.gz
 
 %description
 From summary: %summary
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -29,11 +28,14 @@ From summary: %summary
 %perl_vendor_install
 
 %files
-%doc LICENSE Changes README.md
+%doc Changes README.md
 %perl_vendor_archlib/H*
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Oct 05 2021 Igor Vlasenko <viy@altlinux.org> 1.11-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1.2
 - rebuild with new perl 5.28.1
 
