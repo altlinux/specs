@@ -1,3 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %set_automake_version 1.11
 
 %define lang_path 	./data/lang
@@ -8,13 +12,11 @@
 
 Name:    scorched3d
 Version: 44
-Release: alt1
+Release: alt2
 License: GPL
 Group:   Games/Arcade
-
 Summary: A 3D version of the classic DOS game Scorched Earth
 Summary(ru_RU.UTF8): 3D версия классической DOS игрушки - Scorched Earth.
-
 URL: http://www.scorched3d.co.uk
 
 Source: %name-%version.tar
@@ -22,21 +24,23 @@ Source1: %name.desktop
 Source2: %name-16.png
 Source3: %name-32.png
 Source4: %name-48.png
+
 Patch1: configure.ac.patch
 Patch2: %name-%version-fedora-help.patch
 Patch3: %name-%version-fedora-system-lua.patch
 Patch4: %name-%version-fedora-syslibs.patch
 Patch5: %name-%version-fedora-returntype.patch
 Patch6: %name-%version-alt-thumbsdb.patch
+Patch7: %name-%version-alt-wxGTK-compat.patch
 
 BuildRequires: gcc-c++ libGL-devel libSDL-devel libSDL_net-devel
 BuildRequires: libexpat-devel libfftw3-devel libjpeg-devel
 BuildRequires: libopenal-devel libpango-devel libpng-devel
-BuildRequires: libvorbis-devel libwxGTK-devel libogg-devel
+BuildRequires: libvorbis-devel libwxGTK3.0-devel libogg-devel
 BuildRequires: libalut-devel hd2u findutils
 BuildRequires: liblua-devel libGLEW-devel
 
-Requires: %name-data = %version-%release
+Requires: %name-data = %EVR
 
 %description
 Scorched 3D is a game based loosely on the classic DOS game Scorched
@@ -68,6 +72,7 @@ This package contains data files for Scorched 3D.
 %patch4 -p1
 %patch5 -p0
 %patch6 -p3
+%patch7 -p3
 
 # ensure we use the system versions of these
 rm -f src/common/common/snprintf.c
@@ -75,6 +80,8 @@ rm -f src/common/lua/l*.{cpp,h}
 rm -f src/common/lua/print.cpp
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 /bin/touch {INSTALL,AUTHORS,COPYING,ChangeLog,NEWS}
 export OPENAL_CONFIG=%_bindir/openal-config
 export FREEALUT_CONFIG=%_bindir/freealut-config
@@ -121,6 +128,9 @@ install -pD -m644 %SOURCE4 %buildroot%_liconsdir/%name.png
 %_gamesdatadir/*
 
 %changelog
+* Mon Oct 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 44-alt2
+- Rebuilt with new wxGTK.
+
 * Wed Sep 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 44-alt1
 - Updated to upstream version 44.
 
