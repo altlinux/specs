@@ -3,7 +3,7 @@
 Name: rootsh
 
 Version: 1.5.3
-Release: alt2
+Release: alt2.qa1
 
 Summary: a logging wrapper for shells
 
@@ -22,6 +22,7 @@ Source4: %name.cron
 Source5: README.ALT.utf8
 
 Patch0:  %name-1.5.3-create_file_perms.patch
+Patch1:  %name-1.5.3-alt-fix-autoreconf.patch
 
 BuildRequires(pre): rpm-build-licenses
 AutoReqProv: yes
@@ -39,15 +40,17 @@ root privileges. They start rootsh through the sudo mechanism.
 
 %prep
 %setup
-%patch0
+%patch0 -p0
+%patch1 -p1
 
-/bin/mv -f -- COPYING COPYING.orig
-/bin/ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING) COPYING
+mv -f -- COPYING COPYING.orig
+ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING) COPYING
 
 # Fix typo in program version:
-/bin/sed -e 's#1.5.2#1.5.3#g' -i configure
+sed -e 's#1.5.2#1.5.3#g' -i configure.ac
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -90,6 +93,9 @@ mkdir -p -- %buildroot%logs_dir
 %_man1dir/%name.*
 
 %changelog
+* Wed Oct 06 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.5.3-alt2.qa1
+- Fixed build with LTO flags.
+
 * Thu Oct 18 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.5.3-alt2
 - Fix shell aliases
 - Spec file cleanup
