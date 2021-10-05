@@ -1,6 +1,6 @@
 Name: ytalk
 Version: 3.3.0
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: A chat program for multiple users
 License: GPL
@@ -9,6 +9,8 @@ Group: Networking/Chat
 Url: http://www.impul.se/ytalk/
 Source: %url/ytalk-%version.tar.bz2
 Source1: ytalkrc
+
+Patch0: ytalk-3.3.0-alt-fix-autoreconf.patch
 
 # Automatically added by buildreq on Fri Feb 10 2006
 BuildRequires: libncurses-devel libtinfo-devel
@@ -23,7 +25,10 @@ easy-to-use menu of commands.
 %prep
 %setup -q
 
+%patch -p1
+
 %build
+%autoreconf -I m4
 %configure
 %make_build
 
@@ -37,6 +42,9 @@ easy-to-use menu of commands.
 %_man1dir/ytalk*
 
 %changelog
+* Tue Oct 05 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.3.0-alt1.qa2
+- Fixed build with LTO flags.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.3.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
