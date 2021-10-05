@@ -4,7 +4,7 @@
 %define libkcolorpicker libkcolorpicker%sover
 
 Name: kde5-%rname
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 %K5init altplace
 
@@ -72,5 +72,8 @@ KF5 library
 %_K5lib/libkColorPicker.so.*
 
 %changelog
+* Tue Oct 05 2021 Sergey V Turchin <zerg@altlinux.org> 0.1.6-alt1
+- new version
+
 * Fri Feb 05 2021 Sergey V Turchin <zerg@altlinux.org> 0.1.5-alt1
 - initial build
