@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+
 %define prefix /
 %define exec_prefix /
 %define _prefix /
 %define soname 13
 Name: ipset
 Version: 7.15
-Release: alt2
+Release: alt3
 
 Summary: Tools for managing sets of IP or ports with iptables
 License: GPLv2
@@ -76,6 +78,9 @@ LIBNAME="$(basename $(ls %buildroot/%_lib/libipset.so.%{soname}.*.*))"
 ln -s ../../%_lib/$LIBNAME libipset.so
 popd
 
+# we don't package the file, so let's remove it
+# to avoid confusing pkgconfiglib.req
+rm -f %buildroot/%_lib/libipset.so
 
 tar xvf %SOURCE0
 mv %name-%version kernel-source-%name-%version
@@ -101,6 +106,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Tue Oct 05 2021 Ivan A. Melnikov <iv@altlinux.org> 7.15-alt3
+- fix build on riscv64
+
 * Mon Sep 20 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 7.15-alt2
 - fixed -flto (disabled static)
 
