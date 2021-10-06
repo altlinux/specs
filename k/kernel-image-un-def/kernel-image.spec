@@ -1,5 +1,5 @@
 Name: kernel-image-un-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	5.14
 %define kernel_sublevel .9
@@ -646,6 +646,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Oct 04 2021 Dmitry Terekhin <jqt4@altlinux.org> 1:5.14.9-alt2
+- Disable all sleep states on BE-M1000 based boards.
+
 * Thu Sep 30 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.14.9-alt1
 - v5.14.9
 
