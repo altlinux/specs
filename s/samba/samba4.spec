@@ -63,6 +63,7 @@
 %define _samba_mod_libdir  %_libdir/samba
 %define _samba_dc_libdir  %_libdir/samba-dc
 %define _samba_dc_mod_libdir  %_libdir/samba-dc
+%define _samba_dc_pythonarchdir  %_samba_dc_mod_libdir/python%_python3_version
 %define _samba_piddir /run
 %define _samba_sockets_dir /run/samba
 
@@ -72,8 +73,8 @@
 %endif
 
 Name:    samba
-Version: 4.14.7
-Release: alt4
+Version: 4.14.8
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -840,6 +841,7 @@ pushd ../%rname-%version-separate-heimdal-server
 	--libdir=%_samba_dc_libdir \
 	--with-modulesdir=%_samba_dc_mod_libdir \
 	--with-privatelibdir=%_samba_dc_mod_libdir \
+	--pythonarchdir=%_samba_dc_pythonarchdir \
 	--without-pam
 
 %make_build NPROCS=%__nprocs V=2 -Onone
@@ -877,7 +879,6 @@ popd
 
 mkdir -p %buildroot%_altdir
 
-mv %buildroot%python3_sitelibdir %buildroot%_samba_dc_mod_libdir/python%_python3_version
 mv %buildroot%_bindir %buildroot%_samba_dc_mod_libdir/bin
 mv %buildroot%_sbindir %buildroot%_samba_dc_mod_libdir/sbin
 for f in samba samba_kcc samba_dnsupdate samba_spnupdate samba_upgradedns eventlogadm nmbd smbd winbindd; do
@@ -888,11 +889,9 @@ printf "%_bindir/ntlm_auth\t%_samba_dc_mod_libdir/bin/ntlm_auth\t50\n" >> %build
 printf "%_bindir/pdbedit\t%_samba_dc_mod_libdir/bin/pdbedit\t50\n" >> %buildroot%_altdir/samba-heimdal
 printf "%_samba_mod_libdir/ldb\t%_samba_dc_mod_libdir/ldb\t50\n" >> %buildroot%_altdir/samba-heimdal
 
-printf '#!/bin/bash\nexport PYTHONPATH="%_samba_dc_mod_libdir/python%_python3_version"\nexec %_bindir/samba-tool.py3 "$@"\n' >%buildroot%_samba_dc_mod_libdir/bin/samba-tool
 printf "%_bindir/samba-tool\t%_samba_dc_mod_libdir/bin/samba-tool\t50\n" >> %buildroot%_altdir/samba-heimdal
 chmod 0755 %buildroot%_samba_dc_mod_libdir/bin/samba-tool
 
-printf '#!/bin/bash\nexport PYTHONPATH="%_samba_dc_mod_libdir/python%_python3_version"\nexec %_sbindir/samba_downgrade_db.py3 "$@"\n' >%buildroot%_samba_dc_mod_libdir/sbin/samba_downgrade_db
 printf "%_sbindir/samba_downgrade_db\t%_samba_dc_mod_libdir/sbin/samba_downgrade_db\t50\n" >> %buildroot%_altdir/samba-heimdal
 chmod 0755 %buildroot%_samba_dc_mod_libdir/sbin/samba_downgrade_db
 
@@ -924,13 +923,11 @@ printf "%_bindir/pdbedit\t%_samba_mod_libdir/bin/pdbedit\t20\n" > %buildroot%_al
 mv %buildroot%_samba_mod_libdir/ldb %buildroot%_samba_mod_libdir/ldb.mit
 printf "%_samba_mod_libdir/ldb\t%_samba_mod_libdir/ldb.mit\t20\n" > %buildroot%_altdir/samba-mit-dc-modules
 
-mv %buildroot%_bindir/samba-tool %buildroot%_bindir/samba-tool.py3
-printf '#!/bin/bash\nexec %_bindir/samba-tool.py3 "$@"\n' >%buildroot%_samba_mod_libdir/bin/samba-tool
+mv %buildroot%_bindir/samba-tool %buildroot%_samba_mod_libdir/bin/
 printf "%_bindir/samba-tool\t%_samba_mod_libdir/bin/samba-tool\t20\n" > %buildroot%_altdir/samba-mit-dc-client
 chmod 0755 %buildroot%_samba_mod_libdir/bin/samba-tool
 
-mv %buildroot%_sbindir/samba_downgrade_db %buildroot%_sbindir/samba_downgrade_db.py3
-printf '#!/bin/bash\nexec %_sbindir/samba_downgrade_db.py3 "$@"\n' >%buildroot%_samba_mod_libdir/sbin/samba_downgrade_db
+mv %buildroot%_sbindir/samba_downgrade_db %buildroot%_samba_mod_libdir/sbin/
 printf "%_bindir/samba_downgrade_db\t%_samba_mod_libdir/sbin/samba_downgrade_db\t20\n" >> %buildroot%_altdir/samba-mit-dc-client
 chmod 0755 %buildroot%_samba_mod_libdir/sbin/samba_downgrade_db
 
@@ -1209,7 +1206,6 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_samba_mod_libdir/sbin/samba_dnsupdate
 %_samba_mod_libdir/sbin/samba_spnupdate
 %_samba_mod_libdir/sbin/samba_upgradedns
-%_samba_mod_libdir/sbin/samba_downgrade_db
 %endif #!separate_heimdal_server
 
 %_samba_mod_libdir/auth/samba4.so
@@ -1218,10 +1214,10 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %if_with separate_heimdal_server
 %_altdir/samba-mit-dc-client
 %_samba_mod_libdir/bin/samba-tool
-%_bindir/samba-tool.py3
-%_sbindir/samba_downgrade_db.py3
+%_samba_mod_libdir/sbin/samba_downgrade_db
 %else
 %_bindir/samba-tool
+%_sbindir/samba_downgrade_db
 %endif
 %_sbindir/samba-gpupdate
 %if_with doc
@@ -1921,6 +1917,18 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_includedir/samba-4.0/private
 
 %changelog
+* Wed Oct 06 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.8-alt1
+- Update to latest security release of Samba 4.14
+- Fix performance regressions in lsa_LookupSids3/LookupNames4 since Samba 4.9 by
+  using an explicit database handle cache and address a signifcant in database
+  access in the AD DC since Samba 4.12.
+- Fix an unuthenticated user can crash the AD DC KDC by omitting the server name
+  in a TGS-REQ (Fixes: CVE-2021-3671).
+
+* Tue Oct 05 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.7-alt5
+- Add pythonarchdir repplacement due compatibility with alt security
+  python trust mode (enabled if /etc/alt/security/python-trust exists).
+
 * Mon Sep 20 2021 Ivan A. Melnikov <iv@altlinux.org> 4.14.7-alt4
 - Use parallel make install.
 - Make building and installing more verbose.
