@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-
+%define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,lint=relaxed
 
 Name: gif2png
 Version: 3.0.0
-Release: alt4.git.a9592ae
+Release: alt5.git.a9592ae
 Summary: A GIF to PNG converter
 Group: Graphics
 License: BSD-2-Clause
@@ -18,6 +18,7 @@ ExclusiveArch: %go_arches
 
 BuildRequires(pre): rpm-build-golang rpm-build-python
 BuildRequires: python-modules xmlto
+BuildRequires: golang-golang-x-crypto-devel
 
 %description
 The gif2png program converts files from the obsolescent Graphic
@@ -74,6 +75,9 @@ export CFLAGS="$RPM_OPT_FLAGS $(getconf LFS_CFLAGS)"
 %_man1dir/web2png.1*
 
 %changelog
+* Wed Oct 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.0-alt5.git.a9592ae
+- Fixed build with new golang.
+
 * Wed May 19 2021 Slava Aseev <ptrnine@altlinux.org> 3.0.0-alt4.git.a9592ae
 - Fixed build due to missing rpm-build-python.
 
