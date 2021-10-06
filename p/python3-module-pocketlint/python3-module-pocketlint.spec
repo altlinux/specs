@@ -1,7 +1,7 @@
 %define modname pocketlint
 
 Name: python3-module-%modname
-Version: 0.21
+Version: 0.22
 Release: alt1
 
 Summary: Addon for Pylint
@@ -38,6 +38,9 @@ of Python-based source projects.
 
 
 %changelog
+* Wed Oct 06 2021 Yuri N. Sedunov <aris@altlinux.org> 0.22-alt1
+- 0.22
+
 * Tue Apr 20 2021 Yuri N. Sedunov <aris@altlinux.org> 0.21-alt1
 - 0.21
 
