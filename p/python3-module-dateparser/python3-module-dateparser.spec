@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: Python parser for human readable dates 
@@ -11,7 +11,7 @@ License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/dateparser
 
-#VCS: https://github.com/scrapinghub/dateparser.git
+Vcs: https://github.com/scrapinghub/dateparser.git
 Source: https://github.com/scrapinghub/dateparser/archive/v%version/%modname-%version.tar.gz
 BuildArch: noarch
 
@@ -28,7 +28,8 @@ BuildRequires: python3-module-sphinx-devel python3-module-sphinx_rtd_theme
 BuildRequires: python3-module-pytest-cov python3-module-parameterized
 BuildRequires: python3-module-orderedset python3-module-convertdate
 BuildRequires: python3-module-ruamel-yaml python3-module-umalqurra
-BuildRequires: python3-module-hijri-converter}
+BuildRequires: python3-module-hijri-converter python3-module-langdetect
+BuildRequires: python3-module-fasttext}
 
 %description
 Date parsing library designed to parse dates from HTML pages.
@@ -73,6 +74,7 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%modname/
 %__python3 setup.py test
 
 %files
+%_bindir/%modname-download
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/pickle
 %doc *.rst
@@ -85,6 +87,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%modname/
 
 
 %changelog
+* Wed Oct 06 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Thu Nov 05 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - 1.0.0
 
