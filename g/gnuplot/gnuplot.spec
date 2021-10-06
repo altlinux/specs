@@ -3,7 +3,7 @@
 
 Name: gnuplot
 Version: 5.4.2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A program for plotting mathematical expressions and data
@@ -41,7 +41,7 @@ BuildRequires: dblatex
 %{?_with_emacs:BuildRequires: emacs-common}
 
 # for wxt terminal
-BuildRequires: libwxGTK-devel libcairo-devel libpango-devel libgtk+2-devel
+BuildRequires: libcairo-devel libpango-devel libwxGTK3.0-devel
 # for qt terminal
 BuildRequires: qt5-base-devel qt5-svg-devel qt5-tools
 # for lua/TikZ
@@ -271,6 +271,9 @@ rm -f demo/html/Makefile*
 %doc demo
 
 %changelog
+* Wed Oct 06 2021 Grigory Ustinov <grenka@altlinux.org> 1:5.4.2-alt2
+- Rebuilt with new wxGTK.
+
 * Sat Jun 05 2021 Grigory Ustinov <grenka@altlinux.org> 1:5.4.2-alt1
 - Automatically updated to 5.4.2.
 
