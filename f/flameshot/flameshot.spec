@@ -1,6 +1,6 @@
 Name: flameshot
-Version: 0.8.0
-Release: alt2
+Version: 0.10.1
+Release: alt1
 
 Summary: Powerful yet simple to use screenshot software
 
@@ -36,18 +36,25 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %files
 %doc LICENSE README.md
 %_bindir/%name
-%_datadir/applications/%name.desktop
+%_datadir/applications/org.flameshot.Flameshot.desktop
 %_datadir/bash-completion/completions/%name
 %_datadir/zsh/site-functions/_%name
 %_datadir/dbus-1/interfaces/org.flameshot.Flameshot.xml
 %_datadir/dbus-1/services/org.flameshot.Flameshot.service
 %_datadir/%name
+%_iconsdir/hicolor/128x128/apps/org.flameshot.Flameshot.png
+%_iconsdir/hicolor/48x48/apps/org.flameshot.Flameshot.png
+%_iconsdir/hicolor/scalable/apps/org.flameshot.Flameshot.svg
 %_iconsdir/hicolor/128x128/apps/%name.png
 %_iconsdir/hicolor/48x48/apps/%name.png
 %_iconsdir/hicolor/scalable/apps/%name.svg
-%_datadir/metainfo/%name.metainfo.xml
+%_datadir/metainfo/org.flameshot.Flameshot.metainfo.xml
+%_man1dir/flameshot.1.xz
 
 %changelog
+* Sun Oct 03 2021 Grigory Ustinov <grenka@altlinux.org> 0.10.1-alt1
+- Automatically updated to 0.10.1.
+
 * Tue Apr 13 2021 Arseny Maslennikov <arseny@altlinux.org> 0.8.0-alt2
 - NMU: Adapted to altlinux.org/CMakeMigration2021.
 
