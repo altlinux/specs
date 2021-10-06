@@ -2,7 +2,7 @@
 
 Name: opensc
 Version: 0.22.0
-Release: alt1
+Release: alt2
 
 Group: System/Configuration/Hardware
 Summary: OpenSC library - for accessing SmartCard devices using PC/SC Lite
@@ -12,6 +12,8 @@ License: LGPL-2.1+
 Requires: lib%name = %version-%release
 
 Source: %name-%version.tar
+
+Patch: opensc-gcc11.patch
 
 BuildRequires: db2latex-xsl docbook-dtds docbook-style-xsl libXt-devel libassuan-devel
 BuildRequires: libltdl7-devel libpcsclite-devel libreadline-devel libssl-devel xsltproc zlib-devel
@@ -65,6 +67,7 @@ OpenSC module for PAM.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -124,6 +127,9 @@ rm -f %buildroot%_datadir/doc/opensc/opensc.conf
 %endif
 
 %changelog
+* Wed Oct 06 2021 Grigory Ustinov <grenka@altlinux.org> 0.22.0-alt2
+- Fixed build with gcc11.
+
 * Tue Aug 10 2021 Andrey Cherepanov <cas@altlinux.org> 0.22.0-alt1
 - New version.
 
