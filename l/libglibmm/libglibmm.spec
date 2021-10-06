@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: libglibmm
-Version: %major.1
+Version: %major.2
 Release: alt1
 
 Summary: C++ wrapper for GLib
@@ -105,6 +105,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Oct 06 2021 Yuri N. Sedunov <aris@altlinux.org> 2.66.2-alt1
+- 2.66.2
+
 * Thu May 20 2021 Yuri N. Sedunov <aris@altlinux.org> 2.66.1-alt1
 - 2.66.1
 
