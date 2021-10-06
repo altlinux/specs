@@ -1,6 +1,6 @@
 Name: ogmtools
 Version: 1.5
-Release: alt2.qa1
+Release: alt3
 
 Summary: Tools for Ogg media streams
 License: GPL
@@ -8,13 +8,7 @@ Group: Sound
 Url: http://www.bunkus.org/videotools/ogmtools
 
 Source0: %url/%name-%version.tar.bz2
-
-Packager: Igor Zubkov <icesik@altlinux.org>
-
-Requires: vorbis-tools
-#Requires: /usr/bin/mencoder
-Requires: MPlayer
-Requires: normalize
+Patch0: ogmtools-1.5-fedora-optflags.patch
 
 # Automatically added by buildreq on Sat Sep 19 2009
 BuildRequires: gcc-c++ libdvdread-devel libvorbis-devel
@@ -26,8 +20,10 @@ media streams. OGM is used for "OGG media streams".
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
+%add_optflags -std=c++14
 %configure
 %make_build
 
@@ -40,6 +36,11 @@ media streams. OGM is used for "OGG media streams".
 %doc README ChangeLog TODO
 
 %changelog
+* Wed Oct 06 2021 Ivan A. Melnikov <iv@altlinux.org> 1.5-alt3
+- Make configure respect optflags (patch from Fedora).
+- Build as C++14 (fixes FTBS).
+- Drop unneeded dependencies.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
