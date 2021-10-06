@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: libkqueue
 Version: 2.0.1
-Release: alt5
+Release: alt6
 Summary: Portable implementation of the kqueue() and kevent() system calls
 License: MIT / BSD
 Group: System/Libraries
@@ -14,6 +16,7 @@ Patch1: %name-%version-alt-gcc6.patch
 Patch2: %name-%version-alt-parallel-build.patch
 Patch3: %name-%version-alt-fix-print.patch
 Patch4: %name-%version-alt-printf-buffer.patch
+Patch5: %name-%version-alt-build-flags.patch
 
 %description
 A user space implementation of the kqueue(2) kernel event notification
@@ -38,8 +41,10 @@ This package contains development files of libkqueue.
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
+%patch5 -p2
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %ifarch %e2k
 %add_optflags -D_GNU_SOURCE=
 %endif
@@ -60,6 +65,9 @@ This package contains development files of libkqueue.
 %_man2dir/*
 
 %changelog
+* Wed Oct 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.1-alt6
+- Fixed build with gcc-11.
+
 * Tue Sep 14 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.0.1-alt5
 - Fixed build for Elbrus.
 
