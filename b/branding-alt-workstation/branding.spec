@@ -24,7 +24,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 9.910
+Version: 9.911
 Release: alt1
 Url: https://basealt.ru
 
@@ -359,6 +359,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed Oct 06 2021 Mikhail Efremov <sem@altlinux.org> 9.911-alt1
+- bootsplash: New progressbar from alt-education.
+
 * Tue Oct 05 2021 Mikhail Efremov <sem@altlinux.org> 9.910-alt1
 - Drop alpha status.
 - Update images.
