@@ -1,10 +1,11 @@
 %define rname kstars
 %def_disable indi
-%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+#{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%define optflags_lto %nil
 
 Name: kde5-%rname
-Version: 3.5.2
-Release: alt3
+Version: 3.5.5
+Release: alt1
 Epoch: 1
 %K5init
 
@@ -76,6 +77,12 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 %_K5cfg/kstars.kcfg
 
 %changelog
+* Wed Oct 06 2021 Sergey V Turchin <zerg@altlinux.org> 1:3.5.5-alt1
+- new version
+
+* Wed Oct 06 2021 Sergey V Turchin <zerg@altlinux.org> 1:3.5.2-alt4
+- disable LTO
+
 * Tue Aug 31 2021 Sergey V Turchin <zerg@altlinux.org> 1:3.5.2-alt3
 - enable LTO
 
