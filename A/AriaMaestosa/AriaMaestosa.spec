@@ -1,8 +1,8 @@
 %define srcname AriaSrc
 
 Name: AriaMaestosa
-Version: 1.4.6
-Release: alt1.qa1
+Version: 1.4.13
+Release: alt1
 
 Summary: Aria Maestosa is an opensource (GPL) midi tracker/editor
 License: GPLv2 with exceptions (look at license.txt)
@@ -14,7 +14,8 @@ Packager: Alex Karpov <karpov@altlinux.org>
 Source: %srcname-%version.tar
 
 # Automatically added by buildreq on Thu Nov 18 2010
-BuildRequires: cvs flex gcc-c++ ghostscript-utils glib2-devel libGLU-devel libalsa-devel libjack-devel libwxGTK-devel python-modules-email rcs scons swig texlive-latex-base
+BuildRequires: cvs flex gcc-c++ ghostscript-utils glib2-devel libGLU-devel libalsa-devel libjack-devel libwxGTK3.0-devel python-modules-email rcs scons swig texlive-latex-base
+BuildRequires: chrpath
 
 %description
 Aria Maestosa is an open-source (GPL) midi tracker/editor. It lets you 
@@ -29,6 +30,9 @@ python2 scons/scons.py prefix=/usr destdir=%buildroot
 
 %install
 python2 scons/scons.py install prefix=%buildroot/usr
+
+chrpath -d %buildroot%_bindir/Aria
+
 %find_lang aria_maestosa
 
 %files -f aria_maestosa.lang
@@ -37,6 +41,9 @@ python2 scons/scons.py install prefix=%buildroot/usr
 %_datadir/Aria
 
 %changelog
+* Wed Oct 06 2021 Grigory Ustinov <grenka@altlinux.org> 1.4.13-alt1
+- Build new version.
+
 * Fri Sep 18 2020 Igor Vlasenko <viy@altlinux.ru> 1.4.6-alt1.qa1
 - NMU: do not use /usr/bin/python
 
