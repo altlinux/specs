@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: gpsbabel
-Version: 1.5.4
-Release: alt4
-
+Version: 1.7.0
+Release: alt1
 Summary: A tool to convert between various formats used by GPS devices
 License: GPL
 Group: Sciences/Geosciences
@@ -49,11 +50,21 @@ This package contains gui for gpsbabel.
 
 rm -rf zlib shapelib
 
+# use system headers and libraries
+sed -i \
+	-e 's:zlib/zlib.h::g' \
+	-e 's:zlib/zconf.h::g' \
+	-e 's:shapelib/shapefil.h::g' \
+	-e 's:$(SHAPE):-lshp:g' \
+	Makefile.in
+
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
+%autoreconf
 %configure \
 	--with-zlib=system \
-	--with-libminizip=system \
-	--enable-pdb=no
+	%nil
 
 %make_build
 
@@ -80,12 +91,12 @@ install -m 0755 -d %buildroot%_desktopdir
 install -m 0644 -p gui/gpsbabel.desktop %buildroot%_desktopdir/
 
 install -m 0755 -d %buildroot%_iconsdir/hicolor/256x256/apps
-install -m 0644 -p gpsbabel.png %buildroot%_iconsdir/hicolor/256x256/apps/
+install -m 0644 -p gui/images/appicon.png %buildroot%_iconsdir/hicolor/256x256/apps/gpsbabel.png
 
 %find_lang %name --with-qt --all-name
 
 %files
-%doc AUTHORS README* intdoc gpsbabel.html
+%doc AUTHORS README* intdoc
 %_bindir/%name
 
 %files gui -f %{name}.lang
@@ -96,13 +107,16 @@ install -m 0644 -p gpsbabel.png %buildroot%_iconsdir/hicolor/256x256/apps/
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed Oct 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.0-alt1
+- Updated to upstream version 1.7.0.
+
 * Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt4
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt3
-- NMU: remove %ubt from release
+- NMU: remove %%ubt from release
 
-* Mon May 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.4-alt2%ubt
+* Mon May 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.4-alt2
 - Built Qt5 gui.
 
 * Mon May 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.4-alt1
