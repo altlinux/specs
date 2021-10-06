@@ -1,6 +1,6 @@
 %define module_name	lkrg
 %define module_version	0.9.1.0.19.git51ea889
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		un-def
 %define karch		aarch64 %arm %ix86 x86_64
@@ -200,7 +200,7 @@ timeout=1800
 timeout --foreground "$timeout" qemu-system-"$qemu_arch" -m 512 $qemu_opts -kernel /boot/vmlinuz-$KernelVer -nographic -append console="$console no_timer_check" -initrd initrd.img.gz > boot.log &&
 grep -qF "LKRG initialized successfully!" boot.log &&
 grep -qF "LKRG unloaded!" boot.log &&
-grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log &&
+grep -qE '^.*Power down' boot.log &&
 ! grep -qF "$failmsg" &&
 ! grep -qF 'Kernel panic' || {
 	cat >&2 boot.log
@@ -281,6 +281,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Wed Oct 06 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.19.git51ea889-alt2.%kcode.%kbuildrelease
+- Built for ovz-el7 kernel flavour.
 
 * Fri Sep 03 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.19.git51ea889-alt1.%kcode.%kbuildrelease
 - Updated to v0.9.1-19-g51ea889.
