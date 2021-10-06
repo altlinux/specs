@@ -1,17 +1,21 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %define oname wpd
 %define soname 10
 
 Name: lib%oname%soname
 Version: 0.10.3
-Release: alt1
+Release: alt2
 Summary: Library for reading and converting WordPerfect(tm) documents
 License: LGPLv2+ or MPL-2.0
 Group: System/Libraries
 Url: http://libwpd.sf.net/
 
 Source: libwpd-%version.tar
+
+Patch1: libwpd-alt-build.patch
 
 BuildRequires: boost-devel-headers help2man librevenge-devel
 BuildRequires: gcc-c++
@@ -58,6 +62,7 @@ The %name-doc package contains API documentation for %name.
 
 %prep
 %setup -n lib%oname-%version
+%patch1 -p2
 
 %build
 %autoreconf
@@ -102,6 +107,9 @@ LD_LIBRARY_PATH=../lib/.libs make check
 %doc docs/*.png
 
 %changelog
+* Wed Oct 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10.3-alt2
+- Fixed build with gcc-11.
+
 * Thu Jul 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10.3-alt1
 - Updated to upstream version 0.10.3.
 
