@@ -5,7 +5,7 @@
 %def_enable portaudio
 
 Name: qjackctl
-Version: 0.9.4
+Version: 0.9.5
 Release: alt1
 
 Summary: Qjackctl is a programm to control the JACK sound server daemon
@@ -78,6 +78,9 @@ JACK-клиентов.
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Wed Oct 06 2021 Yuri N. Sedunov <aris@altlinux.org> 0.9.5-alt1
+- 0.9.5
+
 * Mon Jul 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.9.4-alt1
 - 0.9.4 (ported to CMake build system)
 
