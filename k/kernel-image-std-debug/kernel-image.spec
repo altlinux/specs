@@ -2,7 +2,7 @@ Name: kernel-image-std-debug
 Release: alt1
 epoch:2
 %define kernel_base_version	5.10
-%define kernel_sublevel .70
+%define kernel_sublevel .71
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -75,7 +75,7 @@ ExclusiveArch: i586 x86_64 ppc64le aarch64 armh
 
 %define image_path arch/%base_arch/boot/%make_target
 %ifarch ppc64le
-%define image_path %make_target
+%define image_path %make_target.stripped
 %endif
 
 %define arch_dir %base_arch
@@ -394,6 +394,9 @@ scripts/kconfig/merge_config.sh -m $CONFIGS
 %make_build oldconfig
 #%make_build include/linux/version.h
 %make_build %make_target
+%ifarch ppc64le
+eu-strip --remove-comment -o %image_path vmlinux
+%endif
 %make_build modules
 %ifarch aarch64 %arm
 %make_build dtbs
@@ -696,6 +699,15 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Oct 06 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.71-alt1
+- v5.10.71  (Fixes: CVE-2021-3653, CVE-2021-3656)
+
+* Tue Oct 05 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.70-alt3
+- don't use SOF on Cannon Point-LP by default
+
+* Sat Oct 02 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.70-alt2
+- ES8336 support fixed
+
 * Thu Sep 30 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.70-alt1
 - v5.10.70
 
