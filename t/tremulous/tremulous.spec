@@ -1,8 +1,11 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 ExclusiveArch: %ix86 x86_64 aarch64 ppc64le %e2k
 
 %ifarch %ix86
+%global optflags_lto %nil
 %add_optflags -no-pie
 %endif
 
@@ -31,8 +34,7 @@ ExclusiveArch: %ix86 x86_64 aarch64 ppc64le %e2k
 
 Name: tremulous
 Version: 1.2.0
-Release: alt3
-
+Release: alt4
 Summary: Tremulous - 3D FPS Strategic Shooter
 License: GPL
 Group: Games/Arcade
@@ -163,6 +165,7 @@ rm -r src/SDL12 src/AL src/libcurl src/libspeex src/libs
 
 %build
 %add_optflags -fno-strict-aliasing -ffast-math
+%add_optflags -D_FILE_OFFSET_BITS=64
 # the CROSS_COMPILING=1 is a hack to not build q3cc and qvm files
 # since we've stripped out q3cc as this is not Free Software.
 %make_build release \
@@ -241,6 +244,9 @@ install -d %buildroot%_home
 %attr(775,root,%_group) %dir %_home
 
 %changelog
+* Wed Oct 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt4
+- Fixed build on i586.
+
 * Thu Apr 22 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt3
 - Fixed build on i586.
 
