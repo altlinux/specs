@@ -1,6 +1,6 @@
 Name: codeblocks
 Version: 20.03
-Release: alt5
+Release: alt6
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
@@ -90,6 +90,7 @@ sed -ri '/^\s+#pragma implementation/ s,cbkeybinder,cbKeyConfigPanel,' src/plugi
 %build
 msgfmt %name.po -o %name.mo
 ./bootstrap
+%add_optflags -std=gnu++14
 %configure --with-contrib-plugins=all \
            --with-boost-libdir=%_libdir \
            --enable-fortran \
@@ -315,8 +316,11 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_libdir/pkgconfig/wxsmith-contrib.pc
 
 %changelog
+* Wed Oct 06 2021 Grigory Ustinov <grenka@altlinux.org> 20.03-alt6
+- Fix build with gcc11.
+
 * Fri Jul 02 2021 Anton Midyukov <antohami@altlinux.org> 20.03-alt5
-- Fix build with wxGTK 3.1.5
+- Fix build with wxGTK 3.1.5.
 
 * Sun May 16 2021 Grigory Ustinov <grenka@altlinux.org> 20.03-alt4
 - Fix empty arduino project page (more carefully).
