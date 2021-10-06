@@ -1,7 +1,7 @@
 Summary: Tool to manage your infrastructure
 Name: salt
 Version: 3003.2
-Release: alt1
+Release: alt2
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
 License: Apache-2.0
@@ -29,6 +29,10 @@ BuildRequires: python3-module-msgpack python3-module-yaml
 BuildRequires: python3-module-distro
 
 %add_python3_req_skip win32api win32event win32service win32serviceutil winerror pythoncom distutils ntsecuritycon win32con win32process win32security
+
+# pyrax.exceptions is a not a real dependency: pyrax
+# presence is gated at salt/utils/openstack/pyrax/__init__.py
+%add_python3_req_skip pyrax.exceptions
 
 # For more detailed autoreqs (under jnpr.*), which can be satisfied;
 # this fixes the general UNMET python2.X(jnpr), which used to appear.
@@ -240,6 +244,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Wed Oct 06 2021 Ivan A. Melnikov <iv@altlinux.org> 3003.2-alt2
+- Skip pyrax.exceptions dependency (fixes build on mipsel)
+
 * Fri Sep 24 2021 Andrey Cherepanov <cas@altlinux.org> 3003.2-alt1
 - New version.
 
