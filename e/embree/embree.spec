@@ -1,11 +1,13 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %define libsuffix 3
 %define soname 3
 
 Name: embree
 Version: 3.13.1
-Release: alt1
+Release: alt2
 Summary: Collection of high-performance ray tracing kernels developed at Intel
 Group: Graphics
 License: Apache-2.0
@@ -21,7 +23,7 @@ Patch2000: %name-e2k.patch
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libgif-devel
-%ifarch x86_64 %ix86
+%ifnarch %e2k
 BuildRequires: ispc
 %endif
 BuildRequires: pkgconfig(glut)
@@ -34,7 +36,8 @@ BuildRequires: pkgconfig(libtiff-4)
 BuildRequires: pkgconfig(OpenImageIO)
 BuildRequires: pkgconfig(tbb)
 
-ExclusiveArch: x86_64 %ix86 aarch64 %e2k
+# https://github.com/embree/embree/issues/186
+ExclusiveArch: x86_64 %e2k
 
 %description
 A collection of high-performance ray tracing kernels intended to graphics 
@@ -63,14 +66,6 @@ applications that use %{name}.
 %patch2000 -p1
 %endif
 
-%ifarch %ix86
-# _mm_cvtsi128_si64 is unavailable on 32-bit x86
-sed -i "s|defined(__WIN32__) && !defined(__X86_64__)|!defined(__64BIT__)|" \
-	common/simd/vint4_sse2.h
-sed -i "/return _mm_cvtsi128_si64/s|.*|return v.i[0];|" \
-	common/simd/vllong4_avx2.h
-%endif
-
 %build
 # limit parallel build
 if [ %__nprocs -gt 4 ] ; then
@@ -85,13 +80,8 @@ fi
 	-DEMBREE_IGNORE_CMAKE_CXX_FLAGS=OFF \
 	-DEMBREE_TUTORIALS=OFF \
 	-DEMBREE_COMPACT_POLYS=ON \
-%ifnarch x86_64 %ix86
-	-DEMBREE_ISPC_SUPPORT=OFF \
-%endif
-%ifarch %ix86
-	-DEMBREE_MAX_ISA=AVX2 \
-%endif
 %ifarch %e2k
+	-DEMBREE_ISPC_SUPPORT=OFF \
 	-DEMBREE_MAX_ISA=DEFAULT \
 %endif
 	%nil
@@ -117,6 +107,9 @@ rm -rf %buildroot%_docdir/%{name}%{libsuffix}
 %_man3dir/*
 
 %changelog
+* Wed Oct 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.13.1-alt2
+- Disabled unsupported build for %%ix86 and aarch64 architectures.
+
 * Tue Aug 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.13.1-alt1
 - Updated to upstream version 3.13.1.
 
