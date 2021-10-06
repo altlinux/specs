@@ -1,7 +1,7 @@
 %def_enable  clang
 %def_disable shared_libraries
 %def_enable  widevine
-%def_enable  ffmpeg
+%def_disable ffmpeg
 %def_enable  google_api_keys
 
 %ifndef build_parallel_jobs
@@ -33,7 +33,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium-gost
-Version:        92.0.4515.131
+Version:        94.0.4606.71
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -71,29 +71,23 @@ ExcludeArch: ppc64le armh
 
 ### Start Patches
 Patch001: 0001-OPENSUSE-enables-reading-of-the-master-preference.patch
-Patch002: 0002-OPENSUSE-Compile-the-sandbox-with-fPIE-settings.patch
-Patch003: 0003-ALT-Set-appropriate-desktop-file-name-for-default-br.patch
-Patch004: 0004-DEBIAN-manpage-fixes.patch
-Patch005: 0005-ALT-gcc6-fixes.patch
-Patch006: 0006-DEBIAN-add-ps-printing-capability-gtk2.patch
-Patch007: 0007-ALT-fix-shrank-by-one-character.patch
-Patch008: 0008-ALT-Fix-last-commit-position-issue.patch
-Patch009: 0009-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
-Patch010: 0010-ALT-Use-rpath-link-and-absolute-rpath.patch
-Patch011: 0011-FEDORA-Fix-gcc-round.patch
-Patch012: 0012-ALT-openh264-always-pic-on-x86.patch
-Patch013: 0013-ALT-allow-to-override-clang-through-env-variables.patch
-Patch014: 0014-ALT-Hack-to-avoid-build-error-with-clang7.patch
-Patch015: 0015-ALT-Add-missing-header-on-aarch64.patch
-Patch016: 0016-FEDORA-vtable-symbol-undefined.patch
-Patch017: 0017-FEDORA-remove-noexcept.patch
-Patch018: 0018-ALT-disable-asm-on-x86-in-dav1d.patch
-Patch019: 0019-Move-offending-function-to-chromeos-only.patch
-Patch020: 0020-ALT-Do-not-use-no-canonical-prefixes-clang-option.patch
-Patch021: 0021-ALT-Disable-NOMERGE-attribute.patch
-Patch022: 0022-IWYU-include-limits-for-std-numeric_limits.patch
-Patch023: 0023-ALT-Hide-some-utilities-from-rpm-build.patch
-Patch024: 0024-FEDORA-bootstrap-with-python3.patch
+Patch002: 0002-ALT-Set-appropriate-desktop-file-name-for-default-br.patch
+Patch003: 0003-DEBIAN-manpage-fixes.patch
+Patch004: 0004-DEBIAN-add-ps-printing-capability-gtk2.patch
+Patch005: 0005-ALT-fix-shrank-by-one-character.patch
+Patch006: 0006-ALT-Fix-last-commit-position-issue.patch
+Patch007: 0007-ALT-Use-rpath-link-and-absolute-rpath.patch
+Patch008: 0008-ALT-openh264-always-pic-on-x86.patch
+Patch009: 0009-ALT-allow-to-override-clang-through-env-variables.patch
+Patch010: 0010-ALT-Hack-to-avoid-build-error-with-clang7.patch
+Patch011: 0011-ALT-disable-asm-on-x86-in-dav1d.patch
+Patch012: 0012-Move-offending-function-to-chromeos-only.patch
+Patch013: 0013-ALT-Do-not-use-no-canonical-prefixes-clang-option.patch
+Patch014: 0014-ALT-Disable-NOMERGE-attribute.patch
+Patch015: 0015-IWYU-include-limits-for-std-numeric_limits.patch
+Patch016: 0016-FEDORA-bootstrap-with-python3.patch
+Patch017: 0017-sql-make-VirtualCursor-standard-layout-type.patch
+Patch018: 0018-IWYU-add-memory-for-std-unique_ptr-in-blink-CustomSp.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -172,6 +166,7 @@ BuildRequires:  pkgconfig(wayland-egl)
 BuildRequires:  pkgconfig(wayland-cursor)
 BuildRequires:  pkgconfig(wayland-scanner)
 BuildRequires:  pkgconfig(dri)
+BuildRequires:  pkgconfig(libpipewire-0.3)
 BuildRequires:  node
 BuildRequires:  usbids
 BuildRequires:  xdg-utils
@@ -181,6 +176,7 @@ BuildRequires:  python-modules-json
 BuildRequires:  python3
 
 Requires: libva
+Requires: xdg-utils
 
 %description
 Chromium is an open-source browser project that aims to build a safer,
@@ -190,14 +186,24 @@ faster, and more stable way for all Internet users to experience the web.
 %setup -q -n chromium -a 300
 %autopatch -p1
 
-
 sed -E 's@^((diff --git|[-+]{3}) a)/(.*)@\1/third_party/boringssl/src/\3@' < chromium-gost/patch/boringssl.patch | patch -p1
 sed -E 's@^((diff --git|[-+]{3}) a)/(.*)@\1/third_party/boringssl/src/\3@; s@return "chromium-browser@return "chromium@' < chromium-gost/patch/chromium.patch | patch -p1
+
+## c-g patch incompatibility introduced in 94.0.4606.71
+sed -i '1i\
+#if __has_attribute(no_destroy)\
+#  define _LIBCPP_NO_DESTROY __attribute__((__no_destroy__))\
+#else\
+#  define _LIBCPP_NO_DESTROY\
+#endif
+' net/socket/ssl_client_socket_impl.cc
+
 # Try to fix #39677
 sed -i 's/std::string data_dir_basename = "chromium"/std::string data_dir_basename = "chromium-gost"/' chrome/common/chrome_paths_linux.cc
 
 sed -i \
 	-e '/"-Wno-non-c-typedef-for-linkage"/d' \
+	-e 's/"-ffile-compilation-dir=."//g' \
 	build/config/compiler/BUILD.gn
 
 mkdir -p third_party/node/linux/node-linux-x64/bin
@@ -263,8 +269,6 @@ gn_arg optimize_webui=false
 gn_arg use_system_freetype=false
 gn_arg use_system_harfbuzz=false
 gn_arg link_pulseaudio=true
-gn_arg ffmpeg_branding=\"Chrome\"
-gn_arg proprietary_codecs=true
 gn_arg enable_hangout_services_extension=true
 gn_arg fieldtrial_testing_like_official_build=true
 gn_arg treat_warnings_as_errors=false
@@ -277,6 +281,10 @@ gn_arg use_system_libwayland=true
 gn_arg use_system_wayland_scanner=true
 gn_arg use_bundled_weston=false
 
+# ffmpeg
+gn_arg ffmpeg_branding=\"Chrome\"
+gn_arg proprietary_codecs=true
+
 # Remove debug
 gn_arg is_debug=false
 gn_arg symbol_level=0
@@ -285,6 +293,9 @@ gn_arg enable_nacl=false
 gn_arg is_component_ffmpeg=%{is_enabled shared_libraries}
 gn_arg is_component_build=%{is_enabled shared_libraries}
 gn_arg enable_widevine=%{is_enabled widevine}
+
+gn_arg rtc_use_pipewire=true
+gn_arg rtc_link_pipewire=true
 
 %if_enabled clang
 gn_arg clang_base_path=\"%_prefix/lib/llvm-%{llvm_version}\"
@@ -361,7 +372,7 @@ mkdir -p -- \
 #
 install -m 755 %SOURCE100 %buildroot%_bindir/%name
 # XXX ?
-ln -s %name %buildroot%_libdir/%name/chromium
+##ln -s %name %buildroot%_libdir/%name/chromium
 install -m 644 %SOURCE200 %buildroot%_sysconfdir/%name/default
 
 # add directories for policy management
@@ -381,7 +392,7 @@ sed -i -e 's,/usr/lib/chromium,%_libdir/%name,g' %buildroot%_bindir/%name
 pushd %target
 cp -a chrome           %buildroot%_libdir/%name/%name
 cp -a chrome_sandbox   %buildroot%_libdir/%name/chrome-sandbox
-cp -a crashpad_handler %buildroot%_libdir/%name/crashpad_handler
+cp -a chrome_crashpad_handler %buildroot%_libdir/%name/chrome_crashpad_handler
 
 for chromedriver in chromedriver chromedriver.unstripped; do
 	[ ! -x $chromedriver ] || break
@@ -392,8 +403,7 @@ strip %buildroot%_libdir/%name/chromedriver
 
 ln -s -- %_libdir/%name/chromedriver %buildroot/%_bindir/chromedriver-gost
 
-for f in *.bin *.so* *.pak swiftshader locales icudtl.dat \
-	xdg-mime xdg-settings MEIPreload; do
+for f in *.bin *.so* *.pak swiftshader locales icudtl.dat MEIPreload; do
 	[ ! -e "$f" ] ||
 		cp -at %buildroot%_libdir/%name -- "$f"
 done
@@ -471,10 +481,95 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Oct 06 2021 Fr. Br. George <george@altlinux.ru> 94.0.4606.71-alt1
+- Gost version
+
+* Fri Oct 01 2021 Alexey Gladkov <legion@altlinux.ru> 94.0.4606.71-alt1
+- New version (94.0.4606.71).
+- Security fixes:
+  - CVE-2021-37974 : Use after free in Safe Browsing.
+  - CVE-2021-37975 : Use after free in V8.
+  - CVE-2021-37976 : Information leak in core.
+
+* Thu Sep 23 2021 Alexey Gladkov <legion@altlinux.ru> 94.0.4606.54-alt1
+- New version (94.0.4606.54).
+- Security fixes:
+  - CVE-2021-37956: Use after free in Offline use.
+  - CVE-2021-37957 : Use after free in WebGPU.
+  - CVE-2021-37958 : Inappropriate implementation in Navigation.
+  - CVE-2021-37959 : Use after free in Task Manager.
+  - CVE-2021-37960 : Inappropriate implementation in Blink graphics.
+  - CVE-2021-37961 : Use after free in Tab Strip.
+  - CVE-2021-37962 : Use after free in Performance Manager.
+  - CVE-2021-37963 : Side-channel information leakage in DevTools.
+  - CVE-2021-37964 : Inappropriate implementation in ChromeOS Networking.
+  - CVE-2021-37965 : Inappropriate implementation in Background Fetch API.
+  - CVE-2021-37966 : Inappropriate implementation in Compositing.
+  - CVE-2021-37967 : Inappropriate implementation in Background Fetch API.
+  - CVE-2021-37968 : Inappropriate implementation in Background Fetch API.
+  - CVE-2021-37969 : Inappropriate implementation in Google Updater.
+  - CVE-2021-37970 : Use after free in File System API.
+  - CVE-2021-37971 : Incorrect security UI in Web Browser UI.
+  - CVE-2021-37972 : Out of bounds read in libjpeg-turbo.
+
+* Tue Sep 14 2021 Alexey Gladkov <legion@altlinux.ru> 93.0.4577.82-alt1
+- New version (93.0.4577.82).
+- Security fixes:
+  - CVE-2021-30625: Use after free in Selection API.
+  - CVE-2021-30626: Out of bounds memory access in ANGLE.
+  - CVE-2021-30627: Type Confusion in Blink layout.
+  - CVE-2021-30628: Stack buffer overflow in ANGLE.
+  - CVE-2021-30629: Use after free in Permissions.
+  - CVE-2021-30630: Inappropriate implementation in Blink .
+  - CVE-2021-30631: Type Confusion in Blink layout.
+  - CVE-2021-30632: Out of bounds write in V8.
+  - CVE-2021-30633: Use after free in Indexed DB API.
+
+* Wed Sep 01 2021 Alexey Gladkov <legion@altlinux.ru> 93.0.4577.63-alt1
+- New version (93.0.4577.63).
+- Use internal ffmpeg.
+- Security fixes:
+  - CVE-2021-30606: Use after free in Blink.
+  - CVE-2021-30607: Use after free in Permissions.
+  - CVE-2021-30608: Use after free in Web Share.
+  - CVE-2021-30609: Use after free in Sign-In.
+  - CVE-2021-30610: Use after free in Extensions API.
+  - CVE-2021-30611: Use after free in WebRTC.
+  - CVE-2021-30612: Use after free in WebRTC.
+  - CVE-2021-30613: Use after free in Base internals.
+  - CVE-2021-30614: Heap buffer overflow in TabStrip.
+  - CVE-2021-30615: Cross-origin data leak in Navigation.
+  - CVE-2021-30616: Use after free in Media.
+  - CVE-2021-30617: Policy bypass in Blink.
+  - CVE-2021-30618: Inappropriate implementation in DevTools.
+  - CVE-2021-30619: UI Spoofing in Autofill.
+  - CVE-2021-30620: Insufficient policy enforcement in Blink.
+  - CVE-2021-30621: UI Spoofing in Autofill.
+  - CVE-2021-30622: Use after free in WebApp Installs.
+  - CVE-2021-30623: Use after free in Bookmarks.
+  - CVE-2021-30624: Use after free in Autofill.
+
+* Tue Aug 31 2021 Alexey Gladkov <legion@altlinux.ru> 92.0.4515.159-alt3
+- Drop extra dependencies and remove own xdg-settings and xdg-mime.
+
+* Tue Aug 24 2021 Alexey Gladkov <legion@altlinux.ru> 92.0.4515.159-alt2
+- Enable pipewire support (ALT#40806).
+
+* Sat Aug 21 2021 Alexey Gladkov <legion@altlinux.ru> 92.0.4515.159-alt1
+- New version (92.0.4515.159).
+- Security fixes:
+  - CVE-2021-30598: Type Confusion in V8.
+  - CVE-2021-30599: Type Confusion in V8.
+  - CVE-2021-30600: Use after free in Printing.
+  - CVE-2021-30601: Use after free in Extensions API.
+  - CVE-2021-30602: Use after free in WebRTC.
+  - CVE-2021-30603: Race in WebAudio.
+  - CVE-2021-30604: Use after free in ANGLE.
+
 * Fri Aug 20 2021 Fr. Br. George <george@altlinux.ru> 92.0.4515.131-alt1
 - Build GOST version
 
-* Wed Aug 11 2021 Alexey Gladkov <legion@altlinux.ru> 92.0.4515.131-alt0
+* Wed Aug 11 2021 Alexey Gladkov <legion@altlinux.ru> 92.0.4515.131-alt1
 - New version (92.0.4515.131).
 - Use python3.
 - Security fixes:
@@ -489,7 +584,7 @@ EOF
 * Tue Aug 03 2021 Fr. Br. George <george@altlinux.ru> 92.0.4515.107-alt1
 - Build GOST version
 
-* Mon Jul 26 2021 Alexey Gladkov <legion@altlinux.ru> 92.0.4515.107-alt0
+* Mon Jul 26 2021 Alexey Gladkov <legion@altlinux.ru> 92.0.4515.107-alt1
 - New version (92.0.4515.107).
 - Security fixes:
   - CVE-2021-30565: Out of bounds write in Tab Groups.
