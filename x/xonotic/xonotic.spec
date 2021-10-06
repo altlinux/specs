@@ -1,14 +1,19 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: xonotic
 Version: 0.8.2
-Release: alt1
-
+Release: alt2
 Summary: A free multi-player first person shooter
 Group: Games/Arcade
 License: GPLv2+
-Url: http://www.xonotic.org/
+Url: https://www.xonotic.org/
 
 # stripped version of original xonotic-0.8.2.zip
 Source: Xonotic.tar
+
+Patch1: xonotic-fedora-gcc11.patch
 
 Requires: %name-data = %version
 
@@ -28,6 +33,10 @@ best possible open-source FPS (first-person-shooter) of its kind.
 
 %prep
 %setup -q -n Xonotic
+
+pushd source
+%patch1 -p1
+popd
 
 %build
 cd source/darkplaces
@@ -80,6 +89,9 @@ EOF
 %_iconsdir/hicolor/*/apps/%name.svg
 
 %changelog
+* Wed Oct 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.2-alt2
+- Fixed build with gcc-11.
+
 * Fri Jun 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.2-alt1
 - Updated to upstream version 0.8.2.
 
