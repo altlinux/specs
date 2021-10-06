@@ -1,5 +1,5 @@
 Name: ca-certificates
-Version: 2021.06.03
+Version: 2021.10.06
 Release: alt1
 
 Summary: Common CA :Certificates
@@ -48,6 +48,9 @@ install -pD -m 644 ca-bundle.trust.p11-kit \
 %_datadir/pki/ca-trust-source/ca-bundle.trust.p11-kit
 
 %changelog
+* Wed Oct 06 2021 Alexey Gladkov <legion@altlinux.ru> 2021.10.06-alt1
+- mozilla: sync with nss-3.71.
+
 * Thu Jun 03 2021 Alexey Gladkov <legion@altlinux.ru> 2021.06.03-alt1
 - mozilla: sync with nss-3.66.
 
