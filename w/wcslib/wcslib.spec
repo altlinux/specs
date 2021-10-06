@@ -1,10 +1,10 @@
 
-%define sover 5
+%define sover 6
 %define libwcs libwcs%sover
 
 Name: wcslib
-Version: 5.19.1
-Release: alt3
+Version: 6.4
+Release: alt1
 
 Group: System/Libraries
 Summary: An implementation of the FITS World Coordinate System standard
@@ -81,6 +81,9 @@ rm -rf %buildroot/%_docdir/wcslib-*
 %_man1dir/*
 
 %changelog
+* Wed Oct 06 2021 Sergey V Turchin <zerg@altlinux.org> 6.4-alt1
+- new version
+
 * Wed Aug 25 2021 Sergey V Turchin <zerg@altlinux.org> 5.19.1-alt3
 - fix to build
 
