@@ -1,5 +1,5 @@
 Name: hass
-Version: 2021.8.2
+Version: 2021.10.0
 Release: alt1
 
 Summary: Home automation platform
@@ -22,7 +22,7 @@ Requires: python3-module-aiohttp >= 3.7.4
 Requires: python3-module-voluptuous >= 0.12.1
 Requires: python3-module-text-unidecode >= 1.3
 Requires: python3-module-websocket-client >= 0.56.0
-Requires: python3-module-hass-frontend >= 20210804.0
+Requires: python3-module-hass-frontend >= 20211004.0
 
 %package -n python3-module-hass
 Summary: Home automation platform
@@ -88,6 +88,9 @@ sed -re 's,%exclude ,,' < core.files > rest.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Thu Oct 07 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.10.0-alt1
+- 2021.10.0 released
+
 * Fri Aug 06 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.8.2-alt1
 - 2021.8.2 released
 

@@ -1,5 +1,5 @@
 Name: python3-module-miio
-Version: 0.5.6
+Version: 0.5.8
 Release: alt1
 
 Summary: Python miIO library
@@ -43,6 +43,9 @@ with devices using Xiaomi's miIO and miOT protocols.
 %_bindir/*
 
 %changelog
+* Thu Oct 07 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.8-alt1
+- 0.5.8 released
+
 * Tue Jun 29 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.6-alt1
 - 0.5.6 released
 
