@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 2.2
-Release: alt1.1
+Version: 2.6
+Release: alt1
 
 Summary: A tool for static C/C++ code analysis
 License: GPLv3
@@ -16,7 +16,6 @@ Source: %name-%version.tar
 Patch1: cppcheck-makefile-docbook_xsl-1.70.patch
 Patch2: cppcheck-1.78-norebuild.patch
 Patch4: cppcheck-1.72-test_32.patch
-Patch7: cppcheck-2.2-tinyxml.patch
 Patch8: cppcheck-2.2-translations.patch
 
 
@@ -27,8 +26,9 @@ BuildRequires: ctest
 BuildRequires: docbook-style-xsl libpcre-devel xsltproc
 BuildRequires: libtinyxml2-devel
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-cmake
 
-%add_python3_req_skip cppcheckdata
+%add_python3_req_skip cppcheckdata misra_9 cppcheck
 
 %description
 Static analysis of C/C++ code. Checks for: memory leaks, mismatching
@@ -39,6 +39,7 @@ allocation-deallocation, buffer overrun, and many more. The goal is
 Summary: Qt version of %name, %summary
 Group: Development/Tools
 Requires: %name = %EVR
+Requires: icon-theme-hicolor
 
 %description gui
 %summary
@@ -52,7 +53,6 @@ Requires: %name = %EVR
 %patch4 -p1
 %endif
 
-%patch7 -p1
 %patch8 -p1
 
 %__subst 's|/usr/bin/env python|%__python3|' htmlreport/cppcheck-htmlreport
@@ -63,11 +63,10 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.c' -o -name '*.h' |
 	xargs -r sed -ri 's,^\xEF\xBB\xBF,,'
 %endif
 
-# Make sure bundled tinyxml is not used
-rm -r externals/tinyxml
+# Make sure bundled tinyxml2 is not used
+rm -r externals/tinyxml2
 
 %build
-%add_optflags -I%_includedir/pcre
 
 %cmake \
 	-G'Unix Makefiles' \
@@ -78,6 +77,8 @@ rm -r externals/tinyxml
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
 	-DBUILD_TESTS:BOOL=ON \
 	-DFILESDIR=%{_datadir}/Cppcheck \
+	-DUSE_BUNDLED_TINYXML2=OFF \
+	-DPCRE_INCLUDE="%_includedir/pcre" \
 	%nil
 
 %cmake_build
@@ -119,6 +120,9 @@ install -pD -m 755 htmlreport/cppcheck-htmlreport %buildroot%_bindir/cppcheck-ht
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Thu Oct 07 2021 Andrew A. Vasilyev <andy@altlinux.org> 2.6-alt1
+- 2.6
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 2.2-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
