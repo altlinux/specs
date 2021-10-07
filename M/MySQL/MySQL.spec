@@ -2,18 +2,16 @@
 %def_without debug
 %def_with libs
 %def_with devel
-#do not build mysql_router until MySQL-Shell arrival
-%def_without mysql_router
+%def_with mysql_router
 %def_disable static
 %define mysqld_user mysql
 %define mysqlrouter_user mysqlrouter
-%define _libexecdir %_sbindir
 %define ROOT %_localstatedir/mysql
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
 Version: 8.0.26
-Release: alt2
+Release: alt3
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -23,6 +21,7 @@ Url: http://www.mysql.com/
 Packager: MySQL Development Team <mysql@packages.altlinux.org>
 
 Source: %name-%version.tar
+Source98: mysql-shell.tar
 Source99: boost.tar
 Source1: mysqld.init
 Source2: mysql.logrotate
@@ -35,7 +34,6 @@ Source8: mysql.chroot.all
 Source9: mysql_migrate
 Source10: mysqld.sysconfig
 Source14: README.ALT-ru_RU.UTF-8
-Source15: alt-mysql_install_db.sh
 Source16: mysql.control
 Source17: mysqld-chroot.control
 
@@ -70,9 +68,12 @@ Patch2000: mysql-8.0.26-alt-e2k-fixes.patch
 
 # Automatically added by buildreq on Tue Nov 20 2018 (-bi)
 # optimized out: cmake cmake-modules control elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libcrypt-devel libsasl2-3 libstdc++-devel libtinfo-devel perl pkg-config python-base sh3 xz
+BuildRequires: rpm-macros-cmake
+BuildRequires: rpm-build-python3
 BuildRequires: ccmake
 BuildRequires: chrooted
 BuildRequires: gcc-c++
+BuildRequires: python3-dev
 BuildRequires: libaio-devel
 BuildRequires: libedit-devel
 BuildRequires: libevent-devel
@@ -80,13 +81,18 @@ BuildRequires: liblz4-devel
 BuildRequires: libncurses-devel
 BuildRequires: libssl-devel
 BuildRequires: zlib-devel
+BuildRequires: libzstd-devel
 BuildRequires: libsystemd-devel
 BuildRequires: protobuf-compiler
 BuildRequires: libprotobuf-lite-devel
+BuildRequires: libcurl-devel
 %if %(test -f /usr/include/rpc/rpc.h && echo 0 || echo 1)
 BuildRequires: libtirpc-devel
 BuildRequires: rpcgen
 %endif
+
+%add_python3_lib_path %_libexecdir/mysqlsh/
+%add_findprov_skiplist %_libexecdir/mysqlsh/**/*
 
 %define soname 21
 
@@ -159,6 +165,20 @@ Group: Databases
 Provides: mysql-router = %EVR
 Obsoletes: mysql-router < %EVR
 %endif
+
+%package shell
+Summary: MySQL Shell
+Summary(ru_RU.UTF-8): MySQL Shell
+License: GPL
+Group: Databases
+Requires: python3-module-mysqlsh = %EVR
+Provides: mysql-shell = %EVR
+Obsoletes: mysql-shell < %EVR
+
+%package -n python3-module-mysqlsh
+Summary: MySQL Shell python package
+License: GPL
+Group: Databases
 
 %define see_base For a description of MySQL see the base MySQL RPM or %url
 %define see_base_ru Подробное описание смотрите в пакете MySQL или на %url
@@ -322,8 +342,28 @@ recommend upgrading your installation to MySQL Router 8.
 %see_base_ru
 %endif
 
+%description shell
+This is a release of MySQL Shell (part of MySQL Server), an interactive
+JavaScript, Python and SQL console interface, supporting development and
+administration for the MySQL Server. It provides built in scriptable APIs
+that support the creation and management of MySQL InnoDB clusters,
+as well as a modern fluent CRUD API for the MySQL Document Store.
+Connections to MySQL server can use X Protocol or classic MySQL protocol.
+
+The AdminAPI enables you to work with MySQL InnoDB cluster, providing
+an integrated solution for high availability and scalability using
+InnoDB based MySQL databases, without requiring advanced MySQL
+expertise.
+
+%see_base
+
+%description -n python3-module-mysqlsh
+Python module for MySQL Shell
+
+%see_base
+
 %prep
-%setup -a99
+%setup -a98 -a99
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -358,7 +398,7 @@ sed -i 's/ADD_SUBDIRECTORY(router)/# ADD_SUBDIRECTORY(router)/' CMakeLists.txt
 	-DFEATURE_SET="community" \
 	-DINSTALL_LAYOUT=RPM \
 	-DCMAKE_VERBOSE_MAKEFILE=ON \
-	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON \
+	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
 	-DCMAKE_C_FLAGS:STRING="$CFLAGS" \
 	-DCMAKE_CXX_FLAGS:STRING="$CXXFLAGS" \
 	-DCMAKE_INSTALL_PREFIX="%_prefix" \
@@ -408,6 +448,28 @@ sed -i 's/ADD_SUBDIRECTORY(router)/# ADD_SUBDIRECTORY(router)/' CMakeLists.txt
 
 %cmake_build
 
+pushd mysql-shell
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|' \
+	python/packages/mysql_gadgets/__main__.py
+
+%cmake \
+	-DCMAKE_INSTALL_PREFIX=/usr \
+	-DPython_ADDITIONAL_VERSIONS=%_python3_version \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	-DMYSQL_SOURCE_DIR=".." \
+	-DMYSQL_BUILD_DIR="../%_cmake__builddir" \
+	-DLINUX=TRUE \
+	-DHAVE_PYTHON=1 \
+	-DHAVE_V8=OFF \
+	-DWITH_SSL=system \
+	-DWITH_LZ4=system \
+	-DWITH_ZLIB=system \
+	-DWITH_ZSTD=system \
+	-DWITH_PROTOBUF=system
+
+%cmake_build
+popd
+
 %install
 mkdir -p %buildroot{%_bindir,%_sbindir,%_includedir,%_mandir,%_datadir,/var/log/mysql}
 mkdir -p %buildroot%ROOT/{etc,/%_lib,%_libdir,%_libdir/mysql/plugin/,dev,log,tmp,/var/{nis,yp/binding},db/mysql,usr/share/mysql/charsets}
@@ -418,6 +480,9 @@ mkdir -p %buildroot%ROUTER_ROOT/{log,data/{,keyring},run}
 
 %cmakeinstall_std
 
+pushd mysql-shell
+%cmakeinstall_std
+popd
 
 # Install various helper scripts.
 install -pD -m755 %SOURCE1 %buildroot%_initdir/mysqld
@@ -441,9 +506,6 @@ ln -snf ../sbin/safe_mysqld %buildroot%_bindir/mysqld_safe
 %if_with debug
 ln -snf ../sbin/mysqld-debug %buildroot%_sbindir/mysqld
 %endif
-
-# delete deprecated
-rm -f %buildroot%_bindir/mysql_install_db
 
 # Install configuration files.
 install -pD -m644 %SOURCE5 %buildroot%_sysconfdir/my.cnf
@@ -736,9 +798,9 @@ fi
 %_unitdir/mysqlrouter.service
 %dir %_libdir/mysqlrouter
 %_libdir/mysqlrouter/*
-%_libdir/libmysqlrouter.so*
-%_libdir/libmysqlharness.so*
 %_bindir/mysqlrouter
+%_bindir/mysqlrouter_passwd
+%_bindir/mysqlrouter_keyring
 %_bindir/mysqlrouter_plugin_info
 %attr(3771,root,mysqlrouter) %dir %ROUTER_ROOT
 %attr(3770,root,mysqlrouter) %dir %ROUTER_ROOT/data
@@ -747,6 +809,15 @@ fi
 %attr(3770,root,mysqlrouter) %dir %ROUTER_ROOT/log
 %_man1dir/mysqlrouter*
 %endif
+
+%files shell
+%doc mysql-shell/README mysql-shell/LICENSE
+%_bindir/mysqlsh
+%_bindir/mysql-secret-store-login-path
+%_datadir/mysqlsh
+
+%files -n python3-module-mysqlsh
+%_libexecdir/mysqlsh
 
 %files server-perl
 %_bindir/mysqldumpslow
@@ -809,6 +880,11 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Fri Sep 24 2021 Egor Ignatov <egori@altlinux.org> 8.0.26-alt3
+- enable mysql-router package
+- add mysql-shell package
+- remove obsolete alt-mysql_install_db.sh script
+
 * Tue Sep 07 2021 Nikolai Kostrigin <nickel@altlinux.org> 8.0.26-alt2
 - spec: fix packaging error for mysqlrouter logrotate script (closes: #40870)
 - spec: fix man pages' packaging
