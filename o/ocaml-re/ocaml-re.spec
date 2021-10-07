@@ -1,10 +1,9 @@
 %def_with check
 Name: ocaml-re
-Version: 1.9.0
-Release: alt3
+Version: 1.10.3
+Release: alt1
 Summary: A regular expression library for OCaml
-
-License: LGPLv2 with exceptions
+License: LGPLv2.1 with OCaml-LGPL-linking-exception
 Url: https://github.com/ocaml/ocaml-re
 Source0: ocaml-re-%version.tar
 Patch0: %name-%version-alt.patch
@@ -44,7 +43,7 @@ developing applications that use %name.
 
 %check 
 sed -si 's,oUnit,ounit2,' lib_test/fort_unit/dune
-%dune_check
+%dune_check -p re
 
 %files -f ocaml-files.runtime
 %doc CHANGES.md README.md
@@ -52,6 +51,9 @@ sed -si 's,oUnit,ounit2,' lib_test/fort_unit/dune
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Oct 04 2021 Anton Farygin <rider@altlinux.ru> 1.10.3-alt1
+- 1.10.3
+
 * Thu May 20 2021 Anton Farygin <rider@altlinux.ru> 1.9.0-alt3
 - simplified specfile with rpm-build-ocaml 1.4
 
