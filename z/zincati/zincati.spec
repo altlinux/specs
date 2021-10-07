@@ -10,7 +10,7 @@
 
 Name:     zincati
 Version:  0.0.22
-Release:  alt5
+Release:  alt6
 
 Summary:  An auto-update agent for ALT Container OS hosts.
 License:  Apache-2.0
@@ -63,6 +63,10 @@ useradd -g %zincati_group -G root,wheel -c 'Zincati user for auto-updates' -M -d
 %doc *.md
 
 %changelog
+* Thu Oct 07 2021 Andrey Sokolov <keremet@altlinux.org> 0.0.22-alt6
+- Ignore invalid arguments
+- Fixes after renaming ACOS to ALTCOS
+
 * Tue Sep 21 2021 Andrey Sokolov <keremet@altlinux.org> 0.0.22-alt5
 - Change alt-ostree log location (closes 40974)
 - Fix summary
