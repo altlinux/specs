@@ -4,7 +4,7 @@
 %def_without check
 
 Name:    python3-module-%modulename
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: Time-handling functionality from netcdf4-python.
@@ -44,6 +44,9 @@ py.test3
 %doc *.md
 
 %changelog
+* Thu Oct 07 2021 Grigory Ustinov <grenka@altlinux.org> 1.5.1-alt1
+- Build new version.
+
 * Tue May 25 2021 Grigory Ustinov <grenka@altlinux.org> 1.5.0-alt1
 - Build new version.
 
