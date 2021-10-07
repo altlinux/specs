@@ -1,11 +1,11 @@
 %define pkgname zip
 Name: ocaml-%pkgname
-Version: 1.10
+Version: 1.11
 Release: alt1
 Summary: OCaml library for reading and writing zip, jar and gzip files
 
 Group: Development/ML
-License: LGPLv2.1+ with exceptions
+License: LGPLv2.1+ with OCaml-LGPL-linking-exception
 Url: https://github.com/xavierleroy/camlzip
 
 Provides: ocaml4-zip
@@ -71,6 +71,9 @@ ocamlfind install %pkgname *.cma *.cmxa *.a *.cmx *.cmi *.mli dll*.so META
 %_libdir/ocaml/%pkgname/*.mli
 
 %changelog
+* Wed Oct 06 2021 Anton Farygin <rider@altlinux.ru> 1.11-alt1
+- 1.11
+
 * Tue Feb 25 2020 Anton Farygin <rider@altlinux.ru> 1.10-alt1
 - 1.10
 
