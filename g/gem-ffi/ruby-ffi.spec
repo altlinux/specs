@@ -1,7 +1,7 @@
 %define        gemname ffi
 
 Name:          gem-ffi
-Version:       1.15.0
+Version:       1.15.4
 Release:       alt1
 Summary:       Ruby foreign function interface
 License:       BSD-3-Clause
@@ -15,12 +15,16 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: libffi-devel
 BuildRequires: gem(rake) >= 13.0 gem(rake) < 14
 BuildRequires: gem(rake-compiler) >= 1.0 gem(rake-compiler) < 2
+BuildRequires: gem(rake-compiler-dock) >= 1.0 gem(rake-compiler-dock) < 2
+BuildRequires: gem(rspec) >= 2.14.1 gem(rspec) < 4
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
 Obsoletes:     ruby-ffi < %EVR
 Provides:      ruby-ffi = %EVR
-Provides:      gem(ffi) = 1.15.0
+Provides:      gem(ffi) = 1.15.4
+
 
 %description
 Ruby-FFI is a gem for programmatically loading dynamically-linked native
@@ -31,40 +35,50 @@ extension using Ruby-FFI.
 
 
 %package       -n gem-ffi-doc
-Version:       1.15.0
+Version:       1.15.4
 Release:       alt1
-Summary:       Ruby FFI documentation files
+Summary:       Ruby foreign function interface documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ffi
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(ffi) = 1.15.0
+Requires:      gem(ffi) = 1.15.4
 
 %description   -n gem-ffi-doc
-Ruby FFI documentation files.
+Ruby foreign function interface documentation files.
 
-Ruby FFI library
+Ruby-FFI is a gem for programmatically loading dynamically-linked native
+libraries, binding functions within them, and calling those functions from Ruby
+code. Moreover, a Ruby-FFI extension works without changes on CRuby (MRI),
+JRuby, Rubinius and TruffleRuby. Discover why you should write your next
+extension using Ruby-FFI.
 
 %description   -n gem-ffi-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета ffi.
 
 
 %package       -n gem-ffi-devel
-Version:       1.15.0
+Version:       1.15.4
 Release:       alt1
-Summary:       Ruby FFI development package
+Summary:       Ruby foreign function interface development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ffi
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(ffi) = 1.15.0
+Requires:      gem(ffi) = 1.15.4
 Requires:      gem(rake) >= 13.0 gem(rake) < 14
 Requires:      gem(rake-compiler) >= 1.0 gem(rake-compiler) < 2
+Requires:      gem(rake-compiler-dock) >= 1.0 gem(rake-compiler-dock) < 2
+Requires:      gem(rspec) >= 2.14.1 gem(rspec) < 4
 
 %description   -n gem-ffi-devel
-Ruby FFI development package.
+Ruby foreign function interface development package.
 
-Ruby FFI library
+Ruby-FFI is a gem for programmatically loading dynamically-linked native
+libraries, binding functions within them, and calling those functions from Ruby
+code. Moreover, a Ruby-FFI extension works without changes on CRuby (MRI),
+JRuby, Rubinius and TruffleRuby. Discover why you should write your next
+extension using Ruby-FFI.
 
 %description   -n gem-ffi-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета ffi.
@@ -98,6 +112,9 @@ Ruby FFI library
 
 
 %changelog
+* Fri Sep 03 2021 Pavel Skrylev <majioa@altlinux.org> 1.15.4-alt1
+- ^ 1.15.0 -> 1.15.4
+
 * Wed May 12 2021 Pavel Skrylev <majioa@altlinux.org> 1.15.0-alt1
 - ^ 1.13.1 -> 1.15.0
 

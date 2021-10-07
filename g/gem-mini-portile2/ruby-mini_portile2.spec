@@ -1,8 +1,7 @@
-%define        pkgname mini-portile2
 %define        gemname mini_portile2
 
-Name: 	       gem-%pkgname
-Version:       2.5.0
+Name:          gem-mini-portile2
+Version:       2.7.0
 Release:       alt1
 Summary:       Simple autoconf builder for developers
 License:       MIT
@@ -14,30 +13,73 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(bundler) >= 2.1 gem(bundler) < 3
+BuildRequires: gem(minitar) >= 0.7 gem(minitar) < 1
+BuildRequires: gem(minitest) >= 5.11 gem(minitest) < 6
+BuildRequires: gem(minitest-hooks) >= 1.5.0 gem(minitest-hooks) < 1.6
+BuildRequires: gem(rake) >= 13.0 gem(rake) < 14
+BuildRequires: gem(webrick) >= 1.0 gem(webrick) < 2
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%gemname < %EVR
-Provides:      ruby-%gemname = %EVR
+%ruby_alias_names mini_portile2,mini-portile2
+Obsoletes:     ruby-mini_portile2 < %EVR
+Provides:      ruby-mini_portile2 = %EVR
+Provides:      gem(mini_portile2) = 2.7.0
+
 
 %description
-It's intended primarily to make sure that you, as the developer of a
-library, can reproduce a user's dependencies and environment by
-specifying a specific version of an underlying dependency that you'd
-like to use.
+It's intended primarily to make sure that you, as the developer of a library,
+can reproduce a user's dependencies and environment by specifying a specific
+version of an underlying dependency that you'd like to use.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-mini-portile2-doc
+Version:       2.7.0
+Release:       alt1
+Summary:       Simple autoconf builder for developers documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета mini_portile2
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(mini_portile2) = 2.7.0
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-mini-portile2-doc
+Simple autoconf builder for developers documentation files.
+
+It's intended primarily to make sure that you, as the developer of a library,
+can reproduce a user's dependencies and environment by specifying a specific
+version of an underlying dependency that you'd like to use.
+
+%description   -n gem-mini-portile2-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета mini_portile2.
+
+
+%package       -n gem-mini-portile2-devel
+Version:       2.7.0
+Release:       alt1
+Summary:       Simple autoconf builder for developers development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета mini_portile2
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(mini_portile2) = 2.7.0
+Requires:      gem(bundler) >= 2.1 gem(bundler) < 3
+Requires:      gem(minitar) >= 0.7 gem(minitar) < 1
+Requires:      gem(minitest) >= 5.11 gem(minitest) < 6
+Requires:      gem(minitest-hooks) >= 1.5.0 gem(minitest-hooks) < 1.6
+Requires:      gem(rake) >= 13.0 gem(rake) < 14
+Requires:      gem(webrick) >= 1.0 gem(webrick) < 2
+
+%description   -n gem-mini-portile2-devel
+Simple autoconf builder for developers development package.
+
+It's intended primarily to make sure that you, as the developer of a library,
+can reproduce a user's dependencies and environment by specifying a specific
+version of an underlying dependency that you'd like to use.
+
+%description   -n gem-mini-portile2-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета mini_portile2.
 
 
 %prep
@@ -53,15 +95,22 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n gem-mini-portile2-doc
+%doc README.md
 %ruby_gemdocdir
+
+%files         -n gem-mini-portile2-devel
+%doc README.md
 
 
 %changelog
+* Sat Sep 04 2021 Pavel Skrylev <majioa@altlinux.org> 2.7.0-alt1
+- ^ 2.5.0 -> 2.7.0
+
 * Tue Jun 09 2020 Pavel Skrylev <majioa@altlinux.org> 2.5.0-alt1
 - ^ 2.4.0 -> 2.5.0
 - ! spec tags

@@ -1,59 +1,93 @@
-%define _unpackaged_files_terminate_build 1
+%define        gemname pathutil
 
-Name:    gem-pathutil
-Version: 0.16.2
-Release: alt1
+Name:          gem-pathutil
+Version:       0.16.2
+Release:       alt1.1
+Summary:       Almost like Pathname but just a little less insane
+License:       MIT
+Group:         Development/Ruby
+Url:           https://github.com/envygeeks/pathutil.git
+Vcs:           https://github.com/envygeeks/pathutil.git.git
+Packager:      Dmitriy Voropaev <voropaevdmtr@altlinux.org>
+BuildArch:     noarch
 
-Summary: Almost like Pathname but just a little less insane.
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/envygeeks/pathutil.git
-
-Packager:  Dmitriy Voropaev <voropaevdmtr@altlinux.org>
-BuildArch: noarch
-
-Source:  %name-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(forwardable-extended) >= 2.6 gem(forwardable-extended) < 3
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Requires:      gem(forwardable-extended) >= 2.6 gem(forwardable-extended) < 3
+Provides:      gem(pathutil) = 0.16.2
+
 
 %description
 Like Pathname but a little less insane.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       -n gem-pathutil-doc
+Version:       0.16.2
+Release:       alt1.1
+Summary:       Almost like Pathname but just a little less insane documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета pathutil
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
-Documentation files for %name.
+Requires:      gem(pathutil) = 0.16.2
+
+%description   -n gem-pathutil-doc
+Almost like Pathname but just a little less insane documentation files.
+
+Like Pathname but a little less insane.
+
+%description   -n gem-pathutil-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета pathutil.
+
+
+%package       -n gem-pathutil-devel
+Version:       0.16.2
+Release:       alt1.1
+Summary:       Almost like Pathname but just a little less insane development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета pathutil
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(pathutil) = 0.16.2
+
+%description   -n gem-pathutil-devel
+Almost like Pathname but just a little less insane development package.
+
+Like Pathname but a little less insane.
+
+%description   -n gem-pathutil-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета pathutil.
+
 
 %prep
-%setup -n %name-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
 %ruby_build
 
 %install
 %ruby_install
-%rdoc lib/
-# Remove unnecessary files
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-%ruby_test_unit -Ilib:test test
+%ruby_test
 
 %files
-%doc *.md
-%ruby_sitelibdir/*
-%rubygem_specdir/*
-%exclude %ruby_sitelibdir/*/script
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         -n gem-pathutil-doc
+%ruby_gemdocdir
+
+%files         -n gem-pathutil-devel
+
 
 %changelog
+* Tue Sep 14 2021 Pavel Skrylev <majioa@altlinux.org> 0.16.2-alt1.1
+- ! spec
+
 * Fri Mar 19 2021 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.16.2-alt1
 - initial build

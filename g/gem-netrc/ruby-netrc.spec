@@ -1,43 +1,77 @@
-%define        pkgname netrc
+%define        gemname netrc
 
-Name:          gem-%pkgname
+Name:          gem-netrc
 Version:       0.11.0
-Release:       alt1.1
+Release:       alt2
 Summary:       Library to read and write netrc files
-Group:         Development/Ruby
 License:       MIT
+Group:         Development/Ruby
 Url:           https://github.com/heroku/netrc
 Vcs:           https://github.com/heroku/netrc.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Patch:         exec-fix.patch
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(minitest) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname
-Provides:      ruby-%pkgname
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-netrc
+Provides:      ruby-netrc
+Provides:      gem(netrc) = 0.11.0
+
 
 %description
 This library can read and update netrc files, preserving formatting including
 comments and whitespace.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-netrc-doc
+Version:       0.11.0
+Release:       alt2
+Summary:       Library to read and write netrc files documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета netrc
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(netrc) = 0.11.0
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-netrc-doc
+Library to read and write netrc files documentation files.
+
+This library can read and update netrc files, preserving formatting including
+comments and whitespace.
+
+%description   -n gem-netrc-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета netrc.
+
+
+%package       -n gem-netrc-devel
+Version:       0.11.0
+Release:       alt2
+Summary:       Library to read and write netrc files development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета netrc
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(netrc) = 0.11.0
+Requires:      gem(minitest) >= 0
+
+%description   -n gem-netrc-devel
+Library to read and write netrc files development package.
+
+This library can read and update netrc files, preserving formatting including
+comments and whitespace.
+
+%description   -n gem-netrc-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета netrc.
 
 
 %prep
 %setup
+%patch
 
 %build
 %ruby_build
@@ -49,15 +83,22 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc Readme*
+%doc Readme.md
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n gem-netrc-doc
+%doc Readme.md
 %ruby_gemdocdir
+
+%files         -n gem-netrc-devel
+%doc Readme.md
 
 
 %changelog
+* Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 0.11.0-alt2
+- ! spec
+
 * Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 0.11.0-alt1.1
 - fixed (!) spec
 
@@ -73,4 +114,3 @@ Documentation files for %gemname gem.
 
 * Sat Dec 08 2012 Evgeny Sinelnikov <sin@altlinux.ru> 0.7.7-alt1
 - Initial build for Sisyphus
-

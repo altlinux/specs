@@ -1,88 +1,131 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-%define        pkgname nokogiri
+%define        gemname nokogiri
 
-Name:          gem-%pkgname
-Version:       1.11.1
+Name:          gem-nokogiri
+Version:       1.12.4
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
-Group:         Development/Ruby
 License:       MIT
+Group:         Development/Ruby
 Url:           https://nokogiri.org/
 Vcs:           https://github.com/sparklemotion/nokogiri.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
-Patch:         shutdown-libxml2-warning.patch
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-pkg-config
 BuildRequires: libxml2-devel
 BuildRequires: libxslt-devel
 BuildRequires: zlib-devel
-BuildRequires: gem(hoe) >= 3.22.1
-BuildRequires: gem(hoe-markdown)
-BuildRequires: gem(rake-compiler)
-BuildRequires: gem(rake-compiler-dock)
-BuildRequires: gem(concourse)
-BuildRequires: gem(rexical)
-BuildRequires: gem(racc)
-BuildRequires: gem(mini_portile2)
+BuildRequires: gem(racc) >= 1.4 gem(racc) < 2
+BuildRequires: gem(mini_portile2) >= 2.6.1 gem(mini_portile2) < 3
+BuildRequires: gem(bundler) >= 2.1.4 gem(bundler) < 3
+BuildRequires: gem(hoe-markdown) >= 1.4 gem(hoe-markdown) < 2
+BuildRequires: gem(minitest) >= 5.8 gem(minitest) < 6
+BuildRequires: gem(minitest-reporters) >= 1.4 gem(minitest-reporters) < 2
+BuildRequires: gem(rake) >= 13.0 gem(rake) < 14
+BuildRequires: gem(rake-compiler) >= 1.1 gem(rake-compiler) < 2
+BuildRequires: gem(rake-compiler-dock) >= 0.7.2 gem(rake-compiler-dock) < 2
+BuildRequires: gem(rexical) >= 1.0.5 gem(rexical) < 1.1
+BuildRequires: gem(rubocop) >= 1.7 gem(rubocop) < 2
+BuildRequires: gem(simplecov) >= 0.17 gem(simplecov) < 1
+BuildRequires: gem(yard) >= 0.9 gem(yard) < 1
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency mini_portile2 >= 2.7.0,mini_portile2 < 3
+Requires:      gem(racc) >= 1.4 gem(racc) < 2
+Requires:      gem(mini_portile2) >= 2.6.1 gem(mini_portile2) < 3
 Obsoletes:     ruby-%gemname < %EVR
 Provides:      ruby-%gemname = %EVR
+Provides:      gem(nokogiri) = 1.12.4
+
 
 %description
 Nokogiri parses and searches XML/HTML very quickly, and also has correctly
-implemented CSS3 selector support as well as XPath support.
-This package contanis Ruby libraries for Nokogiri.
+implemented CSS3 selector support as well as XPath support. This package
+contanis Ruby libraries for Nokogiri.
 
 
-%package       -n %pkgname
-Summary:       HTML, XML, SAX, and Reader parser
+%package       -n nokogiri
+Version:       1.12.4
+Release:       alt1
+Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) executable(s)
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета nokogiri
 Group:         Development/Other
 BuildArch:     noarch
 
-%description   -n %pkgname
+Requires:      gem(nokogiri) = 1.12.4
+
+%description   -n nokogiri
+Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
+executable(s).
+
 Nokogiri parses and searches XML/HTML very quickly, and also has correctly
-implemented CSS3 selector support as well as XPath support.
-This package contanis Ruby libraries for Nokogiri.
+implemented CSS3 selector support as well as XPath support. This package
+contanis Ruby libraries for Nokogiri.
 
-Executable file for %gemname gem.
-
-%description   -n %pkgname -l ru_RU.UTF8
-Исполнямка для %gemname самоцвета.
+%description   -n nokogiri -l ru_RU.UTF-8
+Исполнямка для самоцвета nokogiri.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-nokogiri-doc
+Version:       1.12.4
+Release:       alt1
+Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета nokogiri
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(nokogiri) = 1.12.4
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-nokogiri-doc
+Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) documentation
+files.
+
+Nokogiri parses and searches XML/HTML very quickly, and also has correctly
+implemented CSS3 selector support as well as XPath support. This package
+contanis Ruby libraries for Nokogiri.
+
+%description   -n gem-nokogiri-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета nokogiri.
 
 
-%package       devel
-Summary:       Development files for %gemname gem
+%package       -n gem-nokogiri-devel
+Version:       1.12.4
+Release:       alt1
+Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета nokogiri
 Group:         Development/Ruby
 BuildArch:     noarch
 
+Requires:      gem(nokogiri) = 1.12.4
+Requires:      gem(bundler) >= 2.1.4 gem(bundler) < 3
+Requires:      gem(hoe-markdown) >= 1.4 gem(hoe-markdown) < 2
+Requires:      gem(minitest) >= 5.8 gem(minitest) < 6
+Requires:      gem(minitest-reporters) >= 1.4 gem(minitest-reporters) < 2
+Requires:      gem(rake) >= 13.0 gem(rake) < 14
+Requires:      gem(rake-compiler) >= 1.1 gem(rake-compiler) < 2
+Requires:      gem(rake-compiler-dock) >= 0.7.2 gem(rake-compiler-dock) <= 2
+Requires:      gem(rexical) >= 1.0.5 gem(rexical) < 1.1
+Requires:      gem(rubocop) >= 1.7 gem(rubocop) < 2
+Requires:      gem(simplecov) >= 0.17 gem(simplecov) < 1
+Requires:      gem(yard) >= 0.9 gem(yard) < 1
 Requires:      ruby-pkg-config
 Requires:      libxml2-devel
 Requires:      libxslt-devel
 Requires:      java-devel
 Requires:      zlib-devel
 
-%description   devel
-Development files for %gemname gem.
+%description   -n gem-nokogiri-devel
+Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) development
+package.
 
-%description   devel -l ru_RU.UTF8
-Файлы заголовков для самоцвета %gemname.
+Nokogiri parses and searches XML/HTML very quickly, and also has correctly
+implemented CSS3 selector support as well as XPath support. This package
+contanis Ruby libraries for Nokogiri.
+
+%description   -n gem-nokogiri-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета nokogiri.
 
 
 %prep
@@ -98,21 +141,35 @@ Development files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         -n %pkgname
-%_bindir/*
+%files         -n nokogiri
+%doc README.md
+%_bindir/nokogiri
 
-%files         doc
+%files         -n gem-nokogiri-doc
+%doc README.md
 %ruby_gemdocdir
 
-%files         devel
+%files         -n gem-nokogiri-devel
+%doc README.md
 %ruby_includedir/*
 
+
 %changelog
+* Sat Sep 04 2021 Pavel Skrylev <majioa@altlinux.org> 1.12.4-alt1
+- ^ 1.11.1 -> 1.12.4
+- ! fixes
+ + CVE-2019-20388
+ + CVE-2020-24977
+ + CVE-2021-3517
+ + CVE-2021-3518
+ + CVE-2021-3537
+ + CVE-2021-3541
+
 * Fri Jan 08 2021 Pavel Skrylev <majioa@altlinux.org> 1.11.1-alt1
 - ^ 1.11.0rc2+ -> 1.11.1
 - ! spec
@@ -209,11 +266,11 @@ Development files for %gemname gem.
 - 1.5.9
 - updated URL
 - updated BuildRequires
-- fixed Group for %%name-doc subpackage
+- fixed Group for gem-nokogiri-doc subpackage
 - moved %%_bindir/nokogiri to separate subpackage
 
 * Sat Dec 15 2012 Led <led@altlinux.ru> 1.5.5-alt2
-- fixed for renamed %_bindir/rex -> %_bindir/rexical
+- fixed for renamed %%_bindir/rex -> %%_bindir/rexical
 - %%files: fixed "File listed twice"
 
 * Fri Dec 07 2012 Led <led@altlinux.ru> 1.5.5-alt1.1

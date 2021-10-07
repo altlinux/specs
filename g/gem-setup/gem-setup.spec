@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.4
-Release:       alt9
+Release:       alt10
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -89,6 +89,14 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Fri Sep 10 2021 Pavel Skrylev <majioa@altlinux.org> 5.999.4-alt10
+- + gem changing version on-the-fly
+- * running extconf as loading the script not forking new ruby instance
+- * the headers taken into consideration are only predefined
+- * reassignation some souces sequence
+- * allow loading gemspec as YAML doc
+- * trapping calls to git executable
+
 * Sun Apr 25 2021 Pavel Skrylev <majioa@altlinux.org> 5.999.4-alt9
 - ! replaces req prefix ruby-gem with gem
 - ! other things

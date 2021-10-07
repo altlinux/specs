@@ -1,56 +1,92 @@
-%define _unpackaged_files_terminate_build 1
+%define        gemname colorator
 
-Name:    gem-colorator
-Version: 1.1.0
-Release: alt1
+Name:          gem-colorator
+Version:       1.1.0
+Release:       alt1.1
+Summary:       Colorize your text in the terminal
+License:       MIT
+Group:         Development/Ruby
+Url:           http://octopress.org/colorator/
+Vcs:           https://github.com/octopress/colorator.git
+Packager:      Dmitriy Voropaev <voropaevdmtr@altlinux.org>
+BuildArch:     noarch
 
-Summary: Colorize your text in the terminal.
-License: MIT
-Group:   Development/Ruby
-Url:     https://github.com/octopress/colorator
-
-Packager:  Dmitriy Voropaev <voropaevdmtr@altlinux.org>
-BuildArch: noarch
-
-Source:  %name-%version.tar
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(rspec) >= 3.1 gem(rspec) < 4
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Provides:      gem(colorator) = 1.1.0
+
 
 %description
 Colorize your text in the terminal.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
 
-BuildArch: noarch
+%package       -n gem-colorator-doc
+Version:       1.1.0
+Release:       alt1.1
+Summary:       Colorize your text in the terminal documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета colorator
+Group:         Development/Documentation
+BuildArch:     noarch
 
-%description doc
-Documentation files for %name.
+Requires:      gem(colorator) = 1.1.0
+
+%description   -n gem-colorator-doc
+Colorize your text in the terminal documentation files.
+
+%description   -n gem-colorator-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета colorator.
+
+
+%package       -n gem-colorator-devel
+Version:       1.1.0
+Release:       alt1.1
+Summary:       Colorize your text in the terminal development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета colorator
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(colorator) = 1.1.0
+Requires:      gem(rspec) >= 3.1 gem(rspec) < 4
+
+%description   -n gem-colorator-devel
+Colorize your text in the terminal development package.
+
+%description   -n gem-colorator-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета colorator.
+
 
 %prep
-%setup -n %name-%version
-%update_setup_rb
+%setup
 
 %build
-%ruby_config
 %ruby_build
 
 %install
 %ruby_install
-%rdoc lib/
-rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %check
-%ruby_test_unit -Ilib:test test
+%ruby_test
 
 %files
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%doc README.markdown
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/*
+%files         -n gem-colorator-doc
+%doc README.markdown
+%ruby_gemdocdir
+
+%files         -n gem-colorator-devel
+%doc README.markdown
+
 
 %changelog
+* Mon Sep 13 2021 Pavel Skrylev <majioa@altlinux.org> 1.1.0-alt1.1
+- ! spec
+
 * Wed Mar 17 2021 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 1.1.0-alt1
 - initial build

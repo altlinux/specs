@@ -11,16 +11,16 @@
 
 Name:          ruby
 Version:       %_version
-Release:       alt2.1
+Release:       alt2.2
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
 Url:           http://www.%name-lang.org/
 Vcs:           https://github.com/ruby/ruby.git
 
-Source0:       %name-%version.tar
+Source0:       %name-%_version.tar
 Source4:       miniruby.sh
-BuildRequires(pre): rpm-macros-ruby >= 1:1.0.0
+BuildRequires(pre): rpm-build-ruby >= 1:1.0.0
 BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: /usr/bin/setup.rb
 BuildRequires: doxygen
@@ -40,21 +40,22 @@ BuildRequires: gcc-c++
 %{?_with_bootstrap:BuildRequires: ruby-miniruby-src = %_version}
 BuildRequires: gem(rake) >= 13.0 gem(rake) < 14
 BuildRequires: gem(rspec) >= 3.8 gem(rspec) < 4
+%ruby_use_gem_dependency rake >= 13.0.5,rake < 14
+%ruby_use_gem_dependency rspec >= 3.8.0,rspec < 4
 
 # Ruby built using LTO cannot rebuild itself because of segfaults
 %define optflags_lto %nil
-%ruby_ignore_names observer,rake,psych,rdoc,gettext,test-unit,net-telnet,minitest,xmlrpc,did_you_mean,power_assert,readline-ext,fiddle,etc,zlib,strscan,fcntl,bigdecimal,gdbm,stringio,io-console,sdbm,dbm,json,openssl,date,bar,rubyforge,pstore,net-smtp,net-pop,reline,bundler,matrix,delegate,yaml,csv,uri,ostruct,racc,tracer,getoptlong,singleton,readline,mutex_m,fileutils,prime,ipaddr,webrick,logger,rss,forwardable,cgi,rexml,open3,benchmark,irb,timeout,mspec,03-tompng,templates,thor
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findreq_skiplist %libdir/*
-Requires:      %lname = %version-%release
-Requires:      ruby-stdlibs = %version-%release
+Requires:      %lname = %_version-%release
+Requires:      ruby-stdlibs = %_version-%release
 Requires:      gem irb erb ri rdoc rake bundle
 %define obsolete() \
-Provides:      %1 = %version-%release \
+Provides:      %1 = %_version-%release \
 Obsoletes:     %1
 %define mobsolete() \
 %(for m in %*; do \
-echo "Provides: %name-module-$m = %version-%release"; \
+echo "Provides: %name-module-$m = %_version-%release"; \
 echo "Obsoletes: %name-module-$m"; \
 done)
 
@@ -85,7 +86,7 @@ This package contains Ruby shared libraries.
 %package       -n %lname-devel
 Summary:       Files for compiling extension modules for Ruby
 Group:         Development/C
-%{?_enable_shared:Requires: %lname = %version-%release}
+%{?_enable_shared:Requires: %lname = %_version-%release}
 Requires:      doxygen
 Requires:      groff-base
 Requires:      libssl-devel
@@ -111,7 +112,7 @@ This package contains files, necessary to make extension library for Ruby.
 %package       -n %lname-devel-static
 Summary:       Files for compiling extension modules for Ruby
 Group:         Development/C
-Requires:      %lname-devel = %version-%release
+Requires:      %lname-devel = %_version-%release
 
 %description   -n %lname-devel-static
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -124,8 +125,8 @@ This package contains static Ruby library needed for embedding Ruby.
 %package       -n %name-stdlibs
 Summary:       Standard Ruby libraries
 Group:         Development/Ruby
-Requires:      %lname = %version-%release
-Requires:      ruby = %version-%release
+Requires:      %lname = %_version-%release
+Requires:      ruby = %_version-%release
 Requires:      libyaml2
 Requires:      libgdbm
 Requires:      libssl1.1
@@ -136,8 +137,8 @@ Requires:      gem(power_assert) >= 1.1.7
 Requires:      gem(rake) >= 13.0.1
 Requires:      gem(test-unit) >= 3.3.4
 Requires:      gem(xmlrpc) >= 0.3.0
-Provides:      %name-libs = %version-%release
-Provides:      %name-racc-runtime = %version
+Provides:      %name-libs = %_version-%release
+Provides:      %name-racc-runtime = %_version
 Provides:      ruby(thread)
 %mobsolete     English bigdecimal cgi curses date-time dbm debug digest dl drb e2mmap
 %mobsolete     erb etc fcntl fileutils gdbm iconv math misc net nkf open3 openssl
@@ -157,7 +158,7 @@ This package contains standard Ruby runtime libraries.
 Summary:       ERB template library
 Group:         Development/Ruby
 BuildArch:     noarch
-Requires:      %name-stdlibs = %version
+Requires:      %name-stdlibs = %_version
 Provides:      %_bindir/erb
 Obsoletes:     %name-tools
 
@@ -169,7 +170,7 @@ ERB template library executable and manual.
 Summary:       Interactive Ruby Shell
 Group:         Development/Ruby
 BuildArch:     noarch
-Requires:      %name-stdlibs = %version
+Requires:      %name-stdlibs = %_version
 Provides:      %_bindir/irb
 Obsoletes:     %name-tools
 %obsolete      %name-tool-irb
@@ -182,7 +183,7 @@ Summary:       Ruby ri executable man page
 Group:         Development/Documentation
 BuildArch:     noarch
 Requires:      %_bindir/ri
-Requires:      %name = %version
+Requires:      %name = %_version
 
 %description   -n ri-doc
 Ruby ri executable man page
@@ -195,7 +196,7 @@ BuildArch:     noarch
 Provides:      %name-doc-ri
 Obsoletes:     %name-doc-ri
 Requires:      ri
-Requires:      ruby = %version-%release
+Requires:      ruby = %_version-%release
 
 %description   doc
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -230,7 +231,7 @@ on different arches.
 %package       -n gem
 Epoch:         2
 Version:       3.1.6
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby gem executable and framefork
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -344,7 +345,7 @@ popd
 %endif #_with_bootstrap
 
 %make_build
-%__setup_rb config --prefixes=gem,ruby,rails-engine --gem-version-replace="$RPM_RUBY_GEMVERSION_REPLACE_LIST" --use=rdoc --join=doc:lib --ignore=03-tompng --use=stdlibs --alias=psych,bar,yaml,webrick,uri,tracer,timeout,singleton,rss,rexml,readline,prime,mutex_m,ipaddr,fileutils,rdoc,racc,pstore,ostruct,open3,observer,net-smtp,net-pop,matrix,logger,irb,getoptlong,forwardable,did_you_mean,delegate,csv,cgi,bundler,benchmark,zlib,strscan,stringio,sdbm,readline-ext,openssl,json,io-console,gdbm,fiddle,fcntl,etc,dbm,date,bigdecimal
+%__setup_rb config --prefixes=ruby,gem --use-gem-dependencies="$RPM_RUBY_USE_GEM_DEPENDENCY_LIST" --gem-version-replace="$RPM_RUBY_GEMVERSION_REPLACE_LIST" --use=rdoc --join=doc:lib --ignore=03-tompng --use=stdlibs --alias=psych,bar,yaml,webrick,uri,tracer,timeout,singleton,rss,rexml,readline,prime,mutex_m,ipaddr,fileutils,rdoc,racc,pstore,ostruct,open3,observer,net-smtp,net-pop,matrix,logger,irb,getoptlong,forwardable,did_you_mean,delegate,csv,cgi,bundler,benchmark,zlib,strscan,stringio,sdbm,readline-ext,openssl,json,io-console,gdbm,fiddle,fcntl,etc,dbm,date,bigdecimal,reline
 %__setup_rb document
 
 %install
@@ -449,6 +450,10 @@ ln -s armh-linux "${EX}/armh-linux-eabi"
 %endif
 
 %changelog
+* Wed Oct 06 2021 Pavel Skrylev <majioa@altlinux.org> 2.7.4-alt2.2
+- + enabled rpm-build-ruby gem autodetection
+- ! spec
+
 * Thu Sep 23 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.7.4-alt2.1
 - disabled bootstrap
 
