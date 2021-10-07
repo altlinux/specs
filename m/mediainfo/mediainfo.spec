@@ -2,7 +2,7 @@
 
 Name: mediainfo
 Version: 21.09
-Release: alt1
+Release: alt1.1
 
 Group: File tools
 Summary: MediaInfo supplies information about a video or audio file
@@ -22,7 +22,7 @@ BuildRequires: zlib-devel
 BuildRequires: libpango-devel
 BuildRequires: libzen-devel >= 0.4.39
 BuildRequires: libmediainfo-devel >= %version
-BuildRequires: libwxGTK-devel
+BuildRequires: libwxGTK3.0-devel
 BuildRequires: sgml-common
 
 %description
@@ -152,6 +152,9 @@ rm -f %buildroot%_datadir/kde4/services/ServiceMenus/mediainfo-gui.desktop
 %_K5srv/ServiceMenus/%name-gui.desktop
 
 %changelog
+* Sat Sep 25 2021 Yuri N. Sedunov <aris@altlinux.org> 21.09-alt1.1
+- rebuilt with wxGTK3.0
+
 * Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 21.09-alt1
 - 21.09
 
