@@ -12,8 +12,8 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.49
-Release: alt2
+Version: 2.4.50
+Release: alt1
 Epoch: 1
 
 License: %asl
@@ -1539,6 +1539,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Thu Oct 07 2021 Anton Farygin <rider@altlinux.ru> 1:2.4.50-alt1
+- 2.4.50 (Fixes: CVE-2021-41773, CVE-2021-41524)
+
 * Fri Oct 01 2021 Egor Ignatov <egori@altlinux.org> 1:2.4.49-alt2
 - a2dismod: disable mod also in mods-start.d
 
