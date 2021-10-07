@@ -2,8 +2,8 @@
 
 Summary: Template engine and code-generator
 Name: python3-module-%origname
-Version: 3.2.3
-Release: alt3
+Version: 3.2.6
+Release: alt1
 Source0: Cheetah-%version.tar
 License: MIT
 Group: Development/Python3
@@ -55,6 +55,11 @@ cp -fR docs/_build/html/* man/
 %install
 %python3_install
 
+%check
+export PATH="%buildroot/%_bindir:$PATH"
+export PYTHONPATH="%buildroot/%python3_sitelibdir"
+%buildroot/%_bindir/cheetah test
+
 %files
 %doc *.rst man/
 %_bindir/*
@@ -65,6 +70,10 @@ cp -fR docs/_build/html/* man/
 %python3_sitelibdir/Cheetah/Tests
 %exclude %python3_sitelibdir/Cheetah/Tests/Performance.py*
 %changelog
+* Thu Oct 07 2021 Grigory Ustinov <grenka@altlinux.org> 3.2.6-alt1
+- Automatically updated to 3.2.6.
+- Enable check.
+
 * Wed May 26 2021 Grigory Ustinov <grenka@altlinux.org> 3.2.3-alt3
 - Drop python2 support.
 
