@@ -7,7 +7,7 @@
 
 Name: thermald
 Version: 2.4.6
-Release: alt1
+Release: alt2
 
 Summary: Thermal daemon for IA
 
@@ -20,6 +20,8 @@ Url: https://github.com/intel/thermal_daemon
 Source: %name-%version.tar
 Source1: thermald.init
 Source2: %name-monitor.svg
+
+Patch1: thermald-2.4.6-alt-ui-cosmetic-fixes-to-avoid-label-cut-in-dialogs.patch
 
 ExclusiveArch: x86_64
 
@@ -67,6 +69,7 @@ embedded devices.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 ./autogen.sh
@@ -181,6 +184,10 @@ exit 0
 %endif
 
 %changelog
+* Wed Oct 06 2021 Nikolai Kostrigin <nickel@altlinux.org> 2.4.6-alt2
+- add alt-ui-cosmetic-fixes-to-avoid-label-cut-in-dialogs patch
+  (closes: #41065)
+
 * Mon Sep 20 2021 Nikolai Kostrigin <nickel@altlinux.org> 2.4.6-alt1
 - new version 2.4.6
 
