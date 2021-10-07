@@ -1,6 +1,6 @@
 Name:    trustedqsl
 Version: 2.5.8
-Release: alt1
+Release: alt2
 Summary: TrustedQSL ham-radio applications
 
 Group: Communications
@@ -20,7 +20,7 @@ BuildRequires: libdb4-devel
 BuildRequires: libssl-devel
 BuildRequires: libcurl-devel
 BuildRequires: libexpat-devel
-BuildRequires: wxGTK-devel
+BuildRequires: libwxGTK3.1-devel
 BuildRequires: zlib-devel
 BuildRequires: desktop-file-utils
 
@@ -97,6 +97,9 @@ rm -f %buildroot%_datadir/locale/*/LC_MESSAGES/wxstd.mo
 %_libdir/libtqsllib.so
 
 %changelog
+* Thu Oct 07 2021 Andrey Cherepanov <cas@altlinux.org> 2.5.8-alt2
+- Rebuild with libwxGTK3.1-devel.
+
 * Mon Jun 07 2021 Andrey Cherepanov <cas@altlinux.org> 2.5.8-alt1
 - New version.
 
