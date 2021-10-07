@@ -4,8 +4,8 @@
 %brp_strip_none
 
 Name: librtpkcs11ecp
-Version: 2.1.1.0
-Release: alt2
+Version: 2.1.2.0
+Release: alt1
 
 Summary: Rutoken PKCS#11 Library
 License: Proprietary
@@ -53,6 +53,9 @@ install -pDm644 rutokenecp.module \
 %config(noreplace) %_sysconfdir/pkcs11/modules/rutokenecp.module
 
 %changelog
+* Thu Oct 07 2021 Andrey Cherepanov <cas@altlinux.org> 2.1.2.0-alt1
+- New version.
+
 * Thu Apr 29 2021 Anna Khrustova <khab@altlinux.org> 2.1.1.0-alt2
 - Preparing for e2kv5, thanks @mike.
 
