@@ -1,5 +1,5 @@
 Name: u-boot-rpi3
-Version: 2021.07
+Version: 2021.10
 Release: alt1
 
 Summary: Das U-Boot
@@ -10,7 +10,7 @@ ExclusiveArch: armh aarch64
 
 Source: %name-%version-%release.tar
 
-BuildRequires: bc dtc >= 1.4 flex
+BuildRequires: bc dtc >= 1.4 flex libssl-devel
 
 %description
 boot loader for embedded boards based on PowerPC, ARM, MIPS and several
@@ -48,6 +48,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Oct 05 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.10-alt1
+- 2021.10 released
+
 * Wed Jul 07 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.07-alt1
 - 2021.07 released
 

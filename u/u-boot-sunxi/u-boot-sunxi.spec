@@ -1,5 +1,5 @@
 Name: u-boot-sunxi
-Version: 2021.07
+Version: 2021.10
 Release: alt1
 
 Summary: Das U-Boot
@@ -20,7 +20,7 @@ Obsoletes: u-boot-sunxi64
 %define ATF %nil
 %endif
 
-BuildRequires: %ATF bc ccache dtc >= 1.4 flex
+BuildRequires: %ATF bc ccache dtc >= 1.4 flex libssl-devel
 BuildRequires: python3-dev swig
 BuildRequires: python3(pkg_resources)
 
@@ -64,6 +64,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Oct 05 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.10-alt1
+- 2021.10 released
+
 * Wed Jul 07 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.07-alt1
 - 2021.07 released
 

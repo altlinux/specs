@@ -1,5 +1,5 @@
 Name: u-boot-imx
-Version: 2021.07
+Version: 2021.10
 Release: alt1
 
 Summary: Das U-Boot
@@ -41,7 +41,7 @@ for board in $boards; do
 	cp -pv %_datadir/firmware-imx-*/firmware/hdmi/cadence/signed_hdmi_imx8m.bin  build/
 %endif
 	make HOSTCC='ccache gcc' CC='ccache gcc' O=build ${board}_defconfig
-	%make_build HOSTCC='ccache gcc' CC='ccache gcc' O=build \
+	%make_build V=1 HOSTCC='ccache gcc' CC='ccache gcc' O=build \
 %ifarch aarch64
 	flash.bin
 	install -pm0644 -D build/flash.bin out/${board}/flash.bin
@@ -59,10 +59,13 @@ cd out
 find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 
 %files
-%doc README* doc/board/freescale
+%doc README* doc/board/nxp
 %_datadir/u-boot/*
 
 %changelog
+* Tue Oct 05 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.10-alt1
+- 2021.10 released
+
 * Wed Jul 07 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.07-alt1
 - 2021.07 released
 
