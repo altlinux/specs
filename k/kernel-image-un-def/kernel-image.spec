@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
-Release: alt2
+Release: alt1
 epoch:1 
 %define kernel_base_version	5.14
-%define kernel_sublevel .9
+%define kernel_sublevel .10
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -75,7 +75,7 @@ ExclusiveArch: i586 x86_64 ppc64le aarch64 armh
 
 %define image_path arch/%base_arch/boot/%make_target
 %ifarch ppc64le
-%define image_path %make_target
+%define image_path %make_target.stripped
 %endif
 
 %define arch_dir %base_arch
@@ -356,6 +356,9 @@ scripts/kconfig/merge_config.sh -m $CONFIGS
 %make_build oldconfig
 #%make_build include/linux/version.h
 %make_build %make_target
+%ifarch ppc64le
+eu-strip --remove-comment -o %image_path vmlinux
+%endif
 %make_build modules
 %ifarch aarch64 %arm
 %make_build dtbs
@@ -646,6 +649,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Oct 07 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.14.10-alt1
+- v5.14.10  (Fixes: CVE-2021-3653, CVE-2021-3656)
+
 * Mon Oct 04 2021 Dmitry Terekhin <jqt4@altlinux.org> 1:5.14.9-alt2
 - Disable all sleep states on BE-M1000 based boards.
 
