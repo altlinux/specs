@@ -1,6 +1,6 @@
 Name: 	  gostcrypt
 Version:  1.3
-Release:  alt4
+Release:  alt5
 
 Summary:  Fork of the (late) Truecrypt project
 License:  GPLv3
@@ -12,7 +12,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source:   GostCrypt_Linux_%version.tar.gz
 Patch:    gostcrypt-fix-conversion.patch
 
-BuildRequires: gcc-c++ libfuse-devel libwxGTK-devel
+BuildRequires: gcc-c++ libfuse-devel libwxGTK3.1-devel
 
 %description
 The Gostcrypt project has been launched at the end of 2013 as fork of
@@ -46,6 +46,9 @@ install -Dm0755 Main/%name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Thu Oct 07 2021 Andrey Cherepanov <cas@altlinux.org> 1.3-alt5
+- Rebuild with libwxGTK3.1-devel.
+
 * Thu Sep 23 2021 Andrey Cherepanov <cas@altlinux.org> 1.3-alt4
 - FTBFS: fix build with gcc11.
 
