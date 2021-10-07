@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: libgusb
-Version: 0.3.7
+Version: 0.3.8
 Release: alt1
 
 Summary: GLib wrapper around libusb1
@@ -111,6 +111,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Oct 07 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.8-alt1
+- 0.3.8
+
 * Wed May 26 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.7-alt1
 - 0.3.7
 
