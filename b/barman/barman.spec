@@ -1,5 +1,5 @@
 Name: barman
-Version: 2.13
+Version: 2.14
 Release: alt1
 Summary: Backup and Recovery Manager for PostgreSQL
 
@@ -108,9 +108,11 @@ touch %buildroot/var/log/barman/barman.log
 %doc NEWS README.rst
 %_bindir/barman-wal-archive
 %_bindir/barman-wal-restore
-%_bindir/barman-cloud-backup
 %_bindir/barman-cloud-restore
+%_bindir/barman-cloud-backup
 %_bindir/barman-cloud-backup-list
+%_bindir/barman-cloud-backup-delete
+%_bindir/barman-cloud-backup-keep
 %_bindir/barman-cloud-wal-archive
 %_bindir/barman-cloud-wal-restore
 %doc %_man1dir/barman-wal-archive.1.xz
@@ -134,6 +136,9 @@ getent passwd barman >/dev/null || \
 exit 0
 
 %changelog
+* Thu Oct 07 2021 Leontiy Volodin <lvol@altlinux.org> 2.14-alt1
+- New version (2.14).
+
 * Wed Jul 28 2021 Leontiy Volodin <lvol@altlinux.org> 2.13-alt1
 - New version (2.13).
 
