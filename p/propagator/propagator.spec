@@ -3,7 +3,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20210922
+Version: 20211007
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -48,6 +48,9 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Thu Oct 07 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 20211007-alt1
+- Fixed HTTP boot when server sent more headers after Content-Length (closes: #41072)
+
 * Thu Sep 22 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 20210922-alt1
 - Support booting complete ISOs via HTTP (closes: #40710)
 
