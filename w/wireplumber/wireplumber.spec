@@ -8,7 +8,7 @@
 %define soversion 0
 
 Name: wireplumber
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: a modular session/policy manager for PipeWire
@@ -144,6 +144,9 @@ This package contains GObject introspection development data for lib%name.
 %endif
 
 %changelog
+* Fri Oct 08 2021 Arseny Maslennikov <arseny@altlinux.org> 0.4.3-alt1
+- 0.4.2-alt1 -> 0.4.3-alt1.
+
 * Sun Oct 03 2021 Arseny Maslennikov <arseny@altlinux.org> 0.4.2-alt1
 - 0.3.96-alt1 -> 0.4.2-alt1.
 
