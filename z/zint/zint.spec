@@ -1,15 +1,15 @@
 Name:      zint
-Version:   2.9.1
-Release:   alt2
+Version:   2.10.0
+Release:   alt1
 Summary:   A barcode generator and library
 Summary(ru_RU.UTF-8): Генератор штрихкодов и библиотека
 License:   GPLv3+
 URL:       http://www.zint.org.uk
 Source:    %name-%version.tar
-Source10:  %{name}_ru.qm
+Source10:  %{name}_ru.ts
 Group:     Graphics
 
-Patch: zint-alt-include-header.patch
+Patch1: zint-alt-qt-sharedlib.patch
 Patch10: zint-alt-use-l10n.patch
 
 BuildRequires: cmake
@@ -17,6 +17,7 @@ BuildRequires: libpng-devel
 BuildRequires: zlib-devel
 BuildRequires: qt5-base-devel qt5-tools-devel-static
 BuildRequires: desktop-file-utils
+BuildRequires: qt5-tools-devel
 
 %description
 Zint is a C library for encoding data in several barcode variants. The
@@ -100,17 +101,18 @@ C library and header files needed to develop applications using %name-qt.
 
 %prep
 %setup -q
-## patch -p 1
+%patch1 -p 1
 %patch10 -p 1
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=Release
 %cmake_build
+lrelease-qt5 %SOURCE10 -qm %{name}_ru.qm
 
 %install
 %cmakeinstall_std
-install -D -p -m 644 %name.png %buildroot%_datadir/pixmaps/%name.png
-install -D -p -m 644 %SOURCE10 %buildroot%_qt5_translationdir/%{name}_ru.qm
+install -D -p -m 644 %name-qt.png %buildroot%_datadir/pixmaps/%name-qt.png
+install -D -p -m 644 %{name}_ru.qm %buildroot%_qt5_translationdir/%{name}_ru.qm
 desktop-file-install --dir %buildroot%_datadir/applications %name-qt.desktop
 
 %files
@@ -121,12 +123,13 @@ desktop-file-install --dir %buildroot%_datadir/applications %name-qt.desktop
 %files -n %name-devel
 %_includedir/%name.h
 %_libdir/libzint.so
+%_datadir/apps/cmake/modules/FindZint.cmake
 
 %files -n %name-qt
 %_bindir/%name-qt
 %_libdir/libQZint.so.*
 %_datadir/applications/%name-qt.desktop
-%_datadir/pixmaps/%name.png
+%_datadir/pixmaps/%name-qt.png
 %_qt5_translationdir/%{name}_*.qm
 
 %files -n %name-qt-devel
@@ -135,6 +138,9 @@ desktop-file-install --dir %buildroot%_datadir/applications %name-qt.desktop
 
 
 %changelog
+* Fri Oct 08 2021 Konstantin Rybakov <kastet@altlinux.org> 2.10.0-alt1
+- Updated to upstream version 2.10.0
+
 * Thu Jul 08 2021 Ivan Razzhivin <underwit@altlinux.org> 2.9.1-alt2
 - New version 2.9.1 (closes: #40294)
 
