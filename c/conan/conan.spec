@@ -1,8 +1,8 @@
 %def_without test
 
 Name: conan
-Version: 1.40.1
-Release: alt2
+Version: 1.41.0
+Release: alt1
 
 Summary: Conan - The open-source C/C++ package manager
 
@@ -95,6 +95,9 @@ rm -rfv %buildroot%python_sitelibdir/conans/test_integration/
 %doc README.rst LICENSE.md
 
 %changelog
+* Fri Oct 08 2021 Vitaly Lipatov <lav@altlinux.ru> 1.41.0-alt1
+- new version 1.41.0 (with rpmrb script)
+
 * Tue Oct 05 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.40.1-alt2
 - drop artificial upper bound for jwt req
 
