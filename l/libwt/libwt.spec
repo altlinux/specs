@@ -1,11 +1,13 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %define oname wt
 
 Name: libwt
 Version: 4.5.0
-Release: alt3
-
+Release: alt4
 Summary: Wt (pronounced as witty) is a C++ library for developing web applications.
-
 License: GPL
 Group: Development/C++
 Url: https://www.webtoolkit.eu
@@ -14,6 +16,7 @@ Url: https://www.webtoolkit.eu
 Source: %name-%version.tar
 
 Patch1: libwt-alt-boost-1.77.0-compat.patch
+Patch2: libwt-alt-gcc11-compat.patch
 
 BuildRequires: rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
@@ -144,8 +147,11 @@ you can focus on actual functionality with a rich set of feature-complete widget
 %prep
 %setup
 %patch1 -p2
+%patch2 -p2
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %cmake_insource \
 	-DPCRE_INCLUDE_DIR:STRING="%optflags" \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
@@ -193,6 +199,9 @@ you can focus on actual functionality with a rich set of feature-complete widget
 #files docs
 
 %changelog
+* Fri Oct 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.5.0-alt4
+- Fixed build with gcc-11.
+
 * Thu Aug 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.5.0-alt3
 - Rebuilt with boost-1.77.0.
 
