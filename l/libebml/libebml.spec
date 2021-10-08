@@ -1,16 +1,19 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: libebml
 Version: 1.4.2
-Release: alt1
-
+Release: alt2
 Summary: Extensible Binary Meta Language access library
 License: LGPL-2.1-or-later and BSD
 Group: System/Libraries
-
 Url: http://www.matroska.org
+
 # https://github.com/Matroska-Org/libebml.git
 Source: %name-%version.tar
+
+Patch1: %name-alt-gcc11-compat.patch
 
 BuildRequires: gcc-c++ cmake
 
@@ -28,8 +31,11 @@ Files needed to build programs using libebml
 
 %prep
 %setup
+%patch1 -p1
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %cmake -DBUILD_SHARED_LIBS=YES
 %cmake_build
 
@@ -48,6 +54,9 @@ Files needed to build programs using libebml
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Oct 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.2-alt2
+- Fixed build with gcc-11.
+
 * Mon Mar 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.2-alt1
 - Updated to upstream version 1.4.2.
 
