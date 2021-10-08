@@ -2,7 +2,7 @@
 
 %define gst_version   1.0
 %define nspr_version  4.32
-%define nss_version   3.69.1
+%define nss_version   3.71
 %define rust_version  1.54.0
 %define cargo_version 1.54.0
 %define llvm_version  12.0
@@ -11,7 +11,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        92.0.1
+Version:        93.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -47,6 +47,7 @@ Patch010: 0010-bmo-847568-Support-system-graphite2.patch
 Patch011: 0011-bmo-1559213-Support-system-av1.patch
 Patch012: 0012-VAAPI-Add-extra-frames.patch
 Patch013: 0013-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
+Patch014: 0014-ALT-fix-double_t-redefinition.patch
 ### End Patches
 
 #ExcludeArch: ppc64le
@@ -199,6 +200,7 @@ Most likely you don't need to use this package.
 %patch011 -p1
 %patch012 -p1
 %patch013 -p1
+%patch014 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -461,6 +463,17 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Oct 06 2021 Alexey Gladkov <legion@altlinux.ru> 93.0-alt1
+- New release (93.0).
+- Security fixes:
+  + CVE-2021-38496: Use-after-free in MessageTask
+  + CVE-2021-38497: Validation message could have been overlaid on another origin
+  + CVE-2021-38498: Use-after-free of nsLanguageAtomService object
+  + CVE-2021-32810: Data race in crossbeam-deque
+  + CVE-2021-38500: Memory safety bugs fixed in Firefox 93, Firefox ESR 78.15, and Firefox ESR 91.2
+  + CVE-2021-38501: Memory safety bugs fixed in Firefox 93 and Firefox ESR 91.2
+  + CVE-2021-38499: Memory safety bugs fixed in Firefox 93
+
 * Tue Sep 28 2021 Alexey Gladkov <legion@altlinux.ru> 92.0.1-alt1
 - New release (92.0.1).
 
