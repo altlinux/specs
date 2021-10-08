@@ -1,10 +1,9 @@
 Name: gamin
 Version: 0.1.10
-Release: alt6
+Release: alt7
 
-%def_disable static
 %def_disable debug
-%def_disable  check
+%def_disable check
 %def_enable server
 
 Summary: Lightweight replacement of the File Alteration Monitor
@@ -67,16 +66,6 @@ Files necessary to develop applications using Gamin.
 Gamin is a file and directory monitoring system defined to be
 a subset of the FAM (File Alteration Monitor) system.
 
-%package -n lib%name-devel-static
-Summary: Static libraries for Gamin, a file and directory monitoring system
-Group: Development/C
-Requires: lib%name-devel = %version-%release
-
-%description -n lib%name-devel-static
-Static library build of Gamin.
-Gamin is a file and directory monitoring system defined to be
-a subset of the FAM (File Alteration Monitor) system.
-
 %prep
 %setup -q
 %patch
@@ -86,9 +75,8 @@ a subset of the FAM (File Alteration Monitor) system.
 
 %build
 %autoreconf
-%configure \
+%configure --disable-static \
     %{subst_enable debug} \
-    %{subst_enable static} \
     %{subst_enable server}
 %make_build
 
@@ -107,6 +95,8 @@ ln -s %_licensedir/LGPL-2 %buildroot%pkgdocdir/COPYING
 install -p -m644 doc/*.{html,gif,txt} \
     %buildroot%pkgdocdir/
 
+rm -fv %buildroot%_libdir/libgamin_shared.a
+
 %if_enabled server
 %files
 %_libexecdir/gam_server
@@ -122,16 +112,12 @@ install -p -m644 doc/*.{html,gif,txt} \
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/*.so
-%_libdir/libgamin_shared.a
 %_libdir/pkgconfig/*
 
-%if_enabled static
-%files -n lib%name-devel-static
-%_libdir/*.a
-%exclude %_libdir/libgamin_shared.a
-%endif
-
 %changelog
+* Fri Oct 08 2021 Grigory Ustinov <grenka@altlinux.org> 0.1.10-alt7
+- Fixed FTBFS: rebuild without static library.
+
 * Mon May 25 2020 Grigory Ustinov <grenka@altlinux.org> 0.1.10-alt6
 - Fixed FTBFS: rebuild without python support.
 
