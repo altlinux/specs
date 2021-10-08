@@ -1,9 +1,8 @@
-%def_enable static
 %define EVR %{?epoch:%epoch:}%version-%release
 
 Name: check
 Version: 0.15.2
-Release: alt1
+Release: alt2
 Epoch: 20180202
 
 Summary: A unit test framework for C
@@ -50,25 +49,12 @@ Check is a unit test framework for C.
 This package contains library header files needed to build
 software with libcheck.
 
-%if_enabled static
-%package -n lib%name-devel-static
-Summary: A unit test framework for C (static library)
-Group: Development/C
-Requires: lib%name = %EVR
-Conflicts: %name < 20070219:0.9.5-alt4
-
-%description -n lib%name-devel-static
-Check is a unit test framework for C.
-
-This package contains a static development library.
-%endif
-
 %prep
 %setup
 
 %build
 %autoreconf
-%configure %{subst_enable static}
+%configure --disable-static
 %make_build
 
 %install
@@ -90,12 +76,10 @@ This package contains a static development library.
 %_datadir/aclocal/*
 %_infodir/check*
 
-%if_enabled static
-%files -n lib%name-devel-static
-%_libdir/*.a
-%endif
-
 %changelog
+* Fri Oct 08 2021 Grigory Ustinov <grenka@altlinux.org> 20180202:0.15.2-alt2
+- Disable building static library.
+
 * Sun Nov 01 2020 Fr. Br. George <george@altlinux.ru> 20180202:0.15.2-alt1
 - Build new version 0.15.2
 
