@@ -1,14 +1,19 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 %def_enable static
 
 Name: libconfig
 Version: 1.5
-Release: alt2
-
+Release: alt3
 Summary: C/C++ Configuration File Library
 License: LGPLv2.1+
 Group: System/Libraries
-
 Url: http://www.hyperrealm.com/main.php?s=libconfig
+
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Sat Oct 08 2011
@@ -33,7 +38,7 @@ and Windows (2000, XP and later).
 %package devel
 Summary: Header files for %name
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Header files for %name library.
@@ -49,8 +54,8 @@ libconfig++ is the C++ binding for libconfig library.
 %package c++-devel
 Summary: Header files for libconfig++ library
 Group: Development/Other
-Requires: %name-c++ = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-c++ = %EVR
+Requires: %name-devel = %EVR
 Requires: libstdc++-devel
 
 %description c++-devel
@@ -60,7 +65,7 @@ Header files for libconfig++ library.
 %package devel-static
 Summary: Static library files for %name
 Group: Development/Other
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 Requires: glibc-devel-static
 
 %description devel-static
@@ -69,7 +74,7 @@ Static library files for %name.
 %package c++-devel-static
 Summary: Static library files for libconfig++
 Group: Development/Other
-Requires: %name-c++-devel = %version-%release
+Requires: %name-c++-devel = %EVR
 Requires: libstdc++-devel-static
 
 %description c++-devel-static
@@ -82,9 +87,11 @@ rm -rf examples/Makefile*
 rm -rf examples/*/Makefile*
 rm -rf examples/*/*.vcproj
 sed -i '/examples.*Makefile/d' configure.ac
-%autoreconf
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
+%autoreconf
 %configure \
 	%{subst_enable static} \
 	--disable-examples
@@ -122,6 +129,9 @@ sed -i '/examples.*Makefile/d' configure.ac
 %endif
 
 %changelog
+* Fri Oct 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5-alt3
+- Fixed build with LTO.
+
 * Fri Jun 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5-alt2
 - NMU: rebuilt to regenerate ABI.
 
