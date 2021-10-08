@@ -8,7 +8,7 @@
 Name: %real_name
 
 Version: 2.7.18
-Release: alt7
+Release: alt8
 
 %define package_name		%real_name
 %define weight			1001
@@ -127,6 +127,9 @@ Patch108: python-2.7.18-fc-cve-2021-3177.patch
 # If neither the argument, env var or config file specifies a separator, "&" is used
 # but a warning is raised if parse_qs is used on input that contains ';'.
 Patch109: python-2.7.18-fc-cve-2021-23336.patch
+
+Patch110: python-2.7.18-fc-cve-2021-3733.patch
+Patch111: python-2.7.18-fc-cve-2021-3737.patch
 
 # XXX ignore pydoc dependencies for now
 %add_findreq_skiplist %_bindir/pydoc*
@@ -760,6 +763,8 @@ install -p -m644 %SOURCE12 -t Lib/distutils/command
 %patch107 -p1
 %patch108 -p1
 %patch109 -p1
+%patch110 -p1
+%patch111 -p1
 
 # XXX temporary Issue20445 fix
 sed -i 's/val1 == nice(2)/val1 == nice(2)+2/' configure.ac
@@ -1210,6 +1215,9 @@ rm %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Fri Oct 08 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.18-alt8
+- Fixed CVE-2021-3733 and CVE-2021-3737.
+
 * Sat Aug 28 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.18-alt7
 - Enabled LTO.
 
