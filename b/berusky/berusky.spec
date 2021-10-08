@@ -1,6 +1,6 @@
 Name:           berusky
 Version:        1.7.2
-Release:        alt1
+Release:        alt2
 Summary:        Berusky, 2D logic game
 License:        GPLv2
 Group:          Games/Other
@@ -26,6 +26,7 @@ This package contains a binary for the game.
 
 %build
 %autoreconf
+%add_optflags -std=gnu++14
 %configure
 %make
 
@@ -48,6 +49,9 @@ popd
 /var/games/%name/berusky.ini
 
 %changelog
+* Fri Oct 08 2021 Grigory Ustinov <grenka@altlinux.org> 1.7.2-alt2
+- Fixed FTBFS.
+
 * Fri Jul 03 2020 Grigory Ustinov <grenka@altlinux.org> 1.7.2-alt1
 - Build new version.
 
