@@ -4,7 +4,7 @@
 
 Summary: OCI runtime written in C
 Name: crun
-Version: 1.1
+Version: 1.2
 Release: alt1
 Group: Development/Other
 License: GPLv3+
@@ -59,6 +59,9 @@ rm -f %buildroot%_libdir/*.a
 %_man1dir/*
 
 %changelog
+* Fri Oct 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.2-alt1
+- 1.2
+
 * Mon Sep 27 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.1-alt1
 - 1.1
 
