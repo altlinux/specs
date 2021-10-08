@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.2.11
+Version: 3.3.0
 Release: alt1
 
 Source:%name-%version.tar
@@ -82,6 +82,9 @@ __EOF__
 
 
 %changelog
+* Fri Oct 08 2021 Sergey V Turchin <zerg at altlinux dot org> 3.3.0-alt1
+- add "theme:close" icon
+
 * Fri Sep 24 2021 Sergey V Turchin <zerg at altlinux dot org> 3.2.11-alt1
 - more information when first screenshot
 
