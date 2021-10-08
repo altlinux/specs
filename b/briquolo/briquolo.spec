@@ -1,13 +1,13 @@
 # vim:set ft=spec: -*- rpm-spec -*-
 Name: briquolo
 Version: 0.5.7
-Release: alt6
+Release: alt7
 
 Group: Games/Arcade
 Summary: OpenGL-based 3D breakout
 Summary(ru_RU.UTF-8): Трёхмерный арканоид использующий OpenGL
 Summary(be_BY.UTF-8): Трохмерны арканоід, які карыстае OpenGL
-License: GPL
+License: GPLv2
 Url: http://briquolo.free.fr
 Packager: Gleb Stiblo <ulfr@altlinux.ru>
 
@@ -42,6 +42,7 @@ BRIQUOLO гэта трохмерны арканоід. Цагліны і біт�
 %patch02 -p2
 
 %build
+%add_optflags -std=gnu++14
 %configure --bindir=%_gamesbindir --datadir=%_gamesdatadir
 %make_build
 
@@ -90,6 +91,9 @@ ln -srf %buildroot%_datadir/fonts/ttf/dejavu/DejaVuSans.ttf %buildroot%_datadir/
 %doc README*
 
 %changelog
+* Fri Oct 08 2021 Grigory Ustinov <grenka@altlinux.org> 0.5.7-alt7
+- Fixed FTBFS.
+
 * Tue Jun 26 2018 Grigory Ustinov <grenka@altlinux.org> 0.5.7-alt6
 - Remove bundled font (Closes: #25349).
 
