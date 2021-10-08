@@ -6,7 +6,7 @@
 %global _cmake_skip_rpath %nil
 
 Name: libnss-role
-Version: 0.5.3
+Version: 0.5.5
 Release: alt1
 
 Summary: NSS API library and admin tools for roles and privilegies
@@ -30,6 +30,7 @@ BuildRequires: libcmocka
 BuildRequires: libcmocka-devel
 BuildRequires: libpam0
 BuildRequires: libpam0-devel
+BuildRequires: nss_wrapper
 
 Requires: libpam0
 
@@ -55,10 +56,10 @@ NSS API library for roles and privilegies.
 	-DMANDIR=%_man8dir \
 	-DCMAKE_INSTALL_PREFIX:PATH=%_prefix
 %cmake_build
+%cmake_build -t all_tests
 
 %check
-%cmake_build -t test
-
+%cmake_build -- all_tests
 %_cmake__builddir/checkver %version
 
 %install
@@ -98,6 +99,18 @@ update_chrooted all
 %_includedir/role/
 
 %changelog
+* Fri Oct 08 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.5.5-alt1
+- Add mutual exclusion for show system role (-S or --system) and
+  show role in additional file option (-f or --file) options.
+
+* Thu Sep 16 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.5.4-alt2
+- Refusing to parse further with cmake_build macros for tests due
+  compatibility with Sisyphus
+
+* Tue Sep 14 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.5.4-alt1
+- Muliple fixes and testing support
+- Add list of roles as additional arguments in rolelst
+
 * Thu Jul 08 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.5.3-alt1
 - Fix for librole_write_dir
 - Clean build with C89 enforced
