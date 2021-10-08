@@ -1,12 +1,11 @@
 Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 %def_enable shared
-%def_enable static
 %def_with examples
 
 %define bname coredumper
 Name: lib%bname
 Version: 1.2.1
-Release: alt2.4
+Release: alt3
 Summary: Library to create core dumps of the running program
 Group: System/Libraries
 License: %bsdstyle
@@ -43,24 +42,6 @@ This package includes the header file needed to develop %name-based
 software.
 
 
-
-%if_enabled static
-%package devel-static
-Summary: Static %bname library
-Group: Development/C
-Requires: %name-devel = %version-%release
-
-%description devel-static
-The %bname library can be compiled into applications to create core
-dumps of the running program - without terminating. It supports both
-single- and multi-threaded core dumps, even if the kernel does not
-natively support multi-threaded core files.
-
-This package includes the static library needed to develop
-%name-based software.
-%endif
-
-
 %if_with examples
 %package devel-examples
 Summary: Examples of using %name
@@ -85,7 +66,7 @@ This package includes examples of using %name.
 sed -i '/#include <sys\/sysctl.h>/d' src/elfcore.c
 
 %build
-%configure %{subst_enable shared} %{subst_enable static}
+%configure %{subst_enable shared} --disable-static
 %make_build
 
 
@@ -112,13 +93,6 @@ install -m 0644 examples/* %buildroot%_docdir/%name-%version/examples/
 %{?_with_examples:%exclude %_docdir/%name-%version/examples}
 
 
-
-%if_enabled static
-%files devel-static
-%_libdir/*.a
-%endif
-
-
 %if_with examples
 %files devel-examples
 %dir %_docdir/%name-%version
@@ -127,6 +101,9 @@ install -m 0644 examples/* %buildroot%_docdir/%name-%version/examples/
 
 
 %changelog
+* Fri Oct 08 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt3
+- Fixed FTBFS.
+
 * Wed Apr 07 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt2.4
 - Fixed FTBFS.
 
