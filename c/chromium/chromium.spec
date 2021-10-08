@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        94.0.4606.71
+Version:        94.0.4606.81
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -438,6 +438,14 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Oct 08 2021 Alexey Gladkov <legion@altlinux.ru> 94.0.4606.81-alt1
+- New version (94.0.4606.81).
+- Security fixes:
+  - CVE-2021-37977: Use after free in Garbage Collection.
+  - CVE-2021-37978: Heap buffer overflow in Blink.
+  - CVE-2021-37979: Heap buffer overflow in WebRTC.
+  - CVE-2021-37980: Inappropriate implementation in Sandbox.
+
 * Fri Oct 01 2021 Alexey Gladkov <legion@altlinux.ru> 94.0.4606.71-alt1
 - New version (94.0.4606.71).
 - Security fixes:
