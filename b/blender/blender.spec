@@ -1,6 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%ifarch x86_64
 %set_verify_elf_method strict
+%endif
 
 %def_with docs
 
@@ -13,8 +15,8 @@
 %def_with jemalloc
 
 Name: blender
-Version: 2.93.4
-Release: alt2.1
+Version: 2.93.5
+Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -49,6 +51,7 @@ Patch28: blender-2.90.0-alt-doc.patch
 Patch29: blender-2.90-alt-non-x86_64-linking.patch
 Patch30: blender-2.93.0-suse-reproducible.patch
 Patch31: blender-2.93.4-alt-openimageio-compat.patch
+Patch32: blender-2.93.5-alt-clang-search-directories.patch
 
 Patch2000: blender-e2k-support.patch
 
@@ -75,7 +78,7 @@ BuildRequires: libfreetype-devel
 BuildRequires: openjpeg-tools2.0
 BuildRequires: alembic-devel
 BuildRequires: openvdb-devel libblosc-devel
-BuildRequires: llvm-devel
+BuildRequires: llvm-devel clang-devel clang-devel-static
 BuildRequires: libgomp-devel
 BuildRequires: libgmp-devel libgmpxx-devel
 BuildRequires: libharu-devel
@@ -191,6 +194,7 @@ This package contains documentation for Blender.
 %patch29 -p1
 %patch30 -p1
 %patch31 -p1
+%patch32 -p1
 %ifarch %e2k
 %patch2000 -p1
 # lcc 1.25.15's EDG bug would fail building OPENVDB+TBB otherwise
@@ -242,6 +246,7 @@ fi
 	-DWITH_CXX_GUARDEDALLOC=OFF \
 	-DWITH_INSTALL_PORTABLE=OFF \
 	-DWITH_LLVM=ON \
+	-DWITH_CLANG=ON \
 	-DWITH_PYTHON_SAFETY=OFF \
 	-DWITH_OPENMP=ON \
 	-DWITH_OPENCOLLADA=ON \
@@ -310,6 +315,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Fri Oct 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.93.5-alt1
+- Updated to upstream version 2.93.5.
+
 * Fri Oct 01 2021 Michael Shigorin <mike@altlinux.org> 2.93.4-alt2.1
 - Build with openshadinglanguage on %%e2k too (thx ilyakurdyukov@).
 - Fixed bogus date in 2008's changelog.
