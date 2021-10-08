@@ -4,7 +4,7 @@
 
 Name: PDFlib-Lite
 Version: 7.0.5
-Release: alt1.p3.1
+Release: alt1.p3.2
 
 Summary: A library for on-the-fly PDF generation
 License: Freely distributable, free for personal/research use and OSS development
@@ -165,6 +165,7 @@ PDF library binding for php
 
 %build
 %configure \
+    --disable-static \
 	--with-pyincl=%python_includedir \
 	--with-py=%_usr \
 	--with-tclpkg=%_libdir/tcl
@@ -260,10 +261,12 @@ install -m0755 --directory %buildroot$RPM_DOC_DIR/PDFLib-Lite-%version/sample/ph
 
 # TODO:
 # - fix bindings
-# - devel-static subpackage?
 # - consider http://cvs.pld-linux.org/cgi-bin/cvsweb/packages/pdflib/pdflib.spec
 
 %changelog
+* Fri Oct 08 2021 Grigory Ustinov <grenka@altlinux.org> 7.0.5-alt1.p3.2
+- Fixed FTBFS.
+
 * Sat Sep 30 2017 Michael Shigorin <mike@altlinux.org> 7.0.5-alt1.p3.1
 - 7.0.5p3
 - added license file (non-commercial use only)
