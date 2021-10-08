@@ -1,5 +1,5 @@
 Name: shelxle
-Version: 1.0.1324
+Version: 1.0.1326
 Release: alt1
 
 Summary: A Qt GUI for SHELX
@@ -41,6 +41,10 @@ cp kissfft/COPYING COPYING_kissfft
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Fri Oct 08 2021 Denis G. Samsonenko <ogion@altlinux.org> 1.0.1326-alt1
+- new version
+- fix wght refine
+
 * Mon Sep 27 2021 Denis G. Samsonenko <ogion@altlinux.org> 1.0.1324-alt1
 - new version
 - fix DSR gui fragment rotation without left mouse button pressed
