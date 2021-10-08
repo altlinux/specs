@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 5.1.1
-Release: alt1
+Release: alt2
 Summary: Jupyter Qt console
 License: BSD
 Group: Development/Python3
@@ -31,6 +31,7 @@ BuildRequires: python3(flaky)
 BuildRequires: /usr/bin/py.test3
 BuildRequires: python3-module-pytest-qt
 BuildRequires: xvfb-run
+BuildRequires: python3(nest_asyncio)
 
 %py3_provides %oname
 %py3_requires traitlets jupyter_core jupyter_client pygments ipykernel
@@ -81,6 +82,9 @@ xvfb-run py.test3 -vv -ra -k "not (test_00 and (test_scroll or test_debug or tes
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Fri Oct 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.1-alt2
+- Updated build dependencies.
+
 * Mon Aug 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.1-alt1
 - Updated to upstream version 5.1.1.
 - Enabled tests.

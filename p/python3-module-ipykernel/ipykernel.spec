@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 6.2.0
-Release: alt1
+Release: alt2
 Summary: IPython Kernel for Jupyter
 License: BSD-3-Clause
 Group: Development/Python3
@@ -22,6 +22,7 @@ BuildRequires: python3(IPython)
 BuildRequires: python3(IPython.testing.tests)
 BuildRequires: python3(flaky)
 BuildRequires: python3(numpy.testing)
+BuildRequires: python3(nest_asyncio)
 
 %add_python3_req_skip gtk
 
@@ -66,6 +67,9 @@ PYTHONPATH=$(pwd) py.test3 -vv
 %python3_sitelibdir/%oname/*/tests
 
 %changelog
+* Thu Oct 07 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.0-alt2
+- Updated build dependencies.
+
 * Tue Aug 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.0-alt1
 - Updated to upstream version 6.2.0.
 

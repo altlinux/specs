@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname notebook
 
 #%def_disable check
@@ -6,13 +8,11 @@
 %def_without doc
 
 Name: python3-module-%oname
-Version: 6.4.0
+Version: 6.4.4
 Release: alt1
-
 Summary: Jupyter Interactive Notebook
 License: BSD
 Group: Development/Python3
-
 Url: https://pypi.python.org/pypi/notebook/
 
 # Source-url: %__pypi_url %oname
@@ -128,6 +128,8 @@ nosetests3 -vv --with-coverage --cover-package=%oname %oname
 %_bindir/jupyter-nbextension
 %_bindir/jupyter-notebook
 %_bindir/jupyter-serverextension
+%_desktopdir/jupyter-notebook.desktop
+%_iconsdir/hicolor/scalable/apps/notebook.svg
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname-*.egg-info
 %exclude %python3_sitelibdir/*/tests
@@ -151,6 +153,9 @@ nosetests3 -vv --with-coverage --cover-package=%oname %oname
 %endif
 
 %changelog
+* Fri Oct 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.4.4-alt1
+- Updated to upstream version 6.4.4.
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 6.4.0-alt1
 - new version 6.4.0 (with rpmrb script)
 

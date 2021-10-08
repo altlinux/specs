@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: python3-module-%oname
-Version: 6.2.0
+Version: 7.0.6
 Release: alt1
 Summary: Jupyter protocol implementation and client libraries
 License: BSD
@@ -27,6 +27,8 @@ BuildRequires: python3(IPython)
 BuildRequires: python3(IPython.testing.tests)
 BuildRequires: python3(async_generator)
 BuildRequires: python3(nest_asyncio)
+BuildRequires: python3(myst_parser)
+BuildRequires: python3(entrypoints)
 
 %py3_provides %oname
 %py3_requires traitlets jupyter_core zmq
@@ -125,6 +127,9 @@ py.test3 -vv
 %doc docs/_build/html/*
 
 %changelog
+* Thu Oct 07 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.0.6-alt1
+- Updated to upstream version 7.0.6.
+
 * Thu Aug 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.0-alt1
 - Updated to upstream version 6.2.0.
 
