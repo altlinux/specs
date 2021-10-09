@@ -1,13 +1,13 @@
 %define armips_commit 7885552b208493a6a0f21663770c446c3ba65576
-%define discord_rpc_commit 3d3ae7129d17643bc706da0a2eea85aafd10ab3a
-%define glslang_commit d0850f875ec392a130ccf00018dab458b546f27c
-%define miniupnp_commit 7e229ddd635933239583ab190d9b614bde018157
-%define ppsspp_lang_commit 6bd5b4bc983917ea8402f73c726b46e36f3de0b4
-%define spirv_cross_commit a1f7c8dc8ea2f94443951ee27003bffa562c1f13
+%define discord_rpc_commit 963aa9f3e5ce81a4682c6ca3d136cddda614db33
+%define glslang_commit dc11adde23c455a24e13dd54de9b4ede8bdd7db8
+%define miniupnp_commit 3a87be33e797ba947b2b2a5f8d087f6c3ff4d93e
+%define spirv_cross_commit 9acb9ec31f5a8ef80ea6b994bb77be787b08d3d1
+%define zstd_version 1.5.0
 
 Name: ppsspp
-Version: 1.11.3
-Release: alt2
+Version: 1.12.1
+Release: alt1
 
 Summary: PlayStation Portable Emulator
 License: GPL-2.0-or-later
@@ -28,16 +28,15 @@ Source2: discord-rpc-%discord_rpc_commit.tar
 Source3: glslang-%glslang_commit.tar
 # https://github.com/hrydgard/miniupnp/archive/%miniupnp_commit/miniupnp-%miniupnp_commit.tar.gz
 Source4: miniupnp-%miniupnp_commit.tar
-# https://github.com/hrydgard/ppsspp-lang/archive/%ppsspp_lang_commit/ppsspp-lang-%ppsspp_lang_commit.tar.gz
-Source5: ppsspp-lang-%ppsspp_lang_commit.tar
 # https://github.com/KhronosGroup/SPIRV-Cross/archive/%spirv_cross_commit/SPIRV-Cross-%spirv_cross_commit.tar.gz
-Source6: SPIRV-Cross-%spirv_cross_commit.tar
+Source5: SPIRV-Cross-%spirv_cross_commit.tar
+# https://github.com/facebook/zstd/archive/v%zstd_version/zstd-%zstd_version.tar.gz
+Source6: zstd-%zstd_version.tar
 Source7: %name.desktop
 Source8: %name-qt.desktop
 
 Patch0: %name-alt-ffmpeg.patch
 Patch1: %name-alt-git.patch
-Patch2: %name-alt-ffmpeg-4.4.patch
 
 BuildRequires: cmake
 BuildRequires: pkgconfig(Qt5Multimedia)
@@ -91,12 +90,11 @@ This build using the Qt frontend.
 %__mv -Tf ../discord-rpc-%discord_rpc_commit ext/discord-rpc
 %__mv -Tf ../glslang-%glslang_commit ext/glslang
 %__mv -Tf ../miniupnp-%miniupnp_commit ext/miniupnp
-%__mv -Tf ../ppsspp-lang-%ppsspp_lang_commit assets/lang
 %__mv -Tf ../SPIRV-Cross-%spirv_cross_commit ext/SPIRV-Cross
+%__mv -Tf ../zstd-%zstd_version ext/zstd
 
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 echo "// This is a generated file.
 
@@ -125,7 +123,11 @@ cmake .. \
 	-DLIBZIP_INCLUDE_DIR=%_includedir \
 	-DPNG_LIBRARY=%_libdir/libpng.so \
 	-DPNG_PNG_INCLUDE_DIR=%_includedir \
+%ifarch %arm
+	-DUSING_GLES2:BOOL=TRUE \
+%else
 	-DOpenGL_GL_PREFERENCE:STRING=GLVND \
+%endif
 	-Wno-dev
 popd
 
@@ -148,7 +150,7 @@ cmake .. \
 	-DLIBZIP_INCLUDE_DIR=%_includedir \
 	-DPNG_LIBRARY=%_libdir/libpng.so \
 	-DPNG_PNG_INCLUDE_DIR=%_includedir \
-%ifarch armh
+%ifarch %arm
 	-DUSING_GLES2:BOOL=TRUE \
 %else
 	-DOpenGL_GL_PREFERENCE:STRING=GLVND \
@@ -196,6 +198,9 @@ CPLUS_INCLUDE_PATH=%_includedir/libzip %make_build -C %_target_platform-qt
 %_desktopdir/%name-qt.desktop
 
 %changelog
+* Sat Oct 09 2021 Nazarov Denis <nenderus@altlinux.org> 1.12.1-alt1
+- Version 1.12.1
+
 * Fri Apr 16 2021 Nazarov Denis <nenderus@altlinux.org> 1.11.3-alt2
 - Fix build with ffmpeg 4.4
 
