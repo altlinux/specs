@@ -1,6 +1,6 @@
 Name: radiotray-ng
 Version: 0.2.7
-Release: alt1
+Release: alt2
 Summary: Internet radio player
 
 License: GPLv3+
@@ -72,6 +72,13 @@ on modern technologies (gstreamer 1.0, python3 and c++).
 %setup -q -n %name-%version
 %patch1 -p1
 
+# fix building on e2k 
+# https://bugzilla.altlinux.org/40634
+%ifarch %e2k
+	# as of lcc 1.25.17 (glib2 induces warnings causing ftbfs)
+	sed -i 's,-Werror,,' CMakeLists.txt
+%endif
+
 %build
 %cmake_insource -DCONFIGURED_ONCE:BOOL=YES \
     -DLSB_RELEASE_EXECUTABLE="lsb_release" \
@@ -122,6 +129,8 @@ desktop-file-validate %buildroot%_desktopdir/rtng-bookmark-editor.desktop
 %_datadir/%name
 
 %changelog
+* Sat Oct 02 2021 Evgeniy Kukhtinov <neurofreak@altlinux.org> 0.2.7-alt2
+- Fix building on %%e2k, thanks to mike@ (closes: 40634)
+
 * Wed Jul 07 2021 Evgeniy Kukhtinov <neurofreak@altlinux.org> 0.2.7-alt1
 - initial build
-
