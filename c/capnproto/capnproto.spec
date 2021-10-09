@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: capnproto
-Version: 0.8.0
-Release: alt3
+Version: 0.9.1
+Release: alt1
 Summary: A data interchange format and capability-based RPC system
 License: MIT
 Url: https://capnproto.org
@@ -76,6 +76,10 @@ cd c++
 cd c++
 # disable networking test
 subst '/TEST(AsyncIo, SimpleNetwork)/,/^}/s/^/\/\//' src/kj/async-io-test.c++
+# AsyncIo/AncillaryMessageHandler test will fail on older kernels (such as
+# 4.9.56-std-def-alt1.1), but is not important and could be ignored, for
+# details look at https://github.com/capnproto/capnproto/issues/1349
+subst '/TEST(AsyncIo, AncillaryMessageHandler)/,/^}/s/^/\/\//' src/kj/async-io-test.c++
 %make_build check
 
 %files
@@ -91,6 +95,9 @@ subst '/TEST(AsyncIo, SimpleNetwork)/,/^}/s/^/\/\//' src/kj/async-io-test.c++
 %_libdir/cmake/CapnProto/
 
 %changelog
+* Fri Oct 01 2021 Vitaly Chikunov <vt@altlinux.org> 0.9.1-alt1
+- Update to v0.9.1 (2021-09-22).
+
 * Fri Sep 03 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.8.0-alt3
 - Added patch for Elbrus
 

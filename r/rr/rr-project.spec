@@ -1,10 +1,13 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
-%define _stripped_files_terminate_build 1
+# Cannot be enabled due to librrpage.so:
+# %%define _stripped_files_terminate_build 1
+# Workaround for https://github.com/rr-debugger/rr/issues/2977
+%filter_from_requires /^libc.so.6(GLIBC_PRIVATE)/d
 
 Name:		rr
-Version:	5.4.0
-Release:	alt3
+Version:	5.5.0
+Release:	alt1
 Summary:	Record and Replay Framework
 Group:		Development/Debuggers
 License:	MIT and BSD and Apache-2.0
@@ -40,7 +43,7 @@ subst "s!/bin/!/lib/rr/!" src/replay_syscall.cc
 subst "s!/bin/rr_page_!lib/rr/rr_page_!" src/AddressSpace.cc
 
 %build
-%add_optflags -Wno-error=class-memaccess
+%add_optflags -Wno-error=class-memaccess -Wno-error=unused-result
 %cmake -Ddisable32bit=ON -DBUILD_TESTS=OFF
 %cmake_build
 
@@ -60,6 +63,9 @@ rm -f %buildroot%_bindir/rr_page*
 %_libdir/rr
 
 %changelog
+* Sat Oct 09 2021 Vitaly Chikunov <vt@altlinux.org> 5.5.0-alt1
+- Update to 5.5.0 (2021-09-20).
+
 * Sat Jun 12 2021 Arseny Maslennikov <arseny@altlinux.org> 5.4.0-alt3
 - NMU: spec: adapt to new cmake macros.
 
