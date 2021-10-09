@@ -1,6 +1,9 @@
+%define optflags_lto %nil
+%set_gcc_version 10
+
 Name: attract
 Version: 2.6.1
-Release: alt1
+Release: alt2
 
 Summary: Arcade-like front-end for emulators
 Summary(ru_RU.UTF-8): Оболочка в стиле аркадных автоматов для эмуляторов
@@ -9,13 +12,24 @@ License: GPLv2+
 Group: Games/Arcade
 Url: http://attractmode.org/
 
-Packager: Artyom Bystrov <arbars@altlinux.org>
-
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Mon Jul 29 2019
-# optimized out: fontconfig libGL-devel libX11-devel libavcodec-devel libavutil-devel libfreetype-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit libsasl2-3 libstdc++-devel libxcbutil-image pkg-config python-base python-modules python3 python3-base xorg-xproto-devel
-BuildRequires: fontconfig-devel gcc-c++ libxcb libGLU-devel libSFML-devel libXinerama-devel libarchive-devel libavformat-devel libavresample-devel libcurl-devel libexpat-devel libjpeg-devel libopenal-devel libswscale-devel zlib-devel
+BuildRequires: fontconfig-devel
+BuildRequires: gcc10-c++
+BuildRequires: libxcb
+BuildRequires: libGLU-devel
+BuildRequires: libSFML-devel
+BuildRequires: libXinerama-devel
+BuildRequires: libarchive-devel
+BuildRequires: libavformat-devel
+BuildRequires: libavresample-devel
+BuildRequires: libcurl-devel
+BuildRequires: libexpat-devel
+BuildRequires: libjpeg-devel
+BuildRequires: libopenal-devel
+BuildRequires: libswscale-devel
+BuildRequires: zlib-devel
+BuildRequires: libXrandr-devel
 
 %description
 Attract-Mode is a graphical frontend for command line emulators such as MAME,
@@ -34,7 +48,7 @@ Mac OS X и Windows.
 %setup -n %name-%version
 
 %build
-%make_build OPTIMISE="%optflags"
+%make_build OPTIMISE="%optflags -std=gnu++14"
 
 %install
 %makeinstall
@@ -43,15 +57,21 @@ install -Dm644 util/linux/attract-mode.png         %buildroot%_iconsdir/hicolor/
 install -Dm644 util/linux/attract-mode.desktop         %buildroot%_desktopdir/%name.desktop
 
 %files
-%dir /usr/share/attract
-%dir /usr/share/icons/hicolor/512x512
-%dir /usr/share/icons/hicolor/512x512/apps
+%dir %_datadir/attract
+%dir %_iconsdir/hicolor/512x512
+%dir %_iconsdir/hicolor/512x512/apps
 %doc License.txt Readme.md Layouts.md
 %_bindir/%name
 %_datadir/%name/*
 %_datadir/appdata/%name.appdata.xml
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.png
+
+
+%changelog
+* Sun Oct 10 2021 Artyom Bystrov <arbars@altlinux.org> 2.6.1-alt2
+- Update to latest state of upstream
+- walk-around build on Sisyphus (yes, it's creepy, but it's works)
 
 %changelog
 * Mon Jan 20 2020 Artyom Bystrov <arbars@altlinux.org> 2.6.1-alt1
