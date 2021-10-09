@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define xdg_name org.gnome.Evince
 
 %define _libexecdir %_prefix/libexec
@@ -20,7 +20,7 @@
 
 Name: evince
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: A document viewer
 Group: Office
@@ -45,8 +45,8 @@ Requires: dconf
 %define handy_ver 1.0.0
 %define spectre_ver 0.2.0
 
-BuildRequires(pre): meson
-BuildRequires: libpoppler-glib-devel >= %poppler_ver
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson libpoppler-glib-devel >= %poppler_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: gcc-c++ gnome-common libappstream-glib-devel yelp-tools
 BuildRequires: icon-theme-adwaita libdjvu-devel libgnome-keyring-devel
@@ -243,6 +243,9 @@ via the Evince.
 
 
 %changelog
+* Sat Oct 09 2021 Yuri N. Sedunov <aris@altlinux.org> 40.4-alt2
+- 40.4-7-g5fc3dc28 (updated translations)
+
 * Thu Jul 15 2021 Yuri N. Sedunov <aris@altlinux.org> 40.4-alt1
 - 40.4
 - new -data and libevince-devel-doc subpackages
