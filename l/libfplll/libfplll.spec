@@ -1,24 +1,28 @@
-%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 # BEGIN SourceDeps(oneline):
 BuildRequires: libgmp-devel mpir-devel
 # END SourceDeps(oneline)
-%add_optflags %optflags_shared
+#%%add_optflags %%optflags_shared
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Group: System/Libraries
-%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# The ARM and s390x builders appear to run out of memory with LTO
+%ifarch %{arm} s390x
+%global _lto_cflags %{nil}
+%endif
+
 Name:           libfplll
-Version:        5.3.1
-Release:        alt2_1
+Version:        5.4.1
+Release:        alt1_2
 Summary:        LLL-reduces euclidean lattices
 License:        LGPLv2+
-URL:            https://github.com/fplll/fplll
+URL:            https://fplll.github.io/fplll/
 Source0:        https://github.com/fplll/fplll/releases/download/%{version}/fplll-%{version}.tar.gz
 
 BuildRequires:  gcc-c++
 BuildRequires:  help2man
-BuildRequires:  libmpfr-devel
-BuildRequires:  libqd-devel
+BuildRequires:  pkgconfig(mpfr)
+BuildRequires:  pkgconfig(qd)
 Source44: import.info
 
 %description
@@ -76,14 +80,8 @@ sed -e '/#ifndef bool/,/#endif/d' \
     -i configure
 
 %build
+%autoreconf -fisv
 %configure --disable-silent-rules LIBS=-lpthread
-
-# Eliminate hardcoded rpaths, and workaround libtool moving all -Wl options
-# after the libraries to be linked
-sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
-    -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
-    -e 's|-nostdlib|-Wl,--as-needed &|' \
-    -i libtool
 
 %make_build
 
@@ -91,7 +89,6 @@ sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
 cd fplll
 export LD_LIBRARY_PATH=$PWD/.libs
 help2man -N -o ../fplll.1 ./fplll
-help2man -N -o ../latsieve.1 ./latsieve
 help2man -N -o ../latticegen.1 ./latticegen
 cd -
 
@@ -110,7 +107,7 @@ LD_LIBRARY_PATH=$PWD/src/.libs make check
 %files
 %doc NEWS README.md
 %doc --no-dereference COPYING
-%{_libdir}/libfplll.so.6*
+%{_libdir}/libfplll.so.7*
 %{_datadir}/fplll/
 
 %files devel
@@ -120,16 +117,19 @@ LD_LIBRARY_PATH=$PWD/src/.libs make check
 %{_libdir}/pkgconfig/fplll.pc
 
 %files static
-%{_libdir}/*.a
+%{_libdir}/libfplll.a
 
 %files tools
-%{_bindir}/*
+%{_bindir}/fplll
+%{_bindir}/latticegen
 %{_mandir}/man1/fplll.1*
-%{_mandir}/man1/latsieve.1*
 %{_mandir}/man1/latticegen.1*
 
 
 %changelog
+* Fri Oct 01 2021 Igor Vlasenko <viy@altlinux.org> 5.4.1-alt1_2
+- new version
+
 * Sat Aug 28 2021 Igor Vlasenko <viy@altlinux.org> 5.3.1-alt2_1
 - NMU for unknown reason:
   the person above was too neglectant to add --changelog "- NMU: <reason>" option.
