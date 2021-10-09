@@ -9,7 +9,7 @@
 
 Name: wxGTK3.0
 Version: %wxbranch.5.1
-Release: alt1
+Release: alt2
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -286,7 +286,7 @@ CONF_FLAG="--enable-shared \
 	--without-gnomeprint \
 	--enable-graphics_ctx \
 	--with-libmspack \
-	--enable-stl \
+	--disable-stl \
 	--enable-std_containers \
 	--enable-std_string_conv_in_wxstring \
 	--enable-ipv6 \
@@ -445,6 +445,9 @@ ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Sun Oct 10 2021 Anton Midyukov <antohami@altlinux.org> 3.0.5.1-alt2
+- rebuild with disable-stl (Closes: 41082)
+
 * Wed Nov 18 2020 Anton Midyukov <antohami@altlinux.org> 3.0.5.1-alt1
 - Version 3.0.5.1
 
