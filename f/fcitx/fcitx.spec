@@ -1,5 +1,8 @@
 # due to kcmshell4
 %filter_from_requires /^kde4base-runtime-core/d
+# scripts test for kdialog before using
+%filter_from_requires /kdialog/d
+
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-alternatives rpm-macros-cmake rpm-macros-fedora-compat
@@ -14,7 +17,7 @@ BuildRequires: /usr/bin/desktop-file-install pkgconfig(cairo-xlib) pkgconfig(fon
 Name:			fcitx
 Summary:		An input method framework
 Version:		4.2.9.8
-Release:		alt3_2
+Release:		alt3_3
 License:		GPLv2+
 URL:			https://fcitx-im.org/wiki/Fcitx
 Source0:		http://download.fcitx-im.org/fcitx/%{name}-%{version}_dict.tar.xz
@@ -308,6 +311,9 @@ EOF
 %endif
 
 %changelog
+* Sat Oct 09 2021 Ivan A. Melnikov <iv@altlinux.org> 4.2.9.8-alt3_3
+- skip kdialog from requires, as it's not really needed
+
 * Tue Jul 06 2021 Igor Vlasenko <viy@altlinux.org> 4.2.9.8-alt3_2
 - fixed build (closes: #40386)
 
