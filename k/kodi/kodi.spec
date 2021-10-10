@@ -1,5 +1,5 @@
 Name: kodi
-Version: 19.1
+Version: 19.2
 Release: alt1
 
 Summary: Kodi Media Center
@@ -193,6 +193,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Sun Oct 10 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.2-alt1
+- 19.2 Matrix released
+
 * Tue Jun 15 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.1-alt1
 - 19.1 Matrix released
 
