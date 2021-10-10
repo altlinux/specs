@@ -1,5 +1,5 @@
 Name: installer-scripts-remount-stage2
-Version: 0.5.23
+Version: 0.5.24
 Release: alt1
 
 Summary: Shared installer scripts: remount
@@ -48,6 +48,9 @@ __EOF__
 %attr(0755,root,root) %_datadir/install2/initinstall.d/85-start-multipath.sh
 
 %changelog
+* Sun Oct 10 2021 Anton Midyukov <antohami@altlinux.org> 0.5.24-alt1
+- install2-remount-functions: run set_active for msdos partition table type only
+
 * Thu Jul 08 2021 Anton Midyukov <antohami@altlinux.org> 0.5.23-alt1
 - install2-remount-functions: check for systemd-tmpfiles utilities in destdir
 - install2-remount-functions: replace check systemd-tmpfiles to mount_chroot
