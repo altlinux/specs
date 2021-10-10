@@ -6,10 +6,17 @@
 %define ffmpeg_version 3.4
 # require
 %define tg_qt5_version 5.15.2
+
+# TODO: def_with clang
+%def_with gtk3
+%def_with tgvoip
+%def_with wayland
+%def_with x11
+%def_with webkit
 %def_without ffmpeg_static
 
 Name: telegram-desktop
-Version: 3.1.5
+Version: 3.1.8
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -50,8 +57,11 @@ BuildRequires: cmake >= 3.16
 BuildRequires: extra-cmake-modules
 
 BuildRequires: qt5-base-devel >= %tg_qt5_version
-BuildRequires: libqt5-core libqt5-network libqt5-gui qt5-imageformats qt5-wayland-devel qt5-svg-devel
-BuildRequires: libwebkit2gtk-devel
+BuildRequires: libqt5-core libqt5-network libqt5-gui qt5-imageformats qt5-svg-devel
+%if_with webkit
+#BuildRequires: libwebkit2gtk-devel
+BuildRequires: pkgconfig(webkit2gtk-4.0)
+%endif
 # needs for smiles and emojicons
 Requires: qt5-imageformats
 
@@ -60,6 +70,16 @@ Requires: libqt5-core >= %_qt5_version
 
 # for -lQt5PlatformSupport
 BuildRequires: qt5-base-devel-static
+
+%if_with wayland
+# TODO: add cmake provides
+#BuildRequires: cmake(KF5Wayland)
+#BuildRequires: cmake(Qt5WaylandClient)
+#BuildRequires: pkgconfig(wayland-client)
+#BuildRequires: qt5-qtbase-static
+BuildRequires: kf5-kwayland-devel
+BuildRequires: qt5-wayland-devel
+%endif
 
 BuildRequires: libenchant2-devel
 BuildRequires: libhunspell-devel
@@ -76,19 +96,36 @@ BuildRequires: libxxhash-devel
 BuildRequires: liblz4-devel
 
 BuildRequires: libminizip-devel libpcre-devel libexpat-devel libssl-devel bison
-BuildRequires: libxcbutil-keysyms-devel
+%if_with x11
+#BuildRequires: libxcbutil-keysyms-devel
+BuildRequires: pkgconfig(xcb)
+BuildRequires: pkgconfig(xcb-keysyms)
+BuildRequires: pkgconfig(xcb-record)
+BuildRequires: pkgconfig(xcb-screensaver)
+%endif
 
-# TODO:
-BuildRequires: libX11-devel
-BuildRequires: kf5-kwayland-devel
 
+%if_with gtk3
 # GTK 3.0 integration
 BuildRequires: libgtk+3-devel libappindicator-gtk3-devel libglibmm-devel
+%endif
+
+%if_with tgvoip
+BuildRequires: libtgvoip-devel >= 2.4.4-alt5
+#BuildRequires: pkgconfig(tgvoip) >= 2.4.4
+%else
+BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(libpulse)
+Provides: bundled(libtgvoip) = 2.4.4
+%endif
+
+BuildRequires: libopus-devel
+
 # TODO:
 # libdee-devel
 
 BuildRequires: libopenal-devel >= 1.17.2
-# libportaudio2-devel libxcb-devel 
+# libportaudio2-devel libxcb-devel
 # used by qt imageformats: libwebp-devel
 BuildRequires: libva-devel libdrm-devel
 
@@ -104,9 +141,6 @@ BuildRequires: libjpeg-devel
 # Just to disable noise like Package 'libffi', required by 'gobject-2.0', not found
 BuildRequires: libffi-devel
 
-# legacy tgvoip
-BuildRequires: libtgvoip-devel >= 2.4.4-alt5
-BuildRequires: libopus-devel
 
 # uses forked version, tag e0ea6af518345c4a46195c4951e023e621a9eb8f
 BuildRequires: librlottie-devel >= 0.1.1
@@ -173,16 +207,30 @@ or business messaging needs.
 # TODO: ld: lib_webview/liblib_webview.a(webview_linux_webkit_gtk.cpp.o): undefined reference to symbol 'dlclose@@GLIBC_2.2.5
 %__subst "s|\(desktop-app::external_rnnoise\)|\1 -lyuv -ldl|" Telegram/cmake/lib_tgcalls.cmake
 
-rm -rf Telegram/ThirdParty/variant \
-	Telegram/ThirdParty/GSL \
+# Unbundling libraries...
+# TODO: minizip
+rm -rv \
 	Telegram/ThirdParty/Catch \
-	Telegram/ThirdParty/xxHash \
-	Telegram/ThirdParty/jemalloc \
-	Telegram/ThirdParty/lz4 \
-	Telegram/ThirdParty/libtgvoip \
-	Telegram/ThirdParty/rlottie \
+	Telegram/ThirdParty/GSL \
 	Telegram/ThirdParty/QR \
-	Telegram/ThirdParty/expected
+	Telegram/ThirdParty/expected \
+	Telegram/ThirdParty/jemalloc \
+	Telegram/ThirdParty/fcitx-qt5 \
+	Telegram/ThirdParty/fcitx5-qt \
+	Telegram/ThirdParty/hime \
+	Telegram/ThirdParty/hunspell \
+	Telegram/ThirdParty/libdbusmenu-qt \
+	Telegram/ThirdParty/lz4 \
+	Telegram/ThirdParty/nimf \
+	Telegram/ThirdParty/range-v3 \
+	Telegram/ThirdParty/xxHash \
+	Telegram/ThirdParty/rlottie \
+	%nil
+
+# Unbundling libtgvoip if build against packaged version...
+%if_with libtgvoip
+rm -rv Telegram/ThirdParty/libtgvoip
+%endif
 
 %build
 %if_with ffmpeg_static
@@ -197,15 +245,34 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
 %cmake_insource -DDESKTOP_APP_USE_PACKAGED=ON \
     -DTDESKTOP_API_ID=182015 \
     -DTDESKTOP_API_HASH=bb6c3f8fffd8fe6804fc5131a08e1c44 \
+    -DDESKTOP_APP_USE_PACKAGED:BOOL=ON \
     -DDESKTOP_APP_USE_PACKAGED_FONTS:BOOL=ON \
-    -DDESKTOP_APP_DISABLE_SPELLCHECK:BOOL=OFF \
-    -DTDESKTOP_DISABLE_GTK_INTEGRATION:BOOL=OFF \
     -DDESKTOP_APP_USE_GLIBC_WRAPS:BOOL=OFF \
     -DDESKTOP_APP_DISABLE_CRASH_REPORTS:BOOL=ON \
-    -DTDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME:BOOL=ON \
-    -DTDESKTOP_DISABLE_DESKTOP_FILE_GENERATION:BOOL=ON \
-    -DTDESKTOP_FORCE_GTK_FILE_DIALOG:BOOL=ON \
+    -DDESKTOP_APP_DISABLE_WEBRTC_INTEGRATION:BOOL=OFF \
+    -DDESKTOP_APP_DISABLE_SPELLCHECK:BOOL=OFF \
+%if_with gtk3
+    -DDESKTOP_APP_DISABLE_GTK_INTEGRATION:BOOL=OFF \
+%else
+    -DDESKTOP_APP_DISABLE_GTK_INTEGRATION:BOOL=ON \
+%endif
+%if %{with webkit}
+    -DDESKTOP_APP_DISABLE_WEBKITGTK:BOOL=OFF \
+%else
+    -DDESKTOP_APP_DISABLE_WEBKITGTK:BOOL=ON \
+%endif
+%if_with wayland
     -DDESKTOP_APP_DISABLE_WAYLAND_INTEGRATION:BOOL=OFF \
+%else
+    -DDESKTOP_APP_DISABLE_WAYLAND_INTEGRATION:BOOL=ON \
+%endif
+%if_with x11
+    -DDESKTOP_APP_DISABLE_X11_INTEGRATION:BOOL=OFF \
+%else
+    -DDESKTOP_APP_DISABLE_X11_INTEGRATION:BOOL=ON \
+%endif
+# lottie_cache.h:9:10: fatal error: ffmpeg/ffmpeg_utility.h: No such file or directory
+#    -DDESKTOP_APP_LOTTIE_USE_CACHE:BOOL=OFF \
     %nil
 
 %make_build VERBOSE=1
@@ -238,6 +305,16 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Sat Oct 09 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.8-alt1
+- new version 3.1.8 (with rpmrb script)
+
+* Fri Oct 08 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.6-alt1
+- new version 3.1.6 (with rpmrb script)
+- build with external range-v3
+- rearrange bundled libraries removing
+- fix gtk3 integration
+- add control for build with x11, wayland, webkit, and external libtgvoip
+
 * Wed Sep 29 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.5-alt1
 - new version 3.1.5 (with rpmrb script)
 
