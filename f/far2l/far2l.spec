@@ -1,6 +1,6 @@
 Name: far2l
 Version: 2.0
-Release: alt3.89d986a
+Release: alt4.89d986a
 
 Summary: Linux port of FAR v2
 
@@ -13,6 +13,9 @@ Source: %name-%version.tar
 
 BuildRequires: cmake gcc-c++ glib2-devel
 BuildRequires: libwxGTK3.0-devel
+
+# multiarc/src/arcread.cpp:184:30: error: cast from 'ArcItemUserData*' to 'DWORD_PTR' {aka 'unsigned int'} loses precision [-fpermissive]
+ExcludeArch: ppc64le
 
 %description
 Linux port of FAR v2
@@ -47,6 +50,9 @@ ln -s ../../%_libexecdir/%name/far2l %buildroot%_bindir/%name
 %_libexecdir/%name/
 
 %changelog
+* Sun Oct 10 2021 Igor Vlasenko <viy@altlinux.org> 2.0-alt4.89d986a
+- NMU: added explicit ExcludeArch: ppc64le for rebuild to not fail
+
 * Sat Sep 15 2018 Anton Midyukov <antohami@altlinux.org> 2.0-alt3.89d986a
 - rebuilt with libwxGTK3.0
 
