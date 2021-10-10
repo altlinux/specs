@@ -1,7 +1,7 @@
 %define write_group users
 
 Name: leiningen
-Version: 2.9.6
+Version: 2.9.7
 Release: alt1
 Summary: Leiningen is for automating Clojure projects without setting your hair on fire
 License: EPL-1.0
@@ -9,8 +9,8 @@ Group:   Development/Java
 URL: https://leiningen.org/
 
 Source0: %name-%version.tar
-# Get by command: LEIN_VERSION=2.9.2; wget https://github.com/technomancy/leiningen/releases/download/$LEIN_VERSION/leiningen-$LEIN_VERSION-standalone.zip
-Source1: leiningen-%version-standalone.zip
+# Get by command: LEIN_VERSION=2.9.2; wget https://github.com/technomancy/leiningen/releases/download/$LEIN_VERSION/leiningen-$LEIN_VERSION-standalone.jar
+Source1: leiningen-%version-standalone.jar
 Source2: repository.tar
 Source3: lein-classpath
 Patch1: alt-lein-use-offline-repo.patch
@@ -60,6 +60,9 @@ find %buildroot%_localstatedir/%name/.m2/repository -type d | sed 's|%buildroot|
 %attr(775,root,%write_group) %config(noreplace) %_localstatedir/%name/.m2/.lein-classpath
 
 %changelog
+* Tue Oct 05 2021 Andrey Cherepanov <cas@altlinux.org> 2.9.7-alt1
+- New version.
+
 * Wed Apr 28 2021 Andrey Cherepanov <cas@altlinux.org> 2.9.6-alt1
 - New version.
 
