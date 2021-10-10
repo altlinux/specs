@@ -5,7 +5,7 @@
 ExcludeArch: armh
 
 Name: zoneminder
-Version: 1.36.6
+Version: 1.36.8
 Release: alt1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
@@ -163,6 +163,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Sun Oct 10 2021 Anton Farygin <rider@altlinux.ru> 1.36.8-alt1
+- 1.36.8
+
 * Fri Sep 10 2021 Anton Farygin <rider@altlinux.ru> 1.36.6-alt1
 - 1.36.6
 - added php7-apcu to Requires (closes: #39340)
