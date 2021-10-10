@@ -2,7 +2,7 @@
 
 Name: visualboyadvance-m
 Version: 2.1.4
-Release: alt1
+Release: alt2
 
 Summary: Game Boy Advance Emulator
 License: GPLv2
@@ -46,6 +46,12 @@ BuildRequires: nasm
 BuildRequires: libavcodec-devel libavformat-devel libswscale-devel libavutil-devel libswresample-devel bzlib-devel libpcre-devel libbrotli-devel libuuid-devel libexpat-devel 
 # Not stated on developers site:
 BuildRequires: zip bzip2
+
+# build consistently segfaults on armh
+# let's disable just for one release
+%if "%version" == "2.1.4" && "%release" == "alt2"
+ExcludeArch: armh
+%endif
 
 %description
 VisualBoyAdvance-M, or simply VBA-M, is an improved fork from the inactive
@@ -127,6 +133,10 @@ export NPROCS=1
 
 
 %changelog
+* Sun Oct 10 2021 Igor Vlasenko <viy@altlinux.org> 2.1.4-alt2
+- NMU: excluded armh build for 2.1.4-alt2 only,
+  as it consistently segfaults and prevents wxGTK3.0 rebuild
+
 * Tue Feb 16 2021 Ilya Mashkin <oddity@altlinux.ru> 2.1.4-alt1
 - 2.1.4
 - Merge with deprecated VisualBoyAdvance
