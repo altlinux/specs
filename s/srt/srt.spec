@@ -1,6 +1,6 @@
 %define soname 1
 Name: srt
-Version: 1.4.3
+Version: 1.4.4
 Release: alt1
 Summary: Secure Reliable Transport protocol tools
 Group: Networking/Other
@@ -89,5 +89,8 @@ rm -f %buildroot/%_libdir/pkgconfig/haisrt.pc
 %_libdir/pkgconfig/srt.pc
 
 %changelog
+* Sun Oct 10 2021 Anton Farygin <rider@altlinux.ru> 1.4.4-alt1
+- 1.4.4
+
 * Mon Sep 13 2021 Anton Farygin <rider@altlinux.ru> 1.4.3-alt1
 - first build for ALT, based on specfile from Fedora
