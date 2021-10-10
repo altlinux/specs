@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
 Version: 0.0.25
-Release: alt1
+Release: alt2
 
 Group: Games/Strategy
 Summary: Free, open-source realtime strategy game of ancient warfare
@@ -12,7 +12,8 @@ Source: %name-%version.tar
 Patch0: 0ad-mozjs78-version.patch
 Patch1: 0ad-mozjs78-PrepareZoneForGC.patch
 
-ExcludeArch: ppc64le
+# disabled i586 build to unblock wxGTK3.0 rebuild; please remove later
+ExcludeArch: ppc64le %ix86
 
 BuildRequires: gcc-c++ python cmake
 BuildRequires: boost-filesystem-devel boost-flyweight-devel boost-signals-devel
@@ -91,6 +92,9 @@ cp -a binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad/*
 
 %changelog
+* Sun Oct 10 2021 Igor Vlasenko <viy@altlinux.org> 1:0.0.25-alt2
+- NMU: disabled i586 build to unblock wxGTK3.0 rebuild
+
 * Mon Aug 09 2021 Alexey Tourbin <at@altlinux.ru> 1:0.0.25-alt1
 - 0.0.24b -> 0.0.25
 - build with system mozjs78
