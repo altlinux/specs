@@ -9,11 +9,11 @@
 %def_disable check
 %def_enable docs
 %def_with cxx
-%def_with system_tzdata
+%def_without system_tzdata
 
 Name: libical
-Version: 3.0.10
-Release: alt1.1
+Version: 3.0.11
+Release: alt1
 
 Summary: An implementation of basic iCAL protocols
 Group: System/Libraries
@@ -27,10 +27,11 @@ Source: %name-%version.tar
 %endif
 Patch: %name-1.0.1-alt-libdir.patch
 
-%define tzdata_ver 2020d
+%define tzdata_ver 2021c
 %define glib_ver 2.38
 %{?_with_system_tzdata:Requires: tzdata >= %tzdata_ver}
 
+BuildRequires(pre): rpm-macros-cmake rpm-build-gir
 BuildRequires: cmake gcc-c++ ctest gtk-doc libicu-devel icu-utils
 %{?_with_system_tzdata:BuildRequires: tzdata >= %tzdata_ver}
 %{?_with_bdb:BuildRequires: libdb4-devel}
@@ -123,7 +124,7 @@ library.
 
 %prep
 %setup
-%patch -p1
+#%%patch -p1
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -198,6 +199,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %cmake_build -t test
 
 
 %changelog
+* Sun Oct 10 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.11-alt1
+- 3.0.11
+
 * Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.10-alt1.1
 - rebuild with new cmake macros
 
