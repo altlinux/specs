@@ -1,8 +1,8 @@
 %define rname kdoctools
 
 Name: kf5-%rname
-Version: 5.86.0
-Release: alt2
+Version: 5.87.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -96,6 +96,9 @@ KF5 library
 %_K5lib/libKF5DocTools.so.*
 
 %changelog
+* Mon Oct 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.87.0-alt1
+- new version
+
 * Wed Sep 15 2021 Sergey V Turchin <zerg@altlinux.org> 5.86.0-alt2
 - package empty devel-static package for compatibility
 

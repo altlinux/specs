@@ -1,7 +1,7 @@
 %define rname kjs
 
 Name: kf5-%rname
-Version: 5.86.0
+Version: 5.87.0
 Release: alt1
 %K5init altplace
 
@@ -14,10 +14,10 @@ Source: %rname-%version.tar
 
 # Automatically added by buildreq on Thu Mar 19 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libcloog-isl4 libgpg-error libqt5-core libqt5-test libstdc++-devel pkg-config python-base ruby ruby-stdlibs xml-common xml-utils
-#BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static libpcre-devel python-module-google qt5-base-devel rpm-build-ruby
+#BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel libpcre-devel python-module-google qt5-base-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
-BuildRequires: kf5-karchive-devel kf5-kdoctools kf5-kdoctools-devel-static
+BuildRequires: kf5-karchive-devel kf5-kdoctools kf5-kdoctools-devel
 #BuildRequires: kf5-kdelibs4support
 BuildRequires: libpcre-devel
 
@@ -88,6 +88,9 @@ KF5 library
 %_K5lib/libKF5JSApi.so.*
 
 %changelog
+* Mon Oct 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.87.0-alt1
+- new version
+
 * Mon Sep 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.86.0-alt1
 - new version
 

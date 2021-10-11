@@ -6,8 +6,8 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.86.0
-Release: alt2
+Version: 5.87.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -144,6 +144,9 @@ mkdir -p %buildroot/%_K5data/kconfigwidgets/
 %endif
 
 %changelog
+* Mon Oct 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.87.0-alt1
+- new version
+
 * Thu Sep 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.86.0-alt2
 - fix requires
 

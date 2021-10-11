@@ -1,7 +1,7 @@
 %define rname kjsembed
 
 Name: kf5-%rname
-Version: 5.86.0
+Version: 5.87.0
 Release: alt1
 %K5init altplace
 
@@ -14,7 +14,7 @@ Source: %rname-%version.tar
 
 # Automatically added by buildreq on Tue Feb 17 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libgpg-error libqt5-core libqt5-gui libqt5-svg libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-tools-devel ruby ruby-stdlibs xml-common xml-utils
-#BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-ki18n-devel kf5-kjs-devel python-module-google qt5-svg-devel qt5-tools-devel-static rpm-build-ruby
+#BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kdoctools kf5-kdoctools-devel kf5-ki18n-devel kf5-kjs-devel python-module-google qt5-svg-devel qt5-tools-devel-static rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-svg-devel qt5-tools-devel-static
 BuildRequires: kf5-karchive-devel kf5-kdoctools kf5-kdoctools-devel
@@ -74,6 +74,9 @@ KF5 library
 %_K5lib/libKF5JsEmbed.so.*
 
 %changelog
+* Mon Oct 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.87.0-alt1
+- new version
+
 * Mon Sep 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.86.0-alt1
 - new version
 

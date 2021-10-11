@@ -1,8 +1,8 @@
 %define rname knewstuff
 
 Name: kf5-%rname
-Version: 5.86.0
-Release: alt2
+Version: 5.87.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -11,8 +11,6 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
-# upstream
-Patch1: kdebug-443025.patch
 
 # Automatically added by buildreq on Tue Feb 17 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base ruby ruby-stdlibs
@@ -64,7 +62,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 # clean kmoretools menu
 for app in \
@@ -108,6 +105,9 @@ done
 
 
 %changelog
+* Mon Oct 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.87.0-alt1
+- new version
+
 * Wed Oct 06 2021 Sergey V Turchin <zerg@altlinux.org> 5.86.0-alt2
 - add fix against crash in DownloadWidget
 

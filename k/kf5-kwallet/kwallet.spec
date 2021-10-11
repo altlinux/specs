@@ -1,7 +1,7 @@
 %define rname kwallet
 
 Name: kf5-%rname
-Version: 5.86.0
+Version: 5.87.0
 Release: alt1
 %K5init altplace
 
@@ -30,7 +30,7 @@ BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kconfigwi
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kguiaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kitemviews-devel kf5-knotifications-devel
 BuildRequires: kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
-BuildRequires: kf5-kdoctools-devel-static kf5-kdoctools
+BuildRequires: kf5-kdoctools-devel kf5-kdoctools
 BuildRequires: libqca-qt5-devel
 
 %description
@@ -115,6 +115,9 @@ LD_LIBRARY_PATH=BUILD/bin BUILD/bin/fdo_secrets_test
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Mon Oct 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.87.0-alt1
+- new version
+
 * Mon Sep 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.86.0-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname kservice
 
 Name: kf5-%rname
-Version: 5.86.0
+Version: 5.87.0
 Release: alt1
 %K5init altplace
 
@@ -16,12 +16,12 @@ Patch2: alt-initial-preference.patch
 
 # Automatically added by buildreq on Thu Feb 12 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base ruby ruby-stdlibs xml-common xml-utils
-#BuildRequires: docbook-style-xsl extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-ki18n-devel kf5-kwindowsystem-devel python-module-google qt5-base-devel rpm-build-ruby
+#BuildRequires: docbook-style-xsl extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdoctools kf5-kdoctools-devel kf5-ki18n-devel kf5-kwindowsystem-devel python-module-google qt5-base-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: docbook-style-xsl flex bison
 BuildRequires: kf5-karchive-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kcrash-devel
-BuildRequires: kf5-kdbusaddons-devel kf5-kdoctools kf5-kdoctools-devel-static
+BuildRequires: kf5-kdbusaddons-devel kf5-kdoctools kf5-kdoctools-devel
 BuildRequires: kf5-ki18n-devel kf5-kwindowsystem-devel
 
 %description
@@ -89,6 +89,9 @@ sed -i '/num_to_alloc.*\/\//s|//\(.*\)|/* \1 */|' BUILD//src/lex.c
 %_K5srvtyp/*.desktop
 
 %changelog
+* Mon Oct 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.87.0-alt1
+- new version
+
 * Mon Sep 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.86.0-alt1
 - new version
 
