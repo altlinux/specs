@@ -5,7 +5,7 @@
 %define libakregatorprivate libakregatorprivate%sover
 
 Name: kde5-%rname
-Version: 21.08.1
+Version: 21.08.2
 Release: alt1
 %K5init no_appdata
 
@@ -28,7 +28,7 @@ BuildRequires: libqtkeychain-qt5-devel
 BuildRequires: kde5-libkleo-devel
 BuildRequires: kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-grantleetheme-devel kde5-kcontacts-devel kde5-kimap-devel
 BuildRequires: kde5-kmime-devel kde5-kontactinterface-devel kde5-kpimtextedit-devel kde5-libkdepim-devel kde5-messagelib-devel kde5-pimcommon-devel
-BuildRequires: kf5-kcmutils-devel kf5-kcrash-devel kf5-kdelibs4support kf5-kdoctools-devel-static kf5-kiconthemes-devel
+BuildRequires: kf5-kcmutils-devel kf5-kcrash-devel kf5-kdelibs4support kf5-kdoctools-devel kf5-kiconthemes-devel
 BuildRequires: kf5-kio-devel kf5-kitemmodels-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-ktexteditor-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-kwindowsystem-devel
 BuildRequires: kf5-syndication-devel kf5-syntax-highlighting-devel
@@ -118,6 +118,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libakregatorprivate.so.*
 
 %changelog
+* Fri Oct 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.2-alt1
+- new version
+
 * Thu Sep 02 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt1
 - new version
 

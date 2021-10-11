@@ -1,7 +1,7 @@
 %define rname kldap
 
 Name: kde5-%rname
-Version: 21.08.1
+Version: 21.08.2
 Release: alt1
 %K5init altplace
 
@@ -20,7 +20,7 @@ BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: libldap-devel libsasl2-devel
 BuildRequires: libqtkeychain-qt5-devel
 BuildRequires: kde5-kmbox-devel kde5-kmime-devel
-BuildRequires: kf5-kcompletion-devel kf5-ki18n-devel kf5-kwidgetsaddons-devel kf5-kio-devel kf5-kdoctools kf5-kdoctools-devel-static
+BuildRequires: kf5-kcompletion-devel kf5-ki18n-devel kf5-kwidgetsaddons-devel kf5-kio-devel kf5-kdoctools kf5-kdoctools-devel
 BuildRequires: kf5-kwallet-devel
 
 %description
@@ -76,6 +76,9 @@ KF5 library
 %_K5plug/kf5/kio/ldap.so
 
 %changelog
+* Fri Oct 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.2-alt1
+- new version
+
 * Thu Sep 02 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt1
 - new version
 
