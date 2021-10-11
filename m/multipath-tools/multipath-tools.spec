@@ -7,8 +7,8 @@
 %add_verify_elf_skiplist /%_lib/libmultipath.so.*
 
 Name: multipath-tools
-Version: 0.8.6
-Release: alt2
+Version: 0.8.7
+Release: alt1
 
 Summary: Tools to manage multipath devices with device-mapper
 License: GPL-2.0-only
@@ -180,6 +180,9 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_pkgconfigdir/libdmmp.pc
 
 %changelog
+* Mon Oct 11 2021 Alexey Shabalin <shaba@altlinux.org> 0.8.7-alt1
+- 0.8.7
+
 * Mon Sep 27 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.8.6-alt2
 - fixed build for Elbrus
 
