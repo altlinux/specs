@@ -1,6 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 Name: libmaa
 Version: 1.4.7
-Release: alt4
+Release: alt5
 
 Summary: Library providing many low-level data structures
 License: MIT
@@ -23,7 +29,7 @@ applicable to a wide range of programming problems.
 %package devel
 Summary: Development files of libmaa
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains development files of libmaa.
@@ -31,7 +37,7 @@ This package contains development files of libmaa.
 %package devel-static
 Summary: Static library for libmaa
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 This package contains the static version of libmaa.
@@ -53,6 +59,8 @@ This package contains development documentation for libmaa.
 	%mkc_env
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %_mkc_env
 %mkcmake_configure
 %mkcmake_build
@@ -83,6 +91,9 @@ This package contains development documentation for libmaa.
 %_libdir/*.a
 
 %changelog
+* Mon Oct 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.7-alt5
+- Fixed build with LTO
+
 * Fri Jan 08 2021 Aleksey Cheusov <cheusov@altlinux.org> 1.4.7-alt4
 - 1.4.7-alt4: Split -devel package into -devel and -static-devel packages
 
