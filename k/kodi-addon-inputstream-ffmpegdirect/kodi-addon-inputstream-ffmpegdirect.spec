@@ -1,9 +1,9 @@
 Name: kodi-addon-inputstream-ffmpegdirect
 Version: 19.0
-Release: alt4
+Release: alt5
 
 Summary: FFmpeg stream addon for Kodi
-License: GPL
+License: GPLv2
 Group: Video
 Url: https://github.com/xbmc/inputstream.ffmpegdirect/
 
@@ -37,6 +37,9 @@ cmake . -DCMAKE_CXX_FLAGS='%optflags' \
 %_datadir/kodi/addons/*
 
 %changelog
+* Mon Oct 11 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.0-alt5
+- 19.0-Matrix released
+
 * Wed Feb 24 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.0-alt4
 - updated up to 1.19.2-Matrix
 
