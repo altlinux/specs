@@ -3,11 +3,11 @@
 %def_enable taskstats
 
 Name: htop
-Version: 3.0.5
+Version: 3.1.0
 Release: alt1
 
 Summary: Interactive ncurses-based process viewer for Linux
-License: GPL
+License: GPLv2+
 Group: Monitoring
 
 Url: http://hisham.hm/htop/
@@ -47,7 +47,7 @@ htop использует для работы с экраном библиоте
 
 %prep
 %setup
-%patch -p1
+#patch -p1
 
 # fix shebang
 #sed -i 's|#!/usr/bin/env python|#!/usr/bin/python2|' scripts/MakeHeader.py
@@ -82,6 +82,10 @@ rm -r %buildroot%_pixmapsdir/
 %_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Mon Oct 11 2021 Ilya Mashkin <oddity@altlinux.ru> 3.1.0-alt1
+- 3.1.0
+- Update license to GPLv2+
+
 * Sat Jan 30 2021 Anton Midyukov <antohami@altlinux.org> 3.0.5-alt1
 - new version 3.0.5
 
