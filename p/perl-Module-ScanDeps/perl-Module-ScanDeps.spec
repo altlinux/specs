@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-ScanDeps
 Name: perl-%dist
-Version: 1.30
+Version: 1.31
 Release: alt1
 
 Summary: Recursively scan Perl programs for dependencies
@@ -23,7 +23,7 @@ such projects, PAR and App::Packer.
 
 %prep
 %setup -q -n %{dist}-%{version}
-[ %version = 1.30 ] && rm t/18-findbin.t
+[ %version = 1.31 ] && rm t/18-findbin.t
 
 %build
 %perl_vendor_build
@@ -38,6 +38,9 @@ such projects, PAR and App::Packer.
 %perl_vendor_privlib/Module
 
 %changelog
+* Mon Oct 11 2021 Igor Vlasenko <viy@altlinux.org> 1.31-alt1
+- automated CPAN update
+
 * Thu Feb 18 2021 Igor Vlasenko <viy@altlinux.org> 1.30-alt1
 - automated CPAN update
 
