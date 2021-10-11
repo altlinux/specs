@@ -1,6 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 Name: libnghttp2
 Version: 1.41.0
-Release: alt1
+Release: alt2
 
 Summary: HTTP/2.0 C Library
 Group: System/Libraries
@@ -18,14 +24,14 @@ BuildRequires: libsystemd-devel
 %package devel
 Group: Development/C
 Summary: HTTP/2.0 C Library headers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 %description devel
 %summary
 
 %package tools
 Group: Networking/WWW
 Summary: HTTP/2.0 client, server and proxy
-Requires: %name = %version-%release
+Requires: %name = %EVR
 %description tools
 %summary
 
@@ -35,6 +41,7 @@ Requires: %name = %version-%release
 %build
 %autoreconf
 %configure
+%make_build
 
 %install
 %makeinstall_std
@@ -68,6 +75,9 @@ Requires: %name = %version-%release
 %exclude %_datadir/nghttp2/fetch-ocsp-response
 
 %changelog
+* Mon Oct 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.41.0-alt2
+- Fixed build.
+
 * Sat Jun 20 2020 Vladimir Lettiev <crux@altlinux.org> 1.41.0-alt1
 - 1.40.1 (Closes: #38626)
 - Security fix: CVE-2020-11080
