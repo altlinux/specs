@@ -8,7 +8,7 @@
 
 Name: kde5-connect
 Version: 21.08.2
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Communications
@@ -109,6 +109,8 @@ KF5 library
 
 %files common -f %name.lang
 %doc LICENSES/*
+%_K5icon/hicolor/*/status/*connect*.*
+%_K5icon/hicolor/*/status/*trust*.*
 %_datadir/qlogging-categories5/*.*categories
 
 %files
@@ -144,6 +146,9 @@ KF5 library
 #%_K5lib/libkdeconnectsmshelper.so.*
 
 %changelog
+* Mon Oct 11 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.2-alt2
+- package new icons
+
 * Fri Oct 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.2-alt1
 - new version
 
