@@ -6,8 +6,8 @@
 %endif
 
 Name: bubblewrap
-Version: 0.4.1
-Release: alt2
+Version: 0.5.0
+Release: alt1
 
 Summary: Unprivileged sandboxing tool
 
@@ -18,7 +18,7 @@ Url: https://github.com/projectatomic/bubblewrap
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/projectatomic/bubblewrap/releases/download/v%version/bubblewrap-%version.tar.xz
-# VCS: https://github.com/projectatomic/bubblewrap.git
+Vcs: https://github.com/projectatomic/bubblewrap.git
 Source: %name-%version.tar
 #Source: https://github.com/projectatomic/%name/releases/download/v%version/%name-%version.tar.xz
 
@@ -75,8 +75,12 @@ setcap -q "cap_sys_admin,cap_net_admin,cap_sys_chroot,cap_setuid,cap_setgid=ep" 
 %{?_enable_userns:%_sysctldir/90-bwrap.conf}
 %_man1dir/bwrap*
 %_datadir/bash-completion/completions/bwrap
+%_datadir/zsh/site-functions/_bwrap
 
 %changelog
+* Mon Oct 11 2021 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Wed May 20 2020 Ivan Razzhivin <underwit@altlinux.org> 0.4.1-alt2
 - fix run path (Closes: 38163)
 

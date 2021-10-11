@@ -4,11 +4,12 @@
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %_prefix/lib/systemd/user
 
+%def_with system_debugedit
 %def_enable docs
 %{?_enable_docs:%def_enable docbook_docs}
 
 Name: flatpak-builder
-Version: 1.0.14
+Version: 1.2.0
 Release: alt1
 Epoch:1
 
@@ -27,6 +28,8 @@ Source: %name-%version.tar
 %define glib_ver 2.44
 %define ostree_ver 2017.14
 %define flatpak_ver 0.99.1
+%define debugedit_ver 5.0
+%define libdw_ver 0.172
 
 Requires: flatpak >= %flatpak_ver
 Requires: libostree >= %ostree_ver
@@ -41,6 +44,7 @@ Requires: /usr/bin/svn
 Requires: /bin/tar
 Requires: /usr/bin/unzip
 Requires: /usr/bin/7z
+%{?_with_system_debugedit:Requires: debugedit >= %debugedit_ver}
 
 BuildRequires: flatpak >= %flatpak_ver
 BuildRequires: libcap-devel
@@ -55,6 +59,7 @@ BuildRequires: pkgconfig(yaml-0.1)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: libcurl-devel
 BuildRequires: xsltproc
+%{?_with_system_debugedit:BuildRequires: /usr/bin/debugedit libdw-devel >= %libdw_ver}
 %{?_enable_docs:BuildRequires: xsltproc docbook-dtds docbook-style-xsl}
 %{?_enable_docbook_docs:BuildRequires: xmlto}
 
@@ -71,7 +76,9 @@ See http://flatpak.org/ for more information.
 %configure \
     %{?_disable_docs:--disable-documentation --disable-docbook-docs} \
     %{?_enable_docbook_docs:--enable-docbook-docs} \
-    --with-dwarf-header=%_includedir/libdwarf
+    --with-dwarf-header=%_includedir/libdwarf \
+    %{?_with_system_debugedit:--with-system-debugedit}
+%nil
 %make_build
 
 %install
@@ -79,11 +86,15 @@ See http://flatpak.org/ for more information.
 
 %files
 %_bindir/%name
+%{?_without_system_debugedit:%_libexecdir/%name-debugedit}
 %{?_enable_docs:%_man1dir/%name.1*
 %_man5dir/flatpak-manifest.5*
 %{?_enable_docbook_docs:%doc %_docdir/%name}}
 
 %changelog
+* Mon Oct 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1:1.2.0-alt1
+- 1.2.0
+
 * Sun Aug 15 2021 Yuri N. Sedunov <aris@altlinux.org> 1:1.0.14-alt1
 - 1.0.14
 - required brz instead of bzr
