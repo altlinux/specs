@@ -3,16 +3,16 @@
 %define real_name zim
 
 Name: zim-wiki
-Version: 0.73.5
+Version: 0.74.1
 Release: alt1
 
 Summary: A desktop wiki and outliner
 Group: Editors
 License: GPLv2
-Url: http://www.zim-wiki.org/
+Url: https://www.zim-wiki.org/
 
 %if_disabled snapshot
-Source: https://zim-wiki.org/downloads/%name-%version.tar.gz
+Source: https://zim-wiki.org/downloads/%real_name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
@@ -61,11 +61,13 @@ control.
 %_datadir/metainfo/*
 %_iconsdir/hicolor/*/*/*
 %exclude %_iconsdir/ubuntu*
-%_datadir/pixmaps/*
 
 %doc README.md CHANGELOG.md
 
 %changelog
+* Mon Oct 11 2021 Yuri N. Sedunov <aris@altlinux.org> 0.74.1-alt1
+- 0.74.1
+
 * Tue Feb 02 2021 Yuri N. Sedunov <aris@altlinux.org> 0.73.5-alt1
 - 0.73.5
 
