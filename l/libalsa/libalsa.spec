@@ -3,7 +3,7 @@
 
 Name: libalsa
 Version: 1.2.5.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) library
@@ -40,6 +40,10 @@ Requires: alsa-topology-conf
 %define modprobe_conf %modprobe_old.conf
 
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%{?optflags_lto:%global optflags_lto %optflags_lto -flto-partition=none}
 
 %description
 Advanced Linux Sound Architecture (ALSA) libs. Modularized
@@ -92,6 +96,8 @@ find include -type f -print0 |
 	xargs -r0 sed -i 's/ inline / __inline__ /g' --
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %autoreconf
 %configure \
 	--with-configdir=%_datadir/alsa \
@@ -187,6 +193,9 @@ done
 %_bindir/aserver
 
 %changelog
+* Mon Oct 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.2.5.1-alt2
+- Fixed build with LTO.
+
 * Sat Jun 19 2021 Michael Shigorin <mike@altlinux.org> 1:1.2.5.1-alt1
 - 1.2.5.1
 
