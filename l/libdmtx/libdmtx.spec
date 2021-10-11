@@ -1,6 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 Name:          libdmtx
 Version:       0.7.5
-Release:       alt1.1
+Release:       alt2
 Summary:       Library for working with Data Matrix 2D bar-codes
 Group:         System/Libraries
 License:       BSD-2-Clause
@@ -24,7 +30,7 @@ libdmtx.
 %package       devel-static
 Summary:       Development files for %name
 Group:         Development/C
-Requires:      %name = %version-%release
+Requires:      %name = %EVR
 
 %description   devel-static
 The %name-devel package contains static libraries and header files for
@@ -34,7 +40,7 @@ developing applications that use %name.
 %package       devel
 Summary:       Development files for %name
 Group:         Development/C
-Requires:      %name = %version-%release
+Requires:      %name = %EVR
 
 %description   devel
 The %name-devel package contains libraries and header files for
@@ -70,6 +76,9 @@ developing applications that use %name.
 %_libdir/%name.a
 
 %changelog
+* Mon Oct 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.5-alt2
+- Fixed build with LTO
+
 * Tue Apr 06 2021 Fr. Br. George <george@altlinux.ru> 0.7.5-alt1.1
 - NMU: separate dynamic and static development libs
 
