@@ -1,8 +1,14 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 %set_automake_version 1.11
 
 Name:		libev4
 Version:	4.33
-Release:	alt1
+Release:	alt2
 Summary:	libev - an event notification library
 License:	BSD or GPL v2+
 URL:		http://software.schmorp.de/pkg/libev
@@ -22,7 +28,7 @@ in event-driven network servers.
 %package -n libev-devel
 Summary:	Header files for libev library
 Group:		Development/C
-Requires:	%name = %version-%release
+Requires:	%name = %EVR
 
 %description -n libev-devel
 Header files for libev library.
@@ -30,7 +36,7 @@ Header files for libev library.
 %package -n libev-devel-static
 Summary:	Static libev library
 Group:		Development/C
-Requires:	libev-devel = %version-%release
+Requires:	libev-devel = %EVR
 
 %description -n libev-devel-static
 Static libev library.
@@ -43,6 +49,8 @@ sed -i.pkgconfig -e 's|Makefile|Makefile libev.pc|' configure.ac configure
 sed -i.pkgconfig -e 's|lib_LTLIBRARIES|pkgconfigdir = $(libdir)/pkgconfig\n\npkgconfig_DATA = libev.pc\n\nlib_LTLIBRARIES|' Makefile.am Makefile.in
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 aclocal
 automake
 %autoreconf
@@ -76,6 +84,9 @@ popd
 %_libdir/libev.a
 
 %changelog
+* Mon Oct 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.33-alt2
+- Fixed build with LTO
+
 * Sun Jan 24 2021 Pavel Vainerman <pv@altlinux.ru> 4.33-alt1
 - new version (4.33) with rpmgs script
 
