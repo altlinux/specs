@@ -1,10 +1,10 @@
 %global import_path github.com/containers/skopeo
-%global commit 130f32f047b7bf9b1fb4f95c4c5b1da6255e4829
+%global commit 209a993159eae02f037d01efc001feb57577c2ef
 
 %global _unpackaged_files_terminate_build 1
 
 Name: skopeo
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 
 Summary: skopeo is a command line utility that performs various operations on container images and image repositories
@@ -126,6 +126,9 @@ mkdir -p %buildroot%_datadir/alt/secrets
 %doc *.md
 
 %changelog
+* Mon Oct 11 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.5.0-alt1
+- new version 1.5.0
+
 * Wed Sep 29 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1-alt1
 - new version 1.4.1
 - add /usr/share/alt/secrets to containers-common package, fix mounts.conf
