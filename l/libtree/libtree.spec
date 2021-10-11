@@ -1,7 +1,7 @@
 %define testsdir %{_localstatedir}/%{name}/tests
 
 Name: libtree
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: C++ lib that helps to work with tree-like data structures
@@ -37,14 +37,25 @@ Development package for %{name}.
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-%package -n %{name}-checkinstall
+%package -n %{name}-tests
 Summary: Tests and test data for %{name}
 Group: Other
 
 Requires: %{name}
 
-%description -n %{name}-checkinstall
+%description -n %{name}-tests
 Tests and test data for %{name}.
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+%package -n %{name}-checkinstall
+Summary: Tests and test data for %{name}
+Group: Other
+
+Requires: %{name}-tests
+
+%description -n %{name}-checkinstall
+Package that runs tests in a build environment.
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -70,7 +81,8 @@ cp COPYING %{buildroot}%{_defaultdocdir}/%{name}/
 cp tests/bin/tests %{buildroot}%{testsdir}
 cp -r tests/data %{buildroot}%{testsdir}
 
-%post -n %{name}-checkinstall
+%pre -n %{name}-checkinstall
+set -e
 cd %{testsdir}
 ./tests data
 cd -
@@ -82,12 +94,21 @@ cd -
 %files -n %{name}-devel
 %{_includedir}/%{name}/
 
-%files -n %{name}-checkinstall
+%files -n %{name}-tests
 %{testsdir}/*
+
+%files -n %{name}-checkinstall
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Mon Oct 11 2021 Alexey Appolonov <alexey@altlinux.org> 0.7.0-alt1
+- Algorithm of the XML handler is brought into compliance with the algorithm
+  of the JSON handler;
+- Corrected ALT Linux "checkinstall" testing scheme;
+- Modified tests;
+- Build with debuginfo enabled.
+
 * Fri May 28 2021 Alexey Appolonov <alexey@altlinux.org> 0.6.0-alt1
 - Improved API;
 - Ability to have optional nodes in branch drafts;
