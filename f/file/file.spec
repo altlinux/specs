@@ -5,7 +5,7 @@
 
 Name: file
 Version: 5.40
-Release: alt4
+Release: alt5
 
 Summary: File type guesser
 License: BSD-2-Clause
@@ -113,6 +113,9 @@ make check
 %_man3dir/libmagic.3*
 
 %changelog
+* Mon Oct 11 2021 Vitaly Chikunov <vt@altlinux.org> 5.40-alt5
+- Update seccomp filter for glibc-2.34.
+
 * Thu Aug 26 2021 Vitaly Chikunov <vt@altlinux.org> 5.40-alt4
 - spec: Test seccomp filtering in %%check.
 - Add more hardening measures (seccomp, setrlimit, capset).
