@@ -1,3 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %define _oldname libglade2
 %define ver_major 2.6
 %def_disable static
@@ -6,19 +10,17 @@
 
 Name: libglade
 Version: %ver_major.4
-Release: alt5.qa1
-
+Release: alt6
 Summary: libglade library
-License: LGPL
+License: LGPL-2.0+
 Group: System/Libraries
 Url: ftp://ftp.gnome.org
-
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Provides: %_oldname = %version
 Obsoletes: %_oldname < %version
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.bz2
+# ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.bz2
+Source: %name-%version.tar
 
 %define gtk_ver 2.5.0
 %define glib_ver 2.10.0
@@ -30,21 +32,18 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define xmlcatalog %_sysconfdir/xml/catalog
 PreReq: %xmlcatalog
 
-BuildPreReq: libgtk+2-devel >= %gtk_ver
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libatk-devel >= %atk_ver
-BuildPreReq: python >= %python_ver
-BuildPreReq: libxml2-devel >= %libxml2_ver
-BuildPreReq: pkgconfig >= %pkgconfig_ver
+BuildRequires: libgtk+2-devel >= %gtk_ver
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: libatk-devel >= %atk_ver
+BuildRequires: python >= %python_ver
+BuildRequires: libxml2-devel >= %libxml2_ver
+BuildRequires: pkgconfig >= %pkgconfig_ver
 
 %if_enabled python
-BuildPreReq: PyXML python-modules-xml
+BuildRequires: PyXML python-modules-xml
 %endif
 
-%if_enabled gtk_doc
-BuildPreReq: gtk-doc 
-%endif
-
+BuildRequires: gtk-doc
 BuildRequires: docbook-dtds docbook-style-xsl python-devel xml-utils xsltproc zlib-devel
 
 %description
@@ -59,7 +58,7 @@ Summary: Libraries, includes, etc to develop libglade applications
 Group: Development/GNOME and GTK+
 Provides: %_oldname-devel = %version
 Obsoletes: %_oldname-devel < %version
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This library allows you to load user interfaces in your program, which are
@@ -74,7 +73,7 @@ Summary: Python script to convert old glade files.
 Group: Development/GNOME and GTK+
 Provides: %_oldname-devel-python = %version %name-devel-python = %version
 Obsoletes: %_oldname-devel-python < %version %name-devel-python < %version
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-converter
 This library allows you to load user interfaces in your program, which are
@@ -103,7 +102,7 @@ This package contains development documentation for %name
 %package devel-static
 Summary: Libraries, includes, etc to develop libglade applications
 Group: Development/GNOME and GTK+
-Requires: libgtk+2-devel libxml2-devel %name-devel = %version-%release
+Requires: libgtk+2-devel libxml2-devel %name-devel = %EVR
 
 %description devel-static
 Libraries, include files, etc you can use to develop libglade applications.
@@ -122,6 +121,8 @@ Libraries, include files, etc you can use to develop libglade applications.
 %if_disabled python
 export ac_cv_path_PYTHON=/bin/false
 %endif
+
+%autoreconf
 %configure \
 	%{subst_enable static} \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
@@ -175,6 +176,9 @@ export ac_cv_path_PYTHON=/bin/false
 %endif
 
 %changelog
+* Mon Oct 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.4-alt6
+- Fixed build
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.6.4-alt5.qa1
 - NMU: rebuilt for updated dependencies.
 
