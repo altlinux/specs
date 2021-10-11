@@ -1,17 +1,28 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 Name: lksctp-tools
 Summary: Linux Kernel SCTP tools
-Version: 1.0.17
-Release: alt2
-License: GPL2
+Version: 1.0.19
+Release: alt1
+License: GPL-2.0
 Group: System/Kernel and hardware
-BuildRequires: glibc-devel-static
-Url: http://lksctp.sourceforge.net/
+Url: https://github.com/sctp/lksctp-tools
+
+# https://github.com/sctp/lksctp-tools.git
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+
+Source1000: %name.watch
+
+BuildRequires: glibc-devel-static
 
 %package -n liblksctp
 Summary: Linux Kernel SCTP library
 Group: System/Kernel and hardware
+License: LGPL-2.1
 
 %description -n liblksctp
 Linux Kernel SCTP library
@@ -19,6 +30,7 @@ Linux Kernel SCTP library
 %package -n liblksctp-devel
 Summary: Linux Kernel SCTP library
 Group: System/Kernel and hardware
+License: LGPL-2.1
 
 %description -n liblksctp-devel
 Linux Kernel SCTP library
@@ -26,6 +38,7 @@ Linux Kernel SCTP library
 %package -n liblksctp-devel-static
 Summary: Linux Kernel SCTP library
 Group: System/Kernel and hardware
+License: LGPL-2.1
 
 %description -n liblksctp-devel-static
 Linux Kernel SCTP library
@@ -33,19 +46,18 @@ Linux Kernel SCTP library
 %description
 Linux Kernel SCTP tools
 
-
 %prep
 %setup
-%patch -p1
 
 %build
-%autoreconf -fisv
+%add_optflags -D_FILE_OFFSET_BITS=64
+
+%autoreconf
 %configure
 %make_build
 
 %install
-mkdir -p %buildroot
-%makeinstall install
+%makeinstall_std
 
 %files
 %_man3dir/*
@@ -70,6 +82,9 @@ mkdir -p %buildroot
 %_libdir/lksctp-tools/*.a
 
 %changelog
+* Mon Oct 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.19-alt1
+- Updated to upstream version 1.0.19
+
 * Sat Apr 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.17-alt2
 - NMU: fixed warning: Installed (but unpackaged) file(s) found:
 - /usr/lib64/pkgconfig/libsctp.pc
