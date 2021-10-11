@@ -1,8 +1,8 @@
 %define rname kgpg
 
 Name: kde5-%rname
-Version: 21.08.1
-Release: alt2
+Version: 21.08.2
+Release: alt1
 %K5init
 
 Group: File tools
@@ -60,6 +60,9 @@ Graphical GPG frontend.
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Fri Oct 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.2-alt1
+- new version
+
 * Thu Sep 23 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt2
 - fix expert mode when create keypair
 

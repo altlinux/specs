@@ -4,8 +4,8 @@
 %define libkcupslib libkcupslib%sover
 
 Name: kde5-%rname
-Version: 21.08.1
-Release: alt2
+Version: 21.08.2
+Release: alt1
 %K5init altplace
 
 Group: System/Configuration/Printing
@@ -92,6 +92,9 @@ KF5 library
 %_K5lib/libkcupslib.so.*
 
 %changelog
+* Fri Oct 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.2-alt1
+- new version
+
 * Fri Sep 17 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt2
 - remove help button from AddPrinterAssistant
 
