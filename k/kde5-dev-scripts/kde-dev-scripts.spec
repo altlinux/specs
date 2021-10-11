@@ -5,7 +5,7 @@
 %add_findreq_skiplist %_K5bin/kde-systemsettings-tree.py
 
 Name: kde5-dev-scripts
-Version: 21.08.1
+Version: 21.08.2
 Release: alt1
 %K5init altplace no_appdata
 
@@ -20,11 +20,11 @@ Source: %rname-%version.tar
 
 # Automatically added by buildreq on Thu Oct 01 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl kf5-kdoctools-devel less libgpg-error libqt5-core libstdc++-devel perl-Encode perl-HTTP-Date perl-HTTP-Message perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage perl-Term-ANSIColor perl-URI perl-XML-Parser perl-XML-RegExp perl-libwww python-base python3 python3-base rpm-build-gir termutils xml-common xml-utils
-#BuildRequires: cvs extra-cmake-modules gcc-c++ git-core graphviz kde5-konqueror kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static perl-XML-DOM perl-podlators python-module-google qt5-base-devel rpm-build-python3 ruby ruby-stdlibs subversion
+#BuildRequires: cvs extra-cmake-modules gcc-c++ git-core graphviz kde5-konqueror kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel perl-XML-DOM perl-podlators python-module-google qt5-base-devel rpm-build-python3 ruby ruby-stdlibs subversion
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: graphviz perl-XML-DOM perl-podlators rpm-build-python rpm-build-python3 ruby ruby-stdlibs
-BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static
+BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel
 
 %description
 %summary.
@@ -65,6 +65,9 @@ done
 %_K5data/*/
 
 %changelog
+* Fri Oct 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.2-alt1
+- new version
+
 * Thu Sep 02 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt1
 - new version
 

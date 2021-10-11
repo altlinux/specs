@@ -5,8 +5,8 @@
 %define libkwave libkwave%sover
 
 Name: kde5-%rname
-Version: 21.08.1
-Release: alt2
+Version: 21.08.2
+Release: alt1
 %K5init no_appdata
 
 Group: Sound
@@ -106,6 +106,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libkwavegui.so.*
 
 %changelog
+* Fri Oct 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.2-alt1
+- new version
+
 * Fri Sep 17 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt2
 - fix to show entry in khelpcenter
 

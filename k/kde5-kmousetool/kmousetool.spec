@@ -1,7 +1,7 @@
 %define rname kmousetool
 
 Name: kde5-%rname
-Version: 21.08.1
+Version: 21.08.2
 Release: alt1
 %K5init no_appdata
 
@@ -40,6 +40,9 @@ BuildRequires: qt5-phonon-devel
 %_K5data/kmousetool/
 
 %changelog
+* Fri Oct 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.2-alt1
+- new version
+
 * Thu Sep 02 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt1
 - new version
 
