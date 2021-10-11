@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.11.1
+Version: 3.0.0
 Release: alt1
 
 Summary: pytest plugin for coverage reporting with support for centralised and distributed testing
@@ -63,9 +63,12 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr
 %doc README.rst CHANGELOG.rst
 %python3_sitelibdir/pytest-cov.pth
 %python3_sitelibdir/pytest_cov/
-%python3_sitelibdir/pytest_cov-*.egg-info/
+%python3_sitelibdir/pytest_cov-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Oct 11 2021 Stanislav Levin <slev@altlinux.org> 3.0.0-alt1
+- 2.11.1 -> 3.0.0.
+
 * Sun Apr 18 2021 Stanislav Levin <slev@altlinux.org> 2.11.1-alt1
 - 2.10.1 -> 2.11.1.
 
