@@ -1,7 +1,7 @@
 %define oname systemd
 
 Name: rpm-build-%oname
-Version: 4
+Version: 5
 Release: alt1
 
 Summary: RPM helper macros to build packages with systemd support
@@ -36,6 +36,9 @@ install -D -m644 %SOURCE1 -p %buildroot%_rpmmacrosdir/%oname
 %_rpmmacrosdir/*
 
 %changelog
+* Mon Oct 11 2021 Alexey Shabalin <shaba@altlinux.org> 5-alt1
+- Rename macros post_systemd_restart_later to post_systemd_postponed
+
 * Sun Sep 05 2021 Alexey Shabalin <shaba@altlinux.org> 4-alt1
 - Fixed %%post_systemd_restart_later macros.
 
