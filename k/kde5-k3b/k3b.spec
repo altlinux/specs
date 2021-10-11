@@ -11,8 +11,7 @@
 %define libk3blib libk3blib%sover
 %define libk3bdevice libk3bdevice%sover
 
-#define req_permhelper alterator-control
-%define req_permhelper /usr/bin/gpasswd
+%define req_permhelper /usr/sbin/usermod
 
 %define req_std_burning cdrkit cdrdao dvd+rw-tools cdrskin
 %define req_std_common kde5-runtime %req_permhelper
@@ -24,7 +23,7 @@
 %define rname k3b
 Name: kde5-%rname
 Version: 21.08.2
-Release: alt1
+Release: alt2
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Group: Archiving/Cd burning
@@ -42,7 +41,7 @@ Obsoletes: kde4-k3b < %version-%release
 %endif
 
 Source0: %rname-%version.tar
-Patch1: alt-permhelper.patch
+Patch1: alt-permissions.patch
 Patch2: alt-return-wodim.patch
 
 # Automatically added by buildreq on Mon May 23 2016 (-bi)
@@ -122,7 +121,7 @@ KDE 4 library.
 
 %prep
 %setup -q -n %rname-%version
-#%patch1 -p1
+%patch1 -p1
 #%patch2 -p1
 
 %build
@@ -181,6 +180,9 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5inc/k3b*.h
 
 %changelog
+* Mon Oct 11 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.2-alt2
+- remove permissions helper
+
 * Fri Oct 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.2-alt1
 - new version
 
