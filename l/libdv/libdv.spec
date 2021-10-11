@@ -1,3 +1,6 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 %def_enable shared
 %def_enable static
 %def_without debug
@@ -10,9 +13,21 @@
 %define pal-yuv YUY2
 #----------------------------------------------------------------------
 
+%ifarch %ix86
+%if_enabled asm
+%set_verify_elf_method strict,textrel=relaxed
+%else
+%set_verify_elf_method strict
+%endif
+%else
+%set_verify_elf_method strict
+%endif
+
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 Name: libdv
 Version: 1.0.0
-Release: alt5.7
+Release: alt6
 Summary: DV software video codec
 License: %lgpl2plus
 Group: System/Libraries
@@ -22,7 +37,6 @@ Patch: %name-%version-%release.patch
 Patch1: %name-1.0.0-alt-DSO.patch
 %define popt_ver 1.7-alt5
 Requires: libpopt >= %popt_ver
-Packager: Led <led@altlinux.ru>
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: libpopt-devel >= %popt_ver
@@ -44,7 +58,7 @@ applications.
 %package devel
 Summary: Development files from %name
 Group: Development/C
-Requires: %name%{?_disable_shared:-devel-static} = %version-%release
+Requires: %name%{?_disable_shared:-devel-static} = %EVR
 Requires: libpopt-devel >= %popt_ver
 
 %description devel
@@ -62,7 +76,7 @@ to incorporate %name into applications.
 %package devel-static
 Summary: Static %name libraries
 Group: Development/C
-%{?_enable_shared:Requires: %name-devel = %version-%release}
+%{?_enable_shared:Requires: %name-devel = %EVR}
 
 %description devel-static
 The Quasar DV codec (%name) is a software codec for DV video. DV is the
@@ -79,7 +93,7 @@ applications.
 %package utils
 Summary: Binaries from %name
 Group: Video
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: libpopt >= %popt_ver
 
 %description utils
@@ -102,6 +116,7 @@ and SMPTE 314M.
 %ifnarch %ix86 x86_64
 %add_optflags -DBRUTE_FORCE_DCT_88 -DBRUTE_FORCE_DCT_248
 %endif
+%add_optflags -D_FILE_OFFSET_BITS=64
 %configure \
     %{subst_enable static} \
     %{subst_enable shared} \
@@ -122,10 +137,6 @@ bzip2 --best --keep --force ChangeLog
 
 %install
 %makeinstall_std
-
-%ifarch %ix86
-%{?_enable_asm:%set_verify_elf_method textrel=relaxed}
-%endif
 
 
 %if_enabled shared
@@ -159,6 +170,9 @@ bzip2 --best --keep --force ChangeLog
 
 
 %changelog
+* Mon Oct 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt6
+- Fixed build with LTO
+
 * Wed Mar 06 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.0-alt5.7
 - Rebuilt without libgtk+.
 
