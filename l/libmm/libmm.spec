@@ -1,6 +1,16 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%def_disable static
+
+%if_enabled static
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%endif
+
 Name: libmm
 Version: 1.4.2
-Release: alt3
+Release: alt4
 
 %define srcname mm-%version
 
@@ -21,14 +31,14 @@ BuildRequires: glibc-devel-static termutils
 %package devel
 Summary: Development files for Shared Memory Abstraction Library
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Provides: mm-devel = %version
 Obsoletes: mm-devel < %version
 
 %package devel-static
 Summary: Static version of Shared Memory Abstraction Library
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description
 The MM library is a 2-layer abstraction library which simplifies the usage of
@@ -67,7 +77,17 @@ linked software with %name.
 bzip2 -k ChangeLog
 
 %build
-%configure --enable-debug
+%add_optflags -D_FILE_OFFSET_BITS=64
+
+%configure \
+	--enable-debug \
+%if_enabled static
+	--enable-static \
+%else
+	--disable-static \
+%endif
+	%nil
+
 %make_build
 make test
 
@@ -91,6 +111,9 @@ make test
 %endif
 
 %changelog
+* Mon Oct 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.2-alt4
+- Fixed build with LTO
+
 * Mon Mar 21 2011 Alexey Tourbin <at@altlinux.ru> 1.4.2-alt3
 - rebuilt for debuginfo
 
