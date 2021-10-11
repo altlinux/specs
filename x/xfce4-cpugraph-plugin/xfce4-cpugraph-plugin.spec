@@ -1,5 +1,5 @@
 Name: xfce4-cpugraph-plugin
-Version: 1.2.4
+Version: 1.2.5
 Release: alt1
 
 Summary: CPU monitor for the Xfce panel
@@ -46,6 +46,9 @@ the system. The colors and the size of the plugin are customizable.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Oct 11 2021 Mikhail Efremov <sem@altlinux.org> 1.2.5-alt1
+- Updated to 1.2.5.
+
 * Mon Oct 04 2021 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt1
 - Updated to 1.2.4.
 
