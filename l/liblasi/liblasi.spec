@@ -1,8 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %define origname libLASi
 
 Name: liblasi
 Version: 1.1.3
-Release: alt2
+Release: alt3
 
 Summary: C++ stream output interface for creating Unicode PostScript documents
 License: LGPL
@@ -17,9 +21,10 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Mon Apr 28 2014
 # optimized out: cmake-modules fontconfig fontconfig-devel glib2-devel libcloog-isl4 libfreetype-devel libstdc++-devel pkg-config
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake doxygen gcc-c++ libpango-devel
 
-BuildRequires: chrpath libharfbuzz-devel libexpat-devel
+BuildRequires: libharfbuzz-devel libexpat-devel
 
 %define pkgdocdir %_docdir/%name-%version
 
@@ -48,7 +53,7 @@ Postscript independent of any one application framework.
 Summary: Development part of libLASi
 License: GPL
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 libLASi is a library that provides a C++ stream output interface
@@ -74,17 +79,22 @@ This is user and developer documentation for libLASi.
 %patch1 -p1
 
 %build
-cmake \
+%cmake \
+	-DCMAKE_CXX_STANDARD=14 \
 	-DCMAKE_INSTALL_PREFIX=%_prefix \
-	-DCMAKE_INSTALL_LIBDIR=%_libdir
-%make_build
+	-DCMAKE_INSTALL_LIBDIR=%_libdir \
+	%nil
+
+%cmake_build
 
 %install
-%makeinstall_std
-chrpath -d %buildroot%_libdir/*.so.*
+%cmakeinstall_std
+
 mkdir -p %buildroot%pkgdocdir
 cp -a AUTHORS NEWS README %buildroot%pkgdocdir/
 mv %buildroot%_datadir/lasi%version/examples/ %buildroot%pkgdocdir/
+
+rm -rf %buildroot%_docdir/%origname-%version/html
 
 %files
 %_libdir/*.so.*
@@ -103,6 +113,9 @@ mv %buildroot%_datadir/lasi%version/examples/ %buildroot%pkgdocdir/
 %doc doc/*
 
 %changelog
+* Mon Oct 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.3-alt3
+- Fixed build with gcc-11
+
 * Wed Oct 16 2019 Michael Shigorin <mike@altlinux.org> 1.1.3-alt2
 - fix actual ftbfs with opensuse patches
   + ...dropping examples along with that
