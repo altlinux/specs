@@ -6,7 +6,7 @@
 
 Name: caddy
 Version: 2.4.5
-Release: alt1
+Release: alt2
 Summary: Web server with automatic HTTPS
 License: Apache-2.0
 Url: https://caddyserver.com
@@ -25,7 +25,8 @@ Source5: https://raw.githubusercontent.com/caddyserver/dist/master/scripts/compl
 Source6: https://raw.githubusercontent.com/caddyserver/dist/master/scripts/completions/_caddy
 
 ExclusiveArch: %go_arches
-BuildRequires(pre): rpm-build-golang rpm-macros-webserver-common rpm-macros-systemd
+BuildRequires(pre): rpm-build-golang rpm-macros-webserver-common
+BuildRequires(pre): rpm-macros-systemd >= 5
 
 Requires: webserver-common
 Provides: webserver
@@ -88,7 +89,7 @@ useradd -r -N -g %caddy_group -G %webserver_group -c 'Caddy web server' \
         -s /sbin/nologin -M -d %_sharedstatedir/%name %caddy_user 2>/dev/null ||:
 
 %post
-%post_systemd_restart_later %name
+%post_systemd_postponed %name
 
 %preun
 %preun_systemd %name
@@ -107,6 +108,9 @@ useradd -r -N -g %caddy_group -G %webserver_group -c 'Caddy web server' \
 %_datadir/zsh/site-functions/_caddy
 
 %changelog
+* Mon Oct 11 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.5-alt2
+- Rebuild with updated systemd macros.
+
 * Sun Sep 05 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.5-alt1
 - new version 2.4.5
 
