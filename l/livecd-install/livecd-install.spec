@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.9.17
+Version: 0.9.18
 Release: alt1
 
 Summary: Permanently install Live system
@@ -63,6 +63,9 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Mon Oct 11 2021 Anton Midyukov <antohami@altlinux.org> 0.9.18-alt1
+- setup-plymouth: Don't disable plymouth when there are LUKS partitions
+
 * Tue Sep 07 2021 Anton Midyukov <antohami@altlinux.org> 0.9.17-alt1
 - zdg-user-dirs-install.sh: make trusted livecd-install.desktop for
   lxqt, xfce (Closes: 40640)
