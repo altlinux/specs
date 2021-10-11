@@ -25,8 +25,8 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.14.1
-Release: alt4
+Version: 2.15.1
+Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL-2.1
@@ -594,6 +594,9 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Mon Oct 11 2021 Pavel Vainerman <pv@altlinux.ru> 2.15.1-alt1
+- supported "hash64/hash32" for ID
+
 * Tue Sep 28 2021 Pavel Vainerman <pv@altlinux.ru> 2.14.1-alt4
 - [python]: fixed build with c++17
 
