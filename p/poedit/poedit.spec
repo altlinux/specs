@@ -7,7 +7,7 @@
 %def_without cld2
 
 Name: poedit
-Version: 2.4.3
+Version: 3.0
 Release: alt1
 
 Summary: Cross-platform translation files editor
@@ -22,9 +22,16 @@ Source: https://github.com/vslavik/%name/releases/download/v%version-oss/%name-%
 Vcs: https://github.com/vslavik/poedit.git
 Source: %name-%version.tar
 %endif
+Source1: README.md.%name
+Patch: %name-3.0-up-HEAD.patch
+
+ExcludeArch: armh
+
 Requires: gettext-tools
 
 %define cpprest_ver 2.5
+# /deps/wx/include/wx/version.h 3.1.6
+# with our 3.1.5 poedit segfaults
 %define wxgtk_ver 3.0.3-alt9
 %define boost_ver 1.60
 
@@ -51,6 +58,8 @@ wxLocale библиотеки wxWindows.
 
 %prep
 %setup
+%patch -p1
+[ ! -f README.md ] && cp %SOURCE1 README.md
 
 %build
 %configure \
@@ -60,19 +69,25 @@ wxLocale библиотеки wxWindows.
 
 %install
 %makeinstall_std
+rm -f %buildroot/%_iconsdir/hicolor/icon-theme.cache
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README*
 %_bindir/%name
 %_man1dir/%name.1.*
 %_datadir/%name/
 %_desktopdir/%rdn_name.desktop
 %_desktopdir/net.poedit.PoeditURI.desktop
 %_iconsdir/hicolor/*x*/*/*.png
+%_iconsdir/hicolor/scalable/apps/*.svg
 %_datadir/metainfo/%rdn_name.appdata.xml
 
 %changelog
+* Mon Oct 11 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt1
+- 3.0
+- disabled build for armh
+
 * Tue Apr 27 2021 Yuri N. Sedunov <aris@altlinux.org> 2.4.3-alt1
 - 2.4.3
 
