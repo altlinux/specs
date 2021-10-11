@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.4.0
+Version: 3.4.1
 Release: alt1
 
 Source:%name-%version.tar
@@ -82,6 +82,9 @@ __EOF__
 
 
 %changelog
+* Mon Oct 11 2021 Sergey V Turchin <zerg at altlinux dot org> 3.4.1-alt1
+- allow to screenshot combobox (closes: 41001)
+
 * Fri Oct 08 2021 Sergey V Turchin <zerg at altlinux dot org> 3.4.0-alt1
 - allow to setup icons theme
 
