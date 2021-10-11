@@ -4,7 +4,7 @@
 %filter_from_requires /^python3(gajim.gui/d
 
 Name: gajim
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 
 Summary: a Jabber client written in PyGTK
@@ -43,8 +43,8 @@ users. Gajim does not require GNOME to run, eventhough it exists with
 it nicely.
 
 %prep
-%setup -n %name-%version
-%patch1 -p1
+%setup -n %name-%name-%version
+#patch1 -p1
 
 %build
 %python3_build
@@ -74,6 +74,9 @@ it nicely.
 #_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Mon Oct 11 2021 Ilya Mashkin <oddity@altlinux.ru> 1.3.3-alt1
+- 1.3.3
+
 * Tue Apr 27 2021 Ilya Mashkin <oddity@altlinux.ru> 1.3.2-alt1
 - 1.3.2
 
