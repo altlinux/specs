@@ -1,14 +1,14 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
+BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global snapshot 20060225
 Name:           duel3
 Version:        0.1
-Release:        alt3_0.29.%{snapshot}
+Release:        alt3_0.34.%{snapshot}
 Summary:        One on one spaceship duel in a 2D arena
-Group:          Games/Other
 License:        BSD
 # Upstream has vanished
 #URL:            http://ts-games.com/duel3.php
@@ -21,11 +21,12 @@ Patch0:         Duel3_20060225-fixes.patch
 Patch1:         Duel3_20060225-windowed-mode.patch
 Patch2:         Duel3_20060225-fix-buf-oflow.patch
 Patch3:         Duel3_20060225-extra-fix-buf-oflow.patch
-Patch4:         Duel3_20060225-gcc8-fix.patch
+BuildRequires:  gcc-c++
 BuildRequires:  liballegro-devel dumb-devel libGLU-devel desktop-file-utils
 Requires:       icon-theme-hicolor opengl-games-utils
 Source44: import.info
 Patch33: Duel3_20060225-alt-as-needed.patch
+Patch34: Duel3_20060225-gcc8-fix.patch
 
 %description
 The sudden attack from the Martain Rim miners caught the Earth by surprise,
@@ -56,18 +57,18 @@ cp %{SOURCE4} .
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p2
 sed -i 's/\r//' Source/readme.txt license.txt music-credits.txt
 iconv -f iso8859-1 -t utf-8 music-credits.txt > temp
 mv temp music-credits.txt
 %patch33 -p0
+%patch34 -p2
 
 
 %build
 %add_optflags -DALLEGRO_NO_FIX_ALIASES
 pushd Source
 %make_build PREFIX=%{_prefix} \
-  CFLAGS="$RPM_OPT_FLAGS -fsigned-char -Wno-deprecated-declarations -Wno-non-virtual-dtor"
+  CFLAGS="-std=c++14 $RPM_OPT_FLAGS -fsigned-char -Wno-deprecated-declarations -Wno-non-virtual-dtor"
 popd
 
 
@@ -86,11 +87,12 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
 install -p -m 644 %{SOURCE3} \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
 
-# It is the file in the package named Thumbs.db or Thumbs.db.gz, 
-# which is normally a Windows image thumbnail database. 
-# Such databases are generally useless in packages and were usually 
+# It is the file in the package named Thumbs.db or Thumbs.db.gz,
+# which is normally a Windows image thumbnail database.
+# Such databases are generally useless in packages and were usually
 # accidentally included by copying complete directories from the source tarball.
 find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
+
 
 
 %files
@@ -102,6 +104,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 
 
 %changelog
+* Mon Oct 11 2021 Igor Vlasenko <viy@altlinux.org> 0.1-alt3_0.34.20060225
+- fixed build
+
 * Thu Dec 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_0.29.20060225
 - fixed build
 
