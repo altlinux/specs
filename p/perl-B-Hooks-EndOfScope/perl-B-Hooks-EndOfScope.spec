@@ -1,11 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 %define dist B-Hooks-EndOfScope
 Name: perl-%dist
-Version: 0.24
-Release: alt1.1
+Version: 0.25
+Release: alt1
 
 Summary: Execute code after a scope finished compilation
 License: GPL or Artistic
@@ -32,10 +32,13 @@ surrounding scope.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README CONTRIBUTING
 %perl_vendor_privlib/B/Hooks/EndOfScope*
 
 %changelog
+* Mon Oct 11 2021 Igor Vlasenko <viy@altlinux.org> 0.25-alt1
+- automated CPAN update
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1.1
 - dropped deprecated BR: perl-Module-Install
 
