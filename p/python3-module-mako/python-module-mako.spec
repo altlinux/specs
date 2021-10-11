@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 %define modname mako
 
+%def_with check
+
 Name: python3-module-%modname
-Version: 1.1.4
+Version: 1.1.5
 Release: alt1
 Summary: template library written in Python
 
 Group: Development/Python3
 License: MIT
 Url: http://www.makotemplates.org
-
-Packager: Vladimir Lettiev <crux@altlinux.ru>
 
 # Source-url: http://pypi.io/packages/source/M/Mako/Mako-%version.tar.gz
 Source: %name-%version.tar
@@ -25,6 +26,19 @@ Obsoletes: python-module-mako < %EVR
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
+
+%if_with check
+# install_requires:
+BuildRequires: python3(markupsafe)
+
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+BuildRequires: python3(tox_no_deps)
+%endif
+
+# conditional import, but unconditionally required
+%py3_requires markupsafe
 
 %description
 Mako is a template library written in Python. It provides a familiar,
@@ -47,6 +61,11 @@ and scoping semantics.
 %python3_install
 %python3_prune
 
+%check
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --no-deps --console-scripts -s false -vvr
+
 %files
 %doc CHANGES LICENSE README*
 %_bindir/mako-render
@@ -54,6 +73,9 @@ and scoping semantics.
 %python3_sitelibdir/Mako-%version-*.egg-info
 
 %changelog
+* Mon Oct 11 2021 Stanislav Levin <slev@altlinux.org> 1.1.5-alt1
+- 1.1.4 -> 1.1.5.
+
 * Thu May 13 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.4-alt1
 - Build new version.
 

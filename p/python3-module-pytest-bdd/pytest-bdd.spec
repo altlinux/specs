@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.0.2
+Version: 4.1.0
 Release: alt1
 
 Summary: BDD library for the py.test runner
@@ -67,10 +67,12 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr
 %doc CHANGES.rst README.rst
 %_bindir/*
 %python3_sitelibdir/pytest_bdd/
-%python3_sitelibdir/pytest_bdd-*.egg-info/
-
+%python3_sitelibdir/pytest_bdd-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Oct 11 2021 Stanislav Levin <slev@altlinux.org> 4.1.0-alt1
+- 4.0.2 -> 4.1.0.
+
 * Sun Apr 18 2021 Stanislav Levin <slev@altlinux.org> 4.0.2-alt1
 - 4.0.1 -> 4.0.2.
 
