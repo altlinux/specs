@@ -2,7 +2,7 @@
 
 Name: perl-Config-MVP
 Version: 2.200012
-Release: alt2
+Release: alt3
 
 Summary: Perl module to work with multivalue-property INI files
 
@@ -19,9 +19,9 @@ Source: %real_name-%version.tar
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Fri Mar 26 2021
-# optimized out: perl perl-B-Hooks-EndOfScope perl-CPAN-Meta-Requirements perl-Class-Load perl-Data-OptList perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Devel-StackTrace perl-Eval-Closure perl-MRO-Compat perl-Module-Implementation perl-Module-Runtime perl-Moo perl-Moose perl-MooseX-Role-Parameterized perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Role-Tiny perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Sub-Quote perl-Test-Fatal perl-Try-Tiny perl-Variable-Magic perl-devel perl-namespace-autoclean perl-namespace-clean perl-parent python2-base sh4
-BuildRequires: perl-Class-XSAccessor perl-Module-Pluggable perl-MooseX-OneArgNew perl-Role-HasMessage perl-Role-Identifiable perl-Throwable perl-Tie-IxHash
+# Automatically added by buildreq on Mon Oct 11 2021
+# optimized out: libgpg-error perl perl-B-Hooks-EndOfScope perl-CPAN-Meta-Requirements perl-Class-Load perl-Config-MVP perl-Data-OptList perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Devel-StackTrace perl-Encode perl-Eval-Closure perl-JSON-PP perl-MRO-Compat perl-Module-Implementation perl-Module-Pluggable perl-Module-Runtime perl-Moo perl-Moose perl-MooseX-OneArgNew perl-MooseX-Role-Parameterized perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Parse-CPAN-Meta perl-Role-HasMessage perl-Role-Identifiable perl-Role-Tiny perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Install perl-Sub-Name perl-Sub-Quote perl-Throwable perl-Tie-IxHash perl-Try-Tiny perl-Variable-Magic perl-devel perl-namespace-autoclean perl-namespace-clean perl-parent python3-base sh4
+BuildRequires: perl-CPAN-Meta perl-Class-XSAccessor perl-Config-MVP-Reader-INI perl-Test-Fatal
 
 %description
 Perl module Config::MVP provides read and write access to the
@@ -45,6 +45,9 @@ things that do.
 %perl_vendor_privlib/Config/MVP*
 
 %changelog
+* Mon Oct 11 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.200012-alt3
+- Update BuildRequires
+
 * Fri Mar 26 2021 Ivan A. Melnikov <iv@altlinux.org> 2.200012-alt2
 - Rerun buildreq avoiding recursive build dependencies
 
