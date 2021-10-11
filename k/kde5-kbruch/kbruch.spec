@@ -1,7 +1,7 @@
 %define rname kbruch
 
 Name: kde5-%rname
-Version: 21.08.1
+Version: 21.08.2
 Release: alt1
 %K5init no_appdata
 
@@ -15,11 +15,11 @@ Patch: Fix-incorrect-display-of-user-interface-elements-alt.patch
 
 # Automatically added by buildreq on Fri Apr 01 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ gtk-update-icon-cache kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python-modules python3 rpm-build-python3 xml-common xml-utils
-#BuildRequires: extra-cmake-modules kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdelibs4support kf5-kdoctools-devel-static kf5-ki18n-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel python-module-google python3-base qt5-base-devel ruby ruby-stdlibs
+#BuildRequires: extra-cmake-modules kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdelibs4support kf5-kdoctools-devel kf5-ki18n-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel python-module-google python3-base qt5-base-devel ruby ruby-stdlibs
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel
-BuildRequires: kf5-kdelibs4support kf5-kdoctools-devel-static kf5-ki18n-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel
+BuildRequires: kf5-kdelibs4support kf5-kdoctools-devel kf5-ki18n-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel
 
 %description
 KBruch is a small program to practice calculating with fractions and percentages.
@@ -81,6 +81,9 @@ KF5 library
 #%_K5lib/libKF5Bruch.so.*
 
 %changelog
+* Fri Oct 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.2-alt1
+- new version
+
 * Mon Sep 06 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname kqtquickcharts
 
 Name: kde5-%rname
-Version: 21.08.1
+Version: 21.08.2
 Release: alt1
 %K5init no_appdata
 
@@ -61,6 +61,9 @@ developing applications that use %name.
 
 
 %changelog
+* Fri Oct 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.2-alt1
+- new version
+
 * Mon Sep 06 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt1
 - new version
 
