@@ -38,8 +38,8 @@
 %def_disable check
 
 Name:    golang
-Version: 1.17.1
-Release: alt3
+Version: 1.17.2
+Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -341,6 +341,11 @@ mkdir -p -- \
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Mon Oct 11 2021 Alexey Shabalin <shaba@altlinux.org> 1.17.2-alt1
+- New version (1.17.2).
+- Fixes:
+  + CVE-2021-38297
+
 * Thu Sep 23 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.17.1-alt3
 - Remove workaround patch for building golang itself
 
