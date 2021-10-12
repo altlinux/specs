@@ -1,9 +1,10 @@
 Group: Editors
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+BuildRequires: /usr/bin/git
 Name:           dc3dd
 Version:        7.2.646
-Release:        alt1_9
+Release:        alt1_14
 Summary:        Patched version of GNU dd for use in computer forensics
 
 License:        GPLv3+
@@ -25,6 +26,7 @@ BuildRequires:  gettext gettext-tools
 BuildRequires:  gettext-tools libasprintf-devel
 BuildRequires:  gnulib
 BuildRequires:  perl(Locale/gettext.pm)
+BuildRequires:  perl(I18N/Langinfo.pm)
 BuildRequires:  p7zip-standalone p7zip
 BuildRequires:  m4, readline-devel, autoconf, automake
 Source44: import.info
@@ -51,8 +53,16 @@ were rewritten for dc3dd.
 
 %prep
 %setup -q
-%patch1 -p1
-%patch2 -p1
+git init -q
+git config user.name "rpmbuild"
+git config user.email "<rpmbuild>"
+git config gc.auto 0
+git add --force .
+git commit -q --allow-empty -a --author "rpmbuild <rpmbuild>" -m "%{NAME}-%{VERSION} base"
+cat %_sourcedir/dc3dd-01_automake.patch | git apply --index --reject  -
+git commit -q -m dc3dd-01_automake.patch --author "rpmbuild <rpmbuild>"
+cat %_sourcedir/dc3dd-02_fix-FTBFS-with-glibc-2.28.patch | git apply --index --reject  -
+git commit -q -m dc3dd-02_fix-FTBFS-with-glibc-2.28.patch --author "rpmbuild <rpmbuild>"
 
 
 #Missing x flag in version 7.2.646 makes the build fail
@@ -81,6 +91,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_mandir}/man1/%{name}.*
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 7.2.646-alt1_14
+- update to new release by fcimport
+
 * Wed Dec 04 2019 Igor Vlasenko <viy@altlinux.ru> 7.2.646-alt1_9
 - fixed build
 
