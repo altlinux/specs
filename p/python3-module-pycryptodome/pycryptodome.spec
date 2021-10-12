@@ -1,7 +1,7 @@
 %define oname pycryptodome
 
 Name:     python3-module-%oname
-Version:  3.10.1
+Version:  3.11.0
 Release:  alt1
 
 Summary:  A self-contained cryptographic library for Python
@@ -10,7 +10,7 @@ Summary:  A self-contained cryptographic library for Python
 # and partially released under the BSD 2-Clause license.
 # In either case, there are minimal if no restrictions on the redistribution,
 # modification and usage of the software.
-License:  BSD 2-Clause
+License:  BSD-2-Clause
 Group:    Development/Python3
 Url:      https://www.pycryptodome.org
 # https://github.com/Legrandin/pycryptodome
@@ -67,6 +67,9 @@ python3 setup.py test
 %python3_sitelibdir/*/SelfTest
 
 %changelog
+* Tue Oct 12 2021 Grigory Ustinov <grenka@altlinux.org> 3.11.0-alt1
+- Automatically updated to 3.11.0.
+
 * Wed Mar 17 2021 Grigory Ustinov <grenka@altlinux.org> 3.10.1-alt1
 - Automatically updated to 3.10.1.
 
