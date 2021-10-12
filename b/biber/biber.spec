@@ -1,61 +1,87 @@
-%define perl_bootstrap 1
 Group: Development/Tools
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(DateTime.pm) perl(DateTime/TimeZone.pm) perl(IO/String.pm) perl(LWP/UserAgent.pm) perl(Pod/Usage.pm) perl(Text/Diff/Config.pm) perl(parent.pm) perl-podlators
+BuildRequires: perl(Text/Diff/Config.pm) perl-podlators
 # END SourceDeps(oneline)
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# Perform developer tests which exhibit a biber executable
+%bcond_without biber_enables_extra_test
+
 Name:           biber
-Version:        2.14
+Version:        2.16
 Release:        alt1_4
 Summary:        Command-line bibliographic manager, BibTeX replacement
+# bin/biber:        Artistic 2.0
+# data/texmap.xsl:  Artistic 2.0
+# doc/biber.tex:    Artistic 2.0
+# lib/Biber.pm:     Artistic 2.0
+# lib/Biber/LaTeX/recode_data.xml:  Artistic 2.0
+# README.md:        Artistic 2.0
+## Not in any binary package
+# Build.PL:         GPL+ or Artistic
+## Not used at all
+# etc/bibtex.g:     GPLv2+
+# etc/parser.dlg:   GPLv2+ (generated from etc/bibtex.g)
+# etc/tugboat.bib:  Public Domain
 License:        (GPL+ or Artistic 2.0) and Artistic 2.0
 URL:            http://biblatex-biber.sourceforge.net/
 Source0:        https://github.com/plk/biber/archive/v%{version}.tar.gz
 # not appropriate for upstream: http://github.com/plk/biber/pull/97
 Patch0:         biber-drop-builddeps-for-monolithic-build.patch
+# Do not use /bin/env in shebangs
+Patch1:         biber-2.16-Normalize-shebangs.patch
 BuildArch:      noarch
-
+BuildRequires:  coreutils
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl(Config.pm)
+BuildRequires:  perl(Module/Build.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(utf8.pm)
+BuildRequires:  perl(warnings.pm)
+# Run-time:
+BuildRequires:  perl
 BuildRequires:  perl(autovivification.pm)
-BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Business/ISBN.pm)
 BuildRequires:  perl(Business/ISMN.pm)
 BuildRequires:  perl(Business/ISSN.pm)
-BuildRequires:  perl(constant.pm)
-BuildRequires:  perl(Capture/Tiny.pm)
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Class/Accessor.pm)
+BuildRequires:  perl(constant.pm)
 BuildRequires:  perl(Cwd.pm)
-BuildRequires:  perl(Data/Dump.pm)
 BuildRequires:  perl(Data/Compare.pm)
+BuildRequires:  perl(Data/Dump.pm)
 BuildRequires:  perl(Data/Uniqid.pm)
-BuildRequires:  perl(Date/Simple.pm)
+BuildRequires:  perl(DateTime.pm)
 BuildRequires:  perl(DateTime/Calendar/Julian.pm)
 BuildRequires:  perl(DateTime/Format/Builder.pm)
+BuildRequires:  perl(DateTime/TimeZone.pm)
 BuildRequires:  perl(Digest/MD5.pm)
 BuildRequires:  perl(Encode.pm)
 BuildRequires:  perl(Encode/Alias.pm)
-BuildRequires:  perl(Encode/EUCJPASCII.pm)
-BuildRequires:  perl(Encode/HanExtra.pm)
-BuildRequires:  perl(Encode/JIS2K.pm)
 BuildRequires:  perl(Exporter.pm)
-BuildRequires:  perl(File/Compare.pm)
 BuildRequires:  perl(File/Copy.pm)
+# File::DosGlob not used on Linux
 BuildRequires:  perl(File/Find.pm)
 BuildRequires:  perl(File/Slurper.pm)
 BuildRequires:  perl(File/Spec.pm)
 BuildRequires:  perl(File/Temp.pm)
-BuildRequires:  perl(File/Which.pm)
+%if %{with biber_enables_extra_test}
+BuildRequires:  perl(Getopt/Long.pm)
+%endif
 BuildRequires:  perl(IO/File.pm)
+BuildRequires:  perl(IO/String.pm)
 BuildRequires:  perl(IPC/Cmd.pm)
 BuildRequires:  perl(IPC/Run3.pm)
 BuildRequires:  perl(Lingua/Translit.pm)
 BuildRequires:  perl(List/AllUtils.pm)
-BuildRequires:  perl(List/MoreUtils.pm)
-BuildRequires:  perl(List/MoreUtils/XS.pm)
 BuildRequires:  perl(List/Util.pm)
 BuildRequires:  perl(locale.pm)
 BuildRequires:  perl(Log/Log4perl.pm)
@@ -63,75 +89,74 @@ BuildRequires:  perl(Log/Log4perl/Appender/File.pm)
 BuildRequires:  perl(Log/Log4perl/Appender/Screen.pm)
 BuildRequires:  perl(Log/Log4perl/Layout/PatternLayout.pm)
 BuildRequires:  perl(Log/Log4perl/Layout/SimpleLayout.pm)
+%if %{with biber_enables_extra_test}
+BuildRequires:  perl(Log/Log4perl/Level.pm)
+%endif
 BuildRequires:  perl(LWP/Protocol/https.pm)
-BuildRequires:  perl(Module/Build.pm)
-BuildRequires:  perl(open.pm)
+BuildRequires:  perl(LWP/UserAgent.pm)
+# Mozilla::CA is not helpful
+BuildRequires:  perl(parent.pm)
 BuildRequires:  perl(Parse/RecDescent.pm)
-BuildRequires:  perl(PerlIO/utf8_strict.pm)
+%if %{with biber_enables_extra_test}
+BuildRequires:  perl(Pod/Usage.pm)
+%endif
 BuildRequires:  perl(POSIX.pm)
-BuildRequires:  perl(re.pm)
 BuildRequires:  perl(Regexp/Common.pm)
-BuildRequires:  perl(Storable.pm)
+BuildRequires:  perl(Scalar/Util.pm)
 BuildRequires:  perl(sigtrap.pm)
 BuildRequires:  perl(Sort/Key.pm)
-BuildRequires:  perl(strict.pm)
-BuildRequires:  perl(Text/CSV.pm)
-BuildRequires:  perl(Text/CSV_XS.pm)
-BuildRequires:  perl(Test/Differences.pm)
-BuildRequires:  perl(Test/More.pm)
-BuildRequires:  perl(Test/Pod.pm)
-BuildRequires:  perl(Test/Pod/Coverage.pm)
+BuildRequires:  perl(Storable.pm)
 BuildRequires:  perl(Text/BibTeX.pm)
 BuildRequires:  perl(Text/BibTeX/Name.pm)
 BuildRequires:  perl(Text/BibTeX/NameFormat.pm)
+BuildRequires:  perl(Text/CSV.pm)
 BuildRequires:  perl(Text/Roman.pm)
 BuildRequires:  perl(Text/Wrap.pm)
-BuildRequires:  perl(Unicode/UCD.pm)
-BuildRequires:  perl(Unicode/LineBreak.pm)
-BuildRequires:  perl(Unicode/Normalize.pm)
-BuildRequires:  perl(Unicode/GCString.pm)
+# Unicode::Collate::Locale version from Unicode::Collate in Build.PL
 BuildRequires:  perl(Unicode/Collate/Locale.pm)
+BuildRequires:  perl(Unicode/GCString.pm)
+BuildRequires:  perl(Unicode/Normalize.pm)
+BuildRequires:  perl(Unicode/UCD.pm)
 BuildRequires:  perl(URI.pm)
-BuildRequires:  perl(utf8.pm)
 BuildRequires:  perl(vars.pm)
-BuildRequires:  perl(warnings.pm)
+# Win32* not used on Linux
 BuildRequires:  perl(XML/LibXML.pm)
 BuildRequires:  perl(XML/LibXML/Simple.pm)
 BuildRequires:  perl(XML/LibXSLT.pm)
 BuildRequires:  perl(XML/Writer.pm)
-# For tests
-# Break build cycle biber -> texlive-plain -> texlive-biblatex -> biber
-%if !%{defined perl_bootstrap}
-BuildRequires:  texlive-collection-basic
+# Tests:
+BuildRequires:  perl(Capture/Tiny.pm)
+BuildRequires:  perl(File/Which.pm)
+BuildRequires:  perl(open.pm)
+BuildRequires:  perl(Test/Differences.pm)
+BuildRequires:  perl(Test/More.pm)
+# Optional tests:
+# texlive-plain not helpful; The only "plain.tex" usage in t/utils.t checks
+# that it exist on a file system.
+# It would also create a build cycle: texlive-plain a.. texlive-biblatex a.. biber
+# Extra tests:
+%if %{with biber_enables_extra_test}
+BuildRequires:  perl(File/Compare.pm)
 %endif
 Requires:       perl(autovivification.pm)
 Requires:       perl(Business/ISBN.pm)
 Requires:       perl(Business/ISMN.pm)
 Requires:       perl(Business/ISSN.pm)
-# Upstream confirmed [1] deps on Encode::* and List::MoreUtils (c.f., [2]).
-# [1] https://github.com/plk/biber/issues/98
-# [2] https://bugzilla.redhat.com/show_bug.cgi?id=1165620
-Requires:       perl(Encode/EUCJPASCII.pm)
-Requires:       perl(Encode/HanExtra.pm)
-Requires:       perl(Encode/JIS2K.pm)
-Requires:       perl(List/MoreUtils.pm)
-Requires:       perl(List/MoreUtils/XS.pm)
+Requires:       perl(Lingua/Translit.pm) >= 0.280
 Requires:       perl(LWP/UserAgent.pm)
 Requires:       perl(LWP/Protocol/https.pm)
-Requires:       perl(Mozilla/CA.pm) >= 20141217
-Requires:       perl(PerlIO/utf8_strict.pm)
 Requires:       perl(Text/BibTeX.pm) >= 0.880
-Requires:       perl(Text/Roman.pm)
-Requires:       perl(Unicode/Collate/Locale.pm)
+# Unicode::Collate::Locale version from Unicode::Collate in Build.PL
+Requires:       perl(Unicode/Collate/Locale.pm) >= 1.290
 Requires:       perl(XML/LibXSLT.pm)
-Requires:       texlive-collection-basic texlive-dist
-# Biber need a minimum biblatex (src: doc/biber.tex "Compatibility Matrix")
+# Biber does not use biblatex, but it expects a compatible biblatex file format
+# (see doc/biber.tex "Compatibility Matrix"):
 #     biber | texlive-biblatex
 #     ------+-----------------
 #     1.8   | 2.8a
 #     2.1   | 3.0
 #     2.6   | 3.5, 3.6
-#     2.7   | 3.7       (#1401482)
+#     2.7   | 3.7       (bug #1401482)
 #     2.8   | 3.8
 #     2.9   | 3.9
 #     2.10  | 3.10
@@ -139,13 +164,19 @@ Requires:       texlive-collection-basic texlive-dist
 #     2.12  | 3.12
 #     2.13  | 3.13
 #     2.14  | 3.14
-# (biblatex also has minimum biber requirements)
+# (biblatex also has minimum biber requirements). Provided that texlive-biblatex
+# package (e.g. 2020) does not RPM-export biblatex's version (e.g. 3.14) and
+# biblatex reached 3.14 version many years ago, it does not make sense to keep
+# the dependency from biber on texlive-biblatex >= 7:svn42680 here.
+# Version at least the main module
+Provides:       perl(Biber.pm) = %{version}
 
-# filter autogenerated runtime dep, instead use constraint above
+# Remove under-specified dependencies
+
 
 Source44: import.info
-%filter_from_requires /^perl(Text.BibTeX.pm)/d
-
+%filter_from_requires /^perl(\(Text.BibTeX\|Unicode.Collate.Locale\).pm)/d
+%filter_from_provides /^perl(Biber.pm)/d
 
 %description
 Biber is a command-line tool for dealing with bibliographic databases.
@@ -154,9 +185,36 @@ functionality.  It is often used with the popular BibLaTeX package
 (texlive-biblatex), where it is required for some features.
 
 
+%package tests
+Group: Development/Tools
+Summary:        Tests for %{name}
+Requires:       %{name} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       coreutils
+
+%description tests
+Tests from %{name}. Execute them
+with "%{_libexecdir}/%{name}/test".
+
+
 %prep
 %setup -q -n biber-%{version}
 %patch0 -p1
+%patch1 -p1
+# t/remote-files.t needs the Internet
+for F in \
+    t/remote-files.t \
+%if !%{with biber_enables_extra_test}
+    t/full-*.t \
+%endif
+; do
+    rm "$F";
+    perl -i -ne 'print $_ unless m{\A\Q'"$F"'\E\b}' MANIFEST
+done
+# Help generators to recognize Perl scripts
+for F in t/*.t; do
+    perl -i -MConfig -ple 'print $Config{startperl} if $. == 1 && !s{\A#!\s*perl}{$Config{startperl}}' "$F"
+    chmod +x "$F"
+done
 
 
 %build
@@ -166,13 +224,46 @@ perl Build.PL installdirs=vendor
 
 %install
 ./Build install destdir=%{buildroot} create_packlist=0
-chmod u+w %{buildroot}%{_bindir}/*
+# %{_fixperms} %{buildroot}/*
+# Install tests
+mkdir -p %{buildroot}%{_libexecdir}/%{name}
+cp -a t %{buildroot}%{_libexecdir}/%{name}
+mkdir -p %{buildroot}%{_libexecdir}/%{name}/data/schemata
+ln -s %{perl_vendor_privlib}/Biber/biber-tool.conf \
+    %{buildroot}%{_libexecdir}/%{name}/data
+for F in {bcf,config}.{rnc,rng}; do
+    ln -s %{perl_vendor_privlib}/Biber/"$F" \
+        %{buildroot}%{_libexecdir}/%{name}/data/schemata
+done
+%if %{with biber_enables_extra_test}
+mkdir %{buildroot}%{_libexecdir}/%{name}/bin
+ln -s %{_bindir}/%{name} %{buildroot}%{_libexecdir}/%{name}/bin
+%endif
+cat > %{buildroot}%{_libexecdir}/%{name}/test << 'EOF'
+#!/bin/bash
+set -e
+# t/datalists.t via generate_bltxml_schema() writes into CWD
+DIR=$(mktemp -d)
+cp -a %{_libexecdir}/%{name}/* "$DIR"
+pushd "$DIR"
+unset BIBER_DEV_TESTS ISBN_RANGE_MESSAGE PAR_TEMP PERL_LWP_SSL_CA_FILE
+%if %{with biber_enables_extra_test}
+export BIBER_DEV_TESTS=1
+%endif
+prove -I . -j "$(getconf _NPROCESSORS_ONLN)"
+popd
+rm -r "$DIR"
+EOF
+chmod +x %{buildroot}%{_libexecdir}/%{name}/test
 
 
 %check
-%if !%{defined perl_bootstrap}
-./Build test verbose=1
+unset BIBER_DEV_TESTS ISBN_RANGE_MESSAGE PAR_TEMP PERL_LWP_SSL_CA_FILE
+%if %{with biber_enables_extra_test}
+export BIBER_DEV_TESTS=1
 %endif
+export HARNESS_OPTIONS=j$(perl -e 'if ($ARGV[0] =~ /.*-j([0-9][0-9]*).*/) {print $1} else {print 1}' -- '%{?_smp_mflags}')
+./Build test
 
 
 %files
@@ -181,8 +272,14 @@ chmod u+w %{buildroot}%{_bindir}/*
 %{_mandir}/man1/*
 %{perl_vendor_privlib}/Biber*
 
+%files tests
+%{_libexecdir}/%{name}
+
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 2.16-alt1_4
+- update to new release by fcimport
+
 * Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 2.14-alt1_4
 - fixed build
 
