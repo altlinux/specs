@@ -1,6 +1,6 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install perl(Shell.pm)
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -8,24 +8,19 @@ BuildRequires: /usr/bin/desktop-file-install perl(Shell.pm)
 %global debug_package %{nil}
 %define apricotsdir %{_datadir}/apricots
 Name: apricots
-Version:  0.2.6
-Release:  alt4_27
+Version:  0.2.7
+Release:  alt1_2
 Summary: 2D air combat game
 
 License: GPLv2
-URL: http://www.fishies.org.uk/apricots.html
-Source0: http://www.fishies.org.uk/apricots-%{version}.tar.gz
+URL: https://github.com/moggers87/apricots
+Source0: %{url}/archive/v%{version}/apricots-%{version}.tar.gz
 Source1: apricots.png
 #Icon created from screenshot on website
 Source2: apricots.desktop
-Patch0: apricots-0.2.6-alut-apricots.patch
-Patch1: apricots-0.2.6-alut-sampleio.patch
-Patch2: apricots-0.2.6-alut-configure.patch
-# alut patches sent upstream.
-Patch3: apricots-0.2.6-path.patch
-#Patch4: apricots-0.2.6-alincludes.patch
+
 BuildRequires: gcc gcc-c++
-BuildRequires: libSDL-devel
+BuildRequires: libSDL2-devel
 BuildRequires: libalut-devel
 BuildRequires: desktop-file-utils
 BuildRequires: libopenal-devel
@@ -40,26 +35,13 @@ and fun.
 
 %prep
 %setup -q
+# e2k support (deprecated in 0.2.7)
+#cp -at admin -- \
+#       /usr/share/gnu-config/config.sub /usr/share/gnu-config/config.guess
 
-chmod -x apricots/*.cpp
-chmod -x apricots/*.h
-chmod -x AUTHORS
-chmod -x ChangeLog
-chmod -x COPYING
-chmod -x README
-chmod -x TODO
-
-%patch0 -p0
-%patch1 -p0
-%patch2 -p0
-%patch3 -p0
-# e2k support
-cp -at admin -- \
-       /usr/share/gnu-config/config.sub /usr/share/gnu-config/config.guess
-
-#%patch4 -p0
 
 %build
+./bootstrap
 #Use %%configure once --as-needed is fixed, and fix debug at top of spec.
 ./configure --prefix=%{_prefix}
 %make_build
@@ -87,7 +69,8 @@ install -p -m 644 %{SOURCE1} \
 
 
 %files
-%doc AUTHORS ChangeLog COPYING README TODO
+%doc --no-dereference COPYING
+%doc AUTHORS ChangeLog README.md
 %{_bindir}/apricots
 %{_datadir}/apricots
 %{_datadir}/applications/apricots.desktop
@@ -96,6 +79,9 @@ install -p -m 644 %{SOURCE1} \
 
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 0.2.7-alt1_2
+- new version
+
 * Sat Dec 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt4_27
 - restored e2k patch
 
