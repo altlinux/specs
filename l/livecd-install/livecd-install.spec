@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.9.18
+Version: 0.9.19
 Release: alt1
 
 Summary: Permanently install Live system
@@ -63,6 +63,11 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Tue Oct 12 2021 Anton Midyukov <antohami@altlinux.org> 0.9.19-alt1
+- 08-crypttab.sh: Rework crypttab generator
+- 40-autohostname.sh: generate short hostname if it's longer than 13 chars
+- 00-cp-installer-screenshots.sh: add script from installer-common-stage2
+
 * Mon Oct 11 2021 Anton Midyukov <antohami@altlinux.org> 0.9.18-alt1
 - setup-plymouth: Don't disable plymouth when there are LUKS partitions
 
