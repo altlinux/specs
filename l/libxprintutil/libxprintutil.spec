@@ -1,7 +1,7 @@
 Name: libxprintutil
 Summary: The XprintUtil Library
 Version: 1.0.1
-Release: alt5
+Release: alt6
 Group: System/X11
 License: MIT
 Url: http://xorg.freedesktop.org
@@ -27,18 +27,6 @@ Development files for %name
 %_pkgconfigdir/xprintutil.pc
 %_includedir/X11/XprintUtil/xprintutil.h
 
-%package devel-static
-Summary: Static development files for %name
-Group: System/X11
-Requires: libxprintutil-devel = %version-%release
-Provides: libxprintutil-static-devel = %version-%release
-
-%description devel-static
-Static development files for %name
-
-%files devel-static
-%_libdir/libXprintUtil.a
-
 %prep
 %setup -q -n libXprintUtil-%version
 
@@ -49,11 +37,16 @@ Static development files for %name
 %install
 %make install DESTDIR=%buildroot
 
+rm -fv %buildroot%_libdir/*.a
+
 %files -n libxprintutil
 %_libdir/libXprintUtil.so.1
 %_libdir/libXprintUtil.so.1.0.0
 
 %changelog
+* Tue Oct 12 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt6
+- Remove devel-static subpackage.
+
 * Mon Jul 29 2019 Fr. Br. George <george@altlinux.ru> 1.0.1-alt5
 - Fix devel-tatic package name (Closes: #36964)
 
