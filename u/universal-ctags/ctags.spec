@@ -3,8 +3,9 @@
 %define _stripped_files_terminate_build 1
 
 Name:    universal-ctags
-Version: p5.9.20201115.0
-Release: alt2
+Version: 5.9.20211010.0
+Release: alt1
+Epoch:   1
 
 Summary: Universal Ctags generates an index of language objects found in source
 License: GPL-2.0-only
@@ -41,6 +42,8 @@ together.
 
 %prep
 %setup
+# Seems, developer-only test requiring git.
+sed -i '/check:/s/check-genfile//' makefiles/testing.mak
 
 %build
 %autoreconf
@@ -58,12 +61,16 @@ together.
 %doc docs/interactive-mode.rst docs/parser* docs/output*
 %_bindir/ctags
 %_bindir/readtags
+%_bindir/optscript
 %_man1dir/ctags.1*
 %_man1dir/readtags.1*
 %_man5dir/tags.5*
 %_man7dir/ctags-*.7*
 
 %changelog
+* Tue Oct 12 2021 Vitaly Chikunov <vt@altlinux.org> 1:5.9.20211010.0-alt1
+- Update to 5.9.20211010.0. (Also fixes seccomp rules for glibc-2.34).
+
 * Fri Nov 20 2020 Vitaly Chikunov <vt@altlinux.org> p5.9.20201115.0-alt2
 - Add conflict with ctags.
 
