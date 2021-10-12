@@ -1,3 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %def_enable shared
 %def_enable static
 %def_disable debug
@@ -5,18 +9,23 @@
 %def_with pic
 %def_with doc
 
+%if_enabled static
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%endif
+
 %define bname gavl
 Name: lib%bname
 Version: 1.4.0
-Release: alt4
+Release: alt5
 Summary: Library for handling uncompressed audio- and video data
 License: GPL2+
 Group: System/Libraries
 URL: http://gmerlin.sourceforge.net/
-Source: %bname-%version.tar.gz
+
+Source: %bname-%version.tar
+
 Patch: %bname-1.1.2-config.patch
 Patch1: %bname-1.4.0-debian-Makefile.patch
-Packager: Led <led@altlinux.ru>
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -33,11 +42,10 @@ for audio and video formats, which are applicable to a wide range of
 multimedia applications. In addition, it provides conversion functions
 from all possible formats to all other formats.
 
-
 %package devel
 Group: Development/C
 Summary: Development files for %name
-Requires: %name%{?_disable_shared:-devel-static} = %version-%release
+Requires: %name%{?_disable_shared:-devel-static} = %EVR
 
 %description devel
 Gavl is short for Gmerlin Audio Video Library. It defines generic types
@@ -57,7 +65,7 @@ applications with %name.
 %package devel-static
 Summary: Static %name
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 Gavl is short for Gmerlin Audio Video Library. It defines generic types
@@ -98,6 +106,7 @@ This package contains API Reference for develop with %name.
 export LIBS="-lm"
 %endif
 %define _optlevel 3
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
     %{subst_enable shared} \
@@ -148,6 +157,9 @@ install -m 0644 AUTHORS README TODO %buildroot%_docdir/%name-%version/
 
 
 %changelog
+* Tue Oct 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.0-alt5
+- Fixed build with LTO
+
 * Fri Nov 30 2018 Leontiy Volodin <lvol@altlinux.org> 1.4.0-alt4
 - Added patch for Makefile (thanks debian for this patch)
 
