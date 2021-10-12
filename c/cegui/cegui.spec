@@ -1,13 +1,13 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: boost-devel cmake glib2-devel libGL-devel libGLES-devel libSDL2-devel libSDL2_image-devel libatk-devel libcairo-devel libgtk+2-devel libminizip-devel libpango-devel pkgconfig(tinyxml2) 
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
+BuildRequires: /usr/bin/ccache /usr/bin/doxygen boost-devel cmake glib2-devel libSDL2-devel libSDL2_image-devel libatk-devel libcairo-devel libglvnd-devel libgtk+2-devel libminizip-devel libpango-devel pkgconfig(glfw3) pkgconfig(tinyxml2) python3-devel rpm-build-python3
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           cegui
 Version:        0.8.7
-Release:        alt8_14
+Release:        alt8_22
 Summary:        Free library providing windowing and widgets for graphics APIs / engines
 License:        MIT
 URL:            http://www.cegui.org.uk
@@ -40,13 +40,15 @@ BuildRequires:  libGLEW-devel
 BuildRequires:  libogre-devel >= 1.7.0
 BuildRequires:  libois-devel
 BuildRequires:  libirrlicht-devel >= 1.8
-BuildRequires:  doxygen
-BuildRequires:  graphviz libgraphviz
 # We no longer build a python subpackage as the python bindings are
 # broken when building with gcc6 / boost-1.60 and no-one uses them
 Obsoletes:      %{name}-python < %{version}-%{release}
 # Idem for the xerces-xmlparser (broken with recent xerces versions)
 Obsoletes:      %{name}-xerces-xmlparser < %{version}-%{release}
+# We no longer build the samples and devel-doc subpackages, because CEGUI is no
+# longer maintained upstream and thus should not be used for new projects
+Obsoletes:      %{name}-samples < %{version}-%{release}
+Obsoletes:      %{name}-devel-doc < %{version}-%{release}
 Source44: import.info
 
 %description
@@ -73,25 +75,6 @@ Requires:       %{name}-tinyxml-xmlparser = %{version}-%{release}
 
 %description devel
 Development files for cegui
-
-
-%package devel-doc
-Group: Documentation
-Summary:        API documentation for cegui
-Requires:       cegui = %{version}-%{release}
-
-%description devel-doc
-API and Falagard skinning documentation for cegui
-
-
-%package samples
-Group: System/Libraries
-Summary:        Executable samples provided with the library
-Requires:       cegui = %{version}-%{release}
-
-%description samples
-Several interactive sample programs demonstrating functionality of
-the CEGUI library.
 
 
 %package DevIL-imagecodec
@@ -158,7 +141,7 @@ Alternative xml parsing library for CEGUI using tinyxml.
 
 
 %prep
-%setup
+%setup -q
 %patch0 -p1
 %patch1 -p2
 %patch2 -p2
@@ -166,7 +149,7 @@ find -name "*.orig" -exec rm -f {} ';'
 
 
 %build
-%{fedora_cmake} \
+%{fedora_v2_cmake} \
 -D CMAKE_INSTALL_DOCDIR=%{_docdir}/%{name} \
 -D CEGUI_BUILD_IMAGECODEC_SDL2=false \
 -D CEGUI_BUILD_IMAGECODEC_STB=false \
@@ -178,24 +161,13 @@ find -name "*.orig" -exec rm -f {} ';'
 -D CEGUI_OPTION_DEFAULT_IMAGECODEC=SILLYImageCodec \
 -D CEGUI_BUILD_RENDERER_NULL=true \
 -D CEGUI_BUILD_TESTS=false \
-.
+-D CEGUI_SAMPLES_ENABLED=false
 
-%make_build
-make html %{?_smp_mflags}
-
-
-#%check
-# CEGUITests is in $BUILDDIR/bin, datafiles are in $BUILDDIR/datafiles
-#CEGUI_SAMPLE_DATAPATH=../datafiles ctest -V
+%fedora_v2_cmake_build
 
 
 %install
-make install DESTDIR=%{buildroot} 
-mkdir -p %{buildroot}/%{_docdir}/cegui-0.8.4/
-cp -r doc/doxygen/html %{buildroot}/%{_docdir}/cegui-0.8.4/
-
-# CEGUITests is not very useful to install
-find $RPM_BUILD_ROOT -name "CEGUITests-0.8" -exec rm -f {} ';'
+%fedora_v2_cmake_install
 
 
 
@@ -221,10 +193,8 @@ find $RPM_BUILD_ROOT -name "CEGUITests-0.8" -exec rm -f {} ';'
 %{_libdir}/cegui-0.8/libCEGUISILLYImageCodec.so
 
 %files devel
-%{_libdir}/libCEGUI*-0.so
-
 %{_bindir}/toluappcegui-0.8
-
+%{_libdir}/libCEGUI*-0.so
 %{_libdir}/pkgconfig/CEGUI-0.pc
 %{_libdir}/pkgconfig/CEGUI-0-OPENGL.pc
 %{_libdir}/pkgconfig/CEGUI-0-OPENGL3.pc
@@ -232,19 +202,8 @@ find $RPM_BUILD_ROOT -name "CEGUITests-0.8" -exec rm -f {} ';'
 %{_libdir}/pkgconfig/CEGUI-0-NULL.pc
 %{_libdir}/pkgconfig/CEGUI-0-LUA.pc
 %{_libdir}/pkgconfig/CEGUI-0-IRRLICHT.pc
-
 %{_includedir}/cegui-0
-
 %{_datadir}/cegui-0
-
-%files devel-doc
-%doc %{_docdir}/cegui-0.8.4/html
-
-%files samples
-%{_bindir}/CEGUISampleFramework-0.8
-%{_libdir}/cegui-0.8/libCEGUI*Demo.so
-%{_libdir}/cegui-0.8/libCEGUIDemo6.so
-%{_libdir}/cegui-0.8/libCEGUIMinesweeper.so
 
 %files irrlicht-renderer
 %{_libdir}/libCEGUIIrrlichtRenderer-0.so.*
@@ -270,6 +229,9 @@ find $RPM_BUILD_ROOT -name "CEGUITests-0.8" -exec rm -f {} ';'
 %{_libdir}/cegui-0.8/libCEGUITinyXMLParser.so
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 0.8.7-alt8_22
+- update to new release by fcimport
+
 * Tue Aug 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.7-alt8_14
 - Updated build dependencies.
 
