@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.0.0
-Release: alt1
+Release: alt2
 Summary: Python library for serializing any arbitrary object graph into JSON
 License: BSD-3-Clause
 Group: Development/Python3
@@ -21,14 +21,14 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(setuptools_scm) python3(toml)
 BuildRequires: python3-module-demjson python3-module-jsonlib
-BuildRequires: python3-module-yajl python3-module-ujson
+BuildRequires: python3-module-ujson
 BuildRequires: python3-module-numpy
 BuildRequires: python3-module-numpy-testing
 BuildRequires: /usr/bin/pytest-3 python3-module-pytest-flake8 python3-module-pytest-cov
 BuildRequires: python3(pandas)
 
 %py3_provides %oname
-%py3_requires demjson jsonlib yajl ujson
+%py3_requires demjson jsonlib ujson
 
 %description
 jsonpickle converts complex Python objects to and from JSON.
@@ -55,6 +55,9 @@ pytest3 -vv
 %python3_sitelibdir/%oname-%version-py*.egg-info
 
 %changelog
+* Tue Oct 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt2
+- Updated build and runtime dependencies.
+
 * Tue Aug 24 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt1
 - Updated to upstream version 2.0.0.
 - Enabled tests.
