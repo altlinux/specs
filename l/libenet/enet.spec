@@ -1,8 +1,14 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 %define _libname	enet
 
 Name: libenet
 Version: 1.3.13
-Release: alt1
+Release: alt2
 Summary: Thin, simple and robust network layer on top of UDP
 Group: System/Libraries
 License: MIT
@@ -22,7 +28,7 @@ level or dependent tasks.
 %package devel
 Summary: Development files for enet
 Group: Development/C
-Requires: %name = %version
+Requires: %name = %EVR
 
 %description devel
 The libenet-devel package contains libraries and header files for
@@ -31,7 +37,7 @@ developing applications that use enet.
 %package devel-static
 Summary: Static library for enet
 Group: Development/C
-Requires: %name = %version
+Requires: %name = %EVR
 
 %description devel-static
 Static library for enet
@@ -40,6 +46,8 @@ Static library for enet
 %setup -n %_libname-%version
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %configure
 %make
@@ -66,6 +74,9 @@ install -m644 *.pc %buildroot%_pkgconfigdir
 %_pkgconfigdir/*
 
 %changelog
+* Tue Oct 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.13-alt2
+- Fixed build with LTO
+
 * Tue Jul 14 2015 Fr. Br. George <george@altlinux.ru> 1.3.13-alt1
 - Autobuild version bump to 1.3.13
 
