@@ -1,6 +1,4 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
+Group: System/Libraries
 BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -19,9 +17,8 @@ BuildRequires: /proc
 
 Name:           openni-primesense
 Version:        5.1.6.6
-Release:        alt2_11%{?gitrev}.qa1
+Release:        alt2_20%{?gitrev}
 Summary:        PrimeSensor/Kinect Modules for OpenNI
-Group:          System/Libraries
 License:        ASL 2.0
 URL:            https://github.com/PrimeSense/Sensor
 
@@ -33,11 +30,14 @@ Patch2:         openni-primesense-5.1.6.6-sse.patch
 Patch3:         openni-primesense-5.1.6.6-softfloat.patch
 ExclusiveArch:  %{ix86} x86_64 %{arm}
 
-BuildRequires:  openni-devel >= 1.5.0.0, python
+BuildRequires:  gcc-c++
+BuildRequires:  openni-devel >= 1.5.0.0
 BuildRequires:  dos2unix
 BuildRequires:  libjpeg-devel
+BuildRequires:  rpm-macros-systemd
 Requires:       openni >= 1.5.0.0
 Requires:       udev
+Requires(pre):  shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
 Source44: import.info
 
 %description
@@ -45,8 +45,8 @@ This modules enables OpenNI to make use of the PrimeSense, also known as
 Kinect depth camera.
 
 %package        devel
+Group: Development/Other
 Summary:        Development files for %{name}
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 
 %description    devel
@@ -74,13 +74,14 @@ sed -i 's|make -j$(calc_jobs_number) -C ../Build|make -j$(calc_jobs_number) -C .
 
 %install
 pushd Platform/Linux/Redist/Sensor-Bin-Linux-%{niarch}-v%{version}
-mkdir -p $RPM_BUILD_ROOT%_udevrulesdir/
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d/
+mkdir -p $RPM_BUILD_ROOT%{_udevrulesdir}
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
 INSTALL_LIB=$RPM_BUILD_ROOT%{_libdir}/ \
 INSTALL_BIN=$RPM_BUILD_ROOT%{_bindir}/ \
 INSTALL_ETC=$RPM_BUILD_ROOT%{_sysconfdir}/openni/primesense/ \
 SERVER_LOGS_DIR=$RPM_BUILD_ROOT%{_var}/log/primesense/ \
-INSTALL_RULES=$RPM_BUILD_ROOT%_udevrulesdir/ \
+INSTALL_RULES=$RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d/ \
 ./install.sh -n
 popd
 
@@ -89,10 +90,13 @@ popd
 
 rm -rf $RPM_BUILD_ROOT%{_var}/log/primesense
 
-rm $RPM_BUILD_ROOT%_udevrulesdir/55-primesense-usb.rules
-install -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%_udevrulesdir/55-primesense-usb.rules
+rm $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d/55-primesense-usb.rules
+install -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_udevrulesdir}/55-primesense-usb.rules
 
 
+%pre
+getent group primesense >/dev/null || groupadd -r primesense
+exit 0
 
 %post
 if [ $1 == 1 ]; then
@@ -112,11 +116,14 @@ fi
 %doc LICENSE 
 %dir %{_sysconfdir}/openni/primesense
 %config(noreplace) %{_sysconfdir}/openni/primesense/*
-%config(noreplace) %_udevrulesdir/55-primesense-usb.rules
+%{_udevrulesdir}/55-primesense-usb.rules
 %{_libdir}/*.so
 %{_bindir}/XnSensorServer
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 5.1.6.6-alt2_20
+- fc update
+
 * Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 5.1.6.6-alt2_11.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
