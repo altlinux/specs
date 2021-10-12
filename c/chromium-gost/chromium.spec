@@ -34,7 +34,7 @@
 
 Name:           chromium-gost
 Version:        94.0.4606.71
-Release:        alt1
+Release:        alt2
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -371,8 +371,7 @@ mkdir -p -- \
 	%buildroot/%_sysconfdir/%name \
 #
 install -m 755 %SOURCE100 %buildroot%_bindir/%name
-# XXX ?
-##ln -s %name %buildroot%_libdir/%name/chromium
+ln -s %name %buildroot%_libdir/%name/chromium
 install -m 644 %SOURCE200 %buildroot%_sysconfdir/%name/default
 
 # add directories for policy management
@@ -481,6 +480,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Oct 12 2021 Fr. Br. George <george@altlinux.ru> 94.0.4606.71-alt2
+- Restore internal symlink (Closes: #41094)
+
 * Wed Oct 06 2021 Fr. Br. George <george@altlinux.ru> 94.0.4606.71-alt1
 - Gost version
 
