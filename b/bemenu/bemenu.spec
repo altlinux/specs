@@ -1,33 +1,32 @@
 Group: Other
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/doxygen gcc-c++ libncurses-devel
-# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:       bemenu
-Version:    0.3.0
-Release:    alt1_3
+Version:    0.6.3
+Release:    alt1_1
 Summary:    Dynamic menu library and client program inspired by dmenu
+
+# In case upstream do not bump program version when tagging; this should usually just resolve to %%{version}
+%global     soversion   0
 
 # Library and bindings are LGPLv3+, other files are GPLv3+
 License:    GPLv3+ and LGPLv3+
 URL:        https://github.com/Cloudef/bemenu
-Source0:    %{url}/archive/%{version}/%{name}-%{version}.tar.gz
+Source0:    %{url}/releases/download/%{version}/%{name}-%{version}.tar.gz
 Source1:    %{url}/releases/download/%{version}/%{name}-%{version}.tar.gz.asc
-# Created with: gpg --export-options export-minimal --armor --export 0CBD2CD395613887
-Source2:    pgpkey-0CBD2CD395613887.asc
+Source2:    https://cloudef.pw/bemenu-pgp.txt
 
-Patch:      0001-Mark-global-wayland-constant-extern.patch
+Patch:      respect-env-build-flags.patch
 
-BuildRequires:  gnupg gnupg2
-BuildRequires:  ctest cmake gcc
+BuildRequires:  gnupg2
+BuildRequires:  gcc
 BuildRequires:  pkgconfig(cairo)
 BuildRequires:  pkgconfig(ncursesw)
 BuildRequires:  pkgconfig(pango)
 BuildRequires:  pkgconfig(pangocairo)
 BuildRequires:  pkgconfig(wayland-client)
 BuildRequires:  pkgconfig(wayland-egl)
+BuildRequires:  pkgconfig(wayland-protocols)
 BuildRequires:  pkgconfig(wayland-server)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xinerama)
@@ -51,14 +50,11 @@ Development files for extending %{name}.
 
 
 %build
-%{fedora_cmake} \
-    -DCURSES_NEED_WIDE=ON \
-    -DBEMENU_WAYLAND_RENDERER=ON \
-    "$PWD"
-%make_build
+
+%make_build   PREFIX='%{_prefix}' libdir='/%{_lib}'
 
 %install
-%makeinstall_std
+%makeinstall_std PREFIX='%{_prefix}' libdir='/%{_lib}'
 
 %files
 %doc README.md
@@ -67,7 +63,7 @@ Development files for extending %{name}.
 %{_bindir}/%{name}-run
 %{_mandir}/man1/%{name}*.1*
 # Long live escaping! %%%% resolves to %%; $v%%.* strips everything after first dot
-%{_libdir}/lib%{name}.so.0
+%{_libdir}/lib%{name}.so.%{soversion}
 %{_libdir}/lib%{name}.so.%{version}
 %dir %{_libdir}/%{name}
 %{_libdir}/%{name}/%{name}-renderer-curses.so
@@ -78,9 +74,13 @@ Development files for extending %{name}.
 %doc README.md
 %{_includedir}/%{name}.h
 %{_libdir}/lib%{name}.so
+%{_libdir}/pkgconfig/%{name}.pc
 
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 0.6.3-alt1_1
+- update to new release by fcimport
+
 * Sun Mar 29 2020 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_3
 - new version
 
