@@ -6,14 +6,14 @@ BuildRequires: perl(Test/More.pm) perl(parent.pm) perl(Data/Munge.pm) perl(Test/
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.05
-Release: alt2
+Version: 0.06
+Release: alt1
 Summary: return across multiple call levels
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://www.cpan.org/authors/id/M/MA/MAUKE/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PL/PLICEASE/%{module_name}-%{version}.tar.gz
 Patch0:         Return-MultiLevel-0.05-Test-Fatal-0.016.patch
 BuildArch: noarch
 
@@ -38,6 +38,9 @@ BuildArch: noarch
 %perl_vendor_privlib/R*
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 0.06-alt1
+- automated CPAN update
+
 * Thu Sep 10 2020 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2
 - fixed build
 
