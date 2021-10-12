@@ -1,10 +1,14 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %def_disable cluster
 %define _sbindir /sbin
 %define nowarn -Wno-implicit-fallthrough -Wno-format-truncation -Wno-format-overflow
 
 Name: mdadm
 Version: 4.1
-Release: alt3
+Release: alt4
 
 Summary: A tool for managing Soft RAID under Linux
 License: GPLv2+
@@ -22,7 +26,7 @@ Conflicts: udev < 151
 
 # Pull in the tool subpackage on a package update, but
 # allow it to be installed individually
-Requires: %name-tool = %version-%release
+Requires: %name-tool = %EVR
 
 %description
 mdadm is a program that can be used to create, manage, and monitor
@@ -51,6 +55,8 @@ BuildArch: noarch
 %setup -n %name-%version-%release
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %make_build mdadm mdmon CXFLAGS='%optflags %nowarn' SYSCONFDIR='%_sysconfdir'
 bzip2 -9fk ChangeLog
 
@@ -101,6 +107,9 @@ install -pD -m644 alt/mdadm.crond %buildroot%_sysconfdir/cron.d/mdadm
 %doc TODO ChangeLog.* mdadm.conf-example ANNOUNCE-%version alt/README*
 
 %changelog
+* Mon Oct 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1-alt4
+- Fixed build with gcc-11
+
 * Wed Mar 10 2021 Slava Aseev <ptrnine@altlinux.org> 4.1-alt3
 - fix ftbfs due to -Werror=stringop-truncation
 
