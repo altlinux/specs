@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: libdb4-devel
+BuildRequires: libkyotocabinet-devel
 # END SourceDeps(oneline)
 Group: Other
 %add_optflags %optflags_shared
@@ -8,7 +8,7 @@ Group: Other
 %global snapshot 0
 
 Name:           libpinyin
-Version:        2.2.2
+Version:        2.6.1
 Release:        alt1_1
 Summary:        Library to deal with pinyin
 
@@ -16,11 +16,11 @@ License:        GPLv3+
 URL:            https://github.com/libpinyin/libpinyin
 Source0:        http://downloads.sourceforge.net/libpinyin/libpinyin/%{name}-%{version}.tar.gz
 %if %snapshot
-Patch0:         libpinyin-2.2.x-head.patch
+Patch0:         libpinyin-2.3.x-head.patch
 %endif
 
 BuildRequires:  gcc-c++
-BuildRequires:  libkyotocabinet-devel glib2-devel libgio libgio-devel
+BuildRequires:  libdb4.8-devel glib2-devel libgio libgio-devel
 Requires:       %{name}-data = %{version}-%{release}
 Source44: import.info
 
@@ -75,7 +75,7 @@ The libzhuyin package contains libzhuyin compatibility library.
 
 %build
 %configure --disable-static \
-           --with-dbm=KyotoCabinet \
+           --with-dbm=BerkeleyDB \
            --enable-libzhuyin
 %make_build
 
@@ -83,8 +83,11 @@ The libzhuyin package contains libzhuyin compatibility library.
 make check
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
+%makeinstall_std
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+
+
+
 
 
 %files
@@ -93,7 +96,7 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %dir %{_libdir}/libpinyin
 
 %files devel
-%doc
+#doc %_docdir/%name
 %dir %{_includedir}/libpinyin-%{version}
 %{_includedir}/libpinyin-%{version}/*
 %{_libdir}/libpinyin.so
@@ -102,7 +105,7 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/libzhuyin.pc
 
 %files data
-%doc
+#doc %_docdir/%name
 %{_libdir}/libpinyin/data
 
 %files tools
@@ -115,6 +118,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/libzhuyin*.so.*
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 2.6.1-alt1_1
+- update to new release by fcimport
+
 * Sun Jan 27 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt1_1
 - update to new release by fcimport
 
