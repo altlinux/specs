@@ -1,6 +1,6 @@
 Name: jikes
 Version: 1.22
-Release: alt1.1.qa1
+Release: alt2
 
 Summary: Java source to bytecode compiler
 License: IBM Public License
@@ -8,10 +8,8 @@ Group: Development/Java
 Url: http://oss.software.ibm.com/developerworks/opensource/jikes/
 
 Source: %url/%name-%version.tar.bz2
-
-Provides: jikes
-
-Prefix: %prefix
+Patch0: %{name}-%{version}-uninitialized-variables.patch
+Patch1: %{name}-%{version}-strict_aliasing.patch
 
 # Automatically added by buildreq on Fri Nov 26 2004
 BuildRequires: hostinfo libstdc++-devel
@@ -25,8 +23,11 @@ and is maintained by the Jikes Project.
 
 %prep
 %setup -q
+%patch0
+%patch1
 
 %build
+autoreconf -I src/m4 --force --install
 %configure --disable-dependency-tracking
 make
 
@@ -41,6 +42,9 @@ make
 /usr/include/*.h
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 1.22-alt2
+- NMU: fixed build
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.22-alt1.1.qa1
 - NMU: rebuilt for debuginfo.
 
