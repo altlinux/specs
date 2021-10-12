@@ -3,7 +3,7 @@
 %define _without_test 1
 %endif
 %define module_name Future-IO
-%define test_module_name Test-Future-IO
+%define test_module_name Test-Future-IO-Impl
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Future.pm) perl(Module/Build.pm) perl(Struct/Dumb.pm) perl(Test/Identity.pm) perl(Test/More.pm) perl(Time/HiRes.pm)
 # END SourceDeps(oneline)
@@ -11,7 +11,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.10
-Release: alt1
+Release: alt2
 Summary: Future-returning IO methods
 Group: Development/Perl
 License: perl
@@ -62,6 +62,9 @@ fi
 %perl_vendor_privlib/Test*
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 0.10-alt2
+- set test module name to Test-Future-IO-Impl
+
 * Mon Oct 11 2021 Igor Vlasenko <viy@altlinux.org> 0.10-alt1
 - automated CPAN update
 - added test subpackage
