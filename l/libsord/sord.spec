@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat
+BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: waf
 # END SourceDeps(oneline)
 BuildRequires: libpcre-devel
@@ -10,18 +10,20 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name sord
-%define version 0.16.6
+%define version 0.16.8
 %global maj 0
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 
 Name:       libsord
-Version:    0.16.6
-Release:    alt2_1
+Version:    0.16.8
+Release:    alt1_2
 Summary:    A lightweight Resource Description Framework (RDF) C library
 
 License:    ISC
 URL:        http://drobilla.net/software/sord/
 Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
+# This fixes a potential BTree crash with GCC 10, patch from upstream
+Patch0:     %{oldname}-update-zix.patch
 
 BuildRequires: doxygen
 BuildRequires: graphviz libgraphviz
@@ -53,15 +55,12 @@ This package contains the headers and development libraries for %{oldname}.
 
 %prep
 %setup -n %{oldname}-%{version} -q
+%patch0 -p1
+
 # Do not run ldconfig.
 sed -i -e "s|bld.add_post_fun(autowaf.run_ldconfig)||" wscript
 
 %build
-# Work around a possible GCC 10.1 bug
-# GCC 10.1 crashes on these arches in for loop with ZixBTreeIter
-%ifarch %{power64} %{arm} aarch64 s390 s390x
-%define _optlevel 1
-%endif
 
 export CFLAGS="%optflags"
 export CXXFLAGS="%optflags"
@@ -79,12 +78,12 @@ python3 waf build -v %{?_smp_mflags}
 %install
 DESTDIR=%{buildroot} python3 waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-%{maj}.so.*
-install -pm 644 AUTHORS NEWS README.md COPYING %{buildroot}%{_docdir}/%{oldname}
+install -pm 644 AUTHORS NEWS README.md %{buildroot}%{_docdir}/%{oldname}
 
 %files
 %{_docdir}/%{oldname}
 %exclude %{_docdir}/%{oldname}/%{oldname}-%{maj}/
-%exclude %{_docdir}/%{oldname}/COPYING
+#exclude %{_docdir}/%{oldname}/COPYING
 %doc --no-dereference COPYING
 %{_libdir}/lib%{oldname}-%{maj}.so.*
 %{_bindir}/sordi
@@ -99,6 +98,9 @@ install -pm 644 AUTHORS NEWS README.md COPYING %{buildroot}%{_docdir}/%{oldname}
 %{_mandir}/man3/%{oldname}*.3*
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 0.16.8-alt1_2
+- update to new release by fcimport
+
 * Tue Jul 13 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.16.6-alt2_1
 - Fixed gcc >= 10 optimization workaround (ALT#40471).
 
