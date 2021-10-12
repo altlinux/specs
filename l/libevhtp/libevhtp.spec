@@ -10,15 +10,15 @@ BuildRequires: gcc-c++
 
 Name:		libevhtp
 Version:	1.2.18
-Release:	alt1_3
+Release:	alt1_4
 Summary:	A more flexible replacement for libevent's http API
 License:	BSD
 Group:		System/Libraries
 Url:		https://criticalstack.com/
 Source0:	https://github.com/criticalstack/libevhtp/archive/%{version}/%{name}-%{version}.tar.gz
 Patch0:		libevhtp-1.2.18-fix-libraries-path.patch
-BuildRequires:	ccmake cmake ctest
-BuildRequires:	glibc-devel glibc-devel-static
+BuildRequires:	cmake
+BuildRequires:	glibc-devel
 BuildRequires:	pkgconfig(jemalloc)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(libevent)
@@ -96,6 +96,9 @@ developing applications that use %{name}.
 
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 1.2.18-alt1_4
+- update by mgaimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.18-alt1_3
 - fixed build
 
