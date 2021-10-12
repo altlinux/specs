@@ -1,17 +1,25 @@
+%def_disable static
+%def_disable htmldoc
+
 Name: stk
-Version: 4.5.0
-Release: alt1.1
-License: GPL
+Version: 4.6.1
+Release: alt1
+License: MIT
 Group: Sound
 Summary: C++ classes for audio digital signal processing
 Url: http://www-ccrma.stanford.edu/software/stk/
 Source: stk-%version.tar
+Patch0: stk-4.6.1-header.patch
+Patch1: stk-4.6.1-cflags-lib.patch
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 # Automatically added by buildreq on Thu Nov 22 2007
 BuildRequires: gcc-c++ jackit-devel libalsa-devel util-linux-ng
 BuildRequires: desktop-file-utils symlinks
+%if_enabled htmldoc
+BuildRequires: doxygen
+%endif
 
 %description
 The Synthesis ToolKit in C++ (STK) is a set of open source audio signal
@@ -32,6 +40,7 @@ platforms and should work with any standard C++ compiler.
 %package -n lib%name
 Summary: C++ classes for audio digital signal processing
 Group: System/Libraries
+Provides: %{name} = %EVR
 
 %description -n lib%name
 The Synthesis ToolKit in C++ (STK) is a set of open source audio signal
@@ -64,6 +73,19 @@ Obsoletes: lib%name-static
 %description -n lib%name-devel-static
 Static LibSTK library.
 
+%package demo
+Group: Sound
+Summary:        Demo applications for %{name}
+Requires:       libtk tk
+Requires:       lib%{name} = %EVR
+Provides: %{name} = %EVR
+Conflicts: stk < 4.6.0
+Obsoletes: stk < 4.6.0
+
+%description demo
+The %{name}-demo package contains the demo applications for the
+C++ Sound Synthesis ToolKit.
+
 %package doc
 Summary: Documentation for the sound synthesis toolkit (STK)
 Group: Documentation
@@ -75,18 +97,22 @@ you need to know if you want to develop an STK application.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
 
-sed -i "s|/usr/lib|%_libdir|g" src/Makefile.in
 sed -i 's:../../rawwaves/:/usr/share/stk/rawwaves/:g' projects/demo/demo.cpp
 
 %build
 %autoreconf
-%configure --with-alsa \
+%configure \
+	--with-alsa \
 	--with-jack \
 	--enable-shared \
+	%{subst_enable static} \
 	RAWWAVE_PATH=%_datadir/stk/rawwaves/
 
-%make
+%make_build
+%make_build -C projects/demo libMd2Skini
 
 %install
 mkdir -p \
@@ -101,13 +127,13 @@ mkdir -p \
   %buildroot%_datadir/stk/eguitar
 
 cp -p include/* %buildroot%_includedir/stk
-cp -pd src/libstk.* %buildroot%_libdir
+cp -pd src/libstk*.* %buildroot%_libdir
 cp -p rawwaves/*.raw %buildroot%_datadir/stk/rawwaves
 
 cp -pr projects/demo/tcl %buildroot%_datadir/stk/demo
 cp -pr projects/demo/scores %buildroot%_datadir/stk/demo
-cp -p projects/demo/demo %buildroot%_bindir/stk-demo
-#cp -p projects/demo/Md2Skini %buildroot%_bindir/Md2Skini
+cp -p projects/demo/stk-demo %buildroot%_bindir/stk-demo
+cp -p projects/demo/Md2Skini %buildroot%_bindir/Md2Skini
 for f in Banded Drums Modal Physical Shakers StkDemo Voice ; do
   chmod +x projects/demo/$f
   sed -e 's,\./demo,%_bindir/stk-demo,' -e '1i#! /bin/sh' \
@@ -154,29 +180,36 @@ iconv -f iso-8859-1 -t utf-8 doc/doxygen/index.txt \
   -o doc/doxygen/index.txt.tmp
 mv doc/doxygen/index.txt.tmp doc/doxygen/index.txt
 
-%files
+%files -n %name-demo
 %_bindir/*
 %_datadir/stk/*
-
 %exclude %_datadir/stk/rawwaves
 
 %files -n lib%name
 %dir %_datadir/stk
 %doc README*
-%_libdir/*.so.*
+%_libdir/libstk-*.so
 %_datadir/stk/rawwaves
 
 %files -n lib%name-devel
-%_libdir/*.so
+%_libdir/libstk.so
 %_includedir/stk
 
+%if_enabled static
 %files -n lib%name-devel-static
 %_libdir/*.a
+%endif
 
+%if_enabled htmldoc
 %files doc
-%doc doc/html doc/*.txt
+%doc doc/html
+%doc doc/*.txt
+%endif
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 4.6.1-alt1
+- new version
+
 * Tue Jun  7 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.5.0-alt1.1
 - rebuild for new C++ ABI
 
