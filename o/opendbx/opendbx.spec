@@ -1,3 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %def_with mysql
 %def_with pgsql
 %def_with sqlite3
@@ -5,7 +9,7 @@
 
 Name: opendbx
 Version: 1.4.3
-Release: alt2.2.qa2
+Release: alt3
 
 Summary: Unified database layer with a clean and lightweight interface
 Summary(de):	Bibliothek zum Zugriff auf Datenbanken über eine einheitliche Schnittstelle
@@ -13,7 +17,8 @@ License: LGPL
 Group: Development/Databases
 Url: http://www.linuxnetworks.de/doc/index.php/OpenDBX
 
-Source: http://www.linuxnetworks.de/opendbx/download/%name-%version.tar.gz
+# http://www.linuxnetworks.de/opendbx/download/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch: %name-1.4.0-alt-sqlite3-no-threadsafe.patch
 
 # Automatically added by buildreq on Wed Apr 08 2009
@@ -33,7 +38,7 @@ anzusprechen.
 Summary: OpenDBX development headers
 Summary(de):	Entwicklungsschnittstellen für OpenDBX
 Group: Development/Databases
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: pkgconfig %{?_with_mysql:%name-mysql} %{?_with_pgsql:%name-pgsql} %{?_with_sqlite3:%name-sqlite3} %{?_with_firebird:%name-firebird}
 
 %description devel
@@ -47,7 +52,7 @@ Schnittstellen der OpenDBX Datenbankbibliothek zur Softwareentwicklung
 Summary: MySQL backend for OpenDBX
 Summary(de):	MySQL Unterstützung für OpenDBX
 Group: Development/Databases
-Requires: %name = %version-%release
+Requires: %name = %EVR
 BuildRequires: mysql-devel
 
 %description mysql
@@ -62,7 +67,7 @@ MySQL Unterstützung für die OpenDBX Datenbankbibliothek
 Summary: PostgreSQL backend for OpenDBX
 Summary(de):	PostgreSQL Unterstützung für OpenDBX
 Group: Development/Databases
-Requires: %name = %version-%release
+Requires: %name = %EVR
 BuildRequires: postgresql-devel
 
 %description pgsql
@@ -77,7 +82,7 @@ PostgreSQL Unterstützung für die OpenDBX Datenbankbibliothek
 Summary: SQLite3 backend for OpenDBX
 Summary(de):	SQLite3 Unterstützung für OpenDBX
 Group: Development/Databases
-Requires: %name = %version-%release
+Requires: %name = %EVR
 BuildRequires: libsqlite3-devel
 
 %description sqlite3
@@ -92,7 +97,7 @@ Sqlite3 Unterstützung für die OpenDBX Datenbankbibliothek
 Summary: Firebird/Interbase backend for OpenDBX
 Summary(de):    Firebird/Interbase Unterstützung für OpenDBX
 Group: Development/Databases
-Requires: %name = %version-%release
+Requires: %name = %EVR
 BuildRequires: firebird-devel
 
 %description firebird
@@ -113,6 +118,7 @@ Firebird/Interbase Unterstützung für die OpenDBX Datenbankbibliothek
 %if_with pgsql
 %add_optflags "-I%_includedir/pgsql"
 %endif
+%add_optflags -std=c++14
 
 %undefine __libtoolize
 %configure --with-pic --disable-static --with-backends="\
@@ -127,7 +133,10 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 
 %install
 %makeinstall
-%find_lang %name
+
+rm %buildroot%_libdir/%name/*.la
+
+%find_lang --all %name
 
 %files -f %name.lang
 %_bindir/*
@@ -164,6 +173,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %endif
 
 %changelog
+* Tue Oct 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.3-alt3
+- Fixed build with gcc-11.
+
 * Wed Feb 06 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.3-alt2.2.qa2
 - Rebuild with libreadline7.
 
