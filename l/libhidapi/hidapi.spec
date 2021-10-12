@@ -7,15 +7,14 @@ Group: Development/Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libhidapi
-Version:        0.10.1
-Release:        alt1_2
+Version:        0.11.0
+Release:        alt1_1
 Summary:        Library for communicating with USB and Bluetooth HID devices
 
 License:        GPLv3 or BSD
 URL:            https://github.com/libusb/hidapi
 
 Source0:        https://github.com/libusb/hidapi/archive/%{oldname}-%{version}.tar.gz
-Patch0:         fix-ftbfs-autoconf-2.70.patch
 
 BuildRequires: autoconf
 BuildRequires: automake
@@ -45,7 +44,6 @@ USB and Bluetooth HID-class devices.
 
 %prep
 %setup -q -n %{oldname}-%{oldname}-%{version}
-%patch0 -p1
 
 
 %build
@@ -73,6 +71,9 @@ rm -rf %{buildroot}%{_defaultdocdir}/%{oldname}
 %{_libdir}/pkgconfig/hidapi-libusb.pc
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 0.11.0-alt1_1
+- update to new release by fcimport
+
 * Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 0.10.1-alt1_2
 - update to new release by fcimport
 
