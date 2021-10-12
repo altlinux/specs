@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:		coccinelle
-Version:	1.1.0
-Release:	alt2
+Version:	1.1.1
+Release:	alt1
 Summary:	Semantic patching for Linux (spatch)
 
 Group:		Development/C
@@ -164,6 +164,9 @@ cd %_docdir/%name-demos-%version
 %files checkinstall
 
 %changelog
+* Tue Oct 12 2021 Vitaly Chikunov <vt@altlinux.org> 1.1.1-alt1
+- Update to 1.1.1 (2021-09-06).
+
 * Tue May 11 2021 Vitaly Chikunov <vt@altlinux.org> 1.1.0-alt2
 - spec: Avoid make install race.
 
