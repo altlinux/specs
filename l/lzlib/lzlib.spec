@@ -1,6 +1,6 @@
 Name: lzlib
 Version: 1.12
-Release: alt1
+Release: alt2
 
 Summary: The lzlib compression library provides in-memory LZMA compression and decompression functions
 License: GPLv3+
@@ -38,8 +38,9 @@ make check
 %install
 %makeinstall_std
 
+rm -fv %buildroot%_libdir/*.a
+
 %files
-%exclude %_libdir/*.a
 %_libdir/lib*.so.*
 
 %files devel
@@ -48,6 +49,9 @@ make check
 %_infodir/*.info*
 
 %changelog
+* Tue Oct 12 2021 Grigory Ustinov <grenka@altlinux.org> 1.12-alt2
+- Fixed FTBFS.
+
 * Tue Jan 05 2021 Michael Shigorin <mike@altlinux.org> 1.12-alt1
 - new version (watch file uupdate)
 
