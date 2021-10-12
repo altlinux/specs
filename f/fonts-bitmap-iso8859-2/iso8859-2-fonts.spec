@@ -9,7 +9,7 @@ Group: System/Fonts/X11 bitmap
 
 Name:           fonts-bitmap-iso8859-2
 Version:        1.0
-Release:        alt2_36
+Release:        alt2_45
 Summary:        Central European language fonts for the X Window System
 License:        MIT
 # Upstream url http://www.biz.net.pl/images/ISO8859-2-bdf.tar.gz is dead now.
@@ -17,12 +17,13 @@ Source:         ISO8859-2-bdf.tar.gz
 
 Patch0:         XFree86-ISO8859-2-1.0-redhat.patch
 BuildArch:      noarch
-Buildrequires:  bdftopcf mkfontdir mkfontscale xorg-font-utils
 BuildRequires:  fontpackages-devel
+BuildRequires:  bdftopcf
+BuildRequires:  mkfontscale
 Requires:       mkfontdir
 Source44: import.info
 Url: http://xorg.freedesktop.org
- 
+
 %description
 If you use the X Window System and you want to display Central
 European fonts, you should install this package.
@@ -141,6 +142,9 @@ ln -sf %{_fontdir}/100dpi $RPM_BUILD_ROOT%{catalogue}/%{fontname}-100dpi-fonts
 %dir %{_fontdir}
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 1.0-alt2_45
+- fc update
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_36
 - added URL
 
