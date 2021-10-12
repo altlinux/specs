@@ -2,8 +2,8 @@
 %define libver 7.8
 
 Name:    grass
-Version: 7.8.5
-Release: alt4
+Version: 7.8.6
+Release: alt1
 
 %def_with mysql
 %def_with postgres
@@ -129,7 +129,7 @@ rm lib/gis/lz4{.h,.c}
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
-%patch4 -p2
+%patch4 -p1
 subst 's/\t/        /g' \
       scripts/v.db.dropcolumn/v.db.dropcolumn.py \
       scripts/v.db.addtable/v.db.addtable.py
@@ -159,7 +159,6 @@ export LDCONFIG=-llz4
 	--with-motif \
 	%{subst_with mysql} \
 	--with-mysql-includes=%{_includedir}/mysql \
-        --with-netcdf=%_bindir/nc-config \
 	--with-nls \
 	--with-odbc \
         %{subst_with opencl} \
@@ -312,6 +311,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Mon Oct 11 2021 Andrey Cherepanov <cas@altlinux.org> 7.8.6-alt1
+- New version.
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 7.8.5-alt4
 - drop BR: libqt4-devel swig
 
