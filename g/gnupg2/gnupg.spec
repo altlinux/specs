@@ -1,5 +1,5 @@
 Name: gnupg2
-Version: 2.2.31
+Version: 2.2.32
 Release: alt1
 
 Group: Text tools
@@ -177,6 +177,9 @@ install -pm 0644 doc/*.8 %buildroot%_man8dir/
 %doc tools/addgnupghome tools/applygnupgdefaults
 
 %changelog
+* Tue Oct 12 2021 Alexey Gladkov <legion@altlinux.ru> 2.2.32-alt1
+- New version (2.2.32).
+
 * Sat Sep 18 2021 Alexey Gladkov <legion@altlinux.ru> 2.2.31-alt1
 - New version (2.2.31).
 
