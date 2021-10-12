@@ -1,8 +1,8 @@
 %define base_name design-bootloader
 
 Name: %base_name-source
-Version: 7.2
-Release: alt3
+Version: 7.3
+Release: alt1
 
 Group: Graphics
 Summary: Graphical boot logo sources
@@ -14,13 +14,17 @@ BuildRequires: perl-Encode
 
 Source: %name-%version.tar
 
-Obsoletes: design-bootloader-installer-source  design-bootloader-livecd-source  design-bootloader-system-source
-
+Obsoletes: design-bootloader-installer-source design-bootloader-livecd-source design-bootloader-system-source
 Conflicts: fonts-ttf-droid <= 1.0-alt1
 
-%description
-Sources of macros for generating graphical boot logo. Needed for building packages design-bootloader-{distro}
+# Requires packages with fonts for .fnt generation
+Requires: fonts-ttf-dejavu
+Requires: fonts-ttf-google-droid-sans
+Requires: fonts-ttf-roboto
 
+%description
+Sources of macros for generating graphical boot logo. Needed for building
+packages design-bootloader-{distro}
 
 %prep
 %setup
@@ -29,11 +33,14 @@ Sources of macros for generating graphical boot logo. Needed for building packag
 mkdir -p %buildroot/usr/src/%base_name-source
 cp -a * %buildroot/usr/src/%base_name-source
 
-
 %files -n %base_name-source
 /usr/src/%base_name-source
 
 %changelog
+* Wed Sep 29 2021 Andrey Cherepanov <cas@altlinux.org> 7.3-alt1
+- Add Roboto fonts (rob16.fnt rob18.fnt rob16b.fnt rob18b.fnt)
+- Requires packages with fonts for .fnt generation
+
 * Sun Jun 02 2019 Anton Midyukov <antohami@altlinux.org> 7.2-alt3
 - Fixed russian translation (closes: #36840)
 

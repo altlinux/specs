@@ -26,14 +26,13 @@
 
 Name: branding-%flavour
 Version: 10.0
-Release: alt0.1.beta
+Release: alt0.3.beta
 
 %ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
-BuildRequires: design-bootloader-source >= 5.0-alt2
+BuildRequires: design-bootloader-source >= 7.3-alt1
 BuildRequires: cpio
 %endif
-BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-sans
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -104,6 +103,7 @@ Group: System/Configuration/Other
 BuildArch: noarch
 Provides: design-alterator-browser-%theme  branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt
 Provides: alterator-icons design-alterator design-alterator-%theme
+Requires: fonts-ttf-roboto
 
 %branding_add_conflicts %flavour alterator
 Obsoletes: design-alterator-server design-alterator-desktop design-altertor-browser-desktop design-altertor-browser-server branding-altlinux-backup-server-alterator
@@ -148,6 +148,7 @@ Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "
 Obsoletes: %obsolete_list
 %branding_add_conflicts %flavour release
 Requires: pam-limits-desktop
+Requires: alt-os-release
 
 %description release
 %distro_name release file.
@@ -177,6 +178,7 @@ Summary: KDE settings for %distro_name (for KDE4 and KF5)
 License: Distributable
 Group:   Graphical desktop/KDE
 Requires(pre): %name-graphics
+Requires: %name-graphics = %EVR
 Requires: kde5-konsole-colorscheme-SolarizedPastel
 Requires: plasma5-breeze
 Requires: fonts-ttf-liberation
@@ -211,6 +213,7 @@ Requires(post): lightdm-gtk-greeter
 Requires: xfce4-whiskermenu-plugin
 Requires: xfce4-pulseaudio-plugin
 Requires: branding-%brand-%theme-graphics
+Requires(pre): libgtk+2
 %branding_add_conflicts %flavour xfce-settings
 
 %description xfce-settings
@@ -327,7 +330,6 @@ make
 mkdir -p %buildroot%_libexecdir
 mv %buildroot%_sysconfdir/os-release %buildroot%_libexecdir/os-release
 touch %buildroot%_sysconfdir/os-release
-install -Dm0755 release.filetrigger %buildroot%_rpmlibdir/%flavour-release.filetrigger
 
 find %buildroot -name \*.in -delete
 
@@ -400,6 +402,8 @@ subst 's/^#\?theme-name=.*/theme-name=%gtk_theme/' /etc/lightdm/lightdm-gtk-gree
 subst 's/^#\?icon-theme-name=.*/icon-theme-name=%icon_theme/' /etc/lightdm/lightdm-gtk-greeter.conf ||:
 subst 's/^#\?indicators=.*/indicators=~clock;~spacer;~host;~spacer;~session;~layout;~a11y;~power/' /etc/lightdm/lightdm-gtk-greeter.conf ||:
 subst 's/^#\?clock-format=.*/clock-format=%A, %x %H:%M/' /etc/lightdm/lightdm-gtk-greeter.conf ||:
+# Set gtk+2 theme for root too
+grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc/gtk-2.0/gtkrc
 
 %files alterator
 %config %_altdir/*.rcc
@@ -409,7 +413,7 @@ subst 's/^#\?clock-format=.*/clock-format=%A, %x %H:%M/' /etc/lightdm/lightdm-gt
 %files graphics
 %config /etc/alternatives/packages.d/%name-graphics
 %_datadir/design
-%_iconsdir/hicolor/*/apps/alt-%theme.png
+%_iconsdir/hicolor/*/apps/alt-%theme.svg
 
 %files bootsplash
 %_datadir/plymouth/themes/%theme/*
@@ -423,7 +427,6 @@ subst 's/^#\?clock-format=.*/clock-format=%A, %x %H:%M/' /etc/lightdm/lightdm-gt
 %ghost %_sysconfdir/os-release
 %_libexecdir/os-release
 %_sysconfdir/buildreqs/packages/ignore.d/*
-%_rpmlibdir/*.filetrigger
 
 %files notes
 %_datadir/alt-notes/*
@@ -467,7 +470,7 @@ subst 's/^#\?clock-format=.*/clock-format=%A, %x %H:%M/' /etc/lightdm/lightdm-gt
 %_desktopdir/*
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 %attr(0755,root,root) %_datadir/Desktop/indexhtml.desktop
-%_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
+%_iconsdir/hicolor/*/apps/alt-%theme-desktop.svg
 
 %files menu
 /usr/share/slinux-style
@@ -479,6 +482,17 @@ subst 's/^#\?clock-format=.*/clock-format=%A, %x %H:%M/' /etc/lightdm/lightdm-gt
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Fri Oct 08 2021 Andrey Cherepanov <cas@altlinux.org> 10.0-alt0.3.beta
+- Use filetrigger from alt-os-release for storing installed release.
+- Update slides for ALT Education 10.
+- Alterator: use icons from Papirus icon theme and themed colors.
+- Set gtk+2 theme for root too.
+- browser-qt: use open and closed eye as password entry show/hide icons.
+- gfxboot: use wallpaper with logotype.
+
+* Thu Sep 30 2021 Andrey Cherepanov <cas@altlinux.org> 10.0-alt0.2.beta
+- Use corparate colors and Roboto font.
+
 * Mon Sep 20 2021 Andrey Cherepanov <cas@altlinux.org> 10.0-alt0.1.beta
 - 10.0 beta.
 - Store old values in /etc/os-release with ALT_installed_ prefix.
