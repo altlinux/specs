@@ -3,26 +3,26 @@
 %define oname sqlanydb
 
 Name: python3-module-%oname
-Version: 1.0.8
-Release: alt2
+Version: 1.0.11
+Release: alt1
 Epoch: 1
-License: Apache
+License: Apache-2.0
 BuildArch: noarch
 Group: Development/Python3
 Summary: Python interface for Sybase Anywhere DB
 Summary(ru_RU.UTF-8): Интерфейс к БД Sybase Anywhere для Python
 
-Url: http://code.google.com/p/sqlanydb/
+Url: https://pypi.org/project/sqlanydb
 
-Source0: https://pypi.python.org/packages/45/62/e0c80101e551fb16ca919cc80b1938ff225e0f20c3afdabf35d6ca79e52f/%{oname}-%{version}.tar.gz
+Source: %oname-%version.tar.gz
 
 Requires: libfreetds >= 0.64
 
 BuildRequires(pre): rpm-build-python3
 
 %description
-This a Google Code project providing a python interface to the
-SQL Anywhere Database. This interface conforms to PEP 249.
+This package provides a python interface to the SQL Anywhere database server.
+This interface conforms to PEP 249.
 
 %prep
 %setup -n %{oname}-%{version}
@@ -38,6 +38,9 @@ SQL Anywhere Database. This interface conforms to PEP 249.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Oct 12 2021 Grigory Ustinov <grenka@altlinux.org> 1:1.0.11-alt1
+- Build new version.
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 1:1.0.8-alt2
 - Drop python2 support.
 
