@@ -1,3 +1,8 @@
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
@@ -17,7 +22,7 @@ BuildRequires: xsltproc
 
 Name:       gdcm
 Version:    3.0.5
-Release:    alt1_0
+Release:    alt1_0.1
 Summary:    Grassroots DiCoM is a C++ library to parse DICOM medical files
 License:    BSD
 URL:        http://gdcm.sourceforge.net/wiki/index.php/Main_Page
@@ -32,6 +37,8 @@ Patch2: gdcm-2.8.8-dont_use_EOF.patch
 Patch3: 0002-Fix-export-variables.patch
 Patch4: gdcm-3.0.1-poppler-0.84.0.patch
 Patch5: Update_gdcminfo_for_new_poppler.patch
+
+Patch100: gdcm-3.0.5-alt-gcc11-compat.patch
 
 BuildRequires:  libCharLS-devel >= 2.0
 BuildRequires:  ctest cmake
@@ -134,6 +141,8 @@ used this library with python
 %patch3 -p1
 #%patch4 -p1
 %patch5 -p1
+
+%patch100 -p2
 
 # Data source
 %setup -n GDCM-%{version} -q -T -D -a 1
@@ -286,6 +295,9 @@ make test -C %{_target_platform} || exit 0
 %endif
 
 %changelog
+* Tue Oct 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.5-alt1_0.1
+- Fixed build with gcc-11.
+
 * Mon May 11 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.5-alt1_0
 - new version
 
