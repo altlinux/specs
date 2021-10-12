@@ -1,6 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: liblog4cpp
 Version: 1.1.1
-Release: alt3
+Release: alt4
 Summary: Log for C++
 Group: Development/C++
 
@@ -18,7 +22,7 @@ stays as close to its API as is reasonable.
 %package devel
 Summary: development tools for Log for C++
 Group: Development/C++
-Requires: %name = %version
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains the static libraries and header files
@@ -29,6 +33,8 @@ needed for development with %name.
 %setup
 
 %build
+%add_optflags -std=c++14
+%add_optflags -D_FILE_OFFSET_BITS=64
 ./autogen.sh
 %configure 	--enable-doxygen --disable-static
 
@@ -36,6 +42,8 @@ needed for development with %name.
 
 %install
 %makeinstall
+
+rm -rf %buildroot%_prefix/doc
 
 %files
 %_libdir/lib*.so.*
@@ -50,6 +58,9 @@ needed for development with %name.
 %_datadir/aclocal/*.m4
 
 %changelog
+* Tue Oct 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt4
+- Fixed build with gcc-11
+
 * Wed Aug 25 2021 Alexei Takaseev <taf@altlinux.org> 1.1.1-alt3
 - Disable static
 - Fix License:
