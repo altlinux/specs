@@ -1,9 +1,9 @@
 Name: 		log4c
 Version: 	1.2.1
-Release: 	alt1.1.qa2
+Release: 	alt1.1.qa3
 
 Summary: 	Log for C
-License:	LGPL
+License:	LGPLv2.1
 Group:		Development/C
 Packager:	Maxim Ivanov <redbaron@altlinux.org>
 Url:		http://%name.sourceforge.net/
@@ -25,7 +25,7 @@ Requires: %name = %version
 BuildArch: noarch
 
 %description devel
-The %name-devel package contains the static libraries and header files
+The %name-devel package contains the shared libraries and header files
 needed for development with %name.
 
 %description doc
@@ -41,6 +41,8 @@ The %name-doc package contains the %name documentation
 %install
 %makeinstall
 
+rm -fv %buildroot%_libdir/*.a
+
 %files
 %doc AUTHORS COPYING ChangeLog NEWS README
 %_sysconfdir/*
@@ -50,7 +52,6 @@ The %name-doc package contains the %name documentation
 %_bindir/*
 %_includedir/*
 %_libdir/*.so
-%exclude %_libdir/*.a
 %_datadir/aclocal/*
 %_man3dir/*
 
@@ -58,6 +59,9 @@ The %name-doc package contains the %name documentation
 %doc  doc/html
 
 %changelog
+* Tue Oct 12 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1.1.qa3
+- Fixed FTBFS.
+
 * Thu Apr 15 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1.1.qa2
 - Fixed FTBFS.
 
