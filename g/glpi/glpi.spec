@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 9.5.5
+Version: 9.5.6
 Release: alt1
 
 Summary: IT and asset management software
@@ -75,7 +75,7 @@ find %buildroot%installdir -name *.py -delete
 rm -rf %buildroot%installdir/vendor/sabre/dav/bin
 
 %post
-echo "If you upgrade from previous version then read /usr/share/doc/glpi/UPGRADE.ALT"
+echo "If you upgrade from previous version (less than 9.5) then read /usr/share/doc/%name-%version/UPGRADE.ALT"
 
 %post apache2
 if [ "$1" = "1" ]; then
@@ -139,12 +139,20 @@ fi
 %files php7
 
 %changelog
+* Tue Oct 12 2021 Pavel Zilke <zidex at altlinux dot org> 9.5.6-alt1
+- New version 9.5.6
+- This is a security release, upgrading is recommended
+- Security fixes:
+ + CVE-2021-39211 : Disclosure of GLPI and server informations in telemetry endpoint
+ + CVE-2021-39210 : Autologin cookie accessible by scripts
+ + CVE-2021-39209 : Bypassable CSRF protection on ajax endpoints
+ + CVE-2021-39213 : Bypassable IP restriction on GLPI API using custom header injection
+
 * Thu May 13 2021 Pavel Zilke <zidex at altlinux dot org> 9.5.5-alt1
 - New version 9.5.5
 - This is a security release, upgrading is recommended
 - Security fixes:
  + CVE-2021-3486 : Stored XSS in plugins information
-
 
 * Wed Mar 31 2021 Pavel Zilke <zidex at altlinux dot org> 9.5.4-alt1
 - New version 9.5.4
