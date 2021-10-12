@@ -1,7 +1,7 @@
 %global appid net.lutris.Lutris
 Name: lutris
 Version: 0.5.9
-Release: alt0.beta2
+Release: alt1
 Summary: Manager for game installation and execution
 License: GPL-2.0 and GPL-2.0+ and GPL-3.0+ and CC0-1.0 and LGPL-2.1+ and CC-BY-NC-SA-2.0 and CC-BY-SA-3.0
 Group: Games/Other
@@ -15,7 +15,7 @@ BuildRequires(pre): meson
 # optimized out: bash4 bashrc kmod perl python-base python-modules python3 python3-base python3-dev python3-module-pkg_resources rpm-build-python3 sh4 tzdata xz
 BuildRequires: eject fuse python3-module-setuptools rpm-build-gir unzip xlsfonts
 # Requires: cabextract fluid-soundfont-gm python3-module-Pillow python3-module-yaml python3-module-pygobject python3-module-requests winetricks libgdk-pixbuf-gir libgnome-desktop3-gir xrandr pciutils
-Requires: python3-module-pygobject3 python3-module-yaml python3-module-requests python3-module-pylint python3-module-distro python3-module-setproctitle python3-module-Pillow libgdk-pixbuf-gir libgnome-desktop3-gir libwebkit2gtk-gir libnotify-gir libgtk+3-gir
+Requires: python3-module-magic python3-module-pygobject3 python3-module-yaml python3-module-requests python3-module-pylint python3-module-distro python3-module-setproctitle python3-module-Pillow libgdk-pixbuf-gir libgnome-desktop3-gir libwebkit2gtk-gir libnotify-gir libgtk+3-gir
 # settings menu
 # Requires: lsblk glxinfo
 # controller support
@@ -61,6 +61,9 @@ sed -i 's|GdkPixbuf.InterpType.NEAREST|1|' \
 %_man1dir/%name.1.xz
 
 %changelog
+* Tue Oct 12 2021 Leontiy Volodin <lvol@altlinux.org> 0.5.9-alt1
+- New version (0.5.9).
+
 * Wed Sep 08 2021 Leontiy Volodin <lvol@altlinux.org> 0.5.9-alt0.beta2
 - New version (0.5.9-beta2).
 
