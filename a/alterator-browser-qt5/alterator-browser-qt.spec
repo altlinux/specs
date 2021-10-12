@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.4.1
+Version: 3.4.2
 Release: alt1
 
 Source:%name-%version.tar
@@ -23,6 +23,7 @@ Packager: Sergey V Turchin <zerg at altlinux dot org>
 Requires(post,preun): alternatives >= 0.2
 Requires: qt5-translations
 Requires: qt5-virtualkeyboard
+Requires: qt5-svg
 Requires: /usr/bin/xdg-open
 Requires: alterator-browser-gui-common
 Requires: alterator-common >= 2.9-alt0.14
@@ -82,6 +83,9 @@ __EOF__
 
 
 %changelog
+* Tue Oct 12 2021 Sergey V Turchin <zerg at altlinux dot org> 3.4.2-alt1
+- improve password hiding icon
+
 * Mon Oct 11 2021 Sergey V Turchin <zerg at altlinux dot org> 3.4.1-alt1
 - allow to screenshot combobox (closes: 41001)
 
