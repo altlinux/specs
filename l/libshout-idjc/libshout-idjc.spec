@@ -9,7 +9,7 @@ BuildRequires: pkgconfig(theora)
 
 Name:		libshout-idjc
 Version:	2.4.1
-Release:	alt1_4
+Release:	alt1_5
 Summary:	Libshout with extensions for IDJC
 Source:		http://downloads.sf.net/idjc/libshout-idjc-%{version}.tar.gz
 Patch0:		01-libshout-tls-compile-with-OpenSSL-1.1.0.patch
@@ -68,6 +68,9 @@ rm -rf %{buildroot}%{_datadir}/doc/libshout-idjc
 
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 2.4.1-alt1_5
+- update by mgaimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1_4
 - update by mgaimport
 
