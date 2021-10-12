@@ -4,7 +4,7 @@ Group: System/Base
 Summary: Utility to create fonts.scale files for truetype fonts
 Name: ttmkfdir
 Version: 3.0.9
-Release: alt3_59
+Release: alt3_64
 # Only licensing attribution is in README, no version.
 License: LGPLv2+
 # This is a Red Hat maintained package which is specific to
@@ -23,6 +23,7 @@ Patch8: ttmkfdir-3.0.9-font-scale.patch
 Patch9: ttmkfdir-3.0.9-bug434301.patch
 Patch10:ttmkfdir-3.0.9-freetype-header-fix2.patch
 Patch11:ttmkfdir-3.0.9-fedora-ldflags.patch
+Patch12:ttmkfdir-3.0.9-tag.patch
 Source10: ttmkfdir.1
 
 BuildRequires: libfreetype-devel >= 2.0
@@ -31,7 +32,6 @@ BuildRequires: bzlib-devel
 BuildRequires: zlib-devel
 BuildRequires: gcc-c++
 Source44: import.info
-Patch33: ttmkfdir-3.0.9-alt-Makefile-tag-cxx.patch
 Url: http://freecode.com/projects/ttmkfdir
 
 %description
@@ -53,11 +53,11 @@ by the font server.
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
-%patch33 -p0
+%patch12 -p1
 
 
 %build
-%{make_build} OPTFLAGS="$RPM_OPT_FLAGS"
+%{make_build} OPTFLAGS="$RPM_OPT_FLAGS" RPM_LD_FLAGS="$RPM_LD_FLAGS -pie"
 
 %install
 %{makeinstall_std} PREFIX="%{_prefix}"
@@ -70,6 +70,9 @@ cp -p %{SOURCE10} %{buildroot}%{_mandir}/man1/
 %{_mandir}/man1/ttmkfdir.1*
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 3.0.9-alt3_64
+- fc update
+
 * Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 3.0.9-alt3_59
 - update to new release by fcimport
 
