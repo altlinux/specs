@@ -1,6 +1,6 @@
 Name: herbstluftwm
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Summary: A manual tiling window manager
 License: BSD-2-Clause
@@ -14,6 +14,7 @@ Source2: %name.wmsession
 
 Patch1: 0001-ALT-use-xvt-as-default-terminal.patch
 Patch2: 0002-DEBIAN-reproducible.patch
+Patch3: 0003-FC-herbstluftwm-gcc11.patch
 
 BuildRequires(pre): cmake rpm-macros-cmake
 BuildRequires: asciidoc asciidoc-a2x gcc-c++ glib2-devel libxslt-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel
@@ -99,6 +100,9 @@ rm -f %buildroot%_datadir/doc/%name/{INSTALL,NEWS,LICENSE,BUGS}
 %_datadir/doc/%name/examples
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 0.9.0-alt2
+- NMU: fixed build
+
 * Mon Nov 02 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.0-alt1
 - Updated to 0.9.0.
 
