@@ -1,8 +1,8 @@
 %define oname python-subunit
 
 Name: python3-module-subunit
-Version: 1.3.0
-Release: alt3
+Version: 1.4.0
+Release: alt1
 
 Summary: Python implementation of subunit test streaming protocol
 
@@ -21,10 +21,7 @@ BuildArch: noarch
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-testscenarios
 BuildRequires: python3(hypothesis) python3(fixtures)
-BuildRequires: python3-module-testtools
-
-%add_python3_req_skip gtk pynotify
-%add_python3_req_skip gtk.gdk
+BuildRequires: python3-module-testtools >= 0.9.34
 
 %description
 Subunit is a streaming protocol for test results. The protocol is human
@@ -56,6 +53,9 @@ write for other languages.
 
 
 %changelog
+* Tue Oct 12 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
+- new version 1.4.0 (with rpmrb script)
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt3
 - build python3 module separately
 
