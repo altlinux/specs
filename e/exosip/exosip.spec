@@ -11,7 +11,7 @@ BuildRequires: libcares-devel
 Summary: 	Extended osip library
 Name: 	 	exosip
 Version:	5.0.0
-Release: 	alt1_2
+Release: 	alt1_4
 License:	GPLv2+
 Group:		System/Libraries
 URL:		http://savannah.nongnu.org/projects/exosip/
@@ -61,7 +61,7 @@ Libraries and includes files for developing programs based on %name.
 # don't ship .a, .la
 find %{buildroot} -name '*.la' -delete
 # kill rpath
-for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin,/usr/games} -type f -perm -111 ! -name '*.la' `; do
 	chrpath -d $i ||:
 done
 
@@ -80,6 +80,9 @@ done
 
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 5.0.0-alt1_4
+- update by mgaimport
+
 * Sun Sep 29 2019 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1_2
 - new version
 
