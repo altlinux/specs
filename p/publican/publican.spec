@@ -3,7 +3,7 @@ Group: Publishing
 BuildRequires(pre): rpm-build-perl
 BuildRequires: /usr/bin/desktop-file-install perl(DateTime/Locale.pm) perl(HTML/WikiConverter.pm) perl-podlators
 # END SourceDeps(oneline)
-Requires: docbook-dtds docbook-style-xsl perl-Makefile-Parser
+Requires: docbook-dtds docbook-style-xsl perl-Makefile-Parser perl(DateTime/Locale.pm)
 BuildRequires: docbook-dtds docbook-style-xsl
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -31,7 +31,7 @@ BuildRequires: docbook-dtds docbook-style-xsl
 
 Name:           publican
 Version:        4.3.2
-Release:        alt5_13.1
+Release:        alt5_22
 Summary:        Common files and scripts for publishing with DocBook XML
 # For a breakdown of the licensing, refer to LICENSE
 License:        (GPLv2+ or Artistic) and CC0
@@ -181,7 +181,6 @@ BuildRequires:  fonts-ttf-cjkuni-uming fonts-ttf-ipa-gothic fonts-ttf-ipa-pgothi
 BuildRequires:  fonts-ttf-lklug fonts-ttf-baekmuk-batang
 %endif
 Source44: import.info
-Requires: perl(DateTime/Locale.pm)
 
 %description
 Publican is a DocBook publication system, not just a DocBook processing tool.
@@ -334,6 +333,9 @@ fi
 %{wwwdir}/common-db5
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 4.3.2-alt5_22
+- fc update
+
 * Wed Jun 09 2021 Igor Vlasenko <viy@altlinux.org> 4.3.2-alt5_13.1
 - added requires on perl(DateTime/Locale.pm)
 
