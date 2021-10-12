@@ -1,8 +1,9 @@
 Group: Video
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/swig boost-devel boost-filesystem-devel boost-program_options-devel boost-wave-devel gcc-c++ ilmbase-devel libGLU-devel libglvnd-devel python-devel rpm-build-python swig
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/swig boost-devel boost-filesystem-devel boost-program_options-devel boost-wave-devel gcc-c++ ilmbase-devel libGLU-devel libglvnd-devel python3-devel rpm-build-python3 swig
 # END SourceDeps(oneline)
+%define fedora 34
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # force out-of-tree build for spec compatibility with older releases
@@ -10,7 +11,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/swig boost-devel boost-fil
 
 Name:		aqsis
 Version:	1.8.2
-Release:	alt4_41
+Release:	alt4_46
 Summary:	Open source 3D rendering solution adhering to the RenderMan standard
 
 License:	GPLv2+ and LGPLv2+
@@ -43,7 +44,19 @@ BuildRequires:  libpng-devel
 BuildRequires:  libxslt xsltproc
 BuildRequires:  libqt4-declarative libqt4-devel libqt4-help qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools
 #BuildRequires:  tinyxml-devel
+# As of OpenEXR 3 upstream has significantly reorganized the libraries
+# including splitting out imath as a standalone library (which this project may
+# or may not need). Please see
+# https://github.com/AcademySoftwareFoundation/Imath/blob/master/docs/PortingGuide2-3.md
+# for porting details and encourage upstream to support it. For now a 2.x
+# compat package is provided.
+# FTR, it looks like imath-devel will be required...
+%if 0%{?fedora} > 34
+BuildRequires:  cmake(OpenEXR) < 3
+#BuildRequires:  cmake(Imath)
+%else
 BuildRequires:  openexr-devel
+%endif
 BuildRequires:  python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 BuildRequires:  zlib-devel >= 1.1.4
 
@@ -94,8 +107,7 @@ Group: Video
 #Requires:	%{name} = %{version}-%{release}
 Summary:	Example content for Aqsis Renderer
 BuildArch:      noarch
-#AutoReq: yes,nopython
-AutoReq: no
+AutoReqProv: no
 
 %description data
 Aqsis is a cross-platform photo-realistic 3D rendering solution,
@@ -242,6 +254,9 @@ desktop-file-install --vendor "" --delete-original \
 
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 1.8.2-alt4_46
+- dropped python2 BR
+
 * Tue Jan 26 2021 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt4_41
 - update to new release by fcimport
 
