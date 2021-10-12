@@ -3,9 +3,13 @@
 
 %define majver 5.0
 
+%ifnarch %arm
+%def_with scripting
+%endif
+
 Name: kicad
 Version: 5.1.9
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: An open source software for the creation of electronic schematic diagrams
@@ -15,7 +19,9 @@ Group: Engineering
 
 Url: https://gitlab.com/kicad/code/kicad.git
 Source: %name-%version.tar
+%if_with scripting
 Source1: pcbnew.py
+%endif
 Patch1: kicad-5.1.0-nostrip.patch
 Patch2: fix-python3.patch
 Patch2000: kicad-e2k.patch
@@ -23,8 +29,13 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 BuildRequires(pre): cmake rpm-macros-cmake
 BuildRequires(pre): rpm-build-python3
+
+%if_with scripting
 BuildRequires: python3-dev
 BuildRequires: python3-module-wx
+%else
+%add_python3_req_skip pcbnew
+%endif
 BuildRequires: boost-devel boost-asio-devel boost-asio-devel boost-context-devel boost-filesystem-devel boost-geometry-devel boost-interprocess-devel boost-locale-devel boost-program_options-devel
 BuildRequires: ccmake gcc-c++
 BuildRequires: libwxGTK3.0-devel
@@ -40,13 +51,14 @@ BuildRequires: openmpi-devel
 BuildRequires: ImageMagick-tools
 BuildRequires: desktop-file-utils
 
-Requires: %name-data = %EVR
 #Requires: kicad-packages3D >= %majver
 Requires: kicad-symbols >= %majver
 Requires: kicad-footprints >= %majver
 Requires: kicad-templates >= %majver
 Requires: %name-doc >= %epoch:%majver
 Requires: %name-i18n >= %majver
+
+Obsoletes: kicad-data <= %EVR
 
 %add_python3_path %_datadir/%name
 
@@ -83,39 +95,6 @@ gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом 
 "Настройки страницы" в поле "Файл описания разметки листа".
 Стандартные файлы рамки (*.kicad_wks) находятся в %_datadir/kicad/template/.
 
-%package data
-Summary: An open source software for the creation of electronic schematic diagrams
-Summary(ru_RU.UTF-8): Программа с открытым исходным кодом для проектирования электронных схем
-Group: Sciences/Computer science
-BuildArch: noarch
-Requires: icon-theme-hicolor
-Requires: %name = %EVR
-
-%description data
-Kicad is an open source (GPL) software for the creation of electronic
-schematic diagrams and printed circuit board artwork.
-
-Kicad is a set of four softwares and a project manager:
-
-Kicad: Project manager.
-Eeschema: Schematic entry.
-Pcbnew: Board editor.
-Cvpcb: Footprint selector for components used in the circuit design.
-Gerbview: GERBER viewer (photoplotter documents).
-
-Package contains data files.
-
-%description data -l ru_RU.UTF-8
-Kicad - это программное обеспечение с открытым исходным кодом для
-проектирования электронных схем и получения на их основе печатных плат.
-
-Для использования рамки ГОСТ необходимо выбрать шаблон
-gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом окне
-"Настройки страницы" в поле "Файл описания разметки листа".
-Стандартные файлы рамки (*.kicad_wks) находятся в %_datadir/kicad/template/.
-
-Пакет содержит архитектурно-независимые файлы.
-
 %prep
 %setup
 %patch1 -p1
@@ -132,26 +111,38 @@ gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом 
 %endif
 %cmake \
     %_cmake_skip_rpath \
-    -DKICAD_USE_OCC:BOOL=ON \
+    -DKICAD_USE_OCC:=ON \
     -DKICAD_SCRIPTING=ON \
+%if_with scripting
     -DKICAD_SCRIPTING_MODULES=ON \
     -DKICAD_SCRIPTING_WXPYTHON=ON \
     -DKICAD_SCRIPTING_WXPYTHON_PHOENIX=ON \
     -DKICAD_SCRIPTING_PYTHON3=ON \
     -DKICAD_SCRIPTING_ACTION_MENU=ON \
+    -DPYTHON_SITE_PACKAGE_PATH=%python3_sitelibdir \
+%else
+    -DKICAD_SCRIPTING_MODULES=OFF \
+    -DKICAD_SCRIPTING_WXPYTHON=OFF \
+    -DKICAD_SCRIPTING_WXPYTHON_PHOENIX=OFF \
+    -DKICAD_SCRIPTING_PYTHON3=OFF \
+    -DKICAD_SCRIPTING_ACTION_MENU=OFF \
+%endif
     -DKICAD_SPICE=ON \
     -DKICAD_VERSION_EXTRA=%release \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DPYTHON_SITE_PACKAGE_PATH=%python3_sitelibdir
+    -DCMAKE_BUILD_TYPE=Release
 
 %cmake_build
 
 %install
 %cmake_install
 
+%if_with scripting
 # !!!Fix me
 # Needed swig4
 install -m 755 %SOURCE1 %buildroot%python3_sitelibdir/pcbnew.py
+%else
+rm -fr %buildroot%python_sitelibdir
+%endif
 
 #fix line ending
 dos2unix %buildroot%_desktopdir/*.desktop
@@ -170,11 +161,11 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/*.desktop
 %_libdir/*.so*
 %_libdir/%name/
+%if_with scripting
 %python3_sitelibdir/_pcbnew.so
 %python3_sitelibdir/pcbnew.py
 %python3_sitelibdir/__pycache__/pcbnew*
-
-%files data
+%endif
 %doc %_docdir/%name
 %_datadir/appdata/%name.appdata.xml
 %_iconsdir/hicolor/*/mimetypes/application-x-*.*
@@ -183,6 +174,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/mime/packages/*
 
 %changelog
+* Tue Oct 12 2021 Anton Midyukov <antohami@altlinux.org> 1:5.1.9-alt4
+- build on armh without python scripting
+- remove data subpackage
+
 * Wed Sep 01 2021 Michael Shigorin <mike@altlinux.org> 1:5.1.9-alt3
 - E2K: add architecture support (patch by ilyakurdyukov@)
 - minor spec cleanup

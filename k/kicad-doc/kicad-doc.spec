@@ -5,7 +5,7 @@ Summary: Documentation and tutorials for kicad
 Name: kicad-doc
 Version: 5.1.4
 Epoch: 1
-Release: alt1
+Release: alt2
 Group: Documentation
 License: GPLv3
 Url: https://github.com/KiCad/kicad-doc
@@ -13,7 +13,6 @@ Source: %name-%version.tar
 BuildArch: noarch
 BuildRequires(pre): cmake rpm-macros-cmake
 BuildRequires: dblatex po4a asciidoc-a2x source-highlight git
-Requires: kicad-data
 
 %description 
 KiCad is a open source (GPL) integrated package for schematic circuit capture
@@ -156,15 +155,16 @@ Chinese translation.
 %setup
 
 %build
-%cmake_insource \
+%cmake \
     -DCMAKE_BUILD_TYPE=Release \
     -DBUILD_FORMATS=html
-%make_build
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %files
+%dir %_datadir/doc/kicad
 %dir %_datadir/doc/kicad/help
 %_datadir/doc/kicad/help/en
 %_datadir/doc/kicad/help/ru
@@ -200,6 +200,9 @@ Chinese translation.
 %_datadir/doc/kicad/help/zh
 
 %changelog
+* Tue Oct 12 2021 Anton Midyukov <antohami@altlinux.org> 1:5.1.4-alt2
+- do not require kicad-data
+
 * Mon Aug 19 2019 Anton Midyukov <antohami@altlinux.org> 1:5.1.4-alt1
 - new version 5.1.4
 
