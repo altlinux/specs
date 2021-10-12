@@ -5,7 +5,7 @@
 
 Name: fluxbox
 Version: 1.3.7
-Release: alt2
+Release: alt3
 
 Summary: Fast and lightweight window manager
 Summary(ru_RU.UTF-8): Легкий и быстрый оконный менеджер
@@ -22,6 +22,7 @@ Source4: fluxbox-icons.tar.bz2
 Source5: README.ALT-ru_RU.UTF-8
 Source6: Cthulhain
 Source7: fluxbox.vim
+Patch: fluxbox-gcc11.patch
 
 # Explanation:
 # - xmessages uses by fbsetbg plus can be invoked from menu
@@ -62,6 +63,7 @@ VIm syntax for fluxbox apps, keys and menu files.
 
 %prep
 %setup -a4
+%patch -p0
 
 # Using mouse wheel for changes Tabs
 sed -i '22a\
@@ -134,6 +136,9 @@ install -pD -m 644 %SOURCE6 %buildroot%_datadir/%name/styles/Cthulhain
 %vim_ftdetect_dir/%name.vim
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 1.3.7-alt3
+- NMU: fixed build
+
 * Thu Feb 12 2015 Mikhail Kolchin <mvk@altlinux.org> 1.3.7-alt2
 - Enabled XSHAPE extension
 
