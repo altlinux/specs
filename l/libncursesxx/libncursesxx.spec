@@ -1,14 +1,16 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 Name: libncursesxx
 Version: 0.0.1
-Release: alt17
-
+Release: alt18
 Summary: C++ bindings for ncurses library
 License: LGPL
 Group: System/Libraries
-
 Url: http://sisyphus.ru/ru/srpm/Sisyphus/libncursesxx
-
-Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Source: %name-%version.tar
 
@@ -22,7 +24,7 @@ C++ bindings for ncurses library
 %package devel
 Summary: Development part of %name
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Contents header files and development libraries for %name
@@ -30,7 +32,7 @@ Contents header files and development libraries for %name
 %package devel-static
 Summary: Static libraries for %name
 Group: Development/C++
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 Contents static libraries for %name
@@ -56,6 +58,9 @@ Contents static libraries for %name
 %_libdir/*.a
 
 %changelog
+* Tue Oct 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.1-alt18
+- Fixed build with LTO
+
 * Tue Oct 16 2012 Denis Smirnov <mithraen@altlinux.ru> 0.0.1-alt17
 - fix build with gcc 4.7 (Ivan A. Melnikov)
 - re-enable build with -pedantic
