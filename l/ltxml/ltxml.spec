@@ -1,6 +1,6 @@
 Name:		ltxml
 Version:	1.2.7
-Release:	alt3
+Release:	alt4
 License:	GPL
 Group:		Text tools
 Summary:	LT XML toolkit
@@ -22,7 +22,7 @@ including searching and extracting, down-translation
 
 Sequences of tool applications can be pipelined together
 to achieve complex results.
- 
+
 %package devel
 Summary:	LT XML API libraries and header files
 Group:		Development/C
@@ -54,6 +54,8 @@ LT XML API libraries and header files.
 mv %buildroot%_libexecdir/ltxml* %buildroot%_libdir/
 %endif
 
+rm -fv %buildroot%_libdir/*.a
+
 %files
 %doc doc ../{00README,00COPYRIGHT,00CHANGES,COPYING}
 %{_bindir}/*
@@ -62,9 +64,11 @@ mv %buildroot%_libexecdir/ltxml* %buildroot%_libdir/
 
 %files devel
 %{_includedir}/*
-%{_libdir}/*.a
 
 %changelog
+* Tue Oct 12 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.7-alt4
+- Fixed FTBFS.
+
 * Thu Apr 08 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.7-alt3
 - Fixed FTBFS.
 
