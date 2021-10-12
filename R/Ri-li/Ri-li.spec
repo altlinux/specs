@@ -2,7 +2,7 @@
 
 Name: Ri-li
 Version: 2.0.1
-Release: alt3.2.qa1
+Release: alt4
 
 Summary: Ri-li arcade game
 License: GPL v2 or GPL v3
@@ -12,7 +12,8 @@ URL: http://www.ri-li.org
 Source0: http://surfnet.dl.sourceforge.net/sourceforge/ri-li/%name-%version.tar.bz2
 
 Patch0: Ri-li-2.0.1-alt-auto.patch
-Patch1: Ri-li-2.0.1-alt-gcc43.patch
+Patch1: Ri-li-2.0.1-gcc43.patch
+Patch2: Ri-li-gcc11.patch
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -46,6 +47,7 @@ This is package contains data files.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %autoreconf
@@ -64,7 +66,6 @@ mkdir -p %buildroot%_desktopdir
 cat > %buildroot%_desktopdir/%{name}.desktop <<EOF
 [Desktop Entry]
 Type=Application
-Version=1.0
 Name=Ri-li
 GenericName=%summary
 Comment=Drive a toy wood engine
@@ -72,7 +73,8 @@ Exec=Ri_li
 Icon=Ri-li
 Terminal=false
 StartupNotify=false
-Categories=Game;ArcadeGame;
+Categories=Game;ArcadeGame;Simulation;
+Keywords=game;train;toy;wood;engine;switches;kids;
 EOF
 
 
@@ -94,6 +96,9 @@ EOF
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 2.0.1-alt4
+- NMU: fixed build
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.1-alt3.2.qa1
 - NMU: rebuilt for updated dependencies.
 
@@ -118,30 +123,3 @@ EOF
 
 * Sat Aug 04 2007 Igor Zubkov <icesik@altlinux.org> 2.0.0-alt1
 - build for Sisyphus
-
-* Mon Oct 16 2006 Dominique Roux-Serret <roux-serret@ifrance.com> 2.0.0-1
-- New Polish language.
-- New Turkish language.
-- New Hungarian language.
-- New Dutch language.
-- Animate when Ri-li is loading.
-- 10 news levels. Now 50 levels.
-- Correction of the languages : Japanese, German, Italian, Russian.
-- Define AMIGAOS4 flags for Amiga OS4 system.
-- Organization of the data files remade.
-- Ri-Li can be launched without a sound card.
-- Ri-li is limited to 60 fps to relieve the CPU.
-- Ri-li use less ram memory.
-* Thu Jul 19 2006 Dominique Roux-Serret <roux-serret@ifrance.com> 1.2.0-1
--  Addition a help in the game to direct the engine.
--  New Breton language.
--  New Esperanto language.
--  New Italian language.
--  New Portuguese language.
--  New Slovak language.
--  New Swedish language.
--  Correction of the languages : German, Japanese, Spanish.
-* Thu Jul 07 2006 Dominique Roux-Serret <roux-serret@ifrance.com> 1.0.3-1
-- $pkgdatadir is use in source for more compatibility in all distributions (gentoo, ..). Thanks to B. GANNE.
-* Thu Jun 29 2006 Dominique Roux-Serret <roux-serret@ifrance.com> 1.0.2-1
-- first RPM pakage.
