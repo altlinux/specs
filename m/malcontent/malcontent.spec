@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define api_ver 0
 %define xdg_name org.freedesktop.MalcontentControl
 
@@ -5,7 +6,7 @@
 %def_enable ui
 
 Name: malcontent
-Version: 0.10.1
+Version: 0.10.2
 Release: alt1
 
 Summary: Parental controls implementation
@@ -13,7 +14,12 @@ Group: Security/Networking
 License: LGPL-2.1-or-later and GPL-2.0-or-later
 Url: https://gitlab.freedesktop.org/pwithnall/malcontent/
 
+Vcs: https://gitlab.freedesktop.org/pwithnall/malcontent.git
+%if_disabled snapshot
 Source: %url/-/archive/%version/%name-%version.tar.bz2
+%else
+Source: %name-%version.tar
+%endif
 
 Requires: polkit accountsservice
 
@@ -192,6 +198,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%xdg_name.app
 
 
 %changelog
+* Tue Oct 12 2021 Yuri N. Sedunov <aris@altlinux.org> 0.10.2-alt1
+- updated to 0.10.2-8-gb311cbd
+
 * Mon May 03 2021 Yuri N. Sedunov <aris@altlinux.org> 0.10.1-alt1
 - 0.10.1
 - BR: +rpm-build-python3
