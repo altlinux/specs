@@ -1,0 +1,52 @@
+%global _unpackaged_files_terminate_build 1
+# Vendorized go modules
+# $ go generate
+# $ GO111MODULE=on go mod vendor -v
+# $ git add -f vendor
+# $ git commit -n --no-post-rewrite -m "add go vendor modules"
+
+Name: clickhouse-backup
+Version: 1.1.0
+Release: alt1
+Summary: Tool for easy ClickHouse backup and restore with cloud storages support
+Group: Databases
+License: MIT
+Url: https://github.com/AlexAkulov/clickhouse-backup/
+Source0: %name-%version.tar
+
+ExclusiveArch: %go_arches
+BuildRequires(pre): rpm-build-golang
+
+%description
+Tool for easy ClickHouse backup and restore with cloud storages support.
+
+%prep
+%setup
+
+%build
+export VERSION=%version
+export COMMIT=%release
+export BRANCH=altlinux
+
+go build -ldflags " \
+    -X main.version=$VERSION \
+    -X main.commit=$COMMIT \
+    -X main.branch=$BRANCH " \
+    -o clickhouse-backup/clickhouse-backup \
+    ./cmd/clickhouse-backup
+
+%install
+%__install -pDm0755 clickhouse-backup/clickhouse-backup %buildroot%_bindir/%name
+
+# generation of the config file
+%__install -pdm0750 %buildroot%_sysconfdir/%name
+./clickhouse-backup/clickhouse-backup default-config > %buildroot%_sysconfdir/%name/config.yml
+
+%files
+%_bindir/%name
+%dir %attr(0750,root,root) %_sysconfdir/%name
+%attr(0640,root,root) %config(noreplace) %_sysconfdir/%name/config.yml
+
+%changelog
+* Tue Oct 12 2021 Anton Farygin <rider@altlinux.ru> 1.1.0-alt1
+- first build for ALT
