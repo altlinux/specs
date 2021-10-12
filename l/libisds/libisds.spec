@@ -22,7 +22,7 @@ Group: System/Libraries
 
 Name:           libisds
 Version:        0.11.1
-Release:        alt1_1
+Release:        alt1_4
 Summary:        Library for accessing the Czech Data Boxes
 # COPYING:      LGPLv3 text
 # README:       LGPLv3+
@@ -79,7 +79,7 @@ BuildRequires:  libxslt xsltproc
 BuildRequires:  findutils
 BuildRequires:  gcc
 BuildRequires:  gettext-tools libasprintf-devel
-BuildRequires:  gnupg gnupg2
+BuildRequires:  gnupg2
 BuildRequires:  libtool
 BuildRequires:  libxml2-devel
 %if %{with libisds_enables_net}
@@ -89,7 +89,7 @@ BuildRequires:  libcurl-devel
 BuildRequires:  openssl
 %else
 BuildRequires:  gpgme libgpgme-devel
-BuildRequires:  gcrypt-utils libgcrypt-devel
+BuildRequires:  libgcrypt-devel
 %endif
 BuildRequires:  libexpat-devel >= 2.0.0
 # Run-time:
@@ -98,6 +98,7 @@ BuildRequires:  gnupg2
 %endif
 # Tests:
 %if %{with libisds_enables_test}
+BuildRequires:  glibc-gconv-modules
 BuildRequires:  libgnutls-devel libgnutlsxx-devel
 %endif
 %if !%{with libisds_enables_openssl}
@@ -176,6 +177,9 @@ rm -rf client/.deps client/Makefile{,.in}
 %doc client
 
 %changelog
+* Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 0.11.1-alt1_4
+- fc update
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 0.11.1-alt1_1
 - update to new release by fcimport
 
