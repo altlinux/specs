@@ -13,7 +13,7 @@
 
 Name: openvswitch
 Version: 2.14.2
-Release: alt1
+Release: alt2
 
 Summary: An open source, production quality, multilayer virtual switch
 # All code is Apache-2.0 except
@@ -52,7 +52,9 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: graphviz libssl-devel openssl groff
 BuildRequires: libcap-ng-devel
+%ifnarch %e2k
 BuildRequires: libunwind-devel
+%endif
 BuildRequires: libunbound-devel
 BuildRequires: glibc-kernheaders
 BuildRequires: python3-devel python3-module-setuptools python3-module-OpenSSL python3-module-sphinx
@@ -152,6 +154,9 @@ Python3 bindings for the Open vSwitch database
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
+%ifarch %e2k
+sed -i "s/__has_extension(c_atomic)/0/" lib/ovs-atomic.h
+%endif
 
 %if_with ksrc
 # it's not datapath/linux due to shared configure script; thx led@
@@ -417,6 +422,9 @@ fi
 %endif
 
 %changelog
+* Wed Oct 13 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.14.2-alt2
+- fixed build for Elbrus
+
 * Sun Mar 14 2021 Alexey Shabalin <shaba@altlinux.org> 2.14.2-alt1
 - 2.14.2 (Fixes: CVE-2020-35498)
 
