@@ -1,8 +1,8 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.32
-Release: alt4
+Version: 2.34.0.33.a996d
+Release: alt1
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -35,7 +35,7 @@ Url: http://www.gnu.org/software/glibc/
 %def_disable static_pie
 %endif
 
-%define basever 2.32
+%define basever 2.34
 
 %define enablekernel 3.2
 
@@ -359,6 +359,10 @@ rm -rf %buildtarget
 mkdir %buildtarget
 pushd %buildtarget
 
+# glibc doesn't support link-time optimized builds.
+# https://sourceware.org/bugzilla/show_bug.cgi?id=19649#c1
+%global optflags_lto %nil
+
 %configure \
 	--disable-crypt \
 	--disable-profile \
@@ -381,13 +385,6 @@ make -C alt CC=%__cc objdir=../%buildtarget
 %install
 %makeinstall_std %PARALLELMFLAGS -C %buildtarget
 
-pushd %buildroot%_libdir
-%__cc -r -nostdlib -o libpthread.o -Wl,--whole-archive ./libpthread.a
-rm libpthread.a
-ar rcs libpthread.a libpthread.o
-rm libpthread.o
-popd
-
 mkdir -p %buildroot%_cachedir/ldconfig
 > %buildroot%_cachedir/ldconfig/aux-cache
 
@@ -396,7 +393,7 @@ mv %buildroot/%_lib/lib{memusage,pcprofile,SegFault}.so \
 	%buildroot%_libdir/ ||:
 
 # Relocate libnsl.
-mv %buildroot/%_lib/libnsl{-*.so,.so.1} %buildroot%_libdir/
+mv %buildroot/%_lib/libnsl.so.1 %buildroot%_libdir/
 
 # Install upgrade programs.
 make -C alt install
@@ -438,9 +435,6 @@ cmp alt/stubs-32.h %buildroot%_includedir/gnu/stubs-32.h || {
 }
 %endif
 
-# Install nss.conf
-install -pm644 nis/nss %buildroot%_sysconfdir/nss.conf
-
 # Install gai.conf
 install -pm644 posix/gai.conf %buildroot%_sysconfdir/
 
@@ -474,6 +468,9 @@ cp -pL LICENSES README* alt/README* NEWS \
 	%buildroot%docdir/
 find %buildroot%docdir/ -type f -size +8k -print0 |
 	xargs -r0 xz -9
+
+# Drop unused libnss_* devel symlinks
+rm %buildroot%_libdir/libnss_*.so
 
 >devel.files
 >devel-static.files
@@ -517,10 +514,10 @@ mkdir -p %buildroot%glibc_sourcedir
 cp %SOURCE0 %buildroot%glibc_sourcedir/
 
 %ifarch aarch64
-ln -s /lib64/ld-linux-aarch64.so.1 %buildroot/lib/
+ln -s ../lib64/ld-linux-aarch64.so.1 %buildroot/lib/
 %endif
 %ifarch riscv64
-ln -s /lib64/ld-linux-riscv64-lp64d.so.1 %buildroot/lib/
+ln -s ../lib64/ld-linux-riscv64-lp64d.so.1 %buildroot/lib/
 %endif
 
 %brp_strip_debug */%_lib/ld-*.so* */%_lib/libpthread-*.so
@@ -664,14 +661,13 @@ fi
 %exclude /%_lib/lib*thread*.so*
 %exclude /%_lib/libanl*.so*
 %exclude /%_lib/librt*.so*
-/%_lib/ld*.so.*
+%attr(755,root,root) /%_lib/ld*.so.*
 %ifarch aarch64
 /lib/ld-linux-aarch64.so.1
 %endif
 %ifarch riscv64
 /lib/ld-linux-riscv64-lp64d.so.1
 %endif
-%attr(755,root,root)/%_lib/ld*.so
 %exclude /%_lib/libnss_[a-eg-z]*
 /sbin/glibc_post_upgrade
 /sbin/glibc_fix_*
@@ -685,7 +681,6 @@ fi
 %config(noreplace) %_sysconfdir/bindresvport.blacklist
 %config(noreplace) %_sysconfdir/gai.conf
 %config(noreplace) %_sysconfdir/ld.so.conf
-%config(noreplace) %_sysconfdir/nss.conf
 %config(noreplace) %_sysconfdir/nsswitch.conf
 %config(noreplace) %_sysconfdir/rpc
 
@@ -699,7 +694,6 @@ fi
 %exclude /%_lib/libnss_f*
 
 %files -n libnsl1
-%_libdir/libnsl-*.so
 %_libdir/libnsl.so.1
 
 %if_with locales
@@ -714,6 +708,8 @@ fi
 %dir %_gconvdir
 %_gconvdir/*.so
 %_gconvdir/gconv-modules
+%dir %_gconvdir/gconv-modules.d
+%_gconvdir/gconv-modules.d/gconv-modules-extra.conf
 %ghost %verify(not md5 size mtime) %config(noreplace,missingok) %_gconvdir/gconv-modules.cache
 
 %files -n iconv
@@ -722,7 +718,7 @@ fi
 
 %files timezones
 %_bindir/tzselect
-%_sbindir/zdump
+%_bindir/zdump
 %_sbindir/zic
 
 %files utils
@@ -736,13 +732,13 @@ fi
 %exclude %_bindir/pcprofiledump
 %exclude %_bindir/tzselect
 %exclude %_bindir/xtrace
+%exclude %_bindir/zdump
 %_libexecdir/getconf
 %_libdir/audit/sotruss-lib.so
 %exclude /var/db/Makefile
 
 %files devel -f devel.files
 %_libdir/lib*.so
-%exclude %_libdir/libnsl-*.so
 %exclude %_libdir/libmemusage.so
 %exclude %_libdir/libpcprofile.so
 %_libdir/*.o
@@ -787,6 +783,9 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Wed Oct 13 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.34.0.33.a996d-alt1
+- Updated to glibc-2.34-33-ga996d13b8a from 2.34 branch.
+
 * Fri Jul 09 2021 Dmitry V. Levin <ldv@altlinux.org> 6:2.32-alt4
 - Updated to glibc-2.32-50-g737efa27fc from 2.32 branch
   (fixes: CVE-2021-35942).

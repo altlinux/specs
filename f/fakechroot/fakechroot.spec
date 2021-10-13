@@ -1,6 +1,6 @@
 Name: fakechroot
 Version: 2.20.1
-Release: alt2
+Release: alt3
 Summary: Gives a fake chroot environment
 Group: Development/Tools
 License: LGPLv2+
@@ -9,6 +9,11 @@ Url: https://github.com/dex4er/fakechroot
 Source: %name-%version.tar
 
 Patch: fakechroot-2.20.1-add-statx-support.patch
+Patch1: pull-85-0001-tmpnam.c-fix-heap-overflow.patch
+Patch2: pull-85-0002-declare-missing-bufs-remove-ver-from-lstat.patch
+Patch3: pull-85-0003-fix-glibc-2.33-compatibility.patch
+Patch4: pull-85-0006-wrap-fstatat-and-fstatat64.patch
+
 
 # Automatically added by buildreq on Wed Aug 31 2016
 # optimized out: gnu-config perl perl-podlators python-base python3
@@ -26,7 +31,7 @@ privileges.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 %autoreconf
@@ -63,6 +68,11 @@ find %buildroot%_libdir -name '*.la' -delete -print
 %_mandir/man1/%name.1*
 
 %changelog
+* Wed Oct 13 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.20.1-alt3
+- Added glibc 2.33+ support patches from
+  https://github.com/dex4er/fakechroot/pull/85 (thanks to Ilya Lipnitskiy), and
+  https://github.com/dex4er/fakechroot/pull/86 (thanks to neok-m4700).
+
 * Tue Apr 27 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.20.1-alt2
 - Backported upstream commit adding support of libc wrapper for
   statx(1) syscall.

@@ -1,20 +1,6 @@
-
-# Upstream issue: https://github.com/apitrace/apitrace/issues/258
-# Fedora
-# Filter GLIBC_PRIVATE Requires, see wrappers/dlsym.cpp
-#define __filter_GLIBC_PRIVATE 1
-
-# ROSA
-# Exclude libc.so.6(GLIBC_PRIVATE) because it's not provided.
-#define __noautoreq '(.*)GLIBC_PRIVATE(.*)'
-
-# ALT as in http://www.sisyphus.ru/en/srpm/Sisyphus/gcc7/spec
-# Allow use __libc_dlsym and __libc_dlopen_mode
-%filter_from_requires /^libc.so.6(GLIBC_PRIVATE)/d
-
 Name: apitrace
 Version: 10.0
-Release: alt1
+Release: alt2
 
 Summary: Tools for tracing OpenGL
 
@@ -32,10 +18,7 @@ Source2: qapitrace.appdata.xml
 Patch: apitrace-7.1_gtest.patch
 Patch1: apitrace-unbundle-brotli.patch
 Patch2: apitrace-gcc10.patch
-
-# due https://bugzilla.altlinux.org/show_bug.cgi?id=35067
-%remove_optflags -O2
-%add_optflags -O1
+Patch3: apitrace-10.0-fix-glibc-2.34.patch
 
 # internal
 %add_python3_req_skip highlight
@@ -92,6 +75,7 @@ This package contains qapitrace, the Graphical frontend for apitrace.
 #patch2 -p1
 # fix WRAPPER_DIR
 %__subst "s|dpkg-architecture|no-dpkg-architecture|" CMakeLists.txt
+%patch3 -p1
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1507659
 # Remove bundled libraries, except khronos headers and libbacktrace
@@ -147,6 +131,9 @@ make check
 %_datadir/appdata/qapitrace.appdata.xml
 
 %changelog
+* Tue Oct 05 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.0-alt2
+- Fixed build with glibc 2.32.
+
 * Fri Jul 09 2021 Vitaly Lipatov <lav@altlinux.ru> 10.0-alt1
 - new version 10.0 (with rpmrb script)
 
