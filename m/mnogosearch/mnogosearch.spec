@@ -39,7 +39,7 @@
 
 Name: mnogosearch
 Version: 3.4.1
-Release: alt1
+Release: alt2
 
 Summary: a full-featured search engine for intranet and internet servers
 Summary(ru_RU.UTF-8): поисковая машина для серверов интернет и интранет
@@ -243,6 +243,8 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 # One can install then a subpackage for a specific database backend, or a
 # general subpackage with full set of database's libs.
 
+# LTO support for static libraries
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 # Common configuration flags
 CONF_FLAGS="--enable-shared \
@@ -636,6 +638,9 @@ fi
 %endif
 
 %changelog
+* Wed Oct 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 3.4.1-alt2
+- Fix build with LTO flags
+
 * Fri Jul 02 2021 Nikolay A. Fetisov <naf@altlinux.org> 3.4.1-alt1
 - New version (Closes: 32446)
 
