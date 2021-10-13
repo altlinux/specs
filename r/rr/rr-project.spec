@@ -7,7 +7,7 @@
 
 Name:		rr
 Version:	5.5.0
-Release:	alt1
+Release:	alt2
 Summary:	Record and Replay Framework
 Group:		Development/Debuggers
 License:	MIT and BSD and Apache-2.0
@@ -52,6 +52,8 @@ subst "s!/bin/rr_page_!lib/rr/rr_page_!" src/AddressSpace.cc
 mv %buildroot/%_bindir/rr_* %buildroot%_libdir/rr/
 subst '1s:/usr/bin/bash:/bin/bash:' %buildroot%_bindir/signal-rr-recording.sh
 rm -f %buildroot%_bindir/rr_page*
+# Workaround for https://github.com/rr-debugger/rr/issues/2977
+rm -f %buildroot%_libdir/rr/librraudit.so
 
 %files
 %doc LICENSE README.md
@@ -63,6 +65,9 @@ rm -f %buildroot%_bindir/rr_page*
 %_libdir/rr
 
 %changelog
+* Wed Oct 13 2021 Vitaly Chikunov <vt@altlinux.org> 5.5.0-alt2
+- Do not install librraudit.so (fixes build for glibc-2.34).
+
 * Sat Oct 09 2021 Vitaly Chikunov <vt@altlinux.org> 5.5.0-alt1
 - Update to 5.5.0 (2021-09-20).
 
