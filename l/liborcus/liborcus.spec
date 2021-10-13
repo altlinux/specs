@@ -1,13 +1,19 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %def_without python
 Name: liborcus
 Version: 0.16.1
-Release: alt1
+Release: alt2
 Summary: Standalone file import filter library for spreadsheet documents
 
 Group: System/Libraries
 License: MPL-2.0
 Url: https://gitlab.com/orcus/orcus
 Source: orcus-%version.tar.gz
+
+Patch1: liborcus-alt-gcc11-compat.patch
 
 %define libver 0.16
 
@@ -44,8 +50,11 @@ Python3 bindings for Orcus
 
 %prep
 %setup
+%patch1 -p2
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 sed -i 's|liborcus_@ORCUS_API_VERSION@_la_LIBADD = |& ../parser/liborcus-parser-@ORCUS_API_VERSION@.la|' src/liborcus/Makefile.am
 sed -i 's/liborcus_parser_.*_la_LIBADD = /& $(BOOST_SYSTEM_LIB) /' src/parser/Makefile.am
 
@@ -96,6 +105,9 @@ ln -s %name-%libver.pc %buildroot%_pkgconfigdir/%name.pc
 %endif
 
 %changelog
+* Wed Oct 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.16.1-alt2
+- Fixed build with gcc-11
+
 * Fri Feb 12 2021 Fr. Br. George <george@altlinux.ru> 0.16.1-alt1
 - Autobuild version bump to 0.16.1
 
