@@ -1,5 +1,5 @@
 Name: installer-feature-simply-livecd
-Version: 9.1.0
+Version: 10.0.0
 Release: alt1
 
 Summary: LiveCD install hooks for Simply Linux.
@@ -69,6 +69,9 @@ cp -ar alterator-menu/ %buildroot%_datadir/livecd-install
 %_datadir/livecd-install/
 
 %changelog
+* Wed Oct 13 2021 Mikhail Efremov <sem@altlinux.org> 10.0.0-alt1
+- Drop 05-vm-profile.sh.
+
 * Thu Feb 25 2021 Mikhail Efremov <sem@altlinux.org> 9.1.0-alt1
 - Try to kill light-locker during install.
 - Only require alterator-grub for arches that have grub.
