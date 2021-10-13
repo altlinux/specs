@@ -2,7 +2,7 @@
 
 Name: shlomif-cmake-modules
 Version: 0
-Release: alt1.git.89f05ca
+Release: alt1.git.7525914
 
 Summary: CMake modules which are used across Shlomi Fishs projects
 License: MIT
@@ -29,6 +29,9 @@ cp %name/Shlomif_Common.cmake %buildroot%_datadir/cmake/Modules/
 %doc LICENSE README.md
 
 %changelog
+* Tue Oct 12 2021 Konstantin Rybakov <kastet@altlinux.org> 0-alt1.git.7525914
+- Updated from upstream git
+
 * Mon Feb 10 2020 Konstantin Rybakov <kastet@altlinux.org> 0-alt1.git.89f05ca
 - Initial build for ALT.
 
