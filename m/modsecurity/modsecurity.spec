@@ -4,12 +4,13 @@
 
 Name:    modsecurity
 Version: 3.0.5
-Release: alt1
+Release: alt2
 
 Summary: web application firewall (WAF) engine
 Group: Security/Networking
 License: %asl
-Url: https://www.modsecurity.org
+Url: https://github.com/SpiderLabs/ModSecurity
+#Url: https://www.modsecurity.org
 
 Source0: %name-%version.tar
 Source1: submodules-%version.tar
@@ -81,6 +82,9 @@ mv -f -- LICENSE LICENSE.Apache-2.0
 ln -s -- $(relative %_licensedir/Apache-2.0 %_docdir/%name/LICENSE) LICENSE
 
 %build
+# LTO support for static libraries
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 %autoreconf
 %configure %{?_disabled_static:--disable-static}
 
@@ -138,5 +142,9 @@ install -m 640 %SOURCE3 %buildroot%_logrotatedir/%name
 %endif
 
 %changelog
+* Wed Oct 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 3.0.5-alt2
+- Fix build with LTO flags
+- Update project URL
+
 * Fri Jul 16 2021 Nikolay A. Fetisov <naf@altlinux.org> 3.0.5-alt1
 - Initial build for ALT Linux Sisyphus
