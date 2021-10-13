@@ -10,7 +10,7 @@
 
 Name: unit
 Version: 1.25.0
-Release: alt1
+Release: alt2
 
 Summary: NGINX Unit - Web Application Server
 License: Apache-2.0
@@ -138,7 +138,7 @@ build/tests
 
 %pre
 /usr/sbin/groupadd -r -f _unit
-/usr/sbin/useradd -r -g _unit -d /var/empty -s /dev/null -n -c "%summary" _unit >/dev/null 2>&1 ||:
+/usr/sbin/useradd -r -g _unit -d /var/empty -s /dev/null -N -c "%summary" _unit >/dev/null 2>&1 ||:
 
 %post
 %post_service unit
@@ -186,6 +186,9 @@ build/tests
 %endif
 
 %changelog
+* Wed Oct 13 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.25.0-alt2
+- FTBFS: build with glibc 2.34
+
 * Tue Aug 24 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.25.0-alt1
 - Update to 1.25.0 (2021-08-19).
 
