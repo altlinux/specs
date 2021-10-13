@@ -25,7 +25,7 @@
 
 Name: branding-%flavour
 Version: 9.911
-Release: alt1
+Release: alt2
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -168,6 +168,7 @@ Summary(ru_RU.UTF-8): Лицензия и дополнительные свед�
 License:   Distributable
 Group:     Documentation
 %branding_add_conflicts %flavour notes
+Conflicts: alt-notes-school-server
 
 %description notes
 Distribution license and release notes
@@ -200,6 +201,7 @@ Requires: %name-graphics = %EVR
 Conflicts: installer-feature-lightdm-stage3 < 0.1.0-alt1
 # Due to /usr/share/install3/lightdm-gtk-greeter.conf
 Conflicts: branding-simply-linux-system-settings
+Conflicts: lxde-settings-lxdesktop
 
 %description mate-settings
 MATE settings for %distro_name
@@ -359,6 +361,10 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed Oct 13 2021 Mikhail Efremov <sem@altlinux.org> 9.911-alt2
+- notes: Add conflict with alt-notes-school-server.
+- mate-settings: Add conflict with lxde-settings-lxdesktop.
+
 * Wed Oct 06 2021 Mikhail Efremov <sem@altlinux.org> 9.911-alt1
 - bootsplash: New progressbar from alt-education.
 
