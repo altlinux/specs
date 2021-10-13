@@ -1,12 +1,18 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 Name: libbtree
 Version: 0.0.1
-Release: alt3.qa4
-
-Summary: library to read Multitran databases
-License: LGPL
+Release: alt4.alpha2
+Summary: Library to read Multitran databases
+License: LGPL-2.0
 Group: System/Libraries
+Url: http://multitran.sourceforge.net
 
-Source: %name-%{version}alpha2.tar.bz2
+Source: %name-%{version}alpha2.tar
 
 # Automatically added by buildreq on Mon Oct 04 2004
 BuildRequires: gcc-c++ libstdc++-devel
@@ -17,7 +23,7 @@ Simple library to read Multitran databases
 %package devel
 Summary: Development part of %name
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Contents header files and development libraries for %name
@@ -25,7 +31,7 @@ Contents header files and development libraries for %name
 %package devel-static
 Summary: Static libraries for %name
 Group: Development/C++
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 Contents static libraries for %name
@@ -51,6 +57,9 @@ Contents static libraries for %name
 %_libdir/*.a
 
 %changelog
+* Wed Oct 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.1-alt4.alpha2
+- Fixed build with LTO
+
 * Sun Nov 08 2015 Michael Shigorin <mike@altlinux.org> 0.0.1-alt3.qa4
 - rebuilt for gcc5 C++ ABI
 
