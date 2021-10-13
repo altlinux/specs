@@ -1,7 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: qstat
-Version: 2.16
+Version: 2.17
 Release: alt1
 Summary: Game server browsing utility
 License: Artistic-2.0
@@ -27,6 +29,7 @@ Terminous, Wheel of Time, and Daikatana.
 %setup
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 export QSTAT_VERSION=v%version
 %autoreconf
 %configure --enable-dump
@@ -47,6 +50,9 @@ rm -f template/Makefile*
 %_bindir/qstat
 
 %changelog
+* Wed Oct 13 2021 Konstantin Rybakov <kastet@altlinux.org> 2.17-alt1
+- Updated to upstream version 2.17. 
+
 * Wed Aug 25 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.16-alt1
 - Updated to upstream version 2.16.
 
