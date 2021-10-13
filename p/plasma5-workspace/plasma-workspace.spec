@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.22.5
-Release: alt4
+Release: alt5
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -293,7 +293,7 @@ popd
 %patch130 -p1
 %patch131 -p2
 %patch132 -p2
-%patch133 -p1
+#%patch133 -p1
 
 install -m 0644 %SOURCE1 po/ru/freememorynotifier.po
 tar xf %SOURCE11 freememorynotifier/
@@ -502,6 +502,9 @@ done
 
 
 %changelog
+* Wed Oct 13 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.5-alt5
+- revert 5.22.5-alt3 changes
+
 * Mon Sep 27 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.5-alt4
 - fix default small icons size in systemsettings
 
