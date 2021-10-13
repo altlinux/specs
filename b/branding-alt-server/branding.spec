@@ -17,8 +17,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 9.2
-Release: alt1
+Version: 10.0
+Release: alt0.1
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -142,6 +142,7 @@ Group:    System/Configuration/Other
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme  branding-alt-%theme-release
 Obsoletes: %obsolete_list
 %branding_add_conflicts %flavour release
+Requires: alt-os-release
 
 %description release
 %distro_name release file.
@@ -261,13 +262,6 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
       subst "s|GRUB_WALLPAPER=.*|GRUB_WALLPAPER=/usr/share/plymouth/themes/%theme/grub.jpg|" \
              /etc/sysconfig/grub2 ||:
 
-#release
-%post release
-if ! [ -e %_sysconfdir/altlinux-release ] && \
-   ! [ -e %_sysconfdir/os-release ]; then
-	cp -a %data_cur_dir/release/*-release %_sysconfdir/
-fi
-
 #notes
 %post notes
 if ! [ -e %_datadir/alt-notes/license.all.html ]; then
@@ -289,8 +283,8 @@ fi
 %_pixmapsdir/system-logo.png
 
 %files release
-%dir %data_cur_dir
-%data_cur_dir/release/
+%_sysconfdir/*-release
+%_prefix/lib/os-release
 %_sysconfdir/buildreqs/packages/ignore.d/*
 %ghost %config(noreplace) %_sysconfdir/*-release
 
@@ -316,6 +310,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Sep 16 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 10.0-alt0.1
+- images and bootsplash changed
+
 * Wed Mar 17 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 9.2-alt1
 - version bump
 - 'Next' button size fixed
