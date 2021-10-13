@@ -1,5 +1,5 @@
 Name: installer-distro-simply-linux
-Version: 9.3.0
+Version: 10.0.0
 Release: alt1
 
 Summary: Installer common files
@@ -114,6 +114,9 @@ Installer stage3
 %files stage3
 
 %changelog
+* Wed Oct 13 2021 Mikhail Efremov <sem@altlinux.org> 10.0.0-alt1
+- stage2: Drop 05-vm-profile.sh.
+
 * Wed Feb 24 2021 Mikhail Efremov <sem@altlinux.org> 9.3.0-alt1
 - stage3: Only require alterator-grub for arches that have grub.
 - stage3: Drop dhcpcd.
