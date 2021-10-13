@@ -4,7 +4,7 @@
 
 Name: miredo
 Version: 1.2.6
-Release: alt2.gite5f565
+Release: alt3.gite5f565
 
 Summary: Teredo IPv6 tunneling through NATs
 
@@ -123,6 +123,7 @@ This package contains a Miredo client static libraries.
 %build
 %def_enable Werror
 
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %add_optflags -std=gnu99
 ./autogen.sh
 # --localstatedir used here as a prefix for LOCALSTATEDIR/run/ directory to place PID file
@@ -238,6 +239,9 @@ install -m 0644 -- %SOURCE6 %buildroot%_unitdir/%name-server.service
 %endif
 
 %changelog
+* Wed Oct 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.2.6-alt3.gite5f565
+- Fix build with LTO flags
+
 * Thu Jul 01 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.2.6-alt2.gite5f565
 - Restore from orphaned
 - Fix systemd startup order (Closes: 38847)
