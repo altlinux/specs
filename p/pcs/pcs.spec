@@ -1,16 +1,15 @@
-%define        pyagentx_version 0.4.pcs.2
+%define pyagentx_version 0.4.pcs.2
 
 Name: 	       pcs
 Epoch:         1
-Version:       0.10.8
-Release:       alt2
+Version:       0.10.11
+Release:       alt1
 Summary:       Pacemaker/Corosync configuration system
 License:       GPL-2.0 and Apache-2.0 and MIT
 Group:         System/Servers
 Url:           https://github.com/ClusterLabs/pcs
 Vcs:           https://github.com/ClusterLabs/pcs.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch:     noarch
 
 Source:        %name-%version.tar
 Source1:       pyagentx-v%pyagentx_version.tar.gz
@@ -28,6 +27,31 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: corosync fontconfig fonts-ttf-liberation
 BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-pip
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-pycurl
+BuildRequires: python3-module-pyparsing
+BuildRequires: python3-module-dacite
+BuildRequires: python3-module-tornado >= 6.0.0
+BuildRequires: python3-module-dateutil
+BuildRequires: python3-module-distro
+BuildRequires: python3-module-wheel
+BuildRequires: gem-backports
+BuildRequires: ruby-daemons
+BuildRequires: gem-ethon
+BuildRequires: gem-eventmachine
+BuildRequires: ruby-open4
+BuildRequires: gem-rack
+BuildRequires: gem-rack-protection
+BuildRequires: gem-rack-test
+BuildRequires: gem-sinatra
+BuildRequires: gem-tilt
+BuildRequires: gem-thin
+BuildRequires: gem-rexml
+BuildRequires: gem-webrick
+BuildRequires: libsystemd-devel
+BuildRequires: wget
+BuildRequires: service
 
 %description
 Pacemaker/Corosync configuration system with remote access
@@ -60,38 +84,38 @@ agent (snmpd).
 %prep
 %setup
 %patch -p1
-subst "s,/usr/lib/pcsd/vendor/bundle/ruby,/usr/lib/ruby," pcsd/pcsd-ruby.service
-# ALT-specific path to pacemaker executables
-subst 's|/usr/libexec/pacemaker|/usr/lib/pacemaker|' pcs/settings_default.py
-mkdir -p pcs/bundled/tmp
-tar xf %SOURCE1 -C pcs/bundled/tmp
+cp %SOURCE1 rpm
+mkdir -p pcs_bundled/src
+echo %version > .tarball-version
+echo %version > .version
 
 %build
-make BUNDLE_PYAGENTX_SRC_DIR=pcs/bundled/tmp/pyagentx-%pyagentx_version \
-     PYAGENTX_LIB_DIR=%buildroot%_libexecdir/pcs/bundled
-%ruby_build --use=pcsd --alias=pcs --join=bin:lib
+%autoreconf
+export PATH=/sbin:$PATH
+%configure \
+    --with-distro=fedora \
+    --enable-local-build \
+    --enable-use-local-cache-only \
+    --enable-individual-bundling \
+    --localstatedir=%_var \
+    PYTHON=%__python3
+%make_build
 
 %install
-mkdir -p %buildroot%_libexecdir/pcs
-mkdir -p %buildroot%_localstatedir/pcsd
-mkdir -p %buildroot%_logdir/pcsd
-mkdir -p %buildroot%_sysconfdir/sysconfig/
-# Disable python2 requirement
-subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *) \
-$(find ./ -name '*.py')
-
-%ruby_install
 %makeinstall_std \
-     BUNDLE_PYAGENTX_SRC_DIR=pcs/bundled/tmp/pyagentx-%pyagentx_version \
-     PYAGENTX_LIB_DIR=%buildroot%_libexecdir/pcs/bundled \
      BUILD_GEMS=false \
-     DEST_LIB=%buildroot%_libexecdir \
      SYSTEMCTL_OVERRIDE=true \
      DEST_SYSTEMD_SYSTEM=%buildroot%systemd_unitdir \
+     bashcompletiondir=%_sysconfdir/bash_completion.d
 
-install -Dm 0644 pcsd/pcsd.logrotate %buildroot%_logrotatedir/pcsd.logrotate
 install -Dm 0755 %SOURCE2 %buildroot%_initdir/pcsd
 install -Dm 0644 %SOURCE3 %buildroot%_localstatedir/pcsd/known-hosts
+
+# Set correct python3 executable in shebang
+subst 's|#!.*python$|#!%__python3|' %buildroot%_libdir/pcs/pcs_bundled/packages/pyagentx/*.py
+
+# Remove wrong placed documentation
+rm -f %buildroot%_defaultdocdir/pcs/*.md
 
 %check
 %ruby_test
@@ -102,45 +126,55 @@ install -Dm 0644 %SOURCE3 %buildroot%_localstatedir/pcsd/known-hosts
 %preun
 %preun_service pcsd
 
-%post          -n python3-module-snmp
+%post -n python3-module-snmp
 %post_service pcs_snmp_agent
 
-%preun         -n python3-module-snmp
+%preun -n python3-module-snmp
 %preun_service pcs_snmp_agent
 
 %files
 %doc CHANGELOG.md COPYING README.md
-
-%files         -n python3-module-pcs
-%doc README.md
 %_sbindir/pcs
-%python3_sitelibdir_noarch/*
 %_man8dir/*.*
 %exclude %_man8dir/pcs_snmp_agent.*
 %_sysconfdir/bash_completion.d/pcs
-%_libexecdir/pcs/pcs_internal
 %_sbindir/pcsd
 %_initdir/pcsd
-%_libexecdir/pcsd
-%_sysconfdir/logrotate.d/pcsd
-%_sysconfdir/pam.d/pcsd
-%_sysconfdir/sysconfig/pcsd
+%_libdir/pcsd
+%_libdir/pcs/pcs_internal
+%config(noreplace) %_sysconfdir/pam.d/pcsd
+%config(noreplace) %_sysconfdir/sysconfig/pcsd
+%config(noreplace) %_logrotatedir/pcsd
 %dir %_logdir/pcsd
 %dir %_localstatedir/pcsd
-%_logrotatedir/pcsd.logrotate
 %systemd_unitdir/pcsd.service
 %systemd_unitdir/pcsd-ruby.service
 %_localstatedir/pcsd/known-hosts
 
-%files         -n python3-module-snmp
+%files -n python3-module-pcs
+%python3_sitelibdir_noarch/*
+
+%files -n python3-module-snmp
 %config(noreplace) %_sysconfdir/sysconfig/pcs_snmp_agent
-%_libexecdir/pcs/pcs_snmp_agent
-%_libexecdir/pcs/bundled/packages/pyagentx*
+%_libdir/pcs/pcs_snmp_agent
+%_libdir/pcs/pcs_bundled/packages/pyagentx*
 %systemd_unitdir/pcs_snmp_agent.service
 %_datadir/snmp/mibs/PCMK-PCS*-MIB.txt
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Fri Oct 08 2021 Andrey Cherepanov <cas@altlinux.org> 1:0.10.11-alt1
+- New version.
+- Do not use ruby macros.
+
+* Fri Aug 20 2021 Andrey Cherepanov <cas@altlinux.org> 1:0.10.10-alt1
+- New version.
+- Leave only python module in python3-module-pcs.
+- Mark config files.
+
+* Tue Aug 10 2021 Andrey Cherepanov <cas@altlinux.org> 1:0.10.9-alt1
+- New version.
+
 * Tue May 18 2021 Pavel Vasenkov <pav@altlinux.org> 1:0.10.8-alt2
 - Disable python2 requirement
 
