@@ -1,5 +1,5 @@
 %define kernel_base_version	5.14
-%define kernel_sublevel        .8
+%define kernel_sublevel        .12
 %define kernel_extra_version	%nil
 
 Name: kernel-image-mp
@@ -138,9 +138,11 @@ install -Dp -m644 System.map %buildroot/boot/System.map-$KernelVer
 install -Dp -m644 arch/%base_arch/boot/%Image %buildroot/boot/vmlinuz-$KernelVer
 install -Dp -m644 .config %buildroot/boot/config-$KernelVer
 make modules_install INSTALL_MOD_PATH=%buildroot
-
-mkdir -p %buildroot/lib/devicetree/$KernelVer
-find arch/%base_arch/boot/dts -type f -name \*.dtb |xargs -iz install -pm0644 z %buildroot/lib/devicetree/$KernelVer
+make dtbs_install INSTALL_DTBS_PATH=%buildroot/lib/devicetree/$KernelVer
+%ifarch aarch64
+find %buildroot/lib/devicetree/$KernelVer -mindepth 1 -type d |\
+	while read d; do mv $d/* $d/../ && rmdir $d && ln -srv $d/../ $d; done
+%endif
 
 mkdir -p %buildroot%kbuild_dir/arch/%base_arch
 cp -a include %buildroot%kbuild_dir/include
@@ -256,6 +258,9 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Wed Oct 13 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.14.12-alt1
+- 5.14.12
+
 * Mon Sep 27 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.14.8-alt1
 - 5.14.8
 
