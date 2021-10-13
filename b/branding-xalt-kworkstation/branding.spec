@@ -3,23 +3,22 @@
 %else
 %def_disable gfxboot
 %endif
-%def_disable save_release_file
 
 %define Theme Workstation K
 %define smalltheme kworkstation
-%define codename Centaurea Pineticola
+%define codename Sorbaronia Mitschurinii
 %define brand alt
 %define Brand ALT
 %define fakebrand xalt
 
-%define major 9
-%define minor 2
+%define major 10
+%define minor 0
 %define bugfix 0
 %define altversion %major.%minor
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt0.1
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -37,8 +36,8 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel /usr/bin/fribidi
 
 %define Theme_ru Рабочая станция К
 %define Brand_ru Альт
-%define status %nil
-%define status_ru %nil
+%define status BETA
+%define status_ru БЕТА
 %define ProductName %Brand %Theme %altversion
 %define ProductName_ru %Brand_ru %Theme_ru %altversion
 %define branding_data_dir %_datadir/branding-data-current
@@ -121,6 +120,7 @@ BuildArch: noarch
 Summary: %ProductName release file
 License: GPL
 Group: System/Configuration/Other
+Requires: alt-os-release
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme  branding-alt-%theme-release
 Obsoletes: %obsolete_list  branding-alt-%theme-release
 Conflicts: %conflicts_list
@@ -275,6 +275,7 @@ VERSION_ID=%altversion
 PRETTY_NAME="%ProductName %status (%codename)"
 ANSI_COLOR="1;33"
 CPE_NAME="cpe:/o:%brand:%smalltheme:%altversion"
+BUILD_ID="%Brand %altversion%status"
 HOME_URL="%url"
 BUG_REPORT_URL="https://bugs.altlinux.org/"
 DOCUMENTATION_URL="https://docs.altlinux.org/"
@@ -284,6 +285,8 @@ __EOF__
 mkdir -p %buildroot/%branding_data_dir/release/
 cp -ar %buildroot/%_sysconfdir/altlinux-release %buildroot/%branding_data_dir/release/altlinux-release
 cp -ar %buildroot/%_sysconfdir/os-release %buildroot/%branding_data_dir/release/os-release
+mkdir -p %buildroot/%prefix/lib/
+cp -ar %buildroot/%_sysconfdir/os-release %buildroot/%prefix/lib/os-release
 
 #notes
 pushd notes
@@ -377,14 +380,10 @@ shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER /boot/grub/themes/%theme/gr
 sed -i "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf ||:
 
 %post release
-%if_enabled save_release_file
-if ! [ -e %_sysconfdir/altlinux-release ]; then
-       cp -a %branding_data_dir/release/altlinux-release %_sysconfdir/altlinux-release ||:
-fi
-if ! [ -e %_sysconfdir/os-release ]; then
-       cp -a %branding_data_dir/release/os-release %_sysconfdir/os-release ||:
-fi
-%endif
+# alt-os-release filetrigger do it now
+#if ! [ -e %_sysconfdir/os-release ]; then
+#       cp -a %branding_data_dir/release/os-release %_sysconfdir/os-release ||:
+#fi
 
 %post gnome-settings
 %gconf2_set string /desktop/gnome/interface/font_name Sans 11
@@ -421,13 +420,8 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/plymouth/themes/%theme/*
 
 %files release
-%if_enabled save_release_file
 %ghost %config(noreplace) %_sysconfdir/os-release
-%ghost %config(noreplace) %_sysconfdir/altlinux-release
-%else
-%_sysconfdir/os-release
 %_sysconfdir/altlinux-release
-%endif
 %config(noreplace) %_sysconfdir/fedora-release
 %config(noreplace) %_sysconfdir/redhat-release
 %config(noreplace) %_sysconfdir/system-release
@@ -435,6 +429,7 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %dir %branding_data_dir/
 %dir %branding_data_dir/release/
 %branding_data_dir/release/*-release
+%prefix/lib/os-release
 
 %files notes
 %_datadir/alt-notes/*
@@ -468,6 +463,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Wed Oct 13 2021 Sergey V Turchin <zerg at altlinux dot org> 10.0.0-alt0.1
+- beta
+
 * Tue Aug 17 2021 Sergey V Turchin <zerg at altlinux dot org> 9.2.0-alt2
 - don't save original os-release on system upgrade
 
