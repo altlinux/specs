@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.6.0
-Release: alt1
+Release: alt2
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -89,9 +89,16 @@ rm -rf ./3rdparty
 %patch1 -p1
 %patch3 -p1
 %patch4 -p1
+%ifarch %e2k
+sed -i "s/-Werror/-Wno-error/" CMakeLists.txt
+%endif
 
 %build
-%cmake
+%cmake \
+%ifarch %e2k
+	-DWITH_LTO=OFF \
+%endif
+	%nil
 %cmake_build
 
 %install
@@ -111,6 +118,9 @@ rm -rf ./3rdparty
 %_datadir/%name
 
 %changelog
+* Wed Oct 13 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.6.0-alt2
+- fixed build for Elbrus
+
 * Mon Sep 27 2021 Egor Ignatov <egori@altlinux.org> 4.6.0-alt1
 - new version
 
