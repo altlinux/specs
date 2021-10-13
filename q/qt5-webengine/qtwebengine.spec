@@ -30,7 +30,7 @@
 
 Name: qt5-webengine
 Version: 5.15.6
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -62,7 +62,8 @@ Patch41: sandbox-fstatat-syscalls.patch
 Patch42: sandbox-time64-syscalls.patch
 Patch43: python2.patch
 Patch44: remove-benchmark-from-inputs.patch
-
+Patch45: glibc-2.34-SIGSTKSZ.patch
+Patch46: glibc-2.34-clone3.patch
 # ALT
 Patch101: alt-pepflashplayer.patch
 Patch102: alt-fix-shrank-by-one-character.patch
@@ -213,6 +214,8 @@ popd
 %patch42 -p1
 %patch43 -p1
 %patch44 -p1
+%patch45 -p1
+%patch46 -p1
 #
 %patch101 -p1
 %patch102 -p1
@@ -434,6 +437,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Wed Oct 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.6-alt3
+- add fix against glibc-2.34
+
 * Thu Sep 23 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.6-alt2
 - don't apply harfbuzz patches with old harfbuzz
 
