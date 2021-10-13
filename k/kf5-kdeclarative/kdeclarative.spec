@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.87.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -45,7 +45,7 @@ Requires: kf5-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: qt5-declarative-devel
+Requires: qt5-declarative-devel libepoxy-devel kf5-kio-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -106,6 +106,9 @@ KF5 library
 %_K5lib/libKF5QuickAddons.so.*
 
 %changelog
+* Wed Oct 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.87.0-alt2
+- fix build requires
+
 * Mon Oct 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.87.0-alt1
 - new version
 
