@@ -1,16 +1,18 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/less /usr/bin/perl /usr/sbin/zdump texinfo
+BuildRequires: /usr/bin/less /usr/sbin/zdump texinfo
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%define autorelease 19
+
 %global gcalmantag 4
 
 Name:		gcal
 Version:	4.1
-Release:	alt2_5
+Release:	alt2_%autorelease
 Summary:	GNU Gregorian calendar program
 
-Group:		Text tools
 License:	GPLv3+
 URL:		http://www.gnu.org/software/gcal/
 Source0:	ftp://ftp.gnu.org/gnu/gcal/%{name}-%{version}.tar.xz
@@ -25,8 +27,6 @@ Patch:		gcal-glibc-no-libio.patch
 BuildRequires:  gcc
 BuildRequires:	gettext gettext-tools libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 BuildRequires:  libunistring-devel
-Requires(post): info info-install
-Requires(preun): info info-install
 
 # Gnulib is granted exception of "no bundled libraries" packaging guideline:
 # https://fedoraproject.org/wiki/Packaging:No_Bundled_Libraries#Packages_granted_exceptions
@@ -64,7 +64,6 @@ rm -f %{buildroot}%{_datadir}/%{name}/Makefile.in
 rm -f %{buildroot}%{_infodir}/dir
 %find_lang %{name}
 
-
 %files -f %{name}.lang
 %doc AUTHORS BUGS COPYING LIMITATIONS NEWS README THANKS TODO
 %{_bindir}/gcal
@@ -76,6 +75,9 @@ rm -f %{buildroot}%{_infodir}/dir
 %{_mandir}/man1/*.1*
 
 %changelog
+* Wed Oct 13 2021 Igor Vlasenko <viy@altlinux.org> 4.1-alt2_19
+- fc update
+
 * Wed Apr 22 2020 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.1-alt2_5
 - Reverted previous change.
 
