@@ -1,7 +1,7 @@
 # SPEC file for vnStat package
 
 Name:    vnstat
-Version: 2.7
+Version: 2.8
 Release: alt1
 
 Summary: console-based network traffic monitor
@@ -162,6 +162,9 @@ mkdir -p %buildroot%data_dir
 %_man1dir/%{name}i*
 
 %changelog
+* Wed Oct 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.8-alt1
+- New version
+
 * Tue Jun 15 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.7-alt1
 - New version
 
