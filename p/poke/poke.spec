@@ -6,7 +6,7 @@
 
 Name: poke
 Version: 1.3
-Release: alt1
+Release: alt2
 
 Summary: extensible editor for structured binary data
 
@@ -84,6 +84,9 @@ mv -f -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-3.0+ %_docdir/%name/COPYING) COPYING
 
 %build
+
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 %autoreconf
 %configure \
     --disable-rpath \
@@ -137,5 +140,8 @@ ln -s -- $(relative %_licensedir/GPL-3.0+ %_docdir/%name/COPYING) COPYING
 
 
 %changelog
+* Wed Oct 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.3-alt2
+- Fix build with LTO flags
+
 * Tue Jun 29 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.3-alt1
 - Initial build for ALT Linux Sisyphus
