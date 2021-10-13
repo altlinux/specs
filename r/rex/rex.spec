@@ -4,7 +4,7 @@
 
 Name:    rex
 Version: 1.13.4
-Release: alt1
+Release: alt2
 
 Summary: (R)?ex - Remote Execution Framework
 
@@ -88,10 +88,6 @@ export V=%{version}
 %build
 cd Rex-%{version}%{version_suffix}
 
-# Fix test to work with ALT libmime-4.26 (see ALT#38497):
-sed -e 's/utf-8/binary/'      -i t/write_utf8_files.t
-sed -e 's/iso-8859-1/binary/' -i t/write_utf8_files.t
-
 # Fix test to work with ALT perl 5.28.0 / PathTools 3.74
 sed -e "/=> realpath/ s#/\*')#').'/*'#" -i t/rsync.t
 
@@ -129,6 +125,9 @@ mv -f ChangeLog    ../
 
 
 %changelog
+* Wed Oct 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.13.4-alt2
+- Remove libmagic bug workaround after closing 38497
+
 * Sun Jul 11 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.13.4-alt1
 - New version
 
