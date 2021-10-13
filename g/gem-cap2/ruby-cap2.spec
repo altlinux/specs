@@ -1,8 +1,8 @@
-%define        pkgname cap2
+%define        gemname cap2
 
-Name:          gem-%pkgname
-Version:       0.2.2
-Release:       alt2.3
+Name:          gem-cap2
+Version:       0.2.2.1
+Release:       alt0.1
 Summary:       A Ruby library for managing Linux process and file capabilities
 License:       MIT
 Group:         Development/Ruby
@@ -13,12 +13,14 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libcap-devel
-BuildRequires: gem(rake)
-BuildRequires: gem(rake-compiler)
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_version cap2:0.2.2.1
+Obsoletes:     ruby-cap2 < %EVR
+Provides:      ruby-cap2 = %EVR
+Provides:      gem(cap2) = 0.2.2.1
+
 
 %description
 Cap2 is a Ruby library for managing the POSIX 1003.1e capabilities available in
@@ -27,30 +29,47 @@ privilege into a set of distinct privileges. See capabilities(7) for more
 information.
 
 
-%package       devel
-Summary:       Development files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
-Group:         Development/Ruby
-BuildArch:     noarch
-
-%description   devel
-Development files for %gemname gem.
-
-%description   devel -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
-
-
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-cap2-doc
+Version:       0.2.2.1
+Release:       alt0.1
+Summary:       A Ruby library for managing Linux process and file capabilities documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета cap2
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(cap2) = 0.2.2.1
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-cap2-doc
+A Ruby library for managing Linux process and file capabilities documentation
+files.
+
+Cap2 is a Ruby library for managing the POSIX 1003.1e capabilities available in
+Linux kernels. These capabilities are a partitioning of the all powerful root
+privilege into a set of distinct privileges. See capabilities(7) for more
+information.
+
+%description   -n gem-cap2-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета cap2.
+
+
+%package       -n gem-cap2-devel
+Version:       0.2.2.1
+Release:       alt0.1
+Summary:       A Ruby library for managing Linux file and process capabilities development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета cap2
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(cap2) = 0.2.2.1
+
+%description   -n gem-cap2-devel
+Cap2 is a Ruby library for managing the POSIX 1003.1e capabilities available in
+Linux kernels.
+
+These capabilities are a partitioning of the all powerful root privilege into a
+set of distinct privileges.
+
+See capabilites(7) for more information.
 
 
 %prep
@@ -66,19 +85,23 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
-%ruby_gemlibdir
+%doc README.md
 %ruby_gemspec
+%ruby_gemlibdir
 %ruby_gemextdir
 
-%files         devel
-%ruby_includedir/%gemname
-
-%files         doc
+%files         -n gem-cap2-doc
+%doc README.md
 %ruby_gemdocdir
+
+%files         -n gem-cap2-devel
+%doc README.md
 
 
 %changelog
+* Fri Oct 08 2021 Pavel Skrylev <majioa@altlinux.org> 0.2.2.1-alt0.1
+- ^ 0.2.2 -> 0.2.2[.1]
+
 * Tue Apr 07 2020 Pavel Skrylev <majioa@altlinux.org> 0.2.2-alt2.3
 - ! spec's obsoletes/provides pair
 

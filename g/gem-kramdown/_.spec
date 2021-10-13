@@ -4,16 +4,18 @@
 
 Name:          gem-kramdown
 Version:       2.3.1
-Release:       alt2
+Release:       alt3
 Summary:       kramdown is a fast, pure Ruby Markdown superset converter
 License:       MIT
 Group:         Development/Ruby
 Url:           http://kramdown.gettalong.org
+Vcs:           https://github.com/gettalong/kramdown.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 Patch:         alias-fix.patch
+Patch1:        stringex-dep.patch
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(rexml) >= 0
 BuildRequires: gem(minitest) >= 5.0 gem(minitest) < 6
@@ -24,6 +26,7 @@ BuildRequires: gem(stringex) >= 1.5.1 gem(stringex) < 3
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency stringex >= 2.8.5,stringex < 3
 Requires:      gem(rexml) >= 0
+Requires:      gem(stringex) >= 1.5.1 gem(stringex) < 3
 Provides:      gem(kramdown) = 2.3.1
 
 
@@ -59,7 +62,7 @@ features and the patch number on everything else.
 
 %package       -n kramdown
 Version:       2.3.1
-Release:       alt2
+Release:       alt3
 Summary:       kramdown is a fast, pure Ruby Markdown superset converter executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета kramdown
 Group:         Development/Ruby
@@ -105,7 +108,7 @@ features and the patch number on everything else.
 
 %package       -n gem-kramdown-doc
 Version:       2.3.1
-Release:       alt2
+Release:       alt3
 Summary:       kramdown is a fast, pure Ruby Markdown superset converter documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета kramdown
 Group:         Development/Documentation
@@ -151,7 +154,7 @@ features and the patch number on everything else.
 
 %package       -n gem-kramdown-devel
 Version:       2.3.1
-Release:       alt2
+Release:       alt3
 Summary:       kramdown is a fast, pure Ruby Markdown superset converter development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета kramdown
 Group:         Development/Ruby
@@ -160,7 +163,6 @@ BuildArch:     noarch
 Requires:      gem(kramdown) = 2.3.1
 Requires:      gem(minitest) >= 5.0 gem(minitest) < 6
 Requires:      gem(rouge) >= 3.26.0 gem(rouge) < 4
-Requires:      gem(stringex) >= 1.5.1 gem(stringex) < 3
 
 %description   -n gem-kramdown-devel
 kramdown is a fast, pure Ruby Markdown superset converter development
@@ -201,6 +203,7 @@ features and the patch number on everything else.
 %prep
 %setup
 %patch
+%patch1 -p1
 
 %build
 %ruby_build
@@ -229,6 +232,9 @@ features and the patch number on everything else.
 
 
 %changelog
+* Tue Oct 12 2021 Pavel Skrylev <majioa@altlinux.org> 2.3.1-alt3
+- ! to change stringex dep to runtime from devel
+
 * Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 2.3.1-alt2
 - ! spec
 - ! loading Rakefile multiple times

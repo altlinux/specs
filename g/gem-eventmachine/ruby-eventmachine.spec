@@ -1,11 +1,11 @@
-%define        pkgname eventmachine
+%define        gemname eventmachine
 
-Name:          gem-%pkgname
-Version:       1.2.7
-Release:       alt3
+Name:          gem-eventmachine
+Version:       1.3.0.dev.1
+Release:       alt1
 Summary:       Fast, simple event-processing library for Ruby programs
+License:       Ruby or GPL-2.0
 Group:         Development/Ruby
-License:       GPLv2 or Ruby
 Url:           http://www.rubyeventmachine.com/
 Vcs:           https://github.com/eventmachine/eventmachine.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
@@ -16,53 +16,94 @@ BuildRequires: gcc-c++
 BuildRequires: net-tools
 BuildRequires: /proc
 BuildRequires: libssl-devel
+BuildRequires: gem(test-unit) >= 3.2 gem(test-unit) < 4
+BuildRequires: gem(rake-compiler) >= 1.1 gem(rake-compiler) < 2
+BuildRequires: gem(rake-compiler-dock) >= 0.6.3 gem(rake-compiler-dock) < 2
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+%ruby_use_gem_dependency rake-compiler-dock >= 0.7.2,rake-compiler-dock < 2
+Obsoletes:     ruby-eventmachine < %EVR
+Provides:      ruby-eventmachine = %EVR
+Provides:      gem(eventmachine) = 1.3.0.dev.1
+
 
 %description
 EventMachine implements a fast, single-threaded engine for arbitrary network
 communications. It's extremely easy to use in Ruby. EventMachine wraps all
 interactions with IP sockets, allowing programs to concentrate on the
 implementation of network protocols. It can be used to create both network
-servers and clients. To create a server or client, a Ruby program only needs
-to specify the IP address and port, and provide a Module that implements the
+servers and clients. To create a server or client, a Ruby program only needs to
+specify the IP address and port, and provide a Module that implements the
 communications protocol. Implementations of several standard network protocols
-are provided with the package, primarily to serve as examples. The real goal
-of EventMachine is to enable programs to easily interface with other programs
-using TCP/IP, especially if custom protocols are required.
+are provided with the package, primarily to serve as examples. The real goal of
+EventMachine is to enable programs to easily interface with other programs using
+TCP/IP, especially if custom protocols are required.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-eventmachine-doc
+Version:       1.3.0.dev.1
+Release:       alt1
+Summary:       Fast, simple event-processing library for Ruby programs documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета eventmachine
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(eventmachine) = 1.3.0.dev.1
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-eventmachine-doc
+Fast, simple event-processing library for Ruby programs documentation
+files.
+
+EventMachine implements a fast, single-threaded engine for arbitrary network
+communications. It's extremely easy to use in Ruby. EventMachine wraps all
+interactions with IP sockets, allowing programs to concentrate on the
+implementation of network protocols. It can be used to create both network
+servers and clients. To create a server or client, a Ruby program only needs to
+specify the IP address and port, and provide a Module that implements the
+communications protocol. Implementations of several standard network protocols
+are provided with the package, primarily to serve as examples. The real goal of
+EventMachine is to enable programs to easily interface with other programs using
+TCP/IP, especially if custom protocols are required.
+
+%description   -n gem-eventmachine-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета eventmachine.
 
 
-%package       devel
-Summary:       Development files for %gemname gem
+%package       -n gem-eventmachine-devel
+Version:       1.3.0.dev.1
+Release:       alt1
+Summary:       Fast, simple event-processing library for Ruby programs development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета eventmachine
 Group:         Development/Ruby
 BuildArch:     noarch
 
+Requires:      gem(eventmachine) = 1.3.0.dev.1
+Requires:      gem(test-unit) >= 3.2 gem(test-unit) < 4
+Requires:      gem(rake-compiler) >= 1.1 gem(rake-compiler) < 2
+Requires:      gem(rake-compiler-dock) >= 0.6.3 gem(rake-compiler-dock) < 2
 Requires:      gcc-c++
 Requires:      net-tools
 Requires:      /proc
 Requires:      libssl-devel
 
-%description   devel
-Development files for %gemname gem.
+%description   -n gem-eventmachine-devel
+Fast, simple event-processing library for Ruby programs development
+package.
 
-%description   devel -l ru_RU.UTF8
-Файлы заголовков для самоцвета %gemname.
+EventMachine implements a fast, single-threaded engine for arbitrary network
+communications. It's extremely easy to use in Ruby. EventMachine wraps all
+interactions with IP sockets, allowing programs to concentrate on the
+implementation of network protocols. It can be used to create both network
+servers and clients. To create a server or client, a Ruby program only needs to
+specify the IP address and port, and provide a Module that implements the
+communications protocol. Implementations of several standard network protocols
+are provided with the package, primarily to serve as examples. The real goal of
+EventMachine is to enable programs to easily interface with other programs using
+TCP/IP, especially if custom protocols are required.
+
+%description   -n gem-eventmachine-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета eventmachine.
 
 
 %prep
@@ -78,19 +119,24 @@ Development files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         doc
+%files         -n gem-eventmachine-doc
+%doc README.md
 %ruby_gemdocdir
 
-%files         devel
+%files         -n gem-eventmachine-devel
+%doc README.md
 %ruby_includedir/*
 
 
 %changelog
+* Fri Oct 08 2021 Pavel Skrylev <majioa@altlinux.org> 1.3.0.dev.1-alt1
+- ^ 1.2.7 -> 1.3.0.dev.1
+
 * Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 1.2.7-alt3
 - ! spec tags and syntax
 
@@ -149,4 +195,3 @@ Development files for %gemname gem.
 
 * Mon Jun 28 2010 Timur Batyrshin <erthad@altlinux.org> 0.12.11-alt1
 - Built for Sisyphus
-

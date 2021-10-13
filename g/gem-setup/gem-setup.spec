@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.4
-Release:       alt10
+Release:       alt11
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -89,6 +89,10 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Tue Oct 12 2021 Pavel Skrylev <majioa@altlinux.org> 5.999.4-alt11
+- * extconf module to class, to allow multiext config support.
+- + rakefile gemspec finder... but it seems useless though
+
 * Fri Sep 10 2021 Pavel Skrylev <majioa@altlinux.org> 5.999.4-alt10
 - + gem changing version on-the-fly
 - * running extconf as loading the script not forking new ruby instance

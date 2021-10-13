@@ -2,7 +2,7 @@
 
 Name:          gem-libyajl2
 Version:       2.1.0
-Release:       alt1
+Release:       alt2
 Summary:       gem to install the libyajl2 c-library for distributions which do not have it
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -12,6 +12,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Patch:         fix-extconf-rb.patch
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
@@ -25,7 +26,7 @@ gem to install the libyajl2 c-library for distributions which do not have it.
 
 %package       -n gem-libyajl2-doc
 Version:       2.1.0
-Release:       alt1
+Release:       alt2
 Summary:       gem to install the libyajl2 c-library for distributions which do not have it documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета libyajl2
 Group:         Development/Documentation
@@ -43,9 +44,10 @@ documentation files.
 
 %prep
 %setup
+%patch
 
 %build
-%ruby_build --mode=flex
+%ruby_build
 
 %install
 %ruby_install
@@ -62,6 +64,10 @@ documentation files.
 
 
 %changelog
+* Mon Oct 11 2021 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt2
+- + fix to extconf.rb allowing to use system variable without pass arg to ENV
+- ! spec
+
 * Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt1
 - ^ 1.2.0 -> 2.1.0
 

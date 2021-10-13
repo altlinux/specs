@@ -1,10 +1,10 @@
-%define        pkgname curses
+%define        gemname curses
 
-Name:          gem-%pkgname
-Version:       1.3.2
+Name:          gem-curses
+Version:       1.4.2
 Release:       alt1
 Summary:       Ruby binding for curses, ncurses, and PDCurses
-License:       MIT
+License:       Ruby or BSD-2-Clause
 Group:         Development/Ruby
 Url:           https://github.com/ruby/curses
 Vcs:           https://github.com/ruby/curses.git
@@ -13,41 +13,61 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libncursesw-devel
+BuildRequires: gem(bundler) >= 0
+BuildRequires: gem(rake) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+Obsoletes:     ruby-curses < %EVR
+Provides:      ruby-curses = %EVR
+Provides:      gem(curses) = 1.4.2
+
 
 %description
-A Ruby binding for curses, ncurses, and PDCurses. curses is an extension
-library for text UI applications.  Formerly part of the Ruby standard
-library.
+A Ruby binding for curses, ncurses, and PDCurses. curses is an extension library
+for text UI applications. Formerly part of the Ruby standard library.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-curses-doc
+Version:       1.4.2
+Release:       alt1
+Summary:       Ruby binding for curses, ncurses, and PDCurses documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета curses
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(curses) = 1.4.2
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-curses-doc
+Ruby binding for curses, ncurses, and PDCurses documentation files.
+
+A Ruby binding for curses, ncurses, and PDCurses. curses is an extension library
+for text UI applications. Formerly part of the Ruby standard library.
+
+%description   -n gem-curses-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета curses.
 
 
-%package       devel
-Summary:       Development files for %gemname gem
+%package       -n gem-curses-devel
+Version:       1.4.2
+Release:       alt1
+Summary:       Ruby binding for curses, ncurses, and PDCurses development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета curses
 Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   devel
-Development files for %gemname gem.
+Requires:      gem(curses) = 1.4.2
+Requires:      gem(bundler) >= 0
+Requires:      gem(rake) >= 0
 
-%description   devel -l ru_RU.UTF8
-Файлы заголовков для самоцвета %gemname.
+%description   -n gem-curses-devel
+Ruby binding for curses, ncurses, and PDCurses development package.
+
+A Ruby binding for curses, ncurses, and PDCurses. curses is an extension library
+for text UI applications. Formerly part of the Ruby standard library.
+
+%description   -n gem-curses-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета curses.
 
 
 %prep
@@ -63,19 +83,26 @@ Development files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         doc
+%files         -n gem-curses-doc
+%doc README.md
 %ruby_gemdocdir
 
-%files         devel
-%ruby_includedir/*
+%files         -n gem-curses-devel
+%doc README.md
 
 
 %changelog
+* Fri Oct 08 2021 Pavel Skrylev <majioa@altlinux.org> 1.4.2-alt1
+- ^ 1.4.0 -> 1.4.2
+
+* Sat Apr 24 2021 Pavel Skrylev <majioa@altlinux.org> 1.4.0-alt1
+- new version 1.4.0
+
 * Tue Mar 31 2020 Pavel Skrylev <majioa@altlinux.org> 1.3.2-alt1
 - ^ 1.2.7 -> 1.3.2
 - ! spec tags and syntax
