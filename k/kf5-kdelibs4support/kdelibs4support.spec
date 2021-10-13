@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.87.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -56,7 +56,7 @@ Requires: kf5-karchive-devel kf5-kauth-devel kf5-kconfigwidgets-devel kf5-kcorea
 Requires: kf5-kdbusaddons-devel kf5-kdesignerplugin-devel kf5-kdoctools-devel kf5-kguiaddons-devel
 Requires: kf5-kiconthemes-devel kf5-knotifications-devel kf5-kparts-devel kf5-ktextwidgets-devel
 Requires: kf5-kunitconversion-devel kf5-kwindowsystem-devel kf5-kemoticons-devel kf5-kitemmodels-devel
-Requires: kf5-kinit-devel
+Requires: kf5-kinit-devel kf5-knotifications-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -128,6 +128,9 @@ rm -rf %buildroot/%_libdir/cmake/KF5KDELibs4Support/FindSIP.*
 %_K5lib/libKF5KDELibs4Support.so.*
 
 %changelog
+* Wed Oct 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.87.0-alt2
+- fix requires
+
 * Mon Oct 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.87.0-alt1
 - new version
 
