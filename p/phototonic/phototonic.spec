@@ -3,7 +3,7 @@
 %define git	1
 
 Name: phototonic
-Version: 2.1.75
+Version: 2.1.125
 Release: alt1
 
 Summary: An image viewer and organizer
@@ -70,6 +70,9 @@ cp -r translations/*.qm %buildroot%_datadir/%name/translations
 %_datadir/metainfo/phototonic.appdata.xml
 
 %changelog
+* Thu Oct 14 2021 Ilya Mashkin <oddity@altlinux.ru> 2.1.125-alt1
+- 2.1.125
+
 * Mon Aug 02 2021 Ilya Mashkin <oddity@altlinux.ru> 2.1.75-alt1
 - 2.1.75
 
