@@ -7,7 +7,7 @@
 
 Name: lua%major_version
 Version: %major_version.6
-Release: alt1
+Release: alt2
 
 Summary: Powerful light-weight programming language
 License: MIT
@@ -209,6 +209,9 @@ echo lua-devel-static >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/li
 %config %_sysconfdir/buildreqs/packages/substitute.d/lib%name-devel-static
 
 %changelog
+* Sun Oct 03 2021 Ivan A. Melnikov <iv@altlinux.org> 5.3.6-alt2
+- riscv64 support
+
 * Sat Aug 28 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.3.6-alt1
 - 5.3.6.
 
