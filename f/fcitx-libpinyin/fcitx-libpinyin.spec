@@ -6,11 +6,11 @@ BuildRequires: gcc-c++ qt5-base-devel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		fcitx-libpinyin
-Version:	0.5.3
-Release:	alt1_11
+Version:	0.5.4
+Release:	alt1_2
 Summary:	Libpinyin Wrapper for Fcitx
 License:	GPLv2+
-URL:		https://fcitx-im.org/wiki/Libpinyin
+URL:		  https://fcitx-im.org/wiki/Libpinyin
 Source0:	http://download.fcitx-im.org/fcitx-libpinyin/%{name}-%{version}_dict.tar.xz
 
 BuildRequires:	gcc
@@ -55,6 +55,9 @@ Libpinyin is a Frontend of the Intelligent Pinyin IME Backend.
 %{_datadir}/icons/hicolor/48x48/status/fcitx-*.png
 
 %changelog
+* Thu Oct 14 2021 Igor Vlasenko <viy@altlinux.org> 0.5.4-alt1_2
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt1_11
 - update to new release by fcimport
 
