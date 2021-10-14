@@ -1,8 +1,9 @@
 %define _cmake__builddir BUILD
+%def_disable tests
 
 Name: libkeyfinder
 Version: 2.2.5
-Release: alt1
+Release: alt2
 
 Summary: Musical key detection for digital audio
 Summary(ru_RU.UTF-8): Обнаружение музыкального ключа для цифрового звука
@@ -12,11 +13,13 @@ Url: https://mixxxdj.github.io/libkeyfinder
 
 Source: https://github.com/mixxxdj/libkeyfinder/archive/%version/%name-%version.tar.gz
 
-# BuildPreReq: rpm-build-ninja
+BuildPreReq: rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: libfftw3-devel
+%if_enabled tests
 BuildRequires: catch2-devel
+%endif
 
 %description
 libkeyfinder is a small C++11 library for estimating the musical key of digital audio.
@@ -52,10 +55,14 @@ sed -i 's|lib/cmake/KeyFinder|%_lib/cmake/KeyFinder|' CMakeLists.txt
 
 %build
 %cmake \
+    -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+%if_disabled tests
+    -DBUILD_TESTING=OFF \
+%endif
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
 #
-%cmake_build
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
@@ -73,6 +80,10 @@ sed -i 's|lib/cmake/KeyFinder|%_lib/cmake/KeyFinder|' CMakeLists.txt
 %_libdir/cmake/KeyFinder/*
 
 %changelog
+* Thu Oct 14 2021 Leontiy Volodin <lvol@altlinux.org> 2.2.5-alt2
+- Fixed build with glibc 2.34.
+- Built via ninja again.
+
 * Wed Jul 21 2021 Leontiy Volodin <lvol@altlinux.org> 2.2.5-alt1
 - New version (2.2.5).
 - Built with debuginfo.
