@@ -1,8 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%ifarch x86_64
-%set_verify_elf_method strict
-%endif
+%set_verify_elf_method strict,lint=relaxed
 
 %def_with docs
 
@@ -16,7 +14,7 @@
 
 Name: blender
 Version: 2.93.5
-Release: alt1
+Release: alt2
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -201,10 +199,6 @@ This package contains documentation for Blender.
 sed -i "/-Werror=return-type/d" CMakeLists.txt
 %endif
 
-%ifnarch %ix86 x86_64
-sed -i 's,-fuse-ld=gold,,' build_files/cmake/platform/platform_unix.cmake
-%endif
-
 # Delete the bundled FindOpenJPEG to make find_package use the system version
 # instead (the local version hardcodes the openjpeg version so it is not update
 # proof)
@@ -273,6 +267,7 @@ fi
 	-DBUILDINFO_OVERRIDE_TIME="$BUILD_TIME" \
 	-DWITH_DOC_MANPAGE:BOOL=ON \
 	-DWITH_ASSERT_ABORT:BOOL=OFF \
+	-DWITH_LINKER_GOLD:BOOL=OFF \
 	%nil
 
 %cmake_build
@@ -315,6 +310,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Thu Oct 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.93.5-alt2
+- Fixed build with new glibc.
+
 * Fri Oct 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.93.5-alt1
 - Updated to upstream version 2.93.5.
 
