@@ -3,7 +3,7 @@
 %define somver 0
 %define sover %somver.0.0
 Name: f2c
-Version: 20160102
+Version: 20200916
 Release: alt1
 Summary: F2c converts Fortran 77 source code to C/C++ source code
 License: %bsdstyle
@@ -12,6 +12,7 @@ Url: http://www.netlib.org/f2c/
 BuildRequires(pre): unzip rpm-build-licenses
 Patch: f2c-ALT-build.patch
 Patch1: f2c-ALT-MIPS.patch
+Patch2: f2c-ALT-RISC-V.patch
 
 Source: http://www.netlib.org/f2c/libf2c.zip
 Source2: http://www.netlib.org/f2c/fc
@@ -93,6 +94,7 @@ This package contains development documentation for f2c.
 %setup -c -a7
 %patch -p1
 %patch1 -p1
+%patch2 -p1
 install -p -m644 %SOURCE6 ./
 sed -i '19s|(LIBDIR)|%buildroot%_libdir|' makefile
 
@@ -131,6 +133,10 @@ bzip2 src/changes
 %_docdir/%name
 
 %changelog
+* Thu Oct 14 2021 Ivan A. Melnikov <iv@altlinux.org> 20200916-alt1
+- Version 20200916
+- fix build on riscv64
+
 * Mon Feb 12 2018 Fr. Br. George <george@altlinux.ru> 20160102-alt1
 - Version 20160102
 - MIPS build
