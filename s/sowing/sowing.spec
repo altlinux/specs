@@ -8,7 +8,7 @@ the excellent Unix tools for programmers.
 
 Name: sowing
 Version: %sover
-Release: alt2
+Release: alt3
 
 Summary: The program development and maintenance environment
 License: Free
@@ -55,15 +55,6 @@ Requires: lib%name = %version-%release
 
 This package contains development files of Sowing.
 
-%package -n lib%name-devel-static
-Summary: Static libraries of Sowing
-Group: Development/C++
-
-%description -n lib%name-devel-static
-%descr
-
-This package contains static libraries of Sowing.
-
 %prep
 %setup
 %patch -p2
@@ -108,6 +99,8 @@ popd
 
 sed -i '1s|/sh|/bash|' %buildroot%_bindir/pstoxbm
 
+rm -fv %buildroot%_libdir/*.a
+
 %files
 %_bindir/*
 
@@ -122,10 +115,10 @@ sed -i '1s|/sh|/bash|' %buildroot%_bindir/pstoxbm
 %_libdir/*.so
 %_includedir/*
 
-%files -n lib%name-devel-static
-%_libdir/*.a
-
 %changelog
+* Thu Oct 14 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.25-alt3
+- Fixed FTBFS.
+
 * Sat Nov 07 2020 Grigory Ustinov <grenka@altlinux.org> 1.1.25-alt2
 - Fixed FTBFS.
 
