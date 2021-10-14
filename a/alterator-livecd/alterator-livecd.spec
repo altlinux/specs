@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-livecd
-Version: 0.8.8
+Version: 0.8.9
 Release: alt1
 
 Summary: special steps for LiveCD installers
@@ -17,6 +17,8 @@ Requires: alterator-l10n >= 2.5-alt1
 Requires: alterator-browser-qt >= 2.17.0
 Requires: alterator-lookout => 2.4-alt1
 Requires: installer-scripts-remount-stage2
+Requires: losetup
+Requires: util-linux
 BuildRequires: rpm-macros-alterator
 
 BuildPreReq: alterator >= 4.10-alt6
@@ -42,6 +44,9 @@ special steps for LiveCD installers
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Oct 08 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.8.9-alt1
+- Faster and more reliable installation (closes: #41080)
+
 * Mon Jun 07 2021 Anton Midyukov <antohami@altlinux.org> 0.8.8-alt1
 - Revert commit: backend3/livecd-install: create tmpfiles directory on $dst/run
 - backend3/livecd-install: running alterator in chroot before mounting socket
