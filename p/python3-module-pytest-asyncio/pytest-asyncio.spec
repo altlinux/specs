@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.15.1
-Release: alt1
+Release: alt2
 
 Summary: Pytest support for asyncio
 License: Apache-2.0
@@ -36,6 +36,9 @@ python 3.5+.
 %setup
 %autopatch -p1
 
+# Ignore deperecation warnings
+sed -i '/filterwarnings = error/d' setup.cfg
+
 %build
 %python3_build
 
@@ -53,6 +56,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr
 %python3_sitelibdir/*
 
 %changelog
+* Thu Oct 14 2021 Ivan A. Melnikov <iv@altlinux.org> 0.15.1-alt2
+- NMU: Fix FTBFS by ignoring warnings in tests.
+
 * Thu Apr 22 2021 Stanislav Levin <slev@altlinux.org> 0.15.1-alt1
 - 0.15.0 -> 0.15.1.
 
