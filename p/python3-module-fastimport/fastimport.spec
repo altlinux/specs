@@ -1,19 +1,23 @@
 %define _unpackaged_files_terminate_build 1
 %define oname fastimport
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.9.8
-Release: alt2
+Version: 0.9.14
+Release: alt1
 Summary: VCS fastimport/fastexport parser
 License: GPLv2+
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/fastimport/
 BuildArch: noarch
 
-Source0: https://pypi.python.org/packages/aa/65/47a579aae80fbd8b89cfbdffcde8dff68d57e3148b99da6a326673021455/%{oname}-%{version}.tar.gz
+Source0: %{oname}-%{version}.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-tools-2to3
+%if_with check
+BuildRequires: python3-module-nose
+%endif
 
 %py3_provides %oname
 
@@ -45,11 +49,13 @@ This package contains tests for fastimport.
 %setup -n %{oname}-%{version}
 
 %build
-find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
 
 %install
 %python3_install
+
+%check
+PYTHONPATH=%buildroot%python3_sitelibdir %_bindir/nosetests-3.* %oname
 
 %files
 %doc PKG-INFO
@@ -61,6 +67,9 @@ find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_sitelibdir/*/tests
 
 %changelog
+* Thu Oct 14 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.14-alt1
+- Build new version.
+
 * Tue Jul 27 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.8-alt2
 - Drop python2 support.
 
