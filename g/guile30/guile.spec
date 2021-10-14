@@ -1,6 +1,6 @@
 Name: guile30
 Version: 3.0.7
-Release: alt1
+Release: alt2
 
 Summary: A GNU implementation of Scheme
 License: GPLv3
@@ -79,6 +79,9 @@ make check
 %_infodir/*.info*
 
 %changelog
+* Thu Oct 14 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.7-alt2
+- fixed build with glibc 2.34
+
 * Mon Sep 20 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.7-alt1
 - 3.0.7 released
 
