@@ -1,16 +1,18 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: libdotconf
 Version: 1.3
-Release: alt1
+Release: alt2
 Summary: configuration file parser
 License: %lgpl2only
-Packager: Michael Pozhidaev <msp@altlinux.ru>
 Group: System/Libraries
 URL: git://github.com/williamh/dotconf.git
 
 BuildRequires: glibc-devel-static rpm-build-licenses
 
-Source: dotconf-%version.tar.gz
+Source: dotconf-%version.tar
 
 %description
 dotconf is a configuration file parser.
@@ -24,26 +26,31 @@ Development files for dotconf library
 
 %prep
 %setup -q -n dotconf-%version
+
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %autoreconf
-%configure
+%configure --disable-static
 %make_build
 
 %install
-%make_install DESTDIR='%buildroot' install
+%makeinstall_std
 
 %files
-#%defattr(-,root,root)
-%doc AUTHORS COPYING README 
+%doc AUTHORS COPYING README
 %_libdir/libdotconf*.so.*
 
 %files devel
 %_libdir/libdotconf.so
 %_includedir/dotconf.h
 %_pkgconfigdir/*
-/usr/share/doc/dotconf
+%_defaultdocdir/dotconf
 
 %changelog
+* Thu Oct 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3-alt2
+- Fixed build with LTO
+
 * Fri May 10 2013 Michael Pozhidaev <msp@altlinux.ru> 1.3-alt1
 - New version 1.3
 - devel-static subpackage is removed
