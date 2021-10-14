@@ -9,7 +9,7 @@
 
 Name: rawtherapee
 Version: 5.8%{?_enable_snapshot:.%git_distance}
-Release: alt1.1
+Release: alt2
 
 Summary: THe Experimental RAw Photo Editor
 License: GPLv3+
@@ -24,6 +24,10 @@ Source: rawtherapee-%version.tar
 #Source: %url/shared/source/%name-%version.tar.xz
 Source: https://github.com/Beep6581/RawTherapee/releases/download/%version/%name-%version.tar.xz
 %endif
+
+#https://github.com/Beep6581/RawTherapee/issues/6324
+# backport of https://github.com/Beep6581/RawTherapee/commit/2e0137d54243eb729d4a5f939c4320ec8f8f415d.patch by fc
+Patch: %name-5.8-fc-glibc-2.34.patch
 
 %define gtk_ver 3.24.7
 %define tiff_ver 4.0.4
@@ -56,6 +60,7 @@ This package provides noarch data needed for Raw Therapee to work.
 
 %prep
 %setup
+%patch -p1
 # Do not install useless rtstart:
 subst "s|install (PROGRAMS rtstart|\#install (PROGRAMS rtstart|" CMakeLists.txt
 
@@ -85,6 +90,9 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Thu Oct 14 2021 Yuri N. Sedunov <aris@altlinux.org> 5.8-alt2
+- fixed build with glibc-2.34
+
 * Mon May 31 2021 Yuri N. Sedunov <aris@altlinux.org> 5.8-alt1.1
 - adapted to new cmake macros
 
