@@ -25,7 +25,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.15.1
+Version: 2.16.1
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -594,6 +594,12 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Thu Oct 14 2021 Pavel Vainerman <pv@altlinux.ru> 2.16.1-alt1
+- python: module refactoring
+
+* Tue Oct 12 2021 Pavel Vainerman <pv@altlinux.ru> 2.15.2-alt1
+- fixed python3 imports
+
 * Mon Oct 11 2021 Pavel Vainerman <pv@altlinux.ru> 2.15.1-alt1
 - supported "hash64/hash32" for ID
 
