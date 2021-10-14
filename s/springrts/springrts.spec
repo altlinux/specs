@@ -6,7 +6,7 @@
 
 Name: springrts
 Version: 105.0
-Release: alt2
+Release: alt3
 Summary: Real time strategy game engine with many mods
 License: GPL-2.0+ and BSD-3-Clause
 Group: Games/Strategy
@@ -33,6 +33,7 @@ Patch1: %name-alt-linking.patch
 Patch2: %name-alt-unbundle-libs.patch
 Patch3: %name-alt-unbundle-libs-pr-downloader.patch
 Patch4: %name-alt-gcc11-compat.patch
+Patch5: %name-alt-dont-use-gold-linker.patch
 
 BuildRequires(pre): rpm-build-xdg rpm-macros-cmake
 BuildRequires: cmake cmake-modules java-devel /proc libGL-devel libGLU-devel gcc-c++
@@ -85,6 +86,7 @@ pushd tools/pr-downloader
 popd
 
 %patch4 -p1
+%patch5 -p1
 
 # TODO: remove remaining bundled libraries. They're either missing or patched.
 rm -rf tools/pr-downloader/src/lib/{jsoncpp,minizip}
@@ -151,6 +153,9 @@ sed -i -e '/NoDisplay=true/d' \
 %_man6dir/*
 
 %changelog
+* Thu Oct 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 105.0-alt3
+- Fixed build with new glibc.
+
 * Tue Oct 05 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 105.0-alt2
 - Fixed build with gcc-11 and new jsoncpp.
 
