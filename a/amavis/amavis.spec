@@ -1,5 +1,5 @@
 Name: amavis
-Version: 2.12.1
+Version: 2.12.2
 Release: alt1
 Epoch: 1
 
@@ -366,6 +366,9 @@ exit 0
 %files complete
 
 %changelog
+* Wed Oct 13 2021 Andrey Cherepanov <cas@altlinux.org> 1:2.12.2-alt1
+- New version.
+
 * Sat Nov 14 2020 Andrey Cherepanov <cas@altlinux.org> 1:2.12.1-alt1
 - New version.
 
