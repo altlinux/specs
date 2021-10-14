@@ -1,8 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %def_disable static
 
 Name: xapian-core
 Version: 1.4.15
-Release: alt1
+Release: alt2
 
 Summary: The Xapian Probabilistic Information Retrieval Library
 
@@ -12,6 +16,8 @@ Url: http://www.xapian.org
 
 Source: http://www.oligarchy.co.uk/xapian/%version/%{name}-%{version}.tar
 Source100: %name.watch
+
+Patch1: xapian-core-alt-gcc11-compat.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -39,7 +45,7 @@ functionality.
 %package -n libxapian-devel
 Group: Development/C++
 Summary: Files needed for building packages which use Xapian
-Requires: libxapian = %version
+Requires: libxapian = %EVR
 
 %description -n libxapian-devel
 This package provides the files needed for building packages which
@@ -49,7 +55,7 @@ use Xapian library.
 %package -n libxapian-devel-static
 Group: Development/C++
 Summary: Files needed for building packages which use Xapian statically
-Requires: libxapian-devel = %version
+Requires: libxapian-devel = %EVR
 
 %description -n libxapian-devel-static
 This package provides the files needed for building packages which
@@ -61,7 +67,7 @@ and build with libtool.
 Group: Development/Documentation
 Summary: Developer's documentation for Xapian
 Obsoletes: xapian-doc < 0.9.9
-Provides: xapian-doc = %version-%release
+Provides: xapian-doc = %EVR
 BuildArch: noarch
 
 %description -n %name-doc
@@ -73,6 +79,7 @@ This package contains API reference in HTML and PostScript.
 
 %prep
 %setup
+%patch1 -p2
 %ifarch %e2k
 # current lcc doesn't know these
 sed -i  -e 's,-fno-gnu-keywords,,;s,-Wstrict-null-sentinel,,' \
@@ -108,12 +115,14 @@ rm -f %buildroot%_libdir/libxapian.a
 %_bindir/xapian-compact
 %_bindir/xapian-delve
 %_bindir/xapian-metadata
+%_bindir/xapian-pos
 %_bindir/xapian-progsrv
 %_bindir/xapian-replicate
 %_bindir/xapian-replicate-server
 %_bindir/xapian-tcpsrv
 %_datadir/xapian-core/
 %_man1dir/*.1*
+%exclude %_man1dir/xapian-config.1*
 %doc AUTHORS ChangeLog* NEWS PLATFORMS README
 
 %files -n libxapian
@@ -126,6 +135,7 @@ rm -f %buildroot%_libdir/libxapian.a
 %_libdir/libxapian.so
 %_libdir/cmake/xapian/
 %_datadir/aclocal/xapian.m4
+%_man1dir/xapian-config.1*
 %_pkgconfigdir/*.pc
 
 %if_enabled static
@@ -143,6 +153,9 @@ rm -f %buildroot%_libdir/libxapian.a
 #   I use watch file and it's more convenient to do that with srpms
 
 %changelog
+* Thu Oct 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.15-alt2
+- Fixed build with gcc-11
+
 * Mon Mar 23 2020 Vitaly Lipatov <lav@altlinux.ru> 1.4.15-alt1
 - new version 1.4.15 (with rpmrb script)
 - update buildreqs
