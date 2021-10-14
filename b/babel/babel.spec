@@ -1,3 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
@@ -5,23 +9,21 @@
 
 Name: babel
 Version: 2.0.0
-Release: alt5
-
+Release: alt6
 Summary: Language tool for high-performance scientific computing community
 License: LGPLv2.1
 Group: Sciences/Mathematics
-
 Url: http://www.llnl.gov/CASC/components/babel.html
-Source: %name-%version.tar.gz
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Requires: %name-common = %version-%release
-Requires: lib%name = %version-%release
-Requires: lib%name-devel = %version-%release
-Requires: %name-j = %version-%release
+Source: %name-%version.tar
+
+Requires: %name-common = %EVR
+Requires: lib%name = %EVR
+Requires: lib%name-devel = %EVR
+Requires: %name-j = %EVR
 %if_with python
-Requires: python-module-sidl = %version-%release
-Requires: python-module-sidlx = %version-%release
+Requires: python-module-sidl = %EVR
+Requires: python-module-sidlx = %EVR
 %endif
 
 Conflicts: openbabel
@@ -87,12 +89,12 @@ This package contains shared libraries of Babel.
 %package -n lib%name-devel
 Summary: Development files for Babel
 Group: Development/Other
-Requires: %name = %version-%release
-Requires: %name-common = %version-%release
-Requires: lib%name = %version-%release
-Requires: %name-j = %version-%release
+Requires: %name = %EVR
+Requires: %name-common = %EVR
+Requires: lib%name = %EVR
+Requires: %name-j = %EVR
 %if_with python
-Requires: python-module-sidl = %version-%release
+Requires: python-module-sidl = %EVR
 %endif
 
 %description -n lib%name-devel
@@ -116,7 +118,7 @@ This package contains development files for Babel.
 %package -n python-module-sidl
 Summary: Build Python support extension modules for sidl
 Group: Development/Python
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 %setup_python_module sidl
 
 %description -n python-module-sidl
@@ -140,7 +142,7 @@ This package contains python support extension modules for sidl.
 %package -n python-module-sidlx
 Summary: Build Python support experimental extension modules for sidl
 Group: Development/Python
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 %setup_python_module sidlx
 
 %description -n python-module-sidlx
@@ -165,7 +167,7 @@ This package contains python support experimental extension modules for sidl.
 Summary: Babel java packages
 Group: Development/Java
 BuildArch: noarch
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Requires: java >= 1.5.0
 
 %description j
@@ -261,6 +263,9 @@ This package contains user manual for Babel.
 find -name Makefile.in -exec sed 's/-traditional/& -Ubool -Uvector/' -i {} \;
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags -std=c++14
+
 export JAVAPREFIX="%_libexecdir/jvm/java"
 export CLASSPATH=".:$(build-classpath gnu-getopt):$(pwd)/compiler"
 export JAVACFLAGS="-classpath $CLASSPATH"
@@ -395,6 +400,9 @@ done
 %_docdir/%name
 
 %changelog
+* Thu Oct 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt6
+- Fixed build with gcc-11.
+
 * Thu Sep 02 2021 Michael Shigorin <mike@altlinux.org> 2.0.0-alt5
 - E2K: avoid lcc-unsupported option (and fortran altogether)
 - minor spec cleanup
