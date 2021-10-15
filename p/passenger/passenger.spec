@@ -1,26 +1,21 @@
-%define        pkgname passenger
-%define        mod_name mod_%pkgname
-%define        module_package_name apache2-mod_%pkgname
+%define        gemname passenger
 
-Name:          %pkgname
-Version:       6.0.4
-Release:       alt1.1
+Name:          passenger
+Version:       6.0.11
+Release:       alt1
 Summary:       Easy and robust deployment Ruby on Rails applications on Apache and Nginx webservers
-Summary(ru_RU.UTF-8): Простой и ясный мост между приложениями на Рельсах и серверами Апач и Нгинкс
-Group:         System/Servers
+Summary(ru_RU.UTF-8): Простой и ясный мост между приложениями на Рельсах и серверами Апач и Нжинкс
 License:       MIT
+Group:         System/Servers
 Url:           https://github.com/phusion/passenger
 Vcs:           https://github.com/phusion/passenger.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
-Source1:       %name.load
-Source2:       %name.conf
-Source3:       %name.start
+Source1:       passenger.load
+Source2:       passenger.conf
+Source3:       passenger.start
 Source4:       locations.ini
-
-ExcludeArch: armh
-
 BuildRequires(pre): rpm-build-ruby
 BuildRequires(pre): rpm-macros-apache2
 BuildRequires(pre): rpm-build-python3
@@ -33,69 +28,174 @@ BuildRequires: libssl-devel
 BuildRequires: libcurl-devel
 BuildRequires: apache2-httpd-worker
 BuildRequires: gcc-c++
-BuildRequires: gem(rack)
-
-ExcludeArch: armh
+BuildRequires: gem(rake) >= 0.8.1
+BuildRequires: gem(rack) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 Requires(pre): apache2 >= %apache2_version-%apache2_release
+Provides:      gem(passenger) = 6.0.11
 Conflicts:     ruby1.8-passenger
 
-%description
-Phusion Passenger - a.k.a. mod_rails or mod_rack - makes deployment of
-Ruby web applications, such as those built on the revolutionary Ruby on
-Rails web framework, a breeze. It follows the usual Ruby on Rails
-conventions, such as "Don't-Repeat-Yourself".
- * Deployment is only a matter of uploading application files.
-   No Ruby (on Rails)-specific server configuration required!
- * Supports both the industry standard Apache web server and the fast
-   and lightweight Nginx web server.
- * Allows Ruby on Rails applications to use about 33%% less memory, when
-   used in combination with Ruby Enterprise Edition (optional).
- * Zero maintenance. No port management, server process monitoring or
-   stale file cleanup required. Errors are automatically recovered
-   whenever possible.
- * Designed for performance, stability and security. Phusion Passenger
-   should never crash Apache even in case of crashing Rails applications
- * Well-documented, for both system administrators and developers!
+%ruby_on_build_rake_tasks apache2
 
-%description -l ru_RU.UTF-8
+%description
+Phusion Passenger - a.k.a. mod_rails or mod_rack - makes deployment of Ruby web
+applications, such as those built on the revolutionary Ruby on Rails web
+framework, a breeze. It follows the usual Ruby on Rails conventions, such as
+"Don't-Repeat-Yourself".
+* Deployment is only a matter of uploading application files. No Ruby
+  (on Rails)-specific server configuration required!
+* Supports both the industry standard Apache web server and the fast and
+  lightweight Nginx web server.
+* Allows Ruby on Rails applications to use about 33%% less memory, when used in
+  combination with Ruby Enterprise Edition (optional).
+* Zero maintenance. No port management, server process monitoring or stale file
+  cleanup required. Errors are automatically recovered whenever possible.
+* Designed for performance, stability and security. Phusion Passenger should
+  never crash Apache even in case of crashing Rails applications
+* Well-documented, for both system administrators and developers!
+
+%description         -l ru_RU.UTF-8
 Phusion Passenger™ известный как mod_rails или mod_rack
 
 
-%package       -n %module_package_name
-
-Summary:       Easy and robust deployment Ruby on Rails applications on Apache webserver
-Summary(ru_RU.UTF-8): Простой и ясный мост между приложениями на Рельсах и сервером Апач
-Group:         System/Servers
-Requires:      apache2-httpd-worker passenger = %version
-Provides:      %mod_name = %version
-
-%description   -n %module_package_name
-Documentation files for %module_package_name
-
-
-%package       -n gem-%pkgname
-Summary:       Library files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы библиотечные для самоцвета %gemname
+%package       -n gem-passenger
+Version:       6.0.11
+Release:       alt1
+Summary:       Easy and robust deployment Ruby on Rails applications on Apache and Nginx webservers
 Group:         Development/Ruby
 
-%description   -n gem-%pkgname
-Library files for %gemname gem.
+Requires:      gem(passenger) = 6.0.11
+Requires:      gem(rake) >= 0.8.1
+Requires:      gem(rack) >= 0
 
-%description   -n gem-%pkgname -l ru_RU.UTF8
-Файлы библиотечные для самоцвета %gemname.
+%description   -n gem-passenger
+Easy and robust deployment Ruby on Rails applications on Apache and Nginx
+webservers executable(s).
+
+Phusion Passenger - a.k.a. mod_rails or mod_rack - makes deployment of Ruby web
+applications, such as those built on the revolutionary Ruby on Rails web
+framework, a breeze. It follows the usual Ruby on Rails conventions, such as
+"Don't-Repeat-Yourself".
+* Deployment is only a matter of uploading application files. No Ruby
+  (on Rails)-specific server configuration required!
+* Supports both the industry standard Apache web server and the fast and
+  lightweight Nginx web server.
+* Allows Ruby on Rails applications to use about 33%% less memory, when used in
+  combination with Ruby Enterprise Edition (optional).
+* Zero maintenance. No port management, server process monitoring or stale file
+  cleanup required. Errors are automatically recovered whenever possible.
+* Designed for performance, stability and security. Phusion Passenger should
+  never crash Apache even in case of crashing Rails applications
+* Well-documented, for both system administrators and developers!
+
+%description   -n gem-passenger -l ru_RU.UTF-8
+Исполнямка для самоцвета passenger.
 
 
-%package       -n gem-%pkgname-doc
-Summary:       Documentation files for %gemname gem
+%package       -n gem-passenger-doc
+Version:       6.0.11
+Release:       alt1
+Summary:       Easy and robust deployment Ruby on Rails applications on Apache and Nginx webservers gem
+Summary(ru_RU.UTF-8): Самоцвет простого и ясного моста между приложениями на Рельсах и серверами Апач и Нжинкс
 Group:         Development/Documentation
+BuildArch:     noarch
 
-%description   -n gem-%pkgname-doc
-Documentation files for %gemname gem.
+Requires:      gem(passenger) = 6.0.11
 
-%description   -n gem-%pkgname-doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-passenger-doc
+Easy and robust deployment Ruby on Rails applications on Apache and Nginx
+webservers documentation files.
+
+Phusion Passenger - a.k.a. mod_rails or mod_rack - makes deployment of Ruby web
+applications, such as those built on the revolutionary Ruby on Rails web
+framework, a breeze. It follows the usual Ruby on Rails conventions, such as
+"Don't-Repeat-Yourself".
+* Deployment is only a matter of uploading application files. No Ruby
+  (on Rails)-specific server configuration required!
+* Supports both the industry standard Apache web server and the fast and
+  lightweight Nginx web server.
+* Allows Ruby on Rails applications to use about 33%% less memory, when used in
+  combination with Ruby Enterprise Edition (optional).
+* Zero maintenance. No port management, server process monitoring or stale file
+  cleanup required. Errors are automatically recovered whenever possible.
+* Designed for performance, stability and security. Phusion Passenger should
+  never crash Apache even in case of crashing Rails applications
+* Well-documented, for both system administrators and developers!
+
+%description   -n gem-passenger-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета passenger.
+
+
+%package       -n gem-passenger-devel
+Version:       6.0.11
+Release:       alt1
+Summary:       Easy and robust deployment Ruby on Rails applications on Apache and Nginx webservers development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета passenger
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(passenger) = 6.0.11
+
+%description   -n gem-passenger-devel
+Easy and robust deployment Ruby on Rails applications on Apache and Nginx
+webservers development package.
+
+Phusion Passenger - a.k.a. mod_rails or mod_rack - makes deployment of Ruby web
+applications, such as those built on the revolutionary Ruby on Rails web
+framework, a breeze. It follows the usual Ruby on Rails conventions, such as
+"Don't-Repeat-Yourself".
+* Deployment is only a matter of uploading application files. No Ruby
+  (on Rails)-specific server configuration required!
+* Supports both the industry standard Apache web server and the fast and
+  lightweight Nginx web server.
+* Allows Ruby on Rails applications to use about 33%% less memory, when used in
+  combination with Ruby Enterprise Edition (optional).
+* Zero maintenance. No port management, server process monitoring or stale file
+  cleanup required. Errors are automatically recovered whenever possible.
+* Designed for performance, stability and security. Phusion Passenger should
+  never crash Apache even in case of crashing Rails applications
+* Well-documented, for both system administrators and developers!
+
+%description   -n gem-passenger-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета passenger.
+
+
+%package       -n apache2-mod-passenger
+Version:       6.0.11
+Release:       alt1
+Summary:       Easy and robust deployment Ruby on Rails applications on Apache and Nginx webservers apache module files
+Summary(ru_RU.UTF-8): Модуль passenger для вебсервера apache
+Group:         System/Servers
+
+Requires:      passenger = 6.0.11
+Requires:      apache2-httpd-worker
+Provides:      apache2-mod_passenger = 6.0.11
+Provides:      mod_passenger = 6.0.11
+
+%description   -n apache2-mod-passenger
+Easy and robust deployment Ruby on Rails applications on Apache and Nginx
+webservers apache module files.
+
+Phusion Passenger - a.k.a. mod_rails or mod_rack - makes deployment of Ruby web
+applications, such as those built on the revolutionary Ruby on Rails web
+framework, a breeze. It follows the usual Ruby on Rails conventions, such as
+"Don't-Repeat-Yourself".
+* Deployment is only a matter of uploading application files. No Ruby
+  (on Rails)-specific server configuration required!
+* Supports both the industry standard Apache web server and the fast and
+  lightweight Nginx web server.
+* Allows Ruby on Rails applications to use about 33%% less memory, when used in
+  combination with Ruby Enterprise Edition (optional).
+* Zero maintenance. No port management, server process monitoring or stale file
+  cleanup required. Errors are automatically recovered whenever possible.
+* Designed for performance, stability and security. Phusion Passenger should
+  never crash Apache even in case of crashing Rails applications
+* Well-documented, for both system administrators and developers!
+
+%description   -n apache2-mod-passenger -l ru_RU.UTF-8
+Файлы для разработки самоцвета passenger.
 
 
 %prep
@@ -105,24 +205,29 @@ subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
 subst '1i #!%__python3' test/stub/wsgi/passenger_wsgi.py
 
 %build
-%ruby_build --pre=apache2
+%ruby_build
 
 %install
 %ruby_install
+%ifnarch armh
 install -p -D -m 755 -- $(find -name passenger_native_support.so) %buildroot%ruby_gemextdir/passenger_native_support.so
+%endif
 
 #mod_passenger
-install -p -D -m 755 -- buildout/apache2/%mod_name.so %buildroot%apache2_libexecdir/%mod_name.so
+%ifnarch armh
+install -p -D -m 755 -- buildout/apache2/mod_passenger.so %buildroot%apache2_libexecdir/mod_passenger.so
+%endif
+
 install -d -m 755 -- %buildroot%apache2_mods_available
 install -d -m 755 -- %buildroot%apache2_mods_start
-install -p -m 644 -- %SOURCE1 %buildroot%apache2_mods_available/%pkgname.load
-install -p -m 644 -- %SOURCE2 %buildroot%apache2_mods_available/%pkgname.conf
-install -p -m 644 -- %SOURCE3 %buildroot%apache2_mods_start/100-%pkgname.conf
+install -p -m 644 -- %SOURCE1 %buildroot%apache2_mods_available/passenger.load
+install -p -m 644 -- %SOURCE2 %buildroot%apache2_mods_available/passenger.conf
+install -p -m 644 -- %SOURCE3 %buildroot%apache2_mods_start/100-passenger.conf
 install -p -D -m 644 -- %SOURCE4 %buildroot/%ruby_gemlibdir/locations.ini
 sed 's,@a_libexecdir@,%apache2_libexecdir,g' \
-    -i %buildroot%apache2_mods_available/%pkgname.load
+    -i %buildroot%apache2_mods_available/passenger.load
 sed -e 's,@passenger_path@,%ruby_gemlibdir/locations.ini,g' -e 's,@ruby_exec@,%__ruby,g' \
-    -i %buildroot%apache2_mods_available/%pkgname.conf
+    -i %buildroot%apache2_mods_available/passenger.conf
 sed -e 's,@rubylibdir@,%ruby_sitearchdir,g' \
     -e 's,@a_libexecdir@,%apache2_libexecdir,g' \
     -e 's,@bindir@,%_bindir,g' \
@@ -131,32 +236,35 @@ sed -e 's,@rubylibdir@,%ruby_sitearchdir,g' \
     -e 's,@name@,%name,g' \
     -i %buildroot%ruby_gemlibdir/locations.ini
 
-%post -n %module_package_name
+%check
+%ruby_test
+
+%post          -n apache2-mod-passenger
 # Reconfigure Apache2:
 %apache2_sbindir/a2chkconfig ||:
 
-if [ -e %apache2_mods_enabled/%pkgname.load ]; then
+if [ -e %apache2_mods_enabled/passenger.load ]; then
     CONF_OK=0
     %apache2_sbindir/apachectl2 configtest && CONF_OK=1 ||:
     if [ "$CONF_OK" = "1" ]; then
 	service %apache2_dname condrestart ||:
     else
 	echo "Some errors detected in Apache2 configuration!"
-	echo "To use %mod_name check configuration and start %apache2_dname service."
+	echo "To use mod_passenger check configuration and start %apache2_dname service."
 	echo
     fi
 else
-    echo "Apache2 %mod_name module had been installed, but does't enabled."
-    echo "Check %apache2_mods_start directory for files with '%pkgname=no' lines."
+    echo "Apache2 mod_passenger module had been installed, but does't enabled."
+    echo "Check %apache2_mods_start directory for files with 'passenger=no' lines."
     echo
 fi
 
-%preun -n %module_package_name
+%preun         -n apache2-mod-passenger
 if [ "$1" = "0" ] ; then # last uninstall
-    [ -e %apache2_mods_enabled/%pkgname.load ] && %apache2_sbindir/a2dismod %pkgname 2>&1 >/dev/null ||:
+    [ -e %apache2_mods_enabled/passenger.load ] && %apache2_sbindir/a2dismod passenger 2>&1 >/dev/null ||:
 fi
 
-%postun -n %module_package_name
+%postun        -n apache2-mod-passenger
 # Reconfigure Apache2:
 %apache2_sbindir/a2chkconfig ||:
 if [ "$1" = "0" ] ; then # last uninstall
@@ -166,31 +274,49 @@ if [ "$1" = "0" ] ; then # last uninstall
 	service %apache2_dname condrestart ||:
     else
 	echo "Some errors detected in Apache2 configuration!"
-	echo "To complete %mod_name uninstalling check configuration and restart %apache2_dname service."
+	echo "To complete mod_passenger uninstalling check configuration and restart %apache2_dname service."
 	echo
     fi
 fi
 
 %files
-%doc README*
-%_bindir/*
+%doc README.md
+%_bindir/passenger
+%_bindir/passenger-install-apache2-module
+%_bindir/passenger-install-nginx-module
+%_bindir/passenger-config
+%_bindir/passenger-status
+%_bindir/passenger-memory-stats
 %_mandir/*
 
-%files         -n gem-%pkgname
+%files         -n gem-passenger
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
+%ifnarch armh
 %ruby_gemextdir
+%endif
 
-%files         -n gem-%pkgname-doc
+%files         -n gem-passenger-doc
+%doc README.md
 %ruby_gemdocdir
 
-%files         -n %module_package_name
-%config(noreplace) %apache2_mods_available/%pkgname.conf
-%config            %apache2_mods_available/%pkgname.load
-%config            %apache2_mods_start/100-%pkgname.conf
-%apache2_libexecdir/%mod_name.so
+%files         -n gem-passenger-devel
+%doc README.md
+
+%files         -n apache2-mod-passenger
+%config(noreplace) %apache2_mods_available/passenger.conf
+%config            %apache2_mods_available/passenger.load
+%config            %apache2_mods_start/100-passenger.conf
+%ifnarch armh
+%apache2_libexecdir/mod_passenger.so
+%endif
+
 
 %changelog
+* Thu Oct 14 2021 Pavel Skrylev <majioa@altlinux.org> 6.0.11-alt1
+- ^ 6.0.4 -> 6.0.11
+
 * Mon Jun 21 2021 Andrey Cherepanov <cas@altlinux.org> 6.0.4-alt1.1
 - FTBFS: use autoreq with python3.
 - Exclude build on armh.
@@ -255,4 +381,3 @@ fi
 
 * Sat Feb 26 2011 Malo Skryleve <malo@altlinux.org> 3.0.2-alt1
 - initial build for ALT Linux Sisyphus
-
