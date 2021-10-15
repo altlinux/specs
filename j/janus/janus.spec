@@ -4,8 +4,8 @@
 %def_without aes_gcm
 
 Name: janus
-Version: 0.11.3
-Release: alt3
+Version: 0.11.4
+Release: alt1
 
 Summary: Janus WebRTC Server
 
@@ -194,6 +194,9 @@ mkdir -p -- %buildroot%_localstatedir/%name/recordings
 
 
 %changelog
+* Fri Oct 15 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.11.4-alt1
+- New version
+
 * Sat Jul 03 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.11.3-alt3
 - Re-enable websockets support
 
