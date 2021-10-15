@@ -1,5 +1,5 @@
 Name: praat
-Version: 6.1.48
+Version: 6.1.54
 Release: alt1
 
 Summary: A program for speech analysis and synthesis
@@ -57,7 +57,7 @@ Recommends: fonts-bitmap-100dpi fonts-bitmap-75dpi
 #patch0 -p2
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+#patch3 -p1
 
 %build
 cp -a makefiles/makefile.defs.linux.pulse makefile.defs
@@ -87,6 +87,9 @@ install -pDm755 %name %buildroot%_bindir/%name
 #  http://www.fon.hum.uva.nl/praat/download_sources.html praat(\d)(\d)(\d+)_sources.tar.gz debian
 
 %changelog
+* Sat Oct 16 2021 Ilya Mashkin <oddity@altlinux.ru> 6.1.54-alt1
+- 6.1.54
+
 * Thu Oct 14 2021 Ilya Mashkin <oddity@altlinux.ru> 6.1.48-alt1
 - 6.1.48
 - add more regs
