@@ -10,23 +10,30 @@ BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_without icu
+%define autorelease 15
 
+%bcond_without icu
 Name:           xalan-c
 Version:        1.12.0
-Release:        alt1_4
+# The soversion is made from the major and minor version numbers, e.g. 112 for
+# version 1.12.x. We could do this automaticallya..
+#   %%global so_version %%(echo %%{version} | cut -d . -f -2 | tr -d .)
+# a..but we do not do so because we want to make sure we detect any soversion
+# update.
+%global so_version 112
+Release:        alt1_%autorelease
 Summary:        Xalan XSLT processor for C/C++
 
 License:        ASL 2.0
-URL:            http://xalan.apache.org/%{name}/
+URL:            http://xalan.apache.org/xalan-c/
 %global tag Xalan-C_%(echo '%{version}' | tr . _)
 %global tar_name xalan_c-%(echo %{version} | cut -d . -f -2)
-%global release_url https://github.com/apache/%{name}/releases/download/%{tag}
+%global release_url https://github.com/apache/xalan-c/releases/download/%{tag}
 Source0:        %{release_url}/%{tar_name}.tar.gz
 Source1:        %{release_url}/%{tar_name}.tar.gz.asc
 Source2:        %{release_url}/KEYS
 
-BuildRequires:  gnupg gnupg2
+BuildRequires:  gnupg2
 BuildRequires:  ctest cmake
 # Either make or ninja is supported.
 BuildRequires:  ninja-build python3-module-ninja_syntax
@@ -35,10 +42,6 @@ BuildRequires:  libxerces-c-devel
 %if %{with icu}
 BuildRequires:  icu-utils libicu-devel
 %endif
-
-%global so_version %(echo %{version} | cut -d . -f -2 | tr -d .)
-# Required for EPEL8:
-%undefine __cmake_in_source_build
 Source44: import.info
 
 %description
@@ -50,24 +53,30 @@ Xalan is a project of the Apache Software Foundation.
 
 %package        devel
 Group: Development/Other
-Summary:        Development files for %{name}
-Requires:       %{name} = %{version}-%{release}
+Summary:        Development files for xalan-c
+Requires:       xalan-c = %{version}-%{release}
 
 %description devel
-The %{name}-devel package contains libraries and header files for developing
-applications that use %{name}.
+The xalan-c-devel package contains libraries and header files for developing
+applications that use xalan-c.
 
 
 %package doc
 Group: Documentation
-Summary:        Documentation for %{name}
-BuildRequires:  doxygen
-# Explicit BR required for EPEL8:
-BuildRequires:  graphviz libgraphviz
+Summary:        Documentation for xalan-c
 BuildArch: noarch
 
+# Doxygen HTML help is not suitable for packaging due to a minified JavaScript
+# bundle inserted by Doxygen itself. See discussion at
+# https://bugzilla.redhat.com/show_bug.cgi?id=2006555.
+#
+# Normally, we would enable the Doxygen PDF documentation as a lesser
+# substitute, but building it fails with:
+#   ! TeX capacity exceeded, sorry [pool size=5905151].
+
 %description doc
-Documentation for %{name}.
+Documentation for xalan-c. See https://apache.github.io/xalan-c/ for full HTML
+documentation.
 
 
 %prep
@@ -76,7 +85,7 @@ Documentation for %{name}.
 
 
 # https://github.com/apache/xalan-c/pull/35
-chmod a-x NOTICE
+chmod -v a-x NOTICE
 
 # Remove the Autotools build system cruft from the samples; otherwise, it would
 # be installed as documentation. We leave the CmakeLists.txt even though it
@@ -87,11 +96,7 @@ rm -vf samples/configure samples/configure.in
 
 %build
 cp -at . -- /usr/share/gnu-config/config.{guess,sub}
-%{fedora_v2_cmake} \
-%if %{with icu}
-    -Dtranscoder=icu \
-%endif
-    -GNinja
+%{fedora_v2_cmake} %{?with_icu:-Dtranscoder=icu} -GNinja
 %fedora_v2_cmake_build
 
 
@@ -99,19 +104,16 @@ cp -at . -- /usr/share/gnu-config/config.{guess,sub}
 %fedora_v2_cmake_install
 # Remove CMake-installed docs in favor of using the doc macro. We refer to
 # _prefix/share instead of _datadir to mirror how the install path is defined
-# in the relevant CMakeLists.txt.
+# in the relevant CMakeLists.txt. Note also that we do *not* want to install
+# the HTML version of the API documentation.
 rm -rf %{buildroot}%{_prefix}/share/doc/xalan-c/api
 
-
+ 
 # alt fixes for xalan-c.pc
 sed -i 's,^Version:,Version: %version,;/^Cflags/d' %buildroot%_pkgconfigdir/xalan-c.pc
 
 %check
 %fedora_v2_ctest
-
-
-# Required for EPEL8:
-
 
 
 %files
@@ -133,7 +135,8 @@ sed -i 's,^Version:,Version: %version,;/^Cflags/d' %buildroot%_pkgconfigdir/xala
 %{_includedir}/xalanc/
 %dir %{_libdir}/cmake/XalanC
 %{_libdir}/cmake/XalanC/*.cmake
-%{_libdir}/pkgconfig/%{name}.pc
+%{_libdir}/pkgconfig/xalan-c.pc
+
 
 %if 0
 # non-indentical noarch packages :(
@@ -144,11 +147,13 @@ sed -i 's,^Version:,Version: %version,;/^Cflags/d' %buildroot%_pkgconfigdir/xala
 %doc NOTICE
 %doc README.md
 %doc docs/*.md docs/images
-%doc %{_vpath_builddir}/docs/doxygen/api
 %doc samples
 %endif
 
 %changelog
+* Thu Oct 14 2021 Igor Vlasenko <viy@altlinux.org> 1.12.0-alt1_15
+- update to new release by fcimport
+
 * Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_4
 - update to new release by fcimport
 
