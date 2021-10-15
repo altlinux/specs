@@ -1,6 +1,6 @@
 Name:    system-config-printer
 Version: 1.5.15
-Release: alt1
+Release: alt2
 
 Summary: A printer administration tool
 Group:   System/Configuration/Printing
@@ -118,6 +118,9 @@ exit 0
 %python3_sitelibdir_noarch/cupshelpers-*
 
 %changelog
+* Fri Oct 15 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.15-alt2
+- Complete Russian translation (thanks Sergey Kazorin).
+
 * Tue Jul 27 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.15-alt1
 - New version (ALT #37558).
 
