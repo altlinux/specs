@@ -8,7 +8,7 @@
 %define gtkver 2
 Name: lxde-common
 Version: 0.99.2
-Release: alt4
+Release: alt5
 BuildArch: noarch
 
 Summary: Basic infrastructure for LXDE.
@@ -20,20 +20,19 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: lxde.wm
 Source2: panel
-Patch: keybinding.patch
+Patch: lxde-common-copy_skel_settings.patch
 
 AutoReq: yes,nosymlinks
 
 Requires: lxde-settings
 Requires: wm-common-freedesktop
-# Automatically added by buildreq on Sat May 21 2016
-# optimized out: perl perl-Encode perl-XML-Parser python-base python-modules xml-common xml-utils
-BuildRequires: docbook-dtds xsltproc
 
-BuildPreReq: rpm-build-licenses intltool libgtk+%gtkver-devel
+BuildRequires: docbook-dtds xsltproc
+ 
+BuildRequires: rpm-build-licenses intltool libgtk+%gtkver-devel
 
 %description
-Pprovides infrastructure for LXDE components
+Provides infrastructure for LXDE components
 
 %package -n %theme_fullname
 #Version: theme_version
@@ -70,16 +69,24 @@ sed -i '/XDG_MENU/ a\\n# Since shared-mime-info-0.90-alt3 XDG_DATA_DIRS not expo
 
 install -m644 -D %SOURCE1 %buildroot%_x11sysconfdir/wmsession.d/09LXDE
 
-mv %buildroot%_datadir/lxde %buildroot%_datadir/%theme_fullname
+mkdir -p %buildroot%_datadir/%theme_fullname
+mv %buildroot%_datadir/lxde/* %buildroot%_datadir/%theme_fullname
+rmdir %buildroot%_datadir/lxde
+
 mkdir -p %buildroot%_datadir/%theme_fullname/pcmanfm
 mv %buildroot%_sysconfdir/xdg/pcmanfm/LXDE/pcmanfm.conf %buildroot%_datadir/%theme_fullname/pcmanfm/lxde.conf
+
 mv %buildroot%_sysconfdir/xdg/lxsession/LXDE/desktop.conf %buildroot%_datadir/%theme_fullname
+
 mkdir -p %buildroot%_datadir/%theme_fullname/openbox
-mv %buildroot%_sysconfdir/xdg/openbox/LXDE/* %buildroot%_datadir/%theme_fullname/openbox
-rm -fR %buildroot%_sysconfdir/xdg/openbox/LXDE
+mv %buildroot%_sysconfdir/xdg/openbox/LXDE/rc.xml %buildroot%_datadir/%theme_fullname/openbox/lxde-rc.xml
+mv %buildroot%_sysconfdir/xdg/openbox/LXDE/menu.xml %buildroot%_datadir/%theme_fullname/openbox/menu.xml
+rmdir %buildroot%_sysconfdir/xdg/openbox/LXDE
+
 mkdir -p %buildroot%_datadir/%theme_fullname/lxpanel
 mv %buildroot%_sysconfdir/xdg/lxpanel/LXDE/* %buildroot%_datadir/%theme_fullname/lxpanel
-rm -fR %buildroot%_sysconfdir/xdg/lxpanel/LXDE
+rmdir %buildroot%_sysconfdir/xdg/lxpanel/LXDE
+
 ln -s %_datadir/%theme_virt_dir/desktop.conf %buildroot%_sysconfdir/xdg/lxsession/LXDE/desktop.conf
 ln -s %_datadir/%theme_virt_dir/pcmanfm/lxde.conf %buildroot%_sysconfdir/xdg/pcmanfm/LXDE/pcmanfm.conf
 ln -s %_datadir/%theme_virt_dir/pcmanfm/lxde.conf %buildroot%_sysconfdir/xdg/pcmanfm/LXDE/lxde.conf
@@ -104,7 +111,6 @@ install -m644 %SOURCE2 %buildroot%_datadir/%theme_fullname/lxpanel/panels/
 if [ -d %_datadir/lxpanel/profile/LXDE ] && [ ! -L %_datadir/lxpanel/profile/LXDE ] ; then
  rm -fR %_datadir/lxpanel/profile/LXDE
 fi
-
 rm -fR %_sysconfdir/xdg/lxsession/LXDE/desktop.conf \
        %_sysconfdir/xdg/pcmanfm/LXDE \
        %_sysconfdir/xdg/lxpanel/LXDE \
@@ -118,7 +124,6 @@ rm -fR %_sysconfdir/xdg/lxsession/LXDE/desktop.conf \
 %dir %_datadir/xsessions
 %_datadir/xsessions/*.desktop
 %_man1dir/*
-
 %_desktopdir/*.desktop
 
 %files -n %theme_fullname
@@ -126,6 +131,10 @@ rm -fR %_sysconfdir/xdg/lxsession/LXDE/desktop.conf \
 %_datadir/%theme_fullname
 
 %changelog
+* Thu Oct 14 2021 Anton Midyukov <antohami@altlinux.org> 0.99.2-alt5
+- copy skel settings to XDG_CONFIG_HOME from LXDE theme
+- cleanup spec
+
 * Fri Mar 23 2018 Anton Midyukov <antohami@altlinux.org> 0.99.2-alt4
 - Added lxde-icon-theme in requires for lxde-upstream
 

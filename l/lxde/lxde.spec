@@ -1,6 +1,6 @@
 Name: lxde
 Version: 1.1
-Release: alt3
+Release: alt4
 Summary: Virtual package for install all parts of LXDE
 Group: Graphical desktop/Other
 License: GPL
@@ -10,7 +10,6 @@ Requires: lxde-lite = %EVR
 Requires: lxde-lxrandr lxde-lxshortcut lxde-lxinput lxde-lxtask lxde-lxhotkey lxde-lxterminal
 Requires: gpicview leafpad
 Requires: lxde-lxpolkit
-Requires: lxde-settings-lxdesktop
 Requires: icon-theme-faenza-blue
 Requires: gnome-themes-extra libgtk2-engine-adwaita
 Requires: fonts-ttf-google-droid-sans-mono fonts-ttf-google-droid-sans fonts-ttf-google-droid-serif
@@ -42,6 +41,9 @@ Requires: pcmanfm2 menu-cache lxde-lxappearance lxde-lxappearance-obconf
 %files lite
 
 %changelog
+* Fri Oct 15 2021 Anton Midyukov <antohami@altlinux.org> 1.1-alt4
+- do not require lxde-settings-lxdesktop
+
 * Wed Jun 26 2019 Anton Midyukov <antohami@altlinux.org> 1.1-alt3
 - lxde requires openbox-themes
 
