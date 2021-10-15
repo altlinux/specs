@@ -5,10 +5,11 @@
 
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
+BuildRequires(pre): rpm-build-python3 rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: /usr/bin/castxml /usr/bin/latex java-devel-default libcurl-devel libqt4-devel rpm-build-java rpm-build-perl zlib-devel
 # END SourceDeps(oneline)
 BuildRequires: xsltproc
+%define fedora 34
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -17,12 +18,17 @@ BuildRequires: xsltproc
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+BuildRequires: /usr/bin/git
 # Enabled by default
-%bcond_with tests
+%bcond_without tests
+
+%if 0%{?fedora} < 33
+%undefine __cmake_in_source_build
+%endif
 
 Name:       gdcm
-Version:    3.0.5
-Release:    alt1_0.1
+Version:    3.0.9
+Release:    alt1_3
 Summary:    Grassroots DiCoM is a C++ library to parse DICOM medical files
 License:    BSD
 URL:        http://gdcm.sourceforge.net/wiki/index.php/Main_Page
@@ -31,14 +37,9 @@ Source0:    https://github.com/malaterre/%{name}/archive/v%{version}/%{name}-%{v
 Source1:    http://downloads.sourceforge.net/project/gdcm/gdcmData/gdcmData/gdcmData.tar.gz
 
 Patch1: 0001-3.0.1-Use-copyright.patch
-# https://sourceforge.net/p/gdcm/bugs/487/
-Patch2: gdcm-2.8.8-dont_use_EOF.patch
 # Fix for 1687233
 Patch3: 0002-Fix-export-variables.patch
-Patch4: gdcm-3.0.1-poppler-0.84.0.patch
-Patch5: Update_gdcminfo_for_new_poppler.patch
-
-Patch100: gdcm-3.0.5-alt-gcc11-compat.patch
+Patch4: 0003-Fix-missing-include-for-gcc-11.patch
 
 BuildRequires:  libCharLS-devel >= 2.0
 BuildRequires:  ctest cmake
@@ -136,13 +137,18 @@ used this library with python
 
 %prep
 %setup -q -n GDCM-%{version}
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-#%patch4 -p1
-%patch5 -p1
-
-%patch100 -p2
+git init -q
+git config user.name "rpmbuild"
+git config user.email "<rpmbuild>"
+git config gc.auto 0
+git add --force .
+git commit -q --allow-empty -a --author "rpmbuild <rpmbuild>" -m "%{NAME}-%{VERSION} base"
+cat %_sourcedir/0001-3.0.1-Use-copyright.patch | git apply --index --reject  -
+git commit -q -m 0001-3.0.1-Use-copyright.patch --author "rpmbuild <rpmbuild>"
+cat %_sourcedir/0002-Fix-export-variables.patch | git apply --index --reject  -
+git commit -q -m 0002-Fix-export-variables.patch --author "rpmbuild <rpmbuild>"
+cat %_sourcedir/0003-Fix-missing-include-for-gcc-11.patch | git apply --index --reject  -
+git commit -q -m 0003-Fix-missing-include-for-gcc-11.patch --author "rpmbuild <rpmbuild>"
 
 # Data source
 %setup -n GDCM-%{version} -q -T -D -a 1
@@ -172,14 +178,11 @@ rm -rf Utilities/wxWidgets
 #rm -rf Utilities/gdcmmd5
 
 %build
-mkdir -p %{_target_platform}
-pushd %{_target_platform}
-
-%{fedora_cmake}  .. \
+%{fedora_v2_cmake}  .. \
     -DCMAKE_VERBOSE_MAKEFILE=ON \
     -DGDCM_INSTALL_PACKAGE_DIR=%{_libdir}/cmake/%{name} \
     -DGDCM_INSTALL_INCLUDE_DIR=%{_includedir}/%{name} \
-    -DGDCM_INSTALL_DOC_DIR=%{_docdir}/%{name}-%version \
+    -DGDCM_INSTALL_DOC_DIR=%{_docdir}/%{name} \
     -DGDCM_INSTALL_MAN_DIR=%{_mandir} \
     -DGDCM_INSTALL_LIB_DIR=%{_libdir} \
     -DGDCM_BUILD_TESTING:BOOL=ON \
@@ -211,12 +214,10 @@ pushd %{_target_platform}
 #   -DGDCM_VTK_JAVA_JAR:PATH=/usr/share/java/vtk.jar no found!
 #   yum provides */vtk.jar -> No results found
 
-popd
-
-%make_build -C %{_target_platform}
+%fedora_v2_cmake_build
 
 %install
-%makeinstall_std -C %{_target_platform}
+%fedora_v2_cmake_install
 install -d $RPM_BUILD_ROOT%{python3_sitelibdir}
 
 # Install examples
@@ -227,30 +228,41 @@ cp -rv ./Examples/* $RPM_BUILD_ROOT/%{_datadir}/%{name}/Examples/
 %check
 # Making the tests informative only for now. Several failing tests (27/228):
 # 11,40,48,49,107-109,111-114,130-135,146,149,,151-154,157,194,216,219
-make test -C %{_target_platform} || exit 0
+make test -C %{__cmake_builddir} || exit 0
 %endif
 
 %files
 %doc AUTHORS README.md
 %doc --no-dereference Copyright.txt README.Copyright.txt
-%{_libdir}/libgdcmCommon.so.*
-%{_libdir}/libgdcmDICT.so.*
-%{_libdir}/libgdcmDSED.so.*
-%{_libdir}/libgdcmIOD.so.*
-%{_libdir}/libgdcmMEXD.so.*
-%{_libdir}/libgdcmMSFF.so.*
-%{_libdir}/libgdcmjpeg12.so.*
-%{_libdir}/libgdcmjpeg16.so.*
-%{_libdir}/libgdcmjpeg8.so.*
-%{_libdir}/libgdcmmd5.so.*
-%{_libdir}/libsocketxx.so.*
+%{_libdir}/libgdcmCommon.so.3.0
+%{_libdir}/libgdcmCommon.so.3.0.9
+%{_libdir}/libgdcmDICT.so.3.0
+%{_libdir}/libgdcmDICT.so.3.0.9
+%{_libdir}/libgdcmDSED.so.3.0
+%{_libdir}/libgdcmDSED.so.3.0.9
+%{_libdir}/libgdcmIOD.so.3.0
+%{_libdir}/libgdcmIOD.so.3.0.9
+%{_libdir}/libgdcmMEXD.so.3.0
+%{_libdir}/libgdcmMEXD.so.3.0.9
+%{_libdir}/libgdcmMSFF.so.3.0
+%{_libdir}/libgdcmMSFF.so.3.0.9
+%{_libdir}/libgdcmjpeg12.so.3.0
+%{_libdir}/libgdcmjpeg12.so.3.0.9
+%{_libdir}/libgdcmjpeg16.so.3.0
+%{_libdir}/libgdcmjpeg16.so.3.0.9
+%{_libdir}/libgdcmjpeg8.so.3.0
+%{_libdir}/libgdcmjpeg8.so.3.0.9
+%{_libdir}/libgdcmmd5.so.3.0
+%{_libdir}/libgdcmmd5.so.3.0.9
+%{_libdir}/libsocketxx.so.1.2
+%{_libdir}/libsocketxx.so.1.2.0
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}-3.0/XML/
-#exclude %{_docdir}/%{name}-%version/html/
-#exclude %{_docdir}/%{name}-%version/Examples/
+#exclude %{_docdir}/%{name}/html/
+#exclude %{_docdir}/%{name}/Examples/
 
 #files doc
-#doc %{_docdir}/%{name}-%version/html/
+#doc %{_docdir}/%{name}/html/
 
 %files applications
 %{_bindir}/gdcmanon
@@ -287,14 +299,17 @@ make test -C %{_target_platform} || exit 0
 %if 0
 %files examples
 %{_datadir}/%{name}/Examples/
+%endif
 
 %files -n python3-module-gdcm
 %{python3_sitelibdir}/%{name}*.py
 %{python3_sitelibdir}/_%{name}swig.so
 %{python3_sitelibdir}/__pycache__/%{name}*
-%endif
 
 %changelog
+* Thu Oct 14 2021 Igor Vlasenko <viy@altlinux.org> 3.0.9-alt1_3
+- new version
+
 * Tue Oct 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.5-alt1_0.1
 - Fixed build with gcc-11.
 
