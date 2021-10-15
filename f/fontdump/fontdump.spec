@@ -11,12 +11,12 @@ BuildRequires: python3-module-setuptools
 
 Name:           %{srcname}
 Version:        1.3.0
-Release:        alt2_19
+Release:        alt2_25
 Summary:        %{sum}
 
 License:        MIT
 URL:            https://github.com/glasslion/fontdump
-Source0:        %{srcname}-%version.tar.gz
+Source0:        https://files.pythonhosted.org/packages/source/f/%{srcname}/%{srcname}-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  python3-devel
@@ -30,9 +30,11 @@ Fonts, so you can serve them on your local servers.
 %package -n python3-module-fontdump
 Group: Publishing
 Summary:        %{sum}
+BuildRequires:   python3-module-distribute
 BuildRequires:   python3-module-docopt
 BuildRequires:   python3-module-cssutils
 BuildRequires:   python3-module-requests
+%{?python_provide:%python_provide python3-%{srcname}}
 
 %description -n python3-module-fontdump
 A command line tool to dump the CSS and different formats of fonts for Google
@@ -62,6 +64,9 @@ sed -i -e '/^#!\//, 1d' fontdump/*.py
 %{python3_sitelibdir_noarch}/%{srcname}-%{version}-py3.*.egg-info
 
 %changelog
+* Fri Oct 15 2021 Igor Vlasenko <viy@altlinux.org> 1.3.0-alt2_25
+- update to new release by fcimport
+
 * Mon Mar 30 2020 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_19
 - update
 
