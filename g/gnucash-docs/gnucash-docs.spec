@@ -1,5 +1,5 @@
 Name:    gnucash-docs
-Version: 4.6
+Version: 4.8
 Release: alt1
 
 Summary: Documentation for the Gnucash
@@ -19,6 +19,7 @@ Requires(postun): scrollkeeper
 
 Source: http://prdownloads.sourceforge.net/gnucash/gnucash-docs/%version/%name-%version.tar
 
+BuildRequires(pre): cmake
 BuildRequires: scrollkeeper xsltproc
 
 %description
@@ -33,19 +34,24 @@ This is the documentation module for GnuCash.
 %setup
 
 %build
-%autoreconf
-%configure
-%make
+%cmake
+%cmake_build
 
 %install
-%makeinstall
+%cmake_install
+rm -f %buildroot%_datadir/gnucash-docs/COPYING*
 
 %files
-%doc AUTHORS COPYING-DOCS ChangeLog NEWS README HACKING
+%doc AUTHORS COPYING-DOCS ChangeLog NEWS README
 %_datadir/gnome/help/gnucash-*/
-#%%_datadir/omf/gnucash-*/
 
 %changelog
+* Wed Sep 29 2021 Andrey Cherepanov <cas@altlinux.org> 4.8-alt1
+- New version.
+
+* Mon Sep 27 2021 Andrey Cherepanov <cas@altlinux.org> 4.7-alt1
+- New version.
+
 * Mon Jun 28 2021 Andrey Cherepanov <cas@altlinux.org> 4.6-alt1
 - New version.
 

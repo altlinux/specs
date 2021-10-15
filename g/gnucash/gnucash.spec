@@ -4,7 +4,7 @@
 %def_with aqbanking
 
 Name: 	 gnucash
-Version: 4.6
+Version: 4.8
 Release: alt1
 
 Summary: GnuCash is an application to keep track of your finances
@@ -28,6 +28,9 @@ Source8: gnucash.appdata.xml.in
 Source9: gnucash.desktop.in
 
 Patch2: %name-alt-fix-rpath.patch
+
+# munmap_chunk(): invalid pointer
+ExcludeArch: armh
 
 AutoReq: yes, noperl
 
@@ -138,6 +141,7 @@ fetch and update.
 %setup
 %patch2 -p1
 tar xf %SOURCE1
+mv googletest-release-1.11.0 gtest
 cp %SOURCE2 doc
 cp %SOURCE3 libgnucash/core-utils
 cp %SOURCE4 .
@@ -208,6 +212,13 @@ rm -rf %buildroot%_datadir/guile/site/*/tests \
 %files quotes
 
 %changelog
+* Wed Sep 29 2021 Andrey Cherepanov <cas@altlinux.org> 4.8-alt1
+- New version.
+- Do not build for armh.
+
+* Mon Sep 27 2021 Andrey Cherepanov <cas@altlinux.org> 4.7-alt1
+- New version.
+
 * Sun Jun 27 2021 Andrey Cherepanov <cas@altlinux.org> 4.6-alt1
 - New version.
 
