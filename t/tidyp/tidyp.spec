@@ -1,7 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: tidyp
 Version: 1.04
-Release: alt1
-
+Release: alt2
 Summary: program that can validate your HTML, as well as modify it to be more clean and standard
 License: W3C
 Group: Text tools
@@ -27,7 +30,7 @@ Shared libraries for tidyp.
 %package -n libtidyp-devel
 Summary: Development files for libtidyp
 Group: Development/C
-Requires: libtidyp = %{version}-%{release}
+Requires: libtidyp = %EVR
 
 %description -n libtidyp-devel
 Development files for libtidyp.
@@ -36,9 +39,11 @@ Development files for libtidyp.
 %setup -q
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 touch NEWS COPYING AUTHORS
 %autoreconf
-%configure
+%configure --disable-static
 %make_build
 
 %install
@@ -54,9 +59,11 @@ touch NEWS COPYING AUTHORS
 %files -n libtidyp-devel
 %_includedir/tidyp
 %_libdir/libtidyp.so
-%exclude %_libdir/libtidyp.a
 
 %changelog
+* Fri Oct 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.04-alt2
+- Fixed build with LTO
+
 * Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 1.04-alt1
 - initial build
 
