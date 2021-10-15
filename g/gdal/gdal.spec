@@ -1,7 +1,4 @@
 
-# This stops %%python3_setup from adding BR on python3-module-setuptools
-%global python3_setup_buildrequires %nil
-
 # TODO: enable system libtiff when it will support BigTiff (from 4.0?)
 %def_without libtiff
 %def_without geotiff
@@ -13,7 +10,7 @@
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 3.0.4
-Release: alt1.6
+Release: alt1.7
 Group: Sciences/Geosciences
 
 License: MIT
@@ -30,6 +27,7 @@ Patch6: %name-alt-python3.patch
 Patch7: %name-2.2.3-alt-mysql8-transition.patch
 Patch8: %name-3.0.4-arch-jpeg2000-issue-vendor.patch
 Patch9: %name-3.0.4-alt-gcc11.patch
+Patch10: %name-alt-python-2to3.patch
 
 %define libname lib%name
 
@@ -124,6 +122,7 @@ Perl modules for GDAL/OGR.
 %patch7 -p0
 %patch8 -p2
 %patch9 -p2
+%patch10 -p2
 
 %build
 %add_optflags -fno-strict-aliasing -I%_includedir/netcdf
@@ -261,6 +260,9 @@ sed -i 's|__bool__ = __nonzero__||' \
 %endif
 
 %changelog
+* Fri Oct 15 2021 Ivan A. Melnikov <iv@altlinux.org> 3.0.4-alt1.7
+- build with setuptools again to fix the package update
+
 * Thu Oct 14 2021 Ivan A. Melnikov <iv@altlinux.org> 3.0.4-alt1.6
 - fix FTBFS:
   + fix build with gcc11
