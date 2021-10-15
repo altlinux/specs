@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-CHI
-Version: 0.60
+Version: 0.61
 Release: alt1
 Summary: CHI - Unified cache handling interface
 
@@ -8,7 +8,7 @@ Group: Development/Perl
 License: Perl
 Url: %CPAN CHI
 
-Source: http://www.cpan.org/authors/id/J/JS/JSWARTZ/CHI-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/A/AS/ASB/CHI-%{version}.tar.gz
 
 BuildArch: noarch
 BuildRequires: perl-Log-Any perl-Time-Duration perl-Data-UUID perl-Try-Tiny perl-Moose perl-JSON perl-List-MoreUtils perl-Task-Weaken perl-Hash-MoreUtils perl-Digest-JHash perl-Time-Duration perl-Time-Duration-Parse perl-Carp-Assert perl-Test-Deep perl-Test-Exception perl-TimeDate perl-Test-Warn perl-Test-Class perl-IO-Compress perl-Cache-Cache perl-Cache-FastMmap perl-String-RewritePrefix perl-Moo perl-MooX-Types-MooseLike perl-MooX-Types-MooseLike-Numeric perl(JSON/MaybeXS.pm)
@@ -17,7 +17,7 @@ BuildRequires: perl-Log-Any perl-Time-Duration perl-Data-UUID perl-Try-Tiny perl
 %summary
 
 %prep
-%setup -q -n CHI-%version
+%setup -q -n CHI-%{version}
 
 %build
 %perl_vendor_build
@@ -28,9 +28,12 @@ BuildRequires: perl-Log-Any perl-Time-Duration perl-Data-UUID perl-Try-Tiny perl
 %files
 %perl_vendor_privlib/CHI*
 %exclude %perl_vendor_privlib/CHI/t
-%doc Changes LICENSE
+%doc Changes
 
 %changelog
+* Fri Oct 15 2021 Igor Vlasenko <viy@altlinux.org> 0.61-alt1
+- automated CPAN update
+
 * Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1
 - automated CPAN update
 
