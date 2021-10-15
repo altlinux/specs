@@ -1,14 +1,17 @@
 Name: bonnie++
 Version: 2.00a
-Release: alt1
+Release: alt2
 
 Summary: A program for benchmarking hard drives and filesystems
-License: GPL v2
+License: GPLv2
 Group: Monitoring
 
 Url: http://www.coker.com.au/bonnie++/
 Source: %name-%version.tgz
 Source100: bonnie++.watch
+# https://gitweb.gentoo.org/repo/gentoo.git/plain/app-benchmarks/bonnie++/files/bonnie++-2.00a-gcc11.patch
+Patch: bonnie++-2.00a-gcc11.patch
+
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Fri Apr 23 2004
@@ -25,6 +28,7 @@ Bonnie++ - тест скорости работы вашей дисковой п
 
 %prep
 %setup
+%patch -p1
 
 %build
 %configure
@@ -43,6 +47,9 @@ ln -s ../sbin/%name %buildroot/%_bindir/
 %doc copyright.txt credits.txt readme.html
 
 %changelog
+* Fri Oct 15 2021 Grigory Ustinov <grenka@altlinux.org> 2.00a-alt2
+- make gcc11 happy
+
 * Tue Sep 22 2020 Michael Shigorin <mike@altlinux.org> 2.00a-alt1
 - new version (watch file uupdate)
 
