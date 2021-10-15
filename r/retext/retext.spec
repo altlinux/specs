@@ -1,8 +1,8 @@
 %def_without tests
 
 Name:    retext
-Version: 7.2.1
-Release: alt2
+Version: 7.2.2
+Release: alt1
 License: GPL-3.0+
 Summary: Text editor for Markdown and reStructuredText
 Summary(de): Texteditor für Markdown und reStructuredText
@@ -30,7 +30,6 @@ BuildRequires: librsvg-devel
 BuildRequires: librsvg-utils
 BuildRequires: ImageMagick-tools
 BuildRequires: qt5-tools-devel
-#BuildRequires: python3-module-PyQt5
 
 %if_with tests
 BuildRequires:  libappstream-glib
@@ -91,6 +90,9 @@ python3 setup.py test
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Thu Oct 14 2021 Andrey Cherepanov <cas@altlinux.org> 7.2.2-alt1
+- New version.
+
 * Sun Jul 18 2021 Vitaly Lipatov <lav@altlinux.ru> 7.2.1-alt2
 - drop BR: python-module-PyQt5-devel
 - skip WebKit requires (ALT bug 40361)
