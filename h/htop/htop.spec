@@ -3,7 +3,7 @@
 %def_enable taskstats
 
 Name: htop
-Version: 3.1.0
+Version: 3.1.1
 Release: alt1
 
 Summary: Interactive ncurses-based process viewer for Linux
@@ -82,6 +82,9 @@ rm -r %buildroot%_pixmapsdir/
 %_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Sat Oct 16 2021 Ilya Mashkin <oddity@altlinux.ru> 3.1.1-alt1
+- 3.1.1
+
 * Mon Oct 11 2021 Ilya Mashkin <oddity@altlinux.ru> 3.1.0-alt1
 - 3.1.0
 - Update license to GPLv2+
