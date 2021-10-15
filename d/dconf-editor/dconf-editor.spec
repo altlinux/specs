@@ -6,7 +6,7 @@
 
 Name: dconf-editor
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 Summary: dconf confuguration editor
 Group: Graphical desktop/GNOME
@@ -18,6 +18,8 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
+#https://l10n.gnome.org/media/upload/dconf-editor-master-po-ru-812899_sj2ZdlN.merged.po
+Source1: %name-3.38.3.ru.po.finziyr
 
 %define glib_ver 2.55.1
 %define gtk_ver 3.22.27
@@ -44,6 +46,7 @@ This package provides graphical dconf configuration editor.
 
 %prep
 %setup
+cp %SOURCE1 po/ru.po
 
 %build
 %meson
@@ -67,6 +70,9 @@ This package provides graphical dconf configuration editor.
 %doc README*
 
 %changelog
+* Fri Oct 15 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.3-alt1.1
+- updated russian translation
+
 * Tue Mar 23 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.3-alt1
 - 3.38.3
 
