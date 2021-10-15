@@ -46,7 +46,7 @@ Japanese text arts correctly.
 
 Name:		fonts-bitmap-mona
 Version:	2.90
-Release:	alt1_23
+Release:	alt1_29
 Summary:	Japanese font for text arts
 
 # monafont itself is under public domain
@@ -67,16 +67,28 @@ Patch0:	monafont-2.90-perl512-split.patch
 
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
-# Write BuildRequires a bit verbosely
-BuildRequires:	perl-devel
-BuildRequires:	bdftopcf mkfontdir mkfontscale xorg-font-utils
 BuildRequires:	%{_bindir}/perl
-Obsoletes:	%{old_name_bitmap} <= %{obsoletes_EVR}
-Provides:	%{old_name_bitmap} = %{version}-%{release}
+BuildRequires:	glibc-locales
 Source44: import.info
 
 %description
 %{common_description}
+
+%if 0
+%package -n fonts-bitmap-mona
+Group: Graphical desktop/Other
+Summary:	Bitmap Japanese font for text arts
+License:	Public Domain
+# Write BuildRequires a bit verbosely
+BuildRequires:	perl-devel
+BuildRequires:	%{_bindir}/bdftopcf
+BuildRequires:	%{_bindir}/mkfontdir
+#Obsoletes:	%{old_name_bitmap} <= %{obsoletes_EVR}
+#Provides:	%{old_name_bitmap} = %{version}-%{release}
+
+%description -n fonts-bitmap-mona
+%{common_description}
+%endif
 
 %package -n fonts-ttf-mona-sazanami
 Group: Graphical desktop/Other
@@ -219,8 +231,8 @@ install -Dm 0644 -p %{SOURCE3} \
 %dir %{fontdir_ttf_s_full}/
 %{fontdir_ttf_s_full}/mona-%{real_family_ttf_s}.ttf
 %doc	ttfsrc/README-ttf.txt
-%{_datadir}/appdata/%{projectname}.metainfo.xml
-%{_datadir}/appdata/%{projectname}-sazanami.metainfo.xml
+%{_datadir}/appdata/%{fontname}.metainfo.xml
+%{_datadir}/appdata/%{fontname}-sazanami.metainfo.xml
 
 %define	_font_pkg_name	%{name_ttf_v}
 %define	_fontdir	%{fontdir_ttf_v_full}
@@ -228,10 +240,13 @@ install -Dm 0644 -p %{SOURCE3} \
 %dir %{fontdir_ttf_v_full}/
 %{fontdir_ttf_v_full}/mona-%{real_family_ttf_v}.ttf
 %doc	ttfsrc/README-ttf.txt
-%{_datadir}/appdata/%{projectname}.metainfo.xml
-%{_datadir}/appdata/%{projectname}-vlgothic.metainfo.xml
+%{_datadir}/appdata/%{fontname}.metainfo.xml
+%{_datadir}/appdata/%{fontname}-vlgothic.metainfo.xml
 
 %changelog
+* Fri Oct 15 2021 Igor Vlasenko <viy@altlinux.org> 2.90-alt1_29
+- fc update
+
 * Sun Feb 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.90-alt1_23
 - added appinfo
 - obsoleted fonts-bitmap-mona-bitmap
