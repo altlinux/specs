@@ -9,7 +9,7 @@ BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           ensmallen
-Version:        2.14.2
+Version:        2.17.0
 Release:        alt1_1
 Summary:        Header-only C++ library for efficient mathematical optimization
 
@@ -19,13 +19,13 @@ Source0:        https://www.ensmallen.org/files/%{name}-%{version}.tar.gz
 
 BuildRequires:  ctest cmake
 BuildRequires:	gcc-c++
-BuildRequires:	armadillo-devel >= 8.400.0
-
-Patch0:         random_tests.patch
+BuildRequires:	libarmadillo-devel >= 8.400.0
 
 # ensmallen is header-only, and the build just builds the tests, so there's no
 # use for a debuginfo package.
 %global debug_package %{nil}
+
+Patch0:		catch_constexpr.patch
 Source44: import.info
 
 %description
@@ -42,11 +42,9 @@ gradient-free optimizers, and constrained optimization.
 
 
 %build
-%{fedora_v2_cmake} -DENSMALLEN_CMAKE_DIR=%{_libdir}/cmake/ensmallen/
+%{fedora_v2_cmake} -DENSMALLEN_CMAKE_DIR=%{_libdir}/cmake/ensmallen/ -DBUILD_TESTS=ON
 
-# Technically we don't need to build anything but it's a good sanity check to
-# just build the tests to make sure they compile.
-%fedora_v2_cmake_build
+%fedora_v2_cmake_build -t ensmallen_tests
 
 %install
 %fedora_v2_cmake_install
@@ -63,7 +61,7 @@ success=0;
 cd %{_vpath_builddir};
 for i in `seq 1 5`; do
   code=""; # Reset exit code.
-  ./ensmallen_tests ~SmallLovaszThetaSdp ~BBSBBLogisticRegressionTest || code=$?
+  ./ensmallen_tests --rng-seed=time ~SmallLovaszThetaSdp ~BBSBBLogisticRegressionTest || code=$?
   if [ "a$code" == "a" ]; then
     success=1;
     break;
@@ -97,6 +95,9 @@ gradient-free optimizers, and constrained optimization.
 %{_libdir}/cmake/ensmallen/ensmallen-targets.cmake
 
 %changelog
+* Thu Oct 14 2021 Igor Vlasenko <viy@altlinux.org> 2.17.0-alt1_1
+- update to new release by fcimport
+
 * Mon Nov 09 2020 Igor Vlasenko <viy@altlinux.ru> 2.14.2-alt1_1
 - fc import
 
