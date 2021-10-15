@@ -3,7 +3,7 @@
 
 Name:     ignition
 Version:  2.12.0
-Release:  alt1
+Release:  alt2
 
 Summary:  First boot installer and configuration tool
 License:  Apache-2.0
@@ -19,10 +19,13 @@ BuildRequires: golang
 BuildRequires: libblkid-devel
 
 Requires: btrfs-progs
+Requires: xfsprogs
 Requires: dosfstools
 Requires: gdisk
 Requires: dracut
 Requires: dracut-network
+#mkswap
+Requires: util-linux
 
 %description
 Ignition is a utility used to manipulate systems during the initramfs.
@@ -85,6 +88,9 @@ popd
 %_bindir/%name-validate
 
 %changelog
+* Fri Sep 15 2021 Andrey Sokolov <keremet@altlinux.org> 2.12.0-alt2
+- Fix formatting to xfs and swap
+
 * Sat Sep 04 2021 Alexey Shabalin <shaba@altlinux.org> 2.12.0-alt1
 - new version 2.12.0
 
