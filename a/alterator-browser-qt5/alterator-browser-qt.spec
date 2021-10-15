@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.4.3
+Version: 3.4.4
 Release: alt1
 
 Source:%name-%version.tar
@@ -83,6 +83,9 @@ __EOF__
 
 
 %changelog
+* Fri Oct 15 2021 Sergey V Turchin <zerg at altlinux dot org> 3.4.4-alt1
+- fix eye icon on password field
+
 * Fri Oct 15 2021 Sergey V Turchin <zerg at altlinux dot org> 3.4.3-alt1
 - combine combobox popup screenshot with main window
 
