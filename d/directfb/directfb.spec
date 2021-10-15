@@ -2,10 +2,10 @@
 
 Name: directfb
 Version: 1.1.0
-Release: alt6
+Release: alt7
 
 Summary: %realname - drivers and binaries
-License: LGPL
+License: LGPLv2.1
 Group: System/Libraries
 
 Url: http://www.directfb.org
@@ -56,14 +56,6 @@ Devel for %realname is a graphics library which was designed with embedded syste
 in mind. It offers maximum hardware accelerated performance at a minimum
 of resource usage and overhead.
 
-%package -n lib%name-devel-static
-Summary: Static libraries for devel %realname applications
-Group: Development/C
-Requires: %name = %version-%release
-
-%description -n lib%name-devel-static
-Static libraries for devel %realname applications
-
 %prep
 %setup -n %realname-%version
 %patch0 -p1 -b .fix0
@@ -84,7 +76,7 @@ export DRIVERS=radeon
 %configure \
 	--enable-fbdev \
 	--enable-shared \
-	--enable-static \
+	--disable-static \
 	--with-pic \
 	--with-gfxdrivers=$DRIVERS \
 	#
@@ -100,12 +92,6 @@ find %buildroot -name \*.la -delete
 } |
 	sed -e 's#%{buildroot}##' |
 	sort -u > %name.files
-find \
-	%buildroot%_libdir/lib*.a \
-	%buildroot%_libdir/%name-* \
-	-type f \( -name '*.a' -o -name '*.o' \) |
-		sed -e 's#^%{buildroot}##' |
-		sort -u > %name-static.files
 
 %files -f %name.files
 %doc TODO fb.modes
@@ -126,9 +112,10 @@ find \
 %_pkgconfigdir/*.pc
 %_man1dir/%{name}*
 
-%files -n lib%name-devel-static -f %name-static.files
-
 %changelog
+* Fri Oct 15 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt7
+- Fixed FTBFS.
+
 * Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 1.1.0-alt6
 - E2K: reduce gfxdriver set to just radeon (matrox, ati128 FTBFS)
 - minor spec cleanup
