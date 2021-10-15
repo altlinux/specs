@@ -3,7 +3,7 @@
 Name: hammerhead
 
 Version: 2.1.4
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: a stress testing tool for web servers
@@ -15,7 +15,7 @@ URL: http://sourceforge.net/projects/hammerhead/
 
 BuildRequires(pre): rpm-build-licenses
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source0: %name-%version.tar
 
@@ -24,9 +24,7 @@ Patch2: %name-2.1.3-alt-gcc4.3_fix.patch
 Patch3: %name-2.1.3-alt-gcc4.4_fix.patch
 Patch4: %name-2.1.4-alt-autoconf_2.63_fix.patch
 Patch5: %name-2.1.4-alt-libssl10.patch
-
-AutoReqProv: yes
-
+Patch6: %name-2.1.4-alt-gcc11.2_fix.patch
 
 # Automatically added by buildreq on Sat May 24 2008
 BuildRequires: gcc-c++ libssl-devel net-tools
@@ -48,10 +46,10 @@ or the ability of the port to service a set of requests.
 %patch3
 %patch4
 %patch5
+%patch6
 
 mv -f -- Copying Copying.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/Copying) Copying
-
 
 %build
 %autoreconf
@@ -87,6 +85,9 @@ install -m 0644 doc/hammerhead.1 %buildroot%_man1dir/
 
 
 %changelog
+* Fri Oct 15 2021 Nikolay A. Fetisov <naf@altlinux.org> 1:2.1.4-alt3
+- Fix build with GCC 11.2
+
 * Thu Sep 06 2018 Nikolay A. Fetisov <naf@altlinux.org> 1:2.1.4-alt2
 - Rebuild with openssl 1.1.0i
 
