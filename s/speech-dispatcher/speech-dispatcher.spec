@@ -1,6 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: speech-dispatcher
 Version: 0.10.2
-Release: alt1
+Release: alt2
 
 Summary: A speech output processing service
 License: %gpl2plus
@@ -50,7 +54,7 @@ and produce speech output.
 %package utils
 Group: Sound
 Summary: Various utilities for speech-dispatcher
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description utils
 Various utilities for speech-dispatcher
@@ -58,7 +62,7 @@ Various utilities for speech-dispatcher
 %package module-flite
 Group: Sound
 Summary: Flite support for speech-dispatcher
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description module-flite
 Flite support for speech-dispatcher
@@ -66,7 +70,7 @@ Flite support for speech-dispatcher
 %package module-festival
 Group: Sound
 Summary: Festival support for speech-dispatcher
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description module-festival
 Festival support for speech-dispatcher
@@ -74,7 +78,7 @@ Festival support for speech-dispatcher
 %package module-pico
 Group: Sound
 Summary: Pico support for speech-dispatcher
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description module-pico
 Pico support for speech-dispatcher
@@ -83,7 +87,7 @@ Pico support for speech-dispatcher
 Summary: Python client for Speech Dispatcher
 Group: Development/Python
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n python3-module-speechd
 This python module allows programmsaccess speech-dispatcher service.
@@ -93,6 +97,8 @@ This python module allows programmsaccess speech-dispatcher service.
 %patch -p1
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %autoreconf
 %configure --with-espeak \
 	   --with-flite  \
@@ -104,7 +110,9 @@ This python module allows programmsaccess speech-dispatcher service.
 	   --without-voxin \
 	   --without-kali \
 	   --without-ibmtts \
-	   --without-baratinoo
+	   --without-baratinoo \
+	   --disable-static \
+	   %nil
 %make_build
 
 %install
@@ -112,6 +120,9 @@ This python module allows programmsaccess speech-dispatcher service.
 
 # service file
 install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%{name}d.service
+
+# unpackaged files
+find %buildroot%_libdir -name '*.la' -delete
 
 %find_lang %name
 
@@ -122,7 +133,6 @@ install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%{name}d.service
 %_unitdir/%{name}d.service
 %dir %_libdir/%name
 %_libdir/%name/spd*.so
-%exclude %_libdir/%name/spd_alsa.*a
 %dir %_libdir/%name-modules
 %_libdir/%name-modules/sd_dummy
 %_libdir/%name-modules/sd_espeak
@@ -134,7 +144,6 @@ install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%{name}d.service
 
 %files -n libspeechd
 %_libdir/libspeechd*.so.*
-%exclude %_libdir/libspeechd.*a
 
 %files -n libspeechd-devel
 %_includedir/*
@@ -159,6 +168,9 @@ install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%{name}d.service
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Oct 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10.2-alt2
+- Fixed build with LTO
+
 * Mon Jan 11 2021 Paul Wolneykien <manowar@altlinux.org> 0.10.2-alt1
 - Fixed doc/ files.
 - Build without voxin, kali, ibmtts and baratinoo (to avoid "shims").
