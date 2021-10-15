@@ -1,7 +1,7 @@
 %define testsdir %{_localstatedir}/%{name}/tests
 
 Name: libtree
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: C++ lib that helps to work with tree-like data structures
@@ -102,6 +102,9 @@ cd -
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu Oct 14 2021 Alexey Appolonov <alexey@altlinux.org> 0.7.1-alt1
+- Corrected JSON handler (the bug was introduced in the libtree v0.7.0).
+
 * Mon Oct 11 2021 Alexey Appolonov <alexey@altlinux.org> 0.7.0-alt1
 - Algorithm of the XML handler is brought into compliance with the algorithm
   of the JSON handler;
