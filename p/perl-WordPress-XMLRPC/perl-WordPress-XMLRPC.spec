@@ -15,7 +15,7 @@
 %define _disable_test 1
 
 Name: perl-WordPress-XMLRPC
-Version: 2.12
+Version: 2.13
 Release: alt1
 
 Summary: api to wordpress xml rpc calls
@@ -53,6 +53,9 @@ This is really useful to automate new postings, uploading media, etc.
 %perl_vendor_privlib/WordPress/*
 
 %changelog
+* Fri Oct 15 2021 Igor Vlasenko <viy@altlinux.org> 2.13-alt1
+- automated CPAN update
+
 * Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.12-alt1
 - automated CPAN update
 
