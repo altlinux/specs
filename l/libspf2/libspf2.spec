@@ -3,18 +3,19 @@
 %set_verify_elf_method strict
 
 Name: libspf2
-Version: 1.2.10
-Release: alt4
+Version: 1.2.11
+Release: alt1.git.4915c30
 Summary: Implementation of the SPF specification
 License: LGPLv2.1+
 Group: System/Libraries
-URL: http://www.libspf2.org/
+URL: https://www.libspf2.org/
 
-# http://libspf2.org/spf/libspf2-%version.tar.gz
-Source0: %name-%version.tar
+# https://github.com/shevek/libspf2.git
+Source: %name-%version.tar
 
-Patch1: libspf2-alt-newgcc.patch
-Patch2: libspf2-alt-disable-static-binaries.patch
+Patch1: libspf2-alt-disable-static-binaries.patch
+Patch2: libspf2-alt-glibc-compat.patch
+Patch3: libspf2-alt-print-format.patch
 
 # Automatically added by buildreq on Mon Nov 03 2008
 BuildRequires: gcc-c++
@@ -43,29 +44,20 @@ Development files for libspf2 library.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p2
+%patch2 -p1
+%patch3 -p1
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
 
-# The configure script checks for the existence of __ns_get16 and uses the
-# system-supplied version if found, otherwise one from src/libreplace.
-# However, this function is marked GLIBC_PRIVATE in recent versions of glibc
-# and shouldn't be called even if the configure script finds it. So we make
-# sure that the configure script always uses the version in src/libreplace.
-# This prevents us getting an unresolvable dependency in the built RPM.
-cat > config.cache << EOF
-ac_cv_func___ns_get16=no
-EOF
-
+%autoreconf
 %configure \
-	--cache-file=config.cache \
 	--disable-static \
 	%nil
 
 # fix rpath libtool issues
-subst 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+subst 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool || exit 1
+subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool || exit 1
 %make_build
 
 %install
@@ -83,6 +75,9 @@ subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %_libdir/*.so
 
 %changelog
+* Fri Oct 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.11-alt1.git.4915c30
+- Updated to latest upstream snapshot
+
 * Wed Sep 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.10-alt4
 - Fixed build with LTO.
 
