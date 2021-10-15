@@ -2,7 +2,6 @@
 %def_disable devel
 %def_disable profile
 %def_enable shared
-%def_enable static
 #----------------------------------------------------------------------
 
 %define Name Tokyo Tyrant
@@ -11,7 +10,7 @@ Name: tokyotyrant
 %define lname lib%name
 Summary: A network interface of Tokyo Cabinet
 Version: 1.1.40
-Release: alt1.2
+Release: alt2
 License: %lgpl2plus
 Group: System/Libraries
 Group: Databases
@@ -67,19 +66,6 @@ This package contains the libraries and header files needed for
 developing with %lname.
 
 
-%if_enabled static
-%package -n %lname-devel-static
-Summary: Static version of %Name database library
-Group: Development/C
-Requires: %lname-devel = %version-%release
-
-%description -n %lname-devel-static
-%Name is a network interface for Tokyo Cabinet.
-This package contains static libraries for building statically linked
-programs which use %Name.
-%endif
-
-
 %package doc
 Summary: Documentation for %Name
 Group: Documentation
@@ -116,6 +102,8 @@ mv %buildroot{%_datadir/%name,%_docdir/%name-%version}
 mv %buildroot{%_sbindir/*,%_docdir/%name-%version/}
 install -m 0755 %SOURCE1 %buildroot%_initdir/%name
 install -m 0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
+
+rm -fv %buildroot%_libdir/*.a
 
 
 %pre
@@ -159,18 +147,15 @@ install -m 0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 %_pkgconfigdir/*
 
 
-%if_enabled static
-%files -n %lname-devel-static
-%_libdir/*.a
-%endif
-
-
 %files doc
 %_docdir/%name-%version
 %_man3dir/*
 
 
 %changelog
+* Fri Oct 15 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.40-alt2
+- Fixed FTBFS.
+
 * Tue Apr 3 2018 Mikhail Savostyanov <mik@altlinux.org> 1.1.40-alt1.2
 - Rebuild for updated dependencies.
 

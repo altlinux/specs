@@ -3,7 +3,6 @@
 %def_disable devel
 %def_disable profile
 %def_enable shared
-%def_enable static
 %def_disable uyield
 %def_enable zlib
 %def_enable bzip
@@ -22,7 +21,7 @@ Name: tokyocabinet
 %define lname lib%name
 Summary: A modern implementation of a DBM
 Version: 1.4.47
-Release: alt2
+Release: alt3
 License: %lgpl2plus
 Group: Databases
 Packager: Vladimir Lettiev <crux@altlinux.org>
@@ -92,24 +91,6 @@ This package contains the libraries and header files needed for
 developing with %lname.
 
 
-%if_enabled static
-%package -n %lname-devel-static
-Summary: Static version of %Name database library
-Group: Development/C
-Requires: %lname-devel = %version-%release
-
-%description -n %lname-devel-static
-%Name is a library of routines for managing a database. It is
-the successor of QDBM. %Name runs very fast. For example, the
-time required to store 1 million records is 1.5 seconds for a hash
-database and 2.2 seconds for a B+ tree database. Moreover, the database
-size is very small and can be up to 8EB. Furthermore, the scalability
-of %Name is great.
-This package contains static libraries for building statically linked
-programs which use %Name.
-%endif
-
-
 %package doc
 Summary: Documentation for %Name
 Group: Documentation
@@ -159,6 +140,7 @@ bzip2 --best %buildroot%_datadir/%name/ChangeLog
 install -d -m 0755 %buildroot%_docdir
 mv %buildroot{%_datadir/%name,%_docdir/%name-%version}
 
+rm -fv %buildroot%_libdir/*.a
 
 %check
 %make_build check
@@ -183,17 +165,14 @@ mv %buildroot{%_datadir/%name,%_docdir/%name-%version}
 %_man3dir/*
 
 
-%if_enabled static
-%files -n %lname-devel-static
-%_libdir/*.a
-%endif
-
-
 %files doc
 %_docdir/%name-%version
 
 
 %changelog
+* Fri Oct 15 2021 Grigory Ustinov <grenka@altlinux.org> 1.4.47-alt3
+- Fixed FTBFS.
+
 * Mon Mar 02 2020 Dmitry V. Levin <ldv@altlinux.org> 1.4.47-alt2
 - Rebuilt.
 

@@ -2,7 +2,6 @@
 %def_disable devel
 %def_disable profile
 %def_enable shared
-%def_enable static
 %def_enable zlib
 %def_disable check
 #----------------------------------------------------------------------
@@ -12,7 +11,7 @@ Name: tokyodystopia
 %define lname lib%name
 Summary: A full-text search system for Tokyo Cabinet
 Version: 0.9.13
-Release: alt2.qa1
+Release: alt3
 License: %lgpl2plus
 Group: Databases
 URL: http://tokyocabinet.sourceforge.net/
@@ -60,19 +59,6 @@ This package contains the libraries and header files needed for
 developing with %lname.
 
 
-%if_enabled static
-%package -n %lname-devel-static
-Summary: Static version of %Name database library
-Group: Development/C
-Requires: %lname-devel = %version-%release
-
-%description -n %lname-devel-static
-%Name is a full-text search system for Tokyo Cabinet.
-This package contains static libraries for building statically linked
-programs which use %Name.
-%endif
-
-
 %package doc
 Summary: Documentation for %Name
 Group: Documentation
@@ -107,6 +93,7 @@ rm -f %buildroot%_datadir/%name/COPYING
 install -d -m 0755 %buildroot%_docdir
 mv %buildroot{%_datadir/%name,%_docdir/%name-%version}
 
+rm -fv %buildroot%_libdir/*.a
 
 %files utils
 %_bindir/*
@@ -127,17 +114,14 @@ mv %buildroot{%_datadir/%name,%_docdir/%name-%version}
 %_man3dir/*
 
 
-%if_enabled static
-%files -n %lname-devel-static
-%_libdir/*.a
-%endif
-
-
 %files doc
 %_docdir/%name-%version
 
 
 %changelog
+* Fri Oct 15 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.13-alt3
+- Fixed FTBFS.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.13-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
