@@ -1,5 +1,5 @@
 Name: buildcache
-Version: 0.26.1
+Version: 0.27.2
 Release: alt1
 
 Summary: a simple compiler accelerator
@@ -36,6 +36,14 @@ cd src
 %_bindir/buildcache
 
 %changelog
+* Fri Oct 15 2021 Ivan Savin <svn17@altlinux.org> 0.27.2-alt1
+- 0.27.2
+- Merge remote-tracking branch 'upstream/master' into sisyphus.
+
+* Thu Oct 14 2021 Ivan Savin <svn17@altlinux.org> 0.27.1-alt1
+- 0.27.1
+- Merge remote-tracking branch 'upstream/master' into sisyphus.
+
 * Thu Apr 01 2021 Ivan Savin <svn17@altlinux.org> 0.26.1-alt1
 - 0.26.1
 - Returns code of unbundled libraries.
