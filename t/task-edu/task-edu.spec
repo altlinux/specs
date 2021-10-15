@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.5.0
-Release: alt1
+Release: alt2
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
 Group:   Education
@@ -119,11 +119,13 @@ Requires: openssh-server
 %else
 %define lo_name LibreOffice
 %endif
+%ifnarch armh
 Requires: %{lo_name}-extensions
 Requires: %{lo_name}-integrated
 Requires: %{lo_name}-gtk3
 Requires: %{lo_name}-langpack-ru
 Requires: libreoffice-languagetool
+%endif
 Requires: mythes-ru
 Requires: hyphen-ru
 Requires: gst-plugins-bad
@@ -361,7 +363,9 @@ Requires: kde5-edu
 Requires: kde5-printing
 Requires: kde5-scanning
 Requires: kde5-connect
-Requires: LibreOffice-still-kde5
+%ifnarch armh
+Requires: %{lo_name}-kde5
+%endif
 Requires: nextcloud-client-kde5
 Requires: branding-alt-education-kde-settings
 %description kde5
@@ -512,6 +516,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Thu Oct 14 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt2
+- LibreOffice was not built on armh.
+
 * Mon Sep 20 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt1
 - Move utilities to distribution profile and package task-edu-tools.
 

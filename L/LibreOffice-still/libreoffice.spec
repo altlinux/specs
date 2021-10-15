@@ -25,7 +25,7 @@
 
 Name: LibreOffice-still
 %define hversion 7.1
-%define urelease 5.2
+%define urelease 6.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -37,6 +37,11 @@ Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
 Group: Office
 URL: http://www.libreoffice.org
+
+# [00:22:16] /bin/sh: line 1:  8356 Aborted                 ( LD_LIBRARY_PATH=${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}"$I/program:$I/program" $I/program/gengal.bin --build-tree --destdir file://$S/extras/source/gallery --name "sounds" --path $W/Gallery/sounds --filenames file://$RESPONSEFILE ) > $W/Gallery/sounds.done.log 2>&1
+#[00:22:16] munmap_chunk(): invalid pointer
+#[00:22:16] make[1]: *** [/usr/src/RPM/BUILD/libreoffice-7.1.6.2/solenv/gbuild/Gallery.mk:56: /usr/src/RPM/BUILD/libreoffice-7.1.6.2/workdir/Gallery/sounds.done] Error 1
+ExcludeArch: armh
 
 Requires: %name-integrated = %EVR
 Requires: %name-common = %EVR
@@ -88,11 +93,9 @@ Patch5: 0001-Get-rid-of-apache-commons-logging.patch
 Patch6: 0001-gtk3-workaround-missing-gdk_threads_enter-calls-in-e.patch
 Patch7: 0001-Replace-inet_ntoa-with-inet_ntop.patch
 Patch8: 0001-Simplify-construction-of-a-hardcoded-IPv4-address.patch
-Patch9: 0001-Remove-unused-DOCTYPE-from-odk-examples-xcu-file.patch
 Patch10: 0001-math.desktop-include-Spreadsheet-category.patch
 Patch11: 0001-rhbz-1980800-allow-convert-to-csv-to-write-each-shee.patch
 Patch12: 0001-make-with-idlc-cpp-cpp-work-for-gcc-cpp-as-a-ucpp-re.patch
-Patch13: 0001-Resolves-tdf-132739-two-style-tags-where-there-shoul.patch
 # not upstreamed
 Patch14: 0001-disable-libe-book-support.patch
 
@@ -347,11 +350,9 @@ echo Direct build
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
-%patch13 -p1
 %patch14 -p1
 
 ## ALT apply patches
@@ -703,6 +704,13 @@ install -pm0644 %SOURCE507 %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Sep 13 2021 Andrey Cherepanov <cas@altlinux.org> 7.1.6.2-alt1
+- New version.
+- Security fixes:
+  + CVE-2021-25633 Content Manipulation with Double Certificate Attack
+  + CVE-2021-25634 Timestamp Manipulation with Signature Wrapping
+  + CVE-2021-25635 Content Manipulation with Certificate Validation Attack
+
 * Fri Aug 20 2021 Andrey Cherepanov <cas@altlinux.org> 7.1.5.2-alt1
 - New version.
 - Use gtk3-kde5 vcl instead of kde5 due to incorrect icon scaling.
