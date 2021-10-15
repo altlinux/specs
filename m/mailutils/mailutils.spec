@@ -1,4 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 # http://lists.altlinux.org/pipermail/devel/2012-February/193243.html
 %def_disable python
@@ -23,7 +27,7 @@ Release: alt0.%snapshotdate.1
 %define srcdir %name-%snapshotdate
 %else
 Version: %baseversion
-Release: alt1
+Release: alt2
 %define srcdir %name-%version
 %endif
 
@@ -469,6 +473,9 @@ done
 %endif
 
 %changelog
+* Fri Oct 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.12-alt2
+- Fixed build with LTO
+
 * Mon Mar 01 2021 Sergey Y. Afonin <asy@altlinux.org> 3.12-alt1
 - New version
 - Enabled standard streams tests for all architectures
