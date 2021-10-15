@@ -25,7 +25,7 @@ BuildRequires: /usr/bin/dot /usr/bin/gpg /usr/bin/openssl perl(Class/Accessor.pm
 #add_findreq_skiplist /usr/libexec/perl5-tests/*
 # end hacks =======================
 BuildRequires: perl(Data/Perl/Role/Collection/Array.pm) perl(Encode/Guess.pm)
-%define fedora 31
+%define fedora 34
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -37,7 +37,7 @@ BuildRequires: perl(Data/Perl/Role/Collection/Array.pm) perl(Encode/Guess.pm)
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name rt
 #
-# Copyright (c) 2005-2020, Ralf Corsepius, Ulm, Germany.
+# Copyright (c) 2005-2021, Ralf Corsepius, Ulm, Germany.
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
 #
@@ -76,8 +76,8 @@ BuildRequires: perl(Data/Perl/Role/Collection/Array.pm) perl(Encode/Guess.pm)
 %global RT_STATICDIR		%{_datadir}/%{name}/static
 
 Name:		rt
-Version:	4.4.4
-Release:	alt1_7
+Version:	4.4.5
+Release:	alt1_4
 Summary:	Request tracker
 
 License:	GPLv2+
@@ -96,6 +96,7 @@ Patch1: 0001-Add-Fedora-configuration.patch
 Patch2: 0002-Use-usr-bin-perl-instead-of-usr-bin-env-perl.patch
 Patch3: 0003-Remove-fixperms-font-install.patch
 Patch4: 0004-Fix-permissions.patch
+Patch5: 0005-Do-not-install-cpanfile.patch
 
 BuildArch:	noarch
 
@@ -136,6 +137,9 @@ BuildRequires: perl(Digest/MD5.pm)
 BuildRequires: perl(Email/Address.pm)
 BuildRequires: perl(Email/Address/List.pm)
 BuildRequires: perl(Encode.pm)
+%if "%{version}" >= "5.0.0"
+BuildRequires: perl(Encode/Detect/Detector.pm)
+%endif
 BuildRequires: perl(Encode/HanExtra.pm)
 # In rt-test-dependencies, but seemingly unused
 BuildRequires: perl(Errno.pm)
@@ -148,12 +152,22 @@ BuildRequires: perl(File/Which.pm)
 BuildRequires: perl(GD.pm)
 BuildRequires: perl(GD/Graph.pm)
 BuildRequires: perl(GD/Text.pm)
+%if (("%{version}" >= "4.4.5") && ("%{version}" < "5.0.0")) || ("%{version}" >= "5.0.2")
 BuildRequires: perl(GnuPG/Interface.pm)
+%else
+BuildRequires: perl(GnuPG/Interface.pm)
+%endif
 BuildRequires: perl(GraphViz.pm)
 BuildRequires: perl(Getopt/Long.pm)
 BuildRequires: perl(HTML/Entities.pm)
+%if "%{version}" >= "5.0.0"
+BuildRequires: perl(HTML/FormatExternal.pm)
+%endif
 BuildRequires: perl(HTML/FormatText/WithLinks.pm)
 BuildRequires: perl(HTML/FormatText/WithLinks/AndTables.pm)
+%if "%{version}" >= "5.0.0"
+BuildRequires: perl(HTML/Gumbo.pm)
+%endif
 BuildRequires: perl(HTML/Mason.pm)
 BuildRequires: perl(HTML/Mason/PSGIHandler.pm)
 BuildRequires: perl(HTML/Quoted.pm)
@@ -182,8 +196,16 @@ BuildRequires: perl(LWP/Protocol/https.pm)
 BuildRequires: perl(Mail/Mailer.pm)
 BuildRequires: perl(MIME/Entity.pm)
 BuildRequires: perl(MIME/Types.pm)
+%if "%{version}" >= "5.0.0"
+BuildRequires: perl(Module/Path.pm)
+%endif
 %{?with_devel_mode:BuildRequires: perl(Module/Refresh.pm)}
 BuildRequires: perl(Module/Versions/Report.pm)
+%if "%{version}" >= "5.0.0"
+BuildRequires: perl(Moose.pm)
+BuildRequires: perl(MooseX/NonMoose.pm)
+BuildRequires: perl(MooseX/Role/Parameterized.pm)
+%endif
 # In rt-test-dependencies, but seemingly unused
 BuildRequires: perl(Mozilla/CA.pm)
 BuildRequires: perl(Mojo/DOM.pm)
@@ -191,6 +213,12 @@ BuildRequires: perl(Net/CIDR.pm)
 BuildRequires: perl(Net/IP.pm)
 # In rt-test-dependencies, but seemingly unused
 BuildRequires: perl(Net/SSLeay.pm)
+%if (("%{version}" >= "4.4.5") && ("%{version}" < "5.0.0")) || ("%{version}" >= "5.0.2")
+BuildRequires: perl(Parallel/ForkManager.pm)
+%endif
+%if "%{version}" >= "5.0.0"
+BuildRequires: perl(Path/Dispatcher.pm)
+%endif
 # In rt-test-dependencies, but seemingly unused
 BuildRequires: perl(PerlIO/eol.pm)
 BuildRequires: perl(Pod/Usage.pm)
@@ -227,12 +255,18 @@ BuildRequires: perl(Text/Password/Pronounceable.pm)
 BuildRequires: perl(Text/Quoted.pm)
 BuildRequires: perl(Text/Template.pm)
 BuildRequires: perl(Text/WikiFormat.pm)
+%if "%{version}" >= "5.0.1"
+BuildRequires: perl(Text/WordDiff.pm)
+%endif
 BuildRequires: perl(Text/Wrapper.pm)
 BuildRequires: perl(Time/HiRes.pm)
 BuildRequires: perl(Time/ParseDate.pm)
 BuildRequires: perl(Tree/Simple.pm)
 BuildRequires: perl(UNIVERSAL/require.pm)
 BuildRequires: perl(URI/QueryParam.pm)
+%if "%{version}" >= "5.0.0"
+BuildRequires: perl(Web/Machine.pm)
+%endif
 %{?with_devel_mode:BuildRequires: perl(WWW/Mechanize.pm)}
 BuildRequires: perl(XML/RSS.pm)
 %{?with_devel_mode:BuildRequires: perl(XML/Simple.pm)}
@@ -248,17 +282,17 @@ BuildRequires:	/usr/sbin/apachectl
 
 %if 0%{fedora} > 31
 # the original sources carry bundled versions of these ...
-Requires:  /usr/share/fonts/ttf/google-droid-sans-fonts/DroidSansFallbackFull.ttf
-Requires:  /usr/share/fonts/ttf/google-droid-sans-fonts/DroidSans.ttf
-# ... we use symlinks to the system-wide versions ...
-BuildRequires:  /usr/share/fonts/ttf/google-droid-sans-fonts/DroidSansFallbackFull.ttf
-BuildRequires:  /usr/share/fonts/ttf/google-droid-sans-fonts/DroidSans.ttf
-%else
-# the original sources carry bundled versions of these ...
-Requires:  /usr/share/fonts/ttf/google-droid/DroidSansFallback.ttf
+#Requires:  /usr/share/fonts/ttf/google-droid/DroidSansFallbackFull.ttf
 Requires:  /usr/share/fonts/ttf/google-droid/DroidSans.ttf
 # ... we use symlinks to the system-wide versions ...
-BuildRequires:	/usr/share/fonts/ttf/google-droid/DroidSansFallback.ttf
+#BuildRequires:  /usr/share/fonts/ttf/google-droid/DroidSansFallbackFull.ttf
+BuildRequires:  /usr/share/fonts/ttf/google-droid/DroidSans.ttf
+%else
+# the original sources carry bundled versions of these ...
+#Requires:  /usr/share/fonts/ttf/google-droid/DroidSansFallback.ttf
+Requires:  /usr/share/fonts/ttf/google-droid/DroidSans.ttf
+# ... we use symlinks to the system-wide versions ...
+#BuildRequires:	/usr/share/fonts/ttf/google-droid/DroidSansFallback.ttf
 BuildRequires:	/usr/share/fonts/ttf/google-droid/DroidSans.ttf
 %endif
 
@@ -274,10 +308,7 @@ Requires: perl(Data/Page/Pageset.pm)
 Requires: perl(Data/ICal.pm)
 Requires: perl(Data/ICal/Entry/Event.pm)
 %{?with_mysql:Requires: perl(DBD/mysql.pm) >= 2.101.800}
-# This should be: Requires: perl(DBD::Pg) != 3.3.0
-# cf. RHBZ#1138926
 %{?with_pg:Requires: perl(DBD/Pg.pm)}
-%{?with_pg:Conflicts: perl(DBD/Pg.pm) == 3.3.0}
 Requires: perl(DateTime/Format/Natural.pm) >= 0.670
 Requires: perl(Log/Dispatch/Perl.pm)
 Requires: perl(GD/Text.pm)
@@ -290,6 +321,7 @@ Requires: perl(IPC/Run3.pm)
 Requires: perl(LWP/MediaTypes.pm)
 Requires: perl(mod_perl2.pm)
 Requires: perl(Module/Versions/Report.pm)
+Requires: perl(Net/IP.pm)
 Requires: perl(PerlIO/eol.pm)
 Requires: perl(Plack/Middleware/Test/StashWarnings.pm) >= 0.060
 Requires: perl(Plack/Handler/Starlet.pm)
@@ -311,7 +343,7 @@ Requires: rt-mailgate
 
 
 
-# Work-around rpm's depgenerator defect: 
+# Work-around rpm's depgenerator defect:
 
 
 # Filter redundant provides
@@ -412,6 +444,9 @@ while read a; do b=$(echo "$a" | sed -e 's,\.in$,,'); rm "$b"; done
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%if "%{version}" >= "5.0.0"
+%patch5 -p1
+%endif
 
 # Propagate rpm's directories to config.layout
 cat << \EOF >> config.layout
@@ -532,11 +567,11 @@ ln -s %{_datadir}/%{name}/upgrade ${RPM_BUILD_ROOT}%{_sysconfdir}/%{name}/upgrad
 
 install -d -m755 ${RPM_BUILD_ROOT}%{RT_FONTSDIR}
 %if 0%{fedora} > 31
-ln -s /usr/share/fonts/ttf/google-droid-sans-fonts/DroidSans.ttf ${RPM_BUILD_ROOT}%{RT_FONTSDIR}/DroidSans.ttf
-ln -s /usr/share/fonts/ttf/google-droid-sans-fonts/DroidSansFallbackFull.ttf ${RPM_BUILD_ROOT}%{RT_FONTSDIR}/DroidSansFallback.ttf
+ln -s /usr/share/fonts/ttf/google-droid/DroidSans.ttf ${RPM_BUILD_ROOT}%{RT_FONTSDIR}/DroidSans.ttf
+#ln -s /usr/share/fonts/ttf/google-droid/DroidSansFallbackFull.ttf ${RPM_BUILD_ROOT}%{RT_FONTSDIR}/DroidSansFallback.ttf
 %else
 ln -s /usr/share/fonts/ttf/google-droid/DroidSans.ttf ${RPM_BUILD_ROOT}%{RT_FONTSDIR}/DroidSans.ttf
-ln -s /usr/share/fonts/ttf/google-droid/DroidSansFallback.ttf ${RPM_BUILD_ROOT}%{RT_FONTSDIR}/DroidSansFallback.ttf
+#ln -s /usr/share/fonts/ttf/google-droid/DroidSansFallback.ttf ${RPM_BUILD_ROOT}%{RT_FONTSDIR}/DroidSansFallback.ttf
 %endif
 install -d -m755 ${RPM_BUILD_ROOT}%{perl_testdir}/%{name}
 cp -R t ${RPM_BUILD_ROOT}%{perl_testdir}/%{name}
@@ -658,6 +693,9 @@ fi
 %endif
 
 %changelog
+* Fri Oct 15 2021 Igor Vlasenko <viy@altlinux.org> 4.4.5-alt1_4
+- new version
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 4.4.4-alt1_7
 - fixed build
 
