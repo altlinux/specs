@@ -17,7 +17,7 @@
 
 Name: glusterfs9
 Version: %major
-Release: alt1
+Release: alt2
 
 Summary: Cluster File System
 
@@ -34,6 +34,7 @@ Source3: umount.glusterfs
 Source4: glusterfs.logrotate
 Source7: glusterd.init
 Source8: glustereventsd.init
+Patch2000: glusterfs9-e2k.patch
 
 Patch: 0001-afr_selfheal_do-return-EIO-if-inode-type-is-not-IA_I.patch
 
@@ -71,7 +72,10 @@ BuildRequires: python3-dev
 # liblvm2-devel: disable bd translator (uses obsoleted liblvm2app.so from liblvm2)
 
 BuildRequires: flex libacl-devel libaio-devel libdb4-devel libreadline-devel libsqlite3-devel libuuid-devel libxml2-devel
-BuildRequires: libssl-devel libcurl-devel zlib-devel liburing-devel
+BuildRequires: libssl-devel libcurl-devel zlib-devel
+%ifnarch %e2k
+BuildRequires: liburing-devel
+%endif
 BuildRequires: libtirpc-devel
 # glibc-utils on p9
 BuildRequires: /usr/bin/rpcgen
@@ -421,6 +425,9 @@ like Pacemaker.
 %prep
 %setup
 %patch -p1
+%ifarch %e2k
+%patch2000 -p2
+%endif
 %__subst "s|python ||" tools/gfind_missing_files/gfind_missing_files.sh
 # Increase soname version of libs to major version
 %__subst "s|VERSION=\"0:\([01]\):0\"|VERSION=\"%somajor:\1:0\"|" configure.ac
@@ -441,6 +448,9 @@ export PYTHON=%__python3
   %{subst_enable fusermount} \
   %{subst_enable georeplication} \
   %{subst_with ocf} \
+%ifarch %e2k
+  --disable-linux-io_uring \
+%endif
   --with-systemddir=%_unitdir \
   --localstatedir=/var/
   
@@ -763,6 +773,9 @@ rm -rf %buildroot%_includedir/glusterfs/
 #files checkinstall
 
 %changelog
+* Sat Oct 16 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 9.3-alt2
+- added patch for Elbrus
+
 * Fri Jul 09 2021 Vitaly Lipatov <lav@altlinux.ru> 9.3-alt1
 - new version 9.3 (with rpmrb script)
 
