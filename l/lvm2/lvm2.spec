@@ -1,4 +1,5 @@
 %define _unpackaged_files_terminate_build 1
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 %define lvm2version 2.03.13
 %define dmversion 1.02.179
@@ -29,7 +30,7 @@
 Summary: Userland logical volume management tools
 Name: lvm2
 Version: %lvm2version
-Release: alt1
+Release: alt2
 License: GPLv2+ AND LGPL-2.1+
 
 Group: System/Base
@@ -493,6 +494,9 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %endif
 
 %changelog
+* Sat Oct 16 2021 Andrew A. Vasilyev <andy@altlinux.org> 2.03.13-alt2
+- FTBFS: fixed build with lto.
+
 * Wed Aug 18 2021 Alexey Shabalin <shaba@altlinux.org> 2.03.13-alt1
 - 2.03.13
 
