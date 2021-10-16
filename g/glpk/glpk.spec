@@ -1,128 +1,145 @@
-Name: glpk
-Version: 4.48
-Release: alt1
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name glpk
+%define lib_major		40
+%define lib_name		lib%{name}%{lib_major}
 
-Summary: GNU Linear Programming Kit
-License: GPL
-Group: Development/Other
-Url: http://www.gnu.org/software/glpk/glpk.html
+%define lib_name_devel		lib%{name}-devel
 
-Source0: %name-%version.tar.gz
-Requires: lib%name = %version-%release
+Summary:	GLPK glpsol utility
+Name:		glpk
+Version:	5.0
+Release:	alt1_1
+License:	GPLv3+
+Group:		Sciences/Mathematics
+URL:		http://www.gnu.org/software/glpk/glpk.html
+Source0:	http://ftp.gnu.org/gnu/%{name}/%{name}-%{version}.tar.gz
+BuildRequires:	libgmp-devel
+BuildRequires:	texlive
+BuildRequires:	makeinfo texi2dvi
+BuildRequires:	texlive-dist
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
+BuildRequires:  libgmp-devel
+BuildRequires:  pkgconfig(zlib)
+BuildRequires:  libsuitesparse-devel
 
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Obsoletes: %{name}4
-Conflicts: %{name}4
-
-BuildRequires: glibc-devel-static zlib-devel libgmp-devel libltdl7-devel
-
-%package -n lib%name
-Summary: GNU Linear Programming Kit shared libraries
-Group: System/Libraries
-Obsoletes: lib%{name}4
-Conflicts: lib%{name}4
-
-%package -n lib%name-devel
-Summary: Development headers and files for GLPK
-Group: Development/C
-Requires: lib%name = %version-%release, pkgconfig
-Provides: lib%{name}4-devel = %version-%release
-Obsoletes: lib%{name}4-devel < %version-%release
-Conflicts: lib%{name}4-devel < %version-%release
-
-%package -n lib%name-devel-doc
-Summary: Development documentation for GLPK
-Group: Development/Documentation
-BuildArch: noarch
-Obsoletes: lib%{name}4-devel-doc
-Conflicts: lib%{name}4-devel-doc
+# Un-bundle zlib (#1102855). Upstream won't accept; they want to be
+# ANSI-compatible, and zlib makes POSIX assumptions.
+Patch0:         %{name}-4.65-unbundle-zlib.patch
+# Unbundle suitesparse
+Patch1:         %{name}-4.65-unbundle-suitesparse.patch
+# Fix violations of the ANSI C strict aliasing rules
+Patch2:         %{name}-4.65-alias.patch
+# See http://lists.gnu.org/archive/html/bug-glpk/2018-03/msg00000.html
+Patch3:         %{name}-4.65-sagemath.patch
+Source44: import.info
 
 %description
-The glpk (GNU Linear Programming Kit) package is intended for solving
+The GLPK (GNU Linear Programming Kit) package is intended for solving
 large-scale linear programming (LP), mixed integer programming (MIP),
 and other related problems. It is a set of routines written in ANSI C
 and organized in the form of a callable library.
 
-glpk supports the GNU MathProg language, which is a subset of the AMPL
-language.
+This package contains the utility glpsol.
 
-The glpk package includes the following main components:
+%package -n %{lib_name}
+Summary:	GLPK shared libraries
+Group:		Sciences/Mathematics
+Obsoletes:	%{name} < %{version}
 
- * Revised simplex method.
- * Primal-dual interior point method.
- * Branch-and-bound method.
- * Translator for GNU MathProg.
- * Application program interface (API).
- * Stand-alone LP/MIP solver.
-
-%description -n lib%name
-The glpk (GNU Linear Programming Kit) package is intended for solving
+%description -n %{lib_name}
+The GLPK (GNU Linear Programming Kit) package is intended for solving
 large-scale linear programming (LP), mixed integer programming (MIP),
 and other related problems. It is a set of routines written in ANSI C
 and organized in the form of a callable library.
 
-This package contains shared library required for run glpk-based software.
+This package contains the library needed to run programs dynamically
+linked with GLPK.
 
-%description -n lib%name-devel
-The glpk (GNU Linear Programming Kit) package is intended for solving
+%package -n %{lib_name_devel}
+Summary:	Header files for development with GLPK
+Group:		Development/C
+Requires:	%{lib_name} = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
+
+%description -n %{lib_name_devel}
+The GLPK (GNU Linear Programming Kit) package is intended for solving
 large-scale linear programming (LP), mixed integer programming (MIP),
 and other related problems. It is a set of routines written in ANSI C
 and organized in the form of a callable library.
 
-This package contains headers and files for developing applications
-which use glpk (GNU Linear Programming Kit).
+This package contains the headers needed to develop applications using
+GLPK.
 
-%description -n lib%name-devel-doc
-The glpk (GNU Linear Programming Kit) package is intended for solving
-large-scale linear programming (LP), mixed integer programming (MIP),
-and other related problems. It is a set of routines written in ANSI C
-and organized in the form of a callable library.
+%package        doc	
+Group: Sciences/Mathematics
+Summary:        Documentation for %{name}
+BuildArch: noarch
 
-This package contains documentation for developing applications
-which use glpk (GNU Linear Programming Kit).
+%description    doc
+Documentation subpackage for %{name}.
 
 %prep
-%setup
+%setup -q
 
 %build
-%add_optflags %optflags_shared
-%autoreconf
-%configure \
-	--includedir=%_includedir/%name \
-	--enable-dl \
-	--with-gmp \
-	--with-zlib
-sed -i -e '1a\echo=echo' libtool
+export LIBS=-ldl
+
+# Need to rebuild src/Makefile.in from src/Makefile.am
+autoreconf -ifs
+
+%configure --disable-static --with-gmp --enable-dl=dlfcn
+# Get rid of undesirable hardcoded rpaths; workaround libtool reordering
+# -Wl,--as-needed after all the libraries.
+ sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
+     -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
+     -e 's|CC="\(g..\)"|CC="\1 -Wl,--as-needed"|' \
+     -i libtool
 %make_build
 
+# Trust Knuth to produce a single-pass compiler for a multiple-pass language.
+pushd doc
+pdflatex -interaction=nonstopmode -file-line-error-style glpk.tex && \
+pdflatex -interaction=nonstopmode -file-line-error-style glpk.tex && \
+pdflatex -interaction=nonstopmode -file-line-error-style glpk.tex
+popd
+
 %install
-%makeinstall_std
+make install prefix=$RPM_BUILD_ROOT%{_prefix} \
+	bindir=$RPM_BUILD_ROOT%{_bindir} libdir=$RPM_BUILD_ROOT%{_libdir} \
+	includedir=$RPM_BUILD_ROOT%{_includedir}
+rm -f %{buildroot}%{_libdir}/*.la
+	
+%check
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$RPM_BUILD_ROOT%{_libdir}"
+make check
+## Clean up directories that are included in docs
+rm -Rf examples/{.deps,.libs,Makefile*,glpsol,glpsol.o} doc/*.tex
 
-install -d %buildroot%_docdir/%name
-cp -fR doc/* %buildroot%_docdir/%name/
-rm -fR examples/.libs
-rm -f examples/*.o
-cp -fR examples %buildroot%_docdir/%name/
+%files
+%{_bindir}/glpsol
 
-ln -s glpk/glpk.h %buildroot%_includedir
+%files -n %{lib_name}
+%{_libdir}/*.so.%{lib_major}
+%{_libdir}/*.so.%{lib_major}.*
 
-%files 
-%_bindir/*
+%files -n %{lib_name_devel}
+%doc examples doc/*.txt doc/*.pdf AUTHORS ChangeLog NEWS README
+%doc --no-dereference COPYING
+%{_includedir}/*
+%{_libdir}/*.so
 
-%files -n lib%name
-%_libdir/*.so.*
+%files doc
+%doc doc examples
 
-%files -n lib%name-devel
-%_includedir/*
-%_libdir/*.so
-#_libdir/pkgconfig/*
-%doc AUTHORS ChangeLog COPYING NEWS README THANKS
-
-%files -n lib%name-devel-doc
-%_docdir/%name
 
 %changelog
+* Sat Oct 16 2021 Igor Vlasenko <viy@altlinux.org> 5.0-alt1_1
+- new version
+
 * Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.48-alt1
 - Version 4.48
 
