@@ -7,7 +7,7 @@ Name: kernel-image-drm-tip
 %define kernel_source_version	5.12
 %define kernel_base_version	5.15
 %define kernel_sublevel .0
-%define kernel_extra_version	+rc5.20211014
+%define kernel_extra_version	+rc5.20211015
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1
 
@@ -117,6 +117,10 @@ head .config
 # Experimentally reduce debuginfo for this also experimental package,
 # should be enough for stack traces, but not for BPF/BTF.
 scripts/config -e DEBUG_INFO_REDUCED
+# Enable Intel GVT-g graphics virtualization host support
+# based on https://github.com/intel/gvt-linux/wiki/GVTg_Setup_Guide#322-build-kernel-source
+scripts/config -e VFIO_MDEV -e VFIO_MDEV_DEVICE \
+	-e DRM_I915_GVT -e DRM_I915_GVT_KVMGT -e DRM_I915_GVT_XENGT
 
 %make_build olddefconfig
 %make_build bzImage
@@ -218,6 +222,6 @@ fi
 %modules_dir/build
 
 %changelog
-* Fri Oct 15 2021 Kernel Pony <kernelpony@altlinux.org> 5.15.0+rc5.20211014-alt1
-- drm-tip 2021y-10m-14d-20h-32m-11s (9fedda3a0fa2).
+* Sun Oct 17 2021 Kernel Pony <kernelpony@altlinux.org> 5.15.0+rc5.20211015-alt1
+- drm-tip 2021y-10m-15d-18h-38m-14s (dc405215cfab).
 
