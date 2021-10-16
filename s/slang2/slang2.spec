@@ -1,9 +1,10 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %define _unpackaged_files_terminate_build 1
 %def_enable static
 
 Name: slang2
 Version: 2.3.2
-Release: alt4
+Release: alt5
 
 Summary: The shared library for the S-Lang extension language
 License: GPL-2.0-or-later
@@ -157,6 +158,9 @@ export TERM="xterm"
 %endif
 
 %changelog
+* Sat Oct 16 2021 Anton Farygin <rider@altlinux.ru> 2.3.2-alt5
+- fixed build with LTO
+
 * Wed Jan 01 2020 Sergey Y. Afonin <asy@altlinux.org> 2.3.2-alt4
 - enabled LFS support
 - updated %%License to SPDX syntax
