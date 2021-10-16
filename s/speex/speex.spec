@@ -2,7 +2,7 @@
 
 Name: speex
 Version: 1.2
-Release: alt1
+Release: alt2
 Summary: An open-source, patent-free speech codec
 License: BSD-style
 Group: Sound
@@ -65,6 +65,7 @@ Speex-based software.
 %setup
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %add_optflags -DRELEASE
 %autoreconf -fisv
 %configure \
@@ -107,6 +108,9 @@ install -m 0644 COPYING AUTHORS NEWS README %buildroot%pkgdocdir/
 %endif
 
 %changelog
+* Sat Oct 16 2021 Arseny Maslennikov <arseny@altlinux.org> 1.2-alt2
+- Built static libraries with -ffat-lto-objects.
+
 * Mon Jun 04 2018 Anton Farygin <rider@altlinux.ru> 1.2-alt1
 - updated to 1.2 release
 
