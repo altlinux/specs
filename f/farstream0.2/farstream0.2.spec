@@ -11,7 +11,7 @@
 
 Name: %_name%api_ver
 Version: 0.2.9.1
-Release: alt0.2
+Release: alt0.3
 
 Summary: A audio/video conferencing framework (0.2)
 Group: System/Libraries
@@ -21,9 +21,11 @@ Url: http://www.freedesktop.org/wiki/Software/Farstream
 %if_disabled snapshot
 Source: http://freedesktop.org/software/%_name/releases/%_name/%_name-%version.tar.gz
 %else
-#VCS: https://gitlab.freedesktop.org/farstream/farstream.git
+Vcs: https://gitlab.freedesktop.org/farstream/farstream.git
 Source: %_name-%version.tar
 %endif
+#https://gitlab.freedesktop.org/farstream/farstream/-/merge_requests/7
+Patch: farstream-0.2.9-up-drop_volatile_qualifiers.patch
 
 %define nice_ver 0.1.8
 %define gst_ver 1.4
@@ -35,10 +37,11 @@ Conflicts: farsight2
 Requires: lib%name = %version-%release
 Requires: gst-plugins-nice%gst_api_ver gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: libgio-devel >= %glib_ver libnice-devel >= %nice_ver
 BuildRequires: gst-plugins%gst_api_ver-devel >= %gst_ver
 BuildRequires: libgupnp-igd-devel gtk-doc
-BuildRequires: rpm-build-python3 python3-module-gst%gst_api_ver python3-module-pygobject3-devel
+BuildRequires: python3-dev python3-module-gst%gst_api_ver python3-module-pygobject3-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgstreamer%gst_api_ver-gir-devel}
 %{?_enable_check:BuildRequires: libgupnp%gupnp_api_ver-devel}
 
@@ -102,6 +105,7 @@ This package provides development documentation for the Farstream library.
 
 %prep
 %setup -n %_name-%version
+%patch -p1
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -111,7 +115,8 @@ This package provides development documentation for the Farstream library.
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	PYTHON=%__python3
 %nil
-%make_build
+#SMP-incomaptible build
+%make
 
 %install
 %makeinstall_std
@@ -156,6 +161,9 @@ This package provides development documentation for the Farstream library.
 
 
 %changelog
+* Sat Oct 16 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.9.1-alt0.3
+- fixed build with GCC11
+
 * Thu Apr 22 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.9.1-alt0.2
 - updated to 0.2.9-5-ge70dcd0a (ported to gupnp-1.2)
 
