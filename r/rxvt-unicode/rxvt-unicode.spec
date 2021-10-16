@@ -1,12 +1,15 @@
 Name: rxvt-unicode
-Version: 9.22
-Release: alt1.2
+Version: 9.26
+Release: alt1
 
 Summary:  rxvt-unicode is a clone of the well known terminal emulator rxvt
-License: GPL
+License: GPL-3.0-or-later
 Group: Terminals
 Url: http://software.schmorp.de/pkg/rxvt-unicode.html
 Packager: Alexey Gladkov <legion@altlinux.ru>
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 AutoReq: yes, noperl
 
@@ -19,12 +22,24 @@ Source: http://dist.schmorp.de/%name/%name-%version.tar.bz2
 Source1: %name.alternatives
 Source2: %name.desktop
 
-Patch1:	rxvt-unicode-alt-change-cutchars.patch
+Patch1: rxvt-unicode-alt-change-cutchars.patch
+Patch2: handle-new-tic-and-dont-install-terminfo.patch
+Patch3: perl-avoiding-recursive-loading.patch
+Patch4: rxvt-unicode-0001-Prefer-XDG_RUNTIME_DIR-over-the-HOME.patch
+Patch5: rxvt-unicode-9.21-xsubpp.patch
 
-# Automatically added by buildreq on Mon May 14 2007
-BuildRequires: gcc-c++ imake libICE-devel libXft-devel libXpm-devel xorg-cf-files
-BuildRequires: alternatives libgdk-pixbuf-devel libstartup-notification-devel
-BuildRequires: perl-devel perl-podlators
+BuildRequires: alternatives
+BuildRequires: gcc-c++
+BuildRequires: perl-devel
+BuildRequires: perl-podlators
+BuildRequires: pkgconfig(fontconfig)
+BuildRequires: pkgconfig(gdk-pixbuf-2.0)
+BuildRequires: pkgconfig(gobject-2.0)
+BuildRequires: pkgconfig(libstartup-notification-1.0)
+BuildRequires: pkgconfig(x11)
+BuildRequires: pkgconfig(xft)
+BuildRequires: pkgconfig(xrender)
+BuildRequires: pkgconfig(xt)
 
 %description
 rxvt-unicode is a clone of the well known terminal emulator rxvt, modified to
@@ -34,10 +49,10 @@ Xft fonts.
 
 %prep
 %setup -q
-%patch1 -p1
+%autopatch -p1
 
 %build
-%autoreconf
+#autoreconf
 %configure \
 	--enable-everything \
 	--enable-256-color \
@@ -47,8 +62,8 @@ Xft fonts.
 %install
 %make_install install DESTDIR=$RPM_BUILD_ROOT
 
-%__install -pD -m644 %SOURCE1 %buildroot/%_altdir/%name
-%__install -pD -m644 %SOURCE2 %buildroot/%_desktopdir/%name.desktop
+install -pD -m644 %SOURCE1 %buildroot/%_altdir/%name
+install -pD -m644 %SOURCE2 %buildroot/%_desktopdir/%name.desktop
 
 %files
 %doc README.FAQ INSTALL doc/README.xvt doc/etc
@@ -61,6 +76,11 @@ Xft fonts.
 %_libdir/urxvt/
 
 %changelog
+* Sat Oct 16 2021 Alexey Gladkov <legion@altlinux.ru> 9.26-alt1
+- New release (9.26).
+- Update license tag.
+- Add patches from SUSE.
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 9.22-alt1.2
 - rebuild with new perl 5.28.1
 
