@@ -1,7 +1,7 @@
 %def_without pgsql
 Name: gnunet
 Version: 0.11.5
-Release: alt1
+Release: alt2
 
 Summary: Peer-to-peer framework
 
@@ -19,7 +19,7 @@ Patch2: gnunet-0.11.0-alt-mysql8-transition.patch
 
 BuildRequires: gcc-c++ libmysqlclient21-devel libgnurl-devel libextractor-devel libgcrypt-devel libglade-devel libncursesw-devel libsqlite3-devel zlib-devel
 #BuildRequires: %_bindir/git %_bindir/svnversion libICE-devel libSM-devel 
-BuildRequires: glib2-devel libglpk36-devel libgnutls-devel libltdl7-devel libmicrohttpd-devel libunistring-devel pkgconfig(libgtop-2.0) python-devel
+BuildRequires: glib2-devel libglpk-devel libgnutls-devel libltdl7-devel libmicrohttpd-devel libunistring-devel pkgconfig(libgtop-2.0) python-devel
 BuildRequires: libpulseaudio-devel libopus-devel libogg-devel
 BuildRequires: libidn2-devel libjansson-devel libzbar-devel
 %if_with pgsql
@@ -277,6 +277,9 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 %_libdir/pkgconfig/gnunetspeaker.pc
 
 %changelog
+* Sat Oct 16 2021 Igor Vlasenko <viy@altlinux.org> 0.11.5-alt2
+- NMU: rebuild with glpk
+
 * Tue Jun 18 2019 Vitaly Lipatov <lav@altlinux.ru> 0.11.5-alt1
 - new version 0.11.5 (with rpmrb script)
 - disable PostgreSQL support
