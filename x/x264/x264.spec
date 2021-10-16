@@ -1,9 +1,10 @@
+%define optflags_lto %nil
 Name: x264
 Version: 148
-Release: alt5
+Release: alt6
 
 Summary: CLI H.264 encoder
-License: GPL
+License: GPLv2
 Group: Video
 Url: http://www.videolan.org/x264.html
 
@@ -83,6 +84,9 @@ install -pm0755 tools/countquant_x264.pl %buildroot%_bindir
 %_bindir/countquant_x264.pl
 
 %changelog
+* Sat Oct 16 2021 Anton Farygin <rider@altlinux.ru> 148-alt6
+- FTBFS: disable LTO
+
 * Wed Jun 13 2018 Anton Farygin <rider@altlinux.ru> 148-alt5
 - rebuilt with ffmpeg-4.0
 
