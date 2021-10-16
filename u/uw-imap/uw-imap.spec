@@ -1,6 +1,7 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: uw-imap
 Version: 2004g
-Release: alt4
+Release: alt5
 
 Summary: Server daemons for IMAP and POP network mail protocols
 License: BSD
@@ -295,6 +296,9 @@ fi
 %endif
 
 %changelog
+* Sat Oct 16 2021 Anton Farygin <rider@altlinux.ru> 2004g-alt5
+- fixed build with LTO
+
 * Tue Sep 04 2018 Anton Farygin <rider@altlinux.ru> 2004g-alt4
 - fixed build with openssl-1.1 with path from debian
 - cleanup specfile from old and unused patches
