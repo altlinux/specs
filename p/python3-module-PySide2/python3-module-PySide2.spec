@@ -1,6 +1,6 @@
 Name: python3-module-PySide2
 Version: 5.15.0
-Release: alt5
+Release: alt6
 
 Summary: Python bindings for the Qt 5 cross-platform application and UI framework
 Group: Development/Python3
@@ -130,8 +130,13 @@ the previous versions (without the 2) refer to Qt 4.
 %patch2 -p2
 
 %build
+%ifarch %e2k
+# Clang ported to Elbrus generates unstable code on -O2
+%global _optlevel 1
+%endif
 export CXX=/usr/bin/clang++
-%cmake -DUSE_PYTHON_VERSION=3
+# CMAKE_CXX_FLAGS is already included -O%_optlevel, so CMAKE_CXX_FLAGS_RELEASE need -O2 removed
+%cmake -DUSE_PYTHON_VERSION=3 -DCMAKE_CXX_FLAGS_RELEASE="-DNDEBUG"
 %cmake_build
 
 %install
@@ -185,6 +190,9 @@ done
 %python3_sitelibdir/shiboken2_generator-*.egg-info/
 
 %changelog
+* Sat Oct 16 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 5.15.0-alt6
+- fixed build for Elbrus
+
 * Mon Sep 20 2021 Andrey Cherepanov <cas@altlinux.org> 5.15.0-alt5
 - FTBFS: fix build with LTO.
 
