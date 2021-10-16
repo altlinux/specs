@@ -1,16 +1,15 @@
 %undefine __libtoolize
 Name:		quesoglc
-License:	LGPL
+License:	LGPLv2.1
 Group:		System/X11
 Summary:	QuesoGLC is a free implementation of SGI's OpenGL Character Renderer (GLC)
 Version:	0.7.2
-Release:	alt2.qa1
+Release:	alt3
 Source:		%name-%version.tar
-Packager:	Anton Farygin <rider@altlinux.ru>
 URL:		http://quesoglc.sourceforge.net/
 
 # Automatically added by buildreq on Thu Sep 11 2008
-BuildRequires: fontconfig-devel gcc-c++ gcc-fortran glibc-devel-static imake libGL-devel libICE-devel libX11-devel libfreetype-devel libfribidi-devel xorg-cf-files libGLU-devel
+BuildRequires: fontconfig-devel gcc-c++ gcc-fortran imake libGL-devel libICE-devel libX11-devel libfreetype-devel libfribidi-devel xorg-cf-files libGLU-devel
 
 %description
 QuesoGLC is a free implementation of SGI's OpenGL Character Renderer (GLC).
@@ -39,7 +38,7 @@ executes the command.
 %setup -q
 
 %build
-%configure
+%configure --disable-static
 %make
 
 %install
@@ -56,6 +55,9 @@ executes the command.
 
 
 %changelog
+* Sat Oct 16 2021 Anton Farygin <rider@altlinux.ru> 0.7.2-alt3
+- fixed build with LTO
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.2-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
