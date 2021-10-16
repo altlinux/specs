@@ -5,8 +5,8 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: catch2
-Version: 2.13.4
-Release: alt2
+Version: 2.13.7
+Release: alt1
 
 Summary: C++ Unit Test framework ("all in one header")
 
@@ -61,12 +61,15 @@ ctest -V
 %doc %_docdir/Catch2/
 %dir %_includedir/catch2/
 %_includedir/catch2/*.hpp
-%_libdir/libCatch2WithMain.a
+#%_libdir/libCatch2WithMain.a
 %_datadir/Catch2/
 %_datadir/cmake/Catch2/
 %_datadir/pkgconfig/catch2.pc
 
 %changelog
+* Sat Oct 16 2021 Pavel Vainerman <pv@altlinux.ru> 2.13.7-alt1
+- new version (2.13.7) with rpmgs script
+
 * Thu Sep 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.13.4-alt2
 - Fixed build with LTO.
 
