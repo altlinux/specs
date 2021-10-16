@@ -17,7 +17,7 @@
 
 Name: glusterfs8
 Version: %major
-Release: alt1
+Release: alt2
 
 Summary: Cluster File System
 
@@ -34,6 +34,7 @@ Source3: umount.glusterfs
 Source4: glusterfs.logrotate
 Source7: glusterd.init
 Source8: glustereventsd.init
+Patch2000: glusterfs8-e2k.patch
 
 # Stop unsupported i586 build
 # Said all is ok: https://bugzilla.redhat.com/show_bug.cgi?id=1473968
@@ -401,6 +402,9 @@ like Pacemaker.
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p2
+%endif
 %__subst "s|python ||" tools/gfind_missing_files/gfind_missing_files.sh
 # Increase soname version of libs to major version
 %__subst "s|VERSION=\"0:\([01]\):0\"|VERSION=\"%somajor:\1:0\"|" configure.ac
@@ -744,6 +748,9 @@ install -p -m 0744 -D extras/command-completion/gluster.bash \
 #files checkinstall
 
 %changelog
+* Sat Oct 16 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 8.4-alt2
+- added patch for Elbrus
+
 * Thu Mar 11 2021 Vitaly Lipatov <lav@altlinux.ru> 8.4-alt1
 - new version 8.4 (with rpmrb script)
 - change BR to /usr/bin/rpcgen (p9 compatibility)
