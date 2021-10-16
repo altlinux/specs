@@ -1,7 +1,7 @@
 %{?optflags_lto:%global optflags_lto %nil}
 Name: freeswitch
 Version: 1.10.6
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -32,7 +32,7 @@ BuildRequires: libnet-snmp-devel libnl-devel libsensors3-devel zlib-devel
 BuildRequires: libuuid-devel postgresql-devel libsofia-sip-devel
 BuildRequires: java-common java-1.8.0-openjdk-devel /proc libavformat-devel libavutil-devel libavresample-devel libswscale-devel
 BuildRequires: libmemcached-devel libopus-devel libbroadvoice-devel libcodec2-devel libImageMagick-devel
-BuildRequires: flite-devel libyuv-devel libfreetype-devel libvpx-devel libsilk-devel libg7221-devel libvlc-devel libavcodec-devel libx264-devel
+BuildRequires: flite-devel libyuv-devel libfreetype-devel libvpx-devel libg7221-devel libvlc-devel libavcodec-devel libx264-devel
 
 %ifarch %ix86 x86_64
 BuildRequires: yasm
@@ -386,7 +386,6 @@ fi
 %_libdir/%name/mod_rtmp.so
 %_libdir/%name/mod_shell_stream.so
 %_libdir/%name/mod_shout.so
-%_libdir/%name/mod_silk.so
 %_libdir/%name/mod_siren.so
 %_libdir/%name/mod_sms.so
 %_libdir/%name/mod_snapshot.so
@@ -539,6 +538,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Sat Oct 16 2021 Anton Farygin <rider@altlinux.ru> 1:1.10.6-alt3
+- built without silk support
+
 * Thu Sep 30 2021 Anton Farygin <rider@altlinux.ru> 1:1.10.6-alt2
 - fixed build with gcc-11.2
 - removed build dependency to external gsmlib (removed from Sisyphus)
