@@ -1,5 +1,5 @@
 Name:     py3c
-Version:  1.3.1
+Version:  1.4
 Release:  alt1
 
 Summary:  A Python 2/3 compatibility layer for C extensions
@@ -48,6 +48,9 @@ make test-python3
 %_datadir/pkgconfig/py3c.pc
 
 %changelog
+* Sat Oct 16 2021 Andrey Cherepanov <cas@altlinux.org> 1.4-alt1
+- New version.
+
 * Thu Jan 07 2021 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt1
 - New version.
 
