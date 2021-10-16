@@ -1,6 +1,6 @@
 Name: hashdeep
 Version: 4.4
-Release: alt1
+Release: alt2
 
 Summary: Compute message digests on an arbitrary number of files
 License: Public domain, GPLv2 (Tiger)
@@ -8,6 +8,8 @@ Group: File tools
 
 Url: https://github.com/jessek/hashdeep
 Source: %name-%version.tar
+# https://src.fedoraproject.org/rpms/md5deep/raw/rawhide/f/md5deep-gcc11.patch
+Patch: md5deep-gcc11.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++
@@ -57,6 +59,7 @@ ma następujące dodatkowe możliwości:
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -72,6 +75,9 @@ ma następujące dodatkowe możliwości:
 %_man1dir/*
 
 %changelog
+* Sat Oct 16 2021 Grigory Ustinov <grenka@altlinux.org> 4.4-alt2
+- Make gcc11 happy.
+
 * Tue May 27 2014 Michael Shigorin <mike@altlinux.org> 4.4-alt1
 - 4.4 (github buid, thanks Maxim Suhanov)
 
