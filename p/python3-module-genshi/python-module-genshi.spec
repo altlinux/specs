@@ -1,8 +1,8 @@
 %define modulename genshi
 
 Name: python3-module-%modulename
-Version: 0.7.4
-Release: alt2
+Version: 0.7.5
+Release: alt1
 
 Summary: A toolkit for stream-based generation of output for the web
 
@@ -97,6 +97,9 @@ This package contains examples for Genshi.
 %doc examples
 
 %changelog
+* Sat Oct 16 2021 Grigory Ustinov <grenka@altlinux.org> 0.7.5-alt1
+- Build new version.
+
 * Fri Nov 13 2020 Vitaly Lipatov <lav@altlinux.ru> 0.7.4-alt2
 - NMU: cleanup spec, don't pack tests, fix tests requires
 
