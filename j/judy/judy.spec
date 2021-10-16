@@ -1,6 +1,8 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 Name: judy
 Version: 1.0.5
-Release: alt4
+Release: alt5
 
 Summary: Judy is a C library that implements a dynamic array
 License: LGPLv2.1
@@ -101,6 +103,9 @@ install -m644 tool/jhton %buildroot%_bindir
 %doc examples
 
 %changelog
+* Sat Oct 16 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.0.5-alt5
+- FTBFS: fixed build with lto
+
 * Fri Sep 20 2019 Michael Shigorin <mike@altlinux.org> 1.0.5-alt4
 - Actually applied patch4 as well, thx at@ (closes: #37243)
 
