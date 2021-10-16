@@ -3,7 +3,7 @@
 
 Name: android-tools
 Version: 10.0.0
-Release: alt2.r36
+Release: alt3.r36
 
 Summary: Android Debug CLI tools
 License: APL
@@ -51,6 +51,7 @@ Patch202: alt-libunwind-fix-ppc64le-build.patch
 Patch203: alt-libadb-fix-attribute-usage.patch
 Patch204: alt-liblp-fix-cstring-header.patch
 Patch205: alt-libunwindstack-dirty-ppc64-compile-fix.patch
+Patch206: alt-libunwindstack-dwarfmemory-include-cstddef.patch
 
 Requires: udev-android
 
@@ -112,6 +113,7 @@ pushd system/core
 %patch203 -p1
 %patch204 -p1
 %patch205 -p1
+%patch206 -p1
 popd
 
 pushd system/extras
@@ -274,6 +276,10 @@ done
 %aprefix
 
 %changelog
+* Sat Oct 16 2021 Pavel Nakonechnyi <zorg@altlinux.org> 10.0.0-alt3.r36
+- fix build on the update toolchain
+- backport some Debian buildfiles updates
+
 * Mon May 03 2021 Pavel Nakonechnyi <zorg@altlinux.org> 10.0.0-alt2.r36
 - add rpm-build-python3 as a build requirement
 
