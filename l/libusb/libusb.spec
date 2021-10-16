@@ -1,8 +1,9 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %def_enable static
 
 Name: libusb
 Version: 1.0.24
-Release: alt1
+Release: alt2
 
 Summary: Libusb is a library which allows userspace access to USB devices
 License: LGPL
@@ -82,6 +83,9 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %doc doc/api-1.0
 
 %changelog
+* Sat Oct 16 2021 Anton Farygin <rider@altlinux.ru> 1.0.24-alt2
+- fixed build with LTO
+
 * Fri May 14 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.24-alt1
 - new version 1.0.24
 
