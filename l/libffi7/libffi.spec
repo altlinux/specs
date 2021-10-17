@@ -1,9 +1,9 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-%define soname 8
+%define soname 7
 
-Name: libffi
-Version: 3.4.2
-Release: alt1
+Name: libffi%soname
+Version: 3.3
+Release: alt2
 Epoch: 1
 
 Summary: Foreign Function Interface library
@@ -28,49 +28,6 @@ interface to various calling conventions.  This allows a programmer
 to call any function specified by a call interface description
 at run time.
 
-%package -n libffi%soname
-Summary: Header files and library for Foreign Function Interface development
-Group: System/Libraries
-Provides: libffi = %epoch:%version-%release
-
-%description -n libffi%soname
-The libffi library provides a portable, high level programming
-interface to various calling conventions.  This allows a programmer
-to call any function specified by a call interface description
-at run time.
-
-This package contains Foreign Function Interface shared library
-which is needed to run Foreign Function Interface dynamically
-linked programs.
-
-%package devel
-Summary: Header files and library for Foreign Function Interface development
-Group: Development/Other
-Requires: libffi%soname = %epoch:%version-%release
-
-%description devel
-The libffi library provides a portable, high level programming
-interface to various calling conventions.  This allows a programmer
-to call any function specified by a call interface description
-at run time.
-
-This package includes the header files and library needed for
-Foreign Function Interface development.
-
-%package devel-static
-Summary: Static library for Foreign Function Interface development
-Group: Development/Other
-Requires: libffi-devel = %epoch:%version-%release
-
-%description devel-static
-The libffi library provides a portable, high level programming
-interface to various calling conventions.  This allows a programmer
-to call any function specified by a call interface description
-at run time.
-
-This package includes the static library needed for
-Foreign Function Interface development.
-
 %prep
 %setup
 %patch -p1
@@ -87,23 +44,14 @@ make -k check
 %install
 %makeinstall_std
 
-%files -n %name%soname
+%files -n libffi%soname
 %_libdir/*.so.*
 
-%files devel
-%doc README.md
-%_includedir/*
-%_libdir/*.so
-%_pkgconfigdir/*
-%_man3dir/*
-%_infodir/*
-
-%files devel-static
-%_libdir/*.a
-
 %changelog
-* Sat Oct 16 2021 Anton Farygin <rider@altlinux.ru> 1:3.4.2-alt1
-- 3.4.2
+* Sat Oct 16 2021 Anton Farygin <rider@altlinux.ru> 1:3.3-alt2
+- renamed to libffi7
+- removed devel and devel-static packages
+- fixed build with LTO
 
 * Tue May 19 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.3-alt1
 - Updated to v3.3.
