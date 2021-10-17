@@ -1,8 +1,8 @@
 %define optflags_lto %nil
 
 Name: gzdoom
-Version: 4.6.1
-Release: alt3
+Version: 4.7.0
+Release: alt2
 
 Summary: Enhanced Doom engine
 Summary(ru_RU.UTF-8): Продвинутый порт движка Doom
@@ -13,10 +13,12 @@ Url: http://zdoom.org
 
 ExclusiveArch: x86_64
 
+Packager: Artyom Bystrov <arbars@altlinux.org>
+
 Source: %name-%version.tar
 Source1: %name.png
 
-Patch: fix-soundfont-paths.patch
+Patch0: fix-soundfont-paths.patch
 
 BuildRequires: cmake gcc-c++ rpm-macros-cmake nasm glslang-devel libspirv-tools-devel bzip2
 BuildRequires: libSDL2-devel zlib-devel libgme-devel libpng-devel libfluidsynth-devel libjpeg-devel libgomp5-devel libtimidity-devel xz zmusic-devel
@@ -103,6 +105,17 @@ done
 %_datadir/%name/soundfonts/%name.sf2
 
 %changelog
+* Sat Oct 16 2021 Artyom Bystrov <arbars@altlinux.org> 4.7.0-alt2
+- fixed paths for soundfont in patch
+
+* Sat Oct 16 2021 Artyom Bystrov <arbars@altlinux.org> 4.7.0-alt1
+- Update version to 4.7.0
+- Widescreen graphics for Strife
+- new GLES backend for better performance on OpenGL 3.3 and early 4.x hardware.
+- MBF21 support (still in beta and not fully tested yet, bug reports are welcome)
+- DEHEXTRA working properly now
+- various enhancements and fixes for ZScript.
+
 * Fri Aug 27 2021 Artyom Bystrov <arbars@altlinux.org> 4.6.1-alt3
 - disable link-time optimization;
 - delete "Packager" tag
