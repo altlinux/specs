@@ -14,7 +14,7 @@
 
 Name:    freecad
 Version: 0.19.2
-Release: alt4
+Release: alt5
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -152,6 +152,13 @@ rm -rf src/3rdParty
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%ifarch %e2k
+sed -i "/-fext-numeric-literals/d" src/Mod/Path/App/CMakeLists.txt
+# because "error: cpio archive too big"
+%define optflags_debug -g0
+# too much warnings of this type
+%add_optflags -Wno-overloaded-virtual
+%endif
 
 %build
 export PATH=$PATH:%_qt5_bindir
@@ -162,6 +169,7 @@ export PATH=$PATH:%_qt5_bindir
 %cmake_insource \
 	-DBUILD_ENABLE_CXX_STD:STRING="C++14" \
 	-DCMAKE_BUILD_TYPE=Release \
+	-DCMAKE_CXX_FLAGS_RELEASE="-DNDEBUG" \
 	-DCMAKE_INSTALL_DATADIR=%ldir \
 	-DCMAKE_INSTALL_DOCDIR=%ldir/doc \
 	-DCMAKE_INSTALL_LIBDIR=%ldir/lib \
@@ -244,6 +252,9 @@ sed -i '1s:#!/usr/bin/python:#!/usr/bin/python3:' %buildroot%_libdir/freecad/Mod
 %ldir/doc
 
 %changelog
+* Sun Oct 17 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:0.19.2-alt5
+- Fixed build for Elbrus.
+
 * Wed Aug 18 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.19.2-alt4
 - Rebuilt with boost-1.77.0.
 
