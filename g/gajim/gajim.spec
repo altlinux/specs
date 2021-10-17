@@ -5,7 +5,7 @@
 
 Name: gajim
 Version: 1.3.3
-Release: alt1
+Release: alt2
 
 Summary: a Jabber client written in PyGTK
 License: GPL-3.0-only
@@ -33,7 +33,7 @@ Requires: libgtk+3-gir
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: libgtk+3-devel python3-devel python3-module-setuptools
-BuildRequires: python3-module-nbxmpp >= 1.0.2
+BuildRequires: python3-module-nbxmpp >= 2.0.4
 BuildArch: noarch
 
 %description
@@ -74,6 +74,9 @@ it nicely.
 #_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Mon Oct 18 2021 Ilya Mashkin <oddity@altlinux.ru> 1.3.3-alt2
+- BuildRequires python3-module-nbxmpp >= 2.0.4 (Closes: #41133)
+
 * Mon Oct 11 2021 Ilya Mashkin <oddity@altlinux.ru> 1.3.3-alt1
 - 1.3.3
 
