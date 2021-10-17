@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 0
 Name: btrfs-progs
 Version: 5.14.2
-Release: alt2
+Release: alt3
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
@@ -77,7 +77,7 @@ mkdir -p %buildroot%_libdir %buildroot%_bindir
 LIBNAME=`basename \`ls $RPM_BUILD_ROOT/%{_lib}/libbtrfs.so.*.*\``
 ln -s ../../%_lib/$LIBNAME %buildroot%_libdir/libbtrfs.so 
 LIBUTILNAME=`basename \`ls $RPM_BUILD_ROOT/%{_lib}/libbtrfsutil.so.*.*\``
-ln -s ../../%_lib/$LIBUTILNAME %buildroot%_libdir/libbtrfutils.so 
+ln -s ../../%_lib/$LIBUTILNAME %buildroot%_libdir/libbtrfsutil.so
 ln -s ../../sbin/btrfs %buildroot%_bindir/btrfs
 rm -f %buildroot/%{_lib}/libbtrfs.so
 rm -f %buildroot/%{_lib}/libbtrfsutil.so
@@ -99,6 +99,9 @@ rm -f %buildroot/%{_lib}/libbtrfsutil.so
 %_includedir/*
 
 %changelog
+* Sun Oct 17 2021 Anton Farygin <rider@altlinux.ru> 5.14.2-alt3
+- fixed typo in libbtrfsutil.so symlink (closes: #41143)
+
 * Sun Oct 17 2021 Anton Farygin <rider@altlinux.ru> 5.14.2-alt2
 - added libbtrfsutil.so to the devel package (closes: #41137)
 
