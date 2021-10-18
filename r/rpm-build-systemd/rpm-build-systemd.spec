@@ -2,7 +2,7 @@
 
 Name: rpm-build-%oname
 Version: 5
-Release: alt1
+Release: alt2
 
 Summary: RPM helper macros to build packages with systemd support
 License: LGPL-2.1-or-later
@@ -19,7 +19,6 @@ Requires: libsystemd-devel
 Group: Development/Other
 BuildArch: noarch
 Summary: Macros that define paths and scriptlets related to systemd
-Requires: systemd >= 1:249.4
 
 %description -n rpm-macros-%oname
 %summary.
@@ -36,6 +35,9 @@ install -D -m644 %SOURCE1 -p %buildroot%_rpmmacrosdir/%oname
 %_rpmmacrosdir/*
 
 %changelog
+* Mon Oct 18 2021 Alexey Shabalin <shaba@altlinux.org> 5-alt2
+- Drop requires on systemd from package with macros
+
 * Mon Oct 11 2021 Alexey Shabalin <shaba@altlinux.org> 5-alt1
 - Rename macros post_systemd_restart_later to post_systemd_postponed
 
