@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt50
+Release: alt51
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -183,6 +183,9 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Mon Oct 18 2021 Slava Aseev <ptrnine@altlinux.org> 2.5.5-alt51
+- Fix FTBFS: disable static library building
+
 * Wed Aug 04 2021 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt50
 - plugins/xfs: fix incorrect log size calculation (Closes: #39567)
 
