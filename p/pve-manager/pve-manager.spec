@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 7.0.11
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -83,6 +83,8 @@ Patch52: pve-qmeventd.patch
 Patch53: pve-container-syscalld.patch
 Patch54: pve-manager-rs-apt.patch
 Patch55: pve-manager-eslint.patch
+Patch56: pve-manager-restart-network-to-apply-new-settings.patch
+Patch57: pve-manager-remove-comments-about-ifupdown2.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -215,6 +217,8 @@ This is used to implement the PVE REST API
 %patch53 -p0 -b .syscall
 %patch54 -p0 -b .rs
 %patch55 -p0 -b .eslint
+%patch56 -p0 -b .restart
+%patch57 -p0 -b .ifupdown2
 
 find -name Makefile | while read m; do
 	sed -i '/^.*\/usr\/share\/dpkg.*/d' $m;
@@ -624,6 +628,9 @@ __EOF__
 %perl_vendor_privlib/PVE/APIServer
 
 %changelog
+* Mon Oct 04 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.11-alt2
+- restart network to apply new settings, no need for ifupdown2
+
 * Thu Sep 23 2021 Valery Inozemtsev <shrek@altlinux.ru> 7.0.11-alt1
 - pve-manager 7.0-11
 - pve-container 4.0-9

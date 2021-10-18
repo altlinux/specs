@@ -3,7 +3,7 @@
 Name: pve-common
 Summary: PVE base library
 Version: 7.0.6
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -68,6 +68,11 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Mon Oct 04 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.6-alt2
+- use BRIDGE_OPTIONS for bridge
+- consider ifupdown2 is always true, due to network restart in pve-manager
+- fix tests
+
 * Thu Sep 23 2021 Valery Inozemtsev <shrek@altlinux.ru> 7.0.6-alt1
 - 7.0-6
 
