@@ -1,7 +1,7 @@
 Summary: unzip like for .adf files (Amiga devices dumps)
 Name: unadf
 Version: 0.7.12
-Release: alt1.qa2
+Release: alt1.qa3
 URL: http://lclevy.free.fr/adflib
 Source0: http://lclevy.free.fr/adflib/adflib-%version.tar.bz2
 Patch: %name-doublecomm-alt.patch
@@ -52,6 +52,8 @@ cp -rp boot %buildroot%_datadir/libadf
 mkdir -p %buildroot%_includedir/adflib
 mv %buildroot%_includedir/*.* %buildroot%_includedir/adflib
 
+rm -fv %buildroot%_libdir/*.a
+
 %files
 %_bindir/%name
 %doc README
@@ -69,9 +71,11 @@ mv %buildroot%_includedir/*.* %buildroot%_includedir/adflib
 %_libdir/lib*
 %_pkgconfigdir/*
 %exclude %_libdir/libadf.so.*
-%exclude %_libdir/libadf.a
 
 %changelog
+* Mon Oct 18 2021 Grigory Ustinov <grenka@altlinux.org> 0.7.12-alt1.qa3
+- Fixed FTBFS.
+
 * Thu Apr 15 2021 Grigory Ustinov <grenka@altlinux.org> 0.7.12-alt1.qa2
 - Fixed FTBFS.
 
