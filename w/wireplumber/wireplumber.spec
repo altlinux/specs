@@ -8,7 +8,7 @@
 %define soversion 0
 
 Name: wireplumber
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
 
 Summary: a modular session/policy manager for PipeWire
@@ -30,10 +30,16 @@ BuildRequires(pre): gobject-introspection-devel
 %if_enabled doc
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-breathe
+BuildRequires: python3(sphinx_rtd_theme)
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
 BuildRequires: doxygen >= 1.8.0
 %endif
 
 Source: %name-%version.tar
+
+%package doc
+Summary: docs for the client library for WirePlumber
+Group: Documentation
 
 %package -n lib%name
 Summary: the client library for WirePlumber
@@ -62,6 +68,14 @@ WirePlumber is a modular session / policy manager for PipeWire and a
 GObject-based high-level library that wraps PipeWire's API, providing
 convenience for writing the daemon's modules as well as external tools
 for managing PipeWire.
+
+%description doc
+WirePlumber is a modular session / policy manager for PipeWire and a
+GObject-based high-level library that wraps PipeWire's API, providing
+convenience for writing the daemon's modules as well as external tools
+for managing PipeWire.
+
+This package contains documentation for WirePlumber.
 
 %description -n lib%name
 WirePlumber is a modular session / policy manager for PipeWire and a
@@ -105,7 +119,7 @@ This package contains GObject introspection development data for lib%name.
 %meson \
     -Dsystem-lua=true \
 %if_enabled doc
-    -Ddocs=enabled \
+    -Ddoc=enabled \
 %endif
 %if_enabled introspection
     -Dintrospection=enabled \
@@ -117,12 +131,26 @@ This package contains GObject introspection development data for lib%name.
 %install
 %meson_install
 
+# %doc does not work for multiple subpackages as of 2021 Oct 18.
+# We implement its functionality by hand as closely as possible.
+%define docdir() %_defaultdocdir/%1-%version
+mkdir -p %buildroot%{docdir %name}/
+cp -v NEWS.rst README.rst %buildroot%{docdir %name}/
+mkdir -p %buildroot%{docdir %name-doc}/
+mv -v %buildroot%_datadir/doc/%name %buildroot%{docdir %name-doc}
+
 %files
-%doc NEWS.rst README.rst
+%define docdir() %_defaultdocdir/%1-%version
+%{docdir %name}
 %_bindir/wireplumber
 %_bindir/wpctl
 %_bindir/wpexec
 %_datadir/wireplumber
+
+%files doc
+%define docdir() %_defaultdocdir/%1-%version
+# Quoting docs/meson.build.
+%{docdir %name-doc}
 
 %files -n lib%name
 %_libdir/libwireplumber-%apiversion.so.%soversion.*
@@ -144,6 +172,9 @@ This package contains GObject introspection development data for lib%name.
 %endif
 
 %changelog
+* Sun Oct 17 2021 Arseny Maslennikov <arseny@altlinux.org> 0.4.4-alt1
+- 0.4.3-alt1 -> 0.4.4-alt1.
+
 * Fri Oct 08 2021 Arseny Maslennikov <arseny@altlinux.org> 0.4.3-alt1
 - 0.4.2-alt1 -> 0.4.3-alt1.
 
