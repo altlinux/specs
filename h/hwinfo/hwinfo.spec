@@ -1,11 +1,11 @@
-%def_with static
+%def_without static
 
 Name: hwinfo
 %define lname lib%name
 Version: 21.23
-Release: alt1.1
+Release: alt1.2
 Summary: Hardware detection tool
-License: GPL2
+License: GPLv2
 Group: System/Kernel and hardware
 URL: http://download.opensuse.org/source/factory/repo/oss/suse/src
 # http://download.opensuse.org/source/factory/repo/oss/suse/src/%name-%version-2.1.src.rpm
@@ -146,6 +146,9 @@ install -m 0644 doc/libhd/html/* %buildroot%_docdir/%lname-%version/html/
 
 
 %changelog
+* Mon Oct 18 2021 Grigory Ustinov <grenka@altlinux.org> 21.23-alt1.2
+- Build without static library.
+
 * Wed Mar 06 2019 Igor Vlasenko <viy@altlinux.ru> 21.23-alt1.1
 - NMU: rebuild with new libx86emu (closes: #36239)
 
