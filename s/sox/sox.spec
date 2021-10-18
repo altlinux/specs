@@ -5,7 +5,7 @@
 Name: sox
 Summary: A general purpose sound file conversion tool
 Version: 14.4.2
-Release: alt4
+Release: alt5
 License: GPLv2+ and LGPLv2+ and MIT
 Group: Sound
 BuildRequires: glibc-devel-static libalsa-devel libao-devel libflac-devel libgomp-devel libgsm-devel libid3tag-devel liblame-devel libltdl7-devel libmad-devel libmagic-devel libopencore-amrnb-devel libopencore-amrwb-devel libopusfile-devel libpng-devel libsndfile-devel libvorbis-devel libwavpack-devel
@@ -54,19 +54,6 @@ Provides:  sox-devel = %version-%release
 %description -n libsox-devel
 This package contains the headers and library needed for compiling
 applications which will use the SoX sound file format converter.
-
-
-%package -n libsox-devel-static
-Summary: The SoX sound file format converter headers files and libraries
-Group: Sound
-Requires: %name = %version-%release
-Obsoletes: sox-devel
-
-%description -n libsox-devel-static
-This package contains the headers and library needed for compiling
-applications which will use the SoX sound file format converter.
-Install %name-devel if you want to develop applications which will use SoX.
-
 
 %package -n libsox-fmt-alsa
 Summary: %summary
@@ -297,6 +284,9 @@ cat << EOF >%buildroot%_bindir/%{name}play
 EOF
 chmod 755 %buildroot%_bindir/%{name}play
 
+rm -rf %buildroot%_libdir/*.a
+rm -rf %buildroot%_libdir/sox/*.a
+
 %files
 %doc ChangeLog README
 
@@ -305,11 +295,6 @@ chmod 755 %buildroot%_bindir/%{name}play
 %_libdir/libsox.so
 %_pkgconfigdir/*.pc
 %_man3dir/*
-%exclude %_libdir/libsox.a
-
-%files -n libsox-devel-static
-%_libdir/sox/*.a
-%exclude %_libdir/sox/*.la
 
 %files -n libsox-fmt-alsa
 %_libdir/sox/libsox_fmt_alsa.so
@@ -390,6 +375,9 @@ chmod 755 %buildroot%_bindir/%{name}play
 %files play
 
 %changelog
+* Mon Oct 18 2021 Grigory Ustinov <grenka@altlinux.org> 14.4.2-alt5
+- Fixed FTBFS.
+
 * Sat Dec 26 2020 Dmitry V. Levin <ldv@altlinux.org> 14.4.2-alt4
 - NMU.
 - spec: fixed License tag.
