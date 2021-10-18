@@ -1,11 +1,11 @@
 %def_enable shared
-%def_enable static
+%def_disable static
 %def_enable nls
 
 Name: progsreiserfs
 %define lname lib%name
 Version: 0.3.0.5
-Release: alt4
+Release: alt5
 Summary: Programs needed for manipulating reiserfs partitions
 Summary(ru_RU.UTF-8): Программа для манипулирования разделами диска с reiserfs
 Summary(uk_UA.UTF-8): Програми для маніпулювання розділами диску з reiserfs
@@ -118,6 +118,9 @@ done
 
 
 %changelog
+* Mon Oct 18 2021 Grigory Ustinov <grenka@altlinux.org> 0.3.0.5-alt5
+- Build without static library.
+
 * Tue May 05 2020 Anton Midyukov <antohami@altlinux.org> 0.3.0.5-alt4
 - Fix build with gettext > 0.20
 - Cleanup spec
