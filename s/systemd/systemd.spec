@@ -88,8 +88,8 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.5
+Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -153,6 +153,7 @@ Patch1: %name-%version.patch
 %define dbus_ver 1.11.0
 
 BuildRequires(pre): rpm-build-xdg meson >= 0.49
+BuildRequires(pre): rpm-macros-systemd >= 5
 BuildRequires: glibc-kernheaders
 BuildRequires: intltool >= 0.40.0
 BuildRequires: gperf
@@ -497,7 +498,7 @@ Summary: Tools for containers and VMs
 Group: System/Configuration/Other
 Requires: %name = %EVR
 #Requires: libnss-mymachines = %EVR
-Provides: /lib/systemd/systemd-machined
+Provides: %_systemd_dir/systemd-machined
 
 %description container
 Systemd tools to spawn and manage containers and virtual machines.
@@ -579,10 +580,10 @@ Provides: udev-extras = %EVR
 Obsoletes: udev-extras < %EVR
 Provides: udev-rules = %EVR
 Obsoletes: udev-rules < %EVR
-Provides: %_sysconfdir/udev/rules.d /lib/udev/rules.d
+Provides: %_sysconfdir/udev/rules.d %_udev_rulesdir
 Provides: udev-hwdb = %EVR
 Obsoletes: udev-hwdb < %EVR
-Provides: %_sysconfdir/udev/hwdb.d /lib/udev/hwdb.d
+Provides: %_sysconfdir/udev/hwdb.d %_udev_hwdbdir
 Conflicts: util-linux <= 2.22-alt2
 Conflicts: DeviceKit
 Conflicts: make-initrd < 2.2.10
@@ -814,13 +815,13 @@ Summary: Common sysctl configs
 %meson_install
 
 # remove .so file for the shared library, it's not supposed to be used
-rm -f %buildroot/lib/systemd/libsystemd-shared.so
+rm -f %buildroot%_systemd_dir/libsystemd-shared.so
 # remove systemd rpm macros
 rm -f %buildroot/usr/lib/rpm/macros.d/macros.systemd
 # remove linuxia32.elf.stub
 # debugedit: Failed to update file: invalid section entry size
 %ifarch %ix86
-rm -f %buildroot/%_prefix/lib/systemd/boot/efi/linuxia32.elf.stub
+rm -f %buildroot%_prefix%_systemd_dir/boot/efi/linuxia32.elf.stub
 %endif
 
 %find_lang %name
@@ -828,7 +829,7 @@ rm -f %buildroot/%_prefix/lib/systemd/boot/efi/linuxia32.elf.stub
 # Make sure these directories are properly owned
 mkdir -p %buildroot%_unitdir/{basic,dbus,default,graphical,poweroff,rescue,reboot,sysinit}.target.wants
 
-install -m755 %SOURCE2 %buildroot/lib/systemd/systemd-sysv-install
+install -m755 %SOURCE2 %buildroot%_systemd_dir/systemd-sysv-install
 
 ln -s rc-local.service %buildroot%_unitdir/local.service
 install -m644 %SOURCE4 %buildroot%_unitdir/altlinux-openresolv.path
@@ -848,7 +849,7 @@ ln -s systemd-halt.service %buildroot%_unitdir/halt.service
 ln -s systemd-tmpfiles-setup.service %buildroot%_unitdir/tmpfiles.service
 
 # Make sure the NTP units dir exists
-mkdir -p %buildroot/lib/systemd/ntp-units.d
+mkdir -p %buildroot%_systemd_dir/ntp-units.d
 mkdir -p %buildroot%_sysconfdir/systemd/ntp-units.d
 
 # restore bind-mounts /var/run -> run and /var/lock -> /run/lock
@@ -864,9 +865,9 @@ rm -f %buildroot%_unitdir/local-fs.target.wants/tmp.mount
 
 find %buildroot \( -name '*.la' \) -exec rm {} \;
 mkdir -p %buildroot/{sbin,bin}
-ln -r -s %buildroot/lib/systemd/systemd %buildroot/sbin/systemd
+ln -r -s %buildroot%_systemd_dir/systemd %buildroot/sbin/systemd
 
-ln -r -s %buildroot/lib/systemd/systemd-{binfmt,modules-load,sysctl} %buildroot/sbin/
+ln -r -s %buildroot%_systemd_dir/systemd-{binfmt,modules-load,sysctl} %buildroot/sbin/
 # for compatibility with older systemd pkgs which expected it at /sbin/:
 ln -r -s %buildroot/bin/systemctl %buildroot/sbin/
 ln -r -s %buildroot/bin/systemctl %buildroot%_bindir/
@@ -900,7 +901,7 @@ ln -s /dev/null %buildroot%_unitdir/single.service
 ln -s /dev/null %buildroot%_unitdir/netfs.service
 
 # create modules.conf as a symlink to /etc/modules
-mkdir -p %buildroot/lib/modules-load.d
+mkdir -p %buildroot%_modules_loaddir
 mkdir -p %buildroot%_sysconfdir/modules-load.d
 ln -r -s %buildroot%_sysconfdir/modules %buildroot%_sysconfdir/modules-load.d/modules.conf
 
@@ -909,21 +910,21 @@ mkdir -p %buildroot%_sysconfdir/sysctl.d
 ln -r -s %buildroot%_sysconfdir/sysctl.conf %buildroot%_sysconfdir/sysctl.d/99-sysctl.conf
 
 # Make sure directories in /var exist
-mkdir -p %buildroot%_localstatedir/lib/systemd/coredump
-mkdir -p %buildroot%_localstatedir/lib/systemd/catalog
-mkdir -p %buildroot%_localstatedir/lib/systemd/backlight
-mkdir -p %buildroot%_localstatedir/lib/systemd/rfkill
-mkdir -p %buildroot%_localstatedir/lib/systemd/linger
-mkdir -p %buildroot%_localstatedir/lib/systemd/journal-upload
+mkdir -p %buildroot%_localstatedir%_systemd_dir/coredump
+mkdir -p %buildroot%_localstatedir%_systemd_dir/catalog
+mkdir -p %buildroot%_localstatedir%_systemd_dir/backlight
+mkdir -p %buildroot%_localstatedir%_systemd_dir/rfkill
+mkdir -p %buildroot%_localstatedir%_systemd_dir/linger
+mkdir -p %buildroot%_localstatedir%_systemd_dir/journal-upload
 mkdir -p %buildroot%_localstatedir/lib/private/systemd/journal-upload
 mkdir -p %buildroot%_logdir/private
-mkdir -p %buildroot%_localstatedir/cache/private
-mkdir -p %buildroot%_localstatedir/lib/systemd/timesync
+mkdir -p %buildroot%_cachedir/private
+mkdir -p %buildroot%_localstatedir%_systemd_dir/timesync
 mkdir -p %buildroot%_logdir/journal
-touch %buildroot%_localstatedir/lib/systemd/catalog/database
+touch %buildroot%_localstatedir%_systemd_dir/catalog/database
 touch %buildroot%_sysconfdir/udev/hwdb.bin
-touch %buildroot%_localstatedir/lib/systemd/random-seed
-touch %buildroot%_localstatedir/lib/systemd/timesync/clock
+touch %buildroot%_localstatedir%_systemd_dir/random-seed
+touch %buildroot%_localstatedir%_systemd_dir/timesync/clock
 
 # Create new-style configuration files so that we can ghost-own them
 touch %buildroot%_sysconfdir/hostname
@@ -932,34 +933,34 @@ touch %buildroot%_sysconfdir/locale.conf
 touch %buildroot%_sysconfdir/machine-info
 
 # Make sure the shutdown/sleep drop-in dirs exist
-mkdir -p %buildroot/lib/systemd/system-shutdown
-mkdir -p %buildroot/lib/systemd/system-sleep
+mkdir -p %buildroot%_systemd_dir/system-shutdown
+mkdir -p %buildroot%_systemd_dir/system-sleep
 
 # Make sure the *-environment-generators dirs exist
-mkdir -p %buildroot/usr/lib/systemd/user-environment-generators
-mkdir -p %buildroot/lib/systemd/system-environment-generators
+mkdir -p %buildroot%_user_env_gen_dir
+mkdir -p %buildroot%_env_gen_dir
 
 # fix pam.d/systemd-user for ALTLinux
 install -m644 %SOURCE14 %buildroot%_sysconfdir/pam.d/systemd-user
 
 # Install ALTLinux default preset policy
-mkdir -p %buildroot/lib/systemd/system-preset
+mkdir -p %buildroot%_presetdir
 mkdir -p %buildroot%_sysconfdir/systemd/system-preset
-mkdir -p %buildroot/lib/systemd/user-preset
+mkdir -p %buildroot%_systemd_dir/user-preset
 mkdir -p %buildroot%_sysconfdir/systemd/user-preset
-mkdir -p %buildroot%_prefix/lib/systemd/user-preset
-install -m 0644 %SOURCE34 %buildroot/lib/systemd/system-preset/
-install -m 0644 %SOURCE35 %buildroot/lib/systemd/system-preset/
-install -m 0644 %SOURCE36 %buildroot/lib/systemd/system-preset/
-install -m 0644 %SOURCE37 %buildroot/lib/systemd/system-preset/
-install -m 0644 %SOURCE38 %buildroot/lib/systemd/system-preset/
+mkdir -p %buildroot%_user_presetdir
+install -m 0644 %SOURCE34 %buildroot%_presetdir/
+install -m 0644 %SOURCE35 %buildroot%_presetdir/
+install -m 0644 %SOURCE36 %buildroot%_presetdir/
+install -m 0644 %SOURCE37 %buildroot%_presetdir/
+install -m 0644 %SOURCE38 %buildroot%_presetdir/
 
 # systemd-oomd default configuration
-install -D -m 0644 -t %buildroot/lib/systemd/oomd.conf.d/ %SOURCE44
+install -D -m 0644 -t %buildroot%_systemd_dir/oomd.conf.d/ %SOURCE44
 install -D -m 0644 -t %buildroot%_unitdir/-.slice.d/ %SOURCE45
 install -D -m 0644 -t %buildroot%_unitdir/user@.service.d/ %SOURCE46
 
-sed -i 's|#!/usr/bin/env python3|#!%__python3|' %buildroot/usr/lib/systemd/tests/run-unit-tests.py
+sed -i 's|#!/usr/bin/env python3|#!%__python3|' %buildroot%_prefix%_systemd_dir/tests/run-unit-tests.py
 
 mkdir -p %buildroot%_sysconfdir/systemd/network
 
@@ -977,7 +978,7 @@ export SYSTEMD_PAGER="/usr/bin/less -FR"
 EOF
 chmod 755 %buildroot%_sysconfdir/profile.d/systemd.sh
 
-install -m644 %SOURCE30 %buildroot/lib/sysctl.d/49-coredump-disable.conf
+install -m644 %SOURCE30 %buildroot%_sysctldir/49-coredump-disable.conf
 # rpm posttrans filetriggers
 install -pD -m755 %SOURCE71 %buildroot%_rpmlibdir/udev.filetrigger
 install -pD -m755 %SOURCE72 %buildroot%_rpmlibdir/udev-hwdb.filetrigger
@@ -1003,7 +1004,7 @@ install -pD -m644 %SOURCE86 %buildroot/%_altdir/systemd-sysusers-standalone
 install -pD -m644 %SOURCE87 %buildroot/%_altdir/systemd-tmpfiles-shared
 install -pD -m644 %SOURCE88 %buildroot/%_altdir/systemd-tmpfiles-standalone
 
-cat >>%buildroot/lib/sysctl.d/50-mmap-min-addr.conf <<EOF
+cat >>%buildroot%_sysctldir/50-mmap-min-addr.conf <<EOF
 # Indicates the amount of address space which a user process will be
 # restricted from mmaping.  Since kernel null dereference bugs could
 # accidentally operate based on the information in the first couple of
@@ -1018,8 +1019,8 @@ vm.mmap_min_addr = %mmap_min_addr
 EOF
 
 # define default PATH for system and user
-mkdir -p %buildroot%_prefix/lib/systemd/user.conf.d
-install -m 0644 %SOURCE11 %buildroot%_prefix/lib/systemd/user.conf.d/env-path.conf
+mkdir -p %buildroot%_prefix%_systemd_dir/user.conf.d
+install -m 0644 %SOURCE11 %buildroot%_prefix%_systemd_dir/user.conf.d/env-path.conf
 #mkdir -p %buildroot%_prefix/systemd/system.conf.d
 #install -m 0644 %SOURCE12 %buildroot%_prefix/systemd/system.conf.d/env-path.conf
 
@@ -1032,8 +1033,8 @@ install -p -m755 %SOURCE19 %buildroot%_initdir/udevd
 ln -s systemd-udevd.service %buildroot%_unitdir/udevd.service
 
 # compatibility symlinks to udevd binary
-ln -r -s %buildroot/lib/systemd/systemd-udevd %buildroot/lib/udev/udevd
-ln -r -s %buildroot/lib/systemd/systemd-udevd %buildroot/sbin/udevd
+ln -r -s %buildroot%_systemd_dir/systemd-udevd %buildroot/lib/udev/udevd
+ln -r -s %buildroot%_systemd_dir/systemd-udevd %buildroot/sbin/udevd
 
 install -p -m644 %SOURCE22 %buildroot%_sysconfdir/scsi_id.config
 
@@ -1079,12 +1080,33 @@ useradd -g systemd-oom -c 'systemd Userspace OOM Killer' \
     -d /var/empty -s /dev/null -r -l -M systemd-oom >/dev/null 2>&1 ||:
 
 %post
-# Move old stuff around in /var/lib
-[ -d %_localstatedir/lib/systemd/random-seed ] && rm -rf %_localstatedir/lib/systemd/random-seed >/dev/null 2>&1 || :
-[ -e %_localstatedir/lib/random-seed ] && mv %_localstatedir/lib/random-seed %_localstatedir/lib/systemd/random-seed >/dev/null 2>&1 || :
-[ -e %_localstatedir/lib/backlight ] && mv %_localstatedir/lib/backlight %_localstatedir/lib/systemd/backlight >/dev/null 2>&1 || :
 
-/lib/systemd/systemd-random-seed save >/dev/null 2>&1 || :
+systemctl daemon-reexec &>/dev/null || {
+  # systemd v239 had bug #9553 in D-Bus authentication of the private socket,
+  # which was later fixed in v240 by #9625.
+  #
+  # The end result is that a `systemctl daemon-reexec` call as root will fail
+  # when upgrading from systemd v239, which means the system will not start
+  # running the new version of systemd after this post install script runs.
+  #
+  # To work around this issue, let's fall back to using a `kill -TERM 1` to
+  # re-execute the daemon when the `systemctl daemon-reexec` call fails.
+  #
+  # In order to prevent issues when the reason why the daemon-reexec failed is
+  # not the aforementioned bug, let's only use this fallback when:
+  #   - we're upgrading this RPM package; and
+  #   - we confirm that systemd is running as PID1 on this system.
+  if [ $1 -gt 1 ] && [ -d /run/systemd/system ] ; then
+    kill -TERM 1 &>/dev/null || :
+  fi
+}
+
+# Move old stuff around in /var/lib
+[ -d %_localstatedir%_systemd_dir/random-seed ] && rm -rf %_localstatedir%_systemd_dir/random-seed >/dev/null 2>&1 || :
+[ -e %_localstatedir/lib/random-seed ] && mv %_localstatedir/lib/random-seed %_localstatedir%_systemd_dir/random-seed >/dev/null 2>&1 || :
+[ -e %_localstatedir/lib/backlight ] && mv %_localstatedir/lib/backlight %_localstatedir%_systemd_dir/backlight >/dev/null 2>&1 || :
+
+%_systemd_dir/systemd-random-seed save >/dev/null 2>&1 || :
 
 # rm symlinks for network.service
 [ -L %_sysconfdir/systemd/system/network.target.wants/network.service ] && rm -f %_sysconfdir/systemd/system/network.target.wants/network.service  >/dev/null 2>&1 || :
@@ -1189,18 +1211,9 @@ if [ -e "$SYSCONFIG_NETWORK" -a ! -e /etc/hostname ]; then
 fi
 #sed -i '/^HOSTNAME=/d' "$SYSCONFIG_NETWORK" >/dev/null 2>&1 || :
 
-%preun
-if [ $1 -eq 0 ] ; then
-        systemctl disable --quiet \
-                remote-fs.target \
-                getty@.service \
-                serial-getty@.service \
-                console-getty.service \
-                debug-shell.service \
-                 >/dev/null 2>&1 || :
 
-        rm -f /etc/systemd/system/default.target > /dev/null 2>&1 || :
-fi
+%post_systemd_postponed systemd-timedated.service systemd-hostnamed.service systemd-journald.service systemd-localed.service systemd-userdbd.service systemd-oomd.service
+
 
 %post utils
 systemd-machine-id-setup >/dev/null 2>&1 || :
@@ -1216,23 +1229,10 @@ useradd -g systemd-resolve -c 'systemd Resolver' \
     -d /var/empty -s /dev/null -r -l -M systemd-resolve >/dev/null 2>&1 ||:
 
 %post networkd
-if [ $1 -eq 1 ] ; then
-        # Enable the services we install by default
-        systemctl preset \
-                systemd-networkd.service \
-                systemd-networkd-wait-online.service \
-                systemd-resolved.service \
-                 >/dev/null 2>&1 || :
-fi
+%post_systemd_postponed systemd-networkd.service systemd-networkd-wait-online.service systemd-resolved.service
 
 %preun networkd
-if [ $1 -eq 0 ] ; then
-        systemctl disable --quiet \
-                systemd-networkd.service \
-                systemd-networkd-wait-online.service \
-                systemd-resolved.service \
-                 >/dev/null 2>&1 || :
-fi
+%systemd_preun systemd-networkd.service systemd-networkd-wait-online.service systemd-resolved.service
 %endif
 
 %if_enabled coredump
@@ -1250,27 +1250,32 @@ useradd -g systemd-timesync -c 'systemd Time Synchronization' \
 
 
 %post timesyncd
-if [ -L %_localstatedir/lib/systemd/timesync ]; then
-    rm %_localstatedir/lib/systemd/timesync
-    mv %_localstatedir/lib/private/systemd/timesync %_localstatedir/lib/systemd/timesync
+if [ -L %_localstatedir%_systemd_dir/timesync ]; then
+    rm %_localstatedir%_systemd_dir/timesync
+    mv %_localstatedir/lib/private/systemd/timesync %_localstatedir%_systemd_dir/timesync
 fi
-if [ -f %_localstatedir/lib/systemd/clock ] ; then
-    mkdir -p %_localstatedir/lib/systemd/timesync
-    mv %_localstatedir/lib/systemd/clock %_localstatedir/lib/systemd/timesync/
+if [ -f %_localstatedir%_systemd_dir/clock ] ; then
+    mkdir -p %_localstatedir%_systemd_dir/timesync
+    mv %_localstatedir%_systemd_dir/clock %_localstatedir%_systemd_dir/timesync/
 fi
 
-%post_service systemd-timesyncd.service
+%post_systemd_postponed systemd-timesyncd.service
 
 %preun timesyncd
-%preun_service systemd-timesyncd.service
+%systemd_preun systemd-timesyncd.service
 
 %endif
 
 %post homed
-%post_service systemd-homed.service
+%post_systemd_postponed systemd-homed.service
 
 %preun homed
-%preun_service systemd-homed.service
+%systemd_preun systemd-homed.service
+
+%post boot-efi
+if bootctl is-installed >/dev/null 2>&1 ; then
+        bootctl update || echo "** WARNING: systemd-boot-efi install failed"
+fi
 
 %post -n libnss-systemd
 if [ -f /etc/nsswitch.conf ] ; then
@@ -1372,24 +1377,22 @@ useradd -g systemd-journal-remote -c 'Journal Remote' \
     -d %_logdir/journal/remote -s /dev/null -r -l systemd-journal-remote >/dev/null 2>&1 ||:
 
 %post journal-remote
-%post_service systemd-journal-gatewayd
-%post_service systemd-journal-remote
+%post_systemd_postponed systemd-journal-gatewayd.service systemd-journal-remote.service 
 %if_enabled libcurl
-%post_service systemd-journal-upload
+%post_systemd_postponed systemd-journal-upload.service
 %endif
 
 %preun journal-remote
-%preun_service systemd-journal-gatewayd
-%preun_service systemd-journal-remote
+%systemd_preun systemd-journal-gatewayd.service systemd-journal-remote.service systemd-journal-gatewayd.socket systemd-journal-remote.socket
 %if_enabled libcurl
-%preun_service systemd-journal-upload
+%systemd_preun systemd-journal-upload.service
 %endif
 
 if [ $1 -eq 1 ] ; then
-    if [ -f %_localstatedir/lib/systemd/journal-upload/state -a ! -L %_localstatedir/lib/systemd/journal-upload ] ; then
+    if [ -f %_localstatedir%_systemd_dir/journal-upload/state -a ! -L %_localstatedir%_systemd_dir/journal-upload ] ; then
         mkdir -p %_localstatedir/lib/private/systemd/journal-upload
-        mv %_localstatedir/lib/systemd/journal-upload/state %_localstatedir/lib/private/systemd/journal-upload/
-        rmdir %_localstatedir/lib/systemd/journal-upload || :
+        mv %_localstatedir%_systemd_dir/journal-upload/state %_localstatedir/lib/private/systemd/journal-upload/
+        rmdir %_localstatedir%_systemd_dir/journal-upload || :
      fi
 fi
 %endif
@@ -1441,7 +1444,7 @@ udevadm hwdb --update &>/dev/null
 
 %if_enabled pstore
 /etc/systemd/pstore.conf
-/lib/systemd/systemd-pstore
+%_systemd_dir/systemd-pstore
 %_man5dir/pstore.*
 %_man8dir/systemd-pstore.*
 %_tmpfilesdir/systemd-pstore.conf
@@ -1462,47 +1465,47 @@ udevadm hwdb --update &>/dev/null
 /bin/systemd-repart
 /bin/systemd-run
 %_bindir/systemd-stdio-bridge
-/lib/systemd/systemd
-/lib/systemd/systemd-ac-power
-/lib/systemd/systemd-cgroups-agent
+%_systemd_dir/systemd
+%_systemd_dir/systemd-ac-power
+%_systemd_dir/systemd-cgroups-agent
 %if_enabled libcryptsetup
-/lib/systemd/systemd-cryptsetup
-/lib/systemd/systemd-veritysetup
+%_systemd_dir/systemd-cryptsetup
+%_systemd_dir/systemd-veritysetup
 %_man5dir/crypttab*
 %_mandir/*/*cryptsetup*
 %_man8dir/systemd-veritysetup*
 %endif
-/lib/systemd/systemd-boot-check-no-failures
-/lib/systemd/systemd-fsck
-/lib/systemd/systemd-growfs
-/lib/systemd/systemd-hibernate-resume
-/lib/systemd/systemd-initctl
-/lib/systemd/systemd-journald
-/lib/systemd/systemd-makefs
-/lib/systemd/systemd-quotacheck
-/lib/systemd/systemd-random-seed
-/lib/systemd/systemd-remount-fs
-/lib/systemd/systemd-reply-password
-/lib/systemd/systemd-rfkill
-/lib/systemd/systemd-shutdown
-/lib/systemd/systemd-sleep
-/lib/systemd/systemd-socket-proxyd
-/lib/systemd/systemd-update-done
-/lib/systemd/systemd-update-helper
-/lib/systemd/systemd-update-utmp
-/lib/systemd/systemd-user-runtime-dir
-/lib/systemd/systemd-user-sessions
-/lib/systemd/systemd-vconsole-setup
-/lib/systemd/systemd-volatile-root
-/lib/systemd/systemd-sysv-install
-/lib/systemd/systemd-sulogin-shell
-/lib/systemd/systemd-xdg-autostart-condition
+%_systemd_dir/systemd-boot-check-no-failures
+%_systemd_dir/systemd-fsck
+%_systemd_dir/systemd-growfs
+%_systemd_dir/systemd-hibernate-resume
+%_systemd_dir/systemd-initctl
+%_systemd_dir/systemd-journald
+%_systemd_dir/systemd-makefs
+%_systemd_dir/systemd-quotacheck
+%_systemd_dir/systemd-random-seed
+%_systemd_dir/systemd-remount-fs
+%_systemd_dir/systemd-reply-password
+%_systemd_dir/systemd-rfkill
+%_systemd_dir/systemd-shutdown
+%_systemd_dir/systemd-sleep
+%_systemd_dir/systemd-socket-proxyd
+%_systemd_dir/systemd-update-done
+%_systemd_dir/systemd-update-helper
+%_systemd_dir/systemd-update-utmp
+%_systemd_dir/systemd-user-runtime-dir
+%_systemd_dir/systemd-user-sessions
+%_systemd_dir/systemd-vconsole-setup
+%_systemd_dir/systemd-volatile-root
+%_systemd_dir/systemd-sysv-install
+%_systemd_dir/systemd-sulogin-shell
+%_systemd_dir/systemd-xdg-autostart-condition
 
-%dir /lib/environment.d
-/lib/environment.d/99-environment.conf
+%dir %_env_dir
+%_env_dir/99-environment.conf
 %_mandir/man[58]/*environment*
-#%dir /lib/systemd/system.conf.d
-#/lib/systemd/system.conf.d/env-path.conf
+#%dir %_systemd_dir/system.conf.d
+#%_systemd_dir/system.conf.d/env-path.conf
 
 %dir %_unitdir
 %_unitdir/*
@@ -1647,33 +1650,33 @@ udevadm hwdb --update &>/dev/null
 %exclude %_datadir/factory
 %exclude %_tmpfilesdir/etc.conf
 
-%_prefix/lib/systemd
-/lib/systemd/system-generators
-/lib/systemd/system-environment-generators
+%_prefix%_systemd_dir
+%_gen_dir
+%_env_gen_dir
 %if_enabled efi
-%exclude /lib/systemd/system-generators/systemd-bless-boot-generator
+%exclude %_gen_dir/systemd-bless-boot-generator
 %if_enabled gnuefi
-%exclude %_prefix/lib/systemd/boot
+%exclude %_prefix%_systemd_dir/boot
 %endif
 %endif
 %if_enabled tests
-%exclude %_prefix/lib/systemd/tests
+%exclude %_prefix%_systemd_dir/tests
 %endif
 
-%dir /lib/systemd/system-shutdown
-%dir /lib/systemd/system-sleep
+%dir %_systemd_dir/system-shutdown
+%dir %_systemd_dir/system-sleep
 
-%dir /lib/systemd/system-preset
-/lib/systemd/system-preset/85-display-manager.preset
-/lib/systemd/system-preset/90-default.preset
-/lib/systemd/system-preset/90-systemd.preset
-/lib/systemd/system-preset/99-default-disable.preset
+%dir %_presetdir
+%_presetdir/85-display-manager.preset
+%_presetdir/90-default.preset
+%_presetdir/90-systemd.preset
+%_presetdir/99-default-disable.preset
 
-/lib/udev/rules.d/70-uaccess.rules
-/lib/udev/rules.d/71-seat.rules
-/lib/udev/rules.d/73-seat-late.rules
-/lib/udev/rules.d/90-vconsole.rules
-/lib/udev/rules.d/99-systemd.rules
+%_udev_rulesdir/70-uaccess.rules
+%_udev_rulesdir/71-seat.rules
+%_udev_rulesdir/73-seat-late.rules
+%_udev_rulesdir/90-vconsole.rules
+%_udev_rulesdir/99-systemd.rules
 
 %dir %_datadir/systemd
 %_datadir/systemd/kbd-model-map
@@ -1689,13 +1692,13 @@ udevadm hwdb --update &>/dev/null
 %ghost %attr(0700,root,root) %dir %_logdir/private
 %ghost %attr(0700,root,root) %dir %_localstatedir/cache/private
 %ghost %attr(0700,root,root) %dir %_localstatedir/lib/private
-%dir %_localstatedir/lib/systemd
-%dir %_localstatedir/lib/systemd/catalog
+%dir %_localstatedir%_systemd_dir
+%dir %_localstatedir%_systemd_dir/catalog
 %ghost %dir %_localstatedir/lib/private/systemd
 %_rpmlibdir/journal-catalog.filetrigger
-%ghost %_localstatedir/lib/systemd/catalog/database
-%ghost %_localstatedir/lib/systemd/random-seed
-%ghost %dir %_localstatedir/lib/systemd/linger
+%ghost %_localstatedir%_systemd_dir/catalog/database
+%ghost %_localstatedir%_systemd_dir/random-seed
+%ghost %dir %_localstatedir%_systemd_dir/linger
 
 %_defaultdocdir/%name-%version
 %_logdir/README
@@ -1757,8 +1760,8 @@ udevadm hwdb --update &>/dev/null
 %files homed
 %config(noreplace) %_sysconfdir/systemd/homed.conf
 /bin/homectl
-/lib/systemd/systemd-homed
-/lib/systemd/systemd-homework
+%_systemd_dir/systemd-homed
+%_systemd_dir/systemd-homework
 %_unitdir/systemd-homed*
 %_datadir/dbus-1/system.d/org.freedesktop.home1.conf
 %_datadir/dbus-1/system-services/org.freedesktop.home1.service
@@ -1796,22 +1799,22 @@ udevadm hwdb --update &>/dev/null
 
 %files sysctl-common
 %config(noreplace) %_sysconfdir/sysctl.d/99-sysctl.conf
-/lib/sysctl.d/49-coredump-disable.conf
-/lib/sysctl.d/50-default.conf
-/lib/sysctl.d/50-net.conf
-/lib/sysctl.d/50-mmap-min-addr.conf
+%_sysctldir/49-coredump-disable.conf
+%_sysctldir/50-default.conf
+%_sysctldir/50-net.conf
+%_sysctldir/50-mmap-min-addr.conf
 %if %_lib == lib64
-/lib/sysctl.d/50-pid-max.conf
+%_sysctldir/50-pid-max.conf
 %endif
 
 %files utils
-%dir /lib/systemd
-/lib/systemd/libsystemd-shared-%ver_major.so
+%dir %_systemd_dir
+%_systemd_dir/libsystemd-shared-%ver_major.so
 
-/lib/modprobe.d/README
-/lib/sysctl.d/README
-/lib/sysusers.d/README
-/lib/tmpfiles.d/README
+%_modprobedir/README
+%_sysctldir/README
+%_sysusersdir/README
+%_tmpfilesdir/README
 
 /sbin/systemctl
 /bin/systemctl
@@ -1829,7 +1832,7 @@ udevadm hwdb --update &>/dev/null
 %_altdir/systemd-tmpfiles-shared
 %_mandir/*/*tmpfiles*
 %_tmpfilesdir/systemd-tmp.conf
-/lib/systemd/systemd-binfmt
+%_systemd_dir/systemd-binfmt
 /sbin/systemd-binfmt
 %_rpmlibdir/systemd-binfmt.filetrigger
 %_mandir/*/*binfmt*
@@ -1838,20 +1841,20 @@ udevadm hwdb --update &>/dev/null
 %_altdir/systemd-sysusers-shared
 %_mandir/*/*sysusers*
 
-/lib/systemd/systemd-modules-load
+%_systemd_dir/systemd-modules-load
 %_sysconfdir/modules-load.d/modules.conf
 /sbin/systemd-modules-load.shared
 %_altdir/systemd-modules-load-shared
 %_mandir/*/*modules-load*
 
-/lib/systemd/systemd-sysctl
+%_systemd_dir/systemd-sysctl
 /sbin/systemd-sysctl.shared
 %_altdir/systemd-sysctl-shared
 %_mandir/*/*sysctl*
 
-/lib/systemd/systemd-backlight
+%_systemd_dir/systemd-backlight
 %_mandir/*/*backlight*
-%ghost %dir %_localstatedir/lib/systemd/backlight
+%ghost %dir %_localstatedir%_systemd_dir/backlight
 
 /sbin/systemd-machine-id-setup
 %_man8dir/systemd-machine-id-*
@@ -1911,20 +1914,20 @@ udevadm hwdb --update &>/dev/null
 %endif
 
 /bin/loginctl
-/lib/systemd/systemd-logind
+%_systemd_dir/systemd-logind
 /bin/userdbctl
-/lib/systemd/systemd-userdbd
-/lib/systemd/systemd-userwork
+%_systemd_dir/systemd-userdbd
+%_systemd_dir/systemd-userwork
 %_bindir/hostnamectl
-/lib/systemd/systemd-hostnamed
+%_systemd_dir/systemd-hostnamed
 %_bindir/localectl
-/lib/systemd/systemd-localed
+%_systemd_dir/systemd-localed
 %_bindir/timedatectl
-/lib/systemd/systemd-timedated
-%dir /lib/systemd/ntp-units.d
+%_systemd_dir/systemd-timedated
+%dir %_systemd_dir/ntp-units.d
 %dir %_sysconfdir/systemd/ntp-units.d
 /bin/oomctl
-/lib/systemd/systemd-oomd
+%_systemd_dir/systemd-oomd
 %config(noreplace) %_sysconfdir/systemd/oomd.conf
 
 %_datadir/bash-completion/completions/*
@@ -1958,13 +1961,13 @@ udevadm hwdb --update &>/dev/null
 %_datadir/polkit-1/actions/org.freedesktop.network1.policy
 %_datadir/polkit-1/actions/org.freedesktop.resolve1.policy
 %endif
-/lib/systemd/systemd-network-generator
-/lib/systemd/system-preset/85-networkd.preset
-/lib/systemd/systemd-networkd
-/lib/systemd/systemd-networkd-wait-online
-/lib/systemd/systemd-resolved
-/lib/systemd/resolv.conf
-/lib/modprobe.d/systemd.conf
+%_systemd_dir/systemd-network-generator
+%_presetdir/85-networkd.preset
+%_systemd_dir/systemd-networkd
+%_systemd_dir/systemd-networkd-wait-online
+%_systemd_dir/systemd-resolved
+%_systemd_dir/resolv.conf
+%_modprobedir/systemd.conf
 %_bindir/resolvectl
 %_bindir/systemd-resolve
 # TODO: Provides: /sbin/resolvconf ?
@@ -1974,10 +1977,10 @@ udevadm hwdb --update &>/dev/null
 %_unitdir/systemd-network-generator.service
 %_unitdir/*resolv*
 %_unitdir/*/*resolv*
-/lib/systemd/network/80-container-host0.network
-/lib/systemd/network/80-wifi-adhoc.network
-/lib/systemd/network/80-wifi-ap.network.example
-/lib/systemd/network/80-wifi-station.network.example
+%_systemd_dir/network/80-container-host0.network
+%_systemd_dir/network/80-wifi-adhoc.network
+%_systemd_dir/network/80-wifi-ap.network.example
+%_systemd_dir/network/80-wifi-station.network.example
 %_mandir/*/*networkd*
 %_mandir/*/systemd-network-generator*
 %_mandir/*/*netdev*
@@ -1994,7 +1997,7 @@ udevadm hwdb --update &>/dev/null
 %endif
 
 %files oomd-defaults
-/lib/systemd/oomd.conf.d/10-oomd-defaults.conf
+%_systemd_dir/oomd.conf.d/10-oomd-defaults.conf
 %_unitdir/-.slice.d/10-oomd-root-slice-defaults.conf
 %_unitdir/user@.service.d/10-oomd-user-service-defaults.conf
 
@@ -2003,7 +2006,7 @@ udevadm hwdb --update &>/dev/null
 %_datadir/dbus-1/system.d/org.freedesktop.import1.conf
 /bin/machinectl
 %_bindir/systemd-nspawn
-/lib/systemd/import-pubring.gpg
+%_systemd_dir/import-pubring.gpg
 %_tmpfilesdir/systemd-nspawn.conf
 %_unitdir/*.machine1.*
 %_unitdir/*.import1.*
@@ -2015,15 +2018,15 @@ udevadm hwdb --update &>/dev/null
 %_unitdir/var-lib-machines.mount
 %_unitdir/*/var-lib-machines.mount
 %_unitdir/systemd-nspawn@.service
-/lib/systemd/systemd-machined
-/lib/systemd/systemd-export
-/lib/systemd/systemd-import
-/lib/systemd/systemd-import-fs
-/lib/systemd/systemd-importd
-/lib/systemd/systemd-pull
-/lib/systemd/network/80-container-ve.network
-/lib/systemd/network/80-container-vz.network
-/lib/systemd/network/80-vm-vt.network
+%_systemd_dir/systemd-machined
+%_systemd_dir/systemd-export
+%_systemd_dir/systemd-import
+%_systemd_dir/systemd-import-fs
+%_systemd_dir/systemd-importd
+%_systemd_dir/systemd-pull
+%_systemd_dir/network/80-container-ve.network
+%_systemd_dir/network/80-container-vz.network
+%_systemd_dir/network/80-vm-vt.network
 %_datadir/dbus-1/system-services/org.freedesktop.machine1.service
 %_datadir/dbus-1/system-services/org.freedesktop.import1.service
 %if_enabled polkit
@@ -2041,11 +2044,11 @@ udevadm hwdb --update &>/dev/null
 %_tmpfilesdir/portables.conf
 %_unitdir/systemd-portabled.service
 %_unitdir/*.portable1.*
-%dir /lib/systemd/portable
-%dir /lib/systemd/portable/profile
-/lib/systemd/portable/profile/*
+%dir %_systemd_dir/portable
+%dir %_systemd_dir/portable/profile
+%_systemd_dir/portable/profile/*
 /bin/portablectl
-/lib/systemd/systemd-portabled
+%_systemd_dir/systemd-portabled
 %_datadir/dbus-1/system-services/org.freedesktop.portable1.service
 %if_enabled polkit
 %_datadir/polkit-1/actions/org.freedesktop.portable1.policy
@@ -2055,18 +2058,18 @@ udevadm hwdb --update &>/dev/null
 %if_enabled timesyncd
 %files timesyncd
 %config(noreplace) %_sysconfdir/systemd/timesyncd.conf
-/lib/systemd/system-preset/85-timesyncd.preset
-/lib/systemd/systemd-timesyncd
-/lib/systemd/systemd-time-wait-sync
-/lib/systemd/ntp-units.d/80-systemd-timesync.list
+%_presetdir/85-timesyncd.preset
+%_systemd_dir/systemd-timesyncd
+%_systemd_dir/systemd-time-wait-sync
+%_systemd_dir/ntp-units.d/80-systemd-timesync.list
 %_datadir/dbus-1/system.d/org.freedesktop.timesync1.conf
 %_datadir/dbus-1/system-services/org.freedesktop.timesync1.service
 %_unitdir/systemd-timesyncd.service
 %_unitdir/systemd-time-wait-sync.service
 %_mandir/*/*timesyncd*
 %_mandir/*/*time-wait-sync*
-%ghost %dir %_localstatedir/lib/systemd/timesync
-%ghost %_localstatedir/lib/systemd/timesync/clock
+%ghost %dir %_localstatedir%_systemd_dir/timesync
+%ghost %_localstatedir%_systemd_dir/timesync/clock
 %endif
 
 %files analyze
@@ -2077,8 +2080,8 @@ udevadm hwdb --update &>/dev/null
 %files journal-remote
 %dir %attr(2755,systemd-journal-remote,systemd-journal-remote) %_logdir/journal/remote
 %config(noreplace) %_sysconfdir/systemd/journal-remote.conf
-/lib/systemd/systemd-journal-gatewayd
-/lib/systemd/systemd-journal-remote
+%_systemd_dir/systemd-journal-gatewayd
+%_systemd_dir/systemd-journal-remote
 %_unitdir/systemd-journal-gatewayd.*
 %_unitdir/systemd-journal-remote*
 %_datadir/systemd/gatewayd
@@ -2088,14 +2091,14 @@ udevadm hwdb --update &>/dev/null
 %_man5dir/journal-upload.conf.*
 
 %if_enabled sysusers
-/lib/sysusers.d/systemd-remote.conf
+%_sysusersdir/systemd-remote.conf
 %endif
 
 %if_enabled libcurl
 %config(noreplace) %_sysconfdir/systemd/journal-upload.conf
-%ghost %dir %_localstatedir/lib/systemd/journal-upload
+%ghost %dir %_localstatedir%_systemd_dir/journal-upload
 %ghost %dir %_localstatedir/lib/private/systemd/journal-upload
-/lib/systemd/systemd-journal-upload
+%_systemd_dir/systemd-journal-upload
 %_unitdir/systemd-journal-upload.service
 %_man8dir/systemd-journal-upload*
 %endif
@@ -2104,8 +2107,8 @@ udevadm hwdb --update &>/dev/null
 %if_enabled efi
 %files boot-efi
 %_bindir/bootctl
-/lib/systemd/systemd-bless-boot
-/lib/systemd/system-generators/systemd-bless-boot-generator
+%_systemd_dir/systemd-bless-boot
+%_gen_dir/systemd-bless-boot-generator
 %_unitdir/systemd-boot-system-token.service
 %_unitdir/sysinit.target.wants/systemd-boot-system-token.service
 %_unitdir/systemd-bless-boot.service
@@ -2116,24 +2119,24 @@ udevadm hwdb --update &>/dev/null
 %_man8dir/systemd-bless*
 %_man8dir/systemd-boot*
 %if_enabled gnuefi
-%dir %_prefix/lib/systemd/boot
-%dir %_prefix/lib/systemd/boot/efi
-%_prefix/lib/systemd/boot/efi/*
+%dir %_prefix%_systemd_dir/boot
+%dir %_prefix%_systemd_dir/boot/efi
+%_prefix%_systemd_dir/boot/efi/*
 %endif
 %endif
 
 %if_enabled coredump
 %files coredump
 %config(noreplace) %_sysconfdir/systemd/coredump.conf
-/lib/systemd/systemd-coredump
+%_systemd_dir/systemd-coredump
 %_bindir/*coredumpctl
-/lib/sysctl.d/50-coredump.conf
+%_sysctldir/50-coredump.conf
 %_unitdir/systemd-coredump*
 %_unitdir/*/systemd-coredump*
 %_man1dir/*coredumpctl.*
 %_man5dir/coredump.conf.*
 %_man8dir/systemd-coredump*
-%dir %_localstatedir/lib/systemd/coredump
+%dir %_localstatedir%_systemd_dir/coredump
 %endif
 
 %files stateless
@@ -2146,9 +2149,9 @@ udevadm hwdb --update &>/dev/null
 %if_enabled sysusers
 %_unitdir/systemd-sysusers.service
 %_unitdir/sysinit.target.wants/systemd-sysusers.service
-%dir /lib/sysusers.d
-/lib/sysusers.d/systemd.conf
-/lib/sysusers.d/basic.conf
+%dir %_sysusersdir
+%_sysusersdir/systemd.conf
+%_sysusersdir/basic.conf
 %_tmpfilesdir/etc.conf
 %endif
 
@@ -2177,7 +2180,7 @@ udevadm hwdb --update &>/dev/null
 
 %if_enabled tests
 %files tests
-%_prefix/lib/systemd/tests
+%_prefix%_systemd_dir/tests
 %endif
 
 %files -n libudev1
@@ -2207,14 +2210,14 @@ udevadm hwdb --update &>/dev/null
 %_initdir/udev*
 %_unitdir/*udev*
 %_unitdir/*/*udev*
-%dir /lib/systemd/network
-/lib/systemd/network/*.link
+%dir %_systemd_dir/network
+%_systemd_dir/network/*.link
 %_tmpfilesdir/static-nodes-permissions.conf
 /lib/udev
 /sbin/udevadm
 /sbin/udevd
 /sbin/systemd-hwdb
-/lib/systemd/systemd-udevd
+%_systemd_dir/systemd-udevd
 %_rpmlibdir/udev.filetrigger
 %_rpmlibdir/udev-hwdb.filetrigger
 %_mandir/*/*udev*
@@ -2226,13 +2229,18 @@ udevadm hwdb --update &>/dev/null
 %_datadir/zsh/site-functions/_udevadm
 
 # systemd
-%exclude /lib/udev/rules.d/70-uaccess.rules
-%exclude /lib/udev/rules.d/71-seat.rules
-%exclude /lib/udev/rules.d/73-seat-late.rules
-%exclude /lib/udev/rules.d/90-vconsole.rules
-%exclude /lib/udev/rules.d/99-systemd.rules
+%exclude %_udev_rulesdir/70-uaccess.rules
+%exclude %_udev_rulesdir/71-seat.rules
+%exclude %_udev_rulesdir/73-seat-late.rules
+%exclude %_udev_rulesdir/90-vconsole.rules
+%exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Mon Oct 18 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.5-alt1
+- 249.5
+- Migrate to macros from rpm-macros-systemd.
+- Add post script for update bootloader.
+
 * Sun Sep 05 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.4-alt2
 - Fixed systemd-oom user name typo.
 
