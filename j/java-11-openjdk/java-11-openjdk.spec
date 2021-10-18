@@ -39,7 +39,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-11-openjdk
-%define version 11.0.12.0.7
+%define version 11.0.13.0.7
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -187,9 +187,9 @@ BuildRequires: /proc rpm-build-java
 %global rev_build_loop  %{build_loop2} %{build_loop1}
 
 %ifarch %{bootstrap_arches}
-%global bootstrap_build 1
+%global bootstrap_build 0
 %else
-%global bootstrap_build 1
+%global bootstrap_build 0
 %endif
 
 %if %{bootstrap_build}
@@ -276,7 +276,7 @@ BuildRequires: /proc rpm-build-java
 # Used via new version scheme. JDK 11 was
 # GA'ed in September 2018 => 18.9
 %global vendor_version_string 18.9
-%global securityver 12
+%global securityver 13
 # buildjdkver is usually same as %%{majorver},
 # but in time of bootstrap of next jdk, it is majorver-1, 
 # and this it is better to change it here, on single place
@@ -406,7 +406,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{javaver}-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt2_0jpp10
+Release: alt1_0jpp11
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -434,13 +434,13 @@ Summary: %{origin_nice} Runtime Environment %{majorver}
 # The test code includes copies of NSS under the Mozilla Public License v2.0
 # The PCSClite headers are under a BSD with advertising license
 # The elliptic curve cryptography (ECC) source code is licensed under the LGPLv2.1 or any later version
-License:  ASL 1.1 and ASL 2.0 and BSD and BSD with advertising and GPL+ and GPLv2 and GPLv2 with exceptions and IJG and LGPLv2+ and MIT and MPLv2.0 and Public Domain and W3C and zlib and ISC and FTL and RSA
+License:  Apache-1.1 and Apache-2.0 and BSD and BSD with advertising and GPL-2.0 and GPL-2.0 with exceptions and IJG and LGPL-2.0+ and MIT and MPL-2.0 and ALT-Public-Domain and W3C and Zlib and ISC and FTL and RSA-MD
 URL:      http://openjdk.java.net/
 
 
 # to regenerate source0 (jdk) run update_package.sh
 # update_package.sh contains hard-coded repos, revisions, tags, and projects to regenerate the source archives
-Source0: jdk-updates-jdk%{majorver}u-jdk-%{newjavaver}+%{buildver}%{?tagsuffix:-%{tagsuffix}}-4curve-clean.tar.xz
+Source0: jdk-updates-jdk%{majorver}u-jdk-%{newjavaver}+%{buildver}%{?tagsuffix:-%{tagsuffix}}-4curve.tar.xz
 
 # Use 'icedtea_sync.sh' to update the following
 # They are based on code contained in the IcedTea project (3.x).
@@ -498,14 +498,6 @@ Patch2:    rh1648644-java_access_bridge_privileged_security.patch
 #############################################
 
 Patch3:    rh649512-remove_uses_of_far_in_jpeg_libjpeg_turbo_1_4_compat_for_jdk10_and_up.patch
-# PR3694, RH1340845: Add security.useSystemPropertiesFile option to java.security to use system crypto policy
-Patch4: pr3694-rh1340845-support_fedora_rhel_system_crypto_policy.patch
-# RH1566890: CVE-2018-3639
-Patch6:    rh1566890-CVE_2018_3639-speculative_store_bypass.patch
-# PR3695: Allow use of system crypto policy to be disabled by the user
-Patch7: pr3695-toggle_system_crypto_policy.patch
-# JDK-8269668, RH1977671: [aarch64] java.library.path not including /usr/lib64
-Patch8: jdk8269668-rh1977671-aarch64_lib_path_fix.patch
 
 BuildRequires: autoconf
 BuildRequires: automake
@@ -890,10 +882,6 @@ pushd %{top_level_dir_name}
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-#patch4 -p1
-%patch6 -p1
-#patch7 -p1
-%patch8 -p1
 popd # openjdk
 
 %patch1000
@@ -1236,7 +1224,7 @@ if ! echo $suffix | grep -q "debug" ; then
   install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}
   cp -a %{buildoutputdir}/images/docs $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}
   #cp -a %{buildoutputdir}/bundles/jdk-%{newjavaver}%{ea_designator_zip}+%{buildver}%{lts_designator_zip}-docs.zip $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}.zip
-  cp -a %{buildoutputdir}/bundles/jdk-11.0.12.1+1%{lts_designator_zip}-docs.zip $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}.zip
+  cp -a %{buildoutputdir}/bundles/jdk-11.0.13.1+1%{lts_designator_zip}-docs.zip $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}.zip
 fi
 
 # Install release notes
@@ -1786,6 +1774,10 @@ fi
 %endif
 
 %changelog
+* Mon Oct 18 2021 Andrey Cherepanov <cas@altlinux.org> 0:11.0.13.7-alt1_0jpp11
+- New version.
+- Fix some license names according to SPDX.
+
 * Wed Sep 01 2021 Andrey Cherepanov <cas@altlinux.org> 0:11.0.12.7-alt2_0jpp10
 - Use system libharfbuzz.
 
