@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.18
+Version: 1.4.19
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,32 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Oct 18 2021 Anton Midyukov <antohami@altlinux.org> 1.4.19-alt1
+- syslinux: fix broken 01-syslinux script in previous version 1.4.18
+- regular-vm.mk, regular.mk: drop udev-rule-generator
+- kernel: add rtw89 wifi kernel module for support Realtek RTL8852AE
+  (thanks zerg@)
+- install2: don't remove mmc kernel modules to allow USB 0bda:0129 cardreader
+  (thanks zerg@)
+- install2: do not cleanup cec and rc kernel modules (needed for amdgpu)
+  (thanks zerg@)
+- kernel/stage1: prevent to include nvidia to stage1 (thanks zerg@)
+- drm: drop use/drm/stage2/nvidia target
+- kworkstation: add latest commits from zerg@
+- initrd-bootchain: add etwork interface naming udev rules
+- initrd-bootchain: allow BOOTCHAIN_LOGFILE, BOOTCHAIN_LOG_VT to be reassigned
+- build-vm: create initrd from a special config (/etc/initrd.mk.oem)
+- kernel: add use/kernel/disable-usb-autosuspend
+- mixin.mk: disable usb autosuspend for regular-x11
+- kernel: add drivers/mfd drivers/clk to initrd for aarch64, armh
+- grub: remove 'ip=dhcp' from netinstall.cfg
+- isomd5sum: drop obsoletes feature
+- build.mk: Do nothing with IMAGEDIR if $(DIRECT_TARGETS) is running
+- init: Fix install /etc/os-release (thanks sem@)
+- workstation: add latest commits from sem@
+- slinux: add latest commits from sem@
+- education: add latest commits from cas@
+
 * Mon Sep 20 2021 Anton Midyukov <antohami@altlinux.org> 1.4.18-alt1
 - If the BRANCH variable is not empty, and the BRANDING variable on
   the contrary is empty, then BRANDING is assigned to alt-starterkit.
