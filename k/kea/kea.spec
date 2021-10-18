@@ -9,11 +9,11 @@
 %define _localstatedir /var
 
 Name: kea
-Version: 1.8.2
-Release: alt3
+Version: 2.0.0
+Release: alt1
 Summary: DHCPv4, DHCPv6 and DDNS server from ISC
 
-License: MPLv2.0 and Boost
+License: MPL-2.0 and BSL-1.0
 Group: System/Servers
 Url: http://kea.isc.org
 Source0: %name-%version.tar
@@ -115,6 +115,8 @@ This package provides Python3 connector.
 # https://lists.isc.org/pipermail/kea-dev/2016-January/000599.html
 sed -i -e 's|ECHO|YYECHO|g' src/lib/eval/lexer.cc
 
+sed -i -e "s|%version-git|%version|" configure.ac
+
 %build
 %autoreconf
 export CXXFLAGS="%optflags -std=gnu++11 -Wno-deprecated-declarations"
@@ -201,8 +203,7 @@ rm -f %buildroot%python3_sitelibdir_noarch/kea/kea_connector2.py
 %_unitdir/*.service
 %dir %attr(0750, root, _kea) %_sysconfdir/%name
 %config(noreplace) %attr(0640, root, _kea) %_sysconfdir/%name/*.conf
-%dir %_datadir/%name
-%_datadir/%name/scripts
+%_datadir/%name
 %dir %attr(0755, _kea, _kea) %_sharedstatedir/%name
 %config(noreplace) %attr(0644, _kea, _kea) %_sharedstatedir/%name/*.csv
 %_man8dir/*
@@ -228,6 +229,9 @@ rm -f %buildroot%python3_sitelibdir_noarch/kea/kea_connector2.py
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Mon Oct 18 2021 Alexey Shabalin <shaba@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Thu Aug 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.2-alt3
 - Rebuilt with boost-1.77.0.
 
