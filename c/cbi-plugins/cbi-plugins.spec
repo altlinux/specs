@@ -1,6 +1,6 @@
 Name: cbi-plugins
 Version: 1.1.7
-Release: alt2
+Release: alt2.1
 
 Summary: A set of helpers for Eclipse CBI
 License: EPL-1.0
@@ -15,7 +15,7 @@ Source: org.eclipse.cbi_maven-plugin-parent_%version.tar
 
 BuildRequires: /proc
 BuildRequires: auto-value
-BuildRequires: java-devel
+BuildRequires: java-devel >= 11.0.0
 BuildRequires: maven-plugin-plugin
 BuildRequires: rpm-build-java
 BuildRequires: tycho
@@ -59,6 +59,9 @@ API documentation for %name.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Oct 18 2021 Andrey Cherepanov <cas@altlinux.org> 1.1.7-alt2.1
+- NMU: Rebuild with java-11-openjdk.
+
 * Sat Mar 06 2021 Nazarov Denis <nenderus@altlinux.org> 1.1.7-alt2
 - Fix build
 
