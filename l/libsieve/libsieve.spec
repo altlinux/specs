@@ -1,6 +1,6 @@
 Name: libsieve
 Version: 2.2.5
-Release: alt2
+Release: alt3
 
 Summary: Standalone library providing an interpreter for RFC 3028 Sieve and various extensions
 License: CMU and LGPL
@@ -16,12 +16,6 @@ License: CMU and LGPL
 Group: Development/Other
 Requires: %name = %version-%release
 
-%package -n %name-devel-static
-Summary: Standalone library providing an interpreter for RFC 3028 Sieve and various extensions
-License: CMU and LGPL
-Group: Development/Other
-Requires: %name-devel = %version-%release
-
 %description
 This is a standalone library providing an interpreter for RFC 3028 Sieve
 and various extensions. It is based upon code distributed with the Cyrus Mail
@@ -30,13 +24,6 @@ attempts to be easy to use and extensible, and replaces the more rigid API in
 the Cyrus Sieve implementation.
 
 %description -n %name-devel
-This is a standalone library providing an interpreter for RFC 3028 Sieve
-and various extensions. It is based upon code distributed with the Cyrus Mail
-Server prior to CMU's switch to a more restrictive license. The libSieve API
-attempts to be easy to use and extensible, and replaces the more rigid API in
-the Cyrus Sieve implementation.
-
-%description -n %name-devel-static
 This is a standalone library providing an interpreter for RFC 3028 Sieve
 and various extensions. It is based upon code distributed with the Cyrus Mail
 Server prior to CMU's switch to a more restrictive license. The libSieve API
@@ -71,6 +58,8 @@ install -m 0644 README %buildroot/%_docdir/%name-%version
 cd src
 %makeinstall
 
+rm -rf %buildroot%_libdir/*.a
+
 %files
 %_libdir/%name.so.?*
 %doc %_docdir/%name-%version/*
@@ -83,10 +72,10 @@ cd src
 %_includedir/*.h
 %_libdir/%name.so
 
-%files -n %name-devel-static
-%_libdir/%name.a
-
 %changelog
+* Mon Oct 18 2021 Grigory Ustinov <grenka@altlinux.org> 2.2.5-alt3
+- Fixed FTBFS.
+
 * Wed Apr 07 2021 Grigory Ustinov <grenka@altlinux.org> 2.2.5-alt2
 - Fixed FTBFS with -fcommon.
 
