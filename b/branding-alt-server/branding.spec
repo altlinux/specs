@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 10.0
-Release: alt0.1
+Release: alt0.2
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -310,6 +310,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Oct 15 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 10.0-alt0.2
+- images and bootsplash fixed
+
 * Thu Sep 16 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 10.0-alt0.1
 - images and bootsplash changed
 
