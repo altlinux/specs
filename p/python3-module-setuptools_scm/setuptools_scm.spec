@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.0.1
+Version: 6.3.2
 Release: alt1
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
@@ -19,6 +19,11 @@ Patch1: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
+# install_requires
+BuildRequires: python3(packaging)
+BuildRequires: python3(setuptools)
+BuildRequires: python3(tomli)
+
 BuildRequires: git-core
 BuildRequires: mercurial
 BuildRequires: python3(pytest)
@@ -29,7 +34,9 @@ BuildRequires: python3(tox_console_scripts)
 
 %py3_provides setuptools-scm
 Requires: git-core mercurial
+%py3_requires packaging
 %py3_requires setuptools
+%py3_requires tomli
 
 %description
 setuptools_scm is a simple utility for the setup_requires feature of
@@ -66,9 +73,13 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/setuptools_scm/
+%python3_sitelibdir/setuptools_scm-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Sep 29 2021 Stanislav Levin <slev@altlinux.org> 6.3.2-alt1
+- 6.0.1 -> 6.3.2.
+
 * Sun Apr 18 2021 Stanislav Levin <slev@altlinux.org> 6.0.1-alt1
 - 4.1.2 -> 6.0.1.
 

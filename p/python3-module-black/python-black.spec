@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 21.8b0
+Version: 21.9b0
 Release: alt1
 
 Summary: The Uncompromising Code Formatter
@@ -99,6 +99,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/blib2to3/
 
 %changelog
+* Mon Oct 18 2021 Stanislav Levin <slev@altlinux.org> 21.9b0-alt1
+- 21.8b0 -> 21.9b0.
+
 * Tue Sep 07 2021 Stanislav Levin <slev@altlinux.org> 21.8b0-alt1
 - 21.7b0 -> 21.8b0.
 

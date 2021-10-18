@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.5.1
+Version: 3.6.0
 Release: alt1
 
 Summary: A pathlib-compatible Zipfile object wrapper
@@ -22,7 +22,6 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python3(setuptools_scm)
-BuildRequires: python3(toml)
 
 %if_with check
 BuildRequires: python3(pytest)
@@ -64,6 +63,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Oct 18 2021 Stanislav Levin <slev@altlinux.org> 3.6.0-alt1
+- 3.5.1 -> 3.6.0.
+
 * Wed Sep 29 2021 Stanislav Levin <slev@altlinux.org> 3.5.1-alt1
 - 3.5.0 -> 3.5.1.
 
