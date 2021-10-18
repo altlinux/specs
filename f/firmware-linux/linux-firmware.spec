@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20210926
+Version: 20211018
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,19 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Mon Oct 18 2021 Cronbuild Service <cronbuild@altlinux.org> 20211018-alt1
+- upstream changes (GIT d34196f):
+  + update firmware for MT7921 WiFi device (thx Deren Wu)
+  + Update firmware file for Intel Bluetooth 9462 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9560 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX211 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX210 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9560 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9260 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX200 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+
 * Tue Oct 05 2021 Cronbuild Service <cronbuild@altlinux.org> 20210926-alt1
 - upstream changes (GIT 7a30050):
   + brcm: Add 43455 based AP6255 NVRAM for the ACEPC T8 Mini PC (thx Hans de Goede)
