@@ -1,6 +1,6 @@
 Name: libgii
 Version: 1.0.2
-Release: alt3.qa2
+Release: alt3.qa3
 Packager: Fr. Br. George <george@altlinux.ru>
 Summary: A flexible library for input handling (General Input Interface)
 
@@ -35,16 +35,8 @@ Requires: %name = %version-%release
 %description devel
 development files for %name
 
-%package devel-static
-Summary: development part of %name, static version
-Group: Development/C
-Requires: %name = %version-%release
-
-%description devel-static
-development files for %name
-
 %prep
-%setup -q 
+%setup
 
 %build
 %undefine __libtoolize
@@ -54,6 +46,8 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 
 %install
 %makeinstall
+
+rm -fv %buildroot%_libdir/*.a
 
 %files
 %doc ChangeLog* FAQ INSTALL INSTALL.autoconf NEWS README doc/README*
@@ -68,15 +62,12 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 
 %files devel
 %_includedir/*
-#_libdir/ggi/*/*.la
 %_libdir/*.so
-#_libdir/*.la
-
-%files devel-static
-%_libdir/libgii.a
-%_libdir/libgg.a
 
 %changelog
+* Mon Oct 18 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt3.qa3
+- Fixed FTBFS.
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt3.qa2
 - Removed bad RPATH
 
