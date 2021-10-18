@@ -1,7 +1,7 @@
 # TODO: check .gear/predownloaded-preinstall-hook
 
 Name: element-web
-Version: 1.9.0
+Version: 1.9.1
 Release: alt1
 
 Summary: A glossy Matrix collaboration client
@@ -56,6 +56,9 @@ cp -a webapp %buildroot/var/www/html/%name/
 /var/www/html/%name/
 
 %changelog
+* Mon Oct 11 2021 Vitaly Lipatov <lav@altlinux.ru> 1.9.1-alt1
+- new version 1.9.1 (with rpmrb script)
+
 * Mon Sep 27 2021 Vitaly Lipatov <lav@altlinux.ru> 1.9.0-alt1
 - new version 1.9.0 (with rpmrb script)
 
