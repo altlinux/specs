@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 1.10.3
-Release: alt1
+Release: alt2
 
 Summary: cysignals: interrupt and signal handling for Cython
 License: LGPL-3.0
@@ -16,6 +16,9 @@ BuildRequires: python3-dev python3-module-setuptools
 BuildRequires: python3-module-Cython
 
 Source: %modulename-%version.tar
+# https://github.com/sagemath/cysignals/pull/151
+Patch1: d7b65f920eaf50e76e56125a3ebec2332bb3ad45.patch
+Patch2: d589e5ec3291f0c0dcfb1f619a7e50ebe2987502.patch
 
 %description
 The cysignals package provides mechanisms to handle interrupts (and other
@@ -23,6 +26,8 @@ signals and errors) in Cython code.
 
 %prep
 %setup -n %modulename-%version
+%patch1 -p1
+%patch2 -p1
 
 %build
 %python3_build
@@ -38,5 +43,8 @@ signals and errors) in Cython code.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Oct 18 2021 Grigory Ustinov <grenka@altlinux.org> 1.10.3-alt2
+- Fixed FTBFS.
+
 * Mon Jun 21 2021 Andrey Cherepanov <cas@altlinux.org> 1.10.3-alt1
 - Initial build for Sisyphus
