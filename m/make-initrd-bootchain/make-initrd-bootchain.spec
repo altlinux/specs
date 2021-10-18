@@ -3,7 +3,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt4
+Release: alt5
 
 Summary: %child modules set for %name
 License: GPL-3.0
@@ -207,6 +207,17 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Fri Oct 15 2021 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt5
+- fix netboot problem on very slow hardware (ALT #41078).
+- fix screen blinks in ponder widget (ALT #41096).
+- bootchain-core: adds support for the early console.
+- bootchain-waitnet: increase timeout and fix messages.
+- bootchain: reworked interaction with TTY's (ALT #41097).
+- bootchain-altboot: adds special actions to the main menu.
+- concatinate bootchain-loop back with the bootchained.
+- bootchain-core: daemon and log renamed to chaind.
+- bootchain-waitnet: bring up interfaces only once.
+
 * Tue Sep 28 2021 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt4
 - prepare to upstreaming started for core, getimage and waitdev.
 - many fixes for synchronize code and style with the upstream.
