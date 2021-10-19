@@ -1,9 +1,9 @@
 Name: autofs
-Version: 5.1.7
-Release: alt3
+Version: 5.1.8
+Release: alt1
 
 Summary: A tool for automatically mounting and unmounting filesystems
-License: GPL
+License: GPLv2
 Group: System/Kernel and hardware
 Url: ftp://ftp.kernel.org/pub/linux/daemons/autofs/v4/
 
@@ -135,6 +135,9 @@ fi
 %_libdir/%name/lookup_sss.so
 
 %changelog
+* Tue Oct 19 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.8-alt1
+- 5.1.8 released
+
 * Thu Oct 14 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.7-alt3
 - fixed build with glibc 2.34
 
