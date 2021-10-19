@@ -1,5 +1,5 @@
 Name: smcroute
-Version: 2.4.4
+Version: 2.5.3
 Release: alt1
 
 Summary: Static Multicast Routing Daemon
@@ -48,11 +48,14 @@ touch %buildroot%_sysconfdir/smcroute.conf
 %_sbindir/smcrouted
 %_sbindir/smcroutectl
 
-%_man8dir/smcroute.*
+%_man5dir/smcroute.conf.*
 %_man8dir/smcrouted.*
 %_man8dir/smcroutectl.*
 
 %changelog
+* Tue Oct 19 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5.3-alt1
+- 2.5.3 released
+
 * Sun Dec 01 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4.4-alt1
 - 2.4.4 released
 
