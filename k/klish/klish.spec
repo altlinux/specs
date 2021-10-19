@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: klish
-Version: 1.6.8
-Release: alt2
+Version: 2.2.4
+Release: alt1
 
 Summary: A framework for implementing a CISCO-like CLI on a UNIX systems
 
@@ -10,9 +12,8 @@ Url: http://libcode.org/projects/klish/
 
 Packager: Paul Wolneykien <manowar@altlinux.org>
 
-Source: %name-%version.tar
-
-Patch0: klishlibdir.patch
+Source0: %name-%version.tar
+Source1: %name.watch
 
 BuildRequires: libexpat-devel
 
@@ -184,11 +185,10 @@ See %_docdir/%name-%version for other examples.
 
 %prep
 %setup -q -n %name-%version
-%patch0 -p2
 
 %build
 %autoreconf
-%configure
+%configure --disable-static
 %make_build
 
 %install
@@ -203,40 +203,34 @@ See %_docdir/%name-%version for other examples.
 %exclude %_bindir/sigexec
 
 %files libclish
-%_libdir/klish/libclish*.so.*
-%exclude %_libdir/klish/libclish*.a
+%_libdir/libclish*.so.*
+%_libdir/clish_plugin_clish.so
+%_libdir/clish_plugin_clish.la
 
 %files libclish-devel
 %_includedir/clish/*.h
-%_libdir/klish/libclish*.so
-%_libdir/klish/libclish*.la
+%_libdir/libclish*.so
 
 %files libkonf
-%_libdir/klish/libkonf*.so.*
-%exclude %_libdir/klish/libkonf*.a
+%_libdir/libkonf*.so.*
 
 %files libkonf-devel
 %_includedir/konf/*.h
-%_libdir/klish/libkonf*.so
-%_libdir/klish/libkonf*.la
+%_libdir/libkonf*.so
 
 %files liblub
-%_libdir/klish/liblub*.so.*
-%exclude %_libdir/klish/liblub*.a
+%_libdir/liblub*.so.*
 
 %files liblub-devel
 %_includedir/lub/*.h
-%_libdir/klish/liblub*.so
-%_libdir/klish/liblub*.la
+%_libdir/liblub*.so
 
 %files libtinyrl
-%_libdir/klish/libtinyrl*.so.*
-%exclude %_libdir/klish/libtinyrl*.a
+%_libdir/libtinyrl*.so.*
 
 %files libtinyrl-devel
 %_includedir/tinyrl/*.h
-%_libdir/klish/libtinyrl*.so
-%_libdir/klish/libtinyrl*.la
+%_libdir/libtinyrl*.so
 
 %files doc
 %doc README
@@ -245,6 +239,11 @@ See %_docdir/%name-%version for other examples.
 %doc xml-examples/klish
 
 %changelog
+* Tue Oct 19 2021 Paul Wolneykien <manowar@altlinux.org> 2.2.4-alt1
+- New version 2.2.4.
+- Update paths of the libraries (now they are in %%_libdir).
+- Disable static.
+
 * Mon Jul 28 2014 Paul Wolneykien <manowar@altlinux.org> 1.6.8-alt2
 - FR fix: Include the klish-specific examples into the doc package
   (closes #30209).
