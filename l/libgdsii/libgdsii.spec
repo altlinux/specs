@@ -1,7 +1,7 @@
 Name:		libgdsii
 Summary:	A C++ library for working with GDSII binary data files
 Version:	0.21
-Release:	alt1
+Release:	alt2
 License:	GPLv2
 URL:		https://github.com/HomerReid/libGDSII
 Source:		%name-%version.tar.gz
@@ -26,12 +26,6 @@ Summary: Development files for %name
 %description devel
 %summary
 
-%package devel-static
-Group: Development/C++
-Summary: Development static files for %name
-%description devel-static
-%summary
-
 %package -n GDSIIConvert
 Group:	Graphics
 Summary: Reporting statistics on GDSII geometries and exporting them to other file formats
@@ -52,6 +46,8 @@ including the GMSH geometry format.
 %makeinstall
 install -D libGDSII-pkgconfig %buildroot%_pkgconfigdir/libGDSII.pc
 
+rm -fv %buildroot%_libdir/*.a
+
 %files
 %doc README*
 %_libdir/*.so.*
@@ -62,13 +58,13 @@ install -D libGDSII-pkgconfig %buildroot%_pkgconfigdir/libGDSII.pc
 %_libdir/*.so
 %_pkgconfigdir/*
 
-%files devel-static
-%_libdir/*.a
-
 %files -n GDSIIConvert
 %_bindir/*
 
 %changelog
+* Tue Oct 19 2021 Grigory Ustinov <grenka@altlinux.org> 0.21-alt2
+- Removed static library.
+
 * Mon Aug 05 2019 Fr. Br. George <george@altlinux.ru> 0.21-alt1
 - Initial build for ALT
 
