@@ -1,21 +1,27 @@
-Name:          elixir
-Version:       1.10.2
-Release:       alt1
-Summary:       A modern approach to programming for the Erlang VM
-Group:         Development/Other
-License:       Apache-2.0
-Url:           http://elixir-lang.org/
-Vcs:           https://github.com/elixir-lang/elixir.git
-Packager:      Denis Medvedev <nbr@altlinux.org>
+%define _unpackaged_files_terminate_build 1
 
-Source:        %name-%version.tar
-BuildArch:     noarch
-BuildRequires(pre): erlang-otp-full erlang-otp-devel erlang-devel
-BuildRequires(pre): erlang-common_test-debug erlang-common_test-common
-BuildRequires(pre): erlang-otp-native  erlang-common_test-native erlang-common_test rebar
+Name: elixir
+Version: 1.12.3
+Release: alt1
+Summary: A modern approach to programming for the Erlang VM
+License: Apache-2.0
+Group: Development/Other
+Url: http://elixir-lang.org/
+BuildArch: noarch
+
+# https://github.com/elixir-lang/elixir.git
+Source: %name-%version.tar
+
+Patch0: elixir-alt-exception_test-gt_cookie.patch
+
+BuildRequires(pre): rpm-build-erlang
+BuildRequires: erlang-devel
+BuildRequires: erlang-otp-devel
+BuildRequires: rebar
+
+# for tests
+BuildRequires: /dev/pts
 BuildRequires: git
-
-Requires:      /usr/bin/erl
 
 %description
 Elixir is a programming language built on top of the Erlang VM.
@@ -24,19 +30,18 @@ fault-tolerant, non-stop applications with hot code swapping.
 
 %prep
 %setup
-%__subst "s/time //g" Makefile
 find -name '*.bat' -exec rm \{\} \;
 
-# This contains a failing test. We want `make test` for most tests, but
-# this deals with ANSI codes which rpmbuild strips.
-#rm lib/elixir/test/elixir/io/ansi_test.exs
+%patch0 -p1
 
 %build
-make
+export LANG="en_US.UTF-8"
+%make_build compile
+%make_build build_man
 
 %check
 export LANG="en_US.UTF-8"
-# make test
+%make_build test
 
 %install
 mkdir -p %buildroot/%_datadir/%name/%version
@@ -45,6 +50,9 @@ cp -ra bin lib %buildroot/%_datadir/%name/%version
 mkdir -p %buildroot/%_bindir
 ln -s %_datadir/%name/%version/bin/{elixir,elixirc,iex,mix} %buildroot/%_bindir/
 
+mkdir -p %buildroot/%_mandir/man1
+cp -a man/elixir.1 man/elixirc.1 man/iex.1 man/mix.1 %buildroot/%_mandir/man1
+
 %files
 %doc LICENSE
 %_bindir/elixir
@@ -52,8 +60,12 @@ ln -s %_datadir/%name/%version/bin/{elixir,elixirc,iex,mix} %buildroot/%_bindir/
 %_bindir/iex
 %_bindir/mix
 %_datadir/%name
+%_mandir/man1/*
 
 %changelog
+* Tue Oct 12 2021 Egor Ignatov <egori@altlinux.org> 1.12.3-alt1
+- 1.12.3
+
 * Wed Mar 11 2020 Pavel Skrylev <majioa@altlinux.org> 1.10.2-alt1
 - ^ 1.9.2 -> 1.10.2
 

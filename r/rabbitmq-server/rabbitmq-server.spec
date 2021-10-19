@@ -3,13 +3,9 @@
 
 %add_findreq_skiplist */ocf/resource.d/rabbitmq/*
 
-# workaround for not find Provides in plugins/*.ez files
-%add_erlang_req_modules_skiplist ranch delegate ec_semver file_handle_cache file_handle_cache_stats lg recon_alloc vm_memory_monitor worker_pool
-%add_erlang_req_modules_skiplist app_utils credit_flow gen_server2 mirrored_supervisor pmon priority_queue rand_compat supervisor2 time_compat
-
 Name: rabbitmq-server
-Version: 3.8.3
-Release: alt2
+Version: 3.9.7
+Release: alt1
 Summary: The RabbitMQ server
 License: MPL-1.1
 BuildArch: noarch
@@ -21,48 +17,38 @@ Source3: rabbitmq-server.logrotate
 Source4: rabbitmq-env.conf
 Source6: rabbitmq-server.service
 Source7: rabbitmq-server.tmpfiles
+Source8: rabbitmq-server-cuttlefish
 
-Patch1: rabbitmq-server-0001-Remove-excessive-sd_notify-code.patch
-Patch2: rabbitmq-server-0002-Add-systemd-notification-support.patch
 Patch3: rabbitmq-server-0003-Allow-guest-login-from-non-loopback-connections.patch
-Patch4: rabbitmq-server-0004-rabbit_prelaunch-must-use-RABBITMQ_SERVER_ERL_ARGS.patch
 Patch101: rabbitmq-common-0001-Use-proto_dist-from-command-line.patch
 Patch102: rabbitmq-common-0002-force-python3.patch
-Patch201: rabbitmq-server-release-0001-Don-t-use-templates.patch
 Patch202: rabbitmq-server-release-0002-Revert-Use-template-in-rabbitmq-script-wrapper-for-R.patch
 Patch301: rabbitmq-amqp1.0-common-0001-force-python3.patch
 
 URL: http://www.rabbitmq.com/
 
-BuildRequires(pre): rpm-build-erlang
-BuildRequires: erlang-devel erlang-otp-devel elixir
+BuildRequires(pre): rpm-build-erlang rpm-build-python3
+BuildRequires: erlang-devel
+BuildRequires: erlang-otp-devel elixir
 BuildRequires: python3-module-simplejson
 BuildRequires: xmlto zip unzip netcat rsync
-Requires: erlang  >= 1:20.3.0
 
-%filter_from_requires /^erlang_\(mod\|lib\|app\)(\(lager\|glc\|gr_\|gre\|prometheus\|ranch\|observer\|ra_\|ra)\|jose\|jsx\|cow\|aten\|recon\|stdout_formatter\|sysmon_handler\|credentials_obfuscation\|accept\|base64url\|gen_batch_server\|goldrush\|error_logger_lager_h\|syslog\)/d
-%filter_from_provides /^erlang_\(mod\|lib\|app\)(\(lager\|glc\|gr_\|gre\|prometheus\|ranch\|observer\|ra_\|ra)\|jose\|jsx\|cow\|aten\|recon\|stdout_formatter\|sysmon_handler\|credentials_obfuscation\|accept\|base64url\|gen_batch_server\|goldrush\|error_logger_lager_h\|syslog\)/d
+#Disable erlang autoreq to avoid unmet dependencies on rabbitmq plugins
+AutoReq: noerlang
+Requires: elixir
+Requires: erlang >= 1:23.2.0
+Requires: erlang-otp >= 1:23.2.0
 
 %description
 RabbitMQ is an implementation of AMQP, the emerging standard for high
 performance enterprise messaging. The RabbitMQ server is a robust and
 scalable implementation of an AMQP broker.
 
-%package -n %name-devel
-Summary: %name header files
-Group: Development/Erlang
-
-%description -n %name-devel
-Erlang header files for %name
-
 %prep
 %setup -q
 
 pushd deps/rabbit
-%patch1 -p1
-%patch2 -p1
 %patch3 -p1
-%patch4 -p1
 popd
 
 pushd deps/rabbit_common
@@ -70,7 +56,6 @@ pushd deps/rabbit_common
 %patch102 -p1
 popd
 
-%patch201 -p1
 %patch202 -p1
 
 pushd deps/amqp10_common
@@ -115,6 +100,7 @@ install -p -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/%oname/%{oname}-env.conf
 install -p -D -m 0644 deps/rabbit/docs/rabbitmq.conf.example %buildroot%_sysconfdir/%oname/rabbitmq.conf
 install -p -D -m 0644 %SOURCE6 %buildroot%_unitdir/%oname.service
 install -p -D -m 0644 %SOURCE7 %buildroot%_tmpfilesdir/%oname.conf
+install -p -D -m 0755 %SOURCE8 %buildroot%_otplibdir/rabbitmq_server-%version/sbin/cuttlefish
 install -d %buildroot%_runtimedir/%oname
 
 # Make necessary symlinks
@@ -155,7 +141,7 @@ rm -rf %buildroot/usr/lib/erlang/autocomplete
 %dir %_erlanglibdir/rabbitmq_server-%version
 %_erlanglibdir/rabbitmq_server-%version/*
 %_erldir/bin/*
-%exclude %_erlanglibdir/rabbitmq_server-%version/include
+#%exclude %_erlanglibdir/rabbitmq_server-%version/include
 %attr(0750, rabbitmq, rabbitmq) %dir %_localstatedir/%oname
 %attr(0750, rabbitmq, rabbitmq) %dir %_localstatedir/%oname/mnesia
 %attr(0750, rabbitmq, rabbitmq) %dir %_logdir/%oname
@@ -172,11 +158,12 @@ rm -rf %buildroot/usr/lib/erlang/autocomplete
 %_datadir/bash-completion/completions/%name
 %_datadir/zsh/site-functions/_%name
 
-%files -n %name-devel
-%_erlanglibdir/rabbitmq_server-%version/include
-#%_datadir/%name
-
 %changelog
+* Wed Oct 13 2021 Egor Ignatov <egori@altlinux.org> 3.9.7-alt1
+- 3.9.7
+- Disable erlang AutoReq
+- Remove obsolete patches
+
 * Wed Jun 10 2020 Andrey Cherepanov <cas@altlinux.org> 3.8.3-alt2
 - Remove provides from bundled modules (ALT #36925).
 - Fix License tag according to SPDX.

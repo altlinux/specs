@@ -3,8 +3,8 @@
 %define realname meck
 
 Name: erlang-%realname
-Version: 0.8.13
-Release: alt2
+Version: 0.9.2
+Release: alt1
 Summary: A mocking library for Erlang
 Group: Development/Erlang
 License: Apache-2.0
@@ -46,6 +46,9 @@ modules, such as making sure no function is called in a way it should not.
 %_erllibdir/%realname-%version
 
 %changelog
+* Wed Oct 13 2021 Egor Ignatov <egori@altlinux.org> 0.9.2-alt1
+- 0.9.2
+
 * Mon Mar 30 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.13-alt2
 - Fixed build with rebar2.
 

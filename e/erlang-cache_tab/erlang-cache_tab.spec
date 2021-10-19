@@ -6,7 +6,7 @@
 
 Name: erlang-%realname
 Version: 1.0.29
-Release: alt1
+Release: alt2
 Summary: In-memory cache Erlang / Elixir library
 Group: Development/Erlang
 License: Apache-2.0
@@ -14,9 +14,6 @@ Url: https://github.com/processone/cache_tab
 
 # https://github.com/processone/cache_tab.git
 Source: %name-%version.tar
-
-# Upstream check didn't work for some reason, just revert it
-Patch1: %name-alt-erlang-compat.patch
 
 BuildRequires(pre): rpm-build-erlang
 BuildRequires: erlang-otp-devel erlang-devel
@@ -28,7 +25,6 @@ In-memory cache Erlang / Elixir library.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %autoreconf
@@ -47,6 +43,9 @@ In-memory cache Erlang / Elixir library.
 %_erllibdir/%realname-%version
 
 %changelog
+* Wed Oct 13 2021 Egor Ignatov <egori@altlinux.org> 1.0.29-alt2
+- Fix build with Erlang/OTP 24 (Remove obsolete patch)
+
 * Mon Jul 26 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.29-alt1
 - Updated to upstream version 1.0.29.
 

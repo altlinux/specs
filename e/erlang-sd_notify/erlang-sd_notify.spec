@@ -2,24 +2,21 @@
 
 %define realname sd_notify
 
-%def_disable check
-
-%set_verify_elf_method relaxed
-
 Name: erlang-%realname
-Version: 1.0
-Release: alt5
+Version: 1.1
+Release: alt1
 Summary: Erlang interface to systemd notify subsystem
 Group: Development/Erlang
 License: MIT
 Url: https://github.com/systemd/erlang-sd_notify
+BuildArch: noarch
 
 #VCS: scm:git:https://github.com/systemd/erlang-sd_notify.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-erlang
 BuildRequires: erlang-devel erlang-otp-devel
-BuildRequires: /usr/bin/rebar
+BuildRequires: rebar
 BuildRequires: libsystemd-devel
 
 %description
@@ -29,13 +26,15 @@ BuildRequires: libsystemd-devel
 %setup
 
 %build
-%rebar_compile
+rebar3 compile
 
 %install
-%rebar_install %realname
+mkdir -p %buildroot/%_erllibdir/%realname-%version/ebin
+install -m 644 -p _build/default/lib/sd_notify/ebin/%realname.app %buildroot/%_erllibdir/%realname-%version/ebin
+install -m 644 -p _build/default/lib/sd_notify/ebin/%realname.beam %buildroot/%_erllibdir/%realname-%version/ebin
 
 %check
-%rebar_eunit
+rebar3 eunit
 
 %files
 %doc LICENSE
@@ -43,6 +42,9 @@ BuildRequires: libsystemd-devel
 %_erllibdir/%realname-%version
 
 %changelog
+* Tue Oct 12 2021 Egor Ignatov <egori@altlinux.org> 1.1-alt1
+- 1.1
+
 * Tue Mar 31 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt5
 - Fixed build with rebar2.
 

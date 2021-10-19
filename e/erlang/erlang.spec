@@ -2,40 +2,21 @@
 
 %def_with otp_debug
 %def_with otp_native
-%def_enable threads
-%def_enable smp
-%def_disable halfword
-%def_enable kernel_poll
-%ifarch %ix86 x86_64 %arm
-%def_enable hipe
-%else
-%def_disable hipe
-%endif
-%def_enable megaco_flex_scanner_lineno
+
 %def_with ssl
-%def_with ssl_zlib
-%def_with java
-%def_enable sctp
-%def_disable tsp
-%def_disable elib_malloc
-%def_enable fixalloc
-%def_enable clock_gettime
-%def_disable lock_checking
-%def_disable lock_counting
 %def_with termcap
 %def_with gmp
+%def_with java
+
 %def_enable docs
-%def_enable asm_optimize
+%def_enable kernel_poll
+%def_enable megaco_flex_scanner_lineno
+%def_enable threads
+%def_enable sctp
+%def_disable lock_checking
+%def_disable lock_counting
 
 %def_disable strip_beam
-%def_disable pdf_opt
-
-%ifarch amd64
-%define x86_64 amd64
-%else
-%define x86_64 x86_64
-%endif
-
 
 %define subst_enable_to() %{expand:%%{?_enable_%1:--enable-%2}} %{expand:%%{?_disable_%1:--disable-%2}}
 %define subst_with_to() %{expand:%%{?_with_%1:--with-%2}} %{expand:%%{?_without_%1:--without-%2}}
@@ -43,77 +24,48 @@
 %define java_options -Xmx512m
 %define fop_options -Xmx512m
 
-%def_disable gnu_ld
 #----------------------------------------------------------------------
-%{?_enable_smp_io_thread:%set_disable port_tasks}
 
 %define Name Erlang
-%define ver 21
 Name: erlang
 Epoch: 1
-%define subver 3.6
-Version: %ver.%subver
-Release: alt4
+Version: 24.1.2
+Release: alt1
 Summary: A programming language developed by Ericsson
-License: %asl
+License: Apache-2.0
 Group: Development/Erlang
-Url: http://www.%name.org
+Url: http://www.erlang.org
 
-Source: otp_src_OTP-%ver.%subver.tar
+Source: otp_src_OTP-%version.tar
 
 Source5:	epmd.service
 Source6:	epmd.socket
 Source7:	epmd@.service
 Source8:	epmd@.socket
 
-
 Requires: %name-otp-modules = %version-%release
-Provides: erlang_mod(hipe_bifs) = %version
 Provides: erlang_mod(demo) = %version
-
-%if_disabled hipe
-Provides: erlang_mod(hipe)
-Provides: erlang_mod(hipe_amd64_main)
-Provides: erlang_mod(hipe_arm_main)
-Provides: erlang_mod(hipe_data_pp)
-Provides: erlang_mod(hipe_icode2rtl)
-Provides: erlang_mod(hipe_icode_heap_test)
-Provides: erlang_mod(hipe_llvm_liveness)
-Provides: erlang_mod(hipe_llvm_main)
-Provides: erlang_mod(hipe_ppc_main)
-Provides: erlang_mod(hipe_rtl_arch)
-Provides: erlang_mod(hipe_rtl_cfg)
-Provides: erlang_mod(hipe_rtl_cleanup_const)
-Provides: erlang_mod(hipe_rtl_lcm)
-Provides: erlang_mod(hipe_rtl_ssa)
-Provides: erlang_mod(hipe_rtl_ssa_avail_expr)
-Provides: erlang_mod(hipe_rtl_ssa_const_prop)
-Provides: erlang_mod(hipe_rtl_ssapre)
-Provides: erlang_mod(hipe_rtl_symbolic)
-Provides: erlang_mod(hipe_rtl_verify_gcsafe)
-Provides: erlang_mod(hipe_sparc_main)
-Provides: erlang_mod(hipe_tagscheme)
-Provides: erlang_mod(hipe_x86_main)
-%endif
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-erlang
 BuildRequires(pre): rpm-build-erlang
-BuildRequires: gcc-c++ flex libunixODBC-devel zlib-devel /proc symlinks
-#BuildRequires: wxGTK-contrib-stc-devel >= 2.8.4, wxGTK-devel >= 2.8.4
-#BuildRequires: wxGTK-contrib-stc >= 2.8.4, wxGTK >= 2.8.4
+
+BuildRequires: gcc-c++
+BuildRequires: flex
+BuildRequires: /proc
+BuildRequires: symlinks
+BuildRequires: zlib-devel
 BuildRequires: libwxGTK3.0-devel
+BuildRequires: libunixODBC-devel
 BuildRequires: libGLU-devel
 BuildRequires: libsystemd-devel
+
 %{?_enable_sctp:BuildRequires: liblksctp-devel}
-%{?_enable_docs:BuildRequires: xsltproc %_bindir/fop %{?_enable_pdf_opt:%_bindir/pdfopt}}
-%if_with java
-BuildRequires: java-devel-default
-%endif
+%{?_enable_docs:BuildRequires: xml-utils xsltproc %_bindir/fop}
+%{?_with_java:BuildRequires: java-devel-default}
 %{?_with_ssl:BuildRequires: libssl-devel openssl libkrb5-devel}
 %{?_with_gmp:BuildRequires: libgmp-devel}
 %{?_with_termcap:BuildRequires: libncurses-devel}
-
 
 %description
 %Name is a programming language developed at Ericsson Computer Science
@@ -124,7 +76,7 @@ memory management, distribution, networking, etc.
 %package devel
 Summary: Libs and headers for devel for %Name
 Group: Development/C
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %description devel
 %Name is a programming language developed at Ericsson Computer Science
@@ -137,7 +89,7 @@ This package contains Libs and headers for devel for %Name.
 %package megaco-drivers
 Summary: H.248 support for %Name - drivers
 Group: Development/Erlang
-Requires: %name-megaco = %epoch:%version-%release
+Requires: %name-megaco = %EVR
 
 %description megaco-drivers
 Megaco (aka H.248) is a signalling protocol used in VoIP networks.
@@ -148,8 +100,8 @@ This package contains drivers for %Name/OTP Megaco files.
 Summary: Headers for %Name megaco modules
 Group: Development/Erlang
 BuildArch: noarch
-Requires: %name = %epoch:%version-%release
-Requires: %name-megaco = %epoch:%version-%release
+Requires: %name = %EVR
+Requires: %name-megaco = %EVR
 
 %description megaco-devel
 Headers for %Name megaco modules.
@@ -159,9 +111,9 @@ Headers for %Name megaco modules.
 Summary: H.248 support for %Name
 Group: Development/Erlang
 BuildArch: noarch
-Provides: %name-megaco-modules = %epoch:%version-%release
-Requires: %name-megaco-drivers = %epoch:%version-%release
-Requires: %name-visual = %epoch:%version-%release
+Provides: %name-megaco-modules = %EVR
+Requires: %name-megaco-drivers = %EVR
+Requires: %name-visual = %EVR
 
 %description megaco
 Megaco (aka H.248) is a signalling protocol used in VoIP networks.
@@ -171,7 +123,7 @@ This package contains modules for %Name Megaco.
 %package visual-common
 Summary: Standart visual applications for %Name - common files
 Group: Development/Erlang
-Requires: %name-otp = %epoch:%version-%release
+Requires: %name-otp = %EVR
 Requires: tk
 
 %description visual-common
@@ -183,7 +135,7 @@ This package contains common files for %Name visual applications.
 Summary: Headers for standart visual %Name modules
 Group: Development/Erlang
 BuildArch: noarch
-Requires: %name-visual = %epoch:%version-%release
+Requires: %name-visual = %EVR
 
 %description visual-devel
 Headers for standart visual %Name modules.
@@ -192,8 +144,8 @@ Headers for standart visual %Name modules.
 %package visual
 Summary: Standart visual applications for %Name
 Group: Development/Erlang
-Provides: %name-visual-modules = %epoch:%version-%release
-Requires: %name-visual-common = %epoch:%version-%release
+Provides: %name-visual-modules = %EVR
+Requires: %name-visual-common = %EVR
 
 %description visual
 Standard visual applications and modules for %Name programming
@@ -203,7 +155,7 @@ language.
 %package odbc-server
 Summary: Server for %Name/OTP ODBC driver
 Group: Development/Erlang
-Requires: %name-odbc = %epoch:%version-%release
+Requires: %name-odbc = %EVR
 
 %description odbc-server
 ODBC support for %Name programming language.
@@ -214,8 +166,8 @@ This package contains Server for %Name/OTP ODBC driver.
 Summary: Headers for %Name ODBC modules
 Group: Development/Erlang
 BuildArch: noarch
-Requires: %name = %epoch:%version-%release
-Requires: %name-odbc-modules = %epoch:%version-%release
+Requires: %name = %EVR
+Requires: %name-odbc-modules = %EVR
 
 %description odbc-devel
 Headers for %Name ODBC modules.
@@ -225,8 +177,8 @@ Headers for %Name ODBC modules.
 Summary: ODBC support for %Name
 Group: Development/Erlang
 BuildArch: noarch
-Provides: %name-odbc-modules = %epoch:%version-%release
-Requires: %name-odbc-server = %epoch:%version-%release
+Provides: %name-odbc-modules = %EVR
+Requires: %name-odbc-server = %EVR
 
 %description odbc
 ODBC support for %Name programming language.
@@ -236,7 +188,7 @@ ODBC support for %Name programming language.
 Summary: A portable framework for automatic testing %Name applications - common files
 Group: Development/Erlang
 BuildArch: noarch
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %description common_test-common
 A portable framework for automatic testing %Name applications.
@@ -247,8 +199,8 @@ This package contains common %Name common_test files.
 Summary: Headers for %Name common_test modules
 Group: Development/Erlang
 BuildArch: noarch
-Requires: %name = %epoch:%version-%release
-Requires: %name-common_test-modules = %epoch:%version-%release
+Requires: %name = %EVR
+Requires: %name-common_test-modules = %EVR
 
 %description common_test-devel
 Headers for %Name common_test modules.
@@ -258,8 +210,8 @@ Headers for %Name common_test modules.
 Summary: A portable framework for automatic testing %Name applications
 Group: Development/Erlang
 BuildArch: noarch
-Provides: %name-common_test-modules = %epoch:%version-%release
-Requires: %name-common_test-common = %epoch:%version-%release
+Provides: %name-common_test-modules = %EVR
+Requires: %name-common_test-common = %EVR
 
 %description common_test
 A portable framework for automatic testing %Name applications.
@@ -269,7 +221,7 @@ A portable framework for automatic testing %Name applications.
 Summary: A portable framework for automatic testing %Name applications arch-depend binaries.
 Group: Development/Erlang
 Conflicts: speech-dispatcher
-Requires: %name-common_test = %epoch:%version-%release
+Requires: %name-common_test = %EVR
 
 %description common_test-bin
 A portable framework for automatic testing %Name applications arch-depend binaries.
@@ -278,8 +230,8 @@ A portable framework for automatic testing %Name applications arch-depend binari
 Summary: OTP examples
 Group: Development/Erlang
 BuildArch: noarch
-Requires: %name-megaco = %epoch:%version-%release
-Requires: %name-visual = %epoch:%version-%release
+Requires: %name-megaco = %EVR
+Requires: %name-visual = %EVR
 AutoProv: no
 AutoReq: no
 
@@ -290,8 +242,7 @@ OTP examples.
 Summary: Compiled elisp files for erlang-mode under GNU Emacs.
 Group: Development/Erlang
 BuildArch: noarch
-Requires: %name-otp = %epoch:%version-%release
-Provides: %name-emacs = %epoch:%version-%release
+Requires: %name-otp = %EVR
 
 %description emacs
 Compiled elisp files for erlang-mode under GNU Emacs.
@@ -301,8 +252,8 @@ Compiled elisp files for erlang-mode under GNU Emacs.
 Summary: Standard %Name OTP - common files
 Group: Development/Erlang
 BuildArch: noarch
-Requires: %name = %epoch:%version-%release
-Provides: otp-common = %epoch:%version-%release
+Requires: %name = %EVR
+Provides: otp-common = %EVR
 
 %description otp-common
 Standard %Name OTP.
@@ -312,8 +263,8 @@ This package contains common %Name OTP files.
 %package otp-bin
 Summary: Standard %Name OTP - arch-depend binaries
 Group: Development/Erlang
-Provides: otp-bin = %epoch:%version-%release
-Requires: %name-otp-common = %epoch:%version-%release
+Provides: otp-bin = %EVR
+Requires: %name-otp-common = %EVR
 
 %description otp-bin
 Standard %Name OTP.
@@ -323,9 +274,9 @@ This package contains arch-depend binaries %Name OTP files.
 %package otp-devel
 Summary: Headers for standard %Name OTP
 Group: Development/Erlang
-Provides: otp-devel = %epoch:%version-%release
-Requires: %name-otp-common = %epoch:%version-%release
-Requires: %name-otp-modules = %epoch:%version-%release
+Provides: otp-devel = %EVR
+Requires: %name-otp-common = %EVR
+Requires: %name-otp-modules = %EVR
 
 %description otp-devel
 Headers for standard %Name OTP.
@@ -334,10 +285,10 @@ Headers for standard %Name OTP.
 %package otp
 Summary: Standard %Name OTP
 Group: Development/Erlang
-Provides: %name-otp-modules = %epoch:%version-%release
-Provides: otp = %epoch:%version-%release
-Requires: %name-otp-common = %epoch:%version-%release
-Requires: %name-otp-bin = %epoch:%version-%release
+Provides: %name-otp-modules = %EVR
+Provides: otp = %EVR
+Requires: %name-otp-common = %EVR
+Requires: %name-otp-bin = %EVR
 
 %description otp
 Standard %Name OTP.
@@ -348,7 +299,7 @@ Standard %Name OTP.
 Summary: %Name's level interface to Java
 Group: Development/Erlang
 BuildArch: noarch
-Requires: %name-otp = %epoch:%version-%release
+Requires: %name-otp = %EVR
 
 %description jinterface
 %Name's level interface to Java.
@@ -359,11 +310,11 @@ Requires: %name-otp = %epoch:%version-%release
 Summary: Full %Name OTP package
 Group: Development/Erlang
 BuildArch: noarch
-Requires: %name-otp = %epoch:%version-%release
-Requires: %name-megaco = %epoch:%version-%release
-Requires: %name-odbc = %epoch:%version-%release
-Requires: %name-visual = %epoch:%version-%release
-Requires: %name-common_test = %epoch:%version-%release
+Requires: %name-otp = %EVR
+Requires: %name-megaco = %EVR
+Requires: %name-odbc = %EVR
+Requires: %name-visual = %EVR
+Requires: %name-common_test = %EVR
 
 %description otp-full
 %Name is a programming language developed at Ericsson Computer Science
@@ -377,9 +328,9 @@ This package requires all standard %Name OTP subpackages.
 Summary: Full %Name/OTP package
 Group: Development/Erlang
 BuildArch: noarch
-Requires: %name-otp-full = %epoch:%version-%release
-Requires: %name-examples = %epoch:%version-%release
-%{?_with_java:Requires: %name-jinterface = %epoch:%version-%release}
+Requires: %name-otp-full = %EVR
+Requires: %name-examples = %EVR
+%{?_with_java:Requires: %name-jinterface = %EVR}
 
 %description full
 %Name is a programming language developed at Ericsson Computer Science
@@ -393,10 +344,10 @@ This package requires all standard %Name/OTP subpackages.
 %package otp-debug
 Summary: Standard %Name OTP modules with debug information
 Group: Development/Erlang
-Provides: %name-otp-modules-debug = %epoch:%version-%release
-Provides: otp-debug = %epoch:%version-%release
-Requires: %name-otp-common = %epoch:%version-%release
-Requires: %name-otp-bin = %epoch:%version-%release
+Provides: %name-otp-modules-debug = %EVR
+Provides: otp-debug = %EVR
+Requires: %name-otp-common = %EVR
+Requires: %name-otp-bin = %EVR
 Conflicts: %name-eunit-debug = 2.0
 
 %description otp-debug
@@ -407,8 +358,8 @@ Standard %Name OTP modules with debug information.
 Summary: H.248 support for %Name - modules with debug information
 Group: Development/Erlang
 BuildArch: noarch
-Provides: %name-megaco-modules-debug = %epoch:%version-%release
-Requires: %name-megaco-drivers = %epoch:%version-%release
+Provides: %name-megaco-modules-debug = %EVR
+Requires: %name-megaco-drivers = %EVR
 
 %description megaco-debug
 Megaco (aka H.248) is a signalling protocol used in VoIP networks.
@@ -419,9 +370,9 @@ This package contains modules for %Name Megaco with debug information.
 Summary: Standart visual applications for %Name - modules with debug information
 Group: Development/Erlang
 BuildArch: noarch
-Provides: %name-visual-modules-debug = %epoch:%version-%release
-Requires: %name-otp-debug = %epoch:%version-%release
-Requires: %name-visual-common = %epoch:%version-%release
+Provides: %name-visual-modules-debug = %EVR
+Requires: %name-otp-debug = %EVR
+Requires: %name-visual-common = %EVR
 
 %description visual-debug
 Standard visual applications for %Name programming language.
@@ -433,8 +384,8 @@ information.
 Summary: ODBC support for %Name - modules with debug information
 Group: Development/Erlang
 BuildArch: noarch
-Provides: %name-odbc-modules-debug = %epoch:%version-%release
-Requires: %name-odbc-server = %epoch:%version-%release
+Provides: %name-odbc-modules-debug = %EVR
+Requires: %name-odbc-server = %EVR
 
 %description odbc-debug
 ODBC support for %Name programming language.
@@ -445,8 +396,8 @@ This package contains modules for odbc with debug information.
 Summary: A portable framework for automatic testing %Name applications - modules with debug information
 Group: Development/Erlang
 BuildArch: noarch
-Provides: %name-common_test-modules-debug = %epoch:%version-%release
-Requires: %name-common_test-common = %epoch:%version-%release
+Provides: %name-common_test-modules-debug = %EVR
+Requires: %name-common_test-common = %EVR
 
 %description common_test-debug
 A portable framework for automatic testing %Name applications.
@@ -458,10 +409,10 @@ This package contains modules for common_test with debug information.
 %package otp-native
 Summary: Standard %Name OTP modules with native CPU code
 Group: Development/Erlang
-Provides: %name-otp-modules-native = %epoch:%version-%release
-Provides: otp-native = %epoch:%version-%release
-Requires: %name-otp-common = %epoch:%version-%release
-Requires: %name-otp-bin = %epoch:%version-%release
+Provides: %name-otp-modules-native = %EVR
+Provides: otp-native = %EVR
+Requires: %name-otp-common = %EVR
+Requires: %name-otp-bin = %EVR
 
 
 %description otp-native
@@ -472,8 +423,8 @@ Standard %Name OTP modules with native CPU code.
 Summary: H.248 support for %Name - modules with native CPU code
 Group: Development/Erlang
 BuildArch: noarch
-Provides: %name-megaco-modules-native = %epoch:%version-%release
-Requires: %name-megaco-drivers = %epoch:%version-%release
+Provides: %name-megaco-modules-native = %EVR
+Requires: %name-megaco-drivers = %EVR
 
 %description megaco-native
 Megaco (aka H.248) is a signalling protocol used in VoIP networks.
@@ -484,9 +435,9 @@ This package contains modules for %Name Megaco with native CPU code.
 Summary: Standart visual applications for %Name - modules with native CPU code
 Group: Development/Erlang
 BuildArch: noarch
-Provides: %name-visual-modules-native = %epoch:%version-%release
-Requires: %name-otp-native = %epoch:%version-%release
-Requires: %name-visual-common = %epoch:%version-%release
+Provides: %name-visual-modules-native = %EVR
+Requires: %name-otp-native = %EVR
+Requires: %name-visual-common = %EVR
 
 %description visual-native
 Standard visual applications for %Name programming language.
@@ -498,8 +449,8 @@ CPU code.
 Summary: ODBC support for %Name - modules with native CPU code
 Group: Development/Erlang
 BuildArch: noarch
-Provides: %name-odbc-modules-native = %epoch:%version-%release
-Requires: %name-odbc-server = %epoch:%version-%release
+Provides: %name-odbc-modules-native = %EVR
+Requires: %name-odbc-server = %EVR
 
 %description odbc-native
 ODBC support for %Name programming language.
@@ -510,8 +461,8 @@ This package contains modules for odbc with native CPU code.
 Summary: A portable framework for automatic testing %Name applications - modules with native CPU code
 Group: Development/Erlang
 BuildArch: noarch
-Provides: %name-common_test-modules-native = %epoch:%version-%release
-Requires: %name-common_test-common = %epoch:%version-%release
+Provides: %name-common_test-modules-native = %EVR
+Requires: %name-common_test-common = %EVR
 
 %description common_test-native
 A portable framework for automatic testing %Name applications.
@@ -541,8 +492,9 @@ Summary: Documentation for %Name/OTP.
 License: EPL
 Group: Development/Documentation
 BuildArch: noarch
-Requires: %name-doc-html = %epoch:%version-%release
-Requires: %name-doc-pdf = %epoch:%version-%release
+Requires: %name-doc-html = %EVR
+Requires: %name-doc-pdf = %EVR
+Requires: %name-doc-chunks = %EVR
 AutoReq: no
 
 %description doc
@@ -558,9 +510,9 @@ Summary: Documentation for %Name/OTP in HTML format
 Group: Development/Documentation
 BuildArch: noarch
 Conflicts: %name-manual < R11B.4-alt0.1
-Requires: %name-visual-common = %epoch:%version-%release
-Requires: %name-doc-pdf = %epoch:%version-%release
-Provides: %name-manual = %epoch:%version-%release
+Requires: %name-visual-common = %EVR
+Requires: %name-doc-pdf = %EVR
+Provides: %name-manual = %EVR
 AutoReq: no
 AutoProv: no
 
@@ -576,13 +528,13 @@ This package contains documentation for %Name/OTP in HTML format.
 Summary: Documentation for %Name/OTP in PDF format
 Group: Development/Documentation
 BuildArch: noarch
-Requires:  %name-visual-common = %epoch:%version-%release
-Requires:  %name-common_test = %epoch:%version-%release
-Requires:  %name-devel = %epoch:%version-%release
-Requires:  %name-megaco = %epoch:%version-%release
-Requires:  %name-odbc = %epoch:%version-%release
+Requires:  %name-visual-common = %EVR
+Requires:  %name-common_test = %EVR
+Requires:  %name-devel = %EVR
+Requires:  %name-megaco = %EVR
+Requires:  %name-odbc = %EVR
 %if_with java
-Requires:  %name-jinterface = %epoch:%version-%release
+Requires:  %name-jinterface = %EVR
 %endif
 AutoReq: no
 AutoProv: no
@@ -594,30 +546,34 @@ associated with an operating system: concurrent processes, scheduling,
 memory management, distribution, networking, etc.
 This package contains documentation for %Name/OTP in PDF format.
 
+%package doc-chunks
+Summary: Documentation for %Name/OTP in chunk format
+Group: Development/Documentation
+BuildArch: noarch
+Requires:  %name-visual-common = %EVR
+Requires:  %name-common_test = %EVR
+Requires:  %name-devel = %EVR
+Requires:  %name-megaco = %EVR
+Requires:  %name-odbc = %EVR
+%if_with java
+Requires:  %name-jinterface = %EVR
+%endif
+AutoReq: no
+AutoProv: no
+
+%description doc-chunks
+%Name is a programming language developed at Ericsson Computer Science
+Laboratory. %Name provides many features which are more commonly
+associated with an operating system: concurrent processes, scheduling,
+memory management, distribution, networking, etc.
+This package contains documentation for %Name/OTP in chunk format.
+
 %endif
 
 
 %prep
-%setup -n otp_src_OTP-%ver.%subver
-chmod -R u+w ./
-cp -p /usr/share/gnu-config/config.* erts/autoconf/
+%setup -n otp_src_OTP-%version
 
-#if_with ssl
-#subst "s/\/usr\/local\/kerberos\/include/\/usr\/include\/krb5/g" erts/configure.in
-#endif
-mkdir -p lib/hipe/ebin
-subst "s/\@libdir\@/\@libexecdir\@/g" Makefile.in
-sed -i 's/ -Wl,-R\$(.*) / /' lib/crypto/priv/Makefile
-sed -i 's/@SSL_DED_LD_RUNTIME_LIBRARY_PATH@/ /' lib/crypto/c_src/Makefile.in
-sed -i '/^include .*\/make\/otp_subdir.mk/iMAKEFLAGS += -j1' \
-	system/doc/Makefile
-sed -i  '/^include .*\/make\/run_make.mk/iMAKEFLAGS += -j1' \
-	lib/{tools,asn1}/c_src/Makefile
-sed -i '/^include .*\/make\/otp_release_targets.mk/iMAKEFLAGS += -j1' \
-	lib/{ssh,common_test,eunit,odbc}/src/Makefile \
-	lib/{{os_mon,snmp}/mibs,public_key/asn1,megaco/src/binary}/Makefile*
-sed -i '/^bootstrap_setup_target:/s|:| $(BOOTSTRAP_ROOT)/bootstrap/target:|' Makefile.in
-subst "s/^.*ERL_COMPILE_FLAGS.*\+debug_info/#\0/g" make/otp.mk.in
 sed -i 's,armv7hl,armh,' erts/aclocal.m4
 
 %ifarch %e2k
@@ -626,92 +582,84 @@ sed -i '/-Werror=return-type/d' erts/configure.in
 %endif
 
 %build
-%define _optlevel 2
-%{?_enable_asm_optimize:%add_optflags -DASM_OPTIMIZE}
 %{?_with_java:%{?java_options:export _JAVA_OPTIONS="%java_options"}}
-%undefine __libtoolize
-%define _configure_script ./otp_build configure
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-./otp_build autoconf
-export CFLAGS="%optflags -fno-strict-aliasing -fcommon"
-export CXXFLAGS=$CFLAGS
+./otp_build update_configure
 
 %configure \
 	--libdir=%_libexecdir \
-	%{subst_enable threads} \
-%ifarch %ix86
-%if_enabled threads
-        --enable-ethread-pre-pentium4-compatibility \
-%endif
-%endif
-	%{subst_enable_to smp smp-support} \
-	%{subst_enable_to halfword halfword-emulator} \
-	%{subst_enable kernel_poll kernel-poll} \
-	%{subst_enable hipe} \
-	%{subst_enable_to megaco_flex_scanner_lineno megaco-flex-scanner-lineno} \
 	%{subst_with ssl} \
-	%{subst_with_to ssl_zlib ssl-zlib} \
 	%{subst_with termcap} \
 	%{subst_with gmp} \
+	%{subst_with_to java javac} \
+	%{subst_enable threads} \
 	%{subst_enable sctp} \
-	%{subst_enable tsp} \
-	%{subst_enable fixalloc} \
-	%{subst_enable_to elib_malloc elib-malloc} \
+	%{subst_enable kernel_poll kernel-poll} \
 	%{subst_enable_to lock_checking lock-checking} \
 	%{subst_enable_to lock_counting lock-counting} \
-	%{subst_enable_to clock_gettime clock-gettime} \
+	%{subst_enable_to megaco_flex_scanner_lineno megaco-flex-scanner-lineno} \
+%if_with java
+	\
+%else
+	--without-jinterface \
+%endif
 	--enable-systemd \
 	--enable-dynamic-ssl-lib \
+	--with-ssl-rpath=no \
 	--enable-shared-zlib
-%make depend
-%make_build OPT_LEVEL="-O%_optlevel" emulator
-%make_build bootstrap_setup
-export ERL_COMPILE_FLAGS="%{?_with_otp_debug:+debug_info}"
-export ERL_LIBS=$PWD/lib
-%__make OPT_LEVEL="-O%_optlevel" BUILD_LIB_PARALLEL=1 ERL_LIBS=$ERL_LIBS
+
+export ERL_LIBS=%buildroot%_otplibdir
+
+%ifarch %arm aarch64
+#24.1.2: Failed to create scheduler thread, error = 11
+export NPROCS=16
+%endif
+
+%make_build
 
 %if_enabled docs
 %{?fop_options:export FOP_OPTS="%fop_options"}
-export PATH=$PWD/bin:$PATH
-%make docs
-%make release_docs
+export PATH="$PWD/bin:$PATH"
+%make_build docs
 %endif
-%if_enabled pdf_opt
-for f in {system,erts,{release,lib}/*}/doc/pdf/*.pdf; do
-	pdfopt "$f" tmp-pdfopt.pdf && mv -f tmp-pdfopt.pdf "$f"
-done
-%endif
-
 
 %install
 %{?_with_java:%{?java_options:export _JAVA_OPTIONS="%java_options"}}
 
-
-%make_install -j1 ERLANG_LIBDIR=%buildroot%_otpdir ERLANG_ILIBDIR=%_otpdir INSTALL_PREFIX=%buildroot install
+%make_install DESTDIR=%buildroot install
 
 %if_enabled docs
-export ERL_LIBS=%buildroot%_otpdir/lib
-%make_install PATH=$PWD/bin:$PATH ERLANG_LIBDIR=%buildroot%_otpdir ERLANG_ILIBDIR=%_otpdir INSTALL_PREFIX=%buildroot install-docs
-gzip -9nf %buildroot%_erlmandir/man?/*
+export ERL_LIBS=%buildroot%_otplibdir
+
+%make_install PATH="$PWD/bin:$PATH" DESTDIR=%buildroot install-docs
+
 install -d -m 0755 %buildroot{%_man1dir,%_man3dir,%_man4dir,%_man6dir,%_man7dir,%_docdir/%name-%version/{pdf,html/lib}}
+
 mv %buildroot%_otpdir/{COPYRIGHT,PR.template,README.md} %buildroot%_docdir/%name-%version
-ln -sf  %buildroot{%_otpdir/{doc,erts-*/doc,lib/*/doc}/pdf/*.pdf,%_docdir/%name-%version/pdf/}
+
+ln -sf %buildroot{%_otpdir/{doc,erts-*/doc,lib/*/doc}/pdf/*.pdf,%_docdir/%name-%version/pdf/}
 ln -sf %buildroot%_erldocdir/* %buildroot%_docdir/%name-%version/html/
 ln -sf %buildroot%_otpdir/erts-*/doc/html %buildroot%_docdir/%name-%version/html/erts
+
 for d in %buildroot%_otplibdir/*; do
 	install -d -m 0755 %buildroot%_docdir/%name-%version/html/lib/$(basename $d)/doc
 	ln -sf $d/doc/html %buildroot%_docdir/%name-%version/html/lib/$(basename $d)/doc/html
 	ln -sf $d/doc/pdf %buildroot%_docdir/%name-%version/html/lib/$(basename $d)/doc/pdf
 done
+
 ln -sf %buildroot%_docdir/%name-%version/html/lib  %buildroot%_docdir/%name-%version/lib
 ln -sf %buildroot%_erldocdir/  %buildroot%_docdir/%name-%version/doc
+
 for m in %buildroot%_erlmandir/man3/*; do
-	ln -sf $m %buildroot%_man3dir/$(basename $m .gz)erl.gz
+	ln -sf $m %buildroot%_man3dir/$(basename $m .xz)erl.xz
 done
 for n in 1 4 6 7; do
 	ln -sf %buildroot{%_erlmandir/man$n/*,%_mandir/man$n/}
 done
-%define _compress_method gz
+
+%define _compress_method xz
+
 %endif
 
 install -d -m 0755 %buildroot{%_otpdir/usr/include,%_includedir}
@@ -719,6 +667,7 @@ ln -sf %buildroot%_otpdir/{erts-*/include/*.h,usr/include/}
 ln -sf %buildroot%_otpdir/{lib/erl_interface-*/include/*.h,usr/include}
 ln -sf %buildroot{%_otpdir/usr/include,%_includedir/%name}
 
+#Save %%_otplibdir/*/*.hrl to %%_otplibdir/*/include and remove sources
 for l in $(ls -d %buildroot%_otplibdir/* | grep -v '^%buildroot%_otplibdir/erl_interface-.*'); do
     if [ -d $l/src ]; then
 	H=$(find $l/src -type f -name '*.hrl' | grep -v '.*_internal\.hrl$') ||:
@@ -747,6 +696,7 @@ rm -f %buildroot%_otpdir/erts-*/info
 find %buildroot -type f -name '*.src' -delete
 find %buildroot -empty -delete
 
+
 install -d -m 0755 %buildroot%_docdir/%name-%version
 install -m 0644 AUTHORS LICENSE.txt README.md %buildroot%_docdir/%name-%version/
 
@@ -760,9 +710,9 @@ done
 
 rm -rf %buildroot%_otpdir/{Install,misc,usr/lib}
 
-subst 's|%buildroot||' %buildroot%_otpdir/{{,erts-*/}bin/{erl,start},releases/RELEASES}
+#subst 's|%buildroot||' %buildroot%_otpdir/{{,erts-*/}bin/{erl,start},releases/RELEASES}
 
-sed 's|^ROOTDIR=|&%buildroot|' %buildroot%_otpdir/bin/erl > erl.buildroot
+sed 's|^[ \t]*ROOTDIR=|&%buildroot|' %buildroot%_otpdir/bin/erl > erl.buildroot
 chmod 755 erl.buildroot
 
 %define __erlang %_builddir/%buildsubdir/erl.buildroot
@@ -801,8 +751,6 @@ symlinks -scdr %buildroot
 
 %add_findreq_skiplist %_otplibdir/megaco-*/examples/meas/*.sh.skel
 %add_findreq_skiplist %_otplibdir/*/contribs/ebin/* %_otplibdir/*/examples/ebin/* %_otplibdir/*/examples/*/ebin/*
-##add_erlang_req_modules_skiplist win32reg
-
 
 # systemd-related stuff
 install -D -p -m 0644 %{SOURCE5} %{buildroot}%{_unitdir}/epmd.service
@@ -810,9 +758,14 @@ install -D -p -m 0644 %{SOURCE6} %{buildroot}%{_unitdir}/epmd.socket
 install -D -p -m 0644 %{SOURCE7} %{buildroot}%{_unitdir}/epmd@.service
 install -D -p -m 0644 %{SOURCE8} %{buildroot}%{_unitdir}/epmd@.socket
 
-
 %check
-# make tests || exit 0
+#export TARGET="$(make target_configured)"
+#export ERL_TOP="$(pwd)"
+#export PATH="$ERL_TOP/bin:$PATH"
+#ERL_TOP=${ERL_TOP} %make_build TARGET=${TARGET} release_tests
+#pushd release/tests/test_server
+#$ERL_TOP/bin/erl -s ts install -s ts all_tests batch -s init stop
+#popd
 
 
 %pre
@@ -878,6 +831,7 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/os_mon-*/priv/bin
 %_otplibdir/runtime_tools-*/priv
 %_otplibdir/tools-*/bin
+%_otplibdir/edoc-*/bin
 
 %files emacs
 %_otplibdir/tools-*/emacs
@@ -895,7 +849,6 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %dir %_otplibdir/erl_docgen-*
 %_otplibdir/erl_docgen-*/priv
 %dir %_otplibdir/eunit-*
-%dir %_otplibdir/hipe-*
 %dir %_otplibdir/inets-*
 
 %_otplibdir/inets-*/priv
@@ -903,11 +856,6 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %dir %_otplibdir/mnesia-*
 %dir %_otplibdir/os_mon-*
 %dir %_otplibdir/os_mon-*/priv
-%_otplibdir/os_mon-*/mibs
-%_otplibdir/os_mon-*/priv/mibs
-%dir %_otplibdir/otp_mibs-*
-%_otplibdir/otp_mibs-*/mibs
-%_otplibdir/otp_mibs-*/priv
 %dir %_otplibdir/observer-*
 %dir %_otplibdir/observer-*/ebin
 %dir %_otplibdir/parsetools-*
@@ -938,15 +886,6 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/edoc-*/src
 %_otplibdir/eldap-*/include
 %_otplibdir/eunit-*/include
-%_otplibdir/hipe-*/cerl
-%_otplibdir/hipe-*/flow
-%_otplibdir/hipe-*/icode
-%_otplibdir/hipe-*/main
-%_otplibdir/hipe-*/misc
-%if_enabled hipe
-%_otplibdir/hipe-*/rtl
-%_otplibdir/hipe-*/llvm
-%endif
 %_otplibdir/inets-*/include
 %_otplibdir/tftp-*/include
 %_otplibdir/tftp-*/src
@@ -956,7 +895,6 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/mnesia-*/src
 %_otplibdir/os_mon-*/include
 %_otplibdir/os_mon-*/src
-%_otplibdir/otp_mibs-*/include
 %_otplibdir/parsetools-*/include
 %_otplibdir/public_key-*/asn1
 %_otplibdir/public_key-*/include
@@ -989,8 +927,6 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/erts-*/ebin
 %_otplibdir/eunit-*/ebin
 %_otplibdir/eldap-*/ebin
-%_otplibdir/hipe-*/ebin
-##%{?_enable_hipe:%exclude %_otplibdir/hipe-*/ebin/hipe_tool*}
 %_otplibdir/inets-*/ebin
 %_otplibdir/tftp-*/ebin
 %_otplibdir/ftp-*/ebin
@@ -998,7 +934,6 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/mnesia-*/ebin
 %_otplibdir/observer-*/ebin/ttb.*
 %_otplibdir/os_mon-*/ebin
-%_otplibdir/otp_mibs-*/ebin
 %_otplibdir/parsetools-*/ebin
 %_otplibdir/public_key-*/ebin
 %_otplibdir/runtime_tools-*/ebin
@@ -1011,8 +946,6 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/tools-*/ebin
 %_otplibdir/xmerl-*/ebin
 %_otplibdir/erl_interface-*/ebin
-# Windows
-##exclude #_otplibdir/stdlib-*/ebin/win32*
 
 
 %files megaco-drivers
@@ -1063,18 +996,6 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/debugger-*/ebin
 %_otplibdir/dialyzer-*/ebin
 %_otplibdir/et-*/ebin
-%if_enabled hipe
-%_otplibdir/hipe-*
-%exclude %_otplibdir/hipe-*/ebin
-%exclude %_otplibdir/hipe-*/cerl
-%exclude %_otplibdir/hipe-*/flow
-%exclude %_otplibdir/hipe-*/icode
-%exclude %_otplibdir/hipe-*/main
-%exclude %_otplibdir/hipe-*/misc
-%exclude %_otplibdir/hipe-*/rtl
-%exclude %_otplibdir/hipe-*/llvm
-%exclude %_otplibdir/hipe-*/doc
-%endif
 %_otplibdir/observer-*/ebin
 %exclude %_otplibdir/observer-*/ebin/ttb.*
 %_otplibdir/reltool-*/ebin
@@ -1130,13 +1051,11 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %exclude %_otplibdir/common_test-*
 %exclude %_otplibdir/debugger-*
 %exclude %_otplibdir/et-*
-%{?_enable_hipe:%exclude %_otplibdir/hipe-*}
 %exclude %_otplibdir/observer-*
 %exclude %_otplibdir/odbc-*
 %exclude %_otplibdir/reltool-*/ebin.debug
 %exclude %_otplibdir/wx-*/ebin.debug
 %_otpdir/bin/*.debug
-%dir %_otplibdir/hipe-*/ebin.debug
 %dir %_otplibdir/observer-*/ebin.debug
 %_bindir/*.debug
 
@@ -1151,7 +1070,6 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/observer-*/ebin.debug
 %_otplibdir/reltool-*/ebin.debug
 %_otplibdir/wx-*/ebin.debug
-
 
 %files odbc-debug
 %_otplibdir/odbc-*/ebin.debug
@@ -1173,7 +1091,6 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %exclude %_otplibdir/wx-*
 %exclude %_otplibdir/odbc-*
 %_otpdir/bin/*.native
-%dir %_otplibdir/hipe-*/ebin.native
 %dir %_otplibdir/observer-*/ebin.native
 %_bindir/*.native
 
@@ -1217,11 +1134,6 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_man4dir/*
 %_man6dir/*
 %_man7dir/*
-# Windows
-%exclude %_man1dir/erlsrv.*
-%exclude %_man1dir/start_erl.*
-%exclude %_man1dir/werl.*
-%exclude %_man3dir/win32*
 
 %files doc-pdf
 %_otpdir/doc/pdf
@@ -1240,15 +1152,17 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_docdir/%name-%version/lib
 %_docdir/%name-%version/doc
 %_docdir/%name-%version/html
-# Windows
-%exclude %_otpdir/erts-*/doc/html/erlsrv.*
-%exclude %_otpdir/erts-*/doc/html/start_erl.*
-%exclude %_otpdir/erts-*/doc/html/werl.*
-%exclude %_otplibdir/*/doc/html/win32*
+
+%files doc-chunks
+%_otplibdir/*/doc/chunks
+
 %endif
 
 
 %changelog
+* Thu Oct 07 2021 Egor Ignatov <egori@altlinux.org> 1:24.1.2-alt1
+- new version 24.1.2
+
 * Wed Apr 14 2021 Grigory Ustinov <grenka@altlinux.org> 1:21.3.6-alt4
 - Fixed FTBFS with -fcommon.
 
