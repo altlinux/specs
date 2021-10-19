@@ -1,7 +1,7 @@
 %def_disable qmake
 
 Name: featherpad
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: A lightweight Qt5 plain-text editor for Linux
@@ -84,6 +84,9 @@ done
 %_datadir/metainfo/featherpad.metainfo.xml
 
 %changelog
+* Tue Oct 19 2021 Leontiy Volodin <lvol@altlinux.org> 1.0.1-alt1
+- new version 1.0.1
+
 * Thu Sep 02 2021 Leontiy Volodin <lvol@altlinux.org> 1.0.0-alt1
 - new version 1.0.0
 - built with cmake and ninja instead qmake and make
