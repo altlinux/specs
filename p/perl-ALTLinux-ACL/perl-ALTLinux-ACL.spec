@@ -1,14 +1,14 @@
 %define module ALTLinux-ACL
 
 Name: perl-%module
-Version: 0.220
+Version: 0.221
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
 Summary: %module - Perl extension for quering ALTLinux ACL files
 Group: Development/Perl
-License: GPLv2+ or Artistic-2.0
+License: LGPLv2+ or Artistic-2.0
 Source: %module-%version.tar.gz
 # TODO: upload
 #Url: http://search.cpan.org/dist/%module
@@ -36,6 +36,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm) perl-IPC-Run3 perl(Data/Array2Array
 %_man1dir/*
 
 %changelog
+* Mon Oct 18 2021 Igor Vlasenko <viy@altlinux.org> 0.221-alt1
+- new version
+
 * Mon Sep 28 2020 Igor Vlasenko <viy@altlinux.ru> 0.220-alt1
 - new version
 
