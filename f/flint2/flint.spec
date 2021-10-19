@@ -1,7 +1,7 @@
 %define soname 16
 
 Name: flint2
-Version: 2.8.1
+Version: 2.8.2
 Release: alt1
 Summary: Fast Library for Number Theory
 
@@ -72,6 +72,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/libflint.so
 
 %changelog
+* Tue Oct 19 2021 Leontiy Volodin <lvol@altlinux.org> 2.8.2-alt1
+- New version (2.8.2).
+
 * Sat Oct 02 2021 Leontiy Volodin <lvol@altlinux.org> 2.8.1-alt1
 - New version (2.8.1).
 
