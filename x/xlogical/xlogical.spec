@@ -1,10 +1,10 @@
 Name: xlogical
 Version: 1.0
-Release: alt8.qa1
+Release: alt8.qa2
 Serial: 1
 Summary: SDL logical arcade game
 Summary(ru_RU.KOI8-R): Логическая игра под управлением SDL
-License: GPL
+License: GPLv2
 Group: Games/Arcade
 Url: http://changeling.ixionstudios.com/xlogical/
 Packager: Fr. Br. George <george@altlinux.ru>
@@ -17,6 +17,7 @@ Source5: %name.desktop
 
 Patch1: %name-gcc41-compile.patch
 Patch2: %name-1.0-8-gcc44.patch
+Patch3: %name-1.0.8-gcc11.patch
 
 # Automatically added by buildreq on Thu Nov 04 2010
 BuildRequires: gcc-c++ libSDL_image-devel libSDL_mixer-devel
@@ -39,6 +40,7 @@ Logical! и выпущенной для Commodere Amiga в 1980 году. Развивает параллельное
 
 %patch1 -p0
 %patch2 -p1
+%patch3 -p1
 
 %build
 %autoreconf
@@ -70,6 +72,9 @@ install -pD -m644 %SOURCE5 %buildroot%_datadir/applications/%name.desktop
 %doc ChangeLog README TODO NEWS AUTHORS
 
 %changelog
+* Tue Oct 19 2021 Grigory Ustinov <grenka@altlinux.org> 1:1.0-alt8.qa2
+- Made gcc11 happy.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:1.0-alt8.qa1
 - NMU: rebuilt for debuginfo.
 
