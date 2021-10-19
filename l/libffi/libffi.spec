@@ -3,7 +3,7 @@
 
 Name: libffi
 Version: 3.4.2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Foreign Function Interface library
@@ -77,7 +77,7 @@ Foreign Function Interface development.
 
 %build
 %autoreconf
-%configure
+%configure --disable-exec-static-tramp
 %make_build
 
 %check
@@ -102,6 +102,12 @@ make -k check
 %_libdir/*.a
 
 %changelog
+* Tue Oct 19 2021 Anton Farygin <rider@altlinux.ru> 1:3.4.2-alt2
+- Built with disable-exec-static-tramp for a workaround for
+  upstream incompatability with gjs, gobject-introspection and other projects
+  that use ffi_closure_alloc as a way to allocate executable memory.
+  (libffi PR #647)
+
 * Sat Oct 16 2021 Anton Farygin <rider@altlinux.ru> 1:3.4.2-alt1
 - 3.4.2
 
