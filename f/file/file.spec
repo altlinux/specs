@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: file
-Version: 5.40
-Release: alt5
+Version: 5.41
+Release: alt1
 
 Summary: File type guesser
 License: BSD-2-Clause
@@ -48,6 +48,8 @@ magic files.
 
 %prep
 %setup
+
+sed -i '/rm -fr magic/d' magic/Makefile.am
 
 %build
 %autoreconf
@@ -113,6 +115,9 @@ make check
 %_man3dir/libmagic.3*
 
 %changelog
+* Tue Oct 19 2021 Vitaly Chikunov <vt@altlinux.org> 5.41-alt1
+- Update to FILE5_41 (2021-10-18).
+
 * Mon Oct 11 2021 Vitaly Chikunov <vt@altlinux.org> 5.40-alt5
 - Update seccomp filter for glibc-2.34.
 
