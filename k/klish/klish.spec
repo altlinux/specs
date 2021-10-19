@@ -2,7 +2,7 @@
 
 Name: klish
 Version: 2.2.4
-Release: alt1
+Release: alt2
 
 Summary: A framework for implementing a CISCO-like CLI on a UNIX systems
 
@@ -208,6 +208,7 @@ See %_docdir/%name-%version for other examples.
 %_libdir/clish_plugin_clish.la
 
 %files libclish-devel
+%dir %_includedir/clish
 %_includedir/clish/*.h
 %_libdir/libclish*.so
 
@@ -215,6 +216,7 @@ See %_docdir/%name-%version for other examples.
 %_libdir/libkonf*.so.*
 
 %files libkonf-devel
+%dir %_includedir/konf
 %_includedir/konf/*.h
 %_libdir/libkonf*.so
 
@@ -222,6 +224,7 @@ See %_docdir/%name-%version for other examples.
 %_libdir/liblub*.so.*
 
 %files liblub-devel
+%dir %_includedir/lub
 %_includedir/lub/*.h
 %_libdir/liblub*.so
 
@@ -229,6 +232,7 @@ See %_docdir/%name-%version for other examples.
 %_libdir/libtinyrl*.so.*
 
 %files libtinyrl-devel
+%dir %_includedir/tinyrl
 %_includedir/tinyrl/*.h
 %_libdir/libtinyrl*.so
 
@@ -239,6 +243,9 @@ See %_docdir/%name-%version for other examples.
 %doc xml-examples/klish
 
 %changelog
+* Tue Oct 19 2021 Paul Wolneykien <manowar@altlinux.org> 2.2.4-alt2
+- Package the /usr/include/* dirs.
+
 * Tue Oct 19 2021 Paul Wolneykien <manowar@altlinux.org> 2.2.4-alt1
 - New version 2.2.4.
 - Update paths of the libraries (now they are in %%_libdir).
