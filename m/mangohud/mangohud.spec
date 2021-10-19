@@ -3,7 +3,7 @@
 %define srcpath %uname-v%version
 
 Name: mangohud
-Version: 0.6.5
+Version: 0.6.6
 Release: alt1
 
 Summary: A Vulkan overlay layer for monitoring FPS, temperatures, CPU/GPU load and more
@@ -14,13 +14,14 @@ Url: https://github.com/flightlessmango/MangoHud
 # DFSG tarball excludes nonfree nvml.h
 Source: https://github.com/flightlessmango/MangoHud/releases/download/v%version/%srcname-DFSG.tar.xz
 
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ cmake
 BuildRequires: meson
 BuildRequires: glslang
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(gl)
 BuildRequires: pkgconfig(vulkan)
 BuildRequires: pkgconfig(x11)
+BuildRequires: pkgconfig(libdrm)
 BuildRequires: python3(mako)
 
 %description
@@ -59,6 +60,9 @@ The `goverlay` package provides a third-party GUI frontend for MangoHud.
 %_man1dir/%name.1*
 
 %changelog
+* Wed Oct 20 2021 Ilya Mashkin <oddity@altlinux.ru> 0.6.6-alt1
+- 0.6.6
+
 * Sat Aug 28 2021 Ilya Mashkin <oddity@altlinux.ru> 0.6.5-alt1
 - 0.6.5
 
