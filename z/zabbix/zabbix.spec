@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		7d6ebba1ba
+%define svnrev		ed5eee80eb
 
 %def_with pgsql
 %def_enable java
@@ -20,7 +20,7 @@
 %endif
 
 Name: zabbix
-Version: 5.4.5
+Version: 5.4.6
 Release: alt1
 Epoch: 1
 
@@ -106,17 +106,19 @@ Obsoletes: %name-pgsql < 1:1.1.7-alt1
 Summary: %name agent
 Group: Monitoring
 Requires: %name-common >= 1:2.0.4-alt1
+Requires: %name-agent-sudo
 
 %package agent2
 Summary: %name agent2
 Group: Monitoring
 Requires: %name-common >= 1:2.0.4-alt1
+Requires: %name-agent-sudo
 
 %package agent-sudo
 Summary: sudo entry for %name agent
 Group: Monitoring
 BuildArch: noarch
-Requires: %name-agent
+Requires: %name-common >= 1:2.0.4-alt1
 
 %package proxy
 Summary: %name proxy with Sqlite3 support
@@ -674,6 +676,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Oct 19 2021 Alexei Takaseev <taf@altlinux.org> 1:5.4.6-alt1
+- 5.4.6
+
 * Fri Oct 01 2021 Alexei Takaseev <taf@altlinux.org> 1:5.4.5-alt1
 - 5.4.5
 
