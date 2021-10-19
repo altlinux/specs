@@ -9,7 +9,7 @@
 
 Name: wxGTK3.0
 Version: %wxbranch.5.1
-Release: alt2
+Release: alt3
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -287,11 +287,14 @@ CONF_FLAG="--enable-shared \
 	--enable-graphics_ctx \
 	--with-libmspack \
 	--disable-stl \
-	--enable-std_containers \
-	--enable-std_string_conv_in_wxstring \
 	--enable-ipv6 \
 	--enable-no_deps \
 	--with-subdirs"
+# for perl-Wx:
+# error: cannot convert 'const wxString' to 'const wxChar*'
+#	--enable-std_string_conv_in_wxstring \
+# error: invalid initialization of reference of type 'const wxList&' from expression of type 'const wxVariantList'
+#	--enable-std_containers \
 
 ./autogen.sh
 export LIBS="-lX11"
@@ -445,6 +448,11 @@ ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Sun Oct 10 2021 Igor Vlasenko <viy@altlinux.org> 3.0.5.1-alt3
+- NMU: rebuild for perl-Wx compatible configuration without
+ --enable-std_string_conv_in_wxstring 
+ --enable-std_containers 
+
 * Sun Oct 10 2021 Anton Midyukov <antohami@altlinux.org> 3.0.5.1-alt2
 - rebuild with disable-stl (Closes: 41082)
 

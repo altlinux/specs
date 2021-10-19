@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Wx
 Version: 0.9932
-Release: alt2.2
+Release: alt3
 
 Summary: wxPerl - Perl bindings for wxWindows
-License: GPL
+License: GPL+ or Artistic
 Group: Development/Perl
 
 URL: http://wxperl.sourceforge.net/
@@ -12,9 +12,10 @@ Source0: http://www.cpan.org/authors/id/M/MD/MDOOTSON/Wx-%{version}.tar.gz
 # Work around BOM_UTF8 clash between wxGTK and Perl. Should be fixed in newer
 # wxGTK, CPAN RT#121464, <http://trac.wxwidgets.org/ticket/13599>.
 Patch0:         Wx-0.9932-Undefine-BOM_UTF8.patch
+Patch1:         gtk3.patch
 
 # Automatically added by buildreq on Wed Oct 19 2011
-BuildRequires: gcc-c++ libwxGTK-contrib-stc-devel libwxGTK-devel perl-Alien-wxWidgets perl-Encode perl-ExtUtils-CBuilder perl-ExtUtils-XSpp perl-IO-String perl-autodie perl-threads xvfb-run
+BuildRequires: gcc-c++ perl-Encode perl-ExtUtils-CBuilder perl-ExtUtils-XSpp perl-IO-String perl-autodie perl-threads xvfb-run
 
 %description
 wxPerl is a Perl module wrapping the awesome wxWindows library
@@ -24,6 +25,8 @@ for cross-platform GUI developement.
 Summary: Wx Perl development files
 Group: Development/Perl
 Requires: %name = %version-%release
+BuildRequires: libwxGTK3.0-devel perl-Alien-wxWidgets
+Requires: libwxGTK3.0-devel
 
 %description devel
 Development files useful for building Perl applications depending on Wx.
@@ -31,6 +34,7 @@ Development files useful for building Perl applications depending on Wx.
 %prep
 %setup -q -n Wx-%{version}
 %patch0 -p1
+%patch1 -p1
 
 %ifdef __buildreqs
 # these tests open /usr/share/applications/*.desktop
@@ -43,11 +47,23 @@ rm ext/filesys/t/03_threads.t
 %endif
 
 %build
+%if 1
 %perl_vendor_build
-xvfb-run -a make test
+%else
+# with --wx-unicode
+perl Makefile.PL --wx-unicode \
+  --wx-version=`wx-config --version | cut -d . -f 1-2` \
+  --wx-toolkit=gtk \
+  INSTALLDIRS=vendor \
+  OPTIMIZE="$RPM_OPT_FLAGS -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-local-typedefs"
+%make_build
+%endif
 
 %install
 %perl_vendor_install
+
+%check
+xvfb-run -a make test
 
 # need DISPLAY for perl.req
 %{expand:%%global __find_requires xvfb-run -a %__find_requires}
@@ -72,6 +88,9 @@ xvfb-run -a make test
 %perl_vendor_archlib/Wx/typemap
 
 %changelog
+* Sat Oct 09 2021 Igor Vlasenko <viy@altlinux.org> 0.9932-alt3
+- rebuild with wxWidgets 3.0
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.9932-alt2.2
 - rebuild with new perl 5.28.1
 
