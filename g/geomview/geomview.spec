@@ -5,7 +5,7 @@ Summary: geomview -- interactive geometry viewing program
 
 Name: geomview
 Version: 1.9.5
-Release: alt1
+Release: alt2
 
 License: LGPLv2+
 Group: Sciences/Mathematics
@@ -98,6 +98,8 @@ done
 #$RPM_BUILD_ROOT%_man1dir/sweep.* \
 #$RPM_BUILD_ROOT%_man3dir/sweep.* \
 
+rm -fv %buildroot%_libdir/*.a
+
 %__install -m755 -d %buildroot%_desktopdir/
 cat > %buildroot%_desktopdir/%{name}.desktop <<EOF
 [Desktop Entry]
@@ -146,9 +148,11 @@ EOF
 # todo: geomview-devel
 %exclude /usr/include/%{name}
 %exclude %_libdir/lib%name.so
-%exclude %_libdir/lib%name.a
 
 %changelog
+* Tue Oct 19 2021 Grigory Ustinov <grenka@altlinux.org> 1.9.5-alt2
+- Fixed FTBFS.
+
 * Thu May 27 2021 Ilya Mashkin <oddity@altlinux.ru> 1.9.5-alt1
 - 1.9.5
 - Update License to LGPLv2+
