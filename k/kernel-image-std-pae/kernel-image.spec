@@ -2,7 +2,7 @@ Name: kernel-image-std-pae
 Release: alt1
 epoch:2
 %define kernel_base_version	5.10
-%define kernel_sublevel .74
+%define kernel_sublevel .75
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -437,8 +437,11 @@ mv %buildroot%modules_dir/kernel/drivers/media/dvb-core/dvb-core.ko %buildroot%m
 mv %buildroot%modules_dir/kernel/drivers/media/radio/tea575x.ko %buildroot%modules_dir/kernel/drivers/media-core/
 
 %ifarch aarch64 %arm
-mkdir -p %buildroot/lib/devicetree/$KernelVer
-find arch/%arch_dir/boot/dts -type f -name \*.dtb | xargs -iz install -pm0644 z %buildroot/lib/devicetree/$KernelVer
+make dtbs_install INSTALL_DTBS_PATH=%buildroot/lib/devicetree/$KernelVer
+%ifarch aarch64
+find %buildroot/lib/devicetree/$KernelVer -mindepth 1 -type d |\
+       while read d; do mv $d/* $d/../ && rmdir $d && ln -srv $d/../ $d; done
+%endif
 %endif
 
 mkdir -p %buildroot%kbuild_dir/arch/%arch_dir
@@ -699,6 +702,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Oct 20 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.75-alt1
+- v5.10.75
+
 * Sun Oct 17 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.74-alt1
 - v5.10.74
 
