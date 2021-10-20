@@ -1,6 +1,6 @@
 Name: libstrophe
 # configure.ac:AC_INIT([libstrophe], [0.8-snapshot], [jack@metajack.im])
-Version: 0.9.3
+Version: 0.10.1
 Release: alt1
 Summary: A lightweight XMPP client library written in C
 Group: System/Libraries
@@ -31,12 +31,6 @@ Requires: %name = %version-%release
 %description devel
 Development environment for %name
 
-%package static
-Group: System/Libraries
-Summary: A lightweight XMPP client library written in C
-%description static
-Static version of %name
-
 %prep
 %setup
 
@@ -48,6 +42,8 @@ doxygen
 
 %install
 %makeinstall
+
+rm -fv %buildroot%_libdir/*.a
 
 %check
 make check
@@ -61,10 +57,10 @@ make check
 %_libdir/*.so
 %_pkgconfigdir/*
 
-%files static
-%_libdir/*.a
-
 %changelog
+* Wed Oct 20 2021 Grigory Ustinov <grenka@altlinux.org> 0.10.1-alt1
+- Automatically updated to 0.10.1.
+
 * Tue Dec 17 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.3-alt1
 - Build new version.
 - Build from git.
