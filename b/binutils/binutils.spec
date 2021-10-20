@@ -2,7 +2,7 @@
 
 Name: binutils
 Version: 2.37
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -75,9 +75,6 @@ This package contains source code of GNU Binutils.
 
 %prep
 %setup -n %name-%version-%release
-
-# Remove directories we are not going to build for this package.
-rm -r gdb gdbserver gdbsupport sim
 
 sed -i 's/%%{release}/%release/g' bfd/Makefile{.am,.in}
 
@@ -263,6 +260,10 @@ XFAIL_TESTS="$XFAIL_TESTS script_test_12i"
 %binutils_sourcedir
 
 %changelog
+* Wed Oct 20 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.37-alt3
+- Fixed FTBFS with glibc 2.34 (ALT#41173).
+- glibc-source: excluded source files related to gdb (ALT#41172).
+
 * Wed Sep 29 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.37-alt2
 - Changed build scheme to git branches instead of patches (ALT#40904).
 - Fixed preserving dates in ar archives processed with strip/objcopy
