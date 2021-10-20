@@ -2,7 +2,7 @@
 
 Name: os-autoinst
 Version: 4.6
-Release: alt3
+Release: alt4
 Summary: OS-level test automation
 License: GPLv2+
 Group: Development/Tools
@@ -61,7 +61,7 @@ BuildRequires: /usr/bin/qemu-system-i386
 BuildRequires: qemu-img qemu-aux git-core
 BuildRequires: perl(Mojo/File.pm)
 BuildRequires: perl(Carp/Always.pm) perl(Data/Dump.pm) perl(Crypt/DES.pm) perl(JSON.pm) perl(JSON/XS.pm) perl(autodie.pm) perl(Class/Accessor/Fast.pm) perl(Exception/Class.pm) perl(File/Which.pm) perl(IPC/Run/Debug.pm) perl(Net/DBus.pm) perl(Net/SNMP.pm) perl(Net/IP.pm) perl(IPC/System/Simple.pm) perl(Net/SSH2.pm) perl(XML/LibXML.pm) perl(YAML/PP.pm) yamllint perl(Inline/Python.pm) perl(File/chdir.pm) perl(Test/MockRandom.pm)
-BuildRequires: perl(Mojolicious.pm) python3-module-setuptools
+BuildRequires: perl(Mojolicious.pm) python3-module-setuptools perl(Time/Moment.pm)
 BuildPreReq: cmake rpm-macros-cmake ninja-build rpm-macros-ninja-build ctest
 Requires: qemu-kvm
 Requires: tesseract
@@ -138,6 +138,9 @@ export OPENQA_TEST_TIMEOUT_SCALE_CI=10
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Fri Oct 08 2021 Alexandr Antonov <aas@altlinux.org> 4.6-alt4
+- update to current version
+
 * Fri Aug 27 2021 Alexandr Antonov <aas@altlinux.org> 4.6-alt3
 - update to current version
 

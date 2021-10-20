@@ -19,7 +19,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt3
+Release: alt4
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -443,6 +443,9 @@ fi
 %files single-instance
 
 %changelog
+* Fri Aug 27 2021 Alexandr Antonov <aas@altlinux.org> 4.6-alt4
+- update to current version
+
 * Fri Aug 27 2021 Alexandr Antonov <aas@altlinux.org> 4.6-alt3
 - update to current version
 
