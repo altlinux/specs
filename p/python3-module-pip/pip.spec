@@ -5,7 +5,7 @@
 %def_without bootstrap
 
 Name: python3-module-pip
-Version: 21.2.4
+Version: 21.3
 Release: alt1
 
 Summary: The PyPA recommended tool for installing Python packages
@@ -28,10 +28,10 @@ BuildRequires: python3(system_seed_wheels)
 BuildRequires: git-core
 BuildRequires: python3(cryptography)
 BuildRequires: python3(freezegun)
-BuildRequires: python3(pretend)
 BuildRequires: python3(pytest)
 BuildRequires: python3(scripttest)
 BuildRequires: python3(werkzeug)
+BuildRequires: python3(tomli_w)
 BuildRequires: python3(tox)
 BuildRequires: python3(tox_console_scripts)
 BuildRequires: python3(tox_no_deps)
@@ -71,6 +71,9 @@ BuildArch: noarch
 %prep
 %setup
 %autopatch -p1
+
+# remove bundled exes
+rm -f ./src/pip/_vendor/distlib/*.exe
 
 # never unbundle vendored packages
 # built wheel being installed into virtualenv will lack of unbundled packages
@@ -119,6 +122,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
 %endif
 
 %changelog
+* Mon Oct 18 2021 Stanislav Levin <slev@altlinux.org> 21.3-alt1
+- 21.2.4 -> 21.3.
+
 * Fri Sep 10 2021 Stanislav Levin <slev@altlinux.org> 21.2.4-alt1
 - 21.2.1 -> 21.2.4.
 

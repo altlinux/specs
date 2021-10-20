@@ -13,7 +13,7 @@
 
 Name:    python3-module-%oname
 Version: 0.910
-Release: alt1
+Release: alt2
 
 Summary: Optional static typing for Python 3 and 2 (PEP 484)
 License: MIT
@@ -148,6 +148,9 @@ tox.py3 --sitepackages --no-deps -vvr -s false -- -vv $TESTS
 %endif
 
 %changelog
+* Wed Oct 20 2021 Stanislav Levin <slev@altlinux.org> 0.910-alt2
+- Fixed FTBFS (pip 21.3).
+
 * Wed Jun 23 2021 Stanislav Levin <slev@altlinux.org> 0.910-alt1
 - 0.812 -> 0.910.
 
