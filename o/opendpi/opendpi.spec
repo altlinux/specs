@@ -1,7 +1,7 @@
 Name: opendpi
 Version: 1.3.0
 %define w_version 1.2
-Release: alt1
+Release: alt2
 Summary: OpenDPI is a software component for traffic classification based on deep packet inspection
 Group: System/Libraries
 
@@ -90,6 +90,8 @@ install -D wrapper/ipt/libxt_opendpi.so %buildroot/%_lib/iptables/libxt_opendpi.
 mkdir -p %kernel_srcdir
 tar cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 ../kernel-source-%name-%version
 
+rm -fv %buildroot%_libdir/*.a
+
 %files -n lib%name
 %_libdir/*.so.*
 
@@ -108,6 +110,9 @@ tar cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 ../kernel-source-%na
 %kernel_src/*
 
 %changelog
+* Wed Oct 20 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt2
+- Fixed FTBFS.
+
 * Mon Aug 01 2011 Slava Dubrovskiy <dubrsl@altlinux.org> 1.3.0-alt1
 - New version
 - Remove all patches
