@@ -1,6 +1,6 @@
 Name: sispmctl
 Version: 4.9
-Release: alt1
+Release: alt2
 
 Summary: Gembird Silver Shield PM USB PDU control
 License: GPLv2+
@@ -37,6 +37,8 @@ See also egctl package for Gembird's LAN/WLAN PDU support.
 install -pDm644 %SOURCE1 %buildroot%_udevrulesdir/74-sispmctl.rules
 rm -rf %buildroot%_defaultdocdir/%name
 
+rm -fv %buildroot%_libdir/*.a
+
 %pre
 %_sbindir/groupadd -r -f _sispm >/dev/null 2>&1
 
@@ -55,6 +57,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 # - darktemplar@ for explaining me a silly lapse with the shared library
 
 %changelog
+* Wed Oct 20 2021 Grigory Ustinov <grenka@altlinux.org> 4.9-alt2
+- fixed FTBFS.
+
 * Mon Apr 12 2021 Michael Shigorin <mike@altlinux.org> 4.9-alt1
 - new version (watch file uupdate)
 
