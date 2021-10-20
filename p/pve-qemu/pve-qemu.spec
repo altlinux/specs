@@ -8,7 +8,7 @@
 
 Name: pve-%rname
 Version: 6.0.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: GPL-1 and LGPLv2 and BSD
@@ -233,7 +233,7 @@ export CFLAGS="%optflags"
 	--localstatedir=%_localstatedir \
 	--extra-cflags="%optflags" \
 	--disable-werror \
-        --audio-drv-list="alsa" \
+	--audio-drv-list="alsa" \
         --disable-capstone \
         --disable-gtk \
         --disable-guest-agent \
@@ -262,7 +262,7 @@ export CFLAGS="%optflags"
         --enable-virtiofsd \
         --enable-xfsctl
 
-%make_build V=1
+%make_build -j1 V=1
 
 sed -i 's/@GROUP@/%_group/g' qemu-kvm.control.in
 
@@ -394,6 +394,9 @@ fi
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Wed Oct 20 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:6.0.0-alt2
+- build in one job, race in meson.build due to missing deps
+
 * Wed Sep 29 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:6.0.0-alt1
 - 6.0.0-4
 
