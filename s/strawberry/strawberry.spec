@@ -1,8 +1,8 @@
 %def_disable clang
 
 Name: strawberry
-Version: 0.9.3
-Release: alt1.1
+Version: 1.0.0
+Release: alt1
 Summary: Audio player and music collection organizer
 
 # Main program: GPL-3.0-or-later
@@ -16,7 +16,7 @@ Group: Sound
 Url: https://www.strawberrymusicplayer.org/
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: https://github.com/jonaski/strawberry/archive/%version/%name-%version.tar.gz
+Source: https://github.com/strawberrymusicplayer/strawberry/archive/%version/%name-%version.tar.gz
 
 BuildRequires(pre): desktop-file-utils rpm-build-ninja
 BuildRequires: boost-program_options-devel ccache gettext-tools glib2-devel gst-plugins1.0-devel gstreamer1.0-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libfftw3-devel libgio-devel libgnutls-devel libgpod-devel libimobiledevice-devel libmtp-devel libplist-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel libtag-devel libusbmuxd-devel libvlc-devel libxine2-devel qt5-phonon-devel qt5-x11extras-devel
@@ -29,7 +29,7 @@ Requires: gst-plugins-good1.0 vlc-mini
 
 Provides: bundled(SPMediaKeyTap)
 Provides: bundled(singleapplication)
-Provides: bundled(singlecoreapplication)
+Provides: bundled(macdeployqt)
 
 %description
 Strawberry is a audio player and music collection organizer.
@@ -81,7 +81,7 @@ export AR="ar"
   -DBUILD_WERROR=OFF \
   -DUSE_SYSTEM_TAGLIB=ON
 
-%cmake_build
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
@@ -102,6 +102,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Wed Oct 20 2021 Leontiy Volodin <lvol@altlinux.org> 1.0.0-alt1
+- New version (1.0.0).
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 0.9.3-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
