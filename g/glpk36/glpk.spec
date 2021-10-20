@@ -1,6 +1,6 @@
 Name: glpk36
 Version: 4.54
-Release: alt1
+Release: alt2
 
 Summary: GNU Linear Programming Kit
 License: GPL
@@ -101,7 +101,9 @@ cp -fR examples %buildroot%_docdir/%name/
 
 ln -s %name/glpk.h %buildroot%_includedir
 
-%files 
+rm -fv %buildroot%_libdir/*.a
+
+%files
 %_bindir/*
 
 %files -n lib%name
@@ -117,6 +119,9 @@ ln -s %name/glpk.h %buildroot%_includedir
 %_docdir/%name
 
 %changelog
+* Wed Oct 20 2021 Grigory Ustinov <grenka@altlinux.org> 4.54-alt2
+- Fixed FTBFS.
+
 * Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.54-alt1
 - Version 4.54
 
