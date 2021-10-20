@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name:    universal-ctags
-Version: 5.9.20211010.0
+Version: 5.9.20211017.0
 Release: alt1
 Epoch:   1
 
@@ -13,7 +13,8 @@ Group:   Development/Other
 Url:     https://ctags.io/
 Vcs:     https://github.com/universal-ctags/ctags.git
 # Docs:  https://docs.ctags.io
-Conflicts: ctags
+Conflicts: ctags < %EVR
+Provides:  ctags = %EVR
 
 Source: %name-%version.tar
 BuildRequires: libjansson-devel
@@ -68,8 +69,11 @@ sed -i '/check:/s/check-genfile//' makefiles/testing.mak
 %_man7dir/ctags-*.7*
 
 %changelog
+* Thu Oct 21 2021 Vitaly Chikunov <vt@altlinux.org> 1:5.9.20211017.0-alt1
+- Update to p5.9.20211017.0.
+
 * Tue Oct 12 2021 Vitaly Chikunov <vt@altlinux.org> 1:5.9.20211010.0-alt1
-- Update to 5.9.20211010.0. (Also fixes seccomp rules for glibc-2.34).
+- Update to p5.9.20211010.0. (Also fixes seccomp rules for glibc-2.34).
 
 * Fri Nov 20 2020 Vitaly Chikunov <vt@altlinux.org> p5.9.20201115.0-alt2
 - Add conflict with ctags.
