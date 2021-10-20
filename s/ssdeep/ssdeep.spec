@@ -1,6 +1,6 @@
 Name: ssdeep
 Version: 2.13
-Release: alt1
+Release: alt2
 
 Summary: Context Triggered Piecewise Hashing values
 License: GPLv2+
@@ -24,7 +24,7 @@ Authors:
 See some examples here: http://www.forensicswiki.org/wiki/Ssdeep
 
 %package -n libfuzzy
-License: GPL v2 or later
+License: GPLv2+
 Group: System/Libraries
 Summary: Library that provides %summary
 
@@ -32,21 +32,12 @@ Summary: Library that provides %summary
 Library that provides %summary, used by %name
 
 %package -n libfuzzy-devel
-License: GPL v2 or later
+License: GPLv2+
 Group: Development/C
 Summary: API for libfuzzy
 
 %description -n libfuzzy-devel
 API for libfuzzy, %summary
-
-%package -n libfuzzy-devel-static
-License: GPL v2 or later
-Group: Development/C
-Summary: API for %name
-Requires: libfuzzy-devel = %version
-
-%description -n libfuzzy-devel-static
-Static library for libfuzzy, %summary
 
 %prep
 %setup
@@ -57,6 +48,8 @@ Static library for libfuzzy, %summary
 
 %install
 %makeinstall
+
+rm -fv %buildroot%_libdir/*.a
 
 %files
 %doc README COPYING FILEFORMAT
@@ -70,10 +63,10 @@ Static library for libfuzzy, %summary
 %_libdir/*.so
 %_includedir/*
 
-%files -n libfuzzy-devel-static
-%_libdir/*.a
-
 %changelog
+* Wed Oct 20 2021 Grigory Ustinov <grenka@altlinux.org> 2.13-alt2
+- fixed FTBFS.
+
 * Mon Apr 27 2015 Michael Shigorin <mike@altlinux.org> 2.13-alt1
 - new version (watch file uupdate)
 
