@@ -1,5 +1,5 @@
 %def_enable shared
-%def_enable static
+%def_disable static
 
 %define Name HTTrack
 %define lname lib%name
@@ -7,7 +7,7 @@
 
 Name: httrack
 Version: 3.45.3
-Release: alt1.1.qa1
+Release: alt1.2
 Epoch: 1
 
 Summary: An easy-to-use offline browser utility
@@ -154,6 +154,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 
 %changelog
+* Wed Oct 20 2021 Grigory Ustinov <grenka@altlinux.org> 1:3.45.3-alt1.2
+- Fixed FTBFS.
+
 * Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.45.3-alt1.1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
