@@ -1,11 +1,11 @@
 %define module_name ixgbe
-%define module_version 5.12.5
+%define module_version 5.13.4
 
 %define module_source %module_name.tar
 
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt2
+Release: alt1
 
 Group: Development/Kernel
 Summary: Linux %module_name modules sources
@@ -33,6 +33,9 @@ tar -cjf %kernel_srcdir/kernel-source-%module_name-%version.tar.bz2 %name-%versi
 %_usrsrc/*
 
 %changelog
+* Wed Oct 20 2021 Alexei Takaseev <taf@altlinux.org> 5.13.4-alt1
+- 5.13.4
+
 * Mon Aug 23 2021 Alexei Takaseev <taf@altlinux.org> 5.12.5-alt2
 - Change BR: kernel-build-tools -> rpm-build-kernel
 

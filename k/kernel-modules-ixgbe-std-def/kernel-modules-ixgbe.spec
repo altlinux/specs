@@ -1,6 +1,6 @@
 %define module_name             ixgbe
-%define module_version          5.12.5
-%define module_release          alt4
+%define module_version          5.13.4
+%define module_release          alt1
 
 %define flavour std-def
 %define karch x86_64 aarch64 ppc64le
@@ -79,6 +79,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Oct 20 2021 Alexei Takaseev <taf@altlinux.org> 5.13.4-alt1
+- 5.13.4
 
 * Sat Aug 28 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.12.5-alt3
 - remove old modules to avoid ixgbe blacklisting
