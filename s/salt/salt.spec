@@ -1,7 +1,7 @@
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 3003.2
-Release: alt2
+Version: 3004
+Release: alt1
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
 License: Apache-2.0
@@ -20,7 +20,6 @@ Source5: salt-minion.init
 Source6: salt-syndic.init
 
 Patch1: salt-alt-supported-names.patch
-Patch2: salt-alt-use-build-in-contextvars-for-python3.9.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools perl-podlators
@@ -96,7 +95,6 @@ with XMLRPC or even a Websocket API.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 # Remove local copy documentation mention
 subst 's| file:///usr/share/doc/salt/html/contents.html||' pkg/*.service
 
@@ -244,6 +242,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Mon Oct 18 2021 Andrey Cherepanov <cas@altlinux.org> 3004-alt1
+- New version.
+
 * Wed Oct 06 2021 Ivan A. Melnikov <iv@altlinux.org> 3003.2-alt2
 - Skip pyrax.exceptions dependency (fixes build on mipsel)
 
