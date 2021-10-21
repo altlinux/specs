@@ -7,7 +7,7 @@ Epoch: 2
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.83
+Version: 1.84
 Release: alt1
 Summary: Concise Binary Object Representation (CBOR, RFC7049)
 Group: Development/Perl
@@ -64,6 +64,9 @@ vice versa.
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Oct 21 2021 Igor Vlasenko <viy@altlinux.org> 2:1.84-alt1
+- automated CPAN update
+
 * Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 2:1.83-alt1
 - automated CPAN update
 
