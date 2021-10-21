@@ -5,6 +5,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.3
+%define ms_ver 0.4.0
 %define api_ver 0.3
 %define spa_api_ver 0.2
 %define gst_api_ver 1.0
@@ -30,7 +31,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.38
+Version: %ver_major.39
 Release: alt1
 
 Summary: Media Sharing Server
@@ -44,6 +45,9 @@ Source: https://github.com/PipeWire/pipewire/archive/%version/%name-%version.tar
 %else
 Vcs: https://github.com/PipeWire/pipewire.git
 Source: %name-%version.tar
+#https://gitlab.freedesktop.org/pipewire/media-session.git
+# 0.4.0-1-g4bf1b2954
+Source1: media-session-%ms_ver.tar
 %endif
 Patch: %name-0.3.19-alt-rpath.patch
 
@@ -127,7 +131,9 @@ Requires: %name-libs = %version-%release
 This package contains command line utilities for the PipeWire media server.
 
 %prep
-%setup
+%setup -a1
+mv media-session-%ms_ver subprojects/media-session
+
 #echo -e "SHORT_NAMES = YES\nDIRECTORY_GRAPH = NO\n" >> doc/Doxyfile.in
 #%%patch
 
@@ -146,14 +152,14 @@ export LIB=%_lib
 	%{?_disable_systemd:-Dsystemd=disabled} \
 	%{?_enable_systemd_system_service:-Dsystemd-system-service=enabled} \
 	%{?_disable_examples:-Dexamples=disabled} \
-	%{?_enable_wireplumber:-Dmedia-session='wireplumber'}
+	%{?_enable_wireplumber:-Dsession-managers=['media-session', 'wireplumber']}
 %nil
 %meson_build
 
 %install
 %meson_install
 mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
-%find_lang %name
+%find_lang %name media-session --output=%name.lang
 
 %check
 %meson_test
@@ -181,7 +187,6 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %dir %_datadir/%name/media-session.d
 %_datadir/%name/media-session.d/alsa-monitor.conf
 %_datadir/%name/media-session.d/bluez-monitor.conf
-#%_datadir/%name/media-session.d/bluez-hardware.conf
 %_datadir/%name/media-session.d/media-session.conf
 %_datadir/%name/media-session.d/v4l2-monitor.conf
 %_datadir/%name/media-session.d/with-jack
@@ -256,6 +261,7 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_bindir/pw-profiler
 %_bindir/pw-record
 %_bindir/pw-top
+%_bindir/pw-v4l2
 %{?_enable_examples:%_bindir/pw-reserve}
 %_bindir/spa-inspect
 %_bindir/spa-json-dump
@@ -274,6 +280,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Thu Oct 21 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.39-alt1
+- updated to 0.3.39-1-g651f0dece + media-session-0.4.0-1-g4bf1b2954
+
 * Fri Oct 01 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.38-alt1
 - updated to 0.3.38-12-g9a76feb91
 
