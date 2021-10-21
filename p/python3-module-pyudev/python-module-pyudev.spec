@@ -2,10 +2,11 @@
 %def_without wx
 %def_without qt4
 %def_without pyside
+%def_without glib
 
 Name: python3-module-pyudev
 Version: 0.22.0
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Udev bindings for Python
@@ -99,8 +100,10 @@ service found in modern linux systems.
 %files -n python3-module-pyudev-pyqt5
 %python3_sitelibdir/pyudev/pyqt5.p*
 
+%if_with glib
 %files -n python3-module-pyudev-glib
 %python3_sitelibdir/pyudev/glib.p*
+%endif
 
 %if_with pyside
 %files -n python3-module-pyudev-pyside
@@ -113,6 +116,9 @@ service found in modern linux systems.
 %endif
 
 %changelog
+* Thu Oct 21 2021 Grigory Ustinov <grenka@altlinux.org> 0.22.0-alt2
+- Disabled glib subpackage (Closes: #41093).
+
 * Mon Oct 04 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.22.0-alt1
 - 0.22.0
 
