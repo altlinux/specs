@@ -1,6 +1,6 @@
 Name: xdg-user-dirs
 Version: 0.17
-Release: alt1
+Release: alt2
 Summary: Handles user special directories
 Group: Graphical desktop/Other
 License: GPLv2+ and MIT
@@ -10,7 +10,6 @@ Packager: Radik Usupov <radik@altlinux.org>
 Source0: http://user-dirs.freedesktop.org/releases/%name-%version.tar.gz
 Source1: xdg-user-dirs.sh
 Source2: xdg-user-dirs.control
-Patch0: xdg-user-dirs-0.13-alt.patch
 Patch1: user-dirs-fix-encoding-0.13-alt.patch
 Patch2: xdg-user-dirs-0.14-alt-home.patch
 Patch3: user-dirs-update-fix-0.13-alt.patch
@@ -23,7 +22,6 @@ homedirectory based on the defaults configured by the administrator.
 
 %prep
 %setup
-%patch0 -p2
 %patch1 -p2
 %patch2 -p1
 
@@ -57,6 +55,9 @@ install -p -m 755 %SOURCE2 %buildroot%_controldir/xdg-user-dirs
 %_man5dir/*user-dir*
 
 %changelog
+* Thu Oct 21 2021 Andrey Cherepanov <cas@altlinux.org> 0.17-alt2
+- Move Picture, Misic, Images subdirectories from Documents directory.
+
 * Wed Oct 09 2019 Sergey V Turchin <zerg@altlinux.org> 0.17-alt1
 - new version
 
