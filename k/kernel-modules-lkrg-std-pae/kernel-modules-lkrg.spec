@@ -1,6 +1,6 @@
 %define module_name	lkrg
-%define module_version	0.9.1.0.19.git51ea889
-%define module_release	alt2
+%define module_version	0.9.1.0.25.gita9906a6
+%define module_release	alt1
 
 %define flavour		std-pae
 %define karch		%ix86
@@ -281,6 +281,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Thu Oct 21 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.25.gita9906a6-alt1.%kcode.%kbuildrelease
+- Updated to v0.9.1-25-ga9906a6.
 
 * Wed Oct 06 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.19.git51ea889-alt2.%kcode.%kbuildrelease
 - Built for ovz-el7 kernel flavour.

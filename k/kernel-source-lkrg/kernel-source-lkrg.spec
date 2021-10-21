@@ -1,5 +1,5 @@
 %define module_name lkrg
-%define module_version 0.9.1.0.19.git51ea889
+%define module_version 0.9.1.0.25.gita9906a6
 
 Name: kernel-source-lkrg
 Version: %module_version
@@ -73,6 +73,9 @@ done
 %config(noreplace) %_sysconfdir/sysctl.d/lkrg.conf
 
 %changelog
+* Thu Oct 21 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.25.gita9906a6-alt1
+- Updated to v0.9.1-25-ga9906a6.
+
 * Fri Sep 03 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.19.git51ea889-alt1
 - Updated to v0.9.1-19-g51ea889.
 
