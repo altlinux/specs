@@ -1,6 +1,6 @@
 Name: libsixel
 Version: 1.8.5
-Release: alt1
+Release: alt2
 
 Summary: A SIXEL encoder/decoder implementation
 License: MIT
@@ -57,6 +57,8 @@ Group: Development/C
 %install
 %makeinstall_std
 
+rm -fv %buildroot%_libdir/*.a
+
 %files -n sixel-utils
 %_bindir/img2sixel
 %_bindir/sixel2png
@@ -70,12 +72,14 @@ Group: Development/C
 %_libdir/%name.so.*
 %files devel
 %_libdir/%name.so
-%exclude %_libdir/%name.a
 %_pkgconfigdir/%name.pc
 %_includedir/sixel.h
 %_bindir/%name-config
 
 %changelog
+* Thu Oct 21 2021 Grigory Ustinov <grenka@altlinux.org> 1.8.5-alt2
+- fixed FTBFS.
+
 * Wed Sep 30 2020 Fr. Br. George <george@altlinux.ru> 1.8.5-alt1
 - update to 1.8.5
 
