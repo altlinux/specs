@@ -3,8 +3,8 @@
 %define oname mpi4py
 
 Name: python3-module-%oname
-Version: 2.0.0
-Release: alt4.a0.git20150528
+Version: 3.1.1
+Release: alt1
 Summary: MPI bindings for Python
 License: Public
 Group: Development/Python3
@@ -93,6 +93,9 @@ cp -fR docs/source %buildroot%_docdir/%name/
 %_docdir/%name
 
 %changelog
+* Thu Oct 21 2021 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1
+- Automatically updated to 3.1.1.
+
 * Tue May 25 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt4.a0.git20150528
 - Drop python2 support.
 
