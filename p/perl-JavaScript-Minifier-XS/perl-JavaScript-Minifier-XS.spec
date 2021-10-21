@@ -7,7 +7,7 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Pod/Wordlist.pm) perl(Test/CP
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-JavaScript-Minifier-XS
-Version:        0.14
+Version:        0.15
 Release:        alt1
 Summary:        XS based JavaScript minifier
 License:        GPL+ or Artistic
@@ -65,6 +65,9 @@ make test
 %{perl_vendor_archlib}/JavaScript*
 
 %changelog
+* Thu Oct 21 2021 Igor Vlasenko <viy@altlinux.org> 0.15-alt1
+- automated CPAN update
+
 * Wed Feb 10 2021 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - automated CPAN update
 
