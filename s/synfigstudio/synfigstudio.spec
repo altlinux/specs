@@ -1,7 +1,7 @@
 %def_without build_docs
 
 Name:    synfigstudio
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: Synfig studio - animation program
@@ -30,6 +30,7 @@ BuildRequires: fontconfig-devel
 BuildRequires: gcc-c++
 BuildRequires: git-core
 BuildRequires: intltool
+BuildRequires: ladspa_sdk
 BuildRequires: libImageMagick-devel
 BuildRequires: libXcomposite-devel
 BuildRequires: libXcursor-devel
@@ -39,12 +40,16 @@ BuildRequires: libXi-devel
 BuildRequires: libXinerama-devel
 BuildRequires: libXrandr-devel
 BuildRequires: libXt-devel
+BuildRequires: libavcodec-devel
 BuildRequires: libavformat-devel
 BuildRequires: libcairo-devel
 BuildRequires: libdirectfb-devel
+BuildRequires: libdv-devel
 BuildRequires: libfftw3-devel
+BuildRequires: libfribidi-devel
 BuildRequires: libfreetype-devel
 BuildRequires: libgtkmm3-devel
+BuildRequires: libjack-devel
 BuildRequires: libjasper-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libltdl7-devel
@@ -57,10 +62,6 @@ BuildRequires: libswscale-devel
 BuildRequires: libtiff-devel
 BuildRequires: libxml++2-devel
 BuildRequires: openexr-devel
-BuildRequires: libjack-devel
-BuildRequires: libavcodec-devel
-BuildRequires: libdv-devel
-BuildRequires: ladspa_sdk
 BuildRequires: zlib-devel
 %if_with build_docs
 BuildRequires: docbook-style-dsssl-utils
@@ -219,6 +220,9 @@ echo /usr/share/locale/zh-Hant/LC_MESSAGES/synfigstudio.mo >> %name.lang
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Oct 21 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.1-alt1
+- New version.
+
 * Sun Aug 15 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt1
 - New version.
 
