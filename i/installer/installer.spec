@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.10.12
+Version: 1.10.13
 Release: alt1
 
 Summary: Installer common parts
@@ -111,6 +111,10 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Fri Oct 22 2021 Anton Midyukov <antohami@altlinux.org> 1.10.13-alt1
+- initinstall.d: Create /dev/{core,fd,stdin,stdout,stderr} symlinks if needed
+- cp-installer-screenshots.sh: adapt for alterator-browser-qt5 >= 3.2.10-alt1
+
 * Thu Sep 30 2021 Anton Midyukov <antohami@altlinux.org> 1.10.12-alt1
 - 71-copy-cmdline-parameters.sh: copy usbcore.autosuspend=-1
 
