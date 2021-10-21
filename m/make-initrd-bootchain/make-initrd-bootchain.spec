@@ -3,7 +3,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt5
+Release: alt6
 
 Summary: %child modules set for %name
 License: GPL-3.0
@@ -207,6 +207,10 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Thu Oct 21 2021 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt6
+- bootchain-doc: introduce initial testing suite
+- bootchain-cifs: fix unbound variable usage
+
 * Fri Oct 15 2021 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt5
 - fix netboot problem on very slow hardware (ALT #41078).
 - fix screen blinks in ponder widget (ALT #41096).
