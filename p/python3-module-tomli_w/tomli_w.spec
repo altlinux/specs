@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: A lil' TOML writer
@@ -79,5 +79,8 @@ tox.py3 -c tox.ini --sitepackages --console-scripts -vvr
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Oct 21 2021 Stanislav Levin <slev@altlinux.org> 0.4.0-alt1
+- 0.3.0 -> 0.4.0.
+
 * Mon Oct 18 2021 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1
 - Initial build for Sisyphus.
