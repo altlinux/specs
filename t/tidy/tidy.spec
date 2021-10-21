@@ -1,29 +1,29 @@
-%define ver 170301
-%define docsver 170301
+%define ver 171125
 %define EVR %{?epoch:%epoch:}%version-%release
 %define sover 5
 %define libtidy lib%name%sover
 
 Name: tidy
-Version: 5.4
-Release: alt3.20%ver.1
-Epoch: 20171110
+Version: 5.6.0
+Release: alt2.20%ver
+Epoch: 20171125
 
 Summary: HTML Tidy helps keep webpages clean
-License: W3C license
+License: W3C
 Group: Text tools
 
-Url: http://tidy.sourceforge.net
-Source0: %url/src/tidy_src_%ver.tgz
-Source1: %url/docs/tidy_docs_%docsver.tgz
-Source2: man_page.txt
+Url: http://www.html-tidy.org/
+# repacked https://github.com/htacg/tidy-html5/archive/refs/tags/%version.tar.gz
+Source0: %name.tgz
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Summary(ru_RU.UTF-8): HTML Tidy помогает чистить web-страницы
 Summary(uk_UA.UTF-8): HTML Tidy допомагає чистити web-сторінки
 
-# Automatically added by buildreq on Tue Oct 11 2011
-BuildRequires: gcc-c++ cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++
+BuildRequires: cmake
+BuildRequires: xsltproc
 
 Requires: %libtidy = %EVR
 
@@ -108,7 +108,6 @@ Static libraries for %name development
 
 %prep
 %setup -n %name
-%setup -n %name -T -D -b1
 # strip UTF8 BOM (lcc chokes otherwise)
 find -name '*.c' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 
@@ -121,26 +120,30 @@ find -name '*.c' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 
 %install
 %cmake_install
-install -pDm644 %SOURCE2 %buildroot%_man1dir/tidy.1
-mv htmldoc/api _api
+
+# compat symlinks for header renames
+# until apps are adapted for the new api
+ln -s tidybuffio.h %buildroot%_includedir/buffio.h
+ln -s tidyplatform.h %buildroot%_includedir/platform.h
+
 %if_enabled static
 %else
 rm %buildroot%_libdir/*.a
 %endif
 
 %files
-%doc htmldoc/*
+%doc README
 %_bindir/*
 %_man1dir/*
 
 %files -n %libtidy
-%_libdir/lib%name.so.%{sover}
-%_libdir/lib%name.so.%{sover}.*
+%_libdir/lib%name.so.%sover
+%_libdir/lib%name.so.%sover.*
 
 %files -n lib%name-devel
-%doc _api/*
 %_includedir/*
 %_libdir/*.so
+%_pkgconfigdir/%name.pc
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -148,6 +151,13 @@ rm %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Tue Oct 19 2021 Nikolay Burykin <bne@altlinux.org> 20171125:5.6.0-alt2.20171125
+- changed license "W3C license" to "W3C" (according to common-license)
+- changed source name from tidy_src_release to tidy
+
+* Fri Aug 06 2021 Nikolay Burykin <bne@altlinux.org> 20171125:5.6.0-alt1.20171125
+- update to 5.6
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 20171110:5.4-alt3.20170301.1
 - NMU: spec: adapted to new cmake macros.
 
