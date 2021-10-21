@@ -4,7 +4,7 @@
 %add_findreq_skiplist */ocf/resource.d/rabbitmq/*
 
 Name: rabbitmq-server
-Version: 3.9.7
+Version: 3.9.8
 Release: alt1
 Summary: The RabbitMQ server
 License: MPL-1.1
@@ -61,12 +61,6 @@ popd
 pushd deps/amqp10_common
 %patch301 -p1
 popd
-
-# We have to remove it until common_test subpackage lands RHOS
-rm -f \
-    deps/amqp_client/src/rabbit_ct_client_helpers.erl \
-    deps/rabbit_common/src/rabbit_ct_broker_helpers.erl \
-    deps/rabbit_common/src/rabbit_ct_helpers.erl
 
 %build
 sed -i 's|@libexecdir@|%_libexecdir|g' %SOURCE2
@@ -146,6 +140,7 @@ rm -rf %buildroot/usr/lib/erlang/autocomplete
 %attr(0750, rabbitmq, rabbitmq) %dir %_localstatedir/%oname/mnesia
 %attr(0750, rabbitmq, rabbitmq) %dir %_logdir/%oname
 %attr(0750, rabbitmq, rabbitmq) %dir %_runtimedir/%oname
+%dir %_sysconfdir/rabbitmq
 %config(noreplace) %attr(0644, rabbitmq, rabbitmq) %_sysconfdir/rabbitmq/rabbitmq.conf
 %config(noreplace) %attr(0644, rabbitmq, rabbitmq) %_sysconfdir/rabbitmq/rabbitmq-env.conf
 %config(noreplace) %_logrotatedir/*
@@ -159,6 +154,9 @@ rm -rf %buildroot/usr/lib/erlang/autocomplete
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Thu Oct 21 2021 Egor Ignatov <egori@altlinux.org> 3.9.8-alt1
+- 3.9.8
+
 * Wed Oct 13 2021 Egor Ignatov <egori@altlinux.org> 3.9.7-alt1
 - 3.9.7
 - Disable erlang AutoReq
