@@ -9,7 +9,7 @@
 
 Name:    qgis3
 Version: 3.20.3
-Release: alt2
+Release: alt3
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -19,8 +19,6 @@ Url:     http://qgis.org/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %rname-%version.tar
-Source1: qbrowser.desktop
-Source2: qgis.desktop
 Source3: qgis-server-httpd.conf
 Source4: qgis-server-README
 Source5: qgis.xml
@@ -218,9 +216,6 @@ export NPROCS=8
 %install
 %ninja_install
 
-# Install desktop files
-desktop-file-install --dir=%buildroot%_datadir/applications %SOURCE2
-
 # Install MIME type definitions
 install -pd %buildroot%_datadir/mime/packages
 install -pm0644 %SOURCE5 %buildroot%_datadir/mime/packages/%rname.xml
@@ -362,6 +357,9 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %endif
 
 %changelog
+* Thu Oct 21 2021 Andrey Cherepanov <cas@altlinux.org> 3.20.3-alt3
+- Remove desktop files absent in upstream.
+
 * Mon Oct 11 2021 Andrey Cherepanov <cas@altlinux.org> 3.20.3-alt2
 - Rebuild with grass 7.8.6.
 
