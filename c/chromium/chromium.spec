@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        94.0.4606.81
+Version:        95.0.4638.54
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -76,10 +76,10 @@ Patch011: 0011-ALT-disable-asm-on-x86-in-dav1d.patch
 Patch012: 0012-Move-offending-function-to-chromeos-only.patch
 Patch013: 0013-ALT-Do-not-use-no-canonical-prefixes-clang-option.patch
 Patch014: 0014-ALT-Disable-NOMERGE-attribute.patch
-Patch015: 0015-IWYU-include-limits-for-std-numeric_limits.patch
-Patch016: 0016-FEDORA-bootstrap-with-python3.patch
-Patch017: 0017-sql-make-VirtualCursor-standard-layout-type.patch
-Patch018: 0018-IWYU-add-memory-for-std-unique_ptr-in-blink-CustomSp.patch
+Patch015: 0015-FEDORA-bootstrap-with-python3.patch
+Patch016: 0016-sql-make-VirtualCursor-standard-layout-type.patch
+Patch017: 0017-ALT-fix-build-with-glibc-2.34.patch
+Patch018: 0018-IWYU-add-stddef.h-for-size_t-in-WindowManager.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -438,6 +438,29 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Oct 21 2021 Alexey Gladkov <legion@altlinux.ru> 95.0.4638.54-alt1
+- New version (95.0.4638.54<F2>).
+- Security fixes:
+  - CVE-2021-37981: Heap buffer overflow in Skia.
+  - CVE-2021-37982: Use after free in Incognito.
+  - CVE-2021-37983: Use after free in Dev Tools.
+  - CVE-2021-37984: Heap buffer overflow in PDFium.
+  - CVE-2021-37985: Use after free in V8.
+  - CVE-2021-37986: Heap buffer overflow in Settings.
+  - CVE-2021-37987: Use after free in Network APIs.
+  - CVE-2021-37988: Use after free in Profiles.
+  - CVE-2021-37989: Inappropriate implementation in Blink.
+  - CVE-2021-37990: Inappropriate implementation in WebView.
+  - CVE-2021-37991: Race in V8.
+  - CVE-2021-37992: Out of bounds read in WebAudio.
+  - CVE-2021-37993: Use after free in PDF Accessibility.
+  - CVE-2021-37994: Inappropriate implementation in iFrame Sandbox.
+  - CVE-2021-37995: Inappropriate implementation in WebApp Installer.
+  - CVE-2021-37996: Insufficient validation of untrusted input in Downloads.
+
+* Wed Oct 13 2021 Alexey Gladkov <legion@altlinux.ru> 94.0.4606.81-alt2
+- Fix build with glibc-2.34.
+
 * Fri Oct 08 2021 Alexey Gladkov <legion@altlinux.ru> 94.0.4606.81-alt1
 - New version (94.0.4606.81).
 - Security fixes:
