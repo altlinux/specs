@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.98
+Version: 2.9.99
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -115,6 +115,9 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Fri Oct 22 2021 Andrey Cherepanov <cas@altlinux.org> 2.9.99-alt1
+- Add Russian translation for alterator-limits (thanks Sergey Kazorin).
+
 * Thu Oct 14 2021 Slava Aseev <ptrnine@altlinux.org> 2.9.98-alt1
 - alterator-vm: fix translation
 
