@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 35.0.0
-Release: alt1
+Release: alt2
 
 Summary: Cryptographic recipes and primitives to Python developers
 
@@ -20,6 +20,7 @@ Source: %name-%version.tar
 # see gear/predownloaded-preinstall-hook
 Source1: %name-development-%version.tar
 
+Patch0: 0001-support-legacy-PEM-headers-for-certificate-and-CSR-6.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
@@ -48,6 +49,7 @@ digests and key derivation functions.
 
 %prep
 %setup -a1
+%autopatch -p1
 
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
@@ -82,6 +84,9 @@ py.test3
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Wed Oct 20 2021 Stanislav Levin <slev@altlinux.org> 35.0.0-alt2
+- Backported fix for legacy PEM headers (#6340).
+
 * Thu Sep 30 2021 Vladimir Didenko <cow@altlinux.ru> 35.0.0-alt1
 - new version (35.0.0)
 
