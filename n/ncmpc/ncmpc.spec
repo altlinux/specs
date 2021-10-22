@@ -7,7 +7,7 @@
 
 Name: ncmpc
 Version: 0.45
-Release: alt1
+Release: alt2
 Summary: curses client for mpd
 License: GPL-2.0+
 Group: Sound
@@ -42,6 +42,9 @@ with a remote control.
 %prep
 %setup
 %patch1 -p1
+%ifarch %e2k
+sed -i 's/#if defined(__linux__)$/& \&\& !defined(__e2k__)/' src/net/IPv6Address.hxx
+%endif
 
 %build
 %meson \
@@ -83,6 +86,9 @@ rm -f %buildroot%_defaultdocdir/%name/html/.buildinfo
 %_datadir/%name
 
 %changelog
+* Fri Oct 22 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.45-alt2
+- Fixed build for Elbrus.
+
 * Wed Jun 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.45-alt1
 - Updated to upstream version 0.45.
 
