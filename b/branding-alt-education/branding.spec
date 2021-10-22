@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 10.0
-Release: alt0.3.beta
+Release: alt0.4.beta
 
 %ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
@@ -482,6 +482,22 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Wed Oct 20 2021 Andrey Cherepanov <cas@altlinux.org> 10.0-alt0.4.beta
+- browser-qt: use widget and icon theme from branding.
+- slideshow: update slides.
+- kde5: add krunner with calculator and search for applications in menu.
+- kde5: disable NumLock at startup.
+- xfce-settings: disable CSD for dialogs.
+- Set default user face to alt-education-desktop.svg.
+- browser-qt: set darkgray color for section link in main window.
+- ahttp: adapt css for brand colors.
+- indexhtml: set pale background for links in brand color.
+- indexhtml: update company logo.
+- xfce-settings: decrease clock fonts to fit clock on panel.
+- browser-qt: new naming for password show/hide icons.
+- browser-qt: set solid color #FF9631 for prosgressbar chunk.
+- menu: localize menu items on Russian.
+
 * Fri Oct 08 2021 Andrey Cherepanov <cas@altlinux.org> 10.0-alt0.3.beta
 - Use filetrigger from alt-os-release for storing installed release.
 - Update slides for ALT Education 10.
