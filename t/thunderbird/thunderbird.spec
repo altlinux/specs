@@ -7,7 +7,7 @@
 %define llvm_version 12.0
 
 Name: 	 thunderbird
-Version: 91.2.0
+Version: 91.2.1
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -511,6 +511,17 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Fri Oct 22 2021 Andrey Cherepanov <cas@altlinux.org> 91.2.1-alt1
+- New version.
+- Security fixes:
+  + CVE-2021-38502 Downgrade attack on SMTP STARTTLS connections
+  + CVE-2021-38496 Use-after-free in MessageTask
+  + CVE-2021-38497 Validation message could have been overlaid on another origin
+  + CVE-2021-38498 Use-after-free of nsLanguageAtomService object
+  + CVE-2021-32810 Data race in crossbeam-deque
+  + CVE-2021-38500 Memory safety bugs fixed in Thunderbird 91.2
+  + CVE-2021-38501 Memory safety bugs fixed in Thunderbird 91.2
+
 * Wed Oct 06 2021 Andrey Cherepanov <cas@altlinux.org> 91.2.0-alt1
 - New version.
 
