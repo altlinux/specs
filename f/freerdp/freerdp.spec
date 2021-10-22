@@ -7,8 +7,8 @@
 %def_without mbedtls
 
 Name: freerdp
-Version: 2.3.2
-Release: alt3
+Version: 2.4.1
+Release: alt1
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -360,6 +360,12 @@ popd
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Thu Oct 21 2021 Andrey Cherepanov <cas@altlinux.org> 2.4.1-alt1
+- New version.
+- Security fixes:
+  + CVE-2021-41159 Improper client input validation for gateway connections allows to overwrite memory
+  + CVE-2021-41160 Improper region checks in all clients allow out of bound write to memory
+
 * Thu Jul 29 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.3.2-alt3
 - Fixed build for Elbrus.
 
