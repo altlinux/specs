@@ -2,7 +2,7 @@
 
 Name: meshlab
 Version: 2021.07
-Release: alt1
+Release: alt2
 
 Summary: A system for processing and editing unstructured 3D triangular meshes
 License: GPLv2+ and BSD and Public Domain
@@ -64,6 +64,16 @@ these kinds of meshes.
 %setup -a1
 %patch0 -p1 -b .MESHLAB_LIB_INSTALL_DIR-fix
 %patch1 -p1 -b .system-levmar
+%ifarch %e2k
+%define num_threads_fix() \
+	sed -i "/num_threads( %1 )/{s/ %1 /nthreads/;s/.*/int nthreads=%1; (void)nthreads;\\n&/}" \\\
+	src/meshlabplugins/filter_screened_poisson/%2
+%num_threads_fix threads Src/MultiGridOctreeData{,.IsoSurface,.System}.inl
+%num_threads_fix Threads.value Src/PoissonRecon.cpp
+%num_threads_fix pp.ThreadsVal poisson_utils.h
+sed -i "/pragma omp/{s/.*/int loop_count=mesh.vert.size();\n&/;:a;n;s/i < (int)mesh.vert.size()/i < loop_count/;ba}" \
+	vcglib-%vcglibver/vcg/complex/algorithms/point_outlier.h
+%endif
 
 rmdir src/vcglib
 mv vcglib-%vcglibver src/vcglib
@@ -71,15 +81,8 @@ mv vcglib-%vcglibver src/vcglib
 # plugin path
 sed -i -e 's|"lib"|"%{_lib}"|g' src/common/globals.cpp
 
-%ifarch %e2k
-# lcc 1.23 only got OpenMP 2.5, hope 1.24 will deliver 5.0
-find src/meshlabplugins/filter_screened_poisson/ \
-	-type f -print0 -name '*.cpp' -o -name '*.inl' |
-	xargs -r0 sed -i '/^#pragma omp/d' --
-%endif
-
 %build
-export CXXFLAGS=`echo %{optflags} -fopenmp -DSYSTEM_QHULL -I/usr/include/libqhull`
+%add_optflags -fopenmp -DSYSTEM_QHULL -I/usr/include/libqhull
 
 %cmake src \
 	-DCMAKE_SKIP_RPATH=ON \
@@ -148,6 +151,9 @@ rm %buildroot%_libdir/*.a
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Fri Oct 22 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2021.07-alt2
+- e2k: fixed OpenMP issues
+
 * Thu Sep 30 2021 Anton Midyukov <antohami@altlinux.org> 2021.07-alt1
 - new version (2021.07) with rpmgs script
 
