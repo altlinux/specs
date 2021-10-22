@@ -1,6 +1,6 @@
 %define module_name     tripso
-%define module_version  1.1
-%define module_release  alt2
+%define module_version  1.2
+%define module_release  alt1
 %define flavour         std-def
 %define karch %ix86 x86_64 aarch64 ppc64le armh e2k e2kv4 e2kv5 e2kv6
 
@@ -8,7 +8,7 @@
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
 
-Summary: Translate between CISPO and AstraLinux labels
+Summary: Translate between CISPO and GOST R 58256-2018 (Astra) labels
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
 Release: %module_release.%kcode.%kbuildrelease
@@ -30,7 +30,7 @@ PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 ExclusiveArch: %karch
 
 %description
-Translate between CISPO and AstraLinux labels (kernel module).
+%summary (kernel module).
 
 %prep
 rm -rf %module_name-%module_version
