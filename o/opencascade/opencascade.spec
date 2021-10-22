@@ -1,6 +1,6 @@
 Name: opencascade
 Version: 7.5.3
-Release: alt1
+Release: alt2
 Summary: SDK intended for development of applications dealing with 3D CAD data
 License: LGPL-2.1-only-with-OCCT-exception-1.0
 Group: Development/Tools
@@ -12,6 +12,7 @@ Url: http://www.opencascade.org
 Source: %name-%version.tar
 Patch1: opencascade-cmake.patch
 Patch2: opencascade-alt-arm-build.patch
+Patch2000: opencascade-e2k-disable-fenv.patch
 
 Requires: lib%name = %version-%release
 Requires: %name-data = %version-%release
@@ -80,6 +81,9 @@ This package contains documentation for Open CASCADE.
 %ifarch %arm
 %patch2 -p2
 %endif
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 %build
 # opencascade does some manual install trickery that does not respect DESTDIR.
@@ -127,6 +131,9 @@ rm -f /usr/share/doc/opencascade/*
 %_datadir/doc/%name
 
 %changelog
+* Fri Oct 22 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 7.5.3-alt2
+- e2k: disabled use of "feclearexcept" (freecad crashes with SIGILL)
+
 * Mon Aug 16 2021 Andrey Cherepanov <cas@altlinux.org> 7.5.3-alt1
 - New version.
 - Build from upstream tag.
