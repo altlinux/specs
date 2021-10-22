@@ -2,7 +2,7 @@
 
 Name:          spectrum-fuse-utils
 Version:       1.5.8
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Utils for the the Free Unix Spectrum Emulator
 License:       GPLv2
 Group:         Emulators
@@ -45,6 +45,10 @@ and sound. The package contains utilities for the Emulator.
 
 %prep
 %setup
+%ifarch %e2k
+# LCC crashes with -O3 by default
+sed -i "/scaler_AdvMame3x/i __attribute__((optimize(2)))" ui/scaler/scalers.c
+%endif
 find -name "Makefile.am" -exec sed -e "s/fuse_/spectrum_fuse_utils_/" -e "s/= fuse/= spectrum-fuse-utils/" -i {} \;
 sed -e "s/\[fuse]/[spectrum-fuse]/g" -i configure.ac
 
@@ -72,6 +76,9 @@ find %buildroot -name "*.1" -o -name "*.scr" -o -name "*.bmp" -o -name "*.rom" |
 
 
 %changelog
+* Fri Oct 22 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.5.8-alt0.2
+- Fixed build for Elbrus.
+
 * Fri Dec 11 2020 Pavel Skrylev <majioa@altlinux.org> 1.5.8-alt0.1
 - ^ 1.5.7 -> 1.5.8[gamma]
 - + support for zlib, bzip2, libaudiofile
