@@ -3,8 +3,8 @@
 
 %define dest_dir %_libdir/OpenBoard
 Name: OpenBoard
-Version: 1.5.4
-Release: alt3
+Version: 1.6.1
+Release: alt1
 Summary: Interactive whiteboard for schools and universities
 License: GPL-3.0+
 Group: Education
@@ -12,19 +12,6 @@ Url: https://github.com/OpenBoard-org/OpenBoard
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-# use system libs as dependencies
-Patch0: openboard-1.5.3-no_Third-Party.patch
-# use poppler instead of xpdf to handle pdf
-Patch1: openboard-1.3.4-XPDFRenderer_with_poppler.patch
-# fix build with poppler >= 0.70.1 and gcc8
-Patch3: openboard-gcc8.patch
-Patch4: openboard-poppler-0.71.patch
-Patch5: openboard-poppler-0.72.patch
-Patch6: openboard-poppler-0.83.patch
-# fix build with Qt5 >= 5.12
-Patch10: openboard-1.4.1-fix-build-with-qt-5.12.patch
-# Upstream patch
-Patch100: 0001-Update-Russian-translation.patch
 
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: desktop-file-utils
@@ -67,14 +54,6 @@ Interactive whiteboard for schools and universities.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch10 -p1
-%patch100 -p1
 
 # remove unwanted and nonfree libraries
 sed -i -e 's|-lfdk-aac ||' src/podcast/podcast.pri
@@ -165,6 +144,10 @@ cp -R resources/customizations %buildroot%dest_dir/
 %_bindir/%name
 
 %changelog
+* Fri Oct 22 2021 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.1-alt1
+- new version 1.6.1
+- Removing patches merged to upstream
+
 * Wed Mar 24 2021 Anton Midyukov <antohami@altlinux.org> 1.5.4-alt3
 - Update Russian translation
 
