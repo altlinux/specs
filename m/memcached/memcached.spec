@@ -6,7 +6,7 @@
 
 Name: memcached
 Version: 1.6.10
-Release: alt1
+Release: alt2
 
 Summary: memcached - memory caching daemon
 License: BSD
@@ -52,6 +52,9 @@ memcached instance.
 %prep
 %setup
 %patch -p1
+%ifarch %e2k
+sed -i "s/-Werror/-Wno-error/" configure.ac
+%endif
 sed -i 's,`git describe`,"%version-%release",g' version.pl
 
 %build
@@ -110,6 +113,9 @@ fi
 %_man1dir/%name-tool.*
 
 %changelog
+* Fri Oct 22 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.6.10-alt2
+- removed -Werror for Elbrus build
+
 * Sat Sep 04 2021 Alexey Shabalin <shaba@altlinux.org> 1.6.10-alt1
 - new version 1.6.10
 
