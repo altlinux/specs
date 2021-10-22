@@ -4,8 +4,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.23
-Release: alt2
+Version: 1.24
+Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
 License: GPL-2.0-only
@@ -190,6 +190,9 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Fri Oct 22 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.24-alt1
+- vm-run: explicitly pass CPU topology to qemu.
+
 * Wed Aug 25 2021 Vitaly Chikunov <vt@altlinux.org> 1.23-alt2
 - Fix compiling with LTO.
 
