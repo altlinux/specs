@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 7.0.11
-Release: alt2
+Release: alt3
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -85,6 +85,7 @@ Patch54: pve-manager-rs-apt.patch
 Patch55: pve-manager-eslint.patch
 Patch56: pve-manager-restart-network-to-apply-new-settings.patch
 Patch57: pve-manager-remove-comments-about-ifupdown2.patch
+Patch58: pve-manager-www-rm-templateButton.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -219,6 +220,7 @@ This is used to implement the PVE REST API
 %patch55 -p0 -b .eslint
 %patch56 -p0 -b .restart
 %patch57 -p0 -b .ifupdown2
+#patch58 -p0 -b .templateButton
 
 find -name Makefile | while read m; do
 	sed -i '/^.*\/usr\/share\/dpkg.*/d' $m;
@@ -315,6 +317,7 @@ __EOF__
 %files
 %dir %_datadir/doc/pve-manager
 %_datadir/doc/pve-manager/examples
+%_datadir/doc/%name/trustedkeys.gpg
 %_datadir/bash-completion/completions/pveam
 %_datadir/bash-completion/completions/pvesr
 %_datadir/bash-completion/completions/pveceph
@@ -327,6 +330,7 @@ __EOF__
 %_datadir/bash-completion/completions/vzdump
 %_datadir/bash-completion/completions/pvesh
 %_datadir/bash-completion/completions/pve5to6
+%_datadir/bash-completion/completions/pve6to7
 %_datadir/zsh/vendor-completions/_pveam
 %_datadir/zsh/vendor-completions/_pvesr
 %_datadir/zsh/vendor-completions/_pveceph
@@ -471,7 +475,6 @@ __EOF__
 %_man8dir/pveproxy.8*
 %_man8dir/pvestatd.8*
 %_man8dir/spiceproxy.8*
-%dir %_datadir/doc/%name
 
 %files -n pve-container
 %_sysconfdir/sysctl.d/10-pve-ct-inotify-limits.conf
@@ -628,6 +631,9 @@ __EOF__
 %perl_vendor_privlib/PVE/APIServer
 
 %changelog
+* Fri Oct 22 2021 Valery Inozemtsev <shrek@altlinux.ru> 7.0.11-alt3
+- package trustedkeys.gpg to make pveam functioning
+
 * Mon Oct 04 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.11-alt2
 - restart network to apply new settings, no need for ifupdown2
 
