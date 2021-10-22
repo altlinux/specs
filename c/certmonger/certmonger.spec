@@ -6,7 +6,7 @@
 
 Name: certmonger
 Version: 0.79.14
-Release: alt2
+Release: alt3
 Summary: Certificate status monitor and PKI enrollment client
 
 Group: System/Base
@@ -160,6 +160,9 @@ getcert refresh-ca -a >/dev/null 2>&1 || help
 %_man8dir/certmonger.8.*
 
 %changelog
+* Tue Oct 05 2021 Stanislav Levin <slev@altlinux.org> 0.79.14-alt3
+- Backported fix for certmonger#223.
+
 * Mon Aug 30 2021 Stanislav Levin <slev@altlinux.org> 0.79.14-alt2
 - Bumped required libnss (MBZ#1721476).
 
