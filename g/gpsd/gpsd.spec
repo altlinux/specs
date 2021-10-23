@@ -5,7 +5,7 @@
 
 Name: gpsd
 Summary: Service daemon for mediating access to a GPS
-Version: 3.23
+Version: 3.23.1
 Release: alt1
 License: BSD-2-Clause
 Group: System/Servers
@@ -15,9 +15,7 @@ Packager: Anton V. Boyarshinov <boyarsh@altlinux.org>
 Source: %name-%version.tar
 Requires: libgps%abiversion = %version-%release
 
-Patch0: gpsd-3.20-SConstruct.patch
-
-BuildRequires: asciidoc docbook-dtds docbook-style-xsl asciidoctor
+BuildRequires: asciidoc docbook-dtds docbook-style-xsl asciidoctor gem-rouge
 
 BuildRequires: scons gcc-c++ libXaw-devel libXext-devel libXpm-devel libdbus-glib-devel xorg-cf-files xsltproc libgtk+3-devel pps-tools-devel
 
@@ -76,20 +74,39 @@ Requires: libQgpsmm%abiversion = %version-%release
 %description -n libgps-devel
 Development files for libgps
 
-%package -n gpsd-clients
+%package -n gpsd-clients-console
+Summary: Console clients for gpsd
+Group: Sciences/Geosciences
+Requires: libgps%abiversion = %version-%release
+Requires: python3-module-gps = %version-%release
+Conflicts: gpsd-clients < %version-%release
+
+%description -n gpsd-clients-console
+Console clients pack for the gpsd
+
+cgps resembles xgps, but without the pictorial satellite display.
+It can run on a serial terminal or terminal emulator.
+
+%package -n gpsd-clients-gui
 Summary: Clients for gpsd with an X interface
 Group: Sciences/Geosciences
 Requires: libgps%abiversion = %version-%release
 Requires: python3-module-gps = %version-%release
+Conflicts: gpsd-clients < %version-%release
 
-%description -n gpsd-clients
-xgpsspeed is a speedometer that uses position information from the GPS.
-It accepts an -h option and optional argument as for gps, or a -v option
-to dump the package version and exit. Additionally, it accepts -rv
-(reverse video) and -nc (needle color) options.
+%description -n gpsd-clients-gui
+xgps is a simple sample client for gpsd with an X interface.
+xgpsspeed is a speedometer that uses position information from gpsd.
 
-cgps resembles xgps, but without the pictorial satellite display.  It
-can run on a serial terminal or terminal emulator.
+%package -n gpsd-helpers
+Summary: Helpers pack for the gpsd
+Group: Sciences/Geosciences
+Requires: libgps%abiversion = %version-%release
+Requires: python3-module-gps = %version-%release
+Conflicts: gpsd-clients < %version-%release
+
+%description -n gpsd-helpers
+Helpers pack for the gpsd
 
 %package -n python3-module-gps
 Summary: Python bindings to libgps
@@ -100,24 +117,6 @@ Python bindings to libgps
 
 %prep
 %setup
-
-#patch0 -p2
-
-# don't set RPATH
-#sed -i 's|env.Prepend.*RPATH.*|pass #\0|' SConstruct
-
-# fixed linking with libm
-#sed -i 's|parse_flags=usblibs . rtlibs . bluezlibs . ."-lgps".|parse_flags=usblibs + rtlibs + bluezlibs + ["-lgps", "-lm"]|' SConstruct
-
-# fixed binary's path, exit with 1 when not found
-#sed -i '/\/usr\/local\/sbin/{s||%_sbindir|;h};${x;/./{x;q0};x;q1}' systemd/gpsd.service
-#sed -i '/\/usr\/local\/sbin/{s||%_sbindir|;h};${x;/./{x;q0};x;q1}' systemd/gpsdctl@.service
-
-#sed -i 's|/usr/bin/python|%__python3|' contrib/gpsData.py
-#find -type f -name "*.py" -exec sed -i 's|/usr/bin/env python|%__python3|' {} \;
-#for FILE in gegps gpscat gpsfake gpsprof ubxtool xgps xgpsspeed zerk ; do
-#   sed -i 's|/usr/bin/env python|%__python3|' $FILE
-#done
 
 %build
 scons \
@@ -138,18 +137,38 @@ scons \
 %install
 DESTDIR=%buildroot scons install udev-install
 
+install -p -m 0755 gpsinit %buildroot/%_sbindir
+
+mkdir -p %buildroot/%_desktopdir
+install -p -m 0644 %name-%version/packaging/X11/xgps.desktop      %buildroot/%_desktopdir
+install -p -m 0644 %name-%version/packaging/X11/xgpsspeed.desktop %buildroot/%_desktopdir
+
+mkdir -p %buildroot/%_sysconfdir/sysconfig
+install -p -m 0644 %name-%version/packaging/rpm/gpsd.sysconfig %buildroot/%_sysconfdir/sysconfig/gpsd
+
 %files
 %doc AUTHORS COPYING NEWS README.adoc INSTALL.adoc SUPPORT.adoc build.adoc www/example1.c.txt
 %_sbindir/gpsd
+%_man8dir/gpsd.*
+
 %_sbindir/gpsdctl
+%_man8dir/gpsdctl*
+
+%_sbindir/gpsinit
+%_man8dir/gpsinit*
+
+%_bindir/ppscheck
+%_man8dir/ppscheck*
+
 %_unitdir/gpsd.service
 %_unitdir/gpsd.socket
 %_unitdir/gpsdctl@.service
 %_udevrulesdir/*.rules
+%config(noreplace) %attr(0644,root,root) %_sysconfdir/sysconfig/gpsd
 
-%_man8dir/gps*
-%_man8dir/ppscheck.*
 %_man5dir/*
+
+%_man1dir/gps.*
 
 %_iconsdir/gpsd-logo.png
 
@@ -173,15 +192,93 @@ DESTDIR=%buildroot scons install udev-install
 %_includedir/*.h
 %_man3dir/*
 
-%files -n gpsd-clients
-%_bindir/*
-%_man1dir/*
+%files -n gpsd-clients-console
+%_bindir/cgps
+%_man1dir/cgps*
+
+%_bindir/gegps
+%_man1dir/gegps*
+
+%_bindir/gpscsv
+%_man1dir/gpscsv*
+
+%_bindir/gpsdecode
+%_man1dir/gpsdecode*
+
+%_bindir/gpsmon
+%_man1dir/gpsmon*
+
+%_bindir/gpspipe
+%_man1dir/gpspipe*
+
+%_bindir/gpsplot
+%_man1dir/gpsplot*
+
+%_bindir/gpsprof
+%_man1dir/gpsprof*
+
+%_bindir/gpsrinex
+%_man1dir/gpsrinex*
+
+%_bindir/gpssubframe
+%_man1dir/gpssubframe*
+
+%_bindir/gpxlogger
+%_man1dir/gpxlogger*
+
+%_bindir/lcdgps
+%_man1dir/lcdgps*
+
+%_bindir/ubxtool
+%_man1dir/ubxtool*
+
+%_bindir/zerk
+%_man1dir/zerk*
+
+%files -n gpsd-clients-gui
+%_bindir/xgps
+%_desktopdir/xgps.desktop
+%_man1dir/xgps*
+
+%_bindir/xgpsspeed
+%_desktopdir/xgpsspeed.desktop
+%_man1dir/xgpsspeed*
+
+%files -n gpsd-helpers
+%_bindir/gps2udp
+%_man1dir/gps2udp*
+
+%_bindir/gpscat
+%_man1dir/gpscat*
+
+%_bindir/gpsctl
+%_man1dir/gpsctl*
+
+%_bindir/gpsdebuginfo
+%_man1dir/gpsdebuginfo*
+
+%_bindir/gpsfake
+%_man1dir/gpsfake*
+
+%_bindir/gpssnmp
+%_man1dir/gpssnmp*
+
+#_bindir/ntploggps
+#_man1dir/ntploggps*
+
+%_bindir/ntpshmmon
+%_man1dir/ntpshmmon*
 
 %files -n python3-module-gps
 %python3_sitelibdir/gps/
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat Oct 23 2021 Sergey Y. Afonin <asy@altlinux.org> 3.23.1-alt1
+- 3.23.1
+- splitted gpsd-clients to gpsd-clients-gui, gpsd-clients-console
+  and gpsd-helpers (ALT #41036)
+
 * Sat Oct 23 2021 Sergey Y. Afonin <asy@altlinux.org> 3.23-alt1
 - 3.23
 - Changed abiversion to 29
