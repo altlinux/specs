@@ -39,7 +39,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-11-openjdk
-%define version 11.0.13.0.7
+%define version 11.0.13.0.8
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -298,7 +298,7 @@ BuildRequires: /proc rpm-build-java
 %global origin_nice     OpenJDK
 %global top_level_dir_name   %{origin}
 %global minorver        0
-%global buildver        7
+%global buildver        8
 %global rpmrelease      2
 #%%global tagsuffix      ""
 # priority must be 8 digits in total; untill openjdk 1.8 we were using 18..... so when moving to 11 we had to add another digit
@@ -406,7 +406,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{javaver}-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt1_0jpp11
+Release: alt1_1jpp11
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -1774,6 +1774,20 @@ fi
 %endif
 
 %changelog
+* Sat Oct 23 2021 Andrey Cherepanov <cas@altlinux.org> 0:11.0.13.8-alt1_1jpp11
+- New version.
+- Security fixes:
+  + CVE-2021-35550 Update the default enabled cipher suites preference
+  + CVE-2021-35565 com.sun.net.HttpsServer spins on TLS session close
+  + CVE-2021-35556 Richer Text Editors
+  + CVE-2021-35559 Enhanced style for RTF kit
+  + CVE-2021-35561 Better hashing support
+  + CVE-2021-35564 Improve Keystore integrity
+  + CVE-2021-35567 More Constrained Delegation
+  + CVE-2021-35578 Improve TLS client handshaking
+  + CVE-2021-35586 Better BMP support
+  + CVE-2021-35603 Better session identification
+
 * Mon Oct 18 2021 Andrey Cherepanov <cas@altlinux.org> 0:11.0.13.7-alt1_0jpp11
 - New version.
 - Fix some license names according to SPDX.
