@@ -2,7 +2,7 @@
 
 Name: 	 qcad
 Version: 3.26.4.5
-Release: alt1
+Release: alt2
 Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
 
@@ -23,6 +23,8 @@ Patch:   %name-%version-%release.patch
 Patch1:  qcad-qt5-unbundle_libraries.patch
 Patch2:  qcad-alt-use-system-zlib.patch
 Patch3:  qcad-alt-check-translation-file.patch
+Patch4:  qcad-disable-macos.patch
+Patch5:  qcad-fix-lto.patch
 
 BuildRequires: gcc-c++ qt5-base-devel python
 BuildRequires: desktop-file-utils
@@ -63,6 +65,8 @@ QCad это профессиональная CAD система. С QCad вы м
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 cp -f %SOURCE1 ts/qcadcore_ru.ts
 cp -f %SOURCE2 ts/qcadentity_ru.ts
@@ -141,6 +145,11 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sat Oct 23 2021 Vladislav Zavjalov <slazav@altlinux.org> 3.26.4.5-alt2
+- do not detect amd64 system as MacOS
+- disable CONFIG += resources_big to fix LTO error.
+  (See https://bugreports.qt.io/browse/QTBUG-73834)
+
 * Wed Jul 21 2021 Andrey Cherepanov <cas@altlinux.org> 3.26.4.5-alt1
 - New version.
 
