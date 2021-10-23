@@ -2,7 +2,7 @@
 
 Name: igraph
 Version: 0.9.4
-Release: alt1
+Release: alt1.1
 Summary: Library for creating and manipulating graphs
 
 License: GPL-2.0+
@@ -48,6 +48,7 @@ networks, community structure finding, etc.
 %package -n lib%name-devel
 Summary: Development files for igraph
 Group: Development/C
+Provides: %name-devel = %EVR
 
 %description -n lib%name-devel
 The lib%name-devel package contains the header files and some
@@ -94,6 +95,9 @@ find . -name '.arch-ids' | xargs rm -rf
 %exclude %_man3dir/igraph.3*
 
 %changelog
+* Sat Oct 23 2021 Igor Vlasenko <viy@altlinux.org> 0.9.4-alt1.1
+- NMU: added Provides: %name-devel for compatibility
+
 * Fri Oct 22 2021 Leontiy Volodin <lvol@altlinux.org> 0.9.4-alt1
 - Initial build for ALT Sisyphus (thanks fedora for the spec).
 - Built as require for rw and sagemath.
