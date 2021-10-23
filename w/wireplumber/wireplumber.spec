@@ -2,13 +2,14 @@
 
 %def_enable doc
 %def_enable introspection
+%def_enable systemd
 
 # These come from meson.build.
 %define apiversion 0.4
 %define soversion 0
 
 Name: wireplumber
-Version: 0.4.4
+Version: 0.4.4.9.g44a0c55
 Release: alt1
 
 Summary: a modular session/policy manager for PipeWire
@@ -17,7 +18,7 @@ License: MIT
 Group: Sound
 URL: https://pipewire.pages.freedesktop.org/wireplumber/
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson >= 0.56
 BuildRequires: pkgconfig(gobject-2.0) >= 2.58
 BuildRequires: pkgconfig(gmodule-2.0) >= 2.58
 BuildRequires: pkgconfig(gio-2.0) >= 2.58
@@ -33,6 +34,11 @@ BuildRequires: python3-module-breathe
 BuildRequires: python3(sphinx_rtd_theme)
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 BuildRequires: doxygen >= 1.8.0
+%endif
+%if_enabled systemd
+# Like so many other programs, WirePlumber implements logind integration via
+# libsystemd for no reason. :(
+BuildRequires: pkgconfig(systemd)
 %endif
 
 Source: %name-%version.tar
@@ -121,6 +127,9 @@ This package contains GObject introspection development data for lib%name.
 %if_enabled doc
     -Ddoc=enabled \
 %endif
+%if_enabled systemd
+    -Dsystemd=enabled \
+%endif
 %if_enabled introspection
     -Dintrospection=enabled \
 %endif
@@ -131,7 +140,7 @@ This package contains GObject introspection development data for lib%name.
 %install
 %meson_install
 
-# %doc does not work for multiple subpackages as of 2021 Oct 18.
+# %%doc does not work for multiple subpackages as of 2021 Oct 18.
 # We implement its functionality by hand as closely as possible.
 %define docdir() %_defaultdocdir/%1-%version
 mkdir -p %buildroot%{docdir %name}/
@@ -146,6 +155,10 @@ mv -v %buildroot%_datadir/doc/%name %buildroot%{docdir %name-doc}
 %_bindir/wpctl
 %_bindir/wpexec
 %_datadir/wireplumber
+%if_enabled systemd
+%_user_unitdir/wireplumber.service
+%_user_unitdir/wireplumber@.service
+%endif
 
 %files doc
 %define docdir() %_defaultdocdir/%1-%version
@@ -172,17 +185,22 @@ mv -v %buildroot%_datadir/doc/%name %buildroot%{docdir %name-doc}
 %endif
 
 %changelog
+* Fri Oct 22 2021 Arseny Maslennikov <arseny@altlinux.org> 0.4.4.9.g44a0c55-alt1
+- 0.4.4 -> 0.4.4-9-g44a0c55.
+- Built with -Dsystemd=enabled; this includes logind integration (by means of
+  libsystemd) and installs unit files.
+
 * Sun Oct 17 2021 Arseny Maslennikov <arseny@altlinux.org> 0.4.4-alt1
-- 0.4.3-alt1 -> 0.4.4-alt1.
+- 0.4.3 -> 0.4.4.
 
 * Fri Oct 08 2021 Arseny Maslennikov <arseny@altlinux.org> 0.4.3-alt1
-- 0.4.2-alt1 -> 0.4.3-alt1.
+- 0.4.2 -> 0.4.3.
 
 * Sun Oct 03 2021 Arseny Maslennikov <arseny@altlinux.org> 0.4.2-alt1
-- 0.3.96-alt1 -> 0.4.2-alt1.
+- 0.3.96 -> 0.4.2.
 
 * Sat Jun 05 2021 Arseny Maslennikov <arseny@altlinux.org> 0.3.96-alt1
-- 0.3.60.103.g9609a79903ab-alt1 -> 0.3.96-alt1.
+- 0.3.60.103.g9609a79903ab -> 0.3.96.
 
 * Thu Mar 18 2021 Arseny Maslennikov <arseny@altlinux.org> 0.3.60.103.g9609a79903ab-alt1
 - 0.3.60.63.g24a260030bab -> 0.3.60.103.g9609a79903ab.
