@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_with libQgpsmm
-%define abiversion 25
+%define abiversion 29
 
 Name: gpsd
 Summary: Service daemon for mediating access to a GPS
-Version: 3.20
-Release: alt6.1
+Version: 3.23
+Release: alt1
 License: BSD-2-Clause
 Group: System/Servers
 Url: https://gpsd.gitlab.io/gpsd/index.html
@@ -15,11 +17,12 @@ Requires: libgps%abiversion = %version-%release
 
 Patch0: gpsd-3.20-SConstruct.patch
 
-BuildRequires: asciidoc docbook-dtds docbook-style-xsl
+BuildRequires: asciidoc docbook-dtds docbook-style-xsl asciidoctor
 
 BuildRequires: scons gcc-c++ libXaw-devel libXext-devel libXpm-devel libdbus-glib-devel xorg-cf-files xsltproc libgtk+3-devel pps-tools-devel
 
-BuildRequires: python3-dev python3-module-pycairo python3-module-pygobject3 python3-module-serial
+BuildRequires: python3-dev python3-module-pycairo python3-module-pygobject3 python3-module-serial python3-module-matplotlib
+%add_findreq_skiplist */gpsdebuginfo
 
 %if_with libQgpsmm
 BuildRequires: qt5-base-devel
@@ -98,7 +101,7 @@ Python bindings to libgps
 %prep
 %setup
 
-%patch0 -p2
+#patch0 -p2
 
 # don't set RPATH
 #sed -i 's|env.Prepend.*RPATH.*|pass #\0|' SConstruct
@@ -107,19 +110,21 @@ Python bindings to libgps
 #sed -i 's|parse_flags=usblibs . rtlibs . bluezlibs . ."-lgps".|parse_flags=usblibs + rtlibs + bluezlibs + ["-lgps", "-lm"]|' SConstruct
 
 # fixed binary's path, exit with 1 when not found
-sed -i '/\/usr\/local\/sbin/{s||%_sbindir|;h};${x;/./{x;q0};x;q1}' systemd/gpsd.service
-sed -i '/\/usr\/local\/sbin/{s||%_sbindir|;h};${x;/./{x;q0};x;q1}' systemd/gpsdctl@.service
+#sed -i '/\/usr\/local\/sbin/{s||%_sbindir|;h};${x;/./{x;q0};x;q1}' systemd/gpsd.service
+#sed -i '/\/usr\/local\/sbin/{s||%_sbindir|;h};${x;/./{x;q0};x;q1}' systemd/gpsdctl@.service
 
-sed -i 's|/usr/bin/python|%__python3|' contrib/gpsData.py
-find -type f -name "*.py" -exec sed -i 's|/usr/bin/env python|%__python3|' {} \;
-for FILE in gegps gpscat gpsfake gpsprof ubxtool xgps xgpsspeed zerk ; do
-   sed -i 's|/usr/bin/env python|%__python3|' $FILE
-done
+#sed -i 's|/usr/bin/python|%__python3|' contrib/gpsData.py
+#find -type f -name "*.py" -exec sed -i 's|/usr/bin/env python|%__python3|' {} \;
+#for FILE in gegps gpscat gpsfake gpsprof ubxtool xgps xgpsspeed zerk ; do
+#   sed -i 's|/usr/bin/env python|%__python3|' $FILE
+#done
 
 %build
 scons \
     prefix=/usr \
     libdir=%_libdir \
+    docdir=%_defaultdocdir/%name-%version \
+    icondir=%_iconsdir \
     python_libdir=%python3_sitelibdir \
     target_python=%__python3 \
     %if_with libQgpsmm
@@ -134,7 +139,7 @@ scons \
 DESTDIR=%buildroot scons install udev-install
 
 %files
-%doc README.adoc INSTALL.adoc COPYING
+%doc AUTHORS COPYING NEWS README.adoc INSTALL.adoc SUPPORT.adoc build.adoc www/example1.c.txt
 %_sbindir/gpsd
 %_sbindir/gpsdctl
 %_unitdir/gpsd.service
@@ -145,6 +150,8 @@ DESTDIR=%buildroot scons install udev-install
 %_man8dir/gps*
 %_man8dir/ppscheck.*
 %_man5dir/*
+
+%_iconsdir/gpsd-logo.png
 
 %files -n libgps%abiversion
 %_libdir/libgps*.so.%abiversion
@@ -175,6 +182,10 @@ DESTDIR=%buildroot scons install udev-install
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat Oct 23 2021 Sergey Y. Afonin <asy@altlinux.org> 3.23-alt1
+- 3.23
+- Changed abiversion to 29
+
 * Thu Jul 29 2021 Grigory Ustinov <grenka@altlinux.org> 3.20-alt6.1
 - NMU: removed buildrequires on python3-module-anyjson.
 
