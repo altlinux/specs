@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.24
+Version: 1.25
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -190,6 +190,9 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Sat Oct 23 2021 Vitaly Chikunov <vt@altlinux.org> 1.25-alt1
+- Fix `--cpu=' option after previous change.
+
 * Fri Oct 22 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.24-alt1
 - vm-run: explicitly pass CPU topology to qemu.
 
