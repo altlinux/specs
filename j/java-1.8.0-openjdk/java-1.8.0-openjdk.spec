@@ -26,7 +26,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.312.b05
+%define version 1.8.0.312.b07
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -294,7 +294,7 @@ BuildRequires: /proc rpm-build-java
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
 %global shenandoah_project	aarch64-port
 %global shenandoah_repo		jdk8u-shenandoah
-%global shenandoah_revision aarch64-shenandoah-jdk8u312-b05
+%global shenandoah_revision aarch64-shenandoah-jdk8u312-b07
 # Define old aarch64/jdk8u tree variables for compatibility
 %global project         %{shenandoah_project}
 %global repo            %{shenandoah_repo}
@@ -310,12 +310,13 @@ BuildRequires: /proc rpm-build-java
 %global updatever       %(VERSION=%{whole_update}; echo ${VERSION##*u})
 # eg jdk8u60-b27 -> b27
 %global buildver        %(VERSION=%{version_tag}; echo ${VERSION##*-})
-%global rpmrelease      0
+%global rpmrelease      1
+%global dist            jpp8
 # Define milestone (EA for pre-releases, GA ("fcs") for releases)
 # Release will be (where N is usually a number starting at 1):
 # - 0.N%%{?extraver}%%{?dist} for EA releases,
 # - N%%{?extraver}{?dist} for GA releases
-%global is_ga           0
+%global is_ga           1
 %if %{is_ga}
 %global milestone          fcs
 %global milestone_version  %{nil}
@@ -379,7 +380,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}.%{buildver}
-Release: alt1_0.1.eajpp8
+Release: alt1_%{?eaprefix}%{rpmrelease}%{?extraver}%{?dist}
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -2150,6 +2151,21 @@ fi
 %endif
 
 %changelog
+* Sat Oct 23 2021 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.312.b07-alt1_1jpp8
+- New version.
+- Security fixes:
+  + CVE-2021-35588 InnerClasses: VM permits wrong Throw ClassFormatError if InnerClasses attribute's inner_class_info_index is 0
+  + CVE-2021-35550 Update the default enabled cipher suites preference
+  + CVE-2021-35565 com.sun.net.HttpsServer spins on TLS session close
+  + CVE-2021-35556 Richer Text Editors
+  + CVE-2021-35559 Enhanced style for RTF kit
+  + CVE-2021-35561 Better hashing support
+  + CVE-2021-35564 Improve Keystore integrity
+  + CVE-2021-35567 More Constrained Delegation
+  + CVE-2021-35578 Improve TLS client handshaking
+  + CVE-2021-35586 Better BMP support
+  + CVE-2021-35603 Better session identification
+
 * Thu Oct 14 2021 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.312.b05-alt1_0.1.eajpp8
 - New version.
 
