@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Feed-Find
 Name: perl-%dist
-Version: 0.11
+Version: 0.12
 Release: alt1
 
 Summary: Syndication feed auto-discovery
@@ -43,6 +43,9 @@ rm t/01-find.t
 %perl_vendor_privlib/Feed
 
 %changelog
+* Sun Oct 24 2021 Igor Vlasenko <viy@altlinux.org> 0.12-alt1
+- automated CPAN update
+
 * Thu Jun 17 2021 Igor Vlasenko <viy@altlinux.org> 0.11-alt1
 - automated CPAN update
 
