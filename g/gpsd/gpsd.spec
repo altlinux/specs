@@ -6,7 +6,7 @@
 Name: gpsd
 Summary: Service daemon for mediating access to a GPS
 Version: 3.23.1
-Release: alt1
+Release: alt2
 License: BSD-2-Clause
 Group: System/Servers
 Url: https://gpsd.gitlab.io/gpsd/index.html
@@ -14,6 +14,8 @@ Packager: Anton V. Boyarshinov <boyarsh@altlinux.org>
 
 Source: %name-%version.tar
 Requires: libgps%abiversion = %version-%release
+
+Patch0: gpsd-apistatus.patch
 
 BuildRequires: asciidoc docbook-dtds docbook-style-xsl asciidoctor gem-rouge
 
@@ -117,6 +119,8 @@ Python bindings to libgps
 
 %prep
 %setup
+
+%patch0 -p1
 
 %build
 scons \
@@ -274,6 +278,9 @@ install -p -m 0644 %name-%version/packaging/rpm/gpsd.sysconfig %buildroot/%_sysc
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sun Oct 24 2021 Sergey Y. Afonin <asy@altlinux.org> 3.23.1-alt2
+- added gpsd-apistatus.patch from Fedora Rawhide
+
 * Sat Oct 23 2021 Sergey Y. Afonin <asy@altlinux.org> 3.23.1-alt1
 - 3.23.1
 - splitted gpsd-clients to gpsd-clients-gui, gpsd-clients-console
