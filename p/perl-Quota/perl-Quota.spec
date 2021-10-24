@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Quota
 Name: perl-%dist
-Version: 1.8.1
-Release: alt2
+Version: 1.8.2
+Release: alt1
 
 Summary: Perl interface to file system quotas
 License: GPL or Artistic
@@ -39,6 +39,9 @@ sed -i- 's/Linux 2/Linux/' Makefile.PL
 %perl_vendor_autolib/Quota
 
 %changelog
+* Sun Oct 24 2021 Igor Vlasenko <viy@altlinux.org> 1.8.2-alt1
+- automated CPAN update
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt2
 - built with libtirpc
 
