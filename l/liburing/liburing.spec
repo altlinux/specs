@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: liburing
-Version: 2.0
+Version: 2.1
 Release: alt1
 
 Summary: Linux-native io_uring I/O access library
@@ -45,7 +45,7 @@ linked programs that use Linux-native io_uring.
 %setup
 
 %build
-%add_optflags %(getconf LFS_CFLAGS)
+%add_optflags %(getconf LFS_CFLAGS) -ffat-lto-objects
 ./configure \
 	--prefix=%_prefix \
 	--includedir=%_includedir \
@@ -59,15 +59,8 @@ linked programs that use Linux-native io_uring.
 %makeinstall_std V=1
 
 %ifnarch ppc64le %e2k
-# Almost all tests fail on ppc64le, so there is not point to even try.
+# Almost all tests fail on ppc64le, so there is no point to even try.
 %check
-# These tests always fail on the most arches/older kernels.
-TEST_EXCLUDE="35fa71a030ca-test eeed8b54e0df-test connect io_uring_register sq-poll-dup
-	sq-poll-share double-poll-crash timeout-new sendmsg_fs_cve link-timeout
-	500f9fbadef8-test cq-overflow defer file-update io-cancel io_uring_enter iopoll
-	lfs-openat lfs-openat-write link_drain open-close openat2 pipe-eof poll-cancel
-	poll-cancel-ton poll-link read-write self sigfd-deadlock sq-space_left thread-exit
-	statx accept-link socket-rw across-fork" \
 make runtests
 %endif
 
@@ -88,6 +81,10 @@ make runtests
 %_libdir/%name.a
 
 %changelog
+* Sun Oct 24 2021 Vitaly Chikunov <vt@altlinux.org> 2.1-alt1
+- Update to liburing-2.1 (2021-09-09).
+- Fix LTO build.
+
 * Sat Jun 05 2021 Vitaly Chikunov <vt@altlinux.org> 2.0-alt1
 - Update to liburing-2.0 (2021-02-28).
 
