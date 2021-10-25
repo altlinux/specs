@@ -9,8 +9,8 @@ Group: System/Libraries
 %global maj 0
 
 Name:           libserd
-Version:        0.30.6
-Release:        alt1_1
+Version:        0.30.10
+Release:        alt1_3
 Summary:        A lightweight C library for RDF syntax
 
 License:        ISC
@@ -22,6 +22,8 @@ BuildRequires:  graphviz libgraphviz
 BuildRequires:  glib2-devel libgio libgio-devel
 BuildRequires:  python3
 BuildRequires:  gcc
+BuildRequires:  python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
+#BuildRequires:  python3-module-sphinx_lv2_theme
 Source44: import.info
 Provides: serd = %{version}-%{release}
 
@@ -47,44 +49,50 @@ This package contains the headers and development libraries for %{oldname}.
 
 %prep
 %setup -n %{oldname}-%{version} -q
-# we'll run ldconfig, well not any more, see
+
+# Do not run ldconfig, see
 # https://fedoraproject.org/wiki/Changes/Removing_ldconfig_scriptlets
 sed -i -e 's|bld.add_post_fun(autowaf.run_ldconfig)||' wscript
 
 %build
 
-python3 waf configure \
+/usr/bin/python3 waf configure \
     --prefix=%{_prefix} \
     --libdir=%{_libdir} \
     --mandir=%{_mandir} \
     --datadir=%{_datadir} \
     --docdir=%{_docdir} \
     --test \
-    --docs 
-python3 waf build -v %{?_smp_mflags}
+    
+#    --docs 
+/usr/bin/python3 waf build -v %{?_smp_mflags}
 
 %install
-DESTDIR=%{buildroot} python3 waf install
+DESTDIR=%{buildroot} /usr/bin/python3 waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-%{maj}.so.*
+# Delete sphinx buildinfo
+#rm %{buildroot}%{_docdir}/%{oldname}-%{maj}/c/{html,singlehtml}/.buildinfo
 # Move devel docs to the right directory
-install -d %{buildroot}%{_docdir}/%{oldname}/%{oldname}-%{maj}
-mv %{buildroot}%{_docdir}/%{oldname}-%{maj}/html %{buildroot}%{_docdir}/%{oldname}/%{oldname}-%{maj}/html
+#install -d %{buildroot}%{_docdir}/%{oldname}/%{oldname}-%{maj}
+#mv %{buildroot}%{_docdir}/%{oldname}-%{maj}/c %{buildroot}%{_docdir}/%{oldname}/%{oldname}-%{maj}/c
 
 %files
 %doc --no-dereference COPYING
 %doc AUTHORS NEWS README.md
 %doc %{_mandir}/man1/serdi.1*
-%{_libdir}/lib%{oldname}-%{maj}.so.*
+%{_libdir}/lib%{oldname}-%{maj}.so.%{maj}*
 %{_bindir}/serdi
 
 %files devel
-%doc %{_mandir}/man3/serd.3*
-%doc %{_docdir}/%{oldname}/%{oldname}-%{maj}/
+#doc %{_docdir}/%{oldname}/%{oldname}-%{maj}/
 %{_libdir}/lib%{oldname}-%{maj}*.so
 %{_libdir}/pkgconfig/%{oldname}*.pc
 %{_includedir}/%{oldname}-%{maj}/
 
 %changelog
+* Mon Oct 25 2021 Igor Vlasenko <viy@altlinux.org> 0.30.10-alt1_3
+- new version
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.30.6-alt1_1
 - update to new release by fcimport
 
