@@ -5,14 +5,15 @@
 %endif
 
 Name: libcaf
-Version: 0.16.2
-Release: alt3
+Version: 0.18.5
+Release: alt1
 
 Summary: An Open Source Implementation of the Actor Model in C++
+
 License: BSD / Boost
 Group: Networking/Other
-
 Url: http://www.actor-framework.org/
+
 # Source-url: https://github.com/actor-framework/actor-framework/archive/%version.tar.gz
 Source: %name-%version.tar
 Patch: libcaf-0.16.2-fix-linking.patch
@@ -38,7 +39,7 @@ This package contains the header files for %name.
 
 %prep
 %setup
-%patch -p1
+#patch -p1
 # TODO: LIB_DESTINATION
 sed -i "s|LIBRARY DESTINATION lib|LIBRARY DESTINATION %_lib|" */CMakeLists.txt
 
@@ -48,6 +49,8 @@ sed -i "s|LIBRARY DESTINATION lib|LIBRARY DESTINATION %_lib|" */CMakeLists.txt
 
 %install
 %cmakeinstall_std
+# TODO: pack tools?
+rm -rv %buildroot%_datadir/caf/
 
 %files
 %_libdir/libcaf_*.so.*
@@ -55,10 +58,14 @@ sed -i "s|LIBRARY DESTINATION lib|LIBRARY DESTINATION %_lib|" */CMakeLists.txt
 %files devel
 %_includedir/caf/
 %_libdir/libcaf_*.so
-%_datadir/caf/
+%_libdir/cmake/CAF/
+#%_datadir/caf/
 
 
 %changelog
+* Sat Sep 25 2021 Vitaly Lipatov <lav@altlinux.ru> 0.18.5-alt1
+- new version 0.18.5 (with rpmrb script)
+
 * Fri Oct 11 2019 Michael Shigorin <mike@altlinux.org> 0.16.2-alt3
 - move to opencv knob (on by default except for ppc64le, %%e2k)
 - minor spec cleanup

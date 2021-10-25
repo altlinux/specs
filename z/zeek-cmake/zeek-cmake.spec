@@ -1,5 +1,5 @@
 Name: zeek-cmake
-Version: 20190609
+Version: 20210717
 Release: alt1
 
 Summary: CMake scripts used in Zeek
@@ -38,5 +38,8 @@ cp -a * %buildroot%_datadir/%name/
 %_datadir/%name/
 
 %changelog
+* Sun Sep 26 2021 Vitaly Lipatov <lav@altlinux.ru> 20210717-alt1
+- new version 20210717 (with rpmrb script)
+
 * Sun Jun 09 2019 Vitaly Lipatov <lav@altlinux.ru> 20190609-alt1
 - initial build for ALT Sisyphus
