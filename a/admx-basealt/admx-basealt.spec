@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.1.8
+Version: 0.1.9
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,12 @@ done
 %_destdir
 
 %changelog
+* Fri Oct 22 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.1.9-alt1
+- Fixed typo in screensaver setting in Russian translations
+- Improve English translation of gsettings strings
+- Fix authetication method bug for gsetting oprtion:
+  org.gnome.Vino.authentication-methods
+
 * Mon Oct 04 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.1.8-alt1
 - Fix typos in Russian translations
 
