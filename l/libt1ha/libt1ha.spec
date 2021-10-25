@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: libt1ha
 Version: 2.1.4
-Release: alt1
+Release: alt2
 
 Summary: Fast Positive Hash
 License: Zlib
@@ -57,6 +58,9 @@ install -m644 libt1ha{,_pic}.a %buildroot%_libdir
 %_libdir/libt1ha*.a
 
 %changelog
+* Mon Oct 25 2021 Slava Aseev <ptrnine@altlinux.org> 2.1.4-alt2
+- FTBFS: built with -ffat-lto-objects
+
 * Wed Mar 10 2021 Slava Aseev <ptrnine@altlinux.org> 2.1.4-alt1
 - Updated to upstream version 2.1.4.
 
