@@ -6,11 +6,11 @@
 %global repo            cli
 
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit      c2ea9bc90bacf19bdbe37fd13eec8772432aca99
+%global commit      b485636f4b90ed5a91a1f403e65ffced469c641a
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-cli
-Version:    20.10.9
+Version:    20.10.10
 Release: alt1
 Summary: Docker CLI
 License: Apache-2.0
@@ -91,6 +91,9 @@ install -Dp -m 644 contrib/completion/fish/docker.fish %{buildroot}%{_datadir}/f
 %{_datadir}/fish/completions/docker.fish
 
 %changelog
+* Mon Oct 25 2021 Vladimir Didenko <cow@altlinux.org> 20.10.10-alt1
+- new release
+
 * Wed Oct 6 2021 Vladimir Didenko <cow@altlinux.org> 20.10.9-alt1
 - new release
 
