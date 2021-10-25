@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: diffoscope
-Version: 137
+Version: 188
 Release: alt1
 
 Summary: In-depth comparison of files, archives, and directories
@@ -16,6 +16,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-libmagic
 BuildRequires: python3-module-libarchive-c
 BuildRequires: python3-module-docutils
+BuildRequires: python3-modules-curses
 BuildRequires: /usr/bin/help2man
 BuildRequires: /usr/bin/xxd
 Requires: python3(tlsh)
@@ -46,6 +47,9 @@ install -Dm644 doc/diffoscope.1 %buildroot%_man1dir/diffoscope.1
 %_man1dir/diffoscope.1*
 
 %changelog
+* Mon Oct 25 2021 Slava Aseev <ptrnine@altlinux.org> 188-alt1
+- Update to upstream version 188
+
 * Thu Mar 12 2020 Slava Aseev <ptrnine@altlinux.org> 137-alt1
 - Update to upstream version 137
 
