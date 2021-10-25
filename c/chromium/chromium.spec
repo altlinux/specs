@@ -30,7 +30,7 @@
 
 Name:           chromium
 Version:        95.0.4638.54
-Release:        alt1
+Release:        alt2
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -438,8 +438,11 @@ EOF
 %_altdir/%name
 
 %changelog
+* Mon Oct 25 2021 Alexey Gladkov <legion@altlinux.ru> 95.0.4638.54-alt2
+- Audio process sandbox is disabled.
+
 * Thu Oct 21 2021 Alexey Gladkov <legion@altlinux.ru> 95.0.4638.54-alt1
-- New version (95.0.4638.54<F2>).
+- New version (95.0.4638.54).
 - Security fixes:
   - CVE-2021-37981: Heap buffer overflow in Skia.
   - CVE-2021-37982: Use after free in Incognito.
