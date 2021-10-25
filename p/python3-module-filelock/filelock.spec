@@ -4,21 +4,25 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.0.10
-Release: alt2
+Version: 3.3.1
+Release: alt1
 
 Summary: A platform independent file lock for Python
 License: Unlicense
 Group: Development/Python3
-# Source-git: https://github.com/benediktschmitt/py-filelock.git
-Url: https://pypi.python.org/pypi/filelock
+# Source-git: https://github.com/tox-dev/py-filelock
+Url: https://pypi.org/project/filelock/
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools_scm)
 
 %if_with check
-BuildRequires: pytest3
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+BuildRequires: python3(tox_console_scripts)
+BuildRequires: python3(pytest)
 %endif
 
 BuildArch: noarch
@@ -34,21 +38,29 @@ the same lock object twice, it will not block.
 %setup
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_build
 
 %install
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 
 %check
-pytest3 -xvv test.py
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false -- -vra tests
 
 %files
-%doc LICENSE.rst README.rst
-%python3_sitelibdir/filelock.py
-%python3_sitelibdir/__pycache__/filelock.*.py*
-%python3_sitelibdir/filelock-*.egg-info/
+%doc LICENSE README.md
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Oct 25 2021 Stanislav Levin <slev@altlinux.org> 3.3.1-alt1
+- 3.0.10 -> 3.3.1.
+
 * Sun Jul 25 2021 Grigory Ustinov <grenka@altlinux.org> 3.0.10-alt2
 - Drop python2 support.
 

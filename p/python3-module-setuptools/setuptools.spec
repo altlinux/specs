@@ -7,7 +7,7 @@
 
 Name: python3-module-%mname
 Epoch: 1
-Version: 58.2.0
+Version: 58.3.0
 Release: alt1
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
@@ -162,6 +162,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
 %endif
 
 %changelog
+* Mon Oct 25 2021 Stanislav Levin <slev@altlinux.org> 1:58.3.0-alt1
+- 58.2.0 -> 58.3.0.
+
 * Fri Oct 15 2021 Stanislav Levin <slev@altlinux.org> 1:58.2.0-alt1
 - 58.1.0 -> 58.2.0.
 

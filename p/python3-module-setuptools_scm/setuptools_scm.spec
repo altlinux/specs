@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 6.3.2
-Release: alt1
+Release: alt2
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
 Group: Development/Python3
@@ -77,6 +77,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr
 %python3_sitelibdir/setuptools_scm-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Oct 25 2021 Stanislav Levin <slev@altlinux.org> 6.3.2-alt2
+- Fixed FTBFS (setuptools 58.3.0).
+
 * Wed Sep 29 2021 Stanislav Levin <slev@altlinux.org> 6.3.2-alt1
 - 6.0.1 -> 6.3.2.
 
