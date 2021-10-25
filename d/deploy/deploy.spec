@@ -1,5 +1,5 @@
 Name: deploy
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: Script and set of ansible roles to deploy system services
@@ -31,6 +31,9 @@ system services like PostgreSQL or Moodle.
 %_datadir/%name
 
 %changelog
+* Mon Oct 25 2021 Andrey Cherepanov <cas@altlinux.org> 0.3.2-alt1
+- nextcloud: use ncadmin for admin user, show database name and database username.
+
 * Sat Jul 17 2021 Andrey Cherepanov <cas@altlinux.org> 0.3.1-alt1
 - Adapt for latest version of Mediawiki and Nextcloud.
 - mediawiki: fix password generation program.

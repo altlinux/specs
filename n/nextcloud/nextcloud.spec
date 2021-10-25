@@ -1,5 +1,5 @@
 Name: nextcloud
-Version: 20.0.0
+Version: 22.2.0
 Release: alt1
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
@@ -133,6 +133,9 @@ ssl_generate "nextcloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Mon Oct 25 2021 Andrey Cherepanov <cas@altlinux.org> 22.2.0-alt1
+- New version (ALT #41211).
+
 * Thu Oct 15 2020 Evgeniy Korneechev <ekorneechev@altlinux.org> 20.0.0-alt1
 - version 20.0.0 / Oct 3 2020 (closes: #39028)
 - Add requirement to php7-intl (closes: #36902)
