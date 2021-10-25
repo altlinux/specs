@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 2.6
+Version: 2.6.1
 Release: alt1
 
 Summary: A tool for static C/C++ code analysis
@@ -55,7 +55,7 @@ Requires: icon-theme-hicolor
 
 %patch8 -p1
 
-%__subst 's|/usr/bin/env python|%__python3|' htmlreport/cppcheck-htmlreport
+%__subst 's|/usr/bin/env python.*$|%__python3|' htmlreport/{cppcheck-htmlreport,*.py} addons/*.py tools/*.py
 
 %ifarch %e2k
 # strip UTF-8 BOM for lcc < 1.24
@@ -98,6 +98,8 @@ install -pD -m 644 %name.1 %buildroot%_man1dir/%name.1
 
 # Install htmlreport
 install -pD -m 755 htmlreport/cppcheck-htmlreport %buildroot%_bindir/cppcheck-htmlreport
+# Restore execute permission of python files
+grep -l "#\!%__python3" %buildroot%_datadir/Cppcheck/addons/*.py | xargs chmod +x
 
 %check
 %cmake_build --target check
@@ -120,6 +122,9 @@ install -pD -m 755 htmlreport/cppcheck-htmlreport %buildroot%_bindir/cppcheck-ht
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Oct 25 2021 Andrew A. Vasilyev <andy@altlinux.org> 2.6.1-alt1
+- 2.6.1
+
 * Thu Oct 07 2021 Andrew A. Vasilyev <andy@altlinux.org> 2.6-alt1
 - 2.6
 
