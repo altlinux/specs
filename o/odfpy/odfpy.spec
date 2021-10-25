@@ -1,22 +1,24 @@
+%def_enable check
+
 Name: odfpy
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 Summary: Python scripts for manipulating OpenDocument files
 
-Group: Development/Python
+Group: Development/Python3
 License: GPLv2+
 Url: https://joinup.ec.europa.eu/software/odfpy/home
 
 # Source-url: https://pypi.io/packages/source/o/%name/%name-%version.tar.gz
 Source: %name-%version.tar.gz
 
-%setup_python_module %name
-
 BuildArch: noarch
 
-# Automatically added by buildreq on Tue Feb 02 2010
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: rpm-build-python3
+%{?_enable_check:BuildRequires: python3-module-pytest python3-module-defusedxml}
+
+Conflicts: python3-module-odf < %EVR
+Obsoletes: python3-module-odf < %EVR
 
 %description
     csv2odf - Create OpenDocument spreadsheet from comma separated values
@@ -30,25 +32,6 @@ BuildRequires: python3-devel python3-module-setuptools
     odfoutline - Show outline of OpenDocument
     odfuserfield - List or change the user-field declarations in an ODF file
     xml2odf - Create OD? package from OpenDocument in XML form
-
-%package -n %packagename
-Summary: Python library for manipulating OpenDocument files
-Group: Development/Python
-License: GPLv2+
-
-%description -n %packagename
-Odfpy aims to be a complete API for OpenDocument in Python. Unlike
-other more convenient APIs, this one is essentially an abstraction
-layer just above the XML format. The main focus has been to prevent
-the programmer from creating invalid documents. It has checks that
-raise an exception if the programmer adds an invalid element, adds an
-attribute unknown to the grammar, forgets to add a required attribute
-or adds text to an element that doesn't allow it.
-
-These checks and the API itself were generated from the RelaxNG
-schema, and then hand-edited. Therefore the API is complete and can
-handle all ODF constructions, but could be improved in its
-understanding of data types.
 
 %package -n python3-module-%name
 Summary: Python3 library for manipulating OpenDocument files
@@ -73,19 +56,14 @@ understanding of data types.
 %setup -n %name-%version
 
 %build
-%python_build
 %python3_build
 
 %install
-%python_install
 %python3_install
 
-%files -n %packagename
-%doc examples
-%doc contrib
-%doc *odt
-%python_sitelibdir/*egg-info
-%python_sitelibdir/odf/
+%check
+export PYTHONPATH=$PWD
+py.test3
 
 %files
 %doc README*
@@ -100,6 +78,12 @@ understanding of data types.
 %python3_sitelibdir/odf/
 
 %changelog
+* Mon Oct 25 2021 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1
+- Built new version.
+- Dropped python2 support.
+- Enabled check.
+- Resolved conflict with python3-module-odf (Closes: #39266).
+
 * Thu Jun 20 2019 Fr. Br. George <george@altlinux.ru> 1.4.0-alt1
 - Autobuild version bump to 1.4.0
 
