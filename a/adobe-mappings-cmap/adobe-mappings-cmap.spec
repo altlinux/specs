@@ -1,10 +1,11 @@
 Group: Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+BuildRequires: /usr/bin/git
 Name:             adobe-mappings-cmap
 Summary:          CMap resources for Adobe's character collections
-Version:          20171205
-Release:          alt1_9
+Version:          20190730
+Release:          alt1_2
 License:          BSD
 
 URL:              https://www.adobe.com/
@@ -12,6 +13,27 @@ Source:           https://github.com/adobe-type-tools/cmap-resources/archive/%{v
 
 BuildArch:        noarch
 BuildRequires:    git
+
+# The cmap-resources package duplicated this one (albeit with different
+# installation paths). It was retired for F36. Provide an upgrade path.
+%global crversion %(echo '%{version}' | \
+    awk '{print substr($0,1,4)"."substr($0,5,2)"."substr($0,7)}')
+Provides:         cmap-resources = %{crversion}-6.%{release}
+Obsoletes:        cmap-resources < 2019.07.30-6
+Provides:         cmap-resources-cns1-6 = %{crversion}-6.%{release}
+Obsoletes:        cmap-resources-cns1-6 < 2019.07.30-6
+Provides:         cmap-resources-cns1-7 = %{crversion}-6.%{release}
+Obsoletes:        cmap-resources-cns1-7 < 2019.07.30-6
+Provides:         cmap-resources-gb1-5 = %{crversion}-6.%{release}
+Obsoletes:        cmap-resources-gb1-5 < 2019.07.30-6
+Provides:         cmap-resources-japan1-7 = %{crversion}-6.%{release}
+Obsoletes:        cmap-resources-japan1-7 < 2019.07.30-6
+Provides:         cmap-resources-korea1-2 = %{crversion}-6.%{release}
+Obsoletes:        cmap-resources-korea1-2 < 2019.07.30-6
+Provides:         cmap-resources-identity-0 = %{crversion}-6.%{release}
+Obsoletes:        cmap-resources-identity-0 < 2019.07.30-6
+Provides:         cmap-resources-kr-9 = %{crversion}-6.%{release}
+Obsoletes:        cmap-resources-kr-9 < 2019.07.30-6
 Source44: import.info
 
 %description
@@ -29,6 +51,9 @@ characters.
 Group: Other
 Summary:          Deprecated CMap resources for Adobe's character collections
 Requires:         %{name} = %{version}-%{release}
+
+Provides:         cmap-resources-japan2-0 = %{crversion}-6.%{release}
+Obsoletes:        cmap-resources-japan2-0 < 2019.07.30-6
 
 %description deprecated
 This sub-package contains currently deprecated CMap resources that some
@@ -53,6 +78,12 @@ as well as all the fonts contained in this font set.
 
 %prep
 %setup -q -n cmap-resources-%{version}
+git init -q
+git config user.name "rpmbuild"
+git config user.email "<rpmbuild>"
+git config gc.auto 0
+git add --force .
+git commit -q --allow-empty -a --author "rpmbuild <rpmbuild>" -m "%{NAME}-%{VERSION} base"
 
 
 %install
@@ -69,7 +100,7 @@ _EOF
 
 %files
 %doc README.md VERSIONS.txt
-%doc --no-dereference LICENSE.txt
+%doc --no-dereference LICENSE.md
 
 # Necessary directories ownership (to remove them correctly when uninstalling):
 %dir %{_datadir}/adobe
@@ -81,6 +112,7 @@ _EOF
 %{_datadir}/adobe/resources/mapping/Identity
 %{_datadir}/adobe/resources/mapping/Japan1
 %{_datadir}/adobe/resources/mapping/Korea1
+%{_datadir}/adobe/resources/mapping/KR
 
 %files deprecated
 %{_datadir}/adobe/resources/mapping/deprecated
@@ -91,6 +123,9 @@ _EOF
 # =============================================================================
 
 %changelog
+* Mon Oct 25 2021 Igor Vlasenko <viy@altlinux.org> 20190730-alt1_2
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 20171205-alt1_9
 - update to new release by fcimport
 
