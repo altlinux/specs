@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: neomutt
-Version: 20210205
-Release: alt2.1
+Version: 20211022
+Release: alt1
 
 %define docdir %_docdir/%name-%version
 %undefine _configure_gettext
@@ -24,7 +24,6 @@ Vcs: https://github.com/neomutt/neomutt.git
 Requires: mailcap
 
 Source: %name-%version.tar
-Patch0: %name-color-group.patch
 
 BuildRequires: docbook-style-xsl
 BuildRequires: elinks
@@ -94,6 +93,10 @@ make -s test
 %docdir
 
 %changelog
+* Sun Oct 24 2021 Vitaly Chikunov <vt@altlinux.org> 20211022-alt1
+- Update to 20211022-6-g4c9fa28537 (2021-10-24).
+- Do not apply color groups patch.
+
 * Mon Jul 05 2021 Alexey Gladkov <legion@altlinux.ru> 20210205-alt2.1
 - Add color groups for header and body.
 
