@@ -2,7 +2,7 @@
 %define Brand ALT
 %define theme server-v
 %define Theme Server-V
-%define codename Altostratus
+%define codename Actinoform
 %define status %nil
 %define status_en %nil
 %define flavour %brand-%theme
@@ -12,11 +12,13 @@
 %define design_graphics_abi_minor 1
 %define design_graphics_abi_bugfix 0
 
+%define data_cur_dir %_datadir/branding-data-current
+
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 9.2
-Release: alt2
+Version: 10
+Release: alt0.1
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -54,7 +56,10 @@ Summary(ru_RU.UTF-8): Тема для экрана выбора варианто
 License: GPLv2+
 
 Requires(pre):    coreutils
-Provides:  design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
+Provides: design-bootloader-system-%theme = %EVR
+Provides: design-bootloader-livecd-%theme = %EVR
+Provides: design-bootloader-livecd-%theme = %EVR
+Provides: design-bootloader-%theme = %EVR
 %branding_add_conflicts %flavour bootloader
 
 %define grub_normal white/light-blue
@@ -74,7 +79,7 @@ Summary(ru_RU.UTF-8): Тема для экрана загрузки для ди�
 License:  Distributable
 Group:    System/Configuration/Boot and Init
 BuildArch: noarch
-Provides: plymouth-theme-%theme
+Provides: plymouth-theme-%theme = %EVR
 Requires: plymouth-plugin-script
 Requires(pre):   plymouth
 
@@ -94,8 +99,11 @@ Summary(ru_RU.UTF-8): Тема для "Центра управления сис�
 License: GPLv2+
 Group: System/Configuration/Other
 BuildArch: noarch
-Provides: design-alterator-browser-%theme  branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt
-Provides: alterator-icons design-alterator design-alterator-%theme
+Provides: design-alterator-browser-%theme = %EVR
+Provides: branding-alt-%theme-browser-qt = %EVR
+Provides: branding-altlinux-%theme-browser-qt = %EVR
+Provides: alterator-icons design-alterator
+Provides: design-alterator-%theme = %EVR
 
 %branding_add_conflicts %flavour alterator
 Obsoletes: design-alterator-server design-alterator-desktop design-altertor-browser-desktop design-altertor-browser-server branding-altlinux-backup-server-alterator
@@ -114,7 +122,7 @@ Summary(ru_RU.UTF-8): Тема для дистрибутива %distro_name_ru
 License: Different licenses
 Group: Graphics
 BuildArch: noarch
-Provides: design-graphics-%theme
+Provides: design-graphics-%theme = %EVR
 Provides: design-graphics = %design_graphics_abi_major.%design_graphics_abi_minor.%design_graphics_abi_bugfix
 
 Requires(post,preun): alternatives >= 0.2
@@ -136,9 +144,10 @@ Summary:  %distro_name release file
 Summary(ru_RU.UTF-8): Описание дистрибутива %distro_name_ru
 License:  GPLv2+
 Group:    System/Configuration/Other
-Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme  branding-alt-%theme-release
+Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme = %EVR
 Obsoletes: %obsolete_list
 %branding_add_conflicts %flavour release
+Requires: alt-os-release
 
 %description release
 %distro_name release file.
@@ -174,7 +183,7 @@ BuildArch: noarch
 Slideshow for %distro_name installer.
 
 %description slideshow -l ru_RU.UTF-8
-В данном пакете находятся изображения для организации "слайдшоу" в установщике 
+В данном пакете находятся изображения для организации "слайдшоу" в установщике
 дистрибутива %distro_name_ru.
 
 %package indexhtml
@@ -206,6 +215,9 @@ make
 
 %install
 %makeinstall
+
+touch %buildroot%_sysconfdir/os-release
+
 find %buildroot -name \*.in -delete
 
 #bootloader
@@ -257,6 +269,12 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
       subst "s|GRUB_WALLPAPER=.*|GRUB_WALLPAPER=/usr/share/plymouth/themes/%theme/grub.jpg|" \
              /etc/sysconfig/grub2 ||:
 
+#notes
+%post notes
+if ! [ -e %_datadir/alt-notes/license.all.html ]; then
+	cp -a %data_cur_dir/alt-notes/license.*.html %_datadir/alt-notes/
+fi
+
 %files alterator
 %config %_altdir/*.rcc
 /usr/share/alterator-browser-qt/design/*.rcc
@@ -272,11 +290,20 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_pixmapsdir/system-logo.png
 
 %files release
-%_sysconfdir/*-release
+%_sysconfdir/altlinux-release
+%_sysconfdir/fedora-release
+%_sysconfdir/redhat-release
+%_sysconfdir/system-release
+%_prefix/lib/os-release
 %_sysconfdir/buildreqs/packages/ignore.d/*
+%ghost %config(noreplace) %_sysconfdir/os-release
 
 %files notes
-%_datadir/alt-notes/*
+%dir %data_cur_dir
+%data_cur_dir/alt-notes
+%_datadir/alt-notes/livecd-*
+%_datadir/alt-notes/release-notes.*
+%ghost %config(noreplace) %_datadir/alt-notes/license.*.html
 
 %files slideshow
 /etc/alterator/slideshow.conf
@@ -293,6 +320,9 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Oct 25 2021 Alexey Shabalin <shaba@altlinux.org> 10-alt0.1
+- version 10
+
 * Mon Aug 02 2021 Alexey Shabalin <shaba@altlinux.org> 9.2-alt2
 - Revert "Don't change license and *-release files during update"
 - indexhtml: update copyright years
