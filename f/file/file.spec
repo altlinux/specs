@@ -5,7 +5,7 @@
 
 Name: file
 Version: 5.41
-Release: alt1
+Release: alt2
 
 Summary: File type guesser
 License: BSD-2-Clause
@@ -86,7 +86,8 @@ strace_file -m magic/magic.mgc	  ChangeLog.xz | grep ': XZ compressed data'
 strace_file -m magic/magic.mgc -z ChangeLog.xz | grep ': ASCII text (XZ compressed data'
 # Zstd uses external helper.
 tar cf ChangeLog.tar.zst ChangeLog.xz --zstd
-strace_file -z ChangeLog.tar.zst | grep ': POSIX tar archive (GNU) (Zstandard compressed data'
+strace_file -m magic/magic.mgc -z ChangeLog.tar.zst |
+    grep ': POSIX tar archive (GNU) (Zstandard compressed data'
 
 # Check seccomp was enabled.
 grep 'prctl(PR_SET_NO_NEW_PRIVS, 1,.* = 0' strace.log
@@ -115,6 +116,9 @@ make check
 %_man3dir/libmagic.3*
 
 %changelog
+* Mon Oct 25 2021 Ivan A. Melnikov <iv@altlinux.org> 5.41-alt2
+- Fix %%check on systems with file < 5.40.
+
 * Tue Oct 19 2021 Vitaly Chikunov <vt@altlinux.org> 5.41-alt1
 - Update to FILE5_41 (2021-10-18).
 
