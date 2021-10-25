@@ -7,7 +7,7 @@
 
 Name: python3-module-twisted-core
 Version: %major.0
-Release: alt2
+Release: alt3
 
 Summary: An asynchronous networking framework written in Python
 
@@ -308,6 +308,8 @@ cp -a docs/core/man/*.1 docs/mail/man/*.1 \
 rm -rfv docs/core/man docs/lore/man docs/mail/man docs/conch/man \
 	docs/words/man
 
+ln -s trial %buildroot%_bindir/trial-3
+
 %check
 
 %files -n twisted-core-tools
@@ -474,6 +476,7 @@ rm -rfv docs/core/man docs/lore/man docs/mail/man docs/conch/man \
 
 %files -n %prefx3-core-tests
 %_bindir/trial
+%_bindir/trial-3
 %_man1dir/trial.1*
 %python3_sitelibdir/twisted/trial/
 %python3_sitelibdir/twisted/test
@@ -504,6 +507,9 @@ rm -rfv docs/core/man docs/lore/man docs/mail/man docs/conch/man \
 %python3_sitelibdir/twisted/python/_setup.py
 
 %changelog
+* Mon Oct 25 2021 Igor Vlasenko <viy@altlinux.org> 20.3.0-alt3
+- NMU: added trial-3 compat symlink
+
 * Mon Nov 09 2020 Vitaly Lipatov <lav@altlinux.ru> 20.3.0-alt2
 - pack tools to twisted-core-tools (ALT bug 39226)
 - fix tests packing (no more tests package requires from the packages)
