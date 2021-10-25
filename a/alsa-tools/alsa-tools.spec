@@ -2,7 +2,7 @@
 
 Name: alsa-tools
 Version: 1.2.5
-Release: alt1
+Release: alt2
 
 Summary: Advanced Linux Sound Architecture (ALSA) tools
 License: GPLv2+
@@ -27,7 +27,7 @@ Provides: /etc/default/ld10k1
 
 BuildRequires: gcc-c++ libgtk+2-devel libgtk+3-devel
 BuildRequires: libalsa-devel >= %basever
-BuildRequires: rpm-build-python
+BuildRequires: rpm-build-python3
 
 %define udevdir /lib/udev
 
@@ -105,6 +105,8 @@ lo10k1 library, development part
 %setup
 %patch -p1
 
+sed -E -i '1 s@^(#![[:space:]]*)%_bindir/(env[[:space:]]+)?python\>@\1%__python3@' hwmixvolume/hwmixvolume
+
 mv seq/sbiload sbiload
 rm -rf {seq,hdsp*,qlo10k1}
 
@@ -134,9 +136,6 @@ rm -f %buildroot%_sysconfdir/hotplug/usb/tascam_fw.usermap
 mkdir -p %buildroot{%udevdir,%_udevrulesdir}
 mv %buildroot%_sysconfdir/hotplug/usb/* %buildroot%udevdir/
 install -pm644 %SOURCE1 %buildroot%_udevrulesdir/
-
-# python version should be specified explicitly now that 2 is going away
-sed -i 's,env python,&2,' %buildroot%_bindir/hwmixvolume
 
 %files
 %exclude %_bindir/hdajackretask
@@ -172,6 +171,9 @@ sed -i 's,env python,&2,' %buildroot%_bindir/hwmixvolume
 # - consider http://cvs.fedoraproject.org/viewvc/rpms/alsa-tools/devel/
 
 %changelog
+* Thu Oct 21 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.5-alt2
+- Use python3 for hwmixvolume.
+
 * Tue Jun 01 2021 Michael Shigorin <mike@altlinux.org> 1.2.5-alt1
 - 1.2.5
 
