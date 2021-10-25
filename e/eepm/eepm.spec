@@ -1,5 +1,7 @@
+%def_without external_distro_info
+
 Name: eepm
-Version: 3.13.3
+Version: 3.14.2
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -21,6 +23,9 @@ Provides: epm = %EVR
 %if %_vendor == "alt"
 # FIXHERE: Replace with target platform package manager
 Requires: apt rpm
+%endif
+
+%if_with external_distro_info
 Requires: distro_info >= 2.5
 %endif
 
@@ -96,12 +101,14 @@ ln -s serv %buildroot%_sysconfdir/bash_completion.d/cerv
 chmod a+x %buildroot%_datadir/%name/{serv-,epm-}*
 chmod a+x %buildroot%_datadir/%name/tools_*
 
-%if %_vendor == "alt"
+%if_with external_distro_info
 # use external eget
 #rm -v %buildroot%_datadir/%name/tools_eget
 # use external distro_info
 rm -v %buildroot%_bindir/distr_info
-%else
+%endif
+
+%if %_vendor != "alt"
 rm -v %buildroot%_bindir/yum
 %endif
 
@@ -122,7 +129,7 @@ mkdir -p %buildroot/var/lib/eepm/
 %_bindir/cerv
 %exclude %_bindir/yum
 %dir /var/lib/eepm/
-%if %_vendor != "alt"
+%if_without external_distro_info
 %_bindir/distr_info
 %endif
 %_man1dir/*
@@ -139,6 +146,29 @@ mkdir -p %buildroot/var/lib/eepm/
 %endif
 
 %changelog
+* Mon Oct 25 2021 Vitaly Lipatov <lav@altlinux.ru> 3.14.2-alt1
+- epm-epm_install: don't need distro-info since 3.14.1
+- move nvidia-clean-drivers to epm remove-old-kernels
+- google-chrome-stable.sh: fix icon packing
+- chromium-gost-stable.sh: cleanup
+- google-chrome-stable.sh: don't pack menu file
+- epm-play: fix removing from the list
+- epm-sh-functions: wait after error when under screen
+- epm play: add sputnik-browser
+
+* Fri Sep 10 2021 Vitaly Lipatov <lav@altlinux.ru> 3.14.1-alt1
+- epm-kernel_update: add kernel update for dnf-rpm
+- epm-query-file: cleanup, print all symlinks chain
+- epm-autoorphans: do update too
+- epm: add epm purge alias for epm remove
+- repack chromium-gost-stable.sh: small fixes
+- epm: add --force-yes support
+- epm-release-upgrade: pass --auto and --force-yes to epm upgrade/downgrade
+- epm-release_upgrade: skip error on empty package list
+- epm-upgrade: add support for upgrade installed packages (and package files, with -F)
+- epm-downgrade: downgrade only installed packages (file packages with --oldpackage)
+- always pack and use internal distr_info
+
 * Mon Sep 06 2021 Vitaly Lipatov <lav@altlinux.ru> 3.13.3-alt1
 - epm-release_upgrade: add downgrade after upgrade to Sisyphus
 - epm-autoorphans: upgrade before run autoorphans
