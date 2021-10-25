@@ -1,8 +1,7 @@
-Packager: Denis Smirnov <mithraen@altlinux.ru>
-
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: libfcgi
 Version: 2.4.0
-Release: alt8
+Release: alt9
 
 Summary: FastCGI library
 License: BSD-like
@@ -58,6 +57,9 @@ make
 %doc LICENSE.TERMS README
 
 %changelog
+* Mon Oct 25 2021 Anton Farygin <rider@altlinux.ru> 2.4.0-alt9
+- NMU: fixed build with LTO
+
 * Thu Feb 07 2013 Denis Smirnov <mithraen@altlinux.ru> 2.4.0-alt8
 - exclude %_bindir/cgi-fcgi
 
