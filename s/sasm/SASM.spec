@@ -1,7 +1,7 @@
 Name: sasm
 Url: http://dman95.github.io/SASM/
 Version: 3.12.1
-Release: alt1
+Release: alt2
 Summary: Simple crossplatform IDE for NASM, MASM, GAS, FASM assembly languages
 License: GPL-3.0+
 Group: Development/Other
@@ -10,9 +10,9 @@ Source: v%version.tar.gz
 Obsoletes: SASM < %version
 Provides: SASM = %version-%release
 
-# Automatically added by buildreq on Sun Jul 11 2021
-# optimized out: gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libglvnd-devel libqt5-core libqt5-gui libqt5-network libqt5-widgets libstdc++-devel python-modules python2-base python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-webchannel-devel sh4
-BuildRequires: qt5-3d-devel qt5-charts-devel qt5-connectivity-devel qt5-datavis3d-devel qt5-enginio-devel qt5-gamepad-devel qt5-multimedia-devel qt5-networkauth-devel qt5-phonon-devel qt5-quickcontrols2-devel qt5-remoteobjects-devel qt5-script-devel qt5-scxml-devel qt5-sensors-devel qt5-serialbus-devel qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-virtualkeyboard-devel qt5-wayland-devel qt5-webengine-devel qt5-webkit-devel qt5-websockets-devel qt5-webview-devel qt5-x11extras-devel qt5-xmlpatterns-devel
+BuildRequires: pkgconfig(Qt5Core)
+BuildRequires: pkgconfig(Qt5Gui)
+BuildRequires: pkgconfig(Qt5Widgets)
 
 %description
 Simple crossplatform IDE for NASM, MASM, GAS, FASM assembly languages
@@ -36,6 +36,9 @@ qmake-qt5 SASM.pro PREFIX=%buildroot/usr
 %_desktopdir/*
 
 %changelog
+* Mon Oct 25 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.12.1-alt2
+- Cleaned build requires
+
 * Sun Jul 11 2021 Fr. Br. George <george@altlinux.ru> 3.12.1-alt1
 - Autobuild version bump to 3.12.1
 
