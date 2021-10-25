@@ -1,6 +1,6 @@
 Name:		cpuminer-multi
 Version:	1.3.5
-Release:	alt3
+Release:	alt4
 Summary:	Multi-threaded CPU miner
 Url:		https://github.com/tpruvot/cpuminer-multi
 Group:		Office
@@ -11,6 +11,7 @@ Source1:	README.txt
 Source2:	cpuminer-conf.json.axiom
 Source3:	cpuminer-conf.json.lyra2re
 Source4:	cpuminer-conf.json.scryptjanenf16
+Patch:		%name-%version-gcc-11.patch
 
 # Automatically added by buildreq on Tue Apr 11 2017 (-bi)
 # optimized out: elfutils gnu-config libstdc++-devel python-base python-modules xz
@@ -25,6 +26,7 @@ https://www.nicehash.com/index.jsp?p=software#cpu
 
 %prep
 %setup -n %name-linux
+%patch -p1
 
 %build
 ./autogen.sh
@@ -45,6 +47,9 @@ install -Dp -m 644 {%SOURCE1,%SOURCE2,%SOURCE3,%SOURCE4} ./examples/
 %_man1dir/*
 
 %changelog
+* Mon Oct 25 2021 Slava Aseev <ptrnine@altlinux.org> 1.3.5-alt4
+- Fix FTBFS with gcc-11
+
 * Thu Apr 22 2021 Slava Aseev <ptrnine@altlinux.org> 1.3.5-alt3
 - Use -no-pie on ix86 only
 
