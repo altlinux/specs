@@ -7,7 +7,7 @@ BuildRequires(pre): rpm-macros-alternatives
 %global vimdatadir %{_datadir}/vim/vimfiles
 
 Name:           environment-modules
-Version:        5.0.0
+Version:        5.0.1
 Release:        alt1_1
 Summary:        Provides dynamic modification of a user's environment
 
@@ -174,6 +174,9 @@ fi
 
 
 %changelog
+* Mon Oct 25 2021 Igor Vlasenko <viy@altlinux.org> 5.0.1-alt1_1
+- update to new release by fcimport
+
 * Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 5.0.0-alt1_1
 - update to new release by fcimport
 
