@@ -1,13 +1,13 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/bison /usr/bin/flex /usr/bin/import /usr/bin/inkscape /usr/bin/kpsewhich /usr/bin/pandoc /usr/bin/xelatex perl(English.pm) perl(open.pm)
+BuildRequires: /usr/bin/bison /usr/bin/flex /usr/bin/import /usr/bin/inkscape /usr/bin/kpsewhich /usr/bin/pandoc /usr/bin/xelatex
 # END SourceDeps(oneline)
 BuildRequires: chrpath
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           ttfautohint
-Version:        1.8.3
-Release:        alt1_2
+Version:        1.8.4
+Release:        alt1_1
 Summary:        Automated hinting utility for TrueType fonts
 License:        FTL or GPLv2
 URL:            http://www.freetype.org/ttfautohint
@@ -15,7 +15,7 @@ Source0:        http://download.savannah.gnu.org/releases/freetype/%{name}-%{ver
 
 BuildRequires:  gcc gcc-c++
 BuildRequires:  libfreetype-devel
-BuildRequires:  libharfbuzz-devel libharfbuzz-utils
+BuildRequires:  libharfbuzz-devel libharfbuzz-gir-devel libharfbuzz-utils
 BuildRequires:  qt5-base-devel
 Provides:       bundled(gnulib)
 Requires:       %{name}-libs = %{version}-%{release}
@@ -97,11 +97,13 @@ done
 %doc doc/img doc/ttfautohint.txt
 %doc --no-dereference COPYING
 %{_bindir}/ttfautohint
+%{_mandir}/man1/ttfautohint.1*
 
 %files gui
 %doc --no-dereference COPYING
-#%{_docdir}/%{name}/
+%{_docdir}/%{name}/
 %{_bindir}/ttfautohintGUI
+%{_mandir}/man1/ttfautohintGUI.1*
 
 %files libs
 %doc --no-dereference COPYING
@@ -114,6 +116,9 @@ done
 %{_libdir}/pkgconfig/ttfautohint.pc
 
 %changelog
+* Mon Oct 25 2021 Igor Vlasenko <viy@altlinux.org> 1.8.4-alt1_1
+- update to new release by fcimport
+
 * Sat Dec 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.3-alt1_2
 - merged e2k patch
 
