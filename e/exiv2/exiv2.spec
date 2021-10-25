@@ -16,8 +16,8 @@
 %endif
 
 Name: exiv2
-Version: 0.27.4
-Release: alt1.2%beta
+Version: 0.27.5
+Release: alt1%beta
 
 Summary: Command line tool to access EXIF data in image files
 License: GPL-2.0-or-later
@@ -30,9 +30,6 @@ Source: https://github.com/Exiv2/%name/archive/v%version/%name-%version.tar.gz
 Vcs: https://github.com/Exiv2/exiv2.git
 Source: %name-%version.tar
 %endif
-# try to disable -fvisibility-inlines-hidden with default gcc-10
-Patch: %name-0.27.4-alt-no-visibility_inlines.patch
-
 Requires: lib%name = %version-%release
 
 BuildRequires(pre): rpm-macros-cmake
@@ -66,12 +63,10 @@ exiv2 library.
 
 %prep
 %setup -n %name-%version
-%patch -p1 -b .visibility
 
 %build
 %add_optflags -Wno-deprecated-declarations %(getconf LFS_CFLAGS)
 %cmake \
-	-DEXIV2_VISIBILITY_INLINES:BOOL=ON \
 	-DEXIV2_ENABLE_NLS:BOOL=ON \
 	-DEXIV2_BUILD_SAMPLES:BOOL=OFF \
 	%{?_enable_video:-DEXIV2_ENABLE_VIDEO:BOOL=ON} \
@@ -106,6 +101,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Mon Oct 25 2021 Yuri N. Sedunov <aris@altlinux.org> 0.27.5-alt1
+- 0.27.5 (https://github.com/Exiv2/exiv2/issues/1018#issuecomment-948573657)
+
 * Fri Aug 27 2021 Yuri N. Sedunov <aris@altlinux.org> 0.27.4-alt1.2
 - set optflags_lto to %%nil while we use gcc-9 to build
 
