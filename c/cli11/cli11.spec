@@ -11,15 +11,13 @@ BuildRequires: /usr/bin/clang-tidy boost-devel rpm-build-python3
 %global _docdir_fmt %{name}-devel
 
 Name:           cli11
-Version:        2.1.1
+Version:        2.1.2
 Release:        alt1_1
 Summary:        Command line parser for C++11
 
 License:        BSD
 URL:            https://github.com/CLIUtils/CLI11
 Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
-# Do not try to download catch.hpp
-Patch0:         %{name}-catch.patch
 
 BuildArch:      noarch
 BuildRequires:  boost-complete
@@ -53,11 +51,7 @@ Documentation for CLI11.
 
 %prep
 %setup -q -n CLI11-%{version}
-%patch0 -p1
 
-
-# Make catch2 header available
-ln -s %{_includedir}/catch2/catch.hpp tests
 
 # Alter the icon path in README.md for the installed paths
 sed -i.orig 's,\./docs,.,' README.md
@@ -93,6 +87,9 @@ CXXFLAGS='%{build_cxxflags} -DCLI11_OPTIONAL -DCLI11_STD_OPTIONAL=1'
 %doc docs/CLI11.svg docs/CLI11_100.png
 
 %changelog
+* Mon Oct 25 2021 Igor Vlasenko <viy@altlinux.org> 2.1.2-alt1_1
+- update to new release by fcimport
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 2.1.1-alt1_1
 - update to new release by fcimport
 
