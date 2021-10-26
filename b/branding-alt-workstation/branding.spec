@@ -24,8 +24,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 9.911
-Release: alt2
+Version: 9.920
+Release: alt1
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -201,7 +201,7 @@ Requires: %name-graphics = %EVR
 Conflicts: installer-feature-lightdm-stage3 < 0.1.0-alt1
 # Due to /usr/share/install3/lightdm-gtk-greeter.conf
 Conflicts: branding-simply-linux-system-settings
-Conflicts: lxde-settings-lxdesktop
+Conflicts: lxde-settings-lxdesktop < 0.3.2-alt2
 
 %description mate-settings
 MATE settings for %distro_name
@@ -331,7 +331,6 @@ fi
 %_sysconfdir/*-release
 %_prefix/lib/os-release
 %_sysconfdir/buildreqs/packages/ignore.d/*
-%ghost %config(noreplace) %_sysconfdir/*-release
 
 %files notes
 %dir %data_cur_dir
@@ -361,6 +360,23 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Oct 26 2021 Mikhail Efremov <sem@altlinux.org> 9.920-alt1
+- slideshow: Create empty Slides-en directory if needed.
+- slideshow: Drop old p9 English slides.
+- alterator: Add icons from Education 10.
+- slideshow: Update Russian slideshow for WS10.
+- alterator: Set black labels and titles.
+- bootloader: Update grub colors.
+- bootloader: Update gfxboot colors.
+- mate-settings: Don't conflict with lxde-settings-lxdesktop >=
+  0.3.2-alt2.
+- alterator: fix alterator-browser-qt theme: bold selection and
+  group, darkorange for progressbar (by Andrey Cherepanov).
+- alterator: adapt css for brand colors (by Andrey Cherepanov).
+- alterator: Add help button.
+- alterator: Update theme.
+- release: Fix /etc/*-release files packaging.
+
 * Wed Oct 13 2021 Mikhail Efremov <sem@altlinux.org> 9.911-alt2
 - notes: Add conflict with alt-notes-school-server.
 - mate-settings: Add conflict with lxde-settings-lxdesktop.
