@@ -2,8 +2,8 @@
 %define oname cpuinfo
 
 Name: python3-module-%oname
-Version: 7.0.0
-Release: alt2
+Version: 8.0.0
+Release: alt1
 
 Summary: Get CPU info with pure Python 2 & 3
 License: MIT
@@ -12,7 +12,7 @@ BuildArch: noarch
 Url: https://pypi.python.org/pypi/py-cpuinfo
 
 Source: py-%oname-%version.tar
-Patch1: py-cpuinfo-7.0.0-alt-mips-support.patch
+Patch1: py-cpuinfo-8.0.0-upstream-risc-v-support.patch
 
 BuildRequires(pre): rpm-build-python3
 # /proc is needed for tests
@@ -28,7 +28,6 @@ It does not require any compilation(C/C++, assembly, et cetera) to use.
 
 %prep
 %setup -n py-%oname-%version
-
 %patch1 -p1
 
 %build
@@ -47,6 +46,10 @@ It does not require any compilation(C/C++, assembly, et cetera) to use.
 
 
 %changelog
+* Tue Oct 26 2021 Ivan A. Melnikov <iv@altlinux.org> 8.0.0-alt1
+- 8.0.0
+- backport RISC-V support from upstream
+
 * Thu Jan 28 2021 Ivan A. Melnikov <iv@altlinux.org> 7.0.0-alt2
 - MIPS support (https://github.com/workhorsy/py-cpuinfo/pull/160)
 
