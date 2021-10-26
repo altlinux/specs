@@ -3,8 +3,8 @@
 %define rule_requires   python3-module-pymysql, pwgen, curl
 
 Name: installed-db-office-server
-Version: 1.5
-Release: alt2
+Version: 1.5.1
+Release: alt1
 Summary: Databases and config files for moodle, mediawiki and nextcloud
 License: GPL-2.0+
 Group: System/Configuration/Other
@@ -87,6 +87,10 @@ done
 %_libexecdir/alterator/hooks/root.d/nextcloud
 
 %changelog
+* Tue Oct 26 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.1-alt1
+- Wait 30s before first deploy (mediawiki).
+- Debug mediawiki deploy.
+
 * Wed Jul 21 2021 Andrey Cherepanov <cas@altlinux.org> 1.5-alt2
 - Remove deprecated mediawiki-ldap from requirements.
 
