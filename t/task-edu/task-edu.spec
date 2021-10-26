@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.5.1
+Version: 1.5.2
 Release: alt1
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
@@ -396,10 +396,6 @@ Requires: touchegg
 Summary(ru_RU.UTF-8): Образовательное программное обеспечение (серверные приложения)
 Summary: Server applications for education
 Group: Education
-%ifnarch %e2k
-Requires: puppetserver
-Requires: puppetdb
-%endif
 %ifnarch %e2k armh
 Requires: semaphore
 %endif
@@ -519,6 +515,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Tue Oct 26 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.2-alt1
+- Remove puppetserver and puppetdb from task-edu-server-apps.
+
 * Tue Oct 26 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.1-alt1
 - Add gnuplot-qt for octave.
 
