@@ -7,6 +7,11 @@
 %define status_en %nil
 %define flavour %brand-%theme
 
+%define gtk_theme Clearlooks-Phenix
+%define kde_theme Breeze
+%define icon_theme SimpleSL
+%define window_theme Clearlooks-Phenix
+
 %define design_graphics_abi_epoch 0
 %define design_graphics_abi_major 12
 %define design_graphics_abi_minor 0
@@ -17,7 +22,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 8.4
+Version: 9.2
 Release: alt1
 Url: https://altsp.su
 
@@ -223,7 +228,7 @@ Requires(post): indexhtml-common
 
 %build
 autoconf
-THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' ./configure
+THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' X86='%x86' GTK_THEME='%gtk_theme' KDE_THEME='%kde_theme' ICON_THEME='%icon_theme' WINDOW_THEME='%window_theme' ./configure
 make
 
 %install
@@ -297,7 +302,7 @@ if ! [ -e %_datadir/alt-notes/license.all.html ]; then
 fi
 
 %post mate-settings
-subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-greeter.conf ||:
+subst 's/#theme-name=/theme-name=%gtk_theme/' /etc/lightdm/lightdm-gtk-greeter.conf ||:
 /usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas
 
 %files alterator
@@ -345,6 +350,9 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Oct 22 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 9.2-alt1
+- version bump
+
 * Tue Sep 21 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.4-alt1
 - version bump
 - os-release updating
