@@ -11,22 +11,26 @@
 %def_with tbb
 %def_with numa
 %def_without rocksdb_lite
+%def_with liburing
+%def_disable static
 
 Name: rocksdb
-Version: 6.14.6
-Release: alt1.1
+Version: 6.25.3
+Release: alt1
 Summary: A Persistent Key-Value Store for Flash and RAM Storage
 Group: Databases
 # License is changed from "BSD-plus-Patents" (BSD-3-Clause) to GPL-2.0 AND Apache-2.0 in 2017.
 License: GPL-2.0-only AND Apache-2.0
 Url: https://rocksdb.org/
 Vcs: https://github.com/facebook/rocksdb.git
+ExcludeArch: %arm %ix86
+
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
-BuildRequires: libgtest-devel libgflags-devel cmake >= 3.5.1
+BuildRequires: libgtest-devel libgflags-devel cmake >= 3.10
 %{?_with_jemalloc:BuildRequires: libjemalloc-devel}
 %{?_with_java:BuildRequires: java-devel}
 %{?_with_snappy:BuildRequires: libsnappy-devel}
@@ -36,6 +40,7 @@ BuildRequires: libgtest-devel libgflags-devel cmake >= 3.5.1
 %{?_with_zstd:BuildRequires: libzstd-devel}
 %{?_with_tbb:BuildRequires: tbb-devel}
 %{?_with_numa:BuildRequires: libnuma-devel}
+%{?_with_liburing:BuildRequires: liburing-devel}
 
 %description
 Rocksdb is a library that forms the core building block for a fast key value
@@ -94,6 +99,7 @@ rm build_tools/gnu_parallel
 
 %build
 %cmake \
+    -DPORTABLE=ON \
     -DROCKSDB_BUILD_SHARED:BOOL=ON \
     %{?_with_jemalloc:-DWITH_JEMALLOC:BOOL=ON} \
     %{?_with_java:-DWITH_JNI:BOOL=ON} \
@@ -103,6 +109,7 @@ rm build_tools/gnu_parallel
     %{?_with_bzip2:-DWITH_BZ2:BOOL=ON} \
     %{?_with_zstd:-DWITH_ZSTD:BOOL=ON} \
     %{?_with_rocksdb_lite:-DROCKSDB_LITE:BOOL=ON} \
+    %{?_without_liburing:-DWITH_LIBURING:BOOL=OFF} \
     -DWITH_CORE_TOOLS:BOOL=ON \
     -DWITH_BENCHMARK_TOOLS:BOOL=OFF \
     -DWITH_TOOLS:BOOL=OFF \
@@ -120,6 +127,10 @@ rm build_tools/gnu_parallel
 %cmake_install
 #%%makeinstall_std PREFIX=%_prefix LIBDIR=%_libdir
 
+%if_disabled static
+rm -f %buildroot%_libdir/*.a
+%endif
+
 %files -n %name-tools
 %_bindir/ldb
 %_bindir/sst_dump
@@ -132,10 +143,22 @@ rm build_tools/gnu_parallel
 %_includedir/*
 %_libdir/cmake/%name
 
+%if_enabled static
 %files -n lib%name-devel-static
 %_libdir/*.a
+%endif
 
 %changelog
+* Mon Oct 25 2021 Alexey Shabalin <shaba@altlinux.org> 6.25.3-alt1
+- 6.25.3
+- Exclude build on ix86.
+
+* Fri Oct 08 2021 Alexey Shabalin <shaba@altlinux.org> 6.22.1-alt1
+- 6.22.1
+- Build with liburing.
+- Disable package static lib.
+- Add patches for arm, mips and riscv from openembedded.
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 6.14.6-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
