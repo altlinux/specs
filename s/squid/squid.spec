@@ -1,4 +1,4 @@
-
+%global optflags_lto %nil
 %def_disable poll
 %def_enable epoll
 %def_enable ecap
@@ -10,7 +10,7 @@
 
 Name: squid
 Version: 4.15
-Release: alt1
+Release: alt2
 %define langpack_ver 20210511
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -27,17 +27,18 @@ Source7: %name.service
 Source8: %name.tmpfiles
 
 Patch: %name-%version-%release.patch
-Obsoletes: %name-novm %name-pinger
+Obsoletes: %name-novm < %EVR
+Obsoletes: %name-pinger < %EVR
 Requires: net-snmp-mibs
 Provides: %name-common = %version-%release
-Obsoletes: %name-common
+Obsoletes: %name-common < %EVR
 Provides: %name-server = %version-%release
-Obsoletes: %name-server
+Obsoletes: %name-server < %EVR
 Provides: %name-cachemgr = %version-%release
-Obsoletes: %name-cachemgr
+Obsoletes: %name-cachemgr < %EVR
 Conflicts: %name-conf-host2cat < 1.01-alt5
 Provides: %name-conf-default = %version-%release
-Obsoletes: %name-conf-default
+Obsoletes: %name-conf-default < %EVR
 
 # epoll is enabled by default, so disable it if plain poll is enabled
 %{?_enable_poll:%force_disable epoll}
@@ -88,7 +89,7 @@ Summary: Squid helpers
 Group: System/Servers
 Requires: %name = %version-%release
 Provides: %name-helpers-perl = %version-%release
-Obsoletes: %name-helpers-perl
+Obsoletes: %name-helpers-perl < %EVR
 
 %description helpers
 This package contains Squid helpers for different kinds of authentication.
@@ -297,6 +298,10 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/cachemgr.cgi.*
 
 %changelog
+* Tue Oct 26 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.15-alt2
+- FTBFS: disable LTO
+- spec cleanup
+
 * Thu Jun 24 2021 Alexey Shabalin <shaba@altlinux.org> 4.15-alt1
 - 4.15
 - Fixes:
@@ -1167,7 +1172,7 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 - shiny version.
 - comment out already applied patches.
 
-* Tue Sep  5 2000 Etienne Faure  <etienne@mandraksoft.com> 2.3.STABLE2-3mdk
+* Tue Sep  5 2000 Etienne Faure <etienne@mandraksoft.com> 2.3.STABLE2-3mdk
 - rebuilt with %%doc macro
 - added noreplace tag for config files
 
