@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20211018
+Version: 20211025
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,12 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Oct 26 2021 Cronbuild Service <cronbuild@altlinux.org> 20211025-alt1
+- upstream changes (GIT fc14618):
+  + bnx2x: Add FW 7.13.20.0 (thx Manish Chopra)
+  + Mellanox: Add new mlxsw_spectrum firmware xx.2010.1006 (thx Petr Machata)
+  + Update NXP Management Complex firmware to version 10.28.1 (thx Florinel Iordache)
+
 * Mon Oct 18 2021 Cronbuild Service <cronbuild@altlinux.org> 20211018-alt1
 - upstream changes (GIT d34196f):
   + update firmware for MT7921 WiFi device (thx Deren Wu)
