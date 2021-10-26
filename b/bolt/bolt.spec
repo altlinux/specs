@@ -4,7 +4,7 @@
 
 Name: bolt
 Version: 0.9.1
-Release: alt1
+Release: alt1.1
 Summary: Thunderbolt device manager
 Group: System/Libraries
 License: LGPLv2+
@@ -74,6 +74,10 @@ mentioned tasks.
 %ghost %dir %_localstatedir/boltd
 
 %changelog
+* Tue Oct 26 2021 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1.1
+- cherry-picked 130e09d1c7ff02c09e4ad1c9c36e9940b68e58d8 to fix tests
+  against libumockdev-0.16.3
+
 * Tue Feb 23 2021 L.A. Kostis <lakostis@altlinux.ru> 0.9.1-alt1
 - 0.9.1.
 
