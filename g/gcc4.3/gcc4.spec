@@ -1,8 +1,9 @@
+%{?optflags_lto:%global optflags_lto %nil}
 %define gcc_branch 4.3
 
 Name: gcc%gcc_branch
 Version: 4.3.2
-Release: alt23
+Release: alt24
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap and crtstuff have an exception which
@@ -1547,6 +1548,9 @@ rm %buildroot%_man1dir/g++%psuffix.1* %buildroot%_man1dir/gcc%psuffix.1*
 %endif #with_pdf
 
 %changelog
+* Mon Oct 25 2021 Slava Aseev <ptrnine@altlinux.org> 4.3.2-alt24
+- Fixed build: disabled LTO
+
 * Fri Apr 16 2021 Slava Aseev <ptrnine@altlinux.org> 4.3.2-alt23
 - Fixed build with texinfo 6.7.
 - Enabled build on ix86/x86_64 only
