@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist URI
 Name: perl-%dist
-Version: 5.09
+Version: 5.10
 Release: alt1
 
 Summary: A Perl interface for URI objects
@@ -37,6 +37,9 @@ Resource Identifier (URI) references as specified in RFC 2396.
 %perl_vendor_privlib/URI*
 
 %changelog
+* Tue Oct 26 2021 Igor Vlasenko <viy@altlinux.org> 5.10-alt1
+- automated CPAN update
+
 * Fri Mar 05 2021 Igor Vlasenko <viy@altlinux.org> 5.09-alt1
 - automated CPAN update
 
