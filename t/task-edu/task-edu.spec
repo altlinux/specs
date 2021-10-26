@@ -1,6 +1,6 @@
 Name:    task-edu
-Version: 1.5.0
-Release: alt2
+Version: 1.5.1
+Release: alt1
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
 Group:   Education
@@ -77,6 +77,7 @@ Requires: itest
 Requires: kumir2
 # Big educational software
 Requires: octave
+Requires: gnuplot-qt
 %ifnarch ppc64le
 Requires: wxMaxima
 %endif
@@ -287,6 +288,7 @@ Requires: qcad
 Requires: wxMaxima
 %endif
 Requires: octave
+Requires: gnuplot-qt
 Requires: qt-creator
 Requires: qt-creator-doc
 Requires: cmake
@@ -330,6 +332,7 @@ Requires: swi-prolog
 Requires: wxMaxima
 %endif
 Requires: octave
+Requires: gnuplot-qt
 %ifnarch %e2k
 Requires: qcad
 %endif
@@ -516,6 +519,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Tue Oct 26 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.1-alt1
+- Add gnuplot-qt for octave.
+
 * Thu Oct 14 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt2
 - LibreOffice was not built on armh.
 
