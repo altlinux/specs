@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: yara
-Version: 4.1.2
+Version: 4.1.3
 Release: alt1
 License: BSD-3-Clause and Apache-2.0
 Group: Development/Tools
@@ -83,6 +83,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %buildroot%_bindir/yara --version
 %_pkgconfigdir/yara.pc
 
 %changelog
+* Tue Oct 26 2021 Vitaly Chikunov <vt@altlinux.org> 4.1.3-alt1
+- Update to v4.1.3 (2021-10-21).
+
 * Sun Aug 29 2021 Vitaly Chikunov <vt@altlinux.org> 4.1.2-alt1
 - Update to v4.1.2 (2021-08-23).
 
