@@ -1,7 +1,7 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.34.0.33.a996d
+Version: 2.34.0.39.024a7
 Release: alt1
 Epoch: 6
 
@@ -584,7 +584,7 @@ ulimit -u $(ulimit -Hu)
 make %PARALLELMFLAGS -C %buildtarget -f xfail.mk -k check fast-check=yes LDFLAGS=-Wl,--no-as-needed || {
   rc=$?
   grep '^FAIL:' %buildtarget/tests.sum | cut -d" " -f2- |
-    xargs -i tail -v -n 100 %buildtarget/{}.test-result %buildtarget/{}.out ||:
+    xargs -i head -v -n -0 %buildtarget/{}.test-result %buildtarget/{}.out ||:
 # architectures we care for enough to fail here
 %ifarch %ix86 x86_64 aarch64 ppc64le
   exit $rc
@@ -783,6 +783,12 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Tue Oct 26 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.34.0.39.024a7-alt1
+- Updated to glibc-2.34-39-g024a7640ab.
+- Fixed FTBFS on some hosts (due to testsuite LWP bug).
+- Changed clone function to fallback to clone/clone2 syscalls if clone3 syscall
+  returned EPERM.
+
 * Wed Oct 13 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.34.0.33.a996d-alt1
 - Updated to glibc-2.34-33-ga996d13b8a from 2.34 branch.
 
