@@ -1,14 +1,14 @@
 %define module DistroMap
 
 Name: perl-%module
-Version: 0.392
+Version: 0.394
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
 Summary: %module - Perl interface for DistroMap database
 Group: Development/Perl
-License: GPL or Artistic
+License: GPLv2+ or Artistic-2.0
 Source: http://www.cpan.org/modules/by-module/DistroMap/%module-%version.tar.gz
 Url: http://search.cpan.org/dist/%module
 
@@ -36,6 +36,12 @@ BuildRequires: perl-devel perl(Pod/Usage.pm) perl(Pod/Text.pm) perl-Source-Share
 %_man1dir/distro*
 
 %changelog
+* Tue Oct 26 2021 Igor Vlasenko <viy@altlinux.org> 0.394-alt1
+- new version
+
+* Sat Jan 16 2021 Igor Vlasenko <viy@altlinux.ru> 0.393-alt1
+- new version
+
 * Mon Dec 17 2018 Igor Vlasenko <viy@altlinux.ru> 0.392-alt1
 - added stem mapper for source names
 
