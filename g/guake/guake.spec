@@ -1,5 +1,5 @@
 Name:    guake
-Version: 3.8.0
+Version: 3.8.1
 Release: alt1
 Summary: guake - a drop-down terminal
 Summary(ru.UTF-8):guake — выпадающий эмулятор терминала
@@ -12,7 +12,6 @@ Source0: %name-%version.tar
 
 Patch1: guake-alt-fix-ru-l10n.patch
 Patch2: guake-alt-add-glade-l10n.patch
-Patch3: guake-alt-fix-metainfo-dir.patch
 
 BuildArch: noarch
 
@@ -39,7 +38,6 @@ just need to press a key to invoke him, and press again to hide.
 %setup -q
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 export PBR_VERSION="%version"
@@ -66,6 +64,9 @@ rm -f %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Oct 26 2021 Andrey Cherepanov <cas@altlinux.org> 3.8.1-alt1
+- New version.
+
 * Sat Oct 09 2021 Andrey Cherepanov <cas@altlinux.org> 3.8.0-alt1
 - New version.
 
