@@ -1,27 +1,26 @@
-%define module_version 0.15
+%define _unpackaged_files_terminate_build 1
 %define module_name Spreadsheet-XLSX
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Archive/Zip.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Spreadsheet/ParseExcel.pm) perl(Spreadsheet/ParseExcel/Workbook.pm) perl(Test/Kwalitee.pm) perl(Test/More.pm) perl(Test/NoWarnings.pm) perl(base.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.15
-Release: alt2
+Version: 0.16
+Release: alt1
 Summary: perl module %module_name
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/M/MI/MIKEB/%{module_name}-%{module_version}.tar.gz
+Source0: http://www.cpan.org/authors/id/A/AS/ASB/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/S*
 
 %changelog
+* Tue Oct 26 2021 Igor Vlasenko <viy@altlinux.org> 0.16-alt1
+- automated CPAN update
+
 * Mon Jul 12 2021 Igor Vlasenko <viy@altlinux.org> 0.15-alt2
 - to Sisyphus as perl-Finance-Quote dep
 
