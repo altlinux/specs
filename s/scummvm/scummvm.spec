@@ -1,6 +1,6 @@
 Name: scummvm
-Version: 2.2.0
-Release: alt2
+Version: 2.5.0
+Release: alt1
 
 Summary: Graphic adventure game interpreter
 Group: Games/Adventure
@@ -13,9 +13,9 @@ Patch1: scummvm-2.2.0-Fluidsynth2.2.patch
 
 Provides: %_gamesdatadir/%name
 
-# Automatically added by buildreq on Sun Oct 04 2020
-# optimized out: glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libSDL-devel libX11-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libharfbuzz-devel libogg-devel libpango-devel libpng-devel libsasl2-3 libstdc++-devel pkg-config python2-base sh4 xorg-proto-devel zlib-devel
-BuildRequires: gcc-c++ git-core libSDL_net-devel liba52-devel libalsa-devel libcurl-devel libfaad-devel libflac-devel libfluidsynth-devel libgtk+3-devel libjpeg-devel libmad-devel libmpeg2-devel libreadline-devel libtheora-devel libvorbis-devel
+# Automatically added by buildreq on Wed Oct 20 2021
+# optimized out: at-spi2-atk fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libGLU-devel libSDL-devel libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgpg-error libharfbuzz-devel libogg-devel libpango-devel libpng-devel libsasl2-3 libstdc++-devel libwayland-client libwayland-cursor libwayland-egl pkg-config python3 python3-base sh4 xorg-proto-devel zlib-devel
+BuildRequires: curl gcc-c++ git-core libGLEW-devel libSDL_net-devel liba52-devel libalsa-devel libcurl-devel libfaad-devel libflac-devel libfluidsynth-devel libfribidi-devel libgif-devel libgtk+3-devel libjpeg-devel libmad-devel libmpeg2-devel libreadline-devel libtheora-devel libvorbis-devel
 
 %description
 ScummVM is a collection of interpreters, capable of emulating several
@@ -26,7 +26,7 @@ LucasArts games such as Monkey Island, Day of the Tentacle, and others.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
+#patch1 -p1
 
 %build
 export CXXFLAGS=-DFS_API_VERSION=0x0202
@@ -73,6 +73,9 @@ install -D icons/scummvm.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.sv
 %_datadir/%name/*
 
 %changelog
+* Wed Oct 20 2021 Fr. Br. George <george@altlinux.ru> 2.5.0-alt1
+- Autobuild version bump to 2.5.0
+
 * Fri May 28 2021 Fr. Br. George <george@altlinux.ru> 2.2.0-alt2
 - Build with fluidsynth 2.2.1
 
