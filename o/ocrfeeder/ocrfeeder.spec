@@ -4,7 +4,7 @@
 
 Name: ocrfeeder
 Version: %ver_major.3
-Release: alt3
+Release: alt3.1
 
 Summary: OCRFeeder is a document layout analysis and optical character recognition system
 Group: Graphics
@@ -33,7 +33,7 @@ BuildRequires: intltool yelp-tools
 BuildRequires: python3-devel python3-module-pygobject3-devel
 BuildRequires: typelib(Gtk) = 3.0 typelib(GooCanvas) = 2.0
 BuildRequires: python3-module-enchant python3-module-Pillow
-BuildRequires: python3-module-Reportlab python3-module-odf
+BuildRequires: python3-module-Reportlab python3-module-odfpy
 BuildRequires: python3-module-sane
 
 %description
@@ -82,6 +82,9 @@ export PYTHON=%__python3
 %python3_sitelibdir/ocrfeeder
 
 %changelog
+* Tue Oct 26 2021 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt3.1
+- fixed BR
+
 * Thu Jul 22 2021 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt3
 - updated to 0.8.3-31-gb4313f0 (removed the usage of deprecated
   since Python-3.9 'xml.etree.ElementTree.Element.getchildren')
