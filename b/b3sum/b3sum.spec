@@ -1,13 +1,13 @@
 %def_without benchmark
 
 Name:     b3sum
-Version:  1.0.0
-Release:  alt2
+Version:  1.1.0
+Release:  alt1
 
 Summary:  A command line utility for calculating BLAKE3 hashes
 License:  Apache-2.0
 Group:    Development/Tools
-Url:      https://github.com/sharkdp/hyperfine
+Url:      https://github.com/BLAKE3-team/BLAKE3
 
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
@@ -60,6 +60,9 @@ hyperfine --style basic --warmup 3 \
 %doc *.md
 
 %changelog
+* Wed Oct 27 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.0-alt1
+- new version 1.1.0
+
 * Tue Aug 03 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.0.0-alt2
 - Remove ExclusiveArch
 
