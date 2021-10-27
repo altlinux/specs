@@ -10,7 +10,7 @@
 
 Name: openuds-server
 Version: 3.0.0
-Release: alt10
+Release: alt11
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -33,6 +33,7 @@ Requires: python3-module-django-dbbackend-mysql >= 2.2
 Requires: python3-module-django-dbbackend-sqlite3 >= 2.2
 Requires: openssl
 Requires: logrotate
+Requires: openuds-installers
 
 Conflicts: openuds-tunnel openuds-guacamole-tunnel
 BuildArch: noarch
@@ -90,6 +91,8 @@ django-admin compilemessages
 
 mkdir -p %buildroot{%_datadir,%_logdir,%_sysconfdir,%_sharedstatedir}/openuds
 cp -r src/* %buildroot%_datadir/openuds/
+mkdir -p %buildroot%_datadir/openuds/uds/static/clients
+mkdir -p %buildroot%_datadir/openuds/uds/osmanagers/WindowsOsManager/files
 mv %buildroot%_datadir/openuds/server/settings.py.sample %buildroot%_sysconfdir/openuds/settings.py
 ln -r -s %buildroot%_logdir/openuds %buildroot%_datadir/openuds/log
 ln -r -s %buildroot%_sysconfdir/openuds/settings.py %buildroot%_datadir/openuds/server/settings.py
@@ -152,6 +155,11 @@ cert-sh generate nginx-openuds ||:
 %_unitdir/openuds-web.socket
 
 %changelog
+* Wed Oct 27 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt11
+- Add requires openuds-installers (client and actor windows installers).
+- Revert "Remove download pages".
+- Fix client and actor file name on download page.
+
 * Mon Sep 06 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt10
 - Updated RSA key to 4096 bit in config.
 
