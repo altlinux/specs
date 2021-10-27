@@ -1,25 +1,30 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_disable debug
-%define        _rebar_builddir _build/prod
+%define _rebar_builddir _build/prod
 
-Name:          rebar
-Epoch:         1
-Version:       3.12.0
-Release:       alt1
-Summary:       A sophisticated build-tool for Erlang projects that follows OTP principles.
-License:       %asl
-Group:         Development/Erlang
-BuildArch:     noarch
-URL:           https://github.com/rebar/rebar
-# VCS          https://github.com/erlang/rebar3.git
+Name: rebar
+Epoch: 1
+Version: 3.17.0
+Release: alt1
+Summary: A sophisticated build-tool for Erlang projects that follows OTP principles.
+License: Apache-2.0
+Group: Development/Erlang
+BuildArch: noarch
+URL: https://www.rebar3.org
+#https://github.com/erlang/rebar3.git
 
-Source:        %name-%version.tar
-Source1:       %name-modules.tar
-Source2:       _build.tar
+Source: %name-%version.tar
+Source1: %name-modules.tar
+Source2: _build.tar
 
 BuildRequires(pre): rpm-build-erlang rpm-build-licenses
-BuildRequires: erlang-devel erlang-otp-devel erlang-visual-devel erlang-common_test-devel
+BuildRequires: erlang-devel erlang-otp-devel
+BuildRequires: erlang-visual-devel erlang-common_test-devel
 
-Requires:      erlang-otp erlang-visual erlang-common_test
+Requires: erlang-otp erlang-visual erlang-common_test
+Provides: rebar3
+Provides: /usr/bin/rebar3
 
 %description
 rebar is an Erlang build tool that makes it easy to compile and
@@ -34,22 +39,24 @@ locations (git, hg, etc).
 
 %prep
 %setup
-tar -xf %SOURCE2
-cd $HOME
 tar -xf %SOURCE1
+tar -xf %SOURCE2
 
 %build
-./bootstrap
+HOME="." ./bootstrap
 
 %install
 mkdir -p %buildroot%_bindir
 install -m755 %_rebar_builddir/bin/rebar3 %buildroot%_bindir
-install -d -m644 %_rebar_builddir/lib/rebar %buildroot%_erllibdir
+#install -d -m644 %_rebar_builddir/lib/rebar %buildroot%_erllibdir
 
 %files
 %_bindir/*
 
 %changelog
+* Thu Oct 21 2021 Egor Ignatov <egori@altlinux.org> 1:3.17.0-alt1
+- 3.17.0
+
 * Tue Oct 01 2019 Pavel Skrylev <majioa@altlinux.org> 1:3.12.0-alt1
 - updated (^) 2.6.4 -> 3.12.0
 

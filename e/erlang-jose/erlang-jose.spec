@@ -34,7 +34,7 @@
 %add_erlang_req_modules_skiplist ojson
 
 Name: erlang-%realname
-Version: 1.9.0
+Version: 1.11.2
 Release: alt1
 Summary: JSON Object Signing and Encryption (JOSE) for Erlang and Elixir
 Group: Development/Erlang
@@ -46,15 +46,11 @@ BuildArch: noarch
 # https://github.com/potatosalad/erlang-jose.git
 Source: %name-%version.tar
 
-Patch1: erlang-jose-fedora-remove-warnings_as_errors-to-work-around-47.patch
-Patch2: erlang-jose-alt-base64url-version.patch
-
 BuildRequires(pre): rpm-build-erlang
 BuildRequires: erlang-otp-devel erlang-devel
 BuildRequires: /usr/bin/rebar
 BuildRequires: erlang-common_test-devel
 BuildRequires: erlang-base64url
-BuildRequires: erlang-triq
 BuildRequires: erlang-proper
 
 %description
@@ -62,8 +58,6 @@ JSON Object Signing and Encryption (JOSE) for Erlang and Elixir.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
 
 %build
 %rebar_compile
@@ -80,6 +74,9 @@ JSON Object Signing and Encryption (JOSE) for Erlang and Elixir.
 %_erllibdir/%realname-%version
 
 %changelog
+* Thu Oct 21 2021 Egor Ignatov <egori@altlinux.org> 1.11.2-alt1
+- 1.11.2
+
 * Mon Mar 30 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.0-alt1
 - Updated to upstream version 1.9.0.
 
