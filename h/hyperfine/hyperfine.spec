@@ -1,6 +1,6 @@
 Name:     hyperfine
-Version:  1.11.0
-Release:  alt4
+Version:  1.12.0
+Release:  alt1
 
 Summary:  A command-line benchmarking tool
 License:  Apache-2.0
@@ -36,6 +36,9 @@ BuildRequires: /proc
 %doc *.md
 
 %changelog
+* Wed Oct 27 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.12.0-alt1
+- new version 1.12.0
+
 * Tue Aug 03 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.11.0-alt4
 - Remove ExclusiveArch
 
