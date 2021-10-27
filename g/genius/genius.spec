@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: genius
-Version: %ver_major.26
+Version: %ver_major.27
 Release: alt1
 
 Summary: Genius Calculator
@@ -28,9 +28,8 @@ BuildRequires: autoconf-archive intltool xsltproc bison flex
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libgtksourceview4-devel >= %gtksourceview_ver
 BuildRequires: libreadline-devel libncurses-devel libgmp-devel libmpfr-devel >= %mpfr_ver
-BuildRequires: pkgconfig(amtk-5)
 BuildRequires: libvte3-devel >= %vte_ver
-# for non-UTF korean trnslation
+# for non-UTF korean translation
 BuildRequires: perl-Encode-KR
 
 %description
@@ -97,6 +96,9 @@ popd
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Thu Oct 28 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.27-alt1
+- 1.0.27
+
 * Fri Feb 19 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.26-alt1
 - 1.0.26
 
