@@ -3,7 +3,7 @@
 %define rule_requires   python3-module-pymysql, pwgen, curl
 
 Name: installed-db-office-server
-Version: 1.5.1
+Version: 1.5.2
 Release: alt1
 Summary: Databases and config files for moodle, mediawiki and nextcloud
 License: GPL-2.0+
@@ -87,6 +87,9 @@ done
 %_libexecdir/alterator/hooks/root.d/nextcloud
 
 %changelog
+* Wed Oct 27 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.2-alt1
+- Disable debug mediawiki deploy.
+
 * Tue Oct 26 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.1-alt1
 - Wait 30s before first deploy (mediawiki).
 - Debug mediawiki deploy.
