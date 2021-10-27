@@ -1,5 +1,5 @@
 Name: deploy
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 
 Summary: Script and set of ansible roles to deploy system services
@@ -31,6 +31,9 @@ system services like PostgreSQL or Moodle.
 %_datadir/%name
 
 %changelog
+* Wed Oct 27 2021 Andrey Cherepanov <cas@altlinux.org> 0.3.4-alt1
+- nextcloud: backup config file with .new extension.
+
 * Tue Oct 26 2021 Andrey Cherepanov <cas@altlinux.org> 0.3.3-alt1
 - nextcloud: ignore deploy error (see https://github.com/nextcloud/server/issues/22590).
 - nextcloud/password: use ncadmin username, fix memory warning.
