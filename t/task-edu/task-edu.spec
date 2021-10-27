@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.5.2
+Version: 1.5.3
 Release: alt1
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
@@ -408,6 +408,7 @@ Requires: perl-DBD-mysql
 Requires: ejabberd
 Requires: alterator-datetime
 Requires: alterator-console
+Requires: apache2
 Requires: apache2-httpd-worker
 Requires: installed-db-office-server-mediawiki
 Requires: installed-db-office-server-nextcloud
@@ -515,6 +516,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Wed Oct 27 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.3-alt1
+- server-apps: add apache2 metapackage.
+
 * Tue Oct 26 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.2-alt1
 - Remove puppetserver and puppetdb from task-edu-server-apps.
 
