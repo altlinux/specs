@@ -2,7 +2,7 @@
 
 Name: osgEarth
 Version: 3.2
-Release: alt1
+Release: alt2
 
 Summary: Dynamic map generation toolkit for OpenSceneGraph
 License: LGPL
@@ -93,6 +93,8 @@ This package contains sample data files for osgEarth.
 %ifarch %e2k
 # -std=c++03 by default as of lcc 1.23.12
 %add_optflags -std=c++11
+# OpenSceneGraph debuginfo too large now => unmets
+%global __find_debuginfo_files %nil
 %endif
 mkdir BUILD
 pushd BUILD
@@ -128,6 +130,9 @@ popd
 %_datadir/osgEarth
 
 %changelog
+* Wed Oct 27 2021 Michael Shigorin <mike@altlinux.org> 3.2-alt2
+- E2K: avoid OSG debuginfo unmets
+
 * Tue Aug 10 2021 Andrey Cherepanov <cas@altlinux.org> 3.2-alt1
 - New version.
 
