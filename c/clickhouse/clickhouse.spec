@@ -10,7 +10,7 @@
 %global optflags_lto %nil
 
 Name: clickhouse
-Version: 21.8.8.29
+Version: 21.8.10.19
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -99,7 +99,7 @@ BuildRequires: libsasl2-devel
 BuildRequires: libsnappy-devel
 BuildRequires: libltdl-devel
 BuildRequires: libabseil-cpp-devel
-BuildRequires: librocksdb-devel librocksdb-devel-static bzlib-devel libgflags-devel
+BuildRequires: librocksdb-devel bzlib-devel libgflags-devel
 BuildRequires: liblzma-devel
 BuildRequires: libyaml-cpp-devel
 
@@ -315,6 +315,10 @@ fi
 %_datadir/clickhouse-test
 
 %changelog
+* Mon Oct 25 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.8.10.19-alt1
+- Updated to lts upstream version 21.8.10.19.
+- Disabled thread fuzzer since it's not compatible with glibc-2.34 yet (GH issue 30462).
+
 * Mon Oct 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.8.8.29-alt1
 - Updated to lts upstream version 21.8.8.29.
 
