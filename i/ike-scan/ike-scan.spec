@@ -1,14 +1,16 @@
 Name:           ike-scan
-Version:        1.9
-Release:        alt2.1
+Version:        1.9.5
+Release:        alt1
 Summary:        IKE protocol tool to discover, fingerprint and test IPsec VPN servers
 
 Group:          Networking/Other
-License:        GPLv2+
-URL:            http://www.nta-monitor.com/tools/ike-scan/
+License:        GPLv3+
+URL:            https://github.com/royhills/ike-scan
 Source0:        %{name}-%{version}.tar
 
 BuildRequires:  openssl-devel
+
+Patch1: ike-scan-memleak.patch
 
 %description
 ike-scan is a command-line tool that uses the IKE protocol to discover,
@@ -16,8 +18,10 @@ fingerprint and test IPsec VPN servers.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
+%autoreconf
 %configure --with-openssl
 %make_build
 
@@ -25,12 +29,17 @@ fingerprint and test IPsec VPN servers.
 %makeinstall_std
 
 %files
-%doc AUTHORS ChangeLog COPYING README TODO
+%doc AUTHORS ChangeLog COPYING README.md TODO
 %{_bindir}/*
 %{_mandir}/man?/*
 %{_datadir}/ike-scan
 
 %changelog
+* Wed Oct 27 2021 Pavel Nakonechnyi <zorg@altlinux.org> 1.9.5-alt1
+- Updated to 1.9.5.
+- memleak patch from Fedora was added.
+- Minor spec update.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.9-alt2.1
 - NMU: Rebuild with new openssl 1.1.0.
 
