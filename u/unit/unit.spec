@@ -4,13 +4,14 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 %def_enable perl
+%def_enable python
 %def_enable php
 %def_enable ruby
 %def_disable devel
 
 Name: unit
 Version: 1.25.0
-Release: alt2
+Release: alt3
 
 Summary: NGINX Unit - Web Application Server
 License: Apache-2.0
@@ -27,6 +28,7 @@ BuildRequires: libpcre-devel
 %{?_enable_ruby:BuildRequires: ruby libruby-devel}
 %{?_enable_perl:BuildRequires: perl-devel perl-base}
 %{?_enable_php:BuildRequires: php7 php7-devel php-base}
+%{?_enable_python:BuildRequires: python3-devel}
 
 Provides: nginx-unit = %EVR
 
@@ -39,15 +41,23 @@ at runtime.
 %package perl
 Summary: Perl module for NGINX Unit
 Group: System/Servers
-Requires: unit
+Requires: unit = %EVR
 
 %description perl
 Perl module for NGINX Unit
 
+%package python3
+Summary: Python module for NGINX Unit
+Group: System/Servers
+Requires: unit = %EVR
+
+%description python3
+Python module for NGINX Unit
+
 %package php
 Summary: PHP module for NGINX Unit
 Group: System/Servers
-Requires: unit
+Requires: unit = %EVR
 
 %description php
 PHP module for NGINX Unit
@@ -55,7 +65,7 @@ PHP module for NGINX Unit
 %package ruby
 Summary: Ruby module for NGINX Unit
 Group: System/Servers
-Requires: unit
+Requires: unit = %EVR
 
 %description ruby
 Ruby module for NGINX Unit
@@ -91,6 +101,9 @@ CFLAGS="%optflags" \
 %if_enabled perl
   ./configure perl
 %endif
+%if_enabled python
+  ./configure python --config=python3-config
+%endif
 %if_enabled php
   ./configure php
 %endif
@@ -109,6 +122,9 @@ sed -i -e 's!Environment=.*!EnvironmentFile=/etc/sysconfig/unit!' pkg/rpm/rpmbui
 %makeinstall_std unitd-install libunit-install
 %if_enabled perl
   %makeinstall_std perl-install
+%endif
+%if_enabled python
+  %makeinstall_std python3-install
 %endif
 %if_enabled php
   %makeinstall_std php-install
@@ -130,6 +146,8 @@ ln pkg/rpm/rpmbuild/SOURCES/unit.example-ruby-app    ruby-app.ru
 ln pkg/rpm/rpmbuild/SOURCES/unit.example-ruby-config ruby-unit.config
 ln pkg/rpm/rpmbuild/SOURCES/unit.example-perl-app    perl-app.ru
 ln pkg/rpm/rpmbuild/SOURCES/unit.example-perl-config perl-unit.config
+ln pkg/rpm/rpmbuild/SOURCES/unit.example-python-app    python-app.ru
+ln pkg/rpm/rpmbuild/SOURCES/unit.example-python-config python-unit.config
 ln pkg/rpm/rpmbuild/SOURCES/unit.example-php-app     php-app.ru
 ln pkg/rpm/rpmbuild/SOURCES/unit.example-php-config  php-unit.config
 
@@ -173,6 +191,12 @@ build/tests
 %_libdir/unit/modules/perl.unit.so
 %endif
 
+%if_enabled python
+%files python3
+%doc COPYRIGHT python-app.ru python-unit.config
+%_libdir/unit/modules/python3.unit.so
+%endif
+
 %if_enabled php
 %files php
 %doc COPYRIGHT php-app.ru php-unit.config
@@ -186,6 +210,9 @@ build/tests
 %endif
 
 %changelog
+* Tue Oct 26 2021 Anton Farygin <rider@altlinux.ru> 1.25.0-alt3
+- added python3 module
+
 * Wed Oct 13 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.25.0-alt2
 - FTBFS: build with glibc 2.34
 
