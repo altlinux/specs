@@ -1,6 +1,6 @@
 Name: hurrican
 Version: 1.0.9.2
-Release: alt4
+Release: alt5
 
 Summary: Turrican freeware clone
 Summary(ru_RU.UTF-8): Бесплатный клон Turrican
@@ -46,6 +46,19 @@ Hurrican - бесплатный экшн-платформер, созданны�
 %setup -n %name-%version
 rm -r ./Hurrican/data/textures/pvr
 %patch0 -p1
+%ifarch %e2k
+# because of "multiple definition of" errors at linking
+%define lcc_fix() \
+  sed -i "1i #define preferred_separator preferred_separator_$(echo %1 | tr /- __)" Hurrican/src/%1.cpp
+%lcc_fix Console
+%lcc_fix Texts
+%lcc_fix SDLPort/texture
+%lcc_fix SDLPort/SDL_port
+%lcc_fix Tileengine
+%lcc_fix DX8Sound
+%lcc_fix DX8Texture
+%lcc_fix Main
+%endif
 
 %build
 %set_verify_elf_method no
@@ -76,6 +89,9 @@ cp -R Hurrican/lang/*.lng %buildroot%_datadir/%name/lang/
 %_liconsdir/%name.png
 
 %changelog
+* Wed Oct 27 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.0.9.2-alt5
+- Fixed build for Elbrus
+
 * Fri Mar 27 2020 Artyom Bystrov <arbars@altlinux.org> 1.0.9.2-alt4
 - Fix post-install unowned files
 
