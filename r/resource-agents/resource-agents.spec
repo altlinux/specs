@@ -4,8 +4,8 @@
 
 Name: resource-agents
 Summary: Open Source HA Reusable Cluster Resource Scripts
-Version: 4.9.0
-Release: alt1
+Version: 4.10.0
+Release: alt0.rc1
 License: GPLv2+ and LGPLv2+
 Url: https://github.com/ClusterLabs/resource-agents
 Group: System/Base
@@ -355,6 +355,9 @@ rm -f %buildroot%_datadir/cluster/drbd.*
 %_mandir/man8/ldirectord.8*
 
 %changelog
+* Wed Oct 27 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.10.0-alt0.rc1
+- 4.10.0rc1
+
 * Sat Aug 21 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.9.0-alt1
 - 4.9.0
 - remove drbd.sh,drbd.metadata (closes: #40747)
