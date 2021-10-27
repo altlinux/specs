@@ -1,3 +1,4 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %def_enable dc
 %def_disable fw_mgr
 %def_enable xml2
@@ -7,7 +8,7 @@
 
 Name: mstflint
 Version: 4.16.0
-Release: alt2
+Release: alt3
 
 Summary: Mellanox firmware burning application
 License: GPLv2 or BSD
@@ -69,6 +70,9 @@ rm -rf %buildroot%_includedir
 %_man1dir/*
 
 %changelog
+* Wed Oct 27 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.16.0-alt3
+- FTBFS: fix build with LTO
+
 * Wed Jun 09 2021 Alexey Shabalin <shaba@altlinux.org> 4.16.0-alt2
 - v4.16.0-2
 
