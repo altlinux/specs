@@ -1,10 +1,10 @@
 %define uname   MangoHud
-%define srcname %uname-v%version-Source
-%define srcpath %uname-v%version
+%define srcname %uname-v%version-1-Source
+%define srcpath %uname-v%version-1
 
 Name: mangohud
 Version: 0.6.6
-Release: alt1
+Release: alt2
 
 Summary: A Vulkan overlay layer for monitoring FPS, temperatures, CPU/GPU load and more
 License: MIT
@@ -60,6 +60,10 @@ The `goverlay` package provides a third-party GUI frontend for MangoHud.
 %_man1dir/%name.1*
 
 %changelog
+
+* Wed Oct 27 2021 Ilya Mashkin <oddity@altlinux.ru> 0.6.6-alt2
+- 0.6.6-1
+
 * Wed Oct 20 2021 Ilya Mashkin <oddity@altlinux.ru> 0.6.6-alt1
 - 0.6.6
 
