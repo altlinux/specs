@@ -2,7 +2,7 @@
 
 Name: mpg321
 Version: 0.3.2
-Release: alt2
+Release: alt3
 Summary: A Free command-line mp3 player, compatible with mpg123
 Summary(ru_RU.UTF-8): mp3 плейер c интерфейсом командной строки, совместимый с mpg123
 Group: Sound
@@ -15,6 +15,7 @@ Source0: %{name}_%{version}.orig.tar
 Patch1: mpg321-0.3.2-format-security.patch
 Patch2: mpg321-0.3.2-CVE-2019-14247.patch
 Patch3: mpg321-0.3.2-gcc10.patch
+Patch4: mpg321-0.3.2-static-inline.patch
 
 # Patches from ALT
 Patch100: mpg321-0.3.2-alt-build.patch
@@ -61,6 +62,7 @@ mpg321 - проигрыватель mp3 файлов с интерфейсом �
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 %patch100 -p2
 
 %build
@@ -88,6 +90,9 @@ mpg321 - проигрыватель mp3 файлов с интерфейсом �
 %_man1dir/*
 
 %changelog
+* Wed Oct 27 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.3.2-alt3
+- e2k: inline without static leads to a link error on the EDG frontend. 
+
 * Tue Oct 27 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.2-alt2
 - Applied patches from Gentoo (Fixes: CVE-2019-14247).
 
