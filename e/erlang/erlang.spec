@@ -30,7 +30,7 @@
 Name: erlang
 Epoch: 1
 Version: 24.1.2
-Release: alt1
+Release: alt2
 Summary: A programming language developed by Ericsson
 License: Apache-2.0
 Group: Development/Erlang
@@ -38,10 +38,10 @@ Url: http://www.erlang.org
 
 Source: otp_src_OTP-%version.tar
 
-Source5:	epmd.service
-Source6:	epmd.socket
-Source7:	epmd@.service
-Source8:	epmd@.socket
+Source5: epmd.service
+Source6: epmd.socket
+Source7: epmd@.service
+Source8: epmd@.socket
 
 Requires: %name-otp-modules = %version-%release
 Provides: erlang_mod(demo) = %version
@@ -144,6 +144,7 @@ Headers for standart visual %Name modules.
 %package visual
 Summary: Standart visual applications for %Name
 Group: Development/Erlang
+BuildArch: noarch
 Provides: %name-visual-modules = %EVR
 Requires: %name-visual-common = %EVR
 
@@ -274,6 +275,7 @@ This package contains arch-depend binaries %Name OTP files.
 %package otp-devel
 Summary: Headers for standard %Name OTP
 Group: Development/Erlang
+BuildArch: noarch
 Provides: otp-devel = %EVR
 Requires: %name-otp-common = %EVR
 Requires: %name-otp-modules = %EVR
@@ -284,6 +286,7 @@ Headers for standard %Name OTP.
 
 %package otp
 Summary: Standard %Name OTP
+BuildArch: noarch
 Group: Development/Erlang
 Provides: %name-otp-modules = %EVR
 Provides: otp = %EVR
@@ -344,6 +347,7 @@ This package requires all standard %Name/OTP subpackages.
 %package otp-debug
 Summary: Standard %Name OTP modules with debug information
 Group: Development/Erlang
+BuildArch: noarch
 Provides: %name-otp-modules-debug = %EVR
 Provides: otp-debug = %EVR
 Requires: %name-otp-common = %EVR
@@ -409,6 +413,7 @@ This package contains modules for common_test with debug information.
 %package otp-native
 Summary: Standard %Name OTP modules with native CPU code
 Group: Development/Erlang
+BuildArch: noarch
 Provides: %name-otp-modules-native = %EVR
 Provides: otp-native = %EVR
 Requires: %name-otp-common = %EVR
@@ -585,6 +590,9 @@ sed -i '/-Werror=return-type/d' erts/configure.in
 %{?_with_java:%{?java_options:export _JAVA_OPTIONS="%java_options"}}
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
+#24.1.2: Failed to create scheduler thread, error = 11
+export NPROCS=16
+
 ./otp_build update_configure
 
 %configure \
@@ -611,11 +619,6 @@ sed -i '/-Werror=return-type/d' erts/configure.in
 
 export ERL_LIBS=%buildroot%_otplibdir
 
-%ifarch %arm aarch64
-#24.1.2: Failed to create scheduler thread, error = 11
-export NPROCS=16
-%endif
-
 %make_build
 
 %if_enabled docs
@@ -635,7 +638,7 @@ export ERL_LIBS=%buildroot%_otplibdir
 %make_install PATH="$PWD/bin:$PATH" DESTDIR=%buildroot install-docs
 
 install -d -m 0755 %buildroot{%_man1dir,%_man3dir,%_man4dir,%_man6dir,%_man7dir,%_docdir/%name-%version/{pdf,html/lib}}
-
+xz -9f %buildroot%_erlmandir/man?/*
 mv %buildroot%_otpdir/{COPYRIGHT,PR.template,README.md} %buildroot%_docdir/%name-%version
 
 ln -sf %buildroot{%_otpdir/{doc,erts-*/doc,lib/*/doc}/pdf/*.pdf,%_docdir/%name-%version/pdf/}
@@ -759,14 +762,32 @@ install -D -p -m 0644 %{SOURCE7} %{buildroot}%{_unitdir}/epmd@.service
 install -D -p -m 0644 %{SOURCE8} %{buildroot}%{_unitdir}/epmd@.socket
 
 %check
-#export TARGET="$(make target_configured)"
-#export ERL_TOP="$(pwd)"
-#export PATH="$ERL_TOP/bin:$PATH"
-#ERL_TOP=${ERL_TOP} %make_build TARGET=${TARGET} release_tests
-#pushd release/tests/test_server
-#$ERL_TOP/bin/erl -s ts install -s ts all_tests batch -s init stop
-#popd
+export TARGET="$(make -sk target_configured 2>/dev/null | grep -v make)"
+export ERL_TOP="$(pwd)"
+export PATH="$ERL_TOP/bin:$PATH"
+ERL_TOP=${ERL_TOP} make TARGET=${TARGET} release_tests
 
+cat >> release/tests/emulator_test/emulator.spec <<-EOF
+{skip_cases,"../emulator_test",time_SUITE,
+    [univ_to_local,local_to_univ],"Depends on CET timezone"}.
+EOF
+sed -i '/disksup_SUITE/d' release/tests/os_mon_test/os_mon_smoke.spec
+
+pushd release/tests/test_server
+
+# Workarount to use correct target triplet in ts:install
+sed -i 's/-pc-linux-/-alt-linux-/g' config.guess
+
+$ERL_TOP/bin/erl -noshell -s ts install -s ts smoke_test batch -s init stop
+#$ERL_TOP/bin/erl -noshell -s ts install -s ts run emulator batch -s init stop
+
+if grep -q '=failed *[1-9]' ct_run.test_server@*/*/run.*/suite.log; then
+    echo "One or more tests failed."
+fi
+
+rm -rf ct_run.test_server@*
+
+popd
 
 %pre
 getent group epmd >/dev/null || groupadd -r epmd
@@ -873,6 +894,9 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %dir %_otplibdir/tools-*
 %_otplibdir/tools-*/priv
 %dir %_otplibdir/xmerl-*
+%dir %_otplibdir/erl_interface-*
+%dir %_otplibdir/ftp-*
+%dir %_otplibdir/tftp-*
 
 
 %files otp-devel
@@ -1160,6 +1184,10 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Wed Oct 27 2021 Egor Ignatov <egori@altlinux.org> 1:24.1.2-alt2
+- enable tests
+- fix man symlinks
+
 * Thu Oct 07 2021 Egor Ignatov <egori@altlinux.org> 1:24.1.2-alt1
 - new version 24.1.2
 
