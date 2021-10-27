@@ -1,6 +1,6 @@
 Name: v4l-utils
-Version: 1.20.0
-Release: alt2
+Version: 1.22.1
+Release: alt1
 
 Summary: Collection of video4linux support libraries and utilities
 License: GPLv2+
@@ -9,7 +9,7 @@ Url: http://linuxtv.org
 
 Source: %name-%version-%release.tar
 BuildRequires: gcc-c++ libalsa-devel libelf-devel libGLU-devel libjpeg-devel
-BuildRequires: libudev-devel qt5-base-devel
+BuildRequires: libsystemd-devel libudev-devel qt5-base-devel
 
 %package -n ir-keytable
 Summary: IR keytable management tool
@@ -109,7 +109,6 @@ also serve as a generic video/TV viewer application.
 
 %files -n ir-keytable
 %config(noreplace) %_sysconfdir/rc_maps.cfg
-%_unitdir/systemd-udevd.service.d/50-rc_keymap.conf
 /lib/udev/rules.d/70-infrared.rules
 /lib/udev/rc_keymaps
 %_bindir/ir-keytable
@@ -145,6 +144,9 @@ also serve as a generic video/TV viewer application.
 %endif
 
 %changelog
+* Wed Oct 27 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.22.1-alt1
+- 1.22.1 released
+
 * Wed Sep 22 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.20.0-alt2
 - rebuilt with gcc11
 
