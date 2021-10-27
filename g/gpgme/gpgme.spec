@@ -16,7 +16,7 @@
 %add_python_req_skip _gpgme
 
 Name: gpgme
-Version: 1.15.1
+Version: 1.16.0
 Release: alt1
 
 Summary: GnuPG Made Easy is a library designed to make access to GnuPG easier for applications
@@ -29,18 +29,13 @@ Requires: %gpg_bin_path
 
 # ftp://ftp.gnupg.org/gcrypt/gpgme/gpgme-%version.tar.bz2
 Source: gpgme-%version.tar
-# FC
-Patch1: 0001-fix-stupid-ax_python_devel.patch
+
+# Upstream patches
+Patch1: gpgme-1.16.0-fix-closefrom-glibc.patch
+
 # ALT
 Patch11: gpgme-1.4.3-alt-version-script.patch
-Patch12: gpgme-1.3.0-alt-gpgme-config-assuan.patch
-Patch13: gpgme-1.3.0-alt-tests.patch
-Patch14: gpgme-1.3.2-rh-alt-linkage.patch
 Patch15: alt-revision.patch
-
-#GOST
-%define gostversion 1.0.0
-Patch16: %name-%version-gost-constants.patch
 
 %def_disable static
 %{?_enable_static:BuildPreReq: glibc-devel-static}
@@ -152,20 +147,13 @@ GPGME-based statically linked applications.
 %setup
 %patch1 -p1
 %patch11 -p1
-%patch12 -p1
-%patch13 -p1
-#%patch14 -p1
 %patch15 -p2
-%patch16 -p1
 
 %if_disabled beta
 sed -i -e 's/@BETA@/no/' configure.ac
 %else
 sed -i -e 's/@BETA@/yes/' configure.ac
 %endif
-sed -i -e 's/@REVISION@/gost-%gostversion/' -e 's/@REVISION_DESC@/ALT/' configure.ac
-
-rm doc/*.info* m4/{libtool,lt}*.m4
 
 %autoreconf
 
@@ -240,6 +228,12 @@ export PATH=$PWD/tmp_bin:$PATH
 %_libdir/libqgpgme.so.%qgpgme_sover.*
 
 %changelog
+* Tue Oct 26 2021 Paul Wolneykien <manowar@altlinux.org> 1.16.0-alt1
+- New version 1.16.0.
+- Drop GOST patches.
+- Drop some other old patches.
+- Added patch for upstream glibc fix.
+
 * Tue Feb 02 2021 Paul Wolneykien <manowar@altlinux.org> 1.15.1-alt1
 - Fresh up to v1.15.1.
 
