@@ -1,7 +1,7 @@
 %define modname pytest-tap
 
 Name: python3-module-%modname
-Version: 3.2
+Version: 3.3
 Release: alt1
 
 Summary: Test Anything Protocol (TAP) reporting plugin for pytest
@@ -37,6 +37,9 @@ data in a standard way.
 %doc README* LICENSE
 
 %changelog
+* Wed Oct 27 2021 Yuri N. Sedunov <aris@altlinux.org> 3.3-alt1
+- 3.3
+
 * Mon Nov 09 2020 Yuri N. Sedunov <aris@altlinux.org> 3.2-alt1
 - 3.2
 
