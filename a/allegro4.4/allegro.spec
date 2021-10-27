@@ -6,11 +6,11 @@
 
 %define major 4
 %define minor 4
-%define bugfix 2
+%define bugfix 3
 %define sover 4.4
 Name: %oname%sover
-Version: %major.%minor.%bugfix
-Release: alt7.1
+Version: %major.%minor.%bugfix.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Game programming library
@@ -18,13 +18,7 @@ License: Giftware
 URL: http://alleg.sourceforge.net
 
 Source0: http://sunsite.auc.dk/allegro/%name-%version.tar
-Patch0: allegro-4.0.1-allegro.h.patch
-Patch1: allegro-4.1.8-allegro.h.patch
-Patch2: allegro-4.4.2-allegrogl.patch
-Patch3: allegro-4.4.2-allegro.h.patch
 Patch4: allegro-4.4-no-degree-symbol.patch
-
-Patch100: Fix-build-with-lcc-1.23.patch
 
 Obsoletes: %name
 Conflicts: lib%oname-svgalib < %version-%release
@@ -65,9 +59,7 @@ This package contains files needed to build programs using Allegro.
 
 %prep
 %setup
-%patch2 -p1
 %patch4 -p2
-%patch100 -p1
 
 %build
 mkdir Build
@@ -100,10 +92,7 @@ install -m 755 Build/docs/makedoc %buildroot%_bindir/allegro-makedoc
 install -dm 755 %buildroot%_datadir/allegro
 install -pm 644 keyboard.dat language.dat %buildroot%_datadir/allegro
 
-gzip CHANGES
-
 %files -n lib%name
-%doc readme.txt AUTHORS CHANGES* THANKS
 %dir %_libdir/allegro
 %dir %_libdir/allegro/%major.%minor.%bugfix
 %_libdir/*.so.*
@@ -127,6 +116,9 @@ gzip CHANGES
 %_pkgconfigdir/*
 
 %changelog
+* Wed Oct 27 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.4.3.1-alt1
+- 4.4.3.1 (closes: 41206)
+
 * Wed Jul 21 2021 Michael Shigorin <mike@altlinux.org> 4.4.2-alt7.1
 - E2K: fix build (reapply sem@'s solution for alt5)
 
