@@ -1,19 +1,20 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %def_enable static
 
 %define _unpackaged_files_terminate_build 1
 
 Name: sysfsutils
 Version: 2.1.0
-Release: alt8
+Release: alt9
 
 %define lib_name libsysfs
 %define docdir %_docdir/%lib_name-%version
 
 Summary: Utility suite to enjoy sysfs
 Group: System/Kernel and hardware
-License: GPL
+License: GPL-2.0
 Url: http://linux-diag.sourceforge.net/Sysfsutils.html
 Packager: Alexey I. Froloff <raorn@altlinux.org>
 
@@ -28,21 +29,21 @@ Source3: sysfs.service
 
 %package -n %lib_name
 Summary: Main library for %name
-License: LGPL
+License: LGPL-2.0
 Group: System/Libraries
 
 %package -n %lib_name-devel
 Summary: Headers for developing programs that will use %lib_name
-License: LGPL
+License: LGPL-2.0
 Group: Development/C
 Requires: %lib_name = %version-%release
 
 %package -n %lib_name-devel-static
 Summary: Static library for developing programs that will use %lib_name
-License: LGPL
+License: LGPL-2.0
 Group: Development/C
 Requires: %lib_name-devel = %version-%release
-Obsoletes: %lib_name-static-devel
+Obsoletes: %lib_name-static-devel < %EVR
 
 %description
 This package's purpose is to provide a set of utilities for interfacing
@@ -124,6 +125,9 @@ bzip2 -9f %buildroot%docdir/{ChangeLog,*.txt}
 %endif
 
 %changelog
+* Wed Oct 27 2021 Andrew A. Vasilyev <andy@altlinux.org> 2.1.0-alt9
+- FTBFS: build with LTO
+
 * Wed Jul  1 2015 Terechkov Evgenii <evg@altlinux.org> 2.1.0-alt8
 - Add systemd unit file (ALT#31048)
 
