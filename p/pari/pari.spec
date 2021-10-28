@@ -3,7 +3,7 @@
 Name: pari
 %define sover 7
 %define lname   libpari-gmp-tls%sover
-Version: 2.13.2
+Version: 2.13.3
 Release: alt1
 Summary: Computer Algebra System for computations in Number Theory
 License: GPL-2.0-only
@@ -19,7 +19,7 @@ BuildRequires: libgmp-devel
 BuildRequires: libX11-devel
 BuildRequires: libreadline-devel
 BuildRequires: xorg-proto-devel
-BuildRequires: texlive
+BuildRequires: texlive texlive-dist
 
 %description
 PARI/GP is a computer algebra system designed for fast computations
@@ -73,13 +73,13 @@ functions.
 
 %build
 ./Configure --prefix="%prefix" \
-	--bindir="%_bindir" --includedir="%_includedir" \
-	--libdir="%_libdir" \
-	--sysdatadir="%_libdir" --datadir="%_datadir/%name" \
-	--mt=pthread
+        --bindir="%_bindir" --includedir="%_includedir" \
+        --libdir="%_libdir" \
+        --sysdatadir="%_libdir" --datadir="%_datadir/%name" \
+        --mt=pthread
 %make_build all \
-	CFLAGS="%optflags -fno-strict-aliasing" \
-	STRIP=true
+        CFLAGS="%optflags -fno-strict-aliasing" \
+        STRIP=true
 
 %install
 %makeinstall_std
@@ -102,6 +102,9 @@ functions.
 %_libdir/libpari.so
 
 %changelog
+* Tue Oct 26 2021 Leontiy Volodin <lvol@altlinux.org> 2.13.3-alt1
+- New version (2.13.3) with rpmgs script.
+
 * Fri Jul 02 2021 Leontiy Volodin <lvol@altlinux.org> 2.13.2-alt1
 - New version (2.13.2) with rpmgs script.
 
