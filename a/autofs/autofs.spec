@@ -1,6 +1,6 @@
 Name: autofs
 Version: 5.1.8
-Release: alt1
+Release: alt2
 
 Summary: A tool for automatically mounting and unmounting filesystems
 License: GPLv2
@@ -135,6 +135,9 @@ fi
 %_libdir/%name/lookup_sss.so
 
 %changelog
+* Thu Oct 28 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.8-alt2
+- keep pre-5.1.8 idea of default nfs port usage
+
 * Tue Oct 19 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.8-alt1
 - 5.1.8 released
 
