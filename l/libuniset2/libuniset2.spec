@@ -25,7 +25,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.16.1
+Version: 2.17.1
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -63,7 +63,7 @@ BuildRequires: libsqlite3-devel
 %endif
 
 %if_enabled pgsql
-BuildRequires: libpqxx-devel
+BuildRequires: libpqxx-devel >= 7.6.0
 %endif
 
 %if_enabled rrd
@@ -594,6 +594,9 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Thu Oct 28 2021 Pavel Vainerman <pv@altlinux.ru> 2.17.1-alt1
+- DBServer-PGSQL: new libpqxx (c++17)
+
 * Thu Oct 14 2021 Pavel Vainerman <pv@altlinux.ru> 2.16.1-alt1
 - python: module refactoring
 

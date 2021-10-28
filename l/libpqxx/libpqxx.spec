@@ -1,30 +1,62 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/dot /usr/bin/doxygen /usr/bin/xmlto boost-devel-headers python-devel
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat rpm-macros-ninja-build
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with check
+%bcond_without doc
 
 Name:           libpqxx
 Summary:        C++ client API for PostgreSQL
 Epoch:          1
-Version:        4.0.1
-Release:        alt2_17
+Version:        7.6.0
+Release:        alt1_1
+
+%global         forgeurl https://github.com/jtv/%{name}/
+%global         tag %{version}
+%global forgeurl https://github.com/jtv/libpqxx/
+%global forgesource https://github.com/jtv/libpqxx//archive/7.6.0/libpqxx-7.6.0.tar.gz
+%global archivename libpqxx-7.6.0
+%global archiveext tar.gz
+%global archiveurl https://github.com/jtv/libpqxx//archive/7.6.0/libpqxx-7.6.0.tar.gz
+%global topdir libpqxx-7.6.0
+%global extractdir libpqxx-7.6.0
+%global repo libpqxx
+#global owner %nil
+#global namespace %nil
+%global scm git
+%global tag 7.6.0
+#global commit %nil
+#global shortcommit %nil
+#global branch %nil
+%global version 7.6.0
+#global date %nil
+%global distprefix .git7.6.0
 
 License:        BSD
 URL:            http://pqxx.org/
-Source0:        http://pqxx.org/download/software/libpqxx/libpqxx-%{version}.tar.gz
-Source1:        http://pqxx.org/download/software/libpqxx/libpqxx-%{version}.tar.gz.md5sum
-
-Patch3:         libpqxx-2.6.8-multilib.patch
-Patch4:         libpqxx_configure.patch
+Source0:        %{forgesource}
 
 BuildRequires:  gcc-c++
+BuildRequires:  ninja-build python3-module-ninja_syntax
+BuildRequires:  ctest cmake
 BuildRequires:  postgresql-devel
-BuildRequires:  python
-BuildRequires:  rpm-build-python
+%if %{with check}
+BuildRequires:  postgresql-test-rpm-macros
+%endif
+%if %{with doc}
+BuildRequires:  doxygen
+BuildRequires:  graphviz libgraphviz
+BuildRequires:  xmlto
+%endif
 Source44: import.info
 
 %description
@@ -34,68 +66,80 @@ Supersedes older libpq++ interface.
 
 %package devel
 Group: Development/C
-Summary:        Development tools for %{name} 
+Summary:        Development files for %{name}
 Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       pkgconfig
 %description devel
 %{summary}.
 
+%if %{with doc}
 %package doc
 Group: System/Libraries
 Summary: Developer documentation for %{name}
 BuildArch: noarch
 %description doc
 %{summary}.
-
+%endif
 
 %prep
-%setup -q
-
-# fix spurious permissions
-chmod -x COPYING
-
-%patch3 -p1 -b .multilib
-%patch4 -p1
-
-# fix python interpreter
-sed -i.py2 -e "s|/usr/bin/python$|%{__python}|g" \
- tools/splitconfig \
- tools/template2mak.py
+%setup -q -n libpqxx-7.6.0
 
 
 %build
-%configure \
-  --enable-shared --disable-static
-
-%make_build
-
+%{fedora_v2_cmake} -G Ninja \
+%if %{with doc}
+  -DBUILD_DOC=ON
+%endif
+%ninja_build -C "%{_vpath_builddir}"
 
 %install
-%makeinstall_std
+%ninja_install -C "%{_vpath_builddir}"
 
-rm -fv %{buildroot}%{_libdir}/lib*.la
-
-
-%check 
-# FIXME: most/all fail, need already-running postgresql instance?
-%make_build check ||:
+%check
+%if %{with check}
+%postgresql_tests_run
+cd "%{_vpath_builddir}/test"
+%__ctest -V --force-new-ctest-process %{?_smp_mflags}
+cd -
+%endif
 
 %files
-%doc AUTHORS ChangeLog NEWS README VERSION
+%doc AUTHORS NEWS README.md VERSION
 %doc --no-dereference COPYING
-%{_libdir}/libpqxx-4.0.so
+%{_libdir}/%{name}-7.6.so
 
 %files devel
+%dir %{_libdir}/cmake/%{name}
 %doc README-UPGRADE
-%{_bindir}/pqxx-config
-%{_includedir}/pqxx/
-%{_libdir}/libpqxx.so
-%{_libdir}/pkgconfig/libpqxx.pc
+%{_includedir}/pqxx
+%{_libdir}/%{name}.so
+%{_libdir}/pkgconfig/%{name}.pc
+%{_libdir}/cmake/%{name}/%{name}-config.cmake
+%{_libdir}/cmake/%{name}/%{name}-config-version.cmake
+%{_libdir}/cmake/%{name}/%{name}-targets.cmake
+%{_libdir}/cmake/%{name}/%{name}-targets-noconfig.cmake
 
+%if %{with doc}
 %files doc
-%doc doc/html/*
-
+%dir %{_docdir}/%{name}
+%{_docdir}/%{name}/accessing-results.md
+%{_docdir}/%{name}/binary-data.md
+%{_docdir}/%{name}/datatypes.md
+%{_docdir}/%{name}/escaping.md
+%{_docdir}/%{name}/getting-started.md
+%{_docdir}/%{name}/mainpage.md
+%{_docdir}/%{name}/parameters.md
+%{_docdir}/%{name}/performance.md
+%{_docdir}/%{name}/prepared-statement.md
+%{_docdir}/%{name}/streams.md
+%{_docdir}/%{name}/thread-safety.md
+%{_docdir}/%{name}/html
+%endif
 
 %changelog
+* Mon Oct 25 2021 Igor Vlasenko <viy@altlinux.org> 1:7.6.0-alt1_1
+- update to new release by fcimport
+
 * Sun Jan 12 2020 Igor Vlasenko <viy@altlinux.ru> 1:4.0.1-alt2_17
 - fixed build
 
