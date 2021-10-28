@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.5.3
+Version: 1.5.4
 Release: alt1
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
@@ -239,7 +239,6 @@ Requires: kde5-kolourpaint
 %ifarch %ix86 x86_64
 Requires: lazarus
 Requires: openscad
-Requires: scilab
 %endif
 %ifarch %ix86 x86_64 %e2k
 Requires: synfigstudio
@@ -279,6 +278,7 @@ Group: Education
 Requires: codeblocks
 %ifarch %ix86 x86_64
 Requires: lazarus
+Requires: scilab
 %endif
 %ifnarch %e2k armh
 Requires: freecad
@@ -325,6 +325,7 @@ Requires: lazarus
 Requires: gambas-full
 Requires: monodevelop
 Requires: openscad
+Requires: scilab
 %endif
 Requires: swi-prolog
 #Requires: Texmacs
@@ -516,6 +517,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Thu Oct 28 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.4-alt1
+- Move scilab from school group to secondary-vocational and university.
+
 * Wed Oct 27 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.3-alt1
 - server-apps: add apache2 metapackage.
 
