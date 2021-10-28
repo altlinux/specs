@@ -1,7 +1,7 @@
 %def_disable coverage
 
 Name: apt-repo-tools
-Version: 0.7.1
+Version: 0.8.0
 Release: alt1
 
 Summary: Utilities to create APT repositories
@@ -10,6 +10,7 @@ Group: Development/Other
 
 Source: %name-%version.tar
 
+Requires: librpmio(PGPHASHALGO_BLAKE2B)%{?_is_libsuff:(%{_libsuff}bit)} = 100
 Provides: apt-utils = 0.5.15lorg4
 Obsoletes: apt-utils <= 0.5.15lorg4
 
@@ -46,7 +47,7 @@ cd build
 mkdir -p %buildroot/var/cache/apt/gen{pkg,src}list
 
 %check
-make check -C build
+%make_build check -C build VERBOSE=1
 %if_enabled coverage
 make code-coverage-capture -C build
 %endif
@@ -61,6 +62,11 @@ make code-coverage-capture -C build
 %dir /var/cache/apt/gensrclist
 
 %changelog
+* Thu Oct 28 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.0-alt1
+- Switched to librpm crypto API instead of libapt.
+- Added support and enabled blake2b hash by default.
+- genbasedir: add --disable-hash-caching option to disable hashsum caching.
+
 * Fri Mar 12 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.1-alt1
 - genbasedir/genpkglist: fixed generation of non-flat repositories.
 - genbasedir (imz@):
