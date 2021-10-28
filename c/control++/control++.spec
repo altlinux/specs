@@ -1,4 +1,4 @@
-%define libcontrolppver 0.25
+%define libcontrolppver 0.27
 %define confdir %{_sysconfdir}/%{name}
 %define statedir %{_localstatedir}/%{name}
 %define ulim_statedir %{statedir}/ulimits
@@ -6,8 +6,8 @@
 %define testsdir %{statedir}/tests
 
 Name: control++
-Version: 0.20.4
-Release: alt3
+Version: 0.21.0
+Release: alt1
 
 Summary: System configuration tool
 License: GPLv3
@@ -52,8 +52,9 @@ Summary: Tests and test data for %{name}
 Group: Other
 
 Requires(pre): %{name}
+Requires(pre): %{name}-wl
 Requires: python3
-Requires: python3-module-ax
+Requires: python3-module-ax >= 0.17
 
 %description -n %{name}-checkinstall
 Tests and test data for %{name}.
@@ -112,6 +113,11 @@ cp -r tests/* %{buildroot}%{testsdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Wed Oct 27 2021 Alexey Appolonov <alexey@altlinux.org> 0.21.0-alt1
+- Improved user interface (not backward compatible);
+- Build with new version of libcontrol++;
+- Fixed checkinstall package.
+
 * Thu May 13 2021 Alexey Appolonov <alexey@altlinux.org> 0.20.4-alt3
 - Build with debuginfo enabled.
 

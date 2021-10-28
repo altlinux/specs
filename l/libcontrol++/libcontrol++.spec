@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.26.0
+Version: 0.27.0
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -56,6 +56,13 @@ cp src/*.h %{buildroot}%{_includedir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Wed Oct 27 2021 Alexey Appolonov <alexey@altlinux.org> 0.27.0-alt1
+- Fixed segmentation faults in the "TConf" and "TPrinter" classes;
+- Improved error handling of the "TConf" class;
+- Improved indentation management of the "TPrinter" class (the API is changed!);
+- Ability to use the "Stringify" functions with arguments of data types that
+  include strings.
+
 * Mon Jul 26 2021 Alexey Appolonov <alexey@altlinux.org> 0.26.0-alt1
 - New functions that perform stringification.
 
