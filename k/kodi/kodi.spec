@@ -1,19 +1,20 @@
 Name: kodi
 Version: 19.3
-Release: alt1
+Release: alt2
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
 Group: Video
 Url: http://kodi.tv
 
-ExclusiveArch: armh aarch64 %ix86 x86_64
+ExclusiveArch: armh aarch64 %ix86 x86_64 %e2k
 
 Requires: kodi-bin = %version-%release
 Requires: kodi-data = %version-%release
 Requires: kodi-x11 = %version-%release
 
 Source0: %name-%version-%release.tar
+Patch2000: %name-e2k.patch
 
 BuildRequires: cmake gcc-c++
 BuildRequires: libcrossguid-devel libflatbuffers-devel libgif-devel liblzo2-devel
@@ -145,9 +146,13 @@ This package contains X11-specific part of Kodi.
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 %build
-%cmake %cdefs %platdefs
+%cmake %cdefs %platdefs \
+	-DCMAKE_CXX_FLAGS_RELEASE="-DNDEBUG"
 %cmake_build
 
 %install
@@ -193,6 +198,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Thu Oct 28 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 19.3-alt2
+- added patch with Elbrus support
+
 * Wed Oct 27 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.3-alt1
 - 19.3 Matrix released
 
