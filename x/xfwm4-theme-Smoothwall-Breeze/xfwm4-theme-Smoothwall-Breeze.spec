@@ -1,7 +1,7 @@
 %define oname Smoothwall-Breeze
 
 Name: xfwm4-theme-%oname                                                                
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Summary: Adapted original Smoothwall window theme from XFCE for Breeze GTK theme
@@ -29,6 +29,9 @@ cp -a xfwm4 %buildroot/%_datadir/themes/%oname
 %_datadir/themes/%oname
 
 %changelog
+* Thu Oct 28 2021 Andrey Cherepanov <cas@altlinux.org> 1.2-alt1
+- Use grayed active window decoration.
+
 * Thu May 06 2021 Andrey Cherepanov <cas@altlinux.org> 1.1-alt1
 - Fix inactive colors.
 - Set lightgray for inactive title text.
