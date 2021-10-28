@@ -1,5 +1,5 @@
 Name: bind
-Version: 9.11.32
+Version: 9.11.36
 %define src_version 9.11.32
 Release: alt1
 
@@ -426,6 +426,9 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Thu Oct 28 2021 Stanislav Levin <slev@altlinux.org> 9.11.36-alt1
+- 9.11.32 -> 9.11.36 (fixes: CVE-2021-25219).
+
 * Mon May 24 2021 Stanislav Levin <slev@altlinux.org> 9.11.32-alt1
 - 9.11.31 -> 9.11.32.
 
