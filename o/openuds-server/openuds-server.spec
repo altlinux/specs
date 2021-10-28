@@ -10,7 +10,7 @@
 
 Name: openuds-server
 Version: 3.0.0
-Release: alt11
+Release: alt12
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -27,7 +27,7 @@ Source16: openuds-web.service
 Source17: openuds-web.socket
 
 #Patch: %name-%version.patch
-
+BuildRequires(pre): rpm-macros-systemd
 Requires: python3-module-django >= 2.2
 Requires: python3-module-django-dbbackend-mysql >= 2.2
 Requires: python3-module-django-dbbackend-sqlite3 >= 2.2
@@ -120,20 +120,18 @@ if [ $1 -eq 1 ]; then
 	sed -i "/^SECRET_KEY.*$/{N;s/^.*$/SECRET_KEY='`openssl rand -hex 10`'/}" %_sysconfdir/openuds/settings.py
 fi
 
-%post_service openuds-taskmanager
+%post_systemd_postponed openuds-taskmanager.service
 
 %preun
-%preun_service openuds-taskmanager
+%preun_systemd openuds-taskmanager.service
 
 %post nginx
-%post_service openuds-web.socket
-%post_service openuds-web.service
+%post_systemd_postponed openuds-web.socket openuds-web.service
 # Create SSL certificate for HTTPS server
 cert-sh generate nginx-openuds ||:
 
 %preun nginx
-%preun_service openuds-web.service
-%preun_service openuds-web.socket
+%preun_systemd openuds-web.service openuds-web.socket
 
 %files
 %_datadir/openuds
@@ -155,6 +153,9 @@ cert-sh generate nginx-openuds ||:
 %_unitdir/openuds-web.socket
 
 %changelog
+* Thu Oct 28 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt12
+- Switch to use macros from rpm-build-systemd for post scripts.
+
 * Wed Oct 27 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt11
 - Add requires openuds-installers (client and actor windows installers).
 - Revert "Remove download pages".
