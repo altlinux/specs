@@ -6,7 +6,7 @@
 
 Name:     scilab
 Version:  6.1.1
-Release:  alt1
+Release:  alt2
 Summary:  A high-level language and system for numerical computations
 
 License:  GPL-2.0 and BSD-3-Clause
@@ -23,6 +23,8 @@ Source1: scilab-desktop-ru.tar
 Source2: help.tar
 
 Patch1:  scilab-alt-modules-crosslinking.patch
+Patch2:  scilab-use-java-1.8.0-openjdk.patch
+Patch3:  scilab-alt-fix-conflict-with-system-pause.patch
 Patch4:	 scilab-fix-make-doc-ja_JP.patch
 Patch5:  scilab-6.1.0-jogl-2.3.patch
 Patch6:  scilab-alt-fix-missing-DSO.patch
@@ -101,7 +103,7 @@ BuildRequires: checkstyle
 BuildRequires: junit
 BuildRequires: avalon-framework
 
-Requires:      java
+Requires:      java-1.8.0-openjdk
 Requires:      lucene lucene-analysis lucene-queryparser
 
 # TCL/TK features
@@ -161,6 +163,7 @@ Requires: freehep-graphics2d
 Requires: freehep-util
 %endif
 Requires: empty
+Requires: avalon-framework
 
 #Requires: jgoodies-looks skinlf ant-commons-logging avalon-framework
 #Requires: docbook-style-xsl saxon
@@ -177,6 +180,8 @@ structures, 2-D and 3-D graphical functions.
 cd scilab
 tar xf %SOURCE1
 %patch1 -p2
+%patch2 -p2
+%patch3 -p2
 %patch4 -p1
 %patch5 -p2
 %patch6 -p2
@@ -264,6 +269,10 @@ tar xf %SOURCE2 -C %buildroot%_datadir/scilab/modules/helptools/jar/
 %_datadir/mime/packages/scilab.xml
 
 %changelog
+* Wed Oct 27 2021 Andrey Cherepanov <cas@altlinux.org> 6.1.1-alt2
+- Explicitly use java-1.8.0-openjdk.
+- Add avalon-framework to requirements (ALT #40586).
+
 * Mon Jul 26 2021 Andrey Cherepanov <cas@altlinux.org> 6.1.1-alt1
 - New version (ALT #40149).
 
