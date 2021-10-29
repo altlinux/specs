@@ -1,3 +1,4 @@
+%global optflags_lto %nil
 %define _unpackaged_files_terminate_build 1
 %define libwbc_alternatives_version 0.15.0
 %def_with kcm
@@ -9,7 +10,7 @@
 
 Name: sssd
 Version: 2.5.2
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -832,6 +833,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/SSSDConfig/__pycache__/*.py*
 
 %changelog
+* Fri Oct 29 2021 Andrew A. Vasilyev <andy@altlinux.org> 2.5.2-alt2
+- FTBFS: disable LTO
+
 * Thu Jul 29 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.5.2-alt1
 - Update to 2.5.2:
   + auto_private_groups option can be set centrally through ID range setting
