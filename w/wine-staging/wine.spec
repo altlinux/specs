@@ -1,10 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 %def_disable static
-%def_with vanilla
+%def_without vanilla
 %define gecko_version 2.47.2
 %define mono_version 6.3.0
+
+%define major 6.17
 %define rel %nil
-%define conflictbase wine
+%define stagingrel %nil
+# the packages will conflict with that
+%define conflictbase wine-vanilla
+
+# used in wine staging only
+%def_with gtk3
 
 # build ping subpackage
 %def_with set_cap_net_raw
@@ -40,21 +47,25 @@
 %def_with opencl
 %endif
 
-Name: wine-vanilla
-Version: 6.17
-Release: alt1
+Name: wine-staging
+Version: %major.1
+Release: alt3
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
 
 License: LGPLv2+
 Group: Emulators
-Url: http://winehq.org
+Url: https://www.altlinux.org/Wine
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://dl.winehq.org/wine/source/6.x/wine-%version%rel.tar.xz
+# TODO: major in gear
+
+# Source-url: https://dl.winehq.org/wine/source/6.x/wine-%major%rel.tar.xz
 Source: %name-%version.tar
+# Source1-url: https://github.com/wine-staging/wine-staging/archive/v%major%stagingrel.tar.gz
+Source1: %name-staging-%version.tar
 
 Source3: %name-%version-desktop.tar
 Source4: %name-%version-icons.tar
@@ -62,7 +73,7 @@ Source4: %name-%version-icons.tar
 Source6: %name-%version-bin-scripts.tar
 
 # local patches
-#Source10: %name-patches-%version.tar
+Source10: %name-patches-%version.tar
 
 AutoReq: yes,noperl
 
@@ -315,7 +326,8 @@ Wine translates Windows API calls into POSIX calls on-the-fly,
 eliminating the performance and memory penalties
 of other methods and allowing you to cleanly integrate Windows applications into your desktop.
 
-This build uses only winehq upstream sources without any patches.
+This build based on wine source with wine-staging project patches
+and ALT in progress patches.
 
 %package test
 Summary: WinAPI test for Wine
@@ -511,13 +523,15 @@ develop programs which make use of Wine.
 
 
 %prep
-%setup
+%setup -a 1 -a 10
+# Apply wine-staging patches
+%name-staging/patches/patchinstall.sh DESTDIR=$(pwd) --all --backend=patch
 
 # disable rpath using for executable
 %__subst "s|^\(LDRPATH_INSTALL =\).*|\1|" Makefile.in
 
 # Apply local patches
-#name-patches/patchapply.sh
+%name-patches/patchapply.sh
 
 %build
 %if_with clang
@@ -635,7 +649,7 @@ llvm-strip %buildroot%libwinedir/%winepedir/* || :
 strip %buildroot%libwinedir/%winepedir/*
 %endif
 # fix against old broken strip: restore builtin mark
-tools/winebuild --builtin %buildroot%libwinedir/%winepedir/*
+tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 
@@ -694,9 +708,7 @@ fi
 %libwinedir/%winesodir/wpcap.so
 
 %if_without mingw
-%if_without vanilla
 %libwinedir/%winesodir/windows.networking.connectivity.so
-%endif
 %libwinedir/%winesodir/light.msstyles.so
 %libwinedir/%winesodir/*.com.so
 %libwinedir/%winesodir/*.cpl.so
@@ -731,9 +743,7 @@ fi
 %libwinedir/%winepedir/*.exe
 %libwinedir/%winepedir/*.ax
 %libwinedir/%winepedir/*.ds
-%if_without vanilla
 %libwinedir/%winepedir/windows.networking.connectivity
-%endif
 %libwinedir/%winepedir/light.msstyles
 %if_without build64
 %libwinedir/%winepedir/*.dll16
@@ -917,797 +927,435 @@ fi
 %endif
 
 %changelog
-* Fri Sep 17 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.17-alt1
-- biarch build, PE build
+* Fri Sep 17 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.17.1-alt3
+- improve package conflicts, make spec wine-vanilla compatible
 
-* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 6.15-alt1
-- new version 6.15
+* Tue Sep 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.17.1-alt2
+- disable strip PE modules
 
-* Fri Jul 30 2021 Vitaly Lipatov <lav@altlinux.ru> 6.14-alt1
-- new version 6.14
+* Sat Sep 11 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.17.1-alt1
+- new version 6.17.1 (with rpmrb script)
+
+* Fri Sep 10 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.16.2-alt1
+- update patchset: eterbugs #15185, 15271, 15286
+- strip debug info from PE modules
+
+* Mon Aug 30 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.16.1-alt2
+- skip strip all PE files from winepedir (we need debug info)
+- add script wine-cap_net_raw in wine-ping package (eterbug #15254)
+- rewrite clang build requires to p9 compatibility
+
+* Sun Aug 29 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.16.1-alt1
+- new version 6.16.1 (with rpmrb script)
+
+* Sun Aug 29 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.15.2-alt3
+- enable PE dlls build (via clang)
+- add workaround for altbug #38130 (avoid nested if)
+
+* Sun Aug 29 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.15.2-alt2.2
+- enable build with libunwind
+- rearrange BR: add libattr, libxjr, add libSDL2, libgcrypt, libsasl2, valgrind
+- disable build with opencl if build PE
+- allow enable PE dlls build (via clang)
+- add subpackage wine-ping to allow ping via setcap cap_net_raw=ep in post script
+
+* Sun Aug 29 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.15.2-alt2.1
+- disable LTO (test it later)
+- move secondary definitions below, drop alt only section
+- wine-devel now requires base wine package
+- fix clang requires (basically, for p9)
+- provide and obsolete libname if we don't pack libname
+- small cleanup
+
+* Mon Aug 23 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.15.2-alt1
+- update patches to staging wine-6.15
+
+* Sat Aug 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.15.1-alt2
+- enable wine biarch based on changes by @lav@ and @darktemplar (ALT bug #37035)
+- add wine-common noarch package
+- add wine-devel-tools package (with toolchain)
+- rename libwine-devel to wine-devel and make it noarch
+- rename libwine-gl to wine-gl
+- rename libwine-twain to wine-twain
+- move all files exclude libwine.so.1 from libwine to main package wine
+
+* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.15.1-alt1
+- new version 6.15.1 (with rpmrb script)
+
+* Sat Jul 31 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.14.1-alt1
+- new version 6.14.1 (with rpmrb script)
 - set strict require wine-mono 6.3.0
 
-* Wed Jul 21 2021 Vitaly Lipatov <lav@altlinux.ru> 6.13-alt1
-- new version 6.13
+* Thu Jul 22 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.13.1-alt1
+- new version 6.13.1 (with rpmrb script)
 
-* Sat Jul 03 2021 Vitaly Lipatov <lav@altlinux.ru> 6.12-alt1
-- new version 6.12
+* Sat Jul 03 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.12.1-alt1
+- new version 6.12.1 (with rpmrb script)
 
-* Fri Jun 25 2021 Vitaly Lipatov <lav@altlinux.ru> 6.11-alt2
+* Fri Jun 25 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.11.1-alt2
 - fix packing
 
-* Sat Jun 19 2021 Vitaly Lipatov <lav@altlinux.ru> 6.11-alt1
-- new version 6.11
+* Tue Jun 22 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.11.1-alt1
+- new version 6.11.1 (with rpmrb script)
 - set strict require wine-mono 6.2.0
-- build with opencl and pcap
 
-* Sat May 08 2021 Vitaly Lipatov <lav@altlinux.ru> 6.8-alt1
-- new version 6.8
+* Sun Apr 25 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.7.1-alt1
+- new version 6.7.1 (with rpmrb script)
 
-* Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 6.7-alt1
-- new version 6.7
+* Fri Apr 16 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.6.1-alt1
+- new version 6.6.1 (with rpmrb script)
+- set strict require wine-mono 6.1.1
 
-* Fri Apr 16 2021 Vitaly Lipatov <lav@altlinux.ru> 6.6-alt1
-- new version 6.6
+* Tue Apr 13 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.5.1-alt1
+- new version 6.5.1 (with rpmrb script)
 
-* Sat Mar 27 2021 Vitaly Lipatov <lav@altlinux.ru> 6.5-alt1
-- new version 6.5
+* Thu Apr 01 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.5.2-alt1
+- update patches to staging wine-6.5
+ + fix dotnet 4.5 install (https://bugs.winehq.org/show_bug.cgi?id=49897)
 
-* Sat Mar 13 2021 Vitaly Lipatov <lav@altlinux.ru> 6.4-alt1
-- new version 6.4
+* Wed Mar 31 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.5.1-alt1
+- new version 6.5.1 (with rpmrb script)
 
-* Thu Feb 18 2021 Vitaly Lipatov <lav@altlinux.ru> 6.2-alt1
-- new version 6.2
+* Wed Mar 17 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.4.1-alt1
+- new version 6.4.1 (with rpmrb script)
+
+* Fri Feb 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.2.1-alt1
+- new version 6.2.1 (with rpmrb script)
 - set strict require wine-mono 6.0.0
 
-* Thu Jan 21 2021 Vitaly Lipatov <lav@altlinux.ru> 6.0-alt1
-- new version 6.0
+* Thu Jan 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.0.1-alt1
+- new version 6.0.1 (with rpmrb script)
 - set strict require wine-gecko 2.47.2
 
-* Sun Nov 22 2020 Vitaly Lipatov <lav@altlinux.ru> 5.22-alt2
-- don't provide libwine.so.1 from libwine-vanilla subpackage
+* Sat Nov 21 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.22.1-alt1
+- new version 5.22.1 (with rpmrb script)
 
-* Sat Nov 21 2020 Vitaly Lipatov <lav@altlinux.ru> 5.22-alt1
-- new version 5.22
+* Mon Nov 16 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.21.1-alt1
+- new version 5.21.1 (with rpmrb script)
 
-* Mon Nov 16 2020 Vitaly Lipatov <lav@altlinux.ru> 5.21-alt1
-- new version 5.21
+* Sat Oct 24 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.20.0.1-alt1
+- new version 5.20.0.1 (with rpmrb script)
 
-* Sat Oct 24 2020 Vitaly Lipatov <lav@altlinux.ru> 5.20-alt1
-- new version 5.20
-
-* Sat Oct 10 2020 Vitaly Lipatov <lav@altlinux.ru> 5.19-alt1
-- new version 5.19
+* Sat Oct 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.19.1-alt1
+- new version 5.19.1 (with rpmrb script)
 - add gcc-c++ require to devel package (due winegcc)
+- update Basealt patches to staging wine-5.19
 
-* Sun Oct 04 2020 Vitaly Lipatov <lav@altlinux.ru> 5.18-alt3
-- move additional files to .gear subdir (drop etersoft dir)
-- add Source git URL
+* Thu Oct 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.18.5-alt1
+- update Basealt patches to staging wine-5.18
 
-* Thu Oct 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.18-alt2
-- Re-enabled vkd3d support.
+* Tue Oct 06 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.18.4-alt1
+- add scripts/wine_setup (check and install all needed packages)
+- revert "add reg files for initial file open integration"
+- update patches to staging wine-5.18:
+ + wine.inf.in: disable decorated window for maincontroller.exe (eterbug #14662)
+ + add Office and media file associations (eterbug #14583)
 
-* Mon Sep 28 2020 Vitaly Lipatov <lav@altlinux.ru> 5.18-alt1
-- new version 5.18
+* Sun Oct 04 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.18.3-alt1
+- update patches to staging wine-5.18
+- add reg files for initial file open integration
+- drop Requires: glibc-pthread (we already have auto reqs for it)
+- update summary and description (ALT bug 34281)
+
+* Sat Oct 03 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.18.2-alt1
+- update Basealt patches
+
+* Thu Oct 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:5.18.1-alt3
+- Re-enabled vkd3d.
+
+* Thu Oct 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.18.1-alt2
+- crypt32: fix CertGetCertificateContextProperty for CERT_KEY_PROV_INFO_PROP_ID property
+
+* Mon Sep 28 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.18.1-alt1
+- new version 5.18.1 (with rpmrb script)
 - console no longer requires the curses library
 - build with vkd3d disabled (see ALT bug 39002)
 
-* Sat Sep 12 2020 Vitaly Lipatov <lav@altlinux.ru> 5.17-alt1
-- new version 5.17
-- drop static libs if disabled
+* Tue Sep 22 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.17.1-alt1
+- new version 5.17.1 (with rpmrb script)
+- add fix for dotnet install issue (eterbug #11790)
 
-* Wed Sep 09 2020 Vitaly Lipatov <lav@altlinux.ru> 5.16-alt3
+* Wed Sep 09 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.16.1-alt3
 - just require libvulkan1 as all other libs
 - backport small fixes from future biarch build
-- sync Requires/Conflicts with wine staging package
 
-* Wed Sep 09 2020 Vitaly Lipatov <lav@altlinux.ru> 5.16-alt2
+* Tue Sep 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.16.1-alt2
 - build vulkan only for p9 and Sisyphus
-- disable static package
 
-* Sun Aug 30 2020 Vitaly Lipatov <lav@altlinux.ru> 5.16-alt1
-- new version 5.16
+* Sun Aug 30 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.16.1-alt1
+- new version 5.16.1 (with rpmrb script)
 
-* Fri Aug 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.13-alt2
+* Fri Aug 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:5.12.1-alt2
 - Rebuilt with vulkan, vkd3d and faudio support (ALT bug #38810).
 
-* Thu Jul 30 2020 Vitaly Lipatov <lav@altlinux.ru> 5.13-alt1
-- new version 5.13
-
-* Sat Jul 04 2020 Vitaly Lipatov <lav@altlinux.ru> 5.12-alt1
-- new version 5.12
+* Thu Jul 30 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.12.1-alt1
+- new version 5.12.1 (with rpmrb script)
 - set strict require wine-mono 5.1.0
 
-* Sat Jun 06 2020 Vitaly Lipatov <lav@altlinux.ru> 5.10-alt1
-- new version 5.10
+* Thu Jul 30 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.10.1-alt1
+- new version 5.10.1 (with rpmrb script)
 
-* Sun May 24 2020 Vitaly Lipatov <lav@altlinux.ru> 5.9-alt1
-- new version 5.9
+* Tue May 26 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.9.1-alt1
+- new version 5.9.1 (with rpmrb script)
 
-* Sat May 09 2020 Vitaly Lipatov <lav@altlinux.ru> 5.8-alt1
-- new version 5.8
+* Sun May 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.8.1-alt1
+- new version 5.8.1 (with rpmrb script)
 
-* Tue May 05 2020 Vitaly Lipatov <lav@altlinux.ru> 5.7-alt1
-- new version 5.7
+* Tue May 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.7.1-alt1
+- new version 5.7.1 (with rpmrb script)
+- update wine-mono require to 5.0.0
 
-* Mon Mar 30 2020 Vitaly Lipatov <lav@altlinux.ru> 5.5-alt1
-- new version 5.5
+* Mon Mar 30 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.5.1-alt1
+- new version 5.5.1 (with rpmrb script)
 
-* Sat Mar 14 2020 Vitaly Lipatov <lav@altlinux.ru> 5.4-alt1
-- new version 5.4
+* Mon Mar 16 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.4.1-alt1
+- new version 5.4.1 (with rpmrb script)
 
-* Sun Mar 01 2020 Vitaly Lipatov <lav@altlinux.ru> 5.3-alt2
-- update requires
+* Sun Mar 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.3.1-alt2
+- add BR: libnetapi-devel
+- add requires for detected libraries
 
-* Sun Mar 01 2020 Vitaly Lipatov <lav@altlinux.ru> 5.3-alt1
-- new version 5.3
+* Sun Mar 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.3.1-alt1
+- new version 5.3.1 (with rpmrb script)
 
-* Mon Feb 17 2020 Vitaly Lipatov <lav@altlinux.ru> 5.2-alt1
-- new version 5.2
+* Mon Feb 17 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.2.1-alt1
+- new version 5.2.1 (with rpmrb script)
 
-* Tue Feb 04 2020 Vitaly Lipatov <lav@altlinux.ru> 5.1-alt1
-- new version 5.1
+* Tue Feb 04 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.1.2-alt1
+- new version 5.1.2 (with rpmrb script)
 
-* Wed Jan 22 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0-alt1
+* Wed Jan 22 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.0.2-alt1
+- new version 5.0.2 (with rpmrb script)
 - wine 5.0 release
 
-* Sun Jan 19 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0-alt0.rc6
-- pre release 5.0-RC6
-- wine-gecko 2.47.1
+* Sun Jan 19 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.0.1-alt1
+- new version (5.0.1) with rpmgs script
+- based on wine 5.0-rc6
+- update wine-gecko require to 2.47.1
 
-* Sun Nov 17 2019 Vitaly Lipatov <lav@altlinux.ru> 4.20-alt1
-- new version 4.20
-- strict require wine-mono 4.9.4
+* Mon Nov 18 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.20.1-alt1
+- new version (4.20.1) with rpmgs script
+- update patch set
+- update wine-mono require to 4.9.4
 
-* Sat Nov 02 2019 Vitaly Lipatov <lav@altlinux.ru> 4.19-alt1
-- new version 4.19
+* Sun Nov 17 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.19.2-alt1
+- improve patchapply.sh, update patches
 
-* Fri Oct 18 2019 Vitaly Lipatov <lav@altlinux.ru> 4.18-alt1
-- new version 4.18
+* Sat Nov 02 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.19.1-alt1
+- new version 4.19.1 (with rpmrb script)
+- make GetDriveType() always return DRIVE_FIXED for C: (eterbug #14223)
 
-* Sat Sep 28 2019 Vitaly Lipatov <lav@altlinux.ru> 4.17-alt1
-- new version 4.17
+* Sat Oct 19 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.18.1-alt1
+- new version 4.18.1 (with rpmrb script)
 
-* Sun Sep 15 2019 Vitaly Lipatov <lav@altlinux.ru> 4.16-alt1
-- new version 4.16
+* Sat Sep 28 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.17.1-alt1
+- new version 4.17.1 (with rpmrb script)
+- update wine-mono require to 4.9.3
 
-* Sat Aug 31 2019 Vitaly Lipatov <lav@altlinux.ru> 4.15-alt1
-- new version 4.15
+* Sun Sep 15 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.16.1-alt1
+- new version 4.16.1 (with rpmrb script)
+- wine/debug.h: Make wine_dbgstr_wn use UTF-8 for output (eterbug #14134)
+- reapply ntoskrnl.exe: Ignore CProCtrl initialization failure (eterbug #13466)
 
-* Sat Aug 17 2019 Vitaly Lipatov <lav@altlinux.ru> 4.14-alt1
-- new version 4.14
+* Sun Sep 01 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.15.1-alt1
+- new version 4.15.1 (with rpmrb script)
 
-* Sun Aug 04 2019 Vitaly Lipatov <lav@altlinux.ru> 4.13-alt1
-- new version 4.13
+* Sun Aug 04 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.13.1-alt1
+- new version 4.13.1 (with rpmrb script)
+- use EVR instead of version-release
 
-* Sun Jul 07 2019 Vitaly Lipatov <lav@altlinux.ru> 4.12.1-alt1
-- new version 4.12.1
+* Wed Jul 17 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.12.1.2-alt1
+- add patch with cryptext: Implement CryptExtOpenCER
 
-* Sat Jul 06 2019 Vitaly Lipatov <lav@altlinux.ru> 4.12-alt1
-- new version 4.12, enable ExclusiveArch for x86 and aarch64
+* Sun Jul 07 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.12.1.1-alt1
+- new version (4.12.1.1) with rpmgs script
+- fixe 64 bit build
+
+* Sun Jul 07 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.12.1-alt1
+- new version 4.12.1 (with rpmrb script)
+- enable ExclusiveArch for x86 and aarch64
 - remove BR: prelink
 
-* Sat Jun 22 2019 Vitaly Lipatov <lav@altlinux.ru> 4.11-alt1
-- new version 4.11
+* Sat Jun 22 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.11.1-alt1
+- new version 4.11.1 (with rpmrb script)
 - strict require wine-mono-4.9.0
 
-* Mon Jun 10 2019 Vitaly Lipatov <lav@altlinux.ru> 4.10-alt1
-- new version 4.10
+* Tue Jun 11 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.10.1-alt1
+- new version 4.10.1 (with rpmrb script)
 
-* Mon May 27 2019 Vitaly Lipatov <lav@altlinux.ru> 4.9-alt1
-- new version 4.9
+* Wed May 29 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.9.1-alt1
+- new version 4.9.1 (with rpmrb script)
 - strict require wine-mono-4.8.3
 
-* Mon May 20 2019 Vitaly Lipatov <lav@altlinux.ru> 4.8-alt1
-- new version 4.8
+* Wed May 22 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.8.1-alt1
+- new version 4.8.1 (with rpmrb script)
 
-* Fri Apr 19 2019 Vitaly Lipatov <lav@altlinux.ru> 4.6-alt2
+* Fri Apr 19 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.6.1-alt1
+- new version 4.6.1 (with rpmrb script)
 - strict require wine-mono-4.8.1
 
-* Fri Apr 19 2019 Vitaly Lipatov <lav@altlinux.ru> 4.6-alt1
-- new version 4.6
+* Mon Mar 18 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.4.1-alt1
+- new version 4.4.1 (with rpmrb script)
+- fix segfault when run wine in a directory with nonlatin letters in their name (ALT bug 36268)
 
-* Mon Mar 18 2019 Vitaly Lipatov <lav@altlinux.ru> 4.4-alt1
-- new version 4.4
+* Tue Mar 05 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.3.1-alt1
+- new version (4.3.1) with rpmgs script
 
-* Sat Mar 02 2019 Vitaly Lipatov <lav@altlinux.ru> 4.3-alt1
-- new version 4.3
+* Mon Feb 18 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.2.1-alt1
+- new version 4.2.1 (with rpmrb script)
 
-* Mon Feb 18 2019 Vitaly Lipatov <lav@altlinux.ru> 4.2-alt1
-- new version 4.2
+* Thu Feb 14 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.1.1-alt1
+- new version 4.1.1 (with rpmrb script)
+- disable file open associations by default (eterbug #13662)
 
-* Sat Feb 09 2019 Vitaly Lipatov <lav@altlinux.ru> 4.1-alt1
-- new version 4.1
+* Wed Jan 23 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.0.1-alt1
+- new version 4.0.1 (with rpmrb script)
 
-* Wed Jan 23 2019 Vitaly Lipatov <lav@altlinux.ru> 4.0-alt1
-- new version 4.0
+* Fri Dec 21 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.21.2-alt1
+- ntoskrnl.exe: Ignore CProCtrl initialization failure (eterbug #13466)
+- remove "-firstrundlg" parameter from command line for CryptoPro 5.0 installer (eterbug #13466)
+- drop version from internal subdirs
 
-* Sat Nov 24 2018 Vitaly Lipatov <lav@altlinux.ru> 3.21-alt1
-- new version 3.21
+* Sun Nov 25 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.21.1-alt1
+- new version 3.21.1 (with rpmrb script)
 
-* Sun Nov 11 2018 Vitaly Lipatov <lav@altlinux.ru> 3.20-alt1
-- new version 3.20
+* Fri Nov 09 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.19.1-alt1
+- new version 3.19.1 (with rpmrb script)
 
-* Sat Nov 03 2018 Vitaly Lipatov <lav@altlinux.ru> 3.19-alt1
-- new version 3.19
+* Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.18.1-alt1
+- new version 3.18.1 (with rpmrb script)
 
-* Sat Oct 13 2018 Vitaly Lipatov <lav@altlinux.ru> 3.18-alt1
-- new version 3.18
+* Sat Oct 13 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.17.1-alt1
+- new version 3.17.1 (with rpmrb script)
 - use external winetricks
 
-* Sun Sep 30 2018 Vitaly Lipatov <lav@altlinux.ru> 3.17-alt1
-- new version 3.17
+* Wed Aug 15 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.13.3-alt1
+- ntdll: Don't allow blocking on a critical section during (eterbug #12662)
 
-* Fri Sep 14 2018 Vitaly Lipatov <lav@altlinux.ru> 3.16-alt1
-- new version 3.16
+* Tue Jul 31 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.13.2-alt1
+- add patch kernel32: Set environment variable PUBLIC on the process (eterbug #13054)
 
-* Fri Aug 31 2018 Vitaly Lipatov <lav@altlinux.ru> 3.15-alt1
-- new version 3.15
+* Sat Jul 21 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.13.1-alt1
+- new version 3.13.1 (with rpmrb script)
 
-* Mon Aug 20 2018 Vitaly Lipatov <lav@altlinux.ru> 3.14-alt1
-- new version 3.14
+* Fri Jul 13 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.12.1-alt1
+- new version 3.12.1 (with rpmrb script)
 
-* Sat Jul 21 2018 Vitaly Lipatov <lav@altlinux.ru> 3.13-alt1
-- new version 3.13
+* Fri Jun 29 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.11.1-alt1
+- new version (3.11.1) with rpmgs script
+- drop -fno-omit-frame-pointer
 
-* Tue Jul 10 2018 Vitaly Lipatov <lav@altlinux.ru> 3.12-alt1
-- new version 3.12
-
-* Sat Jun 23 2018 Vitaly Lipatov <lav@altlinux.ru> 3.11-alt1
-- new version 3.11
-
-* Wed Jun 13 2018 Vitaly Lipatov <lav@altlinux.ru> 3.10-alt1
-- new version 3.10
-- add runtime linking requires
+* Wed Jun 13 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.10.1-alt1
+- new version 3.10.1 (with rpmrb script)
 - use clang on aarch64
 
-* Sat May 26 2018 Vitaly Lipatov <lav@altlinux.ru> 3.9-alt1
-- new version 3.9
+* Tue May 29 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.9.1-alt1
+- new version 3.9.1 (with rpmrb script)
 
-* Sat May 12 2018 Vitaly Lipatov <lav@altlinux.ru> 3.8-alt1
-- new version 3.8
+* Fri May 18 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.8.1-alt1
+- new version 3.8.1 (with rpmrb script)
 
-* Sat Apr 28 2018 Vitaly Lipatov <lav@altlinux.ru> 3.7-alt1
-- new version 3.7
+* Sat May 12 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.7.1-alt1
+- new version 3.7.1 (with rpmrb script)
 
-* Sat Apr 21 2018 Vitaly Lipatov <lav@altlinux.ru> 3.6-alt1
-- new version 3.6
+* Wed Apr 25 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.6.1-alt1
+- new version 3.6.1 (with rpmrb script)
+- fix missed wined3d-csmt.dll (ALT bug 34777)
 
-* Sat Mar 31 2018 Vitaly Lipatov <lav@altlinux.ru> 3.5-alt1
-- new version 3.5
+* Sat Mar 31 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.5.0-alt1
+- new version 3.5.0 (with rpmrb script)
 
-* Mon Mar 19 2018 Vitaly Lipatov <lav@altlinux.ru> 3.4-alt1
-- new version 3.4
+* Thu Mar 22 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.4.1-alt1
+- new version 3.4.1 (with rpmrb script)
 
-* Sat Mar 03 2018 Vitaly Lipatov <lav@altlinux.ru> 3.3-alt1
-- new version 3.3
+* Mon Mar 05 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.3.1-alt1
+- new version (3.3)
+- build with winehq 3.3 incorporated Kerberos related code only
 
-* Mon Feb 19 2018 Vitaly Lipatov <lav@altlinux.ru> 3.2-alt1
-- new version 3.2
-
-* Fri Feb 02 2018 Vitaly Lipatov <lav@altlinux.ru> 3.1-alt1
-- new version 3.1
-
-* Fri Jan 19 2018 Vitaly Lipatov <lav@altlinux.ru> 3.0-alt1
-- new version 3.0
+* Tue Jan 16 2018 Vitaly Lipatov <lav@altlinux.ru> 1:2.21.3-alt1
 - update winetricks up to 20171222
+- wine.inf: Add the Kerberos SSP/AP registration
 
-* Sat Nov 25 2017 Vitaly Lipatov <lav@altlinux.ru> 2.22-alt1
-- new version 2.22
+* Thu Jan 11 2018 Vitaly Lipatov <lav@altlinux.ru> 1:2.21.1-alt2
+- add the font replacement for Microsoft Sans Serif as Tahoma
+- update and rewrite Kerberos related patches
 
-* Sat Nov 11 2017 Vitaly Lipatov <lav@altlinux.ru> 2.21-alt1
-- new version 2.21
+* Thu Nov 30 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.21.1-alt1
+- update winetricks up to 20171018-next
+- remove obsoleted patches
+- use separated patch list and apply script
+- add local_build.sh script
 
-* Thu Nov 02 2017 Vitaly Lipatov <lav@altlinux.ru> 2.20-alt1
-- new version 2.20
+* Fri Nov 24 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.21.0-alt1
+- new version (2.21) with rpmgs script
+- update Kerberos patches against wine staging 2.21
 
-* Mon Oct 16 2017 Vitaly Lipatov <lav@altlinux.ru> 2.19-alt1
-- new version 2.19
+* Wed Nov 08 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.20.2-alt1
+- add server APC patches (eterbug #12054, redmine #356)
 
-* Tue Oct 03 2017 Vitaly Lipatov <lav@altlinux.ru> 2.18-alt1
-- new version 2.18
+* Mon Nov 06 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.20.1-alt1
+- new version (2.20.1) with rpmgs script
+- update Kerberos patches against wine staging 2.20
 
-* Fri Sep 15 2017 Vitaly Lipatov <lav@altlinux.ru> 2.17-alt1
-- new version 2.17
-- update winetricks to 20170823
+* Wed Oct 11 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.18.0-alt1
+- new version (2.18.0) with rpmgs script
+- update Kerberos patches (eterbug #11982)
 
-* Sat Sep 02 2017 Vitaly Lipatov <lav@altlinux.ru> 2.16-alt1
-- new version 2.16
+* Fri Sep 29 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.17.1-alt1
+- add Kerberos SSPI (via GSSIAPI support)
 
-* Sun Aug 20 2017 Vitaly Lipatov <lav@altlinux.ru> 2.15-alt1
-- new version 2.15
+* Fri Sep 29 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.17.0-alt1
+- new version (2.17.0) with rpmgs script
 
-* Thu Aug 03 2017 Vitaly Lipatov <lav@altlinux.ru> 2.14-alt1
-- new version 2.14
+* Mon Sep 11 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.16.0-alt1
+- new version (2.16.0) with rpmgs script
+- update winetricks up to 20170823-next
+- add dotnet47 support in winetricks
 
-* Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 2.13-alt1
-- new version 2.13
+* Sun Aug 27 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.15.0-alt1
+- new version (2.15.0) with rpmgs script
 
-* Wed Jul 12 2017 Vitaly Lipatov <lav@altlinux.ru> 2.12-alt1
-- new version 2.12
+* Tue Aug 08 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.14.0-alt1
+- new version (2.14.0) with rpmgs script
+- enable font smoothing by default
+- add libpng16, libjpeg requires
 
-* Sun Jun 25 2017 Vitaly Lipatov <lav@altlinux.ru> 2.11-alt1
-- new version 2.11
+* Sun Jul 30 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.13.0-alt1
+- new version (2.13.0) with rpmgs script
+- add fix debug output patches
 
-* Mon Jun 12 2017 Vitaly Lipatov <lav@altlinux.ru> 2.10-alt1
-- new version 2.10
+* Wed Jul 12 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.12.0-alt1
+- new version 2.12.0 (with rpmrb script)
 
-* Sat May 27 2017 Vitaly Lipatov <lav@altlinux.ru> 2.9-alt1
-- new version 2.9
+* Thu Jun 29 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.11.0-alt1
+- new version (2.11.0) with rpmgs script
+
+* Thu Jun 15 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.10.1-alt1
+- new version (2.10.1) with rpmgs script
+- replace RegQueryValueEx HKEY_PERFORMANCE hack with wine-staging one
+
+* Tue May 30 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.9.1-alt1
+- new version (2.9.1) with rpmgs script
+
+* Fri May 26 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.8.1-alt1
+- new version 2.8.1 (with rpmrb script)
 - update winetricks to 20170517-next
 
-* Sat May 13 2017 Vitaly Lipatov <lav@altlinux.ru> 2.8-alt1
-- new version 2.8
-
-* Sat Apr 29 2017 Vitaly Lipatov <lav@altlinux.ru> 2.7-alt1
-- new version 2.7
-
-* Sat Apr 15 2017 Vitaly Lipatov <lav@altlinux.ru> 2.6-alt1
-- new version 2.6
-
-* Sun Apr 09 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5-alt2
-- update winetricks to 20170327
-- add default icons (ALT bug 25237)
-
-* Sat Apr 01 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5-alt1
-- new version 2.5
-
-* Fri Mar 17 2017 Vitaly Lipatov <lav@altlinux.ru> 2.4-alt1
-- new version 2.4
-
-* Sat Mar 04 2017 Vitaly Lipatov <lav@altlinux.ru> 2.3-alt1
-- new version 2.3
-
-* Sun Feb 19 2017 Vitaly Lipatov <lav@altlinux.ru> 2.2-alt1
-- new version 2.2
-
-* Thu Jan 26 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0-alt1
-- new version 2.0
-
-* Thu Dec 01 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.24-alt1
-- new version 1.9.24
-
-* Tue Nov 15 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.23-alt1
-- new version 1.9.23
-
-* Sun Oct 30 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.22-alt1
-- new version 1.9.22
-
-* Fri Oct 21 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.21-alt3
-- pack desktop files for programs to wine-vanilla-programs
-- do not pack wine.desktop for protect from suddenly running from GUI
-
-* Thu Oct 20 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.21-alt2
-- split wine-vanilla-programs subpackage (ALT bug #32587)
-
-* Sat Oct 15 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.21-alt1
-- new version 1.9.21
-
-* Thu Oct 06 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.20-alt1
-- new version 1.9.20
-
-* Sat Sep 24 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.19-alt1
-- new version 1.9.19
-
-* Sat Sep 03 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.18-alt1
-- new version 1.9.18
-
-* Fri Sep 02 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.17-alt2
-- add wine and libwine-devel provides
-
-* Sun Aug 21 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.17-alt1
-- new version 1.9.17
-
-* Thu Aug 18 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.16-alt1
-- new version 1.9.16 (requires wine-gecko = 2.47 since 1.9.13)
-- update winetricks to 20160724
-
-* Thu Jun 16 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.12-alt1
-- new version 1.9.12
-
-* Sat May 28 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.11-alt1
-- new version 1.9.11
-
-* Fri May 20 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.10-alt1
-- new version 1.9.10
-
-* Tue Apr 05 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.7-alt1
-- new version 1.9.7
-
-* Fri Mar 18 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.6-alt1
-- new version 1.9.6
-
-* Wed Feb 24 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.4-alt2
-- fix packing issues
-- make wine-vanilla-full noarch
-- add libpulseaudio-devel buildreq
-
-* Wed Feb 24 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.4-alt1
-- new version 1.9.4 (requires wine-gecko = 2.44)
-
-* Tue Jan 12 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.1-alt1
-- new version 1.9.1
-
-* Sat Dec 12 2015 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt0rc4
-- new version 1.8-rc4
-
-* Tue Dec 01 2015 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt0rc2
-- new version 1.8-rc2
-
-* Sun Nov 22 2015 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt0rc1
-- new version 1.8-rc1
-
-* Fri Oct 30 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.54-alt1
-- new version 1.7.54
-
-* Sat Oct 17 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.53-alt1
-- new version 1.7.53, requires wine-gecko = 2.40
-
-* Mon Aug 10 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.49-alt1
-- new version 1.7.49
-
-* Wed Jul 22 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.47-alt2
-- add requires to wine-mono and wine-gecko to full subpackage (closes: #31149)
-
-* Mon Jul 13 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.47-alt1
-- new version 1.7.47
-
-* Mon Jun 15 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.45-alt1
-- new version 1.7.45
-
-* Thu Jun 04 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.44-alt1
-- new version 1.7.44
-
-* Tue May 26 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.43-alt2
-- add unixODBC-devel buildreq (closes: #31024)
-- add cabextract require (closes: #31024)
-- add wine-vanilla-full package (closes: #31024)
-
-* Tue May 19 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.43-alt1
-- new version 1.7.43
-- build with liblcms2 (closes: #31006)
-- build without gstreamer (closes: #31014)
-
-* Sat May 02 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.42-alt1
-- new version 1.7.42
-
-* Sun Apr 05 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.40-alt1
-- new version 1.7.40
-
-* Wed Apr 01 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.39.gdbf8bde-alt1
-- build against commit dbf8bde14616e54abbcf4caca92d4b708170b0ac
-
-* Fri Mar 27 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.39-alt1
-- new version 1.7.39
-
-* Mon Mar 09 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.38-alt1
-- new version 1.7.38, requires wine-gecko = 2.36
-
-* Fri Feb 20 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.37-alt1
-- new version 1.7.37
-
-* Sun Feb 08 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.36-alt1
-- new version 1.7.36
-
-* Fri Feb 06 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.35-alt2
-- rebuild with new libgphoto2
-
-* Sat Jan 24 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.35-alt1
-- new version 1.7.35
-
-* Wed Jan 14 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.34-alt1
-- new version 1.7.34
-
-* Sat Dec 13 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7.33-alt1
-- new version 1.7.33, requires wine-gecko = 2.34
-
-* Mon Nov 10 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7.30-alt1
-- new version 1.7.30
-
-* Tue Oct 21 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7.29-alt1
-- new version 1.7.29
-
-* Sat Oct 11 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7.28-alt2
-- update winetricks to 20140302 (ALT bug #30382)
-
-* Mon Oct 06 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7.28-alt1
-- new version 1.7.28
-
-* Fri Sep 19 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7.27-alt1
-- new version 1.7.27
-
-* Sat Sep 06 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7.26-alt1
-- new version 1.7.26
-
-* Sat Aug 23 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7.25-alt1
-- new version 1.7.25
-
-* Fri Jul 25 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7.23-alt1
-- new version 1.7.23
-
-* Mon Jul 14 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7.22-alt1
-- new version 1.7.22
-
-* Tue Jul 08 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7.21-alt1
-- new version 1.7.21
-
-* Sun May 18 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7.19-alt1
-- new version 1.7.19
-
-* Mon May 05 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7.18-alt1
-- new version 1.7.18 (ALT bug #30054)
-
-* Sat Apr 05 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7.16-alt1
-- new version 1.7.16
-
-* Sat Mar 22 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7.15-alt1
-- new version 1.7.15
-
-* Fri Mar 14 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7.14-alt1
-- new version 1.7.14
-
-* Sat Oct 26 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.5-alt1
-- new version 1.7.5
-
-* Mon Oct 14 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.4-alt1
-- new version 1.7.4
-
-* Sat Sep 14 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.2-alt1
-- new version 1.7.2
-
-* Fri Aug 02 2013 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1
-- release 1.6
-- remove libssl-devel requires
-
-* Sun Jun 30 2013 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt0.rc4
-- new version 1.6-rc4
-
-* Sat Jun 22 2013 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt0.rc3
-- new version 1.6-rc3, requires wine-gecko 2.21
-
-* Tue Feb 19 2013 Vitaly Lipatov <lav@altlinux.ru> 1.5.24-alt1
-- new version 1.5.24
-
-* Wed Feb 06 2013 Vitaly Lipatov <lav@altlinux.ru> 1.5.23-alt1
-- new version 1.5.23, requires wine-gecko 1.9
-
-* Sat Dec 22 2012 Vitaly Lipatov <lav@altlinux.ru> 1.5.20-alt1
-- new version 1.5.20, requires wine-gecko 1.8
-- remove libhal-devel buildreq
-
-* Mon Sep 17 2012 Vitaly Lipatov <lav@altlinux.ru> 1.5.13-alt2
-- restore missed-in-merge changes
-
-* Sat Sep 15 2012 Vitaly Lipatov <lav@altlinux.ru> 1.5.13-alt1
-- new version 1.5.13, cleanup spec
-- disable libesd support and requires
-
-* Fri Sep 07 2012 Vitaly Lipatov <lav@altlinux.ru> 1.5.12-alt1
-- new version 1.5.12
-
-* Wed Aug 01 2012 Vitaly Lipatov <lav@altlinux.ru> 1.5.10-alt1
-- new version 1.5.10, requires wine-gecko 1.7
-
-* Sat Jul 14 2012 Vitaly Lipatov <lav@altlinux.ru> 1.5.8-alt1
-- new version 1.5.8
-
-* Mon May 28 2012 Vitaly Lipatov <lav@altlinux.ru> 1.5.5-alt2
-- fix wine-gecko requires to 1.5
-
-* Sat May 26 2012 Vitaly Lipatov <lav@altlinux.ru> 1.5.5-alt1
-- new version 1.5.5
-
-* Fri Mar 09 2012 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
-- new version 1.4.0
-- update winetricks to 20120308
-- fix requires
-
-* Sat Jan 14 2012 Vitaly Lipatov <lav@altlinux.ru> 1.3.37-alt1
-- new version 1.3.37
-
-* Sat Dec 31 2011 Vitaly Lipatov <lav@altlinux.ru> 1.3.36-alt1
-- new version 1.3.36
-
-* Sat Dec 17 2011 Vitaly Lipatov <lav@altlinux.ru> 1.3.35-alt1
-- new version 1.3.35
-- update winetricks to 20111115
-
-* Tue Dec 06 2011 Vitaly Lipatov <lav@altlinux.ru> 1.3.34-alt1
-- new version 1.3.34, use wine-gecko 1.4
-
-* Sat Nov 05 2011 Vitaly Lipatov <lav@altlinux.ru> 1.3.32-alt1
-- new version 1.3.32
-
-* Tue Nov 01 2011 Vitaly Lipatov <lav@altlinux.ru> 1.3.31-alt1
-- new version 1.3.31
-- update winetricks to 20110629
-
-* Tue Oct 11 2011 Vitaly Lipatov <lav@altlinux.ru> 1.3.30-alt1
-- new version 1.3.30
-
-* Fri Aug 26 2011 Vitaly Lipatov <lav@altlinux.ru> 1.3.27-alt1
-- new version 1.3.26, use wine-gecko 1.3
-
-* Mon Aug 22 2011 Vitaly Lipatov <lav@altlinux.ru> 1.3.26-alt1
-- new version 1.3.26
-- drop out winehelp desktop file
-
-* Thu Jun 02 2011 Vitaly Lipatov <lav@altlinux.ru> 1.3.21-alt1
-- new version 1.3.21
-
-* Fri Apr 29 2011 Vitaly Lipatov <lav@altlinux.ru> 1.3.19-alt1
-- new version 1.3.19
-
-* Sun Apr 17 2011 Vitaly Lipatov <lav@altlinux.ru> 1.3.18-alt1
-- new version 1.3.18
-
-* Mon Apr 11 2011 Vitaly Lipatov <lav@altlinux.ru> 1.3.17-alt2
-- fix build requires (add missed libtiff-devel, gstreamer plugin base, libgnutls-devel)
-
-* Sat Apr 02 2011 Vitaly Lipatov <lav@altlinux.ru> 1.3.17-alt1
-- new version 1.3.17
-- again winetricks: do not use zenity/kdialog via direct run (ALT bug 24838)
-- add libncurses requires
-
-* Wed Mar 30 2011 Vitaly Lipatov <lav@altlinux.ru> 1.3.16-alt3
-- drop xorg-x11-proto-devel buildreqs
-- pack all man files
-
-* Tue Mar 29 2011 Vitaly Lipatov <lav@altlinux.ru> 1.3.16-alt2
-- winetricks: update to 20110324
-- winetricks: do not use zenity/kdialog via direct run (ALT bug 24838)
-
-* Sat Mar 19 2011 Vitaly Lipatov <lav@altlinux.ru> 1.3.16-alt1
-- new version 1.3.16
-- update winetricks to 20110318
-- require wine-gecko 1.2.0
-- add some desktop files for menu (ALT bug 25237)
-
-* Thu Dec 30 2010 Vitaly Lipatov <lav@altlinux.ru> 1.3.10-alt2
-- winetricks: use detected MENU instead direct command (ALT bug 24838)
-
-* Mon Dec 27 2010 Vitaly Lipatov <lav@altlinux.ru> 1.3.10-alt1
-- new version 1.3.10 (ALT bug 24273)
-
-* Fri Jul 16 2010 Ilya Shpigor <elly@altlinux.org> 1.2_rc7-alt1
-- new version 1.2-rc7
-
-* Mon Jun 14 2010 Ilya Shpigor <elly@altlinux.org> 1.2_rc3-alt1
-- new version 1.2-rc3
-
-* Mon May 31 2010 Ilya Shpigor <elly@altlinux.org> 1.2_rc2-alt1
-- new version 1.2-rc2
-
-* Tue May 25 2010 Ilya Shpigor <elly@altlinux.org> 1.1.44-alt3
-- fix build for x86_64 architecture (try 2)
-
-* Fri May 14 2010 Ilya Shpigor <elly@altlinux.org> 1.1.44-alt2
-- fix build for x86_64 architecture
-
-* Tue May 11 2010 Ilya Shpigor <elly@altlinux.org> 1.1.44-alt1
-- new version 1.1.44
-
-* Mon Apr 19 2010 Ilya Shpigor <elly@altlinux.org> 1.1.43-alt1
-- new version 1.1.43
-
-* Mon Apr 05 2010 Ilya Shpigor <elly@altlinux.org> 1.1.42-alt1
-- new version 1.1.42
-
-* Mon Mar 22 2010 Ilya Shpigor <elly@altlinux.org> 1.1.41-alt1
-- new version 1.1.41
-
-* Sat Mar 06 2010 Ilya Shpigor <elly@altlinux.org> 1.1.40-alt1
-- new version 1.1.40
-
-* Sun Feb 21 2010 Ilya Shpigor <elly@altlinux.org> 1.1.39-alt1
-- new version 1.1.39
-
-* Mon Feb 08 2010 Ilya Shpigor <elly@altlinux.org> 1.1.38-alt1
-- new version 1.1.38
-
-* Mon Jan 25 2010 Ilya Shpigor <elly@altlinux.org> 1.1.37-alt1
-- new version 1.1.37
-
-* Mon Jan 18 2010 Ilya Shpigor <elly@altlinux.org> 1.1.36-alt2
-- add winetricks to wine-vanilla package (fix altbug #22650)
-
-* Sat Jan 16 2010 Ilya Shpigor <elly@altlinux.org> 1.1.36-alt1
-- new version 1.1.36
-
-* Fri Jan 08 2010 Ilya Shpigor <elly@altlinux.org> 1.1.35-alt4
-- fix conflict libwine-vanilla-devel-static with libwine-devel
-
-* Wed Jan 06 2010 Ilya Shpigor <elly@altlinux.org> 1.1.35-alt3
-- don't build libwine-vanilla-devel-doc package
-
-* Wed Jan 06 2010 Ilya Shpigor <elly@altlinux.org> 1.1.35-alt2
-- build the libwine-vanilla-devel-doc package as the architecture-independent
-
-* Fri Dec 25 2009 Ilya Shpigor <elly@altlinux.org> 1.1.35-alt1
-- new version 1.1.35
-
-* Fri Dec 25 2009 Vitaly Lipatov <lav@altlinux.ru> 1.1.34-alt2
-- enable build for x86_64 (fix altbug #10042)
-
-* Fri Dec 11 2009 Ilya Shpigor <elly@altlinux.org> 1.1.34-alt1
-- new version 1.1.34
-
-* Tue Nov 24 2009 Ilya Shpigor <elly@altlinux.org> 1.1.33-alt1
-- new version 1.1.33
-
-* Sat Oct 24 2009 Vitaly Lipatov <lav@altlinux.ru> 1.1.32-alt1
-- new version 1.1.32
-
-* Sat Aug 01 2009 Vitaly Lipatov <lav@altlinux.ru> 1.1.26-alt2
-- fix services.exe crash (altbug #20927)
-
-* Fri Jul 24 2009 Vitaly Lipatov <lav@altlinux.ru> 1.1.26-alt1
-- new version 1.1.26
-
-* Thu Jul 23 2009 Vitaly Lipatov <lav@altlinux.ru> 1.1.25-alt1
-- new version 1.1.25
-
-* Tue Jun 30 2009 Vitaly Lipatov <lav@altlinux.ru> 1.1.24-alt1
-- new version 1.1.24
-
-* Tue May 26 2009 Vitaly Lipatov <lav@altlinux.ru> 1.1.22-alt1
-- new version 1.1.22
-
-* Sat May 09 2009 Vitaly Lipatov <lav@altlinux.ru> 1.1.21-alt1
-- new version 1.1.21
-
-* Sat Mar 28 2009 Vitaly Lipatov <lav@altlinux.ru> 1.1.18-alt1
-- new version 1.1.18
-
-* Fri Mar 20 2009 Vitaly Lipatov <lav@altlinux.ru> 1.1.17-alt1
-- new version 1.1.17
-
-* Sat Feb 28 2009 Vitaly Lipatov <lav@altlinux.ru> 1.1.16-alt1
-- new version 1.1.16
-
-* Sun Feb 15 2009 Vitaly Lipatov <lav@altlinux.ru> 1.1.15-alt1
-- new version 1.1.15
-
-* Fri Feb 13 2009 Vitaly Lipatov <lav@altlinux.ru> 1.1.14-alt1
-- new version 1.1.14
-
-* Sat Jan 17 2009 Vitaly Lipatov <lav@altlinux.ru> 1.1.13-alt1
-- new version 1.1.13
-
-* Tue Jan 06 2009 Vitaly Lipatov <lav@altlinux.ru> 1.1.12-alt1
-- merge with upstream (1.1.12)
-
-* Fri Dec 26 2008 Vitaly Lipatov <lav@altlinux.ru> 1.1.11-alt1
-- merge with upstream (1.1.11)
-- add libhal-devel buildreq
-
-* Fri Nov 21 2008 Vitaly Lipatov <lav@altlinux.ru> 1.1.9-alt1
-- merge with upstream (1.1.9)
-
-* Sat Nov 08 2008 Vitaly Lipatov <lav@altlinux.ru> 1.1.8-alt1
-- merge with upstream (1.1.8)
-
-* Sat Nov 01 2008 Vitaly Lipatov <lav@altlinux.ru> 1.1.7-alt2
-- rebuild configure
-- remove autoconf due too old autoconf in ALT 4.0
-
-* Wed Oct 29 2008 Vitaly Lipatov <lav@altlinux.ru> 1.1.7-alt1
-- merge with upstream (1.1.7)
-- add autoconf -f due strange configure
-
-* Fri Sep 19 2008 Vitaly Lipatov <lav@altlinux.ru> 1.1.5-alt1
-- merge with upstream (1.1.5)
-- revert to original sources from git://source.winehq.org/git/wine.git
-
-* Wed Jul 16 2008 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
-- merge with upstream (1.1.1)
-- cleanup spec, return update_menus
-- fix altbug #16230 again (run init functions from linked libs)
-
-* Tue Jul 08 2008 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt2
-- merge with upsteam
-- link gdi32 with freetype/fontconfig directly (fix altbug #16230)
-- disable RPATH for installed libs (LDRPATH_INSTALL=)
-
-* Wed Jul 02 2008 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
-- initial build from vanilla source for ALT Linux Sisyphus
+* Fri May 05 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.7.1-alt1
+- new version (2.7.1) with rpmgs script
+
+* Sun Apr 09 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.4.1-alt2
+- set Epoche:1 for compatibility
+- fix build requires
+- add if_enabled static
+- add Obsoletes for Fedora packages, fix conflicts with wine-vanilla
+
+* Sat Apr 08 2017 Vitaly Lipatov <lav@altlinux.ru> 2.4.1-alt1
+- patches moving:
+ + enable linking with freetype and fontconfig
+ + add PERF_DATA_BLOCK struct definition
+ + add fast hack for RegQueryValueEx-HKEY_PERFORMANCE_DATA_BLOCK
+ + make OleLoadPicture load DIBs using WIC decoder
+
+* Sat Apr 08 2017 Vitaly Lipatov <lav@altlinux.ru> 2.4.0-alt1
+- initial build wine-staging for ALT Sisyphus

@@ -1,5 +1,5 @@
 Name: rpmrebuild-arepo
-Version: 3.1.11
+Version: 3.1.12
 Release: alt1
 
 Summary: biarch repackager for Sisyphus packages
@@ -32,6 +32,9 @@ install -m755 arepo.sh %buildroot%_libexecdir/rpmrebuild/plugins/
 %_libexecdir/rpmrebuild/plugins/arepo.*
 
 %changelog
+* Fri Sep 17 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.12-alt1
+- rpmrebuild-arepo.conf: drop special prog mode for wine packages
+
 * Thu Apr 29 2021 Dmitry V. Levin <ldv@altlinux.org> 3.1.11-alt1
 - Dropped unused %name-scripts subpackage.
 
