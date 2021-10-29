@@ -89,7 +89,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.5
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -803,6 +803,7 @@ Summary: Common sysctl configs
 %endif
 	-Db_pie=true \
 	-Dman=true \
+	-Durlify=false \
 	-Dtests=unsafe \
 	-Dinstall-tests=true \
 	-Dversion-tag=v%version-%release \
@@ -966,8 +967,8 @@ mkdir -p %buildroot%_sysconfdir/systemd/network
 
 # The following services are currently installed by initscripts
 #pushd %buildroot%_unitdir/graphical.target.wants && {
-#	rm -f display-manager.service
-#	rm -f dm.service
+#        rm -f display-manager.service
+#        rm -f dm.service
 #popd
 #}
 
@@ -993,7 +994,7 @@ install -pD -m755 %SOURCE80 %buildroot%_rpmlibdir/systemd-user.filetrigger
 
 # alternatives
 for f in systemd-modules-load systemd-sysusers systemd-sysctl systemd-tmpfiles; do
-	mv %buildroot/sbin/$f %buildroot/sbin/$f.shared
+        mv %buildroot/sbin/$f %buildroot/sbin/$f.shared
 done
 install -pD -m644 %SOURCE81 %buildroot/%_altdir/systemd-modules-load-shared
 install -pD -m644 %SOURCE82 %buildroot/%_altdir/systemd-modules-load-standalone
@@ -1189,8 +1190,8 @@ SYSCONFIG_KEYBOARD=/etc/sysconfig/keyboard
 SYSCONFIG_CONSOLEFONT=/etc/sysconfig/consolefont
 if [ -e "$SYSCONFIG_KEYBOARD" -a -e "$SYSCONFIG_CONSOLEFONT" -a ! -e /etc/vconsole.conf ]; then
         unset SYSFONT
-	unset SYSFONTACM
-	unset UNIMAP
+        unset SYSFONTACM
+        unset UNIMAP
         unset KEYTABLE
         [ -e "$SYSCONFIG_KEYBOARD" ] && . "$SYSCONFIG_KEYBOARD" >/dev/null 2>&1 || :
         [ -e "$SYSCONFIG_CONSOLEFONT" ] && . "$SYSCONFIG_CONSOLEFONT" >/dev/null 2>&1 || :
@@ -1301,7 +1302,7 @@ update_chrooted all
 if [ -f /etc/nsswitch.conf ] ; then
         grep -E -q '^hosts:.* resolve' /etc/nsswitch.conf ||
         sed -i.rpmorig -r -e '
-                s/^(hosts):(.*) files( mdns4_minimal .NOTFOUND=return.)? dns myhostname/\1:\2 resolve [!UNAVAIL=return] myhostname files\3 dns/
+                s/^(hosts):(.*)(files)/\1:\2resolve [!UNAVAIL=return] \3/
                 ' /etc/nsswitch.conf >/dev/null 2>&1 || :
 fi
 update_chrooted all
@@ -1320,11 +1321,20 @@ update_chrooted all
 %post -n libnss-myhostname
 if [ -f /etc/nsswitch.conf ] ; then
         grep -E -q '^hosts:.* myhostname' /etc/nsswitch.conf ||
-        sed -i.rpmorig -e '
-                /^hosts:/ !b
-                /\<myhostname\>/ b
-                s/[[:blank:]]*$/ myhostname/
+        sed -i.rpmorig -r -e '
+                s/^(hosts):(.*) files(.*) dns/\1:\2 files myhostname\3 dns/
                 ' /etc/nsswitch.conf >/dev/null 2>&1 || :
+    # Fix: move myhostname after files
+    if grep -E -q '^hosts:.* dns myhostname' /etc/nsswitch.conf ; then
+        sed -i.rpmorig -r -e '
+                s/^(hosts):(.*) files(.*) dns myhostname/\1:\2 files myhostname\3 dns/
+                ' /etc/nsswitch.conf >/dev/null 2>&1 || :
+    fi
+    if grep -E -q '^hosts:.* myhostname.*files' /etc/nsswitch.conf ; then
+        sed -i.rpmorig -r -e '
+                s/^(hosts):(.*) myhostname(.*) files(.*)/\1:\2 files myhostname\3\4/
+                ' /etc/nsswitch.conf >/dev/null 2>&1 || :
+    fi
 fi
 update_chrooted all
 
@@ -1342,10 +1352,8 @@ update_chrooted all
 %post -n libnss-mymachines
 if [ -f /etc/nsswitch.conf ] ; then
         grep -E -q '^hosts:.* mymachines' /etc/nsswitch.conf ||
-        sed -i.rpmorig -e '
-                /^hosts:/ !b
-                /\<mymachines\>/ b
-                s/[[:blank:]]*$/ mymachines/
+        sed -i.rpmorig -r -e '
+                s/^(hosts):([ \t]*)(\s+)/\1:\2 mymachines\3/
                 ' /etc/nsswitch.conf >/dev/null 2>&1 || :
 
 # Cleanup. sinse v246 nss-mymachines: drop support for UID/GID resolving
@@ -2236,6 +2244,10 @@ udevadm hwdb --update &>/dev/null
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Thu Oct 28 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.5-alt2
+- Disable pager Hyperlink ANSI sequence support.
+- Update post scripts for nss modules.
+
 * Mon Oct 18 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.5-alt1
 - 249.5
 - Migrate to macros from rpm-macros-systemd.
