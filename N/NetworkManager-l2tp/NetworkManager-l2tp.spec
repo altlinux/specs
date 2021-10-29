@@ -1,20 +1,19 @@
-%define nm_version 1.8.0
+%define nm_version 1.20.0
 %define nm_applet_version 1.8.0
 %define nm_applet_name NetworkManager-applet-gtk
 #define git_date .git20170115
 %define git_date %nil
 %define ppp_version %((%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
 
-%def_without libnm_glib
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-l2tp
-Version: 1.8.6
+Version: 1.20.0
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for l2tp
-Url: http://www.gnome.org/projects/NetworkManager/
+Url: https://networkmanager.dev/docs/vpn/
 Vcs: git://github.com/nm-l2tp/NetworkManager-l2tp.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -27,18 +26,13 @@ Requires: strongswan
 
 BuildRequires: ppp-devel
 BuildRequires: libnm-devel >= %nm_version
-BuildRequires: libnma-devel >= %nm_applet_version
-%if_with libnm_glib
-BuildRequires: NetworkManager-devel >= %nm_version
-BuildRequires: libnm-glib-vpn-devel >= %nm_version
-BuildRequires: libnm-gtk-devel >= %nm_applet_version
-%endif
+BuildRequires: libnma-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libsecret-devel
 # We consider it as system library
 BuildRequires: libssl-devel
 BuildRequires: libnss-devel
-BuildRequires: intltool gettext
+BuildRequires: gettext
 
 %description
 This package contains software for integrating the l2tp VPN software
@@ -69,9 +63,8 @@ NetworkManager panel applet.
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
 	--with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
-%if_without libnm_glib
-	--without-libnm-glib \
-%endif
+	--with-nm-ipsec-secrets=/etc/strongswan/ipsec.secrets \
+	--with-nm-ipsec-secrets-dir=/etc/strongswan/ipsec.d \
 	--disable-silent-rules \
 	--enable-more-warnings=yes
 %make_build
@@ -85,15 +78,9 @@ NetworkManager panel applet.
 %config %_datadir/dbus-1/system.d/nm-l2tp-service.conf
 %_libexecdir/NetworkManager/nm-l2tp-service
 %_libdir/pppd/%ppp_version/*.so
-%if_with libnm_glib
-%config %_sysconfdir/NetworkManager/VPN/nm-l2tp-service.name
-%endif
 %config %_libexecdir/NetworkManager/VPN/nm-l2tp-service.name
 
 %files gtk -f %name.lang
-%if_with libnm_glib
-%_libdir/NetworkManager/libnm-l2tp-properties.so
-%endif
 %_libexecdir/NetworkManager/nm-l2tp-auth-dialog
 %_libdir/NetworkManager/libnm-vpn-plugin-l2tp.so
 %_libdir/NetworkManager/libnm-vpn-plugin-l2tp-editor.so
@@ -103,6 +90,14 @@ NetworkManager panel applet.
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Fri Oct 29 2021 Mikhail Efremov <sem@altlinux.org> 1.20.0-alt1
+- Updated Url tag.
+- Don't try to use kl2tpd.
+- Fixed ipsec.secrets location.
+- Dropped libnm-glib support from spec.
+- Dropped intltool from BR.
+- Updated to 1.20.0.
+
 * Wed Dec 09 2020 Mikhail Efremov <sem@altlinux.org> 1.8.6-alt1
 - Updated to 1.8.6.
 
