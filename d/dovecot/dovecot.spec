@@ -5,7 +5,7 @@
 %def_disable debug
 
 Name: dovecot
-Version: 2.3.16
+Version: 2.3.17
 Release: alt1
 
 Summary: Dovecot secure IMAP/POP3 server
@@ -221,6 +221,9 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Thu Oct 28 2021 Andrey Cherepanov <cas@altlinux.org> 2.3.17-alt1
+- Updated to 2.3.17.
+
 * Thu Aug 12 2021 Andrey Cherepanov <cas@altlinux.org> 2.3.16-alt1
 - Updated to 2.3.16 (fixes CVE-2021-33515, CVE-2021-29157, CVE-2021-33515, CVE-2021-29157).
 - Package watch file.
