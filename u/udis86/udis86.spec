@@ -1,6 +1,8 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 Name: udis86
 Version: 1.7
-Release: alt1.qa1
+Release: alt2
 
 Summary: Disassembler for x86 and x86-64
 License: BSD
@@ -64,6 +66,9 @@ Documentation for x86 and x86-64 disassembler.
 %_includedir/*
 
 %changelog
+* Fri Oct 29 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.7-alt2
+- NMU: FTBFS: build with LTO.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.7-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
