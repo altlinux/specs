@@ -15,12 +15,12 @@
 %endif
 
 Name: NetworkManager-openvpn
-Version: 1.8.14
+Version: 1.8.16
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for OpenVPN
-Url: http://www.gnome.org/projects/NetworkManager
+Url: https://networkmanager.dev/docs/vpn/
 Vcs: https://gitlab.gnome.org/GNOME/NetworkManager-openvpn.git
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -103,6 +103,10 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Fri Oct 29 2021 Mikhail Efremov <sem@altlinux.org> 1.8.16-alt1
+- Updated Url tag.
+- Updated to 1.8.16.
+
 * Thu Apr 22 2021 Mikhail Efremov <sem@altlinux.org> 1.8.14-alt1
 - Updated to 1.8.14.
 
