@@ -1,6 +1,6 @@
-Name: alterator-role
-Version: 1.1
-Release: alt3
+Name: alterator-roles
+Version: 1.2
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -12,6 +12,8 @@ Group: System/Configuration/Other
 
 Requires: alterator-l10n >= 2.9.92-alt1 libnss-role >= 0.5.3-alt1
 BuildPreReq: alterator >= 4.10-alt1
+
+Obsoletes: alterator-role
 
 %define _unpackaged_files_terminate_build 1
 
@@ -46,6 +48,9 @@ An alterator module for managing roles (it uses libnss-role).
 %_datadir/dbus-1/interfaces/*.xml
 
 %changelog
+* Fri Oct 29 2021 Ivan Savin <svn17@altlinux.org> 1.2-alt1
+- Rename package name to alterator-roles.
+
 * Wed Jul 14 2021 Ivan Savin <svn17@altlinux.org> 1.1-alt3
 - Add use of new libnss-role functions for add and delete system roles.
 
