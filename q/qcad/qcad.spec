@@ -1,8 +1,8 @@
 %def_with debug
 
 Name: 	 qcad
-Version: 3.26.4.5
-Release: alt2
+Version: 3.27.0.0
+Release: alt1
 Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
 
@@ -145,6 +145,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Fri Oct 29 2021 Andrey Cherepanov <cas@altlinux.org> 3.27.0.0-alt1
+- New version.
+
 * Sat Oct 23 2021 Vladislav Zavjalov <slazav@altlinux.org> 3.26.4.5-alt2
 - do not detect amd64 system as MacOS
 - disable CONFIG += resources_big to fix LTO error.
