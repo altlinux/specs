@@ -1,6 +1,6 @@
 Name:    libleatherman
 Version: 1.12.6
-Release: alt1
+Release: alt2
 Summary: A collection of C++ and CMake utility libraries
  
 Group:   System/Libraries
@@ -10,6 +10,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
  
 Source: leatherman-%version.tar
 Patch1: fedora-shared_nowide.patch
+Patch2: libleatherman-Catch-SIGSTKSZ-not-constexpr.patch
  
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -20,6 +21,7 @@ BuildRequires: boost-filesystem-devel
 BuildRequires: boost-locale-devel
 BuildRequires: boost-log-devel
 BuildRequires: libcurl-devel
+BuildRequires: unzip zip
 
 %description
 A collection of C++ and CMake utility libraries.
@@ -50,8 +52,15 @@ sed -r -i.orig 's,reinterpret_cast<char\*\*\*>,(char***),g' ruby/src/api.cc
 # Set correct python executable in shebang
 subst 's|#!.*python$|#!%__python3|' scripts/cpplint.py
 
+# SIGSTKSZ is no longer a constexpr
+cd vendor
+unzip Catch-1.10.0.zip >/dev/null
+%patch2 -p1 -d Catch-1.10.0
+zip -ru Catch-1.10.0.zip Catch-1.10.0/
+
 %build
 %cmake -GNinja \
+       -Wno-dev \
        -DLEATHERMAN_SHARED=TRUE \
        -DENABLE_CXX_WERROR=OFF
 %ninja_build -C "%_cmake__builddir"
@@ -70,6 +79,9 @@ subst 's|#!.*python$|#!%__python3|' scripts/cpplint.py
 %_libdir/cmake/leatherman
 
 %changelog
+* Fri Oct 29 2021 Andrey Cherepanov <cas@altlinux.org> 1.12.6-alt2
+- FTBFS: SIGSTKSZ is no longer a constexpr.
+
 * Wed Jul 14 2021 Andrey Cherepanov <cas@altlinux.org> 1.12.6-alt1
 - New version.
 
