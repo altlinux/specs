@@ -1,5 +1,5 @@
 Name: deploy
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 
 Summary: Script and set of ansible roles to deploy system services
@@ -31,6 +31,9 @@ system services like PostgreSQL or Moodle.
 %_datadir/%name
 
 %changelog
+* Thu Oct 28 2021 Andrey Cherepanov <cas@altlinux.org> 0.3.5-alt1
+- nextcloud: add hostname to main configuration file.
+
 * Wed Oct 27 2021 Andrey Cherepanov <cas@altlinux.org> 0.3.4-alt1
 - nextcloud: backup config file with .new extension.
 
