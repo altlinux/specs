@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.10.13
+Version: 1.10.14
 Release: alt1
 
 Summary: Installer common parts
@@ -111,6 +111,10 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Thu Oct 28 2021 Anton Midyukov <antohami@altlinux.org> 1.10.14-alt1
+- 30-setup-network.sh, 40-autohostname.sh: configure /etc/hostname
+- 30-setup-network.sh: exclude HOSTNAME=(none)
+
 * Fri Oct 22 2021 Anton Midyukov <antohami@altlinux.org> 1.10.13-alt1
 - initinstall.d: Create /dev/{core,fd,stdin,stdout,stderr} symlinks if needed
 - cp-installer-screenshots.sh: adapt for alterator-browser-qt5 >= 3.2.10-alt1
