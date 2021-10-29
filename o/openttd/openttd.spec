@@ -1,8 +1,10 @@
-%define daterev 20210501
-%define gitsnapshot 672f285218c6817784d86f737987b75db4bc78fc
+%define daterev 20211003
+%define gitsnapshot 33201896bfeae43ea5b0e381b7f834aa6b6287d2
+%define version_major 12
+%define version_minor 0
 
 Name: openttd
-Version: 1.11.2
+Version: %version_major.%version_minor
 Release: alt1
 
 Summary: An open source clone of the Microprose game "Transport Tycoon Deluxe"
@@ -12,7 +14,7 @@ Group: Games/Strategy
 Url: http://www.openttd.org
 Source: %name-%version.tar
 Source1: %name.watch
-Patch: %name-%version-alt.patch
+Patch: %name-12.0-alt.patch
 
 Requires: TiMidity++
 Requires: fonts-ttf-dejavu
@@ -31,6 +33,7 @@ An open source clone of the Microprose game "Transport Tycoon Deluxe".
 %patch -p1
 
 %build
+echo "%version	%daterev	0	%gitsnapshot	1	1	`echo %daterev|cut -c 1-4`" >.ottdrev
 %cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_DATADIR=share/games
 %cmake_build
 
@@ -46,6 +49,11 @@ An open source clone of the Microprose game "Transport Tycoon Deluxe".
 %_man6dir/*
 
 %changelog
+* Fri Oct 29 2021 Anton Farygin <rider@altlinux.ru> 12.0-alt1
+- 1.11.2 -> 12.0
+- fixed fonts location (closes: #41160)
+- added version and git revision for build, lost in 1.11.0-alt1
+
 * Thu May 13 2021 Anton Farygin <rider@altlinux.ru> 1.11.2-alt1
 - 1.11.2
 
