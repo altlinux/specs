@@ -1,6 +1,6 @@
 Name: nmap
 Version: 7.80
-Release: alt1
+Release: alt2
 Epoch: 20020501
 
 Summary: Network exploration tool and security scanner
@@ -18,13 +18,13 @@ Source2: zenmap.security
 %def_with ncat
 %def_with ndiff
 %def_with nping
-%def_with zenmap
+%def_without zenmap
 
 Requires: chrooted-resolv
 BuildRequires: gcc-c++, libcap-devel
 BuildRequires: libpcap-devel >= 2:0.8, libpcre-devel, libssl-devel, libssh2-devel, zlib-devel
 %{?_with_liblua:BuildRequires: liblua5.3-devel}
-%{?_with_ndiff:BuildRequires: python-devel}
+%{?_with_ndiff:BuildRequires: python3-devel}
 %{?_with_zenmap:BuildRequires: libpam-devel python-devel}
 
 %description
@@ -94,6 +94,9 @@ rm %buildroot%_bindir/{nmapfe,uninstall_zenmap,xnmap}
 rm %buildroot%_datadir/zenmap/su-to-zenmap.sh
 %endif
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 %pre
 /usr/sbin/groupadd -r -f nmapuser
 /usr/sbin/useradd -r -g nmapuser -d /dev/null -s /dev/null -n nmapuser >/dev/null 2>&1 ||:
@@ -109,6 +112,8 @@ rm %buildroot%_datadir/zenmap/su-to-zenmap.sh
 %if_with ndiff
 %_bindir/ndiff
 %_man1dir/ndiff.*
+%python3_sitelibdir_noarch/ndiff.py
+%python3_sitelibdir_noarch/__pycache__/ndiff*
 %endif
 %if_with nping
 %_bindir/nping
@@ -129,6 +134,11 @@ rm %buildroot%_datadir/zenmap/su-to-zenmap.sh
 %endif
 
 %changelog
+* Sat Oct 30 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 20020501:7.80-alt2
+- Switched to use python3 due to python2 EOL (ALT#38271) (thx Vitaly Lipatov):
+  + disabled zenmap build;
+  + applied ndiff python3 patch (thx Bryan Quigley).
+
 * Fri Aug 16 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 20020501:7.80-alt1
 - Updated to 7.80.
 
