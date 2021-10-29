@@ -3,7 +3,7 @@
 
 Name: mate-system-monitor
 Version: 1.26.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Process and resource monitor
 License: GPLv2+
@@ -24,6 +24,11 @@ such as CPU and memory.
 %prep
 %setup -q
 %patch -p1
+%ifarch %e2k
+# workaround for EDG frontend
+sed -i "s|g_autofree char \*|g_autofree_edg(char) |" src/sysinfo.cpp
+sed -i "/g_autofree gchar/{s|g_autofree gchar|g_autofree_edg(gchar)|;s|\*||g}" src/load-graph.cpp
+%endif
 
 %build
 %autoreconf
@@ -51,6 +56,9 @@ such as CPU and memory.
 %_man1dir/*.1*
 
 %changelog
+* Thu Sep 16 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:1.26.0-alt2
+- Fixes for Elbrus build.
+
 * Tue Aug 10 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
 - 1.26.0
 
