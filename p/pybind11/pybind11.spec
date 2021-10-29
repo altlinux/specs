@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 #based on fedora spec
 Name: pybind11
-Version: 2.7.1
+Version: 2.8.1
 Release: alt1
 
 Summary: Seamless operability between C++11 and Python
@@ -97,6 +97,9 @@ export SKIP_E2K=1
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Fri Oct 29 2021 Nikolai Kostrigin <nickel@altlinux.org> 2.8.1-alt1
+- New version
+
 * Wed Aug 18 2021 Nikolai Kostrigin <nickel@altlinux.org> 2.7.1-alt1
 - New version
 
