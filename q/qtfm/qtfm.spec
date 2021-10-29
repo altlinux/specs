@@ -1,14 +1,35 @@
 Name:		qtfm
-Version:	5.5
-Release:	alt2
+Version:	6.2.1
+Release:	alt1
 Summary:	qtFM is a small, lightweight file manager
-License:	GPLv2
+License:	GPLv2+
 Group:		File tools
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Url:		http://www.qtfm.org/
 Source0:	http://www.qtfm.org/%name-%version.tar.gz
 
-BuildRequires: /usr/bin/convert gcc-c++ libmagic-devel libqt4-devel
+BuildRequires: /usr/bin/convert gcc-c++ libmagic-devel 
+
+Patch0:         0001-iconview-Fix-QPainterPath-path-has-incomplete-type.patch
+BuildRequires:  fdupes
+BuildRequires:  hicolor-icon-theme
+BuildRequires:  pkgconfig
+BuildRequires:  desktop-file-utils
+BuildRequires:  pkgconfig(Magick++)
+BuildRequires:  pkgconfig(Qt5Concurrent)
+BuildRequires:  pkgconfig(Qt5Core)
+BuildRequires:  pkgconfig(Qt5DBus)
+BuildRequires:  pkgconfig(Qt5Gui)
+BuildRequires:  pkgconfig(Qt5Widgets)
+BuildRequires:  pkgconfig(libavcodec)
+BuildRequires:  pkgconfig(libavdevice)
+BuildRequires:  pkgconfig(libavformat)
+BuildRequires:  pkgconfig(libavutil)
+BuildRequires:  pkgconfig(libswscale)
+Requires:     icon-theme-adwaita
+Requires:     udisks2
+
+
 
 %description
 qtFM is a small, lightweight file manager for Linux desktops based on pure Qt
@@ -27,28 +48,40 @@ Features:
 
 %prep
 %setup
+%patch0 -p1
 
 %build
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags"
+
+%qmake_qt5 PREFIX=%{_prefix} CONFIG+=with_magick CONFIG+=magick7 CONFIG+=with_ffmpeg
 %make_build
 
-%install
-%make_install INSTALL_ROOT=%buildroot install
 
-# Icons
-%__mkdir -p %buildroot/{%_miconsdir,%_niconsdir}
-install -Dp -m 0644 images/%name.png %buildroot%_liconsdir/%name.png
-convert -resize 32x32 images/%name.png %buildroot%_niconsdir/%name.png
-convert -resize 16x16 images/%name.png %buildroot%_miconsdir/%name.png
+
+%install
+
+%makeinstall_std INSTALL_ROOT=%buildroot
+fdupes %{buildroot}/%{_datadir}
+
 
 %files
-%doc CHANGELOG COPYING README
-%_bindir/%name
-%_desktopdir/%name.desktop
-%_datadir/%name
-%_iconsdir/hicolor/*/apps/*
+
+%doc AUTHORS ChangeLog README.md
+%{_bindir}/qtfm
+%{_bindir}/qtfm-tray
+%{_datadir}/applications/qtfm.desktop
+#dir %{_datadir}/icons/hicolor/160x160/{,apps}
+#dir %{_datadir}/icons/hicolor/20x20/{,apps}
+%{_datadir}/icons/hicolor/*/apps/qtfm.??g
+%{_sysconfdir}/xdg/autostart/qtfm-tray.desktop
+%{_man1dir}/qtfm*
+
 
 %changelog
+* Fri Oct 29 2021 Ilya Mashkin <oddity@altlinux.ru> 6.2.1-alt1
+- 6.2.1
+- Build with qt5
+- Update License and URL tags
+
 * Mon Jun 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.5-alt2
 - Fix build with gcc-6
 
