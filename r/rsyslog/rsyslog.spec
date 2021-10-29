@@ -25,8 +25,8 @@
 %def_enable impcap
 
 Name: rsyslog
-Version: 8.2108.0
-Release: alt2
+Version: 8.2110.0
+Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
 License: Apache-2.0 AND GPL-3.0-or-later
@@ -60,7 +60,7 @@ BuildRequires: liblognorm-devel >= 2.0.3
 %{?_enable_elasticsearch:BuildRequires: libcurl-devel}
 %{?_enable_omhttpfs:BuildRequires: libcurl-devel >= 7.0.0}
 %{?_enable_omhttp:BuildRequires: libcurl-devel}
-%{?_enable_imhttp:BuildRequires: libcivetweb-devel}
+%{?_enable_imhttp:BuildRequires: libcivetweb-devel libaprutil1-devel >= 1.0}
 %{?_enable_omhiredis:BuildRequires: libhiredis-devel >= 0.10.1}
 %{?_enable_imhiredis:BuildRequires: libhiredis-devel >= 0.10.1 libevent-devel >= 2.0}
 %{?_enable_libsystemd:BuildRequires: libsystemd-devel >= 209}
@@ -679,6 +679,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Fri Oct 29 2021 Alexey Shabalin <shaba@altlinux.org> 8.2110.0-alt1
+- new version 8.2110.0
+
 * Fri Sep 03 2021 Alexey Shabalin <shaba@altlinux.org> 8.2108.0-alt2
 - Fixed configs.
 
