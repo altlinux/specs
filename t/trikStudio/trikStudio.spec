@@ -7,7 +7,7 @@
 
 Name: trikStudio
 Version: 2021.1
-Release: alt2
+Release: alt3
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
@@ -25,7 +25,9 @@ BuildRequires: libqscintilla2-qt5-devel zlib-devel libquazip-qt5-devel python3-d
 # Workaround due project build with -fsanitize=undefined natively
 # https://bugzilla.altlinux.org/show_bug.cgi?id=38106
 #if_with sanitize
+%ifnarch %e2k
 BuildRequires: libubsan-devel-static
+%endif
 #endif
 BuildRequires: rsync qt5-tools
 
@@ -116,6 +118,10 @@ fi
 %else
     CONFIG-=debug CONFIG+=release \
 %endif
+%ifarch %e2k
+    CONFIG+=noPch CONFIG+=warn_off \
+    QMAKE_LFLAGS+=-Wl,-rpath-link=%_builddir/%name-%version/bin/release \
+%endif
 %if_with sanitize
     CONFIG+=!nosanitizers \
 %endif
@@ -187,6 +193,9 @@ popd
 %endif
 
 %changelog
+* Sat Oct 30 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2021.1-alt3
+- Fixed build for Elbrus
+
 * Thu Apr 29 2021 Evgeny Sinelnikov <sin@altlinux.org> 2021.1-alt2
 - Set TRIK_STUDIO_VERSION to package version for cmake build.
 - Add HomeLocation prefix in invariantPath() substitution for paths started with
