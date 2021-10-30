@@ -5,7 +5,7 @@
 
 Name: fluxbox
 Version: 1.3.7
-Release: alt4
+Release: alt5
 
 Summary: Fast and lightweight window manager
 Summary(ru_RU.UTF-8): Легкий и быстрый оконный менеджер
@@ -34,9 +34,10 @@ Patch1: fluxbox-gcc11.patch
 # - menu: support for locate_icon() function
 Requires: xmessage xprop xinitrc
 Requires: menu >= 2.1.35-alt3
+# used in default fluxbox style
+Requires: fonts-bitmap-artwiz-aleczapka-snap
 
 BuildRequires(pre): rpm-build-vim
-
 BuildRequires: gcc-c++ imlib2-devel libXt-devel libXft-devel
 BuildRequires: libXrandr-devel libXpm-devel libXinerama-devel libXext-devel
 
@@ -175,6 +176,9 @@ bzip2 ChangeLog
 %vim_ftdetect_dir/%name.vim
 
 %changelog
+* Sun Oct 31 2021 Igor Vlasenko <viy@altlinux.org> 1.3.7-alt5
+- NMU: added requires on fonts-bitmap-artwiz-aleczapka
+
 * Sat Oct 30 2021 Igor Vlasenko <viy@altlinux.org> 1.3.7-alt4
 - NMU:
 - added xsessions .desktop file
