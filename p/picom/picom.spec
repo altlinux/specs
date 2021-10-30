@@ -3,7 +3,7 @@
 
 Name: picom
 Version: 8.2
-Release: alt1
+Release: alt2
 Summary: A lightweight compositor for X11
 License: MPL-2.0 or MIT
 Group: System/X11
@@ -42,6 +42,11 @@ You can leave your feedbacks or thoughts in the discussion tab.
 
 %prep
 %setup
+%ifarch %e2k
+sed -i "s/const auto/auto/" src/render.c src/backend/xrender/xrender.c
+sed -i "s/__attribute__((optimize(".*")))//" src/utils.h
+sed -i "/#warning Use of -ffast-math/s/#warning/#error/" src/utils.h
+%endif
 
 %build
 %meson
@@ -59,6 +64,9 @@ You can leave your feedbacks or thoughts in the discussion tab.
 %_iconsdir/hicolor/*/*/*
 
 %changelog
+* Sat Oct 30 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 8.2-alt2
+- fixed build for Elbrus
+
 * Fri Aug 13 2021 Ildar Mulyukov <ildar@altlinux.ru> 8.2-alt1
 - upstream renamed compton to picom
 
