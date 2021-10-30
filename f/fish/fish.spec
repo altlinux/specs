@@ -1,6 +1,6 @@
 Name: fish
 Version: 3.3.1
-Release: alt1
+Release: alt2
 
 Summary: A friendly interactive shell
 License: GPLv2+
@@ -75,6 +75,9 @@ fi
 %_pixmapsdir/fish.png
 
 %changelog
+* Sun Oct 31 2021 Alexey Shabalin <shaba@altlinux.org> 3.3.1-alt2
+- Drop tests with resetting match start inside lookaround.
+
 * Mon Jul 19 2021 Alexey Shabalin <shaba@altlinux.org> 3.3.1-alt1
 - 3.3.1
 
