@@ -1,12 +1,16 @@
+%def_disable snapshot
+
 %define _name gfbgraph
 %define ver_major 0.2
 %define api_ver 0.2
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
+# see tests/README
+%def_disable check
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: A GObject library for Facebook Graph API
@@ -14,8 +18,11 @@ License: %lgpl2plus
 Group: System/Libraries
 Url: http://developer.gnome.org/
 
+%if_disabled snapshot
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 
 %define glib_ver 2.31.2
 
@@ -73,7 +80,7 @@ GObject introspection devel data for the LibGFBGraph library.
 %configure --disable-static \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	%{subst_enable introspection}
-
+%nil
 %make_build
 
 %install
@@ -82,8 +89,7 @@ GObject introspection devel data for the LibGFBGraph library.
 %find_lang %name
 
 %check
-# see tests/README
-#%make check
+%make -t check VERBOSE=1
 
 %files -f %name.lang
 %_libdir/%name-%api_ver.so.*
@@ -108,6 +114,9 @@ GObject introspection devel data for the LibGFBGraph library.
 %endif
 
 %changelog
+* Sat Oct 30 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt1
+- 0.2.5 (fixed CVE-2021-39358)
+
 * Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 0.2.4-alt1
 - 0.2.4
 
