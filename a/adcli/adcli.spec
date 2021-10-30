@@ -2,7 +2,7 @@
 Name: adcli
 Version: 0.9.1
 
-Release: alt1
+Release: alt2
 Summary: Active Directory enrollment
 License: LGPLv2+
 Group: Networking/Other
@@ -58,6 +58,9 @@ documentation.
 %doc %_datadir/doc/adcli
 
 %changelog
+* Sat Oct 30 2021 Alexey Shabalin <shaba@altlinux.org> 0.9.1-alt2
+- Upstream master snapshot.
+
 * Sat Jun 26 2021 Alexey Shabalin <shaba@altlinux.org> 0.9.1-alt1
 - 0.9.1
 
@@ -71,9 +74,9 @@ documentation.
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.8.2-alt2
-- NMU: remove %ubt from release
+- NMU: remove %%ubt from release
 
-* Sun Aug 06 2017 Alexey Shabalin <shaba@altlinux.ru> 0.8.2-alt1%ubt
+* Sun Aug 06 2017 Alexey Shabalin <shaba@altlinux.ru> 0.8.2-alt1
 - 0.8.2
 
 * Mon Apr 25 2016 Alexey Shabalin <shaba@altlinux.ru> 0.8.1-alt1
