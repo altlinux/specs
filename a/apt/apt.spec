@@ -1,13 +1,9 @@
-# Honor both kind of options: --{without,disable} check;
-# and allow to simply write %%if_enabled check below.
-%if_without check
-%else
-%def_enable check
-%endif
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt72
+Release: alt73
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -50,11 +46,27 @@ URL: http://apt-rpm.org
 # git replace --graft apt-rpm-MERGED-0.5.4.9@github 0.5.4.9-MERGED-into-CNC apt-rpm-MERGED-0.5.4.9@github^
 #
 # The parent with the richer history is 1st for git blame --first-parent -w.
+#
+# Enhanced apt-rpm history
+# ------------------------
+#
+# I've enhanced the apt-rpm history (for future rebases and cherry-picks
+# into ALT) and put it into the "next" remote (apt-rpm_next repo); branches:
+#
+# 0.5.15sisyphus0/apt-rpm -- brings the apt-repomd branch into the linear history;
+# 0.5.15sisyphus1/apt-rpm -- fixes whitespace issues.
+#
+# It makes sense to graft it into our history (so that merges are hopefully
+# simpler):
+#
+# git replace --graft 00dc7947063a474cafd29c6c1fb1185609eb0c6b 00dc7947063a474cafd29c6c1fb1185609eb0c6b^ next/0.5.15sisyphus1/fix-whitespace
+#
 Vcs: git://git.altlinux.org/gears/a/apt.git
 Source0: %name-%version-%release.tar
 
 Requires: libapt = %EVR
 Requires: rpm >= 4.13.0.1-alt2, /etc/apt/pkgpriorities, apt-conf
+Requires: librpmio(PGPHASHALGO_BLAKE2B)%{?_is_libsuff:(%{_libsuff}bit)} = 100
 # We need (lib)rpm which finds pkgs by labels in N-E:V-R@T format:
 Requires: RPMQ(EPOCH)
 Requires: RPMQ(BUILDTIME)
@@ -83,14 +95,6 @@ BuildPreReq: liblua5.3-devel
 
 BuildRequires: docbook-utils gcc-c++ libreadline-devel librpm-devel setproctitle-devel
 BuildRequires: libgnutls-devel
-
-# dependencies of tests
-%if_enabled check
-BuildRequires: /usr/bin/genbasedir
-BuildRequires: gpg-keygen
-BuildRequires: /usr/sbin/nginx
-BuildRequires: /usr/bin/openssl
-%endif
 
 %package -n libapt
 Summary: APT's core libraries
@@ -128,6 +132,10 @@ Summary(ru_RU.UTF-8): Набор тестов для APT
 Group: Other
 BuildArch: noarch
 Requires: %name = %EVR
+Requires: rpm-build
+Requires: /usr/bin/genbasedir
+# optional
+%global complete_reqs_of_tests %name-https /usr/sbin/nginx /usr/bin/openssl
 
 # {{{ descriptions
 %define risk_usage_en This package is still under development.
@@ -225,7 +233,8 @@ This package contains test suite for APT.
 %prep
 %setup -n %name-%version-%release
 
-%build
+./verify-src.sh
+
 # Fix url.
 sed -i 's,/usr/share/common-licenses/GPL,/usr/share/license/GPL,' COPYING
 
@@ -235,6 +244,7 @@ sed -i 's, > /dev/null 2>&1,,' buildlib/tools.m4
 # Add trivial arch translation.
 printf '%_target_cpu\t%_target_cpu' >> buildlib/archtable
 
+%build
 gettextize --force --quiet --no-changelog --symlink
 %autoreconf
 
@@ -306,14 +316,22 @@ cp -r test/integration %buildroot%_datadir/%name/tests/
 
 unset RPM_PYTHON
 
-%set_verify_elf_method strict
-%define _unpackaged_files_terminate_build 1
+%package basic-checkinstall
+Summary: Immediately test %name when installing this package (only basic tests)
+Group: Other
+BuildArch: noarch
+Requires(pre): %name-tests
 
-%check
+%description basic-checkinstall
+Immediately test %name when installing this package.
+
+The set of testcases is limited (just to the file method).
+
+%files basic-checkinstall
+
+%pre basic-checkinstall -p %_sbindir/sh-safely
 set -o pipefail
-
-# Run tests several times to make sure no tests are randomly succeeding.
-pushd test/integration
+pushd %_datadir/%name/tests/
 
 # force the target arch for the tests
 #
@@ -321,24 +339,50 @@ pushd test/integration
 # (rpmbuild --eval %%_arch). On installation, they would be compared
 # by rpm for compatibility with the arch detected by rpm. Currently,
 # the mismatch in the detection between rpm and rpm-build can lead to problems,
-# at least, on armh. So, we se the target by force to a value that must work.
+# at least, on armh. So, we set the target by force to a value that must work.
 system_arch="$(rpm -q rpm --qf='%%{ARCH}')"
 export APT_TEST_TARGET="$system_arch"
 
 # this macro can be prefixed (e.g., by environment assignments),
 # therefore the extra backslash in the first line
 %global runtests \\\
-	LD_LIBRARY_PATH=%buildroot%_libdir \\\
-	PATH=$PATH:%buildroot%_bindir \\\
-	METHODSDIR=%buildroot%_libdir/apt/methods \\\
-		./run-tests
+		./run-tests -v
 
-%runtests
+# A quick test with just one method for the case without APT_TEST_GPGPUBKEY.
+APT_TEST_METHODS='file' %runtests
 
-# The same tests, but via cdrom:
-APT_TEST_METHOD=cdrom %runtests
-# ...with a missing release:
-#APT_TEST_METHOD=cdrom_missing_release %runtests
+# The same tests, but just via cdrom with a missing release:
+#APT_TEST_METHODS=cdrom_missing_release %%runtests
+
+%package checkinstall
+Summary: Immediately test %name when installing this package (complete set of tests)
+Group: Other
+BuildArch: noarch
+Requires(pre): %name-tests
+Requires(pre): %complete_reqs_of_tests
+Requires(pre): gpg-keygen
+
+%description checkinstall
+Immediately test %name when installing this package.
+
+The set of testcases is complete (all the methods that are tested by default
+and some additional peculiarities are tested).
+
+%files checkinstall
+
+%pre checkinstall -p %_sbindir/sh-safely
+set -o pipefail
+pushd %_datadir/%name/tests/
+
+# force the target arch for the tests
+#
+# By default, the packages would be built for the arch detected by rpm-build
+# (rpmbuild --eval %%_arch). On installation, they would be compared
+# by rpm for compatibility with the arch detected by rpm. Currently,
+# the mismatch in the detection between rpm and rpm-build can lead to problems,
+# at least, on armh. So, we set the target by force to a value that must work.
+system_arch="$(rpm -q rpm --qf='%%{ARCH}')"
+export APT_TEST_TARGET="$system_arch"
 
 # prepare data for rpm --import
 APT_TEST_GPGPUBKEY="$PWD"/example-pubkey.asc
@@ -348,9 +392,61 @@ gpg-keygen --passphrase '' \
 
 export APT_TEST_GPGPUBKEY
 
-# To not run in parallel, build with --define 'nprocs_for_check %nil'
-%{?!nprocs_for_check:%global nprocs_for_check %__nprocs}
-NPROCS=%nprocs_for_check
+%runtests
+
+# Everything has been tested by now.
+
+%package heavyload-checkinstall
+Summary: Immediately test %name when installing this package (many times under heavy load)
+Group: Other
+BuildArch: noarch
+Requires(pre): %name-tests
+Requires(pre): %complete_reqs_of_tests
+Requires(pre): gpg-keygen
+
+%description heavyload-checkinstall
+Immediately test %name when installing this package.
+
+The tests are run many times and under simulated heavy load (namely,
+in parallel) in order to possibly detect races
+(to make sure no tests are randomly succeeding).
+
+%files heavyload-checkinstall
+
+%pre heavyload-checkinstall -p %_sbindir/sh-safely
+set -o pipefail
+pushd %_datadir/%name/tests/
+
+# force the target arch for the tests
+#
+# By default, the packages would be built for the arch detected by rpm-build
+# (rpmbuild --eval %%_arch). On installation, they would be compared
+# by rpm for compatibility with the arch detected by rpm. Currently,
+# the mismatch in the detection between rpm and rpm-build can lead to problems,
+# at least, on armh. So, we set the target by force to a value that must work.
+system_arch="$(rpm -q rpm --qf='%%{ARCH}')"
+export APT_TEST_TARGET="$system_arch"
+
+# prepare data for rpm --import
+APT_TEST_GPGPUBKEY="$PWD"/example-pubkey.asc
+gpg-keygen --passphrase '' \
+	--name-real 'Some One' --name-email someone@example.com \
+	/dev/null "$APT_TEST_GPGPUBKEY"
+
+export APT_TEST_GPGPUBKEY
+
+# Below we run the same tests many times in order to possibly catch
+# bad races. (It's more probable to catch a race under heavy load;
+# therefore, of the total specified number of tries, we do
+# simultaneously as many as reasonable and possibly even more than TRIES.)
+
+# To not run in parallel, build the pkg with --define 'nprocs_for_check %%nil'
+# Consider multiplying `nproc` by 2 for heavier load.
+NPROCS=`nproc`
+if ! [ "$NPROCS" -gt 0 ] 2>/dev/null; then
+	NPROCS=1
+fi
+%{?nprocs_for_check:NPROCS=%nprocs_for_check}
 TRIES=2
 if [ $TRIES -lt ${NPROCS:-0} ]; then
 	TRIES=$NPROCS
@@ -358,8 +454,6 @@ fi
 
 seq 0 $((TRIES-1)) | xargs -I'{}' ${NPROCS:+-P$NPROCS --process-slot-var=PARALLEL_SLOT} \
 	-- sh -efuo pipefail -c '%runtests '${NPROCS:+'|& sed --unbuffered -e "s/^/[$PARALLEL_SLOT {}] /"'}
-
-popd
 
 %files -f %name.lang
 %_bindir/apt-*
@@ -406,6 +500,40 @@ popd
 %_datadir/%name/tests/
 
 %changelog
+* Fri Oct 29 2021 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt73
+- (tests) Report if a test (marked XFAIL) uneXpectedly passes (XPASS).
+- (tests) Run them not in %%check, but in *-checkinstall subpkgs. (To break
+  build-dep cycle with apt-repo-tools, whose features are required by the tests,
+  but which needs to be recompiled to be linked with libapt.)
+- (tests) Done more extensive testing of how apt works with "rpm" repos
+  via any of the file, http(s), cdrom methods; including:
+  + re-fetching if the saved complete or partial pkglist indices are corrupt
+    (see https://bugzilla.altlinux.org/show_bug.cgi?id=40746#c9 );
+  + the verification of the checksums of pkglist indices. (The verification
+    is tested in two ways:
+    * The verification of the checksum of a specific type is tested by faking
+      it in the meta-data: for MD5, SHA1, SHA256, BLAKE2b and just the size.
+    * Simply testing that a faked pkglist file of the same size is rejected--no
+      matter which hashing algorithm is used.)
+  + the verification of the checksums of rpm archives. (The verification
+    is tested in two ways:
+    * The verification of the checksum of a specific type is tested by faking
+      it in the meta-data: for MD5, SHA1, SHA256, BLAKE2b.
+    * Simply testing that a faked rpm file of the same size is rejected--no
+      matter which hashing algorithm is used.)
+- (source code; ABI) Reverted a lot of inessential optimizations
+  from 0.5.15lorg2-alt72.
+- (source code; ABI) Got rid of virtual methods with default parameters
+  (because they are confusing for the programmer).
+- (source code; ABI) Backported some pieces of the support for the multiplicity
+  of checksum (and compression) types from apt-rpm (thx imz@):
+  + the type of the compression for "pkglist" indices;
+  + the type of the checksum for "pkglist" indices;
+  + the type of the checksum for "rpm" archives.
+- Added blake2b hash support (thx glebfm@).
+- Changed file and copy download methods to always compute checksums
+  (thx glebfm@).
+
 * Thu Mar 18 2021 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt72
 - Cleaned up the code (thx Dmitry V. Levin ldv@; including
   quite a few commits cherry-picked from http://apt-rpm.org/scm/apt.git):
