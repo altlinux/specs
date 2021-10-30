@@ -2,7 +2,7 @@
 
 Name: lm_sensors3
 Version: 3.6.0
-Release: alt1
+Release: alt2
 
 Summary: Hardware Health Monitoring Tools
 License: LGPLv2+ and GPLv3+ and GPLv2+ and Verbatim and Public Domain
@@ -26,8 +26,6 @@ Patch2: lm_sensors3-3.1.0-makefile-norpath.patch
 
 Requires: libsensors3 = %version-%release
 Provides: lm_sensors
-Obsoletes: lm_sensors
-Conflicts: lm_sensors < 3.1.0-alt1
 
 Provides: lm_sensors = %version-%release
 
@@ -162,6 +160,9 @@ install -pD -m755 prog/init/sysconfig-lm_sensors-convert %buildroot%_datadir/%na
 mkdir -p %buildroot%_datadir/%name
 cp -ar prog/tellerstats %buildroot%_datadir/%name
 
+# remove static library
+rm %buildroot%_libdir/*.a
+
 %post
 %post_service lm_sensors
 
@@ -227,7 +228,6 @@ fi
 
 %files -n libsensors3
 %_libdir/*.so.*
-%exclude %_libdir/*.a
 
 %files -n libsensors3-devel
 %doc doc/libsensors-API.txt doc/developers
@@ -241,6 +241,10 @@ fi
 %endif #static
 
 %changelog
+* Sat Oct 30 2021 Anton Midyukov <antohami@altlinux.org> 3.6.0-alt2
+- remove static library (fix FTBFS with LTO)
+- drop old obsoletes, conflicts
+
 * Thu Jun 03 2021 L.A. Kostis <lakostis@altlinux.ru> 3.6.0-alt1
 - new version 3.6.0.
 
