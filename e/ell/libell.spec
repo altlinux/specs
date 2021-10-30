@@ -1,8 +1,8 @@
 %define git %nil
 
 Name: ell
-Version: 0.40
-Release: alt2
+Version: 0.44
+Release: alt1
 Summary: Embedded Linux library
 Group: System/Libraries
 License: LGPLv2+
@@ -62,6 +62,9 @@ Headers for developing against libell.
 %_pkgconfigdir/ell.pc
 
 %changelog
+* Sat Oct 30 2021 L.A. Kostis <lakostis@altlinux.ru> 0.44-alt1
+- 0.44.
+
 * Wed Jul 14 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.40-alt2
 - added patch with workarounds for Elbrus compiler
 
