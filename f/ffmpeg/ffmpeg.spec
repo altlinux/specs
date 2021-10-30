@@ -156,8 +156,8 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version:	4.4
-Release:	alt7
+Version:	4.4.1
+Release:	alt1
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -890,6 +890,9 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
+* Fri Oct 29 2021 Anton Farygin <rider@altlinux.ru> 2:4.4.1-alt1
+- 4.4.1
+
 * Sat Sep 25 2021 Anton Farygin <rider@altlinux.ru> 2:4.4-alt7
 - Fixes:
   * CVE-2021-38171 in FFmpeg 4.4 does not check the return value of the init_vlc function
