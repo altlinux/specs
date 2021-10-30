@@ -5,7 +5,7 @@
 
 Name: fluxbox
 Version: 1.3.7
-Release: alt3
+Release: alt4
 
 Summary: Fast and lightweight window manager
 Summary(ru_RU.UTF-8): Легкий и быстрый оконный менеджер
@@ -22,7 +22,10 @@ Source4: fluxbox-icons.tar.bz2
 Source5: README.ALT-ru_RU.UTF-8
 Source6: Cthulhain
 Source7: fluxbox.vim
-Patch: fluxbox-gcc11.patch
+Source8: fluxbox-xsessions.desktop
+#Source9: fluxbox-applications.desktop
+Patch0: fluxbox-startfluxbox-pulseaudio.patch
+Patch1: fluxbox-gcc11.patch
 
 # Explanation:
 # - xmessages uses by fbsetbg plus can be invoked from menu
@@ -61,9 +64,24 @@ VIm syntax for fluxbox apps, keys and menu files.
 %description -l ru_RU.UTF-8 -n vim-plugin-fluxbox-syntax
 Подсветка синтаксиса для конфигурационных файлов fluxbox: app, keys и menu.
 
+%package pulseaudio
+Summary:   Enable pulseaudio support
+Group: Graphical desktop/Other
+BuildArch: noarch
+Requires:  %name = %EVR
+Requires:  alsa-plugins-pulse
+Requires:  pulseaudio-daemon pulseaudio-utils
+
+%description pulseaudio
+Enable pulseaudio support.
+
+%description -l ru_RU.UTF-8 pulseaudio
+Включить поддержку pulseaudio в %name.
+
 %prep
 %setup -a4
-%patch -p0
+%patch0 -p0
+%patch1 -p0
 
 # Using mouse wheel for changes Tabs
 sed -i '22a\
@@ -82,8 +100,6 @@ session.screen0.windowScrollAction:\tNextTab
 
 %make_build %{?!_enable_debug: --no-print-directory --silent}
 
-bzip2 ChangeLog
-
 %install
 %makeinstall_std %{?!_enable_debug: --no-print-directory --silent}
 
@@ -101,12 +117,28 @@ s:%%lang(C) ::" %name
 install -pD -m 644 %name-48.xpm %buildroot%_liconsdir/%name.xpm
 install -pD -m 644 %name-32.xpm %buildroot%_niconsdir/%name.xpm
 install -pD -m 644 %name-16.xpm %buildroot%_miconsdir/%name.xpm
+install -pD -m 644 %name-48.png %buildroot%_liconsdir/%name.png
+install -pD -m 644 %name-32.png %buildroot%_niconsdir/%name.png
+install -pD -m 644 %name-16.png %buildroot%_miconsdir/%name.png
 
 install -pD -m 644 %SOURCE1 %buildroot%_menudir/%name
 install -pD -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 install -pD -m 644 %SOURCE3 %buildroot%_sysconfdir/X11/wmsession.d/07%name
 install -pD -m 644 %SOURCE5 .
 install -pD -m 644 %SOURCE6 %buildroot%_datadir/%name/styles/Cthulhain
+
+# this is for desktop integration
+install -pD -m 0644 %SOURCE8 %buildroot%_datadir/xsessions/fluxbox.desktop
+
+# do not install: no need for fluxbox.desktop in applications
+#install -pD -m 0644 %%SOURCE9 %buildroot%_desktopdir/fluxbox.desktop
+
+# trick to use pulseaudio from fedora and mageia
+mkdir -p %{buildroot}%_sysconfdir
+touch -r ChangeLog %buildroot%_sysconfdir/fluxbox-pulseaudio
+
+# too big ChangeLog: let's save disk space
+bzip2 ChangeLog
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog.bz2 COPYING NEWS README* TODO
@@ -116,9 +148,13 @@ install -pD -m 644 %SOURCE6 %buildroot%_datadir/%name/styles/Cthulhain
 %_liconsdir/%name.xpm
 %_niconsdir/%name.xpm
 %_miconsdir/%name.xpm
+%_liconsdir/%name.png
+%_niconsdir/%name.png
+%_miconsdir/%name.png
 %_menudir/%name
 %_sysconfdir/menu-methods/%name
 %config %_sysconfdir/X11/wmsession.d/07%name
+%_datadir/xsessions/fluxbox.desktop
 
 %dir %_sysconfdir/X11/%name/
 %config %_sysconfdir/X11/%name/[!m]*
@@ -131,11 +167,20 @@ install -pD -m 644 %SOURCE6 %buildroot%_datadir/%name/styles/Cthulhain
 %_datadir/%name/overlay
 %_datadir/%name/windowmenu
 
+%files pulseaudio
+%_sysconfdir/fluxbox-pulseaudio
+
 %files -n vim-plugin-fluxbox-syntax
 %vim_syntax_dir/flux*.vim
 %vim_ftdetect_dir/%name.vim
 
 %changelog
+* Sat Oct 30 2021 Igor Vlasenko <viy@altlinux.org> 1.3.7-alt4
+- NMU:
+- added xsessions .desktop file
+- added png icons
+- added fluxbox-pulseaudio
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 1.3.7-alt3
 - NMU: fixed build
 
