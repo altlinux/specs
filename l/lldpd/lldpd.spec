@@ -1,10 +1,10 @@
 Name: lldpd
 Version: 1.0.12
-Release: alt1
+Release: alt2
 Summary: Link Layer Discovery Protocol Daemon
 Source: %name-%version.tar
 Group: Networking/Other
-License: ICS
+License: ISC
 Url: https://lldpd.github.io/
 Vcs: https://github.com/lldpd/lldpd.git
 
@@ -81,6 +81,7 @@ Header files for LLDP Daemon
 %autoreconf
 %configure \
     --enable-pie \
+    --disable-static \
     %{subst_enable cdp} \
     %{subst_enable fdp} \
     %{subst_enable edp} \
@@ -134,7 +135,7 @@ fi
 %dir %_sysconfdir/lldpd.d
 %config(noreplace) %_sysconfdir/lldpd.d/*
 %_sbindir/*
-%_libdir/liblldpctl.so*
+%_libdir/liblldpctl.so.*
 %_datadir/doc/%name-%version/
 %_datadir/bash-completion/completions/*
 %_datadir/zsh/site-functions/*
@@ -143,10 +144,13 @@ fi
 
 %files devel
 %_includedir/*
-%_libdir/liblldpctl.a
+%_libdir/liblldpctl.so
 %_pkgconfigdir/*
 
 %changelog
+* Sun Oct 31 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.12-alt2
+- disable build static lib
+
 * Mon Aug 23 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.12-alt1
 - new version 1.0.12
 
