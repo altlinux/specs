@@ -1,7 +1,7 @@
 %def_without xdg
 %def_without gtk3
 Name: wm-select
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 
 Summary: Application for selecting window manager at startup
@@ -50,6 +50,10 @@ done
 %_bindir/*
 
 %changelog
+* Sun Oct 31 2021 Igor Vlasenko <viy@altlinux.org> 0.9.3-alt1
+- new version:
+- command line options, sessions (ALT/XDG) selection
+
 * Sat Oct 30 2021 Igor Vlasenko <viy@altlinux.org> 0.9.2-alt1
 - new version:
 - optional XDG sessions support (/usr/share/xsessions)
