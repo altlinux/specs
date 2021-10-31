@@ -3,7 +3,7 @@
 %define otrs_user otrs
 
 Name: otrs
-Version: 6.0.36
+Version: 6.0.38
 Release: alt1
 
 Summary: Open source Ticket Request System Community Edition
@@ -153,6 +153,9 @@ cd %installdir/bin/
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %changelog
+* Sun Oct 31 2021 Sergey Y. Afonin <asy@altlinux.org> 6.0.38-alt1
+- New version
+
 * Wed Sep 29 2021 Sergey Y. Afonin <asy@altlinux.org> 6.0.36-alt1
 - New version
   the "((OTRS)) Community Edition Fork" by Znuny GmbH
