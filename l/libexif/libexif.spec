@@ -2,8 +2,8 @@
 %def_disable static
 
 Name: libexif
-Version: 0.6.22
-Release: alt3
+Version: 0.6.23
+Release: alt1
 
 Summary: libexif is a library for parsing, editing, and saving EXIF data
 License: LGPLv2+
@@ -14,9 +14,6 @@ Packager: Dmitriy Khanzhin <jinn@altlinux.org>
 # Source code: https://github.com/libexif/libexif/releases
 Source: %name-%version.tar
 Patch0: libexif-0.6.16-pkgconfig.patch
-Patch1: libexif-0.6.22-upstream-fix-CVE-2020-0198.patch
-Patch2: libexif-0.6.22-upstream-fix-use_the_correct_integer_type.patch
-Patch3: libexif-0.6.22-upstream-fix-CVE-2020-0452.patch
 
 # Automatically added by buildreq on Tue Jun 12 2007
 BuildRequires: doxygen gcc-c++
@@ -53,9 +50,6 @@ linked against %name library.
 %prep
 %setup
 %patch0 -p1 -b .pkgconfig
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 %autoreconf
@@ -66,10 +60,9 @@ linked against %name library.
 %makeinstall
 %find_lang --output=%name.lang %name-%soname
 /bin/rm -rf %buildroot%_datadir/doc/%name
-/bin/bzip2 -9 ChangeLog
 
 %files -f %name.lang
-%doc AUTHORS NEWS README ChangeLog.bz2
+%doc AUTHORS NEWS README
 %_libdir/*.so.*
 
 %files devel
@@ -83,6 +76,9 @@ linked against %name library.
 %endif
 
 %changelog
+* Sun Oct 31 2021 Dmitriy Khanzhin <jinn@altlinux.org> 0.6.23-alt1
+- 0.6.23
+
 * Tue Jan 19 2021 Dmitriy Khanzhin <jinn@altlinux.org> 0.6.22-alt3
 - added upstream commit:
   + fixed a incorrect overflow check that could be optimized away
