@@ -14,16 +14,19 @@
 %def_enable	snmp
 %def_enable	redis
 
+# static delel library
+%def_disable	native_connector
+
 # https://lists.altlinux.org/pipermail/devel/2019-March/207208.html
 %def_disable	unit_tests
 
 Name: syslog-ng
-Version: 3.32.1
+Version: 3.34.1
 Release: alt1
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
-License: %gpllgpl2only
+License: GPL-2.0-or-later and LGPL-2.1-or-later
 URL: https://www.syslog-ng.com
 
 Provides: syslogd-daemon
@@ -38,8 +41,6 @@ Source: %name-%version.tar.gz
 #https://github.com/balabit/syslog-ng.git
 
 Patch1: %name-%version-%release.patch
-
-BuildRequires: rpm-build-licenses
 
 # Automatically added by buildreq on Fri Apr 19 2013 (-bi)
 # optimized out: elfutils libcom_err-devel libkrb5-devel pkg-config python-base python-modules
@@ -246,6 +247,10 @@ skip_submodules=1 ./autogen.sh
 #export LIBMONGO_CFLAGS="-I%_includedir/libmongoc-1.0 -I%_includedir/libbson-1.0"
 #export LIBMONGO_LIBS="-lsasl2 -lssl -lcrypto -lrt -lmongoc-1.0 -lbson-1.0"
 
+%if_enabled native_connector
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%endif
+
 %configure \
  --sbindir=/sbin \
  --sysconfdir=%_sysconfdir/%name \
@@ -326,6 +331,11 @@ install -c -m 644 doc/xsd/patterndb-1.xsd doc/xsd/patterndb-2.xsd doc/xsd/patter
     %buildroot%_datadir/%name/xsd
 
 find %buildroot -name "*.la" -exec rm -f {} +
+
+%if_disabled native_connector
+rm -f %buildroot%_pkgconfigdir/%name-native-connector.pc
+rm -f %buildroot%_libdir/libsyslog-ng-native-connector.a
+%endif
 
 %post
 %post_service %name
@@ -418,6 +428,8 @@ fi
 # added in 3.28.1-alt1
 %_libdir/%name/libazure-auth-header.so
 %_libdir/%name/libsecure-logging.so
+# added in 3.34.1-alt1
+%_libdir/%name/libregexp-parser.so
 
 %_libdir/lib%name-*.so.*
 %_libdir/libevtlog-*.so.*
@@ -523,10 +535,17 @@ fi
 %_libdir/lib%name.so
 %_pkgconfigdir/%name.pc
 
+%if_enabled native_connector
 %_pkgconfigdir/%name-native-connector.pc
 %_libdir/libsyslog-ng-native-connector.a
+%endif
 
 %changelog
+* Sun Oct 31 2021 Sergey Y. Afonin <asy@altlinux.org> 3.34.1-alt1
+- 3.34.1
+- updated License tag to SPDX syntax, fixed GPL/LGPL versions
+- disabled build native connector static library (fixed build with LTO)
+
 * Tue Jun 08 2021 Sergey Y. Afonin <asy@altlinux.org> 3.32.1-alt1
 - 3.32.1
 - fixed build without rpm-build-python (ALT #40178)
