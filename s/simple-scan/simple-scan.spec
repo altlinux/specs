@@ -6,7 +6,7 @@
 %def_enable packagekit
 
 Name: simple-scan
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1%beta
 
 Summary: Simple scanning utility
@@ -63,6 +63,9 @@ scanner and quickly have the image/document in an appropriate format.
 %_man1dir/*
 
 %changelog
+* Sun Oct 31 2021 Yuri N. Sedunov <aris@altlinux.org> 40.6-alt1
+- 40.6
+
 * Thu Sep 23 2021 Yuri N. Sedunov <aris@altlinux.org> 40.5-alt1
 - 40.5
 - data/org.gnome.SimpleScan.gschema.xml: fixed PageSide enum (ALT #40970)
