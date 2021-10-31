@@ -109,7 +109,7 @@
 
 Name: weston
 Version: %ver_major.0.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Reference compositor for Wayland
 Group: Graphical desktop/Other
@@ -119,7 +119,8 @@ Url: http://wayland.freedesktop.org/
 Vcs: https://gitlab.freedesktop.org/wayland/weston.git
 Source: %name-%version.tar
 # https://gitlab.freedesktop.org/wayland/weston/-/issues/517
-Patch: weston-9.0.0-alt-ivi-shell-test_LTO.patch
+Patch1: weston-9.0.0-alt-ivi-shell-test_LTO.patch
+Patch2: weston-9.0.0-alt-launch-group.patch
 
 Requires: lib%name = %EVR
 Requires: xkeyboard-config
@@ -204,11 +205,13 @@ Header files for doing development with the weston.
 
 %prep
 %setup
-%patch -p1 -b .ivi
+%patch1 -p1 -b .ivi
+%patch2 -p1 -b .launch-group
 
 %build
 %meson \
 	--libexecdir=%clientsdir \
+	-Dweston-launch-group=xgrp \
 	%{?_disable_backend_x11:-Dbackend-x11=false} \
 	%{?_disable_backend_rdp:-Dbackend-rdp=false} \
 	%{?_disable_xwayland:-Dxwayland=false} \
@@ -227,8 +230,6 @@ sed \
 	-e 's,@clientsdir@,%clientsdir,g' \
 	.gear/%name.ini > %buildroot/%_xdgconfigdir/%name/%name.ini
 
-chmod +s %buildroot/%_bindir/%name-launch
-
 %check
 %__meson_test
 
@@ -236,6 +237,7 @@ chmod +s %buildroot/%_bindir/%name-launch
 %dir %_xdgconfigdir/%name
 %config(noreplace) %_xdgconfigdir/%name/%name.ini
 %_bindir/*
+%attr (4710,root,xgrp) %_bindir/weston-launch
 %dir %_libdir/%name
 %{?_enable_color_management_colord:%_libdir/%name/cms-colord.so}
 %{?_enable_color_management_lcms:%_libdir/%name/cms-static.so}
@@ -289,6 +291,9 @@ chmod +s %buildroot/%_bindir/%name-launch
 %_datadir/pkgconfig/lib%name-%api_ver-protocols.pc
 
 %changelog
+* Sun Oct 31 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 9.0.0-alt1.2
+- weston-launch: changed perms mode, subject of xgrp group (closes #41205)
+
 * Sun Sep 12 2021 Yuri N. Sedunov <aris@altlinux.org> 9.0.0-alt1.1
 - tests/ivi-layout-test-plugin.c: fixed for build with LTO
 
