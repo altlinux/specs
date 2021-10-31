@@ -1,8 +1,10 @@
 %define native iperf
 %define abiversion 0
 
+%define use_chrpath 1
+
 Name: iperf3
-Version: 3.9
+Version: 3.10.1
 Release: alt1
 
 Summary: A TCP, UDP, and SCTP network bandwidth measurement tool
@@ -15,9 +17,13 @@ Source1: iperf3.sysconfig
 Source2: iperf3.init
 Source3: iperf3.service
 
-Patch0: iperf3-3.7-idle-tcp-DoS.patch
+Patch0: iperf3-3.10-idle-tcp-DoS.patch
 
 Requires: lib%name-%abiversion = %version-%release
+
+%ifdef use_chrpath
+BuildRequires: chrpath
+%endif
 
 %package -n lib%name-%abiversion
 Summary: iperf shared library
@@ -56,16 +62,19 @@ This package contains development files of iperf3
 %prep
 %setup -q -n %native-%version
 
-%patch0 -p2
+%patch0 -p1
 
 %build
 
 # fixed RPATH issue
+# https://lists.altlinux.org/pipermail/community/2014-October/682803.html
+%ifndef use_chrpath
 libtoolize --copy --force --automake
 aclocal -I config
 autoheader
 automake --foreign --add-missing --copy
 autoconf
+%endif
 
 %configure
 %make_build
@@ -79,6 +88,11 @@ install -pDm0644 %SOURCE1 %buildroot/%_sysconfdir/sysconfig/%name
 
 install -pDm0755 %SOURCE2 %buildroot/%_initdir/%name
 install -pDm0644 %SOURCE3 %buildroot/%_unitdir/%name.service
+
+# fixed RPATH issue
+%ifdef use_chrpath
+chrpath -d %buildroot/%_bindir/iperf3
+%endif
 
 %post
 %post_service %name
@@ -102,6 +116,11 @@ install -pDm0644 %SOURCE3 %buildroot/%_unitdir/%name.service
 %_libdir/lib%native.so
 
 %changelog
+* Sun Oct 31 2021 Sergey Y. Afonin <asy@altlinux.org> 3.10.1-alt1
+- New version
+- Switched to chrpath for remove RPATH
+  (autoconf 2.71 is needed for reconfigure since 3.10.1)
+
 * Wed Aug 19 2020 Sergey Y. Afonin <asy@altlinux.org> 3.9-alt1
 - New version
 
