@@ -25,7 +25,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.17.1
+Version: 2.17.3
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -91,7 +91,7 @@ BuildRequires: doxygen graphviz ImageMagick-tools
 %endif
 
 %if_enabled tests
-BuildRequires: catch
+BuildRequires: catch2-devel
 %endif
 
 #set_verify_elf_method textrel=strict,rpath=strict,unresolved=strict
@@ -594,6 +594,12 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Sun Oct 31 2021 Pavel Vainerman <pv@altlinux.ru> 2.17.3-alt1
+- [uwebsocket]: minor refactoring and fixes
+
+* Sun Oct 31 2021 Pavel Vainerman <pv@altlinux.ru> 2.17.2-alt1
+- used catch2 instead catch
+
 * Thu Oct 28 2021 Pavel Vainerman <pv@altlinux.ru> 2.17.1-alt1
 - DBServer-PGSQL: new libpqxx (c++17)
 
