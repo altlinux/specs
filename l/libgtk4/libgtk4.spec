@@ -33,7 +33,7 @@
 
 Name: lib%_name%api_ver_major
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: The GIMP ToolKit (GTK)
 Group: System/Libraries
@@ -74,8 +74,8 @@ Requires: librsvg >= %rsvg_ver
 Requires: gtk+3-themes-incompatible
 %{?_enable_colord:Requires: colord}
 
-BuildRequires(pre): meson rpm-build-gnome
-BuildRequires: gcc-c++ sassc
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires: meson gcc-c++ sassc
 BuildRequires: glib2-devel >= %glib_ver libgio-devel
 BuildRequires: libcairo-devel >= %cairo_ver
 BuildRequires: libcairo-gobject-devel >= %cairo_ver
@@ -95,7 +95,7 @@ BuildRequires: libXdamage-devel libX11-devel libXcursor-devel
 BuildRequires: libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel
 BuildRequires: libXrender-devel libXt-devel
 %endif
-%{?_enable_gtk_doc:BuildRequires: gtk-doc >= %gtk_doc_ver gi-docgen pandoc xsltproc}
+%{?_enable_gtk_doc:BuildRequires: gi-docgen}
 %{?_enable_man:BuildRequires: xsltproc docbook-style-xsl}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver libpango-gir-devel libatk-gir-devel >= %atk_ver libgdk-pixbuf-gir-devel libgraphene-gir-devel}
 %{?_enable_colord:BuildRequires: libcolord-devel >= %colord_ver}
@@ -370,6 +370,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Mon Nov 01 2021 Yuri N. Sedunov <aris@altlinux.org> 4.4.0-alt1.1
+- updated BR for "gtk_doc"
+
 * Mon Aug 23 2021 Yuri N. Sedunov <aris@altlinux.org> 4.4.0-alt1
 - 4.4.0
 
