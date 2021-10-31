@@ -3,7 +3,7 @@
 
 Name: lib%rname
 Version: %api_ver.32
-Release: alt1
+Release: alt2
 Summary: A graph based image processing framework
 License: %gpllgpl3plus
 Group: System/Libraries
@@ -50,6 +50,10 @@ GObject introspection data for the GEGL library.
 %prep
 %setup -n %rname-%version
 %patch -p1
+%ifarch %e2k
+# EDG frontend bug workaround
+sed -i 's/g_clear_object (/#undef g_clear_object\ng_clear_object((GObject**)/' operations/common-cxx/piecewise-blend.cc
+%endif
 
 %build
 %meson \
@@ -89,6 +93,9 @@ rm -f %buildroot%_libdir/%rname-%api_ver/*.la
 %_typelibdir/Gegl-%api_ver.typelib
 
 %changelog
+* Sun Oct 31 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.4.32-alt2
+- fixed build for Elbrus
+
 * Mon Sep 20 2021 Valery Inozemtsev <shrek@altlinux.ru> 0.4.32-alt1
 - 0.4.32
 
