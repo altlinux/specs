@@ -1,6 +1,6 @@
 Name: larswm
 Version: 7.5.3
-Release: alt3
+Release: alt3.1
 
 Group: Graphical desktop/Other
 Summary: Lars Tiling Window Manager
@@ -48,7 +48,7 @@ cat >"%buildroot%_datadir/xsessions/%name.desktop" <<EOF
 Name=LarsWM
 Comment=larswm - tiling window manager
 Comment[ru]=larswm - Фреймовый оконный менеджер
-Icon=%name-logo.png
+Icon=%name-logo
 Exec=%name
 Type=Application
 Keywords=launch;%name;desktop;session;
@@ -64,6 +64,9 @@ EOF
 %_datadir/xsessions/%name.desktop
 
 %changelog
+* Sun Oct 31 2021 Igor Vlasenko <viy@altlinux.org> 7.5.3-alt3.1
+- NMU: fixed Icon= in xsessions.desktop
+
 * Sun Oct 31 2021 Igor Vlasenko <viy@altlinux.org> 7.5.3-alt3
 - NMU: added xsessions (WM packaging policy 2.0)
 
