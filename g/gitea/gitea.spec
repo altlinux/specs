@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:    gitea
-Version: 1.14.5
+Version: 1.15.6
 Release: alt1
 
 Summary: Git with a cup of tea, painless self-hosted git service
@@ -24,7 +24,7 @@ Patch2: ALT_config.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang >= 1.13 go-bindata
-BuildRequires: npm >= 6.13.6-alt2 node >= 10.13
+BuildRequires: npm >= 6.13.6-alt2 node >= 10.13 esbuild
 BuildRequires: libpam0-devel
 BuildRequires: /proc
 
@@ -39,11 +39,14 @@ and Gitlab. Gitea is a fork of Gogs.
 # build the JavaScript and CSS files
 # $ npm install
 # $ git add -f node_modules
+# $ rm -f node_modules/esbuild/bin/esbuild
 # $ git commit -n --no-post-rewrite -m "add node js modules"
 
 %setup
 %patch1 -p1
 %patch2 -p1
+mkdir -p node_modules/esbuild/bin
+ln -s %_bindir/esbuild node_modules/esbuild/bin/esbuild
 
 %build
 export BUILDDIR="$PWD/.gopath"
@@ -92,6 +95,9 @@ useradd -r -g %name -c 'Gitea daemon' \
 %doc *.md
 
 %changelog
+* Sun Oct 31 2021 Alexey Shabalin <shaba@altlinux.org> 1.15.6-alt1
+- Build new version.
+
 * Fri Jul 30 2021 Alexey Shabalin <shaba@altlinux.org> 1.14.5-alt1
 - Build new version.
 
