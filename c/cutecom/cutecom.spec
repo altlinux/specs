@@ -1,6 +1,13 @@
+%ifarch %e2k
+# pandoc is unavailable because depends on haskell
+%def_without pandoc
+%else
+%def_with pandoc
+%endif
+
 Name:     cutecom
 Version:  0.51.0
-Release:  alt2
+Release:  alt3
 
 Summary:  A graphical serial terminal
 Summary(pl): Graficzny terminal szeregowy
@@ -22,8 +29,10 @@ BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Gui)
 BuildRequires: pkgconfig(Qt5SerialPort)
 BuildRequires: pkgconfig(Qt5Widgets)
+%if_with pandoc
 # build MarkDown
 BuildRequires: pandoc
+%endif
 
 # Required for xmodem support
 Requires: lrzsz
@@ -63,16 +72,26 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=System \
 	cutecom.desktop
 
+%if_with pandoc
 pandoc -f markdown -t html README.md -o README.html
+%endif
 
 %files
-%doc Changelog LICENSE README.html *.png TODO
+%doc Changelog LICENSE *.png TODO
+%if_with pandoc
+%doc README.html
+%else
+%doc README.md
+%endif
 %_bindir/*
 %_man1dir/*
 %_desktopdir/*
 %_iconsdir/hicolor/scalable/apps/cutecom.svg
 
 %changelog
+* Sun Oct 31 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.51.0-alt3
+- Fixed build for Elbrus
+
 * Sun Aug 16 2020 Anton Midyukov <antohami@altlinux.org> 0.51.0-alt2
 - Fix build with qt5 5.15
 
