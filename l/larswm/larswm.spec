@@ -1,6 +1,6 @@
 Name: larswm
 Version: 7.5.3
-Release: alt2.1.qa2
+Release: alt3
 
 Group: Graphical desktop/Other
 Summary: Lars Tiling Window Manager
@@ -32,8 +32,8 @@ mkdir -p $RPM_BUILD_ROOT%_liconsdir/
 install %SOURCE1 $RPM_BUILD_ROOT%_liconsdir/%name-logo.png
 
 # session file
-%__install -d $RPM_BUILD_ROOT%_sysconfdir/X11/wmsession.d
-%__cat > $RPM_BUILD_ROOT%_sysconfdir/X11/wmsession.d/14%name << EOF
+install -d $RPM_BUILD_ROOT%_sysconfdir/X11/wmsession.d
+cat > $RPM_BUILD_ROOT%_sysconfdir/X11/wmsession.d/14%name << EOF
 NAME=%name
 ICON=%_liconsdir/%name-logo.png
 EXEC=%_bindir/%name
@@ -42,14 +42,31 @@ SCRIPT:
 exec %_bindir/%name
 EOF
 
+mkdir -p %buildroot%_datadir/xsessions/
+cat >"%buildroot%_datadir/xsessions/%name.desktop" <<EOF
+[Desktop Entry]
+Name=LarsWM
+Comment=larswm - tiling window manager
+Comment[ru]=larswm - Фреймовый оконный менеджер
+Icon=%name-logo.png
+Exec=%name
+Type=Application
+Keywords=launch;%name;desktop;session;
+EOF
+
+
 %files
 %doc ChangeLog README README.9menu README.9wm sample.larswmrc sample.xsession
 %_bindir/*
 %_mandir/man1/*
-%_sysconfdir/X11/wmsession.d/*
 %_liconsdir/*
+%_sysconfdir/X11/wmsession.d/*
+%_datadir/xsessions/%name.desktop
 
 %changelog
+* Sun Oct 31 2021 Igor Vlasenko <viy@altlinux.org> 7.5.3-alt3
+- NMU: added xsessions (WM packaging policy 2.0)
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 7.5.3-alt2.1.qa2
 - NMU: rebuilt for debuginfo.
 
