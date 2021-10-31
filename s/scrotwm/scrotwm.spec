@@ -2,7 +2,7 @@
 
 Name: scrotwm
 Version: 0.9.23
-Release: alt3
+Release: alt4
 
 Summary: Tiling window manager for X
 
@@ -14,6 +14,7 @@ Source: http://scrotwm.org/snapshot/%name-%version.tgz
 Packager: Dmitry Derjavin <dd@altlinux.org>
 
 Source1: scrotwm.wmsession
+Source2: scrotwm.png
 
 BuildRequires: libX11-devel libXrandr-devel libXrender-devel libXt-devel iconv
 
@@ -47,16 +48,35 @@ iconv -f utf-8 -t koi8-r %buildroot%_mandir/ru/man1/%name\.1 > manpage.txt
 mv manpage.txt %buildroot%_mandir/ru/man1/%name\.1
 
 install -pD -m 644 %SOURCE1 %buildroot%_x11sysconfdir/wmsession.d/%PRIO%name
+install -pD -m 644 %SOURCE2 %buildroot%_iconsdir/hicolor/64x64/apps/scrotwm.png
+
+mkdir -p %buildroot%_datadir/xsessions/
+cat >"%buildroot%_datadir/xsessions/%name.desktop" <<__EOF__
+[Desktop Entry]
+Name=ScrotWM
+Comment=Light and fast tiling window manager
+Icon=%name
+Exec=%name
+Type=Application
+__EOF__
+
 
 %files
+#%doc README
 %_bindir/%name
 %_libdir/libswmhack.*
 %_man1dir/*
 %_mandir/??/*
+%_iconsdir/hicolor/64x64/apps/scrotwm.png
+%_datadir/xsessions/%name.desktop
 %config %_x11sysconfdir/wmsession.d/%PRIO%name
-#%doc README
 
 %changelog
+* Sun Oct 31 2021 Igor Vlasenko <viy@altlinux.org> 0.9.23-alt4
+- NMU: WM packaging policy 2.0:
+- added .desktop
+- added pixmap
+
 * Tue Feb 08 2011 Dmitry Derjavin <dd@altlinux.org> 0.9.23-alt3
 - libdir fix for debuginfo.
 
