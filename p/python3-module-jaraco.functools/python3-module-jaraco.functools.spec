@@ -1,7 +1,7 @@
 %define  modulename jaraco.functools
 
 Name:    python3-module-%modulename
-Version: 3.3.0
+Version: 3.4.0
 Release: alt1
 
 Summary: Additional functools in the spirit of stdlib's functools
@@ -42,6 +42,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{modulename}*
 
 %changelog
+* Mon Nov 01 2021 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt1
+- New version.
+
 * Sat Mar 27 2021 Andrey Cherepanov <cas@altlinux.org> 3.3.0-alt1
 - New version.
 
