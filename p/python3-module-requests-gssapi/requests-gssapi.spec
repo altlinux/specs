@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%mname
-Version: 1.2.1
+Version: 1.2.3
 Release: alt1
 
 Summary: A GSSAPI/SPNEGO authentication handler for python-requests
@@ -20,12 +20,15 @@ BuildRequires(pre): rpm-build-python3
 
 %if_with check
 BuildRequires: python3(gssapi)
-BuildRequires: python3(mock)
 BuildRequires: python3(requests)
 BuildRequires: python3(tox)
 %endif
 
 BuildArch: noarch
+
+# PyPI name
+%py3_provides requests-gssapi
+Provides: python3-module-requests_gssapi = %EVR
 
 %description
 Requests is an HTTP library, written in Python, for human beings.
@@ -48,20 +51,23 @@ guaranteed to be compatible.
 %python3_install
 
 %check
-cat > tox.ini <<EOF
+cat > tox.ini <<'EOF'
 [testenv]
-deps = -rrequirements.txt
 commands = {envpython} -m pytest {posargs:.}
 EOF
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -v
+export TOXENV=py3
+tox.py3 --sitepackages -vvr
 
 %files
 %doc AUTHORS LICENSE *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/requests_gssapi/
+%python3_sitelibdir/requests_gssapi-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Nov 01 2021 Stanislav Levin <slev@altlinux.org> 1.2.3-alt1
+- 1.2.1 -> 1.2.3.
+
 * Mon Jul 06 2020 Stanislav Levin <slev@altlinux.org> 1.2.1-alt1
 - 1.1.0 -> 1.2.1.
 
