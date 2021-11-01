@@ -8,7 +8,7 @@
 %def_enable man_pages
 
 Name: %_name-renderer
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Summary: Service for interacting with Digital Media Renderers
@@ -69,6 +69,9 @@ developing applications that use %name-service.
 
 
 %changelog
+* Tue Nov 02 2021 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt1
+- 0.7.2
+
 * Mon Sep 27 2021 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
 - 0.7.1 (new upstream, ported to Meson build system)
 
