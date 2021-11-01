@@ -30,7 +30,7 @@
 
 Name: glib2
 Version: %ver_major.4
-Release: alt2
+Release: alt2.1
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -59,7 +59,7 @@ Patch1: glib-2.53.5-alt-deprecated_paths-nowarning.patch
 Patch2: glib-2.61.3-alt-add-xvt.patch
 Patch3: glib-2.38.2-alt-lfs.patch
 Patch4: glib-2.50.1-alt-dbus_socket_path.patch
-Patch2000: glib-2.64.5-alt-e2k.patch
+Patch2000: glib-2.64.5-1-alt-e2k.patch
 
 %def_with locales
 %if_with locales
@@ -444,6 +444,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon Nov 1 2021 Yuri N. Sedunov <aris@altlinux.org> 2.68.4-alt2.1
+- updated %%e2k patch by ilyakurdyukov@ (cf. BGO#754245)
+
 * Tue Sep 14 2021 Yuri N. Sedunov <aris@altlinux.org> 2.68.4-alt2
 - updated %%e2k patchset by ilyakurdyukov@
 
