@@ -10,7 +10,7 @@
 
 Name: audacity
 Version: 2.4.1
-Release: alt0.git%{commit_short}.2
+Release: alt0.git%{commit_short}.3
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
 License: GPL
@@ -111,6 +111,11 @@ For the most up to date manual content, use the on-line manual.
 %prep
 %setup -n %name-src-%version
 %autopatch -p1
+%ifarch %e2k
+# EDG frontend bug workaround
+sed -i "/struct alignas/{N;N;s/alignas(.*)//;s/{/{alignas(64)/}" src/AudioIO.h
+sed -i "/std::initializer_list/s/static//" src/prefs/GUIPrefs.cpp
+%endif
 
 ln -s locale po || :
 
@@ -202,6 +207,9 @@ echo "$p" | grep -q libmp3lame
 %_datadir/%name/help
 
 %changelog
+* Mon Nov 01 2021 Michael Shigorin <mike@altlinux.org> 2.4.1-alt0.gitd6f841.3
+- fixed build for Elbrus (ilyakurdyukov@)
+
 * Sat May 30 2020 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.4.1-alt0.gitd6f841.2
 - Version v2.4.1 + git master from 2020-05-30, commit d6f8410d5
   Git has fixes for newest wxWidgets 3.1.3 and some other important bug fixes
