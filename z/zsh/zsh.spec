@@ -1,6 +1,6 @@
 Name: zsh
 Version: 5.8
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: A shell with lots of features
@@ -10,12 +10,17 @@ Group: Shells
 Url: http://www.zsh.org
 Source: %name-%version.tar
 Patch: zsh-%version-%release.patch
+# present on master branch
 Patch1: 47867-promptinit-typo-RPOMPT-RPROMPT.patch
+# present on master branch
 Patch2: 47868-promptinit-Fix-prompt-cleanups.patch
 # present on master branch
 Patch3: 47918-completions-for-nsenter-and-unshare.patch
 # present on master branch
 Patch4: 47323-_rpmbuild-Complete-file-arguments-after-r-b-t.patch
+Patch5: alt-packaging-0001-compaudit-fix-zsh-executable-discovery-if-proc-missing.patch
+
+Patch101: alt-rpm-0001-_rpm-complete-q-lastchange.patch
 
 Provides: zsh-doc = %epoch:%version
 Obsoletes: zsh-doc < %epoch:%version
@@ -42,6 +47,8 @@ mechanism, and a lots of other features.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
+%patch101 -p1
 rm config.guess config.sub
 
 %build
@@ -107,6 +114,10 @@ find %buildroot%_datadir/zsh -type f -print0 |
 	xargs -r0 grep -FZl /usr/local/bin/zsh |
 	xargs -r0 subst -p s:/usr/local/bin/zsh:/bin/zsh:g
 
+# Resolve absolute path of zsh binary in compaudit to power Patch5.
+find %buildroot%_datadir/zsh -type f -name compaudit -print0 |
+	xargs -r0 -n1 sed -i s:@packaged_zsh_executable@:%_bindir/zsh:
+
 # Drop useless crap
 rm -f %buildroot%_datadir/zsh/Completion/Linux/_rpmbuild
 
@@ -125,6 +136,11 @@ make check
 %doc Etc/BUGS Etc/CONTRIBUTORS Etc/FAQ Etc/STD-TODO Etc/TODO
 
 %changelog
+* Tue Nov 02 2021 Arseny Maslennikov <arseny@altlinux.org> 1:5.8-alt3
+- New patches:
+  + compaudit: fix zsh executable discovery if /proc missing
+  + _rpm: complete -q --lastchange (Closes: 41261)
+
 * Sat Feb 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1:5.8-alt2
 - Applied zsh-workers/47323 to fix Completion/Redhat/Command/_rpm.
 - /etc/zlogout now only clears the screen on Linux VTs.
@@ -146,7 +162,7 @@ make check
 
 * Mon Sep 04 2017 Fr. Br. George <george@altlinux.ru> 1:5.4.2-alt1
 - Autobuild version bump to 5.4.2
-- ALT: improve _hasher completion (thanks to @arseny)
+- ALT: improve _hasher completion (thanks to arseny@)
 
 * Wed Apr 05 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:5.3.1-alt2
 - Switched builtin pwd -P to use getcwd(3).
