@@ -1,6 +1,6 @@
 Name: poco
 Version: 1.11.0
-Release: alt1
+Release: alt1.1
 Summary: POrtable COmponents C++ Libraries
 License: BSL-1.0
 Group: Development/C++
@@ -8,6 +8,7 @@ Url: http://pocoproject.org/
 
 # https://github.com/pocoproject/poco.git
 Source: %name-%version.tar
+Patch2000: %name-e2k.patch
 
 BuildPreReq: gcc-c++ cmake libsqlite3-devel zlib-devel libpcre-devel
 BuildPreReq: libexpat-devel libssl-devel libmariadb-devel
@@ -183,6 +184,9 @@ C++ Libraries.
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 %build
 %add_optflags -I%_includedir/pcre -fno-strict-aliasing
@@ -191,6 +195,7 @@ cmake \
 	-DLIB_SUFFIX=64 \
 %endif
 	-DCMAKE_BUILD_TYPE:STRING=Release \
+	-DCMAKE_CXX_FLAGS_RELEASE="-DNDEBUG" \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
@@ -275,6 +280,9 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 #files -n lib%name-devel-docs
 
 %changelog
+* Mon Nov 01 2021 Michael Shigorin <mike@altlinux.org> 1.11.0-alt1.1
+- added e2k support patch (ilyakurdyukov@)
+
 * Tue Jun 29 2021 Alexei Takaseev <taf@altlinux.org> 1.11.0-alt1
 - 1.11.0
 
