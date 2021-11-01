@@ -1,5 +1,5 @@
 Name: gptfdisk
-Version: 1.0.5
+Version: 1.0.8
 Release: alt1
 
 Summary: GPT partitioning and MBR repair software
@@ -80,6 +80,9 @@ install -pm644 *.8 %buildroot%_man8dir/
 %_man8dir/fixparts*
 
 %changelog
+* Mon Nov 01 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.8-alt1
+- 1.0.8 (Fixes: CVE-2020-0256, CVE-2021-0308)
+
 * Tue Jun 30 2020 Alexey Shabalin <shaba@altlinux.org> 1.0.5-alt1
 - 1.0.5
 
