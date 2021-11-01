@@ -1,7 +1,7 @@
 Summary: Wrapper for apt-rpm utilities
 
 Name: papt
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 License: GPL-2.0-or-later
@@ -46,6 +46,12 @@ install -D -m644 papt-query.1 %buildroot%_man1dir/papt-query.1
 %_man1dir/papt*.1*
 
 %changelog
+* Mon Nov 01 2021 Alexey Gladkov <legion@altlinux.ru> 0.4.0-alt1
+- Fix regexp for print-uris.
+- Add some debug information.
+- Add BLAKE2b support.
+- Show the number of received and remaining packages.
+
 * Fri Oct 01 2021 Alexey Gladkov <legion@altlinux.ru> 0.3.0-alt1
 - Add utility to search packages in the apt-cache.
 
