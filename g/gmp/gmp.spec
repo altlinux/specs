@@ -4,7 +4,7 @@
 
 Name: gmp
 Version: 6.2.1
-Release: alt3
+Release: alt4
 
 Summary: GNU MP arbitrary precision arithmetic library
 License: LGPLv3+
@@ -165,6 +165,7 @@ __gmpn_dcpi1_divappr_q
 __gmpn_div_q
 __gmpn_divexact
 __gmpn_dump
+__gmpn_fft_best_k
 __gmpn_fib2_ui
 __gmpn_fib2m
 __gmpn_gcd_22
@@ -199,6 +200,7 @@ __gmpn_mu_div_qr_itch
 __gmpn_mu_divappr_q
 __gmpn_mu_divappr_q_itch
 __gmpn_mul_basecase
+__gmpn_mul_fft
 __gmpn_mullo_basecase
 __gmpn_mullo_n
 __gmpn_mulmid
@@ -279,6 +281,10 @@ install -pm644 gmp-mparam.h rand/randmt.h %buildroot%_includedir/
 %endif #cxx && static
 
 %changelog
+* Fri Oct 29 2021 Leontiy Volodin <lvol@altlinux.org> 6.2.1-alt4
+- Enabled visibility for __gmpn_fft_best_k and __gmpn_mul_fft,
+  which are used in gmp-ecm (ALT#41248).
+
 * Thu Aug 26 2021 Dmitry V. Levin <ldv@altlinux.org> 6.2.1-alt3
 - Disabled build and packaging of static libraries.
 
