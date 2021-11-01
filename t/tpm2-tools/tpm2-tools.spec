@@ -2,8 +2,8 @@
 %define _localstatedir %_var
 
 Name: tpm2-tools
-Version: 5.1.1
-Release: alt2
+Version: 5.2
+Release: alt1
 Summary: A bunch of TPM testing toolS build upon tpm2-tss
 Group: System/Configuration/Other
 
@@ -49,6 +49,9 @@ echo %version > VERSION
 %_man1dir/*
 
 %changelog
+* Mon Nov 01 2021 Alexey Shabalin <shaba@altlinux.org> 5.2-alt1
+- new version 5.2
+
 * Tue Aug 31 2021 Alexey Shabalin <shaba@altlinux.org> 5.1.1-alt2
 - Up release for greater then in fedoraimport.
 
