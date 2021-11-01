@@ -63,9 +63,10 @@
 %set_verify_elf_method textrel=relaxed
 %add_findprov_lib_path %vboxdir
 
+
 Name: virtualbox
-Version: 6.1.26
-Release: alt2
+Version: 6.1.28
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -953,6 +954,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Mon Oct 25 2021 Valery Sinelnikov <greh@altlinux.org> 6.1.28-alt1
+- Update to newest version 6.1.28
+
 * Tue Sep 07 2021 Valery Sinelnikov <greh@altlinux.org> 6.1.26-alt2
 - Added patch for kernel 5.14
 

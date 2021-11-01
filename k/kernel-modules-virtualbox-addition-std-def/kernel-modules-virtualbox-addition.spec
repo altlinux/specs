@@ -1,6 +1,6 @@
 %define module_name	virtualbox-addition
-%define module_version  6.1.26
-%define module_release	alt2
+%define module_version  6.1.28
+%define module_release	alt1
 
 %define flavour		std-def
 %define karch x86_64 %ix86
@@ -9,7 +9,7 @@ BuildRequires(pre): kernel-headers-modules-std-def
 
 %setup_kernel_module %flavour
 
-%define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
+%define module_dir /lib/modules/%kversion-%flavour-%krelease/updates
 
 %define guest_module_name	vboxguest
 %define vfs_module_name		vboxsf
@@ -28,8 +28,6 @@ ExclusiveOS: Linux
 Url: http://www.virtualbox.org/
 
 Patch0: vboxcommon-5.4.patch
-Patch1: fixes_for_5.14.patch
-Patch2: fixes_drm_for_5.14.patch
 
 BuildPreReq: gcc-c++
 BuildRequires: perl
@@ -51,61 +49,13 @@ PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 ExclusiveArch: %karch
 
 Requires: virtualbox-guest-common
-Requires: kernel-modules-%module_name-video-%flavour = %version-%release
-Requires: kernel-modules-%module_name-guest-%flavour = %version-%release
+Provides: kernel-modules-%module_name-video-%flavour = %version-%release
+Provides: kernel-modules-%module_name-guest-%flavour = %version-%release
 Requires: virtualbox-guest-common-vboxsf
 
 %description
 This package contains VirtualBox addition modules (vboxguest, vboxsf)
 that are needed for additonal guests support for VirtualBox.
-
-
-%package -n kernel-modules-%module_name-video-%flavour
-Summary: VirtualBox video modules
-Version: %module_version
-Release: %module_release.%kcode.%kbuildrelease
-PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
-License: GPLv2
-Group: System/Kernel and hardware
-
-Provides: kernel-modules-%module_name-video-%kversion-%flavour-%krelease = %version-%release
-Conflicts: kernel-modules-%module_name-video-%kversion-%flavour-%krelease < %version-%release
-Conflicts: kernel-modules-%module_name-video-%kversion-%flavour-%krelease > %version-%release
-
-Provides: kernel-modules-%video_module_name-%kversion-%flavour-%krelease = %version-%release
-Provides: kernel-modules-%video_module_name-%flavour = %version-%release
-
-Requires: virtualbox-guest-common-vboxvideo
-
-%description -n kernel-modules-%module_name-video-%flavour
-This package contains VirtualBox addition vboxvideo module
-that are needed for additonal guests support for VirtualBox.
-You can also use vboxvideo module from staging subpackage of
-your kernel.
-
-
-%package -n kernel-modules-%module_name-guest-%flavour
-Summary: VirtualBox guest modules
-Version: %module_version
-Release: %module_release.%kcode.%kbuildrelease
-PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
-License: GPLv2
-Group: System/Kernel and hardware
-
-Provides: kernel-modules-%module_name-guest-%kversion-%flavour-%krelease = %version-%release
-Conflicts: kernel-modules-%module_name-guest-%kversion-%flavour-%krelease < %version-%release
-Conflicts: kernel-modules-%module_name-guest-%kversion-%flavour-%krelease > %version-%release
-
-Provides: kernel-modules-%guest_module_name-%kversion-%flavour-%krelease = %version-%release
-Provides: kernel-modules-%guest_module_name-%flavour = %version-%release
-
-Requires: virtualbox-guest-common-vboxguest
-
-%description -n kernel-modules-%module_name-guest-%flavour
-This package contains VirtualBox addition vboxvideo module
-that are needed for additonal guests support for VirtualBox.
-You can also use vboxvideo module from staging subpackage of
-your kernel.
 
 
 %prep
@@ -117,12 +67,9 @@ popd
 tar jxvf %kernel_src/kernel-source-%vfs_module_name-%module_version.tar.bz2
 pushd kernel-source-%vfs_module_name-%module_version
 %patch0 -p1
-%patch1 -p6
 popd
 tar jxvf %kernel_src/kernel-source-%video_module_name-%module_version.tar.bz2
 pushd kernel-source-%video_module_name-%module_version
-%patch2 -p7
-popd
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -137,27 +84,24 @@ popd
 %install
 mkdir -p %buildroot/%module_dir
 install -pD -m644 kernel-source-%guest_module_name-%module_version/vboxguest.ko \
-    %buildroot%module_dir/vboxguestvbox.ko
+    %buildroot%module_dir/vboxguest.ko
 install -pD -m644 kernel-source-%vfs_module_name-%module_version/vboxsf.ko \
-    %buildroot%module_dir/vboxsfvbox.ko
+    %buildroot%module_dir/vboxsf.ko
 install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko \
-    %buildroot%module_dir/vboxvideovbox.ko
+    %buildroot%module_dir/vboxvideo.ko
 
 %files
 %defattr(644,root,root,755)
-%module_dir/vboxsfvbox.ko
-%exclude %module_dir/vboxvideovbox.ko
-%exclude %module_dir/vboxguestvbox.ko
-
-%files -n kernel-modules-%module_name-guest-%flavour
-%module_dir/vboxguestvbox.ko
-
-%files -n kernel-modules-%module_name-video-%flavour
-%module_dir/vboxvideovbox.ko
+%module_dir/vboxsf.ko
+%module_dir/vboxguest.ko
+%module_dir/vboxvideo.ko
 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Oct 25 2021 Valery Sinelnikov <greh@altlinux.org> 6.1.28-alt1
+- Updated template for virtualbox 6.1.28
 
 * Thu Sep 09 2021 Valery Sinelnikov <greh@altlinux.org> 6.1.26-alt2
 - Fixed build with kernel-5.14
