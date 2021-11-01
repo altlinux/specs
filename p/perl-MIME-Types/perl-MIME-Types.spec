@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist MIME-Types
 Name: perl-MIME-Types
-Version: 2.21
+Version: 2.22
 Release: alt1
 
 Summary: Definition of MIME types
@@ -55,6 +55,9 @@ Requires: %name = %version-%release
 %doc	%perl_vendor_privlib/MojoX/MIME/*.pod
 
 %changelog
+* Mon Nov 01 2021 Igor Vlasenko <viy@altlinux.org> 2.22-alt1
+- automated CPAN update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.21-alt1
 - automated CPAN update
 
