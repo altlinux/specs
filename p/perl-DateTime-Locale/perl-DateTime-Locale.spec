@@ -1,11 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(DateTime/Locale.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 %define dist DateTime-Locale
 Name: perl-%dist
-Version: 1.32
-Release: alt2
+Version: 1.33
+Release: alt1
 
 Summary: Localization support for DateTime.pm
 License: GPL or Artistic
@@ -43,6 +43,9 @@ on available locales.
 %perl_vendor_privlib/auto/share/dist/DateTime-Locale
 
 %changelog
+* Mon Nov 01 2021 Igor Vlasenko <viy@altlinux.org> 1.33-alt1
+- automated CPAN update
+
 * Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 1.32-alt2
 - fixed build
 
