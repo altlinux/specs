@@ -1,6 +1,7 @@
 %def_without lightning
 %def_without system_mozldap
-%def_without enigmail
+%def_without system_nss
+%define clang_version 12.0
 
 %define sm_prefix %_libdir/%name
 %define sm_datadir %_datadir/%name
@@ -8,7 +9,6 @@
 %define sm_arch_extensionsdir %sm_prefix/extensions
 %define sm_noarch_extensionsdir %sm_datadir/extensions
 %define sm_cid \{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}
-%define enigmail_ciddir %sm_arch_extensionsdir/\{847b3a00-7ab1-11d4-8f02-006008948af5\}
 %define sm_idldir %_datadir/idl/%name
 %define sm_includedir %_includedir/%name
 %define sm_develdir %sm_prefix-devel
@@ -20,7 +20,7 @@
 %define ciddir %sm_prefix/extensions/%cid
 
 Name: seamonkey
-Version: 2.53.8.1
+Version: 2.53.9.1
 Release: alt1
 Epoch: 1
 Summary: Web browser and mail reader
@@ -38,7 +38,6 @@ Source2: mozilla-searchplugins.tar
 Source3: seamonkey-alt-browser.desktop
 Source4: seamonkey-alt-mail.desktop
 Source5: seamonkey-prefs.js
-Source6: enigmail.tar
 Source7: seamonkey-mozconfig
 Source8: rpm-build.tar
 Source9: cbindgen-vendor.tar
@@ -57,6 +56,8 @@ Patch9: mozilla-js-makefile.patch
 Patch10: firefox-32-baseline-disable.patch
 Patch11: seamonkey-2.53.2-alt-ppc64le-disable-broken-getProcessorLineSize-code.patch
 Patch12: seamonkey-2.53.2-alt-ppc64le-fix-clang-error-invalid-memory-operand.patch
+Patch13: seamonkey-packed_simd-for-rust-1.56.patch
+Patch14: seamonkey-alt-disable-elfhack.patch
 Patch120: 0020-MOZILLA-1666567-land-NSS-8ebee3cec9cf-UPGRADE_NSS_RE.patch
 Patch121: 0021-MOZILLA-1666567-land-NSS-8fdbec414ce2-UPGRADE_NSS_RE.patch
 Patch122: 0022-MOZILLA-1666567-land-NSS-NSS_3_58_BETA1-UPGRADE_NSS_.patch
@@ -92,11 +93,10 @@ BuildRequires(pre): browser-plugins-npapi-devel
 BuildPreReq: mozldap-devel
 %endif
 BuildRequires: gcc-c++
-%define clang_version 11.0
 BuildRequires: clang%clang_version
 BuildRequires: clang%clang_version-devel
 BuildRequires: llvm%clang_version-devel
-BuildRequires: lld-devel
+BuildRequires: lld%clang_version-devel
 BuildRequires: libdnet-devel libgtk+2-devel libgtk+3-devel libIDL-devel wget libarchive-devel libpixman-devel
 BuildRequires: libjpeg-devel libpng-devel libXinerama-devel libXext-devel
 BuildRequires: libXp-devel libXt-devel makedepend net-tools unzip libalsa-devel yasm libwireless-devel
@@ -130,8 +130,10 @@ BuildRequires: hunspell-ru
 
 # Mozilla requires
 BuildRequires: libnspr-devel       >= 4.9.2-alt1
+%if_with system_nss
 BuildRequires: libnss-devel        >= 3.15.1-alt1
 BuildRequires: libnss-devel-static >= 3.15.1-alt1
+%endif
 
 # Python requires
 BuildRequires: python2-base
@@ -193,11 +195,6 @@ seamonkey packages by some Alt Linux Team Policy compatible way.
 %prep
 %setup -n %name-%version%beta_suffix
 
-### Moved enigmail to mailnews
-%if_with enigmail
-tar -xf %SOURCE6 -C mailnews/extensions/
-%endif
-
 #patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -213,10 +210,14 @@ tar -xf %SOURCE6 -C mailnews/extensions/
 %endif
 %patch11 -p2
 %patch12 -p2
+%patch13 -p1
+%patch14 -p1
+%if_with system_nss
 %patch120 -p2
 %patch121 -p2
 %patch122 -p2
-%patch124 -p2
+%patch124 -p1
+%endif
 
 ### Copying .mozconfig to build directory
 cp -f %SOURCE7 .mozconfig
@@ -283,7 +284,11 @@ export SHELL=/bin/sh
 export MOZILLA_OBJDIR="$PWD"
 export PATH="$CBINDGEN_BINDIR:$PATH"
 
-#autoconf
+# Do not use desktop notify during build process
+export MOZ_NOSPAM=1
+
+# Don't throw "old profile" dialog box
+export MOZ_ALLOW_DOWNGRADE=1
 
 export NPROCS=%build_parallel_jobs
 # Decrease NPROCS prevents oomkill terror on x86_64
@@ -299,23 +304,6 @@ export NPROCS=1
 ./mach configure
 ./mach build -j $NPROCS
 ./mach buildsymbols
-
-%if_with enigmail
-cd mailnews/extensions/enigmail
-    ./makemake -r
-cd -
-
-dir="$PWD/objdir"
-
-cd $dir/mailnews/extensions/enigmail
-	make \
-		STRIP="/bin/true" \
-		MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
-	make xpi
-	mv -f -- $dir/dist/bin/enigmail-*.xpi $dir/dist/xpi-stage/
-	make clean
-cd -
-%endif
 
 %install
 export SHELL=/bin/sh
@@ -373,13 +361,6 @@ rm -rf -- \
 	#
 
 dir="$PWD/objdir"
-
-###From Enigmail
-%if_with enigmail
-mkdir -p %buildroot/%enigmail_ciddir
-unzip -q -u -d %buildroot/%enigmail_ciddir -- \
-    $dir/dist/xpi-stage/enigmail*.xpi
-%endif
 
 ###From Lightning
 %if_with lightning
@@ -476,6 +457,12 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%ciddir/dictionaries/ru.dic
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Tue Sep 28 2021 Andrey Cherepanov <cas@altlinux.org> 1:2.53.9.1-alt1
+- New version.
+
+* Mon Aug 30 2021 Andrey Cherepanov <cas@altlinux.org> 1:2.53.9-alt1
+- New version.
+
 * Thu Jul 22 2021 Andrey Cherepanov <cas@altlinux.org> 1:2.53.8.1-alt1
 - New version.
 
