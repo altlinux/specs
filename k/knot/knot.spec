@@ -7,7 +7,7 @@
 %def_disable documentation
 
 Name: knot
-Version: 3.1.2
+Version: 3.1.3
 Release: alt1
 Summary: High-performance authoritative DNS server
 Group: System/Servers
@@ -202,6 +202,9 @@ V=1 %make check ||:
 %endif
 
 %changelog
+* Mon Nov 01 2021 Alexey Shabalin <shaba@altlinux.org> 3.1.3-alt1
+- new version 3.1.3
+
 * Mon Sep 13 2021 Alexey Shabalin <shaba@altlinux.org> 3.1.2-alt1
 - new version 3.1.2
 
