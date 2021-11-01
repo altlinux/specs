@@ -3,7 +3,7 @@
 %def_enable test
 
 Name: libcacard
-Version: 2.8.0
+Version: 2.8.1
 Release: alt1
 Summary: Common Access Card (CAC) Emulation
 Group: System/Libraries
@@ -11,7 +11,6 @@ License: LGPLv2.1+
 Url: http://www.spice-space.org/download
 # https://gitlab.freedesktop.org/spice/libcacard.git
 Source: %name-%version.tar
-Patch1: libcacard-2.8.0-32bit.patch
 
 BuildRequires(pre): meson
 BuildRequires: gcc-c++
@@ -33,7 +32,6 @@ CAC emulation development files.
 
 %prep
 %setup
-%patch1 -p1
 echo "%version" > .tarball-version
 
 %build
@@ -59,6 +57,9 @@ echo "%version" > .tarball-version
 %_libdir/libcacard.so
 
 %changelog
+* Mon Nov 01 2021 Alexey Shabalin <shaba@altlinux.org> 2.8.1-alt1
+- new version 2.8.1
+
 * Sat Nov 14 2020 Alexey Shabalin <shaba@altlinux.org> 2.8.0-alt1
 - new version 2.8.0
 
