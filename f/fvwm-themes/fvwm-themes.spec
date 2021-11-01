@@ -5,7 +5,7 @@
 
 Name: fvwm-themes
 Version: 0.7.0
-Release: alt2.qa1
+Release: alt2.qa2
 
 Summary: FVWM Themes, configuration framework for FVWM
 Summary(ru_RU.UTF-8): Темы для оконного менеджера FVWM
@@ -15,8 +15,10 @@ Url: http://%name.sourceforge.org/
 BuildArch: noarch
 
 Source0: %name-%version.tar.bz2
-Source1: %name.wmsession
+Source1: %name.xpm
 Source2: %name-extra-%version.tar.bz2
+Source3: %name.desktop
+Source4: %name.wmsession
 Patch0: %name-menu.patch
 
 Requires: fvwm-base >= 2.5.31
@@ -83,11 +85,13 @@ make \
 	prefix=$RPM_BUILD_ROOT%_prefix \
 	mandir=$RPM_BUILD_ROOT%_mandir \
 	ROOT_PREFIX=$RPM_BUILD_ROOT install
-%__install -pD -m644 %SOURCE1 $RPM_BUILD_ROOT%_sysconfdir/X11/wmsession.d/10Fvwm-themes
+install -pD -m644 %SOURCE1 $RPM_BUILD_ROOT%_iconsdir/hicolor/64x64/apps/%name.xpm
+install -pD -m644 %SOURCE3 $RPM_BUILD_ROOT%_datadir/xsessions/%name.desktop
+install -pD -m644 %SOURCE4 $RPM_BUILD_ROOT%_sysconfdir/X11/wmsession.d/10Fvwm-themes
 find %buildroot -type f -print0 | xargs -r0 %__subst -p s,%buildroot,,g
-%__tar xjf %SOURCE2 -C %buildroot%_datadir/fvwm/themes
-%__mv %buildroot%_datadir/fvwm/themes/%name-extra-%version/* %buildroot%_datadir/fvwm/themes/
-%__rm -rf %buildroot%_datadir/fvwm/themes/%name-extra-%version
+tar xjf %SOURCE2 -C %buildroot%_datadir/fvwm/themes
+mv %buildroot%_datadir/fvwm/themes/%name-extra-%version/* %buildroot%_datadir/fvwm/themes/
+rm -rf %buildroot%_datadir/fvwm/themes/%name-extra-%version
 find %buildroot%_datadir/fvwm/themes -type f -print0 | \
 	xargs -r0 %__subst -p s,-adobe-,-*-,g
 find %buildroot%_datadir/fvwm/themes -type f -print0 | \
@@ -105,6 +109,8 @@ find %buildroot%_datadir/fvwm/themes -type f -print0 | \
 %files
 %_bindir/*
 %_sysconfdir/X11/wmsession.d/*
+%_datadir/xsessions/*.desktop
+%_iconsdir/hicolor/64x64/apps/%name.xpm
 %_sysconfdir/menu-methods/*
 %_mandir/man?/*
 %_datadir/fvwm/Fvwm*
@@ -146,6 +152,11 @@ find %buildroot%_datadir/fvwm/themes -type f -print0 | \
 %_datadir/fvwm/themes/underground/
 
 %changelog
+* Mon Nov 01 2021 Igor Vlasenko <viy@altlinux.org> 0.7.0-alt2.qa2
+- NMU: WM packaging policy 2.0:
+- added xsessions desktop
+- added xsessions icon
+
 * Wed Apr 06 2011 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2.qa1
 - NMU: Removed obsolete %%update_menus/%%clean_menus calls
 
