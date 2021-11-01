@@ -3,7 +3,7 @@ Summary(ru_RU): Основанный на twm оконный менеджер д
 Name: ctwm
 Version: 4.0.3
 Epoch: 1
-Release: alt1
+Release: alt2
 
 Source: %name-%version.tar.xz
 Url: http://ctwm.free.lp.se
@@ -13,6 +13,7 @@ Packager: Fr. Br. George <george@altlinux.ru>
 Source1: startctwm
 Source2: %name.wmsession
 Source3: %name.icon64x64.xpm
+Source4: %name.desktop
 #Source4: ctwm-3.7-Imakefile.local-additional
 
 Patch: ctwm-3.8.2-GetFont.patch
@@ -66,6 +67,7 @@ ln -s build BUILD
 
 %install
 %cmakeinstall_std
+install -pD -m644 %SOURCE4 %buildroot%_datadir/xsessions/%name.desktop
 install -pD -m644 %SOURCE3 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.xpm
 install -pD -m644 %SOURCE2 %buildroot/%_sysconfdir/X11/wmsession.d/07%name
 install -pD -m644 system.ctwmrc %buildroot/%_sysconfdir/X11/%name/system.ctwmrc
@@ -79,8 +81,12 @@ install -Dm 755 %SOURCE1 %buildroot/%_bindir/startctwm
 %config(noreplace) %_sysconfdir/X11/%name/system.ctwmrc
 %_sysconfdir/X11/wmsession.d/*
 %_datadir/%name/
+%_datadir/xsessions/%name.desktop
 
 %changelog
+* Mon Nov 01 2021 Igor Vlasenko <viy@altlinux.org> 1:4.0.3-alt2
+- NMU: WM packaging policy 2.0: added xsessions desktop
+
 * Sat Oct 26 2019 Fr. Br. George <george@altlinux.ru> 1:4.0.3-alt1
 - Autobuild version bump to 4.0.3
 
