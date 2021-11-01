@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-X11-Xlib
-Version: 0.20
+Version: 0.23
 Release: alt1
 
 Summary: Low-level access to the X11 library
@@ -32,6 +32,9 @@ xvfb-run -a make test
 %doc Changes README
 
 %changelog
+* Mon Nov 01 2021 Igor Vlasenko <viy@altlinux.org> 0.23-alt1
+- new version
+
 * Sat Jun 06 2020 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - new version
 
