@@ -12,7 +12,7 @@
 
 Name: WindowMaker
 Version: 0.95.9
-Release: alt1
+Release: alt2
 Packager: %packager
 
 Summary: A window manager for the X Window System
@@ -268,6 +268,7 @@ rm -rf %buildroot%_mandir/cs
 %_miconsdir/*.xpm
 %_niconsdir/*.xpm
 %_liconsdir/*.xpm
+%_datadir/xsessions/WindowMaker.desktop
 
 %gnustepdir/Applications/WPrefs.app
 %dir %wmdatadir
@@ -310,6 +311,9 @@ rm -rf %buildroot%_mandir/cs
 %_bindir/wmsetbg
 
 %changelog
+* Mon Nov 01 2021 Igor Vlasenko <viy@altlinux.org> 0.95.9-alt2
+- NMU: WM packaging policy 2.0: added xsessions desktop
+
 * Sun Mar 28 2021 Andrey Bergman <vkni@altlinux.org> 0.95.9-alt1
 - Update to version 0.95.9. Removed flag-info executables.
 
