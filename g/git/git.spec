@@ -1,6 +1,6 @@
 Name: git
-Version: 2.33.0
-Release: alt3
+Version: 2.33.1
+Release: alt1
 
 Summary: Git core and tools
 License: GPLv2
@@ -534,6 +534,9 @@ popd
 %endif #doc
 
 %changelog
+* Tue Oct 12 2021 Dmitry V. Levin <ldv@altlinux.org> 2.33.1-alt1
+- 2.33.0 -> 2.33.1.
+
 * Tue Sep 28 2021 Vitaly Chikunov <vt@altlinux.org> 2.33.0-alt3
 - Workaround lost git-email Requires.
 
