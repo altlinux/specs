@@ -1,18 +1,18 @@
 %define clang_version 12
 
-%define git_ver 12699
-%define git_commit 9c0c8f2bc7a09aa09825992964e8a916b25d888b
+%define git_ver 12971
+%define git_commit 46a54f5474133eae424078dc29e0e0fa5210e7fb
 
-%define glslang_version 11.5.0
+%define glslang_version 11.6.0
 %define asmjit_commit 723f58581afc0f4cb16ba13396ff77e425896847
 %define hidapi_commit 01f601a1509bf9c67819fbf521df39644bab52d5
-%define yaml_cpp_commit 6a211f0bc71920beef749e6c35d7d1bcc2447715
+%define yaml_cpp_commit 0b67821f307e8c6bf0eba9b6d3250e3cf1441450
 %define llvm_commit 5836324d6443a62ed09b84c125029e98324978c3
 %define spirv_headers_version 1.5.3.reservations1
 %define spirv_tools_version 2020.4
 
 Name: rpcs3
-Version: 0.0.18
+Version: 0.0.19
 Release: alt1
 
 Summary: PS3 emulator/debugger
@@ -51,6 +51,9 @@ BuildRequires: libflatbuffers-devel
 BuildRequires: libpugixml-devel
 BuildRequires: pkgconfig(FAudio)
 BuildRequires: pkgconfig(Qt5) >= 5.15.2
+BuildRequires: pkgconfig(Qt5Multimedia) >= 5.15.2
+BuildRequires: pkgconfig(Qt5MultimediaWidgets) >= 5.15.2
+BuildRequires: pkgconfig(Qt5Svg) >= 5.15.2
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(glew)
 BuildRequires: pkgconfig(libavformat)
@@ -150,6 +153,9 @@ export RANLIB="llvm-ranlib-%clang_version"
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Mon Nov 01 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.19-alt1
+- Version 0.0.19
+
 * Wed Sep 01 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.18-alt1
 - Version 0.0.18
 

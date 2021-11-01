@@ -2,7 +2,7 @@
 
 Name: wolfssl
 Version: 4.8.1
-Release: alt1
+Release: alt2
 
 Summary: Embedded SSL/TLS Library
 License: GPL-2.0
@@ -37,7 +37,8 @@ This package contains the header files and development libraries for %name.
 %build
 %autoreconf
 %configure \
-	--enable-distro
+	--enable-distro \
+	--enable-writedup
 %make_build
 
 %install
@@ -59,6 +60,9 @@ This package contains the header files and development libraries for %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Nov 01 2021 Nazarov Denis <nenderus@altlinux.org> 4.8.1-alt2
+- Enable write duplication for compatibility with RPCS3
+
 * Mon Jul 26 2021 Nazarov Denis <nenderus@altlinux.org> 4.8.1-alt1
 - Version 4.8.1
 
