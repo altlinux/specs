@@ -1,7 +1,7 @@
 # Shared object version of libkcapi.
 %global vmajor            1
-%global vminor            2
-%global vpatch            0
+%global vminor            3
+%global vpatch            1
 
 Name: libkcapi
 Version: %vmajor.%vminor.%vpatch
@@ -12,6 +12,7 @@ License: BSD or GPLv2
 Url: http://www.chronox.de/%name.html
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
+Patch1: libkcapi-1.3.1-fedora-Use-GCCs-__symver__-attribute.patch
 BuildRequires: /proc
 BuildRequires: clang
 BuildRequires: cppcheck
@@ -24,6 +25,7 @@ BuildRequires: openssl
 BuildRequires: perl
 BuildRequires: systemd
 BuildRequires: xmlto
+%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm /proc}}
 
 %description
 libkcapi allows user-space to access the Linux kernel crypto API.
@@ -126,6 +128,7 @@ Auxiliary scripts for testing %name.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 
 %build
@@ -162,16 +165,15 @@ Auxiliary scripts for testing %name.
 rm -f %buildroot%_bindir/*sum
 
 %check
-# Some basic sanity checks.
-for t in cppcheck scan; do
-  %make_build $t
-done
-
+# don't run compile test
+sed -i '/^[^#]/ s/\(^.*compile-test\.sh.*$\)/#\1/' test/test-invocation.sh
+vm-run --kvm=cond "
 pushd test
 ENABLE_FUZZ_TEST=1 \
 NO_32BIT_TEST=1    \
-  ./test-invocation.sh ||:
+  ./test-invocation.sh
 popd
+"
 
 %files -n %name%vmajor
 %doc README.md COPYING*
@@ -201,9 +203,13 @@ popd
 %_mandir/man1/kcapi*.1.*
 
 %files tests
+%dir %_libexecdir/%name
 %_libexecdir/%name/*
 
 %changelog
+* Mon Oct 25 2021 Anton Farygin <rider@altlinux.ru> 1.3.1-alt1
+- 1.3.1
+
 * Thu Jul 09 2020 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1
 - first build for ALT
 
