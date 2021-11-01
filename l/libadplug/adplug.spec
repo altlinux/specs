@@ -1,31 +1,29 @@
 %define origname adplug
-%define dbver 2006-07-07
+%define dbver 1.0
 
 Name: lib%origname
-Version: 2.2.1
-Release: alt3
+Version: 2.3.3
+Release: alt1.git104.g66b19f6
 
 Summary: AdLib sound player library
 License: LGPL
-Group: Sound
+Group: System/Libraries
 
-Url: http://adplug.sourceforge.net/
-Source: http://sourceforge.net/projects/adplug/files/AdPlug%%20core%%20library/2.2.1/%origname-%version.tar
-#.bz2
-Source1: http://sourceforge.net/projects/adplug/files/Database/2006-07-06/adplugdb-%dbver.tar
-#.gz
-Patch0: adplug-2.2.1-cve-2018-17825.patch
-Patch1: adplug-2.2.1-inline.patch
+Url: http://adplug.github.io/
+#https://github.com/adplug/adplug/archive/adplug-2.3.tar.gz
+Source: %origname-%version.tar
+#https://github.com/adplug/database/archive/v1.0.tar.gz
+Source1: adplugdb-%dbver.tar
+Source44: %origname.watch
+Source45: %origname-database.watch
 
 # Automatically added by buildreq on Sun Sep 09 2012 (-bi)
 # optimized out: elfutils gnu-config libstdc++-devel pkg-config python-base
-BuildRequires: chrpath gcc-c++ libbinio-devel
+BuildRequires: chrpath gcc-c++ libbinio-devel texinfo
 
 %if_enabled static
 BuildPreReq: glibc-devel-static
 %endif
-# explicitly added texinfo for info files
-BuildRequires: texinfo
 
 %description
 AdPlug is a free, multi-platform, hardware independent AdLib sound player
@@ -72,11 +70,11 @@ linking applications based on AdPlug.
 
 %prep
 %setup -n %origname-%version
-%patch0 -p1
-%patch1 -p1
+tar xf %SOURCE1
 
 %build
 %add_optflags -fsigned-char
+%autoreconf -Im4
 %configure --sharedstatedir=%_datadir
 %make_build
 
@@ -84,12 +82,12 @@ linking applications based on AdPlug.
 %makeinstall
 chrpath -d %buildroot%_bindir/adplugdb
 
-tar xf %SOURCE1
 mkdir -p %buildroot%_datadir
-cp -a %dbver %buildroot%_datadir/%origname
+cp -a adplugdb-%dbver %buildroot%_datadir/%origname
+rpm -q glibc-devel-static || rm -f %buildroot%_libdir/*.a
 
 %files
-%doc AUTHORS BUGS ChangeLog NEWS README TODO
+%doc AUTHORS BUGS COPYING ChangeLog NEWS README TODO
 %_bindir/adplugdb
 %_man1dir/adplugdb.1*
 %_libdir/*.so.*
@@ -107,6 +105,9 @@ cp -a %dbver %buildroot%_datadir/%origname
 %endif
 
 %changelog
+* Mon Oct 18 2021 Ildar Mulyukov <ildar@altlinux.ru> 2.3.3-alt1.git104.g66b19f6
+- new upstream URL
+
 * Sun Sep 22 2019 Michael Shigorin <mike@altlinux.org> 2.2.1-alt3
 - added fedora patches:
   + inline (fixes e2k ftbfs)
