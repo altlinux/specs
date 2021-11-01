@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 21.9b0
+Version: 21.10b0
 Release: alt1
 
 Summary: The Uncompromising Code Formatter
@@ -36,7 +36,6 @@ BuildRequires: python3(typing_extensions)
 # tests
 BuildRequires: python3(aiohttp)
 BuildRequires: python3(aiohttp.test_utils)
-BuildRequires: python3(aiohttp_cors)
 BuildRequires: python3(click.testing)
 BuildRequires: python3(parameterized)
 BuildRequires: python3(pytest)
@@ -99,6 +98,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/blib2to3/
 
 %changelog
+* Mon Nov 01 2021 Stanislav Levin <slev@altlinux.org> 21.10b0-alt1
+- 21.9b0 -> 21.10b0.
+
 * Mon Oct 18 2021 Stanislav Levin <slev@altlinux.org> 21.9b0-alt1
 - 21.8b0 -> 21.9b0.
 
