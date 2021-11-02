@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 5.14
+%define kernel_base_version 5.15
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/traceevent/plugins/*
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
@@ -14,7 +14,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt2
+Release: alt1
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
@@ -70,8 +70,6 @@ Source23: hypervfcopyd.service
 Source31: hypervkvpd.rules
 Source32: hypervvssd.rules
 Source33: hypervfcopyd.rules
-
-Patch1: 0001-bootconfig-Fix-missing-return-check-of-xbc_node_comp.patch
 
 %description
 Various tools from the Linux Kernel source tree.
@@ -207,7 +205,6 @@ and booting a kernel.
 %setup -cT
 tar -xf %kernel_src/%kernel_source.tar
 cd %kernel_source
-%autopatch -p1
 cd tools
 
 # Avoid conflict with trace-cmd which installs same plug-ins in
@@ -264,7 +261,7 @@ make -C perf \
      %perf_opts \
      VF=1 \
      all \
-     doc \
+     man \
      python \
      libtraceevent_plugins \
      V=1
@@ -442,6 +439,8 @@ mkdir -p %buildroot%_libexecdir/kselftests
 ./kselftest_install.sh %buildroot%_libexecdir/kselftests
 popd
 
+%add_debuginfo_skiplist %_prefix/libexec/perf-core/dlfilters/dlfilter-test-api-v0.so
+
 %check
 banner check
 cd %kernel_source/tools
@@ -599,6 +598,9 @@ fi
 %_libexecdir/kselftests
 
 %changelog
+* Tue Nov 02 2021 Vitaly Chikunov <vt@altlinux.org> 5.15-alt1
+- Update to v5.15 (2021-10-31).
+
 * Sun Sep 19 2021 Vitaly Chikunov <vt@altlinux.org> 5.14-alt2
 - Package bootconfig tool (closes: #40956).
 
