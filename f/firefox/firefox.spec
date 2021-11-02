@@ -1,17 +1,8 @@
-%set_verify_elf_method relaxed
-
-%define gst_version   1.0
-%define nspr_version  4.32
-%define nss_version   3.71
-%define rust_version  1.54.0
-%define cargo_version 1.54.0
-%define llvm_version  12.0
-
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        93.0
+Version:        94.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -50,6 +41,16 @@ Patch013: 0013-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch014: 0014-ALT-fix-double_t-redefinition.patch
 ### End Patches
 
+%define _unpackaged_files_terminate_build 1
+%set_verify_elf_method relaxed
+
+%define gst_version   1.0
+%define nspr_version  4.32
+%define nss_version   3.72
+%define rust_version  1.56.0
+%define cargo_version 1.56.0
+%define llvm_version  12.0
+
 #ExcludeArch: ppc64le
 
 BuildRequires(pre): mozilla-common-devel
@@ -78,6 +79,7 @@ BuildRequires: pkgconfig(xcomposite)
 BuildRequires: pkgconfig(x11)
 BuildRequires: pkgconfig(xext)
 BuildRequires: pkgconfig(xft)
+BuildRequires: pkgconfig(xrandr)
 BuildRequires: pkgconfig(xscrnsaver)
 BuildRequires: pkgconfig(xdamage)
 BuildRequires: pkgconfig(libcurl)
@@ -463,6 +465,23 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Nov 02 2021 Alexey Gladkov <legion@altlinux.ru> 94.0-alt1
+- New release (94.0).
+- Security fixes:
+  + CVE-2021-38503: iframe sandbox rules did not apply to XSLT stylesheets
+  + CVE-2021-38504: Use-after-free in file picker dialog
+  + CVE-2021-38505: Windows 10 Cloud Clipboard may have recorded sensitive user data
+  + CVE-2021-38506: Firefox could be coaxed into going into fullscreen mode without notification or warning
+  + CVE-2021-38507: Opportunistic Encryption in HTTP2 could be used to bypass the Same-Origin-Policy on services hosted on other ports
+  + MOZ-2021-0003: Universal XSS in Firefox for Android via QR Code URLs
+  + CVE-2021-38508: Permission Prompt could be overlaid, resulting in user confusion and potential spoofing
+  + MOZ-2021-0004: Web Extensions could access pre-redirect URL when their context menu was triggered by a user
+  + CVE-2021-38509: Javascript alert box could have been spoofed onto an arbitrary domain
+  + CVE-2021-38510: Download Protections were bypassed by .inetloc files on Mac OS
+  + MOZ-2021-0005: 'Copy Image Link' context menu action could have been abused to see authentication tokens
+  + MOZ-2021-0006: URL Parsing may incorrectly parse internationalized domains
+  + MOZ-2021-0007: Memory safety bugs fixed in Firefox 94 and Firefox ESR 91.3
+
 * Wed Oct 06 2021 Alexey Gladkov <legion@altlinux.ru> 93.0-alt1
 - New release (93.0).
 - Security fixes:
