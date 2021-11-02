@@ -1,12 +1,12 @@
 %define theme_name Greybird
 
 Name: gtk-theme-greybird
-Version: 3.22.14
+Version: 3.22.15
 Release: alt1
 Summary: A clean minimalistic theme for Xfce, GTK+ 2 and 3
 Group: Graphical desktop/XFce
 
-License: GPLv2+ or CC-BY-SA
+License: GPLv2+ or CC-BY-SA-3.0
 URL: https://shimmerproject.org/
 Vcs: https://github.com/shimmerproject/Greybird
 Source: %name-%version.tar
@@ -91,6 +91,11 @@ Themes for Xfce4 notifyd as part of the Greybird theme.
 
 %install
 %meson_install
+# Fix xfwm themes path
+mv %buildroot%_datadir/themes/%theme_name-compact/xfwm4{-compact,}
+mv %buildroot%_datadir/themes/%theme_name-dark-accessibility/xfwm4{-a11y,}
+mv %buildroot%_datadir/themes/%theme_name-accessibility/xfwm4{-a11y,}
+mv %buildroot%_datadir/themes/%theme_name-bright/xfce-notify-4.0{_bright,}
 
 %files
 
@@ -138,18 +143,14 @@ Themes for Xfce4 notifyd as part of the Greybird theme.
 %exclude %_datadir/themes/%theme_name-dark/unity
 
 %changelog
+* Tue Nov 02 2021 Mikhail Efremov <sem@altlinux.org> 3.22.15-alt1
+- Fix License tag.
+- Fix xfwm themes path.
+- Fix changelog entry.
+- 3.22.15.
+
 * Tue Jan 26 2021 Mikhail Efremov <sem@altlinux.org> 3.22.14-alt1
-- Reduce messagedialog buttonbox size (by Simon Steinbeiss)
-- Make CSD titlebars slimmer (by Maurizio Galli)
-- Improve dark xfwm4 tabwin contrast (by Simon Steinbeiss)
-- Improve contrast of dark entry (Fixes #263) (by Simon Steinbeiss)
-- More normal-sized inline-toolbar buttons (by Simon Steinbeiss)
-- Add workaround for Gnome Builder (Fixes #264) (by Simon Steinbeiss)
-- Fix progressbar in unfocused windows (Fixes #284) (by Simon Steinbeiss)
-- Rebase parts of the %linked code (Fixes #265) (by Simon Steinbeiss)
-- Own /usr/share/themes/Greybird-dark directory
-- Fix Thunar CSD when not focused (Fixes #274) (by Simon Steinbeiss)
-- Fix GTK3 dark colors (by Nico Kaiser)
+- 3.22.14.
 
 * Mon Oct 19 2020 Mikhail Efremov <sem@altlinux.org> 3.22.12-alt1
 - 3.22.12.
