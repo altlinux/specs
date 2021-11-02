@@ -1,10 +1,10 @@
 %define Name Oroborus
 Name: oroborus
 Version: 2.0.20
-Release: alt2
+Release: alt3
 Summary: Small window manager for the X Window System
-Summary(uk_UA.CP1251): Ìàëåíüêèé â³êîííèé ìåíåäæåð äëÿ X Window System
-Summary(ru_RU.CP1251): Ìàëåíüêèé îêîííûé ìåíåäæåð äëÿ X Window System
+Summary(uk_UA.UTF-8): ÐœÐ°Ð»ÐµÐ½ÑŒÐºÐ¸Ð¹ Ð²Ñ–ÐºÐ¾Ð½Ð½Ð¸Ð¹ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ€ Ð´Ð»Ñ X Window System
+Summary(ru_RU.UTF-8): ÐœÐ°Ð»ÐµÐ½ÑŒÐºÐ¸Ð¹ Ð¾ÐºÐ¾Ð½Ð½Ñ‹Ð¹ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ€ Ð´Ð»Ñ X Window System
 License: GPLv2
 Group: Graphical desktop/Other
 URL: http://www.%name.org/
@@ -24,36 +24,36 @@ icons. These can be added quite easily by either using %Name with
 GNOME or using some other applications that provide the required
 functionality.
 
-%description -l uk_UA.CP1251
-Ãîëîâíà ìåòà %Name - áóòè ìàëåíüêèì ³ ëåãêèì ç äóæå íåáàãàòüìà
-"ìîäíèìè" âëàñòèâîñòÿìè; òàêèì ÷èíîì íåìàº í³ÿêèõ äîê³â, ïàíåëåé çàäà÷,
-ãîëîâíèõ ìåíþ òà çíà÷ê³â. Âîíè ìîæóòü áóòè âåëüìè ëåãêî äîäàí³ øëÿõîì
-âèêîðèñòàííÿ %Name ç GNOME àáî çà äîïîìîãîþ ³íøèõ äîäàòê³â, ÿê³
-çàáåçïå÷óþòü íåîáõ³äíó ôóíêö³îíàëüí³ñòü.
+%description -l uk_UA.UTF-8
+Ð“Ð¾Ð»Ð¾Ð²Ð½Ð° Ð¼ÐµÑ‚Ð° %Name - Ð±ÑƒÑ‚Ð¸ Ð¼Ð°Ð»ÐµÐ½ÑŒÐºÐ¸Ð¼ Ñ– Ð»ÐµÐ³ÐºÐ¸Ð¼ Ð· Ð´ÑƒÐ¶Ðµ Ð½ÐµÐ±Ð°Ð³Ð°Ñ‚ÑŒÐ¼Ð°
+"Ð¼Ð¾Ð´Ð½Ð¸Ð¼Ð¸" Ð²Ð»Ð°ÑÑ‚Ð¸Ð²Ð¾ÑÑ‚ÑÐ¼Ð¸; Ñ‚Ð°ÐºÐ¸Ð¼ Ñ‡Ð¸Ð½Ð¾Ð¼ Ð½ÐµÐ¼Ð°Ñ” Ð½Ñ–ÑÐºÐ¸Ñ… Ð´Ð¾ÐºÑ–Ð², Ð¿Ð°Ð½ÐµÐ»ÐµÐ¹ Ð·Ð°Ð´Ð°Ñ‡,
+Ð³Ð¾Ð»Ð¾Ð²Ð½Ð¸Ñ… Ð¼ÐµÐ½ÑŽ Ñ‚Ð° Ð·Ð½Ð°Ñ‡ÐºÑ–Ð². Ð’Ð¾Ð½Ð¸ Ð¼Ð¾Ð¶ÑƒÑ‚ÑŒ Ð±ÑƒÑ‚Ð¸ Ð²ÐµÐ»ÑŒÐ¼Ð¸ Ð»ÐµÐ³ÐºÐ¾ Ð´Ð¾Ð´Ð°Ð½Ñ– ÑˆÐ»ÑÑ…Ð¾Ð¼
+Ð²Ð¸ÐºÐ¾Ñ€Ð¸ÑÑ‚Ð°Ð½Ð½Ñ %Name Ð· GNOME Ð°Ð±Ð¾ Ð·Ð° Ð´Ð¾Ð¿Ð¾Ð¼Ð¾Ð³Ð¾ÑŽ Ñ–Ð½ÑˆÐ¸Ñ… Ð´Ð¾Ð´Ð°Ñ‚ÐºÑ–Ð², ÑÐºÑ–
+Ð·Ð°Ð±ÐµÐ·Ð¿ÐµÑ‡ÑƒÑŽÑ‚ÑŒ Ð½ÐµÐ¾Ð±Ñ…Ñ–Ð´Ð½Ñƒ Ñ„ÑƒÐ½ÐºÑ†Ñ–Ð¾Ð½Ð°Ð»ÑŒÐ½Ñ–ÑÑ‚ÑŒ.
 
-%description -l ru_RU.CP1251
-Ãëàâíàÿ öåëü %Name - áûòü ìàëåíüêèì è ë¸ãêèì ñ î÷åíü íåìíîãèìè
-"ìîäíûìè" ñâîéñòâàìè; òàêèì îáðàçîì íåò íèêàêèõ äîêîâ, ïàíåëåé çàäà÷,
-ãëàâíûõ ìåíþ è çíà÷êîâ. Îíè ìîãóò áûòü âåñüìà ëåãêî äîáàâëåíû ïóò¸ì
-èñïîëüçîâàíèÿ %Name ñ GNOME èëè ñ ïîìîùüþ äðóãèõ ïðèëîæåíèé,
-îáåñïå÷èâàþùèõ íåîáõîäèìóþ ôóíêöèîíàëüíîñòü.
+%description -l ru_RU.UTF-8
+Ð“Ð»Ð°Ð²Ð½Ð°Ñ Ñ†ÐµÐ»ÑŒ %Name - Ð±Ñ‹Ñ‚ÑŒ Ð¼Ð°Ð»ÐµÐ½ÑŒÐºÐ¸Ð¼ Ð¸ Ð»Ñ‘Ð³ÐºÐ¸Ð¼ Ñ Ð¾Ñ‡ÐµÐ½ÑŒ Ð½ÐµÐ¼Ð½Ð¾Ð³Ð¸Ð¼Ð¸
+"Ð¼Ð¾Ð´Ð½Ñ‹Ð¼Ð¸" ÑÐ²Ð¾Ð¹ÑÑ‚Ð²Ð°Ð¼Ð¸; Ñ‚Ð°ÐºÐ¸Ð¼ Ð¾Ð±Ñ€Ð°Ð·Ð¾Ð¼ Ð½ÐµÑ‚ Ð½Ð¸ÐºÐ°ÐºÐ¸Ñ… Ð´Ð¾ÐºÐ¾Ð², Ð¿Ð°Ð½ÐµÐ»ÐµÐ¹ Ð·Ð°Ð´Ð°Ñ‡,
+Ð³Ð»Ð°Ð²Ð½Ñ‹Ñ… Ð¼ÐµÐ½ÑŽ Ð¸ Ð·Ð½Ð°Ñ‡ÐºÐ¾Ð². ÐžÐ½Ð¸ Ð¼Ð¾Ð³ÑƒÑ‚ Ð±Ñ‹Ñ‚ÑŒ Ð²ÐµÑÑŒÐ¼Ð° Ð»ÐµÐ³ÐºÐ¾ Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ñ‹ Ð¿ÑƒÑ‚Ñ‘Ð¼
+Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ð½Ð¸Ñ %Name Ñ GNOME Ð¸Ð»Ð¸ Ñ Ð¿Ð¾Ð¼Ð¾Ñ‰ÑŒÑŽ Ð´Ñ€ÑƒÐ³Ð¸Ñ… Ð¿Ñ€Ð¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ð¹,
+Ð¾Ð±ÐµÑÐ¿ÐµÑ‡Ð¸Ð²Ð°ÑŽÑ‰Ð¸Ñ… Ð½ÐµÐ¾Ð±Ñ…Ð¾Ð´Ð¸Ð¼ÑƒÑŽ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¾Ð½Ð°Ð»ÑŒÐ½Ð¾ÑÑ‚ÑŒ.
 
 
 %package themes
 Summary: Themes for %Name Window Manager
-Summary(uk_UA.CP1251): Òåìè äëÿ â³êîííîãî ìåíåäæåðà %Name
-Summary(ru_RU.CP1251): Òåìû äëÿ îêîííîãî ìåíåäæåðà %Name
+Summary(uk_UA.UTF-8): Ð¢ÐµÐ¼Ð¸ Ð´Ð»Ñ Ð²Ñ–ÐºÐ¾Ð½Ð½Ð¾Ð³Ð¾ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ€Ð° %Name
+Summary(ru_RU.UTF-8): Ð¢ÐµÐ¼Ñ‹ Ð´Ð»Ñ Ð¾ÐºÐ¾Ð½Ð½Ð¾Ð³Ð¾ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ€Ð° %Name
 Group: Graphical desktop/Other
 Requires: %name
 
 %description themes
 Themes for %Name Window Manager.
 
-%description -l uk_UA.CP1251 themes
-Òåìè äëÿ â³êîííîãî ìåíåäæåðà %Name.
+%description -l uk_UA.UTF-8 themes
+Ð¢ÐµÐ¼Ð¸ Ð´Ð»Ñ Ð²Ñ–ÐºÐ¾Ð½Ð½Ð¾Ð³Ð¾ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ€Ð° %Name.
 
-%description -l ru_RU.CP1251 themes
-Òåìû äëÿ îêîííîãî ìåíåäæåðà %Name.
+%description -l ru_RU.UTF-8 themes
+Ð¢ÐµÐ¼Ñ‹ Ð´Ð»Ñ Ð¾ÐºÐ¾Ð½Ð½Ð¾Ð³Ð¾ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ€Ð° %Name.
 
 
 %prep
@@ -69,7 +69,7 @@ Themes for %Name Window Manager.
 
 %install
 %make_install install DESTDIR=%buildroot
-install -pD -m 644 %name-64.xpm %buildroot%_iconsdir/hicolor/64x64/apps/%Name.xpm
+install -pD -m 644 %name-64.xpm %buildroot%_iconsdir/hicolor/64x64/apps/%name.xpm
 install -pD -m 644 %name-48.xpm %buildroot%_liconsdir/%name.xpm
 install -pD -m 644 %name-32.xpm %buildroot%_niconsdir/%name.xpm
 install -pD -m 644 %name-16.xpm %buildroot%_miconsdir/%name.xpm
@@ -83,13 +83,24 @@ install -m 0755 %SOURCE3 %buildroot%_x11sysconfdir/%name/%{name}rc
 install -d -m 0755 %buildroot%_x11sysconfdir/wmsession.d
 cat > %buildroot%_x11sysconfdir/wmsession.d/10%name <<__MENU__
 NAME=%name
-ICON=%_iconsdir/hicolor/64x64/apps/%Name.xpm
+ICON=%_iconsdir/hicolor/64x64/apps/%name.xpm
 EXEC=%_bindir/start%name
 DESC=Small yet fully featured window manager.
 SCRIPT:
 exec %_bindir/start%name
 __MENU__
-
+mkdir -p %buildroot%_datadir/xsessions/
+cat >%buildroot%_datadir/xsessions/%name.desktop <<__EOF__
+[Desktop Entry]
+Name=%Name
+Comment=Small yet fully featured window manager
+Comment[ru]=ÐœÐ°Ð»ÐµÐ½ÑŒÐºÐ¸Ð¹, Ð½Ð¾ Ð¿Ð¾Ð»Ð½Ð¾Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¾Ð½Ð°Ð»ÑŒÐ½Ñ‹Ð¹ Ð¾ÐºÐ¾Ð½Ð½Ñ‹Ð¹ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ€
+Icon=%name
+Exec=start%name
+Type=Application
+DesktopNames=%Name;
+Keywords=launch;%Name;desktop;session;
+__EOF__
 
 %files
 %doc AUTHORS ChangeLog README TODO example.%{name}rc
@@ -107,6 +118,7 @@ __MENU__
 %_niconsdir/*.xpm
 %_miconsdir/*.xpm
 %_x11sysconfdir/wmsession.d/*
+%_datadir/xsessions/%name.desktop
 %dir %_x11sysconfdir/%name
 %config(noreplace) %_x11sysconfdir/%name/*
 
@@ -132,6 +144,9 @@ __MENU__
 
 
 %changelog
+* Tue Nov 02 2021 Igor Vlasenko <viy@altlinux.org> 2.0.20-alt3
+- NMU: WM policy 2.0: added %name.desktop in xsessions
+
 * Mon Mar 29 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.20-alt2
 - Fixed FTBFS with -fcommon.
 - Fixed license tag.
