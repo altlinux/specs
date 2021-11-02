@@ -1,8 +1,8 @@
-%define sover 24
+%define sover 30
 
 Name: wolfssl
-Version: 4.8.1
-Release: alt2
+Version: 5.0.0
+Release: alt1
 
 Summary: Embedded SSL/TLS Library
 License: GPL-2.0
@@ -60,6 +60,9 @@ This package contains the header files and development libraries for %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Nov 02 2021 Nazarov Denis <nenderus@altlinux.org> 5.0.0-alt1
+- Version 5.0.0
+
 * Mon Nov 01 2021 Nazarov Denis <nenderus@altlinux.org> 4.8.1-alt2
 - Enable write duplication for compatibility with RPCS3
 
