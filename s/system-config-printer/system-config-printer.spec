@@ -1,6 +1,6 @@
 Name:    system-config-printer
 Version: 1.5.15
-Release: alt3
+Release: alt4
 
 Summary: A printer administration tool
 Group:   System/Configuration/Printing
@@ -42,6 +42,7 @@ Summary: Libraries and share for printer tools
 Group: System/Configuration/Printing
 Requires: python3-module-cupshelpers = %version-%release
 Requires: python3-module-cups >= 1.9.61-alt1
+Requires: typelib(Gdk) = 3.0
 
 %description lib
 Code used by both graphical and non-graphical parts
@@ -118,6 +119,9 @@ exit 0
 %python3_sitelibdir_noarch/cupshelpers-*
 
 %changelog
+* Tue Nov 02 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.15-alt4
+- Require typelib(Gdk) = 3.0 (ALT #41156).
+
 * Wed Oct 20 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.15-alt3
 - Fix word merge in Russian translation.
 
