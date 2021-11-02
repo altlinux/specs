@@ -21,6 +21,7 @@ BuildRequires: ca-certificates-java
 %def_disable control_panel
 %def_disable desktop
 %def_disable systemtap
+%def_disable check
 BuildRequires: unzip gcc-c++ libstdc++-devel-static
 BuildRequires: libXext-devel libXrender-devel libXcomposite-devel
 BuildRequires(pre): browser-plugins-npapi-devel lsb-release
@@ -406,7 +407,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{javaver}-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt1_1jpp11
+Release: alt2_1jpp11
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -1051,6 +1052,7 @@ ln -s %{_datadir}/javazi-1.8/tzdb.dat $JAVA_HOME/lib/tzdb.dat
 done
 
 %check
+%if_enabled check
 # We test debug first as it will give better diagnostics on a crash
 for suffix in %{rev_build_loop} ; do
 
@@ -1160,6 +1162,7 @@ $JAVA_HOME/bin/javap -l java.nio.ByteBuffer | grep LocalVariableTable
 
 # build cycles check
 done
+%endif
 
 %install
 STRIP_KEEP_SYMTAB=libjvm*
@@ -1461,8 +1464,8 @@ echo "install passed past alt linux specific."
 %ifnarch %{power64}
 #see https://bugzilla.redhat.com/show_bug.cgi?id=513605
 java=%{jrebindir}/java
-if [ -f /proc/cpuinfo ] && ! [ -d /.ours ] ; then #real workstation; not a mkimage-profile, etc
-    $java -Xshare:dump >/dev/null 2>/dev/null
+if [ -f /proc/cpuinfo ] && ! [ -d /.our ] ; then #real workstation; not a mkimage-profile, etc
+    $java -Xshare:dump >/dev/null 2>/dev/null ||:
 fi
 %endif
 %endif
@@ -1774,6 +1777,10 @@ fi
 %endif
 
 %changelog
+* Tue Nov 02 2021 Andrey Cherepanov <cas@altlinux.org> 0:11.0.13.8-alt2_1jpp11
+- Ignore possible fail of %%post scriptlet (ALT #40831).
+- Optionally disable %%check by default.
+
 * Sat Oct 23 2021 Andrey Cherepanov <cas@altlinux.org> 0:11.0.13.8-alt1_1jpp11
 - New version.
 - Security fixes:
