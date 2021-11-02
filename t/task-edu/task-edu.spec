@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.5.4
+Version: 1.5.5
 Release: alt1
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
@@ -43,6 +43,7 @@ Requires: basic256
 Requires: freebasic
 Requires: fpc
 Requires: fpc-ide
+Requires: pascalabcnet
 %endif
 Requires: geany
 Requires: geany-themes
@@ -517,6 +518,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Tue Nov 02 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.5-alt1
+- Add pascalabcnet to task-edu.
+
 * Thu Oct 28 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.4-alt1
 - Move scilab from school group to secondary-vocational and university.
 
