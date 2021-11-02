@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        95.0.4638.54
+Version:        95.0.4638.69
 Release:        alt2
 
 Summary:        An open source web browser developed by Google
@@ -438,6 +438,17 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Nov 02 2021 Alexey Gladkov <legion@altlinux.ru> 95.0.4638.69-alt2
+- New version (95.0.4638.69).
+- Security fixes:
+  - CVE-2021-37997: Use after free in Sign-In.
+  - CVE-2021-37998: Use after free in Garbage Collection.
+  - CVE-2021-37999: Insufficient data validation in New Tab Page.
+  - CVE-2021-38000: Insufficient validation of untrusted input in Intents.
+  - CVE-2021-38001: Type Confusion in V8.
+  - CVE-2021-38002: Use after free in Web Transport.
+  - CVE-2021-38003: Inappropriate implementation in V8.
+
 * Mon Oct 25 2021 Alexey Gladkov <legion@altlinux.ru> 95.0.4638.54-alt2
 - Audio process sandbox is disabled.
 
