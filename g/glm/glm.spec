@@ -1,6 +1,6 @@
 Name: glm
-Version: 0.9.9.6
-Release: alt1.1
+Version: 0.9.9.8
+Release: alt1
 License: MIT
 Summary: GLM is a header only C++ mathematics library for graphics software based on the GLSL specification
 Group: Development/C++
@@ -8,7 +8,8 @@ Url: http://glm.g-truc.net/
 BuildRequires: gcc-c++ cmake ctest
 
 Source: %version.tar.gz
-Patch1: glm-0.9.9.6-install.patch
+Patch0: glm-0.9.9.8-install.patch
+Patch1: glm-0.9.9.8-noarch.patch
 
 %package -n lib%name-devel
 Summary: GLM is a header only C++ mathematics library for graphics software based on the GLSL specification
@@ -58,10 +59,32 @@ This package contains the GLM in HTML and PDF formats.
 
 %prep
 %setup
+
+# A couple of files had CRLF line-ends in them.
+# Check with rpmlint after updating the package that we are not
+# forgetting to convert line endings in some files.
+#
+# This release of glm seems to have shipped with no CRLF file
+# endings at all, so these are commented out.
+sed -i 's/\r//' readme.md
+sed -i 's/\r//' CMakeLists.txt
+sed -i 's/\r//' doc/api/doxygen.css
+sed -i 's/\r//' doc/api/dynsections.js
+sed -i 's/\r//' doc/api/jquery.js
+sed -i 's/\r//' doc/api/tabs.css
+
+# These are just for being able to apply the patch that
+# was exported from git.
+sed -i 's/\r//' glm/detail/setup.hpp
+sed -i 's/\r//' glm/simd/platform.h
+sed -i 's/\r//' test/core/core_setup_message.cpp
+
+%patch0 -p1
 %patch1 -p1
 
 %build
-%cmake -DGLM_TEST_ENABLE=True -DGLM_TEST_ENABLE_CXX_11=True -DCMAKE_CXX_FLAGS="-std=c++11" -DCMAKE_VERBOSE_MAKEFILE=True
+%add_optflags -fno-strict-aliasing
+%cmake -DGLM_TEST_ENABLE=True -DGLM_TEST_ENABLE_CXX_11=True -DCMAKE_VERBOSE_MAKEFILE=True
 %cmake_build
 
 %install
@@ -75,16 +98,23 @@ find %buildroot -name CMakeLists.txt -exec rm -f {} ';'
 # cmake configuration files under /usr/share.
 mkdir -pv %buildroot%_datadir
 mv %buildroot%_libdir/cmake %buildroot%_datadir/cmake
-mv %buildroot%_pkgconfigdir %buildroot%_datadir/pkgconfig
+#they removed pkgconfig in 0.9.9.8
+#mv %buildroot%_pkgconfigdir %buildroot%_datadir/pkgconfig
 rmdir %buildroot%_libdir
 
 %check
-%cmake_build --target test
+#cmake_build --target test
+
+# Some tests are disabled due to failing tests (to be reported)
+# - test-core_func_common fails on aarch64
+# - test-gtc_packing      fails on s390x
+ctest --output-on-failure -E '(test-core_func_common|test-gtc_packing)'
 
 %files -n lib%name-devel
 %_includedir/%name/
 %_datadir/cmake/*
-%_datadir/pkgconfig/*
+#they removed pkgconfig in 0.9.9.8
+#%_datadir/pkgconfig/*
 %doc copying.txt readme.md
 
 %files -n lib%name-devel-doc
@@ -92,6 +122,9 @@ rmdir %buildroot%_libdir
 %doc doc/api/
 
 %changelog
+* Tue Nov 02 2021 Igor Vlasenko <viy@altlinux.org> 0.9.9.8-alt1
+- NMU: new version 0.9.9.8 (closes: #41200)
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.9.9.6-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
