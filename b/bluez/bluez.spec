@@ -8,8 +8,8 @@
 %def_enable experimental
 
 Name: bluez
-Version: 5.61
-Release: alt1.1
+Version: 5.62
+Release: alt1
 
 Summary: Bluetooth utilities
 License: GPL-2.0-or-later
@@ -203,6 +203,9 @@ fi
 %_datadir/zsh/site-functions/_bluetoothctl
 
 %changelog
+* Sat Oct 30 2021 L.A. Kostis <lakostis@altlinux.ru> 5.62-alt1
+- 5.62.
+
 * Mon Aug 30 2021 L.A. Kostis <lakostis@altlinux.ru> 5.61-alt1.1
 - Enable experimental features.
 - Package main.conf for extra configuration.
