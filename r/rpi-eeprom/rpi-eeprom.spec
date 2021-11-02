@@ -2,9 +2,9 @@
 
 Name: rpi-eeprom
 Version: 2021.04.29
-Release: alt1
+Release: alt2
 Summary: Update Raspberry Pi 4 bootloader and VLI USB controller EEPROMs.
-License: LICENCE
+License: BSD-3-Clause
 Group: System/Configuration/Other
 Packager: Dmitry Terekhin <jqt4@altlinux.org>
 Url: https://github.com/raspberrypi/rpi-eeprom
@@ -23,7 +23,7 @@ in the %fw_subpkg package.
 
 %package -n %fw_subpkg
 Summary: Raspberry Pi 4 bootloader and VLI USB controller EEPROMs files.
-License: LICENCE
+License: Redistributable, no modification permitted
 Group: System/Configuration/Other
 
 %description -n %fw_subpkg
@@ -44,13 +44,6 @@ cp -a firmware/* %buildroot%eep_rpi4
 subst 's|#!.*python$|#!/usr/bin/env python3|' rpi-eeprom-config
 %__install -m755 rpi-eeprom-config %buildroot%_bindir
 %__install -m755 rpi-eeprom-update %buildroot%_bindir
-%__install -d %buildroot%_docdir%name
-%__install -d %buildroot%_docdir/%fw_subpkg
-%__install -m644 LICENSE %buildroot%_docdir%name
-%__install -m644 LICENSE %buildroot%_docdir/%fw_subpkg
-%__install -m644 README.md %buildroot%_docdir%name
-%__install -m644 releases.md %buildroot%_docdir%name
-%__install -m644 firmware/release-notes.md %buildroot%_docdir%name
 %__install -d %buildroot%_sysconfdir/default
 cat rpi-eeprom-update-default | sed 's/^BOOTFS=\/boot$/BOOTFS=\/boot\/efi/' > %buildroot%_sysconfdir/default/rpi-eeprom-update
 
@@ -58,13 +51,17 @@ cat rpi-eeprom-update-default | sed 's/^BOOTFS=\/boot$/BOOTFS=\/boot\/efi/' > %b
 %bkp_rpi4
 %_bindir/rpi-eeprom-config
 %_bindir/rpi-eeprom-update
-%doc %_docdir%name
+%doc README.md LICENSE releases.md firmware/release-notes.md
 %_sysconfdir/default/rpi-eeprom-update
 
 %files -n %fw_subpkg
 %eep_rpi4
-%_docdir/%fw_subpkg
+%doc README.md LICENSE releases.md firmware/release-notes.md
 
 %changelog
+* Fri Oct 29 2021 Anton Midyukov <antohami@altlinux.org> 2021.04.29-alt2
+- fix the packaging of the documentation
+- fix License tag
+
 * Wed Jun 02 2021 Dmitry Terekhin <jqt4@altlinux.org> 2021.04.29-alt1
 - Initial build
