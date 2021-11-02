@@ -6,12 +6,12 @@ BuildRequires: gcc-c++
 %define rver	0.42-6
 %define ver	%(echo %rver|tr '-' '.')
 %define rel	12
-%global _legacy_common_support 1
+%add_optflags -fcommon
 
 Summary:	Real-time patchable audio and multimedia processor
 Name:		pd
 Version:	%{ver}
-Release:	alt4_%{rel}
+Release:	alt5_%{rel}
 License:	BSD
 Group:		Sciences/Other
 URL:		http://www.puredata.org
@@ -64,8 +64,11 @@ Development files for Pure Data.
 sed -i -e 's|doc/|share/%{name}/doc/|g' src/s_main.c src/u_main.tk
 sed -i -e 's|\(^set help_top_directory\).*|\1 %{_datadir}/%{name}/doc|' src/u_main.tk
 
+%ifarch %e2k
+sed -i 's,-O6,-O%_optlevel,' src/configure*
+%endif
+
 %build
-%add_optflags -fcommon
 pushd src
 autoconf
 export CPPFLAGS="%{optflags}"
@@ -107,6 +110,9 @@ install -m 644 man/*.1 %{buildroot}/%{_mandir}/man1
 
 
 %changelog
+* Tue Nov 02 2021 Igor Vlasenko <viy@altlinux.org> 0.42.6-alt5_12
+- restored e2k fix
+
 * Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 0.42.6-alt4_12
 - fixed build with gcc10
 
