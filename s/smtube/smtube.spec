@@ -1,5 +1,5 @@
 Name: smtube
-Version: 21.7.0
+Version: 21.10.0
 Release: alt1
 Summary: Youtube Browser for SMPlayer
 Summary(ru_RU.UTF8): Браузер YouTube для SMPlayer
@@ -60,6 +60,9 @@ cd ./src && qmake-qt5 "QMAKE_CXXFLAGS+=%optflags -DTRANSLATION_PATH=%_datadir/%n
 %_datadir/%name/translations/*.qm
 
 %changelog
+* Tue Nov 02 2021 Anton Midyukov <antohami@altlinux.org> 21.10.0-alt1
+- new version (21.10.0) with rpmgs script
+
 * Mon Aug 23 2021 Anton Midyukov <antohami@altlinux.org> 21.7.0-alt1
 - new version (21.7.0) with rpmgs script
 - build with qt5
