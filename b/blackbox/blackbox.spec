@@ -1,12 +1,12 @@
 Name: blackbox
-Version: 0.74
+Version: 0.76
 Release: alt1
 
 Summary: A Window Manager for the X Window System
 License: BSD-style
 Group:   Graphical desktop/Other
 URL:     https://github.com/bbidulock/blackboxwm
-Source0: https://github.com/bbidulock/blackboxwm/releases/download/%version/%name-%version.tar.xz
+Source0: https://github.com/bbidulock/blackboxwm/releases/download/%version/%name-%version.tar
 Source1: %name.menu-method
 Source2: %name.menu
 Source3: %name-16.png
@@ -129,6 +129,10 @@ install -pD -m644 %SOURCE10 %buildroot%_datadir/xsessions/blackbox.desktop
 %_pkgconfigdir/libbt.pc
 
 %changelog
+* Tue Nov 02 2021 Igor Vlasenko <viy@altlinux.org> 0.76-alt1
+- new version
+- WM packaging policy 2.0: added pixmap to .desktop
+
 * Wed Sep 04 2019 Igor Vlasenko <viy@altlinux.ru> 0.74-alt1
 - new version
 
