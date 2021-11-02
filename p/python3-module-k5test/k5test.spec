@@ -2,7 +2,7 @@
 %define mname k5test
 
 Name: python3-module-%mname
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 Summary: Library for setting up self-contained Kerberos 5 environments
 
@@ -44,6 +44,9 @@ same name found alongside the MIT Kerberos 5 unit tests.
 %python3_sitelibdir/%mname-%version-*.egg-info
 
 %changelog
+* Mon Nov 01 2021 Stanislav Levin <slev@altlinux.org> 0.10.1-alt1
+- 0.10.0 -> 0.10.1.
+
 * Wed Sep 01 2021 Stanislav Levin <slev@altlinux.org> 0.10.0-alt1
 - 0.9.2 -> 0.10.0.
 

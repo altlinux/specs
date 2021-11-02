@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%mname
-Version: 1.7.0
+Version: 1.7.2
 Release: alt1
 
 Summary: Python Bindings for GSSAPI (RFC 2743/2744 and extensions)
@@ -22,12 +22,12 @@ BuildRequires: python3(Cython)
 BuildRequires: libkrb5-devel >= 1.15
 
 %if_with check
+# install_requires
 BuildRequires: python3(decorator)
-BuildRequires: python3(future)
+
 BuildRequires: python3(k5test)
 BuildRequires: python3(nose)
 BuildRequires: python3(parameterized)
-BuildRequires: python3(six)
 BuildRequires: python3(tox)
 BuildRequires: python3(tox_no_deps)
 BuildRequires: krb5-kdc >= 1.15
@@ -65,6 +65,9 @@ tox.py3 --sitepackages -r -vvr --no-deps -s false
 %exclude %python3_sitelibdir/%mname/tests/
 
 %changelog
+* Mon Nov 01 2021 Stanislav Levin <slev@altlinux.org> 1.7.2-alt1
+- 1.7.0 -> 1.7.2.
+
 * Mon Sep 20 2021 Stanislav Levin <slev@altlinux.org> 1.7.0-alt1
 - 1.6.14 -> 1.7.0.
 
