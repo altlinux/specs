@@ -1,17 +1,17 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %def_enable autotools
 
 Name: synaptic
 Version: 0.58
-Release: alt26
-
+Release: alt27
 Summary: Graphical front-end for APT
 Summary(ru_RU.UTF-8): Графическая оболочка для APT
 Group: System/Configuration/Packaging
 License: GPL
 Url: http://www.nongnu.org/synaptic/
-
 
 # http://people.debian.org/~mvo/synaptic/%name-%version.tar
 Source: %name-%version.tar
@@ -32,6 +32,7 @@ BuildRequires: libglade2-devel >= 2.0.0
 BuildRequires: libvte-devel >= 0.10.11
 
 BuildRequires: libtinfo-devel scrollkeeper
+BuildRequires: gnome-doc-utils
 
 %description
 Synaptic is a graphical front-end for APT (Advanced Package Tool).
@@ -56,6 +57,10 @@ Synaptic - это графическая оболочка для APT (Advanced P
 %patch1 -p1
 
 install -p -m644 %SOURCE1 pixmaps/hicolor/16x16/package-supported.png
+
+# bootstrap russian help files
+gnome-doc-prepare --copy --force
+/usr/bin/xml2po -p po-manual/synaptic-manual.ru.po -o help/ru/synaptic.xml help/C/synaptic.xml
 
 %build
 intltoolize --force
@@ -103,6 +108,12 @@ install -p -m644 %SOURCE2 %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 %exclude %_datadir/pixmaps/%name.png
 
 %changelog
+* Tue Nov 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.58-alt27
+- Packaged russian help build implemented by aris@.
+
+* Mon Nov 01 2021 Yuri N. Sedunov <aris@altlinux.org> 0.58-alt26.1
+- added russian help
+
 * Mon Jun 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.58-alt26
 - Reintroduced optimizations and improvements disabled in previous builds.
 
