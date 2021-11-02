@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: neomutt
-Version: 20211022
+Version: 20211029
 Release: alt1
 
 %define docdir %_docdir/%name-%version
@@ -93,6 +93,9 @@ make -s test
 %docdir
 
 %changelog
+* Wed Nov 03 2021 Vitaly Chikunov <vt@altlinux.org> 20211029-alt1
+- Update to 20211029.
+
 * Sun Oct 24 2021 Vitaly Chikunov <vt@altlinux.org> 20211022-alt1
 - Update to 20211022-6-g4c9fa28537 (2021-10-24).
 - Do not apply color groups patch.
