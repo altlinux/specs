@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-session
-Version: 0.17.0
-Release: alt2
+Version: 0.17.1
+Release: alt1
 
 Summary: Session manager
 License: LGPL
@@ -61,6 +61,9 @@ install -pDm644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/08lxqt
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Wed Nov 03 2021 Anton Midyukov <antohami@altlinux.org> 0.17.1-alt1
+- new version 0.17.1
+
 * Fri Sep 10 2021 Anton Midyukov <antohami@altlinux.org> 0.17.0-alt2
 - add /usr/share to XDG_CONFIG_DIRS, if variable is defined (Closes: 40879)
 
