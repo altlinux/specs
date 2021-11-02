@@ -1,6 +1,6 @@
 Name: pekwm
 Version: 0.1.17
-Release: alt3
+Release: alt4
 Summary: Fast & lightweight window manager
 License: GPLv2
 Group: Graphical desktop/Other
@@ -32,8 +32,18 @@ DESC=Fast & lightweight window manager
 SCRIPT:
 exec /usr/bin/pekwm
 @@@
+cat > %name.desktop <<@@@
+[Desktop Entry]
+Name=PekWM
+Comment=Fast & lightweight window manager
+Comment[ru]=Быстрый и легковесный оконный менеджер
+Icon=%name
+Exec=%name
+Type=Application
+@@@
 
 %build
+%add_optflags -std=c++14
 %autoreconf
 %configure
 %make_build
@@ -42,6 +52,7 @@ exec /usr/bin/pekwm
 %makeinstall_std
 mkdir -p %buildroot/%_sysconfdir/X11/wmsession.d
 install -pD -m644 %name.wmsession %buildroot/%_sysconfdir/X11/wmsession.d/08%name
+install -pD -m644 %name.desktop %buildroot%_datadir/xsessions/%name.desktop
 install -D %SOURCE1 %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 
 %files
@@ -49,11 +60,16 @@ install -D %SOURCE1 %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 %_bindir/*
 %_sysconfdir/%name
 %_sysconfdir/X11/wmsession.d/*
+%_datadir/xsessions/%name.desktop
 %_datadir/%name
 %_man1dir/%name.*
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Tue Nov 02 2021 Igor Vlasenko <viy@altlinux.org> 0.1.17-alt4
+- NMU: WM policy 2.0: added %name.desktop in xsessions
+- fixed build
+
 * Sun Apr 04 2021 Grigory Ustinov <grenka@altlinux.org> 0.1.17-alt3
 - Fix build for gcc10.
 
