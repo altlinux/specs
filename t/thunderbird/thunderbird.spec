@@ -7,7 +7,7 @@
 %define llvm_version 12.0
 
 Name: 	 thunderbird
-Version: 91.2.1
+Version: 91.3.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -511,6 +511,19 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Wed Nov 03 2021 Andrey Cherepanov <cas@altlinux.org> 91.3.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2021-38503 iframe sandbox rules did not apply to XSLT stylesheets
+  + CVE-2021-38504 Use-after-free in file picker dialog
+  + CVE-2021-38505 Windows 10 Cloud Clipboard may have recorded sensitive user data
+  + CVE-2021-38506 Thunderbird could be coaxed into going into fullscreen mode without notification or warning
+  + CVE-2021-38507 Opportunistic Encryption in HTTP2 could be used to bypass the Same-Origin-Policy on services hosted on other ports
+  + CVE-2021-38508 Permission Prompt could be overlaid, resulting in user confusion and potential spoofing
+  + CVE-2021-38509 Javascript alert box could have been spoofed onto an arbitrary domain
+  + CVE-2021-38510 Download Protections were bypassed by .inetloc files on Mac OS
+- Disable telemetry by default.
+
 * Fri Oct 22 2021 Andrey Cherepanov <cas@altlinux.org> 91.2.1-alt1
 - New version.
 - Security fixes:
