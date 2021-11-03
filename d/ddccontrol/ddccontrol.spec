@@ -10,11 +10,11 @@
 %endif
 
 %def_enable doc
-%define ddcreleasedate 20200630gitf3d003f
+%define ddcreleasedate 20211005git8be298f
 
 Name: ddccontrol
-Version: 0.4.4
-Release: alt2.%ddcreleasedate
+Version: 0.6.0
+Release: alt1.%ddcreleasedate
 
 Summary: Control your monitor by software using the DDC/CI protocol
 License: GPLv2+
@@ -27,7 +27,6 @@ Source1: %{name}-modules-autoload.conf
 Patch2: ddccontrol-0.4.2-desktop-alt11.patch
 Patch3: ddccontrol-0.4.4-alt-fix-linkage.patch
 Patch5: ddccontrol-0.4.2-russian.patch
-Patch6: ddccontrol-0.4.4-autopoint.patch
 
 BuildRequires: intltool libICE-devel libpci-devel libxml2-devel libgtk+2-devel libsystemd-devel
 %if_enabled applet
@@ -93,7 +92,6 @@ GNOME applet for ddccontrol.
 %patch2 -p1
 %patch3 -p1
 %patch5 -p1
-%patch6 -p1 -b .autopoint
 
 %build
 touch config.rpath
@@ -174,6 +172,9 @@ install -m 644 -D %SOURCE1 %buildroot%_sysconfdir/modules-load.d/%name.conf
 %endif
 
 %changelog
+* Wed Nov 03 2021 Igor Vlasenko <viy@altlinux.org> 0.6.0-alt1.20211005git8be298f
+- new version
+
 * Sun Aug 15 2021 Michael Shigorin <mike@altlinux.org> 0.4.4-alt2.20200630gitf3d003f
 - fix doc knob
 
