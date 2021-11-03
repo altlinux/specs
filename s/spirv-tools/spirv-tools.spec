@@ -1,11 +1,11 @@
 %define sover 0
-%define git 5dd2f76
+%define git %nil
 %define build_type RelWithDebInfo
 %define _cmake %cmake -GNinja -DCMAKE_BUILD_TYPE:STRING="%build_type" -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 Name: spirv-tools
-Version: 2021.2
-Release: alt0.1.g%{git}
+Version: 2021.3
+Release: alt1
 Epoch: 1
 
 Summary: API and commands for processing SPIR-V modules
@@ -15,14 +15,14 @@ License: Apache-2.0
 Url: https://www.khronos.org/registry/spir-v/
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
-Source: https://github.com/KhronosGroup/SPIRV-Tools/archive/v%version/SPIRV-Tools-%version.tar.gz
+Source: https://github.com/KhronosGroup/SPIRV-Tools/archive/v%version/SPIRV-Tools-%version.tar
 Patch0: %name-soname-alt.patch
 Patch1: %name-alt-cmake-path.patch
 
 BuildRequires(pre): cmake ninja-build
 BuildRequires: gcc-c++
 BuildRequires: python3-devel
-BuildRequires: spirv-headers >= 1.5.4-alt2
+BuildRequires: spirv-headers >= 1.5.4-alt3
 
 %description
 The package includes an assembler, binary module parser,
@@ -96,6 +96,9 @@ ninja -C %_cmake__builddir install
 %_datadir/cmake/SPIRV-Tools*
 
 %changelog
+* Wed Nov 03 2021 L.A. Kostis <lakostis@altlinux.ru> 1:2021.3-alt1
+- Update to v2021.3.
+
 * Sun Jun 27 2021 L.A. Kostis <lakostis@altlinux.ru> 1:2021.2-alt0.1.g5dd2f76
 - Updated to GIT 5dd2f76.
 

@@ -3,7 +3,7 @@
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 Name: glslang
-Version: 11.5.0
+Version: 11.6.0
 Release: alt1
 Epoch: 1
 
@@ -20,7 +20,7 @@ Patch1: %{name}-alt-shared-opt.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
-BuildRequires: python3-devel libspirv-tools-devel >= 2021.2
+BuildRequires: python3-devel libspirv-tools-devel >= 2021.3
 
 %description
 glslang is the official reference compiler front end for the OpenGL
@@ -81,6 +81,9 @@ popd
 %_includedir/SPIRV
 
 %changelog
+* Wed Nov 03 2021 L.A. Kostis <lakostis@altlinux.ru> 1:11.6.0-alt1
+- 11.6.0.
+
 * Sun Jun 27 2021 L.A. Kostis <lakostis@altlinux.ru> 1:11.5.0-alt1
 - 11.5.0.
 
