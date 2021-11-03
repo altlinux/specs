@@ -10,7 +10,7 @@ Name: bzflag
 Version: 2.4.22
 
 # %%ifndef git_commit
-Release: alt1
+Release: alt3
 # %%else
 # Release: alt0.git_1_%git_commit
 # %%endif
@@ -48,7 +48,7 @@ Summary(uk_UA.UTF-8): Тривимірна мережева гра на танк
 
 # Automatically added by buildreq on Thu May 04 2017 (-bi)
 # optimized out: elfutils libGL-devel libGLU-devel libX11-devel libgpg-error libstdc++-devel libtinfo-devel perl pkg-config python-base termutils xorg-xf86vidmodeproto-devel xorg-xproto-devel xz
-BuildRequires: gcc-c++ libSDL-devel libXext-devel libXxf86vm-devel libcares-devel libcurl-devel libncurses-devel zlib-devel
+BuildRequires: gcc-c++ libSDL2-devel libGLEW-devel libXext-devel libXxf86vm-devel libcares-devel libcurl-devel libncurses-devel zlib-devel
 
 BuildRequires: catdoc iconv
 
@@ -145,6 +145,11 @@ This package contains BZFlags standalone game server.
 %build
 %autoreconf
 export CARES_DIR=%_includedir
+# Use PIE because bzflag/bzfs are networked server applications
+CFLAGS='-fPIC %{optflags} -fno-strict-aliasing' \
+CXXFLAGS='-fPIC %{optflags} -fno-strict-aliasing' \
+LDFLAGS='-pie' \
+SDL_CFLAGS='-I%{_prefix}/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT' \
 %configure \
 	--bindir=%_gamesbindir \
 	--datadir=%_gamesdatadir \
@@ -153,7 +158,11 @@ export CARES_DIR=%_includedir
 	--enable-threads \
 	%{subst_enable plugins} \
 	--without-regex \
-	--enable-robots
+	--enable-robots \
+ --libdir=%{_libdir}/%{name} --with-SDL=2 \
+    --prefix=%{_prefix} --exec-prefix=%{_prefix} \
+    --with-sdl-prefix=%{_prefix} --with-sdl-exec-prefix=%{_prefix}
+
 
 %make_build
 cd misc
@@ -201,7 +210,7 @@ mkdir -p %buildroot/var/run/%name
 
 %_man6dir/*
 %_man5dir/*
-%_gamesbindir/*
+%_gamesbindir/%name
 %_gamesdatadir/%name
 %if_enabled menufile
 %_menudir/%name
@@ -223,6 +232,13 @@ mkdir -p %buildroot/var/run/%name
 %_initdir/bzfs
 
 %changelog
+* Wed Nov 03 2021 Ilya Mashkin <oddity@altlinux.ru> 2.4.22-alt3
+- fix path
+
+* Wed Nov 03 2021 Ilya Mashkin <oddity@altlinux.ru> 2.4.22-alt2
+- add more options for configure to correct build with SDL2
+- Michael Shigorin: actually build the client (doesn't support SDL1 anymore)
+
 * Thu Apr 29 2021 Ilya Mashkin <oddity@altlinux.ru> 2.4.22-alt1
 - 2.4.22
 
