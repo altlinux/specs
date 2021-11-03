@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 
 Summary: A lil' TOML parser
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(flit)
 
 %if_with check
 BuildRequires: python3(dateutil)
@@ -37,16 +38,16 @@ v1.0.0.
 %autopatch -p1
 
 %build
-# tomli no longer provides setup.py, rpm-build-python3 cannot build
-# setup.py-less projects. The following converter can be used to generate
-# setup.py if the build backend is flit.
+# generate setup.py for legacy builder(flit build backend)
+%__python3 - <<-'EOF'
+from pathlib import Path
+from flit.sdist import SdistBuilder
 
-# from pathlib import Path
-# from flit.sdist import SdistBuilder
-#
-# with open("setup.py", "wb") as f:
-#     sd_builder = SdistBuilder.from_ini_path(Path("pyproject.toml"))
-#     f.write(sd_builder.make_setup_py())
+
+with open("setup.py", "wb") as f:
+    sd_builder = SdistBuilder.from_ini_path(Path("pyproject.toml"))
+    f.write(sd_builder.make_setup_py())
+EOF
 %python3_build
 
 %install
@@ -64,6 +65,9 @@ tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Nov 02 2021 Stanislav Levin <slev@altlinux.org> 1.2.2-alt1
+- 1.2.1 -> 1.2.2.
+
 * Wed Sep 29 2021 Stanislav Levin <slev@altlinux.org> 1.2.1-alt1
 - 1.1.0 -> 1.2.1.
 

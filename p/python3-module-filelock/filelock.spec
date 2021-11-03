@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.3.1
+Version: 3.3.2
 Release: alt1
 
 Summary: A platform independent file lock for Python
@@ -58,6 +58,9 @@ tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false -- -vra tests
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Nov 02 2021 Stanislav Levin <slev@altlinux.org> 3.3.2-alt1
+- 3.3.1 -> 3.3.2.
+
 * Mon Oct 25 2021 Stanislav Levin <slev@altlinux.org> 3.3.1-alt1
 - 3.0.10 -> 3.3.1.
 

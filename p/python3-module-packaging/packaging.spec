@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 21.0
+Version: 21.2
 Release: alt1
 
 Summary: Core utilities for Python packages
@@ -58,6 +58,9 @@ tox.py3 --sitepackages --console-scripts -vvr
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Nov 02 2021 Stanislav Levin <slev@altlinux.org> 21.2-alt1
+- 21.0 -> 21.2.
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 21.0-alt1
 - new version 21.0
 
