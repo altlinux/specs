@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.178
+Version: 4.0.4.179
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -384,6 +384,12 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Wed Nov 03 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4.179-alt1
+- brp-debuginfo, process-debuginfo: added support of zstd-compressed modules.
+- brp-sign-kmodules:
+  + added support of zstd-compressed modules;
+  + changed to skip and warn about modules compressed with unsupported method.
+
 * Thu Sep 09 2021 Dmitry V. Levin <ldv@altlinux.org> 4.0.4.178-alt1
 - process-lto: enhanced error diagnostics.
 
