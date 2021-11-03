@@ -1,6 +1,6 @@
 Name: firmware-linux
 Version: 20211025
-Release: alt1
+Release: alt1.1
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -76,6 +76,9 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Nov 03 2021 L.A. Kostis <lakostis@altlinux.ru> 20211025-alt1.1
+- gears/update: fix git pull command (use fast-forward stategy).
+
 * Tue Oct 26 2021 Cronbuild Service <cronbuild@altlinux.org> 20211025-alt1
 - upstream changes (GIT fc14618):
   + bnx2x: Add FW 7.13.20.0 (thx Manish Chopra)
