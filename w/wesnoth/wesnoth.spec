@@ -38,13 +38,14 @@ BuildRequires: rpm-build-python
 #define wesdesktopsuffix %nil
 
 Name: wesnoth%wessuffix
-Version: 1.14.16
+Version: 1.14.17
 Release: alt1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
 Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия в стиле фэнтези
 License: %gpl2plus
 Url: http://www.%name.org
+VCS: https://github.com/wesnoth/wesnoth.git
 Source0: wesnoth-%version.tar
 Patch1: wesnoth-1.13.8-sdl2.02-alt-hack.patch
 
@@ -711,6 +712,9 @@ rm -rf %buildroot%_bindir/wesnoth_addon_manager \
 %endif
 
 %changelog
+* Wed Nov 03 2021 Igor Vlasenko <viy@altlinux.org> 1.14.17-alt1
+- new version
+
 * Thu May 13 2021 Igor Vlasenko <viy@altlinux.org> 1.14.16-alt1
 - new version
 
