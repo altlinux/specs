@@ -10,7 +10,7 @@
 
 Name: plymouth
 Version: 0.9.5
-Release: alt4
+Release: alt5
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
@@ -263,7 +263,7 @@ export UDEVADM="/sbin/udevadm"
 	--disable-static				\
 	--enable-tracing				\
 	--enable-documentation				\
-	--with-logo=%_pixmapsdir/system-logo.png		\
+	--with-logo=%_datadir/design/current/icons/system-logo.png	\
 	--with-background-start-color-stop=0x0073B3	\
 	--with-background-end-color-stop=0x00457E	\
 	--with-background-color=0x3391cd		\
@@ -456,6 +456,10 @@ fi \
 %files system-theme
 
 %changelog
+* Wed Nov 03 2021 Sergey V Turchin <zerg@altlinux.org> 1:0.9.5-alt5
+- fix requires (closes: 39837)
+- using /usr/share/design/current/icons/system-logo.png as special://logo
+
 * Sun Jul 11 2021 Alexey Shabalin <shaba@altlinux.org> 1:0.9.5-alt4
 - KillMode=mixed in plymouth-start.service
 - kernel cmdline should contain splash for run plymouth
