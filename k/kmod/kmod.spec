@@ -1,5 +1,5 @@
 Name:		kmod
-Version:	27.0.9.f5434cf
+Version:	29
 Release:	alt1
 Summary:	Linux kernel module management utilities
 
@@ -12,12 +12,12 @@ Requires:	lib%name = %version-%release
 Source0:	%name-%version.tar
 Patch0:		%name-manpage.patch
 
-BuildRequires: bash4
 BuildRequires: docbook-dtds
 BuildRequires: docbook-style-xsl
 BuildRequires: glibc-devel-static
 BuildRequires: liblzma-devel
 BuildRequires: libssl-devel
+BuildRequires: libzstd-devel
 BuildRequires: xsltproc
 BuildRequires: zlib-devel
 
@@ -54,10 +54,6 @@ applications that wish to load or unload Linux kernel modules.
 %prep
 %setup -q
 
-sed -i \
-	-e 's,#!/bin/bash$,#!/bin/bash4,' \
-	testsuite/populate-modules.sh
-
 %build
 touch libkmod/docs/gtk-doc.make
 %autoreconf
@@ -70,7 +66,9 @@ touch libkmod/docs/gtk-doc.make
 	--with-rootlibdir=/%_lib \
 	--with-openssl \
 	--with-zlib \
-	--with-xz
+	--with-xz \
+	--with-zstd \
+	#
 %make_build
 
 %install
@@ -100,6 +98,12 @@ done
 # lsmod was in /bin before
 ln -s kmod %buildroot/bin/lsmod
 
+# unpackaged files
+rm -r %buildroot%_datadir/bash-completion
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %check
 make check
@@ -132,6 +136,10 @@ make check
 %_libdir/libkmod.so
 
 %changelog
+* Tue Nov 02 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 29-alt1
+- Version (29).
+- Enabled zstd compression support.
+
 * Thu Jun 25 2020 Alexey Gladkov <legion@altlinux.ru> 27.0.9.f5434cf-alt1
 - Version (27).
 
