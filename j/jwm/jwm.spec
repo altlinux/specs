@@ -1,13 +1,13 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: libX11-devel libXext-devel libpng-devel xorg-xproto-devel
+BuildRequires: libX11-devel libXext-devel xorg-proto-devel
 # END SourceDeps(oneline)
-%define fedora 26
+%define fedora 34
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jwm
 Version:        2.3.7
-Release:        alt1_3
+Release:        alt1_11
 Summary:        Joe's Window Manager
 
 License:        GPLv2+
@@ -15,7 +15,7 @@ URL:            http://joewing.net/projects/jwm/
 Source0:        %{url}/releases/%{name}-%{version}.tar.xz
 Source1:        %{name}.desktop
 
-BuildRequires:  gcc-common
+BuildRequires:  gcc
 BuildRequires:  pkgconfig(libpng)
 %if 0%{?fedora} > 24
 BuildRequires:  pkgconfig(libjpeg)
@@ -33,13 +33,14 @@ BuildRequires:  libXmu-devel
 BuildRequires:  libXinerama-devel
 BuildRequires:  gettext gettext-tools
 Requires:     /usr/bin/xterm
-Requires:     /usr/bin/xlock
 Source44: import.info
 Patch33: jwm-2.3.7-alt-config-file.patch
 Source45: jwm.method
 Source46: jwm.wmsession
 Source47: jwm-conf.tar
-Source48: startjwm
+Source48: jwm.svg
+Source49: startjwm
+#Recommends:     /usr/bin/xlock
 
 %description
 JWM is a window manager for the X11 Window System. It's written in C and uses
@@ -89,22 +90,27 @@ install -Dpm0644 %{SOURCE1} %{buildroot}%{_datadir}/xsessions/
 tar -xC %buildroot/%_sysconfdir/X11/jwm -f %SOURCE47
 rm -f -- %buildroot/%_sysconfdir/X11/jwm/system.jwmrc
 
-# install -m755 %SOURCE48 %buildroot/%_bindir/
-install -D -m644 %SOURCE46 %buildroot/%_sysconfdir/X11/wmsession.d/jwm
+# install -m755 %SOURCE49 %buildroot%_bindir/
+install -D -m644 %SOURCE46 %buildroot%_sysconfdir/X11/wmsession.d/jwm
+install -D -m644 %SOURCE48 %buildroot%_iconsdir/hicolor/scalable/apps/jwm.svg
 install -D -m 755 %{SOURCE45} %buildroot%_sysconfdir/menu-methods/jwm
 
 %files -f %{name}.lang
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc ChangeLog README.md
 %doc %{_mandir}/man1/%{name}.1*
 %{_bindir}/%{name}
 %config(noreplace) %{_sysconfdir}/X11/jwm/*
 %{_datadir}/xsessions/%{name}.desktop
 %{_datadir}/%{name}/
+%_iconsdir/hicolor/scalable/apps/jwm.svg
 %config %_sysconfdir/menu-methods/jwm
 %config %_sysconfdir/X11/wmsession.d/jwm
 
 %changelog
+* Wed Nov 03 2021 Igor Vlasenko <viy@altlinux.org> 2.3.7-alt1_11
+- WM policy 2.0: added svg. fixed desktop
+
 * Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.7-alt1_3
 - update to new release by fcimport
 
