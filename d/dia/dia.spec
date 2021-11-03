@@ -3,7 +3,7 @@
 
 Name: dia
 Version: 0.97.4
-Release: alt0.8
+Release: alt0.9
 
 Summary: A gtk+ based diagram creation program
 Summary(ru_RU.UTF-8): Программа для создания диаграмм, основанная на GTK+
@@ -70,9 +70,6 @@ chmod -x `find objects/AADL -type f`
 iconv -f WINDOWS-1252 -t UTF8 doc/en/usage-layers.xml > usage-layers.xml.UTF-8
 mv usage-layers.xml.UTF-8 doc/en/usage-layers.xml
 
-# run in single window mode (--integrated) by default (Fedora #910275)
-sed -i 's|Exec=dia|Exec=dia --integrated|' dia.desktop.in.in
-
 %build
 # TODO: remove autoreconf when will build from a tarball
 %autoreconf
@@ -113,6 +110,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_mandir/fr/man1/*
 
 %changelog
+* Wed Nov 03 2021 Vitaly Lipatov <lav@altlinux.ru> 0.97.4-alt0.9
+- drop --integrated (does not supported)
+
 * Mon Aug 16 2021 Vitaly Lipatov <lav@altlinux.ru> 0.97.4-alt0.8
 - cleanup spec, drop obsoleted BR
 - run dia --integrated now
