@@ -1,7 +1,7 @@
 Name: fvwm
 Version: 2.6.9
 #define cvsdate 20031019
-Release: alt2
+Release: alt3
 
 %def_with fribidi
 %def_with libstroke
@@ -31,6 +31,7 @@ Source15: fvwm.menu
 Source16: fvwm.menu-method
 Source17: startfvwm
 Source18: fvwm.wmsession
+Source19: fvwm.desktop
 
 Patch1: fvwm-2.5.10-alt-obsolete-modules.patch
 Patch2: fvwm-2.6.0-alt-config.patch
@@ -275,9 +276,9 @@ pushd $RPM_BUILD_ROOT
 popd
 
 # mdk: menu entry icon
-install -pD -m644 %SOURCE12 $RPM_BUILD_ROOT%_iconsdir/%name-menuicon.xpm
+install -pD -m644 %SOURCE12 $RPM_BUILD_ROOT%_niconsdir/%name-menuicon.xpm
 install -pD -m644 %SOURCE13 $RPM_BUILD_ROOT%_miconsdir/%name-menuicon.xpm
-install -p -m644 %SOURCE14 $RPM_BUILD_ROOT%_iconsdir/
+install -pD -m644 %SOURCE14 $RPM_BUILD_ROOT%_iconsdir/hicolor/64x64/apps/%name.xpm
 
 # mdk: menu stuff
 install -pD -m644 %SOURCE15 $RPM_BUILD_ROOT%_menudir/%name
@@ -285,6 +286,7 @@ install -pD -m755 %SOURCE16 $RPM_BUILD_ROOT%_sysconfdir/menu-methods/%name
 
 install -pD -m755 %SOURCE17 $RPM_BUILD_ROOT%_bindir/start%name
 install -pD -m644 %SOURCE18 $RPM_BUILD_ROOT%_sysconfdir/X11/wmsession.d/09Fvwm
+install -pD -m644 %SOURCE19 $RPM_BUILD_ROOT%_datadir/xsessions/fvwm.desktop
 
 # move HTML docs to proper place if they were generated
 mkdir -p $RPM_BUILD_ROOT/%_docdir/%name
@@ -307,6 +309,7 @@ find $RPM_BUILD_ROOT%_docdir/%name-%version -type d -empty -print -delete
 %ghost %_sysconfdir/X11/%name/menu
 %_sysconfdir/X11/wmsession.d/*
 %_sysconfdir/menu-methods/*
+%_datadir/xsessions/*.desktop
 %_bindir/*
 %exclude %_bindir/fvwm-convert-2.6
 %exclude %_bindir/fvwm-menu-desktop
@@ -322,6 +325,9 @@ find $RPM_BUILD_ROOT%_docdir/%name-%version -type d -empty -print -delete
 %exclude %_datadir/fvwm/perllib/
 %exclude %_datadir/fvwm/fvwm-script-ComExample.pl
 %_menudir/*
+%_niconsdir/%name-menuicon.xpm
+%_miconsdir/%name-menuicon.xpm
+%_iconsdir/hicolor/64x64/apps/%name.xpm
 
 %files doc
 %_mandir/man?/*
@@ -357,8 +363,18 @@ find $RPM_BUILD_ROOT%_docdir/%name-%version -type d -empty -print -delete
 %files icons
 %_iconsdir/*.xpm
 %_miconsdir/*.xpm
+# menu entry icons are in fvwm-base:
+%exclude %_niconsdir/%name-menuicon.xpm
+%exclude %_miconsdir/%name-menuicon.xpm
+%exclude %_iconsdir/hicolor/64x64/apps/%name.xpm
 
 %changelog
+* Tue Nov 02 2021 Vladislav Zavjalov <slazav@altlinux.org> 2.6.9-alt3
+- follow Altlinux WM policy (closes #41275):
+  - move /usr/share/icons/Fvwm.xpm to /usr/share/icons/hicolor/64x64/apps/fvwm.xpm
+  - add /usr/share/xsessions/fvwm.desktop file
+- move fvwm.xpm and fvwm-menuicon.xpm from fvwm-icons to fvwm-base package
+
 * Tue May 04 2021 Vladislav Zavjalov <slazav@altlinux.org> 2.6.9-alt2
 - add BuildRequires: rpm-build-python3 (for fvwm-menu-desktop script)
 
