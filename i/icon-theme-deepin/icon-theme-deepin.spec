@@ -1,7 +1,7 @@
 # %%set_findreq_skiplist %%_iconsdir/bloom/actions/24/arrow-{down,left,right,up,empty}.svg
 
 Name: icon-theme-deepin
-Version: 2020.09.25
+Version: 2021.08.19
 Release: alt1
 Summary: Icons for the Deepin Desktop Environment
 License: GPL-3.0-only
@@ -10,19 +10,16 @@ Url: https://github.com/linuxdeepin/deepin-icon-theme
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/deepin-icon-theme-%version.tar.gz
-Patch: %{name}_fix-installation.patch
+
 BuildArch: noarch
 
 BuildRequires: python3-devel gtk-update-icon-cache xcursorgen
-Requires: icon-theme-Papirus
-AutoReq: no
 
 %description
 %summary.
 
 %prep
 %setup -n icon-theme-deepin-%version
-%patch -p1
 
 sed -i 's/deepin/bloom/g' tools/hicolor.links
 sed -i 's|python|python3|' Makefile
@@ -30,7 +27,7 @@ sed -i 's|/usr/bin/env python|/usr/bin/env python3|' \
 	$(find ./ -name '*.py')
 
 %build
-%make_build
+%make -j1
 
 %install
 %makeinstall DESTDIR=%buildroot
@@ -45,8 +42,13 @@ cp -a ./Sea ./usr/share/icons/hicolor %buildroot/usr/share/icons/
 %_iconsdir/bloom-dark/
 %_iconsdir/bloom/
 %_iconsdir/Sea/
+%_iconsdir/Vintage/
 
 %changelog
+* Wed Nov 03 2021 Leontiy Volodin <lvol@altlinux.org> 2021.08.19-alt1
+- New version (2021.08.19) with rpmgs script.
+- Fixed installation error.
+
 * Fri Oct 09 2020 Leontiy Volodin <lvol@altlinux.org> 2020.09.25-alt1
 - New version (2020.09.25) with rpmgs script.
 

@@ -1,6 +1,6 @@
 Name: deepin
 Version: 5
-Release: alt14
+Release: alt15
 Summary: Set of Deepin Desktop installers
 License: GPL-2.0+
 Group: Graphical desktop/Other
@@ -73,7 +73,7 @@ Requires: deepin-terminal
 Requires: deepin-calendar
 Requires: deepin-anything
 Requires: deepin-wallpapers
-Requires: deepin-turbo
+# Requires: deepin-turbo
 Requires: deepin-system-monitor
 Requires: deepin-editor
 Requires: deepin-sound-theme
@@ -133,6 +133,9 @@ Requires: %name-default = %version-%release
 %files regular
 
 %changelog
+* Wed Nov 03 2021 Leontiy Volodin <lvol@altlinux.org> 5-alt15
+- Fixed memory leaks caused by booster-desktop.
+
 * Fri Jul 23 2021 Leontiy Volodin <lvol@altlinux.org> 5-alt14
 - Added kde5-profile into deepin-default.
 
