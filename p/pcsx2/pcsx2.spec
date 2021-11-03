@@ -4,7 +4,7 @@
 %define gtest_version 1.11.0
 
 Name: pcsx2
-Version: 1.7.2003
+Version: 1.7.2006
 Release: alt1
 
 Summary: Playstation 2 console emulator
@@ -71,6 +71,7 @@ BuildRequires: libwxGTK3.1-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libxml2-devel
 BuildRequires: libyaml-cpp-devel
+BuildRequires: ninja-build
 
 %description
 PCSX2 is an emulator for the playstation 2 video game console. It is written mostly in C++, some part are in C and x86 assembly.
@@ -84,17 +85,18 @@ There is still lot of on going work to improve compatibility & speed.
 
 %build
 %cmake .. \
+	-DCMAKE_DISABLE_PRECOMPILE_HEADERS:BOOL=TRUE \
 	-DCMAKE_BUILD_PO:BOOL=TRUE \
 	-DDISABLE_ADVANCE_SIMD:BOOL=TRUE \
 	-DPACKAGE_MODE:BOOL=TRUE \
 	-DXDG_STD:BOOL=TRUE \
-	-DDISABLE_BUILD_DATE:BOOL=TRUE \
-	-DUSE_SYSTEM_YAML:BOOL=TRUE
+	-DUSE_SYSTEM_YAML:BOOL=TRUE \
+	-GNinja
 
-%cmake_build
+ninja -j %__nprocs -vvv -C %_cmake__builddir
 
 %install
-%cmakeinstall_std
+DESTDIR=%buildroot ninja install -C %_cmake__builddir
 %find_lang --output=%name.lang %{name}_{Iconized,Main}
 
 %files -f %name.lang
@@ -109,6 +111,9 @@ There is still lot of on going work to improve compatibility & speed.
 %_defaultdocdir/Pcsx2/*.pdf
 
 %changelog
+* Wed Nov 03 2021 Nazarov Denis <nenderus@altlinux.org> 1.7.2006-alt1
+- Version 1.7.2006
+
 * Tue Nov 02 2021 Nazarov Denis <nenderus@altlinux.org> 1.7.2003-alt1
 - Version 1.7.2003
 
