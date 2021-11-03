@@ -1,6 +1,8 @@
+%global optflags_lto %nil
+
 Name: tcptrace
 Version: 6.6.7
-Release: alt3.qa1
+Release: alt4
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -45,6 +47,9 @@ install -pD -m644 tcptrace.man %buildroot%_man1dir/tcptrace.1
 %_man1dir/*
 
 %changelog
+* Wed Nov 03 2021 Andrew A. Vasilyev <andy@altlinux.org> 6.6.7-alt4
+- NMU: build without LTO
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 6.6.7-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
