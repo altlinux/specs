@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.5.5
+Version: 1.5.6
 Release: alt1
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
@@ -87,7 +87,7 @@ Requires: lazarus
 Requires: gambas-full
 %endif
 # OCR
-Requires: gimagereader-qt5
+Requires: gimagereader-gtk
 Requires: tesseract
 Requires: tesseract-langpack-ru
 Requires: tesseract-langpack-en
@@ -518,6 +518,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Wed Nov 03 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.6-alt1
+- Use gimagereader-gtk instead of gimagereader-qt5 due completely translation.
+
 * Tue Nov 02 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.5-alt1
 - Add pascalabcnet to task-edu.
 
