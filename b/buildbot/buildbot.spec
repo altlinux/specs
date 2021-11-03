@@ -1,5 +1,5 @@
 Name: buildbot
-Version: 3.3.0
+Version: 3.4.0
 Release: alt1
 Summary: Python-based continuous integration testing framework
 
@@ -197,8 +197,6 @@ mkdir -p %buildroot%_unitdir
 install -m 0644 %SOURCE31 %buildroot%_unitdir/
 install -m 0644 %SOURCE32 %buildroot%_unitdir/
 
-rm %buildroot%_bindir/buildbot_windows_service
-rm %buildroot%_bindir/buildbot_worker_windows_service
 rm %buildroot%python3_sitelibdir/buildbot-*.egg-info/requires.txt
 
 
@@ -278,6 +276,9 @@ buildbot-worker start worker
 %files checkinstall
 
 %changelog
+* Mon Nov 01 2021 Mikhail Gordeev <obirvalger@altlinux.org> 3.4.0-alt1
+- new version 3.4.0
+
 * Mon Aug 09 2021 Mikhail Gordeev <obirvalger@altlinux.org> 3.3.0-alt1
 - new version 3.3.0
 
