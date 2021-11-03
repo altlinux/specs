@@ -1,12 +1,13 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %def_enable pulse
 %define ver_major 2
 %define api_ver 2.0
+%define enc_api_ver 2.1
 %def_disable qt5
 
 Name: guvcview
-Version: %ver_major.0.6
+Version: %ver_major.0.7
 Release: alt1
 
 Summary: A GTK UVC video viewer
@@ -17,7 +18,7 @@ Url: http://%name.sourceforge.net/
 %if_disabled snapshot
 Source: http://download.sourceforge.net/%name/%name-src-%version.tar.gz
 %else
-# VCS: git://git.code.sf.net/p/guvcview/git-master
+Vcs: git://git.code.sf.net/p/guvcview/git-master
 Source: %name-%version.tar
 %endif
 
@@ -63,10 +64,10 @@ This package contains files necessary to develop applications that use
 %name libraries.
 
 %prep
-%setup -n %name-src-%version
+%setup -n %name%{?_disable_snapshot:-src}-%version
 
 %build
-export LIBS="$LIBS -lm"
+#export LIBS="$LIBS -lm"
 %{?_enable_qt5: export ac_cv_prog_MOC=%_bindir/moc-qt5}
 %autoreconf
 %configure \
@@ -96,14 +97,14 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pixmapsdir/*
 %_niconsdir/*
 %_man1dir/*
-%_datadir/appdata/%name.appdata.xml
-%doc AUTHORS ChangeLog NEWS README*
+%_datadir/metainfo/%name.appdata.xml
+%doc AUTHORS ChangeLog README*
 
 %files -n lib%name
 %_libdir/libgviewaudio-%api_ver.so.*
 %_libdir/libgviewrender-%api_ver.so.*
 %_libdir/libgviewv4l2core-%api_ver.so.*
-%_libdir/libgviewencoder-%api_ver.so.*
+%_libdir/libgviewencoder-%enc_api_ver.so.*
 
 %files -n lib%name-devel
 %_includedir/%name-%ver_major/
@@ -113,6 +114,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_datadir/doc/%name
 
 %changelog
+* Wed Nov 03 2021 Yuri N. Sedunov <aris@altlinux.org> 2.0.7-alt1
+- updated to v2.0.7-2-5-g9edc615
+
 * Tue Oct 23 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.6-alt1
 - 2.0.6
 
