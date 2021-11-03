@@ -1,7 +1,7 @@
 
 Name: kde5-virtual
-Version: 5.21.5
-Release: alt1.1
+Version: 5.22.0
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: Virtual packages for KDE 5
@@ -232,7 +232,7 @@ Summary:  LightDM Display Manager collective package
 Provides: kde5-display-manager = %EVR
 Provides: kde5-display-manager-lightdm = %EVR
 Requires: kf5-filesystem
-Requires: lightdm-gtk-greeter lightdm-gtk-greeter-settings
+Requires: lightdm-kde-greeter
 %description -n kde5-display-manager-4-lightdm
 %summary
 
@@ -281,6 +281,9 @@ Requires: sddm sddm-theme-breeze plasma5-sddm-kcm
 %files -n kde5-display-manager-5-sddm
 
 %changelog
+* Wed Nov 03 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.0-alt1
+- use lightdm-kde-greeter for lightdm
+
 * Thu Aug 26 2021 Andrey Cherepanov <cas@altlinux.org> 5.21.5-alt1.1
 - NMU: thunderbird is built for pc64le, but not for armh
 
