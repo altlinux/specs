@@ -2,7 +2,7 @@
 
 Name:          %pkg_name
 Version:       1.4.9
-Release:       alt1
+Release:       alt2
 
 Group:         Graphical desktop/Other
 Summary:       ratpoison - Simple window manager with no fat library dependencies
@@ -11,7 +11,8 @@ Url:           http://www.nongnu.org/ratpoison
 # VCS:         https://git.savannah.nongnu.org/git/ratpoison.git
 
 Source:        %name-%version.tar
-Source1:       RATPOISON.xpm
+Source1:       ratpoison-64.xpm
+Source2:       ratpoison-16.png
 
 # Automatically added by buildreq on Thu Apr 08 2010 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glibc-pthread libX11-devel libXrender-devel libfreetype-devel pkg-config xorg-inputproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
@@ -78,8 +79,6 @@ You need to install %name-el only if you intend to modify any of the
 %install
 %makeinstall_std
 
-install -d %buildroot/%_docdir %buildroot/%_niconsdir
-
 # startfile
 cat > %buildroot/%_bindir/start%name << EOF
 #!/bin/sh
@@ -89,14 +88,24 @@ chmod 755 %buildroot/%_bindir/start%name
 
 # session file
 install -d %buildroot/%_sysconfdir/X11/wmsession.d
-install -m 644 %SOURCE1 %buildroot/%_niconsdir/RATPOISON.xpm
+install -D -m 644 %SOURCE1 %buildroot%_iconsdir/hicolor/64x64/apps/ratpoison.xpm
+install -D -m 644 %SOURCE2 %buildroot%_iconsdir/hicolor/16x16/apps/ratpoison.png
 cat > %buildroot/%_sysconfdir/X11/wmsession.d/16%name << EOF
 NAME=%name
-ICON=%_niconsdir/RATPOISON.xpm
+ICON=%_iconsdir/hicolor/64x64/apps/ratpoison.xpm
 EXEC=%_bindir/start%name
 DESC=%name window manager
 SCRIPT:
 exec %_bindir/start%name
+EOF
+install -d %buildroot/%_datadir/xsessions
+cat > %buildroot%_datadir/xsessions/%name.desktop << EOF
+[Desktop Entry]
+Name=%name
+Comment=%name window manager
+Icon=%name
+Exec=start%name
+Type=Application
 EOF
 
 install -D -m 644 contrib/%pkg_name.elc %buildroot%_emacslispdir/%pkg_name.elc
@@ -108,7 +117,9 @@ install -D -m 644 contrib/%pkg_name.elc %buildroot%_emacslispdir/%pkg_name.elc
 %_datadir/%name
 %_man1dir/%name.1*
 %_infodir/%name.info*
-%_niconsdir/RATPOISON.xpm
+%_miconsdir/ratpoison.png
+%_iconsdir/hicolor/64x64/apps/ratpoison.xpm
+%_datadir/xsessions/%name.desktop
 %doc README TODO AUTHORS NEWS ChangeLog doc/sample.ratpoisonrc doc/ipaq.ratpoisonrc
 
 %files       -n emacs-%name-el
@@ -118,6 +129,11 @@ install -D -m 644 contrib/%pkg_name.elc %buildroot%_emacslispdir/%pkg_name.elc
 %_emacslispdir/%name.elc
 
 %changelog
+* Wed Nov 03 2021 Igor Vlasenko <viy@altlinux.org> 1.4.9-alt2
+- NMU: WM packaging policy 2.0:
+- added .desktop
+- added 16x16 pixmap
+
 * Thu Apr 11 2019 Pavel Skrylev <majioa@altlinux.org> 1.4.9-alt1
 - Bump to version 1.4.9
 - Use git repo sources to build
