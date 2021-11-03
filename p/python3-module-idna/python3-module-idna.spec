@@ -1,7 +1,7 @@
 %define oname idna
 
 Name: python3-module-%oname
-Version: 3.2
+Version: 3.3
 Release: alt1
 
 Summary: A library to support the Internationalised Domain Names in Applications (IDNA)
@@ -35,6 +35,9 @@ to as "IDNA2008" and can produce different results from the earlier standard fro
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Wed Nov 3 2021 Vladimir Didenko <cow@altlinux.org> 3.3-alt1
+- New version
+
 * Fri Jun 18 2021 Vladimir Didenko <cow@altlinux.org> 3.2-alt1
 - New version
 
