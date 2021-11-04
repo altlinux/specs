@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-functions
-Version: 2.0.3
+Version: 2.1.0
 Release: alt1
 
 Requires: libshell >= 0.1.3 etcnet
@@ -41,6 +41,9 @@ helpers for etcnet administration
 %_libexecdir/%name/
 
 %changelog
+* Fri Oct 29 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.1.0-alt1
+- Add support systemd-networkd iface control functions
+
 * Mon Feb 10 2020 Mikhail Gordeev <obirvalger@altlinux.org> 2.0.3-alt1
 - Add support of several bridge types
 
