@@ -2,7 +2,7 @@ Name: kernel-image-std-pae
 Release: alt1
 epoch:2
 %define kernel_base_version	5.10
-%define kernel_sublevel .76
+%define kernel_sublevel .77
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -702,6 +702,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Nov 04 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.77-alt1
+- v5.10.77
+
 * Wed Oct 27 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.76-alt1
 - v5.10.76
 
