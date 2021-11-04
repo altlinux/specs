@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	5.14
-%define kernel_sublevel .13
+%define kernel_sublevel .16
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -399,8 +399,11 @@ mv %buildroot%modules_dir/kernel/drivers/media/dvb-core/dvb-core.ko %buildroot%m
 mv %buildroot%modules_dir/kernel/drivers/media/radio/tea575x.ko %buildroot%modules_dir/kernel/drivers/media-core/
 
 %ifarch aarch64 %arm
-mkdir -p %buildroot/lib/devicetree/$KernelVer
-find arch/%arch_dir/boot/dts -type f -name \*.dtb | xargs -iz install -pm0644 z %buildroot/lib/devicetree/$KernelVer
+make dtbs_install INSTALL_DTBS_PATH=%buildroot/lib/devicetree/$KernelVer
+%ifarch aarch64
+find %buildroot/lib/devicetree/$KernelVer -mindepth 1 -type d |\
+       while read d; do mv $d/* $d/../ && rmdir $d && ln -srv $d/../ $d; done
+%endif
 %endif
 
 mkdir -p %buildroot%kbuild_dir/arch/%arch_dir
@@ -649,6 +652,15 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Nov 04 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.14.16-alt1
+- v5.14.16  (Fixes: CVE-2021-42327)
+
+* Wed Oct 27 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.14.15-alt1
+- v5.14.15
+
+* Wed Oct 20 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.14.14-alt1
+- v5.14.14
+
 * Sun Oct 17 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.14.13-alt1
 - v5.14.13
 
