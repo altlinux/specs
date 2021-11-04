@@ -1,5 +1,5 @@
 Name: waypipe
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: Network transparency agent for Wayland
@@ -54,7 +54,6 @@ enable Wayland-based workflows similar to those using `ssh -X'.
 #patch -p1
 
 %build
-export CFLAGS="%optflags -Wno-error=unused-result"
 %meson \
     -D'man-pages=enabled'                \
     %{meson_subst_feature with_video}    \
@@ -79,6 +78,9 @@ export LC_CTYPE=en_US.UTF-8
 %_man1dir/waypipe.1*
 
 %changelog
+* Thu Nov 04 2021 Arseny Maslennikov <arseny@altlinux.org> 0.8.1-alt1
+- 0.8.0 -> 0.8.1.
+
 * Wed May 05 2021 Arseny Maslennikov <arseny@altlinux.org> 0.8.0-alt1
 - 0.7.2 -> 0.8.0.
 
