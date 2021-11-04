@@ -8,7 +8,7 @@
 %endif
 
 Name: libldb
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
@@ -23,6 +23,11 @@ Patch3: ldb-skip-ldb_lmdb_free_list_test-on-ppc64le.patch
 
 BuildRequires: libpopt-devel libldap-devel xsltproc docbook-style-xsl docbook-dtds
 BuildRequires: libcmocka-devel >= 1.1.3
+BuildRequires: socket_wrapper >= 1.3.3
+BuildRequires: nss_wrapper >= 1.1.11
+BuildRequires: resolv_wrapper >= 1.1.7
+BuildRequires: uid_wrapper >= 1.2.7
+BuildRequires: pam_wrapper >= 1.1.2
 BuildRequires: libtdb-devel >= 1.4.3
 BuildRequires: libtalloc-devel >= 2.3.2
 BuildRequires: libtevent-devel >= 0.10.2
@@ -176,6 +181,9 @@ make test
 %_pkgconfigdir/pyldb-util.cpython-*.pc
 
 %changelog
+* Tue Nov 02 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.3.1-alt1
+- Update to the 2.3.1 for latest samba-4.14.9 security release
+
 * Wed Mar 24 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.3.0-alt1
 - Update to the 2.3.0 for latest samba-4.14.2 security release
 

@@ -1,6 +1,6 @@
 Name: pam_wrapper
-Version: 1.1.3
-Release: alt1.1
+Version: 1.1.4
+Release: alt1
 Summary: A tool to test PAM applications and PAM modules
 License: GPLv3+
 Url: http://cwrap.org/
@@ -124,6 +124,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %python3_sitelibdir/pypamtest.so
 
 %changelog
+* Mon Nov 01 2021 Evgeny Sinelnikov <sin@altlinux.org> 1.1.4-alt1
+- new version 1.1.4
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1.1.3-alt1.1
 - NMU: spec: adapted to new cmake macros.
 

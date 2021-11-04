@@ -73,7 +73,7 @@
 %endif
 
 Name:    samba
-Version: 4.14.8
+Version: 4.14.9
 Release: alt1
 
 Group:   System/Servers
@@ -186,7 +186,7 @@ BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-%define ldb_version 2.3.0
+%define ldb_version 2.3.1
 BuildRequires: libldb-devel = %ldb_version
 BuildRequires: python3-module-pyldb-devel
 %endif
@@ -1917,6 +1917,12 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_includedir/samba-4.0/private
 
 %changelog
+* Mon Nov 01 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.9-alt1
+- Update to latest security release of Samba 4.14
+- Backport bronze bit fixes, tests, and selftest improvements. Provide a fix
+  for MS in Samba [SECURITY] 'Bronze bit' S4U2Proxy Constrained Delegation
+  bypass in Samba with embedded Heimdal (Fixes: CVE-2020-17049).
+
 * Wed Oct 06 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.8-alt1
 - Update to latest security release of Samba 4.14
 - Fix performance regressions in lsa_LookupSids3/LookupNames4 since Samba 4.9 by
