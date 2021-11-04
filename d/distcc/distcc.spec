@@ -2,7 +2,7 @@
 
 Name: distcc
 Version: 3.4
-Release: alt6
+Release: alt7
 
 Summary: distcc is a program to distribute builds C/C++/ Objective C/C++
 
@@ -65,7 +65,7 @@ Python3 module distcc include_server.
 # FIXME: autoreconf in hasher missed CC= in Makefile
 #autoreconf
 ./autogen.sh
-%configure --disable-Werror
+%configure --disable-Werror --enable-rfc2553
 %make_build
 
 %install
@@ -130,6 +130,9 @@ rm -rf %buildroot/%_docdir/
 %python3_sitelibdir/include_server*
 
 %changelog
+* Thu Nov 04 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.4-alt7
+- Use getaddrinfo to resolve host names (Closes: #41291)
+
 * Thu Aug 26 2021 Vitaly Lipatov <lav@altlinux.ru> 3.4-alt6
 - remove unused BR: glibc-devel-static
 
