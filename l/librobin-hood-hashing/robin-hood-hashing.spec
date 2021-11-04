@@ -3,7 +3,7 @@
 %define oname robin-hood-hashing
 
 Name:    lib%oname
-Version: 3.11.2
+Version: 3.11.3
 Release: alt1
 Summary: Fast & memory efficient hashtable based on robin hood hashing for C++11/14/17/20
 Group:   Development/C++
@@ -50,6 +50,9 @@ both faster and more memory efficient for real-world use cases.
 %_datadir/cmake/*
 
 %changelog
+* Wed Nov 03 2021 L.A. Kostis <lakostis@altlinux.ru> 3.11.3-alt1
+- 3.11.3.
+
 * Mon Jun 14 2021 L.A. Kostis <lakostis@altlinux.ru> 3.11.2-alt1
 - Initial build for ALTLinux.
 
