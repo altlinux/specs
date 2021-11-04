@@ -1,6 +1,6 @@
 Name: firmware-linux
-Version: 20211025
-Release: alt1.1
+Version: 20211102
+Release: alt1
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -76,6 +76,16 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Thu Nov 04 2021 Cronbuild Service <cronbuild@altlinux.org> 20211102-alt1
+- upstream changes (GIT c9e68c4):
+  + rtl_bt: Update RTL8852A BT USB firmware to 0xDBA9_6937 (thx Hilda Wu)
+  + iwlwifi: add new FWs from core64-96 release (thx Luca Coelho)
+  + iwlwifi: update 9000-family firmwares to core64-96 (thx Luca Coelho)
+  + amdgpu: update VCN firmware for green sardine (thx Alex Deucher)
+  + update frimware for mediatek bluetooth chip (MT7921) (thx mark-yw.chen)
+  + Update AMD cpu microcode (thx John Allen)
+  + QCA: Update Bluetooth firmware for WCN685x (thx Rocky Liao)
+
 * Wed Nov 03 2021 L.A. Kostis <lakostis@altlinux.ru> 20211025-alt1.1
 - gears/update: fix git pull command (use fast-forward stategy).
 
