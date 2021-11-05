@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-build-tools
-Version: 0.9.0
-Release: alt2
+Version: 0.10.0
+Release: alt1
 
 Summary: Various packaging tools and scripts for LXQt applications
 License: BSD 3-clause
@@ -41,6 +41,9 @@ sed -i '/-flto/d' cmake/modules/LXQtCompilerSettings.cmake
 %_bindir/*
 
 %changelog
+* Fri Nov 05 2021 Anton Midyukov <antohami@altlinux.org> 0.10.0-alt1
+- new version 0.10.0
+
 * Thu Apr 29 2021 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt2
 - use macros for e2k arch
 

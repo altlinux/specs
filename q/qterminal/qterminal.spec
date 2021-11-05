@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qterminal
-Version: 0.17.0
-Release: alt2
+Version: 1.0.0
+Release: alt1
 
 Summary: Qt-based multitab terminal emulator
 License: GPL-2.0
@@ -56,6 +56,9 @@ at http://qterminal.sourceforge.net/
 %_datadir/%name
 
 %changelog
+* Fri Nov 05 2021 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt1
+- new version 1.0.0
+
 * Thu Apr 29 2021 Anton Midyukov <antohami@altlinux.org> 0.17.0-alt2
 - use macros for e2k arch
 - fix License tag

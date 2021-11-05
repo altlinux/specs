@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     lxqt-sudo
-Version:  0.17.0
+Version:  1.0.0
 Release:  alt1
 
 Summary:  GUI frontend for sudo/su
@@ -42,6 +42,9 @@ BuildRequires: kf5-kwindowsystem-devel
 %_man1dir/*
 
 %changelog
+* Fri Nov 05 2021 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt1
+- new version 1.0.0
+
 * Fri Apr 16 2021 Anton Midyukov <antohami@altlinux.org> 0.17.0-alt1
 - new version 0.17.0
 

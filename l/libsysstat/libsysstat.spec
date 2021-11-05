@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libsysstat
-Version: 0.4.5
-Release: alt2
+Version: 0.4.6
+Release: alt1
 
 Summary: Library used to query system info and statistics
 License: LGPL
@@ -51,6 +51,9 @@ which is used to query system info and statistics.
 %_datadir/cmake/*/
 
 %changelog
+* Fri Nov 05 2021 Anton Midyukov <antohami@altlinux.org> 0.4.6-alt1
+- new version 0.4.6
+
 * Thu Apr 29 2021 Anton Midyukov <antohami@altlinux.org> 0.4.5-alt2
 - use macros for e2k arch
 
