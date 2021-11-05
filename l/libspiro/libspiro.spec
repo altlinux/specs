@@ -1,53 +1,81 @@
-Name: libspiro
-Version: 20071029
-Release: alt2.qa2
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global major   1
+%define libname libspiro%{major}
+%define devname libspiro-devel
 
-Summary: Raph Levien's spiro splines library
+Name:           libspiro
+Version:        20200505
+Release:        alt1_1
+Summary:        Library to simplify the drawing of beautiful curves
 
-License: GPL
-Group: System/Libraries
-Url: http://libspiro.sourceforge.net/
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source: http://prdownloads.sf.net/%name/%name-src-%version.tar.bz2
-
-
-# Automatically added by buildreq on Tue Oct 30 2007
-BuildRequires: gcc-c++
+Group:          System/Libraries
+License:        GPLv2+
+URL:            http://libspiro.sourceforge.net/
+# Let's use libspiro-dist tarball from upstream as it does not require autoreconf
+Source0:        https://github.com/fontforge/libspiro/releases/download/%{version}/libspiro-dist-%{version}.tar.gz
+BuildRequires:  automake
+BuildRequires:  autoconf
+BuildRequires:  libtool
+Source44: import.info
 
 %description
-This is a shared library designed to give FontForge (and others) access to
-Raph Levien's spiro splines. 
+This library will take an array of spiro control points and
+convert them into a series of bA.zier splines which can then
+be used in the myriad of ways the world has come to use bA.ziers.
 
-%package devel
-Summary: Header files for %name
-Group: Development/Other
-Requires: %name = %version-%release
+%package        -n %libname
+Summary:        Library to simplify the drawing of beautiful curves
+Group:          System/Libraries
 
-%description devel
-Header files for %name library.
+%description    -n %libname
+This library will take an array of spiro control points and
+convert them into a series of bA.zier splines which can then
+be used in the myriad of ways the world has come to use bA.ziers.
+
+%package        -n %devname
+Summary:        Development files for %{name}
+Group:          Development/C
+Requires:       %{libname} = %{version}-%{release}
+Provides:       spiro-devel = %{version}-%{release}
+
+%description    -n %devname
+The %{name}-devel package contains libraries and header files for
+developing applications that use %{name}.
 
 %prep
-%setup -n %name
+%setup -q -n libspiro-%{version}
+
 
 %build
 %configure --disable-static
 %make_build
 
 %install
-mkdir -p %buildroot%_includedir/
-%makeinstall
+%makeinstall_std
 
-%files
-%doc README README-RaphLevien
-%_libdir/lib*.so.*
+find %{buildroot} -name '*.la' -delete
 
-%files devel
-%_libdir/lib*.so
-%_includedir/*
+%check
+make check
+
+%files -n %libname
+%doc COPYING README* ChangeLog AUTHORS
+%{_libdir}/*.so.%{major}
+%{_libdir}/*.so.%{major}.*
+
+%files -n %devname
+%{_includedir}/*
+%{_libdir}/*.so
+%{_libdir}/pkgconfig/libspiro.pc
+%{_mandir}/man3/libspiro.3*
+
+
 
 %changelog
+* Fri Nov 05 2021 Igor Vlasenko <viy@altlinux.org> 20200505-alt1_1
+- new version (closes: 41201)
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20071029-alt2.qa2
 - NMU: rebuilt for debuginfo.
 
