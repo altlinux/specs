@@ -13,7 +13,7 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2021.Q3.5
+Version: 2021.Q4.1
 Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
@@ -32,14 +32,14 @@ BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel lib
 BuildRequires: libffi-devel
 %endif
 
-Source0: xgl.tar.xz
-Source1: pal.tar.xz
-Source2: llpc.tar.xz
-Source3: spvgen.tar.xz
-Source4: llvm.tar.xz
-Source5: metrohash.tar.xz
+Source0: xgl.tar
+Source1: pal.tar
+Source2: llpc.tar
+Source3: spvgen.tar
+Source4: llvm.tar
+Source5: metrohash.tar
 Source6: amd_icd.json
-Source7: cwpack.tar.xz
+Source7: cwpack.tar
 
 Patch1: spvgen-alt-shared.patch
 
@@ -96,6 +96,16 @@ install -p -m644 %SOURCE6 %buildroot%_vkdir/amd_icd.json
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Fri Nov 05 2021 L.A. Kostis <lakostis@altlinux.ru> 2021.Q4.1-alt1
+- 2021-11-4 update:
+  + icd: bump vulkan API version
+  + cwpack: Updated to 39f8940199e6
+  + llvm: Updated to 3ced1fbbcda4
+  + spvgen: Updated to e0855d9a0370
+  + llpc: Updated to c937b09ac21a
+  + pal: Updated to d5826cb5d1a3
+  + xgl: Updated to 477361f6a225
+
 * Tue Aug 31 2021 L.A. Kostis <lakostis@altlinux.ru> 2021.Q3.5-alt1
 - 2021-8-24 update:
   + llvm: Updated to e32a5e65b5a2
