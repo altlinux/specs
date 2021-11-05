@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: ima-evm-utils
-Version: 1.3.2
+Version: 1.4
 Release: alt1
 
 Summary: IMA/EVM support utilities
@@ -27,7 +28,7 @@ BuildRequires: libtpm2-tss-devel
 BuildRequires: xsltproc
 
 # For tests
-%{?!_without_check:%{?!_disable_check:BuildRequires: openssl attr e2fsprogs xxd rpm-build-vm >= 1.0-alt4}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: openssl attr e2fsprogs xxd rpm-build-vm >= 1.22}}
 
 Requires: libimaevm = %EVR
 
@@ -73,6 +74,7 @@ ima-evm-utils is used to prepare the file system for these extended attributes.
 %setup
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure --disable-static
 %make_build
@@ -86,10 +88,8 @@ LD_LIBRARY_PATH=%buildroot%_libdir %buildroot%_bindir/evmctl --version
 # armh does not support kvm properly, thus, if run w/o kvm:
 #   name           aarch64   armh  i586  ppc64le  x86_64
 #   ima-evm-utils     3:37  14:50  1:24     1:47    1:25
-if [ -w /dev/kvm ]; then
-  # ext4 is required to run tests becasue of xattrs
-  vm-run --overlay=ext4 make check
-fi
+# ext4 is required to run tests becasue of xattrs
+vm-run --kvm=cond --overlay=ext4 make check
 
 %files
 %doc NEWS README AUTHORS COPYING examples/*.sh
@@ -104,6 +104,10 @@ fi
 %_libdir/libimaevm.so
 
 %changelog
+* Fri Nov 05 2021 Vitaly Chikunov <vt@altlinux.org> 1.4-alt1
+- Update to v1.4 (2021-10-22).
+- Enable LFS on 32-bit architectures.
+
 * Wed Oct 28 2020 Vitaly Chikunov <vt@altlinux.org> 1.3.2-alt1
 - Update to v1.3.2 (2020-10-28).
 
