@@ -25,7 +25,7 @@
 
 Name: LibreOffice-still
 %define hversion 7.1
-%define urelease 6.2
+%define urelease 7.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -704,6 +704,9 @@ install -pm0644 %SOURCE507 %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Nov 05 2021 Andrey Cherepanov <cas@altlinux.org> 7.1.7.2-alt1
+- New version.
+
 * Mon Sep 13 2021 Andrey Cherepanov <cas@altlinux.org> 7.1.6.2-alt1
 - New version.
 - Security fixes:
