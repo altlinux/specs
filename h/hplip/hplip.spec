@@ -28,7 +28,7 @@
 %endif
 
 Name:    hplip
-Version: 3.21.8
+Version: 3.21.10
 Release: alt1
 Epoch:   1
 
@@ -1212,6 +1212,29 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Fri Nov 05 2021 Andrey Cherepanov <cas@altlinux.org> 1:3.21.10-alt1
+- New version.
+- Added support for the following new printers:
+  + HP ENVY Inspire 7200e series
+  + HP ENVY Inspire 7900e series
+  + HP LaserJet MFP M139a, M139w, M139we
+  + HP LaserJet MFP M140a, M140w, M140we
+  + HP LaserJet MFP M141a, M141w, M141we
+  + HP LaserJet MFP M142a, M142w, M142we
+  + HP LaserJet M109a, M109w, M109we
+  + HP LaserJet M110a, M110w, M110we
+  + HP LaserJet M111a, M111w, M111we
+  + HP LaserJet M112a, M112w, M112we
+  + HP DesignJet Z6 Pro 64in
+  + HP DesignJet Z9 Pro 64in
+  + HP PageWide XL Pro 5200 PS MFP series
+  + HP PageWide XL Pro 8200 PS MFP series
+  + HP PageWide XL 3920 MFP
+  + HP PageWide XL 4200 Printer, Multifunction Printer
+  + HP PageWide XL 4700 Printer, Multifunction Printer
+  + HP PageWide XL 5200 Printer, Multifunction Printer
+  + HP PageWide XL 8200 Printer
+
 * Thu Sep 09 2021 Andrey Cherepanov <cas@altlinux.org> 1:3.21.8-alt1
 - New version.
 - Added support for the following new printers:
