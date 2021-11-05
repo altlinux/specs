@@ -9,7 +9,7 @@
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: python3-module-%oname
-Version: %branch.6
+Version: %branch.9
 Release: alt1
 Source0: %origname-%version.tar
 License: BSD
@@ -180,6 +180,9 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Fri Nov 05 2021 Alexey Shabalin <shaba@altlinux.org> 3.2.9-alt1
+- new version 3.2.9
+
 * Wed Aug 18 2021 Alexey Shabalin <shaba@altlinux.org> 3.2.6-alt1
 - new version 3.2.6
 - Rename dbbackend-psycopg2 to dbbackend-postgresql
