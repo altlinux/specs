@@ -1,37 +1,52 @@
 %define _unpackaged_files_terminate_build 1
 
-%define origname yaml-cpp
-%define soversion 0
+%define soversion 0.7
 
-Name: lib%origname%soversion
-Version: 0.6.3
-Release: alt2
+Name: yaml-cpp
+Version: 0.7.0
+Release: alt1
 
 Summary: A YAML parser and emitter for C++
 License: MIT
-Group: System/Legacy libraries
+Group: System/Libraries
 
-Url: https://github.com/jbeder/yaml-cpp
+Url: https://github.com/jbeder/%name
 
-# https://github.com/jbeder/yaml-cpp.git
-Source: %name-%version.tar
+# https://github.com/jbeder/%name/archive/%name-%version/%name-%name-%version.tar.gz
+Source: %name-%name-%version.tar
 
-Patch1: CVE-2017-5950.patch
+Patch1: https://patch-diff.githubusercontent.com/raw/jbeder/yaml-cpp/pull/1037.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: boost-devel-headers cmake gcc-c++
 
-Provides: %name = %EVR
-
 %description
 A YAML parser and emitter for C++
 
+%package -n lib%name%soversion
+Summary: A YAML parser and emitter for C++
+Group: System/Libraries
+
+%description -n lib%name%soversion
+A YAML parser and emitter for C++
+
+%package -n lib%name-devel
+Summary: YAML Development libraries
+Group: Development/C++
+Provides: %name-devel = %EVR
+Obsoletes: %name-devel < %EVR
+
+%description -n lib%name-devel
+Development libraries for YAML.
+This package contains static development files for YAML.
+
 %prep
-%setup
+%setup -n %name-%name-%version
 %patch1 -p1
 
 %build
 %cmake \
+	-DCMAKE_INSTALL_DATADIR:PATH=%_libdir \
 	-DYAML_BUILD_SHARED_LIBS:BOOL=ON \
 	-DYAML_CPP_BUILD_TOOLS:BOOL=OFF \
 	-DYAML_CPP_BUILD_TESTS:BOOL=OFF \
@@ -42,18 +57,19 @@ A YAML parser and emitter for C++
 %install
 %cmakeinstall_std
 
-%__rm -rf %buildroot%_includedir/%origname
-%__rm -rf %buildroot%_libdir/cmake/%origname
-%__rm -rf %buildroot%_libdir/lib%origname.so
-%__rm -rf %buildroot%_pkgconfigdir/%origname.pc
-
-%files
+%files -n lib%name%soversion
 %doc LICENSE *.md
 %_libdir/*.so.*
 
+%files -n lib%name-devel
+%_includedir/%name
+%_pkgconfigdir/*.pc
+%_libdir/*.so
+%_libdir/cmake/%name
+
 %changelog
-* Fri Nov 05 2021 Nazarov Denis <nenderus@altlinux.org> 0.6.3-alt2
-- Build as legacy library
+* Fri Nov 05 2021 Nazarov Denis <nenderus@altlinux.org> 0.7.0-alt1
+- Updated to upstream version 0.7.0.
 
 * Tue Apr 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.3-alt1
 - Updated to upstream version 0.6.3.

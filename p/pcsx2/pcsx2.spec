@@ -1,13 +1,13 @@
 %define optflags_lto %nil
 
 # git show -s --format=%ci upstream/pcsx2 | sed 's/[ :-]//g' | sed 's/\(.\{,14\}\).*/\1/'
-%define svn_rev 20211104111826
+%define svn_rev 20211105011608
 
 %define libchdr_commit a17c0da7e9efa8cbb752c707df7d5457b2149fb8
 %define gtest_version 1.11.0
 
 Name: pcsx2
-Version: 1.7.2012
+Version: 1.7.2016
 Release: alt1
 
 Summary: Playstation 2 console emulator
@@ -95,6 +95,7 @@ There is still lot of on going work to improve compatibility & speed.
 	-DXDG_STD:BOOL=TRUE \
 	-DDISABLE_BUILD_DATE:BOOL=TRUE \
 	-DUSE_SYSTEM_YAML:BOOL=TRUE \
+	-DLTO_PCSX2_CORE:BOOL=TRUE \
 	-GNinja
 
 echo "#define SVN_REV $(echo %svn_rev)ll 
@@ -120,6 +121,9 @@ DESTDIR=%buildroot ninja install -C %_cmake__builddir
 %_defaultdocdir/Pcsx2/*.pdf
 
 %changelog
+* Fri Nov 05 2021 Nazarov Denis <nenderus@altlinux.org> 1.7.2016-alt1
+- Version 1.7.2016
+
 * Thu Nov 04 2021 Nazarov Denis <nenderus@altlinux.org> 1.7.2012-alt1
 - Version 1.7.2012
 
