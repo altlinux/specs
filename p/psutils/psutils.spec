@@ -1,6 +1,6 @@
 %def_with check
 Name: psutils
-Version: 2.06
+Version: 2.07
 Release: alt1
 Epoch: 2
 %add_perl_lib_path %_datadir/%name
@@ -42,6 +42,9 @@ into signatures for booklet printing, and page merging for n-up printing.
 %_man1dir/*
 
 %changelog
+* Fri Nov 05 2021 Anton Farygin <rider@altlinux.ru> 2:2.07-alt1
+- 2.07
+
 * Thu Jul 08 2021 Anton Farygin <rider@altlinux.ru> 2:2.06-alt1
 - 2.06
 
