@@ -2,8 +2,8 @@
 #	add systemd init support
 #       use xz for large archives in /usr/share/mailman/cron/nightly_gzip
 Name: mailman
-Version: 2.1.34.0.3.1d42a
-Release: alt2
+Version: 2.1.35
+Release: alt1
 Epoch: 5
 
 %define mm_user %name
@@ -376,6 +376,12 @@ fi
 %docdir/mailman-*
 
 %changelog
+* Sat Nov 06 2021 L.A. Kostis <lakostis@altlinux.ru> 5:2.1.35-alt1
+- Updated to 2.1.35:
+  + CVE-2021-42096: Attack to obtain the list admin password.
+  + CVE-2021-42097: A CSRF attack via the user options page
+                    could allow takeover of a users
+
 * Thu May 27 2021 Anton Farygin <rider@altlinux.ru> 5:2.1.34.0.3.1d42a-alt2
 - Fixed FTBFS: removed %%post scripts for apache2 due to changes
   in rpm-build-apache2 and apache2 with migration post-scripts to filetriggers.
