@@ -1,5 +1,5 @@
 Name: conmon
-Version: 2.0.27
+Version: 2.0.30
 Release: alt1
 # due to typo in version :(
 Epoch: 1
@@ -16,6 +16,7 @@ BuildRequires: go-md2man
 BuildRequires: glibc-devel
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(libsystemd)
+BuildRequires: pkgconfig(libseccomp) >= 2.5.0
 
 %description
 %summary.
@@ -37,6 +38,10 @@ export GIT_COMMIT=%release
 %_man8dir/conmon.*
 
 %changelog
+* Sat Nov 06 2021 Alexey Shabalin <shaba@altlinux.org> 1:2.0.30-alt1
+- new version 2.0.30
+- build with seccomp support
+
 * Thu Apr 22 2021 Alexey Shabalin <shaba@altlinux.org> 1:2.0.27-alt1
 - new version 2.0.27
 
