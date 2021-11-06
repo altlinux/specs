@@ -1,9 +1,9 @@
 Name: lxqt
-Version: 0.17
+Version: 1.0
 Release: alt1
 Summary: Meta package for install LxQt
 Group: Graphical desktop/Other
-License: GPL
+License: GPL-2.0-or-later
 Url: https://lxqt-project.org
 BuildArch: noarch
 
@@ -89,6 +89,10 @@ Requires: lxqt-sudo
 %files regular
 
 %changelog
+* Sat Nov 06 2021 Anton Midyukov <antohami@altlinux.org> 1.0-alt1
+- new version 1.0
+- fix License tag
+
 * Tue Aug 31 2021 Anton Midyukov <antohami@altlinux.org> 0.17-alt1
 - Update URL tag
 
