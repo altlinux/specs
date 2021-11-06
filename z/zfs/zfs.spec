@@ -2,8 +2,8 @@
 %global _localstatedir %_var
 
 Name: zfs
-Version: 2.1.0
-Release: alt2
+Version: 2.1.1
+Release: alt1
 Summary: ZFS on Linux
 License: CDDL-1.0
 Group: System/Kernel and hardware
@@ -201,6 +201,9 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Sat Nov 06 2021 Anton Farygin <rider@altlinux.ru> 2.1.1-alt1
+- 2.1.1
+
 * Fri Sep 10 2021 Anton Farygin <rider@altlinux.ru> 2.1.0-alt2
 - added fix from the zfs upstream to build with a kernel 5.14
 

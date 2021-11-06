@@ -1,9 +1,9 @@
 %define module_name zfs
-%define module_version 2.1.0
+%define module_version 2.1.1
 %define module_release alt1
 
 %define flavour std-def
-%define karch %ix86 x86_64 aarch64 ppc64le
+%define karch %ix86 x86_64 aarch64 ppc64le armh
 BuildRequires(pre): kernel-headers-modules-std-def
 
 %setup_kernel_module %flavour
@@ -74,6 +74,9 @@ export CC="gcc${GCC_VERSION:+-$GCC_VERSION}"
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sat Nov 06 2021 Anton Farygin <rider@altlinux.ru> 2.1.1-alt1
+- 2.1.0 -> 2.1.1
 
 * Tue Aug 10 2021 Anton Farygin <rider@altlinux.ru> 2.1.0-alt1
 - 2.0.4 -> 2.1.0
