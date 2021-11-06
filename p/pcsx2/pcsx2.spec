@@ -1,13 +1,13 @@
 %define optflags_lto %nil
 
 # git show -s --format=%ci upstream/pcsx2 | sed 's/[ :-]//g' | sed 's/\(.\{,14\}\).*/\1/'
-%define svn_rev 20211105011608
+%define svn_rev 20211106004408
 
 %define libchdr_commit a17c0da7e9efa8cbb752c707df7d5457b2149fb8
 %define gtest_version 1.11.0
 
 Name: pcsx2
-Version: 1.7.2016
+Version: 1.7.2019
 Release: alt1
 
 Summary: Playstation 2 console emulator
@@ -103,10 +103,10 @@ echo "#define SVN_REV $(echo %svn_rev)ll
 #define GIT_TAGGED_COMMIT 1
 #define GIT_REV \"\"" > %_cmake__builddir/common/include/svnrev.h
 
-ninja -j %__nprocs -vvv -C %_cmake__builddir
+%cmake_build
 
 %install
-DESTDIR=%buildroot ninja install -C %_cmake__builddir
+%cmake_install
 %find_lang --output=%name.lang %{name}_{Iconized,Main}
 
 %files -f %name.lang
@@ -121,6 +121,9 @@ DESTDIR=%buildroot ninja install -C %_cmake__builddir
 %_defaultdocdir/Pcsx2/*.pdf
 
 %changelog
+* Sat Nov 06 2021 Nazarov Denis <nenderus@altlinux.org> 1.7.2019-alt1
+- Version 1.7.2019
+
 * Fri Nov 05 2021 Nazarov Denis <nenderus@altlinux.org> 1.7.2016-alt1
 - Version 1.7.2016
 
