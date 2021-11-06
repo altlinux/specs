@@ -22,8 +22,8 @@
 # TODO: check if we need debug info and pack it separately
 %def_with debugpe
 
-# rpm-build-info gives _distro_version
-%if %_vendor == "alt" && (%_distro_version == "p9" || %_distro_version == "Sisyphus")
+# use rpm-macros-features
+%if_feature vkd3d 1.2
 %def_with vulkan
 # vkd3d depends on vulkan
 %def_with vkd3d
@@ -37,11 +37,11 @@
 %if_with mingw
 %def_without opencl
 %else
-%def_with opencl
+%def_without opencl
 %endif
 
 Name: wine-vanilla
-Version: 6.17
+Version: 6.21
 Release: alt1
 Epoch: 1
 
@@ -92,6 +92,7 @@ ExclusiveArch: %ix86 x86_64 aarch64
     %define winearch wine32
 %endif
 
+# TODO: also check build64
 # workaround for https://bugzilla.altlinux.org/38130
 %if_with mingw
     %def_with build64mingw
@@ -174,6 +175,7 @@ BuildRequires: %llvm_br
 
 # General dependencies
 BuildRequires(pre): rpm-build-intro >= 2.1.14
+BuildRequires(pre): rpm-macros-features
 BuildRequires: util-linux flex bison
 BuildRequires: fontconfig-devel libfreetype-devel
 BuildRequires: zlib-devel libattr-devel
@@ -397,7 +399,7 @@ Also you can control in manually:
 # wine-cap_net_raw [on|off]
 
 
-
+%if_with libwine
 %package -n lib%name
 Summary: Compatibility library for Wine
 Group: System/Libraries
@@ -411,6 +413,7 @@ linked with Wine.
 %description -n lib%name -l ru_RU.UTF-8
 Этот пакет состоит из библиотек, которые реализуют Windows API.
 
+%endif
 
 %package gl
 Summary: DirectX/OpenGL support libraries for Wine
@@ -482,6 +485,7 @@ Summary: Headers for %name-devel
 Group: Development/C
 Requires: %name = %EVR
 Obsoletes: lib%name-devel < %version
+Provides: lib%name-devel = %EVR
 Conflicts: lib%conflictbase-devel
 # we don't need provide anything
 AutoProv:no
@@ -669,20 +673,18 @@ fi
 
 %libwinedir/%winesodir/avicap32.so
 %libwinedir/%winesodir/ntdll.so
+%libwinedir/%winesodir/ctapi32.so
 %libwinedir/%winesodir/dnsapi.so
 %libwinedir/%winesodir/dwrite.so
-%libwinedir/%winesodir/gdi32.so
-%libwinedir/%winesodir/user32.so
 %libwinedir/%winesodir/bcrypt.so
 %libwinedir/%winesodir/qcap.so
 %libwinedir/%winesodir/odbc32.so
-%libwinedir/%winesodir/windowscodecs.so
 %libwinedir/%winesodir/crypt32.so
 %libwinedir/%winesodir/kerberos.so
 %libwinedir/%winesodir/netapi32.so
+%libwinedir/%winesodir/nsiproxy.so
 %libwinedir/%winesodir/wldap32.so
-%libwinedir/%winesodir/mscms.so
-%libwinedir/%winesodir/wmphoto.so
+%libwinedir/%winesodir/winspool.so
 %libwinedir/%winesodir/msv1_0.so
 %libwinedir/%winesodir/win32u.so
 %libwinedir/%winesodir/ws2_32.so
@@ -692,11 +694,13 @@ fi
 %libwinedir/%winesodir/secur32.so
 %libwinedir/%winesodir/winepulse.so
 %libwinedir/%winesodir/wpcap.so
+%libwinedir/%winesodir/winebus.so
 
+# FIXME: https://bugzilla.altlinux.org/38130
 %if_without mingw
-%if_without vanilla
-%libwinedir/%winesodir/windows.networking.connectivity.so
-%endif
+#if_without vanilla
+#libwinedir/%winesodir/windows.networking.connectivity.so
+#endif
 %libwinedir/%winesodir/light.msstyles.so
 %libwinedir/%winesodir/*.com.so
 %libwinedir/%winesodir/*.cpl.so
@@ -714,10 +718,8 @@ fi
 %endif
 
 # some dll still compiled not as PE in any way
-%libwinedir/%winesodir/*.exe.so
 %libwinedir/%winesodir/*.drv.so
 %libwinedir/%winesodir/*.dll.so
-%libwinedir/%winesodir/*.acm.so
 %libwinedir/%winesodir/*.sys.so
 
 %libwinedir/%winepedir/*.com
@@ -745,6 +747,7 @@ fi
 
 # move to separate packages
 %exclude %libwinedir/%winepedir/twain_32.dll
+%exclude %libwinedir/%winepedir/gphoto2.ds
 %exclude %libwinedir/%winesodir/winevulkan.so
 %if_without mingw
 %exclude %libwinedir/%winesodir/twain_32.dll.so
@@ -849,8 +852,9 @@ fi
 
 %files twain
 %libwinedir/%winepedir/twain_32.dll
-%libwinedir/%winesodir/gphoto2.ds.so
-%libwinedir/%winesodir/sane.ds.so
+%libwinedir/%winepedir/gphoto2.ds
+%libwinedir/%winesodir/gphoto2.so
+%libwinedir/%winesodir/sane.so
 %if_without mingw
 %libwinedir/%winesodir/twain_32.dll.so
 %endif
@@ -917,6 +921,22 @@ fi
 %endif
 
 %changelog
+* Sat Nov 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.21-alt1
+- new version 6.21 (with rpmrb script)
+
+* Sat Nov 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.20-alt1
+- new version 6.20 (with rpmrb script)
+
+* Sat Nov 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.19-alt1
+- new version 6.19 (with rpmrb script)
+- add provides libwine-vanilla-devel (thanks, lakostis@)
+
+* Wed Nov 03 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.18-alt1
+- new version 6.18 (with rpmrb script)
+
+* Thu Sep 30 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.17-alt2
+- use rpm-macros-feature for vkd3d checking
+
 * Fri Sep 17 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.17-alt1
 - biarch build, PE build
 
