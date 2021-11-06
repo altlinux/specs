@@ -1,10 +1,10 @@
-%define _unpackaged_files_terminate_build 1
 ## SPEC file for Perl module HTTP::BrowserDetect
 
 %define real_name HTTP-BrowserDetect
+%define _unpackaged_files_terminate_build 1
 
 Name: perl-HTTP-BrowserDetect
-Version: 3.31
+Version: 3.35
 Release: alt1
 
 Summary: determine Web browser from an HTTP user agent string
@@ -22,9 +22,9 @@ BuildArch: noarch
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Tue May 05 2020
-# optimized out: perl perl-Algorithm-Diff perl-CPAN-Meta-Requirements perl-Class-Data-Inheritable perl-Clone-Choose perl-Devel-StackTrace perl-Encode perl-Exception-Class perl-JSON-PP perl-Parse-CPAN-Meta perl-Sub-Uplevel perl-Test-Deep perl-Test-Differences perl-Test-Exception perl-Test-Warn perl-Text-Diff perl-devel perl-parent python-modules python2-base python3 python3-base python3-dev ruby ruby-stdlibs sh4
-BuildRequires: perl-CPAN-Meta perl-Clone perl-Hash-Merge perl-Module-Runtime perl-Path-Tiny perl-Test-FailWarnings perl-Test-Most perl-Test-NoWarnings
+# Automatically added by buildreq on Sat Nov 06 2021
+# optimized out: libgpg-error perl perl-Algorithm-Diff perl-CPAN-Meta-Requirements perl-Clone-Choose perl-Devel-StackTrace perl-Encode perl-JSON-PP perl-Parse-CPAN-Meta perl-Text-Diff perl-devel perl-parent python3-base sh4
+BuildRequires: perl-CPAN-Meta perl-Clone perl-Hash-Merge perl-Module-Runtime perl-Path-Tiny perl-Test-Differences perl-Test-NoWarnings perl-Test-Warnings
 
 %description
 Perl module HTTP::BrowserDetect does a number of tests on an HTTP
@@ -54,6 +54,9 @@ sed -e '/List::Util/ s/1\.49/1.46/' -i t/01-detect.t
 %perl_vendor_privlib/HTTP/BrowserDetect*
 
 %changelog
+* Sat Nov 06 2021 Nikolay A. Fetisov <naf@altlinux.org> 3.35-alt1
+- New version
+
 * Sun Aug 09 2020 Nikolay A. Fetisov <naf@altlinux.org> 3.31-alt1
 - New version
 
