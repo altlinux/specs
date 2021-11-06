@@ -4,7 +4,7 @@
 #set_verify_elf_method relaxed
 
 Name: screengrab
-Version: 2.1.0
+Version: 2.3.0
 Release: alt1
 
 Summary: ScreenGrab is a tool for geting screenshots
@@ -29,6 +29,8 @@ BuildRequires: pkgconfig(Qt5Widgets)
 BuildRequires: pkgconfig(Qt5X11Extras)
 BuildRequires: pkgconfig(Qt5Xdg)
 BuildRequires: kf5-kwindowsystem-devel
+# To generate screengrab.desktop
+BuildRequires: perl-YAML-LibYAML-API
 
 %description
 ScreenGrab -- program getting screenshots working in Linux and Windows.
@@ -57,11 +59,12 @@ sed -i 's|${CMAKE_INSTALL_FULL_DOCDIR}|${CMAKE_INSTALL_FULL_DOCDIR}-%version|g' 
 %endif
 
 %build
-%cmake -DSG_GLOBALSHORTCUTS=OFF \
+%cmake -DCMAKE_SKIP_RPATH:BOOL=ON \
+       -DSG_GLOBALSHORTCUTS=OFF \
        -DSG_DBUS_NOTIFY=ON \
        -DSG_EXT_EDIT=OFF \
        -DSG_EXT_UPLOADS=OFF \
-       -DUPDATE_TRANSLATIONS=ON
+       -DUPDATE_TRANSLATIONS=OFF
 
 %cmake_build
 
@@ -83,6 +86,9 @@ convert -resize 16x16 img/%name.png %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Sat Nov 06 2021 Anton Midyukov <antohami@altlinux.org> 2.3.0-alt1
+- new version 2.3.0
+
 * Thu Nov 05 2020 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
 - new version 2.1.0
 
