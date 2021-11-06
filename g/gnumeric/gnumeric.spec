@@ -12,7 +12,7 @@
 
 Name: gnumeric
 Version: %ver_major.50
-Release: alt1
+Release: alt1.1
 
 Summary: A full-featured spreadsheet for GNOME
 License: GPL-2.0 or GPL-3.0
@@ -21,7 +21,6 @@ Url: http://www.gnumeric.org/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch: gnumeric-desktop-alt.patch
-Patch1: gnumeric-1.12.1-alt-locale_dir.patch
 
 Obsoletes: %name-light
 Provides: %name-light = %version-%release
@@ -118,7 +117,8 @@ GObject introspection devel data for the Gnumeric.
 %prep
 %setup
 %patch -p1
-#%%patch1
+# prevent linking against libpython3.x.a
+sed -i s'@\-L\$PY_LIB_DIR@@' configure.ac
 
 subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
 
@@ -183,6 +183,9 @@ subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
 %_pkgconfigdir/*
 
 %changelog
+* Sat Nov 06 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.50-alt1.1
+- fixed build with python3 >= 3.9.7-alt3
+
 * Fri Jun 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.50-alt1
 - 1.12.50
 
