@@ -1,8 +1,8 @@
 # git describe --always upstream/citra
-%define git_desc 19617f7edb
+%define git_desc 5a7d80172d
 
 Name: citra
-Version: 1724
+Version: 1732
 Release: alt1
 
 Summary: Nintendo 3DS emulator
@@ -12,7 +12,7 @@ Group: Emulators
 Url: https://%name-emu.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-ExclusiveArch: x86_64 aarch64
+ExcludeArch: %ix86 %arm
 
 # https://github.com/%name-emu/%name-nightly/archive/nightly-%version/%name-nightly-nightly-%version.tar.gz
 Source0: %name-nightly-nightly-%version.tar
@@ -150,6 +150,9 @@ ctest
 %_man6dir/%name-qt.6*
 
 %changelog
+* Sat Nov 06 2021 Nazarov Denis <nenderus@altlinux.org> 1732-alt1
+- Version Nightly 1732
+
 * Sat Sep 25 2021 Nazarov Denis <nenderus@altlinux.org> 1724-alt1
 - Version Nightly 1724
 
