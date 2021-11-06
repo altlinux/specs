@@ -1,9 +1,10 @@
+%global optflags_lto %nil
 %define _unpackaged_files_terminate_build 1
 %define oname faketime
 
 Name: python3-module-%oname
 Version: 0.9.8
-Release: alt1
+Release: alt2
 
 Summary: Python wrapper around libfaketime
 License: GPLv2
@@ -47,6 +48,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Sat Nov 06 2021 Andrew A. Vasilyev <andy@altlinux.org> 0.9.8-alt2
+- NMU: build without LTO
+
 * Fri Feb 07 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.9.8-alt1
 - Version updated to 0.9.8
 - build for python2 disabled.
