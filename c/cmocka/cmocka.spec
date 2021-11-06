@@ -2,16 +2,17 @@
 %def_with doc
 
 Name: cmocka
-Version: 1.1.3
-Release: alt2.1
+Version: 1.1.5
+Release: alt1
 
 Summary: Lightweight library to simplify and generalize unit tests for C
-License: ASL 2.0
+License: Apache-2.0
 Group: Development/Tools
 
 Url: http://cmocka.org
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake ctest
 BuildRequires: doxygen
 BuildRequires: glibc-devel
@@ -79,10 +80,24 @@ Requires: libcmocka = %version-%release
 %description -n libcmocka-devel
 Development headers for the cmocka unit testing library.
 
+%package doc
+Summary: API documentation for the cmocka unit testing framework
+Group: Development/Documentation
+BuildArch: noarch
+
+%description doc
+This package provides the API documentation for the cmocka unit testing
+framework.
+
 %prep
 %setup
 
 %build
+# This package uses -Wl,-wrap to wrap calls at link time.  This is incompatible
+# with LTO.
+# Disable LTO
+%global optflags_lto %nil
+
 %define _cmake__builddir BUILD
 %cmake \
 %if_enabled static
@@ -111,9 +126,6 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/*.so.*
 
 %files -n libcmocka-devel
-%if_with doc
-%doc BUILD/doc/html
-%endif
 %_includedir/*.h
 %_libdir/*.so
 %_pkgconfigdir/*.pc
@@ -124,7 +136,17 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/*.a
 %endif
 
+%if_with doc
+%files doc
+%doc %_cmake__builddir/doc/html
+%endif
+
 %changelog
+* Sat Nov 06 2021 Alexey Shabalin <shaba@altlinux.org> 1.1.5-alt1
+- new version 1.1.5
+- Split out a cmocka-doc package.
+- Disabled LTO.
+
 * Sat Apr 24 2021 Arseny Maslennikov <arseny@altlinux.org> 1.1.3-alt2.1
 - NMU: spec: adapt to new cmake macros.
 
@@ -137,7 +159,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 * Mon Dec 03 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.1.1-alt2
 - Disable ubt macros due binary package identity changes
 
-* Mon Apr 10 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.1.1-alt1%ubt
+* Mon Apr 10 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.1.1-alt1
 - 1.1.1
 - Build package with unified build tag aka ubt macros
 
