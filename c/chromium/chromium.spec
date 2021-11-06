@@ -30,7 +30,7 @@
 
 Name:           chromium
 Version:        95.0.4638.69
-Release:        alt2
+Release:        alt3
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -80,6 +80,7 @@ Patch015: 0015-FEDORA-bootstrap-with-python3.patch
 Patch016: 0016-sql-make-VirtualCursor-standard-layout-type.patch
 Patch017: 0017-ALT-fix-build-with-glibc-2.34.patch
 Patch018: 0018-IWYU-add-stddef.h-for-size_t-in-WindowManager.patch
+Patch019: 0019-Set-zero-insets-on-maximising-the-window.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -438,6 +439,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Sat Nov 06 2021 Alexey Gladkov <legion@altlinux.ru> 95.0.4638.69-alt3
+- Set zero insets on maximising the window (ALT#41247).
+
 * Tue Nov 02 2021 Alexey Gladkov <legion@altlinux.ru> 95.0.4638.69-alt2
 - New version (95.0.4638.69).
 - Security fixes:
