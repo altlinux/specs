@@ -1,9 +1,9 @@
 # git describe upstream/yuzu
-%define git_descr mainline-636-5283-g9a5a85eb04a
+%define git_descr mainline-636-7326-ga123fd92b03
 
 Name: yuzu
-Version: 620
-Release: alt1.1
+Version: 800
+Release: alt1
 
 Summary: Nintendo Switch emulator/debugger
 License: GPLv2
@@ -18,26 +18,26 @@ ExclusiveArch: x86_64
 Source0: %name-%version.tar
 # https://github.com/benhoyt/inih.git
 Source1: inih.tar
+# https://github.com/kinetiknz/cpp-httplib.git
+Source2: cpp-httplib.tar
 # https://github.com/kinetiknz/cubeb.git
-Source2: cubeb.tar
+Source3: cubeb.tar
 # https://github.com/MerryMage/dynarmic.git
-Source3: dynarmic.tar
+Source4: dynarmic.tar
 # https://github.com/citra-emu/ext-soundtouch.git
-Source4: soundtouch.tar
+Source5: soundtouch.tar
 # https://github.com/citra-emu/ext-libressl-portable.git
-Source5: libressl.tar
+Source6: libressl.tar
 # https://github.com/libusb/libusb.git
-Source6: libusb.tar
+Source7: libusb.tar
 # https://github.com/discordapp/discord-rpc.git
-Source7: discord-rpc.tar
+Source8: discord-rpc.tar
 # https://github.com/KhronosGroup/Vulkan-Headers.git
-Source8: Vulkan-Headers.tar
+Source9: Vulkan-Headers.tar
 # https://github.com/ReinUsesLisp/sirit.git
-Source9: sirit.tar
+Source10: sirit.tar
 # https://github.com/yuzu-emu/mbedtls.git
-Source10: mbedtls.tar
-# https://github.com/nih-at/libzip.git
-Source11: libzip.tar
+Source11: mbedtls.tar
 # https://github.com/herumi/xbyak.git
 Source12: xbyak.tar
 # https://github.com/xiph/opus.git
@@ -50,6 +50,9 @@ Source15: SDL.tar
 Source16: sanitizers-cmake.tar
 # https://github.com/KhronosGroup/SPIRV-Headers.git
 Source17: SPIRV-Headers.tar
+
+BuildRequires(pre): libffi-devel
+BuildRequires(pre): libwayland-egl-devel
 
 BuildRequires: boost-asio-devel
 BuildRequires: boost-context-devel
@@ -93,6 +96,7 @@ BuildPreReq: libwayland-cursor-devel
 %setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13 -b 14 -b 15 -b 16 -b 17
 
 %__mv -Tf ../inih externals/inih/inih
+%__mv -Tf ../cpp-httplib externals/cpp-httplib
 %__mv -Tf ../cubeb externals/cubeb
 %__mv -Tf ../dynarmic externals/dynarmic
 %__mv -Tf ../soundtouch externals/soundtouch
@@ -102,7 +106,6 @@ BuildPreReq: libwayland-cursor-devel
 %__mv -Tf ../Vulkan-Headers externals/Vulkan-Headers
 %__mv -Tf ../sirit externals/sirit
 %__mv -Tf ../mbedtls externals/mbedtls
-%__mv -Tf ../libzip externals/libzip/libzip
 %__mv -Tf ../xbyak externals/xbyak
 %__mv -Tf ../opus externals/opus/opus
 %__mv -Tf ../ffmpeg externals/ffmpeg
@@ -111,6 +114,7 @@ BuildPreReq: libwayland-cursor-devel
 %__mv -Tf ../SPIRV-Headers externals/sirit/externals/SPIRV-Headers
 
 %__mkdir externals/inih/inih/.git
+%__mkdir externals/cpp-httplib/.git
 %__mkdir externals/cubeb/.git
 %__mkdir externals/dynarmic/.git
 %__mkdir externals/soundtouch/.git
@@ -120,7 +124,6 @@ BuildPreReq: libwayland-cursor-devel
 %__mkdir externals/Vulkan-Headers/.git
 %__mkdir externals/sirit/.git
 %__mkdir externals/mbedtls/.git
-%__mkdir externals/libzip/libzip/.git
 %__mkdir externals/xbyak/.git
 %__mkdir externals/opus/opus/.git
 %__mkdir externals/ffmpeg/.git
@@ -154,6 +157,9 @@ src/common/scm_rev.cpp.in
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sat Nov 06 2021 Nazarov Denis <nenderus@altlinux.org> 800-alt1
+- Version 800
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 620-alt1.1
 - NMU: spec: adapted to new cmake macros.
 

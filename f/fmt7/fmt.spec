@@ -1,42 +1,35 @@
-%define sover 8
+%define rname fmt
+%define sover 7
 
-Name: libfmt
-Version: 8.0.1
-Release: alt1
+Name: %rname%sover
+Version: 7.1.3
+Release: alt2
 
 Summary: An open-source formatting library for C++
 License: BSD
-Group: System/Libraries
+Group: System/Legacy libraries
 Url: http://fmtlib.net/
 
-# https://github.com/fmtlib/fmt.git
-Source: %name-%version.tar
+# https://github.com/%{rname}lib/%rname.git
+Source: lib%rname-%version.tar
 
 BuildRequires: cmake ctest gcc-c++
 
-%package -n %name%sover
+%package -n lib%rname%sover
 Summary: An open-source formatting library for C++
-Group: System/Libraries
+Group: System/Legacy libraries
 
-%package devel
-Summary: An open-source formatting library for C++
-Group: Development/C++
-
-%define desc fmt (formerly cppformat) is an open-source formatting library. \
+%define desc %rname (formerly cppformat) is an open-source formatting library. \
 It can be used as a fast and safe alternative to printf and IOStreams.
 
 %description
 %desc
 
-%description -n %name%sover
+%description -n lib%rname%sover
 %desc
-
-%description devel
-%desc
-This package contains development part of fmt.
 
 %prep
-%setup
+%setup -n lib%rname-%version
 
 %build
 %cmake_insource \
@@ -53,19 +46,18 @@ make test
 %install
 %makeinstall_std
 
-%files -n %name%sover
-%doc LICENSE* README*
-%_libdir/libfmt.so.*
+%__rm -rf %buildroot%_includedir/%rname
+%__rm -rf %buildroot%_libdir/cmake/%rname
+%__rm -rf %buildroot%_pkgconfigdir/%rname.pc
+%__rm -rf %buildroot%_libdir/lib%rname.so
 
-%files devel
-%_includedir/fmt
-%_libdir/cmake/fmt
-%_pkgconfigdir/fmt.pc
-%_libdir/libfmt.so
+%files -n lib%rname%sover
+%doc LICENSE* README*
+%_libdir/lib%rname.so.*
 
 %changelog
-* Sat Nov 06 2021 Nazarov Denis <nenderus@altlinux.org> 8.0.1-alt1
-- Updated to upstream version 8.0.1.
+* Sat Nov 06 2021 Nazarov Denis <nenderus@altlinux.org> 7.1.3-alt2
+- Build as legacy library
 
 * Sun Jan 24 2021 Nazarov Denis <nenderus@altlinux.org> 7.1.3-alt1
 - Updated to upstream version 7.1.3.
