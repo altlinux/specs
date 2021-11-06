@@ -2,7 +2,7 @@
 %define git_descr mainline-636-7326-ga123fd92b03
 
 Name: yuzu
-Version: 800
+Version: 801
 Release: alt1
 
 Summary: Nintendo Switch emulator/debugger
@@ -157,6 +157,9 @@ src/common/scm_rev.cpp.in
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sat Nov 06 2021 Nazarov Denis <nenderus@altlinux.org> 801-alt1
+- Version 801
+
 * Sat Nov 06 2021 Nazarov Denis <nenderus@altlinux.org> 800-alt1
 - Version 800
 
