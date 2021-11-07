@@ -4,7 +4,7 @@
 %define cid 	uBlock0@raymondhill.net
 
 Name:		%firefox_name-%rname
-Version:	1.36.2
+Version:	1.38.6
 Release:	alt1
 
 Summary:	uBlock Origin extension for Firefox
@@ -53,6 +53,9 @@ install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 
 
 %changelog
+* Sun Nov 07 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.38.6-alt1
+- New version
+
 * Tue Jul 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.36.2-alt1
 - New version
 
