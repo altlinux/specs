@@ -1,20 +1,20 @@
-%define _unpackaged_files_terminate_build 1
 ## SPEC file for Perl module Software::License
+%define _unpackaged_files_terminate_build 1
+%define real_name Software-License
 
 Name: perl-Software-License
-Version: 0.103014
+Version: 0.104001
 Release: alt1
 
 Summary: Perl module that provide templated software licenses
 
 License: %perl_license
 Group: Development/Perl
-URL: http://search.cpan.org/dist/Software-License/
+URL: https://metacpan.org/dist/Software-License/
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 BuildArch: noarch
 
-%define real_name Software-License
 Source: %real_name-%version.tar
 
 AutoReqProv: perl, yes
@@ -41,6 +41,10 @@ Perl module Software::License provides templated software licenses.
 %perl_vendor_privlib/Software/License*
 
 %changelog
+* Sun Nov 07 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.104001-alt1
+- New version
+- Update URL
+
 * Wed Feb 13 2019 Igor Vlasenko <viy@altlinux.ru> 0.103014-alt1
 - new version
 
