@@ -1,7 +1,9 @@
 ## SPEC file for Perl module File::Find::Object::Rule
+%define _unpackaged_files_terminate_build 1
+%define real_name File-Find-Object-Rule
 
 Name: perl-File-Find-Object-Rule
-Version: 0.0312
+Version: 0.0313
 Release: alt1
 
 Summary: alternative interface to File::Find::Object
@@ -9,10 +11,9 @@ Summary: alternative interface to File::Find::Object
 License: %perl_license
 Group: Development/Perl
 
-%define real_name File-Find-Object-Rule
-URL: http://search.cpan.org/dist/File-Find-Object-Rule/
+URL: https://metacpan.org/dist/File-Find-Object-Rule
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 BuildArch: noarch
 
 Source: %real_name-%version.tar
@@ -21,9 +22,9 @@ AutoReqProv: perl, yes
 BuildRequires(pre): perl-devel rpm-build-licenses
 
 
-# Automatically added by buildreq on Sun Jun 03 2018
-# optimized out: perl perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Class-XSAccessor perl-Devel-Symdump perl-Encode perl-File-Find-Rule perl-HTML-Parser perl-JSON-PP perl-Module-Metadata perl-Number-Compare perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Text-Glob perl-devel perl-parent perl-podlators python-base python-modules python3 python3-base python3-module-zope ruby
-BuildRequires: perl-File-Find-Object perl-File-Find-Rule-Perl perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage
+# Automatically added by buildreq on Sun Nov 07 2021
+# optimized out: libgpg-error perl perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Class-XSAccessor perl-Encode perl-File-Find-Rule perl-JSON-PP perl-Module-Metadata perl-Number-Compare perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-Text-Glob perl-Tie-RefHash perl-autodie perl-devel perl-parent perl-podlators python3-base sh4
+BuildRequires: perl-File-Find-Object perl-File-Find-Rule-Perl perl-File-TreeCreate perl-HTML-Parser perl-Module-Build
 
 %description
 Perl module File::Find::Object::Rule is a friendlier interface
@@ -46,6 +47,10 @@ specify the desired files and directories.
 %_man1dir/findorule*
 
 %changelog
+* Sun Nov 07 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.0313-alt1
+- New version
+- Update URL
+
 * Tue May 05 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.0312-alt1
 - New version
 
