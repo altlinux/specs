@@ -9,7 +9,7 @@
 
 Name: libldb
 Version: 2.3.1
-Release: alt1
+Release: alt2
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -41,9 +41,9 @@ BuildRequires: python3-module-tdb
 BuildRequires: python3-module-talloc-devel
 BuildRequires: python3-module-tevent
 
-Requires: libtdb >= 1.4.2
-Requires: libtalloc >= 2.2.0
-Requires: libtevent >= 0.10.0
+Requires: libtdb >= 1.4.3
+Requires: libtalloc >= 2.3.2
+Requires: libtevent >= 0.10.2
 %if_with mdb
 Requires: liblmdb >= 0.9.16
 %endif
@@ -55,7 +55,7 @@ servers, or use local tdb databases.
 %package devel
 Group: Development/C
 Summary: Developer tools for the LDB library
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Header files needed to develop programs that link against the LDB library.
@@ -63,7 +63,7 @@ Header files needed to develop programs that link against the LDB library.
 %package -n ldb-tools
 Group: Development/Tools
 Summary: Tools to manage LDB files
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n ldb-tools
 Tools to manage LDB files
@@ -181,6 +181,9 @@ make test
 %_pkgconfigdir/pyldb-util.cpython-*.pc
 
 %changelog
+* Sun Nov 07 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.3.1-alt2
+- Fix libtdb, libtalloc and libtevent requires for libldb
+
 * Tue Nov 02 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.3.1-alt1
 - Update to the 2.3.1 for latest samba-4.14.9 security release
 
