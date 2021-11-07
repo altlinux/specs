@@ -2,7 +2,7 @@
 
 Name: gimagereader
 Version: 3.3.1
-Release: alt5.1
+Release: alt5.2
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -131,10 +131,8 @@ Common files for %name.
 %patch2 -p1
 # remove with new version
 # https://redmine.basealt.space/issues/2497
-cp -fv %SOURCE1 po/
+cp -fv %SOURCE1 po/ru.po
 cp -fv %SOURCE2 data/
-# https://bugzilla.altlinux.org/show_bug.cgi?id=36811
-%__subst "s|Приложение OCR|Приложение для распознавания текста|" po/ru.po
 cat <<EOF >>data/gimagereader.desktop.in
 Comment=Scan pages and optical text recognize
 Comment[ru]=Сканирование страниц и распознавание текста
@@ -206,6 +204,9 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Wed Nov 03 2021 Andrey Cherepanov <cas@altlinux.org> 3.3.1-alt5.2
+- NMU: fix apply russian translation.
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 3.3.1-alt5.1
 - NMU: spec: adapted to new cmake macros.
 
