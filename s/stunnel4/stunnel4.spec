@@ -5,8 +5,8 @@
 
 Summary: Universal SSL tunnel
 Name: stunnel4
-Version: 5.53
-Release: alt1.1
+Version: 5.60
+Release: alt1
 License: GPLv2+
 Group: Networking/Other
 
@@ -133,7 +133,7 @@ make check
 
 %files
 # note: this COPYING contains general information not GPL text
-%doc AUTHORS BUGS COPYING CREDITS ChangeLog NEWS PORTS README TODO doc/en/* doc/stunnel.html
+%doc *.md doc/en/* doc/stunnel.html
 %doc tools/{ca.*,importCA.*}
 %attr(750,stunnel,stunnel) %_var/run/stunnel
 %attr(750,stunnel,stunnel) %_var/lib/stunnel
@@ -152,6 +152,9 @@ make check
 %config(noreplace) %verify(not md5 mtime size) /etc/xinetd.d/stunnel
 
 %changelog
+* Sun Nov 07 2021 Vladislav Zavjalov <slazav@altlinux.org> 5.60-alt1
+- New version (5.60).
+
 * Thu Apr 18 2019 L.A. Kostis <lakostis@altlinux.ru> 5.53-alt1.1
 - Disable tests (due hidepid=1 setting on build host).
 - Fix noarch warnings.
