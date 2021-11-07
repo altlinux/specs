@@ -1,5 +1,5 @@
 Name:     kdiskmark
-Version:  2.2.1
+Version:  2.3.0
 Release:  alt1
 
 Summary:  A simple open-source disk benchmark tool for Linux distros
@@ -43,6 +43,9 @@ comprehensive benchmark result.
 %_usr/libexec/kauth/kdiskmark_helper
 
 %changelog
+* Sun Nov 07 2021 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt1
+- Automatically updated to 2.3.0.
+
 * Tue Sep 14 2021 Grigory Ustinov <grenka@altlinux.org> 2.2.1-alt1
 - Automatically updated to 2.2.1.
 
