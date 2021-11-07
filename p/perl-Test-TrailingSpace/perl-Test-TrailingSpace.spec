@@ -1,7 +1,9 @@
 ## SPEC file for Perl module Test::TrailingSpace
+%define _unpackaged_files_terminate_build 1
+%define real_name Test-TrailingSpace
 
 Name: perl-Test-TrailingSpace
-Version: 0.0600
+Version: 0.0601
 Release: alt1
 
 Summary: test for trailing space in source files
@@ -9,10 +11,9 @@ Summary: test for trailing space in source files
 License: %mit
 Group: Development/Perl
 
-%define real_name Test-TrailingSpace
-URL: http://search.cpan.org/dist/Test-TrailingSpace/
+URL: https://metacpan.org/dist/Test-TrailingSpace/
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 BuildArch: noarch
 
 Source: %real_name-%version.tar
@@ -20,9 +21,9 @@ Source: %real_name-%version.tar
 AutoReqProv: perl, yes
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Sun May 24 2020
-# optimized out: perl perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Class-XSAccessor perl-Encode perl-File-Find-Object perl-HTML-Parser perl-JSON-PP perl-Module-Metadata perl-Number-Compare perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-Text-Glob perl-Tie-RefHash perl-devel perl-parent perl-podlators python-modules python2-base python3 python3-base python3-dev ruby ruby-stdlibs sh4
-BuildRequires: perl-File-Find-Object-Rule perl-Module-Build perl-autodie
+# Automatically added by buildreq on Sun Nov 07 2021
+# optimized out: libgpg-error perl perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Class-XSAccessor perl-Encode perl-File-Find-Object perl-JSON-PP perl-Module-Metadata perl-Number-Compare perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-Text-Glob perl-Tie-RefHash perl-autodie perl-devel perl-parent perl-podlators python3-base sh4
+BuildRequires: perl-File-Find-Object-Rule perl-File-TreeCreate perl-HTML-Parser perl-Module-Build
 
 %description
 Perl module Test::TrailingSpace  is used to test for lack
@@ -42,6 +43,10 @@ of trailing space.
 %perl_vendor_privlib/Test/TrailingSpace*
 
 %changelog
+* Sun Nov 07 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.0601-alt1
+- New version
+- Update URL
+
 * Mon Jun 08 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.0600-alt1
 - New version
 
