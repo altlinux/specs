@@ -5,19 +5,19 @@ BuildRequires: perl(Shell.pm)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		scim-hangul
-Version:	0.3.2
-Release:	alt2_28
+Version:	0.4.0
+Release:	alt1
 
 License:	GPLv3
-URL:		http://www.scim-im.org/
+URL:		https://github.com/libhangul/scim-hangul
 BuildRequires:	scim-devel >= 1.2.0 libhangul-devel
 Source0:	http://downloads.sourceforge.net/scim/%{name}-%{version}.tar.gz
 Patch0:		scim-hangul-0.3.2.gcc43.patch
 Patch1:         scim-hangul-0.3.2.gcc47.patch
-
+Patch2:		scim-hangul-0.4.0-fixes-gtk2-compile.patch
 Summary:	Hangul Input Method Engine for SCIM
 Requires:	scim
-BuildRequires:  gcc-c++
+BuildRequires:  gcc-c++ make
 %ifarch aarch64
 BuildRequires:	autoconf
 %endif
@@ -29,9 +29,9 @@ Scim-hangul is a SCIM IMEngine module for Korean (Hangul) input support.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1 -b .gcc43
+#patch0 -p1 -b .gcc43
 %patch1 -p1 -b .gcc47
-
+%patch2 -p1
 
 %build
 %ifarch aarch64
@@ -53,11 +53,15 @@ rm $RPM_BUILD_ROOT%{_libdir}/scim-1.0/*/{IMEngine,SetupUI}/hangul*.la
 %doc AUTHORS COPYING README ChangeLog
 %{_libdir}/scim-1.0/*/IMEngine/hangul.so
 %{_libdir}/scim-1.0/*/SetupUI/hangul-imengine-setup.so
-%{_datadir}/scim/icons/scim-hangul.png
+%{_datadir}/scim/icons/scim-hangul*.png
 %{_datadir}/scim/hangul
 
 
 %changelog
+* Sun Nov 07 2021 Ilya Mashkin <oddity@altlinux.ru> 0.4.0-alt1
+- 0.4.0
+- Update url
+
 * Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt2_28
 - fc update
 
