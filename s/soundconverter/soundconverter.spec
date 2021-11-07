@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: soundconverter
-Version: 4.0.1
+Version: 4.0.3
 Release: alt1
 
 Summary: A simple sound converter application for GNOME
@@ -69,6 +69,9 @@ rm -r %buildroot%_datadir/doc/%name
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Sun Nov 07 2021 Anton Midyukov <antohami@altlinux.org> 4.0.3-alt1
+- New version 4.0.3
+
 * Sun Jun 27 2021 Anton Midyukov <antohami@altlinux.org> 4.0.1-alt1
 - New version 4.0.1
 - not require GConf
