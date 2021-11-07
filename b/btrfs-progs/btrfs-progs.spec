@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 0
 Name: btrfs-progs
-Version: 5.14.2
-Release: alt3
+Version: 5.15
+Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
@@ -99,6 +99,9 @@ rm -f %buildroot/%{_lib}/libbtrfsutil.so
 %_includedir/*
 
 %changelog
+* Sat Nov 06 2021 Anton Farygin <rider@altlinux.ru> 5.15-alt1
+- 5.14.2 -> 5.15
+
 * Sun Oct 17 2021 Anton Farygin <rider@altlinux.ru> 5.14.2-alt3
 - fixed typo in libbtrfsutil.so symlink (closes: #41143)
 
