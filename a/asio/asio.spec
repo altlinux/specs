@@ -8,7 +8,7 @@ BuildRequires: gcc-c++ perl(Date/Format.pm)
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:           asio
-Version:        1.20.0
+Version:        1.21.0
 Release:        alt1
 Summary:        A cross-platform C++ library for network programming
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -58,6 +58,8 @@ make install DESTDIR=%{buildroot}
 %{_includedir}/asio.hpp
 
 %changelog
+* Sun Nov 07 2021 Ilya Mashkin <oddity@altlinux.ru> 1.21.0-alt1
+- 1.21.0
 
 * Wed Oct 20 2021 Ilya Mashkin <oddity@altlinux.ru> 1.20.0-alt1
 - 1.20.0
