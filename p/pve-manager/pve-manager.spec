@@ -1,14 +1,14 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 7.0.11
-Release: alt3
+Release: alt4
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64 aarch64
-Requires: cstream lzop pve-vncterm pve-novnc pve-spiceterm pve-xtermjs pve-docs
+Requires: cstream lzop pve-vncterm pve-novnc pve-spiceterm pve-xtermjs pve-docs pve-widget-toolkit pve-mini-journalreader
 Requires: perl-LWP-Protocol-https pve-cluster schedutils pve-acme
 
 Source0: pve-manager.tar.xz
@@ -111,7 +111,7 @@ Tool to manage Linux Containers on PVE
 Summary: PVE Firewall
 Version: 4.2.3
 Group: System/Servers
-Requires: ebtables ipset iptables iptables-ipv6 shorewall shorewall6 iproute2 >= 4.10.0
+Requires: ebtables ipset iptables iptables-ipv6 iproute2 >= 4.10.0
 
 %description -n pve-firewall
 This package contains the PVE Firewall
@@ -159,6 +159,23 @@ Requires: fonts-font-awesome
 
 %description -n pve-http-server
 This is used to implement the PVE REST API
+
+%package -n pve-widget-toolkit
+Summary: ExtJS Helper Classes for PVE
+Version: 3.3.6
+Group: System/Servers
+
+%description -n pve-widget-toolkit
+ExtJS Helper Classes to easy access to PVE APIs
+
+%package -n pve-mini-journalreader
+Summary: Minimal systemd Journal Reader
+Version: 1.1.1
+Group: System/Servers
+
+%description -n pve-mini-journalreader
+A minimal application to read the last X lines of the systemd journal or the
+last X lines before a cursor
 
 %add_findreq_skiplist %perl_vendor_privlib/PVE/HA/Env/PVE2.pm
 %add_findreq_skiplist %_bindir/pve-ha-simulator
@@ -268,6 +285,10 @@ ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-serial2.jpg
 ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-serial3.jpg
 ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-virtio.jpg
 
+mkdir -p %buildroot%_datadir/javascript/qrcodejs
+mv %buildroot%_datadir/%name/js/qrcode.min.js %buildroot%_datadir/javascript/qrcodejs/
+ln -s ../../javascript/qrcodejs/qrcode.min.js %buildroot%_datadir/%name/js/qrcode.min.js
+
 install -m0644 pve-firewall/debian/*.service %buildroot%systemd_unitdir/
 install -m0644 pve-firewall/debian/pve-firewall.logrotate %buildroot%_sysconfdir/logrotate.d/pve-firewall
 mkdir -p %buildroot%_localstatedir/pve-firewall
@@ -376,7 +397,6 @@ __EOF__
 %_bindir/pveversion
 %_bindir/spiceproxy
 %_bindir/vzdump
-%_bindir/mini-journalreader
 %_bindir/pve5to6
 %_bindir/pve6to7
 %_datadir/pve-i18n
@@ -627,10 +647,18 @@ __EOF__
 %perl_vendor_privlib/PVE/AbstractConfig.pm
 
 %files -n pve-http-server
-%_datadir/javascript
 %perl_vendor_privlib/PVE/APIServer
 
+%files -n pve-widget-toolkit
+%_datadir/javascript
+
+%files -n pve-mini-journalreader
+%_bindir/mini-journalreader
+
 %changelog
+* Sun Nov 07 2021 Valery Inozemtsev <shrek@altlinux.ru> 7.0.11-alt4
+- pve-mini-journalreader, pve-widget-toolkit moved to subpackages
+
 * Fri Oct 22 2021 Valery Inozemtsev <shrek@altlinux.ru> 7.0.11-alt3
 - package trustedkeys.gpg to make pveam functioning
 

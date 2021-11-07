@@ -3,7 +3,7 @@
 
 Name: pve-backup
 Version: 2.0.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: PVE Backup Server
 License: GPL-1 and LGPLv2 and BSD
@@ -18,16 +18,26 @@ Source4: proxmox-fuse.tar.xz
 Source5: pxar.tar.xz
 Source6: proxmox-backup-qemu-1.2.0.tar.xz
 Source10: cargo.tar.xz
+Source11: basealt_logo-128.png
+Source12: basealt_logo.png
+
+Source100: pve-i18n.tar.xz
 
 Patch0: proxmox-backup-alt.patch
 Patch1: proxmox-openid-rs-alt.patch
 Patch2: proxmox-backup-qemu-alt.patch
 Patch3: proxmox-backup-alt-libexec.patch
+Patch4: proxmox-backup-widgettoolkit.patch
+Patch5: proxmox-backup-auth.patch
+Patch6: proxmox-backup-sshkeypath.patch
+Patch7: proxmox-backup-rm-subscription.patch
+Patch8: pve-i18n-pbs.patch
 
 ExclusiveArch: x86_64 aarch64
 
 BuildRequires: /proc clang-devel git-core rust-cargo libudev-devel libssl-devel libacl-devel libsystemd-devel libpam-devel libfuse3-devel libuuid-devel
 BuildRequires: libsgutils-devel python3-module-sphinx python3-module-docutils python3-module-sphinx-sphinx-build-symlink
+BuildRequires: perl(JSON.pm) perl(Locale/PO.pm)
 
 %description
 PVE Backup Server daemon with tools and GUI
@@ -38,7 +48,7 @@ tools. This includes a web-based graphical user interface.
 Summary: PVE backup server
 Group: Archiving/Backup
 Requires(pre): shadow-utils
-Requires: javascript-common %name-client = %EVR
+Requires: javascript-common %name-client = %EVR pve-xtermjs >= 4.12.0 pve-widget-toolkit pve-mini-journalreader
 Provides: proxmox-backup-server = %EVR
 
 %description server
@@ -82,11 +92,16 @@ Version: 1.2.0
 PVE Backup Server development environment.
 
 %prep
-%setup -q -c -n %name -a1 -a2 -a3 -a4 -a5 -a6 -a10
+%setup -q -c -n %name -a1 -a2 -a3 -a4 -a5 -a6 -a10 -a100
 %patch0 -p0 -b .alt
 %patch1 -p0
 %patch2 -p0
 %patch3 -p0 -b .libexec
+%patch4 -p0 -b .wt
+%patch5 -p0 -b .auth
+%patch6 -p0 -b .sshkey
+%patch7 -p0 -b .subscr
+%patch8 -p0
 
 rm -f */.cargo/config
 
@@ -95,9 +110,11 @@ export CARGO_HOME=%_builddir/%name/cargo
 cd proxmox-backup-qemu
 cargo build --release --offline
 make -C %_builddir/%name/proxmox-backup PROXY_USER=%proxy_user
+make -C %_builddir/%name/pve-i18n
 
 %install
 make -C proxmox-backup DESTDIR=%buildroot install
+make -C pve-i18n DESTDIR=%buildroot install
 
 install -pD -m644 proxmox-backup-qemu/proxmox-backup-qemu.h %buildroot%_includedir/proxmox-backup-qemu.h
 install -pD -m644 proxmox-backup-qemu/target/release/libproxmox_backup_qemu.so %buildroot%_libdir/libproxmox_backup_qemu.so.0
@@ -107,6 +124,9 @@ install -dm755 %buildroot%_unitdir
 for u in proxmox-backup.service proxmox-backup-proxy.service ; do
     install -m644 proxmox-backup/etc/$u %buildroot%_unitdir/
 done
+
+install -m644 %SOURCE11 %buildroot%_datadir/javascript/proxmox-backup/images/logo-128.png
+install -m644 %SOURCE12 %buildroot%_datadir/javascript/proxmox-backup/images/basealt_logo.png
 
 mkdir -p %buildroot/%_sysconfdir/proxmox-backup
 touch %buildroot/%_sysconfdir/proxmox-backup/{authkey.key,authkey.pub,csrf.key,proxy.key,proxy.pem,user.cfg}
@@ -127,6 +147,7 @@ grep -q "^%proxy_user:" %_sysconfdir/passwd || %_sbindir/useradd -g %proxy_user 
 %_libexecdir/proxmox-backup/proxmox-backup-proxy
 %attr(2511,root,%proxy_user) %_libexecdir/proxmox-backup/sg-tape-cmd
 %_datadir/javascript/proxmox-backup
+%_datadir/pbs-i18n
 %_datadir/zsh/vendor-completions/_pmt*
 %_datadir/zsh/vendor-completions/_proxmox-tape
 %_datadir/zsh/vendor-completions/_proxmox-backup-manager
@@ -162,6 +183,9 @@ grep -q "^%proxy_user:" %_sysconfdir/passwd || %_sbindir/useradd -g %proxy_user 
 %_libdir/libproxmox_backup_qemu.so
 
 %changelog
+* Sun Nov 07 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:2.0.1-alt2
+- updated required packages 
+
 * Wed Sep 29 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:2.0.1-alt1
 - 2.0.1
 
