@@ -1,20 +1,20 @@
 ## SPEC file for Perl module File::Find::Object
+%define _unpackaged_files_terminate_build 1
+%define real_name File-Find-Object
 
 Name: perl-File-Find-Object
-Version: 0.3.5
+Version: 0.3.6
 Serial: 1
 Release: alt1
-
 
 Summary: an object oriented File::Find replacement
 
 License: %perl_license
 Group: Development/Perl
 
-%define real_name File-Find-Object
-URL: http://search.cpan.org/dist/File-Find-Object/
+URL: https://metacpan.org/dist/File-Find-Object
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 BuildArch: noarch
 
 Source: %real_name-%version.tar
@@ -23,9 +23,9 @@ AutoReqProv: perl, yes
 BuildRequires(pre): perl-devel rpm-build-licenses
 
 
-# Automatically added by buildreq on Mon Aug 26 2019
-# optimized out: gem-power-assert perl perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Encode perl-HTML-Parser perl-JSON-PP perl-Module-Metadata perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-devel perl-parent perl-podlators python-base python-modules python3 python3-base python3-dev ruby ruby-coderay ruby-method_source ruby-pry ruby-rake ruby-rdoc ruby-stdlibs sh4
-BuildRequires: perl-Class-XSAccessor perl-Module-Build
+# Automatically added by buildreq on Sun Nov 07 2021
+# optimized out: libgpg-error perl perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Encode perl-JSON-PP perl-Module-Metadata perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-Tie-RefHash perl-autodie perl-devel perl-parent perl-podlators python3-base sh4
+BuildRequires: perl-Class-XSAccessor perl-File-TreeCreate perl-HTML-Parser perl-Module-Build
 
 %description
 Perl module File::Find::Object does the same job as File::Find
@@ -52,6 +52,10 @@ the next() function, but setting a callback is still possible.
 %perl_vendor_privlib/File/Find/Object*
 
 %changelog
+* Sun Nov 07 2021 Nikolay A. Fetisov <naf@altlinux.org> 1:0.3.6-alt1
+- New version
+- Update URL
+
 * Tue May 05 2020 Nikolay A. Fetisov <naf@altlinux.org> 1:0.3.5-alt1
 - New version
 
