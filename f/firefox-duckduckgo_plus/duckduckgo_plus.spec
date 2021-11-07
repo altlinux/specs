@@ -4,7 +4,7 @@
 %define cid	jid1-ZAdIEUB7XOzOJw@jetpack
 
 Name:		%firefox_name-%rname
-Version:	2021.7.9
+Version:	2021.9.30
 Release:	alt1
 
 Summary:	DuckDuckGo Plus Firefox extension
@@ -45,6 +45,9 @@ install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 %firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Sun Nov 07 2021 Nikolay A. Fetisov <naf@altlinux.org> 2021.9.30-alt1
+- New version
+
 * Tue Jul 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 2021.7.9-alt1
 - New version
 
