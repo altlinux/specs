@@ -1,7 +1,9 @@
 # SPEC file for Perl module PDF::API2
+%define _unpackaged_files_terminate_build 1
+%define real_name PDF-API2
 
 Name: perl-PDF-API2
-Version: 2.040
+Version: 2.042
 Release: alt1
 
 Summary: Perl module for creation and modification PDF files
@@ -9,13 +11,12 @@ Summary(ru_RU.UTF-8): модуль Perl для создания и измене�
 
 License: %lgpl2plus
 Group: Development/Perl
-URL: http://search.cpan.org/dist/PDF-API2/
+URL: https://metacpan.org/dist/PDF-API2/
 
 Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
-%define real_name PDF-API2
 Source: %real_name-%version.tar
-Patch0: %real_name-2.019-alt-fix_fonts_path.patch
+Patch0: %real_name-2.042-alt-fix_fonts_path.patch
 Patch1: %real_name-0.51-alt-Lbrk_pl.patch
 
 BuildArch: noarch
@@ -78,8 +79,12 @@ ln -s -- $(relative %_licensedir/LGPL %_docdir/%name/LICENSE) LICENSE
 %exclude /.perl.req
 
 %changelog
+* Sun Nov 07 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.042-alt1
+- New version
+
 * Sat May 15 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.040-alt1
 - New version
+- Update URL
 
 * Fri Mar 12 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.039-alt1
 - New version
