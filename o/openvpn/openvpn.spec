@@ -1,5 +1,6 @@
-# spec file for package openvpn (Version 2.3)
+# spec file for package openvpn (Version 2.5)
 #
+%define _unpackaged_files_terminate_build 1
 
 %def_with systemd
 %def_with plugins
@@ -15,7 +16,7 @@
 %def_with x509_alt_username
 
 Name: openvpn
-Version: 2.5.3
+Version: 2.5.4
 Release: alt1
 
 Summary: a full-featured SSL VPN solution
@@ -25,7 +26,7 @@ License: %gpl2only with OpenSSL exception
 Group: System/Servers
 Url: http://www.openvpn.net
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source0: %name-%version.tar
 Patch0:  %name-%version-%release.patch
@@ -341,6 +342,11 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %endif
 
 %changelog
+* Sun Nov 07 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.5.4-alt1
+- New version
+  - Fix minor memory leak under certain conditions in add_route()
+    and add_route_ipv6()
+
 * Thu Jul 01 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.5.3-alt1
 - New major version
 - Using /run for pid and lock files (Closes: 39989)
