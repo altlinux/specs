@@ -1,7 +1,7 @@
 %def_enable python
 
 Name: sudo
-Version: 1.9.7p2
+Version: 1.9.8p2
 Release: alt1
 Epoch: 1
 
@@ -240,6 +240,13 @@ fi
 %_man8dir/sudo_plugin.8*
 
 %changelog
+* Mon Oct 11 2021 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.8p2-alt1
+- Fixed minor troubles and regressions.
+
+* Thu Sep 16 2021 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.8-alt1
+- Update to latest stable release with support transparently intercepting
+  sub-commands executed by the original command run via sudo.
+
 * Sat Sep 11 2021 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.7p2-alt1
 - Update to latest stable release with bugfixes and improvements:
  + Sudo now can handle the getgroups() function returning a different
