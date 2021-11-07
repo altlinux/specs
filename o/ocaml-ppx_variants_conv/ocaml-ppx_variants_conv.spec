@@ -1,7 +1,7 @@
 %define  modulename ppx_variants_conv
 Name:    ocaml-%modulename
-Version: 0.14.1
-Release: alt2
+Version: 0.14.2
+Release: alt1
 
 Summary: Generation of accessor and iteration functions for ocaml variant types
 License: MIT
@@ -42,6 +42,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Nov 02 2021 Anton Farygin <rider@altlinux.ru> 0.14.2-alt1
+- 0.14.2
+
 * Sun Mar 21 2021 Anton Farygin <rider@altlinux.org> 0.14.1-alt2
 - simplified specfile with macros from rpm-build-ocaml 1.4
 

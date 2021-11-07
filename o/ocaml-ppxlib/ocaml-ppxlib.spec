@@ -17,7 +17,7 @@
 %endif
 
 Name: ocaml-%libname
-Version: 0.22.2
+Version: 0.23.0
 Release: alt1
 Summary: Base library and tools for ppx rewriters.
 License: MIT
@@ -27,8 +27,8 @@ Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 BuildRequires: ocaml-findlib-devel dune cinaps ocaml-result-devel
 BuildRequires: ocaml-re-devel ocaml-compiler-libs-devel ocaml-ppx_derivers-devel
-BuildRequires: ocaml-sexplib0-devel ocaml-migrate-parsetree-devel ocaml-stdio-devel
-BuildRequires: ocaml-base-devel
+BuildRequires: ocaml-sexplib0-devel ocaml-stdio-devel
+BuildRequires: ocaml-base-devel /proc
 
 %description
 A comprehensive toolbox for ppx development. It features:
@@ -57,7 +57,7 @@ developing applications that use %name.
 %patch0 -p1
 
 %build
-sed -i 's/ stdlib-shims//' */dune
+sed -i 's/ stdlib-shims//' */dune */*/dune
 %dune_build -p %libname
 
 %install
@@ -74,6 +74,9 @@ rm -rf %buildroot%_bindir
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Nov 02 2021 Anton Farygin <rider@altlinux.ru> 0.23.0-alt1
+- 0.23.0
+
 * Wed Jul 28 2021 Anton Farygin <rider@altlinux.ru> 0.22.2-alt1
 - 0.22.2
 

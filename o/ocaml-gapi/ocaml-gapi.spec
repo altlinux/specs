@@ -1,7 +1,7 @@
 %def_with check
 Name: ocaml-gapi
-Version: 0.4.1
-Release: alt2
+Version: 0.4.2
+Release: alt1
 Summary: A simple OCaml client for Google Services
 License: MIT
 Group: Development/ML
@@ -81,6 +81,9 @@ sed -i 's,oUnit,ounit2,' src/test/dune
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Nov 04 2021 Anton Farygin <rider@altlinux.ru> 0.4.2-alt1
+- 0.4.2
+
 * Fri Mar 19 2021 Anton Farygin <rider@altlinux.org> 0.4.1-alt2
 - enabled tests
 - cleanup BR

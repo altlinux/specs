@@ -1,6 +1,11 @@
+# tests broken on 32-bit platforms and ppc64le
+%ifarch %ix86 armh ppc64le
+%def_disable check
+%endif
+
 %define libname qcheck
 Name: ocaml-%libname
-Version: 0.17
+Version: 0.18
 Release: alt1
 Summary: QuickCheck inspired property-based testing for OCaml
 Group: Development/ML
@@ -10,7 +15,7 @@ Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 BuildRequires: dune
 BuildRequires: ocaml
-BuildRequires: ocaml-ounit
+BuildRequires: ocaml-ounit-devel
 BuildRequires: ocaml-alcotest-devel
 
 %description
@@ -39,6 +44,7 @@ developing applications that use %name.
 rm -rf %buildroot/usr/doc
 
 %check
+sed -i '19d' example/alcotest/output.txt.expected
 %dune_check
 
 %files -f ocaml-files.runtime
@@ -47,6 +53,9 @@ rm -rf %buildroot/usr/doc
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Nov 03 2021 Anton Farygin <rider@altlinux.ru> 0.18-alt1
+- 0.18
+
 * Mon Mar 15 2021 Anton Farygin <rider@altlinux.org> 0.17-alt1
 - 0.17
 

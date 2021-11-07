@@ -17,23 +17,18 @@
 %def_enable bash_completion
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-Summary: Tools for accessing and modifying virtual machine disk images
+Summary: Library for accessing and modifying virtual machine disk images
 Name: libguestfs
-Version: 1.44.1
-Release: alt2
+Version: 1.46.0
+Release: alt1
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
 
 Source: %name-%version.tar
-Source2: gnulib-%name-%version.tar
-Source3: libguestfs-common-%version.tar
+Source2: %name-%version-common.tar
 Patch1: %name-%version-alt-fixes.patch
 Patch2: %name-%version-alt-fixes-common.patch
-
-# libguestfs live service
-#%%Source2: guestfsd.service
-#%%Source3: 99-guestfsd.rules
 
 BuildRequires: /proc
 BuildRequires: gcc gcc-c++ flex
@@ -45,11 +40,11 @@ BuildRequires: gettext-tools
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgjs-devel}
 %{?_enable_vala:BuildRequires(pre): rpm-build-vala}
 %{?_enable_vala:BuildRequires: vala-tools}
-BuildRequires: cpio gperf genisoimage xml-utils db4-utils zip unzip
+BuildRequires: cpio gperf xorriso xml-utils db4-utils zip unzip
 # po4a 
 BuildRequires: qemu-kvm qemu-system >= 1.3.0
 BuildRequires: libncurses-devel libtinfo-devel libreadline-devel
-BuildRequires: libpcre-devel libmagic-devel libvirt-devel libxml2-devel libconfig-devel hivex-devel
+BuildRequires: libpcre2-devel libmagic-devel libvirt-devel libxml2-devel libconfig-devel hivex-devel
 BuildRequires: libacl-devel libcap-devel
 BuildRequires: netpbm
 BuildRequires: libyajl-devel >= 2.0.4
@@ -91,6 +86,16 @@ guestfsd runs within the appliance. It receives commands from the host
 and performs the requested action by calling the helper binaries.
 This package is only required for building the appliance.
 
+%package rescue
+Summary: virt-rescue shell
+Group: System/Base
+
+%description rescue
+This adds the virt-rescue shell which is a "rescue disk" for virtual
+machines, and additional tools to use inside the shell such as ssh,
+network utilities, editors and debugging utilities.
+
+
 %package devel
 Summary: Header files for libguestfs library
 Group: Development/Other
@@ -129,38 +134,6 @@ Requires: golang
 
 %description -n golang-guestfs
 golang-%name contains Go language bindings for %name.
-
-%package -n guestfs-tools
-Summary: System administration tools for virtual machines
-Group: File tools
-License: GPLv2+
-Requires: %name = %EVR
-Provides: %name-tools = %EVR
-Obsoletes: %name-tools < %EVR
-Requires: db4-utils
-%if_enabled bash_completion
-Provides: bash-completion-libguestfs = %EVR
-Obsoletes: bash-completion-libguestfs < %EVR
-%endif
-%ifarch %ix86 x86_64 aarch64
-Requires: guestfs-data
-%endif
-
-Requires: libosinfo
-
-# for virt-make-fs:
-Requires: qemu-img >= 1.3.0
-Requires: libvirt-daemon-driver-qemu >= 0.10.2
-
-# for virt-sysprep:
-Requires: %_bindir/fusermount
-Requires: %_bindir/getopt
-# for virt-df and other tools, who is working via libvirtd
-Requires: /lib/systemd/systemd-machined
-
-%description -n guestfs-tools
-This package contains miscellaneous system administrator command line
-tools for virtual machines.
 
 %package -n ocaml-%name
 Summary: OCaml bindings for %name
@@ -262,20 +235,9 @@ Requires: %name = %EVR
 %description -n erlang-%name
 erlang-%name contains Erlang bindings for %name.
 
-%package -n virt-dib
-Summary: Safe and secure diskimage-builder replacement
-Group: Development/Other
-License: GPLv2+
-Requires: %name = %EVR
-
-%description -n virt-dib
-Virt-dib is a safe and secure alternative to the OpenStack
-diskimage-builder command.  It is compatible with most
-diskimage-builder elements.
-
 %prep
 %setup -a2
-tar -xf %SOURCE3 -C common
+tar -xf %SOURCE2 -C common
 
 %patch1 -p1
 pushd common
@@ -283,37 +245,34 @@ pushd common
 popd
 
 %build
+%autoreconf
 export PYTHON=%__python3
-%define localconfigure \
-    %configure \\\
-	vmchannel_test=no \\\
-	%{subst_enable daemon} \\\
-	--enable-install-daemon \\\
-	%{subst_enable appliance} \\\
-	%{subst_enable fuse} \\\
-	%{subst_enable ocaml} \\\
-	%{subst_enable perl} \\\
-	%{subst_enable python} \\\
-	%{subst_enable ruby} \\\
-	%{subst_enable haskell} \\\
-	%{subst_enable php} \\\
-	%{subst_enable erlang} \\\
-	%{subst_enable lua} \\\
-	%{subst_enable goolang} \\\
-	%{subst_enable introspection} \\\
-	%{subst_enable vala} \\\
-	%{subst_enable rust} \\\
-	%{subst_enable static} \\\
-	--with-default-backend=libvirt \\\
-	--with-extra="ALTLinux,release=%version-%release,libvirt" \\\
-	--with-qemu="qemu-kvm qemu-system-%_build_arch qemu" \\\
-	--disable-silent-rules \\\
-	--disable-probes \\\
+%configure \
+	vmchannel_test=no \
+	%{subst_enable daemon} \
+	--enable-install-daemon \
+	%{subst_enable appliance} \
+	%{subst_enable fuse} \
+	%{subst_enable ocaml} \
+	%{subst_enable perl} \
+	%{subst_enable python} \
+	%{subst_enable ruby} \
+	%{subst_enable haskell} \
+	%{subst_enable php} \
+	%{subst_enable erlang} \
+	%{subst_enable lua} \
+	%{subst_enable goolang} \
+	%{subst_enable introspection} \
+	%{subst_enable vala} \
+	%{subst_enable rust} \
+	%{subst_enable static} \
+	--with-default-backend=libvirt \
+	--with-extra="ALTLinux,release=%version-%release,libvirt" \
+	--with-qemu="qemu-kvm qemu-system-%_build_arch qemu" \
+	--disable-silent-rules \
+	--disable-probes \
 	--disable-rpath
 
-./bootstrap --gnulib-srcdir=gnulib-%name-%version
-
-%localconfigure
 %make INSTALLDIRS=vendor
 
 %install
@@ -330,21 +289,11 @@ find %buildroot -name 'bindtests.pl' -delete
 # Remove static-linked Java bindings.
 rm %buildroot%_libdir/libguestfs_jni.la
 
-# Move installed documentation back to the source directory so
-# we can install it using a %%doc rule.
-mv %buildroot%_docdir/libguestfs installed-docs
-
 # Remove Japanese manpages, since these are not translated fully at
 # the moment.  When these are translated properly we intend to add
 # them back.
 rm -rf %buildroot%_mandir/ja/man{1,3}/
 
-# For the libguestfs-live-service subpackage install the systemd
-# service and udev rules.
-#mkdir -p %buildroot%systemd_unitdir
-#mkdir -p %buildroot%_sysconfdir/udev/rules.d
-#install -m 0644 %%SOURCE2 %buildroot%systemd_unitdir
-#install -m 0644 %%SOURCE3 %buildroot%_sysconfdir/udev/rules.d
 
 # delete unneeded
 rm -f %buildroot%_man1dir/guestfs-release-notes*
@@ -353,22 +302,55 @@ rm -f %buildroot%_man1dir/guestfs-release-notes*
 
 %files -f %name.lang
 %doc COPYING README
+%config(noreplace) %_sysconfdir/libguestfs-tools.conf
+%_bindir/guestfish
+%_bindir/guestmount
+%_bindir/guestunmount
 %_bindir/libguestfs-test-tool
+%_bindir/virt-copy-in
+%_bindir/virt-copy-out
+%_bindir/virt-tar-in
+%_bindir/virt-tar-out
 %_libdir/libguestfs.so.*
+%_man1dir/guestfish.1*
+%_man1dir/guestfs-faq.1*
+%_man1dir/guestfs-hacking.1*
+%_man1dir/guestfs-internals.1*
+%_man1dir/guestfs-performance.1*
+%_man1dir/guestfs-security.1*
+%_man1dir/guestmount.1*
+%_man1dir/guestunmount.1*
 %_man1dir/guestfs-testing.1*
+%_man1dir/virt-copy-in.1*
+%_man1dir/virt-copy-out.1*
+%_man1dir/virt-tar-in.1*
+%_man1dir/virt-tar-out.1*
 %_man1dir/libguestfs-test-tool.1*
+%_man5dir/libguestfs-tools.conf.5*
+%dir %_datadir/bash-completion/completions
+%_datadir/bash-completion/completions/guestfish
+%_datadir/bash-completion/completions/guestmount
+%_datadir/bash-completion/completions/guestunmount
+%_datadir/bash-completion/completions/libguestfs-test-tool
+%_datadir/bash-completion/completions/virt-copy-in
+%_datadir/bash-completion/completions/virt-copy-out
+%_datadir/bash-completion/completions/virt-rescue
+%_datadir/bash-completion/completions/virt-tar-in
+%_datadir/bash-completion/completions/virt-tar-out
+
 
 %files -n guestfsd
 %_sbindir/guestfsd
 %_man8dir/guestfsd.*
 
+%files rescue
+%_bindir/virt-rescue
+%_man1dir/virt-rescue.1*
+
 %files devel
-%doc AUTHORS BUGS HACKING TODO README
+%doc AUTHORS HACKING TODO README
 %doc examples/*.c
-%doc installed-docs/*
 %_libdir/libguestfs.so
-#%_sbindir/libguestfs-make-fixed-appliance
-#%_man1dir/libguestfs-make-fixed-appliance.1*
 %_man1dir/guestfs-building.1*
 %_man1dir/guestfs-recipes.1*
 %_man3dir/guestfs.3*
@@ -383,21 +365,18 @@ rm -f %buildroot%_man1dir/guestfs-release-notes*
 %_includedir/guestfs-gobject.h
 %_pkgconfigdir/libguestfs-gobject-1.0.pc
 %_man3dir/guestfs-gobject.3.*
-
 %_girdir/*.gir
 
 %if_enabled vala
 %_datadir/vala/vapi/libguestfs-gobject-1.0.*
 %endif
-%endif #introspection
 
-%if_enabled introspection
 %files gobject
 %_libdir/libguestfs-gobject-*.so.*
 
 %files gir
 %_typelibdir/*.typelib
-%endif
+%endif #introspection
 
 %if_enabled golang
 %files -n golang-guestfs
@@ -406,101 +385,6 @@ rm -f %buildroot%_man1dir/guestfs-release-notes*
 %_libdir/golang/src/libguestfs.org
 %_man3dir/guestfs-golang.3*
 %endif
-
-%files -n guestfs-tools
-%doc README
-%config(noreplace) %_sysconfdir/libguestfs-tools.conf
-%_man5dir/libguestfs-tools.conf.5*
-%_sysconfdir/virt-builder
-%dir %_sysconfdir/xdg/virt-builder
-%dir %_sysconfdir/xdg/virt-builder/repos.d
-%config %_sysconfdir/xdg/virt-builder/repos.d/libguestfs.conf
-%config %_sysconfdir/xdg/virt-builder/repos.d/libguestfs.gpg
-%config %_sysconfdir/xdg/virt-builder/repos.d/opensuse.conf
-%config %_sysconfdir/xdg/virt-builder/repos.d/opensuse.gpg
-%_bindir/guestfish
-%_man1dir/guestfish.1*
-%_bindir/guestmount
-%_man1dir/guestmount.1*
-%_bindir/guestunmount
-%_man1dir/guestunmount.1*
-%_bindir/virt-alignment-scan
-%_man1dir/virt-alignment-scan.1*
-%_bindir/virt-builder
-%_man1dir/virt-builder.1*
-%_bindir/virt-builder-repository
-%_man1dir/virt-builder-repository.1*
-%_bindir/virt-cat
-%_man1dir/virt-cat.1*
-%_bindir/virt-copy-in
-%_man1dir/virt-copy-in.1*
-%_bindir/virt-copy-out
-%_man1dir/virt-copy-out.1*
-%_bindir/virt-customize
-%_man1dir/virt-customize.1*
-%_bindir/virt-df
-%_man1dir/virt-df.1*
-%_bindir/virt-diff
-%_man1dir/virt-diff.1*
-%_bindir/virt-edit
-%_man1dir/virt-edit.1*
-%_bindir/virt-filesystems
-%_man1dir/virt-filesystems.1*
-%_bindir/virt-format
-%_man1dir/virt-format.1*
-%_bindir/virt-get-kernel
-%_man1dir/virt-get-kernel.1*
-%_bindir/virt-index-validate
-%_man1dir/virt-index-validate.1*
-%_bindir/virt-inspector
-%_man1dir/virt-inspector.1*
-%_bindir/virt-log
-%_man1dir/virt-log.1*
-%_bindir/virt-ls
-%_man1dir/virt-ls.1*
-%_bindir/virt-rescue
-%_man1dir/virt-rescue.1*
-%_bindir/virt-resize
-%_man1dir/virt-resize.1*
-%_bindir/virt-sparsify
-%_man1dir/virt-sparsify.1*
-%_bindir/virt-tar-in
-%_man1dir/virt-tar-in.1*
-%_bindir/virt-tail
-%_man1dir/virt-tail.1*
-%_bindir/virt-tar-out
-%_man1dir/virt-tar-out.1*
-%_bindir/virt-list-filesystems
-%_man1dir/virt-list-filesystems.1*
-%_bindir/virt-list-partitions
-%_man1dir/virt-list-partitions.1*
-%_bindir/virt-make-fs
-%_man1dir/virt-make-fs.1*
-%_bindir/virt-sysprep
-%_man1dir/virt-sysprep.1*
-%_bindir/virt-tar
-%_man1dir/virt-tar.1*
-%_bindir/virt-win-reg
-%_man1dir/virt-win-reg.1*
-%_man1dir/guestfs-faq.1*
-%_man1dir/guestfs-hacking.1*
-%_man1dir/guestfs-internals.1*
-%_man1dir/guestfs-performance.1*
-%_man1dir/guestfs-security.1*
-%if_enabled bash_completion
-%_datadir/bash-completion/completions/*
-%endif
-
-%files -n virt-dib
-%_bindir/virt-dib
-%_man1dir/virt-dib.1*
-
-#%files live-service
-#%doc COPYING README
-#%_sbindir/guestfsd
-#%_unitdir/guestfsd.service
-#/lib/udev/rules.d/99-guestfs-serial.rules
-#/lib/udev/rules.d/99-guestfsd.rules
 
 %if_enabled ocaml
 %files -n ocaml-%name
@@ -525,8 +409,6 @@ rm -f %buildroot%_man1dir/guestfs-release-notes*
 %files -n perl-Sys-Guestfs
 %doc perl/examples
 %perl_vendor_archlib/*
-#%_man3dir/Sys::Guestfs.3pm*
-#%_man3dir/Sys::Guestfs::Lib.3pm*
 %_man3dir/guestfs-perl.3*
 %endif #perl
 
@@ -576,6 +458,9 @@ rm -f %buildroot%_man1dir/guestfs-release-notes*
 %endif #erlang
 
 %changelog
+* Thu Nov 04 2021 Anton Farygin <rider@altlinux.ru> 1.46.0-alt1
+- 1.46.0
+
 * Mon Oct 04 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.44.1-alt2
 - Fix build via -ffat-lto-objects
 

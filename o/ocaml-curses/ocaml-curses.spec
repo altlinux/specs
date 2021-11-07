@@ -1,21 +1,16 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: ocaml-curses
-Version: 1.0.8
+Version: 1.0.9
 Release: alt1
 Summary: OCaml bindings for ncurses
-
-Group: System/Libraries
-License: LGPLv2+
-Url: http://savannah.nongnu.org/projects/ocaml-tmk/
-Source: http://download.savannah.gnu.org/releases/ocaml-tmk/%name-%version.tar
+Group: Development/ML
+License: LGPLv2.1
+Url: https://github.com/mbacarella/curses
+Source: %name-%version.tar
 
 BuildRequires: ocaml
-BuildRequires: ocaml-findlib
-BuildRequires: libncurses-devel libtinfo-devel
-BuildRequires: gawk
-
-# Doesn't include a configure script, so we have to make one.
-BuildRequires: autoconf, automake, libtool
+BuildRequires: rpm-build-ocaml dune ocaml-dune-configurator-devel
+BuildRequires: libncursesw-devel
 
 %description
 OCaml bindings for ncurses.
@@ -34,34 +29,21 @@ developing applications that use %name.
 
 
 %build
-%autoreconf
-%configure --enable-widec
-make all opt
+%dune_build --release @install
 
 %install
-export DESTDIR=%buildroot
-export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
-mkdir -p $OCAMLFIND_DESTDIR $OCAMLFIND_DESTDIR/stublibs
-ocamlfind install curses META *.cmi *.cmx *.cma *.cmxa *.a *.so *.mli
+%dune_install
 
-%files
+%files -f ocaml-files.runtime
 %doc COPYING
-%_libdir/ocaml/curses
-%exclude %_libdir/ocaml/curses/*.a
-%exclude %_libdir/ocaml/curses/*.cmxa
-%exclude %_libdir/ocaml/curses/*.cmx
-%exclude %_libdir/ocaml/curses/*.mli
-%_libdir/ocaml/stublibs/*.so
-%_libdir/ocaml/stublibs/*.so.owner
 
-%files devel
+%files devel -f ocaml-files.devel
 %doc COPYING
-%_libdir/ocaml/curses/*.a
-%_libdir/ocaml/curses/*.cmxa
-%_libdir/ocaml/curses/*.cmx
-%_libdir/ocaml/curses/*.mli
 
 %changelog
+* Thu Nov 04 2021 Anton Farygin <rider@altlinux.ru> 1.0.9-alt1
+- 1.0.9
+
 * Sun Oct 03 2021 Anton Farygin <rider@altlinux.ru> 1.0.8-alt1
 - 1.0.8
 

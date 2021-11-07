@@ -1,5 +1,5 @@
 Name: utop
-Version: 2.7.0
+Version: 2.8.0
 Release: alt1
 Summary: Universal toplevel for OCaml
 
@@ -37,7 +37,7 @@ sed -i 's/%%%%VERSION%%%%/%version/' src/lib/uTop.ml
 %check
 %dune_check
 
-%files
+%files -f ocaml-files.runtime
 %doc CHANGES.md README.md
 %doc %_datadir/utop
 %_man1dir/utop*
@@ -45,19 +45,13 @@ sed -i 's/%%%%VERSION%%%%/%version/' src/lib/uTop.ml
 %_bindir/utop
 %_bindir/utop-full
 %_emacslispdir/utop.el
-%dir %_libdir/ocaml/utop
-%_libdir/ocaml/utop*/META
-%_libdir/ocaml/utop*/*.cma
-%_libdir/ocaml/utop*/*.cmi
 
-%files devel
-%_libdir/ocaml/utop*/dune-package
-%_libdir/ocaml/utop*/opam
-%_libdir/ocaml/utop*/*.cmt*
-%_libdir/ocaml/utop*/*.mli
-%_libdir/ocaml/utop*/*.ml
+%files devel -f ocaml-files.devel
 
 %changelog
+* Tue Nov 02 2021 Anton Farygin <rider@altlinux.ru> 2.8.0-alt1
+- 2.8.0
+
 * Sun Mar 28 2021 Mikhail Gordeev <obirvalger@altlinux.org> 2.7.0-alt1
 - new version 2.7.0
 

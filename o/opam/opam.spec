@@ -1,5 +1,5 @@
 Name: opam
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 Summary: A source-based package manager for OCaml
 License: LGPLv3
@@ -7,6 +7,7 @@ Group: Development/ML
 Url: http://opam.ocamlpro.com/
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
+Patch1: opam-port-to-dose3-6.0.1.patch
 BuildRequires: ocaml
 BuildRequires: ocaml-opam-file-format-devel
 BuildRequires: hevea
@@ -61,6 +62,7 @@ The %name-doc package contains documentation for using %name.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %configure
@@ -86,6 +88,10 @@ rm -rf %buildroot%prefix/doc
 %doc shell/
 
 %changelog
+* Wed Nov 03 2021 Anton Farygin <rider@altlinux.ru> 2.1.1-alt1
+- 2.1.1
+- added a patch from debian to support dose3 > 6.0.1
+
 * Tue Aug 03 2021 Anton Farygin <rider@altlinux.ru> 2.1.0-alt1
 - 2.1.0
 

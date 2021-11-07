@@ -1,6 +1,6 @@
 %define libname fmt
 Name:           ocaml-%libname
-Version:        0.8.9
+Version:        0.8.10
 Release:        alt1
 Summary:        OCaml Format pretty-printer combinators
 License:        ISC
@@ -51,6 +51,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname/*.mli
 
 %changelog
+* Tue Oct 12 2021 Anton Farygin <rider@altlinux.ru> 0.8.10-alt1
+- 0.8.10
+
 * Thu Dec 31 2020 Anton Farygin <rider@altlinux.ru> 0.8.9-alt1
 - 0.8.9
 

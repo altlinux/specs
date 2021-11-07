@@ -1,26 +1,20 @@
-# Currently packaging a snapshot to build with newer ocaml.
-%set_verify_elf_method textrel=relaxed
-
+%def_with check
 Name: ocaml-dose3
-Version: 5.0.2
-Release: alt8.5.2git2c1b8df
+Version: 7.0.0
+Release: alt1
 Summary: Framework for managing distribution packages and dependencies
 Group: Development/ML
 
 %global libname %(echo %name | sed -e 's/^ocaml-//')
 
 # Linking exception, see included COPYING file.
-License: LGPLv3+ with exceptions
+License: LGPLv3+ with OCaml-LGPL-linking-exception
 Url: http://www.mancoosi.org/software/
 
 Source0: %name-%version.tar
 
-# One remaining safe-string fix.
-Patch0: ocaml-dose3-safe-string.patch
-
-
 BuildRequires: ocaml
-BuildRequires: ocaml-ocamlbuild
+BuildRequires: dune
 BuildRequires: ocaml-ocamldoc
 BuildRequires: ocaml-ocamlgraph-devel
 BuildRequires: ocaml-findlib-devel
@@ -33,10 +27,16 @@ BuildRequires: ocaml-cppo
 BuildRequires: ocaml-curl
 BuildRequires: ocaml-zip-devel
 BuildRequires: ocaml-camlbz2-devel
-
+BuildRequires: ocaml-base64-devel
+BuildRequires: ocaml-parmap-devel
+BuildRequires: ocaml-ounit-devel
+BuildRequires: ocaml-odoc
+%if_with check
+BuildRequires: /usr/bin/dpkg 
+BuildRequires: python3-module-yaml
+%endif
 BuildRequires: rpm-devel
 BuildRequires: zlib-devel
-
 BuildRequires: perl
 
 # Depend on pod2man, pod2html.
@@ -64,9 +64,6 @@ Group: Development/ML
 The %name-devel package contains libraries and signature files for
 developing applications that use %name.
 
-# Since these are applications, I think the correct name is "dose3-tools"
-# and not "ocaml-dose3-tools", but I'm happy to change it if necessary.
-
 %package -n dose3-tools
 Summary: Tools suite from the dose3 framework
 Group: Development/ML
@@ -80,66 +77,53 @@ for manipulating packages of various formats.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
-%autoreconf
-%configure --with-zip --with-bz2 --without-oUnit --with-rpm4 --with-xml --with-curl
-make
+sed -i 's,oUnit,ounit2,' src/*/tests/dune
+sed -i 's/stdlib-shims//' src/common/dune
+%dune_build --release @install @doc
+pushd doc/manpages
 make man
+popd
 
 %install
-make install DESTDIR=%buildroot
+%dune_install --release
 
-# Install manpages.
-mkdir -p %buildroot%_mandir/man1/
-mkdir -p %buildroot%_mandir/man5/
-mkdir -p %buildroot%_mandir/man8/
-cp -a doc/manpages/*.8 %buildroot%_mandir/man8/
-cp -a doc/manpages/*.5 %buildroot%_mandir/man5/
-cp -a doc/manpages/*.1 %buildroot%_mandir/man1/
+mkdir -p %buildroot{%_man1dir,%_man8dir,%_man5dir}
+install -m0644 doc/manpages/*.1 %buildroot%_man1dir/
+install -m0644 doc/manpages/*.8 %buildroot%_man8dir/
+install -m0644 doc/manpages/*.5 %buildroot%_man5dir/
 
-# Rewrite symlinks.
-rm -f %buildroot%_bindir/rpmcheck
-rm -f %buildroot%_bindir/debcheck
-rm -f %buildroot%_bindir/eclipsecheck
-ln -s %_bindir/distcheck %buildroot%_bindir/rpmcheck
-ln -s %_bindir/distcheck %buildroot%_bindir/debcheck
-ln -s %_bindir/distcheck %buildroot%_bindir/eclipsecheck
+%check
+%dune_check
 
-%files
+%files -f ocaml-files.runtime
 %doc README.architecture COPYING
-%_libdir/ocaml/%libname
-%exclude %_libdir/ocaml/*/*.a
-%exclude %_libdir/ocaml/*/*.cmxa
-%exclude %_libdir/ocaml/*/*.cmi
-%_libdir/ocaml/stublibs/*.so
-%_libdir/ocaml/stublibs/*.so.owner
 
-%files devel
+%files devel -f ocaml-files.devel
 %doc COPYING
-%_libdir/ocaml/*/*.a
-%_libdir/ocaml/*/*.cmxa
-%_libdir/ocaml/*/*.cmi
 
 %files -n dose3-tools
 %doc COPYING
 %doc doc/apt-cudf/
+%_man1dir/*
+%_man8dir/*
+%_man5dir/*
 %_bindir/apt-cudf
-%_bindir/ceve
-%_bindir/challenged
-%_bindir/deb-buildcheck
-%_bindir/deb-coinstall
-%_bindir/debcheck
-%_bindir/eclipsecheck
-%_bindir/distcheck
-%_bindir/outdated
-%_bindir/rpmcheck
-%_mandir/man1/*.1*
-%_mandir/man5/*.5*
-%_mandir/man8/*.8*
+%_bindir/dose-challenged
+%_bindir/dose-ceve
+%_bindir/dose-distcheck
+%_bindir/dose-deb-coinstall
+%_bindir/dose-outdated
+%_bindir/dose-builddebcheck
 
 %changelog
+* Thu Nov 04 2021 Anton Farygin <rider@altlinux.ru> 7.0.0-alt1
+- 7.0.0
+
+* Thu Mar 18 2021 Anton Farygin <rider@altlinux.org> 6.1-alt1
+- 6.1
+
 * Fri Dec 11 2020 Anton Farygin <rider@altlinux.ru> 5.0.2-alt8.5.2git2c1b8df
 - built without ounit
 

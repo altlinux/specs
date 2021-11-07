@@ -1,11 +1,11 @@
 %ifarch %ix86 armh
 %def_without check
 %else
-%def_without check
+%def_with check
 %endif
 Name: js_of_ocaml
-Version: 3.9.1
-Release: alt2
+Version: 3.11.0
+Release: alt1
 Summary: A compiler of OCaml byte-code to Javascript
 License: LGPLv2 with exceptions
 Group: Development/ML
@@ -78,6 +78,8 @@ files for developing applications that use %name.
 %prep
 %setup
 %patch0 -p1
+# remove vendored version of the ppx_expect
+rm -rf vendor
 
 %build
 %dune_build --release @install
@@ -106,6 +108,12 @@ files for developing applications that use %name.
 %_libdir/ocaml/js_of_ocaml-ppx/ppx_js
 
 %changelog
+* Thu Nov 04 2021 Anton Farygin <rider@altlinux.ru> 3.11.0-alt1
+- 3.11.0
+
+* Mon Sep 06 2021 Anton Farygin <rider@altlinux.ru> 3.10.0-alt1
+- 3.10.0
+
 * Sun Apr 04 2021 Anton Farygin <rider@altlinux.org> 3.9.1-alt2
 - disabled check for ocaml-4.12 task
 

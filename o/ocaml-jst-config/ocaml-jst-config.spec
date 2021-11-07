@@ -1,7 +1,7 @@
 %define  modulename jst-config
 Name:    ocaml-%modulename
-Version: 0.14.0
-Release: alt4
+Version: 0.14.1
+Release: alt1
 Summary: Compile-time configuration for Jane Street libraries
 License: MIT
 Group:   Development/ML
@@ -43,6 +43,9 @@ developing applications that use %name.
 %_libdir/ocaml/%{modulename}*/rt-flags
 
 %changelog
+* Wed Nov 03 2021 Anton Farygin <rider@altlinux.ru> 0.14.1-alt1
+- 0.14.1
+
 * Thu Mar 18 2021 Anton Farygin <rider@altlinux.org> 0.14.0-alt4
 - spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
 

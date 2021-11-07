@@ -7,7 +7,7 @@
 %endif
 
 Name: ocaml
-Version: 4.12.0
+Version: 4.13.1
 Release: alt1
 
 Summary: The Objective Caml compiler and programming environment
@@ -19,7 +19,7 @@ Source0: %name-%version.tar
 Source1: ocaml-reqprov.ml
 
 Patch1: ocaml-3.12.1-alt-stdlib-pdf.patch
-Patch2: ocaml-4.08-alt-mk-reqprov.patch
+Patch2: ocaml-4.13-alt-mk-reqprov.patch
 Patch4: ocaml-4.11.1-RH-configure-Allow-user-defined-C-compiler-flags.patch
 
 Requires: rpm-build-ocaml >= 1.4
@@ -157,6 +157,9 @@ popd
 %_libdir/ocaml/ocamldoc/
 
 %changelog
+* Mon Oct 25 2021 Anton Farygin <rider@altlinux.ru> 4.13.1-alt1
+- 4.13.1
+
 * Sun Mar 28 2021 Anton Farygin <rider@altlinux.org> 4.12.0-alt1
 - 4.12.0
 

@@ -1,8 +1,6 @@
-%set_verify_elf_method textrel=relaxed
 %define  modulename conduit
-
 Name:    ocaml-%modulename
-Version: 4.0.1
+Version: 4.0.2
 Release: alt1
 Summary: An OCaml network connection establishment library
 License: ISC
@@ -53,6 +51,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Nov 04 2021 Anton Farygin <rider@altlinux.ru> 4.0.2-alt1
+- 4.0.2
+
 * Wed Sep 08 2021 Anton Farygin <rider@altlinux.ru> 4.0.1-alt1
 - 4.0.1
 

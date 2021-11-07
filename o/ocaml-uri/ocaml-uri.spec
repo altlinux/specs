@@ -1,6 +1,6 @@
 %define libname uri
 Name: ocaml-%libname
-Version: 4.1.0
+Version: 4.2.0
 Release: alt1
 Summary: An RFC3986 URI/URL parsing library for OCaml
 Group: Development/ML
@@ -55,6 +55,9 @@ find %buildroot -name '*.cmxs' -exec chmod 0755 {} \;
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Nov 04 2021 Anton Farygin <rider@altlinux.ru> 4.2.0-alt1
+- 4.2.0
+
 * Tue Mar 23 2021 Anton Farygin <rider@altlinux.org> 4.1.0-alt1
 - 4.1.0
 - cleanup spec

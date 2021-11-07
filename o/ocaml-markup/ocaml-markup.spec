@@ -3,7 +3,7 @@
 %define libnamelwt %libname-lwt
 Name: ocaml-%libname
 Version: 1.0.2
-Release: alt1
+Release: alt2
 Summary: Error-recovering streaming HTML5 and XML parsers.
 License: MIT
 Group: Development/ML
@@ -62,7 +62,7 @@ programs which use %name-lwt
 %dune_install
 
 %check
-%dune_check
+%dune_check -p markup,markup-lwt
 
 %files
 %doc LICENSE.md README.md
@@ -92,6 +92,9 @@ programs which use %name-lwt
 %_libdir/ocaml/%libnamelwt/*.mli
 
 %changelog
+* Wed Nov 03 2021 Anton Farygin <rider@altlinux.ru> 1.0.2-alt2
+- run tests with --release flag
+
 * Wed Jul 28 2021 Anton Farygin <rider@altlinux.ru> 1.0.2-alt1
 - 1.0.2
 

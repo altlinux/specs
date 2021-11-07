@@ -1,6 +1,6 @@
 Name: ocaml-ocamlnet
 Version: 4.1.9
-Release: alt1
+Release: alt2
 Summary: Network protocols for OCaml
 License: BSD
 Group: Development/ML
@@ -13,7 +13,6 @@ BuildPreReq: /dev/shm
 BuildRequires: ocaml >= 4.04
 BuildRequires: ocaml-ocamldoc
 BuildRequires: ocaml-findlib-devel
-BuildRequires: ocaml-lablgtk-devel
 BuildRequires: ocaml-labltk-devel
 BuildRequires: ocaml-pcre-devel
 BuildRequires: ocaml-zip-devel
@@ -104,7 +103,7 @@ files for developing applications that use %name-nethttpd.
   -datadir %_datadir/%name \
   -disable-apache \
   -enable-pcre \
-  -enable-gtk2 \
+  -disable-gtk2 \
   -enable-gnutls \
   -enable-gssapi \
   -enable-nethttpd \
@@ -134,7 +133,6 @@ echo -e '-b /usr/bin/netplex-admin\n-b /usr/bin/ocamlrpcgen' \
 %files
 %doc ChangeLog RELNOTES
 %_libdir/ocaml/equeue
-%_libdir/ocaml/equeue-gtk2
 %_libdir/ocaml/equeue-tcl
 %_libdir/ocaml/netcamlbox
 %_libdir/ocaml/netcgi2
@@ -189,6 +187,9 @@ echo -e '-b /usr/bin/netplex-admin\n-b /usr/bin/ocamlrpcgen' \
 %_libdir/ocaml/nethttpd/*.mli
 
 %changelog
+* Wed Nov 03 2021 Anton Farygin <rider@altlinux.ru> 4.1.9-alt2
+- disabled gtk2 support
+
 * Tue Apr 13 2021 Anton Farygin <rider@altlinux.org> 4.1.9-alt1
 - 4.1.9
 

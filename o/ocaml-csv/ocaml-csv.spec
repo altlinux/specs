@@ -1,8 +1,7 @@
-%set_verify_elf_method textrel=relaxed
-
-Name: ocaml-csv
+%define modname csv
+Name: ocaml-%modname
 Version: 2.4
-Release: alt1
+Release: alt2
 Summary: OCaml library for reading and writing CSV files
 License: LGPLv2+
 Group: Development/ML
@@ -11,12 +10,11 @@ Url: https://opam.ocaml.org/packages/csv/
 
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-
 BuildRequires: ocaml
-BuildRequires: ocaml-lwt-devel
 BuildRequires: ocaml-uutf-devel
 BuildRequires: ocaml-findlib
 BuildRequires: dune
+BuildRequires(pre): rpm-build-ocaml
 
 %description
 This OCaml library can read and write CSV files, including all
@@ -29,49 +27,45 @@ handling CSV files from shell scripts.
 %package devel
 Summary: Development files for %name
 Group: Development/ML
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains libraries and signature files for
 developing applications that use %name.
+
+%package -n csvtool
+Summary: Command line tool for handling CSV files
+Group:Text tools
+Conflicts: %name < %EVR
+
+%description -n csvtool
+This is a handy command line tool for handling CSV files from shell
+scripts based on the library ocaml-csv.
 
 %prep
 %setup
 %patch0 -p1
 
 %build
-make
+%dune_build -p %modname,csvtool
 
 %install
-dune install --destdir=%buildroot
+%dune_install %modname csvtool
 
+%files -f ocaml-files.runtime
 
-%files
+%files -n csvtool
 %doc LICENSE.md
-%_libdir/ocaml/csv
-%_libdir/ocaml/csv-lwt
-%exclude %_libdir/ocaml/csv/*.a
-%exclude %_libdir/ocaml/csv/*.cmxa
-%exclude %_libdir/ocaml/csv/*.cmx
-%exclude %_libdir/ocaml/csv/*.mli
-%exclude %_libdir/ocaml/csv-lwt/*.a
-%exclude %_libdir/ocaml/csv-lwt/*.cmxa
-%exclude %_libdir/ocaml/csv-lwt/*.cmx
-%exclude %_libdir/ocaml/csv-lwt/*.mli
 %_bindir/csvtool
 
-%files devel
+%files devel -f ocaml-files.devel
 %doc README.md LICENSE.md
-%_libdir/ocaml/csv/*.a
-%_libdir/ocaml/csv/*.cmxa
-%_libdir/ocaml/csv/*.cmx
-%_libdir/ocaml/csv/*.mli
-%_libdir/ocaml/csv-lwt/*.a
-%_libdir/ocaml/csv-lwt/*.cmxa
-%_libdir/ocaml/csv-lwt/*.cmx
-%_libdir/ocaml/csv-lwt/*.mli
 
 %changelog
+* Tue Nov 02 2021 Anton Farygin <rider@altlinux.ru> 2.4-alt2
+- lwt variant is removed to resolve cyclic dependencies with lwt
+- csvtool moved to a separate package
+
 * Wed Feb 26 2020 Anton Farygin <rider@altlinux.ru> 2.4-alt1
 - 2.4-alt1
 

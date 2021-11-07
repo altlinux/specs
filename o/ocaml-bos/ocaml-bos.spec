@@ -1,8 +1,7 @@
-%set_verify_elf_method textrel=relaxed
 %define libname bos
 Name:           ocaml-%libname
-Version:        0.2.0
-Release:        alt2
+Version:        0.2.1
+Release:        alt1
 Summary:        Basic OS interaction for OCaml
 License:        ISC
 Group:          Development/ML
@@ -54,6 +53,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname/*.mli
 
 %changelog
+* Thu Nov 04 2021 Anton Farygin <rider@altlinux.ru> 0.2.1-alt1
+- 0.2.1
+
 * Fri Aug 02 2019 Anton Farygin <rider@altlinux.ru> 0.2.0-alt2
 - rebuilt with ocaml-4.08
 

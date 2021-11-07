@@ -1,6 +1,6 @@
 Name: ocaml-ounit
 Version: 2.2.4
-Release: alt2
+Release: alt3
 Summary: Unit test framework for OCaml
 Group: Development/ML
 License: MIT
@@ -10,7 +10,6 @@ Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 BuildRequires: ocaml-findlib-devel
-BuildRequires: ocaml-lwt-devel
 BuildRequires: libev-devel
 BuildRequires: dune
 
@@ -34,13 +33,13 @@ developing applications that use %name.
 %patch0 -p1
 
 %build
-%dune_build --release @install
+%dune_build -p ounit2
 
 %install
-%dune_install
+%dune_install ounit2
 
 %check
-%dune_check --release
+%dune_check -p ounit2
 
 %files -f ocaml-files.runtime
 %doc LICENSE.txt
@@ -49,6 +48,9 @@ developing applications that use %name.
 %doc LICENSE.txt README.md CHANGES.md
 
 %changelog
+* Tue Nov 02 2021 Anton Farygin <rider@altlinux.ru> 2.2.4-alt3
+- disabled lwt variant of the ounit2
+
 * Tue Mar 30 2021 Anton Farygin <rider@altlinux.org> 2.2.4-alt2
 - added --release option for dune in build and check sections
 - simplified specfile with macros from rpm-build-ocaml 1.4

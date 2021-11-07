@@ -1,14 +1,12 @@
 %define  modulename domain-name
 Name:    ocaml-%modulename
-Version: 0.3.0
-Release: alt2
+Version: 0.3.1
+Release: alt1
 Summary: An OCaml library for RFC 1035 Internet domain names
 License: ISC
 Group:   Development/ML
 URL:     https://opam.ocaml.org/packages/domain-name/
 BuildRequires: dune
-BuildRequires: ocaml-astring-devel
-BuildRequires: ocaml-fmt-devel
 BuildRequires: ocaml-alcotest-devel
 BuildPreReq: rpm-build-ocaml >= 1.1
 Source:  %name-%version.tar
@@ -43,6 +41,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Nov 04 2021 Anton Farygin <rider@altlinux.ru> 0.3.1-alt1
+- 0.3.1
+
 * Tue Apr 20 2021 Anton Farygin <rider@altlinux.ru> 0.3.0-alt2
 - migrated to rpm-build-ocaml 1.4
 

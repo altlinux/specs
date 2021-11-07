@@ -1,8 +1,8 @@
-%set_verify_elf_method textrel=relaxed
-
-Name: ocaml-ocamlgraph
-Version: 1.8.8
-Release: alt5
+%def_without check
+%define modname ocamlgraph
+Name: ocaml-%modname
+Version: 2.0.0
+Release: alt1
 Summary: OCaml library for arc and node graphs
 Group: Development/ML
 License: LGPLv2 with exceptions
@@ -11,13 +11,12 @@ Url: http://ocamlgraph.lri.fr/index.en.html
 Source0: %name-%version.tar
 BuildRequires: libart_lgpl-devel
 BuildRequires: libgnomecanvas-devel
-BuildRequires: ocaml
-BuildRequires: ocaml-findlib
-BuildRequires: ocaml-lablgtk-devel
+BuildRequires: dune
 BuildRequires: ocaml-ocamldoc
+%if_with check
+BuildRequires: ocaml-graphics-devel
+%endif
 BuildRequires(pre): rpm-build-ocaml >= 1.3
-%global libname %(sed -e 's/^ocaml-//' <<< %name)
-%add_ocaml_req_skip Sig
 
 %description
 Ocamlgraph provides several different implementations of graph data
@@ -39,71 +38,30 @@ Group: Development/ML
 The %name-devel package contains libraries and signature files for
 developing applications that use %name.
 
-%package tools
-Summary: Graph editing tools for %name
-Requires: %name = %version-%release
-Group: Development/ML
-
-%description tools
-The %name-tools package contains graph editing tools for use with
-%name.
-
 %prep
 %setup
 
-# Fix encoding
-for fil in CHANGES COPYING CREDITS; do
-  iconv -f latin1 -t utf-8 $fil > $fil.utf8
-  touch -r $fil $fil.utf8
-  mv -f $fil.utf8 $fil
-done
-
 %build
-autoreconf -fisv
-%configure
-make depend
-make OCAMLBEST=opt OCAMLOPT='ocamlopt.opt -g'
-make doc
+sed -i 's,stdlib-shims,,' */dune
+%dune_build -p %modname
 
 %install
-mkdir -p %buildroot%_ocamldir
-make OCAMLFIND_DESTDIR=%buildroot%_ocamldir install-findlib
-install -m 0755 -p graph.cmxs %buildroot%_ocamldir/%libname
+%dune_install %modname
 
-# Include all code and examples in the docs
-mkdir -p dox-devel/examples
-mkdir -p dox-devel/API
-cp -p examples/*.ml dox-devel/examples
-cp -p doc/* dox-devel/API
+%check
+%dune_check -p %modname
 
-# Install the graph editing tools
-mkdir -p %buildroot%_bindir
-install -m 0755 -p editor/editor.opt %buildroot/%_bindir/ocaml-graph-editor
-install -m 0755 -p dgraph/dgraph.opt %buildroot%_bindir/ocaml-graph-viewer
-install -m 0755 -p view_graph/viewgraph.opt \
-    %buildroot%_bindir/ocaml-viewgraph
-
-%files
+%files -f ocaml-files.runtime
 %doc CREDITS FAQ COPYING LICENSE
-%_ocamldir/%libname/
-%exclude %_ocamldir/*/*.a
-%exclude %_ocamldir/*/*.cmxa
-%exclude %_ocamldir/*/*.cmx
-%exclude %_ocamldir/*/*.o
-%exclude %_ocamldir/*/*.mli
 
-%files devel
-%doc CHANGES README.adoc dox-devel/*
-%_ocamldir/*/*.a
-%_ocamldir/*/*.cmxa
-%_ocamldir/*/*.cmx
-%_ocamldir/*/*.o
-%_ocamldir/*/*.mli
-
-%files tools
-%_bindir/*
+%files devel -f ocaml-files.devel
+%doc CHANGES.md README.md
 
 %changelog
+* Tue Nov 02 2021 Anton Farygin <rider@altlinux.ru> 2.0.0-alt1
+- new version
+- disabled tests for bootstrap ocaml-4.13
+
 * Wed Sep 16 2020 Anton Farygin <rider@altlinux.ru> 1.8.8-alt5
 - adaptation for rpm-build-ocaml-1.4
 

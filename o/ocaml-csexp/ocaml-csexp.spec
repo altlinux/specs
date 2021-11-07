@@ -1,16 +1,16 @@
 %define libname csexp
-%def_with check
+%def_without check
 
 Name:           ocaml-%libname
 Version:        1.5.1
-Release:        alt1
+Release:        alt2
 Summary:        Canonical S-expressions for OCaml
 License:        MIT
 Group:          Development/ML
 Url:            https://github.com/ocaml-dune/csexp
 Source: %name-%version.tar
 
-BuildRequires: dune
+BuildRequires: ocaml dune rpm-build-ocaml
 %if_with check
 BuildRequires: ocaml-ppx_expect-devel
 %endif
@@ -47,6 +47,9 @@ programs which use %name
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Nov 02 2021 Anton Farygin <rider@altlinux.ru> 1.5.1-alt2
+- disabled test for bootstrap ocaml 4.13
+
 * Sat Apr 10 2021 Anton Farygin <rider@altlinux.org> 1.5.1-alt1
 - 1.5.1
 
