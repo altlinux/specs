@@ -1,28 +1,29 @@
 ## SPEC file for Perl module String-Formatter
+%define _unpackaged_files_terminate_build 1
+%define real_name String-Formatter
 
 Name: perl-String-Formatter
-Version: 0.102084
+Version: 1.234
 Release: alt1
 
 Summary: Perl module to build sprintf-like functions of your own
 
 License: %gpl2only
 Group: Development/Perl
-URL: http://search.cpan.org/dist/String-Formatter/
+URL: https://metacpan.org/dist/String-Formatter/
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 BuildArch: noarch
 
-%define real_name String-Formatter
 Source: %real_name-%version.tar
 
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
 
-# Automatically added by buildreq on Sat Jan 28 2012
-# optimized out: perl-Data-OptList perl-Params-Util perl-Sub-Install
-BuildRequires: perl-Sub-Exporter perl-devel
+# Automatically added by buildreq on Sun Nov 07 2021
+# optimized out: libgpg-error perl perl-CPAN-Meta-Requirements perl-Data-OptList perl-Encode perl-JSON-PP perl-Params-Util perl-Parse-CPAN-Meta perl-Sub-Install perl-parent python3-base sh4
+BuildRequires: perl-CPAN-Meta perl-Sub-Exporter perl-devel
 
 %description
 Perl module String::Formatter is a tool for building sprintf-like
@@ -47,9 +48,11 @@ options built into String::Formatter.
 %doc README Changes
 %perl_vendor_privlib/String/Formatter*
 
-%exclude %perl_vendor_privlib/String/bench.pl
-
 %changelog
+* Sun Nov 07 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.234-alt1
+- New version
+- Update URL
+
 * Sun Dec 01 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.102084-alt1
 - New version
 
