@@ -1,19 +1,20 @@
 ## SPEC file for Perl module Mozilla::CA
+%define _unpackaged_files_terminate_build 1
+%define real_name Mozilla-CA
 
 Name: perl-Mozilla-CA
-Version: 20200520
+Version: 20211001
 Release: alt1
 
 Summary: Perl module provides CA cert bundle
 
 License: %mpl
 Group: Development/Perl
-URL: http://search.cpan.org/dist/Mozilla-CA/
+URL: https://metacpan.org/dist/Mozilla-CA/
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 BuildArch: noarch
 
-%define real_name Mozilla-CA
 Source: %real_name-%version.tar
 Patch0: %real_name-%version-%release.patch
 
@@ -54,6 +55,10 @@ ca-certificates .
 %exclude %perl_vendor_privlib/Mozilla/mk-ca-bundle.pl
 
 %changelog
+* Sun Nov 07 2021 Nikolay A. Fetisov <naf@altlinux.org> 20211001-alt1
+- New version
+- Update URL
+
 * Sun May 24 2020 Nikolay A. Fetisov <naf@altlinux.org> 20200520-alt1
 - New version
 
