@@ -1,7 +1,7 @@
 Name: goaccess
 
 Summary: Is an open source real-time web log analyzer
-Version: 1.5.1
+Version: 1.5.2
 Release: alt1
 
 URL: https://goaccess.io/
@@ -59,6 +59,9 @@ report on the fly.
 
 
 %changelog
+* Sun Nov 07 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.5.2-alt1
+- New version
+
 * Tue Jul 20 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.5.1-alt1
 - New version
   - lot of new features
