@@ -1,9 +1,9 @@
 ## SPEC file for Perl module Path::Iterator::Rule
-
+%define _unpackaged_files_terminate_build 1
 %define real_name Path-Iterator-Rule
 
 Name: perl-Path-Iterator-Rule
-Version: 1.014
+Version: 1.015
 Release: alt1
 
 Summary: Iterative, recursive file finder
@@ -11,9 +11,9 @@ Summary: Iterative, recursive file finder
 License: %asl 2.0
 Group: Development/Perl
 
-URL: http://search.cpan.org/dist/Path-Iterator-Rule/
+URL: http://metacpan.org/dist/Path-Iterator-Rule/
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source: %real_name-%version.tar
 
@@ -51,6 +51,9 @@ arguments to the method that generates an iterator.
 %perl_vendor_privlib/PIR*
 
 %changelog
+* Sun Nov 07 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.015-alt1
+- New version
+
 * Sat Jun 30 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.014-alt1
 - New version
 
