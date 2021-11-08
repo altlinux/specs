@@ -1,17 +1,30 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_with clang
+
 %ifnarch ppc64le
 %def_with jemalloc
 %else
 %def_without jemalloc
 %endif
 
+%if_with clang
+# LTO support for clang
+%ifnarch aarch64
+%global optflags_lto -flto=thin
+%else
+%global optflags_lto %nil
+%endif
+ExclusiveArch: aarch64 x86_64
+%else
 # LTO causes random crashes, disable it
 %global optflags_lto %nil
+ExclusiveArch: aarch64 x86_64 ppc64le
+%endif
 
 Name: clickhouse
 Version: 21.8.10.19
-Release: alt1
+Release: alt2
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
 Group: Databases
@@ -20,40 +33,52 @@ Url: https://clickhouse.yandex/
 # https://github.com/ClickHouse/ClickHouse.git
 Source: %name-%version.tar
 
-Source1:  %name-%version-contrib-AMQP-CPP.tar
-Source2:  %name-%version-contrib-avro.tar
-Source3:  %name-%version-contrib-aws.tar
-Source4:  %name-%version-contrib-aws-c-common.tar
-Source5:  %name-%version-contrib-aws-c-event-stream.tar
-Source6:  %name-%version-contrib-aws-checksums.tar
-Source7:  %name-%version-contrib-base64.tar
-Source8:  %name-%version-contrib-boringssl.tar
-Source9:  %name-%version-contrib-cassandra.tar
-Source10: %name-%version-contrib-croaring.tar
-Source11: %name-%version-contrib-datasketches-cpp.tar
-Source12: %name-%version-contrib-dragonbox.tar
-Source13: %name-%version-contrib-fast_float.tar
-Source14: %name-%version-contrib-fastops.tar
-Source15: %name-%version-contrib-gcem.tar
-Source16: %name-%version-contrib-googletest.tar
-Source17: %name-%version-contrib-grpc.tar
-Source18: %name-%version-contrib-grpc-third_party-cares-cares.tar
-Source19: %name-%version-contrib-h3.tar
-Source20: %name-%version-contrib-libhdfs3.tar
-Source21: %name-%version-contrib-libpq.tar
-Source22: %name-%version-contrib-libpqxx.tar
-Source23: %name-%version-contrib-llvm.tar
-Source24: %name-%version-contrib-miniselect.tar
-Source25: %name-%version-contrib-nanodbc.tar
-Source26: %name-%version-contrib-NuRaft.tar
-Source27: %name-%version-contrib-poco.tar
-Source28: %name-%version-contrib-replxx.tar
-Source29: %name-%version-contrib-sentry-native.tar
-Source30: %name-%version-contrib-simdjson.tar
-Source31: %name-%version-contrib-sparsehash-c11.tar
-Source32: %name-%version-contrib-stats.tar
-Source33: %name-%version-contrib-thrift.tar
-Source34: %name-%version-contrib-zlib-ng.tar
+Source1:  %name-%version-contrib-abseil-cpp.tar
+Source2:  %name-%version-contrib-AMQP-CPP.tar
+Source3:  %name-%version-contrib-avro.tar
+Source4:  %name-%version-contrib-aws.tar
+Source5:  %name-%version-contrib-aws-c-common.tar
+Source6:  %name-%version-contrib-aws-c-event-stream.tar
+Source7:  %name-%version-contrib-aws-checksums.tar
+Source8:  %name-%version-contrib-base64.tar
+Source9:  %name-%version-contrib-boost.tar
+Source10: %name-%version-contrib-boringssl.tar
+Source11: %name-%version-contrib-cassandra.tar
+Source12: %name-%version-contrib-cctz.tar
+Source13: %name-%version-contrib-cppkafka.tar
+Source14: %name-%version-contrib-cppkafka-third_party-Catch2.tar
+Source15: %name-%version-contrib-croaring.tar
+Source16: %name-%version-contrib-datasketches-cpp.tar
+Source17: %name-%version-contrib-dragonbox.tar
+Source18: %name-%version-contrib-fast_float.tar
+Source19: %name-%version-contrib-fastops.tar
+Source20: %name-%version-contrib-fmtlib.tar
+Source21: %name-%version-contrib-gcem.tar
+Source22: %name-%version-contrib-googletest.tar
+Source23: %name-%version-contrib-grpc.tar
+Source24: %name-%version-contrib-grpc-third_party-cares-cares.tar
+Source25: %name-%version-contrib-h3.tar
+Source26: %name-%version-contrib-libcxx.tar
+Source27: %name-%version-contrib-libcxxabi.tar
+Source28: %name-%version-contrib-libhdfs3.tar
+Source29: %name-%version-contrib-libpq.tar
+Source30: %name-%version-contrib-libpqxx.tar
+Source31: %name-%version-contrib-llvm.tar
+Source32: %name-%version-contrib-miniselect.tar
+Source33: %name-%version-contrib-nanodbc.tar
+Source34: %name-%version-contrib-NuRaft.tar
+Source35: %name-%version-contrib-poco.tar
+Source36: %name-%version-contrib-protobuf.tar
+Source37: %name-%version-contrib-re2.tar
+Source38: %name-%version-contrib-replxx.tar
+Source39: %name-%version-contrib-rocksdb.tar
+Source40: %name-%version-contrib-sentry-native.tar
+Source41: %name-%version-contrib-simdjson.tar
+Source42: %name-%version-contrib-sparsehash-c11.tar
+Source43: %name-%version-contrib-stats.tar
+Source44: %name-%version-contrib-thrift.tar
+Source45: %name-%version-contrib-yaml-cpp.tar
+Source46: %name-%version-contrib-zlib-ng.tar
 
 Source1000: %name.watch
 
@@ -67,16 +92,31 @@ Patch6: %name-nanodbc-compat.patch
 Patch7: %name-llvm-compat.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: cmake libicu-devel libreadline-devel python3 gperf tzdata cctz-devel
-BuildRequires: rpm-macros-cmake liblz4-devel /proc libzstd-devel libmariadb-devel
-BuildRequires: farmhash-devel metrohash-devel libdouble-conversion-devel librdkafka-devel libre2-devel
-BuildRequires: libgsasl-devel libcap-ng-devel libxxhash-devel boost-complete libunixODBC-devel libgperftools-devel
-BuildRequires: libbrotli-devel capnproto-devel libxml2-devel liblzma-devel libcppkafka-devel
+%if_with clang
+BuildRequires: clang lld
+%else
+BuildRequires: gcc-c++
+BuildRequires: libabseil-cpp-devel
+BuildRequires: boost-complete
+BuildRequires: cctz-devel
+BuildRequires: libcppkafka-devel
+BuildRequires: libfmt-devel
+BuildRequires: libprotobuf-devel protobuf-compiler protobuf-c-compiler
+BuildRequires: libre2-devel
+BuildRequires: librocksdb-devel
+BuildRequires: libyaml-cpp-devel
+%endif
+BuildRequires: cmake libicu-devel libreadline-devel python3 gperf tzdata
+BuildRequires: rpm-macros-cmake liblz4-devel /proc libzstd-devel
+BuildRequires: libmysqlclient-devel
+BuildRequires: libssl-devel
+BuildRequires: farmhash-devel metrohash-devel libdouble-conversion-devel librdkafka-devel
+BuildRequires: libgsasl-devel libcap-ng-devel libxxhash-devel libunixODBC-devel libgperftools-devel
+BuildRequires: libbrotli-devel capnproto-devel libxml2-devel liblzma-devel
 # TODO: try unbundling poco when new version is released
 #BuildRequires: libpoco-devel
 BuildRequires: libtinfo-devel
-BuildRequires: gcc-c++ perl-JSON-XS libb64-devel libasan-devel-static
-BuildRequires: libprotobuf-devel protobuf-compiler protobuf-c-compiler
+BuildRequires: perl-JSON-XS libb64-devel libasan-devel-static
 BuildRequires: libstdc++-devel-static
 BuildRequires: rapidjson-devel
 %ifarch x86_64
@@ -86,7 +126,6 @@ BuildRequires: libcurl-devel
 BuildRequires: libflatbuffers-devel
 # TODO: try unbundling googletest when new version is released
 #BuildRequires: libgtest-devel
-BuildRequires: libfmt-devel
 %ifnarch aarch64
 BuildRequires: libunwind-devel
 %endif
@@ -98,16 +137,12 @@ BuildRequires: libmsgpack-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libsnappy-devel
 BuildRequires: libltdl-devel
-BuildRequires: libabseil-cpp-devel
-BuildRequires: librocksdb-devel bzlib-devel libgflags-devel
+BuildRequires: bzlib-devel libgflags-devel
 BuildRequires: liblzma-devel
-BuildRequires: libyaml-cpp-devel
 
 %if_with jemalloc
 BuildRequires: libjemalloc-devel
 %endif
-
-ExclusiveArch: aarch64 x86_64 ppc64le
 
 %add_python3_path %_datadir/clickhouse-test
 
@@ -150,7 +185,13 @@ Requires: %name-client = %EVR
 ClickHouse tests
 
 %prep
-%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22 -a23 -a24 -a25 -a26 -a27 -a28 -a29 -a30 -a31 -a32 -a33 -a34
+%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22 -a23 -a24 -a25 -a26 -a27 -a28 -a29 -a30 -a31 -a32 -a33 -a34 -a35 -a36 -a37 -a38 -a39 -a40 -a41 -a42 -a43 -a44 -a45 -a46
+
+%if_without clang
+# remove unneeded bundles
+rm -rf contrib/{abseil-cpp,boost,cctz,cppkafka,fmtlib,libcxx,libcxxabi,protobuf,re2,rocksdb,yaml-cpp}
+%endif
+
 %patch0 -p1
 
 pushd contrib/base64
@@ -195,6 +236,41 @@ fi
 %define optflags_debug -g0
 
 %cmake \
+%if_with clang
+	-DCMAKE_C_COMPILER=clang \
+	-DCMAKE_CXX_COMPILER=clang++ \
+	-DUSE_LIBCXX:BOOL=ON \
+	-DUSE_INTERNAL_BOOST_LIBRARY:BOOL=ON \
+	-DUSE_INTERNAL_CCTZ_LIBRARY:BOOL=ON \
+	-DUSE_INTERNAL_LIBCXX_LIBRARY:BOOL=ON \
+	-DUSE_INTERNAL_PROTOBUF_LIBRARY:BOOL=ON \
+	-DUSE_INTERNAL_RE2_LIBRARY:BOOL=ON \
+	-DUSE_INTERNAL_ROCKSDB_LIBRARY:BOOL=ON \
+	-DUSE_INTERNAL_ZLIB_LIBRARY:BOOL=ON \
+	-DUSE_SYSTEM_ABSEIL_CPP:BOOL=OFF \
+	-DUSE_SYSTEM_BOOST:BOOL=OFF \
+	-DUSE_SYSTEM_CPPKAFKA:BOOL=OFF \
+	-DUSE_SYSTEM_FMTLIB:BOOL=OFF \
+	-DUSE_SYSTEM_YAML_CPP:BOOL=OFF \
+	-DPARALLEL_COMPILE_JOBS=$NPROCS \
+	-DPARALLEL_LINK_JOBS=1 \
+%else
+	-DUSE_LIBCXX:BOOL=OFF \
+	-DUSE_INTERNAL_BOOST_LIBRARY:BOOL=OFF \
+	-DUSE_INTERNAL_CCTZ_LIBRARY:BOOL=OFF \
+	-DUSE_INTERNAL_LIBCXX_LIBRARY:BOOL=OFF \
+	-DUSE_INTERNAL_PROTOBUF_LIBRARY:BOOL=OFF \
+	-DUSE_INTERNAL_RE2_LIBRARY:BOOL=OFF \
+	-DUSE_INTERNAL_ROCKSDB_LIBRARY:BOOL=OFF \
+	-DUSE_INTERNAL_ZLIB_LIBRARY:BOOL=OFF \
+	-DUSE_SYSTEM_ABSEIL_CPP:BOOL=ON \
+	-DUSE_SYSTEM_BOOST:BOOL=ON \
+	-DUSE_SYSTEM_CPPKAFKA:BOOL=ON \
+	-DUSE_SYSTEM_FMTLIB:BOOL=ON \
+	-DUSE_SYSTEM_YAML_CPP:BOOL=ON \
+	-DPARALLEL_COMPILE_JOBS=$NPROCS \
+	-DPARALLEL_LINK_JOBS=$NPROCS \
+%endif
 	-DCLICKHOUSE_SPLIT_BINARY:BOOL=OFF \
 	-DCMAKE_BUILD_TYPE:STRING=Release \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=OFF \
@@ -214,8 +290,6 @@ fi
 	-DENABLE_PARQUET:BOOL=OFF \
 	-DENABLE_S3:BOOL=OFF \
 	-DENABLE_UTILS:BOOL=OFF \
-	-DPARALLEL_COMPILE_JOBS=$NPROCS \
-	-DPARALLEL_LINK_JOBS=$NPROCS \
 	-DUNBUNDLED:BOOL=ON \
 	-DUSE_INTERNAL_AWS_S3_LIBRARY:BOOL=OFF \
 	-DUSE_INTERNAL_BROTLI_LIBRARY:BOOL=OFF \
@@ -228,7 +302,6 @@ fi
 	-DUSE_INTERNAL_LLVM_LIBRARY:BOOL=OFF \
 %endif
 	-DUSE_INTERNAL_POCO_LIBRARY:BOOL=ON \
-	-DUSE_INTERNAL_PROTOBUF_LIBRARY:BOOL=OFF \
 	-DUSE_INTERNAL_RDKAFKA_LIBRARY:BOOL=OFF \
 	-DUSE_INTERNAL_REPLXX:BOOL=ON \
 	-DUSE_INTERNAL_XZ_LIBRARY:BOOL=OFF \
@@ -252,6 +325,9 @@ mkdir -p %buildroot%_logdir/clickhouse-server
 # remove unpackaged files
 rm -rfv %buildroot%_prefix/cmake
 rm -fv %buildroot%_prefix/lib/*.a
+
+%check
+./%_cmake__builddir/src/unit_tests_dbms --gtest_filter='-CoordinationTest.TestRotateIntervalChanges:ReadBufferAIOTest.TestReadAfterAIO:WeakHash32.*'
 
 %pre server
 %_sbindir/groupadd -r -f _clickhouse 2> /dev/null ||:
@@ -315,6 +391,12 @@ fi
 %_datadir/clickhouse-test
 
 %changelog
+* Fri Oct 29 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.8.10.19-alt2
+- Rebuilt with clang.
+- Rebuilt with mysql instead of mariadb.
+- Disabled build for ppc64le when clang is used.
+- Enabled tests.
+
 * Mon Oct 25 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.8.10.19-alt1
 - Updated to lts upstream version 21.8.10.19.
 - Disabled thread fuzzer since it's not compatible with glibc-2.34 yet (GH issue 30462).
