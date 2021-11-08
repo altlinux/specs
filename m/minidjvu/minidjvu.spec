@@ -2,7 +2,7 @@
 
 Name: minidjvu
 Version: 0.8
-Release: alt1.2
+Release: alt2
 Summary: A program to create bitonal djvu files.
 Summary(ru_RU.UTF-8): Программа для создания чёрно-белых файлов djvu.
 License: GPLv2
@@ -28,12 +28,6 @@ Summary(ru_RU.UTF-8): Заголовочные файлы для програм�
 Group: Development/C
 Requires: libminidjvu = %version-%release
 
-%package -n libminidjvu-devel-static
-Summary: Static Minidjvu library
-Summary(ru_RU.UTF-8): Версия библиотеки Minidjvu для статического связывания
-Group: Development/C
-Requires: libminidjvu-devel = %version-%release
-
 %description
 A simple program to make a pack bitonal graphical files
 into djvu file. It is very useful for creating typical
@@ -58,12 +52,6 @@ Header files for Minidjvu library.
 
 %description -n libminidjvu-devel -l ru_RU.UTF-8
 Заголовочные файлы для библиотеки Minidjvu.
-
-%description -n libminidjvu-devel-static
-Static version of Minidjvu library.
-
-%description -l ru_RU.UTF-8 -n libminidjvu-devel-static
-Статическая версия библиотеки Minidjvu.
 
 %prep
 %setup -q -n %srcName-%version
@@ -96,6 +84,8 @@ install -pm644 minidjvu/jb2/*.h %buildroot%_includedir/minidjvu/jb2/
 
 install -pm644 minidjvu.h %buildroot%_includedir/minidjvu/
 
+rm -fv %buildroot%_libdir/*.a
+
 %find_lang %name
 
 %files -f %name.lang
@@ -113,10 +103,10 @@ install -pm644 minidjvu.h %buildroot%_includedir/minidjvu/
 %dir %_includedir/minidjvu
 %_includedir/*
 
-%files -n libminidjvu-devel-static
-%_libdir/*.a
-
 %changelog
+* Mon Nov 08 2021 Grigory Ustinov <grenka@altlinux.org> 0.8-alt2
+- Fixed FTBFS.
+
 * Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt1.2
 - Rebuilt with libtiff5
 
