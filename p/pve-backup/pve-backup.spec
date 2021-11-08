@@ -3,7 +3,7 @@
 
 Name: pve-backup
 Version: 2.0.1
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: PVE Backup Server
 License: GPL-1 and LGPLv2 and BSD
@@ -20,6 +20,8 @@ Source6: proxmox-backup-qemu-1.2.0.tar.xz
 Source10: cargo.tar.xz
 Source11: basealt_logo-128.png
 Source12: basealt_logo.png
+Source13: Toolkit.js
+Source14: APIViewer.js
 
 Source100: pve-i18n.tar.xz
 
@@ -106,6 +108,7 @@ PVE Backup Server development environment.
 rm -f */.cargo/config
 
 %build
+mv %SOURCE13 %SOURCE14 %_builddir/%name/proxmox-backup/docs
 export CARGO_HOME=%_builddir/%name/cargo
 cd proxmox-backup-qemu
 cargo build --release --offline
@@ -115,6 +118,8 @@ make -C %_builddir/%name/pve-i18n
 %install
 make -C proxmox-backup DESTDIR=%buildroot install
 make -C pve-i18n DESTDIR=%buildroot install
+
+make -C proxmox-backup/docs DESTDIR=%buildroot install_html
 
 install -pD -m644 proxmox-backup-qemu/proxmox-backup-qemu.h %buildroot%_includedir/proxmox-backup-qemu.h
 install -pD -m644 proxmox-backup-qemu/target/release/libproxmox_backup_qemu.so %buildroot%_libdir/libproxmox_backup_qemu.so.0
@@ -160,6 +165,7 @@ grep -q "^%proxy_user:" %_sysconfdir/passwd || %_sbindir/useradd -g %proxy_user 
 %_man1dir/proxmox-backup-manager.1*
 %_man1dir/proxmox-backup-proxy.1*
 %_man5dir/*.5*
+%_docdir/proxmox-backup
 
 %files client
 %_bindir/pxar
@@ -183,6 +189,9 @@ grep -q "^%proxy_user:" %_sysconfdir/passwd || %_sbindir/useradd -g %proxy_user 
 %_libdir/libproxmox_backup_qemu.so
 
 %changelog
+* Mon Nov 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:2.0.1-alt3
+- build with html docs
+
 * Sun Nov 07 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:2.0.1-alt2
 - updated required packages 
 
