@@ -17,7 +17,7 @@
 Summary: LizardFS - distributed, fault tolerant file system
 Name: lizardfs
 Version: 3.13.0
-Release: alt0.rc3.72
+Release: alt0.rc3.82
 License: GPLv3
 Group: System/Servers
 Url: https://www.lizardfs.org/
@@ -437,6 +437,10 @@ rm -f %buildroot%_libdir/*.a
 %_unitdir/lizardfs-uraft.lizardfs-ha-master.service
 
 %changelog
+* Mon Nov 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc3.82
+- update to c9617bd7afe46ad69da4856bffad778890cce9d9 from upstream
+- build with new spdlog
+
 * Tue Aug 24 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc3.72
 - update to b5f6b576b7f3941f98ebf50473e6e741ff760403 from upstream
 - remove static libraries
