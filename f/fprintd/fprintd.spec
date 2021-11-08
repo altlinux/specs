@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fprintd
-Version: 1.94.0
+Version: 1.94.1
 Release: alt1
 Summary: D-Bus service for Fingerprint reader access
 Group: System/Servers
@@ -108,6 +108,9 @@ install -m0644 -p %SOURCE2 %buildroot%_sysconfdir/pam.d/
 %_bindir/%name-*
 
 %changelog
+* Mon Nov 08 2021 Anton Farygin <rider@altlinux.ru> 1.94.1-alt1
+- 1.94.1
+
 * Thu Sep 02 2021 Anton Farygin <rider@altlinux.ru> 1.94.0-alt1
 - 1.94.0
 
