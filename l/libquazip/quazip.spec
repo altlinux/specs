@@ -4,7 +4,7 @@
 %define oname quazip
 Name: libquazip
 Version: 0.8.1
-Release: alt1
+Release: alt2
 Summary: Qt/C++ wrapper for the minizip library
 License: GPLv2+ or LGPLv2+
 Group: System/Libraries
@@ -14,8 +14,8 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
-BuildRequires: libqt4-devel
 BuildRequires: qt5-base-devel
+BuildRequires: zlib-devel
 BuildRequires: doxygen graphviz
 
 %description
@@ -28,16 +28,6 @@ whatever you would like to use on your zipped files.
 
 QuaZIP provides complete abstraction of the ZIP/UNZIP API, for both reading
 from and writing to ZIP archives.
-
-%package devel
-Summary: Development files for %oname
-Group: Development/C
-Requires: %name
-Requires: libqt4-devel
-
-%description devel
-The %name-devel package contains libraries, header files and documentation
-for developing applications that use %oname.
 
 %package qt5
 Summary: Qt5 wrapper for the minizip library
@@ -68,12 +58,6 @@ for developing applications that use %name.
 %setup
 
 %build
-mkdir build-qt4
-pushd build-qt4
-%cmake_insource .. -DBUILD_WITH_QT4:BOOL=ON
-%make_build
-popd
-
 mkdir build-qt5
 pushd build-qt5
 %cmake_insource .. -DBUILD_WITH_QT4:BOOL=OFF
@@ -87,20 +71,9 @@ done
 
 %install
 %make_install install/fast DESTDIR=%buildroot -C build-qt5
-%make_install install/fast DESTDIR=%buildroot -C build-qt4
 
 #remove static library
 rm -f %buildroot%_libdir/*.a
-
-%files
-%doc COPYING NEWS.txt README.md
-%_libdir/libquazip.so.1*
-
-%files devel
-%doc doc/html
-%_includedir/quazip/
-%_libdir/libquazip.so
-%_datadir/cmake/Modules/FindQuaZip.cmake
 
 %files qt5
 %doc COPYING NEWS.txt README.md
@@ -113,6 +86,9 @@ rm -f %buildroot%_libdir/*.a
 %_datadir/cmake/Modules/FindQuaZip5.cmake
 
 %changelog
+* Mon Nov 08 2021 Anton Midyukov <antohami@altlinux.org> 0.8.1-alt2
+- drop qt4 subpackage
+
 * Fri Aug 16 2019 Anton Midyukov <antohami@altlinux.org> 0.8.1-alt1
 - Version 0.8.1
 
