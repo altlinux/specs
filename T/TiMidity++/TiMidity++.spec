@@ -3,9 +3,12 @@
 %define prerel %nil
 %define _name timidity
 
+# Solution from OpenSuse
+%global optflags_lto %nil
+
 Name: TiMidity++
 Version: 2.15.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Great-sounding CPU-hungry MIDI soundfile player
 License: GPLv2
@@ -158,6 +161,9 @@ install -pDm644 interface/%_name.el %buildroot%_emacslispdir/%_name.el
 %doc doc/C/{README*,FAQ}
 
 %changelog
+* Mon Nov 08 2021 Grigory Ustinov <grenka@altlinux.org> 2.15.0-alt1.2
+- NMU: fixed FTBFS.
+
 * Wed May 15 2019 Michael Shigorin <mike@altlinux.org> 2.15.0-alt1.1
 - introduced emacs knob (on by default)
 
