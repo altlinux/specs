@@ -5,12 +5,12 @@
 
 Name:    apache2-mod_perl
 Version: 2.0.11
-Release: alt2
+Release: alt3
 
 Summary: An embedded Perl interpreter for the Apache2 Web server
 Summary(ru_RU.UTF-8): Встроенный интерпретатор Perl для веб-сервера Apache2
 
-License: Apache License v. 2.0
+License: %asl 2.0
 Group:   System/Servers
 
 URL:     http://perl.apache.org/
@@ -19,8 +19,8 @@ Source1: perl.load
 Source2: perl.conf
 Source3: perl.start
 
-Source4: Apache-Test-1.39.tar
-Source5: Apache-SizeLimit-0.96.tar
+Source4: Apache-Test-1.43.tar
+Source5: Apache-SizeLimit-0.98.tar
 Source6: Apache-Reload-0.13.tar
 Source7: docs-2.0.tar
 
@@ -34,6 +34,7 @@ Provides: mod_perl = %version
 
 Requires(pre): apache2 >= %apache2_version
 BuildRequires(pre): apache2-devel >= 2.2.5
+BuildRequires(pre): rpm-build-licenses
 BuildRequires: apache2-httpd-prefork
 BuildRequires: %apache2_apr_buildreq
 BuildRequires: libgdbm-devel
@@ -260,6 +261,9 @@ install -p -m 644 -- xs/tables/current/ModPerl/FunctionTable.pm  %buildroot%perl
 %doc docs/*
 
 %changelog
+* Sun Nov 07 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.0.11-alt3
+- Update Apache::Test module to the release version 1.43
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.0.11-alt2
 - added support for perl 5.34
 
