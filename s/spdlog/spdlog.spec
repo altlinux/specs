@@ -1,6 +1,6 @@
 Name: spdlog
-Version: 1.8.5
-Release: alt2
+Version: 1.9.2
+Release: alt1
 
 Summary: Super fast C++ logging library
 
@@ -70,6 +70,9 @@ export LD_LIBRARY_PATH=$(pwd)/%_cmake__builddir
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Nov 08 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.9.2-alt1
+- 1.9.2 released
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1.8.5-alt2
 - remove bundled fmt, use _cmake__builddir
 
