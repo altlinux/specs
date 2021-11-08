@@ -1,3 +1,5 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 %def_with fcitx
 %def_with ibus
 %def_with nas
@@ -5,7 +7,7 @@
 
 Name: SDL2
 Version: 2.0.16
-Release: alt1
+Release: alt2
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -72,6 +74,18 @@ multiple platforms.
 This is the libraries, include files and other resources you can use
 to develop SDL applications.
 
+%package -n lib%name-devel-static
+Summary: Static libraries to develop SDL applications.
+Group: Development/C
+Requires: lib%name-devel = %EVR
+
+%description -n lib%name-devel-static
+This is the Simple DirectMedia Layer, a generic API that provides low
+level access to audio, keyboard, mouse, and display framebuffer across
+multiple platforms.
+
+This is the static libraries you can use to develop SDL applications.
+
 %prep
 %setup
 %patch0 -p1
@@ -81,14 +95,12 @@ to develop SDL applications.
 %configure \
     --enable-video-vulkan \
     --enable-video-wayland \
-    --disable-rpath \
-    --disable-static
+    --disable-rpath
     
 %make_build
 
 %install
 %makeinstall_std
-rm %buildroot%_libdir/*.a
 %set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
 
@@ -104,7 +116,13 @@ rm %buildroot%_libdir/*.a
 %_pkgconfigdir/sdl2.pc
 %_aclocaldir/sdl2.m4
 
+%files -n lib%name-devel-static
+%_libdir/lib%{name}*.a
+
 %changelog
+* Mon Nov 08 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.16-alt2
+- Build static libraries (ALT #41301)
+
 * Tue Aug 10 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.16-alt1
 - Version 2.0.16
 
