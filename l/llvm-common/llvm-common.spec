@@ -4,7 +4,7 @@
 
 Name: llvm-common
 Version: 12.0.0
-Release: alt1
+Release: alt2
 
 Summary: Common directories, symlinks and tool selection for LLVM
 License: Apache-2.0 with LLVM-exception
@@ -14,6 +14,7 @@ Url: http://git.altlinux.org/gears/l/llvm-common.git
 Source: llvm-alt-tool-wrapper.c
 Source1: alt-packaging-wrap-cmake-script
 Source2: alt-packaging-produce-rpm-macros-llvm-common
+Source3: llvm-common.env
 
 # We want to have these obsoletions to win apt's generic provider selection
 # against pre-wrapped llvm packages.
@@ -334,6 +335,7 @@ install -p -m755 llvm-alt-tool-wrapper %buildroot%_bindir/
 
 mkdir -p %buildroot%_rpmmacrosdir
 RPM_LLVM_VERSION=%_llvm_version %_sourcedir/alt-packaging-produce-rpm-macros-llvm-common > %buildroot%_rpmmacrosdir/%name
+cp %SOURCE3 %buildroot%_rpmmacrosdir/%name.env
 
 %check
 which %__clang_versioned || { echo 'Skipping the test of llvm-alt-tool-wrapper.'; exit 0; }
@@ -345,6 +347,7 @@ which %__clang_versioned || { echo 'Skipping the test of llvm-alt-tool-wrapper.'
 
 %files -n rpm-macros-%name
 %_rpmmacrosdir/%name
+%_rpmmacrosdir/%name.env
 
 %files
 %_bindir/llvm-alt-tool-wrapper
@@ -425,6 +428,9 @@ clang-cpp --version
 llc --version
 
 %changelog
+* Fri Aug 20 2021 Arseny Maslennikov <arseny@altlinux.org> 12.0.0-alt2
+- Added %set_llvm_version.
+
 * Wed Aug 11 2021 Arseny Maslennikov <arseny@altlinux.org> 12.0.0-alt1
 - Made LLVM 12 the default.
 - For each package in the llvm-common-* family, replaced it with its provide.
