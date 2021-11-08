@@ -1,9 +1,9 @@
 Name: kexec-tools
-Version: 2.0.22
+Version: 2.0.23
 Release: alt1
 
 Summary: Load one kernel from another
-License: GPL
+License: GPLv2
 Group: System/Kernel and hardware
 
 Source: kexec-tools-%version.tar
@@ -54,6 +54,9 @@ install -pm0644 -D kexec/kexec.8 %buildroot%_man8dir/kexec.8
 %endif
 
 %changelog
+* Fri Nov 05 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.23-alt1
+- 2.0.23 released
+
 * Fri Jul 23 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.22-alt1
 - 2.0.22 released
 
