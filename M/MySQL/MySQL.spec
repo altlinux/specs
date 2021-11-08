@@ -10,8 +10,8 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.26
-Release: alt3
+Version: 8.0.27
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -56,13 +56,15 @@ Patch2: mysql-5.0.20-alt-libdir.patch
 Patch4: mysql-8.0.26-alt-client.patch
 Patch5: mysql-8.0.12-alt-load_defaults.patch
 Patch6: mysql-5.1.50-alt-fPIC-innodb.patch
-Patch7: mysql-8.0.12-alt-mysql_config-libs.patch
+Patch7: mysql-8.0.27-alt-mysql_config-libs.patch
 Patch9: mysql-8.0.18-alt-disable-run-libmysql_api_test.patch
-Patch10: mysql-8.0.26-alt-powerpc-fix-longdouble-constexpr.patch
 
 # Patches taken from boost 1.59
 Patch115: boost-1.58.0-pool.patch
 Patch125: boost-1.57.0-mpl-print.patch
+
+# Patches for mysql-shell
+Patch201: mysql-shell-8.0.26-alt-link-secret-store-login-path-with-ssl.patch
 
 Patch2000: mysql-8.0.26-alt-e2k-fixes.patch
 
@@ -371,13 +373,14 @@ Python module for MySQL Shell
 %patch5 -p1
 %patch7 -p1
 %patch9 -p1
-%patch10 -p1
 
 # Patch Boost
 pushd boost/boost_1_73_0
 %patch115 -p0
 %patch125 -p1
 popd
+
+%patch201 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -880,6 +883,24 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Mon Nov 08 2021 Nikolai Kostrigin <nickel@altlinux.org> 8.0.27-alt1
+- new version
+  + (fixes: CVE-2021-2478, CVE-2021-2479, CVE-2021-2481, CVE-2021-3711)
+  + (fixes: CVE-2021-22926, CVE-2021-35537, CVE-2021-35546, CVE-2021-35575)
+  + (fixes: CVE-2021-35577, CVE-2021-35583, CVE-2021-35591, CVE-2021-35596)
+  + (fixes: CVE-2021-35597, CVE-2021-35602, CVE-2021-35604, CVE-2021-35607)
+  + (fixes: CVE-2021-35608, CVE-2021-35610, CVE-2021-35612, CVE-2021-35622)
+  + (fixes: CVE-2021-35623, CVE-2021-35624, CVE-2021-35625, CVE-2021-35626)
+  + (fixes: CVE-2021-35627, CVE-2021-35628, CVE-2021-35629, CVE-2021-35630)
+  + (fixes: CVE-2021-35631, CVE-2021-35632, CVE-2021-35633, CVE-2021-35634)
+  + (fixes: CVE-2021-35635, CVE-2021-35636, CVE-2021-35637, CVE-2021-35638)
+  + (fixes: CVE-2021-35639, CVE-2021-35640, CVE-2021-35641, CVE-2021-35642)
+  + (fixes: CVE-2021-35643, CVE-2021-35644, CVE-2021-35645, CVE-2021-35646)
+  + (fixes: CVE-2021-35647, CVE-2021-35648, CVE-2021-36222)
+- add mysql-shell alt-link-secret-store-login-path-with-ssl patch
+- update alt-mysql_config-libs patch
+- remove alt-powerpc-fix-longdouble-constexpr patch
+
 * Fri Sep 24 2021 Egor Ignatov <egori@altlinux.org> 8.0.26-alt3
 - enable mysql-router package
 - add mysql-shell package
