@@ -1,80 +1,80 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ unzip
-# END SourceDeps(oneline)
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:           GLC_lib
-Version:        2.2.0
-Release:        alt2_17
-Summary:        C++ class library for OpenGL application based on Qt 4
+%define maj_ver 3.0
+Name: GLC_lib
+Version: %maj_ver.1
+Release: alt1.20211001
+Summary: C++ class library for OpenGL application based on Qt 5
 
-Group:          System/Libraries
-License:        LGPLv3+
-URL:            http://www.glc-lib.net/
-Source0:        http://downloads.sourceforge.net/glc-lib/GLC_lib_src_%{version}.zip
-Patch0:         GLC_lib_src_2.2.0-nointernal.patch
-Patch1:         GLC_lib_src_2.2.0-gcc46.patch
+Group: System/Libraries
+License: LGPL-2.1
+Url: https://github.com/laumaya/GLC_lib
 
-BuildRequires:  libqt4-declarative libqt4-devel qt4-designer
-BuildRequires:  lib3ds-devel
-BuildRequires:  libquazip-devel
-Source44: import.info
+Source: %name-%version.tar
+Patch: unbundled_library.patch
 
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-designer
+BuildRequires: qt5-quickcontrols2-devel
+BuildRequires: lib3ds-devel
+BuildRequires: libquazip-qt5-devel
+BuildRequires: zlib-devel
+
+# Project ERROR: GLC_lib does not support OpenGL ES 2!
+ExcludeArch: %arm
 
 %description
 GLC_lib is a C++ class library that enables the quick creation of OpenGL
-application based on Qt 4. Some GLC_lib features : Camera orbiting, Obj
+application based on Qt 5. Some GLC_lib features : Camera orbiting, Obj
 textured file support, 3D Primitive... And more.
 
-%package        devel
-Summary:        Development files for %{name}
-Group:          Development/Other
-Requires:       %{name} = %{version}-%{release}
-Requires:       libqt4-declarative qt4-designer
+%package devel
+Summary: Development files for %name
+Group: Development/Other
+Requires: %name = %version-%release
+Requires: libqt5-declarative
+Requires: qt5-designer
+Requires: qt5-base-devel
+Requires: qt5-quickcontrols2-devel
 
-%description    devel
-The %{name}-devel package contains libraries and header files for
-developing applications that use %{name}.
-
-
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
 
 %prep
-%setup -q -c
-cd glc_lib
-%patch0 -p2 -b .nointernal
-%patch1 -p2 -b .gcc46
+%setup
+%patch -p2
 
 #Fix library Path on lib64
-sed -i -e 's|LIB_DIR = /usr/local/lib|LIB_DIR = %{_libdir}|' GLC_lib.pro
-sed -i -e 's|/usr/local/include|%{_includedir}|' GLC_lib.pro
-
-# Fix internal use of several libraries
-sed -i -e 's|lib3ds minizip|lib3ds|' GLC_lib.pro
-rm -rf 3rdparty
-
-
+%__subst 's|LIB_DIR = /usr/lib|LIB_DIR = %_libdir|' glc_lib.pro install.pri
 
 %build
-cd glc_lib
-%{qmake_qt4} GLC_lib.pro
+%qmake_qt5 CONFIG+="force_debug_info qml_debug" LIBS+="-l3ds -lquazip5 -lz" glc_lib.pro
 %make_build
 
-
 %install
-cd glc_lib
-make install INSTALL_ROOT=$RPM_BUILD_ROOT
+%make_install install INSTALL_ROOT=%buildroot
 
+# remove built examples
+rm -r %buildroot%prefix/src/GLC_lib-%maj_ver/examples
 
 %files
-%doc glc_lib/COPYING
-%{_libdir}/*.so.*
+%doc README
+%_libdir/*.so.*
+%_libdir/qt5/qml/glclib
 
 %files devel
-%{_includedir}/GLC_lib/
-%{_libdir}/*.so
-
+%_includedir/GLC_lib-%maj_ver/
+%_libdir/*.so
 
 %changelog
+* Sun Nov 07 2021 Anton Midyukov <antohami@altlinux.org> 3.0.1-alt1.20211001
+- new version from commit 5e86cbb1049ea7b32f7329dd391bc2df88882d71
+  with https://github.com/laumaya/GLC_lib
+- update URL tag
+- update License tag
+- build with qt5
+- drop import.info
+- ExcludeArch: %arm
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt2_17
 - update to new release by fcimport
 

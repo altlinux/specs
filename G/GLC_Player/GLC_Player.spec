@@ -1,57 +1,51 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
-# END SourceDeps(oneline)
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:           GLC_Player
-Version:        2.3.0
-Release:        alt2_16
-Summary:        GLC_Player is an Open Source software used to view 3d models (OBJ Format)
+Name: GLC_Player
+Version: 2.3.0
+Release: alt3.20200519
+Summary: GLC_Player is an Open Source software used to view 3d models (OBJ Format)
 
-Group:          Graphics
-License:        GPLv2+
-URL:            http://www.glc-player.net/
-Source0:        http://downloads.sourceforge.net/glc-player/GLC_Player_src_%{version}.zip
-Source1:        glc_player.desktop
-Patch0:         GLC_Player_src_2.3.0-cache.patch
-Patch1:         GLC_Player_src_2.3.0-prefix.patch
+Group: Graphics
+License: GPLv2+
+Url: https://github.com/alon/GLC_Player
 
-BuildRequires:  GLC_lib-devel >= 2.0.0
-BuildRequires:  desktop-file-utils
-Source44: import.info
+Source: %name-%version.tar
+Source1: glc_player.desktop
+Patch: GLC_Player_src_2.3.0-cache.patch
+Patch1: GLC_Player_src_2.3.0-prefix.patch
+
+BuildRequires: GLC_lib-devel >= 3.0.1
+BuildRequires: desktop-file-utils
+
+# GLC_Lib not available for %arm
+ExcludeArch: %arm
 
 %description
 GLC_Player is an Open Source software used to view 3d models (OBJ Format).
 With the session concept and navigation possibilities GLC_Player is the
-accurate tools to review a lot of 3D models. GLC_Player is a 
-cross-platform, Qt 4 and GLC_lib application.
-
+accurate tools to review a lot of 3D models. GLC_Player is a
+cross-platform, Qt 5 and GLC_lib application.
 
 %prep
-%setup -q -c
+%setup
 %patch0 -p1 -b .cache
-%patch1 -p1 -b .prefix
-
+#patch1 -p1 -b .prefix
 
 %build
-%{qmake_qt4} glc_player.pro
+%qmake_qt5 glc_player.pro
 %make_build
 
-
 %install
+mkdir -p %buildroot%_bindir
+install -pm 0755 glc_player %buildroot%_bindir
 
-mkdir -p $RPM_BUILD_ROOT%{_bindir}
-install -pm 0755 glc_player $RPM_BUILD_ROOT%{_bindir}
-
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/{applications,pixmaps}
+mkdir -p %buildroot%_datadir/{applications,pixmaps}
 
 install -pm 0644 ressources/images/GLC_logo_blanc.png \
-  $RPM_BUILD_ROOT%{_datadir}/pixmaps/glc_player.png
+%buildroot%_pixmapsdir/glc_player.png
 
 desktop-file-install \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
+  --dir %buildroot%_desktopdir \
   --mode 644 \
-  %{SOURCE1}	
+%SOURCE1
 
 # Register as an application to be visible in the software center
 #
@@ -60,8 +54,8 @@ desktop-file-install \
 #
 # See http://www.freedesktop.org/software/appstream/docs/ for more details.
 #
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
-cat > $RPM_BUILD_ROOT%{_datadir}/appdata/glc_player.appdata.xml <<EOF
+mkdir -p %buildroot%_datadir/appdata
+cat > %buildroot%_datadir/appdata/glc_player.appdata.xml <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2014 Ryan Lerch <rlerch@redhat.com> -->
 <!--
@@ -90,13 +84,18 @@ EOF
 
 %files
 %doc
-%{_bindir}/glc_player
-%{_datadir}/pixmaps/glc_player.png
-%{_datadir}/appdata/*.appdata.xml
-%{_datadir}/applications/*.desktop
-
+%_bindir/glc_player
+%_pixmapsdir/glc_player.png
+%_datadir/appdata/*.appdata.xml
+%_desktopdir/*.desktop
 
 %changelog
+* Mon Nov 08 2021 Anton Midyukov <antohami@altlinux.org> 2.3.0-alt3.20200519
+- new snapshot from commit c513c3d15f6395121e156ef47efa0bfe9cd71f40
+- build with qt5 and GLC_lib 3.0.1
+- Update Url Tag
+- ExcludeArch: %arm
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt2_16
 - update to new release by fcimport
 
