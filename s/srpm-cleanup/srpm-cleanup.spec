@@ -2,7 +2,7 @@
 
 Name:     srpm-cleanup
 Version:  0.1.3
-Release:  alt1
+Release:  alt2
 
 Summary:  Remove unused source files from SRPM packages
 License:  GPL-3.0-or-later
@@ -18,6 +18,7 @@ BuildRequires: ronn perl(Pod/Usage.pm) pandoc >= 2
 
 Requires: make apt-repo-tools rsync time findutils coreutils gear
 Requires: %name-parallel = %version-%release
+Requires: %name-common = %version-%release
 
 %description
 srpm-cleanup(1) removes unused source files from SRPM packages.
@@ -31,6 +32,7 @@ Summary:  Default audit on/off scripts for %name
 Group:    Development/Tools
 License:  GPL-3.0-or-later
 Requires: audit
+Requires: %name-common = %version-%release
 
 %description audit
 Provides the default audit on/off scripts for %name.
@@ -46,6 +48,15 @@ License:  GPL-3.0-or-later
 %description parallel
 A "GNU" Parallel version with special patches used in srpm-cleanup
 scripts.
+
+
+%package common
+Summary:  Common files for %name
+Group:    Development/Tools
+License:  GPL-3.0-or-later
+
+%description common
+Provides common files for %name.
 
 
 %prep
@@ -69,6 +80,7 @@ scripts.
 %_man1dir/hsh-separate-sources.1*
 %_man1dir/srpm-cleanup.1*
 %_man7dir/make-srpm-cleanup.7*
+%dir %_docdir/%name
 %_docdir/%name/*
 
 %files audit
@@ -78,7 +90,14 @@ scripts.
 %files parallel
 %_bindir/parallel_alt
 
+%files common
+%dir %_datadir/%name
+
+
 %changelog
+* Mon Nov 08 2021 Paul Wolneykien <manowar@altlinux.org> 0.1.3-alt2
+- Fix: Own %_datadir/%name and %_docdir/%name.
+
 * Mon Nov 08 2021 Paul Wolneykien <manowar@altlinux.org> 0.1.3-alt1
 - Added --init-cmds=<CMDS>: Execute <CMDS> before the Hasher run.
 - vm/Makefile: Mount EXPORT_DIR to /export on the manager node.
