@@ -5,8 +5,8 @@
 %add_tcl_req_skip ttk::theme::default
 
 Name: tk
-Version: 8.6.11.1
-Release: alt2
+Version: 8.6.12
+Release: alt1
 
 Summary: The Tk toolkit fot Tcl scripting language
 License: TCL
@@ -26,14 +26,14 @@ Patch8: 0008-ALT-pkgIndex.tcl-location.patch
 Patch9: 0009-Fedora-font-sizes-fix.patch
 
 BuildRequires(pre): rpm-build-tcl >= 0.5-alt1
-BuildRequires: tcl-devel = 8.6.11 libXt-devel libXft-devel libXScrnSaver-devel
+BuildRequires: tcl-devel = %version libXt-devel libXft-devel libXScrnSaver-devel
 # tests
 BuildRequires: xvfb-run fonts-bitmap-75dpi fonts-bitmap-100dpi fonts-bitmap-misc
 
-Requires: tcl = 8.6.11 lib%name
+Requires: tcl = %version lib%name
 
 Provides: tcl(Ttk)
-Provides: tcl(Ttk)-8 = 8.6.11
+Provides: tcl(Ttk)-8 = %version
 Obsoletes: tcl-tile <= 0.8.2
 
 %package -n lib%name
@@ -43,7 +43,7 @@ Group: System/Libraries
 %package devel
 Summary: Header files and C programming manual for Tk
 Group: Development/C
-Requires: %name  tcl-devel = 8.6.11
+Requires: %name  tcl-devel = %version
 
 %package demos
 Summary: A collection of programs to demonstrate the features of the Tk toolkit
@@ -168,6 +168,9 @@ popd
 %_tcldatadir/%name%major/demos
 
 %changelog
+* Mon Nov 08 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.12-alt1
+- Updated to 8.6.12.
+
 * Fri Aug 27 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.11.1-alt2
 - Enabled LTO.
 
