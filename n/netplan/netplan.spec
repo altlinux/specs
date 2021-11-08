@@ -1,5 +1,5 @@
 Name:    netplan
-Version: 0.101
+Version: 0.103
 Release: alt1
 
 Summary: Backend-agnostic network configuration in YAML
@@ -23,12 +23,14 @@ Requires:       iproute2
 %add_python3_path %_datadir/%name
 
 Source:  %name-%version.tar
+Patch1: alt-use-proper-print-format.patch
 
 %description
 %summary
 
 %prep
 %setup -n %name-%version
+%patch1 -p1
 
 %build
 %make_build
@@ -50,6 +52,9 @@ mkdir -p %buildroot%_sysconfdir/%name
 %_man8dir/%{name}*
 
 %changelog
+* Mon Nov 08 2021 Mikhail Gordeev <obirvalger@altlinux.org> 0.103-alt1
+- new version 0.103
+
 * Thu Jan 14 2021 Mikhail Gordeev <obirvalger@altlinux.org> 0.101-alt1
 - new version 0.101
 
