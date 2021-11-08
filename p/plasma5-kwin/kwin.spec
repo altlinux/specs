@@ -18,8 +18,8 @@
 %define libkcmkwincommon libkcmkwincommon%kcmkwincommon_sover
 
 Name: plasma5-%rname
-Version: 5.22.5
-Release: alt2
+Version: 5.23.2
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -36,12 +36,10 @@ Requires: qml(org.kde.kquickcontrols) qml(org.kde.plasma.components) qml(org.kde
 Requires(post): /sbin/setcap
 
 Source: %rname-%version.tar
-# upstream
-Patch0: glvnd-1.4.patch
 #
 Patch1: alt-def-window-buttons.patch
 Patch2: alt-def-nocompositing.patch
-Patch3: alt-def-xcompositing.patch
+Patch3: alt-def-qcompositing.patch
 Patch4: alt-hwdatabase.patch
 
 # Automatically added by buildreq on Thu Mar 05 2015 (-bi)
@@ -134,11 +132,9 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch0 -p1
-#
 %patch1 -p1
 #%patch2 -p1 -b .nocompositing
-%patch3 -p1 -b .xcompositing
+#%patch3 -p1 -b .qcompositing
 %patch4 -p1 -b .hwinfo
 
 %build
@@ -168,7 +164,7 @@ KF5 library
 #%_K5plug/kf5/org.kde.kidletime.platforms/*.so
 #%_K5plug/kf5/kwindowsystem/*.so
 #%_K5plug/org.kde.kglobalaccel5.platforms/
-%_K5plug/kpackage/packagestructure/kwin_packagestructure_*.so
+%_K5plug/kpackage/packagestructure/kwin_*.so
 %_K5plug/kwin/
 %_K5plug/kcms/*.so
 %_K5plug/org.kde.kdecoration2/
@@ -215,6 +211,9 @@ KF5 library
 
 
 %changelog
+* Mon Nov 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.2-alt1
+- new version
+
 * Tue Sep 28 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt2
 - fix to build with libglvnd-1.3.4
 

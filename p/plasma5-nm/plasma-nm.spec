@@ -2,7 +2,7 @@
 %def_disable openswan
 
 Name: plasma5-nm
-Version: 5.22.5
+Version: 5.23.2
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -22,7 +22,7 @@ Provides: kf5-plasma-nm = %EVR
 Obsoletes: kf5-plasma-nm < %EVR
 
 Source: %rname-%version.tar
-Source1: plasmanetworkmanagement-kded.po
+Source1: plasmanetworkmanagement-kded-ru-add.po
 Source10: 01-plasma-nm.js
 # ALT
 Patch11: alt-old-openconnectauth.patch
@@ -32,7 +32,7 @@ Patch14: alt-revert.patch
 
 # Automatically added by buildreq on Tue Mar 03 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils glib2-devel kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libgio-devel libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base qt5-base-devel ruby ruby-stdlibs
-#BuildRequires: ModemManager-devel extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kpackage-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libmm-qt-devel kf5-networkmanager-qt-devel kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel libnm-devel libopenconnect-devel python-module-google qt5-declarative-devel rpm-build-ruby
+#BuildRequires: ModemManager-devel extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kemoticons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kpackage-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libmm-qt-devel kf5-networkmanager-qt-devel kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel libnm-devel libopenconnect-devel python-module-google qt5-declarative-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-declarative-devel qt5-tools-devel-static
 BuildRequires: mobile-broadband-provider-info libqca-qt5-devel
@@ -40,7 +40,7 @@ BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcode
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kdeclarative-devel kf5-kdesignerplugin-devel
 #kf5-kdelibs4support kf5-kdelibs4support-devel
-BuildRequires: kf5-kdoctools kf5-kdoctools-devel-static
+BuildRequires: kf5-kdoctools kf5-kdoctools-devel
 BuildRequires: kf5-kemoticons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel
 BuildRequires: kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
 BuildRequires: kf5-knotifications-devel kf5-kpackage-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel
@@ -220,7 +220,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %find_lang %name --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%dir %_K5plug/plasma/network/
+%dir %_K5plug/plasma/network/vpn/
+%doc LICENSES/*
 %_K5lib/libplasmanm_*.so
 %_K5plug/kf5/kded/networkmanagement.so
 %_K5plug/kcm_networkmanagement.so
@@ -230,56 +232,38 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5data/plasma/updates/*
 %_K5notif/networkmanagement.notifyrc
 %_K5srv/kcm_networkmanagement.desktop
-%_K5srvtyp/*networkmanagement*.desktop
+#%_K5srvtyp/*networkmanagement*.desktop
 
 %files maxi
 %files connect-mobile
 
 %files connect-iodine
-%_K5plug/libplasmanetworkmanagement_iodineui.so
-%_K5srv/plasmanetworkmanagement_iodineui.desktop
-
+%_K5plug/plasma/network/vpn/plasmanetworkmanagement_iodineui.so
 %files connect-openvpn
-%_K5plug/libplasmanetworkmanagement_openvpnui.so
-%_K5srv/plasmanetworkmanagement_openvpnui.desktop
-
+%_K5plug/plasma/network/vpn/plasmanetworkmanagement_openvpnui.so
 %files connect-fortisslvpn
-%_K5plug/libplasmanetworkmanagement_fortisslvpnui.so
-%_K5srv/plasmanetworkmanagement_fortisslvpnui.desktop
-
+%_K5plug/plasma/network/vpn/plasmanetworkmanagement_fortisslvpnui.so
 %files connect-vpnc
-%_K5plug/libplasmanetworkmanagement_vpncui.so
-%_K5srv/plasmanetworkmanagement_vpncui.desktop
-
+%_K5plug/plasma/network/vpn/plasmanetworkmanagement_vpncui.so
 %files connect-openconnect
-%_K5plug/libplasmanetworkmanagement_openconnectui.so
-%_K5srv/plasmanetworkmanagement_openconnect*.desktop
-
+%_K5plug/plasma/network/vpn/plasmanetworkmanagement_openconnect_*.so
 %files connect-openswan
-%_K5plug/libplasmanetworkmanagement_openswanui.so
-%_K5srv/plasmanetworkmanagement_openswanui.desktop
-
+%_K5plug/plasma/network/vpn/plasmanetworkmanagement_openswanui.so
 %files connect-strongswan
-%_K5plug/libplasmanetworkmanagement_strongswanui.so
-%_K5srv/plasmanetworkmanagement_strongswanui.desktop
-
+%_K5plug/plasma/network/vpn/plasmanetworkmanagement_strongswanui.so
 %files connect-l2tp
-%_K5plug/libplasmanetworkmanagement_l2tpui.so
-%_K5srv/plasmanetworkmanagement_l2tpui.desktop
-
+%_K5plug/plasma/network/vpn/plasmanetworkmanagement_l2tpui.so
 %files connect-pptp
-%_K5plug/libplasmanetworkmanagement_pptpui.so
-%_K5srv/plasmanetworkmanagement_pptpui.desktop
-
+%_K5plug/plasma/network/vpn/plasmanetworkmanagement_pptpui.so
 %files connect-sstp
-%_K5plug/libplasmanetworkmanagement_sstpui.so
-%_K5srv/plasmanetworkmanagement_sstpui.desktop
-
+%_K5plug/plasma/network/vpn/plasmanetworkmanagement_sstpui.so
 %files connect-ssh
-%_K5plug/libplasmanetworkmanagement_sshui.so
-%_K5srv/plasmanetworkmanagement_sshui.desktop
+%_K5plug/plasma/network/vpn/plasmanetworkmanagement_sshui.so
 
 %changelog
+* Mon Nov 01 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.23.2-alt1
+- new version
+
 * Wed Sep 01 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.5-alt1
 - new version
 

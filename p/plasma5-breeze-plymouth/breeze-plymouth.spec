@@ -1,8 +1,8 @@
 %define rname breeze-plymouth
 
 Name: plasma5-%{rname}
-Version: 5.22.5
-Release: alt4
+Version: 5.23.2
+Release: alt1
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -88,6 +88,9 @@ cat %SOURCE11 >breeze/images/os.logo.png
 /usr/share/plymouth/themes/breeze/
 
 %changelog
+* Mon Nov 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.2-alt1
+- new version
+
 * Thu Sep 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt4
 - fix color
 

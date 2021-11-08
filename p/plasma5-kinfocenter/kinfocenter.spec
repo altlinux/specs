@@ -1,8 +1,8 @@
 %define rname kinfocenter
 
 Name: plasma5-%rname
-Version: 5.22.5
-Release: alt2
+Version: 5.23.2
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -79,7 +79,7 @@ KF5 library
 %K5install
 
 #K5install_move data all
-%K5install_move data desktop-directories kcmusb kcmview1394 kpackage 
+%K5install_move data desktop-directories kcmusb kcmview1394 kpackage kinfocenter
 %K5install_move menu all
 
 %find_lang %name --with-kde --all-name
@@ -89,15 +89,19 @@ KF5 library
 %_K5bin/*
 %_K5plug/kcms/
 %_K5plug/*.so
+%_K5qml/org/kde/kinfocenter/
 %_K5xdgapp/*.desktop
 %_K5xdgdir/*.directory
 %_K5xdgmenu/*.menu
-#%_K5data/kcm*/
+%_K5data/kinfocenter/
 %_K5data/kpackage/
 %_K5srv/*
 %_K5srvtyp/*
 
 %changelog
+* Mon Nov 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.2-alt1
+- new version
+
 * Thu Sep 23 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt2
 - mark usb devices in Device Viewer
 

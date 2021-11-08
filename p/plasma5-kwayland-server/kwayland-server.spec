@@ -4,7 +4,7 @@
 %define libkwaylandserver libkwaylandserver%sover
 
 Name: plasma5-%rname
-Version: 5.22.5
+Version: 5.23.2
 Release: alt1
 %K5init altplace
 
@@ -77,6 +77,9 @@ mv %buildroot/KF5/* %buildroot/%_K5inc/
 %_K5lib/libKWaylandServer.so.*
 
 %changelog
+* Mon Nov 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.2-alt1
+- new version
+
 * Wed Sep 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt1
 - new version
 

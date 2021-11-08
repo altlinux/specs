@@ -1,7 +1,7 @@
 %define rname kwayland-integration
 
 Name: plasma5-%rname
-Version: 5.22.5
+Version: 5.23.2
 Release: alt1
 %K5init altplace
 
@@ -16,7 +16,8 @@ Source: %rname-%version.tar
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libqt5-core libqt5-gui libqt5-widgets libqt5-x11extras libstdc++-devel libwayland-client libxcbutil-keysyms python-base python3 python3-base ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kidletime-devel kf5-kwayland-devel kf5-kwindowsystem-devel python-module-google qt5-base-devel rpm-build-python3 rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
+BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-base-devel-static qt5-wayland-devel
+BuildRequires: pkgconfig(wayland-protocols)
 BuildRequires: kf5-kidletime-devel kf5-kwayland-devel kf5-kwindowsystem-devel kf5-kguiaddons-devel
 
 Requires: xorg-xwayland wayland-protocols qt5-wayland
@@ -45,6 +46,9 @@ Provides integration plugins for various KDE frameworks for the wayland windowin
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Mon Nov 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.2-alt1
+- new version
+
 * Wed Sep 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt1
 - new version
 

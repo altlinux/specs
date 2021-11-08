@@ -36,8 +36,8 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.22.5
-Release: alt5
+Version: 5.23.2
+Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -97,8 +97,7 @@ Patch128: alt-soname.patch
 Patch129: alt-def-icons.patch
 Patch130: alt-sddm-check-username.patch
 Patch131: alt-kscreenlocker-theme-pam-support.patch
-Patch132: alt-kscreenlocker-theme-pam-support-translation.patch
-Patch133: alt-fix-virtualkeyboard.patch
+Patch132: alt-fix-virtualkeyboard.patch
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig glib2-devel glibc-devel-static kf5-attica-devel kf5-kdoctools-devel kf5-kjs-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcln-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libgst-plugins1.0 libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-script libqt5-sql libqt5-svg libqt5-test libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libwayland-server libxcb-devel libxcbutil-keysyms libxcbutil-keysyms-devel libxkbfile-devel libxml2-devel pkg-config python-base qt5-base-devel qt5-declarative-devel qt5-webkit-devel rpm-build-gir ruby ruby-stdlibs wayland-devel xml-common xml-utils xorg-fixesproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -282,7 +281,7 @@ popd
 %patch119 -p2
 %patch120 -p1
 %patch121 -p2
-%patch122 -p2
+#%patch122 -p2
 %patch123 -p1
 #%patch124 -p1
 %patch125 -p1
@@ -292,8 +291,7 @@ popd
 %patch129 -p1
 %patch130 -p1
 %patch131 -p2
-%patch132 -p2
-#%patch133 -p1
+#%patch132 -p1
 
 install -m 0644 %SOURCE1 po/ru/freememorynotifier.po
 tar xf %SOURCE11 freememorynotifier/
@@ -379,7 +377,7 @@ done
 
 
 %files common -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %dir %_K5xdgconf/plasma-workspace/
 %dir %_K5xdgconf/plasma-workspace/env/
 %dir %_K5data/desktop-directories/
@@ -402,7 +400,7 @@ done
 %_K5exec/*
 %_K5libexecdir/kauth/*
 %_K5conf_bin/*
-%_K5lib/libkdeinit5_*.so
+#%_K5lib/libkdeinit5_*.so
 %_K5plug/plasma/*/*.so
 %_K5plug/phonon_platform/*.so
 %_K5plug/*.so
@@ -411,11 +409,10 @@ done
 %_K5plug/kf5/kded/*.so
 %_K5plug/kf5/kio/*.so
 %_K5plug/kf5/krunner/*.so
+%_K5plug/kf5/parts/*.so
 %_K5plug/plasmacalendarplugins/
 %_K5qml/org/kde/plasma/private/*
 %_K5qml/org/kde/plasma/wallpapers/*
-#%_K5qml/org/kde/plasma/workspace/*
-#%_K5qml/org/kde/private/*
 %_K5qml/org/kde/taskmanager/
 %_K5qml/org/kde/holidayeventshelperplugin/
 %_K5qml/org/kde/colorcorrect/
@@ -425,11 +422,10 @@ done
 %_K5data/kglobalaccel/*.desktop
 %_K5data/kio_desktop/
 %_K5data/kpackage/kcms/*/
-#%_K5data/kcontrol/
 %_K5data/krunner/
 %_K5data/ksplash/
 %_K5data/kstyle/
-%_K5data/kdisplay/
+#%_K5data/kdisplay/
 %_K5data/kfontinst/
 %_K5data/konqsidebartng/
 %_K5data/desktop-directories/*
@@ -439,7 +435,7 @@ done
 %_K5notif/*.notifyrc
 %_K5cfg/*.kcfg
 %_K5srv/*.desktop
-%_K5srv/*.protocol
+#%_K5srv/*.protocol
 %_K5srvtyp/*.desktop
 %_K5dbus_srv/*.service
 %_K5dbus/system.d/*.conf
@@ -470,7 +466,7 @@ done
 %_K5lib/cmake/KSMServerDBusInterface/
 %_K5lib/cmake/Lib*/
 %_K5dbus_iface/*.xml
-%_K5data/kdevappwizard/templates/*
+#%_K5data/kdevappwizard/templates/*
 
 %files -n %libkworkspace5
 %_K5lib/libkworkspace5.so.*
@@ -502,6 +498,9 @@ done
 
 
 %changelog
+* Mon Nov 01 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.23.2-alt1
+- new version
+
 * Wed Oct 13 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.5-alt5
 - revert 5.22.5-alt3 changes
 

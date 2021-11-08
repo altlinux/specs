@@ -2,7 +2,7 @@
 %def_disable dialer
 
 Name: plasma5-phone-components
-Version: 5.22.5
+Version: 5.23.2
 Release: alt1
 %K5init altplace
 
@@ -22,6 +22,7 @@ Patch3: alt-no-dialer.patch
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-wayland-devel
 BuildRequires: gst-plugins1.0-devel telepathy-qt5-devel
+BuildRequires: kf5-modemmanager-qt-devel ModemManager-devel
 BuildRequires: kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kio-devel kf5-knotifications-devel
 BuildRequires: kf5-kpackage-devel kf5-kpeople-devel kf5-kwayland-devel kf5-plasma-framework-devel
 BuildRequires: plasma5-kwin-devel
@@ -79,15 +80,21 @@ sed -i 's|\(.*add_subdirectory.*dialer.*\)|#\1|' CMakeLists.txt
 %doc LICENSES/*
 %_K5bin/kwinwrapper
 %_K5plug/plasma/applets/*.so
+%_K5qml/org/kde/plasma/mm/
 %_K5qml/org/kde/plasma/private/mobileshell/
 %_K5qml/org/kde/plasma/private/mobilehomescreencomponents/
 %_K5data/plasma/look-and-feel/org.kde.plasma.phone/
 %_K5data/plasma/plasmoids/*/
+%_K5data/plasma/quicksettings/*/
 %_K5data/plasma/shells/org.kde.plasma.phoneshell/
 %_K5notif/*.notifyrc
 %_datadir/xsessions/plasma-mobile.desktop
 
+
 %changelog
+* Mon Nov 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.2-alt1
+- new version
+
 * Wed Sep 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt1
 - new version
 

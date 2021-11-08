@@ -1,14 +1,18 @@
+%ifndef _unitdir_user
+%define _unitdir_user %prefix/lib/systemd/user
+%endif
+
 %define rname kwallet-pam
 
 Name: plasma5-%rname
-Version: 5.22.5
+Version: 5.23.2
 Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 PAM KWallet integration
 Url: http://www.kde.org
-License: GPL-2.0-or-later
+License: LGPL-2.1-or-later
 
 Provides: kf5-kwallet-pam = %EVR
 Obsoletes: kf5-kwallet-pam < %EVR
@@ -72,12 +76,16 @@ sed -i '/^Exec=/s|/pam_kwallet_init|/pam_kwallet5_init|' \
     %buildroot/%_K5start/pam_kwallet5_init.desktop
 
 %files -n pam0_kwallet5
-%doc COPYING.LIB
+%doc LICENSES/*
 %_pam_modules_dir/pam_kwallet5.so
 %_K5libexecdir/pam_kwallet5_init
 %_K5start/pam_kwallet5_init.desktop
+%_unitdir_user/*.service
 
 %changelog
+* Mon Nov 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.2-alt1
+- new version
+
 * Wed Sep 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt1
 - new version
 

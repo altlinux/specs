@@ -1,7 +1,7 @@
 %define rname plasma-browser-integration
 
 Name: plasma5-browser-integration
-Version: 5.22.5
+Version: 5.23.2
 Release: alt1
 %K5init altplace
 
@@ -11,7 +11,6 @@ Url: http://www.kde.org
 License: GPL-3.0-or-later
 
 Source: %rname-%version.tar
-Patch1: alt-def-krunner.patch
 Patch2: alt-detect-more-browsers.patch
 
 # Automatically added by buildreq on Thu Feb 27 2020 (-bi)
@@ -52,8 +51,13 @@ Requires: %name-common
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 %patch2 -p1
+
+# disable krunners by default
+for f in host/*.desktop ; do
+    sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=false|' $f
+done
+
 
 %build
 %K5build \
@@ -91,6 +95,9 @@ Requires: %name-common
 #%_K5lib/libplasma-browser-integration.so.*
 
 %changelog
+* Mon Nov 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.2-alt1
+- new version
+
 * Wed Sep 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt1
 - new version
 

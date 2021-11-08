@@ -1,7 +1,7 @@
 %define rname libkscreen
 
 Name: plasma5-%rname
-Version: 5.22.5
+Version: 5.23.2
 Release: alt1
 %K5init altplace
 
@@ -10,6 +10,9 @@ Summary: KDE Workspace 5 display configuration library
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
+Provides: kf5-libkscreen = %EVR
+Obsoletes: kf5-libkscreen < %EVR
+
 Source: %rname-%version.tar
 Patch1: alt-pnp-ids-path.patch
 
@@ -17,10 +20,9 @@ Patch1: alt-pnp-ids-path.patch
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-test libqt5-x11extras libstdc++-devel libxcb-devel libxkbfile-devel pkg-config python-base qt5-base-devel ruby ruby-stdlibs xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
 #BuildRequires: extra-cmake-modules gcc-c++ python-module-google qt5-x11extras-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules gcc-c++ qt5-x11extras-devel kf5-kwayland-devel
-
-Provides: kf5-libkscreen = %EVR
-Obsoletes: kf5-libkscreen < %EVR
+BuildRequires: extra-cmake-modules
+BuildRequires: qt5-x11extras-devel
+BuildRequires: qt5-wayland-devel kf5-kwayland-devel kde5-plasma-wayland-protocols
 
 %description
 LibKScreen is a library that provides access to current configuration
@@ -67,6 +69,7 @@ Obsoletes: kf5-libkscreen-utils < %EVR
 %patch1 -p1
 
 %build
+export PATH=%_qt5_bindir:$PATH
 %K5build
 
 %install
@@ -95,6 +98,9 @@ Obsoletes: kf5-libkscreen-utils < %EVR
 %_K5dbus_srv/org.kde.kscreen.service
 
 %changelog
+* Mon Nov 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.2-alt1
+- new version
+
 * Wed Sep 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt1
 - new version
 

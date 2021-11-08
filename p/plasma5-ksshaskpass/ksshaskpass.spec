@@ -2,7 +2,7 @@
 %define openssh_askpass_dir %_libexecdir/openssh
 
 Name: plasma5-%rname
-Version: 5.22.5
+Version: 5.23.2
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -20,11 +20,11 @@ Source: %rname-%version.tar
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
 # optimized out: alternatives cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base xml-common xml-utils
-#BuildRequires: extra-cmake-modules gcc-c++ kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static kf5-ki18n-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel python-module-google qt5-base-devel ruby ruby-stdlibs
+#BuildRequires: extra-cmake-modules gcc-c++ kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel kf5-ki18n-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel python-module-google qt5-base-devel ruby ruby-stdlibs
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kdelibs4support
-BuildRequires: kf5-kdoctools kf5-kdoctools-devel-static
+BuildRequires: kf5-kdoctools kf5-kdoctools-devel
 BuildRequires: kf5-ki18n-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
 
 Provides: kf5-ksshaskpass = %EVR
@@ -88,6 +88,9 @@ EOF
 #%_K5xdgapp/org.kde.ksshaskpass.desktop
 
 %changelog
+* Mon Nov 01 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.23.2-alt1
+- new version
+
 * Wed Sep 01 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.5-alt1
 - new version
 

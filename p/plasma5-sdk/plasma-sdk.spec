@@ -1,7 +1,7 @@
 %define rname plasma-sdk
 
 Name: plasma5-sdk
-Version: 5.22.5
+Version: 5.23.2
 Release: alt1
 %K5init altplace no_appdata
 
@@ -24,7 +24,7 @@ BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdeclarative-d
 BuildRequires: kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-kpackage-devel kf5-kparts-devel kf5-kservice-devel
 BuildRequires: kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
 BuildRequires: kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel kf5-kdbusaddons-devel kf5-kitemmodels-devel
-BuildRequires: kf5-kdoctools-devel-static kf5-syntax-highlighting-devel
+BuildRequires: kf5-kdoctools-devel kf5-syntax-highlighting-devel
 
 Provides: kf5-plasma-sdk = %EVR
 Obsoletes: kf5-plasma-sdk < %EVR
@@ -82,6 +82,9 @@ KF5 library
 %_K5data/kpackage/
 
 %changelog
+* Mon Nov 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.2-alt1
+- new version
+
 * Wed Sep 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt1
 - new version
 

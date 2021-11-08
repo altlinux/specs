@@ -2,7 +2,7 @@
 
 
 Name: plasma5-desktop
-Version: 5.22.5
+Version: 5.23.2
 Release: alt1
 %K5init altplace no_appdata
 
@@ -36,13 +36,12 @@ Patch14: alt-def-desktop-icons.patch
 Patch15: alt-menu-add-tooltip.patch
 Patch16: alt-kicker-custom-btn-img-size.patch
 Patch17: alt-users-use-gost-yescrypt.patch
-Patch18: alt-taskgroup-performance.patch
-Patch19: alt-kxkb-indicator-uppercase.patch
-Patch20: alt-use-background.patch
+Patch18: alt-kxkb-indicator-uppercase.patch
+Patch19: alt-use-background.patch
 
 # Automatically added by buildreq on Mon Mar 23 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glib2-devel glibc-devel-static kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libdbusmenu-qt52 libfreetype-devel libgpg-error libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libusb-compat libxcb-devel libxcbutil-image libxcbutil-keysyms libxkbfile-devel mkfontscale pkg-config python-base qt5-base-devel rpm-build-gir ruby ruby-stdlibs xml-common xml-utils xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
-#BuildRequires: boost-devel-headers extra-cmake-modules gcc-c++ iceauth kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kpackage-devel kf5-kparts-devel kf5-krunner-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwin-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libksysguard-devel kf5-plasma-framework-devel kf5-plasma-workspace-devel kf5-solid-devel kf5-sonnet-devel libGLU-devel libcanberra-devel libpulseaudio-devel libusb-compat-devel libxapian-devel libxcbutil-image-devel mkfontdir python-module-google qt5-declarative-devel qt5-phonon-devel qt5-svg-devel qt5-x11extras-devel rpm-build-ruby xset
+#BuildRequires: boost-devel-headers extra-cmake-modules gcc-c++ iceauth kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kpackage-devel kf5-kparts-devel kf5-krunner-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwin-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libksysguard-devel kf5-plasma-framework-devel kf5-plasma-workspace-devel kf5-solid-devel kf5-sonnet-devel libGLU-devel libcanberra-devel libpulseaudio-devel libusb-compat-devel libxapian-devel libxcbutil-image-devel mkfontdir python-module-google qt5-declarative-devel qt5-phonon-devel qt5-svg-devel qt5-x11extras-devel rpm-build-ruby xset
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: rpm-build-python3
 BuildRequires: boost-devel extra-cmake-modules gcc-c++
@@ -59,7 +58,7 @@ BuildRequires: kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kaut
 BuildRequires: kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel
 BuildRequires: kf5-kdbusaddons-devel kf5-kdesignerplugin-devel
 BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel
-BuildRequires: kf5-kdoctools kf5-kdoctools-devel-static
+BuildRequires: kf5-kdoctools kf5-kdoctools-devel
 BuildRequires: kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
 BuildRequires: kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kpackage-devel kf5-kparts-devel
@@ -132,7 +131,6 @@ Common polkit files for %name
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
-%patch20 -p1
 
 pushd kcms
     tar xvf %SOURCE1
@@ -171,7 +169,7 @@ done
 
 
 %files common -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_datadir/locale/*/LC_SCRIPTS/kfontinst/
 %_K5icon/*/*/*/*.*
 %_datadir/qlogging-categories5/*.*categories
@@ -179,13 +177,11 @@ done
 %dir %_K5data/plasma/avatars/photos/
 
 %files
-#%config(noreplace) %_K5xdgconf/*
 %_K5dbus/system.d/*.conf
 %_K5bin/*
 %exclude %_K5bin/*emojier*
 %_K5exec/*
 %_K5libexecdir/kauth/*
-#%_K5lib/libkdeinit5_*.so
 %_K5plug/*.so
 %_K5plug/kcms/*.so
 %_K5plug/kf5/kded/*.so
@@ -201,12 +197,11 @@ done
 %_K5start/*.desktop
 %_K5cfg/*
 %_K5conf_up/*
-%_K5srv/kded/*.desktop
+#%_K5srv/kded/*.desktop
 %_K5srv/*.desktop
 %_K5srvtyp/*.desktop
 %_K5notif/*
 %_K5data/solid/devices/solid-*.desktop
-#%_K5data/color-schemes/*
 %_K5data/kcm*/
 %_K5data/kactivitymanagerd/
 %_K5data/kpackage/kcms/*
@@ -217,7 +212,7 @@ done
 %_K5data/plasma/layout-templates/*
 %_K5data/plasma/shells/*/
 %_K5data/plasma/services/*
-%_K5data/plasma/desktoptheme/default/icons/*
+#%_K5data/plasma/desktoptheme/default/icons/*
 %_K5data/kglobalaccel/*.desktop
 %exclude %_K5data/kglobalaccel/*emojier*.desktop
 %_K5data/knsrcfiles/*.knsrc
@@ -238,6 +233,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Mon Nov 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.2-alt1
+- new version
+
 * Wed Sep 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt1
 - new version
 

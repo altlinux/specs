@@ -1,11 +1,17 @@
 %define _cmake__builddir BUILD
 %define repo dde-kwin
+%define kwin_ver %{get_version plasma5-kwin-devel}
+%_K5if_ver_lteq %kwin_ver 5.21.5
+%def_enable kwin_ext
+%else
+%def_disable kwin_ext
+%endif
 
 %def_disable clang
 
 Name: deepin-kwin
 Version: 5.3.14
-Release: alt2
+Release: alt3
 
 Summary: KWin configuration for Deepin Desktop Environment
 License: GPL-3.0+ and MIT
@@ -16,7 +22,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%repo-%version.tar.gz
 
 # upstream patches
-Patch: deepin-kwin-5.3.7-compile-kwin5.21.patch
+Patch: kwin-greater-than.patch
 Patch1: deepin-kwin-5.3.14-fix-library-links.patch
 # archlinux patches
 Patch2: %name-added-functions-from-their-forked-kwin.patch
@@ -32,10 +38,10 @@ BuildRequires(pre): clang12.0-devel
 BuildRequires(pre): gcc-c++
 %endif
 BuildRequires(pre): rpm-build-kf5 rpm-build-ninja
+BuildRequires(pre): plasma5-kwin-devel
 BuildRequires: cmake extra-cmake-modules qt5-tools qt5-tools-devel qt5-base-devel plasma5-kdecoration-devel qt5-x11extras-devel qt5-declarative-devel kf5-kwindowsystem-devel kf5-kcoreaddons-devel dtk5-gui-devel dtk5-common kf5-kconfig-devel kf5-kglobalaccel-devel kf5-ki18n-devel gsettings-qt-devel plasma5-kwin-devel plasma5-kwayland-server-devel kf5-kwayland-devel
 BuildRequires: zlib-devel bzlib-devel libpng-devel libpcre-devel libbrotli-devel libuuid-devel libexpat-devel
 BuildRequires: libxcb-devel libglvnd-devel libX11-devel
-BuildRequires: libkwin5
 Requires: plasma5-kwin
 # libkwineffects12 libkwinglutils12 libxcb libGL libX11
 
@@ -52,7 +58,7 @@ Header files and libraries for %name.
 
 %prep
 %setup -n %repo-%version
-# %patch -p2
+%patch -p1
 %patch1 -p1
 %patch2 -R -p1
 %patch3 -p1
@@ -80,13 +86,11 @@ export CC="clang"
 export CXX="clang++"
 export AR="llvm-ar"
 %endif
-# Workaround for missing libkwin.so
-mkdir libs
-ln -s %_libdir/libkwin.so.5 libs/libkwin.so
 %K5cmake \
     -GNinja \
     -DCMAKE_INSTALL_LIBDIR=%_K5lib \
-    -DKWIN_LIBRARY_PATH=`pwd`/libs
+    -DKWIN_LIBRARY_PATH=%_K5link \
+    #
 %cmake_build
 
 %install
@@ -101,18 +105,18 @@ chmod +x %buildroot%_bindir/kwin_no_scale
 %files
 %doc CHANGELOG.md LICENSE
 %_sysconfdir/xdg/*
-%_bindir/deepin-wm-dbus
 %_bindir/kwin_no_scale
-%_K5lib/libkwin-xcb.so.*
+%if_enabled kwin_ext
+%_bindir/deepin-wm-dbus
+%_K5plug/platforms/lib%repo-xcb.so
 %_datadir/dbus-1/services/*.service
-%_datadir/dbus-1/interfaces/*.xml
 %_K5data/kwin/scripts/*
 %_K5data/kwin/tabbox/*
 %dir %_datadir/dde-kwin-xcb/
 %dir %_datadir/dde-kwin-xcb/translations/
 %_datadir/dde-kwin-xcb/translations/%repo-xcb*.qm
 %dir %_K5plug/platforms/
-%_K5plug/platforms/lib%repo-xcb.so
+%_K5lib/libkwin-xcb.so.*
 %_K5plug/platforms/lib%repo-wayland.so
 %dir %_K5plug/kwin/
 %dir %_K5plug/kwin/effects/
@@ -121,13 +125,21 @@ chmod +x %buildroot%_bindir/kwin_no_scale
 %_K5plug/kwin/effects/plugins/libmultitasking.so
 %_K5plug/kwin/effects/plugins/libscissor-window.so
 %_K5plug/org.kde.kdecoration2/libdeepin-chameleon.so
+%endif
 
 %files devel
+%if_enabled kwin_ext
+%_K5plug/platforms/lib%repo-xcb.so
+%_datadir/dbus-1/interfaces/*.xml
 %_includedir/%repo/
 %_pkgconfigdir/%repo.pc
 %_K5lib/libkwin-xcb.so
+%endif
 
 %changelog
+* Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 5.3.14-alt3
+- fix to build with new kwin
+
 * Tue Oct 05 2021 Leontiy Volodin <lvol@altlinux.org> 5.3.14-alt2
 - Fixed library links with x11.
 

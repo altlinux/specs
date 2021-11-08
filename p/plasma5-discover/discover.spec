@@ -11,8 +11,8 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma5-%rname
-Version: 5.22.5
-Release: alt2
+Version: 5.23.2
+Release: alt1
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -224,6 +224,9 @@ done
 
 
 %changelog
+* Mon Nov 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.2-alt1
+- new version
+
 * Fri Sep 17 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.5-alt2
 - remove entry from khelpcenter
 

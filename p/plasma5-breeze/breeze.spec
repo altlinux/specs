@@ -4,7 +4,7 @@
 %define libbreezecommon libbreezecommon%breezecommon_sover
 
 Name: plasma5-%rname
-Version: 5.22.5
+Version: 5.23.2
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -92,7 +92,6 @@ KF5 library
 %_K5data/QtCurve/
 %_K5data/kstyle/themes/*
 %_K5data/color-schemes/*
-%_K5data/plasma/look-and-feel/org.kde.breeze*.desktop/
 %_iconsdir/?reeze*/
 %_iconsdir/hicolor/*/apps/breeze-settings.*
 %_K5cf_upd/*
@@ -106,6 +105,9 @@ KF5 library
 %_K5lib/libbreezecommon5.so.*
 
 %changelog
+* Mon Nov 01 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.23.2-alt1
+- new version
+
 * Wed Sep 01 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.22.5-alt1
 - new version
 
