@@ -18,7 +18,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.1
+Release: alt0.2
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -463,6 +463,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Mon Nov 08 2021 Sergey V Turchin <zerg at altlinux dot org> 10.0.0-alt0.2
+- update bootsplash theme
+
 * Wed Oct 13 2021 Sergey V Turchin <zerg at altlinux dot org> 10.0.0-alt0.1
 - beta
 
