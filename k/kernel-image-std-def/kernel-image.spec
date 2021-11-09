@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt2
 epoch:2
 %define kernel_base_version	5.10
 %define kernel_sublevel .78
@@ -702,6 +702,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Tue Nov 09 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.78-alt2
+- CLONE_USERNS default restriction restored (Closes: 41283)
+- NVME fix for TF307-MB-S-D (Closes: 40718)
+- use VIRT_CPU_ACCOUNTING_NATIVE instead of TICK_CPU_ACCOUNTING
+
 * Mon Nov 08 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.78-alt1
 - v5.10.78
 
