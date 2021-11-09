@@ -1,6 +1,6 @@
 
 Name: pve-storage-linstor
-Version: 5.2.0
+Version: 5.2.1
 Release: alt1
 
 Summary: LINSTOR Proxmox Plugin
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: pve-storage
 BuildRequires: perl-JSON-XS
 BuildRequires: perl(REST/Client.pm)
-Requires: linstor-controller
+Requires: linstor-controller pve-manager
 
 %add_perl_lib_path %buildroot%perl_vendor_privlib
 
@@ -39,10 +39,12 @@ LINSTOR Proxmox Plugin.
 	install -D -m 0644 ./LINBIT/PluginHelper.pm %buildroot%perl_vendor_privlib/LINBIT/PluginHelper.pm
 
 %post
-%post_service pvedaemon
+/sbin/service pvedaemon condrestart ||:
 
 %postun
-%post_service pvedaemon
+if [ $1 = 0 ]; then
+    /sbin/service pvedaemon condrestart ||:
+fi
 
 %files
 %doc README.md
@@ -53,6 +55,9 @@ LINSTOR Proxmox Plugin.
 %perl_vendor_privlib/LINBIT/PluginHelper.pm
 
 %changelog
+* Tue Nov 09 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.2.1-alt1
+- 5.2.1
+
 * Mon Jul 12 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.2.0-alt1
 - 5.2.0
 
