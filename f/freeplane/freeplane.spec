@@ -14,7 +14,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:		freeplane
 Version:	1.3.15
-Release:	alt4_7jpp8
+Release:	alt5_7jpp8
 Summary:	Mind mapping, knowledge management and project management tool
 Group:		Office
 License:	GPLv2+
@@ -254,9 +254,11 @@ pushd freeplane/dist/doc
     sed -i 's/\r$//' history_en.txt freeplaneTutorial*.mmfilter
 popd
 
-# bundled lib
+# bundled libs; to find exact locations (see MANIFEST.MF) use grep -r
 cp -ap -t %{buildroot}%{_javadir}/%{name}/org.freeplane.core/lib/ \
-	%{SOURCE33} %{SOURCE34}
+	%{SOURCE34} %{SOURCE35}
+cp -ap -t %{buildroot}%{_javadir}/%{name}/org.freeplane.plugin.script/lib/ \
+	%{SOURCE33}
 
 %files
 %doc README.%{product_distribution}
@@ -270,6 +272,9 @@ cp -ap -t %{buildroot}%{_javadir}/%{name}/org.freeplane.core/lib/ \
 
 
 %changelog
+* Tue Nov 09 2021 Igor Vlasenko <viy@altlinux.org> 1.3.15-alt5_7jpp8
+- fixed bundled groovy location (closes: #41144)
+
 * Wed Aug 18 2021 Igor Vlasenko <viy@altlinux.org> 1.3.15-alt4_7jpp8
 - bundled jgoodies-forms to fix build
 
