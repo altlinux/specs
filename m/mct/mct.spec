@@ -5,7 +5,7 @@
 
 Name: mct
 Version: 2.8.3
-Release: alt3
+Release: alt4
 Summary: The Model Coupling Toolkit
 License: MIT
 Group: Development/Tools
@@ -155,6 +155,8 @@ for i in libmpeu libmct; do
 done
 popd
 
+rm -fv %buildroot%_libdir/*.a
+
 #files
 #doc COPYRIGHT examples
 #_bindir/*
@@ -173,6 +175,9 @@ popd
 #_docdir/lib%name-devel
 
 %changelog
+* Tue Nov 09 2021 Grigory Ustinov <grenka@altlinux.org> 2.8.3-alt4
+- Fixed FTBFS.
+
 * Tue Jul 27 2021 Grigory Ustinov <grenka@altlinux.org> 2.8.3-alt3
 - Fixed fix for %%e2k.
 
