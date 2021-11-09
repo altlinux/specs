@@ -3,7 +3,7 @@
 
 Name: pve-backup
 Version: 2.0.1
-Release: alt3
+Release: alt4
 Epoch: 1
 Summary: PVE Backup Server
 License: GPL-1 and LGPLv2 and BSD
@@ -20,10 +20,9 @@ Source6: proxmox-backup-qemu-1.2.0.tar.xz
 Source10: cargo.tar.xz
 Source11: basealt_logo-128.png
 Source12: basealt_logo.png
-Source13: Toolkit.js
-Source14: APIViewer.js
 
 Source100: pve-i18n.tar.xz
+Source101: proxmox-backup-js.tar
 
 Patch0: proxmox-backup-alt.patch
 Patch1: proxmox-openid-rs-alt.patch
@@ -34,6 +33,7 @@ Patch5: proxmox-backup-auth.patch
 Patch6: proxmox-backup-sshkeypath.patch
 Patch7: proxmox-backup-rm-subscription.patch
 Patch8: pve-i18n-pbs.patch
+Patch9: proxmox-backup-docs-rm-pdf.patch
 
 ExclusiveArch: x86_64 aarch64
 
@@ -50,7 +50,7 @@ tools. This includes a web-based graphical user interface.
 Summary: PVE backup server
 Group: Archiving/Backup
 Requires(pre): shadow-utils
-Requires: javascript-common %name-client = %EVR pve-xtermjs >= 4.12.0 pve-widget-toolkit pve-mini-journalreader
+Requires: javascript-common %name-client = %EVR pve-xtermjs >= 4.12.0 pve-widget-toolkit pve-mini-journalreader lvm2 zfs-utils
 Provides: proxmox-backup-server = %EVR
 
 %description server
@@ -94,7 +94,7 @@ Version: 1.2.0
 PVE Backup Server development environment.
 
 %prep
-%setup -q -c -n %name -a1 -a2 -a3 -a4 -a5 -a6 -a10 -a100
+%setup -q -c -n %name -a1 -a2 -a3 -a4 -a5 -a6 -a10 -a100 -a101
 %patch0 -p0 -b .alt
 %patch1 -p0
 %patch2 -p0
@@ -104,11 +104,12 @@ PVE Backup Server development environment.
 %patch6 -p0 -b .sshkey
 %patch7 -p0 -b .subscr
 %patch8 -p0
+%patch9 -p0 -b .rmpdf
 
 rm -f */.cargo/config
+rm -f proxmox-backup/docs/installation.rst
 
 %build
-mv %SOURCE13 %SOURCE14 %_builddir/%name/proxmox-backup/docs
 export CARGO_HOME=%_builddir/%name/cargo
 cd proxmox-backup-qemu
 cargo build --release --offline
@@ -117,9 +118,14 @@ make -C %_builddir/%name/pve-i18n
 
 %install
 make -C proxmox-backup DESTDIR=%buildroot install
-make -C pve-i18n DESTDIR=%buildroot install
-
 make -C proxmox-backup/docs DESTDIR=%buildroot install_html
+
+for d in api-viewer prune-simulator lto-barcode ; do
+	ln -s ../../../../javascript/extjs %buildroot%_datadir/doc/proxmox-backup/html/$d/extjs
+done
+ln -s ../../../../fonts-font-awesome %buildroot%_datadir/doc/proxmox-backup/html/lto-barcode/font-awesome
+
+make -C pve-i18n DESTDIR=%buildroot install
 
 install -pD -m644 proxmox-backup-qemu/proxmox-backup-qemu.h %buildroot%_includedir/proxmox-backup-qemu.h
 install -pD -m644 proxmox-backup-qemu/target/release/libproxmox_backup_qemu.so %buildroot%_libdir/libproxmox_backup_qemu.so.0
@@ -156,6 +162,7 @@ grep -q "^%proxy_user:" %_sysconfdir/passwd || %_sbindir/useradd -g %proxy_user 
 %_datadir/zsh/vendor-completions/_pmt*
 %_datadir/zsh/vendor-completions/_proxmox-tape
 %_datadir/zsh/vendor-completions/_proxmox-backup-manager
+%_datadir/doc/proxmox-backup
 %_unitdir/proxmox-backup.service
 %_unitdir/proxmox-backup-proxy.service
 %dir %attr(0755,%proxy_user,%proxy_user) %_logdir/proxmox-backup
@@ -165,7 +172,6 @@ grep -q "^%proxy_user:" %_sysconfdir/passwd || %_sbindir/useradd -g %proxy_user 
 %_man1dir/proxmox-backup-manager.1*
 %_man1dir/proxmox-backup-proxy.1*
 %_man5dir/*.5*
-%_docdir/proxmox-backup
 
 %files client
 %_bindir/pxar
@@ -189,6 +195,9 @@ grep -q "^%proxy_user:" %_sysconfdir/passwd || %_sbindir/useradd -g %proxy_user 
 %_libdir/libproxmox_backup_qemu.so
 
 %changelog
+* Tue Nov 09 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:2.0.1-alt4
+- fixed html docs
+
 * Mon Nov 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 1:2.0.1-alt3
 - build with html docs
 
