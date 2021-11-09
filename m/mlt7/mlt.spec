@@ -11,30 +11,31 @@
 %def_enable libvidstab
 
 %define Name MLT
-%define mlt_sover 6
+%define nam mlt
+%define mlt_major 7
+%define mlt_sover 7
 %define libmlt libmlt%mlt_sover
-%define mltxx_sover 3
+%define mltxx_sover 7
 %define libmltxx libmlt++%mltxx_sover
 
-Name: mlt
-Version: 6.26.1
-Release: alt3
+Name: %nam%mlt_major
+Version: 7.0.1
+Release: alt1
+%K5init no_altplace
 
 Summary: Multimedia framework designed for television broadcasting
 License: GPL-3.0-or-later
 Group: Video
 Url: https://www.mltframework.org/
 
-Packager: Maxim Ivanov <redbaron@altlinux.org>
-
-Source: %name-%version.tar
+Source: %nam-%version.tar
 Source1: mlt++-config.h
 # Debian
 Patch20: 01-changed-preset-path.diff
 # ALT
-Patch101: alt-configure-mmx.patch
 Patch102: alt-no-version-script.patch
 Patch103: alt-libav.patch
+Patch104: alt-ix86.patch
 
 # Automatically added by buildreq on Sun Mar 18 2018 (-bi)
 # optimized out: elfutils gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libSDL-devel libX11-devel libavcodec-devel libavformat-devel libavutil-devel libcdio-paranoia libdc1394-22 libgpg-error libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-gui libqt5-svg libqt5-widgets libqt5-xml libraw1394-11 libstdc++-devel libvdpau-devel libx265-130 perl pkg-config python-base python-devel python-modules qt5-base-devel rpm-build-gir swig-data xorg-xproto-devel
@@ -42,6 +43,7 @@ Patch103: alt-libav.patch
 #BuildRequires: frei0r-devel ladspa_sdk libSDL_image-devel libalsa-devel libavdevice-devel libavformat-devel libexif-devel libfftw3-devel libjack-devel libpulseaudio-devel libsamplerate-devel libsox-devel libswfdec-devel libswscale-devel libxml2-devel python-module-google python3-dev qt5-svg-devel rpm-build-ruby swig
 BuildRequires(pre): rpm-build-kf5 rpm-build-python3 libavformat-devel
 BuildRequires: qt5-svg-devel
+BuildRequires: cmake
 BuildRequires: frei0r-devel libSDL-devel libSDL2-devel libSDL2_image-devel libalsa-devel libexif-devel
 BuildRequires: libavfilter-devel libswscale-devel libavdevice-devel libavformat-devel
 %if %is_ffmpeg
@@ -59,45 +61,35 @@ BuildRequires: libgdk-pixbuf-devel libpango-devel
 %description
 %Name is a multimedia framework designed for television broadcasting.
 
-%package utils
-Summary: %name utils
+%package -n %nam-utils
+Summary: %Name utils
 Group: Video
-License: GPL
-%description utils
+%description -n %nam-utils
 %Name utils.
 
 %package -n %libmlt
 Summary: %Name framework library
-License: GPL
 Group: System/Libraries
-%mIF_ver_lt %version 7
-Provides: libmlt = %EVR
-Obsoletes: libmlt < %EVR
-%endif
 %description -n %libmlt
 %Name is a multimedia framework designed for television broadcasting.
 
 %package -n %libmltxx
 Summary: C++ wrapping for the MLT library
 Group: System/Libraries
-%mIF_ver_lt %version 7
-Provides: libmlt++ = %EVR
-Obsoletes: libmlt++ < %EVR
-%endif
 %description -n %libmltxx
 This mlt sub-project provides a C++ wrapping for the MLT library.
 
-%package -n libmlt-devel
+%package -n %name-devel
 Summary: Development files for %Name framework
-License: GPL
 Group: Development/C
-%description -n libmlt-devel
+%description -n %name-devel
 Development files for %Name framework.
 
-%package -n libmlt++-devel
+%package -n %{name}xx-devel
 Summary: Development files for %Name
 Group: Development/C++
-%description -n libmlt++-devel
+Requires: %name-devel
+%description -n %{name}xx-devel
 Development files for %Name.
 
 %package -n python3-module-%name
@@ -107,29 +99,23 @@ Group: Development/Python
 This module allows to work with %Name using python..
 
 %prep
-%setup
+%setup -n %nam-%version
 %if %is_ffmpeg
 %else
 %patch20 -p1
 %endif
-%patch101 -p1
 %patch102 -p1
 %if %is_ffmpeg
 %else
 %patch103 -p1
 %endif
+%patch104 -p1
 
 [ -f src/mlt++/config.h ] || \
     install -m 0644 %SOURCE1 src/mlt++/config.h
 
-find src/swig/python -name '*.py' | xargs sed -i '1s|^#!/usr/bin/env python|#!%{__python3}|'
-sed -i -e 's|which python|which python3|' src/swig/python/build
-sed -i -e 's|python -c|python3 -c|' src/swig/python/build
-sed -i -e 's|python-config|python3-config|' src/swig/python/build
-sed -i -e 's|python{}.{}|python{}.{}m|' src/swig/python/build
-
 %ifarch %e2k
-sed -i 's,-fno-tree-pre,,' configure
+sed -i 's,-fno-tree-pre,,' src/modules/xine/CMakeLists.txt
 %endif
 
 %build
@@ -141,70 +127,52 @@ sed -i 's,-fno-tree-pre,,' configure
 %add_optflags -std=c++11
 %endif
 export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
-%configure \
-	--enable-gpl --enable-gpl3 \
-	--target-os=Linux \
-%ifarch x86_64
-	--target-arch=%_target_cpu \
+%if %is_ffmpeg
+%add_optflags -DAVDATADIR="%_datadir/ffmpeg/"
+%else
+%add_optflags -DAVDATADIR="%_datadir/avconv/"
 %endif
-	%ifnarch %ix86 x86_64
-	--disable-mmx \
-	--disable-sse \
-	--disable-sse2 \
-	%endif
-	%ifarch i586
-	--disable-mmx \
-	%endif
-	%{subst_enable debug} \
-	--without-kde \
-	--kde-includedir=%_K5inc \
-        --kde-libdir=%_K5link \
-        --swig-languages=python \
-        --disable-swfdec \
-        --disable-opencv \
-        #
-#	--luma-compress \
-
-%make_build
+%K5build \
+    -DSWIG_PYTHON=ON \
+    -DMOD_OPENCV=OFF \
+    #
 
 %install
-%makeinstall_std
-install -d %buildroot/%python3_sitelibdir
-install -pm 0644 src/swig/python/%name.py %buildroot/%python3_sitelibdir/
-install -pm 0755 src/swig/python/_%name.so %buildroot/%python3_sitelibdir/
+%make -C BUILD DESTDIR=%buildroot install
 
-#%files -n %name-utils
-#%doc docs/melt.txt
-#%_bindir/melt
+%files -n %nam-utils
+%_bindir/melt*
+%_man1dir/*.1.*
 
 %files -n %libmlt
-#%doc docs/services.txt docs/westley.txt
-%_libdir/libmlt.so.%mlt_sover
-%_libdir/libmlt.so.*
-%_libdir/mlt
-%_datadir/mlt
+%_libdir/libmlt-%mlt_major.so.%mlt_sover
+%_libdir/libmlt-%mlt_major.so.*
+%_libdir/mlt-%mlt_major/
+%_datadir/mlt-%mlt_major/
 
 %files -n %libmltxx
-%_libdir/libmlt++.so.%mltxx_sover
-%_libdir/libmlt++.so.*
+%_libdir/libmlt++-%mlt_major.so.%mltxx_sover
+%_libdir/libmlt++-%mlt_major.so.*
 
 %files -n python3-module-%name
-%python3_sitelibdir/*
+%python3_sitelibdir/*%{name}*
+%python3_sitelibdir/*/*%{name}*
 
-%files -n libmlt-devel
-#%doc docs/framework.txt
-%_includedir/mlt/
-%_libdir/libmlt.so
-%_pkgconfigdir/mlt-framework.pc
+%files -n %name-devel
+%dir %_includedir/mlt-%mlt_major/
+%_includedir/mlt-%mlt_major/framework/
+%_libdir/libmlt-%mlt_major.so
+%_libdir/cmake/Mlt7/
+%_pkgconfigdir/mlt-framework-%mlt_major.pc
 
-%files -n libmlt++-devel
-%_includedir/mlt++/
-%_libdir/libmlt++.so
-%_pkgconfigdir/mlt++.pc
+%files -n %{name}xx-devel
+%_includedir/mlt-%mlt_major/mlt++/
+%_libdir/libmlt++-%mlt_major.so
+%_pkgconfigdir/mlt++-%mlt_major.pc
 
 %changelog
-* Tue Nov 09 2021 Sergey V Turchin <zerg@altlinux.org> 6.26.1-alt3
-- don't package mlt-utils (moved to mlt7 utils)
+* Tue Aug 31 2021 Sergey V Turchin <zerg@altlinux.org> 7.0.1-alt1
+- new version
 
 * Wed Jul 21 2021 Andrey Sokolov <keremet@altlinux.org> 6.26.1-alt2
 - add build requirements for libmltgdk.so (closes 40556)
@@ -372,7 +340,7 @@ install -pm 0755 src/swig/python/_%name.so %buildroot/%python3_sitelibdir/
 - 0.5.2
 
 * Tue Jan 12 2010 Slava Dubrovskiy <dubrsl@altlinux.org> 0.4.6-alt2
-- Add subpackage python-module-%name
+- Add subpackage python-module-name
 
 * Thu Nov 12 2009 Maxim Ivanov <redbaron at altlinux.org> 0.4.6-alt1
 - 0.4.6
@@ -433,12 +401,12 @@ install -pm 0755 src/swig/python/_%name.so %buildroot/%python3_sitelibdir/
 - add Packager (swi@)
 
 * Wed Feb 14 2007 Led <led@altlinux.ru> 0.2.2-alt0.3
-- fixed %name-0.2.2-modulesdir.patch
+- fixed name-0.2.2-modulesdir.patch
 
 * Tue Feb 13 2007 Led <led@altlinux.ru> 0.2.2-alt0.2
-- added %name-0.2.2-configure.patch
-- added %name-0.2.2-x86_64.patch
+- added name-0.2.2-configure.patch
+- added name-0.2.2-x86_64.patch
 
 * Tue Feb 13 2007 Led <led@altlinux.ru> 0.2.2-alt0.1
 - initial build
-- added %name-0.2.2-modulesdir.patch
+- added name-0.2.2-modulesdir.patch
