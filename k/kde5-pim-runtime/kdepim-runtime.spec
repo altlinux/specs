@@ -8,7 +8,7 @@
 %define libakonadi_singlefileresource libakonadi-singlefileresource%pim_sover
 
 Name: kde5-pim-runtime
-Version: 21.08.2
+Version: 21.08.3
 Release: alt1
 %K5init altplace
 
@@ -165,6 +165,9 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 %_K5lib/libakonadi-singlefileresource.so.*
 
 %changelog
+* Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
+- new version
+
 * Fri Oct 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.2-alt1
 - new version
 

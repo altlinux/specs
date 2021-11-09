@@ -4,7 +4,7 @@
 %define libgrantleethemeeditor libgrantleethemeeditor%pim_sover
 
 Name: kde5-%rname
-Version: 21.08.2
+Version: 21.08.3
 Release: alt1
 %K5init
 
@@ -89,6 +89,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libgrantleethemeeditor.so.*
 
 %changelog
+* Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
+- new version
+
 * Fri Oct 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.2-alt1
 - new version
 
