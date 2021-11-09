@@ -8,7 +8,7 @@
 %def_enable exiv2
 
 Name: kde5-%rname
-Version: 21.08.2
+Version: 21.08.3
 Release: alt1
 %K5init altplace
 
@@ -22,8 +22,10 @@ Requires: kf5-kio
 Provides: kf5-kio-extras = %EVR
 Obsoletes: kf5-kio-extras < %EVR
 
-# Bug 40997
-Requires: djvu-utils
+# djvu thumbnailer
+Requires: /usr/bin/ddjvu
+# ico thumbnailer: /usr/bin/wrestool
+# comic thumbnailer: /usr/bin/unrar
 
 Source: %rname-%version.tar
 # ALT
@@ -145,6 +147,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libkioarchive.so.%kioarchive_sover
 
 %changelog
+* Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
+- new version
+
 * Fri Oct 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.2-alt1
 - new version
 

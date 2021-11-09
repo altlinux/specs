@@ -7,8 +7,8 @@
 %define libkdeconnectsmshelper libkdeconnectsmshelper%sover
 
 Name: kde5-connect
-Version: 21.08.2
-Release: alt2
+Version: 21.08.3
+Release: alt1
 %K5init
 
 Group: Communications
@@ -146,6 +146,9 @@ KF5 library
 #%_K5lib/libkdeconnectsmshelper.so.*
 
 %changelog
+* Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
+- new version
+
 * Mon Oct 11 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.2-alt2
 - package new icons
 
