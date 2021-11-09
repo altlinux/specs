@@ -1,7 +1,8 @@
+%def_without runwm
 %def_without xdg
 %def_without gtk3
 Name: wm-select
-Version: 0.9.3
+Version: 0.9.4
 Release: alt1
 
 Summary: Application for selecting window manager at startup
@@ -21,25 +22,42 @@ BuildRequires: libgtk+2-devel
 wm-select is a small Gtk application for selecting a window manager
 at X startup.
 
+%if_with runwm
+%package -n runwm
+Group: System/X11
+Summary: Executes window manager using wm.d or xsessions database
+Conflicts: xinitrc < 2.4.47-alt3
+
+%description -n runwm
+runwm is a tool for non-XDG compliant Display Managers that executes
+window manager using wm.d or xsessions database.
+%endif
+
+
 %prep
 %setup
 
 %build
 %make_build CFLAGS="%optflags" \
-%if_with xdg
-	WITH_XDG=yes \
-%else
-	WITH_XDG= \
+%if_without xdg
+	    WITH_WM_SESSION=yes \
 %endif
 %if_with gtk3
-	    WITH_GTK2=
+	    WITH_GTK2= \
 %else
-	    WITH_GTK2=yes
+	    WITH_GTK2=yes \
 %endif
-
+	    all
 
 %install
 install -pD -m755 %name %buildroot%_bindir/%name
+
+%if_with runwm
+install -pD -m755 runwm %buildroot%_bindir/runwm
+%else
+install -pD -m755 runwm %buildroot%_bindir/runwm.test
+%endif
+
 for f in *.mo; do
 	lang="${f%%.mo}"
 	install -pD -m644 "$f" "%buildroot%_datadir/locale/$lang/LC_MESSAGES/%name.mo"
@@ -47,9 +65,20 @@ done
 %find_lang %name
 
 %files -f %name.lang
-%_bindir/*
+%_bindir/%name
+
+%if_with runwm
+%files -n runwm
+%_bindir/runwm
+%else
+%_bindir/runwm.test
+%endif
 
 %changelog
+* Tue Nov 09 2021 Igor Vlasenko <viy@altlinux.org> 0.9.4-alt1
+- new version:
+- added future runwm replacement as runwm.test for now
+
 * Sun Oct 31 2021 Igor Vlasenko <viy@altlinux.org> 0.9.3-alt1
 - new version:
 - command line options, sessions (ALT/XDG) selection
