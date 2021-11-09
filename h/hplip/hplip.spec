@@ -29,7 +29,7 @@
 
 Name:    hplip
 Version: 3.21.10
-Release: alt1
+Release: alt2
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -129,6 +129,14 @@ BuildRequires: python%{pysuffix}-devel
 %if_enabled PPDs
 #cups-common and foomatic-filters is for cupstestppd
 BuildRequires: perl cups-common %{cups_filters}
+Provides:  %name-PPDs = %EVR
+Obsoletes: %name-PPDs < %EVR
+Provides:  %name-ps-PPDs = %EVR
+Obsoletes: %name-ps-PPDs < %EVR
+Provides:  %name-hpcups-PPDs = %EVR
+Obsoletes: %name-hpcups-PPDs < %EVR
+Provides:  %name-hpijs-PPDs = %EVR
+Obsoletes: %name-hpijs-PPDs < %EVR
 %endif
 
 %if_enabled policykit
@@ -405,91 +413,6 @@ models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy),
 
 This package contains common libraries for
 The Hewlett-Packard  Inkjet  Driver  Project.
-
-%if_enabled PPDs
-%package PPDs
-Summary: PPDs for Hewlett-Packard Co. Inkjet Printers and MFPs (Deprecated)
-License: MIT
-Group: Publishing
-Requires: %name-ps-PPDs = %{?epoch:%epoch:}%version-%release
-Requires: %name-hpcups-PPDs = %{?epoch:%epoch:}%version-%release
-Requires: %name-hpijs-PPDs = %{?epoch:%epoch:}%version-%release
-# TODO: it seems it is not needed 
-#Requires: foomatic-db >= 3.0.2-alt7
-%if_enabled foomatic_rip
-Requires: %{cups_filters}
-%endif
-BuildArch: noarch
-
-%description PPDs
-HPLIP is an HP developed solution for printing, scanning, and faxing
-with HP inkjet and laser based printers in Linux.
-
-The HPLIP project provides printing support for nearly 1000 printer
-models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy),
-
-WARNING! foomatic static and dynamic ppd install is deprecated.
-Feature can be used as is. Fixes or updates will not be provided.
-
-%package ps-PPDs
-Summary: PPDs for Hewlett-Packard Co. Inkjet Printers and MFPs for postscript HP printers
-License: MIT
-Group: Publishing
-%if_enabled foomatic_rip
-Requires: %{cups_filters}
-%endif
-Conflicts: %name-PPDs < %version
-BuildArch: noarch
-
-%description ps-PPDs
-HPLIP is an HP developed solution for printing, scanning, and faxing
-with HP inkjet and laser based printers in Linux.
-
-The HPLIP project provides printing support for nearly 1000 printer
-models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy),
-
-This package contains postscript printer definition files (PPDs) for postscript HP printers.
-
-%package hpcups-PPDs
-Summary: PPDs for HP Inkjet Printers and MFPs for hpcups cups driver (Deprecated)
-License: MIT
-Group: Publishing
-%if_enabled foomatic_rip
-Requires: %{cups_filters}
-%endif
-Requires: %name-hpcups = %{?epoch:%epoch:}%version-%release
-Conflicts: %name-PPDs < %version
-BuildArch: noarch
-
-%description hpcups-PPDs
-HPLIP is an HP developed solution for printing, scanning, and faxing
-with HP inkjet and laser based printers in Linux.
-
-The HPLIP project provides printing support for nearly 1000 printer
-models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy),
-
-This package contains postscript printer definition files (PPDs) for hpcups cups driver.
-
-%package hpijs-PPDs
-Summary: PPDs for HP Inkjet Printers and MFPs for hpijs cups driver (Deprecated)
-License: MIT
-Group: Publishing
-%if_enabled foomatic_rip
-Requires: %{cups_filters}
-%endif
-Requires: %name-hpijs = %{?epoch:%epoch:}%version-%release
-Conflicts: %name-PPDs < %version
-BuildArch: noarch
-
-%description hpijs-PPDs
-HPLIP is an HP developed solution for printing, scanning, and faxing
-with HP inkjet and laser based printers in Linux.
-
-The HPLIP project provides printing support for nearly 1000 printer
-models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy),
-
-This package contains postscript printer definition files (PPDs) for hpijs cups driver.
-%endif
 
 %package hpijs
 Summary: Hewlett-Packard Co. Inkjet Driver Project (Deprecated)
@@ -1064,6 +987,12 @@ fi
 #%{_sysconfdir}/cron.daily/hplip_cron
 %endif
 
+%if_enabled PPDs
+%_datadir/ppd/HP/*
+%else
+%_datadir/cups/model/HP-Fax-hplip.ppd*
+%endif
+
 %files hpcups
 # CUPS drv
 %dir %{_datadir}/cups/drv/hp
@@ -1149,22 +1078,6 @@ fi
 %endif
 %endif
 
-%if_enabled PPDs
-%files PPDs
-### moved to foomatic
-###%_datadir/cups/model/foomatic-ppds
-%files hpijs-PPDs
-%_datadir/ppd/HP/*-hpijs*.ppd*
-%files hpcups-PPDs
-%_datadir/ppd/HP/*
-%exclude %_datadir/ppd/HP/*-hpijs*.ppd*
-%exclude %_datadir/ppd/HP/*-ps.ppd*
-%files ps-PPDs
-%_datadir/ppd/HP/*-ps.ppd*
-%else
-%_datadir/cups/model/HP-Fax-hplip.ppd*
-%endif
-
 %files recommends
 
 %files common
@@ -1212,6 +1125,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Tue Nov 09 2021 Andrey Cherepanov <cas@altlinux.org> 1:3.21.10-alt2
+- Move all PPD files to main package hplip.
+
 * Fri Nov 05 2021 Andrey Cherepanov <cas@altlinux.org> 1:3.21.10-alt1
 - New version.
 - Added support for the following new printers:
