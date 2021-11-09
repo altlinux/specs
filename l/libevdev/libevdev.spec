@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: libevdev
-Version: 1.11.0
+Version: 1.12.0
 Release: alt1
 
 Summary: kernel evdev device wrapper library
@@ -14,8 +14,8 @@ Vcs: https://gitlab.freedesktop.org/libevdev/libevdev.git
 
 Source: https://www.freedesktop.org/software/%name/%name-%version.tar.xz
 
-BuildRequires(pre): meson rpm-macros-valgrind
-BuildRequires: glibc-kernheaders libcheck-devel python3-module-setuptools
+BuildRequires(pre): rpm-macros-meson rpm-macros-valgrind
+BuildRequires: meson glibc-kernheaders libcheck-devel python3-module-setuptools
 %{?_enable_doc:BuildRequires: doxygen}
 %ifarch %valgrind_arches
 BuildRequires: valgrind
@@ -66,6 +66,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man3dir/%name.3.*
 
 %changelog
+* Tue Nov 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Mon Feb 01 2021 Yuri N. Sedunov <aris@altlinux.org> 1.11.0-alt1
 - 1.11.0 (ported to Meson build system)
 
