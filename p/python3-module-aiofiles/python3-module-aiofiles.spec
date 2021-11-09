@@ -1,13 +1,14 @@
 %define  modulename aiofiles
 
 Name:    python3-module-%modulename
-Version: 0.6.0
-Release: alt2
+Version: 0.7.0
+Release: alt1
 
 Summary: File support for asyncio
 License: Apache-2.0
 Group:   Development/Python3
 URL:     https://github.com/Tinche/aiofiles
+# Source-url: https://pypi.python.org/packages/source/a/aiofiles/aiofiles-%version.tar.gz
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 
@@ -15,11 +16,11 @@ BuildArch: noarch
 
 Source:  %modulename-%version.tar
 
-%description
-%summary
-
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
+
+%description
+%summary
 
 %prep
 %setup -n %modulename-%version
@@ -36,6 +37,10 @@ BuildRequires: python3-devel python3-module-setuptools
 %doc *.rst LICENSE
 
 %changelog
+* Tue Nov 09 2021 Anton Midyukov <antohami@altlinux.org> 0.7.0-alt1
+- new version (0.7.0) with rpmgs script
+- source from tarball
+
 * Mon May 24 2021 Anton Midyukov <antohami@altlinux.org> 0.6.0-alt2
 - rename srpm to python3-module-aiofiles
 

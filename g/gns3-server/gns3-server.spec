@@ -1,6 +1,8 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
+#%%def_disable check
+
 %add_verify_elf_skiplist %python3_sitelibdir/gns3server/compute/docker/resources/bin/busybox
 %add_findreq_skiplist %python3_sitelibdir/gns3server/compute/docker/*
 %add_python3_req_skip prompt_toolkit.eventloop.base
@@ -9,7 +11,7 @@
 %add_python3_req_skip prompt_toolkit.terminal.vt100_output
 
 Name: gns3-server
-Version: 2.2.21
+Version: 2.2.26
 Release: alt1
 
 Summary: GNS3 server manages emulators such as Dynamips, VirtualBox or Qemu/KVM
@@ -27,11 +29,11 @@ BuildRequires: python3-devel python3-module-setuptools
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 Requires: cpulimit
 Requires: dynamips >= 0.2.11
-Requires: python3-module-aiofiles >= 0.6.0
+Requires: python3-module-aiofiles >= 0.7.0
 Requires: python3-module-aiohttp >= 3.7.4
 Requires: python3-module-aiohttp-cors >= 0.7.0
 Requires: python3-module-async-timeout >= 3.0.1
-Requires: python3-module-jinja2 >= 2.11.3 
+Requires: python3-module-jinja2 >= 2.11.3
 Requires: python3-module-jsonschema >= 3.2.0
 Requires: python3-module-psutil >= 5.7.1
 #Requires: python3-module-sentry-sdk >= 1.0.0
@@ -39,6 +41,21 @@ Requires: iouyap
 Requires: ubridge
 Requires: vpcs
 Conflicts: gns3 < 1.0.0
+
+%if_disabled check
+%else
+BuildRequires: /proc
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-aiohttp
+BuildRequires: python3-module-aiohttp-tests
+BuildRequires: python3-module-jsonschema >= 3.2.0
+BuildRequires: python3-module-aiofiles >= 0.7.0
+BuildRequires: python3-module-psutil >= 5.7.1
+BuildRequires: python3-module-jinja2 >= 2.11.3
+BuildRequires: python3-module-distro
+BuildRequires: python3-module-aiohttp-cors >= 0.7.0
+BuildRequires: python3-module-cpuinfo
+%endif
 
 %description
 The GNS3 server manages emulators such as Dynamips, VirtualBox or Qemu/KVM.
@@ -54,14 +71,25 @@ echo '' > requirements.txt
 %install
 %python3_install
 
+%ifnarch %ix86 x86_64
+rm tests/controller/gns3vm/test_virtualbox_gns3_vm.py
+%endif
+
+%check
+export PYTHONPATH=%buildroot/%python3_sitelibdir/
+py.test3 -v
+
 %files
 %doc AUTHORS LICENSE README.rst
 %_bindir/*
 %python3_sitelibdir/gns3server
 %python3_sitelibdir/gns3_server-*.egg-info
-%exclude %python3_sitelibdir/tests/controller
 
 %changelog
+* Tue Nov 09 2021 Anton Midyukov <antohami@altlinux.org> 2.2.26-alt1
+- new version 2.2.26
+- enable check
+
 * Mon Jul 05 2021 Anton Midyukov <antohami@altlinux.org> 2.2.21-alt1
 - new version 2.2.21
 
