@@ -1,6 +1,6 @@
 Name: asc
-Version: 2.6.1.0
-Release: alt4
+Version: 2.8.0.2
+Release: alt1
 
 Summary: ASC - a battle isle clone
 License: GPLv2+
@@ -15,32 +15,41 @@ Source3: time_to_strike.ogg
 Source10: %name.desktop
 Source11: %name.png
 Patch1: asc-upstream-gcc10-compat.patch
+Patch2: asc-2.8.0.2-gcc-11.patch
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildRequires: boost-program_options-devel bzlib-devel gcc-c++
 BuildRequires: libSDL_image-devel libSDL_mixer-devel libSDL_sound-devel
 BuildRequires: libexpat-devel libfreetype-devel liblua5-devel libphysfs-devel libsigc++2-devel libwxGTK3.0-devel
-BuildRequires: libcurl-devel libogg-devel libpng-devel libxvid-devel zip
+BuildRequires: libcurl-devel libogg-devel libpng-devel libxvid-devel zip libjpeg-devel
 BuildRequires: desktop-file-utils
 
 %description
 ASC aims at providing a free clone of Bluebyte's Battle Isle(tm) series.
 
 %prep
+#bug in upstream tarbal, contains 2.8.0.1 dir instead of 2.8.0.2
+#setup -n asc-2.8.0.1
+
 %setup
 %patch1 -p1
+%patch2 -p1
 cp -a %SOURCE1 %SOURCE2 %SOURCE3 data/music/
 # see https://slackbuilds.org/slackbuilds/14.2/games/d2x-rebirth/libphysfs-3.0.1.patch
 sed -i "s|__EXPORT__|PHYSFS_DECL|" source/libs/paragui/src/core/physfsrwops.h
 
 %build
 %autoreconf
+
 %add_optflags -fpermissive
 %ifarch %e2k
 # -std=c++03 by default as of lcc 1.23.12
 %add_optflags -std=c++11
 %endif
-%configure
+export CXXFLAGS="$RPM_OPT_FLAGS -std=c++11 -D__EXPORT__="
+%configure --enable-genparse --disable-paraguitest
+
+#configure
 %make_build
 
 %install
@@ -65,6 +74,9 @@ install -p -m 644 %SOURCE11 \
 %doc AUTHORS COPYING ChangeLog README TODO doc
 
 %changelog
+* Tue Nov 09 2021 Ilya Mashkin <oddity@altlinux.ru> 2.8.0.2-alt1
+- Version 2.8.0.2
+
 * Tue Feb 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.1.0-alt4
 - Fixed build with gcc-10 and rebuilt with new boost libraries.
 
