@@ -2,17 +2,17 @@
 BuildRequires: gcc-c++ pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 Name: scim-anthy
-Version: 1.2.7
-Release: alt3
+Version: 1.3.2
+Release: alt1
 
 License: GPLv2+
-Url: http://scim-imengine.sourceforge.jp/
+Url:            https://github.com/scim-im/scim-anthy
+Source:         https://github.com/scim-im/scim-anthy/archive/v%{version}/%{name}-%{version}.tar.gz
 Packager: Ilya Mashkin <oddity@altlinux.ru>
-BuildRequires: scim-devel
+BuildRequires: scim-devel libtool
 BuildRequires: libanthy-devel >= 6700b-1 gettext-devel
-Source0: http://osdn.dl.sourceforge.jp/scim-imengine/37309/%name-%version.tar.gz
 Patch0: %name-aarch64.patch
-Patch1: %name-%version-alt-build.patch
+Patch1: %name-1.2.7-alt-build.patch
 
 Summary: SCIM IMEngine for anthy for Japanese input
 Group: System/Libraries
@@ -29,10 +29,12 @@ Scim-anthy is a SCIM IMEngine module for anthy to support Japanese input.
 
 %prep
 %setup
-%patch0 -p1 -b .0-aarch64
-%patch1 -p2
+#patch0 -p1 -b .0-aarch64
+#patch1 -p2
 
 %build
+libtoolize --force
+autoreconf --force --install --verbose
 %configure --disable-static
 make %{?_smp_mflags}
 
@@ -52,6 +54,10 @@ rm $RPM_BUILD_ROOT%_libdir/scim-1.0/*/*/*.la
 %_datadir/scim/icons/*png
 
 %changelog
+* Tue Nov 09 2021 Ilya Mashkin <oddity@altlinux.ru> 1.3.2-alt1
+- 1.3.2
+- Update url
+
 * Thu Jul 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.7-alt3
 - Fixed build with new toolchain
 
