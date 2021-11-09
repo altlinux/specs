@@ -7,7 +7,7 @@
 
 Name: vlc
 Version: 3.0.16
-Release: alt2
+Release: alt3
 
 Summary: VLC media player
 License: GPLv2
@@ -17,6 +17,7 @@ Url: http://www.videolan.org
 Source: vlc-%version.tar
 Patch: vlc-3.0.6-alt-e2k-lcc123.patch
 Patch1: 0001-configure-fix-linking-on-RISC-V-ISA.patch
+Patch2: 0001-Get-addr-by-ref.-from-getConnectionEndpointAddress.patch
 
 BuildRequires: gcc-c++
 BuildRequires: freetype2-devel glib2-devel flex
@@ -645,6 +646,7 @@ sed -i 's,const ATTR_USED,const,' modules/video_filter/deinterlace/yadif.h
 %endif
 
 %patch1 -p1
+%patch2 -p1
 
 %build
 %add_optflags -I%_includedir/samba-4.0
@@ -1406,6 +1408,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Tue Nov 02 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.16-alt3
+- rebuilt with recent live555
+
 * Sun Oct 03 2021 Anton Farygin <rider@altlinux.ru> 3.0.16-alt2
 - fixed build with LTO
 

@@ -1,6 +1,6 @@
 Name: live555
-Version: 20201201
-Release: alt2
+Version: 20211020
+Release: alt1
 
 Summary: Live555.com Streaming Media Library Utilities
 License: LGPLv3
@@ -77,6 +77,9 @@ done
 %_includedir/liveMedia
 
 %changelog
+* Wed Oct 27 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 20211020-alt1
+- 2021.10.20 released
+
 * Mon Aug 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 20201201-alt2
 - unpackaged static libraries dropped
 
