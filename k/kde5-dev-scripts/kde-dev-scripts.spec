@@ -5,7 +5,7 @@
 %add_findreq_skiplist %_K5bin/kde-systemsettings-tree.py
 
 Name: kde5-dev-scripts
-Version: 21.08.2
+Version: 21.08.3
 Release: alt1
 %K5init altplace no_appdata
 
@@ -65,6 +65,9 @@ done
 %_K5data/*/
 
 %changelog
+* Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
+- new version
+
 * Fri Oct 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.2-alt1
 - new version
 
