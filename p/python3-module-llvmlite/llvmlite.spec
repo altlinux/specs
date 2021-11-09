@@ -1,8 +1,10 @@
 %define  oname llvmlite
+%define  llvm_version 11
+%define  optflags_lto -flto=thin
 
 Name:    python3-module-%oname
-Version: 0.36.0
-Release: alt1.git.dd00288
+Version: 0.37.0
+Release: alt1
 
 Summary: A lightweight LLVM python binding for writing JIT compilers
 
@@ -13,7 +15,7 @@ URL:     https://pypi.org/project/llvmlite
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: clang11.0 llvm11.0-devel libstdc++-devel
+BuildRequires: clang%{llvm_version}.0 llvm%{llvm_version}.0-devel libstdc++-devel lld%{llvm_version}.0
 
 Source:  %name-%version.tar
 
@@ -36,20 +38,13 @@ following approach:
 
 %prep
 %setup
-%ifarch armh
-sed -ri '/^\S+FLTO_FLAGS/ s,=.+$,=,' ffi/Makefile.linux
-%endif
 
 %build
 %remove_optflags -frecord-gcc-switches
-# http://llvm.1065342.n5.nabble.com/llvm-dev-Code-Coverage-Compile-Issue-LLVM-10-td141053.html
-%ifarch armh
-%remove_optflags -O2
-%endif
-%add_optflags -grecord-gcc-switches -fPIC
-export CXX="clang++"
-export LLVM_CONFIG=%_bindir/llvm-config
-export LLVMLITE_SKIP_LLVM_VERSION_CHECK=1
+%add_optflags -grecord-gcc-switches -fPIC -fuse-ld=lld -DNDEBUG
+export CXX='clang++-%llvm_version'
+export LLVM_CONFIG=%_bindir/llvm-config-%llvm_version
+#export LLVMLITE_SKIP_LLVM_VERSION_CHECK=1
 %python3_build
 
 %install
@@ -63,6 +58,9 @@ mv %buildroot%python3_sitelibdir/%oname-*.egg-info %buildroot%python3_sitelibdir
 %doc *.rst
 
 %changelog
+* Fri Sep 10 2021 Grigory Ustinov <grenka@altlinux.org> 0.37.0-alt1
+- Build new version (thx sbolshakov@).
+
 * Wed Jun 30 2021 Grigory Ustinov <grenka@altlinux.org> 0.36.0-alt1.git.dd00288
 - Build from last commit.
 
