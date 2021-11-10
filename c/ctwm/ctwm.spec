@@ -3,26 +3,28 @@ Summary(ru_RU): Основанный на twm оконный менеджер д
 Name: ctwm
 Version: 4.0.3
 Epoch: 1
-Release: alt2
+Release: alt3
 
 Source: %name-%version.tar.xz
-Url: http://ctwm.free.lp.se
-Packager: Fr. Br. George <george@altlinux.ru>
+Url: http://www.ctwm.org/index.html
 
-#Source1: http://slhp1.epfl.ch/public/ctwm/ctwm-images.tar.gz
 Source1: startctwm
 Source2: %name.wmsession
 Source3: %name.icon64x64.xpm
 Source4: %name.desktop
-#Source4: ctwm-3.7-Imakefile.local-additional
+Source5: %name-systemd.desktop
+Source6: %name-session-target
+Source7: %name.service
+Source8: %name-session.target
+Source9: %name.target
 
 Patch: ctwm-3.8.2-GetFont.patch
 License: BSD
 Group: Graphical desktop/Other
 
-# Automatically added by buildreq on Mon May 29 2017
-# optimized out: asciidoc cmake-modules dblatex docbook-dtds docbook-style-xsl libICE-devel libSM-devel libX11-devel libXau-devel libXt-devel libgpg-error python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-xml xml-common xml-utils xorg-kbproto-devel xorg-xextproto-devel xorg-xproto-devel xsltproc xz
-BuildRequires: asciidoc-a2x cmake flex libXext-devel libXmu-devel libXpm-devel libjpeg-devel time
+# Automatically added by buildreq on Tue Nov 09 2021
+# optimized out: asciidoc cmake-modules docbook-dtds docbook-style-xsl glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXau-devel libXt-devel libcrypt-devel libgpg-error libsasl2-3 libxcb-devel python3 python3-base sh4 xml-common xml-utils xorg-proto-devel xsltproc xz
+BuildRequires: asciidoc-a2x cmake ctags flex libXext-devel libXmu-devel libXpm-devel libjpeg-devel
 
 %description
 Ctwm is a window manager for the X Window System.  It provides
@@ -54,24 +56,29 @@ Ctwm -- оконный менеждер для X Windows System, основан�
 sed -ri 's/(#define[[:space:]]+MAX_BUTTONS[[:space:]]+).*/\1 24/' ctwm.h
 ln -s build BUILD
 %cmake \
-	-DETCDIR=%_sysconfdir/X11/ctwm \
-	-DDOCDIR=%_defaultdocdir/%name-%version \
-	-DEXAMPLEDIR=%_defaultdocdir/%name-%version
-
-# -DDO_CLIENT=ON
+    -DETCDIR=%_sysconfdir/X11/ctwm \
+    -DDOCDIR=%_defaultdocdir/%name-%version \
+    -DEXAMPLEDIR=%_defaultdocdir/%name-%version \
+    -DMANUAL_BUILD_HTML=True -DENABLE_ASCIIDOC_HTML=True
+    # unmaintained -DDO_CLIENT=ON
 
 %build
 %cmake_build
-#xmkmf
-#make_build CDEBUGFLAGS="-g -Og"
 
 %install
 %cmakeinstall_std
-install -pD -m644 %SOURCE4 %buildroot%_datadir/xsessions/%name.desktop
+install -d %buildroot%_datadir/xsessions
+install -m644 %SOURCE4 %buildroot%_datadir/xsessions/
+install -m644 %SOURCE5 %buildroot%_datadir/xsessions/
 install -pD -m644 %SOURCE3 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.xpm
 install -pD -m644 %SOURCE2 %buildroot/%_sysconfdir/X11/wmsession.d/07%name
 install -pD -m644 system.ctwmrc %buildroot/%_sysconfdir/X11/%name/system.ctwmrc
 install -Dm 755 %SOURCE1 %buildroot/%_bindir/startctwm
+install -Dm 755 %SOURCE6 %buildroot%_prefix/libexec/%name-session-target
+install -d %buildroot%_user_unitdir
+install -m644 %SOURCE7 %buildroot%_user_unitdir/
+install -m644 %SOURCE8 %buildroot%_user_unitdir/
+install -m644 %SOURCE9 %buildroot%_user_unitdir/
 
 %files
 %doc %_defaultdocdir/%name-%version
@@ -81,9 +88,14 @@ install -Dm 755 %SOURCE1 %buildroot/%_bindir/startctwm
 %config(noreplace) %_sysconfdir/X11/%name/system.ctwmrc
 %_sysconfdir/X11/wmsession.d/*
 %_datadir/%name/
-%_datadir/xsessions/%name.desktop
+%_datadir/xsessions/*
+%_user_unitdir/*
+%_prefix/libexec/*
 
 %changelog
+* Tue Nov 09 2021 Fr. Br. George <george@altlinux.ru> 1:4.0.3-alt3
+- Introduce systemd --user session startup
+
 * Mon Nov 01 2021 Igor Vlasenko <viy@altlinux.org> 1:4.0.3-alt2
 - NMU: WM packaging policy 2.0: added xsessions desktop
 
