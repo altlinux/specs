@@ -2,7 +2,7 @@
 %define dist CryptX
 
 Name: perl-%dist
-Version: 0.073
+Version: 0.074
 Release: alt1
 
 Summary: Crypto toolkit with multiple ciphers, hash functions and other
@@ -98,6 +98,9 @@ Cryptography in CryptX is based on https://github.com/libtom/libtomcrypt
 %perl_vendor_archlib/Math
 
 %changelog
+* Thu Nov 11 2021 Igor Vlasenko <viy@altlinux.org> 0.074-alt1
+- automated CPAN update
+
 * Sun Jul 18 2021 Igor Vlasenko <viy@altlinux.org> 0.073-alt1
 - automated CPAN update
 
