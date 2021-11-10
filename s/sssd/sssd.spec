@@ -2,15 +2,14 @@
 %define _unpackaged_files_terminate_build 1
 %define libwbc_alternatives_version 0.15.0
 %def_with kcm
-%def_without secrets
-%def_disable local_provider
 %def_with check
 %def_with samba
-%def_with openssl
+%def_without gdm_pam_extensions
+%def_disable systemtap
 
 Name: sssd
-Version: 2.5.2
-Release: alt2
+Version: 2.6.1
+Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -43,7 +42,6 @@ Patch: %name-%version-alt.patch
 %define mcpath %sssdstatedir/mc
 %define pubconfpath %sssdstatedir/pubconf
 %define gpocachepath %sssdstatedir/gpo_cache
-%global secdbpath %sssdstatedir/secrets
 %define deskprofilepath %sssdstatedir/deskprofile
 %define dotcachepath %sssdstatedir/.cache
 
@@ -73,7 +71,7 @@ BuildRequires: libpam-devel
 BuildRequires: libnss-devel
 BuildRequires: libnspr-devel
 #BuildRequires: libssl-devel
-BuildRequires: libpcre-devel >= 7
+BuildRequires: libpcre2-devel
 BuildRequires: libxslt
 BuildRequires: libxml2-devel
 BuildRequires: docbook-dtds docbook-style-xsl xsltproc xml-utils
@@ -97,16 +95,15 @@ BuildRequires: libsystemd-devel
 BuildRequires: cifs-utils-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libnfsidmap-devel >= 1:2.2.1-alt1
-BuildRequires: libaugeas-devel
-%if_with openssl
+BuildRequires: libunistring-devel
 BuildRequires: libssl-devel libgnutls-devel libp11-kit-devel
-%endif
 BuildRequires: nscd
 %if_with kcm
-BuildRequires: libuuid-devel libjansson-devel
+BuildRequires: libuuid-devel
 %endif
-%if_with secrets
-BuildRequires: libhttp-parser-devel libcurl-devel libjansson-devel
+BuildRequires: libhttp-parser-devel libcurl-devel
+%if_with gdm_pam_extensions
+BuildRequires: gdm-libs-devel
 %endif
 
 %if_with check
@@ -117,9 +114,8 @@ BuildRequires: nss-utils
 BuildRequires: libcmocka-devel >= 1.0.0
 BuildRequires: uid_wrapper
 BuildRequires: nss_wrapper
-%if_with openssl
+BuildRequires: pam_wrapper
 BuildRequires: softhsm
-%endif
 %endif
 BuildRequires: po4a
 
@@ -170,16 +166,15 @@ Group: System/Configuration/Networking
 License: GPLv3+
 Requires: %name = %version-%release
 Requires: python3-module-sss = %EVR
+Requires: python3-module-sssd = %EVR
 Requires: python3-module-sssdconfig = %EVR
 
 %description tools
-Provides userspace tools for manipulating users, groups, and nested groups in
-SSSD when using id_provider = local in /etc/sssd/sssd.conf.
-
-Also provides several other administrative tools:
+Provides several administrative tools:
     * sss_debuglevel to change the debug level on the fly
     * sss_seed which pre-creates a user entry for use in kickstarts
     * sss_obfuscate for generating an obfuscated LDAP password
+    * sssctl -- an sssd status and control utility
 
 %package ldap
 Summary: The LDAP back end of the SSSD
@@ -420,8 +415,9 @@ License: LGPLv3+
 Requires: %name = %EVR
 
 %description -n python3-module-sss
-The python3-module-sss contains the bindings so that sss can be used by Python3
-applications.
+Provides python3 bindings:
+    * function for retrieving list of groups user belongs to
+    * class for obfuscation of passwords
 
 %package -n python3-module-sss-murmur
 Summary: Python3 bindings for murmur hash function
@@ -430,6 +426,16 @@ License: LGPLv3+
 
 %description -n python3-module-sss-murmur
 Provides python3 module for calculating the murmur hash version 3
+
+%package -n python3-module-sssd
+Summary: Python3 programs with sssd analyze tools
+Group: System/Configuration/Other
+License: GPLv3+
+
+%add_python3_req_skip modules
+
+%description -n python3-module-sssd
+Provides python3 programs with sssd analyze tools
 
 %prep
 %setup
@@ -457,23 +463,26 @@ Provides python3 module for calculating the murmur hash version 3
     --enable-pac-responder \
     --enable-sss-default-nss-plugin \
     --with-sssd-user=%sssd_user \
-    %{?_enable_local_provider:--enable-local-provider} \
     --disable-rpath \
     --disable-static \
     %{subst_with kcm} \
     %{subst_with samba} \
-    %{subst_with secrets} \
+    %{?!_enable_systemtap:--disable-systemtap} \
     --without-python2-bindings \
-%if_with openssl
-    --with-crypto=libcrypto \
-%endif
     #
 
 %make_build all
 %make docs
 
 %install
-sed -i -e 's:/usr/bin/python:/usr/bin/python3:' src/tools/sss_obfuscate
+for f in \
+    src/tools/sss_obfuscate \
+    src/tools/analyzer/sss_analyze.py;
+do
+    sed -i -e 's:/usr/bin/python:/usr/bin/python3:' \
+           -e 's:/usr/bin/env\s*python\s*:/usr/bin/python3:' \
+        "$f"
+done
 
 %make install DESTDIR=%buildroot
 
@@ -508,9 +517,9 @@ mkdir -p %buildroot%dotcachepath
 mkdir -p %buildroot/%_altdir
 printf '%_libdir/cifs-utils/idmap-plugin\t%_libdir/cifs-utils/cifs_idmap_sss.so\t20\n' > %buildroot%_altdir/cifs-idmap-plugin-sss
 
-%if_without secrets
-rm -rf %buildroot%_mandir/*/man5/sssd-secrets.5*
-rm -rf %buildroot%_mandir/*/man5/sssd-systemtap.5*
+%if_disabled systemtap
+# Clean manpages l10n
+rm -f %buildroot/%_mandir/*/man5/sssd-systemtap.5*
 %endif
 
 %check
@@ -523,20 +532,13 @@ unset CK_TIMEOUT_MULTIPLIER
 %_sbindir/useradd -r -n -g %sssd_user -G _keytab -d %sssdstatedir -s /dev/null -c "User for sssd" %sssd_user 2> /dev/null ||:
 
 %post
-# Sinse 0.13.0 we are run sssd as non-root user. Migrate files owner.
-#chown %sssd_user:%sssd_user %dbpath/cache* %dbpath/ccache* %dbpath/config.ldb
-#chown %sssd_user:%sssd_user %mcpath/*
-#chown %sssd_user:%sssd_user %pubconfpath/kdcinfo* %pubconfpath/kpasswdinfo*
-#chown %sssd_user:%sssd_user  %_logdir/%name/sssd_*
 chown root:root %_sysconfdir/sssd/sssd.conf
 
 # Don't restart sssd services until reboot or manual restart
 #post_service %name
-#post_service sssd-secrets
 #
 #preun
 #preun_service %name
-#preun_service sssd-secrets
 
 %triggerpostun -- %name < 2.4.2-alt1
 [ "$(control sssd-drop-privileges)" != "unknown" ] ||
@@ -589,9 +591,6 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_libdir/%name/libsss_iface_sync.so
 %_libdir/%name/libifp_iface.so
 %_libdir/%name/libifp_iface_sync.so
-%if_with kcm
-%_libdir/%name/libsss_secrets.so
-%endif
 
 # 3rd party application libraries
 %dir %_libdir/%name/modules
@@ -607,7 +606,6 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %attr(700,%sssd_user,%sssd_user) %dir %dbpath
 %attr(755,%sssd_user,%sssd_user) %dir %mcpath
 %attr(700,%sssd_user,%sssd_user) %dir %deskprofilepath
-%attr(700,root,root) %dir %secdbpath
 %ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/passwd
 %ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/group
 %ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/initgroups
@@ -630,7 +628,6 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_datadir/%name/cfg_rules.ini
 %_datadir/%name/sssd.api.conf
 %dir %_datadir/%name/sssd.api.d
-%_datadir/%name/sssd.api.d/sssd-local.conf
 %_datadir/%name/sssd.api.d/sssd-simple.conf
 %_datadir/%name/sssd.api.d/sssd-files.conf
 %_man1dir/sss_ssh_*
@@ -651,6 +648,15 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_mandir/*/man8/sssd.8*
 %_man8dir/sss_cache.8*
 %_mandir/*/man8/sss_cache.8*
+
+%if_enabled systemtap
+%dir %_datadir/%name/systemtap
+%_datadir/%name/systemtap/*.stp
+%dir %_datadir/systemtap
+%dir %_datadir/systemtap/tapset
+%_datadir/systemtap/tapset/sssd*.stp
+%_man5dir/sssd-systemtap.5*
+%endif
 
 %files ldap
 %_libdir/%name/libsss_ldap.so
@@ -787,13 +793,6 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_unitdir/sssd-kcm.service
 %_man8dir/sssd-kcm*
 %_mandir/*/man8/sssd-kcm*
-%if_with secrets
-%_libexecdir/%name/sssd_secrets
-%_unitdir/sssd-secrets.socket
-%_unitdir/sssd-secrets.service
-%_man5dir/sssd-secrets.5*
-%_mandir/*/man5/sssd-secrets.5*
-%endif
 %endif
 
 %files -n libsss_simpleifp
@@ -832,7 +831,31 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %dir %python3_sitelibdir_noarch/SSSDConfig/__pycache__
 %python3_sitelibdir_noarch/SSSDConfig/__pycache__/*.py*
 
+%files -n python3-module-sssd
+%dir %python3_sitelibdir_noarch/sssd
+%python3_sitelibdir_noarch/sssd/*.py*
+%dir %python3_sitelibdir_noarch/sssd/__pycache__
+%python3_sitelibdir_noarch/sssd/__pycache__/*.py*
+%dir %python3_sitelibdir_noarch/sssd/modules
+%python3_sitelibdir_noarch/sssd/modules/*.py*
+%dir %python3_sitelibdir_noarch/sssd/modules/__pycache__
+%python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
+
 %changelog
+* Wed Nov 10 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.6.1-alt1
+- Update to 2.6.1 stable release.
+- Revert "Don't change owner/permissions of user deskprofile path" patch
+  due CAP_DAC_OVERRIDE was added to systemd configs in 2.4.2 release.
+
+* Sun Nov 07 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.6.0-alt1
+- Update to 2.6.0 (with upstream fixes from master - 7bfdd3db8e4c).
+- Security issue in the sssctl command - shell command injection via the
+  logs-fetch and cache-expire subcommands (fixes: CVE-2021-3621).
+- pam_sss: Allow offline authentication against non-ipa-desktopprofiles aware DC
+- Add filter for Active Directory trusted domains which are not trusted (one-way
+  trust) or are from a different forest (direct trust). Both should be ignored
+  because they are not trusted or can currently not be handled properly.
+
 * Fri Oct 29 2021 Andrew A. Vasilyev <andy@altlinux.org> 2.5.2-alt2
 - FTBFS: disable LTO
 
