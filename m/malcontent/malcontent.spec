@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define api_ver 0
 %define xdg_name org.freedesktop.MalcontentControl
 
@@ -6,7 +6,7 @@
 %def_enable ui
 
 Name: malcontent
-Version: 0.10.2
+Version: 0.10.3
 Release: alt1
 
 Summary: Parental controls implementation
@@ -21,14 +21,14 @@ Source: %url/-/archive/%version/%name-%version.tar.bz2
 Source: %name-%version.tar
 %endif
 
-Requires: polkit accountsservice
-
 %define glib_ver 2.54.2
 %define gtk_ver 3.24
 %define accountsservice_ver 0.6.39
 
-BuildRequires(pre): meson rpm-build-python3
-BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel
+Requires: polkit accountsservice >= %accountsservice_ver
+
+BuildRequires(pre): rpm-macros-meson rpm-build-python3
+BuildRequires: meson yelp-tools desktop-file-utils libappstream-glib-devel
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(polkit-gobject-1)
@@ -198,6 +198,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%xdg_name.app
 
 
 %changelog
+* Wed Nov 10 2021 Yuri N. Sedunov <aris@altlinux.org> 0.10.3-alt1
+- 0.10.3
+
 * Tue Oct 12 2021 Yuri N. Sedunov <aris@altlinux.org> 0.10.2-alt1
 - updated to 0.10.2-8-gb311cbd
 
