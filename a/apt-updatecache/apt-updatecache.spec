@@ -1,6 +1,6 @@
 Name:    apt-updatecache
 Version: 1.2
-Release: alt1
+Release: alt2
 
 Summary: Service for update APT cache on boot and every 4 hours
 License: GPL-3.0+ 
@@ -23,16 +23,13 @@ Service for update APT cache on boot and every 4 hours.
 install -pD -m644 %name.service %buildroot%systemd_unitdir/%name.service
 install -pD -m644 %name.timer %buildroot%systemd_unitdir/%name.timer
 
-%preun
-%preun_service %name
-
-%post
-%post_service %name
-
 %files
 %config(noreplace) %systemd_unitdir/*
 
 %changelog
+* Wed Nov 10 2021 Andrey Cherepanov <cas@altlinux.org> 1.2-alt2
+- Remove postun/post macros for service file.
+
 * Sat Jul 10 2021 Andrey Cherepanov <cas@altlinux.org> 1.2-alt1
 - Fix run on startup (ALT #40423).
 - Add Requires=network-online.target to service file.
