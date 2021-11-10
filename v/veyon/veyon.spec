@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.6.0
-Release: alt2
+Release: alt3
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -118,6 +118,9 @@ sed -i "s/-Werror/-Wno-error/" CMakeLists.txt
 %_datadir/%name
 
 %changelog
+* Wed Nov 10 2021 Egor Ignatov <egori@altlinux.org> 4.6.0-alt3
+- Complete Russian translation (thanks Olesya Gerasimenko) (closes: #41183)
+
 * Wed Oct 13 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.6.0-alt2
 - fixed build for Elbrus
 
