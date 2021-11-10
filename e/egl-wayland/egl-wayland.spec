@@ -3,7 +3,7 @@
 %define libnvidia_egl_wayland libnvidia-egl-wayland%sover
 
 Name: egl-wayland
-Version: 1.1.8
+Version: 1.1.9
 Release: alt1
 Epoch: 1
 
@@ -70,6 +70,9 @@ install -pDm644 %SOURCE1 \
 %_datadir/wayland-eglstream/
 
 %changelog
+* Wed Nov 10 2021 Sergey V Turchin <zerg@altlinux.org> 1:1.1.9-alt1
+- new version
+
 * Mon Sep 27 2021 Sergey V Turchin <zerg@altlinux.org> 1:1.1.8-alt1
 - new version
 
