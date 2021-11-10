@@ -1,7 +1,7 @@
 # obsoleted koffice version
 %define koffice_ver 4:2.3.70
 
-%define sover 21
+%define sover 20
 %define libkritacommand libkritacommand%sover
 %define libkritaimpex libkritaimpex%sover
 %define libkritalibkis libkritalibkis%sover
@@ -30,7 +30,7 @@
 %define libkritatext libkritatext%sover
 
 Name: krita
-Version: 4.4.5
+Version: 4.4.8
 Release: alt1
 %K5init no_altplace
 
@@ -67,7 +67,7 @@ BuildRequires: python3-devel python3-module-PyQt5-devel python3-module-sip5
 BuildRequires: eigen3 libfftw3-devel libgomp-devel libgsl-devel
 BuildRequires: boost-devel boost-geometry-devel
 #BuildRequires: libgif-devel
-BuildRequires: libquazip-qt5-devel
+BuildRequires: quazip-qt5-devel
 #BuildRequires: libquadmath-devel
 BuildRequires: libopencolorio-devel
 BuildRequires: libXres-devel libxcbutil-devel
@@ -284,6 +284,7 @@ Requires: %name-common = %EVR
 %patch2 -p1
 
 sed -i 's|sipbuild|sipbuild5|' cmake/modules/FindSIP.py
+sed -i 's|sipbuild|sipbuild5|' cmake/modules/sip-generate.py
 %ifarch %arm
 sed -i 's,HAVE_OCIO,0,' plugins/dockers/CMakeLists.txt
 %endif
@@ -433,6 +434,9 @@ done
 %_libdir/libkritametadata.so.*
 
 %changelog
+* Wed Nov 10 2021 Sergey V Turchin <zerg@altlinux.org> 4.4.8-alt1
+- new version
+
 * Fri Jul 16 2021 Sergey V Turchin <zerg@altlinux.org> 4.4.5-alt1
 - new version (closes: 40461)
 
