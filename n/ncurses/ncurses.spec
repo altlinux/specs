@@ -1,6 +1,6 @@
 Name: ncurses
-Version: 6.2.20210123
-Release: alt2
+Version: 6.3.20211106
+Release: alt1
 
 %define rootdatadir /lib
 
@@ -52,12 +52,12 @@ Group: System/Base
 BuildArch: noarch
 Provides: %name-extraterms = %version
 Obsoletes: %name-extraterms
-PreReq: terminfo = %version-%release
+Requires(pre,postun): terminfo = %version-%release
 
 %package -n libtinfo
 Summary: A low-level terminfo shared library
 Group: System/Libraries
-PreReq: terminfo = %version-%release
+Requires(pre,postun): terminfo = %version-%release
 
 %package -n libtinfo-devel
 Summary: A low-level terminfo development library
@@ -100,7 +100,7 @@ Requires: libtinfo-devel = %version-%release
 Summary: A CRT screen handling and optimization libraries
 Group: System/Libraries
 Provides: libncurses.so.4 libncurses.so.3
-PreReq: libtinfo = %version-%release
+Requires(pre,postun): libtinfo = %version-%release
 Conflicts: %name < %version-%release
 
 %package -n lib%name-devel
@@ -143,7 +143,7 @@ Requires: lib%name-devel-static = %version-%release
 %package -n lib%{name}w
 Summary: A CRT screen handling and optimization libraries with wide character support
 Group: System/Libraries
-PreReq: libtinfo = %version-%release
+Requires(pre,postun): libtinfo = %version-%release
 
 %package -n lib%{name}w-devel
 Summary: Development files for applications which use %name (widechar version)
@@ -692,6 +692,9 @@ done
 %endif # with_utf8
 
 %changelog
+* Tue Nov 09 2021 Fr. Br. George <george@altlinux.ru> 6.3.20211106-alt1
+- Autobuild version bump to 6.3.20211106
+
 * Thu Aug 26 2021 Dmitry V. Levin <ldv@altlinux.org> 6.2.20210123-alt2
 - Moved infocmp from termutils-devel to termutils (closes: #40808).
 - Added -ffat-lto-objects to %%optflags_lto.
