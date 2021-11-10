@@ -1,12 +1,12 @@
 %define oname jquery
 Name: javascript-jquery
-Version: 1.7.2
+Version: 3.6.0
 Release: alt1
 
 Summary: jQuery is a new kind of JavaScript Library
 
 Group: System/Libraries
-License: LGPL
+License: MIT
 Url: http://jquery.com/
 
 Source: http://code.jquery.com/jquery-%version.js
@@ -14,7 +14,7 @@ Source1: http://code.jquery.com/jquery-%version.min.js
 
 BuildArch: noarch
 
-BuildRequires: rpm-macros-javascript >= 0.2
+BuildRequires(pre): rpm-macros-javascript >= 0.2
 
 Requires: javascript-common
 
@@ -35,6 +35,10 @@ install -m644 %SOURCE1 %buildroot%_jquerydir/jquery.min.js
 %_jquerydir/*
 
 %changelog
+* Wed Nov 10 2021 L.A. Kostis <lakostis@altlinux.ru> 3.6.0-alt1
+- 3.6.0.
+- Change License.
+
 * Wed Aug 08 2012 Vitaly Lipatov <lav@altlinux.ru> 1.7.2-alt1
 - 1.7.2 version
 - add minified version
