@@ -6,8 +6,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     12
-%define postgresql_minor     8
-%define postgresql_altrel    3
+%define postgresql_minor     9
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -782,6 +782,9 @@ fi
 %endif
 
 %changelog
+* Wed Nov 10 2021 Alexei Takaseev <taf@altlinux.org> 12.9-alt1
+- 12.8 (Fixes CVE-2021-23214, CVE-2021-23222)
+
 * Wed Sep 29 2021 Alexei Takaseev <taf@altlinux.org> 12.8-alt3
 - Add %%triggerpostun for PG 14
 
