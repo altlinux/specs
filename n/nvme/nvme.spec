@@ -1,7 +1,7 @@
 %define git %nil
 
 Name: nvme
-Version: 1.14
+Version: 1.15
 Release: alt1
 Summary: Core nvme tools
 License: GPL-2
@@ -74,6 +74,9 @@ if [ $1 = 1 ]; then # 1 : This package is being installed for the first time
 fi
 
 %changelog
+* Wed Nov 10 2021 L.A. Kostis <lakostis@altlinux.ru> 1.15-alt1
+- 1.15 (closes #41284).
+
 * Tue Jul 13 2021 L.A. Kostis <lakostis@altlinux.ru> 1.14-alt1
 - 1.14.
 - Added json-c into BR.
