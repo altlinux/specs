@@ -1,5 +1,5 @@
 Name: steam
-Version: 1.0.0.72
+Version: 1.0.0.73
 Release: alt1
 
 Summary: Launcher for the Steam software distribution service
@@ -28,6 +28,8 @@ Requires: libnss
 Requires: xz
 
 BuildRequires: rpm-build-python3
+
+%add_python3_path %_libexecdir/%name/%{name}_launcher
 
 %description
 Steam is a software distribution service with an online store, automated
@@ -61,6 +63,9 @@ savegame and screenshot functionality, and many social features.
 %config %_udevrulesdir/60-%name-vr.rules
 
 %changelog 
+* Wed Nov 10 2021 Nazarov Denis <nenderus@altlinux.org> 1.0.0.73-alt1
+- Version 1.0.0.73
+
 * Fri Sep 10 2021 Nazarov Denis <nenderus@altlinux.org> 1.0.0.72-alt1
 - Version 1.0.0.72
 
