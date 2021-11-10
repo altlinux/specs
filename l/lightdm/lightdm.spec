@@ -7,7 +7,7 @@
 
 Name: lightdm
 Version: 1.30.0
-Release: alt19
+Release: alt20
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -36,6 +36,7 @@ Patch18: %name-1.30.0-update-lang.patch
 Patch19: %name-1.30.0-alt-wayland-session.patch
 Patch20: %name-1.30.0-alt-lock-tty.patch
 Patch21: %name-1.30.0-alt-select-vt.patch
+Patch22: %name-1.30.0-session-sort.patch
 
 Requires: dm-tool
 
@@ -154,6 +155,7 @@ manager via D-Bus.
 %patch19 -p1
 %patch20 -p1
 %patch21 -p1
+%patch22 -p1
 
 %ifarch %e2k
 # until apx. lcc-1.23.01
@@ -286,6 +288,9 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Tue Nov 09 2021 Paul Wolneykien <manowar@altlinux.org> 1.30.0-alt20
+- Sort sessions by directory first, then by name (closes: 41265).
+
 * Tue Aug 24 2021 Paul Wolneykien <manowar@altlinux.org> 1.30.0-alt19
 - Apply the greeter locale to the authentication (PAM) session only
   (closes: 40798).
