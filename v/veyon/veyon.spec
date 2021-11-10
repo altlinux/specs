@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.6.0
-Release: alt3
+Release: alt4
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -19,6 +19,7 @@ Source: %name-%version.tar
 Source1: %name-%version-3rdparty.tar
 Source2: veyon-config-dm-login.sh
 
+Patch0: %name-%version-alt.patch
 Patch1: alt-veyon-libdir.patch
 Patch3: alt-fix-builtindirectory-computers-list-display.patch
 Patch4: alt-fix-dm-login.patch
@@ -86,6 +87,7 @@ Veyon доступен на разных языках и предоставля�
 rm -rf ./3rdparty
 %setup -D -T -a 1
 
+%patch0 -p1
 %patch1 -p1
 %patch3 -p1
 %patch4 -p1
@@ -118,6 +120,9 @@ sed -i "s/-Werror/-Wno-error/" CMakeLists.txt
 %_datadir/%name
 
 %changelog
+* Wed Nov 10 2021 Egor Ignatov <egori@altlinux.org> 4.6.0-alt4
+- Build with downstream commits
+
 * Wed Nov 10 2021 Egor Ignatov <egori@altlinux.org> 4.6.0-alt3
 - Complete Russian translation (thanks Olesya Gerasimenko) (closes: #41183)
 
