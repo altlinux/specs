@@ -1,8 +1,8 @@
 %define _unpacakged_files_terminate_build 1
 
 Name: baikal-openuds
-Version: 0.0.1
-Release: alt2
+Version: 0.0.3
+Release: alt1
 License: %gpl2plus
 Summary: Workaround for xfreerdp with OpenUDS on Baikal-M
 Group: Other
@@ -17,7 +17,8 @@ Conflicts: xfreerdp
 Provides: freerdp
 
 %description
-Workaround for xfreerdp with OpenUDS on Baikal-M
+Workaround for xfreerdp with OpenUDS on Baikal-M. Must be installed on
+a client machine.
 
 %prep
 %setup -q
@@ -29,6 +30,12 @@ install -D xfreerdp %buildroot%_bindir/xfreerdp
 %_bindir/xfreerdp
 
 %changelog
+* Wed Nov 10 2021 Igor Chudov <nir@altlinux.org> 0.0.3-alt1
+- Fixed logging errors
+
+* Tue Nov 09 2021 Igor Chudov <nir@altlinux.org> 0.0.2-alt1
+- Logging functionality added.
+
 * Wed Oct 20 2021 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.0.1-alt2
 - Initial build
 
