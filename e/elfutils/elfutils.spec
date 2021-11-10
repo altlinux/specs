@@ -1,5 +1,5 @@
 Name: elfutils
-Version: 0.185.0.54.b561
+Version: 0.186
 Release: alt1
 
 Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
@@ -251,7 +251,7 @@ cd %buildtarget
 %if_disabled debuginfod_urls
 # Explicitly remove debuginfod profile.d's as we don't have
 # default value for DEBUGINFOD_URLS anyway.
-rm %buildroot/%_sysconfdir/profile.d/debuginfod.*
+rm %buildroot%_sysconfdir/{debuginfod/altlinux.urls,profile.d/debuginfod.*sh}
 %endif
 
 %check
@@ -365,10 +365,15 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 
 %if_enabled debuginfod_urls
 %files -n debuginfod-urls
+%dir %_sysconfdir/debuginfod/
+%config(noreplace) %_sysconfdir/debuginfod/altlinux.urls
 %config(noreplace) %_sysconfdir/profile.d/debuginfod.*sh
 %endif
 
 %changelog
+* Wed Nov 10 2021 Dmitry V. Levin <ldv@altlinux.org> 0.186-alt1
+- elfutils-0.185-54-gb561b51a -> elfutils-0.186.
+
 * Thu Sep 09 2021 Dmitry V. Levin <ldv@altlinux.org> 0.185.0.54.b561-alt1
 - elfutils-0.185 -> elfutils-0.185-54-gb561b51a.
 - Fixed LTO build.
