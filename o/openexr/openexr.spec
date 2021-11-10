@@ -3,7 +3,7 @@
 %define libsover 25
 Name: openexr
 Version: 2.5.6
-Release: alt3
+Release: alt4
 
 %define _cmake__builddir BUILD
 %define common %name%libsover-common
@@ -22,6 +22,8 @@ Provides: %name-utils = %version-%release
 Obsoletes: %name-utils < %version-%release
 
 Source: %name-%version.tar
+# upstream
+Patch1: oss-fuzz.patch
 Patch2000: %name-e2k-simd.patch
 
 BuildRequires: gcc-c++ glibc-devel ilmbase-devel zlib-devel
@@ -68,6 +70,7 @@ developing applications with %rname
 
 %prep
 %setup -q -n %name-%version
+%patch1 -p1
 %ifarch %e2k
 %patch2000 -p2
 %endif
@@ -104,6 +107,9 @@ make -C BUILD install DESTDIR=%buildroot
 
 
 %changelog
+* Wed Nov 10 2021 Sergey V Turchin <zerg@altlinux.org> 2.5.6-alt4
+- add upstream fixes against oss-fuzz issues 28051,28055
+
 * Mon Jun 21 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.5.6-alt3
 - added SIMD patch for Elbrus
 
