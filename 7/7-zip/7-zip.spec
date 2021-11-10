@@ -1,13 +1,11 @@
 Name:       7-zip
-Version:    21.02
-Release:    alt2
+Version:    21.04
+Release:    alt1
 Group:      Archiving/Compression
 License:    LGPLv2+ with UnRAR exception
 URL:        https://www.7-zip.org
 Source:     %name-%version.tar.gz
-Patch0:     absoluteNewPosition.patch
 Patch1:     nostrip.patch
-Patch2:     uint32_byte.patch
 Summary:    Official 7-zip for linux, the file archiver with a high compression ratio
 Provides:   7zz = %version-%release
 
@@ -34,9 +32,7 @@ BuildRequires: gcc-c++
 
 %prep
 %setup -c
-%patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 cd CPP/7zip/Bundles/Alone2
@@ -55,6 +51,10 @@ install -D CPP/7zip/Bundles/Alone2/b/g/7zz %buildroot%_bindir/7zz
 
 
 %changelog
+* Tue Nov 09 2021 Fr. Br. George <george@altlinux.ru> 21.04-alt1
+- Manual version up
+- Update patches
+
 * Sat Jul 17 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 21.02-alt2
 - added -Wno-error and restored optlevel for Elbrus
 - proper passing of optflags
