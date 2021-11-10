@@ -8,8 +8,8 @@
 %endif
 
 Name: libldb
-Version: 2.3.1
-Release: alt2
+Version: 2.3.2
+Release: alt1
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -20,6 +20,7 @@ Patch: ldb-samba-modules.patch
 Patch1: ldb-alt-fix-python-ldflags.patch
 Patch2: ldb-skip-test_guid_indexed_v1_db-on-mips64el-ppc64le-mipsel.patch
 Patch3: ldb-skip-ldb_lmdb_free_list_test-on-ppc64le.patch
+Patch4: ldb-pyldb-overflow-timestring-test-32bit.patch
 
 BuildRequires: libpopt-devel libldap-devel xsltproc docbook-style-xsl docbook-dtds
 BuildRequires: libcmocka-devel >= 1.1.3
@@ -92,6 +93,9 @@ Development files for the Python3 bindings for the LDB library
 %patch2 -p1
 %ifarch ppc64le
 %patch3 -p2
+%endif
+%ifarch %ix86 %arm %mips32
+%patch4 -p2
 %endif
 
 %build
@@ -181,6 +185,10 @@ make test
 %_pkgconfigdir/pyldb-util.cpython-*.pc
 
 %changelog
+* Sun Nov 07 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.3.2-alt1
+- Update to the 2.3.2 with backported all C code changes from ldb-2.4.1
+- Fix overflow timestring test for 32 bits platforms
+
 * Sun Nov 07 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.3.1-alt2
 - Fix libtdb, libtalloc and libtevent requires for libldb
 

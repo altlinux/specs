@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %set_verify_elf_method unresolved=relaxed
 %add_findprov_skiplist /%_lib/*
 %add_debuginfo_skiplist /%_lib
@@ -73,7 +74,7 @@
 %endif
 
 Name:    samba
-Version: 4.14.9
+Version: 4.14.10
 Release: alt1
 
 Group:   System/Servers
@@ -186,7 +187,7 @@ BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-%define ldb_version 2.3.1
+%define ldb_version 2.3.2
 BuildRequires: libldb-devel = %ldb_version
 BuildRequires: python3-module-pyldb-devel
 %endif
@@ -1512,6 +1513,7 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_samba_mod_libdir/libcmdline-contexts-samba4.so
 %_samba_mod_libdir/libcmdline-credentials-samba4.so
 %_samba_mod_libdir/libcommon-auth-samba4.so
+%_samba_mod_libdir/libdcerpc-pkt-auth-samba4.so
 %_samba_mod_libdir/libdcerpc-samba-samba4.so
 %_samba_mod_libdir/libdcerpc-samba4.so
 %_samba_mod_libdir/libevents-samba4.so
@@ -1917,6 +1919,35 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_includedir/samba-4.0/private
 
 %changelog
+* Tue Nov 07 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.10-alt1
+- Update to latest security release of Samba 4.14
+- Security fixes:
+  + CVE-2016-2124:  SMB1 client connections can be downgraded to plaintext
+                    authentication.
+                    https://www.samba.org/samba/security/CVE-2016-2124.html
+  + CVE-2020-25717: A user on the domain can become root on domain members.
+                    https://www.samba.org/samba/security/CVE-2020-25717.html
+  + CVE-2020-25718: Samba AD DC did not correctly sandbox Kerberos tickets
+                    issued by an RODC.
+                    https://www.samba.org/samba/security/CVE-2020-25718.html
+  + CVE-2020-25719: Samba AD DC did not always rely on the SID and PAC in
+                    Kerberos tickets.
+                    https://www.samba.org/samba/security/CVE-2020-25719.html
+  + CVE-2020-25721: Kerberos acceptors need easy access to stable AD identifiers
+                    (eg objectSid).
+                    https://www.samba.org/samba/security/CVE-2020-25721.html
+  + CVE-2020-25722: Samba AD DC did not do suffienct access and conformance
+                    checking of data stored.
+                    https://www.samba.org/samba/security/CVE-2020-25722.html
+  + CVE-2021-3738:  Use after free in Samba AD DC RPC server.
+                    https://www.samba.org/samba/security/CVE-2021-3738.html
+  + CVE-2021-23192: Subsequent DCE/RPC fragment injection vulnerability.
+                    https://www.samba.org/samba/security/CVE-2021-23192.html
+
+* Sun Nov 07 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.9-alt2
+- Rebuild with updated ldb-2.3.2 with backported all C code changes from
+  ldb-2.4.1 to be available for Samba 4.14.x.
+
 * Mon Nov 01 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.9-alt1
 - Update to latest security release of Samba 4.14
 - Backport bronze bit fixes, tests, and selftest improvements. Provide a fix
