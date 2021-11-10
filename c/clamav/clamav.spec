@@ -15,7 +15,7 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.103.3
+Version: 0.103.4
 Release: alt1
 %define abiversion 9
 
@@ -397,6 +397,10 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %endif
 
 %changelog
+* Wed Nov 10 2021 Sergey Y. Afonin <asy@altlinux.org> 0.103.4-alt1
+- 0.103.4
+- updated clamav-config-systemd.patch for 0.103.4
+
 * Fri Jul 02 2021 Sergey Y. Afonin <asy@altlinux.org> 0.103.3-alt1
 - 0.103.3
 
