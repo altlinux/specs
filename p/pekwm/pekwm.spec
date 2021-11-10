@@ -1,18 +1,16 @@
 Name: pekwm
-Version: 0.1.17
-Release: alt4
+Version: 0.2.0
+Release: alt1
 Summary: Fast & lightweight window manager
 License: GPLv2
 Group: Graphical desktop/Other
 Url: http://pekwm.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 source1: %name.png
 
-Patch: pekwm-0.1.17-gcc10.patch
-
-# Automatically added by buildreq on Sun Sep 15 2013
-# optimized out: fontconfig fontconfig-devel libICE-devel libX11-devel libXrender-devel libfreetype-devel libstdc++-devel pkg-config xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: gcc-c++ imake libSM-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libjpeg-devel libpng-devel xorg-cf-files
+# Automatically added by buildreq on Tue Nov 09 2021
+# optimized out: cmake-modules fontconfig fontconfig-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libX11-devel libXau-devel libXrender-devel libcrypt-devel libfreetype-devel libgpg-error libsasl2-3 libstdc++-devel libxcb-devel pkg-config python3 python3-base sh4 xorg-proto-devel zlib-devel
+BuildRequires: cmake flex gcc-c++ libSM-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libjpeg-devel libpng-devel
 
 %description
 pekwm is a window manager that once up on a time was based on the aewm++
@@ -23,7 +21,6 @@ keygrabber that supports keychains, and much more.
 
 %prep
 %setup
-%patch -p1
 cat > %name.wmsession <<@@@
 NAME=PekWM
 ICON=%_iconsdir/hicolor/64x64/apps/pekwm.png
@@ -44,28 +41,34 @@ Type=Application
 
 %build
 %add_optflags -std=c++14
-%autoreconf
-%configure
-%make_build
+#autoreconf
+#configure
+#make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
+#makeinstall_std
+%cmake_install
 mkdir -p %buildroot/%_sysconfdir/X11/wmsession.d
 install -pD -m644 %name.wmsession %buildroot/%_sysconfdir/X11/wmsession.d/08%name
 install -pD -m644 %name.desktop %buildroot%_datadir/xsessions/%name.desktop
 install -D %SOURCE1 %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 
 %files
-%doc README
+%doc *.md
 %_bindir/*
 %_sysconfdir/%name
 %_sysconfdir/X11/wmsession.d/*
 %_datadir/xsessions/%name.desktop
 %_datadir/%name
-%_man1dir/%name.*
+%_man1dir/%{name}*
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Tue Nov 09 2021 Fr. Br. George <george@altlinux.ru> 0.2.0-alt1
+- Autobuild version bump to 0.2.0
+
 * Tue Nov 02 2021 Igor Vlasenko <viy@altlinux.org> 0.1.17-alt4
 - NMU: WM policy 2.0: added %name.desktop in xsessions
 - fixed build
