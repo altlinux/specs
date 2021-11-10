@@ -1,6 +1,6 @@
 Name: libdrm
-Version: 2.4.107
-Release: alt2
+Version: 2.4.108
+Release: alt1
 Epoch: 1
 Summary: Userspace interface to kernel DRM service
 License: GPL
@@ -62,6 +62,9 @@ develop programs which make use of %name
 %_man7dir/*.7*
 
 %changelog
+* Wed Nov 10 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.108-alt1
+- 2.4.108
+
 * Fri Aug 20 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.107-alt2
 - use python3-module-docutils for /usr/bin/rst2man.py
 
