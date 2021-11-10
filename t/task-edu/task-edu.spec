@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.5.6
-Release: alt1
+Release: alt2
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
 Group:   Education
@@ -143,6 +143,95 @@ Requires: thunderbird
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
 Summary: Educational software (base set)
 %description
+%{summary}.
+
+%package lite
+Summary(ru_RU.UTF-8): Базовый набор образовательного ПО, облегчённый для RPi4
+Summary: Basic set of educational software, lightweight for RPi4
+Group: Other
+%ifarch aarch64
+# Education (base part)
+Requires: audacity
+Requires: bluefish
+Requires: codeblocks
+Requires: codeblocks-contrib
+Requires: dia
+Requires: fbreader
+Requires: goldendict
+Requires: dict-mueller7-utf8
+Requires: gcc
+Requires: inkscape
+Requires: gimp
+Requires: gimp-help-ru
+Requires: gimp-plugin-gutenprint
+Requires: gimp-plugin-refocus-it
+Requires: java-devel
+Requires: kdenlive
+Requires: scribus
+Requires: shotwell
+Requires: logisim
+Requires: basic256
+Requires: geany
+Requires: geany-themes
+Requires: geany-plugins
+Requires: freeplane
+Requires: gnome-games-klotski
+Requires: gnome-games-mahjongg
+Requires: gnome-games-aisleriot
+Requires: xsane
+Requires: xsane-gimp2
+Requires: xsane-doc-ru
+Requires: simple-scan
+Requires: imagination
+Requires: connector
+Requires: chromium
+Requires: fonts-otf-mozilla-fira
+Requires: itest
+Requires: kumir2
+# Big educational software
+Requires: octave
+Requires: gnuplot-qt
+Requires: wxMaxima
+# OCR
+Requires: gimagereader-gtk
+Requires: tesseract
+Requires: tesseract-langpack-ru
+Requires: tesseract-langpack-en
+# KDE5 localization and profile
+Requires: kde5-profile
+Requires: qt5-translations
+Requires: kde5-khelpcenter
+# Content filter and antivirus
+Requires: netpolice-filter
+Requires: netpolice-main
+# For Skydns
+Requires: ddclient
+Requires: perl-IO-Socket-SSL
+# For search exercises
+Requires: docx2txt odt2txt
+# Mass management and remote assistance
+Requires: puppet
+Requires: x11spice
+Requires: openssh-server
+# LibreOffice
+%define lo_name LibreOffice-still
+Requires: %{lo_name}-extensions
+Requires: %{lo_name}-integrated
+Requires: %{lo_name}-gtk3
+Requires: %{lo_name}-langpack-ru
+Requires: libreoffice-languagetool
+Requires: mythes-ru
+Requires: hyphen-ru
+Requires: gst-plugins-bad
+Requires: gst-plugins-ugly
+Requires: pentaho-reporting-flow-engine
+Requires: perl-DBD-mysql
+Requires: postgresql-jdbc
+Requires: mysql-connector-java
+# Mozilla
+Requires: thunderbird
+%endif
+%description lite
 %{summary}.
 
 %package tools
@@ -491,6 +580,8 @@ Requires: task-edu-teacher
 
 %files
 
+%files lite
+
 %files tools
 
 %files preschool
@@ -518,6 +609,11 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Tue Nov 09 2021 Dmitry Terekhin <jqt4@altlinux.org> 1.5.6-alt2
+- Add basic set of educational software, lightweight for RPi4.
+  Some applications added by the task-edu package are unnecessary
+  or do not work on RPi4.
+
 * Wed Nov 03 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.6-alt1
 - Use gimagereader-gtk instead of gimagereader-qt5 due completely translation.
 
