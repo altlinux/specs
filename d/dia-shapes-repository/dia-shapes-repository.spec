@@ -1,11 +1,11 @@
 Name: dia-shapes-repository
 # No version here. Usiny YEAR.SERIAL
-Version: 2010.11
+Version: 2021.11
 Release: alt1
 Buildarch: noarch
 Group: Office
 Requires: dia
-License: GPL
+License: GPLv2
 # No single source here, see get.sh in documentation
 Source: %name-%version.tar
 Source1: get.sh
@@ -43,7 +43,7 @@ cp -a shapes/* %buildroot%_datadir/dia/shapes/
 cp -a sheets/* %buildroot%_datadir/dia/sheets/
 
 %files
-%doc docs/*
+%doc docs/* examples samples
 %doc *.sh
 %_datadir/dia/shapes/*
 %_datadir/dia/sheets/*
@@ -51,6 +51,10 @@ cp -a sheets/* %buildroot%_datadir/dia/sheets/
 
 
 %changelog
+* Wed Nov 03 2021 Fr. Br. George <george@altlinux.ru> 2021.11-alt1
+- Fix getter script
++ 5 more shapes
+
 * Thu Nov 04 2010 Fr. Br. George <george@altlinux.ru> 2010.11-alt1
 + New shape: gradient
 
