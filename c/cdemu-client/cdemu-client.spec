@@ -1,6 +1,6 @@
 Name: cdemu-client
-Version: 3.2.4
-Release: alt1.2
+Version: 3.2.5
+Release: alt1
 
 Summary: A simple command-line client to control CDEmu daemon
 License: GPLv2+
@@ -20,7 +20,7 @@ BuildRequires: intltool
 BuildRequires: rpm-build-gir
 BuildRequires: rpm-build-python3
 
-Requires: cdemu-daemon >= 3.2.2
+Requires: cdemu-daemon >= 3.2.5
 
 %description
 This is cdemu-client, a simple command-line client for controlling CDEmu daemon.
@@ -51,6 +51,9 @@ retrieving/setting devices' debug masks.
 %_datadir/bash-completion/completions/cdemu
 
 %changelog
+* Thu Nov 11 2021 Nazarov Denis <nenderus@altlinux.org> 3.2.5-alt1
+- Version 3.2.5
+
 * Mon May 03 2021 Nazarov Denis <nenderus@altlinux.org> 3.2.4-alt1.2
 - Update build requires to fix FTBFS
 

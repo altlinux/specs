@@ -1,9 +1,9 @@
 %define module_name     vhba
-%define module_version  20200106
+%define module_version  20211023
 %define module_release alt1.k
 
 %define flavour         un-def
-%define karch %ix86 x86_64
+%define karch %ix86 x86_64 aarch64 ppc64le
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-un-def
 
@@ -63,6 +63,9 @@ cp -a %module_name.ko %buildroot/%module_dir/
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Nov 11 2021 Nazarov Denis <nenderus@altlinux.org> 20211023-alt1
+- Version 20211023
 
 * Mon Nov 02 2020 Nazarov Denis <nenderus@altlinux.org> 20200106-alt1
 - Version 20200106

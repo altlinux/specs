@@ -3,8 +3,8 @@
 %define soversion 11
 
 Name: libmirage
-Version: 3.2.4
-Release: alt2.1
+Version: 3.2.5
+Release: alt1
 
 Summary: A CD-ROM image access library
 License: GPLv2+
@@ -105,6 +105,9 @@ This package contains files needed to develop with libMirage.
 %doc %_datadir/gtk-doc/html/%name
 
 %changelog
+* Thu Nov 11 2021 Nazarov Denis <nenderus@altlinux.org> 3.2.5-alt1
+- Version 3.2.5
+
 * Fri Mar 19 2021 Nazarov Denis <nenderus@altlinux.org> 3.2.4-alt2.1
 - Don't bzip sources to speedup rpmbuild -bp
 - Update build requires

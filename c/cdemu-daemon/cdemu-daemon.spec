@@ -1,8 +1,8 @@
 %add_optflags -fcommon
 
 Name: cdemu-daemon
-Version: 3.2.4
-Release: alt3
+Version: 3.2.5
+Release: alt1
 
 Summary: CDEmu daemon
 License: GPLv2+
@@ -24,7 +24,7 @@ BuildPreReq: zlib-devel
 BuildRequires: cmake
 BuildRequires: intltool
 BuildRequires: libao-devel >= 0.8.0
-BuildRequires: libmirage-devel >= 3.2.0
+BuildRequires: libmirage-devel >= 3.2.5
 
 %description
 This is CDEmu daemon, the userspace daemon part of the userspace-cdemu suite, a 
@@ -50,18 +50,22 @@ to control it.
 %install
 %cmakeinstall_std
 %__install -Dp -m0644 %SOURCE1 %buildroot%_sysconfdir/modules-load.d/%name.conf
+%__install -Dp -m0644 service-example/%name.service %buildroot%_libexecdir/systemd/user/%name.service
+%__install -Dp -m0644 service-example/net.sf.cdemu.CDEmuDaemon.service %buildroot%_datadir/dbus-1/services/net.sf.cdemu.CDEmuDaemon.service
 %find_lang %name
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README
 %_bindir/%name
-%dir %_libexecdir/%name
-%_libexecdir/%name/%name-session.sh
+%_libexecdir/systemd/user/%name.service
 %_man8dir/%name.*
 %_datadir/dbus-1/services/*.service
 %config %_sysconfdir/modules-load.d/%name.conf
 
 %changelog
+* Thu Nov 11 2021 Nazarov Denis <nenderus@altlinux.org> 3.2.5-alt1
+- Version 3.2.5
+
 * Sat Mar 20 2021 Nazarov Denis <nenderus@altlinux.org> 3.2.4-alt3
 - Autoload vhba module without unit service (ALT #32492)
 

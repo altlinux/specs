@@ -1,6 +1,6 @@
 Name: kernel-source-vhba
-Version: 20200106
-Release: alt1.1
+Version: 20211023
+Release: alt1
 
 Summary: Source for VHBA module
 License: GPLv2
@@ -47,6 +47,9 @@ install -Dp -m0644 %SOURCE1 %buildroot%_udevrulesdir/60-vhba.rules
 %config %_udevrulesdir/60-vhba.rules
 
 %changelog
+* Thu Nov 11 2021 Nazarov Denis <nenderus@altlinux.org> 20211023-alt1
+- Version 20211023
+
 * Fri Mar 19 2021 Nazarov Denis <nenderus@altlinux.org> 20200106-alt1.1
 - Don't bzip sources to speedup rpmbuild -bp
 
