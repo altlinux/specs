@@ -1,6 +1,6 @@
 Name: screen
 Version: 4.8.0
-Release: alt1
+Release: alt2
 
 Summary: A screen manager that supports multiple sessions on one terminal
 License: GPLv2+
@@ -117,6 +117,10 @@ ln -f %_libexecdir/utempter/utempter %_libexecdir/screen/
 %doc src/NEWS src/README src/FAQ src/doc/README.DOTSCREEN src/doc/*.ps.*
 
 %changelog
+* Thu Nov 11 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.8.0-alt2
+- Applied SUSE combchar.diff to prevent DoS via crafted UTF-8 character
+  sequence (fixes CVE-2021-26937).
+
 * Wed Jan 20 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.8.0-alt1
 - Updated to v.4.8.0 (fixes CVE-2020-9366).
 
