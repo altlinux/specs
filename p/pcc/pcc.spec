@@ -1,3 +1,5 @@
+
+
 # Use our own configure in order to prevent --target, which makes autotools believe we are cross compiling
 %global pccconfigure \
  export CFLAGS="${FLAGS}"; \
@@ -18,9 +20,9 @@
 Name: pcc
 Version: 1.2.0
 %if %usepcc
-Release: alt1
+Release: alt2
 %else
-Release: alt1
+Release: alt2
 %endif
 Summary: The Portable C Compiler
 Group: Development/C
@@ -70,6 +72,7 @@ mv pcc-libs-%version pcc-libs
 %patch0 -p1
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 # Set architecture directory needed for include flag
 %ifarch x86_64
 export archdir=amd64
@@ -134,6 +137,9 @@ mkdir -p %buildroot%_includedir/pcc
 %_mandir/man1/pcpp.1.*
 
 %changelog
+* Thu Nov 11 2021 Ilya Mashkin <oddity@altlinux.ru> 1.2.0-alt2
+- add lto options
+
 * Thu Apr 22 2021 Egor Ignatov <egori@altlinux.org> 1.2.0-alt1
 - new version
 - import pcc-20141210-flags patch from Fedora
