@@ -1,19 +1,20 @@
-Name:           pcsc-tools
-Version:        1.5.7
-Release:        alt2
-Summary:        Tools to be used with smart cards and PC/SC
+Name:    pcsc-tools
+Version: 1.5.8
+Release: alt1
+Summary: Tools to be used with smart cards and PC/SC
 
-Group:          System/Configuration/Hardware
-License:        GPLv2+
-URL:            http://ludovic.rousseau.free.fr/softwares/pcsc-tools/
-Source0:        http://ludovic.rousseau.free.fr/softwares/pcsc-tools/%{name}-%{version}.tar.gz
+Group:   System/Configuration/Hardware
+License: GPLv2+
+URL:     http://ludovic.rousseau.free.fr/softwares/pcsc-tools/
+Source0: http://ludovic.rousseau.free.fr/softwares/pcsc-tools/%{name}-%{version}.tar.gz
 Source1:	%name.watch
 
-BuildRequires:  desktop-file-utils
-BuildRequires:  libpcsclite-devel >= 1.2.9
-BuildRequires:  perl-pcsc
-BuildRequires:  perl-Gtk3
-Requires:       pcsc-lite
+BuildRequires: libpcsclite-devel >= 1.2.9
+BuildRequires: perl-pcsc
+BuildRequires: perl-Gtk3
+BuildRequires: desktop-file-utils
+
+Requires: pcsc-lite
 
 %add_findreq_skiplist %_bindir/gscriptor
 
@@ -34,7 +35,7 @@ The pcsc-tools-gui package contains gscriptor sends commands to a smart
 card from a GTK user interface.
 
 %prep
-%setup -q
+%setup 
 
 %build
 %autoreconf
@@ -61,6 +62,9 @@ desktop-file-install --mode=644 \
 %doc %_man1dir/gscriptor.*
 
 %changelog
+* Thu Nov 11 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.8-alt1
+- New version.
+
 * Fri Jul 10 2020 Andrey Cherepanov <cas@altlinux.org> 1.5.7-alt2
 - Remove strict requirements of python2-base.
 
