@@ -1,10 +1,11 @@
 %global import_path github.com/traefik/traefik
-%global commit 35a40c87275bf8a86463125152d1b00343975ad4
+%global commit 95dc43ce4a0b9a3cdfa1ce33e606af5ef0b09f5b
 
 %global _unpackaged_files_terminate_build 1
+%def_with prebuild_webui
 
 Name: traefik
-Version: 2.4.14
+Version: 2.5.4
 Release: alt1
 Summary: The Cloud Native Edge Router
 
@@ -17,8 +18,10 @@ Patch: %name-%version-%release.patch
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-build-golang rpm-macros-nodejs
 BuildRequires: go-bindata
+%if_without prebuild_webui
 BuildRequires: npm yarn
 BuildRequires: node node-devel node-gyp node-sass
+%endif
 
 %description
 Traefik listens to your service registry/orchestrator API and instantly
@@ -37,6 +40,7 @@ step you need.
 Documentation: http://docs.traefik.io/
 
 %prep
+#%%if_without prebuild_webui
 # Build the Front-end Assets
 # $ cd webui
 # $ git rm -r node_modules
@@ -45,6 +49,7 @@ Documentation: http://docs.traefik.io/
 # $ rm -rf node_modules/node-gyp
 # $ git add -f node_modules
 # $ git commit -n --no-post-rewrite -m "add node js modules"
+#%%endif
 
 # Vendorized go modules
 # $ go generate
@@ -55,6 +60,9 @@ Documentation: http://docs.traefik.io/
 %setup
 %patch -p1
 
+%if_without prebuild_webui
+rm -rf static autogen
+
 # add symlink to node headers
 node_ver=$(node -v | sed -e "s/v//")
 mkdir -p webui/node_modules/.node-gyp/$node_ver/include
@@ -63,6 +71,9 @@ echo "9" > webui/node_modules/.node-gyp/$node_ver/installVersion
 
 ln -sf %nodejs_sitelib/node-gyp webui/node_modules/node-gyp
 ln -sf %nodejs_sitelib/node-sass webui/node_modules/node-sass
+%else
+rm -rf webui/node_modules
+%endif
 
 %build
 export BUILDDIR="$PWD/.gopath"
@@ -78,14 +89,16 @@ cd .gopath/src/%import_path
 export VERSION=%version
 export COMMIT=%commit
 export BRANCH=altlinux
-export CODENAME=montdor
+export CODENAME=livarot
 export DATE=$(date -u '+%Y-%m-%d')
 export GOFLAGS="-mod=vendor"
 
+%if_without prebuild_webui
 pushd webui
 npm rebuild
 npm run build
 popd
+%endif
 
 mkdir -p dist
 
@@ -110,7 +123,7 @@ install -p -D -m 0644 traefik.sample.toml %buildroot%_sysconfdir/%name/%name.tom
 install -d -m 755 %buildroot%_logdir/%name
 install -d -m 755 %buildroot%_sharedstatedir/%name
 # Install logrotate
-#install -p -D -m 644 %%SOURCE10 %buildroot%_logrotatedir/%name
+#install -p -D -m 644 %%SOURCE10 %%buildroot%%_logrotatedir/%%name
 
 %pre
 %_sbindir/groupadd -r -f %name 2>/dev/null ||:
@@ -134,6 +147,10 @@ install -d -m 755 %buildroot%_sharedstatedir/%name
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Fri Nov 12 2021 Alexey Shabalin <shaba@altlinux.org> 2.5.4-alt1
+- 2.5.4
+- Build with prebuilded js static files
+
 * Tue Aug 17 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.14-alt1
 - 2.4.14
 
