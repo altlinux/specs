@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.23.3
-Release: alt2
+Release: alt3
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -133,10 +133,8 @@ Common polkit files for %name
 %patch18 -p1
 %patch19 -p1
 
-msgcat --use-first po/ru/kcm_componentchooser.po %SOURCE10 > po/ru/kcm_componentchooser.po.tmp
-cat po/ru/kcm_componentchooser.po.tmp > po/ru/kcm_componentchooser.po
-rm -f po/ru/kcm_componentchooser.po.tmp
-
+msgcat --use-first po/ru/kcm_componentchooser.po %SOURCE10 > po/ru/kcm_multicomponentchooser.po
+cat po/ru/kcm_multicomponentchooser.po > po/ru/kcm_componentchooser.po
 
 pushd kcms
     tar xvf %SOURCE1
@@ -239,6 +237,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Thu Nov 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.3-alt3
+- fix mediaplayers chooser translation
+
 * Wed Nov 10 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.3-alt2
 - translate mediaplayers chooser into russian
 
