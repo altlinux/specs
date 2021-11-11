@@ -1,12 +1,13 @@
 Name: rbdoom3bfg
-Version: 1.2.0
-Release: alt2
+Version: 1.3.0
+Release: alt1
 
 Summary: Doom 3: BFG Edition with soft shadows, cleaned up source, Linux and 64 bit Support
 License: GPLv3
 Group: Games/Arcade
 
 Url: https://github.com/RobertBeckebans/RBDOOM-3-BFG
+
 Source: %name-%version.tar
 Source2: %name.png
 
@@ -89,6 +90,9 @@ install -Dpm0644 %SOURCE2 %buildroot/%_iconsdir/%name.png
 %_iconsdir/%name.png
 
 %changelog
+* Fri Nov 12 2021 Artyom Bystrov <arbars@altlinux.org> 1.3.0-alt1
+- Update version to 1.3.0
+
 * Fri Sep 24 2021 Artyom Bystrov <arbars@altlinux.org> 1.2.0-alt2
 - minor sources update
 - fixed build on GCC11
