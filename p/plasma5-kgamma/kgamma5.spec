@@ -1,7 +1,7 @@
 %define rname kgamma5
 
 Name: plasma5-kgamma
-Version: 5.23.2
+Version: 5.23.3
 Release: alt1
 %K5init altplace
 
@@ -56,6 +56,9 @@ sed -i 's|QString::SkipEmptyParts|Qt::SkipEmptyParts|' kcmkgamma/kgamma.cpp
 %_K5srv/kgamma.desktop
 
 %changelog
+* Wed Nov 10 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.3-alt1
+- new version
+
 * Mon Nov 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.2-alt1
 - new version
 
