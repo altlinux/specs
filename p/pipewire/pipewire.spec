@@ -5,7 +5,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.3
-%define ms_ver 0.4.0
+%define ms_ver 0.4.1
 %define api_ver 0.3
 %define spa_api_ver 0.2
 %define gst_api_ver 1.0
@@ -31,7 +31,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.39
+Version: %ver_major.40
 Release: alt1
 
 Summary: Media Sharing Server
@@ -40,13 +40,12 @@ License: MIT
 Url: https://pipewire.org/
 
 %if_disabled snapshot
-#Source: http://freedesktop.org/software/%name/releases/%name-%version.tar.gz
 Source: https://github.com/PipeWire/pipewire/archive/%version/%name-%version.tar.gz
 %else
 Vcs: https://github.com/PipeWire/pipewire.git
 Source: %name-%version.tar
 #https://gitlab.freedesktop.org/pipewire/media-session.git
-# 0.4.0-1-g4bf1b2954
+# 0.4.1-4-ge4b49a306
 Source1: media-session-%ms_ver.tar
 %endif
 Patch: %name-0.3.19-alt-rpath.patch
@@ -220,6 +219,7 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_datadir/alsa/alsa.conf.d/99-pipewire-default.conf
 %if_enabled man
 %_man1dir/%name.1*
+%_man1dir/%name-pulse.1*
 %_man1dir/pw-jack.1*
 %_man5dir/%name.conf.5*
 %endif
@@ -280,6 +280,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Fri Nov 12 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.40-alt1
+- 0.3.40 + media-session-0.4.1-4-ge4b49a306
+
 * Thu Oct 21 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.39-alt1
 - updated to 0.3.39-1-g651f0dece + media-session-0.4.0-1-g4bf1b2954
 
