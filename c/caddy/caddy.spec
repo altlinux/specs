@@ -5,8 +5,8 @@
 %define caddy_group _caddy
 
 Name: caddy
-Version: 2.4.5
-Release: alt2
+Version: 2.4.6
+Release: alt1
 Summary: Web server with automatic HTTPS
 License: Apache-2.0
 Url: https://caddyserver.com
@@ -108,6 +108,9 @@ useradd -r -N -g %caddy_group -G %webserver_group -c 'Caddy web server' \
 %_datadir/zsh/site-functions/_caddy
 
 %changelog
+* Thu Nov 11 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.6-alt1
+- new version 2.4.6
+
 * Mon Oct 11 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.5-alt2
 - Rebuild with updated systemd macros.
 
