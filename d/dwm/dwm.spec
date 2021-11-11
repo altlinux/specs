@@ -1,6 +1,6 @@
 Name: dwm
 Version: 6.1
-Release: alt1
+Release: alt2
 
 Summary: Dynamic window manager for X
 
@@ -13,6 +13,8 @@ Source: %name-%version.tar
 Source1: dwm.wmsession
 Source2: dwm-start
 Source3: dwm-start.1
+Source4: dwm.desktop
+Source5: dwm-32.png
 
 Patch0: dwm-user-notes.patch
 
@@ -30,7 +32,7 @@ use and the task performed. It is the little brother of wmii.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
 # Nuke the silent build.
 sed -i.backup -e 's|\t@|\t|' Makefile
 cmp -s Makefile{,.backup} && false
@@ -54,6 +56,8 @@ cmp -s config.mk{,.backup} && false
 %makeinstall_std PREFIX=%prefix
 
 install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/14%name
+install -pD -m 644 %SOURCE4 %buildroot%_datadir/xsessions/%name.desktop
+install -pD -m 644 %SOURCE5 %buildroot%_niconsdir/%name.png
 
 install -m755 %SOURCE2 %buildroot%_bindir/dwm-start
 install -m644 %SOURCE3 %buildroot%_man1dir/dwm-start.1
@@ -67,8 +71,13 @@ sed -i "s/VERSION/%version/;s/RELEASE/%release/" \
 %_man1dir/dwm-start.1*
 %doc README
 %config %_sysconfdir/X11/wmsession.d/14%name
+%_datadir/xsessions/%name.desktop
+%_niconsdir/%name.png
 
 %changelog
+* Thu Nov 11 2021 Igor Vlasenko <viy@altlinux.org> 6.1-alt2
+- NMU: WM packaging policy 2.0: added .desktop and pixmap
+
 * Fri Sep 16 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.1-alt1
 - Updated to 6.1.
 - Added dwm-start script to start user-built dwm.
