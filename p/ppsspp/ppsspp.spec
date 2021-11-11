@@ -6,7 +6,7 @@
 %define zstd_version 1.5.0
 
 Name: ppsspp
-Version: 1.12.2
+Version: 1.12.3
 Release: alt1
 
 Summary: PlayStation Portable Emulator
@@ -198,6 +198,9 @@ CPLUS_INCLUDE_PATH=%_includedir/libzip %make_build -C %_target_platform-qt
 %_desktopdir/%name-qt.desktop
 
 %changelog
+* Thu Nov 11 2021 Nazarov Denis <nenderus@altlinux.org> 1.12.3-alt1
+- Version 1.12.3
+
 * Sun Oct 10 2021 Nazarov Denis <nenderus@altlinux.org> 1.12.2-alt1
 - Version 1.12.2
 
