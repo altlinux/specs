@@ -1,6 +1,6 @@
 Name: keepassxc
 Version:  2.6.6
-Release:  alt3
+Release:  alt4
 
 Summary: KeePassXC Password Safe - light-weight cross-platform password manager
 License: GPLv2+
@@ -27,7 +27,7 @@ BuildRequires: libargon2-devel
 BuildRequires: libsodium-devel >= 1.0.12
 BuildRequires: zlib-devel >= 1.2.0
 BuildRequires: libqrencode4-devel
-BuildRequires: libquazip-qt5-devel
+BuildRequires: quazip-qt5-devel
 # Optional for Auto-Type on X11/Linux:
 BuildRequires: libXi-devel, libXtst-devel, qt5-x11extras-devel
 # Optional for YubiKey support
@@ -95,6 +95,9 @@ cp -v %SOURCE1 share/translations/keepassx_ru.ts
 %endif
 
 %changelog
+* Thu Nov 11 2021 Sergey V Turchin <zerg@altlinux.org> 2.6.6-alt4
+- update build requires
+
 * Sat Aug 28 2021 Pavel Nakonechnyi <zorg@altlinux.org> 2.6.6-alt3
 - LTO explicitly disabled as it is not supported yet
 - disable building tests: we don't run them anyway
