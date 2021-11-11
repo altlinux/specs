@@ -1,6 +1,6 @@
 Name:    task-edu
-Version: 1.5.6
-Release: alt2
+Version: 1.5.7
+Release: alt1
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
 Group:   Education
@@ -504,6 +504,7 @@ Requires: apache2-httpd-worker
 Requires: installed-db-office-server-mediawiki
 Requires: installed-db-office-server-nextcloud
 Requires: installed-db-office-server-moodle
+Requires: moodle-qtype_coderunner
 Requires: alt-domain-server
 Requires: alterator-fbi
 #Requires: alterator-bacula
@@ -609,6 +610,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Thu Nov 11 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.7-alt1
+- Add moodle-qtype_coderunner to server-apps.
+
 * Tue Nov 09 2021 Dmitry Terekhin <jqt4@altlinux.org> 1.5.6-alt2
 - Add basic set of educational software, lightweight for RPi4.
   Some applications added by the task-edu package are unnecessary
