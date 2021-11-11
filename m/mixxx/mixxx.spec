@@ -2,8 +2,8 @@
 %define _cmake__builddir BUILD
 
 Name: mixxx
-Version: 2.3.0
-Release: alt2
+Version: 2.3.1
+Release: alt1
 
 Summary: Free digital DJ software
 Summary(ru_RU.UTF-8): Свободная программа для цифрового диджеинга
@@ -18,7 +18,7 @@ Patch1: %name-2.2.4-alt-find-shout2.patch
 Patch2: %name-2.2.4-alt-rpath.patch
 
 BuildPreReq: rpm-macros-qt5
-# BuildPreReq: rpm-build-ninja
+BuildPreReq: rpm-build-ninja
 BuildRequires: flex gcc-c++ cmake libflac-devel libid3tag-devel libmad-devel
 BuildRequires: libportaudio2-devel libportmidi-devel
 BuildRequires: libsndfile-devel libtag-devel
@@ -33,6 +33,7 @@ BuildRequires: qt5-base-devel qt5-script-devel qt5-svg-devel qt5-xmlpatterns-dev
 BuildRequires: liblilv-devel libsoundtouch-devel libvorbis-devel libspeex-devel libtheora-devel
 BuildRequires: liblame-devel libqtkeychain-qt5-devel libavcodec-devel libavformat-devel libavutil-devel libswresample-devel libavdevice-devel libavfilter-devel libpostproc-devel libswscale-devel
 BuildRequires: libhidapi-devel libkeyfinder-devel libssl-devel
+BuildRequires: libebur128-devel libshout-idjc-devel libmodplug-devel
 
 Requires: %name-data = %EVR
 Requires: qt5-sql-sqlite3
@@ -54,26 +55,6 @@ BuildArch: noarch
 %description data
 This package contains data files for Mixxx.
 
-# %package -n vamp-%name-plugin
-# Summary: %name plugin for Vamp
-# Group: Sound
-#
-# %description -n vamp-%name-plugin
-# Mixxx is free, open source DJ software that gives you everything
-# you need to perform live mixes.
-#
-# This package contains %name plugin for Vamp.
-#
-# %package -n soundsource-%name-plugin
-# Summary: %name plugin for Soundsource
-# Group: Sound
-#
-# %description -n soundsource-%name-plugin
-# Mixxx is free, open source DJ software that gives you everything
-# you need to perform live mixes.
-#
-# This package contains %name plugin for Soundsource.
-
 %prep
 %setup
 # %patch1 -p1
@@ -81,21 +62,15 @@ This package contains data files for Mixxx.
 
 %build
 %cmake \
+    -GNinja \
     -DCMAKE_BUILD_TYPE=Release \
 #
-%cmake_build
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
-
-# install -d %buildroot%_libdir
-# mv %buildroot%_libexecdir/mixxx/plugins/vampqt5 \
-# 	%buildroot%_libdir/
-# mv %buildroot%_libexecdir/mixxx/plugins/soundsourceqt5 \
-# 	%buildroot%_libdir/
-mkdir -p %buildroot%_udevrulesdir/
-mv %buildroot%_datadir/mixxx/udev/rules.d/* \
-    %buildroot%_udevrulesdir/
+chmod +x %buildroot%_datadir/mixxx/controllers/novation-launchpad/scripts/compile-mapping.js
+chmod +x %buildroot%_datadir/mixxx/controllers/novation-launchpad/scripts/compile-scripts.js
 
 %files
 %_bindir/%name
@@ -104,19 +79,18 @@ mv %buildroot%_datadir/mixxx/udev/rules.d/* \
 %exclude %_datadir/doc
 %doc README.md COPYING LICENSE res/Mixxx-Keyboard-Shortcuts.pdf
 %_datadir/%name
-%_datadir/metainfo/%name.metainfo.xml
-%_desktopdir/%name.desktop
+%_datadir/metainfo/org.mixxx.Mixxx.metainfo.xml
+%_desktopdir/org.mixxx.Mixxx.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
-%_iconsdir/hicolor/32x32/apps/%name.png
-%_udevrulesdir/%name-usb-uaccess.rules
-
-# %files -n vamp-%name-plugin
-# %_libdir/vampqt5
-#
-# %files -n soundsource-%name-plugin
-# %_libdir/soundsourceqt5
+%_iconsdir/hicolor/??x??/apps/%name.png
+%_iconsdir/hicolor/???x???/apps/%name.png
+%_udevrulesdir/69-%name-usb-uaccess.rules
 
 %changelog
+* Thu Nov 11 2021 Leontiy Volodin <lvol@altlinux.org> 2.3.1-alt1
+- Updated to upstream release version 2.3.1.
+- Built with cmake and ninja again.
+
 * Thu Aug 12 2021 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt2
 - drop python2 packages from BR
 
