@@ -1,5 +1,5 @@
 Name: alterator-multiseat
-Version: 0.0.6
+Version: 0.0.7
 Release: alt1
 
 Source: %name-%version.tar
@@ -31,6 +31,12 @@ alterator module for setup multiseat configuration
 %_datadir/alterator/ui/*
 
 %changelog
+* Tue Nov 09 2021 Ivan Razzhivin <underwit@altlinux.org> 0.0.7-alt1
+- integration with setup-multiseat-pulse
+- add sound cards to device list
+- attach frame buffer
+- improve device management
+
 * Wed Sep 29 2021 Ivan Razzhivin <underwit@altlinux.org> 0.0.6-alt1
 - change pop-up message (closes: #40205)
 - update translation
