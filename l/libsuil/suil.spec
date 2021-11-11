@@ -1,8 +1,7 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires: waf
 # END SourceDeps(oneline)
-Group: System/Libraries
-%add_optflags %optflags_shared
 %define oldname suil
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -14,7 +13,7 @@ Group: System/Libraries
 
 Name:       libsuil
 Version:    0.10.8
-Release:    alt1_1
+Release:    alt1_3
 Summary:    A lightweight C library for loading and wrapping LV2 plugin UIs
 
 License:    MIT 
@@ -29,9 +28,8 @@ BuildRequires:  python3
 BuildRequires:  lv2-devel >= 1.16.0
 # we need to track changess to these toolkits manually due to the 
 # requires filtering below
-BuildRequires:  libgtk+2-devel >= 2.18.0
+BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel
 BuildRequires:  gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
-BuildRequires:  libqt4-declarative libqt4-devel libqt4-help qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools
 BuildRequires:  gcc-c++
 BuildRequires:  pkgconfig(Qt5Core) >= 5.1.0
 BuildRequires:  pkgconfig(Qt5Widgets) >= 5.1.0
@@ -41,7 +39,6 @@ BuildRequires:  pkgconfig(Qt5X11Extras) >= 5.1.0
 # the host and or the plugin
 %define __requires_exclude ^lib.*$
 Source44: import.info
-Provides: suil = %{version}-%{release}
 
 %description
 %{oldname} makes it possible to load a UI of any toolkit in a host using any other 
@@ -54,7 +51,6 @@ loaded modules).
 Group: Development/Other
 Summary:    Development libraries and headers for %{oldname}
 Requires:   %{name} = %{version}-%{release}
-Provides: suil-devel = %{version}-%{release}
 
 %description devel
 This package contains the headers and development libraries for %{oldname}.
@@ -67,17 +63,17 @@ sed -i -e "s|bld.add_post_fun(autowaf.run_ldconfig)||" wscript
 
 %build
 
-python3 waf configure \
+/usr/bin/python3 waf configure \
     --prefix=%{_prefix} \
     --libdir=%{_libdir} \
     --mandir=%{_mandir} \
     --docdir=%{_docdir}/%{oldname} \
     --no-cocoa \
     --docs 
-python3 waf build -v %{?_smp_mflags}
+/usr/bin/python3 waf build -v %{?_smp_mflags}
 
 %install
-DESTDIR=%{buildroot} python3 waf install
+DESTDIR=%{buildroot} /usr/bin/python3 waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 install -pm 644 AUTHORS COPYING NEWS README.md %{buildroot}%{_docdir}/%{oldname}
 
@@ -88,9 +84,6 @@ install -pm 644 AUTHORS COPYING NEWS README.md %{buildroot}%{_docdir}/%{oldname}
 %doc --no-dereference COPYING
 %dir %{_libdir}/suil-%{maj}
 %{_libdir}/lib%{oldname}-*.so.%{maj}*
-%{_libdir}/suil-%{maj}/libsuil_gtk2_in_qt4.so
-%{_libdir}/suil-%{maj}/libsuil_qt4_in_gtk2.so
-%{_libdir}/suil-%{maj}/libsuil_x11_in_qt4.so
 %{_libdir}/suil-%{maj}/libsuil_x11_in_gtk2.so
 %{_libdir}/suil-%{maj}/libsuil_gtk2_in_qt5.so
 %{_libdir}/suil-%{maj}/libsuil_x11_in_qt5.so
@@ -107,6 +100,9 @@ install -pm 644 AUTHORS COPYING NEWS README.md %{buildroot}%{_docdir}/%{oldname}
 %{_mandir}/man3/%{oldname}.3*
 
 %changelog
+* Thu Nov 11 2021 Igor Vlasenko <viy@altlinux.org> 0.10.8-alt1_3
+- build w/o qt4 (closes: #41330)
+
 * Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.10.8-alt1_1
 - new version
 
