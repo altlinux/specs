@@ -1,7 +1,7 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
 Version:	3.72
-Release:	alt1
+Release:	alt2
 License:	MPL-2.0
 Group:		System/Libraries
 Url:		http://www.mozilla.org/projects/security/pki/nss
@@ -23,6 +23,10 @@ BuildRequires:  python3
 BuildRequires:  gyp
 BuildRequires:  ninja-build
 BuildRequires:  libnspr-devel
+
+%define _unpackaged_files_terminate_build 1
+%define _libexecdir %_prefix/libexec
+%global unsupported_bindir %_libexecdir/nss
 
 %description
 Network Security Services (NSS) is a set of libraries designed
@@ -118,8 +122,6 @@ cd nss
 	#
 
 %install
-mkdir -p %buildroot{%_bindir,%_libdir/pkgconfig,%_includedir}
-
 # Get some variables
 DESTDIR="$PWD/dist/Release"
 NSPR_VERSION="$(nspr-config --version)"
@@ -130,11 +132,34 @@ NSS_VPATCH="$(sed -ne 's,^#define[[:space:]]\+NSS_VPATCH[[:space:]]\+,,p' "$nss_
 
 # Install NSS libraries
 cd dist
-cp -aL "$DESTDIR"/bin/* %buildroot%_bindir
+
+# fedora utilities
+mkdir -p -- %buildroot%_bindir
+for n in \
+	certutil cmsutil crlutil modutil nss-policy-check pk12util signver \
+	ssltap \
+	;
+do
+	cp -L -- "$DESTDIR/bin/$n" %buildroot%_bindir/
+done
+
+# fedora unsupported utilites
+mkdir -p -- %buildroot%unsupported_bindir
+for n in \
+	bltest ecperf fbectest shlibsign atob btoa derdump listsuites \
+	ocspclnt pp selfserv signtool strsclnt symkeyutil tstclnt vfyserv \
+	vfychain \
+	;
+do
+	cp -L -- "$DESTDIR/bin/$n" %buildroot%unsupported_bindir/
+done
+
+mkdir -p -- %buildroot%_libdir
 cp -aL "$DESTDIR"/lib/* %buildroot%_libdir
 rm -f -- %buildroot%_libdir/*.TOC
 
 # Install NSS headers
+mkdir -p %buildroot%_includedir
 cp -aL public/nss %buildroot%_includedir
 
 # Copy some freebl include files we also want
@@ -145,6 +170,8 @@ for n in blapi.h alghmac.h cmac.h; do
 done
 
 # Install NSS utils
+mkdir -p -- %buildroot%_libdir/pkgconfig
+
 sed -e "s,@libdir@,%_libdir,g" \
     -e "s,@prefix@,%_prefix,g" \
     -e "s,@exec_prefix@,%_prefix,g" \
@@ -203,6 +230,7 @@ popd
 
 %files -n %name-utils
 %_bindir/*
+%unsupported_bindir
 %exclude %_bindir/setup-nsssysinit.sh
 %exclude %_bindir/%name-config
 
@@ -234,6 +262,9 @@ popd
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_Releases
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Thu Nov 11 2021 Alexey Gladkov <legion@altlinux.ru> 3.72-alt2
+- nss-utils: Install utilities used by fedora and opensuse (ALT#41317).
+
 * Tue Nov 02 2021 Alexey Gladkov <legion@altlinux.ru> 3.72-alt1
 - New version (3.72).
 
