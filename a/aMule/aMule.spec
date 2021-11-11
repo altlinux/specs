@@ -2,7 +2,7 @@
 %define		_rc	rc8
 Name:		aMule
 Version:	2.3.3
-Release:	alt1
+Release:	alt2
 
 Summary:	aMule - eMule client.
 License:	GPL
@@ -20,7 +20,7 @@ Patch3:		%name-2.3.1-alt-wxGTK3.1-gcc4.9.patch
 Patch4:		aMule-2.3.2-libcryptopp-6.patch
 
 # Automatically added by buildreq on Mon Jun 16 2008
-BuildRequires: flex gcc gcc-c++ imake libpng-devel libreadline-devel libwxGTK-devel xorg-cf-files
+BuildRequires: flex gcc gcc-c++ imake libpng-devel libreadline-devel libwxGTK3.1-devel xorg-cf-files
 BuildRequires: libcryptopp-devel >= 6
 BuildRequires: libupnp-devel binutils-devel libcurl-devel libtool bison libexpat-devel
 
@@ -85,6 +85,9 @@ export CXXFLAGS="%{optflags} -std=c++14"
 %dir %_docdir/amule
 
 %changelog
+* Thu Nov 11 2021 Ilya Mashkin <oddity@altlinux.ru> 2.3.3-alt2
+- Fix FTBFS
+
 * Tue Feb 23 2021 Ilya Mashkin <oddity@altlinux.ru> 2.3.3-alt1
 - 2.3.3
 
