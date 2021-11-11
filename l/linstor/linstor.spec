@@ -8,8 +8,8 @@
 %define __jar_repack %nil
 
 Name: linstor
-Version: 1.10.0
-Release: alt2
+Version: 1.16.0
+Release: alt1
 Summary: DRBD replicated volume manager
 Group: System/Servers
 License: GPLv2+
@@ -140,6 +140,9 @@ and creates drbd resource files.
 %preun_service linstor-satellite
 
 %changelog
+* Thu Nov 11 2021 Alexey Shabalin <shaba@altlinux.org> 1.16.0-alt1
+- 1.16.0
+
 * Sun Nov 15 2020 Alexey Shabalin <shaba@altlinux.org> 1.10.0-alt2
 - build as noarch again
 
