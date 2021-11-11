@@ -2,7 +2,7 @@
 
 Name:           solaar
 Version:        1.0.7
-Release:        alt1
+Release:        alt2
 
 Group:          System/Configuration/Hardware
 Summary:        Device manager for Logitech Unifying Receiver
@@ -25,7 +25,8 @@ Requires:  	unifying-receiver-udev
 # typelib(AyatanaAppIndicator3) is not package in ALT Linux
 %add_typelib_req_skiplist typelib(AyatanaAppIndicator3)
 
-Source0:        https://github.com/pwr/Solaar/archive/%{version}.tar.gz
+Source0: https://github.com/pwr/Solaar/archive/%{version}.tar.gz
+Patch1: solaar-paths.patch
 
 %description
 Solaar is a device manager for Logitech's Unifying Receiver
@@ -47,30 +48,37 @@ This package provides documentation for Solaar, a device manager for
 Logitech's Unifying Receiver peripherals.
 
 %prep
-%setup -q -n Solaar-%version
+%setup -n Solaar-%version
+%patch1 -p1
 
 %build
+tools/po-compile.sh
 %python3_build
 
 %install
 %python3_install
-install -Dm0644 share/autostart/solaar.desktop %buildroot%_sysconfdir/xdg/autostart/solaar.desktop
-install -Dm0644 rules.d/42-logitech-unify-permissions.rules %buildroot%_sysconfdir/udev/rules.d/42-logitech-unify-permissions.rules
+%find_lang %name
 
-%files
+%files -f %name.lang
 %doc COPYRIGHT share/README
 %config(noreplace) %_sysconfdir/xdg/autostart/solaar.desktop
-%_sysconfdir/udev/rules.d/*.rules
+%_libexecdir/udev/rules.d/*.rules
 %_bindir/solaar
 %python3_sitelibdir/*
 %_datadir/solaar/
 %_desktopdir/solaar.desktop
 %_iconsdir/hicolor/scalable/apps/solaar.svg
+%_datadir/metainfo/*.metainfo.xml
 
 %files doc
 %doc docs
 
 %changelog
+* Thu Nov 11 2021 Andrey Cherepanov <cas@altlinux.org> 1.0.7-alt2
+- Compile and package localization files.
+- Package metainfo.
+- Fix udev rules patch and fix install autostart and udev rules by patch.
+
 * Sun Oct 03 2021 Andrey Cherepanov <cas@altlinux.org> 1.0.7-alt1
 - New version.
 
