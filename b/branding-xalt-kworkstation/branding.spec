@@ -18,7 +18,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.5
+Release: alt0.6
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -463,6 +463,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Nov 11 2021 Sergey V Turchin <zerg at altlinux dot org> 10.0.0-alt0.6
+- update grub background
+
 * Thu Nov 11 2021 Sergey V Turchin <zerg at altlinux dot org> 10.0.0-alt0.5
 - show version on bootsplash
 - update bootsplash spinner
