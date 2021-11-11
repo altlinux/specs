@@ -1,9 +1,9 @@
 Name: ocrad
 Version: 0.27
-Release: alt1
+Release: alt2
 
 Summary: Ocrad is an OCR program based on a feature extraction method
-License: GPL
+License: GPLv3+
 Group: Office
 
 Url: http://www.gnu.org/software/ocrad/ocrad.html
@@ -26,6 +26,7 @@ produces text in byte (8-bit) or UTF-8 formats.
 %setup
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 ./configure --prefix=%prefix
 %make_build CXXFLAGS="%optflags"
 
@@ -43,6 +44,10 @@ make check
 %_man1dir/*
 
 %changelog
+* Thu Nov 11 2021 Ilya Mashkin <oddity@altlinux.ru> 0.27-alt2
+- Fix FTBFS
+- Update License tag to GPLv3+
+
 * Fri Jun 28 2019 Vitaly Lipatov <lav@altlinux.ru> 0.27-alt1
 - new version (0.27) with rpmgs script
 
