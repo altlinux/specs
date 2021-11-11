@@ -24,7 +24,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 9.920
+Version: 9.930
 Release: alt1
 Url: https://basealt.ru
 
@@ -360,6 +360,10 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Nov 11 2021 Mikhail Efremov <sem@altlinux.org> 9.930-alt1
+- slideshow: Add English slides.
+- slideshow: Update Russian slides.
+
 * Tue Oct 26 2021 Mikhail Efremov <sem@altlinux.org> 9.920-alt1
 - slideshow: Create empty Slides-en directory if needed.
 - slideshow: Drop old p9 English slides.
