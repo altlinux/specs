@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gcdemu
-Version: 3.2.4
-Release: alt1.1
+Version: 3.2.5
+Release: alt1
 
 Summary: GTK+ based GUI for controlling CDEmu daemon
 Summary(ru_RU.UTF-8): Основанная на GTK+ GUI для управления CDEmu
@@ -81,6 +81,9 @@ mv %buildroot/%_desktopdir/%name.desktop %buildroot/%_sysconfdir/xdg/autostart/
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Thu Nov 11 2021 Nazarov Denis <nenderus@altlinux.org> 3.2.5-alt1
+- Version 3.2.5
+
 * Sat Mar 20 2021 Nazarov Denis <nenderus@altlinux.org> 3.2.4-alt1.1
 - Don't bzip sources to speedup rpmbuild -bp
 
