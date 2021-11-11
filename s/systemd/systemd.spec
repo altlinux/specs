@@ -88,8 +88,8 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.5
-Release: alt2
+Version: %ver_major.6
+Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -2244,6 +2244,9 @@ udevadm hwdb --update &>/dev/null
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Thu Nov 11 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.6-alt1
+- 249.6
+
 * Thu Oct 28 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.5-alt2
 - Disable pager Hyperlink ANSI sequence support.
 - Update post scripts for nss modules.
