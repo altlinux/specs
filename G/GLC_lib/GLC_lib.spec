@@ -1,7 +1,7 @@
 %define maj_ver 3.0
 Name: GLC_lib
-Version: %maj_ver.1
-Release: alt1.20211001
+Version: %maj_ver.1.20211001
+Release: alt2
 Summary: C++ class library for OpenGL application based on Qt 5
 
 Group: System/Libraries
@@ -12,10 +12,9 @@ Source: %name-%version.tar
 Patch: unbundled_library.patch
 
 BuildRequires: qt5-base-devel
-BuildRequires: qt5-designer
 BuildRequires: qt5-quickcontrols2-devel
 BuildRequires: lib3ds-devel
-BuildRequires: libquazip-qt5-devel
+BuildRequires: quazip-qt5-devel
 BuildRequires: zlib-devel
 
 # Project ERROR: GLC_lib does not support OpenGL ES 2!
@@ -47,14 +46,18 @@ developing applications that use %name.
 %__subst 's|LIB_DIR = /usr/lib|LIB_DIR = %_libdir|' glc_lib.pro install.pri
 
 %build
-%qmake_qt5 CONFIG+="force_debug_info qml_debug" LIBS+="-l3ds -lquazip5 -lz" glc_lib.pro
+%qmake_qt5 \
+    CONFIG+="force_debug_info qml_debug" \
+    LIBS+="-l3ds -lquazip1-qt5 -lz" \
+    QMAKE_CXXFLAGS+="`pkg-config --cflags quazip1-qt5`" \
+    glc_lib.pro
 %make_build
 
 %install
 %make_install install INSTALL_ROOT=%buildroot
 
 # remove built examples
-rm -r %buildroot%prefix/src/GLC_lib-%maj_ver/examples
+rm -r %buildroot%prefix/src/GLC_lib-%maj_ver/examples ||:
 
 %files
 %doc README
@@ -66,6 +69,9 @@ rm -r %buildroot%prefix/src/GLC_lib-%maj_ver/examples
 %_libdir/*.so
 
 %changelog
+* Thu Nov 11 2021 Sergey V Turchin <zerg@altlinux.org> 3.0.1.20211001-alt2
+- build with quazip-qt5-1.1
+
 * Sun Nov 07 2021 Anton Midyukov <antohami@altlinux.org> 3.0.1-alt1.20211001
 - new version from commit 5e86cbb1049ea7b32f7329dd391bc2df88882d71
   with https://github.com/laumaya/GLC_lib
