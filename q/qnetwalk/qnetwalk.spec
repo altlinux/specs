@@ -1,45 +1,33 @@
 Name: qnetwalk
-Version: 1.3
-Release: alt3.qa1
+Version: 1.6
+Release: alt1
+%K5init no_altplace
 
 Group: Games/Puzzles
 Summary: Qt-version of the popular NetWalk game
 License: GPL
-URL: http://qt.osdn.org.ua/qnetwalk.html
+#URL: http://qt.osdn.org.ua/qnetwalk.html
+URL: https://github.com/AMDmi3/qnetwalk
 
-Source0: http://qt.osdn.org.ua/%name-%version.tar
+Source0: %name-%version.tar
 
-Patch1: %name-1.1-paths.patch
-Patch2: %name-1.3-gcc45.patch
-
-Packager: Evgenii Terechkov <evg@altlinux.ru>
-
-# Automatically added by buildreq on Thu Apr 03 2008 (-bi)
-BuildRequires: ImageMagick gcc-c++ libqt4-devel
+BuildRequires: cmake qt5-base-devel qt5-tools qt5-tools-devel
+BuildRequires: ImageMagick-tools
+BuildRequires: libSDL-devel libSDL_mixer-devel
+BuildRequires(pre): rpm-build-kf5
 
 %description
 Qt-version of the popular NetWalk game.
 
 %prep
 %setup -q
-%patch1 -p1
-%patch2 -p1
-
-subst "s|\(target.path.*=\).*|\1 %_gamesbindir/|" %name.pro
-subst "s|\(share.path.*=\).*|\1 %_gamesdatadir/%name/|" %name.pro
-subst "s|/usr/local/man|%_mandir|" %name.pro
-subst "s|/usr/local/share|%_gamesdatadir|g" %name.pro
-
-export QTDIR=%_qt4dir PATH=%_qt4dir/bin:$PATH
-qmake -unix
-%make clean
 
 %build
-export QTDIR=%_qt4dir PATH=%_qt4dir/bin:$PATH
-%make_build
+%K5build
 
 %install
-make install INSTALL_ROOT=%buildroot
+%K5install
+#make install INSTALL_ROOT=%buildroot
 
 mkdir -p %buildroot/%_iconsdir/hicolor/{16x16,32x32,48x48}/apps/
 install -m 0644 pics/%name.png %buildroot/%_iconsdir/hicolor/16x16/apps/%name.png
@@ -47,14 +35,16 @@ install -m 0644 pics/computer2.png %buildroot/%_iconsdir/hicolor/32x32/apps/%nam
 convert -resize 48x48 pics/computer2.png %buildroot/%_iconsdir/hicolor/48x48/apps/%name.png
 
 %files
-%_gamesbindir/*
+%_bindir/*
 %_datadir/%name
 %_desktopdir/*
-%_iconsdir/*/*/*/%name.png
-%_man6dir/%name.6.*
-%doc ChangeLog README
+%_iconsdir/*/*/*/%name.*
+%doc ChangeLog* README*
 
 %changelog
+* Thu Nov 11 2021 Sergey V Turchin <zerg@altlinux.org> 1.6-alt1
+- new version
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
