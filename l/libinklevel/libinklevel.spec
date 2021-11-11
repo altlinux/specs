@@ -1,9 +1,9 @@
 Name: libinklevel
 Version: 0.9.3
-Release: alt1
+Release: alt2
 
 Summary: Library for retrieving the ink level of a printer
-License: GPL
+License: GPLv2
 Group: System/Libraries
 
 Url: http://libinklevel.sourceforge.net
@@ -31,6 +31,7 @@ Headers for building software that uses libinklevel
 cp -a %SOURCE1 index.html
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %configure
 %make_build OPTFLAGS="%optflags"
 
@@ -40,7 +41,7 @@ ln -sf /usr/share/license/GPL-2 COPYING
 
 %files
 %_libdir/*.so.*
-%doc index.html
+%doc index.html README ChangeLog NEWS AUTHORS
 %doc --no-dereference COPYING
 
 %files devel
@@ -48,6 +49,10 @@ ln -sf /usr/share/license/GPL-2 COPYING
 %_includedir/*.h
 
 %changelog
+* Thu Nov 11 2021 Ilya Mashkin <oddity@altlinux.ru> 0.9.3-alt2
+- add lto options
+- Update License tag to GPLv2
+
 * Thu May 23 2019 Michael Shigorin <mike@altlinux.org> 0.9.3-alt1
 - 0.9.3 (NB: drops support for parallel port printers)
 
