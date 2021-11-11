@@ -1,10 +1,11 @@
 %define sover 1.0.0
 %define libquazip libquazip1-qt5_%sover
+%define _cmake__builddir BUILD
 
 %define rname quazip
 Name: quazip-qt5
 Version: 1.1
-Release: alt1.1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt/C++ wrapper for the minizip library
@@ -43,6 +44,8 @@ Summary: Development files for %rname
 Group: Development/C
 Requires: %libquazip
 Requires: qt5-base-devel
+Provides: libquazip-qt5-devel = %EVR
+Obsoletes: libquazip-qt5-devel < %EVR
 %description devel
 The %name-devel package contains libraries, header files and documentation
 for developing applications that use %rname.
@@ -64,8 +67,8 @@ done
 
 
 %install
-%cmake_install
-
+%make install -C BUILD DESTDIR=%buildroot
+install -Dm 0644 .gear/FindQuaZip.cmake %buildroot/%_datadir/cmake/Modules/FindQuaZip5.cmake
 
 %files -n %libquazip
 %doc COPYING NEWS.txt *.md
@@ -77,9 +80,13 @@ done
 %_includedir/QuaZip-Qt*/
 %_libdir/lib*.so
 %_libdir/cmake/QuaZip-Qt*/
+%_datadir/cmake/Modules/FindQuaZip*.cmake
 %_pkgconfigdir/quazip*-qt*.pc
 
 %changelog
+* Thu Nov 11 2021 Sergey V Turchin <zerg@altlinux.org> 1.1-alt2
+- obsolete libquazip-qt5-devel
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1.1-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
