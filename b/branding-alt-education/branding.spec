@@ -3,8 +3,8 @@
 %define theme education
 %define Theme Education
 %define codename FalcoRusticolus
-%define status beta
-%define status_en beta
+%define status %nil
+%define status_en %nil
 %define flavour %brand-%theme
 
 %define gtk_theme Breeze
@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 10.0
-Release: alt0.4.beta
+Release: alt1
 
 %ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
@@ -482,6 +482,12 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Thu Nov 11 2021 Andrey Cherepanov <cas@altlinux.org> 10.0-alt1
+- Release 10.0.
+
+* Tue Nov 09 2021 Andrey Cherepanov <cas@altlinux.org> 10.0-alt0.5rc
+- 10.0 RC1.
+
 * Wed Oct 20 2021 Andrey Cherepanov <cas@altlinux.org> 10.0-alt0.4.beta
 - browser-qt: use widget and icon theme from branding.
 - slideshow: update slides.
