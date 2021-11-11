@@ -1,7 +1,7 @@
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
-Version: 3.0.23
-Release: alt2
+Version: 3.0.25
+Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
 Url: http://www.freeradius.org/
@@ -698,6 +698,9 @@ fi
 #%_libdir/freeradius/rlm_sql_unixodbc-%version.so
 
 %changelog
+* Thu Nov 11 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.25-alt1
+- 3.0.25
+
 * Tue Sep 28 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.0.23-alt2
 - Fixed build for Elbrus
 
