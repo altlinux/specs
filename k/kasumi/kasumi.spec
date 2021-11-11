@@ -1,6 +1,6 @@
 Name: kasumi
 Version: 2.5
-Release: alt1.qa1
+Release: alt2
 
 License: GPLv2+
 Url: http://kasumi.sourceforge.jp/
@@ -17,6 +17,7 @@ Kasumi is a dictionary management tool for Anthy.
 %setup -q
 
 %build
+%add_optflags -std=c++11
 %configure
 make %{?_smp_mflags}
 
@@ -35,6 +36,9 @@ rm -rf $RPM_BUILD_ROOT%_datadir/applications/*.desktop
 %doc AUTHORS COPYING ChangeLog NEWS README
 
 %changelog
+* Thu Nov 11 2021 Ilya Mashkin <oddity@altlinux.ru> 2.5-alt2
+- Fix FTBFS
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.5-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
