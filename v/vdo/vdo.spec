@@ -2,7 +2,7 @@
 %define _libexecdir %_usr/libexec
 
 Name: vdo
-Version: 6.2.5.74
+Version: 6.2.6.3
 Release: alt1
 
 Summary: Management tools for Virtual Data Optimizer
@@ -115,6 +115,9 @@ mv %buildroot%_sysconfdir/bash_completion.d/* %buildroot%_datadir/bash-completio
 %_man8dir/vdoregenerategeometry.8*
 
 %changelog
+* Fri Nov 12 2021 Alexey Shabalin <shaba@altlinux.org> 6.2.6.3-alt1
+- 6.2.6.3
+
 * Fri Sep 03 2021 Alexey Shabalin <shaba@altlinux.org> 6.2.5.74-alt1
 - 6.2.5.74
 
