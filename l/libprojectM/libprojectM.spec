@@ -3,21 +3,20 @@
 %ifarch %arm riscv64
 %def_disable qt
 %else
-%def_enable qt
+%def_disable qt
 %endif
 
 Name: lib%oname
 Version: 2.1.0
-Release: alt14
+Release: alt15
 
 Summary: Awesome music visualizer
 License: LGPLv2.1
 Group: System/Libraries
 
 Url: http://projectm.sourceforge.net/
-Source: http://freefr.dl.sourceforge.net/project/projectm/2.0.1/%oname-complete-%version-Source.tar.gz
-
-Packager: Motsyo Gennadi <drool@altlinux.ru>
+#Source: http://freefr.dl.sourceforge.net/project/projectm/2.0.1/%oname-complete-%version-Source.tar.gz
+Source: %oname-complete-%version-Source.tar
 
 Patch1: %name-complete-2.1.0-doxy.patch
 Patch2: %name-complete-2.1.0-link.patch
@@ -86,9 +85,6 @@ libvisual compatible applications.
 Summary: Header files for projectM library
 Group: Development/C
 Requires: %name = %version-%release
-%if_enabled qt
-Requires: %name-qt = %version-%release
-%endif
 
 %description devel
 Header files for projectM library.
@@ -111,11 +107,13 @@ Static projectM library.
 %patch6 -p2
 
 %build
+%add_optflags -std=gnu++11
 %cmake \
 	-DUSE_FBO:STRING=FALSE \
 %if_disabled qt
 	-DINCLUDE-PROJECTM-QT:BOOL=FALSE \
 	-DINCLUDE-PROJECTM-PULSEAUDIO:BOOL=FALSE \
+	-DINCLUDE-PROJECTM-JACK:BOOL=FALSE \
 %endif
 	#
 %cmake_build
@@ -173,6 +171,9 @@ ln -s /usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf %buildroot/%_datadir/%oname
 # - consider https://src.fedoraproject.org/rpms/libprojectM/raw/master/f/libprojectM-c++14.patch
 
 %changelog
+* Fri Nov 12 2021 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt15
+- build wihtout Qt4
+
 * Mon Mar 02 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.1.0-alt14
 - Disabled qt frontend on riscv64.
 
