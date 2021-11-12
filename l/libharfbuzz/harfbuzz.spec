@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name harfbuzz
-%define ver_major 3.0
+%define ver_major 3.1
 %def_with graphite2
 %def_with icu
 %def_with gobject
@@ -13,7 +13,7 @@
 %endif
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: HarfBuzz is an OpenType text shaping engine
@@ -114,7 +114,7 @@ GObject introspection devel data for the HarfBuzz library
 	-Dfreetype=enabled \
 	-Dcairo=enabled \
 	%{?_with_icu:-Dicu=enabled} \
-	%{?_with_graphite2:-Dgraphite=enabled} \
+	%{?_with_graphite2:-Dgraphite2=enabled} \
         %{?_enable_gobject:-Dgobject=enabled} \
         %{?_enable_introspection:-Dintrospection=enabled} \
 	%{?_disable_docs:-Ddocs=disabled}
@@ -125,7 +125,7 @@ GObject introspection devel data for the HarfBuzz library
 %meson_install
 
 %check
-%__meson_test
+%__meson_test -t 4
 
 %files
 %_libdir/%name.so.*
@@ -178,6 +178,9 @@ GObject introspection devel data for the HarfBuzz library
 %endif
 
 %changelog
+* Fri Nov 12 2021 Yuri N. Sedunov <aris@altlinux.org> 3.1.1-alt1
+- 3.1.1
+
 * Wed Sep 22 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt1
 - 3.0.0
 
