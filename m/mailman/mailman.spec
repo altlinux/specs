@@ -2,7 +2,7 @@
 #	add systemd init support
 #       use xz for large archives in /usr/share/mailman/cron/nightly_gzip
 Name: mailman
-Version: 2.1.35
+Version: 2.1.36
 Release: alt1
 Epoch: 5
 
@@ -376,8 +376,17 @@ fi
 %docdir/mailman-*
 
 %changelog
+* Sat Nov 13 2021 L.A. Kostis <lakostis@altlinux.ru> 5:2.1.36-alt1
+- Updated to 2.1.36.
+- Security fixes:
+  + CVE-2021-43331: A potential XSS attack via the user options.
+  + CVE-2021-43332: A potential for for a list moderator to carry out an
+                    off-line brute force attack to obtain the list
+		    admin password.
+
 * Sat Nov 06 2021 L.A. Kostis <lakostis@altlinux.ru> 5:2.1.35-alt1
 - Updated to 2.1.35:
+- Security fixes:
   + CVE-2021-42096: Attack to obtain the list admin password.
   + CVE-2021-42097: A CSRF attack via the user options page
                     could allow takeover of a users
