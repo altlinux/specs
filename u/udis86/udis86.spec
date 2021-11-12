@@ -1,8 +1,8 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: udis86
-Version: 1.7
-Release: alt2
+Version: 1.7.2
+Release: alt1
 
 Summary: Disassembler for x86 and x86-64
 License: BSD
@@ -13,6 +13,7 @@ Source: http://download.sourceforge.net/udis86/%name-%version.tar.gz
 
 # Automatically added by buildreq on Wed Oct 06 2010
 BuildRequires: gcc-c++
+BuildRequires: python3
 
 %description
 Udis86 is an easy-to-use minimalistic disassembler library for the x86 and
@@ -30,6 +31,7 @@ Disassembler library for the x86 and x86-64 instruction set architectures.
 %package -n lib%{name}-devel
 Summary: Disassembler library for the x86 and x86-64, development files
 Group: Development/C
+BuildArch: noarch
 Requires: lib%{name}-devel-static = %version-%release
 
 %description -n lib%{name}-devel
@@ -47,7 +49,7 @@ Documentation for x86 and x86-64 disassembler.
 %setup
 
 %build
-%configure
+%configure --with-python=%__python3
 %make_build
 
 %install
@@ -66,6 +68,9 @@ Documentation for x86 and x86-64 disassembler.
 %_includedir/*
 
 %changelog
+* Fri Nov 12 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.7.2-alt1
+- 1.7.2
+
 * Fri Oct 29 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.7-alt2
 - NMU: FTBFS: build with LTO.
 
