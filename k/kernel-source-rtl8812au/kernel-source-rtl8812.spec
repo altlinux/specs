@@ -5,7 +5,7 @@
 #### MODULE SOURCES ####
 Name: kernel-source-rtl8812au
 Version: %module_version
-Release: alt1
+Release: alt2
 Provides: kernel-source-%module_name-%module_version
 Summary: Linux %module_name Realtek 8812 WiFi chipset series module sources
 License: GPLv2
@@ -39,6 +39,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Fri Nov 12 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 7502.20210405-alt2
+- build with kernel >=5.15 fixed
+
 * Mon Apr 05 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 7502.20210405-alt1
 - updated from git
 - build with kernel >=5.10 fixed
