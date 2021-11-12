@@ -1,57 +1,60 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libqt4-devel
-# END SourceDeps(oneline)
-Name:           abby
-Version:        0.4.8
-Release:        alt3
-Summary:        Front-end for cclive and clive
-Packager: Ilya Mashkin <oddity@altlinux.ru>
-Group:          Video
-License:        GPLv3+
-URL:            http://code.google.com/p/abby/
-Source0:        http://%{name}.googlecode.com/files/%{name}-%{version}.tar.bz2
+Name: abby
+Version: 0.4.8
+Release: alt4
 
-BuildRequires:  qt4-devel desktop-file-utils
-Requires:       cclive
+Group: Video
+Summary: Front-end for cclive and clive
+Packager: Ilya Mashkin <oddity@altlinux.ru>
+License: GPLv3+
+Url: http://code.google.com/p/abby/
+
+Requires: cclive
+
+#Source0: http://%name.googlecode.com/files/%name-%version.tar.bz2
+Source0: %name-%version.tar
 Source44: import.info
+Patch1: alt-qt5.patch
+
+BuildRequires: qt5-base-devel qt5-tools desktop-file-utils
 
 %description
 abby is a front-end for clive and cclive, allowing users unfamiliar with
 command-line interfaces to make most of cclive using a graphical
-user-interface. abby is written in C++. 
+user-interface. abby is written in C++.
 
 %prep
-%setup -q
-echo "[Desktop Entry]" > %{name}.desktop
-echo "Name=abby" >> %{name}.desktop
-echo "GenericName=abby" >> %{name}.desktop
-echo "Comment=Front-end for cclive and clive" >> %{name}.desktop
-echo "Exec=abby" >> %{name}.desktop
-echo "Terminal=false" >> %{name}.desktop
-echo "Type=Application" >> %{name}.desktop
-echo "Categories=Network;FileTransfer;Qt;" >> %{name}.desktop
+%setup
+%patch1 -p1
 
+echo "[Desktop Entry]" > %name.desktop
+echo "Name=abby" >> %name.desktop
+echo "GenericName=abby" >> %name.desktop
+echo "Comment=Front-end for cclive and clive" >> %name.desktop
+echo "Exec=abby" >> %name.desktop
+echo "Terminal=false" >> %name.desktop
+echo "Type=Application" >> %name.desktop
+echo "Categories=Network;FileTransfer;Qt;" >> %name.desktop
 
 %build
-qmake-qt4
-make %{?_smp_mflags}
-
+%qmake_qt5
+%make_build
 
 %install
-install -d $RPM_BUILD_ROOT%{_bindir}
-install -Dm 755 -p %{name} $RPM_BUILD_ROOT%{_bindir}
+install -d $RPM_BUILD_ROOT%_bindir
+install -Dm 755 -p %name $RPM_BUILD_ROOT%_bindir
 desktop-file-install --vendor=""   \
-       --dir=%{buildroot}%{_datadir}/applications/   \
-       %{name}.desktop
-
+       --dir=%buildroot%_datadir/applications/   \
+       %name.desktop
 
 %files
 %doc AUTHORS ChangeLog COPYING README TODO
-%{_bindir}/%{name}
-%{_datadir}/applications/%{name}.desktop
-
+%_bindir/%name
+%_datadir/applications/%name.desktop
 
 %changelog
+* Fri Nov 12 2021 Sergey V Turchin <zerg@altlinux.org> 0.4.8-alt4
+- build with Qt5
+
 * Fri Sep 05 2014 Ilya Mashkin <oddity@altlinux.ru> 0.4.8-alt3
 - build for Sisyphus
 
