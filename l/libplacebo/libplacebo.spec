@@ -1,7 +1,7 @@
-%define sover 120
+%define sover 157
 
 Name: libplacebo
-Version: 3.120.1
+Version: 4.157.0
 Release: alt0.1
 Summary: libplacebo is essentially the core rendering algorithms and ideas of mpv turned into a library
 Group: System/Libraries
@@ -53,6 +53,10 @@ developing applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Nov 12 2021 L.A. Kostis <lakostis@altlinux.ru> 4.157.0-alt0.1
+- v4.157.0.
+- Update soname.
+
 * Mon Jun 14 2021 L.A. Kostis <lakostis@altlinux.ru> 3.120.1-alt0.1
 - v3.120.1.
 
