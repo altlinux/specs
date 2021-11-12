@@ -1,5 +1,4 @@
-# Unpackaged files in buildroot should terminate build
-%define _unpackaged_files_terminate_build 1
+%def_disable qt4
 
 %define commit0 ad9bc4600ce769a8b3ad10910803cd555811b70c
 
@@ -8,7 +7,7 @@
 
 Name: lib%upname
 Version: 2.6.1
-Release: alt3
+Release: alt4
 Url: http://doc.qt.digia.com/solutions/4/qtsingleapplication/qtsingleapplication.html
 Group: System/Libraries
 License: LGPLv2.1 GPLv3
@@ -25,7 +24,9 @@ Patch2: qtsingleapplication-build-qtsinglecoreapplication.patch
 Patch3: qtsingleapplication-qupzilla.patch
 
 BuildRequires: gcc-c++
+%if_enabled qt4
 BuildRequires: libqt4-devel
+%endif
 BuildRequires: qt5-base-devel
 
 %description
@@ -92,8 +93,10 @@ sed -i -r 's,.include,\0 <QtCore/QDataStream>\n\0,' src/qtlocalpeer.h
 
 %build
 echo yes | ./configure -library
+%if_enabled qt4
 qmake-qt4
 %make_build
+%endif
 
 pushd qt5
 %qmake_qt5 ..
@@ -113,23 +116,26 @@ cp -a \
     src/QtSingleCoreApplication \
     %buildroot%_includedir/QtSolutions
 mkdir -p %buildroot%_qt5_headerdir
-
 # symlink is not possible due to split into individual subpackages
 cp -ap %buildroot%_includedir/QtSolutions %buildroot%_qt5_headerdir
 
 # features
-mkdir -p %buildroot%_datadir/qt4/mkspecs/features %buildroot%_qt5_archdatadir/mkspecs/features
+%if_enabled qt4
+mkdir -p %buildroot%_datadir/qt4/mkspecs/features
 install -p -m644 %SOURCE1 %SOURCE2 %buildroot%_datadir/qt4/mkspecs/features
+%endif
+mkdir -p %buildroot%_qt5_archdatadir/mkspecs/features
 install -p -m644 qt5/*.prf %buildroot%_qt5_archdatadir/mkspecs/features
 
+%if_enabled qt4
 %files
 %_libdir/libQtSolutions*.so.*
-
 %files devel
 %doc doc/html README.TXT
 %_libdir/libQtSolutions*.so
 %_includedir/QtSolutions/
 %_datadir/qt4/mkspecs/features/*.prf
+%endif
 
 %files qt5
 %_libdir/libQt5*.so.*
@@ -141,6 +147,9 @@ install -p -m644 qt5/*.prf %buildroot%_qt5_archdatadir/mkspecs/features
 %_qt5_archdatadir/mkspecs/features/*.prf
 
 %changelog
+* Fri Nov 12 2021 Sergey V Turchin <zerg@altlinux.org> 2.6.1-alt4
+- build without qt4
+
 * Sat Nov 17 2018 Anton Midyukov <antohami@altlinux.org> 2.6.1-alt3
 - new snapshot
 - initial build libqtsingleapplication-qt5
