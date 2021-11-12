@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 10
-Release: alt0.1
+Release: alt0.3
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -132,7 +132,7 @@ Requires(post,preun): alternatives >= 0.2
 This package contains some graphics for %distro_name design.
 
 %description graphics -l ru_RU.UTF-8
-В данном пакете находится необходимые графические элементы для дистрибутива 
+В данном пакете находится необходимые графические элементы для дистрибутива
 %distro_name_ru.
 
 %define provide_list altlinux fedora redhat system altlinux
@@ -320,6 +320,12 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Nov 12 2021 Alexey Shabalin <shaba@altlinux.org> 10-alt0.3
+- add slideshow
+
+* Tue Oct 26 2021 Andrew A. Vasilyev <andy@altlinux.org> 10-alt0.2
+- colors and styles from Workstation and Education
+
 * Mon Oct 25 2021 Alexey Shabalin <shaba@altlinux.org> 10-alt0.1
 - version 10
 
