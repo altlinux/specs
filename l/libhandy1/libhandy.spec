@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name libhandy
-%define ver_major 1.4
+%define ver_major 1.5
 %define api_ver 1
 
 %def_enable introspection
@@ -124,6 +124,9 @@ xvfb-run -s -noreset %meson_test
 %endif
 
 %changelog
+* Fri Nov 12 2021 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Sun Sep 05 2021 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - 1.4.0
 
