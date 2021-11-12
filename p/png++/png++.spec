@@ -1,5 +1,5 @@
 Name: png++
-Version: 0.2.9
+Version: 0.2.10
 Release: alt1
 
 Summary: C++ wrapper for libpng
@@ -8,6 +8,7 @@ Group: Development/C++
 
 Url: http://www.nongnu.org/pngpp/
 Packager: Nazarov Denis <nenderus@altlinux.org>
+BuildArch: noarch
 
 Source: http://download.savannah.gnu.org/releases/pngpp/%name-%version.tar.gz
 
@@ -49,12 +50,15 @@ PNG reference implementation library.
 %__rm -rf %buildroot%_docdir/%name
 
 %files -n lib%name
-%doc %_docdir/%name-%version
+%doc %_docdir/%name-0.2.9
 
 %files -n lib%name-devel
 %_includedir/%name
 
 %changelog
+* Fri Nov 12 2021 Nazarov Denis <nenderus@altlinux.org> 0.2.10-alt1
+- Version 0.2.10
+
 * Sun Jan 10 2016 Nazarov Denis <nenderus@altlinux.org> 0.2.9-alt1
 - Initial release for ALT Linux
 
