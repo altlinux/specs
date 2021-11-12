@@ -1,9 +1,10 @@
+%def_disable qt4
 %define _qt4_translationdir %_datadir/qt4/translations
 
 %define oname qtspell
 Name: libqtspell
 Version: 0.8.5
-Release: alt2.1
+Release: alt3
 
 Summary: Spell checking for Qt text widgets
 License: GPLv3+
@@ -20,7 +21,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 BuildRequires: ccmake doxygen gcc-c++ graphviz libenchant-devel
 
 BuildRequires: cmake
+%if_enabled qt4
 BuildRequires: libqt4-devel
+%endif
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools-devel
 
@@ -92,33 +95,39 @@ that use %name.
 %add_optflags -std=c++11
 %endif
 
+%if_enabled qt4
 %define _cmake__builddir build-qt4
 %cmake -DUSE_QT5=OFF
 %cmake_build
 %cmake_build -t doc
+%endif
 
 %define _cmake__builddir build-qt5
 %cmake -DUSE_QT5=ON
 %cmake_build
+%cmake_build -t doc
 
 %install
+%if_enabled qt4
 # install qt4 build
 %define _cmake__builddir build-qt4
 %cmake_install
+%endif
 
 # install qt5 build
 %define _cmake__builddir build-qt5
 %cmake_install
 
+%if_enabled qt4
 %files qt4
 %doc COPYING
 %_libdir/libqtspell-qt4.so.*
 %_qt4_translationdir/QtSpell_*.qm
-
 %files qt4-devel
 %_includedir/QtSpell-qt4/
 %_libdir/libqtspell-qt4.so
 %_pkgconfigdir/QtSpell-qt4.pc
+%endif
 
 %files qt5
 %doc COPYING
@@ -134,9 +143,12 @@ that use %name.
 
 %files doc
 %doc COPYING
-%doc build-qt4/doc/html
+%doc build-qt5/doc/html
 
 %changelog
+* Fri Nov 12 2021 Sergey V Turchin <zerg@altlinux.org> 0.8.5-alt3
+- build without Qt4
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.8.5-alt2.1
 - NMU: spec: adapted to new cmake macros.
 
