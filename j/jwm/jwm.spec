@@ -7,7 +7,7 @@ BuildRequires: libX11-devel libXext-devel xorg-proto-devel
 %define _localstatedir %{_var}
 Name:           jwm
 Version:        2.3.7
-Release:        alt1_11
+Release:        alt2_11
 Summary:        Joe's Window Manager
 
 License:        GPLv2+
@@ -91,7 +91,7 @@ tar -xC %buildroot/%_sysconfdir/X11/jwm -f %SOURCE47
 rm -f -- %buildroot/%_sysconfdir/X11/jwm/system.jwmrc
 
 # install -m755 %SOURCE49 %buildroot%_bindir/
-install -D -m644 %SOURCE46 %buildroot%_sysconfdir/X11/wmsession.d/jwm
+install -D -m644 %SOURCE46 %buildroot%_sysconfdir/X11/wmsession.d/15jwm
 install -D -m644 %SOURCE48 %buildroot%_iconsdir/hicolor/scalable/apps/jwm.svg
 install -D -m 755 %{SOURCE45} %buildroot%_sysconfdir/menu-methods/jwm
 
@@ -105,9 +105,12 @@ install -D -m 755 %{SOURCE45} %buildroot%_sysconfdir/menu-methods/jwm
 %{_datadir}/%{name}/
 %_iconsdir/hicolor/scalable/apps/jwm.svg
 %config %_sysconfdir/menu-methods/jwm
-%config %_sysconfdir/X11/wmsession.d/jwm
+%config %_sysconfdir/X11/wmsession.d/15jwm
 
 %changelog
+* Fri Nov 12 2021 Igor Vlasenko <viy@altlinux.org> 2.3.7-alt2_11
+- added priority to wmsession file name
+
 * Wed Nov 03 2021 Igor Vlasenko <viy@altlinux.org> 2.3.7-alt1_11
 - WM policy 2.0: added svg. fixed desktop
 
