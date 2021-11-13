@@ -1,8 +1,8 @@
 Name: kernel-image-std-def
-Release: alt2
+Release: alt1
 epoch:2
 %define kernel_base_version	5.10
-%define kernel_sublevel .78
+%define kernel_sublevel .79
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -702,6 +702,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Nov 13 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.79-alt1
+- v5.10.79
+
 * Tue Nov 09 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.78-alt2
 - CLONE_USERNS default restriction restored (Closes: 41283)
 - NVME fix for TF307-MB-S-D (Closes: 40718)
