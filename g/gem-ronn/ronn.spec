@@ -1,8 +1,9 @@
 %define	       pkgname ronn
+%def_without   bootstrap
 
 Name:          gem-%pkgname
 Version:       0.7.3
-Release:       alt4.1
+Release:       alt4.2
 Summary:       Ronn builds manuals from Markdown to roff format
 License:       MIT
 Group:         Development/Documentation
@@ -13,7 +14,9 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+%if_without bootstrap
 BuildRequires: gem(ronn)
+%endif
 BuildRequires: gem(hpricot)
 BuildRequires: gem(rdiscount)
 BuildRequires: gem(mustache)
@@ -77,6 +80,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Sat Nov 13 2021 Michael Shigorin <mike@altlinux.org> 0.7.3-alt4.2
+- added bootstrap knob to circumvent self-BR: gem-ronn
+
 * Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 0.7.3-alt4.1
 - fixed (!) spec
 
