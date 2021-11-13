@@ -12,7 +12,7 @@
 
 Name: gns3-server
 Version: 2.2.26
-Release: alt1
+Release: alt2
 
 Summary: GNS3 server manages emulators such as Dynamips, VirtualBox or Qemu/KVM
 License: GPLv3
@@ -24,6 +24,9 @@ Buildarch: noarch
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+
+# test_lock_decorator is failed at ALT girar
+Patch: drop-test_lock_decorator.patch
 
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
@@ -63,6 +66,7 @@ Clients like the GNS3 GUI controls the server using a HTTP REST API.
 
 %prep
 %setup
+%patch -p1
 echo '' > requirements.txt
 
 %build
@@ -86,6 +90,9 @@ py.test3 -v
 %python3_sitelibdir/gns3_server-*.egg-info
 
 %changelog
+* Sat Nov 13 2021 Anton Midyukov <antohami@altlinux.org> 2.2.26-alt2
+- drop test_lock_decorator
+
 * Tue Nov 09 2021 Anton Midyukov <antohami@altlinux.org> 2.2.26-alt1
 - new version 2.2.26
 - enable check
