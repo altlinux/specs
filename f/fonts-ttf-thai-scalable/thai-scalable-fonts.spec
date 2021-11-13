@@ -1,6 +1,6 @@
 Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/mkfontdir /usr/bin/mkfontscale /usr/bin/mktexlsr /usr/bin/ttmkfdir /usr/bin/vptovf python-devel
+BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/mkfontdir /usr/bin/mkfontscale /usr/bin/mktexlsr /usr/bin/ttmkfdir /usr/bin/vptovf python3-devel
 # END SourceDeps(oneline)
 %define oldname thai-scalable-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -15,7 +15,7 @@ BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/mkfontdir /usr/bin/mk
 %{archivename} provides a collection of free scalable Thai fonts.
 
 Name:      fonts-ttf-thai-scalable
-Version:   0.7.2
+Version:   0.7.3
 Release:   alt1_1
 Summary:   Thai TrueType fonts
 License:   GPLv2+ and Bitstream Vera
@@ -402,6 +402,9 @@ fi
 
 
 %changelog
+* Sat Nov 13 2021 Igor Vlasenko <viy@altlinux.org> 0.7.3-alt1_1
+- update to new release by fcimport
+
 * Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.7.2-alt1_1
 - update to new release by fcimport
 
