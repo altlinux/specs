@@ -75,7 +75,7 @@
 
 Name:    samba
 Version: 4.14.10
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -890,6 +890,7 @@ printf "%_bindir/ntlm_auth\t%_samba_dc_mod_libdir/bin/ntlm_auth\t50\n" >> %build
 printf "%_bindir/pdbedit\t%_samba_dc_mod_libdir/bin/pdbedit\t50\n" >> %buildroot%_altdir/samba-heimdal
 printf "%_samba_mod_libdir/ldb\t%_samba_dc_mod_libdir/ldb\t50\n" >> %buildroot%_altdir/samba-heimdal
 
+printf "%_bindir/samba-tool-plus\t%_samba_dc_mod_libdir/bin/samba-tool-plus\t50\n" >> %buildroot%_altdir/samba-heimdal
 printf "%_bindir/samba-tool\t%_samba_dc_mod_libdir/bin/samba-tool\t50\n" >> %buildroot%_altdir/samba-heimdal
 chmod 0755 %buildroot%_samba_dc_mod_libdir/bin/samba-tool
 
@@ -1919,6 +1920,9 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_includedir/samba-4.0/private
 
 %changelog
+* Sat Nov 13 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.10-alt2
+- Add support samba-tool-plus alternative for samba-dc build with heimdal.
+
 * Tue Nov 07 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.10-alt1
 - Update to latest security release of Samba 4.14
 - Security fixes:

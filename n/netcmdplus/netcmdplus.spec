@@ -1,6 +1,10 @@
+%define _samba_mod_libdir  %_libdir/samba
+%define _samba_dc_mod_libdir  %_libdir/samba-dc
+%define _samba_dc_pythonarchdir  %_samba_dc_mod_libdir/python%_python3_version
+
 Name: netcmdplus
 Version: 0.1.2
-Release: alt1
+Release: alt2
 
 Summary: Extended samba-tool (netcmd) version
 License: GPLv3+
@@ -8,15 +12,15 @@ Group: System/Configuration/Other
 
 Url: http://git.altlinux.org/people/manowar/packages/netcmdplus.git
 Packager: Paul Wolneykien <manowar@altlinux.org>
-BuildArch: noarch
 
 Source: %name-%version.tar
 
 BuildPreReq: rpm-build-python3
 BuildRequires: /usr/bin/2to3
 
+# Add conflicts due compatiblity with old samba package not provided alternative to heimdal libs
+Conflicts: samba-dc < 4.14.10-alt2
 # Add conflicts due compatiblity with old samba package provided python3(samba.netcmd.user)
-Conflicts: samba-dc < 4.14
 Conflicts: python3-module-samba < 4.14
 
 Conflicts: %name < %EVR
@@ -28,6 +32,7 @@ netcmdplus extends samba-tool "user" and "group" commands with additional operat
 Summary: python3 module for samba-tool-plus (netcmdplus)
 License: GPLv3+
 Group: Development/Python3
+BuildArch: noarch
 
 %description -n python3-module-%name
 netcmdplus extends samba-tool "user" and "group" commands with additional operations.
@@ -48,14 +53,31 @@ sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' bin/samba-tool-plus
 %install
 %python3_install
 
+mkdir -p %buildroot%_altdir
+mkdir -p %buildroot%_samba_mod_libdir/bin
+mkdir -p %buildroot%_samba_dc_mod_libdir/bin
+
+cp %buildroot%_bindir/samba-tool-plus %buildroot%_samba_dc_mod_libdir/bin/
+sed -i 's!^\(import sys\)$!\1\nsys.path.insert(0, "%_samba_dc_pythonarchdir")!' -- "%buildroot%_samba_dc_mod_libdir/bin/samba-tool-plus"
+
+cp %buildroot%_bindir/samba-tool-plus %buildroot%_samba_mod_libdir/bin/
+printf "%_bindir/samba-tool-plus\t%_samba_mod_libdir/bin/samba-tool-plus\t20\n" > %buildroot%_altdir/%name
+
 %files
-%_bindir/samba-tool-plus
+%ghost %_bindir/samba-tool-plus
+%_samba_dc_mod_libdir/bin/samba-tool-plus
+%_samba_mod_libdir/bin/samba-tool-plus
+%_altdir/%name
 
 %files -n python3-module-%name
-%python3_sitelibdir/%name/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir_noarch/%name/
+%python3_sitelibdir_noarch/*.egg-info
 
 %changelog
+* Sat Nov 13 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.1.2-alt2
+- Add support samba-tool-plus alternatives for various samba-dc and
+  samba-dc-mitkrb5 builds with Heimdal and MIT Kerberos respectively.
+
 * Wed Jul 21 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.1.2-alt1
 - Fix using obsoleted in samba-4.14 cmd_user_create class with renamed
   cmd_user_add class (closes: 40557)
