@@ -1,13 +1,13 @@
 %define name 		Xaw95
 %define version 	1.1
-%define release 	alt3
+%define release 	alt4
 
 Name: %name
 Version: %version
 Release: %release
 
 Summary: 3D Athena Widgets with Win95 look and feel
-License: GPL
+License: MIT
 Group: System/Libraries
 
 #Url: http://www.netsw.org/x11/libs/xaw95/
@@ -66,14 +66,17 @@ Requires: %libname = %version
 %patch2 -p0 -b .nocrash
 %patch1 -p0 -b .secure
 %patch0
+
 rm -rf laylex.c laygram.h laygram.c
 rm -rf exports/
 mkdir -p exports/include/X11/Xaw95
 mkdir -p X11
 ln -sf ../exports/include/X11/Xaw95 X11/Xaw95
-xmkmf -a
 
 %build
+xmkmf -a
+# GNU ar
+sed -i 's,AR = ar clq,AR = ar cq,' Makefile
 %make
 
 %install
@@ -92,6 +95,11 @@ rm -f %buildroot/%_x11libdir/Xaw95/*so*
 %_x11libdir/libXaw95.a
 
 %changelog
+* Sat Nov 13 2021 Igor Vlasenko <viy@altlinux.org> 1.1-alt4
+- NMU:
+- corrected License to MIT
+- fixed build
+
 * Wed Jan 31 2018 Michael Shigorin <mike@altlinux.org> 1.1-alt3
 - *correct* BuildRequires
 - updated Url:
