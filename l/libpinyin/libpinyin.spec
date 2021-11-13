@@ -9,7 +9,7 @@ Group: Other
 
 Name:           libpinyin
 Version:        2.6.1
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Library to deal with pinyin
 
 License:        GPLv3+
@@ -33,6 +33,7 @@ for intelligent sentence-based Chinese pinyin input methods.
 Group: Other
 Summary:        Development files for %{name}
 Requires:       %{name} = %{version}-%{release}
+Requires:       libzhuyin = %{version}-%{release}
 Provides:       libzhuyin-devel = %{version}-%{release}
 Obsoletes:      libzhuyin-devel < %{version}-%{release}
 
@@ -118,6 +119,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/libzhuyin*.so.*
 
 %changelog
+* Sat Nov 13 2021 Igor Vlasenko <viy@altlinux.org> 2.6.1-alt1_2
+- update to new release by fcimport
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 2.6.1-alt1_1
 - update to new release by fcimport
 
