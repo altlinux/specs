@@ -36,6 +36,9 @@
 %define optflags_debug -g1
 %endif
 
+# LTO-related flags are set by CMake.
+%global optflags_lto %nil
+
 %define hwasan_symbolize_arches x86_64 aarch64
 %define lldb_arches x86_64 %arm
 
@@ -50,7 +53,7 @@
 
 Name: %llvm_name
 Version: %v_full
-Release: alt3
+Release: alt4
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -76,7 +79,9 @@ Patch10: llvm-10-alt-python3.patch
 Patch14: llvm-10-alt-riscv64-config-guess.patch
 Patch15: llvm-cmake-resolve-symlinks-in-LLVMConfig.cmake.patch
 Patch16: clang-cmake-resolve-symlinks-in-ClangConfig.cmake.patch
+Patch17: llvm-cmake-pass-ffat-lto-objects-if-using-the-GNU-toolcha.patch
 Patch20: compiler-rt-D102059-libsanitizer-Remove-cyclades-inclusion-in-sanitizer.patch
+Patch21: llvm-utils-maint-missing-numeric_limits-decl.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -366,7 +371,9 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' lib/Support/Unix/Path.inc
 %patch14 -p1
 %patch15 -p2
 %patch16 -p1
+%patch17 -p1
 %patch20 -p1
+%patch21 -p1
 
 # Explicitly use python3 in select hashbangs.
 subst '/^#!.*python$/s|python$|python3|' $(find * -name opt-viewer.py)
@@ -376,6 +383,10 @@ subst '/^#!.*python$/s|python$|python3|' $(find * -name opt-viewer.py)
 subst '/^#!.*python$/s|python$|python2|' $(grep -Rl '#!.*python$' *)
 
 %build
+export NPROCS="%__nprocs"
+if [ "$NPROCS" -gt 64 ]; then
+	export NPROCS=64
+fi
 %define _cmake__builddir BUILD
 %define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 %cmake -G Ninja \
@@ -451,7 +462,7 @@ subst '/^#!.*python$/s|python$|python2|' $(grep -Rl '#!.*python$' *)
 	-DPYTHON_EXECUTABLE=%_bindir/python3
 
 sed -i 's|man\ tools/lld/docs/docs-lld-html|man|' BUILD/build.ninja
-ninja -vvv -j %__nprocs -C BUILD
+ninja -vvv -j "$NPROCS" -C BUILD
 
 %install
 pushd BUILD
@@ -824,6 +835,9 @@ ninja -C BUILD check-all || :
 %doc %llvm_docdir/lldb
 
 %changelog
+* Fri Nov 12 2021 Arseny Maslennikov <arseny@altlinux.org> 11.0.1-alt4
+- Fixed FTBFS due to missing std::numeric_limits declaration.
+
 * Tue Aug 10 2021 Arseny Maslennikov <arseny@altlinux.org> 11.0.1-alt3
 - Made opt-viewer use python3. (closes: bug 40691)
 - Backported from llvmorg-12.0.1:
