@@ -20,7 +20,7 @@
 #   (merge) git merge --continue
 
 Name:		bcc
-Version:	0.21.0
+Version:	0.22.0
 Release:	alt1
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
@@ -39,8 +39,6 @@ Source1:	libbpf.tar
 # See https://github.com/iovisor/bcc/issues/3241
 ExclusiveArch:	x86_64 aarch64 ppc64le
 
-%define clang_version 12.0
-
 BuildRequires(pre): python3-module-setuptools
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: banner
@@ -48,11 +46,11 @@ BuildRequires: bpftool
 BuildRequires: cmake
 BuildRequires: flex
 BuildRequires: libstdc++-devel
-BuildRequires: clang%clang_version-devel
-BuildRequires: clang%clang_version-devel-static
-BuildRequires:  llvm%clang_version-devel
-BuildRequires:  llvm%clang_version-devel-static
-BuildRequires:   lld%clang_version
+BuildRequires: clang-devel
+BuildRequires: clang-devel-static
+BuildRequires: llvm-devel
+BuildRequires: llvm-devel-static
+BuildRequires: lld
 BuildRequires: python3-devel
 BuildRequires: python3-tools
 BuildRequires: libelf-devel-static
@@ -182,6 +180,7 @@ export LDFLAGS="-fuse-ld=lld -Wl,--as-needed $LDFLAGS -lLLVM -lclang-cpp -lelf"
 	-DLLVM_DIR=$(llvm-config --cmakedir) \
 	-DUSINGISYSTEM:BOOL=no \
 	-DPYTHON_CMD=python3 \
+	-DENABLE_LLVM_SHARED=ON \
 	%{?lua_config}
 %cmake_build
 
@@ -267,6 +266,9 @@ fi
 %endif
 
 %changelog
+* Sat Nov 13 2021 Vitaly Chikunov <vt@altlinux.org> 0.22.0-alt1
+- Update to v0.22.0 (2021-09-15).
+
 * Mon Sep 06 2021 Vitaly Chikunov <vt@altlinux.org> 0.21.0-alt1
 - Update to v0.21.0 (2021-07-18).
 - spec: Fix build with LTO.
