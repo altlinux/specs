@@ -4,7 +4,7 @@
 
 Name: liboqs
 Version: 0.7.0
-Release: alt2
+Release: alt3
 Summary: C library for prototyping and experimenting with quantum-resistant cryptography
 License: MIT
 Group: System/Libraries
@@ -58,6 +58,9 @@ sed -i '\!DESTINATION!s!lib!%_libdir!' src/CMakeLists.txt
 sed -i '/CMAKE_SYSTEM_PROCESSOR.*armhf/s/")/|armv8l&/' CMakeLists.txt
 
 %build
+%if "%version" == "0.7.0"
+%add_optflags -Wno-error=array-parameter
+%endif
 # CMake options https://github.com/open-quantum-safe/liboqs/wiki/Customizing-liboqs
 # -DOQS_ENABLE_TEST_CONSTANT_TIME=ON -- does not pass.
 %cmake -B build \
@@ -94,6 +97,9 @@ export LD_LIBRARY_PATH=$PWD/build/lib
 %_libdir/liboqs.so
 
 %changelog
+* Sat Nov 13 2021 Vitaly Chikunov <vt@altlinux.org> 0.7.0-alt3
+- Workaround re-build on GCC 11.
+
 * Mon Aug 30 2021 Vitaly Chikunov <vt@altlinux.org> 0.7.0-alt2
 - Increase SOVERSION (to 1) to fix dynamic linking to older libs.
 
