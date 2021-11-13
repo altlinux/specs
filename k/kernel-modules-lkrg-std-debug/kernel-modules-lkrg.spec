@@ -1,5 +1,5 @@
 %define module_name	lkrg
-%define module_version	0.9.1.0.25.gita9906a6
+%define module_version	0.9.1.0.27.gitabd8719
 %define module_release	alt1
 
 %define flavour		std-debug
@@ -21,8 +21,6 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
 URL: https://www.openwall.com/lkrg/
-
-Source1: lkrg.init
 
 %define qemu_pkg %_arch
 %ifarch %ix86 x86_64
@@ -68,41 +66,12 @@ file) based on the unauthorized credentials.
 rm -rf %module_name-%module_version
 tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n %module_name-%module_version
-cp -a %SOURCE1 .
-sed -i 's,@KERNVFR@,%kversion-%flavour-%krelease,g' lkrg.init
 
 %build
 %make_build -C %_usrsrc/linux-%kversion-%flavour modules M=$(pwd)
 
 %install
 install -D -p -m0644 p_lkrg.ko %buildroot%module_dir/p_lkrg.ko
-install -D -p -m0755 lkrg.init %buildroot%_initdir/lkrg-%kversion-%flavour-%krelease
-
-mkdir -p %buildroot%_unitdir
-cat <<EOF >%buildroot%_unitdir/lkrg-%kversion-%flavour-%krelease.service
-[Unit]
-Description=Linux Kernel Runtime Guard
-DefaultDependencies=no
-After=systemd-modules-load.service
-Before=systemd-sysctl.service
-Before=sysinit.target shutdown.target
-Conflicts=shutdown.target
-ConditionKernelCommandLine=!nolkrg
-
-[Service]
-Type=oneshot
-ExecStart=/etc/rc.d/init.d/lkrg-%kversion-%flavour-%krelease start
-ExecStop=/etc/rc.d/init.d/lkrg-%kversion-%flavour-%krelease stop
-RemainAfterExit=yes
-
-[Install]
-WantedBy=sysinit.target
-EOF
-
-mkdir -p %buildroot%_presetdir
-cat <<EOF >%buildroot%_presetdir/30-lkrg-%kversion-%flavour-%krelease.preset
-enable lkrg-%kversion-%flavour-%krelease.service
-EOF
 
 %check
 # based on %%check of kernel-image-%%flavour.spec
@@ -208,11 +177,15 @@ grep -qE '^.*Power down' boot.log &&
 }
 
 %post
-if [ $1 -eq 1 ]; then
-	echo "All the LKRG settings should be only in %_sysconfdir/sysctl.d/lkrg.conf to prevent its lost during service reload"
-	/sbin/chkconfig --add lkrg-%kversion-%flavour-%krelease ||:
-else
-	/sbin/service lkrg-%kversion-%flavour-%krelease condrestart
+if [ $1 -eq 2 ]; then
+	%post_service lkrg
+fi
+
+%preun
+# do not stop service if module was not build for currently running kernel
+# do not unregister service: the other kernel flavour module still can be installed
+if [ $1 -eq 0 ] && [ "$(uname -r)" = "%kversion-%flavour-%krelease" ]; then
+	service lkrg stop
 fi
 
 # {{{
@@ -265,30 +238,25 @@ if [ "$2" -gt 0 ]; then
 fi
 # }}}
 
-%preun
-if [ $1 -eq 0 ]; then
-	/sbin/service lkrg-%kversion-%flavour-%krelease condstop
-	/sbin/chkconfig --del lkrg-%kversion-%flavour-%krelease ||:
-fi
-
 %files
 %doc README
 %module_dir/p_lkrg.ko
-%_initdir/lkrg-%kversion-%flavour-%krelease
-%_unitdir/lkrg-%kversion-%flavour-%krelease.service
-%_presetdir/30-lkrg-%kversion-%flavour-%krelease.preset
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
 
-* Thu Oct 21 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.25.gita9906a6-alt1.%kcode.%kbuildrelease
+* Sat Nov 13 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.27.gitabd8719-alt1
+- Updated to 0.9.1.0.27.gitabd8719.
+- Moved init and service files to lkrg-common.
+
+* Thu Oct 21 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.25.gita9906a6-alt1
 - Updated to v0.9.1-25-ga9906a6.
 
-* Wed Oct 06 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.19.git51ea889-alt2.%kcode.%kbuildrelease
+* Wed Oct 06 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.19.git51ea889-alt2
 - Built for ovz-el7 kernel flavour.
 
-* Fri Sep 03 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.19.git51ea889-alt1.%kcode.%kbuildrelease
+* Fri Sep 03 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.19.git51ea889-alt1
 - Updated to v0.9.1-19-g51ea889.
 
 * Sat May 29 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.8.git0fba5fe-alt1
