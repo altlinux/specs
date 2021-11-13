@@ -1,6 +1,6 @@
 Name: cups
 Version: 2.3.3
-Release: alt6.op2
+Release: alt7.op2
 
 Summary: Common Unix Printing System - server package
 License: Apache-2.0
@@ -94,6 +94,10 @@ Patch557: ALT-lspp-set-context-via-ipp.patch
 Patch558: ALT-lspp-in-alt-job-ft.patch
 Patch559: ALT-mime-pjl-pdf.patch
 Patch560: ALT-SE-ippcalls.patch
+
+# Upstream patches
+Patch900: upstream-0001-backend-usb-libusb.c-Use-60s-timeout-for-reading-.patch
+Patch901: upstream-0002-backend-usb-libusb.c-Revert-enforcing-read-limits.patch
 
 ## Provides
 Provides: %name-ppd = %version %name-common = %version
@@ -232,6 +236,11 @@ services using the main CUPS library "libcups".
 %patch558 -p1
 %patch559 -p1
 %patch560 -p2
+
+# Upstream patches
+# https://github.com/OpenPrinting/cups/pull/174
+%patch900 -p1
+%patch901 -p1
 
 cp %SOURCE98 %SOURCE97 %SOURCE10 %SOURCE11 .
 cp %SOURCE21 scheduler/cups.sh.in
@@ -436,6 +445,10 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Fri Nov 12 2021 Anton Midyukov <antohami@altlinux.org> 2.3.3-alt7.op2
+- Fixed: can't print on Samsung ML-1640/2010/2240 series with splix driver
+  (Closes: #41319)
+
 * Tue Jun 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.3-alt6.op2
 - Updated service migration script.
 
