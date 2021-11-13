@@ -2,8 +2,8 @@
 %define optflags_lto %nil
 
 Name: crtools-ovz
-Version: 3.15.2.9
-Release: alt4
+Version: 3.15.3.6
+Release: alt1
 
 Summary: Utility to checkpoint/restore tasks for OpenVZ containers
 License: GPL-2.0-only
@@ -93,6 +93,9 @@ vm-run --kvm=cond make test || :
 %_man8dir/crtools.8*
 
 %changelog
+* Wed Nov 10 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.15.3.6-alt1
+- 3.15.3.6
+
 * Wed Sep 22 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.15.2.9-alt4
 - FTBFS: gcc11: false stringop-overflow
 
