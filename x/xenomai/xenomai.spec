@@ -1,12 +1,13 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %def_enable docs
 
 Name: xenomai
-Version: 3.1.1
-Release: alt2
+Version: 3.1.2
+Release: alt1
 Summary: Real-Time Framework for Linux
 License: GPL-2.0+ and LGPL-2.0+ and LGPL-2.1 and MIT
 Group: System/Kernel and hardware
@@ -167,7 +168,7 @@ sed -i 's/mountkernfs/$local_fs/' debian/libxenomai1.xenomai.init
 %define _configure_script ../configure
 %build
 %autoreconf
-export CFLAGS=-fno-omit-frame-pointer
+export CFLAGS="-pipe -frecord-gcc-switches -Wall -g -O2 -fno-omit-frame-pointer -Wno-error=deprecated-declarations"
 # --enable-smp is enabled by default on Cobalt, not on Mercury.
 
 banner cobalt
@@ -185,7 +186,7 @@ pushd COBALT
         --enable-debug=symbols \
         --enable-dlopen-libs \
         %nil
-%make_build --no-print-directory
+%make_build --no-print-directory V=1
 popd
 
 banner mercury
@@ -209,7 +210,7 @@ pushd MERCURY
         --enable-so-suffix \
         %nil
 # Note: make install will rebuild docs due to some bug.
-%make_build --no-print-directory
+%make_build --no-print-directory V=1
 popd
 
 %install
@@ -399,6 +400,10 @@ find /usr/share/doc/xenomai/demo -name a.out -delete
 %files checkinstall
 
 %changelog
+* Sat Nov 13 2021 Vitaly Chikunov <vt@altlinux.org> 3.1.2-alt1
+- Update to v3.1.2 (2021-11-12).
+- Fix build with glibc-2.34.
+
 * Mon Aug 16 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.1-alt2
 - NMU: add BR: asciidoc-latex
 

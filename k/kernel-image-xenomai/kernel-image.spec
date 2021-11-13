@@ -5,16 +5,16 @@
 %define flavour			xenomai
 Name: kernel-image-%flavour
 
-%define xenomai_version		3.1
-%define ipipe_version		4.19.192-cip50-x86-18
+%define xenomai_version		3.1.2
+%define ipipe_version		4.19.207-cip58-x86-20
 %define kernel_base_version	4.19
-%define kernel_sublevel		.192
+%define kernel_sublevel		.207
 %define kernel_extra_version	%nil
-%define kernel_cip_release	cip50
-%define kernel_ipipe_release	18
+%define kernel_cip_release	cip58
+%define kernel_ipipe_release	20
 
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
-Release: alt3.%kernel_cip_release.%kernel_ipipe_release
+Release: alt1.%kernel_cip_release.%kernel_ipipe_release
 
 %define krelease	%release
 
@@ -395,6 +395,9 @@ fi
 %modules_dir/build
 
 %changelog
+* Sat Nov 13 2021 Vitaly Chikunov <vt@altlinux.org> 4.19.207-alt1.cip58.20
+- Update to ipipe-core-4.19.207-cip58-x86-20 (2021-10-07).
+
 * Sun Jul 18 2021 Vitaly Chikunov <vt@altlinux.org> 4.19.192-alt3.cip50.18
 - spec: Remove BuildRequires: dev86.
 - spec: Improve LTP testing.
