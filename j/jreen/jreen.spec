@@ -1,6 +1,8 @@
+%define so_version 1
+
 Name: jreen
-Version: 1.2.1
-Release: alt1.qa2
+Version: 1.3.0
+Release: alt1
 Epoch: 7
 
 Summary: Free and Opensource Jabber library, written in C++ using cross-platform framework Qt.
@@ -11,9 +13,8 @@ Group: System/Libraries
 URL: http://qutim.org/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-# https://codeload.github.com/euroelessar/%name/tar.gz/v%version
-Source: %name-%version.tar.gz
-Patch0: %name-%version-qt56-alt.patch
+# https://github.com/euroelessar/%name/archive/v%version/%name-%version.tar.gz
+Source: %name-%version.tar
 
 BuildRequires: cmake
 BuildRequires: libgsasl-devel
@@ -37,12 +38,12 @@ Jreen - Открытая и свободная Jabber-библиотека, на
 - Лёгкий в освоении и поддержке
 - Очень быстрый
 
-%package -n lib%name
+%package -n lib%name%so_version
 Summary: Free and Opensource Jabber library, written in C++ using cross-platform framework Qt.
 Summary(ru_RU.UTF-8): Открытая и свободная Jabber-библиотека, написанная на C++ с использованием кросс-платформенного фреймворка Qt.
 Group: System/Libraries
 
-%description -n lib%name
+%description -n lib%name%so_version
 Jreen - Free and Opensource Jabber library, written in C++ using cross-platform framework Qt. Licensed under the GNU/GPL version 2.
 
 Advantages over other Jabber/XMPP libraries: 
@@ -50,7 +51,7 @@ Advantages over other Jabber/XMPP libraries:
 - Easy to learn and support
 - Very fast
 
-%description -l ru_RU.UTF-8 -n lib%name
+%description -l ru_RU.UTF-8 -n lib%name%so_version
 Jreen - Открытая и свободная Jabber-библиотека, написанная на C++ с использованием кросс-платформенного фреймворка Qt. Распространяется под лицензией GNU/GPL версии 2.
 
 Преимущества перед другими Jabber/XMPP библиотеками: 
@@ -62,7 +63,6 @@ Jreen - Открытая и свободная Jabber-библиотека, на
 Summary: Free and Opensource Jabber library, written in C++ using cross-platform framework Qt.
 Summary(ru_RU.UTF-8): Открытая и свободная Jabber-библиотека, написанная на C++ с использованием кросс-платформенного фреймворка Qt.
 Group: Development/C++
-Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Jreen - Free and Opensource Jabber library, written in C++ using cross-platform framework Qt. Licensed under the GNU/GPL version 2.
@@ -80,12 +80,12 @@ Jreen - Открытая и свободная Jabber-библиотека, на
 - Лёгкий в освоении и поддержке
 - Очень быстрый
 
-%package -n lib%name-qt5
+%package -n lib%name-qt5-%so_version
 Summary: Free and Opensource Jabber library, written in C++ using cross-platform framework Qt.
 Summary(ru_RU.UTF-8): Открытая и свободная Jabber-библиотека, написанная на C++ с использованием кросс-платформенного фреймворка Qt.
 Group: System/Libraries
 
-%description -n lib%name-qt5
+%description -n lib%name-qt5-%so_version
 Jreen - Free and Opensource Jabber library, written in C++ using cross-platform framework Qt. Licensed under the GNU/GPL version 2.
 
 Advantages over other Jabber/XMPP libraries: 
@@ -93,7 +93,7 @@ Advantages over other Jabber/XMPP libraries:
 - Easy to learn and support
 - Very fast
 
-%description -l ru_RU.UTF-8 -n lib%name-qt5
+%description -l ru_RU.UTF-8 -n lib%name-qt5-%so_version
 Jreen - Открытая и свободная Jabber-библиотека, написанная на C++ с использованием кросс-платформенного фреймворка Qt. Распространяется под лицензией GNU/GPL версии 2.
 
 Преимущества перед другими Jabber/XMPP библиотеками: 
@@ -105,7 +105,6 @@ Jreen - Открытая и свободная Jabber-библиотека, на
 Summary: Free and Opensource Jabber library, written in C++ using cross-platform framework Qt.
 Summary(ru_RU.UTF-8): Открытая и свободная Jabber-библиотека, написанная на C++ с использованием кросс-платформенного фреймворка Qt.
 Group: Development/C++
-Requires: lib%name-qt5 = %EVR
 
 %description -n lib%name-qt5-devel
 Jreen - Free and Opensource Jabber library, written in C++ using cross-platform framework Qt. Licensed under the GNU/GPL version 2.
@@ -125,7 +124,6 @@ Jreen - Открытая и свободная Jabber-библиотека, на
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 # Build Qt4 version
@@ -166,7 +164,7 @@ popd
 # Install Qt5 version
 %makeinstall_std -C %_target_platform-qt5
 
-%files -n lib%name
+%files -n lib%name%so_version
 %_libdir/lib%name.so.*
 
 %files -n lib%name-devel
@@ -178,7 +176,7 @@ popd
 %dir %_includedir/%name-qt4/%name/experimental
 %_includedir/%name-qt4/%name/experimental/*.h
 
-%files -n lib%name-qt5
+%files -n lib%name-qt5-%so_version
 %_libdir/lib%name-qt5.so.*
 
 %files -n lib%name-qt5-devel
@@ -191,6 +189,9 @@ popd
 %_includedir/%name-qt5/%name/experimental/*.h
 
 %changelog
+* Sat Nov 13 2021 Nazarov Denis <nenderus@altlinux.org> 7:1.3.0-alt1
+- Version 1.3.0
+
 * Wed Jul 07 2021 Grigory Ustinov <grenka@altlinux.org> 7:1.2.1-alt1.qa2
 - Fixed FTBFS.
 
