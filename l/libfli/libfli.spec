@@ -1,29 +1,32 @@
-Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 # END SourceDeps(oneline)
+Group: Development/Other
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name: libfli
-Version: 1.7
-Release: alt3_29
-Summary: Library for FLI CCD Camera & Filter Wheels
+Name:       libfli
+Version:    1.9.0
+Release:    alt1_2
+Summary:    Library for FLI CCD Camera & Filter Wheels
 
-%define majorver 1
+License:    BSD
+URL:        http://indilib.org/
 
-# Code and LICENSE.LIB have different versions of the BSD license
-# https://sourceforge.net/tracker2/?func=detail&aid=2568511&group_id=90275&atid=593019
-License: BSD
-URL: http://indi.sourceforge.net/index.php
+# Tar is generated from the huge all-in-one tar from INDI
+# by using ./libfli-generate-tarball.sh %%{version}
+# The main source from upstream is at
+# https://github.com/indilib/indi-3rdparty/archive/refs/tags/v%%{version}.tar.gz
+Source0:        %{name}-%{version}.tar.gz
+Source1:        %{name}-generate-tarball.sh
 
-Source0: http://downloads.sourceforge.net/indi/%{name}%{majorver}_%{version}.tar.gz
-Patch0: libfli-suffix.patch
-
+BuildRequires:  ctest cmake
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
-BuildRequires: ctest cmake 
+BuildRequires:  rpm-macros-systemd
+BuildRequires:  pkgconfig(libindi) = %{version}
+BuildRequires:  pkgconfig(libusb-1.0)
 Source44: import.info
-Patch33: libfli1_1.7-alt-link-libm.patch
 
 %description
 Finger Lakes Instrument library is used by applications to control FLI 
@@ -37,9 +40,8 @@ Requires: %{name} = %{version}-%{release}
 These are the header files needed to develop a %{name} application
 
 %prep
-%setup -q -n %{name}%{majorver}-%{version}
-%patch0 -p1
-%patch33 -p1
+%setup -q -n %{name}-%{version}
+sed -i 's|/lib/udev/rules.d|%{_udevrulesdir}|g' CMakeLists.txt
 
 %build
 %{fedora_v2_cmake}
@@ -49,16 +51,19 @@ These are the header files needed to develop a %{name} application
 %fedora_v2_cmake_install
 
 
-
 %files
 %doc --no-dereference LICENSE.BSD
-%{_libdir}/*.so.*
+%{_libdir}/*.so.2*
+%{_udevrulesdir}/99-fli.rules
 
 %files devel
 %{_includedir}/*
 %{_libdir}/*.so
 
 %changelog
+* Sat Nov 13 2021 Igor Vlasenko <viy@altlinux.org> 1.9.0-alt1_2
+- update to new release by fcimport
+
 * Sat Sep 19 2020 Igor Vlasenko <viy@altlinux.ru> 1.7-alt3_29
 - migrated to new fc cmake macros
 
