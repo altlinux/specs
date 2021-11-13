@@ -11,8 +11,8 @@ BuildRequires: unzip
 %global archivename SourceHanSerifTW
 
 Name:           fonts-otf-adobe-source-han-serif-tw
-Version:        1.001
-Release:        alt1_6
+Version:        2.000
+Release:        alt1_1
 Summary:        Adobe OpenType Pan-CJK font family for Traditional Chinese
 
 License:        OFL
@@ -28,7 +28,7 @@ Source44: import.info
 Source Han Serif is a set of OpenType/CFF Pan-CJK fonts.
 
 %prep
-%setup -q -n %{archivename}
+%setup -n %{oldname}-%{version} -q -c
 
 
 
@@ -92,6 +92,9 @@ fi
 
 
 %changelog
+* Sat Nov 13 2021 Igor Vlasenko <viy@altlinux.org> 2.000-alt1_1
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.001-alt1_6
 - update to new release by fcimport
 
