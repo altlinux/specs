@@ -12,10 +12,12 @@
 %def_enable zeitgeist
 %def_enable soundcloud
 %def_disable magnatune
+# based on WebKit1
+%def_disable context
 
 Name: rhythmbox
 Version: %ver_major.4
-Release: alt2%rev
+Release: alt2.1%rev
 
 Summary: Music Management Application
 License: GPL-2.0
@@ -60,9 +62,6 @@ Provides: %name-plugins-audiocd
 Provides: %name-plugins-generic-player
 
 %define _libexecdir %_libdir/%name
-# use python3
-AutoReqProv: nopython
-%define __python %nil
 %add_python3_path %_libexecdir
 # python bindings are linked into rhythmbox statically
 Provides: python%__python3_version(rb)
@@ -276,8 +275,12 @@ Summary: Python plugins for Rhythmbox
 Group: Sound
 Requires: %name = %version-%release
 Requires: lib%name-gir = %version-%release
-Requires: typelib(WebKit) = 3.0
+%{?_enable_context:Requires: typelib(WebKit) = 1.0}
 %{?_enable_zeitgeist:Requires: zeitgeist}
+
+%description plugins-python
+Python scripting language capabilities and several Python plugins
+to the Rhythmbox music manager.
 
 %package -n lib%name-gir
 Summary: GObject introspection data for the Gedit
@@ -297,9 +300,6 @@ Requires: lib%name-devel = %version-%release
 %description -n lib%name-gir-devel
 GObject introspection devel data for the Rhythmbox music manager.
 
-%description plugins-python
-Python scripting language capabilities and several Python plugins
-to the Rhythmbox music manager.
 
 %package plugins
 Summary: All plugins for Rhythmbox
@@ -457,7 +457,7 @@ ln -s %_licensedir/GPL-2.0 %buildroot%pkgdocdir/COPYING
 %_libdir/%name/plugins/artsearch/
 %_libdir/%name/plugins/lyrics/
 %{?_disable_magnatune:%exclude %_libdir/%name/plugins/magnatune/}
-%_libdir/%name/plugins/context/
+%{?_disable_context:%exclude %_libdir/%name/plugins/context/}
 %_libdir/%name/plugins/replaygain/
 %_libdir/%name/plugins/webremote/
 %_libdir/%name/plugins/listenbrainz/
@@ -476,6 +476,9 @@ ln -s %_licensedir/GPL-2.0 %buildroot%pkgdocdir/COPYING
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Sat Nov 13 2021 Yuri N. Sedunov <aris@altlinux.org> 3.4.4-alt2.1
+- plugins-python(context): fixed dependencies, disabled by default
+
 * Mon Nov 23 2020 Yuri N. Sedunov <aris@altlinux.org> 3.4.4-alt2
 - plugins-python(context): explicitly required typelib(WebKit) = 3.0
 
