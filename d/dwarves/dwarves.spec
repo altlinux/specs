@@ -1,13 +1,14 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %define libname libdwarves
 %define libver 1
 
 Name: dwarves
-Version: 1.20
-Release: alt3
+Version: 1.22
+Release: alt1
 Summary: Debugging Information Manipulation Tools (pahole & friends)
 Group: Development/Tools
 Provides: pahole
@@ -16,6 +17,7 @@ Url: http://acmel.wordpress.com
 #Vcs: https://github.com/acmel/dwarves
 Vcs: https://git.kernel.org/pub/scm/devel/pahole/pahole.git
 Source: %name-%version.tar
+Source1: bpf-0.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -73,6 +75,7 @@ Debugging information processing library development files.
 
 %prep
 %setup
+tar xf %SOURCE1 -C lib
 
 %build
 %cmake
@@ -104,6 +107,9 @@ pahole --packable pahole
 %_libdir/%{libname}*.so
 
 %changelog
+* Sun Nov 14 2021 Vitaly Chikunov <vt@altlinux.org> 1.22-alt1
+- Update to v1.22 (2021-08-16).
+
 * Thu May 13 2021 Arseny Maslennikov <arseny@altlinux.org> 1.20-alt3
 - NMU: spec: adapted to new cmake macros.
 
