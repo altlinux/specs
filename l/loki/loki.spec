@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: loki
-Version: 2.3.0
+Version: 2.4.1
 Release: alt1
 Summary: Loki: like Prometheus, but for logs
 License: Apache-2.0
@@ -52,11 +52,11 @@ export GOPATH="$BUILDDIR:%go_path"
 export CGO_ENABLED=0
 export GOFLAGS="-mod=vendor -buildmode=pie -tags=netgo"
 export DATE=$(date -u '+%%Y-%%m-%%d')
-export GOLDFLAGS="-s -w -X %buildpkg.Version=%version \
-                        -X %buildpkg.Revision=%release \
-                        -X %buildpkg.Branch=master \
-                        -X %buildpkg.BuildUser=alt \
-                        -X %buildpkg.BuildDate=$DATE"
+export GOLDFLAGS="-X %buildpkg.Version=%version \
+                  -X %buildpkg.Revision=%release \
+                  -X %buildpkg.Branch=master \
+                  -X %buildpkg.BuildUser=alt \
+                  -X %buildpkg.BuildDate=$DATE"
 
 go build -ldflags="$GOLDFLAGS" ./cmd/loki
 go build -ldflags="$GOLDFLAGS" ./cmd/logcli
@@ -122,6 +122,9 @@ useradd -r -N -g _promtail -G systemd-journal -c 'Promtail log collector' \
 %attr(0770,root,_promtail) %_sharedstatedir/promtail
 
 %changelog
+* Sun Nov 14 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.1-alt1
+- new version 2.4.1
+
 * Tue Aug 17 2021 Alexey Shabalin <shaba@altlinux.org> 2.3.0-alt1
 - new version 2.3.0
 
