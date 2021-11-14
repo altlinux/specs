@@ -4,7 +4,7 @@
 
 Name: libmirage
 Version: 3.2.5
-Release: alt1
+Release: alt2
 
 Summary: A CD-ROM image access library
 License: GPLv2+
@@ -49,9 +49,10 @@ file, which is based on GObjects.
 %package -n %name%soversion
 Summary: A CD-ROM image access library
 Group: System/Libraries
-Provides: %name = %version
-Obsoletes: %name
-Conflicts: %{name}10
+Requires: %name-plugins >= %version
+Requires: %name-common >= %version
+Provides: %name = %EVR
+Obsoletes: %name <= 3.0.3-alt1
 
 %description -n %name%soversion
 This is libMirage library, a CD-ROM image access library, and part of the 
@@ -61,6 +62,38 @@ written in C and based on GLib.
 The aim of libMirage is to provide uniform access to the data stored in 
 different image formats, by creating a representation of disc stored in image 
 file, which is based on GObjects.
+
+%package plugins
+Summary: CD-ROM image format plugins for %name
+Group: System/Libraries
+Conflicts: %{name}10
+
+%description plugins
+This is libMirage library, a CD-ROM image access library, and part of the 
+userspace-cdemu suite, a free, GPL CD/DVD-ROM device emulator for linux. It is
+written in C and based on GLib.
+
+The aim of libMirage is to provide uniform access to the data stored in 
+different image formats, by creating a representation of disc stored in image 
+file, which is based on GObjects.
+
+This package provides the image format plugins for %name.
+
+%package common
+Summary: Common files for %name
+Group: System/Libraries
+BuildArch: noarch
+
+%description common
+This is libMirage library, a CD-ROM image access library, and part of the 
+userspace-cdemu suite, a free, GPL CD/DVD-ROM device emulator for linux. It is
+written in C and based on GLib.
+
+The aim of libMirage is to provide uniform access to the data stored in 
+different image formats, by creating a representation of disc stored in image 
+file, which is based on GObjects.
+
+This package provides the common files for %name.
 
 %package devel
 Summary: A CD-ROM image access library
@@ -85,26 +118,28 @@ This package contains files needed to develop with libMirage.
 %cmakeinstall_std
 %find_lang %name
 
-%files -n %name%soversion -f %name.lang
-%doc AUTHORS ChangeLog COPYING INSTALL NEWS README
+%files -n %name%soversion
+%doc AUTHORS ChangeLog INSTALL NEWS README
 %_libdir/libmirage.so.*
-%dir %_libdir/libmirage-3.2
-%_libdir/libmirage-3.2/*.so
+
+%files plugins
+%_libdir/libmirage-3.2
+
+%files common -f %name.lang
 %_datadir/mime/packages/*.xml
+%_datadir/gtk-doc/html/%name
 
 %files devel
 %_libdir/libmirage.so
-%_libdir/girepository-1.0/*
+%_libdir/girepository-1.0/Mirage-3.2.typelib
 %_pkgconfigdir/%name.pc
-%dir %_includedir/%name-3.2
-%dir %_includedir/%name-3.2/mirage
-%_includedir/%name-3.2/mirage/*.h
+%_includedir/%name-3.2
 %_datadir/gir-1.0/*
-%dir %_datadir/gtk-doc
-%dir %_datadir/gtk-doc/html
-%doc %_datadir/gtk-doc/html/%name
 
 %changelog
+* Sun Nov 14 2021 Nazarov Denis <nenderus@altlinux.org> 3.2.5-alt2
+- Separate plugins and common packages
+
 * Thu Nov 11 2021 Nazarov Denis <nenderus@altlinux.org> 3.2.5-alt1
 - Version 3.2.5
 
