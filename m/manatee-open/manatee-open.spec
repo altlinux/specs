@@ -1,6 +1,6 @@
 Name: manatee-open
 Version: 2.167.10
-Release: alt4
+Release: alt5
 
 Summary: Manatee is a corpus management tool
 License: LGPLv2+
@@ -26,7 +26,7 @@ indexing library called Finlib.
 
 %build
 #export MANATEE_REGISTRY=%_localstatedir/manatee
-%configure PYTHON=python3 --with-icu
+%configure PYTHON=python3 --with-icu --disable-static
 %make_build
 
 %install
@@ -40,6 +40,11 @@ indexing library called Finlib.
 %doc doc/*
 
 %changelog
+* Sun Nov 14 2021 Kirill Maslinsky <kirill@altlinux.org> 2.167.10-alt5
+- fix build
+  - disable static library build to avoid LTO problem
+  - update code to avoid C++17 errors
+
 * Tue Feb 16 2021 Kirill Maslinsky <kirill@altlinux.org> 2.167.10-alt4
 - fix build with python3.9 SWIG API
 
