@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: promu
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 Summary: Prometheus Utility Tool
 
@@ -49,6 +49,9 @@ rm -rf -- %buildroot%_datadir
 %_bindir/*
 
 %changelog
+* Sun Nov 14 2021 Alexey Shabalin <shaba@altlinux.org> 0.13.0-alt1
+- 0.13.0
+
 * Fri Jul 30 2021 Alexey Shabalin <shaba@altlinux.org> 0.12.0-alt1
 - 0.12.0
 
