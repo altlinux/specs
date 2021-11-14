@@ -1,12 +1,14 @@
+%define so_version 1
+
 Name: qbs
 Version: 1.20.1
-Release: alt1
+Release: alt2
 
 Summary: Qt Build Suite
 License: LGPL-3.0-only OR (GPL-2.0-only OR GPL-3.0-or-later) AND (LGPL-2.1-only OR LGPL-3.0-only WITH Qt-LGPL-exception-1.1) AND GPL-3.0-only WITH Qt-GPL-exception-1.0
 Group: Development/Tools
 
-Url: http://qt-project.org/wiki/%name
+Url: http://qt-project.org/wiki/Qbs
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://download.qt.io/official_releases/%name/%version/%name-src-%version.tar.gz
@@ -14,6 +16,8 @@ Source: %name-src-%version.tar
 
 BuildRequires: qt5-script-devel
 BuildRequires: rpm-build-python3
+
+Conflicts: qt-creator-core
 
 %add_python3_path %_datadir/%name/python/biplist
 %add_python3_path %_datadir/%name/python/ds_store
@@ -28,12 +32,29 @@ Qbs is an all-in-one tool that generates a build graph from a high-level
 project description (like qmake or cmake) and additionally undertakes the task
 of executing the commands in the low-level build graph (like make).
 
-%package devel
+%package common
+Summary: Common files for %name
+Group: Development/Tools
+BuildArch: noarch
+
+%description common
+Provides common files for %name
+
+%package -n lib%{name}core%so_version
+Summary: Shared library for %name
+Group: System/Libraries
+Requires: %name-common = %EVR
+
+%description -n lib%{name}core%so_version
+Provides shared library for %name
+
+%package -n lib%{name}core-devel
 Summary: Development files for %name
 Group: Development/Tools
-Requires: %name = %version-%release
+Provides: %name-devel = %EVR
+Obsoletes: %name-devel <= 1.20.1-alt1
 
-%description devel
+%description -n lib%{name}core-devel
 This package is required to build native/C++ extensions for %name
 
 %package examples
@@ -62,7 +83,6 @@ export LD_LIBRARY_PATH=`pwd`/lib
 
 %install
 %install_qt5_base
-%__rm %buildroot%_libdir/libqbscore.prl
 %__rm %buildroot%_libexecdir/%name/dmgbuild
 
 %files
@@ -74,21 +94,30 @@ export LD_LIBRARY_PATH=`pwd`/lib
 %_bindir/%name-setup-android
 %_bindir/%name-setup-qt
 %_bindir/%name-setup-toolchains
-%_datadir/%name
-%exclude %_datadir/%name/examples
-%_libdir/%name/plugins/*.so
-%_libdir/lib%{name}core.so.*
+%_libdir/%name
 %_libexecdir/%name
 %_man1dir/%name.1*
 
-%files devel
+%files common
+%_datadir/%name
+%exclude %_datadir/%name/examples
+
+%files -n lib%{name}core%so_version
+%_libdir/lib%{name}core.so.*
+
+%files -n lib%{name}core-devel
 %_includedir/%name
+%_libdir/lib%{name}core.prl
 %_libdir/lib%{name}core.so
 
 %files examples
 %_datadir/%name/examples
 
 %changelog
+* Sun Nov 14 2021 Nazarov Denis <nenderus@altlinux.org> 1.20.1-alt2
+- Add conflicts to qt-creator-core
+- Separate shared library and common files
+
 * Sat Nov 13 2021 Nazarov Denis <nenderus@altlinux.org> 1.20.1-alt1
 - Version 1.20.1
 
