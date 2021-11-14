@@ -1,7 +1,8 @@
+%def_enable embedded_cryptopp
 
 Name: urbackup-client
 Version: 2.4.11
-Release: alt2
+Release: alt3
 Summary: Efficient Client-Server backup system for Linux and Windows
 Group: Archiving/Backup
 License: AGPL-3.0+
@@ -14,7 +15,7 @@ Patch2: urbackup-client-scripts.patch
 BuildRequires: gcc-c++
 BuildRequires: zlib-devel
 BuildRequires: libzstd-devel
-BuildRequires: libcryptopp-devel
+%{?_disable_embedded_cryptopp:BuildRequires: libcryptopp-devel}
 BuildRequires: libsqlite3-devel
 
 Requires: urbackup-common
@@ -32,6 +33,7 @@ on either Windows or Linux servers.
 %patch2 -p1
 
 sed -i "s@/usr/local/sbin/urbackupclientbackend@%_sbindir/urbackupclientbackend@g" urbackupclientbackend-redhat.service
+sed -i 's,armhf,armh,' cryptoplugin/src/configure.ac
 
 %build
 export SUID_CFLAGS=-fPIE
@@ -44,6 +46,7 @@ export SUID_LDFLAGS=-fpie
 %endif
 %autoreconf
 %configure \
+    %{?_enable_embedded_cryptopp:--enable-embedded-cryptopp} \
     --without-embedded-sqlite3 \
     --enable-headless
 
@@ -90,6 +93,9 @@ touch %buildroot%_logdir/urbackupclient.log
 %ghost %_logdir/urbackupclient.log
 
 %changelog
+* Fri Nov 12 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.11-alt3
+- build with embedded cryptopp
+
 * Thu Jun 10 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.4.11-alt2
 - fixed build for Elbrus
 

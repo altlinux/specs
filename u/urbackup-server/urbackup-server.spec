@@ -1,6 +1,8 @@
+%def_enable embedded_cryptopp
+
 Name: urbackup-server
 Version: 2.4.13
-Release: alt2
+Release: alt3
 
 Summary: Efficient Client-Server backup system for Linux and Windows
 License: AGPL-3.0+
@@ -21,10 +23,10 @@ BuildRequires: libcurl-devel
 BuildRequires: libfuse-devel
 BuildRequires: zlib-devel
 BuildRequires: libzstd-devel
-BuildRequires: libcryptopp-devel
+%{?_disable_embedded_cryptopp:BuildRequires: libcryptopp-devel}
 BuildRequires: liblmdb-devel
 BuildRequires: libsqlite3-devel
-BuildRequires: liblua5.3-devel
+BuildRequires: liblua-devel
 Requires: urbackup-common = %version-%release
 
 %description
@@ -44,11 +46,12 @@ Common directories and user for urbackup server and client
 %prep
 %setup -n %name-%version
 %patch1 -p1
-#%patch3 -p1
+#%%patch3 -p1
 %patch4 -p1
 
 sed -i "s@/var/urbackup@%_localstatedir/urbackup@g" docs/urbackupsrv.1
 sed -i "s@/etc/default/urbackupsrv@%_sysconfdir/sysconfig/%name@g" %name.service
+sed -i 's,armhf,armh,' cryptoplugin/src/configure.ac
 
 %build
 export SUID_CFLAGS=-fPIE
@@ -60,6 +63,7 @@ export CXXFLAGS="-msse2 -O2 -g"
 %configure \
     --enable-packaging \
     --with-mountvhd \
+    %{?_enable_embedded_cryptopp:--enable-embedded-cryptopp} \
     --without-embedded-sqlite3 \
     --without-embedded-lua \
     --without-embedded-lmdb
@@ -110,6 +114,9 @@ useradd -g urbackup -c 'UrBackup pseudo user' \
 %dir %attr(0755,urbackup,urbackup) %_localstatedir/urbackup
 
 %changelog
+* Fri Nov 12 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.13-alt3
+- build with embedded cryptopp
+
 * Tue Jun 22 2021 Michael Shigorin <mike@altlinux.org> 2.4.13-alt2
 - do not R: guestfs-tools on %%e2k (missing by now)
 
