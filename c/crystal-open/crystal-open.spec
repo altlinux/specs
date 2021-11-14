@@ -1,6 +1,6 @@
 Name: crystal-open
 Version: 2.14
-Release: alt5
+Release: alt6
 Summary: Sketch Engine web interface
 License: GPLv3
 Group: Text tools
@@ -30,6 +30,10 @@ Sketch Engine web interface, open source version.
 %config(noreplace) %_var/www/crystal/config.js
 
 %changelog
+* Sun Nov 14 2021 Kirill Maslinsky <kirill@altlinux.org> 2.14-alt6
+- fix build: repackage node_modules
+- update dependency on sass-loader to ^11.1.0
+
 * Mon Dec 21 2020 Kirill Maslinsky <kirill@altlinux.org> 2.14-alt5
 - Russian translation edited
 
