@@ -1,7 +1,7 @@
-%define daterev 20211003
-%define gitsnapshot 33201896bfeae43ea5b0e381b7f834aa6b6287d2
+%define daterev 20211108
+%define gitsnapshot 17dfc6e28aac5ad2290e849b03893a416be97b03
 %define version_major 12
-%define version_minor 0
+%define version_minor 1
 
 Name: openttd
 Version: %version_major.%version_minor
@@ -49,6 +49,9 @@ echo "%version	%daterev	0	%gitsnapshot	1	1	`echo %daterev|cut -c 1-4`" >.ottdrev
 %_man6dir/*
 
 %changelog
+* Sun Nov 14 2021 Anton Farygin <rider@altlinux.ru> 12.1-alt1
+- 12.0 -> 12.1
+
 * Fri Oct 29 2021 Anton Farygin <rider@altlinux.ru> 12.0-alt1
 - 1.11.2 -> 12.0
 - fixed fonts location (closes: #41160)
