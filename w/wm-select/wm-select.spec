@@ -2,7 +2,7 @@
 %def_without xdg
 %def_without gtk3
 Name: wm-select
-Version: 0.9.6
+Version: 0.9.7
 Release: alt1
 
 Summary: Application for selecting window manager at startup
@@ -29,7 +29,7 @@ Summary: Executes window manager using wm.d or xsessions database
 Conflicts: xinitrc < 2.4.47-alt3
 
 %description -n runwm
-runwm is a tool for non-XDG compliant Display Managers that executes
+runwm is a tool for non-XDG compliant Display Managers that launches
 window manager using wm.d or xsessions database.
 %endif
 
@@ -75,6 +75,12 @@ done
 %endif
 
 %changelog
+* Mon Nov 15 2021 Igor Vlasenko <viy@altlinux.org> 0.9.7-alt1
+- new version
+
+* Sat Nov 13 2021 Igor Vlasenko <viy@altlinux.org> 0.9.6-alt2
+- runwm package enabled
+
 * Sat Nov 13 2021 Igor Vlasenko <viy@altlinux.org> 0.9.6-alt1
 - new version
 
