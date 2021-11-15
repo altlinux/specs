@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.23.3
-Release: alt3
+Release: alt4
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -237,6 +237,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Mon Nov 15 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.3-alt4
+- reserve more space for desktop icons text by default
+
 * Thu Nov 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.3-alt3
 - fix mediaplayers chooser translation
 
