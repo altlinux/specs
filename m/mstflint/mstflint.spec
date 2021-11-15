@@ -7,8 +7,8 @@
 %def_enable openssl
 
 Name: mstflint
-Version: 4.16.0
-Release: alt3
+Version: 4.17.0
+Release: alt1
 
 Summary: Mellanox firmware burning application
 License: GPLv2 or BSD
@@ -61,6 +61,7 @@ echo "#define TOOLS_GIT_SHA \"%release\"" > common/gitversion.h
 %install
 %makeinstall_std
 rm -rf %buildroot%_includedir
+rm -f  %buildroot%_libdir/*.a
 
 %files
 %_bindir/*
@@ -70,6 +71,9 @@ rm -rf %buildroot%_includedir
 %_man1dir/*
 
 %changelog
+* Mon Nov 15 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.17.0-alt1
+- v4.17.0-1
+
 * Wed Oct 27 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.16.0-alt3
 - FTBFS: fix build with LTO
 
