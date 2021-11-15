@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nlohmann-json
-Version: 3.10.2
-Release: alt2
+Version: 3.10.4
+Release: alt1
 
 Summary: JSON for Modern C++ (c++11) ("single header file")
 
@@ -67,6 +67,9 @@ ln -sf ../json_test_data-2.0.0 %_cmake__builddir/json_test_data
 %_pkgconfigdir/nlohmann_json.pc
 
 %changelog
+* Mon Nov 15 2021 Paul Wolneykien <manowar@altlinux.org> 3.10.4-alt1
+- new version 3.10.4
+
 * Thu Sep 16 2021 Ivan A. Melnikov <iv@altlinux.org> 3.10.2-alt2
 - Disable slower tests on %%mips and riscv64 to avoid timeouts.
 
