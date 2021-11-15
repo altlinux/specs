@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.19
+Version: 1.4.20
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,25 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Nov 15 2021 Anton Midyukov <antohami@altlinux.org> 1.4.20-alt1
+- ve.mk: refactor those ve/lxc-* dups (thanks mike@)
+- ve.mk: initial ve/lxc-builder (thanks mike@)
+- ve.mk: refactor those ve/systemd-* dups
+- x11: Add graphics card support for HiFive Unmatched (thanks jqt4@)
+- x11: use/x11/amdgpu too when use/x11/3d (thanks mike@)
+- e2k: more patches by mike@
+- x11, lists/tagged: initial use/x11/xscreensaver
+- net: fix build without etcnet
+- l10n: add base+l10n tagged list
+- Revert "regular.mk: add grub submenu 'Network installation'"
+- grub: add submenu for stagename to netinstall.cfg
+- alt-server: add latest commits (thanks boyarsh@)
+- alt-workstation: add latest commits (thanks sem@)
+- slinux: add latest commits (thanks sem@)
+- alt-education: add latest commits (thanks cas@)
+- server-v: add latest commits (thanks shaba@)
+- virt/base.pkgs: drop libnss-resolve
+
 * Mon Oct 18 2021 Anton Midyukov <antohami@altlinux.org> 1.4.19-alt1
 - syslinux: fix broken 01-syslinux script in previous version 1.4.18
 - regular-vm.mk, regular.mk: drop udev-rule-generator
