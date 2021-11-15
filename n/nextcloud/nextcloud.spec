@@ -1,6 +1,6 @@
 Name: nextcloud
 Version: 22.2.0
-Release: alt1
+Release: alt2
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
 %define installdir %webserver_webappsdir/%name
@@ -24,6 +24,8 @@ Requires: php7-curl php7-fileinfo php7-openssl
 Requires: php7-pdo-driver
 Requires: php7-pcntl
 Requires: php7-intl
+# Recommended
+Requires: php7-memcached php7-gmp php7-imagick
 
 Source0: %name-%version.tar
 
@@ -133,6 +135,9 @@ ssl_generate "nextcloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Mon Nov 15 2021 Andrey Cherepanov <cas@altlinux.org> 22.2.0-alt2
+- Add recommended requirements.
+
 * Mon Oct 25 2021 Andrey Cherepanov <cas@altlinux.org> 22.2.0-alt1
 - New version (ALT #41211).
 
