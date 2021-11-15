@@ -1,5 +1,5 @@
 Name: flacon
-Version: 7.0.1
+Version: 8.0.0
 Release: alt1
 
 Summary: Audio File Encoder
@@ -15,6 +15,7 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 Source: %name-%version.tar
 
 BuildRequires: cmake
+BuildRequires: libtag-devel
 BuildRequires: libuchardet-devel
 BuildRequires: qt5-tools-devel
 
@@ -69,6 +70,9 @@ Extracts audio tracks from audio CD image to separate tracks.
 %_man1dir/%name.1.*
 
 %changelog
+* Sun Nov 14 2021 Nazarov Denis <nenderus@altlinux.org> 8.0.0-alt1
+- Version 8.0.0
+
 * Sun Apr 25 2021 Nazarov Denis <nenderus@altlinux.org> 7.0.1-alt1
 - Version 7.0.1
 
