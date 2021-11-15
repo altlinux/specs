@@ -3,8 +3,8 @@
 %def_enable streebog
 
 Name: kf5-%rname
-Version: 5.87.0
-Release: alt2
+Version: 5.88.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -168,6 +168,9 @@ KF5 library
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Mon Nov 15 2021 Sergey V Turchin <zerg@altlinux.org> 5.88.0-alt1
+- new version
+
 * Wed Oct 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.87.0-alt2
 - fix requires
 

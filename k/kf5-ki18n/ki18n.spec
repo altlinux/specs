@@ -7,7 +7,7 @@
 %add_python3_path %_libdir/cmake
 
 Name: kf5-%rname
-Version: 5.87.0
+Version: 5.88.0
 Release: alt1
 %K5init altplace
 
@@ -53,6 +53,13 @@ Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %version-%release
 %description -n libkf5i18n
+KF5 library
+
+%package -n libkf5i18nlocaledata
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5i18nlocaledata
 KF5 library
 
 %if_enabled python
@@ -120,13 +127,17 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %files devel
 %_K5inc/ki18n_version.h
 %_K5inc/KI18n/
+%_K5inc/KI18nLocaleData/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5I18n
+%_K5lib/cmake/KF5I18n/
 %_K5archdata/mkspecs/modules/qt_KI18n.pri
 
 %files -n libkf5i18n
 %_K5lib/libKF5I18n.so.*
 %_K5plug/kf5/ktranscript.so
+%files -n libkf5i18nlocaledata
+%_K5lib/libKF5I18nLocaleData.so.*
+%_K5qml/org/kde/i18n/localeData/
 
 %if_enabled python
 #%files -n python-module-%rname
@@ -140,6 +151,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Mon Nov 15 2021 Sergey V Turchin <zerg@altlinux.org> 5.88.0-alt1
+- new version
+
 * Mon Oct 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.87.0-alt1
 - new version
 

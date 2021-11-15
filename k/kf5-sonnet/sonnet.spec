@@ -1,7 +1,7 @@
 %define rname sonnet
 
 Name: kf5-%rname
-Version: 5.87.0
+Version: 5.88.0
 Release: alt1
 %K5init altplace
 
@@ -16,7 +16,8 @@ Source: %rname-%version.tar
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-gui libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-tools ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ libhunspell-devel python-module-google qt5-tools-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules gcc-c++ qt5-tools-devel libhunspell-devel
+BuildRequires: extra-cmake-modules gcc-c++ qt5-tools-devel qt5-declarative-devel
+BuildRequires: libhunspell-devel
 
 %description
 Sonnet is a plugin-based spell checking library for Qt-based
@@ -85,8 +86,12 @@ KF5 library
 %_K5plug/kf5/sonnet/sonnet_hunspell.so
 %files -n libkf5sonnetui
 %_K5lib/libKF5SonnetUi.so.*
+%_K5qml/org/kde/sonnet/
 
 %changelog
+* Mon Nov 15 2021 Sergey V Turchin <zerg@altlinux.org> 5.88.0-alt1
+- new version
+
 * Mon Oct 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.87.0-alt1
 - new version
 

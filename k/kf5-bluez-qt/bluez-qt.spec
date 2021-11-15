@@ -1,7 +1,7 @@
 %define rname bluez-qt
 
 Name: kf5-%rname
-Version: 5.87.0
+Version: 5.88.0
 Release: alt1
 %K5init altplace
 
@@ -59,6 +59,7 @@ KF5 library
 %_udevrulesdir/*-kde-bluetooth-*.rules
 
 %files devel
+%_pkgconfigdir/KF5BluezQt.pc
 %_K5inc/bluezqt_version.h
 %_K5inc/BluezQt/
 %_K5link/lib*.so
@@ -70,6 +71,9 @@ KF5 library
 %_K5qml/org/kde/bluezqt/
 
 %changelog
+* Mon Nov 15 2021 Sergey V Turchin <zerg@altlinux.org> 5.88.0-alt1
+- new version
+
 * Mon Oct 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.87.0-alt1
 - new version
 
