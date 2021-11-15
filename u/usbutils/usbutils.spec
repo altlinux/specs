@@ -1,6 +1,6 @@
 Name: usbutils
 Version: 014
-Release: alt1
+Release: alt2
 
 Summary: Linux USB utilities
 License: GPLv2+
@@ -38,6 +38,9 @@ rm -f %buildroot%_bindir/lsusb.py
 %doc NEWS README.md
 
 %changelog
+* Mon Nov 15 2021 Alexey Shabalin <shaba@altlinux.org> 014-alt2
+- add install usbreset
+
 * Sun Sep 05 2021 Alexey Shabalin <shaba@altlinux.org> 014-alt1
 - new version 014
 
