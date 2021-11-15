@@ -11,7 +11,7 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma5-%rname
-Version: 5.23.3
+Version: 5.23.3.1
 Release: alt1
 %K5init no_altplace appdata
 
@@ -224,6 +224,9 @@ done
 
 
 %changelog
+* Mon Nov 15 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.3.1-alt1
+- new version
+
 * Wed Nov 10 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.3-alt1
 - new version
 
