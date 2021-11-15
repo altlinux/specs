@@ -1,6 +1,6 @@
 Name: blackbox
 Version: 0.76
-Release: alt1
+Release: alt2
 
 Summary: A Window Manager for the X Window System
 License: BSD-style
@@ -13,7 +13,6 @@ Source3: %name-16.png
 Source4: %name-32.png
 Source5: %name-48.png
 Source6: %name-64.png
-Source7: %name.wmsession
 Source8: %name.alternatives
 Source9: %name-gencat-wrapper
 Source10: blackbox.desktop
@@ -21,6 +20,12 @@ Source11: ru.po.fixed
 
 Patch0: blackbox-0.74-alt-link.patch
 Patch10: blackbox-0.70.1-alt-style.patch
+
+%define iconname blackbox-session
+%if "%iconname" == "%name"
+# due to apps/blackbox.png in tatham-puzzles
+Conflicts: tatham-puzzles
+%endif
 
 # Automatically added by buildreq on Tue Mar 12 2013
 # optimized out: alternatives fontconfig fontconfig-devel gnu-config libX11-devel libXrender-devel libfreetype-devel libstdc++-devel pkg-config xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
@@ -84,17 +89,28 @@ mv %buildroot%_man1dir/bsetroot.1 %buildroot%_man1dir/bsetroot-%name.1
 
 install -pD -m755 %SOURCE1 %buildroot%_sysconfdir/menu-methods/%name
 install -pD -m644 %SOURCE2 %buildroot%_menudir/%name
-install -pD -m644 %SOURCE3 %buildroot%_miconsdir/%name.png
-install -pD -m644 %SOURCE4 %buildroot%_niconsdir/%name.png
-install -pD -m644 %SOURCE5 %buildroot%_liconsdir/%name.png
-install -pD -m644 %SOURCE6 %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
-install -pD -m644 %SOURCE7 %buildroot%_sysconfdir/X11/wmsession.d/07%name
+install -pD -m644 %SOURCE3 %buildroot%_miconsdir/%iconname.png
+install -pD -m644 %SOURCE4 %buildroot%_niconsdir/%iconname.png
+install -pD -m644 %SOURCE5 %buildroot%_liconsdir/%iconname.png
+install -pD -m644 %SOURCE6 %buildroot%_iconsdir/hicolor/64x64/apps/%iconname.png
 install -pD -m644 %SOURCE8 %buildroot%_altdir/%name
 
 install -pD -m644 /dev/null %buildroot%_sysconfdir/X11/%name/%name-menu
 
 # Install the desktop entry
 install -pD -m644 %SOURCE10 %buildroot%_datadir/xsessions/blackbox.desktop
+sed -i 's,^Icon=blackbox,%{iconname},' %buildroot%_datadir/xsessions/blackbox.desktop
+
+mkdir -p %buildroot%_sysconfdir/X11/wmsession.d/
+cat > %buildroot%_sysconfdir/X11/wmsession.d/17%name <<'EOF'
+NAME=BlackBox
+ICON=/usr/share/icons/hicolor/64x64/apps/%{iconname}.png
+EXEC=/usr/bin/blackbox
+DESC=A Light but nice looking window manager
+SCRIPT:
+exec /usr/bin/blackbox
+EOF
+
 
 %find_lang %{name}
 
@@ -129,6 +145,10 @@ install -pD -m644 %SOURCE10 %buildroot%_datadir/xsessions/blackbox.desktop
 %_pkgconfigdir/libbt.pc
 
 %changelog
+* Mon Nov 15 2021 Igor Vlasenko <viy@altlinux.org> 0.76-alt2
+- renamed pixmaps to blackbox-session:
+  avoided FS conflict with tatham-puzzles (closes: #41351)
+
 * Tue Nov 02 2021 Igor Vlasenko <viy@altlinux.org> 0.76-alt1
 - new version
 - WM packaging policy 2.0: added pixmap to .desktop
