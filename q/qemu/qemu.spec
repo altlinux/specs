@@ -131,7 +131,7 @@
 
 Name: qemu
 Version: 6.1.0
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -227,41 +227,41 @@ BuildRequires: libslirp-devel
 # used by some linux user impls
 BuildRequires: libdrm-devel
 
-%global requires_all_modules         \
-Requires: %name-block-curl = %EVR    \
-Requires: %name-block-dmg = %EVR     \
-%{?_enable_glusterfs:Requires: %name-block-gluster = %EVR}  \
-%{?_enable_libiscsi:Requires: %name-block-iscsi = %EVR}     \
-%{?_enable_libnfs:Requires: %name-block-nfs = %EVR}         \
-%{?_enable_rbd:Requires: %name-block-rbd = %EVR}            \
-%{?_enable_libssh:Requires: %name-block-ssh = %EVR}         \
-%{?_enable_alsa:Requires: %name-audio-alsa = %EVR}          \
-%{?_enable_oss:Requires: %name-audio-oss = %EVR}            \
-%{?_enable_pulseaudio:Requires: %name-audio-pa = %EVR}      \
-%{?_enable_jack:Requires: %name-audio-jack = %EVR}          \
-%{?_enable_sdl:Requires: %name-audio-sdl = %EVR}            \
-%{?_enable_spice:Requires: %name-audio-spice = %EVR}        \
-%{?_enable_curses:Requires: %name-ui-curses = %EVR}         \
-%{?_enable_spice:Requires: %name-ui-spice-app = %EVR}       \
-%{?_enable_spice:Requires: %name-ui-spice-core = %EVR}      \
-%{?_enable_spice:Requires: %name-device-display-qxl = %EVR} \
-Requires: %name-device-display-virtio-gpu-pci = %EVR        \
-Requires: %name-device-display-virtio-vga = %EVR            \
-%{?_enable_virglrenderer:Requires: %name-device-display-virtio-gpu = %EVR} \
-%{?_enable_virglrenderer:Requires: %name-device-display-virtio-gpu-gl = %EVR} \
-%{?_enable_virglrenderer:Requires: %name-device-display-virtio-gpu-pci-gl = %EVR} \
-%{?_enable_virglrenderer:Requires: %name-device-display-virtio-vga-gl = %EVR} \
-%{?_enable_virglrenderer:Requires: %name-device-display-vhost-user-gpu = %EVR} \
-%{?_enable_brlapi:Requires: %name-char-baum = %EVR}         \
-%{?_enable_spice:Requires: %name-char-spice = %EVR}         \
-Requires: %name-device-usb-host = %EVR                  \
-Requires: %name-device-usb-redirect = %EVR                  \
-Requires: %name-device-usb-smartcard = %EVR
+%global requires_all_modules \
+Requires: %name-block-curl \
+Requires: %name-block-dmg  \
+%{?_enable_glusterfs:Requires: %name-block-gluster} \
+%{?_enable_libiscsi:Requires: %name-block-iscsi} \
+%{?_enable_libnfs:Requires: %name-block-nfs}     \
+%{?_enable_rbd:Requires: %name-block-rbd}        \
+%{?_enable_libssh:Requires: %name-block-ssh}     \
+%{?_enable_alsa:Requires: %name-audio-alsa}      \
+%{?_enable_oss:Requires: %name-audio-oss}        \
+%{?_enable_pulseaudio:Requires: %name-audio-pa}  \
+%{?_enable_jack:Requires: %name-audio-jack}      \
+%{?_enable_sdl:Requires: %name-audio-sdl}        \
+%{?_enable_spice:Requires: %name-audio-spice}    \
+%{?_enable_curses:Requires: %name-ui-curses}     \
+%{?_enable_spice:Requires: %name-ui-spice-app}   \
+%{?_enable_spice:Requires: %name-ui-spice-core}  \
+%{?_enable_spice:Requires: %name-device-display-qxl} \
+Requires: %name-device-display-virtio-gpu-pci    \
+Requires: %name-device-display-virtio-vga        \
+%{?_enable_virglrenderer:Requires: %name-device-display-virtio-gpu} \
+%{?_enable_virglrenderer:Requires: %name-device-display-virtio-gpu-gl}  \
+%{?_enable_virglrenderer:Requires: %name-device-display-virtio-gpu-pci-gl} \
+%{?_enable_virglrenderer:Requires: %name-device-display-virtio-vga-gl}  \
+%{?_enable_virglrenderer:Requires: %name-device-display-vhost-user-gpu} \
+%{?_enable_brlapi:Requires: %name-char-baum} \
+%{?_enable_spice:Requires: %name-char-spice} \
+Requires: %name-device-usb-host \
+Requires: %name-device-usb-redirect \
+Requires: %name-device-usb-smartcard
 
-##%%{?_enable_opengl:Requires: %name-ui-opengl = %EVR}         \
-##%%{?_enable_opengl:Requires: %name-ui-egl-headless = %EVR}   \
-##%%{?_enable_gtk:Requires: %name-ui-gtk = %EVR}        \
-##%%{?_enable_sdl:Requires: %name-ui-sdl = %EVR}
+##%%{?_enable_opengl:Requires: %%name-ui-opengl} \
+##%%{?_enable_opengl:Requires: %%name-ui-egl-headless} \
+##%%{?_enable_gtk:Requires: %%name-ui-gtk}       \
+##%%{?_enable_sdl:Requires: %%name-ui-sdl}
 
 %description
 QEMU is a fast processor emulator using dynamic translation to achieve
@@ -301,7 +301,7 @@ Requires: %name-common = %EVR
 Requires: %name-tools = %EVR
 %{?_enable_mpath:Requires: %name-pr-helper = %EVR}
 Conflicts: %name-img < %EVR
-%{expand:%(for i in %qemu_arches; do echo Requires: %%name-system-$i = %%EVR; done)}
+%{expand:%(for i in %qemu_arches; do echo Requires: %%name-system-$i ; done)}
 
 %description system
 Full system emulation.  In this mode, QEMU emulates a full system
@@ -336,7 +336,7 @@ x86 system, this will install qemu-system-x86-core
 Summary: QEMU CPU Emulator - user mode emulation
 Group: Emulators
 Requires: %name-common = %EVR
-%{expand:%(for i in %qemu_arches; do echo Requires: %%name-user-$i = %%EVR; done)}
+%{expand:%(for i in %qemu_arches; do echo Requires: %%name-user-$i ; done)}
 
 %description user
 User mode emulation.  In this mode, QEMU can launch Linux processes
@@ -351,7 +351,7 @@ Requires: %name-user = %EVR
 # qemu-user-binfmt + qemu-user-static both provide binfmt rules
 Conflicts: %name-user-static-binfmt
 Conflicts: %name-user < 2.10.1-alt1
-%{expand:%(for i in %qemu_arches; do echo Requires: %%name-user-binfmt-$i = %%EVR; done)}
+%{expand:%(for i in %qemu_arches; do echo Requires: %%name-user-binfmt-$i ; done)}
 
 %description user-binfmt
 QEMU is a generic and open source processor emulator which achieves a good
@@ -363,7 +363,7 @@ This package provides the user mode emulation of qemu targets
 Summary: QEMU user mode emulation of qemu targets static build
 Group: Emulators
 Requires: %name-aux = %EVR
-%{expand:%(for i in %qemu_arches; do echo Requires: %%name-user-static-$i = %%EVR; done)}
+%{expand:%(for i in %qemu_arches; do echo Requires: %%name-user-static-$i ; done)}
 
 %description user-static
 QEMU is a generic and open source processor emulator which achieves a good
@@ -380,7 +380,7 @@ Conflicts: %name-user-binfmt
 Conflicts: %name-user < 2.10.1-alt1
 Provides: %name-user-binfmt_misc = %EVR
 Obsoletes: %name-user-binfmt_misc < %EVR
-%{expand:%(for i in %qemu_arches; do echo Requires: %%name-user-static-binfmt-$i = %%EVR; done)}
+%{expand:%(for i in %qemu_arches; do echo Requires: %%name-user-static-binfmt-$i ; done)}
 
 %description user-static-binfmt
 QEMU is a generic and open source processor emulator which achieves a good
@@ -410,7 +410,7 @@ compiled for one CPU on another CPU. \
 %package img
 Summary: QEMU command line tool for manipulating disk images
 Group: Emulators
-Provides: qemu-kvm-img
+Provides: qemu-kvm-img = %EVR
 Obsoletes: qemu-kvm-img < %EVR
 Requires: %name-aux = %EVR
 
@@ -485,10 +485,10 @@ Summary: QEMU %%{1} UI driver \
 Group: Emulators \
 Requires: %%name-common = %%EVR \
 %%if "%%{1}" == "gtk" \
-Requires: %%name-ui-opengl = %%EVR \
+Requires: %%name-ui-opengl \
 %%endif \
 %%if "%%{1}" == "sdl" \
-Requires: %%name-ui-opengl = %%EVR \
+Requires: %%name-ui-opengl \
 %%endif \
 \
 %%description ui-%%{1} \
@@ -505,11 +505,11 @@ Summary: QEMU spice-%%{1} UI driver \
 Group: Emulators \
 Requires: %%name-common = %%EVR \
 %%if "%%{1}" == "core" \
-Requires: %%name-ui-opengl = %%EVR \
+Requires: %%name-ui-opengl \
 %%endif \
 %%if "%%{1}" == "app" \
-Requires: %%name-ui-spice-core = %%EVR \
-Requires: %%name-char-spice = %%EVR \
+Requires: %%name-ui-spice-core \
+Requires: %%name-char-spice \
 %%endif \
 \
 %%description ui-spice-%%{1} \
@@ -551,7 +551,7 @@ Summary: QEMU display-%%{1} device \
 Group: Emulators \
 Requires: %%name-common = %%EVR \
 %%if "%%{1}" == "qxl" \
-Requires: %%name-ui-spice-core = %%EVR \
+Requires: %%name-ui-spice-core \
 %%endif \
 \
 %%description device-display-%%{1} \
@@ -631,7 +631,7 @@ This is an auxiliary package.
 %%package system-%%{1} \
 Summary: QEMU system emulator for %%{1} \
 Group: Emulators \
-Requires: %%name-system-%%{1}-core = %%EVR \
+Requires: %%name-system-%%{1}-core \
 %%requires_all_modules \
 %%description system-%%{1} \
 This package provides the system emulator for %%{1}. \
@@ -640,11 +640,11 @@ This package provides the system emulator for %%{1}. \
 %%package system-%%{1}-core \
 Summary: QEMU system emulator for %%{1} \
 Group: Emulators \
-Requires: %%name-common = %%EVR  \
+Requires: %%name-common \
 Conflicts: %%name-system < 2.10.1-alt1 \
 \
 %%if "%%{1}" == "x86" \
-Requires: seabios >= 1.7.4-alt2 seavgabios edk2-ovmf libseccomp >= 2.2.3 qboot \
+Requires: seabios seavgabios edk2-ovmf libseccomp qboot \
 %%endif \
 %%if "%%{1}" == "aarch64" \
 Requires: edk2-aarch64 \
@@ -751,7 +751,6 @@ pushd build-static
 # non-GNU configure
 run_configure \
 	--static \
-	--disable-lto \
 	--enable-user \
 	--enable-linux-user \
 	--enable-attr \
@@ -899,7 +898,9 @@ run_configure \
 	--enable-user \
 	--enable-linux-user \
 	--enable-pie \
+%if "%__gcc_version_major" >= "11"
 	--enable-lto \
+%endif
 	--enable-modules \
 	%{?_enable_sdl:--enable-sdl} \
 	%{?_disable_curses:--disable-curses} \
@@ -1313,6 +1314,18 @@ fi
 %exclude %docdir/LICENSE
 
 %changelog
+* Mon Nov 15 2021 Alexey Shabalin <shaba@altlinux.org> 6.1.0-alt2
+- Backport patches from upstream:
+  + qemu-sockets: fix unix socket path copy (again)
+  + tests: tcg: Fix PVH test with binutils 2.36+
+  + qxl: fix pre-save logic
+  + ebpf: only include in system emulators
+  + virtio-net: fix use after unmap/free for sg (Fixes: CVE-2021-3748)
+  + e1000: fix tx re-entrancy problem (CVE-2021-20257)
+  + Fix virtio-net-pci* "vectors" compat
+  + hw/scsi/scsi-disk: MODE_PAGE_ALLS not allowed in MODE SELECT commands
+    (Fixes: CVE-2021-3930)
+
 * Thu Sep 02 2021 Alexey Shabalin <shaba@altlinux.org> 6.1.0-alt1
 - 6.1.0.
 - Enabled build with bpf support.
