@@ -1,8 +1,8 @@
 Name: thunar-sendto-clamtk
-Version: 0.06
+Version: 0.07
 Release: alt1
 Summary: Simple virus scanning extension for Thunar
-License: GPL+ or Artistic 2.0
+License: (GPL-1.0+ or Artistic-1.0) and BSD-3-Clause
 Group: Graphical desktop/XFce
 Url: https://bitbucket.org/davem_/thunar-sendto-clamtk
 
@@ -29,10 +29,13 @@ desktop-file-install --vendor "" \
 	%name.desktop
 
 %files
-%doc CHANGES DISCLAIMER LICENSE README
+%doc CHANGES DISCLAIMER LICENSE README.md
 %_datadir/Thunar/sendto/%name.desktop
 
 %changelog
+* Mon Nov 15 2021 Leontiy Volodin <lvol@altlinux.org> 0.07-alt1
+- New version (0.07).
+
 * Wed Sep 18 2019 Leontiy Volodin <lvol@altlinux.org> 0.06-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
 
