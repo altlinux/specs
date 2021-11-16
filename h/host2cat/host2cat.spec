@@ -3,7 +3,7 @@
 
 Name: host2cat
 Version: 1.01
-Release: alt6
+Release: alt7
 Packager: Grigory Batalov <bga@altlinux.ru>
 
 Summary: Custom DNS resolver
@@ -16,9 +16,9 @@ Source1: %name.init
 Source2: %name.sysconfig
 Source3: squid.conf
 Source4: %name.openresolv
-SOURCE5: README.ALT.host2cat
+Source5: README.ALT.host2cat
+Source6: %name.service
 
-# Automatically added by buildreq on Fri Apr 10 2009
 BuildRequires: libadns-devel libmemcache-devel
 
 # for findreq 
@@ -73,8 +73,9 @@ install -m0755 -D %name %buildroot%_sbindir/%name
 install -m0755 -D %SOURCE1 %buildroot%_initdir/%name
 install -m0644 -D %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 install -m0644 -D %SOURCE3 %buildroot%_sysconfdir/squid/squid.conf.host2cat
-install -m0644 -D %SOURCE5 %buildroot%_sysconfdir/squid/README.ALT.host2cat
 install -m0644 -D %SOURCE4 %buildroot%subscribers_dir/%name
+install -m0644 -D %SOURCE5 %buildroot%_sysconfdir/squid/README.ALT.host2cat
+install -m0644 -D %SOURCE6 %buildroot%_unitdir/%name.service
 
 install -m0755 contrib/get_file.pl %buildroot%webserver_cgibindir/get_file.pl
 install -m0644 scripts/config.ph %buildroot%webserver_cgibindir/config.ph
@@ -119,6 +120,7 @@ htpasswd2 -b %_sysconfdir/squid/passwd netpolice netpolice
 
 %files
 %_initdir/%name
+%_unitdir/%name.service
 %_sysconfdir/sysconfig/%name
 %_sysconfdir/httpd2/conf/extra-start.d/030-host2cat.conf
 %_sysconfdir/httpd2/conf/extra-available/host2cat.conf
@@ -139,6 +141,10 @@ htpasswd2 -b %_sysconfdir/squid/passwd netpolice netpolice
 %subscribers_dir/%name
 
 %changelog
+* Tue Nov 16 2021 Andrey Cherepanov <cas@altlinux.org> 1.01-alt7
+- Add host2cat.service
+- Set default DNS server to 127.0.0.1
+
 * Thu Apr 11 2013 Andrey Cherepanov <cas@altlinux.org> 1.01-alt6
 - Remove post and preun scripts for change Squid configuration
 - Add README.ALT.host2cat to squid-conf-host2cat to help change
