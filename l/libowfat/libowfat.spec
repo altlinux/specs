@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: libowfat
 Version: 0.32
-Release: alt1
+Release: alt2
 Summary: Reimplementation of libdjb
 License: GPLv2
 Group: System/Libraries
@@ -14,6 +16,7 @@ Patch1: %name-%version-alt-no-dietlibc.patch
 Patch2: %name-%version-alt-no-man.patch
 Patch3: %name-%version-debian-fix-gcc10.patch
 Patch4: %name-%version-alt-fno-common.patch
+Patch5: %name-%version-alt-glibc-2.34-compat.patch
 
 %package devel
 Summary: Headers and static lib for libowfat development
@@ -41,9 +44,11 @@ Install this package if you want do compile applications using the
 %patch2 -p2
 %patch3 -p1
 %patch4 -p2
+%patch5 -p2
 
 %build
 %add_optflags %optflags_shared
+%add_optflags -D_FILE_OFFSET_BITS=64
 
 %make -f GNUmakefile \
         havescope.h \
@@ -76,6 +81,9 @@ ln -s libowfat.so.0 %buildroot%_libdir/libowfat.so
 %_includedir/%name/
 
 %changelog
+* Tue Nov 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.32-alt2
+- Fixed build with new glibc.
+
 * Mon Dec 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.32-alt1
 - Updated to upstream version 0.32.
 - Fixed build with -fno-common.
