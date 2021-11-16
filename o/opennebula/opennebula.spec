@@ -16,7 +16,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 5.12.0.4
-Release: alt3
+Release: alt4
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.io
@@ -826,6 +826,9 @@ fi
 %exclude %_man1dir/oneprovision.1*
 
 %changelog
+* Tue Nov 16 2021 Alexey Shabalin <shaba@altlinux.org> 5.12.0.4-alt4
+- Remove quotes on libvirt domain names
+
 * Tue Sep 21 2021 Andrew A. Vasilyev <andy@altlinux.org> 5.12.0.4-alt3
 - FTBFS: yet another gem deps
 
