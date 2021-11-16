@@ -1,5 +1,5 @@
 Name: debootstrap
-Version: 1.0.115
+Version: 1.0.126
 Release: alt1
 Summary: Debian GNU/Linux bootstrapper
 
@@ -46,6 +46,9 @@ touch -r debootstrap  %buildroot%_sbindir/debootstrap
 %doc debian/changelog debian/copyright README
 
 %changelog
+* Tue Nov 16 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.126-alt1
+- Updated to 1.0.126.
+
 * Fri Aug 16 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.115-alt1
 - Updated to 1.0.115.
 
