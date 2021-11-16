@@ -1,8 +1,6 @@
 %define _unpackaged_files_terminate_build 1
-
-Name: pam_alreadyloggedin
-Version: 0.3.2
-Release: alt4
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %def_without libpam
 %def_with    libpam0
@@ -15,7 +13,11 @@ Release: alt4
 %add_findprov_lib_path %pamlibdir
 %endif
 
+Name: pam_alreadyloggedin
+Version: 0.3.2
+Release: alt5
 Summary: Skip password authorization if user is already logged in
+Summary(ru_RU.UTF-8): Вход в систему без пароля, если уже выполнен вход с другой консоли
 License: BSD-3-Clause
 Group: System/Base
 Url: http://ilya-evseev.narod.ru/posix/%name
@@ -23,16 +25,14 @@ Url: http://ilya-evseev.narod.ru/posix/%name
 Source: %name-%version.tar
 
 %if_with libpam
-BuildPreReq: libpam-devel
+BuildRequires: libpam-devel
 %endif
 %if_with libpam0
-BuildPreReq: libpam0-devel
+BuildRequires: libpam0-devel
 %endif
 %if_with libpam2
-BuildPreReq: libpam2-devel
+BuildRequires: libpam2-devel
 %endif
-
-Summary(ru_RU.UTF-8): Вход в систему без пароля, если уже выполнен вход с другой консоли
 
 %description
 Based on the appropriate module from FreeBSD project source tree,
@@ -54,6 +54,8 @@ See using example in %_defaultdocdir/%name-%version/examples directory.
 %setup
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %make_build
 
 %install
@@ -71,6 +73,9 @@ rm -f %buildroot%pamconfdir/login.sso
 %_man8dir/%name.8*
 
 %changelog
+* Tue Nov 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.2-alt5
+- Fixed build, linking and enabled debuginfo.
+
 * Fri Apr 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.2-alt4
 - Fixed license.
 
