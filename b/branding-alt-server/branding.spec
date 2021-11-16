@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 10.0
-Release: alt1
+Release: alt2
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -310,6 +310,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Nov 16 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 10.0-alt2
+- year auto-substitution in (c)
+
 * Mon Nov 15 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 10.0-alt1
 - release up
 
