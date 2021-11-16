@@ -1,9 +1,15 @@
 %define parent make-initrd
 %define child  bootchain
 
+%ifarch %e2k %mips riscv64
+# shellcheck is not available on these architectures
+%def_disable check
+%endif
+
+
 Name: %parent-%child
 Version: 0.1.5
-Release: alt7
+Release: alt8
 
 Summary: %child modules set for %name
 License: GPL-3.0
@@ -12,9 +18,7 @@ BuildArch: noarch
 
 Packager: Leonid Krivoshein <klark@altlinux.org>
 
-%ifnarch %e2k
-BuildRequires: shellcheck
-%endif
+%{!?_disable_check:BuildRequires: shellcheck}
 
 Requires: %name-core        = %version-%release
 Requires: %name-getimage    = %version-%release
@@ -166,10 +170,8 @@ mkdir -p -- "%buildroot%_datadir/%parent"/features "%buildroot%_docdir"
 cp -aRf -- %child-* "%buildroot%_datadir/%parent"/features/
 mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%name"
 
-%ifnarch %e2k
 %check
 ./check-scripts.sh --verbose
-%endif
 
 %files
 
@@ -207,6 +209,9 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Tue Nov 16 2021 Ivan A. Melnikov <iv@altlinux.org> 0.1.5-alt8
+- disable check on %%mips and riscv64 (shellcheck is not there yet)
+
 * Tue Nov 02 2021 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt7
 - bootchain-altboot: try to load module 'loop' (ALT #41263).
 
