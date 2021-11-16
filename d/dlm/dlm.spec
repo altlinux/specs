@@ -1,6 +1,6 @@
 Name: dlm
-Version: 4.1.0
-Release: alt2
+Version: 4.1.1
+Release: alt1
 
 Summary: dlm control daemon and tool
 License: GPLv2 and GPLv2+ and LGPLv2+
@@ -92,6 +92,9 @@ touch %buildroot%_sysconfdir/dlm/dlm.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Nov 16 2021 Andrey Cherepanov <cas@altlinux.org> 4.1.1-alt1
+- New version.
+
 * Mon Jul 26 2021 Andrey Cherepanov <cas@altlinux.org> 4.1.0-alt2
 - Rebuild with -fPIC for all architectures.
 
