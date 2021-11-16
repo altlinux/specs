@@ -2,7 +2,7 @@
 
 Name: libplacebo
 Version: 4.157.0
-Release: alt0.1
+Release: alt0.2
 Summary: libplacebo is essentially the core rendering algorithms and ideas of mpv turned into a library
 Group: System/Libraries
 License: LGPL-2.1+
@@ -11,7 +11,7 @@ Source0: %url/%name/archive/v%version/%name-%version.tar.gz
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson
-BuildRequires: glslang-devel libspirv-tools-devel libvulkan-devel python3-module-mako libepoxy-devel liblcms2-devel gcc-c++
+BuildRequires: libshaderc-devel libvulkan-devel python3-module-mako libepoxy-devel liblcms2-devel gcc-c++
 
 %description
 libplacebo is essentially the core rendering algorithms and ideas of mpv turned
@@ -53,6 +53,9 @@ developing applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Nov 16 2021 L.A. Kostis <lakostis@altlinux.ru> 4.157.0-alt0.2
+- Use libshaderc instead glslang.
+
 * Fri Nov 12 2021 L.A. Kostis <lakostis@altlinux.ru> 4.157.0-alt0.1
 - v4.157.0.
 - Update soname.

@@ -1,10 +1,10 @@
 %define build_type RelWithDebInfo
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DCMAKE_INSTALL_LIBDIR=%_datadir
-%define git 449bc98
+%define git 814e728
 
 Name: spirv-headers
-Version: 1.5.4
-Release: alt3.g%{git}
+Version: 1.5.5
+Release: alt1.g%{git}
 Epoch: 1
 
 Summary: machine-readable files for the SPIR-V Registry
@@ -43,8 +43,12 @@ This repository contains machine-readable files for the SPIR-V Registry. This in
 %dir %_datadir/cmake/SPIRV-Headers
 %_includedir/spirv/*
 %_datadir/cmake/SPIRV-Headers/*
+%_datadir/pkgconfig/*.pc
 
 %changelog
+* Sat Nov 13 2021 L.A. Kostis <lakostis@altlinux.ru> 1:1.5.5-alt1.g814e728
+- Updated to GIT 814e728 (as required by SPIRV-Tools).
+
 * Wed Nov 03 2021 L.A. Kostis <lakostis@altlinux.ru> 1:1.5.4-alt3.g449bc98
 - Updated to GIT 449bc98 (as required by vulkan SDK).
 

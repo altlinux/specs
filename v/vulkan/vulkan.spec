@@ -3,7 +3,7 @@
 
 Name: vulkan
 Version: 1.2.196
-Release: alt1
+Release: alt2
 Summary: Khronos group Vulkan API SDK
 
 Group: System/Libraries
@@ -25,8 +25,8 @@ BuildRequires: libImageMagick-devel libpciaccess-devel libsystemd-devel
 BuildRequires: python3-devel libxcb-devel libXau-devel libXdmcp-devel libX11-devel libXrandr-devel
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
 # strict requires due internal dependency
-BuildRequires: glslang-devel = 11.6.0
-BuildRequires: libspirv-tools-devel = 2021.3
+BuildRequires: glslang-devel = 11.7.0
+BuildRequires: libspirv-tools-devel = 2021.4
 BuildRequires: spirv-headers >= 1.5.4-alt3
 # -layers need it
 BuildRequires: librobin-hood-hashing-devel
@@ -193,6 +193,9 @@ rm -rf %buildroot%_libdir/libVkLayer*.a ||:
 %dir %_datadir/vulkan/implicit_layer.d
 
 %changelog
+* Tue Nov 16 2021 L.A. Kostis <lakostis@altlinux.ru> 1.2.196-alt2
+- Rebuild w/ updated glslang and spirv-tools.
+
 * Wed Nov 03 2021 L.A. Kostis <lakostis@altlinux.ru> 1.2.196-alt1
 - Updated to v1.2.196.
 - Bump BR.
