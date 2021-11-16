@@ -1,8 +1,8 @@
 %define _localstatedir %_var
 
 Name:     sbd
-Version:  1.5.0
-Release:  alt2
+Version:  1.5.1
+Release:  alt1
 
 Summary:  Storage-based death
 License:  GPLv2+
@@ -55,7 +55,7 @@ regression-testing sbd.
 %ifnarch %e2k
 %add_optflags -Wall -Werror
 %endif
-%configure
+%configure --with-runstatedir=/run
 %make_build
 
 %install
@@ -84,10 +84,6 @@ find %buildroot -name '*.la' -type f -print0 | xargs -0 rm -f
 %preun_service sbd
 %preun_service sbd_remote
 
-%postun
-%post_service sbd
-%post_service sbd_remote
-
 %files
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %_sbindir/%name
@@ -109,6 +105,9 @@ find %buildroot -name '*.la' -type f -print0 | xargs -0 rm -f
 %_libdir/libsbdtestbed.so
 
 %changelog
+* Tue Nov 16 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.5.1-alt1
+- 1.5.1
+
 * Wed Jul 14 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.5.0-alt2
 - disabled adding -Werror for e2k arch
 
