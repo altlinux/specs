@@ -1,13 +1,12 @@
-# Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: netris
 Version: 0.52
-Release: alt6
-
+Release: alt7
 Summary: A free network version of Tetris
 Summary(ru_RU.UTF-8): Свободная версия сетевого тетриса
-
 License: GPLv2
 Group: Games/Other
 Url: ftp://ftp.netris.org/pub/netris/
@@ -24,6 +23,8 @@ Patch1: %name-0.52-alt-configure-tests_fix.patch
 
 # http://www.openbsd.org/cgi-bin/cvsweb/ports/games/netris/patches/patch-game_c
 Patch2: netris-openbsd-src-snprintf.patch
+
+Patch3: netris-0.52-alt-warnings.patch
 
 BuildRequires: libncurses-devel
 
@@ -42,8 +43,11 @@ network against your friends.
 %patch0 -p1
 %patch1 -p1
 %patch2
+%patch3 -p2
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 ./Configure -O%_optlevel --cextra "%optflags -Werror"
 %make_build
 
@@ -75,6 +79,9 @@ EOF
 %_man6dir/%name.6.*
 
 %changelog
+* Tue Nov 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.52-alt7
+- Fixed build.
+
 * Tue Feb 05 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.52-alt6
 - NMU: fixed build, converted summary and description to UTF-8.
 
