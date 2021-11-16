@@ -4,7 +4,7 @@
 
 Name: kde5-%rname
 Version: 21.08.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Databases
@@ -88,15 +88,30 @@ Provides: %name-database-postgresql = %EVR
 %description database-5-postgresql
 %name postgresql database
 
-%package database-8-mysql
+%package database-7-mysql
 Group: Databases
 Summary: %name mysql database
 BuildArch: noarch
+Conflicts: %name-database-9-mariadb
+Requires: %name-common = %EVR
+Requires: qt5-sql-mysql MySQL-server MySQL-client
+Provides: %name-database = %EVR
+Provides: %name-database-mysql = %EVR
+%description database-7-mysql
+%name mysql database
+
+%package database-9-mariadb
+Group: Databases
+Summary: %name mariadb database
+BuildArch: noarch
+Conflicts: %name-database-7-mysql
 Requires: %name-common = %EVR
 Requires: qt5-sql-mysql mariadb-server mariadb-client
 Provides: %name-database = %EVR
-Provides: %name-database-mysql = %EVR
-%description database-8-mysql
+Provides: %name-database-mariadb = %EVR
+Provides:  kde5-akonadi-database-8-mysql = %EVR
+Obsoletes: kde5-akonadi-database-8-mysql < %EVR
+%description database-9-mariadb
 %name mysql database
 
 %package devel
@@ -209,7 +224,10 @@ done
 %files database-1-sqlite
 %files database-3-sqlite3
 %files database-5-postgresql
-%files database-8-mysql
+%files database-7-mysql
+%config(noreplace) %_K5xdgconf/akonadi/mysql-*.conf
+%_bindir/akonadi5_mysql_install_db
+%files database-9-mariadb
 %config(noreplace) %_K5xdgconf/akonadi/mysql-*.conf
 %_bindir/akonadi5_mysql_install_db
 
@@ -271,6 +289,9 @@ done
 %endif
 
 %changelog
+* Tue Nov 16 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt2
+- make collective package for MySQL
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 
