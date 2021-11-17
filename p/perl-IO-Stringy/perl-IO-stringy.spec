@@ -1,6 +1,6 @@
-%define dist IO-stringy
+%define dist IO-Stringy
 Name: perl-%dist
-Version: 2.111
+Version: 2.113
 Release: alt1
 
 Summary: Filehandle-like I/O support for Perl in-core objects
@@ -8,9 +8,14 @@ Group: Development/Perl
 License: GPL or Artistic
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DS/DSKOLL/IO-stringy-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/D/DS/DSKOLL/IO-Stringy-%{version}.tar.gz
 
 BuildArch: noarch
+
+# renamed by new upstream
+Provides: perl-IO-stringy = %version
+Conflicts: perl-IO-stringy < 2.113
+Obsoletes: perl-IO-stringy < 2.113
 
 # Automatically added by buildreq on Mon Sep 26 2011
 BuildRequires: perl-devel
@@ -34,6 +39,10 @@ particular, IO::Scalar, IO::ScalarArray, and IO::Lines.
 %perl_vendor_privlib/IO
 
 %changelog
+* Wed Nov 17 2021 Igor Vlasenko <viy@altlinux.org> 2.113-alt1
+- new version
+- renamed to perl-IO-Stringy following upstream
+
 * Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 2.111-alt1
 - automated CPAN update
 
@@ -71,27 +80,3 @@ particular, IO::Scalar, IO::ScalarArray, and IO::Lines.
 * Sun Feb 4 2001 AEN <aen@logic.ru>
 - RE adaptation
 - cleanup spec
-
-* Thu Oct 12 2000 François Pons <fpons@mandrakesoft.com> 1.216-1mdk
-- 1.216.
-
-* Tue Aug 29 2000 François Pons <fpons@mandrakesoft.com> 1.213-1mdk
-- 1.213.
-
-* Thu Aug 03 2000 François Pons <fpons@mandrakesoft.com> 1.212-2mdk
-- macroszifications.
-- added missing clean.
-- add doc.
-
-* Tue Jul 18 2000 François Pons <fpons@mandrakesoft.com> 1.212-1mdk
-- added requires on perl.
-- 1.212.
-
-* Mon Apr  3 2000 Guillaume Cottenceau <gc@mandrakesoft.com> 1.209-1mdk
-- 1.209
-- fixed group
-- rebuild with new perl
-- fixed location
-
-* Thu Dec  2 1999 Jerome Dumonteil <jd@mandrakesoft.com>
-- first version of rpm.
