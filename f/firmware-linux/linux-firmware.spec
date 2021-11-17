@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20211102
+Version: 20211115
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,28 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Nov 17 2021 Cronbuild Service <cronbuild@altlinux.org> 20211115-alt1
+- upstream changes (GIT f5d5195):
+  + Update AMD cpu microcode (thx John Allen)
+  + amdgpu: update raven2 firmware from 21.40 (thx Alex Deucher)
+  + amdgpu: update navi14 firmware from 21.40 (thx Alex Deucher)
+  + amdgpu: update raven firmware from 21.40 (thx Alex Deucher)
+  + amdgpu: update navi12 firmware from 21.40 (thx Alex Deucher)
+  + amdgpu: update navi10 firmware from 21.40 (thx Alex Deucher)
+  + amdgpu: update vega20 firmware from 21.40 (thx Alex Deucher)
+  + amdgpu: update vega12 firmware from 21.40 (thx Alex Deucher)
+  + amdgpu: update vega10 firmware from 21.40 (thx Alex Deucher)
+  + amdgpu: update picasso firmware from 21.40 (thx Alex Deucher)
+  + amdgpu: update vangogh firmware from 21.40 (thx Alex Deucher)
+  + amdgpu: update beige goby firmware from 21.40 (thx Alex Deucher)
+  + amdgpu: add cyan skillfish firmware from 21.40 (thx Alex Deucher)
+  + amdgpu: update dimgrey cavefish firmware from 21.40 (thx Alex Deucher)
+  + amdgpu: update green sardine firmware from 21.40 (thx Alex Deucher)
+  + amdgpu: update navy flounder firmware from 21.40 (thx Alex Deucher)
+  + amdgpu: update renoir firmware from 21.40 (thx Alex Deucher)
+  + amdgpu: update arcturus firmware from 21.40 (thx Alex Deucher)
+  + amdgpu: update sienna cichlid firmware from 21.40 (thx Alex Deucher)
+
 * Thu Nov 04 2021 Cronbuild Service <cronbuild@altlinux.org> 20211102-alt1
 - upstream changes (GIT c9e68c4):
   + rtl_bt: Update RTL8852A BT USB firmware to 0xDBA9_6937 (thx Hilda Wu)
