@@ -1,36 +1,41 @@
 Name: vzdump
-Version: 1.0
-Release: alt3
+Version: 1.2.6
+Release: alt1
 
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 Summary: OpenVZ backup scripts
-Source: %name-%version.tar.gz
-License: GPL
+# http://deb.debian.org/debian/pool/main/v/vzdump/vzdump_1.2.6.orig.tar.gz
+Source: %name-%version.tar
+License: GPL-1.0
 Group: Archiving/Backup
 ExclusiveArch: x86_64
 
-BuildPreReq: perl
-Requires: vzctl rsync xdelta
+BuildRequires(Pre): perl
 BuildRequires: perl-podlators
+BuildRequires: perl(LockFile/Simple.pm)
+Requires: vzctl rsync cstream
 
 %description
-This package contains the vzdump script to backup and restore openvz images.
+This package contains the vzdump and vzrestore scripts to backup and restore OpenVZ images.
 
 %prep
 %setup
-%__subst "s|/vz/root|/var/lib/vz/root|g" vzdump
-%__subst "s|/vz/private|/var/lib/vz/private|g" vzdump
-%__subst "s|/vz/dump|/var/lib/vz/dump|g" vzdump
 
 %install
-make DESTDIR=$RPM_BUILD_ROOT install
+%makeinstall_std
 
 %files
-%attr(755,root,root) %_bindir/vzdump
-%attr(644,root,root) %_mandir/man1/vzdump.1.*
-%doc ChangeLog copyright
+%_sbindir/vzdump
+%_sbindir/vzrestore
+%_man1dir/vzdump.1.*
+%_man1dir/vzrestore.1.*
+%perl_vendor_privlib/OVZ/
+%doc ChangeLog copyright hook-script.pl
 
 %changelog
+* Wed Nov 17 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.2.6-alt1
+- new version 1.2.6
+- adoptation for ALT OpenVZ, remove qemu support
+
 * Mon Nov 05 2018 Alexey Shabalin <shaba@altlinux.org> 1.0-alt3
 - build for x86_64 only
 
