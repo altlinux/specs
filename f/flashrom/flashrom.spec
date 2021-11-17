@@ -1,18 +1,21 @@
+%define soname 1
 Name: flashrom
 Version: 1.3
-Release: alt1
+Release: alt2
 
 Summary: Universal flash programming utility
-License: GPLv2+
+License: GPLv2
 Group: System/Kernel and hardware
 
 Url: http://flashrom.org/Flashrom
 # Homepage: http://www.flashrom.org
 # https://review.coreboot.org/flashrom.git
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
 BuildRequires: libftdi1-devel libpci-devel zlib-devel libusb-compat-devel
+BuildRequires: libjaylink-devel libcmocka-devel
+BuildRequires: gcc meson
 
 %description
 flashrom is a tool for identifying, reading, writing,
@@ -33,24 +36,100 @@ LinuxBIOS) images.
 It can also be used to read the current existing BIOS/firmware
 from a flash chip.
 
+%package -n libflashrom%soname
+Summary: Shared library for %name
+Group: System/Libraries
+Requires: %name = %EVR
+
+%description -n libflashrom%soname
+Shared library for %name.
+
+flashrom is a tool for identifying, reading, writing,
+verifying and erasing flash chips. It's often used to flash
+BIOS/EFI/coreboot/firmware/optionROM images in-system using a
+supported mainboard, but it also supports flashing of network
+cards (NICs), SATA controller cards, and other external devices
+which can program flash chips.
+
+It supports a wide range of DIP32, PLCC32, DIP8, SO8/SOIC8,
+TSOP32/40/48, and BGA chips, which use various protocols such as
+LPC, FWH, parallel flash, or SPI.
+
+The tool can be used to flash BIOS/firmware images for example --
+be it proprietary BIOS images or coreboot (previously known as
+LinuxBIOS) images.
+
+It can also be used to read the current existing BIOS/firmware
+from a flash chip.
+
+
+%package -n lib%name-devel
+Summary: Development package for %name
+Group: Development/C
+Requires: lib%name%soname = %EVR
+
+%description -n lib%name-devel
+Files for development with %{name}.
+
 %prep
 %setup
+%patch0 -p1
 
 %build
-%define _optlevel s
-%add_optflags -Werror -Wno-error=deprecated-declarations
-%make_build CFLAGS="%optflags" PREFIX=%_prefix 
+echo "VERSION = %version" >versioninfo.inc
+echo "MAN_DATE = `date '+%%Y-%%m-%%d'`">>versioninfo.inc
+sed -e 's/MODE="[0-9]*", GROUP="plugdev"/TAG+="uaccess"/g' util/z60_flashrom.rules -i
+%meson \
+%ifarch %{ix86} x86_64
+  -Dconfig_jlink_spi=true \
+  -Dconfig_internal=true
+%else
+  -Dconfig_atahpt=false \
+  -Dconfig_atapromise=false \
+  -Dconfig_atavia=false \
+  -Dconfig_drkaiser=false \
+  -Dconfig_ene_lpc=false \
+  -Dconfig_gfxnvidia=false \
+  -Dconfig_it8212=false \
+  -Dconfig_jlink_spi=false \
+  -Dconfig_mec1308=false \
+  -Dconfig_nic3com=false \
+  -Dconfig_nicintel_eeprom=false \
+  -Dconfig_nicintel=false \
+  -Dconfig_nicintel_spi=false \
+  -Dconfig_nicnatsemi=false \
+  -Dconfig_nicrealtek=false \
+  -Dconfig_ogp_spi=false \
+  -Dconfig_rayer_spi=false \
+  -Dconfig_satamv=false \
+  -Dconfig_satasii=false \
+  -Dconfig_internal=false
+%endif
+%meson_build
 
 %install
-install -dm755 %buildroot%_sbindir
-%make_install PREFIX=%buildroot%_prefix install
+%meson_install
+install -D -p -m 0644 util/z60_flashrom.rules %buildroot/%_udevrulesdir/60_flashrom.rules
 
 %files
 %doc README
+%_udevrulesdir/60_flashrom.rules
 %_sbindir/*
 %_man8dir/*
 
+%files -n libflashrom%soname
+%_libdir/libflashrom.so.%{soname}*
+
+%files -n libflashrom-devel
+%_libdir/libflashrom.so
+%_includedir/libflashrom.h
+%_pkgconfigdir/flashrom.pc
+
 %changelog
+* Wed Nov 17 2021 Anton Farygin <rider@altlinux.ru> 1.3-alt2
+- added the shared library and its devel package
+- migrated to meson in build and install sections
+
 * Tue Jul 13 2021 Evgeny Sinelnikov <sin@altlinux.org> 1.3-alt1
 - Update to latest stable branch 1.3.x
 
