@@ -1,6 +1,6 @@
 Name: twm
 Version: 1.0.10
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Tab Window Manager for the X Window System
 License: MIT/X11
@@ -9,6 +9,7 @@ Group: System/X11
 Url: http://xorg.freedesktop.org
 Source: %name-%version.tar.bz2
 Source3: system.twmrc
+Source4: twm.png
 
 BuildRequires: libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel
 BuildRequires: libXdmcp-devel libXmu-devel libXt-devel pkg-config
@@ -34,24 +35,45 @@ user-specified key and pointer button bindings.
 
 install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/X11/%name/system.twmrc
 
+install -pD -m644 %SOURCE4 %buildroot%_miconsdir/%name.png
 mkdir -p %buildroot%_sysconfdir/X11/wmsession.d
 cat > %buildroot%_sysconfdir/X11/wmsession.d/20twm << EOF
 NAME=TWM
 EXEC=%_bindir/%name
 DESC=Tab Window Manager
+ICON=%name
 SCRIPT:
 exec %_bindir/%name
+EOF
+
+mkdir -p %buildroot%_datadir/xsessions/
+cat > %buildroot%_datadir/xsessions/%name.desktop << EOF
+[Desktop Entry]
+Name=TWM
+Comment=Tab Window Manager
+Icon=%name
+TryExec=%_bindir/%name
+Exec=%_bindir/%name
+Type=Application
+Terminal=false
 EOF
 
 %files
 %dir %_sysconfdir/X11/%name
 %config(noreplace) %_sysconfdir/X11/%name/system.twmrc
 %_sysconfdir/X11/wmsession.d/20twm
+%_datadir/xsessions/%name.desktop
+%_miconsdir/%name.png
 %_bindir/%name
 %_man1dir/*
 %_x11x11dir/twm/*
 
 %changelog
+* Tue Nov 16 2021 Igor Vlasenko <viy@altlinux.org> 1:1.0.10-alt2
+- NMU: WM packaging policy 2.0:
+- added pixmap
+- added .desktop
+
 * Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1:1.0.10-alt1
 - Autobuild version bump to 1.0.10
 
