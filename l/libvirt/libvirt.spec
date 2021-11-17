@@ -167,8 +167,11 @@
 %def_without nss
 %endif
 
+# TODO: switch to modular daemons
+%def_without modular_daemons
+
 Name: libvirt
-Version: 7.7.0
+Version: 7.9.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -778,7 +781,11 @@ tar -xf %SOURCE2 -C src/keycodemapdb --strip-components 1
 		-Dinit_script=systemd \
 		-Dqemu_user=%qemu_user \
 		-Dqemu_group=%qemu_group \
+%if_with modular_daemons
+		-Dremote_default_mode=direct \
+%else
 		-Dremote_default_mode=legacy \
+%endif
 %if_with libvirtd
 		-Ddriver_libvirtd=enabled \
 		-Dhost_validate=enabled \
@@ -880,7 +887,7 @@ rm -f %buildroot%_sysconfdir/logrotate.d/libvirtd.libxl
 %endif
 
 %if_with nss
-# Relocate nss library from %_libdir/libnss_libvirt.so.* to /%_lib/libnss_libvirt.so.* .
+# Relocate nss library from %%_libdir/libnss_libvirt.so.* to /%%_lib/libnss_libvirt.so.* .
 mkdir -p %buildroot/%_lib
 mv %buildroot%_libdir/libnss_libvirt.so.* %buildroot/%_lib/
 ln -sf ../../%_lib/libnss_libvirt.so.2 %buildroot%_libdir/libnss_libvirt.so
@@ -939,8 +946,8 @@ VIR_TEST_DEBUG=1 %__meson_test --no-suite syntax-check --timeout-multiplier 10
 # guests
 if [ $1 -ge 1 ] ; then
     if service libvirtd status; then
-        chkconfig virtlogd on && service virtlogd start
-        chkconfig virtlockd on && service virtlockd start
+	chkconfig virtlogd on && service virtlogd start
+	chkconfig virtlockd on && service virtlockd start
     fi
 fi
 
@@ -959,7 +966,6 @@ fi
 %_man1dir/virt-xml-validate.*
 %_man1dir/virt-pki-validate.*
 %_datadir/bash-completion/completions/virsh
-
 
 %files libs -f %name.lang
 %doc COPYING COPYING.LESSER
@@ -1221,7 +1227,7 @@ fi
 %config(noreplace) %_sysconfdir/libvirt/qemu.conf
 %config(noreplace) %_sysconfdir/logrotate.d/libvirtd.qemu
 %dir %attr(0750, %qemu_user, %qemu_group) %_localstatedir/lib/libvirt/qemu
-%dir %attr(0750, %qemu_user, %qemu_group) %_cachedir/libvirt/qemu
+%dir %attr(0750, root, root) %_cachedir/libvirt/qemu
 %dir %attr(0700, root, root) %_logdir/libvirt/qemu
 %dir %attr(0700, root, root) %_localstatedir/lib/libvirt/swtpm
 %dir %attr(0700, root, root) %_logdir/swtpm/libvirt/qemu
@@ -1360,6 +1366,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed Nov 17 2021 Alexey Shabalin <shaba@altlinux.org> 7.9.0-alt1
+- 7.9.0
+
 * Thu Sep 02 2021 Alexey Shabalin <shaba@altlinux.org> 7.7.0-alt1
 - 7.7.0 (Fixes: CVE-2021-3667, CVE-2021-3631)
 
@@ -1805,7 +1814,7 @@ fi
 - add /etc/tmpfiles.d/libvirtd.conf for systemd and /var/run on tmpfs
 
 * Fri Apr 15 2011 Alexey Shabalin <shaba@altlinux.ru> 0.9.0-alt3
-- cleanup spec (/etc -> %_sysconfdir,/var -> %_localstatedir)
+- cleanup spec (/etc -> %%_sysconfdir,/var -> %%_localstatedir)
 - add generate host_uuid for libvirtd.conf
 - generate UUID for first rpm install only
 - run qemu with "_libvirt" user and "vmusers" group privileges
@@ -1965,7 +1974,7 @@ fi
 
 * Mon Sep 08 2008 Anton Protopopov <aspsk@altlinux.org> 0.4.4-alt1.1
 - Merge with upstream
-- fix %files
+- fix %%files
 
 * Wed Jun 25 2008 Anton Protopopov <aspsk@altlinux.org> 0.4.4-alt1
 - Release of 0.4.4
