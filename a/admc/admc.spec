@@ -6,7 +6,7 @@
 %endif
 
 Name: admc
-Version: 0.7.1
+Version: 0.8.0
 Release: alt1
 
 Summary: AD editor
@@ -38,7 +38,6 @@ Requires: libsasl2
 Requires: libsmbclient
 Requires: libuuid
 Requires: qt5-base-common
-Requires: libqt5-help
 Requires: glib2
 Requires: libkrb5
 
@@ -66,7 +65,7 @@ Tests for ADMC
 
 %files
 %doc README.md
-%_docdir/admc/admc.qch
+%doc CHANGELOG.txt
 %_bindir/admc
 %_libdir/libadldap.so
 %_man1dir/admc*
@@ -74,7 +73,6 @@ Tests for ADMC
 
 %files test
 %_libdir/libadmctest.so
-%_bindir/admc_test_object_menu
 %_bindir/admc_test_unlock_edit
 %_bindir/admc_test_upn_edit
 %_bindir/admc_test_string_edit
@@ -102,13 +100,16 @@ Tests for ADMC
 %_bindir/admc_test_account_option_edit
 %_bindir/admc_test_protect_deletion_edit
 %_bindir/admc_test_gpoptions_edit
-%_bindir/admc_test_octet_editor
-%_bindir/admc_test_bool_editor
-%_bindir/admc_test_string_editor
-%_bindir/admc_test_multi_editor
-%_bindir/admc_test_datetime_editor
+%_bindir/admc_test_octet_attribute_dialog
+%_bindir/admc_test_bool_attribute_dialog
+%_bindir/admc_test_string_attribute_dialog
+%_bindir/admc_test_list_attribute_dialog
+%_bindir/admc_test_datetime_attribute_dialog
 %_bindir/admc_test_edit_query_item_widget
 %_bindir/admc_test_policy_results_widget
+%_bindir/admc_test_find_object_dialog
+%_bindir/admc_test_rename_object_dialog
+%_bindir/admc_test_create_object_dialog
 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
