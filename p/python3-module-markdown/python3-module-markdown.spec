@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: python3-module-%modname
-Version: 3.3.4
+Version: 3.3.5
 Release: alt1
 
 Summary: Python implementation of Markdown text-to-HTML convertor.
@@ -28,6 +28,7 @@ BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-yaml
 BuildRequires: python3-module-nose python3-module-coverage
 BuildRequires: python3-module-Pygments
+%{?_enable_check:BuildRequires: python3-module-importlib-metadata}
 
 %description
 Markdown is a plain text formatting syntax designed to be as readable as
@@ -68,6 +69,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 
 
 %changelog
+* Wed Nov 17 2021 Yuri N. Sedunov <aris@altlinux.org> 3.3.5-alt1
+- 3.3.5
+
 * Fri Feb 26 2021 Yuri N. Sedunov <aris@altlinux.org> 3.3.4-alt1
 - 3.3.4
 
