@@ -3,7 +3,7 @@
 %def_without test
 Name: libabseil-cpp
 Version: 20210324.2
-Release: alt2
+Release: alt3
 
 Summary: C++ Common Libraries
 
@@ -46,6 +46,12 @@ Development headers for %name
 
 %prep
 %setup
+%ifarch %e2k
+# unsupported option
+sed -i "/-Wvarargs/d" absl/copts/{copts.py,GENERATED_{copts.bzl,AbseilCopts.cmake}}
+# EDG frontend fails at this
+sed -i "/static_assert(value.empty()/{N;d}" absl/strings/internal/string_constant.h
+%endif
 
 %build
 %add_optflags "-fPIC"
@@ -74,6 +80,9 @@ ctest
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Nov 17 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 20210324.2-alt3
+- fixed build for Elbrus
+
 * Fri Sep 03 2021 Vitaly Lipatov <lav@altlinux.ru> 20210324.2-alt2
 - set optflags_lto to -ffat-lto-objects
 
