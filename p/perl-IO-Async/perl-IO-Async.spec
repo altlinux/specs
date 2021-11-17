@@ -2,8 +2,8 @@
 %global oname IO-Async
 
 Name: perl-%oname
-Version: 0.79
-Release: alt2
+Version: 0.800
+Release: alt1
 
 Summary: Asynchronous event-driven programming
 Group: Development/Perl
@@ -14,7 +14,9 @@ Url: %CPAN %oname
 Source: %oname-%version.tar
 
 BuildArch: noarch
-BuildRequires: /proc perl(IO/Socket/IP.pm) perl(Module/Build.pm) perl(Test/Refcount.pm) perl(Future.pm) perl(Test/Fatal.pm) perl(Future/Utils.pm) perl-devel perl(Test/Identity.pm) perl(Struct/Dumb.pm) perl(Future/IO.pm) perl(Test/Metrics/Any.pm)
+BuildRequires: /proc perl(IO/Socket/IP.pm) perl(Module/Build.pm) perl(Future.pm) perl(Future/Utils.pm) perl-devel perl(Struct/Dumb.pm) perl(Future/IO.pm)
+# tests
+BuildRequires: perl(Test/Refcount.pm) perl(Test/Fatal.pm) perl(Test/Future/IO/Impl.pm) perl(Test/Identity.pm) perl(Test/Metrics/Any.pm)
 
 %add_findreq_skiplist */IO/Async/MergePoint.pm
 
@@ -64,6 +66,9 @@ This package contains tests for %name.
 %perl_vendor_privlib/IO/Async/Test.pm
 
 %changelog
+* Wed Nov 17 2021 Igor Vlasenko <viy@altlinux.org> 0.800-alt1
+- new version
+
 * Sat Aug 21 2021 Vitaly Lipatov <lav@altlinux.ru> 0.79-alt2
 - pack tests to the submodule
 
