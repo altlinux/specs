@@ -1,8 +1,11 @@
 %def_with server
+%ifarch %ix86
+%define optflags_lto %nil
+%endif
 
 Name:       hedgewars
 Version:    1.0.0
-Release:    alt5
+Release:    alt6
 
 Summary:    Game with heavily armed fighting hedgehogs
 Summary(ru_RU.UTF-8): Игра в битвы тяжело-вооружённых боевых ёжиков
@@ -155,6 +158,9 @@ chrpath --delete %buildroot%_bindir/hwengine
 %_datadir/%name
 
 %changelog
+* Wed Nov 17 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt6
+- Fixed FTBFS.
+
 * Wed Jun 30 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt5
 - Fixed BuildRequires.
 
