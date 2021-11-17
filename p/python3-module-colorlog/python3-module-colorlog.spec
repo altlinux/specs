@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-%modname
-Version: 6.5.0
+Version: 6.6.0
 Release: alt1
 
 Summary: Python 3 module for log formatting with colors
@@ -42,6 +42,9 @@ py.test3
 
 
 %changelog
+* Wed Nov 17 2021 Yuri N. Sedunov <aris@altlinux.org> 6.6.0-alt1
+- 6.6.0
+
 * Sun Oct 17 2021 Yuri N. Sedunov <aris@altlinux.org> 6.5.0-alt1
 - 6.5.0
 
