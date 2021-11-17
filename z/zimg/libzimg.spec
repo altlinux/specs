@@ -1,6 +1,7 @@
+%define soname 2
 %define gname zimg
-Name: libzimg
-Version: 3.0.2
+Name: zimg
+Version: 3.0.3
 Release: alt1
 Summary: Scaling, color space conversion, and dithering library
 License: WTFPL
@@ -22,11 +23,26 @@ correctness, flexibility, and thread-safety as first priorities. Allocation,
 buffering, and I/O are cleanly separated from processing, allowing the
 programmer to adapt "z" to many scenarios.
 
-%package devel
-Summary: Development files for %name
-Group: Development/Other
+%package -n lib%name%soname
+Summary: %summary
+Group: System/Libraries
+Provides: lib%name = %version
+Obsoletes: lib%name
 
-%description devel
+%description -n lib%name%soname
+The "z" library implements the commonly required image processing basics of
+scaling, color space conversion, and depth conversion. A simple API enables
+conversion between any supported formats to operate with minimal knowledge from
+the programmer. All library routines were designed from the ground-up with
+correctness, flexibility, and thread-safety as first priorities. Allocation,
+buffering, and I/O are cleanly separated from processing, allowing the
+programmer to adapt "z" to many scenarios.
+
+%package -n lib%name-devel
+Summary: Development files for %name
+Group: Development/C++
+
+%description -n lib%name-devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
@@ -49,17 +65,22 @@ find %buildroot -name '*.la' -delete
 # Pick up docs in the files section
 rm -fr %buildroot%_docdir/%gname
 
-%files
+%files -n lib%name%soname
 %doc COPYING README.md ChangeLog
-%_libdir/lib%gname.so.*
+%_libdir/lib%gname.so.%{soname}*
 
-%files devel
+%files -n lib%name-devel
 #_bindir/testapp
 %_includedir/*
 %_libdir/lib%gname.so
 %_pkgconfigdir/%gname.pc
 
 %changelog
+* Wed Nov 17 2021 Leontiy Volodin <lvol@altlinux.org> 3.0.3-alt1
+- New version (3.0.3).
+- Package:
+  + rename libzimg to libzimg2.
+
 * Wed Jul 28 2021 Leontiy Volodin <lvol@altlinux.org> 3.0.2-alt1
 - New version (3.0.2).
 - Upstream:
