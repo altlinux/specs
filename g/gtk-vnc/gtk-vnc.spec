@@ -1,4 +1,4 @@
-%define ver_major 1.2
+%define ver_major 1.3
 %define api_ver 1.0
 
 %def_enable introspection
@@ -7,7 +7,7 @@
 
 Name: gtk-vnc
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: VNC viewer widget
 Group: System/Libraries
@@ -222,6 +222,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Nov 17 2021 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Sun Jul 04 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt2
 - E2K: added makecontext patch by ilyakurdyukov@
 
