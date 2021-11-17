@@ -1,9 +1,9 @@
 %define module_name rtl8188fu
-%define git_rev 21813e9
+%define git_rev e9b34e3
 
 Name: kernel-source-%module_name
 Version: 1.0
-Release: alt2.git%git_rev
+Release: alt3.git%git_rev
 
 Summary: Realtek 8188F USB WiFi adapter driver
 License: GPL-2.0
@@ -31,6 +31,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Wed Nov 17 2021 Andrey Cherepanov <cas@altlinux.org> 1.0-alt3.gite9b34e3
+- Upstream support of kernel 5.15.
+
 * Tue Jan 12 2021 Andrey Cherepanov <cas@altlinux.org> 1.0-alt2.git21813e9
 - Upstream support of kernel 5.10.
 
