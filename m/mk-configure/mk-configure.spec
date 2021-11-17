@@ -2,7 +2,7 @@
 
 Name: mk-configure
 Version: 0.37.0
-Release: alt1
+Release: alt2
 
 Summary: Lightweight replacement for GNU autotools
 License: BSD-2-Clause and MIT and ISC
@@ -123,6 +123,10 @@ bmake -k cleandir-tests
 # - add %%config %%_sysconfdir/rpm/macros.mkcmake (extra source)
 
 %changelog
+* Wed Nov 17 2021 Aleksey Cheusov <cheusov@altlinux.org> 0.37.0-alt2
+- Add -ffat-lto-objects to COPTS unconditionally in order to unbreak
+  building static libraries
+
 * Wed Apr 14 2021 Aleksey Cheusov <cheusov@altlinux.org> 0.37.0-alt1
 - 0.37.0
 
