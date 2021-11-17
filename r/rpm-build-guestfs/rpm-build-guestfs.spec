@@ -1,5 +1,5 @@
 Name: rpm-build-guestfs
-Version: 0.7
+Version: 0.8
 Release: alt1
 
 Summary: RPM helper post script for build guestfs appliance
@@ -8,6 +8,7 @@ Group: Development/Other
 
 Requires(pre):  make-initrd >= 2.2.6
 Requires(pre):  kernel >= 5.4
+Requires: /proc
 
 Requires(pre): make-initrd-mdadm make-initrd-devmapper make-initrd-lvm make-initrd-luks
 
@@ -54,6 +55,9 @@ chmod 644 %_libdir/guestfs/*
 %dir %_libdir/guestfs
 
 %changelog
+* Wed Nov 17 2021 Alexey Shabalin <shaba@altlinux.org> 0.8-alt1
+- Requires: /proc for fix install check
+
 * Tue Dec 08 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.7-alt1
 - Requires file and findfs (Closes: 39367)
 
