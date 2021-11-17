@@ -1,9 +1,9 @@
 %define module_name rtl8723bu
-%define git_rev 9ce1c38
+%define git_rev d34603a
 
 Name: kernel-source-%module_name
 Version: 4.3.6.11
-Release: alt2.git%git_rev
+Release: alt3.git%git_rev
 
 Summary: Driver for Realtek RTL8723BU Wireless Adapter with Hardware ID 0bda:b720
 License: GPL-2.0
@@ -31,6 +31,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Wed Nov 17 2021 Andrey Cherepanov <cas@altlinux.org> 4.3.6.11-alt3.gitd34603a
+- Upstream fix for kernel 5.15.
+
 * Fri Dec 18 2020 Andrey Cherepanov <cas@altlinux.org> 4.3.6.11-alt2.git9ce1c38
 - Fix builds with kernel 5.10.
 
