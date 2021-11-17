@@ -18,7 +18,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.8
+Release: alt0.9
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -463,6 +463,10 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Wed Nov 17 2021 Sergey V Turchin <zerg at altlinux dot org> 10.0.0-alt0.9
+- fix grub help bar text color
+- don't use default font
+
 * Tue Nov 16 2021 Sergey V Turchin <zerg at altlinux dot org> 10.0.0-alt0.8
 - use default font
 
