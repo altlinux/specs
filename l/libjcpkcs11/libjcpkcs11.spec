@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %ifarch %ix86
 %set_verify_elf_method relaxed
 %endif
@@ -5,8 +7,8 @@
 %brp_strip_none
 
 Name: libjcpkcs11
-Version: 2.7.2
-Release: alt4
+Version: 2.7.4
+Release: alt1
 
 Summary: Aladdin JaCarta PKCS#11 library
 License: Proprietary
@@ -14,7 +16,7 @@ Group: System/Configuration/Hardware
 
 Url: https://www.aladdin-rd.ru/support/downloads/c9b88e95-aaef-4448-9c86-745639439189
 Source: %name-%version.tar
-ExclusiveArch: x86_64 aarch64 armh e2k e2kv4 mipsel
+ExclusiveArch: i586 x86_64 aarch64 armh e2k e2kv4 mipsel
 
 BuildRequires: libpcsclite-devel
 
@@ -53,10 +55,14 @@ install -pDm644 jcpkcs11.module \
 %files
 %doc README.ALT EULA.pdf
 %_libdir/*.so.%version
+%_libdir/*.so
 %_libdir/pkcs11/*.so
 %config(noreplace) %_sysconfdir/pkcs11/modules/jcpkcs11.module
 
 %changelog
+* Thu Nov 18 2021 Paul Wolneykien <manowar@altlinux.org> 2.7.4-alt1
+- Updated to v2.7.4.534 + i586.
+
 * Mon Jul 19 2021 Paul Wolneykien <manowar@altlinux.org> 2.7.2-alt4
 - Package unversioned %_libdir/pkcs11/*.so.
 
