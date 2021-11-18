@@ -1,5 +1,5 @@
 Name: alterator-net-iptables
-Version: 4.19.8
+Version: 4.19.9
 Release: alt1
 
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
@@ -69,6 +69,11 @@ touch -- %buildroot%_logdir/%name
 %_logdir/alterator-net-iptables
 
 %changelog
+* Thu Nov 18 2021 Mikhail Efremov <sem@altlinux.org> 4.19.9-alt1
+- net-dnat: Rewrite index.scm.
+- net-dnat: Add init-ui function.
+- net-dnat: Don't crash on type-error (closes: #37814).
+
 * Wed May 20 2020 Georgy A Bystrenin <gkot@altlinux.org> 4.19.8-alt1
 - net-iptables: Add host mode support (Closes: #38505)
 
