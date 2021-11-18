@@ -29,8 +29,8 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        95.0.4638.69
-Release:        alt3
+Version:        96.0.4664.45
+Release:        alt1
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -79,8 +79,10 @@ Patch014: 0014-ALT-Disable-NOMERGE-attribute.patch
 Patch015: 0015-FEDORA-bootstrap-with-python3.patch
 Patch016: 0016-sql-make-VirtualCursor-standard-layout-type.patch
 Patch017: 0017-ALT-fix-build-with-glibc-2.34.patch
-Patch018: 0018-IWYU-add-stddef.h-for-size_t-in-WindowManager.patch
-Patch019: 0019-Set-zero-insets-on-maximising-the-window.patch
+Patch018: 0018-IWYU-add-memory-for-std-unique_ptr-in-base-CommandLi.patch
+Patch019: 0019-libstdc-no-implicit-conversion-from-tuple-created-wi.patch
+Patch020: 0020-IWYU-add-string.h-for-memcmp-in-ui-DrmRenderNodePath.patch
+Patch021: 0021-IWYU-add-vector-for-std-vector-in-CouponDB.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -160,6 +162,7 @@ BuildRequires:  pkgconfig(wayland-cursor)
 BuildRequires:  pkgconfig(wayland-scanner)
 BuildRequires:  pkgconfig(dri)
 BuildRequires:  pkgconfig(libpipewire-0.3)
+BuildRequires:  pkgconfig(epoxy)
 BuildRequires:  node
 BuildRequires:  usbids
 BuildRequires:  xdg-utils
@@ -439,6 +442,28 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Nov 16 2021 Alexey Gladkov <legion@altlinux.ru> 96.0.4664.45-alt1
+- New version (96.0.4664.45).
+- Security fixes:
+  - CVE-2021-38005: Use after free in loader.
+  - CVE-2021-38006: Use after free in storage foundation.
+  - CVE-2021-38007: Type Confusion in V8.
+  - CVE-2021-38008: Use after free in media.
+  - CVE-2021-38009: Inappropriate implementation in cache.
+  - CVE-2021-38010: Inappropriate implementation in service workers.
+  - CVE-2021-38011: Use after free in storage foundation.
+  - CVE-2021-38012: Type Confusion in V8.
+  - CVE-2021-38013: Heap buffer overflow in fingerprint recognition.
+  - CVE-2021-38014: Out of bounds write in Swiftshader.
+  - CVE-2021-38015: Inappropriate implementation in input.
+  - CVE-2021-38016: Insufficient policy enforcement in background fetch.
+  - CVE-2021-38017: Insufficient policy enforcement in iframe sandbox.
+  - CVE-2021-38018: Inappropriate implementation in navigation.
+  - CVE-2021-38019: Insufficient policy enforcement in CORS.
+  - CVE-2021-38020: Insufficient policy enforcement in contacts picker.
+  - CVE-2021-38021: Inappropriate implementation in referrer.
+  - CVE-2021-38022: Inappropriate implementation in WebAuthentication.
+
 * Sat Nov 06 2021 Alexey Gladkov <legion@altlinux.ru> 95.0.4638.69-alt3
 - Set zero insets on maximising the window (ALT#41247).
 
