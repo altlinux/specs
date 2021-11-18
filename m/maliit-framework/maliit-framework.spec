@@ -1,7 +1,7 @@
 
 Name: maliit-framework
 Version: 2.0.0
-Release: alt2
+Release: alt3
 %define sover 2
 %define libmaliit libmaliit%sover
 %define libmaliit_glib libmaliit-glib%sover
@@ -169,7 +169,7 @@ rm -rf %buildroot/%_docdir/maliit-framework-doc
 %_qt5_plugindir/platforminputcontexts/libmaliitplatforminputcontextplugin.so
 %_qt5_plugindir/wayland-shell-integration/libinputpanel-shell.so
 %_libdir/gtk-3.0/3.0.0/immodules/libim-wayland.so
-%config %xinputconfdir/*
+#%config %xinputconfdir/*
 %_datadir/dbus-1/services/org.maliit.server.service
 
 #%files settings
@@ -218,6 +218,9 @@ rm -rf %buildroot/%_docdir/maliit-framework-doc
 #%_libdir/gtk-3.0/3.0.0/immodules/libim-maliit.so*
 
 %changelog
+* Thu Nov 18 2021 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt3
+- don't package xinput config
+
 * Wed Jun 30 2021 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt2
 - don't add custom argumetrs to maliit-server startup
 
