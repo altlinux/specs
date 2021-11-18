@@ -10,8 +10,8 @@
 %def_disable devel
 
 Name: unit
-Version: 1.25.0
-Release: alt3
+Version: 1.26.0
+Release: alt1
 
 Summary: NGINX Unit - Web Application Server
 License: Apache-2.0
@@ -210,6 +210,10 @@ build/tests
 %endif
 
 %changelog
+* Thu Nov 18 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.26.0-alt1
+- Update to 1.26.0-1 (2021-11-18).
+- Add condstop to unit.init.
+
 * Tue Oct 26 2021 Anton Farygin <rider@altlinux.ru> 1.25.0-alt3
 - added python3 module
 
