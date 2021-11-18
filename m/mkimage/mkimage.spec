@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.43
+Version: 0.2.44
 Release: alt1
 
 Summary: Simple image creator
@@ -86,6 +86,9 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Thu Nov 18 2021 Alexey Gladkov <legion@altlinux.ru> 0.2.44-alt1
+- mki-copy-efiboot-chrooted: Add riscv64 support. 
+
 * Mon Jul 26 2021 Alexey Gladkov <legion@altlinux.ru> 0.2.43-alt1
 - Add own list of initial packages to instrumental chroot
 - mki-pack-isodata: Set the UUID of the ISO image explicitly
