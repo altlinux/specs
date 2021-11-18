@@ -19,7 +19,7 @@
 %define libmltxx libmlt++%mltxx_sover
 
 Name: %nam%mlt_major
-Version: 7.0.1
+Version: 7.2.0
 Release: alt1
 %K5init no_altplace
 
@@ -171,6 +171,9 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
 %_pkgconfigdir/mlt++-%mlt_major.pc
 
 %changelog
+* Thu Nov 18 2021 Sergey V Turchin <zerg@altlinux.org> 7.2.0-alt1
+- new version
+
 * Tue Aug 31 2021 Sergey V Turchin <zerg@altlinux.org> 7.0.1-alt1
 - new version
 
