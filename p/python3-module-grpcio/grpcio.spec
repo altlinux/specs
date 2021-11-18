@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.39.0
-Release: alt1
+Release: alt2
 Summary: HTTP/2-based RPC framework
 License: Apache-2.0
 Group: Development/Python3
@@ -24,6 +24,10 @@ HTTP/2-based RPC framework.
 
 %prep
 %setup -n %oname-%version
+%ifarch %e2k
+# EDG frontend fails at this
+sed -i "/static_assert(value.empty()/{N;d}" third_party/abseil-cpp/absl/strings/internal/string_constant.h
+%endif
 
 # remove some bundled libraries. TODO: try unbundling all libraries.
 rm -rf third_party/zlib
@@ -63,6 +67,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Thu Nov 18 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.39.0-alt2
+- Fixed build for Elbrus.
+
 * Fri Aug 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.39.0-alt1
 - Updated to upstream version 1.39.0.
 
