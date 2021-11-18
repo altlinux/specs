@@ -16,7 +16,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (верс�
 
 Name: firefox-esr
 Version: 91.3.0
-Release: alt1
+Release: alt2
 License: MPL-2.0
 Group: Networking/WWW
 URL: http://www.mozilla.org/projects/firefox/
@@ -36,6 +36,7 @@ Source9: firefox-prefs.js
 Source10: firefox-l10n.txt
 Source11: l10n.tar
 Source12: firefox-privacy-prefs.js
+Source13: policies.json
 
 ### Start Patches
 Patch001: 0001-ALT-Use-system-nspr-headers.patch
@@ -347,6 +348,9 @@ make -C objdir \
 install -D -m 644 %SOURCE9  %buildroot/%firefox_prefix/browser/defaults/preferences/all-altlinux.js
 install -D -m 644 %SOURCE12 %buildroot/%_sysconfdir/firefox/pref/all-privacy.js
 
+# Install default policies
+install -D -m 644 %SOURCE13 %buildroot%_sysconfdir/firefox/policies/policies.json
+
 cat > %buildroot/%firefox_prefix/browser/defaults/preferences/firefox-l10n.js <<EOF
 pref("intl.locale.matchOS", true);
 pref("intl.locale.requested", "");
@@ -427,6 +431,8 @@ rm -rf -- \
 %files
 %dir %_sysconfdir/firefox
 %dir %_sysconfdir/firefox/pref
+%dir %_sysconfdir/firefox/policies
+%config(noreplace) %_sysconfdir/firefox/policies/policies.json
 %_altdir/firefox-esr
 %_bindir/firefox
 %firefox_prefix
@@ -448,6 +454,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Thu Nov 18 2021 Andrey Cherepanov <cas@altlinux.org> 91.3.0-alt2
+- Show Home button on toolbar by default (ALT #41360).
+
 * Tue Nov 02 2021 Andrey Cherepanov <cas@altlinux.org> 91.3.0-alt1
 - New ESR version.
 - Security fixes:
