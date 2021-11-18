@@ -2,7 +2,7 @@
 %define xdg_name com.github.wwmm.easyeffects
 
 Name: easyeffects
-Version: 6.1.4
+Version: 6.1.5
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -49,6 +49,7 @@ BuildRequires: pkgconfig(rnnoise)
 BuildRequires: pkgconfig(rubberband)
 BuildRequires: zita-convolver-devel
 BuildRequires: libdbus-devel
+BuildRequires: libtbb-devel
 
 %description
 This application used to be called PulseEffects but it was renamed to
@@ -80,6 +81,9 @@ mkdir -p %buildroot%_sysconfdir/EasyEffects
 %doc README* CHANGELOG.*
 
 %changelog
+* Thu Nov 18 2021 Yuri N. Sedunov <aris@altlinux.org> 6.1.5-alt1
+- 6.1.5
+
 * Sun Oct 17 2021 Yuri N. Sedunov <aris@altlinux.org> 6.1.4-alt1
 - 6.1.4
 
