@@ -5,8 +5,8 @@
 %def_enable check
 
 Name: python3-module-%modname
-Version: 3.3.5
-Release: alt1.1
+Version: 3.3.6
+Release: alt1
 
 Summary: Python implementation of Markdown text-to-HTML convertor.
 Group: Development/Python3
@@ -21,16 +21,19 @@ Source: Markdown-%version.tar
 %endif
 
 BuildArch: noarch
+
+%define metadata_ver 4.4
+
 Requires: python3-module-Pygments
 #markdown/util.py:    import importlib_metadata as metadata
-Requires: python3(importlib_metadata)
+Requires: python3-module-importlib-metadata >= %metadata_ver
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-yaml
 BuildRequires: python3-module-nose python3-module-coverage
 BuildRequires: python3-module-Pygments
-%{?_enable_check:BuildRequires: python3(importlib_metadata)}
+BuildRequires: python3-module-importlib-metadata >= %metadata_ver
 
 %description
 Markdown is a plain text formatting syntax designed to be as readable as
@@ -71,6 +74,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 
 
 %changelog
+* Thu Nov 18 2021 Yuri N. Sedunov <aris@altlinux.org> 3.3.6-alt1
+- 3.3.6
+
 * Thu Nov 18 2021 Yuri N. Sedunov <aris@altlinux.org> 3.3.5-alt1.1
 - updated dependencies
 
