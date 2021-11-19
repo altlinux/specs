@@ -1,6 +1,6 @@
 Name: codeblocks
 Version: 20.03
-Release: alt6
+Release: alt7
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
@@ -316,6 +316,9 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_libdir/pkgconfig/wxsmith-contrib.pc
 
 %changelog
+* Fri Nov 19 2021 Grigory Ustinov <grenka@altlinux.org> 20.03-alt7
+- Update russian localization.
+
 * Wed Oct 06 2021 Grigory Ustinov <grenka@altlinux.org> 20.03-alt6
 - Fix build with gcc11.
 
