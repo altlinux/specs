@@ -1,53 +1,50 @@
-%define commit d6f8410d566527f10ae697c47fe34fdc81b09116
-%define commit_short %(echo %commit | head -c 6)
-
 # Ensure no unpackaged files
 %global _unpackaged_files_terminate_build 1
 
-# https://github.com/audacity/audacity/issues/554
-# loffice-libcxx-wrapper.sh will put -lxxx into the end of CLI options
-%global optflags %optflags -DDISABLE_DYNAMIC_LOADING_LAME=1 -lmp3lame
+# wc-config --cflags to add -I/usr/include/wx-3.1
+# wx-config --libs: https://github.com/audacity/audacity/issues/552
+# libmp3lame: https://github.com/audacity/audacity/issues/2166
+%add_optflags %(wx-config --cflags || :) -DDISABLE_DYNAMIC_LOADING_LAME=1
+%define add_libs %(wx-config --libs || :) -lmp3lame
 
 Name: audacity
-Version: 2.4.1
-Release: alt0.git%{commit_short}.3
+Version: 3.1.2
+Release: alt1
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
 License: GPL
 Group: Sound
 
 Url: http://audacity.sourceforge.net/
-# Source0: https://github.com/audacity/audacity/archive/Audacity-%{version}.tar.gz
 # https://www.fosshub.com/Audacity.html/audacity-manual-%{version}.zip
+# https://github.com/audacity/audacity/releases
+# https://github.com/audacity/audacity-manual
+# https://github.com/audacity/audacity/archive/%{commit}.tar.gz
 Source0: %name-minsrc-%version.tar
 Source1: %name-%version-help-en.tar
 # XXX
 Source2: loffice-libcxx-wrapper.sh
 
-# Debian patches are from https://salsa.debian.org/multimedia-team/audacity/tree/master/debian/patches
-# NetBSD patches are from http://ftp.netbsd.org/pub/pkgsrc/current/pkgsrc/audio/audacity/patches/
-# openSUSE patches are from https://build.opensuse.org/package/show/openSUSE:Leap:15.0/audacity
-# ROSA patches are from https://abf.io/import/audacity/tree/rosa2016.1
-Patch20: Debian-0004-desktop.patch
-Patch50: NetBSD-ALT-Session-directory-in-home.patch
-Patch60: ALT-system-sbsms.patch
-Patch70: ALT-Remove-warning-about-alpha-version.patch
-Patch80: 0001-HACK-off-bundled-libmp3lame.patch
-# Updated Russian translation
-# https://github.com/audacity/audacity/pull/558
-Patch91: 0001-update-PO-files-by-update_po_files.sh.patch
-Patch92: 0002-Fix-fuzzies-in-Russian-transaltion.patch
-Patch93: 0003-Fix-translation-of-Filter-Curve.patch
+Patch0001: 0001-Add-keywords-to-desktop-file-fix-exec-command.patch
+Patch0002: 0002-Use-home-directory-for-temp-dir-instead-of-var-tmp-t.patch
+Patch0003: 0003-Fix-building-with-system-sbsms.patch
+Patch0004: 0004-Force-GTK-3.0.patch
+# https://github.com/audacity/audacity/issues/2163
+Patch0005: 0005-Do-not-create-file-in-strange-place.patch
 
 BuildRequires: gcc-c++
 BuildRequires: cmake
+# -Daudacity_conan_enabled=Off is a temporary workaround according to
+# https://github.com/audacity/audacity/pull/1030
+#BuildRequires: conan
 BuildRequires: patchelf
 BuildRequires: gettext-devel
 BuildRequires: ImageMagick
 BuildRequires: ladspa_sdk
 BuildRequires: liblame-devel
+BuildRequires: libportmidi-devel
 # Requires wxWidgets built without STL
-BuildRequires: libwxGTK3.1-devel >= 3.1.1-alt2
+BuildRequires: libwxGTK3.1-devel
 BuildRequires: zip
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(expat)
@@ -57,6 +54,7 @@ BuildRequires: pkgconfig(id3tag)
 BuildRequires: pkgconfig(flac)
 BuildRequires: pkgconfig(fftw3)
 BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(jack)
 BuildRequires: pkgconfig(libavformat)
 BuildRequires: pkgconfig(lilv-0)
@@ -64,6 +62,7 @@ BuildRequires: pkgconfig(libjpeg)
 BuildRequires: pkgconfig(lv2)
 BuildRequires: pkgconfig(mad)
 BuildRequires: pkgconfig(ogg)
+BuildRequires: pkgconfig(opus)
 BuildRequires: pkgconfig(portaudio-2.0)
 BuildRequires: pkgconfig(samplerate)
 BuildRequires: pkgconfig(sbsms)
@@ -71,8 +70,10 @@ BuildRequires: pkgconfig(sndfile)
 BuildRequires: pkgconfig(soundtouch)
 BuildRequires: pkgconfig(soxr)
 BuildRequires: pkgconfig(speex)
+BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(suil-0)
 BuildRequires: pkgconfig(twolame)
+BuildRequires: pkgconfig(uuid)
 BuildRequires: pkgconfig(udev)
 BuildRequires: pkgconfig(vamp-hostsdk)
 BuildRequires: pkgconfig(vorbis)
@@ -81,6 +82,16 @@ BuildRequires: pkgconfig(vorbisfile)
 BuildRequires: pkgconfig(zlib)
 # %%autopatch macro appeared in 4.0.4-alt133
 BuildRequires: rpm-build >= 4.0.4-alt133
+
+# Dummy dependency from dlopen()'ed library, without ABI tracking, track at least soname
+# https://github.com/audacity/audacity/issues/2161
+# If soname becomes >58, the build will not fail, but needed functionality will stop working!
+# XXX ALT would better have %%_isa macro
+%if "%_lib" == "lib64"
+Requires: libavcodec.so.58()(64bit)
+%else
+Requires: libavcodec.so.58
+%endif
 
 %description
 Audacity is a program that lets you manipulate digital audio waveforms.
@@ -111,62 +122,49 @@ For the most up to date manual content, use the on-line manual.
 %prep
 %setup -n %name-src-%version
 %autopatch -p1
+
 %ifarch %e2k
 # EDG frontend bug workaround
 sed -i "/struct alignas/{N;N;s/alignas(.*)//;s/{/{alignas(64)/}" src/AudioIO.h
 sed -i "/std::initializer_list/s/static//" src/prefs/GUIPrefs.cpp
 %endif
 
-ln -s locale po || :
-
-sed -i -e 's,/usr/lib/ladspa,%{_libdir}/ladspa,g' src/effects/ladspa/LadspaEffect.cpp
-
-# Make version in "About" dialog and other places match the package version
-# even if a post-release git snapshot is built where AUDACITY_REVISION was bumped
-n=1
-for i in AUDACITY_VERSION AUDACITY_RELEASE AUDACITY_REVISION ; do
-  text="$(echo "%{version}" | awk -F '.' "{print \$${n}}")"
-  if [ -n "$text" ] && ! echo "$text" | grep -qvE '[[:digit:]]' ; then
-    sed -i -E -e "s,#define[[:blank:]]([[:blank:]])*${i}[[:blank:]].+,#define ${i} ${text}," src/Audacity.h
-  fi
-  n=$((++n))
-done
-
 %build
 # src/RevisionIdent.h is in src/.gitignore and may be missing,
 # what leads to build errors, but it's empty in release tarballs
-[ ! -f src/RevisionIdent.h ] && echo ' ' > src/RevisionIdent.h
+# https://github.com/audacity/audacity/issues/2163
+echo > src/RevisionIdent.h
 
-# From SUSE's spec about PortAudio:
-# "This [using system PortAudio] would require to patch our portaudio package with "PortMixer"...
-# an extra API that never got integrated in PortAudio".
-# Patents on mp3 (liblame) expired in April 2017.
-
-# TODO: probably drop $(wx-config --libs)
-# https://github.com/audacity/audacity/issues/552
-export ADD_LIBS="$(wx-config --libs)"
-%ifarch %mips
-export ADD_LIBS="$ADD_LIBS -latomic"
-%endif
+export ADD_LIBS="%add_libs"
 install -m0755 %SOURCE2 ./g++
 export CXX="$PWD/g++"
+export CC="$(command -v gcc)"
 
 %cmake \
   -Daudacity_lib_preference:STRING=system \
-  -Daudacity_use_ffmpeg:STRING=linked \
-  -Daudacity_use_lame:STRING=system \
+  -Daudacity_has_networking=no \
+  -Daudacity_conan_enabled=Off \
+  -Daudacity_obey_system_dependencies=On \
+  -Daudacity_use_ffmpeg:STRING=loaded \
+  -Daudacity_use_libavcodec:STRING=system \
+  -Daudacity_use_libavformat:STRING=system \
+  -Daudacity_use_libavutil:STRING=system \
+  -Daudacity_use_libmp3lame:STRING=system \
   -Daudacity_use_libflac:STRING=system \
   -Daudacity_use_libid3tag:STRING=system \
   -Daudacity_use_libsndfile:STRING=system \
   -Daudacity_use_libsoxr:STRING=system \
   -Daudacity_use_libtwolame:STRING=system \
+  -Daudacity_use_libuuid:STRING=system \
   -Daudacity_use_libvamp:STRING=system \
   -Daudacity_use_libvorbis:STRING=system \
-  -Daudacity_use_libv2:STRING=system \
+  -Daudacity_use_lv2:STRING=system \
   -Daudacity_use_sbsms:STRING=system \
   -Daudacity_use_soundtouch:STRING=system \
-  -Daudacity_use_portaudio:STRING=local \
-  -Daudacity_use_midi:STRING=local \
+  -Daudacity_use_portaudio:STRING=system \
+  -Daudacity_use_portsmf:STRING=local \
+  -Daudacity_use_midi:STRING=system \
+  -DAUDACITY_BUILD_LEVEL=2 \
   -DAUDACITY_SUFFIX:STRING=""
 
 %cmake_build
@@ -175,6 +173,19 @@ export CXX="$PWD/g++"
 %cmakeinstall_std
 tar -xf %SOURCE1 -C %buildroot%_datadir/%name
 rm -rf %buildroot%_defaultdocdir/%name
+rm -rf %buildroot%_datadir/%name/include
+# Remove a helper script that runs audacity in GitHub CI builds
+rm -rf %buildroot%_prefix/%name
+
+# Remove absolute RPATHs
+# https://github.com/audacity/audacity/pull/1030#issuecomment-873630620
+# https://github.com/audacity/audacity/issues/2165
+patchelf --set-rpath '$ORIGIN/../%_lib/audacity' %buildroot%_bindir/audacity
+find %buildroot%_libdir/audacity -name '*.so' -print | while read -r line
+do
+	patchelf --set-rpath '$ORIGIN' "$line"
+done
+
 %find_lang %name
 
 %check
@@ -182,14 +193,16 @@ p="$(patchelf --print-needed %buildroot/%_bindir/audacity)"
 # upstream seems to assume statically linking bundled libsbsms,
 # verify that system one is used
 echo "$p" | grep -q sbsms
-# ffmpeg and mp3lame can be either dlopen'ed or linked explicitly,
-# ensure that they are linked explicitly
-echo "$p" | grep -q libavcodec
+# mp3lame can be either dlopen'ed or linked explicitly,
+# ensure that a system library is linked explicitly
 echo "$p" | grep -q libmp3lame
+# https://github.com/audacity/audacity/issues/2161
+#echo "$p" | grep -q libavcodec
 
 %files -f %name.lang
-%doc CHANGELOG.txt CODE_OF_CONDUCT.md CONTRIBUTING.md LICENSE.txt README.txt todo.txt
+%doc CHANGELOG.txt CODE_OF_CONDUCT.md CONTRIBUTING.md LICENSE.txt README.txt README.md
 %_bindir/audacity
+%_libdir/audacity
 %_mandir/man?/*
 %_iconsdir/*/*/apps/%name.svg
 %_iconsdir/hicolor/*/%name.png
@@ -198,7 +211,7 @@ echo "$p" | grep -q libmp3lame
 %_datadir/%name/*
 %_datadir/applications/%name.desktop
 %_datadir/mime/packages/%name.xml
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %_datadir/icons/hicolor/*/apps/%name.*
 %_pixmapsdir/*.xpm
 
@@ -207,6 +220,35 @@ echo "$p" | grep -q libmp3lame
 %_datadir/%name/help
 
 %changelog
+* Fri Nov 19 2021 Mikhail Novosyolov <mikhailnov@altlinux.org> 3.1.2-alt1
+- Version 3.1.2 (Closes: 40174, 38790, 38662, 41340)
+- Do load plugins from /usr/lib/ladspa in addition to /usr/lib64/ladspa
+  (this upstream behaviour was incorrectly changed by sed)
+- XXX Upstream removed linkage with libffmpeg, so we do not have propper ABI tracking now
+  and depend from libavocodec.so.58 manually
+  (https://github.com/audacity/audacity/issues/2161)
+- Build against system libopus, libportaudio and libmidi (as in upstream spec for Fedora)
+- Dropped setting of correct version in the "About" dialog, upstream code changed,
+  it is set correctly now by cmake variables like AUDACITY_VERSION
+- Dropped no more needed patches:
+  + ALT-Remove-warning-about-alpha-version.patch - upstream code changed, using
+    "-DAUDACITY_BUILD_LEVEL=2" now
+  + 0001-HACK-off-bundled-libmp3lame.patch - libmp3lame is not bundled any more,
+    a chack that system one is linked is kept in %%check
+  + 0001-update-PO-files-by-update_po_files.sh.patch,
+    0002-Fix-fuzzies-in-Russian-transaltion.patch,
+    0003-Fix-translation-of-Filter-Curve.patch - dropped in the new version,
+    upstream has a special workflow of updating translations
+    (see https://github.com/audacity/audacity/pull/558)
+- Renamed and rediffed other patches, make all of them git am-able
+- Hacked to force GTK+3.0 at build time
+- Removed hack with -latomic on MIPS, upstream CMakeLists.txt adds it itself
+- Hacked for liblame-devel missing pkgconfig file
+  (reported https://bugzilla.altlinux.org/show_bug.cgi?id=40342)
+- Explicitly disabled networking (it is disabled by default, make sure that
+  we do not send crash reports to Audacity servers, they will not be able
+  to read them due to debuginfo available separately and because it is not their build)
+
 * Mon Nov 01 2021 Michael Shigorin <mike@altlinux.org> 2.4.1-alt0.gitd6f841.3
 - fixed build for Elbrus (ilyakurdyukov@)
 
