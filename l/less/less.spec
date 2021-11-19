@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: less
-Version: 530
-Release: alt3
+Version: 590
+Release: alt1
 
 Summary: A text file browser similar to more, but better
 License: GPLv3+
@@ -104,6 +104,13 @@ ln -s lesspipe.1 %buildroot%_man1dir/lessfile.1
 %doc NEWS.bz2 *.html
 
 %changelog
+* Fri Nov 19 2021 Alexey Gladkov <legion@altlinux.ru> 590-alt1
+- New version 590.
+- lessfile.sh:
+  + Fix .xz detection.
+- lessfile.sh, lesspipe.sh:
+  + Add zstd detection.
+
 * Wed Aug 18 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 530-alt3
 - lesspipe.sh: Fix running helpers (closes: #40764).
 
