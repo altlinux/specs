@@ -5,7 +5,7 @@
 
 Name: pgadmin3
 Version: 1.23.0b
-Release: alt1.1
+Release: alt2
 
 Summary: Powerful administration and development platform for PostgreSQL.
 License: BSD
@@ -138,6 +138,9 @@ mv -f %buildroot%_datadir/%name/i18n/??_?? %buildroot%_datadir/locale
 %doc %_datadir/%name/docs/sl_SI
 
 %changelog
+* Fri Nov 19 2021 Alexei Takaseev <taf@altlinux.org> 1.23.0b-alt2
+- Fix build with PostgreSQL 14
+
 * Mon Aug 02 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.23.0b-alt1.1
 - Exclude 32bit arches
 
