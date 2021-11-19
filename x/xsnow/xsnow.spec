@@ -1,12 +1,12 @@
 Name: xsnow
-Version: 3.3.0
+Version: 3.3.2
 Release: alt1
 
 Summary: An X Window System based dose of Christmas cheer
 License: GPLv3+
 Group: Toys
 
-Url: https://www.ratrabbit.nl/ratrabbit/content/sw/xsnow/introduction
+Url: https://www.ratrabbit.nl/ratrabbit/xsnow/index.html
 Source0: xsnow-%version.tar.gz
 Packager: Alexei Mezin <alexvm@altlinux.org>
 
@@ -46,6 +46,9 @@ Xsnow добавляет анимированные снежинки и Сант
 %_desktopdir/*
 
 %changelog
+* Sat Nov 20 2021 Alexei Mezin <alexvm@altlinux.org> 3.3.2-alt1
+- New version
+
 * Mon Jul 12 2021 Alexei Mezin <alexvm@altlinux.org> 3.3.0-alt1
 - New version
 
