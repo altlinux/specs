@@ -1,7 +1,7 @@
 %define rtdir %_runtimedir/%name
 
 Name: fetchmail
-Version: 6.4.2
+Version: 6.4.23
 Release: alt1
 
 Summary: Full-featured POP/IMAP/ETRN mail retrieval daemon
@@ -19,10 +19,10 @@ Source12: fetchmailconf.png
 Source13: fetchmailconf.desktop
 Source100: fetchmail.watch
 
-Patch1: %name-5.6.2-contrib.patch
-Patch2: %name-6.4.1-fetchmailconf.patch
-Patch3: %name-6.4.1-nopermcheck.patch
-Patch4: %name-6.4.1-no-libssl-version-sanity-check.patch
+Patch1: 0001-contrib-Remove-html-quoting-from-the-runfetchmail.patch
+Patch2: 0002-Add-missing-space-in-config-option.patch
+Patch3: 0003-Add-option-to-switch-off-permission-check.patch
+Patch4: 0004-Do-not-check-libssl-version.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: flex openssl-devel libkrb5-devel python3-devel
@@ -98,10 +98,7 @@ neccessary.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%autopatch -p2
 
 cp -a %SOURCE3 fetchmailrc.example
 
@@ -200,6 +197,9 @@ usermod -d %rtdir %name ||:
 
 
 %changelog
+* Fri Nov 19 2021 Alexey Gladkov <legion@altlinux.ru> 6.4.23-alt1
+- New version (6.4.23).
+
 * Thu Mar 19 2020 Andrey Bychkov <mrdrew@altlinux.org> 6.4.2-alt1
 - Version updated to 6.4.2
 
