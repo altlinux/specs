@@ -1,5 +1,5 @@
 Name: praat
-Version: 6.1.54
+Version: 6.2.01
 Release: alt1
 
 Summary: A program for speech analysis and synthesis
@@ -17,6 +17,7 @@ Patch1:         praat-use_system_libs.patch
 Patch2:         praat-no-return-in-nonvoid.patch
 # PATCH-FIX-UPSTREAM praat-gcc11.patch
 Patch3:         praat-gcc11.patch
+
 
 Requires: fonts-bitmap-75dpi
 
@@ -58,6 +59,7 @@ Recommends: fonts-bitmap-100dpi fonts-bitmap-75dpi
 %patch1 -p1
 %patch2 -p1
 #patch3 -p1
+#patch5 -p1
 
 %build
 cp -a makefiles/makefile.defs.linux.pulse makefile.defs
@@ -65,8 +67,11 @@ cp -a makefiles/makefile.defs.linux.pulse makefile.defs
 
 sed -e '/^CFLAGS/s/$/\ %{optflags}/' \
     -e '/^CXXFLAGS/s/$/\ %{optflags}/' \
-    -e '/^CC/s/=/?=/' -e '/^CXX/s/=/?=/' \
-    -e '/^LINK/s/=/?=/' -i makefile.defs
+    -e '/^CC/s/?=/=/' -e '/^CXX/s/?=/=/' \
+    -e '/^LINK/s/?=/=/' -i makefile.defs
+
+#    -e '/^CC/s/=/?=/' -e '/^CXX/s/=/?=/' \
+#    -e '/^LINK/s/=/?=/' -i makefile.defs
 
 
 
@@ -87,6 +92,9 @@ install -pDm755 %name %buildroot%_bindir/%name
 #  http://www.fon.hum.uva.nl/praat/download_sources.html praat(\d)(\d)(\d+)_sources.tar.gz debian
 
 %changelog
+* Fri Nov 19 2021 Ilya Mashkin <oddity@altlinux.ru> 6.2.01-alt1
+- 6.2.01
+
 * Sat Oct 16 2021 Ilya Mashkin <oddity@altlinux.ru> 6.1.54-alt1
 - 6.1.54
 
