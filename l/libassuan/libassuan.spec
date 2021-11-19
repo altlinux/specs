@@ -1,6 +1,6 @@
 Name: libassuan
-Version: 2.5.4.4.g05535d9
-Release: alt4
+Version: 2.5.5
+Release: alt1
 
 Summary: IPC library used by some GnuPG related software
 License: GPL-3.0-or-later AND LGPL-2.1-or-later
@@ -70,6 +70,9 @@ mv %buildroot%_libdir/libassuan{2,}.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jun 23 2021 Alexey Gladkov <legion@altlinux.ru> 2.5.5-alt1
+- New version (2.5.5).
+
 * Mon Mar 15 2021 Michael Shigorin <mike@altlinux.org> 2.5.4.4.g05535d9-alt4
 - Fix installation with --disable check.
 
