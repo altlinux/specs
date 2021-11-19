@@ -2,7 +2,7 @@
 
 Name: sane
 Version: 1.0.32
-Release: alt2
+Release: alt3
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -21,6 +21,9 @@ Source2: %name.xinetd
 Patch3: sane-1.0.19-hp-psc.patch
 Patch4: sane-backends-1.0.18-epson-1270.patch
 Patch5: sane-backends-1.0.32-xerox-blacklist-workcentre-322x.patch
+
+# Support for Avision FB2280E
+Patch6: sane-backends-1.0.32-avision-FB2280E.patch
 
 # Mandriva patches
 Patch201: sane-backends-1.0.18-plustek-s12.patch
@@ -168,6 +171,7 @@ This package contains SANE static libraries.
 %patch3
 %patch4
 %patch5 -p2
+%patch6 -p2
 
 # Mandriva patches
 %patch201 -p1 -b .plusteks12
@@ -283,6 +287,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/%oname.pc
 
 %changelog
+* Fri Nov 19 2021 Paul Wolneykien <manowar@altlinux.org> 1.0.32-alt3
+- Add support for Avision FB2280E (patch).
+
 * Fri Feb 26 2021 Nikolai Kostrigin <nickel@altlinux.org> 1.0.32-alt2
 - add xerox-blacklist-workcentre-322x patch (closes: #39729)
 - remove upstreamed avision-av186plus-av188 patch
