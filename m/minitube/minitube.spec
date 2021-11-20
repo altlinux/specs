@@ -2,8 +2,8 @@
 #
 
 Name:     minitube
-Version:  3.9
-Release:  alt1.1
+Version:  3.9.2
+Release:  alt1
 
 Summary: a YouTube desktop application
 
@@ -84,6 +84,9 @@ ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING) COPYING
 %_datadir/%name
 
 %changelog
+* Fri Nov 19 2021 Nikolay A. Fetisov <naf@altlinux.org> 3.9.2-alt1
+- New version
+
 * Tue Nov 16 2021 Michael Shigorin <mike@altlinux.org> 3.9-alt1.1
 - E2K: avoid webengine for now (unavailable)
 
