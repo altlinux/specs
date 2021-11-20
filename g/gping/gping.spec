@@ -1,5 +1,5 @@
 Name: gping
-Version: 1.2.1
+Version: 1.2.6
 Release: alt1
 Summary: Ping, but with a graph
 License: MIT
@@ -37,6 +37,9 @@ install -m 0755 target/release/%name %buildroot%_bindir
 %doc readme.md LICENSE
 
 %changelog
+* Sat Nov 20 2021 Alexander Makeenkov <amakeenk@altlinux.org> 1.2.6-alt1
+- Updated to version 1.2.6
+
 * Sun Jun 06 2021 Alexander Makeenkov <amakeenk@altlinux.org> 1.2.1-alt1
  - Initial build for ALT
 
