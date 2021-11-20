@@ -1,5 +1,5 @@
 Name: libgcrypt
-Version: 1.9.3
+Version: 1.9.4
 Release: alt1
 
 Group: System/Libraries
@@ -13,6 +13,10 @@ Patch0: 0001-Fix-LFS-on-32-bit-systems.patch
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+
+%ifarch armh
+%define optflags_lto %nil
+%endif
 
 %set_verify_elf_method strict
 
@@ -79,6 +83,10 @@ EOF
     --disable-dev-random \
     --disable-doc
 
+%ifarch armh
+sed -i -e '/ HAVE_COMPATIBLE_GCC_ARM_PLATFORM_AS /d' config.h
+%endif
+
 %make_build
 %make_build -C doc hmac256.1 gcrypt.info
 
@@ -120,6 +128,9 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_infodir/*.info*
 
 %changelog
+* Sat Nov 20 2021 Alexey Gladkov <legion@altlinux.ru> 1.9.4-alt1
+- New version (1.9.4).
+
 * Wed Jun 23 2021 Alexey Gladkov <legion@altlinux.ru> 1.9.3-alt1
 - New version (1.9.3).
 
