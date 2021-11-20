@@ -2,8 +2,8 @@
 %def_without python2
 
 Name: gwyddion
-Version: 2.59
-Release: alt2
+Version: 2.60
+Release: alt1
 
 Summary: An SPM data visualization and analysis tool
 Summary(ru_RU.UTF-8):  Программа для визуализации и анализа данных АСМ
@@ -256,6 +256,9 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 %endif
 
 %changelog
+* Sat Nov 20 2021 Alexei Mezin <alexvm@altlinux.org> 2.60-alt1
+- new version
+
 * Mon Aug 16 2021 Vitaly Lipatov <lav@altlinux.ru> 2.59-alt2
 - NMU: build without using pygtk (add def_without python2)
 
