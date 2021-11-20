@@ -9,7 +9,6 @@
 
 # TODO: def_with clang
 %def_with gtk3
-%def_with tgvoip
 %def_with wayland
 %def_with x11
 %def_with webkit
@@ -17,7 +16,7 @@
 
 Name: telegram-desktop
 Version: 3.1.8
-Release: alt1
+Release: alt2
 
 Summary: Telegram Desktop messaging app
 
@@ -28,7 +27,8 @@ Url: https://telegram.org/
 # Source-url: https://github.com/telegramdesktop/tdesktop/releases/download/v%version/tdesktop-%version-full.tar.gz
 Source: %name-%version.tar
 
-Patch: telegram-desktop-fix-glib2-build.patch
+Patch1: telegram-desktop-remove-tgvoip.patch
+Patch2: telegram-desktop-remove-jemalloc.patch
 
 # [ppc64le] /usr/bin/ld.default: /usr/lib64/libtg_owt.a: error adding symbols: file in wrong format
 # aarch64: see remove_target_sources ARM neon in https://github.com/desktop-app/tg_owt/blob/master/cmake/libyuv.cmake
@@ -110,15 +110,6 @@ BuildRequires: pkgconfig(xcb-screensaver)
 BuildRequires: libgtk+3-devel libappindicator-gtk3-devel libglibmm-devel
 %endif
 
-%if_with tgvoip
-BuildRequires: libtgvoip-devel >= 2.4.4-alt5
-#BuildRequires: pkgconfig(tgvoip) >= 2.4.4
-%else
-BuildRequires: pkgconfig(alsa)
-BuildRequires: pkgconfig(libpulse)
-Provides: bundled(libtgvoip) = 2.4.4
-%endif
-
 BuildRequires: libopus-devel
 
 # TODO:
@@ -157,8 +148,6 @@ BuildRequires: libdbusmenu-qt5-devel
 
 # need for /usr/lib64/cmake/Qt5XkbCommonSupport/Qt5XkbCommonSupportConfig.cmake
 BuildRequires: libxkbcommon-devel
-
-BuildRequires: libjemalloc-devel
 
 # FIXME: libva need only for linking, extra deps?
 
@@ -201,7 +190,8 @@ or business messaging needs.
 
 %prep
 %setup
-#patch -p2
+%patch1 -p2
+%patch2 -p2
 %__subst "s|set(webrtc_build_loc.*|set(webrtc_build_loc %_libdir)|" cmake/external/webrtc/CMakeLists.txt
 # TODO: there are incorrect using and linking libyuv
 # TODO: ld: lib_webview/liblib_webview.a(webview_linux_webkit_gtk.cpp.o): undefined reference to symbol 'dlclose@@GLIBC_2.2.5
@@ -225,12 +215,9 @@ rm -rv \
 	Telegram/ThirdParty/range-v3 \
 	Telegram/ThirdParty/xxHash \
 	Telegram/ThirdParty/rlottie \
+	Telegram/ThirdParty/libtgvoip \
+	Telegram/ThirdParty/tgcalls/tgcalls/legacy \
 	%nil
-
-# Unbundling libtgvoip if build against packaged version...
-%if_with libtgvoip
-rm -rv Telegram/ThirdParty/libtgvoip
-%endif
 
 %build
 %if_with ffmpeg_static
@@ -305,6 +292,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Tue Oct 12 2021 Andrey Sokolov <keremet@altlinux.org> 3.1.8-alt2
+- fix crashes on video call (closes: 38897)
+
 * Sat Oct 09 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.8-alt1
 - new version 3.1.8 (with rpmrb script)
 
