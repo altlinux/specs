@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-setup
-Version: 0.3.12
+Version: 0.3.13
 Release: alt1
 
 Summary: Perform initial setup of an OEM installation (warning!)
@@ -32,24 +32,10 @@ Requires(preun): chkconfig
 Conflicts: alterator-livecd
 Conflicts: installer-common-stage2
 
+Obsoletes: alterator-setup-x11vnc < %EVR
+
 %description
 %summary
-
-WARNING: you really don't want to install this package
-into an already configured system as it may spoil the
-next boot!  Given that its sole purpose is the _initial_
-configuration of a new system (like setting root password)
-nobody should need that on an up-and-running host.
-
-%package x11vnc
-Summary: Perform initial setup of an OEM installation through VNC (warning!)
-Group: System/Configuration/Other
-Requires: x11vnc-service
-Requires: %name
-Requires: alterator-vnc
-
-%description x11vnc
-This is a X11 VNC version of the alterator setup package.
 
 WARNING: you really don't want to install this package
 into an already configured system as it may spoil the
@@ -82,29 +68,23 @@ This postinstall script for installer.
 cat >> %buildroot%_sysconfdir/alterator-setup/config << EOF
 # erase %name and related packages
 REMOVE_SELF=1
+#ALTERATOR_SETUP_VNC=1
 EOF
 
 %files
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/config
+%config(noreplace) %_sysconfdir/%name/steps
 %_initdir/setup
 %_sbindir/%name
+%_sbindir/%name-prep
 %_alterator_datadir/steps/*
-%exclude %_alterator_datadir/steps/vnc.desktop
 %_alterator_datadir/ui/*
 %_alterator_libdir/hooks/*/*
 %_alterator_backend3dir/*
 %_datadir/alterator-setup/
 /lib/systemd/system/setup.service
 /lib/systemd/system/setup.target
-%config(noreplace) %_sysconfdir/%name/steps
-
-%files x11vnc
-%_initdir/setup-vnc
-/lib/systemd/system/setup-vnc.service
-/lib/systemd/system/setup-vnc.target
-%_alterator_datadir/steps/vnc.desktop
-%config(noreplace) %_sysconfdir/%name/steps-vnc
 
 %files -n installer-feature-%name-stage2
 %_datadir/install2/postinstall.d/80-alterator-setup
@@ -115,16 +95,17 @@ EOF
 # package is removed in postinstall hook, but
 # 'systemd stop' stops whole setup.service with hook.
 %preun
-if [ -x /sbin/sd_booted -a ! -f /lib/systemd/system/setup-vnc.target ]; then
+if [ -x /sbin/sd_booted ]; then
 /sbin/sd_booted || %preun_service setup
 fi
 
-%preun x11vnc
-if [ -x /sbin/sd_booted ]; then
-/sbin/sd_booted || %preun_service setup-vnc
-fi
-
 %changelog
+* Fri Nov 19 2021 Anton Midyukov <antohami@altlinux.org> 0.3.13-alt1
+- alterator-setup: Enable VNC if ALTERATOR_SETUP_VNC is set in config
+- alterator-setup: Generate a password for VNC, run VNC from setup.service
+- Add alterator-setup-prep to prepare alterator-setup to work via VNC
+- Obsoletes alterator-setup-x11vnc
+
 * Fri Oct 15 2021 Anton Midyukov <antohami@altlinux.org> 0.3.12-alt1
 - save screenshots of alterator-setup into /root/.install-log/screenshots
 
