@@ -1,5 +1,5 @@
 Name: redis
-Version: 6.2.4
+Version: 6.2.6
 Release: alt1
 
 Summary: Redis is an advanced key-value store
@@ -171,6 +171,19 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_tmpfilesdir/%name.
 
 
 %changelog
+* Sat Nov 20 2021 Nikolay A. Fetisov <naf@altlinux.org> 6.2.6-alt1
+- New version
+- Security fixes:
+  + CVE-2021-41099: buffer overflow with non-default configuration
+  + CVE-2021-32762: buffer overflow issue in redis-cli and redis-sentinel
+  + CVE-2021-32687: buffer overflow with non-default configuration
+  + CVE-2021-32675: Denial Of Service when processing RESP request payloads
+  + CVE-2021-32672: random heap reading issue with Lua Debugger
+  + CVE-2021-32628: buffer overflow with non-default configuration
+  + CVE-2021-32627: buffer overflow with non-default configuration
+  + CVE-2021-32626: Lua scripts may result with Heap buffer overflow
+  + CVE-2021-32761: integer overflow in BITFIELD on 32-bit versions
+
 * Mon Jun 28 2021 Nikolay A. Fetisov <naf@altlinux.org> 6.2.4-alt1
 - New major version (Closes: 40279)
 
