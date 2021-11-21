@@ -4,7 +4,7 @@
 %define cid	webscrapbook@danny0838.addons.mozilla.org
 
 Name:		%firefox_name-%rname
-Version:	0.142.0
+Version:	0.143.0
 Release:	alt1
 
 Summary:	WebScrapBook Firefox extension
@@ -38,6 +38,9 @@ install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 %firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Sun Nov 21 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.143.0-alt1
+- New version
+
 * Wed Nov 17 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.142.0-alt1
 - New version
 
