@@ -1,7 +1,7 @@
 # SPEC file for Siglo utility
 
 Name:     siglo
-Version:  0.9.5
+Version:  0.9.6
 Release:  alt1
 
 Summary:  GTK companion application for InfiniTime watch
@@ -63,13 +63,16 @@ mv  %buildroot%_sysconfdir/systemd/user/siglo.service %buildroot%_prefix/lib/sys
 %_datadir/%name
 
 %_prefix/lib/systemd/user/%name.service
-%_datadir/appdata/*
+%_datadir/metainfo/*
 
 %_desktopdir/*
 %_iconsdir/*
 %_datadir/glib-2.0/schemas/*
 
 %changelog
+* Sun Nov 21 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.9.6-alt1
+- New version
+
 * Wed Oct 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.9.5-alt1
 - New version
 
