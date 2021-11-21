@@ -1,7 +1,7 @@
 %define real_name    cr3
 
 Name:     coolreader3
-Version:  3.2.57
+Version:  3.2.59
 Release:  alt1
 
 Summary:  E-Book reader
@@ -14,10 +14,11 @@ Packager: Nikolay Fetisov <naf@altlinux.org>
 
 Source0: %name-%version.tar
 Patch0:  %name-%version-%release.patch
+Source1: thirdparty.tar
 
-Source1: %real_name-16.png
-Source2: %real_name-32.png
-Source3: %real_name-48.png
+Source2: %real_name-16.png
+Source3: %real_name-32.png
+Source4: %real_name-48.png
 
 Patch1: %name-3.2.57-textlang.patch
 
@@ -26,7 +27,7 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires: cmake gcc-c++ libicu-devel libjpeg-devel qt5-phonon-devel
 BuildRequires: qt5-tools-devel libfreetype-devel fontconfig-devel
 BuildRequires: libpcre-devel libuuid-devel libexpat-devel libtextstyle-devel
-BuildRequires: libunibreak-devel libfribidi-devel
+BuildRequires: libunibreak-devel libfribidi-devel libzstd-devel
 BuildRequires(pre): libpng-devel
 
 %description
@@ -38,6 +39,7 @@ CHM, PDB.
 %prep
 %setup
 %patch0 -p1
+tar xf %SOURCE1
 
 %patch1
 
@@ -48,27 +50,21 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
 %build
-mkdir qtbuild
-cd qtbuild
-cmake -D GUI=QT5 \
+%cmake -D GUI=QT5 \
     -DCMAKE_BUILD_TYPE=Release \
     -DMAX_IMAGE_SCALE_MUL=2 \
     -DDOC_DATA_COMPRESSION_LEVEL=3 \
-    -DDOC_BUFFER_SIZE=0x1400000 \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_C_FLAGS="%optflags" \
-    -DCMAKE_CXX_FLAGS="%optflags" \
-    ..
-%make VERBOSE=1
+    -DDOC_BUFFER_SIZE=0x1400000
+
+%cmake_build
 
 %install
-cd qtbuild
-%makeinstall_std
+%cmake_install
 
 mkdir -p -- %buildroot%_miconsdir %buildroot%_liconsdir %buildroot%_niconsdir
-install -m0644 -- %SOURCE1 %buildroot%_miconsdir/%real_name.png
-install -m0644 -- %SOURCE2 %buildroot%_niconsdir/%real_name.png
-install -m0644 -- %SOURCE3 %buildroot%_liconsdir/%real_name.png
+install -m0644 -- %SOURCE2 %buildroot%_miconsdir/%real_name.png
+install -m0644 -- %SOURCE3 %buildroot%_niconsdir/%real_name.png
+install -m0644 -- %SOURCE4 %buildroot%_liconsdir/%real_name.png
 
 %files
 %doc changelog
@@ -80,6 +76,7 @@ install -m0644 -- %SOURCE3 %buildroot%_liconsdir/%real_name.png
 
 %_pixmapsdir/%real_name.*
 %_desktopdir/%real_name.desktop
+%_datadir/metainfo/%real_name.*
 %_man1dir/%{real_name}*
 
 %exclude %_datadir/doc/%real_name/*
@@ -89,6 +86,9 @@ install -m0644 -- %SOURCE3 %buildroot%_liconsdir/%real_name.png
 %_liconsdir/%{real_name}*
 
 %changelog
+* Sun Nov 21 2021 Nikolay A. Fetisov <naf@altlinux.org> 3.2.59-alt1
+- New version
+
 * Mon Jun 28 2021 Nikolay A. Fetisov <naf@altlinux.org> 3.2.57-alt1
 - New version
 
