@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 %def_enable introspection
 
@@ -11,7 +11,7 @@ Release: alt1%beta
 Summary: A collection of GSettings schemas
 License: %lgpl21plus
 Group: Graphical desktop/GNOME
-URL: ftp://ftp.gnome.org/
+Url: ftp://ftp.gnome.org/
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 
@@ -20,8 +20,8 @@ Requires: %name-data = %version-%release
 %define gio_ver 2.31.0
 Requires(pre): libgio >= %gio_ver
 
-BuildRequires(pre): meson rpm-build-licenses rpm-build-gnome
-BuildRequires: libgio-devel >= %gio_ver intltool
+BuildRequires(pre): rpm-macros-meson rpm-build-licenses rpm-build-gnome
+BuildRequires: meson libgio-devel >= %gio_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 
 %description
@@ -126,6 +126,9 @@ GObject introspection devel data for %name.
 %endif
 
 %changelog
+* Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 

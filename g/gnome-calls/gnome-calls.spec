@@ -1,14 +1,14 @@
 %define _name calls
 %define ver_major 41
-%define beta .alpha
+%define beta %nil
 %define xdg_name org.gnome.Calls
 
 #12/12 sip  TIMEOUT
 %def_disable check
 
 Name: gnome-%_name
-Version: %ver_major
-Release: alt0.1%beta
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: A phone dialer and call handler
 Group: Graphical desktop/GNOME
@@ -24,7 +24,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%
 Requires: ModemManager >= %mm_ver
 Requires: gst-plugins-base1.0
 
-BuildRequires(pre): meson rpm-build-xdg
+BuildRequires(pre): rpm-macros-meson rpm-build-xdg
+BuildRequires: meson
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
@@ -77,6 +78,12 @@ xvfb-run %__meson_test
 %doc NEWS README.md
 
 %changelog
+* Sat Oct 30 2021 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
+- 41.1
+
+* Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Fri Jul 16 2021 Yuri N. Sedunov <aris@altlinux.org> 41-alt0.1.alpha
 - first build for Sisyphus
 

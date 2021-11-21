@@ -1,4 +1,4 @@
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 
 Name: orca
@@ -91,6 +91,9 @@ install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autost
 %_datadir/gdm/greeter/autostart/%name-autostart.desktop
 
 %changelog
+* Thu Sep 16 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 

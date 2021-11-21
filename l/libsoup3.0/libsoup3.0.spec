@@ -1,19 +1,23 @@
+#https://gitlab.gnome.org/GNOME/libsoup/-/issues/225
 %def_disable snapshot
 
 %define _name libsoup
 %define api_ver 3.0
-%define ver_major 2.99
+%define ver_major 3.0
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
 %def_enable vala
 %def_with gssapi
+%def_enable brotli
 %def_disable debug
 %def_disable sysprof
+# moved to PyGobject since 3.0.1
+%def_disable python
 %def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.8
+Version: %ver_major.2
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -29,22 +33,24 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 
 Requires: glib-networking >= 2.63.90
 
-%define glib_ver 2.67.4
+%define glib_ver 2.69.0
 %define gi_ver 1.33.3
 %define psl_ver 0.20.0
 
-BuildRequires(pre): meson rpm-build-gir
-BuildRequires: python3-base
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+%{?_enable_python:BuildRequires(pre): rpm-build-python3}
+BuildRequires: meson
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libxml2-devel libsqlite3-devel zlib-devel
 BuildRequires: docbook-dtds docbook-style-xsl
 BuildRequires: gtk-doc xml-common xsltproc
 BuildRequires: glib-networking libpsl-devel >= %psl_ver
-BuildRequires: libbrotli-devel libnghttp2-devel
+BuildRequires: libnghttp2-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_with_gssapi:BuildRequires: libkrb5-devel}
+%{?_enable_brotli:BuildRequires: libbrotli-devel}
 %{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 %{?_enable_check:BuildRequires: /proc curl}
 
@@ -107,6 +113,17 @@ and the glib main loop, to integrate well with GNOME applications.
 
 This package provides GObject introspection devel data for the Soup library
 
+%package -n python3-module-%name
+Summary: GObject introspection devel data for the Soup library
+Group: Development/Python3
+BuildArch: noarch
+
+%description -n python3-module-%name
+libsoup is an HTTP client/server library for GNOME. It uses GObjects
+and the glib main loop, to integrate well with GNOME applications.
+
+This package provides PyGObject overrides for SoupMessageHeaders.
+
 %prep
 %setup -n %_name-%version
 
@@ -122,6 +139,7 @@ This package provides GObject introspection devel data for the Soup library
     %{?_enable_snapshot:-Dgtk_doc=true} \
     %{?_disable_introspection:-Dintrospection=disabled} \
     %{?_disable_gssapi:-Dgssapi=disabled} \
+    %{?_disable_brotli:-Dbrotli=disabled} \
     %{?_enable_sysprof:-Dsysprof=enabled}
 %meson_build
 
@@ -162,7 +180,22 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_girdir/Soup-%api_ver.gir
 %endif
 
+%if_enabled python
+%files -n python3-module-%name
+%python3_sitelibdir_noarch/gi/overrides/Soup.py
+%python3_sitelibdir_noarch/gi/overrides/__pycache__/Soup*.pyc
+%endif
+
 %changelog
+* Sun Oct 24 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt1
+- 3.0.2
+
+* Sun Sep 26 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
+- 3.0.1
+
+* Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt1
+- 3.0.0
+
 * Fri Jun 04 2021 Yuri N. Sedunov <aris@altlinux.org> 2.99.8-alt1
 - 2.99.8
 

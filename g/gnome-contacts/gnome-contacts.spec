@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
@@ -32,14 +32,15 @@ Source: %name-%version.tar
 %define geocode_ver 3.15.3
 %define handy_ver 1.1.0
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson vala-tools
 BuildRequires: yelp-tools xsltproc docbook-dtds docbook-style-xsl libappstream-glib-devel valadoc
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libtelepathy-glib-devel >= %tp_glib_ver
 BuildRequires: libfolks-devel >= %folks_ver libvala-devel >= %vala_ver libgnome-desktop3-devel
 BuildRequires: libgnome-online-accounts-devel libgee0.8-devel evolution-data-server-devel >= %eds_ver
 BuildRequires: libgeocode-glib-devel >= %geocode_ver libchamplain-gtk3-devel libclutter-gtk3-devel
 %{?_with_cheese:BuildRequires: gstreamer%gst_api_ver-devel libcheese-devel >= %cheese_ver}
-BuildRequires: gobject-introspection-devel vala-tools libgtk+3-gir-devel
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 
 # for build from git
@@ -74,6 +75,9 @@ BuildRequires: libfolks-vala
 %doc NEWS README*
 
 %changelog
+* Wed Sep 29 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Tue Mar 23 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 

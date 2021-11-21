@@ -1,12 +1,11 @@
 %def_disable snapshot
 
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 %define api_ver 1.0
 
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
-%define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
 %define default_pam_config redhat
 # Initial virtual terminal to use
@@ -26,7 +25,7 @@
 %def_enable check
 
 Name: gdm
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: The GNOME Display Manager
@@ -59,13 +58,14 @@ Obsoletes: %name-gnome
 Provides: %name-gnome = %version-%release
 Provides: gnome-dm
 
-# from configure.ac
-%define glib_ver 2.36.0
+# from meson.build
+%define glib_ver 2.56.0
 %define gtk_ver 3.16.0
 %define shell_ver %ver_major
 %define libcanberra_ver 0.4
 %define accountsservice_ver 0.6.35
 %define check_ver 0.9.4
+%define session_ver 40
 
 Provides: %name-user-switch-applet = %version-%release
 Obsoletes: %name-user-switch-applet
@@ -76,12 +76,13 @@ Requires: %name-data = %version-%release
 Requires: gnome-shell >= %shell_ver
 Requires: accountsservice >= %accountsservice_ver
 Requires: coreutils xinitrc iso-codes lsb-release shadow-utils
-Requires: gnome-session >= %ver_major
+Requires: gnome-session >= %session_ver
 Requires: gnome-session-wayland
 Requires: /bin/dbus-run-session
 
-BuildRequires(pre): meson rpm-build-gnome rpm-build-gir rpm-macros-pam0
-BuildRequires: gcc-c++ desktop-file-utils gnome-common yelp-tools
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires(pre): rpm-build-gir rpm-macros-pam0 rpm-build-systemd
+BuildRequires: meson gcc-c++ desktop-file-utils gnome-common yelp-tools
 BuildRequires: iso-codes-devel
 BuildRequires: glib2-devel >= %glib_ver libgio-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver
@@ -295,6 +296,12 @@ dbus-run-session %meson_test
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Tue Sep 21 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
+* Mon Sep 06 2021 Yuri N. Sedunov <aris@altlinux.org> 41-alt0.9.rc
+- 41
+
 * Fri Jul 23 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
 - 40.1
 

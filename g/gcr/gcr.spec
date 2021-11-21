@@ -1,7 +1,8 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.40
+%define ver_major 3.41
+%def_enable ssh_agent
 %def_enable introspection
 %def_enable gtk_doc
 %def_enable check
@@ -23,18 +24,20 @@ Source: %name-%version.tar
 
 Requires: %name-libs = %version-%release
 Requires: libtasn1-utils
-Conflicts: gnome-keyring < 3.3.0
+%{?_enable_ssh_agent:Requires: %_bindir/ssh-agent %_bindir/ssh-add}
 
 %define glib_ver 2.44.0
 %define gtk_ver 3.22
 %define p11kit_ver 0.19.0
 %define vala_ver 0.18.1
 %define gcrypt_ver 1.4.5
+%define secret_ver 0.20
 
-BuildRequires(pre): meson rpm-build-gir
-BuildRequires: gtk-doc python3 glib2-devel >= %glib_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-systemd
+BuildRequires: meson gtk-doc python3 glib2-devel >= %glib_ver
 BuildRequires: libp11-kit-devel >= %p11kit_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libgcrypt-devel >= %gcrypt_ver libtasn1-devel libtasn1-utils libtasn1-utils gnupg2-gpg
+%{?_enable_ssh_agent:BuildRequires: libsecret-devel >= %secret_ver %_bindir/ssh-agent %_bindir/ssh-add}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 BuildRequires: libvala-devel >= %vala_ver vala-tools
 %{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools-gui %_bindir/ssh-keygen}
@@ -50,8 +53,6 @@ GCK is a library for accessing PKCS#11 modules like smart cards, in a
 %package libs
 Summary: Development files for GCR
 Group: System/Libraries
-Obsoletes: gnome-keyring-libs < 3.3.0
-Provides: gnome-keyring-libs = %version-%release
 
 %description libs
 GCR is a library for displaying certificates, and crypto UI, accessing
@@ -64,8 +65,6 @@ GCK is a library for accessing PKCS#11 modules like smart cards, in a
 %package libs-devel
 Summary: Development files for GCR
 Group: Development/C
-Obsoletes: gnome-keyring-libs-devel < 3.3.0
-Provides: gnome-keyring-libs-devel = %version-%release
 Requires: %name-libs = %version-%release
 
 %description libs-devel
@@ -113,8 +112,9 @@ This package contains development documentation for GCR libraries.
 
 %build
 %meson \
-%{?_disable_introspection:-Dintrospection=false} \
-%{?_disable_gtk_doc:-Dgtk_doc=false}
+    %{?_disable_ssh_agent:-Dssh_agent=false} \
+    %{?_disable_introspection:-Dintrospection=false} \
+    %{?_disable_gtk_doc:-Dgtk_doc=false}
 %nil
 %meson_build
 
@@ -130,6 +130,10 @@ xvfb-run %meson_test
 %_bindir/gcr-viewer
 %_libexecdir/gcr-prompter
 %_libexecdir/gcr-ssh-askpass
+%{?_enable_ssh_agent:
+%_libexecdir/gcr-ssh-agent
+%_userunitdir/gcr-ssh-agent.service
+%_userunitdir/gcr-ssh-agent.socket}
 %_datadir/applications/gcr-viewer.desktop
 %_datadir/applications/gcr-prompter.desktop
 %dir %_datadir/GConf
@@ -187,6 +191,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Thu Sep 30 2021 Yuri N. Sedunov <aris@altlinux.org> 3.41.0-alt1
+- 3.41.0
+
 * Sat Mar 27 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
 - 3.40.0
 

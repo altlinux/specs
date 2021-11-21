@@ -3,7 +3,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 %define api_ver 2.0
 
@@ -15,7 +15,7 @@
 %def_enable doc
 
 Name: gnome-control-center
-Version: %ver_major.6
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -30,10 +30,10 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %endif
 
 %define gtk_ver 3.22.0
-%define glib_ver 2.56.0
+%define glib_ver 2.64.0
 %define desktop_ver 3.33.4
 %define fontconfig_ver 1.0.0
-%define gsds_ver 3.37.1
+%define gsds_ver 40
 # nm_client_get_permissions_state()
 %define nm_ver 1.24
 %define goa_ver 3.25.3
@@ -61,7 +61,7 @@ Requires: %name-data = %EVR
 Requires: gnome-filesystem
 Requires: gnome-settings-daemon >= %sett_daemon_ver
 # for graphical passwd changing apps
-Requires: accountsservice
+Requires: accountsservice >= %acc_ver
 #Requires: userpasswd
 Requires: gnome-online-accounts >= %goa_ver
 %{?_with_cheese:Requires: cheese >= %cheese_ver}
@@ -87,7 +87,7 @@ BuildRequires: libpwquality-devel >= %pwq_ver  libkrb5-devel libsmbclient-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 # for test-endianess
 BuildRequires: glibc-i18ndata
-BuildRequires: libnm-devel >= %nm_ver libmm-glib-devel libnma-devel
+BuildRequires: libnm-devel >= %nm_ver libmm-glib-devel libnma-devel gcr-libs-devel
 BuildRequires: libgnome-online-accounts-devel >= %goa_ver
 BuildRequires: libaccountsservice-devel >= %acc_ver
 BuildRequires: libwacom-devel >= %wacom_ver
@@ -163,6 +163,7 @@ you'll want to install this package.
 %_desktopdir/*.desktop
 %_datadir/pixmaps/faces/
 %_iconsdir/hicolor/*/*/*
+%_iconsdir/gnome-logo-text*.svg
 %_datadir/sounds/gnome/default/alerts/*.ogg
 %_datadir/glib-2.0/schemas/org.gnome.ControlCenter.gschema.xml
 %_datadir/polkit-1/actions/org.gnome.controlcenter.datetime.policy
@@ -186,6 +187,9 @@ you'll want to install this package.
 
 
 %changelog
+* Fri Oct 29 2021 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
+- 41.1
+
 * Fri Oct 29 2021 Yuri N. Sedunov <aris@altlinux.org> 40.6-alt1
 - 40.6
 

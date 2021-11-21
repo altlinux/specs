@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.40
+%define ver_major 3.42
 %define api_ver 1.0
 %def_with introspection
 %def_with vapi
@@ -115,6 +115,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat Sep 04 2021 Yuri N. Sedunov <aris@altlinux.org> 3.42.0-alt1
+- 3.42.0
+
 * Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
 - 3.40.0
 

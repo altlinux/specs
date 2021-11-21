@@ -1,13 +1,14 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 
 %def_enable vnc
 %def_enable rdp
+%def_disable nvenc
 
 Name: gnome-remote-desktop
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: GNOME Remote Desktop
@@ -30,6 +31,7 @@ Source: %name-%version.tar
 %define gst_ver 1.10
 %define fuse_ver 3.9.1
 %define xkbc_ver 1.0.0
+%define nvenc_ver 11
 
 Requires: pipewire >= %pw_ver
 Requires: fuse3 >= %fuse_ver
@@ -39,6 +41,7 @@ BuildRequires: meson libgio-devel >= %glib_ver
 BuildRequires: pkgconfig(libpipewire-%pw_api_ver) >= %pw_ver
 %{?_enable_vnc:BuildRequires: libvncserver-devel >= %vnc_ver}
 %{?_enable_rdp:BuildRequires: libfreerdp-devel >= %freerdp_ver}
+%{?_enable_nvenc:BuildRequires: pkgconfig(ffnvcodec) >= %nvenc_ver}
 BuildRequires: libfuse3-devel >= %fuse_ver
 BuildRequires: libxkbcommon-devel >= %xkbc_ver
 BuildRequires: libsecret-devel libnotify-devel libcairo-devel
@@ -52,14 +55,16 @@ Remote desktop daemon for GNOME using pipewire.
 %build
 %meson \
     %{?_disable_rdp:-Drdp=false} \
+    %{?_disable_nvenc:-Dnvenc=false} \
     -Dsystemd_user_unit_dir=%_userunitdir
 %nil
 %meson_build
 
 %install
 %meson_install
+%find_lang %name
 
-%files
+%files -f %name.lang
 %_libexecdir/%name-daemon
 %_userunitdir/%name.service
 %_datadir/glib-2.0/schemas/org.gnome.desktop.remote-desktop.gschema.xml
@@ -67,6 +72,12 @@ Remote desktop daemon for GNOME using pipewire.
 %doc README
 
 %changelog
+* Sat Oct 30 2021 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
+- 41.1
+
+* Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Wed Sep 15 2021 Yuri N. Sedunov <aris@altlinux.org> 40.2-alt1
 - 40.2
 

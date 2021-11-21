@@ -2,14 +2,15 @@
 
 %define rdn_name org.gnome.Gnote
 %define _rdn_name org.gnome.gnote
-%define ver_major 40
+%define ver_major 41
+%define api_ver %ver_major
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %def_without x11_support
 %def_disable check
 
 Name: gnote
-Version: %ver_major.3
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Note-taking application
@@ -29,8 +30,9 @@ Source: %name-%version.tar
 %define gspell_ver 1.6
 %define libsecret_ver 0.8
 
-BuildRequires: gcc-c++
-BuildRequires: yelp-tools intltool
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++
+BuildRequires: yelp-tools desktop-file-utils
 BuildRequires: pkgconfig(glibmm-2.4)  >= %glibmm_ver
 BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver
 BuildRequires: pkgconfig(x11)
@@ -40,7 +42,6 @@ BuildRequires: pkgconfig(libxml-2.0) pkgconfig(libxslt)
 BuildRequires: pkgconfig(gspell-1) >= %gspell_ver
 BuildRequires: pkgconfig(libsecret-1) >= %libsecret_ver
 BuildRequires: pkgconfig(uuid)
-BuildRequires: desktop-file-utils
 %{?_enable_check:BuildRequires: libunittest-cpp-devel}
 
 %description
@@ -53,38 +54,39 @@ and consumes fewer resources.
 %setup -n %name-%version%beta
 
 %build
-%configure \
-	%{?_with_x11_support:--with-x11-support} \
-	--disable-static
-
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name --with-gnome
 
 %check
-%make check
+%__meson_test
 
 %files -f %name.lang
 %_bindir/%name
-%_libdir/libgnote-*.so.*
+%_libdir/lib%name-%api_ver.so.*
+%_libdir/%name/
 %_man1dir/%name.*
 %_desktopdir/%rdn_name.desktop
 %_datadir/%name/
 %_iconsdir/hicolor/*/apps/%rdn_name.*
-%_libdir/%name/
-%exclude %_libdir/%name/addins/*/*.la
 %_datadir/dbus-1/services/%rdn_name.service
 %_datadir/glib-2.0/schemas/%_rdn_name.gschema.xml
 %_datadir/metainfo/%rdn_name.appdata.xml
 %_datadir/gnome-shell/search-providers/%rdn_name.search-provider.ini
 %doc README TODO NEWS AUTHORS
 
-%exclude %_libdir/lib%name.so
-%exclude %_libdir/%name/*/*/*.la
+%exclude %_libdir/lib%name-%api_ver.so
 
 %changelog
+* Sun Oct 31 2021 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
+- 41.1
+
+* Mon Oct 04 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0 (ported to Meson build system)
+
 * Mon Oct 04 2021 Yuri N. Sedunov <aris@altlinux.org> 40.3-alt1
 - 40.3
 

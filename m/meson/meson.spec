@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: meson
-Version: %ver_major.1
+Version: %ver_major.4
 Release: alt1
 
 Summary: High productivity build system
@@ -135,6 +135,14 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 %endif
 
 %changelog
+* Wed Nov 03 2021 Yuri N. Sedunov <aris@altlinux.org> 0.59.4-alt1
+- 0.59.4
+- meson.macros: replaced "--buildtype=plane" by
+  "-Dbuildtype=plane -Doptimisation=%%_optlevel %%{?_enable_debug:-Ddebug=true}"
+
+* Sun Oct 24 2021 Yuri N. Sedunov <aris@altlinux.org> 0.59.3-alt1
+- 0.59.3
+
 * Wed Aug 18 2021 Yuri N. Sedunov <aris@altlinux.org> 0.59.1-alt1
 - 0.59.1
 - new rpm-macros-meson subpackage

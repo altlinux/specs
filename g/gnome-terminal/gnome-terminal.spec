@@ -1,11 +1,11 @@
-%define ver_major 3.40
+%define ver_major 3.42
 %define xdg_name org.gnome.Terminal
 %define _libexecdir %_prefix/libexec
 
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.3
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME Terminal
@@ -17,7 +17,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %define glib_ver 2.40
 %define gtk_ver 3.12.0
-%define vte_ver 0.64.2
+%define vte_ver 0.66.1
 
 Provides: xvt
 
@@ -25,19 +25,16 @@ Requires(pre): libvte3 >= %vte_ver
 Requires: common-licenses
 Requires: dconf gnome-icon-theme
 
-BuildRequires(pre): rpm-macros-alternatives
-BuildRequires: rpm-build-gnome gnome-common intltool
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-macros-alternatives
+BuildRequires: meson gcc-c++
 BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel docbook-style-xsl xsltproc
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libvte3-devel >= %vte_ver
-BuildRequires: vala-tools
 BuildRequires: gsettings-desktop-schemas-devel libSM-devel
 BuildRequires: libdconf-devel libuuid-devel
 BuildRequires: libpcre2-devel
 %{?_with_nautilus:BuildRequires: libnautilus-devel}
-# for migration
-BuildRequires: libGConf-devel
 # %%_datadir/dbus-1/interfaces/org.gnome.ShellSearchProvider2.xml
 Buildrequires: gnome-shell-data
 
@@ -61,17 +58,12 @@ Nautilus file manager.
 %__ln_s -f %_licensedir/GPL-3 COPYING
 
 %build
-%add_optflags %(getconf LFS_CFLAGS)
-%autoreconf
-%configure \
-	--disable-static \
-	--disable-schemas-compile \
-	--disable-dependency-tracking \
-	%{?_with_nautilus:--with-nautilus-extension}
-%make_build
+%meson \
+    %{?_without_nautilus:-Dnautilus_extension=false}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 # alternatives (xterm -- 40)
 mkdir -p %buildroot%_altdir
@@ -92,20 +84,25 @@ EOF
 %_libdir/%name/gschemas.compiled
 %_datadir/gnome-shell/search-providers/%name-search-provider.ini
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.*
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %_man1dir/%name.1*
 %_altdir/%name
 %doc --no-dereference COPYING
-%doc AUTHORS NEWS
+%doc AUTHORS
 
 %if_with nautilus
 %files nautilus
 %nautilus_extdir/libterminal-nautilus.so
 %_datadir/metainfo/%xdg_name.Nautilus.metainfo.xml
-%exclude %nautilus_extdir/libterminal-nautilus.la
 %endif
 
 %changelog
+* Sat Oct 30 2021 Yuri N. Sedunov <aris@altlinux.org> 3.42.1-alt1
+- 3.42.1
+
+* Wed Sep 22 2021 Yuri N. Sedunov <aris@altlinux.org> 3.42.0-alt1
+- 3.42.0 (ported to Meson build system)
+
 * Thu Jul 08 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.3-alt1
 - 3.40.3
 

@@ -1,6 +1,4 @@
-%define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
-
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 %define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
@@ -12,13 +10,13 @@
 %def_enable malcontent
 
 Name: gnome-initial-setup
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
-Summary: Bootstrapping your OS
+Summary: GNOME Initial Setup
 Group: Graphical desktop/GNOME
 License: GPL-2.0
-Url: https://live.gnome.org/GnomeOS/Design/Whiteboards/InitialSetup
+Url: https://gitlab.gnome.org/GNOME/gnome-initial-setup
 
 Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version%beta.tar.xz
 
@@ -41,8 +39,8 @@ Requires: gnome-getting-started-docs
 %{?_enable malcontent:Requires: malcontent}
 #Requires: gnome-tour
 
-BuildRequires(pre): meson pkgconfig(systemd)
-BuildRequires: libgio-devel >= %glib_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-systemd
+BuildRequires: meson libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: libnm-devel >= %nm_ver libnma-devel >= %nma_ver
@@ -105,6 +103,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README* NEWS
 
 %changelog
+* Fri Sep 17 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Sat Aug 14 2021 Yuri N. Sedunov <aris@altlinux.org> 40.4-alt1
 - 40.4
 

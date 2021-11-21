@@ -1,39 +1,44 @@
-%define ver_major 40
+%define ver_major 41
+%define beta %nil
+%define api_ver_major 3
 %define api_ver 3.0
 %define xdg_name org.gnome.Devhelp
 
+%def_enable gtk_doc
 %def_enable plugin_gedit
 
 Name: devhelp
-Version: %ver_major.1
-Release: alt1
+Version: %ver_major.2
+Release: alt1%beta
 
 Summary: Developer's help program
 Group: Development/Other
 License: GPL-3.0
 Url: https://wiki.gnome.org/Apps/Devhelp
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 
 %add_python3_path %_libdir/gedit/plugins
 
 %define gtk_ver 3.22.0
+%define webkit_api_ver 4.0
 %define webkit_ver 2.26
 %define glib_ver 2.64
 %define amtk_ver 5.0
 
 Requires: lib%name = %version-%release
 
-BuildRequires(pre): meson rpm-build-gnome rpm-build-python3
-BuildRequires: gtk-doc yelp-tools libappstream-glib-devel
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-python3
+BuildRequires: meson gtk-doc yelp-tools libappstream-glib-devel
 BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver
-BuildRequires: pkgconfig(webkit2gtk-4.0) >= %webkit_ver
+BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(amtk-5) >= %amtk_ver
 BuildRequires: zlib-devel
 # since 3.23.x
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libwebkit2gtk-gir-devel
 BuildRequires: gsettings-desktop-schemas-devel
+%{?_enable_gtk_doc:BuildRequires: gi-docgen}
 
 %description
 A developers help program.
@@ -95,11 +100,12 @@ This plugin for GEdit enables using DevHelp from inside the editor.
 %define  gedit_pluginsdir %_libdir/gedit/plugins
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson -Dgtk_doc=true \
-%{?_enable_plugin_gedit:-Dplugin_gedit=true}
+    %{?_enable_plugin_gedit:-Dplugin_gedit=true} \
+    %{?_enable_gtk_doc:-Dgtk_doc=true}
 %nil
 %meson_build
 
@@ -111,17 +117,20 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 
 %find_lang --with-gnome %name
 
+%check
+%__meson_test
+
 %files -f %name.lang
 %_bindir/*
 %dir %_devhelpdir
 %_devhelpdir/*
 %_desktopdir/%xdg_name.desktop
-%_iconsdir/hicolor/*/*/%{xdg_name}*.svg
+%_iconsdir/hicolor/*/*/*.svg
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/org.gnome.devhelp.gschema.xml
 %_man1dir/%name.1.*
 %_datadir/metainfo/%xdg_name.appdata.xml
-%doc AUTHORS NEWS README*
+%doc NEWS README*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -138,14 +147,20 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %files -n lib%name-gir-devel
 %_girdir/Devhelp-%api_ver.gir
 
+%if_enabled gtk_doc
 %files -n lib%name-devel-doc
-%_datadir/gtk-doc/html/%name-*/
+#%_datadir/gtk-doc/html/%name-*/
+%_datadir/doc/%name-%api_ver_major
+%endif
 
 %{?_enable_plugin_gedit:
 %files -n gedit-plugin-%name
 %gedit_pluginsdir/*}
 
 %changelog
+* Fri Oct 01 2021 Yuri N. Sedunov <aris@altlinux.org> 41.2-alt1
+- 41.2
+
 * Thu Aug 26 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
 - 40.1
 

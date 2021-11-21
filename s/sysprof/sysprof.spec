@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%define ver_major 3.40
+%define ver_major 3.42
 %define api_ver 4
 %define xdg_name org.gnome.Sysprof%api_ver
 %define _libexecdir %_prefix/libexec
@@ -15,7 +15,7 @@
 
 Name: sysprof
 Version: %ver_major.1
-Release: alt2.1
+Release: alt1
 
 Summary: Sysprof kernel based performance profiler for Linux
 Group: Development/Tools
@@ -108,6 +108,12 @@ developing applications that use GtkGHex library.
 %_pkgconfigdir/%name-capture-%api_ver.pc
 
 %changelog
+* Thu Nov 04 2021 Yuri N. Sedunov <aris@altlinux.org> 3.42.1-alt1
+- 3.42.1
+
+* Wed Sep 22 2021 Yuri N. Sedunov <aris@altlinux.org> 3.42.0-alt1
+- 3.42.0-1-gb113c89
+
 * Tue Sep 14 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.1-alt2.1
 - E2K: disabled libunwind support
 

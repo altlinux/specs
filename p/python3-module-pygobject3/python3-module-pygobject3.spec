@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name pygobject
-%define ver_major 3.40
+%define ver_major 3.42
 %define api_ver 3.0
 %define gtk_api_ver 3.0
 %def_enable pycairo
@@ -10,11 +10,11 @@
 %def_disable check
 
 Name: python3-module-%{_name}3
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Python3 bindings for GObject
-Group: Development/Python
+Group: Development/Python3
 License: LGPL-2.1
 Url: http://www.pygtk.org/
 
@@ -35,8 +35,8 @@ Patch: pygobject-3.38.0-alt-meson-0.55_build.patch
 %define gi_ver 1.56.0
 %define pycairo_ver 1.16
 
-BuildRequires(pre): meson rpm-build-gir rpm-build-python3
-BuildRequires: gtk-doc
+BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
+BuildRequires: meson gtk-doc
 BuildRequires: glib2-devel >= %glib_ver libgio-devel libffi-devel
 BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: python3-devel python3-module-pytest 
@@ -123,6 +123,9 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 3.42.0-alt1
+- 3.42.0
+
 * Fri Apr 09 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.1-alt1
 - 3.40.1
 

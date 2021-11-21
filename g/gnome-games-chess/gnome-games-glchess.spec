@@ -3,7 +3,7 @@
 %define _name chess
 %define xdg_name org.gnome.Chess
 %define __name gnome-%_name
-%define ver_major 40
+%define ver_major 41
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -60,6 +60,12 @@ A chess game which supports several chess engines, with 2D and optionally
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Fri Oct 29 2021 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
+- 41.1
+
+* Thu Sep 16 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Thu Apr 15 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
 - 40.1
 

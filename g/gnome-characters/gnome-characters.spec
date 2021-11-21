@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Characters
-%define ver_major 40
+%define ver_major 41
 %define _libexecdir %_prefix/libexec
 %def_without included_libunistring
 
@@ -17,7 +17,7 @@ Url: https://wiki.gnome.org/Design/Apps/CharacterMap
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
-#VCS: https://gitlab.gnome.org/GNOME/gnome-characters
+Vcs: https://gitlab.gnome.org/GNOME/gnome-characters.git
 Source: %name-%version.tar
 %endif
 
@@ -80,6 +80,9 @@ characters.
 
 
 %changelog
+* Tue Sep 21 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 

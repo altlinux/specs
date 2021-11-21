@@ -1,7 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.38
+%define ver_major 41
+%define beta %nil
 %define api_ver 3.0
 %define xdg_name org.gnome.Cheese
 %define gst_api_ver 1.0
@@ -13,8 +14,8 @@
 %def_disable check
 
 Name: cheese
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: Cheese is a Photobooth-inspired application for taking pictures and videos
 License: GPL-2.0
@@ -22,18 +23,17 @@ Group: Video
 Url: https://wiki.gnome.org/Apps/Cheese
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/cheese/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/cheese/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
 
-# from configure.ac
 %define glib_ver 2.40.0
 %define gtk_ver 3.14.0
 %define desktop_ver 3.0.0
 %define gst_ver 1.4.0
 %define vala_ver 0.18.0
-%define clutter_ver 1.10.0
+%define clutter_ver 1.13.2
 %define clutter_gst_ver 3.0.16
 
 Requires: lib%name = %version-%release
@@ -46,19 +46,19 @@ Requires: gst-plugins-good%gst_api_ver
 Requires: gst-plugins-ugly%gst_api_ver
 Requires: gst-libav
 
-BuildRequires(pre): meson rpm-build-gir
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libgnome-desktop3-devel >= %desktop_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson vala-tools >= %vala_ver
+BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libgnome-desktop3-devel >= %desktop_ver
 BuildRequires: libdbus-devel
-BuildPreReq: gst-plugins%gst_api_ver-devel >= %gst_ver
-BuildPreReq: gst-plugins-bad%gst_api_ver-devel >= %gst_ver
-BuildPreReq: gstreamer%gst_api_ver-utils >= %gst_ver
-BuildPreReq: gst-plugins-good%gst_api_ver >= %gst_ver
-BuildPreReq: libclutter-devel >= %clutter_ver
-BuildPreReq: vala-tools >= %vala_ver
-BuildPreReq: libclutter-gst3.0-devel >= %clutter_gst_ver
-BuildRequires: yelp-tools gtk-doc desktop-file-utils libappstream-glib-devel
+BuildRequires: gst-plugins%gst_api_ver-devel >= %gst_ver
+BuildRequires: gst-plugins-bad%gst_api_ver-devel >= %gst_ver
+BuildRequires: gstreamer%gst_api_ver-utils >= %gst_ver
+BuildRequires: gst-plugins-good%gst_api_ver >= %gst_ver
+BuildRequires: libclutter-devel >= %clutter_ver
+BuildRequires: libclutter-gst3.0-devel >= %clutter_gst_ver
 BuildRequires: librsvg-devel libcanberra-gtk3-devel libcanberra-vala
 BuildRequires: libgudev-devel libclutter-gtk3-devel
 BuildRequires: libX11-devel libXtst-devel libXext-devel
@@ -66,6 +66,7 @@ BuildRequires: gnome-video-effects-devel gsettings-desktop-schemas-devel
 #BuildRequires: nautilus-sendto-devel
 BuildRequires: libappstream-glib-devel
 %{?_enable_introspection:BuildRequires: libgdk-pixbuf-gir-devel libcogl-gir-devel libclutter-gir-devel libgstreamer%gst_api_ver-gir-devel}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools-gui}
 
 %description
@@ -121,7 +122,7 @@ GObject introspection devel data for the Cheese library.
 
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson \
@@ -170,6 +171,12 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Mon Nov 15 2021 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
+- 41.1
+
+* Mon Sep 20 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Tue Apr 13 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt2
 - updated to 3.38.0-32-gdf2c5f2c
 

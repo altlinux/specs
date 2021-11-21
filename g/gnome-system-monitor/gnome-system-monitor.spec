@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 %def_enable systemd
 %def_disable wnck
@@ -8,7 +8,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-system-monitor
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Simple process monitor
@@ -29,8 +29,8 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 
 Requires: polkit
 
-BuildRequires(pre): meson rpm-build-gnome
-BuildRequires: gcc-c++ libappstream-glib-devel
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires: meson gcc-c++ libappstream-glib-devel
 BuildRequires: yelp-tools desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libglibmm-devel >= %glibmm_ver
@@ -77,6 +77,9 @@ Gnome-system-monitor is a simple process and system monitor.
 
 
 %changelog
+* Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Fri Apr 30 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
 - 40.1
 

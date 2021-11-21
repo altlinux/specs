@@ -1,12 +1,13 @@
 %def_disable snapshot
 
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 %define xdg_name org.gnome.Music
 %define gst_api_ver 1.0
+%define soup_api_ver 2.4
 
 Name: gnome-music
-Version: %ver_major.1.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Music playing application for GNOME3
@@ -20,23 +21,22 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version.tar
 %endif
 
-# use python3
-AutoReqProv: nopython
-%define __python %nil
 %add_typelib_req_skiplist typelib(Gd) typelib(Gfm)
 
 %define tracker_ver 3.0
-%define gtk_ver 3.24.7
+%define gtk_ver 3.24.14
 %define grilo_ver 0.3.13
 %define python_ver 3.3
 %define mediaart_ver 1.9
 %define pygobject_ver 3.36.1
 %define pycairo_ver 1.14.0
 %define goa_ver 3.35.90
+%define handy_ver 1.2
 
 Requires: tracker-miners3 >= %tracker_ver typelib(Tracker) = 3.0
 Requires: grilo-tools >= %grilo_ver grilo-plugins
 Requires: gst-plugins-base%gst_api_ver
+Requires: typelib(Gtk) = 3.0 typelib(Soup) = %soup_api_ver
 
 # gir-python.req doesn't recognize multiline expressions (see gnomemusic/albumartcache.py)
 Requires: typelib(MediaArt) = 2.0 typelib(GstTag)
@@ -46,8 +46,8 @@ Requires: typelib(Dazzle)
 
 %add_python3_req_skip gi.repository.Dazzle gi.repository.Gd
 
-BuildRequires(pre): meson rpm-build-gir rpm-build-python3
-BuildRequires: %_bindir/git
+BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
+BuildRequires: meson %_bindir/git
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgtk+3-devel >= %gtk_ver libdazzle-devel libsoup-devel
 BuildRequires: libgrilo-devel >= %grilo_ver grilo-plugins-devel
@@ -57,6 +57,7 @@ BuildRequires: python3-devel >= %python_ver
 BuildRequires: pkgconfig(tracker-sparql-3.0) >= %tracker_ver
 BuildRequires: python3-module-pygobject3-devel >= %pygobject_ver python3-module-pycairo-devel >= %pycairo_ver
 BuildRequires: libgnome-online-accounts-devel >= %goa_ver
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 
 %description
 Music playing application for GNOME3.
@@ -85,6 +86,9 @@ Music playing application for GNOME3.
 %doc README* NEWS*
 
 %changelog
+* Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Wed Jun 09 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1.1-alt1
 - 40.1.1
 

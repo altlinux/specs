@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 %define xdg_name org.gnome.Evince
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 40
+%define ver_major 41
 %define api_ver_major 3
 %define api_ver %api_ver_major.0
 %define so_ver 4
@@ -12,15 +12,14 @@
 %def_enable t1lib
 %def_enable dbus
 %def_enable introspection
-%def_enable browser_plugin
 %def_enable multimedia
 %def_enable nautilus
 %def_enable gtk_doc
 %def_disable debug
 
 Name: evince
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: A document viewer
 Group: Office
@@ -40,7 +39,7 @@ Requires: gvfs-backend-recent-files
 Requires: dconf
 %{?_enable_multimedia:Requires: gst-plugins-base1.0 gst-libav}
 
-%define poppler_ver 0.33
+%define poppler_ver 0.86
 %define gtk_ver 3.22
 %define handy_ver 1.0.0
 %define spectre_ver 0.2.0
@@ -58,7 +57,6 @@ BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 %{?_enable_xps:BuildRequires: libgxps-devel}
 %{?_enable_t1lib:BuildRequires: t1lib-devel}
 %{?_enable_dbus:BuildRequires: libdbus-devel}
-%{?_enable_browser_plugin:BuildRequires:browser-plugins-npapi-devel}
 %{?_enable_multimedia:BuildRequires: gst-plugins1.0-devel}
 %{?_enable_nautilus:BuildRequires: libnautilus-devel}
 %{?_enable_introspection:
@@ -131,15 +129,6 @@ Conflicts: lib%name-devel < %version
 This package contains documentation necessary to develop applications
 using Evince library.
 
-%package -n mozilla-plugin-%name
-Summary: Mozilla plugin for the Evince document viewer
-Group: Networking/WWW
-Requires: %name = %EVR
-Requires: browser-plugins-npapi
-
-%description -n mozilla-plugin-%name
-A Mozilla plug-in that enables to view documents from within webpages
-via the Evince.
 
 %prep
 %setup
@@ -157,7 +146,6 @@ via the Evince.
     %{?_disable_xps:-Dxps=disabled} \
     %{?_enable_ps:-Dps=enabled} \
     %{?_disable_introspection:-Dintrospection=false} \
-    %{?_enable_browser_plugin:-Dbrowser_plugin=true \
     -Dbrowser_plugin_dir='%browser_plugins_path'} \
     %{?_enable_multimedia:-Dmultimedia=enabled} \
     %{?_disable_nautilus:-Dnautilus=false}
@@ -236,13 +224,14 @@ via the Evince.
 %_datadir/gir-1.0/EvinceView-%api_ver.gir
 %endif
 
-%if_enabled browser_plugin
-%files -n mozilla-plugin-%name
-%browser_plugins_path/libevbrowserplugin.so
-%endif
-
 
 %changelog
+* Sun Nov 21 2021 Yuri N. Sedunov <aris@altlinux.org> 41.3-alt1
+- 41.3
+
+* Sat Oct 09 2021 Yuri N. Sedunov <aris@altlinux.org> 41.2-alt1
+- 41.2
+
 * Sat Oct 09 2021 Yuri N. Sedunov <aris@altlinux.org> 40.4-alt2
 - 40.4-7-g5fc3dc28 (updated translations)
 

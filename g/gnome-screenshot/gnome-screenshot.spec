@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 %define xdg_name org.gnome.Screenshot
 
@@ -49,6 +49,9 @@ GNOME Screenshot Tool makes screenshots from desktop.
 %doc NEWS README*
 
 %changelog
+* Sun Nov 14 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 

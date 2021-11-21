@@ -1,4 +1,4 @@
-%define ver_major 1.10
+%define ver_major 1.12
 %define api_ver 1.0
 %define _name wpebackend-fdo
 
@@ -74,6 +74,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Oct 20 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Tue Jun 08 2021 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
 - 1.10.0 (ported to Meson build system)
 - new -devel-doc subpackage

@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 %define plugins_ver 16
 %define _libexecdir %_prefix/libexec
@@ -39,7 +39,7 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.4
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Software manager for GNOME
@@ -72,8 +72,8 @@ Patch: %name-3.32.3-alt-unsupported_mime_types.patch
 %{?_enable_packagekit:Requires: appstream-data}
 %{?_enable_malcontent:Requires: malcontent}
 
-BuildRequires(pre): meson rpm-build-xdg rpm-macros-valgrind
-BuildRequires: libgio-devel >= %glib_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-xdg rpm-macros-valgrind
+BuildRequires: meson libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver pkgconfig(libhandy-1) >= %handy_ver
 BuildRequires: pkgconfig(appstream) >= %appstream_ver
 BuildRequires: libjson-glib-devel >= %json_glib_ver
@@ -156,7 +156,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libexecdir/%name-restarter
 %{?_enable_external_appstream:%_libexecdir/%name-install-appstream}
 %dir %_libdir/%name
-%_libdir/%name/libgnomesoftware.so
+%_libdir/%name/libgnomesoftware.so*
 %_libdir/%name/plugins-%plugins_ver/
 %_desktopdir/%name-local-file.desktop
 %_desktopdir/%xdg_name.desktop
@@ -169,9 +169,8 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/glib-2.0/schemas/org.gnome.software.gschema.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
-#%_datadir/metainfo/%xdg_name.Plugin.Epiphany.metainfo.xml
 %{?_enable_flatpak:%_datadir/metainfo/%xdg_name.Plugin.Flatpak.metainfo.xml}
-%{?_enable_odrs:%_datadir/metainfo/%xdg_name.Plugin.Odrs.metainfo.xml}
+#%{?_enable_odrs:%_datadir/metainfo/%xdg_name.Plugin.Odrs.metainfo.xml}
 %{?_enable_fwupd:%_datadir/metainfo/%xdg_name.Plugin.Fwupd.metainfo.xml}
 %_man1dir/%name.1.*
 %doc AUTHORS README* NEWS
@@ -184,6 +183,15 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Thu Oct 28 2021 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
+- 41.1
+
+* Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
+* Tue Sep 07 2021 Yuri N. Sedunov <aris@altlinux.org> 41-alt1.rc
+- 41
+
 * Fri Aug 13 2021 Yuri N. Sedunov <aris@altlinux.org> 40.4-alt1
 - 40.4
 

@@ -1,18 +1,20 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 %define xdg_name org.gnome.Shell
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 %define gst_api_ver 1.0
+# Use Soup 2.4 instead of Soup 3. Must be in sync with libgweather (and WebKit?)
+# enabled by default in 41.rc
+%def_enable soup2
 %def_disable gtk_doc
 %def_disable check
 # removed in 3.31.x
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.6
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -28,10 +30,6 @@ Source: %name-%version.tar
 Patch3: %name-3.8.4-alt-invalid_user_shell.patch
 
 Obsoletes: gnome-shell-extension-per-window-input-source
-
-# use python3
-AutoReqProv: nopython
-%define __python %nil
 
 %define session_ver 3.26
 %define clutter_ver 1.21.5
@@ -55,7 +53,7 @@ AutoReqProv: nopython
 %define json_glib_ver 0.13.2
 %define nm_ver 1.10.4
 %define ibus_ver 1.5.2
-%define gsds_ver 40
+%define gsds_ver 41
 %define libsecret_ver 0.18
 %define croco_ver 0.6.8
 
@@ -79,6 +77,7 @@ Requires: unzip
 # synce 3.38 
 Requires: malcontent
 Requires: pipewire
+Requires: xdg-desktop-portal-gnome
 
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 Requires: typelib(AccountsService)
@@ -112,15 +111,16 @@ Requires: typelib(PolkitAgent)
 Requires: typelib(Rsvg)
 Requires: typelib(Shell)
 Requires: typelib(Shew)
-Requires: typelib(Soup)
+Requires: typelib(Soup) = %{?_enable_soup2:2.4}%{?_disable_soup2:3.0}
 Requires: typelib(St)
 Requires: typelib(TelepathyGLib)
 Requires: typelib(TelepathyLogger)
 Requires: typelib(UPowerGlib)
 Requires: typelib(WebKit2)
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3 rpm-build-xdg
-BuildRequires: meson gcc-c++ gtk-doc xsltproc asciidoc-a2x sassc
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires(pre): rpm-build-python3 rpm-build-xdg rpm-build-systemd
+BuildRequires: meson gcc-c++ xsltproc asciidoc-a2x sassc
 BuildRequires: %_bindir/appstream-util desktop-file-utils
 BuildRequires: bash-completion
 BuildRequires: python3-devel
@@ -162,6 +162,7 @@ BuildRequires: pkgconfig(systemd)
 BuildRequires: libibus-devel >= %ibus_ver
 BuildRequires: gcr-libs-gir-devel libsecret-devel >= %libsecret_ver libpolkit-gir-devel
 BuildRequires: libgnome-autoar-devel
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_browser_plugin:BuildRequires: browser-plugins-npapi-devel}
 
 %description
@@ -255,11 +256,11 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %_datadir/dbus-1/services/org.gnome.Extensions.service
 %_datadir/dbus-1/services/%xdg_name.Extensions.service
 %_datadir/dbus-1/services/%xdg_name.Notifications.service
-%_datadir/GConf/gsettings/gnome-shell-overrides.convert
 %_datadir/dbus-1/services/%xdg_name.PortalHelper.service
 %_datadir/dbus-1/services/%xdg_name.Screencast.service
 %_datadir/dbus-1/services/org.gnome.ScreenSaver.service
-%_datadir/gnome-control-center/keybindings/50-gnome-shell-system.xml
+%_datadir/gnome-control-center/keybindings/50-%name-system.xml
+%_datadir/gnome-control-center/keybindings/50-%name-launchers.xml
 %_datadir/xdg-desktop-portal/portals/%name.portal
 %config %_datadir/glib-2.0/schemas/org.gnome.shell.gschema.xml
 %config %_datadir/glib-2.0/schemas/00_org.gnome.shell.gschema.override
@@ -280,6 +281,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %endif
 
 %changelog
+* Thu Nov 04 2021 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
+- 41.1
+
 * Thu Nov 04 2021 Yuri N. Sedunov <aris@altlinux.org> 40.6-alt1
 - 40.6
 

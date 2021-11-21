@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %prefix/libexec
-%define ver_major 1.68
+%define ver_major 1.70
 %define _name gjs
 %define api_ver 1.0
 %define mozjs_ver_major 78
@@ -11,7 +11,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Javascript Bindings for GNOME
@@ -25,14 +25,14 @@ Source: %_name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %endif
 
-%define glib_ver 2.56.0
+%define glib_ver 2.66.0
 %define gi_ver 1.66
 
 Requires: gobject-introspection
 Requires: libmozjs%mozjs_ver_major >= %mozjs_ver
 
-BuildRequires(pre): meson rpm-build-gir
-BuildRequires: gcc-c++ libffi-devel libcairo-devel
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson gcc-c++ libffi-devel libcairo-devel
 BuildRequires: libmozjs%mozjs_ver_major-devel >= %mozjs_ver
 BuildRequires: libgio-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
 BuildRequires: libreadline-devel libcairo-gobject-devel
@@ -109,6 +109,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 1.70.0-alt1
+- 1.70.0
+
 * Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 1.68.4-alt1
 - 1.68.4
 

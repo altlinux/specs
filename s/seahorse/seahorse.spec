@@ -1,11 +1,12 @@
-%def_enable snapshot
+%def_disable snapshot
 # [150/151] Linking target pgp/hkp-source
 # hasher-priv: master: idle time limit (3600 seconds) exceeded
 %{?optflags_lto:%global optflags_lto %nil}
 
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
-%define ver_major 40
+%define ver_major 41
+%define beta %nil
 %define xdg_name org.gnome.seahorse
 
 %def_disable debug
@@ -23,7 +24,7 @@
 
 Name: seahorse
 Version: %ver_major.0
-Release: alt2
+Release: alt1%beta
 
 Summary: A password and encryption key manager
 License: GPL-2.0 and LGPL-2.1
@@ -31,7 +32,7 @@ Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Seahorse
 
 %if_disabled snapshot
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -77,7 +78,7 @@ BuildRequires: pkgconfig(pwquality)
 Seahorse is a password and encryption key manager for GNOME desktop.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 #cp %SOURCE1 po/ru.po
 
 %build
@@ -113,6 +114,9 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %doc AUTHORS NEWS README* THANKS
 
 %changelog
+* Wed Sep 29 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Sat Aug 28 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt2
 - updated to 40.0-8-g6f799c36
 - disabled LTO

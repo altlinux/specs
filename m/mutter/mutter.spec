@@ -3,20 +3,20 @@
 
 %def_disable snapshot
 
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
-%define api_ver 8
+# %%ver_major - 32
+%define api_ver 9
 %define xdg_name org.gnome.mutter
 %define _libexecdir %_prefix/libexec
 %def_enable privatelib
 %def_enable remote_desktop
 %def_enable installed_tests
-# https://github.com/NVIDIA/egl-wayland required
 %def_enable egl_device
 %def_enable wayland_eglstream
 
 Name: mutter
-Version: %ver_major.6
+Version: %ver_major.1
 Release: alt1%beta
 Epoch: 1
 
@@ -32,10 +32,10 @@ Source: %name-%version%beta.tar
 %endif
 Patch: mutter-40.0-alt-gsettings_desktop_schemas_dep.patch
 
-
 %define pkglibdir %_libdir/%name-%api_ver
 %define pkgdatadir %_datadir/%name-%api_ver
 
+%{?_enable_installed_tests:%add_python3_path %_libexecdir/installed-tests/%name-%api_ver/}
 %add_findprov_lib_path %pkglibdir
 %set_typelibdir %pkglibdir
 %set_girdir %pkglibdir
@@ -48,18 +48,18 @@ Patch: mutter-40.0-alt-gsettings_desktop_schemas_dep.patch
 
 %define gtk_ver 3.20.0
 %define gi_ver 0.9.5
-%define glib_ver 2.67.3
+%define glib_ver 2.69.0
 %define pango_ver 1.46.0
 %define cairo_ver 1.10.0
 %define Xi_ver 1.7.4
 %define wayland_ver 1.18
-%define wayland_protocols_ver 1.19
+%define wayland_protocols_ver 1.21
 %define upower_ver 0.99.0
-%define libinput_ver 0.99.0
+%define libinput_ver 1.18
 %define gsds_ver 40
 %define gudev_ver 232
 %define pipewire_ver 0.3.21
-%define sysprof_ver 3.37
+%define sysprof_ver 3.38
 %define json_glib_ver 0.12.0
 %define graphene_ver 1.10.2
 %define wacom_ver 0.13
@@ -68,8 +68,8 @@ Requires: lib%name = %EVR
 Requires: zenity
 %{?_enable_remote_desktop:Requires: pipewire >= %pipewire_ver}
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gir
-BuildRequires: meson /proc
+BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
+BuildRequires: meson /proc xvfb-run
 BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgio-devel >= %glib_ver
@@ -104,8 +104,8 @@ BuildRequires: libdbus-devel
 mutter is a minimal X window manager aimed at nontechnical users and is
 designed  to  integrate well with the GNOME desktop.  mutter lacks some
 features that may be expected by traditional UNIX  or  other  technical
-users;  these users may want to investigate other available window man-
-agers for use with GNOME or standalone.
+users; these users may want to investigate other available window
+managers for use with GNOME or standalone.
 
 %package -n lib%name
 Summary: Shared library for Mutter
@@ -155,6 +155,7 @@ environment.
 Summary: Tests for the Mutter WM
 Group: Development/Other
 Requires: %name = %EVR
+Requires: xvfb-run
 
 %description tests
 This package provides tests programs that can be used to verify
@@ -174,12 +175,7 @@ echo 'DRIVERS=="baikal-vdu", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-m
 	%{?_enable_remote_desktop:-Dremote_desktop=true} \
 	%{?_enable_egl_device:-Degl_device=true} \
 	%{?_enable_wayland_eglstream:-Dwayland_eglstream=true} \
-	%{?_disable_sysprof:-Dsysprof=false} \
-	%{?_disable_installed_tests:-Dinstalled_tests=false} \
-%ifarch %e2k
-	-Dclutter_tests=false
-%endif
-%nil
+	%{?_disable_installed_tests:-Dinstalled_tests=false}
 %meson_build
 
 %install
@@ -187,7 +183,7 @@ echo 'DRIVERS=="baikal-vdu", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-m
 %find_lang --with-gnome %name creating-%name-themes
 
 %files -f %name.lang
-%_bindir/*
+%_bindir/%name
 %_udevrulesdir/61-%name.rules
 %_libexecdir/%name-restart-helper
 %dir %pkglibdir/plugins
@@ -208,15 +204,24 @@ echo 'DRIVERS=="baikal-vdu", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-m
 %files -n lib%name-devel
 %_includedir/%name-%api_ver/
 %_libdir/lib%name-%api_ver.so
+%{?_enable_installed_tests:%_libdir/lib%name-test-%api_ver.so}
 %pkglibdir/*.so
 %_pkgconfigdir/*.pc
 %endif
 
 %files -n lib%name-gir
-%pkglibdir/*.typelib
+%pkglibdir/Cally-%api_ver.typelib
+%pkglibdir/Clutter-%api_ver.typelib
+%pkglibdir/Cogl-%api_ver.typelib
+%pkglibdir/CoglPango-%api_ver.typelib
+%pkglibdir/Meta-%api_ver.typelib
 
 %files -n lib%name-gir-devel
-%pkglibdir/*.gir
+%pkglibdir/Cally-%api_ver.gir
+%pkglibdir/Clutter-%api_ver.gir
+%pkglibdir/Cogl-%api_ver.gir
+%pkglibdir/CoglPango-%api_ver.gir
+%pkglibdir/Meta-%api_ver.gir
 
 %files gnome
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
@@ -231,16 +236,15 @@ echo 'DRIVERS=="baikal-vdu", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-m
 %pkgdatadir/tests/
 %endif
 
-
 %changelog
+* Thu Nov 04 2021 Yuri N. Sedunov <aris@altlinux.org> 1:41.1-alt1
+- 41.1
+
 * Thu Nov 04 2021 Yuri N. Sedunov <aris@altlinux.org> 1:40.6-alt1
 - 40.6
 
 * Tue Sep 21 2021 Yuri N. Sedunov <aris@altlinux.org> 1:40.5-alt1
 - 40.5
-
-* Tue Sep 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1:40.4-alt1.1
-- E2K: disabled Clutter tests
 
 * Wed Aug 18 2021 Yuri N. Sedunov <aris@altlinux.org> 1:40.4-alt1
 - 40.4

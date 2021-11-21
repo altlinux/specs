@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 %define _libexecdir %_prefix/libexec
 %def_disable docs
@@ -6,8 +6,8 @@
 %def_disable check
 
 Name: xdg-desktop-portal
-Version: 1.8.1
-Release: alt2.1
+Version: 1.10.1
+Release: alt1
 
 Summary: Portal frontend service to Flatpak
 Group: Graphical desktop/GNOME
@@ -22,7 +22,7 @@ Source: %name-%version.tar
 
 %define glib_ver 2.60
 %define geoclue_ver 2.5.2
-%define portal_ver 0.2
+%define portal_ver 0.2.90
 
 Requires: dbus
 Requires: flatpak >= 1.6.0
@@ -95,6 +95,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 
 
 %changelog
+* Sun Sep 26 2021 Yuri N. Sedunov <aris@altlinux.org> 1.10.1-alt1
+- 1.10.1
+
 * Tue Jul 06 2021 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt2.1
 - disabled check
 

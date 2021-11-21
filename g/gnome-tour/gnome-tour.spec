@@ -1,26 +1,27 @@
-%define ver_major 40
+%define ver_major 41
+%define beta .rc
 %define xdg_name org.gnome.Tour
 
 %def_disable intro
 %define welcome_video altlinux-initial-intro.webm
 
 Name: gnome-tour
-Version: %ver_major.0
-Release: alt1
+Version: %ver_major
+Release: alt0.9%beta
 
 Summary: GNOME Tour and Greeter
 Group: Graphical desktop/GNOME
 License: GPL-3.0
 Url: https://gitlab.gnome.org/GNOME/gnome-tour
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 # https://pagure.io/fedora-workstation/issue/175
 %{?_enable_intro:Source1: %welcome_video}
 
 Requires: /etc/os-release
 
-BuildRequires(pre): meson
-BuildRequires: /proc rust rust-cargo
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: /proc meson rust rust-cargo
 BuildRequires: pkgconfig(gio-2.0) >= 2.64
 BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: pkgconfig(gstreamer-1.0) > 1.12
@@ -32,7 +33,7 @@ BuildRequires: pkgconfig(libhandy-1) >= 1.0
 A guided tour and greeter for GNOME.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson \
@@ -62,6 +63,9 @@ A guided tour and greeter for GNOME.
 
 
 %changelog
+* Sun Sep 05 2021 Yuri N. Sedunov <aris@altlinux.org> 41-alt0.9.rc
+- 41.rc
+
 * Tue Mar 23 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - first build for Sisyphus
 

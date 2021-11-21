@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Calendar
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
 %def_disable gtk_doc
 
 Name: gnome-calendar
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Calendar application for GNOME
@@ -22,7 +22,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 Source: %name-%version.tar
 %endif
 
-BuildRequires(pre): rpm-build-licenses rpm-build-gnome meson
+BuildRequires(pre): rpm-build-licenses rpm-build-gnome rpm-macros-meson
 
 %define glib_ver 2.44.0
 %define gtk_ver 3.22.0
@@ -33,9 +33,9 @@ BuildRequires(pre): rpm-build-licenses rpm-build-gnome meson
 %define dazzle_ver 3.33.1
 %define handy_ver 1.0.0
 
-BuildPreReq: yelp-tools libappstream-glib-devel
-BuildPreReq: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
-BuildPreReq: libical-devel >= %ical_ver libicu-devel
+BuildRequires: meson yelp-tools libappstream-glib-devel
+BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
+BuildRequires: libical-devel >= %ical_ver libicu-devel
 BuildRequires: libgnome-online-accounts-devel vala-tools
 BuildRequires: gobject-introspection-devel
 BuildRequires: evolution-data-server-devel >= %eds_ver
@@ -90,6 +90,12 @@ This package provides Calendar reference manual.
 %endif
 
 %changelog
+* Sat Nov 06 2021 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
+- 41.1
+
+* Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Thu Jun 03 2021 Yuri N. Sedunov <aris@altlinux.org> 40.2-alt1
 - 40.2
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 2.68
+%define ver_major 2.70
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
@@ -15,7 +15,7 @@
 %def_disable check
 
 Name: glib-networking
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Networking support for GIO
@@ -32,18 +32,21 @@ Source: %name-%version.tar
 %{?_enable_gnome_proxy:Requires: gsettings-desktop-schemas >= 3.2.0}
 Requires: ca-certificates
 
-%define glib_ver 2.67.0
+%define glib_ver 2.69.0
 %define gnutls_ver 3.6.5
 %define p11kit_ver 0.20
 %define libproxy_ver 0.3.1
 
-BuildRequires(pre): meson
-BuildRequires: libgio-devel >= %glib_ver libsystemd-devel
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson libgio-devel >= %glib_ver libsystemd-devel
 %{?_enable_ssl:BuildRequires: libssl-devel}
 %{?_enable_gnome_proxy:BuildRequires: gsettings-desktop-schemas-devel}
 %{?_enable_tls:BuildRequires: libgnutls-devel >= %gnutls_ver libgcrypt-devel}
 %{?_enable_pkcs11:BuildRequires: libp11-kit-devel >= %p11kit_ver ca-certificates}
 %{?_enable_libproxy:BuildRequires: libproxy-devel >= %libproxy_ver}
+%{?_enable_installed_tests:
+BuildRequires(pre): rpm-build-python3
+%add_python3_path %_libexecdir/installed-tests/%name}
 
 %description
 This package contains modules that extend the networking support in GIO.
@@ -112,6 +115,13 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Thu Sep 16 2021 Yuri N. Sedunov <aris@altlinux.org> 2.70.0-alt1
+- 2.70.0
+
+* Mon Sep 13 2021 Yuri N. Sedunov <aris@altlinux.org> 2.68.2-alt2
+- updated to 2.68.2-2-g9b70e65 (
+  tls/gnutls/gtlscertificate-gnutls.c: fixed memory leak)
+
 * Sun Aug 08 2021 Yuri N. Sedunov <aris@altlinux.org> 2.68.2-alt1
 - 2.68.2
 

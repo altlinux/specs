@@ -1,7 +1,6 @@
 %set_verify_elf_method unresolved=relaxed
-%define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 %define _name tracker-miners
-%define ver_major 3.1
+%define ver_major 3.2
 %define beta %nil
 %define api_ver_major 3
 %define api_ver %api_ver_major.0
@@ -9,17 +8,17 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name%api_ver_major
-Version: %ver_major.2
-Release: alt2%beta
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPL-2.0 and LGPL-2.1-or-later
 Group: Office
-Url: http://wiki.gnome.org/Projects/Tracker
+Url: https://wiki.gnome.org/Projects/Tracker
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
-# properly link tracker-miners-{rss,fs-control} with private libraries
-Patch: %_name-3.1.2-alt-link.patch
+# properly link tracker-miners-fs-control with private libraries
+Patch: %_name-3.2.0-alt-link.patch
 
 %add_findprov_lib_path %_libdir/%_name-%api_ver_major/
 
@@ -73,7 +72,8 @@ Provides: tracker%api_ver_major-miners = %EVR
 %define generic_media_extractor gstreamer
 BuildRequires: gstreamer1.0-devel >= %gst_ver gst-plugins1.0-devel >= %gst_ver
 
-BuildRequires(pre): meson rpm-build-xdg
+BuildRequires(pre): rpm-macros-meson rpm-build-xdg rpm-build-systemd
+BuildRequires: meson
 BuildRequires: tracker%api_ver_major-devel >= %ver_major
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libupower-devel libstemmer-devel libicu-devel
@@ -203,6 +203,12 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 %doc AUTHORS NEWS README*
 
 %changelog
+* Sun Oct 31 2021 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
+- 3.2.1
+
+* Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Tue Aug 03 2021 Yuri N. Sedunov <aris@altlinux.org> 3.1.2-alt2
 - fixed link tracker-miners-{rss,fs-control} with private libraries (ALT #40639)
 

@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 %define api_ver 2
 # GTK interface library
@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: gnome-calculator
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GTK+3 based desktop calculator
@@ -29,8 +29,8 @@ Provides: gcalctool = 6.6.2
 Requires: libgcalc = %EVR
 Requires: libgci = %EVR
 
-BuildRequires(pre): meson rpm-build-licenses rpm-build-gnome
-BuildRequires: vala-tools >= 0.24 valadoc
+BuildRequires(pre): rpm-macros-meson rpm-build-licenses rpm-build-gnome
+BuildRequires: meson vala-tools >= 0.24 valadoc
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgtk+3-devel >= 3.20.0
 BuildRequires: libgio-devel >= 2.50.0 libgee0.8-devel libxml2-devel
@@ -203,6 +203,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/devhelp/books/GCi-%gci_api_ver/
 
 %changelog
+* Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Fri Apr 30 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
 - 40.1
 

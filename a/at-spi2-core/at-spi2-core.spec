@@ -1,4 +1,4 @@
-%define ver_major 2.40
+%define ver_major 2.42
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 %def_enable introspection
@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: at-spi2-core
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -21,8 +21,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Requires: lib%name = %version-%release
 Requires: dbus-tools-gui
 
-BuildRequires(pre): meson
-BuildRequires: libgio-devel >= 2.36.0 libdbus-devel >= 1.5
+BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-xdg
+BuildRequires: meson libgio-devel >= 2.36.0 libdbus-devel >= 1.5
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_x11:BuildRequires: libXtst-devel libXext-devel libXi-devel libICE-devel libSM-devel}
 %{?_enable_xevie:BuildRequires: libXevie-devel}
@@ -103,6 +103,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
 
 %files -f %name.lang
+%_xdgconfigdir/Xwayland-session.d/00-at-spi
 %_libexecdir/at-spi2-registryd
 %_libexecdir/at-spi-bus-launcher
 %_datadir/dbus-1/accessibility-services/org.a11y.atspi.Registry.service
@@ -134,6 +135,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 2.42.0-alt1
+- 2.42.0
+
 * Fri Jul 09 2021 Yuri N. Sedunov <aris@altlinux.org> 2.40.3-alt1
 - 2.40.3
 

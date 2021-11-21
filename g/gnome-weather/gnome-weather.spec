@@ -1,12 +1,12 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Weather
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-weather
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Access current weather conditions and forecasts
@@ -28,7 +28,7 @@ Provides:  %name-data = %version-%release
 %define gtk_ver 3.20
 %define gi_ver 1.36.0
 %define gjs_ver 1.50.0
-%define gweather_ver 3.28.0
+%define gweather_ver 40.0
 %define handy_ver 1.1.90
 
 Requires: libgweather-gir >= %gweather_ver
@@ -85,6 +85,9 @@ access updated forecasts provided by various internet services.
 %doc NEWS
 
 %changelog
+* Tue Sep 21 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Wed Aug 18 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
 - 40.1
 

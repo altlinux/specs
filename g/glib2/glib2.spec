@@ -3,7 +3,7 @@
 %{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.68
+%define ver_major 2.70
 %define api_ver 2.0
 %define pcre_ver 8.31
 %define gtk_doc_ver 1.32.1
@@ -29,8 +29,8 @@
 %def_disable check
 
 Name: glib2
-Version: %ver_major.4
-Release: alt2.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -234,10 +234,6 @@ the functionality of the installed glib2/libgio packages.
 %ifarch %e2k
 subst "/subdir('fuzzing')/d" meson.build
 %patch2000 -p1
-%endif
-
-%if_with sys_pcre
-rm glib/pcre/*.[ch]
 %endif
 
 sed -i 's|\(#\!/usr/bin/env python\)$|\13|' {gobject,gio}/tests/taptestrunner.py
@@ -444,6 +440,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sun Nov 21 2021 Yuri N. Sedunov <aris@altlinux.org> 2.70.1-alt1
+- 2.70.1
+
 * Mon Nov 1 2021 Yuri N. Sedunov <aris@altlinux.org> 2.68.4-alt2.1
 - updated %%e2k patch by ilyakurdyukov@ (cf. BGO#754245)
 

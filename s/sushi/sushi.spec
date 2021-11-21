@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.38
+%define ver_major 41
 %define xdg_name org.gnome.NautilusPreviewer
 %define api_ver 1.0
 %define gst_api_ver 1.0
@@ -10,7 +10,7 @@
 %define lo_bin %_bindir/libreoffice
 
 Name: sushi
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A quick previewer for Nautilus
@@ -30,7 +30,7 @@ BuildRequires(pre): meson rpm-build-gir
 BuildRequires: libappstream-glib-devel desktop-file-utils
 BuildRequires: libgtksourceview4-devel libgjs-devel libharfbuzz-devel
 BuildRequires: libclutter-devel >= %clutter_ver libclutter-gtk3-devel libclutter-gst3.0-devel
-BuildRequires: libevince-devel libmusicbrainz5-devel libwebkit2gtk-devel libepoxy-devel
+BuildRequires: libevince-devel libwebkit2gtk-devel libepoxy-devel
 BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver gst-plugins%gst_api_ver-devel
 %if_enabled introspection
 BuildRequires: libgtksourceview4-gir-devel libcogl-gir-devel libclutter-gir-devel libevince-gir-devel
@@ -103,6 +103,9 @@ GObject introspection devel data for the Sushi library.
 %doc README AUTHORS NEWS TODO
 
 %changelog
+* Tue Sep 21 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Fri Jun 04 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
 - 3.38.1
 

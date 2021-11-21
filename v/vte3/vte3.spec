@@ -2,12 +2,12 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name vte
-%define ver_major 0.64
+%define ver_major 0.66
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 %def_disable static
 %def_enable introspection
@@ -30,10 +30,11 @@ Source: %_name-%version.tar
 %endif
 
 %define gtk3_ver 3.8.0
-%define glib_ver 2.40.0
+%define glib_ver 2.52.0
 %define pango_ver 1.22
 %define gir_ver 0.10.2
 %define tls_ver 3.2.7
+%define pcre_ver 10.21
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-systemd
 BuildRequires: meson gcc-c++ gperf
@@ -44,7 +45,7 @@ BuildRequires: libgtk+3-devel >= %gtk3_ver
 BuildRequires: libpango-devel >= %pango_ver
 BuildRequires: libgnutls-devel >= %tls_ver
 BuildRequires: libfribidi-devel
-BuildRequires: libpcre2-devel
+BuildRequires: libpcre2-devel >= %pcre_ver
 BuildRequires: vala-tools libvala-devel
 BuildRequires:  pkgconfig(systemd)
 
@@ -198,6 +199,12 @@ LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat Oct 30 2021 Yuri N. Sedunov <aris@altlinux.org> 0.66.1-alt1
+- 0.66.1
+
+* Wed Sep 22 2021 Yuri N. Sedunov <aris@altlinux.org> 0.66.0-alt1
+- 0.66.0
+
 * Wed Sep 15 2021 Yuri N. Sedunov <aris@altlinux.org> 0.64.2-alt2
 - updated to 0.64.2-5-g2ea994e2
 - updated to use rpm-build-systemd

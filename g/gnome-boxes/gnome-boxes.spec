@@ -3,13 +3,12 @@
 
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 40
+%define ver_major 41
 %define xdg_name org.gnome.Boxes
-%def_disable ovirt
 %def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.3
+Version: %ver_major.1
 Release: alt1
 
 Summary: A simple GNOME 3 application to access remote or virtual systems
@@ -24,7 +23,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define govirt_ver 0.3.4
 %define glib_ver 2.50.0
 %define gtk_ver 3.22.20
 %define gtk_vnc_ver 0.4.4
@@ -71,7 +69,6 @@ BuildRequires: pkgconfig(tracker-sparql-3.0) >= %tracker_ver
 BuildRequires: libuuid-devel >= %uuid_ver
 BuildRequires: libsoup-devel >= %libsoup_ver
 BuildRequires: libarchive-devel >= %libarchive_ver
-%{?_enable_ovirt:BuildRequires: pkgconfig(govirt-1.0) >= %govirt_ver}
 BuildRequires: libwebkit2gtk-devel >= %webkit_ver
 BuildRequires: libfreerdp-devel
 BuildRequires: libvte3-devel >= %vte_ver
@@ -102,8 +99,7 @@ the functionality of the Boxes.
 
 %build
 %meson \
-	%{?_disable_ovirt:-Dovirt=false} \
-	%{?_enable_installed_tests:-Dinstalled_tests=true}
+    %{?_enable_installed_tests:-Dinstalled_tests=true}
 %meson_build
 
 %install
@@ -133,6 +129,9 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Fri Sep 17 2021 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
+- 41.1
+
 * Fri Jul 09 2021 Yuri N. Sedunov <aris@altlinux.org> 40.3-alt1
 - 40.3
 

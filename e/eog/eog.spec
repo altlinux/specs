@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 %define oldname eog2
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 %define xdg_name org.gnome.eog
 %define api_ver 3.0
@@ -11,7 +11,7 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Eye Of Gnome
@@ -30,9 +30,9 @@ Obsoletes: %oldname < 2.14.2-alt1
 
 %add_python3_path %_libdir/%name/plugins
 
-BuildRequires(pre): meson rpm-build-gnome
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: python3-devel yelp-tools libappstream-glib-devel
+BuildRequires: meson python3-devel yelp-tools libappstream-glib-devel
 BuildPreReq: libgtk+3-devel >= 3.22
 BuildPreReq: libgio-devel >= 2.54
 BuildPreReq: libgnome-desktop3-devel >= 3.0
@@ -163,6 +163,9 @@ the functionality of the EOG GUI.
 
 
 %changelog
+* Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Sat Aug 14 2021 Yuri N. Sedunov <aris@altlinux.org> 40.3-alt1
 - 40.3
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 %define domain gcampax.github.com
 %define _libexecdir %_prefix/libexec
@@ -8,7 +8,7 @@
 %def_enable classic_mode
 
 Name: gnome-shell-extensions
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Shell Extensions
@@ -109,6 +109,7 @@ See %_docdir/%name-%version/README for more information.
 %_datadir/gnome-shell/extensions/apps-menu@gnome-shell-extensions.%domain/extension.js
 %_datadir/gnome-shell/extensions/apps-menu@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/apps-menu@gnome-shell-extensions.%domain/stylesheet.css
+%_datadir/glib-2.0/schemas/org.gnome.shell.extensions.apps-menu.gschema.xml
 
 # native-window-placement
 %dir %_datadir/gnome-shell/extensions/native-window-placement@gnome-shell-extensions.%domain
@@ -158,6 +159,9 @@ See %_docdir/%name-%version/README for more information.
 %doc NEWS README.md
 
 %changelog
+* Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Wed Aug 18 2021 Yuri N. Sedunov <aris@altlinux.org> 40.4-alt1
 - 40.4
 

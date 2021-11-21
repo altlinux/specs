@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name gnome-desktop
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 %define api_ver 3.0
 %define gnome_distributor "%vendor"
@@ -17,7 +17,7 @@
 %def_enable libseccomp
 
 Name: %{_name}3
-Version: %ver_major.5
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Library with common API for various GNOME 3 modules
@@ -188,6 +188,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Wed Nov 03 2021 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
+- 41.1
+
 * Wed Nov 03 2021 Yuri N. Sedunov <aris@altlinux.org> 40.5-alt1
 - 40.5
 

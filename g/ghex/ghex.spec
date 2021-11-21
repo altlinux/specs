@@ -1,6 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.18
+%define ver_major 3.41
+%define beta %nil
 %define api_ver 3.0
 %define libname gtkhex-3
 %define xdg_name org.gnome.GHex
@@ -8,16 +9,16 @@
 %def_disable check
 
 Name: ghex
-Version: %ver_major.4
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Binary editor for GNOME
 Group: Development/Tools
 License: GPLv2+
 Url: https://wiki.gnome.org/Apps/Ghex
 
-#VCS: https://gitlab.gnome.org/GNOME/ghex.git
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Vcs: https://gitlab.gnome.org/GNOME/ghex.git
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 
 %define glib_ver 2.31.10
 %define gtk_ver 3.3.8
@@ -25,8 +26,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Requires: libgtkhex = %version-%release
 Requires: dconf
 
-BuildRequires(pre): meson
-BuildRequires: glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libgail3-devel yelp-tools
 %{?_enable_check:BuildRequires: desktop-file-utils libappstream-glib-devel}
 
@@ -55,7 +56,7 @@ This package contains libraries and header files for
 developing applications that use GtkGHex library.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson
@@ -74,7 +75,7 @@ developing applications that use GtkGHex library.
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/*
 %_datadir/metainfo/%xdg_name.appdata.xml
-%doc AUTHORS NEWS README
+%doc NEWS README*
 
 %files -n libgtkhex
 %_libdir/lib%libname.so.*
@@ -85,6 +86,9 @@ developing applications that use GtkGHex library.
 %_pkgconfigdir/%libname.pc
 
 %changelog
+* Fri Sep 24 2021 Yuri N. Sedunov <aris@altlinux.org> 3.41.0-alt1
+- 3.41.0
+
 * Sat Jul 13 2019 Yuri N. Sedunov <aris@altlinux.org> 3.18.4-alt1
 - 3.18.4 (ported to Meson build system)
 

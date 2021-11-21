@@ -1,9 +1,8 @@
 %def_disable snapshot
-%def_with python3
 %def_enable check
 
 Name: itstool
-Version: 2.0.6
+Version: 2.0.7
 Release: alt1
 
 Summary: ITS-based XML translation tool
@@ -19,11 +18,7 @@ Source: http://files.itstool.org/itstool/%name-%version.tar.bz2
 
 BuildArch: noarch
 
-%if_with python3
 BuildRequires: rpm-build-python3 python3-devel python3-module-libxml2
-%else
-BuildRequires: rpm-build-python python-devel python-module-libxml2
-%endif
 
 %description
 ITS Tool allows to translate XML documents with PO files, using rules
@@ -51,6 +46,9 @@ translate and how to separate it into PO file messages.
 %doc NEWS
 
 %changelog
+* Sat Sep 25 2021 Yuri N. Sedunov <aris@altlinux.org> 2.0.7-alt1
+- 2.0.7
+
 * Sun Apr 07 2019 Yuri N. Sedunov <aris@altlinux.org> 2.0.6-alt1
 - 2.0.6
 

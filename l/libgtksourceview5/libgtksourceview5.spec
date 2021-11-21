@@ -1,5 +1,6 @@
+%def_disable snapshot
 %define _name gtksourceview
-%define ver_major 5.0
+%define ver_major 5.2
 %define api_ver 5
 
 %def_disable static
@@ -21,17 +22,22 @@ License: LGPLv2+
 Group: System/Libraries
 Url: https://wiki.gnome.org/Projects/GtkSourceView
 
+%if_disabled snapshot
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
+%else
+Source: %_name-%version.tar
+%endif
 
-%define gtk_ver 4.0
+%define gtk_ver 4.2
 %define pcre2_ver 10.21
 %define libxml2_ver 2.6.0
 %define fribidi_ver 0.19.7
 
-BuildRequires(pre): meson rpm-build-gnome rpm-macros-valgrind
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-macros-valgrind
 
 # From meson.build
-BuildRequires: gcc-c++ gtk-doc itstool
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson gcc-c++ gtk-doc itstool
 BuildRequires: libgtk4-devel >= %gtk_ver
 BuildRequires: libpcre2-devel >= %pcre2_ver
 BuildRequires: libxml2-devel >= %libxml2_ver
@@ -157,6 +163,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Sat Sep 04 2021 Yuri N. Sedunov <aris@altlinux.org> 5.2.0-alt1
+- 5.2.0
+
 * Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 5.0.0-alt1
 - 5.0.0
 

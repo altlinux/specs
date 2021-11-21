@@ -1,12 +1,9 @@
-#%%set_verify_elf_method unresolved=relaxed
-%define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
-
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
-%define api_ver 40
+%define api_ver 41
 %define xdg_name org.gnome.SettingsDaemon
 
 %def_enable smartcard
@@ -19,7 +16,7 @@
 %def_disable suspend_then_hibernate
 
 Name: gnome-settings-daemon
-Version: %ver_major.0.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A program that manages general GNOME settings
@@ -33,12 +30,12 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.56.0
+%define glib_ver 2.58.0
 %define gtk_ver 3.16
 %define gnome_desktop_ver 3.34.2
 %define notify_ver 0.7.3
 %define pulse_ver 2.0
-%define gsds_ver 40
+%define gsds_ver 41
 %define colord_ver 0.1.9
 %define dconf_ver 0.8
 %define upower_ver 0.99.8
@@ -50,6 +47,7 @@ Source: %name-%version.tar
 %define nm_ver 1.0
 %define lcms_ver 2.2
 %define polkit_ver 0.114
+%define xfixes_ver 6.0
 
 Requires: dconf >= %dconf_ver
 Requires: colord >= %colord_ver
@@ -63,8 +61,8 @@ Requires: udev-rules-rfkill-uaccess
 Requires: polkit >= %polkit_ver
 Requires: upower >= %upower_ver
 
-BuildRequires(pre): meson pkgconfig(systemd)
-BuildRequires: glib2-devel >= %glib_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-systemd rpm-build-gnome
+BuildRequires: meson gcc-c++ glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgnome-desktop3-devel >= %gnome_desktop_ver
@@ -74,19 +72,18 @@ BuildRequires: libpulseaudio-devel >= %pulse_ver libalsa-devel libcanberra-gtk3-
 BuildRequires: libdbus-devel libpolkit1-devel >= %polkit_ver
 BuildRequires: xkeyboard-config-devel
 %{?_enable_smartcard:BuildRequires: libnss-devel}
-%{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel}
+%{?_enable_systemd:BuildRequires: pkgconfig(systemd) >= %systemd_ver}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel}
 BuildRequires: libxkbfile-devel
-BuildRequires: rpm-build-gnome docbook-style-xsl xsltproc
-BuildRequires: gcc-c++ libcups-devel libgudev-devel libX11-devel libXi-devel libXext-devel libXfixes-devel
+BuildRequires: docbook-style-xsl xsltproc
+BuildRequires: libcups-devel libgudev-devel libX11-devel libXi-devel
+BuildRequires: libXext-devel libXfixes-devel >= %xfixes_ver
 BuildRequires: libXrandr-devel xorg-proto-devel libICE-devel libSM-devel
 BuildRequires: libupower-devel >= %upower_ver
 BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel >= %lcms_ver librsvg-devel
 BuildRequires: libwacom-devel >= %wacom_ver xorg-drv-wacom-devel
 BuildRequires: libgweather-devel >= %gweather_ver libgeocode-glib-devel >= %geocode_ver libgeoclue2-devel >= %geoclue_ver
 BuildRequires: libnm-devel >= %nm_ver libmm-glib-devel gcr-libs-devel
-
-# for check
 %{?_enable_check:BuildRequires: /proc dbus gnome-color-manager}
 
 %description
@@ -131,8 +128,8 @@ The %name-tests package provides programms for testing GSD plugins.
 %meson_test
 
 %files -f %name.lang
-%dir %_libdir/%name-%api_ver
-%_libdir/%name-%api_ver/libgsd.so
+%dir %_libdir/%name-%ver_major
+%_libdir/%name-%ver_major/libgsd.so
 %_libexecdir/gsd-a11y-settings
 %_libexecdir/gsd-backlight-helper
 %_libexecdir/gsd-color
@@ -168,7 +165,7 @@ The %name-tests package provides programms for testing GSD plugins.
 %exclude %_udevrulesdir/61-gnome-settings-daemon-rfkill.rules
 
 %files devel
-%_includedir/%name-%api_ver/
+%_includedir/%name-%ver_major/
 %_pkgconfigdir/%name.pc
 
 %if_enabled tests
@@ -194,6 +191,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Wed Apr 14 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0.1-alt1
 - 40.0.1
 

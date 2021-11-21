@@ -2,7 +2,7 @@
 
 %define _name baobab
 %define xdg_name org.gnome.baobab
-%define ver_major 40
+%define ver_major 41
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
 Name: gnome-disk-usage
@@ -60,6 +60,9 @@ popd
 %doc README* NEWS
 
 %changelog
+* Tue Sep 21 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 

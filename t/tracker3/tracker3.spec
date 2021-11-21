@@ -1,11 +1,10 @@
 %def_disable snapshot
 %define _name tracker
-%define ver_major 3.1
+%define ver_major 3.2
 %define beta %nil
 %define api_ver_major 3
 %define api_ver %{api_ver_major}.0
 %define gst_api_ver 1.0
-%define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
 # since 1.0.3 (see https://bugzilla.gnome.org/show_bug.cgi?id=733857)
 %set_verify_elf_method unresolved=relaxed
@@ -14,6 +13,8 @@
 %def_enable introspection
 %def_enable upower
 %def_enable stemmer
+%def_enable soup
+%def_enable soup3
 %def_enable docs
 %def_enable man
 %def_enable test_utils
@@ -24,7 +25,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name%api_ver_major
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -43,31 +44,34 @@ Requires: dconf
 %{?_without_bootstrap:Requires:  %_name-miners%api_ver_major >= %ver_major}
 
 %define dbus_ver 1.3.1
-%define glib_ver 2.44.0
+%define glib_ver 2.52.0
 %define pango_ver 1.0.0
 %define gtk_ver 3.0.0
 %define upower_ver 0.9.0
 %define gst_ver 1.0
 %define sqlite_ver 3.20.1-alt2
 %define soup_ver 2.40.0
+%define soup3_ver 2.99.2
 %define gupnp_dlna_ver 0.9.4
 
 Requires: libsqlite3 >= %sqlite_ver
 
-BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir rpm-build-systemd
 %{?_enable_test_utils:
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 python3-module-pygobject3
 %add_python3_path %_libdir/%_name-%api_ver/trackertestutils
 }
-BuildRequires: /proc gcc-c++ gnome-common
-BuildRequires: gtk-doc docbook-utils python3
+BuildRequires: /proc meson gcc-c++
 BuildRequires: libxml2-devel libicu-devel libuuid-devel
 BuildRequires: libdbus-devel >= %dbus_ver
 BuildRequires: libgio-devel >= %glib_ver libpango-devel >= %pango_ver libgtk+3-devel >= %gtk_ver
-BuildRequires: libsoup-devel >= %soup_ver libjson-glib-devel
+%{?_enable_soup:BuildRequires: libsoup-devel >= %soup_ver}
+%{?_enable_soup3:BuildRequires: libsoup3.0-devel >= %soup3_ver}
+BuildRequires: libjson-glib-devel
 BuildRequires: gobject-introspection-devel
 %{?_enable_upower:BuildRequires: libupower-devel >= %upower_ver}
 %{?_enable_stemmer:BuildRequires: libstemmer-devel}
+%{?_enable_docs:BuildRequires: hotdoc}
 %{?_enable_man:BuildRequires: asciidoc-a2x xsltproc}
 BuildRequires: vala-tools
 BuildRequires: sqlite3 libsqlite3-devel >= %sqlite_ver
@@ -179,7 +183,8 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/*/meson.build
 
 %files -n lib%name
 %_libdir/*.so.*
-#%_libdir/%_name-%api_ver/*.so
+%{?_enable_soup:%_libdir/%_name-%api_ver/lib%_name-remote-soup2.so}
+%{?_enable_soup3:%_libdir/%_name-%api_ver/lib%_name-remote-soup3.so}
 
 %files devel
 %_includedir/%_name-%api_ver/
@@ -189,7 +194,7 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/*/meson.build
 
 %if_enabled docs
 %files devel-doc
-%_datadir/gtk-doc/html/*
+%_datadir/devhelp/books/Tracker/
 %endif
 
 %if_enabled introspection
@@ -206,6 +211,12 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/*/meson.build
 %endif
 
 %changelog
+* Sun Oct 31 2021 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
+- 3.2.1
+
+* Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Sat Jun 12 2021 Yuri N. Sedunov <aris@altlinux.org> 3.1.2-alt1
 - 3.1.2
 

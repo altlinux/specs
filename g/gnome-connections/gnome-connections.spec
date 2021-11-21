@@ -1,11 +1,12 @@
 %def_disable snapshot
 %define _name connections
 %define xdg_name org.gnome.Connections
-%define ver_major 40
+%define ver_major 41
+%define beta %nil
 
 Name: gnome-%_name
-Version: %ver_major.0.1
-Release: alt1
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: GNOME Connections
 Group: Graphical desktop/GNOME
@@ -13,7 +14,7 @@ License: GPL-3.0
 Url: https://wiki.gnome.org/Apps/Connections
 
 %if_disabled snapshot
-Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
+Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Vcs: https://gitlab.gnome.org/GNOME/connections.git
 Source: %name-%version.tar
@@ -33,12 +34,13 @@ BuildRequires: pkgconfig(gtk-vnc-2.0)
 BuildRequires: pkgconfig(freerdp2)
 BuildRequires: pkgconfig(winpr2)
 BuildRequires: gobject-introspection-devel gir(Gtk) = 3.0
+BuildRequires: pkgconfig(libhandy-1)
 
 %description
 %summary
 
 %prep
-%setup -n %name-%version
+%setup -n %name-%version%beta
 
 %build
 %meson
@@ -56,7 +58,7 @@ BuildRequires: gobject-introspection-devel gir(Gtk) = 3.0
 %_datadir/dbus-1/services/%xdg_name.service
 %_iconsdir/hicolor/*/*/%{xdg_name}*.*
 %_datadir/mime/packages/%xdg_name.xml
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %doc README* NEWS*
 
 # gtk-frdp usless stuff
@@ -66,6 +68,12 @@ BuildRequires: gobject-introspection-devel gir(Gtk) = 3.0
 %exclude %_libdir/%name/pkgconfig/
 
 %changelog
+* Wed Oct 27 2021 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
+- 41.1
+
+* Fri Sep 17 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Thu Apr 15 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0.1-alt1
 - 40.0.1
 

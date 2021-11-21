@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define domain gsconnect@andyholmes.github.io
 %define xdg_name org.gnome.Shell.Extensions.GSConnect
@@ -96,6 +96,9 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Tue Oct 05 2021 Yuri N. Sedunov <aris@altlinux.org> 48-alt1
+- 48
+
 * Sun Jun 20 2021 Yuri N. Sedunov <aris@altlinux.org> 47-alt1
 - 47
 

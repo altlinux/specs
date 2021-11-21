@@ -8,12 +8,12 @@
 %def_enable python
 %def_enable gjs
 %def_enable gladeui
-%def_enable webkit2gtk
+%def_disable webkit2gtk
 %def_disable check
 
 Name: glade
 Version: %ver_major.0
-Release: alt0.2
+Release: alt0.3
 
 Summary: A user interface designer for Gtk+ and GNOME
 Group: Development/GNOME and GTK+
@@ -162,6 +162,9 @@ xvfb-run %meson_test
 %_girdir/Gladeui-%api_ver.gir
 
 %changelog
+* Thu Sep 02 2021 Yuri N. Sedunov <aris@altlinux.org> 3.39.0-alt0.3
+- temporarily disabled webkit2gtk support (not ready for 4.1)
+
 * Thu Sep 02 2021 Yuri N. Sedunov <aris@altlinux.org> 3.39.0-alt0.2
 - updated to 3.39.0-106-g5e46bd65
 

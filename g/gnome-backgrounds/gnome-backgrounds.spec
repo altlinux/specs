@@ -1,8 +1,8 @@
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 
 Name: gnome-backgrounds
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A collection of GNOME backgrounds
@@ -13,6 +13,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 
 BuildArch: noarch
 
+BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
 
 %description
@@ -37,6 +38,9 @@ with the GNOME desktop.
 %doc NEWS README*
 
 %changelog
+* Sat Sep 11 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Mon May 03 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
 - 40.1
 

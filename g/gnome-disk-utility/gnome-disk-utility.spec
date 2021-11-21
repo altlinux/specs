@@ -1,4 +1,4 @@
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 %define xdg_name org.gnome.DiskUtility
 %define _libexecdir %_prefix/libexec
@@ -6,7 +6,7 @@
 %def_enable libsystemd
 
 Name: gnome-disk-utility
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Disk management application
@@ -31,7 +31,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Provides: gnome-disks = %EVR
 Requires: udisks2 >= %udisks_ver
 
-BuildRequires(pre): meson rpm-build-xdg
+BuildRequires(pre): rpm-macros-meson rpm-build-xdg
+BuildRequires: meson
 BuildRequires: libappstream-glib-devel desktop-file-utils
 BuildRequires: libudisks2-devel >= %udisks_ver
 BuildRequires: libgio-devel  >= %glib_ver
@@ -83,6 +84,9 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Sun Jul 11 2021 Yuri N. Sedunov <aris@altlinux.org> 40.2-alt1
 - 40.2
 

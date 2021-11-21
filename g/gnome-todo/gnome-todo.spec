@@ -1,7 +1,8 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 40
+%define ver_major 41
+%define beta %nil
 %define api_ver 1.0
 %define xdg_name org.gnome.Todo
 
@@ -11,8 +12,8 @@
 %def_disable gtk_doc
 
 Name: gnome-todo
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Todo manager for GNOME
 Group: Graphical desktop/GNOME
@@ -20,14 +21,14 @@ License: GPLv3+
 Url: https://wiki.gnome.org/Apps/Todo
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
 Patch: gnome-todo-40.1-alt-build.patch
 
 %define gtk_ver 4.2.1
-%define libadwaita_ver 1.1.0
+%define libadwaita_ver 1.0
 %define eds_ver 3.18.0
 
 %add_python3_path %_libdir/%name/plugins
@@ -36,14 +37,14 @@ BuildRequires: python3-devel
 # no python3 plugins now
 #Requires: libpeas-python3-loader
 
-BuildRequires(pre): meson rpm-build-gir
-BuildRequires: yelp-tools libappstream-glib-devel gtk-doc
-BuildRequires: libgtk4-devel >= %gtk_ver libadwaita-devel >= %libadwaita_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson yelp-tools libappstream-glib-devel gtk-doc
+BuildRequires: libgtk4-devel >= %gtk_ver pkgconfig(libadwaita-1) >= %libadwaita_ver
 BuildRequires: libpeas-devel
 BuildRequires: evolution-data-server-devel >= %eds_ver libical-devel
 BuildRequires: libgnome-online-accounts-devel 
 BuildRequires: librest-devel libjson-glib-devel libportal-devel
-BuildRequires: gir(Gtk) = 3.0 libadwaita-gir-devel
+BuildRequires: gir(Gtk) = 3.0 gir(Adw) = 1
 
 %description
 GNOME Todo is a simple task management application designed to integrate
@@ -76,7 +77,7 @@ Requires: %name-devel = %version-%release
 GObject introspection devel data for the GNOME Todo.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 %patch
 
 %build
@@ -88,7 +89,7 @@ GObject introspection devel data for the GNOME Todo.
 
 %install
 %meson_install
-%find_lang %name
+%find_lang --with-gnome %name
 
 %files -f %name.lang
 %_bindir/%name
@@ -112,6 +113,9 @@ GObject introspection devel data for the GNOME Todo.
 %_girdir/Gtd-%api_ver.gir
 
 %changelog
+* Thu Sep 16 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Tue Jul 06 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1.1
 - fixed build
 

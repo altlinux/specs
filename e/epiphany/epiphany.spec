@@ -3,21 +3,23 @@
 
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 %define api_ver 3.10
 %define ua_ver 3.24
 %define xdg_name org.gnome.Epiphany
 
+%def_enable soup2
+
 Name: epiphany
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Epiphany is a GNOME web browser.
 Summary(ru_RU.UTF-8): Epiphany - интернет-браузер для графической оболочки GNOME.
 Group: Networking/WWW
 License: GPL-3.0-or-later
-Url: http://www.gnome.org/projects/%name
+Url: https://wiki.gnome.org/Apps/Web
 
 %if_enabled snapshot
 Source: %name-%version.tar
@@ -31,11 +33,12 @@ Obsoletes: %name-extensions
 %add_findprov_lib_path %_libdir/%name
 
 %define glib_ver 2.64
-%define webkit_ver 2.31.91
+%define webkit_ver 2.33.90
 %define gtk_ver 3.24.0
 %define nettle_ver 3.4
 %define libxml2_ver 2.6.12
 %define soup_ver 2.48.0
+%define soup3_ver 2.99.4
 %define secret_ver 0.19
 %define gcr_ver 3.5.5
 %define dazzle_ver 3.37.1
@@ -46,12 +49,10 @@ Obsoletes: %name-extensions
 
 Requires: %name-data = %version-%release indexhtml iso-codes
 
-BuildRequires(pre): meson
-BuildRequires: gcc-c++ yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++ yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: libwebkit2gtk-devel >= %webkit_ver
 BuildRequires: libxml2-devel >= %libxml2_ver
-BuildRequires: libsoup-devel >= %soup_ver
 BuildRequires: libsecret-devel >= %secret_ver
 BuildRequires: gcr-libs-devel >= %gcr_ver
 BuildRequires: libdazzle-devel >= %dazzle_ver
@@ -63,6 +64,11 @@ BuildRequires: libicu-devel libjson-glib-devel
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 BuildRequires: libportal-devel >= %portal_ver
 BuildRequires: libarchive-devel
+%if_enabled soup2
+BuildRequires: libsoup-devel >= %soup_ver pkgconfig(webkit2gtk-4.0)
+%else
+BuildRequires: libsoup3.0-devel >= %soup3_ver pkgconfig(webkit2gtk-4.1) >= %webkit_ver
+%endif
 
 %description
 Epiphany is a GNOME web browser based on the Webkit rendering engine.
@@ -85,7 +91,8 @@ This package contains common noarch files needed for Epiphany.
 
 %build
 %meson \
-	-Ddistributor_name="ALTLinux"
+	-Ddistributor_name="ALTLinux" \
+	%{?_disable_soup2:-Dsoup2=disabled}
 %meson_build
 
 %install
@@ -115,6 +122,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Thu Sep 16 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Thu Aug 12 2021 Yuri N. Sedunov <aris@altlinux.org> 40.3-alt1
 - 40.3
 

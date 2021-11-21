@@ -1,7 +1,7 @@
-%define ver_major 3.32
+%define ver_major 41
 
 Name: gnome3
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME 3 Desktop installers
@@ -10,12 +10,12 @@ Group: Graphical desktop/GNOME
 
 BuildArch: noarch
 
-BuildPreReq: rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses
 
 # The following are required versions of those packages that
 # do not follow GNOME version numbers.
 ## Core components
-%define session_ver %ver_major
+%define session_ver 40
 %define keyring_ver 3.31.91
 
 ## Applications
@@ -23,33 +23,33 @@ BuildPreReq: rpm-build-licenses
 %define seahorse_ver %ver_major
 %define utils_ver 3.20
 %define games_ver 3.28.0
-%define weather_ver 3.26
-%define pm_ver 3.26
+%define weather_ver 3.36.1
+%define pm_ver 3.32.0
 %define yelp_ver %ver_major
-%define dconf_editor_ver 3.31.91
-%define contacts_ver 3.31.90
-%define roller_ver %ver_major
-%define eog_ver 3.28.4
-%define network_manager_ver 1.8
-%define terminal_ver %ver_major
+%define dconf_editor_ver %ver_major
+%define contacts_ver %ver_major
+%define roller_ver 3.40
+%define eog_ver %ver_major
+%define network_manager_ver 1.24
+%define terminal_ver 3.42
 %define epiphany_ver %ver_major
 %define pidgin_ver 2.6.3
-%define evince_ver 3.31.91
+%define evince_ver %ver_major
 %define applets_ver %ver_major
-%define gedit_ver %ver_major
-%define gedit_plugins_ver %ver_major
+%define gedit_ver 40.1
+%define gedit_plugins_ver 40.1
 %define gud_ver %ver_major
-%define gdm_ver 3.31.91
+%define gdm_ver %ver_major
 %define gdu_ver %ver_major
-%define evo_ver %ver_major
+%define evo_ver 3.42
 %define emp_ver 3.12.11
 %define brasero_ver 3.12.2
-%define accerciser_ver 3.22
-%define recorder_ver 3.28.0
+%define accerciser_ver 3.38
+%define recorder_ver 40
 %define todo_ver 3.28.1
-%define characters_ver 3.30.0
+%define characters_ver 3.34.0
 %define music_ver %ver_major
-%define photos_ver 3.31.91
+%define photos_ver 40
 ## Engines, themes
 %define engines_ver %ver_major
 %define icon_theme_ver %ver_major
@@ -72,15 +72,14 @@ Provides: gnome-minimal = %version-%release
 
 # GNOME Desktop Core
 Requires: gnome-session >= %session_ver
-#Requires: gnome-panel >= %ver_major
 Requires: pulseaudio-daemon
 Requires: gnome-control-center >= %ver_major
 Requires: xorg-drv-libinput
 Requires: gnome-shell >= %ver_major
 Requires: gnome-shell-extensions >= %ver_major
 # user settings utility
-Requires: gnome-tweaks >= %ver_major
-Requires: dconf-editor >= %dconf_editor_ver
+Requires: gnome-tweaks >= 40
+Requires: dconf-editor >= 3.38
 
 # default font
 Requires: fonts-otf-abattis-cantarell
@@ -89,12 +88,11 @@ Requires: gnome-backgrounds
 
 # Help browser
 Requires: yelp >= %yelp_ver
-#Requires: gnome-menus >= %ver_major
 
 # GNOME Utilities
 Requires: gnome-system-monitor >= %ver_major
-Requires: gnome-logs >= %ver_major
-Requires: gucharmap >= %ver_major
+Requires: gnome-logs >= 3.36
+Requires: gucharmap >= 14.0.0
 Requires: gnome-calculator >= %ver_major
 Requires: gnome-calendar >= %ver_major
 #Requires: gnome-todo >= %todo_ver
@@ -175,13 +173,12 @@ Requires: gnome-contacts >= %contacts_ver
 
 ## Default document reader (currently pdf, ps, tiff, dvi)
 Requires: evince >= %evince_ver
-Requires: mozilla-plugin-evince
 ## and E-Book Reader
 #Requires: fbreader
 ## and videos from a webcam
 Requires: cheese >= %ver_major
 # Note editor
-Requires: bijiben >= %ver_major
+Requires: bijiben >= 40.1
 
 # Utilities
 Requires: gnome-utils >= %utils_ver
@@ -216,7 +213,6 @@ Requires: brasero >= %brasero_ver
 ## Clipboard manager
 Requires: gnome-shell-extension-gpaste
 # Documents manager
-Requires: gnome-documents
 Requires: gnome-books
 # A quick previewer for Nautilus
 Requires: sushi
@@ -231,7 +227,7 @@ Requires: gnome-terminal-nautilus
 # Weather application
 Requires: gnome-weather >= %weather_ver
 # Clock application
-Requires: gnome-clocks >= %ver_major
+Requires: gnome-clocks >= 40
 # Maps application
 Requires: gnome-maps >= %ver_major
 # power consumption statistic
@@ -239,10 +235,7 @@ Requires: gnome-power-manager >= %pm_ver
 Requires: NetworkManager-gnome >= %network_manager_ver
 ## Bluetooth pairing and control program
 Requires: gnome-bluetooth
-## VNC server for the GNOME Desktop
-Requires: vino
-## VNC client for the GNOME Desktop
-Requires: vinagre
+Requires: gnome-remote-desktop
 
 Requires: gnome-user-share
 Requires: rygel
@@ -251,7 +244,7 @@ Requires: gnome-usage
 Requires: gnome-software >= %ver_major
 
 # flatpak
-Requires: xdg-desktop-portal-gtk
+Requires: xdg-desktop-portal-gnome
 
 %description default
 This virtual package installs GNOME Desktop for an average user's
@@ -412,6 +405,9 @@ Requires: liferea
 # Other
 Requires: gnome-battery-bench
 Requires: gnome-multi-writer
+Requires: gnome-calls
+Requires: gnome-connections
+
 # Additional LibreOffice packages
 # (sushi requires LibreOffice-integrated, gnome-documents requires libreofficekit)
 Requires: LibreOffice
@@ -433,6 +429,18 @@ some other useful GNOME and GTK applications.
 %files regular
 
 %changelog
+* Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- default: xdg-desktop-portal-gtk -> xdg-desktop-portal-gnome,
+           added gnome-remote-desktop,
+           removed mozilla-plugin-evince,
+- regular: added gnome-calls, gnome-connections
+
+* Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- default: removed gnome-documents
+
+* Fri Sep 25 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Sat Jun 22 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
 - default: removed alacarte, added gnome-keyring-ssh
 

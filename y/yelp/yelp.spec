@@ -1,14 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 %define xdg_name org.gnome.Yelp
 
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 %def_disable debug
 %def_enable lzma
+%define webkit_api_ver 4.1
+%def_with webkit2gtk_40
+%{?_with_webkit2gtk_40:%define webkit_api_ver 4.0}
 
 Name: yelp
-Version: %ver_major.3
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: Lightweight help browser for GNOME
 License: %gpl2plus
@@ -22,7 +25,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %define gtk_ver 3.14
 %define xslt_ver 1.1.4
 %define webkit_ver 2.19.2
-%define yelpxsl_ver 3.38.0
+%define yelpxsl_ver %ver_major
 
 Requires: lib%name = %version-%release
 Requires: yelp-xsl >= %yelpxsl_ver
@@ -36,7 +39,7 @@ BuildRequires: gnome-common itstool gtk-doc
 BuildRequires: libgio-devel >= %gio_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libxslt-devel >= %xslt_ver
-BuildRequires: libwebkit2gtk-devel >= %webkit_ver
+BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver
 BuildRequires: yelp-xsl >= %yelpxsl_ver
 BuildRequires: zlib-devel bzlib-devel libsqlite3-devel
 %{?_enable_lzma:BuildRequires: liblzma-devel}
@@ -94,7 +97,8 @@ Yelp.
 	--disable-static \
 	--disable-schemas-compile \
 	%{subst_enable debug} \
-	%{subst_enable lzma}
+	%{subst_enable lzma} \
+	%{?_with_webkit2gtk_40:--with-webkit2gtk-4-0}
 %nil
 %make_build
 
@@ -127,6 +131,9 @@ Yelp.
 %_datadir/gtk-doc/html/lib%name/
 
 %changelog
+* Sat Sep 25 2021 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
+- 41.1
+
 * Fri Sep 10 2021 Yuri N. Sedunov <aris@altlinux.org> 40.3-alt1.1
 - E2k: Obsoletes yelp.sh
 

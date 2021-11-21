@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: GObject contact aggregation library
@@ -35,8 +35,8 @@ Source: %_name-%version.tar
 %define gee_ver 0.8.4
 %define zeitgeist_ver 0.9.15
 
-BuildRequires(pre): meson rpm-build-vala rpm-build-gir
-BuildRequires: vala-tools >= %vala_ver valadoc
+BuildRequires(pre): rpm-macros-meson rpm-build-vala rpm-build-gir
+BuildRequires: meson vala-tools >= %vala_ver valadoc
 BuildRequires: libgio-devel >= %glib_ver libdbus-glib-devel
 BuildRequires: libtelepathy-glib-devel >= %tp_glib_ver libtelepathy-glib-vala libgee0.8-devel >= %gee_ver
 BuildRequires: gobject-introspection-devel libgee0.8-gir-devel libtelepathy-glib-gir-devel libgee0.8-gir-devel
@@ -171,6 +171,9 @@ the functionality of the Folks library.
 
 
 %changelog
+* Fri Sep 03 2021 Yuri N. Sedunov <aris@altlinux.org> 0.15.3-alt1
+- 0.15.3
+
 * Mon Feb 15 2021 Yuri N. Sedunov <aris@altlinux.org> 0.15.2-alt1
 - 0.15.2
 

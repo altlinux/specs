@@ -1,4 +1,4 @@
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 
 Name: yelp-tools
@@ -14,12 +14,12 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 
 BuildArch: noarch
 
-Requires: yelp-xsl >= 3.32.0 itstool xmllint xsltproc
+Requires: yelp-xsl >= 3.38.0 itstool xmllint xsltproc
 # Optional jing dep
 #%%filter_from_requires /jing/d
 
-BuildRequires(pre): meson rpm-build-python3
-BuildRequires: python3-module-lxml
+BuildRequires(pre): rpm-macros-meson rpm-build-python3
+BuildRequires: meson python3-module-lxml
 BuildRequires: yelp-xsl itstool xml-utils xsltproc
 
 %description
@@ -47,6 +47,9 @@ package just wraps things up in a developer-friendly way.
 %doc AUTHORS README
 
 %changelog
+* Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 

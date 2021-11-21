@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.68
+%define ver_major 1.70
 %def_enable doctool
 %def_enable check
 %def_enable gtk_doc
@@ -23,9 +23,6 @@ Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
 
-# use python3
-AutoReqProv: nopython
-%define __python %nil
 %add_python3_path %_libdir/%name/giscanner
 %add_python3_path %_libdir/%name/giscanner
 #https://bugzilla.altlinux.org/38965
@@ -33,12 +30,13 @@ AutoReqProv: nopython
 %filter_from_provides /python3(pkgconfig)/d
 %add_python3_req_skip distutils.msvccompiler
 
-%define glib_ver 2.66.0
+%define glib_ver 2.58.0
+%define python_ver 3.6
 
 BuildRequires(pre): meson rpm-build-python3 rpm-build-gir
 BuildRequires: /proc libgio-devel >= %glib_ver
 BuildRequires: flex gtk-doc libcairo-devel libcairo-gobject-devel libffi-devel
-BuildRequires: python3-devel
+BuildRequires: python3-devel >= %python_ver
 %{?_enable_doctool:BuildRequires: python3-module-mako python3-module-markdown}
 
 %description
@@ -143,6 +141,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Sep 17 2021 Yuri N. Sedunov <aris@altlinux.org> 1.70.0-alt1
+- 1.70.0
+
 * Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 1.68.0-alt1
 - 1.68.0
 

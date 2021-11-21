@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 %define api_ver 3.0
 %define xdg_name org.gnome.Nautilus
@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: nautilus
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Nautilus is a network user environment
@@ -204,6 +204,12 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Sat Oct 30 2021 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
+- 41.1
+
+* Fri Sep 17 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Fri Jun 04 2021 Yuri N. Sedunov <aris@altlinux.org> 40.2-alt1
 - 40.2
 

@@ -1,26 +1,26 @@
-%def_enable snapshot
+%def_disable snapshot
+%define optflags_lto %nil
 
 %define xdg_name org.gnome.Builder
-%define ver_major 3.40
+%define ver_major 41
+%define beta %nil
 %define _libexecdir %_prefix/libexec
-%define api_ver 1.0
+%define api_ver %ver_major.0
 
+%def_with clang
 %def_with sysprof
 %def_with flatpak
 %def_with docs
 %def_with help
 %def_with autotools
-%def_with jedi
 # disabled by default
 %def_with vala
-# Vala Language Server integration plugin
-%def_without gvls
 # Rust Language Server integration plugin (disabled by default)
 %def_without rls
 
 Name: gnome-builder
 Version: %ver_major.2
-Release: alt1.1
+Release: alt1%beta
 
 Summary: Builder - Develop software for GNOME
 License: LGPLv2+
@@ -28,15 +28,15 @@ Group: Development/GNOME and GTK+
 Url: https://wiki.gnome.org/Apps/Builder
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
-%define glib_ver 2.67.0
-%define gtk_ver 3.22.26
+%define glib_ver 2.69.1
+%define gtk_ver 3.24
 %define gtksourceview_ver 4.6.1
 %define git2_ver 0.28.0.1
 %define devhelp_ver 3.30.0
@@ -54,6 +54,7 @@ Source: %name-%version.tar
 %define soup_ver 2.52
 %define webkit_ver 2.26
 %define portal_ver 0.3
+%define gi_docgen_ver 2021.9
 
 %add_python3_path %_libdir/%name/plugins
 %add_findreq_skiplist %_datadir/%name/plugins/*_templates/resources/*/*.py
@@ -65,17 +66,16 @@ Requires: typelib(Jsonrpc) = 1.0
 
 %{?_with_autotools:Requires: automake autoconf libtool}
 #%{?_with_flatpak:Requires: flatpak-builder}
-Requires: meson git indent xmllint
-Requires: devhelp uncrustify %_bindir/ctags
+Requires: meson %_bindir/git %_bindir/indent %_bindir/xmllint
+Requires: devhelp %_bindir/uncrustify %_bindir/ctags %_bindir/cmark
 Requires: libpeas-python3-loader
-#%%{?_with_jedi:Requires: python3-module-jedi}
 
-BuildRequires(pre): meson rpm-build-python3 rpm-build-gir
-BuildRequires: /proc gcc-c++ flex mm-common yelp-tools gtk-doc
-BuildRequires: ctags
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
+BuildRequires: /proc meson gcc-c++ flex mm-common yelp-tools
+BuildRequires: %_bindir/ctags %_bindir/tidy %_bindir/uncrustify
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libappstream-glib-devel desktop-file-utils
-BuildRequires: llvm-devel clang-devel libgtk+3-devel >= %gtk_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgtksourceview4-devel >= %gtksourceview_ver
 BuildRequires: libgit2-glib-devel >= %git2_ver libdevhelp-devel >= %devhelp_ver
 BuildRequires: libpcre-devel libgjs-devel >= %gjs_ver libwebkit2gtk-devel >= %webkit_ver
@@ -90,7 +90,9 @@ BuildRequires: libgspell-devel >= %gspell_ver libenchant2-devel
 BuildRequires: libdazzle-devel >= %dazzle_ver libtemplate-glib-devel >= %template_glib_ver libjsonrpc-glib-devel
 BuildRequires: libdazzle-gir-devel libtemplate-glib-gir-devel  libjsonrpc-glib-gir-devel
 BuildRequires: libgtkmm3-devel >= %gtkmm_ver
-BuildRequires: libgladeui2.0-devel
+BuildRequires: libgladeui2.0-devel cmark-devel
+%{?_with_clang:BuildRequires: llvm-devel clang-devel}
+%{?_with_docs:BuildRequires: gi-docgen >= %gi_docgen_ver}
 %{?_with_help:BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme}
 %{?_with_flatpak:BuildRequires: libflatpak-devel libostree-devel libportal-devel >= %portal_ver}
 %{?_with_sysprof:BuildRequires: sysprof-devel >= %sysprof_ver}
@@ -116,21 +118,21 @@ Requires: %name = %EVR
 %description clang
 This package provides files for Gnome Builder to work with Clang/LLVW.
 
-
 %prep
-%setup
+%setup -n %name-%version%beta
 sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 
 %build
 %meson \
+	%{?_without_clang:-Dplugin_clang=false} \
+	%{?_without_sysprof:-Dplugin_sysprof=false} \
 	%{?_with_docs:-Ddocs=true} \
 	%{?_with_help:-Dhelp=true} \
 	%{?_without_flatpak:-Dplugin_flatpak=false} \
 	%{?_with_autotools:-Dplugin_autotools=true} \
-	%{?_with_gvls:-Dplugin_gvls=true} \
 	%{?_with_rls:-Dplugin_rls=true}
 %nil
-%meson_build
+%meson_build -v
 
 %install
 %meson_install
@@ -139,10 +141,11 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %files -f %name.lang
 %_bindir/%name
 %_libexecdir/%name-git
+%_libexecdir/%name-flatpak
 %dir %_libdir/%name
 
 %dir %_libdir/%name/girepository-1.0
-%_libdir/%name/girepository-1.0/Ide-%ver_major.typelib
+%_libdir/%name/girepository-1.0/Ide-%api_ver.typelib
 
 %dir %_libdir/%name/plugins
 %_libdir/%name/plugins/__pycache__
@@ -167,8 +170,8 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %_libdir/%name/plugins/html-preview.plugin
 %_libdir/%name/plugins/html_preview.gresource
 %_libdir/%name/plugins/html_preview.py
-%_libdir/%name/plugins/jedi.plugin
-%_libdir/%name/plugins/jedi_plugin.py
+%_libdir/%name/plugins/jedi-language-server.plugin
+%_libdir/%name/plugins/jedi_language_server_plugin.py
 %_libdir/%name/plugins/jhbuild.plugin
 %_libdir/%name/plugins/jhbuild_plugin.py
 %_libdir/%name/plugins/make.plugin
@@ -196,6 +199,8 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %_libdir/%name/plugins/valgrind.plugin
 %_libdir/%name/plugins/valgrind_plugin.gresource
 %_libdir/%name/plugins/valgrind_plugin.py
+%_libdir/%name/plugins/vala_langserv.plugin
+%_libdir/%name/plugins/vala_langserv.py
 %_libdir/%name/plugins/waf.plugin
 %_libdir/%name/plugins/waf_plugin.py
 #%{?_with_autotools_templates:%_libdir/%name/plugins/autotools_templates/}
@@ -204,13 +209,15 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %_includedir/%name/
 %_includedir/%name-%ver_major/
 %dir %_libdir/%name/pkgconfig
-%_libdir/%name/pkgconfig/%name-%ver_major.pc
+%_libdir/%name/pkgconfig/%name-%version.pc
 %python3_sitelibdir_noarch/gi/overrides/Ide.py
 %python3_sitelibdir_noarch/gi/overrides/__pycache__/
 %doc README* AUTHORS NEWS
 
+%if_with clang
 %files clang
 %_libexecdir/%name-clang
+%endif
 
 %files data
 %_desktopdir/%xdg_name.desktop
@@ -238,12 +245,19 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %_iconsdir/hicolor/*/*/*.*
 %_datadir/metainfo/%xdg_name.appdata.xml
 
-%if_with docs
-%_datadir/gtk-doc/html/libide/
+%{?_with_docs:%_datadir/doc/libide/}
 %{?_with_help:%_datadir/doc/%name/}
-%endif
 
 %changelog
+* Wed Nov 17 2021 Yuri N. Sedunov <aris@altlinux.org> 41.2-alt1
+- 41.2
+
+* Thu Sep 23 2021 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
+- 41.1
+
+* Mon Sep 13 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.2-alt1.2
+- disabled LTO
+
 * Thu Jul 08 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.2-alt1.1
 - required "typelib(Jsonrpc) = 1.0" (ALT #40399)
 

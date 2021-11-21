@@ -3,11 +3,11 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name swell-foop
-%define ver_major 40
+%define ver_major 41
 %define xdg_name org.gnome.SwellFoop
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: The "Same Game" puzzle
@@ -27,8 +27,8 @@ Provides:  %_name = %version-%release
 %define glib_ver 2.36.0
 %define gtk_ver 3.22.23
 
-BuildRequires(pre): meson
-BuildRequires: vala-tools
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson vala-tools
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libclutter-gtk3-devel
 BuildRequires: gsettings-desktop-schemas-devel
@@ -61,6 +61,9 @@ area in as few moves as possible.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0.1-alt1
+- 41.0.1
+
 * Fri Apr 30 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
 - 40.1
 

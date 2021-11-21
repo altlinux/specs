@@ -1,22 +1,29 @@
-%define ver_major 40
+%define ver_major 41
+%define beta %nil
 %define xdg_name org.gnome.Polari
 %define mozjs_ver 78
 
 Name: polari
-Version: %ver_major.1
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Internet Relay Chat client for GNOME
 License: GPLv2+
 Group: Networking/Chat
 Url: https://wiki.gnome.org/Apps/Polari
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 
-Requires: libgjs
+%define gtk_ver 3.22.0
+%define gspell_ver 1.3.2
+%define gjs_ver 1.69.2
+
+Requires: libgjs >= %gjs_ver
 Requires: telepathy-logger
 Requires: telepathy-mission-control
 Requires: telepathy-idle
+
+%set_typelibdir %_libdir/%name/girepository-1.0
 
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 Requires: typelib(Gdk)
@@ -24,24 +31,20 @@ Requires: typelib(GdkPixbuf)
 Requires: typelib(Gio)
 Requires: typelib(GLib)
 Requires: typelib(GObject)
+Requires: typelib(Graphene)
 Requires: typelib(Gspell)
-Requires: typelib(Gtk)
+Requires: typelib(Gtk) = 3.0
 Requires: typelib(Pango)
 Requires: typelib(PangoCairo)
 Requires: typelib(Polari)
 Requires: typelib(Secret)
-Requires: typelib(Soup)
+Requires: typelib(Soup) = 2.4
 Requires: typelib(TelepathyGLib)
 Requires: typelib(TelepathyLogger)
-Requires: typelib(WebKit2)
+Requires: typelib(WebKit2) = 4.0
 
-%set_typelibdir %_libdir/%name/girepository-1.0
-%define gtk_ver 3.22.0
-%define gspell_ver 1.3.2
-%define gjs_ver 1.58.0
-
-BuildRequires(pre): meson rpm-build-gir
-BuildRequires: gtk-doc yelp-tools
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson gtk-doc yelp-tools
 BuildRequires: desktop-file-utils libappstream-glib-devel
 BuildRequires: libgjs-devel >= %gjs_ver  %_bindir/js%mozjs_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver libtelepathy-glib-devel
@@ -54,7 +57,7 @@ Polari is a simple IRC Client that is designed to integrate seamlessly
 with GNOME 3 Desktop.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson
@@ -70,7 +73,7 @@ with GNOME 3 Desktop.
 %_libdir/%name/
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
-%_iconsdir/hicolor/scalable/apps/%xdg_name.svg
+%_iconsdir/hicolor/scalable/apps/%{xdg_name}*.svg
 %_datadir/%name/
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.Polari.service
@@ -81,6 +84,9 @@ with GNOME 3 Desktop.
 
 
 %changelog
+* Tue Sep 21 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Mon Jul 12 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
 - 40.1
 

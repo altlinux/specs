@@ -1,5 +1,5 @@
 %define bname librsvg
-%define ver_major 2.50
+%define ver_major 2.52
 %define api_ver 2.0
 %define gtk_api_ver 2.0
 %define gtk3_api_ver 3.0
@@ -13,10 +13,10 @@
 %def_enable introspection
 %def_enable vala
 %def_disable installed_tests
-%def_enable check
+%def_disable check
 
 Name: %bname
-Version: %ver_major.7
+Version: %ver_major.4
 Release: alt1
 Epoch: 1
 
@@ -28,28 +28,28 @@ Url: https://wiki.gnome.org/action/show/Projects/LibRsvg
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.tar.xz
 
 # From configure.ac
+%define rust_ver 1.52
 %define glib_ver 2.52.0
 %define pango_ver 1.44
 %define gtk3_ver 3.10.0
-%define libxml2_ver 2.7.0
-%define cairo_ver 1.15.12
+%define libxml2_ver 2.9.0
+%define cairo_ver 1.16
 %define vala_ver 0.18
 %define freetype_ver 2.9
-%define rust_ver 1.40
+%define harfbuzz_ver 2.0.0
 
-# From configure.ac
+BuildRequires: /proc rust >= %rust_ver rust-cargo
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libpango-devel >= %pango_ver
 BuildRequires: libgtk+3-devel >= %gtk3_ver
 BuildRequires: libxml2-devel >= %libxml2_ver
 BuildRequires: libcairo-devel >= %cairo_ver
 BuildRequires: libfreetype-devel >= %freetype_ver
+BuildRequires: libharfbuzz-devel >= %harfbuzz_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
 BuildRequires: libX11-devel libXt-devel
-BuildRequires: gcc-c++ gtk-doc intltool sgml-common zlib-devel
+BuildRequires: gtk-doc intltool sgml-common zlib-devel
 %{?_enable_vala:BuildRequires: vala-tools >= %vala_ver rpm-build-vala}
-# sinc 2.41.0
-BuildRequires: /proc rust >= %rust_ver rust-cargo
 
 %description
 A high performance SVG rendering library associated with the Gnome Project.
@@ -192,6 +192,9 @@ the functionality of the installed %name.
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Sat Nov 13 2021 Yuri N. Sedunov <aris@altlinux.org> 1:2.52.4-alt1
+- 2.52.4
+
 * Sat Jun 05 2021 Yuri N. Sedunov <aris@altlinux.org> 1:2.50.7-alt1
 - 2.50.7
 

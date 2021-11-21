@@ -1,14 +1,13 @@
 %define _unpackaged_files_terminate_build 1
-%def_disable snapshot
+%def_enable snapshot
 %define modname gidocgen
 %define ver_major 2021
 
-# mypy too old?
-%def_disable check
+%def_enable check
 
 Name: gi-docgen
-Version: %ver_major.8
-Release: alt1
+Version: %ver_major.9
+Release: alt0.1
 
 Summary: Documentation tool for GObject-based libraries
 Group: Development/Other
@@ -35,7 +34,9 @@ BuildRequires: python3-module-markupsafe
 BuildRequires: python3-module-Pygments
 BuildRequires: python3-module-toml
 BuildRequires: python3-module-typogrify
-%{?_enable_check:BuildRequires: python3-module-flake8 python3-module-mypy}
+%{?_enable_check:BuildRequires: python3-module-pytest python3-module-flake8 python3-module-mypy
+BuildRequires: python3-module-markdown python3-module-jinja2 python3-module-Pygments
+BuildRequires: python3-module-toml python3-module-typogrify}
 
 %description
 GI-DocGen is a document generator for GObject-based libraries. GObject is
@@ -81,6 +82,10 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %_datadir/%modname/templates/
 
 %changelog
+* Wed Nov 17 2021 Yuri N. Sedunov <aris@altlinux.org> 2021.9-alt0.1
+- updated to 2021.8-37-g1e9d03d
+- enabled %%check
+
 * Thu Oct 21 2021 Yuri N. Sedunov <aris@altlinux.org> 2021.8-alt1
 - 2021.8
 

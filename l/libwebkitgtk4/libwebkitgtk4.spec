@@ -1,11 +1,15 @@
 %set_verify_elf_method textrel=relaxed
-%{?optflags_lto:%global optflags_lto %nil}
-
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
+%def_enable soup2
+%if_enabled soup2
 %define api_ver 4.0
+%else
+%define api_ver 4.1
+%endif
+
 %define pkglibexecdir %_libexecdir/webkit2gtk-%api_ver
-%define ver_major 2.32
+%define ver_major 2.34
 %define gtk_ver 3.0
 %define gst_ver 1.14.3
 
@@ -15,10 +19,12 @@
 
 %def_enable ninja
 %def_disable gtkdoc
-%def_disable gold
+%def_enable gold
 %def_enable x11
 %def_enable wayland
 %def_enable systemd
+%def_disable soup2
+%def_disable libavif
 # since 2.19.x in some build environments
 # while build webki2gtk-dep typelibs this error appears
 # FATAL: Could not allocate gigacage memory with maxAlignment = ..
@@ -28,7 +34,7 @@
 %def_enable bubblewrap_sandbox
 
 Name: libwebkitgtk4
-Version: %ver_major.4
+Version: %ver_major.1
 Release: alt1
 
 Summary: Web browser engine
@@ -42,18 +48,24 @@ Source1: webkit2gtk.env
 # https://gitlab.kitware.com/cmake/cmake/issues/18044
 Patch: webkitgtk-2.26.1-alt-bwrap_check.patch
 # python->python3
-Patch1: webkitgtk-2.31.1-alt-python3.patch
+Patch1: webkitgtk-2.33.3-alt-python3.patch
 Patch2: webkitgtk-2.30.0-alt-arm64-return-type.patch
+Patch3: webkitgtk-2.32.2-alt-no_forsed_sse.patch
+Patch10: webkitgtk-2.33.90-alt-format.patch
 Patch2000: webkitgtk-2.32.3-1-alt-e2k.patch
 
 %define bwrap_ver 0.3.1
+%define soup_ver 2.62
+%define soup_api_ver 3.0
+%define soup3_ver 2.99.9
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-gir rpm-build-python3
 BuildRequires: /proc gcc-c++ cmake
 %{?_enable_ninja:BuildRequires: ninja-build}
 BuildRequires: ccache libicu-devel >= 5.6.1 bison perl-Switch perl-JSON-PP zlib-devel
 BuildRequires: flex >= 2.5.33
-BuildRequires: gperf libjpeg-devel libpng-devel libwebp-devel libopenjpeg2.0-devel openjpeg-tools2.0
+BuildRequires: gperf libjpeg-devel libpng-devel libwebp-devel liblcms2-devel
+BuildRequires: libopenjpeg2.0-devel openjpeg-tools2.0
 BuildRequires: libxml2-devel >= 2.6
 BuildRequires: libXt-devel
 BuildRequires: libgtk+3-devel >= 3.4.0 libepoxy-devel
@@ -64,14 +76,18 @@ BuildRequires: libxslt-devel >= 1.1.7
 BuildRequires: gstreamer1.0-devel >= %gst_ver gst-plugins1.0-devel >= %gst_ver gst-plugins-bad1.0-devel
 BuildRequires: librsvg-devel >= 2.2.0
 BuildRequires: gtk-doc >= 1.10
-BuildRequires: libsoup-devel >= 2.61.90
+%if_enabled soup2
+BuildRequires: libsoup-devel >= %soup_ver libsoup-gir-devel
+%else
+BuildRequires: libsoup%soup_api_ver-devel >= %soup3_ver libsoup%soup_api_ver-gir-devel
+%endif
 BuildRequires: libsecret-devel
 BuildRequires: libpango-devel >= 1.21.0 libcairo-devel >= 1.10 libcairo-gobject-devel
 BuildRequires: fontconfig-devel >= 2.4 libfreetype-devel libharfbuzz-devel libwoff2-devel
 BuildRequires: libgio-devel >= 2.25.0
 BuildRequires: ruby ruby-stdlibs
 BuildRequires: libGL-devel libGLES-devel libXcomposite-devel libXdamage-devel
-BuildRequires: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel libsoup-gir-devel
+BuildRequires: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel 
 BuildRequires: geoclue2-devel libgeoclue2-devel
 BuildRequires: libenchant-devel libhyphen-devel
 BuildRequires: libat-spi2-core-devel at-spi2-atk-devel
@@ -91,6 +107,8 @@ BuildRequires: libmanette-devel
 %{?_enable_bubblewrap_sandbox:BuildRequires: bubblewrap >= %bwrap_ver xdg-dbus-proxy libseccomp-devel}
 # since 2.29.x 
 %{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
+# since 2.34.0
+%{?_enable_libavif:BuildRequires: libavif-devel}
 
 %description
 WebKit is an open source web browser engine.
@@ -222,6 +240,10 @@ GObject introspection devel data for the JavaScriptCore library
 %ifarch aarch64
 %patch2 -b .arm64
 %endif
+%ifarch %ix86
+%patch3 -p1 -b .no_forced_sse
+%endif
+%patch10 -p1 -b .format
 %ifarch %e2k
 %patch2000 -p2 -b .e2k
 %endif
@@ -243,17 +265,12 @@ subst 's|Q\(unused-arguments\)|W\1|' Source/cmake/WebKitCompilerFlags.cmake
 %endif
 %add_optflags -Wl,--no-keep-memory
 %{?_disable_gold: %add_optflags -Wl,--reduce-memory-overheads}
-%add_optflags %(getconf LFS_CFLAGS)
-%ifarch %ix86
-# since 2.24.1 sse2 required for %%ix86
-%add_optflags -msse2 -mfpmath=sse
-%endif
+%add_optflags %(getconf LFS_CFLAGS) -Wno-error=return-type
 %ifarch %e2k
 # EDG frontend mistakenly sees it everywhere
 # after each "if constexpr {} else {}" constuct
 %add_optflags -Wno-return-type
 %endif
-
 %ifarch x86_64
 %if_disabled gigacage
 export GIGACAGE_ENABLED=0
@@ -269,6 +286,7 @@ export PYTHON=%__python3
 %{?_enable_gtkdoc:-DENABLE_GTKDOC:BOOL=ON} \
 %{?_enable_x11:-DENABLE_X11_TARGET:BOOL=ON} \
 %{?_enable_wayland:-DENABLE_WAYLAND_TARGET:BOOL=ON} \
+%{?_disable_libavif:-DUSE_AVIF:BOOL=OFF} \
 %{?_disable_gold:-DUSE_LD_GOLD:BOOL=OFF} \
 %if_disabled bubblewrap_sandbox
 -DENABLE_BUBBLEWRAP_SANDBOX=OFF \
@@ -285,12 +303,11 @@ export PYTHON=%__python3
 -DUSE_SYSTEM_MALLOC=ON \
 %endif
 -DUSER_AGENT_BRANDING:STRING="ALTLinux" \
-%{?_disable_systemd:-DUSE_SYSTEMD:BOOL=OFF}
+%{?_disable_systemd:-DUSE_SYSTEMD:BOOL=OFF} \
+%{?_enable_soup2:-DUSE_SOUP2=ON}
 %nil
-%ifarch aarch64
-%define smp %__nprocs
-n=%smp
-[  "$n"  -lt  64  ]  || %define _smp_build_ncpus 64
+%ifarch aarch64 x86_64
+[ %__nprocs -lt 64 ] || export NPROCS=64
 %endif
 %cmake_build
 
@@ -307,7 +324,6 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 %_libdir/libwebkit2gtk-%api_ver.so.*
 %dir %pkglibexecdir
 %pkglibexecdir/WebKitNetworkProcess
-#%pkglibexecdir/WebKitPluginProcess
 %pkglibexecdir/WebKitWebProcess
 %dir %_libdir/webkit2gtk-%api_ver
 %dir %_libdir/webkit2gtk-%api_ver/injected-bundle
@@ -359,6 +375,14 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Fri Oct 29 2021 Yuri N. Sedunov <aris@altlinux.org> 2.34.1-alt1
+- 2.34.1
+- enabled LTO again
+
+* Fri Oct 29 2021 Yuri N. Sedunov <aris@altlinux.org> 2.32.4-alt2
+- Source/cmake/WebKitCompilerFlags.cmake, spec: no force SSE for %%ix86
+- decreased nprocs limit for x86_64
+
 * Fri Sep 17 2021 Yuri N. Sedunov <aris@altlinux.org> 2.32.4-alt1
 - 2.32.4
 
