@@ -30,7 +30,7 @@
 Name: erlang
 Epoch: 1
 Version: 24.1.3
-Release: alt1
+Release: alt2
 Summary: A programming language developed by Ericsson
 License: Apache-2.0
 Group: Development/Erlang
@@ -584,6 +584,10 @@ sed -i 's,armv7hl,armh,' erts/aclocal.m4
 %ifarch %e2k
 # beam/erl_bif_lists.c:779: non-void subtract_continue() w/o return
 sed -i '/-Werror=return-type/d' erts/configure.in
+# lcc: error: unrecognized command line option "-MG"
+sed -i 's/MG_FLAG=-MG/MG_FLAG=/' erts/emulator/Makefile.in
+# slow feature for LCC
+%add_optflags -DNO_JUMP_TABLE
 %endif
 
 %build
@@ -591,6 +595,9 @@ sed -i '/-Werror=return-type/d' erts/configure.in
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 #24.1.2: Failed to create scheduler thread, error = 11
+# each Erlang process can use ncpu*3+1 threads
+# if you get this error, you need to increase the limit returned by "ulimit -u"
+# which is 512 in the default ALT Linux configuration
 export NPROCS=16
 
 ./otp_build update_configure
@@ -1184,6 +1191,11 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Sat Nov 20 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:24.1.3-alt2
+- E2K: removed unsupported -MG option
+- E2K: disabled use of Labels as Values
+- commented on the issue with pthread_create fail
+
 * Wed Oct 27 2021 Egor Ignatov <egori@altlinux.org> 1:24.1.3-alt1
 - new version 24.1.3
 
