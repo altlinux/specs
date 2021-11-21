@@ -8,7 +8,7 @@
 %def_with unique
 
 Name: gnome-commander
-Version: %ver_major.3
+Version: %ver_major.3.1
 Release: alt1
 
 %define xdg_name org.gnome.%name
@@ -82,6 +82,9 @@ sed -i.e2k "/g_autofree gchar/{s|g_autofree gchar|g_autofree_edg(gchar)|;s|\*||g
 
 
 %changelog
+* Sun Nov 21 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.3.1-alt1
+- 1.12.3.1
+
 * Sun Nov 21 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.3-alt1
 - 1.12.3 (fixed ALT #41354)
 
