@@ -1,7 +1,7 @@
 Name: perl-OpenGL
 Epoch: 1
 Version: 0.70
-Release: alt2.1
+Release: alt3
 
 Summary: Perl bindings to OpenGL API
 Group: Development/Perl
@@ -28,12 +28,18 @@ rm test.pl
 %install
 %perl_vendor_install
 
+# conflicts with perl-OpenGL-Array
+rm %buildroot%perl_vendor_archlib/OpenGL/Array.pod
+
 %files
 %perl_vendor_archlib/OpenGL*
 %perl_vendor_autolib/OpenGL*
 %doc TODO CHANGES README COPYRIGHT KNOWN_PROBLEMS Release_Notes SUPPORTS
 
 %changelog
+* Tue Nov 23 2021 Igor Vlasenko <viy@altlinux.org> 1:0.70-alt3
+- removed Array.pod (conflicts with perl-OpenGL-Array)
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.70-alt2.1
 - rebuild with new perl 5.28.1
 
