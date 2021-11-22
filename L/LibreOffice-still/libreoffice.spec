@@ -31,7 +31,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -539,7 +539,7 @@ for l in %with_lang; do
 done
 
 # Create gtk3 plugin list
-find %buildroot%lodir -name "*_gtk3*" ! -name "*_kf5*" | sed 's@^%buildroot@@' > files.gtk3
+find %buildroot%lodir -name "*_gtk3lo.so" | sed 's@^%buildroot@@' > files.gtk3
 
 # Create qt5 plugin list
 find %buildroot%lodir -name "*qt5*"   | sed 's@^%buildroot@@' > files.qt5
@@ -704,6 +704,9 @@ install -pm0644 %SOURCE507 %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Nov 22 2021 Andrey Cherepanov <cas@altlinux.org> 7.1.7.2-alt2
+- Exclude libvclplug_gtk3_kde5lo.so from LibreOffice-still-gtk3.
+
 * Fri Nov 05 2021 Andrey Cherepanov <cas@altlinux.org> 7.1.7.2-alt1
 - New version.
 
