@@ -1,12 +1,12 @@
 Group: Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ libX11-devel libqt4-devel libquazip-devel pkgconfig(lcms2) pkgconfig(libopenjp2) pkgconfig(libtiff-4) qt5-phonon-devel
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ libX11-devel libqt4-devel pkgconfig(lcms2) pkgconfig(libopenjp2) pkgconfig(libtiff-4) qt5-phonon-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define fontpkgname texstudio
 Name:           texstudio
-Version:        4.0.4
+Version:        4.1.1
 Release:        alt1
 
 Summary:        A feature-rich editor for LaTeX documents
@@ -31,7 +31,6 @@ BuildRequires:  hunspell-utils libhunspell-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext gettext-tools
 BuildRequires:  libpoppler-qt5-devel
-BuildRequires:  libqtsingleapplication-devel
 BuildRequires:  libqtsingleapplication-qt5-devel
 BuildRequires:  libqtermwidget-devel
 BuildRequires:  libquazip-qt5-devel
@@ -126,6 +125,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE1}
 %doc utilities/AUTHORS utilities/COPYING utilities/manual/CHANGELOG.txt
 
 %changelog
+* Mon Nov 22 2021 Ilya Mashkin <oddity@altlinux.ru> 4.1.1-alt1
+- 4.1.1
+
 * Sun Nov 07 2021 Ilya Mashkin <oddity@altlinux.ru> 4.0.4-alt1
 - 4.0.4
 
