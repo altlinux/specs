@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: virtualgl
-Version: 2.6.5
-Release: alt1.1
+Version: 3.0
+Release: alt1
 
 %define vgl_name vgl
 
@@ -18,7 +18,7 @@ Source2: README.ALT-ru_RU.UTF-8
 
 Patch1: %name-2.5.90-alt-remove-solaris-stuff.patch
 Patch2: %name-2.5.2-alt-xauth.patch
-Patch3: %name-2.5.2-alt-nettest.patch
+Patch3: %name-3.0-alt-nettest.patch
 Patch4: %name-2.6.3-alt-fix-linkage.patch
 # patch 5: modified RedHat libexec path patch
 Patch5: %name-2.5.2-alt-libexec-path-fix.patch
@@ -102,7 +102,7 @@ mkdir -p %buildroot%_sbindir
 install -pD -m 755 %SOURCE1 %buildroot%_sbindir
 mkdir -p %buildroot%_localstatedir/%vgl_name
 pushd %buildroot%_bindir
-for file in glreadtest nettest glxinfo glxspheres* cpustat tcbench; do
+for file in glreadtest nettest glxinfo glxspheres* cpustat tcbench eglinfo; do
     mv $file vgl_$file
 done
 
@@ -145,6 +145,11 @@ chmod 2755 %_localstatedir/%vgl_name
 %_includedir/*.h
 
 %changelog
+* Mon Nov 22 2021 Nikolai Kostrigin <nickel@altlinux.org> 3.0-alt1
+- new version
+  + pack vgl_eglinfo utility by upstream
+  + update alt-nettest patch
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 2.6.5-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
