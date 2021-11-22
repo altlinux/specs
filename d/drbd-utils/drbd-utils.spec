@@ -1,11 +1,11 @@
 %def_without xen
-%define githash 9f2aa37c2e0438bc3e6336eb8f697cfc6c0b8243
+%define githash 856c13e97e974f8e0dec77dd3738372d4c234d2e
 %define gitdiff c6e62702d5e4fb2cf6b3fa27e67cb0d4b399a30b
 %define _localstatedir %_var
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: drbd-utils
-Version: 9.19.0
+Version: 9.19.1
 Release: alt1
 
 Summary: DRBD user-land tools and scripts
@@ -146,6 +146,7 @@ make test
 %_unitdir/drbd-lvchange@.service
 %_unitdir/drbd-promote@.service
 %_unitdir/drbd-reconfigure-suspend-or-error@.service
+%_unitdir/drbd-demote-or-escalate@.service
 %_unitdir/drbd-services@.target
 %_unitdir/drbd-wait-promotable@.service
 %_unitdir/drbd@.service
@@ -195,6 +196,9 @@ make test
 %_sysconfdir/bash_completion.d
 
 %changelog
+* Mon Nov 22 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.19.1-alt1
+- 9.19.1
+
 * Mon Oct 04 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.19.0-alt1
 - 9.19.0
 - add %%check for x86_64 and %%ix86
