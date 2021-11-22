@@ -6,7 +6,7 @@
 %endif
 
 Name: admc
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: AD editor
