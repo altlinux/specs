@@ -7,7 +7,7 @@
 
 Name: ltrace
 Version: 0.7.91.0.198.git82c6640
-Release: alt4
+Release: alt5
 
 Summary: Tracks runtime library calls from dynamically linked executables
 License: GPLv2+
@@ -53,6 +53,7 @@ Patch1003: ltrace-0.7.91.0.198.git82c6640-disable_long_double_test_wchar.patch
 Patch1004: ltrace-0.7.91.0.198.git82c6640-fix_errors_in_tests.patch
 %{?_without_glibc_debuginfo:
 Patch1005: ltrace-0.7.91.0.198.git82c6640-disable_glibc_core_debuginfo_tests.patch}
+Patch1006: ltrace-0.7.91.0.198.git82c6640-fix_Wlto-type-mismatch.patch
 
 BuildRequires: libelf-devel elfutils-devel gcc-c++
 %{?!_without_check:%{?!_disable_check:
@@ -102,6 +103,7 @@ Ltrace перехватывает и выводит все выполняемы�
 %patch1004 -p1
 %{?_without_glibc_debuginfo:
 %patch1005 -p1}
+%patch1006 -p1
 
 %build
 export CFLAGS="%optflags -Werror"
@@ -124,6 +126,9 @@ LC_ALL=en_US.UTF-8 make check RUNTESTFLAGS="--tool_exec=%buildroot/%_bindir/ltra
 %exclude %_docdir/%name
 
 %changelog
+* Mon Nov 22 2021 Grigory Ustinov <grenka@altlinux.org> 0.7.91.0.198.git82c6640-alt5
+- Fixed FTBFS.
+
 * Tue Oct 27 2020 Grigory Ustinov <grenka@altlinux.org> 0.7.91.0.198.git82c6640-alt4
 - Make lav@ happy. (Closes: #39102)
 
