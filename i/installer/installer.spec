@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.10.14
+Version: 1.10.15
 Release: alt1
 
 Summary: Installer common parts
@@ -111,6 +111,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Mon Nov 22 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.10.15-alt1
+- host-N auto hostnames resurrected
+
 * Thu Oct 28 2021 Anton Midyukov <antohami@altlinux.org> 1.10.14-alt1
 - 30-setup-network.sh, 40-autohostname.sh: configure /etc/hostname
 - 30-setup-network.sh: exclude HOSTNAME=(none)
