@@ -1,6 +1,6 @@
 Name:          canorus
-Version:       0.7.3.git3a25392
-Release:       alt2
+Version:       0.7.3.git45e82ec
+Release:       alt1
 Summary:       Free cross-platform music score editor
 Group:         Sound
 License:       GPLv3+
@@ -22,7 +22,7 @@ BuildRequires: qt5-webkit-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: zlib-devel
 BuildRequires: qt5-svg-devel
-%add_optflags -Wno-error=deprecated-declarations
+%add_optflags -Wno-error=deprecated-declarations -Wno-error=return-type -Wno-error
 
 %add_findreq_skiplist %_datadir/%name/*
 
@@ -43,7 +43,7 @@ NoteEdit and others.
 
 %build
 %cmake -DTTF_INSTALL_DIR:PATH=%_datadir/fonts/ttf/%name \
-# TODO       -DNO_RUBY:BOOL=OFF
+       -DCMAKE_BUILD_TYPE:STRING=Release
 %cmake_build
 
 %install
@@ -75,6 +75,9 @@ fc-cache %_datadir/fonts/ttf/%name ||:
 
 
 %changelog
+* Tue Oct 12 2021 Pavel Skrylev <majioa@altlinux.org> 0.7.3.git45e82ec-alt1
+- ^ 0.7.3.git3a25392 -> 0.7.3.git45e82ec
+
 * Thu Aug 27 2020 Pavel Skrylev <majioa@altlinux.org> 0.7.3.git3a25392-alt2
 - ! build
 
