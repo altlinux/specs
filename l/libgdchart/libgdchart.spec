@@ -1,6 +1,8 @@
+%define optflags_lto %nil
+
 Name: libgdchart
 Version: 0.11.5
-Release: alt1.2
+Release: alt1.3
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -53,6 +55,9 @@ install -pm644 libgdc.so* %buildroot%_libdir
 %_libdir/lib*.so
 
 %changelog
+* Mon Nov 22 2021 Grigory Ustinov <grenka@altlinux.org> 0.11.5-alt1.3
+- Fixed FTBFS.
+
 * Sun Apr 04 2021 Grigory Ustinov <grenka@altlinux.org> 0.11.5-alt1.2
 - Fixed FTBFS with -fcommon.
 
