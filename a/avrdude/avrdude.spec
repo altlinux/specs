@@ -7,10 +7,12 @@
 %define udev_rules_file 70-avrdude_usbprog.rules
 %set_verify_elf_method unresolved=relaxed
 
+%global optflags_lto %nil
+
 Summary: AVRDUDE is software for programming Atmel AVR Microcontrollers.
 Name: avrdude
 Version: 6.3
-Release: alt5
+Release: alt6
 License: GPL
 Group: Development/Other
 URL: http://www.nongnu.org/avrdude/
@@ -123,6 +125,9 @@ install -D -m 644 %{SOURCE3} %buildroot%_sysconfdir/modprobe.d/50-avrdude_parpor
 %_libdir/*.a
 
 %changelog
+* Mon Nov 22 2021 Nikolai Kostrigin <nickel@altlinux.org> 6.3-alt6
+- NMU: spec: disable LTO to fix FTBFS
+
 * Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 6.3-alt5
 - added doc fixes from fedora
 - added 70-avrdude_usbprog.rules - usb id list merged from SuSE, fedora, debian
