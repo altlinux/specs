@@ -3,8 +3,8 @@
 %def_enable static
 
 Name:    modsecurity
-Version: 3.0.5
-Release: alt2
+Version: 3.0.6
+Release: alt1
 
 Summary: web application firewall (WAF) engine
 Group: Security/Networking
@@ -142,6 +142,9 @@ install -m 640 %SOURCE3 %buildroot%_logrotatedir/%name
 %endif
 
 %changelog
+* Sun Nov 21 2021 Nikolay A. Fetisov <naf@altlinux.org> 3.0.6-alt1
+- New version
+
 * Wed Oct 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 3.0.5-alt2
 - Fix build with LTO flags
 - Update project URL
