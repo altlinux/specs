@@ -2,7 +2,7 @@
 %define soname 3
 
 Name: jitterentropy
-Version: 3.3.0
+Version: 3.3.1
 Release: alt1
 
 Summary: Library implementing the jitter entropy source
@@ -52,6 +52,9 @@ mkdir -p %buildroot%_includedir
 %_man3dir/*
 
 %changelog
+* Mon Nov 22 2021 Nikolai Kostrigin <nickel@altlinux.org> 3.3.1-alt1
+- New version
+
 * Mon Sep 20 2021 Nikolai Kostrigin <nickel@altlinux.org> 3.3.0-alt1
 - New version
 
