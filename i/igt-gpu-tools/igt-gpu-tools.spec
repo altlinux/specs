@@ -1,5 +1,5 @@
 Name: igt-gpu-tools
-Version: 1.25
+Version: 1.26
 Release: alt1
 
 Summary: tools for debugging the Intel graphics driver
@@ -13,42 +13,13 @@ Source: %name-%version.tar.xz
 Provides: intel-gpu-tools-@version@
 Obsoletes: intel-gpu-tools
 
-# dropped by buildreq but still required
-# Automatically added by buildreq on Wed Dec 11 2019
-# optimized out: fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libEGL-devel libGL-devel libX11-devel libXau-devel libXext-devel libXrender-devel libcrypt-devel libelf-devel libfreetype-devel libglvnd-devel libgraphite2-devel libharfbuzz-devel libicu-devel libjson-c4 libncurses-devel libp11-kit libpng-devel libsasl2-3 libtinfo-devel libxcb-devel libxmlrpc-client ninja-build perl pkg-config python-modules python2-base python3 python3-base python3-module-pkg_resources sh4 xz zlib-devel
-BuildRequires: flex git-core gtk-doc libXrandr-devel libXv-devel libalsa-devel libcairo-devel libcurl-devel libdb4-devel libdrm-devel libdw-devel libgdbm-devel libgsl-devel libjson-c-devel libkmod-devel libpciaccess-devel libpixman-devel libprocps-devel libudev-devel libunwind-devel libxmlrpc-devel meson python3-dev
-
-BuildRequires: xorg-util-macros
-BuildRequires: libdrm-devel >= 2.4.64
-
-# 1.6+
-BuildRequires: gtk-doc xorg-dri2proto-devel swig python3-dev flex
-
-# just to be sure...
-BuildRequires: bison
-BuildRequires: flex
-BuildRequires: python3-module-docutils
-BuildRequires: python3
-BuildRequires: pkgconfig(cairo)
-BuildRequires: pkgconfig(cairo-xlib)
-BuildRequires: pkgconfig(dri2proto)
-BuildRequires: pkgconfig(glib-2.0)
-BuildRequires: pkgconfig(gtk-doc)
-BuildRequires: pkgconfig(libdrm)
-BuildRequires: pkgconfig(libkmod)
-BuildRequires: pkgconfig(libprocps)
-BuildRequires: pkgconfig(libudev)
-BuildRequires: pkgconfig(libunwind)
-BuildRequires: pkgconfig(pciaccess)
-BuildRequires: pkgconfig(x11)
-BuildRequires: pkgconfig(xext)
-BuildRequires: pkgconfig(xorg-macros)
-BuildRequires: pkgconfig(xrandr)
-BuildRequires: pkgconfig(xv)
-
 ExclusiveArch: %ix86 x86_64
 
 Requires: intel-gen4asm = %version
+
+# Automatically added by buildreq on Wed Nov 17 2021
+# optimized out: docbook-dtds docbook-style-xsl fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXau-devel libXext-devel libXrender-devel libcrypt-devel libctf-nobfd0 libelf-devel libfreetype-devel libglvnd-devel libgpg-error libgraphite2-devel libicu-devel libjson-c5 libncurses-devel libp11-kit libpng-devel libsasl2-3 libtinfo-devel libxcb-devel libxmlrpc-client ninja-build perl pkg-config python3 python3-base python3-module-Pygments sh4 xml-common xsltproc xz zlib-devel
+BuildRequires: ctags flex git-core gtk-doc libXrandr-devel libXv-devel libalsa-devel libcairo-devel libcurl-devel libdb4-devel libdrm-devel libdw-devel libgdbm-devel libgsl-devel libharfbuzz-devel libjson-c-devel libkmod-devel liboping-devel libpciaccess-devel libpixman-devel libprocps-devel libudev-devel libunwind-devel libxmlrpc-devel meson python3-dev
 
 %description
 igt-gpu-tools is a package of tools for debugging the Intel graphics
@@ -84,7 +55,6 @@ Group: Development/Documentation
 
 %prep
 %setup
-sed -i 's/NOT-GIT/%release/g' lib/Makefile.sources
 
 %build
 %meson
@@ -119,6 +89,9 @@ sed -i 's/NOT-GIT/%release/g' lib/Makefile.sources
 %doc assembler/README assembler/TODO assembler/doc/examples/
 
 %changelog
+* Wed Nov 17 2021 Fr. Br. George <george@altlinux.ru> 1.26-alt1
+- Autobuild version bump to 1.26
+
 * Sat Jan 30 2021 Fr. Br. George <george@altlinux.ru> 1.25-alt1
 - Autobuild version bump to 1.25
 
