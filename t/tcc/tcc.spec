@@ -1,3 +1,5 @@
+%global optflags_lto %nil
+
 %def_enable static
 %def_enable cross
 %def_with selinux
@@ -10,7 +12,7 @@ Name: tcc
 %define lname lib%name
 Version: 0.9.27
 # git describe upstream/mob --tags
-Release: alt3.740.g347c036
+Release: alt4.740.g347c036
 Summary: A small but hyper fast C compiler
 Group: Development/C
 License: LGPLv2.1+
@@ -109,6 +111,9 @@ make test
 %_libdir/%lname.a
 
 %changelog
+* Mon Nov 22 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.9.27-alt4.740.g347c036
+- Disabled LTO to fix build
+
 * Sat Apr 17 2021 Fr. Br. George <george@altlinux.ru> 0.9.27-alt3.740.g347c036
 - Switch to git origin/mob build
 - Update to 2021/04/17
