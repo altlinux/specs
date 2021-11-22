@@ -4,12 +4,9 @@
 %def_disable ffmpeg
 %def_enable  google_api_keys
 
+%define max_parallel_jobs 64
 %ifndef build_parallel_jobs
 %global build_parallel_jobs %__nprocs
-%endif
-
-%ifndef max_parallel_jobs
-%global max_parallel_jobs 16
 %endif
 
 %define is_enabled() %{expand:%%{?_enable_%{1}:true}%%{!?_enable_%{1}:false}}
@@ -33,8 +30,8 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium-gost
-Version:        94.0.4606.71
-Release:        alt2
+Version:        96.0.4664.45
+Release:        alt1
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -84,10 +81,13 @@ Patch011: 0011-ALT-disable-asm-on-x86-in-dav1d.patch
 Patch012: 0012-Move-offending-function-to-chromeos-only.patch
 Patch013: 0013-ALT-Do-not-use-no-canonical-prefixes-clang-option.patch
 Patch014: 0014-ALT-Disable-NOMERGE-attribute.patch
-Patch015: 0015-IWYU-include-limits-for-std-numeric_limits.patch
-Patch016: 0016-FEDORA-bootstrap-with-python3.patch
-Patch017: 0017-sql-make-VirtualCursor-standard-layout-type.patch
-Patch018: 0018-IWYU-add-memory-for-std-unique_ptr-in-blink-CustomSp.patch
+Patch015: 0015-FEDORA-bootstrap-with-python3.patch
+Patch016: 0016-sql-make-VirtualCursor-standard-layout-type.patch
+Patch017: 0017-ALT-fix-build-with-glibc-2.34.patch
+Patch018: 0018-IWYU-add-memory-for-std-unique_ptr-in-base-CommandLi.patch
+Patch019: 0019-libstdc-no-implicit-conversion-from-tuple-created-wi.patch
+Patch020: 0020-IWYU-add-string.h-for-memcmp-in-ui-DrmRenderNodePath.patch
+Patch021: 0021-IWYU-add-vector-for-std-vector-in-CouponDB.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -167,6 +167,7 @@ BuildRequires:  pkgconfig(wayland-cursor)
 BuildRequires:  pkgconfig(wayland-scanner)
 BuildRequires:  pkgconfig(dri)
 BuildRequires:  pkgconfig(libpipewire-0.3)
+BuildRequires:  pkgconfig(epoxy)
 BuildRequires:  node
 BuildRequires:  usbids
 BuildRequires:  xdg-utils
@@ -346,7 +347,7 @@ tools/gn/bootstrap/bootstrap.py --gn-gen-args="$CHROMIUM_GN_DEFINES" --build-pat
 %target/gn gen --args="$CHROMIUM_GN_DEFINES" %target
 
 n=%build_parallel_jobs
-[ "$n" -gt %max_parallel_jobs ] || n=%max_parallel_jobs
+test $n -gt %max_parallel_jobs && n=%max_parallel_jobs
 
 %ifnarch %{ix86} x86_64
 %define GOSTCFLAGS -DPROCESSOR_TYPE=-1 -O2 -g
@@ -480,8 +481,81 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Nov 19 2021 Fr. Br. George <george@altlinux.ru> 96.0.4664.45-alt1
+- GOST version
+
+* Tue Nov 16 2021 Alexey Gladkov <legion@altlinux.ru> 96.0.4664.45-alt1
+- New version (96.0.4664.45).
+- Security fixes:
+  - CVE-2021-38005: Use after free in loader.
+  - CVE-2021-38006: Use after free in storage foundation.
+  - CVE-2021-38007: Type Confusion in V8.
+  - CVE-2021-38008: Use after free in media.
+  - CVE-2021-38009: Inappropriate implementation in cache.
+  - CVE-2021-38010: Inappropriate implementation in service workers.
+  - CVE-2021-38011: Use after free in storage foundation.
+  - CVE-2021-38012: Type Confusion in V8.
+  - CVE-2021-38013: Heap buffer overflow in fingerprint recognition.
+  - CVE-2021-38014: Out of bounds write in Swiftshader.
+  - CVE-2021-38015: Inappropriate implementation in input.
+  - CVE-2021-38016: Insufficient policy enforcement in background fetch.
+  - CVE-2021-38017: Insufficient policy enforcement in iframe sandbox.
+  - CVE-2021-38018: Inappropriate implementation in navigation.
+  - CVE-2021-38019: Insufficient policy enforcement in CORS.
+  - CVE-2021-38020: Insufficient policy enforcement in contacts picker.
+  - CVE-2021-38021: Inappropriate implementation in referrer.
+  - CVE-2021-38022: Inappropriate implementation in WebAuthentication.
+
+* Sat Nov 06 2021 Alexey Gladkov <legion@altlinux.ru> 95.0.4638.69-alt3
+- Set zero insets on maximising the window (ALT#41247).
+
+* Tue Nov 02 2021 Alexey Gladkov <legion@altlinux.ru> 95.0.4638.69-alt2
+- New version (95.0.4638.69).
+- Security fixes:
+  - CVE-2021-37997: Use after free in Sign-In.
+  - CVE-2021-37998: Use after free in Garbage Collection.
+  - CVE-2021-37999: Insufficient data validation in New Tab Page.
+  - CVE-2021-38000: Insufficient validation of untrusted input in Intents.
+  - CVE-2021-38001: Type Confusion in V8.
+  - CVE-2021-38002: Use after free in Web Transport.
+  - CVE-2021-38003: Inappropriate implementation in V8.
+
+* Mon Oct 25 2021 Alexey Gladkov <legion@altlinux.ru> 95.0.4638.54-alt2
+- Audio process sandbox is disabled.
+
+* Thu Oct 21 2021 Alexey Gladkov <legion@altlinux.ru> 95.0.4638.54-alt1
+- New version (95.0.4638.54).
+- Security fixes:
+  - CVE-2021-37981: Heap buffer overflow in Skia.
+  - CVE-2021-37982: Use after free in Incognito.
+  - CVE-2021-37983: Use after free in Dev Tools.
+  - CVE-2021-37984: Heap buffer overflow in PDFium.
+  - CVE-2021-37985: Use after free in V8.
+  - CVE-2021-37986: Heap buffer overflow in Settings.
+  - CVE-2021-37987: Use after free in Network APIs.
+  - CVE-2021-37988: Use after free in Profiles.
+  - CVE-2021-37989: Inappropriate implementation in Blink.
+  - CVE-2021-37990: Inappropriate implementation in WebView.
+  - CVE-2021-37991: Race in V8.
+  - CVE-2021-37992: Out of bounds read in WebAudio.
+  - CVE-2021-37993: Use after free in PDF Accessibility.
+  - CVE-2021-37994: Inappropriate implementation in iFrame Sandbox.
+  - CVE-2021-37995: Inappropriate implementation in WebApp Installer.
+  - CVE-2021-37996: Insufficient validation of untrusted input in Downloads.
+
+* Wed Oct 13 2021 Alexey Gladkov <legion@altlinux.ru> 94.0.4606.81-alt2
+- Fix build with glibc-2.34.
+
 * Tue Oct 12 2021 Fr. Br. George <george@altlinux.ru> 94.0.4606.71-alt2
 - Restore internal symlink (Closes: #41094)
+
+* Fri Oct 08 2021 Alexey Gladkov <legion@altlinux.ru> 94.0.4606.81-alt1
+- New version (94.0.4606.81).
+- Security fixes:
+  - CVE-2021-37977: Use after free in Garbage Collection.
+  - CVE-2021-37978: Heap buffer overflow in Blink.
+  - CVE-2021-37979: Heap buffer overflow in WebRTC.
+  - CVE-2021-37980: Inappropriate implementation in Sandbox.
 
 * Wed Oct 06 2021 Fr. Br. George <george@altlinux.ru> 94.0.4606.71-alt1
 - Gost version
