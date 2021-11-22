@@ -3,8 +3,8 @@
 %def_enable check
 
 Name: libnftnl
-Version: 1.2.0
-Release: alt2
+Version: 1.2.1
+Release: alt1
 
 Summary: Netfilter nf_tables infrastructure library
 License: GPL-2.0-only
@@ -85,6 +85,9 @@ cp -a examples/.libs/* %buildroot%_sbindir/
 %endif
 
 %changelog
+* Mon Nov 22 2021 Alexei Takaseev <taf@altlinux.org> 1.2.1-alt1
+- 1.2.1
+
 * Wed Aug 25 2021 Alexei Takaseev <taf@altlinux.org> 1.2.0-alt2
 - Added -ffat-lto-objects to %optflags_lto.
 
