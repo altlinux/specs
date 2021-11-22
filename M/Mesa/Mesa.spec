@@ -13,7 +13,7 @@
 %define intel_arches %ix86 x86_64
 %define vulkan_intel_arches %ix86 x86_64
 %define vulkan_virtio_arches %ix86 x86_64 aarch64 ppc64le mipsel
-%define virgl_arches %ix86 x86_64 aarch64 ppc64le mipsel
+%define virgl_arches %ix86 x86_64 armh aarch64 ppc64le mipsel
 %define armsoc_arches %arm aarch64
 %define svga_arches %ix86 x86_64
 
@@ -79,7 +79,7 @@
 %endif
 
 Name: Mesa
-Version: 21.2.5
+Version: 21.3.0
 Release: alt1
 Epoch: 4
 License: MIT
@@ -100,6 +100,7 @@ BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-dev
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
 BuildRequires: libwayland-egl-devel python3-module-mako wayland-protocols libsensors-devel libzstd-devel libunwind-devel
 BuildRequires: libclc-devel libglvnd-devel >= 1.2.0 llvm-devel >= 11.0.0 clang-devel >= 11.0.0
+BuildRequires: python3-module-docutils
 #BuildRequires: glslang rpm-build-python3
 
 %description
@@ -558,6 +559,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Mon Nov 22 2021 Valery Inozemtsev <shrek@altlinux.ru> 4:21.3.0-alt1
+- 21.3.0
+
 * Fri Oct 29 2021 Valery Inozemtsev <shrek@altlinux.ru> 4:21.2.5-alt1
 - 21.2.5
 
