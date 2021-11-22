@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.17
+Version: 0.1.18
 Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
@@ -139,6 +139,10 @@ popd
 %_rpmlibdir/py3-check-importable
 
 %changelog
+* Mon Sep 06 2021 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.18-alt1
+- python3.req.py:
+  + replaced symbol and parser uses with ast.
+
 * Fri Apr 30 2021 Dmitry V. Levin <ldv@altlinux.org> 0.1.17-alt1
 - python3.{prov,req}.files:
   + removed redundant text file check;
