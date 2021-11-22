@@ -53,7 +53,7 @@
 
 Name: %llvm_name
 Version: %v_full
-Release: alt4
+Release: alt5
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -163,15 +163,6 @@ BuildArch: noarch
 
 %description doc
 Documentation for the LLVM compiler infrastructure.
-
-%package tools
-Summary: Various minor tools bundled with LLVM
-Group: Development/C
-%requires_filesystem
-
-%description tools
-This package contains various tools maintained as part of LLVM, including
-opt-viewer.
 
 %package -n %clang_name
 Summary: A C language family frontend for LLVM
@@ -462,6 +453,8 @@ fi
 	-DPYTHON_EXECUTABLE=%_bindir/python3
 
 sed -i 's|man\ tools/lld/docs/docs-lld-html|man|' BUILD/build.ninja
+# Do not install opt-viewer into buildroot.
+sed -i '1,$d' BUILD/tools/opt-viewer/cmake_install.cmake
 ninja -vvv -j "$NPROCS" -C BUILD
 
 %install
@@ -470,6 +463,8 @@ cmake -DCMAKE_INSTALL_PREFIX=%buildroot%llvm_prefix ../
 sed -i 's|man\ tools/lld/docs/docs-lld-html|man|' build.ninja
 sed -i '/^[[:space:]]*include.*tools\/lld\/docs\/cmake_install.cmake.*/d' tools/lld/cmake_install.cmake
 popd
+# Do not install opt-viewer into buildroot.
+sed -i '1,$d' BUILD/tools/opt-viewer/cmake_install.cmake
 ninja -C BUILD install
 
 # Prepare Clang documentation.
@@ -662,9 +657,6 @@ ninja -C BUILD check-all || :
 %llvm_libdir/libRemarks.so.*
 %_libdir/libRemarks.so.*
 
-%files tools
-%llvm_datadir/opt-viewer
-
 %files devel
 %llvm_bindir/llvm-config
 %_bindir/llvm-config-%v_major
@@ -835,6 +827,10 @@ ninja -C BUILD check-all || :
 %doc %llvm_docdir/lldb
 
 %changelog
+* Sun Nov 21 2021 Arseny Maslennikov <arseny@altlinux.org> 11.0.1-alt5
+- Stopped packaging opt-viewer-11 since it depends on python2(yaml).
+  Users are advised to use more recent opt-viewer.
+
 * Fri Nov 12 2021 Arseny Maslennikov <arseny@altlinux.org> 11.0.1-alt4
 - Fixed FTBFS due to missing std::numeric_limits declaration.
 
