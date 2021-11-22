@@ -1,19 +1,19 @@
-Name: avarice
-Version: 2.13
-Release: alt1
+Name:          avarice
+Version:       2.14.5
+Release:       alt1
 
-Summary: Interface for GDB to Atmel AVR JTAG ICE in circuit emulator
+Summary:       Interface for GDB to Atmel AVR JTAG ICE in circuit emulator
 Summary(ru_RU.UTF8): Программа, управляющая устройством AVR JTAG ICE
-License: GPL
-Group: Development/Other
-Url: http://avarice.sourceforge.net/
-Packager: Malo Skryleve <malo@altlinux.org>
+License:       GPL-2.0
+Group:         Development/Other
+Url:           http://avarice.sourceforge.net/
+Vcs:           https://github.com/Florin-Popescu/avarice.git
+Packager:      Pavel Skrylev <majioa@altlinux.org>
 
-Source: %name-%version.tar
+Source:        %name-%version.tar
 
-Requires: binutils
-BuildPreReq: glibc-kernheaders kernel-headers-common
-BuildRequires: glibc-kernheaders kernel-headers-common binutils-devel, gcc-c++
+Requires:      binutils
+BuildRequires: glibc-kernheaders kernel-headers-common binutils-devel gcc-c++
 
 %description
 AVaRICE is a program which interfaces the GNU Debugger with the AVR JTAG
@@ -64,6 +64,10 @@ their home!)
 %_mandir/man?/*
 
 %changelog
+* Mon Nov 22 2021 Pavel Skrylev <majioa@altlinux.org> 2.14.5-alt1
+- ^ 2.13 -> 2.14.5
+- * rebase project to a new VCS
+
 * Fri Aug 31 2018 Pavel Skrylev <majioa@altlinux.org> 2.13-alt1
 - Bump to 2.13
 
@@ -84,4 +88,3 @@ their home!)
 
 * Fri Feb 11 2011 Malo Skryleve <malo@altlinux.org> 2.10-alt1
 - initial build for ALT Linux Sisyphus
-
