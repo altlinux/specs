@@ -1,6 +1,6 @@
 Name: elinks
 Version: 0.12
-Release: alt0.12.8
+Release: alt0.12.9
 
 Summary: Lynx-like text WWW browser with many features
 License: GPLv2
@@ -97,6 +97,11 @@ install -pD -m644 elinks.conf %buildroot/etc/elinks/elinks.conf
 %doc doc/manual.html
 
 %changelog
+* Mon Nov 22 2021 Vladislav Zavjalov <slazav@altlinux.org> 0.12-alt0.12.9
+- Fix FTBFS:
+  mismatch in function declaration,
+  string overflow in elinks_ulongcat call
+
 * Fri Apr 16 2021 Fr. Br. George <george@altlinux.ru> 0.12-alt0.12.8
 - Build with new bison
 
