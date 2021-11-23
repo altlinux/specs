@@ -1,12 +1,12 @@
 Name: repocop-report-distrodb
-Version: 0.429
+Version: 0.430
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
 Summary: repocop report script that dumps test results to prometeus format
 Group: Development/Other
-License: GPL or Artistic
+License: GPLv2+ or Artistic-2.0
 Url: http://repocop.altlinux.org
 
 Requires: repocop > 0.76
@@ -39,6 +39,9 @@ install -m 755 repocop-report-* %buildroot/%_bindir/
 #%_man1dir/repocop-report-*
 
 %changelog
+* Tue Nov 23 2021 Igor Vlasenko <viy@altlinux.org> 0.430-alt1
+- added typelib db
+
 * Thu Apr 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.429-alt1
 - new version
 
