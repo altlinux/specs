@@ -2,12 +2,12 @@
 # "setuid" or "none"
 %define priv_mode setuid
 %if %priv_mode == "setuid"
-%def_enable userns
+%def_disable userns
 %endif
 
 Name: bubblewrap
 Version: 0.5.0
-Release: alt1
+Release: alt2
 
 Summary: Unprivileged sandboxing tool
 
@@ -48,7 +48,7 @@ because it is trivial to turn such access into to a fully privileged root shell 
 %configure \
 	%{subst_enable selinux} \
 	%{?_enable_userns:--enable-require-userns=yes}
-
+%nil
 %make_build
 
 %install
@@ -78,6 +78,9 @@ setcap -q "cap_sys_admin,cap_net_admin,cap_sys_chroot,cap_setuid,cap_setgid=ep" 
 %_datadir/zsh/site-functions/_bwrap
 
 %changelog
+* Tue Nov 23 2021 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt2
+- disabled user namespaces in a setuid mode (ALT #41418)
+
 * Mon Oct 11 2021 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - 0.5.0
 
