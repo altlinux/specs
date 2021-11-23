@@ -1,11 +1,12 @@
 Name: unclutter-xfixes
 Version: 1.6
-Release: alt1
+Release: alt1.1
 
 Summary: Hides X11 cursor when idle
 License: MIT
 Group: System/X11
-Url: ttps://github.com/Airblader/unclutter-xfixes
+Url: https://github.com/Airblader/unclutter-xfixes
+VCS: git://github.com/Airblader/unclutter-xfixes
 Source: %name-%version.tar
 
 Conflicts: unclutter
@@ -38,6 +39,9 @@ make DESTDIR="$RPM_BUILD_ROOT" install
 %_man1dir/*
 
 %changelog
+* Tue Nov 23 2021 Igor Vlasenko <viy@altlinux.org> 1.6-alt1.1
+- fixed url, added vcs
+
 * Wed Nov 03 2021 Igor Vlasenko <viy@altlinux.org> 1.6-alt1
 - new version
 
