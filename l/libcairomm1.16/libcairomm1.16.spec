@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: This library provides a C++ interface to cairo
@@ -94,6 +94,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Tue Nov 23 2021 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt1
+- 1.16.1
+
 * Sat Dec 19 2020 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
 - 1.16.0 (new cairomm-1.16 library)
 - -- end of cairomm-1.0 --
