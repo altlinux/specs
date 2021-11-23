@@ -2,7 +2,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 0.9.4
+Version: 0.9.6
 Release: alt1
 
 Summary: Python interface to OpenJPEG library for reading and writing JPEG 2000 images.
@@ -49,10 +49,14 @@ py.test3
 %files
 %doc README.md CHANGES.txt LICENSE.txt
 %_bindir/jp2dump
+%_bindir/tiff2jp2
 %python3_sitelibdir/%modulename/
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Nov 23 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.6-alt1
+- Automatically updated to 0.9.6.
+
 * Tue Sep 07 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.4-alt1
 - Automatically updated to 0.9.4.
 
