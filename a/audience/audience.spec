@@ -1,13 +1,13 @@
 %def_enable snapshot
 
-%define ver_major 2.7
+%define ver_major 2.8
 %define gst_api_ver 1.0
 %define _name videos
 %define rdn_name io.elementary.%_name
 
 Name: audience
 %define xdg_name org.pantheon.%name
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A modern media player
@@ -34,6 +34,7 @@ BuildRequires(pre): meson
 BuildRequires: gcc-c++ libgranite-devel libclutter-gtk3-devel
 BuildRequires: libclutter-gst3.0-devel gst-plugins%gst_api_ver-devel
 BuildRequires: vala-tools libgranite-vala
+BuildRequires: pkgconfig(libhandy-1)
 BuildRequires: gobject-introspection-devel
 
 %description
@@ -61,6 +62,9 @@ hardware acceleration than most players out there.
 %doc README.md
 
 %changelog
+* Tue Nov 23 2021 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1
+- updated to 2.8.0-20-gad2924b4
+
 * Mon Jul 19 2021 Yuri N. Sedunov <aris@altlinux.org> 2.7.3-alt1
 - updated to 2.7.3-15-gcdaed46f
 
