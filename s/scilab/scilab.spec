@@ -5,11 +5,12 @@
 %def_without docs
 
 Name:     scilab
-Version:  6.1.1
+Version:  6.0.2
 Release:  alt2
+Epoch:    1
 Summary:  A high-level language and system for numerical computations
 
-License:  GPL-2.0 and BSD-3-Clause
+License:  CeCILL
 Group:    Sciences/Mathematics
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -22,32 +23,17 @@ Source0: %name-%version.tar
 Source1: scilab-desktop-ru.tar
 Source2: help.tar
 
-Patch1:  scilab-alt-modules-crosslinking.patch
-Patch2:  scilab-use-java-1.8.0-openjdk.patch
-Patch3:  scilab-alt-fix-conflict-with-system-pause.patch
+Patch1:  scilab-find-jhall.patch
+Patch2:  scilab-find-jgoodies-looks.patch
+Patch3:  scilab-find-xml-apis-ext.patch
 Patch4:	 scilab-fix-make-doc-ja_JP.patch
-Patch5:  scilab-6.1.0-jogl-2.3.patch
-Patch6:  scilab-alt-fix-missing-DSO.patch
+Patch5:  scilab-6.0.0-jogl-2.3.patch
 Patch8:  scilab-5.5.2-disable-doclint.patch
 Patch9:  scilab-alt-cxx-flags.patch
 Patch10: scilab-alt-gcc8-fix.patch
-
-# Debian patches
-Patch11: scilab-jh.patch
-Patch12: scilab-depend-scicos.patch
-Patch13: scilab-missing-lib.patch
-Patch14: scilab-reproducible-build.patch
-Patch15: scilab-java-9.patch
-Patch16: scilab-force-java-home.patch
-Patch17: scilab-set-class-path.patch
-Patch18: scilab-use-outside-font.patch
-Patch19: scilab-java11-compatibility.patch
-Patch20: scilab-force-fop-jar-into-classpath.patch
-Patch21: scilab-ocaml-406.patch
-Patch22: scilab-find-libs.patch
-Patch23: scilab-strange-us-ascii-unmappable-character.patch
-Patch24: scilab-openjdk11.patch
-Patch25: scilab-fix-desktop-file-in-appdata.patch
+Patch11: scilab-use-java-1.8.0-openjdk.patch
+Patch12: scilab-bug-15451.patch
+Patch13: 0001-fix-build-with-gcc-10.patch
 
 URL: http://www.scilab.org
 AutoReq: yes, noshell
@@ -57,11 +43,9 @@ ExcludeArch:   %{arm} aarch64 ppc64le
 
 BuildRequires(pre): rpm-build-java
 BuildRequires(pre): rpm-build-xdg
-# Need for javah
 BuildRequires: java-1.8.0-devel
 BuildRequires: gcc-fortran
 BuildRequires: gcc-c++
-BuildRequires: libstdc++-devel-static
 BuildRequires: libxml2-devel
 
 # Numerical libraries
@@ -97,10 +81,7 @@ BuildRequires: ecj
 BuildRequires: freehep-graphics2d
 BuildRequires: freehep-util
 %endif
-BuildRequires: hamcrest
 BuildRequires: objectweb-asm3
-BuildRequires: checkstyle
-BuildRequires: junit
 BuildRequires: avalon-framework
 
 Requires:      java-1.8.0-openjdk
@@ -176,40 +157,27 @@ high level programming language allowing access to advanced data
 structures, 2-D and 3-D graphical functions.
 
 %prep
-%setup
+%setup -q
 cd scilab
 tar xf %SOURCE1
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
 %patch4 -p1
-%patch5 -p2
-%patch6 -p2
+%patch5 -p1
 %patch8 -p2
 %patch9 -p2
 %patch10 -p2
 %patch11 -p2
 %patch12 -p2
 %patch13 -p2
-%patch14 -p2
-##patch15 -p2
-%patch16 -p2
-##patch17 -p2
-%patch18 -p2
-##patch19 -p2
-%patch20 -p2
-%patch21 -p2
-%patch22 -p2
-%patch23 -p2
-%patch24 -p2
-%patch25 -p2
 
 # Update saxon dependency
 # http://bugzilla.scilab.org/show_bug.cgi?id=8479
-#sed -i "s/com.icl.saxon.Loader/net.sf.saxon.Version/g" m4/docbook.m4 configure
+sed -i "s/com.icl.saxon.Loader/net.sf.saxon.Version/g" m4/docbook.m4 configure
 
 # Fix Class-Path in manifest
-#sed -i '/name="Class-Path"/d' build.incl.xml
+sed -i '/name="Class-Path"/d' build.incl.xml
 
 # Fix file-not-utf8
 iconv -f ISO_8859-1 -t UTF-8 COPYING >COPYING.utf8
@@ -220,8 +188,7 @@ cd scilab
 #%%define _configure_target %{_arch}-pc-linux-gnu
 %undefine _configure_gettext
 export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
-#aclocal
-%autoreconf
+aclocal
 %configure --enable-shared \
            --enable-static=no \
            --with-tk \
@@ -269,6 +236,9 @@ tar xf %SOURCE2 -C %buildroot%_datadir/scilab/modules/helptools/jar/
 %_datadir/mime/packages/scilab.xml
 
 %changelog
+* Mon Nov 22 2021 Andrey Cherepanov <cas@altlinux.org> 1:6.0.2-alt2
+- Downgrade to working 6.0.2 (ALT #40587).
+
 * Wed Oct 27 2021 Andrey Cherepanov <cas@altlinux.org> 6.1.1-alt2
 - Explicitly use java-1.8.0-openjdk.
 - Add avalon-framework to requirements (ALT #40586).
