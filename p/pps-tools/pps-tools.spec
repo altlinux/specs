@@ -1,12 +1,11 @@
 Name: pps-tools
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: Userspace tools for kernel PPS
 License: GPLv2
 Group: System/Configuration/Other
 Url: https://github.com/redlab-i/pps-tools
-Packager: Alexei Takaseev <taf@altlinux.ru>
 
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
@@ -39,5 +38,8 @@ The devel package contains the include files
 %_includedir/sys/*
 
 %changelog
+* Tue Nov 23 2021 Alexei Takaseev <taf@altlinux.org> 1.0.3-alt1
+- 1.0.3
+
 * Wed Mar 10 2021 Alexei Takaseev <taf@altlinux.org> 1.0.2-alt1
 - Initial build for ALT Linux Sisyphus.
