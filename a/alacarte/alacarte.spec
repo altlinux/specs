@@ -1,4 +1,4 @@
-%define ver_major 3.36
+%define ver_major 3.42
 
 Name: alacarte
 Version: %ver_major.0
@@ -14,6 +14,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 BuildArch: noarch
 
 %define menus_ver 3.5.3
+
+Requires: typelib(Gtk) = 3.0
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: intltool libgnome-menus-devel >= %menus_ver
@@ -45,6 +47,9 @@ specification.
 %doc README AUTHORS NEWS
 
 %changelog
+* Tue Nov 23 2021 Yuri N. Sedunov <aris@altlinux.org> 3.42.0-alt1
+- 3.42.0
+
 * Thu Mar 05 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 
