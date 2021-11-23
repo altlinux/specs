@@ -1,5 +1,5 @@
 Name: libfcft
-Version: 2.4.4
+Version: 2.5.0
 Release: alt1
 
 Summary: A small font loading and glyph rasterization library
@@ -46,5 +46,8 @@ Group: Development/C
 %_pkgconfigdir/fcft.pc
 
 %changelog
+* Tue Nov 23 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5.0-alt1
+- 2.5.0 released
+
 * Mon Aug 02 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4.4-alt1
 - 2.4.4 released
