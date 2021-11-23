@@ -89,7 +89,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.7
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -225,6 +225,7 @@ Requires: %name-services = %EVR
 Requires: pam_%name = %EVR
 
 Requires: libnss-myhostname = %EVR
+Requires: libnss-systemd = %EVR
 
 # Copy from SysVinit
 Requires: coreutils
@@ -485,7 +486,6 @@ Group: System/Configuration/Other
 Summary: Network Time Synchronization
 Conflicts: %name < 1:214-alt13
 Requires: %name-networkd = %EVR
-Requires: libnss-systemd = %EVR
 Provides: ntp-client
 Provides: ntp-server
 
@@ -537,7 +537,6 @@ Analyze tool for systemd.
 Group: System/Servers
 Summary: Journal Gateway Daemon
 Requires: %name = %EVR
-Requires: libnss-systemd  = %EVR
 Provides: systemd-journal-gateway = %EVR
 Obsoletes: systemd-journal-gateway < %EVR
 
@@ -2244,6 +2243,10 @@ udevadm hwdb --update &>/dev/null
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Tue Nov 23 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.7-alt2
+- Add requires libnss-systemd to main systemd package for allow
+  use units with dynamic users.
+
 * Mon Nov 22 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.7-alt1
 - 249.7
 
