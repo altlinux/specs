@@ -1,6 +1,6 @@
 Name: upx
 Version: 3.96
-Release: alt1
+Release: alt2
 
 Summary: The Ultimate Packer for eXecutables
 License: GPLv2+
@@ -8,6 +8,7 @@ Group: Archiving/Compression
 
 Url: http://upx.sourceforge.net
 Source: v%version.tar.gz
+Patch1: %name-misleading-indentation.patch
 
 # Automatically added by buildreq on Mon Feb 11 2019
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libstdc++-devel perl perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-parent perl-podlators python-base sh4
@@ -20,6 +21,7 @@ Your executables suffer no memory overhead or other drawbacks.
 
 %prep
 %setup
+%patch1 -p1
 
 sed -i 's/-O2/%optflags/' src/Makefile
 sed -i 's/CHECK_WHITESPACE =.*/CHECK_WHITESPACE =/' src/Makefile
@@ -38,6 +40,9 @@ install -pD -m644 doc/upx.1 %buildroot%_man1dir/upx.1
 %_man1dir/upx*
 
 %changelog
+* Thu Sep 30 2021 Alexander Danilov  <admsasha@altlinux.org> 3.96-alt2
+- Fixed misleading indentation
+
 * Thu Oct 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.96-alt1
 - Updated to upstream version 3.96 (Fixes: CVE-2019-20805).
 
