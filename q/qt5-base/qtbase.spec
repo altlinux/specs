@@ -19,6 +19,8 @@
 %def_enable pulse
 %def_disable journald
 %def_enable vulkan
+%def_disable tests
+%def_disable sctp
 
 %define platform linux-g++
 %define graphicssystem raster
@@ -36,7 +38,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.15.2
-Release: alt6
+Release: alt7
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -87,7 +89,8 @@ Patch1013: alt-QTBUG-88599.patch
 BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): libharfbuzz-devel
 BuildRequires: gcc-c++ glibc-devel libcups-devel libdbus-devel libicu-devel libjpeg-devel libpng-devel
-BuildRequires: libproxy-devel libssl-devel liblksctp-devel
+BuildRequires: libproxy-devel libssl-devel
+%{?_enable_sctp:BuildRequires: liblksctp-devel}
 BuildRequires: libpcre2-devel libudev-devel libdrm-devel libgbm-devel zlib-devel libzstd-devel libgtk+3-devel
 BuildRequires: libmtdev-devel libinput-devel libts-devel
 BuildRequires: pkgconfig(gl) pkgconfig(glesv2) pkgconfig(egl) libGL-devel libEGL-devel
@@ -110,6 +113,9 @@ BuildRequires: libsqlite3-devel
 BuildRequires: qt5-base-devel qt5-tools
 %endif
 BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
+%if_enabled tests
+BuildRequires: time mesa-dri-drivers /bin/dbus-launch /usr/bin/xvfb-run
+%endif
 
 %description
 Qt is a software toolkit for developing applications.
@@ -466,7 +472,8 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
 %endif
     -openssl-linked \
     -libproxy \
-    -sctp \
+    %{?_enable_sctp:-sctp} \
+    -no-mimetype-database \
     -make examples \
     -no-compile-examples \
     -nomake tests \
@@ -630,6 +637,15 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 %dir %_sysconfdir/xdg/qtchooser
 %_sysconfdir/xdg/qtchooser/*.conf
 %endif
+
+%check
+dbus-launch --exit-with-session \
+%make_build sub-tests  -k ||:
+xvfb-run -a --server-args="-screen 0 1280x1024x32" \
+dbus-launch --exit-with-session \
+time \
+make check -k ||:
+
 
 %files -n qt5-qtbase
 %files -n qt5-qtbase-gui
@@ -830,6 +846,11 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Tue Nov 23 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt7
+- build without internal mimetype database
+- build without sctp
+- update kde/5.15 branch patches
+
 * Fri Sep 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.15.2-alt6
 - Updated fix for QTBUG-49771, fixing QTBUG-95108 and QTBUG-95289.
 
