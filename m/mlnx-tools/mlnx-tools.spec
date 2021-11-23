@@ -2,7 +2,7 @@
 
 Name: mlnx-tools
 Version: 5.1.3
-Release: alt1
+Release: alt2
 
 Summary: Mellanox userland tools and scripts
 
@@ -14,10 +14,11 @@ Vendor: Mellanox Technologies
 
 Source: https://github.com/Mellanox/mlnx-tools/releases/download/v%version/%name-%version.tar.gz
 Patch: mlnx-tools-5.1.3-alt-disable-conf-detection.patch
+Patch1: mlnx-tools-5.1.3-alt-syntax.patch
 
 BuildRequires: perl-devel python3-devel
 BuildRequires: openvswitch /usr/bin/systemctl startup
-Requires: openvswitch
+Requires: openvswitch python3-module-termcolor python3-module-anytree mstflint
 
 %description
 Mellanox userland tools and scripts
@@ -32,6 +33,7 @@ The package provides python3 bindings for %name.
 %prep
 %setup -n %name-%version
 %patch -p1
+%patch1 -p1
 
 sed -i 's|/etc/init.d/openvswitch-switch|/etc/init.d/openvswitch|' \
     ofed_scripts/mlnx-post-hlk \
@@ -125,6 +127,10 @@ chmod +x %buildroot%python3_sitelibdir/dcbnetlink.py
 %python3_sitelibdir/*
 
 %changelog
+* Mon Nov 22 2021 Leontiy Volodin <lvol@altlinux.org> 5.1.3-alt2
+- Added requires (ALT #41412).
+- Fixed syntax errors in mlx_fs_dump (ALT #41411).
+
 * Tue Nov 09 2021 Leontiy Volodin <lvol@altlinux.org> 5.1.3-alt1
 - Initial build for ALT Sisyphus (based on upstream spec).
 - Built for ticket 2021110801000478 (redmine_65351).
