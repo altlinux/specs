@@ -1,6 +1,6 @@
 Name: libffcall
-Version: 2.1
-Release: alt3
+Version: 2.4
+Release: alt1
 
 Summary: Foreign Function Call Libraries
 License: GPLv2
@@ -8,8 +8,6 @@ Group: System/Libraries
 Url: https://www.gnu.org/software/libffcall/
 
 Source: %name-%version.tar
-Patch: ffcall-2.1-debian-mips-fpxx.patch
-
 
 %define desc This is a library which can be used to build foreign function\
 call interfaces in embedded interpreters.
@@ -28,7 +26,6 @@ This package contains development headers for FFCall libraries
 
 %prep
 %setup
-%patch -p1
 
 %build
 %ifarch armh
@@ -55,6 +52,9 @@ rm -v %buildroot%_libdir/*.a
 %_mandir/man?/*
 
 %changelog
+* Mon Aug 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4-alt1
+- 2.4 released
+
 * Mon Aug 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1-alt3
 - unpackaged static library dropped
 
