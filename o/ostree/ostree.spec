@@ -1,8 +1,8 @@
 %def_disable check
 
 Name: ostree
-Version: 2021.3
-Release: alt3
+Version: 2021.6
+Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
 License: LGPLv2+
@@ -126,6 +126,9 @@ rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 %_datadir/gtk-doc/html/ostree/
 
 %changelog
+* Wed Nov 24 2021 Andrey Sokolov <keremet@altlinux.org> 2021.6-alt1
+- 2021.6
+
 * Tue Oct 05 2021 Andrey Sokolov <keremet@altlinux.org> 2021.3-alt3
 - mount readonly /bin, /sbin, /lib, /lib64, /libx32
 
