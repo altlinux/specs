@@ -1,6 +1,6 @@
 Name: appinstall
-Version: 1.0
-Release: alt2
+Version: 1.1
+Release: alt1
 Summary: GUI frontend for install third-party applications
 
 License: GPL-3.0+
@@ -51,6 +51,10 @@ install -Dpm 0644 %name.desktop %buildroot%_desktopdir/%name.desktop
 %config(noreplace) %_sysconfdir/security/console.apps/%name
 
 %changelog
+* Wed Nov 24 2021 Andrey Cherepanov <cas@altlinux.org> 1.1-alt1
+- Fix crash after install or remove.
+- Prevent of double run of installation.
+
 * Wed Nov 17 2021 Andrey Cherepanov <cas@altlinux.org> 1.0-alt2
 - Fix typo in Russian translation.
 
