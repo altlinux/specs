@@ -9,7 +9,7 @@
 %define _pluginsdir %_libdir/%name/plugins/3.4
 
 Name: wireshark
-Version: 3.4.9
+Version: 3.4.10
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -223,6 +223,11 @@ _EOF_
 %_libdir/%name/cmake
 
 %changelog
+* Wed Nov 24 2021 Anton Farygin <rider@altlinux.ru> 3.4.10-alt1
+- 3.4.10 (Fixes: CVE-2021-39929, CVE-2021-39926, CVE-2021-39925,
+		 CVE-2021-39924, CVE-2021-39922, CVE-2021-39928,
+		 CVE-2021-39921, CVE-2021-39920)
+
 * Thu Oct 14 2021 Anton Farygin <rider@altlinux.ru> 3.4.9-alt1
 - 3.4.9
 
