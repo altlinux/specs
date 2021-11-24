@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 4.8.1
-Release: alt1
+Release: alt2
 Summary: Library to access the metadata for a Python package
 License: Apache-2.0
 Group: Development/Python3
@@ -33,6 +33,8 @@ BuildRequires: python3(tox_console_scripts)
 
 # PyPI name(dash, underscore)
 %py3_provides %oname
+Provides: python3-module-importlib_metadata = %EVR
+Obsoletes: python3-module-importlib_metadata <= 1.5.0-alt1
 
 %description
 Library to access the metadata for a Python package.
@@ -74,6 +76,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
 %python3_sitelibdir/importlib_metadata/
 
 %changelog
+* Tue Nov 23 2021 Stanislav Levin <slev@altlinux.org> 4.8.1-alt2
+- Obsoleted importlib_metadata (closes: #41400).
+
 * Wed Sep 29 2021 Stanislav Levin <slev@altlinux.org> 4.8.1-alt1
 - 4.6.1 -> 4.8.1.
 
