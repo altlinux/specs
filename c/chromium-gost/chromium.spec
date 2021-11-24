@@ -31,7 +31,7 @@
 
 Name:           chromium-gost
 Version:        96.0.4664.45
-Release:        alt1
+Release:        alt2
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -88,6 +88,8 @@ Patch018: 0018-IWYU-add-memory-for-std-unique_ptr-in-base-CommandLi.patch
 Patch019: 0019-libstdc-no-implicit-conversion-from-tuple-created-wi.patch
 Patch020: 0020-IWYU-add-string.h-for-memcmp-in-ui-DrmRenderNodePath.patch
 Patch021: 0021-IWYU-add-vector-for-std-vector-in-CouponDB.patch
+Patch022: 0022-linux-xfce-Introduced-a-hack-for-Xfwm.patch
+Patch023: 0023-linux-x11-Made-the-hidden-window-ignoring-new-proper.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -481,6 +483,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Nov 23 2021 Andrey Cherepanov <cas@altlinux.org> 96.0.4664.45-alt2
+- Apply upstream patches for fix window maximization in XFCE (ALT #41247)
+
 * Fri Nov 19 2021 Fr. Br. George <george@altlinux.ru> 96.0.4664.45-alt1
 - GOST version
 
