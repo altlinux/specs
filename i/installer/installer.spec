@@ -1,6 +1,6 @@
 Name: installer
 Version: 1.10.15
-Release: alt1
+Release: alt2
 
 Summary: Installer common parts
 License: GPLv2+
@@ -111,6 +111,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Wed Nov 24 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.10.15-alt2
+- 30-setup-network.sh: handle 'localhost' from hostinfo fixed
+
 * Mon Nov 22 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.10.15-alt1
 - host-N auto hostnames resurrected
 
