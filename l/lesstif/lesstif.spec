@@ -1,6 +1,6 @@
 Name: lesstif
 Version: 0.95.2
-Release: alt3
+Release: alt4
 
 Summary: LessTif - a free replacement of OSF/Motif
 Group: System/Libraries
@@ -152,6 +152,7 @@ touch -r __mwm_stamp clients/Motif-2.1/mwm/mwm.h
 rm __mwm_stamp
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 CFLAGS="$RPM_OPT_FLAGS" %configure \
 	--enable-shared \
 	--enable-static \
@@ -269,6 +270,9 @@ install -p -m644 %SOURCE5 %buildroot%_datadir/xsessions/
 %doc %_docdir/%name-%version/lessdox
 
 %changelog
+* Wed Nov 24 2021 Ilya Mashkin <oddity@altlinux.ru> 0.95.2-alt4
+- add lto option
+
 * Tue Apr 10 2012 Lenar Shakirov <snejok@altlinux.ru> 0.95.2-alt3
 - Fixed build: remove RPATH entry from libtool
 
