@@ -23,8 +23,8 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 %endif
 
 Name: clickhouse
-Version: 21.8.10.19
-Release: alt2
+Version: 21.8.11.4
+Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
 Group: Databases
@@ -391,6 +391,9 @@ fi
 %_datadir/clickhouse-test
 
 %changelog
+* Mon Nov 22 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.8.11.4-alt1
+- Updated to lts upstream version 21.8.11.4.
+
 * Fri Oct 29 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.8.10.19-alt2
 - Rebuilt with clang.
 - Rebuilt with mysql instead of mariadb.
