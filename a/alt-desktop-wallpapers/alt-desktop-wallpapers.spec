@@ -1,8 +1,8 @@
 %define rname desktop-wallpapers
 
 Name: alt-desktop-wallpapers
-Version: 0.1.0
-Release: alt2
+Version: 0.2.0
+Release: alt1
 %K5init no_altplace
 
 Group: Graphical desktop/Other
@@ -63,5 +63,8 @@ popd 1>/dev/null
 %_pixmapsdir/*
 
 %changelog
+* Wed Nov 24 2021 Sergey V Turchin <zerg at altlinux dot org> 0.2.0-alt1
+- new version
+
 * Tue Oct 12 2021 Sergey V Turchin <zerg at altlinux dot org> 0.1.0-alt2
 - initial build
