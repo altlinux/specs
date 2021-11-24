@@ -4,12 +4,12 @@
 
 %define _name granite
 %define rdn_name io.elementary.%_name
-%define ver_major 6.1
+%define ver_major 6.2
 %define api_ver 1.0
 %define sover 6
 
 Name: libgranite
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Extension of GTK+3 libraries
@@ -135,6 +135,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/vala/vapi/%_name.vapi
 
 %changelog
+* Wed Nov 24 2021 Yuri N. Sedunov <aris@altlinux.org> 6.2.0-alt1
+- 6.2.0
+
 * Fri Oct 29 2021 Yuri N. Sedunov <aris@altlinux.org> 6.1.2-alt1
 - 6.1.2
 
