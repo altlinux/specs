@@ -1,8 +1,9 @@
+%define optflags_lto %nil
 %def_disable xvmc
 
 Name: xorg-drv-intel
 Version: 2.99.917
-Release: alt1.20200421
+Release: alt1.20210115
 Epoch: 8
 Summary: Intel integrated graphics chipsets
 License: MIT/X11
@@ -64,6 +65,9 @@ and 24 for the 830M and later
 %endif
 
 %changelog
+* Wed Nov 24 2021 Valery Inozemtsev <shrek@altlinux.ru> 8:2.99.917-alt1.20210115
+- git snapshot master.31486f4
+
 * Wed Apr 22 2020 Valery Inozemtsev <shrek@altlinux.ru> 8:2.99.917-alt1.20200421
 - git snapshot master.846b53d
 
