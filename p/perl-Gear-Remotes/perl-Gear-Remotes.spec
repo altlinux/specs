@@ -1,8 +1,8 @@
-%def_without utils
+%def_with utils
 %define module Gear-Remotes
 
 Name: perl-%module
-Version: 0.023
+Version: 0.025
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -17,8 +17,8 @@ Url: https://www.altlinux.org/Gear/remotes
 # Automatically added by buildreq on Wed Nov 06 2002
 BuildRequires: perl-devel perl(Pod/Usage.pm) perl(Pod/Text.pm) perl(RPM/uscan.pm) perl(Gear/Rules.pm) perl(RPM/Source/Editor.pm)
 Requires: gear perl(Pod/Text.pm)
-Provides: gear-remotes = %version
 %if_without utils
+Provides: gear-remotes = %version
 Provides: gear-remotes-utils = %version
 Requires: gear-uupdate
 %endif
@@ -40,13 +40,26 @@ Summary: utilities for manipulating Gear upstream/remotes files
 Group: Development/Other
 Requires: perl-Gear-Remotes = %EVR
 Requires: gear-uupdate
-#Conflicts: perl-Gear-Remotes < %version
+Provides: gear-remotes = %version
+Obsoletes: perl-Gear-Remotes < 0.024
+Conflicts: perl-Gear-Remotes < 0.024
 
 %description -n gear-remotes-utils
 gear-remotes-utils are utils for managing .gear/upstream/remotes file.
 .gear/upstream/remotes file is used to save, share and restore local
 .git configuration to all maintainers.
 %endif
+
+%package -n gear-remotes-batch-watch
+Summary: utilities for batch quering for updates from rpm git urls
+Group: Development/Other
+Requires: perl-Gear-Remotes = %EVR
+Requires: /usr/bin/altlinux-find-local-mirror
+BuildRequires: perl(Parallel/ForkManager.pm)
+
+%description -n gear-remotes-batch-watch
+gear-remotes-batch-watch utils are used for batch quering for updates
+from rpm git urls found in VCS: and URL: rpm tags.
 
 %prep
 %setup -q -n %module-%version
@@ -57,6 +70,8 @@ gear-remotes-utils are utils for managing .gear/upstream/remotes file.
 %install
 %perl_vendor_install
 
+ln -s gr-batch-watch-standalone %buildroot%_bindir/repocop-watch-batch-git-plugin
+
 %files
 #doc Changes
 #doc README
@@ -64,10 +79,23 @@ gear-remotes-utils are utils for managing .gear/upstream/remotes file.
 %if_with utils
 %files -n gear-remotes-utils
 %endif
-%_bindir/*
-%_man1dir/*
+%_bindir/gear-remotes-*
+%_man1dir/gear-remotes-*
+
+%files -n gear-remotes-batch-watch
+%_bindir/gr-batch-*
+%_man1dir/gr-batch-*
+%_bindir/repocop-watch-*
 
 %changelog
+* Thu Nov 23 2021 Igor Vlasenko <viy@altlinux.org> 0.025-alt1
+- new version
+- added gear-remotes-batch-utils
+
+* Fri Nov 05 2021 Igor Vlasenko <viy@altlinux.org> 0.024-alt1
+- new version
+- added gear-remotes-utils subpackage
+
 * Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 0.023-alt1
 - gear-remotes-set-from-spec with VCS: tag support
   instead of old gear-remotes-set-from-spec-comment
