@@ -1,9 +1,9 @@
 %define module_name	evdi
 %define module_version	1.9.1
-%define module_release	alt2
+%define module_release	alt3
 
 %define flavour		un-def
-%define karch %ix86 x86_64 aarch64 ppc64le armh
+%define karch %ix86 x86_64 aarch64 ppc64le
 BuildRequires(pre): kernel-headers-modules-un-def
 %setup_kernel_module %flavour
 
@@ -16,6 +16,8 @@ Release: %module_release.%kcode.%kbuildrelease
 License: GPLv2
 Group: System/Kernel and hardware
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
+
+Patch0: evdi-kernel-5.15.patch
 
 ExclusiveOS: Linux
 URL: https://github.com/DisplayLink/evdi
@@ -43,6 +45,7 @@ the libevdi library.
 %prep
 tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
+%patch0 -p2
 
 %build
 %make_build -C %_usrsrc/linux-%kversion-%flavour M=`pwd` modules
@@ -58,6 +61,9 @@ install evdi.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Nov 25 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.9.1-alt3
+- build with kernel 5.15 fixed
 
 * Mon Nov 22 2021 L.A. Kostis <lakostis@altlinux.org> 1.9.1-alt2
 - Add ExclusiveArch.
