@@ -2,7 +2,7 @@
 %global import_path github.com/coreos/butane
 
 Name: butane
-Version: 0.12.1
+Version: 0.13.1
 Release: alt1
 
 Summary: Butane translates human readable Butane YAML Configs into machine readable Ignition JSON Configs
@@ -53,6 +53,9 @@ ln -s butane %buildroot%_bindir/fcct
 %_bindir/*
 
 %changelog
+* Thu Nov 25 2021 Andrey Sokolov <keremet@altlinux.org> 0.13.1-alt1
+- 0.13.1
+
 * Fri Jun 11 2021 Alexey Shabalin <shaba@altlinux.org> 0.12.1-alt1
 - 0.12.1
 
