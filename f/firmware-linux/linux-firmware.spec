@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20211115
+Version: 20211123
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,22 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Thu Nov 25 2021 Cronbuild Service <cronbuild@altlinux.org> 20211123-alt1
+- upstream changes (GIT b0e898f):
+  + Update firmware file for Intel Bluetooth 9462 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9560 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX211 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX210 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9560 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9260 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX200 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + amdgpu: update yellow carp dmcub firmware (thx Alex Deucher)
+  + amdgpu: update vangogh DMCUB firmware (thx Alex Deucher)
+  + mrvl: prestera: Update Marvell Prestera Switchdev v4.0 (thx Volodymyr Mytnyk)
+  + QCA: Add Bluetooth firmware for WCN685x (thx Tim Jiang)
+
 * Wed Nov 17 2021 Cronbuild Service <cronbuild@altlinux.org> 20211115-alt1
 - upstream changes (GIT f5d5195):
   + Update AMD cpu microcode (thx John Allen)
