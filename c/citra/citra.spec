@@ -1,8 +1,8 @@
 # git describe --always upstream/citra
-%define git_desc 5a7d80172d
+%define git_desc 64b502aad3
 
 Name: citra
-Version: 1732
+Version: 1734
 Release: alt1
 
 Summary: Nintendo 3DS emulator
@@ -54,6 +54,8 @@ Source17: lodepng.tar
 Source18: zstd.tar
 # https://github.com/arsenm/sanitizers-cmake.git
 Source19: sanitizers-cmake.tar
+
+Source20: ru_RU.ts
 
 BuildRequires: boost-asio-devel
 BuildRequires: ctest
@@ -120,6 +122,9 @@ sed -i \
 -e 's|@BUILD_FULLNAME@|Nightly %version|g' \
 src/common/scm_rev.cpp.in
 
+%__rm dist/languages/ru_RU.ts
+%__cp %SOURCE20 dist/languages/
+
 %build
 %add_optflags -Wno-error=return-type
 
@@ -150,6 +155,10 @@ ctest
 %_man6dir/%name-qt.6*
 
 %changelog
+* Thu Nov 25 2021 Nazarov Denis <nenderus@altlinux.org> 1734-alt1
+- Version Nightly 1734
+- Add updated russian translation
+
 * Sat Nov 06 2021 Nazarov Denis <nenderus@altlinux.org> 1732-alt1
 - Version Nightly 1732
 
