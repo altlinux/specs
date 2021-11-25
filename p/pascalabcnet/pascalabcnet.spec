@@ -1,6 +1,6 @@
 Name:    pascalabcnet
 Version: 3.8.0.2964
-Release: alt1
+Release: alt2
 
 Summary: PascalABC.NET programming language  
 License: LGPL-3.0
@@ -18,6 +18,7 @@ BuildRequires(pre): rpm-build-mono
 BuildRequires: mono-devel
 BuildRequires: mono-locale-extras
 
+Requires: mono-devel
 Requires: mono-locale-extras
 
 %filter_from_requires /mono(\(PresentationCore\|PresentationFramework\))/d
@@ -68,6 +69,9 @@ chmod +x %buildroot%_bindir/pabcnetcclear
 %_libdir/%name
 
 %changelog
+* Thu Nov 25 2021 Andrey Cherepanov <cas@altlinux.org> 3.8.0.2964-alt2
+- Requires mono-devel for compilation.
+
 * Sat Aug 21 2021 Andrey Cherepanov <cas@altlinux.org> 3.8.0.2964-alt1
 - New version.
 - Runtime requires mono-locale-extras.
