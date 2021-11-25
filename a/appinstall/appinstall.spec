@@ -1,5 +1,5 @@
 Name: appinstall
-Version: 1.2
+Version: 1.3
 Release: alt1
 Summary: GUI frontend for install third-party applications
 
@@ -51,6 +51,9 @@ install -Dpm 0644 %name.desktop %buildroot%_desktopdir/%name.desktop
 %config(noreplace) %_sysconfdir/security/console.apps/%name
 
 %changelog
+* Thu Nov 25 2021 Andrey Cherepanov <cas@altlinux.org> 1.3-alt1
+- Hack for wrong exit code of install glusterfs7 (see bug 41429).
+
 * Thu Nov 25 2021 Andrey Cherepanov <cas@altlinux.org> 1.2-alt1
 - Show remove action in top of detail pane on removing.
 - Use epm play --auto for all operation.
