@@ -1,12 +1,11 @@
-%set_verify_elf_method textrel=relaxed
 %define libname qtest
 Name: ocaml-%libname
 Version: 2.11.2
-Release: alt1
+Release: alt2
 Summary: Inline (Unit) Tests for OCaml
 License: GPLv3
 Group: Development/ML
-Url: https://github.com/c-cube/ocaml-containers/
+Url: https://github.com/vincent-hugot/qtest
 Source0: %name-%version.tar
 BuildRequires:  dune 
 BuildRequires: ocaml-qcheck-devel ocaml-ounit-devel ocaml-base-devel 
@@ -45,6 +44,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Nov 25 2021 Anton Farygin <rider@altlinux.ru> 2.11.2-alt2
+- fixed URL
+
 * Fri Mar 19 2021 Anton Farygin <rider@altlinux.org> 2.11.2-alt1
 - 2.11.2
 
