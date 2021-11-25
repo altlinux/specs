@@ -3,9 +3,19 @@
 %define sover 0
 %define rel 55.174
 
+%ifarch x86_64
+%define dl_dir x64-ubuntu-1604
+%endif
+%ifarch %ix86
+%define dl_dir x86-ubuntu-1604
+%endif
+%ifarch armh
+%define dl_dir arm-linux-gnueabihf
+%endif
+
 Name: displaylink-driver
 Version: 5.4.1
-Release: alt1.%rel
+Release: alt2.%rel
 Summary: DisplayLink library and tools
 Group: System/Kernel and hardware
 
@@ -14,9 +24,13 @@ License: Proprietary
 
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: %ix86 x86_64 armh
 
 BuildRequires: libdrm-devel libusb chrpath
+%ifarch armh
+BuildRequires: libgomp-devel
+%endif
+
 Source1: %name-%version-%rel.run
 Source2: %module_name.modprobe
 Source3: %name.service
@@ -72,6 +86,8 @@ popd
 
 %install
 %brp_strip_none %_bindir/DisplayLinkManager
+%set_debuginfo_skiplist %_bindir/DisplayLinkManager
+
 install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/modprobe.d/%module_name.conf
 
 # kernel-source install
@@ -86,13 +102,11 @@ pushd library
 popd
 
 # install scripts
-mkdir -p %buildroot{%_bindir,%_unitdir,%_udev_rulesdir,%_systemd_dir,%_datadir/%name}
-%ifarch x86_64
-install -m 0755 x64-ubuntu-1604/DisplayLinkManager %buildroot%_bindir/
-%else
-install -m 0755 x86-ubuntu-1604/DisplayLinkManager %buildroot%_bindir/
-%endif
+mkdir -p %buildroot{%_bindir,%_unitdir,%_udev_rulesdir,%_systemd_dir,%_datadir/%name,%_logdir/displaylink}
+install -m0755 %dl_dir/DisplayLinkManager %buildroot%_bindir/
+
 chrpath -d %buildroot%_bindir/DisplayLinkManager
+
 install -m 0644 %SOURCE3 %buildroot%_unitdir/%name.service
 install -pD -m 0755 %SOURCE4 %buildroot%_systemd_dir/system-sleep/displaylink.sh
 install -m 0755 %SOURCE5 %buildroot%_bindir/
@@ -101,6 +115,12 @@ install -m 0644 %SOURCE6 %buildroot%_udev_rulesdir/99-displaylink.rules
 # firmware files
 install -m 0644 *.spkg %buildroot%_datadir/%name/
 
+%post
+%post_service %name.service
+
+%preun
+%preun_service %name.service
+
 %files
 %doc LICENSE 3rd_party_licences.txt
 %_bindir/*
@@ -108,6 +128,7 @@ install -m 0644 *.spkg %buildroot%_datadir/%name/
 %_sysconfdir/modprobe.d/%module_name.conf
 %_udev_rulesdir/99-displaylink.rules
 %_systemd_dir/system-sleep/displaylink.sh
+%dir %_logdir/displaylink
 
 %files -n lib%{module_name}%{sover}
 %_libdir/*.so*
@@ -119,5 +140,11 @@ install -m 0644 *.spkg %buildroot%_datadir/%name/
 %_usrsrc/kernel/sources/kernel-source-%module_name-%module_version.tar.bz2
 
 %changelog
+* Thu Nov 25 2021 L.A. Kostis <lakostis@altlinux.ru> 5.4.1-alt2.55.174
+- Add logdir.
+- Add armh support.
+- Improve udev and service scripts.
+- Handle service changes.
+
 * Mon Nov 22 2021 L.A. Kostis <lakostis@altlinux.ru> 5.4.1-alt1.55.174
 - Initial build for ALTLinux.

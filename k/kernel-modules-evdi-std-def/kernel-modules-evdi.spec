@@ -1,9 +1,9 @@
 %define module_name	evdi
 %define module_version	1.9.1
-%define module_release	alt3
+%define module_release	alt5
 
 %define flavour		std-def
-%define karch %ix86 x86_64 aarch64 ppc64le
+%define karch %ix86 x86_64 aarch64 ppc64le armh
 BuildRequires(pre): kernel-headers-modules-std-def
 %setup_kernel_module %flavour
 
@@ -17,8 +17,6 @@ License: GPLv2
 Group: System/Kernel and hardware
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
-Patch0: evdi-kernel-5.15.patch
-
 ExclusiveOS: Linux
 URL: https://github.com/DisplayLink/evdi
 BuildRequires(pre): rpm-build-kernel
@@ -31,7 +29,14 @@ Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %EVR
 
 PreReq: coreutils
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: %ix86 x86_64 armh
+
+# https://github.com/DisplayLink/evdi/pull/314
+Patch1: 0001-Add-support-for-cursor-planes.patch
+# https://github.com/DisplayLink/evdi/issues/308
+Patch2: 0001-Remove-compat-calls-for-5.15-kernel.patch
+# https://github.com/DisplayLink/evdi/pull/315
+Patch3: 0002-Fix-dma_buf_vunmap-failing-on-kernel-5.11.patch
 
 %description
 Extensible Virtual Display Interface
@@ -45,7 +50,15 @@ the libevdi library.
 %prep
 tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
-%patch0 -p2
+%patch1 -p2
+# 5.15+
+if [ %kcode -ge 331285 ]; then
+%patch2 -p2
+fi
+# 5.11+
+if [ %kcode -gt 330240 ]; then
+%patch3 -p2
+fi
 
 %build
 %make_build -C %_usrsrc/linux-%kversion-%flavour M=`pwd` modules
@@ -61,6 +74,16 @@ install evdi.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Nov 25 2021 L.A. Kostis <lakostis@altlinux.org> 1.9.1-alt5
+- Bump release.
+
+* Thu Nov 25 2021 L.A. Kostis <lakostis@altlinux.org> 1.9.1-alt4
+- Enable armh.
+- Apply some fixes from upstream PRs:
+  + 0001-Add-support-for-cursor-planes.patch (PR 314)
+  + 0001-Remove-compat-calls-for-5.15-kernel.patch (fix compile on 5.15+ kernels)
+  + 0002-Fix-dma_buf_vunmap-failing-on-kernel-5.11.patch (PR 315)
 
 * Thu Nov 25 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.9.1-alt3
 - build with kernel 5.15 fixed
