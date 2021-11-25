@@ -3,8 +3,8 @@
 %global goipath         github.com/jinzhu/now
 
 Name: golang-github-jinzhu-now
-Version: 1.1.2
-Release: alt2
+Version: 1.1.3
+Release: alt1
 Summary: Time toolkit for Go
 Group: Development/Other
 License: MIT
@@ -55,6 +55,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Thu Nov 25 2021 Leontiy Volodin <lvol@altlinux.org> 1.1.3-alt1
+- New version (1.1.3).
+
 * Tue Sep 21 2021 Leontiy Volodin <lvol@altlinux.org> 1.1.2-alt2
 - Fixed build with golang 1.17.
 
