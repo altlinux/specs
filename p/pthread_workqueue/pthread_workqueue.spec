@@ -1,5 +1,5 @@
 Name: pthread_workqueue
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 Summary: Thread pool for libdispatch
 License: BSD
@@ -59,6 +59,9 @@ This package contains development files of libpthread_workqueue.
 %_man3dir/*
 
 %changelog
+* Thu Nov 25 2021 Anton Farygin <rider@altlinux.ru> 0.9.2-alt1
+- 0.9.2
+
 * Sun Apr 07 2019 Anton Farygin <rider@altlinux.ru> 0.9.1-alt1
 - 0.9.1
 
