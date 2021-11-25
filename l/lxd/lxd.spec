@@ -7,7 +7,7 @@
 
 Name:		lxd
 Version:	4.17
-Release:	alt0.61bb78a49.1
+Release:	alt0.61bb78a49.2
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
 Group:		Development/Other
@@ -189,6 +189,9 @@ fi
 %exclude %go_path/src/%import_path/go.sum
 
 %changelog
+* Thu Nov 25 2021 Nikolay A. Fetisov <naf@altlinux.org> 4.17-alt0.61bb78a49.2
+- fix build with Go 1.17.1
+
 * Thu Aug 12 2021 Mikhail Gordeev <obirvalger@altlinux.org> 4.17-alt0.61bb78a49.1
 - new version 4.17 (Closes: #40674)
 
