@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define _localstatedir %_var
 
 %def_enable lvs
@@ -6,7 +7,6 @@
 %def_enable fwmark
 %def_enable snmp
 %def_disable dbus
-%def_enable sha1
 %def_enable regex
 %def_enable json
 %def_enable routes
@@ -16,21 +16,19 @@
 %def_enable libnl
 
 Name: keepalived
-Version: 2.2.2
-Release: alt3
+Version: 2.2.4
+Release: alt1
 
-Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
+Summary: HA monitor built upon LVS, VRRP and services poller
 License: GPLv2
 Group: Networking/Other
 
-Url: http://www.keepalived.org/software/
-Source0: %url/%name-%version.tar
+Url: http://www.keepalived.org
+Source0: %name-%version.tar
 Source1: %name.init
 Patch0: 0002-update-systemd-unit-file.patch
-Patch1: keepalived-2.2.2-fix-build-with-nftables.patch
 Patch2: keepalived-e2k-check-nft-set-concat.patch
 
-# Automatically added by buildreq on Thu Aug 09 2007 (-ba)
 BuildRequires: libpopt-devel libssl-devel
 %{?_enable_libiptc:BuildRequires: pkgconfig(libiptc)}
 %{?_enable_libipset:BuildRequires: pkgconfig(libipset)}
@@ -54,7 +52,6 @@ userspace daemon for LVS cluster nodes healthchecks and LVS directors failover.
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 %ifarch %e2k
 %patch2 -p1
 # lcc 1.23's edg frontend can only do numbers here (#4061)
@@ -75,33 +72,27 @@ sed -i 's,"O0",0,' lib/utils.c
 	%{subst_enable dbus} \
 	%{subst_enable regex} \
 	%{subst_enable json} \
-	%{subst_enable sha1} \
 	%{subst_enable routes} \
-	%{subst_enable libiptc} \
+	%{?_enable_libiptc:--enable-libiptc-dynamic} \
 	%{subst_enable libipset} \
 	%{subst_enable nftables} \
-	%{subst_enable libnl} \
+	%{?_enable_libnl:--enable-libnl-dynamic} \
 	--with-init=systemd \
 	--with-systemdsystemunitdir=%_unitdir
 
-GIT_TIMESTAMP=`cat gitstamp`
-printf '#define GIT_DATE        "%%s"\n' `date -d "1970-01-01 UTC $GIT_TIMESTAMP seconds" +"%%m/%%d,%%Y"` >lib/git-commit.h
-printf '#define GIT_YEAR        "%%s"\n' `date -d "1970-01-01 UTC $GIT_TIMESTAMP seconds" +"%%Y"` >>lib/git-commit.h
-
-%make_build
+%make_build STRIP=/bin/true
 
 %install
-#makeinstall_std
-mkdir -p %buildroot{%_sbindir,%_initdir,%_unitdir,%_sysconfdir/%name,%_sysconfdir/sysconfig}
-install -pD -m755 bin/genhash %buildroot%_sbindir/genhash
-install -pD -m755 bin/keepalived %buildroot%_sbindir/keepalived
-mkdir -p %buildroot/%_mandir/man{1,5,8}
-install -pD -m644 doc/man/man1/genhash.1 %buildroot%_man1dir/genhash.1
-install -pD -m644 doc/man/man5/keepalived.conf.5 %buildroot%_man5dir/keepalived.conf.5
-install -pD -m644 doc/man/man8/keepalived.8 %buildroot%_man8dir/keepalived.8
+%makeinstall_std
 install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
-install -pD -m644 keepalived/%name.service %buildroot%_unitdir/%name.service
-install -pD -m644 keepalived/etc/sysconfig/%name %buildroot%_sysconfdir/sysconfig/%name
+rm -rf %buildroot%_sysconfdir/%name/samples
+rm -rf %buildroot%_defaultdocdir/%name
+
+mkdir -p %buildroot%_datadir/mibs/%name
+for f in %buildroot%_datadir/snmp/mibs/*.txt; do
+    bn=$(basename "$f" .txt)
+    mv "$f" "%buildroot%_datadir/mibs/%name/$bn"
+done
 
 %preun
 %preun_service keepalived
@@ -110,6 +101,7 @@ install -pD -m644 keepalived/etc/sysconfig/%name %buildroot%_sysconfdir/sysconfi
 %post_service keepalived
 
 %files
+%_bindir/*
 %_sbindir/*
 %_man1dir/genhash.*
 %_man5dir/keepalived.conf.*
@@ -117,15 +109,21 @@ install -pD -m644 keepalived/etc/sysconfig/%name %buildroot%_sysconfdir/sysconfi
 %_initdir/%name
 %_unitdir/%name.service
 %dir %_sysconfdir/%name
+%config(noreplace) %_sysconfdir/%name/%name.conf
 %config(noreplace) %_sysconfdir/sysconfig/%name
+%_datadir/mibs/%name
 
-%doc AUTHOR ChangeLog README.md
+%doc AUTHOR ChangeLog README
 %doc doc/keepalived.conf.SYNOPSIS
 %doc doc/*-MIB*
 %doc doc/*.txt
 %doc doc/samples
 
 %changelog
+* Thu Nov 25 2021 Alexey Shabalin <shaba@altlinux.org> 2.2.4-alt1
+- 2.2.4
+- cleanup spec
+
 * Fri Aug 06 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.2.2-alt3
 - e2k: added patch to check if NFT_SET_CONCAT is declared
 
