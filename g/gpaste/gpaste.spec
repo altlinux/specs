@@ -9,7 +9,7 @@
 %def_disable applet
 
 Name: gpaste
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GPaste is a clipboard management system
@@ -32,7 +32,7 @@ Requires: lib%name = %version-%release
 %define mutter_ver 40.0
 %define gjs_ver 1.54
 
-BuildRequires(pre): meson rpm-build-gir
+BuildRequires(pre): meson rpm-build-gir rpm-build-vala rpm-build-systemd
 BuildRequires: libappstream-glib-devel desktop-file-utils
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libdbus-devel libgtk+3-devel >= %gtk_ver
@@ -40,8 +40,6 @@ BuildRequires: libgjs-devel >= %gjs_ver libmutter-devel >= %mutter_ver
 BuildRequires: gnome-control-center-devel
 BuildRequires: gobject-introspection-devel >= %gi_ver libgtk+3-gir-devel
 BuildRequires: vala-tools >= %vala_ver libvala-devel
-# since 3.20
-BuildRequires: pkgconfig(systemd)
 
 %description
 This package provides gpaste-daemon is a clipboard management daemon with DBus
@@ -107,8 +105,8 @@ in notification area.
 
 %build
 %meson \
-  -Dschemas-compile=false \
-  -Dvala=true
+  -Dvapi=true
+%nil
 %meson_build
 
 %install
@@ -123,7 +121,7 @@ in notification area.
 %_datadir/metainfo/%xdg_name.Ui.appdata.xml
 %_prefix/lib/systemd/user/%xdg_name.Ui.service
 %_datadir/dbus-1/services/*.service
-%_prefix/lib/systemd/user/%xdg_name.service
+%_userunitdir/%xdg_name.service
 %_datadir/glib-2.0/schemas/*.xml
 %_datadir/gnome-control-center/keybindings/*.xml
 %_man1dir/%name-client.1.*
@@ -162,6 +160,9 @@ in notification area.
 
 
 %changelog
+* Thu Nov 25 2021 Yuri N. Sedunov <aris@altlinux.org> 3.42.2-alt1
+- 3.42.2
+
 * Sun Oct 31 2021 Yuri N. Sedunov <aris@altlinux.org> 3.42.1-alt1
 - 3.42.1
 
