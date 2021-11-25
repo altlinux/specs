@@ -1,5 +1,5 @@
 Name: c-ares
-Version: 1.17.2
+Version: 1.18.1
 Release: alt1
 
 Summary: A library that performs asynchronous DNS operations
@@ -56,6 +56,11 @@ subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 install -d %buildroot%_bindir
 install -pm755 src/tools/.libs/{acountry,adig,ahost} %buildroot%_bindir/
 
+%check
+pushd test/
+./arestest --gtest_filter=-*.Live*
+popd
+
 %files -n c-ares
 %_bindir/*
 
@@ -69,6 +74,10 @@ install -pm755 src/tools/.libs/{acountry,adig,ahost} %buildroot%_bindir/
 %_man3dir/*
 
 %changelog
+* Thu Nov 25 2021 Anton Farygin <rider@altlinux.ru> 1.18.1-alt1
+- 1.18.1
+- enabled tests
+
 * Wed Aug 11 2021 Anton Farygin <rider@altlinux.ru> 1.17.2-alt1
 - 1.17.2 (Fixes: CVE-2021-3672)
 
