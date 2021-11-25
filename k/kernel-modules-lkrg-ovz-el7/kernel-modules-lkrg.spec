@@ -1,5 +1,5 @@
 %define module_name	lkrg
-%define module_version	0.9.1.0.27.gitabd8719
+%define module_version	0.9.1.0.34.git0270c95
 %define module_release	alt1
 
 %define flavour		ovz-el7
@@ -39,7 +39,7 @@ Provides:  kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
-Requires: lkrg-config >= %module_version
+Requires: lkrg-common >= %module_version
 
 # Conflicts due %_sysconfdir/lkrg.conf. These conflicts should be at
 # lkrg-config package, but sisyphus_check does not allow dependencies to kernel
@@ -178,7 +178,7 @@ grep -qE '^.*Power down' boot.log &&
 
 %post
 if [ $1 -eq 2 ]; then
-	%post_service lkrg
+	service lkrg condrestart
 fi
 
 %preun
@@ -245,6 +245,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Thu Nov 25 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.34.git0270c95-alt1
+- Updated to v0.9.1-34-g0270c95.
 
 * Sat Nov 13 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.27.gitabd8719-alt1
 - Updated to 0.9.1.0.27.gitabd8719.

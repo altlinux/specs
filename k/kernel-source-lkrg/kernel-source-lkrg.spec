@@ -1,5 +1,5 @@
 %define module_name lkrg
-%define module_version 0.9.1.0.27.gitabd8719
+%define module_version 0.9.1.0.34.git0270c95
 
 Name: kernel-source-lkrg
 Version: %module_version
@@ -14,7 +14,6 @@ Url:  https://www.openwall.com/lkrg/
 VCS: https://github.com/openwall/lkrg.git
 Source: %module_name-%version.tar
 Source1: %module_name.init
-Patch: %name-%version-%release.patch
 
 ExclusiveArch: aarch64 armh %ix86 x86_64
 BuildRequires(pre): rpm-build-kernel
@@ -52,14 +51,11 @@ detection). For process credentials, LKRG attempts to detect the exploit and
 take action before the kernel would grant the process access (such as open a
 file) based on the unauthorized credentials.
 
-This package contains a common files fo Linux Kernel Runtime Guard.
+This package contains common files fo Linux Kernel Runtime Guard.
 
 %prep
 %setup -q -c
 cp -a %SOURCE1 .
-pushd %module_name-%version
-%patch -p1
-popd
 
 %install
 mkdir -p %kernel_srcdir
@@ -119,6 +115,9 @@ done
 %_presetdir/30-lkrg.preset
 
 %changelog
+* Thu Nov 25 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.34.git0270c95-alt1
+- Updated to v0.9.1-34-g0270c95.
+
 * Fri Nov 12 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.27.gitabd8719-alt1
 - Updated to v0.9.1-27-gabd8719.
 - Fixed FTBFS with kernel 5.15 on armh.
