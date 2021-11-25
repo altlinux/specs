@@ -1,6 +1,6 @@
 Name: borg
 Version: 1.1.17
-Release: alt1
+Release: alt2
 
 Summary: Deduplicating backup program with compression and authenticated encryption
 
@@ -35,9 +35,10 @@ fully trusted targets.
 
 %prep
 %setup
-%patch1 -p1
+#patch1 -p1
 
-rm -rfv src/borg/algorithms/{lz4,xxh64,zstd,blake2}/
+#rm -rfv src/borg/algorithms/{lz4,xxh64,zstd,blake2}/
+#rm -rfv src/borg/algorithms/{lz4,zstd,blake2}/
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -56,6 +57,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
 
 %changelog
+* Wed Sep 15 2021 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.1.17-alt2
+- build with bundled xxhash
+
 * Sat Jul 17 2021 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.1.17-alt1
 - 1.1.17 release
 
