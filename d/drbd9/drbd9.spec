@@ -1,6 +1,6 @@
 Name: drbd9
 Version: 9.1.4
-Release: alt1
+Release: alt2
 %define githash e4de25c3a65811b0fa4733b1c2a000ee322f5cfa
 
 Summary: The Linux kernel code for DRBD9.
@@ -49,9 +49,8 @@ cd ..
 tar -cf %kernel_srcdir/kernel-source-%name-%version.tar %name-%version
 
 %check
-# sed -i s/SUBDIRS=/M=/g Makefile
 make -C drbd KDIR=/lib/modules/*-std-def-*/build -k
-make -C drbd KDIR=/lib/modules/*-un-def-*/build -k
+# make -C drbd KDIR=/lib/modules/*-un-def-*/build -k
 
 %files -n kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar
@@ -60,6 +59,9 @@ make -C drbd KDIR=/lib/modules/*-un-def-*/build -k
 %doc README.md COPYING
 
 %changelog
+* Fri Nov 26 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.1.4-alt2
+- Disable check for un-def until upstream make fix for 5.15 kernel.
+
 * Tue Oct 05 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.1.4-alt1
 - 9.1.4
 
