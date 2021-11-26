@@ -15,7 +15,7 @@
 
 Name: displaylink-driver
 Version: 5.4.1
-Release: alt2.%rel
+Release: alt3.%rel
 Summary: DisplayLink library and tools
 Group: System/Kernel and hardware
 
@@ -140,6 +140,11 @@ install -m 0644 *.spkg %buildroot%_datadir/%name/
 %_usrsrc/kernel/sources/kernel-source-%module_name-%module_version.tar.bz2
 
 %changelog
+* Fri Nov 26 2021 L.A. Kostis <lakostis@altlinux.ru> 5.4.1-alt3.55.174
+- Update udev script:
+  + fix add/remove actions
+  + code cleanups.
+
 * Thu Nov 25 2021 L.A. Kostis <lakostis@altlinux.ru> 5.4.1-alt2.55.174
 - Add logdir.
 - Add armh support.
