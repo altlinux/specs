@@ -1,11 +1,11 @@
 %define libname iter
 Name: ocaml-%libname
-Version: 1.2.1
-Release: alt3
+Version: 1.3
+Release: alt1
 Summary: Simple and lightweight iterator abstract data type for OCaml
 License: BSD
 Group: Development/ML
-Url: https://github.com/c-cube/sequence/
+Url: https://github.com/c-cube/iter/
 Source0: %name-%version.tar
 BuildRequires: ocaml-findlib-devel ocaml-dune-configurator-devel ocaml-result-devel
 BuildRequires: ocaml-qcheck-devel ocaml-ounit-devel ocaml-odoc ocaml-qtest-devel
@@ -46,6 +46,9 @@ rm -f dune
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Nov 26 2021 Anton Farygin <rider@altlinux.ru> 1.3-alt1
+- 1.2.1 -> 1.3
+
 * Tue Mar 16 2021 Anton Farygin <rider@altlinux.org> 1.2.1-alt3
 - spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
 - simplified specfile with macros from rpm-build-ocaml 1.4
