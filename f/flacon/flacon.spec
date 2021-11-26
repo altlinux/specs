@@ -1,5 +1,5 @@
 Name: flacon
-Version: 8.0.0
+Version: 8.1.0
 Release: alt1
 
 Summary: Audio File Encoder
@@ -51,7 +51,7 @@ Extracts audio tracks from audio CD image to separate tracks.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %doc LICENSE README.md
@@ -70,6 +70,9 @@ Extracts audio tracks from audio CD image to separate tracks.
 %_man1dir/%name.1.*
 
 %changelog
+* Fri Nov 26 2021 Nazarov Denis <nenderus@altlinux.org> 8.1.0-alt1
+- Version 8.1.0
+
 * Sun Nov 14 2021 Nazarov Denis <nenderus@altlinux.org> 8.0.0-alt1
 - Version 8.0.0
 
