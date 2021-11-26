@@ -1,6 +1,6 @@
 Name: herbstluftwm
 Version: 0.9.0
-Release: alt2
+Release: alt3
 
 Summary: A manual tiling window manager
 License: BSD-2-Clause
@@ -83,16 +83,16 @@ rm -f %buildroot%_datadir/doc/%name/{INSTALL,NEWS,LICENSE,BUGS}
 
 %_datadir/xsessions/herbstluftwm.desktop
 
-%dir %_datadir/zsh
-%dir %_datadir/zsh/site-functions
+#dir %_datadir/zsh
+#dir %_datadir/zsh/site-functions
 %_datadir/zsh/site-functions/_herbstclient
 
-%dir %_datadir/bash-completion/
-%dir %_datadir/bash-completion/completions/
+#dir %_datadir/bash-completion/
+#dir %_datadir/bash-completion/completions/
 %_datadir/bash-completion/completions/herbstclient
 
-%dir %_datadir/fish
-%dir %_datadir/fish/vendor_completions.d
+#dir %_datadir/fish
+#dir %_datadir/fish/vendor_completions.d
 %_datadir/fish/vendor_completions.d/herbstclient.fish
 
 %files examples
@@ -100,6 +100,9 @@ rm -f %buildroot%_datadir/doc/%name/{INSTALL,NEWS,LICENSE,BUGS}
 %_datadir/doc/%name/examples
 
 %changelog
+* Sat Nov 27 2021 Igor Vlasenko <viy@altlinux.org> 0.9.0-alt3
+- NMU: new completion policy
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 0.9.0-alt2
 - NMU: fixed build
 
