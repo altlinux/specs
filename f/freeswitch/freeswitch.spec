@@ -1,12 +1,14 @@
 %{?optflags_lto:%global optflags_lto %nil}
 Name: freeswitch
-Version: 1.10.6
-Release: alt3
+Version: 1.10.7
+Release: alt1
 Epoch: 1
+ExcludeArch: %arm %ix86
 
 Summary: FreeSWITCH open source telephony platform
 License: MPL-1.1
 Group: System/Servers
+# VCS: https://github.com/signalwire/freeswitch
 Url: http://www.freeswitch.org/
 
 Source: %name-%version.tar
@@ -33,6 +35,7 @@ BuildRequires: libuuid-devel postgresql-devel libsofia-sip-devel
 BuildRequires: java-common java-1.8.0-openjdk-devel /proc libavformat-devel libavutil-devel libavresample-devel libswscale-devel
 BuildRequires: libmemcached-devel libopus-devel libbroadvoice-devel libcodec2-devel libImageMagick-devel
 BuildRequires: flite-devel libyuv-devel libfreetype-devel libvpx-devel libg7221-devel libvlc-devel libavcodec-devel libx264-devel
+BuildRequires: libks-devel
 
 %ifarch %ix86 x86_64
 BuildRequires: yasm
@@ -538,6 +541,10 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Fri Nov 26 2021 Anton Farygin <rider@altlinux.ru> 1:1.10.7-alt1
+- 1.10.6 -> 1.10.7 (Fixes: CVE-2021-41158, CVE-2021-41145, CVE-2021-41157,
+  CVE-2021-41105, CVE-2021-37624, CVE-2021-36513)
+
 * Sat Oct 16 2021 Anton Farygin <rider@altlinux.ru> 1:1.10.6-alt3
 - built without silk support
 
