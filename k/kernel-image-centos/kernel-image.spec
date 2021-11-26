@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 19
+%define centos_release 21
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -611,6 +611,23 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Nov 26 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.21-alt1.el9
+- clocksource: Workaround the hpet fallback problem
+- scsi: target: Fix the pgr/alua_support_store functions
+- redhat: fix typo and make the output more silent for dist-git sync
+- Improve performace of AMD C3 entry for Family 17h and later
+- lpfc updates for centos-9 14.0.0.3
+- x86/Kconfig: Do not enable AMD_MEM_ENCRYPT_ACTIVE_BY_DEFAULT automatically
+- ucounts: Fix signal ucount refcounting
+- x86/cpu: Fix migration safety with X86_BUG_NULL_SEL
+- net: gre: fix csum validation for gre4 and gre6
+- redhat/configs: enable KEXEC_SIG for aarch64
+- kernel.spec: add bpf_testmod.ko to kselftests/bpf
+- netfilter: Add deprecation notices for xtables
+
+* Thu Nov 25 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.20-alt1.el9
+- powerpc/svm: Don't issue ultracalls if !mem_encrypt_active() (Herton R. Krzesinski)
+
 * Sun Nov 21 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.19-alt1.el9
 - First build for ALTLinux.
 
