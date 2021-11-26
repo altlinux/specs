@@ -1,11 +1,11 @@
 %define libname gen
 Name: ocaml-%libname
 Version: 0.5.3
-Release: alt4
+Release: alt5
 Summary: Simple and efficient iterators (modules Gen and GenLabels).
 License: BSD
 Group: Development/ML
-Url: https://github.com/c-cube/sequence/
+Url: https://github.com/c-cube/gen
 Source0: %name-%version.tar
 BuildRequires: ocaml-findlib-devel ocaml-dune-configurator-devel ocaml-result-devel
 BuildRequires: ocaml-qcheck-devel ocaml-ounit-devel ocaml-odoc ocaml-qtest-devel
@@ -48,6 +48,9 @@ export OCAMLPARAM="_,w=-33"
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Nov 26 2021 Anton Farygin <rider@altlinux.ru> 0.5.3-alt5
+- fixed homepage URL
+
 * Mon Mar 15 2021 Anton Farygin <rider@altlinux.org> 0.5.3-alt4
 - spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel
 - supressed a warning 33 in tests for compatability with new dune 2.8.x
