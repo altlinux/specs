@@ -3,7 +3,7 @@ Name: kernel-image-centos
 %define centos_release 21
 
 Version: 5.14.0.%{centos_release}
-Release: alt1.el9
+Release: alt2.el9
 
 %define kernel_base_version  %version
 %define kernel_extra_version %nil
@@ -379,6 +379,7 @@ cp -a net/mac80211/sta_info.h      %buildroot%kbuild_dir/net/mac80211/
 # Install files required for building external modules (in addition to headers)
 KbuildFiles="
 	Makefile
+	Makefile.rhelver
 	Module.symvers
 	arch/%arch_dir/Makefile
 %ifarch %ix86 x86_64
@@ -421,6 +422,7 @@ KbuildFiles="
 	scripts/recordmcount.c
 	scripts/recordmcount
 	scripts/gcc-x86_*-has-stack-protector.sh
+	scripts/modules-check.sh
 	scripts/module-common.lds
 	scripts/subarch.include
 	scripts/depmod.sh
@@ -611,6 +613,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Nov 26 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.21-alt2.el9
+- Add files needed for kbuild.
+
 * Fri Nov 26 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.21-alt1.el9
 - clocksource: Workaround the hpet fallback problem
 - scsi: target: Fix the pgr/alua_support_store functions
