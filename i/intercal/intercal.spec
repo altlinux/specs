@@ -1,6 +1,6 @@
 Name: intercal
 Version: 0.31
-Release: alt1
+Release: alt2
 
 Summary: A compiler for the INTERCAL language
 License: GPL-2.0-or-later and GFDL-1.2-or-later
@@ -25,6 +25,7 @@ cp -a pit examples
 rm -r examples/{lib,Makefile}
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %autoreconf
 %configure
 %make_build
@@ -49,6 +50,9 @@ rm -r examples/{lib,Makefile}
 %doc BUGS NEWS README HISTORY examples/ etc/%name.el
 
 %changelog
+* Thu Aug 26 2021 Dmitry V. Levin <ldv@altlinux.org> 0.31-alt2
+- Added -ffat-lto-objects to %%optflags_lto.
+
 * Sun Dec 27 2020 Dmitry V. Levin <ldv@altlinux.org> 0.31-alt1
 - 0.30 -> 0.31.
 - Fixed build with gcc-10.
