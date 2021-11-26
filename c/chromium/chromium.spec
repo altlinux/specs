@@ -30,7 +30,7 @@
 
 Name:           chromium
 Version:        96.0.4664.45
-Release:        alt2
+Release:        alt3
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -444,6 +444,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Nov 26 2021 Alexey Gladkov <legion@altlinux.ru> 96.0.4664.45-alt3
+- Allow fallback to any GL implementation (ALT#41430).
+
 * Tue Nov 23 2021 Andrey Cherepanov <cas@altlinux.org> 96.0.4664.45-alt2
 - Apply upstream patches for fix window maximization in XFCE (ALT #41247).
 
