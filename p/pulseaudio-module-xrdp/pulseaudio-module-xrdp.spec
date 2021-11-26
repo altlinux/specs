@@ -1,8 +1,8 @@
 %define pulseaudio_version 15.0
 
 Name:     pulseaudio-module-xrdp
-Version:  0.5
-Release:  alt3
+Version:  0.6
+Release:  alt1
 
 Summary:  xrdp sink / source pulseaudio modules
 License:  Apache-2.0
@@ -74,6 +74,9 @@ rm -f %buildroot%_libdir/pulse-*/modules/*.la
 %_libdir/pulse-*/modules/*.so
 
 %changelog
+* Fri Nov 26 2021 Andrey Cherepanov <cas@altlinux.org> 0.6-alt1
+- New version.
+
 * Thu Jul 29 2021 Andrey Cherepanov <cas@altlinux.org> 0.5-alt3
 - Rebuild with pulseaudio 15.0.
 
