@@ -1,5 +1,5 @@
 Name: systemd-settings
-Version: 5
+Version: 6
 Release: alt1
 Summary: Settings for systemd
 Url: https://packages.altlinux.org/en/Sisyphus/srpms/%name
@@ -46,13 +46,6 @@ Group: System/Configuration/Boot and Init
 %description enable-showstatus
 %summary
 
-%package disable-dumpcore
-Summary: Set global DumpCore=no
-Group: System/Configuration/Boot and Init
-
-%description disable-dumpcore
-%summary
-
 %package enable-log-to-tty12
 Summary: Set global TTYPath=/dev/tty12 for forward logs
 Group: System/Configuration/Boot and Init
@@ -81,8 +74,6 @@ install -p -m644 enable-kill-user-processes.conf \
     %buildroot/lib/systemd/logind.conf.d/enable-kill-user-processes.conf
 install -p -m644 enable-showstatus.conf \
     %buildroot/lib/systemd/system.conf.d/enable-showstatus.conf
-install -p -m644 disable-dumpcore.conf \
-    %buildroot/lib/systemd/system.conf.d/disable-dumpcore.conf
 install -p -m644 enable-log-to-tty12.conf \
     %buildroot/lib/systemd/journald.conf.d/enable-log-to-tty12.conf
 install -p -m644 disable-resolve-llmnr.conf \
@@ -103,9 +94,6 @@ install -p -m644 disable-user-systemd-for-selinux.conf \
 %files enable-showstatus
 /lib/systemd/system.conf.d/enable-showstatus.conf
 
-%files disable-dumpcore
-/lib/systemd/system.conf.d/disable-dumpcore.conf
-
 %files disable-resolve-llmnr
 /lib/systemd/resolved.conf.d/disable-resolve-llmnr.conf
 
@@ -113,6 +101,9 @@ install -p -m644 disable-user-systemd-for-selinux.conf \
 /lib/systemd/journald.conf.d/enable-log-to-tty12.conf
 
 %changelog
+* Fri Nov 26 2021 Alexey Shabalin <shaba@altlinux.org> 6-alt1
+- Drop disable-dumpcore package.
+
 * Fri Jul 09 2021 Alexey Shabalin <shaba@altlinux.org> 5-alt1
 - Added disable-resolve-llmnr package
 
