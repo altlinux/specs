@@ -1,6 +1,6 @@
 Name: liboil
 Version: 0.3.17
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: Library of Optimized Inner Loops
 License: BSD-style
@@ -91,7 +91,7 @@ make -C examples distclean
 cp -a examples %buildroot%pkgdocdir/
 
 %check
-make -k -C testsuite check
+make -k -C testsuite check CFLAGS='%optflags -fno-lto'
 
 %files
 %_libdir/*.so.*
@@ -117,6 +117,9 @@ make -k -C testsuite check
 %pkgdocdir/examples/
 
 %changelog
+* Fri Nov 26 2021 Dmitry V. Levin <ldv@altlinux.org> 0.3.17-alt1.qa2
+- NMU: disabled lto in %%check.
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.17-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
