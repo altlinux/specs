@@ -1,6 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+## does not work, sed below does not help
 ##define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_archlib -MPrima::Const'
-BuildRequires: perl(Text/Bidi.pm)
+##sed -i -e '/use Prima /d' Prima/Const.pm
+##sed -i -e 's/use Prima::Const/require Prima::Const/' Prima/Classes.pm
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -9,16 +11,29 @@ BuildRequires: /usr/bin/xvfb-run perl(AnyEvent.pm) perl(AnyEvent/Socket.pm) perl
 # need installed Prima
 %add_findreq_skiplist %_bindir/VB
 %add_findreq_skiplist %_bindir/podview
-%add_findreq_skiplist */Prima/DetailedOutline.pm
-%add_findreq_skiplist */Prima/HelpViewer.pm
-%add_findreq_skiplist */Prima/KeySelector.pm
+%add_findreq_skiplist %perl_vendor_archlib/Prima/DetailedOutline.pm
+%add_findreq_skiplist %perl_vendor_archlib/Prima/HelpViewer.pm
+%add_findreq_skiplist %perl_vendor_archlib/Prima/KeySelector.pm
 # Bareword "cs::Simple" not allowed
-%add_findreq_skiplist */Prima/VB/*
-%add_findreq_skiplist */Prima/examples/*
+%add_findreq_skiplist %perl_vendor_archlib/Prima/VB/*
+%add_findreq_skiplist %perl_vendor_archlib/Prima/examples/*
 # -M Prima::Drawable
-%add_findreq_skiplist */Prima/Drawable/*
-%add_findreq_skiplist */Prima/Buttons.pm
-%add_findreq_skiplist */Prima/*
+%add_findreq_skiplist %perl_vendor_archlib/Prima/Drawable/*
+%add_findreq_skiplist %perl_vendor_archlib/Prima/Buttons.pm
+%add_findreq_skiplist %perl_vendor_archlib/Prima/ExtLists.pm
+%add_findreq_skiplist %perl_vendor_archlib/Prima/ImageViewer.pm
+%add_findreq_skiplist %perl_vendor_archlib/Prima/IntUtils.pm
+%add_findreq_skiplist %perl_vendor_archlib/Prima/Label.pm
+%add_findreq_skiplist %perl_vendor_archlib/Prima/Lists.pm
+%add_findreq_skiplist %perl_vendor_archlib/Prima/Notebooks.pm
+%add_findreq_skiplist %perl_vendor_archlib/Prima/PS/*.pm
+%add_findreq_skiplist %perl_vendor_archlib/Prima/RubberBand.pm
+%add_findreq_skiplist %perl_vendor_archlib/Prima/ScrollBar.pm
+%add_findreq_skiplist %perl_vendor_archlib/Prima/ScrollWidget.pm
+%add_findreq_skiplist %perl_vendor_archlib/Prima/Sliders.pm
+%add_findreq_skiplist %perl_vendor_archlib/Prima/StartupWindow.pm
+%add_findreq_skiplist %perl_vendor_archlib/Prima/Widgets.pm
+%add_findreq_skiplist %perl_vendor_archlib/Prima/sys/*
 
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
@@ -28,42 +43,53 @@ BuildRequires: /usr/bin/xvfb-run perl(AnyEvent.pm) perl(AnyEvent/Socket.pm) perl
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# Perform optional tests
+%{bcond_without perl_Prima_enables_optional_test}
 # Run X11 tests
 %{bcond_without perl_Prima_enables_x11_test}
+# Support bidirectional text with FriBidi library
+%{bcond_without perl_Prima_enables_fribidi}
 # Use GTK2 file dialogs and fonts
 %{bcond_without perl_Prima_enables_gtk2}
+# Use HarfBuzz library for rendering a text
+%{bcond_without perl_Prima_enables_harfbuzz}
 # Support colorful cursor via Xcursor
 %{bcond_without perl_Prima_enables_xcursor}
 # Support FreeType fonts via xft
 %{bcond_without perl_Prima_enables_xft}
+# Support WebP image format
+%{bcond_without perl_Prima_enables_wepb}
 
 Name:           perl-Prima
 Version:        1.63
-Release:        alt1
+Release:        alt1_1
 Summary:        Perl graphic toolkit
+# Copying:              BSD text
+# examples/tiger.eps:   AGPLv3+   (bundled from GhostScript? CPAN RT#122271)
 # img/codec_jpeg.c:     EXIF parser is based on io-jpeg.c from gdk-pixbuf
 #                       (LGPLv2+)
+# img/codec_X11.c:      MIT
 # img/imgscale.c:       Resizing filters are baes on magick/resize.c from
 #                       ImageMagick (ImageMagick)
 # include/unix/queue.h: BSD
+# LICENSE:              BSD text
+# pod/Prima/Widget/place.pod:   TCL
 # pod/prima-gencls.pod: BSD
 # Prima.pm:             BSD
-# Copying:              BSD text
-# LICENSE:              BSD text
-# img/codec_X11.c:      MIT
-# pod/Prima/Widget/place.pod:   TCL
-# src/Drawable.c:               TCL
-# examples/tiger.eps:   AGPLv3+   (bundled from GhostScript? CPAN RT#122271)
+# Prima/PS/Unicode.pm:  BSD
+# src/Drawable.c:       TCL
+# unix/apc_render.c:    MIT
 License:        BSD and MIT and TCL and ImageMagick and LGPLv2+ and AGPLv3+
-URL:            http://search.cpan.org/dist/Prima/
-Source0:        http://www.cpan.org/authors/id/K/KA/KARASIK/Prima-%{version}.tar.gz
+URL:            https://metacpan.org/release/Prima
+Source0:        https://cpan.metacpan.org/authors/id/K/KA/KARASIK/Prima-%{version}.tar.gz
 BuildRequires:  findutils
 BuildRequires:  libgif-devel
-BuildRequires:  gcc-common
+BuildRequires:  gcc
 BuildRequires:  libjpeg-devel
 BuildRequires:  perl-devel
-BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
+BuildRequires:  perl
 BuildRequires:  perl(Config.pm)
 BuildRequires:  perl(constant.pm)
 BuildRequires:  perl(Cwd.pm)
@@ -83,11 +109,22 @@ BuildRequires:  perl(warnings.pm)
 # pkgconfig is optional, but it provides better compiler options, so use it
 BuildRequires:  pkgconfig(fontconfig)
 BuildRequires:  pkgconfig(freetype2)
+%if %{with perl_Prima_enables_fribidi}
+BuildRequires:  pkgconfig(fribidi)
+%endif
 %if %{with perl_Prima_enables_gtk2}
 BuildRequires:  pkgconfig(gtk+-2.0) >= 2.7
 %endif
+%if %{with perl_Prima_enables_harfbuzz}
+BuildRequires:  pkgconfig(harfbuzz)
+%endif
 BuildRequires:  pkgconfig(libpng)
 BuildRequires:  pkgconfig(libtiff-4)
+%if %{with perl_Prima_enables_wepb}
+BuildRequires:  pkgconfig(libwebp)
+BuildRequires:  pkgconfig(libwebpdemux)
+BuildRequires:  pkgconfig(libwebpmux)
+%endif
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xcomposite)
 %if %{with perl_Prima_enables_xcursor}
@@ -105,19 +142,23 @@ BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Encode.pm)
 BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(Fcntl.pm)
 # Getopt::Long not used at tests
 BuildRequires:  perl(IO/Handle.pm)
+BuildRequires:  perl(Scalar/Util.pm)
+BuildRequires:  perl(Symbol.pm)
 BuildRequires:  perl(Tie/Array.pm)
 BuildRequires:  perl(Tie/RefHash.pm)
 # Optional run-time:
-# Text::Bidi::Constants 2.10 not used at tests
-# Text::Bidi::Paragraph 2.10 not used at tests
+BuildRequires:  perl(Compress/Raw/Zlib.pm)
+# gv not used at a tests
 # Tests:
 BuildRequires:  perl(FindBin.pm)
 BuildRequires:  perl(IO/Socket/INET.pm)
 BuildRequires:  perl(open.pm)
 BuildRequires:  perl(Socket.pm)
 BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(utf8.pm)
 %if %{with perl_Prima_enables_x11_test}
 # X11 tests:
 BuildRequires:  xorg-xvfb xvfb-run
@@ -125,24 +166,25 @@ BuildRequires:  fontlang(en)
 # Tests exhibit a proportional font
 BuildRequires:  fonts-ttf-liberation
 %endif
+%if %{with perl_Prima_enables_optional_test}
 # Optional tests:
 BuildRequires:  perl(Test/Pod.pm)
-# Optional run-time:
-Requires:     perl(Text/Bidi/Constants.pm) >= 2.100
-Requires:     perl(Text/Bidi/Paragraph.pm) >= 2.100
-# Public modules without package keyword:
+%endif
+Requires:     perl(Compress/Raw/Zlib.pm)
+Requires:       gv
+# Public modules without a package keyword:
 Provides:       perl(Prima/noARGV.pm) = %{version}
+Provides:       perl(Prima/PS/Drawable/Path.pm) = %{version}
+Provides:       perl(Prima/PS/Drawable/Region.pm) = %{version}
+Provides:       perl(Prima/PS/Setup.pm) = %{version}
 
 
 
 # Do not export private modules (not starting with "Prima")
 
 
-# Filter under-specified provides
-
 Source44: import.info
-%filter_from_provides /^perl\\((am|apc|bi|bs|bt|ci|cl|cm|CodeEditor|cr|cs|CustomPodView|Divider|dmfp|dt|Editor|fdo|fds|fe|fp|fr|fra|frr|fs|fw|gm|gr|grow|gsci|gt|gui|ict|im|is|ItemsOutline|kb|km|le|lj|lp|mb|mbi|MenuOutline|MPropListViewer|mt|MyOutline|nt|PackPropListViewer|PropListViewer|rop|Round3D|sbmp|ss|sv|ta|tb|tka|tm|tno|tns|tw|wc|ws).pm\\)/d
-%filter_from_provides /^perl\\(Prima.pm\\)$/d
+%filter_from_provides /^perl(\(am\|apc\|bi\|bs\|bt\|ci\|cl\|cm\|CodeEditor\|cr\|cs\|CustomPodView\|Divider\|dmfp\|dt\|Editor\|fdo\|fds\|fe\|fp\|fr\|fra\|frr\|fs\|fw\|gm\|gr\|grow\|gsci\|gt\|gui\|ict\|im\|is\|ItemsOutline\|kb\|km\|le\|lj\|lp\|mb\|mbi\|MenuOutline\|MPropListViewer\|mt\|MyOutline\|nt\|PackPropListViewer\|PropListViewer\|rop\|Round3D\|sbmp\|ss\|sv\|ta\|tb\|tka\|tm\|tno\|tns\|tw\|wc\|ws\).pm)/d
 
 %description
 Prima is a general purpose extensible graphical user interface toolkit with
@@ -157,28 +199,89 @@ Summary:        Test tools for Prima Perl graphic toolkit
 This Perl module contains a small set or tool used for testing of
 Prima-related code together with standard Perl Test:: suite.
 
+%package tests
+Group: Development/Perl
+Summary:        Tests for %{name}
+BuildArch:      noarch
+Requires:       %{name} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       perl-Prima perl-Prima-Test
+Requires:       coreutils
+%if %{with perl_Prima_enables_x11_test}
+Requires:       xorg-xvfb xvfb-run
+Requires:       fontlang(en)
+# TODO: see log message for fonts
+# Tests exhibit a proportional font
+Requires:       fonts-ttf-liberation
+%endif
+
+%description tests
+Tests from %{name}. Execute them
+with "%{_libexecdir}/%{name}/test".
 
 %prep
 %setup -q -n Prima-%{version}
 
-#sed -i -e '/use Prima /d' Prima/Const.pm
-#sed -i -e 's/use Prima::Const/require Prima::Const/' Prima/Classes.pm
+%if !%{with perl_Prima_enables_optional_test}
+rm t/misc/pod.t
+perl -i -ne 'print $_ unless m{\A\Qt/misc/pod.t\E}' MANIFEST
+%endif
+# Normalize end-of-lines
+find -type f \( -name '*.pm' -o -name '*.pl' -o -name '*.PL' -o -name '*.t' \
+     -o -name Changes -o -name README.md \) -exec perl -i -pe 's/\r\n/\n/' {} +
+# Help generators to recognize Perl scripts
+for F in $(find t -name '*.t'); do
+    perl -i -MConfig -ple 'print $Config{startperl} if $. == 1 && !s{\A#!\s*perl}{$Config{startperl}}' "$F"
+    chmod +x "$F"
+done
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1 OPTIMIZE="$RPM_OPT_FLAGS" \
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1 NO_PERLLOCAL=1 \
+    OPTIMIZE="$RPM_OPT_FLAGS" \
     CYGWIN_WINAPI=0 \
+    DEBUG=0 \
+    VERBOSE=1 \
+    WITH_FRIBIDI=%{with perl_Prima_enables_fribidi} \
     WITH_GTK2=%{with perl_Prima_enables_gtk2} \
+    WITH_GTK3=0 \
+    WITH_HARFBUZZ=%{with perl_Prima_enables_harfbuzz} \
     WITH_ICONV=1 \
     WITH_OPENMP=1 \
-    WITH_XFT=%{with perl_Prima_enables_xft} \
-%make_build
+    WITH_XFT=%{with perl_Prima_enables_xft}
+%{make_build}
 
 %install
-make pure_install DESTDIR=$RPM_BUILD_ROOT
+%{makeinstall_std}
 find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -delete
+find $RPM_BUILD_ROOT -type f -name '*.a' -size 0 -delete
 # %{_fixperms} $RPM_BUILD_ROOT/*
+# Install tests
+mkdir -p %{buildroot}%{_libexecdir}/%{name}
+cp -a t %{buildroot}%{_libexecdir}/%{name}
+rm %{buildroot}%{_libexecdir}/%{name}/t/misc/syntax.t
+%if %{with perl_Prima_enables_optional_test}
+rm %{buildroot}%{_libexecdir}/%{name}/t/misc/pod.t
+%endif
+cat > %{buildroot}%{_libexecdir}/%{name}/test << 'EOF'
+#!/bin/bash
+set -e
+# t/misc/fs.t writes into CWD
+DIR=$(mktemp -d)
+cp -a %{_libexecdir}/%{name}/t "$DIR"
+pushd "$DIR"
+unset DISPLAY XDG_SESSION_TYPE
+%if %{with perl_Prima_enables_x11_test}
+    xvfb-run -a prove -I . -r -j 1 t
+%else
+    prove -I . -r -j 1 t
+%endif
+popd
+rm -r "$DIR"
+EOF
+chmod +x %{buildroot}%{_libexecdir}/%{name}/test
 
 %check
+unset DISPLAY XDG_SESSION_TYPE
+# Not parallel-safe
 %if %{with perl_Prima_enables_x11_test}
     xvfb-run -a make test
 %else
@@ -186,7 +289,7 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -delete
 %endif
 
 %files
-%doc Copying examples
+%doc --no-dereference Copying LICENSE AGPLv3
 # "examples" directory is installed into perl_vendorarch
 %doc Changes README.md
 %{_bindir}/*
@@ -194,14 +297,22 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -delete
 %{perl_vendor_archlib}/prima-gencls.pod
 %{perl_vendor_archlib}/Prima*
 %exclude %{perl_vendor_archlib}/Prima/Stress.*
-#exclude %{perl_vendor_archlib}/Prima/Test.*
+%exclude %{perl_vendor_archlib}/Prima/sys/Test.*
 %{_mandir}/man1/*
 
 %files Test
 %{perl_vendor_archlib}/Prima/Stress.*
-#{perl_vendor_archlib}/Prima/Test.*
+%{perl_vendor_archlib}/Prima/sys/Test.*
+
+%files tests
+%{_libexecdir}/%{name}
 
 %changelog
+* Fri Nov 26 2021 Igor Vlasenko <viy@altlinux.org> 1.63-alt1_1
+- re-import
+- properly link with libperl
+- do not loose lib dependencies
+
 * Mon Oct 11 2021 Igor Vlasenko <viy@altlinux.org> 1.63-alt1
 - automated CPAN update
 
