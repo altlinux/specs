@@ -1,6 +1,6 @@
 # check version in include/libyuv/version.h
 Name: libyuv
-Version: 0.0.1767
+Version: 0.0.1805
 Release: alt1
 
 Summary: YUV conversion and scaling functionality library
@@ -11,10 +11,9 @@ Url: http://code.google.com/p/libyuv/
 
 # Source-url: https://chromium.googlesource.com/libyuv/libyuv/+archive/ad890067f661dc747a975bc55ba3767fe30d4452.tar.gz
 Source: %name-%version.tar
-
 Patch0: libyuv-alt-buildfix.patch
 
-BuildRequires: gcc-c++ cmake
+BuildRequires: clang cmake libstdc++-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libgtest-devel
 
@@ -48,9 +47,12 @@ yuvconvert tool.
 %patch0 -p2
 
 %build
+%define optflags_lto %nil
 %ifarch %ix86
     %add_optflags -msse2
 %endif
+export CC=clang
+export CXX=clang++
 %cmake \
     -DENABLE_TEST=1 \
     -DCMAKE_SKIP_BUILD_RPATH=1
@@ -77,6 +79,9 @@ $(echo */libyuv_unittest)
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Fri Nov 26 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.1805-alt1
+- up to 1805 git.63ce1d05
+
 * Sun Jul 04 2021 Vitaly Lipatov <lav@altlinux.ru> 0.0.1767-alt1
 - new version from git ad890067f661dc747a975bc55ba3767fe30d4452
 - new version (0.0.1767) with rpmgs script
