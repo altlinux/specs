@@ -1,5 +1,5 @@
 Name: mednafen
-Version: 1.27.1
+Version: 1.28.0
 Release: alt1
 
 Summary: Multi-consoles Emulator
@@ -11,6 +11,7 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 # http://downloads.sourceforge.net/%%name/%%name-%%version.tar.bz2
 Source: %name-%version.tar.xz
 Patch1: mednafen-e2k.patch
+Patch2: libco-ppc64v2-swap-global.patch
 
 BuildRequires: gcc-c++ liblzo2-devel libsndfile-devel libflac-devel
 BuildRequires: libcdio-devel libvorbis-devel libSDL_net-devel
@@ -50,6 +51,7 @@ reasons.
 %prep
 %setup -n %name
 %patch1 -p1
+%patch2 -p1
 
 %build
 # This package has a configure test which uses ASMs, but does not link the
@@ -84,6 +86,9 @@ export CXXFLAGS
 
 
 %changelog
+* Sat Nov 27 2021 Ilya Mashkin <oddity@altlinux.ru> 1.28.0-alt1
+- version 1.28.0
+
 * Mon Jun 14 2021 Ilya Mashkin <oddity@altlinux.ru> 1.27.1-alt1
 - version 1.27.1
 
