@@ -1,7 +1,7 @@
 %define  modulename resolvelib
 
 Name:    python3-module-%modulename
-Version: 0.5.5
+Version: 0.8.1
 Release: alt1
 
 Summary: Resolve abstract dependencies into concrete ones 
@@ -38,5 +38,8 @@ on how it should interact with them, and it will spit out a resolution result.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Nov 26 2021 Andrey Cherepanov <cas@altlinux.org> 0.8.1-alt1
+- New version.
+
 * Thu Oct 28 2021 Andrey Cherepanov <cas@altlinux.org> 0.5.5-alt1
 - Initial build for Sisyphus.
