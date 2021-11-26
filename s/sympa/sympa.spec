@@ -1,6 +1,6 @@
 Name: sympa
-Version: 6.2.66
-Release: alt0.3
+Version: 6.2.67
+Release: alt0.1.b2
 
 %def_without authorcheck
 %define ngxconfdir %_sysconfdir/nginx/sites-available.d
@@ -199,7 +199,8 @@ Requires: perl(Net/DNS.pm)
 Requires: perl(Net/SMTP.pm)
 Requires: perl(Unicode/Normalize.pm)
 Requires: perl(Unicode/UTF8.pm)
-
+# On disk attachments compression
+Requires: perl(Archive/Zip/SimpleZip.pm)
 
 BuildRequires(pre): rpm-macros-webserver-common rpm-macros-apache2 rpm-macros-javascript
 
@@ -751,6 +752,10 @@ fi
 %static_content
 
 %changelog
+* Fri Nov 26 2021 L.A. Kostis <lakostis@altlinux.ru> 6.2.67-alt0.1.b2
+- Updated to 6.2.67b.2
+- Req: added perl-Archive-Zip-SimpleZip (see upstream issue #1235)
+
 * Wed Nov 10 2021 L.A. Kostis <lakostis@altlinux.ru> 6.2.66-alt0.3
 - Fix unowned dirs.
 
