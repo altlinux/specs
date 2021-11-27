@@ -1,7 +1,7 @@
 %define alias oxce
 Name: openxcom-extended
 Epoch: 1
-Version: 7.0.13
+Version: 7.1.7
 Release: alt1
 Summary: OpenXcom Extended is an open-source clone of the original X-COM
 License: GPLv3+
@@ -14,7 +14,7 @@ Source3: openxcom32.png
 Patch0: openxcom.desktop-to-oxce.patch
 Patch1: openxcom-man6.patch
 
-BuildRequires: cmake gcc-c++ libSDL_gfx-devel libSDL_image-devel libSDL_mixer-devel libyaml-cpp0-devel zlib-devel doxygen /usr/bin/git libGLU-devel libglvnd-devel pkgconfig(sdl)
+BuildRequires: cmake gcc-c++ libSDL_gfx-devel libSDL_image-devel libSDL_mixer-devel libyaml-cpp-devel zlib-devel doxygen /usr/bin/git libGLU-devel libglvnd-devel pkgconfig(sdl)
 
 # Recommends
 Requires: zenity
@@ -65,6 +65,9 @@ mv %buildroot%_man6dir/{openxcom.6,%{name}.6}
 %_desktopdir/%name.desktop
 
 %changelog
+* Sat Nov 27 2021 Igor Vlasenko <viy@altlinux.org> 1:7.1.7-alt1
+- new version
+
 * Tue Aug 03 2021 Igor Vlasenko <viy@altlinux.org> 1:7.0.13-alt1
 - new version
 
