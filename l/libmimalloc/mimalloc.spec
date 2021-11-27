@@ -1,101 +1,95 @@
-Name: 		libmimalloc
-Version:	1.0
-Release:	alt1.1
-Summary:	A general purpose allocator with excellent performance
-Source:		%name-%version.tar
-Group:		System/Libraries
-Patch:		%name-%version-%release.patch
-License:	BSD
-URL:		https://github.com/microsoft/mimalloc
+Group: System/Libraries
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
+# END SourceDeps(oneline)
+%define oldname mimalloc
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%undefine __cmake_in_source_build
 
-# Automatically added by buildreq on Sun Jun 23 2019
-# optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libsasl2-3 python-base sh4
-BuildRequires: cmake
+Name:           libmimalloc
+Version:        2.0.3
+Release:        alt1_1
+Summary:        A general purpose allocator with excellent performance
 
-# Tests:
-BuildRequires: gcc-c++
+License:        MIT
+URL:            https://github.com/microsoft/mimalloc
+Source0:        %{url}/archive/v%{version}/%{oldname}-%{version}.tar.gz
+
+BuildRequires:  ctest cmake
+BuildRequires:  gcc-c++
+Source44: import.info
+Patch33: mimalloc-2.0.3-alt-soname.patch
 
 %description
 mimalloc (pronounced "me-malloc")
 is a general purpose allocator with excellent performance characteristics.
-Initially developed by Daan Leijen for the run-time systems of the
+Initially developed by Daan Leijen for the run-time systems.
 
-It is a drop-in replacement for `malloc` and can be used in other programs
-without code changes, for example, on Unix you can use it as:
+%package -n libmimalloc2
+Summary:        Shared library for the %oldname library
+Group:          System/Libraries
 
-$ LD_PRELOAD=/usr/bin/libmimalloc.so  myprogram
+%description -n libmimalloc2
+mimalloc (pronounced "me-malloc")
+is a general purpose allocator with excellent performance characteristics.
+Initially developed by Daan Leijen for the run-time systems.
 
-%package devel
-Group:		Development/C
-Summary:	Development environment for %name
-%description devel
-%summary
+This package contains the shared library.
 
-%package devel-static
-Group:		Development/C
-Summary:	Development environment for %name (static files)
-Requires:	%name = %version-%release
-%description devel-static
-%summary
+%package -n libmimalloc-devel
+Group: Development/C
+Summary:        Development environment for %oldname
+Requires:       libmimalloc2 = %EVR
+Provides: %oldname-devel = %EVR
+
+%description -n libmimalloc-devel
+Development package for mimalloc.
 
 %prep
-%setup
-%patch -p1
+%setup -n %{oldname}-%{version} -q
+
+# Remove unneded binary from sources
+rm -rf bin
+
+%if "%version" == "2.0.3"
+%patch33 -p1
+%else
+echo update release in patch
+exit 1
+%endif
 
 %build
-mkdir -p BUILD_{release,secure,debug}
-BUILD_release=-DCMAKE_BUILD_TYPE=RelWithDebInfo
-BUILD_secure=-DSECURE=ON
-BUILD_debug=-DCMAKE_BUILD_TYPE=Debug
-%define _cmake__builddir $D
-for D in BUILD_*; do
-  %cmake $(eval echo '$'$D)
-  %cmake_build
-done
+%{fedora_v2_cmake} \
+    -DMI_BUILD_OBJECT=OFF \
+    -DMI_OVERRIDE=OFF \
+    -DMI_INSTALL_TOPLEVEL=ON \
+    -DMI_BUILD_STATIC=OFF \
+    -DMI_BUILD_TESTS=OFF \
+    -DCMAKE_BUILD_TYPE=Release
+%fedora_v2_cmake_build
+
 
 %install
-%define _cmake__builddir $D
-for D in BUILD_*; do
-  rm -f BUILD && ln -s $D BUILD
-  %cmake_install
-done
+%fedora_v2_cmake_install
 
-# XXX this is supposed to be but not
-for L in %buildroot%_libdir/lib*.so.*; do
-  ln -s `basename $L` ${L%%%%.*}.so
-done
 
-# XXX this too
-mkdir -p %buildroot%_datadir/cmake/Modules
-mv %buildroot%_libdir/cmake %buildroot%_datadir/cmake/Modules/mimalloc
+%files -n libmimalloc2
+%doc --no-dereference LICENSE
+%doc readme.md
+%_libdir/libmimalloc.so.2
+%_libdir/libmimalloc.so.2.*
 
-# XXX and this!
-mkdir -p %buildroot%_includedir
-mv %buildroot%_libdir/include/* %buildroot%_includedir/
+%files -n libmimalloc-devel
+%{_libdir}/lib%{oldname}.so
+%{_libdir}/cmake/%{oldname}/
+%{_includedir}/*
 
-%check
-cd test
-
-# XXX main.cpp includes mysterious rcmalloc.h
-for f in main-override.cpp *.c; do
-  cc $f -I %buildroot%_includedir -L %buildroot%_libdir -lmimalloc-debug
-  LD_LIBRARY_PATH=%buildroot%_libdir ./a.out
-done
-
-%files
-%_libdir/*.so.*
-
-%files devel
-%doc docs readme*
-%_libdir/*.so
-%_datadir/cmake/Modules/mimalloc
-%_includedir/*
-
-%files devel-static
-%_libdir/*.o
-%_libdir/*.a
 
 %changelog
+* Sat Nov 27 2021 Igor Vlasenko <viy@altlinux.org> 2.0.3-alt1_1
+- new version
+
 * Tue Jun 01 2021 Arseny Maslennikov <arseny@altlinux.org> 1.0-alt1.1
 - NMU: spec: adapted to new CMake macros.
 
