@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:           alex4
 Version:        1.0
-Release:        alt2_32
+Release:        alt2_36
 Summary:        Alex the Allegator 4 - Platform game
 License:        GPL+
 URL:            https://obiot.github.io/Alex4-WE/readme.html
@@ -25,6 +25,7 @@ BuildRequires:  gcc
 BuildRequires:  liballegro-devel dumb-devel desktop-file-utils libappstream-glib
 Requires:       icon-theme-hicolor
 Source44: import.info
+Patch33: alex4-alt-allegro-4.4.patch
 
 %description
 In the latest installment of the series Alex travels through the jungle in
@@ -46,7 +47,10 @@ sed -i 's/\r//' *.txt *.ini
 
 # as-needed
 sed -i -e 's,$(CC) $(LDFLAGS) -o $@ $^,$(CC) -o $@ $^ $(LDFLAGS),' src/Makefile
+# glibc-2.34
+sed -i 's,^LDFLAGS = \(.*\S\)\(\s*\)$,LDFLAGS = \1 -lm\2,' src/Makefile
 
+%patch33 -p1
 
 %build
 pushd src
@@ -83,6 +87,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Sat Nov 27 2021 Igor Vlasenko <viy@altlinux.org> 1.0-alt2_36
+- fixed build
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_32
 - update to new release by fcimport
 
