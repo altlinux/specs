@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
@@ -5,9 +6,8 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:           alphabet-soup
 Version:        1.1
-Release:        alt2_24
+Release:        alt2_31
 Summary:        Guide your worm through the soup to spell words
-Group:          Games/Other
 License:        Crystal Stacker
 URL:            http://www.t3-i.com/asoup.htm
 Source0:        http://www.t3-i.com/ncdgames/as11src.zip
@@ -31,6 +31,9 @@ included dictionaries, or import your own.
 %patch1 -p1
 sed -i 's/\r//' readme.txt
 
+# glibc-2.34
+sed -i 's,^LDFLAGS = \(.*\S\)\(\s*\)$,LDFLAGS = \1 -lm\2,' Makefile.unix
+
 %build
 %make_build -f Makefile.unix PREFIX=%{_prefix} \
   CFLAGS="$RPM_OPT_FLAGS -fsigned-char -Wno-deprecated-declarations -DALLEGRO_FIX_ALIASES"
@@ -53,6 +56,9 @@ install -p -m 644 %{SOURCE2} \
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 
 %changelog
+* Sat Nov 27 2021 Igor Vlasenko <viy@altlinux.org> 1.1-alt2_31
+- fixed build
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_24
 - update to new release by fcimport
 
