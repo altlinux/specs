@@ -1,5 +1,5 @@
 Name: openxcom
-Version: 1.0_2021.09.20
+Version: 1.0_2021.11.24
 Release: alt1
 Summary: OpenXcom is an open-source clone of the original X-COM
 License: GPLv3+
@@ -13,7 +13,7 @@ Patch: openxcom-man6.patch
 
 # Automatically added by buildreq on Sat May 31 2014
 # optimized out: boost-devel-headers cmake-modules libGL-devel libGLU-devel libSDL-devel libX11-devel libcloog-isl4 libstdc++-devel libyaml-cpp0 pkg-config xorg-kbproto-devel xorg-xproto-devel
-BuildRequires: cmake gcc-c++ libSDL_gfx-devel libSDL_image-devel libSDL_mixer-devel libyaml-cpp0-devel
+BuildRequires: cmake gcc-c++ libSDL_gfx-devel libSDL_image-devel libSDL_mixer-devel libyaml-cpp-devel
 
 # Recommends
 Requires: zenity
@@ -51,6 +51,9 @@ install -pm 644 -D res/linux/openxcom.desktop %buildroot%_desktopdir/%name.deskt
 %_desktopdir/%name.desktop
 
 %changelog
+* Sat Nov 27 2021 Igor Vlasenko <viy@altlinux.org> 1.0_2021.11.24-alt1
+- nightly 2021.11.24
+
 * Wed Nov 03 2021 Igor Vlasenko <viy@altlinux.org> 1.0_2021.09.20-alt1
 - nightly 2021.09.20
 
