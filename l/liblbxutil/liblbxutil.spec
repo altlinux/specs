@@ -1,6 +1,8 @@
+%def_disable static
+
 Name:		liblbxutil
 Version:	1.1.0
-Release:	alt3
+Release:	alt4
 License:	MIT
 Group:		System/X11
 Summary:	LBX utility routines
@@ -43,14 +45,14 @@ Requires:	%name-devel
 
 %build
 %autoreconf
-%configure
+%configure %{subst_enable static}
 %make_build
 
 %install
 %makeinstall
 
 %files
-%_libdir/lib*.so.*
+%_libdir/lib*.so.1*
 
 %files devel
 %_includedir/X11/extensions/*
@@ -58,10 +60,16 @@ Requires:	%name-devel
 %_libdir/lib*.so
 %_pkgconfigdir/*
 
+%if_enabled static
 %files devel-static
 %_libdir/lib*.a
+%endif
 
 %changelog
+* Sat Nov 27 2021 Igor Vlasenko <viy@altlinux.org> 1.1.0-alt4
+- picked from orphaned
+- fixed build
+
 * Tue Apr 06 2021 Fr. Br. George <george@altlinux.ru> 1.1.0-alt3
 - Fix GCC10 build
 
