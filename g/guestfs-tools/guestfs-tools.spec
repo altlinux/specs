@@ -1,7 +1,7 @@
 Summary: Tools to access and modify virtual machine disk images
 Name: guestfs-tools
 Version: 1.47.2
-Release: alt1
+Release: alt2
 Group: File tools
 License: GPLv2+
 Url: http://libguestfs.org/
@@ -37,7 +37,16 @@ BuildRequires: xorriso
 BuildRequires: perl-Sys-Guestfs
 BuildRequires: bash-completion
 
+%ifarch %ix86 x86_64 aarch64
+Requires: guestfs-data
+%endif
+
 # For virt-builder:
+Requires: libvirt-daemon-driver-qemu >= 0.10.2
+Requires: %_bindir/fusermount
+Requires: %_bindir/getopt
+Requires: /lib/systemd/systemd-machined
+Requires: libosinfo
 Requires: curl
 Requires: gnupg2
 Requires: /usr/bin/qemu-img
@@ -155,5 +164,8 @@ rm -rf %buildroot%_mandir/{ja,uk}
 %_mandir/man1/virt-dib.1*
 
 %changelog
+* Sat Nov 27 2021 Anton Farygin <rider@altlinux.ru> 1.47.2-alt2
+- added Requires, which is needed to build images (closes: #41443)
+
 * Sun Nov 07 2021 Anton Farygin <rider@altlinux.ru> 1.47.2-alt1
 - first build for Sisyphus
