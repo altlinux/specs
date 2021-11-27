@@ -25,7 +25,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.18.1
+Version: 2.19.1
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -594,6 +594,9 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Sat Nov 27 2021 Pavel Vainerman <pv@altlinux.ru> 2.19.1-alt1
+- [log]: supported "log in local time"
+
 * Sun Nov 21 2021 Pavel Vainerman <pv@altlinux.ru> 2.18.1-alt1
 - [modbus slave]: supported "socket timeout"(reopen)
 
