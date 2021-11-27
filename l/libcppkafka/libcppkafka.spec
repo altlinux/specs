@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libcppkafka
-Version: 0.3.1
-Release: alt1.git.5e4b350
+Version: 0.4.0
+Release: alt1
 Summary: High level C++ wrapper for rdkafka
 Group: Development/C++
 License: BSD-2-Clause
@@ -53,6 +53,9 @@ Development environment for %name, %summary
 %_libdir/cmake/*
 
 %changelog
+* Sat Nov 27 2021 Anton Farygin <rider@altlinux.ru> 0.4.0-alt1
+- 0.4.0
+
 * Mon Oct 12 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.1-alt1.git.5e4b350
 - Updated to current snapshot.
 
