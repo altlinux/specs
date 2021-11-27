@@ -1,6 +1,6 @@
 Group: Text tools
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/less /usr/sbin/zdump texinfo
+BuildRequires: /usr/bin/less /usr/bin/zdump texinfo
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/less /usr/sbin/zdump texinfo
 
 Name:		gcal
 Version:	4.1
-Release:	alt2_%autorelease
+Release:	alt3_%autorelease
 Summary:	GNU Gregorian calendar program
 
 License:	GPLv3+
@@ -75,6 +75,9 @@ rm -f %{buildroot}%{_infodir}/dir
 %{_mandir}/man1/*.1*
 
 %changelog
+* Sat Nov 27 2021 Igor Vlasenko <viy@altlinux.org> 4.1-alt3_19
+- fixed build
+
 * Wed Oct 13 2021 Igor Vlasenko <viy@altlinux.org> 4.1-alt2_19
 - fc update
 
