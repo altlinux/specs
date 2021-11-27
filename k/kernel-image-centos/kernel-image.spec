@@ -1,9 +1,9 @@
 Name: kernel-image-centos
 
-%define centos_release 21
+%define centos_release 22
 
 Version: 5.14.0.%{centos_release}
-Release: alt2.el9
+Release: alt1.el9
 
 %define kernel_base_version  %version
 %define kernel_extra_version %nil
@@ -613,6 +613,10 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sat Nov 27 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.22-alt1.el9
+- Add automotive CI jobs
+- post 5.14 scheduler fixes
+
 * Fri Nov 26 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.21-alt2.el9
 - Add files needed for kbuild.
 
