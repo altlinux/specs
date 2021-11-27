@@ -1,18 +1,20 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(DateTime/Locale.pm) perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Tiny
 Version:        1.07
-Release:        alt2_6
+Release:        alt2_13
 Summary:        Date object, with as little code as possible
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/DateTime-Tiny
 Source0:        https://cpan.metacpan.org/authors/id/D/DA/DAGOLDEN/DateTime-Tiny-%{version}.tar.gz
+Patch0:         DateTime-Tiny-1.07-Fixed-test-for-DateTime-Locale-1.33.patch
 BuildArch:      noarch
+BuildRequires:  coreutils
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl-devel
 BuildRequires:  perl
@@ -37,13 +39,14 @@ datetime.
 
 %prep
 %setup -q -n DateTime-Tiny-%{version}
+%patch0 -p1
 
 %build
-/usr/bin/perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
-%make_build
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1 NO_PERLLOCAL=1
+%{make_build}
 
 %install
-make pure_install DESTDIR=$RPM_BUILD_ROOT
+%{makeinstall_std}
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -55,6 +58,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Nov 27 2021 Igor Vlasenko <viy@altlinux.org> 1.07-alt2_13
+- fixed build
+
 * Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 1.07-alt2_6
 - fixed build
 
