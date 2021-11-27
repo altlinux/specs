@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           worminator
 Version:        3.0R2.1
-Release:        alt2_30
+Release:        alt2_36
 Summary:        Sidescrolling platform and shoot'em up action-game
 License:        GPLv2+
 URL:            http://sourceforge.net/projects/worminator/
@@ -20,6 +20,7 @@ BuildRequires:  gcc
 BuildRequires:  liballegro-devel desktop-file-utils libappstream-glib
 Requires:       worminator-data >= 3.0R2.1, icon-theme-hicolor
 Source44: import.info
+Patch33: worminator-3.0R2.1-alt-allegro4.patch
 
 %description
 You play as The Worminator and fight your way through many levels of madness
@@ -31,8 +32,10 @@ full screen scrolling, sound and music, and much more!
 %setup -q
 %patch0 -p1
 %patch1 -p1
+
 sed -i 's/\r//' ReadMe.txt
 
+%patch33 -p1
 
 %build
 gcc $RPM_OPT_FLAGS -fsigned-char -Wno-deprecated-declarations \
@@ -67,6 +70,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Sat Nov 27 2021 Igor Vlasenko <viy@altlinux.org> 3.0R2.1-alt2_36
+- fixed build
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 3.0R2.1-alt2_30
 - update to new release by fcimport
 
