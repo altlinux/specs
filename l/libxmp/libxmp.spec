@@ -1,6 +1,9 @@
+# on soname change rename lib package according to shared libs policy!
+%global soname 4
+
 Name: libxmp
 Version: 4.5.0
-Release: alt1
+Release: alt2
 
 Summary: Module Player library for MOD, S3M, IT and others
 License: LGPLv2.1
@@ -9,6 +12,7 @@ Group: System/Libraries
 Url: http://xmp.sf.net/
 Source0: http://downloads.sf.net/xmp/%name-%version.tar.gz
 Source100: %name.watch
+Patch0: %{name}-fix-lto.patch
 
 %description
 libxmp is a module player library which supports many module formats,
@@ -34,6 +38,7 @@ libxmp.
 
 %prep
 %setup
+%patch0 -p1 -b .lto
 
 %build
 %configure
@@ -50,7 +55,8 @@ rm -f "$b/%_docdir/%name"/{adlib*,ay*.txt}
 mv "$b/%_docdir/%name/libxmp.3" "$b/%_man3dir/"
 
 %files -n %name
-%_libdir/libxmp.so.4*
+%_libdir/libxmp.so.%{soname}
+%_libdir/libxmp.so.%{soname}.*
 %doc docs/COPYING.LIB
 
 %files devel
@@ -61,6 +67,10 @@ mv "$b/%_docdir/%name/libxmp.3" "$b/%_man3dir/"
 %_docdir/%name/
 
 %changelog
+* Sat Nov 27 2021 Igor Vlasenko <viy@altlinux.org> 4.5.0-alt2
+- picked from orphaned
+- fixed build
+
 * Tue Jun 15 2021 Michael Shigorin <mike@altlinux.org> 4.5.0-alt1
 - new version (watch file uupdate)
 
