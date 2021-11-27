@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 %define _localstatedir %{_var}
 Name:           zasx
 Version:        1.30
-Release:        alt2_27
+Release:        alt2_33
 Summary:        Asteroid like game with powerups
 License:        GPLv2+ and Freely redistributable without restriction
 URL:            https://www.allegro.cc/depot/Zasx/
@@ -22,6 +22,7 @@ BuildRequires:  gcc
 BuildRequires:  dumb-devel ImageMagick-tools desktop-file-utils libappstream-glib
 Requires:       icon-theme-hicolor
 Source44: import.info
+Patch33: zasx-1.30-alt-allegro-4.4.patch
 
 %description
 Shoot the asteroids before they hit your ship and collect power ups to restore
@@ -35,12 +36,14 @@ mode, joystick, music and sound.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+
 sed -i 's/\r//' copying.txt readme.txt docs/index.html docs/%{name}.css
 mv docs html
 
 # as-needed
 sed -i -e 's,$(CC) $(LDFLAGS) -o $@ $^,$(CC) -o $@ $^ $(LDFLAGS),' Makefile
 
+%patch33 -p1
 
 %build
 %make_build PREFIX=%{_prefix} \
@@ -76,6 +79,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Sat Nov 27 2021 Igor Vlasenko <viy@altlinux.org> 1.30-alt2_33
+- fixed build
+
 * Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 1.30-alt2_27
 - update to new release by fcimport
 
