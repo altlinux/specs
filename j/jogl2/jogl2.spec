@@ -7,39 +7,39 @@ BuildRequires: /proc
 BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:           jogl2
-Version:        2.3.2
-Release:        alt4_9jpp8
+Name:    jogl2
+Version: 2.3.2
+Release: alt5_9jpp8
 %global src_name jogl-v%{version}
-Summary:        Java bindings for the OpenGL API
+Summary: Java bindings for the OpenGL API
 
 # For a breakdown of the licensing, see LICENSE.txt 
-License:        BSD and MIT and ASL 2.0 and ASL 1.1 
-URL:            http://jogamp.org/
-Source0:        http://jogamp.org/deployment/v%{version}/archive/Sources/%{src_name}.tar.xz
-Source1:        %{name}-pom.xml
+License: BSD and MIT and Apache-2.0 and Apache-1.1 
+URL: http://jogamp.org/
+Source0: http://jogamp.org/deployment/v%{version}/archive/Sources/%{src_name}.tar.xz
+Source1: %{name}-pom.xml
 
-Patch2:         %{name}-0002-deactivate-debug-printf.patch
-Patch3:         %{name}-0003-delete-not-supported-API.patch
-Patch4:         %{name}-0004-disable-some-tests.patch
-Patch5:         %{name}-add-secarchs.patch
-Patch6:         %{name}-mesa-profile-detection.patch
+Patch2: %{name}-0002-deactivate-debug-printf.patch
+Patch3: %{name}-0003-delete-not-supported-API.patch
+Patch4: %{name}-0004-disable-some-tests.patch
+Patch5: %{name}-add-secarchs.patch
+Patch6: %{name}-mesa-profile-detection.patch
+Patch7: jogl2-disable-build-native-broadcom.patch
 
-BuildRequires:  gcc
-BuildRequires:  jpackage-utils
-BuildRequires:  gluegen2-devel = %{version}
-BuildRequires:  eclipse-swt
-BuildRequires:  libXt-devel
-BuildRequires:  libXrender-devel
-BuildRequires:  libXxf86vm-devel
-BuildRequires:  libXrandr-devel
-BuildRequires:  libXcursor-devel
-BuildRequires:  maven-local
+BuildRequires: gcc
+BuildRequires: jpackage-utils
+BuildRequires: gluegen2-devel = %{version}
+BuildRequires: eclipse-swt
+BuildRequires: libXt-devel
+BuildRequires: libXrender-devel
+BuildRequires: libXxf86vm-devel
+BuildRequires: libXrandr-devel
+BuildRequires: libXcursor-devel
+BuildRequires: maven-local
 
-Requires:       jpackage-utils
-Requires:       gluegen2 = %{version}
+Requires: jpackage-utils
+Requires: gluegen2 = %{version}
 Source44: import.info
-Patch33: jogl2-disable-build-native-broadcom.patch
 
 %description
 The JOGL project hosts the development version of the Java Binding for
@@ -66,6 +66,7 @@ User manual for jogl2.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p2
 
 # Remove bundled dependencies
 find -name "*.jar" -type f -exec rm {} \;
@@ -85,7 +86,6 @@ done
 
 # git executable should not be used, use true (to avoid checkout) instead
 sed -i 's/executable="git"/executable="true"/' make/build-common.xml
-%patch33 -p2
 
 %build
 # zerg's girar armh hack:
@@ -139,16 +139,18 @@ cp -rdf doc/* %{buildroot}%{_docdir}/%{name}
 cp -t %{buildroot}%{_docdir}/%{name}/ README.txt LICENSE.txt CHANGELOG.txt
 
 %files -f .mfiles
-%{_docdir}/%{name}/README.txt
-%{_docdir}/%{name}/LICENSE.txt
-%{_docdir}/%{name}/CHANGELOG.txt
+%doc README.txt LICENSE.txt CHANGELOG.txt
 %{_libdir}/%{name}
 
 %files doc
-%{_docdir}/%{name}/LICENSE.txt
 %{_docdir}/%{name}
 
 %changelog
+* Sat Nov 27 2021 Andrey Cherepanov <cas@altlinux.org> 2.3.2-alt5_9jpp8
+- use patch for new Mesa from Mageia (ALT #41445)
+- fix license names according to SPDX
+- fix file conflicts between jogl2 and jogl2-doc
+
 * Sat Dec 12 2020 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt4_9jpp8
 - use zerg@'s hack for armh
 
