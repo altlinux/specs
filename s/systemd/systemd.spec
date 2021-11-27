@@ -89,7 +89,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.7
-Release: alt2
+Release: alt3
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -217,15 +217,39 @@ Requires: libseccomp >= 2.3.1
 %{?_enable_libidn:Requires: libidn >= 1.33-alt2}
 %{?_enable_libidn2:Requires: libidn2 > 2.0.4-alt3}
 
-
 # Requires: selinux-policy >= 3.8.5
-Requires: %name-utils = %EVR
-Requires: %name-services = %EVR
 %{?_enable_efi:Requires: %name-boot-efi = %EVR}
-Requires: pam_%name = %EVR
-
 Requires: libnss-myhostname = %EVR
 Requires: libnss-systemd = %EVR
+
+Provides: %name-utils = %EVR
+Obsoletes: %name-utils < %EVR
+Provides: %name-services = %EVR
+Obsoletes: %name-services < %EVR
+
+#utils
+Provides: /sbin/systemctl
+Provides: /bin/systemctl
+Provides: /usr/bin/systemctl
+Provides: /bin/journalctl
+Provides: /sbin/journalctl
+Provides: journalctl = %EVR
+Obsoletes: journalctl < %EVR
+Obsoletes: libsystemd-shared < %EVR
+Obsoletes: bash-completion-%name < %EVR
+Obsoletes: bash-completion-journalctl < %EVR
+Obsoletes: zsh-completion-%name < %EVR
+Obsoletes: zsh-completion-journalctl < %EVR
+Requires: %name-utils-filetriggers = %EVR
+Requires: %name-tmpfiles-common = %EVR
+Requires: %name-sysctl-common = %EVR
+
+# services
+Requires: pam_%name = %EVR
+Requires: dbus >= %dbus_ver
+Conflicts: service <= 0.5.25-alt1
+Conflicts: chkconfig <= 1.3.59-alt3
+Conflicts: ConsoleKit2 ConsoleKit2-x11
 
 # Copy from SysVinit
 Requires: coreutils
@@ -345,7 +369,6 @@ Summary: libnss-mymachines is plugin for local system host name resolution
 Requires(pre): chrooted >= 0.3.5-alt1 chrooted-resolv sed
 Requires(postun): chrooted >= 0.3.5-alt1 sed
 Requires: dbus >= %dbus_ver
-Requires: %name-services = %EVR
 Requires: systemd-container
 
 %description -n libnss-mymachines
@@ -408,55 +431,6 @@ BuildArch: noarch
 
 %description sysvinit
 Drop-in replacement for the System V init tools of systemd.
-
-%package utils
-Group: System/Configuration/Boot and Init
-Summary: systemd utils
-Provides: /sbin/systemctl
-Provides: /bin/systemctl
-Provides: /usr/bin/systemctl
-Provides: /bin/journalctl
-Provides: /sbin/journalctl
-Provides: journalctl = %EVR
-Obsoletes: journalctl < %EVR
-Obsoletes: libsystemd-shared < %EVR
-Obsoletes: bash-completion-%name < %EVR
-Obsoletes: bash-completion-journalctl < %EVR
-Obsoletes: zsh-completion-%name < %EVR
-Obsoletes: zsh-completion-journalctl < %EVR
-Requires: %name-utils-filetriggers = %EVR
-Requires: %name-tmpfiles-common = %EVR
-Requires: %name-sysctl-common = %EVR
-
-%description utils
-This package contains utils from systemd:
- - systemd-binfmt
- - systemd-modules-load
- - systemd-sysctl
- - systemd-tmpfiles
- - systemd-firstboot
- - systemctl
- - journalctl
-
-%package services
-Group: System/Configuration/Boot and Init
-Summary: systemd services
-Conflicts: %name < %EVR
-Requires: pam_%name = %EVR
-Requires: %name-utils = %EVR
-Requires: dbus >= %dbus_ver
-Conflicts: service <= 0.5.25-alt1
-Conflicts: chkconfig <= 1.3.59-alt3
-Conflicts: ConsoleKit2 ConsoleKit2-x11
-
-%description services
-This package contains dbus services and utils from systemd:
- - systemd-hostnamed and hostnamectl
- - systemd-localed and localectl
- - systemd-logind and loginctl
- - systemd-oomd and oomctl
- - systemd-timedated and timedatectl
- - systemd-userdbd and userdbctl
 
 %package networkd
 Group: System/Base
@@ -1080,6 +1054,7 @@ useradd -g systemd-oom -c 'systemd Userspace OOM Killer' \
     -d /var/empty -s /dev/null -r -l -M systemd-oom >/dev/null 2>&1 ||:
 
 %post
+systemd-machine-id-setup >/dev/null 2>&1 || :
 
 systemctl daemon-reexec &>/dev/null || {
   # systemd v239 had bug #9553 in D-Bus authentication of the private socket,
@@ -1214,9 +1189,6 @@ fi
 
 %post_systemd_postponed systemd-timedated.service systemd-hostnamed.service systemd-journald.service systemd-localed.service systemd-userdbd.service systemd-oomd.service
 
-
-%post utils
-systemd-machine-id-setup >/dev/null 2>&1 || :
 
 %if_enabled networkd
 %pre networkd
@@ -1426,6 +1398,10 @@ udevadm hwdb --update &>/dev/null
 
 %_sysconfdir/profile.d/systemd.sh
 
+/lib/modprobe.d/README
+/lib/sysctl.d/README
+/lib/sysusers.d/README
+/lib/tmpfiles.d/README
 
 %_tmpfilesdir/systemd-nologin.conf
 %_tmpfilesdir/systemd.conf
@@ -1438,10 +1414,79 @@ udevadm hwdb --update &>/dev/null
 %config(noreplace) %_sysconfdir/systemd/sleep.conf
 %config(noreplace) %_sysconfdir/systemd/system.conf
 %config(noreplace) %_sysconfdir/systemd/user.conf
-%_datadir/dbus-1/system.d/org.freedesktop.systemd1.conf
 
 %_rpmlibdir/systemd.filetrigger
 %_rpmlibdir/systemd-user.filetrigger
+
+%dir %_systemd_dir
+%_systemd_dir/libsystemd-shared-%ver_major.so
+
+%_modprobedir/README
+%_sysctldir/README
+%_sysusersdir/README
+%_tmpfilesdir/README
+
+/sbin/systemctl
+/bin/systemctl
+%_bindir/systemctl
+%_man1dir/systemctl.*
+
+/bin/journalctl
+/sbin/journalctl
+%_man1dir/journalctl.*
+
+/bin/systemd-escape
+%_mandir/*/*escape*
+
+/sbin/systemd-tmpfiles.shared
+%_altdir/systemd-tmpfiles-shared
+%_mandir/*/*tmpfiles*
+%_tmpfilesdir/systemd-tmp.conf
+%_systemd_dir/systemd-binfmt
+/sbin/systemd-binfmt
+%_rpmlibdir/systemd-binfmt.filetrigger
+%_mandir/*/*binfmt*
+
+/sbin/systemd-sysusers.shared
+%_altdir/systemd-sysusers-shared
+%_mandir/*/*sysusers*
+
+%_systemd_dir/systemd-modules-load
+%_sysconfdir/modules-load.d/modules.conf
+/sbin/systemd-modules-load.shared
+%_altdir/systemd-modules-load-shared
+%_mandir/*/*modules-load*
+
+%_systemd_dir/systemd-sysctl
+/sbin/systemd-sysctl.shared
+%_altdir/systemd-sysctl-shared
+%_mandir/*/*sysctl*
+
+%_systemd_dir/systemd-backlight
+%_mandir/*/*backlight*
+%ghost %dir %_localstatedir%_systemd_dir/backlight
+
+/sbin/systemd-machine-id-setup
+%_man8dir/systemd-machine-id-*
+
+/bin/systemd-sysext
+%_man8dir/systemd-sysext.*
+
+/usr/bin/systemd-cryptenroll
+%_man1dir/systemd-cryptenroll.*
+%_man5dir/veritytab.*
+
+%if_enabled firstboot
+/sbin/systemd-firstboot
+%_man8dir/systemd-firstboot.*
+%endif
+
+%ghost %config(noreplace) %_sysconfdir/machine-info
+%ghost %config(noreplace) %_sysconfdir/hostname
+%ghost %config(noreplace) %_sysconfdir/vconsole.conf
+%ghost %config(noreplace) %_sysconfdir/locale.conf
+
+
 /sbin/systemd
 /sbin/systemd-ask-password
 /bin/systemd-inhibit
@@ -1471,6 +1516,22 @@ udevadm hwdb --update &>/dev/null
 %_bindir/systemd-path
 /bin/systemd-repart
 /bin/systemd-run
+/bin/loginctl
+%_systemd_dir/systemd-logind
+/bin/userdbctl
+%_systemd_dir/systemd-userdbd
+%_systemd_dir/systemd-userwork
+%_bindir/hostnamectl
+%_systemd_dir/systemd-hostnamed
+%_bindir/localectl
+%_systemd_dir/systemd-localed
+%_bindir/timedatectl
+%_systemd_dir/systemd-timedated
+%dir %_systemd_dir/ntp-units.d
+%dir %_sysconfdir/systemd/ntp-units.d
+/bin/oomctl
+%_systemd_dir/systemd-oomd
+%config(noreplace) %_sysconfdir/systemd/oomd.conf
 %_bindir/systemd-stdio-bridge
 %_systemd_dir/systemd
 %_systemd_dir/systemd-ac-power
@@ -1652,7 +1713,17 @@ udevadm hwdb --update &>/dev/null
 %_man8dir/systemd-poweroff*
 %_man8dir/systemd-volatile-root*
 %_man8dir/systemd-xdg-autostart-generator*
+%_mandir/*/*login*
+%_mandir/*/*userdb*
+%_mandir/*/*hostname*
+%exclude %_man8dir/*myhostname*
+%exclude %_man8dir/*mymachines*
+%_mandir/*/*locale*
+%_mandir/*/*timedate*
+%_man5dir/*LogControl1*
+%_mandir/*/*oom*
 
+%exclude %_man3dir/*
 %exclude %_mandir/*/*sysusers*
 %exclude %_datadir/factory
 %exclude %_tmpfilesdir/etc.conf
@@ -1685,14 +1756,44 @@ udevadm hwdb --update &>/dev/null
 %_udev_rulesdir/90-vconsole.rules
 %_udev_rulesdir/99-systemd.rules
 
+%dir %_sysconfdir/systemd
 %dir %_datadir/systemd
 %_datadir/systemd/kbd-model-map
 %_datadir/systemd/language-fallback-map
-%_datadir/dbus-1/system-services/org.freedesktop.systemd1.service
-%_datadir/dbus-1/services/org.freedesktop.systemd1.service
+
+%_datadir/dbus-1/services/*
+%config(noreplace) %_sysconfdir/systemd/logind.conf
+%_datadir/dbus-1/system.d/*
+%exclude %_datadir/dbus-1/system.d/org.freedesktop.resolve1.conf
+%exclude %_datadir/dbus-1/system.d/org.freedesktop.network1.conf
+%exclude %_datadir/dbus-1/system.d/org.freedesktop.machine1.conf
+%exclude %_datadir/dbus-1/system.d/org.freedesktop.import1.conf
+%exclude %_datadir/dbus-1/system.d/org.freedesktop.timesync1.conf
+%if_enabled homed
+%exclude %_datadir/dbus-1/system.d/org.freedesktop.home1.conf
+%endif
+%_datadir/dbus-1/system-services/*
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.resolve1.service
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.network1.service
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.machine1.service
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.import1.service
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.portable1.service
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.timesync1.service
+%if_enabled homed
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.home1.service
+%endif
 
 %if_enabled polkit
-%_datadir/polkit-1/actions/org.freedesktop.systemd1.policy
+%_datadir/polkit-1/actions/*.policy
+%exclude %_datadir/polkit-1/actions/org.freedesktop.systemd1.policy
+%exclude %_datadir/polkit-1/actions/org.freedesktop.resolve1.policy
+%exclude %_datadir/polkit-1/actions/org.freedesktop.network1.policy
+%exclude %_datadir/polkit-1/actions/org.freedesktop.machine1.policy
+%exclude %_datadir/polkit-1/actions/org.freedesktop.import1.policy
+%exclude %_datadir/polkit-1/actions/org.freedesktop.portable1.policy
+%if_enabled homed
+%exclude %_datadir/polkit-1/actions/org.freedesktop.home1.policy
+%endif
 %endif
 
 %ghost %dir %attr(2755, root, systemd-journal) %verify(not mode) %_logdir/journal
@@ -1706,6 +1807,11 @@ udevadm hwdb --update &>/dev/null
 %ghost %_localstatedir%_systemd_dir/catalog/database
 %ghost %_localstatedir%_systemd_dir/random-seed
 %ghost %dir %_localstatedir%_systemd_dir/linger
+
+%_datadir/bash-completion/completions/*
+%exclude %_datadir/bash-completion/completions/udevadm
+%_datadir/zsh/site-functions/*
+%exclude %_datadir/zsh/site-functions/_udevadm
 
 %_defaultdocdir/%name-%version
 %_logdir/README
@@ -1813,145 +1919,6 @@ udevadm hwdb --update &>/dev/null
 %if %_lib == lib64
 %_sysctldir/50-pid-max.conf
 %endif
-
-%files utils
-%dir %_systemd_dir
-%_systemd_dir/libsystemd-shared-%ver_major.so
-
-%_modprobedir/README
-%_sysctldir/README
-%_sysusersdir/README
-%_tmpfilesdir/README
-
-/sbin/systemctl
-/bin/systemctl
-%_bindir/systemctl
-%_man1dir/systemctl.*
-
-/bin/journalctl
-/sbin/journalctl
-%_man1dir/journalctl.*
-
-/bin/systemd-escape
-%_mandir/*/*escape*
-
-/sbin/systemd-tmpfiles.shared
-%_altdir/systemd-tmpfiles-shared
-%_mandir/*/*tmpfiles*
-%_tmpfilesdir/systemd-tmp.conf
-%_systemd_dir/systemd-binfmt
-/sbin/systemd-binfmt
-%_rpmlibdir/systemd-binfmt.filetrigger
-%_mandir/*/*binfmt*
-
-/sbin/systemd-sysusers.shared
-%_altdir/systemd-sysusers-shared
-%_mandir/*/*sysusers*
-
-%_systemd_dir/systemd-modules-load
-%_sysconfdir/modules-load.d/modules.conf
-/sbin/systemd-modules-load.shared
-%_altdir/systemd-modules-load-shared
-%_mandir/*/*modules-load*
-
-%_systemd_dir/systemd-sysctl
-/sbin/systemd-sysctl.shared
-%_altdir/systemd-sysctl-shared
-%_mandir/*/*sysctl*
-
-%_systemd_dir/systemd-backlight
-%_mandir/*/*backlight*
-%ghost %dir %_localstatedir%_systemd_dir/backlight
-
-/sbin/systemd-machine-id-setup
-%_man8dir/systemd-machine-id-*
-
-/bin/systemd-sysext
-%_man8dir/systemd-sysext.*
-
-/usr/bin/systemd-cryptenroll
-%_man1dir/systemd-cryptenroll.*
-%_man5dir/veritytab.*
-
-%if_enabled firstboot
-/sbin/systemd-firstboot
-%_man8dir/systemd-firstboot.*
-%endif
-
-%ghost %config(noreplace) %_sysconfdir/machine-info
-%ghost %config(noreplace) %_sysconfdir/hostname
-%ghost %config(noreplace) %_sysconfdir/vconsole.conf
-%ghost %config(noreplace) %_sysconfdir/locale.conf
-
-%files services
-%dir %_sysconfdir/systemd
-%config(noreplace) %_sysconfdir/systemd/logind.conf
-%_datadir/dbus-1/system.d/org.freedesktop.*.conf
-%exclude %_datadir/dbus-1/system.d/org.freedesktop.systemd1.conf
-%exclude %_datadir/dbus-1/system.d/org.freedesktop.resolve1.conf
-%exclude %_datadir/dbus-1/system.d/org.freedesktop.network1.conf
-%exclude %_datadir/dbus-1/system.d/org.freedesktop.machine1.conf
-%exclude %_datadir/dbus-1/system.d/org.freedesktop.import1.conf
-%exclude %_datadir/dbus-1/system.d/org.freedesktop.timesync1.conf
-%if_enabled homed
-%exclude %_datadir/dbus-1/system.d/org.freedesktop.home1.conf
-%endif
-%_datadir/dbus-1/system-services/org.freedesktop.*.service
-%exclude %_datadir/dbus-1/system-services/org.freedesktop.systemd1.service
-%exclude %_datadir/dbus-1/system-services/org.freedesktop.resolve1.service
-%exclude %_datadir/dbus-1/system-services/org.freedesktop.network1.service
-%exclude %_datadir/dbus-1/system-services/org.freedesktop.machine1.service
-%exclude %_datadir/dbus-1/system-services/org.freedesktop.import1.service
-%exclude %_datadir/dbus-1/system-services/org.freedesktop.portable1.service
-%exclude %_datadir/dbus-1/system-services/org.freedesktop.timesync1.service
-%if_enabled homed
-%exclude %_datadir/dbus-1/system-services/org.freedesktop.home1.service
-%endif
-%if_enabled polkit
-%_datadir/polkit-1/actions/*.policy
-%exclude %_datadir/polkit-1/actions/org.freedesktop.systemd1.policy
-%exclude %_datadir/polkit-1/actions/org.freedesktop.resolve1.policy
-%exclude %_datadir/polkit-1/actions/org.freedesktop.network1.policy
-%exclude %_datadir/polkit-1/actions/org.freedesktop.machine1.policy
-%exclude %_datadir/polkit-1/actions/org.freedesktop.import1.policy
-%exclude %_datadir/polkit-1/actions/org.freedesktop.portable1.policy
-%if_enabled homed
-%exclude %_datadir/polkit-1/actions/org.freedesktop.home1.policy
-%endif
-%endif
-
-/bin/loginctl
-%_systemd_dir/systemd-logind
-/bin/userdbctl
-%_systemd_dir/systemd-userdbd
-%_systemd_dir/systemd-userwork
-%_bindir/hostnamectl
-%_systemd_dir/systemd-hostnamed
-%_bindir/localectl
-%_systemd_dir/systemd-localed
-%_bindir/timedatectl
-%_systemd_dir/systemd-timedated
-%dir %_systemd_dir/ntp-units.d
-%dir %_sysconfdir/systemd/ntp-units.d
-/bin/oomctl
-%_systemd_dir/systemd-oomd
-%config(noreplace) %_sysconfdir/systemd/oomd.conf
-
-%_datadir/bash-completion/completions/*
-%exclude %_datadir/bash-completion/completions/udevadm
-%_datadir/zsh/site-functions/*
-%exclude %_datadir/zsh/site-functions/_udevadm
-
-%_mandir/*/*login*
-%_mandir/*/*userdb*
-%exclude %_man3dir/*
-%_mandir/*/*hostname*
-%exclude %_man8dir/*myhostname*
-%exclude %_man8dir/*mymachines*
-%_mandir/*/*locale*
-%_mandir/*/*timedate*
-%_man5dir/*LogControl1*
-%_mandir/*/*oom*
 
 %if_enabled networkd
 %files networkd
@@ -2243,6 +2210,10 @@ udevadm hwdb --update &>/dev/null
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Sat Nov 27 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.7-alt3
+- Merge services files to main systemd package.
+- Merge utils files to main systemd package.
+
 * Tue Nov 23 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.7-alt2
 - Add requires libnss-systemd to main systemd package for allow
   use units with dynamic users.
