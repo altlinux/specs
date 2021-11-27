@@ -12,8 +12,8 @@
 %define default_luks_format LUKS2
 
 Name: cryptsetup
-Version: 2.3.5
-Release: alt2
+Version: 2.4.2
+Release: alt1
 
 Summary: Utility to setup a encrypted disks with LUKS support
 Summary(ru_RU.UTF-8): Утилита управления зашифрованными дисковыми разделами с поддержкой LUKS
@@ -38,6 +38,7 @@ BuildRequires: libjson-c-devel >= 0.12.1-alt2
 BuildRequires: libargon2-devel
 BuildRequires: libsystemd-devel
 BuildRequires: libblkid-devel
+BuildRequires: libssh-devel
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 
 %if "%default_crypto_backend" == "gcrypt"
@@ -53,12 +54,14 @@ BuildRequires: libnss-devel
 %if "%default_crypto_backend" == "nettle"
 BuildRequires: libnettle-devel
 %endif
+# for tests
+BuildRequires: /proc
 
 # Rename package from cryptsetup-luks-1.0.6-alt0.pre2 to cryptsetup-1.0.6-alt1
 Provides:  cryptsetup-luks = %version
 Obsoletes: cryptsetup-luks < %version-%release
 Provides:  cryptsetup-veritysetup = %version
-Obsoletes: cryptsetup-veritysetup
+Obsoletes: cryptsetup-veritysetup < %version-%release
 Provides:  cryptsetup-reencrypt = %version
 Obsoletes: cryptsetup-reencrypt < %version-%release
 
@@ -142,6 +145,14 @@ LUKS ( Linux Unified Key Setup ) - разрабатываемый стандар
 необходим Вам  только  если Вы планируете  разрабатывать или
 компилировать какие-либо приложения с поддержкой LUKS.
 
+%package ssh-token
+Summary: Cryptsetup LUKS2 SSH token
+Group: System/Kernel and hardware
+Requires: lib%name = %version-%release
+
+%description ssh-token
+This package contains the LUKS2 SSH token.
+
 %prep
 %setup -n %name-%version -a2
 %patch0 -p1
@@ -155,13 +166,13 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %build
 %autoreconf
 %configure \
-	--sbindir=%_root_sbindir \
-	--libdir=/%_lib \
-	--with-crypto_backend=%default_crypto_backend \
-	--with-default-luks-format=%default_luks_format \
-	--disable-internal-argon2 \
-	--enable-libargon2 \
-	--enable-passwdqc=/etc/passwdqc.conf
+    --sbindir=%_root_sbindir \
+    --libdir=/%_lib \
+    --with-crypto_backend=%default_crypto_backend \
+    --with-default-luks-format=%default_luks_format \
+    --disable-internal-argon2 \
+    --enable-libargon2 \
+    --enable-passwdqc=/etc/passwdqc.conf
 
 %make
 
@@ -183,23 +194,31 @@ ln -fnrs %buildroot/%_root_sbindir/%name %buildroot/%_sbindir/%name
 install -Dpm 755 debian/cryptdisks-early.init %buildroot%_sysconfdir/rc.d/scripts/cryptdisks-early
 install -Dpm 755 debian/cryptdisks.init %buildroot%_sysconfdir/rc.d/scripts/cryptdisks
 mkdir -p %buildroot/lib/%name
-install -Dpm 755 debian/cryptdisks.functions %buildroot%_sysconfdir/rc.d/init.d/cryptdisks.functions
+install -Dpm 644 debian/cryptdisks.functions %buildroot%_sysconfdir/rc.d/init.d/cryptdisks.functions
 install -Dpm 600 debian/cryptdisks.default %buildroot%_sysconfdir/sysconfig/cryptdisks
 mkdir -p %buildroot/lib/%name/checks
 install -Dpm 755 debian/checks/blkid %buildroot/lib/%name/checks/blkid
 install -Dpm 755 debian/checks/un_blkid %buildroot/lib/%name/checks/un_blkid
 install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
 
+rm -rf %buildroot/%_lib/*.la
+rm -rf %buildroot/%_lib/%name/*.la
+
 %find_lang %name
+
+%check
+%make check
 
 %files -f %name.lang
 %doc docs/*
-%doc AUTHORS FAQ README
+%doc AUTHORS FAQ README.md
 %doc --no-dereference COPYING COPYING.LGPL
 %doc README.ALT.utf-8
 %_root_sbindir/*
+%exclude %_root_sbindir/cryptsetup-ssh
 %_sbindir/%name
 %_man8dir/*
+%exclude %_man8dir/cryptsetup-ssh.*
 %attr(600,root,root) %config(noreplace) %_sysconfdir/sysconfig/cryptdisks
 %_sysconfdir/rc.d/scripts/cryptdisks-early
 %_sysconfdir/rc.d/scripts/cryptdisks
@@ -212,13 +231,24 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
 
 %files -n lib%name
 /%_lib/lib%name.so.*
+%dir /%_lib/%name
 
 %files -n lib%name-devel
 %_includedir/lib%name.h
 %_libdir/lib%name.so
 %_pkgconfigdir/*
 
+%files ssh-token
+/%_lib/%name/libcryptsetup-token-ssh.so
+%_man8dir/cryptsetup-ssh.*
+%_root_sbindir/cryptsetup-ssh
+
 %changelog
+* Sat Nov 27 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.2-alt1
+- 2.4.2.
+- Add ssh-token subpackage.
+- Add %%check section.
+
 * Sat Jul 17 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.3.5-alt2
 - Fix status message in the cryptdisks init script (Closes: 31052)
 
