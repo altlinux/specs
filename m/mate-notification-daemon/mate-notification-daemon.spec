@@ -1,9 +1,8 @@
-%define optflags_lto %nil
 %define _libexecdir %_prefix/libexec
 
 Name: mate-notification-daemon
 Version: 1.26.0
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: Notification daemon for MATE Desktop
 License: GPLv2+
@@ -28,6 +27,7 @@ Notification daemon for MATE Desktop
 %autoreconf
 %configure \
 	--enable-wayland \
+	--disable-static \
 	--disable-schemas-compile
 
 %make_build
@@ -51,6 +51,9 @@ Notification daemon for MATE Desktop
 %_man1dir/mate-notification-properties.1*
 
 %changelog
+* Sat Nov 27 2021 Dmitry V. Levin <ldv@altlinux.org> 1:1.26.0-alt3
+- NMU: reverted previous change, fixed build.
+
 * Sat Nov 27 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt2
 - disable LTO to avoid build failures
 
