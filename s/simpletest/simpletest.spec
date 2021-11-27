@@ -5,7 +5,7 @@
 
 Name:     simpletest
 Version:  11
-Release:  alt5
+Release:  alt6
 
 Summary:  Simple toolchain test
 License:  GPL-3
@@ -71,6 +71,9 @@ Also provides useful information about system:
 %doc README
 
 %changelog
+* Sat Nov 27 2021 Andrew Savchenko <bircoph@altlinux.org> 11-alt6
+- Workaround g++-11 bug. Alt bug 41451.
+
 * Tue Dec 15 2020 Andrew Savchenko <bircoph@altlinux.org> 11-alt5
 - Fix configure exit code when all sanitizers are disabled.
 
