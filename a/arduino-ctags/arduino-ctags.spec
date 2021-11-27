@@ -4,7 +4,7 @@ Group: Development/C
 %global         extraver        arduino11
 Name:           arduino-ctags
 Version:        5.8
-Release:        alt1_9.%{extraver}
+Release:        alt1_13.%{extraver}
 Summary:        A mix of ctags and anjuta-tags for the perfect C++ ctags
 
 License:        GPLv2
@@ -26,12 +26,16 @@ An Arduino fork of exuberant ctags
 %patch0 -p1
 %patch1 -p1
 
+
 # rename executable and man page
 sed -i 's/^CTAGS_PROG =.*/CTAGS_PROG = arduino-ctags/' Makefile.in
 sed -i 's/^MANPAGE =.*/MANPAGE = arduino-ctags.1/' Makefile.in
 
 # remove glibc regex bundled copy to ensure it's not used
 rm -r gnu_regex
+
+# glibc 2.34
+[ %version = 5.8 ] && sed -i s,__unused__,__attribute_unused__,g `grep -rl __unused__`
 
 %build
 %configure
@@ -49,6 +53,9 @@ rm -r gnu_regex
 
 
 %changelog
+* Sat Nov 27 2021 Igor Vlasenko <viy@altlinux.org> 5.8-alt1_13.arduino11
+- fixed build
+
 * Fri Jul 19 2019 Igor Vlasenko <viy@altlinux.ru> 5.8-alt1_9.arduino11
 - aarch64 build
 
