@@ -1,47 +1,68 @@
+#%%{?optflags_lto:%%global optflags_lto %%optflags_lto -ffat-lto-objects}
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Exporter.pm) perl(FindBin.pm) perl(base.pm) perl(sigtrap.pm)
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl-podlators rpm-build-python3
 # END SourceDeps(oneline)
-Group: System/Libraries
-%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name: libhugetlbfs
-Version: 2.20
-Release: alt2_9
-Summary: A library which provides easy access to huge pages of memory
-License: LGPLv2+
-URL: https://github.com/libhugetlbfs/libhugetlbfs
-Source0: https://www.mgebm.net/~emunson/%{name}-%{version}.tar.gz
-Patch0: build_flags.patch
+#
+# spec file for package libhugetlbfs
+#
+# Copyright (c) 2021 SUSE LLC
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
 
-# For huge_page_setup_helper.py
-BuildRequires(pre): rpm-build-python
+# Please submit bugfixes or comments via https://bugs.opensuse.org/
+#
 
-BuildRequires: gcc
-BuildRequires: glibc-devel
-BuildRequires: glibc-devel-static
 
-%define ldscriptdir %{_datadir}/%{name}/ldscripts
+%define my_make_flags V=1 CFLAGS="%{optflags} -fPIC" LDFLAGS="-pie" BUILDTYPE=NATIVEONLY PREFIX=%{_prefix} LIBDIR32=%{_libdir} DESTDIR=%{buildroot}
+Name:           libhugetlbfs
+Version:        2.23.0.g6b126a4
+Release:        alt1_2.2
+Summary:        Helper library for the Huge Translation Lookaside Buffer Filesystem
+License:        LGPL-2.1-or-later
+Group:          System/Libraries
+URL:            https://github.com/libhugetlbfs/libhugetlbfs
+Source0:        libhugetlbfs-%{version}.tar.gz
+Source1:        baselibs.conf
+Patch0:         libhugetlbfs.tests-malloc.patch
+Patch1:         libhugetlbfs_ia64_fix_missing_test.patch
+Patch2:         disable-rw-on-non-ldscripts.diff
+Patch3:         zero_filesize_segment.patch
+Patch4:         glibc-2.34-fix.patch
+BuildRequires:  doxygen
+BuildRequires:  glibc-devel-static
+# bug437293
+%ifarch ppc64
+Obsoletes:      libhugetlbfs-64bit
+%endif
 Source44: import.info
 
 %description
-libhugetlbfs is a library which provides easy access to huge pages of memory.
-It is a wrapper for the hugetlbfs file system. Applications can use huge pages
-to fulfill malloc() requests without being recompiled by using LD_PRELOAD.
-Alternatively, applications can be linked against libhugetlbfs without source
-modifications to load BSS or BSS, data, and text segments into large pages.
+The libhugetlbfs package interacts with the Linux hugetlbfs to
+make large pages available to applications in a transparent manner.
 
 %package devel
-Group: Development/Other
-Summary:	Header files for libhugetlbfs
-Requires:	%{name} = %{version}-%{release}
+Summary:        Development files for libhugetlbfs
+Group:          Development/Other
+Requires:       %{name} = %EVR
+
 %description devel
-Contains header files for building with libhugetlbfs.
+Devel package, header and static library, of libhugetlbfs.
 
 %package utils
 Group: System/Base
 Summary:	Userspace utilities for configuring the hugepage environment
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %EVR
+
 %description utils
 This packages contains a number of utilities that will help administrate the
 use of huge pages on your system.  hugeedit modifies binaries to set default
@@ -49,46 +70,71 @@ segment remapping behavior. hugectl sets environment variables for using huge
 pages and then execs the target program. hugeadm gives easy access to huge page
 pool size control. pagesize lists page sizes available on the machine.
 
+%files utils
+%{_bindir}/hugeedit
+%{_bindir}/hugeadm
+%{_bindir}/hugectl
+%{_bindir}/pagesize
+%{_mandir}/man8/hugeedit.8*
+%{_mandir}/man8/hugectl.8*
+%{_mandir}/man8/hugeadm.8*
+%{_mandir}/man1/pagesize.1*
+%{_mandir}/man1/ld.hugetlbfs.1*
+%{_libdir}/libhugetlbfs_privutils.so
+
+%package tests
+Summary:        Tests for package libhugetlbfs
+Group:          Development/Tools
+
+%description tests
+The testsuite for libhugetlbfs. Binaries can be found in
+%{_libdir}/libhugetlbfs/tests.
+
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+
 
 %build
-
-# Parallel builds are not reliable
-make BUILDTYPE=NATIVEONLY
+echo %{version} > version
+make %{my_make_flags}
 
 %install
-make install PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LDSCRIPTDIR=%{ldscriptdir} BUILDTYPE=NATIVEONLY
-make install-helper PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LDSCRIPTDIR=%{ldscriptdir} BUILDTYPE=NATIVEONLY
+make %{my_make_flags} PMDIR="%{perl_vendor_privlib}/TLBC" \
+	install install-tests
+mkdir -p %{buildroot}%{_prefix}/include
+cp -avL hugetlbfs.h %{buildroot}%{_prefix}/include
+chmod 644 %{buildroot}%{_libdir}/*.a
+if [ -f %{buildroot}%{_libdir}/libhugetlbfs/tests/obj64/dummy.ldscript ]; then
+	chmod -f a-x %{buildroot}%{_libdir}/libhugetlbfs/tests/obj64/dummy.ldscript
+fi
+
 mkdir -p -m755 $RPM_BUILD_ROOT%{_sysconfdir}/security/limits.d
 touch $RPM_BUILD_ROOT%{_sysconfdir}/security/limits.d/hugepages.conf
 
 # remove statically built libraries:
 rm -f $RPM_BUILD_ROOT/%{_libdir}/*.a
 # remove unused sbin directory
-rm -fr $RPM_BUILD_ROOT/%{_sbindir}/
-
-# touching all ghosts; hack for rpm 4.0.4
-for rpm404_ghost in %{_sysconfdir}/security/limits.d/hugepages.conf
-do
-    mkdir -p %buildroot`dirname "$rpm404_ghost"`
-    touch %buildroot"$rpm404_ghost"
-done
-
-sed -i 1s,python,python2, %buildroot%_bindir/huge_page_setup_helper.py
+#rm -fr $RPM_BUILD_ROOT/%{_sbindir}/
 
 %files
-%doc --no-dereference LGPL-2.1
-%doc README HOWTO NEWS
-%{_libdir}/libhugetlbfs.so*
-%{_datadir}/%{name}/
+%doc LGPL-2.1 HOWTO README NEWS
+%{_datadir}/libhugetlbfs
+#%{_bindir}/*
+#%{_mandir}/man[178]/*%{?ext_man}
 %{_mandir}/man7/libhugetlbfs.7*
+%{_libdir}/libhugetlbfs.so
 %ghost %config(noreplace) %{_sysconfdir}/security/limits.d/hugepages.conf
 %exclude %{_libdir}/libhugetlbfs_privutils.so
 
 %files devel
 %{_includedir}/hugetlbfs.h
+#%{_libdir}/libhugetlbfs.a
+#%{_mandir}/man3/*%{?ext_man}
 %{_mandir}/man3/getpagesizes.3*
 %{_mandir}/man3/free_huge_pages.3*
 %{_mandir}/man3/get_huge_pages.3*
@@ -102,24 +148,13 @@ sed -i 1s,python,python2, %buildroot%_bindir/huge_page_setup_helper.py
 %{_mandir}/man3/hugetlbfs_unlinked_fd.3*
 %{_mandir}/man3/hugetlbfs_unlinked_fd_for_size.3*
 
-%files utils
-%{_bindir}/hugeedit
-%{_bindir}/hugeadm
-%{_bindir}/hugectl
-%{_bindir}/pagesize
-%{_bindir}/huge_page_setup_helper.py
-%exclude %{_bindir}/cpupcstat
-%exclude %{_bindir}/oprofile_map_events.pl
-%exclude %{_bindir}/oprofile_start.sh
-%{_mandir}/man8/hugeedit.8*
-%{_mandir}/man8/hugectl.8*
-%{_mandir}/man8/hugeadm.8*
-%{_mandir}/man1/pagesize.1*
-%{_mandir}/man1/ld.hugetlbfs.1*
-%exclude %{_mandir}/man8/cpupcstat.8*
-%exclude %{_libdir}/perl5/TLBC
+%files tests
+%{_libdir}/libhugetlbfs/
 
 %changelog
+* Sat Nov 27 2021 Igor Vlasenko <viy@altlinux.org> 2.23.0.g6b126a4-alt1_2.2
+- new version
+
 * Thu May 20 2021 Slava Aseev <ptrnine@altlinux.org> 2.20-alt2_9
 - fixed build due to missing rpm-build-python
 
