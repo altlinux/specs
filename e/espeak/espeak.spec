@@ -1,30 +1,61 @@
+%def_with portaudio
+
+# do not enable;
+# a part of msp@work in progress for 1.45;
+# should be adopted first to espeak 1.48
+# to be used together with pulseaudio (a-la runtime)
+%def_without libao
 
 Name: espeak
-Version: 1.44.05
-Release: alt5
+Version: 1.48.04
+Release: alt1
 
-Summary:%name is a software speech synthesizer for English and other languages
-Summary(ru_RU.UTF-8): Программный синтезатор речи для английского и других языков 
+Summary: %name is a software speech synthesizer for English and other languages
+Summary(ru_RU.UTF-8): Программный синтезатор речи для английского и других языков
 Group: Sound
 License: %gpl3plus
-URL:http://espeak.sourceforge.net
+URL: http://espeak.sourceforge.net
 
 Requires: tts-base
 
 # Automatically added by buildreq on Fri Aug 21 2009
 BuildRequires: gcc-c++ unzip
 
-BuildRequires: rpm-macros-tts rpm-build-licenses libao-devel
+BuildRequires: rpm-macros-tts rpm-build-licenses
 
-Source: %name-%version-source.zip
+Source0: http://downloads.sourceforge.net/%{name}/%name-%version-source.zip
 Source1: %name.replacements
 Source2: russian_data.zip
-Source3: %name-dict.mak
+Source3: wave_ao.cpp
 Source4: espeak.voiceman
 Source5: espeak-ru.voiceman
-Source6: wave_ao.cpp
 
-Patch1: %name-alt-libao.patch
+# found in fedora espeak 1.48.04-21.fc35
+# Upstream ticket: https://sourceforge.net/p/espeak/patches/10/
+Source7:        espeak.1
+Patch0:         espeak-1.47-makefile-nostaticlibs.patch
+Patch1:         espeak-1.47-ftbs-ld-libm.patch
+# Upstream ticket: https://sourceforge.net/p/espeak/patches/10/
+Patch2:         espeak-1.48-help-fix.patch
+# Upstream ticket: https://sourceforge.net/p/espeak/bugs/105/
+Patch3:         espeak-1.47-wav-close.patch
+Patch4:         espeak-1.48-gcc-6-fix.patch
+# Upstream-accepted patch (to the new fork espeak-ng)
+# https://github.com/espeak-ng/espeak-ng/commit/7659aaa2e88cc0401d032d04602731ca45070fab
+Patch5:         espeak-1.48-read-fifo.patch
+
+Patch11: %name-1.48-alt-libao.patch
+
+BuildRequires:  libpulseaudio-devel
+%define backend pulseaudio
+%if_with portaudio
+BuildRequires:  libportaudio2-devel
+%define backend runtime
+%endif
+%if_with libao
+BuildRequires: libao-devel
+%define backend ao
+%endif
 
 %description
 %name is a software text-to-speech tool. It produces speech in enlish
@@ -49,7 +80,7 @@ Group: Sound
 Requires: %name-data = %version-%release
 %description -n lib%name
 This package contains the shared library with text-to-speech
-engine. This library is used in 'speak' TTS tool. 
+engine. This library is used in 'speak' TTS tool.
 
 %description -l ru_RU.UTF-8 -n lib%name
 Динамически подключаемая библиотека, содержащая
@@ -73,53 +104,79 @@ Summary(ru_RU.UTF-8): Вспомогательные данные для раб�
 BuildArch: noarch
 License: %gpl3plus
 
-%description data 
-This package contains  architecture-independent 
+%description data
+This package contains  architecture-independent
 data used by espeak speech synthesizer.
 
 %description -l ru_RU.UTF-8 data
-Вспомогательные данные о языках, используемые 
-в работе синтезатором%name.
+Вспомогательные данные о языках, используемые
+в работе синтезатором %name.
 
 %prep
 %setup -q -n %name-%version-source
-%patch1 -p1
-# To enable portaudio19 and newer using instead of portaudio18;
-%__rm -f ./src/portaudio.h
-%__mv ./src/portaudio19.h ./src/portaudio.h
 
-%__cp %SOURCE6 ./src
+# Fix file permissions in upstream tarball
+find . -type f -exec chmod 0644 {} \;
+
+mv docs html
+sed -i 's/\r//' License.txt
+
+# To enable portaudio19 and newer using instead of portaudio18;
+rm -f ./src/portaudio.h
+mv ./src/portaudio19.h ./src/portaudio.h
+
+# Don't use the included binary voice dictionaries; we compile these from source
+rm -f espeak-data/*_dict
+
+%patch0 -p1 -b .nostaticlibs
+%patch1 -p1 -b .ftbs-ld-libm
+%patch2 -p1 -b .help-fix
+%patch3 -p1 -b .wav-close
+%patch4 -p1 -b .1.48-gcc-6-fix
+%patch5 -p1 -b .read-fifo
+
+%if_with libao
+%patch11 -p1
+cp %SOURCE3 ./src
+%endif
+
+unzip %SOURCE2
+mv russian_data/ru_listx dictsource/
 
 %build
-cp %SOURCE2 ./
-unzip russian_data.zip
-mv russian_data/ru_listx dictsource/
 cd src
-cp %SOURCE3 ./dict.mak
-make -f dict.mak
+%make_build CXXFLAGS="%optflags" AUDIO=%backend
+
+# Compile the TTS voice dictionaries
+export ESPEAK_DATA_PATH=%_builddir/espeak-%{version}-source
 cd ../dictsource
-../src/speak --compile=ru
-cd ../src
-make clean
-%make_build CXXFLAGS="%optflags"
-cd ..
+# Strange sed regex to parse ambiguous output from 'speak --voices', filled upstream BZ 3608811
+for voice in $(../src/speak --voices | \
+LANG=C sed -n '/Age\/Gender/ ! s/ *[0-9]\+ *\([^ ]\+\) *M\? *[^ ]\+ *\(\((\|[A-Z]\)[^ ]\+\)\? *\([^ ]\+\).*/\1 \4/ p' | \
+sort | uniq); do \
+    ../src/speak --compile=$voice; \
+done
+# for ru_listx above; no need, for we compile all langs
+#../src/speak --compile=ru
 
 %install
 cd src
 make DESTDIR=$RPM_BUILD_ROOT LIBDIR=%_libdir install
 cd ..
-%__install -pD -m 644 %SOURCE4 %buildroot%_ttsdir/espeak.voiceman
-%__install -pD -m 644 %SOURCE5 %buildroot%_ttsdir/espeak-ru.voiceman
-%__install -pD -m 644 %SOURCE1 %buildroot%_datadir/espeak-data/replacements
+install -pD -m 644 %SOURCE4 %buildroot%_ttsdir/espeak.voiceman
+install -pD -m 644 %SOURCE5 %buildroot%_ttsdir/espeak-ru.voiceman
+install -pD -m 644 %SOURCE1 %buildroot%_datadir/espeak-data/replacements
+install -pD -m 644 %SOURCE7 %buildroot%_man1dir/espeak.1
 
 %preun
 %tts_unregister espeak
 %tts_unregister espeak-ru
 
 %files
-%_bindir/*
+%doc ChangeLog.txt License.txt ReadMe html
+%_bindir/espeak
+%_man1dir/espeak.1*
 %_ttsdir/*
-%doc ChangeLog.txt docs License.txt ReadMe
 
 %files data
 %_datadir/espeak-data
@@ -128,10 +185,14 @@ cd ..
 %_libdir/libespeak.so.*
 
 %files -n lib%name-devel
-%_includedir/*
+%_includedir/espeak
 %_libdir/libespeak.so
 
 %changelog
+* Sun Nov 28 2021 Igor Vlasenko <viy@altlinux.org> 1.48.04-alt1
+- new version
+- picked from orphaned
+
 * Sat Dec 05 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.44.05-alt5
 - libespeak-devel: Do not pack libespeak.a to pass sisyphus_check
 - spec: Remove packager field.
