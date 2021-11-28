@@ -9,14 +9,15 @@
 
 # TODO: def_with clang
 %def_with gtk3
+%def_without qt6
 %def_with wayland
 %def_with x11
 %def_with webkit
 %def_without ffmpeg_static
 
 Name: telegram-desktop
-Version: 3.1.8
-Release: alt2
+Version: 3.2.5
+Release: alt1
 
 Summary: Telegram Desktop messaging app
 
@@ -238,6 +239,11 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
     -DDESKTOP_APP_DISABLE_CRASH_REPORTS:BOOL=ON \
     -DDESKTOP_APP_DISABLE_WEBRTC_INTEGRATION:BOOL=OFF \
     -DDESKTOP_APP_DISABLE_SPELLCHECK:BOOL=OFF \
+%if_with qt6
+    -DDESKTOP_APP_QT6:BOOL=ON \
+%else
+    -DDESKTOP_APP_QT6:BOOL=OFF \
+%endif
 %if_with gtk3
     -DDESKTOP_APP_DISABLE_GTK_INTEGRATION:BOOL=OFF \
 %else
@@ -292,6 +298,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Fri Nov 26 2021 Vitaly Lipatov <lav@altlinux.ru> 3.2.5-alt1
+- new version 3.2.5 (with rpmrb script)
+
 * Tue Oct 12 2021 Andrey Sokolov <keremet@altlinux.org> 3.1.8-alt2
 - fix crashes on video call (closes: 38897)
 
