@@ -1,8 +1,8 @@
 %global optflags %optflags -I%_includedir/KF5 -L%_libdir/kf5/devel
 
 Name:		ksnip
-Version:	1.8.2
-Release:	alt1
+Version:	1.9.1
+Release:	alt2
 
 Summary:	Window Snipping Tool
 
@@ -10,10 +10,8 @@ License:	GPLv2+
 Group:		Graphics
 Url:		https://github.com/ksnip/ksnip
 
-# Source-git: https://github.com/ksnip/ksnip.git
+# Source-url: https://github.com/ksnip/ksnip/archive/refs/tags/v%version.tar.gz
 Source:	%name-%version.tar
-
-Patch1: %name-%version.patch
 
 BuildRequires: cmake
 BuildRequires: extra-cmake-modules
@@ -30,6 +28,7 @@ BuildRequires: libpng-devel
 BuildRequires: libpcre-devel
 BuildRequires: libuuid-devel
 BuildRequires: libexpat-devel
+BuildRequires: libbrotli-devel
 
 BuildRequires:  libappstream-glib
 BuildRequires:  desktop-file-utils
@@ -41,7 +40,6 @@ Screenshot tool inspired by Windows Snipping Tool and made with Qt5 for Linux.
 
 %prep
 %setup -q -n %name-%version
-%patch1 -p1
 
 %build
 %cmake
@@ -65,6 +63,12 @@ desktop-file-validate %buildroot%_datadir/applications/*.desktop
 %_datadir/metainfo/org.ksnip.ksnip.appdata.xml
 
 %changelog
+* Sun Nov 28 2021 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.9.1-alt2
+- Add BR
+
+* Tue Nov 23 2021 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.9.1-alt1
+- new version (1.9.1) with rpmgs script
+
 * Fri May 14 2021 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.8.2-alt1
 - new version
 
