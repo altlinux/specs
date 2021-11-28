@@ -5,7 +5,7 @@
 %global import_path github.com/containers/dnsname
 
 Name:     cni-plugin-%oname
-Version:  1.1.1
+Version:  1.3.1
 Release:  alt1
 
 Summary:  Dnsname cni plugin for podman
@@ -39,7 +39,7 @@ export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export GOFLAGS="-mod=vendor"
-
+export GIT_COMMIT=%release
 
 %golang_prepare
 
@@ -62,6 +62,9 @@ popd
 %cni_dir/dnsname
 
 %changelog
+* Sun Nov 28 2021 Alexey Shabalin <shaba@altlinux.org> 1.3.1-alt1
+- new version 1.3.1
+
 * Tue Dec 08 2020 Alexey Shabalin <shaba@altlinux.org> 1.1.1-alt1
 - Initial build
 
