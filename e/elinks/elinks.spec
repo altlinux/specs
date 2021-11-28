@@ -1,14 +1,23 @@
 Name: elinks
-Version: 0.12
-Release: alt0.12.9
+Version: 0.14.3
+Release: alt1
 
 Summary: Lynx-like text WWW browser with many features
 License: GPLv2
 Group: Networking/WWW
 
 URL: http://elinks.cz
-Source: elinks-0.12pre5.tar
-Patch: %name-%version-%release.patch
+# https://github.com/rkd77/elinks
+Source: %name-%version.tar
+Source1: elinks.conf
+Patch0: 0001-Make-gcc-happy.patch
+Patch1: 0002-less-info-in-user-ag-header.patch
+Patch2: 0003-Fix-OpenSSL-1.1-compat.patch
+Patch3: 0004-fix-dereference-error.patch
+Patch4: 0005-fix-unused-result-errors.patch
+Patch5: 0006-fix-address-always-true-error.patch
+Patch6: 0001-Fix-string-overflow.patch
+Patch7: 0001-Fix-mismatch-in-arguments.patch
 
 # alternatives
 %set_compress_method gzip
@@ -22,6 +31,8 @@ Obsoletes: links
 
 # Automatically added by buildreq on Wed Sep 30 2009
 BuildRequires: bzlib-devel docbook-utils libexpat-devel libgpm-devel lua-devel libssl-devel python-modules-encodings xmlto zlib-devel
+BuildRequires: python3
+
 
 %description
 ELinks is advanced text-mode web browser with wide scale of additional
@@ -30,11 +41,18 @@ language. This project aims to provide feature-rich version of Links,
 with more open patches/features inclusion policy.
 
 %prep
-%setup -n elinks-0.12pre5
-%patch -p1
+%setup
+%patch0 -p2
+%patch1 -p2
+%patch2 -p2
+%patch3 -p2
+%patch4 -p2
+%patch5 -p2
+%patch6 -p2
+%patch7 -p2
 
 # fix shebang
-sed -i 's,/usr/bin/env python,%_bindir/python2,' doc/tools/asciidoc/asciidoc.py
+sed -i 's,/usr/bin/env python,%_bindir/python,' doc/tools/asciidoc/asciidoc.py
 
 # fix old bison behaivour
 sed -i '/rm -f \$\*.h/s/^/# /' src/intl/gettext/Makefile
@@ -82,7 +100,7 @@ cat <<__EOF__ >%buildroot%_altdir/elinks
 %_man1dir/links.1.gz	%_man1dir/elinks.1.gz	%_bindir/elinks
 __EOF__
 
-install -pD -m644 elinks.conf %buildroot/etc/elinks/elinks.conf
+install -pD -m644 %SOURCE1 %buildroot/etc/elinks/elinks.conf
 
 %find_lang elinks
 
@@ -97,6 +115,10 @@ install -pD -m644 elinks.conf %buildroot/etc/elinks/elinks.conf
 %doc doc/manual.html
 
 %changelog
+* Sun Nov 28 2021 Vladislav Zavjalov <slazav@altlinux.org> 0.14.3-alt1
+- New release: 0.14.3 (upstream moved to https://github.com/rkd77/elinks)
+- Apply old Altlinux patches
+
 * Mon Nov 22 2021 Vladislav Zavjalov <slazav@altlinux.org> 0.12-alt0.12.9
 - Fix FTBFS:
   mismatch in function declaration,
