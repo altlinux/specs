@@ -5,11 +5,12 @@
 ExcludeArch: armh
 
 Name: zoneminder
-Version: 1.36.10
+Version: 1.36.11
 Release: alt1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
+# VCS: https://github.com/ZoneMinder/ZoneMinder.git
 Url: http://www.zoneminder.com
 Source: %name-%version-alt.tar
 Source1: Crud-%version.tar
@@ -163,6 +164,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Sun Nov 28 2021 Anton Farygin <rider@altlinux.ru> 1.36.11-alt1
+- 1.36.10 -> 1.36.11
+
 * Sun Nov 07 2021 Anton Farygin <rider@altlinux.ru> 1.36.10-alt1
 - 1.36.10
 
