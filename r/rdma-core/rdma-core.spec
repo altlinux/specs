@@ -11,7 +11,7 @@
 
 
 Name: rdma-core
-Version: 37.0
+Version: 38.0
 Release: alt1
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
@@ -478,6 +478,10 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %_sbindir/ibprintrt.pl
 %_man8dir/ibprintrt*
 %_sbindir/set_nodedesc.sh
+%_sbindir/ibclearerrors
+%_man8dir/ibclearerrors*
+%_sbindir/ibclearcounters
+%_man8dir/ibclearcounters*
 
 %files -n infiniband-diags
 %_sbindir/ibaddr
@@ -538,10 +542,6 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %_man8dir/dump_lfts*
 %_sbindir/dump_mfts.sh
 %_man8dir/dump_mfts*
-%_sbindir/ibclearerrors
-%_man8dir/ibclearerrors*
-%_sbindir/ibclearcounters
-%_man8dir/ibclearcounters*
 %_sbindir/ibstatus
 %_man8dir/ibstatus*
 %_man8dir/infiniband-diags*
@@ -569,6 +569,9 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %docdir/ibsrpdm.md
 
 %changelog
+* Sun Nov 28 2021 Alexey Shabalin <shaba@altlinux.org> 38.0-alt1
+- new version 38.0
+
 * Mon Oct 04 2021 Alexey Shabalin <shaba@altlinux.org> 37.0-alt1
 - new version 37.0
 
