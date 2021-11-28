@@ -12,7 +12,7 @@
 
 Name: rdma-core
 Version: 38.0
-Release: alt1
+Release: alt2
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
 
@@ -190,7 +190,7 @@ Example test programs for the librdmacm library.
 Summary: OpenFabrics InfiniBand Diagnostic Tools
 Group: System/Base
 Provides: openib-diags = %version
-Obsoletes: openib-diags
+Obsoletes: openib-diags < %version
 Conflicts: libinfiniband-diags =< 2.2.0-alt1 
 
 %description -n infiniband-diags
@@ -200,6 +200,7 @@ diagnose an IB subnet.
 %package -n infiniband-diags-compat
 Group: System/Base
 Summary: OpenFabrics Alliance InfiniBand Diagnostic Tools
+BuildArch: noarch
 
 %description -n infiniband-diags-compat
 Deprecated scripts and utilities which provide duplicated functionality, most
@@ -569,6 +570,9 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %docdir/ibsrpdm.md
 
 %changelog
+* Sun Nov 28 2021 Alexey Shabalin <shaba@altlinux.org> 38.0-alt2
+- build infiniband-diags-compat as noarch 
+
 * Sun Nov 28 2021 Alexey Shabalin <shaba@altlinux.org> 38.0-alt1
 - new version 38.0
 
@@ -607,7 +611,7 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 - fix build on riscv64
 
 * Fri Jun 14 2019 Rustem Bapin <rbapin@altlinux.org> 24.0-alt2
-- move efa* in %files under dma_coherent define for fix build on mipsel
+- move efa* in %%files under dma_coherent define for fix build on mipsel
 
 * Sat Jun 01 2019 Alexey Shabalin <shaba@altlinux.org> 24.0-alt1
 - 24.0
