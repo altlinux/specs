@@ -16,7 +16,7 @@
 
 Name: OpenSceneGraph
 Version: 3.4.1
-Release: alt2.1
+Release: alt2.2
 
 Summary: High performance real-time graphics toolkit
 License: OSGPL (wxWidgets, clarified LGPL)
@@ -66,6 +66,7 @@ sed -i "s|share/OpenSceneGraph/bin|bin|" CMakeModules/OsgMacroUtils.cmake
 
 %build
 %cmake -DCMAKE_BUILD_TYPE="Release" \
+      -DCMAKE_CXX_FLAGS_RELEASE="-DNDEBUG" \
 %ifarch %e2k
       -DBUILD_OSG_EXAMPLES=OFF \
 %else
@@ -359,6 +360,9 @@ Development files for OpenThreads
 %_includedir/OpenThreads
 
 %changelog
+* Sun Nov 28 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.4.1-alt2.2
+- fixed passing optlevel to cmake
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 3.4.1-alt2.1
 - NMU: spec: adapted to new cmake macros.
 
