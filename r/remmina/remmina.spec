@@ -1,9 +1,11 @@
-%def_without telepathy
-
 %define _unpackaged_files_terminate_build 1
+%def_without telepathy
+%def_with kwallet
+%def_with gvnc
+%def_with x2go
 
 Name: remmina
-Version: 1.4.11
+Version: 1.4.21
 Release: alt1
 Summary: Remote Desktop Client
 
@@ -16,7 +18,11 @@ Patch0: %name-%version.patch
 
 Requires: icon-theme-hicolor
 
-BuildRequires(pre): cmake
+Obsoletes: %name-plugins-nx < %EVR
+Obsoletes: %name-plugins-st < %EVR
+Obsoletes: %name-plugins-xdmcp < %EVR
+
+BuildRequires(pre): cmake >= 3.4.0
 BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
 BuildRequires: gettext pkgconfig(libpcre) libpcre2-devel
@@ -28,11 +34,17 @@ BuildRequires: pkgconfig(glib-2.0) >= 2.30 pkgconfig(gio-2.0) pkgconfig(gobject-
 BuildRequires: pkgconfig(avahi-ui-gtk3) >= 0.6.30 pkgconfig(avahi-client) >= 0.6.30
 BuildRequires: pkgconfig(freerdp2) >= 2.0.0 libcups-devel
 BuildRequires: pkgconfig(winpr2)
-BuildRequires: pkgconfig(gtk+-3.0) pkgconfig(gdk-pixbuf-2.0) pkgconfig(pango) pkgconfig(cairo) pkgconfig(atk) libwayland-client-devel
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.14.0 pkgconfig(gdk-pixbuf-2.0) pkgconfig(pango)
+BuildRequires: pkgconfig(atk)
+BuildRequires: pkgconfig(cairo)
+BuildRequires: pkgconfig(wayland-client) pkgconfig(wayland-cursor) pkgconfig(wayland-egl) pkgconfig(wayland-scanner) libxkbcommon-devel
 BuildRequires: pkgconfig(libsecret-1)
+%{?_with_kwallet:BuildRequires: kf5-kwallet-devel}
 BuildRequires: pkgconfig(libssh) >= 0.6
 BuildRequires: pkgconfig(libvncserver)
+%{?_with_gvnc:BuildRequires: pkgconfig(gvnc-1.0) pkgconfig(gvncpulse-1.0) pkgconfig(gtk-vnc-2.0)}
 %{?_with_telepathy:BuildRequires: pkgconfig(telepathy-glib) pkgconfig(dbus-glib-1)}
+%{?_with_x2go:BuildRequires: pyhoca-cli}
 BuildRequires: pkgconfig(vte-2.91)
 BuildRequires: pkgconfig(xkbfile)
 BuildRequires: pkgconfig(harfbuzz)
@@ -40,6 +52,7 @@ BuildRequires: pkgconfig(spice-client-gtk-3.0)
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(libsoup-2.4)
 BuildRequires: pkgconfig(libsodium)
+BuildRequires: pkgconfig(appindicator3-0.1)
 
 %add_findreq_skiplist %_datadir/%name/external_tools/*
 
@@ -66,11 +79,8 @@ BuildArch: noarch
 Requires: %name
 Requires: %name-plugins-exec
 Requires: %name-plugins-secret
-Requires: %name-plugins-nx
 Requires: %name-plugins-rdp
-Requires: %name-plugins-st
 Requires: %name-plugins-vnc
-Requires: %name-plugins-xdmcp
 Requires: %name-plugins-spice
 
 %description plugins
@@ -104,18 +114,18 @@ computers in front of either large monitors or tiny net-books.
 This package contains the plugin with keyring support for the Remmina remote
 desktop client.
 
-%package plugins-nx
-Summary: NX plugin for Remmina Remote Desktop Client
+%package plugins-kwallet
+Summary: Kwallet integration for Remmina Remote Desktop Client
 Group: Networking/Remote access
 Requires: %name = %EVR
-Requires: nxproxy
 
-%description plugins-nx
+%description plugins-kwallet
 Remmina is a remote desktop client written in GTK+, aiming to be useful for
 system administrators and travelers, who need to work with lots of remote
 computers in front of either large monitors or tiny net-books.
 
-This package contains the NX plugin for the Remmina remote desktop client.
+This package contains the plugin with kwallet support for the Remmina remote
+desktop client.
 
 %package plugins-rdp
 Summary: RDP plugin for Remmina Remote Desktop Client
@@ -131,19 +141,6 @@ computers in front of either large monitors or tiny net-books.
 This package contains the Remote Desktop Protocol (RDP) plugin for the Remmina
 remote desktop client.
 
-%package plugins-st
-Summary: Simple Terminal plugin for Remmina Remote Desktop Client
-Group: Networking/Remote access
-Requires: %name = %EVR
-
-%description plugins-st
-Remmina is a remote desktop client written in GTK+, aiming to be useful for
-system administrators and travelers, who need to work with lots of remote
-computers in front of either large monitors or tiny net-books.
-
-This package contains the Simple Terminal plugin for the Remmina remote desktop
-client.
-
 %package plugins-vnc
 Summary: VNC plugin for Remmina Remote Desktop Client
 Group: Networking/Remote access
@@ -157,18 +154,17 @@ computers in front of either large monitors or tiny net-books.
 This package contains the VNC plugin for the Remmina remote desktop
 client.
 
-%package plugins-xdmcp
-Summary: XDMCP plugin for Remmina Remote Desktop Client
+%package plugins-gvnc
+Summary: GTK-VNC plugin for Remmina Remote Desktop Client
 Group: Networking/Remote access
 Requires: %name = %EVR
-Requires: xorg-xephyr
 
-%description plugins-xdmcp
+%description plugins-gvnc
 Remmina is a remote desktop client written in GTK+, aiming to be useful for
 system administrators and travelers, who need to work with lots of remote
 computers in front of either large monitors or tiny net-books.
 
-This package contains the XDMCP plugin for the Remmina remote desktop
+This package contains the GTK-VNC plugin for the Remmina remote desktop
 client.
 
 %package plugins-spice
@@ -182,6 +178,20 @@ system administrators and travelers, who need to work with lots of remote
 computers in front of either large monitors or tiny net-books.
 
 This package contains the SPICE plugin for the Remmina remote desktop
+client.
+
+%package plugins-x2go
+Summary: X2GO plugin for Remmina Remote Desktop Client
+Group: Networking/Remote access
+Requires: %name = %EVR
+Requires: pyhoca-cli
+
+%description plugins-x2go
+Remmina is a remote desktop client written in GTK+, aiming to be useful for
+system administrators and travelers, who need to work with lots of remote
+computers in front of either large monitors or tiny net-books.
+
+This package contains the X2GO plugin for the Remmina remote desktop
 client.
 
 %package gnome-session
@@ -217,6 +227,9 @@ that shows up under the display manager session menu.
     -DWITH_VTE=ON \
     -DWITH_KIOSK_SESSION=ON \
     -DWITH_NEWS=OFF \
+    %{?_with_gvnc:-DWITH_GVNC=ON} \
+    %{?_with_x2go:-DWITH_X2GO=ON} \
+    %{?_with_kwallet:-DWITH_KF5WALLET=ON} \
     -DREMMINA_RUNTIME_PLUGINDIR=%_libdir/remmina/plugins \
     -DREMMINA_PLUGINDIR=%_libdir/remmina/plugins
 
@@ -246,9 +259,10 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_iconsdir/hicolor/*/actions/*
 %_iconsdir/hicolor/*/apps/*
 %_iconsdir/hicolor/apps/*
-%_iconsdir/hicolor/*/panel/*
-%_iconsdir/hicolor/*/emblems/remmina-sftp-symbolic.svg
-%_iconsdir/hicolor/*/emblems/remmina-ssh-symbolic.svg
+%_iconsdir/hicolor/*/emblems/org.remmina.Remmina-ssh-symbolic.svg
+%_iconsdir/hicolor/*/emblems/org.remmina.Remmina-sftp-symbolic.svg
+%_iconsdir/hicolor/*/emblems/org.remmina.Remmina-tool-symbolic.svg
+%_iconsdir/hicolor/*/status/org.remmina.Remmina-status.svg
 %_datadir/%name
 %_man1dir/remmina.1.*
 %_man1dir/remmina-file-wrapper.1.*
@@ -262,33 +276,38 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %files plugins-secret
 %_libdir/remmina/plugins/remmina-plugin-secret.so
 
-%files plugins-nx
-%_libdir/remmina/plugins/remmina-plugin-nx.so
-%_iconsdir/hicolor/*/emblems/remmina-nx-symbolic.svg
+%if_with kwallet
+%files plugins-kwallet
+%_libdir/remmina/plugins/remmina-plugin-kwallet.so
+%endif
 
 %files plugins-rdp
 %_libdir/remmina/plugins/remmina-plugin-rdp.so
-%_iconsdir/hicolor/*/emblems/remmina-rdp-ssh-symbolic.svg
-%_iconsdir/hicolor/*/emblems/remmina-rdp-symbolic.svg
-
-%files plugins-st
-%_libdir/remmina/plugins/remmina-plugin-st.so
-%_iconsdir/hicolor/*/emblems/remmina-tool-symbolic.svg
+%_iconsdir/hicolor/*/emblems/org.remmina.Remmina-rdp-ssh-symbolic.svg
+%_iconsdir/hicolor/*/emblems/org.remmina.Remmina-rdp-symbolic.svg
 
 %files plugins-vnc
 %_libdir/remmina/plugins/remmina-plugin-vnc.so
-%_iconsdir/hicolor/*/emblems/remmina-vnc-ssh-symbolic.svg
-%_iconsdir/hicolor/*/emblems/remmina-vnc-symbolic.svg
+%_iconsdir/hicolor/*/emblems/org.remmina.Remmina-vnc-ssh-symbolic.svg
+%_iconsdir/hicolor/*/emblems/org.remmina.Remmina-vnc-symbolic.svg
 
-%files plugins-xdmcp
-%_libdir/remmina/plugins/remmina-plugin-xdmcp.so
-%_iconsdir/hicolor/*/emblems/remmina-xdmcp-ssh-symbolic.svg
-%_iconsdir/hicolor/*/emblems/remmina-xdmcp-symbolic.svg
+%if_with gvnc
+%files plugins-gvnc
+%_libdir/remmina/plugins/remmina-plugin-gvnc.so
+%_iconsdir/hicolor/*/emblems/org.remmina.Remmina-gvnc-ssh-symbolic.svg
+%_iconsdir/hicolor/*/emblems/org.remmina.Remmina-gvnc-symbolic.svg
+%endif
 
 %files plugins-spice
 %_libdir/remmina/plugins/remmina-plugin-spice.so
-%_iconsdir/hicolor/*/emblems/remmina-spice-ssh-symbolic.svg
-%_iconsdir/hicolor/*/emblems/remmina-spice-symbolic.svg
+%_iconsdir/hicolor/*/emblems/org.remmina.Remmina-spice-ssh-symbolic.svg
+%_iconsdir/hicolor/*/emblems/org.remmina.Remmina-spice-symbolic.svg
+
+%if_with x2go
+%files plugins-x2go
+%_libdir/remmina/plugins/remmina-plugin-x2go.so
+%_iconsdir/hicolor/*/emblems/org.remmina.Remmina-x2go.png
+%endif
 
 %files gnome-session
 %_bindir/gnome-session-remmina
@@ -303,6 +322,11 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Sun Nov 28 2021 Alexey Shabalin <shaba@altlinux.org> 1.4.21-alt1
+- new version 1.4.21.
+- Remove unmaintained nx, st, xdmcp plugins.
+- Add kwallet, gvnc, x2go plugins.
+
 * Tue Feb 09 2021 Alexey Shabalin <shaba@altlinux.org> 1.4.11-alt1
 - new version 1.4.11
 
