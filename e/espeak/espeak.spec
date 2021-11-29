@@ -8,7 +8,7 @@
 
 Name: espeak
 Version: 1.48.04
-Release: alt1
+Release: alt2
 
 Summary: %name is a software speech synthesizer for English and other languages
 Summary(ru_RU.UTF-8): Программный синтезатор речи для английского и других языков
@@ -168,6 +168,14 @@ install -pD -m 644 %SOURCE5 %buildroot%_ttsdir/espeak-ru.voiceman
 install -pD -m 644 %SOURCE1 %buildroot%_datadir/espeak-data/replacements
 install -pD -m 644 %SOURCE7 %buildroot%_man1dir/espeak.1
 
+%pre
+# Hack for 1.44 -> 1.48: voices/en from dir to file
+if [ -d %_datadir/%name-data/voices/en ]
+then
+  rm -f %_datadir/%name-data/voices/en/*
+  rmdir %_datadir/%name-data/voices/en
+fi
+
 %preun
 %tts_unregister espeak
 %tts_unregister espeak-ru
@@ -189,6 +197,9 @@ install -pD -m 644 %SOURCE7 %buildroot%_man1dir/espeak.1
 %_libdir/libespeak.so
 
 %changelog
+* Mon Nov 29 2021 Igor Vlasenko <viy@altlinux.org> 1.48.04-alt2
+- %%pre check for voices/en/ (closes: #41463)
+
 * Sun Nov 28 2021 Igor Vlasenko <viy@altlinux.org> 1.48.04-alt1
 - new version
 - picked from orphaned
