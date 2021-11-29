@@ -1,8 +1,9 @@
 %global _firmwarepath  /lib/firmware
+%define version_major 1.9
 Summary: Firmware and topology files for Sound Open Firmware project
 Name: firmware-alsa-sof
-Version: 1.8
-Release: alt4
+Version: %version_major.2
+Release: alt1
 # See later in the spec for a breakdown of licensing
 License: BSD
 Group: Sound
@@ -35,9 +36,9 @@ alsatplg -c /usr/share/alsa/topology/hda-dsp/skl_hda_dsp_generic-tplg.conf \
 
 %install
 mkdir -p  %buildroot%_firmwarepath/intel/
-cp -a v%version.x/sof-tplg-v%version  %buildroot%_firmwarepath/intel/sof-tplg-v%version
+cp -a v%version_major.x/sof-tplg-v%version  %buildroot%_firmwarepath/intel/sof-tplg-v%version
 install %SOURCE2 %buildroot%_firmwarepath/intel/sof-tplg-v%version/
-cp -a v%version.x/sof-v%version  %buildroot%_firmwarepath/intel/sof
+cp -a v%version_major.x/sof-v%version  %buildroot%_firmwarepath/intel/sof
 ln -s sof-tplg-v%version %buildroot%_firmwarepath/intel/sof-tplg
 install -m0644 skl_hda_dsp_generic-tplg.bin %buildroot%_firmwarepath/
 
@@ -63,11 +64,12 @@ cat alsa-sof-firmware.files
 %dir %_firmwarepath/intel
 %_firmwarepath/intel/sof-tplg
 
-
-
 %files debug -f alsa-sof-firmware.debug-files
 
 %changelog
+* Thu Nov 25 2021 Anton Farygin <rider@altlinux.ru> 1.9.2-alt1
+- 1.9.2
+
 * Mon Oct 04 2021 Anton Farygin <rider@altlinux.ru> 1.8-alt4
 - added topology for es8336, received from our OEM partners
 
