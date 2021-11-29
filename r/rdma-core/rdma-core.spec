@@ -12,7 +12,7 @@
 
 Name: rdma-core
 Version: 38.0
-Release: alt2
+Release: alt3
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
 
@@ -37,6 +37,8 @@ BuildRequires: pandoc
 Conflicts: infiniband-diags < 2.0.0
 
 %define docdir %_docdir/%name-%version
+
+%filter_from_requires /^\/lib\/systemd\/systemd-modules-load/d
 
 %description
 RDMA core userspace infrastructure and documentation, including initialization
@@ -570,8 +572,11 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %docdir/ibsrpdm.md
 
 %changelog
+* Mon Nov 29 2021 Alexey Shabalin <shaba@altlinux.org> 38.0-alt3
+- filter requires systemd-utils
+
 * Sun Nov 28 2021 Alexey Shabalin <shaba@altlinux.org> 38.0-alt2
-- build infiniband-diags-compat as noarch 
+- build infiniband-diags-compat as noarch
 
 * Sun Nov 28 2021 Alexey Shabalin <shaba@altlinux.org> 38.0-alt1
 - new version 38.0
