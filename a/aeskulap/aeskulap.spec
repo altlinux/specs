@@ -1,13 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-
-%global optflags_lto %optflags_lto -ffat-lto-objects
+%set_verify_elf_method strict,rpath=normal
 
 %add_optflags %optflags_shared 
 
 Name: aeskulap
 Version: 0.2.2
-Release: alt8.git8787e95
+Release: alt9.git8787e95
 Summary: Medical image viewer for DICOM images
 License: GPL/LGPL
 Group: Graphics
@@ -41,7 +40,11 @@ any platform were these packages are available.
 %add_optflags -D_FILE_OFFSET_BITS=64
 
 %autoreconf
-%configure --with-gsettings --disable-schemas-install
+%configure \
+	--with-gsettings \
+	--disable-schemas-install \
+	--disable-static \
+	%nil
 
 %install
 %makeinstall_std
@@ -63,6 +66,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc ABOUT-NLS AUTHORS ChangeLog COPYING COPYING.LIB NEWS README
 
 %changelog
+* Mon Nov 29 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.2-alt9.git8787e95
+- Rebuilt without static libraries.
+
 * Tue Sep 07 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.2-alt8.git8787e95
 - Fixed build with LTO.
 
