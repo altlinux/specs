@@ -1,7 +1,7 @@
 %define rname desktop-wallpapers
 
 Name: alt-desktop-wallpapers
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 %K5init no_altplace
 
@@ -63,6 +63,9 @@ popd 1>/dev/null
 %_pixmapsdir/*
 
 %changelog
+* Mon Nov 29 2021 Sergey V Turchin <zerg at altlinux dot org> 0.2.1-alt1
+- fix morning_mist name
+
 * Wed Nov 24 2021 Sergey V Turchin <zerg at altlinux dot org> 0.2.0-alt1
 - new version
 
