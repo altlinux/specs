@@ -1,7 +1,11 @@
 %def_disable static
 
+%ifarch armh
+%add_optflags -DUATOMIC_NO_LINK_ERROR
+%endif
+
 Name: xfsprogs
-Version: 5.13.0
+Version: 5.14.0
 Release: alt1
 
 Summary: Utilities for managing the XFS filesystem
@@ -22,7 +26,7 @@ BuildConflicts: libxfs-devel
 
 BuildRequires: libuuid-devel libblkid-devel 
 BuildRequires: libsystemd-devel rpm-build-python3
-BuildRequires: libinih-devel
+BuildRequires: libinih-devel libuserspace-rcu-devel
 
 %description
 XFS is a high performance journaling filesystem which originated
@@ -140,6 +144,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Thu Nov 25 2021 Anton Farygin <rider@altlinux.ru> 5.14.0-alt1
+- 5.14.0
+
 * Fri Sep 03 2021 Anton Farygin <rider@altlinux.ru> 5.13.0-alt1
 - 5.13.0
 
