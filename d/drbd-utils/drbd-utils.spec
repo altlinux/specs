@@ -6,7 +6,7 @@
 
 Name: drbd-utils
 Version: 9.19.1
-Release: alt1
+Release: alt2
 
 Summary: DRBD user-land tools and scripts
 License: GPLv2+
@@ -73,16 +73,6 @@ BuildArch: noarch
 %description rgmanager
 This package contains the DRBD resource agent for the Red Hat Cluster Suite
 resource manager.
-
-%package bash-completion
-Summary: Programmable bash completion support for drbdadm
-Group: System/Kernel and hardware
-Requires: %name = %version-%release
-BuildArch: noarch
-
-%description bash-completion
-This package contains programmable bash completion support for the drbdadm
-management utility.
 
 %prep
 %setup -a1
@@ -174,6 +164,7 @@ make test
 %_man8dir/drbd*
 %_man7dir/*
 %_man5dir/drbd*
+%_sysconfdir/bash_completion.d/*
 
 %if_with xen
 %files xen
@@ -192,10 +183,11 @@ make test
 %_datadir/cluster/drbd.sh
 %_datadir/cluster/drbd.metadata
 
-%files bash-completion
-%_sysconfdir/bash_completion.d
-
 %changelog
+* Mon Nov 29 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.19.1-alt2
+- remove journalctl and systemctl direct requirements (closes: #41454)
+- move bash completion to main package
+
 * Mon Nov 22 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.19.1-alt1
 - 9.19.1
 
