@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-setup
-Version: 0.3.13
+Version: 0.3.14
 Release: alt1
 
 Summary: Perform initial setup of an OEM installation (warning!)
@@ -100,6 +100,11 @@ if [ -x /sbin/sd_booted ]; then
 fi
 
 %changelog
+* Mon Nov 29 2021 Anton Midyukov <antohami@altlinux.org> 0.3.14-alt1
+- 93-enable-vnc-server-pkgs.sh: do not require systemctl (Closes: 41457)
+- installer-feature-%name-stage2, installer-feature-%name-x11vnc-stage2:
+  do not require install2-init-functions
+
 * Fri Nov 19 2021 Anton Midyukov <antohami@altlinux.org> 0.3.13-alt1
 - alterator-setup: Enable VNC if ALTERATOR_SETUP_VNC is set in config
 - alterator-setup: Generate a password for VNC, run VNC from setup.service
