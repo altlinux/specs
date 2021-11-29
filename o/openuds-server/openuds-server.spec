@@ -10,7 +10,7 @@
 
 Name: openuds-server
 Version: 3.0.0
-Release: alt12
+Release: alt13
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -153,6 +153,9 @@ cert-sh generate nginx-openuds ||:
 %_unitdir/openuds-web.socket
 
 %changelog
+* Mon Nov 29 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt13
+- Add link for download python 3.9 client.
+
 * Thu Oct 28 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt12
 - Switch to use macros from rpm-build-systemd for post scripts.
 
