@@ -15,7 +15,7 @@
 
 Name: displaylink-driver
 Version: 5.4.1
-Release: alt3.%rel
+Release: alt4.%rel
 Summary: DisplayLink library and tools
 Group: System/Kernel and hardware
 
@@ -59,6 +59,7 @@ Group: Development/Kernel
 Summary: Linux %module_name modules sources
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 BuildRequires: kernel-build-tools
+BuildArch: noarch
 Provides: kernel-source-%module_name = %module_version
 
 %description -n kernel-source-%module_name-%module_version
@@ -140,6 +141,9 @@ install -m 0644 *.spkg %buildroot%_datadir/%name/
 %_usrsrc/kernel/sources/kernel-source-%module_name-%module_version.tar.bz2
 
 %changelog
+* Mon Nov 29 2021 L.A. Kostis <lakostis@altlinux.ru> 5.4.1-alt4.55.174
+- kernel-source: make package noarch.
+
 * Fri Nov 26 2021 L.A. Kostis <lakostis@altlinux.ru> 5.4.1-alt3.55.174
 - Update udev script:
   + fix add/remove actions
