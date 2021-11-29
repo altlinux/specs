@@ -1,7 +1,7 @@
 %define testsdir %{_localstatedir}/%{name}/tests
 
 Name: libtree
-Version: 0.7.1
+Version: 0.8.0
 Release: alt1
 
 Summary: C++ lib that helps to work with tree-like data structures
@@ -102,6 +102,9 @@ cd -
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Wed Nov 10 2021 Alexey Appolonov <alexey@altlinux.org> 0.8.0-alt1
+- Ability to customize the format of a string representation of selected data.
+
 * Thu Oct 14 2021 Alexey Appolonov <alexey@altlinux.org> 0.7.1-alt1
 - Corrected JSON handler (the bug was introduced in the libtree v0.7.0).
 
