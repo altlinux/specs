@@ -6,7 +6,7 @@
 
 Name: drbd-utils
 Version: 9.19.1
-Release: alt2
+Release: alt3
 
 Summary: DRBD user-land tools and scripts
 License: GPLv2+
@@ -33,6 +33,8 @@ BuildRequires: asciidoctor resource-agents
 Requires: linux-ha-common
 
 Conflicts: drbd-tools drbd83-tools
+Provides: %name-bash-completion = %EVR
+Obsoletes: %name-bash-completion < %EVR
 
 %description
 DRBD refers to block devices designed as a building block to form high
@@ -184,6 +186,9 @@ make test
 %_datadir/cluster/drbd.metadata
 
 %changelog
+* Mon Nov 29 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.19.1-alt3
+- add Provides and Obsoletes for bash-completion package
+
 * Mon Nov 29 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.19.1-alt2
 - remove journalctl and systemctl direct requirements (closes: #41454)
 - move bash completion to main package
