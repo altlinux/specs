@@ -1,6 +1,6 @@
 Name: alterator-logs
-Version: 0.9.1
-Release: alt1.1.1
+Version: 0.9.2
+Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.ru>
 
@@ -51,6 +51,9 @@ System logs alterator module
 touch /var/log/journald
 
 %changelog
+* Sun Nov 28 2021 Anton Midyukov <antohami@altlinux.org> 0.9.2-alt1
+- do not require systemd (journalctl)
+
 * Fri Apr 13 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.1-alt1.1.1
 - NMU: Replace BuildRequires for guile on e2k arch.
 
