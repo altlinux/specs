@@ -8,7 +8,7 @@
 
 Name: espeak
 Version: 1.48.04
-Release: alt2
+Release: alt3
 
 Summary: %name is a software speech synthesizer for English and other languages
 Summary(ru_RU.UTF-8): Программный синтезатор речи для английского и других языков
@@ -168,13 +168,24 @@ install -pD -m 644 %SOURCE5 %buildroot%_ttsdir/espeak-ru.voiceman
 install -pD -m 644 %SOURCE1 %buildroot%_datadir/espeak-data/replacements
 install -pD -m 644 %SOURCE7 %buildroot%_man1dir/espeak.1
 
-%pre
+# altbug #41463
+# from espeak-1.46 to espeak-1.47 voices/en changed from dir to a file
+mv %buildroot%_datadir/%name-data/voices/en{,-gb}
+
+%if "%version" == "1.48.04"
+# no need to return voices/en back for now, it works as is
+%else
+# voices/en was renamed to voices/en-gb; see #41463.
+# It works for 1.48.04, but for the new version test w/and w/o %post"
+exit 1
+%post data
 # Hack for 1.44 -> 1.48: voices/en from dir to file
 if [ -d %_datadir/%name-data/voices/en ]
 then
-  rm -f %_datadir/%name-data/voices/en/*
-  rmdir %_datadir/%name-data/voices/en
+  rm -rf %_datadir/%name-data/voices/en
 fi
+ln -s en-gb %_datadir/%name-data/voices/en ||:
+%endif
 
 %preun
 %tts_unregister espeak
@@ -197,6 +208,9 @@ fi
 %_libdir/libespeak.so
 
 %changelog
+* Mon Nov 29 2021 Igor Vlasenko <viy@altlinux.org> 1.48.04-alt3
+- upgrade fix thanks to andy@ (closes: #41463)
+
 * Mon Nov 29 2021 Igor Vlasenko <viy@altlinux.org> 1.48.04-alt2
 - %%pre check for voices/en/ (closes: #41463)
 
