@@ -1,8 +1,9 @@
 %define origver 2020.3.8
+%def_enable openmp
 
 Name: SimGear
 Version: %origver
-Release: alt1.1
+Release: alt2
 
 Summary: Simulator Construction Tools
 License: GPLv2+
@@ -14,7 +15,6 @@ Source: %name-%version.tar
 Patch0: simgear-3.2.0-fedora-format.patch
 Patch1: simgear-3.6.0-fedora-aarch64.patch
 Patch2: %name-g++8.patch
-Patch3: simgear-2018.2.2-alt-e2k.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sat Mar 03 2012
@@ -24,6 +24,9 @@ BuildRequires: boost-devel-headers cmake gcc-c++ libGLU-devel libOpenSceneGraph-
 BuildRequires: cmake libapr1-devel
 BuildRequires: libexpat-devel
 BuildRequires: liblzma-devel
+%if_enabled openmp
+BuildRequires: libgomp-devel
+%endif
 
 %ifarch %e2k
 # had to disable in OpenSceneGraph => unmets followed up
@@ -67,10 +70,11 @@ This package contains header files for SimGear.
 %setup
 %patch0 -p1
 %patch1 -p1
-%ifnarch %e2k
+%ifarch %e2k
+sed -i "/__x86_64__/{N;/<x86intrin.h>/s/__x86_64__/__e2k__/}" simgear/math/simd.hxx
+%else
 %patch2 -p2
 %endif
-%patch3 -p2
 #sed -i "s|\${CMAKE_INSTALL_LIBDIR}/cmake/SimGear|%_libdir/cmake/SimGear|" CMakeLists.txt
 
 # rename version file to simgear_version because it's incorrectly detected as header file
@@ -82,11 +86,16 @@ mv version simgear_version
 # /usr/src/RPM/BUILD/SimGear-2020.1/simgear/io/HTTPRepository.cxx:267:16: error: return-statement with a value, in function returning 'void' [-fpermissive]
 #         return "";
 %add_optflags -fpermissive
-%ifarch e2k
-%add_optflags -fno-error-always-inline
+%cmake \
+%ifarch x86_64 aarch64 %e2k
+	-DENABLE_SIMD_CODE=ON \
 %endif
-%cmake_insource \
 	-DCMAKE_BUILD_TYPE=Release \
+	-DCMAKE_C_FLAGS_RELEASE="-DNDEBUG" \
+	-DCMAKE_CXX_FLAGS_RELEASE="-DNDEBUG" \
+%if_enabled openmp
+	-DENABLE_OPENMP=ON \
+%endif
 	-DSIMGEAR_SHARED=ON \
 	-DSYSTEM_EXPAT=ON \
 	-DENABLE_TESTS=OFF
@@ -105,6 +114,11 @@ mv version simgear_version
 %_libdir/cmake/%name/
 
 %changelog
+* Sat Nov 27 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2020.3.8-alt2
+- enabled SIMD and OpenMP
+- fixed passing optlevel to cmake
+- removed obsolete workarounds for Elbrus
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2020.3.8-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
