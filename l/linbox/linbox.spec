@@ -3,13 +3,17 @@
 Name: linbox
 %define lname   liblinbox0
 Version: 1.6.3
-Release: alt1
+Release: alt2
 Summary: C++ library for computation with matrices over ints and finite fields
 License: LGPL-2.1+
 Group: Sciences/Mathematics
 Url: https://linalg.org/
 
 Source: https://github.com/linbox-team/linbox/releases/download/v%version/linbox-%version.tar.gz
+
+Patch: remove-linboxsage-libs-from-pc.patch
+Patch1: fix-ksh-pkgconfig.patch
+Patch2: linbox-pr-256.patch
 
 # Couldn't find package libatlas-devel on aarch64, armh and ppc64le.
 ExclusiveArch: i586 x86_64
@@ -20,14 +24,17 @@ BuildRequires: gcc-c++
 BuildRequires: libgmp-devel
 BuildRequires: libiml-devel
 BuildRequires: libm4ri-devel
+BuildRequires: libm4rie-devel
 BuildRequires: libmpfr-devel
 BuildRequires: libntl-devel
+BuildRequires: libflint2-devel
 %if_with openblas
 BuildRequires: libopenblas-devel
 %else
 BuildRequires: libatlas-devel
 %endif
 BuildRequires: fflas-ffpack-devel
+BuildRequires: libtinyxml2-devel
 
 %description
 LinBox is a C++ template library for exact, high-performance linear
@@ -57,6 +64,9 @@ developing against the Givaro library.
 
 %prep
 %setup
+%patch -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %autoreconf
@@ -84,6 +94,10 @@ rm -f "%buildroot/%_libdir"/*.la
 %doc COPYING*
 
 %changelog
+* Mon Nov 29 2021 Leontiy Volodin <lvol@altlinux.org> 1.6.3-alt2
+- Fixed build with sagemath.
+- Added buildrequires.
+
 * Thu Nov 11 2021 Leontiy Volodin <lvol@altlinux.org> 1.6.3-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
 - Built as require for sagemath.
