@@ -1,6 +1,6 @@
 %def_with check
 Name: ethtool
-Version: 5.14
+Version: 5.15
 Release: alt1
 Epoch: 1
 Summary: Ethernet settings tools for network cards
@@ -46,12 +46,16 @@ Ethernet-картки, таких як швидк╕сть, порт, autonegoti
 make check
 
 %files
-%doc AUTHORS NEWS README.ALT
+%doc AUTHORS NEWS
 %_sbindir/*
 %_man8dir/*
 %_datadir/bash-completion
 
 %changelog
+* Mon Nov 29 2021 Anton Farygin <rider@altlinux.ru> 1:5.15-alt1
+- 5.15
+- removed README.ALT (closes: #41460)
+
 * Sun Oct 17 2021 Anton Farygin <rider@altlinux.ru> 1:5.14-alt1
 - 5.14
 
