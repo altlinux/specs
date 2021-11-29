@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 Name: dictd
-Version: 1.12.1
-Release: alt4.1
+Version: 1.13.1
+Release: alt1
 Epoch: 1
 
 Url: http://www.dict.org/
@@ -16,12 +18,6 @@ Source7: dictd-README.ALT-ru_RU.UTF-8
 Source8: dictd.service
 Source9: dictd.filetrigger
 
-Patch: %name-1.12.1-natspec.patch
-
-Patch10: dict-1.9.15-alt-utf8.patch
-Patch11: dict-1.9.11-alt-fix_utf.patch
-Patch12: dictl-alt-params.path
-
 # -------  dictd package description ----- #
 
 Summary: dict server that serves dictionaries for clients
@@ -30,7 +26,6 @@ Group: System/Servers
 
 # Automatically added by buildreq on Thu Sep 22 2005
 BuildRequires: flex groff-base texlive-collection-basic texlive-collection-basic texlive-collection-latexrecommended transfig zlib-devel
-BuildRequires: libnatspec-devel >= 0.2.3
 BuildRequires: libmaa-devel
 
 %description
@@ -83,6 +78,7 @@ This package contains header files for dictd server plugins
 
 %description -n dict-devel -l ru_RU.UTF-8
 Данный пакет содержит заголовочные файлы для сборки модулей к серверу dictd
+
 # ------- dict description ------ #
 %package -n dict
 # Name: dictd
@@ -97,19 +93,42 @@ easy to use.
 %description -n dict -l ru_RU.UTF-8
 Данный пакет содержит консольный клиент для DICT-сервера. Он лёгок и
 прост в работе.
-# --------------- real part ----------------  #
 
+# ------- colorit description ------ #
+%package -n colorit
+# Name: dictd
+Summary: script for colorizing plain text sent to terminal emulator.
+Group: Text tools
+
+%description -n colorit
+colorit is a script for markuping text input and sending a result to
+pager ('less -r' by default) or stdout.  Markuping rules are described
+in a configuration file which is filtered by preprocessor (the default
+is m4). This script can be used for colorizing the text by ANSI escape
+sequences, or making a simple text conversions and may be used as a
+pager instead of less by dict(1) or other programs, e.g., cc(1),
+make(1), or diff(1) output can easily be colorized and viewed.
+
+# ------- dict_lookup ------ #
+%package -n dict_lookup
+# Name: dictd
+Summary: Dictionary Protocol Client for X11
+Group: Text tools
+
+%description -n dict_lookup
+dict_lookup reads X selection, then open
+terminal emulator and run dict client in it allowing user to view
+content using pager.  It makes sense to configure launching
+dict_lookup on a keyboard shortcut in the window manager.
+
+# --------------- real part ----------------  #
 %prep
 %setup
-%patch -p2
-#%patch10 -p0
-#%patch11 -p1
-#%patch12 -p1
 cp %SOURCE7 README.ALT-ru_RU.UTF-8
 
 %build
 %autoreconf
-%configure --without-local-zlib --with-natspec
+%configure --without-local-zlib
 # FIXME: non-SMP-safe build as of 1.12.1
 #make_build
 make
@@ -187,13 +206,11 @@ fi
 %_rpmlibdir/dictd.filetrigger
 
 %files -n dict-tools
-%_bindir/dict_lookup
 %_bindir/dictfmt
 %_bindir/dictunformat
 %_bindir/dictzip
 %_bindir/dictfmt_index2suffix
 %_bindir/dictfmt_index2word
-%_man1dir/dict_lookup.1*
 %_man1dir/dictfmt.1*
 %_man1dir/dictunformat.1*
 %_man1dir/dictzip.1*
@@ -210,11 +227,22 @@ fi
 %exclude %_bindir/dictl
 %exclude %_man1dir/dictl.*
 %_bindir/dict
-%_bindir/colorit
 %_man1dir/dict.1*
+
+%files -n dict_lookup
+%_bindir/dict_lookup
+%_man1dir/dict_lookup.1*
+
+%files -n colorit
+%_bindir/colorit
 %_man1dir/colorit.1*
 
 %changelog
+* Sun Nov 28 2021 Aleksey Cheusov <cheusov@altlinux.org> 1:1.13.1-alt1
+- 1.13.1
+- Remove local patches. They are useless.
+- Separate "colorit" and "dict_lookup" programs into a separate packages.
+
 * Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.12.1-alt4.1
 - NMU: rebuild with TeXLive instead of TeTeX
 
