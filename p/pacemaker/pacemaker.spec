@@ -10,7 +10,7 @@
 
 Name:    pacemaker
 Summary: Scalable High-Availability cluster resource manager
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Url:     http://www.clusterlabs.org
@@ -174,7 +174,7 @@ manager.
 	--with-systemdsystemunitdir=%_unitdir	\
 	--with-runstatedir=%_rundir	\
 	--localstatedir=%_var	\
-    --with-nagios-plugin-dir=%_prefix/lib/nagios/plugins \
+	--with-nagios-plugin-dir=%_prefix/lib/nagios/plugins \
 	--with-daemon-user=%uname	\
 	--with-daemon-group=%gname	\
 	--with-version=%version-%release
@@ -194,6 +194,7 @@ subst 's|^libpe_status_la_LIBADD = |libpe_status_la_LIBADD = $(top_builddir)/lib
 mkdir -p %buildroot%_var/lib/pacemaker/cores
 install -D -m 644 etc/sysconfig/pacemaker %buildroot%_sysconfdir/sysconfig/pacemaker
 install -D -m 755 pacemaker.init %buildroot%_initdir/pacemaker
+install -D -m 755 pacemaker_remote.init %buildroot%_initdir/pacemaker_remote
 
 # Copy configuration for pacemaker_remote and use it in init script
 install -D -m 644 etc/sysconfig/pacemaker %buildroot%_sysconfdir/sysconfig/pacemaker_remote
@@ -257,6 +258,7 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_logrotatedir/%name
 %_libexecdir/pacemaker/*
 %_sbindir/fence_legacy
+%_sbindir/fence_watchdog
 %_sbindir/notifyServicelogEvent
 %_sbindir/ipmiservicelogd
 %_man7dir/*.7*
@@ -342,6 +344,9 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_datadir/pacemaker/api
 
 %changelog
+* Sat Nov 27 2021 Andrey Cherepanov <cas@altlinux.org> 2.1.2-alt1
+- New version.
+
 * Mon Sep 13 2021 Andrey Cherepanov <cas@altlinux.org> 2.1.1-alt1
 - New version.
 
