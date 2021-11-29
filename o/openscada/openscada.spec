@@ -82,10 +82,10 @@ Summary(ru_RU.UTF8): Открытая SCADA система
 Summary(uk_UA.UTF8): Відкрита SCADA система
 Summary(de_DE.UTF8): Open SCADA-System
 Name: openscada
-Version: 0.9.2
+Version: 0.9.4
 Release: alt1
 Source: openscada-%version.tar
-Source1: openscada-res.tar.xz
+Source1: openscada-res-%version.tar
 Patch: added_lsb_header.patch
 Patch1: openscada-0.9.2-fix-build-with-qt5-5.15.patch
 License: GPLv2
@@ -1273,7 +1273,10 @@ Das Paket %{name}-Special.FLibSYS - bibliothek mit System-API für spezifische P
 
 %prep
 %setup -q -n %srcname
-%setup -T -D -a 1 -n %srcname
+%setup -a 1 -n %srcname
+mv openscada-res-%version/* .
+rmdir openscada-res-%version
+
 %patch -p1
 %patch1 -p2
 
@@ -1698,6 +1701,9 @@ ln -s %_defaultdocdir/%name-docUK-%version %buildroot/%_datadir/openscada/docs/u
 %endif
 
 %changelog
+* Sat Nov 27 2021 Anton Midyukov <antohami@altlinux.org> 0.9.4-alt1
+- The build of 0.9.4 main update to the production release
+
 * Mon Aug 24 2020 Anton Midyukov <antohami@altlinux.org> 0.9.2-alt1
 - The build of 0.9.2 main update to the production release
 - enable build DB.DBGate (new module)
