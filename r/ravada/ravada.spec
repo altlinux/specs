@@ -6,7 +6,7 @@
 
 Name: ravada
 Summary: Remote Virtual Desktops Manager
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 License: AGPL-3.0
 Group: Development/Perl
@@ -105,14 +105,16 @@ vm-run --kvm=cond "mount -t tmpfs tmp /var/run; make test"
 %post
 %post_service rvd_back
 # First installation, not upgrade.
-if [ $1 -eq 1 ]; then
-    systemctl enable rvd_back.service || :
+systemctl=/bin/systemctl
+if [ $1 -eq 1 -a -f "$systemctl" ]; then
+    $systemctl enable rvd_back.service ||:
 fi
 
 %post_service rvd_front
 # First installation, not upgrade.
-if [ $1 -eq 1 ]; then
-    systemctl enable rvd_front.service || :
+systemctl=/bin/systemctl
+if [ $1 -eq 1 -a -f "$systemctl" ]; then
+    $systemctl enable rvd_front.service ||:
 fi
 
 %files
@@ -125,6 +127,9 @@ fi
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Mon Nov 29 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.1.2-alt1
+- 1.1.2
+
 * Tue Oct 26 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.1.1-alt1
 - 1.1.1
 
