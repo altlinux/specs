@@ -1,7 +1,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: voiceman
-Version: 1.5.0.2
-Release: alt3
+Version: 1.5.2
+Release: alt1
 
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 License: %gpl3plus
@@ -64,18 +64,18 @@ This package contains library used for static linking of libvmclient.
 %install
 make DESTDIR=%buildroot install 
 
-%__rm -f %buildroot%_sysconfdir/%name.conf
-%__install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/%name.conf
-%__install -pD -m755 %SOURCE1 %buildroot%_sysconfdir/rc.d/init.d/%name
+rm -f %buildroot%_sysconfdir/%name.conf
+install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/%name.conf
+install -pD -m755 %SOURCE1 %buildroot%_sysconfdir/rc.d/init.d/%name
 
-%__install -d -m755 %buildroot%_sysconfdir/%name.d
-%__install -d -m755 %buildroot%_datadir/sounds/%name
+install -d -m755 %buildroot%_sysconfdir/%name.d
+install -d -m755 %buildroot%_datadir/sounds/%name
 
-%__install -pD -m644 ./libvmclient/vmclient.h %buildroot%_includedir/vmclient/vmclient.h
-%__install -pD -m644 ./libvmclient/libvmclient.a %buildroot%_libdir/libvmclient.a
+install -pD -m644 ./libvmclient/vmclient.h %buildroot%_includedir/vmclient/vmclient.h
+install -pD -m644 ./libvmclient/libvmclient.a %buildroot%_libdir/libvmclient.a
 
 for i in espeak ru_tts mbrola; do
-%__rm -f %buildroot%_datadir/%name/replacements.$i
+rm -f %buildroot%_datadir/%name/replacements.$i
 done
 
 %preun server
@@ -105,6 +105,9 @@ done
 %_libdir/libvmclient.a
 
 %changelog
+* Mon Nov 29 2021 Igor Vlasenko <viy@altlinux.org> 1.5.2-alt1
+- updated to 1.5.2
+
 * Mon Nov 29 2021 Igor Vlasenko <viy@altlinux.org> 1.5.0.2-alt3
 - Picked from orphaned
 - fixed build
