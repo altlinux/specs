@@ -1,6 +1,6 @@
 Name: 	  laptop-mode-tools
 Version:  1.74
-Release:  alt2
+Release:  alt3
 
 Summary:  Tools for power savings based on battery/AC status
 License:  GPL-2.0+
@@ -11,12 +11,13 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source:   %name-%version.tar
 # VCS:    https://github.com/rickysarraf/laptop-mode-tools
 Patch1:   support-condrestart-in-initscript.patch
+Patch2:   no-autoreq-systemd.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
-%filter_from_requires \,^/lib/udev/hotplug\.functions,d;\,^systemd$,d
+%filter_from_requires \,^/lib/udev/hotplug\.functions,d
 %add_python3_path %_datadir/%name
 
 %description
@@ -31,6 +32,7 @@ various other power savings.
 %prep
 %setup -q
 %patch1 -p1
+%patch2 -p1
 
 %build
 DESTDIR=%buildroot INIT_D=%buildroot%_initdir MAN_D=%_mandir INSTALL=install TMPFILES_D=%_tmpfilesdir ./install.sh
@@ -64,6 +66,9 @@ DESTDIR=%buildroot INIT_D=%buildroot%_initdir MAN_D=%_mandir INSTALL=install TMP
 %_pixmapsdir/%name.svg
 
 %changelog
+* Mon Nov 29 2021 Andrey Cherepanov <cas@altlinux.org> 1.74-alt3
+- No requirements of systemd (ALT #41459).
+
 * Tue May 04 2021 Andrey Cherepanov <cas@altlinux.org> 1.74-alt2
 - FTBFS: Set correct python3 library directory for python scripts.
 - Package desktop file and pixmap.
