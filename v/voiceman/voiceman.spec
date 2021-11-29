@@ -1,6 +1,7 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: voiceman
 Version: 1.5.0.2
-Release: alt2
+Release: alt3
 
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 License: %gpl3plus
@@ -18,7 +19,7 @@ BuildRequires: rpm-build-licenses gcc-c++ libao-devel
 %package server
 Summary: The VoiceMan server
 Group: Sound
-Requires: iconv libao aplay 
+Requires: iconv libao aplay
 
 %package -n libvmclient-devel
 BuildArch: noarch
@@ -104,6 +105,10 @@ done
 %_libdir/libvmclient.a
 
 %changelog
+* Mon Nov 29 2021 Igor Vlasenko <viy@altlinux.org> 1.5.0.2-alt3
+- Picked from orphaned
+- fixed build
+
 * Thu Dec 05 2013 Michael Pozhidaev <msp@altlinux.ru> 1.5.0.2-alt2
 - %autoreconf invocation added
 
