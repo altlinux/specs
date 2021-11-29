@@ -1,7 +1,7 @@
 %define oname TurboGears2
 
 Name: python3-module-%oname
-Version: 2.4.2
+Version: 2.4.3
 Release: alt1
 
 Summary: Back-to-front web development in Python
@@ -65,6 +65,9 @@ This package contains tests for TurboGears.
 %python3_sitelibdir/*
 
 %changelog
+* Mon Nov 29 2021 Anton Farygin <rider@altlinux.ru> 2.4.3-alt1
+- 2.4.3
+
 * Wed Dec 04 2019 Anton Farygin <rider@altlinux.ru> 2.4.2-alt1
 - 2.4.2
 - disabled python2 version
