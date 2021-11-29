@@ -9,7 +9,7 @@
 
 Name: bluez
 Version: 5.62
-Release: alt1
+Release: alt2
 
 Summary: Bluetooth utilities
 License: GPL-2.0-or-later
@@ -27,7 +27,6 @@ Patch1: bluez-5.55-alt-firmware-path-fixes.patch
 Patch10: 0001-Allow-using-obexd-without-systemd-in-the-user-sessio.patch
 Obsoletes: obex-data-server < 0.4.6-alt3
 Conflicts: udev-extras < 169
-Requires(post,preun): /bin/systemctl
 
 BuildRequires: glib2-devel libudev-devel libdbus-devel libreadline-devel
 BuildRequires: systemd-devel gtk-doc python3-module-docutils
@@ -128,20 +127,24 @@ find %buildroot%_libdir -name \*.la -delete
 %make check
 
 %post
-if [ $1 = 1 ]; then
+SYSTEMCTL=systemctl
 %post_service bluetoothd
-	chkconfig bluetoothd on
-	/bin/systemctl --user --global preset obex.service >/dev/null 2>&1 || :
+if [ $1 = 1 ] && sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+    "$SYSTEMCTL" -q --user --global preset obex.service >/dev/null 2>&1 || :
 fi
 
 %preun
-if [ $1 = 0 ]; then
+SYSTEMCTL=systemctl
 %preun_service bluetoothd
-	/bin/systemctl --user --global disable obex.service >/dev/null 2>&1 || :
+if [ $1 = 0 ] && sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+	"$SYSTEMCTL" -q --user --global disable obex.service >/dev/null 2>&1 || :
 fi
 
 %triggerin -- %name < 5.54-alt5
-/bin/systemctl --user --global preset obex.service >/dev/null 2>&1 || :
+SYSTEMCTL=systemctl
+if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+    $SYSTEMCTL -q --user --global preset obex.service >/dev/null 2>&1 || :
+fi
 
 %files
 %doc AUTHORS ChangeLog README
@@ -203,6 +206,9 @@ fi
 %_datadir/zsh/site-functions/_bluetoothctl
 
 %changelog
+* Mon Nov 29 2021 Alexey Shabalin <shaba@altlinux.org> 5.62-alt2
+- Avoid /bin/systemctl requirements (ALT #41458).
+
 * Sat Oct 30 2021 L.A. Kostis <lakostis@altlinux.ru> 5.62-alt1
 - 5.62.
 
