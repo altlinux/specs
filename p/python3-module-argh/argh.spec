@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.26.2
-Release: alt1
+Release: alt2
 Summary: An unobtrusive argparse wrapper with natural syntax
 License: LGPLv3
 Group: Development/Python3
@@ -55,6 +55,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/*
 
 %changelog
+* Mon Nov 29 2021 Stanislav Levin <slev@altlinux.org> 0.26.2-alt2
+- Fixed FTBFS.
+
 * Tue Sep 08 2020 Stanislav Levin <slev@altlinux.org> 0.26.2-alt1
 - 0.26.1 -> 0.26.2.
 - Stopped Python2 package build.
