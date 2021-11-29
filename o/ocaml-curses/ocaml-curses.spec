@@ -1,6 +1,6 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: ocaml-curses
-Version: 1.0.9
+Version: 1.0.10
 Release: alt1
 Summary: OCaml bindings for ncurses
 Group: Development/ML
@@ -41,6 +41,9 @@ developing applications that use %name.
 %doc COPYING
 
 %changelog
+* Mon Nov 29 2021 Anton Farygin <rider@altlinux.ru> 1.0.10-alt1
+- 1.0.10
+
 * Thu Nov 04 2021 Anton Farygin <rider@altlinux.ru> 1.0.9-alt1
 - 1.0.9
 
