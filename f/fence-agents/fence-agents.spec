@@ -11,8 +11,8 @@
 
 Name: fence-agents
 Summary: Fence Agents
-Version: 4.10.0
-Release: alt2
+Version: 4.11.0
+Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Base
 Url: http://sourceware.org/cluster/wiki/
@@ -32,7 +32,7 @@ BuildRequires: libxml2-devel nss-devel nspr-devel
 BuildRequires: flex libuuid-devel
 
 # skipped: pve, raritan, rcd-serial, virsh
-%global allfenceagents fence-agents-aliyun fence-agents-alom fence-agents-amt fence-agents-apc fence-agents-apc-snmp fence-agents-aws fence-agents-azure-arm fence-agents-bladecenter fence-agents-brocade fence-agents-cdu fence-agents-cisco-mds fence-agents-cisco-ucs fence-agents-common fence-agents-crosslink fence-agents-docker fence-agents-drac fence-agents-drac5 fence-agents-eaton-snmp fence-agents-emerson fence-agents-eps fence-agents-hds-cb fence-agents-heuristics-ping fence-agents-hpblade fence-agents-ibmblade fence-agents-ibmz fence-agents-ifmib fence-agents-ilo2 fence-agents-ilo-moonshot fence-agents-ilo-mp fence-agents-ilo-ssh fence-agents-intelmodular fence-agents-ipdu fence-agents-ipmilan fence-agents-kdump fence-agents-kubevirt fence-agents-ldom fence-agents-lindypdu fence-agents-lpar fence-agents-mpath fence-agents-netio fence-agents-ovh fence-agents-powerman fence-agents-redfish fence-agents-rhevm fence-agents-rsa fence-agents-rsb fence-agents-sanbox2 fence-agents-sbd fence-agents-scsi fence-agents-skalar fence-agents-vbox fence-agents-vmware fence-agents-vmware-rest fence-agents-vmware-soap fence-agents-vmware-vcloud fence-agents-wti fence-agents-xenapi fence-agents-zvm fence-virt fence-virtd fence-virtd-multicast fence-virtd-serial fence-virtd-tcp fence-virtd-vsock fence-virtd-libvirt fence-virtd-cpg fence-agents-compute fence-agents-ironic fence-agents-openstack
+%global allfenceagents fence-agents-aliyun fence-agents-alom fence-agents-amt fence-agents-apc fence-agents-apc-snmp fence-agents-aws fence-agents-azure-arm fence-agents-bladecenter fence-agents-brocade fence-agents-cdu fence-agents-cisco-mds fence-agents-cisco-ucs fence-agents-crosslink fence-agents-docker fence-agents-drac fence-agents-drac5 fence-agents-eaton-snmp fence-agents-emerson fence-agents-eps fence-agents-hds-cb fence-agents-heuristics-ping fence-agents-hpblade fence-agents-ibmblade fence-agents-ibmz fence-agents-ifmib fence-agents-ilo2 fence-agents-ilo-moonshot fence-agents-ilo-mp fence-agents-ilo-ssh fence-agents-intelmodular fence-agents-ipdu fence-agents-ipmilan fence-agents-kdump fence-agents-kubevirt fence-agents-ldom fence-agents-lindypdu fence-agents-lpar fence-agents-mpath fence-agents-netio fence-agents-ovh fence-agents-powerman fence-agents-redfish fence-agents-rhevm fence-agents-rsa fence-agents-rsb fence-agents-sanbox2 fence-agents-sbd fence-agents-scsi fence-agents-skalar fence-agents-vbox fence-agents-vmware fence-agents-vmware-rest fence-agents-vmware-soap fence-agents-vmware-vcloud fence-agents-wti fence-agents-xenapi fence-agents-zvm fence-virt fence-virtd fence-virtd-multicast fence-virtd-serial fence-virtd-tcp fence-virtd-vsock fence-virtd-libvirt fence-virtd-cpg fence-agents-compute fence-agents-ironic fence-agents-openstack
 
 %description
 Fence Agents is a collection of scripts to handle remote
@@ -1145,6 +1145,9 @@ install -m 0755 %SOURCE11 %buildroot%_initdir/fence_virtd
 %endif
 
 %changelog
+* Mon Nov 29 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.11.0-alt1
+- 4.11.0
+
 * Tue Aug 10 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.10.0-alt2
 - fence-agents-all meta package
 
