@@ -1,5 +1,5 @@
 Name:     tupitube-desk
-Version:  0.2.17
+Version:  0.2.18
 Release:  alt1
 
 Summary:  TupiTube Desk is vector editor for images, storyboards and animations
@@ -10,9 +10,9 @@ Url:      http://www.tupitube.com/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: tupitube.desk-%version.tar
-Patch1: tupitube.desk-alt-libquazip5.patch
-Patch2: tupitube.desk-alt-qt-5.15.patch
-Patch3: tupitube.desk-alt-rpath.patch
+Source1: %name.watch
+Patch1: tupitube.desk-alt-rpath.patch
+Patch2: tupitube.desk-alt-quazip1.1.patch
 
 BuildRequires: gcc-c++
 BuildRequires: qt5-base-devel
@@ -21,8 +21,7 @@ BuildRequires: qt5-svg-devel
 BuildRequires: ruby
 BuildRequires: ruby-gem(os)
 BuildRequires: libavformat-devel
-BuildRequires: libquazip-devel
-BuildRequires: libquazip-qt5-devel
+BuildRequires: quazip-qt5-devel
 BuildRequires: zlib-devel
 
 %description
@@ -35,9 +34,7 @@ development resource the Qt framework.
 
 %prep
 %setup -n tupitube.desk-%version
-%patch1 -p2
-%patch2 -p2
-%patch3 -p2
+%autopatch1 -p2
 subst 's|@LIBDIR@|%_libdir|' src/shell/shell.pro
 
 %build
@@ -55,7 +52,11 @@ subst 's|@LIBDIR@|%_libdir|' src/shell/shell.pro
 %_desktopdir/tupitube.desktop
 %_datadir/mime/packages/tupitube.xml
 %_pixmapsdir/tupitube.desk.png
+%_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Mon Nov 29 2021 Andrey Cherepanov <cas@altlinux.org> 0.2.18-alt1
+- New version.
+
 * Mon Jan 25 2021 Andrey Cherepanov <cas@altlinux.org> 0.2.17-alt1
 - Initial build for Sisyphus.
