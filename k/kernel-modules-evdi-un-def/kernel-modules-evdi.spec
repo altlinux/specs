@@ -1,9 +1,9 @@
 %define module_name	evdi
 %define module_version	1.9.1
-%define module_release	alt5
+%define module_release	alt6
 
 %define flavour		un-def
-%define karch %ix86 x86_64 aarch64 ppc64le armh
+%define karch %ix86 x86_64 armh
 BuildRequires(pre): kernel-headers-modules-un-def
 %setup_kernel_module %flavour
 
@@ -29,7 +29,7 @@ Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %EVR
 
 PreReq: coreutils
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
-ExclusiveArch: %ix86 x86_64 armh
+ExclusiveArch: %karch
 
 # https://github.com/DisplayLink/evdi/pull/314
 Patch1: 0001-Add-support-for-cursor-planes.patch
@@ -74,6 +74,9 @@ install evdi.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Nov 29 2021 L.A. Kostis <lakostis@altlinux.org> 1.9.1-alt6
+- Add -centos kernel support.
 
 * Thu Nov 25 2021 L.A. Kostis <lakostis@altlinux.org> 1.9.1-alt5
 - Bump release.

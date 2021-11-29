@@ -1,6 +1,6 @@
 Name: kernel-build-tools
 Version: 0.116
-Release: alt1
+Release: alt2
 
 Summary: Utilities to build kernel packages for ALT Linux
 License: GPL
@@ -27,6 +27,9 @@ Provides: kernel-headers-modules-std-def
 %ifnarch %ix86 x86_64 ppc64le
 Provides: kernel-headers-modules-un-def
 Provides: kernel-headers-modules-std-debug
+%endif
+%ifnarch x86_64 aarch64
+Provides: kernel-headers-modules-centos
 %endif
 %ifnarch x86_64
 Provides: kernel-headers-modules-ovz-el7
@@ -80,6 +83,9 @@ install -Dpm0755 query-kEVR.sh \
 %_rpmlibdir/kernel.req*
 
 %changelog
+* Mon Nov 29 2021 L.A. Kostis <lakostis@altlinux.ru> 0.116-alt2
+- Added -centos kernel to the list of fake providers.
+
 * Wed Sep 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 0.116-alt1
 - Updated the list of fake provides related to ovz kernel flavours.
 

@@ -2,9 +2,9 @@
 %define module_version	1.9.1
 %define module_release	alt6
 
-%define flavour		std-def
-%define karch %ix86 x86_64 armh
-BuildRequires(pre): kernel-headers-modules-std-def
+%define flavour		centos
+%define karch x86_64
+BuildRequires(pre): kernel-headers-modules-centos
 %setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name

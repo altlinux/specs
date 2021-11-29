@@ -1,9 +1,9 @@
 %define module_name	v4l2loopback
 %define module_version	0.12.5
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		std-def
-%define karch %ix86 x86_64 aarch64 ppc64le
+%define karch %ix86 x86_64 aarch64 ppc64le armh
 BuildRequires(pre): kernel-headers-modules-std-def
 %setup_kernel_module %flavour
 
@@ -29,7 +29,7 @@ Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %EVR
 
 PreReq: coreutils
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
-ExclusiveArch: %karch 
+ExclusiveArch: %karch
 
 %description
 v4l2loopback kernel module.
@@ -61,6 +61,9 @@ install v4l2loopback.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Nov 26 2021 L.A. Kostis <lakostis@altlinux.org> 0.12.5-alt2
+- Added -centos kernel arches.
 
 * Sat Dec 5 2020 L.A. Kostis <lakostis@altlinux.org> 0.12.5-alt1
 - Initial build for Sisyphus.
