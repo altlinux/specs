@@ -12,7 +12,7 @@
 %endif
 
 Name: openvswitch
-Version: 2.14.2
+Version: 2.16.1
 Release: alt2
 
 Summary: An open source, production quality, multilayer virtual switch
@@ -27,17 +27,18 @@ Source0: %name-%version.tar
 Source11: %name.init
 Source12: %name.tmpfiles
 
-Patch11: 0001-execute-openvswitch-as-openvswitch-user.patch
-Patch12: 0002-ovs-var_run-to-run.patch
-Patch13: 0003-ovs-use-strongswan-for-ipsec.patch
-Patch14: 0004-ovs-update-systemd-unit-for-ALT.patch
-Patch15: 0005-ovs-fix-linking.patch
-Patch16: 0006-ovs-Python-3-support.patch
-Patch17: 0007-Use-local-LSB-functions.patch
+Patch0001: 0001-execute-openvswitch-as-openvswitch-user.patch
+Patch0002: 0002-ovs-var_run-to-run.patch
+Patch0003: 0003-ovs-use-strongswan-for-ipsec.patch
+Patch0004: 0004-ovs-update-systemd-unit-for-ALT.patch
+Patch0005: 0005-ovs-fix-linking.patch
+Patch0006: 0006-ovs-Python-3-support.patch
+Patch0007: 0007-Use-local-LSB-functions.patch
+Patch0008: 0008-Avoid-autoreq-on-systemd-utils.patch
 
 Obsoletes: %name-controller <= 2.3.1-alt1
 Obsoletes: %name-ovsdbmonitor <= 2.3.1-alt1
-Obsoletes: bash-completion-%name
+Obsoletes: bash-completion-%name < %EVR
 Provides: openvswitch-common = %EVR
 Obsoletes: openvswitch-common < 2.14.0-alt1
 # force apt to update openvswith with etcnet
@@ -58,7 +59,7 @@ BuildRequires: libunwind-devel
 BuildRequires: libunbound-devel
 BuildRequires: glibc-kernheaders
 BuildRequires: python3-devel python3-module-setuptools python3-module-OpenSSL python3-module-sphinx
-%{?_with_dpdk:BuildRequires: dpdk-devel >= 19.11 libpcap-devel libnuma-devel rdma-core-devel libmnl-devel}
+%{?_with_dpdk:BuildRequires: dpdk-devel >= 20.11 libpcap-devel libnuma-devel rdma-core-devel libmnl-devel}
 %{?_enable_afxdp:BuildRequires: libbpf-devel libelf-devel libnuma-devel}
 %define ksrcdir %_usrsrc/kernel/sources
 
@@ -147,13 +148,14 @@ Python3 bindings for the Open vSwitch database
 
 %prep
 %setup
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
+%patch0001 -p1
+%patch0002 -p1
+%patch0003 -p1
+%patch0004 -p1
+%patch0005 -p1
+%patch0006 -p1
+%patch0007 -p1
+%patch0008 -p1
 %ifarch %e2k
 sed -i "s/__has_extension(c_atomic)/0/" lib/ovs-atomic.h
 %endif
@@ -180,7 +182,7 @@ export PYTHON3=%__python3
 	--enable-ssl \
 	%{subst_enable afxdp} \
 %if_with dpdk
-	--with-dpdk=$(dirname %_libdir/dpdk/*/.config) \
+	--with-dpdk=shared \
 %endif
 	--with-rundir=/run/%name \
 	--with-logdir=%_logdir/%name \
@@ -422,6 +424,12 @@ fi
 %endif
 
 %changelog
+* Mon Nov 29 2021 Alexey Shabalin <shaba@altlinux.org> 2.16.1-alt2
+- Avoid autoreq on systemd-utils.
+
+* Tue Nov 23 2021 Alexey Shabalin <shaba@altlinux.org> 2.16.1-alt1
+- 2.16.1
+
 * Wed Oct 13 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.14.2-alt2
 - fixed build for Elbrus
 

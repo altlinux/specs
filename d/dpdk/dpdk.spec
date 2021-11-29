@@ -1,24 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
 # Add option to build without examples
-%def_with examples
+%def_without examples
 # Add option to build without tools
 %def_with tools
-# Add option to build the PDF documentation separately (--with pdfdoc)
-%def_without pdfdoc
-%def_without doc
+%def_disable docs
 
-# build with Mellanox nic support
-%def_with mlnx
-
-%define sdkdir  %_libdir/%name
-%define docdir  %_docdir/%name
-%define incdir %_includedir/%name
-%define pmddir %_libdir/%name-pmds
+%def_enable afxdp
 
 
 Name: dpdk
-Version: 19.11.8
+Version: 20.11.3
 Release: alt1
 Url: http://dpdk.org
 License: BSD-3-Clause AND GPL-2.0-only AND LGPL-2.1-only
@@ -27,11 +19,7 @@ Group: System/Libraries
 
 Source: %name-%version.tar
 
-Patch0: dpdk-16.11-move-to-libdir.patch
-Patch4: dpdk-19.11.3-fix-redefinition.patch
-
-# fedora patches
-Patch100: app-pie.patch
+Patch0001: 0001-Do-not-redefine-strlcpy-and-strlcat.patch
 
 #
 # The DPDK is designed to optimize througput of network traffic using, among
@@ -40,46 +28,13 @@ Patch100: app-pie.patch
 #
 ExclusiveArch: x86_64 %{ix86} aarch64 ppc64le
 
-# machine_arch maps between rpm and dpdk arch name, often same as _target_cpu
-# machine_tmpl is the config template machine name, often "native"
-# machine is the actual machine name used in the dpdk make system
-%ifarch x86_64
-%define machine_arch x86_64
-%define machine_tmpl native
-%define machine default
-%endif
-%ifarch %{ix86}
-%define machine_arch i686
-%define machine_tmpl native
-%define machine default
-%endif
-%ifarch aarch64
-%define machine_arch arm64
-%define machine_tmpl armv8a
-%define machine armv8a
-%endif
-%ifarch ppc64le
-%define machine_arch ppc_64
-%define machine_tmpl power8
-%define machine power8
-%endif
-
-%define target %machine_arch-%machine_tmpl-linuxapp-gcc
+BuildRequires(pre): meson
 BuildRequires(pre): rpm-build-python3
-BuildRequires: glibc-kernheaders libpcap-devel zlib-devel
-BuildRequires: libnuma-devel
-%{?_with_doc:BuildRequires: doxygen python-module-sphinx}
-%{?_with_mlnx:BuildRequires: rdma-core-devel libmnl-devel}
-%if_with pdfdoc
-BuildRequires: texlive-dejavu inkscape texlive-latex-bin-bin
-BuildRequires: texlive-kpathsea-bin texlive-metafont-bin texlive-cm
-BuildRequires: texlive-cmap texlive-ec texlive-babel-english
-BuildRequires: texlive-fancyhdr texlive-fancybox texlive-titlesec
-BuildRequires: texlive-framed texlive-threeparttable texlive-mdwtools
-BuildRequires: texlive-wrapfig texlive-parskip texlive-upquote texlive-multirow
-BuildRequires: texlive-helvetic texlive-times texlive-dvips
-%endif
-
+BuildRequires: glibc-kernheaders libpcap-devel zlib-devel libssl-devel
+BuildRequires: libnuma-devel libelf-devel libfdt-devel libjansson-devel
+BuildRequires: rdma-core-devel libmnl-devel
+%{?_enable_afxdp:BuildRequires: libbpf-devel}
+%{?_enable_docs:BuildRequires: doxygen /usr/bin/sphinx-build python3-module-sphinx_rtd_theme}
 Requires: lib%name = %EVR
 
 %description
@@ -131,157 +86,40 @@ BuildRequires: libvirt-devel
 Example applications utilizing the Data Plane Development Kit, such
 as L2 and L3 forwarding.
 
+%define sdkdir %_datadir/%name
+%define docdir %_docdir/%name
+%define incdir %_includedir/%name
+%define pmddir %name-pmds
+
 %prep
 %setup
-%patch0 -p2
-%patch4 -p1
-
-#%patch100 -p1
+%patch0001 -p2
 
 %build
-# set up a method for modifying the resulting .config file
-function setconf() {
-	if grep -q ^$1= %target/.config; then
-		sed -i "s:^$1=.*$:$1=$2:g" %target/.config
-	else
-		echo $1=$2 >> %target/.config
-	fi
-}
+%add_optflags -fcommon
+%meson --includedir=include/dpdk \
+       -Ddrivers_install_subdir=%pmddir \
+       -Dmachine=default \
+       %{?_with_examples:-Dexamples=all} \
+       %{?_enable_docs:-Denable_docs=true} \
+       --default-library=shared
 
-# In case dpdk-devel is installed, we should ignore its hints about the SDK directories
-unset RTE_SDK RTE_INCLUDE RTE_TARGET
-
-# Avoid appending second -Wall to everything, it breaks upstream warning
-# disablers in makefiles. Strip expclit -march= from optflags since they
-# will only guarantee build failures, DPDK is picky with that.
-export EXTRA_CFLAGS="$(echo %optflags | sed -e 's:-Wall::g' -e 's:-march=[[:alnum:]]* ::g') -Wformat -fPIC -I/etc/sysconfig/kernel/include"
-%ifarch x86_64 i686
-export EXTRA_CFLAGS="$EXTRA_CFLAGS -fcf-protection=full"
-%endif
-
-%make_build V=1 O=%target T=%target config
-
-setconf CONFIG_RTE_MACHINE '"%machine"'
-# Disable experimental features
-setconf CONFIG_RTE_NEXT_ABI n
-setconf CONFIG_RTE_LIBRTE_MBUF_OFFLOAD n
-# Disable unmaintained features
-setconf CONFIG_RTE_LIBRTE_POWER n
-
-# Enable automatic driver loading from this path
-setconf CONFIG_RTE_EAL_PMD_PATH '"%pmddir"'
-
-setconf CONFIG_RTE_LIBRTE_BNX2X_PMD y
-setconf CONFIG_RTE_LIBRTE_PMD_PCAP y
-setconf CONFIG_RTE_LIBRTE_VHOST_NUMA y
-
-setconf CONFIG_RTE_EAL_IGB_UIO n
-setconf CONFIG_RTE_LIBRTE_KNI n
-setconf CONFIG_RTE_KNI_KMOD n
-setconf CONFIG_RTE_KNI_PREEMPT_DEFAULT n
-
-setconf CONFIG_RTE_APP_EVENTDEV n
-
-setconf CONFIG_RTE_LIBRTE_NFP_PMD y
-
-%if_with mlnx
-setconf CONFIG_RTE_LIBRTE_MLX4_PMD y
-setconf CONFIG_RTE_LIBRTE_MLX5_PMD y
-%endif
-
-%ifarch aarch64
-setconf CONFIG_RTE_LIBRTE_DPAA_BUS n
-setconf CONFIG_RTE_LIBRTE_DPAA_MEMPOOL n
-setconf CONFIG_RTE_LIBRTE_DPAA_PMD n
-setconf CONFIG_RTE_LIBRTE_PFE_PMD n
-setconf CONFIG_RTE_LIBRTE_PMD_CAAM_JR n
-setconf CONFIG_RTE_LIBRTE_PMD_CAAM_JR_BE n
-%endif
-
-setconf CONFIG_RTE_BUILD_SHARED_LIB y
-
-%make_build V=1 O=%target -Wimplicit-fallthrough=0
-%if_with doc
-%make_build V=1 O=%target doc-api-html doc-guides-html %{?with_pdfdoc: guides-pdf}
-%endif
-
-%if_with examples
-%make_build V=1 O=%target/examples T=%target examples
-%endif
+%meson_build
 
 %install
-# In case dpdk-devel is installed
-unset RTE_SDK RTE_INCLUDE RTE_TARGET
-
-%makeinstall_std O=%target prefix=%_usr libdir=%_libdir
-
-%if_without tools
-rm -rf %buildroot%sdkdir/usertools
-rm -rf %buildroot%_sbindir/dpdk_nic_bind
-rm -f %buildroot%_bindir/dpdk-test-crypto-perf
-rm -f %buildroot%_bindir/testbbdev
-%else
-mv %buildroot%_bindir/testbbdev %buildroot%_bindir/dpdk-test-bbdev
-%endif
-rm -f %buildroot%sdkdir/usertools/setup.sh
-rm -f %buildroot%sdkdir/usertools/meson.build
-
-%if_with examples
-find %target/examples/ -name "*.map" | xargs rm -f
-for f in %target/examples/*/%target/app/*; do
-    bn=`basename ${f}`
-    cp -p ${f} %buildroot%_bindir/dpdk_example_${bn}
-done
-%endif
-
-# Replace /usr/bin/env python with /usr/bin/python3
-find %buildroot%sdkdir/ -name "*.py" -exec \
-  sed -i -e 's|#!\s*/usr/bin/env python3|#!/usr/bin/python3|' {} +
-
-find %buildroot%sdkdir/ -name "*.py" -exec \
-  sed -i -e 's|#!\s*/usr/bin/env python|#!/usr/bin/python3|' {} +
-
-find %buildroot%sdkdir/ -name "*.py" -exec \
-  sed -i -e 's|#!\s*/usr/bin/python33|#!/usr/bin/python3|' {} +
-
-# Create a driver directory with symlinks to all pmds
-mkdir -p %buildroot/%pmddir
-for f in %buildroot/%_libdir/*_pmd_*.so.*; do
-    bn=$(basename ${f})
-    ln -s ../${bn} %buildroot%pmddir/${bn}
-done
-
-# Setup RTE_SDK environment as expected by apps etc
-mkdir -p %buildroot/%_sysconfdir/profile.d
-cat << EOF > %buildroot/%_sysconfdir/profile.d/dpdk-sdk-%_arch.sh
-if [ -z "\${RTE_SDK}" ]; then
-    export RTE_SDK="%sdkdir"
-    export RTE_TARGET="%target"
-    export RTE_INCLUDE="%incdir"
-fi
-EOF
-
-cat << EOF > %buildroot/%_sysconfdir/profile.d/dpdk-sdk-%_arch.csh
-if (! -d \$?RTE_SDK ) then
-    setenv RTE_SDK "%sdkdir"
-    setenv RTE_TARGET "%target"
-    setenv RTE_INCLUDE "%incdir"
-endif
-EOF
-
-# Fixup target machine mismatch
-sed -i -e 's:-%machine_tmpl-:-%machine-:g' %buildroot/%_sysconfdir/profile.d/dpdk-sdk*
+%meson_install
+rm -f %buildroot%_libdir/*.a
 
 %files
 # BSD
-%_bindir/testpmd
-%_bindir/dpdk-procinfo
+%_bindir/dpdk-testpmd
+%_bindir/dpdk-proc-info
 
 %files -n lib%name
 %_libdir/*.so.*
-%pmddir
+%_libdir/%pmddir
 
-%if_with doc
+%if_enabled docs
 %files doc
 #BSD
 %docdir
@@ -291,25 +129,18 @@ sed -i -e 's:-%machine_tmpl-:-%machine-:g' %buildroot/%_sysconfdir/profile.d/dpd
 #BSD
 %incdir/
 %sdkdir
-%if_with tools
-%exclude %sdkdir/usertools/
-%endif
 %if_with examples
 %exclude %sdkdir/examples/
 %endif
-%_sysconfdir/profile.d/dpdk-sdk-*.*
 %_libdir/*.so
+%_pkgconfigdir/*.pc
 
 %if_with tools
 %files tools
-%sdkdir/usertools/
-%_sbindir/dpdk-devbind
 %_bindir/dpdk-pdump
-%_bindir/dpdk-pmdinfo
-%_bindir/dpdk-test-bbdev
-%_bindir/dpdk-test-compress-perf
-%_bindir/dpdk-test-crypto-perf
-%_bindir/testsad
+%_bindir/dpdk-test
+%_bindir/dpdk-test-*
+%_bindir/dpdk-*.py
 %endif
 
 %if_with examples
@@ -319,6 +150,9 @@ sed -i -e 's:-%machine_tmpl-:-%machine-:g' %buildroot/%_sysconfdir/profile.d/dpd
 %endif
 
 %changelog
+* Tue Nov 23 2021 Alexey Shabalin <shaba@altlinux.org> 20.11.3-alt1
+- Update to LTS release 20.11.3.
+
 * Thu May 27 2021 Alexey Shabalin <shaba@altlinux.org> 19.11.8-alt1
 - Update to LTS release 19.11.8.
 

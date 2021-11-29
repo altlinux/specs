@@ -2,8 +2,8 @@
 %define rpmstate /run/openvswitch-rpm-state-
 
 Name: ovn
-Version: 20.09.0
-Release: alt7
+Version: 21.03.0
+Release: alt1
 
 Summary: Open Virtual Network support
 License: Apache-2.0 AND LGPL-2.1-only AND SISSL
@@ -26,6 +26,7 @@ Requires: lib%name = %EVR
 Requires: openvswitch >= 2.14.0
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-systemd
 BuildRequires: gcc-c++
 BuildRequires: graphviz libssl-devel openssl groff
 BuildRequires: libopenvswitch-devel
@@ -168,7 +169,7 @@ install -pDm0644 rhel/usr_share_ovn_scripts_systemd_sysconfig.template \
         %buildroot%_sysconfdir/sysconfig/%name
 install -pDm0644 rhel/etc_logrotate.d_ovn \
         %buildroot%_logrotatedir/%name
-for service in ovn-controller ovn-controller-vtep ovn-northd; do
+for service in ovn-controller ovn-controller-vtep ovn-northd ovn-ic ovn-ic-db; do
     install -pDm0644 \
             rhel/usr_lib_systemd_system_${service}.service \
             %buildroot%_unitdir/${service}.service
@@ -202,7 +203,6 @@ if [ $1 -eq 1 ]; then
 fi
 
 %post central
-echo "post install central = $1"
 if [ $1 -eq 1 ]; then
     # move db and log from openvswitch to ovn dir
     for db in ovnnb ovnsb; do
@@ -214,10 +214,10 @@ if [ $1 -eq 1 ]; then
     done
     chown -R openvswitch:openvswitch %_logdir/%name %_localstatedir/%name
 fi
-%post_service ovn-northd
+%post_systemd_postponed ovn-northd.service ovn-ic.service ovn-ic-db.service
 
 %preun central
-%preun_service ovn-northd
+%preun_systemd ovn-northd.service ovn-ic.service ovn-ic-db.service
 
 %triggerpostun central -- openvswitch-ovn-central < 2.14.0
 SYSTEMCTL=systemctl
@@ -258,10 +258,10 @@ if [ $1 -eq 1 ]; then
     [ ! -f %_logdir/openvswitch/ovn-controller.log ] || mv -f %_logdir/openvswitch/ovn-controller.log* %_logdir/%name/
     chown -R openvswitch:openvswitch %_logdir/%name
 fi
-%post_service ovn-controller
+%post_systemd_postponed ovn-controller.service
 
 %preun host
-%preun_service ovn-controller
+%preun_systemd ovn-controller.service
 
 %triggerpostun host -- openvswitch-ovn-host < 2.14.0
 SYSTEMCTL=systemctl
@@ -303,10 +303,10 @@ if [ $1 -eq 1 ]; then
     [ ! -f %_logdir/openvswitch/ovn-controller-vtep.log ] || mv -f %_logdir/openvswitch/ovn-controller-vtep.log* %_logdir/%name/
     chown -R openvswitch:openvswitch %_logdir/%name
 fi
-%post_service ovn-controller-vtep
+%post_systemd_postponed ovn-controller-vtep.service
 
 %preun vtep
-%preun_service ovn-controller-vtep
+%preun_systemd ovn-controller-vtep.service
 
 %triggerpostun vtep -- openvswitch-ovn-vtep < 2.14.0
 SYSTEMCTL=systemctl
@@ -379,6 +379,8 @@ fi
 %_datadir/%name/ovn-ic-nb.ovsschema
 %_datadir/%name/ovn-ic-sb.ovsschema
 %_unitdir/ovn-northd.service
+%_unitdir/ovn-ic.service
+%_unitdir/ovn-ic-db.service
 #%%_prefix/lib/firewalld/services/ovn-central-firewall-service.xml
 
 %files host
@@ -397,6 +399,9 @@ fi
 %_datadir/%name/scripts/ovn-bugtool-*
 
 %changelog
+* Tue Nov 23 2021 Alexey Shabalin <shaba@altlinux.org> 21.03.0-alt1
+- branch-21.03 (git b65602b1)
+
 * Sat Jan 23 2021 Alexey Shabalin <shaba@altlinux.org> 20.09.0-alt7
 - move detect of started and enabled services to %%pre
 - fixed detect of started services based on pid file
