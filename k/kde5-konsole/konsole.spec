@@ -15,7 +15,7 @@
 
 Name: kde5-%rname
 Version: 21.08.3
-Release: alt1
+Release: alt2
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{?_enable_obsolete_kde4:appdata}%{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Terminals
@@ -32,6 +32,7 @@ Obsoletes: kde4-konsole < %version-%release
 %endif
 
 Source: %rname-%version.tar
+Source10: ru-add.po
 Patch10: alt-no-transparency.patch
 Patch11: alt-konsole-profiles.patch
 Patch12: alt-def-font.patch
@@ -104,6 +105,8 @@ Requires: %name-common = %version-%release
 %patch14 -p1
 %patch15 -p1
 
+cat %SOURCE10 >>po/ru/konsole.po
+
 %build
 %K5build \
 %if_disabled obsolete_kde4
@@ -169,6 +172,9 @@ __EOF__
 %_K5lib/libkonsoleapp.so.%sover
 
 %changelog
+* Mon Nov 29 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt2
+- fix tranparency option description
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 
