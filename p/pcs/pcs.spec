@@ -3,7 +3,7 @@
 Name: 	       pcs
 Epoch:         1
 Version:       0.10.11
-Release:       alt1
+Release:       alt2
 Summary:       Pacemaker/Corosync configuration system
 License:       GPL-2.0 and Apache-2.0 and MIT
 Group:         System/Servers
@@ -22,6 +22,16 @@ Requires:      python3-module-pcs = %version
 Requires:      python3-module-snmp = %version
 Obsoletes:     pcs-pcsd < %EVR
 Provides:      pcs-pcsd = %EVR
+
+Requires: gem-rack
+Requires: gem-sinatra
+Requires: gem-rack-protection
+Requires: gem-thin
+Requires: gem-rake-compiler-dock
+Requires: gem-open4
+Requires: gem-backports
+Requires: gem-ethon
+Requires: gem-rspec
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-ruby
@@ -163,6 +173,9 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Fri Nov 26 2021 Egor Ignatov <egori@altlinux.org> 1:0.10.11-alt2
+- Add missing dependencies
+
 * Fri Oct 08 2021 Andrey Cherepanov <cas@altlinux.org> 1:0.10.11-alt1
 - New version.
 - Do not use ruby macros.
