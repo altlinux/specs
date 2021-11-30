@@ -23,7 +23,7 @@
 %define tver    0.96
 Name:           mbrola
 Version:        3.3
-Release:        alt1_2.9
+Release:        alt1_2.12
 Summary:        Speech Synthesis System
 Summary(de):    Sprachsynthese System
 License:        AGPL-3.0-or-later
@@ -40,11 +40,7 @@ BuildRequires:  gcc-c++
 Requires:       sox-base
 Requires:     mbrola-voice
 Source44: import.info
-# where freespeech is built
-%ifarch %ix86 x86_64
 Requires: freespeech
-%endif
-
 
 %description
 MBROLA is a speech synthesizer based on the concatenation of diphones.
@@ -109,6 +105,9 @@ fdupes %{buildroot}%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 3.3-alt1_2.12
+- we have freespeech on arm/aarch64/ppc64le now
+
 * Fri Oct 01 2021 Igor Vlasenko <viy@altlinux.org> 3.3-alt1_2.9
 - fixed build with gcc11
 - TODO: need freespeech on arm/aarch64/ppc64le
