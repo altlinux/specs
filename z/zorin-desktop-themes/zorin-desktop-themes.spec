@@ -1,5 +1,5 @@
 Name: zorin-desktop-themes
-Version: 3.4.1
+Version: 3.4.2
 Release: alt1
 Summary: Zorin OS desktop themes
 
@@ -46,6 +46,9 @@ mkdir -p %buildroot%_datadir/themes
 cp -a Zorin* %buildroot%_datadir/themes
 
 %changelog
+* Tue Nov 30 2021 Andrey Cherepanov <cas@altlinux.org> 3.4.2-alt1
+- New version.
+
 * Sat Oct 23 2021 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt1
 - New version.
 
