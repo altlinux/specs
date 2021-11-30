@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 22
+%define centos_release 23
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -613,6 +613,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Nov 30 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.23-alt1.el9
+- CNB: pci: add several VPD helpers
+
 * Sat Nov 27 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.22-alt1.el9
 - Add automotive CI jobs
 - post 5.14 scheduler fixes
