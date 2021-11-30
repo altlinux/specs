@@ -2,8 +2,8 @@
 
 Name: sdcc
 Epoch: 1
-Version: 3.9.0
-Release: alt2
+Version: 4.1.0
+Release: alt1
 Group: Development/C
 URL: http://sdcc.sourceforge.net
 License: GPL
@@ -66,7 +66,6 @@ microprocessors.
 %patch1 -p1
 
 %build
-PYTHON=python3 \
 %configure \
 	--docdir=%_docdir/%name-%version \
 	--enable-werror=no \
@@ -75,7 +74,9 @@ PYTHON=python3 \
 %make_build
 
 %install
-%makeinstall_std
+%makeinstall_std STRIP=:
+
+%brp_strip_none %_datadir/sdcc/*
 
 %files 
 %_bindir/*
@@ -87,6 +88,9 @@ PYTHON=python3 \
 %_docdir/%name-%version
 
 %changelog
+* Tue Nov 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:4.1.0-alt1
+- 4.1.0
+
 * Thu Jun 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.9.0-alt2
 - Updated build dependencies.
 
