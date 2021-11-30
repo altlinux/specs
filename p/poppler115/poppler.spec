@@ -6,9 +6,10 @@
 %def_disable static
 %def_disable compat
 
-%if_enabled compat
+%if_disabled compat
 %def_enable cpp
 %def_enable glib
+%def_disable qt6
 %def_enable qt5
 %def_disable qt4
 %def_enable devel
@@ -18,6 +19,7 @@
 %else
 %def_disable cpp
 %def_disable glib
+%def_disable qt6
 %def_disable qt5
 %def_disable qt4
 %def_disable devel
@@ -27,18 +29,19 @@
 %endif
 
 %define rname poppler
-%define somajor 110
+%define somajor 115
 %define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
 %define somajor_qt5 1
+%define somajor_qt6 3
 %define somajor_glib 8
 %define major 21
-%define minor 05
+%define minor 11
 %define bugfix 0
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt1
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -47,6 +50,7 @@ Release: alt3
 %define poppler_qt_devel_name lib%rname-qt-devel
 %define poppler_qt4_devel_name lib%rname-qt4-devel
 %define poppler_qt5_devel_name lib%rname-qt5-devel
+%define poppler_qt6_devel_name lib%rname-qt6-devel
 %else
 %define poppler_devel_name lib%rname%somajor-devel
 %define poppler_cpp_devel_name lib%rname%somajor-cpp-devel
@@ -54,12 +58,13 @@ Release: alt3
 %define poppler_qt_devel_name lib%rname%somajor-qt-devel
 %define poppler_qt4_devel_name lib%rname%somajor-qt4-devel
 %define poppler_qt5_devel_name lib%rname%somajor-qt5-devel
+%define poppler_qt6_devel_name lib%rname%somajor-qt6-devel
 %endif
 %define _cmake__builddir BUILD
 
 Group: Publishing
 Summary: PDF rendering library
-License: GPL
+License: GPL-2.0-or-later
 Url: http://poppler.freedesktop.org/
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -74,6 +79,9 @@ Patch11: alt-poppler-0.86-qt4.patch
 
 BuildRequires(pre): rpm-utils rpm-build-ubt
 BuildRequires: cmake
+%if_enabled qt6
+BuildRequires: qt6-base-devel
+%endif
 %if_enabled qt5
 BuildRequires: qt5-base-devel
 %endif
@@ -83,7 +91,7 @@ BuildRequires: libqt4-devel
 %if_enabled glib
 BuildRequires: glib2-devel
 %endif
-BuildRequires: gcc-c++ glibc-devel libcurl-devel zlib-devel libnss-devel
+BuildRequires: gcc-c++ glibc-devel libcurl-devel zlib-devel libnss-devel libpcre-devel
 BuildRequires: libjpeg-devel liblcms2-devel libtiff-devel libpng-devel
 BuildRequires: libgtk+3-gir-devel libgtk+3-devel
 BuildRequires: libopenjpeg2.0-devel openjpeg-tools2.0
@@ -155,6 +163,13 @@ Requires: lib%name = %version-%release
 %description -n lib%rname%somajor_qt5-qt5
 Qt5 frontend library for %rname
 
+%package -n lib%rname%somajor_qt6-qt6
+Summary: Qt6 frontend library for %rname
+Group: System/Libraries
+Requires: lib%name = %version-%release
+%description -n lib%rname%somajor_qt6-qt6
+Qt6 frontend library for %rname
+
 %package -n lib%rname%somajor_qt4-qt4
 Summary: Qt4 frontend library for %rname
 Group: System/Libraries
@@ -225,6 +240,20 @@ Conflicts: lib%rname-glib-devel
 Libraries, include files, etc you can use to develop
 poppler applications with Glib/Gtk+
 
+%package -n %poppler_qt6_devel_name
+Summary: Development files for %rname-qt6
+Group: Development/KDE and QT
+Requires: lib%rname%somajor_qt6-qt6 = %version-%release
+%if_enabled xpdfheaders
+Requires: %poppler_devel_name = %version-%release
+%endif
+%if_enabled compat
+Conflicts: lib%rname-qt6-devel
+%endif
+%description -n %poppler_qt6_devel_name
+Libraries, include files, etc you can use to develop
+poppler applications with Qt6
+
 %package -n %poppler_qt5_devel_name
 Summary: Development files for %rname-qt5
 Group: Development/KDE and QT
@@ -294,6 +323,7 @@ export QT4DIR=%_qt4dir
 %cmake \
     -DSHARE_INSTALL_DIR=%_datadir \
     -DBUILD_SHARED_LIBS=ON \
+    -DENABLE_BOOST=OFF \
     -DENABLE_LIBCURL=ON \
     -DENABLE_ZLIB=OFF \
     -DENABLE_CMS=lcms2 \
@@ -306,10 +336,12 @@ export QT4DIR=%_qt4dir
     -DENABLE_GLIB=%{?_enable_glib:ON}%{!?_enable_glib:OFF} \
     -DENABLE_QT4=%{?_enable_qt4:ON}%{!?_enable_qt4:OFF} \
     -DENABLE_QT5=%{?_enable_qt5:ON}%{!?_enable_qt5:OFF} \
+    -DENABLE_QT6=%{?_enable_qt6:ON}%{!?_enable_qt6:OFF} \
     #
 #    -DBUILD_GTK_TESTS=OFF \
 #    -DBUILD_QT4_TESTS=OFF \
 #    -DBUILD_QT5_TESTS=OFF \
+#    -DBUILD_QT6_TESTS=OFF \
 #    -DBUILD_CPP_TESTS=OFF \
 %cmake_build
 
@@ -374,6 +406,18 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 %endif
 
+%if_enabled qt6
+%files -n lib%rname%somajor_qt6-qt6
+%_libdir/libpoppler-qt6.so.%somajor_qt6
+%_libdir/libpoppler-qt6.so.%somajor_qt6.*
+%if_enabled devel
+%files -n %poppler_qt6_devel_name
+%_includedir/poppler/qt6/
+%_libdir/libpoppler-qt6.so
+%_pkgconfigdir/poppler-qt6.pc
+%endif
+%endif
+
 %if_enabled cpp
 %files -n lib%rname%somajor_cpp-cpp
 %_libdir/libpoppler-cpp.so.%somajor_cpp
@@ -406,8 +450,8 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
-* Tue Nov 30 2021 Sergey V Turchin <zerg@altlinux.org> 21.05.0-alt3
-- build only compat library
+* Tue Nov 30 2021 Sergey V Turchin <zerg@altlinux.org> 21.11.0-alt1
+- new version
 
 * Mon Jun 07 2021 Sergey V Turchin <zerg@altlinux.org> 21.05.0-alt2
 - fix to build against new cmake
