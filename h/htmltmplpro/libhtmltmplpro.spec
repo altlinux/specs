@@ -1,22 +1,23 @@
-%set_automake_version 1.11
+#set_automake_version 1.11
 
 %def_disable static
 #def_enable debug
 
 %define libname libhtmltmplpro
 Name: htmltmplpro
-Version: 0.9510
-Release: alt1.1
+Version: 0.9520
+Release: alt1
 
 Summary: HTML::Template compatible HTML template library
-License: GPL2+ or Artistic
+License: LGPLv2+ or Artistic-2.0
 Group: System/Libraries
 Url: http://sf.net/projects/html-tmpl-pro
 Packager: Igor Vlasenko <viy@altlinux.org>
 
 Source: htmltmplpro-%version.tar.gz
 
-BuildRequires: gcc libpcre-devel doxygen graphviz
+BuildRequires: gcc doxygen graphviz
+BuildRequires: libpcre2-devel
 
 %package -n %libname
 Summary: HTML::Template compatible HTML template shared library
@@ -46,20 +47,20 @@ Group: Development/C
 Requires: %libname = %version-%release
 
 %description
-The HTML::Template::Pro library is a portable template engine for templates 
-that use syntax of known perl modules HTML::Template, HTML::Template::Expr 
+The HTML::Template::Pro library is a portable template engine for templates
+that use syntax of known perl modules HTML::Template, HTML::Template::Expr
 and HTML::Template::Pro.
 
 %description -n %libname
-The HTML::Template::Pro library is a portable template engine for templates 
-that use syntax of known perl modules HTML::Template, HTML::Template::Expr 
+The HTML::Template::Pro library is a portable template engine for templates
+that use syntax of known perl modules HTML::Template, HTML::Template::Expr
 and HTML::Template::Pro.
 
 This package contains shared libraries.
 
 %description -n lib%name-devel
-The HTML::Template::Pro library is a portable template engine for templates 
-that use syntax of known perl modules HTML::Template, HTML::Template::Expr 
+The HTML::Template::Pro library is a portable template engine for templates
+that use syntax of known perl modules HTML::Template, HTML::Template::Expr
 and HTML::Template::Pro.
 
 This package contains development libraries, include files and development
@@ -67,16 +68,16 @@ documentation required for developing applications which use perl-style
 regular expressions.
 
 %description -n lib%name-devel-static
-The HTML::Template::Pro library is a portable template engine for templates 
-that use syntax of known perl modules HTML::Template, HTML::Template::Expr 
+The HTML::Template::Pro library is a portable template engine for templates
+that use syntax of known perl modules HTML::Template, HTML::Template::Expr
 and HTML::Template::Pro.
 
 This package contains static development libraries required for developing
 statically linked applications which use perl-style regular expressions.
 
 %description -n %name-testsuite
-The HTML::Template::Pro library is a portable template engine for templates 
-that use syntax of known perl modules HTML::Template, HTML::Template::Expr 
+The HTML::Template::Pro library is a portable template engine for templates
+that use syntax of known perl modules HTML::Template, HTML::Template::Expr
 and HTML::Template::Pro.
 
 This package contains library's test suite to test its bindings.
@@ -125,6 +126,9 @@ make check
 %endif
 
 %changelog
+* Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 0.9520-alt1
+- new version; see Changes
+
 * Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9510-alt1.1
 - Fixed build
 
