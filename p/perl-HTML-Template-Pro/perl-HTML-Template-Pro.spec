@@ -6,30 +6,29 @@
 %define module HTML-Template-Pro
 
 Name: perl-%module
-Version: 0.9510
-Release: alt2.2
+Version: 0.9520
+Release: alt1
 
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
 Summary: Perl+C/XS module to produce HTML from HTML Template files.
 Group: Development/Perl
-License: LGPL2+ or Artistic
+License: LGPLv2+ or Artistic-2.0
 #Source: http://www.cpan.org/modules/by-module/HTML/%module-%version.tar.gz
 Source: %module-%version.tar.gz
 Url: http://sourceforge.net/projects/html-tmpl-pro/
 
-# Automatically added by buildreq on Wed Nov 06 2002
-BuildRequires: perl-devel pcre libpcre-devel perl-JSON perl-JSON-XS perl-Test-Pod
+BuildRequires: perl-devel libpcre2-devel perl-JSON perl-JSON-XS perl-Test-Pod
 
 %description
 HTML::Template::Pro is a fast lightweight C/Perl+XS reimplementation
-of HTML::Template and HTML::Template::Expr. It is not intended 
-to be a complete replacement, but to be a fast implementation 
+of HTML::Template and HTML::Template::Expr. It is not intended
+to be a complete replacement, but to be a fast implementation
 of HTML::Template if you don't need quering, the extended facility
-of HTML::Template. 
+of HTML::Template.
 Designed for heavy upload, resource limitations, abcence of mod_perl.
 
-HTML::Template module attempts make using HTML templates simple and natural. 
+HTML::Template module attempts make using HTML templates simple and natural.
 It extends standard HTML with a few new HTML-esque tags - <TMPL_VAR>,
 <TMPL_LOOP>, <TMPL_INCLUDE>, <TMPL_IF> and <TMPL_ELSE>.  The file
 written with HTML and these new tags is called a template.  It is
@@ -54,6 +53,9 @@ in the Perl script.
 #perl_vendor_man3dir/*
 
 %changelog
+* Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 0.9520-alt1
+- new version; see Changes
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.9510-alt2.2
 - rebuild with new perl 5.28.1
 
