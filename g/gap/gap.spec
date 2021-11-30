@@ -1,6 +1,6 @@
 Name: gap
 Version: 4.11.1
-Release: alt1
+Release: alt2
 Summary: System for Computational Discrete Algebra
 License: Zlib and LGPL-3.0+ and GPL-2.0+ and GPL-3.0+
 Group: Sciences/Mathematics
@@ -10,13 +10,31 @@ Source: https://www.gap-system.org/pub/gap/gap4core/gap-%version-core.zip
 Source2: macros.gap
 Source3: %name-rpmlintrc
 
-BuildPreReq: fdupes
+# Patch applied in bootstrap mode to break circular dependencies.
+Patch: %name-bootstrap.patch
+# This patch applies a change from Debian to allow help files to be in gzip
+# compressed DVI files, and also adds support for viewing with xdg-open.
+Patch1: %name-help.patch
+# Fix broken references in the reference manual's lab file
+Patch2: %name-ref.patch
+# Fix paths in gac
+Patch3: %name-gac.patch
+# On i386 only, and with recent versions of gcc only, various parts of the
+# compiled code disagree about the size of a BagHeader.  Some parts think it
+# is 12 bytes, and some parts think it is 16 bytes.  This leads to pointers
+# pointing 4 bytes off from the actual first byte of a BagHeader, leading to
+# weird failure modes.  This does not affect 32-bit ARM, so it is not purely
+# a 32-bit issue.  I do not yet know if this behavior is due to a GCC bug, or
+# if the GAP code is in fact wrong, but this patch works around the issue.
+Patch4: %name-bagheader.patch
+
 BuildRequires: gcc-c++
 BuildRequires: libgmp-devel
 BuildRequires: libtool
 BuildRequires: libreadline-devel
 BuildRequires: unzip
 BuildRequires: zlib-devel
+BuildRequires: libatomic_ops-devel libgc-devel
 Obsoletes: gap-core < %version
 Provides: gap-core = %version
 Obsoletes: gap-data < %version
@@ -117,13 +135,18 @@ This subpackage will pull in all optional packages of the GAP distribution.
 
 %prep
 %setup
+#%%patch -p0
+%patch1 -p0
+%patch2 -p0
+#%%patch3 -p0
+%patch4 -p0
 
-sed -i 's/\#$(INSTALL) gac/$(INSTALL) gac/' Makefile.rules
+subst 's/\#$(INSTALL) gac/$(INSTALL) gac/' Makefile.rules
 # Fixed version
-sed -i 's|4.11.0|4.11.1|; s|29-Feb|Feb|; s|2020|2021|' configure.ac
+subst 's|4.11.0|4.11.1|; s|29-Feb|Feb|; s|2020|2021|' configure.ac
 
 %build
-%autoreconf
+#%%autoreconf
 %configure
 %make_build V=1
 
@@ -184,7 +207,7 @@ cat >>"$b/%_libexecdir/rpm/macros.d/gap" <<-EOF
 	%%gapdir %_libdir/gap
 EOF
 
-fdupes %buildroot%_prefix
+install -p -m 0644 gen/config.h %buildroot%_includedir/gap
 
 %files
 %doc CITATION CONTRIBUTING.md COPYRIGHT INSTALL.md LICENSE README*
@@ -209,8 +232,11 @@ fdupes %buildroot%_prefix
 %_libexecdir/rpm/macros.d/gap
 
 %files full
-
 %changelog
+* Tue Nov 30 2021 Leontiy Volodin <lvol@altlinux.org> 4.11.1-alt2
+- Packed config.h for sagemath.
+- Added buildrequires.
+
 * Sun Jun 20 2021 Leontiy Volodin <lvol@altlinux.org> 4.11.1-alt1
 - New version (4.11.1).
 
