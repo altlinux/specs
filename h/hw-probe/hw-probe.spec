@@ -1,5 +1,5 @@
 Name: hw-probe
-Version: 1.6
+Version: 1.6.1
 Release: alt1
 Summary: A tool to check operability of computer hardware
 License: LGPLv2.1+
@@ -59,6 +59,9 @@ Reliability Test study: https://github.com/linuxhw/SMART
 %_bindir/%name
 
 %changelog
+* Tue Nov 30 2021 Andrey Cherepanov <cas@altlinux.org> 1.6.1-alt1
+- New version.
+
 * Thu Sep 23 2021 Andrey Cherepanov <cas@altlinux.org> 1.6-alt1
 - New version.
 
