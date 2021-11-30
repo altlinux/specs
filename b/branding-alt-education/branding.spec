@@ -7,7 +7,7 @@
 %define status_en %nil
 %define flavour %brand-%theme
 
-%define gtk_theme Breeze
+%define gtk_theme Breeze-Education
 %define kde_theme Breeze
 %define icon_theme Papirus-Light
 %define window_theme Smoothwall-Breeze
@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 10.0
-Release: alt1
+Release: alt2
 
 %ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
@@ -206,7 +206,7 @@ Requires: icon-theme-ePapirus
 Requires: icon-theme-Papirus
 Requires: icon-theme-Papirus-Dark
 Requires: icon-theme-Papirus-Light
-Requires: gtk-theme-breeze
+Requires: gtk-theme-breeze-education
 Requires: xfwm4-theme-Smoothwall-Breeze
 Requires(post): lightdm-gtk-greeter
 # XFCE plugins
@@ -482,6 +482,9 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Tue Nov 30 2021 Andrey Cherepanov <cas@altlinux.org> 10.0-alt2
+- Use gtk theme Breeze-Education.
+
 * Thu Nov 11 2021 Andrey Cherepanov <cas@altlinux.org> 10.0-alt1
 - Release 10.0.
 
