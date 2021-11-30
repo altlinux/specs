@@ -39,27 +39,39 @@
 %define major 21
 %define minor 11
 %define bugfix 0
-Name: %rname%somajor
-Version: %major.%minor.%bugfix
-Release: alt1
 
 %if_disabled compat
-%define poppler_devel_name lib%rname-devel
-%define poppler_cpp_devel_name lib%rname-cpp-devel
-%define poppler_glib_devel_name lib%rname-glib-devel
-%define poppler_qt_devel_name lib%rname-qt-devel
-%define poppler_qt4_devel_name lib%rname-qt4-devel
-%define poppler_qt5_devel_name lib%rname-qt5-devel
-%define poppler_qt6_devel_name lib%rname-qt6-devel
+%define pkgname %{rname}-current
 %else
-%define poppler_devel_name lib%rname%somajor-devel
-%define poppler_cpp_devel_name lib%rname%somajor-cpp-devel
-%define poppler_glib_devel_name lib%rname%somajor-glib-devel
-%define poppler_qt_devel_name lib%rname%somajor-qt-devel
-%define poppler_qt4_devel_name lib%rname%somajor-qt4-devel
-%define poppler_qt5_devel_name lib%rname%somajor-qt5-devel
-%define poppler_qt6_devel_name lib%rname%somajor-qt6-devel
+%define pkgname %rname%somajor
 %endif
+Name: %pkgname
+Version: %major.%minor.%bugfix
+Release: alt2
+
+%if_disabled compat
+%define poppler_devel lib%rname-devel
+%define poppler_cpp_devel lib%rname-cpp-devel
+%define poppler_glib_devel lib%rname-glib-devel
+%define poppler_qt_devel lib%rname-qt-devel
+%define poppler_qt4_devel lib%rname-qt4-devel
+%define poppler_qt5_devel lib%rname-qt5-devel
+%define poppler_qt6_devel lib%rname-qt6-devel
+%else
+%define poppler_devel lib%rname%somajor-devel
+%define poppler_cpp_devel lib%rname%somajor-cpp-devel
+%define poppler_glib_devel lib%rname%somajor-glib-devel
+%define poppler_qt_devel lib%rname%somajor-qt-devel
+%define poppler_qt4_devel lib%rname%somajor-qt4-devel
+%define poppler_qt5_devel lib%rname%somajor-qt5-devel
+%define poppler_qt6_devel lib%rname%somajor-qt6-devel
+%endif
+%define libpoppler libpoppler%somajor
+%define libpoppler_qt4 lib%rname%somajor_qt4-qt4
+%define libpoppler_qt5 lib%rname%somajor_qt5-qt5
+%define libpoppler_qt6 lib%rname%somajor_qt6-qt6
+%define libpoppler_glib lib%rname%somajor_glib-glib
+%define libpoppler_cpp lib%rname%somajor_cpp-cpp
 %define _cmake__builddir BUILD
 
 Group: Publishing
@@ -113,11 +125,11 @@ base to the world, we hope that over time these applications will
 adopt poppler.  After all, we only need one application to use poppler
 to break even.
 
-%package -n lib%name
+%package -n %libpoppler
 Summary: PDF rendering library
 Group: System/Libraries
 Requires: poppler-data
-%description -n lib%name
+%description -n %libpoppler
 Poppler is a fork of the xpdf PDF viewer developed by Derek Noonburg
 of Glyph and Cog, LLC.  The purpose of forking xpdf is twofold.
 First, we want to provide PDF rendering functionality as a shared
@@ -135,7 +147,7 @@ to break even.
 %package -n %rname
 Group: Publishing
 Summary: PDF rendering library utils
-Requires: lib%name = %version-%release
+Requires: %libpoppler
 Provides: poppler-utils = %version-%release
 Provides: xpdf-utils = 3.02-alt6
 Obsoletes: xpdf-utils <= 3.02-alt5
@@ -156,24 +168,24 @@ base to the world, we hope that over time these applications will
 adopt poppler.  After all, we only need one application to use poppler
 to break even.
 
-%package -n lib%rname%somajor_qt5-qt5
+%package -n %libpoppler_qt5
 Summary: Qt5 frontend library for %rname
 Group: System/Libraries
-Requires: lib%name = %version-%release
-%description -n lib%rname%somajor_qt5-qt5
+Requires: %libpoppler
+%description -n %libpoppler_qt5
 Qt5 frontend library for %rname
 
-%package -n lib%rname%somajor_qt6-qt6
+%package -n %libpoppler_qt6
 Summary: Qt6 frontend library for %rname
 Group: System/Libraries
-Requires: lib%name = %version-%release
-%description -n lib%rname%somajor_qt6-qt6
+Requires: %libpoppler
+%description -n %libpoppler_qt6
 Qt6 frontend library for %rname
 
-%package -n lib%rname%somajor_qt4-qt4
+%package -n %libpoppler_qt4
 Summary: Qt4 frontend library for %rname
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: %libpoppler
 %popIF_ver_gteq "%major.%minor" "0.10"
 Provides: libpoppler08-qt4 = %version-%release
 Obsoletes: libpoppler08-qt4 < %version-%release
@@ -182,110 +194,109 @@ Provides: libpoppler4-qt4 = %version-%release
 Obsoletes: libpoppler4-qt4 < %version-%release
 %endif
 %endif
-%description -n lib%rname%somajor_qt4-qt4
+%description -n %libpoppler_qt4
 Qt4 frontend library for %rname
 
-%package -n lib%rname%somajor_glib-glib
+%package -n %libpoppler_glib
 Summary: Glib frontend library for %rname
 Group: System/Libraries
-Requires: lib%name = %version-%release
-%description -n lib%rname%somajor_glib-glib
+Requires: %libpoppler
+%description -n %libpoppler_glib
 Glib frontend library for %rname
 
-%package -n lib%rname%somajor_cpp-cpp
+%package -n libpoppler_cpp
 Summary: Pure C++ wrapper for poppler
 Group: System/Libraries
-Requires: lib%name = %version-%release
-%description -n lib%rname%somajor_cpp-cpp
+Requires: %libpoppler
+%description -n libpoppler_cpp
 Pure C++ wrapper for poppler
 
-
-%package -n %poppler_devel_name
+%package -n %poppler_devel
 Summary: Development files for %rname
 Group: Development/C
-Provides: lib%name-devel = %version-%release
-Obsoletes: lib%name-devel < %version-%release
-Requires: lib%name = %version-%release
+Provides: %libpoppler-devel = %version-%release
+Obsoletes: %libpoppler-devel < %version-%release
+Requires: %libpoppler
 %if_enabled compat
 Conflicts: lib%rname-devel
 %endif
-%description -n %poppler_devel_name
+%description -n %poppler_devel
 Libraries, include files, etc you can use to develop poppler applications
 
-%package -n %poppler_cpp_devel_name
+%package -n %poppler_cpp_devel
 Summary: Development files for C++ wrapper
 Group: Development/C++
-Requires: lib%rname%somajor_cpp-cpp = %version-%release
+Requires: libpoppler_cpp
 %if_enabled xpdfheaders
-Requires: %poppler_devel_name = %version-%release
+Requires: %poppler_devel
 %endif
 %if_enabled compat
 Conflicts: lib%rname-cpp-devel
 %endif
-%description -n %poppler_cpp_devel_name
+%description -n %poppler_cpp_devel
 Libraries, include files, etc you can use to develop
 poppler applications with pure C++
 
-%package -n %poppler_glib_devel_name
+%package -n %poppler_glib_devel
 Summary: Development files for %rname-glib
 Group: Development/GNOME and GTK+
-Requires: lib%rname%somajor_glib-glib = %version-%release
+Requires: %libpoppler_glib
 %if_enabled xpdfheaders
-Requires: %poppler_devel_name = %version-%release
+Requires: %poppler_devel
 %endif
 %if_enabled compat
 Conflicts: lib%rname-glib-devel
 %endif
-%description -n %poppler_glib_devel_name
+%description -n %poppler_glib_devel
 Libraries, include files, etc you can use to develop
 poppler applications with Glib/Gtk+
 
-%package -n %poppler_qt6_devel_name
+%package -n %poppler_qt6_devel
 Summary: Development files for %rname-qt6
 Group: Development/KDE and QT
-Requires: lib%rname%somajor_qt6-qt6 = %version-%release
+Requires: %libpoppler_qt6
 %if_enabled xpdfheaders
-Requires: %poppler_devel_name = %version-%release
+Requires: %poppler_devel
 %endif
 %if_enabled compat
 Conflicts: lib%rname-qt6-devel
 %endif
-%description -n %poppler_qt6_devel_name
+%description -n %poppler_qt6_devel
 Libraries, include files, etc you can use to develop
 poppler applications with Qt6
 
-%package -n %poppler_qt5_devel_name
+%package -n %poppler_qt5_devel
 Summary: Development files for %rname-qt5
 Group: Development/KDE and QT
-Requires: lib%rname%somajor_qt5-qt5 = %version-%release
+Requires: %libpoppler_qt5
 %if_enabled xpdfheaders
-Requires: %poppler_devel_name = %version-%release
+Requires: %poppler_devel
 %endif
 %if_enabled compat
 Conflicts: lib%rname-qt5-devel
 %endif
-%description -n %poppler_qt5_devel_name
+%description -n %poppler_qt5_devel
 Libraries, include files, etc you can use to develop
 poppler applications with Qt5
 
-%package -n %poppler_qt4_devel_name
+%package -n %poppler_qt4_devel
 Summary: Development files for %rname-qt4
 Group: Development/KDE and QT
-Requires: lib%rname%somajor_qt4-qt4 = %version-%release
+Requires: %libpoppler_qt4
 %if_enabled xpdfheaders
-Requires: %poppler_devel_name = %version-%release
+Requires: %poppler_devel
 %endif
 %if_enabled compat
 Conflicts: lib%rname-qt4-devel
 %endif
-%description -n %poppler_qt4_devel_name
+%description -n %poppler_qt4_devel
 Libraries, include files, etc you can use to develop
 poppler applications with Qt4
 
 %package -n lib%rname-gir
 Summary: GObject introspection data for the Poppler library
 Group: System/Libraries
-Requires: lib%rname%somajor_glib-glib = %version-%release
+Requires: %libpoppler_glib
 %description -n lib%rname-gir
 GObject introspection data for the Poppler library
 
@@ -293,23 +304,23 @@ GObject introspection data for the Poppler library
 Summary: GObject introspection devel data for the Poppler library
 Group: System/Libraries
 BuildArch: noarch
-Requires: lib%rname-gir = %version-%release
-Requires: %poppler_glib_devel_name = %version-%release
+Requires: lib%rname-gir
+Requires: %poppler_glib_devel
 %description -n lib%rname-gir-devel
 GObject introspection devel data for the Poppler library
 
-%package -n %{poppler_devel_name}-static
+%package -n %poppler_devel-static
 Summary: Static libraries for lib%rname
 Group: Development/Other
-Provides: lib%name-devel-static = %version-%release
-Obsoletes: lib%name-devel-static < %version-%release
-Requires: %poppler_devel_name = %version-%release
-%description -n %{poppler_devel_name}-static
+Provides: %libpoppler-devel-static = %version-%release
+Obsoletes: %libpoppler-devel-static < %version-%release
+Requires: %poppler_devel
+%description -n %poppler_devel-static
 This package contains development libraries required for packaging
 statically linked libpoppler-based software
 
 %prep
-%setup -q -n %rname-%version
+%setup -n %rname-%version
 #%patch1 -p1
 %patch10 -p1
 #%patch11 -p1
@@ -355,7 +366,7 @@ make install DESTDIR=%buildroot -C BUILD
 %_man1dir/pdf*
 %endif
 
-%files -n lib%name
+%files -n %libpoppler
 %doc AUTHORS ChangeLog NEWS README*
 %_libdir/libpoppler.so.%somajor
 %_libdir/libpoppler.so.%somajor.*
@@ -370,11 +381,11 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %if_enabled glib
-%files -n lib%rname%somajor_glib-glib
+%files -n %libpoppler_glib
 %_libdir/libpoppler-glib.so.%somajor_glib
 %_libdir/libpoppler-glib.so.%somajor_glib.*
 %if_enabled devel
-%files -n %poppler_glib_devel_name
+%files -n %poppler_glib_devel
 %_includedir/poppler/glib/
 %_libdir/libpoppler-glib.so
 #%_pkgconfigdir/poppler-cairo.pc
@@ -383,11 +394,11 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %if_enabled qt4
-%files -n lib%rname%somajor_qt4-qt4
+%files -n %libpoppler_qt4
 %_libdir/libpoppler-qt4.so.%somajor_qt4
 %_libdir/libpoppler-qt4.so.%somajor_qt4.*
 %if_enabled devel
-%files -n %poppler_qt4_devel_name
+%files -n %poppler_qt4_devel
 %_includedir/poppler/qt4/
 %_libdir/libpoppler-qt4.so
 %_pkgconfigdir/poppler-qt4.pc
@@ -395,11 +406,11 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %if_enabled qt5
-%files -n lib%rname%somajor_qt5-qt5
+%files -n %libpoppler_qt5
 %_libdir/libpoppler-qt5.so.%somajor_qt5
 %_libdir/libpoppler-qt5.so.%somajor_qt5.*
 %if_enabled devel
-%files -n %poppler_qt5_devel_name
+%files -n %poppler_qt5_devel
 %_includedir/poppler/qt5/
 %_libdir/libpoppler-qt5.so
 %_pkgconfigdir/poppler-qt5.pc
@@ -407,11 +418,11 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %if_enabled qt6
-%files -n lib%rname%somajor_qt6-qt6
+%files -n %libpoppler_qt6
 %_libdir/libpoppler-qt6.so.%somajor_qt6
 %_libdir/libpoppler-qt6.so.%somajor_qt6.*
 %if_enabled devel
-%files -n %poppler_qt6_devel_name
+%files -n %poppler_qt6_devel
 %_includedir/poppler/qt6/
 %_libdir/libpoppler-qt6.so
 %_pkgconfigdir/poppler-qt6.pc
@@ -419,11 +430,11 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %if_enabled cpp
-%files -n lib%rname%somajor_cpp-cpp
+%files -n libpoppler_cpp
 %_libdir/libpoppler-cpp.so.%somajor_cpp
 %_libdir/libpoppler-cpp.so.%somajor_cpp.*
 %if_enabled devel
-%files -n %poppler_cpp_devel_name
+%files -n %poppler_cpp_devel
 %_includedir/poppler/cpp/
 %_libdir/libpoppler-cpp.so
 %_pkgconfigdir/poppler-cpp.pc
@@ -432,7 +443,7 @@ make install DESTDIR=%buildroot -C BUILD
 
 %if_enabled devel
 %if_enabled xpdfheaders
-%files -n %poppler_devel_name
+%files -n %poppler_devel
 %dir %_includedir/poppler
 %_includedir/poppler/*.h
 %_includedir/poppler/fofi
@@ -443,13 +454,16 @@ make install DESTDIR=%buildroot -C BUILD
 #%_pkgconfigdir/poppler-splash.pc
 
 %if_enabled static
-%files -n %{poppler_devel_name}-static
+%files -n %poppler_devel-static
 %_libdir/*.a
 %endif
 %endif
 %endif
 
 %changelog
+* Tue Nov 30 2021 Sergey V Turchin <zerg@altlinux.org> 21.11.0-alt2
+- rename source package name
+
 * Tue Nov 30 2021 Sergey V Turchin <zerg@altlinux.org> 21.11.0-alt1
 - new version
 
