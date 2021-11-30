@@ -1,6 +1,6 @@
 Name:       rosa-crypto-tool
 Version:    1.0.0
-Release:    alt1
+Release:    alt2
 
 Summary:    Program for working with electronic digital signatures
 Group:      Text tools
@@ -12,8 +12,7 @@ Source0:    %name-%version.tar
 Patch:      %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-python3
-
-Requires: python3-module-pyudev-pyqt5 >= 0.21.0
+BuildRequires: gettext-tools
 
 %description
 Program for working with electronic digital signatures.
@@ -41,6 +40,9 @@ sed -i 's|#!.* python$|#!%__python3|' \
 
 
 %changelog
+* Tue Nov 30 2021 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt2
+- Finish adapt for Python3 and PyQt5.
+
 * Mon Nov 29 2021 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1
 - New version.
 
