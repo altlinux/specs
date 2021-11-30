@@ -1,6 +1,6 @@
 Name:       rosa-crypto-tool
-Version:    0.1.5
-Release:    alt2
+Version:    1.0.0
+Release:    alt1
 
 Summary:    Program for working with electronic digital signatures
 Group:      Text tools
@@ -12,10 +12,8 @@ Source0:    %name-%version.tar
 Patch:      %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-tools-2to3
 
 Requires: python3-module-pyudev-pyqt5 >= 0.21.0
-
 
 %description
 Program for working with electronic digital signatures.
@@ -23,18 +21,9 @@ Program for working with electronic digital signatures.
 %prep
 %setup -q
 %patch -p1
-
-
-## py2 -> py3
-sed -i 's|, unicode=True||' src/rosa_crypto_tool.py
-
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+# Set all python shebang to python3 executable
+sed -i 's|#!.* python$|#!%__python3|' \
     $(find ./ \( -name '*.py' -o -name '%name' \))
-sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
-    $(find ./ -name '*.py')
-##
 
 %build
 %python3_build
@@ -52,6 +41,9 @@ sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
 
 
 %changelog
+* Mon Nov 29 2021 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1
+- New version.
+
 * Mon Nov 11 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.1.5-alt2
 - python2 -> python3
 
