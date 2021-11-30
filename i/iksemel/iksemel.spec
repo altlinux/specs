@@ -1,13 +1,11 @@
 Name: iksemel
 Version: 1.4
-Release: alt5
+Release: alt6
 
 Summary: iksemel Jabber Library
 Group: Development/C
-License: LGPL
+License: LGPL-2.1
 Url: http://code.google.com/p/iksemel/
-
-Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Source: %name-%version.tar
 Patch0: iksemel-1.3-gnutls-2.8.patch
@@ -39,7 +37,7 @@ Requires: lib%name = %version-%release
 
 %build
 %autoreconf
-%configure --with-gnutls
+%configure --disable-static --with-gnutls
 %make
 
 %install
@@ -58,11 +56,11 @@ rmdir %buildroot%_infodir
 %_libdir/lib%name.so
 %_includedir/%name.h
 %_pkgconfigdir/%name.pc
-# %_infodir/%name.bz2
-
-%exclude %_libdir/libiksemel.a
 
 %changelog
+* Tue Nov 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4-alt6
+- fix packaging with lto on
+
 * Mon Jan 18 2016 Denis Smirnov <mithraen@altlinux.ru> 1.4-alt5
 - Rebuild with new gnutls
 - https://github.com/meduketto/iksemel/issues/45
