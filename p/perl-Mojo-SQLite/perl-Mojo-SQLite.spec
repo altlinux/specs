@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:           perl-Mojo-SQLite
-Version:        3.007
+Version:        3.008
 Release:        alt1
 Summary:        Tiny Mojolicious wrapper for SQLite
 License:        Artistic 2.0
@@ -62,6 +62,9 @@ and manage your database schema with migrations.
 %perl_vendorlib/Mojo*
 
 %changelog
+* Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 3.008-alt1
+- automated CPAN update
+
 * Mon Aug 02 2021 Igor Vlasenko <viy@altlinux.org> 3.007-alt1
 - automated CPAN update
 
