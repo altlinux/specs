@@ -2,7 +2,7 @@
 %define git_date %nil
 
 Name: xfce4-whiskermenu-plugin
-Version: 2.6.2
+Version: 2.7.0
 Release: alt1%git_date
 
 Summary: Alternate Xfce menu
@@ -51,6 +51,9 @@ keeps a list of the last ten applications that you've launched from it.
 %_man1dir/*.1.*
 
 %changelog
+* Tue Nov 30 2021 Mikhail Efremov <sem@altlinux.org> 2.7.0-alt1
+- Updated to 2.7.0.
+
 * Sat Nov 13 2021 Mikhail Efremov <sem@altlinux.org> 2.6.2-alt1
 - Updated to 2.6.2.
 
