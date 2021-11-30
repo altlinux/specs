@@ -1,6 +1,6 @@
 Name: libtiff
 Version: 4.3.0
-Release: alt1
+Release: alt2
 
 Summary: Library of functions for manipulating TIFF format image files
 License: BSD-style
@@ -14,6 +14,7 @@ Source: %name-%version-%release.tar
 %def_enable cxx
 
 BuildRequires: gcc-c++ libSM-devel libXi-devel libXmu-devel libfreeglut-devel libjbig-devel libjpeg-devel liblzma-devel libwebp-devel libzstd-devel zlib-devel
+BuildRequires: libdeflate-devel
 %description
 This package contains a library of functions for manipulating
 TIFF (Tagged Image File Format) image format files.  TIFF is a widely
@@ -174,6 +175,9 @@ xz -9 %buildroot%docdir/ChangeLog
 %endif
 
 %changelog
+* Mon Nov 29 2021 Vitaly Chikunov <vt@altlinux.org> 4.3.0-alt2
+- Rebuilt with libdeflate support.
+
 * Wed Sep 15 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.3.0-alt1
 - Updated to v4.3.0.
 
