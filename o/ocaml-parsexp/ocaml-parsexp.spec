@@ -1,12 +1,11 @@
-%set_verify_elf_method textrel=relaxed
 %define libname parsexp
 Name: ocaml-%libname
 Version: 0.14.1
-Release: alt1
+Release: alt2
 Summary: S-expression parsing library for ocaml
 Group: Development/ML
 License: Apache-2.0
-Url: https://github.com/ocaml-ppx/ppx_derivers
+Url: https://github.com/janestreet/parsexp
 Source0: %name-%version.tar
 BuildRequires: dune >= 1.8
 BuildRequires: ocaml
@@ -64,6 +63,9 @@ rm -rf %buildroot/usr/share/doc
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Nov 30 2021 Anton Farygin <rider@altlinux.ru> 0.14.1-alt2
+- fixed homepage URL
+
 * Wed Aug 18 2021 Anton Farygin <rider@altlinux.ru> 0.14.1-alt1
 - 0.14.1
 
