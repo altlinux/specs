@@ -5,14 +5,13 @@
 
 Name: rabbitmq-server
 Version: 3.9.10
-Release: alt1
+Release: alt2
 Summary: The RabbitMQ server
 License: MPL-1.1
 BuildArch: noarch
 Group: System/Servers
 Source: %name-%version.tar
 Source1: rabbitmq-server.init
-Source2: rabbitmq-script-wrapper
 Source3: rabbitmq-server.logrotate
 Source4: rabbitmq-env.conf
 Source6: rabbitmq-server.service
@@ -22,6 +21,7 @@ Source8: rabbitmq-server-cuttlefish
 Patch3: rabbitmq-server-0003-Allow-guest-login-from-non-loopback-connections.patch
 Patch101: rabbitmq-common-0001-Use-proto_dist-from-command-line.patch
 Patch102: rabbitmq-common-0002-force-python3.patch
+Patch201: rabbitmq-script-wrapper-use-alt-specific-path.patch
 Patch202: rabbitmq-server-release-0002-Revert-Use-template-in-rabbitmq-script-wrapper-for-R.patch
 Patch301: rabbitmq-amqp1.0-common-0001-force-python3.patch
 
@@ -56,6 +56,7 @@ pushd deps/rabbit_common
 %patch102 -p1
 popd
 
+%patch201 -p2
 %patch202 -p1
 
 pushd deps/amqp10_common
@@ -63,8 +64,6 @@ pushd deps/amqp10_common
 popd
 
 %build
-sed -i 's|@libexecdir@|%_libexecdir|g' %SOURCE2
-sed -i 's|@localstatedir@|%_localstatedir|g' %SOURCE2
 
 export LANG=en_US.UTF-8
 export VERSION=%version
@@ -86,9 +85,10 @@ mkdir -p %buildroot%_logdir/%oname
 #Sysvinit support
 install -p -D -m 0755 %SOURCE1 %buildroot%_initrddir/%oname
 
-install -p -D -m 0755 %SOURCE2 %buildroot%_sbindir/rabbitmqctl
-install -p -D -m 0755 %SOURCE2 %buildroot%_sbindir/%{oname}-server
-install -p -D -m 0755 %SOURCE2 %buildroot%_sbindir/%{oname}-plugins
+install -p -D -m 0755 scripts/rabbitmq-script-wrapper %buildroot%_sbindir/rabbitmqctl
+install -p -D -m 0755 scripts/rabbitmq-script-wrapper %buildroot%_sbindir/%{oname}-server
+install -p -D -m 0755 scripts/rabbitmq-script-wrapper %buildroot%_sbindir/%{oname}-plugins
+
 install -p -D -m 0644 %SOURCE3 %buildroot%_logrotatedir/%name
 install -p -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/%oname/%{oname}-env.conf
 install -p -D -m 0644 deps/rabbit/docs/rabbitmq.conf.example %buildroot%_sysconfdir/%oname/rabbitmq.conf
@@ -153,6 +153,10 @@ rm -rf %buildroot/usr/lib/erlang/autocomplete
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Thu Nov 25 2021 Egor Ignatov <egori@altlinux.org> 3.9.10-alt2
+- use upstream rabbitmq-script-wrapper
+- add rabbitmq-script-wrapper-use-alt-specific-path patch
+
 * Mon Nov 22 2021 Egor Ignatov <egori@altlinux.org> 3.9.10-alt1
 - 3.9.10
 
