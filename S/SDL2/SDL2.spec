@@ -6,8 +6,8 @@
 %def_with pulse
 
 Name: SDL2
-Version: 2.0.16
-Release: alt2
+Version: 2.0.18
+Release: alt1
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -120,6 +120,9 @@ This is the static libraries you can use to develop SDL applications.
 %_libdir/lib%{name}*.a
 
 %changelog
+* Tue Nov 30 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.18-alt1
+- Verision 2.0.18
+
 * Mon Nov 08 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.16-alt2
 - Build static libraries (ALT #41301)
 
