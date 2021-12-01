@@ -1,6 +1,6 @@
 Name: borg
 Version: 1.1.17
-Release: alt2
+Release: alt3
 
 Summary: Deduplicating backup program with compression and authenticated encryption
 
@@ -48,6 +48,17 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 
+%check
+export LANG=en_US.UTF-8
+export PYTHONPATH="$(pwd)/build/lib.linux-$(uname -m)-%__python3_version"
+
+# copy missing files
+cp -a src/borg/testsuite/attic.tar.gz $PYTHONPATH/borg/testsuite/
+cp -a src/borg/paperkey.html $PYTHONPATH/borg
+
+TEST_SELECTOR="not test_fuse and not test_readonly_mount and not benchmark"
+py.test-3 -x -vk "$TEST_SELECTOR" $PYTHONPATH/borg/testsuite/*.py
+
 %files
 %doc LICENSE AUTHORS CHANGES.rst README.rst
 %_bindir/borg
@@ -57,6 +68,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
 
 %changelog
+* Wed Dec 01 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.17-alt3
+- enabled tests
+
 * Wed Sep 15 2021 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.1.17-alt2
 - build with bundled xxhash
 
