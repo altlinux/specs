@@ -4,7 +4,7 @@ BuildRequires: libblas-devel libgomp-devel libsvm-devel makeinfo
 %def_with _octave_arch
 %define octpkg nan
 Name: octave-%octpkg
-Version: 3.5.2
+Version: 3.6.1
 Release: alt1
 Summary: The NaN-toolbox
 
@@ -39,13 +39,16 @@ A statistics and machine learning toolbox for data with and w/o missing values
 %octave_install
 
 %files
-%doc COPYING DESCRIPTION NEWS doc
+%doc COPYING NEWS DESCRIPTION doc
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 3.6.1-alt1
+- regenerated from template by package builder
+
 * Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 3.5.2-alt1
 - regenerated from template by package builder
 
