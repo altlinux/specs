@@ -1,7 +1,7 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.72
-Release:	alt2
+Version:	3.73
+Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
 Url:		http://www.mozilla.org/projects/security/pki/nss
@@ -262,6 +262,11 @@ popd
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_Releases
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Wed Dec 01 2021 Alexey Gladkov <legion@altlinux.ru> 3.73-alt1
+- New version (3.73).
+- Security fixes:
+  + CVE-2021-43527: Heap overflow in NSS when verifying DSA/RSA-PSS DER-encoded signatures
+
 * Thu Nov 11 2021 Alexey Gladkov <legion@altlinux.ru> 3.72-alt2
 - nss-utils: Install utilities used by fedora and opensuse (ALT#41317).
 
