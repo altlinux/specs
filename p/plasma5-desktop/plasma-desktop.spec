@@ -2,8 +2,8 @@
 
 
 Name: plasma5-desktop
-Version: 5.23.3
-Release: alt5
+Version: 5.23.4
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -216,7 +216,7 @@ done
 %_K5data/plasma/layout-templates/*
 %_K5data/plasma/shells/*/
 %_K5data/plasma/services/*
-#%_K5data/plasma/desktoptheme/default/icons/*
+%_K5data/plasma/desktoptheme/default/icons/*
 %_K5data/kglobalaccel/*.desktop
 %exclude %_K5data/kglobalaccel/*emojier*.desktop
 %_K5data/knsrcfiles/*.knsrc
@@ -237,6 +237,12 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Wed Dec 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.4-alt2
+- fix package icons
+
+* Wed Dec 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.4-alt1
+- new version
+
 * Fri Nov 19 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.3-alt5
 - add tablet mode button to default panel
 

@@ -1,8 +1,8 @@
 %define rname plasma-systemmonitor
 
 Name: plasma5-systemmonitor
-Version: 5.23.3
-Release: alt2
+Version: 5.23.4
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -94,6 +94,9 @@ Requires: %name-common
 #%_K5lib/libplasma-systemmonitor.so.*
 
 %changelog
+* Wed Dec 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.4-alt1
+- new version
+
 * Tue Nov 30 2021 Oleg Solovyov <mcpain@altlinux.org> 5.23.3-alt2
 - Start userid from 500 (Closes: #41469)
 
