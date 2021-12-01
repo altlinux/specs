@@ -1,4 +1,4 @@
-%define ver_major 5.0
+%define ver_major 5.2
 %define api_ver 3.0
 
 Name: cinnamon-menus
@@ -103,6 +103,9 @@ GObject introspection devel data for the Cinnamon Desktop Menu Library
 
 
 %changelog
+* Mon Nov 29 2021 Vladimir Didenko <cow@altlinux.org> 5.2.0-alt1
+- 5.2.0
+
 * Fri May 28 2021 Vladimir Didenko <cow@altlinux.org> 5.0.0-alt1
 - 5.0.0
 

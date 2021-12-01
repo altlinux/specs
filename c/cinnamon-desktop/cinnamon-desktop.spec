@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 5.0
+%define ver_major 5.2
 %define api_ver 3.0
 %def_disable static
 %def_enable gtk_doc
@@ -154,6 +154,9 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Mon Nov 29 2021 Vladimir Didenko <cow@altlinux.org> 5.2.0-alt1
+- 5.2.0
+
 * Fri May 28 2021 Vladimir Didenko <cow@altlinux.org> 5.0.0-alt1
 - 5.0.0
 

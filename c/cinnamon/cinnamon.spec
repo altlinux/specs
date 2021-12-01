@@ -1,8 +1,8 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 5.0.7
-Release: alt1
+Version: 5.2.1
+Release: alt2
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -118,7 +118,7 @@ Development docs package for Cinnamon.
 rm -rf debian
 
 %build
-%meson
+%meson --libexecdir=%{_libexecdir}/cinnamon
 %meson_build
 
 %install
@@ -162,8 +162,9 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %exclude %_bindir/%{name}-launcher
 %_bindir/*
 %_libdir/cinnamon/
-%_libexecdir/cinnamon-hotplug-sniffer
-%_libexecdir/cinnamon-perf-helper
+%_libexecdir/cinnamon/cinnamon-hotplug-sniffer
+%_libexecdir/cinnamon/cinnamon-perf-helper
+%_libexecdir/cinnamon/cinnamon-calendar-server.py
 
 %files data
 %exclude %_xdgmenusdir/cinnamon-applications-merged
@@ -174,6 +175,7 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %_datadir/dbus-1/services/org.Cinnamon.HotplugSniffer.service
 %_datadir/dbus-1/services/org.Cinnamon.Melange.service
 %_datadir/dbus-1/services/org.Cinnamon.Slideshow.service
+%_datadir/dbus-1/services/org.cinnamon.CalendarServer.service
 %_datadir/desktop-directories/*.directory
 %_datadir/glib-2.0/schemas/*.xml
 %_datadir/polkit-1/actions/org.cinnamon.settings-users.policy
@@ -188,6 +190,12 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Wed Dec 1 2021 Vladimir Didenko <cow@altlinux.org> 5.2.1-alt2
+- Fix path to the cinnamon-calendar-server script
+
+* Mon Nov 29 2021 Vladimir Didenko <cow@altlinux.org> 5.2.1-alt1
+- 5.2.1-1-g8fc2df08b
+
 * Tue Nov 9 2021 Vladimir Didenko <cow@altlinux.org> 5.0.7-alt1
 - 5.0.7
 

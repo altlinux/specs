@@ -1,4 +1,4 @@
-%define ver_major 5.0
+%define ver_major 5.2
 %define _libexecdirname libexec
 %define _libexecdir %_prefix/%_libexecdirname
 %define _name cinnamon
@@ -6,8 +6,8 @@
 %def_disable wmsession
 
 Name: %{_name}-session
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 License: GPLv2+
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
@@ -120,6 +120,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon Nov 29 2021 Vladimir Didenko <cow@altlinux.org> 5.2.0-alt1
+- 5.2.0
+
 * Mon Oct 18 2021 Vladimir Didenko <cow@altlinux.org> 5.0.1-alt2
 - Add flatpak directories to XDG_DATA_DIRS (closes: #41135)
 

@@ -1,11 +1,11 @@
-%define ver_major 5.0
+%define ver_major 5.2
 %define _name cjs
 %define api_ver 1.0
 
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Javascript Bindings for Cinnamon
@@ -88,6 +88,9 @@ xvfb-run %meson_test
 %doc examples/*
 
 %changelog
+* Mon Nov 29 2021 Vladimir Didenko <cow@altlinux.org> 5.2.0-alt1
+- 5.2.0-1-ga4f6cfc
+
 * Wed Oct 27 2021 Vladimir Didenko <cow@altlinux.org> 5.0.1-alt1
 - 5.0.1
 

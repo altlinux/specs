@@ -1,5 +1,5 @@
 %define api_ver 3.0
-%define ver_major 5.0
+%define ver_major 5.2
 
 %def_enable exempi
 %def_enable tracker
@@ -7,7 +7,7 @@
 %def_enable selinux
 
 Name: nemo
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: default file manager for Cinnamon
@@ -154,8 +154,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %_iconsdir/hicolor/*/*/*
 %_datadir/dbus-1/services/nemo.FileManager1.service
 %_datadir/dbus-1/services/nemo.service
-%_datadir/gtksourceview-2.0/language-specs/nemo_action.lang
-%_datadir/gtksourceview-3.0/language-specs/nemo_action.lang
+%_datadir/gtksourceview-2.0/language-specs/*.lang
+%_datadir/gtksourceview-3.0/language-specs/*.lang
+%_datadir/gtksourceview-4/language-specs/*.lang
 %_datadir/polkit-1/actions/org.nemo.root.policy
 # gsettings schemas
 %config %_datadir/glib-2.0/schemas/org.nemo.gschema.xml
@@ -185,6 +186,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Mon Nov 29 2021 Vladimir Didenko <cow@altlinux.org> 5.2.0-alt1
+- 5.2.0
+
 * Tue Nov 9 2021 Vladimir Didenko <cow@altlinux.org> 5.0.5-alt1
 - 5.0.5
 
