@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/octave /usr/bin/octave-config gcc-fortran makeinfo
 %def_with _octave_arch
 %define octpkg optiminterp
 Name: octave-%octpkg
-Version: 0.3.6
+Version: 0.3.7
 Release: alt1
 Summary: optiminterp
 
@@ -22,8 +22,8 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 BuildArch: noarch
 %endif
 Provides: octave(optiminterp) = %version
-# Depends: octave (>= 2.9.9)
-Requires: octave >= 2.9.9
+# Depends: octave (>= 4.0.0)
+Requires: octave >= 4.0.0
 
 
 %description
@@ -39,13 +39,16 @@ An optimal interpolation toolbox for octave. This package provides functions to 
 %octave_install
 
 %files
-%doc DESCRIPTION COPYING NEWS
+%doc NEWS COPYING DESCRIPTION
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 0.3.7-alt1
+- regenerated from template by package builder
+
 * Wed Feb 19 2020 Andrey Cherepanov <cas@altlinux.org> 0.3.6-alt1
 - New version.
 
