@@ -1,6 +1,6 @@
 Name: pdf2djvu
-Version: 0.9.18
-Release: alt1.1
+Version: 0.9.18.2
+Release: alt1
 
 Summary: PDF to DjVu converter
 License: GPL-2.0
@@ -12,6 +12,8 @@ Requires: djvu-utils
 # Automatically added by buildreq on Fri Nov 19 2010
 BuildRequires: djvu-utils fontconfig-devel gcc-c++ libGraphicsMagick-c++-devel libdjvu-devel
 BuildRequires: libgomp-devel libpoppler-devel libxslt-devel pstreams libexiv2-devel libuuid-devel
+# for manpage
+BuildRequires: xsltproc docbook-dtds docbook-style-xsl
 
 %description
 pdf2djvu creates DjVu files from PDF files. It's able to extract:
@@ -25,20 +27,27 @@ pdf2djvu creates DjVu files from PDF files. It's able to extract:
 %setup
 
 %build
+private/autogen
 %configure
 %make_build
+pushd doc
+make
+popd
 
 %install
 %makeinstall_std
 %find_lang %name
 
 %files -f %name.lang
-%doc doc/COPYING doc/changelog
+%doc COPYING doc/changelog doc/credits
 %_bindir/*
-%_mandir/*/man1/*
 %_man1dir/*
 
 %changelog
+* Wed Dec 01 2021 L.A. Kostis <lakostis@altlinux.ru> 0.9.18.2-alt1
+- 0.9.18.2.
+- Update BR manpage.
+
 * Sun Jun 13 2021 L.A. Kostis <lakostis@altlinux.ru> 0.9.18-alt1.1
 - Update BR: add libuuid-devel.
 
