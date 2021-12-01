@@ -4,7 +4,7 @@ BuildRequires: makeinfo
 %define octpkg ga
 Epoch: 1
 Name: octave-%octpkg
-Version: 0.10.1
+Version: 0.10.2
 Release: alt1
 Summary: Genetic Algorithm
 
@@ -39,13 +39,16 @@ Genetic optimization code
 %octave_install
 
 %files
-%doc DESCRIPTION NEWS COPYING doc
+%doc DESCRIPTION COPYING NEWS doc
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 1:0.10.2-alt1
+- regenerated from template by package builder
+
 * Thu Jun 13 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.10.1-alt1
 - regenerated from template by package builder
 
