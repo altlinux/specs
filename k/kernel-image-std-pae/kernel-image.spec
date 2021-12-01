@@ -2,7 +2,7 @@ Name: kernel-image-std-pae
 Release: alt1
 epoch:2
 %define kernel_base_version	5.10
-%define kernel_sublevel .82
+%define kernel_sublevel .83
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -702,11 +702,25 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Dec 01 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.83-alt1
+- v5.10.83  (Fixes: CVE-2021-4001)
+
+* Wed Dec 01 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.82-alt2
+- merged changes from jqt4@ 2:5.10.81-alt2
+
 * Fri Nov 26 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.82-alt1
 - v5.10.82  (Fixes: CVE-2020-27820, CVE-2021-43267)
 
 * Fri Nov 26 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.81-alt2
 - Add support for debian-specific kernel.unprivileged_userns_clone parameter
+
+* Thu Nov 25 2021 Dmitry Terekhin <jqt4@altlinux.org> 2:5.10.81-alt2
+- Update baikal_minimal_defconfig
+- Update BE-M1000 clock driver
+- Update BE-M1000 dwmac driver
+- Update BE-M1000 video unit driver
+- Add BE-M1000 serio PS/2 emulator driver
+- Disable pcie-baikal driver build
 
 * Mon Nov 22 2021 Kernel Bot <kernelbot@altlinux.org> 2:5.10.81-alt1
 - v5.10.81
