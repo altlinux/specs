@@ -1,7 +1,7 @@
 
 Name: virt-viewer
-Version: 10.0
-Release: alt2
+Version: 11.0
+Release: alt1
 
 Summary: Virtual Machine Viewer
 Group: System/Configuration/Other
@@ -9,10 +9,6 @@ License: GPL-2.0+
 Url: https://gitlab.com/virt-viewer/virt-viewer
 # Vcs https://gitlab.com/virt-viewer/virt-viewer
 Source: %name-%version.tar
-Patch0001: 0001-src-ensure-auth-entry-fields-are-cleared.patch
-Patch0002: 0002-src-correctly-set-display-state-when-cancelling-quit-request.patch
-Patch0003: 0003-src-update-action-sensitivity-when-creating-window.patch
-Patch0004: 0004-src-relax-minimum-desktop-widthheight.patch
 
 Obsoletes: spice-client < 0.12.5-alt3
 
@@ -30,7 +26,7 @@ BuildRequires: pkgconfig(spice-protocol) >= 0.12.7
 BuildRequires: pkgconfig(vte-2.91) >= 0.46.0
 BuildRequires: /usr/bin/pod2man
 BuildRequires: gettext
-BuildRequires: pkgconfig(govirt-1.0) >= 0.3.3
+BuildRequires: pkgconfig(govirt-1.0) >= 0.3.7
 BuildRequires: pkgconfig(rest-0.7) >= 0.8
 BuildRequires: bash-completion
 
@@ -44,13 +40,9 @@ using SSL/TLS encryption.
 
 %prep
 %setup
-%patch0001 -p1
-%patch0002 -p1
-%patch0003 -p1
-%patch0004 -p1
 
 %build
-%meson -Dbuild-id=%release
+%meson -Dbuild-id=%release -Dos-id=ALT
 %meson_build
 
 %install
@@ -68,6 +60,9 @@ using SSL/TLS encryption.
 %_datadir/bash-completion/completions/virt-viewer
 
 %changelog
+* Thu Dec 02 2021 Alexey Shabalin <shaba@altlinux.org> 11.0-alt1
+- new version 11.0
+
 * Fri Jun 11 2021 Alexey Shabalin <shaba@altlinux.org> 10.0-alt2
 - backport fixes from upstream master branch (ALT#40198)
 
