@@ -1,7 +1,6 @@
-%define module RPM-Specfile-Multispec
 
 Name: debian2spec
-Version: 1.08
+Version: 1.090
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -9,45 +8,37 @@ Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 Summary: converter of debian source directory to RPM specfile format
 Group: Development/Other
 License: GPLv2+ or Artistic-2.0
-Url: http://search.cpan.org/dist/RPM-Specfile-Multispec
+Url: git://git.altlinux.org/people/viy/%name
 
-Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
+Source: %name-%version.tar
 
-# Automatically added by buildreq on Wed Nov 06 2002
-BuildRequires: perl-devel perl-RPM-Specfile perl(Pod/Usage.pm)
+BuildRequires: perl-devel perl-podlators perl-RPM-Specfile-Multispec perl(Pod/Usage.pm)
 
 %description -n debian2spec
 debian2spec utility creates a initial RPM spec file for the source RPM package
 using debian control directory of source Debian package.
 
-%package -n perl-%module
-Summary: RPM::Specfile::Multispec - Perl extension for creating RPM Specfiles
-Group: Development/Perl
-
-%description -n perl-%module
-This is a debian2spec utility used to create initial spec files 
-from the debian control directory using RPM-Specfile-Multispec ---
- module for creation of RPM spec files with multiple subpackages.
-
 %prep
-%setup -q -n %module-%version
+%setup -q
 
 %build
-%perl_vendor_build
+pod2man debian-patches-series2spec-in > debian-patches-series2spec-in.1
 
 %install
-%perl_vendor_install
+mkdir -p %buildroot%_bindir/ %buildroot%_man1dir/
+install -m 755 debian-patches-series2spec-in debian2spec %buildroot%_bindir/
+install -m 644 debian-patches-series2spec-in.1 %buildroot%_man1dir/
 
 %files
-%doc README Changes
+%doc Changes
 %_bindir/*
 %_man1dir/*
 
-%files -n perl-%module
-%perl_vendor_privlib/R*
-#perl_vendor_man3dir/*
-
 %changelog
+* Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 1.090-alt1
+- new version
+- moved RPM-Specfile-Multispec to separate distribution
+
 * Fri Sep 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
 - new version
 
