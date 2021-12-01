@@ -4,7 +4,7 @@ BuildRequires: makeinfo texinfo
 %def_with _octave_arch
 %define octpkg audio
 Name: octave-%octpkg
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 Summary: Audio Toolbox
 
@@ -42,13 +42,16 @@ Audio and MIDI Toolbox for GNU Octave
 %octave_install
 
 %files
-%doc COPYING DESCRIPTION README.md NEWS doc
+%doc DESCRIPTION README.md NEWS COPYING doc
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 2.0.3-alt1
+- regenerated from template by package builder
+
 * Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt1
 - regenerated from template by package builder
 
