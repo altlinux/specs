@@ -1,6 +1,8 @@
+%define _runtimedir /run
+
 Name: lldpd
-Version: 1.0.12
-Release: alt2
+Version: 1.0.13
+Release: alt1
 Summary: Link Layer Discovery Protocol Daemon
 Source: %name-%version.tar
 Group: Networking/Other
@@ -112,13 +114,12 @@ install -m750 -D %SOURCE3 %buildroot%_sysconfdir/chroot.d/%name.all
 install -m750 -D %SOURCE4 %buildroot%_sysconfdir/chroot.d/%name.conf
 install -m644 -D %SOURCE5 %buildroot%_unitdir/%name.service
 install -m644 -D %SOURCE6 %buildroot%_tmpfilesdir/%name.conf
+install -d -m 0755 %buildroot%_sharedstatedir/%name
 
 %pre
-if [ $1 = 1 ]; then
-        %_sbindir/groupadd -r _lldpd >/dev/null 2>&1 ||:
-        %_sbindir/useradd -M -r _lldpd -g _lldpd -s /dev/null -c "LLDP Daemon" \
-        -d / >/dev/null 2>&1 ||:
-fi
+groupadd -r -f _lldpd >/dev/null 2>&1 ||:
+useradd -M -r -g _lldpd -s /dev/null -c "LLDP Daemon" \
+        -s /bin/false -d %_sharedstatedir/%name _lldpd  >/dev/null 2>&1 ||:
 
 %post
 %post_service %name
@@ -139,7 +140,7 @@ fi
 %_datadir/doc/%name-%version/
 %_datadir/bash-completion/completions/*
 %_datadir/zsh/site-functions/*
-
+%dir %attr(0775, root, _lldpd) %_sharedstatedir/%name
 %_man8dir/*
 
 %files devel
@@ -148,6 +149,10 @@ fi
 %_pkgconfigdir/*
 
 %changelog
+* Thu Dec 02 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.13-alt1
+- new version 1.0.13 (Fixes: CVE-2021-43612)
+- migrate /var/run -> /run
+
 * Sun Oct 31 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.12-alt2
 - disable build static lib
 
