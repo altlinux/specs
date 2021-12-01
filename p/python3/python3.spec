@@ -86,8 +86,8 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %endif
 
 Name: python3
-Version: %{pybasever}.7
-Release: alt3
+Version: %{pybasever}.8
+Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
 
@@ -115,7 +115,7 @@ BuildRequires: desktop-file-utils autoconf-archive
 %{?_with_gl:BuildRequires: libGL-devel}
 %{?_with_gdbm:BuildRequires: gdbm-devel}
 %{?_with_valgrind:BuildRequires: valgrind-devel}
-%{?!_without_check:%{?!_disable_check:BuildRequires: /dev/pts}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: /dev/pts /proc}}
 
 # Fix find-requires
 %global __python3 %buildroot%_bindir/python3
@@ -947,12 +947,10 @@ $(pwd)/python -m test.regrtest \
 %doc Misc/README.valgrind Misc/valgrind-python.supp Misc/gdbinit
 %_bindir/python3-config
 %_bindir/python%pybasever-config
-#_bindir/python%%pybasever%%pyabi-config
 %_libdir/libpython3.so
 %_libdir/libpython%pybasever%pyabi.so
 %_libdir/pkgconfig/python3.pc
 %_libdir/pkgconfig/python-%pybasever.pc
-#_libdir/pkgconfig/python-%%pybasever%%pyabi.pc
 %_libdir/pkgconfig/python-%pybasever-embed.pc
 %_libdir/pkgconfig/python3-embed.pc
 
@@ -1016,6 +1014,10 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Wed Dec 01 2021 Grigory Ustinov <grenka@altlinux.org> 3.9.8-alt1
+- Updated to upstream version 3.9.8.
+- Added /proc to BR's (Closes: #41006).
+
 * Fri Oct 01 2021 Grigory Ustinov <grenka@altlinux.org> 3.9.7-alt3
 - Fix previous change to make python link as shared library (Closes: #40939).
 
