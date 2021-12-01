@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.101
+Version: 2.9.102
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -115,6 +115,11 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Tue Nov 30 2021 Ivan Razzhivin <underwit@altlinux.org> 2.9.102-alt1
+- alterator-setup-welcome: add translation
+- alterator-setup-kworkstation: add help
+- alterator-setup-kworkstation: add translation
+
 * Tue Nov 09 2021 Ivan Razzhivin <underwit@altlinux.org> 2.9.101-alt1
 - alterator-multiseat: update translation
 
