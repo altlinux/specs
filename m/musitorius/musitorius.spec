@@ -1,6 +1,9 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%def_enable static
+
 Name: musitorius
 Version: 0.4.0
-Release: alt2
+Release: alt3
 
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 License: %gpl3plus
@@ -50,10 +53,13 @@ This package contains library used for static linking of libmusitorius.
 %make_build
 
 %install
-make DESTDIR=%buildroot install 
-%__install -pD -m755 %SOURCE1 %buildroot%_sysconfdir/rc.d/init.d/%name
-%__install -pD -m644 ./src/libmusitorius/musitoriusclient.h %buildroot%_includedir/musitoriusclient.h
-%__install -pD -m644 ./src/libmusitorius/libmusitorius.a %buildroot%_libdir/lib%name.a
+make DESTDIR=%buildroot install
+install -pD -m755 %SOURCE1 %buildroot%_sysconfdir/rc.d/init.d/%name
+install -pD -m644 ./src/libmusitorius/musitoriusclient.h %buildroot%_includedir/musitoriusclient.h
+
+%if_enabled static
+install -pD -m644 ./src/libmusitorius/libmusitorius.a %buildroot%_libdir/lib%name.a
+%endif
 
 %preun
 %preun_service %name
@@ -62,15 +68,23 @@ make DESTDIR=%buildroot install
 %_bindir/*
 %doc AUTHOR COPYING README ChangeLog NEWS
 #%config(noreplace) %_sysconfdir/%name.conf
+%doc musitorius.conf
 %_sysconfdir/rc.d/init.d/%name
 
+%if_enabled static
 %files -n lib%name-devel
 %_includedir/*
 
 %files -n lib%name-devel-static
 %_libdir/lib%name.a
+%endif
 
 %changelog
+* Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 0.4.0-alt3
+- Fixed build
+- TODO: add systemd unit
+- TODO: shared library?
+
 * Thu May 05 2011 Michael Pozhidaev <msp@altlinux.ru> 0.4.0-alt2
 - Fixed bug with MPlayer file descriptors
 
