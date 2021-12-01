@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen2man gcc-c++ pkgconfig(libsystemd) python-devel
+BuildRequires: /usr/bin/doxygen2man gcc-c++ pkgconfig(libsystemd) python3-devel
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
@@ -11,10 +11,11 @@ Group: System/Libraries
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+BuildRequires: /usr/bin/git
 %bcond_without check
 
 Name:           libqb
-Version:        2.0.3
+Version:        2.0.4
 Release:        alt1_1
 Summary:        Library providing high performance logging, tracing, ipc, and poll
 
@@ -55,6 +56,12 @@ This package contains the shared library.
 
 %prep
 %setup -q # for when patches around
+git init -q
+git config user.name "rpmbuild"
+git config user.email "<rpmbuild>"
+git config gc.auto 0
+git add --force .
+git commit -q --allow-empty -a --author "rpmbuild <rpmbuild>" -m "%{NAME}-%{VERSION} base"
 
 
 %build
@@ -111,6 +118,9 @@ This package contains a program to create nicely-formatted man pages from Doxyge
 
 
 %changelog
+* Tue Nov 30 2021 Igor Vlasenko <viy@altlinux.org> 2.0.4-alt1_1
+- update to new release by fcimport
+
 * Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 2.0.3-alt1_1
 - update to new release by fcimport
 
