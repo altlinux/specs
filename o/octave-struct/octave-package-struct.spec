@@ -5,8 +5,8 @@ BuildRequires: /usr/bin/octave-config makeinfo
 %define octpkg struct
 Epoch: 1
 Name: octave-%octpkg
-Version: 1.0.16
-Release: alt2
+Version: 1.0.17
+Release: alt1
 Summary: Structure Handling.
 
 Group: Sciences/Mathematics
@@ -40,13 +40,16 @@ Additional structure manipulation functions.
 %octave_install
 
 %files
-%doc DESCRIPTION NEWS COPYING
+%doc COPYING DESCRIPTION NEWS
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 1:1.0.17-alt1
+- regenerated from template by package builder
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.0.16-alt2
 - rebuild with octave 5
 
