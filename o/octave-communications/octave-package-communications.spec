@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/octave makeinfo perl(FileHandle.pm) perl(IPC/Open3.pm) perl(Text/Wrap.pm) texinfo
+BuildRequires: /usr/bin/octave makeinfo texinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
 %define octpkg communications
 Epoch: 1
 Name: octave-%octpkg
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 Summary: Communications
 
@@ -40,13 +40,16 @@ Digital Communications, Error Correcting Codes (Channel Code), Source Code funct
 %octave_install
 
 %files
-%doc DESCRIPTION NEWS COPYING doc
+%doc COPYING DESCRIPTION NEWS doc
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 1:1.2.3-alt1
+- regenerated from template by package builder
+
 * Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.2.2-alt1
 - regenerated from template by package builder
 
