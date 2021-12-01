@@ -1,4 +1,3 @@
-BuildRequires: chrpath
 Group: System/Base
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ libncurses-devel
@@ -13,8 +12,9 @@ BuildRequires: gcc-c++ libncurses-devel
 %define _localstatedir %{_var}
 Name:           afpfs-ng
 Version:        0.8.1
-Release:        alt3_35
+Release:        alt3_37
 Summary:        Apple Filing Protocol client
+
 
 # by default build with the fuse module
 # rpmbuild --rebuild afpfs-ng.src.rpm --without fuse
@@ -31,9 +31,12 @@ Patch2:         afpfs-ng-0.8.1-formatsec.patch
 Patch3:         afpfs-ng-0.8.1-longoptions.patch
 
 %{?with_fuse:BuildRequires: libfuse-devel}
-BuildRequires:  gcc
+BuildRequires: gcc
 BuildRequires: libgcrypt-devel libgmp-devel libgmpxx-devel readline-devel
+BuildRequires: libtool
+BuildRequires: autoconf
 Source44: import.info
+
 
 %description
 A command line client to access files exported from Mac OS system via
@@ -61,7 +64,6 @@ Requires:       %{name} = %{version}
 %description devel
 Library for dynamic linking and header files of afpfs-ng.
 
-
 %prep
 %setup -q
 %patch0 -p1
@@ -69,7 +71,8 @@ Library for dynamic linking and header files of afpfs-ng.
 %patch2 -p1
 %patch3 -p1
 
-
+libtoolize
+autoreconf
 
 %build
 # make would rebuild the autoconf infrastructure due to the following:
@@ -92,10 +95,6 @@ cp -p include/* %{buildroot}%{_includedir}/afpfs-ng
 %if ( 0%{?rhel} && 0%{?rhel} <= 7 )
 
 %endif
-# kill rpath
-for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
-	chrpath -d $i ||:
-done
 
 
 %files
@@ -128,6 +127,9 @@ done
 
 
 %changelog
+* Tue Nov 30 2021 Igor Vlasenko <viy@altlinux.org> 0.8.1-alt3_37
+- update to new release by fcimport
+
 * Thu Jul 08 2021 Igor Vlasenko <viy@altlinux.org> 0.8.1-alt3_35
 - update to new release by fcimport
 
