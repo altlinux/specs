@@ -1,15 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _localstatedir  %_var
-%define spname		ldapsp
-%define filtname	ldapfilt
-%define beansname	ldapbeans
-%define jss_version     4.6.0
+
+# JSS built with Java11
+%define jss_version 5.0.0
+
+%define java_version 11
 
 Name: ldapjdk
 Epoch: 1
-Version: 4.22.0
-Release: alt2
+Version: 5.0.0
+Release: alt1
 
 Summary: LDAP SDK
 License: MPL-1.1 or GPLv2+ or LGPLv2+
@@ -25,7 +26,7 @@ BuildRequires: rpm-build-java
 
 BuildRequires: /proc
 BuildRequires: ant
-BuildRequires: java-11-devel
+BuildRequires: java-devel >= %java_version
 BuildRequires: javapackages-local
 BuildRequires: javapackages-tools
 BuildRequires: jss >= %jss_version
@@ -36,6 +37,7 @@ Provides: ldapsdk = 1:%version-%release
 Obsoletes: ldapsdk <= 1:4.18-alt1_2jpp6
 
 Requires: jss >= %jss_version
+Requires: java >= %java_version
 
 %description
 The Mozilla LDAP SDKs enable you to write applications which access,
@@ -59,18 +61,11 @@ Javadoc for %name
 %setup
 %patch -p1
 
-# Remove all bundled jars, we must build against build-system jars
-rm ./java-sdk/ldapjdk/lib/*
-
 ################################################################################
 %build
 ################################################################################
 
-pushd ./java-sdk/ldapjdk/lib
-build-jar-repository -s -p . jss4
-
-ln -s /usr/lib/jvm-exports/java/{jsse,jaas,jndi}.jar ./
-pushd ../../
+cd java-sdk
 %ant -v dist
 
 ################################################################################
@@ -79,34 +74,33 @@ pushd ../../
 
 install -d -m 755 %buildroot%_javadir
 install -m 644 java-sdk/dist/packages/%name.jar %buildroot%_javadir/%name.jar
-install -m 644 java-sdk/dist/packages/%spname.jar %buildroot%_javadir/%spname.jar
-install -m 644 java-sdk/dist/packages/%filtname.jar %buildroot%_javadir/%filtname.jar
-install -m 644 java-sdk/dist/packages/%beansname.jar %buildroot%_javadir/%beansname.jar
-
-install -d -m 755 %buildroot%_javadir-1.3.0
-
-pushd %buildroot%_javadir-1.3.0
-	ln -fs ../java/*%spname.jar jndi-ldap.jar
-popd
+install -m 644 java-sdk/dist/packages/ldapsp.jar %buildroot%_javadir/ldapsp.jar
+install -m 644 java-sdk/dist/packages/ldapfilt.jar %buildroot%_javadir/ldapfilt.jar
+install -m 644 java-sdk/dist/packages/ldapbeans.jar %buildroot%_javadir/ldapbeans.jar
 
 mkdir -p %buildroot%_mavenpomdir
-sed -i 's/@VERSION@/%{version}/g' %name.pom
-install -pm 644 %name.pom %buildroot%_mavenpomdir/JPP-%name.pom
-%add_maven_depmap JPP-%name.pom %name.jar -a "ldapsdk:ldapsdk"
+install -pm 644 java-sdk/ldapjdk/pom.xml %buildroot%_mavenpomdir/JPP-ldapjdk.pom
+install -pm 644 java-sdk/ldapfilter/pom.xml %buildroot%_mavenpomdir/JPP-ldapfilter.pom
+install -pm 644 java-sdk/ldapbeans/pom.xml %buildroot%_mavenpomdir/JPP-ldapbeans.pom
+install -pm 644 java-sdk/ldapsp/pom.xml %buildroot%_mavenpomdir/JPP-ldapsp.pom
 
 install -d -m 755 %buildroot%_javadocdir/%name
 cp -r java-sdk/dist/doc/* %buildroot%_javadocdir/%name
 ln -s ldapjdk.jar %buildroot%_javadir/ldapsdk.jar
 
 ################################################################################
-%files -f .mfiles
+%files
 ################################################################################
 
-%_javadir/%{spname}*.jar
-%_javadir/%{filtname}*.jar
-%_javadir/%{beansname}*.jar
-%_javadir-1.3.0/*.jar
+%_javadir/%name.jar
+%_javadir/ldapsp.jar
+%_javadir/ldapfilt.jar
+%_javadir/ldapbeans.jar
 %_javadir/ldapsdk.jar
+%_mavenpomdir/JPP-ldapjdk.pom
+%_mavenpomdir/JPP-ldapsp.pom
+%_mavenpomdir/JPP-ldapfilter.pom
+%_mavenpomdir/JPP-ldapbeans.pom
 
 ################################################################################
 %files javadoc
@@ -117,6 +111,9 @@ ln -s ldapjdk.jar %buildroot%_javadir/ldapsdk.jar
 
 ################################################################################
 %changelog
+* Thu Nov 25 2021 Stanislav Levin <slev@altlinux.org> 1:5.0.0-alt1
+- 4.22.0 -> 5.0.0.
+
 * Fri May 21 2021 Stanislav Levin <slev@altlinux.org> 1:4.22.0-alt2
 - Built with Java11.
 

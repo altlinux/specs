@@ -1,11 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
-%define jss_version 4.8.0
+# JSS built with Java11
+%define jss_version 5.0.0
 %define tomcat_version 9.0.37
+%define java_version 11
 
 Name: tomcatjss
-Version: 7.6.1
-Release: alt2
+Version: 8.0.0
+Release: alt1
 
 Summary: JSSE module for Apache Tomcat that uses JSS
 License: LGPLv2+
@@ -18,7 +20,7 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
-BuildRequires: java-11-devel
+BuildRequires: java-devel >= %java_version
 BuildRequires: jpackage-generic-compat
 BuildRequires: apache-commons-logging
 BuildRequires: ant
@@ -29,6 +31,7 @@ BuildArch: noarch
 Requires: jss >= %jss_version
 Requires: tomcat >= %tomcat_version
 Requires: apache-commons-logging
+Requires: java >= %java_version
 
 %description
 JSS Connector for Apache Tomcat, installed via the tomcatjss package,
@@ -45,11 +48,7 @@ Services (NSS).
 %install
 # get Tomcat <major>.<minor> version number
 tomcat_version=`/usr/sbin/tomcat version | sed -n 's/Server number: *\([0-9]\+\.[0-9]\+\).*/\1/p'`
-if [ $tomcat_version == "9.0" ]; then
-    app_server=tomcat-8.5
-else
-    app_server=tomcat-$tomcat_version
-fi
+app_server=tomcat-$tomcat_version
 
 ant -v -f build.xml \
     -Dversion=%version \
@@ -65,6 +64,9 @@ ant -v -f build.xml \
 %_javadir/tomcatjss-%version.jar
 
 %changelog
+* Thu Nov 25 2021 Stanislav Levin <slev@altlinux.org> 8.0.0-alt1
+- 7.6.1 -> 8.0.0.
+
 * Fri May 21 2021 Stanislav Levin <slev@altlinux.org> 7.6.1-alt2
 - Built with Java11.
 

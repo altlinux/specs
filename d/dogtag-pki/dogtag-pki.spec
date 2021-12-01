@@ -1,21 +1,36 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_with check
+%def_without javadoc
+
 %define nss_default_db_type sql
+
+%define pki_username pkiuser
+%define pki_groupname pkiuser
+%define pki_homedir %_localstatedir/pki
 
 %define java_home           %_jvmdir/jre
 %define resteasy_lib        %_javadir/resteasy
 %define jaxrs_api_jar       %_javadir/jboss-jaxrs-2.0-api.jar
 
-%define tomcatjss_version   7.6.1
-%define jss_version         4.8.1
-%define ldapjdk_version     4.22.0
+# tomcatjss built with Java11
+%define tomcatjss_version 8.0.0
+# jss built with Java11
+%define jss_version 5.0.0
+# ldapjdk built with Java11
+%define ldapjdk_version 5.0.0
 
-Name: pki-core
-Version: 10.10.6
-Release: alt2
+# https://bugzilla.altlinux.org/40727
+%define java_version 11
 
-Summary: Certificate System - PKI Core Components
+# first dogtag-pki renamed from pki-core
+%define pki_rebranded_version 11.0.0-alt1
+
+Name: dogtag-pki
+Version: 11.0.0
+Release: alt1
+
+Summary: Dogtag PKI Certificate System
 License: %gpl2only
 Group: System/Servers
 # Source-git: https://github.com/dogtagpki/pki
@@ -30,7 +45,7 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-java
 
-BuildRequires: java-11-devel
+BuildRequires: java-devel >= %java_version
 BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: sh4
@@ -38,6 +53,7 @@ BuildRequires: apache2-devel
 BuildRequires: apache-commons-cli
 BuildRequires: apache-commons-httpclient
 BuildRequires: apache-commons-net
+BuildRequires: apache-commons-logging
 
 BuildRequires: libnss-devel
 BuildRequires: zlib-devel
@@ -45,9 +61,7 @@ BuildRequires: selinux-policy-alt
 
 BuildRequires: jackson
 BuildRequires: ldapjdk >= %ldapjdk_version
-BuildRequires: resteasy-atom-provider
-BuildRequires: resteasy-client
-BuildRequires: resteasy-jackson2-provider
+BuildRequires: resteasy
 BuildRequires: tomcatjss >= %tomcatjss_version
 BuildRequires: xalan-j2
 BuildRequires: slf4j-jdk14
@@ -58,10 +72,6 @@ BuildRequires: junit
 BuildRequires: go-md2man
 
 BuildRequires: python3-module-sphinx
-
-# healthcheck
-BuildRequires: python3-module-pytest-runner
-BuildRequires: freeipa-healthcheck
 
 %if_with check
 BuildRequires: /dev/shm
@@ -75,6 +85,7 @@ BuildRequires: python3-module-pyflakes
 BuildRequires: python3-module-pylint
 BuildRequires: python3-module-selinux
 BuildRequires: python3-module-tox
+BuildRequires: python3(tox_console_scripts)
 BuildRequires: python3(tox_no_deps)
 %endif
 
@@ -85,25 +96,31 @@ BuildRequires: python3(tox_no_deps)
 %add_python3_compile_exclude %_datadir/pki/server/upgrade/
 
 #### Meta package ####
-Requires: dogtag-pki-server-theme = %EVR
-Requires: dogtag-pki-console-theme = %EVR
-Requires: python3-module-pki-base = %EVR
-Requires: pki-base-java = %EVR
-Requires: pki-tools = %EVR
-Requires: pki-server = %EVR
-Requires: pki-acme = %EVR
-Requires: pki-ca = %EVR
-Requires: pki-kra = %EVR
-Requires: pki-ocsp = %EVR
-Requires: pki-tks = %EVR
-Requires: pki-tps = %EVR
-Requires: pki-console = %EVR
+Requires: dogtag-pki-server-theme
+Requires: python3-module-dogtag-pki
+Requires: dogtag-pki-base-java
+Requires: dogtag-pki-tools
+Requires: dogtag-pki-server
+Requires: dogtag-pki-acme
+Requires: dogtag-pki-ca
+Requires: dogtag-pki-kra
+Requires: dogtag-pki-ocsp
+Requires: dogtag-pki-tks
+Requires: dogtag-pki-tps
+
+# removed from Sisyphus
+Obsoletes: idm-console-framework <= 1.2.0-alt1
+Obsoletes: pki-console < 11.0.0
+Obsoletes: dogtag-pki-console-theme < 11.0.0
+
+Provides: pki-core = %EVR
+Obsoletes: pki-core < %pki_rebranded_version
 
 %description
 Dogtag PKI is an enterprise software system designed
 to manage enterprise Public Key Infrastructure deployments.
 
-PKI consists of the following components:
+Dogtag PKI consists of the following components:
 
   * Automatic Certificate Management Environment (ACME) Responder
   * Certificate Authority (CA)
@@ -113,57 +130,64 @@ PKI consists of the following components:
   * Token Processing Service (TPS)
 
 
-%package -n pki-symkey
+%package -n dogtag-pki-symkey
 Summary: Dogtag PKI Symmetric Key Package
 Group: System/Libraries
 Requires: jss >= %jss_version
 Requires: javapackages-tools
 Provides: symkey = %EVR
 Obsoletes: symkey < %EVR
+Provides: pki-symkey = %EVR
+Obsoletes: pki-symkey < %pki_rebranded_version
 
-%description -n pki-symkey
+%description -n dogtag-pki-symkey
 The Dogtag PKI Symmetric Key Java Package supplies various native
 symmetric key operations to Java programs.
 
-%package -n pki-base
+%package -n dogtag-pki-base
 Summary: Dogtag PKI Base Package
 Group: System/Base
-Requires: python3-module-pki-base = %EVR
+Requires: python3-module-dogtag-pki
 Provides: pki-common = %EVR
 Provides: pki-util = %EVR
 Obsoletes: pki-common < %EVR
 Obsoletes: pki-util < %EVR
-Requires(post): python3-module-pki-base = %EVR
+Provides: pki-base = %EVR
+Obsoletes: pki-base < %pki_rebranded_version
+Requires(post): python3-module-dogtag-pki
 
-%description -n pki-base
+%description -n dogtag-pki-base
 The Dogtag PKI Base Package contains the common and client libraries
 and utilities written in Python.
 
-%package -n pki-base-java
+%package -n dogtag-pki-base-java
 Summary: Dogtag PKI Base Java Package
 Group: System/Base
-Requires: pki-base = %EVR
-Requires: java
+Requires: dogtag-pki-base
+Requires: java >= %java_version
 Requires: xalan-j2
-Requires: xml-commons-apis
 Requires: xml-commons-resolver
+Provides: pki-base-java = %EVR
+Obsoletes: pki-base-java < %pki_rebranded_version
 
-%description -n pki-base-java
+%description -n dogtag-pki-base-java
 The Dogtag PKI Base Java Package contains the common and client
 libraries and utilities written in Java.
 
-%package -n python3-module-pki-base
+%package -n python3-module-dogtag-pki
 Summary: Dogtag PKI Python3 Package
 Group: Development/Python3
-Requires: pki-base = %EVR
+Requires: dogtag-pki-base
+Provides: python3-module-pki-base = %EVR
+Obsoletes: python3-module-pki-base < %pki_rebranded_version
 
-%description -n python3-module-pki-base
+%description -n python3-module-dogtag-pki
 This package contains Dogtag PKI client library for Python3.
 
-%package -n pki-tools
+%package -n dogtag-pki-tools
 Summary: Dogtag PKI Tools Package
 Group: System/Base
-Requires: pki-base-java = %EVR
+Requires: dogtag-pki-base-java
 Requires: openldap-clients
 Requires: nss-utils
 Requires: p11-kit-trust
@@ -171,17 +195,21 @@ Provides: pki-native-tools = %EVR
 Provides: pki-java-tools = %EVR
 Obsoletes: pki-native-tools < %EVR
 Obsoletes: pki-java-tools < %EVR
+Provides: pki-tools = %EVR
+Obsoletes: pki-tools < %pki_rebranded_version
 
-%description -n pki-tools
+%description -n dogtag-pki-tools
 This package contains Dogtag PKI executables that can be used to help make
 Certificate System into a more complete and robust PKI solution.
 
-%package -n pki-server
+%package -n dogtag-pki-server
 Summary: Dogtag PKI Server Package
 Group: System/Base
-Requires: pki-symkey = %EVR
-Requires: pki-tools = %EVR
+Requires: dogtag-pki-symkey
+Requires: dogtag-pki-tools
 Requires: openssl
+# https://bugzilla.altlinux.org/40819
+Requires: tomcat >= 1:9.0.50-alt2_2jpp11
 Requires: tomcatjss >= %tomcatjss_version
 
 Provides: pki-deploy = %EVR
@@ -191,30 +219,36 @@ Provides: pki-silent = %EVR
 Obsoletes: pki-deploy < %EVR
 Obsoletes: pki-setup < %EVR
 Obsoletes: pki-silent < %EVR
+Provides: pki-server = %EVR
+Obsoletes: pki-server < %pki_rebranded_version
 
 # https://pagure.io/freeipa/issue/7742
 Conflicts: freeipa-server < 4.7.1
 
-%description -n pki-server
-The PKI Server Package contains libraries and utilities needed by other
-PKI subsystems.
+%description -n dogtag-pki-server
+The Dogtag PKI Server Package contains libraries and utilities needed by other
+Dogtag PKI subsystems.
 
-%package -n pki-acme
-Summary: PKI ACME Package
+%package -n dogtag-pki-acme
+Summary: Dogtag PKI ACME Package
 Group: System/Base
-Requires: pki-server = %EVR
+Requires: dogtag-pki-server
+Provides: pki-acme = %EVR
+Obsoletes: pki-acme < %pki_rebranded_version
 
-%description -n pki-acme
-the pki acme responder is a service that provides an automatic certificate
-management via ACME v2 protocol defined in RFC 8555.
+%description -n dogtag-pki-acme
+The Dogtag PKI ACME responder is a service that provides an automatic
+certificate management via ACME v2 protocol defined in RFC 8555.
 
-%package -n pki-ca
+%package -n dogtag-pki-ca
 Summary: Dogtag PKI CA Package
 Group: System/Servers
-Requires: pki-server = %EVR
+Requires: dogtag-pki-server
+Provides: pki-ca = %EVR
+Obsoletes: pki-ca < %pki_rebranded_version
 
-%description -n pki-ca
-The Certificate Authority (CA) is a required PKI subsystem which issues,
+%description -n dogtag-pki-ca
+The Certificate Authority (CA) is a required Dogtag PKI subsystem which issues,
 renews, revokes, and publishes certificates as well as compiling and
 publishing Certificate Revocation Lists (CRLs).
 
@@ -222,33 +256,38 @@ The Certificate Authority can be configured as a self-signing Certificate
 Authority, where it is the root CA, or it can act as a subordinate CA,
 where it obtains its own signing certificate from a public CA.
 
-%package -n pki-kra
+%package -n dogtag-pki-kra
 Summary: Dogtag PKI KRA Package
 Group: System/Servers
-Requires: pki-server = %EVR
+Requires: dogtag-pki-server
+Provides: pki-kra = %EVR
+Obsoletes: pki-kra < %pki_rebranded_version
 
-%description -n pki-kra
-The Key Recovery Authority (KRA) is an optional PKI subsystem that can act
-as a key archival facility.  When configured in conjunction with the
+%description -n dogtag-pki-kra
+The Key Recovery Authority (KRA) is an optional Dogtag PKI subsystem that can
+act as a key archival facility.  When configured in conjunction with the
 Certificate Authority (CA), the KRA stores private encryption keys as part of
 the certificate enrollment process.  The key archival mechanism is triggered
-when a user enrolls in the PKI and creates the certificate request.  Using the
-Certificate Request Message Format (CRMF) request format, a request is
-generated for the user's private encryption key.  This key is then stored in
+when a user enrolls in the Dogtag PKI and creates the certificate request.
+Using the Certificate Request Message Format (CRMF) request format, a request
+is generated for the user's private encryption key.  This key is then stored in
 the KRA which is configured to store keys in an encrypted format that can only
 be decrypted by several agents requesting the key at one time, providing for
-protection of the public encryption keys for the users in the PKI deployment.
+protection of the public encryption keys for the users in the Dogtag PKI
+deployment.
 
 Note that the KRA archives encryption keys; it does NOT archive signing keys,
 since such archival would undermine non-repudiation properties of signing keys.
 
-%package -n pki-ocsp
+%package -n dogtag-pki-ocsp
 Summary: Dogtag PKI OCSP Package
 Group: System/Servers
-Requires: pki-server = %EVR
+Requires: dogtag-pki-server
+Provides: pki-ocsp = %EVR
+Obsoletes: pki-ocsp < %pki_rebranded_version
 
-%description -n pki-ocsp
-The Online Certificate Status Protocol (OCSP) Manager is an optional PKI
+%description -n dogtag-pki-ocsp
+The Online Certificate Status Protocol (OCSP) Manager is an optional Dogtag PKI
 subsystem that can act as a stand-alone OCSP service.  The OCSP Manager
 performs the task of an online certificate validation authority by enabling
 OCSP-compliant clients to do real-time verification of certificates.  Note
@@ -269,14 +308,16 @@ When an instance of OCSP Manager is set up with an instance of CA, and
 publishing is set up to this OCSP Manager, CRLs are published to it
 whenever they are issued or updated.
 
-%package -n pki-tks
+%package -n dogtag-pki-tks
 Summary: Dogtag PKI TKS Package
 Group: System/Servers
-Requires: pki-server = %EVR
+Requires: dogtag-pki-server
+Provides: pki-tks = %EVR
+Obsoletes: pki-tks < %pki_rebranded_version
 
-%description -n pki-tks
-The Token Key Service (TKS) is an optional PKI subsystem that manages the
-master key(s) and the transport key(s) required to generate and distribute
+%description -n dogtag-pki-tks
+The Token Key Service (TKS) is an optional Dogtag PKI subsystem that manages
+the master key(s) and the transport key(s) required to generate and distribute
 keys for hardware tokens.  TKS provides the security between tokens and an
 instance of Token Processing System (TPS), where the security relies upon the
 relationship between the master key and the token keys.  A TPS communicates
@@ -290,18 +331,20 @@ TKS.  Tokens with older keys will get new token keys.
 Because of the sensitivity of the data that TKS manages, TKS should be set up
 behind the firewall with restricted access.
 
-%package -n pki-tps
+%package -n dogtag-pki-tps
 Summary: Dogtag PKI TPS Package
 Group: System/Servers
-Requires: pki-server = %EVR
+Requires: dogtag-pki-server
+Provides: pki-tps = %EVR
+Obsoletes: pki-tps < %pki_rebranded_version
 
 Provides: pki-tps-tomcat = %EVR
 Provides: pki-tps-client = %EVR
 Obsoletes: pki-tps-tomcat < %EVR
 Obsoletes: pki-tps-client < %EVR
 
-%description -n pki-tps
-The Token Processing System (TPS) is an optional PKI subsystem that acts
+%description -n dogtag-pki-tps
+The Token Processing System (TPS) is an optional Dogtag PKI subsystem that acts
 as a Registration Authority (RA) for authenticating and processing
 enrollment requests, PIN reset requests, and formatting requests from
 the Enterprise Security Client (ESC).
@@ -320,10 +363,13 @@ The utility "tpsclient" is a test tool that interacts with TPS.  This
 tool is useful to test TPS server configs without risking an actual
 smart card.
 
-%package -n pki-javadoc
+%if_with javadoc
+%package -n dogtag-pki-javadoc
 Summary: Dogtag PKI Javadoc Package
 Group: Documentation
 Requires: javapackages-tools
+Provides: pki-javadoc = %EVR
+Obsoletes: pki-javadoc < %pki_rebranded_version
 
 Provides: pki-util-javadoc = %EVR
 Provides: pki-java-tools-javadoc = %EVR
@@ -332,26 +378,19 @@ Obsoletes: pki-util-javadoc < %EVR
 Obsoletes: pki-java-tools-javadoc < %EVR
 Obsoletes: pki-common-javadoc < %EVR
 
-%description -n pki-javadoc
-This package contains PKI API documentation.
+%description -n dogtag-pki-javadoc
+This package contains Dogtag PKI API documentation.
+%endif
 
-%package -n pki-console
-Summary: PKI Console Package
-Group: Networking/Other
-Requires: idm-console-framework
-Requires: pki-base-java = %EVR
-Requires: dogtag-pki-console-theme = %EVR
-
-%description -n pki-console
-The PKI Console is a Java application used to administer PKI server.
-
-%package -n pki-healthcheck
+%package -n dogtag-pki-healthcheck
 Summary: Dogtag PKI Healthcheck
 Group: System/Servers
+Provides: pki-healthcheck = %EVR
+Obsoletes: pki-healthcheck < %pki_rebranded_version
 
-%description -n pki-healthcheck
-The healthcheck tool is intended for executing health checks against PKI.
-This is the plugin for freeipa-healthcheck.
+%description -n dogtag-pki-healthcheck
+The healthcheck tool is intended for executing health checks against Dogtag
+PKI. This is the plugin for freeipa-healthcheck.
 
 %package -n dogtag-pki-server-theme
 Summary: Dogtag PKI Server Theme Package
@@ -360,18 +399,8 @@ Provides: pki-server-theme = %EVR
 Obsoletes: pki-server-theme < %EVR
 
 %description -n dogtag-pki-server-theme
-This PKI Server Theme Package contains textual and graphical user
-interface for PKI Server.
-
-%package -n dogtag-pki-console-theme
-Summary: Dogtag PKI Console Theme Package
-Group: Networking/Other
-Provides: pki-console-theme = %EVR
-Obsoletes: pki-console-theme < %EVR
-
-%description -n dogtag-pki-console-theme
-This PKI Console Theme Package contains textual and graphical user
-interface for PKI Console.
+This Dogtag PKI Server Theme Package contains textual and graphical user
+interface for Dogtag PKI Server.
 
 %prep
 %setup
@@ -396,13 +425,7 @@ java_version="$(%java_home/bin/java -XshowSettings:properties -version  2>&1 | \
 # otherwise get <major> version number
 java_version="$(echo $java_version | sed -e 's/^1\.//' -e 's/\..*$//')"
 
-# get Tomcat <major>.<minor> version number
-tomcat_version=`/usr/sbin/tomcat version | sed -n 's/Server number: *\([0-9]\+\.[0-9]\+\).*/\1/p'`
-if [ $tomcat_version == "9.0" ]; then
-    app_server=tomcat-8.5
-else
-    app_server=tomcat-$tomcat_version
-fi
+app_server=tomcat-9.0
 set +o pipefail
 
 %add_optflags -I/usr/include/apu-1
@@ -426,8 +449,11 @@ set +o pipefail
 %else
     -DWITH_TEST:BOOL=OFF \
 %endif
+%if_with javadoc
     -DWITH_JAVADOC:BOOL=ON \
-    -DBUILD_PKI_CONSOLE:BOOL=ON \
+%else
+    -DWITH_JAVADOC:BOOL=OFF \
+%endif
     -DTHEME=dogtag \
      ..
 
@@ -437,12 +463,12 @@ set +o pipefail
 %cmakeinstall_std
 # Customize client library links in /usr/share/pki/lib
 ln -sf %_datadir/java/jboss-logging/jboss-logging.jar %buildroot%_datadir/pki/lib/jboss-logging.jar
-ln -sf %_datadir/java/jboss-annotations-1.2-api/jboss-annotations-api_1.2_spec.jar %buildroot%_datadir/pki/lib/jboss-annotations-api_1.2_spec.jar
+ln -sf %_datadir/java/jakarta-annotations/jakarta.annotation-api.jar %buildroot%_datadir/pki/lib/jakarta.annotation-api.jar
 
 # Customize server library links in /usr/share/pki/server/common/lib
 ln -sf %jaxrs_api_jar %buildroot%_datadir/pki/server/common/lib/jboss-jaxrs-2.0-api.jar
 ln -sf %_datadir/java/jboss-logging/jboss-logging.jar %buildroot%_datadir/pki/server/common/lib/jboss-logging.jar
-ln -sf %_datadir/java/jboss-annotations-1.2-api/jboss-annotations-api_1.2_spec.jar %buildroot%_datadir/pki/server/common/lib/jboss-annotations-api_1.2_spec.jar
+ln -sf %_datadir/java/jakarta-annotations/jakarta.annotation-api.jar %buildroot%_datadir/pki/server/common/lib/jakarta.annotation-api.jar
 
 # from sem@:
 # This file should be sourced only
@@ -468,20 +494,17 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %check
 export PIP_NO_INDEX=YES
 export TOXENV=lint3,pep8py3,py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -vvr --no-deps -s false
+ln -sr ./tests/tox.ini ./
+tox.py3 --sitepackages -p auto -o -vvr --no-deps --console-scripts -s false
 %cmake_build -t test
 
-%pre -n pki-server
-%define pki_username pkiuser
-%define pki_groupname pkiuser
-%define pki_homedir %_localstatedir/pki
-
+%pre -n dogtag-pki-server
 %_sbindir/groupadd -r -f %pki_groupname ||:
 %_sbindir/useradd -g %pki_groupname -c 'Certificate System' \
                   -d %pki_homedir -s /sbin/nologin -r %pki_username \
                   > /dev/null 2>&1 ||:
 
-%post -n pki-base
+%post -n dogtag-pki-base
 if [ $1 -eq 1 ]
 then
     # On RPM installation create system upgrade tracker
@@ -497,29 +520,35 @@ else
     %_sbindir/pki-upgrade --status 2>&1 | sed 's/^/pki-base: /'
 fi
 
-%postun -n pki-base
+%postun -n dogtag-pki-base
 if [ $1 -eq 0 ]
 then
     # On RPM uninstallation remove system upgrade tracker
     rm -f %_sysconfdir/pki/pki.version
 fi
 
-%post -n pki-server
-# CVE-2021-3551: Remove world access from existing installation logs
-find /var/log/pki -maxdepth 1 -type f -exec chmod o-rwx {} \;
-
+%post -n dogtag-pki-server
+# upgrade
 if [ "$1" -ge 2 ]
 then
+    # CVE-2021-3551: Remove world access from existing installation logs
+    find %_logdir/pki -maxdepth 1 -type f -exec chmod o-rwx {} \;
+
+    # pki-tomcat is the hardcoded instance name used by ipa
+    # https://pagure.io/dogtagpki/issue/3195
+    chown -R -P %pki_username:%pki_groupname \
+        %_sysconfdir/pki/pki-tomcat/alias >/dev/null 2>&1 ||:
+
     systemctl daemon-reload ||:
 fi
 
 %files
 
-%files -n pki-symkey
+%files -n dogtag-pki-symkey
 %_jnidir/symkey.jar
 %_libdir/symkey/
 
-%files -n pki-base
+%files -n dogtag-pki-base
 %doc %_datadir/doc/pki-base/html
 %doc %_datadir/pki/server/docs
 %dir %_datadir/pki/etc
@@ -542,20 +571,21 @@ fi
 %_man5dir/pki-logging.5.*
 %_man8dir/pki-upgrade.8.*
 
-%files -n pki-base-java
+%files -n dogtag-pki-base-java
 %_datadir/pki/examples/java/
 %_datadir/pki/lib/*.jar
 %dir %_javadir/pki
 %_javadir/pki/pki-cmsutil.jar
 %_javadir/pki/pki-certsrv.jar
 
-%files -n python3-module-pki-base
+%files -n python3-module-dogtag-pki
 %exclude %python3_sitelibdir/pki/server/
 %python3_sitelibdir/pki/
 
-%files -n pki-tools
+%files -n dogtag-pki-tools
 %doc base/tools/doc/README
 %_bindir/p7tool
+%_bindir/p12tool
 %_bindir/pistool
 %_bindir/pki
 %_bindir/revoker
@@ -619,7 +649,7 @@ fi
 %_man1dir/PKCS10Client.1.*
 %_man1dir/PKICertImport.1.*
 
-%files -n pki-server
+%files -n dogtag-pki-server
 %doc base/common/THIRD_PARTY_LICENSES
 %doc base/server/LICENSE
 %doc base/server/README
@@ -679,27 +709,27 @@ fi
 %_datadir/pki/server/certs/
 %_datadir/pki/server/examples/
 
-%files -n pki-acme
+%files -n dogtag-pki-acme
 %_javadir/pki/pki-acme.jar
 %_datadir/pki/acme/
 
-%files -n pki-ca
+%files -n dogtag-pki-ca
 %_javadir/pki/pki-ca.jar
 %_datadir/pki/ca/
 
-%files -n pki-kra
+%files -n dogtag-pki-kra
 %_javadir/pki/pki-kra.jar
 %_datadir/pki/kra/
 
-%files -n pki-ocsp
+%files -n dogtag-pki-ocsp
 %_javadir/pki/pki-ocsp.jar
 %_datadir/pki/ocsp/
 
-%files -n pki-tks
+%files -n dogtag-pki-tks
 %_javadir/pki/pki-tks.jar
 %_datadir/pki/tks/
 
-%files -n pki-tps
+%files -n dogtag-pki-tps
 %_javadir/pki/pki-tps.jar
 %_datadir/pki/tps/
 %_man5dir/pki-tps-connector.5.*
@@ -711,14 +741,12 @@ fi
 %_libdir/libtps.so
 %_libdir/libtokendb.so
 
-%files -n pki-javadoc
+%if_with javadoc
+%files -n dogtag-pki-javadoc
 %_javadocdir/pki-%version/
+%endif
 
-%files -n pki-console
-%_bindir/pkiconsole
-%_javadir/pki/pki-console.jar
-
-%files -n pki-healthcheck
+%files -n dogtag-pki-healthcheck
 %_sbindir/pki-healthcheck
 %python3_sitelibdir/pki/server/healthcheck/
 %python3_sitelibdir/pkihealthcheck-*.egg-info/
@@ -748,10 +776,10 @@ fi
 %_datadir/pki/server/webapps/pki/ui/
 %_datadir/pki/server/webapps/pki/WEB-INF/
 
-%files -n dogtag-pki-console-theme
-%_javadir/pki/pki-console-theme.jar
-
 %changelog
+* Thu Nov 25 2021 Stanislav Levin <slev@altlinux.org> 11.0.0-alt1
+- 10.10.6 -> 11.0.0.
+
 * Wed Jun 23 2021 Stanislav Levin <slev@altlinux.org> 10.10.6-alt2
 - Made python-nss really optional.
 

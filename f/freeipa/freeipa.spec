@@ -39,7 +39,7 @@
 %define ds_version 1.4.3.24
 %define gssproxy_version 0.8.0-alt2
 %define krb5_version 1.16.3
-%define pki_version 10.10.5
+%define pki_version 11.0.0
 %define python_ldap_version 3.2.0
 %define samba_version 4.7.6
 # RHBZ#1958909, RHBZ#1967906
@@ -51,7 +51,7 @@
 
 Name: freeipa
 # don't forget to update .gear/rules
-Version: 4.9.7
+Version: 4.9.8
 Release: alt1
 
 Summary: The Identity, Policy and Audit system
@@ -154,7 +154,7 @@ BuildRequires: python3-module-netaddr
 BuildRequires: python3-module-netifaces
 BuildRequires: python3-module-paste
 BuildRequires: python3-module-pexpect
-BuildRequires: python3-module-pki-base >= %pki_version
+BuildRequires: python3-module-dogtag-pki >= %pki_version
 BuildRequires: python3-module-polib
 BuildRequires: python3-module-psutil
 BuildRequires: python3-module-pyasn1
@@ -193,9 +193,9 @@ Requires: %name-client = %EVR
 Requires: acl
 Requires: gssproxy >= %gssproxy_version
 Requires: sssd-dbus >= %sssd_version
-Requires: pki-ca >= %pki_version
-Requires: pki-kra >= %pki_version
-Requires: pki-acme >= %pki_version
+Requires: dogtag-pki-ca >= %pki_version
+Requires: dogtag-pki-kra >= %pki_version
+Requires: dogtag-pki-acme >= %pki_version
 Requires: certmonger >= %certmonger_version
 Requires: 389-ds-base >= %ds_version
 # https://pagure.io/freeipa/issue/8632
@@ -244,7 +244,7 @@ Requires: python3-module-gssapi
 Requires: python3-module-ipaclient = %EVR
 Requires: python3-module-kdcproxy
 Requires: python3-module-ldap >= %python_ldap_version
-Requires: python3-module-pki-base >= %pki_version
+Requires: python3-module-dogtag-pki >= %pki_version
 Requires: python3-module-sssdconfig >= %sssd_version
 Requires: python3-module-samba
 Requires: python3-module-psutil
@@ -861,6 +861,7 @@ fi
 %dir %_libexecdir/ipa/oddjob
 %attr(0755,root,root) %_libexecdir/ipa/oddjob/org.freeipa.server.conncheck
 %attr(0755,root,root) %_libexecdir/ipa/oddjob/org.freeipa.server.trust-enable-agent
+%attr(0755,root,root) %_libexecdir/ipa/oddjob/org.freeipa.server.config-enable-sid
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.freeipa.server.conf
 %config(noreplace) %_sysconfdir/oddjobd.conf.d/ipa-server.conf
 %dir %_libexecdir/ipa/certmonger
@@ -1024,7 +1025,7 @@ fi
 %_bindir/ipa
 %dir %_libexecdir/ipa/acme
 %_libexecdir/ipa/acme/certbot-dns-ipa
-%config %_sysconfdir/bash_completion.d
+%_datadir/bash-completion/completions/ipa
 %config %_sysconfdir/sysconfig/certmonger
 %_mandir/man1/ipa.1*
 %_mandir/man1/ipa-getkeytab.1*
@@ -1089,6 +1090,9 @@ fi
 %python3_sitelibdir/ipaplatform-*.egg-info/
 
 %changelog
+* Mon Nov 29 2021 Stanislav Levin <slev@altlinux.org> 4.9.8-alt1
+- 4.9.7 -> 4.9.8.
+
 * Tue Sep 07 2021 Stanislav Levin <slev@altlinux.org> 4.9.7-alt1
 - 4.9.6 -> 4.9.7.
 

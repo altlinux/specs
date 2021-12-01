@@ -3,11 +3,12 @@
 
 %def_with check
 
-%define nss_version 3.44
+%define nss_version 3.66
+%define java_version 11
 
 Name: jss
-Version: 4.8.1
-Release: alt3
+Version: 5.0.0
+Release: alt1
 
 Summary: Java Security Services (JSS)
 License: MPL-1.1 or GPLv2+ or LGPLv2+
@@ -25,7 +26,7 @@ BuildRequires: gcc-c++
 BuildRequires: jaxb-api
 BuildRequires: /proc
 BuildRequires: cmake
-BuildRequires: java-11-devel
+BuildRequires: java-devel >= %java_version
 BuildRequires: jpackage-generic-compat
 BuildRequires: libnss-devel >= %nss_version
 BuildRequires: libnspr-devel
@@ -37,9 +38,11 @@ BuildRequires: slf4j-jdk14
 BuildRequires: zip
 BuildRequires: unzip
 
+# not an optional though used only in tests
+BuildRequires: junit
+
 %if_with check
 BuildRequires: ctest
-BuildRequires: junit
 BuildRequires: nss-utils >= %nss_version
 %endif
 
@@ -47,6 +50,7 @@ Requires: apache-commons-lang3
 Requires: jaxb-api
 Requires: slf4j
 Requires: libnss >= %nss_version
+Requires: java >= %java_version
 
 %description
 Network Security Services for Java (JSS) is a Java interface to NSS. JSS
@@ -64,15 +68,6 @@ performed. JSS essentially provides a Java JNI bridge to NSS C shared libraries.
 When NSS is put in FIPS mode, JSS ensures FIPS compliance by ensuring that all
 cryptographic operations are performed by the NSS cryptographic module.
 
-%package javadoc
-Summary: Java Security Services (JSS) Javadocs
-Group: Development/Java
-Requires: %name = %EVR
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for JSS.
-
 %prep
 %setup
 %patch -p1
@@ -86,9 +81,13 @@ export BUILD_OPT=1
 
 %cmake \
     -DJAVA_HOME=%java_home \
+    -DVERSION=%version \
+    -DJAVA_LIB_INSTALL_DIR=%_jnidir \
+    -DJSS_LIB_INSTALL_DIR=%_libdir/jss \
+    -DWITH_JAVADOC=FALSE \
     ..
 
-%cmake_build --target all javadoc
+%cmake_build --target all
 
 %check
 # fails on migration to Java11, need to investigate
@@ -103,33 +102,18 @@ CTEST_OUTPUT_ON_FAILURE=1 %cmake_build --target test
 %endif
 
 %install
-install -d -m 0755 %buildroot%_jnidir
-install -m 644 %_cmake__builddir/jss4.jar %buildroot%_jnidir/jss4.jar
-
-# We have to use the name libjss4.so because this is dynamically
-# loaded by the jar file.
-install -d -m 0755 %buildroot%_libdir/jss
-install -m 0755 %_cmake__builddir/libjss4.so %buildroot%_libdir/jss/
-pushd  %buildroot%_libdir/jss
-    ln -fs %_jnidir/jss4.jar jss4.jar
-popd
-
-# javadoc
-install -d -m 0755 %buildroot%_javadocdir/%name-%version
-cp -rp %_cmake__builddir/docs/* %buildroot%_javadocdir/%name-%version
-cp -p jss.html %buildroot%_javadocdir/%name-%version
-cp -p *.txt %buildroot%_javadocdir/%name-%version
+%cmake_install
 
 %files
 %dir %_libdir/jss
-%_libdir/jss/jss4.jar
-%_libdir/jss/libjss4.so
-%_jnidir/jss4.jar
-
-%files javadoc
-%_javadocdir/%name-%version
+%_libdir/jss/jss.jar
+%_libdir/jss/libjss.so
+%_jnidir/jss.jar
 
 %changelog
+* Wed Nov 24 2021 Stanislav Levin <slev@altlinux.org> 5.0.0-alt1
+- 4.8.1 -> 5.0.0.
+
 * Thu Jun 24 2021 Stanislav Levin <slev@altlinux.org> 4.8.1-alt3
 - Fixed FTBFS(missing deps).
 
