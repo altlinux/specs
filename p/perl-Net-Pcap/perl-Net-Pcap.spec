@@ -1,17 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Net-Pcap
 Name: perl-%dist
-Version: 0.18
-Release: alt2.1
+Version: 0.19
+Release: alt1
 
 Summary: Interface to pcap(3) LBL packet capture library
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SA/SAPER/Net-Pcap-%{version}.tar.gz
-
-Patch1: Net-Pcap-0.18-Adapt-a-test-to-libpcap-1.8.0.patch
-Patch2: Net-Pcap-0.18-Fix-build-with-libpcap-1.9.0.patch
+Source0: http://www.cpan.org/authors/id/C/CO/CORION/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: libpcap-devel perl-Test-Exception perl-Test-Pod perl-podlators
@@ -26,10 +24,7 @@ monitoring.  Applications include network statistics collection,
 security monitoring, network debugging, etc."
 
 %prep
-%setup -q -n %dist-%version
-
-%patch1 -p1
-%patch2 -p1
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -45,6 +40,9 @@ security monitoring, network debugging, etc."
 %perl_vendor_autolib/Net
 
 %changelog
+* Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 0.19-alt1
+- automated CPAN update
+
 * Sat Apr 04 2020 Igor Vlasenko <viy@altlinux.ru> 0.18-alt2.1
 - rebuild: hack around alt bug 38332
 
