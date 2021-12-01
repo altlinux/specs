@@ -15,7 +15,7 @@
 
 Name: kde5-%rname
 Version: 21.08.3
-Release: alt2
+Release: alt3
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{?_enable_obsolete_kde4:appdata}%{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Terminals
@@ -32,9 +32,7 @@ Obsoletes: kde4-konsole < %version-%release
 %endif
 
 Source: %rname-%version.tar
-Source10: ru-add.po
-Patch10: alt-no-transparency.patch
-Patch11: alt-konsole-profiles.patch
+Source10: profiles.tar
 Patch12: alt-def-font.patch
 Patch13: alt-def-colors.patch
 Patch14: alt-fix-empty-profile.patch
@@ -97,15 +95,11 @@ Requires: %name-common = %version-%release
 %name library
 
 %prep
-%setup -q -n %rname-%version
-%patch10 -p1 -b .transparency
-#%patch11 -p1
-%patch12 -p1
+%setup -q -n %rname-%version -a10
+#patch12 -p1
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
-
-cat %SOURCE10 >>po/ru/konsole.po
 
 %build
 %K5build \
@@ -119,7 +113,15 @@ cat %SOURCE10 >>po/ru/konsole.po
 %if_disabled obsolete_kde4
 %K5install_move data konsole khotkeys knsrcfiles
 %endif
-%find_lang %name --with-kde --all-name
+
+# install profiles
+KONSOLE_DATA_DIR=%buildroot/%_K5data/konsole/
+%if_enabled obsolete_kde4
+KONSOLE_DATA_DIR=%buildroot/%_datadir/konsole/
+%endif
+for f in profiles/*.profile ; do
+    install -m 0644 $f $KONSOLE_DATA_DIR
+done
 
 # install alternatives
 install -d %buildroot/%_sysconfdir/alternatives/packages.d
@@ -127,6 +129,7 @@ cat > %buildroot/%_sysconfdir/alternatives/packages.d/kde5-konsole <<__EOF__
 %_x11bindir/xvt %_K5bin/konsole        55
 __EOF__
 
+%find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
 %doc LICENSES/*
@@ -172,6 +175,11 @@ __EOF__
 %_K5lib/libkonsoleapp.so.%sover
 
 %changelog
+* Wed Dec 01 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt3
+- don't disable transparency by default
+- add root shell profile by default
+- don't increase default font size
+
 * Mon Nov 29 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt2
 - fix tranparency option description
 
