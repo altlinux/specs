@@ -3,12 +3,12 @@
 %define oname sphinxext-opengraph
 
 Name: python3-module-%oname
-Version: 0.4.2
+Version: 0.5.0
 Release: alt1
 Summary: Sphinx extension to generate unique OpenGraph metadata
 License: MIT
 Group: Development/Python3
-#https://github.com/mplanchard/pydecor
+#https://github.com/wpilibsuite/sphinxext-opengraph
 Url: https://sphinxext-opengraph.readthedocs.io
 
 BuildArch: noarch
@@ -35,5 +35,8 @@ Sphinx extension to generate OpenGraph metadata
 %python3_sitelibdir/sphinxext_opengraph-main-*.egg-info
 
 %changelog
+* Wed Dec 01 2021 Egor Ignatov <egori@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Wed Sep 01 2021 Egor Ignatov <egori@altlinux.org> 0.4.2-alt1
 - Initial build for ALT
