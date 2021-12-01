@@ -4,8 +4,8 @@ BuildRequires: libgomp-devel makeinfo
 %def_with _octave_arch
 %define octpkg nurbs
 Name: octave-%octpkg
-Version: 1.3.13
-Release: alt4
+Version: 1.4.3
+Release: alt1
 Summary: Nurbs.
 
 Group: Sciences/Mathematics
@@ -13,7 +13,6 @@ License: GPLv3+
 URL: http://octave.sf.net
 
 Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
-Patch0: octave-nurbs-octave-6.patch
 
 BuildRequires(pre): rpm-build-octave
 BuildRequires: octave-devel
@@ -23,15 +22,15 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 BuildArch: noarch
 %endif
 Provides: octave(nurbs) = %version
-# Depends: octave (>= 3.8)
-Requires: octave >= 3.8
+# Depends: octave (>= 5.1)
+Requires: octave >= 5.1
+
 
 %description
 Collection of routines for the creation, and manipulation of Non-Uniform Rational B-Splines (NURBS), based on the NURBS toolbox by Mark Spink.
 
 %prep
 %setup -q -n %{octpkg}-%{version}
-%patch0 -p1
 
 %build
 %octave_build
@@ -40,13 +39,16 @@ Collection of routines for the creation, and manipulation of Non-Uniform Rationa
 %octave_install
 
 %files
-%doc COPYING DESCRIPTION NEWS
+%doc DESCRIPTION COPYING NEWS
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 1.4.3-alt1
+- regenerated from template by package builder
+
 * Tue Dec 15 2020 Andrey Cherepanov <cas@altlinux.org> 1.3.13-alt4
 - rebuild against octave 6
 
