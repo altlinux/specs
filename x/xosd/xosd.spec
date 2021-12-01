@@ -1,7 +1,8 @@
+# xmms is long dead
 %def_without xmms
 Name: xosd
 Version: 2.2.14
-Release: alt10
+Release: alt11
 
 Summary: X On Screen Display, displays XMMS status information
 License: GPLv2
@@ -81,13 +82,24 @@ This package contains an osd_cat.
 # XMMS is dead, gdk-pixbuf-0 is dead. Dropping xmms plug-in.
 sed -i -e '/AM_PATH_GTK/,+1 d' -e '/AM_PATH_XMMS/,+1 d' \
     -e '/AM_PATH_GDK_PIXBUF/,+1 d' configure.ac
-# Update config.sub to support aarch64, Redhat bug #926836
-%autoreconf
 %endif
 
 %build
-%configure --enable-new-plugin --disable-beep_media_player_plugin --disable-dependency-tracking
+# Update config.sub to support aarch64
+%autoreconf
+%configure \
+    --disable-static \
+    --disable-dependency-tracking \
+    --disable-gtktest \
+    --disable-gdk_pixbuftest \
+    --disable-new-plugin \
+    --disable-old-plugin \
+    --disable-beep_media_player_plugin \
+    --enable-xinerama
+
 %make_build
+
+grep -Wall script/xosd-config && exit 1
 
 %install
 make install DESTDIR=%buildroot
@@ -108,8 +120,10 @@ rm -rf %buildroot%_datadir/%name/
 %_man3dir/%{name}*
 %_libdir/lib%name.so
 
+%if_enabled static
 %files -n lib%name-devel-static
 %_libdir/*.a
+%endif
 
 %if_with xmms
 %files -n xmms-osd
@@ -123,6 +137,9 @@ rm -rf %buildroot%_datadir/%name/
 %_man1dir/osd_cat.1*
 
 %changelog
+* Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 2.2.14-alt11
+- Fixed build
+
 * Sat Sep  5 2020 Terechkov Evgenii <evg@altlinux.org> 2.2.14-alt10
 - Drop more self-obsoletes
 
