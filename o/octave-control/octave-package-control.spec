@@ -5,8 +5,8 @@ BuildRequires: /usr/bin/octave-config makeinfo
 %define octpkg control
 Epoch: 1
 Name: octave-%octpkg
-Version: 3.2.0
-Release: alt2
+Version: 3.3.1
+Release: alt1
 Summary: Computer-Aided Control System Design
 
 Group: Sciences/Mathematics
@@ -40,13 +40,16 @@ Computer-Aided Control System Design (CACSD) Tools for GNU Octave, based on the 
 %octave_install
 
 %files
-%doc COPYING NEWS DESCRIPTION doc
+%doc NEWS COPYING DESCRIPTION doc
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 1:3.3.1-alt1
+- regenerated from template by package builder
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.2.0-alt2
 - rebuild with octave 5
 
