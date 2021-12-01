@@ -1,8 +1,15 @@
 %global _unpackaged_files_terminate_build 1
 
+# man build has heavy pandoc dependency
+%ifnarch %e2k
+%def_enable man
+%else
+%def_disable man
+%endif
+
 Name:		fscryptctl
 Version:	1.0.0
-Release:	alt2
+Release:	alt3
 Summary:	A low-level tool for the management of Linux kernel filesystem encryption
 
 Group:		System/Kernel and hardware
@@ -11,6 +18,7 @@ URL:		https://github.com/google/fscryptctl
 Source:     %name-%version.tar
 
 %{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm python3-module-pytest e2fsprogs}}
+%{?!_disable_man:BuildRequires: pandoc}
 
 Requires:   kernel >= 5.4
 
@@ -32,11 +40,24 @@ wrapping, or PAM integration.
 
 %build
 %make_build \
-    CFLAGS="%optflags"
+    CFLAGS="%optflags" \
+    %{?_disable_man:fscryptctl}
 
 %install
-%makeinstall_std \
+%if_enabled man
+    target=install
+%else
+    target=install-bin
+%endif
+
+%make_install $target \
+    DESTDIR=%buildroot \
     PREFIX="/usr"
+
+%if_enabled man
+# duplicates man
+rm %name.1.md
+%endif
 
 %check
 mkdir -p /usr/src/bin
@@ -46,9 +67,17 @@ vm-run --kvm=cond --sbin make test-all
 
 %files
 %_bindir/%name
+%if_enabled man
+%_man1dir/%name.1*
+%endif
 %doc *.md
 
 %changelog
+* Wed Dec 01 2021 Andrew Savchenko <bircoph@altlinux.org> 1.0.0-alt3
+- Fix tests on kernels >= 5.15 where key entropy requirement is
+  relaxed, upstream issue #26.
+- Build man page on arches where pandoc is available.
+
 * Mon May 10 2021 Vitaly Chikunov <vt@altlinux.org> 1.0.0-alt2
 - spec: Run tests in %%check.
 
