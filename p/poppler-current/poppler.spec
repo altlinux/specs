@@ -41,13 +41,13 @@
 %define bugfix 0
 
 %if_disabled compat
-%define pkgname %{rname}-current
+%define pkgname %rname-current
 %else
 %define pkgname %rname%somajor
 %endif
 Name: %pkgname
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 %if_disabled compat
 %define poppler_devel lib%rname-devel
@@ -204,11 +204,11 @@ Requires: %libpoppler
 %description -n %libpoppler_glib
 Glib frontend library for %rname
 
-%package -n libpoppler_cpp
+%package -n %libpoppler_cpp
 Summary: Pure C++ wrapper for poppler
 Group: System/Libraries
 Requires: %libpoppler
-%description -n libpoppler_cpp
+%description -n %libpoppler_cpp
 Pure C++ wrapper for poppler
 
 %package -n %poppler_devel
@@ -226,7 +226,7 @@ Libraries, include files, etc you can use to develop poppler applications
 %package -n %poppler_cpp_devel
 Summary: Development files for C++ wrapper
 Group: Development/C++
-Requires: libpoppler_cpp
+Requires: %libpoppler_cpp
 %if_enabled xpdfheaders
 Requires: %poppler_devel
 %endif
@@ -430,7 +430,7 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %if_enabled cpp
-%files -n libpoppler_cpp
+%files -n %libpoppler_cpp
 %_libdir/libpoppler-cpp.so.%somajor_cpp
 %_libdir/libpoppler-cpp.so.%somajor_cpp.*
 %if_enabled devel
@@ -461,6 +461,9 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
+* Wed Dec 01 2021 Sergey V Turchin <zerg@altlinux.org> 21.11.0-alt3
+- fix libpoppler_cpp package name
+
 * Tue Nov 30 2021 Sergey V Turchin <zerg@altlinux.org> 21.11.0-alt2
 - rename source package name
 
