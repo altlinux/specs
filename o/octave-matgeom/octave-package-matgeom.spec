@@ -3,7 +3,7 @@ BuildRequires: makeinfo
 # END SourceDeps(oneline)
 %define octpkg matgeom
 Name: octave-%octpkg
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 Summary: Computational Geometry
 
@@ -38,13 +38,16 @@ Geometry toolbox for 2D/3D geometric computing
 %octave_install
 
 %files
-%doc NEWS DESCRIPTION COPYING
+%doc DESCRIPTION NEWS COPYING
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 1.2.3-alt1
+- regenerated from template by package builder
+
 * Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1
 - initial import by package builder
 
