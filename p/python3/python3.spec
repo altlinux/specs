@@ -86,7 +86,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %endif
 
 Name: python3
-Version: %{pybasever}.8
+Version: %{pybasever}.9
 Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
@@ -1014,6 +1014,9 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Wed Dec 01 2021 Grigory Ustinov <grenka@altlinux.org> 3.9.9-alt1
+- Updated to upstream version 3.9.9.
+
 * Wed Dec 01 2021 Grigory Ustinov <grenka@altlinux.org> 3.9.8-alt1
 - Updated to upstream version 3.9.8.
 - Added /proc to BR's (Closes: #41006).
