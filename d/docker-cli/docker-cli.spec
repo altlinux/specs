@@ -11,7 +11,7 @@
 
 Name:       docker-cli
 Version:    20.10.11
-Release: alt1
+Release: alt2
 Summary: Docker CLI
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -78,6 +78,10 @@ install -Dp -m 644 contrib/completion/zsh/_docker %{buildroot}%{_datadir}/zsh/si
 # install fish completion
 install -Dp -m 644 contrib/completion/fish/docker.fish %{buildroot}%{_datadir}/fish/completions/docker.fish
 
+# install CLI plugins dir
+install -d %{buildroot}%{_libexecdir}/docker/cli-plugins
+
+
 %files
 %doc AUTHORS LICENSE
 %doc MAINTAINERS NOTICE
@@ -89,8 +93,12 @@ install -Dp -m 644 contrib/completion/fish/docker.fish %{buildroot}%{_datadir}/f
 %{_datadir}/bash-completion/completions/docker
 %{_datadir}/zsh/site-functions/_docker
 %{_datadir}/fish/completions/docker.fish
+%dir %{_libexecdir}/docker/cli-plugins
 
 %changelog
+* Wed Dec 1 2021 Vladimir Didenko <cow@altlinux.org> 20.10.11-alt2
+- pack cli plugins directory
+
 * Wed Dec 1 2021 Vladimir Didenko <cow@altlinux.org> 20.10.11-alt1
 - new release
 
