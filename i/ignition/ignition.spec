@@ -2,8 +2,8 @@
 %define dracutlibdir %{_prefix}/lib/dracut
 
 Name:     ignition
-Version:  2.12.0
-Release:  alt2
+Version:  2.13.0
+Release:  alt1
 
 Summary:  First boot installer and configuration tool
 License:  Apache-2.0
@@ -88,6 +88,9 @@ popd
 %_bindir/%name-validate
 
 %changelog
+* Thu Dec 02 2021 Alexey Shabalin <shaba@altlinux.org> 2.13.0-alt1
+- new version 2.13.0
+
 * Fri Sep 15 2021 Andrey Sokolov <keremet@altlinux.org> 2.12.0-alt2
 - Fix formatting to xfs and swap
 
