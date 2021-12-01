@@ -2,7 +2,7 @@
 
 Name: feh
 Version: 3.7.2
-Release: alt1
+Release: alt2
 Summary: Image viewer using Imlib 2
 Group: Graphics
 License: BSD
@@ -16,7 +16,7 @@ Patch0:         feh-1.10.1-dejavu.patch
 
 # Automatically added by buildreq on Thu Sep 08 2011
 # optimized out: imlib2 imlib2-devel libX11-devel xorg-xproto-devel zlib-devel
-BuildRequires: libXinerama-devel libXt-devel libcurl-devel libgiblib-devel libpng-devel libexif-devel libjpeg-utils
+BuildRequires: libXinerama-devel libXt-devel libcurl-devel libgiblib-devel libpng-devel libexif-devel libjpeg-utils fonts-ttf-dejavu imlib2-devel
 
 %description
 feh is a versatile and fast image viewer using imlib2, the
@@ -57,6 +57,9 @@ export PREFIX="%_prefix"
 %doc COPYING
 
 %changelog
+* Wed Dec 01 2021 Ilya Mashkin <oddity@altlinux.ru> 3.7.2-alt2
+- Add BR fonts-ttf-dejavu
+
 * Sat Sep 25 2021 Ilya Mashkin <oddity@altlinux.ru> 3.7.2-alt1
 - 3.7.2
 
