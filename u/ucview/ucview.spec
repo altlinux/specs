@@ -1,7 +1,7 @@
 Summary: Image and video capture application using unicap toolkit
 Name: ucview
-Version: 0.31
-Release: alt1.1
+Version: 0.33
+Release: alt1
 License: GPLv2+
 Group: Video
 Url: http://www.unicap-imaging.org/
@@ -10,6 +10,7 @@ Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 Source: http://www.unicap-imaging.org/downloads/%name-%version.tar.gz
 Source1: %name.desktop
 Patch: %name-0.31-alt-DSO.patch
+Patch1:           ucview-0.33-gmodule.patch
 # Automatically added by buildreq on Sun Aug 16 2009
 BuildRequires: GConf intltool libGConf-devel libglade-devel libunicap-devel libunicapgtk-devel libucil-devel
 
@@ -33,6 +34,8 @@ ucview plugins
 %prep
 %setup -q
 %patch -p2
+%patch1 -p1 -b .gmodule
+
 %autoreconf
 
 %build
@@ -67,6 +70,9 @@ rm -f %buildroot%_libdir/%name/plugins/*.{a,la}
 %_includedir/*
 
 %changelog
+* Thu Dec 02 2021 Ilya Mashkin <oddity@altlinux.ru> 0.33-alt1
+- 0.33
+
 * Wed Jun 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.31-alt1.1
 - Fixed build
 
