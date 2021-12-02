@@ -6,7 +6,7 @@ epoch:1
 %define kernel_need_version	5.10
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	5.10
-%define kernel_sublevel .63
+%define kernel_sublevel .81
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -56,7 +56,7 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Patch0: %name-%version-%release.patch
 
-ExclusiveArch: armh aarch64
+ExclusiveArch: aarch64
 
 %define make_target Image
 %ifarch %arm
@@ -505,6 +505,15 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Tue Nov 30 2021 Dmitry Terekhin <jqt4@altlinux.org> 1:5.10.81-alt1
+- Updated to 5.10.81 (still RPi-specific)
+- https://github.com/raspberrypi/linux.git rpi-5.10.y
+- commit e16e31540935728ce57f22a1de56e8b2da5dd33b
+- CONFIG_NF_TABLES=m
+- Add some NFT modules
+- (closes: 41084)
+- Build for armh is off
+
 * Thu Oct 07 2021 Dmitry Terekhin <jqt4@altlinux.org> 1:5.10.63-alt1
 - Updated to 5.10.63 (still RPi-specific)
 - https://github.com/raspberrypi/linux.git rpi-5.10.y
