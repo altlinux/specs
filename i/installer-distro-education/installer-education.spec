@@ -1,6 +1,6 @@
 Name:    installer-distro-education
-Version: 9.2
-Release: alt5
+Version: 10.0
+Release: alt1
 
 Summary: Installer common files for ALT Education
 License: GPL-2.0
@@ -36,7 +36,6 @@ Requires: alterator-luks
 Requires: x-cursor-theme-jimmac
 Requires: bc
 #features
-Requires: installer-feature-local-clock
 Requires: installer-feature-autohostname-stage2
 Requires: installer-feature-samba-usershares-stage2
 Requires: installer-feature-desktop-other-fs-stage2
@@ -116,6 +115,9 @@ rm -rf %buildroot%_datadir/alterator/help/ru_RU \
 %_datadir/install2/initinstall.d/10-vm-profile.sh
 
 %changelog
+* Thu Dec 02 2021 Andrey Cherepanov <cas@altlinux.org> 10.0-alt1
+- Remove installer-feature-local-clock from requirements.
+
 * Fri Aug 20 2021 Michael Shigorin <mike@altlinux.org> 9.2-alt5
 - E2K: increase /boot size from 512 Mb to 1 Gb for serviceability.
 
