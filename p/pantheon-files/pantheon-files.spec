@@ -2,13 +2,13 @@
 
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 6.0
+%define ver_major 6.1
 %define _name files
 %define xdg_name org.pantheon.%_name
 %define rdn_name io.elementary.%_name
 
 Name: pantheon-files
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: The file manager of the Pantheon desktop
@@ -30,12 +30,13 @@ Provides: %rdn_name = %version-%release
 #Suggests: tumbler-plugins-extra
 Requires: polkit zeitgeist tumbler elementary-icon-theme
 
+%define gtk_ver 3.22.25
 %define granite_ver 6.1.0
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools
 BuildRequires: intltool libappstream-glib-devel flatpak-builder
-BuildRequires: libsqlite3-devel libgtk+3-devel
+BuildRequires: libsqlite3-devel libgtk+3-devel >= %gtk_ver
 BuildRequires: libgee0.8-devel libgranite-devel
 BuildRequires: libgail3-devel libdbus-glib-devel libnotify-devel
 BuildRequires: libxkbcommon-devel libgranite-vala >= %granite_ver
@@ -71,7 +72,7 @@ This package provides Vala language bindings for the pantheon-files.
 %setup -n %_name-%version
 
 %build
-%meson -Dwith-unity=disabled
+%meson
 %meson_build
 
 %install
@@ -111,6 +112,9 @@ This package provides Vala language bindings for the pantheon-files.
 %endif
 
 %changelog
+* Thu Dec 02 2021 Yuri N. Sedunov <aris@altlinux.org> 6.1.0-alt1
+- updated to 6.1.0-37-g1e03757fb
+
 * Mon Nov 01 2021 Yuri N. Sedunov <aris@altlinux.org> 6.0.4-alt1
 - updated to 6.0.4-5-g4f6823d72
 
