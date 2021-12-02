@@ -28,7 +28,7 @@
 
 Name: dogtag-pki
 Version: 11.0.0
-Release: alt1
+Release: alt2
 
 Summary: Dogtag PKI Certificate System
 License: %gpl2only
@@ -65,7 +65,6 @@ BuildRequires: resteasy
 BuildRequires: tomcatjss >= %tomcatjss_version
 BuildRequires: xalan-j2
 BuildRequires: slf4j-jdk14
-BuildRequires: idm-console-framework
 BuildRequires: junit
 
 # build dependency to build man pages
@@ -777,6 +776,9 @@ fi
 %_datadir/pki/server/webapps/pki/WEB-INF/
 
 %changelog
+* Thu Dec 02 2021 Stanislav Levin <slev@altlinux.org> 11.0.0-alt2
+- Cleaned up buildtime dependency on no longer shipped idm-console.
+
 * Thu Nov 25 2021 Stanislav Levin <slev@altlinux.org> 11.0.0-alt1
 - 10.10.6 -> 11.0.0.
 
