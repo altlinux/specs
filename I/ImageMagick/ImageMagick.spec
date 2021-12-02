@@ -16,7 +16,7 @@
 
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt1
+Release: alt2
 
 Summary: An X application for displaying and manipulating images
 License: ImageMagick
@@ -270,6 +270,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Thu Dec 02 2021 Anton Farygin <rider@altlinux.ru> 6.9.12.31-alt2
+- removed the bin/display from menu in all window managers (closes: #31789)
+
 * Thu Nov 25 2021 Anton Farygin <rider@altlinux.ru> 6.9.12.31-alt1
 - new version 6.9.12.31
 
