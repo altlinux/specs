@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 11.2.1
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -17,7 +17,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20210910
+%define snapshot 20211202
 
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
@@ -2212,6 +2212,13 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Thu Dec 02 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 11.2.1-alt2
+- Updated to merged branches from git://gcc.gnu.org/git/gcc.git:
+  + vendors/redhat/heads/gcc-11-branch
+  commit 0990a48aaf68b56a3737fdb290328df1da9095cc;
+  + releases/gcc-11 (snapshot 20211202)
+  commit 29c5aa76b47a0ac27db05b4f5f9481c45efd653e.
+
 * Sun Sep 12 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 11.2.1-alt1
 - Updated to merged branches from git://gcc.gnu.org/git/gcc.git:
   + vendors/redhat/heads/gcc-11-branch
