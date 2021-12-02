@@ -27,7 +27,7 @@
 Summary: Firmware update daemon
 Name: fwupd
 Version: 1.7.2
-Release: alt1
+Release: alt2
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
 Url: https://github.com/fwupd/fwupd
@@ -74,7 +74,6 @@ BuildRequires: python3-module-Pillow
 BuildRequires: python3-module-pycairo
 BuildRequires: python3-module-pygobject3
 BuildRequires: vala-tools
-BuildRequires: gi-docgen
 BuildRequires: /proc
 
 %if_enabled uefi
@@ -91,7 +90,7 @@ Obsoletes: fwupdate
 %endif
 
 Requires: bubblewrap
-Requires: libgusb >= 0.3.4
+Requires: libgusb >= 0.3.5
 
 Obsoletes: fwupd-labels <= %EVR
 
@@ -371,6 +370,10 @@ rm -rf %buildroot%_docdir/fwupd
 %config(noreplace)%_sysconfdir/fwupd/remotes.d/fwupd-tests.conf
 
 %changelog
+* Thu Dec 02 2021 Nikolai Kostrigin <nickel@altlinux.org> 1.7.2-alt2
+- remove unused BR: gi-docgen causing extensive dependencies on python modules
+- update minimal required version of libgusb to 0.3.5
+
 * Mon Nov 22 2021 Anton Farygin <rider@altlinux.ru> 1.7.2-alt1
 - 1.7.2
 
