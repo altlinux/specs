@@ -2,8 +2,8 @@
 
 Name: 	       pcs
 Epoch:         1
-Version:       0.10.11
-Release:       alt2
+Version:       0.11.1
+Release:       alt1
 Summary:       Pacemaker/Corosync configuration system
 License:       GPL-2.0 and Apache-2.0 and MIT
 Group:         System/Servers
@@ -173,6 +173,9 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Wed Dec 01 2021 Andrey Cherepanov <cas@altlinux.org> 1:0.11.1-alt1
+- New version.
+
 * Fri Nov 26 2021 Egor Ignatov <egori@altlinux.org> 1:0.10.11-alt2
 - Add missing dependencies
 
