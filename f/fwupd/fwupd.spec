@@ -27,7 +27,7 @@
 Summary: Firmware update daemon
 Name: fwupd
 Version: 1.7.2
-Release: alt2
+Release: alt3
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
 Url: https://github.com/fwupd/fwupd
@@ -169,6 +169,9 @@ export FWUPD_PLUGINDIR=%buildroot%fwupd_pluginsdir/
 
 %install
 %meson_install
+%ifarch %ix86
+rm -f %buildroot%_libexecdir/fwupd/fwupd-detect-cet ||:
+%endif
 
 mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 rm -rf %buildroot%_docdir/fwupd
@@ -370,6 +373,10 @@ rm -rf %buildroot%_docdir/fwupd
 %config(noreplace)%_sysconfdir/fwupd/remotes.d/fwupd-tests.conf
 
 %changelog
+* Thu Dec 02 2021 Nikolai Kostrigin <nickel@altlinux.org> 1.7.2-alt3
+- improve package backportability by unconditionally not packing
+  of fwupd-detect-cet on ix86 at all
+
 * Thu Dec 02 2021 Nikolai Kostrigin <nickel@altlinux.org> 1.7.2-alt2
 - remove unused BR: gi-docgen causing extensive dependencies on python modules
 - update minimal required version of libgusb to 0.3.5
