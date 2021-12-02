@@ -5,7 +5,7 @@
 
 %define libname libhtmltmplpro
 Name: htmltmplpro
-Version: 0.9520
+Version: 0.9521
 Release: alt1
 
 Summary: HTML::Template compatible HTML template library
@@ -126,6 +126,9 @@ make check
 %endif
 
 %changelog
+* Thu Dec 02 2021 Igor Vlasenko <viy@altlinux.org> 0.9521-alt1
+- new version; see Changes
+
 * Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 0.9520-alt1
 - new version; see Changes
 
