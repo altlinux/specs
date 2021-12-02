@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.4.4
+Version: 3.4.5
 Release: alt1
 
 Source:%name-%version.tar
@@ -83,6 +83,9 @@ __EOF__
 
 
 %changelog
+* Thu Dec 02 2021 Sergey V Turchin <zerg at altlinux dot org> 3.4.5-alt1
+- align messagboxes text to left
+
 * Fri Oct 15 2021 Sergey V Turchin <zerg at altlinux dot org> 3.4.4-alt1
 - fix eye icon on password field
 
