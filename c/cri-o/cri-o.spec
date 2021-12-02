@@ -5,7 +5,7 @@
 
 %global provider_prefix %provider/%project/%repo
 %global import_path %provider_prefix
-%global commit d388528dbed26b93c5bc1c89623607a1e597aa57
+%global commit 63ca93845d5fe05cdca826367afcb601ece8d7ad
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %global _unpackaged_files_terminate_build 1
@@ -13,7 +13,7 @@
 %define _libexecdir /usr/libexec
 
 Name: cri-o
-Version: 1.20.0
+Version: 1.22.1
 Release: alt1
 Summary: Kubernetes Container Runtime Interface for OCI-based containers
 Group: Development/Other
@@ -53,16 +53,12 @@ Provides: cri-runtime
 
 sed -i 's/\/local//' contrib/systemd/crio.service
 sed -i 's/\/local//' contrib/systemd/crio-wipe.service
-sed -i -e 's|/usr/bin/mkdir|/bin/mkdir|; s|/usr/bin/touch|/bin/touch|; s|/usr/bin/rm|/bin/rm|; s|/usr/bin/bash|/bin/bash|' \
-        contrib/systemd/crio-shutdown.service
 sed -i 's/\/local//' docs/crio.8.md
 sed -i 's/\/local//' docs/crio.conf.5.md
 
 sed -i 's/install.config: crio.conf/install.config:/' Makefile
 sed -i 's/install.bin: binaries/install.bin:/' Makefile
 sed -i 's/\.gopathok//' Makefile
-sed -i 's/include Makefile.inc//' Makefile
-sed -i 's/crio: git-vars/crio:/' Makefile
 sed -i 's|$(PREFIX)/lib/systemd/system|$(DESTDIR)/lib/systemd/system|g' Makefile
 
 %build
@@ -128,6 +124,12 @@ install -p -m 644 contrib/sysconfig/crio %buildroot%_sysconfdir/sysconfig/crio
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Thu Dec 02 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.1-alt1
+- 1.22.1
+
+* Wed Jun 30 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.21.1-alt1
+- new version 1.21.1
+
 * Thu Jan 21 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.20.0-alt1
 - new version 1.20.0
 

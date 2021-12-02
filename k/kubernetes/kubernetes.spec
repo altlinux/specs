@@ -6,7 +6,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: kubernetes
-Version: 1.20.8
+Version: 1.22.4
 Release: alt1
 Summary: Container cluster management
 
@@ -269,11 +269,6 @@ install -p -m 0644 -t %buildroot/%_sysconfdir/systemd/system.conf.d %SOURCE3
 %preun node
 %preun_service kube-proxy
 
-%post crio
-for mod in $(cat %_modulesloaddir/crio.conf); do
-    /sbin/modprobe -b "$mod"
-done
-
 %files common
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/config
@@ -329,6 +324,9 @@ done
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Thu Dec 02 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.4-alt1
+- 1.22.4
+
 * Wed Jun 30 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.20.8-alt1
 - 1.20.8
 

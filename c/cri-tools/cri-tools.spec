@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:     cri-tools
-Version:  1.20.0
+Version:  1.22.0
 Release:  alt1
 
 Summary:  CLI and validation tools for Kubelet Container Runtime Interface (CRI)
@@ -42,7 +42,9 @@ pushd .build/src/%import_path
 go test -buildmode=pie -o $BUILDDIR/bin/critest -c "$PWD"/cmd/critest
 popd
 
-$BUILDDIR/bin/crictl completion > crictl-bash-completion
+for shell in bash zsh fish; do
+    $BUILDDIR/bin/crictl completion "$shell" > "crictl-$shell-completion"
+done
 
 %install
 export BUILDDIR="$PWD/.build"
@@ -53,15 +55,26 @@ export IGNORE_SOURCES=1
 install -Dpm 644 docs/*.1 -t %buildroot/%_man1dir
 rm docs/*.1
 install -Dpm 644 crictl-bash-completion -T %buildroot/%_datadir/bash-completion/completions/crictl
+install -Dpm 644 crictl-zsh-completion -T %buildroot/%_datadir/zsh/site-functions/_crictl
+install -Dpm 644 crictl-fish-completion -T %buildroot%_datadir/fish/vendor_completions.d/crictl.fish
 
 %files
 %_bindir/crictl
 %_bindir/critest
 %_datadir/bash-completion/completions/crictl
+%_datadir/zsh/site-functions/_crictl
+%_datadir/fish/vendor_completions.d/crictl.fish
 %doc %_man1dir/*
 %doc docs
 
 %changelog
+* Thu Dec 02 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.0-alt1
+- new version 1.22.0
+- add zsh and fish completions
+
+* Wed Jun 30 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.21.0-alt1
+- new version 1.21.0
+
 * Fri Jan 22 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.20.0-alt1
 - new version 1.20.0
 
