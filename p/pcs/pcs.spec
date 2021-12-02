@@ -3,7 +3,7 @@
 Name: 	       pcs
 Epoch:         1
 Version:       0.11.1
-Release:       alt1
+Release:       alt2
 Summary:       Pacemaker/Corosync configuration system
 License:       GPL-2.0 and Apache-2.0 and MIT
 Group:         System/Servers
@@ -108,7 +108,8 @@ export PATH=/sbin:$PATH
     --enable-use-local-cache-only \
     --enable-individual-bundling \
     --localstatedir=%_var \
-    PYTHON=%__python3
+    PYTHON=%__python3 \
+    SYSTEMCTL="/bin/systemctl"
 %make_build
 
 %install
@@ -173,6 +174,10 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Thu Dec 02 2021 Egor Ignatov <egori@altlinux.org> 1:0.11.1-alt2
+- Explicitly set SYSTEMCTL for configure script (pcs systemd driver
+  didn't work because systemctl_binary in settings.py was not set).
+
 * Wed Dec 01 2021 Andrey Cherepanov <cas@altlinux.org> 1:0.11.1-alt1
 - New version.
 
