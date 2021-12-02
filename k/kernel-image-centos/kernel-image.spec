@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 23
+%define centos_release 24
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -613,6 +613,21 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Dec 02 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.24-alt1.el9
+- perf test: Handle fd gaps in test__dso_data_reopen
+- perf tests vmlinux-kallsyms: Ignore hidden symbols
+- perf script: Fix PERF_SAMPLE_WEIGHT_STRUCT support
+- redhat/kernel.spec.template: Link perf with --export-dynamic
+- xfs: fix I_DONTCACHE
+- Fix virtio problem on s390x with raw DASD devices
+- net/tls: backport fixes from 5.15
+- x86: hv: Hyper-V x86-64 updates for Centos Stream 9
+- Upgrade the SMC driver for s390x to latest from upstream
+- cifs: enable SMB_DIRECT in RHEL9
+- mpt3sas: driver update
+- Support DMA implementation of Offload Service Engine (OSE) for Elkhart Lake
+- vmxnet3: Update network driver for RHEL 9.0
+
 * Tue Nov 30 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.23-alt1.el9
 - CNB: pci: add several VPD helpers
 
