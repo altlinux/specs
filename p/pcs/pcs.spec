@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define pyagentx_version 0.4.pcs.2
 
 Name: 	       pcs
 Epoch:         1
 Version:       0.11.1
-Release:       alt2
+Release:       alt3
 Summary:       Pacemaker/Corosync configuration system
 License:       GPL-2.0 and Apache-2.0 and MIT
 Group:         System/Servers
@@ -152,7 +153,11 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %_sbindir/pcsd
 %_initdir/pcsd
 %_libdir/pcsd
+%dir %_libdir/pcs
+%dir %_libdir/pcs/pcs_bundled
+%dir %_libdir/pcs/pcs_bundled/packages/
 %_libdir/pcs/pcs_internal
+%_libdir/pcs/data
 %config(noreplace) %_sysconfdir/pam.d/pcsd
 %config(noreplace) %_sysconfdir/sysconfig/pcsd
 %config(noreplace) %_logrotatedir/pcsd
@@ -174,6 +179,9 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Fri Dec 03 2021 Egor Ignatov <egori@altlinux.org> 1:0.11.1-alt3
+- package ocf-1.0.rng and ocf-1.1.rng
+
 * Thu Dec 02 2021 Egor Ignatov <egori@altlinux.org> 1:0.11.1-alt2
 - Explicitly set SYSTEMCTL for configure script (pcs systemd driver
   didn't work because systemctl_binary in settings.py was not set).
