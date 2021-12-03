@@ -1,5 +1,5 @@
 Name:     kde5-profile
-Version:  1.1
+Version:  1.2
 Release:  alt1
 
 Summary:  Profile for run KDE5 apps and show in menu in any other DE
@@ -28,6 +28,9 @@ install -Dm 0755 kde5.sh %buildroot%_sysconfdir/profile.d/kde5.sh
 %_sysconfdir/profile.d/kde5.sh
 
 %changelog
+* Fri Dec 03 2021 Andrey Cherepanov <cas@altlinux.org> 1.2-alt1
+- Do not override completely XDG_DATA_DIRS.
+
 * Tue Dec 04 2018 Andrey Cherepanov <cas@altlinux.org> 1.1-alt1
 - Require kf5-kinit.
 
