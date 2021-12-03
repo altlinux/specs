@@ -1,5 +1,5 @@
 Name:     kde5-profile
-Version:  1.3
+Version:  1.4
 Release:  alt1
 
 Summary:  Profile for run KDE5 apps and show in menu in any other DE
@@ -28,6 +28,9 @@ install -Dm 0755 kde5.sh %buildroot%_sysconfdir/profile.d/kde5.sh
 %_sysconfdir/profile.d/kde5.sh
 
 %changelog
+* Fri Dec 03 2021 Andrey Cherepanov <cas@altlinux.org> 1.4-alt1
+- Use default path to XDG_CONFIG_DIRS and XDG_DATA_DIRS it they are empty.
+
 * Fri Dec 03 2021 Andrey Cherepanov <cas@altlinux.org> 1.3-alt1
 - Do not override any environment variables.
 
