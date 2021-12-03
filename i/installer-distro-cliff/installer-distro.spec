@@ -1,7 +1,7 @@
 %define distro cliff
 Name: installer-distro-%distro
 Version: 8.2
-Release: alt7
+Release: alt8
 
 License: GPL
 Group: System/Configuration/Other
@@ -89,6 +89,9 @@ cp -a steps.d/* %buildroot%install2dir/steps
 %files stage3
 
 %changelog
+* Fri Dec 03 2020 Denis Medvedev <nbr@altlinux.org> 8.2-alt8
+- avahi and nrpe disabled by default
+
 * Wed Nov 11 2020 Anton Midyukov <antohami@altlinux.org> 8.2-alt7
 - Require alterator-officer by installer-distro-cliff-stage2 only
 - Not add officer step into alterator-setup
