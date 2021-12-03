@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 24
+%define centos_release 25
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -613,6 +613,14 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Dec 03 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.25-alt1.el9
+- fix  '/proc/pid/wchan is always "0"'
+- powerpc/bpf: Fix write protecting JIT code
+- vfs: check fd has read access in kernel_read_file_from_fd()
+- Disable idmapped mounts
+- Sync s390x KVM code with upstream kernel v5.15
+- redhat/configs: Remove CONFIG_INFINIBAND_I40IW
+
 * Thu Dec 02 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.24-alt1.el9
 - perf test: Handle fd gaps in test__dso_data_reopen
 - perf tests vmlinux-kallsyms: Ignore hidden symbols
