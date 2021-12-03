@@ -17,7 +17,7 @@
 %define docdir %_docdir/%name-%version-doc
 
 Name: lighttpd
-Version: 1.4.61
+Version: 1.4.62
 Release: alt1
 
 Summary: A fast webserver with minimal memory-footprint
@@ -190,6 +190,7 @@ libtoolize -f -c
     %{?_with_geoip:	  --with-geoip} \
     %{?_with_maxminddb:	  --with-maxminddb} \
     %{?_with_lua:	  LUA_CFLAGS="-I/usr/include/" LUA_LIBS="-llua"}
+
 %make_build
 
 # run tests for sanity checks
@@ -353,6 +354,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Fri Dec 03 2021 Alexei Takaseev <taf@altlinux.org> 1.4.62-alt1
+- 1.4.62
+
 * Fri Oct 29 2021 Alexei Takaseev <taf@altlinux.org> 1.4.61-alt1
 - 1.4.61
 
