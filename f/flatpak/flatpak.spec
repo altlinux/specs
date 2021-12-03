@@ -14,7 +14,7 @@
 
 Name: flatpak
 Version: 1.12.2
-Release: alt1
+Release: alt2
 
 Summary: Application deployment framework for desktop apps
 Group: Development/Tools
@@ -168,7 +168,7 @@ install -d %buildroot%_localstatedir/lib/flatpak
 %_libexecdir/%name-oci-authenticator
 %dir %_localstatedir/lib/%name
 %_man1dir/%{name}*.1*
-%_sysconfdir/profile.d/%name.sh
+%attr(0755,root,root) %_sysconfdir/profile.d/%name.sh
 %_sysconfdir/dbus-1/system.d/%xdg_name.SystemHelper.conf
 %_datadir/dbus-1/interfaces/org.freedesktop.portal.Flatpak.xml
 %_datadir/dbus-1/services/org.freedesktop.portal.Flatpak.service
@@ -210,6 +210,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Fri Dec 03 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt2
+- /etc/profile.d/flatpak.sh: made executable (ALT #41495)
+
 * Sun Oct 17 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt1
 - 1.12.2
 
