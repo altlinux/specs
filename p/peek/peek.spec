@@ -1,6 +1,6 @@
 Name:           peek
 Version:        1.5.1
-Release:        alt1
+Release:        alt2
 
 Summary:        Simple animated GIF screen recorder with an easy to use interface
 
@@ -64,6 +64,9 @@ desktop-file-validate %buildroot%_desktopdir/com.uploadedlobster.peek.desktop
 %_datadir/dbus-1/services/com.uploadedlobster.peek.service
 
 %changelog
+* Fri Dec 03 2021 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.5.1-alt2
+- Change patch to fix python command for meson.build
+
 * Wed Dec 01 2021 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.5.1-alt1
 - new version (1.5.1) with rpmgs script
 - Add patch to fix python command for meson.build
