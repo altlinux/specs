@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.23.4
-Release: alt3
+Release: alt4
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -498,6 +498,9 @@ done
 
 
 %changelog
+* Fri Dec 03 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.23.4-alt4
+- fix to set XDG variables against flatpak bug#41495 and same
+
 * Fri Dec 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:5.23.4-alt3
 - updated kscreenlocker-theme-pam patch
 
