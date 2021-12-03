@@ -1,11 +1,17 @@
 Name: conntrack-tools
 Version: 1.4.6
-Release: alt2
+Release: alt3
 Summary: Tool to manipulate netfilter connection tracking table
 Group: System/Kernel and hardware
 License: GPLv2
 Url: http://netfilter.org
 Source0: http://netfilter.org/projects/conntrack-tools/files/%name-%version.tar
+
+Source11: conntrackd.conf
+Source12: conntrackd.sysconfig
+Source13: conntrackd.init
+Source14: conntrackd.service
+Source15: conntrackd.logrotate
 
 BuildRequires: flex libnetfilter_conntrack-devel libmnl-devel
 BuildRequires: libnetfilter_cttimeout-devel libnetfilter_cthelper-devel libnetfilter_queue-devel
@@ -25,24 +31,45 @@ show an event message (one line) per newly established connection.
 %setup
 
 %build
-%autoreconf -fisv
-%configure --enable-systemd
+%autoreconf
+%configure --disable-static --enable-systemd
 %make
 
 %install
-make install DESTDIR=%buildroot
+%makeinstall_std
 rm -f %buildroot%_libdir/conntrack-tools/*.la
+
+mkdir -p %buildroot{%_sysconfdir/{conntrackd,sysconfig},%_logrotatedir,%_initdir,%_unitdir}
+install -pm0600 %SOURCE11 %buildroot%_sysconfdir/conntrackd/conntrackd.conf
+install -pm0644 %SOURCE12 %buildroot%_sysconfdir/sysconfig/conntrackd
+install -pm0755 %SOURCE13 %buildroot%_initdir/conntrackd
+install -pm0644 %SOURCE14 %buildroot%_unitdir/conntrackd.service
+install -pm0644 %SOURCE15 %buildroot%_logrotatedir/conntrackd
+
+%post
+%post_service conntrackd
+
+%preun
+%preun_service conntrackd
 
 %files
 %doc COPYING AUTHORS
+%config(noreplace) %_sysconfdir/conntrackd/conntrackd.conf
+%config(noreplace) %_sysconfdir/sysconfig/conntrackd
+%config(noreplace) %_logrotatedir/conntrackd
 %_sbindir/conntrack
 %_sbindir/nfct
 %_sbindir/conntrackd
+%_unitdir/conntrackd.service
+%_initdir/conntrackd
 %_libdir/%name/*.so
 %_man8dir/*
 %_man5dir/*
 
 %changelog
+* Fri Dec 03 2021 Alexey Shabalin <shaba@altlinux.org> 1.4.6-alt3
+- add sysv init script, systemd unit, logrotate config for conntrackd daemon
+
 * Fri Dec 18 2020 Anton Farygin <rider@altlinux.ru> 1.4.6-alt2
 - added libtirpc to BuildRequires against glibc-2.32
 
