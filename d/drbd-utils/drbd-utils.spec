@@ -6,7 +6,7 @@
 
 Name: drbd-utils
 Version: 9.19.1
-Release: alt3
+Release: alt4
 
 Summary: DRBD user-land tools and scripts
 License: GPLv2+
@@ -186,6 +186,9 @@ make test
 %_datadir/cluster/drbd.metadata
 
 %changelog
+* Fri Dec 03 2021 Egor Ignatov <egori@altlinux.org> 9.19.1-alt4
+- drbd.ocf: change type name 'numeric' to 'integer'
+
 * Mon Nov 29 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.19.1-alt3
 - add Provides and Obsoletes for bash-completion package
 
