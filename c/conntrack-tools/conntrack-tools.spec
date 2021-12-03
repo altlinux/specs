@@ -1,6 +1,6 @@
 Name: conntrack-tools
 Version: 1.4.6
-Release: alt4
+Release: alt5
 Summary: Tool to manipulate netfilter connection tracking table
 Group: System/Kernel and hardware
 License: GPLv2
@@ -68,6 +68,9 @@ install -pm0644 %SOURCE15 %buildroot%_logrotatedir/conntrackd
 %_man5dir/*
 
 %changelog
+* Sat Dec 04 2021 Alexey Shabalin <shaba@altlinux.org> 1.4.6-alt5
+- update systemd unit for start conntrackd before keepalived
+
 * Fri Dec 03 2021 Alexey Shabalin <shaba@altlinux.org> 1.4.6-alt4
 - config examples packaged to doc dir
 
