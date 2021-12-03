@@ -24,7 +24,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 9.990
+Version: 10.0
 Release: alt1
 Url: https://basealt.ru
 
@@ -360,6 +360,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Dec 02 2021 Mikhail Efremov <sem@altlinux.org> 10.0-alt1
+- Bump version.
+
 * Thu Nov 18 2021 Mikhail Efremov <sem@altlinux.org> 9.990-alt1
 - indexhtml: Year auto-substitution (by Anton V. Boyarshinov).
 - slideshow: Fix English slide 14.
