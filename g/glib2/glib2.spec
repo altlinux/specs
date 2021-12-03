@@ -29,7 +29,7 @@
 %def_disable check
 
 Name: glib2
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -174,6 +174,7 @@ Provides: gvfs-utils = %version-%release %_bindir/gio
 Requires: %name = %version-%release
 Requires: gsettings-desktop-schemas
 Requires: shared-mime-info >= 0.80
+Requires: desktop-file-utils
 
 %description -n libgio
 GIO is a VFS API, designed to replace GnomeVFS. This GIO implementation is
@@ -440,6 +441,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Dec 03 2021 Yuri N. Sedunov <aris@altlinux.org> 2.70.2-alt1
+- 2.70.2
+
 * Sun Nov 21 2021 Yuri N. Sedunov <aris@altlinux.org> 2.70.1-alt1
 - 2.70.1
 
