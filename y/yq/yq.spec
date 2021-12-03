@@ -3,7 +3,7 @@
 %def_enable check
 
 Name:    yq
-Version: 2.12.2
+Version: 2.13.0
 Release: alt1
 
 Summary: Command-line YAML, XML and TOML processor
@@ -45,7 +45,6 @@ It is a jq wrapper for YAML, XML and TOML documents.
 %python3_install
 
 %check
-sed -i '/expect_exit_codes=.* sys.stdin.isatt/d' ./test/test.py
 %__python3 ./test/test.py -v
 
 %files
@@ -55,6 +54,9 @@ sed -i '/expect_exit_codes=.* sys.stdin.isatt/d' ./test/test.py
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Dec 03 2021 Ivan A. Melnikov <iv@altlinux.org> 2.13.0-alt1
+- 2.13.0
+
 * Mon Jun 14 2021 Ivan A. Melnikov <iv@altlinux.org> 2.12.2-alt1
 - 2.12.2
 
