@@ -1,6 +1,6 @@
 Name: conntrack-tools
 Version: 1.4.6
-Release: alt3
+Release: alt4
 Summary: Tool to manipulate netfilter connection tracking table
 Group: System/Kernel and hardware
 License: GPLv2
@@ -53,7 +53,7 @@ install -pm0644 %SOURCE15 %buildroot%_logrotatedir/conntrackd
 %preun_service conntrackd
 
 %files
-%doc COPYING AUTHORS
+%doc COPYING AUTHORS doc
 %config(noreplace) %_sysconfdir/conntrackd/conntrackd.conf
 %config(noreplace) %_sysconfdir/sysconfig/conntrackd
 %config(noreplace) %_logrotatedir/conntrackd
@@ -62,11 +62,15 @@ install -pm0644 %SOURCE15 %buildroot%_logrotatedir/conntrackd
 %_sbindir/conntrackd
 %_unitdir/conntrackd.service
 %_initdir/conntrackd
+%dir %_libdir/%name
 %_libdir/%name/*.so
 %_man8dir/*
 %_man5dir/*
 
 %changelog
+* Fri Dec 03 2021 Alexey Shabalin <shaba@altlinux.org> 1.4.6-alt4
+- config examples packaged to doc dir
+
 * Fri Dec 03 2021 Alexey Shabalin <shaba@altlinux.org> 1.4.6-alt3
 - add sysv init script, systemd unit, logrotate config for conntrackd daemon
 
