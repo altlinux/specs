@@ -10,7 +10,7 @@
 
 Name: inkscape
 Version: 1.1
-Release: alt7
+Release: alt8
 
 Summary: A Vector Drawing Application
 
@@ -26,6 +26,7 @@ Source: %name-%version.tar
 Source1: inkview.desktop
 
 Patch: inkscape-1.1-fix-build-witch-gcc7.5.patch
+Patch2: 5724c21b9cb7b6176a7b36ca24068b148c817e82.patch
 
 # a program package can't have any provides
 AutoProv:no
@@ -145,6 +146,8 @@ Run checkinstall tests for %name.
 %prep
 %setup
 %patch -p1
+%patch2 -p1
+
 %ifarch %e2k
 # missing typeinfo fix
 cat >> src/inkscape-version.cpp.in << "EOF"
@@ -236,6 +239,9 @@ true
 %files checkinstall
 
 %changelog
+* Sat Dec 04 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt8
+- fix build with poppler 21.11.0 (thanks, zerg@) (ALT bug 41503)
+
 * Fri Aug 20 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt7
 - move add noarch files to data subpackage
 - rearrange build requires and requires
