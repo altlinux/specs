@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: ghex
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Binary editor for GNOME
@@ -86,6 +86,9 @@ developing applications that use GtkGHex library.
 %_pkgconfigdir/%libname.pc
 
 %changelog
+* Sat Dec 04 2021 Yuri N. Sedunov <aris@altlinux.org> 3.41.1-alt1
+- 3.41.1
+
 * Fri Sep 24 2021 Yuri N. Sedunov <aris@altlinux.org> 3.41.0-alt1
 - 3.41.0
 
