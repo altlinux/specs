@@ -12,7 +12,7 @@
 
 Name: plasma5-%rname
 Version: 5.23.4
-Release: alt1
+Release: alt2
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -224,6 +224,9 @@ done
 
 
 %changelog
+* Sat Dec 04 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.4-alt2
+- fix setup XDG_DATA_DIRS for flatpak
+
 * Wed Dec 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.4-alt1
 - new version
 
