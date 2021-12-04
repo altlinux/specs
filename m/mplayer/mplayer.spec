@@ -9,7 +9,7 @@
 %define subst_o_post() %{expand:%%{?_enable_%{1}:%{1}%{2},}}
 
 %define prerel %nil
-%define svnrev 38314
+%define svnrev 38327
 %define lname mplayer
 %define gname g%lname
 %define Name MPlayer
@@ -108,7 +108,7 @@
 %def_enable bs2b
 %def_enable dca
 %def_enable libdv
-%def_enable libilbc
+%def_disable libilbc
 %def_disable crystalhd
 %def_enable mad
 %def_disable toolame
@@ -315,7 +315,7 @@
 
 Name: %lname
 Version: 1.4
-Release: alt8.%svnrev.1
+Release: alt9.%svnrev.1
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -1156,6 +1156,10 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Sat Dec 04 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4-alt9.38327.1
+- Updated to SNV snapshot (revision 38327).
+- Fixed FTBFS: Disabled libilbc support.
+
 * Sun Oct 03 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4-alt8.38314.1
 - Updated to SVN snapshot (revision 38314).
 - Explicitly enabled libxml2.
