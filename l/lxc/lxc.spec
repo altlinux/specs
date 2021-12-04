@@ -39,7 +39,7 @@
 %add_findreq_skiplist %_libexecdir/lxc/lxc-net
 
 Name: lxc
-Version: 4.0.10
+Version: 4.0.11
 Release: alt1
 
 Summary: Linux Containers
@@ -54,11 +54,8 @@ Source1: lxc-net.sysconfig
 Source2: lxc-user-nic.control
 Source3: lxc.watch
 
-Patch2: 0002-FEDORA-lxc-net.service-wants-network-online.target.patch
-Patch3: 0003-ALT-Fixed-_have-macro-in-bash-completion.patch
-Patch4: 0004-ALT-tune-SysVinit-scripts.patch
-Patch5: 0005-ALT-make-lxc-and-lxc-net-init-scripts-disabled-by-de.patch
-Patch6: 0006-ALT-sysvinit-don-t-start-services-at-boot-by-default.patch
+# git://git.altlinux.org:/gears/l/lxc.git
+Patch: %name-%version-%release.patch
 
 Requires: lxc-core lxc-net lxc-templates
 
@@ -88,7 +85,7 @@ Obsoletes: lxc-sysvinit
 BuildArch: noarch
 Summary: Network interface for LXC with DHCP
 Group: System/Configuration/Networking
-Requires: iproute2 dnsmasq lxc-core
+Requires: iproute2 dnsmasq lxc-core iptables
 
 %package templates
 BuildArch: noarch
@@ -245,9 +242,8 @@ groupadd -r -f vmusers ||:
 %config(noreplace) %_sysconfdir/lxc/*
 %config(noreplace) %_sysconfdir/sysconfig/lxc*
 
-%dir %_datadir/bash-completion
 %dir %_datadir/bash-completion/completions
-%_datadir/bash-completion/completions/lxc
+%_datadir/bash-completion/completions/*
 
 %_bindir/lxc-*
 %_datadir/lxc/config
@@ -322,6 +318,10 @@ groupadd -r -f vmusers ||:
 %_man8dir/pam_cgfs.8*
 
 %changelog
+* Sat Dec 04 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.11-alt1
+- Updated to lxc-4.0.11.
+- lxc-net: Added missing dependency to iptables.
+
 * Thu Jul 22 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.10-alt1
 - Updated to lxc-4.0.10.
 
