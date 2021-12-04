@@ -10,7 +10,7 @@
 %{?_with_webkit2gtk_40:%define webkit_api_ver 4.0}
 
 Name: yelp
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Lightweight help browser for GNOME
@@ -131,6 +131,9 @@ Yelp.
 %_datadir/gtk-doc/html/lib%name/
 
 %changelog
+* Sat Dec 04 2021 Yuri N. Sedunov <aris@altlinux.org> 41.2-alt1
+- 41.2
+
 * Sat Sep 25 2021 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
 - 41.1
 
