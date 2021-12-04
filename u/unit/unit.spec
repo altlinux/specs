@@ -10,7 +10,7 @@
 %def_disable devel
 
 Name: unit
-Version: 1.26.0
+Version: 1.26.1
 Release: alt1
 
 Summary: NGINX Unit - Web Application Server
@@ -22,6 +22,8 @@ Vcs: http://hg.nginx.org/unit/
 # Mirror Vcs: https://github.com/nginx/unit
 
 Source: %name-%version.tar
+
+%define restart_flag /var/run/%name.restart
 
 BuildRequires: libssl-devel
 BuildRequires: libpcre-devel
@@ -151,6 +153,19 @@ ln pkg/rpm/rpmbuild/SOURCES/unit.example-python-config python-unit.config
 ln pkg/rpm/rpmbuild/SOURCES/unit.example-php-app     php-app.ru
 ln pkg/rpm/rpmbuild/SOURCES/unit.example-php-config  php-unit.config
 
+# Install filetrigger.
+mkdir -p %buildroot%_rpmlibdir
+cat > %buildroot%_rpmlibdir/%name.filetrigger <<'EOF'
+#!/bin/sh
+LC_ALL=C grep -Fqs %_sbindir/unitd &&
+        [ -f %restart_flag ] ||
+        exit 0
+rm -f %restart_flag
+service %name start
+exit 0
+EOF
+chmod 0755 %buildroot%_rpmlibdir/%name.filetrigger
+
 %check
 build/tests
 
@@ -158,8 +173,29 @@ build/tests
 /usr/sbin/groupadd -r -f _unit
 /usr/sbin/useradd -r -g _unit -d /var/empty -s /dev/null -N -c "%summary" _unit >/dev/null 2>&1 ||:
 
+rm -f %restart_flag
+if [ $1 -gt 1 ]; then
+	SYSTEMCTL=systemctl
+	if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+		$SYSTEMCTL is-active %name.service >/dev/null 2>&1 &&
+		$SYSTEMCTL stop %name.service &&
+		touch %restart_flag ||:
+        else
+		%_initdir/%name status >/dev/null 2>&1 &&
+		%_initdir/%name stop &&
+		touch %restart_flag ||:
+	fi
+fi
+
 %post
-%post_service unit
+if [ $1 -eq 1 ]; then
+	chkconfig --add %name
+else
+	chkconfig %name resetpriorities
+	SYSTEMCTL=systemctl
+	sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1 &&
+	"$SYSTEMCTL" daemon-reload ||:
+fi
 
 %preun
 %preun_service unit
@@ -170,6 +206,7 @@ build/tests
 %_sbindir/unitd
 %_initdir/unit
 %systemd_unitdir/unit.service
+%_rpmlibdir/%name.filetrigger
 %config(noreplace) %_sysconfdir/sysconfig/unit
 %config(noreplace) %_sysconfdir/logrotate.d/unit
 %dir %_localstatedir/unit
@@ -210,6 +247,10 @@ build/tests
 %endif
 
 %changelog
+* Sat Dec 04 2021 Vitaly Chikunov <vt@altlinux.org> 1.26.1-alt1
+- Update to 1.26.1 (2021-12-02).
+- Restart unit from filetrigger (closes: #41487).
+
 * Thu Nov 18 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.26.0-alt1
 - Update to 1.26.0-1 (2021-11-18).
 - Add condstop to unit.init.
