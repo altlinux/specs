@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.74
-Release: alt1
+Release: alt1.1
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -17,6 +17,8 @@ Source1: %{name}_install_agreement.txt
 Patch0: %name-apt-alt.patch
 Patch1: %name-desktop-alt.patch
 
+BuildRequires(Pre): rpm-build-python3
+
 Requires: bash >= 4.4
 Requires: curl
 Requires: glibc-pthread >= 2.15
@@ -26,8 +28,6 @@ Requires: libGL
 Requires: libnsl1
 Requires: libnss
 Requires: xz
-
-BuildRequires: rpm-build-python3
 
 %add_python3_path %_libexecdir/%name/%{name}_launcher
 
@@ -63,6 +63,9 @@ savegame and screenshot functionality, and many social features.
 %config %_udevrulesdir/60-%name-vr.rules
 
 %changelog 
+* Sun Dec 05 2021 Nazarov Denis <nenderus@altlinux.org> 1.0.0.74-alt1.1
+- Fix BR
+
 * Sat Dec 04 2021 Nazarov Denis <nenderus@altlinux.org> 1.0.0.74-alt1
 - Version 1.0.0.74
 
