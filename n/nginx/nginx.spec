@@ -4,7 +4,7 @@
 #============================================================================
 Name: nginx
 Summary: Fast HTTP server
-Version: 1.20.1
+Version: 1.20.2
 Release: alt1
 License: BSD
 Group: System/Servers
@@ -352,6 +352,10 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Sun Dec 05 2021 Anton Farygin <rider@altlinux.ru> 1.20.2-alt1
+- 1.20.2
+- updated pam module to 1.5.3
+
 * Thu Jun 17 2021 Anton Farygin <rider@altlinux.ru> 1.20.1-alt1
 - 1.20.1 (Fixes: CVE-2021-23017)
 - updated rtmp module to 1.2.2
