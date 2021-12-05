@@ -1,6 +1,6 @@
 Name:    installer-distro-education
 Version: 10.0
-Release: alt1
+Release: alt2
 
 Summary: Installer common files for ALT Education
 License: GPL-2.0
@@ -115,6 +115,9 @@ rm -rf %buildroot%_datadir/alterator/help/ru_RU \
 %_datadir/install2/initinstall.d/10-vm-profile.sh
 
 %changelog
+* Sun Dec 05 2021 Andrey Cherepanov <cas@altlinux.org> 10.0-alt2
+- Do not enable dnsmasq service by default because it crashes after suspend.
+
 * Thu Dec 02 2021 Andrey Cherepanov <cas@altlinux.org> 10.0-alt1
 - Remove installer-feature-local-clock from requirements.
 
