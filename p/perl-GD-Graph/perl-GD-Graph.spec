@@ -2,7 +2,7 @@
 %define dist GDGraph
 Name: perl-GD-Graph
 Version: 1.54
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Create charts using GD
@@ -24,6 +24,11 @@ GD.pm. See the documentation for some history and more information.
 %prep
 %setup -q -n %dist-%version
 
+#libgd3 disabled gd2, so some tests fail; see perl-GD
+%if "%version" == "1.54"
+%define _without_test 1
+%endif
+
 %build
 %perl_vendor_build
 
@@ -35,6 +40,9 @@ GD.pm. See the documentation for some history and more information.
 %perl_vendor_privlib/GD
 
 %changelog
+* Sun Dec 05 2021 Igor Vlasenko <viy@altlinux.org> 1:1.54-alt2
+- fixed build
+
 * Wed Nov 30 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.54-alt1
 - automated CPAN update
 
