@@ -1,0 +1,55 @@
+Name: xfishtank
+Version: 3.0.0
+Release: alt2
+
+Summary:  An aquarium for your screen, with fish swimming around on your desktop.
+License: GPLv3+
+Group: Toys
+
+Url: https://www.ratrabbit.nl/ratrabbit/software/xfishtank/index.html
+Source0: %name-%version.tar.gz
+Packager: Alexei Mezin <alexvm@altlinux.org>
+
+Summary(ru_RU.UTF8):  Аквариум на вашем рабочем столе.
+
+BuildRequires: libXpm-devel libXt-devel libgtk+3-devel libxml2-devel libdbus-devel gcc-c++ ImageMagick-tools
+
+%description
+Xfishtank is a modern clone of well-known vintage application called xfish. It shows fishes swimming over the desktop.
+
+%description -l ru_RU.UTF8
+Xfishtank это современная версия винтажного приложения xfish. Программа создает аквариум на рабочем столе.
+
+%prep
+%setup
+
+%build
+%autoreconf
+%configure
+%make_build
+
+%install
+%makeinstall_std
+
+# create 48x48 pixmap and put icons according to the Policy, see https://www.altlinux.org/Icon_Paths_Policy
+convert -resize 48x48 src/%name.png %name.png
+install -m 755 -d %buildroot/%_liconsdir/
+install -m 644 %name.png %buildroot/%_liconsdir/
+# fix Category
+desktop-file-install --dir %buildroot/%_desktopdir \
+    --add-category=Amusement %buildroot/%_desktopdir/%name.desktop
+
+%files
+%doc README
+%_gamesbindir/*
+%_man1dir/*
+%_liconsdir/%name.*
+%_desktopdir/*
+ 
+%changelog
+* Sun Dec 05 2021 Alexei Mezin <alexvm@altlinux.org> 3.0.0-alt2
+- Fix packaging error
+- Minor spec cleanup
+
+* Sat Dec 04 2021 Alexei Mezin <alexvm@altlinux.org> 3.0.0-alt1
+- Initial build
