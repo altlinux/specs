@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define m_distro CPAN-Checksums
 Name: perl-CPAN-Checksums
-Version: 2.13
+Version: 2.14
 Release: alt1
 Summary: CPAN::Checksums - Write a "CHECKSUMS" file for a directory as on CPAN
 
@@ -35,6 +35,9 @@ BuildRequires: perl-Test-Pod-Coverage perl-Test-Pod
 %doc README
 
 %changelog
+* Sun Dec 05 2021 Igor Vlasenko <viy@altlinux.org> 2.14-alt1
+- new version
+
 * Fri Nov 26 2021 Igor Vlasenko <viy@altlinux.org> 2.13-alt1
 - new version
 
