@@ -5,10 +5,10 @@
 
 Name: nut
 Version: 2.7.4
-Release: alt6
+Release: alt7
 
 Summary: Network UPS Tools
-License: GPL
+License:  GPLv2+ and GPLv3+
 Group: System/Servers
 Url: http://networkupstools.org
 
@@ -157,10 +157,10 @@ Requires: libupsclient = %EVR
 Requires: libnutscan = %EVR
 
 %description
-These programs are part of a developing project to monitor the assortment 
-of UPSes that are found out there in the field.  Many models have serial 
+These programs are part of a developing project to monitor the assortment
+of UPSes that are found out there in the field.  Many models have serial
 serial ports of some kind that allow some form of state checking.  This
-capability has been harnessed where possible to allow for safe shutdowns, 
+capability has been harnessed where possible to allow for safe shutdowns,
 live status tracking on web pages, and more.
 
 This package includes the client utilities that are required to monitor a
@@ -171,19 +171,20 @@ monitors the UPS via serial cable and runs the upsd from %name-server package
 to allow clients to see the information).
 
 %description server
-These programs are part of a developing project to monitor the assortment 
-of UPSes that are found out there in the field.  Many models have serial 
+These programs are part of a developing project to monitor the assortment
+of UPSes that are found out there in the field.  Many models have serial
 serial ports of some kind that allow some form of state checking.  This
-capability has been harnessed where possible to allow for safe shutdowns, 
+capability has been harnessed where possible to allow for safe shutdowns,
 live status tracking on web pages, and more.
 
-This package contains the UPS information server and per-UPS-model drivers which talk to the UPSes.
+This package contains the UPS information server and per-UPS-model drivers which
+talk to the UPSes.
 
 %description driver-snmp
-These programs are part of a developing project to monitor the assortment 
-of UPSes that are found out there in the field.  Many models have serial 
+These programs are part of a developing project to monitor the assortment
+of UPSes that are found out there in the field.  Many models have serial
 serial ports of some kind that allow some form of state checking.  This
-capability has been harnessed where possible to allow for safe shutdowns, 
+capability has been harnessed where possible to allow for safe shutdowns,
 live status tracking on web pages, and more.
 
 This package contains somewhat experimental support of a wide range
@@ -191,20 +192,20 @@ of SNMP-aware UPS devices, including MGE and APC, for details
 see snmp-ups(8).
 
 %description driver-ipmi
-These programs are part of a developing project to monitor the assortment 
-of UPSes that are found out there in the field.  Many models have serial 
+These programs are part of a developing project to monitor the assortment
+of UPSes that are found out there in the field.  Many models have serial
 serial ports of some kind that allow some form of state checking.  This
-capability has been harnessed where possible to allow for safe shutdowns, 
+capability has been harnessed where possible to allow for safe shutdowns,
 live status tracking on web pages, and more.
 
 This package contains somewhat experimental support of IPMI UPS devices,
 for details see nut-ipmipsu(8).
 
 %description cgi
-These programs are part of a developing project to monitor the assortment 
-of UPSes that are found out there in the field.  Many models have serial 
+These programs are part of a developing project to monitor the assortment
+of UPSes that are found out there in the field.  Many models have serial
 serial ports of some kind that allow some form of state checking.  This
-capability has been harnessed where possible to allow for safe shutdowns, 
+capability has been harnessed where possible to allow for safe shutdowns,
 live status tracking on web pages, and more.
 
 This package includes CGI programs for accessing UPS status via a web
@@ -213,37 +214,37 @@ browser and can be installed on a separate machine to the rest of the
 
 
 %description -n libupsclient
-These programs are part of a developing project to monitor the assortment 
-of UPSes that are found out there in the field.  Many models have serial 
+These programs are part of a developing project to monitor the assortment
+of UPSes that are found out there in the field.  Many models have serial
 serial ports of some kind that allow some form of state checking.  This
-capability has been harnessed where possible to allow for safe shutdowns, 
+capability has been harnessed where possible to allow for safe shutdowns,
 live status tracking on web pages, and more.
 
 This package includes shared library of NUT project.
 
 %description -n libnutscan
-These programs are part of a developing project to monitor the assortment 
-of UPSes that are found out there in the field.  Many models have serial 
+These programs are part of a developing project to monitor the assortment
+of UPSes that are found out there in the field.  Many models have serial
 serial ports of some kind that allow some form of state checking.  This
-capability has been harnessed where possible to allow for safe shutdowns, 
+capability has been harnessed where possible to allow for safe shutdowns,
 live status tracking on web pages, and more.
 
 This package includes shared library of NUT project.
 
 %description -n libnutclient
-These programs are part of a developing project to monitor the assortment 
-of UPSes that are found out there in the field.  Many models have serial 
+These programs are part of a developing project to monitor the assortment
+of UPSes that are found out there in the field.  Many models have serial
 serial ports of some kind that allow some form of state checking.  This
-capability has been harnessed where possible to allow for safe shutdowns, 
+capability has been harnessed where possible to allow for safe shutdowns,
 live status tracking on web pages, and more.
 
 This package includes shared library of NUT project.
 
 %description -n libupsclient-devel
-These programs are part of a developing project to monitor the assortment 
-of UPSes that are found out there in the field.  Many models have serial 
+These programs are part of a developing project to monitor the assortment
+of UPSes that are found out there in the field.  Many models have serial
 serial ports of some kind that allow some form of state checking.  This
-capability has been harnessed where possible to allow for safe shutdowns, 
+capability has been harnessed where possible to allow for safe shutdowns,
 live status tracking on web pages, and more.
 
 This package includes header files and C programming manuals for nut.
@@ -258,10 +259,10 @@ Requires: python-module-%name = %EVR
 %py_requires pynotify
 
 %description client
-These programs are part of a developing project to monitor the assortment 
-of UPSes that are found out there in the field.  Many models have serial 
+These programs are part of a developing project to monitor the assortment
+of UPSes that are found out there in the field.  Many models have serial
 serial ports of some kind that allow some form of state checking.  This
-capability has been harnessed where possible to allow for safe shutdowns, 
+capability has been harnessed where possible to allow for safe shutdowns,
 live status tracking on web pages, and more.
 
 This package contains the UPS information GUI client.
@@ -272,10 +273,10 @@ Group: Development/Python
 Requires: %name = %EVR
 
 %description -n python-module-%name
-These programs are part of a developing project to monitor the assortment 
-of UPSes that are found out there in the field.  Many models have serial 
+These programs are part of a developing project to monitor the assortment
+of UPSes that are found out there in the field.  Many models have serial
 serial ports of some kind that allow some form of state checking.  This
-capability has been harnessed where possible to allow for safe shutdowns, 
+capability has been harnessed where possible to allow for safe shutdowns,
 live status tracking on web pages, and more.
 
 This package contains python bindings for NUT.
@@ -287,10 +288,10 @@ Group: Development/Python3
 Requires: %name = %EVR
 
 %description -n python3-module-%name
-These programs are part of a developing project to monitor the assortment 
-of UPSes that are found out there in the field.  Many models have serial 
+These programs are part of a developing project to monitor the assortment
+of UPSes that are found out there in the field.  Many models have serial
 serial ports of some kind that allow some form of state checking.  This
-capability has been harnessed where possible to allow for safe shutdowns, 
+capability has been harnessed where possible to allow for safe shutdowns,
 live status tracking on web pages, and more.
 
 This package contains python bindings for NUT.
@@ -329,6 +330,7 @@ sed -i "s|sys.argv\[0\]|'%_datadir/nut/nut-monitor/nut-monitor'|" scripts/python
 
 %build
 %define snmp_opts --with-snmp
+export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS"
 ./autogen.sh
 %autoreconf
 %configure \
@@ -648,6 +650,11 @@ fi
 %python3_sitelibdir/__pycache__/PyNUT.*
 
 %changelog
+* Sun Dec 05 2021 Anton Farygin <rider@altlinux.ru> 2.7.4-alt7
+- FTBFS: built with forced C++14 to make gcc 11.2 happy
+- the License tag was formatted in according to SPDX
+- removed extra spaces in sub-packages description
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 2.7.4-alt6
 - NMU: build without python2 subpackages (see also #39720)
 
