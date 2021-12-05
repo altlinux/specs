@@ -1,9 +1,9 @@
 %define php_extension	xdebug
 
 Name: php%_php_suffix-%php_extension
-Version: 3.0.4
+Version: 3.1.2
 Epoch: 1
-Release: alt3.%_php_release_version
+Release: alt1.%_php_release_version
 
 Summary: xdebug extensions
 Group: System/Servers
@@ -56,6 +56,9 @@ install -D -m 644 %SOURCE2 %buildroot%php_extconf/%php_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} 1:%version-%release
 - Rebuild with php-devel %php_version-%php_release
+
+* Sun Dec 05 2021 Anton Farygin <rider@altlinux.ru> 1:3.1.2-alt1
+- 3.0.4 -> 3.1.2
 
 * Tue Jul 06 2021 Anton Farygin <rider@altlinux.ru> 1:3.0.4
 - update to 3.0.4
