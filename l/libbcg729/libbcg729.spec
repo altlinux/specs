@@ -1,8 +1,8 @@
 Summary: Opensource implementation of the ITU G729 Annex A/B speech codec
 Name: libbcg729
-Version: 1.0.4
+Version: 1.1.1
 Release: alt1
-License: GPLv2
+License: GPLv3
 Group: Communications
 Url: http://www.belledonne-communications.com
 # https://github.com/BelledonneCommunications/bcg729
@@ -40,14 +40,18 @@ building programs which use %name.
 %cmakeinstall_std
 
 %files
-%doc AUTHORS COPYING ChangeLog NEWS README.md
+%doc AUTHORS.md CHANGELOG.md README.md
 %_libdir/%name.*
 
 %files devel
 %_includedir/bcg729
 %_pkgconfigdir/%name.pc
+%_datadir/Bcg729
 
 %changelog
+* Sun Dec 05 2021 Anton Farygin <rider@altlinux.ru> 1.1.1-alt1
+- 1.0.4 -> 1.1.1
+
 * Tue Mar 19 2019 Anton Farygin <rider@altlinux.ru> 1.0.4-alt1
 - updated to 1.0.4
 - switch to cmake
