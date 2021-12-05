@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: 2.3.1
+Version: 2.3.2
 Release: alt1
 
 Summary: An Enchanting Spell Checking Program
@@ -85,6 +85,9 @@ using libenchant.
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Sun Dec 05 2021 Yuri N. Sedunov <aris@altlinux.org> 2.3.2-alt1
+- 2.3.2
+
 * Wed Aug 11 2021 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1
 - 2.3.1
 
