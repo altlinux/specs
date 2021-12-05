@@ -1,5 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 Name: oksh
-Version: 6.7
+Version: 7.0
 Release: alt2
 
 Summary: Portable OpenBSD ksh(1)
@@ -21,7 +24,7 @@ across operating systems and C compilers.
 %setup
 
 %build
-%configure --enable-curses
+%configure --enable-curses --no-strip
 %make_build
 
 %install
@@ -33,6 +36,12 @@ across operating systems and C compilers.
 %_man1dir/oksh.1*
 
 %changelog
+* Sun Dec  5 2021 Aleksey Cheusov <cheusov@altlinux.org> 7.0-alt2
+- Do not set set_verify_elf_method macros
+
+* Sun Dec  5 2021 Aleksey Cheusov <cheusov@altlinux.org> 7.0-alt1
+- Update
+
 * Thu May 21 2020 Aleksey Cheusov <cheusov@altlinux.org> 6.7-alt2
 - Fix licence and improve changelog
 
