@@ -1,5 +1,5 @@
 Name:		lxcfs
-Version:	4.0.9
+Version:	4.0.11
 Release:	alt1
 Summary:	FUSE filesystem for LXC
 
@@ -10,7 +10,9 @@ URL:		https://github.com/lxc/lxcfs
 VCS:		https://github.com/lxc/lxcfs.git
 Source0:	%name-%version.tar
 Source1:	lxcfs.sysvinit
-Patch1:		lxcfs-4.0.6-alt-service-fusermount3.patch
+
+# git://git.altlinux.org/gears/l/lxcfs.git
+Patch:		%name-%version-%release.patch
 
 BuildRequires: libfuse3-devel
 BuildRequires: help2man
@@ -28,9 +30,10 @@ FUSE filesystem for LXC, offering the following features:
 
 %prep
 %setup
-%patch1 -p0
+%patch -p1
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 ./bootstrap.sh
 %configure --disable-static --with-init-script=systemd --localstatedir=%_var
 %make_build
@@ -63,6 +66,9 @@ find %buildroot -name '*.la' -delete
 %ghost %dir %_localstatedir/%name
 
 %changelog
+* Sat Dec 04 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.11-alt1
+- Updated to lxcfs-4.0.11.
+
 * Thu Jul 22 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.9-alt1
 - Updated to lxcfs-4.0.9.
 
