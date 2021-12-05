@@ -2,12 +2,10 @@
 %define 	real_name	imagick
 
 Name:	 	php%_php_suffix-%{php_extension}
-Version:	3.5.1
+Version:	3.6.0
 Epoch:		1
 Release:	alt1.%_php_release_version
-
 Summary:	PHP wrapper to the ImageMagick library
-
 License:	PHP-3.01
 Group:		System/Servers
 URL:		http://pecl.php.net/package/imagick
@@ -58,6 +56,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} 1:%version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Sun Dec 05 2021 Anton Farygin <rider@altlinux.ru> 1:3.6.0-alt1
+- 3.5.1 -> 3.6.0
 
 * Mon Aug 16 2021 Anton Farygin <rider@altlinux.ru> 1:3.5.1-alt1
 - updated to 3.5.1
