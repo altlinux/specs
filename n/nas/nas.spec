@@ -1,3 +1,5 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 %def_enable static
 %def_enable shared
 %def_with pic
@@ -5,10 +7,10 @@
 Name: nas
 %define dname %{name}d
 Version: 1.9.4
-Release: alt3.git20131009
+Release: alt4.git20131009
 Summary: Network Audio System - a portable, network-transparent audio system
 Group: Sound
-License: distributable
+License: MIT
 URL: http://radscan.com/%name.html
 # git://git.code.sf.net/p/nas/nas.git
 Source0: %name-%version.src.tar
@@ -149,7 +151,11 @@ pushd config
 %add_optflags -fcommon
 %configure --with-gnu-ld %{subst_with pic}
 popd
-%make_build BOOTSTRAPCFLAGS="%optflags" CDEBUGFLAGS="%optflags" CXXDEBUGFLAGS="%optflags" World
+%make Makefiles
+for f in $(find . -type f -name "Makefile"); do sed -i -r 's/ar clq/ar cq/' "$f"; done
+%make includes
+%make depend
+%make_build BOOTSTRAPCFLAGS="%optflags" CDEBUGFLAGS="%optflags" CXXDEBUGFLAGS="%optflags" -k all
 bzip2 --keep --force --best HISTORY
 
 
@@ -218,6 +224,9 @@ echo "# See %dname.conf(5) and sample at %_docdir/%dname-*/" > %buildroot%_sysco
 
 
 %changelog
+* Sun Dec 05 2021 Nazarov Denis <nenderus@altlinux.org> 1.9.4-alt4.git20131009
+- Fix FTBFS
+
 * Thu Apr 15 2021 Grigory Ustinov <grenka@altlinux.org> 1.9.4-alt3.git20131009
 - Fixed FTBFS with -fcommon.
 
