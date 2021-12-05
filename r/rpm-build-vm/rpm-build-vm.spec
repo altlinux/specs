@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.25
+Version: 1.26
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -123,6 +123,7 @@ install -D -p -m 0755 vm-init     %buildroot%_libexecdir/vm-run/vm-init
 install -D -p -m 0755 initrd-init %buildroot%_libexecdir/vm-run/initrd-init
 install -D -p -m 0755 filetrigger %buildroot%_rpmlibdir/vm-run.filetrigger
 %endif
+install -D -p -m 0755 vm-resize   %buildroot%_bindir/vm-resize
 
 %pre run
 # Only allow to install inside of hasher.
@@ -137,6 +138,7 @@ install -D -p -m 0755 filetrigger %buildroot%_rpmlibdir/vm-run.filetrigger
 
 %files run
 %_bindir/vm-run
+%_bindir/vm-resize
 
 %ifarch %supported_arches
 %_libexecdir/vm-run
@@ -190,6 +192,9 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Sun Dec 05 2021 Vitaly Chikunov <vt@altlinux.org> 1.26-alt1
+- Add vm-resize tool (simpler version of resize(1)).
+
 * Sat Oct 23 2021 Vitaly Chikunov <vt@altlinux.org> 1.25-alt1
 - Fix `--cpu=' option after previous change.
 
