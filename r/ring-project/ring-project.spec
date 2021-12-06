@@ -30,7 +30,7 @@
 
 Name: ring-project
 Version: 20210917
-Release: alt1
+Release: alt1.1
 
 Group: Networking/Instant messaging
 Summary: SIP and IAX2 compatible softphone
@@ -61,7 +61,7 @@ BuildRequires: libssl-devel libgpg-error-devel libgcrypt-devel
 #BuildRequires: libssl-devel-static
 BuildRequires: libnettle-devel libpcre-devel libpulseaudio-devel libsamplerate-devel libsndfile-devel libvpx-devel
 BuildRequires: libspeexdsp-devel libswscale-devel libudev-devel libupnp-devel libuuid-devel jsoncpp-devel
-BuildRequires: zlib-devel libopus-devel libspeex-devel ilbc-devel libmsgpack-devel libx264-devel libx265-devel libva-devel libvdpau-devel
+BuildRequires: zlib-devel libopus-devel libspeex-devel libilbc-devel libmsgpack-devel libx264-devel libx265-devel libva-devel libvdpau-devel
 BuildRequires: libyaml-cpp-devel yasm perl-Pod-Usage cppunit-devel libgmp-devel libexpat-devel
 BuildRequires: evolution-data-server-devel libclutter-gtk3-devel libnotify-devel libpixman-devel
 BuildRequires: libXdmcp-devel libpng-devel libXxf86vm-devel libappindicator-gtk3-devel libwebkit2gtk-devel libqrencode-devel
@@ -358,6 +358,9 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir/
 #%_libdir/libring.a
 
 %changelog
+* Mon Dec 06 2021 Igor Vlasenko <viy@altlinux.org> 20210917-alt1.1
+- NMU: rebuild with libilbc instead of ilbc
+
 * Thu Sep 23 2021 Sergey V Turchin <zerg@altlinux.org> 20210917-alt1
 - new version
 
