@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: gnome-calculator
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: GTK+3 based desktop calculator
@@ -30,6 +30,7 @@ Requires: libgcalc = %EVR
 Requires: libgci = %EVR
 
 BuildRequires(pre): rpm-macros-meson rpm-build-licenses rpm-build-gnome
+BuildRequires(pre): rpm-build-gir rpm-build-vala
 BuildRequires: meson vala-tools >= 0.24 valadoc
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgtk+3-devel >= 3.20.0
@@ -203,6 +204,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/devhelp/books/GCi-%gci_api_ver/
 
 %changelog
+* Mon Dec 06 2021 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
+- 41.1
+
 * Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
 - 41.0
 
