@@ -2,12 +2,12 @@
 
 Name: qm-dsp
 Version: 1.7
-Release: alt3.hg20140805
+Release: alt4
+
 Summary: A C++ library for audio analysis
 License: GPLv2+
 Group: Sound
 Url: https://code.soundsoftware.ac.uk/projects/qm-dsp
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # hg clone https://code.soundsoftware.ac.uk/hg/qm-dsp
 Source: %name-%version.tar
@@ -64,17 +64,19 @@ This package contains development documentation for lib%name.
 
 %prep
 %setup
+%ifnarch %ix86 x86_64
+sed -ri -e 's, -msse2*,,g' -e 's, -mfpmath=sse,,' build/linux/Makefile*
+%endif
 
 find -type f -name '.*' -exec rm -fR '{}' +
 rm -fR ext/kissfft/.hg build/linux/amd64
 
 %build
-%ifarch x86_64
-SUFF=64
+%if "%_lib" == "lib64"
+%make_build -f build/linux/Makefile.linux64
 %else
-SUFF=32
+%make_build -f build/linux/Makefile.linux32
 %endif
-%make_build -f build/linux/Makefile.linux$SUFF
 
 g++ -shared -Wl,--whole-archive lib%name.a -Wl,--no-whole-archive \
 	-llo -lpthread -lbz2 -lfftw3f -lasound -lQt5Core -ldl -lsamplerate \
@@ -107,6 +109,9 @@ doxygen
 %doc doc/html/*
 
 %changelog
+* Mon Dec 06 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7-alt4
+- rebuilt for non-x86 arches
+
 * Tue Sep 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7-alt3.hg20140805
 - Rebuilt for new c++ ABI.
 
@@ -115,4 +120,3 @@ doxygen
 
 * Sun Sep 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7-alt1.hg20140805
 - Initial build for Sisyphus
-
