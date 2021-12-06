@@ -1,114 +1,71 @@
-%def_disable snapshot
-%def_disable static
-%def_enable man
+%def_enable snapshot
 
-Name: mdbtools
-Version: 1.0.0
+%define _name gmdb
+%define beta %nil
+
+Name: %{_name}2
+Version: 0.9.1
 Release: alt1
 
-Summary: Utilities for use M$ Access databases under Linux
+Summary: M$ Access MDB File Viewer
 Group: Databases
-License: GPL-2.0 and LGPL-2.0
-Url: https://github.com/mdbtools/mdbtools
+License: GPL-2.0
+Url: https://github.com/mdbtools/gmdb2
 
 %if_disabled snapshot
-Source: %url/archive/v%version/%name-%version.tar.gz
+Source: %url/archive/v%version%beta/%name-%version%beta.tar.gz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 
-Requires: lib%name = %EVR
+%define mdbtools_ver %version
+%define gtk_ver 3.22
 
-%define glib_ver 2.68
+Obsoletes: %_name < %version
+Provides: %_name = %EVR
 
-BuildRequires: bison flex glib2-devel >= %glib_ver libreadline-devel libunixODBC-devel
-BuildRequires: bash-completion
-%{?_enable_man:BuildRequires: txt2man}
-%{?_enable_static:BuildRequires: glibc-devel-static glib2-devel-static}
+Requires: libmdbtools >= %mdbtools_ver
+
+BuildRequires: libmdbtools-devel >= %mdbtools_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires:  yelp-tools
 
 %description
 MDB Tools is a set of libraries and programs to help you use Microsoft
 Access file in various settings.
 
-%package -n lib%name
-Summary: MDB Tools shared libraries
-Group: System/Libraries
-License: LGPL-2.0
-Requires: glib2 >= %glib_ver
-
-%description -n lib%name
-MDB Tools is a set of libraries and programs to help you use Microsoft
-Access file in various settings.
-This package provides MDB Tools shared libraries.
-
-%package -n lib%name-devel
-Summary: MDB Tools development files and libraries
-Group: Development/C
-License: LGPL-2.0
-Requires: lib%name = %EVR
-Requires: glib2-devel >= %glib_ver
-
-%description -n lib%name-devel
-This package contains the files needed to build packages that depend on
-MDB Tools libraries.
-
-%package -n lib%name-devel-static
-Summary: MDB Tools static libraries
-Group: Development/C
-License: LGPL-2.0
-Requires: lib%name-devel = %EVR
-
-%description -n lib%name-devel-static
-This package contains the libraries needed to build applications
-statically linked with MDB Tools.
+gmdb 2 - The MDB File Viewer and debugger.
 
 %prep
-%setup
-# always use system GLIB:
-sed -i 's|\(Cflags:.*\)$|\1 -DHAVE_GLIB=1|' *.pc.in
+%setup -n %name-%version%beta
+# GTimeVal is deprecated sinc 2.62
+sed -i 's| \-Werror||' configure.ac
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
-%configure \
-    %{subst_enable static} \
-    --with-unixodbc=%_prefix \
-    %{subst_enable man}
+%configure
 %make_build
 
 %install
 %makeinstall_std
+install -pD -m644 src/%_name.desktop %buildroot/%_desktopdir/%_name.desktop
+%find_lang --with-gnome --output=%_name.lang %_name %name
 
-%files
-%_bindir/*
-%{?_enable_man:%_man1dir/*}
-%_datadir/bash-completion/completions/mdb-*
-%doc AUTHORS NEWS README* TODO*
-
-%files -n lib%name
-%_libdir/*.so.*
-%dir %_libdir/odbc/
-%_libdir/odbc/libmdbodbc*.so
-
-%files -n lib%name-devel
-%_includedir/*
-%_libdir/*.so
-%_pkgconfigdir/*
-
-%if_enabled static
-%files -n lib%name-devel-static
-%_libdir/*.a
-%endif
+%files -f %_name.lang
+%_bindir/%name
+%_desktopdir/%_name.desktop
+%_datadir/%_name/
+%_datadir/glib-2.0/schemas/mdbtools.%name.gschema.xml
+%_man1dir/%name.1.*
+%doc AUTHORS README* TODO
 
 %changelog
-* Sat Nov 06 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
-- 1.0.0
+* Sat Nov 06 2021 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1
+- updated to v0.9.1-3-g60335e0 (ported to GTK 3)
 
-* Fri Aug 06 2021 Yuri N. Sedunov <aris@altlinux.org> 0.9.4-alt1
-- 0.9.4
-
-* Fri Dec 18 2020 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
-- 0.9.0 (moved gmdb2 to its own project)
+* Fri Dec 18 2020 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt0.1
+- 0.9.0-beta1 (gmdb-only)
 
 * Sat Jul 04 2020 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
 - updated to 0.8.2-4-ga6c3fa2 from new %%url

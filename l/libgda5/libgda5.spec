@@ -13,7 +13,7 @@
 %def_with mysql
 %def_with postgres
 %def_without odbc
-%def_with mdb
+%def_without mdb
 %def_with bdb
 %def_with ldap
 %def_without oracle
@@ -36,7 +36,7 @@
 
 Name: %{_name}5
 Version: %ver_major.10
-Release: alt1
+Release: alt2
 
 Summary: Library for writing gnome database programs
 Group: System/Libraries
@@ -56,7 +56,7 @@ Obsoletes: libgda2 < %version
 Provides: libgda2 = %version-%release
 
 %define mysql_ver 8.0
-%define mdbtools_ver 0.7
+%define mdbtools_ver 0.9
 %define ldap_ver 2.2.27-alt1.1
 %define freetds_ver 0.63
 %define vala_ver 0.50
@@ -84,42 +84,42 @@ BuildRequires: yelp-tools
 %{?_with_gtksourceview:BuildRequires: libgtksourceview3-devel}
 
 %if_with postgres
-BuildPreReq: postgresql-devel
+BuildRequires: postgresql-devel
 %endif
 
 %if_with mysql
-BuildPreReq: libMySQL-devel >= %mysql_ver
+BuildRequires: libMySQL-devel >= %mysql_ver
 %endif
 
 %if_with odbc
-BuildPreReq: libunixODBC-devel
+BuildRequires: libunixODBC-devel
 %endif
 
 %if_with mdb
-BuildPreReq: libmdbtools-devel >= %mdbtools_ver
+BuildRequires: libmdbtools-devel >= %mdbtools_ver
 %endif
 
 %if_with interbase
-#BuildPreReq: interbase
-BuildPreReq: FirebirdCS
+#BuildRequires: interbase
+BuildRequires: FirebirdCS
 %endif
 
 %if_with sqlite
-BuildPreReq: libsqlite3-devel >= %sqlite_ver
+BuildRequires: libsqlite3-devel >= %sqlite_ver
 %endif
 
 %if_with ldap
-BuildPreReq: libldap-devel >= %ldap_ver
+BuildRequires: libldap-devel >= %ldap_ver
 # while libldap-devel doesn't requires libsasl2-devel
-BuildPreReq: libsasl2-devel
+BuildRequires: libsasl2-devel
 %endif
 
 %if_with tds
-BuildPreReq: libfreetds-devel >= %freetds_ver
+BuildRequires: libfreetds-devel >= %freetds_ver
 %endif
 
 %if_with bdb
-BuildPreReq: libdb4.7-devel
+BuildRequires: libdb4.7-devel
 %endif
 
 %if_with java
@@ -654,6 +654,10 @@ mkdir -p %buildroot%_datadir/gtk-doc/html/gda-browser
 %exclude %_datadir/%_name-%abi_ver/php
 
 %changelog
+* Sat Nov 06 2021 Yuri N. Sedunov <aris@altlinux.org> 5.2.10-alt2
+- updated to LIBGDA_5_2_10-13-ga15dfa49e
+- disabled useless mdbtools support (required old mdbtools <= 0.8.2)
+
 * Mon Nov 09 2020 Yuri N. Sedunov <aris@altlinux.org> 5.2.10-alt1
 - 5.2.10 release
 
