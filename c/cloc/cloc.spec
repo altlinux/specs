@@ -1,5 +1,5 @@
 Name:           cloc
-Version:        1.90
+Version:        1.92
 Release:        alt1
 Summary:        Count lines of code
 License:        GPL-2.0+
@@ -56,6 +56,9 @@ make install DESTDIR="%buildroot"
 %_mandir/man1/%name.1*
 
 %changelog
+* Mon Dec 06 2021 Andrey Cherepanov <cas@altlinux.org> 1.92-alt1
+- New version.
+
 * Mon May 03 2021 Andrey Cherepanov <cas@altlinux.org> 1.90-alt1
 - New version.
 
