@@ -2,7 +2,7 @@
 
 Name:           solaar
 Version:        1.1.0
-Release:        alt1
+Release:        alt2
 
 Group:          System/Configuration/Hardware
 Summary:        Device manager for Logitech Unifying Receiver
@@ -26,6 +26,7 @@ Requires:  	unifying-receiver-udev
 %add_typelib_req_skiplist typelib(AyatanaAppIndicator3)
 
 Source0: https://github.com/pwr/Solaar/archive/%{version}.tar.gz
+Source1: ru.po
 Patch1: solaar-paths.patch
 
 %description
@@ -49,6 +50,7 @@ Logitech's Unifying Receiver peripherals.
 
 %prep
 %setup -n Solaar-%version
+cat %SOURCE1 > po/ru.po
 %patch1 -p1
 
 %build
@@ -74,6 +76,9 @@ tools/po-compile.sh
 %doc docs
 
 %changelog
+* Mon Dec 06 2021 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt2
+- Complete Russian translation.
+
 * Wed Dec 01 2021 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
 - New version.
 
