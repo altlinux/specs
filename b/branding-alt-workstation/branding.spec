@@ -25,7 +25,7 @@
 
 Name: branding-%flavour
 Version: 10.0
-Release: alt1
+Release: alt2
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -66,8 +66,8 @@ Provides:  design-bootloader-system-%theme design-bootloader-livecd-%theme desig
 Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme
 %branding_add_conflicts %flavour bootloader
 
-%define grub_normal white/light-blue
-%define grub_high black/light-gray
+%define grub_normal white/dark-gray
+%define grub_high black/white
 
 %description bootloader
 Here you find the graphical boot logo for %distro_name.
@@ -300,9 +300,6 @@ shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 %post bootsplash
 [ "$1" -eq 1 ] || exit 0
 subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
-[ -f /etc/sysconfig/grub2 ] && \
-      subst "s|GRUB_WALLPAPER=.*|GRUB_WALLPAPER=/usr/share/plymouth/themes/%theme/grub.jpg|" \
-             /etc/sysconfig/grub2 ||:
 
 %post mate-settings
 [ "$1" -eq 1 ] || exit 0
@@ -360,6 +357,10 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Dec 06 2021 Mikhail Efremov <sem@altlinux.org> 10.0-alt2
+- bootloader: Fix grub colors.
+- bootsplash: Don't set GRUB_WALLPAPER.
+
 * Thu Dec 02 2021 Mikhail Efremov <sem@altlinux.org> 10.0-alt1
 - Bump version.
 
