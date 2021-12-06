@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.3.5
+Version: 1.3.6
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
@@ -50,6 +50,9 @@ alterator module for basic system settings
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Mon Dec 06 2021 Mikhail Efremov <sem@altlinux.org> 1.3.6-alt1
+- sysconfig-base: Use English slideshow as default.
+
 * Wed Mar 10 2021 Paul Wolneykien <manowar@altlinux.org> 1.3.5-alt1
 - Restore a lost commit from v1.3.3.
 - Fix: Added "language" notification on language change (closes:
