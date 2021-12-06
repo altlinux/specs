@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %add_python3_path %_libdir/freecad/Mod %_libdir/freecad/Ext/*
 %add_python3_req_skip FreeCADGui FreeCAD
 %add_findprov_skiplist %_libdir/freecad/Mod/* %_libdir/freecad/Ext/*
@@ -13,8 +14,8 @@
 # git rev-list --count remotes/upstream/releases/FreeCAD-0-17
 
 Name:    freecad
-Version: 0.19.2
-Release: alt5
+Version: 0.19.3
+Release: alt1
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -33,7 +34,6 @@ Patch2: %name-0.18.4-alt-boost-1.73.0-compat.patch
 Patch3: freecad-0.19.2-upstream-vtk9-compat.patch
 Patch4: freecad-0.19.2-alt-boost-link.patch
 Patch5: freecad-alt-fix-icon-name-in-menu.patch
-Patch6: freecad-0.19.2-upstream-opencascade-compat.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
@@ -151,7 +151,6 @@ rm -rf src/3rdParty
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 %ifarch %e2k
 sed -i "/-fext-numeric-literals/d" src/Mod/Path/App/CMakeLists.txt
 # because "error: cpio archive too big"
@@ -247,11 +246,15 @@ sed -i '1s:#!/usr/bin/python:#!/usr/bin/python3:' %buildroot%_libdir/freecad/Mod
 %_pixmapsdir/%name.xpm
 %_datadir/metainfo/*.appdata.xml
 %_datadir/thumbnailers/FreeCAD.thumbnailer
+%_iconsdir/hicolor/scalable/*/*.svg
 
 %files docs
 %ldir/doc
 
 %changelog
+* Mon Dec 06 2021 Andrey Cherepanov <cas@altlinux.org> 1:0.19.3-alt1
+- New version.
+
 * Sun Oct 17 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:0.19.2-alt5
 - Fixed build for Elbrus.
 
