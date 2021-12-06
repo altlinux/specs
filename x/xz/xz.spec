@@ -1,6 +1,6 @@
 Name: xz
 Version: 5.2.5
-Release: alt3
+Release: alt3.1
 
 Summary: LZMA/XZ compression programs
 # We don't package scripts to grep, diff, and view compressed files here
@@ -57,6 +57,11 @@ This package contains static liblzma compression library.
 %prep
 %setup -q
 %patch -p1
+%ifarch e2kv5 e2kv6
+# 15%% faster lzma decompression (idea by Alexander Troosh from MCST)
+sed -i -E 's/rc_bound = (.*) [*] (.*);/rc_bound = __builtin_e2k_pmullw(\1,\2);/' \
+	src/liblzma/rangecoder/range_decoder.h
+%endif
 
 %build
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
@@ -74,21 +79,25 @@ cflags=$(sed -n 's/^CFLAGS = //p' src/liblzma/Makefile)
 
 %def_enable profile
 %if_enabled profile
+# 5-10%% faster on x86_64
+# 15%% faster compression and 40%% faster decompression on e2k
 tar cf .tar */*/*.o */*.[ch] */*/*.[ch] */*/*/*.[ch] */*/*/*/*.[ch] \
 	*/*.txt tests/files */*/.libs/*.{o,so*} --sort=name --mtime=@2718281828
+stat --printf=".tar size: %%s\n" .tar
 md5sum .tar
-rm src/liblzma/*.lo src/liblzma/liblzma.la
+rm src/liblzma/{*.lo,liblzma.la}
 %make_build -C src/liblzma CFLAGS="$cflags -fprofile-generate %{!?_enable_debug:-O3}" liblzma_la-lzma_decoder.lo
 %make_build -C src/liblzma CFLAGS="$cflags -fprofile-generate"
 ./libtool --tag=CC --mode=link gcc %optflags -fprofile-generate -static src/xz/xz-*.o src/liblzma/liblzma.la -o xz.static
+# ./xz.static collect profiles from src/liblzma/*.o
+# ./src/xz/xz collect profiles from src/liblzma/.libs/*.o compiled with -fPIC -DPIC
+# doesn't matter which to use for LCC 1.25 on E2K
 for i in '0 -C none' '2 -C crc32' '6 --arm --lzma2 -C crc64' '6 --x86 --lzma2=lc=4 -C sha256' '7e --format=lzma'; do
-    # workaround lcc bug with corrupted profile written by several apps concurrently
-	./src/xz/xz -$i <.tar > .tmp
-    cat .tmp | ./xz.static -d >/dev/null
-	./xz.static -$i <.tar > .tmp
-    cat .tmp | ./src/xz/xz -d >/dev/null
+	# .tmp needed to workaround LCC bug with corrupted profile written by several apps concurrently
+	./src/xz/xz -$i <.tar >.tmp ; ./xz.static -d <.tmp >/dev/null
+	./xz.static -$i <.tar >.tmp ; ./src/xz/xz -d <.tmp >/dev/null
 done
-rm src/liblzma/*.lo src/liblzma/liblzma.la .tmp
+rm src/liblzma/{*.lo,liblzma.la} .tmp xz.static
 %ifarch %e2k
 eprof_helper
 # lcc needs special paths handling, MCST is not willing to fix this
@@ -146,6 +155,10 @@ make -k check
 %_libdir/liblzma.a
 
 %changelog
+* Sat Dec 04 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 5.2.5-alt3.1
+- 15%% faster lzma decompression on e2k-v5 and e2k-v6.
+- Extra comments on profiling, style editing, .tar size print.
+
 * Thu Aug 26 2021 Dmitry V. Levin <ldv@altlinux.org> 5.2.5-alt3
 - Reduced maximum possible memory limit on MIPS32 (by Ivan A. Melnikov).
 - Added -ffat-lto-objects to %%optflags_lto.
