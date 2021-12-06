@@ -1,7 +1,7 @@
 %define oname liblarch
 
 Name: python3-module-%oname
-Version: 3.0.1
+Version: 3.1.0
 Release: alt1
 
 Summary: A Python library to easily handle complex data structures, with a GTK binding
@@ -36,5 +36,8 @@ you to use your data structure into a Gtk.Treeview.
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Mon Dec 06 2021 Vladimir Didenko <cow@altlinux.org> 3.1.0-alt1
+- new version
+
 * Thu Jul 09 2020 Vladimir Didenko <cow@altlinux.org> 3.0.1-alt1
 - initial build for Sisyphus
