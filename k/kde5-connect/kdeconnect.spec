@@ -8,7 +8,7 @@
 
 Name: kde5-connect
 Version: 21.08.3
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Communications
@@ -105,6 +105,11 @@ KF5 library
 %install
 %K5install
 %K5install_move data plasma locale kdeconnect
+for d in %buildroot/%_K5doc/* ; do
+    [ -d $d/kdeconnect-kde -a ! -d $d/kdeconnect ] \
+	&& cp -ar $d/kdeconnect-kde $d/kdeconnect \
+	||:
+done
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
@@ -146,6 +151,9 @@ KF5 library
 #%_K5lib/libkdeconnectsmshelper.so.*
 
 %changelog
+* Mon Dec 06 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt2
+- fix to show docs from settings
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 
