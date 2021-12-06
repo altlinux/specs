@@ -78,8 +78,11 @@
 %vulkan_drivers_add panfrost
 %endif
 
+%define ver_major 21.3
+%define ver_minor 1
+
 Name: Mesa
-Version: 21.3.0
+Version: %ver_major.%ver_minor
 Release: alt1
 Epoch: 4
 License: MIT
@@ -340,6 +343,10 @@ Mesa-based DRI drivers
 
 %meson_build -v
 
+for i in $(seq 0 %ver_minor); do
+	rst2html.py %_builddir/%name-%version/docs/relnotes/%ver_major.$i.rst %_builddir/%name-%version/%ver_major.$i.html
+done
+
 %install
 %meson_install
 
@@ -399,7 +406,7 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 #define _unpackaged_files_terminate_build 1
 
 %files -n libGLX-mesa
-%doc docs/relnotes/%version.rst
+%doc %ver_major.*.html
 %_libdir/libGLX_mesa.so.*
 %_libdir/libglapi.so.*
 
@@ -559,6 +566,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Mon Dec 06 2021 Valery Inozemtsev <shrek@altlinux.ru> 4:21.3.1-alt1
+- 21.3.1
+
 * Mon Nov 22 2021 Valery Inozemtsev <shrek@altlinux.ru> 4:21.3.0-alt1
 - 21.3.0
 
