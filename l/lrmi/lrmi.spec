@@ -1,9 +1,9 @@
-%def_enable static
+%def_disable static
 %def_with vbetest
 
 Name: lrmi
 Version: 0.10
-Release: alt4
+Release: alt5
 
 Summary: Linux Real Mode Interface
 License: Public domain
@@ -102,6 +102,9 @@ install -pm0644 %name.h %buildroot%_includedir/
 %endif
 
 %changelog
+* Mon Dec 06 2021 Igor Vlasenko <viy@altlinux.org> 0.10-alt5
+- NMU: fixed build (disabled static for lto)
+
 * Sun Jan 08 2012 Michael Shigorin <mike@altlinux.org> 0.10-alt4
 - rebuilt for Sisyphus (thx Speccyfighter for the reminder)
 
