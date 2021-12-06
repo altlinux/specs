@@ -25,13 +25,13 @@
 
 Name: LibreOffice-still
 %define hversion 7.1
-%define urelease 7.2
+%define urelease 8.1
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt1
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -69,16 +69,11 @@ Source10: libreoffice-ext_sources.%version.tar
 Source100: forky.c
 Source200: key.gpg
 Source300: libreoffice.unused
-Source400: images_oxygen.zip
 
+# Icons
+Source400: libreoffice-icons-oxygen.zip
 # Scalable symbolic icons from https://raw.githubusercontent.com/gnome-design-team/gnome-icons/master/apps-symbolic/Adwaita/scalable/apps/
-Source501: libreoffice-base-symbolic.svg
-Source502: libreoffice-calc-symbolic.svg
-Source503: libreoffice-draw-symbolic.svg
-Source504: libreoffice-impress-symbolic.svg
-Source505: libreoffice-main-symbolic.svg
-Source506: libreoffice-math-symbolic.svg
-Source507: libreoffice-writer-symbolic.svg
+Source401: libreoffice-icons-symbolic.tar
 
 ## FC patches
 Patch0: 0001-don-t-suppress-crashes.patch
@@ -632,13 +627,7 @@ install -Dpm0644 sysui/desktop/man/unopkg.1 %buildroot%_man1dir/unopkg.1
 
 # Install symbolc icons
 mkdir -p %buildroot%_iconsdir/hicolor/symbolic/apps
-install -pm0644 %SOURCE501 %buildroot%_iconsdir/hicolor/symbolic/apps
-install -pm0644 %SOURCE502 %buildroot%_iconsdir/hicolor/symbolic/apps
-install -pm0644 %SOURCE503 %buildroot%_iconsdir/hicolor/symbolic/apps
-install -pm0644 %SOURCE504 %buildroot%_iconsdir/hicolor/symbolic/apps
-install -pm0644 %SOURCE505 %buildroot%_iconsdir/hicolor/symbolic/apps
-install -pm0644 %SOURCE506 %buildroot%_iconsdir/hicolor/symbolic/apps
-install -pm0644 %SOURCE507 %buildroot%_iconsdir/hicolor/symbolic/apps
+tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 
 %files
 
@@ -704,6 +693,9 @@ install -pm0644 %SOURCE507 %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Dec 06 2021 Andrey Cherepanov <cas@altlinux.org> 7.1.8.1-alt1
+- New version.
+
 * Mon Nov 22 2021 Andrey Cherepanov <cas@altlinux.org> 7.1.7.2-alt2
 - Exclude libvclplug_gtk3_kde5lo.so from LibreOffice-still-gtk3.
 
