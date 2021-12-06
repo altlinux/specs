@@ -1,7 +1,7 @@
 %define modname setuptools_rust
 
 Name: python3-module-%modname
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: Setuptools helpers for rust Python extensions.
@@ -17,7 +17,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
-BuildRequires: python3-module-setuptools_scm python3-module-wheel python3-module-toml
+BuildRequires: python3-module-setuptools_scm python3-module-wheel
 
 %description
 Compile and distribute Python extensions written in rust as easily as if they
@@ -37,6 +37,9 @@ were written in C.
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Mon Dec 6 2021 Vladimir Didenko <cow@altlinux.org> 1.1.2-alt1
+- new version
+
 * Thu Dec 2 2021 Vladimir Didenko <cow@altlinux.org> 1.1.1-alt1
 - new version
 
