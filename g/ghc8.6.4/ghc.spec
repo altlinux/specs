@@ -1,13 +1,8 @@
-# llvm needs for unregisterised architectures
-%ifarch armh aarch64
-%define llvm_version 11.0
-%endif
-
 %def_without bootstrap
 
 Name: ghc8.6.4
 Version: 8.6.4
-Release: alt6
+Release: alt8
 
 Summary: Glasgow Haskell Compilation system
 License: BSD-3-Clause and HaskellReport
@@ -74,8 +69,7 @@ BuildRequires: ghc(hscolour)
 Provides: haskell(abi) = %version
 
 %ifarch armh aarch64
-BuildRequires: llvm%llvm_version
-Requires: llvm >= %llvm_version
+BuildRequires: llvm
 %endif
 
 %description
@@ -268,6 +262,14 @@ sed -i 's/@GHC_VERSION@/%version/' %buildroot%_rpmmacrosdir/ghc
 %exclude %docdir/[AR]*
 
 %changelog
+* Mon Dec 06 2021 Evgeny Sinelnikov <sin@altlinux.org> 8.6.4-alt8
+- Always use AC_LINK_ELSEIF when testing against assembler
+  (autoconf assembler checks and -flto)
+- Build with system llvm on armh and aarch64
+
+* Wed Jun 30 2021 Evgeny Sinelnikov <sin@altlinux.org> 8.6.4-alt7
+- Missing haddock file warning in ghc-pkg
+
 * Tue Jun 22 2021 Evgeny Sinelnikov <sin@altlinux.org> 8.6.4-alt6
 - Fix build with configuration error in docs/users_guide/conf.py
 - Apply patches to avoid haddock warnings from Fedora
