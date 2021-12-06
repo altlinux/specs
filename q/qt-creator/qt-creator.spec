@@ -8,7 +8,7 @@
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 5.0.3
+Version: 6.0.0
 Release: alt1
 
 Summary: Cross-platform IDE for Qt
@@ -178,10 +178,6 @@ install -Dpm0644 %_cmake__builddir/share/doc/qtcreator/qtcreator.qch %buildroot%
 # Remove Windows cdb debugger support to prevent unmet python2.7(cdbext)
 rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 
-# Make symlink to prevent package upgrade failure
-rm -rf %buildroot%_datadir/qtcreator/qbs/share/qbs/examples/cocoa-application/CocoaApplication/en_US.lproj
-ln -s en.lproj %buildroot%_datadir/qtcreator/qbs/share/qbs/examples/cocoa-application/CocoaApplication/en_US.lproj
-
 %files
 
 %files core
@@ -201,6 +197,9 @@ ln -s en.lproj %buildroot%_datadir/qtcreator/qbs/share/qbs/examples/cocoa-applic
 %_datadir/qtcreator/*
 
 %changelog
+* Mon Dec 06 2021 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt1
+- New version.
+
 * Fri Nov 05 2021 Andrey Cherepanov <cas@altlinux.org> 5.0.3-alt1
 - New version.
 
