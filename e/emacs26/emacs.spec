@@ -21,7 +21,7 @@
 
 Name: emacs26
 Version: 26.3
-Release: alt13
+Release: alt14
 
 Group: Editors
 Summary: GNU Emacs text editor
@@ -32,6 +32,7 @@ URL: http://www.gnu.org/software/emacs/
 Packager: Emacs Maintainers Team <emacs@packages.altlinux.org>
 
 Source0: %shortname-%emacs_version.tar
+Patch0: %shortname-%emacs_version-alt.patch
 
 Source7: README.KOI8-U
 
@@ -796,6 +797,7 @@ the Emacs editor
 
 %prep
 %setup -n %shortname
+%patch0 -p1
 # Ukrainian docs:
 cp %SOURCE16 .
 cp %SOURCE17 .
@@ -1531,6 +1533,9 @@ install -p -m 0644 etc/emacs.appdata.xml %buildroot%_datadir/appdata/emacs.appda
 %_includedir/emacs-module.h
 
 %changelog
+* Mon Dec 06 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 26.3-alt14
+- backported fix for FTBFS with glibc >= 2.34
+
 * Thu Nov 12 2020 Igor Vlasenko <viy@altlinux.ru> 26.3-alt13
 - NMU: added Requires: on emacs-base-X11 (closes: #39029)
 
