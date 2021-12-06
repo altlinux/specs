@@ -2,7 +2,7 @@
 %def_disable debugger
 
 Name: python3-module-%modname
-Version: 0.29.24
+Version: 0.29.25
 Release: alt1
 
 Summary: C-extensions for Python 3
@@ -11,8 +11,8 @@ License: Apache-2.0
 Url: http://www.cython.org
 
 Vcs: https://github.com/cython/cython.git
-Source: https://pypi.io/packages/source/C/%modname/%modname-%version.tar.gz
-#Source: https://github.com/cython/cython/archive/%version/%modname-%version.tar.gz
+#Source: https://pypi.io/packages/source/C/%modname/%modname-%version.tar.gz
+Source: https://github.com/cython/cython/archive/%version/%modname-%version.tar.gz
 
 %add_python3_req_skip IPython IPython.core IPython.core.magic IPython.utils IPython.utils.text
 
@@ -77,7 +77,7 @@ code.
 This package provides modules for debugging Cython programms.
 
 %prep
-%setup -n %modname-%version
+%setup -n cython-%version
 
 %build
 %python3_build
@@ -113,6 +113,9 @@ done
 %endif
 
 %changelog
+* Mon Dec 06 2021 Yuri N. Sedunov <aris@altlinux.org> 0.29.25-alt1
+- 0.29.25
+
 * Fri Jul 16 2021 Yuri N. Sedunov <aris@altlinux.org> 0.29.24-alt1
 - 0.29.24
 
