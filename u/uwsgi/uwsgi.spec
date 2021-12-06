@@ -4,7 +4,7 @@
 
 Name: uwsgi
 Version: 2.0.18
-Release: alt2
+Release: alt3
 
 Summary: fast (pure C), self-healing, developer-friendly WSGI server
 License: GPLv2
@@ -52,7 +52,7 @@ Erlang message exchanger are already available.
 %install
 install -dm0775 %buildroot%_logdir/%name
 
-install -pDm0755 %name %buildroot%_sbindir/%name
+install -pDm0755 %name %buildroot%_bindir/%name
 install -pDm0755 %SOURCE1 %buildroot%_initdir/%name
 install -pDm0644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
 install -pDm0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/%name
@@ -64,7 +64,7 @@ install -pDm0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/%name
 %preun_service %name
 
 %files
-%_sbindir/*
+%_bindir/%name
 %dir %attr(0775,root,%_pseudouser_group) %_logdir/%name
 %config %_initdir/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
@@ -72,6 +72,9 @@ install -pDm0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/%name
 %doc README contrib
 
 %changelog
+* Mon Dec 06 2021 Oleg Solovyov <mcpain@altlinux.org> 2.0.18-alt3
+- Moved /usr/sbin/uwsgi -> /usr/bin/uwsgi (Closes: #41510)
+
 * Thu Sep 02 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.0.18-alt2
 - Added patch for Elbrus
 
