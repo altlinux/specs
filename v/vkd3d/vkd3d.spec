@@ -3,7 +3,7 @@
 
 Name: vkd3d
 Version: 1.2
-Release: alt1.1
+Release: alt1.2
 Summary: The vkd3d 3D Graphics Library
 
 Group: System/Libraries
@@ -13,7 +13,7 @@ Url: https://source.winehq.org/git/vkd3d.git/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: libvulkan-devel spirv-headers libwine-vanilla-devel
+BuildRequires: libvulkan-devel spirv-headers wine-devel-tools
 BuildRequires: libspirv-tools-devel spirv-tools
 %if_enabled demos
 BuildRequires: libxcb-devel libxcbutil-devel libxcbutil-keysyms-devel libxcbutil-icccm-devel
@@ -100,6 +100,9 @@ done
 %endif
 
 %changelog
+* Mon Dec 06 2021 L.A. Kostis <lakostis@altlinux.ru> 1.2-alt1.2
+- Fix wine BR (changed again).
+
 * Mon Aug 30 2021 L.A. Kostis <lakostis@altlinux.ru> 1.2-alt1.1
 - Fix LTO linking.
 
