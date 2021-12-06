@@ -1,7 +1,7 @@
 %define        pkgname setup
 
 Name:          gem-%pkgname
-Version:       5.999.4
+Version:       5.999.5
 Release:       alt11
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
@@ -89,6 +89,10 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Mon Oct 25 2021 Pavel Skrylev <majioa@altlinux.org> 5.999.5-alt11
+- ^ 5.999.4 -> 5.999.5
+- ! pass option hash to gem requirement constructor in setup deps
+
 * Tue Oct 12 2021 Pavel Skrylev <majioa@altlinux.org> 5.999.4-alt11
 - * extconf module to class, to allow multiext config support.
 - + rakefile gemspec finder... but it seems useless though

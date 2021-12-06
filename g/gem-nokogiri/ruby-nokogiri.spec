@@ -1,7 +1,7 @@
 %define        gemname nokogiri
 
 Name:          gem-nokogiri
-Version:       1.12.4
+Version:       1.12.5
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
 License:       MIT
@@ -12,7 +12,6 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-pkg-config
 BuildRequires: libxml2-devel
 BuildRequires: libxslt-devel
 BuildRequires: zlib-devel
@@ -35,9 +34,9 @@ BuildRequires: gem(yard) >= 0.9 gem(yard) < 1
 %ruby_use_gem_dependency mini_portile2 >= 2.7.0,mini_portile2 < 3
 Requires:      gem(racc) >= 1.4 gem(racc) < 2
 Requires:      gem(mini_portile2) >= 2.6.1 gem(mini_portile2) < 3
-Obsoletes:     ruby-%gemname < %EVR
-Provides:      ruby-%gemname = %EVR
-Provides:      gem(nokogiri) = 1.12.4
+Obsoletes:     ruby-nokogiri < %EVR
+Provides:      ruby-nokogiri = %EVR
+Provides:      gem(nokogiri) = 1.12.5
 
 
 %description
@@ -47,14 +46,14 @@ contanis Ruby libraries for Nokogiri.
 
 
 %package       -n nokogiri
-Version:       1.12.4
+Version:       1.12.5
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета nokogiri
 Group:         Development/Other
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.12.4
+Requires:      gem(nokogiri) = 1.12.5
 
 %description   -n nokogiri
 Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
@@ -69,14 +68,14 @@ contanis Ruby libraries for Nokogiri.
 
 
 %package       -n gem-nokogiri-doc
-Version:       1.12.4
+Version:       1.12.5
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета nokogiri
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.12.4
+Requires:      gem(nokogiri) = 1.12.5
 
 %description   -n gem-nokogiri-doc
 Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) documentation
@@ -91,14 +90,14 @@ contanis Ruby libraries for Nokogiri.
 
 
 %package       -n gem-nokogiri-devel
-Version:       1.12.4
+Version:       1.12.5
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета nokogiri
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.12.4
+Requires:      gem(nokogiri) = 1.12.5
 Requires:      gem(bundler) >= 2.1.4 gem(bundler) < 3
 Requires:      gem(hoe-markdown) >= 1.4 gem(hoe-markdown) < 2
 Requires:      gem(minitest) >= 5.8 gem(minitest) < 6
@@ -110,7 +109,6 @@ Requires:      gem(rexical) >= 1.0.5 gem(rexical) < 1.1
 Requires:      gem(rubocop) >= 1.7 gem(rubocop) < 2
 Requires:      gem(simplecov) >= 0.17 gem(simplecov) < 1
 Requires:      gem(yard) >= 0.9 gem(yard) < 1
-Requires:      ruby-pkg-config
 Requires:      libxml2-devel
 Requires:      libxslt-devel
 Requires:      java-devel
@@ -160,6 +158,10 @@ contanis Ruby libraries for Nokogiri.
 
 
 %changelog
+* Mon Dec 06 2021 Pavel Skrylev <majioa@altlinux.org> 1.12.5-alt1
+- ^ 1.12.4 -> 1.12.5
+- ! CVE-2021-41098
+
 * Sat Sep 04 2021 Pavel Skrylev <majioa@altlinux.org> 1.12.4-alt1
 - ^ 1.11.1 -> 1.12.4
 - ! fixes

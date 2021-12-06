@@ -1,29 +1,31 @@
 Name:          foreman
-Version:       2.5.0
-Release:       alt0.2
+Version:       3.0.0
+Release:       alt1
 Summary:       An application that automates the lifecycle of servers
-License:       GPLv3
+License:       MIT
 Group:         System/Servers
 Url:           https://theforeman.org
 Vcs:           https://github.com/theforeman/foreman.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
-Source:        %name-%version.tar
-Source1:       database.yml
-Source2:       foreman.sysconfig
-Source3:       foreman.logrotate
-Source4:       foreman.cron.d
-Source5:       foreman.tmpfiles
-Source6:       foreman.service
-Source7:       settings.yml
-Source9:       manifest.js
-# Source10:      node_modules.tar.gz
-Source11:      foreman-jobs.service
 Source12:      foreman-jobs.sysconfig
-# TODO remove sass patch part when patternfly-sass gem will be upgraded to new font-awesome-sass v5
-Patch:         foreman.patch
-Patch4:        1.24.3.2.alt5.patch
+Source11:      foreman-jobs.service
+Source10:      public.tar
+Source9:       manifest.js
+Source7:       settings.yml
+Source6:       foreman.service
+Source5:       foreman.tmpfiles
+Source4:       foreman.cron.d
+Source3:       foreman.logrotate
+Source2:       foreman.sysconfig
+Source1:       database.yml
+Source:        %name-%version.tar
+Patch:         alt.patch
+Patch1:        gemfile.patch
+Patch2:        rails_6_1.patch
+Patch3:        invalid_premission.patch
+Patch4:        puppet_enc_script.patch
 BuildRequires(pre): rpm-build-ruby
 BuildRequires(pre): rpm-macros-webserver-common
 BuildRequires: elfutils
@@ -33,7 +35,6 @@ BuildRequires: libnss-devel
 BuildRequires: libnspr-devel
 BuildRequires: fontconfig
 BuildRequires: libfreetype-devel
-BuildRequires: node-sass
 BuildRequires: gem(sass) >= 3.2
 BuildRequires: gem(bundler) >= 1.3 gem(bundler) < 3
 BuildRequires: gem(rake) >= 0
@@ -43,10 +44,10 @@ BuildRequires: gem(rails) >= 6.0.3.1 gem(rails) < 7
 BuildRequires: gem(rest-client) >= 2.0.0 gem(rest-client) < 3
 BuildRequires: gem(audited) >= 4.9.0 gem(audited) < 6
 BuildRequires: gem(will_paginate) >= 3.1.7 gem(will_paginate) < 4
-BuildRequires: gem(ancestry) >= 3.2.0 gem(ancestry) < 5
+BuildRequires: gem(ancestry) >= 3.0.7 gem(ancestry) < 5
 BuildRequires: gem(scoped_search) >= 4.1.8 gem(scoped_search) < 5
 BuildRequires: gem(ldap_fluff) >= 0.5.0 gem(ldap_fluff) < 1.0
-BuildRequires: gem(apipie-rails) >= 0.5.17 gem(apipie-rails) < 0.6.0
+BuildRequires: gem(apipie-rails) >= 0.5.19 gem(apipie-rails) < 0.6.0
 BuildRequires: gem(apipie-dsl) >= 2.2.6
 BuildRequires: gem(rdoc) >= 0
 BuildRequires: gem(rabl) >= 0.14.2 gem(rabl) < 0.15
@@ -86,7 +87,7 @@ BuildRequires: gem(graphql) >= 1.8.0 gem(graphql) < 2
 BuildRequires: gem(graphql-batch) >= 0
 BuildRequires: gem(fog-aws) >= 3.6.2 gem(fog-aws) < 4
 BuildRequires: gem(fog-ovirt) >= 2.0.1 gem(fog-ovirt) < 3
-BuildRequires: gem(fog-libvirt) >= 0.8.0
+BuildRequires: gem(fog-libvirt) >= 0.9.0
 BuildRequires: gem(ruby-libvirt) >= 0.5 gem(ruby-libvirt) < 1
 BuildRequires: gem(fog-vsphere) >= 3.5.0 gem(fog-vsphere) < 4.0
 BuildRequires: gem(rbvmomi) >= 2.0 gem(rbvmomi) < 3
@@ -102,7 +103,7 @@ BuildRequires: gem(gitlab-sidekiq-fetcher) >= 0
 BuildRequires: gem(sd_notify) >= 0.1 gem(sd_notify) < 1
 BuildRequires: gem(rack-openid) >= 1.3 gem(rack-openid) < 2
 BuildRequires: gem(prometheus-client) >= 1.0 gem(prometheus-client) < 3
-BuildRequires: gem(statsd-instrument) < 4
+BuildRequires: gem(statsd-instrument) >= 3.0 gem(statsd-instrument) < 4
 BuildRequires: gem(maruku) >= 0.7 gem(maruku) < 1
 BuildRequires: gem(gettext) >= 3.2.1 gem(gettext) < 4.0.0
 BuildRequires: gem(immigrant) >= 0.1 gem(immigrant) < 1
@@ -134,7 +135,7 @@ BuildRequires: gem(fog-openstack) >= 1.0.8 gem(fog-openstack) < 2.0.0
 BuildRequires: gem(mocha) >= 1.11 gem(mocha) < 2
 BuildRequires: gem(single_test) >= 0.6 gem(single_test) < 1
 BuildRequires: gem(minitest) >= 5.1 gem(minitest) < 6
-BuildRequires: gem(minitest-retry) >= 0.0 gem(minitest-retry) < 1
+BuildRequires: gem(minitest-retry) >= 0
 BuildRequires: gem(minitest-spec-rails) >= 6.0 gem(minitest-spec-rails) < 7
 BuildRequires: gem(ci_reporter_minitest) >= 0
 BuildRequires: gem(capybara) >= 3.0 gem(capybara) < 3.32.1
@@ -150,7 +151,7 @@ BuildRequires: gem(rails-controller-testing) >= 1.0 gem(rails-controller-testing
 BuildRequires: gem(rfauxfactory) >= 0.1.5 gem(rfauxfactory) < 1
 BuildRequires: gem(robottelo_reporter) >= 0.1 gem(robottelo_reporter) < 1
 BuildRequires: gem(theforeman-rubocop) >= 0.0.6 gem(theforeman-rubocop) < 0.1
-BuildRequires: gem(webmock) >= 0
+BuildRequires: gem(webmock) >= 0 gem(webmock) < 4
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findreq_skiplist %_libexecdir/%name/**/*
@@ -176,15 +177,14 @@ BuildRequires: gem(webmock) >= 0
 %ruby_use_gem_dependency factory_bot_rails >= 6.2.0,factory_bot_rails < 7
 %ruby_use_gem_dependency shoulda-matchers >= 4.5.1,shoulda-matchers < 5
 %ruby_use_gem_dependency shoulda-context >= 2.0.0,shoulda-context < 3
-Requires:      gem-scoped-search gem-friendly-id gem-fog-google
 Requires:      gem(rails) >= 6.0.3.1 gem(rails) < 7
 Requires:      gem(rest-client) >= 2.0.0 gem(rest-client) < 3
 Requires:      gem(audited) >= 4.9.0 gem(audited) < 6
 Requires:      gem(will_paginate) >= 3.1.7 gem(will_paginate) < 4
-Requires:      gem(ancestry) >= 3.2.0 gem(ancestry) < 5
+Requires:      gem(ancestry) >= 3.0.7 gem(ancestry) < 5
 Requires:      gem(scoped_search) >= 4.1.8 gem(scoped_search) < 5
 Requires:      gem(ldap_fluff) >= 0.5.0 gem(ldap_fluff) < 1.0
-Requires:      gem(apipie-rails) >= 0.5.17 gem(apipie-rails) < 0.6.0
+Requires:      gem(apipie-rails) >= 0.5.19 gem(apipie-rails) < 0.6.0
 Requires:      gem(apipie-dsl) >= 2.2.6
 Requires:      gem(rdoc) >= 0 gem(rdoc) < 7
 Requires:      gem(rabl) >= 0.14.2 gem(rabl) < 0.15
@@ -224,7 +224,7 @@ Requires:      gem(graphql) >= 1.8.0 gem(graphql) < 2
 Requires:      gem(graphql-batch) >= 0
 Requires:      gem(fog-aws) >= 3.6.2 gem(fog-aws) < 4
 Requires:      gem(fog-ovirt) >= 2.0.1 gem(fog-ovirt) < 3
-Requires:      gem(fog-libvirt) >= 0.8.0
+Requires:      gem(fog-libvirt) >= 0.9.0
 Requires:      gem(ruby-libvirt) >= 0.5 gem(ruby-libvirt) < 1
 Requires:      gem(fog-vsphere) >= 3.5.0 gem(fog-vsphere) < 4.0
 Requires:      gem(rbvmomi) >= 2.0 gem(rbvmomi) < 3
@@ -240,12 +240,12 @@ Requires:      gem(gitlab-sidekiq-fetcher) >= 0
 Requires:      gem(sd_notify) >= 0.1 gem(sd_notify) < 1
 Requires:      gem(rack-openid) >= 1.3 gem(rack-openid) < 2
 Requires:      gem(prometheus-client) >= 1.0 gem(prometheus-client) < 3
-Requires:      gem(statsd-instrument) < 4
+Requires:      gem(statsd-instrument) >= 3.0 gem(statsd-instrument) < 4
 Requires:      gem(maruku) >= 0.7 gem(maruku) < 1
 Requires:      gem(gettext) >= 3.2.1 gem(gettext) < 4.0.0
 Requires:      gem(immigrant) >= 0.1 gem(immigrant) < 1
 Requires:      gem(byebug) >= 0
-Requires:      gem(pry) >= 0 gem(pry) < 1
+Requires:      gem(pry) >= 0
 Requires:      gem(pry-rails) >= 0
 Requires:      gem(pry-byebug) >= 0
 Requires:      gem(pry-doc) >= 0
@@ -290,16 +290,20 @@ Requires:      gem(rfauxfactory) >= 0.1.5 gem(rfauxfactory) < 1
 Requires:      gem(robottelo_reporter) >= 0.1 gem(robottelo_reporter) < 1
 Requires:      gem(theforeman-rubocop) >= 0.0.6 gem(theforeman-rubocop) < 0.1
 Requires:      gem(webmock) >= 0
+Requires:      gem(foreman_templates) >= 0
+Requires:      gem(foreman_remote_execution) >= 0
+Requires:      gem(foreman_discovery) >= 0
+Requires:      gem(foreman_ansible) >= 0
+Requires:      gem(foreman-tasks) >= 0
+Requires:      gem(foreman_default_hostgroup) >= 0
+Requires:      gem(foreman_puppet) >= 0
+Requires:      gem(foreman_setup) >= 0
 Requires:      wget
 Requires:      vixie-cron
 Requires:      postgresql-server
-Requires:      libX11
-Requires:      libnss
-Requires:      libnspr
-Requires:      fontconfig
-Requires:      libfreetype
-Requires:      node-sass
 Requires:      dynflow
+Requires:      node
+Provides:      ruby-foreman
 
 
 %description
@@ -316,136 +320,24 @@ API which enables you to build higher level business logic on top of a solid
 foundation.
 
 
-#%package       -n gem-font-awesome-sass
-#Version:       4.7.0
-#Release:       alt1
-#Summary:       Font-Awesome SASS
-#Group:         Development/Ruby
-#BuildArch:     noarch
-#
-#Requires:      gem(sass) >= 3.2
-#Provides:      gem(font-awesome-sass) = 4.7.0
-#
-#%description   -n gem-font-awesome-sass
-#Font-Awesome SASS gem for use in Ruby projects
-#
-#
-#%package       -n gem-font-awesome-sass-doc
-#Version:       4.7.0
-#Release:       alt1
-#Summary:       Font-Awesome SASS documentation files
-#Summary(ru_RU.UTF-8): Файлы сведений для самоцвета font-awesome-sass
-#Group:         Development/Documentation
-#BuildArch:     noarch
-#
-#Requires:      gem(font-awesome-sass) = 4.7.0
-#
-#%description   -n gem-font-awesome-sass-doc
-#Font-Awesome SASS documentation files.
-#
-#Font-Awesome SASS gem for use in Ruby projects
-#
-#%description   -n gem-font-awesome-sass-doc -l ru_RU.UTF-8
-#Файлы сведений для самоцвета font-awesome-sass.
-#
-#
-#%package       -n gem-font-awesome-sass-devel
-#Version:       4.7.0
-#Release:       alt1
-#Summary:       Font-Awesome SASS development package
-#Summary(ru_RU.UTF-8): Файлы для разработки самоцвета font-awesome-sass
-#Group:         Development/Ruby
-#BuildArch:     noarch
-#
-#Requires:      gem(font-awesome-sass) = 4.7.0
-#Requires:      gem(bundler) >= 1.3 gem(bundler) < 3
-#Requires:      gem(rake) >= 0 gem(rake) < 14
-#Requires:      gem(sass-rails) >= 0
-#Requires:      gem(compass) >= 0
-#
-#%description   -n gem-font-awesome-sass-devel
-#Font-Awesome SASS development package.
-#
-#Font-Awesome SASS gem for use in Ruby projects
-#
-#%description   -n gem-font-awesome-sass-devel -l ru_RU.UTF-8
-#Файлы для разработки самоцвета font-awesome-sass.
-#
-#
-%package       -n foreman-doc
-Version:       2.5.0
-Release:       alt0.1
-Summary:       An application that automates the lifecycle of servers documentation files
-Group:         Documentation
-
-Requires:      foreman = 2.5.0
-
-%description   -n foreman-doc
-An application that automates the lifecycle of servers documentation files.
-
-%description   -n foreman-doc -l ru_RU.UTF-8
-Файлы сведений для приложения foreman.
-
-
-%package       -n foreman-devel
-Version:       2.5.0
-Release:       alt0.1
-Summary:       An application that automates the lifecycle of servers development package
-Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman
-Group:         Development/Ruby
-BuildArch:     noarch
-
-Requires:      gem(rails) >= 6 gem(rails) < 7
-Requires:      gem(graphql) >= 1.9 gem(graphql) < 2
-Requires:      gem(jquery-ui-rails) >= 6.0 gem(jquery-ui-rails) < 7
-Requires:      gem(patternfly-sass) >= 3.38 gem(patternfly-sass) < 4
-Requires:      gem(fog-core) >= 2.1 gem(fog-core) < 3
-Requires:      gem(prometheus-client) >= 2.0 gem(prometheus-client) < 3
-Requires:      gem(sprockets) >= 4.0 gem(sprockets) < 5
-Requires:      gem(sass-rails) >= 6.0 gem(sass-rails) < 7
-Requires:      gem(net-ssh) >= 6.0 gem(net-ssh) < 7
-
-%description   -n foreman-devel
-An application that automates the lifecycle of servers development
-package.
-
-Foreman is a free open source project that gives you the power to easily
-automate repetitive tasks, quickly deploy applications, and proactively manage
-your servers lifecyle, on-premises or in the cloud. From provisioning and
-configuration to orchestration and monitoring, Foreman integrates with your
-existing infrastructure to make operations easier. Using Puppet, Ansible, Chef,
-Salt and Foreman's smart proxy architecture, you can easily automate repetitive
-tasks, quickly deploy applications, and proactively manage change, both
-on-premise with VMs and bare-metal or in the cloud. Foreman provides
-comprehensive, interaction facilities including a web frontend, CLI and RESTful
-API which enables you to build higher level business logic on top of a solid
-foundation.
-
-%description   -n foreman-devel -l ru_RU.UTF-8
-Файлы для разработки самоцвета foreman.
-
-
-
-
 %prep
 %setup
-# %setup -a 10
+%setup -a 10
 %patch -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 sed -e "s/a2x/asciidoctor/" -e "s/-f/-b/" -i Rakefile.dist # NOTE patching a2x to asciidoctor
-sed "s,gem 'turbolinks'.*,gem 'gitlab-turbolinks-classic'," -i Gemfile
-rm -rf ./node_modules/node-sass/ ./node_modules/.bin/node-sass
+# sed "s,gem 'turbolinks'.*,gem 'gitlab-turbolinks-classic'," -i Gemfile
 install -Dm0755 %SOURCE9 app/assets/config/manifest.js
+# rm -rf ./node_modules
 rm -rf ./extras/noVNC/websockify
-rm -rf ./node_modules/jstz
-rm -rf ./node_modules/node-gyp
-rm -rf ./node_modules/npm/node_modules/node-gyp
-rm -rf ./node_modules/railroad-diagrams
 # Set correct python3 executable in shebang
 subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *) \
     $(find ./ -type f \( -name '*.py' -o -name '%name' \))
 # Add record to end of scss order
 echo "@import 'fix-views';" >> app/assets/stylesheets/application.scss
-
 
 %build
 %ruby_build
@@ -461,20 +353,24 @@ rm -rf %buildroot%_libexecdir/%name/config
 rm -rf %buildroot%ruby_sitelibdir
 rm -rf %buildroot%_libexecdir/%name/lib
 rm -rf %buildroot%_localstatedir/%name
+rm -rf %buildroot%_libexecdir/%name/tmp
 cp -rf config %buildroot%_libexecdir/%name/config
 cp -rf lib %buildroot%_libexecdir/%name/
-mkdir -p %buildroot%webserver_datadir \
+mkdir -p %buildroot%webserver_datadir/%name \
          %buildroot%_sbindir \
          %buildroot/run/%name \
          %buildroot%_spooldir/%name/tmp \
          %buildroot%_cachedir/%name/_ \
-         %buildroot%_localstatedir/%name \
+         %buildroot%_cachedir/%name/.bundle \
          %buildroot%_cachedir/%name/openid-store \
-         %buildroot%_sysconfdir/%name/plugins
+         %buildroot%_cachedir/%name/apipie-cache \
+         %buildroot%_sysconfdir/%name/plugins \
+         %buildroot%_localstatedir/%name
 
 # Create VERSION file
 install -pm0644 VERSION %buildroot%_libexecdir/%name/VERSION
-# cp -r node_modules/.bin %buildroot%_libexecdir/%name/node_modules/
+# bin folder is required for the rails run
+cp -r bin %buildroot%_libexecdir/%name/bin
 
 install -Dm0644 %SOURCE1 %buildroot%_sysconfdir/%name/database.yml
 install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
@@ -487,18 +383,24 @@ install -Dm0640 /dev/null %buildroot%_sysconfdir/%name/encryption_key.rb
 install -Dm0640 /dev/null %buildroot%_sysconfdir/%name/local_secret_token.rb
 install -Dm0644 %SOURCE11 %buildroot%_unitdir/%{name}-jobs.service
 install -Dm0644 %SOURCE12 %buildroot%_sysconfdir/sysconfig/%{name}-jobs
+install -Dm0644 config.ru %buildroot%_libexecdir/%name/config.ru
+touch %buildroot%_cachedir/%name/Gemfile.lock
 
-mv %buildroot%_libexecdir/%name/public %buildroot%webserver_datadir/%name
-ln -svr %buildroot%webserver_datadir/%name %buildroot%_libexecdir/%name/public
+#mv %buildroot%_libexecdir/%name/public %buildroot%webserver_datadir/%name
+cp -r public/{javascripts,stylesheets,images} %buildroot%_libexecdir/%name/public/
+#ln -svr %buildroot%webserver_datadir/%name %buildroot%_libexecdir/%name/public
 ln -svr %buildroot%_sysconfdir/%name/plugins %buildroot%_libexecdir/%name/config/settings.plugins.d
 ln -svr %buildroot%_sysconfdir/%name/settings.yml %buildroot%_libexecdir/%name/config/settings.yaml
 ln -svr %buildroot%_sysconfdir/%name/database.yml %buildroot%_libexecdir/%name/config/database.yml
 ln -svr %buildroot%_sysconfdir/%name/encryption_key.rb %buildroot%_libexecdir/%name/config/initializers/encryption_key.rb
 ln -svr %buildroot%_sysconfdir/%name/local_secret_token.rb %buildroot%_libexecdir/%name/config/initializers/local_secret_token.rb
-#ln -svr %buildroot%_spooldir/%name/tmp %buildroot%_libexecdir/%name/tmp
+ln -svr %buildroot%_spooldir/%name/tmp %buildroot%_libexecdir/%name/tmp
 #ln -svr %buildroot%_cachedir/%name/_ %buildroot%_spooldir/%name/tmp/cache
 ln -svr %buildroot%_cachedir/%name/openid-store %buildroot%_libexecdir/%name/db/openid-store
+ln -svr %buildroot%_cachedir/%name/apipie-cache %buildroot%_libexecdir/%name/public/apipie-cache
+ln -svr %buildroot%_cachedir/%name/.bundle %buildroot%_libexecdir/%name/.bundle
 ln -svr %buildroot%_libexecdir/%name/script/foreman-rake %buildroot%_sbindir/foreman-rake
+ln -svr %buildroot%_cachedir/%name/Gemfile.lock %buildroot%_libexecdir/%name/Gemfile.lock
 install -d %buildroot%_logdir/%name
 
 %check
@@ -511,7 +413,7 @@ getent passwd _foreman >/dev/null || \
    %_sbindir/useradd -r -g foreman -G foreman -M -d %_localstatedir/%name -s /bin/bash -c "Foreman" _foreman
 getent group puppet >/dev/null || \
    %_sbindir/usermod -a -G puppet _foreman
-rm -rf %_libexecdir/%name/db/openid-store
+rm -rf %_libexecdir/%name/public %_libexecdir/%name/db/openid-store
 exit 0
 
 %post
@@ -523,9 +425,9 @@ railsctl cleanup %name
 %preun_service foreman
 %preun_service foreman-jobs
 
+
 %files
 %doc README* CONTRIBUTING.md LICENSE
-#%_sbindir/*
 %_sbindir/%name-rake
 %_libexecdir/%name
 %config(noreplace) %_logrotatedir/%name
@@ -539,34 +441,24 @@ railsctl cleanup %name
 %attr(770,_foreman,foreman) %_sysconfdir/cron.d/%name
 %_tmpfilesdir/%name.conf
 %_unitdir/*
-%attr(770,_foreman,foreman) %webserver_datadir/%name
 %attr(770,_foreman,foreman) %_spooldir/%name/tmp
+%attr(770,_foreman,foreman) %_cachedir/%name/Gemfile.lock
+%dir %attr(770,_foreman,foreman) %webserver_datadir/%name
+%dir %attr(770,_foreman,foreman) %_localstatedir/%name
+%dir %attr(770,_foreman,foreman) %_cachedir/%name/.bundle
 %dir %attr(770,_foreman,foreman) %_cachedir/%name/openid-store
+%dir %attr(770,_foreman,foreman) %_cachedir/%name/apipie-cache
 %dir %attr(770,_foreman,foreman) %_cachedir/%name/_
 %dir %attr(770,_foreman,foreman) /run/%name
 %dir %attr(770,_foreman,foreman) %_logdir/%name
-%dir %attr(770,_foreman,foreman) %_localstatedir/%name
 %dir %attr(770,_foreman,foreman) %_spooldir/%name
 # %_man8dir/*.8*
-#%attr(770,_foreman,foreman) %_cachedir/%name/bootsnap
-
-
-#%files         -n gem-font-awesome-sass
-#%doc README.md
-#%ruby_gemspecdir/font-awesome-sass-4.7.0.gemspec
-#%ruby_gemslibdir/font-awesome-sass-4.7.0
-#
-#%files         -n gem-font-awesome-sass-doc
-#%doc README.md
-#%ruby_gemsdocdir/font-awesome-sass-4.7.0
-#
-%files         -n foreman-doc
-%ruby_sitedocdir/*
-
-%files         -n foreman-devel
 
 
 %changelog
+* Wed Oct 20 2021 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt1
+- ^ 2.5.0 -> 3.0.0
+
 * Wed Aug 25 2021 Pavel Skrylev <majioa@altlinux.org> 2.5.0-alt0.2
 - ! require deps
 - ! sitedocdir folder

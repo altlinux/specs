@@ -1,51 +1,125 @@
-%define        pkgname apipie-rails
+%define        gemname apipie-rails
 
-Name:          gem-%pkgname
-Version:       0.5.17
+Name:          gem-apipie-rails
+Version:       0.5.19
 Release:       alt1
 Summary:       Ruby on Rails API documentation tool
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://github.com/Apipie/apipie-rails
-Vcs:           https://github.com/Apipie/apipie-rails.git
+Vcs:           https://github.com/apipie/apipie-rails.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(rails) >= 4.1
+BuildRequires: gem(rspec-rails) >= 3.0 gem(rspec-rails) < 6
+BuildRequires: gem(sqlite3) >= 0
+BuildRequires: gem(minitest) >= 0
+BuildRequires: gem(maruku) >= 0
+BuildRequires: gem(RedCloth) >= 0
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(rdoc) >= 0
+BuildRequires: gem(json-schema) >= 2.8 gem(json-schema) < 3
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname
-Provides:      ruby-%pkgname
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency rspec-rails >= 5.0.1,rspec-rails < 6
+%ruby_ignore_names test_engine
+Requires:      gem(rails) >= 4.1
+Obsoletes:     ruby-apipie-rails < %EVR
+Provides:      ruby-apipie-rails = %EVR
+Provides:      gem(apipie-rails) = 0.5.19
+
 
 %description
 Apipie-rails is a DSL and Rails engine for documenting your RESTful API. Instead
-of traditional use of #comments, Apipie lets you describe the code, through
-the code. This brings advantages like:
+of traditional use of #comments, Apipie lets you describe the code, through the
+code. This brings advantages like:
 
 * No need to learn yet another syntax, you already know Ruby, right?
 * Possibility of reusing the docs for other purposes (such as validation)
 * Easier to extend and maintain (no string parsing involved)
 * Possibility of reusing other sources for documentation purposes (such as
-  routes etc.)
+routes etc.)
 
-The documentation is available from within your app (by default under
-the /apipie path.) In development mode, you can see the changes as you go. It's
+The documentation is available from within your app (by default under the
+/apipie path.) In development mode, you can see the changes as you go. It's
 markup language agnostic, and even provides an API for reusing the documentation
 data in JSON.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-apipie-rails-doc
+Version:       0.5.19
+Release:       alt1
+Summary:       Ruby on Rails API documentation tool documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета apipie-rails
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(apipie-rails) = 0.5.19
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-apipie-rails-doc
+Ruby on Rails API documentation tool documentation files.
+
+Apipie-rails is a DSL and Rails engine for documenting your RESTful API. Instead
+of traditional use of #comments, Apipie lets you describe the code, through the
+code. This brings advantages like:
+
+* No need to learn yet another syntax, you already know Ruby, right?
+* Possibility of reusing the docs for other purposes (such as validation)
+* Easier to extend and maintain (no string parsing involved)
+* Possibility of reusing other sources for documentation purposes (such as
+routes etc.)
+
+The documentation is available from within your app (by default under the
+/apipie path.) In development mode, you can see the changes as you go. It's
+markup language agnostic, and even provides an API for reusing the documentation
+data in JSON.
+
+%description   -n gem-apipie-rails-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета apipie-rails.
+
+
+%package       -n gem-apipie-rails-devel
+Version:       0.5.19
+Release:       alt1
+Summary:       Ruby on Rails API documentation tool development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета apipie-rails
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(apipie-rails) = 0.5.19
+Requires:      gem(rspec-rails) >= 3.0 gem(rspec-rails) < 6
+Requires:      gem(sqlite3) >= 0
+Requires:      gem(minitest) >= 0
+Requires:      gem(maruku) >= 0
+Requires:      gem(RedCloth) >= 0
+Requires:      gem(rake) >= 0
+Requires:      gem(rdoc) >= 0
+Requires:      gem(json-schema) >= 2.8 gem(json-schema) < 3
+
+%description   -n gem-apipie-rails-devel
+Ruby on Rails API documentation tool development package.
+
+Apipie-rails is a DSL and Rails engine for documenting your RESTful API. Instead
+of traditional use of #comments, Apipie lets you describe the code, through the
+code. This brings advantages like:
+
+* No need to learn yet another syntax, you already know Ruby, right?
+* Possibility of reusing the docs for other purposes (such as validation)
+* Easier to extend and maintain (no string parsing involved)
+* Possibility of reusing other sources for documentation purposes (such as
+routes etc.)
+
+The documentation is available from within your app (by default under the
+/apipie path.) In development mode, you can see the changes as you go. It's
+markup language agnostic, and even provides an API for reusing the documentation
+data in JSON.
+
+%description   -n gem-apipie-rails-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета apipie-rails.
 
 
 %prep
@@ -61,15 +135,22 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.rst lib/generators/apipie/install/README rel-eng/packages/.readme
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n gem-apipie-rails-doc
+%doc README.rst lib/generators/apipie/install/README rel-eng/packages/.readme
 %ruby_gemdocdir
+
+%files         -n gem-apipie-rails-devel
+%doc README.rst lib/generators/apipie/install/README rel-eng/packages/.readme
 
 
 %changelog
+* Sat Oct 23 2021 Pavel Skrylev <majioa@altlinux.org> 0.5.19-alt1
+- ^ 0.5.17 -> 0.5.19
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 0.5.17-alt1
 - updated (^) 0.5.16 -> 0.5.17
 - fixed (!) spec

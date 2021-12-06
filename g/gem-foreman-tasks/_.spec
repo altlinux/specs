@@ -2,8 +2,8 @@
 
 Name:          gem-foreman-tasks
 Epoch:         1
-Version:       5.0.0
-Release:       alt1
+Version:       5.1.1
+Release:       alt1.1
 Summary:       Foreman plugin for showing tasks information for resources and users
 License:       GPL-3.0
 Group:         Development/Ruby
@@ -13,6 +13,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Patch:         template-fix.patch
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(dynflow) >= 1.2.3
 BuildRequires: gem(get_process_mem) >= 0
@@ -30,7 +31,7 @@ Requires:      gem(dynflow) >= 1.2.3
 Requires:      gem(get_process_mem) >= 0
 Requires:      gem(parse-cron) >= 0.1.4 gem(parse-cron) < 0.2
 Requires:      gem(sinatra) >= 0
-Provides:      gem(foreman-tasks) = 5.0.0
+Provides:      gem(foreman-tasks) = 5.1.1
 
 
 %description
@@ -43,7 +44,7 @@ optionally provides Dynflow infrastructure for using it for managing the tasks.
 
 %package       -n gem-foreman-tasks-core
 Version:       0.4.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Common code used both at Forman and Foreman proxy regarding tasks
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -58,7 +59,7 @@ Common code used both at Forman and Foreman proxy regarding tasks
 
 %package       -n gem-foreman-tasks-core-doc
 Version:       0.4.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Common code used both at Forman and Foreman proxy regarding tasks documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman-tasks-core
 Group:         Development/Documentation
@@ -78,7 +79,7 @@ Common code used both at Forman and Foreman proxy regarding tasks
 
 %package       -n gem-foreman-tasks-core-devel
 Version:       0.4.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Common code used both at Forman and Foreman proxy regarding tasks development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman-tasks-core
 Group:         Development/Ruby
@@ -97,14 +98,14 @@ Common code used both at Forman and Foreman proxy regarding tasks
 
 
 %package       -n gem-foreman-tasks-doc
-Version:       5.0.0
-Release:       alt1
+Version:       5.1.1
+Release:       alt1.1
 Summary:       Foreman plugin for showing tasks information for resources and users documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman-tasks
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(foreman-tasks) = 5.0.0
+Requires:      gem(foreman-tasks) = 5.1.1
 
 %description   -n gem-foreman-tasks-doc
 Foreman plugin for showing tasks information for resources and users
@@ -121,14 +122,14 @@ optionally provides Dynflow infrastructure for using it for managing the tasks.
 
 
 %package       -n gem-foreman-tasks-devel
-Version:       5.0.0
-Release:       alt1
+Version:       5.1.1
+Release:       alt1.1
 Summary:       Foreman plugin for showing tasks information for resources and users development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman-tasks
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(foreman-tasks) = 5.0.0
+Requires:      gem(foreman-tasks) = 5.1.1
 Requires:      gem(factory_bot_rails) >= 4.8.0 gem(factory_bot_rails) < 7
 Requires:      gem(sqlite3) >= 0
 
@@ -148,6 +149,7 @@ optionally provides Dynflow infrastructure for using it for managing the tasks.
 
 %prep
 %setup
+%patch
 
 %build
 %ruby_build
@@ -181,6 +183,10 @@ optionally provides Dynflow infrastructure for using it for managing the tasks.
 
 
 %changelog
+* Fri Oct 22 2021 Pavel Skrylev <majioa@altlinux.org> 1:5.1.1-alt1.1
+- ^ 5.0.0 -> 5.1.1
+- ! file path argument to render with template
+
 * Wed Sep 01 2021 Pavel Skrylev <majioa@altlinux.org> 1:5.0.0-alt1
 - ^ 3.0.2 -> 5.0.0
 - ! epoch for gem-foreman-tasks-doc package

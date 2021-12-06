@@ -1,7 +1,7 @@
 %define        gemname smart_proxy
 
 Name:          gem-smart-proxy
-Version:       2.5.0
+Version:       3.0.0
 Release:       alt1
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet
 License:       GPL-3.0
@@ -11,30 +11,36 @@ Vcs:           https://github.com/theforeman/smart-proxy.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
-Source4:       puppetca_http_api.yml
-Source3:       smart-proxy.conf
-Source2:       smart-proxy.service
-Source1:       settings.yml
 Source:        %name-%version.tar
-Patch2:        config-path.patch
+Source1:       settings.yml
+Source2:       smart-proxy.service
+Source3:       smart-proxy.conf
+Source4:       puppetca_http_api.yml
+Patch:         deps.patch
 Patch1:        config.patch
-Patch:         2.1.0.patch
+Patch2:        config-path.patch
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(json) >= 0
 BuildRequires: gem(logging) >= 0
 BuildRequires: gem(rack) >= 1.3
 BuildRequires: gem(sd_notify) >= 0.1 gem(sd_notify) < 1
+BuildRequires: gem(facter) >= 4.0
+BuildRequires: gem(smart_proxy_ansible) >= 3.0.1
+BuildRequires: gem(smart_proxy_discovery) >= 1.0.5
+BuildRequires: gem(smart_proxy_pulp) >= 2.1.0
+BuildRequires: gem(smart_proxy_chef) >= 0.2.0
+
 BuildRequires: gem(sinatra) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_alias_names smart_proxy,smart-proxy
-Requires:      gem(json) >= 0
+Requires:      gem(json) >= 0 gem(json) < 3
 Requires:      gem(logging) >= 0
-Requires:      gem(rack) >= 1.3
+Requires:      gem(rack) >= 1.3 gem(rack) < 3
 Requires:      gem(sd_notify) >= 0.1 gem(sd_notify) < 1
 Requires:      gem(sinatra) >= 0
-Provides:      gem(smart_proxy) = 2.5.0
+Provides:      gem(smart_proxy) = 3.0.0
 Conflicts:     gem-smart-proxy-compat
 
 
@@ -61,14 +67,14 @@ booting
 
 
 %package       -n smart-proxy
-Version:       2.5.0
+Version:       3.0.0
 Release:       alt1
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета smart_proxy
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(smart_proxy) = 2.5.0
+Requires:      gem(smart_proxy) = 3.0.0
 Conflicts:     smart-proxy-compat
 
 %description   -n smart-proxy
@@ -99,14 +105,14 @@ booting
 
 
 %package       -n gem-smart-proxy-doc
-Version:       2.5.0
+Version:       3.0.0
 Release:       alt1
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета smart_proxy
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(smart_proxy) = 2.5.0
+Requires:      gem(smart_proxy) = 3.0.0
 Conflicts:     gem-smart-proxy-compat-doc
 
 %description   -n gem-smart-proxy-doc
@@ -137,15 +143,14 @@ booting
 
 
 %package       -n gem-smart-proxy-devel
-Version:       2.5.0
+Version:       3.0.0
 Release:       alt1
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета smart_proxy
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(smart_proxy) = 2.5.0
-Requires:      gem(json) >= 2.3.1
+Requires:      gem(smart_proxy) = 3.0.0
 
 %description   -n gem-smart-proxy-devel
 RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet development package.
@@ -176,6 +181,9 @@ booting
 
 %prep
 %setup
+%patch
+%patch1 -p1
+%patch2
 
 %build
 %ruby_build
@@ -183,17 +191,49 @@ booting
 %install
 %ruby_install
 
+install -dm750 %buildroot%_logdir/smart-proxy \
+               %buildroot%_sysconfdir/smart-proxy/config/settings.d \
+               %buildroot/run/smart-proxy
+install -m644 %SOURCE1 %buildroot%_sysconfdir/smart-proxy/config/
+install -Dm644 %SOURCE2 %buildroot%_unitdir/smart-proxy.service
+install -Dm644 %SOURCE3 %buildroot%_tmpfilesdir/smart-proxy.conf
+install -Dm750 %buildroot%ruby_gemlibdir/Gemfile %buildroot%_localstatedir/smart-proxy/Gemfile
+#TODO move to setup.rb
+cp -p config/settings.d/*.yml %buildroot%_sysconfdir/smart-proxy/config/settings.d
+install -Dm644 %SOURCE4 %buildroot%_sysconfdir/smart-proxy/config/settings.d/puppetca_http_api.yml
+
 %check
 %ruby_test
+
+%pre           -n smart-proxy
+getent group puppet >/dev/null || %_sbindir/groupadd -r puppet
+getent group foreman >/dev/null || %_sbindir/groupadd -r foreman
+getent passwd _smartforeman >/dev/null || \
+   %_sbindir/useradd -r -G puppet,foreman -d %_localstatedir/smart-proxy -s /bin/bash -c "Foreman" _smartforeman
+
+%post          -n smart-proxy
+rm -rf %_localstatedir/smart-proxy/Gemfile.lock
+%post_service  smart-proxy
+
+%preun         -n smart-proxy
+%preun_service smart-proxy
+
 
 %files
 %doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
+%config(noreplace) %_sysconfdir/smart-proxy/config/settings.yml
+%config(noreplace) %_sysconfdir/smart-proxy/config/settings.d/*.yml
 
 %files         -n smart-proxy
 %doc README.md
 %_bindir/smart-proxy
+%_unitdir/smart-proxy.service
+%_tmpfilesdir/smart-proxy.conf
+%attr(750,_smartforeman,foreman) %_logdir/smart-proxy
+%attr(751,_smartforeman,foreman) %_localstatedir/smart-proxy
+%attr(751,_smartforeman,foreman) /run/smart-proxy
 
 %files         -n gem-smart-proxy-doc
 %doc README.md
@@ -204,6 +244,9 @@ booting
 
 
 %changelog
+* Wed Oct 20 2021 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt1
+- ^ 2.5.0 -> 3.0.0
+
 * Fri Jul 02 2021 Pavel Skrylev <majioa@altlinux.org> 2.5.0-alt1
 - ^ 2.1.0 -> 2.5.0
 

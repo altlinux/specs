@@ -1,7 +1,7 @@
 %define        gemname foreman_discovery
 
 Name:          gem-foreman-discovery
-Version:       17.1.0
+Version:       18.0.4
 Release:       alt1
 Summary:       MaaS Discovery Plugin for Foreman
 License:       GPL-3.0
@@ -16,7 +16,8 @@ BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Provides:      gem(foreman_discovery) = 17.1.0
+%ruby_alias_names foreman_discovery,foreman-discovery
+Provides:      gem(foreman_discovery) = 18.0.4
 
 
 %description
@@ -24,14 +25,14 @@ A plugin to enable Metal-as-a-Service discovery functionality in foreman.
 
 
 %package       -n gem-foreman-discovery-doc
-Version:       17.1.0
+Version:       18.0.4
 Release:       alt1
 Summary:       MaaS Discovery Plugin for Foreman documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_discovery
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(foreman_discovery) = 17.1.0
+Requires:      gem(foreman_discovery) = 18.0.4
 
 %description   -n gem-foreman-discovery-doc
 MaaS Discovery Plugin for Foreman documentation files.
@@ -43,14 +44,14 @@ A plugin to enable Metal-as-a-Service discovery functionality in foreman.
 
 
 %package       -n gem-foreman-discovery-devel
-Version:       17.1.0
+Version:       18.0.4
 Release:       alt1
 Summary:       MaaS Discovery Plugin for Foreman development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman_discovery
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(foreman_discovery) = 17.1.0
+Requires:      gem(foreman_discovery) = 18.0.4
 
 %description   -n gem-foreman-discovery-devel
 MaaS Discovery Plugin for Foreman development package.
@@ -87,5 +88,8 @@ A plugin to enable Metal-as-a-Service discovery functionality in foreman.
 
 
 %changelog
+* Wed Oct 27 2021 Pavel Skrylev <majioa@altlinux.org> 18.0.4-alt1
+- ^ 17.1.0 -> 18.0.4
+
 * Wed Sep 01 2021 Pavel Skrylev <majioa@altlinux.org> 17.1.0-alt1
 - + packaged gem with Ruby Policy 2.0

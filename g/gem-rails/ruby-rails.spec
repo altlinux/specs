@@ -2,7 +2,7 @@
 
 Name:          gem-rails
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Ruby on Rails
 License:       MIT
 Group:         Development/Ruby
@@ -69,7 +69,7 @@ Ruby on Rails metapackage gem.
 
 %package       -n gem-activesupport
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       A toolkit of support libraries and Ruby core extensions extracted from the Rails framework
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -93,7 +93,7 @@ and testing.
 
 %package       -n gem-activesupport-doc
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       A toolkit of support libraries and Ruby core extensions extracted from the Rails framework documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета activesupport
 Group:         Development/Documentation
@@ -117,7 +117,7 @@ and testing.
 
 %package       -n gem-activesupport-devel
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       A toolkit of support libraries and Ruby core extensions extracted from the Rails framework development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета activesupport
 Group:         Development/Ruby
@@ -139,7 +139,7 @@ and testing.
 
 %package       -n gem-actiontext
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Edit and display rich text in Rails applications
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -163,7 +163,7 @@ the included RichText model.
 
 %package       -n gem-actiontext-doc
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Edit and display rich text in Rails applications documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actiontext
 Group:         Development/Documentation
@@ -188,7 +188,7 @@ the included RichText model.
 
 %package       -n gem-actiontext-devel
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Edit and display rich text in Rails applications development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета actiontext
 Group:         Development/Ruby
@@ -213,7 +213,7 @@ the included RichText model.
 
 %package       -n gem-actionpack
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Web-flow and rendering framework putting the VC in MVC (part of Rails)
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -235,7 +235,7 @@ MVC web applications. Works with any Rack-compatible server.
 
 %package       -n gem-actionpack-doc
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Web-flow and rendering framework putting the VC in MVC (part of Rails) documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actionpack
 Group:         Development/Documentation
@@ -258,7 +258,7 @@ MVC web applications. Works with any Rack-compatible server.
 
 %package       -n gem-actionpack-devel
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Web-flow and rendering framework putting the VC in MVC (part of Rails) development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета actionpack
 Group:         Development/Ruby
@@ -280,7 +280,7 @@ MVC web applications. Works with any Rack-compatible server.
 
 %package       -n gem-activemodel
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       A toolkit for building modeling frameworks (part of Rails)
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -298,7 +298,7 @@ testing.
 
 %package       -n gem-activemodel-doc
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       A toolkit for building modeling frameworks (part of Rails) documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета activemodel
 Group:         Development/Documentation
@@ -322,7 +322,7 @@ testing.
 
 %package       -n gem-activemodel-devel
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       A toolkit for building modeling frameworks (part of Rails) development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета activemodel
 Group:         Development/Ruby
@@ -344,7 +344,7 @@ testing.
 
 %package       -n gem-actionmailer
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Email composition, delivery, and receiving framework (part of Rails)
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -367,7 +367,7 @@ attachments.
 
 %package       -n gem-actionmailer-doc
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Email composition, delivery, and receiving framework (part of Rails) documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actionmailer
 Group:         Development/Documentation
@@ -391,7 +391,7 @@ attachments.
 
 %package       -n gem-actionmailer-devel
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Email composition, delivery, and receiving framework (part of Rails) development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета actionmailer
 Group:         Development/Ruby
@@ -413,7 +413,7 @@ attachments.
 
 %package       -n gem-activerecord
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Object-relational mapper framework (part of Rails)
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -434,7 +434,7 @@ migrations, and testing come baked-in.
 
 %package       -n gem-activerecord-doc
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Object-relational mapper framework (part of Rails) documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета activerecord
 Group:         Development/Documentation
@@ -456,7 +456,7 @@ migrations, and testing come baked-in.
 
 %package       -n gem-activerecord-devel
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Object-relational mapper framework (part of Rails) development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета activerecord
 Group:         Development/Ruby
@@ -478,7 +478,7 @@ migrations, and testing come baked-in.
 
 %package       -n gem-activejob
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Job framework with pluggable queues
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -495,7 +495,7 @@ Declare job classes that can be run by a variety of queueing backends.
 
 %package       -n gem-activejob-doc
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Job framework with pluggable queues documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета activejob
 Group:         Development/Documentation
@@ -514,7 +514,7 @@ Declare job classes that can be run by a variety of queueing backends.
 
 %package       -n gem-activejob-devel
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Job framework with pluggable queues development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета activejob
 Group:         Development/Ruby
@@ -533,7 +533,7 @@ Declare job classes that can be run by a variety of queueing backends.
 
 %package       -n gem-railties
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Tools for creating, working with, and running Rails applications
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -553,7 +553,7 @@ Rails internals: application bootup, plugins, generators, and rake tasks.
 
 %package       -n rails
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Tools for creating, working with, and running Rails applications executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета railties
 Group:         Development/Ruby
@@ -573,7 +573,7 @@ Rails internals: application bootup, plugins, generators, and rake tasks.
 
 %package       -n gem-railties-doc
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Tools for creating, working with, and running Rails applications documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета railties
 Group:         Development/Documentation
@@ -593,7 +593,7 @@ Rails internals: application bootup, plugins, generators, and rake tasks.
 
 %package       -n gem-railties-devel
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Tools for creating, working with, and running Rails applications development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета railties
 Group:         Development/Ruby
@@ -614,7 +614,7 @@ Rails internals: application bootup, plugins, generators, and rake tasks.
 
 %package       -n gem-actionview
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Rendering framework putting the V in MVC (part of Rails)
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -634,7 +634,7 @@ Simple, battle-tested conventions and helpers for building web pages.
 
 %package       -n gem-actionview-doc
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Rendering framework putting the V in MVC (part of Rails) documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actionview
 Group:         Development/Documentation
@@ -654,7 +654,7 @@ Simple, battle-tested conventions and helpers for building web pages.
 
 %package       -n gem-actionview-devel
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Rendering framework putting the V in MVC (part of Rails) development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета actionview
 Group:         Development/Ruby
@@ -676,7 +676,7 @@ Simple, battle-tested conventions and helpers for building web pages.
 
 %package       -n gem-activestorage
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Local and cloud file storage framework
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -697,7 +697,7 @@ Attach cloud and local files in Rails applications.
 
 %package       -n gem-activestorage-doc
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Local and cloud file storage framework documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета activestorage
 Group:         Development/Documentation
@@ -716,7 +716,7 @@ Attach cloud and local files in Rails applications.
 
 %package       -n gem-activestorage-devel
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Local and cloud file storage framework development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета activestorage
 Group:         Development/Ruby
@@ -735,7 +735,7 @@ Attach cloud and local files in Rails applications.
 
 %package       -n gem-actionmailbox
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Receive and process incoming emails in Rails applications
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -766,7 +766,7 @@ rest of your domain model.
 
 %package       -n gem-actionmailbox-doc
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Receive and process incoming emails in Rails applications documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actionmailbox
 Group:         Development/Documentation
@@ -798,7 +798,7 @@ rest of your domain model.
 
 %package       -n gem-actionmailbox-devel
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Receive and process incoming emails in Rails applications development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета actionmailbox
 Group:         Development/Ruby
@@ -830,7 +830,7 @@ rest of your domain model.
 
 %package       -n gem-actioncable
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       WebSocket framework for Rails
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -850,7 +850,7 @@ WebSocket connection.
 
 %package       -n gem-actioncable-doc
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       WebSocket framework for Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actioncable
 Group:         Development/Documentation
@@ -870,7 +870,7 @@ WebSocket connection.
 
 %package       -n gem-actioncable-devel
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       WebSocket framework for Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета actioncable
 Group:         Development/Ruby
@@ -890,7 +890,7 @@ WebSocket connection.
 
 %package       -n gem-rails-devel
 Version:       6.1.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rails
 Group:         Development/Ruby
@@ -1079,6 +1079,12 @@ install -D -m 755 %SOURCE1 %buildroot%_sbindir/railsctl
 
 
 %changelog
+* Tue Oct 26 2021 Pavel Skrylev <majioa@altlinux.org> 6.1.4.1-alt2
+- + application sysconfig variable stack as exports
+- * railsctl:
+ + + reconstruction public web tree if any
+ + - disabling the wepback:compile and assers:precompile
+
 * Wed Sep 01 2021 Pavel Skrylev <majioa@altlinux.org> 6.1.4.1-alt1
 - ^ 6.1.3.2 -> 6.1.4.1
 - ! CVE-2021-22942, CVE-2021-22881

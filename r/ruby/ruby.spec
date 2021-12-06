@@ -7,11 +7,11 @@
 %define        ridir %_datadir/ri
 %define        vendordir %libdir/vendor_%name
 %define        lname lib%name
-%define        _version 2.7.4
+%define        _version 2.7.5
 
 Name:          ruby
 Version:       %_version
-Release:       alt2.2
+Release:       alt1
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -20,6 +20,7 @@ Vcs:           https://github.com/ruby/ruby.git
 
 Source0:       %name-%_version.tar
 Source4:       miniruby.sh
+Patch:         realpath.patch
 BuildRequires(pre): rpm-build-ruby >= 1:1.0.0
 BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: /usr/bin/setup.rb
@@ -231,7 +232,7 @@ on different arches.
 %package       -n gem
 Epoch:         2
 Version:       3.1.6
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Ruby gem executable and framefork
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -248,6 +249,7 @@ Ruby gem executable and framework.
 
 %prep
 %setup -q
+%patch
 #́# More strict shebang
 sed -i '1s|^#!/usr/bin/env ruby|#!%_bindir/%name|' bin/*
 # Remove $ruby_version from libs path
@@ -450,6 +452,10 @@ ln -s armh-linux "${EX}/armh-linux-eabi"
 %endif
 
 %changelog
+* Fri Nov 26 2021 Pavel Skrylev <majioa@altlinux.org> 2.7.5-alt1
+- ^ 2.7.4 -> 2.7.5
+- ! realpath when loading a library over symlinks
+
 * Wed Oct 06 2021 Pavel Skrylev <majioa@altlinux.org> 2.7.4-alt2.2
 - + enabled rpm-build-ruby gem autodetection
 - ! spec
