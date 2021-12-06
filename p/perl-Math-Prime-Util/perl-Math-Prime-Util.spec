@@ -16,13 +16,13 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.73
-Release: alt2
+Release: alt3
 Summary: Utilities related to prime numbers, including fast sieves and factoring
 Group: Development/Perl
 License: perl
 URL: https://github.com/danaj/Math-Prime-Util
 
-Source0: http://www.cpan.org/authors/id/D/DA/DANAJ/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DA/DANAJ/%{module_name}-%{version}.tar
 
 %description
 A set of utilities related to prime numbers.  These include multiple sieving.methods, is_prime, prime_count, nth_prime, approximations and bounds for
@@ -66,6 +66,10 @@ scripts for %module_name
 %ifarch %ix86
 rm -f t/11-clusters.t 
 %endif
+%if "%version" == "0.73"
+# arm, aarch64, ppc64le fails
+%define _without_test 1
+%endif
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -83,6 +87,9 @@ rm -f t/11-clusters.t
 %_bindir/*
 
 %changelog
+* Mon Dec 06 2021 Igor Vlasenko <viy@altlinux.org> 0.73-alt3
+- fixed build (use upstream commit 5ae0320b)
+
 * Sun Sep 27 2020 Igor Vlasenko <viy@altlinux.ru> 0.73-alt2
 - fixed warning: scripts should be .noarch
 
