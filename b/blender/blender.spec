@@ -13,7 +13,7 @@
 %def_with jemalloc
 
 Name: blender
-Version: 2.93.6
+Version: 3.0.0
 Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -35,21 +35,16 @@ Source2: %name-%version-release-scripts-addons_contrib.tar
 Source3: %name-%version-release-scripts-addons.tar
 Source4: %name-%version-source-tools.tar
 
-Patch11: 0001-blender_thumbnailer.patch
-Patch12: 0002-install_in_usr_share.patch
-Patch13: 0004-do_not_use_version_number_in_system_path.patch
-
 Patch21: blender-2.66-alt-pcre.patch
 Patch22: blender-2.77-alt-enable-localization.patch
 Patch24: blender-2.92-alt-include-deduplication-check-skip.patch
 Patch25: blender-2.80-alt-use-system-glog.patch
 Patch26: blender-2.83.1-alt-remove-python2-dependency.patch
 Patch27: blender-2.90.0-alt-embree-components.patch
-Patch28: blender-2.90.0-alt-doc.patch
+Patch28: blender-3.0.0-alt-doc.patch
 Patch29: blender-2.90-alt-non-x86_64-linking.patch
 Patch30: blender-2.93.0-suse-reproducible.patch
 Patch31: blender-2.93.4-alt-openimageio-compat.patch
-Patch32: blender-2.93.5-alt-clang-search-directories.patch
 
 Patch2000: blender-e2k-support.patch
 
@@ -84,6 +79,7 @@ BuildRequires: libpulseaudio-devel
 BuildRequires: libpotrace-devel
 BuildRequires: openshadinglanguage-devel
 BuildRequires: opensubdiv-devel
+BuildRequires: libzstd-devel
 
 %ifarch x86_64
 BuildRequires: openimagedenoise-devel
@@ -177,11 +173,6 @@ This package contains documentation for Blender.
 %prep
 %setup -a1 -a2 -a3 -a4
 
-# debian
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-
 %patch21 -p1
 %patch22 -p1
 %patch24 -p1
@@ -192,7 +183,6 @@ This package contains documentation for Blender.
 %patch29 -p1
 %patch30 -p1
 %patch31 -p1
-%patch32 -p1
 %ifarch %e2k
 %patch2000 -p1
 # lcc 1.25.15's EDG bug would fail building OPENVDB+TBB otherwise
@@ -310,6 +300,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Mon Dec 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.0-alt1
+- Updated to upstream version 3.0.0.
+
 * Fri Dec 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.93.6-alt1
 - Updated to upstream version 2.93.6.
 
