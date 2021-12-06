@@ -2,7 +2,7 @@
 
 Name: ctags
 Version: 5.8
-Release: alt2
+Release: alt3
 
 Summary: A C programming language indexing and/or cross-reference tool
 License: GPLv2+
@@ -32,6 +32,10 @@ in a set of language files.
 %patch2 -p1
 %patch3 -p1
 
+%if "%version" == "5.8"
+sed -i s,__unused__,__unused,g `grep -rl __unused__ .`
+%endif
+
 %build
 %autoreconf
 %configure --disable-etags
@@ -46,6 +50,9 @@ in a set of language files.
 %doc EXTENDING.html FAQ NEWS README
 
 %changelog
+* Mon Dec 06 2021 Igor Vlasenko <viy@altlinux.org> 5.8-alt3
+- NMU: fixed build
+
 * Wed Feb 02 2011 Dmitry V. Levin <ldv@altlinux.org> 5.8-alt2
 - Import a fix for potential segfault from FC.
 
