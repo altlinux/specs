@@ -1,13 +1,12 @@
 Summary: Tools to access and modify virtual machine disk images
 Name: guestfs-tools
-Version: 1.47.2
-Release: alt2
+Version: 1.47.3
+Release: alt1
 Group: File tools
 License: GPLv2+
 Url: http://libguestfs.org/
 Source0: %name-%version.tar
 Source2: %name-%version-common.tar
-Patch0: guestfs-tools-suppress-ocaml-6-warnings.patch
 BuildRequires: gcc-c++
 BuildRequires: libguestfs-devel >= 1.46.0
 BuildRequires: perl-Pod-Simple
@@ -79,7 +78,6 @@ diskimage-builder elements.
 %prep
 %setup -a2
 tar -xf %SOURCE2 -C common
-%patch0 -p1
 
 
 %build
@@ -164,6 +162,9 @@ rm -rf %buildroot%_mandir/{ja,uk}
 %_mandir/man1/virt-dib.1*
 
 %changelog
+* Tue Dec 07 2021 Anton Farygin <rider@altlinux.ru> 1.47.3-alt1
+- 1.47.2 -> 1.47.3
+
 * Sat Nov 27 2021 Anton Farygin <rider@altlinux.ru> 1.47.2-alt2
 - added Requires, which is needed to build images (closes: #41443)
 
