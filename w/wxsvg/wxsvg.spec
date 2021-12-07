@@ -3,8 +3,8 @@
 %define soname 3
 
 Name: wxsvg
-Version: 1.5.22
-Release: alt3
+Version: 1.5.23
+Release: alt1
 Epoch: 1
 
 Summary: wxSVG is viewer SVG files
@@ -23,7 +23,7 @@ BuildRequires: libexpat-devel libexif-devel
 wxSVG is viewer SVG files
 
 %package -n lib%name
-License: GPL
+License: GPLv2+
 Group: System/Libraries
 Summary: lib%name is C++ library to create, manipulate and render SVG files
 
@@ -31,7 +31,7 @@ Summary: lib%name is C++ library to create, manipulate and render SVG files
 lib%name is C++ library to create, manipulate and render SVG files
 
 %package -n lib%name-devel-static
-License: GPL
+License: GPLv2+
 Group: System/Libraries
 Summary: lib%name is static C++ library to create, manipulate and render SVG files
 Obsoletes: lib%name-static
@@ -40,7 +40,7 @@ Obsoletes: lib%name-static
 lib%name is static C++ library to create, manipulate and render SVG files
 
 %package -n lib%name-devel
-License: GPL
+License: GPLv2+
 Group: Development/C++
 Summary: Development shared library for wxSVG
 Requires: lib%name = %EVR
@@ -79,6 +79,9 @@ Development shared library for wxSVG
 %_pkgconfigdir/*
 
 %changelog
+* Tue Dec 07 2021 Anton Farygin <rider@altlinux.ru> 1:1.5.23-alt1
+- 1.5.22 -> 1.5.23
+
 * Mon Oct 04 2021 Anton Farygin <rider@altlinux.ru> 1:1.5.22-alt3
 - fixed build with LTO
 - fixed infromation about License
