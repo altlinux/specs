@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ansible-freeipa
-Version: 0.4.2
-Release: alt2
+Version: 1.5.0
+Release: alt1
 
 Summary: Ansible roles and modules for FreeIPA
 License: GPLv3
@@ -77,6 +77,9 @@ cp -r tests %buildroot%_datadir/%name/
 %_datadir/%name/tests
 
 %changelog
+* Tue Dec 07 2021 Slava Aseev <ptrnine@altlinux.org> 1.5.0-alt1
+- Update to new version
+
 * Tue Dec 07 2021 Slava Aseev <ptrnine@altlinux.org> 0.4.2-alt2
 - Add missing Altlinux.yml for ipareplica
 - Remove unnecessary dependencies (and utils directory)
