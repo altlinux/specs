@@ -2,7 +2,7 @@
 %def_without xdg
 %def_without gtk3
 Name: wm-select
-Version: 0.9.8
+Version: 0.9.9
 Release: alt1
 
 Summary: Application for selecting window manager at startup
@@ -75,6 +75,12 @@ done
 %endif
 
 %changelog
+* Tue Dec 07 2021 Igor Vlasenko <viy@altlinux.org> 0.9.9-alt1
+- new version
+
+* Tue Nov 16 2021 Igor Vlasenko <viy@altlinux.org> 0.9.8-alt2
+- runwm package enabled for xinitrc migration
+
 * Tue Nov 16 2021 Igor Vlasenko <viy@altlinux.org> 0.9.8-alt1
 - new version
 
