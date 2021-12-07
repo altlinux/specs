@@ -1,5 +1,5 @@
 Name: python3-module-webpy
-Version: 0.40
+Version: 0.62
 Release: alt1
 Summary: A simple web framework for Python
 Group: Development/Python3
@@ -15,7 +15,7 @@ Group: Development/Python3
 #     This is from WSGIUtils/lib/wsgiutils/wsgiServer.py
 #     See http://www.xfree86.org/3.3.6/COPYRIGHT2.html#5
 License: Public Domain and BSD
-
+# VCS: https://github.com/webpy/webpy
 Url: http://webpy.org/
 # https://github.com/webpy/webpy.git
 Source0: %name-%version.tar
@@ -46,6 +46,9 @@ purpose with absolutely no restrictions.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Dec 07 2021 Anton Farygin <rider@altlinux.ru> 0.62-alt1
+- 0.40 -> 0.62
+
 * Tue Oct 01 2019 Anton Farygin <rider@altlinux.ru> 0.40-alt1
 - updated to 0.40
 
