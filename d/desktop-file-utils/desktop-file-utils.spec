@@ -4,16 +4,17 @@
 
 Name: desktop-file-utils
 Version: 0.26
-Release: alt1
+Release: alt2
 
 Summary: Utilities for manipulating .desktop files
 Group: Graphical desktop/Other
-License: GPL
+License: GPLv2+
 URL: http://www.freedesktop.org/software/desktop-file-utils
 
 Source: %name-%version.tar
 Patch0: desktop-file-utils-0.23-altlinux-add-de-to-main-categories.patch
 Patch1: desktop-file-utils-0.23-altlinux-fix-TextTools.patch
+Patch2: desktop-file-utils-0.26-add-DesktopNames.patch
 
 BuildRequires: gcc glibc-devel glib2-devel libpopt-devel pkg-config automake
 %{?_with_emacs:BuildRequires: emacs-cedet emacs-common emacs-leim}
@@ -58,6 +59,7 @@ emacs-mode-%emacs_mode code or see some Lisp examples.
 %setup -q
 %patch0 -p1 
 %patch1 -p1 
+%patch2 -p1 
 
 %build
 #autoreconf
@@ -115,6 +117,9 @@ touch %buildroot/%_desktopdir/mimeinfo.cache
 %endif
 
 %changelog
+* Tue Dec 07 2021 Igor Vlasenko <viy@altlinux.org> 0.26-alt2
+- added support for DesktopNames in xsessions and wayland-sessions
+
 * Fri Sep 17 2021 Sergey V Turchin <zerg@altlinux.org> 0.26-alt1
 - new version
 
