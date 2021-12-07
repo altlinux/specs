@@ -1,7 +1,7 @@
 Name:		refal-plus
 # `svnversion`
 Version:	4137
-Release:	alt4
+Release:	alt5
 Summary:	A modern dialect of Refal programming language
 Summary(ru_RU.UTF-8): Современный диалект языка программирования Рефал
 Source:		refal-r%{version}-src.zip
@@ -11,7 +11,8 @@ License:	GPLv2
 Group:		Development/Functional
 URL:		http://rfp.botik.ru/
 
-Patch1:     %name-%version-alt-build.patch
+Patch1:         %name-%version-alt-build.patch
+Patch2:         deprecated_exceptions.patch
 
 # Automatically added by buildreq on Tue Sep 28 2010
 BuildRequires: gcc-c++ libgmp-devel unzip
@@ -111,6 +112,7 @@ Sample applications for %name
 %prep
 %setup -n refal-r%{version}-src
 %patch1 -p1
+%patch2
 touch c++/rules.mk
 
 %build
@@ -143,6 +145,9 @@ mv %buildroot%_prefix/lib/lib* %buildroot%_libdir/
 %doc compiler rfp rfpfilt samples RfpUpgrader
 
 %changelog
+* Tue Dec 07 2021 Pavel Skrylev <majioa@altlinux.org> 4137-alt5
+- - deprecated dynamic exception throws
+
 * Wed Jan 13 2021 Fr. Br. George <george@altlinux.ru> 4137-alt4
 - Switch to new gcc
 
