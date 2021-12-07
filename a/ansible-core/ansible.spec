@@ -3,13 +3,15 @@
 Name: ansible-core
 Summary: A radically simple IT automation system
 Version: 2.12.0
-Release: alt1
+Release: alt2
 
 Group:   System/Configuration/Other
 License: GPL-3.0
 Source0: %rname-%version.tar
 Source1: apt_rpm.py
 Source2: apt_repo.py
+
+Patch0: ansible-prohibit-pkg5-usage.patch
 
 Url: http://www.ansible.com
 
@@ -57,6 +59,7 @@ are transferred to managed machines automatically.
 %setup -n %rname-%version
 cp %SOURCE1 lib/ansible/modules/apt_rpm.py
 cp %SOURCE2 lib/ansible/modules/apt_repo.py
+%patch0 -p1
 
 %build
 %python3_build
@@ -83,6 +86,9 @@ find %buildroot%python3_sitelibdir/ansible_test/_data -name \*.ps1 -delete
 %python3_sitelibdir/%{rname}*
 
 %changelog
+* Tue Dec 07 2021 Slava Aseev <ptrnine@altlinux.org> 2.12.0-alt2
+- Prohibit pkg5 usage (see bug #41494)
+
 * Tue Nov 09 2021 Andrey Cherepanov <cas@altlinux.org> 2.12.0-alt1
 - New version.
 - Add apt_repo and apt_rpm from community-general-4.0.0.

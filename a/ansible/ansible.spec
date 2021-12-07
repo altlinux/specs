@@ -1,7 +1,7 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
 Version: 2.9.26
-Release: alt2
+Release: alt3
 
 Group:   System/Configuration/Other
 License: GPL-3.0
@@ -11,6 +11,7 @@ Source1: hacking.tar
 Patch0: %name-alt.patch
 Patch1: ansible-apt_rpm-list-of-packages-support.patch
 Patch2: ansible_native_concat-use-to_text-rather-than-jinja2.patch
+Patch3: ansible-prohibit-pkg5-usage.patch
 
 Url: http://www.ansible.com
 
@@ -63,6 +64,7 @@ tar xf %SOURCE1
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %python3_build
@@ -91,6 +93,9 @@ grep -Rl '^#!.*python$' %buildroot | xargs subst 's|^#!.*python$|#!%__python3|'
 %doc README.rst changelogs/CHANGELOG-v*.rst CODING_GUIDELINES.md MODULE_GUIDELINES.md
 
 %changelog
+* Tue Dec 07 2021 Slava Aseev <ptrnine@altlinux.org> 2.9.26-alt3
+- Prohibit pkg5 usage (closes: #41494)
+
 * Mon Sep 20 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.9.26-alt2
 - Don't package ansible-test tool (it's for ansible development only)
 - Avoid false dependencies on perl-Package (closes: #40957)
