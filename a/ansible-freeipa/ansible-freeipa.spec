@@ -2,7 +2,7 @@
 
 Name: ansible-freeipa
 Version: 0.4.2
-Release: alt1
+Release: alt2
 
 Summary: Ansible roles and modules for FreeIPA
 License: GPLv3
@@ -13,7 +13,7 @@ Url: https://github.com/freeipa/ansible-freeipa
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-%add_findreq_skiplist */utils/templates/* */roles/* */plugins/*
+%add_findreq_skiplist */roles/* */plugins/*
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
@@ -52,7 +52,6 @@ cp -r plugins/* %buildroot%_datadir/ansible/plugins/
 
 install -m 755 -d %buildroot%_datadir/%name
 cp requirements{,-dev}.txt %buildroot%_datadir/%name/
-cp -r utils %buildroot%_datadir/%name/
 
 # Install tests
 cp requirements-tests.txt %buildroot%_datadir/%name/
@@ -78,6 +77,10 @@ cp -r tests %buildroot%_datadir/%name/
 %_datadir/%name/tests
 
 %changelog
+* Tue Dec 07 2021 Slava Aseev <ptrnine@altlinux.org> 0.4.2-alt2
+- Add missing Altlinux.yml for ipareplica
+- Remove unnecessary dependencies (and utils directory)
+
 * Tue Oct 26 2021 Slava Aseev <ptrnine@altlinux.org> 0.4.2-alt1
 - Initial build for ALT
 
