@@ -19,7 +19,7 @@
 %def_without rls
 
 Name: gnome-builder
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Builder - Develop software for GNOME
@@ -32,6 +32,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %else
 Source: %name-%version.tar
 %endif
+Patch: %name-41.3-alt-format.patch
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
@@ -120,6 +121,7 @@ This package provides files for Gnome Builder to work with Clang/LLVW.
 
 %prep
 %setup -n %name-%version%beta
+%patch
 sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 
 %build
@@ -249,6 +251,9 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %{?_with_help:%_datadir/doc/%name/}
 
 %changelog
+* Tue Dec 07 2021 Yuri N. Sedunov <aris@altlinux.org> 41.3-alt1
+- 41.3
+
 * Wed Nov 17 2021 Yuri N. Sedunov <aris@altlinux.org> 41.2-alt1
 - 41.2
 
