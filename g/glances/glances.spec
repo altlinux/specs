@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: glances
-Version: 3.2.3.1
+Version: 3.2.4.2
 Release: alt1
 
 Summary: CLI curses based monitoring tool
@@ -10,7 +10,6 @@ Group: Monitoring
 Url: https://github.com/nicolargo/glances
 BuildArch: noarch
 
-# Repacked %url/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -63,6 +62,7 @@ Glances uses the PsUtil library to get information from your system.
 %package -n python3-module-%name
 Summary: CLI curses based monitoring tool
 Group: Development/Python3
+Requires: python3(defusedxml.xmlrpc)
 
 %description -n python3-module-%name
 Glances is a CLI curses based monitoring tool for both GNU/Linux and BSD.
@@ -93,6 +93,9 @@ Glances uses the PsUtil library to get information from your system.
 
 
 %changelog
+* Wed Dec 01 2021 Egor Ignatov <egori@altlinux.org> 3.2.4.2-alt1
+- new version
+
 * Wed Aug 25 2021 Egor Ignatov <egori@altlinux.org> 3.2.3.1-alt1
 - new version
 
