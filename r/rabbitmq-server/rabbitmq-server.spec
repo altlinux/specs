@@ -4,8 +4,8 @@
 %add_findreq_skiplist */ocf/resource.d/rabbitmq/*
 
 Name: rabbitmq-server
-Version: 3.9.10
-Release: alt2
+Version: 3.9.11
+Release: alt1
 Summary: The RabbitMQ server
 License: MPL-1.1
 BuildArch: noarch
@@ -25,6 +25,7 @@ Patch201: rabbitmq-script-wrapper-use-alt-specific-path.patch
 Patch202: rabbitmq-server-release-0002-Revert-Use-template-in-rabbitmq-script-wrapper-for-R.patch
 Patch301: rabbitmq-amqp1.0-common-0001-force-python3.patch
 
+# VCS: https://github.com/rabbitmq/rabbitmq-server/
 URL: http://www.rabbitmq.com/
 
 BuildRequires(pre): rpm-build-erlang rpm-build-python3
@@ -153,6 +154,9 @@ rm -rf %buildroot/usr/lib/erlang/autocomplete
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Dec 07 2021 Egor Ignatov <egori@altlinux.org> 3.9.11-alt1
+- 3.9.11
+
 * Thu Nov 25 2021 Egor Ignatov <egori@altlinux.org> 3.9.10-alt2
 - use upstream rabbitmq-script-wrapper
 - add rabbitmq-script-wrapper-use-alt-specific-path patch
