@@ -1,9 +1,9 @@
 Name: kernel-image-centos
 
-%define centos_release 25
+%define centos_release 26
 
 Version: 5.14.0.%{centos_release}
-Release: alt1.el9
+Release: alt2.el9
 
 %define kernel_base_version  %version
 %define kernel_extra_version %nil
@@ -279,6 +279,22 @@ chmod +x tools/objtool/sync-check.sh
 
 # This Prevents scripts/setlocalversion from mucking with our version numbers.
 touch .scmversion
+
+# Extend config from fedora config.
+for o in \
+	CONFIG_9P_FS:'CONFIG_9P_FS=m' \
+	CONFIG_9P_FSCACHE:'CONFIG_9P_FSCACHE=y' \
+	CONFIG_9P_FS_POSIX_ACL:'CONFIG_9P_FS_POSIX_ACL=y' \
+	CONFIG_9P_FS_SECURITY:'CONFIG_9P_FS_SECURITY=y' \
+	CONFIG_NET_9P:'CONFIG_NET_9P=m' \
+	CONFIG_NET_9P_DEBUG:'# CONFIG_NET_9P_DEBUG is not set' \
+	CONFIG_NET_9P_RDMA:'CONFIG_NET_9P_RDMA=m' \
+	CONFIG_NET_9P_VIRTIO:'CONFIG_NET_9P_VIRTIO=m' \
+	CONFIG_NET_9P_XEN:'CONFIG_NET_9P_XEN=m' \
+;
+do
+	echo "${o##*:}" > "redhat/configs/custom-overrides/generic/${o%%%%:*}"
+done
 
 %build
 mkdir .bin
@@ -613,6 +629,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Dec 07 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.26-alt2.el9
+- Add 9p modules.
+
+* Mon Dec 06 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.26-alt1.el9
+- ceph: bring ceph client code up to v5.16-rc1
+
 * Fri Dec 03 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.25-alt1.el9
 - fix  '/proc/pid/wchan is always "0"'
 - powerpc/bpf: Fix write protecting JIT code
