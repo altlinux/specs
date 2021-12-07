@@ -3,8 +3,8 @@
 %define _pseudouser_home     /var/empty
 
 Name: uwsgi
-Version: 2.0.18
-Release: alt3
+Version: 2.0.20
+Release: alt1
 
 Summary: fast (pure C), self-healing, developer-friendly WSGI server
 License: GPLv2
@@ -17,7 +17,6 @@ Source1: %name.init
 Source2: %name.logrotate
 Source3: %name.sysconfig
 Patch1: %name-2.0.15-alt-no-rpath.patch
-Patch2: %name-2.0.18-alt-use-python3.patch
 Patch2000: %name-e2k.patch
 
 BuildRequires: libxml2-devel python3-devel
@@ -41,7 +40,6 @@ Erlang message exchanger are already available.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -72,6 +70,9 @@ install -pDm0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/%name
 %doc README contrib
 
 %changelog
+* Tue Dec 07 2021 Oleg Solovyov <mcpain@altlinux.org> 2.0.20-alt1
+- update to 2.0.20
+
 * Mon Dec 06 2021 Oleg Solovyov <mcpain@altlinux.org> 2.0.18-alt3
 - Moved /usr/sbin/uwsgi -> /usr/bin/uwsgi (Closes: #41510)
 
