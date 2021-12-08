@@ -1,5 +1,5 @@
 Name: gnupg2
-Version: 2.2.32
+Version: 2.2.33
 Release: alt1
 
 Group: Text tools
@@ -8,6 +8,7 @@ License: GPL-3.0-or-later
 Url: https://www.gnupg.org/
 
 Source0: %name-%version.tar
+Source1: gnupg-agent.sh
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
@@ -116,6 +117,9 @@ install -m 0644 \
 install -D -m 0644 doc/examples/gpgconf.conf %buildroot%_sysconfdir/gnupg/gpgconf.conf
 install -D -m 0644 doc/gnupg.info %buildroot%_infodir/gnupg.info
 
+mkdir -p -- %buildroot%_sysconfdir/profile.d
+install -pm 0755 %SOURCE1 %buildroot%_sysconfdir/profile.d/
+
 mkdir -p -- %buildroot%_datadir/gnupg
 install -pm 0644 doc/help*.txt %buildroot%_datadir/gnupg/
 
@@ -139,6 +143,7 @@ install -pm 0644 doc/*.8 %buildroot%_man8dir/
 %files -f %name.lang
 %dir %_sysconfdir/gnupg
 %config(noreplace) %_sysconfdir/gnupg/gpgconf.conf
+%config %_sysconfdir/profile.d/*.sh
 %_bindir/dirmngr
 %_bindir/dirmngr-client
 %_bindir/g13
@@ -177,6 +182,10 @@ install -pm 0644 doc/*.8 %buildroot%_man8dir/
 %doc tools/addgnupghome tools/applygnupgdefaults
 
 %changelog
+* Wed Dec 08 2021 Alexey Gladkov <legion@altlinux.ru> 2.2.33-alt1
+- New version (2.2.33).
+- Set GPG_TTY in profile.d (ALT#41509).
+
 * Tue Oct 12 2021 Alexey Gladkov <legion@altlinux.ru> 2.2.32-alt1
 - New version (2.2.32).
 
