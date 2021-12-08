@@ -5,7 +5,7 @@
 %define _keep_libtool_files 1
 %define _optlevel s
 %define static_nonthr 0
-%define static_thread 1
+%define static_thread 0
 %define shared_nonthr 0
 %define shared_thread 1
 %define build_xt 0
@@ -25,7 +25,7 @@
 %define qsa_major 1
 %define qsa_minor 1
 %define qsa_bugfix 5
-%define rlz alt15
+%define rlz alt16
 Name: %rname%major
 Version: %major.%minor.%bugfix
 Release: %rlz
@@ -36,7 +36,7 @@ Release: %rlz
 %define kdedir  %prefix
 
 Summary: Shared library for the Qt%major GUI toolkit
-License: GPLv2 / GPLv3 / QPL
+License: QPL-1.0 or GPL-2.0-only or GPL-3.0-only
 Group: System/Libraries
 
 Url: http://www.trolltech.com/products/qt/
@@ -128,6 +128,7 @@ Patch108: qt-3.3.8d-alt-arm-no-packed-pointers.patch
 Patch109: qt-x11-free-3.3.8d-Lib64.patch
 Patch110: qt-3.3.8d-full-hiden-item-QIconView.patch
 Patch111: qt-3.3.8d-alt-fix-build-pgsql.patch
+Patch112: qt-alt-qmake.patch
 
 # Sergey A. Sukiyazov <sukiyazov@mail.ru>
 Patch9000: 9000-qt-x11-free-3.3.3-menubar.patch
@@ -208,7 +209,7 @@ well as the README files for Qt.
 %package -n lib%name-devel
 Summary: Header files and libraries for developing apps which will use Qt%major
 Group: Development/KDE and QT
-PreReq: lib%name = %version-%release
+Requires: lib%name = %version-%release
 Requires: freetype2-devel fontconfig-devel zlib-devel
 Requires: libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXcursor-devel libXext-devel
 Requires: libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libXv-devel libXft-devel libXmu-devel
@@ -251,7 +252,7 @@ on the system running the application.
 %package -n lib%name-xt
 Summary: An Xt (X Toolkit) compatibility add-on for the Qt GUI toolkit
 Group: System/Libraries
-PreReq: lib%name = %version-%release
+Requires: lib%name = %version-%release
 Provides: %name-xt, %name-xt-devel, lib%name-xt-devel
 Obsoletes: %name-xt, %name-xt-devel, lib%name-xt-devel
 %if %static_nonthr || %static_thread
@@ -266,7 +267,7 @@ An Xt (X Toolkit) compatibility add-on for the Qt GUI toolkit
 %package designer
 Summary: Designer for the Qt%major
 Group: Development/KDE and QT
-PreReq: lib%name-devel = %version-%release
+Requires: lib%name-devel = %version-%release
 #Provides: %name-designer
 #Obsoletes: %name-designer
 
@@ -388,7 +389,7 @@ This package contains sources for example programs.
 %package assistant
 Summary: Assistant for the Qt%major
 Group: Text tools
-PreReq: lib%name = %version-%release
+Requires: lib%name = %version-%release
 #Provides: %name-assistant
 #Obsoletes: %name-assistant
 Conflicts: qt3-doc <= 3.3.3-alt6
@@ -500,6 +501,7 @@ Install this package if you want to create RPM packages that use %name.
 %patch109 -p1
 %patch110 -p1
 %patch111 -p1
+%patch112 -p1
 
 # Corwin
 %patch9000 -p1
@@ -524,6 +526,10 @@ pushd translations
 rm -f ./*.qm
 tar xf %SOURCE11
 popd
+
+%if %static_nonthr || %static_thread
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%endif
 
 %ifarch %e2k
 # workaround to SIGILL in uic -> src/tools/qlocale.cpp -> qdtoa()
@@ -747,116 +753,116 @@ rm -f ./translations/*_untranslated.qm
 %set_strip_method none
 %endif
 export QTDIR=%qtdir
-export PATH=%qtdir/bin:%buildroot/%qtdir/bin:$PATH
+export PATH=%qtdir/bin:%buildroot%qtdir/bin:$PATH
 export MANPATH=%qtdir/doc/man:$MANPATH
-export LD_LIBRARY_PATH=%buildroot/%qtdir/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=%buildroot%qtdir/lib:$LD_LIBRARY_PATH
 export KDEDIR=%kdedir
 
 # Work around for a broken make install
-install -d -m 0755 %buildroot/%_bindir
+install -d -m 0755 %buildroot%_bindir
 
 %make INSTALL_ROOT=%buildroot install
 # Work around for a broken make install
 %make INSTALL_ROOT=%buildroot install -C plugins/src
 
-rm -f %buildroot/%qtdir/bin/{moc,qmake}
-cp -Lf bin/{moc,qmake} %buildroot/%qtdir/bin
+rm -f %buildroot%qtdir/bin/{moc,qmake}
+cp -Lf bin/{moc,qmake} %buildroot%qtdir/bin
 
-ln -s ../../../%_sysconfdir/%rname%major %buildroot/%qtdir/etc
-install -d -m 0755 %buildroot/%_sysconfdir/%rname%major/settings
+ln -s ../../../%_sysconfdir/%rname%major %buildroot%qtdir/etc
+install -d -m 0755 %buildroot%_sysconfdir/%rname%major/settings
 %if %with_settings
 # install config
-install -m 644 %SOURCE10 %buildroot/%_sysconfdir/%rname%major/settings
+install -m 644 %SOURCE10 %buildroot%_sysconfdir/%rname%major/settings
 %endif
 
 # install rpm macros
-install -d -m 0755 %buildroot/%_rpmmacrosdir/
-cat >%buildroot/%_rpmmacrosdir/%name <<__EOF__
+install -d -m 0755 %buildroot%_rpmmacrosdir/
+cat >%buildroot%_rpmmacrosdir/%name <<__EOF__
 %%_%{name}dir %_libdir/%name
 __EOF__
 
 # install tools
-install -m 775 bin/{conv2ui,findtr,qt20fix,qtrename140} %buildroot/%qtdir/bin
-install -m 775 tools/mergetr/mergetr %buildroot/%qtdir/bin
-install -m 775 tools/msg2qm/msg2qm %buildroot/%qtdir/bin
-install -m 775 tools/qembed/qembed %buildroot/%qtdir/bin
-pushd %buildroot/%qtdir/bin/
+install -m 775 bin/{conv2ui,findtr,qt20fix,qtrename140} %buildroot%qtdir/bin
+install -m 775 tools/mergetr/mergetr %buildroot%qtdir/bin
+install -m 775 tools/msg2qm/msg2qm %buildroot%qtdir/bin
+install -m 775 tools/qembed/qembed %buildroot%qtdir/bin
+pushd %buildroot%qtdir/bin/
 for f in `ls -1`; do
-    ln -s ../..%qtdir/bin/$f %buildroot/%_bindir/$f-%name
+    ln -s ../..%qtdir/bin/$f %buildroot%_bindir/$f-%name
 done
 popd
 
-mv %buildroot/%qtdir/bin/designer %buildroot/%qtdir/bin/designer-real
-install -m 0755 %SOURCE5 %buildroot/%qtdir/bin/designer
-sed -i 's,@QTDIR@,%qtdir,g' %buildroot/%qtdir/bin/designer
+mv %buildroot%qtdir/bin/designer %buildroot%qtdir/bin/designer-real
+install -m 0755 %SOURCE5 %buildroot%qtdir/bin/designer
+sed -i 's,@QTDIR@,%qtdir,g' %buildroot%qtdir/bin/designer
 #
-mv %buildroot/%qtdir/bin/assistant %buildroot/%qtdir/bin/assistant-real
-install -m 0755 %SOURCE6 %buildroot/%qtdir/bin/assistant
-sed -i 's,@QTDIR@,%qtdir,g' %buildroot/%qtdir/bin/assistant
+mv %buildroot%qtdir/bin/assistant %buildroot%qtdir/bin/assistant-real
+install -m 0755 %SOURCE6 %buildroot%qtdir/bin/assistant
+sed -i 's,@QTDIR@,%qtdir,g' %buildroot%qtdir/bin/assistant
 #
-mv %buildroot/%qtdir/bin/linguist %buildroot/%qtdir/bin/linguist-real
-install -m 0755 %SOURCE9 %buildroot/%qtdir/bin/linguist
-sed -i 's,@QTDIR@,%qtdir,g' %buildroot/%qtdir/bin/linguist
+mv %buildroot%qtdir/bin/linguist %buildroot%qtdir/bin/linguist-real
+install -m 0755 %SOURCE9 %buildroot%qtdir/bin/linguist
+sed -i 's,@QTDIR@,%qtdir,g' %buildroot%qtdir/bin/linguist
 #
 
 # install libraries
 #
-mkdir -p %buildroot/%qtdir/lib/
+mkdir -p %buildroot%qtdir/lib/
 #
 %if !%build_xt
-rm -f %buildroot/%_libdir/*qxt*
+rm -f %buildroot%_libdir/*qxt*
 %endif
 #
 %if %static_thread
-install -m0644 lib-builded/libqt-mt.a %buildroot/%_libdir/
-install -m0644 lib-builded/libqt-mt.la %buildroot/%_libdir/
+install -m0644 lib-builded/libqt-mt.a %buildroot%_libdir/
+install -m0644 lib-builded/libqt-mt.la %buildroot%_libdir/
 %endif
 %if %static_nonthr
-install -m0644 lib-builded/libqt.a %buildroot/%_libdir/
-install -m0644 lib-builded/libqt.la %buildroot/%_libdir/
+install -m0644 lib-builded/libqt.a %buildroot%_libdir/
+install -m0644 lib-builded/libqt.la %buildroot%_libdir/
 %endif
 %if %build_qsa
-    install -m0755 %_builddir/%buildsubdir/lib/libqsa.so.0.%qsa_major.%qsa_minor %buildroot/%_libdir
-    ln -sf libqsa.so.0.%qsa_major.%qsa_minor %buildroot/%_libdir/libqsa.so
-    ln -sf libqsa.so.0.%qsa_major.%qsa_minor %buildroot/%_libdir/libqsa.so.0
-    ln -sf libqsa.so.0.%qsa_major.%qsa_minor %buildroot/%_libdir/libqsa.so.0.%qsa_major
-    mkdir -p %buildroot/%qtdir/plugins/qsa
-    #install -m 0755 %_builddir/%buildsubdir/plugins/qsa/* %buildroot/%qtdir/plugins/qsa
+    install -m0755 %_builddir/%buildsubdir/lib/libqsa.so.0.%qsa_major.%qsa_minor %buildroot%_libdir
+    ln -sf libqsa.so.0.%qsa_major.%qsa_minor %buildroot%_libdir/libqsa.so
+    ln -sf libqsa.so.0.%qsa_major.%qsa_minor %buildroot%_libdir/libqsa.so.0
+    ln -sf libqsa.so.0.%qsa_major.%qsa_minor %buildroot%_libdir/libqsa.so.0.%qsa_major
+    mkdir -p %buildroot%qtdir/plugins/qsa
+    #install -m 0755 %_builddir/%buildsubdir/plugins/qsa/* %buildroot%qtdir/plugins/qsa
 %endif
 #
-mkdir -p %buildroot/%qtdir/lib
-pushd %buildroot/%_libdir
+mkdir -p %buildroot%qtdir/lib
+pushd %buildroot%_libdir
 for f in lib*.so.*; do
-    ln -s ../../$f %buildroot/%qtdir/lib/
+    ln -s ../../$f %buildroot%qtdir/lib/
     [ -f $f ] \
-	&& ln -sf $f %buildroot/%qtdir/lib/`echo $f| sed "s|\(.*\.so\).*|\1|"`
+	&& ln -sf $f %buildroot%qtdir/lib/`echo $f| sed "s|\(.*\.so\).*|\1|"`
 done
 popd
 #
-ln -s %name %buildroot/%_libdir/%rname-%version
+ln -s %name %buildroot%_libdir/%rname-%version
 
 # install translations
-install -m 644 ./translations/*.qm %buildroot/%qtdir/translations
+install -m 644 ./translations/*.qm %buildroot%qtdir/translations
 
 # move pkgconfig to right place
-#mv %buildroot/%qtdir/lib/pkgconfig %buildroot/%_libdir
-sed -i "s|\(-L\${libdir}\)|-L%qtdir/lib \1|" %buildroot/%_libdir/pkgconfig/*.pc
+#mv %buildroot%qtdir/lib/pkgconfig %buildroot%_libdir
+sed -i "s|\(-L\${libdir}\)|-L%qtdir/lib \1|" %buildroot%_libdir/pkgconfig/*.pc
 
 # install plugins
-#install -m 0755 %_builddir/%buildsubdir/plugins/sqldrivers/*.so %buildroot/%qtdir/plugins/sqldrivers/
-#install -m 0755 %_builddir/%buildsubdir/plugins/designer/*.so %buildroot/%qtdir/plugins/designer/
+#install -m 0755 %_builddir/%buildsubdir/plugins/sqldrivers/*.so %buildroot%qtdir/plugins/sqldrivers/
+#install -m 0755 %_builddir/%buildsubdir/plugins/designer/*.so %buildroot%qtdir/plugins/designer/
 if [ "%_lib" == lib64 ]
 then
- for i in %buildroot/%qtdir/plugins/*/*.so; do
+ for i in %buildroot%qtdir/plugins/*/*.so; do
     mv "$i" $(echo "$i"| sed "s|\.so|.lib64.so|")
  done
 fi
-mkdir -p %buildroot/%qtdir/plugins/crypto
+mkdir -p %buildroot%qtdir/plugins/crypto
 
 # install includes
 #for i in include/* include/*/*; do [ -e $i ] || rm $i; done # Get rid of windows or mac specific links
-#cp -frL include/* %buildroot/%qtdir/include
-install -m 0644 tools/designer/designer/database*.h %buildroot/%qtdir/include
+#cp -frL include/* %buildroot%qtdir/include
+install -m 0644 tools/designer/designer/database*.h %buildroot%qtdir/include
 %if %build_qsa
 pushd include
 > ../qsa-includes.list
@@ -870,23 +876,23 @@ do
     fi
     echo "%qtdir/include/$f" >> ../qsa-includes.list
     echo "%%exclude %qtdir/include/$f" >> ../qsa-includes-exclude.list
-    install -m0644 $f %buildroot/%qtdir/include/$f
+    install -m0644 $f %buildroot%qtdir/include/$f
 done
 popd
 %endif
-mkdir -p %buildroot/%_includedir
-ln -s %qtdir/include %buildroot/%_includedir/%name
+mkdir -p %buildroot%_includedir
+ln -rs %buildroot%qtdir/include %buildroot%_includedir/%name
 
 # install designer templates
-install -d -m 0755 %buildroot/%qtdir/tools/designer/templates
-cp -fR tools/designer/templates/*.ui %buildroot/%qtdir/tools/designer/templates
+install -d -m 0755 %buildroot%qtdir/tools/designer/templates
+cp -fR tools/designer/templates/*.ui %buildroot%qtdir/tools/designer/templates
 
 # Ship qmake stuff
-rm -rf %buildroot/%qtdir/mkspecs/linux*
-cp -ar mkspecs/linux* %buildroot/%qtdir/mkspecs
+rm -rf %buildroot%qtdir/mkspecs/linux*
+cp -ar mkspecs/linux* %buildroot%qtdir/mkspecs
 %if !%shared_nonthr
 # Patch qmake to use qt-mt unconditionally
-perl -pi -e "s,-lqt ,-lqt-mt ,g;s,-lqt$,-lqt-mt,g" %buildroot/%qtdir/mkspecs/*/qmake.conf
+perl -pi -e "s,-lqt ,-lqt-mt ,g;s,-lqt$,-lqt-mt,g" %buildroot%qtdir/mkspecs/*/qmake.conf
 %endif
 %if %versioning_hack
 # fix QMAKE_LFLAGS_SONAME
@@ -897,67 +903,67 @@ done
 %endif
 
 # install documentation
-#install -d -m 0755 %buildroot/%_docdir/%rname-%version/doc/html
+#install -d -m 0755 %buildroot%_docdir/%rname-%version/doc/html
 #%%if %qt_copy
 #rm -rf doc/html/designer
 #%%endif
-#install -m 0644 doc/html/*.html %buildroot/%_docdir/%rname-%version/doc/html
+#install -m 0644 doc/html/*.html %buildroot%_docdir/%rname-%version/doc/html
 
 # David - 3.0.0-0.11mdk - Install missing documentation
-install -d -m 0755 %buildroot/%_docdir/qt-%version/
-#install -m 0644 %_builddir/%buildsubdir/ANNOUNCE  %buildroot/%_docdir/qt-%version/
-cat > %buildroot/%_docdir/qt-%version/LICENSE <<__EOF__
+install -d -m 0755 %buildroot%_docdir/qt-%version/
+#install -m 0644 %_builddir/%buildsubdir/ANNOUNCE  %buildroot%_docdir/qt-%version/
+cat > %buildroot%_docdir/qt-%version/LICENSE <<__EOF__
 see QPL-1.0, GPL-2 and GPL-3 in %_datadir/license
 __EOF__
-install -m 0644 %_builddir/%buildsubdir/PLATFORMS %buildroot/%_docdir/qt-%version/
-install -m 0644 %_builddir/%buildsubdir/FAQ       %buildroot/%_docdir/qt-%version/
-install -m 0644 %_builddir/%buildsubdir/README*    %buildroot/%_docdir/qt-%version/
+install -m 0644 %_builddir/%buildsubdir/PLATFORMS %buildroot%_docdir/qt-%version/
+install -m 0644 %_builddir/%buildsubdir/FAQ       %buildroot%_docdir/qt-%version/
+install -m 0644 %_builddir/%buildsubdir/README*    %buildroot%_docdir/qt-%version/
 %if !%qt_copy
-install -m 0644 %_builddir/%buildsubdir/changes*  %buildroot/%_docdir/qt-%version/
+install -m 0644 %_builddir/%buildsubdir/changes*  %buildroot%_docdir/qt-%version/
 %endif
 
 # Install a README
-install -m 0644 %SOURCE8 %buildroot/%_docdir/qt-%version/README.distribution
-sed -i 's|@QT@|%name|g' %buildroot/%_docdir/qt-%version/README.distribution
-sed -i 's|@QTDIR@|%qtdir|g' %buildroot/%_docdir/qt-%version/README.distribution
-sed -i 's|@QTHOME@|~/.qt%major/|g' %buildroot/%_docdir/qt-%version/README.distribution
-sed -i 's|@QtVersion@|%version|g' %buildroot/%_docdir/qt-%version/README.distribution
-sed -i 's|@PackageVersion@|%version-%release|g' %buildroot/%_docdir/qt-%version/README.distribution
+install -m 0644 %SOURCE8 %buildroot%_docdir/qt-%version/README.distribution
+sed -i 's|@QT@|%name|g' %buildroot%_docdir/qt-%version/README.distribution
+sed -i 's|@QTDIR@|%qtdir|g' %buildroot%_docdir/qt-%version/README.distribution
+sed -i 's|@QTHOME@|~/.qt%major/|g' %buildroot%_docdir/qt-%version/README.distribution
+sed -i 's|@QtVersion@|%version|g' %buildroot%_docdir/qt-%version/README.distribution
+sed -i 's|@PackageVersion@|%version-%release|g' %buildroot%_docdir/qt-%version/README.distribution
 
 # wrap qt malloc
-install -m 0644 %SOURCE12 %buildroot/%_docdir/qt-%version/
+install -m 0644 %SOURCE12 %buildroot%_docdir/qt-%version/
 
 %if %build_qsa
-mkdir -p %buildroot/%_docdir/qsa-%version/html
-mkdir -p %buildroot/%qtdir/doc
-install -m 0644 qsa-x11/doc/html/*.html %buildroot/%_docdir/qsa-%version/html
-ln -s ../../../../%_docdir/qsa-%version/html %buildroot/%qtdir/doc/qsa
-install -m 0644 qsa-x11/README %buildroot/%_docdir/qsa-%version/README
-#install -m 0644 qsa-x11/RELEASENOTES %buildroot/%_docdir/qsa-%version/RELEASENOTES
+mkdir -p %buildroot%_docdir/qsa-%version/html
+mkdir -p %buildroot%qtdir/doc
+install -m 0644 qsa-x11/doc/html/*.html %buildroot%_docdir/qsa-%version/html
+ln -s ../../../../%_docdir/qsa-%version/html %buildroot%qtdir/doc/qsa
+install -m 0644 qsa-x11/README %buildroot%_docdir/qsa-%version/README
+#install -m 0644 qsa-x11/RELEASENOTES %buildroot%_docdir/qsa-%version/RELEASENOTES
 pushd qsa-x11
-tar jcf %buildroot/%_docdir/qsa-%version/examples.tar.bz2 examples/
+tar jcf %buildroot%_docdir/qsa-%version/examples.tar.bz2 examples/
 popd
 %endif
 
 # Install man pages
-install -d -m 0755 %buildroot/%_mandir/man1/
+install -d -m 0755 %buildroot%_mandir/man1/
 for i in %_builddir/%buildsubdir/doc/man/man1/* ; do
-   install -m 0644 $i %buildroot/%_mandir/man1/
+   install -m 0644 $i %buildroot%_mandir/man1/
 done
 #
-pushd %buildroot/%_mandir/man1
+pushd %buildroot%_mandir/man1
     for i in $(find . -name \*.1);do
 	mv -f $i ${i}qt%major%minor%bugfix
     done
 popd
 #
 #
-install -d -m 0755 %buildroot/%_mandir/man3/
+install -d -m 0755 %buildroot%_mandir/man3/
 for i in %_builddir/%buildsubdir/doc/man/man3/* ; do
-   install -m 0644 $i %buildroot/%_mandir/man3/
+   install -m 0644 $i %buildroot%_mandir/man3/
 done
 #
-pushd %buildroot/%_mandir/
+pushd %buildroot%_mandir/
     for i in $(find . -name Q\*);do
 	perl -pi -e 's|3qt|3qt%major%minor%bugfix|g' $i
     done
@@ -967,9 +973,9 @@ pushd %buildroot/%_mandir/
 popd
 
 # David - 3.0.1-2mdk - Install .pri files needed to build examples and tutorials
-install -d -m 0755 %buildroot/%qtdir/src/
+install -d -m 0755 %buildroot%qtdir/src/
 for i in %_builddir/%buildsubdir/src/*.pri; do
-   install -m 0644 $i %buildroot/%qtdir/src/
+   install -m 0644 $i %buildroot%qtdir/src/
 done
 
 # David - 3.0.0-0.11mdk - Provide a qmake.cache for examples
@@ -985,38 +991,38 @@ perl -pi -e "s|^QMAKE_LIBDIR_QT.*|QMAKE_LIBDIR_QT = %qtdir/lib|" %_builddir/%bui
 perl -pi -e "s|^QMAKE_LIBDIR_FLAGS.*|QMAKE_LIBDIR_FLAGS += -lXinerama|" %_builddir/%buildsubdir/.qmake.cache.tmp
 
 ## David - 3.0.0-0.11mdk - Examples and tutorial
-cp -ar %_builddir/%buildsubdir/examples/ %buildroot/%_docdir/qt-%version
-cp -p %_builddir/%buildsubdir/.qmake.cache.tmp %buildroot/%_docdir/qt-%version/examples/.qmake.cache
-perl -pi -e "s|^QMAKE.*|QMAKE = %qtdir/bin/qmake|" %buildroot/%_docdir/qt-%version/examples/Makefile
+cp -ar %_builddir/%buildsubdir/examples/ %buildroot%_docdir/qt-%version
+cp -p %_builddir/%buildsubdir/.qmake.cache.tmp %buildroot%_docdir/qt-%version/examples/.qmake.cache
+perl -pi -e "s|^QMAKE.*|QMAKE = %qtdir/bin/qmake|" %buildroot%_docdir/qt-%version/examples/Makefile
 
 # David - 3.0.0-0.11mdk - Provide a qmake.cache for tutorial
-cp -ar %_builddir/%buildsubdir/tutorial/ %buildroot/%_docdir/qt-%version
-cp -p %_builddir/%buildsubdir/.qmake.cache.tmp %buildroot/%_docdir/qt-%version/tutorial/.qmake.cache
-perl -pi -e "s|^QMAKE.*|QMAKE = %qtdir/bin/qmake|" %buildroot/%_docdir/qt-%version/tutorial/Makefile
+cp -ar %_builddir/%buildsubdir/tutorial/ %buildroot%_docdir/qt-%version
+cp -p %_builddir/%buildsubdir/.qmake.cache.tmp %buildroot%_docdir/qt-%version/tutorial/.qmake.cache
+perl -pi -e "s|^QMAKE.*|QMAKE = %qtdir/bin/qmake|" %buildroot%_docdir/qt-%version/tutorial/Makefile
 
 # David - 3.0.0-0.11mdk - Set qmake.cache to right directory
-find %buildroot/%_docdir/qt-%version/{examples,tutorial} -name Makefile | xargs perl -pi -e "s|../.qmake.cache|.qmake.cache|"
-#find %buildroot/%_docdir/qt-%version/{examples,tutorial} -name Makefile | xargs perl -pi -e "s|../../.qmake.cache|../.qmake.cache|"
+find %buildroot%_docdir/qt-%version/{examples,tutorial} -name Makefile | xargs perl -pi -e "s|../.qmake.cache|.qmake.cache|"
+#find %buildroot%_docdir/qt-%version/{examples,tutorial} -name Makefile | xargs perl -pi -e "s|../../.qmake.cache|../.qmake.cache|"
 
 # David - 3.0.0-0.11mdk - Fix include directory for examples
-find %buildroot/%_docdir/qt-%version/examples -name Makefile | xargs perl -pi -e "s|../../../include|%qtdir/include|"
+find %buildroot%_docdir/qt-%version/examples -name Makefile | xargs perl -pi -e "s|../../../include|%qtdir/include|"
 
 # David - 3.0.0-0.11mdk - Fix include directory for examples
-find %buildroot/%_docdir/qt-%version/examples -name Makefile | xargs perl -pi -e "s|../../include|%qtdir/include|"
+find %buildroot%_docdir/qt-%version/examples -name Makefile | xargs perl -pi -e "s|../../include|%qtdir/include|"
 
 # David - 3.0.1-2mdk - Fix lib directory for examples
-find %buildroot/%_docdir/qt-%version/{examples,tutorial} -name Makefile | xargs perl -pi -e "s|../../../../lib/libqt-mt.prl|%qtdir/lib/libqt-mt.prl|"
-find %buildroot/%_docdir/qt-%version/{examples,tutorial} -name Makefile | xargs perl -pi -e "s|../../../lib/libqt-mt.prl|%qtdir/lib/libqt-mt.prl|"
-find %buildroot/%_docdir/qt-%version/{examples,tutorial} -name Makefile | xargs perl -pi -e "s|../../lib/libqt-mt.prl|%qtdir/lib/libqt-mt.prl|"
+find %buildroot%_docdir/qt-%version/{examples,tutorial} -name Makefile | xargs perl -pi -e "s|../../../../lib/libqt-mt.prl|%qtdir/lib/libqt-mt.prl|"
+find %buildroot%_docdir/qt-%version/{examples,tutorial} -name Makefile | xargs perl -pi -e "s|../../../lib/libqt-mt.prl|%qtdir/lib/libqt-mt.prl|"
+find %buildroot%_docdir/qt-%version/{examples,tutorial} -name Makefile | xargs perl -pi -e "s|../../lib/libqt-mt.prl|%qtdir/lib/libqt-mt.prl|"
 
-find %buildroot/%_docdir/qt-%version/{examples,tutorial} -name Makefile | xargs perl -pi -e "s|../../src/qt_professional.pri|%qtdir/src/qt_professional.pri|"
+find %buildroot%_docdir/qt-%version/{examples,tutorial} -name Makefile | xargs perl -pi -e "s|../../src/qt_professional.pri|%qtdir/src/qt_professional.pri|"
 
 # David - 3.0.0-0.11mdk - Set RPM_BUILD_DIR to QTDIR
-find %buildroot/%_docdir/qt-%version/{examples,tutorial} -name Makefile | xargs perl -pi -e "s|%_builddir/%buildsubdir|%qtdir|"
+find %buildroot%_docdir/qt-%version/{examples,tutorial} -name Makefile | xargs perl -pi -e "s|%_builddir/%buildsubdir|%qtdir|"
 
 # David - 3.0.1-2mdk - Explain in examples README that QTDIR need to be set
 #                      before try to build one of them
-cd %buildroot/%_docdir/qt-%version/examples/
+cd %buildroot%_docdir/qt-%version/examples/
 cat README > README.tmp
 echo "Before try to build one of these examples, you need to:" > README
 echo "" >> README
@@ -1028,11 +1034,11 @@ rm -f README.tmp
 cd -
 
 # David - 3.0.1-2mdk - Fix PATH to tutorial.html in tutorials README
-perl -pi -e "s|../doc/html/tutorial.html|%qtdir/doc/html/tutorial.html|" %buildroot/%_docdir/qt-%version/tutorial/README
+perl -pi -e "s|../doc/html/tutorial.html|%qtdir/doc/html/tutorial.html|" %buildroot%_docdir/qt-%version/tutorial/README
 
 # David - 3.0.1-2mdk - Explain in tutorials README that QTDIR need to be set
 #                      before try to build one of them
-cd %buildroot/%_docdir/qt-%version/tutorial/
+cd %buildroot%_docdir/qt-%version/tutorial/
 cat README > README.tmp
 echo "Before try to build one of these examples, you need to:" > README
 echo "" >> README
@@ -1046,35 +1052,35 @@ cd -
 # David - 3.0.0-0.11mdk - Install examples. They are usefull only for people who
 #                         want learn to use Qt. We assume they are rarely used
 #                         So, we can compress them to save space.
-cd %buildroot/%_docdir/qt-%version/
-tar jcf %buildroot/%_docdir/qt-%version/examples.tar.bz2 examples/
+cd %buildroot%_docdir/qt-%version/
+tar jcf %buildroot%_docdir/qt-%version/examples.tar.bz2 examples/
 rm -fr examples/
 cd -
 
 # David - 3.0.0-0.11mdk - Install tutorial. It is usefull only for people who
 #                         want learn to use Qt. We assume it is rarely used.
 #                         So, we can compress it to save space.
-cd %buildroot/%_docdir/qt-%version/
-tar jcf %buildroot/%_docdir/qt-%version/tutorial.tar.bz2 tutorial/
+cd %buildroot%_docdir/qt-%version/
+tar jcf %buildroot%_docdir/qt-%version/tutorial.tar.bz2 tutorial/
 rm -fr tutorial/
 cd -
 
 # David - 3.0.0-0.11mdk - Create a fake QTDIR (because Qt doesn't care of FHS
 #                         and want all its directories in its own directory...)
-cd %buildroot/%qtdir/
+cd %buildroot%qtdir/
 install -d -m 0755 doc
 ln -s ../../../share/doc/qt-%version/html/ doc/html
 cd -
 
 %if %with_settings
-install -d -m 0755 %buildroot/%_sysconfdir/profile.d/
-install -m 0755 %SOURCE1 %buildroot/%_sysconfdir/profile.d/qt%{major}dir.csh
-sed -i 's,@QTDIR@,%qtdir,g' %buildroot/%_sysconfdir/profile.d/qt%{major}dir.csh
-install -m 0755 %SOURCE2 %buildroot/%_sysconfdir/profile.d/qt%{major}dir.sh
-sed -i 's,@QTDIR@,%qtdir,g' %buildroot/%_sysconfdir/profile.d/qt%{major}dir.sh
+install -d -m 0755 %buildroot%_sysconfdir/profile.d/
+install -m 0755 %SOURCE1 %buildroot%_sysconfdir/profile.d/qt%{major}dir.csh
+sed -i 's,@QTDIR@,%qtdir,g' %buildroot%_sysconfdir/profile.d/qt%{major}dir.csh
+install -m 0755 %SOURCE2 %buildroot%_sysconfdir/profile.d/qt%{major}dir.sh
+sed -i 's,@QTDIR@,%qtdir,g' %buildroot%_sysconfdir/profile.d/qt%{major}dir.sh
 %endif
 
-pushd %buildroot/%qtdir/mkspecs/
+pushd %buildroot%qtdir/mkspecs/
 rm -rf default
 %ifarch x86_64
 ln -sf linux-g++-64 default
@@ -1084,16 +1090,16 @@ ln -sf linux-g++ default
 popd
 
 # Install .desktop files
-install -d -m 0755 %buildroot/%_datadir/applications/
-install -m 0644 %SOURCE21 %buildroot/%_datadir/applications/qt3-assistant.desktop
-install -m 0644 %SOURCE22 %buildroot/%_datadir/applications/qt3-designer.desktop
-install -m 0644 %SOURCE23 %buildroot/%_datadir/applications/qt3-linguist.desktop
-install -m 0644 %SOURCE24 %buildroot/%_datadir/applications/qt3-qtconfig.desktop
+install -d -m 0755 %buildroot%_datadir/applications/
+install -m 0644 %SOURCE21 %buildroot%_datadir/applications/qt3-assistant.desktop
+install -m 0644 %SOURCE22 %buildroot%_datadir/applications/qt3-designer.desktop
+install -m 0644 %SOURCE23 %buildroot%_datadir/applications/qt3-linguist.desktop
+install -m 0644 %SOURCE24 %buildroot%_datadir/applications/qt3-qtconfig.desktop
 # Icons
-mkdir -p %buildroot/%_iconsdir/hicolor/{16x16,32x32,48x48}/apps
-install -m 644 %SOURCE101 %buildroot/%_iconsdir/hicolor/16x16/apps/%rname.png
-install -m 644 %SOURCE102 %buildroot/%_iconsdir/hicolor/32x32/apps/%rname.png
-install -m 644 %SOURCE103 %buildroot/%_iconsdir/hicolor/48x48/apps/%rname.png
+mkdir -p %buildroot%_iconsdir/hicolor/{16x16,32x32,48x48}/apps
+install -m 644 %SOURCE101 %buildroot%_iconsdir/hicolor/16x16/apps/%rname.png
+install -m 644 %SOURCE102 %buildroot%_iconsdir/hicolor/32x32/apps/%rname.png
+install -m 644 %SOURCE103 %buildroot%_iconsdir/hicolor/48x48/apps/%rname.png
 
 
 %files
@@ -1301,14 +1307,24 @@ install -m 644 %SOURCE103 %buildroot/%_iconsdir/hicolor/48x48/apps/%rname.png
 %qtdir/lib/libqsa.so
 %dir %qtdir/mkspecs/features/qsa.prf
 
+%if %static_thread
 %files -n lib%name-devel-static
 %_libdir/libqt-mt.a
 %_libdir/libqt-mt.la
+%endif
 
 %files -n rpm-macros-%name
 %_rpmmacrosdir/*
 
 %changelog
+* Wed Dec 08 2021 Dmitry V. Levin <ldv@altlinux.org> 3.3.8d-alt16
+- NMU.
+- Disabled build and packaging of static libraries to fix FTBFS.
+- Fixed armh-specific FTBFS.
+- Replaced deprecated PreReq with Requires.
+- Fixed /usr/include/qt3 symlink.
+- Fixed License tag.
+
 * Sat Aug 07 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.3.8d-alt15
 - e2k: fixed race condition when creating settings directory
 - e2k: workaround to SIGILL in uic
