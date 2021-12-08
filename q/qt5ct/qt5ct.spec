@@ -1,24 +1,45 @@
 Name: qt5ct
-Version: 1.1
+Version: 1.5
 Release: alt1
-Summary: Qt5 Configuration Tool
-License: BSD
 
+Summary: Qt5 Configuration Tool
+Summary(ru_RU.UTF-8): Инструмент для настройки оформления приложений Qt5
+License: BSD
 Group: System/Configuration/Other
 Url: https://sourceforge.net/projects/qt5ct
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 Source: %name/%name-%version.tar
+# Source-url: https://sourceforge.net/projects/qt5ct/files/qt5ct-%version.tar.bz2/download
 
 BuildRequires(pre): rpm-macros-qt5
-
-# Automatically added by buildreq on Fri Feb 03 2017
-# optimized out: fontconfig fontconfig-devel gcc-c++ glib2-devel libEGL-devel libGL-devel libX11-devel libXext-devel libXrender-devel libfreetype-devel libqt5-core libqt5-dbus libqt5-gui libqt5-widgets libqt5-xml libstdc++-devel libudev-devel python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-script-devel qt5-tools qt5-webchannel-devel qt5-xmlpatterns-devel
-BuildRequires: libinput-devel libmtdev-devel libts-devel libxkbcommon-devel python3-module-zope qt5-base-devel-static qt5-connectivity-devel qt5-multimedia-devel qt5-phonon-devel qt5-quick1-devel qt5-sensors-devel qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-webengine-devel qt5-websockets-devel qt5-x11extras-devel
+BuildRequires: libinput-devel
+BuildRequires: libmtdev-devel
+BuildRequires: libts-devel
+BuildRequires: libxkbcommon-devel
+BuildRequires: python3-module-zope
+BuildRequires: qt5-base-devel-static
+BuildRequires: qt5-connectivity-devel
+BuildRequires: qt5-multimedia-devel
+BuildRequires: qt5-phonon-devel
+BuildRequires: qt5-quick1-devel
+BuildRequires: qt5-sensors-devel
+BuildRequires: qt5-serialport-devel
+BuildRequires: qt5-speech-devel
+BuildRequires: qt5-svg-devel
+BuildRequires: qt5-tools-devel
+BuildRequires: qt5-wayland-devel
+BuildRequires: qt5-webengine-devel
+BuildRequires: qt5-websockets-devel
+BuildRequires: qt5-x11extras-devel
 
 %description
 This applications allows users to configure Qt5 settings (theme,
 font, icons, etc.) under DE/WM without Qt integration.
+
+%description -l ru_RU.UTF-8
+Это приложение позволяет пользователям настраивать параметры Qt5 (тема,
+шрифт, значки и т. д.) в DE / WM без интеграции с Qt.
 
 %prep
 %setup
@@ -28,7 +49,6 @@ echo "setenv QT_QPA_PLATFORMTHEME '%name'" > %name.csh
 %build
 %qmake_qt5
 %make_build
-
 
 %install
 INSTALL_ROOT=%buildroot %makeinstall_std
@@ -40,12 +60,19 @@ install -Dm 0755 %name.csh %buildroot%_sysconfdir/profile.d/%name.csh
 %doc AUTHORS ChangeLog COPYING README
 %config %_sysconfdir/profile.d/%name.*sh
 %_bindir/%name
+%_datadir/%name
 %dir %_libdir/qt5/plugins/platformthemes/
 %_libdir/qt5/plugins/platformthemes/lib%name.so
 %_libdir/qt5/plugins/styles/libqt5ct-style.so
 %_desktopdir/%name.desktop
 
 %changelog
+* Sun Dec 05 2021 Evgeny Chuck <koi@altlinux.org> 1.5-alt1
+- new version (1.5) with rpmgs script
+- Update spec for version 1.5
+  + added package description in Russian
+  + minor fixes in spec
+
 * Wed Aug 19 2020 Ivan A. Melnikov <iv@altlinux.org> 1.1-alt1
 - New version
 
