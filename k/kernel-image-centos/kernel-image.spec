@@ -1,9 +1,9 @@
 Name: kernel-image-centos
 
-%define centos_release 26
+%define centos_release 27
 
 Version: 5.14.0.%{centos_release}
-Release: alt2.el9
+Release: alt1.el9
 
 %define kernel_base_version  %version
 %define kernel_extra_version %nil
@@ -629,6 +629,17 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Dec 08 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.27-alt1.el9
+- x86: change default to spec_store_bypass_disable=prctl spectre_v2_user=prctl
+- Provide and Configure DYNAMIC_PREEMPT
+- x86/sgx: mark tech preview
+- net: ipv6 p1 stable backport from upstream
+- ipv4: stable backports for rhel 9.0
+- crypto: ccp - fix resource leaks in ccp_run_aes_gcm_cmd()
+- net/l2tp: Fix reference count leak in l2tp_udp_recv_core
+- megaraid_sas: driver update
+- tpm: Avoid error message when process gets signal while waiting and other upstream fixes
+
 * Tue Dec 07 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.26-alt2.el9
 - Add 9p modules.
 
