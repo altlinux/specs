@@ -1,7 +1,9 @@
+%add_findreq_skiplist %_docdir/%name
+
 %def_with sdl2
 Name: fheroes2
 Epoch: 2
-Version: 0.9.9
+Version: 0.9.10
 #define rev 20210604
 #Release: alt1.%rev
 Release: alt1
@@ -14,7 +16,6 @@ Url: https://github.com/ihhub/fheroes2
 Source: %name-%version.tar
 Source2: %name.sh
 Source3: %name.png
-Source4: %name.desktop
 
 # Automatically added by buildreq on Wed Oct 03 2012
 # optimized out: libSDL-devel libstdc++-devel zlib-devel
@@ -37,31 +38,43 @@ into your /usr/share/games/fheroes2/{maps,data} directories respectively
 %if_with sdl2
 export WITH_SDL2="ON"
 %endif
-# Makefile hardwires AI resulting in non-fighting opponents
-%make_build WITH_AI=simple CONFIGURE_FHEROES2_DATA="%_gamesdatadir/%name/"
+%make_build CONFIGURE_FHEROES2_DATA="%_gamesdatadir/%name/"
 
 %install
+%if_without cmake
+%endif
+
 # let's create directory structure...
-mkdir -p %buildroot{%_bindir,%_niconsdir,%_desktopdir,%_docdir/%name,%_gamesdatadir/%name/{data,maps}}
+mkdir -p %buildroot%_gamesdatadir/%name/{data,maps}
 
 # and install what we need where we need it to be...
-install -pm755 %name %buildroot%_bindir/%name.bin
-install -pm755 %SOURCE2 %buildroot%_bindir/%name
-mv files/ %buildroot%_gamesdatadir/%name/
-install -pm 644 %name.key %buildroot%_gamesdatadir/%name/
-install -pm 644 %SOURCE3 %buildroot%_niconsdir/%name.png
-install -pm 644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
+install -pD -m 755 %name %buildroot%_bindir/%name.bin
+install -pD -m 755 %SOURCE2 %buildroot%_bindir/%name
+install -pD -m 644 %name.key %buildroot%_gamesdatadir/%name/
+cp -a files/ %buildroot%_gamesdatadir/%name/
+
+# install resources
+install -pD -m 644 %SOURCE3 %buildroot%_niconsdir/%name.png
+install -pD -m 644 src/resources/fheroes2.png %buildroot%_iconsdir/hicolor/128x128/apps/%name.png
+install -pD -m 644 script/packaging/common/fheroes2.desktop %buildroot%_desktopdir/%name.desktop
+
+# docs
+mkdir -p %buildroot%_docdir/%name
 install -pm 644 {CONTRIBUTING.md,changelog.txt,LICENSE,README.md} %buildroot%_docdir/%name/
+install -pm 644 script/demo/download_demo_version.sh script/homm2/extract_homm2_resources.sh %buildroot%_docdir/%name/
 
 %files
 %_bindir/*
 %_niconsdir/%name.png
+%_iconsdir/hicolor/128x128/apps/%name.png
 %_desktopdir/%name.desktop
-%_docdir/%name
+%doc %_docdir/%name
 %_gamesdatadir/%name
 
-
 %changelog
+* Tue Dec 07 2021 Igor Vlasenko <viy@altlinux.org> 2:0.9.10-alt1
+- new version
+
 * Sat Nov 13 2021 Igor Vlasenko <viy@altlinux.org> 2:0.9.9-alt1
 - new version
 
