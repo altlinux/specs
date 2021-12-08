@@ -1,7 +1,7 @@
 Name: rust
 Epoch: 1
 Version: 1.57.0
-Release: alt1
+Release: alt2
 Summary: The Rust Programming Language
 
 Group: Development/Other
@@ -35,7 +35,7 @@ BuildRequires: pkgconfig(libcurl)
 BuildRequires: pkgconfig(liblzma)
 BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(zlib)
-BuildRequires: pkgconfig(libgit2)
+#BuildRequires: pkgconfig(libgit2)
 BuildRequires: pkgconfig(libssh2)
 BuildRequires: pkgconfig(tinfo)
 %if_without bundled_llvm
@@ -279,7 +279,9 @@ find vendor \
 cat >env.sh <<EOF
 export RUST_BACKTRACE=1
 export RUSTFLAGS="-Clink-arg=-Wl,-z,relro,-z,now -Clink-args=-fPIC -Copt-level=2"
-export LIBGIT2_SYS_USE_PKG_CONFIG=1
+# Don't use system libgit2 for now...
+# https://github.com/rust-lang/rust/issues/63476
+#export LIBGIT2_SYS_USE_PKG_CONFIG=1
 export LIBSSH2_SYS_USE_PKG_CONFIG=1
 export DESTDIR="%buildroot"
 export ALTWRAP_LLVM_VERSION="%llvm_version"
@@ -473,6 +475,9 @@ rm -rf %rustdir
 %rustlibdir/%rust_triple/analysis
 
 %changelog
+* Thu Dec 09 2021 Alexey Gladkov <legion@altlinux.ru> 1:1.57.0-alt2
+- Don't use system libgit2 for now (ALT#41534).
+
 * Sun Dec 05 2021 Alexey Gladkov <legion@altlinux.ru> 1:1.57.0-alt1
 - New version (1.57.0).
 
