@@ -1,5 +1,5 @@
 Name: alt-rootfs-installer
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
@@ -41,6 +41,14 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Sat Dec 04 2021 Anton Midyukov <antohami@altlinux.org> 0.5.2-alt1
+- Add HiFive Unmatched support (thanks jqt4@)
+- socs-utils: fix find_firmware_partition
+- alt-rootfs-installer: add new option --vnc
+- riscv64: enable CONSOLE by default
+- enable vnc for HiFive-Unleashed-*
+- Update supported boards with u-boot 2021.10
+
 * Mon Jul 26 2021 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt1
 - Prevent concurrent use of options --image-in and --image-out
 - Fixed mounting ROOTPART when writing image
