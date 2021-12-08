@@ -1,23 +1,31 @@
+%define ver_major 3.1
+%define ver_base %ver_major.0
+
 Name: openbabel
-Version: 2.4.1
-Release: alt7
+Version: %ver_major.1
+Release: alt2
+
+%define tag_ver %(echo %version|tr . -)
 
 Summary: Chemistry software file format converter
-License: GPL
+License: GPL-2.0
 Group: Sciences/Chemistry
-
 Url: http://openbabel.sourceforge.net
-Source0: http://dl.sf.net/%name/%name-%version.tar.gz
-Source1: %name.watch
-Patch1: %name-%version-upstream-gcc-version-1.patch
-Patch2: %name-%version-upstream-gcc-version-2.patch
-Patch3: %name-%version-narrowing-conversion.patch
+Vcs: https://github.com/openbabel/openbabel.git
+
 Packager: Michael Shigorin <mike@altlinux.org>
 
-# Automatically added by buildreq on Sun Apr 13 2014
-# optimized out: cmake-modules fontconfig libcloog-isl4 libgdk-pixbuf libstdc++-devel libwayland-client libwayland-server pkg-config python-base zlib-devel
-BuildRequires: cmake eigen3 gcc-c++ libcairo-devel libwxGTK-devel libxml2-devel xml-utils
-BuildRequires: rpm-build-python3 python3-devel
+Source: %name-%version.tar
+#Source: https://github.com/openbabel/openbabel/releases/download/openbabel-%tag_ver/openbabel-%version-source.tar.bz2
+Source1: %name.watch
+Patch: %name-%version-%release.patch
+
+BuildRequires: rpm-macros-cmake rpm-build-python3
+BuildRequires: cmake eigen3 gcc-c++ rapidjson
+BuildRequires: boost-devel boost-filesystem-devel
+BuildRequires: libcairo-devel libwxGTK3.0-devel
+BuildRequires: zlib-devel libxml2-devel xml-utils
+BuildRequires: python3-devel python3-module-setuptools swig
 
 Summary(ru_RU.UTF-8): Конвертор биохимических форматов данных
 Summary(uk_UA.UTF-8): Конвертор біохімічних форматів даних
@@ -77,33 +85,28 @@ lib%name package installed.
 Python bindings for Open Babel.
 
 %prep
-%setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%setup -n %name-%version
+%patch -p1
+# fix python install path
+sed -i 's/dist\(-packages\)/site\1/' scripts/CMakeLists.txt
 
 %build
-%add_optflags -I%_includedir/eigen3
 %ifarch %e2k
 # see also mcst#3675; there *is* -fPIC there
 %add_optflags -Wl,--no-warn-shared-textrel
 %endif
-%cmake_insource \
-    -DCMAKE_SKIP_RPATH:BOOL=ON \
+%cmake \
+    -DWITH_MAEPARSER:BOOL=OFF \
+    -DWITH_COORDGEN:BOOL=OFF \
     -DBUILD_GUI:BOOL=ON \
+    -DRUN_SWIG=ON \
     -DPYTHON_BINDINGS:BOOL=ON \
     -DPYTHON_EXECUTABLE=%__python3
-
-%make_build VERBOSE=1
+%nil
+%cmake_build
 
 %install
-%makeinstall_std
-
-%if_enabled static
-%else
-rm -f %buildroot%_libdir/*.a
-rm -f %buildroot%_libdir/%name/{%version/,}*.{a,la}
-%endif
+%cmake_install
 
 %files
 %doc AUTHORS README* THANKS 
@@ -122,7 +125,7 @@ rm -f %buildroot%_libdir/%name/{%version/,}*.{a,la}
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
-%_libdir/cmake/openbabel2
+%_libdir/cmake/openbabel3
 
 %files -n python3-module-%name
 %python3_sitelibdir/*
@@ -132,10 +135,13 @@ rm -f %buildroot%_libdir/%name/{%version/,}*.{a,la}
 %_libdir/*.a
 %endif
 
-# TODO:
-# - consider building with external libinchi and fedora patches
-
 %changelog
+* Wed Dec 08 2021 Yuri N. Sedunov <aris@altlinux.org> 3.1.1-alt2
+- updated to openbabel-3-1-1-73-gf3ed2a9a5
+
+* Tue Dec 07 2021 Yuri N. Sedunov <aris@altlinux.org> 3.1.1-alt1
+- 3.1.1 from upstream git
+
 * Sat Sep 12 2020 Vitaly Lipatov <lav@altlinux.ru> 2.4.1-alt7
 - build python 3 subpackage instead of python 2 one
 

@@ -1,13 +1,13 @@
 Name: xdrawchem
 Version: 1.10.2
-Release: alt1
+Release: alt2
 
 Summary: XDrawChem is a two-dimensional molecule drawing program
 Summary(ru_RU.UTF-8): XDrawChem - программа двумерного рисования молекул
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-License: GPL
+License: GPL-2.0-or-later
 Group: Sciences/Chemistry
 Url: http://www.woodsidelabs.com/chemistry/xdrawchem.php
 
@@ -22,7 +22,9 @@ Patch1: xdrawchem-ob22.patch
 Patch2: new-openbabel-string-type-fix.patch
 Patch3: xdrawchem-1.9.9-alt-glibc-2.16.patch
 
-BuildRequires: gcc-c++ openbabel libopenbabel-devel qt5-base-devel
+Patch10: xdrawchem-1.10.2-1-HEAD.patch
+
+BuildRequires: gcc-c++ openbabel pkgconfig(openbabel-3) qt5-base-devel
 
 %description
 XDrawChem is a two-dimensional molecule drawing program for Unix
@@ -40,6 +42,7 @@ XDrawChem - это программа двумерного рисования м
 
 %prep
 %setup
+%patch10 -p1
 cd xdrawchem-qt5
 
 %build
@@ -61,6 +64,10 @@ install -pD -m 644 %SOURCE2 %buildroot/%_niconsdir/xdrawchem.png
 %_niconsdir/xdrawchem.png
 
 %changelog
+* Wed Dec 08 2021 Yuri N. Sedunov <aris@altlinux.org> 1.10.2-alt2
+- updated from upstream git to 1.10.2-1-9-g892acac (required openbabel-3)
+- fixed License tag
+
 * Sun Jun 24 2018 Vitaly Lipatov <lav@altlinux.ru> 1.10.2-alt1
 - new version (1.10.2) with rpmgs script
 - build with Qt5

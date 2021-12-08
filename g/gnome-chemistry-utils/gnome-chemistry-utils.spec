@@ -13,7 +13,7 @@
 
 Name: gnome-chemistry-utils
 Version: %ver_major.17
-Release: alt9
+Release: alt9.1
 
 Summary: A set of chemical utilities
 Group: Sciences/Chemistry
@@ -36,7 +36,7 @@ BuildRequires: autoconf-archive gcc-c++ doxygen docbook-dtds
 BuildRequires: yelp-tools intltool man
 BuildRequires: libgio-devel libgnomeoffice%goffice_api_ver-devel
 %{?_enable_gnumeric:BuildRequires: libspreadsheet-devel}
-BuildRequires: libgsf-devel libopenbabel-devel libGLU-devel
+BuildRequires: libgsf-devel pkgconfig(openbabel-3) libGLU-devel
 BuildRequires: bodr chemical-mime-data
 %{?_enable_mozilla:BuildRequires: xulrunner-devel browser-plugins-npapi-devel}
 
@@ -83,7 +83,7 @@ spreadsheet program.
 %setup
 %patch1 -b .mozplugindir
 %patch11 -p1
-#%%patch12 -p1
+%patch12 -p1
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
@@ -150,6 +150,9 @@ spreadsheet program.
 %endif
 
 %changelog
+* Tue Dec 07 2021 Yuri N. Sedunov <aris@altlinux.org> 0.14.17-alt9.1
+- rebuild against libopenbabel.so.7
+
 * Thu Sep 23 2021 Yuri N. Sedunov <aris@altlinux.org> 0.14.17-alt9
 - applied debian patchset
 - enabled gnimeric plugin again
