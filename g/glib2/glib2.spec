@@ -30,7 +30,7 @@
 
 Name: glib2
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -441,6 +441,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Dec 08 2021 Yuri N. Sedunov <aris@altlinux.org> 2.70.2-alt2
+- /etc/profile.d/glib2.sh: fixed syntax (ALT #41530)
+
 * Fri Dec 03 2021 Yuri N. Sedunov <aris@altlinux.org> 2.70.2-alt1
 - 2.70.2
 
