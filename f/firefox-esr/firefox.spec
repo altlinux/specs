@@ -15,8 +15,8 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR ver
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
-Version: 91.3.0
-Release: alt2
+Version: 91.4.0
+Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
 URL: http://www.mozilla.org/projects/firefox/
@@ -454,6 +454,19 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Mon Dec 06 2021 Andrey Cherepanov <cas@altlinux.org> 91.4.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2021-43536 URL leakage when navigating while executing asynchronous function
+  + CVE-2021-43537 Heap buffer overflow when using structured clone
+  + CVE-2021-43538 Missing fullscreen and pointer lock notification when requesting both
+  + CVE-2021-43539 GC rooting failure when calling wasm instance methods
+  + CVE-2021-43541 External protocol handler parameters were unescaped
+  + CVE-2021-43542 XMLHttpRequest error codes could have leaked the existence of an external protocol handler
+  + CVE-2021-43543 Bypass of CSP sandbox directive when embedding
+  + CVE-2021-43545 Denial of Service when using the Location API in a loop
+  + CVE-2021-43546 Cursor spoofing could overlay user interface when native cursor is zoomed
+
 * Thu Nov 18 2021 Andrey Cherepanov <cas@altlinux.org> 91.3.0-alt2
 - Show Home button on toolbar by default (ALT #41360).
 
