@@ -3,7 +3,7 @@
 
 Name:     podman
 Version:  3.4.3
-Release:  alt1
+Release:  alt2
 
 Summary:  Manage pods, containers, and container images
 License:  Apache-2.0
@@ -14,7 +14,7 @@ Url:      https://podman.io/
 Source:   %name-%version.tar
 
 ExclusiveArch: %go_arches
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-build-golang rpm-macros-systemd
 BuildRequires: golang go-md2man
 BuildRequires: libseccomp-devel glib2-devel libgpgme-devel libbtrfs-devel
 BuildRequires: libgio-devel libostree-devel libselinux-devel libdevmapper-devel
@@ -145,6 +145,9 @@ install -p -m 644 %name.conf %buildroot%_sysconfdir/modules-load.d/
 %_tmpfilesdir/%name-docker.conf
 
 %changelog
+* Wed Dec 08 2021 Alexey Shabalin <shaba@altlinux.org> 3.4.3-alt2
+- add BR:rpm-macros-systemd
+
 * Wed Dec 08 2021 Alexey Shabalin <shaba@altlinux.org> 3.4.3-alt1
 - new version 3.4.3 (Fixes: CVE-2021-4024, CVE-2021-41190)
 
