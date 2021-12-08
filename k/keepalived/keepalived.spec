@@ -17,7 +17,7 @@
 
 Name: keepalived
 Version: 2.2.4
-Release: alt1
+Release: alt2
 
 Summary: HA monitor built upon LVS, VRRP and services poller
 License: GPLv2
@@ -27,7 +27,6 @@ Url: http://www.keepalived.org
 Source0: %name-%version.tar
 Source1: %name.init
 Patch0: 0002-update-systemd-unit-file.patch
-Patch2: keepalived-e2k-check-nft-set-concat.patch
 
 BuildRequires: libpopt-devel libssl-devel
 %{?_enable_libiptc:BuildRequires: pkgconfig(libiptc)}
@@ -53,7 +52,6 @@ userspace daemon for LVS cluster nodes healthchecks and LVS directors failover.
 %setup
 %patch0 -p1
 %ifarch %e2k
-%patch2 -p1
 # lcc 1.23's edg frontend can only do numbers here (#4061)
 sed -i 's,"O0",0,' lib/utils.c
 %endif
@@ -120,6 +118,10 @@ done
 %doc doc/samples
 
 %changelog
+* Wed Dec 08 2021 Michael Shigorin <mike@altlinux.org> 2.2.4-alt2
+- e2k: removed extra patch to check if NFT_SET_CONCAT is declared
+  (merged upstream)
+
 * Thu Nov 25 2021 Alexey Shabalin <shaba@altlinux.org> 2.2.4-alt1
 - 2.2.4
 - cleanup spec
