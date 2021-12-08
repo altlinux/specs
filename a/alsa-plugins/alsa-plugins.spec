@@ -1,5 +1,5 @@
 Name: alsa-plugins
-Version: 1.2.5
+Version: 1.2.6
 Release: alt1
 Epoch: 1
 
@@ -83,6 +83,9 @@ done
 %_datadir/alsa/alsa.conf.d/99-pulse.conf
 
 %changelog
+* Wed Dec 08 2021 Michael Shigorin <mike@altlinux.org> 1:1.2.6-alt1
+- 1.2.6
+
 * Mon Aug 23 2021 Egor Ignatov <egori@altlinux.org> 1:1.2.5-alt1
 - 1.2.5
 

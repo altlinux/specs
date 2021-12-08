@@ -2,8 +2,8 @@
 %def_without python
 
 Name: libalsa
-Version: 1.2.5.1
-Release: alt2
+Version: 1.2.6
+Release: alt1
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) library
@@ -97,6 +97,12 @@ find include -type f -print0 |
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
+
+%ifnarch %e2k
+# http://github.com/alsa-project/alsa-lib/issues/6
+# http://gcc.gnu.org/bugzilla/show_bug.cgi?id=48200
+%add_optflags -flto -flto-partition=none
+%endif
 
 %autoreconf
 %configure \
@@ -193,6 +199,10 @@ done
 %_bindir/aserver
 
 %changelog
+* Wed Dec 08 2021 Michael Shigorin <mike@altlinux.org> 1:1.2.6-alt1
+- 1.2.6
+  + LTO related ftbfs workaround (thx ilyakurdyukov@)
+
 * Mon Oct 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.2.5.1-alt2
 - Fixed build with LTO.
 
