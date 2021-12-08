@@ -1,9 +1,9 @@
 Name: installer-distro-alt-workstation
-Version: 9.0.0
+Version: 10.0.0
 Release: alt1
 
 Summary: Installer configuration (ALT Workstation)
-License: GPL
+License: GPL-2.0+
 Group: System/Configuration/Other
 
 Url: http://www.altlinux.org/Installer
@@ -18,7 +18,7 @@ It is derived from installer-distro-altlinux-desktop.
 
 %package stage2
 Summary: Installer configuration and scripts (stage2 part)
-License: GPL
+License: GPL-2.0+
 Group: System/Configuration/Other
 Requires: installer-stage2
 # modules
@@ -27,7 +27,6 @@ Requires: alterator-datetime
 Requires: alterator-pkg
 Requires: alterator-vm
 Requires: alterator-notes
-Requires: installer-feature-vm-altlinux-generic-stage2
 Requires: x-cursor-theme-jimmac
 
 %description stage2
@@ -38,17 +37,18 @@ The stage2 part is included into live installer system.
 
 %package stage3
 Summary: Installer configuration and scripts (stage3 part)
-License: GPL
+License: GPL-2.0+
 Group: System/Configuration/Other
-Provides: installer-altlinux-generic-stage3 = %name-%version
 #Requires: installer-stage3
 # modules
-# FIXME: grub/lilo
-#Requires: alterator-grub
+# Only require alterator-grub for arches that have grub.
+%ifarch  %ix86 x86_64 aarch64 ppc64le
+Requires: alterator-grub
+%endif
 Requires: alterator-users
 Requires: alterator-root
 Requires: alterator-luks
-Requires: alterator-net-eth dhcpcd
+Requires: alterator-net-eth
 
 %description stage3
 This package contains installer configuration for
@@ -73,6 +73,15 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Tue Dec 07 2021 Mikhail Efremov <sem@altlinux.org> 10.0.0-alt1
+- stage3: Only require alterator-grub for arches that have grub.
+- stage3: Drop wrong installer-altlinux-generic-stage3 provides.
+- stage3: Don't require dhcpcd.
+- stage3: Require alterator-grub.
+- Fix license tag.
+- stage3: Don't overwrite default-groups config file.
+- stage2: Drop installer-feature-vm-altlinux-generic-stage2.
+
 * Thu May 14 2020 Mikhail Efremov <sem@altlinux.org> 9.0.0-alt1
 - postinstall: Remove alterator-wizardface and alterator-luks.
 - Forked from installer-distro-altlinux-desktop.
