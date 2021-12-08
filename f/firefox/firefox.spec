@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        94.0.2
+Version:        95.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -121,6 +121,7 @@ BuildRequires: python3-base
 BuildRequires: python3(setuptools)
 BuildRequires: python3(pip)
 BuildRequires: python3(sqlite3)
+BuildRequires: python3(hamcrest)
 
 # Rust requires
 BuildRequires: /proc
@@ -465,6 +466,23 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Dec 08 2021 Alexey Gladkov <legion@altlinux.ru> 95.0-alt1
+- New release (95.0).
+- Security fixes:
+  + CVE-2021-43536: URL leakage when navigating while executing asynchronous function
+  + CVE-2021-43537: Heap buffer overflow when using structured clone
+  + CVE-2021-43538: Missing fullscreen and pointer lock notification when requesting both
+  + CVE-2021-43539: GC rooting failure when calling wasm instance methods
+  + MOZ-2021-0010: Use-after-free in fullscreen objects on MacOS
+  + CVE-2021-43540: WebExtensions could have installed persistent ServiceWorkers
+  + CVE-2021-43541: External protocol handler parameters were unescaped
+  + CVE-2021-43542: XMLHttpRequest error codes could have leaked the existence of an external protocol handler
+  + CVE-2021-43543: Bypass of CSP sandbox directive when embedding
+  + CVE-2021-43544: Receiving a malicious URL as text through a SEND intent could have led to XSS
+  + CVE-2021-43545: Denial of Service when using the Location API in a loop
+  + CVE-2021-43546: Cursor spoofing could overlay user interface when native cursor is zoomed
+  + MOZ-2021-0009: Memory safety bugs fixed in Firefox 95 and Firefox ESR 91.4
+
 * Fri Nov 19 2021 Alexey Gladkov <legion@altlinux.ru> 94.0.2-alt1
 - New release (94.0.2).
 
