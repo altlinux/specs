@@ -4,13 +4,13 @@
 %define oname altrepo_api
 
 Name: altrepo-api
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: ALTRepo API is a REST API for the repository database of ALT distribution
 License: AGPL-3.0
 Group: System/Servers
-URL: http://git.altlinux.org/gears/a/altrepo_api.git
+URL: https://git.altlinux.org/gears/a/altrepo-api.git
 
 BuildArch: noarch
 
@@ -64,7 +64,10 @@ mkdir -p %buildroot%_logdir/altrepo-api
 %python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
-* Thu Dec 07 2021 Danil Shein <dshein@altlinux.org> 1.5.0-alt1
+* Wed Dec 08 2021 Danil Shein <dshein@altlinux.org> 1.5.1-alt1
+- 1.5.0 -> 1.5.1
+
+* Tue Dec 07 2021 Danil Shein <dshein@altlinux.org> 1.5.0-alt1
 - initial package build
 
 
