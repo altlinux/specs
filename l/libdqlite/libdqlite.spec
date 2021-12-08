@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libdqlite
-Version: 1.6.0
+Version: 1.9.0
 Release: alt1
 Summary: Library for distributed SQLite database
 License: Apache-2.0
@@ -53,6 +53,9 @@ of peers, using the Raft algorithm.
 %_pkgconfigdir/dqlite.pc
 
 %changelog
+* Wed Dec 08 2021 Alexey Shabalin <shaba@altlinux.org> 1.9.0-alt1
+- new version 1.9.0
+
 * Fri Jan 15 2021 Alexey Shabalin <shaba@altlinux.org> 1.6.0-alt1
 - new version 1.6.0
 
