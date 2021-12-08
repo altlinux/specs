@@ -1,6 +1,6 @@
 Name: grep
 Version: 3.6.0.18.70517
-Release: alt1
+Release: alt2
 
 Summary: The GNU versions of grep pattern matching utilities
 License: GPLv3+
@@ -53,6 +53,12 @@ sed -i '/^\(git\|rsync\)[[:space:]]/d' bootstrap.conf
 # a safe handling of non-IEEE-754 'long double' values.
 sed -i 's/gl_printf_safe=yes/gl_printf_safe=/' m4/gnulib-comp.m4 configure
 
+%if "%_pointer_size" == "32"
+# Disable -fanalyzer to fix FTBFS on 32-bit platforms, see
+# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=103602
+export gl_cv_warn_c__fanalyzer=no
+%endif
+
 %configure \
 	--bindir=/bin \
 	--disable-silent-rules \
@@ -93,6 +99,10 @@ ulimit -s 32768
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Wed Dec 08 2021 Dmitry V. Levin <ldv@altlinux.org> 3.6.0.18.70517-alt2
+- Disabled -fanalyzer on 32-bit platforms to fix FTBFS
+  (thanks to glebfm@ for finding out the real cause of this issue).
+
 * Mon Apr 12 2021 Dmitry V. Levin <ldv@altlinux.org> 3.6.0.18.70517-alt1
 - grep: v3.3-16-g268cae4 -> v3.6-18-g7051705.
 - gnulib BR: v0.1-2305-g95c96b6dd -> v0.1-4279-gbb6ecf327.
