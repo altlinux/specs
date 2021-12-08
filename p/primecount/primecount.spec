@@ -1,7 +1,7 @@
 %define soname 7
 
 Name: primecount
-Version: 7.1
+Version: 7.2
 Release: alt1
 Summary: Count the number of primes
 License: BSD-2-Clause
@@ -68,8 +68,12 @@ ctest
 %_libdir/libprimecount.so
 %_includedir/primecount.h
 %_includedir/primecount.hpp
+%_pkgconfigdir/primecount.pc
 
 %changelog
+* Wed Dec 08 2021 Leontiy Volodin <lvol@altlinux.org> 7.2-alt1
+- New version (7.2).
+
 * Fri Nov 26 2021 Leontiy Volodin <lvol@altlinux.org> 7.1-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
 - Built as require for sagemath.
