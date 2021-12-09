@@ -3,7 +3,7 @@
 
 Name: psmisc
 Version: 23.3
-Release: alt3
+Release: alt4
 
 Summary: Miscellaneous utilities that use proc filesystem
 License: GPL-2.0-only
@@ -17,6 +17,10 @@ BuildRequires: libncurses-devel %{?_enable_selinux:libselinux-devel}
 BuildRequires: libseccomp-devel
 BuildRequires: libcap-devel
 %{?!_without_check:%{?!_disable_check:BuildRequires: banner dejagnu rpm-build-vm >= 1.9 strace /proc}}
+%ifarch %e2k
+# required for asan
+%{?!_without_check:%{?!_disable_check:BuildRequires: libcompiler_rt}}
+%endif
 
 %description
 A package of small utilities that use proc filesystem.
@@ -135,6 +139,11 @@ make check
 %doc AUTHORS ChangeLog COPYING README.md
 
 %changelog
+* Thu Dec 09 2021 Andrew Savchenko <bircoph@altlinux.org> 23.3-alt4
+- E2K:
+  - Add arch-specific sandbox rules.
+  - Support ASAN tests.
+
 * Sat Sep 04 2021 Vitaly Chikunov <vt@altlinux.org> 23.3-alt3
 - Fix output redirect (closes: #40857).
 
@@ -181,7 +190,7 @@ make check
 * Mon Sep 12 2005 Ilya G. Evseev <evseev@altlinux.ru> 21.6-alt2
 - Added russian language messages file
 
-* Sun Mar 15 2005 Ilya G. Evseev <evseev@altlinux.ru> 21.6-alt1
+* Sun Mar 13 2005 Ilya G. Evseev <evseev@altlinux.ru> 21.6-alt1
 - Updated to 21.6, revisited patches: P3
 
 * Tue Jan 18 2005 Dmitry V. Levin <ldv@altlinux.org> 21.5-alt3
