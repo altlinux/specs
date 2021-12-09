@@ -1,10 +1,22 @@
 %set_verify_elf_method unresolved=relaxed
 %def_without includes
+
+%ifarch %e2k
+%def_disable clang
+%else
+%def_enable clang
 %define llvm_version 11.0
+%endif
+
+%ifarch %e2k
+%define om_triplet e2k-linux-gnu
+%else
+%define om_triplet %{_target}-gnu
+%endif
 
 Name:     openmodelica
 Version:  1.17.0
-Release:  alt4
+Release:  alt4.1
 
 Summary:  OpenModelica is an open-source Modelica-based modeling and simulation environment intended for industrial and academic usage
 License:  GPL-3.0+ and OSMC-PL
@@ -32,6 +44,8 @@ Patch5: openmodelica-alt-fix-lib64-in-rpath.patch
 Patch6: openmodelica-alt-installdir-in-settings.patch
 Patch7: openmodelica-cmake-3.20.patch
 
+Patch2000: libgc8-e2k.patch
+
 BuildRequires(pre): cmake
 BuildRequires(pre): qt5-base-devel
 BuildRequires(pre): rpm-build-python3
@@ -43,8 +57,10 @@ BuildRequires: boost-filesystem-devel
 BuildRequires: boost-lockfree-devel
 BuildRequires: boost-program_options-devel
 BuildRequires: boost-asio-devel
+%if_enabled clang
 BuildRequires: clang%llvm_version-devel
 BuildRequires: llvm%llvm_version-devel
+%endif
 BuildRequires: libcurl-devel
 BuildRequires: libexpat-devel
 BuildRequires: libhdf5-devel
@@ -71,7 +87,7 @@ BuildRequires: chrpath
 %add_findprov_skiplist %_libexecdir/omlibrary/*
 %add_findreq_skiplist %_libexecdir/omlibrary/*
 
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: %ix86 x86_64 %e2k
 
 %description
 OPENMODELICA is an open-source Modelica-based modeling and simulation
@@ -110,6 +126,19 @@ echo -e "#!/bin/sh\necho %version" > OMCompiler/common/semver.sh
 %patch6 -p1
 %patch7 -p1
 
+%ifarch %e2k
+%patch2000 -p1 -d OMCompiler/3rdParty/gc
+# compiler names collision
+sed -i "s/__LCC__/__LCC_NOT_E2K__/" OMCompiler/3rdParty/ModelicaExternalC/C-Sources/{uthash.h,Modelica{Internal,MatIO}.c}
+rm -rf OMCompiler/3rdParty/ffi
+# because of "multiple definition of" errors at linking
+for n in System Component{,FMUCS,FMUME,Table} Model Values Scope ResultReader OMSFileSystem; do
+  sed -i "1i #define preferred_separator preferred_separator_$name" OMSimulator/src/OMSimulatorLib/$n.cpp
+done
+sed -i "1i #define ANTLR3_USE_64BIT" \
+  OMCompiler/3rdParty/antlr/3.2/libantlr3c-3.2/include/antlr3defs.h
+%endif
+
 # Use %%_lib in CMakeLists.txt
 #find OMSimulator -name CMakeLists.txt | xargs subst 's,\(CMAKE_INSTALL_RPATH.*/\)lib/${HOST_SHORT},\1%_lib/${HOST_SHORT},g'
 
@@ -123,16 +152,19 @@ export PATH=%_qt5_prefix/bin:$PATH
 %configure \
     --with-cppruntime \
     --with-omlibrary=core \
+%if_enabled clang
     CC=clang \
-    CXX=clang++
+    CXX=clang++ \
+%endif
+    %nil
 %make_build
 
 %install 
 %makeinstall_std
 # Remove wrong rpath from libipopt.so.0.0.0 and executables
-chrpath -d %buildroot%_libdir/%{_target}-gnu/omc/libipopt.so.0.0.0
-chrpath -r '$ORIGIN/../%_lib/%{_target}-gnu/omc/omsicpp' %buildroot%_bindir/OMCppOSUSimulation
-chrpath -r '$ORIGIN/../%_lib/%{_target}-gnu/omc' %buildroot%_bindir/{OMSimulator,omc}
+chrpath -d %buildroot%_libdir/%om_triplet/omc/libipopt.so.0.0.0
+chrpath -r '$ORIGIN/../%_lib/%om_triplet/omc/omsicpp' %buildroot%_bindir/OMCppOSUSimulation
+chrpath -r '$ORIGIN/../%_lib/%om_triplet/omc' %buildroot%_bindir/{OMSimulator,omc}
 
 # Make include symlinks to boost relative
 for i in cpp omsicpp;do
@@ -144,10 +176,10 @@ done
 rm -rf %buildroot%_includedir
 %endif
 # Remove duplicate libraries
-rm -r %buildroot%_libdir/OMSimulator/%{_target}-gnu
+rm -r %buildroot%_libdir/OMSimulator/%om_triplet
 
 # Move builtin .mo files
-%ifarch x86_64 aarch64 ppc64le
+%ifarch x86_64 aarch64 ppc64le %e2k
 mkdir -p %buildroot%_libexecdir
 mv %buildroot%_libdir/omc %buildroot%_libexecdir
 %endif
@@ -162,7 +194,7 @@ cp -a libraries/build/* %buildroot%_libexecdir/omlibrary
 %_libdir/OMSimulator
 %_libexecdir/omc
 %_libexecdir/omlibrary
-%_libdir/%{_target}-gnu/omc
+%_libdir/%om_triplet/omc
 %_datadir/omc
 %_datadir/omedit
 %_datadir/omnotebook
@@ -172,10 +204,13 @@ cp -a libraries/build/* %buildroot%_libexecdir/omlibrary
 %_includedir/*.h
 %_includedir/omc
 %_includedir/omplot
-%_includedir/%{_target}-gnu/omc
+%_includedir/%om_triplet/omc
 %endif
 
 %changelog
+* Tue Dec 07 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.17.0-alt4.1
+- Elbrus support.
+
 * Thu Sep 23 2021 Andrey Cherepanov <cas@altlinux.org> 1.17.0-alt4
 - FTBFS: disable LTO.
 
