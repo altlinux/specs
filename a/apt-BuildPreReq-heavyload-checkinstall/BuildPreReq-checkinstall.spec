@@ -28,11 +28,12 @@
 # which shouldn't be visible by normal users.
 Name: %(sed -Ee 's/(-checkinstall|)$/-checkinstall/' <<<'apt-BuildPreReq-heavyload-checkinstall')
 Version: 1
-Release: alt1
+Release: alt2
 
 Summary: Empty package only useful during its build: it installs (and checks) another pkg
 Group: Development/Other
 License: CC0
+URL: http://git.altlinux.org/people/imz/packages/BuildPreReq-checkinstall.git
 
 BuildArch: noarch
 
@@ -115,6 +116,9 @@ rpminstall-checkinstall isn't usually built in the same task as rpm.)
 %files
 
 %changelog
+* Thu Dec 09 2021 Ivan Zakharyaschev <imz@altlinux.org> 1-alt2
+- Added an URL.
+
 * Wed Nov 10 2021 Ivan Zakharyaschev <imz@altlinux.org> 1-alt1
 - Initial release for ALT Sisyphus (specially for
   testing packages on e2k instead of Girar's install checks).
