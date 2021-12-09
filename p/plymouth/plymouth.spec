@@ -10,7 +10,7 @@
 
 Name: plymouth
 Version: 0.9.5
-Release: alt5
+Release: alt6
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
@@ -456,6 +456,9 @@ fi \
 %files system-theme
 
 %changelog
+* Wed Dec 08 2021 Oleg Solovyov <mcpain@altlinux.org> 1:0.9.5-alt6
+- revert commit 3b75b66 (doesn't show splash on boot when using pve)
+
 * Wed Nov 03 2021 Sergey V Turchin <zerg@altlinux.org> 1:0.9.5-alt5
 - fix requires (closes: 39837)
 - using /usr/share/design/current/icons/system-logo.png as special://logo
