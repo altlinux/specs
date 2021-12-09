@@ -2,6 +2,7 @@
 %define _libexecdir %_prefix/libexec
 %define api_ver 3.0
 
+%def_enable ninja
 %def_with bdb
 %def_enable ical_glib
 %def_enable introspection
@@ -12,7 +13,7 @@
 %def_without system_tzdata
 
 Name: libical
-Version: 3.0.11
+Version: 3.0.12
 Release: alt1
 
 Summary: An implementation of basic iCAL protocols
@@ -27,12 +28,13 @@ Source: %name-%version.tar
 %endif
 Patch: %name-1.0.1-alt-libdir.patch
 
-%define tzdata_ver 2021c
+%define tzdata_ver 2021e
 %define glib_ver 2.38
 %{?_with_system_tzdata:Requires: tzdata >= %tzdata_ver}
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-gir
 BuildRequires: cmake gcc-c++ ctest gtk-doc libicu-devel icu-utils
+%{?_enable_ninja:BuildRequires: ninja-build}
 %{?_with_system_tzdata:BuildRequires: tzdata >= %tzdata_ver}
 %{?_with_bdb:BuildRequires: libdb4-devel}
 %{?_enable_ical_glib:BuildRequires: libgio-devel >= %glib_ver libxml2-devel}
@@ -128,7 +130,9 @@ library.
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
-%cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
+%cmake \
+	%{?_enable_ninja:-GNinja} \
+	-DCMAKE_BUILD_TYPE:STRING="Release" \
 	-DSHARED_ONLY:BOOL=ON \
 	%{?_with_cxx:-DWITH_CXX_BINDINGS:BOOL=ON} \
 	%{?_enable_ical_glib:-DICAL_GLIB:BOOL=ON} \
@@ -199,6 +203,10 @@ LD_LIBRARY_PATH=%buildroot%_libdir %cmake_build -t test
 
 
 %changelog
+* Thu Dec 09 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.12-alt1
+- 3.0.12
+- build with ninja instead of make
+
 * Sun Oct 10 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.11-alt1
 - 3.0.11
 
