@@ -1,3 +1,4 @@
+%def_with check
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
@@ -9,19 +10,22 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 1.21.1
-Release: alt2
+Version: 1.21.4
+Release: alt1
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD-3-Clause
 Group: Development/Python3
 Url: https://www.numpy.org/
 
-# https://github.com/numpy/numpy.git
+# VCS: https://github.com/numpy/numpy.git
 Source: %name-%version.tar
 Source2: site.cfg
 
-Patch: %oname-1.20.2-Remove-strict-dependency-on-testing-package.patch
-Patch1: %oname-1.21.1-alt-use-system-fallocate-declaration.patch
+Patch: numpy-1.20.2-Remove-strict-dependency-on-testing-package.patch
+Patch1: numpy-1.21.1-alt-use-system-fallocate-declaration.patch
+Patch2: numpy-1.21.1-alt-recfunctions-use-warnings-instead-of-suppress_warnings.patch
+Patch3: numpy-1.21.4-upstream-fix-generic-aliases-tests.patch
+Patch4: numpy-1.21.4-alt-use-sleep-in-auxv-test.patch
 
 # E2K patchset with MCST numbering scheme
 Patch1001: 0001-arch_e2k_define.patch
@@ -33,6 +37,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: /proc
 BuildRequires: gcc-c++ gcc-fortran liblapack-devel swig
 BuildRequires: python3-module-Cython
+%{?_with_check:BuildRequires: python3-module-pytest python3-module-hypothesis}
 
 # https://bugzilla.altlinux.org/show_bug.cgi?id=18379
 %add_python3_req_skip Scons setuptools distutils nose number code_generators
@@ -122,6 +127,9 @@ This package contains pickles for NumPy.
 %setup
 %patch -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %ifarch %e2k
 %patch1001 -p1
@@ -162,6 +170,9 @@ DEFS="$DEFS -UNPY_CPU_AMD64 -UNPY_CPU_X86"
 
 %python3_build_debug --fcompiler=gnu95
 
+%check
+python3 runtests.py -v %{?_is_ilp32:||:} 
+
 %install
 INCS="-I%_includedir/suitesparse -I$PWD/numpy/core/include/numpy"
 INCS="$INCS -I$PWD/numpy/core/include -I%buildroot%_includedir/python%_python3_version/%oname"
@@ -200,8 +211,6 @@ cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
 %exclude %python3_sitelibdir/%oname/__pycache__/_pytesttester.*
 %exclude %python3_sitelibdir/%oname/f2py/f2py_testing.py
 %exclude %python3_sitelibdir/%oname/f2py/__pycache__/f2py_testing.*
-%exclude %python3_sitelibdir/%oname/lib/recfunctions.py
-%exclude %python3_sitelibdir/%oname/lib/__pycache__/recfunctions.*
 %exclude %python3_sitelibdir/%oname/ma/timer_comparison.py
 %exclude %python3_sitelibdir/%oname/ma/__pycache__/timer_comparison.*
 %exclude %python3_sitelibdir/%oname/testing
@@ -231,8 +240,6 @@ cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
 %python3_sitelibdir/%oname/*/*/test*
 %exclude %python3_sitelibdir/%oname/testing/tests
 %python3_sitelibdir/%oname/f2py/tests/src/array_from_pyobj
-%python3_sitelibdir/%oname/lib/recfunctions.py
-%python3_sitelibdir/%oname/lib/__pycache__/recfunctions.*
 
 %files -n lib%oname-py3-devel
 %_includedir/python%_python3_version/%oname
@@ -245,6 +252,13 @@ cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Wed Dec 08 2021 Anton Farygin <rider@altlinux.ru> 1:1.21.4-alt1
+- 1.21.1 -> 1.21.4
+- moved recfunctions.py from tests to main package
+- added a patch to recfunctions.py for remove dependency to testing
+- added a patch from the upstream for fix _GenericAlias tests
+- enabled tests
+
 * Wed Sep 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.21.1-alt2
 - Disabled LTO.
 
