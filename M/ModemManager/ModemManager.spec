@@ -17,7 +17,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.18.2
+Version: 1.18.4
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -193,7 +193,9 @@ fi
 %files -f %name.lang
 %doc NEWS AUTHORS README
 %_datadir/dbus-1/system-services/*.service
+%_sysconfdir/ModemManager/
 %dir %_libdir/ModemManager/
+%dir %_libdir/ModemManager/fcc-unlock.d/
 %_libdir/ModemManager/*.so
 %_sbindir/*
 %_bindir/mmcli
@@ -242,6 +244,9 @@ fi
 %endif
 
 %changelog
+* Thu Dec 09 2021 Mikhail Efremov <sem@altlinux.org> 1.18.4-alt1
+- Updated to 1.18.4.
+
 * Tue Sep 21 2021 Mikhail Efremov <sem@altlinux.org> 1.18.2-alt1
 - Updated to 1.18.2.
 

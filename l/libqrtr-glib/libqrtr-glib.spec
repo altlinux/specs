@@ -1,7 +1,7 @@
 %def_enable introspection
 
 Name: libqrtr-glib
-Version: 1.0.0
+Version: 1.2.0
 Release: alt1
 
 Summary: Qualcomm IPC Router protocol helper library
@@ -10,11 +10,11 @@ Group: System/Libraries
 URL: https://gitlab.freedesktop.org/mobile-broadband/libqrtr-glib
 Vcs: https://gitlab.freedesktop.org/mobile-broadband/libqrtr-glib.git
 Source: %name-%version.tar
-
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): meson
+
 BuildRequires: glib2-devel libgio-devel
-BuildRequires: autoconf-archive
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 BuildRequires: gtk-doc
 
@@ -64,26 +64,27 @@ This package contains development documentation for %name
 %prep
 %setup
 %patch -p1
-touch README NEWS
 
 %build
 %ifarch %e2k
-%define more_warnings no
+%define werror false
 %else
-%define more_warnings error
+%define werror true
 %endif
 
-%autoreconf
-sed -i 's/ax_compiler_flags_as_needed_option="-Wl,--no-as-needed"/ax_compiler_flags_as_needed_option=""/' configure
-%configure \
-	--disable-static \
-	%{subst_enable introspection} \
-	--enable-gtk-doc \
-	--enable-compile-warnings=%more_warnings
-%make_build
+%meson \
+%if_enabled introspection
+	-Dintrospection=true \
+%else
+	-Dintrospection=false \
+%endif
+	-Dgtk_doc=true \
+	-Dwerror=%werror
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 
 %files
 %_libdir/*.so.*
@@ -106,6 +107,9 @@ sed -i 's/ax_compiler_flags_as_needed_option="-Wl,--no-as-needed"/ax_compiler_fl
 
 
 %changelog
+* Thu Dec 09 2021 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
+- Updated to 1.2.0.
+
 * Thu Feb 25 2021 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1
 - Initial build.
 

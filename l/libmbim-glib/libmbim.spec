@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: %_name-glib
-Version: 1.26.0
+Version: 1.26.2
 Release: alt1
 
 Summary: MBIM modem protocol helper library
@@ -134,6 +134,9 @@ make check
 
 
 %changelog
+* Thu Dec 09 2021 Mikhail Efremov <sem@altlinux.org> 1.26.2-alt1
+- Updated to 1.26.2.
+
 * Wed Sep 15 2021 Mikhail Efremov <sem@altlinux.org> 1.26.0-alt1
 - Fixed build on armh.
 - Fixed gcc maybe-uninitialized warning in test.
