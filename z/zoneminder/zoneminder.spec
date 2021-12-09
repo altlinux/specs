@@ -6,7 +6,7 @@ ExcludeArch: armh
 
 Name: zoneminder
 Version: 1.36.11
-Release: alt1
+Release: alt2
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -48,7 +48,7 @@ too much degradation of performance. This package includes cambozola.jar.
 %package api
 Summary: Zoneminder Web API
 Group: Networking/WWW
-Requires: zoneminder
+Requires: zoneminder php7-apcu
 
 %description api
 The API is built in CakePHP and lives under the /api directory. It provides a RESTful service 
@@ -108,7 +108,6 @@ install -D -m 644 %SOURCE8 %buildroot%_sysconfdir/nginx/sites-enabled.d/zm-fcgi.
 install -D -m 644 %SOURCE9 %buildroot%_sysconfdir/fpm/fpm.d/fpm-zm.conf
 mkdir -p %buildroot/%_cachedir/%name
 
-cp -aR web/api %buildroot%_datadir/%name/www/api
 ln -s %_cachedir/%name %buildroot%_datadir/%name/www/cache
 
 
@@ -164,6 +163,10 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Thu Dec 09 2021 Anton Farygin <rider@altlinux.ru> 1.36.11-alt2
+- api: don't install twice
+- api: add php7-apcu to Requires
+
 * Sun Nov 28 2021 Anton Farygin <rider@altlinux.ru> 1.36.11-alt1
 - 1.36.10 -> 1.36.11
 
