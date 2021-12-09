@@ -6,7 +6,7 @@
 
 Name: synaptic
 Version: 0.58
-Release: alt27
+Release: alt28
 Summary: Graphical front-end for APT
 Summary(ru_RU.UTF-8): Графическая оболочка для APT
 Group: System/Configuration/Packaging
@@ -20,7 +20,7 @@ Source2: %name.conf
 
 Patch1: %name-%version-alt.patch
 
-BuildRequires: libapt-devel >= 0.5.15lorg2-alt72
+BuildRequires: libapt-devel >= 0.5.15lorg2-alt74
 %if_enabled autotools
 BuildRequires: intltool
 %endif
@@ -108,6 +108,12 @@ install -p -m644 %SOURCE2 %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 %exclude %_datadir/pixmaps/%name.png
 
 %changelog
+* Wed Dec 08 2021 Ivan Zakharyaschev <imz@altlinux.org> 0.58-alt28
+- Adapted to the new API with custom callbacks introduced
+  in libapt-0.5.15lorg2-alt74. (Surprisingly, the call that had to be adapted
+  is a method "private" to the apt library used here by means of a hack;
+  so libapt shouldn't really bother to provide a compatibility method.)
+
 * Tue Nov 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.58-alt27
 - Packaged russian help build implemented by aris@.
 

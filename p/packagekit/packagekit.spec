@@ -3,7 +3,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.2.4
-Release:   alt2
+Release:   alt3
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -188,7 +188,14 @@ if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
 fi
 
 %preun
-%preun_service %name ||:
+SYSTEMCTL=systemctl
+
+[ "$RPM_INSTALL_ARG1" -eq 0 ] 2>/dev/null || exit 0
+
+if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+        "$SYSTEMCTL" --no-reload -q disable "$1.service"
+        %_bindir/pkcon quit ||:
+fi
 
 %triggerin -- librpm7
 # only on update of librpm7
@@ -240,6 +247,7 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %_libexecdir/pk-*offline-update
 %config %_sysconfdir/apt/apt.conf.d/20packagekit
 %_libdir/packagekit-backend/libpk_backend_aptcc.so
+%_libexecdir/pk-invoke-filetriggers.sh
 
 %files -n lib%name-glib
 %_libdir/*packagekit-glib2.so.*
@@ -277,6 +285,9 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Thu Dec 02 2021 Oleg Solovyov <mcpain@altlinux.org> 1.2.4-alt3
+- Show actual update percentage during offline update
+
 * Thu Sep 16 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.2.4-alt2
 - Fixes for Elbrus build.
 

@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt73
+Release: alt74
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -136,6 +136,8 @@ Requires: rpm-build
 Requires: /usr/bin/genbasedir
 # optional
 %global complete_reqs_of_tests %name-https /usr/sbin/nginx /usr/bin/openssl
+%global reqs_of_tests_to_filter_out \\(%name-https\\|/usr/sbin/nginx\\|nginx\\|/usr/bin/openssl\\|openssl\\)
+%filter_from_requires \,^%reqs_of_tests_to_filter_out\($\|[[:blank:]]\),d
 
 # {{{ descriptions
 %define risk_usage_en This package is still under development.
@@ -331,6 +333,17 @@ The set of testcases is limited (just to the file method).
 
 %pre basic-checkinstall -p %_sbindir/sh-safely
 set -o pipefail
+
+# Check that %name-tests has no unwanted extra reqs:
+found_unwanted_reqs_of_tests="$(rpm -q %name-tests -R |
+				    { grep -e '%{reqs_of_tests_to_filter_out}' ||
+				      [ $? -eq 1 ]; })"
+if [ -n "$found_unwanted_reqs_of_tests" ]; then
+    printf >&2 'These are unwanted extra reqs of %name-tests:\n%%s\n' \
+	       "$found_unwanted_reqs_of_tests"
+    exit 1
+fi
+
 pushd %_datadir/%name/tests/
 
 # force the target arch for the tests
@@ -500,6 +513,10 @@ seq 0 $((TRIES-1)) | xargs -I'{}' ${NPROCS:+-P$NPROCS --process-slot-var=PARALLE
 %_datadir/%name/tests/
 
 %changelog
+* Sat Dec 04 2021 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt74
+- Implemented generic callback system for packagekit, allowing to show progress
+  during offline-update to user. (Thx Oleg Solovyov mcpain@)
+
 * Fri Oct 29 2021 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt73
 - (tests) Report if a test (marked XFAIL) uneXpectedly passes (XPASS).
 - (tests) Run them not in %%check, but in *-checkinstall subpkgs. (To break
