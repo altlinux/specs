@@ -4,12 +4,12 @@
 %define _runtimedir /run
 
 Name:		grafana
-Version:	8.1.2
+Version:	8.1.8
 Release:	alt1
 Summary:	Metrics dashboard and graph editor
 
 Group:		Development/Other
-License:	Apache-2.0
+License:	AGPL-3.0-only AND Apache-2.0
 URL:		https://grafana.com
 
 Source: %name-%version.tar
@@ -22,7 +22,10 @@ Source103: %name-server.service
 Source104: %name.tmpfiles
 
 
-ExclusiveArch: %go_arches
+#ExclusiveArch: %go_arches
+# on ppc64le error:
+# error Command failed with signal "SIGXCPU"
+ExclusiveArch: %ix86 x86_64 %arm aarch64 mipsel riscv64
 BuildRequires(pre): rpm-build-golang rpm-macros-nodejs
 BuildRequires: npm yarn
 BuildRequires: node >= 14 node-devel node-gyp
@@ -197,6 +200,9 @@ fi
 %_datadir/%name
 
 %changelog
+* Thu Dec 09 2021 Alexey Shabalin <shaba@altlinux.org> 8.1.8-alt1
+- 8.1.8 (Fixes: CVE-2021-43798, CVE-2021-39226)
+
 * Sat Aug 21 2021 Alexey Shabalin <shaba@altlinux.org> 8.1.2-alt1
 - 8.1.2
 
