@@ -1,7 +1,7 @@
 %define distro cliff
 Name: installer-distro-%distro
 Version: 8.2
-Release: alt8
+Release: alt9
 
 License: GPL
 Group: System/Configuration/Other
@@ -89,6 +89,9 @@ cp -a steps.d/* %buildroot%install2dir/steps
 %files stage3
 
 %changelog
+* Thu Dec 09 2020 Denis Medvedev <nbr@altlinux.org> 8.2-alt9
+- corrected avahi disable
+
 * Fri Dec 03 2020 Denis Medvedev <nbr@altlinux.org> 8.2-alt8
 - avahi and nrpe disabled by default
 
