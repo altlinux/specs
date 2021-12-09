@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname
 Version: 5.23.4
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -11,7 +11,7 @@ Summary: KDE Workspace 5 Display Management software
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
-Requires: xrandr
+Requires: xrandr iio-sensor-proxy
 
 Source: %rname-%version.tar
 Patch1: alt-enable-per-screen-scaling.patch
@@ -88,6 +88,9 @@ sed -i 's|^\(add_subdirectory.*tests.*\)|#\1|' CMakeLists.txt
 #%_K5archdata/mkspecs/modules/qt_KScreen.pri
 
 %changelog
+* Thu Dec 09 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.23.4-alt2
+- require iio-sensor-proxy
+
 * Wed Dec 01 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.23.4-alt1
 - new version
 
