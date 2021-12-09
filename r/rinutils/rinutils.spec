@@ -1,7 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: rinutils
-Version: 0.8.0
+Version: 0.10.0
 Release: alt1
 
 Summary: Shlomi Fish's gnu11 C Library of Random headers
@@ -36,6 +38,9 @@ that have been extracted from Shlomi Fishs projects.
 %doc README.asciidoc NEWS.asciidoc LICENSE
 
 %changelog
+* Thu Dec 09 2021 Konstantin Rybakov <kastet@altlinux.org> 0.10.0-alt1
+- Updated to upstream version 0.10.0
+
 * Fri Feb 19 2021 Konstantin Rybakov <kastet@altlinux.org> 0.8.0-alt1
 - Upgrade to upstream version.
 

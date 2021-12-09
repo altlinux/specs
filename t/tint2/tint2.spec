@@ -1,7 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: tint2
-Version: 17.0.1
+Version: 17.0.2
 Release: alt1
 Summary: Simple panel/taskbar made for modern x window managers
 
@@ -29,6 +31,7 @@ other window managers (GNOME, KDE, etc...).
 %setup -q %name-%version
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %cmake \
 	-DENABLE_TINT2CONF=ON \
 	-DENABLE_EXAMPLES=ON
@@ -52,6 +55,9 @@ other window managers (GNOME, KDE, etc...).
 %_datadir/mime/packages/tint2conf.xml
 
 %changelog
+* Thu Dec 09 2021 Konstantin Rybakov <kastet@altlinux.org> 17.0.2-alt1
+- Updated to upstream version 17.0.2
+
 * Fri Jul 02 2021 Konstantin Rybakov <kastet@altlinux.org> 17.0.1-alt1
 - Updated to upstream version 17.0.1
 
