@@ -2,8 +2,8 @@
 
 Name: ansible-core
 Summary: A radically simple IT automation system
-Version: 2.12.0
-Release: alt2
+Version: 2.12.1
+Release: alt1
 
 Group:   System/Configuration/Other
 License: GPL-3.0
@@ -86,6 +86,9 @@ find %buildroot%python3_sitelibdir/ansible_test/_data -name \*.ps1 -delete
 %python3_sitelibdir/%{rname}*
 
 %changelog
+* Fri Dec 10 2021 Andrey Cherepanov <cas@altlinux.org> 2.12.1-alt1
+- New version.
+
 * Tue Dec 07 2021 Slava Aseev <ptrnine@altlinux.org> 2.12.0-alt2
 - Prohibit pkg5 usage (see bug #41494)
 
