@@ -1,7 +1,7 @@
 %define  modulename metaextract
 
 Name:    python3-module-%modulename
-Version: 1.0.7
+Version: 1.0.8
 Release: alt1
 
 Summary: Get metadata for python modules
@@ -42,5 +42,8 @@ too.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Dec 10 2021 Andrey Cherepanov <cas@altlinux.org> 1.0.8-alt1
+- New version.
+
 * Fri Jul 24 2020 Andrey Cherepanov <cas@altlinux.org> 1.0.7-alt1
 - Initial build for Sisyphus
