@@ -7,7 +7,7 @@
 %define llvm_version 12.0
 
 Name: 	 thunderbird
-Version: 91.3.2
+Version: 91.4.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -27,7 +27,6 @@ Source6: l10n.tar
 Source7: cbindgen-vendor.tar
 Source8: thunderbird-wayland.desktop
 
-Patch11: thunderbird-alt-allow-send-in-windows-1251.patch
 Patch12: alt-use-vorbis-on-arm-too.patch
 Patch13: thunderbird-alt-fix-redefinition-double_t.patch
 
@@ -181,7 +180,6 @@ thunderbird packages by some Alt Linux Team Policy compatible way.
 %prep
 %setup -q
 tar -xf %SOURCE6
-%patch11 -p2
 %patch12 -p2
 %patch13 -p2
 %patch21 -p2
@@ -235,6 +233,7 @@ sed -i -e '\,hyphenation/,d' comm/mail/installer/removed-files.in
 %build
 %define optflags_lto %nil
 %add_optflags %optflags_shared
+%add_optflags -lwayland-client
 %add_findprov_lib_path %tbird_prefix
 
 %if_with bundled_cbindgen
@@ -511,6 +510,20 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Fri Dec 10 2021 Andrey Cherepanov <cas@altlinux.org> 91.4.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2021-43536 URL leakage when navigating while executing asynchronous function
+  + CVE-2021-43537 Heap buffer overflow when using structured clone
+  + CVE-2021-43538 Missing fullscreen and pointer lock notification when requesting both
+  + CVE-2021-43539 GC rooting failure when calling wasm instance methods
+  + CVE-2021-43541 External protocol handler parameters were unescaped
+  + CVE-2021-43542 XMLHttpRequest error codes could have leaked the existence of an external protocol handler
+  + CVE-2021-43543 Bypass of CSP sandbox directive when embedding
+  + CVE-2021-43545 Denial of Service when using the Location API in a loop
+  + CVE-2021-43546 Cursor spoofing could overlay user interface when native cursor is zoomed
+  + CVE-2021-43528 JavaScript unexpectedly enabled for the composition area
+
 * Fri Nov 19 2021 Andrey Cherepanov <cas@altlinux.org> 91.3.2-alt1
 - New version.
 
