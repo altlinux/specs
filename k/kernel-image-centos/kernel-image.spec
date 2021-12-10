@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 27
+%define centos_release 28
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -629,6 +629,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Dec 09 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.28-alt1.el9
+- Backport v5.15 rcu/locking/cgroup dependencies for kernel-rt
+
 * Wed Dec 08 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.27-alt1.el9
 - x86: change default to spec_store_bypass_disable=prctl spectre_v2_user=prctl
 - Provide and Configure DYNAMIC_PREEMPT
