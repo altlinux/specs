@@ -2,7 +2,7 @@
 
 Name: nlohmann-json
 Version: 3.10.4
-Release: alt1
+Release: alt1.1
 
 Summary: JSON for Modern C++ (c++11) ("single header file")
 
@@ -43,6 +43,11 @@ This package contains the single header C++ file and CMake dependency files.
 %prep
 %setup -a1
 rm -rf test/cmake_fetch_content
+%ifarch %e2k
+# fixes an internal error in EDG frontend
+sed -i "/String& decomposition = String.*;/{s/;/{};/;s/=/);Result(bool x):Result(x,/}" \
+    test/thirdparty/doctest/doctest.h
+%endif
 sed -i -e '/add_subdirectory(cmake_fetch_content)/ d' test/CMakeLists.txt
 
 %build
@@ -67,6 +72,9 @@ ln -sf ../json_test_data-2.0.0 %_cmake__builddir/json_test_data
 %_pkgconfigdir/nlohmann_json.pc
 
 %changelog
+* Fri Dec 10 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.10.4-alt1.1
+- Fixed build for Elbrus.
+
 * Mon Nov 15 2021 Paul Wolneykien <manowar@altlinux.org> 3.10.4-alt1
 - new version 3.10.4
 
