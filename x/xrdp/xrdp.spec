@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
 Version: 0.9.17
-Release: alt1
+Release: alt2
 
 Summary: An open source remote desktop protocol (RDP) server
 
@@ -61,6 +61,10 @@ BuildRequires: libopus-devel
 BuildRequires: openssl
 BuildRequires: xorg-sdk
 BuildRequires: nasm
+# For glamor support
+BuildRequires: libgbm-devel
+BuildRequires: libepoxy-devel
+BuildRequires: libdrm-devel
 
 Requires: xorg-drv-xrdp = %EVR
 
@@ -126,6 +130,7 @@ echo '#!/bin/bash -l
 . %_sysconfdir/xrdp/startwm.sh' > sesman/startwm-bash.sh
 
 %build
+%add_optflags -I%_includedir/libdrm
 %add_optflags -Wno-error=int-to-pointer-cast
 %ifarch %e2k
 # 0.9.14: expression has no effect (ssl.h, onoff)
@@ -150,7 +155,7 @@ done
 	   --enable-painter \
 	   --with-systemdsystemunitdir=%systemd_unitdir
 pushd xorgxrdp
-PKG_CONFIG_PATH=../pkgconfig ./configure
+PKG_CONFIG_PATH=../pkgconfig ./configure --enable-glamor
 popd
 pushd librfxcodec
 ./configure \
@@ -270,6 +275,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Wed Dec 08 2021 Andrey Cherepanov <cas@altlinux.org> 0.9.17-alt2
+- Enable glamor support for xorgxrdp.
+
 * Wed Sep 01 2021 Andrey Cherepanov <cas@altlinux.org> 0.9.17-alt1
 - New version.
 
