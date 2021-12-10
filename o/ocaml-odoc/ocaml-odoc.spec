@@ -4,7 +4,7 @@
 %def_without check
 
 Name: ocaml-odoc
-Version: 1.5.3
+Version: 2.0.2
 Release: alt1
 Summary: Documentation compiler for OCaml and Reason
 Group: Development/ML
@@ -26,6 +26,7 @@ BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-astring-devel
 BuildRequires: ocaml-fpath-devel
 BuildRequires: ocaml-migrate-parsetree-devel
+BuildRequires: ocaml-odoc-parser-devel
 %if_with check
 BuildRequires: ocaml-bisect_ppx-devel
 BuildRequires: ocaml-markup-devel
@@ -49,7 +50,6 @@ delimited with (** ... *), and outputs HTML.
 
 mkdir -p %buildroot/%_docdir
 
-
 %check
 %dune_check
 
@@ -58,9 +58,11 @@ mkdir -p %buildroot/%_docdir
 %_bindir/odoc
 %_datadir/odoc
 %_libdir/ocaml/odoc
-%_libdir/ocaml/dune_odoc_test
 
 %changelog
+* Fri Dec 10 2021 Anton Farygin <rider@altlinux.ru> 2.0.2-alt1
+- 2.0.2
+
 * Mon Aug 02 2021 Anton Farygin <rider@altlinux.ru> 1.5.3-alt1
 - 1.5.3
 
