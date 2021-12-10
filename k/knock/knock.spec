@@ -1,15 +1,16 @@
 Name: knock
-Version: 0.7.8
+Version: 0.8
 Release: alt1
 
 Summary: knock is a port-knocking client
 License: GPL
 Group: Networking/Remote access
 
-Url: http://www.zeroflux.org/cgi-bin/cvstrac.cgi/knock/wiki
+Url: https://github.com/jvinet/knock
 Source0: %name-%version.tar
 Source1: knockd.sysconfig
 Source2: knockd.init
+Source3: knockd.service
 Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Thu Feb 17 2005
@@ -49,6 +50,7 @@ autoreconf -fisv
 install -pD -m644 %SOURCE1 %buildroot%_sysconfdir/sysconfig/knockd
 install -pD -m755 %SOURCE2 %buildroot%_initdir/knockd
 install -pD -m600 knockd.conf %buildroot%_sysconfdir/knockd.conf
+install -pD -m 0644 -p %SOURCE3 %buildroot%_unitdir/knockd.service
 
 %post server
 %post_service knockd
@@ -71,11 +73,15 @@ fi
 %attr(0600,root,root) %config(noreplace) %_sysconfdir/knockd.conf
 %attr(0644,root,root) %config(noreplace) %_sysconfdir/sysconfig/knockd
 %attr(0755,root,root) %config %_initdir/knockd
+%_unitdir/knockd.service
 %_sbindir/knockd
 %_sbindir/knock_add
 %_man1dir/knockd.1*
 
 %changelog
+* Fri Dec 10 2021 Anton Farygin <rider@altlinux.ru> 0.8-alt1
+- 0.7.8 -> 0.8
+
 * Wed Feb 03 2016 Anton Farygin <rider@altlinux.ru> 0.7.8-alt1
 - new version, build from upstream git
 
