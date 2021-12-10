@@ -1,8 +1,9 @@
-%define        pkgname        puppet
-%define        confdir        ext/redhat
+%define _unpackaged_files_terminate_build 1
+%define pkgname puppet
+%define confdir ext/redhat
 
 Name:          gem-%pkgname
-Version:       7.12.1
+Version:       7.13.1
 Release:       alt1
 Summary:       A network tool for managing many disparate systems
 Group:         Development/Ruby
@@ -126,6 +127,9 @@ touch %buildroot%ruby_gemlibdir/public/.dir
 mkdir -p %buildroot%_datadir/puppet-locale %buildroot%_libexecdir/puppet-modules
 touch %buildroot%_datadir/puppet-locale/.dir %buildroot%_libexecdir/puppet-modules/.dir
 
+# Remove demo files
+rm -rf %buildroot%_libexecdir/demo %buildroot%_datadir/ri/demo
+
 %pre           -n %pkgname
 [ ! -d %_sysconfdir/puppetlabs/puppet/ssl ] || (
    cp -rf %_sysconfdir/puppetlabs/puppet/ssl %_sysconfdir/puppet &&
@@ -177,6 +181,7 @@ sed -e "s,sample.server.name,$(hostname)," \
 %_sysconfdir/NetworkManager/dispatcher.d/98-%{name}
 %_datadir/puppet
 %_datadir/puppet-locale
+%_libexecdir/ruby/site_ruby/puppet/functions/l10n.rb
 %attr(1770,_puppet,puppet) %dir %_cachedir/puppet
 %_cachedir/puppet/
 %attr(1770,_puppet,puppet) %dir %_logdir/puppet
@@ -184,11 +189,13 @@ sed -e "s,sample.server.name,$(hostname)," \
 %doc %_man8dir/*
 %doc %_man5dir/puppet.conf.5*
 
-
 %files         doc
 %ruby_gemdocdir
 
 %changelog
+* Fri Dec 10 2021 Andrey Cherepanov <cas@altlinux.org> 7.13.1-alt1
+- New version.
+
 * Wed Nov 10 2021 Andrey Cherepanov <cas@altlinux.org> 7.12.1-alt1
 - New version.
 
