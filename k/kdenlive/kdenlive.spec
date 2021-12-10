@@ -1,10 +1,10 @@
 %define rname kdenlive
-%define req_ver_mlt 7
+%define current_ver_mlt %{get_version mlt-utils}
 %define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
 
 Name: kdenlive
 Version: 21.08.3
-Release: alt1
+Release: alt2
 %K5init no_altplace man appdata
 
 Summary: KDE Non Linear Video Editor
@@ -16,7 +16,7 @@ URL: http://kdenlive.org/
 
 AutoReq: yes, nopython nopython3
 AutoProv: yes, nopython nopython3
-Requires: mlt-utils >= %req_ver_mlt frei0r-plugins
+Requires: mlt-utils >= %current_ver_mlt frei0r-plugins
 Requires: recordmydesktop dvdauthor dvgrab genisoimage
 Requires: icon-theme-breeze kde5-runtime
 %if %is_ffmpeg
@@ -35,10 +35,11 @@ Patch3: alt-ffmpegaudiothumbnails.patch
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kplotting-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libGLU-devel libdb4-devel libmlt++-devel libv4l-devel python-module-google qt5-script-devel qt5-svg-devel rpm-build-gir rpm-build-python3 rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
 BuildRequires(pre): libavformat-devel
+BuildRequires(pre): mlt-utils
 BuildRequires: extra-cmake-modules
 BuildRequires: qt5-script-devel qt5-svg-devel qt5-declarative-devel qt5-webengine-devel qt5-multimedia-devel qt5-quickcontrols2-devel qt5-networkauth-devel
 BuildRequires: shared-mime-info libEGL-devel libGLU-devel libv4l-devel
-BuildRequires: mlt7-devel mlt7xx-devel >= %req_ver_mlt
+BuildRequires: mlt7-devel mlt7xx-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel kf5-kguiaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel
@@ -96,6 +97,9 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 
 
 %changelog
+* Fri Dec 10 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt2
+- require mlt version (closes 39476)
+
 * Tue Nov 09 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 
