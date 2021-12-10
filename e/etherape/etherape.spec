@@ -1,8 +1,8 @@
 Summary: Graphical network viewer modeled after etherman.
 Name: etherape
-Version: 0.9.19
+Version: 0.9.20
 Release: alt1
-License: GPL
+License: GPLv2+
 Group: Networking/Other
 Packager: Ilya Mashkin <oddity at altlinux.ru>
 Source: etherape-%version.tar.gz
@@ -69,6 +69,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 #_var/lib/scrollkeeper/*
 
 %changelog
+* Sat Dec 11 2021 Ilya Mashkin <oddity@altlinux.ru> 0.9.20-alt1
+- 0.9.20
+- Update License tag to GPLv2+
+
 * Tue Feb 02 2021 Ilya Mashkin <oddity@altlinux.ru> 0.9.19-alt1
 - 0.9.19
 
