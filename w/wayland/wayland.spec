@@ -2,7 +2,7 @@
 %def_enable doc
 %def_enable check
 # since mesa-18.0 wayland-egl moved to this wayland package
-%define main_ver 1.19.0
+%define main_ver 1.20.0
 %define egl_ver 18.1.0
 %define mesa_epoch 4
 
@@ -47,6 +47,7 @@ Common headers for Wayland.
 %package devel-doc
 Summary: Common headers for Wayland
 Group: Development/Documentation
+BuildArch: noarch
 Conflicts: %name-devel < %version
 
 %description devel-doc
@@ -194,6 +195,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Dec 10 2021 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1
+- 1.20.0
+
 * Thu Jan 28 2021 Yuri N. Sedunov <aris@altlinux.org> 1.19.0-alt1
 - 1.19.0 (ported to Meson build system)
 - new devel-doc subpackage
