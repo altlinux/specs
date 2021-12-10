@@ -6,8 +6,8 @@
 
 Name: nas
 %define dname %{name}d
-Version: 1.9.4
-Release: alt4.git20131009
+Version: 1.9.4a
+Release: alt1
 Summary: Network Audio System - a portable, network-transparent audio system
 Group: Sound
 License: MIT
@@ -224,6 +224,9 @@ echo "# See %dname.conf(5) and sample at %_docdir/%dname-*/" > %buildroot%_sysco
 
 
 %changelog
+* Fri Dec 10 2021 Nazarov Denis <nenderus@altlinux.org> 1.9.4a-alt1
+- Version 1.9.4a
+
 * Sun Dec 05 2021 Nazarov Denis <nenderus@altlinux.org> 1.9.4-alt4.git20131009
 - Fix FTBFS
 
