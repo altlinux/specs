@@ -1,12 +1,12 @@
 Name: imlib2
-Version: 1.7.4
+Version: 1.7.5
 Release: alt1
 
 Summary: Image loading, saving, rendering, and manipulation library
 License: Imlib2
 Group: System/Libraries
 Url: http://docs.enlightenment.org/api/imlib2/html/
-# Source-url: https://sourceforge.net/projects/enlightenment/files/imlib2-src/%version/%name-%version.tar.bz2
+# Source-url: https://sourceforge.net/projects/enlightenment/files/imlib2-src/%version/%name-%version.tar.xz
 Source: %name-%version.tar
 
 %def_disable static
@@ -57,7 +57,7 @@ distribution.
 
 %prep
 %setup
-sed -i 's/echo \$libdirs -lImlib2 @my_libs@/echo -lImlib2/' imlib2-config.in
+#sed -i 's/echo \$libdirs -lImlib2 @my_libs@/echo -lImlib2/' imlib2-config.in
 
 %build
 %configure \
@@ -87,7 +87,6 @@ find %buildroot%_libdir/ -name '*.la' -delete
 %_libdir/%name/loaders/*.so
 
 %files devel
-%_bindir/%name-config
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
@@ -96,7 +95,6 @@ find %buildroot%_libdir/ -name '*.la' -delete
 %files utils
 %_bindir/*
 %_datadir/%name/
-%exclude %_bindir/%name-config
 
 %if_enabled static
 %files devel-static
@@ -105,6 +103,9 @@ find %buildroot%_libdir/ -name '*.la' -delete
 %endif
 
 %changelog
+* Fri Dec 10 2021 Leontiy Volodin <lvol@altlinux.org> 1.7.5-alt1
+- New version (1.7.5) with rpmgs script.
+
 * Tue Sep 21 2021 Leontiy Volodin <lvol@altlinux.org> 1.7.4-alt1
 - New version (1.7.4) with rpmgs script.
 
