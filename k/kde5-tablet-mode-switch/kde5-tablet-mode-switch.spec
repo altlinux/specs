@@ -1,6 +1,6 @@
 %define rname kde5-tablet-mode-switch
 Name: kde5-tablet-mode-switch
-Version: 0.1
+Version: 0.2
 Release: alt1
 %K5init altplace
 
@@ -43,5 +43,8 @@ install -m 0755 %{rname}.desktop %buildroot/%_K5xdgapp/
 %_K5xdgapp/*tablet*mode*.desktop
 
 %changelog
+* Fri Dec 10 2021 Sergey V Turchin <zerg at altlinux dot org> 0.2-alt1
+- setup forceFontDPIWayland
+
 * Thu Nov 18 2021 Sergey V Turchin <zerg at altlinux dot org> 0.1-alt1
 - initial build
