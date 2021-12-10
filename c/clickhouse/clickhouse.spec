@@ -23,7 +23,7 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 %endif
 
 Name: clickhouse
-Version: 21.8.11.4
+Version: 21.8.12.29
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -391,6 +391,9 @@ fi
 %_datadir/clickhouse-test
 
 %changelog
+* Mon Dec 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.8.12.29-alt1
+- Updated to lts upstream version 21.8.12.29.
+
 * Mon Nov 22 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.8.11.4-alt1
 - Updated to lts upstream version 21.8.11.4.
 
