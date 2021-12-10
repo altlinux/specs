@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.20
+Version: 1.4.21
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,30 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Fri Dec 10 2021 Anton Midyukov <antohami@altlinux.org> 1.4.21-alt1
+- tar2fs: start partitions from 34 MiB for riscv64
+- add support build iso for riscv64
+- oem: not use/x11vnc for use/oem/vnc
+- oem: not use/net-eth/dhcp for use/oem/vnc
+- build.mk, params.txt: add parameter USE_QEMU
+- bin/archdep-filter: implement multi-matching (thanks mike@)
+- init: Set priority for systemd-utils-standalone package (use/init/sysv)
+- init: add apt-conf-ignore-systemd for sysvinit
+- install2: Set piority for installer-distro-common-stage2 package
+- live: Set piority for livecd-installer-features package
+- oem: Set piority for rootfs-installer-features package
+- regular.mk, regular-vm.mk: add NetworkManager to regular-builder
+- build-vm: add 20-grub-terminal script for setup terminal_output
+- use/net-eth: add dhcp ipv4 only support for networkd (thanks lakostis@)
+- features: add gitlab-runner (thanks lakostis@)
+- arm-rpi4: copy actualy dtb for last kernel
+- net: fix setup NetworkManager controlled with etcnet (fix typo in 50-net-nm)
+- alt-server: add latest commits (thanks boyarsh@)
+- alt-workstation: add latest commits (thanks sem@)
+- slinux: add latest commits (thanks sem@)
+- alt-education: add latest commits (thanks cas@)
+- server-v: add latest commits (thanks shaba@)
+
 * Mon Nov 15 2021 Anton Midyukov <antohami@altlinux.org> 1.4.20-alt1
 - ve.mk: refactor those ve/lxc-* dups (thanks mike@)
 - ve.mk: initial ve/lxc-builder (thanks mike@)
