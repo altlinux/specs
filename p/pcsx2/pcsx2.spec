@@ -1,13 +1,13 @@
 %define optflags_lto %nil
 
 # git show -s --format=%ci upstream/pcsx2 | sed 's/[ :-]//g' | sed 's/\(.\{,14\}\).*/\1/'
-%define svn_rev 20211106004408
+%define svn_rev 20211210110636
 
-%define libchdr_commit a17c0da7e9efa8cbb752c707df7d5457b2149fb8
+%define libchdr_commit 5de1a59019815ccdbba0fe07c71b31406d023248
 %define gtest_version 1.11.0
 
 Name: pcsx2
-Version: 1.7.2019
+Version: 1.7.2116
 Release: alt1
 
 Summary: Playstation 2 console emulator
@@ -121,6 +121,9 @@ echo "#define SVN_REV $(echo %svn_rev)ll
 %_defaultdocdir/Pcsx2/*.pdf
 
 %changelog
+* Fri Dec 10 2021 Nazarov Denis <nenderus@altlinux.org> 1.7.2116-alt1
+- Version 1.7.2116
+
 * Sat Nov 06 2021 Nazarov Denis <nenderus@altlinux.org> 1.7.2019-alt1
 - Version 1.7.2019
 
