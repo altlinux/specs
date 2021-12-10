@@ -12,7 +12,7 @@
 
 Name: iio-sensor-proxy
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 Summary: IIO sensors to input device proxy
 Group: System/Kernel and hardware
@@ -92,6 +92,9 @@ dbus-run-session %__meson_test -t 2
 
 
 %changelog
+* Fri Dec 10 2021 Yuri N. Sedunov <aris@altlinux.org> 3.3-alt1.1
+- rebuilt from git
+
 * Tue Aug 17 2021 Yuri N. Sedunov <aris@altlinux.org> 3.3-alt1
 - 3.3
 
