@@ -1,6 +1,6 @@
 Name: bitstream-headers
 Version: 1.5
-Release: alt1
+Release: alt2
 Summary: biTStream is a set of C headers allowing a simpler access to binary structures such as specified by MPEG, DVB, IETF, etc.
 Group: Development/C
 
@@ -23,7 +23,7 @@ and specifications.
 %patch0 -p1
 
 %install
-make PREFIX=%buildroot/usr install
+make DESTDIR=%buildroot PREFIX=%prefix install
 
 %files
 %doc AUTHORS COPYING INSTALL NEWS README TODO
@@ -31,6 +31,10 @@ make PREFIX=%buildroot/usr install
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Fri Dec 10 2021 Alexei Takaseev <taf@altlinux.org> 1.5-alt2
+- update to git:ba7576b3ae754a8648f43cfd8ae7560ace616816
+- Fix paths in bitstream.pc
+
 * Fri Feb 01 2019 Alexei Takaseev <taf@altlinux.org> 1.5-alt1
 - 1.5
 - rtcp_get_rc: missing const
