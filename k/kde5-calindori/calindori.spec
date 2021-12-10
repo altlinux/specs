@@ -4,7 +4,7 @@
 %define libcalindori libcalindori%sover
 
 Name: kde5-%rname
-Version: 21.08
+Version: 21.12
 Release: alt1
 %K5init altplace no_appdata
 
@@ -53,6 +53,9 @@ Calindori is a touch friendly calendar application. It has been designed for mob
 %_K5dbus_srv/*calind*.service
 
 %changelog
+* Fri Dec 10 2021 Sergey V Turchin <zerg@altlinux.org> 21.12-alt1
+- new version
+
 * Wed Sep 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08-alt1
 - new version
 

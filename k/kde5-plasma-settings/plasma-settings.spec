@@ -1,7 +1,7 @@
 %define rname plasma-settings
 
 Name: kde5-%rname
-Version: 21.08
+Version: 21.12
 Release: alt1
 %K5init altplace no_appdata
 
@@ -20,6 +20,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: qt5-svg-devel qt5-wayland-devel qt5-webengine-devel
+BuildRequires: ModemManager-devel kf5-modemmanager-qt-devel kf5-networkmanager-qt-devel
 BuildRequires: kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kio-devel
 BuildRequires: kf5-kpackage-devel kf5-plasma-framework-devel
 BuildRequires: pkgconfig(gobject-2.0) pkgconfig(gio-2.0)
@@ -81,6 +82,9 @@ Requires: %name-common
 #%_K5lib/libplasma-settings.so.*
 
 %changelog
+* Fri Dec 10 2021 Sergey V Turchin <zerg@altlinux.org> 21.12-alt1
+- new version
+
 * Wed Sep 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08-alt1
 - new version
 
