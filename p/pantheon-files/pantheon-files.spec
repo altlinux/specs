@@ -8,7 +8,7 @@
 %define rdn_name io.elementary.%_name
 
 Name: pantheon-files
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The file manager of the Pantheon desktop
@@ -33,9 +33,10 @@ Requires: polkit zeitgeist tumbler elementary-icon-theme
 %define gtk_ver 3.22.25
 %define granite_ver 6.1.0
 
-BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-macros-meson rpm-build-systemd
 BuildRequires: meson vala-tools
-BuildRequires: intltool libappstream-glib-devel flatpak-builder
+BuildRequires: intltool libappstream-glib-devel
+#BuildRequires: flatpak-builder
 BuildRequires: libsqlite3-devel libgtk+3-devel >= %gtk_ver
 BuildRequires: libgee0.8-devel libgranite-devel
 BuildRequires: libgail3-devel libdbus-glib-devel libnotify-devel
@@ -99,19 +100,20 @@ This package provides Vala language bindings for the pantheon-files.
 %_datadir/xdg-desktop-portal/portals/%rdn_name.portal
 
 %files devel
-%_includedir/%name-widgets.h
 %_includedir/%name-core/
 %_libdir/*.so
 %_pkgconfigdir/%name-core.pc
-%_pkgconfigdir/%name-widgets.pc
+
 
 %if 0
 %files vala
 %_vapidir/%name-core.vapi
-%_vapidir/%name-widgets.vapi
 %endif
 
 %changelog
+* Sat Dec 11 2021 Yuri N. Sedunov <aris@altlinux.org> 6.1.1-alt1
+- updated to 6.1.1-22-g5207a47cd
+
 * Thu Dec 02 2021 Yuri N. Sedunov <aris@altlinux.org> 6.1.0-alt1
 - updated to 6.1.0-37-g1e03757fb
 
