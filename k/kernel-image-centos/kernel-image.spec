@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 28
+%define centos_release 29
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -629,6 +629,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Dec 10 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.29-alt1.el9
+- hrtimer updates for RT prerequisites
+
 * Thu Dec 09 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.28-alt1.el9
 - Backport v5.15 rcu/locking/cgroup dependencies for kernel-rt
 
