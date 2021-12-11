@@ -1,5 +1,5 @@
 Name: xfce4-terminal
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 Summary: Terminal emulator application for Xfce
@@ -65,6 +65,9 @@ xfce4-terminal - легкий и удобный эмулятор термина�
 %_desktopdir/*
 
 %changelog
+* Sat Dec 11 2021 Mikhail Efremov <sem@altlinux.org> 0.9.1-alt1
+- Updated to 0.9.1.
+
 * Sat Oct 16 2021 Mikhail Efremov <sem@altlinux.org> 0.9.0-alt1
 - Updated to 0.9.0.
 
