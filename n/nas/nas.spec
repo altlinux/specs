@@ -5,16 +5,22 @@
 %def_with pic
 
 Name: nas
-%define dname %{name}d
 Version: 1.9.4a
-Release: alt1
+Release: alt2
+
 Summary: Network Audio System - a portable, network-transparent audio system
-Group: Sound
 License: MIT
-URL: http://radscan.com/%name.html
+Group: Sound
+
+Url: http://radscan.com/%name.html
+
+%define dname %{name}d
+
 # git://git.code.sf.net/p/nas/nas.git
 Source0: %name-%version.src.tar
 Source1: %dname.init
+Source2: %dname.service
+Source3: %dname.sysconfig
 
 BuildRequires: flex gccmakedep imake libXaw-devel libXp-devel xorg-sdk
 BuildRequires: libXau-devel libXpm-devel libXext-devel zlib-devel
@@ -28,7 +34,6 @@ manipulating audio data over a network. It uses the client/server
 model to separate application code from the software drivers
 needed to control specific audio input and output devices.
 
-
 %package -n %dname
 Summary: Network Audio System Daemon
 Group: Sound
@@ -39,7 +44,6 @@ developed at Network Computing Devices for playing, recording, and
 manipulating audio data over a network. It uses the client/server
 model to separate application code from the software drivers
 needed to control specific audio input and output devices.
-
 
 %if_enabled shared
 %package -n libaudio
@@ -56,7 +60,6 @@ needed to control specific audio input and output devices.
 This package contains NAS client library.
 %endif
 
-
 %package -n libaudio-devel
 Summary: NAS client library - development headers
 Group: Development/C
@@ -70,7 +73,6 @@ model to separate application code from the software drivers
 needed to control specific audio input and output devices.
 
 This package contains development headers for NAS client library.
-
 
 %if_enabled static
 %package -n libaudio-devel-static
@@ -88,7 +90,6 @@ needed to control specific audio input and output devices.
 This package contains static version of NAS client library.
 %endif
 
-
 %package utils
 Summary: Network Audio System utilites
 Group: Sound
@@ -103,7 +104,6 @@ needed to control specific audio input and output devices.
 
 This package contains miscellaneous NAS client utilites.
 
-
 %package examples
 Summary: Network Audio System examples
 Group: Sound
@@ -115,7 +115,6 @@ developed at Network Computing Devices for playing, recording, and
 manipulating audio data over a network. It uses the client/server
 model to separate application code from the software drivers
 needed to control specific audio input and output devices.
-
 
 %package doc
 Summary: Network Audio System documentation
@@ -135,12 +134,10 @@ manipulating audio data over a network. It uses the client/server
 model to separate application code from the software drivers
 needed to control specific audio input and output devices.
 
-
 %prep
 %setup
 subst 's|/%_sysconfdir/%name\(/%dname\.conf\.eg\)|%_docdir/%dname-%version\1|g' \
     doc/html/%dname.conf.5.html server/%dname.conf.man
-
 
 %build
 echo "#define NasConfigSearchPath /etc/" >> config/NetAudio.def
@@ -158,29 +155,30 @@ for f in $(find . -type f -name "Makefile"); do sed -i -r 's/ar clq/ar cq/' "$f"
 %make_build BOOTSTRAPCFLAGS="%optflags" CDEBUGFLAGS="%optflags" CXXDEBUGFLAGS="%optflags" -k all
 bzip2 --keep --force --best HISTORY
 
-
 %install
 %make_install DESTDIR=%buildroot ETCDIR=%_docdir/%dname-%version install install.man
 install -D -m 0755 %SOURCE1 %buildroot%_initdir/%dname
 echo "# See %dname.conf(5) and sample at %_docdir/%dname-*/" > %buildroot%_sysconfdir/%dname.conf
 
+# Systemd integration
+%__install -D -m 0644 %SOURCE2 %buildroot%_unitdir/%dname.service
+%__install -D -m 0644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%dname
 
 %post -n %dname
 %post_service %dname ||:
 
-
 %preun -n %dname
 %preun_service %dname ||:
-
 
 %files -n %dname
 %_docdir/%dname-%version
 %config(noreplace) %_sysconfdir/%dname.conf
-%_initdir/*
+%config(noreplace) %_sysconfdir/sysconfig/%dname
+%_initdir/%dname
+%_unitdir/%dname.service
 %_bindir/%dname
 %_man1dir/%dname.1*
-%_man5dir/*
-
+%_man5dir/%dname.conf.5*
 
 %if_enabled shared
 %files -n libaudio
@@ -188,23 +186,19 @@ echo "# See %dname.conf(5) and sample at %_docdir/%dname-*/" > %buildroot%_sysco
 %_datadir/X11/AuErrorDB
 %endif
 
-
 %files -n libaudio-devel
 %_libdir/libaudio.so
 %_includedir/audio
-
 
 %if_enabled static
 %files -n libaudio-devel-static
 %_libdir/libaudio.a
 %endif
 
-
 %files utils
 %_bindir/au*
 %_man1dir/au*
 %_man1dir/%name.1*
-
 
 %files examples
 %_bindir/checkmail
@@ -216,14 +210,16 @@ echo "# See %dname.conf(5) and sample at %_docdir/%dname-*/" > %buildroot%_sysco
 %_man1dir/playbucket.1*
 %_man1dir/soundtoh.1*
 
-
 %files doc
 %doc FAQ HISTORY.* README TODO
 %doc doc/actions doc/*.txt doc/*.ps doc/pdf
 %_man3dir/*
 
-
 %changelog
+* Sat Dec 11 2021 Nazarov Denis <nenderus@altlinux.org> 1.9.4a-alt2
+- Add LSB Init header
+- Add systemd integration
+
 * Fri Dec 10 2021 Nazarov Denis <nenderus@altlinux.org> 1.9.4a-alt1
 - Version 1.9.4a
 
