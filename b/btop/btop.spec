@@ -1,5 +1,5 @@
 Name: btop
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: Resource monitor that shows usage and stats for processor, memory, disks, network and processes.
@@ -7,7 +7,7 @@ License: Apache-2.0
 Group: Monitoring
 
 Url: https://github.com/aristocratos/btop
-Source: %name-%version.tar
+Source: %name-%version.tar.gz
 Packager: Alexei Mezin <alexvm@altlinux.org>
 
 Summary(ru_RU.UTF8): Монитор ресурсов, показыавющий загрузку процессора, памяти, дисков, сети и список процессов.
@@ -37,6 +37,9 @@ PREFIX=%buildroot/%_prefix make install
 %_datadir/%name/themes/*
 
 %changelog
+* Sat Dec 11 2021 Alexei Mezin <alexvm@altlinux.org> 1.1.2-alt1
+- New version
+
 * Fri Nov 19 2021 Alexei Mezin <alexvm@altlinux.org> 1.1.1-alt1
 - Initial build
 
