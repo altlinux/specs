@@ -1,6 +1,6 @@
 Name: pcb2gcode
 Version: 2.4.0
-Release: alt2
+Release: alt3
 Summary: Command-line software for the isolation, routing and drilling of PCBs
 
 Group: Engineering
@@ -30,7 +30,7 @@ dynamic calibration of the milling depth.
 %setup
 
 %build
-export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS"
+export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS -I%_includedir/librsvg-2.0"
 %autoreconf
 %configure
 %make_build
@@ -47,6 +47,9 @@ export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS"
 %doc AUTHORS README.md
 
 %changelog
+* Sat Dec 11 2021 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt3
+- add -I%_includedir/librsvg-2.0 to CXXFLAGS (fix FTBFS)
+
 * Sat Sep 25 2021 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt2
 - add compiler flag '-std=c++14' (fix build with gcc-c++ >= 11)
 - ExcludeArch: %ix86 %arm (tests fails)
