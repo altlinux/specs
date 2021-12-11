@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.21
+Version: 1.4.22
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,10 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Sat Dec 11 2021 Anton Midyukov <antohami@altlinux.org> 1.4.22-alt1
+- Revert "arm-rpi4: change firefox-esr to chromium"
+- Revert "regular-vm.mk, regular.mk: add wireless support"
+
 * Fri Dec 10 2021 Anton Midyukov <antohami@altlinux.org> 1.4.21-alt1
 - tar2fs: start partitions from 34 MiB for riscv64
 - add support build iso for riscv64
