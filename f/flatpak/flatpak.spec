@@ -14,7 +14,7 @@
 
 Name: flatpak
 Version: 1.12.2
-Release: alt2
+Release: alt2.1
 
 Summary: Application deployment framework for desktop apps
 Group: Development/Tools
@@ -26,6 +26,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Vcs: https://github.com/flatpak/flatpak.git
 # Source-url: https://github.com/flatpak/flatpak/releases/download/%version/%name-%version.tar.xz
 Source: %name-%version.tar
+Patch1: flatpak-1.12.2-alt-flatpak.sh.patch
 
 %define flatpak_group %name
 %define flatpak_user %name
@@ -113,6 +114,7 @@ This package contains developer documentation for lib%name.
 
 %prep
 %setup
+%patch1
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -144,7 +146,7 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 %post
 # Create an (empty) system-wide repo.
-%_bindir/flatpak remote-list --system
+%_bindir/flatpak remote-list --system >/dev/null 2>&1 ||:
 
 %check
 %make check
@@ -210,6 +212,10 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Sat Dec 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt2.1
+- /etc/profile.d/flatpak.sh: fixed syntax
+- supressed output from %%post
+
 * Fri Dec 03 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt2
 - /etc/profile.d/flatpak.sh: made executable (ALT #41495)
 
