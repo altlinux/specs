@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: victoriametrics
-Version: 1.63.0
+Version: 1.70.0
 Release: alt1
 Summary: The best long-term remote storage for Prometheus
 
@@ -24,6 +24,9 @@ VictoriaMetrics - the best long-term remote storage for Prometheus
 Summary: Utils for %name
 Group: Development/Other
 Provides: vmutils = %EVR
+Provides: vmctl = %EVR
+Provides: victoriametrics-vmctl = %EVR
+Obsoletes: victoriametrics-vmctl < 0.5.0
 
 %description utils
 Utils for VictoriaMetrics:
@@ -57,7 +60,8 @@ export BUILDINFO_TAG=v%version
 	vmalert \
 	vmauth \
 	vmbackup \
-	vmrestore
+	vmrestore \
+	vmctl
 
 %install
 install -m 0755 -d %buildroot%_bindir
@@ -69,6 +73,7 @@ install -m 0755 bin/vmalert %buildroot%_bindir/vmalert
 install -m 0755 bin/vmauth %buildroot%_bindir/vmauth
 install -m 0755 bin/vmbackup %buildroot%_bindir/vmbackup
 install -m 0755 bin/vmrestore %buildroot%_bindir/vmrestore
+install -m 0755 bin/vmctl %buildroot%_bindir/vmctl
 
 install -m 0755 -d %buildroot%_sharedstatedir/victoria-metrics-data
 
@@ -96,6 +101,9 @@ install -m644 %SOURCE2 \
 %_bindir/vm*
 
 %changelog
+* Sat Dec 11 2021 Alexey Shabalin <shaba@altlinux.org> 1.70.0-alt1
+- new version 1.70.0
+
 * Fri Jul 30 2021 Alexey Shabalin <shaba@altlinux.org> 1.63.0-alt1
 - new version 1.63.0
 

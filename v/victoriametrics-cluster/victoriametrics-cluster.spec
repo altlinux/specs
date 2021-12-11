@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: victoriametrics-cluster
-Version: 1.63.0
+Version: 1.70.0
 Release: alt1
 Summary: The best long-term remote storage for Prometheus
 
@@ -97,6 +97,9 @@ install -m 0755 bin/vmstorage %buildroot%_bindir/vmstorage
 %_bindir/vmstorage
 
 %changelog
+* Sat Dec 11 2021 Alexey Shabalin <shaba@altlinux.org> 1.70.0-alt1
+- new version 1.70.0
+
 * Fri Jul 30 2021 Alexey Shabalin <shaba@altlinux.org> 1.63.0-alt1
 - new version 1.63.0
 
