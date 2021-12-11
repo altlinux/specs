@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define module Po4a
 %define m_distro po4a
 %define m_name %module
@@ -5,16 +7,15 @@
 %define _disable_test 0
 
 Name: po4a
-Version: 0.47
-Release: alt1.1
+Version: 0.65
+Release: alt1
 
 Summary: Tools for helping translation of documentation
 
-License: GPL
+License: GPLv2+
 Group: Text tools
 
-Url: http://po4a.alioth.debian.org/
-# VCS: https://alioth.debian.org/anonscm/git/po4a/po4a.git
+Url: http://po4a.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -31,12 +32,12 @@ BuildRequires: docbook-style-xsl perl-HTML-Parser perl-Locale-gettext perl-Modul
 # perl-podlators is required for pod2man conversion.
 BuildRequires: perl-podlators
 
-BuildRequires:  perl-Module-Build >= 0.40
+BuildRequires:  perl-Module-Build >= 0.42
 BuildRequires:  perl-SGMLSpm
 BuildRequires:  perl-Pod-Parser
 # for Unicode::GCString
 BuildRequires:  perl-Unicode-LineBreak 
-
+BuildRequires:  perl-YAML-Tiny
 
 %description
 The po4a (po for anything) project goal is to ease translations (and
@@ -57,7 +58,8 @@ sub-modules:
 
 %build
 export LC_ALL=en_US.UTF-8
-%perl_vendor_build --install_path bindoc=%_man1dir
+perl Build.PL
+%perl_vendor_build --install_path bindoc=%_man1dir --install_path libdoc=%_man3dir
 
 %check
 # requires texlive, which is too heavy for the package
@@ -66,10 +68,10 @@ rm t/24-tex.t
 
 %install
 %perl_vendor_install
-%find_lang %name
 # remove localized man pages
-rm -rf %buildroot%_mandir/??{,_??}
-rm -rf %buildroot%perl_vendor_privlib/i386-linux/
+rm -rf %buildroot%_mandir/??{,_*}
+rm -rf %buildroot%_datadir/locale/??_???? # TBD: why is this not packaged?
+%find_lang %name
 
 %files -f %name.lang
 %_bindir/*
@@ -77,10 +79,16 @@ rm -rf %buildroot%perl_vendor_privlib/i386-linux/
 %perl_vendor_privlib/Locale/Po4a/
 %_man1dir/*
 %_man3dir/*
-%_man5dir/*
 %_man7dir/*
 
 %changelog
+* Thu Dec  9 2021 Aleksey Cheusov <cheusov@altlinux.org> 0.65-alt1
+- 0.65
+
+* Tue Dec  7 2021 Aleksey Cheusov <cheusov@altlinux.org> 0.47-alt1.2
+- Keep remote "upstream" here .gear/upstream/remotes.
+  Minor updates and clean-ups in .spec file.
+
 * Thu Jul 15 2021 Igor Vlasenko <viy@altlinux.org> 0.47-alt1.1
 - NMU: drop 1.03ii from requires on perl-SGMLSpm
 
