@@ -1,8 +1,8 @@
-%global optflags_lto %optflags_lto -ffat-lto-objects
+%define optflags_lto %nil
 
 Name:		karbowanecwallet
-Version:	1.6.0
-Release:	alt2
+Version:	1.6.1
+Release:	alt1
 Summary:	Karbowanec (Karbo) KRB wallet
 Url:		https://karbo.io/
 Group:		Office
@@ -59,6 +59,9 @@ convert -resize 16x16 %SOURCE2 %buildroot%_miconsdir/karbowanec.png
 %_liconsdir/karbowanec.png
 
 %changelog
+* Sat Dec 11 2021 Motsyo Gennadi <drool@altlinux.ru> 1.6.1-alt1
+- 1.6.1
+
 * Mon Aug 30 2021 Motsyo Gennadi <drool@altlinux.ru> 1.6.0-alt2
 - fix LTO
 
