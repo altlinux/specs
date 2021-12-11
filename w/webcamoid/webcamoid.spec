@@ -4,7 +4,7 @@
 
 Name: webcamoid
 Version: %major.0
-Release: alt1
+Release: alt2
 
 Summary: A webcam funny video tool
 
@@ -16,6 +16,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/webcamoid/webcamoid/archive/%version.tar.gz
 Source: %name-%version.tar
+Patch0: %name-numeric_limits.patch
+
 
 BuildRequires: pkgconfig(libavcodec)
 BuildRequires: pkgconfig(libv4l2)
@@ -61,6 +63,7 @@ applications which will use avkys library as webcamoid.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %qmake_qt5 PREFIX=%_prefix CONFIG+=debug
@@ -87,6 +90,9 @@ applications which will use avkys library as webcamoid.
 %_libdir/*.so
 
 %changelog
+* Sat Dec 11 2021 Alexei Mezin <alexvm@altlinux.org> 8.8.0-alt2
+- Minor fixes in src
+
 * Mon Jul 05 2021 Vitaly Lipatov <lav@altlinux.ru> 8.8.0-alt1
 - new version 8.8.0 (with rpmrb script)
 
