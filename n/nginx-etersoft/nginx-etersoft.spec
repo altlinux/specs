@@ -1,5 +1,5 @@
 Name: nginx-etersoft
-Version: 0.2.25
+Version: 0.2.26
 Release: alt1
 
 Summary: Additional Nginx templates and functions
@@ -63,6 +63,10 @@ install -m644 www/* %buildroot%webserver_htdocsdir/maintenance/
 %config(noreplace) %webserver_htdocsdir/maintenance/*
 
 %changelog
+* Sat Dec 11 2021 Vitaly Lipatov <lav@altlinux.ru> 0.2.26-alt1
+- store-proxy.inc: add http_500 for proxy_cache_use_stale
+- use cached limits for all store
+
 * Tue Sep 08 2020 Vitaly Lipatov <lav@altlinux.ru> 0.2.25-alt1
 - fix upstream sent too big header while reading... (eterbug 14534)
 - letsencrypt.conf: add satisfy any;
