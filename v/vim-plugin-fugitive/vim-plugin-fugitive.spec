@@ -1,7 +1,7 @@
 %define oname vim-fugitive
 
 Name: vim-plugin-fugitive
-Version: 3.4
+Version: 3.6
 Release: alt1
 
 Summary: A Git wrapper for Vim
@@ -36,6 +36,9 @@ cp -a autoload doc ftdetect plugin syntax %buildroot%vim_runtime_dir
 %vim_runtime_dir/*/*
 
 %changelog
+* Sun Dec 12 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.6-alt1
+- Updated to v3.6.
+
 * Thu Sep 02 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.4-alt1
 - Updated to v3.4.
 
