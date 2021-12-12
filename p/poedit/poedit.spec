@@ -7,7 +7,7 @@
 %def_without cld2
 
 Name: poedit
-Version: 3.0
+Version: 3.0.1
 Release: alt1
 
 Summary: Cross-platform translation files editor
@@ -22,8 +22,6 @@ Source: https://github.com/vslavik/%name/releases/download/v%version-oss/%name-%
 Vcs: https://github.com/vslavik/poedit.git
 Source: %name-%version.tar
 %endif
-Source1: README.md.%name
-Patch: %name-3.0-up-HEAD.patch
 
 ExcludeArch: armh
 
@@ -58,8 +56,6 @@ wxLocale библиотеки wxWindows.
 
 %prep
 %setup
-%patch -p1
-[ ! -f README.md ] && cp %SOURCE1 README.md
 
 %build
 %configure \
@@ -84,6 +80,9 @@ rm -f %buildroot/%_iconsdir/hicolor/icon-theme.cache
 %_datadir/metainfo/%rdn_name.appdata.xml
 
 %changelog
+* Sun Dec 12 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
+- 3.0.1
+
 * Mon Oct 11 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt1
 - 3.0
 - disabled build for armh
