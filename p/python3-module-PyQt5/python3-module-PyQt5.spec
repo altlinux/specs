@@ -8,8 +8,8 @@
 #define qtver %(rpm -q --qf '%%{VERSION}' libqt5-core | sed -e 's|\\.|_|g')
 
 Name: python3-module-%oname
-Version: 5.15.4
-Release: alt3
+Version: 5.15.6
+Release: alt1
 
 Summary: Python 3 bindings for Qt 5
 
@@ -25,8 +25,8 @@ BuildRequires(pre): rpm-build-python3 >= 0.1.9.2-alt1
 
 BuildRequires: python3-devel
 
-BuildRequires: python3-module-sip5 >= 5.3
-BuildRequires: python3-module-sip5 < 7
+BuildRequires: python3-module-sip6 >= 6.4
+BuildRequires: python3-module-sip6 < 7
 BuildRequires: python3-module-PyQt-builder >= 1.9
 BuildRequires: python3-module-PyQt-builder < 2
 
@@ -125,7 +125,6 @@ This package contains PyQt5 docs.
 
 %prep
 %setup
-find -type f | xargs subst "s|sipbuild|sipbuild5|g"
 
 %build
 sip-build --confirm-license --no-make --debug \
@@ -137,7 +136,7 @@ sip-build --confirm-license --no-make --debug \
 %makeinstall_std -C build INSTALL_ROOT=%buildroot
 
 # Remove unused py2 version of uic modules:
-rm -rfv %buildroot/%python3_sitelibdir/PyQt5/uic/port_v2/
+rm -rv %buildroot/%python3_sitelibdir/PyQt5/uic/port_v2/
 
 #files doc
 #doc doc/*
@@ -182,6 +181,9 @@ rm -rfv %buildroot/%python3_sitelibdir/PyQt5/uic/port_v2/
 %python3_sitelibdir/PyQt5/__pycache__/pyrcc*
 
 %changelog
+* Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 5.15.6-alt1
+- new version 5.15.6 (with rpmrb script)
+
 * Wed Jul 14 2021 Vitaly Lipatov <lav@altlinux.ru> 5.15.4-alt3
 - move bindings to the devel subpackage
 
