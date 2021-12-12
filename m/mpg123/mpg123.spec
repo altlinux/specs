@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: mpg123
-Version: 1.29.2
+Version: 1.29.3
 Release: alt1
 
 Summary: MPEG audio player
@@ -113,6 +113,9 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 
 
 %changelog
+* Sun Dec 12 2021 Yuri N. Sedunov <aris@altlinux.org> 1.29.3-alt1
+- 1.29.3
+
 * Mon Oct 25 2021 Yuri N. Sedunov <aris@altlinux.org> 1.29.2-alt1
 - 1.29.2
 
