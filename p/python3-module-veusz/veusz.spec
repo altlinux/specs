@@ -2,8 +2,8 @@
 %define oname veusz
 
 Name: python3-module-%oname
-Version: 3.3.1
-Release: alt2
+Version: 3.4
+Release: alt1
 
 Summary: A Scientific Plotting Package
 License: GPLv2+
@@ -18,7 +18,7 @@ BuildRequires: gcc-c++
 BuildRequires: /usr/bin/pod2man /usr/bin/man
 BuildRequires: python3-devel libnumpy-py3-devel
 BuildRequires: qt5-base-devel python3-module-PyQt5-devel
-BuildRequires: python3-module-sip5
+BuildRequires: python3-module-sip6
 
 %add_python3_req_skip pyemf
 
@@ -79,7 +79,6 @@ This package contains main scripts for Veusz.
 
 %prep
 %setup
-
 find ./ -type f -name '*.py' -exec \
 	sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' '{}' +
 
@@ -103,6 +102,12 @@ find ./ -type f -name '*.py' -exec \
 
 
 %changelog
+* Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 3.4-alt1
+- new version 3.4
+
+* Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 3.3.1-alt3
+- rebuild with sip6
+
 * Thu Aug 26 2021 Vitaly Lipatov <lav@altlinux.ru> 3.3.1-alt2
 - drop unused BR: texlive-dist
 
