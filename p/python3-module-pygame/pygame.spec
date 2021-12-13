@@ -1,8 +1,8 @@
 %define oname pygame
 
 Name: python3-module-pygame
-Version: 2.0.1
-Release: alt3
+Version: 2.1.0
+Release: alt1
 
 Summary: A Python module for interfacing with the SDL multimedia library
 Summary(ru_RU.UTF-8): Расширение языка Python для работы с библиотекой SDL
@@ -13,7 +13,7 @@ Url: https://www.pygame.org
 
 # Source-url: https://github.com/pygame/pygame/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
-Patch: pygame-1.9.6-docs.patch
+Patch: pygame-2.1.0-docs.patch
 
 %define python3_includedir %_includedir/python%_python3_version
 
@@ -23,7 +23,7 @@ BuildRequires: libfreetype-devel
 BuildRequires: libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel
 BuildRequires: libjpeg-devel libpng-devel libportmidi-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 
 Requires: libSDL >= 1.2.7
 
@@ -79,10 +79,7 @@ Pygame documentation and example programs (Python3 version)
 %patch -p1
 
 %build
-# XXX check:
-#export LOCALBASE=%prefix
-#add_optflags -fno-strict-aliasing
-%python3_build_debug -j${NPROCS:-%__nprocs}
+%python3_build_debug
 python3 setup.py docs
 
 %install
@@ -93,13 +90,16 @@ sed -i '/^pkg_dir =/s@pkg_dir = .*@pkg_dir = "%_defaultdocdir/python3-module-pyg
 %python3_sitelibdir/*
 
 %files doc
-%doc _html/.
+%doc docs/.
 
 %files devel
 %python3_includedir/%oname/
 
 
 %changelog
+* Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
+- new version 2.1.0 (with rpmrb script)
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt3
 - cleanup spec, build python3 module separately
 
