@@ -3,11 +3,10 @@
 %define mname jwcrypto
 %def_with check
 
-# 1.0.0 vs 1.0
-%define pypi_version 1.0
+%define pypi_version 1.1
 
 Name: python3-module-%mname
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 Summary: JWCrypto is an implementation of the Javascript Object Signing and Encryption (JOSE) Web Standards
 
@@ -66,6 +65,9 @@ rm -rfv %buildroot%python3_sitelibdir/%mname/tests*
 %python3_sitelibdir/%mname-%pypi_version-py*.egg-info/
 
 %changelog
+* Thu Dec 02 2021 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
+- 1.0.0 -> 1.1.0.
+
 * Mon Sep 06 2021 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1
 - 0.9.1 -> 1.0.0.
 
