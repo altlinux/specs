@@ -1,16 +1,18 @@
 Name: cpio
-Version: 2.12
-Release: alt2
+Version: 2.13
+Release: alt1
 
 Summary: A GNU archiving program
 License: GPLv3+
 Group: Archiving/Backup
-Url: http://www.gnu.org/software/cpio/
+Url: https://www.gnu.org/software/cpio/
 
-# ftp://ftp.gnu.org/gnu/cpio/cpio-%version.tar.bz2
-Source: cpio-%version.tar
-Patch: cpio-%version-%release.patch
+# https://git.altlinux.org/gears/c/cpio.git
+Source0: %name-%version-%release.tar
+# git://git.altlinux.org/people/glebfm/packages/cpio refs/heads/po-current
+Source1: po-%version-%release.tar
 
+BuildRequires: gnulib paxutils
 BuildPreReq: makeinfo
 # Due to static subpackage.
 BuildPreReq: glibc-devel-static
@@ -66,19 +68,21 @@ This package contains statically linked version of the GNU cpio program.
 и может пригодиться для аварийных работ.
 
 %prep
-%setup
-%patch -p1
+%setup -n %name-%version-%release -a1
 
-# Outdated by fresh autoconf.
-rm m4/extensions.m4
-find -type f -print0 |
-	xargs -r0 fgrep -lZ gl_USE_SYSTEM_EXTENSIONS -- |
-	xargs -r0 sed -i 's/gl_USE_SYSTEM_EXTENSIONS/AC_USE_SYSTEM_EXTENSIONS/g' --
+# Generate LINGUAS file.
+ls po/*.po | sed 's|.*/||; s|\.po$||' > po/LINGUAS
+
+rmdir paxutils
+ln -s %_datadir/paxutils .
 
 %build
-# Several changes modify configure.ac and Makefile.am
-%autoreconf
-%configure --disable-mt --with-rmt=/sbin/rmt --disable-silent-rules
+./bootstrap --force --skip-po --gnulib-srcdir=%_datadir/gnulib
+gettextize --force
+%configure \
+	--disable-mt \
+	--with-rmt=/sbin/rmt \
+	#
 %make_build
 
 %check
@@ -104,6 +108,9 @@ mv %buildroot%_bindir/cpio{,.}static
 %define _unpackaged_files_terminate_build 1
 
 %changelog
+* Fri Dec 10 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.13-alt1
+- Updated to 2.13.
+
 * Fri Mar 19 2021 Slava Aseev <ptrnine@altlinux.org> 2.12-alt2
 - Fix multiple definition of "program_name".
 
