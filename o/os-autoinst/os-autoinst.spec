@@ -2,7 +2,7 @@
 
 Name: os-autoinst
 Version: 4.6
-Release: alt5
+Release: alt6
 Summary: OS-level test automation
 License: GPLv2+
 Group: Development/Tools
@@ -138,6 +138,9 @@ export OPENQA_TEST_TIMEOUT_SCALE_CI=10
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Wed Dec 08 2021 Alexandr Antonov <aas@altlinux.org> 4.6-alt6
+- update to current version
+
 * Mon Nov 08 2021 Alexandr Antonov <aas@altlinux.org> 4.6-alt5
 - update to current version
 

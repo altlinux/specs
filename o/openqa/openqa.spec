@@ -19,7 +19,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt5
+Release: alt6
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -169,7 +169,7 @@ writing, etc., covering both openQA and the os-autoinst test engine.
 tar xf %SOURCE1 -C assets
 %patch0 -p1
 %patch1 -p1
-sed -i -e 's|../webfonts/|https://use.fontawesome.com/releases/v5.0.10/webfonts/|g' assets/cache/use.fontawesome.com/releases/v5.0.10/css/all.css
+sed -i -e 's|../fonts/|https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/fonts/|g' assets/cache/cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css
 sed -i -e 's|/usr/lib/systemd/|/lib/systemd/|'  systemd/systemd-openqa-generator
 sed -i -e 's|/usr/lib/systemd/|/lib/systemd/|' -e 's|/usr/lib/tmpfiles.d|/lib/tmpfiles.d|'  Makefile
 sed -i -e 's|https://|cache/|' -e 's|http://|cache/|' assets/assetpack.def
@@ -443,6 +443,9 @@ fi
 %files single-instance
 
 %changelog
+* Wed Dec 8 2021 Alexandr Antonov <aas@altlinux.org> 4.6-alt6
+- update to current version
+
 * Mon Nov 8 2021 Alexandr Antonov <aas@altlinux.org> 4.6-alt5
 - update to current version
 
