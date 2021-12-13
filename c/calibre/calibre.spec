@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 5.26.0
+Version: 5.33.2
 Release: alt1
 
 Summary: A e-book library management application
@@ -149,7 +149,7 @@ BuildRequires: libstemmer-devel
 %py3_use pyparsing >= 2.4.7
 %py3_use packaging >= 20.4
 
-%py3_buildrequires sip5 >= 5.5.0
+%py3_buildrequires sip6 >= 5.5.0
 %py3_buildrequires PyQt-builder >= 1.6.0
 %py3_buildrequires PyQt5-sip >= 12.8.1
 BuildRequires: python3-module-PyQt5-devel
@@ -181,7 +181,6 @@ TXT, PDF, LRS и FB2.
 
 %prep
 %setup
-find -name "*.py" -type f | xargs subst "s|sipbuild|sipbuild5|g"
 %__subst "s|libdir = s.get_python_lib.*|libdir = '%buildroot%python3_sitelibdir'|" setup/install.py
 %__subst "s|hunspell-1.7|hunspell|" setup/extensions.json
 # don't check for new upstream version
@@ -237,6 +236,10 @@ rm -vf %buildroot%_libdir/calibre/calibre/translations/msgfmt.py
 %_datadir/mime/packages/calibre-mimetypes.xml
 
 %changelog
+* Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 5.33.2-alt1
+- new version 5.33.2 (with rpmrb script)
+- build with sip6
+
 * Sun Sep 12 2021 Vitaly Lipatov <lav@altlinux.ru> 5.26.0-alt1
 - new version 5.26.0 (with rpmrb script)
 
