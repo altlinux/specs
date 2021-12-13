@@ -1,5 +1,5 @@
 Name: expat
-Version: 2.2.10
+Version: 2.4.1
 Release: alt1
 
 %def_disable static
@@ -91,6 +91,7 @@ install -p -m644 examples/*.c %buildroot%pkgdocdir/examples/
 
 %files -n lib%name-devel
 %_libdir/*.so
+%_libdir/cmake/expat-%version
 %_includedir/*
 %_pkgconfigdir/*.pc
 %dir %pkgdocdir
@@ -105,6 +106,9 @@ install -p -m644 examples/*.c %buildroot%pkgdocdir/examples/
 %endif	# enabled static
 
 %changelog
+* Mon Dec 13 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.4.1-alt1
+- Updated to 2.4.1.
+
 * Fri Oct 16 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.2.10-alt1
 - Updated to 2.2.10.
 
