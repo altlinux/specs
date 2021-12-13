@@ -7,7 +7,7 @@
 
 Name: kubernetes
 Version: 1.22.4
-Release: alt1
+Release: alt2
 Summary: Container cluster management
 
 Group: System/Configuration/Other
@@ -132,6 +132,7 @@ Kubernetes client tools like kubectl
 %package crio
 Summary: Kubernetes crio files
 Group: System/Configuration/Other
+Requires: cri-o
 
 %description crio
 Packege contains files specific for using crio.
@@ -324,11 +325,17 @@ install -p -m 0644 -t %buildroot/%_sysconfdir/systemd/system.conf.d %SOURCE3
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Fri Dec 10 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.4-alt2
+- Add cve fixes information
+- Add cri-o requires to kubernetes-crio
+
 * Thu Dec 02 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.4-alt1
 - 1.22.4
+- Fixes: CVE-2021-25741
 
 * Wed Jun 30 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.20.8-alt1
 - 1.20.8
+- Fixes: CVE-2021-25737
 
 * Thu Jan 21 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.20.2-alt1
 - 1.20.2
@@ -339,9 +346,11 @@ install -p -m 0644 -t %buildroot/%_sysconfdir/systemd/system.conf.d %SOURCE3
 
 * Fri Jul 24 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.18.6-alt1
 - 1.18.6
+- Fixes: CVE-2020-8559
 
 * Thu Jul 02 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.18.5-alt1
 - 1.18.5
+- Fixes: CVE-2020-8558
 
 * Thu Apr 02 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.18.0-alt1
 - 1.18.0
