@@ -16,7 +16,7 @@
 %def_enable wayland_eglstream
 
 Name: mutter
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 Epoch: 1
 
@@ -237,6 +237,9 @@ echo 'DRIVERS=="baikal-vdu", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-m
 %endif
 
 %changelog
+* Mon Dec 13 2021 Yuri N. Sedunov <aris@altlinux.org> 1:41.2-alt1
+- 41.2
+
 * Thu Nov 04 2021 Yuri N. Sedunov <aris@altlinux.org> 1:41.1-alt1
 - 41.1
 
