@@ -1,12 +1,11 @@
-%set_verify_elf_method textrel=relaxed
-%def_without check
+%def_with check
 Summary: CUDF (Common Upgradeability Description Format) tools and libraries
 Name: cudf
 Version: 0.9
-Release: alt8
-# https://scm.gforge.inria.fr/anonscm/git/cudf/cudf.git
+Release: alt9
+# VCS: https://gitlab.com/irill/cudf.git
 Source: %name-%version.tar
-Url: http://www.mancoosi.org/cudf/
+Url: https://www.mancoosi.org/cudf/
 License: LGPLv3
 Group: Development/ML
 BuildRequires: ocaml ocaml-findlib ocaml-extlib-devel perl-podlators ocaml-ocamlbuild libncurses-devel glib2-devel
@@ -99,6 +98,10 @@ make test
 %_libdir/ocaml/cudf
 
 %changelog
+* Mon Dec 13 2021 Anton Farygin <rider@altlinux.ru> 0.9-alt9
+- fixed URL
+- enabled check
+
 * Tue Oct 13 2020 Anton Farygin <rider@altlinux.ru> 0.9-alt8
 - temporarily turned off tests
 
