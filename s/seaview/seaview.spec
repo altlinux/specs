@@ -1,5 +1,5 @@
 Name: seaview
-Version: 5.0.4
+Version: 5.0.5
 Release: alt1
 Summary: Graphical multiple sequence alignment editor
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -26,7 +26,7 @@ alignment.
 %prep
 %setup -q -n seaview
 
-%patch0 -p 1 -b .chris
+#patch0 -p 1 -b .chris
 
 chmod -x *.cxx
 chmod -x csrc/*.[ch]
@@ -59,6 +59,9 @@ install -m 644 seaview.1 $RPM_BUILD_ROOT/%_mandir/man1
 %_man1dir/*
 
 %changelog
+* Mon Dec 13 2021 Ilya Mashkin <oddity@altlinux.ru> 5.0.5-alt1
+- 5.0.5
+
 * Thu May 27 2021 Ilya Mashkin <oddity@altlinux.ru> 5.0.4-alt1
 - 5.0.4
 
