@@ -1,5 +1,5 @@
 Name: rpm-macros-features
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: RPM macros to check if can build with a feature
@@ -35,6 +35,9 @@ install -D -m644 macros %buildroot/%_rpmmacrosdir/features
 %_rpmmacrosdir/features
 
 %changelog
+* Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
+- add pcad and llvm versions
+
 * Fri Oct 15 2021 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt1
 - set versions for qt5 and vkd3d
 - add provides/obsoletes for rpm-build-features
