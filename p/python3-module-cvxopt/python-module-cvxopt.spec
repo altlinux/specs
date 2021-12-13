@@ -1,8 +1,8 @@
 %define oname cvxopt
 
 Name: python3-module-%oname
-Version: 1.2.6
-Release: alt1.1
+Version: 1.2.7
+Release: alt1
 
 Summary: Python Software for Convex Optimization
 License: GPL v3 or higher
@@ -144,6 +144,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Dec 13 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.7-alt1
+- Automatically updated to 1.2.7.
+
 * Mon Jul 19 2021 Michael Shigorin <mike@altlinux.org> 1.2.6-alt1.1
 - E2K: fix build (SuiteSparse seems unbundled)
 
