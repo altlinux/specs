@@ -4,7 +4,7 @@
 
 Name: freeipa-healthcheck
 Version: 0.9
-Release: alt2
+Release: alt3
 
 Summary: Check the health of a FreeIPA installation
 License: GPLv3
@@ -29,18 +29,27 @@ BuildRequires: /proc
 %endif
 
 %description
-FreeIPA-healthcheck is a framework which is needed to assist with the
-identification, diagnosis and potentially repair of problems.
+%name is a framework which is needed to assist with the identification,
+diagnosis and potentially repair of problems.
 
 %package -n python3-module-%name
-Summary: FreeIPA-healthcheck python3 bindings and documentation
+Summary: Python modules for %name
 License: GPLv3
 Group: Development/Python3
 Requires: python3-module-lib389 >= 1.4.1.11
 
 %description -n python3-module-%name
-This FreeIPA-healthcheck Python3 module contains the library binding for
-FreeIPA-healthcheck framework.
+Python modules for %name.
+
+%package -n python3-module-%name-core
+Summary: Core plugin system for %name
+License: GPLv3
+Group: Development/Python3
+# core plugin was a part of python3-freeipa-healthcheck
+Conflicts: python3-module-freeipa-healthcheck <= 0.9-alt2
+
+%description -n python3-module-%name-core
+Core plugin system for %name.
 
 %prep
 %setup
@@ -106,8 +115,15 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/ipahealthcheck-%version-py%__python3_version.egg-info/
 %python3_sitelibdir/ipahealthcheck-%version-py%__python3_version-nspkg.pth
 %python3_sitelibdir/ipaclustercheck/
+%exclude %python3_sitelibdir/ipahealthcheck/core/
+
+%files -n python3-module-%name-core
+%python3_sitelibdir/ipahealthcheck/core/
 
 %changelog
+* Thu Dec 02 2021 Stanislav Levin <slev@altlinux.org> 0.9-alt3
+- Applied upstream fixes.
+
 * Thu Sep 09 2021 Stanislav Levin <slev@altlinux.org> 0.9-alt2
 - Applied upstream fix (GH#213).
 
