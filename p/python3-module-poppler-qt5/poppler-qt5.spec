@@ -3,7 +3,7 @@
 
 Name: python3-module-poppler-qt5
 Version: 21.1.0
-Release: alt1
+Release: alt2
 
 Summary: A Python binding to Poppler-Qt5
 
@@ -26,7 +26,7 @@ BuildRequires: python3-module-setuptools
 
 BuildRequires: gcc-c++ qt5-base-devel libpoppler-qt5-devel
 BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-sip5 python3-module-PyQt5-devel python3-module-PyQt-builder
+BuildRequires: python3-module-sip6 python3-module-PyQt5-devel python3-module-PyQt-builder
 
 %description
 A Python binding for libpoppler-qt5 that aims for completeness and for
@@ -35,7 +35,6 @@ being actively maintained.
 %prep
 %setup
 %patch1 -p1
-%__subst "s|sipbuild|sipbuild5|" *.py
 
 %build
 export PATH=$PATH:%_qt5_bindir
@@ -61,6 +60,9 @@ chmod +x %buildroot/%python3_sitelibdir/*.so
 %python3_sitelibdir/PyQt5/bindings/popplerqt5/
 
 %changelog
+* Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 21.1.0-alt2
+- rebuild with sip6
+
 * Wed Jul 14 2021 Vitaly Lipatov <lav@altlinux.ru> 21.1.0-alt1
 - new version (21.1.0) with rpmgs script
 - build from pypi tarball, build with sip5 (thanks, Fedora!)
