@@ -1,5 +1,5 @@
 Name: dav1d
-Version: 0.5.2
+Version: 0.9.2
 Release: alt1
 
 Summary: AV1 cross-platform Decoder
@@ -39,10 +39,10 @@ Development files for dav1d, the AV1 cross-platform Decoder.
 %setup
 
 %build
-%meson --buildtype=release
+%meson
 
 %meson_build
-%meson_build doc/html
+#meson_build doc/html
 
 %install
 %meson_install
@@ -60,12 +60,15 @@ Development files for dav1d, the AV1 cross-platform Decoder.
 %_libdir/libdav1d.so.*
 
 %files -n libdav1d-devel
-%doc %_target_platform/doc/html
+#doc %_target_platform/doc/html
 %_includedir/%name
 %_libdir/libdav1d.so
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 0.9.2-alt1
+- new version 0.9.2 (with rpmrb script)
+
 * Sun Jan 26 2020 Vitaly Lipatov <lav@altlinux.ru> 0.5.2-alt1
 - new version 0.5.2 (with rpmrb script)
 
