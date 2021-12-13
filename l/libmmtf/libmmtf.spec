@@ -2,7 +2,7 @@
 
 Name: libmmtf
 Version: 1.0.0
-Release: alt2
+Release: alt3
 
 Summary: The pure C++ implementation of the MMTF API, decoder and encoder
 
@@ -25,8 +25,10 @@ BuildRequires: doxygen
 BuildRequires: gcc-c++ cmake
 BuildRequires: libmsgpack-devel >= 2.1.5
 
-BuildRequires: ctest catch-devel
+BuildRequires: ctest catch2-devel
 BuildRequires: mmtf_spec >= 1.0
+
+%add_optflags -I%_includedir/catch2
 
 %description
 The pure C++ implementation of the MMTF API, decoder and encoder.
@@ -72,6 +74,9 @@ make test
 %_includedir/mmtf.hpp
 
 %changelog
+* Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt3
+- switch to catch2
+
 * Tue Sep 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt2
 - ExcludeArch: armh (due libmsgpack)
 
