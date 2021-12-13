@@ -3,8 +3,8 @@
 %define oname qscintilla2
 
 Name: qscintilla2
-Version: 2.11.5
-Release: alt4
+Version: 2.13.1
+Release: alt1
 
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 
@@ -12,9 +12,9 @@ License: GPLv3
 Group: Development/KDE and QT
 Url: https://riverbankcomputing.com/software/qscintilla
 
-# Source-url: https://www.riverbankcomputing.com/static/Downloads/QScintilla/%version/QScintilla-%version.zip
+# Source-url: https://www.riverbankcomputing.com/static/Downloads/QScintilla/%version/QScintilla_src-%version.zip
 Source: QScintilla-%version.tar
-Patch1: %name-%version-alt-build.patch
+#Patch1: %name-%version-alt-build.patch
 
 %define libname lib%{oname}
 
@@ -24,7 +24,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires: qt5-base-devel qt5-tools-devel
-BuildRequires: python3-module-PyQt5-devel python3-module-sip5
+BuildRequires: python3-module-PyQt5-devel
+BuildRequires: python3-module-sip6 python3-module-PyQt-builder
 
 %description
 Qscintilla is a free source code editing component. It comes with complete
@@ -109,13 +110,13 @@ Documentation for %oname
 
 %prep
 %setup -n QScintilla-%version
-%patch1 -p2
+#patch1 -p2
 Q5CFLAGS="$(pkg-config --cflags Qt5Widgets)"
-Q5CFLAGS="$Q5CFLAGS $(pkg-config --cflags Qt5PrintSupport)"
-sed -i \
-	-e "s|@Q5CFLAGS@|$Q5CFLAGS|g" \
-	-e "s|@QSCINTILLALIB@|qscintilla2_qt5|g" \
-	Python/configure.py
+#Q5CFLAGS="$Q5CFLAGS $(pkg-config --cflags Qt5PrintSupport)"
+#sed -i \
+#	-e "s|@Q5CFLAGS@|$Q5CFLAGS|g" \
+#	-e "s|@QSCINTILLALIB@|qscintilla2_qt5|g" \
+#	Python/configure.py
 
 %build
 
@@ -129,37 +130,40 @@ forDebug() {
 %add_optflags -std=gnu++11
 %endif
 
-# Qt5
-pushd Qt4Qt5
+pushd src
 qmake-qt5 QMAKE_CFLAGS_RELEASE="%optflags" \
 	QMAKE_CXXFLAGS_RELEASE="%optflags" qscintilla.pro
 forDebug
 %make_build
 popd
 
-# Designer for Qt5
-pushd designer-Qt4Qt5
+pushd designer
 qmake-qt5 QMAKE_CFLAGS_RELEASE="%optflags" \
-	QMAKE_CXXFLAGS_RELEASE="%optflags" designer.pro
+	QMAKE_CXXFLAGS_RELEASE="%optflags -I../src" designer.pro
 forDebug
 %make_build
 popd
 
 pushd Python
-python3 configure.py --debug -n ../Qt4Qt5 -o ../Qt4Qt5 \
-	--apidir=%_datadir/qt5/qsci3 \
-	--qmake=%_qt5_bindir/qmake \
-	--pyqt=PyQt5
-sed -i \
-	's|-lpython%_python3_version|-lpython%{_python3_version}m|g' \
-	Makefile
-%make_build
+cp -v pyproject-qt5.toml pyproject.toml
+sip-build \
+    --no-make \
+    --qmake=%_qt5_bindir/qmake \
+    --qsci-features-dir ../src/features \
+    --qsci-include-dir ../src \
+    --qsci-library-dir ../src \
+    --api-dir %_datadir/qt5/qsci3/api/python \
+
+#sed -i \
+#	's|-lpython%_python3_version|-lpython%{_python3_version}m|g' \
+#	Makefile
+%make_build -C build
 popd
 
 %install
 
 # Python bindings for PyQt5
-pushd Python
+pushd Python/build
 mkdir -p %buildroot%python3_sitelibdir/PyQt5
 %makeinstall_std INSTALL_ROOT=%buildroot
 popd
@@ -173,8 +177,8 @@ mkdir -p %buildroot%_datadir/sip/qsci
 mkdir -p %buildroot%_datadir/qt5/qsci/api/python
 
 # Qt5 library
-install Qt4Qt5/lib%{oname}_qt5.so.*.*.* %buildroot%_libdir
-install Qt4Qt5/*.qm %buildroot%_qt5_translationdir
+install src/lib%{oname}_qt5.so.*.*.* %buildroot%_libdir
+install src/*.qm %buildroot%_qt5_translationdir
 pushd %buildroot%_libdir
 ln -s lib%{oname}_qt5.so.*.*.* `ls lib%{oname}_qt5.so.*.*.* | sed s/\.[0-9]*$//`
 ln -s lib%{oname}_qt5.so.*.*.* `ls lib%{oname}_qt5.so.*.*.* | sed s/\.[0-9]*\.[0-9]*$//`
@@ -188,16 +192,16 @@ done
 popd
 
 # Qt5 designer
-install -D designer-Qt4Qt5/libqscintillaplugin.so %buildroot%_qt5_plugindir/designer
+install -D designer/libqscintillaplugin.so %buildroot%_qt5_plugindir/designer
 
 # Qt5 headers
-install -m644 Qt4Qt5/*.h %buildroot%_qt5_headerdir/
-install -m644 Qt4Qt5/Qsci/*.h %buildroot%_qt5_headerdir/Qsci/
+install -m644 src/*.h %buildroot%_qt5_headerdir/
+install -m644 src/Qsci/*.h %buildroot%_qt5_headerdir/Qsci/
 
 # docs
 mkdir -p %buildroot%_docdir/%libname-%version
 cp -a doc/Scintilla %buildroot%_docdir/%libname-%version
-cp -a doc/html-Qt4Qt5 %buildroot%_docdir/%libname-%version
+cp -a doc/html %buildroot%_docdir/%libname-%version
 cp ChangeLog NEWS LICENSE %buildroot%_docdir/%libname-%version
 
 rm -rf %buildroot/%python3_sitelibdir/QScintilla-%version.dist-info
@@ -218,7 +222,7 @@ rm -rf %buildroot/%python3_sitelibdir/QScintilla-%version.dist-info
 
 %files -n python3-module-%oname-qt5
 %python3_sitelibdir/PyQt5/Qsci.so
-%python3_sitelibdir/PyQt5/Qsci.pyi
+#python3_sitelibdir/PyQt5/Qsci.pyi
 %_datadir/qt5/qsci3/api/python/*.api
 
 %files -n python3-module-%oname-qt5-devel
@@ -231,6 +235,10 @@ rm -rf %buildroot/%python3_sitelibdir/QScintilla-%version.dist-info
 %_docdir/%libname-%version
 
 %changelog
+* Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 2.13.1-alt1
+- new version 2.13.1 (with rpmrb script)
+- build with sip6
+
 * Sun Aug 01 2021 Vitaly Lipatov <lav@altlinux.ru> 2.11.5-alt4
 - drop suffix from the library package name
 - drop python2 and Qt4 support
