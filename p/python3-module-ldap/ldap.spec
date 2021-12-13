@@ -4,11 +4,11 @@
 %def_with check
 
 Name: python3-module-%mname
-Version: 3.3.1
+Version: 3.4.0
 Release: alt1
 
 Summary: An object-oriented API to access LDAP directory servers from Python programs
-License: Python-style
+License: Python-style or MIT
 Group: Development/Python3
 Url: https://www.python-ldap.org
 # Source-git: https://github.com/python-ldap/python-ldap
@@ -51,8 +51,11 @@ grep -rl '^#!/usr/bin/env python' | \
 %python3_build_debug
 
 %check
+export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
+export TOXENV=py3
+export BIN="$PATH:%_sbindir"
+export TOX_TESTENV_PASSENV=BIN
 tox.py3 --sitepackages -r -vv
 
 %install
@@ -69,6 +72,9 @@ tox.py3 --sitepackages -r -vv
 %python3_sitelibdir/python_ldap-%{version}*-*.egg-info
 
 %changelog
+* Tue Nov 30 2021 Stanislav Levin <slev@altlinux.org> 3.4.0-alt1
+- 3.3.1 -> 3.4.0.
+
 * Mon Jul 06 2020 Stanislav Levin <slev@altlinux.org> 3.3.1-alt1
 - 3.2.0 -> 3.3.1.
 
