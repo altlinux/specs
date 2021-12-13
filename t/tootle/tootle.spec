@@ -1,6 +1,6 @@
 Name: tootle
 Version: 1.0
-Release: alt1
+Release: alt2
 
 Summary: Simple Mastodon client
 
@@ -13,19 +13,23 @@ Source: %name-%version.tar
 Patch: fix-build-on-vala-46.patch
 # https://github.com/bleakgrey/tootle/pull/322
 Patch1: 858ee78fbebe161a4cdd707a469dc0f045211a51.patch
+# https://github.com/bleakgrey/tootle/pull/339
+Patch2: 0816105028c26965e37c9afc7c598854f3fecde1.patch
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson >= 0.40.0
+BuildRequires: meson >= 0.50.0
 BuildRequires: pkg-config cmake
-BuildRequires: vala libgranite-vala
+BuildRequires: vala >= 0.48
+BuildRequires: libgranite-vala
 
 BuildRequires: pkgconfig(glib-2.0) >= 2.30.0
 BuildRequires: pkgconfig(granite) >= 0.5
-BuildRequires: pkgconfig(gtk+-3.0)
-BuildRequires: pkgconfig(json-glib-1.0)
-BuildRequires: pkgconfig(libsoup-2.4)
-BuildRequires: pkgconfig(libhandy-1)
-BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(gtk4) >= 4.3.0
+BuildRequires: pkgconfig(json-glib-1.0) >= 1.4.4
+BuildRequires: pkgconfig(libsoup-2.4) >= 2.64
+BuildRequires: pkgconfig(libadwaita-1) >= 1.0.0
+BuildRequires: pkgconfig(libxml-2.0) >= 2.9.10
+BuildRequires: pkgconfig(libhandy-1) >= 1.0.0
 
 %description
 Simple Mastodon client with real-time notifications and multiple accounts
@@ -36,6 +40,7 @@ support.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 %meson
@@ -56,6 +61,9 @@ support.
 %_datadir/metainfo/com.github.bleakgrey.tootle.appdata.xml
 
 %changelog
+* Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt2
+- fix build with vala 0.54.1
+
 * Wed Sep 01 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
 - new version 1.0 (with rpmrb script)
 
