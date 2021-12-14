@@ -29,8 +29,8 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        96.0.4664.45
-Release:        alt3
+Version:        96.0.4664.110
+Release:        alt1
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -83,8 +83,7 @@ Patch018: 0018-IWYU-add-memory-for-std-unique_ptr-in-base-CommandLi.patch
 Patch019: 0019-libstdc-no-implicit-conversion-from-tuple-created-wi.patch
 Patch020: 0020-IWYU-add-string.h-for-memcmp-in-ui-DrmRenderNodePath.patch
 Patch021: 0021-IWYU-add-vector-for-std-vector-in-CouponDB.patch
-Patch022: 0022-linux-xfce-Introduced-a-hack-for-Xfwm.patch
-Patch023: 0023-linux-x11-Made-the-hidden-window-ignoring-new-proper.patch
+Patch023: 0022-linux-x11-Made-the-hidden-window-ignoring-new-proper.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -444,6 +443,15 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Dec 14 2021 Alexey Gladkov <legion@altlinux.ru> 96.0.4664.110-alt1
+- New version (96.0.4664.110).
+- Security fixes:
+  - CVE-2021-4098: Insufficient data validation in Mojo.
+  - CVE-2021-4099: Use after free in Swiftshader.
+  - CVE-2021-4100: Object lifecycle issue in ANGLE.
+  - CVE-2021-4101: Heap buffer overflow in Swiftshader.
+  - CVE-2021-4102: Use after free in V8.
+
 * Fri Nov 26 2021 Alexey Gladkov <legion@altlinux.ru> 96.0.4664.45-alt3
 - Allow fallback to any GL implementation (ALT#41430).
 
