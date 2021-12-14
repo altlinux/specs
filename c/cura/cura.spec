@@ -6,7 +6,7 @@
 
 Name: cura
 Epoch: 1
-Version: 4.11.0
+Version: 4.12.1
 Release: alt1
 Summary: 3D printer control software
 License: LGPLv3+
@@ -53,7 +53,7 @@ Requires: qt5-quickcontrols
 Requires: qt5-quickcontrols2
 Requires: qt5-graphicaleffects
 Requires: CuraEngine = %epoch:%version
-Requires: cura-fdm-materials = %version
+Requires: cura-fdm-materials
 Requires: 3dprinter-udev-rules
 Requires: python3-module-keyring >= 21
 
@@ -130,6 +130,9 @@ desktop-file-validate %buildroot%_datadir/applications/com.ultimaker.cura.deskto
 %_libexecdir/%name
 
 %changelog
+* Mon Dec 13 2021 Anton Midyukov <antohami@altlinux.org> 1:4.12.1-alt1
+- new version (4.12.1) with rpmgs script
+
 * Sat Sep 11 2021 Anton Midyukov <antohami@altlinux.org> 1:4.11.0-alt1
 - new version (4.11.0) with rpmgs script
 
