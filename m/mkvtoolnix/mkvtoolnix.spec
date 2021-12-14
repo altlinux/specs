@@ -15,7 +15,7 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 61.0.0
+Version: 63.0.0
 Release: alt1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
@@ -158,6 +158,9 @@ rake V=1 tests:run_unit
 %endif
 
 %changelog
+* Tue Dec 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 63.0.0-alt1
+- Updated to upstream version 63.0.0.
+
 * Fri Sep 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 61.0.0-alt1
 - Updated to upstream version 61.0.0.
 
