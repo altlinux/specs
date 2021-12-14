@@ -1,4 +1,6 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %def_disable bootstrap
 %def_disable docs
@@ -6,8 +8,8 @@
 %define oname mayavi
 
 Name:           Mayavi
-Version:        4.7.3
-Release:        alt2
+Version:        4.7.4
+Release:        alt1
 Summary:        Scientific data 3-dimensional visualizer
 
 Group:          Graphics
@@ -208,6 +210,9 @@ find %buildroot%python3_sitelibdir -type f -name '*py' -exec \
 %endif
 
 %changelog
+* Tue Dec 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.7.4-alt1
+- Updated to upstream version 4.7.4.
+
 * Wed Jun 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.7.3-alt2
 - Renamed tests packages.
 - Updated package dependencies.
