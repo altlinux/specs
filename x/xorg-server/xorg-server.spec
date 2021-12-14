@@ -28,7 +28,7 @@
 
 Name: xorg-server
 Version: 1.20.13
-Release: alt4
+Release: alt5
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -315,6 +315,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Tue Dec 14 2021 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.13-alt5
+- cherry pick upstream fixes for CVE-2021-4008, CVE-2021-4009, CVE-2021-4010, CVE-2021-4011
+
 * Thu Sep 16 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 2:1.20.13-alt4
 - Fixed detection of primary device on ARM systems with Mali Midgard
   and other headless GPUs (closes: #40946)
