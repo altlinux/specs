@@ -14,7 +14,7 @@
 %endif
 
 Name: 389-ds-base
-Version: 1.4.3.25
+Version: 1.4.3.28
 Release: alt1
 
 Summary: 389 Directory Server (base)
@@ -396,6 +396,9 @@ fi
 %endif
 
 %changelog
+* Thu Oct 28 2021 Stanislav Levin <slev@altlinux.org> 1.4.3.28-alt1
+- 1.4.3.25 -> 1.4.3.28.
+
 * Tue Aug 24 2021 Stanislav Levin <slev@altlinux.org> 1.4.3.25-alt1
 - 1.4.3.24 -> 1.4.3.25.
 
