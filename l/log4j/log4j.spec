@@ -18,11 +18,11 @@ BuildRequires: jpackage-default
 %bcond_without  jp_minimal
 
 Name:           log4j
-Version:        2.14.1
+Version:        2.15.0
 Release:        alt1_1jpp11
 Summary:        Java logging package
 BuildArch:      noarch
-License:        ASL 2.0
+License:        Apache-2.0
 
 URL:            http://logging.apache.org/%{name}
 Source0:        http://www.apache.org/dist/logging/%{name}/%{version}/apache-%{name}-%{version}-src.tar.gz
@@ -47,6 +47,7 @@ BuildRequires:  mvn(org.fusesource.jansi:jansi)
 BuildRequires:  mvn(org.jctools:jctools-core)
 BuildRequires:  mvn(org.osgi:osgi.core)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
+BuildRequires:  mvn(jakarta.servlet:jakarta.servlet-api)
 
 %if %{without jp_minimal}
 BuildRequires:  mvn(com.datastax.cassandra:cassandra-driver-core)
@@ -317,6 +318,11 @@ touch $RPM_BUILD_ROOT/etc/chainsaw.conf
 
 
 %changelog
+* Mon Dec 13 2021 Andrey Cherepanov <cas@altlinux.org> 0:2.15.0-alt1_1jpp11
+- new version
+- security fix for CVE-2021-44228
+- fix License tag according to SPDX
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 0:2.14.1-alt1_1jpp11
 - new version
 
