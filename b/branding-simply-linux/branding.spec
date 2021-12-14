@@ -1,6 +1,6 @@
 %define theme slinux
 %define Name Simply Linux
-%define codename Destiny
+%define codename Captain Finn
 %define status %nil
 
 %define brand simply
@@ -48,8 +48,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 9.1
-Release: alt2
+Version: 9.900
+Release: alt1
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
 %ifarch %ix86 x86_64
@@ -181,6 +181,7 @@ Summary(ru_RU.UTF-8): Описание дистрибутива "Просто Л
 License: GPLv2+
 Group: System/Configuration/Other
 BuildArch: noarch
+Requires: alt-os-release
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme  branding-alt-%theme-release
 Obsoletes: %obsolete_list  branding-alt-%theme-release
 Conflicts: %conflicts_list
@@ -222,7 +223,7 @@ Requires: gtk-theme-classiclooks
 Requires: gnome-themes-standard
 Requires: gnome-icon-theme icon-theme-simple-sl >= 2.7-alt3
 Requires: branding-simply-linux-graphics
-Requires: branding-simply-linux-backgrounds9
+Requires: branding-simply-linux-backgrounds10
 # plugins added on panel by default
 Requires: xfce4-datetime-plugin
 Requires: xfce4-places-plugin
@@ -237,14 +238,14 @@ Conflicts: xfce-settings-simply-linux
 %description xfce-settings
 This package contains default settings for Xfce for Simply linux distribution.
 
-%package backgrounds9
+%package backgrounds10
 Group: Graphics
 Summary: Backgrounds for SL-9
 License: CC-BY-NC-SA-3.0+
 BuildArch: noarch
-%branding_add_conflicts simply-linux backgrounds9
+%branding_add_conflicts simply-linux backgrounds10
 
-%description backgrounds9
+%description backgrounds10
 This package contains backgrounds for Simply Linux 9.
 
 %package slideshow
@@ -318,7 +319,7 @@ Some system settings for Simply Linux.
 
 %build
 autoconf
-THEME=%theme NAME='%Name' STATUS=%status VERSION=%version CODENAME=%codename GTK_THEME=%gtk_theme ICON_THEME=%icon_theme XFWM4_THEME=%xfwm4_theme XFWM4_COMPOSITING=%xfwm4_compositing DEFAULT_WEB_BROWSER=%web_browser DEFAULT_MAIL_READER=%mail_reader DEFAULT_FILE_MANAGER=%file_manager LO_ICON_THEME=%lo_icon_theme MEDIA_PLAYER=%media_player ALTERATOR_BROWSER_WEIGHT=%alterator_browser_weight ./configure
+THEME=%theme NAME='%Name' STATUS=%status VERSION=%version CODENAME='%codename' GTK_THEME=%gtk_theme ICON_THEME=%icon_theme XFWM4_THEME=%xfwm4_theme XFWM4_COMPOSITING=%xfwm4_compositing DEFAULT_WEB_BROWSER=%web_browser DEFAULT_MAIL_READER=%mail_reader DEFAULT_FILE_MANAGER=%file_manager LO_ICON_THEME=%lo_icon_theme MEDIA_PLAYER=%media_player ALTERATOR_BROWSER_WEIGHT=%alterator_browser_weight ./configure
 make
 
 %install
@@ -350,13 +351,10 @@ __EOF__
 
 #release
 install -pD -m644 /dev/null %buildroot%_sysconfdir/buildreqs/packages/ignore.d/%name-release
-install -pD -m644 components/systemd/os-release %buildroot%data_cur_dir/release/os-release
-echo "%Name %version %status (%codename)" >%buildroot%data_cur_dir/release/altlinux-release
+install -pD -m644 components/systemd/os-release %buildroot%_prefix/lib/os-release
+echo "%Name %version %status (%codename)" >%buildroot%_sysconfdir/altlinux-release
 for n in fedora redhat system; do
-	ln -s altlinux-release %buildroot%data_cur_dir/release/$n-release
-done
-for r in %buildroot%data_cur_dir/release/*-release; do
-  touch %buildroot%_sysconfdir/"${r##*/}"
+	ln -s altlinux-release %buildroot%_sysconfdir/$n-release
 done
 
 #notes
@@ -397,11 +395,6 @@ JAVA_POLICY_DESKTOP="$(find /usr/share/applications -mindepth 1 -maxdepth 1 \
 cp -a "$JAVA_POLICY_DESKTOP" %buildroot/usr/share/slinux-style/applications/
 echo "NoDisplay=True" >>%buildroot/usr/share/slinux-style/applications/"${JAVA_POLICY_DESKTOP##*/}"
 
-# Workarond for rcc files: don't build it, just install old one:
-# seems something wrong with newly created files, they are ignored.
-# This issue must be further investigated.
-cp slinux.rcc %buildroot%_datadir/alterator-browser-qt/design/
-
 %ifarch %ix86 x86_64
 #bootloader
 %pre bootloader
@@ -439,13 +432,6 @@ shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 [ "$1" -eq 1 ] || exit 0
 subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 
-#release
-%post release
-if ! [ -e %_sysconfdir/altlinux-release ] && \
-   ! [ -e %_sysconfdir/os-release ]; then
-	cp -a %data_cur_dir/release/*-release %_sysconfdir/
-fi
-
 #notes
 %post notes
 if ! [ -e %_datadir/alt-notes/license.all.html ]; then
@@ -476,10 +462,9 @@ fi
 %exclude %_datadir/plymouth/themes/%theme/*.in
 
 %files release
-%dir %data_cur_dir
-%data_cur_dir/release/
+%_sysconfdir/*-release
+%_prefix/lib/os-release
 %_sysconfdir/buildreqs/packages/ignore.d/*
-%ghost %config(noreplace) %_sysconfdir/*-release
 
 %files notes
 %dir %data_cur_dir
@@ -497,7 +482,7 @@ fi
 /etc/skel/.vimrc
 /etc/skel/.gtkrc-2.0
 
-%files backgrounds9
+%files backgrounds10
 /usr/share/backgrounds/xfce/*
 
 %files slideshow
@@ -523,6 +508,34 @@ fi
 %_datadir/install3/*
 
 %changelog
+* Tue Dec 14 2021 Mikhail Efremov <sem@altlinux.org> 9.900-alt1
+- xfce-settings: Drop compiz settings.
+- xfce-settings: Drop meditrc.
+- xfce-settings: Rename exo-*.desktop -> xfce4-*.desktop.
+- xfce-settings: Update xfce4-notifyd.xml.
+- xfce-settings,backgrounds10: Update backgrounds for SL-10.
+- bootsplash: Update images for SL-10.
+- Revert "Workaround for rcc file".
+- Fix codename handling.
+- menu: Add newline to end of altlinux-wine.directory.
+- menu: Drop wine.desktop.
+- menu: Update wine-regedit.desktop.
+- menu: Update xkill.desktop.
+- menu: Drop xfce-xfcalendar-settings.desktop.
+- menu: Drop wesnoth.desktop.
+- menu: Rename and update shotwell.desktop.
+- menu: Drop ppapi-plugin-adobe-flash.desktop.
+- menu: Drop openttd.desktop.
+- menu: Drop gimagereader-qt5.desktop.
+- menu: Drop easytag.desktop.
+- menu: Update dropbox.desktop.
+- menu: Update cups.desktop.
+- menu: Drop com.obsproject.Studio.desktop.
+- menu: Drop medit.desktop.
+- release: Package /usr/lib/os-release.
+- os-release.in: Add BUILD_ID.
+- Set codename to Captain Finn.
+
 * Mon Apr 26 2021 Mikhail Efremov <sem@altlinux.org> 9.1-alt2
 - menu: Add TryExec to all desktop files.
 - xfwm4.xml.in: Don't force window content display (by Ivan A. Melnikov).

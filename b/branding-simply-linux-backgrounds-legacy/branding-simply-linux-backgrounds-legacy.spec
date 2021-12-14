@@ -1,5 +1,5 @@
 Name: branding-simply-linux-backgrounds-legacy
-Version: 9.0
+Version: 10.0
 Release: alt1
 BuildArch: noarch
 
@@ -9,7 +9,7 @@ Source: backgrounds-%version.tar
 
 Group: Graphics
 Summary: Legacy SL backgrounds
-License: CC-BY-NC-SA-3.0+
+License: CC-BY-NC-SA-4.0
 %branding_add_conflicts simply-linux backgrounds-legacy
 
 Conflicts: branding-simply-linux-xfce-settings < 7.98.1-alt1
@@ -22,7 +22,7 @@ Simply Linux versions 5, 6, 7.
 
 %package -n branding-simply-linux-backgrounds-vladstudio
 Summary: Backgrounds from vladstudio.com
-License: CC-BY-NC-SA-3.0+
+License: CC-BY-NC-SA-4.0
 Group: Graphics
 %branding_add_conflicts simply-linux backgrounds-vladstudio
 Conflicts: branding-simply-linux-xfce-settings < 7.98.1-alt1
@@ -33,12 +33,22 @@ This package contains backgrounds from vladstudio.com.
 %package -n branding-simply-linux-backgrounds8
 Group: Graphics
 Summary: Backgrounds for SL-8
-License: CC-BY-NC-SA-3.0+
+License: CC-BY-NC-SA-4.0
 BuildArch: noarch
 %branding_add_conflicts simply-linux backgrounds8
 
 %description -n branding-simply-linux-backgrounds8
 This package contains backgrounds for Simply Linux 8.
+
+%package -n branding-simply-linux-backgrounds9
+Group: Graphics
+Summary: Backgrounds for SL-9
+License: CC-BY-NC-SA-4.0
+BuildArch: noarch
+%branding_add_conflicts simply-linux backgrounds8
+
+%description -n branding-simply-linux-backgrounds9
+This package contains backgrounds for Simply Linux 9.
 
 %prep
 %setup -n backgrounds-%version
@@ -59,7 +69,14 @@ install -m 644 slinux_*.{jpg,png} %buildroot%_datadir/backgrounds/xfce/
 %files -n branding-simply-linux-backgrounds8
 %_datadir/backgrounds/xfce/slinux_june_2017_*
 
+%files -n branding-simply-linux-backgrounds9
+%_datadir/backgrounds/xfce/slinux_december_2019_*
+
 %changelog
+* Tue Oct 05 2021 Mikhail Efremov <sem@altlinux.org> 10.0-alt1
+- Added backgrounds for Simply Linux 9.
+- Updated License tag.
+
 * Mon Dec 02 2019 Mikhail Efremov <sem@altlinux.org> 9.0-alt1
 - Add backgrounds for Simply Linux 8.
 
