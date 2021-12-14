@@ -3,7 +3,7 @@
 
 Name:       python3-module-%oname
 Version:    0.2.2
-Release:    alt1
+Release:    alt2
 License:    %mit
 Group:      Development/Python3
 Summary:    ClickHouse Python Driver with native interface support.
@@ -15,6 +15,9 @@ BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-tzlocal
 
 Requires: python3-module-clickhouse-cityhash
+Requires: python3-module-numpy
+
+%add_python3_req_skip pandas pandas.api.types
 
 %description
 ClickHouse Python Driver with native (TCP) interface support.
@@ -57,6 +60,9 @@ install -pm0644 docs/*/man/*.1 %buildroot/%_man1dir/
 %python3_sitelibdir/clickhouse_driver/tests/
 
 %changelog
+* Tue Dec 14 2021 Anton Farygin <rider@altlinux.ru> 0.2.2-alt2
+- make pandas requires optional
+
 * Wed Sep 29 2021 Anton Farygin <rider@altlinux.ru> 0.2.2-alt1
 - 0.2.2
 
