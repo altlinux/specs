@@ -2,11 +2,11 @@
 %define _stripped_files_terminate_build 1
 
 # clang doesn't know used LTO flags
-%global optflags_lto %nil
+%define optflags_lto -flto=thin
 
 Name:    castxml
-Version: 0.4.3
-Release: alt2
+Version: 0.4.4
+Release: alt1
 Summary: C-family abstract syntax tree XML output tool
 Group:   Development/Other
 License: Apache-2.0
@@ -89,6 +89,9 @@ popd
 %_datadir/%name/empty.cpp
 
 %changelog
+* Tue Dec 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.4-alt1
+- Updated to upstream release version 0.4.4.
+
 * Mon Aug 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.3-alt2
 - Disabled LTO.
 
