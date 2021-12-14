@@ -3,7 +3,7 @@ Summary: XDG desktop settings for Kometa distros
 Summary(ru): Настройки рабочего окружения дистрибутивов Комета
 License: GPL-3.0
 Group: Graphical desktop/Other
-Version: 1.0
+Version: 1.1
 Release: alt1
 Source0: kometa-xdg-%version.tar
 Source1: COPYING
@@ -44,6 +44,7 @@ Summary: KDE 5 desktop settings for classic variant of Kometa
 Summary(ru): Настройки KDE 5 для классического варианта Кометы
 Group: Graphical desktop/KDE
 Requires: %name-core = %EVR
+Requires: kometa-icons-theme-classic
 
 %description plasma5-classic
 KDE 5 desktop settings for classic variant of Kometa
@@ -85,5 +86,8 @@ cd scripts
 ./test.sh
 
 %changelog
+* Tue Dec 14 2021 Mikhail Novosyolov <mikhailnov@altlinux.org> 1.1-alt1
+- set default icon theme
+
 * Tue Dec 14 2021 Mikhail Novosyolov <mikhailnov@altlinux.org> 1.0-alt1
 - Init
