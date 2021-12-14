@@ -4,7 +4,7 @@
 
 Name: deepin-daemon
 Version: 5.13.12
-Release: alt2
+Release: alt2.1
 Epoch: 1
 Summary: Daemon handling the DDE session settings
 License: GPL-3.0+
@@ -83,12 +83,12 @@ BuildRequires: golang-github-msteinert-pam-devel
 BuildRequires: golang-github-lofanmi-pinyin-devel
 # Requires: bamfdaemon libbluez deepin-desktop-base deepin-desktop-schemas deepin-session-ui deepin-polkit-agent
 %ifnarch s390 s390x %arm power64
-Requires: acpid rfkill
+Requires: rfkill
 %endif
 # Requires: upower udisks2 systemd pulseaudio libnm polkit-gnome gnome-keyring deepin-session-ui xorg-drv-wacom libinput xdotool fontconfig pam libnl3 libfprint2 dnsmasq
 # Manually founded requires in the code.
 #Requires: glibc-utils deepin-launcher deepin-kwin setxkbmap systemd-services dbus-tools qt5-dbus libgio deepin-system-monitor coreutils util-linux xinitrc lightdm gdm-data sddm lxde-lxdm python3 zsh xterm xauth setup xorg-server sysvinit
-Requires: xdotool bamfdaemon xkeyboard-config
+Requires: bamfdaemon
 %ifnarch armh i586
 Requires: lshw
 %endif
@@ -296,6 +296,9 @@ chmod +x %buildroot%_datadir/%repo/audio/echoCancelEnable.sh
 %_datadir/locale/es_419/LC_MESSAGES/dde-daemon.mo
 
 %changelog
+* Tue Dec 14 2021 Leontiy Volodin <lvol@altlinux.org> 1:5.13.12-alt2.1
+- Removed unused requires from previous versions.
+
 * Wed Jun 16 2021 Leontiy Volodin <lvol@altlinux.org> 1:5.13.12-alt2
 - Used lightdm lock screen instead dde-lock.
 
