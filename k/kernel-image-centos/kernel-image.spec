@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 29
+%define centos_release 30
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -629,6 +629,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Dec 14 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.30-alt1.el9
+- Rebase KVM x86 to 5.15
+
 * Fri Dec 10 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.29-alt1.el9
 - hrtimer updates for RT prerequisites
 
