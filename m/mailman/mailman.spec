@@ -2,7 +2,7 @@
 #	add systemd init support
 #       use xz for large archives in /usr/share/mailman/cron/nightly_gzip
 Name: mailman
-Version: 2.1.38
+Version: 2.1.39
 Release: alt1
 Epoch: 5
 
@@ -376,6 +376,9 @@ fi
 %docdir/mailman-*
 
 %changelog
+* Tue Dec 14 2021 L.A. Kostis <lakostis@altlinux.ru> 5:2.1.39-alt1
+- 2.1.38 -> 2.1.39 (fixes for CVE-2021-42097 and CVE-2021-44227).
+
 * Wed Dec 01 2021 L.A. Kostis <lakostis@altlinux.ru> 5:2.1.38-alt1
 - 2.1.37 -> 2.1.38 (fixes for CVE-2021-44227).
 
