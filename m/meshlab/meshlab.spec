@@ -1,8 +1,8 @@
-%global vcglibver 2021.07
+%global vcglibver 2021.10
 
 Name: meshlab
-Version: 2021.07
-Release: alt2
+Version: 2021.10
+Release: alt1
 
 Summary: A system for processing and editing unstructured 3D triangular meshes
 License: GPLv2+ and BSD and Public Domain
@@ -136,9 +136,6 @@ for x in 16 32 48; do
 	  -resize $x'x'$x %buildroot/%_iconsdir/hicolor/$x'x'$x/apps/%name.png
 done
 
-# remove static library
-rm %buildroot%_libdir/*.a
-
 %files
 %doc README.md
 %doc docs/readme.txt
@@ -151,6 +148,9 @@ rm %buildroot%_libdir/*.a
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Mon Dec 13 2021 Anton Midyukov <antohami@altlinux.org> 2021.10-alt1
+- new version (2021.10) with rpmgs script
+
 * Fri Oct 22 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2021.07-alt2
 - e2k: fixed OpenMP issues
 
