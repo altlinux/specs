@@ -12,7 +12,7 @@
 
 Name: shotwell
 Version: %ver_major.3
-Release: alt2
+Release: alt2.1
 
 Summary: digital photo organizer designed for the GNOME desktop environment
 Group: Graphics
@@ -63,6 +63,10 @@ mode, and export them to share with others.
 
 %build
 %add_optflags -D_GIT_VERSION=%(echo %version | tr -d .)
+%define vala_ver %(rpm -q --qf '%%{VERSION}' vala)
+%if "%(rpmvercmp %vala_ver 0.52.8 )" <= "0"
+%add_optflags -DEXPORT_DIALOG_DEFAULT_SCALE=1200
+%endif
 %meson -Dunity_support=false \
        -Dinstall_apport_hook=false \
        %{?_enable_face_detection:-Dface_detection=true}
@@ -105,6 +109,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Tue Dec 14 2021 Yuri N. Sedunov <aris@altlinux.org> 0.31.3-alt2.1
+- fixed build with vala-0.52.8 for p10
+
 * Sat Dec 11 2021 Yuri N. Sedunov <aris@altlinux.org> 0.31.3-alt2
 - updated to shotwell-0.31.3-111-gaf5a7ae0
 
