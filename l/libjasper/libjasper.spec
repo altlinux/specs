@@ -1,6 +1,6 @@
 Name: libjasper
 Version: 2.0.33
-Release: alt1
+Release: alt2
 
 Summary: Implementation of the codec specified in the JPEG-2000 Part-1 standard
 Summary(ru_RU.UTF8): Реализация кодеков по спецификации стандарта JPEG-2000, часть I
@@ -15,7 +15,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake imake libGL-devel libXext-devel libXi-devel libXmu-devel libglut-devel libjpeg-devel
+BuildRequires: cmake
+BuildRequires: libjpeg-devel
+BuildRequires: libGL-devel libXext-devel libXi-devel libXmu-devel libglut-devel
 
 %description
 JasPer is a collection
@@ -55,10 +57,13 @@ code stream format defined in ISO/IEC 15444-1:2000.
 
 %prep
 %setup
+# fix bug with glut detection
+subst "s|.*GLUT_glut_LIBRARY.*||" build/cmake/modules/JasOpenGL.cmake
 
 %build
 # TODO: -DJAS_ENABLE_HIDDEN=true
-%cmake -DJAS_ENABLE_AUTOMATIC_DEPENDENCIES=OFF
+%cmake -DJAS_ENABLE_AUTOMATIC_DEPENDENCIES=OFF \
+       -DJAS_ENABLE_DOC=OFF
 %cmake_build
 
 %install
@@ -69,7 +74,10 @@ code stream format defined in ISO/IEC 15444-1:2000.
 %_libdir/lib*.so.*
 
 %files -n jasper
-%_bindir/*
+%_bindir/imgcmp
+%_bindir/imginfo
+%_bindir/jasper
+%_bindir/jiv
 %_man1dir/*
 
 %files devel
@@ -81,6 +89,9 @@ code stream format defined in ISO/IEC 15444-1:2000.
 %doc %_docdir/JasPer/
 
 %changelog
+* Tue Dec 14 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.33-alt2
+- fix build with unbuggy cmake
+
 * Thu Aug 26 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.33-alt1
 - new version 2.0.33 (with rpmrb script)
 
