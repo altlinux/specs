@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %ifarch armh
 %define optflags_lto %nil
 %endif
@@ -31,7 +31,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.40
+Version: %ver_major.41
 Release: alt1
 
 Summary: Media Sharing Server
@@ -44,10 +44,10 @@ Source: https://github.com/PipeWire/pipewire/archive/%version/%name-%version.tar
 %else
 Vcs: https://github.com/PipeWire/pipewire.git
 Source: %name-%version.tar
+%endif
 #https://gitlab.freedesktop.org/pipewire/media-session.git
 # 0.4.1-4-ge4b49a306
 Source1: media-session-%ms_ver.tar
-%endif
 Patch: %name-0.3.19-alt-rpath.patch
 
 Requires: %name-libs = %version-%release
@@ -280,6 +280,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Tue Dec 14 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.41-alt1
+- 0.3.41
+
 * Fri Nov 12 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.40-alt1
 - 0.3.40 + media-session-0.4.1-4-ge4b49a306
 
