@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:    gitea
-Version: 1.15.6
+Version: 1.15.7
 Release: alt1
 
 Summary: Git with a cup of tea, painless self-hosted git service
@@ -95,6 +95,9 @@ useradd -r -g %name -c 'Gitea daemon' \
 %doc *.md
 
 %changelog
+* Tue Dec 14 2021 Alexey Shabalin <shaba@altlinux.org> 1.15.7-alt1
+- 1.15.7
+
 * Sun Oct 31 2021 Alexey Shabalin <shaba@altlinux.org> 1.15.6-alt1
 - Build new version.
 
