@@ -1,5 +1,5 @@
 Name: rapid-photo-downloader
-Version: 0.9.26
+Version: 0.9.27
 Release: alt1
 
 %define xdg_name net.damonlynch.rapid_photo_downloader
@@ -25,11 +25,13 @@ Requires: python3-module-PyQt5 >= 5.9.2 libqt5-svg
 Requires: python3-module-zmq >= 16.0.2
 Requires: python3-module-easygui >= 0.98.1
 Requires: python3-module-pymediainfo >= 2.2.0
-Requires: python3-module-rawkit >= 0.6.0
 Requires: python3-module-pyprind
 Requires: python3-module-colorlog
 Requires: gphoto2 exiv2 perl-Image-ExifTool
 Requires: gst-plugins-good1.0 gst-libav
+# since 0.9.27
+Requires: showinfilemanager >= 1.1.1
+Requires: libimobiledevice ifuse fuse
 
 %add_typelib_req_skiplist typelib(Unity)
 
@@ -63,10 +65,12 @@ cp -r build/mo/* %buildroot%_datadir/locale
 %_man1dir/analyze-pv-structure.1.*
 %_man1dir/%name.1.*
 %_datadir/apps/solid/actions/%xdg_name.desktop
-%doc README.rst RELEASE_NOTES.rst CHANGES.rst
-
+%doc README* RELEASE_NOTES* CHANGES*
 
 %changelog
+* Tue Dec 14 2021 Yuri N. Sedunov <aris@altlinux.org> 0.9.27-alt1
+- 0.9.27
+
 * Fri Dec 25 2020 Yuri N. Sedunov <aris@altlinux.org> 0.9.26-alt1
 - 0.9.26
 
