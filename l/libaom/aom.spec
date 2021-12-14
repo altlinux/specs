@@ -14,12 +14,12 @@
 %define _cmake__builddir BUILD
 
 Name: lib%oname
-Version: 3.1.2
-Release: alt2
+Version: 3.2.0
+Release: alt1
 Summary: AV1 Codec Library
 Group: System/Libraries
 License: BSD-2-Clause
-Url: http://aomedia.org/
+Url: https://aomedia.org/
 
 # https://aomedia.googlesource.com/aom/
 Source: %name-%version.tar
@@ -142,6 +142,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/%_cmake__builddir/third_party/g
 %doc %_cmake__builddir/docs/html
 
 %changelog
+* Tue Dec 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.0-alt1
+- Updated to upstream version 3.2.0.
+
 * Mon Aug 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.2-alt2
 - Disabled installation of static libraries.
 
