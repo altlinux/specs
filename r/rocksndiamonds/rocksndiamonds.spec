@@ -1,5 +1,5 @@
 Name: rocksndiamonds
-Version: 4.3.0.1
+Version: 4.3.0.2
 Release: alt1
 
 Summary: A boulderdash like game
@@ -42,7 +42,7 @@ Some features:
 
 %package data
 Summary: Rocks'N'Diamonds levels
-License: GPL
+License: GPL-2.0
 Group: Games/Arcade
 BuildArch: noarch
 
@@ -81,6 +81,9 @@ install -m644 %SOURCE12 -D %buildroot/%_liconsdir/%name.png
 %_pkgdatadir
 
 %changelog
+* Tue Dec 14 2021 Grigory Ustinov <grenka@altlinux.org> 4.3.0.2-alt1
+- Automatically updated to 4.3.0.2.
+
 * Tue Nov 23 2021 Grigory Ustinov <grenka@altlinux.org> 4.3.0.1-alt1
 - Automatically updated to 4.3.0.1.
 
