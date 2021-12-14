@@ -8,8 +8,8 @@
 %def_disable check
 
 Name: manticore
-Version: 3.6.0
-Release: alt2
+Version: 4.0.2
+Release: alt1
 
 Summary: Manticore full-text search server
 
@@ -29,11 +29,16 @@ Patch2000: %name-e2k.patch
 Conflicts: mnogosearch
 Conflicts: sphinx
 
+ExclusiveArch: x86_64
+
 BuildRequires: flex bison
 BuildRequires: boost-context-devel boost-devel-headers
-BuildRequires: libexpat-devel libmysqlclient21-devel libre2-devel libssl-devel libunixODBC-devel libstemmer-devel postgresql-devel zlib-devel
+BuildRequires: libexpat-devel libmariadb-devel libre2-devel libssl-devel libunixODBC-devel libstemmer-devel postgresql-devel zlib-devel
 #BuildRequires: libjemalloc-devel
 
+BuildRequires: libmanticore-columnar-devel
+
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
 %if_enabled check
@@ -79,7 +84,7 @@ Manticore Search 3.x format.
 
 %prep
 %setup
-%patch -p1
+#patch -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -87,24 +92,37 @@ Manticore Search 3.x format.
 mkdir -p ../cache
 cp -r googletest ../cache/googletest-src
 %endif
-subst "s|.*Boost_USE_STATIC_LIBS ON.*||" cmake/GetBoostContext.cmake
-subst "s|.*Boost_USE_STATIC_RUNTIME ON.*||" cmake/GetBoostContext.cmake
+subst "s|.*Boost_USE_STATIC_LIBS ON.*||" src/CMakeLists.txt
+subst "s|.*Boost_USE_STATIC_RUNTIME ON.*||" src/CMakeLists.txt
 # broken usage of CMAKE_INSTALL_PREFIX
 subst 's|"/usr"||' CMakeLists.txt
 # hack to set correct dirs
-subst 's|SET ( LOCALDATADIR .*|SET ( LOCALDATADIR "/var/lib/manticore" )|' CMakeLists.txt
-subst 's|SET ( FULL_SHARE_DIR .*|SET ( FULL_SHARE_DIR "/usr/share/manticore" )|' CMakeLists.txt
+#subst 's|SET ( LOCALDATADIR .*|SET ( LOCALDATADIR "/var/lib/manticore" )|' CMakeLists.txt
+#subst 's|SET ( FULL_SHARE_DIR .*|SET ( FULL_SHARE_DIR "/usr/share/manticore" )|' CMakeLists.txt
+
+subst "s|find_package(re2|find_package(RE2|" cmake/GetRE2.cmake
+
+# https://github.com/doctest/doctest/issues/473
+subst "s|SIGSTKSZ|65635|" src/searchd.cpp
 
 %build
 # DISABLE_TESTING=ON need for enable api build
 %cmake_insource -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-%if_disabled check
-    -DDISTR_BUILD=rhel8 \
-%endif
-    -DUSE_GALERA=OFF -DWITH_ICU=OFF -DWITH_COLUMNAR=OFF -DUSE_JEMALLOC=OFF \
+    -DWITH_GALERA=OFF \
+    -DWITH_MYSQL=ON \
+    -DWITH_EXPAT=ON \
+    -DWITH_POSTGRESQL=ON \
+    -DWITH_ICU=OFF \
+    -DWITH_ICU_FORCE_STATIC=OFF \
+    -DWITH_COLUMNAR=OFF \
     -DWITH_RE2_LIBS=%_libdir \
-    -DWITH_STEMMER=OFF \
-    -DSYSCONFDIR=/etc/manticoresearch
+    -DWITH_RE2_FORCE_STATIC=OFF \
+    -DWITH_STEMMER_FORCE_STATIC=OFF \
+    -DWITH_STEMMER_LIBS=%_libdir \
+    -DWITH_JEMALLOC=OFF \
+    -DSYSCONFDIR=/etc/manticoresearch \
+    -DLOCALDATADIR=/var/lib/manticore \
+    -DFULL_SHARE_DIR=/usr/share/manticore
 %make_build
 
 %check
@@ -113,12 +131,12 @@ ctest -C Debug
 %install
 %makeinstall_std
 #rm -fv %buildroot%_libdir/debug/usr/bin/*
-rm -rfv %buildroot/usr/include/manticore/sphinxudf.h
+rm -rv %buildroot/usr/include/manticore/sphinxudf.h
 #    /usr/bin/index_converter
-rm -rfv %buildroot/usr/lib/systemd/system-generators/manticore-search-generator
-rm -rfv %buildroot/usr/lib/tmpfiles.d/manticore.conf
-rm -rfv %buildroot/usr/share/doc/MANTICORE/
-rm -rfv %buildroot/%_datadir/%name/api/
+rm -rv %buildroot/usr/lib/systemd/system-generators/manticore-search-generator
+rm -rv %buildroot/usr/lib/tmpfiles.d/manticore.conf
+rm -rv %buildroot/usr/share/doc/%name/
+rm -rv %buildroot/%_datadir/%name/api/
 
 
 cd %buildroot/
@@ -136,12 +154,13 @@ tar xfv %SOURCE2
 
 
 %files
-%doc README.md
+%doc README.md example.sql
 %_bindir/indexer
 %_bindir/indextool
 %_bindir/searchd
 %_bindir/spelldump
 %_bindir/wordbreaker
+#_bindir/manticore_new_cluster
 %_datadir/%name/
 %_unitdir/*
 %dir %_sysconfdir/manticoresearch/
@@ -156,6 +175,9 @@ tar xfv %SOURCE2
 %_bindir/index_converter
 
 %changelog
+* Sat Dec 11 2021 Vitaly Lipatov <lav@altlinux.ru> 4.0.2-alt1
+- new version 4.0.2 (with rpmrb script)
+
 * Tue Aug 31 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.6.0-alt2
 - added patch for Elbrus
 - added check
