@@ -1,5 +1,5 @@
 Name:		arcclock
-Version:	1.2
+Version:	1.2.1
 Release:	alt1
 Summary:	Simple desktop clock
 Url:		https://www.linux-apps.com/p/1190699/
@@ -45,6 +45,9 @@ install -Dp -m 0644 ./arcclock.svg %buildroot%_iconsdir/hicolor/scalable/apps/%n
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Tue Dec 14 2021 Motsyo Gennadi <drool@altlinux.ru> 1.2.1-alt1
+- update
+
 * Fri Oct 06 2017 Motsyo Gennadi <drool@altlinux.ru> 1.2-alt1
 - 1.2
 
