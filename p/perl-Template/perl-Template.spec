@@ -1,10 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 # altfork: https://bugzilla.altlinux.org/show_bug.cgi?id=38635
 %def_without altbugzilla
-%define _unpackaged_files_terminate_build 1
 %define dist Template-Toolkit
 Name: perl-Template
-Version: 3.009
-Release: alt2
+Version: 3.010
+Release: alt1
 
 Summary: Perl Template Toolkit
 License: GPLv2+ or Artistic-2.0
@@ -71,6 +71,9 @@ LaTeX, and so on.
 	%_man1dir/ttree.*
 
 %changelog
+* Wed Dec 15 2021 Igor Vlasenko <viy@altlinux.org> 3.010-alt1
+- new version
+
 * Wed Sep 02 2020 Igor Vlasenko <viy@altlinux.ru> 3.009-alt2
 - restored patch2
 
