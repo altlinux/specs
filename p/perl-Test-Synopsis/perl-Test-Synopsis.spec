@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -8,7 +9,7 @@ BuildRequires: perl-podlators
 %global debug_package %{nil}
 
 Name:		perl-Test-Synopsis
-Version:	0.16
+Version:	0.17
 Release:	alt1
 Summary:	Test your SYNOPSIS code
 Group:		Development/Other
@@ -89,14 +90,15 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 
 %files
 %if 0%{?_licensedir:1}
-%doc LICENSE
 %else
-%doc LICENSE
 %endif
 %doc Changes README README.md
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Wed Dec 15 2021 Igor Vlasenko <viy@altlinux.org> 0.17-alt1
+- automated CPAN update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - automated CPAN update
 
