@@ -1,7 +1,7 @@
 %define  modulename cysignals
 
 Name:    python3-module-%modulename
-Version: 1.11.0
+Version: 1.11.2
 Release: alt1
 
 Summary: cysignals: interrupt and signal handling for Cython
@@ -38,6 +38,9 @@ signals and errors) in Cython code.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Dec 15 2021 Andrey Cherepanov <cas@altlinux.org> 1.11.2-alt1
+- New version.
+
 * Fri Nov 26 2021 Andrey Cherepanov <cas@altlinux.org> 1.11.0-alt1
 - New version.
 
