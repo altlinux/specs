@@ -2,18 +2,19 @@
 %define oname gmpy2
 
 Name: python3-module-%oname
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: GMP/MPIR, MPFR, and MPC interface
 
 License: LGPL-3.0+
 Group: Development/Python3
-Url: http://code.google.com/p/gmpy/
+Url: https://github.com/aleaxit/gmpy
 
-# Source-url: https://pypi.python.org/packages/90/f4/9a2e384b325b69bc5827b9a6510a8fb4a51698c915c06a3f25a86458892a/%{oname}-%{version}.zip
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-devel
@@ -81,6 +82,9 @@ python3 test/runtests.py
 %doc docs/_build/html test*
 
 %changelog
+* Thu Dec 16 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
+- new version 2.1.1 (with rpmrb script)
+
 * Sun Jul 04 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
 - build python3 module only
 
