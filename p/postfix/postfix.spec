@@ -1,15 +1,15 @@
 Name: postfix
-Version: 3.6.2
-Release: alt1
+Version: 3.6.3
+Release: alt2
 Epoch: 1
 
 Summary: Postfix Mail Transport Agent
 License: EPL-2.0 and IPL-1.0
 Group: System/Servers
-Url: http://www.postfix.org/
+Url: https://www.postfix.org/
 
-# ftp://ftp.porcupine.org/mirrors/postfix-release/official/postfix-%version.tar.gz
-Source: %name-%version.tar.gz
+# Repacked ftp://ftp.porcupine.org/mirrors/postfix-release/official/postfix-%version.tar.gz
+Source: %name-%version.tar
 
 Patch: postfix-%version-%release.patch
 
@@ -54,7 +54,6 @@ Patch: postfix-%version-%release.patch
 %define setgid_group postdrop
 %define default_privs postman
 
-%define restart_flag /var/run/%name.restart
 %define libpostfix lib%name-%version.so
 %define libpostfix_dict lib%{name}_dict-%version.so
 
@@ -435,19 +434,6 @@ install -pm755 %_buildaltdir/postfix-generate-ssl-certificate \
 	%buildroot%_sbindir/
 %endif #with tls
 
-# Install filetrigger.
-mkdir -p %buildroot%_rpmlibdir
-cat > %buildroot%_rpmlibdir/%name.filetrigger <<'EOF'
-#!/bin/sh
-LC_ALL=C grep -Fqs %_sbindir/postfix &&
-	[ -f %restart_flag ] ||
-	exit 0
-rm -f %restart_flag
-service %name start
-exit 0
-EOF
-chmod 0755 %buildroot%_rpmlibdir/%name.filetrigger
-
 # Install /etc/aliases.
 ln -rsnf %buildroot%config_directory/aliases %buildroot%_sysconfdir/
 
@@ -507,18 +493,8 @@ sed '/\/postfix-[^-.]*\.so/d' -i %name.files
 /usr/sbin/useradd -r -n -g %name -d %ROOT -s /dev/null -c %name %name >/dev/null 2>&1 ||:
 /usr/sbin/useradd -r -n -g %default_privs -d /dev/null -s /dev/null -c %default_privs %default_privs >/dev/null 2>&1 ||:
 
-rm -f %restart_flag
+%pre_service_stop_posttrans_start %name
 if [ $1 -ge 2 ]; then
-	SYSTEMCTL=systemctl
-	if sd_booted && $SYSTEMCTL --version >/dev/null 2>&1; then
-		$SYSTEMCTL is-active %name.service >/dev/null 2>&1 &&
-		$SYSTEMCTL stop %name.service &&
-		touch %restart_flag ||:
-	else
-		%_initdir/%name status >/dev/null 2>&1 &&
-		%_initdir/%name stop &&
-		touch %restart_flag ||:
-	fi
 	if [ ! -f %daemon_directory/postqueue/postqueue -a \
 	       -f %command_directory/postqueue -a \
 	     ! -L %command_directory/postqueue ]; then
@@ -603,7 +579,6 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %_unitdir/%name.service
 %_libdir/libpostfix-*.so
 %exclude %_libdir/libpostfix-tls.so
-%_rpmlibdir/%name.filetrigger
 %_sysconfdir/syslog.d/%name
 %attr(700,root,root) %verify(not mode,group) %dir %daemon_directory/postqueue
 %command_directory/postqueue
@@ -687,6 +662,12 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %endif #with tls
 
 %changelog
+* Wed Dec 15 2021 Dmitry V. Levin <ldv@altlinux.org> 1:3.6.3-alt2
+- spec: switched to use %%pre_service_stop_posttrans_start.
+
+* Tue Dec 14 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.6.3-alt1
+- Updated to 3.6.3.
+
 * Tue Aug 10 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.6.2-alt1
 - Updated to 3.6.2.
 

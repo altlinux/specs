@@ -1,5 +1,5 @@
 Name: service
-Version: 0.5.32
+Version: 0.5.33
 Release: alt1
 
 Summary: The service start/stop scripts
@@ -46,9 +46,12 @@ install -p -m755 service %buildroot/sbin/
 install -p -m644 service.8 %buildroot%_man8dir/
 mkdir -p %buildroot{/bin,%_sbindir}
 install -p -m755 run-parts %buildroot/bin/
-install -p -m755 post_service preun_service %buildroot%_sbindir/
+install -p -m755 post_service pre_service preun_service %buildroot%_sbindir/
+ln -s post_service %buildroot%_sbindir/post_service_postponed
 install -p -m755 rc.d/init.d/* %buildroot%_initdir/
 chmod a-x %buildroot%_initdir/template
+mkdir -p %buildroot%_rpmlibdir
+install -p -m755 service.filetrigger %buildroot%_rpmlibdir/
 
 # This is a LSB compatibility symlink.  We hope that some day
 # the actual files will be here instead of symlinks.
@@ -108,6 +111,7 @@ fi
 /sbin/*
 /bin/*
 %_sbindir/*
+%_rpmlibdir/service.filetrigger
 %_mandir/man?/*
 %_sysconfdir/init.d
 %_sysconfdir/rc?.d
@@ -119,8 +123,14 @@ fi
 %config(noreplace) %_sysconfdir/sysconfig/limits
 
 %changelog
+* Wed Dec 15 2021 Dmitry V. Levin <ldv@altlinux.org> 0.5.33-alt1
+- service, post_service, preun_service:
+  + removed obsolete systemd unit name translation,
+    it's systemctl job since 2012.
+- Added support for postponed service restart (by vseleznv@, @vt, and me).
+
 * Tue Jan 26 2021 Alexey Gladkov <legion@altlinux.ru> 0.5.32-alt1
-- added function to resolve systemd utilities.
+- Added function to resolve systemd utilities.
 
 * Thu Dec 26 2019 Dmitry V. Levin <ldv@altlinux.org> 0.5.31-alt1
 - {post,preun}_service: added support of non-service systemd units (closes: #35388).

@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.179
+Version: 4.0.4.180
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -384,6 +384,11 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Tue Nov 16 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.4.180-alt1
+- platform.in: added %%pre_service_stop_posttrans_start and
+  %%post_service_posttrans_restart.
+- README.ALT-ru_RU.UTF-8: updated (by Dmitry V. Levin).
+
 * Wed Nov 03 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4.179-alt1
 - brp-debuginfo, process-debuginfo: added support of zstd-compressed modules.
 - brp-sign-kmodules:
