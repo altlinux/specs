@@ -1,5 +1,5 @@
 Name: cataclysm-dda
-Version: 0.F.2
+Version: 0.F.3
 Release: alt1
 
 Summary: Turn-based survival game set in a post-apocalyptic world
@@ -143,6 +143,9 @@ LC_ALL=C.UTF-8 make PCH=0 check
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Dec 15 2021 Mikhail Efremov <sem@altlinux.org> 0.F.3-alt1
+- Updated to 0.F-3 Frank-3.
+
 * Mon Nov 15 2021 Mikhail Efremov <sem@altlinux.org> 0.F.2-alt1
 - Don't use git commit as version.
 - Disabled broken tests.
