@@ -1,5 +1,5 @@
 Name: repocop-report-prometheus
-Version: 0.38
+Version: 0.39
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -19,18 +19,6 @@ BuildRequires: repocop
 Source: %name-%version.tar
 
 %description
-Repocop is a repository unit tests platform.
-%summary
-
-%package -n repocop-report-prometheus2
-Summary: repocop report script that dumps test results to prometheus2 format
-Group: Development/Other
-License: GPLv2+ or Artistic-2.0
-Requires: repocop > 0.80
-Obsoletes: repocop-report-heroku < 0.4
-Obsoletes: repocop-report-prometeus2 < 0.31
-
-%description -n repocop-report-prometheus2
 Repocop is a repository unit tests platform.
 %summary
 
@@ -75,7 +63,6 @@ rm -f *.spec
 
 %install
 mkdir -p %buildroot/%_bindir
-install -m 755 repocop-report-prometheus2* %buildroot/%_bindir/
 # sisyphus.ru
 # exclude repocop-report-prometheus-mysql
 install -m 755 repocop-report-prometheus-dump %buildroot/%_bindir/
@@ -91,9 +78,6 @@ install -D -m 644 lib/Test/Repocop/Report/Tools.pm %buildroot%perl_vendor_privli
 %_bindir/repocop-report-prometheus-*
 #%_man1dir/repocop-report-prometheus-*
 
-%files -n repocop-report-prometheus2
-%_bindir/repocop-report-prometheus2*
-
 %files -n repocop-report-packages.altlinux
 %_bindir/repocop-report-packages.altlinux
 
@@ -104,6 +88,9 @@ install -D -m 644 lib/Test/Repocop/Report/Tools.pm %buildroot%perl_vendor_privli
 %perl_vendor_privlib/Test/Repocop/Report*
 
 %changelog
+* Thu Dec 16 2021 Igor Vlasenko <viy@altlinux.org> 0.39-alt1
+- prometheus2 engine is no more
+
 * Thu Aug 26 2021 Igor Vlasenko <viy@altlinux.org> 0.38-alt1
 - support for --out in prometheus-dump
 
