@@ -1,8 +1,8 @@
 %define optflags_lto %nil
 
 Name: lzdoom
-Version: 3.87c
-Release: alt4
+Version: 3.88
+Release: alt1
 
 Summary: Enhanced Doom engine - version for old systems
 Summary(ru_RU.UTF-8): Продвинутый порт движка Doom - версия для слабых систем
@@ -14,11 +14,10 @@ Url: http://zdoom.org
 Source: %name-%version.tar
 Source1: ico_%name.png
 
-Patch: lzdoom-3.87c-sse2.patch
 Patch1: 0001-Fix-soundfont-search-path.patch
 
 BuildRequires: cmake gcc-c++ rpm-macros-cmake nasm glslang-devel libspirv-tools-devel bzip2 zmusic-devel
-BuildRequires: libSDL2-devel zlib-devel libgme-devel libpng-devel libfluidsynth-devel libjpeg-devel libgomp5-devel libtimidity-devel xz
+BuildRequires: libSDL2-devel zlib-devel libgme-devel libpng-devel libfluidsynth-devel libjpeg-devel libtimidity-devel xz
 BuildRequires: libopenal1-devel libGLU-devel libsndfile-devel libmpg123-devel flac libogg-devel libvorbis-devel ImageMagick-tools
 Requires: fluidsynth fluid-soundfont-gs
 
@@ -39,7 +38,6 @@ LZDoom - ответвление от  GZDoom 3.3, собранное с MinGW д
 %prep
 %setup -n %name-%version
 
-%patch0 -p1
 %patch1 -p1
 
 %build
@@ -86,6 +84,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Wed Dec 15 2021 Artyom Bystrov <arbars@altlinux.org> 3.88-alt1
+- Update to new version
+
 * Fri Aug 27 2021 Artyom Bystrov <arbars@altlinux.org> 3.87c-alt4
 - disable link-time optimization;
 - delete "Packager" tag
