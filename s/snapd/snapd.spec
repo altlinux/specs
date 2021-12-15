@@ -29,7 +29,7 @@
 #%%define _libexecdir %_prefix/libexec
 
 Name: snapd
-Version: 2.53.1
+Version: 2.53.4
 Release: alt1
 Summary: A transactional software package manager
 License: GPLv3
@@ -37,6 +37,12 @@ Group: System/Configuration/Other
 Url: https://%provider_prefix
 Source0: https://%provider_prefix/releases/download/%version/%{name}_%version.no-vendor.tar.xz
 Source1: https://%provider_prefix/releases/download/%version/%{name}_%version.only-vendor.tar.xz
+
+Patch0001: 0001-dirs-add-altlinux-to-altDirDistros.patch
+Patch0002: 0002-add-autogen-case-for-altlinux.patch
+
+# cherry picked from https://github.com/snapcore/snapd/commit/f4cefc704d6c46f204b0a0651379e0766d478ba5
+Patch0003: 0001-cmd-snap-confine-do-not-include-libglvnd-libraries-f.patch
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang rpm-build-systemd
@@ -99,11 +105,12 @@ runs properly under an environment with SELinux enabled.
 
 %prep
 %setup -D -b 1
+%patch0001 -p1
+%patch0002 -p1
+%patch0003 -p1
 
 # We don't want/need squashfuse in the rpm
 sed -e 's:_ "github.com/snapcore/squashfuse"::g' -i systemd/systemd.go
-# We don't need mvo5 fork for seccomp, as we have seccomp 2.3.x
-#sed -e "s:github.com/mvo5/libseccomp-golang:github.com/seccomp/libseccomp-golang:g" -i cmd/snap-seccomp/*.go
 # We don't need the snapcore fork for bolt - it is just a fix on ppc
 #sed -e "s:github.com/snapcore/bolt:github.com/boltdb/bolt:g" -i advisor/*.go errtracker/*.go
 
@@ -113,7 +120,6 @@ sed -e 's:${prefix}/lib/systemd/system-environment-generators:/lib/systemd/syste
 %build
 # Generate version files
 ./mkversion.sh "%version-%release"
-
 
 # Build snapd
 mkdir -p src/github.com/snapcore
@@ -126,9 +132,7 @@ export IMPORT_PATH="%import_path"
 export GOPATH=$(pwd):%go_path
 export GO111MODULE=off
 
-
 BUILDTAGS="nosecboot"
-
 
 # We have to build snapd first to prevent the build from
 # building various things from the tree without additional
@@ -176,7 +180,7 @@ popd
 
 # Build systemd units, dbus services, and env files
 pushd ./data
-make BINDIR="%_bindir" LIBEXECDIR="%_libexecdir" \
+make BINDIR="%_bindir" LIBEXECDIR="%_libexecdir" DATADIR="%_datadir" \
      SYSTEMDSYSTEMUNITDIR="%_unitdir" \
      SNAP_MOUNT_DIR="%_sharedstatedir/snapd/snap" \
      SNAPD_ENVIRONMENT_FILE="%_sysconfdir/sysconfig/snapd"
@@ -185,7 +189,7 @@ popd
 %install
 install -d -p %buildroot%_bindir
 install -d -p %buildroot%_libexecdir/snapd
-install -d -p %buildroot%_mandir/man8
+install -d -p %buildroot%_man8dir
 install -d -p %buildroot%_environmentdir
 install -d -p %buildroot%_systemdgeneratordir
 install -d -p %buildroot%_systemd_system_env_generator_dir
@@ -261,7 +265,7 @@ popd
 
 # Install all systemd and dbus units, and env files
 pushd data
-%makeinstall_std BINDIR="%_bindir" LIBEXECDIR="%_libexecdir" \
+%makeinstall_std BINDIR="%_bindir" LIBEXECDIR="%_libexecdir" DATADIR="%_datadir" \
               SYSTEMDSYSTEMUNITDIR="%_unitdir" SYSTEMDUSERUNITDIR="%_userunitdir" \
               SNAP_MOUNT_DIR="%_sharedstatedir/snapd/snap" \
               SNAPD_ENVIRONMENT_FILE="%_sysconfdir/sysconfig/snapd"
@@ -450,6 +454,10 @@ fi
 %endif
 
 %changelog
+* Wed Dec 15 2021 Alexey Shabalin <shaba@altlinux.org> 2.53.4-alt1
+- 2.53.4
+- Add altlinux support (ALT #41518)
+
 * Mon Nov 01 2021 Alexey Shabalin <shaba@altlinux.org> 2.53.1-alt1
 - 2.53.1.
 
