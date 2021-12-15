@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define module IO-Socket-INET6
 
 # Tests not guaranteed to succeed!
 %def_without test
 
 Name: perl-%module
-Version: 2.72
+Version: 2.73
 Release: alt1
 
 Summary: Object interface for AF_INET/AF_INET6 domain sockets
@@ -12,7 +13,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/S/SH/SHLOMIF/IO-Socket-INET6-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SH/SHLOMIF/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -25,7 +26,7 @@ in either AF_INET or AF_INET6 domains. It is built upon the IO::Socket
 interface and inherits all the methods defined by IO::Socket.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,9 +35,13 @@ interface and inherits all the methods defined by IO::Socket.
 %perl_vendor_install
 
 %files
+%doc README ChangeLog LICENSE
 %perl_vendor_privlib/IO
 
 %changelog
+* Wed Dec 15 2021 Igor Vlasenko <viy@altlinux.org> 2.73-alt1
+- automated CPAN update
+
 * Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 2.72-alt1
 - automated CPAN update
 
