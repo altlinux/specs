@@ -1,6 +1,6 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 0.59
+%define ver_major 0.60
 %define libname mesonbuild
 %define pkgdocdir %_docdir/%name-%version
 
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: meson
-Version: %ver_major.4
+Version: %ver_major.2
 Release: alt1
 
 Summary: High productivity build system
@@ -135,6 +135,9 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 %endif
 
 %changelog
+* Wed Dec 15 2021 Yuri N. Sedunov <aris@altlinux.org> 0.60.2-alt1
+- updated to 0.60.2-1-g3074bb14a
+
 * Wed Nov 03 2021 Yuri N. Sedunov <aris@altlinux.org> 0.59.4-alt1
 - 0.59.4
 - meson.macros: replaced "--buildtype=plane" by
