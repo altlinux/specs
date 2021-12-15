@@ -1,6 +1,6 @@
 Name: expat
 Version: 2.4.1
-Release: alt1
+Release: alt2
 
 %def_disable static
 %define pkgdocdir %_docdir/%name-%version
@@ -106,6 +106,9 @@ install -p -m644 examples/*.c %buildroot%pkgdocdir/examples/
 %endif	# enabled static
 
 %changelog
+* Tue Dec 14 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.4.1-alt2
+- Fixed cmake macros (closes #41571).
+
 * Mon Dec 13 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.4.1-alt1
 - Updated to 2.4.1.
 
