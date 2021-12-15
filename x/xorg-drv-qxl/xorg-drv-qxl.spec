@@ -1,6 +1,6 @@
 Name: xorg-drv-qxl
 Version: 0.1.5
-Release: alt2
+Release: alt3
 Epoch: 2
 Summary: QEMU QXL paravirt video
 License: GPL
@@ -50,6 +50,9 @@ export CFLAGS="-Wno-shadow -Wno-declaration-after-statement -Wno-unused-function
 %_x11modulesdir/drivers/spiceqxl_drv.so
 
 %changelog
+* Wed Dec 15 2021 Valery Inozemtsev <shrek@altlinux.ru> 2:0.1.5-alt3
+- git snapshot master.52c421c
+
 * Tue Jun 18 2019 Valery Inozemtsev <shrek@altlinux.ru> 2:0.1.5-alt2
 - 0.1.5
 
