@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 30
+%define centos_release 31
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -629,6 +629,17 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Dec 15 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.31-alt1.el9
+- Disable CONFIG_DEBUG_PREEMPT to restore performance
+- tcp: phase 1 stable backport for rhel 9.0
+- ibmvnic: Fixes for check failover_pending
+- kernfs: upstream kernfs concurrency improvement series
+- drm/hyperv: Fix double mouse pointers
+- Revert "watchdog: iTCO_wdt: Account for rebooting on second timeout"
+- redhat/kernel.spec.template: enable dependencies generation
+- redhat: configs: Update configs for vmware
+- redhat/configs: Enable CONFIG_DRM_VMWGFX on aarch64
+
 * Tue Dec 14 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.30-alt1.el9
 - Rebase KVM x86 to 5.15
 
