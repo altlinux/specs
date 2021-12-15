@@ -1,5 +1,5 @@
 Name: shelxle
-Version: 1.0.1348
+Version: 1.0.1352
 Release: alt1
 
 Summary: A Qt GUI for SHELX
@@ -41,6 +41,10 @@ cp kissfft/COPYING COPYING_kissfft
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Wed Dec 15 2021 Denis G. Samsonenko <ogion@altlinux.org> 1.0.1352-alt1
+- new version
+- fix Voronoi polyhedra drawing
+
 * Tue Dec 14 2021 Denis G. Samsonenko <ogion@altlinux.org> 1.0.1348-alt1
 - new version
 
