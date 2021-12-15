@@ -1,7 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: warzone2100
-Version: 4.1.3
+Version: 4.2.3
 Release: alt1
 
 Summary: Warzone 2100 Resurrection Project (RTS 3D game)
@@ -31,9 +33,11 @@ Source3: %name-%version-3rdparty-date.tar
 Source4: %name-%version-3rdparty-discord-rpc.tar
 Source5: %name-%version-3rdparty-EmbeddedJSONSignature.tar
 Source6: %name-%version-3rdparty-launchinfo.tar
-Source7: %name-%version-3rdparty-SQLiteCpp.tar
-Source8: %name-%version-data-base-texpages.tar
-Source9: %name-%version-data-music.tar
+Source7: %name-%version-3rdparty-readerwriterqueue.tar
+Source8: %name-%version-3rdparty-SQLiteCpp.tar
+Source9: %name-%version-3rdparty-SQLiteCpp-googletest.tar
+Source10: %name-%version-data-base-texpages.tar
+Source11: %name-%version-data-music.tar
 
 Patch1: %name-alt-unbundle-libs.patch
 Patch2: %name-alt-dont-install-portable-marker.patch
@@ -52,6 +56,7 @@ BuildRequires: libre2-devel
 BuildRequires: libsodium-devel
 BuildRequires: libcurl-devel
 BuildRequires: libsqlite3-devel
+BuildRequires: libfmt-devel
 
 # 'zip -T' called in build process needs unzip to work...
 
@@ -74,13 +79,15 @@ BuildArch: noarch
 Game data for warzone2100.
 
 %prep
-%setup -a1 -a3 -a4 -a5 -a6 -a7 -a8 -a9
+%setup -a1 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11
 %patch1 -p1
 %patch2 -p1
 
 install -m644 %SOURCE2 build_tools/autorevision.cache
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %cmake \
 	-DWZ_DISTRIBUTOR="ALT Linux" \
 	-DWZ_FINDSDL2_NOCONFIG:BOOL=OFF \
@@ -118,6 +125,9 @@ rm -rf %buildroot%_iconsdir/warzone2100.png
 %_datadir/warzone2100
 
 %changelog
+* Wed Dec 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.3-alt1
+- Updated to upstream version 4.2.3.
+
 * Tue Aug 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.3-alt1
 - Updated to upstream version 4.1.3.
 
