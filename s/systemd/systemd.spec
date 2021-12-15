@@ -89,7 +89,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.7
-Release: alt4
+Release: alt5
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -2210,6 +2210,9 @@ udevadm hwdb --update &>/dev/null
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Wed Dec 15 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.7-alt5
+- update-helper: add missing loop over user units
+
 * Sat Nov 27 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.7-alt4
 - unit_is_bound_by_inactive: fix return pointer check
 
