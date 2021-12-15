@@ -6,7 +6,7 @@
 %define rdn_name io.elementary.%_name
 
 Name: pantheon-terminal
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Pantheon Terminal
@@ -17,7 +17,7 @@ Url: https://github.com/elementary/terminal
 %if_disabled snapshot
 Source: %url/archive/%version/%_name-%version.tar.gz
 %else
-#VCS: https://github.com/elementary/terminal.git
+Vcs: https://github.com/elementary/terminal.git
 Source: %_name-%version.tar
 %endif
 
@@ -81,6 +81,9 @@ This package provides Vala language bindings for the %name.
 %endif
 
 %changelog
+* Wed Dec 15 2021 Yuri N. Sedunov <aris@altlinux.org> 6.0.1-alt1
+- 6.0.1
+
 * Mon Jul 19 2021 Yuri N. Sedunov <aris@altlinux.org> 6.0.0-alt1
 - updated to 6.0.0-15-ge274f5c9
 
