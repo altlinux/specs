@@ -1,6 +1,6 @@
 Name: xorg-drv-ati
 Version: 19.1.0
-Release: alt2
+Release: alt3
 Epoch: 4
 Summary: ATI video driver
 License: MIT/X11
@@ -65,8 +65,11 @@ and the Xinerama extension.
 %_man4dir/radeon.4*
 
 %changelog
+* Tue Nov 09 2021 Valery Inozemtsev <shrek@altlinux.ru> 4:19.1.0-alt3
+- git snapshot master.5eba006
+
 * Thu Dec 10 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:19.1.0-alt2
-git snapshot master.8da3e45
+- git snapshot master.8da3e45
 
 * Wed Oct 16 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:19.1.0-alt1
 - 19.1.0
