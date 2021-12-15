@@ -1,4 +1,6 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %def_without openimageio
 
@@ -8,7 +10,7 @@
 
 Name:           lib%oname
 Version:        1.1.1
-Release:        alt5
+Release:        alt6
 Summary:        Enables color transforms and image display across graphics apps
 Group:          System/Libraries
 
@@ -30,6 +32,7 @@ Patch1:         ocio-1.1.0-yamlcpp060.patch
 Patch2:         ocio-glext_h.patch
 
 Patch3:         ocio-1.1.1-upstream-typo-fix.patch
+Patch4:         ocio-1.1.1-alt-yaml-compat.patch
 
 # Utilities
 BuildRequires:  cmake gcc-c++
@@ -91,6 +94,7 @@ Development libraries and headers for %oname.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 # Remove bundled libraries
 rm -f ext/lcms*
@@ -102,6 +106,8 @@ rm -f ext/yaml*
 sed -i 's, -Werror,,' src/core/CMakeLists.txt src/pyglue/CMakeLists.txt
 %add_optflags -std=c++11
 %endif
+
+%add_optflags -D_FILE_OFFSET_BITS=64
 
 %build
 %cmake_insource \
@@ -160,6 +166,9 @@ find %buildroot -name "*.cmake" -exec mv {} %buildroot%_datadir/cmake/Modules/ \
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Dec 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt6
+- Fixed build with new yaml.
+
 * Thu Jun 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt5
 - Rebuilt without openimageio support.
 - Added conflicts to openimageio2.0 devel and tools packages.
