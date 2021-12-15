@@ -9,7 +9,7 @@
 
 Name: libredland
 Version: 1.0.17
-Release: alt3
+Release: alt4
 
 Summary: Redland - a library that provides a high-level interface for RDF
 
@@ -68,11 +68,12 @@ Python bindings for Redland RDF library
 %prep
 %setup -n %oname-%version
 %patch2 -p2
-
-#autoreconf
-NOCONFIGURE=1 ./autogen.sh
+rm -rv libltdl/
 
 %build
+%autoreconf
+# symlink to file
+sed -i ';' libltdl/config-h.in
 %configure \
 	--disable-static \
 	--enable-release \
@@ -116,6 +117,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_gtkdocdir/redland/
 
 %changelog
+* Wed Dec 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.17-alt4
+- fix build
+
 * Wed Mar 06 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0.17-alt3
 - fix build with MySQL 8.x
 
