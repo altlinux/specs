@@ -6,7 +6,7 @@
 
 Name: tracker-miners
 Version: %ver_major.5
-Release: alt1
+Release: alt1.1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPL-2.0
@@ -31,7 +31,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %def_enable libvorbis
 %def_enable libflac
 %def_enable exempi
-%def_enable taglib
 %def_enable libgif
 %def_enable libcue
 %def_enable abiword
@@ -53,7 +52,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define libgsf_ver 1.14.24
 %define exempi_ver 2.1.0
 %define gee_ver 0.3
-%define taglib_ver 1.6
 %define libgrss_ver 0.7
 %define rest_ver 0.7
 %define libosinfo_ver 0.2.9
@@ -84,7 +82,6 @@ BuildRequires: libavformat-devel >= 0.8.4 libavcodec-devel libavutil-devel
 %{?_enable_libvorbis:BuildRequires: libvorbis-devel >= %vorbis_ver}
 %{?_enable_libvorbis:BuildRequires: libflac-devel >= %flac_ver}
 %{?_enable_exempi:BuildRequires: libexempi-devel >= %exempi_ver}
-%{?_enable_taglib:BuildRequires: libtag-devel >= %taglib_ver}
 %{?_enable_docs:BuildRequires: gtk-doc docbook-utils graphviz}
 %{?_enable_libgif:BuildRequires: libgif-devel}
 %{?_enable_libcue:BuildRequires: libcue-devel}
@@ -108,8 +105,7 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 %meson \
 	-Dgeneric_media_extractor='%generic_media_extractor' \
 	%{?_enable_xml:-Dxml=enabled} \
-	%{?_enable_rss:-Dminer-rss=true} \
-	%{?_enable_taglib:-Dtaglib=enabled} \
+	%{?_enable_rss:-Dminer_rss=true} \
 	%{?_enable_poppler:-Dpdf=enabled} \
 	%{?_enable_libgxps:-Dxps=enabled} \
 	%{?_enable_libexif:-Dexif=enabled} \
@@ -174,6 +170,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 2.3.5-alt1.1
+- fixed meson options
+
 * Mon Sep 07 2020 Yuri N. Sedunov <aris@altlinux.org> 2.3.5-alt1
 - 2.3.5
 
