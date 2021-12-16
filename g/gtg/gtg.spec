@@ -2,7 +2,7 @@
 
 Name: gtg
 Version: 0.5
-Release: alt2
+Release: alt3
 
 Summary: A personal tasks and TODO list items organizer.
 License: GPL-3.0-or-later
@@ -11,6 +11,8 @@ Url: https://github.com/getting-things-gnome/gtg
 
 Source: %name-%version.tar
 BuildArch: noarch
+
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libgtk+3-devel
@@ -28,6 +30,7 @@ need to do and need to know, from small tasks to large projects.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %meson
@@ -60,6 +63,9 @@ need to do and need to know, from small tasks to large projects.
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Thu Dec 16 2021 Vladimir Didenko <cow@altlinux.org> 0.5-alt3
+- Fix build with the new version of meson
+
 * Sat May 01 2021 Igor Vlasenko <viy@altlinux.org> 0.5-alt2
 - NMU: removed depandency on pdftk
 
