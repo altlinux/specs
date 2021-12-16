@@ -2,12 +2,19 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
+%ifnarch %e2k
+%def_without ispc
+%else
+# no ispc on e2k
+%def_without ispc
+%endif
+
 %define libsuffix 3
 %define soname 3
 
 Name: embree
-Version: 3.13.1
-Release: alt2
+Version: 3.13.2
+Release: alt1
 Summary: Collection of high-performance ray tracing kernels developed at Intel
 Group: Graphics
 License: Apache-2.0
@@ -23,7 +30,7 @@ Patch2000: %name-e2k.patch
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libgif-devel
-%ifnarch %e2k
+%if_with ispc
 BuildRequires: ispc
 %endif
 BuildRequires: pkgconfig(glut)
@@ -80,7 +87,7 @@ fi
 	-DEMBREE_IGNORE_CMAKE_CXX_FLAGS=OFF \
 	-DEMBREE_TUTORIALS=OFF \
 	-DEMBREE_COMPACT_POLYS=ON \
-%ifarch %e2k
+%if_without ispc
 	-DEMBREE_ISPC_SUPPORT=OFF \
 	-DEMBREE_MAX_ISA=DEFAULT \
 %endif
@@ -107,6 +114,10 @@ rm -rf %buildroot%_docdir/%{name}%{libsuffix}
 %_man3dir/*
 
 %changelog
+* Thu Dec 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.13.2-alt1
+- Updated to upstream version 3.13.2.
+- Built without ispc.
+
 * Wed Oct 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.13.1-alt2
 - Disabled unsupported build for %%ix86 and aarch64 architectures.
 
