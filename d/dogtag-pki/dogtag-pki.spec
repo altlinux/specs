@@ -27,8 +27,8 @@
 %define pki_rebranded_version 11.0.0-alt1
 
 Name: dogtag-pki
-Version: 11.0.0
-Release: alt2
+Version: 11.0.2
+Release: alt1
 
 Summary: Dogtag PKI Certificate System
 License: %gpl2only
@@ -776,6 +776,9 @@ fi
 %_datadir/pki/server/webapps/pki/WEB-INF/
 
 %changelog
+* Wed Dec 15 2021 Stanislav Levin <slev@altlinux.org> 11.0.2-alt1
+- 11.0.0 -> 11.0.2.
+
 * Thu Dec 02 2021 Stanislav Levin <slev@altlinux.org> 11.0.0-alt2
 - Cleaned up buildtime dependency on no longer shipped idm-console.
 
