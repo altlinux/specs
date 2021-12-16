@@ -9,7 +9,7 @@
 
 Name: gst-devtools
 Version: %ver_major.5
-Release: alt1
+Release: alt1.1
 
 Summary: GStreamer development and validation tools
 Group: System/Libraries
@@ -104,7 +104,7 @@ GObject introspection devel data for the Gst Validate library.
 %setup
 
 %build
-%meson %{?_disable_gtk_doc:-Dgtk_doc=disabled}
+%meson %{?_disable_gtk_doc:-Ddoc=disabled}
 %meson_build
 
 %install
@@ -147,6 +147,9 @@ GObject introspection devel data for the Gst Validate library.
 %endif
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1.1
+- fixed meson options
+
 * Thu Sep 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1
 - 1.18.5
 

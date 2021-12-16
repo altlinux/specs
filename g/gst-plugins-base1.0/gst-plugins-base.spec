@@ -21,7 +21,7 @@
 
 Name: %_name-base%api_ver
 Version: %ver_major.5
-Release: alt1
+Release: alt1.1
 
 Summary: An essential set of GStreamer plugins
 Group: System/Libraries
@@ -135,7 +135,7 @@ GObject introspection devel data for the GStreamer library
 	-Dexamples=disabled \
 	-Dgio=enabled \
 	%{?_enable_check:-Dtests=enabled} \
-	%{?_disable_gtk_doc:-Dgtk_doc=disabled} \
+	%{?_disable_gtk_doc:-Ddoc=disabled} \
 	%{?_enable_debug:-Dgst_debug=true}
 
 %meson_build
@@ -204,6 +204,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1.1
+- fixed meson options
+
 * Thu Sep 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1
 - 1.18.5
 

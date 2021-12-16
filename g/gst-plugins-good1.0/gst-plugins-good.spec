@@ -20,7 +20,7 @@
 
 Name: %_name-good%api_ver
 Version: %ver_major.5
-Release: alt1
+Release: alt1.1
 
 Summary: A set of GStreamer plugins considered good
 Group: System/Libraries
@@ -79,9 +79,9 @@ This package contains development documentation for GStreamer Good Plugins
 %meson \
 	-Dexamples=disabled \
 	%{?_enable_check:-Dtests=enabled} \
-	%{?_disable_gtk_doc:-Dgtk_doc=disabled} \
+	%{?_disable_gtk_doc:-Ddoc=disabled} \
 	%{?_enable_debug:-Dgst_debug=true}
-
+%nil
 %meson_build
 
 %install
@@ -109,6 +109,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1.1
+- fixed meson options
+
 * Thu Sep 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1
 - 1.18.5
 

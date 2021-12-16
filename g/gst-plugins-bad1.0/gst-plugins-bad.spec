@@ -35,7 +35,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.5
-Release: alt1
+Release: alt1.1
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -136,7 +136,7 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %meson \
 	-Dexamples=disabled \
 	%{?_enable_check:-Dtests=enabled} \
-	%{?_disable_gtk_doc:-Dgtk_doc=disabled} \
+	%{?_disable_gtk_doc:-Ddoc=disabled} \
 	%{?_enable_debug:-Dgst_debug=true}
 
 %meson_build
@@ -190,6 +190,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1.1
+- fixed meson options
+
 * Thu Sep 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1
 - 1.18.5
 - enabled openh264 plugin for all arhes
