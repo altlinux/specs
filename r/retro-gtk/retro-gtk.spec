@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define ver_major 1.0
 %define api_ver 1
 %define _libexecdir %_prefix/libexec
@@ -8,19 +9,26 @@
 
 Name: retro-gtk
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Toolkit to write Gtk+3-based frontends to libretro
 License: GPLv3
 Group: System/Libraries
 Url: https://gnome.pages.gitlab.gnome.org/retro-gtk
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
+Patch: %name-1.0.2-alt-meson-0.60.patch
 
-%define glib_ver 2.50
+%define meson_ver 0.50
+%define glib_ver 2.68
 %define gtk_ver 3.22
 
-BuildRequires(pre): meson >= 0.50
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson >= %meson_ver
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(epoxy)
@@ -29,7 +37,8 @@ BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver
 BuildRequires: pkgconfig(libpulse-simple)
 BuildRequires: pkgconfig(samplerate)}
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
-%{?_enable_vala:BuildRequires: vala-tools}
+%{?_enable_vala:BuildRequires(pre): rpm-build-vala
+BuildRequires: vala-tools}
 %{?_enable_check:BuildRequires: xvfb-run}
 
 %description
@@ -78,6 +87,7 @@ GObject introspection devel data for the %name library.
 
 %prep
 %setup
+%patch
 
 %build
 %meson \
@@ -115,6 +125,10 @@ xvfb-run %meson_test
 
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt2
+- updated to 1.0.2-26-gf71c48a
+- fixed build with meson-0.60
+
 * Mon Mar 22 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - 1.0.2
 
