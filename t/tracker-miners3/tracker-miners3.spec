@@ -9,7 +9,7 @@
 
 Name: %_name%api_ver_major
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPL-2.0 and LGPL-2.1-or-later
@@ -132,12 +132,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 	%{?_enable_libgif:-Dgif=enabled} \
 	%{?_enable_libpng:-Dpng=enabled} \
 	%{?_enable_raw:-Draw=enabled} \
-	%{?_enable_libvorbis:-Dvorbis=enabled} \
-	%{?_enable_libflac:-Dflac=enabled} \
 	%{?_enable_exempi:-Dxmp=enabled} \
 	%{?_enable_libcue:-Dcue=enabled} \
 	%{?_enable_abiword:-Dabiword=true} \
-	%{?_enable_dvi:-Ddvi=true} \
 	%{?_enable_mp3:-Dmp3=true} \
 	%{?_enable_ps:-Dps=true} \
 	%{?_enable_text:-Dtext=true} \
@@ -203,6 +200,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 %doc AUTHORS NEWS README*
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1.1
+- fixed meson options
+
 * Sun Oct 31 2021 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
 - 3.2.1
 
