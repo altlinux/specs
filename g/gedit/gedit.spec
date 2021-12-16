@@ -12,7 +12,7 @@
 
 Name: gedit
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: gEdit is a small but powerful text editor for GNOME
 License: GPL-2.0
@@ -24,11 +24,7 @@ Source: %name-%version.tar
 %else
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %endif
-Patch: %name-3.10.1-alt-settings.patch
 
-# use python3
-AutoReqProv: nopython
-%define __python %nil
 %{?_enable_python:%py3_provides gedit}
 %define  gedit_pluginsdir %_libdir/gedit/plugins
 %add_python3_path %gedit_pluginsdir
@@ -51,9 +47,8 @@ Requires: %name-gir = %version-%release
 Requires: libpeas-python3-loader
 Requires: dconf gnome-icon-theme gvfs zenity
 
-BuildRequires(pre): meson rpm-build-gnome
-
-BuildRequires: yelp-tools libappstream-glib-devel
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires: meson yelp-tools libappstream-glib-devel
 BuildRequires: desktop-file-utils >= 0.22
 BuildRequires: gtk-doc >= 1.0
 BuildRequires: iso-codes-devel >= 0.35
@@ -126,10 +121,9 @@ This package contains documentation needed to develop plugins for gedit.
 
 %prep
 %setup
-#%%patch -p1 -b .settings
 
 %build
-%meson \
+%meson -Dbuildtype=plain \
     %{?_disable_plugins:-Dplugins=false} \
     %{?_disable_introspection:-Dintrospection=false} \
     %{?_disable_vala:-Dvapi=flalse} \
@@ -216,6 +210,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1.1
+- fixed meson options
+
 * Sat Apr 17 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
 - 40.1
 
