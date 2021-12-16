@@ -2,7 +2,7 @@
 
 Name:    nx-libs
 Version: 3.5.99.26
-Release: alt2
+Release: alt3
 
 Summary: NX X11 protocol compression libraries
 
@@ -15,9 +15,6 @@ Source0: %name-%version.tar
 #Source1: Makefile.alt
 Source2: patches.etersoft.tar
 
-# fix building with binutils >= 2.36
-Patch1: 605a266911b50ababbb3f8a8b224efb42743379c.patch
-
 BuildRequires: gcc-c++
 BuildRequires: fontconfig-devel
 BuildRequires: gccmakedep
@@ -26,7 +23,7 @@ BuildRequires: libXcomposite-devel
 BuildRequires: libXdamage-devel
 BuildRequires: libXdmcp-devel
 BuildRequires: libXext-devel
-BuildRequires: libXfont-devel
+BuildRequires: libXfont2-devel
 BuildRequires: libXfixes-devel
 BuildRequires: libXinerama-devel
 BuildRequires: libXpm-devel
@@ -110,7 +107,6 @@ This package provides the NX proxy (client) binary.
 
 %prep
 %setup
-%patch1 -p1
 
 # Apply all patches from debian/patches
 cat debian/patches/series | while read patchfile;do 
@@ -120,7 +116,7 @@ done
 tar -xf %SOURCE2
 # Apply etersoft patches
 for patchfile in $(ls patches.etersoft/*.patch); do
-	test -e $patchfile && patch -p0 < $patchfile
+	test -e $patchfile && patch -p1 < $patchfile
 done
 
 # remove build cruft that is in Git (also taken from roll-tarball.sh)
@@ -156,8 +152,10 @@ echo "#define DefaultGcc2Ppc64Opt %optflags" >> nx-X11/config/cf/host.def
 
 %build
 cat >"my_configure" <<'EOF'
+#!/bin/sh -x
 %configure \
-  --disable-silent-rules \
+  --disable-selective-werror \
+  --disable-strict-compilation \
   "${@}"
 EOF
 chmod a+x my_configure;
@@ -169,7 +167,9 @@ CDEBUGFLAGS="%{?__global_cppflags} %{?__global_cflags} %{?optflags}"
 IMAKE_DEFINES=''
 FORCE_TIRPC='YES'
 IMAKE_DEFINES="-DUseTIRPC=${FORCE_TIRPC}"
-make CONFIGURE="$PWD/my_configure" PREFIX=%{_prefix} LIBDIR=%{_libdir} CDEBUGFLAGS="${CDEBUGFLAGS}" LOCAL_LDFLAGS="${LOCAL_LDFLAGS}" SHLIBGLOBALSFLAGS="${SHLIBGLOBALSFLAGS}" IMAKE_DEFINES="${IMAKE_DEFINES}"
+# TODO: fix parallel build on aarch64/ppc64le
+%make_build CONFIGURE="$PWD/my_configure" PREFIX=%{_prefix} LIBDIR=%{_libdir} CDEBUGFLAGS="${CDEBUGFLAGS}" LOCAL_LDFLAGS="${LOCAL_LDFLAGS}" SHLIBGLOBALSFLAGS="${SHLIBGLOBALSFLAGS}" IMAKE_DEFINES="${IMAKE_DEFINES}" || \
+    make CONFIGURE="$PWD/my_configure" PREFIX=%{_prefix} LIBDIR=%{_libdir} CDEBUGFLAGS="${CDEBUGFLAGS}" LOCAL_LDFLAGS="${LOCAL_LDFLAGS}" SHLIBGLOBALSFLAGS="${SHLIBGLOBALSFLAGS}" IMAKE_DEFINES="${IMAKE_DEFINES}" || \
 
 %install
 make install \
@@ -286,6 +286,11 @@ cp -a nx-X11/programs/Xserver/hw/nxagent/nxagent.xpm %buildroot%_datadir/pixmaps
 %_datadir/nx/VERSION.nxproxy
 
 %changelog
+* Thu Dec 16 2021 Vitaly Lipatov <lav@altlinux.ru> 3.5.99.26-alt3
+- disable -Wpedantic and -Werror*
+- enable parallel build (use make_build)
+- switch to use libXfont2-devel
+
 * Sat Sep 25 2021 Vitaly Lipatov <lav@altlinux.ru> 3.5.99.26-alt2
 - fix building with binutils >= 2.36
 
