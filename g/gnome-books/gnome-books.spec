@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define ver_major 40
@@ -6,7 +6,7 @@
 
 Name: gnome-books
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: An e-book manager application for GNOME
 License: GPL-2.0
@@ -33,6 +33,7 @@ Source: %name-%version.tar
 
 Conflicts: gnome-documents < 3.31
 Requires: libgjs >= %gjs_ver
+Requires: tracker-miners3 yelp
 
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 Requires: typelib(cairo)
@@ -73,7 +74,7 @@ A simple application to access, organize and read your e-books on GNOME.
 %setup
 
 %build
-%meson
+%meson -Dbuildtype=plain
 %meson_build
 
 %install
@@ -96,6 +97,10 @@ A simple application to access, organize and read your e-books on GNOME.
 
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt2
+- updated to 40.0-8-ge15f750f
+- fixed meson options
+
 * Thu Mar 25 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 
