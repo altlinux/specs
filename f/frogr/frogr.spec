@@ -1,25 +1,30 @@
+%def_enable snapshot
 %define ver_major 1.6
 %def_enable video
 %define xdg_name org.gnome.frogr
 
 Name: frogr
 Version: %ver_major
-Release: alt1
+Release: alt2
 
 Summary: A Flickr Remote Organizer for GNOME
 License: GPL-3.0
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Frogr
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 %{?_enable_video:Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-libav}
 
 %define gtk_ver 3.16.0
 %define json_glib_ver 1.2
 
-BuildRequires(pre): meson
-BuildRequires: yelp-tools libappstream-glib-devel
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson yelp-tools libappstream-glib-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libjson-glib-devel >= %json_glib_ver
 BuildRequires: libsoup-devel libexif-devel libxml2-devel libgcrypt-devel
@@ -53,6 +58,9 @@ a flickr account from the desktop.
 
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt2
+- updated to RELEASE_1.6-16-g25e585d
+
 * Sat Jan 11 2020 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt1
 - 1.6
 
