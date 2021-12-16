@@ -11,7 +11,7 @@
 
 Name:           lib%oname%soname
 Version:        2.0.2
-Release:        alt2
+Release:        alt3
 Summary:        Enables color transforms and image display across graphics apps
 Group:          System/Libraries
 
@@ -24,6 +24,7 @@ Source:         %name-%version.tar
 Patch1: opencolorio-alt-install.patch
 Patch2: opencolorio-alt-armh-multiple-definition.patch
 Patch3: opencolorio-alt-openimageio-linking.patch
+Patch4: opencolorio-upstream-tests.patch
 
 # Utilities
 BuildRequires: cmake gcc-c++
@@ -89,6 +90,7 @@ Group:          Development/Python3
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -162,6 +164,9 @@ popd
 %python3_sitelibdir/*.so
 
 %changelog
+* Wed Dec 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.2-alt3
+- Fixed build with new dependencies.
+
 * Mon Sep 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.2-alt2
 - Rebuilt with openimageio support.
 

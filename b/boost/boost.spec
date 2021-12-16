@@ -57,7 +57,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt2
+Release: alt3
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -1240,7 +1240,7 @@ EOF
 cat >> ./tools/build/src/user-config.jam << EOF
 # There are many strict aliasing warnings, and it's not feasible to go
 # through them all at this time.
-using gcc : : : <compileflags>"$COMPILER_FLAGS" ;
+using gcc : : : <compileflags>"$COMPILER_FLAGS" <linkflags>"$COMPILER_FLAGS" ;
 %if_with mpi
 using mpi ;
 %endif
@@ -1798,6 +1798,9 @@ done
 
 
 %changelog
+* Wed Dec 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.77.0-alt3
+- Fixed passing LTO flags to linker.
+
 * Thu Aug 26 2021 Ivan A. Melnikov <iv@altlinux.org> 1:1.77.0-alt2
 - Fix build with lto-enabling rpm-build.
 - Simplified build and install.
