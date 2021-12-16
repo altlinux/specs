@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define ver_major 40
 %define xdg_name org.gnome.Dictionary
 %define api_ver 1.0
@@ -6,22 +7,26 @@
 
 Name: gnome-dictionary
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Gnome client for MIT dictionary server
 Group: Graphical desktop/GNOME
 License: LGPLv2.1
 Url: https://wiki.gnome.org/Apps/Dictionary
 
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 Obsoletes: libgdict < %version
 
 %define glib_ver 2.42.0
 %define gtk_ver 3.22.7
 
-BuildRequires(pre): meson rpm-build-gnome
-BuildRequires: libappstream-glib-devel desktop-file-utils yelp-tools
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires: meson libappstream-glib-devel desktop-file-utils yelp-tools
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 %{?_enable_man:BuildRequires: xsltproc docbook-dtds docbook-style-xsl}
 
@@ -33,7 +38,7 @@ correct spelling of words.
 %setup
 
 %build
-%meson -Denable-ipv6=true \
+%meson -Duse_ipv6=true \
     %{?_disable_man:-Dbuild_man=false}
 %nil
 %meson_build
@@ -55,6 +60,10 @@ correct spelling of words.
 %doc NEWS README*
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt2
+- updated to 40.0-55-gf558cdc
+- fixed meson options
+
 * Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 
