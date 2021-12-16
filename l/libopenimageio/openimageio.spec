@@ -10,8 +10,8 @@
 %define soname 2.3
 
 Name:           lib%oname
-Version:        2.3.7.2
-Release:        alt2
+Version:        2.3.10.1
+Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -223,9 +223,11 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_includedir/*
 %_libdir/pkgconfig/OpenImageIO.pc
 %_libdir/cmake/*
-%_datadir/cmake/Modules/FindOpenImageIO.cmake
 
 %changelog
+* Thu Dec 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.10.1-alt1
+- Updated to upstream version 2.3.10.1.
+
 * Wed Sep 29 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.3.7.2-alt2
 - E2K: enabled OpenCV, fixed issue with Clang
 
