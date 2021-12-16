@@ -1,19 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 %define  modulename cairocffi
 
 Name:    python3-module-%modulename
-Version: 1.0.2
-Release: alt2
+Version: 1.3.0
+Release: alt1
 
 Summary: CFFI-based cairo bindings for Python.
 License: BSD-3-Clause
 Group:   Development/Python3
 URL:     https://github.com/Kozea/cairocffi
 
-Packager: Mikhail Gordeev <obirvalger@altlinux.org>
-
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
 BuildRequires: python3-module-cffi
+BuildRequires: python3-module-xcffib
+BuildRequires: libxcb-devel
 BuildRequires: python3-module-pytest-runner
 
 BuildArch: noarch
@@ -42,6 +43,9 @@ This package contains tests for Python-3.
 %install
 %python3_install
 
+#create __init__.py for python3.prov
+touch %buildroot%python3_sitelibdir/%modulename/_generated/__init__.py
+
 %files
 %python3_sitelibdir/%modulename/
 %exclude %python3_sitelibdir/%modulename/test_*.py
@@ -54,6 +58,10 @@ This package contains tests for Python-3.
 %python3_sitelibdir/%modulename/__pycache__/test_*
 
 %changelog
+* Tue Dec 14 2021 Egor Ignatov <egori@altlinux.org> 1.3.0-alt1
+- 1.3.0
+- Build with xcffib support
+
 * Wed Jun 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.2-alt2
 - Moved tests into separate package.
 

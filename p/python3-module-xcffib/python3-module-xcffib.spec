@@ -1,7 +1,7 @@
 %define  modulename xcffib
 
 Name:    python3-module-%modulename
-Version: 0.8.1
+Version: 0.11.1
 Release: alt1
 
 Summary: A drop-in replacement for xpyb based on cffi
@@ -37,5 +37,8 @@ Source:  %modulename-%version.tar
 %doc *.md
 
 %changelog
+* Tue Dec 14 2021 Egor Ignatov <egori@altlinux.org> 0.11.1-alt1
+- 0.11.1
+
 * Sat Jun 29 2019 Mikhail Gordeev <obirvalger@altlinux.org> 0.8.1-alt1
 - Initial build for Sisyphus
