@@ -19,7 +19,7 @@
 
 Summary: Library for accessing and modifying virtual machine disk images
 Name: libguestfs
-Version: 1.46.0
+Version: 1.46.1
 Release: alt1
 License: LGPLv2+
 Group: System/Libraries
@@ -27,8 +27,8 @@ Url: http://libguestfs.org/
 
 Source: %name-%version.tar
 Source2: %name-%version-common.tar
-Patch1: %name-%version-alt-fixes.patch
-Patch2: %name-%version-alt-fixes-common.patch
+Patch1: %name-1.46.0-alt-fixes.patch
+Patch2: %name-1.46.0-alt-fixes-common.patch
 
 BuildRequires: /proc
 BuildRequires: gcc gcc-c++ flex
@@ -50,6 +50,9 @@ BuildRequires: netpbm
 BuildRequires: libyajl-devel >= 2.0.4
 BuildRequires: libjansson-devel
 BuildRequires: libsystemd-journal-devel >= 196
+BuildRequires: librpm-devel
+BuildRequires: libyara-devel
+BuildRequires: libtsk-devel
 BuildRequires: liblzma-devel
 BuildRequires: libdbus-devel
 BuildRequires: libtirpc-devel
@@ -458,6 +461,10 @@ rm -f %buildroot%_man1dir/guestfs-release-notes*
 %endif #erlang
 
 %changelog
+* Thu Dec 16 2021 Anton Farygin <rider@altlinux.ru> 1.46.1-alt1
+- 1.46.0 -> 1.46.1
+- built with enabled librpm, yara and sleuthkit support
+
 * Thu Nov 04 2021 Anton Farygin <rider@altlinux.ru> 1.46.0-alt1
 - 1.46.0
 
