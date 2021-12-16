@@ -19,7 +19,7 @@
 
 Name: evince
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 Summary: A document viewer
 Group: Office
@@ -146,7 +146,6 @@ using Evince library.
     %{?_disable_xps:-Dxps=disabled} \
     %{?_enable_ps:-Dps=enabled} \
     %{?_disable_introspection:-Dintrospection=false} \
-    -Dbrowser_plugin_dir='%browser_plugins_path'} \
     %{?_enable_multimedia:-Dmultimedia=enabled} \
     %{?_disable_nautilus:-Dnautilus=false}
 %nil
@@ -226,6 +225,9 @@ using Evince library.
 
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 41.3-alt1.1
+- fixed meson options
+
 * Sun Nov 21 2021 Yuri N. Sedunov <aris@altlinux.org> 41.3-alt1
 - 41.3
 
