@@ -9,7 +9,7 @@
 
 Name: lib%_name
 Version: %ver_major.3
-Release: alt2
+Release: alt3
 
 Summary: Library to use HTTPSEverywhere in desktop applications
 Group: System/Libraries
@@ -22,6 +22,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
+Patch: %name-0.8.3-alt-meson-0.60.patch
 
 BuildRequires(pre): meson >= 0.39.1 rpm-build-gir rpm-build-vala
 BuildRequires: vala-tools valadoc
@@ -73,6 +74,7 @@ This package contains development documentation for %name
 
 %prep
 %setup
+%patch
 
 %build
 %meson %{?_enable_valadoc:-Denable_valadoc=true}
@@ -111,6 +113,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt3
+- fixed build with meson-0.60
+
 * Sat Jan 12 2019 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt2
 - updated to 0.8.3-4-g6da08ef
 
