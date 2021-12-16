@@ -1,5 +1,5 @@
 Name: bluefish
-Version: 2.2.11
+Version: 2.2.12
 Release: alt1
 
 Summary: A GTK3 web development application for experienced users
@@ -10,7 +10,11 @@ Url: http://bluefish.openoffice.nl
 License: GPL-3.0-or-later
 Group: Editors
 
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar
+# Source-url: https://jztkft.dl.sourceforge.net/project/bluefish/bluefish/%version/bluefish-%version.tar.gz
+
+# Russian translation
+Source1: ru.po
 
 # Fedora patchs
 # Avoid potential aliasing issues in zencoding plugin
@@ -18,10 +22,10 @@ Patch0: bluefish-2.2.10-strict-aliasing.patch
 
 # Avoid use of /usr/bin/env in shipped scripts
 # Also change /usr/bin/python → /usr/bin/python2 (for now)
-Patch1: bluefish-2.2.11-shellbang.patch
+Patch1: bluefish-2.2.12-shellbang.patch
 
 # Strip all python content if we don't have Python
-Patch2: bluefish-2.2.11-no-python.patch
+Patch2: bluefish-2.2.12-no-python.patch
 
 Requires: bluefish-common = %serial:%version-%release
 
@@ -56,6 +60,9 @@ find data -type f -name \*.py -exec sed -i 's/\r//' {} \;
 %patch0
 %patch1
 %patch2
+
+# Update russian translation
+cp %SOURCE1 po/
 
 %build
 #autoreconf
@@ -94,6 +101,10 @@ cat %{name}_plugin_*.lang >> %name.lang
 %_datadir/xml/%name/*
 
 %changelog
+* Thu Dec 16 2021 Anton Midyukov <antohami@altlinux.org> 2:2.2.12-alt1
+- New version 2.2.12
+- Update russian translation (thanks Olesya Gerasimenko)
+
 * Sat May 23 2020 Anton Midyukov <antohami@altlinux.org> 2:2.2.11-alt1
 - New version 2.2.11
 - build with gtk3
