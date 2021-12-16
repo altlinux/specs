@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 %define ver_major 3.34
 %define httpd /usr/sbin/httpd2
@@ -7,14 +8,18 @@
 
 Name: gnome-user-share
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Gnome user file sharing
 Group: Graphical desktop/GNOME
 License: GPLv2+
 Url: https://www.gnome.org
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 %define glib_ver 2.58
 %define nautilus_ver 3.27.90
@@ -22,8 +27,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Requires: apache2 >= 2.2
 Requires: apache2-mod_dnssd >= 0.6
 
-BuildRequires(pre): meson
-BuildRequires: yelp-tools desktop-file-utils
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson yelp-tools desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel libnotify-devel libcanberra-gtk3-devel
 BuildRequires: libselinux-devel libgudev-devel
 BuildRequires: apache2 apache2-mod_dnssd pkgconfig(systemd)
@@ -49,7 +54,7 @@ mDNSResolver running.
 
 %build
 %meson -Dhttpd=%httpd \
-       -Dmodules-path=%modules_path \
+       -Dmodules_path=%modules_path \
        %{?_enable_nautilus:-Dnautilus_extension=true}
 %nil
 %meson_build
@@ -70,6 +75,10 @@ mDNSResolver running.
 
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt2
+- updated to GNOME_USER_SHARE_3_34_0-24-g3432ce7
+- fixed meson options
+
 * Fri Sep 06 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0 (ported to Meson build system)
 
