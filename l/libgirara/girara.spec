@@ -4,7 +4,7 @@
 
 Name: lib%_name
 Version: 0.3.6
-Release: alt1
+Release: alt2
 
 Summary: GTK-based minimalistic user interface library
 License: Zlib
@@ -40,8 +40,8 @@ developing applications that use %name.
 
 %build
 %meson \
-	-Denable-notify=true \
-	-Denable-json=false
+	-Dnotify=enabled \
+	-Djson=disabled
 
 %meson_build -v
 
@@ -60,6 +60,9 @@ developing applications that use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Dec 16 2021 Mikhail Efremov <sem@altlinux.org> 0.3.6-alt2
+- Fixed meson options.
+
 * Thu Jul 15 2021 Mikhail Efremov <sem@altlinux.org> 0.3.6-alt1
 - Updated to 0.3.6.
 
