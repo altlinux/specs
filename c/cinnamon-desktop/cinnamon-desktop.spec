@@ -7,7 +7,7 @@
 
 Name: cinnamon-desktop
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Library with common API for various Cinnamon modules
 License: GPLv2+ and LGPLv2+ and MIT
@@ -116,7 +116,7 @@ GObject introspection devel data for the %name library
 [ ! -d m4 ] && mkdir m4
 
 %build
-%meson -Dpnp-ids-path=/usr/share/hwdata/pnp.ids -Ddeprecation-flags=false
+%meson
 %meson_build
 
 %install
@@ -154,6 +154,9 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Thu Dec 16 2021 Vladimir Didenko <cow@altlinux.org> 5.2.0-alt2
+- fix build with the new version of meson
+
 * Mon Nov 29 2021 Vladimir Didenko <cow@altlinux.org> 5.2.0-alt1
 - 5.2.0
 

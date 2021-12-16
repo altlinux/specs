@@ -7,7 +7,7 @@
 
 Name: %{_name}-session
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 License: GPLv2+
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
@@ -75,7 +75,7 @@ This package provides the Cinnamon session manager.
 %patch0 -p1
 
 %build
-%meson -Dwith-gconf=false --libexecdir=%_libexecdirname
+%meson --libexecdir=%_libexecdirname
 %meson_build
 
 %install
@@ -120,6 +120,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Thu Dec 16 2021 Vladimir Didenko <cow@altlinux.org> 5.2.0-alt2
+- Fix build with the new version of meson
+
 * Mon Nov 29 2021 Vladimir Didenko <cow@altlinux.org> 5.2.0-alt1
 - 5.2.0
 

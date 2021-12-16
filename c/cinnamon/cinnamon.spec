@@ -1,8 +1,8 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 5.2.1
-Release: alt2
+Version: 5.2.5
+Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -190,6 +190,9 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Wed Dec 15 2021 Vladimir Didenko <cow@altlinux.org> 5.2.5-alt1
+- 5.2.5-11-g72f56d106
+
 * Wed Dec 1 2021 Vladimir Didenko <cow@altlinux.org> 5.2.1-alt2
 - Fix path to the cinnamon-calendar-server script
 
