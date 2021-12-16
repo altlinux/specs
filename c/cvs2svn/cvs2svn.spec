@@ -3,7 +3,7 @@
 
 
 Name: cvs2svn
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -13,9 +13,9 @@ Summary(ru_RU.KOI8-R): Перенос репозитариев из CVS в Subversion
 # see COPYING
 License: Apache-style
 Group: Development/Other
-Url: http://cvs2svn.tigris.org/
+Url: https://github.com/mhagger/cvs2svn
 
-Source0: http://cvs2svn.tigris.org/files/documents/1462/25036/%name-%version.tar.gz
+Source0: %name-%version.tar.gz
 
 BuildArch: noarch
 
@@ -55,6 +55,10 @@ export LANG=en_US.UTF-8
 %doc BUGS CHANGES COMMITTERS COPYING HACKING README www
 
 %changelog
+* Thu Dec 16 2021 Ilya Mashkin <oddity@altlinux.ru> 2.5.0-alt1
+- 2.5.0
+- Update url
+
 * Tue May 06 2014 Ilya Mashkin <oddity@altlinux.ru> 2.4.0-alt1
 - 2.4.0
 
