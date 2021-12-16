@@ -2,7 +2,7 @@
 %def_disable debugger
 
 Name: python3-module-%modname
-Version: 0.29.25
+Version: 0.29.26
 Release: alt1
 
 Summary: C-extensions for Python 3
@@ -113,6 +113,9 @@ done
 %endif
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 0.29.26-alt1
+- 0.29.26
+
 * Mon Dec 06 2021 Yuri N. Sedunov <aris@altlinux.org> 0.29.25-alt1
 - 0.29.25
 
