@@ -3,7 +3,7 @@ Summary: XDG desktop settings for Kometa distros
 Summary(ru): Настройки рабочего окружения дистрибутивов Комета
 License: GPL-3.0
 Group: Graphical desktop/Other
-Version: 1.2
+Version: 1.3
 Release: alt1
 Source0: kometa-xdg-%version.tar
 Source1: COPYING
@@ -54,7 +54,7 @@ KDE 5 desktop settings for classic variant of Kometa
 %files plasma5-classic
 %doc COPYING
 /etc/xdg/kometa/dolphinrc
-#/etc/xdg/kometa/kcminputrc
+/etc/xdg/kometa/kcminputrc
 /etc/xdg/kometa/kdeglobals
 /etc/xdg/kometa/kxkbrc
 
@@ -162,6 +162,9 @@ cd scripts
 ./test.sh
 
 %changelog
+* Thu Dec 16 2021 Mikhail Novosyolov <mikhailnov@altlinux.org> 1.3-alt1
+- Turn off NumLock by default in KDE 5
+
 * Thu Dec 16 2021 Mikhail Novosyolov <mikhailnov@altlinux.org> 1.2-alt1
 - Hack to make alterator use correct icons (new subpackage kometa-xdg-pam-env)
 - Use macro for directory with systemd user environment generators (thanks to ldv@)
