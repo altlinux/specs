@@ -14,7 +14,7 @@
 
 Name: blender
 Version: 3.0.0
-Release: alt1
+Release: alt2
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -80,10 +80,6 @@ BuildRequires: libpotrace-devel
 BuildRequires: openshadinglanguage-devel
 BuildRequires: opensubdiv-devel
 BuildRequires: libzstd-devel
-
-%ifarch x86_64
-BuildRequires: openimagedenoise-devel
-%endif
 
 %if_with embree
 BuildRequires: embree-devel
@@ -300,6 +296,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Wed Dec 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.0-alt2
+- Rebuilt without Open Image Denoise.
+
 * Mon Dec 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.0-alt1
 - Updated to upstream version 3.0.0.
 
