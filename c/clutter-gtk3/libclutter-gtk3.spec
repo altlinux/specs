@@ -1,23 +1,29 @@
+%def_disable snapshot
 %define _name clutter-gtk
 %define ver_major 1.8
 %define api_ver 1.0
 %def_enable introspection
-%def_enable gtk_doc
+%def_enable docs
 
 Name: %{_name}3
 Version: %ver_major.4
-Release: alt1
+Release: alt1.1
 
 Summary: Library integrating clutter with GTK+3
-License: LGPL v2+
+License: LGPL-2.1-or-later
 Group: System/Libraries
 Url: https://wiki.gnome.org/Projects/Clutter
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
-#Source: %_name-%version.tar
-
-BuildRequires: meson libgtk+3-devel >= 3.21.0 libclutter-devel >= 1.24 gtk-doc
-%{?_enable_introspection:BuildRequires: libjson-glib-gir-devel libcogl-gir-devel libclutter-gir-devel libgtk+3-gir-devel}
+%else
+Source: %_name-%version.tar
+%endif
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson libgtk+3-devel >= 3.21.0 libclutter-devel >= 1.24
+%{?_enable_docs:BuildRequires: gtk-doc}
+%{?_enable_introspection:BuildRequires(pre): rpm-build-gir
+BuildRequires: libjson-glib-gir-devel libcogl-gir-devel libclutter-gir-devel libgtk+3-gir-devel}
 
 %description
 Library integrating clutter with GTK+
@@ -71,9 +77,8 @@ touch AUTHORS
 
 %build
 %meson \
-	%{?_enable_gtk_doc:-Denable_docs=true} \
-	%{?_enable_introspection:-Denable-introspection=true}
-
+    %{?_enable_docs:-Denable_docs=true}
+%nil
 %meson_build
 
 %install
@@ -102,6 +107,10 @@ touch AUTHORS
 %endif
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 1.8.4-alt1.1
+- fixed meson options
+- fixed License tag
+
 * Mon Aug 14 2017 Yuri N. Sedunov <aris@altlinux.org> 1.8.4-alt1
 - 1.8.4
 
