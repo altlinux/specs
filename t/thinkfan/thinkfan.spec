@@ -1,7 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: thinkfan
-Version: 1.2.2
+Version: 1.3.0
 Release: alt1
 Summary: simple and lightweight fan control program
 Group: System/Configuration/Hardware
@@ -32,6 +34,8 @@ CPU power as possible.
 %patch2 -p1
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %cmake \
 	-DUSE_ATASMART:BOOL=ON \
 	%nil
@@ -52,6 +56,9 @@ CPU power as possible.
 %_man5dir/*.5*
 
 %changelog
+* Thu Dec 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.0-alt1
+- Updated to upstream version 1.3.0.
+
 * Mon Jun 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.2-alt1
 - Updated to upstream version 1.2.2.
 - Added watch file.
