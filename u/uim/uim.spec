@@ -37,7 +37,7 @@
 
 Name: uim
 Version: 1.8.8.0.50.d1ac9d931
-Release: alt1
+Release: alt2
 
 Summary: useful input method
 
@@ -71,7 +71,7 @@ BuildRequires: asciidoc intltool ruby ruby-stdlibs libgcroots-devel librsvg-util
 %{?_with_qt5:BuildRequires: qt5-base-devel qt5-x11extras-devel gcc-c++ cmake extra-cmake-modules rpm-macros-cmake qt5-declarative-devel}
 %{?_with_x:BuildRequires: gcc-c++ libXext-devel libXft-devel}
 %{?_with_xft:BuildRequires: libXft-devel}
-%{?_enable_emacs:BuildRequires: emacs-common emacs-devel}
+%{?_enable_emacs:BuildRequires: /usr/bin/emacs emacs-devel}
 
 %{?_with_gtk:Requires: uim-gtk}
 %{?_with_gtk3:Requires: uim-gtk3}
@@ -626,6 +626,9 @@ fi
 %endif
 
 %changelog
+* Thu Dec 16 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.8.0.50.d1ac9d931-alt2
+- Fixed FTBFS.
+
 * Thu Jan 21 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.8.0.50.d1ac9d931-alt1
 - Updated UIM to 1.8.8-50-gd1ac9d931.
 
