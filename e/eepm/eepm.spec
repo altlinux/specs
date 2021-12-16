@@ -1,7 +1,14 @@
 %def_without external_distro_info
 
+%define pkgsystem "%(bin/distr_info -g)"
+%if %pkgsystem == "yum-rpm"
+%def_disable yum
+%else
+%def_enable yum
+%endif
+
 Name: eepm
-Version: 3.14.4
+Version: 3.14.6
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -108,7 +115,7 @@ chmod a+x %buildroot%_datadir/%name/tools_*
 rm -v %buildroot%_bindir/distr_info
 %endif
 
-%if %_vendor != "alt"
+%if_disabled yum
 rm -v %buildroot%_bindir/yum
 %endif
 
@@ -127,7 +134,9 @@ mkdir -p %buildroot/var/lib/eepm/
 %_bindir/eepm
 %_bindir/serv
 %_bindir/cerv
+%if_enabled yum
 %exclude %_bindir/yum
+%endif
 %dir /var/lib/eepm/
 %if_without external_distro_info
 %_bindir/distr_info
@@ -139,13 +148,34 @@ mkdir -p %buildroot/var/lib/eepm/
 
 %if %_vendor == "alt"
 %files repack
+%endif
 
+%if_enabled yum
 # not for yum based system
 %files yum
 %_bindir/yum
 %endif
 
 %changelog
+* Thu Dec 16 2021 Vitaly Lipatov <lav@altlinux.ru> 3.14.6-alt1
+- epm play: add initial --update [receipt|all] support (do update in any case as for now)
+- distr_info: add FedoraLinux support (Fedora 35)
+- prescriptions: remove -x
+- distr_info: add openSUSE support
+- skip eepm-yum packing on yum based systems
+- epm-check_updated_repo: disable check if we never do apt-get update
+- epm-install: pacman no more support --force
+
+* Fri Dec 10 2021 Vitaly Lipatov <lav@altlinux.ru> 3.14.5-alt1
+- epm-Upgrade: pass args to epm-upgrade
+- yum: update supported actions
+- move repo fix code from release_upgrade to repofix
+- epm-repo: add epm repo switch <repo> command
+- epm repack Telegram: add /usr/bin/Telegram command
+- epm play: add XnViewMP support
+- epm repack zoom: drop embedded libs from reqs
+- epm removerepo: error if there is an option as arg
+
 * Thu Oct 28 2021 Vitaly Lipatov <lav@altlinux.ru> 3.14.4-alt1
 - eget: add / in the end of URL to avoid redirect
 
