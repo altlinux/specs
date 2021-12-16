@@ -6,7 +6,7 @@ Name: switchboard
 %define xdg_name org.pantheon.%name
 %define rdn_name io.elementary.%name
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Modular Desktop Settings Hub for elementary OS
 License: LGPL-2.1
@@ -56,7 +56,7 @@ This package contains files that are needed to develop Switchboard plugins.
 %setup
 
 %build
-%meson -Dlibunity=false
+%meson
 %meson_build
 
 %install
@@ -80,6 +80,9 @@ This package contains files that are needed to develop Switchboard plugins.
 %_vapidir/%name-%api_ver.vapi
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 6.0.0-alt1.1
+- fixed meson options
+
 * Mon Jul 19 2021 Yuri N. Sedunov <aris@altlinux.org> 6.0.0-alt1
 - 6.0.0
 
