@@ -3,7 +3,7 @@
 %define libquadmath_arches %ix86 x86_64 ppc64le
 
 Name: ncmpcpp
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 
 Summary: ncurses-based client for the Music Player Daemon (MPD)
@@ -55,6 +55,9 @@ mv %buildroot%_docdir/%name percentDoc
 %_man1dir/%name.1*
 
 %changelog
+* Thu Dec 16 2021 Arseny Maslennikov <arseny@altlinux.org> 0.9.2-alt1
+- 0.9.1 -> 0.9.2.
+
 * Tue Jan 05 2021 Arseny Maslennikov <arseny@altlinux.org> 0.9.1-alt1
 - 0.8.1 -> 0.9.1.
 - Restore the package for aarch64.
