@@ -7,7 +7,7 @@
 
 Name: gnome-characters
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Character map application for GNOME
 Group: Text tools
@@ -57,7 +57,7 @@ characters.
 %setup
 
 %build
-%meson
+%meson -Dbuildtype=release
 %meson_build
 
 %install
@@ -80,6 +80,9 @@ characters.
 
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1.1
+- fixed meson options
+
 * Tue Sep 21 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
 - 41.0
 
