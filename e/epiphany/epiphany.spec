@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %set_verify_elf_method unresolved=relaxed
 
 %define _libexecdir %_prefix/libexec
@@ -13,7 +13,7 @@
 
 Name: epiphany
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: Epiphany is a GNOME web browser.
 Summary(ru_RU.UTF-8): Epiphany - интернет-браузер для графической оболочки GNOME.
@@ -91,8 +91,8 @@ This package contains common noarch files needed for Epiphany.
 
 %build
 %meson \
-	-Ddistributor_name="ALTLinux" \
-	%{?_disable_soup2:-Dsoup2=disabled}
+    %{?_disable_soup2:-Dsoup2=disabled}
+%nil
 %meson_build
 
 %install
@@ -122,6 +122,10 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt2
+- updated to 41.0-44-ga2928c7c7
+- fixed meson options
+
 * Thu Sep 16 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
 - 41.0
 
