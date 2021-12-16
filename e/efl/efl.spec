@@ -34,7 +34,7 @@
 
 Name: efl
 Version: %ver_major.1
-Release: alt3
+Release: alt3.1
 
 Summary: Enlightenment Foundation Libraries
 Group: System/Libraries
@@ -106,6 +106,8 @@ http://www.enlightenment.org/p.php?p=docs
 %package -n %name-libs
 Summary: Enlightenment Foundation Libraries
 Group: System/Libraries
+Requires: shared-mime-info
+Requires: desktop-file-utils
 Obsoletes: libeina < %version
 Provides: libeina = %version-%release
 Obsoletes: libeet < %version
@@ -238,7 +240,7 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 	%{?_disable_gstreamer:-Dgstreamer=false} \
 	%{?_disable_avahi:-Davahi=false} \
 	-Dmount-path=/bin/mount \
-	-Dumount-path=/bin/umount \
+	-Dunmount-path=/bin/umount \
 	-Deject-path=%_bindir/eject
 %ifarch %e2k
 export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_file:@efreet:@edje:@ecore_evas" | sed "s|@|$(pwd)/%__builddir/src/lib/|g")"
@@ -417,6 +419,9 @@ export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_fi
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 1.25.1-alt3.1
+- fixed meson options
+
 * Wed Aug 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.25.1-alt3
 - E2K:
   re-enable lua since luajit is now available too (mike@)
