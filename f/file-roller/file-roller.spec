@@ -4,14 +4,13 @@
 %define xdg_name1 org.gnome.ArchiveManager
 %define ver_major 3.40
 %def_disable packagekit
-%def_disable magic
 %def_enable libarchive
 %def_enable nautilus_actions
 %define nau_api_ver 3.0
 
 Name: file-roller
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: An archive manager for GNOME
 Summary (ru_RU.UTF-8): Архиватор для GNOME
@@ -32,8 +31,8 @@ Requires: tar gzip bzip2 ncompress lzop binutils arj lha unrar zip unzip p7zip l
 # Requires: cdrecord # for .iso support
 Requires: dconf gnome-icon-theme
 
-BuildRequires(pre): meson
-BuildRequires: rpm-build-gnome rpm-build-licenses yelp-tools
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-licenses
+BuildRequires: meson yelp-tools
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -41,7 +40,6 @@ BuildPreReq: intltool >= 0.35.0
 BuildPreReq: desktop-file-utils >= %desktop_file_utils_ver
 BuildRequires: libjson-glib-devel libnotify-devel
 %{?_enable_libarchive:BuildRequires: libarchive-devel >= %libarchive_ver}
-%{?_enable_magic:BuildRequires: libmagic-devel}
 %{?_enable_nautilus_actions:BuildRequires: libnautilus-devel}
 
 %description
@@ -94,12 +92,12 @@ rm -f data/%xdg_name.desktop{,.in}
 
 %build
 %meson \
-    %{?_disable_magic:-Dmagic=false} \
     %{?_enable_packagekit:-Dpackagekit=true} \
     %{?_enable_libarchive:-Dlibarchive=enabled} \
     %{?_disable_nautilus_actions:-Dnautilus-actions=false} \
     -Dnotification=enabled \
     -Dcpio='/bin/cpio'
+%nil
 %meson_build
 
 %install
@@ -124,6 +122,9 @@ rm -f data/%xdg_name.desktop{,.in}
 %doc AUTHORS NEWS README.md
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1.1
+- fixed meson options
+
 * Sat May 01 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
 - 3.40.0
 
