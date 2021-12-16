@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.102
+Version: 2.9.103
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -115,6 +115,9 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Thu Dec 16 2021 Ivan Savin <svn17@altlinux.org> 2.9.103-alt1
+- alterator-gpupdate: fix translation
+
 * Tue Nov 30 2021 Ivan Razzhivin <underwit@altlinux.org> 2.9.102-alt1
 - alterator-setup-welcome: add translation
 - alterator-setup-kworkstation: add help
