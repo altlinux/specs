@@ -1,6 +1,6 @@
 Name: sysvinit
 Version: 2.88
-Release: alt6
+Release: alt7
 
 %def_enable selinux
 %def_enable initramfs
@@ -47,6 +47,9 @@ Conflicts: glibc < 6:2.2.1-ipl0.2mdk,
 BuildConflicts: openssl-devel < 0.9.6a
 # Required for SELinux support.
 %{?_enable_selinux:BuildRequires: libselinux-devel}
+
+Conflicts: systemd
+Conflicts: systemd-sysvinit
 
 %description
 This package contains a group of programs that control the
@@ -215,6 +218,10 @@ fi
 %_man8dir/pidof.*
 
 %changelog
+* Thu Dec 16 2021 Alexey Gladkov <legion@altlinux.ru> 2.88-alt7
+- Add conflict to systemd to make it impossible to install systemd on a system
+  with sysvinit (ALT#41579).
+
 * Mon Nov 11 2019 Dmitry V. Levin <ldv@altlinux.org> 2.88-alt6
 - Fixed build with glibc >= 2.28.
 - Removed explicit "PreReq: coreutils".
