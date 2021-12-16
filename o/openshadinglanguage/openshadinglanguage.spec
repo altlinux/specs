@@ -5,7 +5,7 @@
 %define soname 1.11
 
 Name: openshadinglanguage
-Version: 1.11.15.0
+Version: 1.11.16.0
 Release: alt1
 Summary: Advanced shading language for production GI renderers
 Group: Development/Other
@@ -192,6 +192,9 @@ mv %buildroot%_libdir/osl.imageio.so %buildroot%_libdir/OpenImageIO-%{oiio_major
 %python3_sitelibdir/*.so
 
 %changelog
+* Thu Dec 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.11.16.0-alt1
+- Updated to upstream version 1.11.16.0.
+
 * Mon Sep 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.11.15.0-alt1
 - Updated to upstream version 1.11.15.0.
 
