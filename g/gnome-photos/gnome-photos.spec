@@ -11,7 +11,7 @@
 
 Name: gnome-photos
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Photos - access, organize and share your photos on GNOME
 License: GPL-2.0-or-later
@@ -69,7 +69,7 @@ patterns and objectives.
 %setup
 
 %build
-%meson
+%meson -Dbuildtype=plain
 %meson_build
 
 %install
@@ -95,6 +95,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1.1
+- fixed meson options
+
 * Thu Mar 25 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 
