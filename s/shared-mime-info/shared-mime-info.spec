@@ -6,7 +6,7 @@
 
 Name: shared-mime-info
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 
 Summary: Shared MIME-Info Specification
 Group: System/Libraries
@@ -17,7 +17,7 @@ Url: http://www.freedesktop.org/wiki/Software/%name
 #Source: https://github.com/freedesktop/xdg-%name/archive/Release-%ver_major-%ver_minor/%name-%version.tar.gz
 Source: https://gitlab.freedesktop.org/xdg/shared-mime-info/-/archive/%version/%name-%version.tar.gz
 %else
-#VCS: https://gitlab.freedesktop.org/xdg/shared-mime-info.git
+Vcs: https://gitlab.freedesktop.org/xdg/shared-mime-info.git
 Source: %name-%version.tar
 %endif
 
@@ -26,12 +26,14 @@ Patch: %name-2.0-alt-cachedir-param.patch
 Patch1: %name-2.0-alt-swf.patch
 Patch2: %name-2.0-alt-q_option.patch
 
+Patch10: %name-2.1-up-gettext.patch
+
 %define glib_ver 2.6.0
 %define libxml2_ver 2.4.0
 
 BuildRequires(pre): meson rpm-build-xdg
 BuildRequires: libgio-devel >= %glib_ver libxml2-devel >= %libxml2_ver
-BuildRequires: itstool xmllint xmlto
+BuildRequires: xmllint xmlto
 
 %description
 This is the freedesktop.org shared MIME info database.
@@ -62,6 +64,9 @@ cp %SOURCE1 .
 %patch -p1 -b .cachedir
 %patch1 -p1 -b .swf
 %patch2 -p1 -b .quiet
+
+%patch10 -p1
+
 rm -f freedesktop.org.xml
 
 %build
@@ -116,6 +121,9 @@ multipart,text,video,XMLnamespaces}
 %exclude %_datadir/locale
 
 %changelog
+* Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt2
+- fixed build with meson-0.60 (upstream patch)
+
 * Fri Jan 01 2021 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt1
 - 2.1
 
