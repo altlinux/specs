@@ -1,7 +1,7 @@
 %define rname kimageformats
 
 Name: kf5-%rname
-Version: 5.88.0
+Version: 5.89.0
 Release: alt1
 %K5init altplace
 
@@ -19,7 +19,9 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules kf5-karchive-devel openexr-devel python-module-google qt5-base-devel rpm-build-kf5 rpm-build-ubt rpm-build-python3 rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules openexr-devel qt5-base-devel
-#BuildRequires: libavif-devel
+BuildRequires: libavif-devel
+#BuildRequires: libheif-devel
+#BuildRequires: libjxl-devel
 BuildRequires: kf5-karchive-devel
 
 %description
@@ -55,6 +57,9 @@ Requires: kf5-filesystem
 
 
 %changelog
+* Thu Dec 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.89.0-alt1
+- new version
+
 * Mon Nov 15 2021 Sergey V Turchin <zerg@altlinux.org> 5.88.0-alt1
 - new version
 

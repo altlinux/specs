@@ -1,7 +1,7 @@
 %define rname kactivities
 
 Name: kf5-%rname
-Version: 5.88.0
+Version: 5.89.0
 Release: alt1
 %K5init altplace
 
@@ -57,7 +57,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-sed -i 's|KACTIVITIES_LIB_VERSION_STRING|KACTIVITIES_VERSION_STRING|' src/lib/libKActivities.pc.cmake
 
 %build
 %K5build
@@ -95,6 +94,9 @@ sed -i 's|KACTIVITIES_LIB_VERSION_STRING|KACTIVITIES_VERSION_STRING|' src/lib/li
 %_K5qml/org/kde/activities/
 
 %changelog
+* Thu Dec 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.89.0-alt1
+- new version
+
 * Mon Nov 15 2021 Sergey V Turchin <zerg@altlinux.org> 5.88.0-alt1
 - new version
 

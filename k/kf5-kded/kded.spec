@@ -5,7 +5,7 @@
 %define service_name plasma-kded
 
 Name: kf5-%rname
-Version: 5.88.0
+Version: 5.89.0
 Release: alt1
 %K5init altplace
 
@@ -15,7 +15,6 @@ Url: http://www.kde.org
 License: LGPL-2.0 or GPL-2.0
 
 Requires: %name-common = %version-%release
-Requires(post,preun): /bin/systemctl
 
 Source: %rname-%version.tar
 Patch1: alt-systemd-service.patch
@@ -72,24 +71,12 @@ KF5 library
 %find_lang %name --all-name
 %K5find_qtlang %name --all-name
 
-mkdir -p -m 0755 %buildroot/%_presetdir
-cat >%buildroot/%_presetdir/33-%name.preset <<__EOF__
-# Need to be enabled by default
-enable %service_name.service
-__EOF__
+#mkdir -p -m 0755 %buildroot/%_presetdir
+#cat >%buildroot/%_presetdir/33-%name.preset <<__EOF__
+## Need to be enabled by default
+#enable %service_name.service
+#__EOF__
 
-%post
-if [ $1 = 1 ]; then
-    /bin/systemctl --user --global preset %service_name.service >/dev/null 2>&1 || :
-fi
-
-%preun
-if [ $1 = 0 ]; then
-    /bin/systemctl --user --global disable %service_name.service >/dev/null 2>&1 || :
-fi
-
-%triggerin -- %name < 5.72
-/bin/systemctl --user --global preset %service_name.service.service >/dev/null 2>&1 || :
 
 %files common -f %name.lang
 %doc LICENSES/* README.md
@@ -104,7 +91,7 @@ fi
 #%_K5dbus_srv/*.service
 %_datadir/dbus-1/services/*.service
 %_unitdir_user/%service_name.service
-%_presetdir/*-%name.preset
+#%_presetdir/*-%name.preset
 
 %files devel
 #%_K5inc/kded_version.h
@@ -118,6 +105,9 @@ fi
 #%_K5lib/libKF5DED.so.*
 
 %changelog
+* Thu Dec 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.89.0-alt1
+- new version
+
 * Mon Nov 15 2021 Sergey V Turchin <zerg@altlinux.org> 5.88.0-alt1
 - new version
 

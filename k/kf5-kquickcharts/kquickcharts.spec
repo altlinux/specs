@@ -1,7 +1,7 @@
 %define rname kquickcharts
 
 Name: kf5-%rname
-Version: 5.88.0
+Version: 5.89.0
 Release: alt1
 %K5init altplace
 
@@ -78,6 +78,9 @@ Requires: %name-common = %version-%release
 #%_K5lib/libkquickcharts.so.*
 
 %changelog
+* Thu Dec 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.89.0-alt1
+- new version
+
 * Mon Nov 15 2021 Sergey V Turchin <zerg@altlinux.org> 5.88.0-alt1
 - new version
 

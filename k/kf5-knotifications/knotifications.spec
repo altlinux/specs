@@ -1,7 +1,7 @@
 %define rname knotifications
 
 Name: kf5-%rname
-Version: 5.88.0
+Version: 5.89.0
 Release: alt1
 %K5init altplace
 
@@ -21,11 +21,11 @@ BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel
 BuildRequires: libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel
 BuildRequires: libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libxkbfile-devel
-BuildRequires: qt5-x11extras-devel qt5-speech-devel
+BuildRequires: qt5-x11extras-devel qt5-declarative-devel
 BuildRequires: qt5-phonon-devel qt5-tools-devel
+BuildRequires: qt5-speech-devel
 BuildRequires: libdbusmenu-qt5-devel
 BuildRequires: libcanberra-devel
-#BuildRequires: qt5-speech-devel
 BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kguiaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kservice-devel kf5-kwidgetsaddons-devel
@@ -83,9 +83,13 @@ KF5 library
 
 %files -n libkf5notifications
 %_K5lib/libKF5Notifications.so.*
+%_K5qml/org/kde/notification/
 %_K5srvtyp/*.desktop
 
 %changelog
+* Thu Dec 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.89.0-alt1
+- new version
+
 * Mon Nov 15 2021 Sergey V Turchin <zerg@altlinux.org> 5.88.0-alt1
 - new version
 

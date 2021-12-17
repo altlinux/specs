@@ -6,7 +6,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.88.0
+Version: 5.89.0
 Release: alt1
 %K5init altplace
 
@@ -27,7 +27,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires(pre): python3-module-sip-devel
 BuildRequires: python3-module-PyQt5-devel
 %endif
-BuildRequires: gcc-c++ extra-cmake-modules qt5-base-devel qt5-tools-devel
+BuildRequires: gcc-c++ extra-cmake-modules qt5-base-devel qt5-declarative-devel qt5-tools-devel
 
 %description
 KConfig provides an advanced configuration system.
@@ -59,6 +59,13 @@ Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %version-%release
 %description -n libkf5configcore
+KF5 library
+
+%package -n libkf5configqml
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5configqml
 KF5 library
 
 %if_enabled python
@@ -116,6 +123,7 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %_K5inc/kconfig_version.h
 %_K5inc/KConfigCore/
 %_K5inc/KConfigGui/
+%_K5inc/KConfigQml/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5Config
 %_K5archdata/mkspecs/modules/qt_KConfigCore.pri
@@ -126,6 +134,8 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %_K5exec/kconf_update
 %files -n libkf5configgui
 %_K5lib/libKF5ConfigGui.so.*
+%files -n libkf5configqml
+%_K5lib/libKF5ConfigQml.so.*
 
 %if_enabled python
 %files -n python3-module-%rname
@@ -136,6 +146,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Thu Dec 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.89.0-alt1
+- new version
+
 * Mon Nov 15 2021 Sergey V Turchin <zerg@altlinux.org> 5.88.0-alt1
 - new version
 
