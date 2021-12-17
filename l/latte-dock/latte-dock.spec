@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: latte-dock
-Version: 0.10.4
+Version: 0.10.5
 Release: alt1
 Summary: Latte is a dock based on plasma frameworks
 
@@ -90,6 +90,9 @@ using parabolic zoom effect and tries to be there only when it is needed.
 %_datadir/knsrcfiles/latte-indicators.knsrc
 
 %changelog
+* Fri Dec 17 2021 Konstantin Rybakov <kastet@altlinux.org> 0.10.5-alt1
+- Updated to upstream version 0.10.5
+
 * Mon Dec 06 2021 Konstantin Rybakov <kastet@altlinux.org> 0.10.4-alt1
 - Updated to upstream version 0.10.4
 
