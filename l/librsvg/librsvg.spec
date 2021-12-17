@@ -16,7 +16,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 Epoch: 1
 
@@ -192,6 +192,9 @@ the functionality of the installed %name.
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Fri Dec 17 2021 Yuri N. Sedunov <aris@altlinux.org> 1:2.52.5-alt1
+- 2.52.5
+
 * Sat Nov 13 2021 Yuri N. Sedunov <aris@altlinux.org> 1:2.52.4-alt1
 - 2.52.4
 
