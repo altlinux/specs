@@ -1,6 +1,9 @@
+# due to sysv-systemd conflict we should not have systemd deps
+%filter_from_requires /^.usr.bin.systemctl/d
+
 Name: atop
 Version: 2.5.0
-Release: alt2
+Release: alt3
 Summary: AT Computing's System & Process Monitor
 License: GPLv2+
 Group: Monitoring
@@ -61,6 +64,10 @@ done
 /usr/lib/pm-utils/sleep.d/45atoppm
 
 %changelog
+* Fri Dec 17 2021 Igor Vlasenko <viy@altlinux.org> 2.5.0-alt3
+- NMU: drop shell.req autodeps on /usr/bin/systemctl
+  due to recent sysV-systemd conflict
+
 * Sat Jul 03 2021 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt2
 - NMU: Fixed FTBFS with rpm-build-python3
 
