@@ -15,7 +15,7 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR ver
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
-Version: 91.4.0
+Version: 91.4.1
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -54,6 +54,7 @@ Patch013: 0013-bmo-1559213-Support-system-av1.patch
 Patch014: 0014-VAAPI-Add-extra-frames.patch
 Patch015: 0015-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch016: 0016-ALT-Fix-redefinition-double_t.patch
+Patch017: 0017-Bug-1745560-Add-missing-stub-for-wl_proxy_marshal_fl.patch
 ### End Patches
 
 # Hang up on build browser/components/about
@@ -207,6 +208,7 @@ Most likely you don't need to use this package.
 %patch014 -p1
 %patch015 -p1
 %patch016 -p1
+%patch017 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -454,6 +456,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Fri Dec 17 2021 Andrey Cherepanov <cas@altlinux.org> 91.4.1-alt1
+- New ESR version.
+
 * Mon Dec 06 2021 Andrey Cherepanov <cas@altlinux.org> 91.4.0-alt1
 - New ESR version.
 - Security fixes:
