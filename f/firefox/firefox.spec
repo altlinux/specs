@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        95.0
+Version:        95.0.1
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -39,6 +39,7 @@ Patch011: 0011-bmo-1559213-Support-system-av1.patch
 Patch012: 0012-VAAPI-Add-extra-frames.patch
 Patch013: 0013-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch014: 0014-ALT-fix-double_t-redefinition.patch
+Patch015: 0015-Bug-1745560-Add-missing-stub-for-wl_proxy_marshal_fl.patch
 ### End Patches
 
 %define _unpackaged_files_terminate_build 1
@@ -188,23 +189,7 @@ Most likely you don't need to use this package.
 
 %prep
 %setup -q -n firefox-%version -c
-
-### Begin to apply patches
-%patch001 -p1
-%patch002 -p1
-%patch003 -p1
-%patch004 -p1
-%patch005 -p1
-%patch006 -p1
-%patch007 -p1
-%patch008 -p1
-%patch009 -p1
-%patch010 -p1
-%patch011 -p1
-%patch012 -p1
-%patch013 -p1
-%patch014 -p1
-### Finish apply patches
+%autopatch -p1
 
 cd mozilla
 
@@ -466,6 +451,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Fri Dec 17 2021 Alexey Gladkov <legion@altlinux.ru> 95.0.1-alt1
+- New release (95.0.1).
+
 * Wed Dec 08 2021 Alexey Gladkov <legion@altlinux.ru> 95.0-alt1
 - New release (95.0).
 - Security fixes:
