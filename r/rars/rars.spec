@@ -1,5 +1,5 @@
 Name: rars
-Version: 1.3.1
+Version: 1.5
 Release: alt1
 
 Summary: RISC-V Assembler and Runtime Simulator
@@ -11,6 +11,7 @@ Url: https://github.com/TheThirdOne/rars
 Packager: Nikita Ermakov <arei@altlinux.org>
 
 Source: %name-%version.tar
+Source1: jsoftfloat.tar
 Patch: %name-%version.patch
 
 BuildRequires: java-devel-default
@@ -31,10 +32,11 @@ Summary: Javadoc for %name
 Documentation and license for %name.
 
 %prep
-%setup
+%setup -a1
 %patch -p1
 
 %build
+export LC_ALL=ru_RU.UTF-8
 ./build-jar.sh
 
 %install
@@ -58,5 +60,9 @@ cp -pr License.txt README.md %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}/*
 
 %changelog
+* Wed Dec 15 2021 Fr. Br. George <george@altlinux.ru> 1.5-alt1
+- Version up
+- Import JSoftFloat submodule
+
 * Tue Sep 24 2019 Nikita Ermakov <arei@altlinux.org> 1.3.1-alt1
 - Initial build for ALT Linux Sisyphus.
