@@ -1,114 +1,140 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: libgmp-devel mpir-devel
 # END SourceDeps(oneline)
-#%%add_optflags %%optflags_shared
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Group: System/Libraries
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# The ARM and s390x builders appear to run out of memory with LTO
-%ifarch %{arm} s390x
-%global _lto_cflags %{nil}
-%endif
+%define autorelease 10
 
 Name:           libfplll
 Version:        5.4.1
-Release:        alt1_2
-Summary:        LLL-reduces euclidean lattices
+%global so_version 7
+Release:        alt1_%autorelease
+Summary:        Lattice algorithms using floating-point arithmetic
+
 License:        LGPLv2+
 URL:            https://fplll.github.io/fplll/
 Source0:        https://github.com/fplll/fplll/releases/download/%{version}/fplll-%{version}.tar.gz
 
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
+
 BuildRequires:  gcc-c++
-BuildRequires:  help2man
+
 BuildRequires:  pkgconfig(mpfr)
 BuildRequires:  pkgconfig(qd)
+
+BuildRequires:  help2man
 Source44: import.info
 
 %description
-fplll contains several algorithms on lattices that rely on
-floating-point computations. This includes implementations of the
-floating-point LLL reduction algorithm, offering different
-speed/guarantees ratios. It contains a 'wrapper' choosing the
-estimated best sequence of variants in order to provide a guaranteed
-output as fast as possible. In the case of the wrapper, the
-succession of variants is oblivious to the user. It also includes
-a rigorous floating-point implementation of the Kannan-Fincke-Pohst
-algorithm that finds a shortest non-zero lattice vector, and the BKZ
-reduction algorithm.
+fplll contains implementations of several lattice algorithms. The
+implementation relies on floating-point orthogonalization, and LLL is central
+to the code, hence the name.
+
+It includes implementations of floating-point LLL reduction algorithms,
+offering different speed/guarantees ratios. It contains a 'wrapper' choosing
+the estimated best sequence of variants in order to provide a guaranteed output
+as fast as possible. In the case of the wrapper, the succession of variants is
+oblivious to the user.
+
+It includes an implementation of the BKZ reduction algorithm, including the
+BKZ-2.0 improvements (extreme enumeration pruning, pre-processing of blocks,
+early termination). Additionally, Slide reduction and self dual BKZ are
+supported.
+
+It also includes a floating-point implementation of the Kannan-Fincke-Pohst
+algorithm that finds a shortest non-zero lattice vector. Finally, it contains a
+variant of the enumeration algorithm that computes a lattice vector closest to
+a given vector belonging to the real span of the lattice.
 
 
 %package        devel
 Group: Development/C
-Summary:        Development files for %{name}
-Requires:       %{name} = %{version}-%{release}
+Summary:        Development files for libfplll
+
+Requires:       libfplll = %{version}-%{release}
 
 %description    devel
-The %{name}-devel package contains libraries and header files for
-developing applications that use %{name}.
+The libfplll-devel package contains libraries and header files for
+developing applications that use libfplll.
 
 
+# The static library is required by Macaulay2. See its spec file for a full
+# explanation; the essential justification is excerpted below:
+#
+#   We have to use the static version of the libfplll and givaro library. They
+#   have global objects whose constructors run before GC is initialized. If we
+#   allow the shared libraries to be unloaded, which happens as a normal part
+#   of Macaulay2's functioning, then GC tries to free objects it did not
+#   allocate, which leads to a segfault.
 %package        static
 Group: System/Libraries
-Summary:        Static library for %{name}
+Summary:        Static library for libfplll
+
 
 %description    static
-The %{name}-static package contains a static library for %{name}.
+The libfplll-static package contains a static library for libfplll.
 
 
 %package        tools
 Group: Engineering
-Summary:        Command line tools that use %{name}
-Requires:       %{name} = %{version}-%{release}
+Summary:        Command line tools that use libfplll
+
+Requires:       libfplll = %{version}-%{release}
 
 %description    tools
-The %{name}-tools package contains command-line tools that expose
-the functionality of %{name}.
+The libfplll-tools package contains command-line tools that expose
+the functionality of libfplll.
 
 
 %prep
 %setup -q -n fplll-%{version}
 
 
-# Fix broken test for a bool type
-sed -e '/#ifndef bool/,/#endif/d' \
-    -e '/#ifndef false/,/#endif/d' \
-    -e '/#if false/,/#endif/d' \
-    -e '/#ifndef true/,/#endif/d' \
-    -e '/#if true/,/#endif/d' \
-    -e '/ac_cv_type__Bool/s/\$ac_includes_default/#include <stdbool.h>/' \
-    -i configure
 
 %build
-%autoreconf -fisv
-%configure --disable-silent-rules LIBS=-lpthread
+autoreconf --install --force --verbose
+%configure --disable-silent-rules
+
+# Eliminate hardcoded rpaths, and work around libtool moving all -Wl options
+# after the libraries to be linked
+sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
+    -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
+    -e 's|-nostdlib|-Wl,--as-needed &|' \
+    -i libtool
 
 %make_build
 
-# Build the man pages
-cd fplll
-export LD_LIBRARY_PATH=$PWD/.libs
-help2man -N -o ../fplll.1 ./fplll
-help2man -N -o ../latticegen.1 ./latticegen
-cd -
+# Build man pages with help2man. The result is not as good as hand-written, but
+# quite adequate.
+for cmd in fplll latticegen
+do
+  LD_LIBRARY_PATH="${PWD}/fplll/.libs" \
+      help2man --no-info --output="${cmd}.1" "./fplll/${cmd}"
+done
+
 
 %install
 %makeinstall_std
-rm -f %{buildroot}%{_libdir}/*.la
+find '%{buildroot}' -type f -name '*.la' -print -delete
 
-# Install the man pages
-mkdir -p %{buildroot}%{_mandir}/man1
-cp -p *.1 %{buildroot}%{_mandir}/man1
+install -t '%{buildroot}%{_mandir}/man1' -D -m 0644 -p *.1
+
 
 %check
-LD_LIBRARY_PATH=$PWD/src/.libs make check
+LD_LIBRARY_PATH="${PWD}/src/.libs" %make_build check
 
 
 %files
 %doc NEWS README.md
 %doc --no-dereference COPYING
-%{_libdir}/libfplll.so.7*
+%{_libdir}/libfplll.so.%{so_version}*
 %{_datadir}/fplll/
+
 
 %files devel
 %{_includedir}/fplll.h
@@ -116,8 +142,10 @@ LD_LIBRARY_PATH=$PWD/src/.libs make check
 %{_libdir}/libfplll.so
 %{_libdir}/pkgconfig/fplll.pc
 
+
 %files static
 %{_libdir}/libfplll.a
+
 
 %files tools
 %{_bindir}/fplll
@@ -127,6 +155,9 @@ LD_LIBRARY_PATH=$PWD/src/.libs make check
 
 
 %changelog
+* Fri Dec 17 2021 Igor Vlasenko <viy@altlinux.org> 5.4.1-alt1_10
+- update to new release by fcimport
+
 * Fri Oct 01 2021 Igor Vlasenko <viy@altlinux.org> 5.4.1-alt1_2
 - new version
 
