@@ -2,9 +2,10 @@
 
 Name: openipmi
 Summary: %name - Library interface to IPMI
-Version: 2.0.31
+Version: 2.0.32
 Release: alt1
 License: LGPLv2.1
+# VCS: https://git.code.sf.net/p/openipmi/code
 Url: http://openipmi.sourceforge.net
 Group: System/Configuration/Hardware
 Source: %name-%version.tar
@@ -167,6 +168,9 @@ rm -f %buildroot%_libdir/libOpenIPMIglib12.*
 
 
 %changelog
+* Fri Dec 17 2021 Anton Farygin <rider@altlinux.ru> 2.0.32-alt1
+- 2.0.32
+
 * Wed Mar 03 2021 Anton Farygin <rider@altlinux.org> 2.0.31-alt1
 - 2.0.31
 
