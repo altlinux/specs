@@ -1,6 +1,6 @@
 Summary: Exploring Conway's Game of Life and other cellular automata
 Name: golly
-Version: 3.1
+Version: 4.1
 Release: alt1
 
 License: GPL
@@ -12,15 +12,11 @@ Group: Education
 
 %add_python_req_skip glife golly
 
-Patch: golly-2.8-nolua.patch
-
-# Automatically added by buildreq on Thu Mar 16 2017
-# optimized out: fontconfig libGL-devel libX11-devel libgdk-pixbuf libstdc++-devel libwayland-client libwayland-server perl python-base python-modules xorg-xproto-devel
-BuildRequires: ImageMagick-tools gcc-c++ libGLU-devel libwxGTK-devel lua-devel python-devel zlib-devel
-
-BuildRequires: perl-Math-BigInt
-
 Requires: %name-data = %EVR
+
+# Automatically added by buildreq on Wed Dec 15 2021
+# optimized out: at-spi2-atk fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libImageMagick6-common libat-spi2-core libcairo-gobject libgdk-pixbuf libglvnd-devel libgpg-error libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwxBase3.1-devel libwxGTK3.1-gl python3 python3-base sh4
+BuildRequires: ImageMagick-tools gcc-c++ libGLU-devel libSDL2-devel libwxGTK3.1-devel python3-dev zlib-devel
 
 %description
 Welcome to Golly, a sophisticated tool for exploring Conway's
@@ -56,34 +52,26 @@ Group: Education
 
 %prep
 %setup -n %name-%version-src
-%patch -p1
-sed -i 's/NEEDED +libperl\[/NEEDED +libperl[-/' gui-wx/configure/configure
 
 %build
 cd gui-wx
-sed -i '/#include <EXTERN.h>/a\
-#define PERL_GLOBAL_STRUCT
-' wxperl.cpp
-cd configure
-%autoreconf
-%configure --with-perl-shlib=%_libdir/perl5/CORE/libperl.so
-%make_build
+%make_build -f makefile-gtk GOLLYDIR=%_datadir/%name
 
-cd ..
 for N in 16 32 48; do convert icons/appicon$N.ico $N.png; done
 
 %install
-cd gui-wx/configure
-%makeinstall
-cd ..
+install -d %buildroot/%_bindir %buildroot/%_datadir/%name
+install golly %buildroot/%_bindir/
+install bgolly %buildroot/%_bindir/
+cp -a Help Patterns Rules Scripts %buildroot/%_datadir/%name/
+
 for N in 16 32 48; do
-  install -D $N.png %buildroot%_iconsdir/hicolor/${N}x$N/apps/%name.png
+  install -D gui-wx/$N.png %buildroot%_iconsdir/hicolor/${N}x$N/apps/%name.png
 done
 
 install -D %SOURCE2 %buildroot%_desktopdir/%name.desktop
 
 %files
-%exclude %_datadir/doc/%name
 %doc docs/*
 %_bindir/*
 %_miconsdir/%name.png
@@ -95,6 +83,11 @@ install -D %SOURCE2 %buildroot%_desktopdir/%name.desktop
 %_datadir/%name
 
 %changelog
+* Tue Dec 14 2021 Fr. Br. George <george@altlinux.ru> 4.1-alt1
+- Autobuild version bump to 4.1
+- Remove already broken PERL support
+- No upstream configure any more
+
 * Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 3.1-alt1
 - Autobuild version bump to 3.1
 
