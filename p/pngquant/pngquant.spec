@@ -5,8 +5,8 @@ BuildRequires: libgomp-devel /proc
 %global libname libimagequant
 
 Name:           pngquant
-Version:        2.16.0
-Release:        alt1_1
+Version:        2.17.0
+Release:        alt1_0
 Summary:        PNG quantization tool for reducing image file size
 
 License:        GPLv3+
@@ -66,6 +66,9 @@ export CFLAGS="%{optflags} -fno-math-errno -funroll-loops -fomit-frame-pointer -
 
 
 %changelog
+* Fri Dec 17 2021 Igor Vlasenko <viy@altlinux.org> 2.17.0-alt1_0
+- update to new release by fcimport
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 2.16.0-alt1_1
 - update to new release by fcimport
 
