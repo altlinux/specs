@@ -1,11 +1,12 @@
-%define so_tls_version 16
-%define so_crypto_version 10
+%define __nprocs 1
+%define so_tls_version 17
+%define so_crypto_version 11
 %define so_x509_version 4
 %def_disable static
 
 Name: mbedtls
-Version: 3.0.0
-Release: alt1.1
+Version: 3.1.0
+Release: alt1
 
 Summary: Transport Layer Security protocol suite
 License: Apache-2.0
@@ -93,15 +94,13 @@ sed -i 's,-Wformat-overflow=2,,' CMakeLists.txt
 
 %build
 %cmake .. \
-	-DENABLE_ZLIB_SUPPORT:BOOL=TRUE \
 	-DLIB_INSTALL_DIR:PATH=%_libdir \
 	-DUSE_SHARED_MBEDTLS_LIBRARY:BOOL=TRUE \
 %if_enabled static
-    -DUSE_STATIC_MBEDTLS_LIBRARY:BOOL=TRUE \
+	-DUSE_STATIC_MBEDTLS_LIBRARY:BOOL=TRUE
 %else
-    -DUSE_STATIC_MBEDTLS_LIBRARY:BOOL=FALSE \
+	-DUSE_STATIC_MBEDTLS_LIBRARY:BOOL=FALSE
 %endif
-	-DUSE_PKCS11_HELPER_LIBRARY:BOOL=TRUE
 
 %cmake_build
 
@@ -132,6 +131,7 @@ rm -rf %buildroot%_prefix/cmake
 %_libdir/libmbedcrypto.so
 %_libdir/lib%name.so
 %_libdir/libmbedx509.so
+%dir %_libdir/cmake/%name
 %_libdir/cmake/%name/*.cmake
 
 %if_enabled static
@@ -146,6 +146,9 @@ rm -rf %buildroot%_prefix/cmake
 %_libexecdir/%name/*
 
 %changelog
+* Sat Dec 18 2021 Nazarov Denis <nenderus@altlinux.org> 3.1.0-alt1
+- Version 3.1.1
+
 * Thu Jul 22 2021 Michael Shigorin <mike@altlinux.org> 3.0.0-alt1.1
 - E2K: avoid lcc-unsupported option
 
