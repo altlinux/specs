@@ -2,7 +2,7 @@
 %def_enable check
 
 Name:    python3-module-%modulename
-Version: 0.19
+Version: 0.19.1
 Release: alt1
 
 Summary: Simple Python interface for Graphviz
@@ -48,6 +48,9 @@ tox.py3 --sitepackages -v
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Dec 17 2021 Anton Farygin <rider@altlinux.ru> 0.19.1-alt1
+- 0.19.1
+
 * Mon Nov 29 2021 Anton Farygin <rider@altlinux.ru> 0.19-alt1
 - 0.19
 
