@@ -2,7 +2,7 @@
 
 Name: mate-screensaver
 Version: 1.26.0
-Release: alt1
+Release: alt2
 Epoch: 2
 Summary: MATE Screensaver
 License: GPLv2+ and LGPLv2+
@@ -44,8 +44,7 @@ Development files for mate-screensaver
 	--with-libgl \
 	--with-shadow \
 	--enable-pam  \
-	--enable-authentication-scheme=helper \
-	--with-passwd-helper=%_libexecdir/%name/%name-pam-helper \
+	--enable-authentication-scheme=pam \
 	--enable-locking \
 	--with-systemd \
 	--without-console-kit
@@ -69,7 +68,7 @@ install -m644 -pD doc/mate-screensaver.html %buildroot%_datadir/doc/mate-screens
 %_libexecdir/%name/floaters
 %_libexecdir/%name/popsquares
 %_libexecdir/%name/slideshow
-%attr(2511,root,chkpwd) %_libexecdir/%name/%name-pam-helper
+%attr(2711,root,chkpwd) %_libexecdir/%name-dialog
 %_desktopdir/%name-preferences.desktop
 %_desktopdir/screensavers/*.desktop
 %_datadir/%name
@@ -86,6 +85,9 @@ install -m644 -pD doc/mate-screensaver.html %buildroot%_datadir/doc/mate-screens
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Nov 11 2021 Paul Wolneykien <manowar@altlinux.org> 2:1.26.0-alt2
+- Switch to PAM authentication scheme.
+
 * Fri Aug 06 2021 Valery Inozemtsev <shrek@altlinux.ru> 2:1.26.0-alt1
 - 1.26.0
 
