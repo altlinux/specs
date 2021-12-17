@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Group: System/Libraries
@@ -10,17 +10,15 @@ Group: System/Libraries
 # The Clipper C++ crystallographic library already uses the name "clipper".
 # The developer is fine with the choosen name.
 
-# API monitoring
-# http://upstream-tracker.org/versions/clipper.html
-
 Name:           libpolyclipping
 Version:        6.4.2
-Release:        alt1_6
+Release:        alt1_13
+%global so_version 22
 Summary:        Polygon clipping library
 
 License:        Boost
-URL:            http://sourceforge.net/projects/polyclipping
-Source0:        http://downloads.sourceforge.net/%{oldname}/clipper_ver%{version}.zip
+URL:            https://sourceforge.net/projects/polyclipping
+Source0:        https://downloads.sourceforge.net/%{oldname}/clipper_ver%{version}.zip
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -67,14 +65,14 @@ done
 
 %build
 pushd cpp
-  %{fedora_cmake} .
-%make_build
+  %{fedora_v2_cmake}
+  %fedora_v2_cmake_build
 popd
 
 
 %install
 pushd cpp
-  make install DESTDIR=%{buildroot}
+  %fedora_v2_cmake_install
 
 # Install agg header with corrected include statement
   sed -e 's/\.\.\/clipper\.hpp/clipper.hpp/' < cpp_agg/agg_conv_clipper.h > %{buildroot}/%{_includedir}/%{oldname}/agg_conv_clipper.h
@@ -83,20 +81,22 @@ popd
 sed -i -e 's/^Version: $/Version: %version/' %buildroot%{_datadir}/pkgconfig/%{oldname}.pc
 
 
-
-
-
 %files
-%doc License.txt README
-%doc Third\ Party/Haskell Third\ Party/perl Third\ Party/ruby Third\ Party/python Documentation
-%{_libdir}/lib%{oldname}.so.*
+%doc --no-dereference License.txt
+%doc README
+%{_libdir}/lib%{oldname}.so.%{so_version}
+%{_libdir}/lib%{oldname}.so.%{so_version}.*
 
 %files devel
+%doc Third\ Party
 %{_datadir}/pkgconfig/%{oldname}.pc
 %{_includedir}/%{oldname}/
 %{_libdir}/lib%{oldname}.so
 
 %changelog
+* Fri Dec 17 2021 Igor Vlasenko <viy@altlinux.org> 6.4.2-alt1_13
+- update to new release by fcimport
+
 * Sun Feb 17 2019 Igor Vlasenko <viy@altlinux.ru> 6.4.2-alt1_6
 - fc update
 
