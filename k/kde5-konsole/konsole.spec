@@ -15,7 +15,7 @@
 
 Name: kde5-%rname
 Version: 21.08.3
-Release: alt3
+Release: alt4
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{?_enable_obsolete_kde4:appdata}%{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Terminals
@@ -175,6 +175,9 @@ __EOF__
 %_K5lib/libkonsoleapp.so.%sover
 
 %changelog
+* Fri Dec 17 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt4
+- update default color theme
+
 * Wed Dec 01 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt3
 - don't disable transparency by default
 - add root shell profile by default
