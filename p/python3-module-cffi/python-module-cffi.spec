@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-cffi
-Version: 1.14.5
-Release: alt2
+Version: 1.15.0
+Release: alt1
 
 Summary: Foreign Function Interface for Python calling C code
 
@@ -13,7 +13,7 @@ Group: Development/Python3
 License: MIT
 Url: https://pypi.org/project/%modulename/
 
-Source: https://files.pythonhosted.org/packages/93/1a/ab8c62b5838722f29f3daffcc8d4bd61844aa9b5f437341cc890ceee483b/%modulename-%version.tar.gz
+Source: https://files.pythonhosted.org/packages/00/9e/92de7e1217ccc3d5f352ba21e52398372525765b2e0c4530e6eb2ba9282a/%modulename-%version.tar.gz
 Patch: cffi-0.8.6-alt-link.patch
 
 BuildRequires(pre): rpm-build-python3
@@ -58,6 +58,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Dec 13 2021 Egor Ignatov <egori@altlinux.org> 1.15.0-alt1
+- 1.14.5 -> 1.15.0.
+
 * Mon Apr 26 2021 Stanislav Levin <slev@altlinux.org> 1.14.5-alt2
 - Built Python3 package from its ows src.
 
