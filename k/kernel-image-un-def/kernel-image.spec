@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	5.15
-%define kernel_sublevel .6
+%define kernel_sublevel .10
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -111,6 +111,9 @@ BuildRequires: bc
 BuildRequires: rsync
 BuildRequires: openssl-devel openssl
 BuildRequires: dwarves >= 1.16
+%ifarch aarch64
+BuildRequires: u-boot-tools
+%endif
 # for check
 %{?!_without_check:%{?!_disable_check:BuildRequires: qemu-system-%qemu_pkg-core ipxe-roms-qemu glibc-devel-static}}
 Provides: kernel-modules-eeepc-%flavour = %version-%release
@@ -655,6 +658,15 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Dec 17 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.15.10-alt1
+- v5.15.10
+
+* Tue Dec 14 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.15.8-alt1
+- v5.15.8
+
+* Wed Dec 08 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.15.7-alt1
+- v5.15.7
+
 * Wed Dec 01 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.15.6-alt1
 - v5.15.6
 
