@@ -22,11 +22,12 @@ Group: System/Fonts/True type
 
 Name:           fonts-bitmap-japanese
 Version:        0.20080710
-Release:        alt2_27
+Release:        alt2_30
 License:        Public Domain and BSD and mplus
 BuildArch:      noarch
-BuildRequires:  bdftopcf fonttosfnt mkfontscale xorg-font-utils mkfontdir gawk fontpackages-devel
-BuildRequires:	gcc perl
+BuildRequires:  xorg-font-utils mkfontdir gawk fontpackages-devel
+BuildRequires:	gcc /usr/bin/perl
+BuildRequires: bdftopcf
 
 ## files in ttfonts-ja
 Source2:        FAPIcidfmap.ja
@@ -386,6 +387,9 @@ fi
 %{cataloguedir}/*
 
 %changelog
+* Fri Dec 17 2021 Igor Vlasenko <viy@altlinux.org> 0.20080710-alt2_30
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.20080710-alt2_27
 - update to new release by fcimport
 
