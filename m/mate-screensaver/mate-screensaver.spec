@@ -1,8 +1,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-screensaver
-Version: 1.26.0
-Release: alt2
+Version: 1.26.1
+Release: alt1
 Epoch: 2
 Summary: MATE Screensaver
 License: GPLv2+ and LGPLv2+
@@ -85,6 +85,9 @@ install -m644 -pD doc/mate-screensaver.html %buildroot%_datadir/doc/mate-screens
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Sat Dec 18 2021 Valery Inozemtsev <shrek@altlinux.ru> 2:1.26.1-alt1
+- 1.26.1
+
 * Thu Nov 11 2021 Paul Wolneykien <manowar@altlinux.org> 2:1.26.0-alt2
 - Switch to PAM authentication scheme.
 
