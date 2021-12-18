@@ -1,10 +1,10 @@
 Summary: Tools for searching and reading man pages
 Name: man-db
-Version: 2.9.0
-Release: alt3
+Version: 2.9.4
+Release: alt1
 # GPLv2+ .. man-db
 # GPLv3+ .. gnulib
-License: GPLv2+ and GPLv3+
+License: GPL-2.0-or-later and GPL-3.0-or-later
 Group: System/Base
 URL: http://www.nongnu.org/man-db/
 
@@ -16,11 +16,11 @@ Source2: man-db.sysconfig
 Source3: man-db.filetrigger
 
 Patch0: man-db-2.8.5-change-owner-of-man-cache.patch
-
 # http://lists.nongnu.org/archive/html/man-db-devel/2017-01/msg00013.html
 Patch1: man-db-2.7.6.1-fix-override-dir-handling.patch
-
+%ifarch %e2k
 Patch2: man-db-2.7.6.1-e2k-mcst-path.patch
+%endif
 Patch3: man-db-2.9.0-catman-use-path-env.patch
 
 Obsoletes: man < 2.0
@@ -35,16 +35,15 @@ Conflicts: man-pages-ru-extra < 0.1-alt5
 
 Requires: coreutils, grep, groff-base, gzip, less, xz
 
-BuildRequires: gnu-config
+BuildRequires: flex
 BuildRequires: gdbm-devel
 BuildRequires: gettext
+BuildRequires: gnulib
 BuildRequires: groff-base groff-ps
 BuildRequires: less
-BuildRequires: libpipeline-devel
-BuildRequires: zlib-devel
-BuildRequires: flex
-BuildRequires: po4a
 BuildRequires: perl
+BuildRequires: pkgconfig(libpipeline)
+BuildRequires: pkgconfig(zlib)
 BuildRequires: xz
 
 %description
@@ -72,16 +71,15 @@ This package provides periodic update of man-db cache.
 
 %prep
 %setup
+%autopatch -p1
 
-%patch0 -p1
-%patch1 -p1
-%ifarch %e2k
-%patch2 -p1
-%endif
-%patch3 -p1
+sed -i -e 's#^AC_PREREQ(\[2\.63\])#AC_PREREQ([2.64])#' configure.ac
 
 %build
-%autoreconf -f
+./bootstrap \
+	--gnulib-srcdir=%_datadir/gnulib \
+	--no-git \
+	--skip-po
 
 %configure \
     --with-systemdtmpfilesdir=%_tmpfilesdir \
@@ -163,6 +161,12 @@ cat %name.lang %name-gnulib.lang >> %name.files
 %config(noreplace) %_sysconfdir/sysconfig/man-db
 
 %changelog
+* Sat Dec 18 2021 Alexey Gladkov <legion@altlinux.ru> 2.9.4-alt1
+- New version (2.9.4).
+- Build from upstream git repository.
+- Use system gnulib.
+- Update license tag.
+
 * Sun May 03 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.9.0-alt3
 - NMU: Add missing requires: xz (ALT#38217).
 
