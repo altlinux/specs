@@ -1,7 +1,5 @@
-%filter_from_requires /^repocop-unittest-build-logs/d
-
 Name: autorepo-altnode-repocop
-Version: 0.29
+Version: 0.30
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -13,7 +11,8 @@ Url: http://repocop.altlinux.org
 Source: %name-%version.tar
 
 BuildRequires: perl(Pod/Text.pm) repocop-resource-html repocop > 0.79
-Requires: repocop > 0.79
+Requires: repocop > 0.82
+Requires: repocop-report-broken-metadata
 Requires: pigz pzstd
 Conflicts: repocop-unittest-unmet-dependency < 0.10
 Conflicts: repocop-report-prometheus < 0.36
@@ -55,6 +54,9 @@ install -m 755 repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/repocop-tasktest-*
 
 %changelog
+* Sun Dec 19 2021 Igor Vlasenko <viy@altlinux.org> 0.30-alt1
+- unified import
+
 * Sat Dec 18 2021 Igor Vlasenko <viy@altlinux.org> 0.29-alt1
 - support for repology import
 
