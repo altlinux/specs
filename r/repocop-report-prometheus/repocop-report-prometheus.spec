@@ -1,5 +1,5 @@
 Name: repocop-report-prometheus
-Version: 0.39
+Version: 0.40
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -37,7 +37,6 @@ Summary: repocop report script that dumps test results to packages.altlinux json
 Group: Development/Other
 License: GPLv2+ or Artistic-2.0
 Requires: repocop > 0.80
-Requires: perl-JSON-XS
 BuildRequires: perl-JSON perl-JSON-XS
 
 %description -n repocop-report-packages.altlinux
@@ -88,6 +87,9 @@ install -D -m 644 lib/Test/Repocop/Report/Tools.pm %buildroot%perl_vendor_privli
 %perl_vendor_privlib/Test/Repocop/Report*
 
 %changelog
+* Sun Dec 19 2021 Igor Vlasenko <viy@altlinux.org> 0.40-alt1
+- repology import support
+
 * Thu Dec 16 2021 Igor Vlasenko <viy@altlinux.org> 0.39-alt1
 - prometheus2 engine is no more
 
