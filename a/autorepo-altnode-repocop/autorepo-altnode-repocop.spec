@@ -1,7 +1,7 @@
 %filter_from_requires /^repocop-unittest-build-logs/d
 
 Name: autorepo-altnode-repocop
-Version: 0.28
+Version: 0.29
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -55,6 +55,9 @@ install -m 755 repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/repocop-tasktest-*
 
 %changelog
+* Sat Dec 18 2021 Igor Vlasenko <viy@altlinux.org> 0.29-alt1
+- support for repology import
+
 * Wed Aug 25 2021 Igor Vlasenko <viy@altlinux.org> 0.28-alt1
 - support for repocop-report-prometheus 0.37
 
