@@ -1,9 +1,14 @@
+%def_enable clang
+
 %define _unpackaged_files_terminate_build 1
 %define _cmake__builddir BUILD
+%if_enabled clang
+%define optflags_lto -flto=thin
+%endif
 
 Name: mixxx
 Version: 2.3.1
-Release: alt1
+Release: alt2
 
 Summary: Free digital DJ software
 Summary(ru_RU.UTF-8): Свободная программа для цифрового диджеинга
@@ -17,12 +22,21 @@ Source: %name-%version.tar
 Patch1: %name-2.2.4-alt-find-shout2.patch
 Patch2: %name-2.2.4-alt-rpath.patch
 
+Requires: %name-data = %EVR
+Requires: qt5-sql-sqlite3
+Requires: bpm-tools
+
 BuildPreReq: rpm-macros-qt5
 BuildPreReq: rpm-build-ninja
-BuildRequires: flex gcc-c++ cmake libflac-devel libid3tag-devel libmad-devel
+%if_enabled clang
+BuildRequires: clang-devel llvm-devel-static
+%else
+BuildRequires: gcc-c++
+%endif
+BuildRequires: flex git-core cmake libflac-devel libid3tag-devel libmad-devel
 BuildRequires: libportaudio2-devel libportmidi-devel
 BuildRequires: libsndfile-devel libtag-devel
-BuildRequires: scons
+#BuildRequires: scons
 BuildRequires: swig libvamp-devel libprotobuf-devel
 BuildRequires: libchromaprint-devel libusb-devel libfftw3-devel
 BuildRequires: protobuf-compiler
@@ -35,9 +49,9 @@ BuildRequires: liblame-devel libqtkeychain-qt5-devel libavcodec-devel libavforma
 BuildRequires: libhidapi-devel libkeyfinder-devel libssl-devel
 BuildRequires: libebur128-devel libshout-idjc-devel libmodplug-devel
 
-Requires: %name-data = %EVR
-Requires: qt5-sql-sqlite3
-Requires: bpm-tools
+%if_enabled clang
+ExcludeArch: armh
+%endif
 
 %description
 Mixxx is free, open source DJ software that gives you everything
@@ -61,9 +75,13 @@ This package contains data files for Mixxx.
 # %patch2 -p1
 
 %build
+%if_enabled clang
+export CC=clang
+export CXX=clang++
+%endif
 %cmake \
     -GNinja \
-    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
 #
 cmake --build "%_cmake__builddir" -j%__nprocs
 
@@ -87,6 +105,10 @@ chmod +x %buildroot%_datadir/mixxx/controllers/novation-launchpad/scripts/compil
 %_udevrulesdir/69-%name-usb-uaccess.rules
 
 %changelog
+* Fri Dec 17 2021 Leontiy Volodin <lvol@altlinux.org> 2.3.1-alt2
+- Fixed build.
+- Built with debuginfo.
+
 * Thu Nov 11 2021 Leontiy Volodin <lvol@altlinux.org> 2.3.1-alt1
 - Updated to upstream release version 2.3.1.
 - Built with cmake and ninja again.
