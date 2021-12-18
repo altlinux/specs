@@ -1,16 +1,16 @@
-Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3
-BuildRequires: libtinyxml2-devel python-devel
+BuildRequires: libtinyxml2-devel
 # END SourceDeps(oneline)
+Group: System/Libraries
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define fontpkgname libvoikko
 %global _hardened_build 1
 
 Name:           libvoikko
 Version:        4.3.1
-Release:        alt1_0
+Release:        alt1_2
 Summary:        Voikko is a library for spellcheckers and hyphenators
 
 License:        GPLv2+
@@ -28,7 +28,7 @@ Source0:        https://www.puimula.org/voikko-sources/%{name}/%{name}-%{version
 Source1:        http://www.puimula.org/voikko-sources/%{name}/%{name}-%{version}.tar.gz.asc
 Source2:        gpgkey-AC5D65F10C8596D7E2DAE2633D309B604AE3942E.gpg
 
-#Requires: voikko-fi
+Requires: voikko-fi
 BuildRequires:  gcc-c++
 BuildRequires:  python3-devel
 BuildRequires: gnupg2
@@ -135,6 +135,9 @@ mkdir -p %{buildroot}%{_prefix}/lib/voikko
 %{python3_sitelibdir_noarch}/__pycache__/%{name}.cpython-3*.opt-?.pyc
 
 %changelog
+* Fri Dec 17 2021 Igor Vlasenko <viy@altlinux.org> 4.3.1-alt1_2
+- update to new release by fcimport
+
 * Sat Jul 24 2021 Igor Vlasenko <viy@altlinux.org> 4.3.1-alt1_0
 - bootstrap w/o voikko-fi dependency
 
