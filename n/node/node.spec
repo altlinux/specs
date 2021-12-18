@@ -53,8 +53,8 @@
 %define oversion %version
 
 Name: node
-Version: %major.0
-Release: alt2
+Version: %major.2
+Release: alt1
 
 Summary: Evented I/O for V8 Javascript
 
@@ -126,7 +126,7 @@ Provides: nodejs(v8-abi) = %{v8_abi}
 Provides: nodejs(napi) = 6
 Provides: nodejs(napi) = %{napi}
 
-Provides: bundled(llhttp) = 2.1.3
+Provides: bundled(llhttp) = 2.1.4
 Provides: bundled(uvwasi) = 0.0.11
 
 # /usr/bin/ld.default: failed to set dynamic section sizes: memory exhausted
@@ -386,6 +386,13 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Fri Dec 17 2021 Vitaly Lipatov <lav@altlinux.ru> 14.18.2-alt1
+- new version 14.18.2 (with rpmrb script)
+- CVE-2021-22959: HTTP Request Smuggling due to spaced in headers
+- CVE-2021-22960: HTTP Request Smuggling when parsing the body
+- python 3.10 support
+- set c-ares >= 1.18.1
+
 * Thu Sep 30 2021 Vitaly Lipatov <lav@altlinux.ru> 14.18.0-alt2
 - use rpm-macros-features to check icu version
 
