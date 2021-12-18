@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.23.4
-Release: alt5
+Release: alt6
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -500,6 +500,9 @@ done
 
 
 %changelog
+* Fri Dec 17 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.23.4-alt6
+- using no-break space for default custom date format of digital clock widget (closes: 38552)
+
 * Mon Dec 06 2021 Oleg Solovyov <mcpain@altlinux.org> 1:5.23.4-alt5
 - restore krunner in context menu (Closes: #41565)
 
