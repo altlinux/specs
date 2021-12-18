@@ -1,7 +1,7 @@
 %def_without test
 
 Name: checksec
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: Tool to check system for binary-hardening
@@ -76,6 +76,9 @@ popd
 %_man1dir/%name.1*
 
 %changelog
+* Sat Dec 18 2021 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt1
+- new version 2.5.0 (with rpmrb script)
+
 * Mon Jun 14 2021 Vitaly Lipatov <lav@altlinux.ru> 2.4.0-alt1
 - initial build for ALT Sisyphus
 
