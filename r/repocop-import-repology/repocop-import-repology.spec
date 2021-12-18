@@ -4,7 +4,7 @@ BuildRequires: perl(JSON/XS.pm)
 %define testname repology
 
 Name: repocop-import-%testname
-Version: 0.01
+Version: 0.02
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -47,5 +47,8 @@ mkdir -p %buildroot%_datadir/repocop/srctests/%testname/
 %_datadir/repocop/srctests/*
 
 %changelog
+* Sun Dec 19 2021 Igor Vlasenko <viy@altlinux.org> 0.02-alt1
+- mass report
+
 * Sat Dec 18 2021 Igor Vlasenko <viy@altlinux.org> 0.01-alt1
 - First build for Sisyphus.
