@@ -15,7 +15,7 @@
 %brp_strip_none %_bindir/*
 
 Name:           runc
-Version:        1.0.2
+Version:        1.0.3
 Release:        alt1
 Summary:        CLI for running Open Containers
 Group:          Development/Other
@@ -61,6 +61,9 @@ EOF
 /lib/tmpfiles.d/runc.conf
 
 %changelog
+* Fri Dec 17 2021 Vladimir Didenko <cow@altlinux.ru> 1.0.3-alt1
+- New version (Fixes: CVE-2021-43784)
+
 * Thu Sep 23 2021 Vladimir Didenko <cow@altlinux.ru> 1.0.2-alt1
 - New version
 
