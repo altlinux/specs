@@ -1,5 +1,5 @@
 Name: binwalk
-Version: 2.3.2
+Version: 2.3.3
 Release: alt1
 
 Summary: Firmware Analysis Tool
@@ -62,6 +62,9 @@ firmware headers, kernels, bootloaders, filesystems, etc.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat Dec 18 2021 Vitaly Lipatov <lav@altlinux.ru> 2.3.3-alt1
+- new version 2.3.3 (with rpmrb script)
+
 * Thu Aug 26 2021 Vitaly Lipatov <lav@altlinux.ru> 2.3.2-alt1
 - new version 2.3.2 (with rpmrb script)
 
