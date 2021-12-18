@@ -1,5 +1,5 @@
 Name: clamtk
-Version: 6.13
+Version: 6.14
 Release: alt1
 
 Summary: Easy to use front-end for ClamAV
@@ -66,6 +66,9 @@ done
 %_man1dir/*
 
 %changelog
+* Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 6.14-alt1
+- new version 6.14 (with rpmrb script)
+
 * Mon Jul 26 2021 Vitaly Lipatov <lav@altlinux.ru> 6.13-alt1
 - new version 6.13 (with rpmrb script)
 - cleanup spec, update source url
