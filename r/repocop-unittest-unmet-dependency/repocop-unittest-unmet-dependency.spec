@@ -1,7 +1,7 @@
 %define testname unmet-dependency
 
 Name: repocop-unittest-%testname
-Version: 0.11
+Version: 0.12
 Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -36,6 +36,9 @@ install -m 755 archdiff %buildroot%_datadir/repocop/pkgtests/unmet-dependency-bu
 %_datadir/repocop/pkgtests/%testname-*/
 
 %changelog
+* Sat Dec 18 2021 Igor Vlasenko <viy@altlinux.org> 0.12-alt1
+- bugfix
+
 * Mon Jul 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - archhack use files/list/bin.list
 
