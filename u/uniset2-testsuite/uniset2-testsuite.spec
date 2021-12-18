@@ -2,7 +2,7 @@
 
 Name: uniset2-testsuite
 Version: 2.8
-Release: alt1
+Release: alt2
 Summary: UniSet test suite
 Group: Development/Python
 License: LGPL
@@ -68,6 +68,9 @@ SNMP Plugin for uniset2-testsuite
 %endif
 
 %changelog
+* Sat Dec 18 2021 Pavel Vainerman <pv@altlinux.ru> 2.8-alt2
+- fixed start script (python2.7-> python3)
+
 * Wed Oct 13 2021 Pavel Vainerman <pv@altlinux.ru> 2.8-alt1
 - removed gui player (deprecated)
 
