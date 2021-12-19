@@ -4,7 +4,7 @@
 %define so_x509_version 1
 %def_disable static
 
-Name: %pkgname%so_tls_version
+Name: %pkgname-legacy
 Version: 2.28.0
 Release: alt1
 
@@ -61,7 +61,7 @@ This subpackage of mbedtls contains a library that can read, verify
 and write X.509 certificates, read/write Certificate Signing Requests
 and read Certificate Revocation Lists.
 
-%package -n lib%pkgname%so_tls_version-devel
+%package -n lib%pkgname-legacy-devel
 Summary: Development files for mbed TLS
 Group: Development/C
 Provides: lib%{pkgname}13-devel = %EVR
@@ -69,17 +69,17 @@ Obsoletes: lib%{pkgname}13-devel <= 2.27.0-alt2
 Conflicts: hiawatha
 Conflicts: lib%pkgname-devel
 
-%description -n lib%pkgname%so_tls_version-devel
+%description -n lib%pkgname-legacy-devel
 Contains libraries and header files for
 developing applications that use mbed TLS
 
 %if_enabled static
-%package -n lib%pkgname%so_tls_version-devel-static
+%package -n lib%pkgname-legacy-devel-static
 Summary: Static libraries for mbed TLS
 Group: Development/C
 Conflicts: lib%pkgname-devel-static
 
-%description -n lib%pkgname%so_tls_version-devel-static
+%description -n lib%pkgname-legacy-devel-static
 Static libraries for developing applications
 that use mbed TLS
 %endif
@@ -98,9 +98,9 @@ sed -i 's,-Wformat-overflow=2,,' CMakeLists.txt
 	-DLIB_INSTALL_DIR:PATH=%_libdir \
 	-DUSE_SHARED_MBEDTLS_LIBRARY:BOOL=TRUE \
 %if_enabled static
-    -DUSE_STATIC_MBEDTLS_LIBRARY:BOOL=TRUE \
+	-DUSE_STATIC_MBEDTLS_LIBRARY:BOOL=TRUE \
 %else
-    -DUSE_STATIC_MBEDTLS_LIBRARY:BOOL=FALSE \
+	-DUSE_STATIC_MBEDTLS_LIBRARY:BOOL=FALSE \
 %endif
 	-DUSE_PKCS11_HELPER_LIBRARY:BOOL=TRUE
 
@@ -119,7 +119,7 @@ sed -i 's,-Wformat-overflow=2,,' CMakeLists.txt
 %files -n libmbedx509-%so_x509_version
 %_libdir/libmbedx509.so.*
 
-%files -n lib%pkgname%so_tls_version-devel
+%files -n lib%pkgname-legacy-devel
 %doc ChangeLog LICENSE README.md
 %dir %_includedir/%pkgname
 %_includedir/%pkgname/*.h
@@ -130,7 +130,7 @@ sed -i 's,-Wformat-overflow=2,,' CMakeLists.txt
 %_libdir/libmbedx509.so
 
 %if_enabled static
-%files -n lib%pkgname%so_tls_version-devel-static
+%files -n lib%pkgname-legacy-devel-static
 %_libdir/libmbedcrypto.a
 %_libdir/lib%pkgname.a
 %_libdir/libmbedx509.a
@@ -139,6 +139,7 @@ sed -i 's,-Wformat-overflow=2,,' CMakeLists.txt
 %changelog
 * Sun Dec 19 2021 Nazarov Denis <nenderus@altlinux.org> 2.28.0-alt1
 - Version 2.28.0
+- Rename devel subpackage
 
 * Sun Sep 26 2021 Nazarov Denis <nenderus@altlinux.org> 2.27.0-alt2
 - Add patch to fix build on gcc11
