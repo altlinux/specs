@@ -2,7 +2,7 @@
 
 Name: rpm-build-emacs
 Version: 0.0.3
-Release: alt1
+Release: alt2
 
 Group: Development/Other
 Summary: Helper scripts and RPM macros to build GNU Emacs extensions
@@ -22,7 +22,7 @@ Patch: el-pkgutils-pathfix-alt.patch
 Requires: rpm-macros-emacs = %EVR
 Conflicts: emacs-devel < 0.0.3
 Obsoletes: emacs-devel < 0.0.3
-Provides: emacs-devel = %version
+Provides: emacs-devel = %EVR
 
 %description
 %name is set of scripts and rpm macros to assist in GNU Emacs modules
@@ -62,6 +62,9 @@ install -m0644 el-pkgutils.el %buildroot%_emacslispdir
 %_rpmmacrosdir/emacs
 
 %changelog
+* Sun Dec 19 2021 Igor Vlasenko <viy@altlinux.org> 0.0.3-alt2
+- added release to emacs-devel provides
+
 * Fri Dec 17 2021 Igor Vlasenko <viy@altlinux.org> 0.0.3-alt1
 - renamed to rpm-build-emacs
 - added requires on emacs-nox
