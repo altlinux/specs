@@ -1,5 +1,5 @@
 Name: privoxy
-Version: 3.0.32
+Version: 3.0.33
 Release: alt1
 
 Summary: Privoxy - privacy enhancing proxy
@@ -143,6 +143,9 @@ fi
 %_unitdir/%name.service
 
 %changelog
+* Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0.33-alt1
+- new version 3.0.33 (with rpmrb script)
+
 * Mon Mar 29 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0.32-alt1
 - new version 3.0.32 (with rpmrb script)
 
