@@ -1,5 +1,5 @@
 Name: repocop-unittests-local
-Version: 0.03
+Version: 0.04
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -34,7 +34,8 @@ Requires: repocop-unittest-rpm-recursive-symlink
 Requires: repocop-unittest-rpm-tags
 Requires: repocop-unittest-subdirs-in-usr-games
 Requires: repocop-unittest-systemd
-Requires: repocop-unittest-systemd-but-no-native-init
+# deprecated
+#Requires: repocop-unittest-systemd-but-no-native-init
 ## NO MORE
 ##Requires: repocop-unittest-spec-has-obsolete-macroses
 ##Requires: repocop-unittest-spec-missing-packager
@@ -77,6 +78,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Sun Dec 19 2021 Igor Vlasenko <viy@altlinux.org> 0.04-alt1
+- removed repocop-unittest-systemd-but-no-native-init
+
 * Sun Jul 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
 - added repocop-unittest-systemd-but-no-native-init
 
