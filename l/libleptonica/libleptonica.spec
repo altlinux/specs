@@ -1,8 +1,8 @@
 %define srcName leptonlib
 
 Name: libleptonica
-Version: 1.73
-Release: alt3
+Version: 1.82.0
+Release: alt1
 
 Summary: A library for manipulating images
 Summary(ru_RU.UTF-8): Библиотека для операций над изображениями
@@ -11,14 +11,18 @@ License: BSD-2-Clause
 Group: System/Libraries
 Url: http://www.leptonica.com
 
-BuildRequires: doxygen libjpeg-devel libtiff-devel libpng-devel libgif-devel libwebp-devel
-
 Packager: %packager
 
 Source: leptonlib-%version.tar.bz2
-Patch: %name-alt-makefile.patch
-Patch1: %name-alt-doc.patch
-Patch2: %name-1.69-alt-debuginfo.patch
+# Source-url: https://github.com/DanBloomberg/leptonica/releases/download/%version/leptonica-%version.tar.gz
+
+BuildRequires: doxygen
+BuildRequires: libjpeg-devel
+BuildRequires: libtiff-devel
+BuildRequires: libpng-devel
+BuildRequires: libgif-devel
+BuildRequires: libwebp-devel
+BuildRequires: libopenjpeg2.0-devel
 
 %package devel
 Summary: Development files for programs which will use the Leptonica library
@@ -79,64 +83,55 @@ Doxygen документация в html формате по функциям б
 которые можно использовать из программ, имеют краткое описание и определение
 параметров. Другой документации, к сожалению, не существует.
 Файлы с описаниями библиотеки расположены в каталоге
-%_docdir/libleptonica-xxx/html_reference
+%_docdir/libleptonica-xxx/html
 
 %prep
-%setup -q -n %srcName-%version
-%patch0 -p1
-%patch1 -p1
-%patch2 -p2
+%setup -n %srcName-%version
 
 %build
+# Packaging static libraries lto * .a
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
+%autoreconf
 %configure
+%make_build
 
 doxygen Doxyfile
-cd src
-
-# Эта строка - обход ошибки с make
-# В дальнейшем нужно перейти на схему с configure
-mv makefile.static makefile
-
-make -f makefile all
 
 %install
-mkdir -p %buildroot{%_libdir,%_includedir,%_includedir/leptonica}
-
-%define docdir %_docdir/%name-%version
-rm -rf %buildroot%docdir
-mkdir -p %buildroot%docdir
-install -pm644 leptonica-license.txt %buildroot%docdir/
-install -pm644 README.html %buildroot%docdir/
-install -pm644 version-notes.html %buildroot%docdir/
-install -pm644 lib/shared/liblept.so.%version %buildroot%_libdir/
-cp -af lib/shared/*.so %buildroot%_libdir/
-install -spm644 lib/nodebug/*.a %buildroot%_libdir/
-install -pm644 src/*.h %buildroot%_includedir/leptonica/
-install -m644 -D lept.pc %buildroot%_pkgconfigdir/lept.pc
-mv doc/html doc/html_reference
-mv doc/html_reference %buildroot%docdir
-
-%find_lang %name
+%makeinstall_std
+# link to a non-existent file
+rm -f %buildroot%_libdir/*.la
 
 %files
+%doc README.html
+%doc version-notes.html
+%doc leptonica-license.txt
 %_libdir/*.so.*
-%dir %docdir
-%docdir/*.html
-%docdir/*.txt
+# utilities for working with files
+# without them, the work with the program will be incomplete
+%_bindir/*
 
 %files devel
-%_libdir/*.so
-%_includedir/*
+%_includedir/leptonica
+%_libdir/liblept.so
+%_libdir/libleptonica.so
 %_pkgconfigdir/lept.pc
+%_libdir/cmake/LeptonicaConfig-version.cmake
+%_libdir/cmake/LeptonicaConfig.cmake
 
 %files devel-static
 %_libdir/*.a
 
 %files doc
-%dir %docdir/html_reference
-%docdir/html_reference/*
+%doc doc/html/*
 
 %changelog
+* Thu Dec 16 2021 Evgeny Chuck <koi@altlinux.org> 1.82.0-alt1
+- new version (1.82.0) with rpmgs script
+- Added OpenJPEG codec for working with jpeg images
+- minor fixes in spec
+
 * Mon Aug 17 2020 Pavel Vasenkov <pav@altlinux.org> 1.73-alt3
 - NMU: correct license information 
 
@@ -217,4 +212,3 @@ mv doc/html_reference %buildroot%docdir
 
 * Wed Mar 05 2008 Andrey Bergman <vkni@altlinux.org> 1.54-alt1
 - initial release
-
