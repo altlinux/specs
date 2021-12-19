@@ -1,7 +1,7 @@
 %define testname systemd-but-no-native-init
 
 Name: repocop-unittest-%testname
-Version: 0.05
+Version: 0.06
 Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -52,7 +52,7 @@ cat $REPOCOP_TEST_TMPDIR/pre | while read -r pkgid service; do
     esac
 done
 
-for i in `sort -u $REPOCOP_TEST_TMPDIR/msg`; do repocop-test-info -k $i "The package have native systemd file(s) but no  SysV init scripts."; done
+sort -u $REPOCOP_TEST_TMPDIR/msg | repocop-test-import-tsv -s experimental -m "The package have native systemd file(s) but no  SysV init scripts."
 rm $REPOCOP_TEST_TMPDIR/*
 EOF
 
@@ -70,6 +70,9 @@ done
 #%_datadir/repocop/fixscripts/*.pl
 
 %changelog
+* Sun Dec 19 2021 Igor Vlasenko <viy@altlinux.org> 0.06-alt1
+- sysVinit is deprecating, set as experimental
+
 * Mon Oct 12 2020 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
 - bugfixes
 
