@@ -1,5 +1,5 @@
 Name: bats
-Version: 1.3.0
+Version: 1.5.0
 Release: alt1
 
 Summary: Testing framework for Bash
@@ -31,7 +31,7 @@ find -type f -print0 | xargs -0 subst 's|lib/bats-core|share/bats-core|g'
 mv -v lib share
 
 %install
-./install.sh %buildroot%prefix
+./install.sh %buildroot%prefix share
 
 %files
 %doc LICENSE.md README.md AUTHORS
@@ -42,6 +42,9 @@ mv -v lib share
 %_prefix/libexec/bats-core/
 
 %changelog
+* Sat Dec 18 2021 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
+- new version 1.5.0 (with rpmrb script)
+
 * Tue Apr 27 2021 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
 - new version 1.3.0 (with rpmrb script) (ALT bug 39998)
 - switch to build from tarball
