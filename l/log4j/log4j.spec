@@ -18,7 +18,7 @@ BuildRequires: jpackage-default
 %bcond_without  jp_minimal
 
 Name:           log4j
-Version:        2.16.0
+Version:        2.17.0
 Release:        alt1_1jpp11
 Summary:        Java logging package
 BuildArch:      noarch
@@ -318,6 +318,9 @@ touch $RPM_BUILD_ROOT/etc/chainsaw.conf
 
 
 %changelog
+* Sun Dec 19 2021 Andrey Cherepanov <cas@altlinux.org> 0:2.17.0-alt1_1jpp11
+- new version (fixes CVE-2021-45105)
+
 * Wed Dec 15 2021 Andrey Cherepanov <cas@altlinux.org> 0:2.16.0-alt1_1jpp11
 - new version
 - security fix for CVE-2021-45046
