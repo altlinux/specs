@@ -1,7 +1,7 @@
 %define pear_name Net_Sieve
 
 Name: pear-Net_Sieve
-Version: 1.5.2
+Version: 1.5.4
 Release: alt1
 
 Summary: Handles talking to timsieved
@@ -49,6 +49,9 @@ sieve scripts.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.5.4-alt1
+- new version 1.5.4 (with rpmrb script)
+
 * Sat Jul 16 2016 Vitaly Lipatov <lav@altlinux.ru> 1.5.2-alt1
 - new version 1.5.2 (with rpmrb script)
 
