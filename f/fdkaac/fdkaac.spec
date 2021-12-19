@@ -1,6 +1,6 @@
 Name: fdkaac
-Version: 1.0.1
-Release: alt2
+Version: 1.0.2
+Release: alt1
 
 Summary: command line encoder frontend for libfdk-aac
 License: Zlib
@@ -36,6 +36,9 @@ fdkaac - command line frontend for libfdk-aac encoder.
 %doc README COPYING
 
 %changelog
+* Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt1
+- new version 1.0.2 (with rpmrb script)
+
 * Tue Feb 02 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt2
 - build with correct package name
 
