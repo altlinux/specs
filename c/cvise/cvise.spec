@@ -1,6 +1,6 @@
 Name: cvise
-Version: 2.3.0
-Release: alt1.1
+Version: 2.4.0
+Release: alt1
 
 Summary: Super-parallel Python port of the C-Reduce
 
@@ -104,6 +104,9 @@ rm -rfv %buildroot%_datadir/cvise/tests/
 %_libexecdir/cvise/topformflat
 
 %changelog
+* Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 2.4.0-alt1
+- new version 2.4.0 (with rpmrb script)
+
 * Wed Sep 01 2021 Michael Shigorin <mike@altlinux.org> 2.3.0-alt1.1
 - build on e2k too (llvm9 for now)
 - add missing BR: zlib-devel
