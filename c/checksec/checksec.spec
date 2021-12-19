@@ -2,7 +2,7 @@
 
 Name: checksec
 Version: 2.5.0
-Release: alt1
+Release: alt2
 
 Summary: Tool to check system for binary-hardening
 
@@ -51,6 +51,8 @@ The script also lists the status of various Linux kernel protection mechanisms.
 
 %prep
 %setup
+# fix missed PATH under root: sysctl: command not found
+%__subst 's|.*SHLVL.*||' checksec
 
 # Disable --update command.
 %__subst 's/pkg_release=false/pkg_release=true/' checksec
@@ -76,6 +78,9 @@ popd
 %_man1dir/%name.1*
 
 %changelog
+* Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt2
+- fix PATH (thanks, andy@!)
+
 * Sat Dec 18 2021 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt1
 - new version 2.5.0 (with rpmrb script)
 
