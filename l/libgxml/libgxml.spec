@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name gxml
 %define ver_major 0.20
@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GXml provides a GObject API for manipulating XML
@@ -27,8 +27,8 @@ Source: %_name-%version.tar
 %define gee_ver 0.10.5
 %define xml2_ver 2.7
 
-BuildRequires(pre): meson
-BuildRequires: libvala-devel >= %vala_ver vala-tools
+BuildRequires(pre): rpm-macros-meson rpm-build-vala
+BuildRequires: meson libvala-devel >= %vala_ver vala-tools
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgee0.8-devel >= %gee_ver
 BuildRequires: libxml2-devel >= %xml2_ver
@@ -85,6 +85,7 @@ find ./ -type f -print0| xargs -r0 subst 's|gxml//xlibxml.h|gxml/xlibxml.h|' --
 %meson \
 	%{?_enable_docs:-Ddocs=true} \
 	%{?_enable_introspection:-Dintrospection=true}
+%nil
 %meson_build
 
 %install
@@ -93,7 +94,7 @@ find ./ -type f -print0| xargs -r0 subst 's|gxml//xlibxml.h|gxml/xlibxml.h|' --
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files -f %_name.lang
 %_libdir/%name-%api_ver.so.*
@@ -121,6 +122,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sun Dec 19 2021 Yuri N. Sedunov <aris@altlinux.org> 0.20.1-alt1
+- updated to 0.20.1-10-gf02031e
+
 * Fri Oct 30 2020 Yuri N. Sedunov <aris@altlinux.org> 0.20.0-alt1
 - 0.20.0
 
