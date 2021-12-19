@@ -26,7 +26,7 @@
 
 Name: libuniset2
 Version: 2.19.1
-Release: alt1
+Release: alt2
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL-2.1
@@ -594,6 +594,10 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Sun Dec 19 2021 Pavel Vainerman <pv@altlinux.ru> 2.19.1-alt2
+- [pg]: force c++17
+- fixed lib version
+
 * Sat Nov 27 2021 Pavel Vainerman <pv@altlinux.ru> 2.19.1-alt1
 - [log]: supported "log in local time"
 
