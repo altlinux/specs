@@ -1,8 +1,8 @@
 %define oname roundcubemail
 %define rel %nil
 Name: roundcube
-Version: 1.4.11
-Release: alt2
+Version: 1.4.12
+Release: alt1
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
 
@@ -23,12 +23,13 @@ BuildRequires: php7
 
 Requires: composer >= 1.1.3
 
+
 # check it with composer.json or on http://trac.roundcube.net/wiki/Howto_Requirements
 Requires: php7 >= 7.1
 # php-engine
 Requires: webserver-common
 Requires: pear-Mail_Mime >= 1.10.0
-Requires: pear-Net_SMTP >= 1.7.1
+Requires: pear-Net_SMTP >= 1.8.1
 Requires: pear-Net_IDNA2 >= 0.1.1
 Requires: pear-Auth_SASL >= 1.0.6
 # managesieve plugin
@@ -155,6 +156,10 @@ service httpd2 condreload
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.12-alt1
+- new version 1.4.12 (with rpmrb script)
+- security fixes
+
 * Wed May 12 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.11-alt2
 - fix build
 
