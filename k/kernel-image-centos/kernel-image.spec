@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 31
+%define centos_release 32
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -629,6 +629,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Dec 16 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.32-alt1.el9
+- mm: update generic MM code to upstream v5.15
+
 * Wed Dec 15 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.31-alt1.el9
 - Disable CONFIG_DEBUG_PREEMPT to restore performance
 - tcp: phase 1 stable backport for rhel 9.0
