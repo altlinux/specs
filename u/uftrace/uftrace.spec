@@ -3,7 +3,7 @@
 %def_with test
 
 Name: uftrace
-Version: 0.10
+Version: 0.11
 Release: alt1
 
 Summary: Function (graph) tracer for user-space
@@ -66,6 +66,9 @@ make test
 %doc README.md
 
 %changelog
+* Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 0.11-alt1
+- new version 0.11 (with rpmrb script)
+
 * Sat Sep 11 2021 Vitaly Lipatov <lav@altlinux.ru> 0.10-alt1
 - new version 0.10 (with rpmrb script)
 - enable tests
