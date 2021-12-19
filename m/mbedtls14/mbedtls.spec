@@ -1,10 +1,12 @@
 %define pkgname mbedtls
-%define so_tls_version 13
+%define so_tls_version 14
+%define so_crypto_version 7
+%define so_x509_version 1
 %def_disable static
 
 Name: %pkgname%so_tls_version
-Version: 2.27.0
-Release: alt3
+Version: 2.28.0
+Release: alt1
 
 Summary: Transport Layer Security protocol suite
 License: Apache-2.0
@@ -19,7 +21,6 @@ Source: %pkgname-%version.tar
 Patch0: %pkgname-alt-gcc11.patch
 
 BuildRequires: cmake
-BuildRequires: libmbedx509-1
 BuildRequires: libpkcs11-helper-devel
 BuildRequires: python3-dev
 BuildRequires: zlib-devel
@@ -40,6 +41,48 @@ mbed TLS is a light-weight open source cryptographic and SSL/TLS
 library written in C. mbed TLS makes it easy for developers to include
 cryptographic and SSL/TLS capabilities in their (embedded)
 applications with as little hassle as possible.
+
+%package -n libmbedcrypto%so_crypto_version
+Summary: Cryptographic base library for mbedtls
+Group: System/Legacy libraries
+
+%description -n libmbedcrypto%so_crypto_version
+This subpackage of mbedtls contains a library that exposes
+cryptographic ciphers, hashes, algorithms and format support such as
+AES, MD5, SHA, Elliptic Curves, BigNum, PKCS, ASN.1, BASE64.
+
+%package -n libmbedx509-%so_x509_version
+Summary: Library to work with X.509 certificates
+Group: System/Legacy libraries
+Conflicts: hiawatha < 10.10
+
+%description -n libmbedx509-%so_x509_version
+This subpackage of mbedtls contains a library that can read, verify
+and write X.509 certificates, read/write Certificate Signing Requests
+and read Certificate Revocation Lists.
+
+%package -n lib%pkgname%so_tls_version-devel
+Summary: Development files for mbed TLS
+Group: Development/C
+Provides: lib%{pkgname}13-devel = %EVR
+Obsoletes: lib%{pkgname}13-devel <= 2.27.0-alt2
+Conflicts: hiawatha
+Conflicts: lib%pkgname-devel
+
+%description -n lib%pkgname%so_tls_version-devel
+Contains libraries and header files for
+developing applications that use mbed TLS
+
+%if_enabled static
+%package -n lib%pkgname%so_tls_version-devel-static
+Summary: Static libraries for mbed TLS
+Group: Development/C
+Conflicts: lib%pkgname-devel-static
+
+%description -n lib%pkgname%so_tls_version-devel-static
+Static libraries for developing applications
+that use mbed TLS
+%endif
 
 %prep
 %setup -n %pkgname-%version
@@ -66,20 +109,36 @@ sed -i 's,-Wformat-overflow=2,,' CMakeLists.txt
 %install
 %cmakeinstall_std
 %__rm -rf %buildroot%_bindir
-%__rm -rf %buildroot%_libdir/libmbedcrypto.so.*
-%__rm -rf %buildroot%_libdir/libmbedx509.so.*
-%__rm -rf %buildroot%_includedir/%pkgname
-%__rm -rf %buildroot%_includedir/psa
-%__rm -rf %buildroot%_libdir/libmbedcrypto.so
-%__rm -rf %buildroot%_libdir/lib%pkgname.so
-%__rm -rf %buildroot%_libdir/libmbedx509.so
 
 %files -n lib%pkgname%so_tls_version
 %_libdir/lib%pkgname.so.*
 
+%files -n libmbedcrypto%so_crypto_version
+%_libdir/libmbedcrypto.so.*
+
+%files -n libmbedx509-%so_x509_version
+%_libdir/libmbedx509.so.*
+
+%files -n lib%pkgname%so_tls_version-devel
+%doc ChangeLog LICENSE README.md
+%dir %_includedir/%pkgname
+%_includedir/%pkgname/*.h
+%dir %_includedir/psa
+%_includedir/psa/*h
+%_libdir/libmbedcrypto.so
+%_libdir/lib%pkgname.so
+%_libdir/libmbedx509.so
+
+%if_enabled static
+%files -n lib%pkgname%so_tls_version-devel-static
+%_libdir/libmbedcrypto.a
+%_libdir/lib%pkgname.a
+%_libdir/libmbedx509.a
+%endif
+
 %changelog
-* Sun Dec 19 2021 Nazarov Denis <nenderus@altlinux.org> 2.27.0-alt3
-- Build only lib%pkgname%so_tls_version
+* Sun Dec 19 2021 Nazarov Denis <nenderus@altlinux.org> 2.28.0-alt1
+- Version 2.28.0
 
 * Sun Sep 26 2021 Nazarov Denis <nenderus@altlinux.org> 2.27.0-alt2
 - Add patch to fix build on gcc11
