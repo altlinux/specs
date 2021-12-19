@@ -9,12 +9,12 @@
 %def_without pyod
 
 # Please, update here commit id for release, from $ git log v1.5.0 -n 1 --format="%H"
-%define release_commit 2f130c01aa487d2541a9f3045ff9970f91cc4fc9
+%define release_commit 1c2465c816071ff767982116a4b19bad1d8b0c82
 
 %define netdatauser netdata
 Name: netdata
-Version: 1.31.0
-Release: alt2
+Version: 1.32.1
+Release: alt1
 
 Summary: Real-time performance monitoring, done right!
 
@@ -242,6 +242,7 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 %attr(0700,%netdatauser,%netdatauser) %dir %_sharedstatedir/%name/registry/
 %dir %_sysconfdir/%name/
 %_sysconfdir/%name/.opt-out-from-anonymous-statistics
+%_sysconfdir/%name/.install-type
 %_sysconfdir/%name/edit-config
 #config(noreplace) %_sysconfdir/%name/netdata.conf
 %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/*.conf
@@ -293,6 +294,9 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 
 
 %changelog
+* Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.32.1-alt1
+- new version 1.32.1 (with rpmrb script)
+
 * Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 1.31.0-alt2
 - drop bundled urllib3
 
