@@ -1,5 +1,5 @@
 Name: sslh
-Version: 1.22b
+Version: 1.22c
 Release: alt1
 
 Summary: A ssl/ssh multiplexer
@@ -55,6 +55,9 @@ install -m 644 %SOURCE4 %buildroot%_sysconfdir/%name/sslh.cfg
 %config(noreplace) %_sysconfdir/%name/sslh.cfg
 
 %changelog
+* Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.22c-alt1
+- new version 1.22c (with rpmrb script)
+
 * Sun Aug 29 2021 Vitaly Lipatov <lav@altlinux.ru> 1.22b-alt1
 - new version 1.22b (with rpmrb script)
 
