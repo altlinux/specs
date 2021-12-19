@@ -12,7 +12,7 @@
 
 Name: unit
 Version: 1.26.1
-Release: alt2
+Release: alt3
 
 Summary: NGINX Unit - Web Application Server
 License: Apache-2.0
@@ -158,6 +158,10 @@ ln pkg/rpm/rpmbuild/SOURCES/unit.example-php-config  php-unit.config
 %check
 build/tests
 
+%pre
+/usr/sbin/groupadd -r -f _unit
+/usr/sbin/useradd -r -g _unit -d /var/empty -s /dev/null -N -c "%summary" _unit >/dev/null 2>&1 ||:
+
 %post
 %post_service_posttrans_restart unit
 
@@ -210,6 +214,9 @@ build/tests
 %endif
 
 %changelog
+* Mon Dec 20 2021 Vitaly Chikunov <vt@altlinux.org> 1.26.1-alt3
+- Restore user/group creation that accidentally removed on previous release.
+
 * Sun Dec 19 2021 Vitaly Chikunov <vt@altlinux.org> 1.26.1-alt2
 - Restart in posttrans using new service-0.5.33 features.
 
