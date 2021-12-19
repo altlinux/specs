@@ -1,6 +1,6 @@
 Name: dar
-Version: 2.7.1
-Release: alt2
+Version: 2.7.2
+Release: alt1
 
 Summary: Disk ARchive tool
 License: GPLv2+
@@ -96,6 +96,9 @@ export LD_LIBRARY_PATH+=`pwd`/src/libdar/.libs
 %_docdir/%name-%version/
 
 %changelog
+* Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 2.7.2-alt1
+- new version 2.7.2 (with rpmrb script)
+
 * Sat Sep 11 2021 Michael Shigorin <mike@altlinux.org> 2.7.1-alt2
 - drop manual mode selection (obsoleted with 2.6.0)
 - E2K: ftbfs workaround
