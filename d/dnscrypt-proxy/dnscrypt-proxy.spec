@@ -1,6 +1,6 @@
 Name: dnscrypt-proxy
-Version: 2.1.0
-Release: alt2
+Version: 2.1.1
+Release: alt1
 
 Summary: A protocol for securing communications between a client and a DNS resolver
 
@@ -72,6 +72,9 @@ install -D -p -m 0644 dnscrypt-proxy/example-dnscrypt-proxy.toml %buildroot%_sys
 %_docdir/%name/*.txt
 
 %changelog
+* Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
+- new version 2.1.1 (with rpmrb script)
+
 * Fri Oct 08 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt2
 - pack config from upstream's example
 
