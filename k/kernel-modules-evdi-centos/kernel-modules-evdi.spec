@@ -1,6 +1,6 @@
 %define module_name	evdi
 %define module_version	1.9.1
-%define module_release	alt6
+%define module_release	alt7
 
 %define flavour		centos
 %define karch x86_64
@@ -52,7 +52,9 @@ tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
 %patch1 -p2
 # 5.15+
-if [ %kcode -ge 331285 ]; then
+# centos backported some fixes too
+KCODE=%kcode
+if [ ${KCODE%%.*} -ge 331285 -o %flavour == "centos" ]; then
 %patch2 -p2
 fi
 # 5.11+
@@ -74,6 +76,9 @@ install evdi.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sun Dec 19 2021 L.A. Kostis <lakostis@altlinux.org> 1.9.1-alt7
+- Fix compile with recent centos9 kernel.
 
 * Mon Nov 29 2021 L.A. Kostis <lakostis@altlinux.org> 1.9.1-alt6
 - Add -centos kernel support.
