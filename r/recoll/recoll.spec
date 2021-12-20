@@ -6,14 +6,14 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.31.5
+Version: 1.31.6
 Release: alt1
 
 Summary: A personal full text search package
 License: %gpl2plus
 Group: File tools
 
-Url: http://www.recoll.org
+Url: http://recoll.org
 Source0: %url/%name-%version%pre.tar.gz
 Source1: recoll_ru.ts
 Source2: recoll_ru.qm
@@ -160,6 +160,9 @@ sed -i "s|#!/usr/bin/env python3|#!%__python3|" \
 %python3_sitelibdir/recollchm/
 
 %changelog
+* Mon Dec 20 2021 Michael Shigorin <mike@altlinux.org> 1.31.6-alt1
+- new version (watch file uupdate)
+
 * Tue Dec 07 2021 Michael Shigorin <mike@altlinux.org> 1.31.5-alt1
 - new version (watch file uupdate)
 
