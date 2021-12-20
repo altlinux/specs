@@ -1,10 +1,11 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: liboqs
-Version: 0.7.0
-Release: alt3
+Version: 0.7.1
+Release: alt1
 Summary: C library for prototyping and experimenting with quantum-resistant cryptography
 License: MIT
 Group: System/Libraries
@@ -58,18 +59,17 @@ sed -i '\!DESTINATION!s!lib!%_libdir!' src/CMakeLists.txt
 sed -i '/CMAKE_SYSTEM_PROCESSOR.*armhf/s/")/|armv8l&/' CMakeLists.txt
 
 %build
-%if "%version" == "0.7.0"
-%add_optflags -Wno-error=array-parameter
-%endif
+%add_optflags %(getconf LFS_CFLAGS) -Wa,--noexecstack
 # CMake options https://github.com/open-quantum-safe/liboqs/wiki/Customizing-liboqs
 # -DOQS_ENABLE_TEST_CONSTANT_TIME=ON -- does not pass.
 %cmake -B build \
 	-GNinja \
+	-DCMAKE_ASM_FLAGS='%optflags' \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DBUILD_SHARED_LIBS=ON \
 	-DOQS_DIST_BUILD=ON \
 	-DOQS_OPT_TARGET=generic
-%ninja_build -C build
+%ninja_build -C build --verbose
 
 %install
 %ninja_install -C build
@@ -97,6 +97,11 @@ export LD_LIBRARY_PATH=$PWD/build/lib
 %_libdir/liboqs.so
 
 %changelog
+* Mon Dec 20 2021 Vitaly Chikunov <vt@altlinux.org> 0.7.1-alt1
+- Updated to 0.7.1 (2021-12-16).
+- Build liboqs.so without executable stack.
+- Fixed lfs=strict build on 32-bit systems.
+
 * Sat Nov 13 2021 Vitaly Chikunov <vt@altlinux.org> 0.7.0-alt3
 - Workaround re-build on GCC 11.
 
