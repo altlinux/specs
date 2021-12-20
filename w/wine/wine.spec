@@ -2,9 +2,9 @@
 %def_disable static
 %def_without vanilla
 %define gecko_version 2.47.2
-%define mono_version 6.3.0
+%define mono_version 7.0.0
 
-%define major 6.21
+%define major 6.22
 %define rel %nil
 %define stagingrel %nil
 # the packages will conflict with that
@@ -19,8 +19,10 @@
 # build libwine.so.1 for compatibility
 %def_without libwine
 
+%if_feature llvm 11.0
 # build real PE libraries (.dll, not .dll.so), via clang
 %def_with mingw
+%endif
 
 # https://bugs.etersoft.ru/show_bug.cgi?id=15244
 %def_with unwind
@@ -47,8 +49,15 @@
 %def_without opencl
 %endif
 
+%if_feature pcap 1.2.1
+%def_with pcap
+%else
+%def_without pcap
+%def_without set_cap_net_raw
+%endif
+
 Name: wine
-Version: %major
+Version: %major.1
 Release: alt1
 Epoch: 1
 
@@ -200,7 +209,9 @@ BuildRequires: libSDL2-devel
 BuildRequires: libusb-devel libieee1284-devel
 BuildRequires: libgcrypt-devel libgnutls-devel libsasl2-devel libkrb5-devel libldap-devel
 BuildRequires: libunixODBC-devel
+%if_with pcap
 BuildRequires: libpcap-devel
+%endif
 BuildRequires: valgrind-devel
 %if_with unwind
 BuildRequires: libunwind-devel
@@ -302,8 +313,10 @@ Requires: libvulkan1
 Requires(pre): libcap-utils
 %endif
 
+%if_with pcap
 # Recommended
 # Requires: libpcap0.8
+%endif
 
 # Linked:
 #Requires: fontconfig libfreetype
@@ -497,6 +510,7 @@ Summary: Headers for %name-devel
 Group: Development/C
 Requires: %name = %EVR
 Obsoletes: lib%name-devel < %version
+#Provides: lib%name-devel = %EVR
 Conflicts: lib%conflictbase-devel
 # we don't need provide anything
 AutoProv:no
@@ -531,7 +545,7 @@ develop programs which make use of Wine.
 %name-staging/patches/patchinstall.sh DESTDIR=$(pwd) --all --backend=patch
 
 # disable rpath using for executable
-%__subst "s|^\(LDRPATH_INSTALL =\).*|\1|" Makefile.in
+#__subst "s|^\(LDRPATH_INSTALL =\).*|\1|" Makefile.in
 
 # Apply local patches
 %name-patches/patchapply.sh
@@ -555,12 +569,12 @@ export CROSSCC=clang
 	--without-oss \
 	--without-capi \
 	--without-hal \
+	%{subst_with pcap} \
 	%{subst_with unwind} \
 	%{subst_with mingw} \
 	--with-xattr \
 	%{subst_with vulkan} \
 	%{subst_with vkd3d} \
-	%{subst_with faudio} \
 	--bindir=%winebindir \
 	%nil
 
@@ -918,7 +932,7 @@ fi
 
 
 %files devel
-%libwinedir/%winesodir/lib*.def
+#libwinedir/%winesodir/lib*.def
 %if_with mingw
 %libwinedir/%winepedir/lib*.a
 %endif
@@ -931,6 +945,10 @@ fi
 %endif
 
 %changelog
+* Sat Nov 27 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.22.1-alt1
+- new version (6.22.1) with rpmgs script
+- add check for libpcap and llvm versions
+
 * Sun Nov 07 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.21-alt1
 - new version 6.21 (with rpmrb script)
 
