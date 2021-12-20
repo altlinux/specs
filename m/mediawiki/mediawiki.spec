@@ -1,5 +1,5 @@
 %define webappdir %webserver_webappsdir/mediawiki
-%define major 1.36
+%define major 1.37
 
 Name: mediawiki
 Version: %major.1
@@ -419,6 +419,15 @@ fi
 %_mediawiki_settings_dir/50-PdfHandler.php
 
 %changelog
+* Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.37.1-alt1
+- new version 1.37.1 (with rpmrb script)
+- (T292763, CVE-2021-44854) (T271037, CVE-2021-44856)
+- (T297322, CVE-2021-44857) (T297322, CVE-2021-44858)
+- (T297574, CVE-2021-45038) (T293589, CVE-2021-44855) (T294686)
+
+* Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.36.2-alt1
+- new version 1.36.2 (with rpmrb script)
+
 * Sun Jun 27 2021 Vitaly Lipatov <lav@altlinux.ru> 1.36.1-alt1
 - new version 1.36.1 (with rpmrb script)
 - (T280226, CVE-2021-35197): Prevent blocked users from purging pages
