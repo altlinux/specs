@@ -1,7 +1,7 @@
 %define oname roundcubemail
 %define rel %nil
 Name: roundcube
-Version: 1.4.12
+Version: 1.5.1
 Release: alt1
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
@@ -150,12 +150,15 @@ service httpd2 condreload
 %_localstatedir/%name/enigma/.htaccess
 %dir %attr(0750,root,%webserver_group) %_sysconfdir/%name/
 %config(noreplace) %attr(0640,root,%webserver_group) %_sysconfdir/%name/*
-%doc CHANGELOG INSTALL LICENSE README.md UPGRADING SQL/
+%doc CHANGELOG.md SECURITY.md INSTALL LICENSE README.md UPGRADING SQL/
 
 %files apache2
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.5.1-alt1
+- new version 1.5.1 (with rpmrb script)
+
 * Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.4.12-alt1
 - new version 1.4.12 (with rpmrb script)
 - security fixes
