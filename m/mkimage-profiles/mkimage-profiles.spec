@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.22
+Version: 1.4.23
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,22 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Dec 20 2021 Anton Midyukov <antohami@altlinux.org> 1.4.23-alt1
+- lib/profile.mk: add branding-<BRANDING>-release to
+  PACKAGES_REQUIRES_INITROOT (Closes: 41570)
+- profile.mk: quote variables properly (thanks mike@)
+- mixin.mk, regular.mk: do not +power for regulars with systemd
+- syslinux: cleanup syslinux/.in/ always
+- oem: fix BASE_BRANDING to THE_BRANDING
+- pkg.in/lists: exclude varible NO_SORT_PACKAGES from package lists
+- install2, vmguest: add xorg-dri-vmwgfx to vmware drivers (thanks
+  zerg@)
+- x11: update use/x11/xorg
+- kernel: add kernel modules to initrd for framebuffer support
+  on SBC (RPi3, RPi4, Sunxi, Rockchip, Tegra)
+- basealt.mk: change firefox-esr to chromium for
+  vm/alt-workstation-rpi (thanks jqt4@)
+
 * Sat Dec 11 2021 Anton Midyukov <antohami@altlinux.org> 1.4.22-alt1
 - Revert "arm-rpi4: change firefox-esr to chromium"
 - Revert "regular-vm.mk, regular.mk: add wireless support"
