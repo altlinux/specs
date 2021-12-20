@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%set_verify_elf_method strict,unresolved=normal
 
 Name:    crash
-Version: 7.3.0
+Version: 8.0.0
 Release: alt1
 Summary: Linux kernel crash utility
 Group:   Development/Debuggers
@@ -16,13 +17,14 @@ Vcs:     https://github.com/crash-utility/crash.git
 # Extensions Vcs: https://github.com/crash-utility/crash-extensions.git
 
 Source0: %name-%version.tar
-Source1: gdb-7.6.tar.gz
+Source1: gdb-10.2.tar.gz
 
 ExcludeArch: e2k
+BuildRequires: flex
+BuildRequires: gcc-c++
+BuildRequires: makeinfo
 BuildRequires: ncurses-devel
 BuildRequires: zlib-devel
-BuildRequires: makeinfo
-BuildRequires: flex
 
 %description
 The core analysis suite is a self-contained tool that can be used to
@@ -31,8 +33,8 @@ creation facilities.
 
 Whitepaper: https://crash-utility.github.io/crash_whitepaper.html
 
-Note: You will need -debuginfo package for the kernel installed for this
- tool to work! Because, it requires vmlinux binary present in -debuginfo.
+Note: You will need -debuginfo package for the current kernel installed
+      for this tool to work!
 
 %prep
 %setup
@@ -42,7 +44,8 @@ tar xvf crash-extensions/crash-gcore-command-* -C extensions --strip-components=
 tar xvf crash-extensions/ptdump-*              -C extensions --strip-components=1
 
 %build
-%make_build --output-sync=none RPMPKG=%version-%release CFLAGS="%optflags"
+%add_optflags $(getconf LFS_CFLAGS)
+%make_build --output-sync=none RPMPKG=%version-%release CFLAGS="%optflags" CXXFLAGS="%optflags"
 # Build what builds.
 %make_build --keep-going --ignore-errors extensions
 
@@ -61,6 +64,11 @@ install -p -m0644 extensions/*.so %buildroot%_libdir/crash/extensions
 %_libdir/crash
 
 %changelog
+* Mon Dec 20 2021 Vitaly Chikunov <vt@altlinux.org> 8.0.0-alt1
+- Updated to 8.0.0-4-g6968345893 (2021-12-08) which is based on gdb-10.2
+  with DWARF 5 support.
+- Fixed lfs=strict build on 32-bit systems.
+
 * Wed May 12 2021 Vitaly Chikunov <vt@altlinux.org> 7.3.0-alt1
 - Update to 7.3.0 (2021-04-27).
 
