@@ -4,8 +4,8 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-mocha
-Version: 7.1.0
-Release: alt2
+Version: 9.1.3
+Release: alt1
 
 Summary: simple, flexible, fun javascript test framework for node.js & the browser
 
@@ -76,6 +76,9 @@ rm -rf %buildroot/%nodejs_sitelib/%node_module/docs/
 #doc docs
 
 %changelog
+* Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 9.1.3-alt1
+- new version 9.1.3 (with rpmrb script)
+
 * Thu Apr 09 2020 Igor Vlasenko <viy@altlinux.ru> 7.1.0-alt2
 - NMU: added provides: npm(mocha) for autoimports
 
