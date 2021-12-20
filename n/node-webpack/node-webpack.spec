@@ -4,7 +4,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-webpack
-Version: 5.24.0
+Version: 5.65.0
 Release: alt1
 
 Summary: A bundler for javascript and friends
@@ -70,6 +70,9 @@ rm -rf %buildroot/%nodejs_sitelib/%node_module/test/
 %nodejs_sitelib/%node_module/
 
 %changelog
+* Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 5.65.0-alt1
+- new version 5.65.0 (with rpmrb script)
+
 * Tue Feb 23 2021 Vitaly Lipatov <lav@altlinux.ru> 5.24.0-alt1
 - new version 5.24.0 (with rpmrb script)
 
