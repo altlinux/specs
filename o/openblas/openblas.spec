@@ -16,10 +16,13 @@
 %ifarch riscv64
 %define oblas_target RISCV64_GENERIC
 %endif
+%ifarch %mips
+%define oblas_target MIPS32_GENERIC
+%endif
 
 
 Name: openblas
-Version: 0.3.17
+Version: 0.3.19
 Release: alt1
 
 Summary: Optimized BLAS library based on GotoBLAS2 1.13 
@@ -105,7 +108,7 @@ FLAGS="%optflags %optflags_shared"
 # COMMON_OPT - compiler options
 FC="gfortran" F77="g77" CC="gcc" \
 F_COMPILER="GFORTRAN" C_COMPILER="GCC" \
-%make_build SMP=1 \
+%make_build SMP=1 MAKE_NB_JOBS=${NPROCS:-%__nprocs} \
 %if "%_lib" == "lib64"
 	BINARY=64 \
 %else
@@ -126,6 +129,7 @@ sed -i 's,%buildroot,,' %buildroot%_pkgconfigdir/openblas.pc
 
 %check
 %make_build tests \
+	MAKE_NB_JOBS=${NPROCS:-%__nprocs} \
 	%{?oblas_target:TARGET=%oblas_target} \
 	%{?_enable_dynamic_arch:DYNAMIC_ARCH=1} \
 	%{?_without_lapack:NO_LAPACK=1} \
@@ -143,6 +147,10 @@ sed -i 's,%buildroot,,' %buildroot%_pkgconfigdir/openblas.pc
 %_includedir/openblas
 
 %changelog
+* Mon Dec 20 2021 Ivan A. Melnikov <iv@altlinux.org> 0.3.19-alt1
+- Version 0.3.19
+- %%mips support
+
 * Thu Aug 26 2021 Ivan A. Melnikov <iv@altlinux.org> 0.3.17-alt1
 - Version 0.3.17
 - riscv64 support
