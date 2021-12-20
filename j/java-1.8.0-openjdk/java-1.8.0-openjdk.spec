@@ -27,7 +27,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.312.b07
+%define version 1.8.0.322.b02
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -94,7 +94,7 @@ BuildRequires: /proc rpm-build-java
 %global jit_arches      %{ix86} x86_64 sparcv9 sparc64 %{aarch64} %{power64}
 %global sa_arches       %{ix86} x86_64 sparcv9 sparc64 %{aarch64}
 %global jfr_arches      %{jit_arches}
-%global fastdebug_arches x86_64
+%global fastdebug_arches x86_64 ppc64le aarch64
 
 # By default, we build a debug build during main build on JIT architectures
 %if %{with slowdebug}
@@ -293,9 +293,9 @@ BuildRequires: /proc rpm-build-java
 %endif
 
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
-%global shenandoah_project	aarch64-port
-%global shenandoah_repo		jdk8u-shenandoah
-%global shenandoah_revision aarch64-shenandoah-jdk8u312-b07
+%global shenandoah_project aarch64-port
+%global shenandoah_repo jdk8u-shenandoah
+%global shenandoah_revision aarch64-shenandoah-jdk8u322-b02
 # Define old aarch64/jdk8u tree variables for compatibility
 %global project         %{shenandoah_project}
 %global repo            %{shenandoah_repo}
@@ -317,7 +317,7 @@ BuildRequires: /proc rpm-build-java
 # Release will be (where N is usually a number starting at 1):
 # - 0.N%%{?extraver}%%{?dist} for EA releases,
 # - N%%{?extraver}{?dist} for GA releases
-%global is_ga           1
+%global is_ga           0
 %if %{is_ga}
 %global milestone          fcs
 %global milestone_version  %{nil}
@@ -381,7 +381,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}.%{buildver}
-Release: alt2_%{?eaprefix}%{rpmrelease}%{?extraver}%{?dist}
+Release: alt1_%{?eaprefix}%{rpmrelease}%{?extraver}%{?dist}
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -2154,6 +2154,9 @@ fi
 %endif
 
 %changelog
+* Sun Dec 19 2021 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.322.b02-alt1_0.1.eajpp8
+- New version.
+
 * Tue Nov 02 2021 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.312.b07-alt2_1jpp8
 - Ignore possible fail of %%post scriptlet (ALT #41264).
 - Optionally disable %%check by default.
