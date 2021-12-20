@@ -1,8 +1,8 @@
 %define pname nan
 
 Name: node-nan
-Version: 2.14.2
-Release: alt3
+Version: 2.15.0
+Release: alt1
 
 Summary: Native Abstractions for Node.js
 
@@ -58,6 +58,9 @@ rm -rf %buildroot/%nodejs_sitelib/%pname/tools/
 %nodejs_sitelib/%pname/
 
 %changelog
+* Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 2.15.0-alt1
+- new version 2.15.0 (with rpmrb script)
+
 * Wed Oct 28 2020 Vitaly Lipatov <lav@altlinux.ru> 2.14.2-alt3
 - use npm_test and npm_prune macros (with rpm-macros-nodejs 0.25.5)
 
