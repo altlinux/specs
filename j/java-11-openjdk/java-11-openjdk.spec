@@ -40,7 +40,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-11-openjdk
-%define version 11.0.13.0.8
+%define version 11.0.14.0.1
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -277,7 +277,7 @@ BuildRequires: /proc rpm-build-java
 # Used via new version scheme. JDK 11 was
 # GA'ed in September 2018 => 18.9
 %global vendor_version_string 18.9
-%global securityver 13
+%global securityver 14
 # buildjdkver is usually same as %%{majorver},
 # but in time of bootstrap of next jdk, it is majorver-1, 
 # and this it is better to change it here, on single place
@@ -299,8 +299,9 @@ BuildRequires: /proc rpm-build-java
 %global origin_nice     OpenJDK
 %global top_level_dir_name   %{origin}
 %global minorver        0
-%global buildver        8
-%global rpmrelease      2
+%global buildver        1
+%global rpmrelease      1
+%global dist		jpp11
 #%%global tagsuffix      ""
 # priority must be 8 digits in total; untill openjdk 1.8 we were using 18..... so when moving to 11 we had to add another digit
 %if %is_system_jdk
@@ -317,7 +318,7 @@ BuildRequires: /proc rpm-build-java
 # Release will be (where N is usually a number starting at 1):
 # - 0.N%%{?extraver}%%{?dist} for EA releases,
 # - N%%{?extraver}{?dist} for GA releases
-%global is_ga           1
+%global is_ga           0
 %if %{is_ga}
 %global ea_designator ""
 %global ea_designator_zip ""
@@ -407,7 +408,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{javaver}-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt2_1jpp11
+Release: alt1_%{?eaprefix}%{rpmrelease}%{?extraver}%{?dist}
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -1227,7 +1228,7 @@ if ! echo $suffix | grep -q "debug" ; then
   install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}
   cp -a %{buildoutputdir}/images/docs $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}
   #cp -a %{buildoutputdir}/bundles/jdk-%{newjavaver}%{ea_designator_zip}+%{buildver}%{lts_designator_zip}-docs.zip $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}.zip
-  cp -a %{buildoutputdir}/bundles/jdk-11.0.13.1+1%{lts_designator_zip}-docs.zip $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}.zip
+  cp -a %{buildoutputdir}/bundles/jdk-11.0.14.1-ea+1%{lts_designator_zip}-docs.zip $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}.zip
 fi
 
 # Install release notes
@@ -1580,7 +1581,7 @@ fi
 %dir %{etcjavadir}/conf/security/policy/limited
 %dir %{etcjavadir}/conf/security/policy/unlimited
 %config(noreplace) %{etcjavadir}/lib/security/default.policy
-%config(noreplace) %{etcjavadir}/lib/security/blacklisted.certs
+%config(noreplace) %{etcjavadir}/lib/security/blocked.certs
 %config(noreplace) %{etcjavadir}/lib/security/public_suffix_list.dat
 %config(noreplace) %{etcjavadir}/conf/security/policy/limited/exempt_local.policy
 %config(noreplace) %{etcjavadir}/conf/security/policy/limited/default_local.policy
@@ -1777,6 +1778,9 @@ fi
 %endif
 
 %changelog
+* Sun Dec 19 2021 Andrey Cherepanov <cas@altlinux.org> 0:11.0.14.1-alt1_0.1.eajpp11
+- New version.
+
 * Tue Nov 02 2021 Andrey Cherepanov <cas@altlinux.org> 0:11.0.13.8-alt2_1jpp11
 - Ignore possible fail of %%post scriptlet (ALT #40831).
 - Optionally disable %%check by default.
