@@ -1,7 +1,7 @@
 %define rname lxc
 
 Name: pve-%rname
-Version: 4.0.9
+Version: 4.0.11
 Release: alt1
 Summary: Linux containers usersapce tools
 Group: System/Configuration/Other
@@ -25,10 +25,8 @@ Patch6: 0006-doc-Add-lxc.cgroup.dir.-monitor-container-container..patch
 Patch7: 0007-PVE-Config-lxc.service-start-after-a-potential-syslo.patch
 Patch8: 0008-PVE-Config-deny-rw-mounting-of-sys-and-proc.patch
 Patch9: 0009-PVE-Config-attach-always-use-getent.patch
-Patch10: 0010-conf-userns.conf-include-userns.conf.d.patch
-Patch11: 0011-confile-allow-including-nonexisting-directories.patch
-Patch12: 0012-cgroups-populate-hierarchy-for-device-cgroup.patch
-Patch13: 0013-cgroups-remove-unneeded-variables-from-cgroup_tree_c.patch
+Patch10: 0010-Revert-initutils-use-vfork-in-lxc_container_init.patch
+Patch11: 0011-use-2-sysfs-instances-for-sys-mixed.patch
 
 Patch20: lxc-alt.patch
 Patch21: lxc-altlinux-lxc.patch
@@ -60,8 +58,6 @@ an applications or a system.
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
-%patch13 -p1
 
 %patch20 -p1 -b .alt
 %patch21 -p1 -b .altlinux
@@ -112,6 +108,9 @@ rm -fr %buildroot/usr/lib/%rname/%rname-apparmor-load
 %_man7dir/*.7*
 
 %changelog
+* Mon Dec 20 2021 Valery Inozemtsev <shrek@altlinux.ru> 4.0.11-alt1
+- 4.0.11-1
+
 * Wed Sep 29 2021 Valery Inozemtsev <shrek@altlinux.ru> 4.0.9-alt1
 - 4.0.9-4
 
