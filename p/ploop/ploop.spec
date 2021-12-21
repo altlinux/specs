@@ -2,7 +2,7 @@
 %define _scriptdir %_libexecdir/%name
 
 Name: ploop
-Version: 7.0.261
+Version: 7.0.266
 Release: alt1
 Group: System/Base
 License: GPLv2
@@ -72,7 +72,6 @@ make \
     install
 
 rm -f %buildroot%_libdir/libploop.a
- 
 
 %files
 /sbin/*
@@ -80,7 +79,7 @@ rm -f %buildroot%_libdir/libploop.a
 %_man8dir/*
 %_logrotatedir/%name
 %_modulesloaddir/%name.conf
-%_sysconfdir/bash_completion.d/
+%_sysconfdir/bash_completion.d/*
 
 %files -n lib%name
 %_libdir/lib%name.so.*
@@ -100,6 +99,9 @@ rm -f %buildroot%_libdir/libploop.a
 %python3_sitelibdir/*
 
 %changelog
+* Tue Dec 21 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.266-alt1
+- 7.0.266
+
 * Tue Aug 24 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.261-alt1
 - 7.0.261
 - remove static library
