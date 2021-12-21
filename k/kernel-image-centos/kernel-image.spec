@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 34
+%define centos_release 35
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -629,6 +629,14 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Dec 21 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.35-alt1.el9
+- drm/hyperv: Fix device removal on Gen1 VMs
+- redhat/configs: Always enable CONFIG_PCI_IOV for RHEL on s390x
+- wireguard: device: reset peer src endpoint when netns exits
+- NVMe-TCP fixes
+- ovl: fix missing negative dentry check in ovl_rename()
+- selftests/bpf: Fix some issues for selftest test_xdp_redirect_multi.sh
+
 * Sun Dec 19 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.34-alt1.el9
 - block: update to v5.16
 
