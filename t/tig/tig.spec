@@ -1,6 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: tig
 Version: 2.5.4
-Release: alt1
+Release: alt2
 
 Summary: text-mode interface for git
 License: GPLv2+
@@ -30,24 +34,38 @@ Using it as a pager, it will display input from stdin and colorize it.
 %patch -p1
 
 %build
-autoreconf
+%add_optflags %(getconf LFS_CFLAGS)
+%autoreconf
 %configure
 make V=1 src/tig doc-man
 
 %install
 install -pD -m755 src/tig %buildroot%_bindir/tig
+install -pD -m644 contrib/tig-pick %buildroot%_bindir/tig-pick
 install -pD -m644 doc/tig.1 %buildroot%_man1dir/tig.1
 install -pD -m644 doc/tigrc.5 %buildroot%_man5dir/tigrc.5
 install -pD -m644 doc/tigmanual.7 %buildroot%_man7dir/tigmanual.7
+mkdir -p %buildroot%_datadir/tig
+install -p -m644 contrib/*.tigrc %buildroot%_datadir/tig/
+install -pD -m644 contrib/tig-completion.bash %buildroot%_datadir/bash-completion/completions/tig
+install -pD -m644 contrib/tig-completion.zsh  %buildroot%_datadir/zsh/site-functions/_tig
 
 %files
-%doc NEWS.adoc README.adoc
+%doc COPYING NEWS.adoc README.adoc doc/manual.adoc
 %_bindir/tig
+%_bindir/tig-pick
 %_man1dir/tig.1*
 %_man5dir/tigrc.5*
 %_man7dir/tigmanual.7*
+%_datadir/tig
+%_datadir/bash-completion/completions/tig
+%_datadir/zsh/site-functions/_tig
 
 %changelog
+* Sun Dec 19 2021 Vitaly Chikunov <vt@altlinux.org> 2.5.4-alt2
+- Packaged tig-pick, completions, tigrc examples, and manual.
+- Fixed lfs=strict build on 32-bit systems.
+
 * Tue Jun 15 2021 Alexey Tourbin <at@altlinux.ru> 2.5.4-alt1
 - 2.5.3 -> 2.5.4
 
