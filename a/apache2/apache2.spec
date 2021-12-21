@@ -12,8 +12,8 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.51
-Release: alt2
+Version: 2.4.52
+Release: alt1
 Epoch: 1
 
 License: %asl
@@ -1539,6 +1539,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Tue Dec 21 2021 Anton Farygin <rider@altlinux.ru> 1:2.4.52-alt1
+- 2.4.52 (Fixes: CVE-2021-44790, CVE-2021-44224)
+
 * Mon Nov 29 2021 Anton Midyukov <antohami@altlinux.ru> 1:2.4.51-alt2
 - 90-apache2-base-httpd.filetrigger: do not require systemctl (closes: #41456)
 
