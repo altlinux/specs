@@ -6,7 +6,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 280
+Version: 281
 Release: alt1
 Summary: A simple client for interacting with RESTful http/https resources
 Group: Development/Perl
@@ -34,6 +34,9 @@ REST::Client provides a simple way to interact with HTTP RESTful resources.
 %perl_vendor_privlib/R*
 
 %changelog
+* Tue Dec 21 2021 Igor Vlasenko <viy@altlinux.org> 281-alt1
+- automated CPAN update
+
 * Wed Dec 15 2021 Igor Vlasenko <viy@altlinux.org> 280-alt1
 - automated CPAN update
 
