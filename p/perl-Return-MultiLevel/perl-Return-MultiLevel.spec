@@ -6,7 +6,7 @@ BuildRequires: perl(Test/More.pm) perl(parent.pm) perl(Data/Munge.pm) perl(Test/
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.06
+Version: 0.08
 Release: alt1
 Summary: return across multiple call levels
 Group: Development/Perl
@@ -34,10 +34,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README author.yml
 %perl_vendor_privlib/R*
 
 %changelog
+* Tue Dec 21 2021 Igor Vlasenko <viy@altlinux.org> 0.08-alt1
+- automated CPAN update
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 0.06-alt1
 - automated CPAN update
 
