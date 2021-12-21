@@ -2,14 +2,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-%module
-Version: 0.003
+Version: 0.004
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
 Summary: RPM-Source-Editor extension for updating packages
 Group: Development/Perl
-License: GPL or Artistic
+License: GPLv2+ or Artistic-2.0
 Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
 #Url: http://search.cpan.org/dist/%module
 Url: http://git.altlinux.org/people/viy/packages/%{module}.git
@@ -38,6 +38,9 @@ Requires: perl-RPM-Source-Editor > 0.9229
 %_man1dir/*
 
 %changelog
+* Tue Dec 21 2021 Igor Vlasenko <viy@altlinux.org> 0.004-alt1
+- new version
+
 * Fri Apr 19 2019 Igor Vlasenko <viy@altlinux.ru> 0.003-alt1
 - new version
 
