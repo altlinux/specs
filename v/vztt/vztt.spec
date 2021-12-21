@@ -10,10 +10,11 @@
 %define vztmp /var/lib/vz/tmp
 %define tmp_url_map %vztmp/tmp_url_map
 %define tmp_vztt_conf %vztmp/tmp_vztt_conf
+%add_python3_path %_libexecdir
 
 Name: vztt
-Version: 7.0.80
-Release: alt2
+Version: 7.0.83.3
+Release: alt1
 Summary: OpenVZ EZ template management tools
 Source: %name-%version.tar
 Patch: %name-%version.patch
@@ -94,7 +95,7 @@ rm -f %buildroot%_libdir/lib%name.a
 %config(noreplace) %nojquota_conf
 %config(noreplace) %url_map
 %url_map_link
-%config(noreplace)  %_logrotatedir/vztt
+%config(noreplace) %_logrotatedir/vztt
 %_libexecdir/*
 
 %files -n lib%name
@@ -105,6 +106,9 @@ rm -f %buildroot%_libdir/lib%name.a
 %_libdir/lib%name.so
 
 %changelog
+* Tue Dec 21 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.83.3-alt1
+- 7.0.83.3
+
 * Tue May 04 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.80-alt2
 - BR: +rpm-build-python3
 
