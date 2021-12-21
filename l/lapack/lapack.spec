@@ -1,6 +1,6 @@
 Name: lapack
 Version: 3.8.0
-Release: alt5
+Release: alt6
 Epoch: 1
 
 %define sover 4
@@ -17,7 +17,7 @@ Source1: manpages.tar
 
 BuildRequires: cmake gcc-fortran libxblas-devel
 %{!?_with_bootstrap:BuildRequires: libsuperlu-devel}
-%ifarch %e2k %mips
+%ifarch %e2k
 BuildRequires: libblas-devel
 %define blas libblas.so
 %else
@@ -35,7 +35,7 @@ Obsoletes: liblapack3
 %package -n lib%name-devel
 Summary: BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
 Group: Development/Other
-%ifarch %e2k %mips
+%ifarch %e2k
 Requires: libblas-devel
 %else
 Requires: libopenblas-devel
@@ -180,6 +180,9 @@ done >lapack-man.files
 %files -n lapack-man -f lapack-man.files
 
 %changelog
+* Tue Dec 21 2021 Ivan A. Melnikov <iv@altlinux.org> 1:3.8.0-alt6
+- Use openblas for %%mips
+
 * Thu Oct 14 2021 Ivan A. Melnikov <iv@altlinux.org> 1:3.8.0-alt5
 - Use openblas on riscv64
 - Use libblas.so for %%mips

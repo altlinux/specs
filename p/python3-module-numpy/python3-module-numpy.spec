@@ -15,7 +15,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 1.21.4
-Release: alt2
+Release: alt3
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD-3-Clause
 Group: Development/Python3
@@ -145,12 +145,7 @@ install -m644 %SOURCE2 .
 sed -i 's|@LIBDIR@|%_libdir|g' site.cfg
 sed -i 's|@PYVER@|%_python3_version|g' site.cfg doc/Makefile
 sed -i 's|@PYSUFF@|3|' site.cfg
-
-%ifarch mipsel
-sed -i 's|@BLAS@|blas|' site.cfg
-%else
 sed -i 's|@BLAS@|openblas|' site.cfg
-%endif
 
 # headers
 sed -i 's|^prefix.*|prefix=%python3_sitelibdir/%oname/core|' \
@@ -256,6 +251,9 @@ cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Tue Dec 21 2021 Ivan A. Melnikov <iv@altlinux.org> 1:1.21.4-alt3
+- site.cfg: use openblas by default on mipsel
+
 * Tue Dec 14 2021 Anton Farygin <rider@altlinux.ru> 1:1.21.4-alt2
 - relaxed tests on ppc64le due to fall in
   "test_linalg.py::TestCholesky::test_basic_property" in the build for p10
