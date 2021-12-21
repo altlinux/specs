@@ -1,5 +1,5 @@
 Name: autorepo-altnode-repocop
-Version: 0.30
+Version: 0.31
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -54,6 +54,9 @@ install -m 755 repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/repocop-tasktest-*
 
 %changelog
+* Tue Dec 21 2021 Igor Vlasenko <viy@altlinux.org> 0.31-alt1
+- bugfixes for repology import
+
 * Sun Dec 19 2021 Igor Vlasenko <viy@altlinux.org> 0.30-alt1
 - unified import
 
