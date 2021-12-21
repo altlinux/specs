@@ -49,6 +49,7 @@
 %def_enable gnutls
 %def_disable nettle
 %def_disable gcrypt
+%def_enable selinux
 %def_enable virglrenderer
 %def_enable tpm
 %def_enable libssh
@@ -130,8 +131,8 @@
 # }}}
 
 Name: qemu
-Version: 6.1.0
-Release: alt2
+Version: 6.2.0
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -164,7 +165,7 @@ Requires: %name-system = %EVR
 Requires: %name-user = %EVR
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: meson
+BuildRequires: meson >= 0.58.2
 BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static libpcre-devel-static libattr-devel-static
 BuildRequires: glib2-devel >= 2.56 libgio-devel
 BuildRequires: makeinfo perl-devel python3-module-sphinx python3-module-sphinx_rtd_theme
@@ -203,6 +204,7 @@ BuildRequires: libuuid-devel
 %{?_enable_gnutls:BuildRequires: libgnutls-devel >= 3.5.18}
 %{?_enable_nettle:BuildRequires: libnettle-devel >= 3.4}
 %{?_enable_gcrypt:BuildRequires: libgcrypt-devel >= 1.8.0}
+%{?_enable_selinux:BuildRequires: libselinux-devel}
 BuildRequires: libpam-devel
 BuildRequires: libtasn1-devel
 BuildRequires: libslirp-devel
@@ -666,6 +668,7 @@ This package provides the system emulator for %%{1}. \
 %%_datadir/%%name/sgabios.bin \
 %%_datadir/%%name/linuxboot* \
 %%_datadir/%%name/multiboot.bin \
+%%_datadir/%%name/multiboot_dma.bin \
 %%_datadir/%%name/kvmvapic.bin \
 %%_datadir/%%name/pvh.bin \
 %%endif \
@@ -757,6 +760,7 @@ run_configure \
 	--enable-tcg \
 	--extra-ldflags="-Wl,-Ttext-segment=0x60000000" \
 	--audio-drv-list="" \
+	--disable-fdt \
 	--disable-auth-pam \
 	--disable-avx2 \
 	--disable-avx512f \
@@ -778,8 +782,8 @@ run_configure \
 	--disable-dmg \
 	--disable-docs \
 	--disable-bpf \
-	--disable-fdt \
 	--disable-gcrypt \
+	--disable-selinux \
 	--disable-glusterfs \
 	--disable-gnutls \
 	--disable-gtk \
@@ -789,7 +793,6 @@ run_configure \
 	--disable-hax \
 	--disable-hvf \
 	--disable-iconv \
-	--disable-jemalloc \
 	--disable-keyring \
 	--disable-kvm \
 	--disable-libdaxctl \
@@ -826,13 +829,13 @@ run_configure \
 	--disable-sdl-image \
 	--disable-seccomp \
 	--disable-slirp \
+	--disable-slirp-smbd \
 	--disable-smartcard \
 	--disable-snappy \
 	--disable-sparse \
 	--disable-spice \
 	--disable-spice-protocol \
 	--disable-system \
-	--disable-tcmalloc \
 	--disable-tools \
 	--disable-tpm \
 	--disable-usb-redir \
@@ -916,12 +919,12 @@ run_configure \
 	%{?_disable_io_uring:--disable-linux-io-uring} \
 	%{?_disable_blobs: --disable-blobs} \
 	%{subst_enable spice} \
-	--audio-drv-list="%audio_drv_list" \
 	%{subst_enable brlapi} \
 	--enable-curl \
 	%{subst_enable virglrenderer} \
 	%{subst_enable tpm} \
 	%{subst_enable bpf} \
+	--enable-fdt=system \
 	%{subst_enable xen} \
 	%{?_enable_vhost_crypto:--enable-vhost-crypto} \
 	%{?_enable_vhost_net:--enable-vhost-net} \
@@ -946,9 +949,9 @@ run_configure \
 	%{subst_enable gnutls} \
 	%{subst_enable nettle} \
 	%{subst_enable gcrypt} \
+	%{subst_enable selinux} \
 	%{subst_enable numa} \
-	%{subst_enable tcmalloc} \
-	%{subst_enable jemalloc} \
+	--enable-malloc-trim \
 	%{subst_enable replication} \
 	%{subst_enable lzo} \
 	%{subst_enable snappy} \
@@ -960,7 +963,6 @@ run_configure \
 	%{subst_enable libdaxctl} \
 	%{subst_enable fuse} \
 	--enable-xkbcommon \
-	--extra-ldflags="$extraldflags" \
 	--disable-xen
 
 %make_build V=1 $buildldflags
@@ -1047,12 +1049,12 @@ install -m 0644 -t %buildroot%_datadir/%name/tracetool/format scripts/tracetool/
 # Create new directories and put them all under tests-src
 #mkdir -p %buildroot%testsdir/python
 #mkdir -p %buildroot%testsdir/tests
-#mkdir -p %buildroot%testsdir/tests/acceptance
+#mkdir -p %buildroot%testsdir/tests/avocado
 #mkdir -p %buildroot%testsdir/tests/qemu-iotests
 #mkdir -p %buildroot%testsdir/scripts/qmp
 
 # Install avocado_qemu tests
-#cp -R tests/acceptance/* %buildroot%testsdir/tests/acceptance/
+#cp -R tests/avocado/* %buildroot%testsdir/tests/avocado/
 
 # Install qemu.py and qmp/ scripts required to run avocado_qemu tests
 #cp -R python/qemu %buildroot%testsdir/python
@@ -1314,6 +1316,13 @@ fi
 %exclude %docdir/LICENSE
 
 %changelog
+* Fri Dec 17 2021 Alexey Shabalin <shaba@altlinux.org> 6.2.0-alt1
+- 6.2.0.
+- Fixes for the following security vulnerabilities:
+  + CVE-2021-20203 vmxnet3: validate configuration values during activate
+  + CVE-2021-3947 hw/nvme: fix buffer overrun in nvme_changed_nslist
+  + CVE-2021-20196 Null Pointer Failure in fdctrl_read() in hw/block/fdc.c
+
 * Mon Nov 15 2021 Alexey Shabalin <shaba@altlinux.org> 6.1.0-alt2
 - Backport patches from upstream:
   + qemu-sockets: fix unix socket path copy (again)

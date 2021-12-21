@@ -1,7 +1,7 @@
 
 Summary: Python bindings for the libvirt library
 Name: python3-module-libvirt
-Version: 7.9.0
+Version: 7.10.0
 Release: alt1
 Url: https://libvirt.org
 #git://libvirt.org/libvirt-python.git
@@ -42,6 +42,9 @@ of recent versions of Linux (and other OSes).
 %doc README COPYING COPYING.LESSER examples
 
 %changelog
+* Fri Dec 17 2021 Alexey Shabalin <shaba@altlinux.org> 7.10.0-alt1
+- new version 7.10.0
+
 * Wed Nov 17 2021 Alexey Shabalin <shaba@altlinux.org> 7.9.0-alt1
 - new version 7.9.0
 

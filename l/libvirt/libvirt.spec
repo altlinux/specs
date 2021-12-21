@@ -8,6 +8,10 @@
 %define qemu_user  _libvirt
 %define qemu_group  vmusers
 
+# Locations for QEMU data
+%define qemu_moddir %_libdir/qemu
+%define qemu_datadir %_datadir/qemu
+
 # A client only build will create a libvirt.so only containing
 # the generic RPC driver, and test driver and no libvirtd
 # Default to a full server + client build
@@ -171,7 +175,7 @@
 %def_without modular_daemons
 
 Name: libvirt
-Version: 7.9.0
+Version: 7.10.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -221,7 +225,6 @@ BuildRequires(pre): meson >= 0.54.0
 %{?_with_storage_iscsi_direct:BuildRequires: libiscsi-devel >= 1.18.0}
 %{?_with_storage_mpath:BuildRequires: libdevmapper-devel}
 %{?_with_storage_gluster:BuildRequires: libglusterfs-devel}
-%{?_with_storage_zfs:BuildRequires: zfs-utils}
 %{?_with_numactl:BuildRequires: libnuma-devel >= 2.0.6}
 %{?_with_capng:BuildRequires: libcap-ng-devel}
 %{?_with_netcf:BuildRequires: netcf-devel >= 0.1.8}
@@ -781,6 +784,8 @@ tar -xf %SOURCE2 -C src/keycodemapdb --strip-components 1
 		-Dinit_script=systemd \
 		-Dqemu_user=%qemu_user \
 		-Dqemu_group=%qemu_group \
+		-Dqemu_moddir=%qemu_moddir \
+		-Dqemu_datadir=%qemu_datadir \
 %if_with modular_daemons
 		-Dremote_default_mode=direct \
 %else
@@ -961,6 +966,7 @@ fi
 %files client
 %_bindir/virsh
 %_bindir/virt-xml-validate
+%_bindir/virt-pki-query-dn
 %_bindir/virt-pki-validate
 %_man1dir/virsh.*
 %_man1dir/virt-xml-validate.*
@@ -1366,6 +1372,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Fri Dec 17 2021 Alexey Shabalin <shaba@altlinux.org> 7.10.0-alt1
+- 7.10.0
+
 * Wed Nov 17 2021 Alexey Shabalin <shaba@altlinux.org> 7.9.0-alt1
 - 7.9.0
 
