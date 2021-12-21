@@ -2,8 +2,8 @@
 %define xdg_name in.lsp_plug.lsp_plugins
 
 Name: lsp-plugins
-Version: 1.1.30
-Release: alt2
+Version: 1.1.31
+Release: alt1
 
 Summary: Linux Studio Plugins
 Group: Sound
@@ -113,6 +113,9 @@ export VERSION=%version
 
 
 %changelog
+* Tue Dec 21 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.31-alt1
+- 1.1.31
+
 * Mon Aug 30 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.30-alt2
 - fixed build for %%e2k (ilyakurdyukov@)
 
