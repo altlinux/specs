@@ -2,7 +2,7 @@
 %global oname IO-Async
 
 Name: perl-%oname
-Version: 0.800
+Version: 0.801
 Release: alt1
 
 Summary: Asynchronous event-driven programming
@@ -66,6 +66,9 @@ This package contains tests for %name.
 %perl_vendor_privlib/IO/Async/Test.pm
 
 %changelog
+* Tue Dec 21 2021 Igor Vlasenko <viy@altlinux.org> 0.801-alt1
+- new version
+
 * Wed Nov 17 2021 Igor Vlasenko <viy@altlinux.org> 0.800-alt1
 - new version
 
