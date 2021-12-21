@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist JSON
 Name: perl-%dist
-Version: 4.03
+Version: 4.04
 Release: alt1
 
 Summary: Parse and convert to JSON (JavaScript Object Notation)
@@ -18,7 +18,7 @@ BuildArch: noarch
 Requires: perl-JSON-XS
 
 # Automatically added by buildreq on Tue Nov 15 2011
-BuildRequires: perl-JSON-PP perl-JSON-XS perl-Test-Pod perl-Tie-IxHash
+BuildRequires: perl-JSON-PP perl-JSON-XS perl-Test-Pod perl-Tie-IxHash perl(charnames.pm)
 
 %description
 This module converts between JSON (JavaScript Object Notation)
@@ -39,6 +39,9 @@ and Perl data structure into each other.
 %perl_vendor_privlib/JSON*
 
 %changelog
+* Tue Dec 21 2021 Igor Vlasenko <viy@altlinux.org> 4.04-alt1
+- automated CPAN update
+
 * Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 4.03-alt1
 - automated CPAN update
 
