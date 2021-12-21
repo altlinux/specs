@@ -1,16 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-Mojo-IOLoop-ReadWriteProcess
-Version: 0.28
+Version: 0.32
 Release: alt1
 Summary: Execute external programs or internal code blocks as separate process
 License: Artistic-1.0 or GPL-1.0+
 Group: Development/Perl
 Url: http://search.cpan.org/dist/Mojo-IOLoop-ReadWriteProcess/
 Source0: http://www.cpan.org/authors/id/S/SZ/SZARATE/Mojo-IOLoop-ReadWriteProcess-%{version}.tar.gz
+Patch: Mojo-IOLoop-ReadWriteProcess-0.32-alt-usr-bin-true.patch
 BuildArch: noarch
 
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(Test/Exception.pm)
 BuildRequires: perl(Module/Build.pm)
 BuildRequires: perl(Mojolicious.pm)
 BuildRequires: perl(Test/More.pm)
@@ -25,10 +26,13 @@ Mojo::IOLoop::ReadWriteProcess is yet another process manager.
 
 %prep
 %setup -q -n Mojo-IOLoop-ReadWriteProcess-%{version}
+%patch -p1
+
 %ifnarch %ix86 x86_64
 # following test may fail on some architectures
 rm -f t/12_mocked_container.t
 %endif
+
 
 %build
 %perl_vendor_build
@@ -41,6 +45,9 @@ rm -f t/12_mocked_container.t
 %doc Changes README.md
 
 %changelog
+* Tue Dec 21 2021 Igor Vlasenko <viy@altlinux.org> 0.32-alt1
+- automated CPAN update
+
 * Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
 - automated CPAN update
 
