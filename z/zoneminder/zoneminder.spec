@@ -5,8 +5,8 @@
 ExcludeArch: armh
 
 Name: zoneminder
-Version: 1.36.11
-Release: alt2
+Version: 1.36.12
+Release: alt1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -163,6 +163,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Mon Dec 20 2021 Anton Farygin <rider@altlinux.ru> 1.36.12-alt1
+- 1.36.12
+
 * Thu Dec 09 2021 Anton Farygin <rider@altlinux.ru> 1.36.11-alt2
 - api: don't install twice
 - api: add php7-apcu to Requires
