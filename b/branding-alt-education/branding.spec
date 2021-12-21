@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 10.0
-Release: alt2
+Release: alt3
 
 %ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
@@ -482,6 +482,9 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Tue Dec 21 2021 Andrey Cherepanov <cas@altlinux.org> 10.0-alt3
+- Add missing TryExec for overrided menu entries.
+
 * Tue Nov 30 2021 Andrey Cherepanov <cas@altlinux.org> 10.0-alt2
 - Use gtk theme Breeze-Education.
 
