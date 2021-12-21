@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: ndctl
-Version: 71.1
+Version: 72
 Release: alt1
 
 Summary: Manage NVDIMM subsystem devices (Non-volatile Memory)
@@ -12,16 +12,20 @@ License: LGPL-2.1
 Group: System/Base
 Url: https://github.com/pmem/ndctl
 
+Vcs: https://github.com/pmem/ndctl.git
 Source: %url/archive/v%version/%name-%version.tar.gz
+Patch: %name-72-alt-iniparser.patch
 
-Requires: lib%name = %version-%release
-Requires: libdaxctl = %version-%release
+Requires: lib%name = %EVR
+Requires: libdaxctl = %EVR
+Requires: kmod
 
 BuildRequires: pkgconfig(libkmod)
 BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(uuid)
 BuildRequires: pkgconfig(json-c)
 BuildRequires: pkgconfig(systemd)
+BuildRequires: pkgconfig(iniparser) >= 4.1
 %{?_with_keyutils:BuildRequires: pkgconfig(libkeyutils)}
 %{?_with_bash:BuildRequires: bash-completion >= 2.0}
 BuildRequires: asciidoctor asciidoc xmlto
@@ -36,7 +40,7 @@ Firmware Interface Table).
 Summary: Management library for "libnvdimm" subsystem devices (Non-volatile Memory)
 License: LGPLv2
 Group: System/Libraries
-Requires: libdaxctl = %version-%release
+Requires: libdaxctl = %EVR
 
 %description -n lib%name
 Libraries for %name.
@@ -45,7 +49,7 @@ Libraries for %name.
 Summary: Development files for libndctl
 License: LGPLv2
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 The lib%name-devel package contains libraries and header files for
@@ -55,7 +59,9 @@ developing applications that use %name.
 Summary: Manage Device-DAX instances
 License: GPLv2
 Group: System/Base
-Requires: libdaxctl = %version-%release
+Requires: lib%name = %EVR
+Requires: libdaxctl = %EVR
+Requires: udev
 
 %description -n daxctl
 The daxctl utility provides enumeration and provisioning commands for
@@ -77,7 +83,7 @@ control API for these devices.
 Summary: Development files for libdaxctl
 License: LGPLv2
 Group: Development/C
-Requires: libdaxctl = %version-%release
+Requires: libdaxctl = %EVR
 
 %description -n libdaxctl-devel
 This package contains libraries and header files for
@@ -85,15 +91,47 @@ developing applications that use libdaxctl, a library for enumerating
 "Device DAX" devices.  Device DAX is a facility for establishing DAX
 mappings of performance / feature-differentiated memory.
 
+%package -n cxl
+Summary: Manage CXL devices
+Group: System/Base
+License: GPLv2
+Requires: libcxl = %EVR
+
+%description -n cxl
+The cxl utility provides enumeration and provisioning commands for
+the Linux kernel CXL devices.
+
+%package -n libcxl
+Summary: Management library for CXL devices
+License: LGPLv2
+Group: System/Libraries
+
+%description -n libcxl
+libcxl is a library for enumerating and communicating with CXL devices.
+
+%package -n libcxl-devel
+Summary: Development files for libcxl
+License: LGPLv2
+Group: Development/C
+Requires: libcxl = %EVR
+
+%description -n libcxl-devel
+This package contains libraries and header files for developing
+applications that use libcxl is a library for enumerating and
+communicating with CXL devices.
+
 %prep
 %setup
+%patch -b .iniparser
 
 %build
 echo %version > version
 ./autogen.sh
 %configure --disable-static \
 	%{subst_with bash} \
-	%{subst_with keyutils}
+	%{subst_with keyutils} \
+	--with-udevrulesdir=%_udevrulesdir
+%nil
 %make_build
 
 %install
@@ -106,13 +144,14 @@ echo %version > version
 %_bindir/%name
 %_man1dir/%{name}*
 %dir %_sysconfdir/%name
-%_sysconfdir/%name/monitor.conf
 %dir %_sysconfdir/%name/keys
 %_sysconfdir/%name/keys/keys.readme
+%dir %_sysconfdir/%name.conf.d
+%config(noreplace) %_sysconfdir/%name.conf.d/monitor.conf
+%config(noreplace) %_sysconfdir/%name.conf.d/%name.conf
+%config(noreplace) %_sysconfdir/modprobe.d/nvdimm-security.conf
 %_unitdir/%name-monitor.service
 %{?_with_bash:%_datadir/bash-completion/completions/%name}
-%_sysconfdir/modprobe.d/nvdimm-security.conf
-
 
 %files -n lib%name
 %_libdir/lib%name.so.*
@@ -125,6 +164,10 @@ echo %version > version
 
 %files -n daxctl
 %_bindir/daxctl
+%dir %_sysconfdir/daxctl.conf.d
+%_udevrulesdir/90-daxctl-device.rules
+%_sysconfdir/daxctl.conf.d/daxctl.example.conf
+%_unitdir/daxdev-reconfigure@.service
 %_man1dir/daxctl*
 %dir %_datadir/daxctl
 %_datadir/daxctl/daxctl.conf
@@ -138,7 +181,25 @@ echo %version > version
 %_libdir/libdaxctl.so
 %_pkgconfigdir/libdaxctl.pc
 
+%files -n cxl
+%_bindir/cxl
+%_man1dir/cxl*
+
+%files -n libcxl
+%_libdir/libcxl.so.*
+%doc README.md
+
+%files -n libcxl-devel
+%_includedir/cxl/
+%_libdir/libcxl.so
+%_pkgconfigdir/libcxl.pc
+%_man3dir/*cxl*
+
 %changelog
+* Sat Dec 18 2021 Yuri N. Sedunov <aris@altlinux.org> 72-alt1
+- 72
+- new *cxl* subpackages
+
 * Wed Dec 23 2020 Yuri N. Sedunov <aris@altlinux.org> 71.1-alt1
 - 71.1
 

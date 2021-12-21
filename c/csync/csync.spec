@@ -1,6 +1,6 @@
 Name: csync
 Version: 0.50.6
-Release: alt1.1
+Release: alt1.2
 
 Group: Networking/Other
 Summary: csync is a lightweight desktop synchronize utility
@@ -38,7 +38,9 @@ csyncronizing from other programs.
 %setup
 
 %build
-%cmake -DSYSCONF_INSTALL_DIR=/etc -DCMAKE_VERBOSE_MAKEFILE=1
+%cmake -DSYSCONF_INSTALL_DIR=/etc -DCMAKE_VERBOSE_MAKEFILE=1 \
+       -DINIPARSER_INCLUDE_DIRS:PATH=%_includedir/iniparser
+%nil
 %cmake_build
 
 %install
@@ -61,6 +63,9 @@ csyncronizing from other programs.
 %_includedir/*
 
 %changelog
+* Tue Dec 21 2021 Yuri N. Sedunov <aris@altlinux.org> 0.50.6-alt1.2
+- rebuild against libiniparser.so.1
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.50.6-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
