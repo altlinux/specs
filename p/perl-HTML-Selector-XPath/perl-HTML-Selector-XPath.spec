@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,12 +7,12 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-HTML-Selector-XPath
-Version:        0.25
-Release:        alt3_9
+Version:        0.26
+Release:        alt1
 Summary:        CSS Selector to XPath compiler
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/HTML-Selector-XPath
-Source0:        https://cpan.metacpan.org/authors/id/C/CO/CORION/HTML-Selector-XPath-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/C/CO/CORION/HTML-Selector-XPath-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl-devel >= 5.8.1
 BuildRequires:  rpm-build-perl
@@ -58,6 +59,9 @@ make pure_install DESTDIR=$RPM_BUILD_ROOT
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Dec 21 2021 Igor Vlasenko <viy@altlinux.org> 0.26-alt1
+- automated CPAN update
+
 * Mon Jul 12 2021 Igor Vlasenko <viy@altlinux.org> 0.25-alt3_9
 - to Sisyphus as perl-Finance-Quote dep
 
