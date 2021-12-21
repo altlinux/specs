@@ -12,7 +12,7 @@
 %def_enable soup2
 
 Name: epiphany
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Epiphany is a GNOME web browser.
@@ -122,6 +122,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Tue Dec 21 2021 Yuri N. Sedunov <aris@altlinux.org> 41.3-alt1
+- 41.3
+
 * Fri Dec 17 2021 Yuri N. Sedunov <aris@altlinux.org> 41.2-alt1
 - 41.2
 

@@ -22,8 +22,8 @@
 %def_disable debug
 
 Name: libgtk+3
-Version: %ver_major.30
-Release: alt2
+Version: %ver_major.31
+Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -466,6 +466,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Tue Dec 21 2021 Yuri N. Sedunov <aris@altlinux.org> 3.24.31-alt1
+- 3.24.31
+
 * Wed Sep 15 2021 Yuri N. Sedunov <aris@altlinux.org> 3.24.30-alt2
 - meson.build,configure*: fixed wrong GLIB define names (ilyakurdyukov@)
 
