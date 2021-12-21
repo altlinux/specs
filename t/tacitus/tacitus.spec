@@ -1,7 +1,7 @@
 %define with_docs 0
 
 Name: tacitus
-Version: 0.3
+Version: 0.4
 Release: alt1
 Group: System/Base
 Summary: Set sort-of-actual time on systems without RTC.
@@ -36,9 +36,13 @@ BuildArch: noarch
 rm -rf %buildroot
 mkdir -pm755 \
   %buildroot%_initdir \
-  %buildroot%_man8dir
+  %buildroot%_man8dir \
+  %buildroot%_sysconfdir/cron.hourly \
+  ;
 install -m755 %name.rc \
   %buildroot%_initdir/%name
+install -m755 %name.hourly \
+  %buildroot%_sysconfdir/cron.hourly/%name
 install -m644 %name.8 \
   %buildroot%_man8dir/
 
@@ -56,6 +60,7 @@ rm -rf %buildroot
 
 %files
 %_initdir/%name
+%_sysconfdir/cron.hourly/%name
 %_man8dir/%name.*
 
 %if %with_docs
@@ -65,6 +70,9 @@ rm -rf %buildroot
 
 
 %changelog
+* Tue Dec 21 2021 Gremlin from Kremlin <gremlin@altlinux.org> 0.4-alt1
+- add hourly cron job
+
 * Wed Dec 25 2019 Gremlin from Kremlin <gremlin@altlinux.org> 0.3-alt1
 - one more bash-specific fix
 
