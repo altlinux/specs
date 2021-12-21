@@ -7,7 +7,7 @@
 %define llvm_version 12.0
 
 Name: 	 thunderbird
-Version: 91.4.0
+Version: 91.4.1
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -510,6 +510,12 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Tue Dec 21 2021 Andrey Cherepanov <cas@altlinux.org> 91.4.1-alt1
+- New version.
+- Security fixes:
+  + CVE-2021-4126 OpenPGP signature status doesn't consider additional message content
+  + CVE-2021-44538 Matrix chat library libolm bundled with Thunderbird vulnerable to a buffer overflow
+
 * Fri Dec 10 2021 Andrey Cherepanov <cas@altlinux.org> 91.4.0-alt1
 - New version.
 - Security fixes:
