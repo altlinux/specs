@@ -19,7 +19,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt30
+Release: alt31
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -571,6 +571,12 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Mon Dec 20 2021 Dmitry V. Levin <ldv@altlinux.org> 4.13.0.1-alt31
+- 0ldconfig.filetrigger: guard against faulty telinit.
+  Unfortunately, the presence of telinit does not mean it is safe to use.
+  For example, the telinit provided by systemd is known to re-exec itself
+  endlessly in some circumstances (see ALT#41598).
+
 * Wed Sep 15 2021 Vitaly Chikunov <vt@altlinux.org> 4.13.0.1-alt30
 - Remove BeeCrypt and NSS support from the source in sync with upstream.
 - Make build tests really work (for %%check).
