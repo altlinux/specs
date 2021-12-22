@@ -1,6 +1,6 @@
 Name: gramps
-Version: 4.2.8
-Release: alt2
+Version: 5.1.4
+Release: alt1
 
 Summary: Genealogical Research and Analysis Management Programming System
 Summary(ru_RU.UTF-8): Программная система анализирования и управления генеалогическими изысканиями
@@ -27,9 +27,13 @@ AutoProv:no
 %add_typelib_req_skiplist typelib(GtkosxApplication) typelib(Gtkspell)
 
 %add_python3_req_skip winreg
+%add_python3_req_skip gi.repository.GLib
+%add_python3_req_skip gi.repository.Gio
 
 # TODO: need build python-module-osmgpsmap
 %add_python3_req_skip osmgpsmap
+
+%py3_requires PyICU
 
 %description
 gramps (Genealogical Research and Analysis Management Programming
@@ -86,25 +90,27 @@ echo -n "%_datadir" > %buildroot%python3_sitelibdir/gramps/gen/utils/resource-pa
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS FAQ NEWS README TODO
+%doc AUTHORS FAQ NEWS README.md TODO
 %_bindir/%name
 %python3_sitelibdir/gramps/
 %python3_sitelibdir/gramps-*.egg-info
 %_man1dir/*
 %_datadir/%name/
 %_desktopdir/*
-#%_datadir/gnome/help/*
 %_datadir/mime-info/*
 %_iconsdir/hicolor/48x48/apps/*
-%_iconsdir/gramps.png
 %_datadir/application-registry/*
 %_datadir/appdata/*
 #%config %_sysconfdir/gconf/schemas/*
 %_datadir/mime/packages/*
 %_pixmapsdir/%name.png
-%_iconsdir/gnome/*/mimetypes/*
+%_iconsdir/hicolor/*/apps/gramps.*
+%_iconsdir/hicolor/*/mimetypes/*
 
 %changelog
+* Wed Dec 22 2021 Andrey Cherepanov <cas@altlinux.org> 5.1.4-alt1
+- NMU: new version 5.1.4 (ALT bug #37029)
+
 * Mon Aug 16 2021 Vitaly Lipatov <lav@altlinux.ru> 4.2.8-alt2
 - drop obsoleted BR
 
@@ -238,7 +244,7 @@ echo -n "%_datadir" > %buildroot%python3_sitelibdir/gramps/gen/utils/resource-pa
 * Fri Sep 19 2003 Tim Waugh <twaugh@redhat.com>
 - Own %%{_datadir/gramps directory.
 - Ship %%{_libdir}/gramps.
-* Mon May 20 2003 Donald Peterson <dpeterson@sigmaxi.org>
+* Tue May 20 2003 Donald Peterson <dpeterson@sigmaxi.org>
 - Override RPMs default of localstatedir to /var/lib..
   This is done in accordance with GNOME and FHS compliance guidelines
   (http://fedora.mplug.org/docs/rpm-packaging-guidelines.html)
