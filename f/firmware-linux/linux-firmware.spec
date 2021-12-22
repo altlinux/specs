@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20211123
+Version: 20211216
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,18 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Dec 22 2021 Cronbuild Service <cronbuild@altlinux.org> 20211216-alt1
+- upstream changes (GIT f682ecb):
+  + amdgpu: update green sardine PSP firmware (thx Alex Deucher)
+  + bnx2x: Add FW 7.13.21.0 (thx Manish Chopra)
+  + update frimware for mediatek bluetooth chip (MT7921) (thx Mark Chen)
+  + wilc1000: update WILC1000 firmware to v15.4.1 (thx Ajay Singh)
+  + rtl_bt: Update RTL8761B BT UART firmware to 0x0CA9_8A6B (thx Hilda Wu)
+  + rtl_bt: Update RTL8761B BT USB firmware to 0x09A9_8A6B (thx Hilda Wu)
+  + cxgb4: Update firmware to revision 1.26.4.0 (thx Rahul Lakkireddy)
+  + rtw89: 8852a: update fw to v0.13.33.0 (thx Ping-Ke Shih)
+  + i915: Add DMC firmware v2.14 for ADL-P (thx Madhumitha Tolakanahalli Pradeep)
+
 * Thu Nov 25 2021 Cronbuild Service <cronbuild@altlinux.org> 20211123-alt1
 - upstream changes (GIT b0e898f):
   + Update firmware file for Intel Bluetooth 9462 (thx Kiran K)
