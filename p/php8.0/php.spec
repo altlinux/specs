@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  0
-%define _php_release_version 13
+%define _php_release_version 14
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -457,6 +457,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Mon Dec 20 2021 Anton Farygin <rider@altlinux.ru> 8.0.14-alt1
+- 8.0.14
+
 * Sat Nov 20 2021 Anton Farygin <rider@altlinux.ru> 8.0.13-alt1
 - 8.0.13 (Fixes: CVE-2021-21707)
 
