@@ -2,8 +2,8 @@
 %global import_path github.com/containers/podman
 
 Name:     podman
-Version:  3.4.3
-Release:  alt2
+Version:  3.4.4
+Release:  alt1
 
 Summary:  Manage pods, containers, and container images
 License:  Apache-2.0
@@ -41,6 +41,7 @@ Group:    System/Configuration/Other
 BuildArch: noarch
 Conflicts: docker-ce
 Conflicts: docker-engine
+Conflicts: docker-cli
 Requires: %name = %EVR
 
 %description docker
@@ -145,6 +146,10 @@ install -p -m 644 %name.conf %buildroot%_sysconfdir/modules-load.d/
 %_tmpfilesdir/%name-docker.conf
 
 %changelog
+* Wed Dec 22 2021 Alexey Shabalin <shaba@altlinux.org> 3.4.4-alt1
+- new version 3.4.4
+- Add conflict with docker-cli (ALT#41569)
+
 * Wed Dec 08 2021 Alexey Shabalin <shaba@altlinux.org> 3.4.3-alt2
 - add BR:rpm-macros-systemd
 
