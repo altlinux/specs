@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: rpmlint
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 
 Summary: Tool for checking common errors in RPM packages
@@ -73,6 +73,9 @@ python3 -m pytest
 %python3_sitelibdir/*
 
 %changelog
+* Wed Dec 22 2021 Alexey Shabalin <shaba@altlinux.org> 2.2.0-alt1
+- new version 2.2.0
+
 * Wed Sep 15 2021 Alexey Shabalin <shaba@altlinux.org> 2.1.0-alt1
 - 2.1.0
 - Filter no-cleaning-of-buildroot, setup-not-quiet in ALT config
