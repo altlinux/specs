@@ -5,8 +5,8 @@
 %def_enable tls
 
 Name: memcached
-Version: 1.6.10
-Release: alt2
+Version: 1.6.12
+Release: alt1
 
 Summary: memcached - memory caching daemon
 License: BSD
@@ -113,6 +113,9 @@ fi
 %_man1dir/%name-tool.*
 
 %changelog
+* Wed Dec 22 2021 Alexey Shabalin <shaba@altlinux.org> 1.6.12-alt1
+- new version 1.6.12
+
 * Fri Oct 22 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.6.10-alt2
 - removed -Werror for Elbrus build
 
