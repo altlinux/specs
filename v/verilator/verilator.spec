@@ -1,14 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: verilator
-Version: 4.214
+Version: 4.216
 Release: alt1
 Summary: A fast and free Verilog HDL simulator
 
 Group: Engineering
-License: LGPLv3 or Perl Artistic 2.0
+License: LGPLv3 or Artistic-2.0
 Url: https://www.veripool.org/wiki/verilator
+
+# VCS: https://github.com/verilator/verilator
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
+ExcludeArch: armh
 
 BuildRequires: flex gcc-c++
 BuildRequires: rpm-build-python3
@@ -37,9 +41,6 @@ simulators. This package contains documentation and examples.
 %setup
 
 %build
-%ifarch armh
-%define optflags_lto %nil
-%endif
 autoconf
 %configure
 %make_build all info
@@ -66,6 +67,10 @@ mv %buildroot%_datadir/%name/examples %buildroot%_docdir/%name/
 %_docdir/%name/
 
 %changelog
+* Tue Dec 21 2021 Egor Ignatov <egori@altlinux.org> 4.216-alt1
+- new version 4.216
+- Disable armh build
+
 * Thu Oct 28 2021 Egor Ignatov <egori@altlinux.org> 4.214-alt1
 - new version 4.214
 
