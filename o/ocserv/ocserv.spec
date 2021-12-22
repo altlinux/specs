@@ -4,8 +4,8 @@
 %def_enable man
 
 Name: ocserv
-Version: 1.1.3
-Release: alt1.1
+Version: 1.1.5
+Release: alt1
 
 Summary: OpenConnect SSL VPN server
 License: GPLv2+
@@ -29,7 +29,7 @@ BuildRequires: libGeoIP-devel >= 1.6.0
 BuildRequires: libreadline-devel
 BuildRequires: liboath-devel
 BuildRequires: libpam-devel
-BuildRequires: uid_wrapper socket_wrapper nss_wrapper
+BuildRequires: uid_wrapper socket_wrapper nss_wrapper pam_wrapper
 BuildRequires: libradcli-devel >= 1.2.5
 BuildRequires: libseccomp-devel
 BuildRequires: libsystemd-devel
@@ -136,6 +136,9 @@ export PATH=/sbin:/usr/sbin:$PATH
 %_initdir/%name
 
 %changelog
+* Wed Dec 22 2021 Alexey Shabalin <shaba@altlinux.org> 1.1.5-alt1
+- new version 1.1.5
+
 * Thu Sep 16 2021 Michael Shigorin <mike@altlinux.org> 1.1.3-alt1.1
 - introduce man knob (on by default)
 
