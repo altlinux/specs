@@ -4,8 +4,6 @@
 
 %global provider_prefix %{provider}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          12644e614e25b05da6fd08a38ffa0cfe1903fdec
-%global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -16,7 +14,7 @@
 
 Name:           runc
 Version:        1.0.3
-Release:        alt1
+Release:        alt2
 Summary:        CLI for running Open Containers
 Group:          Development/Other
 License:        Apache-2.0
@@ -26,8 +24,9 @@ ExclusiveArch:  %go_arches
 Source0:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: golang
+BuildRequires: golang go-md2man
 BuildRequires: libseccomp-devel
+Provides: oci-runtime
 Provides: docker-runc = %version-%release
 Obsoletes: docker-runc <= 1.0.0-alt2.gitb2567b3
 
@@ -38,29 +37,47 @@ and to manage containers running under runc.
 
 %prep
 %setup -q
+sed -i 's/ -trimpath//g' Makefile
 
 %build
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 
 %golang_prepare
-make COMMIT=%commit
+make COMMIT=%release BUILDTAGS="seccomp selinux" all
 
 %install
-mkdir -p -- %buildroot/%_bindir
-install -p -m 755 runc %buildroot/%_bindir/%name
+mkdir -p -- %buildroot%_bindir
+install -p -m 755 %name %buildroot%_bindir/%name
 
-mkdir -p -- %buildroot/lib/tmpfiles.d
-cat > %buildroot/lib/tmpfiles.d/runc.conf <<EOF
+# generate man pages
+man/md2man-all.sh
+
+# install man pages
+install -d -p %buildroot%_man8dir
+install -p -m 0644 man/man8/*.8 %buildroot%_man8dir/
+# install bash completion
+install -d -p %buildroot%_datadir/bash-completion/completions
+install -p -m 0644 contrib/completions/bash/%name %buildroot%_datadir/bash-completion/completions/
+
+mkdir -p -- %buildroot%_tmpfilesdir
+cat > %buildroot%_tmpfilesdir/runc.conf <<EOF
 d /run/runc 0700 root root -
 EOF
 
 %files
 %doc MAINTAINERS_GUIDE.md PRINCIPLES.md README.md CONTRIBUTING.md
 %_bindir/*
-/lib/tmpfiles.d/runc.conf
+%_tmpfilesdir/runc.conf
+%_man8dir/*
+%_datadir/bash-completion/completions/%name
 
 %changelog
+* Wed Dec 22 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.3-alt2
+- Define COMMIT as %%release
+- Build and install man pages
+- Package bash completion
+
 * Fri Dec 17 2021 Vladimir Didenko <cow@altlinux.ru> 1.0.3-alt1
 - New version (Fixes: CVE-2021-43784)
 
