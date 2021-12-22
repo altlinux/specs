@@ -1,8 +1,8 @@
 %define debug_level 1
 
 Name: seabios
-Version: 1.14.0
-Release: alt5
+Version: 1.15.0
+Release: alt1
 Summary: Open-source legacy BIOS implementation
 
 Group: Emulators
@@ -17,11 +17,7 @@ Source2: 30-seabios-256k.json
 Patch: %name-%version-snapshot.patch
 
 Patch0001: 0001-Workaround-for-a-win8.1-32-S4-resume-bug.patch
-Patch0002: 0002-reserve-more-memory-on-fseg.patch
 Patch0003: 0003-vgabios-Reorder-video-modes-to-work-around-a-Windows.patch
-Patch0004: 0004-nvme-Record-maximum-allowed-request-size.patch
-Patch0005: 0005-nvme-improve-namespace-allocation.patch
-Patch0006: 0006-vgasrc-ignore-nodegnuproperty-binutils-236-support.patch
 
 Patch10: alt-skip-flags-when-parse-objdump-section.patch
 
@@ -64,11 +60,7 @@ SeaVGABIOS is an open-source VGABIOS implementation.
 %patch -p1
 
 %patch0001 -p1
-%patch0002 -p1
 %patch0003 -p1
-%patch0004 -p1
-%patch0005 -p1
-%patch0006 -p1
 %patch10 -p1
 
 echo %version > .version
@@ -136,6 +128,9 @@ done
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Wed Dec 22 2021 Alexey Shabalin <shaba@altlinux.org> 1.15.0-alt1
+- 1.15.0.
+
 * Tue Oct 26 2021 Alexey Shabalin <shaba@altlinux.org> 1.14.0-alt5
 - Fix build.
 
