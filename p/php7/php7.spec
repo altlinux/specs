@@ -9,7 +9,7 @@
 %define _php_version  %version
 %define _php_major  7
 %define _php_minor  4
-%define _php_release_version 26
+%define _php_release_version 27
 %define _php_suffix %_php_major
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -450,6 +450,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Mon Dec 20 2021 Anton Farygin <rider@altlinux.ru> 7.4.27-alt1
+- 7.4.27
+
 * Thu Nov 18 2021 Anton Farygin <rider@altlinux.ru> 7.4.26-alt1
 - 7.4.26 (Fixes: CVE-2021-21707)
 

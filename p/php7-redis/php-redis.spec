@@ -5,7 +5,7 @@
 %define		php_extension	redis
 %define 	real_name	redis
 Name:	 	php%_php_suffix-%php_extension
-Version:	5.3.4
+Version:	5.3.5
 Release:	alt1.%php_version
 Summary:	Client extension for Redis key-value store
 License:	PHP-3.01
@@ -63,6 +63,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Mon Dec 20 2021 Anton Farygin <rider@altlinux.ru> 5.3.5-alt1
+- 5.3.4 -> 5.3.5
 
 * Mon Jul 05 2021 Anton Farygin <rider@altlinux.ru> 5.3.4-alt1
 - update to 5.3.4
