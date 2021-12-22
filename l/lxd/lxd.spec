@@ -1,20 +1,17 @@
 %global import_path github.com/lxc/lxd
 %global _unpackaged_files_terminate_build 1
-%set_verify_elf_method unresolved=no
 
 %define lxdgroup lxd
 %define lxduser lxd
 
 Name:		lxd
-Version:	4.17
-Release:	alt0.61bb78a49.2
+Version:	4.21
+Release:	alt1
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
 Group:		Development/Other
 License:	Apache-2.0
 URL:		https://%import_path
-
-Packager:	Denis Pynkin <dans@altlinux.ru>
 
 Source0:	%name-%version.tar
 Patch:		%name-%version-%release.patch
@@ -87,6 +84,7 @@ pushd .build/src/%import_path
 
 #export TAGS="libsqlite3"
 #go install -v -tags "libsqlite3" ./...
+export CGO_LDFLAGS_ALLOW="(-Wl,-wrap,pthread_create)|(-Wl,-z,now)"
 TAGS="libsqlite3" %golang_build lxc fuidshift lxd-benchmark lxc-to-lxd lxd/db lxd
 CGO_ENABLED=0 TAGS="netgo" %golang_build lxd-p2c
 CGO_ENABLED=0 TAGS="agent,netgo" %golang_build lxd-agent
@@ -189,6 +187,12 @@ fi
 %exclude %go_path/src/%import_path/go.sum
 
 %changelog
+* Wed Dec 22 2021 Alexey Shabalin <shaba@altlinux.org> 4.21-alt1
+- new version 4.21.
+
+* Wed Dec 08 2021 Alexey Shabalin <shaba@altlinux.org> 4.20-alt1
+- new version 4.20.
+
 * Thu Nov 25 2021 Nikolay A. Fetisov <naf@altlinux.org> 4.17-alt0.61bb78a49.2
 - fix build with Go 1.17.1
 
