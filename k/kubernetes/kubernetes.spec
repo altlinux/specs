@@ -6,8 +6,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: kubernetes
-Version: 1.22.4
-Release: alt2
+Version: 1.22.5
+Release: alt1
 Summary: Container cluster management
 
 Group: System/Configuration/Other
@@ -325,6 +325,10 @@ install -p -m 0644 -t %buildroot/%_sysconfdir/systemd/system.conf.d %SOURCE3
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Tue Dec 21 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.5-alt1
+- 1.22.5
+- Use crio cri by default in kubeadm.conf
+
 * Fri Dec 10 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.4-alt2
 - Add cve fixes information
 - Add cri-o requires to kubernetes-crio
