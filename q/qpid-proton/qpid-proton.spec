@@ -3,15 +3,15 @@
 %define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 
 Name: qpid-proton
-Version: 0.28.0
-Release: alt2
+Version: 0.36.0
+Release: alt1
 Summary: A high performance, lightweight messaging library
 Group: System/Libraries
 
 License: Apache-2.0
 Url: http://qpid.apache.org/proton/
 
-%define proton_datadir %_datadir/proton-%version
+%define proton_datadir %_datadir/proton
 
 Source: %name-%version.tar
 
@@ -24,8 +24,7 @@ BuildRequires: libuv-devel
 BuildRequires: jsoncpp-devel
 BuildRequires: libssl-devel
 BuildRequires: libsasl2-devel
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
 BuildRequires(pre): rpm-build-python3
 
 %description
@@ -78,14 +77,6 @@ Requires: lib%name-devel = %version-%release
 %description -n lib%name-cpp-devel
 Development libraries for writing messaging apps with Qpid Proton
 
-%package -n python-module-qpid-proton
-Summary: Python language bindings for the Qpid Proton messaging framework
-Group: Development/Python
-Requires: lib%name = %version-%release
-
-%description -n python-module-qpid-proton
-Python language bindings for the Qpid Proton messaging framework
-
 %package -n python3-module-qpid-proton
 Summary: Python3 language bindings for the Qpid Proton messaging framework
 Group: Development/Python3
@@ -102,62 +93,39 @@ BuildArch: noarch
 %description -n lib%name-devel-doc
 Documentation for the C development libraries for Qpid Proton
 
-%package -n python-module-qpid-proton-doc
+%package -n python3-module-qpid-proton-doc
 Summary: Documentation for the Python language bindings for Qpid Proton
 Group: Development/Documentation
 BuildArch: noarch
 
-%description -n python-module-qpid-proton-doc
+%description -n python3-module-qpid-proton-doc
 Documentation for the Python language bindings for Qpid Proton
 
 %prep
 %setup
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
 #%%add_optflags -Wno-error=return-type -Wno-error=format-security
 
-%cmake \
-    -DPYTHON_SITEARCH_PACKAGES=%python_sitelibdir \
-    -DSYSINSTALL_BINDINGS=ON \
-    -DENABLE_FUZZ_TESTING=NO \
-    -DPYTHON_EXECUTABLE=%__python \
-    -DPYTHON_INCLUDE_DIR=%python_includedir \
-    -DPYTHON_LIBRARY=%__libpython
-
-%cmake_build --target generated_c_files
-%cmake_build
-
-(cd %_cmake__builddir/python/dist; %python_build)
-
-pushd ../python3
 %cmake \
     -DPYTHON_SITEARCH_PACKAGES=%python3_sitelibdir \
     -DSYSINSTALL_BINDINGS=ON \
     -DENABLE_FUZZ_TESTING=NO \
     -DPYTHON_EXECUTABLE=%__python3 \
-    -DPYTHON_INCLUDE_DIR=%__python3_includedir \
+    -DPYTHON_INCLUDE_DIR=%python3_includedir \
     -DPYTHON_LIBRARY=%__libpython3
 
 %cmake_build --target generated_c_files
 %cmake_build
 
 (cd %_cmake__builddir/python/dist; %python3_build)
-popd
 
 %install
 %cmake_install
-(cd %_cmake__builddir/python/dist; %python_install)
-
-pushd ../python3
-%cmake_install
 (cd %_cmake__builddir/python/dist; %python3_install)
-popd
 
 find %buildroot%proton_datadir/examples/python -name "*.py" -exec sed -i 's/!\/usr\/bin\/env python/!\/usr\/bin\/python3/' {} \;
-sed -i 's/!\/usr\/bin\/python/!\/usr\/bin\/python3/' %buildroot%proton_datadir/examples/c/testme
+#sed -i 's/!\/usr\/bin\/python/!\/usr\/bin\/python3/' %buildroot%proton_datadir/examples/c/testme
 #sed -i 's/!\/usr\/bin\/python/!\/usr\/bin\/python3/' %buildroot%proton_datadir/examples/cpp/testme
 echo '#!/usr/bin/python3' > %buildroot%proton_datadir/examples/python/proton_server.py.original
 cat %buildroot%proton_datadir/examples/python/proton_server.py >> %buildroot%proton_datadir/examples/python/proton_server.py.original
@@ -202,18 +170,19 @@ rm -rf %buildroot%proton_datadir/CMakeLists.txt
 %doc %proton_datadir/docs/api-c
 %endif
 
-%files -n python-module-qpid-proton
-%python_sitelibdir/*
-
 %files -n python3-module-qpid-proton
 %python3_sitelibdir/*
 
 %if_with doc
-%files -n python-module-qpid-proton-doc
+%files -n python3-module-qpid-proton-doc
 %doc %proton_datadir/docs/api-py
 %endif
 
 %changelog
+* Wed Dec 22 2021 Alexey Shabalin <shaba@altlinux.org> 0.36.0-alt1
+- new version 0.36.0.
+- drop python2 package.
+
 * Sat Jul 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.28.0-alt2
 - NMU: fixed BuildRequires.
 
