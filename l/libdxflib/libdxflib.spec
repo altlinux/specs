@@ -1,5 +1,5 @@
 Name: libdxflib
-Version: 3.17.0
+Version: 3.26.4
 Release: alt1
 Summary: A C++ library for reading and writing DXF files
 
@@ -8,14 +8,11 @@ Group: Development/C++
 Url: http://www.ribbonsoft.com/en/90-dxflib
 Packager: Anton Midyukov <antohami@altlinux.org>
 
-#Source-url: https://qcad.org/archives/dxflib/dxflib-%version-src.tar.gz
+# Source-url: https://qcad.org/archives/dxflib/dxflib-%version-src.tar.gz
 Source: dxflib-%version.tar
 
-# https://github.com/qcad/qcad/pull/15
-Patch: dxflib-Use-std-istream.patch
-
 BuildRequires: gcc-c++
-BuildRequires: libqt4-devel
+BuildRequires: qt5-base-devel
 
 %description
 dxflib is an open source C++ library mainly for parsing DXF files.
@@ -36,11 +33,9 @@ developing applications that use %name.
 # Build as a shared library
 %__subst 's/CONFIG += staticlib/CONFIG += shared/' dxflib.pro
 
-%patch0 -p4
-
 %build
 # https://github.com/qcad/qcad/pull/16
-%qmake_qt4 \
+%qmake_qt5 \
   VERSION=%version \
   CONFIG-=qt
 
@@ -78,5 +73,9 @@ EOF
 %_pkgconfigdir/dxflib.pc
 
 %changelog
+* Wed Dec 22 2021 Anton Midyukov <antohami@altlinux.org> 3.26.4-alt1
+- new version (3.26.4) with rpmgs script
+- build with qt5
+
 * Sun Oct 20 2019 Anton Midyukov <antohami@altlinux.org> 3.17.0-alt1
 - initial build for ALT Sisyphus
