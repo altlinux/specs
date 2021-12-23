@@ -4,8 +4,8 @@
 %def_without external_json
 
 Name: sqlitebrowser
-Version: 3.12.0
-Release: alt1.1
+Version: 3.12.2
+Release: alt1
 
 Summary: Official home of the DB Browser for SQLite (DB4S) project
 License: GPLv3+ or MPLv2.0
@@ -15,6 +15,7 @@ Url: https://github.com/sqlitebrowser/sqlitebrowser
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+Patch: sqlitebrowser_unbundle.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -58,20 +59,13 @@ Controls and wizards are available for users to:
 
 %prep
 %setup
+%patch -p1
 
 # Unbundle
 rm -rfv libs/{qcustomplot-source,qhexedit,qscintilla}/
 %if_with external_json
 rm -rfv libs/json/
 %endif
-
-# replace internal cmake/* with pkgconfig files
-%__subst "1ifind_package(PkgConfig)" CMakeLists.txt
-%__subst 's|find_package(QCustomPlot)|pkg_check_modules(QCUSTOMPLOT qcustomplot-qt5)|' CMakeLists.txt
-%__subst 's|find_package(QHexEdit)|pkg_check_modules(QHEXEDIT qhexedit2-qt5)|' CMakeLists.txt
-# pkg_check_modules don't set _FOUND
-%__subst 's|([A-Z]*_FOUND)|(TRUE)|' CMakeLists.txt
-%__subst 's|INCLUDE_DIR|INCLUDE_DIRS|' CMakeLists.txt
 
 %if_with external_json
 %__subst 's|add_subdirectory(${JSON_DIR})|set(JSON_DIR /usr/include/nlohmann)|' CMakeLists.txt
@@ -102,6 +96,9 @@ desktop-file-validate %buildroot%_datadir/applications/%name.desktop
 %_iconsdir/hicolor/256x256/apps/%name.png
 
 %changelog
+* Thu Dec 23 2021 Anton Midyukov <antohami@altlinux.org> 3.12.2-alt1
+- new version 3.12.2
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 3.12.0-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
