@@ -6,7 +6,7 @@
 %def_enable packagekit
 
 Name: simple-scan
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1%beta
 
 Summary: Simple scanning utility
@@ -19,7 +19,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %else
 Source: %name-%version.tar
 %endif
-Patch: simple-scan-40.5-alt-fix_PageSide_schema.patch
 
 Requires: sane xdg-utils gnome-icon-theme colord
 %{?_enable_packagekit:Requires: packagekit}
@@ -43,7 +42,6 @@ scanner and quickly have the image/document in an appropriate format.
 
 %prep
 %setup -n %name-%version%beta
-%patch -p1 -b .pageside
 
 %build
 %meson %{?_disable_packagekit:-Dpackagekit=false}
@@ -63,6 +61,9 @@ scanner and quickly have the image/document in an appropriate format.
 %_man1dir/*
 
 %changelog
+* Thu Dec 23 2021 Yuri N. Sedunov <aris@altlinux.org> 40.7-alt1
+- 40.7
+
 * Sun Oct 31 2021 Yuri N. Sedunov <aris@altlinux.org> 40.6-alt1
 - 40.6
 
