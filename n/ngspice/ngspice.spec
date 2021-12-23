@@ -4,7 +4,7 @@
 %define _pkgdocdir %_docdir/%name-%version
 
 Name: ngspice
-Version: 29
+Version: 35
 Release: alt1
 Summary: A mixed level/signal circuit simulator
 
@@ -21,7 +21,8 @@ Source1: https://downloads.sourceforge.net/project/ngspice/ng-spice-rework/%vers
 # not (bug 1047056, debian bug 737279)
 Patch: ngspice-26-blt-linkage-workaround.patch
 
-BuildRequires: gcc libgomp-devel flex glibc-kernheaders-generic
+BuildRequires: gcc-c++
+BuildRequires: libgomp-devel flex glibc-kernheaders-generic
 BuildRequires: libXaw-devel
 BuildRequires: libXext-devel
 BuildRequires: libtinfo-devel
@@ -189,6 +190,9 @@ cp -a \
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Dec 23 2021 Anton Midyukov <antohami@altlinux.org> 35-alt1
+- new version 35
+
 * Fri Nov 02 2018 Anton Midyukov <antohami@altlinux.org> 29-alt1
 - new version 29
 
