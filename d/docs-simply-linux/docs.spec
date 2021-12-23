@@ -7,8 +7,8 @@
 %define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher docs-alt-education docs-alt-kworkstation docs-alt-server docs-alt-workstation docs-alt-spworkstation docs-alt-server-v
 
 Name: docs-%variant
-Version: 9.09
-Release: alt3
+Version: 10.0
+Release: alt1
 
 Summary: %Variant documentation
 License: %fdl
@@ -24,6 +24,7 @@ Conflicts: %(for n in %variants ; do [ "$n" = %name ] || echo -n "$n "; done)
 BuildRequires(pre):rpm-build-licenses
 BuildRequires: publican
 BuildRequires: perl-podlators
+BuildRequires: libwebp-tools
 
 %description
 %Variant documentation.
@@ -37,12 +38,18 @@ BuildRequires: perl-podlators
 %install
 %make_install DESTDIR=%buildroot docdir=%_docsinstalldir install
 ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationdir
+sed -i 's/src="images\/\(.*\).png"/src="images\/\1.webp"/g' %buildroot%_docsinstalldir/ru-RU/index.html
+for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %buildroot%_docsinstalldir/ru-RU/images/$(basename $file .png).webp -quiet && rm $file; done
 
 %files
 %_docsinstalldir
 %_documentationdir
 
 %changelog
+* Thu Dec 21 2021 Elena Mishina <lepata@altlinux.org> 10.0-alt1
+- update to Simply Linux 10.0beta
+- reduce package size
+
 * Wed Apr 21 2021 Elena Mishina <lepata@altlinux.org> 9.09-alt3
 - update to Simply Linux 9.1
 - add alterator-update-kernel, obs-studio
