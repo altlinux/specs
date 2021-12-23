@@ -15,13 +15,9 @@
 %define _unitdir %systemd_unitdir
 %endif
 
-%ifnarch %e2k
-%def_disable agent2
-%endif
-
 Name: zabbix
 Version: 5.4.8
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A network monitor
@@ -644,6 +640,7 @@ fi
 %_man8dir/%{name}_agentd.*
 %_man1dir/%{name}_sender.*
 
+%if_enabled agent2
 %files agent2
 %config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/%name/%{name}_agent2.conf
 %dir %attr(0750,root,%zabbix_group) %_sysconfdir/%name/zabbix_agent2.conf.d
@@ -651,6 +648,7 @@ fi
 %_unitdir/*agent2*
 %_sbindir/%{name}_agent2
 %_man8dir/%{name}_agent2.*
+%endif
 
 %files agent-sudo
 %config(noreplace) %attr(0400,root,root) %_sysconfdir/sudoers.d/%name
@@ -676,6 +674,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Thu Dec 23 2021 Michael Shigorin <mike@altlinux.org> 1:5.4.8-alt2
+- fix build with disabled agent2
+
 * Tue Nov 30 2021 Alexei Takaseev <taf@altlinux.org> 1:5.4.8-alt1
 - 5.4.8
 
