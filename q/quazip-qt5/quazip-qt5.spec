@@ -5,7 +5,7 @@
 %define rname quazip
 Name: quazip-qt5
 Version: 1.1
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt/C++ wrapper for the minizip library
@@ -69,6 +69,11 @@ done
 %install
 %make install -C BUILD DESTDIR=%buildroot
 install -Dm 0644 .gear/FindQuaZip.cmake %buildroot/%_datadir/cmake/Modules/FindQuaZip5.cmake
+# install compatbility includes
+mkdir -p %buildroot/%_includedir/quazip5
+for f in %buildroot/%_includedir/QuaZip-Qt*/quazip/* ; do
+    ln -sr $f %buildroot/%_includedir/quazip5/`basename $f`
+done
 
 %files -n %libquazip
 %doc COPYING NEWS.txt *.md
@@ -78,12 +83,16 @@ install -Dm 0644 .gear/FindQuaZip.cmake %buildroot/%_datadir/cmake/Modules/FindQ
 %files devel
 %doc doc/html
 %_includedir/QuaZip-Qt*/
+%_includedir/quazip5/
 %_libdir/lib*.so
 %_libdir/cmake/QuaZip-Qt*/
 %_datadir/cmake/Modules/FindQuaZip*.cmake
 %_pkgconfigdir/quazip*-qt*.pc
 
 %changelog
+* Thu Dec 23 2021 Sergey V Turchin <zerg@altlinux.org> 1.1-alt3
+- fix compatibility with libquazip-qt5-devel
+
 * Thu Nov 11 2021 Sergey V Turchin <zerg@altlinux.org> 1.1-alt2
 - obsolete libquazip-qt5-devel
 
