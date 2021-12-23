@@ -4,7 +4,7 @@
 %define soname 28
 Summary: Command-line tools and library for transforming PDF files
 Name: qpdf
-Version: 10.4.0
+Version: 10.5.0
 Release: alt1
 License: Apache-2.0
 Group: System/Base
@@ -14,6 +14,7 @@ Source1: %name.watch
 Patch0: %name-%version-%release.patch
 
 BuildRequires: zlib-devel xml-utils xsltproc docbook-style-xsl
+BuildRequires: python3-module-sphinx-sphinx-build-symlink python3(sphinx_rtd_theme)
 BuildRequires: pcre-devel
 BuildRequires: libjpeg-devel
 BuildRequires: perl-base
@@ -117,9 +118,12 @@ make check
 %_libdir/pkgconfig/libqpdf.pc
 
 %files doc
-%doc doc/qpdf-manual.html doc/stylesheet.css
+%doc manual/build/singlehtml/index.html  manual/build/singlehtml/_static
 
 %changelog
+* Thu Dec 23 2021 Anton Farygin <rider@altlinux.ru> 10.5.0-alt1
+- 10.5.0
+
 * Sat Nov 20 2021 Anton Farygin <rider@altlinux.ru> 10.4.0-alt1
 - 10.3.2 -> 10.4.0
 
@@ -136,7 +140,7 @@ make check
 - 10.2.0
 
 * Mon Jan 11 2021 Anton Farygin <rider@altlinux.ru> 10.1.0-alt1
-- 10.1.0
+- 10.1.0 (Fixes: CVE-2021-36978)
 
 * Mon Nov 23 2020 Anton Farygin <rider@altlinux.ru> 10.0.4-alt1
 - 10.0.4
