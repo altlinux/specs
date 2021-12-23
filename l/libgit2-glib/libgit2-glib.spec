@@ -1,5 +1,5 @@
-%def_disable snapshot
-%define ver_major 0.99
+%def_enable snapshot
+%define ver_major 1.0
 %define api_ver 1.0
 
 %def_enable gtk_doc
@@ -27,11 +27,13 @@ Source: %name-%version.tar
 %define libgit2_ver 0.25
 %define glib_ver 2.44
 
-BuildRequires(pre): meson
-BuildRequires: libgio-devel >= %glib_ver libgit2-devel >= %libgit2_ver
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson libgio-devel >= %glib_ver libgit2-devel >= %libgit2_ver
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel}
-%{?_enable_vala:BuildRequires: vala-tools}
+%{?_enable_introspection:BuildRequires(pre): rpm-build-gir
+BuildRequires: gobject-introspection-devel}
+%{?_enable_vala:BuildRequires(pre): rpm-build-vala
+BuildRequires: vala-tools}
 %{?_enable_python:BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel}
 %{?_enable_ssh:BuildRequires: libssh2-devel}
 
@@ -115,6 +117,8 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %if_enabled vala
 %_vapidir/%name-%api_ver.vapi
 %_vapidir/%name-%api_ver.deps
+%_vapidir/ggit-%api_ver.vapi
+%_vapidir/ggit-%api_ver.deps
 %endif
 
 %if_enabled introspection
@@ -131,6 +135,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Dec 23 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.0.1-alt1
+- updated to v1.0.0.1-1-gf745f88
+
 * Fri Oct 30 2020 Yuri N. Sedunov <aris@altlinux.org> 0.99.0.1-alt1
 - 0.99.0.1
 
