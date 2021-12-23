@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_without check
+%def_with docs
 
 Name: qtile
-Version: 0.18.1
+Version: 0.19.0
 Release: alt1
 
 Summary: A full-featured, hackable tiling window manager written and configured in Python
@@ -38,6 +39,16 @@ BuildRequires: xorg-xephyr
 BuildRequires: xorg-xvfb
 %endif
 
+%if_with docs
+BuildRequires: graphviz
+BuildRequires: libgdk-pixbuf
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
+BuildRequires: python3-module-sphinx_rtd_theme
+BuildRequires: python3-module-sphinxcontrib-seqdiag
+BuildRequires: python3-module-webcolors
+BuildRequires: python3-module-numpydoc
+%endif
+
 %description
 %summary
 
@@ -45,9 +56,17 @@ BuildRequires: xorg-xvfb
 %setup
 %patch0 -p1
 
+sed -i "s/version = .*/version = '%version'/"  docs/conf.py
+
 %build
 ./scripts/ffibuild
 %python3_build
+
+%if_with docs
+pushd docs
+make html
+popd
+%endif
 
 %install
 %python3_install
@@ -62,7 +81,7 @@ mv %buildroot%python3_sitelibdir/libqtile/widget/_pulse_audio.abi3.so %buildroot
 %__python3 -m pytest test
 
 %files
-%doc LICENSE README.rst libqtile/resources/default_config.py
+%doc LICENSE README.rst libqtile/resources/default_config.py docs/_build/html
 %_bindir/qtile
 %python3_sitelibdir/libqtile
 %python3_sitelibdir/*.egg-info
@@ -70,5 +89,11 @@ mv %buildroot%python3_sitelibdir/libqtile/widget/_pulse_audio.abi3.so %buildroot
 %_datadir/wayland-sessions/qtile-wayland.desktop
 
 %changelog
+* Thu Dec 23 2021 Egor Ignatov <egori@altlinux.org> 0.19.0-alt1
+- 0.19.0
+
+* Fri Dec 17 2021 Egor Ignatov <egori@altlinux.org> 0.18.1-alt2
+- Build with docs
+
 * Thu Dec 09 2021 Egor Ignatov <egori@altlinux.org> 0.18.1-alt1
 - First build for ALT
