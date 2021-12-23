@@ -1,6 +1,6 @@
 %define module_name	lkrg
 %define module_version	0.9.1.0.34.git0270c95
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		std-def
 %define karch		aarch64 %arm %ix86 x86_64
@@ -240,11 +240,15 @@ fi
 
 %files
 %doc README
+%dir %module_dir
 %module_dir/p_lkrg.ko
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Thu Dec 23 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.34.git0270c95-alt2
+- Added %%module_dir directory to %%files.
 
 * Thu Nov 25 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.34.git0270c95-alt1
 - Updated to v0.9.1-34-g0270c95.
