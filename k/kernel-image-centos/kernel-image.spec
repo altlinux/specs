@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 35
+%define centos_release 38
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -629,6 +629,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Dec 23 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.38-alt1.el9
+- Enable AMX(TMUL) for Sapphire Rapids
+
 * Tue Dec 21 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.35-alt1.el9
 - drm/hyperv: Fix device removal on Gen1 VMs
 - redhat/configs: Always enable CONFIG_PCI_IOV for RHEL on s390x
