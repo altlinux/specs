@@ -1,10 +1,10 @@
 # Unpackaged files in buildroot should terminate build
-%define _unpackaged_files_terminate_build 1
+#define _unpackaged_files_terminate_build 1
 
 %define oname quazip
 Name: libquazip
 Version: 0.8.1
-Release: alt2
+Release: alt3
 Summary: Qt/C++ wrapper for the minizip library
 License: GPLv2+ or LGPLv2+
 Group: System/Libraries
@@ -44,16 +44,6 @@ whatever you would like to use on your zipped files.
 QuaZIP provides complete abstraction of the ZIP/UNZIP API, for both reading
 from and writing to ZIP archives.
 
-%package qt5-devel
-Summary: Development files for %name
-Group: Development/C
-Requires: %name-qt5
-Requires: qt5-base-devel%{?_isa}
-
-%description qt5-devel
-The %name-devel package contains libraries, header files and documentation
-for developing applications that use %name.
-
 %prep
 %setup
 
@@ -79,13 +69,10 @@ rm -f %buildroot%_libdir/*.a
 %doc COPYING NEWS.txt README.md
 %_libdir/libquazip5.so.1*
 
-%files qt5-devel
-%doc doc/html
-%_includedir/quazip5/
-%_libdir/libquazip5.so
-%_datadir/cmake/Modules/FindQuaZip5.cmake
-
 %changelog
+* Thu Dec 23 2021 Anton Midyukov <antohami@altlinux.org> 0.8.1-alt3
+- drop devel package
+
 * Mon Nov 08 2021 Anton Midyukov <antohami@altlinux.org> 0.8.1-alt2
 - drop qt4 subpackage
 
