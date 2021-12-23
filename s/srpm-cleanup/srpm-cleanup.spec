@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     srpm-cleanup
-Version:  0.1.3
-Release:  alt2
+Version:  0.1.4
+Release:  alt1
 
 Summary:  Remove unused source files from SRPM packages
 License:  GPL-3.0-or-later
@@ -76,6 +76,7 @@ Provides common files for %name.
 %_datadir/%name/import-logs.pl
 %_datadir/%name/main.mk
 %_datadir/%name/exceptions.list
+%_datadir/%name/exclude.list
 %_datadir/%name/nprofile
 %_man1dir/hsh-separate-sources.1*
 %_man1dir/srpm-cleanup.1*
@@ -95,6 +96,26 @@ Provides common files for %name.
 
 
 %changelog
+* Thu Dec 23 2021 Paul Wolneykien <manowar@altlinux.org> 0.1.4-alt1
+- Package base names in exclude.list (was --- regexp).
+- Added 'bind', 'libaom', 'vlc' and 'bind-dyndb-ldap' to the list of
+  packages that shouldn't be cleaned.
+- export-repo: Do not follow the symbolic links.
+- Fixed 'clean-stage4-unused-*' targets.
+- Specify the digest for base Docker images
+  (alt@sha256:c4eb4ad40440b7c3297c14c91048aa07cbe2534f9e629f4bc9b0d113ca57821f).
+- Added 'wpa_supplicant' to exclude.list and install the list
+  to pkgdatadir.
+- Support regular expressions in exclude.list.
+- Pass the time-stamp to the pre and post scripts.
+- Introduce file checksumming and checksum verification.
+- Fixed copying srpm-cleanup-common to the node directory.
+- Fixed building the containers with srpm-cleanup-common.
+- Fix: Rebuild the original SRPMs for packages that have failed on
+  Stage IV on any arch.
+- Fix/improve the 'check-disttags' target.
+- Fix: Include 'noinode' into stage III and IV retry categories.
+
 * Mon Nov 08 2021 Paul Wolneykien <manowar@altlinux.org> 0.1.3-alt2
 - Fix: Own %_datadir/%name and %_docdir/%name.
 
