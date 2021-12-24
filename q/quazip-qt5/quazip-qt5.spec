@@ -4,8 +4,8 @@
 
 %define rname quazip
 Name: quazip-qt5
-Version: 1.1
-Release: alt3
+Version: 1.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt/C++ wrapper for the minizip library
@@ -90,6 +90,9 @@ done
 %_pkgconfigdir/quazip*-qt*.pc
 
 %changelog
+* Fri Dec 24 2021 Sergey V Turchin <zerg@altlinux.org> 1.2-alt1
+- new version
+
 * Thu Dec 23 2021 Sergey V Turchin <zerg@altlinux.org> 1.1-alt3
 - fix compatibility with libquazip-qt5-devel
 
