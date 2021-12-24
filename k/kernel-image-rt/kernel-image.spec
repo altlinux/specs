@@ -5,8 +5,8 @@
 %define kflavour		rt
 Name: kernel-image-%kflavour
 %define kernel_base_version	5.10
-%define kernel_sublevel		.78
-%define kernel_rt_release	rt56
+%define kernel_sublevel		.87
+%define kernel_rt_release	rt59
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -168,7 +168,7 @@ tar -xf %kernel_src/kernel-source-%kernel_base_version.tar
 %setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_base_version
 %patch0 -p1 -s
 
-# OSADL patches
+# OSADL patches: https://www.osadl.org/OSADL-Linux-Add-on-Patches.kernelpatches.0.html
 ## https://www.osadl.org/NMI-SysRq.sysysrequest-via-nmi-polling.0.html
 patch -p1 -s < add-nmi-callback-and-raw-parport-driver.patch # SETPARPORT_RAW
 ## https://www.osadl.org/Latency-histograms.latencyhist.0.html
@@ -434,6 +434,9 @@ check-pesign-helper /boot/vmlinuz-%kversion-%flavour-%krelease
 %files checkinstall
 
 %changelog
+* Fri Dec 24 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.87-alt1.rt59
+- Updated to v5.10.87-rt59 (2021-12-19).
+
 * Thu Dec 02 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.78-alt1.rt56
 - Update to v5.10.78-rt56 (2021-11-29).
 
