@@ -3,7 +3,7 @@
 %def_with sdl2
 Name: fheroes2
 Epoch: 2
-Version: 0.9.10
+Version: 0.9.11
 #define rev 20210604
 #Release: alt1.%rev
 Release: alt1
@@ -72,6 +72,9 @@ install -pm 644 script/demo/download_demo_version.sh script/homm2/extract_homm2_
 %_gamesdatadir/%name
 
 %changelog
+* Fri Dec 24 2021 Igor Vlasenko <viy@altlinux.org> 2:0.9.11-alt1
+- new version
+
 * Tue Dec 07 2021 Igor Vlasenko <viy@altlinux.org> 2:0.9.10-alt1
 - new version
 
