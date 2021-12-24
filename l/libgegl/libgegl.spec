@@ -2,8 +2,8 @@
 %define api_ver 0.4
 
 Name: lib%rname
-Version: %api_ver.32
-Release: alt2
+Version: %api_ver.34
+Release: alt1
 Summary: A graph based image processing framework
 License: %gpllgpl3plus
 Group: System/Libraries
@@ -93,6 +93,9 @@ rm -f %buildroot%_libdir/%rname-%api_ver/*.la
 %_typelibdir/Gegl-%api_ver.typelib
 
 %changelog
+* Sat Dec 25 2021 Valery Inozemtsev <shrek@altlinux.ru> 0.4.34-alt1
+- 0.4.34
+
 * Sun Oct 31 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.4.32-alt2
 - fixed build for Elbrus
 
