@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		65b505c4633
+%define svnrev		d81e50696fa
 
 %def_with pgsql
 %def_enable java
@@ -16,8 +16,8 @@
 %endif
 
 Name: zabbix
-Version: 5.4.8
-Release: alt2
+Version: 5.4.9
+Release: alt1
 Epoch: 1
 
 Summary: A network monitor
@@ -674,6 +674,11 @@ fi
 %_includedir/%name
 
 %changelog
+* Fri Dec 24 2021 Alexei Takaseev <taf@altlinux.org> 1:5.4.9-alt1
+- 5.4.9
+    * [ZBX-20388] fixed XSS vulnerability in multiselect
+    * [ZBX-20278] fixed XSS attack vulnerability in scheduled report configuration form
+
 * Thu Dec 23 2021 Michael Shigorin <mike@altlinux.org> 1:5.4.8-alt2
 - fix build with disabled agent2
 
