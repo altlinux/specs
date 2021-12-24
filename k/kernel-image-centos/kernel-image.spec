@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 38
+%define centos_release 39
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -629,6 +629,17 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Dec 24 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.39-alt1.el9
+- cpuidle: pseries: Fixup CEDE0 latency only for POWER10 onwards
+- powerpc/mce: Fix access error in mce handler
+- powerpc/pseries/mobility: ignore ibm, platform-facilities updates
+- KVM: SVM: Do not terminate SEV-ES guests on GHCB validation failure
+- redhat/configs: enable DWARF5 feature if toolchain supports it
+- init: make unknown command line param message clearer
+- Enable BT WCN6855 2.1 module
+- cgroup: Make rebind_subsystems() disable v2 controllers all at once
+- bnxt_en: PTP related commits for inclusion in RHEL 9.0
+
 * Thu Dec 23 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.38-alt1.el9
 - Enable AMX(TMUL) for Sapphire Rapids
 
