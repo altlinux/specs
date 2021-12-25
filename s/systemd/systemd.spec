@@ -8,6 +8,8 @@
 %add_findreq_skiplist %_unitdir/quotaon.service
 %add_findreq_skiplist %_unitdir/initrd-switch-root.service
 %add_findreq_skiplist %_unitdir/systemd-volatile-root.service
+%add_findreq_skiplist %_unitdir/altlinux-libresolv.service
+%add_findreq_skiplist %_unitdir/altlinux-openresolv.service
 
 %def_disable static_libsystemd
 %def_disable static_libudev
@@ -37,7 +39,7 @@
 %def_enable timesyncd
 %def_enable resolve
 %ifarch %{ix86} x86_64 aarch64 %arm
-%def_enable gnuefi
+%def_enable gnu_efi
 %endif
 %def_disable p11kit
 %def_enable utmp
@@ -89,7 +91,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.7
-Release: alt5
+Release: alt7
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -101,6 +103,8 @@ Source4: altlinux-openresolv.path
 Source5: altlinux-openresolv.service
 Source6: altlinux-libresolv.path
 Source7: altlinux-libresolv.service
+Source8: sysctl.conf
+Source9: modules.conf
 Source10: systemd-udev-trigger-no-reload.conf
 Source11: env-path-user.conf
 Source12: env-path-system.conf
@@ -198,7 +202,7 @@ BuildRequires: pkgconfig(fdisk) >= 2.33
 %{?_enable_libidn2:BuildRequires: pkgconfig(libidn2) >= 2.0.0}
 %{?_enable_libiptc:BuildRequires: pkgconfig(libiptc)}
 %{?_enable_polkit:BuildRequires: pkgconfig(polkit-gobject-1)}
-%{?_enable_gnuefi:BuildRequires: gnu-efi}
+%{?_enable_gnu_efi:BuildRequires: gnu-efi}
 %{?_enable_pstore:BuildRequires: libacl-devel libdw-devel liblzma-devel liblz4-devel}
 %{?_enable_pwquality:BuildRequires: pkgconfig(pwquality)}
 %{?_enable_bpf_framework:BuildRequires: pkgconfig(libbpf) >= 0.2 /usr/bin/clang /usr/bin/llvm-strip bpftool}
@@ -243,6 +247,7 @@ Obsoletes: zsh-completion-journalctl < %EVR
 Requires: %name-utils-filetriggers = %EVR
 Requires: %name-tmpfiles-common = %EVR
 Requires: %name-sysctl-common = %EVR
+Requires: %name-modules-common = %EVR
 
 # services
 Requires: pam_%name = %EVR
@@ -320,7 +325,7 @@ Static Library files for doing development with the systemd.
 %package -n libnss-systemd
 Group: System/Libraries
 Summary: nss-systemd providing UNIX user and group name resolution for dynamic users and groups
-Requires(pre): chrooted >= 0.3.5-alt1 chrooted-resolv sed
+Requires(pre): chrooted >= 0.3.5-alt1 sed
 Requires(postun): chrooted >= 0.3.5-alt1 sed
 Requires: systemd
 
@@ -342,7 +347,7 @@ group: files systemd
 %package -n libnss-myhostname
 Group: System/Libraries
 Summary: nss-myhostname provide hostname resolution for the locally configured system hostname
-Requires(pre): chrooted >= 0.3.5-alt1 chrooted-resolv sed
+Requires(pre): chrooted >= 0.3.5-alt1 sed
 Requires(postun): chrooted >= 0.3.5-alt1 sed
 
 %description -n libnss-myhostname
@@ -381,7 +386,7 @@ hosts: files mymachines
 %package -n libnss-resolve
 Group: System/Libraries
 Summary: nss-resolve is plugin for resolve hostnames via systemd-resolved
-Requires(pre): chrooted >= 0.3.5-alt1 chrooted-resolv sed
+Requires(pre): chrooted >= 0.3.5-alt1 sed
 Requires(postun): chrooted >= 0.3.5-alt1 sed
 Requires: dbus >= %dbus_ver
 Requires: %name-networkd = %EVR
@@ -450,7 +455,7 @@ Group: System/Base
 Summary: Configuration files for systemd-oomd
 BuildArch: noarch
 Requires: %name = %EVR
- 
+
 %description oomd-defaults
 A set of drop-in files for systemd units to enable action from systemd-oomd,
 a userspace out-of-memory (OOM) killer.
@@ -471,8 +476,8 @@ to synchronize the local system clock with a Network Time Protocol Server.
 Summary: Tools for containers and VMs
 Group: System/Configuration/Other
 Requires: %name = %EVR
-#Requires: libnss-mymachines = %EVR
-Provides: %_systemd_dir/systemd-machined
+#Requires: libnss-mymachines = %%EVR
+Provides: /lib/systemd/systemd-machined
 
 %description container
 Systemd tools to spawn and manage containers and virtual machines.
@@ -553,10 +558,10 @@ Provides: udev-extras = %EVR
 Obsoletes: udev-extras < %EVR
 Provides: udev-rules = %EVR
 Obsoletes: udev-rules < %EVR
-Provides: %_sysconfdir/udev/rules.d %_udev_rulesdir
+Provides: /etc/udev/rules.d /lib/udev/rules.d
 Provides: udev-hwdb = %EVR
 Obsoletes: udev-hwdb < %EVR
-Provides: %_sysconfdir/udev/hwdb.d %_udev_hwdbdir
+Provides: /etc/udev/hwdb.d /lib/udev/hwdb.d
 Conflicts: util-linux <= 2.22-alt2
 Conflicts: DeviceKit
 Conflicts: make-initrd < 2.2.10
@@ -602,7 +607,7 @@ Summary: Internal unit tests for systemd
 Requires: %name = %EVR
 Group: Development/Other
 License: LGPLv2+
- 
+
 %description tests
 "Installed tests" that are usually run as part of the build system.
 They can be useful to test systemd internals.
@@ -621,6 +626,10 @@ Obsoletes: %name-tmpfiles-standalone < %EVR
 Requires: %name-utils-filetriggers = %EVR
 Requires: %name-tmpfiles-common = %EVR
 Requires: %name-sysctl-common = %EVR
+Requires: %name-modules-common = %EVR
+Provides: %name-utils = %EVR
+Obsoletes: %name-utils < %EVR
+Conflicts: systemd
 
 %description utils-standalone
 This package contains standalone utils from systemd:
@@ -652,10 +661,19 @@ BuildArch: noarch
 %package sysctl-common
 Group: System/Configuration/Boot and Init
 Summary: Common sysctl configs
+Conflicts: startup < 0.9.9.14
 
 %description sysctl-common
 %summary
 
+%package modules-common
+Group: System/Configuration/Boot and Init
+Summary: Common modules configs
+BuildArch: noarch
+Conflicts: startup < 0.9.9.14
+
+%description modules-common
+%summary
 
 %prep
 %setup -q
@@ -664,124 +682,124 @@ Summary: Common sysctl configs
 %build
 
 %meson \
-	-Dmode=release \
-	-Dlink-udev-shared=false \
-	-Dlink-systemctl-shared=false \
-	-Dlink-networkd-shared=false \
-	-Dlink-timesyncd-shared=false \
-	%{?_enable_static_libsystemd:-Dstatic-libsystemd=pic} \
-	%{?_enable_static_libudev:-Dstatic-libudev=pic} \
-	%{?_enable_standalone_binaries:-Dstandalone-binaries=true} \
-	-Dxinitrcdir=%_sysconfdir/X11/xinit.d \
-	-Drootlibdir=/%_lib \
-	-Dpamlibdir=/%_lib/security \
-	-Dsplit-usr=true \
-	-Dsplit-bin=true \
-	-Dsysvinit-path=%_initdir \
-	-Dsysvrcnd-path=%_sysconfdir/rc.d \
-	-Drc-local=%_sysconfdir/rc.d/rc.local \
-	-Dinstall-sysconfdir=true \
-	-Dkernel-install=true \
-	-Dpamconfdir=%_sysconfdir/pam.d \
-	-Ddebug-shell=/bin/bash \
-	-Dquotaon-path=/sbin/quotaon \
-	-Dquotacheck-path=/sbin/quotacheck \
-	-Dkmod-path=/bin/kmod \
-	%{?_enable_kexec:-Dkexec-path=/sbin/kexec} \
-	-Dsulogin-path=/sbin/sulogin \
-	-Dmount-path=/bin/mount \
-	-Dumount-path=/bin/umount \
-	-Dloadkeys-path=/bin/loadkeys \
-	-Dsetfont-path=/bin/setfont \
-	-Dtelinit-path=/sbin/telinit \
-	-Dnologin-path=/sbin/nologin \
-	-Dcompat-mutable-uid-boundaries=true \
-	-Dsystem-uid-max=499 \
-	-Dsystem-gid-max=499 \
-	-Dadm-gid=4 \
-	-Daudio-gid=81 \
-	-Dcdrom-gid=22 \
-	-Ddisk-gid=6 \
-	-Dkmem-gid=9 \
-	-Dlp-gid=7 \
-	-Dtty-gid=5 \
-	-Dusers-gid=100 \
-	-Dutmp-gid=72 \
-	-Dwheel-gid=10 \
-	-Dnobody-user=nobody \
-	-Dnobody-group=nobody \
-	-Dbump-proc-sys-fs-file-max=false \
-	-Dbump-proc-sys-fs-nr-open=false \
-	%{?_enable_elfutils:-Delfutils=true} \
-	%{?_enable_pwquality:-Dpwquality=true} \
-	%{?_enable_xz:-Dxz=true} \
-	%{?_enable_zlib:-Dzlib=true} \
-	%{?_enable_bzip2:-Dbzip2=true} \
-	%{?_enable_lz4:-Dlz4=true} \
-	%{?_enable_zstd:-Dzstd=true} \
-	%{?_enable_libcryptsetup:-Dlibcryptsetup=true} \
-	%{?_enable_logind:-Dlogind=true} \
-	%{?_enable_vconsole:-Dvconsole=true} \
-	%{?_enable_initrd:-Dinitrd=true} \
-	%{?_enable_quotacheck:-Dquotacheck=true} \
-	%{?_enable_randomseed:-Drandomseed=true} \
-	%{?_enable_bpf_framework:-Dbpf-framework=true} \
-	%{?_enable_coredump:-Dcoredump=true} \
-	%{?_enable_pstore:-Dpstore=true} \
-	%{?_enable_smack:-Dsmack=true} \
-	%{?_enable_gcrypt:-Dgcrypt=true} \
-	%{?_enable_qrencode:-Dqrencode=true} \
-	%{?_enable_microhttpd:-Dmicrohttpd=true} \
-	%{?_enable_gnutls:-Dgnutls=true} \
-	%{?_enable_openssl:-Dopenssl=true } \
-	%{?_enable_p11kit:-Dp11kit=true } \
-	%{?_enable_libcurl:-Dlibcurl=true} \
-	%{?_enable_libidn:-Dlibidn=true} \
-	%{?_enable_libidn2:-Dlibidn2=true} \
-	%{?_enable_libiptc:-Dlibiptc=true} \
-	%{?_enable_polkit:-Dpolkit=true} \
-	%{?_enable_efi:-Defi=true} \
-	-Dsbat-distro=%sbat_distro \
-	-Dsbat-distro-generation=%sbat_distro_generation \
-	-Dsbat-distro-summary=%sbat_distro_summary \
-	-Dsbat-distro-pkgname=%sbat_distro_pkgname \
-	-Dsbat-distro-version=%sbat_distro_version \
-	-Dsbat-distro-url=%sbat_distro_url \
-	%{?_enable_homed:-Dhomed=true} \
-	%{?_enable_networkd:-Dnetworkd=true} \
-	%{?_enable_resolve:-Dresolve=true} \
-	-Ddns-servers="" \
-	%{?_enable_timesyncd:-Dtimesyncd=true} \
-	-Dntp-servers="" \
-	%{?_enable_sysusers:-Dsysusers=true} \
-	%{?_enable_ldconfig:-Dldconfig=true} \
-	%{?_enable_firstboot:-Dfirstboot=true} \
-	%{?_enable_gnuefi:-Dgnuefi=true} \
-	%{?_enable_seccomp:-Dseccomp=true} \
-	%{?_enable_ima:-Dima=true} \
-	%{?_enable_selinux:-Dselinux=true} \
-	%{?_enable_apparmor:-Dapparmor=true} \
-	%{?_enable_utmp:-Dutmp=true} \
-	%{?_disable_kill_user_processes:-Ddefault-kill-user-processes=false} \
-	-Doomd=true \
-	-Dfallback-hostname=localhost \
-	-Ddefault-dnssec=no \
-	-Ddefault-mdns=no \
-	-Ddefault-llmnr=yes \
-	-Ddefault-hierarchy=%hierarchy \
+        -Dmode=release \
+        -Dlink-udev-shared=false \
+        -Dlink-systemctl-shared=false \
+        -Dlink-networkd-shared=false \
+        -Dlink-timesyncd-shared=false \
+        %{?_enable_static_libsystemd:-Dstatic-libsystemd=pic} \
+        %{?_enable_static_libudev:-Dstatic-libudev=pic} \
+        %{?_enable_standalone_binaries:-Dstandalone-binaries=true} \
+        -Dxinitrcdir=%_sysconfdir/X11/xinit.d \
+        -Drootlibdir=/%_lib \
+        -Dpamlibdir=/%_lib/security \
+        -Dsplit-usr=true \
+        -Dsplit-bin=true \
+        -Dsysvinit-path=%_initdir \
+        -Dsysvrcnd-path=%_sysconfdir/rc.d \
+        -Drc-local=%_sysconfdir/rc.d/rc.local \
+        -Dinstall-sysconfdir=true \
+        -Dkernel-install=true \
+        -Dpamconfdir=%_sysconfdir/pam.d \
+        -Ddebug-shell=/bin/bash \
+        -Dquotaon-path=/sbin/quotaon \
+        -Dquotacheck-path=/sbin/quotacheck \
+        -Dkmod-path=/bin/kmod \
+        %{?_enable_kexec:-Dkexec-path=/sbin/kexec} \
+        -Dsulogin-path=/sbin/sulogin \
+        -Dmount-path=/bin/mount \
+        -Dumount-path=/bin/umount \
+        -Dloadkeys-path=/bin/loadkeys \
+        -Dsetfont-path=/bin/setfont \
+        -Dtelinit-path=/sbin/telinit \
+        -Dnologin-path=/sbin/nologin \
+        -Dcompat-mutable-uid-boundaries=true \
+        -Dsystem-uid-max=499 \
+        -Dsystem-gid-max=499 \
+        -Dadm-gid=4 \
+        -Daudio-gid=81 \
+        -Dcdrom-gid=22 \
+        -Ddisk-gid=6 \
+        -Dkmem-gid=9 \
+        -Dlp-gid=7 \
+        -Dtty-gid=5 \
+        -Dusers-gid=100 \
+        -Dutmp-gid=72 \
+        -Dwheel-gid=10 \
+        -Dnobody-user=nobody \
+        -Dnobody-group=nobody \
+        -Dbump-proc-sys-fs-file-max=false \
+        -Dbump-proc-sys-fs-nr-open=false \
+        %{?_enable_elfutils:-Delfutils=true} \
+        %{?_enable_pwquality:-Dpwquality=true} \
+        %{?_enable_xz:-Dxz=true} \
+        %{?_enable_zlib:-Dzlib=true} \
+        %{?_enable_bzip2:-Dbzip2=true} \
+        %{?_enable_lz4:-Dlz4=true} \
+        %{?_enable_zstd:-Dzstd=true} \
+        %{?_enable_libcryptsetup:-Dlibcryptsetup=true} \
+        %{?_enable_logind:-Dlogind=true} \
+        %{?_enable_vconsole:-Dvconsole=true} \
+        %{?_enable_initrd:-Dinitrd=true} \
+        %{?_enable_quotacheck:-Dquotacheck=true} \
+        %{?_enable_randomseed:-Drandomseed=true} \
+        %{?_enable_bpf_framework:-Dbpf-framework=true} \
+        %{?_enable_coredump:-Dcoredump=true} \
+        %{?_enable_pstore:-Dpstore=true} \
+        %{?_enable_smack:-Dsmack=true} \
+        %{?_enable_gcrypt:-Dgcrypt=true} \
+        %{?_enable_qrencode:-Dqrencode=true} \
+        %{?_enable_microhttpd:-Dmicrohttpd=true} \
+        %{?_enable_gnutls:-Dgnutls=true} \
+        %{?_enable_openssl:-Dopenssl=true } \
+        %{?_enable_p11kit:-Dp11kit=true } \
+        %{?_enable_libcurl:-Dlibcurl=true} \
+        %{?_enable_libidn:-Dlibidn=true} \
+        %{?_enable_libidn2:-Dlibidn2=true} \
+        %{?_enable_libiptc:-Dlibiptc=true} \
+        %{?_enable_polkit:-Dpolkit=true} \
+        %{?_enable_efi:-Defi=true} \
+        -Dsbat-distro=%sbat_distro \
+        -Dsbat-distro-generation=%sbat_distro_generation \
+        -Dsbat-distro-summary=%sbat_distro_summary \
+        -Dsbat-distro-pkgname=%sbat_distro_pkgname \
+        -Dsbat-distro-version=%sbat_distro_version \
+        -Dsbat-distro-url=%sbat_distro_url \
+        %{?_enable_homed:-Dhomed=true} \
+        %{?_enable_networkd:-Dnetworkd=true} \
+        %{?_enable_resolve:-Dresolve=true} \
+        -Ddns-servers="" \
+        %{?_enable_timesyncd:-Dtimesyncd=true} \
+        -Dntp-servers="" \
+        %{?_enable_sysusers:-Dsysusers=true} \
+        %{?_enable_ldconfig:-Dldconfig=true} \
+        %{?_enable_firstboot:-Dfirstboot=true} \
+        %{?_enable_gnu_efi:-Dgnu-efi=true} \
+        %{?_enable_seccomp:-Dseccomp=true} \
+        %{?_enable_ima:-Dima=true} \
+        %{?_enable_selinux:-Dselinux=true} \
+        %{?_enable_apparmor:-Dapparmor=true} \
+        %{?_enable_utmp:-Dutmp=true} \
+        %{?_disable_kill_user_processes:-Ddefault-kill-user-processes=false} \
+        -Doomd=true \
+        -Dfallback-hostname=localhost \
+        -Ddefault-dnssec=no \
+        -Ddefault-mdns=no \
+        -Ddefault-llmnr=yes \
+        -Ddefault-hierarchy=%hierarchy \
 %ifnarch mipsel
-	-Db_lto=true \
+        -Db_lto=true \
 %else
-	-Db_lto=false \
+        -Db_lto=false \
 %endif
-	-Db_pie=true \
-	-Dman=true \
-	-Durlify=false \
-	-Dtests=unsafe \
-	-Dinstall-tests=true \
-	-Dversion-tag=v%version-%release \
-	-Dcertificate-root=/etc/pki/tls \
-	-Ddocdir=%_defaultdocdir/%name-%version
+        -Db_pie=true \
+        -Dman=true \
+        -Durlify=false \
+        -Dtests=unsafe \
+        -Dinstall-tests=true \
+        -Dversion-tag=v%version-%release \
+        -Dcertificate-root=/etc/pki/tls \
+        -Ddocdir=%_defaultdocdir/%name-%version
 
 %meson_build
 
@@ -874,14 +892,15 @@ ln -s /dev/null %buildroot%_unitdir/killall.service
 ln -s /dev/null %buildroot%_unitdir/single.service
 ln -s /dev/null %buildroot%_unitdir/netfs.service
 
-# create modules.conf as a symlink to /etc/modules
 mkdir -p %buildroot%_modules_loaddir
-mkdir -p %buildroot%_sysconfdir/modules-load.d
-ln -r -s %buildroot%_sysconfdir/modules %buildroot%_sysconfdir/modules-load.d/modules.conf
+# add example file for module load
+install -Dm0644 %SOURCE9 %buildroot%_sysconfdir/modules-load.d/modules.conf
+# create /etc/modules as a symlink to /etc/modules-load.d/modules.conf
+ln -r -s %buildroot%_sysconfdir/modules-load.d/modules.conf %buildroot%_sysconfdir/modules
 
-# create /etc/sysctl.d/99-sysctl.conf as a symlink to /etc/sysctl.conf
-mkdir -p %buildroot%_sysconfdir/sysctl.d
-ln -r -s %buildroot%_sysconfdir/sysctl.conf %buildroot%_sysconfdir/sysctl.d/99-sysctl.conf
+# create /etc/sysctl.conf as a symlink to /etc/sysctl.d/99-sysctl.conf
+install -Dm0644 %SOURCE8 %buildroot%_sysconfdir/sysctl.d/99-sysctl.conf
+ln -r -s %buildroot%_sysconfdir/sysctl.d/99-sysctl.conf %buildroot%_sysconfdir/sysctl.conf
 
 # Make sure directories in /var exist
 mkdir -p %buildroot%_localstatedir%_systemd_dir/coredump
@@ -939,7 +958,7 @@ sed -i 's|#!/usr/bin/env python3|#!%__python3|' %buildroot%_prefix%_systemd_dir/
 mkdir -p %buildroot%_sysconfdir/systemd/network
 
 # The following services are currently installed by initscripts
-#pushd %buildroot%_unitdir/graphical.target.wants && {
+#pushd %%buildroot%%_unitdir/graphical.target.wants && {
 #        rm -f display-manager.service
 #        rm -f dm.service
 #popd
@@ -995,8 +1014,8 @@ EOF
 # define default PATH for system and user
 mkdir -p %buildroot%_prefix%_systemd_dir/user.conf.d
 install -m 0644 %SOURCE11 %buildroot%_prefix%_systemd_dir/user.conf.d/env-path.conf
-#mkdir -p %buildroot%_prefix/systemd/system.conf.d
-#install -m 0644 %SOURCE12 %buildroot%_prefix/systemd/system.conf.d/env-path.conf
+#mkdir -p %%buildroot%%_prefix/systemd/system.conf.d
+#install -m 0644 %%SOURCE12 %%buildroot%%_prefix/systemd/system.conf.d/env-path.conf
 
 #######
 # UDEV
@@ -1025,12 +1044,12 @@ EOF
 # Install symlinks for rules which are needed in initramfs
 mkdir -p %buildroot/lib/udev/initramfs-rules.d
 for f in \
-	50-udev-default.rules \
-	60-persistent-storage.rules \
-	80-drivers.rules
+    50-udev-default.rules \
+    60-persistent-storage.rules \
+    80-drivers.rules
 do
-	ln -s ../rules.d/"$f" \
-		%buildroot/lib/udev/initramfs-rules.d/
+    ln -s ../rules.d/"$f" \
+        %buildroot/lib/udev/initramfs-rules.d/
 done
 # Create ghost files
 touch %buildroot%_sysconfdir/udev/hwdb.bin
@@ -1392,16 +1411,55 @@ udevadm hwdb --update &>/dev/null
 %preun -n udev
 %preun_service udevd
 
+%pre sysctl-common
+src=/etc/sysctl.conf
+dst=/etc/sysctl.d/99-sysctl.conf.rpmmove
+rm -f $dst
+if [ -s $src -a ! -L $src ]; then
+        cp -a $src $dst
+fi
+
+
+%post sysctl-common
+src=/etc/sysctl.conf.rpmsave
+dst=/etc/sysctl.d/99-sysctl.conf
+tmp=$dst.rpmmove
+new=$dst.rpmnew
+if [ -s $tmp ]; then
+        if cmp -s $src $tmp; then
+            mv -v -f $dst $new
+            mv -v $src $dst
+        fi
+        rm -f $tmp
+fi
+
+
+%pre modules-common
+src=/etc/modules
+dst=/etc/modules-load.d/modules.conf.rpmmove
+rm -f $dst
+if [ -s $src -a ! -L $src ]; then
+        cp -a $src $dst
+fi
+
+%post modules-common
+src=/etc/modules.rpmsave
+dst=/etc/modules-load.d/modules.conf
+tmp=$dst.rpmmove
+new=$dst.rpmnew
+if [ -s $tmp ]; then
+        if cmp -s $src $tmp; then
+            mv -v -f $dst $new
+            mv -v $src $dst
+        fi
+        rm -f $tmp
+fi
+
 %files -f %name.lang
 %dir %_sysconfdir/systemd/system
 %dir %_sysconfdir/systemd/user
 
 %_sysconfdir/profile.d/systemd.sh
-
-/lib/modprobe.d/README
-/lib/sysctl.d/README
-/lib/sysusers.d/README
-/lib/tmpfiles.d/README
 
 %_tmpfilesdir/systemd-nologin.conf
 %_tmpfilesdir/systemd.conf
@@ -1452,7 +1510,6 @@ udevadm hwdb --update &>/dev/null
 %_mandir/*/*sysusers*
 
 %_systemd_dir/systemd-modules-load
-%_sysconfdir/modules-load.d/modules.conf
 /sbin/systemd-modules-load.shared
 %_altdir/systemd-modules-load-shared
 %_mandir/*/*modules-load*
@@ -1572,8 +1629,8 @@ udevadm hwdb --update &>/dev/null
 %dir %_env_dir
 %_env_dir/99-environment.conf
 %_mandir/man[58]/*environment*
-#%dir %_systemd_dir/system.conf.d
-#%_systemd_dir/system.conf.d/env-path.conf
+#%%dir %%_systemd_dir/system.conf.d
+#%%_systemd_dir/system.conf.d/env-path.conf
 
 %dir %_unitdir
 %_unitdir/*
@@ -1785,7 +1842,6 @@ udevadm hwdb --update &>/dev/null
 
 %if_enabled polkit
 %_datadir/polkit-1/actions/*.policy
-%exclude %_datadir/polkit-1/actions/org.freedesktop.systemd1.policy
 %exclude %_datadir/polkit-1/actions/org.freedesktop.resolve1.policy
 %exclude %_datadir/polkit-1/actions/org.freedesktop.network1.policy
 %exclude %_datadir/polkit-1/actions/org.freedesktop.machine1.policy
@@ -1912,6 +1968,7 @@ udevadm hwdb --update &>/dev/null
 
 %files sysctl-common
 %config(noreplace) %_sysconfdir/sysctl.d/99-sysctl.conf
+%_sysconfdir/sysctl.conf
 %_sysctldir/49-coredump-disable.conf
 %_sysctldir/50-default.conf
 %_sysctldir/50-net.conf
@@ -1919,6 +1976,10 @@ udevadm hwdb --update &>/dev/null
 %if %_lib == lib64
 %_sysctldir/50-pid-max.conf
 %endif
+
+%files modules-common
+%config(noreplace) %verify(not md5 size mtime) %_sysconfdir/modules-load.d/modules.conf
+%_sysconfdir/modules
 
 %if_enabled networkd
 %files networkd
@@ -2210,6 +2271,16 @@ udevadm hwdb --update &>/dev/null
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Sat Dec 25 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.7-alt7
+- Add /etc/sysctl.conf to systemd-sysctl-common package.
+- Add /etc/modules to new systemd-modules-common package.
+- Add Provides/Obsoletes systemd-utils to systemd-utils-standalone package.
+- Add Conflicts systemd to systemd-utils-standalone package.
+
+* Tue Dec 21 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.7-alt6
+- Fix package org.freedesktop.systemd1.policy (ALT#41595).
+- Avoid chrooted-resolv requirements.
+
 * Wed Dec 15 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.7-alt5
 - update-helper: add missing loop over user units
 
@@ -2759,7 +2830,7 @@ udevadm hwdb --update &>/dev/null
 - add --no-redirect for chkconfig in systemd-sysv-install
 
 * Wed Jun 24 2015 Alexey Shabalin <shaba@altlinux.ru> 1:221-alt2
-- add add_findreq_skiplist %_x11sysconfdir/xinit.d/*
+- add add_findreq_skiplist %%_x11sysconfdir/xinit.d/*
 
 * Mon Jun 22 2015 Alexey Shabalin <shaba@altlinux.ru> 1:221-alt1
 - 221
@@ -2909,7 +2980,7 @@ udevadm hwdb --update &>/dev/null
 - add and define conditions for seccomp(disabled), IMA(disabled), selinux(enabled), apparmor(disabled)
 - updated bash3 completions
 - all systemd-* libraries moved to libsystemd package
-- update %post
+- update %%post
 - renamed 80-net-name-slot.rules to 80-net-setup-link.rules
 - give systemd-logind access to /proc when it's mounted with hidepid option
 - /boot -> /boot/efi in efi-boot-generator
