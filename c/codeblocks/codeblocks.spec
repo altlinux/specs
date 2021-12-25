@@ -1,6 +1,6 @@
 Name: codeblocks
 Version: 20.03
-Release: alt7
+Release: alt8
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
@@ -29,7 +29,7 @@ Requires: automake >= 1.7 libwxGTK3.1 gcc gcc-c++ gdb xterm gamin mythes-en
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-devel gcc-c++ libICE-devel libgamin-devel libgtk+3-devel
-BuildRequires: libhunspell-devel libwxGTK-contrib-gizmos-devel libwxGTK3.1-devel
+BuildRequires: libhunspell-devel libwxGTK3.1-devel
 BuildRequires: tinyxml-devel zip zlib-devel bzlib-devel
 
 %description
@@ -316,6 +316,9 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_libdir/pkgconfig/wxsmith-contrib.pc
 
 %changelog
+* Sat Dec 25 2021 Grigory Ustinov <grenka@altlinux.org> 20.03-alt8
+- Fixed BuildRequires.
+
 * Fri Nov 19 2021 Grigory Ustinov <grenka@altlinux.org> 20.03-alt7
 - Update russian localization.
 
