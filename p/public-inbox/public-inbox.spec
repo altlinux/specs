@@ -1,7 +1,7 @@
 Summary: An "archives first" approach to mailing lists
 
 Name: public-inbox
-Version: 1.6.1.1190.g8e112fe2
+Version: 1.7.0.17.g07cd8973
 Release: alt1
 
 Group: Networking/Mail
@@ -10,9 +10,10 @@ URL: https://public-inbox.org
 
 Source0: %name-%version.tar
 
-Patch0: 0001-Do-not-show-loose-matches.patch
-Patch1: 0002-Hide-from-thread-missing-messages.patch
-Patch2: 0003-tests-fix-failed-testcases.patch
+Patch1: 0001-Do-not-show-loose-matches.patch
+Patch2: 0002-Hide-from-thread-missing-messages.patch
+Patch3: 0003-tests-fix-failed-testcases.patch
+Patch4: 0004-Make-PublicInbox-MIME-unloadable-and-make-perl.req-h.patch
 
 BuildArch: noarch
 
@@ -27,8 +28,6 @@ BuildRequires: perl-Crypt-CBC
 BuildRequires: perl-DBD-SQLite
 BuildRequires: perl-DBIx-DBSchema
 BuildRequires: perl-Digest-SHA
-BuildRequires: perl-Email-MIME
-BuildRequires: perl-Email-MIME-ContentType
 BuildRequires: perl-Email-Simple
 BuildRequires: perl-Encode
 BuildRequires: perl-Encode-CN
@@ -121,6 +120,10 @@ mkdir -p "$HOME/.cache/public-inbox/inline-c"
 %_man8dir/*
 
 %changelog
+* Sat Dec 25 2021 Alexey Gladkov <legion@altlinux.ru> 1.7.0.17.g07cd8973-alt1
+- New git snapshot (v1.7.0-17-g07cd8973).
+- Remove Email::MIME dependency.
+
 * Mon Jun 21 2021 Alexey Gladkov <legion@altlinux.ru> 1.6.1.1190.g8e112fe2-alt1
 - New git snapshot (v1.6.1-1190-g8e112fe2).
 
