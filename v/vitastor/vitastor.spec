@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: vitastor
-Version: 0.6.5
+Version: 0.6.10
 Release: alt1
 Summary: Vitastor, a fast software-defined clustered block storage
 Group: System/Base
@@ -55,9 +55,17 @@ Monitor is a separate daemon that watches cluster state and handles failures.
 Summary: Vitastor SDS Object Storage Daemon
 Group: System/Base
 Requires: %name-common = %EVR
+Requires: %name-client = %EVR
 
 %description osd
 Vitastor SDS Object Storage Daemon is a process that stores data and serves read/write requests.
+
+%package client
+Summary: Vitastor SDS client
+Group: System/Base
+
+%description client
+Vitastor client library and command-line interface.
 
 %package nbd
 Summary: Vitastor SDS NBD proxy
@@ -139,13 +147,18 @@ useradd  -r -g %name -s /sbin/nologin -c "Vitastor daemons" -M -d %_localstatedi
 %attr(770,root,%name) %dir %_localstatedir/%name
 
 %files osd
+%doc mon/make-osd.sh
 %_bindir/%name-osd
 # ? may be to utils package?
 %_bindir/%name-dump-journal
-%_bindir/%name-rm
 
 %files mon
 %_datadir/%name
+
+%files client
+%_bindir/vitastor-cli
+%_bindir/vitastor-rm
+%_bindir/vita
 
 %files nbd
 %_bindir/%name-nbd
@@ -159,8 +172,12 @@ useradd  -r -g %name -s /sbin/nologin -c "Vitastor daemons" -M -d %_localstatedi
 %files -n lib%name-devel
 %_libdir/*.so
 %_includedir/*
+%_pkgconfigdir/*.pc
 
 %changelog
+* Fri Dec 17 2021 Alexey Shabalin <shaba@altlinux.org> 0.6.10-alt1
+- 0.6.10
+
 * Sun Jul 11 2021 Alexey Shabalin <shaba@altlinux.org> 0.6.5-alt1
 - 0.6.5
 
