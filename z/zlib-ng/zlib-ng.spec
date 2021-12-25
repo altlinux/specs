@@ -1,8 +1,9 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%define soversion 2
 
 Name: zlib-ng
-Version: 2.0.5
-Release: alt1.1
+Version: 2.0.6
+Release: alt1
 
 Summary: Zlib replacement with optimizations
 License: Zlib
@@ -18,6 +19,16 @@ Patch2000: %name-e2k-simd.patch
 BuildRequires: ctest
 
 %description
+%name is a zlib replacement that provides optimizations for "next generation"
+systems.
+
+%package -n libz-ng%soversion
+Summary: Zlib replacement with optimizations
+Group: System/Libraries
+Provides: %name = %EVR
+Obsoletes: %name <= 2.0.5-alt1.1
+
+%description -n libz-ng%soversion
 %name is a zlib replacement that provides optimizations for "next generation"
 systems.
 
@@ -53,12 +64,12 @@ developing application that use %name.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %check
 %make -C %_cmake__builddir test
 
-%files
+%files -n libz-ng%soversion
 %doc FAQ.zlib PORTING.md README.md doc/*.txt
 %_libdir/libz-ng.so.*
 
@@ -71,6 +82,10 @@ developing application that use %name.
 %_libdir/libz-ng.a
 
 %changelog
+* Sat Dec 25 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.6-alt1
+- Version 2.0.6
+- Rename library subpackage
+
 * Wed Aug 25 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.5-alt1.1
 - Fix LTO
 
