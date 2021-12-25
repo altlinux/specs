@@ -29,7 +29,7 @@
 #%%define _libexecdir %_prefix/libexec
 
 Name: snapd
-Version: 2.53.4
+Version: 2.54.1
 Release: alt1
 Summary: A transactional software package manager
 License: GPLv3
@@ -40,9 +40,6 @@ Source1: https://%provider_prefix/releases/download/%version/%{name}_%version.on
 
 Patch0001: 0001-dirs-add-altlinux-to-altDirDistros.patch
 Patch0002: 0002-add-autogen-case-for-altlinux.patch
-
-# cherry picked from https://github.com/snapcore/snapd/commit/f4cefc704d6c46f204b0a0651379e0766d478ba5
-Patch0003: 0001-cmd-snap-confine-do-not-include-libglvnd-libraries-f.patch
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang rpm-build-systemd
@@ -107,7 +104,6 @@ runs properly under an environment with SELinux enabled.
 %setup -D -b 1
 %patch0001 -p1
 %patch0002 -p1
-%patch0003 -p1
 
 # We don't want/need squashfuse in the rpm
 sed -e 's:_ "github.com/snapcore/squashfuse"::g' -i systemd/systemd.go
@@ -380,9 +376,10 @@ fi
 %_libexecdir/snapd/etelpmoc.sh
 %_datadir/zsh/site-functions/_snap
 %_libexecdir/snapd/snapd.run-from-snap
-%_sysconfdir/profile.d/snapd.sh
+%attr(0755,root,root) %_sysconfdir/profile.d/snapd.sh
 %_mandir/man8/snapd-env-generator.8*
 %_systemd_system_env_generator_dir/snapd-env-generator
+%_datadir/fish/vendor_conf.d/snapd.fish
 %_unitdir/snapd.socket
 %_unitdir/snapd.service
 %_unitdir/snapd.autoimport.service
@@ -454,6 +451,10 @@ fi
 %endif
 
 %changelog
+* Sat Dec 25 2021 Alexey Shabalin <shaba@altlinux.org> 2.54.1-alt1
+- 2.54.1
+- /etc/profile.d/snapd.sh: made executable (ALT #41625)
+
 * Wed Dec 15 2021 Alexey Shabalin <shaba@altlinux.org> 2.53.4-alt1
 - 2.53.4
 - Add altlinux support (ALT #41518)
