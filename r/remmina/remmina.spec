@@ -5,7 +5,7 @@
 %def_with x2go
 
 Name: remmina
-Version: 1.4.21
+Version: 1.4.23
 Release: alt1
 Summary: Remote Desktop Client
 
@@ -306,7 +306,8 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %if_with x2go
 %files plugins-x2go
 %_libdir/remmina/plugins/remmina-plugin-x2go.so
-%_iconsdir/hicolor/*/emblems/org.remmina.Remmina-x2go.png
+%_iconsdir/hicolor/*/emblems/org.remmina.Remmina-x2go-ssh-symbolic.svg
+%_iconsdir/hicolor/*/emblems/org.remmina.Remmina-x2go-symbolic.svg
 %endif
 
 %files gnome-session
@@ -322,6 +323,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Sat Dec 25 2021 Alexey Shabalin <shaba@altlinux.org> 1.4.23-alt1
+- new version 1.4.23.
+
 * Sun Nov 28 2021 Alexey Shabalin <shaba@altlinux.org> 1.4.21-alt1
 - new version 1.4.21.
 - Remove unmaintained nx, st, xdmcp plugins.
@@ -420,7 +424,7 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 * Tue Aug 04 2015 Michael Shigorin <mike@altlinux.org> 1.1.2-alt2
 - fixed plugins path on non-x86_64
 - fixed build (closes: #31184)
-- added missing R: %name (closes: #27266)
+- added missing R: %%name (closes: #27266)
 
 * Sat Mar 21 2015 Mikhail Kolchin <mvk@altlinux.org> 1.1.2-alt1
 - new version
