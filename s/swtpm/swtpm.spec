@@ -4,11 +4,10 @@
 %def_with openssl
 %def_without cuse
 %define _localstatedir %_var
-%define _libexecdir %_prefix/libexec
 %def_disable check
 
 Name: swtpm
-Version: 0.6.1
+Version: 0.7.0
 Release: alt1
 
 Summary: TPM Emulator
@@ -29,9 +28,7 @@ BuildRequires: pkgconfig(glib-2.0) pkgconfig(gthread-2.0)
 %{?_with_gnutls:BuildRequires: pkgconfig(gnutls) /usr/bin/certtool}
 BuildRequires: /usr/bin/ss
 BuildRequires: expect socat gawk coreutils
-BuildRequires: libgmp-devel
 BuildRequires: socat
-BuildRequires: python3(twisted.python.sendmsg)
 BuildRequires: softhsm
 BuildRequires: libseccomp-devel
 BuildRequires: tpm2-pkcs11 tpm2-pkcs11-tools tpm2-tools tpm2-abrmd
@@ -149,16 +146,19 @@ fi
 %config(noreplace) %_sysconfdir/swtpm_setup.conf
 %config(noreplace) %_sysconfdir/swtpm-localca.options
 %config(noreplace) %_sysconfdir/swtpm-localca.conf
-%dir %_libexecdir/swtpm
-%_libexecdir/swtpm/swtpm-localca
-%_libexecdir/swtpm/swtpm-create-user-config-files
+%dir %_datadir/swtpm
+%_datadir/swtpm/swtpm-localca
+%_datadir/swtpm/swtpm-create-user-config-files
 %attr( 770, root, tss) %_localstatedir/lib/swtpm-localca
 
 %files tools-pkcs11
 %_man8dir/swtpm-create-tpmca.8*
-%_libexecdir/swtpm/swtpm-create-tpmca
+%_datadir/swtpm/swtpm-create-tpmca
 
 %changelog
+* Thu Dec 02 2021 Alexey Shabalin <shaba@altlinux.org> 0.7.0-alt1
+- new version 0.7.0
+
 * Mon Nov 01 2021 Alexey Shabalin <shaba@altlinux.org> 0.6.1-alt1
 - new version 0.6.1
 
