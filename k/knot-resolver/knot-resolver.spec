@@ -5,7 +5,7 @@
 %def_disable doc
 
 Name: knot-resolver
-Version: 5.4.2
+Version: 5.4.3
 Release: alt1
 Summary: Caching full DNS Resolver
 Group: System/Servers
@@ -19,7 +19,7 @@ Patch0: %name-%version.patch
 
 ExclusiveArch: %luajit_arches
 
-BuildRequires(pre): meson >= 0.49 rpm-macros-luajit
+BuildRequires(pre): meson >= 0.49 rpm-macros-luajit rpm-macros-systemd
 BuildRequires: gcc-c++ luajit
 BuildRequires: pkgconfig(cmocka)
 BuildRequires: pkgconfig(gnutls)
@@ -95,8 +95,6 @@ tar -xf %SOURCE11 -C modules/policy/lua-aho-corasick
 
 %build
 %meson \
-    -Dsystemd_unit_dir=%_unitdir \
-    -Dsystemd_tmpfiles_dir=%_tmpfilesdir \
     %{?_enable_doc:-Ddoc=enabled} \
     -Dsystemd_files=enabled \
     -Dclient=enabled \
@@ -131,22 +129,14 @@ export LD_LIBRARY_PATH=$(pwd)/%{__builddir}/lib:$(pwd)/%{__builddir}
 %meson_test
 
 %pre
-%_sbindir/groupadd -r -f %name >/dev/null 2>&1 ||:
-%_sbindir/useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Knot Resolver" -g %name %name >/dev/null 2>&1 ||:
+groupadd -r -f %name >/dev/null 2>&1 ||:
+useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Knot Resolver" -g %name %name >/dev/null 2>&1 ||:
 
 %post
-systemctl daemon-reload ||:
-if [ "$1" -eq 1 ]; then
-        systemctl -q preset kresd@\*.service kres-cache-gc.service kresd.target ||:
-else
-        systemctl try-restart kresd.target ||:
-fi
+%post_systemd_postponed kresd@*.service kres-cache-gc.service kresd.target
 
 %preun
-if [ "$1" -eq 0 ]; then
-        systemctl --no-reload -q disable kresd@\*.service kres-cache-gc.service kresd.target ||:
-        systemctl stop kresd@\*.service kres-cache-gc.service kresd.target ||:
-fi
+%systemd_preun kresd@*.service kres-cache-gc.service kresd.target
 
 %files
 %doc COPYING AUTHORS NEWS etc/config/config.*
@@ -194,6 +184,10 @@ fi
 %_libdir/%name/kres_modules/prometheus.lua
 
 %changelog
+* Thu Dec 23 2021 Alexey Shabalin <shaba@altlinux.org> 5.4.3-alt1
+- 5.4.3
+- Switch to systemd macros int post and preun.
+
 * Mon Nov 01 2021 Alexey Shabalin <shaba@altlinux.org> 5.4.2-alt1
 - 5.4.2
 
