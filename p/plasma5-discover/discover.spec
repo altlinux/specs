@@ -8,11 +8,7 @@
 %else
 %def_enable fwupd
 %endif
-%_K5if_ver_lt %ubt_id M110
 %def_enable snap
-%else
-%def_disable snap
-%endif
 
 %define sover 0
 %define libdiscovercommon libdiscovercommon%sover
@@ -20,7 +16,7 @@
 
 Name: plasma5-%rname
 Version: 5.23.4
-Release: alt5
+Release: alt6
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -263,6 +259,9 @@ done
 
 
 %changelog
+* Sun Dec 26 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.4-alt6
+- always enable SNAP backend by default
+
 * Fri Dec 24 2021 Oleg Solovyov <mcpain@altlinux.org> 5.23.4-alt5
 - fix updating packages status after succesful transaction (Closes: #41532)
 
