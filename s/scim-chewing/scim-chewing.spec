@@ -4,14 +4,14 @@ BuildRequires: /usr/bin/glib-gettextize gcc-c++
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           scim-chewing
-Version:        0.3.5
-Release:        alt1.qa1_11
+Version:        0.5.1
+Release:        alt1
 Summary:        Chewing Chinese input method for SCIM
 
 License:        GPLv2+
 Url:            http://chewing.csie.net/
 Group:          System/Libraries
-Source:         http://chewing.googlecode.com/files/%{name}-%{version}.tar.bz2
+Source:         http://chewing.googlecode.com/files/%{name}-%{version}.tar.gz
 Patch0:         scim-chewing-0.3.5-libchewing04.patch
 
 BuildRequires:  scim-devel, libchewing-devel >= 0.3.4 gettext gettext-tools, intltool >= 0.34
@@ -25,13 +25,13 @@ This package provides Chewing Chinese input method for SCIM.
 
 %prep
 %setup -q
-%patch0 -p1
+#patch0 -p1
 
 %build
-autoreconf -ivf
-intltoolize --force
-autoreconf
-
+#autoreconf -ivf
+#intltoolize --force
+#autoreconf
+./autogen.sh
 %configure --disable-static
 %make_build
 
@@ -52,6 +52,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/scim-1.0/*/*/*.la
 
 
 %changelog
+* Fri Dec 17 2021 Ilya Mashkin <oddity@altlinux.ru> 0.5.1-alt1
+- 0.5.1
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.5-alt1.qa1_11
 - NMU (for oddity@): new version by fcimport
 
