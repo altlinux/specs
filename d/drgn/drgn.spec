@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name:    drgn
-Version: 0.0.13
+Version: 0.0.16
 Release: alt1
 Summary: Scriptable debugger library
 License: GPL-3.0-or-later
@@ -18,7 +18,6 @@ Vcs:     https://github.com/osandov/drgn
 Provides: python-module-drgn
 
 Source: %name-%version.tar
-ExclusiveArch: x86_64
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: bzip2-devel
@@ -66,6 +65,10 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/_drgn.*
 
 %changelog
+* Sun Dec 26 2021 Vitaly Chikunov <vt@altlinux.org> 0.0.16-alt1
+- Updated to v0.0.16 (2021-12-09).
+- Built on all architectures.
+
 * Sun Jun 20 2021 Vitaly Chikunov <vt@altlinux.org> 0.0.13-alt1
 - Update to v0.0.13 (2021-06-07) -4-gc4b174a (2021-06-09).
 
