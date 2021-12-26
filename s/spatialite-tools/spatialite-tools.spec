@@ -1,11 +1,16 @@
+%global __global_ldflags -Wl,-z,relro
+
 Name: spatialite-tools
-Version: 4.3.0
-Release: alt3
+Version: 5.0.1
+Release: alt1
 Summary: A set of useful CLI tools for SpatiaLite
 
 Group: Development/Other
 License: GPLv3+
 Source0: http://www.gaia-gis.it/gaia-sins/%name-%version.tar.gz
+# Add missing -lxml2
+Patch0:         spatialite-tools_lxml2.patch
+
 Url: https://www.gaia-gis.it/fossil/spatialite-tools
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
@@ -18,18 +23,23 @@ BuildRequires: libreadline-devel
 BuildRequires: readosm-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libxml2-devel
-BuildRequires: zlib-devel
+BuildRequires: zlib-devel librttopo-devel libminizip-devel
 
 %description
 Spatialite-Tools is a set of useful CLI tools for SpatiaLite.
 
 %prep
 %setup
+%patch0 -p1
 
 # Remove unused Makefiles
 rm -f Makefile-static*
 
 %build
+%ifarch %ix86 armh %e2k
+export LDFLAGS="%{__global_ldflags} -lm"
+%endif
+
 %configure
 %make_build
 
@@ -41,6 +51,9 @@ rm -f Makefile-static*
 %_bindir/*
 
 %changelog
+* Sat Dec 26 2021 Ilya Mashkin <oddity@altlinux.ru> 5.0.1-alt1
+- 5.0.1
+
 * Fri Mar 06 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.3.0-alt3
 - NMU: Fixed BuildRequires (libsqlite-devel -> libsqlite3-devel).
 
