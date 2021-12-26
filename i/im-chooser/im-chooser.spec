@@ -14,8 +14,8 @@ BuildRequires: /usr/bin/desktop-file-validate glib2-devel pkgconfig(gtk+-3.0)
 %endif
 
 Name:		im-chooser
-Version:	1.7.3
-Release:	alt1_1
+Version:	1.7.4
+Release:	alt1
 License:	GPLv2+ and LGPLv2+
 URL:		http://pagure.io/im-chooser/
 %{?_with_gtk2:BuildRequires:	gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel}
@@ -123,6 +123,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/applications/im-chooser-panel.desktop
 %endif
 
 %changelog
+* Fri Dec 17 2021 Ilya Mashkin <oddity@altlinux.ru> 1.7.4-alt1
+- 1.7.4
+
 * Sat Mar 16 2019 Igor Vlasenko <viy@altlinux.ru> 1.7.3-alt1_1
 - update to new release by fcimport
 
