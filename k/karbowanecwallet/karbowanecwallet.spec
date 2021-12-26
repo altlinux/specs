@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
 Name:		karbowanecwallet
-Version:	1.6.1
+Version:	1.7.2
 Release:	alt1
 Summary:	Karbowanec (Karbo) KRB wallet
 Url:		https://karbo.io/
@@ -21,6 +21,11 @@ ExclusiveArch: x86_64 armh aarch64
   Karbowanec (Karbo) is Ukrainian decentralized, privacy oriented peer-to-peer
   cryptocurrency. It is open-source, nobody owns or controls Karbowanec
   and everyone can take part.
+
+%description -l uk_UA.UTF8
+  Karbowanec (Karbo) — це українська децентралізована, орієнтована на конфіденційність
+  peer-to-peer криптовалюта. Це відкритий код, ніхто не володіє і не контролює Karbowanec,
+  і кожен може взяти участь.
 
 %prep
 %setup -n %name
@@ -59,6 +64,9 @@ convert -resize 16x16 %SOURCE2 %buildroot%_miconsdir/karbowanec.png
 %_liconsdir/karbowanec.png
 
 %changelog
+* Sun Dec 26 2021 Motsyo Gennadi <drool@altlinux.ru> 1.7.2-alt1
+- 1.7.2
+
 * Sat Dec 11 2021 Motsyo Gennadi <drool@altlinux.ru> 1.6.1-alt1
 - 1.6.1
 
