@@ -1,9 +1,9 @@
-%define		softver 81.0
-%define		buildver 4175.0
+%define		softver 84.0
+%define		buildver 4274.0
 
 Name:		opera64-dev
 Version:	%softver.%buildver
-Release:	alt1
+Release:	alt2
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Summary:	A fast and secure web browser and Internet suite
 Group:		Networking/WWW
@@ -53,6 +53,15 @@ chmod 4755 %_libdir/x86_64-linux-gnu/opera-developer/opera_sandbox
 %_datadir/mime/packages/*.xml
 
 %changelog
+* Sun Dec 26 2021 Motsyo Gennadi <drool@altlinux.ru> 84.0.4274.0-alt2
+- update libffmpeg.so
+
+* Fri Dec 24 2021 Motsyo Gennadi <drool@altlinux.ru> 84.0.4274.0-alt1
+- 84.0.4274.0
+
+* Sat Nov 27 2021 Motsyo Gennadi <drool@altlinux.ru> 83.0.4246.0-alt1
+- 83.0.4246.0 snapshot
+
 * Sun Sep 26 2021 Motsyo Gennadi <drool@altlinux.ru> 81.0.4175.0-alt1
 - 81.0.4175.0 snapshot
 
