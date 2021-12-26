@@ -2,7 +2,7 @@
 
 Name: icon-theme-simple-sl
 Version: 2.7
-Release: alt3
+Release: alt4
 
 Summary: Additonal sets of icons Simple for Simply Linux
 Summary(ru_RU.UTF-8): Набор пиктограмм Simple для Simply Linux
@@ -32,6 +32,11 @@ rm -rf %buildroot%_iconsdir/%icons_name/scalable
 %_iconsdir/%icons_name
 
 %changelog
+* Mon Dec 27 2021 Mikhail Efremov <sem@altlinux.org> 2.7-alt4
+- Add xfsm-lock.png symlink to status/stock_lock.png.
+- Renamed xfsm-switch.png -> xfsm-logout.png.
+- Added new xfsm-switch-user.png icon.
+
 * Wed Mar 29 2017 Mikhail Efremov <sem@altlinux.org> 2.7-alt3
 - Use _unpackaged_files_terminate_build.
 - Add slinux.png icon.
