@@ -39,8 +39,6 @@
 %define lo_icon_theme oxygen
 %endif
 
-%define java_version 1.8.0
-
 #alterantives weights
 %define alterator_browser_weight 52
 %define artworks_weight 12
@@ -48,7 +46,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 9.900
+Version: 10.0
 Release: alt1
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
@@ -63,9 +61,6 @@ BuildRequires: libalternatives-devel
 BuildRequires: qt5-base-devel
 
 BuildRequires: ImageMagick fontconfig bc
-
-# For java-*-openjdk-*-policytool.desktop
-BuildRequires: java-%{java_version}-openjdk
 
 Source: %name-%version.tar
 
@@ -240,13 +235,13 @@ This package contains default settings for Xfce for Simply linux distribution.
 
 %package backgrounds10
 Group: Graphics
-Summary: Backgrounds for SL-9
+Summary: Backgrounds for SL-10
 License: CC-BY-NC-SA-3.0+
 BuildArch: noarch
 %branding_add_conflicts simply-linux backgrounds10
 
 %description backgrounds10
-This package contains backgrounds for Simply Linux 9.
+This package contains backgrounds for Simply Linux 10.
 
 %package slideshow
 Summary: Slideshow for Simply Linux %version installer.
@@ -296,6 +291,7 @@ Simply Linux index.html welcome page.
 Summary: menu for Simply Linux
 License: Distributable
 Group: Graphical desktop/Other
+BuildArch: noarch
 Requires(pre): altlinux-freedesktop-menu-common
 Requires: altlinux-freedesktop-menu-common
 
@@ -388,12 +384,6 @@ mkdir -p %buildroot/etc/xdg/menus/xfce-applications-merged
 cp menu/50-xfce-applications.menu %buildroot/etc/xdg/menus/xfce-applications-merged/
 mkdir -p %buildroot/usr/share/desktop-directories
 cp menu/altlinux-wine.directory %buildroot/usr/share/desktop-directories/
-# Find and use java policy desktop file: its name arch-dependent
-JAVA_POLICY_DESKTOP="$(find /usr/share/applications -mindepth 1 -maxdepth 1 \
-                       -name 'java-%{java_version}-openjdk-*-policytool.desktop')" >/dev/null 2>&1
-[ -n "$JAVA_POLICY_DESKTOP" ] || exit 1
-cp -a "$JAVA_POLICY_DESKTOP" %buildroot/usr/share/slinux-style/applications/
-echo "NoDisplay=True" >>%buildroot/usr/share/slinux-style/applications/"${JAVA_POLICY_DESKTOP##*/}"
 
 %ifarch %ix86 x86_64
 #bootloader
@@ -475,7 +465,9 @@ fi
 
 %files xfce-settings
 %_sysconfdir/X11/profile.d/zdg-move-templates.sh
+%_sysconfdir/X11/profile.d/zdg-move-desktop.sh
 /etc/skel/XDG-Templates.skel/
+/etc/skel/XDG-Desktop.skel/
 /etc/skel/.wm-select
 /etc/skel/.config
 /etc/skel/.local
@@ -508,6 +500,18 @@ fi
 %_datadir/install3/*
 
 %changelog
+* Mon Dec 27 2021 Mikhail Efremov <sem@altlinux.org> 10.0-alt1
+- menu: Use Name as GenericName in pavucontrol.desktop.
+- xfce-settings: Add indexhtml.desktop to desktop.
+- xfce-settings: Reduce panel size.
+- bootloader: Move gfxboot menu.
+- menu: Drop java-*-openjdk-*-policytool.desktop.
+- slideshow: Update slides for SL10.
+- xfce-settings,backgrounds10: Fix description.
+- bootloader: Set white gfxboot menu color.
+- bootloader: Set white grub menu text.
+- bootloader: Move grub menu a bit.
+
 * Tue Dec 14 2021 Mikhail Efremov <sem@altlinux.org> 9.900-alt1
 - xfce-settings: Drop compiz settings.
 - xfce-settings: Drop meditrc.
