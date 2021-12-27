@@ -16,7 +16,7 @@
 %define nv_version 470
 %define nv_release 86
 %define nv_minor %nil
-%define pkg_rel alt245
+%define pkg_rel alt246
 %define set_gl_nvidia_ver 1.5.2
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -77,6 +77,7 @@ Source: set_gl_nvidia-%set_gl_nvidia_ver.tar
 Source1: alternate-install-present
 Source2: nvidia-install-driver
 Source3: nvidia-clean-driver
+Source4: nvidia-prime
 Source10: nvidia-sleep.tar
 
 BuildRequires(pre): rpm-build-ubt
@@ -198,6 +199,7 @@ install -m 0644 %SOURCE1 %buildroot/usr/lib/nvidia/
 mkdir -p %buildroot/%_bindir/
 install -m 0755 %SOURCE2 %buildroot/%_bindir/
 install -m 0755 %SOURCE3 %buildroot/%_bindir/
+install -m 0755 %SOURCE4 %buildroot/%_bindir/
 
 %__install -m 0755 set_gl_nvidia*/nvidia %buildroot/%xdrv_d/nvidia
 #%__ln_s ../../../..%xdrv_d/nvidia %buildroot/%xdrv_d_old/nvidia
@@ -321,6 +323,7 @@ fi
 #
 %_bindir/nvidia-clean-driver
 %_bindir/nvidia-install-driver
+%_bindir/nvidia-prime
 /usr/lib/nvidia/alternate-install-present
 #
 %_bindir/nvidia-sleep.sh
@@ -330,6 +333,9 @@ fi
 /lib/systemd/system-sleep/nvidia
 
 %changelog
+* Mon Dec 27 2021 Sergey V Turchin <zerg@altlinux.org> 470.86-alt246
+- add nvidia-prime script
+
 * Mon Nov 15 2021 Sergey V Turchin <zerg@altlinux.org> 470.86-alt245
 - new version
 
