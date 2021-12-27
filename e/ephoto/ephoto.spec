@@ -3,8 +3,8 @@
 %define beta %nil
 
 Name: ephoto
-Version: 1.5
-Release: alt3
+Version: 1.6.0
+Release: alt1
 
 Summary: The Enlightenment Photo Viewer
 Group: Graphical desktop/Enlightenment
@@ -18,8 +18,8 @@ Vcs: https://git.enlightenment.org/apps/ephoto.git
 Source: %name-%version%beta.tar
 %endif
 
-BuildRequires(pre): meson
-BuildRequires: libelementary-devel >= 1.19.0 libcheck-devel libexif-devel
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson libelementary-devel >= 1.26.0 libcheck-devel libexif-devel
 
 %description
 Photo Viewer for Enlightenment desktop.
@@ -44,6 +44,9 @@ Photo Viewer for Enlightenment desktop.
 %doc AUTHORS README TODO
 
 %changelog
+* Mon Dec 27 2021 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Mon Jun 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1.5-alt3
 - updated to 36b629c (added russian translation)
 - fixed License tag
