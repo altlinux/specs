@@ -1,6 +1,6 @@
 Name: supertux2
-Version: 0.6.2
-Release: alt3
+Version: 0.6.3
+Release: alt1
 
 Summary: Classic 2D jump'n run sidescroller game in a Super Mario style
 License: GPL-3.0-or-later AND CC-BY-SA-3.0 AND GPL-2.0-or-later AND GPL-1.0-only
@@ -21,8 +21,8 @@ Requires: %name-data = %version-%release
 
 # Automatically added by buildreq on Mon Oct 01 2012 (-bi)
 # WTF? vorbis-tools? really?
-BuildPreReq: cmake rpm-macros-cmake
-BuildRequires: boost-program_options-devel boost-filesystem-devel boost-locale-devel gcc-c++ libSDL2_image-devel libSM-devel libXau-devel libXdmcp-devel libXft-devel libcurl-devel libglew-devel libopenal-devel libphysfs-devel libvorbis-devel zlib-devel libpng-devel libfreetype-devel libraqm-devel libfribidi-devel
+BuildPreReq: cmake rpm-macros-cmake rpm-build-ninja doxygen
+BuildRequires: boost-program_options-devel boost-filesystem-devel boost-locale-devel gcc-c++ libSDL2_image-devel libSM-devel libXau-devel libXdmcp-devel libXft-devel libcurl-devel libglew-devel libopenal-devel libphysfs-devel libvorbis-devel zlib-devel libpng-devel libfreetype-devel libraqm-devel libfribidi-devel libglm-devel
 
 %description
 SuperTux is a jump'n run like game, with strong inspiration from the
@@ -60,14 +60,15 @@ sed -i 's/LINKER_LANGUAGE C/&XX/' external/squirrel/sq/CMakeLists.txt
 
 %build
 %cmake_insource \
+				-GNinja \
         -DINSTALL_SUBDIR_BIN=bin \
         -DINSTALL_SUBDIR_SHARE=share/supertux2 \
         -DCMAKE_BUILD_TYPE="Release" \
         -DENABLE_BOOST_STATIC_LIBS=OFF
-%make_build
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
-%makeinstall_std
+%cmake_install
 %find_lang %name
 
 install -pDm644 %SOURCE1 %buildroot/%_miconsdir/%name.png
@@ -98,6 +99,10 @@ rm -rf %buildroot/%_docdir/supertux2/
 %exclude %_datadir/supertux2/sounds/normalize.sh
 
 %changelog
+* Mon Dec 27 2021 Leontiy Volodin <lvol@altlinux.org> 0.6.3-alt1
+- New version (0.6.3) with rpmgs script.
+- Built with ninja instead make.
+
 * Tue Feb 02 2021 Leontiy Volodin <lvol@altlinux.org> 0.6.2-alt3
 - Fixed sisyphus_check error.
 
