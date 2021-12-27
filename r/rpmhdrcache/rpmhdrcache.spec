@@ -1,5 +1,5 @@
 Name: rpmhdrcache
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: Cached reading of rpm package headers
@@ -72,6 +72,9 @@ are stored in a Berkeley DB, larger entries are backed by filesystem.
 %_libdir/libqacache.so
 
 %changelog
+* Thu Dec 23 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.2-alt1
+- Fixed build on e2k architectures.
+
 * Fri Feb 01 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.1-alt1
 - Switched to librpm7 API (patch by Alexey Tourbin).
 - Rebuilt with openssl 1.1.
