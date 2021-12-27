@@ -2,11 +2,12 @@
 %define origname krusader
 
 Name: kde5-%origname
-Version: 2.7.1
-Release: alt3
+Version: 2.7.2
+Release: alt1
 
-Source: %origname.tar.gz
-Source1: krusader.po
+# https://download.kde.org/stable/%origname/%version/%origname-%version.tar.xz
+Source: %origname-%version.tar
+
 Patch1: not_show_hidden_files.patch
 
 Packager: Konstantin Artyushkin <akv@altlinux.org>
@@ -14,7 +15,7 @@ Packager: Konstantin Artyushkin <akv@altlinux.org>
 Group: File tools
 Summary: Advanced KDE twin-panel file-manager
 License: GPLv3+
-Url: http://www.krusader.org/
+Url: http://www.%origname.org/
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: gcc-c++ extra-cmake-modules gettext zlib-devel
@@ -55,9 +56,8 @@ published under the GNU General Public Licence
 (http://www.gnu.org/copyleft/gpl.html).
 
 %prep
-%setup -qn %origname
+%setup -qn %origname-%version
 %patch1 -p2
-cp -f %SOURCE1 po/ru/
 
 %build
 %add_optflags -fpermissive
@@ -79,8 +79,12 @@ cp -f %SOURCE1 po/ru/
 %_K5plug/kio_*.so
 %_K5xmlgui/%origname
 %_K5doc/*/%origname
+%_datadir/metainfo/org.kde.%origname.appdata.xml
 
 %changelog
+* Mon Dec 27 2021 Nazarov Denis <nenderus@altlinux.org> 2.7.2-alt1
+- new 2.7.2 version (ALT #40495)
+
 * Mon Apr 15 2019 Pavel Moseev <mars@altlinux.org> 2.7.1-alt3
 - update translation
 
