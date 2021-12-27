@@ -1,7 +1,7 @@
 %define distro alt-server-v
 
 Name: installer-distro-%distro
-Version: 9.2.0
+Version: 10.0.0
 Release: alt1
 
 Summary: Installer configuration (Server V)
@@ -79,6 +79,11 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Mon Dec 27 2021 Alexey Shabalin <shaba@altlinux.org> 10.0.0-alt1
+- define swap not more then 2GB
+- define minimal root part as 15GB
+- define minimal var part as 1GB
+
 * Tue Jun 01 2021 Andrew A. Vasilyev <andy@altlinux.org> 9.2.0-alt1
 - simplify FS profiles
 
