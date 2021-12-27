@@ -16,10 +16,9 @@
 %define xfwm4_compositing false
 %endif
 
-# NOTE: Helper's name must be one of exo helpers.
-%ifarch %e2k %arm aarch64 mipsel riscv64
+# NOTE: Helper's name must be one of xfce4-settings helpers.
+%ifarch %e2k %arm mipsel riscv64
 # e2k: 2019: no chromium port available
-# aarch64: Seems firefox is faster as reported by jqt4@
 # mipsel: firefox works better now -- iv@
 %ifarch riscv64
 # riscv64: 2021: no firefox port available
@@ -57,7 +56,7 @@
 
 Name: branding-simply-linux
 Version: 10.0
-Release: alt2
+Release: alt3
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
 %ifarch %ix86 x86_64
@@ -510,6 +509,11 @@ fi
 %_datadir/install3/*
 
 %changelog
+* Mon Dec 27 2021 Mikhail Efremov <sem@altlinux.org> 10.0-alt3
+- indexhtml: Year auto-substitution.
+- xfce-settings: Use chromium and vlc on aarch64.
+- trivial: Update comment.
+
 * Mon Dec 27 2021 Anton Midyukov <antohami@altlinux.org> 10.0-alt2
 - riscv64: set browser to epiphany, mail_reader to claws-mail
 
