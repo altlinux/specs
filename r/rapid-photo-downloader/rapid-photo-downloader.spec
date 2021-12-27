@@ -1,5 +1,5 @@
 Name: rapid-photo-downloader
-Version: 0.9.27
+Version: 0.9.28
 Release: alt1
 
 %define xdg_name net.damonlynch.rapid_photo_downloader
@@ -68,6 +68,9 @@ cp -r build/mo/* %buildroot%_datadir/locale
 %doc README* RELEASE_NOTES* CHANGES*
 
 %changelog
+* Tue Dec 28 2021 Yuri N. Sedunov <aris@altlinux.org> 0.9.28-alt1
+- 0.9.28
+
 * Tue Dec 14 2021 Yuri N. Sedunov <aris@altlinux.org> 0.9.27-alt1
 - 0.9.27
 
