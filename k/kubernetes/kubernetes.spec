@@ -7,7 +7,7 @@
 
 Name: kubernetes
 Version: 1.22.5
-Release: alt1
+Release: alt2
 Summary: Container cluster management
 
 Group: System/Configuration/Other
@@ -207,6 +207,9 @@ install -p -m 755 -t %buildroot%_bindir ${output_path}/kube-proxy
 # install the bash completion
 install -d -m 0755 %buildroot%_datadir/bash-completion/completions/
 %buildroot%_bindir/kubectl completion bash > %buildroot%_datadir/bash-completion/completions/kubectl
+# install the zsh completion
+install -d -m 0755 %buildroot%_datadir/zsh/site-functions/
+%buildroot%_bindir/kubectl completion zsh > %buildroot/%_datadir/zsh/site-functions/_kubectl
 
 # systemd service
 install -d -m 0755 %buildroot%_unitdir
@@ -270,6 +273,14 @@ install -p -m 0644 -t %buildroot/%_sysconfdir/systemd/system.conf.d %SOURCE3
 %preun node
 %preun_service kube-proxy
 
+%post crio
+if [ -f /etc/net/sysctl.conf ]; then
+    sed \
+        -i.kubernetes-crio \
+        -e 's/^net.ipv4.ip_forward = 0$/# net.ipv4.ip_forward = 0/' \
+        /etc/net/sysctl.conf
+fi
+
 %files common
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/config
@@ -319,12 +330,17 @@ install -p -m 0644 -t %buildroot/%_sysconfdir/systemd/system.conf.d %SOURCE3
 %_man1dir/kubectl*
 %_bindir/kubectl
 %_datadir/bash-completion/completions/kubectl
+%_datadir/zsh/site-functions/_kubectl
 
 %files crio
 %_modulesloaddir/crio.conf
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Fri Dec 24 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.5-alt2
+- Comment etcnet hardcoded net.ipv4.ip_forward default
+- Add zsh completion
+
 * Tue Dec 21 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.5-alt1
 - 1.22.5
 - Use crio cri by default in kubeadm.conf
