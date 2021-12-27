@@ -2,7 +2,7 @@
 
 Name: installer-distro-%distro
 Version: 10.0.0
-Release: alt1
+Release: alt2
 
 Summary: Installer configuration (Server V)
 License: GPLv2
@@ -79,6 +79,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Tue Dec 28 2021 Alexey Shabalin <shaba@altlinux.org> 10.0.0-alt2
+- decrease minimal root size to 7GB
+
 * Mon Dec 27 2021 Alexey Shabalin <shaba@altlinux.org> 10.0.0-alt1
 - define swap not more then 2GB
 - define minimal root part as 15GB
