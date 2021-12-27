@@ -91,7 +91,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.7
-Release: alt7
+Release: alt8
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -466,7 +466,8 @@ Summary: Network Time Synchronization
 Conflicts: %name < 1:214-alt13
 Requires: %name-networkd = %EVR
 Provides: ntp-client
-Provides: ntp-server
+# temporary disabled
+# Provides: ntp-server
 
 %description timesyncd
 systemd-timesyncd is a system service that may be used
@@ -2271,6 +2272,9 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Mon Dec 27 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.7-alt8
+- Provides ntp-server was disable temporary in systemd-timesyncd.
+
 * Sat Dec 25 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.7-alt7
 - Add /etc/sysctl.conf to systemd-sysctl-common package.
 - Add /etc/modules to new systemd-modules-common package.
