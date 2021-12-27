@@ -6,7 +6,7 @@ ExcludeArch: armh
 
 Name: zoneminder
 Version: 1.36.12
-Release: alt1
+Release: alt2
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -81,6 +81,11 @@ EOF
 ./utils/zmeditconfigdata.sh ZM_CHECK_FOR_UPDATES no
 ./utils/zmeditconfigdata.sh ZM_DYN_SHOW_DONATE_REMINDER no
 ./utils/zmeditconfigdata.sh ZM_OPT_FAST_DELETE no
+
+%ifarch %e2k
+# unsupported as of lcc 1.25.15
+sed -i 's,-Wconditionally-supported,,' cmake/compiler/gcc/settings.cmake
+%endif
 
 %build
 %cmake -DZM_TARGET_DISTRO="alt" -DPCRE_INCLUDE_DIR=/usr/include/pcre -DZM_SYSTEMD=ON -DZM_WEB_USER=%{zmuser} -DZM_WEB_GROUP=%{zmgroup}
@@ -163,6 +168,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Mon Dec 27 2021 Michael Shigorin <mike@altlinux.org> 1.36.12-alt2
+- E2K: avoid lcc-unsupported option
+
 * Mon Dec 20 2021 Anton Farygin <rider@altlinux.ru> 1.36.12-alt1
 - 1.36.12
 
