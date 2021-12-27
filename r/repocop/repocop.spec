@@ -1,5 +1,5 @@
 Name: repocop
-Version: 0.83
+Version: 0.84
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -103,7 +103,7 @@ install -m755 common/* $RPM_BUILD_ROOT%_datadir/repocop/common/
 mkdir -p $RPM_BUILD_ROOT%_datadir/repocop/html/
 install -m644 img/* $RPM_BUILD_ROOT%_datadir/repocop/html/
 
-for backend in fsprefix fsmd5prefix ; do
+for backend in fsprefix ; do
     mkdir -p %buildroot%_prefix/libexec/repocop/backends/$backend
     cp -a libexec/backends/$backend/repocop-test-* %buildroot%_prefix/libexec/repocop/backends/$backend/
 done
@@ -160,6 +160,9 @@ done
 %_man1dir/repocop-report-html.*
 
 %changelog
+* Tue Dec 28 2021 Igor Vlasenko <viy@altlinux.org> 0.84-alt1
+- new version
+
 * Fri Sep 18 2020 Igor Vlasenko <viy@altlinux.ru> 0.83-alt1
 - new version
 
