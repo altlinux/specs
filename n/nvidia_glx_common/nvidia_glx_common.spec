@@ -14,9 +14,9 @@
 # version-release
 
 %define nv_version 470
-%define nv_release 86
+%define nv_release 94
 %define nv_minor %nil
-%define pkg_rel alt246
+%define pkg_rel alt247
 %define set_gl_nvidia_ver 1.5.2
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -333,6 +333,9 @@ fi
 /lib/systemd/system-sleep/nvidia
 
 %changelog
+* Mon Dec 27 2021 Sergey V Turchin <zerg@altlinux.org> 470.94-alt247
+- new version
+
 * Mon Dec 27 2021 Sergey V Turchin <zerg@altlinux.org> 470.86-alt246
 - add nvidia-prime script
 

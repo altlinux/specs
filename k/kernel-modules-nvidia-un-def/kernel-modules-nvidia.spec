@@ -7,10 +7,10 @@
 %define modesetmodule_name	nvidia-modeset
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
-%define package_version	470.86
+%define package_version	470.94
 %define module_version	%package_version
 %ifarch %ix86 armh
-%define module_version	390.144
+%define module_version	390.147
 %endif
 %define module_release	alt1
 %define flavour		un-def
@@ -25,7 +25,7 @@
 
 %define legacy6 %nil
 %nvIF_ver_lt %xorg_ver 1.21
-%define legacy6 390.144
+%define legacy6 390.147
 %endif
 %define legacy6_src %(echo %legacy6 | tr -d .)
 
@@ -280,6 +280,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Dec 27 2021 Sergey V Turchin <zerg at altlinux dot org> 470.94-alt1
+- new release(470.94)
 
 * Mon Nov 15 2021 Sergey V Turchin <zerg at altlinux dot org> 470.86-alt1
 - new release(470.86)
