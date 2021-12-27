@@ -1,5 +1,5 @@
-%def_enable snapshot
-%define ver_major 3.32
+%def_disable snapshot
+%define ver_major 41
 %define api_ver 1.0
 %define xdg_name org.gnome.gitg
 
@@ -9,8 +9,8 @@
 %def_disable check
 
 Name: gitg
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major
+Release: alt1
 
 Summary: git repository viewer targeting gtk+/GNOME
 Group: Development/Other
@@ -29,29 +29,29 @@ Requires: typelib(PeasGtk)
 
 %define gitg_pluginsdir %_libdir/%name/plugins
 
-%define glib_ver 2.38
+%define glib_ver 2.68
 %define gtk_ver 3.20
-%define gtksourceview_ver 3.10
-%define git2_ver 0.27.7
+%define gtksourceview_ver 4.0.3
+%define git2_ver 1.0.0
 %define webkit_ver 2.6.0
-%define gtkspell_ver 3.0.3
+%define gspell_ver 1.8.1
 %define peas_ver 1.5.0
 
-BuildRequires(pre): meson rpm-build-gir rpm-build-python3 rpm-build-vala
+BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3 rpm-build-vala
+BuildRequires: meson vala-tools
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libdazzle-devel
 BuildRequires: libgit2-glib-devel >= %git2_ver
-BuildRequires: libgtksourceview3-devel >= %gtksourceview_ver
-BuildRequires: libwebkit2gtk-devel >= %webkit_ver
-BuildRequires: libgtkspell3-devel >= %gtkspell_ver
+BuildRequires: libgtksourceview4-devel >= %gtksourceview_ver
+#BuildRequires: libwebkit2gtk-devel >= %webkit_ver libwebkit2gtk-gir-devel
+BuildRequires: libgspell-devel >= %gspell_ver
 BuildRequires: libpeas-devel >= %peas_ver
-BuildRequires: gnome-common intltool desktop-file-utils
+BuildRequires: desktop-file-utils
 BuildRequires: libgee0.8-devel libjson-glib-devel libsecret-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxml2-devel
-BuildRequires: libgit2-glib-gir-devel libwebkit2gtk-gir-devel libgee0.8-gir-devel
-BuildRequires: libgtkspell3-gir-devel
-BuildRequires: vala-tools
+BuildRequires: libgit2-glib-gir-devel libgee0.8-gir-devel
+BuildRequires: libgspell-gir-devel
 BuildRequires: gsettings-desktop-schemas-devel
 %{?_enable_docs:BuildRequires: valadoc}
 %{?_enable_python:BuildRequires(pre): rpm-build-python3}
@@ -140,7 +140,6 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_desktopdir/%xdg_name.desktop
 %_datadir/%name/
 %_man1dir/%{name}*
-%_iconsdir/hicolor/*x*/apps/*
 %_iconsdir/hicolor/scalable/apps/%{xdg_name}*.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
 %{?_enable_python:%python3_sitelibdir/gi/overrides/*}
@@ -170,6 +169,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_girdir/GitgExt-%api_ver.gir
 
 %changelog
+* Mon Dec 27 2021 Yuri N. Sedunov <aris@altlinux.org> 41-alt1
+- 41
+
 * Fri Nov 20 2020 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt2
 - updated to v3.32.1-19-ge1014482
 - fixed BR
