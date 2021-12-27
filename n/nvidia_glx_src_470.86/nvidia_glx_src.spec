@@ -27,7 +27,7 @@
 %define nv_version 470
 %define nv_release 86
 %define nv_minor   %nil
-%define pkg_rel alt230
+%define pkg_rel alt231
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -376,6 +376,9 @@ fi
 %endif
 
 %changelog
+* Mon Dec 27 2021 Sergey V Turchin <zerg@altlinux.org> 470.86-alt231
+- update supported devices list
+
 * Mon Nov 15 2021 Sergey V Turchin <zerg@altlinux.org> 470.86-alt230
 - new version
 
