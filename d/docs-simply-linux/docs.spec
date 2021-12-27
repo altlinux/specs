@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.0
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Mon Dec 27 2021 Elena Mishina <lepata@altlinux.org> 10.0-alt2
+- update to Simply Linux 10.0
+- add appinstall, userpasswd
+
 * Thu Dec 21 2021 Elena Mishina <lepata@altlinux.org> 10.0-alt1
 - update to Simply Linux 10.0beta
 - reduce package size
