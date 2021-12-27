@@ -50,7 +50,7 @@
 %global optflags_lto %nil
 
 Name: ceph
-Version: 16.2.6
+Version: 16.2.7
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -172,7 +172,7 @@ BuildRequires: libyaml-cpp-devel
 BuildRequires: python3-module-Cython python3-module-OpenSSL python3-devel python3-module-setuptools
 %{?_with_system_boost:BuildRequires: boost-python3-devel}
 BuildRequires: python3-module-prettytable python3-module-routes python3-module-bcrypt
-BuildRequires: python3-module-html5lib python3-module-pyasn1 python3-module-virtualenv
+BuildRequires: python3-module-html5lib python3-module-pyasn1
 BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 BuildRequires: libxmlsec1-devel
 %{?_enable_check:BuildRequires: python3-module-cherrypy python3-module-jwt python3-module-werkzeug python3-module-pecan python3-module-tox}
@@ -193,6 +193,8 @@ Summary: Ceph Base Package
 Group: System/Base
 Requires: ceph-common = %EVR
 Requires: ntp-server
+Requires: /usr/sbin/smartctl
+Requires: /usr/sbin/nvme
 
 %description base
 Base is the package that includes all the files shared amongst ceph servers
@@ -259,8 +261,6 @@ namespace, coordinating access to the shared OSD cluster.
 Summary: Ceph Monitor Daemon
 Group: System/Base
 Requires: ceph-base = %EVR
-Requires: /usr/sbin/smartctl
-Requires: /usr/sbin/nvme
 
 %description mon
 ceph-mon is the cluster monitor daemon for the Ceph distributed file
@@ -976,7 +976,7 @@ mkdir -p %buildroot%_localstatedir/cephadm/.ssh
 touch %buildroot%_localstatedir/cephadm/.ssh/authorized_keys
 
 # sudoers.d
-install -m 0400 -D sudoers.d/ceph-osd-smartctl %buildroot%_sysconfdir/sudoers.d/ceph-osd-smartctl
+install -m 0400 -D sudoers.d/ceph-smartctl %buildroot%_sysconfdir/sudoers.d/ceph-smartctl
 
 # prometheus alerts
 install -m 644 -D monitoring/prometheus/alerts/ceph_default_alerts.yml %{buildroot}/etc/prometheus/ceph/ceph_default_alerts.yml
@@ -1039,35 +1039,37 @@ useradd  -r -g ceph -u $CEPH_USER_ID -s /sbin/nologin -c "Ceph daemons" -d %_loc
 %systemd_preun rbdmap
 
 %post base
+# Allow execute smartctl for ceph user with sudo
+control sudo public 2>/dev/null ||:
 %post_systemd_postponed ceph.target ceph-crash.service
 
 %preun base
 %systemd_preun ceph.target ceph-crash.service
 
 %post mds
-%post_systemd_postponed ceph-mds@\*.service ceph-mds.target
+%post_systemd_postponed ceph-mds@*.service ceph-mds.target
 
 %preun mds
-%systemd_preun ceph-mds@\*.service ceph-mds.target
+%systemd_preun ceph-mds@*.service ceph-mds.target
 
 %post mon
-%post_systemd_postponed ceph-mon@\*.service ceph-mon.target
+%post_systemd_postponed ceph-mon@*.service ceph-mon.target
 
 %preun mon
-%systemd_preun ceph-mon@\*.service ceph-mon.target
+%systemd_preun ceph-mon@*.service ceph-mon.target
 
 %post osd
 %sysctl_apply 90-ceph-osd.conf
-%post_systemd_postponed ceph-osd@\*.service ceph-volume@\*.service ceph-osd.target
+%post_systemd_postponed ceph-osd@*.service ceph-volume@*.service ceph-osd.target
 
 %preun osd
-%systemd_preun ceph-osd@\*.service ceph-volume@\*.service ceph-osd.target
+%systemd_preun ceph-osd@*.service ceph-volume@*.service ceph-osd.target
 
 %post mgr
-%post_systemd_postponed ceph-mgr@\*.service ceph-mgr.target
+%post_systemd_postponed ceph-mgr@*.service ceph-mgr.target
 
 %preun mgr
-%systemd_preun ceph-mgr@\*.service ceph-mgr.target
+%systemd_preun ceph-mgr@*.service ceph-mgr.target
 
 %post mgr-dashboard
 if [ $1 -eq 1 ] ; then
@@ -1120,28 +1122,28 @@ if [ $1 -eq 1 ] ; then
 fi
 
 %post -n cephfs-mirror
-%post_systemd_postponed cephfs-mirror@\*.service cephfs-mirror.target
+%post_systemd_postponed cephfs-mirror@*.service cephfs-mirror.target
 
 %preun -n cephfs-mirror
-%systemd_preun cephfs-mirror@\*.service cephfs-mirror.target
+%systemd_preun cephfs-mirror@*.service cephfs-mirror.target
 
 %post -n rbd-mirror
-%post_systemd_postponed ceph-rbd-mirror@\*.service ceph-rbd-mirror.target
+%post_systemd_postponed ceph-rbd-mirror@*.service ceph-rbd-mirror.target
 
 %preun -n rbd-mirror
-%systemd_preun ceph-rbd-mirror@\*.service ceph-rbd-mirror.target
+%systemd_preun ceph-rbd-mirror@*.service ceph-rbd-mirror.target
 
 %post radosgw
-%post_systemd_postponed ceph-radosgw@\*.service ceph-radosgw.target
+%post_systemd_postponed ceph-radosgw@*.service ceph-radosgw.target
 
 %preun radosgw
-%systemd_preun ceph-radosgw@\*.service ceph-radosgw.target
+%systemd_preun ceph-radosgw@*.service ceph-radosgw.target
 
 %post immutable-object-cache
-%post_systemd_postponed ceph-immutable-object-cache@\*.service ceph-immutable-object-cache.target
+%post_systemd_postponed ceph-immutable-object-cache@*.service ceph-immutable-object-cache.target
 
 %preun immutable-object-cache
-%systemd_preun ceph-immutable-object-cache@\*.service ceph-immutable-object-cache.target
+%systemd_preun ceph-immutable-object-cache@*.service ceph-immutable-object-cache.target
 
 %pre -n cephadm
 groupadd -r -f cephadm 2>/dev/null ||:
@@ -1194,6 +1196,7 @@ useradd  -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localsta
 %attr(750,ceph,ceph) %dir %_localstatedir/ceph/bootstrap-mgr
 %attr(750,ceph,ceph) %dir %_localstatedir/ceph/bootstrap-rbd
 %attr(750,ceph,ceph) %dir %_localstatedir/ceph/bootstrap-rbd-mirror
+%config(noreplace) %_sysconfdir/sudoers.d/ceph-smartctl
 
 %files common
 %doc AUTHORS COPYING README.md doc src/doc src/sample.ceph.conf
@@ -1410,7 +1413,6 @@ useradd  -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localsta
 %_unitdir/ceph-volume@.service
 %attr(750,ceph,ceph) %dir %_localstatedir/ceph/osd
 %_sysctldir/90-ceph-osd.conf
-%config(noreplace) %_sysconfdir/sudoers.d/ceph-osd-smartctl
 
 %if_with ocf
 %files resource-agents
@@ -1626,6 +1628,9 @@ useradd  -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localsta
 %endif
 
 %changelog
+* Tue Dec 21 2021 Alexey Shabalin <shaba@altlinux.org> 16.2.7-alt1
+- 16.2.7
+
 * Thu Oct 07 2021 Alexey Shabalin <shaba@altlinux.org> 16.2.6-alt1
 - 16.2.6
 - Update post and preun scripts for use macros from rpm-macros-systemd.
