@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: evisum
-Version: 0.5.13
+Version: 0.6.0
 Release: alt1
 
 Summary: The Enlightenment system and process monitor
@@ -13,14 +13,14 @@ Url: https://enlightenment.org
 %if_disabled snapshot
 Source: https://download.enlightenment.org/rel/apps/%name/%name-%version.tar.xz
 %else
-# VCS: https://git.enlightenment.org/apps/evisum.git
+Vcs: https://git.enlightenment.org/apps/evisum.git
 Source: %name-%version.tar
 %endif
 
-%define efl_ver 1.25.1
+%define efl_ver 1.26.0
 
-BuildRequires(pre): meson
-BuildRequires: libelementary-devel >= %efl_ver
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson libelementary-devel >= %efl_ver
 
 %description
 System and process monitor for Enlightenment
@@ -46,6 +46,9 @@ System and process monitor for Enlightenment
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon Dec 27 2021 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Sun Apr 25 2021 Yuri N. Sedunov <aris@altlinux.org> 0.5.13-alt1
 - 0.5.13
 
