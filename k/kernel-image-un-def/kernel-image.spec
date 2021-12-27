@@ -1,5 +1,5 @@
 Name: kernel-image-un-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	5.15
 %define kernel_sublevel .11
@@ -658,6 +658,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Dec 27 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.15.11-alt2
+- CONFIG_FB_SIMPLE=y
+
 * Wed Dec 22 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.15.11-alt1
 - v5.15.11
 
