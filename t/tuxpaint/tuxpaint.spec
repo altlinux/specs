@@ -1,5 +1,5 @@
 Name: tuxpaint
-Version: 0.9.26
+Version: 0.9.27
 Release: alt1
 
 Summary: A drawing program for young children
@@ -12,10 +12,12 @@ Url: http://www.tuxpaint.org/
 Source: %name-%version.tar.gz
 Source1: %name.desktop
 
+# The databases in [/usr/local/share/applications, /usr/share/applications] could not be updated.
+Patch0: desktop.patch
 Patch1: tuxpaint-0.23-e2k-fix_bad_elf_symbol.patch
 
 BuildRequires(pre): rpm-build-python
-BuildRequires: libSDL-devel libSDL_image-devel libSDL_mixer-devel
+BuildRequires: libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_gfx-devel
 BuildRequires: libSDL_pango-devel libSDL_ttf-devel ImageMagick-tools xdg-utils
 BuildRequires: libpng-devel zlib-devel gettext librsvg-devel libpaper-devel libfribidi-devel
 BuildRequires: libimagequant-devel
@@ -54,6 +56,7 @@ Development shared library for %name
 
 %prep
 %setup
+%patch0 -p0
 # we can do it not only on e2k
 %patch1 -p2
 
@@ -111,6 +114,9 @@ rm -f /usr/share/tuxpaint/fonts/Free*.ttf
 %_man1dir/tp-magic-config*
 
 %changelog
+* Mon Dec 27 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.27-alt1
+- Build new version.
+
 * Thu Jul 01 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.26-alt1
 - Build new version.
 
