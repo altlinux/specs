@@ -1,9 +1,9 @@
 %def_disable snapshot
 
-%define ver_major 0.24
+%define ver_major 0.25
 %define beta %nil
-%define efl_ver_major 1.24
-%define efl_ver %efl_ver_major.2
+%define efl_ver_major 1.25
+%define efl_ver %efl_ver_major.0
 
 %def_enable bluetooth
 %def_enable wayland
@@ -21,7 +21,7 @@
 %def_disable wmsession
 
 Name: enlightenment
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -65,6 +65,8 @@ Requires: terminology
 Requires: ephoto
 # default media player
 Requires: rage
+# system monitor
+Requires: evisum
 # for menu
 Requires: gnome-icon-theme
 Requires: wm-common-freedesktop
@@ -82,12 +84,13 @@ Requires: %_libdir/libddcutil.so.2
 %{?_enable_connman:Requires: connman}
 %{?_enable_packagekit:Requires: packagekit}
 
-BuildRequires(pre): meson rpm-build-xdg
-BuildRequires: efl-libs-devel >= %efl_ver libelementary-devel >= %efl_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-xdg
+BuildRequires: meson efl-libs-devel >= %efl_ver libelementary-devel >= %efl_ver
 BuildRequires: libpam-devel libalsa-devel libudev-devel libxcbutil-keysyms-devel
 BuildRequires: libdbus-devel libp11-kit-devel xorg-xproto-devel libxcbutil-keysyms-devel
 BuildRequires: libuuid-devel libpulseaudio-devel
 BuildRequires: xkeyboard-config-devel libxkbcommon-devel libdrm-devel libgbm-devel
+BuildRequires: libexif-devel
 BuildRequires: doxygen
 # for sysv
 BuildRequires: pm-utils
@@ -116,7 +119,7 @@ Development headers for Enlightenment.
 #%patch -p1 -R -b .auth
 %patch1 -p1 -b .gsd
 %{?_without_suid_binaries:%patch2 -p1 -b .nosuid}
-%patch3 -p2 -b .ptrace
+#%patch3 -p2 -b .ptrace
 
 # fix logic
 sed -i "s/\(if config_h\.has('HAVE_WAYLAND') == \)false/\1true/" data/session/meson.build
@@ -192,7 +195,7 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %config(noreplace) %_sysconfdir/pam.d/%name
 %dir %_libdir/%name/
 %_libdir/%name/modules/
-%{?_enable_wayland:%_libdir/%name/gadgets/}
+#%{?_enable_wayland:%_libdir/%name/gadgets/}
 %dir %_libdir/%name/utils
 %_libdir/%name/utils/%{name}_alert
 %_libdir/%name/utils/%{name}_elm_cfgtool
@@ -209,15 +212,16 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_bindir/%name
 %_bindir/%{name}_askpass
 %_bindir/%{name}_filemanager
+%_bindir/%{name}_fprint
 %_bindir/%{name}_imc
 %_bindir/%{name}_open
+%_bindir/%{name}_paledit
 %_bindir/%{name}_remote
 %_bindir/%{name}_start
 %_bindir/start_%name
 %_datadir/%name/
 %_datadir/xsessions/%name-xorg.desktop
 %{?_enable_wayland:%_datadir/wayland-sessions/%name.desktop}
-#%_datadir/pixmaps/emixer.png
 %_pixmapsdir/%name-askpass.png
 %_desktopdir/*.desktop
 %{?_enable_systemd:%_prefix/lib/systemd/user/%name.service}
@@ -231,6 +235,9 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Sun Dec 26 2021 Yuri N. Sedunov <aris@altlinux.org> 1:0.25.0-alt1
+- 0.25.0
+
 * Mon Jul 27 2020 Yuri N. Sedunov <aris@altlinux.org> 1:0.24.2-alt1
 - 0.24.2
 

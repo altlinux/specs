@@ -2,16 +2,18 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 1.25
+%define ver_major 1.26
 %define beta %nil
 %define gst_api_ver 1.0
 %define wayland_ver 1.11.0
 
+%def_enable x11
+%def_enable wayland
+%def_enable drm
 %def_enable multisense
 %def_enable fb
 # fb requires tslib?
 %def_disable tslib
-%def_enable drm
 %def_enable egl
 # disabled buy default
 %def_disable ibus
@@ -19,8 +21,6 @@
 %def_enable emotion
 %def_disable elogind
 %def_enable avahi
-
-%def_enable wayland
 
 # elua disabled by default
 %ifarch %luajit_arches
@@ -33,8 +33,8 @@
 %def_enable lua
 
 Name: efl
-Version: %ver_major.1
-Release: alt3.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Enlightenment Foundation Libraries
 Group: System/Libraries
@@ -54,19 +54,25 @@ Patch2000: efl-1.25.1-alt-e2k.patch
 %add_findreq_skiplist %_libdir/evas/utils/evas_generic_pdf_loader.libreoffice
 #Requires: LibreOffice
 
-BuildRequires(pre): meson rpm-macros-luajit rpm-build-python3
-BuildRequires: gcc-c++ glibc-kernheaders glib2-devel libcheck-devel lcov doxygen
-BuildRequires: libpng-devel libjpeg-devel libopenjpeg2.0-devel libtiff-devel libgif-devel libwebp-devel
+BuildRequires(pre): rpm-macros-meson rpm-macros-luajit rpm-build-python3 rpm-build-systemd
+BuildRequires: meson gcc-c++ glibc-kernheaders glib2-devel libcheck-devel lcov doxygen
+BuildRequires: libpng-devel libjpeg-devel libopenjpeg2.0-devel libtiff-devel
+BuildRequires: libgif-devel libwebp-devel librlottie-devel
+# disabled by default in 1.26.0
+BuildRequires: libavif-devel libheif-devel
 BuildRequires: fontconfig-devel libfreetype-devel libfribidi-devel libharfbuzz-devel
 BuildRequires: libpulseaudio-devel libsndfile-devel libbullet-devel zlib-devel liblz4-devel
 BuildRequires: libssl-devel libcurl-devel libdbus-devel
 BuildRequires: libmount-devel libblkid-devel
-BuildRequires: libudev-devel systemd-devel libsystemd-journal-devel libsystemd-daemon-devel
+BuildRequires: libudev-devel libGL-devel libgnutls-devel
+%{?_enable_x11:
 BuildRequires: libX11-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXext-devel
 BuildRequires: libXfixes-devel libXinerama-devel libXrandr-devel libXrender-devel libXScrnSaver-devel
 BuildRequires: libXtst-devel libXcursor-devel libXp-devel libXi-devel scim-devel
-BuildRequires: libxkbcommon-x11-devel
-BuildRequires: libGL-devel libgnutls-devel
+BuildRequires: libxkbcommon-x11-devel}
+%{?_enable_drm:BuildRequires: libdrm-devel libgbm-devel libinput-devel}
+%{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-server-devel libwayland-cursor-devel
+BuildRequires: wayland-protocols libxkbcommon-devel >= 0.6.0 libuuid-devel libwayland-egl-devel}
 
 %{?_enable_elua:BuildRequires: libluajit-devel}
 %ifnarch %e2k
@@ -74,10 +80,8 @@ BuildRequires: libunwind-devel
 %endif
 %{?_enable_ibus:BuildRequires: libibus-devel}
 %{?_enable_tslib:BuildRequires: libts-devel}
-%{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-server-devel libwayland-cursor-devel wayland-protocols libxkbcommon-devel >= 0.6.0 libuuid-devel libwayland-egl-devel}
 %{?_enable_egl:BuildRequires: libEGL-devel libwayland-egl-devel}
 %{?_enable_gstreamer:BuildRequires: gst-plugins%gst_api_ver-devel}
-%{?_enable_drm:BuildRequires: libdrm-devel libgbm-devel libinput-devel}
 %{?_enable_avahi:BuildRequires: libavahi-glib-devel}
 # for elementary
 BuildRequires: /proc dbus-tools-gui doxygen /usr/bin/convert
@@ -231,20 +235,22 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 
 %build
 %meson \
+	%{?_disable_x11:-Dx11=false} \
+	%{?_enable_wayland:-Dwl=true} \
+	%{?_enable_drm:-Ddrm=true} \
+	%{?_enable_fb:-Dfb=true} \
 	%{?_enable_elogind:-Delogind=true} \
 	%{?_enable_elua:-Delua=true} \
 	%{?_enable_tslib:-Dtslib=true} \
-	%{?_enable_wayland:-Dwl=true} \
-	%{?_enable_fb:-Dfb=true} \
-	%{?_enable_drm:-Ddrm=true} \
 	%{?_disable_gstreamer:-Dgstreamer=false} \
-	%{?_disable_avahi:-Davahi=false} \
+	%{?_enable_avahi:-Davahi=true} \
 	-Dmount-path=/bin/mount \
 	-Dunmount-path=/bin/umount \
 	-Deject-path=%_bindir/eject
 %ifarch %e2k
 export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_file:@efreet:@edje:@ecore_evas" | sed "s|@|$(pwd)/%__builddir/src/lib/|g")"
 %endif
+%nil
 %meson_build
 
 %install
@@ -268,8 +274,8 @@ export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_fi
 %_bindir/eeze_scanner
 %_bindir/eeze_scanner_monitor
 %_bindir/eeze_umount
-%_bindir/efl_canvas_wl_test
-%_bindir/efl_canvas_wl_test_stack
+%{?_enable_wayland:%_bindir/efl_canvas_wl_test
+%_bindir/efl_canvas_wl_test_stack}
 %_bindir/efreetd
 %_bindir/eina_modinfo
 %{?_enable_elua:%_bindir/elua}
@@ -281,10 +287,10 @@ export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_fi
 %_libdir/*.so.*
 %exclude %_libdir/libelementary.so.*
 %_libdir/ecore/
+%{?_enable_wayland:%_libdir/ecore_wl2/}
 %_libdir/ecore_con/
 %_libdir/ecore_evas/
 %_libdir/ecore_imf/
-%_libdir/ecore_wl2/
 %_libdir/edje/
 %_libdir/eeze/
 %_libdir/efreet/
@@ -309,6 +315,7 @@ export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_fi
 %{?_enable_elua:%_datadir/elua/}
 %{?_disable_elua:%exclude %_datadir/elua}
 %_datadir/mime/packages/edje.xml
+%_datadir/mime/packages/evas.xml
 %_prefix/lib/systemd/user/ethumb.service
 %doc AUTHORS README NEWS COMPLIANCE COPYING*
 
@@ -332,6 +339,7 @@ export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_fi
 %_libdir/*.so
 %exclude %_libdir/libelementary.so
 %_pkgconfigdir/ecore-audio.pc
+%{?_enable_avahi:%_pkgconfigdir/ecore-avahi.pc}
 %_pkgconfigdir/ecore-con.pc
 %_pkgconfigdir/ecore-cxx.pc
 %{?_enable_drm:%_pkgconfigdir/ecore-drm2.pc}
@@ -343,7 +351,8 @@ export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_fi
 %_pkgconfigdir/ecore-input-evas.pc
 %_pkgconfigdir/ecore-input.pc
 %_pkgconfigdir/ecore-ipc.pc
-%{?_enable_wayland:%_pkgconfigdir/ecore-wl2.pc}
+%{?_enable_wayland:%_pkgconfigdir/ecore-wl2.pc
+%_pkgconfigdir/%name-canvas-wl.pc}
 %_pkgconfigdir/ecore-x.pc
 %_pkgconfigdir/ecore.pc
 %_pkgconfigdir/ector.pc
@@ -357,7 +366,6 @@ export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_fi
 %_pkgconfigdir/efl-cxx.pc
 %_pkgconfigdir/efl-net.pc
 %_pkgconfigdir/efl-ui.pc
-%_pkgconfigdir/%name-canvas-wl.pc
 %_pkgconfigdir/efreet-mime.pc
 %_pkgconfigdir/efreet-trash.pc
 %_pkgconfigdir/efreet.pc
@@ -419,6 +427,9 @@ export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_fi
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Sun Dec 26 2021 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt1
+- 1.26.0
+
 * Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 1.25.1-alt3.1
 - fixed meson options
 
