@@ -1,5 +1,5 @@
 Name: alterator-net-eth
-Version: 5.2.0
+Version: 5.2.1
 Release: alt1
 
 Source:%name-%version.tar
@@ -77,6 +77,9 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Mon Dec 27 2021 Slava Aseev <ptrnine@altlinux.org> 5.2.1-alt1
+- Use hostnamectl (if it possible) to manage static hostname
+
 * Fri Oct 29 2021 Evgeny Sinelnikov <sin@altlinux.org> 5.2.0-alt1
 - Add systemd-networkd control mode
 
