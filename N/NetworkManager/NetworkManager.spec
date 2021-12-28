@@ -59,7 +59,7 @@
 
 Name: NetworkManager
 Version: 1.32.12
-Release: alt1%git_hash
+Release: alt2%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -81,7 +81,7 @@ Patch: %name-%version-%release.patch
 %{?!_without_check:%{?!_disable_check:BuildPreReq: dbus dhcpcd dhcp-client}}
 %{?!_without_check:%{?!_disable_check:BuildRequires: python3-module-dbus}}
 # For /etc/machine-id
-%{?!_without_check:%{?!_disable_check:BuildRequires: systemd-utils}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: systemd}}
 
 BuildPreReq: intltool libgcrypt-devel libtool
 BuildRequires: iproute2 ppp-devel
@@ -644,6 +644,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Dec 28 2021 Mikhail Efremov <sem@altlinux.org> 1.32.12-alt2
+- Fixed build: added systemd to BR.
+
 * Wed Sep 22 2021 Mikhail Efremov <sem@altlinux.org> 1.32.12-alt1
 - Fixed build with gcc11.
 - Updated to 1.32.12.
