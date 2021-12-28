@@ -16,7 +16,7 @@
 
 Name: plasma5-%rname
 Version: 5.23.4
-Release: alt6
+Release: alt7
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -29,6 +29,7 @@ Requires: %name-kns
 
 Source: %rname-%version.tar
 Source1: env-flatpak.sh
+Source2: env-snap.sh
 Patch1: alt-offline-updates.patch
 Patch2: alt-skip-obsoleted-and-removed-from-upgrade.patch
 Patch3: alt-discover-update-all-packages-from-appstream.patch
@@ -175,6 +176,7 @@ mv %buildroot/%_libdir/plasma-discover/lib*.so* %buildroot/%_libdir/
 
 mkdir -p %buildroot/%_K5xdgconf/plasma-workspace/env/
 install -m 0755 %SOURCE1 %buildroot/%_K5xdgconf/plasma-workspace/env/%{name}-flatpak.sh
+install -m 0755 %SOURCE2 %buildroot/%_K5xdgconf/plasma-workspace/env/%{name}-snap.sh
 
 for f in %buildroot/%_K5xdgapp/org.kde.discover*.desktop ; do
     desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
@@ -234,6 +236,7 @@ done
 
 %if_enabled snap
 %files snap
+%config(noreplace) %_K5xdgconf/plasma-workspace/env/*snap*.sh
 %_K5plug/discover/snap-backend.so
 %_K5libexecdir/discover/SnapMacaroonDialog
 %_K5libexecdir/kauth/libsnap_helper
@@ -259,6 +262,9 @@ done
 
 
 %changelog
+* Tue Dec 28 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.4-alt7
+- add workaround to setup  XDG_DATA_DIRS for snap
+
 * Sun Dec 26 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.4-alt6
 - always enable SNAP backend by default
 
