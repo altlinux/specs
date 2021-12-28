@@ -4,7 +4,7 @@
 
 Name: minetest
 Version: 5.4.1
-Release: alt1
+Release: alt2
 Summary: Multiplayer infinite-world block sandbox with survival mode
 License: LGPL-2.0+ and CC-BY-SA-3.0
 Group: Games/Other
@@ -26,7 +26,8 @@ Source4: %{name}.logrotate
 Source5: %{name}.README
 Source6: %{name}_game-%version.tar.gz
 Source7: http://www.gnu.org/licenses/lgpl-2.1.txt
-
+Patch0:   %{name}-gcc11.patch
+ExcludeArch: aarch64
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
@@ -45,7 +46,7 @@ BuildRequires: libluajit-devel
 %endif
 BuildRequires: libncurses-devel
 BuildRequires: libleveldb-devel
-BuildRequires: spatialindex-devel
+BuildRequires: spatialindex-devel jsoncpp-devel
 
 Requires: %name-server = %version-%release
 Requires: icon-theme-hicolor
@@ -67,6 +68,7 @@ System.
 
 %prep
 %setup -q -n %gitname-%name
+%patch0 -p1
 
 pushd games
 tar xf %SOURCE6
@@ -76,6 +78,10 @@ popd
 cp %SOURCE7 doc/
 
 %build
+%ifarch aarch64
+%define _lto_cflags %{nil}
+%endif
+
 %cmake_insource -GNinja\
 %if_with l10n
     -DENABLE_GETTEXT=TRUE \
@@ -165,6 +171,10 @@ fi
 %_man6dir/minetestserver.6*
 
 %changelog
+* Tue Dec 28 2021 Ilya Mashkin <oddity@altlinux.ru> 5.4.1-alt2
+- Add patch to fix build with gcc11
+- ExcludeArch: aarch64
+
 * Mon Apr 19 2021 Andrey Cherepanov <cas@altlinux.org> 5.4.1-alt1
 - New version.
 
