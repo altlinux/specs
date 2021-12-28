@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.27.0
+Version: 0.28.0
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -56,6 +56,11 @@ cp src/*.h %{buildroot}%{_includedir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu Dec 16 2021 Alexey Appolonov <alexey@altlinux.org> 0.28.0-alt1
+- Fixed and modified functions that process strings ("FindSubstrNthOccurrence",
+  "UnescapedQtnMarkPos" and others);
+- Corrected "TConf" class (regarding the parsing of assigns).
+
 * Wed Oct 27 2021 Alexey Appolonov <alexey@altlinux.org> 0.27.0-alt1
 - Fixed segmentation faults in the "TConf" and "TPrinter" classes;
 - Improved error handling of the "TConf" class;
