@@ -4,7 +4,7 @@
 
 Name: egl-wayland
 Version: 1.1.9
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Group: System/Libraries
@@ -70,6 +70,9 @@ install -pDm644 %SOURCE1 \
 %_datadir/wayland-eglstream/
 
 %changelog
+* Tue Dec 28 2021 Sergey V Turchin <zerg@altlinux.org> 1:1.1.9-alt2
+- add upstream fixes from master branch
+
 * Wed Nov 10 2021 Sergey V Turchin <zerg@altlinux.org> 1:1.1.9-alt1
 - new version
 
