@@ -27,7 +27,7 @@
 %define nv_version 470
 %define nv_release 94
 %define nv_minor   %nil
-%define pkg_rel alt232
+%define pkg_rel alt233
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -376,6 +376,9 @@ fi
 %endif
 
 %changelog
+* Tue Dec 28 2021 Sergey V Turchin <zerg@altlinux.org> 470.94-alt233
+- update supported devices list
+
 * Mon Dec 27 2021 Sergey V Turchin <zerg@altlinux.org> 470.94-alt232
 - new version
 
