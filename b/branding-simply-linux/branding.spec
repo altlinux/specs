@@ -56,7 +56,7 @@
 
 Name: branding-simply-linux
 Version: 10.0
-Release: alt3
+Release: alt4
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
 %ifarch %ix86 x86_64
@@ -509,6 +509,9 @@ fi
 %_datadir/install3/*
 
 %changelog
+* Tue Dec 28 2021 Anton Midyukov <antohami@altlinux.org> 10.0-alt4
+- zdg-move-desktop.sh: make trusted indexhtml.desktop for xfce
+
 * Mon Dec 27 2021 Mikhail Efremov <sem@altlinux.org> 10.0-alt3
 - indexhtml: Year auto-substitution.
 - xfce-settings: Use chromium and vlc on aarch64.
