@@ -2,7 +2,7 @@
 
 Name: bonito-open
 Version: 4.24.6
-Release: alt2
+Release: alt3
 
 Summary: Bonito is an API interface for the Manatee corpus management system. 
 License: GPLv2+
@@ -76,6 +76,9 @@ chmod a+x %buildroot/%{_bindir}/bonito_clear_cache
 
 
 %changelog
+* Wed Dec 29 2021 Kirill Maslinsky <kirill@altlinux.org> 4.24.6-alt3
+- remove dependency on python3-module-signalfd
+
 * Fri Apr 02 2021 Kirill Maslinsky <kirill@altlinux.org> 4.24.6-alt2
 - fix python3 syntax errors
 
