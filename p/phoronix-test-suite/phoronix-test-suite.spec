@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: phoronix-test-suite
-Version: 10.4.0
-Release: alt2
+Version: 10.8.0
+Release: alt1
 Summary: An Automated, Open-Source Testing Framework
 Summary(ru_RU.UTF8): Автоматизированная среда тестирования с открытым исходным кодом
 License: GPLv3+
@@ -62,7 +62,9 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/*.appdata.xml
 install -vdm755 %buildroot/%_unitdir
 mv %buildroot/%_prefix/%_unitdir/* %buildroot/%_unitdir
 # drop packaging scripts
-rm -rfv %buildroot%_datadir/phoronix-test-suite/deploy/
+rm -rv %buildroot%_datadir/phoronix-test-suite/deploy/
+# remove non for package script (due unneeded requires)
+rm -rv %buildroot%_datadir/phoronix-test-suite/pts-core/static/sample-pts-client-update-script.sh
 
 %files
 %doc %_defaultdocdir/%name
@@ -80,6 +82,10 @@ rm -rfv %buildroot%_datadir/phoronix-test-suite/deploy/
 %_unitdir/phoronix-result-server.service
 
 %changelog
+* Thu Dec 30 2021 Vitaly Lipatov <lav@altlinux.ru> 10.8.0-alt1
+- new version 10.8.0
+- drop unneeded requires
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 10.4.0-alt2
 - NMU: build as noarch
 - NMU: skip requires from test-profiles subdir
