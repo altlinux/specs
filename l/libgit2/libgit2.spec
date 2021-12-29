@@ -2,7 +2,7 @@
 %def_disable check
 
 Name: libgit2
-Version: 1.1.1
+Version: 1.3.0
 Release: alt1
 
 Summary: linkable library for Git
@@ -11,17 +11,18 @@ License: GPL-2.0
 Group: System/Libraries
 Url: https://github.com/%name
 
+Vcs: https://github.com/libgit2/libgit2.git
 Source: %url/%name/archive/v%version/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake python-modules zlib-devel libssl-devel libssh2-devel
-BuildRequires: libpcre-devel libkrb5-devel libhttp-parser-devel
+BuildRequires: cmake ninja-build python3
+BuildRequires: zlib-devel libpcre-devel libssl-devel libssh2-devel
+BuildRequires: libkrb5-devel libhttp-parser-devel
+%{?_enable_check:BuildRequires: ctest}
 
 %description
-libgit2 is a portable, pure C implementation of the Git core methods
-provided as a re-entrant linkable library with a solid API, allowing you
-to write native speed custom Git applications in any language which
-supports C bindings.
+A cross-platform, linkable library implementation of Git that you can use
+in your applications.
 
 %package devel
 Group: Development/C
@@ -29,22 +30,23 @@ Summary: linkable library for Git - development files
 Requires: %name = %version-%release
 
 %description devel
-libgit2 is a portable, pure C implementation of the Git core methods
-provided as a re-entrant linkable library with a solid API, allowing you
-to write native speed custom Git applications in any language which
-supports C bindings.
-This package contains development files.
+A cross-platform, linkable library implementation of Git that you can use
+in your applications.
+
+This package contains %name development files.
 
 %prep
 %setup
-rm -rf deps/{regex,zlib}
+rm -rf deps/{pcre,zlib}
 sed -i 's/LIB_INSTALL_DIR lib/LIB_INSTALL_DIR lib${LIB_SUFFIX}/' CMakeLists.txt
 
 %build
-%cmake -DTHREADSAFE:BOOL=ON \
+%cmake -G Ninja \
+       -DTHREADSAFE:BOOL=ON \
        -DUSE_SHA1DC:BOOL=ON \
        -DPCRE_INCLUDE_DIR=%_includedir/pcre \
-       -DENABLE_REPRODUCIBLE_BUILD=ON
+       -DENABLE_REPRODUCIBLE_BUILD=ON \
+       -DDEPRECATE_HARD=OFF
 %nil
 %cmake_build
 
@@ -67,6 +69,13 @@ sed -i 's/LIB_INSTALL_DIR lib/LIB_INSTALL_DIR lib${LIB_SUFFIX}/' CMakeLists.txt
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Oct 12 2021 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
+* Fri Sep 03 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+- built with Ninja instead of Make
+
 * Thu Jul 01 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
 - 1.1.1
 
