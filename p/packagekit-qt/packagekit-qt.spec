@@ -3,17 +3,13 @@
 %define libpackagekitqt5 libpackagekitqt5_%sover
 
 Name: packagekit-qt
-Version: 1.0.1
-Release: alt4
+Version: 1.0.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt support library for PackageKit
-License: LGPLv2+
+License: LGPL-2.0-or-later
 Url: http://www.packagekit.org/
-
-Requires: packagekit
-Provides: PackageKit-Qt = %version-%release
-Provides: PackageKit-Qt5 = %version-%release
 
 # https://github.com/hughsie/PackageKit-Qt
 Source: PackageKit-Qt-%version.tar
@@ -30,6 +26,8 @@ PackageKit-Qt is a Qt support library for PackageKit
 %package -n %libpackagekitqt5
 Summary: %name library
 Group: System/Libraries
+#Requires: packagekit
+Provides: PackageKit-Qt5 = %version-%release
 %description -n %libpackagekitqt5
 %name library.
 
@@ -69,6 +67,9 @@ Provides: PackageKit-Qt5-devel = %version-%release
 %_libdir/cmake/packagekitqt5/
 
 %changelog
+* Wed Dec 29 2021 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt1
+- new version
+
 * Thu Aug 01 2019 Michael Shigorin <mike@altlinux.org> 1.0.1-alt4
 - E2K: explicit -std=c++11
 
@@ -78,5 +79,5 @@ Provides: PackageKit-Qt5-devel = %version-%release
 * Thu Dec 27 2018 Sergey V Turchin <zerg@altlinux.org> 1.0.1-alt2
 - fix build requires
 
-* Tue Aug 07 2018 Sergey V Turchin <zerg@altlinux.org> 1.0.1-alt1%ubt
+* Tue Aug 07 2018 Sergey V Turchin <zerg@altlinux.org> 1.0.1-alt1
 - initial build
