@@ -1,7 +1,7 @@
 %define modname tap.py
 
 Name: python3-module-tappy
-Version: 3.0
+Version: 3.1
 Release: alt1
 
 Summary: Test Anything Protocol (TAP) tools
@@ -39,6 +39,9 @@ data in a standard way.
 %doc README.md LICENSE
 
 %changelog
+* Wed Dec 29 2021 Yuri N. Sedunov <aris@altlinux.org> 3.1-alt1
+- 3.1
+
 * Tue Mar 31 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt1
 - 3.0 (Python3 only)
 - fixed License tag
