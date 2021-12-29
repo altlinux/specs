@@ -1,8 +1,14 @@
 %define ver_major 1.24
 
+%if "%__gcc_version_major" < "11"
+%ifarch ppc64le
+%def_disable check
+%endif
+%endif
+
 Name: wayland-protocols
 Version: %ver_major
-Release: alt1
+Release: alt1.1
 
 Summary: Wayland protocols
 License: MIT
@@ -44,6 +50,9 @@ protocol either in Wayland core, or some other protocol in wayland-protocols.
 %doc README.md
 
 %changelog
+* Wed Dec 29 2021 Yuri N. Sedunov <aris@altlinux.org> 1.24-alt1.1
+- disabled broken %%check for ppc64le with gcc < 11
+
 * Tue Nov 23 2021 Yuri N. Sedunov <aris@altlinux.org> 1.24-alt1
 - 1.24
 
