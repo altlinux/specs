@@ -4,7 +4,7 @@
 
 Name: egl-wayland
 Version: 1.1.9
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Group: System/Libraries
@@ -14,6 +14,7 @@ License: MIT
 
 Source0: %name-%version.tar
 Source1: 10_nvidia_wayland.json
+Source2: 15_nvidia_gbm.json
 Patch1: alt-ftbfs.patch
 
 # Automatically added by buildreq on Fri Jul 12 2019 (-bi)
@@ -57,12 +58,14 @@ Wayland EGL External Platform library development package
 %makeinstall_std
 install -pDm644 %SOURCE1 \
 	%buildroot/%_datadir/egl/egl_external_platform.d/10_nvidia_wayland.json
+install -pDm644 %SOURCE2 \
+	%buildroot/%_datadir/egl/egl_external_platform.d/15_nvidia_gbm.json
 
 %files -n %libnvidia_egl_wayland
 %doc README.md COPYING
 %_libdir/libnvidia-egl-wayland.so.%sover
 %_libdir/libnvidia-egl-wayland.so.*
-%_datadir/egl/egl_external_platform.d/10_nvidia_wayland.json
+%_datadir/egl/egl_external_platform.d/*_nvidia_*.json
 
 %files devel
 %_libdir/lib*.so
@@ -70,6 +73,9 @@ install -pDm644 %SOURCE1 \
 %_datadir/wayland-eglstream/
 
 %changelog
+* Wed Dec 29 2021 Sergey V Turchin <zerg@altlinux.org> 1:1.1.9-alt3
+- package icd for gbm provider
+
 * Tue Dec 28 2021 Sergey V Turchin <zerg@altlinux.org> 1:1.1.9-alt2
 - add upstream fixes from master branch
 
