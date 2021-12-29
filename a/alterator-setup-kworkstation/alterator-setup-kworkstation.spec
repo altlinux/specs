@@ -1,5 +1,5 @@
 Name: alterator-setup-kworkstation
-Version: 0.0.4
+Version: 0.0.5
 Release: alt1
 
 Summary: Perform initial setup of an OEM installation
@@ -53,6 +53,11 @@ cp -r -u %_sysconfdir/%name/steps %_datadir/alterator/
 > /root/.bash_history
 
 %changelog
+* Tue Dec 21 2021 Ivan Razzhivin <underwit@altlinux.org> 0.0.5-alt1
+- change the order of steps
+- fix Icon in setup-welcome.desktop file
+- fix new line in setup-kworkstation.desktop
+
 * Tue Nov 30 2021 Ivan Razzhivin <underwit@altlinux.org> 0.0.4-alt1
 - move translation to alterator-l10n module
 - add help
