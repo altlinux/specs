@@ -7,7 +7,7 @@ Name: kernel-image-drm-tip
 %define kernel_source_version	5.12
 %define kernel_base_version	5.16
 %define kernel_sublevel .0
-%define kernel_extra_version	+rc6.20211223
+%define kernel_extra_version	+rc7.20211230
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1
 
@@ -15,8 +15,6 @@ Release: alt1
 %define flavour		%( s='%name'; printf %%s "${s#kernel-image-}" )
 %define base_flavour	%( s='%flavour'; printf %%s "${s%%%%-*}" )
 %define sub_flavour	%( s='%flavour'; printf %%s "${s#*-}" )
-
-%define kgcc_version	%__gcc_version_base
 
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define modules_dir	/lib/modules/%kversion-%flavour-%krelease
@@ -41,10 +39,10 @@ ExclusiveArch: x86_64
 %define arch_dir x86
 
 BuildRequires(pre): rpm-build-kernel
+BuildRequires: clang llvm lld
 BuildRequires: flex
 BuildRequires: libdb4-devel
-BuildRequires: gcc%kgcc_version gcc%kgcc_version-c++
-BuildRequires: gcc%kgcc_version-plugin-devel libgmp-devel libmpc-devel
+BuildRequires: libgmp-devel libmpc-devel
 BuildRequires: kernel-source-%kernel_source_version = 1.0.0
 BuildRequires: kmod
 BuildRequires: lzma-utils zlib-devel
@@ -90,7 +88,6 @@ kernel package %name-%version-%release.
 %package -n kernel-headers-modules-%flavour
 Summary: Headers and files needed for building modules for %flavour kernel
 Group: Development/Kernel
-Requires: gcc%kgcc_version
 Requires: libelf-devel
 AutoReqProv: nocpp
 
@@ -109,6 +106,7 @@ tar -xf %kernel_src/kernel-source-%kernel_source_version.tar
 subst 's/EXTRAVERSION[[:space:]]*=.*/EXTRAVERSION = %kernel_extra_version-%flavour-%krelease/g' Makefile
 
 %build
+export CC=clang LLVM=1
 KernelVer=%kversion-%flavour-%krelease
 
 echo "Building Kernel $KernelVer"
@@ -121,6 +119,10 @@ scripts/config -e DEBUG_INFO_REDUCED
 # based on https://github.com/intel/gvt-linux/wiki/GVTg_Setup_Guide#322-build-kernel-source
 scripts/config -e VFIO_MDEV -e VFIO_MDEV_DEVICE \
 	-e DRM_I915_GVT -e DRM_I915_GVT_KVMGT -e DRM_I915_GVT_XENGT
+
+scripts/config -e MODULE_SIG_KEY_TYPE_ECDSA \
+	-u MODULE_SIG_HASH -u IMA_DEFAULT_HASH \
+	-e MODULE_SIG_SHA512 -e IMA_DEFAULT_HASH_SHA512
 
 %make_build olddefconfig
 %make_build bzImage
@@ -222,6 +224,6 @@ fi
 %modules_dir/build
 
 %changelog
-* Fri Dec 24 2021 Kernel Pony <kernelpony@altlinux.org> 5.16.0+rc6.20211223-alt1
-- drm-tip 2021y-12m-23d-22h-00m-15s (c2c428a5d323).
+* Fri Dec 31 2021 Kernel Pony <kernelpony@altlinux.org> 5.16.0+rc7.20211230-alt1
+- drm-tip 2021y-12m-30d-05h-18m-07s (9517c3b9b5d4).
 
