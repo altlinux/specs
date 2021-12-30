@@ -1,9 +1,11 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: psmisc
-Version: 23.3
-Release: alt4
+Version: 23.4
+Release: alt1
 
 Summary: Miscellaneous utilities that use proc filesystem
 License: GPL-2.0-only
@@ -121,6 +123,7 @@ vm-run "set -xe
   my_tests"
 popd
 
+%ifnarch riscv64
 banner ASAN
 PATH=src:$PATH
 mkdir asan
@@ -131,6 +134,7 @@ ASAN_OPTIONS=detect_leaks=0 CFLAGS=-fsanitize=address \
 %make_build -s
 my_tests
 make check
+%endif
 
 %files -f %name.lang
 /sbin/*
@@ -139,6 +143,10 @@ make check
 %doc AUTHORS ChangeLog COPYING README.md
 
 %changelog
+* Sat Dec 18 2021 Vitaly Chikunov <vt@altlinux.org> 23.4-alt1
+- sandbox: Replaced EPERM with ENOSYS.
+- Updated to v23.4-6-g1356c54 (2021-11-03).
+
 * Thu Dec 09 2021 Andrew Savchenko <bircoph@altlinux.org> 23.3-alt4
 - E2K:
   - Add arch-specific sandbox rules.
