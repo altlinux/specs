@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.23.4
-Release: alt7
+Release: alt8
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -500,6 +500,9 @@ done
 
 
 %changelog
+* Thu Dec 30 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.23.4-alt8
+- fix PATH variable
+
 * Thu Dec 30 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.23.4-alt7
 - enable appstream runner by default
 
