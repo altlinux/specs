@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.23.4
-Release: alt6
+Release: alt7
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -312,7 +312,7 @@ for d in runners/*/*.desktop ; do
     sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=false|' $d
 done
 # enable some krunners by default
-for d in shell services
+for d in appstream services shell
 do
     sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=true|' runners/${d}/plasma-runner-${d}.desktop
 done
@@ -500,6 +500,9 @@ done
 
 
 %changelog
+* Thu Dec 30 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.23.4-alt7
+- enable appstream runner by default
+
 * Fri Dec 17 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.23.4-alt6
 - using no-break space for default custom date format of digital clock widget (closes: 38552)
 
