@@ -16,7 +16,7 @@
 %define nv_version 470
 %define nv_release 94
 %define nv_minor %nil
-%define pkg_rel alt247
+%define pkg_rel alt248
 %define set_gl_nvidia_ver 1.5.2
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -77,7 +77,7 @@ Source: set_gl_nvidia-%set_gl_nvidia_ver.tar
 Source1: alternate-install-present
 Source2: nvidia-install-driver
 Source3: nvidia-clean-driver
-Source4: nvidia-prime
+Source4: nvidia-prime-run
 Source10: nvidia-sleep.tar
 
 BuildRequires(pre): rpm-build-ubt
@@ -323,7 +323,7 @@ fi
 #
 %_bindir/nvidia-clean-driver
 %_bindir/nvidia-install-driver
-%_bindir/nvidia-prime
+%_bindir/nvidia-prime-run
 /usr/lib/nvidia/alternate-install-present
 #
 %_bindir/nvidia-sleep.sh
@@ -333,6 +333,10 @@ fi
 /lib/systemd/system-sleep/nvidia
 
 %changelog
+* Thu Dec 30 2021 Sergey V Turchin <zerg@altlinux.org> 470.94-alt248
+- rename nvidia-prime to nvidia-prime-run
+- setup variable for vulkan in nvidia-prime-run script
+
 * Mon Dec 27 2021 Sergey V Turchin <zerg@altlinux.org> 470.94-alt247
 - new version
 
