@@ -3,7 +3,7 @@
 
 Name:       emacspeak
 Version:    50.0
-Release:    alt1
+Release:    alt2
 
 Summary:    Speech output interface to Emacs.
 License:    GPLv2+ and BSD
@@ -21,8 +21,8 @@ Patch1: %name-alt-lisp.patch
 
 Requires: voiceman
 
-BuildRequires: emacs26-speedbar
-BuildRequires: emacs26-erc
+BuildRequires: rpm-build-emacs
+BuildRequires: emacs-speedbar
 BuildRequires: gcc-c++
 BuildRequires: libalsa-devel
 BuildRequires: tcl-devel
@@ -127,5 +127,8 @@ chmod -R go+rX %_emacspeakdir/media
 
 
 %changelog
+* Thu Dec 30 2021 Igor Vlasenko <viy@altlinux.org> 50.0-alt2
+- NMU: fixed build
+
 * Mon Jul 08 2019 Andrey Bychkov <mrdrew@altlinux.org> 50.0-alt1
 - Build new version 50.0
