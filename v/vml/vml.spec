@@ -1,5 +1,5 @@
 Name:     vml
-Version:  0.1.4
+Version:  0.1.5
 Release:  alt1
 
 Summary:  Tool for easily and transparently work with qemu virtual machines
@@ -52,6 +52,10 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %doc doc *.md
 
 %changelog
+* Thu Dec 30 2021 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.5-alt1
+- Fix finding running vms after qemu update
+- Create openssh config for vms
+
 * Mon Nov 15 2021 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.4-alt1
 - Add more readable json output to show command
 - Add ansible dynamic inventory - files/scripts/inventory.py
