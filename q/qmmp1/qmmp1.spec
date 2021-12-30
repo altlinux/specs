@@ -5,7 +5,7 @@
 
 %define rname qmmp
 Name: qmmp1
-Version: 1.5.1
+Version: 1.5.2
 Release: alt1
 %K5init no_altplace
 
@@ -18,7 +18,7 @@ License: GPLv2
 
 Provides: qmmp = %version-%release
 Conflicts: qmmp < 1:0.12.0-alt0.M80P.svn8288.1
-Conflicts: qmmp-docs < 1:0.12.0-alt0.M80P.svn8288.1 qmmp-qsui < 1:0.12.0-alt0.M80P.svn8288.1
+Conflicts: qmmp-qsui < 1:0.12.0-alt0.M80P.svn8288.1
 
 Requires: unzip winamplike-skins
 
@@ -281,6 +281,9 @@ ln -s `relative %_wlskindir %_datadir/%rname/skins` %buildroot/%_datadir/%rname/
 %_K5link/lib*.so
 
 %changelog
+* Thu Dec 30 2021 Sergey V Turchin <zerg@altlinux.org> 1.5.2-alt1
+- new version
+
 * Wed Sep 22 2021 Sergey V Turchin <zerg@altlinux.org> 1.5.1-alt1
 - new version
 
