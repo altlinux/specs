@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.23
+Version: 1.4.24
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,20 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Thu Dec 30 2021 Anton Midyukov <antohami@altlinux.org> 1.4.24-alt1
+- regular-server-sysv: add use/power/acpi/button
+- fix META_VOL_ID for Starterkits
+- drop kernel-modules-igb, kernel-modules-e1000e (report by boyarsh@)
+- drop opensc, pccs-lite-openct package from base+smartcard,
+  workstation/smartcard lists (report by klark@)
+- made feature volumes available only for distro targets
+- slinux 10.0 (thanks sem@, jqt4@, iv@)
+- education.mk: drop targets rootfs for not supported platforms
+- add +vmguest feature for vm/alt-education, vm/alt-workstation,
+  vm/slinux and vm desktop regulars
+- apt-conf: replace IMAGE_INIT_LIST to PINNED_PACKAGES
+- vmguest: update vmguest modules list for support Hyper-v gen2
+
 * Mon Dec 20 2021 Anton Midyukov <antohami@altlinux.org> 1.4.23-alt1
 - lib/profile.mk: add branding-<BRANDING>-release to
   PACKAGES_REQUIRES_INITROOT (Closes: 41570)
