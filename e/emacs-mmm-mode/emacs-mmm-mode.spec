@@ -1,19 +1,20 @@
-Version: 0.4.8
-Release: alt2.1
+Version: 0.5.8
+Release: alt1
 Name: emacs-mmm-mode
-Copyright: GPL
+License: GPLv2+
 Group: Editors
 Url: http://mmm-mode.sourceforge.net/
+Vcs: https://github.com/purcell/mmm-mode.git
 Summary: Multiple Major Modes in Emacs
 Packager: Emacs Maintainers Team <emacs@packages.altlinux.org>
-Requires: emacs-common 
-Source: mmm-mode-%{version}.tar.gz
+Requires: emacs-common
+Source: %name-%{version}.tar
 Source1: mmm-emacs.el
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Thu Jul 18 2002
-BuildRequires: emacs-common 
+BuildRequires: rpm-build-emacs
 # explicitly added texinfo for info files
 BuildRequires: texinfo
 
@@ -23,13 +24,13 @@ MMM Mode is a minor mode for Emacs that allows Multiple Major Modes
 well-suited to editing embedded code, such as Mason server-side
 Perl, or HTML output in CGI scripts.
 
-%description -l ru_RU.CP1251
-Режим MMM является вспомогательным режимом для Emacs, позволяющим использовать 
-несколько основных режимов в одном буфере. В частности он удобен для редактирования
-встроенного кода, такого как код на Perl в Mason или другого.
+%description -l ru_RU.UTF-8
+Р РµР¶РёРј MMM СЏРІР»СЏРµС‚СЃСЏ РІСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅС‹Рј СЂРµР¶РёРјРѕРј РґР»СЏ Emacs, РїРѕР·РІРѕР»СЏСЋС‰РёРј РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ
+РЅРµСЃРєРѕР»СЊРєРѕ РѕСЃРЅРѕРІРЅС‹С… СЂРµР¶РёРјРѕРІ РІ РѕРґРЅРѕРј Р±СѓС„РµСЂРµ. Р’ С‡Р°СЃС‚РЅРѕСЃС‚Рё РѕРЅ СѓРґРѕР±РµРЅ РґР»СЏ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ
+РІСЃС‚СЂРѕРµРЅРЅРѕРіРѕ РєРѕРґР°, С‚Р°РєРѕРіРѕ РєР°Рє РєРѕРґ РЅР° Perl РІ Mason РёР»Рё РґСЂСѓРіРѕРіРѕ.
 
-Весь код на Emacs Lisp откомпилирован, для получения исходных текстов установите 
-пакет %name-el
+Р’РµСЃСЊ РєРѕРґ РЅР° Emacs Lisp РѕС‚РєРѕРјРїРёР»РёСЂРѕРІР°РЅ, РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РёСЃС…РѕРґРЅС‹С… С‚РµРєСЃС‚РѕРІ СѓСЃС‚Р°РЅРѕРІРёС‚Рµ
+РїР°РєРµС‚ %name-el
 
 %package el
 Summary: The Emacs Lisp sources for bytecode included in %name
@@ -43,19 +44,20 @@ included in the %name package, that extends the Emacs editor.
 You need to install %name-el only if you intend to modify any of the
 %name code or see some Lisp examples.
 
-%description el -l ru_RU.CP1251
-Пакет %name-el содержит исходные тексты для пакета %name, который 
-является дополнением к редактору Emacs.
+%description el -l ru_RU.UTF-8
+РџР°РєРµС‚ %name-el СЃРѕРґРµСЂР¶РёС‚ РёСЃС…РѕРґРЅС‹Рµ С‚РµРєСЃС‚С‹ РґР»СЏ РїР°РєРµС‚Р° %name, РєРѕС‚РѕСЂС‹Р№
+СЏРІР»СЏРµС‚СЃСЏ РґРѕРїРѕР»РЅРµРЅРёРµРј Рє СЂРµРґР°РєС‚РѕСЂСѓ Emacs.
 
-%name-el необходим вам только, если вы собираетесь изменять файлы
-входящие в %name, или хотите посмотреть некоторые примеры.
+%name-el РЅРµРѕР±С…РѕРґРёРј РІР°Рј С‚РѕР»СЊРєРѕ, РµСЃР»Рё РІС‹ СЃРѕР±РёСЂР°РµС‚РµСЃСЊ РёР·РјРµРЅСЏС‚СЊ С„Р°Р№Р»С‹
+РІС…РѕРґСЏС‰РёРµ РІ %name, РёР»Рё С…РѕС‚РёС‚Рµ РїРѕСЃРјРѕС‚СЂРµС‚СЊ РЅРµРєРѕС‚РѕСЂС‹Рµ РїСЂРёРјРµСЂС‹.
 
 %prep
-%setup -n mmm-mode-%{version}
+%setup -q
 
 %build
+%autoreconf
 ./configure --prefix=%{_prefix} --infodir=%{_infodir} --with-emacs
-make 
+make
 
 %install
 mkdir -p $RPM_BUILD_ROOT%{_emacslispdir}/mmm
@@ -79,6 +81,9 @@ install -m 644 %SOURCE1 $RPM_BUILD_ROOT/etc/emacs/site-start.d/mmm.el
 %{_emacslispdir}/mmm/*.el
 
 %changelog
+* Thu Dec 30 2021 Igor Vlasenko <viy@altlinux.org> 0.5.8-alt1
+- new version
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt2.1
 - NMU: added BR: texinfo
 
