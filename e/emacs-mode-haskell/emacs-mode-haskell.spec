@@ -1,7 +1,7 @@
 Version: 2.1
-Release: alt2
+Release: alt2.1
 Name: emacs-mode-haskell
-Copyright: GPL
+License: GPLv2+
 Group: Editors
 Url: http://wiki.haskell.org/haskell-mode/
 Summary: Haskell mode for Emacs
@@ -15,7 +15,7 @@ Obsoletes: emacs-haskell-mode
 Requires: emacs-common
 
 # Automatically added by buildreq on Thu Aug 05 2002
-BuildRequires: emacs-common
+BuildRequires: rpm-build-emacs
 
 %description
 Haskell mode for Emacs. This mode provides syntax highliting, indentation
@@ -79,6 +79,9 @@ chmod 644 $RPM_BUILD_ROOT/etc/emacs/site-start.d/haskell-mode.el
 %config /etc/emacs/site-start.d/haskell-mode.el
 
 %changelog
+* Thu Dec 30 2021 Igor Vlasenko <viy@altlinux.org> 2.1-alt2.1
+- NMU: fixed build
+
 * Tue Dec 08 2015 Ivan Zakharyaschev <imz@altlinux.org> 2.1-alt2
 - Handle .(hi|[l]hs)-boot files, too;
 - and .[l]curry (as a workaround for the absense of a special curry-mode).
