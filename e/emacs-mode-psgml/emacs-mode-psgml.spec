@@ -1,16 +1,16 @@
 %define modename psgml
 
 Name: emacs-mode-%modename
-Version: 1.2.5
-Release: alt3.1
+Version: 1.4.1
+Release: alt1
 
 Summary: A GNU Emacs major mode for editing SGML/XML documents
 Group: Editors
-License: GPL
-Url: http://www.lysator.liu.se/projects/about_%modename.html
+License: GPLv2+
+Url: https://www.emacswiki.org/emacs/PsgmlMode
 Packager: Emacs Maintainers Team <emacs@packages.altlinux.org>
 
-Source: ftp://ftp.lysator.liu.se/pub/sgml/%modename-%version.tar.gz
+Source: %modename-%version.tar.xz
 
 %define WITH_CUSTOM_EL 1
 
@@ -21,7 +21,7 @@ Source1: %custom_eldir.tar.bz2
 
 BuildArch: noarch
 
-PreReq: emacs sgml-common sgml-tools docbook-dtds openjade xml-utils
+Requires: emacs sgml-common sgml-tools docbook-dtds openjade xml-utils
 
 # Automatically added by buildreq on Thu Sep 25 2008 (-bi)
 BuildRequires: emacs-leim emacs-nox libX11-locales
@@ -139,6 +139,9 @@ done
 %modedir/*.el
 
 %changelog
+* Thu Dec 30 2021 Igor Vlasenko <viy@altlinux.org> 1.4.1-alt1
+- new version
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.5-alt3.1
 - NMU: added BR: texinfo
 
