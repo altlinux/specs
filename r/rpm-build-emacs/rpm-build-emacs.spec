@@ -1,8 +1,10 @@
 # -*- coding: utf-8; mode: rpm-spec -*-
+%define _unpackaged_files_terminate_build 1
+%def_with el_pkgutils
 
 Name: rpm-build-emacs
-Version: 0.0.3
-Release: alt3
+Version: 0.0.4
+Release: alt1
 
 Group: Development/Other
 Summary: Helper scripts and RPM macros to build GNU Emacs extensions
@@ -49,21 +51,29 @@ cp %SOURCE3 .
 mkdir -p %buildroot%_rpmmacrosdir
 install -p -m644 %SOURCE1 %buildroot%_rpmmacrosdir/emacs
 install -p -m644 %SOURCE2 %buildroot%_rpmmacrosdir/emacs-new
+%if_with el_pkgutils
 mkdir -p %buildroot%_emacslispdir
 mkdir -p %buildroot%_datadir/emacs/etc/el-pkgutils
 # Packager's tools - to be used in this and other pkgs
 install -m0755 el-pkgutils.sh %buildroot%_datadir/emacs/etc/el-pkgutils
 install -m0644 el-pkgutils.el %buildroot%_emacslispdir
+%endif
 
 %files
+%if_with el_pkgutils
 %doc README.ALT.ru.txt
 %_emacslispdir/*
 %_datadir/emacs/etc/*
+%endif
 
 %files -n rpm-macros-emacs
 %_rpmmacrosdir/emacs
+%_rpmmacrosdir/emacs-new
 
 %changelog
+* Thu Dec 30 2021 Igor Vlasenko <viy@altlinux.org> 0.0.4-alt1
+- prepared to move out el_pkgutils
+
 * Thu Dec 30 2021 Igor Vlasenko <viy@altlinux.org> 0.0.3-alt3
 - added new %%_emacs_* macros
 
