@@ -3,7 +3,7 @@
 %def_disable java
 
 Name: lib%_name
-Version: 2.9.20
+Version: 2.9.21
 Release: alt1
 
 Group: System/Libraries
@@ -11,10 +11,13 @@ Summary: %name - library for panorama stitching programs. This is new generation
 License: GPL-2.0
 Url: https://sourceforge.net/projects/panotools
 
-Source: https://sourceforge.net/projects/panotools/files/%name/%name-%version.tar.gz
+Source: https://download.sourceforge.net/panotools/%name/%name-%version.tar.gz
 Patch1: %name.patch
+Patch2: %name-2.9.21-alt-static-build.patch
 
-BuildRequires: libjpeg-devel libpng-devel libtiff-devel zlib-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++ libjpeg-devel libpng-devel libtiff-devel zlib-devel
+BuildRequires: /usr/bin/pod2man
 %{?_enable_java:BuildRequires: java-devel}
 
 %package devel
@@ -30,7 +33,8 @@ Requires: %name = %EVR
 Obsoletes: libpano12-programs panotools
 
 %description
-This library is required for running any of the panorama stitching applications (hugin, PTStitcher, etc).
+This library is required for running any of the panorama stitching
+applications (hugin, PTStitcher, etc).
 
 %description devel
 This package contains files for development.
@@ -62,22 +66,24 @@ panoinfo    - Display info from pano12 dll/library
 
 %prep
 %setup -n %name-%version
-sed -i s'|BUG-REPORT-ADDRESS|https://bugzilla.altlinux.org/|' configure.ac
 #Off because MAX_FISHEYE_FOV value is equal 720, not 160
 %patch1 -p1
+%patch2 -p1
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
-%autoreconf
-%configure
-%make_build
+%cmake -DBUILD_STATIC_LIBS=OFF
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 
 %files
 %_libdir/*.so.*
-%doc README README.linux AUTHORS NEWS
+%doc README* AUTHORS NEWS
+%doc doc/Optimize.txt doc/PT*.readme doc/stitch.txt
+
+%exclude %_datadir/pano13/doc/
 
 %files devel
 %_includedir/%_name/
@@ -101,6 +107,9 @@ sed -i s'|BUG-REPORT-ADDRESS|https://bugzilla.altlinux.org/|' configure.ac
 %doc doc/*.txt tools/README.PTmender
 
 %changelog
+* Fri Dec 31 2021 Yuri N. Sedunov <aris@altlinux.org> 2.9.21-alt1
+- 2.9.21 (ported to CMake build system)
+
 * Wed May 12 2021 Yuri N. Sedunov <aris@altlinux.org> 2.9.20-alt1
 - 2.9.20 (fixed CVE-2021-20307)
 

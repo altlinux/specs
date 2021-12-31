@@ -7,7 +7,7 @@
 %def_disable lapack
 
 Name: hugin
-Version: 2020.0.0
+Version: 2021.0.0
 Release: alt1
 
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
@@ -20,7 +20,7 @@ Source: %name-%version.tar
 Patch1: Add-translations-in-desktop-files.patch
 
 %define boost_ver 1.54
-%define pano_ver 2.9.19
+%define pano_ver 2.9.21
 %define wx_ver 3.0.0
 %define enblend_ver 3.2
 
@@ -68,7 +68,7 @@ panorama, stitch any series of overlapping pictures and much more.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 %find_lang --output=%name.lang %name nona_gui
 /bin/install -p -m644 -D src/hugin1/hugin/xrc/data/hugin.png %buildroot%_datadir/pixmaps/%name.png
 /bin/install -p -m644 -D src/hugin1/hugin/xrc/data/hugin.png %buildroot%_niconsdir/%name.png
@@ -88,7 +88,7 @@ done
 %_datadir/mime/packages/hugin.xml
 %_libdir/%name/
 %{?_enable_hsi:%python3_sitelibdir/*}
-%_iconsdir/gnome/48x48/mimetypes/application-x-ptoptimizer-script.png
+%_iconsdir/hicolor/48x48/mimetypes/application-x-ptoptimizer-script.png
 %_iconsdir/hicolor/*x*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
 %_man1dir/*
@@ -97,6 +97,9 @@ done
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Fri Dec 31 2021 Yuri N. Sedunov <aris@altlinux.org> 2021.0.0-alt1
+- 2021.0.0
+
 * Sun Dec 13 2020 Yuri N. Sedunov <aris@altlinux.org> 2020.0.0-alt1
 - 2020.0.0
 
