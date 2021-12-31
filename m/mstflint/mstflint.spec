@@ -7,8 +7,8 @@
 %def_enable openssl
 
 Name: mstflint
-Version: 4.17.0
-Release: alt2
+Version: 4.18.0
+Release: alt1
 
 Summary: Mellanox firmware burning application
 License: GPLv2 or BSD
@@ -63,6 +63,7 @@ echo "#define TOOLS_GIT_SHA \"%release\"" > common/gitversion.h
     MSTFLINT_VERSION_STR="%name %version-%release"
 
 %make_build
+sed -i "s|^#!/usr/bin/env python.*|#!/usr/bin/python3|" tracers/fwtrace/mstfwtrace.py
 
 %install
 %makeinstall_std
@@ -77,6 +78,9 @@ rm -f  %buildroot%_libdir/*.a
 %_man1dir/*
 
 %changelog
+* Fri Dec 31 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.18.0-alt1
+- v4.18.0-1
+
 * Fri Dec 31 2021 Michael Shigorin <mike@altlinux.org> 4.17.0-alt2
 - e2k ftbfs fix (ilyakurdyukov@)
 - minor spec cleanup
