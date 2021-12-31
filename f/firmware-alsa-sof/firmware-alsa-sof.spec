@@ -1,8 +1,8 @@
 %global _firmwarepath  /lib/firmware
-%define version_major 1.9
+%define version_major 2.0
 Summary: Firmware and topology files for Sound Open Firmware project
 Name: firmware-alsa-sof
-Version: %version_major.3
+Version: %version_major
 Release: alt1
 # See later in the spec for a breakdown of licensing
 License: BSD
@@ -67,6 +67,9 @@ cat alsa-sof-firmware.files
 %files debug -f alsa-sof-firmware.debug-files
 
 %changelog
+* Wed Dec 22 2021 Anton Farygin <rider@altlinux.ru> 2.0-alt1
+- 1.9.3 -> 2.0
+
 * Fri Dec 17 2021 Anton Farygin <rider@altlinux.ru> 1.9.3-alt1
 - 1.9.2 -> 1.9.3
 
