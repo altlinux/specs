@@ -6,8 +6,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     13
-%define postgresql_minor     3
-%define postgresql_altrel    5
+%define postgresql_minor     4
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -790,6 +790,10 @@ fi
 %endif
 
 %changelog
+* Fri Dec 24 2021 Alexei Takaseev <taf@altlinux.org> 13.4-alt1
+- 13.4
+- Update 1C patch
+
 * Wed Nov 10 2021 Alexei Takaseev <taf@altlinux.org> 13.3-alt5
 - Fixes CVE-2021-23214, CVE-2021-23222
 
