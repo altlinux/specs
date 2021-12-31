@@ -8,13 +8,13 @@
 
 Name: mstflint
 Version: 4.17.0
-Release: alt1
+Release: alt2
 
 Summary: Mellanox firmware burning application
 License: GPLv2 or BSD
-Url: http://openib.org/
-
 Group: System/Base
+
+Url: http://openib.org/
 # VCS-git: https://github.com/Mellanox/mstflint.git
 Source: %name-%version.tar
 Patch: %name-%version.patch
@@ -26,9 +26,10 @@ BuildRequires: gcc-c++
 %{?_enable_xml2:BuildRequires: libxml2-devel}
 %{?_enable_inband:BuildRequires: rdma-core-devel}
 %{?_enable_cs:BuildRequires: libssl-devel}
-%{?_enable_openssl:BuildRequires: libssl-devel}
+%{?_enable_openssl:BuildRequires: libssl-devel openssl}
 BuildRequires: libiniparser-devel jsoncpp-devel libmuparser-devel libsqlite3-devel
 AutoReq: yes, nopython
+
 %add_python_compile_exclude %_libdir/%name/python_tools
 %add_python3_compile_exclude %_libdir/%name/python_tools
 %add_python3_path %_libdir/%name/python_tools
@@ -39,8 +40,13 @@ This package contains a tool for burning updated firmware on to
 Mellanox manufactured InfiniBand adapters.
 
 %prep
-%setup -q
+%setup
 %patch -p1
+
+%ifarch %e2k
+sed -i "s/__x86_64__/__e2k__/" common/compatibility.h \
+	mtcr_ul/packets_common.h tools_layouts/adb_to_c_utils.h
+%endif
 
 %build
 mkdir config
@@ -71,6 +77,10 @@ rm -f  %buildroot%_libdir/*.a
 %_man1dir/*
 
 %changelog
+* Fri Dec 31 2021 Michael Shigorin <mike@altlinux.org> 4.17.0-alt2
+- e2k ftbfs fix (ilyakurdyukov@)
+- minor spec cleanup
+
 * Mon Nov 15 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.17.0-alt1
 - v4.17.0-1
 
