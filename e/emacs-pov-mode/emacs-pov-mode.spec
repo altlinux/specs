@@ -1,32 +1,35 @@
-Version: 2.10
-Release: alt2
+Version: 3.3
+Release: alt1
 Name: emacs-pov-mode
-License: GPL
+License: GPLv2+
 Group: Editors
 Url: http://www.acc.umu.se/~woormie/povray/
+Vcs: https://github.com/emacsmirror/pov-mode
 Packager: Emacs Maintainers Team <emacs@packages.altlinux.org>
 
-Summary: Emacs mode for editing POVRAY files 
-Summary(ru_RU.KOI8-R): Режим Emac для редактирования файлов POVRAY
-Requires: emacs-common emacsen-startscripts 
+Summary: Emacs mode for editing POVRAY files
+Summary(ru_RU.UTF-8): п═п╣п╤п╦п╪ Emac п╢п╩я▐ я─п╣п╢п╟п╨я┌п╦я─п╬п╡п╟п╫п╦я▐ я└п╟п╧п╩п╬п╡ POVRAY
+Requires: emacs-common emacsen-startscripts
 
-Source: pov-mode.%version.tgz
+Source: %name-%version.tar
+# from http://imagico.de/imenu/index.php
+# for 2.10. deprecated for now?
 Source1: pov-im.el
 Source2: emacs-pov-start-script.el
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Dec 24 2002
-BuildRequires: emacs-common 
+BuildRequires: rpm-build-emacs
 
 %description
-Emacs mode for editing POVRAY files 
+Emacs mode for editing POVRAY files
 
-%description -l ru_RU.KOI8-R
-Режим Emac для редактирования файлов POVRAY
+%description -l ru_RU.UTF-8
+п═п╣п╤п╦п╪ Emac п╢п╩я▐ я─п╣п╢п╟п╨я┌п╦я─п╬п╡п╟п╫п╦я▐ я└п╟п╧п╩п╬п╡ POVRAY
 
 %prep
-%setup -c %name-%version -a 0
+%setup -q
 
 %build
 cp %SOURCE1 .
@@ -37,19 +40,26 @@ for i in *.el ; do
 done
 
 %install
-mkdir -p %buildroot%_emacslispdir/
-install -m 644 *.el* %buildroot%_emacslispdir/
-install -m 644 *.xpm %buildroot%_emacslispdir/
-cp -R InsertMenu %buildroot%_emacslispdir/
-mkdir -p %buildroot/%_sysconfdir/emacs/site-start.d
-install -m 644 %SOURCE2 %buildroot/%_sysconfdir/emacs/site-start.d/pov.el
+%define povdir %_emacslispdir/pov-mode
+mkdir -p %buildroot%povdir/
+install -m 644 *.el* %buildroot%povdir/
+install -m 644 *.xpm %buildroot%povdir/
+cp -R InsertMenu %buildroot%povdir/
+mkdir -p %buildroot%_emacs_sitestart_dir
+install -m 644 %SOURCE2 %buildroot%_emacs_sitestart_dir/pov.el
+
+install -D -m 644 pov-mode.info %buildroot%_infodir/pov-mode.info
 
 %files
-%doc 
-%_emacslispdir/*.el*
-%_sysconfdir/emacs/site-start.d/*
+%doc README
+%_infodir/*.info*
+%povdir
+%_emacs_sitestart_dir/*
 
 %changelog
+* Sat Jan 01 2022 Igor Vlasenko <viy@altlinux.org> 3.3-alt1
+- new version
+
 * Wed Jan 11 2006 Igor Vlasenko <viy@altlinux.ru> 2.10-alt2
 - updated url; now maintained by Emacs Maintainers Team
 
