@@ -1,6 +1,6 @@
 Name: xar
 Version: 1.6.1
-Release: alt3
+Release: alt4
 
 Summary: The XAR project aims to provide an easily extensible archive format
 License: BSD-3-Clause
@@ -12,7 +12,7 @@ Patch1: xar-1.5.3-ext2.patch
 Patch2: xar-1.6.1-openssl-1.1.patch
 Requires: lib%name = %version-%release
 
-ExclusiveArch: i586 x86_64
+ExclusiveArch: %ix86 x86_64 %e2k
 
 # Automatically added by buildreq on Sat Dec 17 2011
 BuildRequires: bzlib-devel libacl-devel libe2fs-devel libssl-devel libxml2-devel xsltproc zlib-devel liblzma-devel
@@ -105,6 +105,9 @@ find .
 %_libdir/*.so
 
 %changelog
+* Fri Dec 31 2021 Michael Shigorin <mike@altlinux.org> 1.6.1-alt4
+- actually builds on %%e2k
+
 * Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 1.6.1-alt3
 - NMU: Fix license.
 
