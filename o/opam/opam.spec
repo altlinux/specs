@@ -1,16 +1,16 @@
 Name: opam
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 Summary: A source-based package manager for OCaml
 License: LGPLv3
 Group: Development/ML
-Url: http://opam.ocamlpro.com/
+Url: https://github.com/ocaml/opam
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
 Patch1: opam-port-to-dose3-6.0.1.patch
 BuildRequires: ocaml
+BuildRequires: libacl-devel
 BuildRequires: ocaml-opam-file-format-devel
-BuildRequires: hevea
 BuildRequires: ocaml-cppo_ocamlbuild-devel
 BuildRequires: ocaml-cppo
 BuildRequires: ocaml-mccs-devel
@@ -88,6 +88,10 @@ rm -rf %buildroot%prefix/doc
 %doc shell/
 
 %changelog
+* Fri Dec 31 2021 Anton Farygin <rider@altlinux.ru> 2.1.2-alt1
+- 2.1.2
+- built with posix ACL support
+
 * Wed Nov 03 2021 Anton Farygin <rider@altlinux.ru> 2.1.1-alt1
 - 2.1.1
 - added a patch from debian to support dose3 > 6.0.1
