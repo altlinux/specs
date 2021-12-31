@@ -1,6 +1,6 @@
 %define mversion	6
 %define dversion	%mversion.9.12
-%define drelease	31
+%define drelease	34
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		7
@@ -16,7 +16,7 @@
 
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt2
+Release: alt1
 
 Summary: An X application for displaying and manipulating images
 License: ImageMagick
@@ -270,6 +270,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Fri Dec 31 2021 Anton Farygin <rider@altlinux.ru> 6.9.12.34-alt1
+- new version 6.9.12.34
+
 * Thu Dec 02 2021 Anton Farygin <rider@altlinux.ru> 6.9.12.31-alt2
 - removed the bin/display from menu in all window managers (closes: #31789)
 
