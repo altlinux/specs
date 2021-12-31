@@ -1,7 +1,7 @@
 %define vendorzone ru.
 
 Name: chrony
-Version: 4.1
+Version: 4.2
 Release: alt1
 
 Summary: Chrony clock synchronization program
@@ -12,6 +12,7 @@ Url: http://chrony.tuxfamily.org
 Source0: http://download.tuxfamily.org/chrony/%name-%version.tar
 Source1: clknetsim-chrony-%version.tar
 Patch0: %name-%version-alt.patch
+Patch1: clknetsim-init_symbols_in_stat.patch
 Source2: chronyd.init
 Source3: chrony.sh
 
@@ -22,7 +23,7 @@ BuildRequires: libnettle-devel
 BuildRequires: makeinfo control
 BuildRequires: pps-tools-devel
 # for tests
-BuildRequires: /proc gcc-c++
+BuildRequires: /proc gcc-c++ /dev/kvm rpm-build-vm
 
 Provides: ntp-server
 
@@ -44,6 +45,9 @@ Internet. chronyd can also act as an RFC1305-compatible NTP server.
 %setup -a 1
 %patch0 -p1
 mv clknetsim-chrony-* test/simulation/clknetsim
+pushd test/simulation/clknetsim
+%patch1 -p1
+popd
 # prepare git sources (make_release)
 # version in version.txt file
 echo %version > version.txt
@@ -66,17 +70,29 @@ sed -i -e 's/OPTIONS/CHRONYD_ARGS/' examples/chronyd.service
 %configure \
 	--with-user=_chrony \
 	--with-hwclockfile=%_sysconfdir/adjtime \
+	--chronyrundir=/run/chrony \
+	--with-pidfile=/run/chrony/chronyd.pid \
 	--enable-ntp-signd \
 	--enable-scfilter \
-	--with-ntp-era=$(date -d '1970-01-01 00:00:00+00:00' +'%s') \
+	--with-ntp-era=$(date -d '1970-01-01 00:00:00+00:00' +'%%s') \
 	--with-sendmail=%_sbindir/sendmail
 
 %make_build all docs 
 make -C doc txt
 
 %check
+export CLKNETSIM_RANDOM_SEED=34653
 %make_build -C test/simulation/clknetsim
 %make check
+
+# chronyc dump + scfilter always falls when working in virtual environment under fakeroot, but in 
+# real system it works fine. need to investigate
+rm -f test/system/099-scfilter
+
+# system tests must be run in kvm with fakeroot for permissions override
+pushd test/system
+vm-run fakeroot ./run
+popd
 
 %install
 %makeinstall_std
@@ -99,6 +115,9 @@ echo 'chronyd.service' > \
 rm -rf %buildroot/usr/doc
 install -d %buildroot%_localstatedir/{lib,log}/%name
 touch %buildroot%_localstatedir/lib/%name/{drift,rtc}
+
+mkdir -p  %buildroot%_sysconfdir/tmpfiles.d
+echo 'd /run/chrony 0750 _chrony _chrony' >> %buildroot%_sysconfdir/tmpfiles.d/chronyd.conf
 
 %pre
 %_sbindir/groupadd -r -f _chrony 2> /dev/null ||:
@@ -124,6 +143,7 @@ touch %buildroot%_localstatedir/lib/%name/{drift,rtc}
 %config(noreplace) %verify(not md5 size mtime) %attr(640,root,_chrony) %_sysconfdir/chrony.keys
 %config(noreplace) %_sysconfdir/logrotate.d/chrony
 %config(noreplace) %_sysconfdir/control.d/facilities/chrony
+%_sysconfdir/tmpfiles.d/chronyd.conf
 %_sysconfdir/NetworkManager/dispatcher.d/20-chrony-dhcp
 %_sysconfdir/NetworkManager/dispatcher.d/21-chrony-onoffline
 %_bindir/*
@@ -137,6 +157,11 @@ touch %buildroot%_localstatedir/lib/%name/{drift,rtc}
 %_man8dir/*
 
 %changelog
+* Thu Dec 23 2021 Anton Farygin <rider@altlinux.ru> 4.2-alt1
+- 4.1 -> 4.2
+- enable system tests via run-vm
+- added tmpfiles config
+
 * Mon May 17 2021 Anton Farygin <rider@altlinux.ru> 4.1-alt1
 - 4.1
 
