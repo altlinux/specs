@@ -1,6 +1,6 @@
 %define module_name	lkrg
-%define module_version	0.9.1.0.34.git0270c95
-%define module_release	alt2
+%define module_version	0.9.2
+%define module_release	alt1
 
 %define flavour		std-pae
 %define karch		%ix86
@@ -246,6 +246,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Fri Dec 31 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.2-alt1
+- Updated to v0.9.2.
 
 * Thu Dec 23 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1.0.34.git0270c95-alt2
 - Added %%module_dir directory to %%files.
