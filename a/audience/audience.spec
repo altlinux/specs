@@ -7,7 +7,7 @@
 
 Name: audience
 %define xdg_name org.pantheon.%name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A modern media player
@@ -62,6 +62,9 @@ hardware acceleration than most players out there.
 %doc README.md
 
 %changelog
+* Sat Jan 01 2022 Yuri N. Sedunov <aris@altlinux.org> 2.8.1-alt1
+- updated to 2.8.1-15-g3e4a32a8
+
 * Tue Nov 23 2021 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1
 - updated to 2.8.0-20-gad2924b4
 
