@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %def_without docs
 
 Name:    appstream
-Version: 0.14.6
+Version: 0.15.1
 Release: alt1
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
@@ -37,6 +38,7 @@ BuildRequires: xmlto
 BuildRequires: gtk-doc
 BuildRequires: libsoup-devel
 BuildRequires: /proc
+BuildRequires: libxmlb-devel
 
 #Requires: appstream-data
 
@@ -115,6 +117,7 @@ export LD_LIBRARY_PATH=$(pwd)/%__builddir/src
 mkdir -p %{buildroot}%{_datadir}/app-info/{icons,xmls}
 mkdir -p %{buildroot}/var/cache/app-info/{icons,xapian,xmls}
 touch %{buildroot}/var/cache/app-info/cache.watch
+rm -f %buildroot%_datadir/installed-tests/appstream/metainfo-validate.test
 
 %find_lang appstream
 
@@ -160,6 +163,9 @@ touch %{buildroot}/var/cache/app-info/cache.watch
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Sat Jan 01 2022 Andrey Cherepanov <cas@altlinux.org> 0.15.1-alt1
+- New version (ALT #41655).
+
 * Sat Oct 09 2021 Andrey Cherepanov <cas@altlinux.org> 0.14.6-alt1
 - New version.
 
