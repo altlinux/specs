@@ -1,21 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 %def_without test
-%define module_version 0.18
 %define module_name Test-HTTP
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(Class/Field.pm) perl(Encode.pm) perl(ExtUtils/MakeMaker.pm) perl(Filter/Simple.pm) perl(LWP.pm) perl(LWP/UserAgent.pm) perl(Test/Builder/Module.pm) perl(Test/More.pm) perl(Text/Balanced.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.18
-Release: alt2
+Version: 0.19
+Release: alt1
 Summary: Testing for HTTP services
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/L/LU/LUKEC/%module_name-%module_version.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MM/MML/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -27,7 +26,7 @@ status codes, headers, and message bodies.
 
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -39,6 +38,9 @@ status codes, headers, and message bodies.
 %perl_vendor_privlib/T*
 
 %changelog
+* Sat Jan 01 2022 Igor Vlasenko <viy@altlinux.org> 0.19-alt1
+- automated CPAN update
+
 * Wed Oct 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.18-alt2
 - build for Sisyphus (required for perl update)
 
