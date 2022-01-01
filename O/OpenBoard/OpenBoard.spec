@@ -4,7 +4,7 @@
 %define dest_dir %_libdir/OpenBoard
 Name: OpenBoard
 Version: 1.6.1
-Release: alt1
+Release: alt2
 Summary: Interactive whiteboard for schools and universities
 License: GPL-3.0+
 Group: Education
@@ -12,6 +12,7 @@ Url: https://github.com/OpenBoard-org/OpenBoard
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+Patch: OpenBoard-fix-build-with-liquazip1-qt5.patch
 
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: desktop-file-utils
@@ -54,6 +55,7 @@ Interactive whiteboard for schools and universities.
 
 %prep
 %setup
+%patch -p1
 
 # remove unwanted and nonfree libraries
 sed -i -e 's|-lfdk-aac ||' src/podcast/podcast.pri
@@ -144,6 +146,9 @@ cp -R resources/customizations %buildroot%dest_dir/
 %_bindir/%name
 
 %changelog
+* Sat Jan 01 2022 Anton Midyukov <antohami@altlinux.org> 1.6.1-alt2
+- fix build with libquazip1-qt5
+
 * Fri Oct 22 2021 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.1-alt1
 - new version 1.6.1
 - Removing patches merged to upstream
