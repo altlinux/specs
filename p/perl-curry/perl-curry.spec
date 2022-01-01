@@ -1,12 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name curry
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Scalar/Util.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.000000
+Version: 2.000001
 Release: alt1
 Summary: Create automatic curried method call closures for any class or object
 Group: Development/Perl
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/c*
 
 %changelog
+* Sat Jan 01 2022 Igor Vlasenko <viy@altlinux.org> 2.000001-alt1
+- automated CPAN update
+
 * Wed Dec 29 2021 Igor Vlasenko <viy@altlinux.org> 2.000000-alt1
 - automated CPAN update
 
