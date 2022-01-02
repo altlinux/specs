@@ -10,11 +10,9 @@ BuildRequires: /usr/bin/pod2man /usr/bin/pod2html
 %define libname	libcerf%{major}
 %define devname	libcerf-devel
 
-%global _cmake_skip_rpath %nil
-
 Name:		libcerf
 Summary:	Complex error functions, Dawson, Faddeeva, and Voigt function
-Version:	1.14
+Version:	1.17
 Release:	alt1_1
 Group:		System/Libraries
 License:	MIT
@@ -86,7 +84,7 @@ export CC=clang
 %{_libdir}/%{name}.so.%{version}
 
 %files -n %{devname}
-%doc %{_docdir}/libcerf/
+%doc %{_docdir}/cerf/
 %{_includedir}/cerf.h
 %{_libdir}/%{name}.so
 %{_libdir}/pkgconfig/%{name}.pc
@@ -94,6 +92,9 @@ export CC=clang
 
 
 %changelog
+* Sun Jan 02 2022 Igor Vlasenko <viy@altlinux.org> 1.17-alt1_1
+- new version
+
 * Thu Aug 26 2021 Igor Vlasenko <viy@altlinux.org> 1.14-alt1_1
 - new version
 
