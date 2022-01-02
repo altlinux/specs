@@ -1,5 +1,5 @@
 Name: picolisp
-Version: 21.6
+Version: 21.12
 Release: alt1
 
 Summary: Interpreted Lisp
@@ -44,7 +44,7 @@ make
 cd ..
 
 %install
-mkdir -p %buildroot{%_bindir,%_libdir/%name,%_datadir}
+mkdir -p %buildroot{%_bindir,%_libdir/%name,%_datadir,%_man1dir}
 cp -a bin/{picolisp,pil} %buildroot%_bindir/
 # TODO: emacs subpackage
 rm -rf lib/el
@@ -53,14 +53,19 @@ cp -a lib* %buildroot%_libdir/%name/
 # as per INSTALL
 ln -s ../lib64/%name %buildroot%_datadir/%name
 #ln -s ../lib64/%name %buildroot%_datadir/%name
+cp man/man1/* %buildroot%_man1dir
 
 %files
 %doc README
 %_bindir/*
 %_libdir/%name/
 %_datadir/%name/
+%_man1dir/*
 
 %changelog
+* Sun Jan 02 2022 Ilya Mashkin <oddity@altlinux.ru> 21.12-alt1
+- 21.12
+
 * Fri Aug 27 2021 Ilya Mashkin <oddity@altlinux.ru> 21.6-alt1
 - 21.6
 - build with clang, llvm etc
