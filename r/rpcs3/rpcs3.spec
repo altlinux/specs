@@ -1,18 +1,21 @@
+%define optflags_lto -flto=thin
+
 %define clang_version 12
 
-%define git_ver 12971
-%define git_commit 46a54f5474133eae424078dc29e0e0fa5210e7fb
+%define git_ver 13138
+%define git_commit 61d9852632e5b417acf47299532c9f80f54d0fd5
 
-%define glslang_version 11.6.0
-%define asmjit_commit 723f58581afc0f4cb16ba13396ff77e425896847
+%define glslang_version 11.7.1
+%define asmjit_commit eae7197fce03fd52a6e71ca89207a88ce270fb1a
 %define hidapi_commit 01f601a1509bf9c67819fbf521df39644bab52d5
 %define yaml_cpp_commit 0b67821f307e8c6bf0eba9b6d3250e3cf1441450
-%define llvm_commit 5836324d6443a62ed09b84c125029e98324978c3
+%define llvm_commit 1c0ca194dc501ffb1674868babf8bd52658a0734
 %define spirv_headers_version 1.5.3.reservations1
 %define spirv_tools_version 2020.4
+%define cubeb_commit d512bfa07a327e0ae7e7aef892dcce01cbeaa67c
 
 Name: rpcs3
-Version: 0.0.19
+Version: 0.0.20
 Release: alt1
 
 Summary: PS3 emulator/debugger
@@ -40,33 +43,34 @@ Source5: llvm-mirror-%llvm_commit.tar
 Source6: SPIRV-Headers-%spirv_headers_version.tar
 # https://github.com/KhronosGroup/SPIRV-Tools/archive/v%spirv_tools_version/SPIRV-Tools-%spirv_tools_version.tar.gz
 Source7: SPIRV-Tools-%spirv_tools_version.tar
+# https://github.com/mozilla/cubeb/archive/%cubeb_commit/cubeb-%cubeb_commit.tar.gz
+Source8: cubeb-%cubeb_commit.tar
 
 Patch0: %name-alt-git.patch
+Patch1: %name-alt-jit-events.patch
 
 BuildRequires: /proc
 BuildRequires: clang%clang_version.0
 BuildRequires: cmake >= 3.16.9
 BuildRequires: git-core
-BuildRequires: libflatbuffers-devel
-BuildRequires: libpugixml-devel
 BuildRequires: pkgconfig(FAudio)
 BuildRequires: pkgconfig(Qt5) >= 5.15.2
 BuildRequires: pkgconfig(Qt5Multimedia) >= 5.15.2
 BuildRequires: pkgconfig(Qt5MultimediaWidgets) >= 5.15.2
 BuildRequires: pkgconfig(Qt5Svg) >= 5.15.2
-BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(flatbuffers)
 BuildRequires: pkgconfig(glew)
 BuildRequires: pkgconfig(libavformat)
 BuildRequires: pkgconfig(libcurl)
 BuildRequires: pkgconfig(libevdev)
 BuildRequires: pkgconfig(libffi)
 BuildRequires: pkgconfig(libpng)
-BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(libswscale)
 BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(libxxhash)
 BuildRequires: pkgconfig(openal)
+BuildRequires: pkgconfig(pugixml)
 BuildRequires: pkgconfig(python3)
 BuildRequires: pkgconfig(sdl2)
 BuildRequires: pkgconfig(wayland-cursor)
@@ -85,9 +89,10 @@ BuildPreReq: python3-module-Pygments
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8
 
 %patch0 -p1
+%patch1 -p1
 
 %__mv -Tf ../glslang-%glslang_version 3rdparty/glslang/glslang
 %__mv -Tf ../asmjit-%asmjit_commit 3rdparty/asmjit/asmjit
@@ -96,6 +101,7 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 %__mv -Tf ../llvm-mirror-%llvm_commit llvm
 %__mv -Tf ../SPIRV-Headers-%spirv_headers_version 3rdparty/SPIRV/SPIRV-Headers
 %__mv -Tf ../SPIRV-Tools-%spirv_tools_version 3rdparty/SPIRV/SPIRV-Tools
+%__mv -Tf ../cubeb-%cubeb_commit 3rdparty/cubeb/cubeb
 
 #Generate Version Strings
 GIT_VERSION=$(echo %git_ver)
@@ -112,8 +118,6 @@ echo "// This is a generated file.
 " > %name/git-version.h
 
 %build
-%remove_optflags %optflags_lto
-
 export CC="clang-%clang_version"
 export CXX="clang++-%clang_version"
 export LINKER="lld-%clang_version"
@@ -141,7 +145,7 @@ export RANLIB="llvm-ranlib-%clang_version"
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %doc LICENSE README.md
@@ -153,6 +157,9 @@ export RANLIB="llvm-ranlib-%clang_version"
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Mon Jan 03 2022 Nazarov Denis <nenderus@altlinux.org> 0.0.20-alt1
+- Version 0.0.20
+
 * Mon Nov 01 2021 Nazarov Denis <nenderus@altlinux.org> 0.0.19-alt1
 - Version 0.0.19
 
