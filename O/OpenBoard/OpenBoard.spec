@@ -4,7 +4,7 @@
 %define dest_dir %_libdir/OpenBoard
 Name: OpenBoard
 Version: 1.6.1
-Release: alt2
+Release: alt3
 Summary: Interactive whiteboard for schools and universities
 License: GPL-3.0+
 Group: Education
@@ -12,13 +12,12 @@ Url: https://github.com/OpenBoard-org/OpenBoard
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-Patch: OpenBoard-fix-build-with-liquazip1-qt5.patch
 
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: desktop-file-utils
 BuildRequires: libpaper-devel
 BuildRequires: libssl-devel
-BuildRequires: libquazip-qt5-devel
+BuildRequires: quazip-qt5-devel
 BuildRequires: libqtsingleapplication-qt5-devel
 BuildRequires: t1lib-devel
 BuildRequires: libavcodec-devel libavformat-devel libswscale-devel libswresample-devel
@@ -55,7 +54,6 @@ Interactive whiteboard for schools and universities.
 
 %prep
 %setup
-%patch -p1
 
 # remove unwanted and nonfree libraries
 sed -i -e 's|-lfdk-aac ||' src/podcast/podcast.pri
@@ -64,11 +62,18 @@ sed -i -e 's|-lx264 ||' src/podcast/podcast.pri
 # fix build with poppler 0.83
 sed -i -e 's,std=c++11,std=c++14,g' src/podcast/podcast.pri
 
+# drop quazip LIBS INCLUDEPATH
+sed -i -e '/LIBS += -lquazip5/d' \
+	-e '/INCLUDEPATH += "\/usr\/include\/quazip"/d' \
+	OpenBoard.pro
+
 %build
 %_qt5_bindir/lrelease -removeidentical %name.pro
 
 %qmake_qt5 \
-    INCLUDEPATH+=%_includedir/quazip5 \
+    LIBS+="`pkg-config --libs quazip1-qt5`" \
+    INCLUDEPATH+="`pkg-config --cflags-only-I quazip1-qt5 |
+      sed 's/-I//g'`" \
     INCLUDEPATH+=%_includedir/poppler \
     INCLUDEPATH+=%_includedir/qt5/QtSolutions \
     %name.pro
@@ -146,6 +151,9 @@ cp -R resources/customizations %buildroot%dest_dir/
 %_bindir/%name
 
 %changelog
+* Sat Jan 01 2022 Anton Midyukov <antohami@altlinux.org> 1.6.1-alt3
+- realy fix build with libquazip1-qt5
+
 * Sat Jan 01 2022 Anton Midyukov <antohami@altlinux.org> 1.6.1-alt2
 - fix build with libquazip1-qt5
 
