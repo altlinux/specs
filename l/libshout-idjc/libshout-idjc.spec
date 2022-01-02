@@ -1,6 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(theora)
-# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define major	3
@@ -8,17 +5,18 @@ BuildRequires: pkgconfig(theora)
 %define devname	libshout-idjc-devel
 
 Name:		libshout-idjc
-Version:	2.4.1
-Release:	alt1_5
+Version:	2.4.3
+Release:	alt1_2
 Summary:	Libshout with extensions for IDJC
-Source:		http://downloads.sf.net/idjc/libshout-idjc-%{version}.tar.gz
-Patch0:		01-libshout-tls-compile-with-OpenSSL-1.1.0.patch
-URL:		https://sourceforge.net/projects/idjc/
-Group:		System/Libraries
-License:	LGPL-2.1+
+Group:          System/Libraries
+License:        LGPL-2.1+
+URL:            https://sourceforge.net/projects/libshoutidjc.idjc.p/
+Source0:	http://downloads.sf.net/libshoutidjc.idjc.p/libshout-idjc-%{version}.tar.gz
+BuildRequires:	pkgconfig(theora)
 BuildRequires:	pkgconfig(ogg)
 BuildRequires:	pkgconfig(vorbis)
 BuildRequires:	pkgconfig(speex)
+BuildRequires:	pkgconfig(openssl)
 Source44: import.info
 
 %description
@@ -35,6 +33,8 @@ This is a modified version of libshout, with extensions for IDJC.
 Summary:	Development files for libshout with extensions for IDJC
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
+Provides:	shout-idjc-devel = %{version}-%{release}
 
 %description -n %{devname}
 Libshout-idjc is a modified version of libshout, with extensions for IDJC.
@@ -42,32 +42,38 @@ This package contains the development files for the library.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 autoreconf -vfi
-%configure
-%make_build LDFLAGS+="-lspeex -logg"
+%configure --disable-static
+%make_build
 
 %install
 %makeinstall_std
 
-rm -f %{buildroot}%{_libdir}/libshout-idjc.{a,la}
-rm -rf %{buildroot}%{_datadir}/doc/libshout-idjc
+rm -rf %{buildroot}%{_datadir}/doc/libshout-idjc/COPYING
+
+# we don't have ckport tool ATM
+rm -rf %{buildroot}%{_libdir}/ckport/
 
 %files -n %{libname}
-%{_libdir}/libshout-idjc.so.%{major}
-%{_libdir}/libshout-idjc.so.%{major}.*
+%doc --no-dereference COPYING
+%docdir %{_datadir}/doc/libshout-idjc
+%doc %{_datadir}/doc/libshout-idjc/
+%{_libdir}/libshout-idjc.so.%{major}*
 
 %files -n %{devname}
-%doc COPYING NEWS README
-%{_datadir}/aclocal/shout.m4
+%docdir %{_datadir}/doc/libshout-idjc
+%doc %{_datadir}/doc/libshout-idjc/
 %{_includedir}/shoutidjc
 %{_libdir}/libshout-idjc.so
 %{_libdir}/pkgconfig/shout-idjc.pc
 
 
 %changelog
+* Sun Jan 02 2022 Igor Vlasenko <viy@altlinux.org> 2.4.3-alt1_2
+- update by mgaimport
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 2.4.1-alt1_5
 - update by mgaimport
 
