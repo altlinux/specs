@@ -74,8 +74,8 @@
 %endif
 
 Name:    samba
-Version: 4.14.10
-Release: alt2
+Version: 4.14.11
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -188,7 +188,11 @@ BuildRequires: python3-module-tdb
 
 %if_without ldb
 %define ldb_version 2.3.2
+%define ldb_version_release 2.3.2-alt2
 BuildRequires: libldb-devel = %ldb_version
+%if "%ldb_version_release" != ""
+BuildRequires: libldb-devel >= %ldb_version_release
+%endif
 BuildRequires: python3-module-pyldb-devel
 %endif
 %{?_with_testsuite:BuildRequires: ldb-tools}
@@ -314,6 +318,9 @@ Group: System/Libraries
 Requires: %name-common-libs = %version-%release
 %if_without ldb
 Requires: libldb = %ldb_version
+%if "%ldb_version_release" != ""
+Requires: libldb >= %ldb_version_release
+%endif
 %endif
 
 %if_without libsmbclient
@@ -1920,6 +1927,24 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_includedir/samba-4.0/private
 
 %changelog
+* Mon Dec 15 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.11-alt1
+- Update to latest maintenance release of Samba 4.14.
+- Fix broken of recursive directory delete with veto files.
+- Fix directory containing dangling symlinks cannot be deleted by
+  SMB2 alone when they are the only entry in the directory.
+
+* Mon Dec 13 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.10-alt3
+- Update for the latest fixes release of Samba 4.14
+  + CVE-2020-25727 idmap_nss, krb5 and s3-auth regressions
+  + CVE-2021-3670 ldap_server, dsdb/anr and ldb (libldb-2.3.2-alt2) regressions
+  + smbd: s3-dsgetdcname: handle num_ips == 0
+  + dsdb: Use DSDB_SEARCH_SHOW_EXTENDED_DN when searching for the local replicated object
+  + lib: handle NTTIME_THAW in nt_time_to_full_timespec()
+  + IPA DC: add missing checks
+  + s3:winbindd: fix "allow trusted domains = no" regression
+- Update tob more compatible with ALT distributions:
+  + loadparm: Set parameter "min domain uid" deafult value to 500.
+
 * Sat Nov 13 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.10-alt2
 - Add support samba-tool-plus alternative for samba-dc build with heimdal.
 

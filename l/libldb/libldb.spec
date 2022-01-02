@@ -9,7 +9,7 @@
 
 Name: libldb
 Version: 2.3.2
-Release: alt1
+Release: alt2
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -21,6 +21,7 @@ Patch1: ldb-alt-fix-python-ldflags.patch
 Patch2: ldb-skip-test_guid_indexed_v1_db-on-mips64el-ppc64le-mipsel.patch
 Patch3: ldb-skip-ldb_lmdb_free_list_test-on-ppc64le.patch
 Patch4: ldb-pyldb-overflow-timestring-test-32bit.patch
+Patch5: 0001-CVE-2021-3670-ldb-Confirm-the-request-has-not-yet-ti.patch
 
 BuildRequires: libpopt-devel libldap-devel xsltproc docbook-style-xsl docbook-dtds
 BuildRequires: libcmocka-devel >= 1.1.3
@@ -97,6 +98,7 @@ Development files for the Python3 bindings for the LDB library
 %ifarch %ix86 %arm %mips32
 %patch4 -p2
 %endif
+%patch5 -p3
 
 %build
 %undefine _configure_gettext
@@ -185,6 +187,10 @@ make test
 %_pkgconfigdir/pyldb-util.cpython-*.pc
 
 %changelog
+* Mon Dec 13 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.3.2-alt2
+- Update to latest regression fixes for samba-4.14.10:
+  + CVE-2021-3670 ldb: Confirm the request has not yet timed out
+
 * Sun Nov 07 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.3.2-alt1
 - Update to the 2.3.2 with backported all C code changes from ldb-2.4.1
 - Fix overflow timestring test for 32 bits platforms

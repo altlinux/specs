@@ -9,7 +9,7 @@
 
 Name: sssd
 Version: 2.6.1
-Release: alt2
+Release: alt3
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -842,6 +842,15 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Mon Dec 13 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.6.1-alt3
+- Update with latest libldb-2.3.2-alt2 fixes.
+- Backport newest fixes from upstream:
+  + utils: ignore systemd and sd-pam process in get_active_uid_linux()
+  + cldap: use dns_resolver_server_timeout timeout for cldap ping
+  + ad: only send cldap-ping to our local domain
+  + ad: make ad_srv_plugin_ctx_switch_site() public
+  + ad: use already discovered forest name
+
 * Mon Nov 15 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.6.1-alt2
 - Revert reverted patch with change owner/permissions of user deskprofile path
   due it still needed.
