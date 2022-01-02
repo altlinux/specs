@@ -1,8 +1,8 @@
 %def_with bootstrap
 
 Name:           solaar
-Version:        1.1.0
-Release:        alt3
+Version:        1.1.1
+Release:        alt1
 
 Group:          System/Configuration/Hardware
 Summary:        Device manager for Logitech Unifying Receiver
@@ -76,6 +76,9 @@ tools/po-compile.sh
 %doc docs
 
 %changelog
+* Sun Jan 02 2022 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt1
+- New version.
+
 * Tue Dec 07 2021 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt3
 - Fix Lighting translation.
 
