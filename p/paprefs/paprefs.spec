@@ -1,9 +1,9 @@
 Name: paprefs
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Summary: PulseAudio Preferences
-License: GPL
+License: GPLv2+
 Group: Sound
 
 Url: http://freedesktop.org/software/pulseaudio/%name
@@ -49,6 +49,10 @@ install -pDm644 %SOURCE1 %buildroot%_datadir/applications/%name.desktop
 %_datadir/paprefs/paprefs.glade
 
 %changelog
+* Sun Jan 02 2022 Ilya Mashkin <oddity@altlinux.ru> 1.2-alt1
+- 1.2
+- Update License tag to GPLv2+
+
 * Mon Apr 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt1
 - NMU: new version 1.1 (with rpmrb script)
 - switch to meson and gtkmm3
