@@ -1,5 +1,4 @@
 %set_verify_elf_method unresolved=relaxed
-%add_findreq_skiplist  %_libdir/trikStudio/*.so* %_libdir/trikStudio/plugins/tools/kitPlugins/*.so %_libdir/trikStudio/plugins/tools/*.so %_libdir/trikStudio/plugins/editors/*.so
 %def_without separate_trikruntime
 %def_without sanitize
 %def_without debug
@@ -7,7 +6,7 @@
 
 Name: trikStudio
 Version: 2021.1
-Release: alt3
+Release: alt4
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
@@ -19,9 +18,11 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 Patch1: gamepad.patch
 Patch2: alt-ftbfs.patch
+Patch3: fix-build-with-qt5-quazip1.patch
 
 BuildRequires: gcc-c++ qt5-base-devel qt5-svg-devel qt5-script-devel qt5-multimedia-devel libusb-devel libudev-devel libgmock-devel
-BuildRequires: libqscintilla2-qt5-devel zlib-devel libquazip-qt5-devel python3-dev libhidapi-devel libusb-devel
+BuildRequires: libqscintilla2-qt5-devel zlib-devel python3-dev libhidapi-devel libusb-devel
+BuildRequires: quazip-qt5-devel
 # Workaround due project build with -fsanitize=undefined natively
 # https://bugzilla.altlinux.org/show_bug.cgi?id=38106
 #if_with sanitize
@@ -31,9 +32,7 @@ BuildRequires: libubsan-devel-static
 #endif
 BuildRequires: rsync qt5-tools
 
-Requires: libquazip-qt5 libhidapi
-Requires: %name-data = %version-%release
-Conflicts: lib%name
+Requires: %name-data
 
 %description
 Intuitive programming environment allows you to program robots using a sequence
@@ -105,6 +104,8 @@ tar -xf qslog.tar.bz2
 popd
 %patch2 -p1
 
+%patch3 -p1
+
 if pushd plugins/robots/thirdparty/trikRuntime/trikRuntime/PythonQt/PythonQt ; then
 	[ -e generated_cpp_5.15 ] \
 	    || ln -s generated_cpp_5.14 generated_cpp_5.15
@@ -113,6 +114,9 @@ fi
 
 %build
 %qmake_qt5 -r \
+    LIBS+="`pkg-config --libs quazip1-qt5`" \
+    INCLUDEPATH+="`pkg-config --cflags-only-I quazip1-qt5 |
+      sed 's/-I//g'`" \
 %if_with debug
     CONFIG+=debug CONFIG-=release \
 %else
@@ -193,6 +197,12 @@ popd
 %endif
 
 %changelog
+* Sun Jan 02 2022 Anton Midyukov <antohami@altlinux.org> 2021.1-alt4
+- fix build with qt5-quazip1
+- clean add_findreq_skiplist
+- drop old Conflicts
+- fix Requires
+
 * Sat Oct 30 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2021.1-alt3
 - Fixed build for Elbrus
 
