@@ -1,7 +1,13 @@
+%ifarch %e2k
+%def_disable clang
+%else
+%def_enable clang
+%endif
+
 # check version in include/libyuv/version.h
 Name: libyuv
 Version: 0.0.1805
-Release: alt1
+Release: alt1.1
 
 Summary: YUV conversion and scaling functionality library
 
@@ -13,7 +19,12 @@ Url: http://code.google.com/p/libyuv/
 Source: %name-%version.tar
 Patch0: libyuv-alt-buildfix.patch
 
-BuildRequires: clang cmake libstdc++-devel
+%if_enabled clang
+BuildRequires: clang
+%else
+BuildRequires: gcc-c++
+%endif
+BuildRequires: cmake libstdc++-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libgtest-devel
 
@@ -51,8 +62,10 @@ yuvconvert tool.
 %ifarch %ix86
     %add_optflags -msse2
 %endif
+%if_enabled clang
 export CC=clang
 export CXX=clang++
+%endif
 %cmake \
     -DENABLE_TEST=1 \
     -DCMAKE_SKIP_BUILD_RPATH=1
@@ -79,6 +92,9 @@ $(echo */libyuv_unittest)
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Sun Jan 02 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.0.1805-alt1.1
+- fixed build for Elbrus
+
 * Fri Nov 26 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.1805-alt1
 - up to 1805 git.63ce1d05
 
