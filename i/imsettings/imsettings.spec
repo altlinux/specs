@@ -3,16 +3,17 @@ Group: System/Base
 BuildRequires(pre): rpm-macros-alternatives
 BuildRequires: /usr/bin/desktop-file-validate /usr/bin/gtkdocize gcc-c++ glib2-devel pkgconfig(check) pkgconfig(gconf-2.0) pkgconfig(gdk-2.0) pkgconfig(gio-2.0) pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
+%filter_from_requires /^systemd/d
 %add_findreq_skiplist %_libexecdir/xinputinfo.sh
 %add_findreq_skiplist /etc/X11/xinit/xinitrc.d/50-xinput.sh
 BuildRequires: libdbus-devel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		imsettings
-Version:	1.8.2
+Version:	1.8.3
 Release:	alt1_1
 License:	LGPLv2+
-URL:		https://tagoh.bitbucket.org/%{name}/
+URL:		https://gitlab.com/tagoh/%{name}/
 BuildRequires:	desktop-file-utils
 BuildRequires:	gettext gettext-tools
 BuildRequires:	libtool automake autoconf
@@ -31,14 +32,13 @@ Patch1:		%{name}-disable-xim.patch
 Patch2:		%{name}-xinput-xcompose.patch
 ## Fedora specific: Force enable the IM management on imsettings for Cinnamon
 Patch3:		%{name}-force-enable-for-cinnamon.patch
-Patch4:		%{name}-gcc10.patch
 
 Summary:	Delivery framework for general Input Method configuration
 Requires:	xinit >= 1.0.2
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	%{name}-desktop-module = %{version}-%{release}
 Requires:	/bin/bash
-Requires:	%{name}-gsettings
+Requires:	%{name}-systemd
 Source44: import.info
 
 %description
@@ -199,17 +199,30 @@ or the desktop.
 This package contains a module to get this working on Cinnamon.
 %endif
 
+%package	systemd
+Group: System/Base
+Summary:	Generic support for imsettings by systemd
+Requires:	%{name} = %{version}-%{release}
+Requires:	im-chooser
+Provides:	imsettings-desktop-module = %{version}-%{release}
+
+%description	systemd
+IMSettings is a framework that delivers Input Method
+settings and applies the changes so they take effect
+immediately without any need to restart applications
+or the desktop.
+
+This package contains a module to support basic functionality for imsettings by systemd.
+
 %prep
 %setup -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 
 %build
-autoreconf -f
 %configure	\
 	--with-xinputsh=50-xinput.sh \
 	--disable-static \
@@ -342,9 +355,17 @@ fi
 %{_libdir}/imsettings/libimsettings-cinnamon-gsettings.so
 %endif
 
-
 %endif
+%files systemd
+%doc --no-dereference COPYING
+%doc AUTHORS ChangeLog NEWS README
+%{_libdir}/imsettings/libimsettings-systemd-gtk.so
+%{_libdir}/imsettings/libimsettings-systemd-qt.so
+
 %changelog
+* Sun Jan 02 2022 Igor Vlasenko <viy@altlinux.org> 1.8.3-alt1_1
+- update to new release by fcimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt1_1
 - update to new release by fcimport
 
