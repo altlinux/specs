@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ libX11-devel libqt4-devel p
 %define fontpkgname texstudio
 Name:           texstudio
 Version:        4.1.2
-Release:        alt1
+Release:        alt2
 
 Summary:        A feature-rich editor for LaTeX documents
 # texstudio binary: GPLv3 due to static linkage of bundled qcodeedit
@@ -33,7 +33,7 @@ BuildRequires:  gettext gettext-tools
 BuildRequires:  libpoppler-qt5-devel
 BuildRequires:  libqtsingleapplication-qt5-devel
 BuildRequires:  libqtermwidget-devel
-BuildRequires:  libquazip-qt5-devel
+BuildRequires:  quazip-qt5-devel
 BuildRequires:  zlib-devel libpoppler-cpp-devel qt5-declarative-devel
 
 Requires:       tex(latex)
@@ -72,7 +72,10 @@ pushd %{_target_platform}
     USE_SYSTEM_HUNSPELL=1 \
     USE_SYSTEM_QTSINGLEAPPLICATION=1 \
     INTERNAL_TERMINAL=1 \
-    USE_SYSTEM_QUAZIP=1 QUAZIP_LIB=-lquazip5 QUAZIP_INCLUDE=%{_includedir}/quazip5/ \
+    USE_SYSTEM_QUAZIP=1 \
+    QUAZIP_LIB="`pkg-config --libs quazip1-qt5`" \
+    QUAZIP_INCLUDE="`pkg-config --cflags-only-I quazip1-qt5 |
+      sed 's/-I//g'`" \
     ../texstudio.pro
 popd
 
@@ -125,6 +128,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE1}
 %doc utilities/AUTHORS utilities/COPYING utilities/manual/CHANGELOG.txt
 
 %changelog
+* Sat Jan 01 2022 Anton Midyukov <antohami@altlinux.org> 4.1.2-alt2
+- use pkgconfig for quazip PATH definitions
+
 * Thu Dec 09 2021 Ilya Mashkin <oddity@altlinux.ru> 4.1.2-alt1
 - 4.1.2
 
