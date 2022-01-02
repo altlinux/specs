@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 
 Name:           libpasastro
-Version:        1.3.0
+Version:        1.4.1
 Release:        alt1_1
 Summary:        Pascal interface for standard astronomy libraries
 Group:          Sciences/Astronomy
@@ -16,7 +16,7 @@ URL:            https://sourceforge.net/projects/libpasastro/
 # Use the following commands to generate the tarball:
 # svn export -r 9 svn://svn.code.sf.net/p/libpasastro/code/trunk libpasastro-1.0
 # tar -cJvf libpasastro-1.0-svn.tar.xz libpasastro-1.0
-Source0:        https://github.com/pchev/libpasastro/archive/v1.3.0.tar.gz#/libpasastro-1.3.0.tar.gz
+Source0:        https://github.com/pchev/libpasastro/archive/v%{version}.tar.gz#/libpasastro-%{version}.tar.gz
 #Source0:        https://downloads.sourceforge.net/%%{name}/%%{name}-%%{version}-src.tar.xz
 
 # Patch to fix stripping and permissions of library files
@@ -54,6 +54,9 @@ mkdir -p plan404/obj
 
 
 %changelog
+* Sun Jan 02 2022 Igor Vlasenko <viy@altlinux.org> 1.4.1-alt1_1
+- update by mgaimport
+
 * Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_1
 - update by mgaimport
 
