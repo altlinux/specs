@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.3.18
+Version:  1.4.0
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -35,6 +35,9 @@ install -Dpm 644 %name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %_man8dir/%name.8*
 
 %changelog
+* Sun Jan 02 2022 Andrey Cherepanov <cas@altlinux.org> 1.4.0-alt1
+- Add command upgrade with optional including tasks.
+
 * Tue Dec 21 2021 Andrey Cherepanov <cas@altlinux.org> 1.3.18-alt1
 - Add autoimports.p10 branch support.
 
