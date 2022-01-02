@@ -3,7 +3,7 @@
 
 Name: openbox
 Version: 3.6.1
-Release: alt5
+Release: alt6
 
 Summary: Openbox is a standards compliant, fast, light-weight, extensible window manager
 Summary(ru_RU.UTF-8): Openbox это следующий стандартам, быстрый, лёгкий, расширяемый оконный менеджер
@@ -36,6 +36,7 @@ Requires: Xdialog
 Requires: %_bindir/openbox-session
 Requires: %name-themes
 Requires: %_libexecdir/openbox-autostart
+Requires: menu
 
 Conflicts: openbox-extras
 
@@ -93,6 +94,8 @@ Openbox window manager.
 %package base
 Summary: Openbox pure WM
 Group: Graphical desktop/Other
+
+%add_findreq_skiplist %_sysconfdir/menu-methods/*
 
 %description base
 Openbox pure WM.
@@ -319,6 +322,7 @@ install -pD -m 644 %SOURCE13 %buildroot%_sysconfdir/xdg/openbox/
 %files
 %config %_sysconfdir/X11/wmsession.d/09openbox
 %_datadir/xsessions/openbox.desktop
+%_bindir/openbox-session
 
 %files base -f %name.lang
 %doc AUTHORS CHANGELOG COMPLIANCE README
@@ -326,6 +330,7 @@ install -pD -m 644 %SOURCE13 %buildroot%_sysconfdir/xdg/openbox/
 %_sysconfdir/xdg/openbox/*
 %config(noreplace) %_sysconfdir/menu-methods/*
 %_bindir/*
+%exclude %_bindir/openbox-session
 %exclude %_bindir/openbox-kde-session
 %exclude %_bindir/openbox-gnome-session
 %exclude %_bindir/gdm-control
@@ -415,6 +420,11 @@ install -pD -m 644 %SOURCE13 %buildroot%_sysconfdir/xdg/openbox/
 %_datadir/themes/Syscrash
 
 %changelog
+* Thu Dec 30 2021 Anton Midyukov <antohami@altlinux.org> 3.6.1-alt6
+- Replace openbox-session from openbox-base package to openbox
+- do not require package menu for openbox-base, require package menu
+  for openbox
+
 * Thu Nov 28 2019 Anton Midyukov <antohami@altlinux.org> 3.6.1-alt5
 - add Buildrequires: imlib2 librsvg (Closes: 37547)
 
