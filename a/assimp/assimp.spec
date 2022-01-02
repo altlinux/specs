@@ -1,43 +1,61 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-mageia-compat
-BuildRequires: gcc-c++ libGLU-devel libglvnd-devel swig unzip
+BuildRequires: /usr/bin/doxygen gcc-c++ libGLU-devel libglvnd-devel python3-devel rpm-build-python3 swig unzip zip
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name assimp
-%define major   3
-%define minor   3
+%define major   5
+%define minor   1
 %define libname lib%{name}%{major}
 %define devname lib%{name}-devel
 
 Name:           assimp
-Version:        3.3.1
-Release:        alt1_5
+Version:        5.1.0
+Release:        alt1_1
 Summary:        Library to import various 3D model formats into applications
 Group:          Graphics
-License:        BSD
-URL:            http://www.assimp.org
-Source0:        https://github.com/assimp/assimp/archive/v%{version}/%{name}-%{version}.tar.gz
-Patch0:         assimp-3.3.1-mga-fdr-system-poly2tri-clipper.patch
-Patch1:         assimp-3.3.1-mga-system-unzip.patch
-# Fix library and include paths in assimp-config.cmake
-# Fixes rhbz#1263698, not submitted upstream
-# Rehashed to 3.3.1
-Patch2:         0001-Assimp-cmake-provider-fix.patch
-Patch10:        assimp-3.3.1-install-pkgconfig.patch
-# Upstream backports:
-# Collada morph animation
-Patch100:       0001-Morph-animation-support-for-collada.patch
+# Assimp is BSD
+# Bundled contrib/clipper is Boost
+# Bundled contrib/Open3DGC is MIT
+# Bundled contrib/openddlparser is MIT
+# Bundled contrib/stb_image is MIT
+# Bundled contrib/unzip is zlib
+# Bundled contrib/zip is unlicense
+# Bundled contrib/zlib is zlib
+License:        BSD and MIT and Boost and unlicense and zlib
+URL:            https://github.com/assimp/assimp
+
+# Github releases include nonfree models, source tarball must be re-generated
+# using assimp_generate_tarball.sh
+Source0:        %{name}-%{version}-free.tar.xz
+Source1:        assimp_generate_tarball.sh
+
+# Un-bundle libraries that are provided by the distribution.
+Patch0:         assimp-5.1.0-mga-unbundle.patch
 
 BuildRequires:  boost-complete
-BuildRequires:  ccmake cmake ctest
-BuildRequires:  dos2unix
+BuildRequires:  cmake
+BuildRequires:  pkgconfig(gtest)
 BuildRequires:  pkgconfig(minizip)
 BuildRequires:  pkgconfig(poly2tri)
-# assimp 3.1 seems not to build with the most recent version of polyclipping
-#BuildRequires:  pkgconfig(polyclipping)
+BuildRequires:  pkgconfig(pugixml)
 BuildRequires:  pkgconfig(zlib)
+BuildRequires:  stbi-devel
+BuildRequires:  libutfcpp-devel
+
+# Incompatible - https://github.com/assimp/assimp/issues/788
+#BuildRequires:  pkgconfig(polyclipping)
+# Needs unstable git version we don't package yet
+#BuildRequires:  rapidjson
+
+Provides: bundled(polyclipping) = 4.8.8
+Provides: bundled(open3dgc)
+Provides: bundled(openddl-parser)
+Provides: bundled(rapidjson)
+# https://github.com/kuba--/zip
+Provides: bundled(zip)
 Source44: import.info
 
 %description
@@ -90,31 +108,26 @@ You need to install it if you want to develop programs using assimp.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch10 -p1
-%patch100 -p1
 
 
 # Get rid of bundled libs so we can't accidentally build against them
+rm -rf contrib/android-cmake
 #rm -rf contrib/clipper
-rm -rf contrib/cppunit-1.12.1
+rm -rf contrib/draco
+rm -rf contrib/gtest
 rm -rf contrib/poly2tri
+rm -rf contrib/pugixml
+#rm -rf contrib/rapidjson
+rm -rf contrib/stb
 rm -rf contrib/unzip
+rm -rf contrib/utf8cpp
+#rm -rf contrib/zip
 rm -rf contrib/zlib
 
-dos2unix CHANGES CREDITS LICENSE Readme.md
-
 %build
-%{mageia_cmake} -DASSIMP_BUILD_TESTS=NO \
-       -DASSIMP_LIB_INSTALL_DIR=%{_libdir} \
-       -DASSIMP_BIN_INSTALL_DIR=%{_bindir} \
-       -DASSIMP_INCLUDE_INSTALL_DIR=%{_includedir} \
-       -DPOLY2TRI_LIB_PATH=%{_libdir} \
-       -DPOLY2TRI_INCLUDE_PATH=%{_includedir}/poly2tri
-# To use system polyclipping if assimp ever becomes compatible:
-#       -DCLIPPER_LIB_PATH=%%{_libdir} \
-#       -DCLIPPER_INCLUDE_PATH=%%{_includedir}/polyclipping
+%{mageia_cmake} \
+  -DASSIMP_BUILD_TESTS=OFF
+
 %mageia_cmake_build
 
 %install
@@ -122,6 +135,9 @@ dos2unix CHANGES CREDITS LICENSE Readme.md
 
 
 %changelog
+* Sun Jan 02 2022 Igor Vlasenko <viy@altlinux.org> 5.1.0-alt1_1
+- update by mgaimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 3.3.1-alt1_5
 - fixed build
 
