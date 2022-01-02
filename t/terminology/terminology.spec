@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.11
+%define ver_major 1.12
 
 %def_enable check
 
@@ -24,10 +24,9 @@ Patch: %name-1.0.0-alt-default_font.patch
 Requires: fonts-bitmap-terminus
 Provides: xvt
 
-BuildRequires(pre): meson rpm-build-licenses
+BuildRequires(pre): rpm-macros-meson rpm-build-licenses
 Conflicts: libelementary < 1.20.0
-BuildRequires: efl-libs-devel
-BuildRequires: libelementary-devel >= 1.22.0
+BuildRequires: meson libelementary-devel >= 1.26.0
 
 %description
 An EFL terminal emulator with some extra bells and whistles. It's brand
@@ -67,6 +66,9 @@ EOF
 %doc AUTHORS ChangeLog COPYING README.md
 
 %changelog
+* Sun Jan 02 2022 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Thu Nov 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.11.0-alt1
 - 1.11.0
 
