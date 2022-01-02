@@ -1,13 +1,13 @@
+Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Summary:  Thai language support routines
 Name: libthai
-Version: 0.1.28
+Version: 0.1.29
 Release: alt1_1
 License: LGPLv2+
-Group: System/Libraries
-Source: ftp://linux.thai.net/pub/thailinux/software/libthai/libthai-%{version}.tar.xz
+Source: http://linux.thai.net/pub/thailinux/software/libthai/libthai-%{version}.tar.xz
 Patch0: libthai-0.1.9-multilib.patch
 URL: http://linux.thai.net
 
@@ -23,8 +23,8 @@ It includes important Thai-specific functions e.g. word breaking, input and
 output methods as well as basic character and string supports.
 
 %package devel
-Summary:  Thai language support routines
 Group: Development/Other
+Summary:  Thai language support routines
 Requires: %{name} = %{version}-%{release}
 Requires: pkgconfig
 
@@ -55,6 +55,8 @@ rmdir $RPM_BUILD_ROOT%{_docdir}/libthai
 
 rm $RPM_BUILD_ROOT%{_libdir}/*.la
 
+
+
 %files
 %doc README AUTHORS COPYING ChangeLog
 %{_libdir}/lib*.so.*
@@ -67,6 +69,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Sun Jan 02 2022 Igor Vlasenko <viy@altlinux.org> 0.1.29-alt1_1
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.28-alt1_1
 - update to new release by fcimport
 
