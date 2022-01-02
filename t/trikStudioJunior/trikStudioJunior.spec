@@ -1,5 +1,4 @@
 %set_verify_elf_method unresolved=relaxed
-%add_findreq_skiplist  %_libdir/trikStudio/*.so* %_libdir/trikStudio/plugins/tools/kitPlugins/*.so %_libdir/trikStudio/plugins/tools/*.so %_libdir/trikStudio/plugins/editors/*.so
 %def_without separate_trikruntime
 %def_without sanitize
 %def_without debug
@@ -7,7 +6,7 @@
 
 Name: trikStudioJunior
 Version: 2020.2
-Release: alt1
+Release: alt2
 Summary: Intuitive graphical programming environment
 Summary(ru_RU.UTF-8): Интуитивно-понятная графическая среда программирования
 License: Apache-2.0
@@ -16,9 +15,11 @@ Url: https://github.com/trikset/trik-studio
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
+Patch1: fix-build-with-qt5-quazip1.patch
 
 BuildRequires: gcc-c++ qt5-base-devel qt5-svg-devel qt5-script-devel qt5-multimedia-devel libusb-devel libudev-devel libgmock-devel
-BuildRequires: libqscintilla2-qt5-devel zlib-devel libquazip-qt5-devel python3-dev
+BuildRequires: libqscintilla2-qt5-devel zlib-devel python3-dev
+BuildRequires: quazip-qt5-devel
 # Workaround due project build with -fsanitize=undefined natively
 # https://bugzilla.altlinux.org/show_bug.cgi?id=38106
 #if_with sanitize
@@ -26,9 +27,7 @@ BuildRequires: libubsan-devel-static
 #endif
 BuildRequires: rsync qt5-tools
 
-Requires: libquazip-qt5
-Requires: %name-data = %version-%release
-Conflicts: lib%name
+Requires: %name-data
 
 %description
 
@@ -66,12 +65,17 @@ Data files for %name
 sed -e '2 a export LD_LIBRARY_PATH=%_libdir\/%name\/' -i installer/platform/trikStudio.sh
 sed -e 's|^trik-studio|%_libdir/%name/trik-studio|' -i installer/platform/trikStudio.sh
 
+%patch1 -p1
+
 pushd qrgui/thirdparty
 tar -xf qt-solutions.tar.bz2
 popd
 
 %build
 %qmake_qt5 -r \
+    LIBS+="`pkg-config --libs quazip1-qt5`" \
+    INCLUDEPATH+="`pkg-config --cflags-only-I quazip1-qt5 |
+      sed 's/-I//g'`" \
 %if_with debug
     CONFIG+=debug CONFIG-=release \
 %else
@@ -122,6 +126,12 @@ done
 %doc LICENSE NOTICE README.md
 
 %changelog
+* Sat Jan 01 2022 Anton Midyukov <antohami@altlinux.org> 2020.2-alt2
+- fix build with qt5-quazip1
+- clean add_findreq_skiplist
+- drop old Conflicts
+- fix Requires
+
 * Tue Jun 23 2020 Valery Sinelnikov <greh@altlinux.org> 2020.2-alt1
 - Initial build for Sisyphus
 
