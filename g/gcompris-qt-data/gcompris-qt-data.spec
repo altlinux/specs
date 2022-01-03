@@ -1,5 +1,5 @@
 Name:     gcompris-qt-data
-Version:  20190304
+Version:  20211229
 Release:  alt1
 
 Summary:  Contains optional data for gcompris-qt (words, background music)
@@ -97,5 +97,8 @@ rm %buildroot%_datadir/gcompris-qt/voices/check_voices.py
 %_datadir/gcompris-qt/words.qrc
 
 %changelog
+* Sun Jan 02 2022 Andrey Cherepanov <cas@altlinux.org> 20211229-alt1
+- New version.
+
 * Mon Apr 08 2019 Andrey Cherepanov <cas@altlinux.org> 20190304-alt1
 - Initial build for Sisyphus.
