@@ -6,17 +6,17 @@
 # as they are loaded into wireshark/tshark processes which guarantee that linkage
 %set_verify_elf_method unresolved=relaxed
 
-%define _pluginsdir %_libdir/%name/plugins/3.4
+%define _pluginsdir %_libdir/%name/plugins/3.6
 
 Name: wireshark
-Version: 3.4.10
+Version: 3.6.1
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
 Group: Monitoring
 License: GPLv2
 Url: http://www.wireshark.org/
-
+# VCS: https://gitlab.com/wireshark/wireshark.git
 Source: http://www.wireshark.org/download/src/%name-%version.tar
 Source2: %name.control
 Source3: %name.watch
@@ -126,7 +126,6 @@ cc --version | grep -q '^lcc:1.21' && export LIBS+=" -lcxa"
 rm -f %buildroot%_libdir/%name/plugins/%version/*.la
 
 mkdir -p %buildroot{%_controldir,%_menudir,%_datadir/applications,%_niconsdir,%_liconsdir,%_miconsdir}
-cp -p wireshark.desktop %buildroot%_datadir/applications/%name-qt5.desktop
 cp -p image/wsicon16.png %buildroot%_miconsdir/wireshark.png
 cp -p image/wsicon32.png %buildroot%_niconsdir/wireshark.png
 cp -p image/wsicon48.png %buildroot%_liconsdir/wireshark.png
@@ -169,6 +168,7 @@ _EOF_
 %_man1dir/captype.*
 %_man1dir/ciscodump.*
 %_man1dir/dpauxmon.*
+%_man1dir/etwdump.*
 %_man1dir/udpdump.*
 %_man1dir/sshdump.*
 %_man1dir/mmdbresolve.*
@@ -198,15 +198,16 @@ _EOF_
 %_miconsdir/wireshark.png
 %_niconsdir/wireshark.png
 %_liconsdir/wireshark.png
+%_iconsdir/hicolor/*/mimetypes/*.png
+%_iconsdir/hicolor/*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
-%_iconsdir/hicolor/*/apps/wireshark.png
-%_xdgmimedir/packages/%name.xml
-%_datadir/appdata/wireshark.appdata.xml
+%_xdgmimedir/packages/org.wireshark.Wireshark.xml
+%_datadir/metainfo/org.wireshark.Wireshark.metainfo.xml
 
 %files qt5
 %_altdir/%name-qt5
 %_bindir/wireshark-qt5
-%_datadir/applications/%name-qt5.desktop
+%_datadir/applications/org.wireshark.Wireshark.desktop
 
 %files -n tshark
 %_bindir/tshark
@@ -223,6 +224,9 @@ _EOF_
 %_libdir/%name/cmake
 
 %changelog
+* Mon Jan 03 2022 Anton Farygin <rider@altlinux.ru> 3.6.1-alt1
+- 3.6.1 (Fixes: CVE-2021-4185, CVE-2021-4184, CVE-2021-4183, CVE-2021-4182, CVE-2021-4181)
+
 * Wed Nov 24 2021 Anton Farygin <rider@altlinux.ru> 3.4.10-alt1
 - 3.4.10 (Fixes: CVE-2021-39929, CVE-2021-39926, CVE-2021-39925,
 		 CVE-2021-39924, CVE-2021-39922, CVE-2021-39928,
