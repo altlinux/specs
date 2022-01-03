@@ -28,8 +28,8 @@
 %endif
 
 Name:    hplip
-Version: 3.21.10
-Release: alt2
+Version: 3.21.12
+Release: alt1
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -564,7 +564,7 @@ sed -i.duplex-constraints \
 %patch311 -p1
 %patch312 -p1
 %patch313 -p1
-%patch314 -p1
+%patch314 -p2
 %patch315 -p1
 %patch317 -p1
 %patch318 -p1
@@ -1125,6 +1125,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Sun Jan 02 2022 Andrey Cherepanov <cas@altlinux.org> 1:3.21.12-alt1
+- New version.
+
 * Tue Nov 09 2021 Andrey Cherepanov <cas@altlinux.org> 1:3.21.10-alt2
 - Move all PPD files to main package hplip.
 
