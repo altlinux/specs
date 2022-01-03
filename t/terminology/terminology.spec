@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: terminology
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: EFL terminal emulator
@@ -66,6 +66,9 @@ EOF
 %doc AUTHORS ChangeLog COPYING README.md
 
 %changelog
+* Tue Jan 04 2022 Yuri N. Sedunov <aris@altlinux.org> 1.12.1-alt1
+- 1.12.1
+
 * Sun Jan 02 2022 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
 - 1.12.0
 
