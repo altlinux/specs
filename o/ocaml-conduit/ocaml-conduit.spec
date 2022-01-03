@@ -1,6 +1,6 @@
 %define  modulename conduit
 Name:    ocaml-%modulename
-Version: 4.0.2
+Version: 5.0.0
 Release: alt1
 Summary: An OCaml network connection establishment library
 License: ISC
@@ -41,7 +41,7 @@ developing applications that use %name.
 %install
 %dune_install %modulename %modulename-lwt %modulename-lwt-unix
 
-# tests disabled due to the need for packages from mirageOS
+# tests disabled due to need packages from the mirageOS
 #check
 #dune_check
 
@@ -51,6 +51,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Jan 03 2022 Anton Farygin <rider@altlinux.ru> 5.0.0-alt1
+- 5.0.0
+
 * Thu Nov 04 2021 Anton Farygin <rider@altlinux.ru> 4.0.2-alt1
 - 4.0.2
 

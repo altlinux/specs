@@ -1,5 +1,6 @@
+%define lwt_modules lwt,lwt_ppx,lwt_luv,lwt_react
 Name: ocaml-lwt
-Version: 5.4.2
+Version: 5.5.0
 Release: alt1
 Summary: OCaml lightweight thread library
 
@@ -34,13 +35,13 @@ developing applications that use %name.
 %patch0 -p1
 
 %build
-%dune_build --release @install
+%dune_build -p %lwt_modules
 
 %install
-%dune_install
+%dune_install `echo "%lwt_modules"|tr ',' ' '`
 
 %check
-%dune_check
+%dune_check -p %lwt_modules
 
 %files -f ocaml-files.runtime
 %doc CHANGES README.md
@@ -49,6 +50,9 @@ developing applications that use %name.
 %_libdir/ocaml/lwt/unix/*.h
 
 %changelog
+* Mon Jan 03 2022 Anton Farygin <rider@altlinux.ru> 5.5.0-alt1
+- 5.4.2 -> 5.5.0
+
 * Mon Aug 16 2021 Anton Farygin <rider@altlinux.ru> 5.4.2-alt1
 - 5.4.2
 

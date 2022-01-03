@@ -1,7 +1,6 @@
-%set_verify_elf_method textrel=relaxed
 %define pkgname ocplib-endian
 Name: ocaml-%pkgname
-Version: 1.1
+Version: 1.2
 Release: alt1
 Summary: Functions to read/write int16/32/64 from strings, bigarrays
 License: LGPLv2+
@@ -42,29 +41,23 @@ signature files for developing applications that use %name.
 %setup
 
 %build
-dune build --profile=release
+%dune_build --release @install
 
 %install
-dune install --destdir=%buildroot --profile=release
+%dune_install
 
 %check
-dune runtest --profile=release
+%dune_check --release
 
-%files
+%files -f ocaml-files.runtime
 %doc COPYING.txt README.md CHANGES.md
-%_libdir/ocaml/%pkgname
-%exclude %_libdir/ocaml/%pkgname/*.a
-%exclude %_libdir/ocaml/%pkgname/*.cmxa
-%exclude %_libdir/ocaml/%pkgname/*.cmx
-%exclude %_libdir/ocaml/%pkgname/*.mli
 
-%files devel
-%_libdir/ocaml/%pkgname/*.a
-%_libdir/ocaml/%pkgname/*.cmxa
-%_libdir/ocaml/%pkgname/*.cmx
-%_libdir/ocaml/%pkgname/*.mli
+%files devel -f ocaml-files.devel
 
 %changelog
+* Fri Dec 10 2021 Anton Farygin <rider@altlinux.ru> 1.2-alt1
+- 1.2
+
 * Tue Jun 30 2020 Anton Farygin <rider@altlinux.ru> 1.1-alt1
 - 1.1
 

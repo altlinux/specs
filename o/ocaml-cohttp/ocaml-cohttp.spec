@@ -1,7 +1,7 @@
 %define  modulename cohttp
 %def_with check
 Name:    ocaml-%modulename
-Version: 4.0.0
+Version: 5.0.0
 Release: alt1
 Summary: An OCaml library for HTTP clients and servers
 License: ISC
@@ -53,6 +53,8 @@ sed -si 's,oUnit,ounit2,' cohttp-lwt-unix/test/dune \
 %dune_install %{modulename} %{modulename}-lwt %{modulename}-lwt-unix 
 
 %check
+# remove fuzzing test
+rm -rf cohttp/fuzz
 %dune_check %{modulename} %{modulename}-lwt %{modulename}-lwt-unix  
 
 %files -f ocaml-files.runtime
@@ -62,6 +64,9 @@ sed -si 's,oUnit,ounit2,' cohttp-lwt-unix/test/dune \
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Jan 03 2022 Anton Farygin <rider@altlinux.ru> 5.0.0-alt1
+- 5.0.0
+
 * Wed Sep 08 2021 Anton Farygin <rider@altlinux.ru> 4.0.0-alt1
 - 4.0.0
 
