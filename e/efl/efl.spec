@@ -21,6 +21,10 @@
 %def_enable emotion
 %def_disable elogind
 %def_enable avahi
+# disabled by default in 1.26.0
+%def_disable json
+%def_enable heif
+%def_enable avif
 
 # elua disabled by default
 %ifarch %luajit_arches
@@ -33,7 +37,7 @@
 %def_enable lua
 
 Name: efl
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Enlightenment Foundation Libraries
@@ -57,9 +61,10 @@ Patch2000: efl-1.25.1-alt-e2k.patch
 BuildRequires(pre): rpm-macros-meson rpm-macros-luajit rpm-build-python3 rpm-build-systemd
 BuildRequires: meson gcc-c++ glibc-kernheaders glib2-devel libcheck-devel lcov doxygen
 BuildRequires: libpng-devel libjpeg-devel libopenjpeg2.0-devel libtiff-devel
-BuildRequires: libgif-devel libwebp-devel librlottie-devel
-# disabled by default in 1.26.0
-BuildRequires: libavif-devel libheif-devel
+BuildRequires: libgif-devel libwebp-devel
+%{?_enable_json:BuildRequires: librlottie-devel}
+%{?_enable_avif:BuildRequires: libavif-devel}
+%{?_enable_heif:BuildRequires: libheif-devel}
 BuildRequires: fontconfig-devel libfreetype-devel libfribidi-devel libharfbuzz-devel
 BuildRequires: libpulseaudio-devel libsndfile-devel libbullet-devel zlib-devel liblz4-devel
 BuildRequires: libssl-devel libcurl-devel libdbus-devel
@@ -244,6 +249,7 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 	%{?_enable_tslib:-Dtslib=true} \
 	%{?_disable_gstreamer:-Dgstreamer=false} \
 	%{?_enable_avahi:-Davahi=true} \
+	-Devas-loaders-disabler="[%{?_disable_json:'json',}%{?_disable_avif: 'avif'}%{?_disable_heif: 'heif'}]" \
 	-Dmount-path=/bin/mount \
 	-Dunmount-path=/bin/umount \
 	-Deject-path=%_bindir/eject
@@ -427,6 +433,10 @@ export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_fi
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Mon Jan 03 2022 Yuri N. Sedunov <aris@altlinux.org> 1.26.1-alt1
+- 1.26.1
+- made build of json, heif and avif evas loaders optional
+
 * Sun Dec 26 2021 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt1
 - 1.26.0
 
