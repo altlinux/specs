@@ -1,5 +1,5 @@
 Name: gphoto2
-Version: 2.5.27
+Version: 2.5.28
 Release: alt1
 
 Group: Graphics
@@ -10,7 +10,8 @@ License: GPLv2+
 Packager: Dmitriy Khanzhin <jinn@altlinux.org>
 
 # Automatically added by buildreq on Mon Oct 11 2010
-BuildRequires: aalib-devel libX11-devel libgphoto2-devel libgpm-devel libjpeg-devel libpopt-devel libreadline-devel libslang-devel
+BuildRequires: aalib-devel libX11-devel libexif-devel libgphoto2-devel libgpm-devel
+BuildRequires: libjpeg-devel libpopt-devel libreadline-devel libslang-devel
 
 # Url for source code downloads now http://sourceforge.net/project/showfiles.php?group_id=8874
 Source0: %name-%version.tar
@@ -54,6 +55,10 @@ gPhoto - универсальный комплект программ и биб�
 %_datadir/doc/%name
 
 %changelog
+* Mon Jan 03 2022 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.28-alt1
+- 2.5.28
+- added libexif-devel to BR
+
 * Sun Feb 21 2021 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.27-alt1
 - 2.5.27
 
