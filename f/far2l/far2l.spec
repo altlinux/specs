@@ -1,6 +1,6 @@
 Name: far2l
-Version: 2.0
-Release: alt4.89d986a
+Version: 2.3.2
+Release: alt1
 
 Summary: Linux port of FAR v2
 
@@ -8,33 +8,45 @@ Group: File tools
 License: GPLv2
 Url: https://github.com/elfmz/far2l
 
-# Source-git: https://github.com/elfmz/far2l.git
+# Source-url: https://github.com/elfmz/far2l/archive/refs/tags/v_%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires: cmake gcc-c++ glib2-devel
 BuildRequires: libwxGTK3.0-devel
+BuildRequires: libuchardet-devel
+BuildRequires: libspdlog-devel
+BuildRequires: libarchive-devel
+BuildRequires: libpcre2-devel
+BuildRequires: libssl-devel
+BuildRequires: libssh-devel
+BuildRequires: libnfs-devel
+BuildRequires: libsmbclient-devel
+BuildRequires: libneon-devel
+BuildRequires: libxerces-c-devel
 
 # multiarc/src/arcread.cpp:184:30: error: cast from 'ArcItemUserData*' to 'DWORD_PTR' {aka 'unsigned int'} loses precision [-fpermissive]
 ExcludeArch: ppc64le
 
 %description
-Linux port of FAR v2
-PRE-ALPHA VERSION - currently interesting only for programmers!!!
-
-Better use CodeLite to open and compile this
-
-License: GNU/GPLv2
+Linux port of FAR v2.
+ALPHA VERSION - Currently interesting only for enthusiasts!!!
+Plug-ins that are currently working: NetRocks 
+(SFTP/SCP/FTP/FTPS/SMB/NFS/WebDAV), colorer, multiarc, tmppanel,
+align, autowrap, drawline, editcase, SimpleIndent, Calculator,
+Python (optional scripting support).
 
 Used code from projects:
 FAR for Windows
-Wine
+WINE
 ANSICON
+Portable UnRAR
+7z ANSI-C Decoder
 
 %prep
 %setup
 
 %build
-%cmake_insource
+%cmake_insource -DPCRE_INCLUDE_DIR=%_includedir/pcre -DPYTHON=no
 %make_build
 # FIXME: NEW bad_elf_symbols detected during build on ALT Linux build system
 rm -rf install/Plugins/{farftp,multiarc}/
@@ -50,6 +62,9 @@ ln -s ../../%_libexecdir/%name/far2l %buildroot%_bindir/%name
 %_libexecdir/%name/
 
 %changelog
+* Sun Jan 02 2022 Anton Midyukov <antohami@altlinux.org> 2.3.2-alt1
+- new version (2.3.2) with rpmgs script (Closes: 41647)
+
 * Sun Oct 10 2021 Igor Vlasenko <viy@altlinux.org> 2.0-alt4.89d986a
 - NMU: added explicit ExcludeArch: ppc64le for rebuild to not fail
 
