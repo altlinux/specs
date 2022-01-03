@@ -1,11 +1,16 @@
 %define ver_major 1.14
+%define api_ver 1
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
 %def_enable check
+# valgrind tests failed for aarch64, ppc64le and armh
+%ifarch %ix86 x86_64
+%def_enable valgrind
+%endif
 
 Name: libgsf
-Version: %ver_major.47
+Version: %ver_major.48
 Release: alt1
 
 Summary: GNOME Structured file library
@@ -18,13 +23,18 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 BuildRequires(pre): rpm-build-gnome rpm-build-gir
 
 # From configure.ac
-BuildPreReq: intltool gtk-doc >= 1.0
-BuildPreReq: libgio-devel >= 2.26.0
-BuildPreReq: libxml2-devel >= 2.4.16
+BuildRequires: gtk-doc >= 1.0
+BuildRequires: libgio-devel >= 2.26.0
+BuildRequires: libxml2-devel >= 2.4.16
 BuildRequires: libgdk-pixbuf-devel bzlib-devel zlib-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_static:BuildRequires: glibc-devel-static}
-%{?_enable_check:BuildRequires: unzip}
+%{?_enable_check:
+%{?_enable_valgrind:BuildRequires(pre): rpm-macros-valgrind
+%ifarch %valgrind_arches
+BuildRequires: valgrind
+%endif}
+BuildRequires: perl-XML-Parser unzip}
 
 %description
 GNOME Structured file library
@@ -32,7 +42,7 @@ GNOME Structured file library
 %package devel
 Summary: Libraries and include files for gsf
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package provides the necessary development libraries and include
@@ -41,7 +51,7 @@ files to allow you to develop programs using gsf.
 %package gir
 Summary: GObject introspection data for the gsf library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the GNOME Structured file library.
@@ -79,7 +89,7 @@ to build programs staticallly linked against libgsf.
 Summary: Python bindings for %name
 Group: Development/Python
 Autoreq: yes
-Requires: %name = %version-%release
+Requires: %name = %EVR
 %add_python_req_skip _gsf
 
 %description -n python-module-gsf
@@ -89,8 +99,7 @@ programs.
 %define _gtk_docdir %_datadir/gtk-doc/html
 
 %prep
-%setup -q
-
+%setup
 subst 's/pythondir/pyexecdir/' python/Makefile.am
 
 %build
@@ -101,7 +110,7 @@ subst 's/pythondir/pyexecdir/' python/Makefile.am
     %{?_enable_gtk_doc:--enable-gtk-doc} \
     %{?_enable_introspection:--enable-introspection=yes} \
     %{subst_enable static}
-
+%nil
 %make_build
 
 %install
@@ -114,29 +123,29 @@ subst 's/pythondir/pyexecdir/' python/Makefile.am
 
 %files -f %name.lang
 %_bindir/*
-%_libdir/%name-1.so.*
+%_libdir/%name-%api_ver.so.*
 %_datadir/thumbnailers/gsf-office.thumbnailer
 %_man1dir/*
 %doc AUTHORS README TODO NEWS
 
 %files devel
-%dir %_includedir/%name-1
-%dir %_includedir/%name-1/gsf
-%_includedir/%name-1/gsf/*.h
-%_libdir/%name-1.so
-%_pkgconfigdir/%name-1.pc
+%dir %_includedir/%name-%api_ver
+%dir %_includedir/%name-%api_ver/gsf
+%_includedir/%name-%api_ver/gsf/*.h
+%_libdir/%name-%api_ver.so
+%_pkgconfigdir/%name-%api_ver.pc
 
 %if_enabled introspection
 %files gir
-%_typelibdir/Gsf-1.typelib
+%_typelibdir/Gsf-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Gsf-1.gir
+%_girdir/Gsf-%api_ver.gir
 %endif
 
 %if_enabled static
 %files devel-static
-%_libdir/%name-1.a
+%_libdir/%name-%api_ver.a
 %endif
 
 %if_enabled gtk_doc
@@ -145,6 +154,10 @@ subst 's/pythondir/pyexecdir/' python/Makefile.am
 %endif
 
 %changelog
+* Tue Dec 28 2021 Yuri N. Sedunov <aris@altlinux.org> 1.14.48-alt1
+- 1.14.48
+- enabled valgrind tests, updated BRs
+
 * Tue Mar 24 2020 Yuri N. Sedunov <aris@altlinux.org> 1.14.47-alt1
 - 1.14.47
 - fixed License tag
