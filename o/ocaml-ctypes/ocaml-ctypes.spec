@@ -1,5 +1,5 @@
 Name: ocaml-ctypes
-Version: 0.19.1
+Version: 0.20.0
 Release: alt1
 Summary: Combinators for binding to C libraries without writing any C
 
@@ -64,6 +64,9 @@ mv %buildroot/%_libdir/ocaml/ctypes/dll*.so %buildroot/%_libdir/ocaml/stublibs
 %_libdir/ocaml/ctypes*/*.h
 
 %changelog
+* Mon Jan 03 2022 Anton Farygin <rider@altlinux.ru> 0.20.0-alt1
+- 0.20.0
+
 * Sat Oct 16 2021 Anton Farygin <rider@altlinux.ru> 0.19.1-alt1
 - 0.19.1
 
