@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: ocaml-parmap
-Version: 1.2.3
+Version: 1.2.4
 Release: alt1
 Summary: Small OCaml library allowing to exploit multicore architectures
 Group: Development/ML
@@ -73,6 +73,9 @@ dune exec -p parmap tests/simplescalefold.exe
 %_libdir/ocaml/parmap/*.ml
 
 %changelog
+* Tue Jan 04 2022 Anton Farygin <rider@altlinux.ru> 1.2.4-alt1
+- 1.2.4
+
 * Wed Sep 08 2021 Anton Farygin <rider@altlinux.ru> 1.2.3-alt1
 - 1.2.3
 
