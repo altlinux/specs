@@ -1,12 +1,12 @@
 Name:     gwenhywfar
-Version:  5.7.3
+Version:  5.8.1
 Release:  alt1
 
 Summary:  A multi-platform helper library for other libraries
 License:  LGPL-2.1+
 Group:    System/Libraries
-URL:      http://www2.aquamaniac.de/sites/download/packages.php
-# VCS:    http://git.aqbanking.de/git/gwenhywfar.git
+URL:      https://www.aquamaniac.de/rdm/projects/gwenhywfar
+# VCS:    https://git.aquamaniac.de/git/gwenhywfar
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -144,6 +144,9 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %_datadir/gwenhywfar/gwenbuild/builders
 
 %changelog
+* Mon Jan 03 2022 Andrey Cherepanov <cas@altlinux.org> 5.8.1-alt1
+- New version.
+
 * Mon Sep 27 2021 Andrey Cherepanov <cas@altlinux.org> 5.7.3-alt1
 - New version.
 
