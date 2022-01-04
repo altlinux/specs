@@ -1,12 +1,12 @@
 Name:     aqbanking
-Version:  6.3.2
+Version:  6.4.1
 Release:  alt1
 
 Summary:  A library for online banking functions and financial data import/export
 License:  GPLv2+
 Group:    System/Libraries
 
-URL:      http://www.aquamaniac.de/aqbanking/
+URL:      https://www.aquamaniac.de/rdm/projects/aqbanking
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -219,6 +219,9 @@ rm -f %buildroot%_docdir/aqebics/aqebics-tool/README
 %_docdir/%name/
 
 %changelog
+* Mon Jan 03 2022 Andrey Cherepanov <cas@altlinux.org> 6.4.1-alt1
+- New version.
+
 * Thu Sep 23 2021 Andrey Cherepanov <cas@altlinux.org> 6.3.2-alt1
 - New version.
 
