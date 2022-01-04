@@ -1,7 +1,7 @@
 %def_enable check
 
 Name: iso-codes
-Version: 4.8.0
+Version: 4.9.0
 Release: alt1
 
 Group: System/Internationalization
@@ -58,6 +58,9 @@ ln -sf %_licensedir/LGPL-2.1 LICENSE
 %_datadir/pkgconfig/iso-codes.pc
 
 %changelog
+* Tue Jan 04 2022 Yuri N. Sedunov <aris@altlinux.org> 4.9.0-alt1
+- 4.9.0
+
 * Thu Nov 04 2021 Yuri N. Sedunov <aris@altlinux.org> 4.8.0-alt1
 - 4.8.0
 
