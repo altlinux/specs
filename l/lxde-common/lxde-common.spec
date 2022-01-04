@@ -8,7 +8,7 @@
 %define gtkver 2
 Name: lxde-common
 Version: 0.99.2
-Release: alt5
+Release: alt6
 BuildArch: noarch
 
 Summary: Basic infrastructure for LXDE.
@@ -131,6 +131,9 @@ rm -fR %_sysconfdir/xdg/lxsession/LXDE/desktop.conf \
 %_datadir/%theme_fullname
 
 %changelog
+* Tue Jan 04 2022 Anton Midyukov <antohami@altlinux.org> 0.99.2-alt6
+- fix lxde-common-copy_skel_settings.patch (Closes: 41670)
+
 * Thu Oct 14 2021 Anton Midyukov <antohami@altlinux.org> 0.99.2-alt5
 - copy skel settings to XDG_CONFIG_HOME from LXDE theme
 - cleanup spec
