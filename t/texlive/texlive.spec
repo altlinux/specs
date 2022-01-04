@@ -75,7 +75,7 @@ BuildRequires: /usr/bin/hg
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	%relYear
-Release:	alt1_3
+Release:	alt2_3
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -90,9 +90,9 @@ Requires:	ghostscript-module-X
 
 #-----------------------------------------------------------------------
 %if %{with_system_dialog}
-Requires:	cdialog
+Requires:	dialog
 %endif
-Requires:	gambit
+Requires:	ghostscript
 %if %{enable_asymptote}
 Requires:	gv
 Requires:	tkinter
@@ -132,9 +132,9 @@ BuildRequires:  libgmp-devel
 %if %{enable_asymptote}
 BuildRequires:	libgc-devel
 BuildRequires:	libsigsegv-devel
-BuildRequires:	ghostscript-utils
+BuildRequires:	ghostscript-dvipdf
 BuildRequires:	libgsl-devel
-BuildRequires:	libglvnd-devel
+BuildRequires:	libGL-devel
 %endif
 BuildRequires:	libgs-devel
 BuildRequires:	pkgconfig(libbrotlienc)
@@ -420,6 +420,12 @@ perl -pi -e 's%%^(TEXMFMAIN\s+= ).*%%$1%{texmfdistdir}%%;'			  \
 %patch34 -p1
 %patch35 -p2
 
+%if ! %{enable_luajittex}
+# even if building luajit is disabled, build scripts still call
+# configure from libs/*. let's just drop the luajit sources here.
+rm -rf libs/luajit
+%endif
+
 #-----------------------------------------------------------------------
 %build
 %add_optflags -fpermissive
@@ -428,7 +434,7 @@ export CXXFLAGS="%{optflags} -std=c++14"
 #for dvisvgm system libs patches
 autoreconf -vfi texk/dvisvgm
 # viy: LTO
-#autoreconf -fisv libs/cairo does not work
+# and something like autoreconf -fisv libs/cairo does not work
 rm -rf libs/cairo
 
 mkdir -p Work
@@ -451,6 +457,7 @@ CONFIGURE_TOP=.. \
 	--enable-luajittex					\
 %else
 	--disable-luajittex					\
+	--disable-luajithbtex					\
 %endif
 %if %{enable_mfluajit}
 	--enable-mfluajit					\
@@ -674,6 +681,9 @@ rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R %{texmfconfdir}/ls-R
 
 #-----------------------------------------------------------------------
 %changelog
+* Tue Jan 04 2022 Igor Vlasenko <viy@altlinux.org> 2021-alt2_3
+- riscv64 support
+
 * Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 2021-alt1_3
 - fixed build
 
