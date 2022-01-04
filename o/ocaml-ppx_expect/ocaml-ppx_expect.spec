@@ -1,6 +1,6 @@
 %define ocamlmod ppx_expect
 Name: ocaml-%ocamlmod
-Version: 0.14.1
+Version: 0.15.0
 Release: alt1
 Summary: a cram like framework for OCaml
 Group: Development/ML
@@ -55,6 +55,9 @@ developing applications that use %name.
 %doc README.org CHANGES.md
 
 %changelog
+* Tue Jan 04 2022 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
+- 0.15.0
+
 * Wed Mar 24 2021 Anton Farygin <rider@altlinux.org> 0.14.1-alt1
 - 0.14.1
 

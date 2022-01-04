@@ -1,16 +1,14 @@
-%set_verify_elf_method textrel=relaxed
 %define  modulename ppx_compare
-%def_without check
+%def_with check
 
 Name:    ocaml-%modulename
-Version: 0.14.0
-Release: alt2
+Version: 0.15.0
+Release: alt1
 Summary: Generation of comparison functions from types
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/janestreet/ppx_compare
 BuildRequires: dune ocaml-base-devel ocaml-ppxlib-devel
-BuildPreReq: rpm-build-ocaml >= 1.4
 Source:  %modulename-%version.tar
 
 %description
@@ -43,6 +41,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Jan 04 2022 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
+- 0.15.0
+
 * Wed Sep 23 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
 - migrated to rpm-build-ocaml 1.4
 

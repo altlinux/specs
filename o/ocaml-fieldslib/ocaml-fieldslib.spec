@@ -1,20 +1,15 @@
-%set_verify_elf_method textrel=relaxed
 %define  modulename fieldslib
 
 Name:    ocaml-%modulename
-Version: 0.14.0
-Release: alt2
-
+Version: 0.15.0
+Release: alt1
 Summary: OCaml record fields as first class values
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/janestreet/fieldslib
 
-Packager: Mikhail Gordeev <obirvalger@altlinux.org>
-
 BuildRequires: dune ocaml-base-devel
-Requires: rpm-build-ocaml >= 1.1
-BuildPreReq: rpm-build-ocaml >= 1.4
+Requires: rpm-build-ocaml >= 1.4
 Source:  %modulename-%version.tar
 
 %description
@@ -46,6 +41,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Jan 04 2022 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
+- 0.15.0
+
 * Sat Sep 12 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
 - built with rpm-build-ocaml-1.4 to resolve requirements in cohttp devel package
 

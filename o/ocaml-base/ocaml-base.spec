@@ -1,12 +1,13 @@
 %define oname base
 Name: ocaml-%oname
-Version: 0.14.1
+Version: 0.15.0
 Release: alt1
 Summary: Full standard library replacement for OCaml
 License: Apache-2.0
 Group: Development/ML
 Url: https://github.com/janestreet/%oname
 Source0: %name-%version.tar
+Patch0: ocaml-base-ocaml413.patch
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-dune-configurator-devel
@@ -33,6 +34,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %dune_build -p %oname
@@ -52,6 +54,12 @@ developing applications that use %name.
 %_libdir/ocaml/%oname/base_internalhash_types/internalhash.h
 
 %changelog
+* Tue Jan 04 2022 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
+- 0.15.0
+
+* Thu Nov 25 2021 Anton Farygin <rider@altlinux.ru> 0.14.2-alt1
+- 0.14.2
+
 * Thu Mar 11 2021 Anton Farygin <rider@altlinux.org> 0.14.1-alt1
 - 0.14.1
 - spec BR: ocaml-dune-devel changed to ocaml-dune-configurator-devel

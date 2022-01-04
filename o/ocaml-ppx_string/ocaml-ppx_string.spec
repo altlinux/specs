@@ -1,8 +1,7 @@
-%set_verify_elf_method textrel=relaxed
 %define  modulename ppx_string
 
 Name:    ocaml-%modulename
-Version: 0.14.1
+Version: 0.15.0
 Release: alt1
 
 Summary: ppx extension for string interpolation
@@ -13,8 +12,7 @@ URL:     https://github.com/janestreet/ppx_string
 BuildRequires: dune
 BuildRequires: ocaml-base-devel ocaml-ppxlib-devel
 BuildRequires: ocaml-ppx_base-devel ocaml-stdio-devel
-Requires: rpm-build-ocaml >= 1.1
-BuildPreReq: rpm-build-ocaml >= 1.1
+Requires: rpm-build-ocaml >= 1.4
 
 Source:  %modulename-%version.tar
 
@@ -47,6 +45,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Jan 04 2022 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
+- 0.15.0
+
 * Fri Sep 18 2020 Anton Farygin <rider@altlinux.ru> 0.14.1-alt1
 - 0.14.1
 - cleanup build requires

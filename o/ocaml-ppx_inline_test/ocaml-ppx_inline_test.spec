@@ -1,8 +1,7 @@
 %define ocamlmod ppx_inline_test
-%set_verify_elf_method textrel=relaxed
 Name: ocaml-%ocamlmod
-Version: 0.14.1
-Release: alt2
+Version: 0.15.0
+Release: alt1
 Summary: Syntax extension for writing in-line tests in ocaml code
 Group: Development/ML
 License: MIT
@@ -40,7 +39,7 @@ developing applications that use %name.
 %dune_install
 
 # tests is broken in upstream
-#check
+#%check
 #dune_check
 
 %files -f ocaml-files.runtime
@@ -50,6 +49,9 @@ developing applications that use %name.
 %doc README.md CHANGES.md
 
 %changelog
+* Tue Jan 04 2022 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
+- 0.15.0
+
 * Wed Sep 23 2020 Anton Farygin <rider@altlinux.ru> 0.14.1-alt2
 - build as release
 

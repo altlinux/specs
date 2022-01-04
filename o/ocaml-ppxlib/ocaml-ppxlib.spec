@@ -17,7 +17,7 @@
 %endif
 
 Name: ocaml-%libname
-Version: 0.23.0
+Version: 0.24.0
 Release: alt1
 Summary: Base library and tools for ppx rewriters.
 License: MIT
@@ -65,7 +65,7 @@ sed -i 's/ stdlib-shims//' */dune */*/dune
 rm -rf %buildroot%_bindir
 
 %check
-%dune_check
+%dune_check -p %libname
 
 %files -f ocaml-files.runtime
 %doc README.md LICENSE.md CHANGES.md
@@ -74,6 +74,9 @@ rm -rf %buildroot%_bindir
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Jan 04 2022 Anton Farygin <rider@altlinux.ru> 0.24.0-alt1
+- 0.24.0
+
 * Tue Nov 02 2021 Anton Farygin <rider@altlinux.ru> 0.23.0-alt1
 - 0.23.0
 

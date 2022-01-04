@@ -5,7 +5,7 @@
 %endif
 Name: js_of_ocaml
 Version: 3.11.0
-Release: alt1
+Release: alt2
 Summary: A compiler of OCaml byte-code to Javascript
 License: LGPLv2 with exceptions
 Group: Development/ML
@@ -108,6 +108,9 @@ rm -rf vendor
 %_libdir/ocaml/js_of_ocaml-ppx/ppx_js
 
 %changelog
+* Tue Jan 04 2022 Anton Farygin <rider@altlinux.ru> 3.11.0-alt2
+- fix test for changes in exception format
+
 * Thu Nov 04 2021 Anton Farygin <rider@altlinux.ru> 3.11.0-alt1
 - 3.11.0
 

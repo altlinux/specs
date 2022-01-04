@@ -1,9 +1,8 @@
-%set_verify_elf_method textrel=relaxed
 %define  modulename time_now
 
 Name:    ocaml-%modulename
-Version: 0.14.0
-Release: alt4
+Version: 0.15.0
+Release: alt1
 Summary: Reports the current time
 License: MIT
 Group:   Development/ML
@@ -48,6 +47,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Jan 04 2022 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
+- 0.15.0
+
 * Wed Sep 23 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt4
 - changed runtime to devel requires for devel package
 

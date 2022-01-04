@@ -1,8 +1,7 @@
-%set_verify_elf_method textrel=relaxed
 %define  modulename ppx_js_style
 
 Name:    ocaml-%modulename
-Version: 0.14.1
+Version: 0.15.0
 Release: alt1
 Summary: Code style checker for Jane Street Packages
 License: MIT
@@ -46,6 +45,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Jan 04 2022 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
+- 0.15.0
+
 * Mon Aug 16 2021 Anton Farygin <rider@altlinux.ru> 0.14.1-alt1
 - 0.14.1
 

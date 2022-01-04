@@ -1,7 +1,7 @@
 %define  modulename ppx_optional
 Name:    ocaml-%modulename
-Version: 0.14.0
-Release: alt2
+Version: 0.15.0
+Release: alt1
 
 Summary: Pattern matching on flat options
 License: MIT
@@ -41,6 +41,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Jan 04 2022 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
+- 0.15.0
+
 * Sun Mar 21 2021 Anton Farygin <rider@altlinux.org> 0.14.0-alt2
 - simplified specfile with macros from rpm-build-ocaml 1.4
 

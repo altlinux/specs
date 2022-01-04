@@ -1,8 +1,7 @@
-%set_verify_elf_method textrel=relaxed
 %define oname sexplib0
 Name: ocaml-%oname
-Version: 0.14.0
-Release: alt2
+Version: 0.15.0
+Release: alt1
 Summary: OCaml library for converting OCaml values to S-expressions
 License: Apache-2.0
 Group: Development/ML
@@ -38,34 +37,23 @@ developing applications that use %name.
 %setup
 
 %build
-dune build --verbose -p %oname
+%dune_build -p %oname
 
 %check
-dune runtest
+%dune_check
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
-%files
+%files -f ocaml-files.runtime
 %doc LICENSE.md
-%dir %_libdir/ocaml/sexplib0
-%_libdir/ocaml/sexplib0/META
-%_libdir/ocaml/sexplib0/*.a
-%_libdir/ocaml/sexplib0/*.cmi
-%_libdir/ocaml/sexplib0/*.cma
-%_libdir/ocaml/sexplib0/*.cmxs
 
-%files devel
-%_libdir/ocaml/sexplib0/opam
-%_libdir/ocaml/sexplib0/dune-package
-%_libdir/ocaml/sexplib0/*.cmt
-%_libdir/ocaml/sexplib0/*.cmxa
-%_libdir/ocaml/sexplib0/*.cmti
-%_libdir/ocaml/sexplib0/*.cmx
-%_libdir/ocaml/sexplib0/*.mli
-%_libdir/ocaml/sexplib0/*.ml
+%files devel -f ocaml-files.devel
 
 %changelog
+* Tue Jan 04 2022 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
+- 0.15.0
+
 * Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
 - cmxa moved to the devel package
 

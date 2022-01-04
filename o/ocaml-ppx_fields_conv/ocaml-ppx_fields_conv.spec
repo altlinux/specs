@@ -1,8 +1,7 @@
-%set_verify_elf_method textrel=relaxed
 %define  modulename ppx_fields_conv
 
 Name:    ocaml-%modulename
-Version: 0.14.2
+Version: 0.15.0
 Release: alt1
 
 Summary: Generation of accessor and iteration functions for ocaml records
@@ -47,6 +46,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Jan 04 2022 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
+- 0.15.0
+
 * Tue Dec 08 2020 Anton Farygin <rider@altlinux.ru> 0.14.2-alt1
 - 0.14.2
 - migrated to rpm-build-ocaml 1.4

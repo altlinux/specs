@@ -1,9 +1,8 @@
-%set_verify_elf_method textrel=relaxed
 %define  modulename ppx_here
 
 Name:    ocaml-%modulename
-Version: 0.14.0
-Release: alt2
+Version: 0.15.0
+Release: alt1
 Summary: Expands [%%here_str] into its location
 License: MIT
 Group:   Development/ML
@@ -38,7 +37,7 @@ developing applications that use %name.
 
 # tests is broken in upstream
 #%check
-#dune runtest
+#dune_check
 
 %files -f ocaml-files.runtime
 %doc LICENSE.md
@@ -47,6 +46,9 @@ developing applications that use %name.
 %doc README.md CHANGES.md
 
 %changelog
+* Tue Jan 04 2022 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
+- 0.15.0
+
 * Wed Sep 09 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
 - migrated to rpm-build-ocaml 1.4
 
