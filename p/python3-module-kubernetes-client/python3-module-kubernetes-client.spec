@@ -1,7 +1,7 @@
 %define  modulename kubernetes-client
 
 Name:     python3-module-%modulename
-Version:  17.17.0
+Version:  21.7.0
 Release:  alt1
 
 Summary:  Kubernetes Python Client
@@ -14,6 +14,7 @@ BuildArch:  noarch
 Packager: Andrew A. Vasilyev <andy@altlinux.org>
 
 Source:   %modulename-%version.tar
+Source1:  python-base-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -23,6 +24,7 @@ Python client for the kubernetes API.
 
 %prep
 %setup -n %modulename-%version
+tar -xf %SOURCE1 -C 'kubernetes/base' --strip-components 1
 
 %build
 #%%python3_build
@@ -39,6 +41,9 @@ rm -rf %buildroot%python3_sitelibdir/kubernetes/dynamic/test_client.py
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jan 05 2022 Andrew A. Vasilyev <andy@altlinux.org> 21.7.0-alt1
+- 21.7.0
+
 * Mon Jul 19 2021 Andrew A. Vasilyev <andy@altlinux.org> 17.17.0-alt1
 - Initial build for ALT
 
