@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %ifarch armh
 %define optflags_lto %nil
 %endif
@@ -18,6 +18,7 @@
 %def_enable avahi
 %def_enable webrtc
 %def_enable sdl
+%def_enable lv2
 #system service: not recommended and disabled by default
 %def_disable systemd_system_service
 %def_enable vulkan
@@ -31,7 +32,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.41
+Version: %ver_major.43
 Release: alt1
 
 Summary: Media Sharing Server
@@ -86,6 +87,7 @@ BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
 %{?_enable_avahi:BuildRequires: pkgconfig(avahi-client)}
 %{?_enable_webrtc:BuildRequires: pkgconfig(webrtc-audio-processing)}
 %{?_enable_sdl:BuildRequires: libSDL2-devel}
+%{?_enable_lv2:BuildRequires: liblilv-devel}
 %{?_enable_docs:BuildRequires: doxygen graphviz fonts-otf-adobe-source-sans-pro fonts-ttf-google-droid-sans}
 %{?_enable_man:BuildRequires: python3-module-docutils}
 %{?_enable_check:BuildRequires: /proc gcc-c++ libcap-devel}
@@ -148,6 +150,7 @@ export LIB=%_lib
 	%{?_disable_avahi:-Davahi=disabled} \
 	%{?_disable_webrtc:-Decho-cancel-webrtc=disabled} \
 	%{?_disable_sdl:-Dsdl=disabled} \
+	%{?_disable_lv2:-Dlv2=disabled} \
 	%{?_disable_systemd:-Dsystemd=disabled} \
 	%{?_enable_systemd_system_service:-Dsystemd-system-service=enabled} \
 	%{?_disable_examples:-Dexamples=disabled} \
@@ -280,6 +283,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Wed Jan 05 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.43-alt1
+- updated to 0.3.43-3-gaf11fb480
+
 * Tue Dec 14 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.41-alt1
 - 0.3.41
 
