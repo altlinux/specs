@@ -1,6 +1,6 @@
 %define libname fix
 Name: ocaml-%libname
-Version: 20201120
+Version: 20211231
 Release: alt1
 Summary: Facilities for memoization and fixed points
 License: LGPLv2 with OCaml-LGPL-linking-exception
@@ -37,5 +37,8 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Jan 05 2022 Anton Farygin <rider@altlinux.ru> 20211231-alt1
+- 20201120 -> 20211231
+
 * Fri Aug 06 2021 Anton Farygin <rider@altlinux.ru> 20201120-alt1
 - first build for ALT
