@@ -1,5 +1,5 @@
 Name: gnu-config
-Version: 2021.12.25
+Version: 2022.01.04
 Release: alt1
 
 Summary: GNU config.guess and config.sub files
@@ -36,6 +36,9 @@ install -pm644 doc/config.guess.1 doc/config.sub.1 %buildroot%_man1dir/
 %_man1dir/*.1*
 
 %changelog
+* Tue Jan 04 2022 Dmitry V. Levin <ldv@altlinux.org> 2022.01.04-alt1
+- 2021.12.25 -> 2022.01.04.
+
 * Sat Dec 25 2021 Dmitry V. Levin <ldv@altlinux.org> 2021.12.25-alt1
 - 2021-06-03 -> 2021.12.25.
 
