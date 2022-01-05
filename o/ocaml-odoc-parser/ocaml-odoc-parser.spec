@@ -1,7 +1,7 @@
 %def_with check
 %define oname odoc-parser
 Name: ocaml-%oname
-Version: 0.9.0
+Version: 1.0.0
 Release: alt1
 Summary: Parser for ocaml documentation comments
 Group: Development/ML
@@ -51,5 +51,8 @@ signature files for developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Jan 05 2022 Anton Farygin <rider@altlinux.ru> 1.0.0-alt1
+- 1.0.0
+
 * Fri Dec 10 2021 Anton Farygin <rider@altlinux.ru> 0.9.0-alt1
 - initial build for ALT
