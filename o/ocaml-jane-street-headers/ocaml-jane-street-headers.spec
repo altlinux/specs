@@ -1,9 +1,8 @@
-%set_verify_elf_method textrel=relaxed
 %define  modulename jane-street-headers
 
 Name:    ocaml-%modulename
-Version: 0.14.0
-Release: alt2
+Version: 0.15.0
+Release: alt1
 Summary: Jane Street header files
 License: MIT
 Group:   Development/ML
@@ -43,6 +42,9 @@ developing applications that use %name.
 %_ocamldir/%modulename/*.h
 
 %changelog
+* Wed Jan 05 2022 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
+- 0.15.0
+
 * Thu Oct 15 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
 - migrated to rpm-build-ocaml 1.4
 

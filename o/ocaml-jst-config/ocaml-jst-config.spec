@@ -1,6 +1,6 @@
 %define  modulename jst-config
 Name:    ocaml-%modulename
-Version: 0.14.1
+Version: 0.15.0
 Release: alt1
 Summary: Compile-time configuration for Jane Street libraries
 License: MIT
@@ -40,9 +40,11 @@ developing applications that use %name.
 
 %files devel -f ocaml-files.devel
 %_libdir/ocaml/%{modulename}*/*.h
-%_libdir/ocaml/%{modulename}*/rt-flags
 
 %changelog
+* Wed Jan 05 2022 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
+- 0.15.0
+
 * Wed Nov 03 2021 Anton Farygin <rider@altlinux.ru> 0.14.1-alt1
 - 0.14.1
 
