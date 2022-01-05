@@ -1,8 +1,9 @@
 %define modname sphinx-autodoc-typehints
+%define _modname sphinx_autodoc_typehints
 %def_disable check
 
 Name: python3-module-%modname
-Version: 1.12.0
+Version: 1.13.1
 Release: alt1
 
 Summary: Type hints (PEP 484) support for the Sphinx autodoc extension
@@ -10,8 +11,9 @@ Group: Development/Python3
 License: MIT
 Url: https://pypi.org/project/%modname
 
-Vcs: https://github.com/agronholm/sphinx-autodoc-typehints.git
-Source: https://pypi.io/packages/source/s/%modname/%modname-%version.tar.gz
+Vcs: https://github.com/tox-dev/sphinx-autodoc-typehints.git
+#Source: https://github.com/tox-dev/%modname/archive/%version/%modname-%version.tar.gz
+Source: https://pypi.io/packages/source/s/%modname/%_modname-%version.tar.gz
 
 BuildArch: noarch
 
@@ -25,7 +27,7 @@ documenting acceptable argument types and return value types of
 functions.
 
 %prep
-%setup -n %modname-%version
+%setup -n %_modname-%version
 
 %build
 %python3_build
@@ -43,6 +45,9 @@ py.test3
 
 
 %changelog
+* Wed Jan 05 2022 Yuri N. Sedunov <aris@altlinux.org> 1.13.1-alt1
+- 1.13.1 (supported Python 3.10)
+
 * Thu Apr 15 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
 - 1.12.0
 
