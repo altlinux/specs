@@ -1,6 +1,6 @@
 Name: engineering-meta
 Version: p10
-Release: alt3
+Release: alt4
 Summary: Metapackage for install Engineering Applications
 Summary(ru_RU.UTF-8): Метапакет для установки инженерных приложений
 Group: Engineering
@@ -162,7 +162,9 @@ Summary: Metapackage for install EDA Applications
 Summary(ru_RU.UTF-8): Метапакет для установки САПР электронных устройств
 Group: Engineering
 
+%ifnarch %arm
 Requires: kicad
+%endif
 Requires: ktechlab
 Requires: qucs
 Requires: qucs-s
@@ -202,6 +204,9 @@ Engineering applications not included in any category.
 %files -n engineering-misc
 
 %changelog
+* Wed Jan 05 2022 Anton Midyukov <antohami@altlinux.org> p10-alt4
+- engineering-EDA: not require kicad on armh
+
 * Sat Sep 25 2021 Anton Midyukov <antohami@altlinux.org> p10-alt3
 - CAM: do not require pcb2gcodeGUI on %ix86, %arm
 

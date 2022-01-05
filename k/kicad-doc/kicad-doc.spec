@@ -3,16 +3,20 @@
 
 Summary: Documentation and tutorials for kicad
 Name: kicad-doc
-Version: 5.1.4
+Version: 6.0.0
 Epoch: 1
-Release: alt2
+Release: alt1
 Group: Documentation
 License: GPLv3
-Url: https://github.com/KiCad/kicad-doc
+Url: https://gitlab.com/kicad/services/kicad-doc
 Source: %name-%version.tar
+# Source-url: https://gitlab.com/kicad/services/kicad-doc/-/archive/%version/kicad-doc-%version.tar.bz2
 BuildArch: noarch
 BuildRequires(pre): cmake rpm-macros-cmake
-BuildRequires: dblatex po4a asciidoc-a2x source-highlight git
+BuildRequires: asciidoctor
+BuildRequires: po4a
+
+Requires: kicad-common >= %version
 
 %description 
 KiCad is a open source (GPL) integrated package for schematic circuit capture
@@ -25,7 +29,7 @@ Enlish and Russian translation.
 Summary: Documentation and tutorials for kicad
 Group: Documentation
 BuildArch: noarch
-Requires: %name = %EVR
+Requires: kicad-common >= %version
 
 %description ca
 KiCad is a open source (GPL) integrated package for schematic circuit capture
@@ -38,7 +42,7 @@ Canadian translation.
 Summary: Documentation and tutorials for kicad
 Group: Documentation
 BuildArch: noarch
-Requires: %name = %EVR
+Requires: kicad-common >= %version
 
 %description de
 KiCad is a open source (GPL) integrated package for schematic circuit capture
@@ -51,7 +55,7 @@ German translation.
 Summary: Documentation and tutorials for kicad
 Group: Documentation
 BuildArch: noarch
-Requires: %name = %EVR
+Requires: kicad-common >= %version
 
 %description es
 KiCad is a open source (GPL) integrated package for schematic circuit capture
@@ -64,7 +68,7 @@ Spanish translation.
 Summary: Documentation and tutorials for kicad
 Group: Documentation
 BuildArch: noarch
-Requires: %name = %EVR
+Requires: kicad-common >= %version
 
 %description fr
 KiCad is a open source (GPL) integrated package for schematic circuit capture
@@ -77,7 +81,7 @@ French translation.
 Summary: Documentation and tutorials for kicad
 Group: Documentation
 BuildArch: noarch
-Requires: %name = %EVR
+Requires: kicad-common >= %version
 
 %description id
 KiCad is a open source (GPL) integrated package for schematic circuit capture
@@ -90,7 +94,7 @@ Indonesian translation.
 Summary: Documentation and tutorials for kicad
 Group: Documentation
 BuildArch: noarch
-Requires: %name = %EVR
+Requires: kicad-common >= %version
 
 %description it
 KiCad is a open source (GPL) integrated package for schematic circuit capture
@@ -103,7 +107,7 @@ Italian translation.
 Summary: Documentation and tutorials for kicad
 Group: Documentation
 BuildArch: noarch
-Requires: %name = %EVR
+Requires: kicad-common >= %version
 
 %description ja
 KiCad is a open source (GPL) integrated package for schematic circuit capture
@@ -116,7 +120,7 @@ Japan translation.
 Summary: Documentation and tutorials for kicad
 Group: Documentation
 BuildArch: noarch
-Requires: %name = %EVR
+Requires: kicad-common >= %version
 
 %description nl
 KiCad is a open source (GPL) integrated package for schematic circuit capture
@@ -129,7 +133,7 @@ Netherlandish translation.
 Summary: Documentation and tutorials for kicad
 Group: Documentation
 BuildArch: noarch
-Requires: %name = %EVR
+Requires: kicad-common >= %version
 
 %description pl
 KiCad is a open source (GPL) integrated package for schematic circuit capture
@@ -142,7 +146,7 @@ Polish translation.
 Summary: Documentation and tutorials for kicad
 Group: Documentation
 BuildArch: noarch
-Requires: %name = %EVR
+Requires: kicad-common >= %version
 
 %description zh
 KiCad is a open source (GPL) integrated package for schematic circuit capture
@@ -164,8 +168,6 @@ Chinese translation.
 %cmakeinstall_std
 
 %files
-%dir %_datadir/doc/kicad
-%dir %_datadir/doc/kicad/help
 %_datadir/doc/kicad/help/en
 %_datadir/doc/kicad/help/ru
 
@@ -200,6 +202,9 @@ Chinese translation.
 %_datadir/doc/kicad/help/zh
 
 %changelog
+* Tue Jan 04 2022 Anton Midyukov <antohami@altlinux.org> 1:6.0.0-alt1
+- new version (6.0.0) with rpmgs script
+
 * Tue Oct 12 2021 Anton Midyukov <antohami@altlinux.org> 1:5.1.4-alt2
 - do not require kicad-data
 

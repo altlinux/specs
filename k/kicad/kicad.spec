@@ -1,15 +1,11 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%define majver 5.0
-
-%ifnarch %arm
-%def_with scripting
-%endif
+%define majver 6.0
 
 Name: kicad
-Version: 5.1.9
-Release: alt4
+Version: 6.0.0
+Release: alt1
 Epoch: 1
 
 Summary: An open source software for the creation of electronic schematic diagrams
@@ -19,26 +15,21 @@ Group: Engineering
 
 Url: https://gitlab.com/kicad/code/kicad.git
 Source: %name-%version.tar
-%if_with scripting
 Source1: pcbnew.py
-%endif
-Patch1: kicad-5.1.0-nostrip.patch
-Patch2: fix-python3.patch
 Patch2000: kicad-e2k.patch
 Packager: Anton Midyukov <antohami@altlinux.org>
+
+ExcludeArch: %arm
 
 BuildRequires(pre): cmake rpm-macros-cmake
 BuildRequires(pre): rpm-build-python3
 
-%if_with scripting
 BuildRequires: python3-dev
 BuildRequires: python3-module-wx
-%else
-%add_python3_req_skip pcbnew
-%endif
 BuildRequires: boost-devel boost-asio-devel boost-asio-devel boost-context-devel boost-filesystem-devel boost-geometry-devel boost-interprocess-devel boost-locale-devel boost-program_options-devel
 BuildRequires: ccmake gcc-c++
 BuildRequires: libwxGTK3.0-devel
+BuildRequires: libgtk+3-devel
 BuildRequires: libGLEW-devel libcairo-devel libssl-devel swig pkgconfig(gobject-2.0) libpcre-devel libpixman-devel pkgconfig(harfbuzz) pkgconfig(expat) pkgconfig(libdrm) pkgconfig(xdmcp) pkgconfig(xdamage) pkgconfig(xxf86vm) libcurl-devel
 BuildRequires: doxygen
 BuildRequires: dos2unix
@@ -56,9 +47,7 @@ Requires: kicad-symbols >= %majver
 Requires: kicad-footprints >= %majver
 Requires: kicad-templates >= %majver
 Requires: %name-doc >= %epoch:%majver
-Requires: %name-i18n >= %majver
-
-Obsoletes: kicad-data <= %EVR
+Requires: %name-common >= %EVR
 
 %add_python3_path %_datadir/%name
 
@@ -95,10 +84,20 @@ gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом 
 "Настройки страницы" в поле "Файл описания разметки листа".
 Стандартные файлы рамки (*.kicad_wks) находятся в %_datadir/kicad/template/.
 
+%package common
+Summary: Common package for kicad
+Group: Engineering
+
+BuildArch: noarch
+
+Obsoletes: kicad-data <= %EVR
+Obsoletes: kicad-i18n <= %EVR
+
+%description common
+Common package for kicad.
+
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -113,67 +112,68 @@ gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом 
     %_cmake_skip_rpath \
     -DKICAD_USE_OCC:=ON \
     -DKICAD_SCRIPTING=ON \
-%if_with scripting
     -DKICAD_SCRIPTING_MODULES=ON \
+    -DKICAD_SCRIPTING_PYTHON3=ON \
+    -DPYTHON_SITE_PACKAGE_PATH=%python3_sitelibdir \
     -DKICAD_SCRIPTING_WXPYTHON=ON \
     -DKICAD_SCRIPTING_WXPYTHON_PHOENIX=ON \
-    -DKICAD_SCRIPTING_PYTHON3=ON \
     -DKICAD_SCRIPTING_ACTION_MENU=ON \
-    -DPYTHON_SITE_PACKAGE_PATH=%python3_sitelibdir \
-%else
-    -DKICAD_SCRIPTING_MODULES=OFF \
-    -DKICAD_SCRIPTING_WXPYTHON=OFF \
-    -DKICAD_SCRIPTING_WXPYTHON_PHOENIX=OFF \
-    -DKICAD_SCRIPTING_PYTHON3=OFF \
-    -DKICAD_SCRIPTING_ACTION_MENU=OFF \
-%endif
     -DKICAD_SPICE=ON \
+    -DKICAD_BUILD_I18N=ON \
+    -DKICAD_I18N_UNIX_STRICT_PATH=ON \
     -DKICAD_VERSION_EXTRA=%release \
-    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo
 
 %cmake_build
 
 %install
 %cmake_install
 
-%if_with scripting
 # !!!Fix me
 # Needed swig4
 install -m 755 %SOURCE1 %buildroot%python3_sitelibdir/pcbnew.py
-%else
-rm -fr %buildroot%python_sitelibdir
-%endif
 
 #fix line ending
 dos2unix %buildroot%_desktopdir/*.desktop
 
 #validate desktop files
 desktop-file-validate %buildroot%_desktopdir/*.desktop
-desktop-file-install --dir %buildroot%_desktopdir \
-	--add-category=Engineering \
-	%buildroot%_desktopdir/kicad.desktop
-desktop-file-install --dir %buildroot%_desktopdir \
-	--add-category=Engineering \
-	%buildroot%_desktopdir/eeschema.desktop
+for i in %buildroot%_desktopdir/*.desktop; do
+	desktop-file-install --dir %buildroot%_desktopdir \
+		--add-category=Engineering \
+		"$i"
+done
 
-%files
+# remove not supported locale
+rm -r %buildroot/%_datadir/locale/pt_br
+
+%find_lang %name
+
+%files -f %name.lang
 %_bindir/*
 %_desktopdir/*.desktop
 %_libdir/*.so*
 %_libdir/%name/
-%if_with scripting
 %python3_sitelibdir/_pcbnew.so
 %python3_sitelibdir/pcbnew.py
 %python3_sitelibdir/__pycache__/pcbnew*
-%endif
 %doc %_docdir/%name
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/*.metainfo.xml
 %_iconsdir/hicolor/*/mimetypes/application-x-*.*
 %_iconsdir/hicolor/*/apps/*.*
 %_datadir/%name/
 %_datadir/mime/packages/*
 
+%files common
+%dir %_datadir/kicad
+%dir %_datadir/kicad/template
+
 %changelog
+* Tue Jan 04 2022 Anton Midyukov <antohami@altlinux.org> 1:6.0.0-alt1
+- new version 6.0.0
+- obsolete kicad-18n
+- ExcludeArch %arm
+
 * Tue Oct 12 2021 Anton Midyukov <antohami@altlinux.org> 1:5.1.9-alt4
 - build on armh without python scripting
 - remove data subpackage
