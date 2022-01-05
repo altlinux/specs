@@ -8,8 +8,8 @@
 %define rname qgis
 
 Name:    qgis3
-Version: 3.20.3
-Release: alt3
+Version: 3.22.2
+Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -67,10 +67,10 @@ BuildRequires: postgresql-devel
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-PyQt5-devel
+BuildRequires: python3-module-PyQt-builder
 BuildRequires: python3-module-nose2
 BuildRequires: python3-module-qscintilla2-qt5-devel
-BuildRequires: python3-module-sip5
-BuildRequires: python3-module-PyQt5-devel
+BuildRequires: python3-module-sip6
 BuildRequires: python3-module-OWSLib
 %endif
 BuildRequires: qt5-base-devel
@@ -173,8 +173,6 @@ rm -rf src/plugins/dxf2shp_converter/
 sed -i '/dxf2shp_converter/d' src/plugins/CMakeLists.txt
 
 gzip ChangeLog
-
-sed -i 's/sipbuild/sipbuild5/' cmake/FindSIP.py cmake/FindPyQt5.py
 
 %build
 %add_optflags -Wno-error=return-type
@@ -317,8 +315,9 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %endif
 %if_enabled grass
 %exclude %_libdir/libqgisgrass*.so.*
-%exclude %_libdir/%rname/libgrassprovider*.so
-%exclude %_libdir/%rname/libgrassrasterprovider*.so
+%exclude %_libdir/%rname/libgrassplugin*.so
+%exclude %_libdir/%rname/libprovider_grass*.so
+%exclude %_libdir/%rname/libprovider_grassraster*.so
 %exclude %_libdir/%rname/grass
 %endif
 %_datadir/metainfo/org.qgis.qgis.appdata.xml
@@ -333,9 +332,10 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 
 %if_enabled grass
 %files grass
-%_libdir/lib%{rname}grass*.so.*
-%_libdir/%rname/libgrassprovider*.so
-%_libdir/%rname/libgrassrasterprovider*.so
+%_libdir/libqgisgrass*.so.*
+%_libdir/%rname/libgrassplugin*.so
+%_libdir/%rname/libprovider_grass*.so
+%_libdir/%rname/libprovider_grassraster*.so
 %_libdir/%rname/grass
 %_datadir/%rname/grass
 %endif
@@ -357,6 +357,15 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %endif
 
 %changelog
+* Tue Jan 04 2022 Andrey Cherepanov <cas@altlinux.org> 3.22.2-alt1
+- New version.
+
+* Mon Nov 29 2021 Andrey Cherepanov <cas@altlinux.org> 3.22.1-alt1
+- New version.
+
+* Fri Oct 22 2021 Andrey Cherepanov <cas@altlinux.org> 3.22.0-alt1
+- New version.
+
 * Thu Oct 21 2021 Andrey Cherepanov <cas@altlinux.org> 3.20.3-alt3
 - Remove desktop files absent in upstream.
 
