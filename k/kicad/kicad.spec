@@ -5,7 +5,7 @@
 
 Name: kicad
 Version: 6.0.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: An open source software for the creation of electronic schematic diagrams
@@ -15,7 +15,6 @@ Group: Engineering
 
 Url: https://gitlab.com/kicad/code/kicad.git
 Source: %name-%version.tar
-Source1: pcbnew.py
 Patch2000: kicad-e2k.patch
 Packager: Anton Midyukov <antohami@altlinux.org>
 
@@ -129,10 +128,6 @@ Common package for kicad.
 %install
 %cmake_install
 
-# !!!Fix me
-# Needed swig4
-install -m 755 %SOURCE1 %buildroot%python3_sitelibdir/pcbnew.py
-
 #fix line ending
 dos2unix %buildroot%_desktopdir/*.desktop
 
@@ -169,6 +164,9 @@ rm -r %buildroot/%_datadir/locale/pt_br
 %dir %_datadir/kicad/template
 
 %changelog
+* Thu Jan 06 2022 Anton Midyukov <antohami@altlinux.org> 1:6.0.0-alt2
+- build with swig 4.0, without external pcbnew.py
+
 * Tue Jan 04 2022 Anton Midyukov <antohami@altlinux.org> 1:6.0.0-alt1
 - new version 6.0.0
 - obsolete kicad-18n

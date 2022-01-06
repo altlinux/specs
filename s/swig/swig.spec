@@ -1,10 +1,10 @@
 %def_with boost
 %def_with caml
 %def_with doc
-%def_with java
+#def_with java
 %def_with lua
 %def_with perl5
-%def_with python
+#def_with python
 %def_with python3
 %def_with R
 %def_with ruby
@@ -13,30 +13,19 @@
 
 # vim:set ft=spec:
 Name: swig
-Version: 3.0.12
-Release: alt8
+Version: 4.0.2
+Release: alt1
 Epoch: 1
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
 License: Open Source
 Group: Development/C
+Url: https://github.com/swig/swig
 
-# http://download.sourceforge.net/swig/%name-%version.tar.gz
+# Source-url: https://github.com/swig/swig/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
-Patch0: fix_import_package.patch
-Patch1: swig308-Do-not-use-isystem.patch
-Patch2: disable_gdb_interface.patch
-Patch3: fix-ocaml-int64-type.patch
-Patch4: fix-ocaml-tests.patch
-Patch5: fix-chicken-tests.patch
-# Based on https://github.com/swig/swig/commit/7c034ead322faa79ad7b94fe72250ce8a4fd5848
-Patch6: upstream-issue-1259-preparation.patch
-# Based on https://github.com/swig/swig/commit/7f9883011029674553a2a4b623d459f02b512458
-Patch7: upstream-issue-1259.patch
-# Based on https://github.com/swig/swig/commit/9825fcbab5c4ddd867432f9922bebfbec7b78af0
-Patch8: upstream-issue-898.patch
 
-%def_disable testsuite
+%def_enable testsuite
 
 %{?_with_boost:BuildPreReq: boost-devel}
 %{?_with_caml:BuildPreReq: ocaml-findlib}
@@ -59,7 +48,7 @@ BuildRequires: libXt-devel imake xorg-cf-files
 BuildRequires: zlib-devel
 
 %if_enabled testsuite
-BuildRequires: perl(Math/BigInt.pm) ocaml-camlp4-devel
+BuildRequires: perl(Math/BigInt.pm)
 %endif
 
 Provides: %name-devel = %version
@@ -156,17 +145,6 @@ This package contains SWIG runtime tcl library.
 
 %prep
 %setup
-%patch0 -p2
-%patch1 -p1
-%patch2 -p1
-%if_enabled testsuite
-%patch3 -p2
-%patch4 -p2
-%patch5 -p2
-%endif
-%patch6 -p2
-%patch7 -p2
-%patch8 -p1
 
 %build
 ./autogen.sh
@@ -181,8 +159,8 @@ sed -i 's/PY3LIBDIR="lib"/PY3LIBDIR="%_lib"/' configure
 	%{subst_with perl5} \
 	%{subst_with ruby} \
 	%{subst_with tcl} \
-	--with-pyinc=%_includedir/python%_python_version \
-	--with-pylib=%_libdir/python%_python_version \
+	--with-pyinc=%_includedir/python%_python3_version \
+	--with-pylib=%_libdir/python%_python3_version \
 	--with-tclconfig=%_libdir
 	#--with-tcl --with-python --with-perl5 --with-java --with-guile --with-ruby
 
@@ -219,7 +197,7 @@ cp -a Examples Doc %buildroot%docdir/
 
 %if_enabled testsuite
 %check
-%__make check
+%__make check PY3=1
 %endif
 
 %files
@@ -258,6 +236,12 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Wed Jan 05 2022 Anton Midyukov <antohami@altlinux.org> 1:4.0.2-alt1
+- new version (4.0.2) with rpmgs script
+- enable testsuite
+- disable python testsuite
+- disable java testsuite
+
 * Wed Apr 17 2019 Michael Shigorin <mike@altlinux.org> 1:3.0.12-alt8
 - introduced explicit knobs for languages
 - minor spec cleanup (needs much more attention)
