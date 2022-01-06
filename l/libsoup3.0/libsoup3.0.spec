@@ -17,7 +17,7 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -37,7 +37,7 @@ Requires: glib-networking >= 2.63.90
 %define gi_ver 1.33.3
 %define psl_ver 0.20.0
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires(pre): rpm-macros-meson
 %{?_enable_python:BuildRequires(pre): rpm-build-python3}
 BuildRequires: meson
 BuildRequires: glib2-devel >= %glib_ver
@@ -47,8 +47,10 @@ BuildRequires: docbook-dtds docbook-style-xsl
 BuildRequires: gtk-doc xml-common xsltproc
 BuildRequires: glib-networking libpsl-devel >= %psl_ver
 BuildRequires: libnghttp2-devel
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
-%{?_enable_vala:BuildRequires: vala-tools}
+%{?_enable_introspection:BuildRequires(pre): rpm-build-gir
+BuildRequires: gobject-introspection-devel >= %gi_ver}
+%{?_enable_vala:BuildRequires(pre): rpm-build-vala
+BuildRequires: vala-tools}
 %{?_with_gssapi:BuildRequires: libkrb5-devel}
 %{?_enable_brotli:BuildRequires: libbrotli-devel}
 %{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
@@ -187,6 +189,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Jan 06 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.4-alt1
+- 3.0.4
+
 * Wed Nov 24 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.3-alt1
 - 3.0.3
 
