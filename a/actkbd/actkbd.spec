@@ -1,10 +1,10 @@
 Summary:        A keyboard shortcut daemon
 Name:           actkbd
 Version:        0.2.8
-Release:        alt2
+Release:        alt2.qa1
 URL:            http://users.softlab.ece.ntua.gr/~thkala/projects/actkbd/
 Packager: 	Valentin Rosavitskiy <valintinr@altlinux.org>
-License:	GPL v2+
+License:	GPL-2.0-only
 Group:		System/Configuration/Other
 
 Source:		%name-%version.tar
@@ -41,6 +41,10 @@ install -pD -m 644 %name.service %buildroot%_unitdir/%name.service
 %_unitdir/%name.service
 
 %changelog
+* Tue Jan 04 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2.8-alt2.qa1
+- Fixed path in %name.service systemd unit.
+- Fixed License: tag.
+
 * Sun Jul 06 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.2.8-alt2
 - Fix lsb header in init script
 
