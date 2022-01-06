@@ -9,7 +9,7 @@
 %define soversion 0
 
 Name: wireplumber
-Version: 0.4.5.37.g0ff9ea9
+Version: 0.4.6
 Release: alt1
 
 Summary: a modular session/policy manager for PipeWire
@@ -185,6 +185,9 @@ mv -v %buildroot%_datadir/doc/%name %buildroot%{docdir %name-doc}
 %endif
 
 %changelog
+* Fri Jan 07 2022 Arseny Maslennikov <arseny@altlinux.org> 0.4.6-alt1
+- 0.4.5-37-g0ff9ea9 -> 0.4.6.
+
 * Mon Dec 20 2021 Arseny Maslennikov <arseny@altlinux.org> 0.4.5.37.g0ff9ea9-alt1
 - 0.4.5 -> 0.4.5-37-g0ff9ea9.
 
