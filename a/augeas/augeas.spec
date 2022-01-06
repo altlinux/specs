@@ -1,11 +1,12 @@
 Name: augeas
-Version: 1.12.0
+Version: 1.13.0
 Release: alt1
 Summary: A library for changing configuration files
 
 Group: System/Configuration/Other
 License: LGPLv2+
 Url: http://augeas.net/
+Vcs: https://github.com/hercules-team/augeas
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -44,7 +45,7 @@ The libraries for %name.
 
 %build
 ./autogen.sh --gnulib-srcdir=/usr/share/gnulib
-%configure --disable-static
+%configure --disable-static --disable-gnulib-tests
 %make_build
 
 %install
@@ -71,6 +72,9 @@ The libraries for %name.
 %_libdir/pkgconfig/augeas.pc
 
 %changelog
+* Wed Jan 05 2022 Anton Farygin <rider@altlinux.ru> 1.13.0-alt1
+- 1.13.0
+
 * Thu Apr 18 2019 Anton Farygin <rider@altlinux.ru> 1.12.0-alt1
 - 1.12.0
 
