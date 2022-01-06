@@ -5,8 +5,8 @@ BuildRequires(pre): rpm-macros-fedora-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:      spatialindex
-Version:   1.8.5
-Release:   alt1_12
+Version:   1.9.3
+Release:   alt1
 Summary:   Spatial index library 
 License:   MIT
 URL:       http://libspatialindex.org
@@ -36,7 +36,7 @@ Development files for %{name}.
 
 %prep
 %setup -q -n %{name}-src-%{version}
-%patch1 -p1
+#patch1 -p1
 
 
 %build
@@ -48,15 +48,10 @@ Development files for %{name}.
 make install DESTDIR=%{buildroot}
 
 
-# Tests must be run manually and seemingly are not built yet
-# See changelog 2011-10-11
-
-
-
 
 
 %files 
-%doc AUTHORS ChangeLog COPYING README
+%doc AUTHORS ChangeLog COPYING
 %{_libdir}/lib%{name}*.so.*
 
 %files devel
@@ -65,6 +60,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Mon Dec 27 2021 Ilya Mashkin <oddity@altlinux.ru> 1.9.3-alt1
+- 1.9.3
+
 * Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.5-alt1_12
 - update to new release by fcimport
 
