@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: feh
-Version: 3.7.2
-Release: alt2
+Version: 3.8
+Release: alt1
 Summary: Image viewer using Imlib 2
 Group: Graphics
 License: BSD
@@ -57,6 +57,9 @@ export PREFIX="%_prefix"
 %doc COPYING
 
 %changelog
+* Thu Jan 06 2022 Ilya Mashkin <oddity@altlinux.ru> 3.8-alt1
+- 3.8
+
 * Wed Dec 01 2021 Ilya Mashkin <oddity@altlinux.ru> 3.7.2-alt2
 - Add BR fonts-ttf-dejavu
 
