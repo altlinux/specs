@@ -1,6 +1,6 @@
 Name: vpcs
-Version: 0.8
-Release: alt3.20171012
+Version: 0.8.2
+Release: alt1
 
 Summary: Virtual PC Simulator
 License: BSD
@@ -10,7 +10,7 @@ Url: https://github.com/GNS3/vpcs
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-Patch0: %name-0.8-no-static.patch
+Patch0: %name-0.8.2-external-cflag.patch
 
 %description
 The VPCS can simulate up to 9 PCs. You can ping/traceroute them, or ping/traceroute
@@ -29,16 +29,10 @@ the packets via udp. In the ether mode, via /dev/tap, not support on the Windows
 %setup
 %patch0 -p1
 
-# see https://github.com/GNS3/vpcs/issues/13#issuecomment-392620688
-pushd src
-rgetopt='int getopt(int argc, char *const *argv, const char *optstr);'
-sed -i "s/^int getopt.*/$rgetopt/" getopt.h
-popd
-
 %build
 pushd src
 export CFLAGS="%optflags -fno-strict-aliasing -fcommon"
-make -f Makefile.linux CPUTYPE=%_target_cpu
+%make_build -f Makefile.linux CPUTYPE=%_target_cpu
 popd
 
 mkdir -p %buildroot/%_bindir
@@ -48,11 +42,14 @@ xz man/vpcs.1
 cp man/vpcs.1.xz %buildroot/%_man1dir/
 
 %files
-%doc readme.txt COPYING README.md
+%doc readme.txt README.md
 %_bindir/%name
 %_man1dir/*.1.*
 
 %changelog
+* Fri Jan 07 2022 Anton Midyukov <antohami@altlinux.org> 0.8.2-alt1
+- new version 0.8.2
+
 * Thu Dec 10 2020 Anton Midyukov <antohami@altlinux.org> 0.8-alt3.20171012
 - Set CFLAGS+=-fcommon to workaround gcc10 errors
 
