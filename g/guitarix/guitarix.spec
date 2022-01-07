@@ -4,8 +4,8 @@
 %define optflags_lto %nil
 
 Name: guitarix
-Version: 0.42.1
-Release: alt2
+Version: 0.43.1
+Release: alt1
 Summary: Mono amplifier to JACK
 Group: Sound
 License: GPL-2.0-or-later
@@ -13,8 +13,6 @@ Url: https://sourceforge.net/projects/guitarix
 Packager: Anton Midyukov <antohami@altlinux.org>
 # Source-url: https://sourceforge.net/projects/guitarix/files/guitarix/guitarix2-%version.tar.xz/download
 Source: %name-%version.tar
-Source1: %name.appdata.xml
-Patch0: %name-glib-2.68.patch
 
 BuildRequires: gcc-c++
 BuildRequires: faust-devel
@@ -97,7 +95,6 @@ guitarix, but can also be used by any other ladspa host.
 
 %prep
 %setup
-%patch0 -p2
 
 # fix shebang
 find . -type f -print0 |
@@ -146,10 +143,6 @@ desktop-file-install \
 chmod 755 %buildroot%_libdir/libgxw*.so.0.1
 rm -rf %buildroot%_libdir/libgxw*.so
 
-# install appdata file
-install -d -m755 %buildroot%_datadir/metainfo
-install -p -m644 %SOURCE1 %buildroot%_datadir/metainfo
-
 %find_lang %name
 
 %files -f %name.lang
@@ -159,7 +152,7 @@ install -p -m644 %SOURCE1 %buildroot%_datadir/metainfo
 %_desktopdir/%name.desktop
 %_datadir/gx_head/
 %_libdir/libgx*.so.0*
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/*.metainfo.xml
 
 %files -n ladspa-%name-plugins
 %_libdir/ladspa/*.so
@@ -169,6 +162,9 @@ install -p -m644 %SOURCE1 %buildroot%_datadir/metainfo
 %_libdir/lv2/*
 
 %changelog
+* Fri Jan 07 2022 Anton Midyukov <antohami@altlinux.org> 0.43.1-alt1
+- new version 0.43.1
+
 * Thu Aug 26 2021 Anton Midyukov <antohami@altlinux.org> 0.42.1-alt2
 - disable LTO flag
 
