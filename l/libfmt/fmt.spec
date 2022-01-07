@@ -1,7 +1,7 @@
 %define sover 8
 
 Name: libfmt
-Version: 8.0.1
+Version: 8.1.1
 Release: alt1
 
 Summary: An open-source formatting library for C++
@@ -9,8 +9,8 @@ License: BSD
 Group: System/Libraries
 Url: http://fmtlib.net/
 
-# https://github.com/fmtlib/fmt.git
-Source: %name-%version.tar
+# https://github.com/fmtlib/fmt/archive/%version/fmt-%version.tar.gz
+Source: fmt-%version.tar
 
 BuildRequires: cmake ctest gcc-c++
 
@@ -36,7 +36,7 @@ It can be used as a fast and safe alternative to printf and IOStreams.
 This package contains development part of fmt.
 
 %prep
-%setup
+%setup -n fmt-%version
 
 %build
 %cmake_insource \
@@ -64,6 +64,9 @@ make test
 %_libdir/libfmt.so
 
 %changelog
+* Fri Jan 07 2022 Nazarov Denis <nenderus@altlinux.org> 8.1.1-alt1
+- Updated to upstream version 8.1.1.
+
 * Sat Nov 06 2021 Nazarov Denis <nenderus@altlinux.org> 8.0.1-alt1
 - Updated to upstream version 8.0.1.
 
