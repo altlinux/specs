@@ -1,6 +1,6 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.73
+Version:	3.74
 Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
@@ -262,6 +262,23 @@ popd
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_Releases
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Fri Jan 07 2022 Alexey Gladkov <legion@altlinux.ru> 3.74-alt1
+- New version (3.74).
+- Certificate Authority Changes:
+  + Add HiPKI Root CA - G1
+  + Add ISRG Root X2
+  + Add vTrus Root CA
+  + Add vTrus ECC Root CA
+  + Add Autoridad de Certificacion Firmaprofesional CIF A62634068
+  + Remove DST Root CA X3
+  + Remove GlobalSign Root CA - R2
+  + Remove Cybertrust Global Root
+  + Replace GlobalSign ECC Root CA - R4
+  + Replace GTS Root R1
+  + Replace GTS Root R2
+  + Replace GTS Root R3
+  + Replace GTS Root R4
+
 * Wed Dec 01 2021 Alexey Gladkov <legion@altlinux.ru> 3.73-alt1
 - New version (3.73).
 - Security fixes:
