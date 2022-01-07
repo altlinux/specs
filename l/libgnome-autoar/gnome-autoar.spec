@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Automatic archives creating and extracting library
@@ -29,15 +29,17 @@ Source: %_name-%version.tar
 %define gtk_ver 3.2
 %define archive_ver 3.2.0
 
-BuildRequires(pre): meson
-BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libarchive-devel >= %archive_ver
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
-%{?_enable_vala:BuildRequires: vala-tools}
+%{?_enable_introspection:
+BuildRequires(pre): rpm-build-gir
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
+%{?_enable_vala:
+BuildRequires(pre): rpm-build-vala
+BuildRequires: vala-tools}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
-
-# for check
-BuildRequires: dbus-tools-gui
+%{?_enable_check:BuildRequires: dbus-tools-gui}
 
 %description
 %_name provides functions, widgets, and gschemas for GNOME
@@ -97,9 +99,7 @@ GObject introspection devel data for the %_name library
 %find_lang %_name
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
-
+%__meson_test
 
 %files -f %_name.lang
 %_libdir/lib%_name-%api_ver_base.so.*
@@ -135,6 +135,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Jan 07 2022 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
+- 0.4.2
+
 * Sat Oct 30 2021 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
 - 0.4.1
 

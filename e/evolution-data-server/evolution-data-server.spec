@@ -30,7 +30,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Evolution Data Server
@@ -276,6 +276,9 @@ ln -s camel-lock-helper-%ver_lib %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Fri Jan 07 2022 Yuri N. Sedunov <aris@altlinux.org> 3.42.3-alt1
+- 3.42.3
+
 * Fri Dec 03 2021 Yuri N. Sedunov <aris@altlinux.org> 3.42.2-alt1
 - 3.42.2
 
