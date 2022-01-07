@@ -11,7 +11,7 @@ Summary:	Internet Low Bitrate Codec (iLBC) library
 Name:		libilbc
 Epoch:		1
 Version:	2.0.2
-Release:	alt1_8
+Release:	alt1_8.1
 License:	BSD-style
 Group:		System/Libraries
 URL:		https://github.com/TimothyGu/libilbc
@@ -61,7 +61,11 @@ connection with lost or delayed IP packets.
 %prep
 
 %setup -q -n libilbc-%{version}
+%ifarch %e2k
+sed -i "s/__aarch64__/__e2k__/" typedefs.h
+%else
 %patch33 -p1
+%endif
 
 %build
 autoreconf -fi
@@ -92,6 +96,9 @@ rm -rf %{buildroot}%{_datadir}/doc/libilbc
 
 
 %changelog
+* Sat Jan 08 2022 Michael Shigorin <mike@altlinux.org> 1:2.0.2-alt1_8.1
+- E2K: ftbfs workaround (ilyakurdyukov@)
+
 * Sun Dec 05 2021 Igor Vlasenko <viy@altlinux.org> 1:2.0.2-alt1_8
 - new version
 
