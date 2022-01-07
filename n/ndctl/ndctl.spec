@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: ndctl
-Version: 72
+Version: 72.1
 Release: alt1
 
 Summary: Manage NVDIMM subsystem devices (Non-volatile Memory)
@@ -14,7 +14,7 @@ Url: https://github.com/pmem/ndctl
 
 Vcs: https://github.com/pmem/ndctl.git
 Source: %url/archive/v%version/%name-%version.tar.gz
-Patch: %name-72-alt-iniparser.patch
+Patch: %name-72.1-alt-iniparser.patch
 
 Requires: lib%name = %EVR
 Requires: libdaxctl = %EVR
@@ -196,6 +196,9 @@ echo %version > version
 %_man3dir/*cxl*
 
 %changelog
+* Fri Jan 07 2022 Yuri N. Sedunov <aris@altlinux.org> 72.1-alt1
+- 72.1
+
 * Sat Dec 18 2021 Yuri N. Sedunov <aris@altlinux.org> 72-alt1
 - 72
 - new *cxl* subpackages
