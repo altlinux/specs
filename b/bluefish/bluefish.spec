@@ -1,6 +1,6 @@
 Name: bluefish
 Version: 2.2.12
-Release: alt1
+Release: alt2
 
 Summary: A GTK3 web development application for experienced users
 
@@ -26,6 +26,8 @@ Patch1: bluefish-2.2.12-shellbang.patch
 
 # Strip all python content if we don't have Python
 Patch2: bluefish-2.2.12-no-python.patch
+
+Patch3: bluefish-2.2.12-fix-command-chmod-a-x.patch
 
 Requires: bluefish-common = %serial:%version-%release
 
@@ -60,12 +62,13 @@ find data -type f -name \*.py -exec sed -i 's/\r//' {} \;
 %patch0
 %patch1
 %patch2
+%patch3 -p2
 
 # Update russian translation
 cp %SOURCE1 po/
 
 %build
-#autoreconf
+%autoreconf
 %configure --disable-update-databases --disable-xml-catalog-update
 %make_build
 
@@ -101,6 +104,10 @@ cat %{name}_plugin_*.lang >> %name.lang
 %_datadir/xml/%name/*
 
 %changelog
+* Fri Jan 07 2022 Anton Midyukov <antohami@altlinux.org> 2:2.2.12-alt2
+- fix command 'chmod a+x' for PATH with spacebar (Closes: 41636)
+- enable autoreconf
+
 * Thu Dec 16 2021 Anton Midyukov <antohami@altlinux.org> 2:2.2.12-alt1
 - New version 2.2.12
 - Update russian translation (thanks Olesya Gerasimenko)
