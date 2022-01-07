@@ -2,7 +2,7 @@
 %define rel alt1
 
 Name: qbittorrent
-Version: 4.3.9
+Version: 4.4.0
 Epoch: 1
 Release: %rel
 
@@ -79,6 +79,10 @@ Default is to listen on tcp/8080 with admin/adminadmin credentials
 #-n qBittorrent-release-%version
 
 %build
+%ifarch %e2k 
+%add_optflags -std=c++14
+%endif
+
 %ifarch %e2k ppc64le riscv64
 sed -i 's,aarch64,&|riscv64|ppc64le|e2k,' m4/ax_boost_base.m4
 %endif
@@ -107,6 +111,10 @@ make clean
 %_datadir/metainfo/*.xml
 
 %changelog
+* Fri Jan 07 2022 Ilya Mashkin <oddity@altlinux.ru> 1:4.4.0-alt1
+- 4.4.0
+- fix build on e2k
+
 * Mon Nov 01 2021 Ilya Mashkin <oddity@altlinux.ru> 1:4.3.9-alt1
 - 4.3.9
 
