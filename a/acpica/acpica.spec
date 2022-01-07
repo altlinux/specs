@@ -1,7 +1,7 @@
 
 Name: acpica
-Version: 20201113
-Release: alt2
+Version: 20211217
+Release: alt1
 Summary: ACPICA tools for the development and debug of ACPI tables
 
 Group: System/Kernel and hardware
@@ -24,53 +24,6 @@ Source13: grammar.asl.result
 Source14: converterSample.asl.result
 Source15: run-misc-tests.sh
 
-# the big-endian patch set (from fedora)
-Patch0: 0001-Add-in-basic-infrastructure-for-big-endian-support.patch
-Patch1: 0002-Modify-utility-functions-to-be-endian-agnostic.patch
-Patch2: 0003-Always-display-table-header-content-in-human-readabl.patch
-Patch3: 0004-Re-enable-support-for-big-endian-machines.patch
-Patch4: 0005-Support-MADT-aka-APIC-in-a-big-endian-world.patch
-Patch5: 0006-Support-ASF-tables-in-a-big-endian-world.patch
-Patch6: 0007-Support-CPEP-tables-in-a-big-endian-world.patch
-Patch7: 0008-Support-DBG2-table-in-a-big-endian-world.patch
-Patch8: 0009-Support-DMAR-in-a-big-endian-world.patch
-Patch9: 0010-Support-DRTM-in-a-big-endian-world.patch
-Patch10: 0011-Support-EINJ-in-a-big-endian-world.patch
-Patch11: 0012-Support-ERST-in-a-big-endian-world.patch
-Patch12: 0013-Support-FADT-aka-FACP-in-a-big-endian-world.patch
-Patch13: 0014-Support-most-FPDTs-in-a-big-endian-world.patch
-Patch14: 0015-Support-GTDT-in-a-big-endian-world.patch
-Patch15: 0016-Support-HEST-in-a-big-endian-world.patch
-Patch16: 0017-Support-RSDT-RSD-PTR-in-a-big-endian-world.patch
-Patch17: 0018-Support-XSDT-in-a-big-endian-world.patch
-Patch18: 0019-Support-SRAT-in-a-big-endian-world.patch
-Patch19: 0020-Support-SLIT-in-a-big-endian-world.patch
-Patch20: 0021-Support-MSCT-in-a-big-endian-world.patch
-Patch21: 0022-Support-MPST-in-a-big-endian-world.patch
-Patch22: 0023-Support-NFIT-in-a-big-endian-world.patch
-Patch23: 0024-Support-SDEV-in-a-big-endian-world.patch
-Patch24: 0025-Support-HMAT-in-a-big-endian-world.patch
-Patch25: 0026-Support-PDTT-in-a-big-endian-world.patch
-Patch26: 0027-Support-PPTT-in-a-big-endian-world.patch
-Patch27: 0028-Support-PCCT-in-a-big-endian-world.patch
-Patch28: 0029-Support-WDAT-in-a-big-endian-world.patch
-Patch29: 0030-Support-TCPA-in-a-big-endian-world.patch
-Patch30: 0031-Support-STAO-in-a-big-endian-world.patch
-Patch31: 0032-Support-SLIC-and-MSDM-in-a-big-endian-world.patch
-Patch32: 0033-Support-MCFG-in-a-big-endian-world.patch
-Patch33: 0034-Support-LPIT-in-a-big-endian-world.patch
-Patch34: 0035-Support-PMTT-in-a-big-endian-world.patch
-Patch35: 0036-Support-IORT-in-a-big-endian-world.patch
-Patch36: 0037-Support-IVRS-in-a-big-endian-world.patch
-Patch37: 0038-Support-TPM2-in-a-big-endian-world.patch
-Patch38: 0039-Add-partial-big-endian-support-for-WPBT-tables.patch
-Patch39: 0040-Support-DSDT-SSDT-in-a-big-endian-world.patch
-Patch40: 0041-Support-MTMR-in-a-big-endian-world.patch
-Patch41: 0042-Support-VRTC-in-a-big-endian-world.patch
-Patch42: 0043-Support-S3PT-in-a-big-endian-world.patch
-Patch43: 0044-Correct-an-endian-ness-problem-when-converting-ASL-t.patch
-Patch44: 0045-Correct-a-couple-of-endianness-issues-previously-uns.patch
-
 
 # other miscellaneous patches
 Patch100: unaligned.patch
@@ -86,10 +39,8 @@ Patch109: cve-2017-13694.patch
 Patch110: cve-2017-13695.patch
 Patch111: str-trunc-warn.patch
 Patch112: ptr-cast.patch
-Patch113: facp.patch
 Patch114: armv7-str-fixes.patch
 Patch115: dbtest.patch
-Patch116: ull-32bit.patch
 
 BuildRequires: bison flex
 
@@ -139,28 +90,7 @@ This version of the tools is being released under GPLv2 license.
 
 %prep
 %setup
-
-%patch0 -p1 -b .big-endian
-%patch1 -p1 -b .unaligned
-%patch2 -p1 -b .OPT_LDFLAGS
-%patch3 -p1 -b .int-format
-%patch4 -p1 -b .f23-harden
-# do not preserve a backup for this patch; it alters the results
-# of the template test case and forces it to fail
-%patch5 -p1
-%patch6 -p1 -b .ppc64le
-%patch7 -p1 -b .arm7hl
-%patch8 -p1 -b .big-endian-v2
-%patch9 -p1 -b .simple-64bit
-%patch10 -p1 -b .mips-be-fix
-%patch11 -p1 -b .cve-2017-13693
-%patch12 -p1 -b .cve-2017-13694
-%patch13 -p1 -b .cve-2017-13695
-%patch14 -p1 -b .str-trunc-warn
-%patch15 -p1 -b .ptr-cast
-%patch16 -p1 -b .aslcodegen
-%patch17 -p1 -b .facp
-%patch18 -p1 -b .badexit
+%autopatch -p1
 
 cp -p %SOURCE3 iasl.1
 cp -p %SOURCE4 acpibin.1
@@ -237,7 +167,7 @@ cd tests
 [ $? -eq 0 ] || exit 1
 
 # misc tests
-./run-misc-tests.sh %buildroot%_bindir %version
+#./run-misc-tests.sh %buildroot%_bindir %version
 
 %files
 %doc documents/changes.txt source/compiler/new_table.txt
@@ -245,6 +175,11 @@ cd tests
 %_man1dir/*
 
 %changelog
+* Tue Dec 28 2021 Alexey Shabalin <shaba@altlinux.org> 20211217-alt1
+- 20211217
+- Drop patches for big-endian support.
+- Disable misc tests.
+
 * Wed Sep 01 2021 Michael Shigorin <mike@altlinux.org> 20201113-alt2
 - fix -Wstrict-aliasing use; see also mcst#4656 and the suggested
   http://gcc.gnu.org/onlinedocs/gcc-7.5.0/gcc/Warning-Options.html#Warning-Options

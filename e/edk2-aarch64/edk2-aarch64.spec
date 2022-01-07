@@ -1,10 +1,10 @@
 %define TOOL_CHAIN_TAG GCC5
-%define openssl_ver 1.1.1g
+%define openssl_ver 1.1.1m
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-aarch64
-Version: 20201127
-Release: alt2
+Version: 20211125
+Release: alt1
 Summary: AARCH64 Virtual Machine Firmware
 
 License: BSD-2-Clause-Patent
@@ -21,6 +21,7 @@ Source4: Logo.bmp
 
 # ALT-specific JSON "descriptor files"
 Source20: 70-edk2-aarch64-verbose.json
+Source21: 60-edk2-aarch64.json
 
 Patch1: %name-%version.patch
 
@@ -50,17 +51,17 @@ cp -f %SOURCE4 MdeModulePkg/Logo/
 # cleanup
 find . -name '*.efi' -print0 | xargs -0 rm -f
 rm -rf BaseTools/Bin \
-	UefiCpuPkg/ResetVector/Vtf0/Bin/*.raw \
-	EdkCompatibilityPkg/Other \
-	AppPkg \
-	DuetPkg/BootSector/bin \
-	StdLib/LibC/Main/Ia32/ftol2.obj \
-	BeagleBoardPkg/Debugger_scripts/rvi_dummy.axf \
-	BaseTools/Source/Python/*/*.pyd \
-	BaseTools/Source/Python/UPT/Dll/sqlite3.dll \
-	Vlv2TbltDevicePkg/GenBiosId \
-	Vlv2TbltDevicePkg/*.exe \
-	ArmPkg/Library/GccLto/liblto-*.a
+        UefiCpuPkg/ResetVector/Vtf0/Bin/*.raw \
+        EdkCompatibilityPkg/Other \
+        AppPkg \
+        DuetPkg/BootSector/bin \
+        StdLib/LibC/Main/Ia32/ftol2.obj \
+        BeagleBoardPkg/Debugger_scripts/rvi_dummy.axf \
+        BaseTools/Source/Python/*/*.pyd \
+        BaseTools/Source/Python/UPT/Dll/sqlite3.dll \
+        Vlv2TbltDevicePkg/GenBiosId \
+        Vlv2TbltDevicePkg/*.exe \
+        ArmPkg/Library/GccLto/liblto-*.a
 
 # Ensure old shell and binary packages are not used
 rm -rf EdkShellBinPkg
@@ -114,8 +115,7 @@ unset MAKEFLAGS
 #cp /usr/share/seabios/bios-csm.bin OvmfPkg/Csm/Csm16/Csm16.bin
 #cp /usr/share/seabios/bios-csm.bin corebootPkg/Csm/Csm16/Csm16.bin
 %make_build \
-	 -C BaseTools
-
+        -C BaseTools
 
 #(cd UefiCpuPkg/ResetVector/Vtf0; python Build.py)
 
@@ -126,21 +126,36 @@ unset MAKEFLAGS
 # build aarch64 firmware
 mkdir -p AAVMF
 gcc -c -fpic ArmPkg/Library/GccLto/liblto-aarch64.s -o ArmPkg/Library/GccLto/liblto-aarch64.a
-build ${ARM_FLAGS} -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc
-cp Build/ArmVirtQemu-AARCH64/*/FV/*.fd AAVMF
-dd of="AAVMF/AAVMF_CODE.fd" if="/dev/zero" bs=1M count=64
-dd of="AAVMF/AAVMF_CODE.fd" if="AAVMF/QEMU_EFI.fd" conv=notrunc
-dd of="AAVMF/AAVMF_VARS.fd" if="/dev/zero" bs=1M count=64
+
+# Build with a verbose debug mask first, and stash the binary.
+build ${ARM_FLAGS} -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc -D DEBUG_PRINT_ERROR_LEVEL=0x8040004F
+cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI.verbose.fd
+cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_VARS.fd AAVMF/QEMU_VARS.fd
+
+# Rebuild with a silent (errors only) debug mask.
+build ${ARM_FLAGS} -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc -D DEBUG_PRINT_ERROR_LEVEL=0x80000000
+cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI.fd
+
 
 %install
 # For distro-provided firmware packages, the specification
 # (https://git.qemu.org/?p=qemu.git;a=blob;f=docs/interop/firmware.json)
 # says the JSON "descriptor files" to be searched in this directory:
 # `/usr/share/firmware/`.  Create it.
-mkdir -p %buildroot%_datadir/qemu/firmware
 
-mkdir -p %buildroot%_datadir/edk2
-cp -a AAVMF %buildroot%_datadir/
+mkdir -p %buildroot%_datadir/qemu/firmware
+mkdir -p %buildroot%_datadir/{edk2,AAVMF}
+
+cat AAVMF/QEMU_EFI.verbose.fd /dev/zero | head -c 64m \
+  > %buildroot%_datadir/AAVMF/AAVMF_CODE.verbose.fd
+
+cat AAVMF/QEMU_EFI.fd /dev/zero | head -c 64m \
+  > %buildroot%_datadir/AAVMF/AAVMF_CODE.fd
+
+cat AAVMF/QEMU_VARS.fd /dev/zero | head -c 64m \
+  > %buildroot%_datadir/AAVMF/AAVMF_VARS.fd
+
+
 ln -r -s %buildroot%_datadir/AAVMF %buildroot%_datadir/edk2/aarch64
 
 for f in %_sourcedir/*edk2-aarch64*.json; do
@@ -148,7 +163,8 @@ for f in %_sourcedir/*edk2-aarch64*.json; do
 done
 
 # add symlinks for compat
-ln -r -s %buildroot%_datadir/AAVMF/AAVMF_CODE.fd %buildroot%_datadir/edk2/aarch64/QEMU_EFI-pflash.raw
+ln -r -s %buildroot%_datadir/AAVMF/AAVMF_CODE.verbose.fd %buildroot%_datadir/edk2/aarch64/QEMU_EFI-pflash.raw
+ln -r -s %buildroot%_datadir/AAVMF/AAVMF_CODE.fd %buildroot%_datadir/edk2/aarch64/QEMU_EFI-silent-pflash.raw
 ln -r -s %buildroot%_datadir/AAVMF/AAVMF_VARS.fd %buildroot%_datadir/edk2/aarch64/vars-template-pflash.raw
 
 %files
@@ -157,6 +173,9 @@ ln -r -s %buildroot%_datadir/AAVMF/AAVMF_VARS.fd %buildroot%_datadir/edk2/aarch6
 %_datadir/qemu/firmware/*edk2-aarch64*.json
 
 %changelog
+* Thu Jan 06 2022 Alexey Shabalin <shaba@altlinux.org> 20211125-alt1
+- edk2-stable202111
+
 * Sat Feb 13 2021 Alexey Shabalin <shaba@altlinux.org> 20201127-alt2
 - build with -b DEBUG
 
@@ -178,13 +197,13 @@ ln -r -s %buildroot%_datadir/AAVMF/AAVMF_VARS.fd %buildroot%_datadir/edk2/aarch6
 * Tue Dec 11 2018 Alexey Shabalin <shaba@altlinux.org> 20181113-alt1
 - edk2-stable201811
 
-* Wed Dec 13 2017 Alexey Shabalin <shaba@altlinux.ru> 20170720-alt3%ubt
+* Wed Dec 13 2017 Alexey Shabalin <shaba@altlinux.ru> 20170720-alt3
 - snapshot of UDK2017 branch
 
-* Mon Sep 18 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 20170720-alt2%ubt
+* Mon Sep 18 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 20170720-alt2
 - added efi-shell subpackage
 
-* Fri Sep 01 2017 Alexey Shabalin <shaba@altlinux.ru> 20170720-alt1%ubt
+* Fri Sep 01 2017 Alexey Shabalin <shaba@altlinux.ru> 20170720-alt1
 - snapshot of UDK2017 branch
 
 * Thu Jan 12 2017 Alexey Shabalin <shaba@altlinux.ru> 20161227-alt1

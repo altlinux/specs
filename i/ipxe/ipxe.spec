@@ -18,12 +18,12 @@
 #    vmxnet3: 0x15ad 0x07b0
 
 %define qemuroms 10222000 10ec8029 8086100e 10ec8139 1af41000 80861209 808610d3 15ad07b0
-%define date 20201218
-%define hash 47098d7c
+%define date 20220104
+%define hash f43c2fd6
 
 Name: ipxe
 Version: %date
-Release: alt3.git%{hash}
+Release: alt1.git%{hash}
 Epoch: 1
 
 Summary: PXE boot firmware
@@ -40,7 +40,7 @@ Source: %name-%version.tar
 Patch: %name-%version.patch
 
 Requires: ipxe-bootimgs
-BuildRequires: genisoimage mtools syslinux binutils-devel edk2-tools
+BuildRequires: xorriso mtools syslinux binutils-devel edk2-tools
 BuildRequires: liblzma-devel
 BuildRequires: gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu
 
@@ -234,6 +234,9 @@ pxe_link 15ad07b0 vmxnet3
 %_datadir/%name.efi/efi-*.rom
 
 %changelog
+* Thu Jan 06 2022 Alexey Shabalin <shaba@altlinux.org> 1:20220104-alt1.gitf43c2fd6
+- Update to latest upstream snapshot.
+
 * Wed Jul 28 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:20201218-alt3.git47098d7c
 - Build ARM64 UEFI images
 

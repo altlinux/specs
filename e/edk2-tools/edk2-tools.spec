@@ -1,9 +1,9 @@
 %define TOOL_CHAIN_TAG GCC5
-%define openssl_ver 1.1.1g
+%define openssl_ver 1.1.1m
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-tools
-Version: 20201127
+Version: 20211125
 Release: alt1
 Summary: EFI Development Kit II Tools
 
@@ -60,17 +60,17 @@ cp -f %SOURCE4 MdeModulePkg/Logo/
 # cleanup
 find . -name '*.efi' -print0 | xargs -0 rm -f
 rm -rf BaseTools/Bin \
-	UefiCpuPkg/ResetVector/Vtf0/Bin/*.raw \
-	EdkCompatibilityPkg/Other \
-	AppPkg \
-	DuetPkg/BootSector/bin \
-	StdLib/LibC/Main/Ia32/ftol2.obj \
-	BeagleBoardPkg/Debugger_scripts/rvi_dummy.axf \
-	BaseTools/Source/Python/*/*.pyd \
-	BaseTools/Source/Python/UPT/Dll/sqlite3.dll \
-	Vlv2TbltDevicePkg/GenBiosId \
-	Vlv2TbltDevicePkg/*.exe \
-	ArmPkg/Library/GccLto/liblto-*.a
+        UefiCpuPkg/ResetVector/Vtf0/Bin/*.raw \
+        EdkCompatibilityPkg/Other \
+        AppPkg \
+        DuetPkg/BootSector/bin \
+        StdLib/LibC/Main/Ia32/ftol2.obj \
+        BeagleBoardPkg/Debugger_scripts/rvi_dummy.axf \
+        BaseTools/Source/Python/*/*.pyd \
+        BaseTools/Source/Python/UPT/Dll/sqlite3.dll \
+        Vlv2TbltDevicePkg/GenBiosId \
+        Vlv2TbltDevicePkg/*.exe \
+        ArmPkg/Library/GccLto/liblto-*.a
 
 # Ensure old shell and binary packages are not used
 rm -rf EdkShellBinPkg
@@ -114,16 +114,13 @@ OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D SMM_REQUIRE"
 OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D EXCLUDE_SHELL_FROM_FD"
 
 # arm firmware features
-#ARM_FLAGS="-t %TOOL_CHAIN_TAG -b DEBUG --cmd-len=65536"
+#ARM_FLAGS="-t %%TOOL_CHAIN_TAG -b DEBUG --cmd-len=65536"
 ARM_FLAGS="${CC_FLAGS}"
 
 unset MAKEFLAGS
 
-# prepare
-#cp /usr/share/seabios/bios-csm.bin OvmfPkg/Csm/Csm16/Csm16.bin
-#cp /usr/share/seabios/bios-csm.bin corebootPkg/Csm/Csm16/Csm16.bin
 %make_build \
-	 -C BaseTools
+        -C BaseTools
 
 %install
 # install BaseTools
@@ -132,25 +129,25 @@ mkdir -p %buildroot%_bindir \
          %buildroot%_datadir/edk2/Scripts
 
 pushd BaseTools
-install --strip \
-	Source/C/bin/* \
-	%buildroot%_bindir
+install \
+        Source/C/bin/* \
+        %buildroot%_bindir
 
 install \
-	BinWrappers/PosixLike/LzmaF86Compress \
-	%buildroot%_bindir
+        BinWrappers/PosixLike/LzmaF86Compress \
+        %buildroot%_bindir
 
 install \
-	BuildEnv \
-	%buildroot%_datadir/edk2
+        BuildEnv \
+        %buildroot%_datadir/edk2
 
 install \
-	Conf/*.template \
-	%buildroot%_datadir/edk2/Conf
+        Conf/*.template \
+        %buildroot%_datadir/edk2/Conf
 
 install \
-	Scripts/GccBase.lds \
-	%buildroot%_datadir/edk2/Scripts
+        Scripts/GccBase.lds \
+        %buildroot%_datadir/edk2/Scripts
 
 cp -R Source/Python %buildroot%_datadir/edk2/Python
 
@@ -175,7 +172,6 @@ popd
 %_bindir/GenSec
 %_bindir/LzmaCompress
 %_bindir/LzmaF86Compress
-%_bindir/Split
 %_bindir/TianoCompress
 %_bindir/VfrCompile
 %_bindir/VolInfo
@@ -183,22 +179,25 @@ popd
 %_datadir/edk2/Conf
 %_datadir/edk2/Scripts
 
-#%files tools-python
-#%_bindir/BPDG
-#%_bindir/Ecc
-#%_bindir/GenDepex
-#%_bindir/GenFds
-#%_bindir/GenPatchPcdTable
-#%_bindir/PatchPcdValue
-#%_bindir/TargetTool
-#%_bindir/Trim
-#%_bindir/UPT
-#%_datadir/edk2/Python/
+%files python
+%_bindir/BPDG
+%_bindir/Ecc
+%_bindir/GenDepex
+%_bindir/GenFds
+%_bindir/GenPatchPcdTable
+%_bindir/PatchPcdValue
+%_bindir/TargetTool
+%_bindir/Trim
+%_bindir/UPT
+%_datadir/edk2/Python/
 
 %files doc
 %doc BaseTools/UserManuals/*.rtf
 
 %changelog
+* Tue Dec 28 2021 Alexey Shabalin <shaba@altlinux.org> 20211125-alt1
+- edk2-stable202111
+
 * Wed Dec 23 2020 Alexey Shabalin <shaba@altlinux.org> 20201127-alt1
 - edk2-stable202011 (Fixes: CVE-2019-14584, CVE-2019-11098)
 
@@ -220,13 +219,13 @@ popd
 * Tue Dec 11 2018 Alexey Shabalin <shaba@altlinux.org> 20181113-alt1
 - edk2-stable201811
 
-* Wed Dec 13 2017 Alexey Shabalin <shaba@altlinux.ru> 20170720-alt3%ubt
+* Wed Dec 13 2017 Alexey Shabalin <shaba@altlinux.ru> 20170720-alt3
 - snapshot of UDK2017 branch
 
-* Mon Sep 18 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 20170720-alt2%ubt
+* Mon Sep 18 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 20170720-alt2
 - added efi-shell subpackage
 
-* Fri Sep 01 2017 Alexey Shabalin <shaba@altlinux.ru> 20170720-alt1%ubt
+* Fri Sep 01 2017 Alexey Shabalin <shaba@altlinux.ru> 20170720-alt1
 - snapshot of UDK2017 branch
 
 * Thu Jan 12 2017 Alexey Shabalin <shaba@altlinux.ru> 20161227-alt1

@@ -1,11 +1,11 @@
 %define TOOL_CHAIN_TAG GCC5
-%define openssl_ver 1.1.1g
+%define openssl_ver 1.1.1m
 %def_disable skip_enroll
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2
-Version: 20201127
-Release: alt2
+Version: 20211125
+Release: alt1
 Summary: EFI Development Kit II
 
 License: BSD-2-Clause-Patent
@@ -30,6 +30,7 @@ Source16: 60-edk2-ovmf-x64.json
 Source17: 40-edk2-ovmf-ia32-sb-enrolled.json
 Source18: 50-edk2-ovmf-ia32-sb.json
 Source19: 60-edk2-ovmf-ia32.json
+Source20: 60-edk2-ovmf-x64-microvm.json
 
 Patch1: %name-%version.patch
 
@@ -91,17 +92,17 @@ cp -f %SOURCE4 MdeModulePkg/Logo/
 # cleanup
 find . -name '*.efi' -print0 | xargs -0 rm -f
 rm -rf BaseTools/Bin \
-	UefiCpuPkg/ResetVector/Vtf0/Bin/*.raw \
-	EdkCompatibilityPkg/Other \
-	AppPkg \
-	DuetPkg/BootSector/bin \
-	StdLib/LibC/Main/Ia32/ftol2.obj \
-	BeagleBoardPkg/Debugger_scripts/rvi_dummy.axf \
-	BaseTools/Source/Python/*/*.pyd \
-	BaseTools/Source/Python/UPT/Dll/sqlite3.dll \
-	Vlv2TbltDevicePkg/GenBiosId \
-	Vlv2TbltDevicePkg/*.exe \
-	ArmPkg/Library/GccLto/liblto-*.a
+        UefiCpuPkg/ResetVector/Vtf0/Bin/*.raw \
+        EdkCompatibilityPkg/Other \
+        AppPkg \
+        DuetPkg/BootSector/bin \
+        StdLib/LibC/Main/Ia32/ftol2.obj \
+        BeagleBoardPkg/Debugger_scripts/rvi_dummy.axf \
+        BaseTools/Source/Python/*/*.pyd \
+        BaseTools/Source/Python/UPT/Dll/sqlite3.dll \
+        Vlv2TbltDevicePkg/GenBiosId \
+        Vlv2TbltDevicePkg/*.exe \
+        ArmPkg/Library/GccLto/liblto-*.a
 
 # Ensure old shell and binary packages are not used
 rm -rf EdkShellBinPkg
@@ -147,7 +148,7 @@ CC_FLAGS="${CC_FLAGS} -D NETWORK_IP6_ENABLE"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_TLS_ENABLE"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_HTTP_BOOT_ENABLE"
 CC_FLAGS="${CC_FLAGS} -D TPM_ENABLE"
- 
+
 # ovmf features
 OVMF_FLAGS="${CC_FLAGS}"
 OVMF_FLAGS="${OVMF_FLAGS} -D FD_SIZE_2MB"
@@ -159,22 +160,20 @@ OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D SMM_REQUIRE"
 OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D EXCLUDE_SHELL_FROM_FD"
 
 # arm firmware features
-#ARM_FLAGS="-t %TOOL_CHAIN_TAG -b DEBUG --cmd-len=65536"
+#ARM_FLAGS="-t %%TOOL_CHAIN_TAG -b DEBUG --cmd-len=65536"
 ARM_FLAGS="${CC_FLAGS}"
 
 unset MAKEFLAGS
 
-# prepare
-#cp /usr/share/seabios/bios-csm.bin OvmfPkg/Csm/Csm16/Csm16.bin
-#cp /usr/share/seabios/bios-csm.bin corebootPkg/Csm/Csm16/Csm16.bin
 %make_build \
-	 -C BaseTools
+        -C BaseTools
 
 
 #(cd UefiCpuPkg/ResetVector/Vtf0; python Build.py)
 
 #mkdir -p FatBinPkg/EnhancedFatDxe/{X64,Ia32}
 #source ./edksetup.sh
+
 
 # build ovmf (x64)
 mkdir -p OVMF
@@ -209,6 +208,10 @@ python3 qemu-ovmf-secureboot/ovmf-vars-generator \
 cp OVMF/OVMF_VARS.fd OVMF/OVMF_VARS.secboot.fd
 %endif
 
+# build microvm
+build ${OVMF_FLAGS} -a X64 -p OvmfPkg/Microvm/MicrovmX64.dsc
+cp Build/MicrovmX64/*/FV/MICROVM.fd OVMF
+
 # build ovmf-ia32
 mkdir -p ovmf-ia32
 build ${OVMF_FLAGS} -a IA32 -p OvmfPkg/OvmfPkgIa32.dsc
@@ -234,7 +237,7 @@ mkdir -p %buildroot%_datadir/qemu/firmware
 # shell
 mkdir -p %buildroot%_prefix/lib64/efi
 cp Build/Shell/*/X64/ShellPkg/Application/Shell/Shell/OUTPUT/Shell.efi \
-	%buildroot%_prefix/lib64/efi/shell.efi
+        %buildroot%_prefix/lib64/efi/shell.efi
 
 #install OVMF
 mkdir -p %buildroot%_datadir/edk2
@@ -263,6 +266,9 @@ done
 %_prefix/lib64/efi/shell.efi
 
 %changelog
+* Tue Dec 28 2021 Alexey Shabalin <shaba@altlinux.org> 20211125-alt1
+- edk2-stable202111
+
 * Sat Feb 13 2021 Alexey Shabalin <shaba@altlinux.org> 20201127-alt2
 - build with -b DEBUG
 
