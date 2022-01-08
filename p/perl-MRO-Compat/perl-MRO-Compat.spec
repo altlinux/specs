@@ -3,8 +3,8 @@
 %define name	perl-%{module}
 
 Name:		%{name}
-Version:	0.13
-Release:	alt2
+Version:	0.15
+Release:	alt1
 Summary:	mro::* interface compatibility for Perls < 5.9.5
 URL:		http://search.cpan.org/dist/%{module}
 Source0:		http://www.cpan.org/authors/id/H/HA/HAARG/%{module}-%{version}.tar.gz
@@ -58,6 +58,9 @@ docs, and contain a lot of other
 
 
 %changelog
+* Sat Jan 08 2022 Igor Vlasenko <viy@altlinux.org> 0.15-alt1
+- automated CPAN update
+
 * Sat Nov 07 2020 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2
 - build w/o mro.pm provides
 
