@@ -5,7 +5,7 @@
 
 Name: recode
 Version: 3.7.9
-Release: alt1
+Release: alt2
 
 Summary: The `recode' library converts files between character sets and usages
 # COPYING:              GPLv3 text
@@ -66,7 +66,7 @@ Patch0: recode4python.patch
 Patch1: recode-3.6-debian-boolsize.patch
 Patch2: recode-3.6-alt-unicode-in-docs.patch
 Patch3: recode-3.6-alt-e2k.patch
-Patch5:     recode-3.7.1-Rename-coliding-hash-functions.patch
+Patch5: recode-3.7.1-Rename-coliding-hash-functions.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -130,7 +130,7 @@ files to allow you to develop applications using the `recode' libraries.
 #patch1 -p1
 #patch2 -p2
 %ifarch %e2k
-%patch3 -p1
+#patch3 -p1
 %endif
 %patch5 -p1
 
@@ -170,6 +170,9 @@ chrpath -d %buildroot%_bindir/%name
 # - configure.in:18: error: automatic de-ANSI-fication support has been removed
 
 %changelog
+* Sat Jan 08 2022 Michael Shigorin <mike@altlinux.org> 3.7.9-alt2
+- E2K: dropped patch (unneeded for 3.7)
+
 * Wed Sep 08 2021 Ilya Mashkin <oddity@altlinux.ru> 3.7.9-alt1
 - 3.7.9
 - Add BR: python3
