@@ -2,7 +2,7 @@
 
 Name: feh
 Version: 3.8
-Release: alt1
+Release: alt2
 Summary: Image viewer using Imlib 2
 Group: Graphics
 License: BSD
@@ -12,11 +12,12 @@ Url: https://feh.finalrewind.org/
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 # git://github.com/derf/feh.git refs/tags/v%%version
 Source: %name-%version.tar
-Patch0:         feh-1.10.1-dejavu.patch
+Patch0: feh-1.10.1-fontpath.patch
 
 # Automatically added by buildreq on Thu Sep 08 2011
 # optimized out: imlib2 imlib2-devel libX11-devel xorg-xproto-devel zlib-devel
-BuildRequires: libXinerama-devel libXt-devel libcurl-devel libgiblib-devel libpng-devel libexif-devel libjpeg-utils fonts-ttf-dejavu imlib2-devel
+BuildRequires: libXinerama-devel libXt-devel libcurl-devel libgiblib-devel libpng-devel libexif-devel libjpeg-utils imlib2-devel
+Requires: fonts-ttf-dejavu
 
 %description
 feh is a versatile and fast image viewer using imlib2, the
@@ -57,6 +58,11 @@ export PREFIX="%_prefix"
 %doc COPYING
 
 %changelog
+* Sat Jan 08 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.8-alt2
+- Fixed font path location (closes: #41468).
+- Removed current directory from the font path (hardening).
+- Moved fonts-ttf-dejavu from BR to runtime dependency.
+
 * Thu Jan 06 2022 Ilya Mashkin <oddity@altlinux.ru> 3.8-alt1
 - 3.8
 
