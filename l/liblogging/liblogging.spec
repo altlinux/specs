@@ -1,9 +1,11 @@
 Name: liblogging
 Version: 1.0.6
-Release: alt2
+Release: alt3
+
 Summary: LibLogging stdlog library
 License: 2-clause BSD
 Group: System/Libraries
+
 Url: http://www.liblogging.org
 Source: %name-%version.tar
 
@@ -26,6 +28,8 @@ developing programs which use liblogging library.
 
 %prep
 %setup
+# Fix wrong ^M in the file
+sed -i 's;\r;\n;g' rfc3195/src/oscallsUnix.c
 
 %build
 %autoreconf
@@ -53,6 +57,9 @@ developing programs which use liblogging library.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Jan 08 2022 Michael Shigorin <mike@altlinux.org> 1.0.6-alt3
+- NMU: fix line endings to build on e2k (sem@)
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.6-alt2
 - NMU: use /usr/bin/rst2man.py from python3-module-docutils
 
