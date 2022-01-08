@@ -4,12 +4,13 @@
 
 %def_disable static
 %def_enable gtk_doc
+%def_enable man
 %def_enable introspection
 %def_enable vala
 %def_enable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A framework for creating UPnP devices and control points
@@ -26,6 +27,7 @@ BuildRequires: libxml2-devel libsoup-devel >= 2.48 libuuid-devel
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libsoup-gir-devel libgssdp%api_ver-gir-devel}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc gi-docgen}
+%{?_enable_man:BuildRequires: xsltproc docbook-style-xsl}
 
 %description
 gUPnP is an object-oriented open source framework for creating UPnP
@@ -77,6 +79,8 @@ GObject introspection devel data for the gUPnP library
 
 %prep
 %setup -n %_name-%version
+# fix manpage building
+sed -i '/\--nowrite/d' doc/meson.build
 
 %build
 %meson \
@@ -96,7 +100,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %files
 %_bindir/%_name-binding-tool-%api_ver
 %_libdir/lib%_name-%api_ver.so.*
-%_man1dir/%_name-binding-tool*.1*
+%{?_enable_man:%_man1dir/%_name-binding-tool*.1*}
 %doc AUTHORS README* NEWS
 
 %files devel
@@ -121,6 +125,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Sat Jan 08 2022 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1
+- 1.4.2
+
 * Mon Dec 06 2021 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
 - 1.4.1
 
