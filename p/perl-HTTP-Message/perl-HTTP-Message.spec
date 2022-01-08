@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist HTTP-Message
 Name: perl-%dist
-Version: 6.35
+Version: 6.36
 Release: alt1
 
 Summary: HTTP style messages
@@ -36,6 +36,9 @@ The following methods are available:
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Sat Jan 08 2022 Igor Vlasenko <viy@altlinux.org> 6.36-alt1
+- automated CPAN update
+
 * Wed Nov 17 2021 Igor Vlasenko <viy@altlinux.org> 6.35-alt1
 - automated CPAN update
 
