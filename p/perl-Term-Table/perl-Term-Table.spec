@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -17,12 +18,12 @@ BuildRequires: perl-podlators
 %bcond_without perl_Term_Table_enables_unicode
 
 Name:           perl-Term-Table
-Version:        0.015
-Release:        alt1_1
+Version:        0.016
+Release:        alt1
 Summary:        Format a header and rows into a table
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Term-Table
-Source0:        https://cpan.metacpan.org/authors/id/E/EX/EXODIST/Term-Table-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/E/EX/EXODIST/Term-Table-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl-devel
@@ -86,11 +87,13 @@ unset TABLE_TERM_SIZE
 make test
 
 %files
-%doc --no-dereference LICENSE
-%doc Changes README
+%doc Changes README README.md
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jan 08 2022 Igor Vlasenko <viy@altlinux.org> 0.016-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.015-alt1_1
 - update to new release by fcimport
 
