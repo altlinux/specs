@@ -10,8 +10,8 @@ BuildRequires: perl(Future.pm) perl(Module/Build.pm) perl(Struct/Dumb.pm) perl(T
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.10
-Release: alt2
+Version: 0.11
+Release: alt1
 Summary: Future-returning IO methods
 Group: Development/Perl
 License: perl
@@ -62,6 +62,9 @@ fi
 %perl_vendor_privlib/Test*
 
 %changelog
+* Sat Jan 08 2022 Igor Vlasenko <viy@altlinux.org> 0.11-alt1
+- automated CPAN update
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 0.10-alt2
 - set test module name to Test-Future-IO-Impl
 
