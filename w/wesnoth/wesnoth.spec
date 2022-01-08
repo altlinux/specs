@@ -20,7 +20,7 @@
 %define _wesnothd_home     %_runtimedir/wesnothd%wessuffix
 
 Name: wesnoth%wessuffix
-Version: 1.16.0
+Version: 1.16.1
 Release: alt1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
@@ -41,8 +41,8 @@ BuildRequires: libICE-devel libSDL2-devel libSDL2_image-devel libSDL2_mixer-deve
 BuildRequires: boost-devel boost-devel-headers boost-asio-devel boost-context-devel boost-coroutine-devel boost-filesystem-devel boost-locale-devel boost-program_options-devel
 # docs
 BuildRequires: asciidoc fribidi po4a xsltproc
-# triggers systemd files
-BuildRequires: systemd-utils
+# use BR to trigger systemd files or edit BoolVariable('systemd'...) in SConstruct
+BuildRequires: /bin/systemctl
 
 # used in spec
 BuildRequires: ImageMagick-tools desktop-file-utils
@@ -408,6 +408,9 @@ mv %buildroot%_datadir/%name/data/tools/wesnoth %buildroot%_datadir/%name/data/t
 %endif
 
 %changelog
+* Sat Jan 08 2022 Igor Vlasenko <viy@altlinux.org> 1.16.1-alt1
+- new version
+
 * Sun Nov 07 2021 Igor Vlasenko <viy@altlinux.org> 1.16.0-alt1
 - new version
 
