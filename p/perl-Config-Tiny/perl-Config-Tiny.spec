@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Config-Tiny
 Name: perl-%dist
-Version: 2.27
+Version: 2.28
 Release: alt1
 
 Summary: Read/Write .ini style files with as little code as possible
@@ -37,6 +37,9 @@ intended to provide an ultralight alternative to the standard modules.
 %perl_vendor_privlib/Config
 
 %changelog
+* Sat Jan 08 2022 Igor Vlasenko <viy@altlinux.org> 2.28-alt1
+- automated CPAN update
+
 * Fri Sep 24 2021 Igor Vlasenko <viy@altlinux.org> 2.27-alt1
 - automated CPAN update
 
