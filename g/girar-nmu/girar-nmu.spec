@@ -4,7 +4,7 @@
 #set_compress_method none
 %set_compress_method %mansuff
 Name: girar-nmu
-Version: 2.014.1
+Version: 2.015.0
 Release: alt1
 
 Summary: girar client utilities for NMU automation
@@ -36,6 +36,8 @@ Summary: girar client tools for easy girar upload
 Group: Development/Other
 BuildArch: noarch
 Conflicts: girar-nmu < 2
+# gpg1's usage of gpg-agent is broken in p10+, we use gpg2 with GPG_TTY fix
+Requires: gnupg2 > 2.2.32
 
 %description -n girar-tools
 This package contains useful client utilities for girar and gitery
@@ -110,6 +112,9 @@ EOF
 %_man1dir/girar-*
 
 %changelog
+* Sat Jan 08 2022 Igor Vlasenko <viy@altlinux.org> 2.015.0-alt1
+- p10 support, gpg2 migration
+
 * Mon Nov 15 2021 Igor Vlasenko <viy@altlinux.org> 2.014.1-alt1
 - new version
 
