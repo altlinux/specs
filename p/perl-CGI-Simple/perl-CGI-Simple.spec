@@ -2,7 +2,7 @@
 Epoch: 1
 %define dist CGI-Simple
 Name: perl-%dist
-Version: 1.25
+Version: 1.27
 Release: alt1
 
 Summary: A Simple totally OO CGI interface that is CGI.pm compliant 
@@ -41,6 +41,9 @@ the CGI::Simple::Standard module.
 %perl_vendor_privlib/CGI*
 
 %changelog
+* Sat Jan 08 2022 Igor Vlasenko <viy@altlinux.org> 1:1.27-alt1
+- automated CPAN update
+
 * Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.25-alt1
 - automated CPAN update
 
