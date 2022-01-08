@@ -1,5 +1,5 @@
 %define module_name lkrg
-%define module_version 0.9.2
+%define module_version 0.9.2.0.1.git10ba314
 
 Name: kernel-source-lkrg
 Version: %module_version
@@ -115,6 +115,9 @@ done
 %_presetdir/30-lkrg.preset
 
 %changelog
+* Sat Jan 08 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.2.0.1.git10ba314-alt1
+- Updated to v0.9.2-1-g10ba314.
+
 * Fri Dec 31 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.2-alt1
 - Updated to v0.9.2.
 
