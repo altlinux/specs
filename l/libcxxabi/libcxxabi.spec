@@ -2,11 +2,11 @@
 
 %define optflags_lto -flto=thin
 %define so_ver 1
-%define llvm_ver 12
+%define llvm_ver 12.0
 
 Name: libcxxabi
 Version: 12.0.1
-Release: alt1
+Release: alt2
 
 Summary: Low level support for a standard C++ library
 
@@ -16,18 +16,16 @@ Url: https://libcxxabi.llvm.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-ExcludeArch: %arm
-
 # https://github.com/llvm/llvm-project/releases/download/llvmorg-%version/%name-%version.src.tar.xz
 Source: %name-%version.src.tar
 
 Patch0: %name-include-refstring.h-from-system-incl.patch
 Patch1: %name-remove-monorepo-requirement.patch
 
-BuildRequires: clang%llvm_ver.0
+BuildRequires: clang%llvm_ver
 BuildRequires: cmake
 BuildRequires: libc++-devel >= %version
-BuildRequires: llvm%llvm_ver.0-devel
+BuildRequires: llvm%llvm_ver-devel
 BuildRequires: ninja-build
 BuildRequires: python3
 
@@ -74,6 +72,8 @@ Obsoletes: %name-static <= 7.0.0-alt1
 %patch1 -p2
 
 %build
+export ALTWRAP_LLVM_VERSION=%llvm_ver
+
 %ifarch %arm
 # disable ARM exception handling
 %__subst 's|LIBCXXABI_ARM_EHABI 1|LIBCXXABI_ARM_EHABI 0|g' include/__cxxabi_config.h
@@ -86,8 +86,12 @@ export LDFLAGS="-Wl,--build-id -stdlib=libc++"
 %endif
 
 %cmake \
-	-DCMAKE_C_COMPILER:PATH=%_bindir/clang-%llvm_ver \
-	-DCMAKE_CXX_COMPILER:PATH=%_bindir/clang++-%llvm_ver \
+	-DCMAKE_C_COMPILER:STRING=clang \
+	-DCMAKE_CXX_COMPILER:STRING=clang++ \
+	-DCMAKE_RANLIB:PATH=%_bindir/llvm-ranlib \
+	-DCMAKE_AR:PATH=%_bindir/llvm-ar \
+	-DCMAKE_NM:PATH=%_bindir/llvm-nm \
+	-DCMAKE_EXE_LINKER_FLAGS:STRING="-fuse-ld=lld" \
 	-DCMAKE_CXX_FLAGS:STRING="-std=c++11" \
 	-DLIBCXXABI_LIBCXX_INCLUDES:PATH=%_includedir/c++/v1 \
 %if %_lib == "lib64"
@@ -116,6 +120,11 @@ export LDFLAGS="-Wl,--build-id -stdlib=libc++"
 %_libdir/libc++abi.a
 
 %changelog
+* Sun Jan 09 2022 Nazarov Denis <nenderus@altlinux.org> 12.0.1-alt2
+- Set ALTWRAP_LLVM_VERSION to select correct LLVM version
+- Use LLVM Linker
+- Build on ARM
+
 * Sat Jan 08 2022 Nazarov Denis <nenderus@altlinux.org> 12.0.1-alt1
 - Version 12.0.1
 

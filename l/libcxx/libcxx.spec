@@ -2,13 +2,25 @@
 # Otherwise, you have a loop with libcxxabi
 %def_with bootstrap
 
+%ifarch %arm
+%def_without clang
+%else
+%def_with clang
+%endif
+
+
+%if_with clang
 %define optflags_lto -flto=thin
+%else
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%endif
+
 %define so_ver 1
-%define llvm_ver 12
+%define llvm_ver 12.0
 
 Name: libcxx
 Version: 12.0.1
-Release: alt1
+Release: alt2
 
 Summary: C++ standard library targeting C++11
 
@@ -18,16 +30,19 @@ Url: https://%name.llvm.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-ExcludeArch: %arm
-
 # https://github.com/llvm/llvm-project/releases/download/llvmorg-%version/%name-%version.src.tar.xz
 Source: %name-%version.src.tar
 
 Patch0: %name-remove-monorepo-requirement.patch
 
-BuildRequires: clang%llvm_ver.0
+%if_with clang
+BuildRequires: clang%llvm_ver
+BuildRequires: llvm%llvm_ver-devel
+%else
+BuildRequires: gcc-c++
+%endif
+
 BuildRequires: cmake
-BuildRequires: llvm%llvm_ver.0-devel
 BuildRequires: ninja-build
 BuildRequires: python3
 
@@ -80,15 +95,23 @@ Obsoletes: %name-static <= 7.0.0-alt1
 %patch0 -p2
 
 %build
+export ALTWRAP_LLVM_VERSION=%llvm_ver
 
 %if_with bootstrap
 export LDFLAGS="-Wl,--build-id"
 %else
 export LDFLAGS="-Wl,--build-id -stdlib=libc++ -lc++abi"
 %endif
+
 %cmake \
-	-DCMAKE_C_COMPILER:PATH="clang-%llvm_ver" \
-	-DCMAKE_CXX_COMPILER:PATH=%_bindir/clang++-%llvm_ver \
+%if_with clang
+	-DCMAKE_C_COMPILER:STRING=clang \
+	-DCMAKE_CXX_COMPILER:STRING=clang++ \
+	-DCMAKE_RANLIB:PATH=%_bindir/llvm-ranlib \
+	-DCMAKE_AR:PATH=%_bindir/llvm-ar \
+	-DCMAKE_NM:PATH=%_bindir/llvm-nm \
+	-DCMAKE_EXE_LINKER_FLAGS:STRING="-fuse-ld=lld" \
+%endif
 %if_without bootstrap
 	-DLIBCXX_CXX_ABI=libcxxabi \
 	-DLIBCXX_CXX_ABI_INCLUDE_PATHS=%_includedir \
@@ -122,6 +145,11 @@ export LDFLAGS="-Wl,--build-id -stdlib=libc++ -lc++abi"
 %_libdir/libc++*.a
 
 %changelog
+* Sun Jan 09 2022 Nazarov Denis <nenderus@altlinux.org> 12.0.1-alt2
+- Set ALTWRAP_LLVM_VERSION to select correct LLVM version
+- Use LLVM Linker
+- Build on ARM with GCC
+
 * Sat Jan 08 2022 Nazarov Denis <nenderus@altlinux.org> 12.0.1-alt1
 - Version 12.0.1
 
