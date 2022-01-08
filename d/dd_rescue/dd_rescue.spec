@@ -4,7 +4,7 @@
 
 Name:           dd_rescue
 Version:        1.99.10
-Release:        alt1
+Release:        alt1.1
 Summary:        Fault tolerant "dd" utility for rescuing data from bad media
 Group:          File tools
 License:        GPL+
@@ -31,8 +31,15 @@ recovery.
 %prep
 %setup
 %setup -a 1 -D -T
-
 %patch1 -p1
+%ifarch %e2k
+# The combination of the laziness of the author of the makefile and
+# the desire of the compiler for Elbrus to throw errors for any reason
+# leads to an error, since the makefile tries to build dependencies
+# for every source file, including those that don't have the required
+# includes and will not compile.
+sed -i 's/$(CC) $(CFLAGS) -DGEN_DEP/echo >.dep #/' Makefile
+%endif
 
 %build
 %make RPM_OPT_FLAGS="%{optflags}" %{?_smp_mflags} LIB=%_lib LIBDIR=%{_libdir}
@@ -57,6 +64,9 @@ install -D -m 755 dd_rhelp-%{rhelp_version}/dd_rhelp %{buildroot}%{_bindir}/dd_r
 %_man1dir/ddr_lzo.1*
 
 %changelog
+* Sat Jan 08 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.99.10-alt1.1
+- Fixed build for Elbrus.
+
 * Thu Mar 18 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.99.10-alt1
 - Updated to upstream version 1.99.10.
 
