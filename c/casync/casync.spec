@@ -1,6 +1,6 @@
 Name: casync
 Version: 2.0.219.gita8f6c84
-Release: alt1
+Release: alt1.1
 
 Summary: Content Addressable Data Synchronizer
 
@@ -48,6 +48,11 @@ have to be transferred during an update.
 %prep
 %setup
 %patch -p1
+%ifarch %e2k
+# fixes for EDG frontend based compiler
+sed -i "s/(void)0/(void*)0/" src/util.h
+sed -i "/-Werror=return-type/d" meson.build
+%endif
 
 %build
 %meson \
@@ -109,6 +114,9 @@ meson test -C %_target_platform \
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Sat Jan 08 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.0.219.gita8f6c84-alt1.1
+- Fixed build for Elbrus.
+
 * Tue Nov 12 2019 Arseny Maslennikov <arseny@altlinux.org> 2.0.219.gita8f6c84-alt1
 - 2-101-git8595b4d -> 2-219-gita8f6c84.
 - Included upstream-provided bash completion.
