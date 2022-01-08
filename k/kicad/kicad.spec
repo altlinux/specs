@@ -5,7 +5,7 @@
 
 Name: kicad
 Version: 6.0.0
-Release: alt2
+Release: alt2.1
 Epoch: 1
 
 Summary: An open source software for the creation of electronic schematic diagrams
@@ -99,6 +99,7 @@ Common package for kicad.
 %setup
 %ifarch %e2k
 %patch2000 -p1
+sed -i "s/-Wreturn-type/-Wbuggy-edg/" CMakeModules/Warnings.cmake
 %endif
 
 %build
@@ -121,6 +122,7 @@ Common package for kicad.
     -DKICAD_BUILD_I18N=ON \
     -DKICAD_I18N_UNIX_STRICT_PATH=ON \
     -DKICAD_VERSION_EXTRA=%release \
+    -DCMAKE_CXX_FLAGS_RELWITHDEBINFO="-DNDEBUG" \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo
 
 %cmake_build
@@ -164,6 +166,9 @@ rm -r %buildroot/%_datadir/locale/pt_br
 %dir %_datadir/kicad/template
 
 %changelog
+* Sat Jan 08 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:6.0.0-alt2.1
+- Fixed build for Elbrus.
+
 * Thu Jan 06 2022 Anton Midyukov <antohami@altlinux.org> 1:6.0.0-alt2
 - build with swig 4.0, without external pcbnew.py
 
