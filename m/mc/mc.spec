@@ -3,8 +3,8 @@
 %define fullname MidnightCommander
 
 Name: mc
-Version: 4.8.25
-Release: alt3
+Version: 4.8.27
+Release: alt1
 
 # '-gitYYYYMMDD' or ''
 %define ver_date ''
@@ -45,6 +45,9 @@ Patch103: mc-4.8.24-alt-extfs-udar.patch
 # https://src.fedoraproject.org/rpms/mc/raw/rawhide/f/mc-python3.patch
 # https://github.com/MidnightCommander/mc/pull/149
 Patch104: mc-4.8.25-python3.patch
+
+# http://www.midnight-commander.org/ticket/4323
+Patch105: mc-4.8.27-4323_fix_segfault_on_change_panel_mode.patch
 
 Conflicts: %name-data
 Conflicts: %name-locales
@@ -105,15 +108,16 @@ needed for working additional components (some vfs for example).
 %patch102 -p1
 %patch103 -p1
 %patch104 -p1
+%patch105 -p1
 
 %build
-cat <<EOF > version.h
+cat <<EOF > mc-version.h
 #ifndef MC_CURRENT_VERSION
 #define MC_CURRENT_VERSION "@@VERSION@@"
 #endif
 EOF
 
-sed 's|@@VERSION@@|%version-%release%ver_date|' -i version.h
+sed 's|@@VERSION@@|%version-%release%ver_date|' -i mc-version.h
 
 #%%autoreconf
 ./autogen.sh
@@ -211,6 +215,9 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 %files full
 
 %changelog
+* Tue Dec 21 2021 Sergey Y. Afonin <asy@altlinux.org> 4.8.27-alt1
+- 4.8.27 (CVE-2021-36370; ALT #40217)
+
 * Tue May 25 2021 Slava Aseev <ptrnine@altlinux.org> 4.8.25-alt3
 - use python3 for python scripts (particularly for uc1541 and s3+)
 
