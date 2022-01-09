@@ -2,7 +2,7 @@
 
 Name: vim-plugin-fugitive
 Version: 3.6
-Release: alt1
+Release: alt2
 
 Summary: A Git wrapper for Vim
 
@@ -30,12 +30,16 @@ For more information, see `:help fugitive`.
 
 %install
 mkdir -p %buildroot%vim_runtime_dir
-cp -a autoload doc ftdetect plugin syntax %buildroot%vim_runtime_dir
+find . -mindepth 1 -maxdepth 1 -type d \
+	-exec cp -a -t %buildroot%vim_runtime_dir '{}' ';'
 
 %files
 %vim_runtime_dir/*/*
 
 %changelog
+* Sun Jan 09 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.6-alt2
+- Packed all needed files.
+
 * Sun Dec 12 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.6-alt1
 - Updated to v3.6.
 
