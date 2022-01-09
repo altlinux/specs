@@ -9,7 +9,7 @@
 %{?_enable_docs:%def_enable docbook_docs}
 
 Name: flatpak-builder
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 Epoch:1
 
@@ -31,7 +31,7 @@ Source: %name-%version.tar
 %define debugedit_ver 5.0
 %define libdw_ver 0.172
 
-Requires: flatpak >= %flatpak_ver
+Requires(pre): flatpak >= %flatpak_ver
 Requires: libostree >= %ostree_ver
 Requires: /usr/bin/bzip2
 Requires: /usr/bin/brz
@@ -76,7 +76,6 @@ See http://flatpak.org/ for more information.
 %configure \
     %{?_disable_docs:--disable-documentation --disable-docbook-docs} \
     %{?_enable_docbook_docs:--enable-docbook-docs} \
-    --with-dwarf-header=%_includedir/libdwarf \
     %{?_with_system_debugedit:--with-system-debugedit}
 %nil
 %make_build
@@ -92,6 +91,9 @@ See http://flatpak.org/ for more information.
 %{?_enable_docbook_docs:%doc %_docdir/%name}}
 
 %changelog
+* Sun Jan 09 2022 Yuri N. Sedunov <aris@altlinux.org> 1:1.2.1-alt1
+- 1.2.1
+
 * Mon Oct 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1:1.2.0-alt1
 - 1.2.0
 
