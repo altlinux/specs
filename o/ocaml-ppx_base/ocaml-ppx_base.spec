@@ -1,7 +1,7 @@
 %define  modulename ppx_base
 Name:    ocaml-%modulename
-Version: 0.14.0
-Release: alt3
+Version: 0.15.0
+Release: alt1
 
 Summary: Base set of ppx rewriters
 License: MIT
@@ -52,6 +52,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Jan 09 2022 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
+- 0.15.0
+
 * Sun Mar 21 2021 Anton Farygin <rider@altlinux.org> 0.14.0-alt3
 - specfile BR: cleanup
 
