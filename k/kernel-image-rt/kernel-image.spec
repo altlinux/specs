@@ -5,8 +5,8 @@
 %define kflavour		rt
 Name: kernel-image-%kflavour
 %define kernel_base_version	5.10
-%define kernel_sublevel		.87
-%define kernel_rt_release	rt59
+%define kernel_sublevel		.90
+%define kernel_rt_release	rt60
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -16,10 +16,6 @@ Release: alt1.%kernel_rt_release
 %define flavour		%( s='%name'; printf %%s "${s#kernel-image-}" )
 %define base_flavour	%( s='%flavour'; printf %%s "${s%%%%-*}" )
 %define sub_flavour	%( s='%flavour'; printf %%s "${s#*-}" )
-
-# Build options
-# You can change compiler version by editing this line:
-%define kgcc_version	%__gcc_version_base
 
 #Remove oss
 %def_disable oss
@@ -68,9 +64,8 @@ ExclusiveOS: Linux
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: bc
 BuildRequires: flex
-BuildRequires: gcc%kgcc_version
-BuildRequires: gcc%kgcc_version-c++
-BuildRequires: gcc%kgcc_version-plugin-devel
+BuildRequires: gcc
+BuildRequires: gcc-c++
 BuildRequires: kernel-source-%kernel_base_version = 1.0.0
 BuildRequires: kmod
 BuildRequires: libdb4-devel
@@ -123,8 +118,6 @@ If possible, try to use glibc-kernheaders instead of this package.
 %package -n kernel-headers-modules-%flavour
 Summary: Headers and other files needed for building kernel modules
 Group: Development/Kernel 
-Requires: gcc%kgcc_version
-Requires: libelf-devel
 AutoReqProv: nocpp
 
 %description -n kernel-headers-modules-%flavour
@@ -181,12 +174,11 @@ patch -p1 -s < sched-add-per-cpu-load-measurement.patch # CPU_IDLERUNTIME
 # fix -rt suffix
 rm -f localversion*
 
-# this file should be usable both with make and sh (for broken modules
+# Legacy: this file should be usable both with make and sh (for broken modules
 # which do not use the kernel makefile system)
-echo 'export GCC_VERSION=%kgcc_version' > gcc_version.inc
+echo '# This kernel compiled with GCC_VERSION=%__gcc_version_base' > gcc_version.inc
 
 subst 's/EXTRAVERSION[[:space:]]*=.*/EXTRAVERSION = %kernel_extra_version-%flavour-%krelease/g' Makefile
-subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := $(shell echo $${GCC_USE_CCACHE:+ccache}) gcc-%kgcc_version/g' Makefile
 
 # get rid of unwanted files resulting from patch fuzz
 find . -name "*.orig" -delete -or -name "*~" -delete
@@ -434,6 +426,11 @@ check-pesign-helper /boot/vmlinuz-%kversion-%flavour-%krelease
 %files checkinstall
 
 %changelog
+* Sun Jan 09 2022 Vitaly Chikunov <vt@altlinux.org> 5.10.90-alt1.rt60
+- Updated to v5.10.90-rt60 (2022-01-05).
+- spec: Disable GCC plugins and GCC version dependence. Remove dependence
+  on gcc and libelf-devel for kernel-headers-modules.
+
 * Fri Dec 24 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.87-alt1.rt59
 - Updated to v5.10.87-rt59 (2021-12-19).
 
