@@ -1,6 +1,6 @@
 # If you need to bootstrap this, turn this on.
 # Otherwise, you have a loop with libcxxabi
-%def_with bootstrap
+%def_without bootstrap
 
 %ifarch %arm
 %def_without clang
@@ -20,7 +20,7 @@
 
 Name: libcxx
 Version: 12.0.1
-Release: alt3
+Release: alt4
 
 Summary: C++ standard library targeting C++11
 
@@ -146,6 +146,9 @@ export LDFLAGS="-Wl,--build-id -stdlib=libc++ -lc++abi"
 %_libdir/libc++*.a
 
 %changelog
+* Sun Jan 09 2022 Nazarov Denis <nenderus@altlinux.org> 12.0.1-alt4
+- Build without bootstrap
+
 * Sun Jan 09 2022 Nazarov Denis <nenderus@altlinux.org> 12.0.1-alt3
 - Fix BR
 - Fix LDFLAGS for build with GCC

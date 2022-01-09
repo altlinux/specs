@@ -1,4 +1,4 @@
-%def_with bootstrap
+%def_without bootstrap
 
 %define optflags_lto -flto=thin
 %define so_ver 1
@@ -6,7 +6,7 @@
 
 Name: libcxxabi
 Version: 12.0.1
-Release: alt3
+Release: alt4
 
 Summary: Low level support for a standard C++ library
 
@@ -117,6 +117,9 @@ export LDFLAGS="-Wl,--build-id -stdlib=libc++"
 %_libdir/libc++abi.a
 
 %changelog
+* Sun Jan 09 2022 Nazarov Denis <nenderus@altlinux.org> 12.0.1-alt4
+- Build without bootstrap
+
 * Sun Jan 09 2022 Nazarov Denis <nenderus@altlinux.org> 12.0.1-alt3
 - Fix BR
 
