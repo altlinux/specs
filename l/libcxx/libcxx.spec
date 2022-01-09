@@ -20,7 +20,7 @@
 
 Name: libcxx
 Version: 12.0.1
-Release: alt2
+Release: alt3
 
 Summary: C++ standard library targeting C++11
 
@@ -43,13 +43,13 @@ BuildRequires: gcc-c++
 %endif
 
 BuildRequires: cmake
+# make cmake compiler test happy
+BuildRequires: libstdc++-devel
 BuildRequires: ninja-build
 BuildRequires: python3
 
 %if_with bootstrap
 %add_verify_elf_skiplist %_libdir/libc++.so.1.0
-# make cmake compiler test happy
-BuildRequires: libstdc++-devel
 %else
 BuildRequires: libc++-devel
 BuildRequires: libc++abi-devel
@@ -96,11 +96,12 @@ Obsoletes: %name-static <= 7.0.0-alt1
 
 %build
 export ALTWRAP_LLVM_VERSION=%llvm_ver
-
-%if_with bootstrap
 export LDFLAGS="-Wl,--build-id"
-%else
+
+%if_with clang
+%if_without bootstrap
 export LDFLAGS="-Wl,--build-id -stdlib=libc++ -lc++abi"
+%endif
 %endif
 
 %cmake \
@@ -145,6 +146,10 @@ export LDFLAGS="-Wl,--build-id -stdlib=libc++ -lc++abi"
 %_libdir/libc++*.a
 
 %changelog
+* Sun Jan 09 2022 Nazarov Denis <nenderus@altlinux.org> 12.0.1-alt3
+- Fix BR
+- Fix LDFLAGS for build with GCC
+
 * Sun Jan 09 2022 Nazarov Denis <nenderus@altlinux.org> 12.0.1-alt2
 - Set ALTWRAP_LLVM_VERSION to select correct LLVM version
 - Use LLVM Linker

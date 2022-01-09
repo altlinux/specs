@@ -6,7 +6,7 @@
 
 Name: libcxxabi
 Version: 12.0.1
-Release: alt2
+Release: alt3
 
 Summary: Low level support for a standard C++ library
 
@@ -25,14 +25,11 @@ Patch1: %name-remove-monorepo-requirement.patch
 BuildRequires: clang%llvm_ver
 BuildRequires: cmake
 BuildRequires: libc++-devel >= %version
+# make cmake compiler test happy
+BuildRequires: libstdc++-devel
 BuildRequires: llvm%llvm_ver-devel
 BuildRequires: ninja-build
 BuildRequires: python3
-
-%if_with bootstrap
-# make cmake compiler test happy
-BuildRequires: libstdc++-devel
-%endif
 
 %description
 libcxxabi provides low level support for a standard C++ library.
@@ -120,6 +117,9 @@ export LDFLAGS="-Wl,--build-id -stdlib=libc++"
 %_libdir/libc++abi.a
 
 %changelog
+* Sun Jan 09 2022 Nazarov Denis <nenderus@altlinux.org> 12.0.1-alt3
+- Fix BR
+
 * Sun Jan 09 2022 Nazarov Denis <nenderus@altlinux.org> 12.0.1-alt2
 - Set ALTWRAP_LLVM_VERSION to select correct LLVM version
 - Use LLVM Linker
