@@ -5,8 +5,8 @@
 %set_verify_elf_method strict
 
 Name: openquantumsafe-openssh
-Version: 8.6p1.202108
-Release: alt3
+Version: 8.6p1.202201
+Release: alt1
 
 Summary: OQS-OpenSSH is a fork of OpenSSH that adds quantum-safe algorithms
 License: SSH-OpenSSH and ALT-Public-Domain and BSD-3-Clause and Beerware
@@ -34,7 +34,7 @@ Conflicts: openssh
 Requires: %name-clients = %EVR
 Requires: %name-server  = %EVR
 
-BuildRequires: liboqs-devel
+BuildRequires: liboqs-devel >= 0.7.1
 BuildRequires: libssl-devel
 BuildRequires: pam_userpass-devel
 %{?_with_zlib:BuildRequires: zlib-devel}
@@ -225,7 +225,7 @@ install -pm644 CREDITS LICENCE README* PROTOCOL* alt/[CR]* alt/faq.html \
 ./ssh -V
 # Query all available algorithms
 for q in `./ssh -Q help`; do
-	./ssh -Q $q | sed "s/^/ $q : /"
+	./ssh -Q $q | sed "s/^/ $q : /" >&2
 done | sort -V
 
 %pre clients
@@ -314,6 +314,9 @@ fi
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Sun Jan 09 2022 Vitaly Chikunov <vt@altlinux.org> 8.6p1.202201-alt1
+- Updated to OQS-OpenSSH-snapshot-2022-01 (2022-01-06).
+
 * Tue Sep 28 2021 Vitaly Chikunov <vt@altlinux.org> 8.6p1.202108-alt3
 - Backported upstream fix for CVE-2021-41617 (AuthorizedKeysCommand).
 
