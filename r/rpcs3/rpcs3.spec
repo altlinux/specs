@@ -1,6 +1,6 @@
 %define optflags_lto -flto=thin
 
-%define clang_version 12
+%define llvm_version 12.0
 
 %define git_ver 13138
 %define git_commit 61d9852632e5b417acf47299532c9f80f54d0fd5
@@ -16,7 +16,7 @@
 
 Name: rpcs3
 Version: 0.0.20
-Release: alt1
+Release: alt2
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -50,9 +50,12 @@ Patch0: %name-alt-git.patch
 Patch1: %name-alt-jit-events.patch
 
 BuildRequires: /proc
-BuildRequires: clang%clang_version.0
+BuildRequires: clang%llvm_version
 BuildRequires: cmake >= 3.16.9
+BuildRequires: doxygen
 BuildRequires: git-core
+BuildRequires: graphviz
+BuildRequires: ninja-build
 BuildRequires: pkgconfig(FAudio)
 BuildRequires: pkgconfig(Qt5) >= 5.15.2
 BuildRequires: pkgconfig(Qt5Multimedia) >= 5.15.2
@@ -77,7 +80,7 @@ BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: pkgconfig(wayland-server)
 BuildRequires: pkgconfig(wolfssl)
-BuildRequires: llvm%clang_version.0
+BuildRequires: llvm%llvm_version
 BuildRequires: ocaml-ctypes
 BuildRequires: ocaml-findlib
 BuildRequires: python3-module-yaml
@@ -118,16 +121,15 @@ echo "// This is a generated file.
 " > %name/git-version.h
 
 %build
-export CC="clang-%clang_version"
-export CXX="clang++-%clang_version"
-export LINKER="lld-%clang_version"
-export AR="llvm-ar-%clang_version"
-export RANLIB="llvm-ranlib-%clang_version"
+export ALTWRAP_LLVM_VERSION=%llvm_version
 
 %cmake \
-	-DCMAKE_LINKER:STRING="$LINKER" \
-	-DCMAKE_AR:STRING="$AR" \
-	-DCMAKE_RANLIB:STRING="$RANLIB" \
+	-DCMAKE_C_COMPILER:STRING=clang \
+	-DCMAKE_CXX_COMPILER:STRING=clang++ \
+	-DCMAKE_RANLIB:PATH=%_bindir/llvm-ranlib \
+	-DCMAKE_AR:PATH=%_bindir/llvm-ar \
+	-DCMAKE_NM:PATH=%_bindir/llvm-nm \
+	-DCMAKE_EXE_LINKER_FLAGS:STRING="-fuse-ld=lld" \
 	-DUSE_NATIVE_INSTRUCTIONS:BOOL=FALSE \
 	-DUSE_SYSTEM_FFMPEG:BOOL=TRUE \
 	-DUSE_SYSTEM_LIBPNG:BOOL=TRUE \
@@ -138,8 +140,9 @@ export RANLIB="llvm-ranlib-%clang_version"
 	-DUSE_SYSTEM_XXHASH:BOOL=TRUE \
 	-DUSE_SYSTEM_WOLFSSL:BOOL=TRUE \
 	-DUSE_SYSTEM_FAUDIO:BOOL=TRUE \
-	-DLLVM_USE_LINKER:STRING="$LINKER" \
+	-DLLVM_ENABLE_LLD:BOOL=TRUE \
 	-DPython3_EXECUTABLE="%__python3" \
+	-GNinja \
 	-Wno-dev
 
 %cmake_build
@@ -157,6 +160,11 @@ export RANLIB="llvm-ranlib-%clang_version"
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Mon Jan 10 2022 Nazarov Denis <nenderus@altlinux.org> 0.0.20-alt2
+- Set ALTWRAP_LLVM_VERSION to select correct LLVM version
+- Fix BR
+- Build with ninja
+
 * Mon Jan 03 2022 Nazarov Denis <nenderus@altlinux.org> 0.0.20-alt1
 - Version 0.0.20
 
