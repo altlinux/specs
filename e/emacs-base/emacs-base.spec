@@ -2,12 +2,12 @@
 # $Id: emacs-base.spec,v 1.10 2006/05/03 08:50:57 eugene Exp $
 
 Name: emacs-base
-Version: 0.0.9
+Version: 0.0.10
 Release: alt1
 
 Group: Editors
 Summary: Common site start scripts for GNU Emacs
-License: GPL
+License: GPLv2+
 
 Packager: Emacs Maintainers Team <emacs@packages.altlinux.org>
 
@@ -82,6 +82,9 @@ mkdir -p %buildroot%_datadir/emacs/etc
 # 1. Добавить check-shadows?
 
 %changelog
+* Sun Jan 09 2022 Igor Vlasenko <viy@altlinux.org> 0.0.10-alt1
+- initial support of /usr/share/emacs/site-lisp/site-start.d
+
 * Mon Dec 24 2018 Terechkov Evgenii <evg@altlinux.org> 0.0.9-alt1
 - Fix to ALT#35809
 
