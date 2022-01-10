@@ -7,19 +7,20 @@
 %define nowarn -Wno-implicit-fallthrough -Wno-format-truncation -Wno-format-overflow
 
 Name: mdadm
-Version: 4.1
-Release: alt4
+Version: 4.2
+Release: alt1
 
 Summary: A tool for managing Soft RAID under Linux
 License: GPLv2+
 Group: System/Configuration/Hardware
-Url: http://neil.brown.name/blog/mdadm
+Url: https://raid.wiki.kernel.org/index.php/Linux_Raid
 
-# http://git.altlinux.org/gears/m/mdadm.git
-Source: %name-%version-%release.tar
+Vcs: https://git.kernel.org/pub/scm/utils/mdadm/mdadm.git
+Source: %name-%version.tar
+Patch: %name-%version.patch
 
-BuildRequires: binutils-devel
-%{?_enable_cluster:BuildRequires: libcorosync2-devel libdlm-devel}
+BuildRequires: binutils-devel libudev-devel
+%{?_enable_cluster:BuildRequires: libcorosync-devel libdlm-devel}
 
 # due to /lib/udev/rules.d/64-md-raid.rules
 Conflicts: udev < 151
@@ -52,7 +53,8 @@ BuildArch: noarch
 %summary
 
 %prep
-%setup -n %name-%version-%release
+%setup
+%patch -p1
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -66,13 +68,15 @@ install -pD -m755 alt/mdadm.init %buildroot%_initdir/mdadm
 install -pD -m755 misc/syslog-events %buildroot%_sbindir/mdadm-syslog-events
 install -pD -m600 alt/mdadm.conf %buildroot%_sysconfdir/mdadm.conf.sample
 touch %buildroot%_sysconfdir/mdadm.conf
-# install -pD -m644 alt/mdadm.service %buildroot%_unitdir/mdadm.service
+# install -pD -m644 alt/mdadm.service %%buildroot%%_unitdir/mdadm.service
 ln -r -s %buildroot%_unitdir/mdmonitor.service %buildroot%_unitdir/mdadm.service
 
 install -pD -m755 alt/checkarray %buildroot%_datadir/mdadm/checkarray
 install -pD -m644 alt/mdadm.sysconfig %buildroot%_sysconfdir/sysconfig/mdadm
 install -pD -m644 alt/mdadm.crond %buildroot%_sysconfdir/cron.d/mdadm
 
+# Cleanup (need adapt for mdadm_env.sh)
+rm -f %buildroot%_unitdir/{mdmonitor-oneshot,mdcheck_continue,mdcheck_start}.{service,timer}
 
 %post -f alt/raidtabtomdadm.sh
 %post_service mdadm
@@ -107,6 +111,9 @@ install -pD -m644 alt/mdadm.crond %buildroot%_sysconfdir/cron.d/mdadm
 %doc TODO ChangeLog.* mdadm.conf-example ANNOUNCE-%version alt/README*
 
 %changelog
+* Fri Jan 07 2022 Alexey Shabalin <shaba@altlinux.org> 4.2-alt1
+- 4.2
+
 * Mon Oct 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1-alt4
 - Fixed build with gcc-11
 
