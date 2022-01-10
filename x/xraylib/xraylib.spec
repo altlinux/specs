@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: xraylib
-Version: 4.1.0
-Release: alt2
+Version: 4.1.1
+Release: alt1
 Summary: X-ray matter interaction cross sections for X-ray fluorescence applications
 License: BSD-3-Clause
 Group: Sciences/Physics
@@ -64,6 +66,8 @@ find . -name '*.py' | xargs sed -i \
 	%nil
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 export PYTHON=python3
 export PYTHON_VERSION=%_python3_version
 export CYTHON=cython3
@@ -105,6 +109,9 @@ rm -f %buildroot%python3_sitelibdir/*.la
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Mon Jan 10 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.1-alt1
+- Updated to upstream version 4.1.1.
+
 * Fri Aug 13 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.1.0-alt2
 - Added workaround for ICE in fortran compiler for Elbrus.
 
