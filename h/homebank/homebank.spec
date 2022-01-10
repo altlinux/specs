@@ -1,12 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: homebank
-Version: 5.5.3
+Version: 5.5.4
 Release: alt1
 
 # Note: _unstable suffix sometimes appears in some versions of the tarball.
 %define _version %{version}
-#_unstable
 
 Summary: Free easy personal accounting for all!
 License: GPL-2.0-or-later
@@ -15,16 +14,16 @@ Url: https://%name.free.fr/index.php
 
 Source: http://%name.free.fr/public/%name-%_version.tar.gz
 
-BuildRequires(pre): rpm-build-licenses
+Requires: %name-help = %EVR
 
+BuildRequires(pre): rpm-build-licenses
 # From configure.ac
 BuildRequires: intltool
 BuildRequires: glib2-devel >= 2.40
 BuildRequires: libgtk+3-devel >= 3.16
 BuildRequires: libsoup-devel >= 2.26
 BuildRequires: libofx-devel
-
-BuildRequires: perl-XML-Parser shared-mime-info desktop-file-utils libappstream-glib-devel
+BuildRequires: perl-XML-Parser desktop-file-utils libappstream-glib-devel
 
 %description
 HomeBank is the free software you have always wanted to manage your
@@ -95,6 +94,9 @@ read and rather useful for a first time user.
 
 
 %changelog
+* Mon Jan 10 2022 Yuri N. Sedunov <aris@altlinux.org> 5.5.4-alt1
+- 5.5.4
+
 * Sun Aug 08 2021 Yuri N. Sedunov <aris@altlinux.org> 5.5.3-alt1
 - 5.5.3
 
