@@ -1,21 +1,15 @@
-%set_verify_elf_method textrel=relaxed
-
-Name: ocaml-fileutils
-Version: 0.5.3
-Release: alt4
+%define ocamlmod fileutils
+Name: ocaml-%ocamlmod
+Version: 0.6.3
+Release: alt1
 Summary: OCaml library for common file and filename operations
 Group: Development/ML
-
-License: LGPLv2 with exceptions
+License: LGPLv2.1 with OCaml-LGPL-linking-exception
+VCS: https://github.com/gildor478/ocaml-fileutils
 Url: https://forge.ocamlcore.org/projects/ocaml-fileutils/
-Packager: Lenar Shakirov <snejok@altlinux.ru>
-
 Source: %name-%version.tar
 
-BuildRequires: ocaml
-BuildRequires: ocaml-findlib
-BuildRequires: ocaml-ocamldoc
-BuildRequires: ocaml-ocamlbuild
+BuildRequires: ocaml dune ocaml-ounit-devel
 
 %description
 This library is intended to provide a basic interface to the most
@@ -30,7 +24,7 @@ abstract filenames.
 %package devel
 Summary: Development files for %name
 Group: Development/ML
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains libraries and signature files for
@@ -40,39 +34,26 @@ developing applications that use %name.
 %setup
 
 %build
-ocaml setup.ml -configure --prefix %prefix --destdir %buildroot
-make
+sed -i '/stdlib-shims/d' *.opam
+sed -i 's,stdlib-shims,,' src/lib/fileutils/dune test/dune
+sed -i 's,oUnit,ounit2,' test/dune
+%dune_build -p %ocamlmod
 
 %install
-export DESTDIR=%buildroot
-export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
-mkdir -p $OCAMLFIND_DESTDIR $OCAMLFIND_DESTDIR/stublibs
-
-# Set htmldir to current directory, then copy the docs (in api/)
-# as a %%doc rule.
-make htmldir=. install
+%dune_install %ocamlmod
 
 %check
-make test
+%dune_check
 
-%files
-%doc COPYING.txt
-%_libdir/ocaml/fileutils
-%exclude %_libdir/ocaml/fileutils/*.a
-%exclude %_libdir/ocaml/fileutils/*.cmx
-%exclude %_libdir/ocaml/fileutils/*.cmxa
-%exclude %_libdir/ocaml/fileutils/*.ml
-%exclude %_libdir/ocaml/fileutils/*.mli
+%files -f ocaml-files.runtime
 
-%files devel
-%doc COPYING.txt AUTHORS.txt CHANGELOG.txt README.txt TODO.txt
-%_libdir/ocaml/fileutils/*.a
-%_libdir/ocaml/fileutils/*.cmx
-%_libdir/ocaml/fileutils/*.cmxa
-%_libdir/ocaml/fileutils/*.ml
-%_libdir/ocaml/fileutils/*.mli
+%files devel -f ocaml-files.devel
+%doc LICENSE.txt CHANGES.md README.md
 
 %changelog
+* Mon Jan 10 2022 Anton Farygin <rider@altlinux.ru> 0.6.3-alt1
+- 0.5.3 -> 0.6.3
+
 * Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 0.5.3-alt4
 - rebuilt with ocaml-4.08
 
