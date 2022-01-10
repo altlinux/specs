@@ -3,7 +3,7 @@
 %def_enable gepub
 
 Name: tumbler
-Version: 4.16.0
+Version: 4.17.0
 Release: alt1
 
 Summary: A thumbnail D-Bus service
@@ -20,6 +20,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libxfce4util-devel >= 4.17.1
 BuildRequires: gtk-doc intltool libfreetype-devel libgio-devel libgtk+2-devel libjpeg-devel libpng-devel
 BuildRequires: libpoppler-glib-devel libgsf-devel libcurl-devel
 %{?!_with_bootstrap:BuildRequires: libopenraw-gnome-devel}
@@ -72,11 +73,12 @@ Development files and headers for %name
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS NEWS TODO
+%doc AUTHORS NEWS
 %_sysconfdir/xdg/%name
 %_prefix/libexec/%name-1
 %_libdir/%name-1
 %_datadir/dbus-1/services/*.service
+%_user_unitdir/*.service
 %_iconsdir/hicolor/*/apps/*
 
 %exclude %_libdir/%name-1/plugins/*.la
@@ -91,6 +93,10 @@ Development files and headers for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jan 10 2022 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt1
+- tumblerd.service: Fixed path.
+- Updated to 4.17.0.
+
 * Wed Dec 23 2020 Mikhail Efremov <sem@altlinux.org> 4.16.0-alt1
 - Updated to 4.16.0.
 
