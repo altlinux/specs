@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nheko
-Version: 0.8.2
+Version: 0.9.1
 Release: alt1
 
 Summary: Desktop client (QT) for the Matrix protocol
 
 Group: Development/Other
 License: GPLv3
-Url: https://github.com/Nheko-Reborn/nheko.git
+Url: https://nheko.im/nheko-reborn/nheko
 
 Source: %name-%version.tar
 
@@ -27,6 +27,7 @@ BuildRequires: libmount-devel
 BuildRequires: libblkid-devel
 BuildRequires: libuuid-devel
 BuildRequires: libselinux-devel
+BuildRequires: libxcbutil-icccm-devel
 
 # Additional (runtime) dependencies
 Requires: qt5-graphicaleffects qt5-quickcontrols2 qt5-multimedia
@@ -40,13 +41,18 @@ and less like an IRC client.
 %setup
 
 %build
-%cmake -DUSE_BUNDLED_BOOST=OFF  \
-       -DUSE_BUNDLED_SPDLOG=OFF \
-       -DUSE_BUNDLED_OLM=OFF    \
-       -DUSE_BUNDLED_CMARK=OFF  \
-       -DUSE_BUNDLED_LMDBXX=OFF \
-       -DUSE_BUNDLED_TWEENY=OFF \
-       -DUSE_BUNDLED_MATRIX_CLIENT=OFF \
+%cmake -DUSE_BUNDLED_SPDLOG=OFF    \
+       -DUSE_BUNDLED_OLM=OFF       \
+       -DUSE_BUNDLED_GTEST=OFF     \
+       -DUSE_BUNDLED_CMARK=OFF     \
+       -DUSE_BUNDLED_JSON=OFF      \
+       -DUSE_BUNDLED_OPENSSL=OFF   \
+       -DUSE_BUNDLED_MTXCLIENT=OFF \
+       -DUSE_BUNDLED_LMDB=OFF      \
+       -DUSE_BUNDLED_LMDBXX=OFF    \
+       -DUSE_BUNDLED_COEURL=OFF    \
+       -DUSE_BUNDLED_LIBCURL=OFF   \
+       -DUSE_BUNDLED_LIBEVENT=OFF  \
        -DCMAKE_BUILD_TYPE=Release
 
 # Adjust nprocs for git.alt
@@ -65,6 +71,10 @@ and less like an IRC client.
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Mon Jan 10 2022 Paul Wolneykien <manowar@altlinux.org> 0.9.1-alt1
+- Switch to https://nheko.im/nheko-reborn/nheko.git.
+- Updated to v0.9.1.
+
 * Tue Sep 14 2021 Paul Wolneykien <manowar@altlinux.org> 0.8.2-alt1
 - Updated to v0.8.2.
 

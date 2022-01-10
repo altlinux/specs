@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libmtxclient
-Version: 0.5.1
+Version: 0.6.1
 Release: alt1
 
 Summary: Client API library for the Matrix protocol, built on top of Boost.Asio
 
 Group: Development/Other
 License: MIT
-Url: https://github.com/Nheko-Reborn/mtxclient
+Url: https://nheko.im/nheko-reborn/mtxclient.git
 
 Source: %name-%version.tar
 
@@ -16,6 +16,7 @@ BuildRequires: cmake gcc-c++ libstdc++-devel-static
 BuildRequires: boost-asio-devel nlohmann-json-devel boost-signals-devel
 BuildRequires: libgtest-devel libssl-devel zlib-devel
 BuildRequires: libolm-devel libsodium-devel libspdlog-devel
+BuildRequires: libevent-devel libcurl-devel libcoeurl-devel
 
 %description
 Client API library for the Matrix protocol, built on top of Boost.Asio.
@@ -38,10 +39,13 @@ library.
 # Undefined references from_json/to_json:
 %define optflags_lto %nil
 
-%cmake -DUSE_BUNDLED_BOOST=OFF  \
-       -DUSE_BUNDLED_SPDLOG=OFF \
-       -DUSE_BUNDLED_OLM=OFF    \
-       -DUSE_BUNDLED_GTEST=OFF  \
+%cmake -DUSE_BUNDLED_BOOST=OFF   \
+       -DUSE_BUNDLED_SPDLOG=OFF  \
+       -DUSE_BUNDLED_OLM=OFF     \
+       -DUSE_BUNDLED_GTEST=OFF   \
+       -DUSE_BUNDLED_JSON=OFF    \
+       -DUSE_BUNDLED_OPENSSL=OFF \
+       -DUSE_BUNDLED_COEURL=OFF  \
        -DCMAKE_BUILD_TYPE=Release
 
 %cmake_build
@@ -67,6 +71,15 @@ library.
 %_libdir/*.so
 
 %changelog
+* Mon Jan 10 2022 Paul Wolneykien <manowar@altlinux.org> 0.6.1-alt1
+- Use the external 'coeurl' lib.
+- Switch to https://nheko.im/nheko-reborn/mtxclient.git.
+- Explicitly use external JSON and OpenSSL libs.
+- Version 0.6.1.
+
+* Thu Nov 18 2021 Paul Wolneykien <manowar@altlinux.org> 0.6.0-alt1
+- new version 0.6.0
+
 * Tue Sep 14 2021 Paul Wolneykien <manowar@altlinux.org> 0.5.1-alt1
 - Updated to v0.5.1.
 
