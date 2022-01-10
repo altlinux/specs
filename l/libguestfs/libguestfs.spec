@@ -19,7 +19,7 @@
 
 Summary: Library for accessing and modifying virtual machine disk images
 Name: libguestfs
-Version: 1.46.1
+Version: 1.46.2
 Release: alt1
 License: LGPLv2+
 Group: System/Libraries
@@ -461,6 +461,9 @@ rm -f %buildroot%_man1dir/guestfs-release-notes*
 %endif #erlang
 
 %changelog
+* Mon Jan 10 2022 Anton Farygin <rider@altlinux.ru> 1.46.2-alt1
+- 1.46.1 -> 1.46.2
+
 * Thu Dec 16 2021 Anton Farygin <rider@altlinux.ru> 1.46.1-alt1
 - 1.46.0 -> 1.46.1
 - built with enabled librpm, yara and sleuthkit support
