@@ -1,4 +1,4 @@
-%define kernel_base_version 5.15
+%define kernel_base_version 5.16
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
@@ -41,19 +41,15 @@ Source1: cyclades.h
 
 Patch1: 0001-uapi-fix-linux-sysctl.h-userspace-compilation-errors.patch
 Patch2: 0002-uapi-move-struct-reiserfs_security_handle-out-from-l.patch
-Patch3: 0003-uapi-fix-linux-nfc.h-userspace-compilation-errors.patch
-Patch4: 0004-uapi-fix-linux-vm_sockets.h-userspace-compilation-er.patch
-Patch5: 0005-uapi-fix-linux-sctp.h-userspace-compilation-errors.patch
-Patch6: 0006-uapi-fix-asm-shmbuf.h-userspace-compilation-errors.patch
-Patch7: 0007-uapi-fix-another-asm-shmbuf.h-userspace-compilation-.patch
-Patch8: 0008-uapi-fix-asm-signal.h-userspace-compilation-errors.patch
-Patch9: 0009-uapi-introduce-__kernel_uapi_size_t.patch
-Patch10: 0010-x86-uapi-fix-asm-signal.h-userspace-compilation-erro.patch
-Patch11: 0011-uapi-fix-linux-kexec.h-userspace-compilation-errors.patch
-Patch12: 0012-uapi-fix-linux-omapfb.h-userspace-compilation-error.patch
-Patch13: 0013-uapi-fix-linux-fsmap.h-userspace-compilation-error.patch
-Patch14: 0014-uapi-fix-linux-usb-audio.h-userspace-compilation-err.patch
-Patch15: 0015-uapi-fix-linux-sysctl.h-Obsolete-types-detected-warn.patch
+Patch3: 0003-uapi-fix-linux-vm_sockets.h-userspace-compilation-er.patch
+Patch4: 0004-uapi-fix-linux-sctp.h-userspace-compilation-errors.patch
+Patch5: 0005-uapi-fix-asm-shmbuf.h-userspace-compilation-errors.patch
+Patch6: 0006-uapi-fix-asm-signal.h-userspace-compilation-errors.patch
+Patch7: 0007-uapi-fix-linux-kexec.h-userspace-compilation-errors.patch
+Patch8: 0008-uapi-fix-linux-omapfb.h-userspace-compilation-error.patch
+Patch9: 0009-uapi-fix-linux-fsmap.h-userspace-compilation-error.patch
+Patch10: 0010-uapi-fix-linux-usb-audio.h-userspace-compilation-err.patch
+Patch11: 0011-uapi-fix-linux-sysctl.h-Obsolete-types-detected-warn.patch
 
 BuildRequires: rpm-build-kernel rsync
 BuildRequires: %kernel_source = 1.0.0
@@ -169,23 +165,7 @@ This package pulls in all other %name-* packages.
 %setup -cT
 tar -xf %kernel_src/%kernel_source.tar
 cd %kernel_source
-#%%patch -p1
-
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
+%autopatch -p1
 
 # No exceptions, please!
 sed -i 's/^no-export-headers/#&/' include/uapi/Kbuild
@@ -322,6 +302,9 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Sun Jan 09 2022 Dmitry V. Levin <ldv@altlinux.org> 5.16-alt1
+- v5.15 -> v5.16.
+
 * Sun Oct 31 2021 Dmitry V. Levin <ldv@altlinux.org> 5.15-alt1
 - v5.14 -> v5.15.
 
