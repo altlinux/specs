@@ -1,9 +1,11 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Summary:   Package management service
 Name:      packagekit
 Version:   1.2.4
-Release:   alt3
+Release:   alt4
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -285,6 +287,9 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Mon Jan 10 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.4-alt4
+- Packagekit service must wait for network connection (Closes: #41633).
+
 * Thu Dec 02 2021 Oleg Solovyov <mcpain@altlinux.org> 1.2.4-alt3
 - Show actual update percentage during offline update
 
