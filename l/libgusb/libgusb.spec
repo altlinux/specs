@@ -8,22 +8,24 @@
 %def_disable check
 
 Name: libgusb
-Version: 0.3.9
+Version: 0.3.10
 Release: alt1
 
 Summary: GLib wrapper around libusb1
 Group: System/Libraries
-License: LGPL-2.1
+License: LGPL-2.1+
 Url: https://gitorious.org/gusb/
 
 Vcs: https://github.com/hughsie/libgusb.git
 Source: http://people.freedesktop.org/~hughsient/releases/%name-%version.tar.xz
 
-BuildRequires(pre): meson
-BuildRequires: libgio-devel >= 2.44 libusb-devel >= 1.0.22
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson libgio-devel >= 2.44 libusb-devel >= 1.0.22
 BuildRequires: gobject-introspection-devel
 %{?_enable_docs:BuildRequires: gtk-doc}
-%{?_enable_vala:BuildRequires: vala-tools}
+%{?_enable_vala:
+BuildRequires(pre): rpm-build-vala
+BuildRequires: vala-tools}
 
 %description
 GUsb is a GObject wrapper for libusb that makes it easy to do
@@ -111,6 +113,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon Jan 10 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.10-alt1
+- 0.3.10
+
 * Wed Dec 08 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.9-alt1
 - 0.3.9
 
