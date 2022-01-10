@@ -2,7 +2,7 @@
 
 Name: tesseract
 Version: 4.1.3
-Release: alt1
+Release: alt1.1
 
 Summary: Tesseract Open Source OCR Engine
 Summary(ru_RU.UTF-8): Движок распознавания текста с открытым исходным кодом
@@ -78,6 +78,11 @@ models.
 %prep
 %setup
 %patch -p1
+%ifarch %e2k
+# LCC autovectorization perform better than these brief SIMD snippets
+sed -i "/CHECK_COMPILE_FLAG/{N;/_OPT/s/=true/=false/}" configure.ac
+%add_optflags -mno-sse
+%endif
 
 %build
 %autoreconf
@@ -113,6 +118,9 @@ rm -I %buildroot%_libdir/*.la
 %doc doc/html/*
 
 %changelog
+* Mon Jan 10 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.1.3-alt1.1
+- fixed build for Elbrus
+
 * Fri Dec 31 2021 Evgeny Chuck <koi@altlinux.org> 4.1.3-alt1
 - new version (4.1.3) with rpmgs script
 - Correct license installed
