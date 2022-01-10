@@ -10,8 +10,8 @@
 %define distro_name Regular
 
 Name: branding-%flavour
-Version: 20201124
-Release: alt3
+Version: 20220110
+Release: alt1
 
 Url: http://en.altlinux.org
 
@@ -91,7 +91,7 @@ Obsoletes: branding-altlinux-%theme-browser-qt
 
 %branding_add_conflicts %flavour alterator
 Obsoletes: design-alterator-server design-alterator-desktop design-alterator-browser-desktop design-alterator-browser-server
-Requires: alternatives >= 0.2 alterator
+Requires(post,preun): alternatives >= 0.2 alterator
 
 %description alterator
 Design for QT and web alterator for %Brand %Theme
@@ -105,7 +105,7 @@ BuildArch: noarch
 Provides: design-graphics-%theme branding-alt-%theme-graphics
 Provides: design-graphics = %design_graphics_abi_major.%design_graphics_abi_minor.%design_graphics_abi_bugfix
 Obsoletes: branding-altlinux-%theme-graphics design-graphics-%theme
-Requires: alternatives >= 0.2
+Requires(post,preun): alternatives >= 0.2
 %branding_add_conflicts %flavour graphics
 Conflicts: design-graphics-default
 
@@ -211,13 +211,9 @@ popd
 install -d %buildroot//etc/alternatives/packages.d
 cat >%buildroot/etc/alternatives/packages.d/%name-graphics <<__EOF__
 %_datadir/artworks	%_datadir/design/%theme 11	
-%_datadir/design-current	%_datadir/design/%theme	10
-%_datadir/design/current	%_datadir/design/%theme	10
+%_datadir/design-current	%_datadir/design/%theme	11
+%_datadir/design/current	%_datadir/design/%theme	11
 __EOF__
-
-# bootsplash
-mkdir -p %buildroot%_pixmapsdir
-cp -a images/system-logo.png %buildroot%_pixmapsdir/
 
 #release
 install -pD -m644 /dev/null %buildroot%_sysconfdir/buildreqs/packages/ignore.d/%name-release
@@ -260,17 +256,8 @@ popd
 #bootloader
 %pre bootloader
 [ -s /usr/share/gfxboot/%theme ] && rm -fr /usr/share/gfxboot/%theme ||:
-[ -s /boot/splash/%theme ] && rm -fr /boot/splash/%theme ||:
 
 %post bootloader
-%ifarch %ix86 x86_64
-ln -snf %theme/message /boot/splash/message
-. /etc/sysconfig/i18n
-lang=$(echo $LANG | cut -d. -f 1)
-cd boot/splash/%theme/
-echo $lang > lang
-[ "$lang" = "C" ] || echo lang | cpio -o --append -F message
-%endif #ifarch
 . shell-config
 shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
@@ -279,20 +266,12 @@ shell_config_set /etc/sysconfig/grub2 GRUB_BACKGROUND ''
 # deprecated
 shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER ''
 
-%ifarch %ix86 x86_64
-%preun bootloader
-[ $1 = 0 ] || exit 0
-[ "`readlink /boot/splash/message`" != "%theme/message" ] ||
-    rm -f /boot/splash/message
-%endif #ifarch
-
 %post indexhtml
 %_sbindir/indexhtml-update
 
 %files bootloader
 %ifarch %ix86 x86_64
 %_datadir/gfxboot/%theme
-/boot/splash/%theme
 %endif #ifarch
 /boot/grub/themes/%theme
 
@@ -311,7 +290,6 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 
 %files bootsplash
 %_datadir/plymouth/themes/%theme/*
-%_pixmapsdir/system-logo.png
 
 %files release
 %_sysconfdir/*-release
@@ -337,6 +315,14 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/autostart/*
 
 %changelog
+* Mon Jan 10 2022 Anton Midyukov <antohami@altlinux.org> 20220110-alt1
+- drop old bootsplash support
+- fix duplicate provides
+- fix Requires tag for alternatives
+- do not use fetch_color
+- do not pack system-logo to %_pixmapsdir
+- new bootsplash theme (based on Kworkstation)
+
 * Wed Mar 10 2021 Anton Midyukov <antohami@altlinux.org> 20201124-alt3
 - Fix missing conflicts
 
