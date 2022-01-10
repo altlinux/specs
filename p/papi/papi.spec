@@ -1,12 +1,17 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+# appio.c directly calls non-LFS functions.
+%set_verify_elf_method strict,lfs=relaxed
 %define optflags_lto %nil
+%def_without doc
 
 Name: papi
 Version: 6.0.0
-Release: alt5
+Release: alt6
 
 Summary: Performance Application Programming Interface
 
-License: BSD-like
+License: BSD-3-Clause
 Group: Development/Tools
 Url: http://icl.cs.utk.edu/papi/
 
@@ -17,6 +22,9 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 Patch1: papi-6.0.0-alt-fix-mips-warning.patch
+Patch4: papi-config.patch
+Patch5: papi-nostatic.patch
+Patch6: papi-init_thread.patch
 Patch2000: papi-e2k.patch
 
 Requires: lib%name = %EVR
@@ -24,7 +32,11 @@ Requires: lib%name = %EVR
 BuildRequires: /proc
 BuildRequires: rpm-build-python3
 BuildRequires: libncurses-devel gcc-fortran libsensors3-devel libgomp-devel
-BuildRequires: libltdl-devel doxygen graphviz
+BuildRequires: libltdl-devel doxygen
+%if_with doc
+BuildRequires: graphviz
+%endif
+BuildRequires: libpfm-devel
 
 BuildRequires: chrpath
 
@@ -76,12 +88,16 @@ This package contains documentation for PAPI.
 %setup
 
 %patch1 -p2
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 %ifarch %e2k
 %patch2000 -p2
 sed -ri "s|PAPILIB = (.*)/@LINKLIB@|& \\1/libpfm4/lib/libpfm.so.4|" \
 	src/components/Makefile_comp_tests.target.in \
 	src/{ctests,ftests,utils,validation_tests}/Makefile.target.in
 %endif
+rm -rf src/libpfm*
 
 #rm -fR src/perfctr-*
 #cp -f src/Rules.pfm src/Rules.perfctr
@@ -93,23 +109,25 @@ sed -ri "s|PAPILIB = (.*)/@LINKLIB@|& \\1/libpfm4/lib/libpfm.so.4|" \
 cd src
 
 # TODO: fix build with static-lib=no
-%add_optflags %optflags_shared
+%add_optflags %optflags_shared %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
 	--with-ffsll \
-	--with-static-lib=yes \
+	--with-static-lib=no \
 	--with-shlib \
 	--with-shared-lib=yes \
 	--with-shlib-tools=yes \
 	--with-virtualtimer=clock_thread_cputime_id \
 	--with-perf-events \
-	--with-libpfm4 \
+	--with-pfm-incdir=%_includedir --with-pfm-libdir=%_libdir \
 	--with-components="appio coretemp lmsensors mx net rapl stealtime"
 #cp -f Makefile.inc.bak Makefile.inc
 #make libpapi.a
-LD_LIBRARY_PATH=$(pwd)/libpfm4/lib %make_build
-
-%make -C ../doc html man
+%make_build
+%if_with doc
+%make -C ../doc html
+%endif
+%make -C ../doc man
 
 %install
 cd src
@@ -121,13 +139,47 @@ cd src
 chrpath --delete %buildroot%_libdir/*.so*
 rm -rf %buildroot%_libdir/*.a
 
+%if_with doc
 install -d %buildroot%_docdir/%name
 cp -fR ../doc/html/* %buildroot%_docdir/%name/
+%endif
 
 #ln -s libpapi.so %buildroot%_libdir/libpapi64.so
 #ln -s libpfm.so %buildroot%_libdir/libpfm64.so
 
 rm -f %buildroot%_libdir/*.a
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir PATH=%buildroot%_bindir:$PATH
+papi_version
+papi_component_avail
+cd src
+ctests/version
+set +x
+# Only selected fast and reliable ctests.
+for i in \
+	attach2 attach3 attach_cpu attach_cpu_sys_validate attach_cpu_validate	\
+	attach_target attach_validate byte_profile calibrate case1 case2	\
+	clockres_pthreads cmpinfo code2name data_range describe			\
+	disable_component dmem_info earprofile eventname exec exec2		\
+	failed_events first fork fork2 forkexec forkexec2 forkexec3 forkexec4	\
+	get_event_component inherit johnmay2 locks_pthreads low-level		\
+	max_multiplex memory mendes-alt overflow overflow2 overflow_index	\
+	overflow_one_and_read overflow_single_event overflow_twoevents		\
+	p4_lst_ins profile profile_force_software profile_pthreads pthrtough	\
+	pthrtough2 remove_events reset reset_multiplex tenth version zero	\
+	zero_flip zero_fork zero_omp zero_pthreads zero_shmem zero_smp
+do
+	if ctests/$i >.out 2>&1; then
+		echo "$i OK"
+	else
+		echo "$i FAILED!"
+		sed 's/^/\t/' .out
+		> .failed
+	fi
+done
+test -e .failed && exit 1
+set -x
 
 %files
 %doc *.txt README.md
@@ -144,10 +196,18 @@ rm -f %buildroot%_libdir/*.a
 %_man3dir/*
 %_pkgconfigdir/*.pc
 
+%if_with doc
 %files doc
 %_docdir/%name
+%endif
 
 %changelog
+* Wed Jan 05 2022 Vitaly Chikunov <vt@altlinux.org> 6.0.0-alt6
+- Unbundle libpfm.
+- Update License tag.
+- Add some testing in %%check.
+- Do not build huge papi-doc package.
+
 * Tue Aug 31 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 6.0.0-alt5
 - disabled LTO because of build errors
 
