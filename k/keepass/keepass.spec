@@ -1,7 +1,7 @@
 %def_without doc
 
 Name: keepass
-Version: 2.49
+Version: 2.50
 Release: alt1
 
 Summary: Password manager
@@ -126,6 +126,9 @@ cp -pr Docs/Chm %buildroot/%_docdir/%name/
 %endif
 
 %changelog
+* Mon Jan 10 2022 Oleg Solovyov <mcpain@altlinux.org> 2.50-alt1
+- new version: 2.50
+
 * Wed Sep 22 2021 Oleg Solovyov <mcpain@altlinux.org> 2.49-alt1
 - new version: 2.49
 
