@@ -1,7 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: log4cplus
-Version: 2.0.6
+Version: 2.0.7
 Release: alt1
 Summary: Logging library to C++
 License: Apache-2.0 or BSD-2-Clause
@@ -80,6 +82,8 @@ This package contains Python bindings of log4cplus.
 %patch1 -p1
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 export PYTHON=python3
 %autoreconf
 %configure \
@@ -126,9 +130,12 @@ install -m644 docs/man/man3/* %buildroot%_man3dir
 %_man3dir/*
 
 %files -n python3-module-%name
-%python3_sitelibdir/*
+%python3_sitelibdir/%name
 
 %changelog
+* Mon Jan 10 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.7-alt1
+- Updated to upstream version 2.0.7.
+
 * Fri Jun 18 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.6-alt1
 - Updated to upstream version 2.0.6.
 
