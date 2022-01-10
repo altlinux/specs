@@ -26,8 +26,8 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.7.2
-Release: alt3
+Version: 1.7.3
+Release: alt1
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
 Url: https://github.com/fwupd/fwupd
@@ -259,7 +259,6 @@ rm -rf %buildroot%_docdir/fwupd
 %fwupd_pluginsdir/libfu_plugin_acpi_phat.so
 %fwupd_pluginsdir/libfu_plugin_bcm57xx.so
 %fwupd_pluginsdir/libfu_plugin_ccgx.so
-%fwupd_pluginsdir/libfu_plugin_cfu.so
 %fwupd_pluginsdir/libfu_plugin_colorhug.so
 %fwupd_pluginsdir/libfu_plugin_cpu.so
 %fwupd_pluginsdir/libfu_plugin_cros_ec.so
@@ -298,6 +297,7 @@ rm -rf %buildroot%_docdir/fwupd
 %endif
 %fwupd_pluginsdir/libfu_plugin_mtd.so
 %fwupd_pluginsdir/libfu_plugin_nitrokey.so
+%fwupd_pluginsdir/libfu_plugin_nordic_hid.so
 %fwupd_pluginsdir/libfu_plugin_nvme.so
 %fwupd_pluginsdir/libfu_plugin_optionrom.so
 %fwupd_pluginsdir/libfu_plugin_parade_lspcon.so
@@ -373,6 +373,9 @@ rm -rf %buildroot%_docdir/fwupd
 %config(noreplace)%_sysconfdir/fwupd/remotes.d/fwupd-tests.conf
 
 %changelog
+* Fri Dec 24 2021 Anton Farygin <rider@altlinux.ru> 1.7.3-alt1
+- 1.7.2 -> 1.7.3
+
 * Thu Dec 02 2021 Nikolai Kostrigin <nickel@altlinux.org> 1.7.2-alt3
 - improve package backportability by unconditionally not packing
   of fwupd-detect-cet on ix86 at all
