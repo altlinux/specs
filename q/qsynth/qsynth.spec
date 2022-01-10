@@ -1,7 +1,9 @@
-%def_disable qt6
+%def_enable qt6
+
+%define rdn_name org.rncbc.qsynth
 
 Name: qsynth
-Version: 0.9.4
+Version: 0.9.5
 Release: alt1
 
 Summary: QSynth is a GUI front-end for FluidSynth
@@ -18,7 +20,7 @@ Requires: fluidsynth
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ ladspa_sdk libfluidsynth-devel libXext-devel
 %if_enabled qt6
-BuildRequires: qt6-tools-devel qt6-x11extras-devel
+BuildRequires: qt6-tools-devel qt6-tools-devel
 %else
 BuildRequires: qt5-tools-devel qt5-x11extras-devel
 %endif
@@ -41,8 +43,8 @@ QSynth -- это графическая надстройка над FluidSynth. 
 
 %prep
 %setup
-# don't compress man pages
-#sed -i '/@gzip/d' Makefile*
+mv src/appdata/%rdn_name.xml src/appdata/%rdn_name.metainfo.xml
+sed -i 's|org.*.xml|%rdn_name.metainfo.xml|' src/CMakeLists.txt
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -59,11 +61,15 @@ QSynth -- это графическая надстройка над FluidSynth. 
 %_iconsdir/hicolor/*/*/*.*
 %dir %_datadir/%name
 %dir %_datadir/%name/translations
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/%rdn_name.metainfo.xml
 %_man1dir/%name.1.*
-%doc AUTHORS ChangeLog README TODO
+%doc ChangeLog README
 
 %changelog
+* Mon Jan 10 2022 Yuri N. Sedunov <aris@altlinux.org> 0.9.5-alt1
+- 0.9.5
+- build against qt6 libraries
+
 * Mon Jul 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.9.4-alt1
 - 0.9.4 (ported to CMake build system)
 

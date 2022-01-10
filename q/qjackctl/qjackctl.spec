@@ -1,11 +1,13 @@
 %def_disable snapshot
-%def_disable qt6
+%def_enable qt6
 # enable/disable JACK version support
 %def_enable jack_version
 %def_enable portaudio
 
+%define rdn_name org.rncbc.qjackctl
+
 Name: qjackctl
-Version: 0.9.5
+Version: 0.9.6
 Release: alt1
 
 Summary: Qjackctl is a programm to control the JACK sound server daemon
@@ -30,7 +32,7 @@ BuildRequires: cmake gcc-c++ libalsa-devel
 %{?_enable_portaudio:BuildRequires: pkgconfig(portaudio-2.0)}
 BuildRequires: libX11-devel libXext-devel
 %if_enabled qt6
-BuildRequires: qt6-base-devel qt6-x11extras-devel qt6-tools-devel
+BuildRequires: qt6-base-devel qt6-tools-devel
 %else
 BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools-devel
 %endif
@@ -50,9 +52,8 @@ JACK-клиентов.
 
 %prep
 %setup -n %name-%version
-
-# don't compress man pages
-#sed -i '/@gzip/d' Makefile*
+mv src/appdata/%rdn_name.xml src/appdata/%rdn_name.metainfo.xml
+sed -i 's|org.*.xml|%rdn_name.metainfo.xml|' src/CMakeLists.txt
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -74,10 +75,14 @@ JACK-клиентов.
 %dir %_datadir/%name/translations
 %_iconsdir/hicolor/*/*/*.*
 %_man1dir/*
-%_datadir/metainfo/%name.appdata.xml
-%doc AUTHORS ChangeLog README TODO
+%_datadir/metainfo/%rdn_name.metainfo.xml
+%doc ChangeLog README
 
 %changelog
+* Mon Jan 10 2022 Yuri N. Sedunov <aris@altlinux.org> 0.9.6-alt1
+- 0.9.6
+- build against qt6 libraries
+
 * Wed Oct 06 2021 Yuri N. Sedunov <aris@altlinux.org> 0.9.5-alt1
 - 0.9.5
 
