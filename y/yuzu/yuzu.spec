@@ -1,10 +1,10 @@
 # git describe upstream/yuzu
-%define git_descr mainline-636-7974-gb2ab75d0f75
+%define git_descr mainline-636-8008-g046ac865890
 
 %define inih_version r52
 %define cpp_httplib_commit 9648f950f5a8a41d18833cf4a85f5821b1bcac54
 %define cubeb_commit 75d9d125ee655ef80f3bfcd97ae5a805931042b8
-%define dynarmic_commit 28714ee75aa079cbb706e38bdabc8ee1f6c69515
+%define dynarmic_commit 1635958d0613da376046532e0db5aed6316fbc18
 %define soundtouch_commit 060181eaf273180d3a7e87349895bd0cb6ccbf4a
 %define sirit_commit a39596358a3a5488c06554c0c15184a6af71e433
 %define mbedtls_commit 8c88150ca139e06aa2aae8349df8292a88148ea1
@@ -13,7 +13,7 @@
 %define spirv_headers_commit a3fdfe81465d57efc97cfd28ac6c8190fb31a6c8
 
 Name: yuzu
-Version: 869
+Version: 875
 Release: alt1
 
 Summary: Nintendo Switch emulator/debugger
@@ -109,6 +109,7 @@ src/common/scm_rev.cpp.in
 %cmake \
 	-DENABLE_QT_TRANSLATION:BOOL=TRUE \
 	-DYUZU_USE_EXTERNAL_SDL2:BOOL=FALSE \
+	-DYUZU_USE_BUNDLED_OPUS:BOOL=FALSE \
 	-GNinja \
 	-Wno-dev
 %cmake_build
@@ -125,6 +126,9 @@ src/common/scm_rev.cpp.in
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Mon Jan 10 2022 Nazarov Denis <nenderus@altlinux.org> 875-alt1
+- Version 875
+
 * Wed Jan 05 2022 Nazarov Denis <nenderus@altlinux.org> 869-alt1
 - Version 869
 
