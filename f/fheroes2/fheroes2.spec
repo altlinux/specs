@@ -1,21 +1,24 @@
-%add_findreq_skiplist %_docdir/%name
-
 %def_with sdl2
 Name: fheroes2
 Epoch: 2
 Version: 0.9.11
 #define rev 20210604
 #Release: alt1.%rev
-Release: alt1
+Release: alt2
 Summary: Free implementation of Heroes of the Might and Magic II engine
 License: GPLv2+
 Group: Games/Strategy
-#Url: http://sourceforge.net/projects/fheroes2/
 Url: https://github.com/ihhub/fheroes2
+VCS: https://github.com/ihhub/fheroes2
+
+%add_findreq_skiplist %_docdir/%name
 
 Source: %name-%version.tar
 Source2: %name.sh
 Source3: %name.png
+Source4: fheroes2-data.spec
+Source5: README.ALT
+Patch: fheroes2-0.9.11-random-skills.patch
 
 # Automatically added by buildreq on Wed Oct 03 2012
 # optimized out: libSDL-devel libstdc++-devel zlib-devel
@@ -33,6 +36,7 @@ into your /usr/share/games/fheroes2/{maps,data} directories respectively
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 %if_with sdl2
@@ -60,8 +64,9 @@ install -pD -m 644 script/packaging/common/fheroes2.desktop %buildroot%_desktopd
 
 # docs
 mkdir -p %buildroot%_docdir/%name
-install -pm 644 {CONTRIBUTING.md,changelog.txt,LICENSE,README.md} %buildroot%_docdir/%name/
+install -pm 644 {CONTRIBUTING.md,changelog.txt,LICENSE,README.md,docs/INSTALL.md,docs/DEVELOPMENT.md} %buildroot%_docdir/%name/
 install -pm 644 script/demo/download_demo_version.sh script/homm2/extract_homm2_resources.sh %buildroot%_docdir/%name/
+install -pD -m 644 %SOURCE4 %SOURCE5 %buildroot%_docdir/%name/
 
 %files
 %_bindir/*
@@ -72,6 +77,11 @@ install -pm 644 script/demo/download_demo_version.sh script/homm2/extract_homm2_
 %_gamesdatadir/%name
 
 %changelog
+* Sun Jan 09 2022 Igor Vlasenko <viy@altlinux.org> 2:0.9.11-alt2
+- XDG_DATA_DIR migration
+- random-skills.patch
+- added example fheroes2-data.spec
+
 * Fri Dec 24 2021 Igor Vlasenko <viy@altlinux.org> 2:0.9.11-alt1
 - new version
 
