@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 39
+%define centos_release 40
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -629,6 +629,14 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Jan 11 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.40-alt1.el9
+- Replace deprecated CPU-hotplug functions for kernel-rt
+- Input: i8042 - Add quirk for Fujitsu Lifebook T725
+- sctp: backports from upstream
+- sctp: enhancements for the verification tag
+- Fix CVE-2020-27820
+- redhat/configs: NFS: disable UDP, insecure enctypes
+
 * Fri Dec 24 2021 Alexey Gladkov <legion@altlinux.ru> 5.14.0.39-alt1.el9
 - cpuidle: pseries: Fixup CEDE0 latency only for POWER10 onwards
 - powerpc/mce: Fix access error in mce handler
