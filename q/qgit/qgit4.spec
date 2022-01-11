@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qgit
-Version: 2.9
-Release: alt2.git8b3b822
+Version: 2.10
+Release: alt1
 Epoch: 1
 
 Summary: Git GUI viewer built on Qt4/C++
@@ -58,6 +58,9 @@ install -pDm755 bin/qgit %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Tue Jan 11 2022 Ivan A. Melnikov <iv@altlinux.org> 1:2.10-alt1
+- new version
+
 * Wed Aug 19 2020 Ivan A. Melnikov <iv@altlinux.org> 1:2.9-alt2.git8b3b822
 - new git snapshot
   + improved git error handling (annoying "Git says:" dialog)
