@@ -1,3 +1,8 @@
+# SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict,unresolved=normal
+
 %def_with python
 %def_with python3
 %def_with ruby
@@ -5,13 +10,14 @@
 
 Name: xapian-bindings
 Version: 1.4.15
-Release: alt2
+Release: alt3
 
 Summary: Xapian search engine bindings
 
-License: GPL
-Group: Development/Other
+License: GPL-2.0+
+Group: Development/Databases
 Url: http://www.xapian.org/
+Vcs: git://git.xapian.org/xapian
 
 Source: http://www.oligarchy.co.uk/xapian/%version/%name-%version.tar
 Source100: xapian-bindings.watch
@@ -27,7 +33,7 @@ BuildRequires: python-module-sphinx-devel python-module-sphinx
 %endif
 %if_with ruby
 BuildRequires(pre): rpm-macros-ruby
-BuildRequires: rpm-build-ruby
+BuildRequires(pre): rpm-build-ruby
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -51,7 +57,6 @@ This package contains programming language bindings.
 
 %package -n python-module-xapian
 Summary: Python bindings for Xapian search engine
-License: GPL
 Group: Development/Python
 # force rebuild with libxapian
 Requires: libxapian = %version
@@ -66,7 +71,6 @@ which use Xapian.
 
 %package -n python3-module-xapian
 Summary: Python 3 bindings for Xapian search engine
-License: GPL
 Group: Development/Python3
 # force rebuild with libxapian
 Requires: libxapian = %version
@@ -79,11 +83,12 @@ add advanced indexing and search facilities to applications.
 This package provides the files needed for developing Python 3 scripts
 which use Xapian.
 
+%define get_ruby_version() %(ruby -e 'print RUBY_VERSION' || echo 'unknown')
 %package -n ruby-xapian
 Summary: Ruby bindings for Xapian search engine
-License: GPL
 Group: Development/Ruby
 Requires: libxapian = %version
+Requires: ruby = %get_ruby_version
 
 %description -n ruby-xapian
 Xapian is an Open Source Probabilistic Information Retrieval framework.
@@ -98,6 +103,7 @@ which use Xapian.
 %if_without doc
 %patch1 -p2
 %endif
+sed -i '/puts/d' ruby/xapian.rb ruby/docs/xapian.rb
 
 %build
 %ifarch %e2k
@@ -129,7 +135,7 @@ rm -rf %buildroot%_defaultdocdir/%name/
 %files -n ruby-xapian
 %doc README ruby/docs/*
 %ruby_sitearchdir/_xapian.so
-%ruby__sitelibdir/xapian.rb
+%ruby_sitelibdir/xapian.rb
 %endif
 
 # TODO:
@@ -141,6 +147,9 @@ rm -rf %buildroot%_defaultdocdir/%name/
 #   I use watch file and it's more convenient to do that with srpms
 
 %changelog
+* Tue Jan 11 2022 Vitaly Chikunov <vt@altlinux.org> 1.4.15-alt3
+- Fixed build of ruby module.
+
 * Sat Oct 17 2020 Vitaly Lipatov <lav@altlinux.ru> 1.4.15-alt2
 - fix build
 
