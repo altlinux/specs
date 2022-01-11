@@ -1,10 +1,6 @@
-%ifnarch %e2k
-%def_with qt5
-%endif
-
 Name: quiterss
 Version: 0.19.4
-Release: alt1
+Release: alt2
 
 Summary: RSS/Atom aggregator
 Summary(ru_RU.UTF-8): QuiteRSS - быстрая и удобная программа для чтения новостных лент RSS/Atom
@@ -16,7 +12,6 @@ Source0: http://quite-rss.googlecode.com/files/QuiteRSS-%{version}-src.tar.gz
 Source44: import.info
 Source45: quiterss.watch
 BuildRequires: desktop-file-utils
-%if_with qt5
 BuildRequires: qt5-base-devel qt5-tools
 BuildRequires: pkgconfig(Qt5Gui)
 BuildRequires: pkgconfig(Qt5Core)
@@ -29,12 +24,6 @@ BuildRequires: pkgconfig(Qt5WebKitWidgets)
 BuildRequires: pkgconfig(Qt5Widgets)
 BuildRequires: libqtsingleapplication-qt5-devel
 Requires: qt5-sql-sqlite
-%else
-BuildRequires: gcc-c++ qt4-devel
-BuildRequires: pkgconfig(QtGui) pkgconfig(QtNetwork) pkgconfig(QtWebKit) pkgconfig(QtXml) pkgconfig(QtSql)
-BuildRequires: libqtsingleapplication-devel pkgconfig(phonon)
-Requires: libqt4-sql-sqlite
-%endif
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: dos2unix
 
@@ -55,11 +44,7 @@ sed -i 's,phonon/mediaobject.h,kde4/&,' src/application/mainwindow.h
 dos2unix %name.desktop
 
 %build
-%if_with qt5
 qmake-qt5 PREFIX=%prefix SYSTEMQTSA=True
-%else
-qmake-qt4 PREFIX=%prefix SYSTEMQTSA=True
-%endif
 %make_build release
 
 %install
@@ -79,6 +64,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %dir %_datadir/%name/lang
 
 %changelog
+* Tue Jan 11 2022 Michael Shigorin <mike@altlinux.org> 0.19.4-alt2
+- drop qt4 build support
+
 * Tue Apr 21 2020 Michael Shigorin <mike@altlinux.org> 0.19.4-alt1
 - new version (watch file uupdate)
 
