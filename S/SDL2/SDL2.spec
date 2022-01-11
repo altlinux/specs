@@ -6,8 +6,8 @@
 %def_with pulse
 
 Name: SDL2
-Version: 2.0.18
-Release: alt2
+Version: 2.0.20
+Release: alt1
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -21,7 +21,6 @@ Source: %name-%version.tar
 
 # RH: ptrdiff_t is not the same as khronos defines on 32bit arches
 Patch0: %name-2.0.9-rh-khrplatform.patch
-Patch1: %name-2.0.18-wayland-1.20.patch
 
 BuildRequires: libXext-devel
 BuildRequires: libdbus-devel
@@ -90,7 +89,6 @@ This is the static libraries you can use to develop SDL applications.
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -122,6 +120,9 @@ This is the static libraries you can use to develop SDL applications.
 %_libdir/lib%{name}*.a
 
 %changelog
+* Tue Jan 11 2022 Nazarov Denis <nenderus@altlinux.org> 2.0.20-alt1
+- Version 2.0.20
+
 * Mon Dec 20 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.18-alt2
 - Add patch to fix build against wayland 1.20
 

@@ -1,5 +1,5 @@
 Name: SDL2_ttf
-Version: 2.0.15
+Version: 2.0.18
 Release: alt1
 
 Summary: Simple DirectMedia Layer - Sample TrueType Font Library
@@ -9,12 +9,13 @@ Group: System/Libraries
 Url: http://www.libsdl.org/projects/SDL_ttf/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source0: http://www.libsdl.org/projects/SDL_ttf/release/%name-%version.tar.gz
+# http://www.libsdl.org/projects/SDL_ttf/release/%name-%version.tar.gz
+Source: %name-%version.tar
 
-BuildRequires: libGL-devel
+BuildRequires: gcc-c++
 BuildRequires: libICE-devel
 BuildRequires: libSDL2-devel
-BuildRequires: libfreetype-devel
+BuildRequires: python3
 
 %description
 This library allows you to use TrueType fonts to render text in SDL
@@ -59,6 +60,9 @@ applications.
 %_libdir/lib%name.so
 
 %changelog
+* Tue Jan 11 2022 Nazarov Denis <nenderus@altlinux.org> 2.0.18-alt1
+- Version 2.0.18
+
 * Wed Feb 10 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.15-alt1
 - Version 2.0.15
 
