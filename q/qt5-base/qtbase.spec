@@ -38,7 +38,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.15.2
-Release: alt7
+Release: alt8
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -71,7 +71,7 @@ Patch1006: e2k-qt-5.15.patch
 Patch1007: alt-decrease-iconloader-fallback-depth.patch
 #Patch1008: alt-mkspecs-features.patch
 Patch1009: alt-false-detect-groupswitchmodifier.patch
-#
+Patch1010: alt-zonetab.patch
 Patch1011: alt-kernel-requires.patch
 Patch1012: alt-fix-paths.patch
 Patch1013: alt-QTBUG-88599.patch
@@ -408,7 +408,7 @@ EGL integration library for the Qt%major toolkit
 %patch1007 -p1
 #%patch1008 -p1
 %patch1009 -p1
-#
+%patch1010 -p1
 %patch1011 -p1
 %patch1012 -p1
 %patch1013 -p1
@@ -846,6 +846,9 @@ make check -k ||:
 
 
 %changelog
+* Tue Jan 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt8
+- using zone1970.tab by default
+
 * Tue Nov 23 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt7
 - build without internal mimetype database
 - build without sctp
