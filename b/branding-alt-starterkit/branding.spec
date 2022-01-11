@@ -8,10 +8,11 @@
 %define Brand ALT
 %define flavour %brand-%theme
 %define distro_name ALT Starterkit
+%define branding_data_dir %_datadir/branding-data-current
 
 Name: branding-%flavour
 Version: p10
-Release: alt1
+Release: alt2
 
 Url: http://en.altlinux.org/starterkits
 
@@ -73,7 +74,6 @@ BuildArch: noarch
 Provides: plymouth-theme-%theme plymouth(system-theme)
 Requires: plymouth-plugin-script
 Requires: plymouth
-Conflicts: system-logo
 %branding_add_conflicts %flavour bootsplash
 
 %description bootsplash
@@ -88,7 +88,7 @@ Provides: design-alterator-browser-%theme branding-alt-%theme-browser-qt brandin
 Provides: alterator-icons design-alterator design-alterator-%theme
 Obsoletes: branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt design-alterator-server design-alterator-desktop design-alterator-browser-desktop design-alterator-browser-server
 %branding_add_conflicts %flavour alterator
-Requires: alternatives >= 0.2 alterator
+Requires(post,preun): alternatives >= 0.2 alterator
 
 %description alterator
 Design for QT and web alterator for %Brand %Theme
@@ -104,14 +104,14 @@ Provides: design-graphics = 12.0.0
 Provides: design-graphics-%theme branding-alt-%theme-graphics
 Provides: design-graphics = %design_graphics_abi_major.%design_graphics_abi_minor.%design_graphics_abi_bugfix
 Obsoletes: design-graphics-%theme
-Requires: alternatives >= 0.2
+Requires(post,preun): alternatives >= 0.2
 %branding_add_conflicts %flavour graphics
 Conflicts: design-graphics-default
 
 %description graphics
 This package contains some graphics for ALT design.
 
-%define provide_list altlinux fedora redhat system altlinux
+%define provide_list altlinux fedora redhat system
 %define obsolete_list altlinux-release fedora-release redhat-release
 %define conflicts_list altlinux-release-sisyphus altlinux-release-4.0 altlinux-release-junior altlinux-release-master altlinux-release-server altlinux-release-terminal altlinux-release-small_business
 
@@ -119,6 +119,7 @@ This package contains some graphics for ALT design.
 Summary: %distribution %Theme release file
 Group: System/Configuration/Other
 BuildArch: noarch
+Requires: alt-os-release
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme branding-alt-%theme-release
 Obsoletes: %obsolete_list
 Conflicts: %conflicts_list
@@ -209,14 +210,10 @@ popd
 
 install -d %buildroot//etc/alternatives/packages.d
 cat >%buildroot/etc/alternatives/packages.d/%name-graphics <<__EOF__
-%_datadir/artworks	%_datadir/design/%theme 10	
-%_datadir/design-current	%_datadir/design/%theme	10
-%_datadir/design/current	%_datadir/design/%theme	10
+%_datadir/artworks	%_datadir/design/%theme 9
+%_datadir/design-current	%_datadir/design/%theme	9
+%_datadir/design/current	%_datadir/design/%theme	9
 __EOF__
-
-# bootsplash
-mkdir -p %buildroot%_pixmapsdir
-cp -a images/system-logo.png %buildroot%_pixmapsdir/
 
 #release
 install -pD -m644 /dev/null %buildroot%_sysconfdir/buildreqs/packages/ignore.d/%name-release
@@ -231,10 +228,17 @@ install -pD -m644 /dev/null %buildroot%_sysconfdir/buildreqs/packages/ignore.d/%
 	[ -n "%codename" ] && echo -n " (%codename)"
 	echo
 } >%buildroot%_sysconfdir/altlinux-release
-for n in fedora redhat system alt; do
+for n in fedora redhat system; do
 	ln -s altlinux-release %buildroot%_sysconfdir/$n-release
 done
 install -pD -m644 components/systemd/os-release %buildroot%_sysconfdir/os-release
+
+# save release
+mkdir -p %buildroot/%branding_data_dir/release/
+cp -ar %buildroot/%_sysconfdir/altlinux-release %buildroot/%branding_data_dir/release/altlinux-release
+cp -ar %buildroot/%_sysconfdir/os-release %buildroot/%branding_data_dir/release/os-release
+mkdir -p %buildroot/%prefix/lib/
+cp -ar %buildroot/%_sysconfdir/os-release %buildroot/%prefix/lib/os-release
 
 #notes
 pushd notes
@@ -258,17 +262,8 @@ popd
 #bootloader
 %pre bootloader
 [ -s /usr/share/gfxboot/%theme ] && rm -fr /usr/share/gfxboot/%theme ||:
-[ -s /boot/splash/%theme ] && rm -fr /boot/splash/%theme ||:
 
 %post bootloader
-%ifarch %ix86 x86_64
-ln -snf %theme/message /boot/splash/message
-. /etc/sysconfig/i18n
-lang=$(echo $LANG | cut -d. -f 1)
-cd boot/splash/%theme/
-echo $lang > lang
-[ "$lang" = "C" ] || echo lang | cpio -o --append -F message
-%endif #ifarch
 . shell-config
 shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
@@ -277,20 +272,12 @@ shell_config_set /etc/sysconfig/grub2 GRUB_BACKGROUND ''
 # deprecated
 shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER ''
 
-%ifarch %ix86 x86_64
-%preun bootloader
-[ $1 = 0 ] || exit 0
-[ "`readlink /boot/splash/message`" != "%theme/message" ] ||
-    rm -f /boot/splash/message
-%endif #ifarch
-
 %post indexhtml
 %_sbindir/indexhtml-update
 
 %files bootloader
 %ifarch %ix86 x86_64
 %_datadir/gfxboot/%theme
-/boot/splash/%theme
 %endif #ifarch
 /boot/grub/themes/%theme
 
@@ -309,11 +296,18 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 
 %files bootsplash
 %_datadir/plymouth/themes/%theme/*
-%_pixmapsdir/system-logo.png
 
 %files release
-%_sysconfdir/*-release
+%ghost %config(noreplace) %_sysconfdir/os-release
+%_sysconfdir/altlinux-release
+%config(noreplace) %_sysconfdir/fedora-release
+%config(noreplace) %_sysconfdir/redhat-release
+%config(noreplace) %_sysconfdir/system-release
 %_sysconfdir/buildreqs/packages/ignore.d/*
+%dir %branding_data_dir/
+%dir %branding_data_dir/release/
+%branding_data_dir/release/*-release
+%prefix/lib/os-release
 
 %files notes
 %_datadir/alt-notes/*
@@ -335,6 +329,15 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/autostart/*
 
 %changelog
+* Tue Jan 11 2022 Anton Midyukov <antohami@altlinux.org> p10-alt2
+- drop old bootsplash support
+- fix Requires tag for alternatives
+- do not use fetch_color
+- do not pack system-logo to %_pixmapsdir
+- new bootsplash theme (based on Kworkstation)
+- save initial release
+- fix duplicate provides
+
 * Fri Jul 02 2021 Anton Midyukov <antohami@altlinux.org> p10-alt1
 - first release for p10
 
