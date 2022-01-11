@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-pywlroots
-Version: 0.14.11
+Version: 0.14.12
 Release: alt1
 
 Summary: Python binding to the wlroots library using cffi
@@ -51,5 +51,8 @@ provide wlroots keyboard functionality.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Jan 11 2022 Egor Ignatov <egori@altlinux.org> 0.14.12-alt1
+- 0.14.12
+
 * Thu Dec 09 2021 Egor Ignatov <egori@altlinux.org> 0.14.11-alt1
 - First build for ALT
