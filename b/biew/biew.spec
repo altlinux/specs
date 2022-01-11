@@ -1,19 +1,21 @@
-# -*- rpm-spec -*-
-# $Id: biew,v 1.7 2004/10/04 12:26:46 grigory Exp $
-
 %define src_version	610
 
 Name: biew
 Version: 6.1.0
-Release: alt2
-Packager: Fr. Br. George <george@altlinux.ru>
+Release: alt4
+
 Summary: %name - console hex viewer/editor and disassembler
 License: GPL
 Group: Development/Other
-URL: http://biew.sourceforge.net
-Source0: %name-%src_version-src.tar.bz2
+
+Url: http://biew.sourceforge.net
+Source: %name-%src_version-src.tar.bz2
 Patch: biew-5.6.2-alt-lvalue.patch.gz
-ExclusiveArch: i586 x86_64
+Packager: Fr. Br. George <george@altlinux.ru>
+
+# ftbfs
+ExcludeArch: armh ppc64le
+
 # Automatically added by buildreq on Sat Apr 11 2009
 BuildRequires: libgpm-devel
 
@@ -29,14 +31,17 @@ other features, making it invaluable for examining binary code.
 Linux, Unix, QNX, BeOS, DOS, Win32, OS/2 versions are available.
 
 %prep
-%setup -q -n %name-%src_version
+%setup -n %name-%src_version
 #patch -p2
 
 %build
 find . -type f|xargs sed -i "s|<slang.h>|<slang/slang.h>|g"
 sed 's/|| die "Please upgrade your compiler"//' configure
 # This CFLAGS hackaround is for 6.1.0 only
-CFLAGS='-O2 -mmmx -msse' %configure
+%ifarch %ix86 x86_64 %e2k
+export CFLAGS='-O%_optlevel -mmmx -msse'
+%endif
+%configure
 %make_build TARGET_PLATFORM=%_target_cpu USE_MOUSE=y
 
 %install 
@@ -52,6 +57,13 @@ cp -a bin_rc/{xlt,skn,*.hlp} %buildroot/%_datadir/%name
 %_man1dir/*
 
 %changelog
+* Tue Jan 11 2022 Michael Shigorin <mike@altlinux.org> 6.1.0-alt4
+- exclude armh too
+
+* Tue Jan 11 2022 Michael Shigorin <mike@altlinux.org> 6.1.0-alt3
+- builds fine on Elbrus; fixed build on arm; ppc64le still fails
+- minor spec cleanup
+
 * Wed Aug 25 2021 Fr. Br. George <george@altlinux.ru> 6.1.0-alt2
 - Exclusive build (Closes: #40429)
 
