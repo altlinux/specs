@@ -15,8 +15,8 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma5-%rname
-Version: 5.23.4
-Release: alt7
+Version: 5.23.5
+Release: alt1
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -262,6 +262,9 @@ done
 
 
 %changelog
+* Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.5-alt1
+- new version
+
 * Tue Dec 28 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.4-alt7
 - add workaround to setup  XDG_DATA_DIRS for snap
 

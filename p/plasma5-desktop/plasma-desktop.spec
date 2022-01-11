@@ -2,8 +2,8 @@
 
 
 Name: plasma5-desktop
-Version: 5.23.4
-Release: alt3
+Version: 5.23.5
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -241,6 +241,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.5-alt1
+- new version
+
 * Wed Dec 29 2021 Oleg Solovyov <mcpain@altlinux.org> 5.23.4-alt3
 - Fix swapping icons when choosing kicker alternatives (Closes: #41564)
 

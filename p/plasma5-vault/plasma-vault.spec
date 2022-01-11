@@ -1,7 +1,7 @@
 %define rname plasma-vault
 
 Name: plasma5-vault
-Version: 5.23.4
+Version: 5.23.5
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -11,7 +11,7 @@ Summary: Encrypted vaults support for KDE
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
-Requires: fuse
+Requires: /usr/bin/fusermount
 #Requires: fuse-encfs >= 1.9.1
 #Requires: fuse-cryfs >= 0.9.6
 
@@ -76,8 +76,15 @@ Requires: %name-common = %version-%release
 %_K5plug/kf5/kded/*vault*.so
 %_K5plug/plasma/applets/*vault*.so
 %_K5data/plasma/plasmoids/*vault*/
+%_K5srv/*.desktop
 
 %changelog
+* Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.23.5-alt1
+- new version
+
+* Sat Dec 18 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.23.4-alt2
+- fix requires
+
 * Wed Dec 01 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.23.4-alt1
 - new version
 

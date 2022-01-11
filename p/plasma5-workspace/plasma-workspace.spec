@@ -36,8 +36,8 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.23.4
-Release: alt8
+Version: 5.23.5
+Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -500,6 +500,9 @@ done
 
 
 %changelog
+* Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.23.5-alt1
+- new version
+
 * Thu Dec 30 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.23.4-alt8
 - fix PATH variable
 

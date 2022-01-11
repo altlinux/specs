@@ -1,7 +1,7 @@
 %define rname plasma-systemmonitor
 
 Name: plasma5-systemmonitor
-Version: 5.23.4
+Version: 5.23.5
 Release: alt1
 %K5init altplace
 
@@ -94,6 +94,9 @@ Requires: %name-common
 #%_K5lib/libplasma-systemmonitor.so.*
 
 %changelog
+* Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.5-alt1
+- new version
+
 * Wed Dec 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.23.4-alt1
 - new version
 

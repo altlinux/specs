@@ -4,7 +4,7 @@
 %define libbreezecommon libbreezecommon%breezecommon_sover
 
 Name: plasma5-%rname
-Version: 5.23.4
+Version: 5.23.5
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -105,6 +105,9 @@ KF5 library
 %_K5lib/libbreezecommon5.so.*
 
 %changelog
+* Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.23.5-alt1
+- new version
+
 * Wed Dec 01 2021 Sergey V Turchin <zerg@altlinux.org> 1:5.23.4-alt1
 - new version
 
