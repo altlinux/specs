@@ -1,19 +1,18 @@
 Name: ndisc6
-Version: 1.0.4
-Release: alt2
+Version: 1.0.5
+Release: alt1
 
 Summary: IPv6 diagnostic tools
-License: %gpl2plus
+License: GPLv2+
 Group: System/Configuration/Networking
 
 URL: https://www.remlab.net/ndisc6/
+Vcs: https://git.remlab.net/git/ndisc6.git
 Source: %name-%version.tar
 Source1: rdnssd.init
 Source2: rdnssd.tmpfiles
 Source3: rdnssd.service
 Patch: %name-%version-%release.patch
-
-BuildRequires(pre): rpm-build-licenses
 
 %define _unpackaged_files_terminate_build 1
 
@@ -88,6 +87,11 @@ useradd -r -g rdnssd -d %_runtimedir/rdnssd -s /dev/null -N rdnssd >/dev/null 2>
 %ghost %_runtimedir/rdnssd/resolv.conf
 
 %changelog
+* Tue Jan 11 2022 Mikhail Efremov <sem@altlinux.org> 1.0.5-alt1
+- Added Vcs tag.
+- Don't use rpm-build-licenses.
+- Updated to 1.0.5.
+
 * Mon Jan 14 2019 Mikhail Efremov <sem@altlinux.org> 1.0.4-alt2
 - Updated to 1.0.4 release.
 
