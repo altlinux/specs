@@ -1,9 +1,9 @@
 Name: fuse
 Version: 2.9.9
-Release: alt1
+Release: alt2
 
 Summary: a tool for creating virtual filesystems
-License: GPL
+License: GPLv2
 Group: System/Kernel and hardware
 
 Url: https://github.com/libfuse/
@@ -14,6 +14,7 @@ Source1: fuserumount
 Patch0: %name.Makefile.patch
 Patch1: 914871b.patch
 Patch2: %name.link.patch
+Patch3: closefrom.patch
 
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
@@ -28,6 +29,7 @@ for creating custom filesystems with minimal effort
 as well as for using them.
 
 %package -n lib%name
+License: LGPLv2
 Group: System/Kernel and hardware
 Summary: tool for creating virtual filesystems
 Requires: %name = %version-%release
@@ -41,6 +43,7 @@ for creating custom filesystems with minimal effort.
 This package contains shared libraries.
 
 %package -n lib%name-devel
+License: LGPLv2
 Group: System/Kernel and hardware
 Summary: tool for creating virtual filesystems
 Requires: lib%name = %version-%release
@@ -58,6 +61,7 @@ This package contains development headers.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p0
+%patch3 -p2
 
 %build
 %autoreconf
@@ -109,6 +113,10 @@ fi
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Jan 11 2022 Evgeny Sinelnikov <sin@altlinux.org> 2.9.9-alt2
+- Fix build with closefrom() from newest unistd.h
+- Adjust license to GPLv2 and LGPLv2 for library
+
 * Mon Feb 04 2019 Rustem Bapin <rbapin@altlinux.org> 2.9.9-alt1
 - 2.9.9
 - fuserumount move back from fuse-common
