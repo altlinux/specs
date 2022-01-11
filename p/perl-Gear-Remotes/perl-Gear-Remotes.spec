@@ -2,7 +2,7 @@
 %define module Gear-Remotes
 
 Name: perl-%module
-Version: 0.028
+Version: 0.030
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -88,6 +88,12 @@ ln -s gr-batch-watch-standalone %buildroot%_bindir/repocop-watch-batch-git-plugi
 %_bindir/repocop-watch-*
 
 %changelog
+* Tue Jan 11 2022 Igor Vlasenko <viy@altlinux.org> 0.030-alt1
+- new version (closes: #41694)
+
+* Tue Jan 11 2022 Igor Vlasenko <viy@altlinux.org> 0.029-alt1
+- new version
+
 * Tue Dec 21 2021 Igor Vlasenko <viy@altlinux.org> 0.028-alt1
 - new version
 
