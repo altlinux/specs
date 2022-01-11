@@ -1,7 +1,7 @@
 %define rname ktexteditor
 
 Name: kf5-%rname
-Version: 5.89.0
+Version: 5.90.0
 Release: alt1
 %K5init altplace
 
@@ -85,7 +85,7 @@ mkdir %buildroot/%_datadir/katepart5/syntax/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5TextEditor
 %_K5archdata/mkspecs/modules/qt_KTextEditor.pri
-%_K5data/kdevappwizard/templates/*ktexteditor*
+#%_K5data/kdevappwizard/templates/*ktexteditor*
 
 %files -n libkf5texteditor
 %_K5dbus_sys_srv/*ktexteditor*.service
@@ -99,6 +99,9 @@ mkdir %buildroot/%_datadir/katepart5/syntax/
 #%_K5xmlgui/katepart/
 
 %changelog
+* Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.90.0-alt1
+- new version
+
 * Thu Dec 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.89.0-alt1
 - new version
 

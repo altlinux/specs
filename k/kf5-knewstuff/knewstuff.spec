@@ -1,7 +1,7 @@
 %define rname knewstuff
 
 Name: kf5-%rname
-Version: 5.89.0
+Version: 5.90.0
 Release: alt1
 %K5init altplace
 
@@ -59,6 +59,13 @@ Requires: %name-common = %version-%release
 %description -n libkf5newstuffcore
 KF5 library
 
+%package -n libkf5newstuffwidgets
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5newstuffwidgets
+KF5 library
+
 
 %prep
 %setup -n %rname-%version
@@ -103,8 +110,14 @@ done
 %files -n libkf5newstuffcore
 %_K5lib/libKF5NewStuffCore.so.*
 
+%files -n libkf5newstuffwidgets
+%_K5lib/libKF5NewStuffWidgets.so.*
+
 
 %changelog
+* Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.90.0-alt1
+- new version
+
 * Thu Dec 16 2021 Sergey V Turchin <zerg@altlinux.org> 5.89.0-alt1
 - new version
 
