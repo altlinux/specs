@@ -11,7 +11,7 @@
 %add_python3_req_skip prompt_toolkit.terminal.vt100_output
 
 Name: gns3-server
-Version: 2.2.28
+Version: 2.2.29
 Release: alt1
 
 Summary: GNS3 server manages emulators such as Dynamips, VirtualBox or Qemu/KVM
@@ -90,6 +90,9 @@ py.test3 -v
 %python3_sitelibdir/gns3_server-*.egg-info
 
 %changelog
+* Wed Jan 12 2022 Anton Midyukov <antohami@altlinux.org> 2.2.29-alt1
+- new version 2.2.29
+
 * Fri Jan 07 2022 Anton Midyukov <antohami@altlinux.org> 2.2.28-alt1
 - new version 2.2.28
 
