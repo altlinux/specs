@@ -1,21 +1,35 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict,rpath=relaxed,unresolved=relaxed
+
 Name: ogre
-Version: 1.9.0
-Release: alt4
+Version: 13.2.4
+Release: alt1
 Summary: Object-Oriented Graphics Rendering Engine
 # CC-BY-SA is for devel docs
 License: MIT
 Group: System/Libraries
-Url: http://www.ogre3d.org/
-Source: %name-%version.tar
-Patch: %name-%version-alt-changes.patch
-Patch10: ogre-aarch64.patch
-Patch11: ogre-1.9.0-armh-no-sysctl-compat.patch
+Url: https://www.ogre3d.org/
 
-BuildRequires: gcc-c++ cmake zziplib-devel libfreetype-devel libgtk+2-devel libois-devel openexr-devel cppunit-devel doxygen graphviz texi2html libtbb-devel boost-devel
-BuildRequires: libXaw-devel libXrandr-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXinerama-devel libXi-devel libXpm-devel libXv-devel libXxf86misc-devel xorg-xf86miscproto-devel libXxf86vm-devel libXext-devel libGLU-devel libfreeimage-devel tinyxml-devel
-#BuildRequires:  glew-devel 
+# https://github.com/OGRECave/ogre
+Source: %name-%version.tar
+
+# https://github.com/ocornut/imgui
+Source1: %name-%version-imgui.tar
+
+BuildRequires: gcc-c++ cmake
+BuildRequires: zziplib-devel libfreetype-devel libgtk+2-devel libois-devel openexr-devel cppunit-devel
+BuildRequires: doxygen graphviz texi2html libtbb-devel boost-devel
+BuildRequires: libXaw-devel libXrandr-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel
+BuildRequires: libXinerama-devel libXi-devel libXpm-devel libXv-devel libXxf86misc-devel xorg-xf86miscproto-devel
+BuildRequires: libXxf86vm-devel libXext-devel libGLU-devel libfreeimage-devel tinyxml-devel
 BuildRequires: libharfbuzz-devel libGLES-devel libpoco-devel
 BuildRequires: libGLEW-devel
+BuildRequires: libSDL2-devel
+BuildRequires: libgtest-devel
+BuildRequires: libpugixml-devel
+BuildRequires: libfreetype-devel
+BuildRequires: zlib-devel
 
 %description
 OGRE (Object-Oriented Graphics Rendering Engine) is a scene-oriented,
@@ -69,10 +83,13 @@ with Ogre.  It also contains some media (meshes, textures,...) needed by these
 samples.
 
 %prep
-%setup -n ogre
-%patch -p1
-%patch10 -p1
-%patch11 -p2
+%setup
+
+mkdir %_cmake__builddir
+pushd %_cmake__builddir &>/dev/null
+tar xvf %SOURCE1
+popd
+
 %ifarch %e2k
 # strip UTF-8 BOM for lcc < 1.24
 find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
@@ -80,6 +97,7 @@ find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
 %endif
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %ifarch %e2k
 # -std=c++03 by default as of lcc 1.23.20
 %add_optflags -std=c++11
@@ -90,44 +108,25 @@ find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
 	-DOGRE_INSTALL_SAMPLES=ON \
 	-DOGRE_BUILD_TESTS=ON \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
-	-DOGRE_DOCS_PATH=docs \
+	-DOpenGL_GL_PREFERENCE=GLVND \
 	%nil
 
 %cmake_build
 
-#Make doc
-pushd Docs
-    bash ./src/makedocs.sh
-popd
-
 %install
 %cmakeinstall_std
 
-# Create config for ldconfig
-mkdir -p $RPM_BUILD_ROOT/etc/ld.so.conf.d
-echo "%_libdir/OGRE" > $RPM_BUILD_ROOT/etc/ld.so.conf.d/%name-%_arch.conf
-
-mkdir -p $RPM_BUILD_ROOT%_man1dir
-install -p -m 644 OgreMaterialUpgrade.1 $RPM_BUILD_ROOT%_man1dir/OgreMaterialUpgrade.1
-install -p -m 644 OgreMeshUpgrade.1 $RPM_BUILD_ROOT%_man1dir/OgreMeshUpgrade.1
-install -p -m 644 OgreXMLConverter.1 $RPM_BUILD_ROOT%_man1dir/OgreXMLConverter.1
-
-#Copy working samples
-subst "s|/usr/lib|%_libdir|"g samples.cfg
-cp -f samples.cfg $RPM_BUILD_ROOT%_datadir/OGRE/samples.cfg
-
 %files
-%doc AUTHORS BUGS COPYING
-/etc/ld.so.conf.d/*
+%doc AUTHORS LICENSE
 %_bindir/Ogre*
 %_bindir/Test_Ogre*
+%_bindir/VRMLConverter
 %dir %_datadir/OGRE
+%_datadir/OGRE/GLX_backdrop.png
 %config(noreplace) %_datadir/OGRE/plugins.cfg
-%config(noreplace) %_datadir/OGRE/quakemap.cfg
 %config(noreplace) %_datadir/OGRE/resources.cfg
 %config(noreplace) %_datadir/OGRE/tests.cfg
 %_datadir/OGRE/Media
-%_man1dir/*
 
 %exclude %_datadir/OGRE/samples.cfg
 
@@ -143,7 +142,7 @@ cp -f samples.cfg $RPM_BUILD_ROOT%_datadir/OGRE/samples.cfg
 %_includedir/OGRE
 
 %files devel-doc
-%_datadir/OGRE/docs
+%_defaultdocdir/OGRE
 
 %files samples
 %config(noreplace) %_datadir/OGRE/samples.cfg
@@ -151,6 +150,9 @@ cp -f samples.cfg $RPM_BUILD_ROOT%_datadir/OGRE/samples.cfg
 %_libdir/OGRE/Samples
 
 %changelog
+* Wed Jan 12 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 13.2.4-alt1
+- Updated to upstream version 13.2.4.
+
 * Tue Apr 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.0-alt4
 - Rebuilt without glsl-optimizer and hlsl2glsl.
 

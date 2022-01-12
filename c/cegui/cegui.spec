@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/ccache /usr/bin/doxygen boost-devel cmake glib2-devel li
 %define _localstatedir %{_var}
 Name:           cegui
 Version:        0.8.7
-Release:        alt8_22
+Release:        alt9_22
 Summary:        Free library providing windowing and widgets for graphics APIs / engines
 License:        MIT
 URL:            http://www.cegui.org.uk
@@ -15,6 +15,8 @@ Source0:        http://downloads.sourceforge.net/crayzedsgui/cegui-%{version}.ta
 Patch0:         cegui-0.8.4-lua53.patch
 Patch1:         cegui-0.8.7-alt-default-cxx14.patch
 Patch2:         cegui-0.8.7-alt-nullptr.patch
+Patch3:         cegui-0.8.7-upstream-ogre-compat.patch
+Patch4:         cegui-0.8.7-alt-ogre-compat.patch
 
 ExcludeArch: %arm
 
@@ -145,6 +147,8 @@ Alternative xml parsing library for CEGUI using tinyxml.
 %patch0 -p1
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
+%patch4 -p2
 find -name "*.orig" -exec rm -f {} ';'
 
 
@@ -229,6 +233,9 @@ find -name "*.orig" -exec rm -f {} ';'
 %{_libdir}/cegui-0.8/libCEGUITinyXMLParser.so
 
 %changelog
+* Wed Jan 12 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.7-alt9_22
+- Rebuilt with new OGRE.
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 0.8.7-alt8_22
 - update to new release by fcimport
 
