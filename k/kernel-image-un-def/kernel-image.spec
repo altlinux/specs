@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
-Release: alt2
+Release: alt1
 epoch:1 
 %define kernel_base_version	5.15
-%define kernel_sublevel .11
+%define kernel_sublevel .14
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -658,6 +658,15 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Jan 12 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.15.14-alt1
+- v5.15.14
+
+* Sun Jan 09 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.15.13-alt1
+- v5.15.13
+
+* Thu Dec 30 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.15.12-alt1
+- v5.15.12
+
 * Mon Dec 27 2021 Kernel Bot <kernelbot@altlinux.org> 1:5.15.11-alt2
 - CONFIG_FB_SIMPLE=y
 
