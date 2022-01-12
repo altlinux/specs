@@ -1,3 +1,6 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 # TODO: with additional buildreqs it builds
 #    /usr/bin/osgQtBrowser
 #    /usr/bin/osgQtWidgets
@@ -15,8 +18,8 @@
 # package are under the same license as the package itself.
 
 Name: OpenSceneGraph
-Version: 3.4.1
-Release: alt2.2
+Version: 3.6.5
+Release: alt1
 
 Summary: High performance real-time graphics toolkit
 License: OSGPL (wxWidgets, clarified LGPL)
@@ -29,16 +32,73 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 # thanks, Fedora
 Patch1: 0001-Cmake-fixes.patch
-Patch2: 0003-Unset-DOT_FONTNAME.patch
-Patch3: 0005-c-11-narrowing-hacks-Work-around-c-11-erroring-out-n.patch
+# Upstream deactivated building osgviewerWX for obscure reasons
+# Reactivate for now.
+Patch2:         0002-Activate-osgviewerWX.patch
+# Unset DOT_FONTNAME
+Patch3:         0003-Unset-DOT_FONTNAME.patch
+# Re-add osgframerenderer
+Patch4:         0004-Re-add-osgframerenderer.patch
+# Force osgviewerWX to always use X11 backend (wxGLCanvas is broken on Wayland)
+Patch5:         force-x11-backend.patch
+# Minimal port to OpenEXR 3
+# https://github.com/openscenegraph/OpenSceneGraph/issues/1075
+Patch6:         OpenSceneGraph-openexr3.patch
+# Fix build against recent asio
+Patch7:         OpenSceneGraph_asio.patch
 
-# Automatically added by buildreq on Wed Nov 30 2011
-# optimized out: cmake-modules fontconfig fontconfig-devel fonts-ttf-liberation glib2-devel libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXau-devel libXcursor-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXrandr-devel libXrender-devel libXt-devel libXv-devel libatk-devel libcairo-devel libcurl-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libjpeg-devel libpango-devel libpng-devel libpoppler8-glib libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-webkit libqt4-xml libstdc++-devel libtiff-devel pkg-config xml-utils xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: rpm-macros-cmake cmake doxygen gcc-c++ gnuplot graphviz libInventor-devel libSDL-devel libXScrnSaver-devel libXcomposite-devel libXdmcp-devel libXpm-devel libXtst-devel libXxf86misc-devel libfreeglut-devel libgif-devel libgtkglext-devel libopenal-devel libpoppler-glib-devel librsvg-devel libxkbfile-devel libxml2-devel wget libgta-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
+BuildRequires: asio-devel
+BuildRequires: doxygen graphviz
+BuildRequires: gcc-c++
+BuildRequires: libgif-devel
+BuildRequires: gnuplot
 
-#BuildRequires: libpixman-devel
+BuildRequires: libcurl-devel
+BuildRequires: libGL-devel
+BuildRequires: libGLU-devel
+BuildRequires: libjpeg-devel
+BuildRequires: libpng-devel
 BuildRequires: libtiff-devel
-Requires: lib%name = %version-%release
+BuildRequires: libvncserver-devel
+BuildRequires: libxml2-devel
+BuildRequires: libXmu-devel
+BuildRequires: libX11-devel
+
+BuildRequires: libInventor-devel
+#BuildRequires: libSDL-devel
+BuildRequires: libSDL2-devel
+#BuildRequires: libXScrnSaver-devel
+#BuildRequires: libXcomposite-devel
+#BuildRequires: libXdmcp-devel
+#BuildRequires: libXpm-devel
+#BuildRequires: libXtst-devel
+#BuildRequires: libXxf86misc-devel
+#BuildRequires: libfreeglut-devel
+
+BuildRequires: libcairo-devel
+BuildRequires: libXrandr-devel
+
+BuildRequires: libgtkglext-devel
+BuildRequires: libopenal-devel
+BuildRequires: libpoppler-glib-devel
+BuildRequires: librsvg-devel
+BuildRequires: libxkbfile-devel
+BuildRequires: libxml2-devel
+BuildRequires: libgta-devel
+
+BuildRequires: libwxGTK3.0-devel
+#BuildRequires: pkgconfig(gtk+-2.0)
+
+BuildRequires: gstreamer1.0-devel
+BuildRequires: libgstreamermm1.0-devel
+BuildRequires: gst-plugins-bad1.0-devel
+BuildRequires: gst-plugins1.0-devel
+
+BuildRequires: libgdal-devel
+
+Requires: lib%name
 
 %ifarch %e2k
 # error: cpio archive too big - 4321M
@@ -55,81 +115,54 @@ of OpenGL freeing the developer from implementing and optimizing
 low level graphics calls, and provides many additional utilities
 for rapid development of graphics applications.
 
-%prep
-%setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-
-# path to install examples (instead the patch)
-sed -i "s|share/OpenSceneGraph/bin|bin|" CMakeModules/OsgMacroUtils.cmake
-
-%build
-%cmake -DCMAKE_BUILD_TYPE="Release" \
-      -DCMAKE_CXX_FLAGS_RELEASE="-DNDEBUG" \
-%ifarch %e2k
-      -DBUILD_OSG_EXAMPLES=OFF \
-%else
-      -DBUILD_OSG_EXAMPLES=ON \
-%endif
-      -DBUILD_OSG_WRAPPERS=ON \
-      -DBUILD_DOCUMENTATION=ON
-%cmake_build
-
-%install
-%cmake_install
-# Supposed to take OpenSceneGraph data
-mkdir -p %buildroot%_datadir/OpenSceneGraph
-
-# hack for 3.4.x (it is ok since 3.6.0)
-rm -rf %buildroot/usr/doc/
-
-%files
-%doc AUTHORS.txt LICENSE.txt NEWS.txt README.txt
-%_bindir/osgarchive
-%_bindir/osgconv
-%_bindir/osgviewer
-%_bindir/osgfilecache
-
 %package -n lib%name
 Summary: Development files for OpenSceneGraph
 Group: System/Libraries
-Requires: libOpenThreads = %version-%release
+Requires: libOpenThreads
 
 %description -n lib%name
 Runtime libraries files for OpenSceneGraph
 
-%files -n lib%name
-%_libdir/osgPlugins-*
-%_libdir/libosg*.so.*
-
 %package -n lib%name-devel
 Summary: Development files for OpenSceneGraph
 Group: Development/C++
-Requires: lib%name = %version-%release
-Requires: libOpenThreads-devel = %version-%release
+Requires: lib%name
+Requires: libOpenThreads-devel
 Requires: pkgconfig
 
 %description -n lib%name-devel
 Development files for OpenSceneGraph
 
-%files -n lib%name-devel
-%doc %_cmake__builddir/doc/OpenSceneGraphReferenceDocs
-%_includedir/osg*
-%_pkgconfigdir/openscenegraph*.pc
-%_libdir/libosg*.so
-%_bindir/osgversion
+%package gdal
+Summary: OSG Gdal plugin
+Group: System/Libraries
+Requires: lib%name
 
-%ifnarch %e2k
+%description gdal
+OSG Gdal plugin.
+
+%package gstreamer
+Summary: OSG gstreamer plugin
+Group: System/Libraries
+Requires: lib%name
+
+%description gstreamer
+OSG gstreamer plugin.
+
+%package inventor
+Summary: OSG inventor plugin
+Group: System/Libraries
+Requires: lib%name
+
+%description inventor
+OSG inventor plugin.
+
 %package examples-SDL
 Summary: OSG sample applications using SDL
 Group: Development/Documentation
 
 %description examples-SDL
 OSG sample applications using SDL
-
-%files examples-SDL
-%_bindir/osgviewerSDL
 
 # currently broken, see #25943
 #package examples-fltk
@@ -153,13 +186,116 @@ Group: Development/Documentation
 %description examples
 Sample applications for OpenSceneGraph
 
+%package -n libOpenThreads
+Summary: OpenThreads
+Group: System/Libraries
+Provides: OpenThreads = %name-%version
+
+%description -n libOpenThreads
+OpenThreads is intended to provide a minimal & complete Object-Oriented
+(OO) thread interface for C++ programmers.  It is loosely modeled on the
+Java thread API, and the POSIX Threads standards.  The architecture of
+the library is designed around "swappable" thread models which are
+defined at compile-time in a shared object library.
+
+%package -n libOpenThreads-devel
+Summary: Development files for OpenThreads
+Group: Development/C++
+Requires: libOpenThreads = %version-%release
+
+%description -n libOpenThreads-devel
+Development files for OpenThreads
+
+%prep
+%setup
+%autopatch -p1
+
+# path to install examples (instead the patch)
+sed -i "s|share/OpenSceneGraph/bin|bin|" CMakeModules/OsgMacroUtils.cmake
+
+# Also look in /usr/share/fonts for fonts
+sed -i -e 's,\.:/usr/share/fonts/ttf:,.:%{_datadir}/fonts:/usr/share/fonts/ttf:,' \
+src/osgText/Font.cpp
+
+iconv -f ISO-8859-1 -t utf-8 AUTHORS.txt > AUTHORS.txt~
+mv AUTHORS.txt~ AUTHORS.txt
+
+# Update doxygen
+doxygen -u doc/Doxyfiles/doxyfile.cmake
+doxygen -u doc/Doxyfiles/openthreads.doxyfile.cmake
+
+%build
+%cmake -DCMAKE_BUILD_TYPE="Release" \
+      -DLIB_POSTFIX=%(l=%{_lib}; echo ${l:3}) \
+      -DCMAKE_CXX_FLAGS_RELEASE="-DNDEBUG" \
+%ifarch %e2k
+      -DBUILD_OSG_EXAMPLES=OFF \
+%else
+      -DBUILD_OSG_EXAMPLES=ON \
+%endif
+      -DBUILD_OSG_WRAPPERS=ON \
+      -DBUILD_DOCUMENTATION=ON \
+      -DOSG_AGGRESSIVE_WARNING_FLAGS=OFF \
+      -Wno-dev
+
+%cmake_build
+
+%install
+%cmake_install
+# Supposed to take OpenSceneGraph data
+mkdir -p %buildroot%_datadir/OpenSceneGraph
+
+# hack for 3.4.x (it is ok since 3.6.0)
+rm -rf %buildroot/usr/doc/
+
+%files
+%doc AUTHORS.txt LICENSE.txt NEWS.txt README.md
+%_bindir/osgarchive
+%_bindir/osgconv
+%_bindir/osgviewer
+%_bindir/osgfilecache
+
+%files -n lib%name
+%_libdir/osgPlugins-%version
+%_libdir/libosg*.so.*
+%exclude %_libdir/osgPlugins-%version/osgdb_gstreamer.so
+%exclude %_libdir/osgPlugins-%version/osgdb_gdal.so
+%exclude %_libdir/osgPlugins-%version/osgdb_ogr.so
+%exclude %_libdir/osgPlugins-%version/osgdb_gstreamer.so
+%exclude %_libdir/osgPlugins-%version/osgdb_iv.so
+
+%files gdal
+%_libdir/osgPlugins-%version/osgdb_gdal.so
+%_libdir/osgPlugins-%version/osgdb_ogr.so
+
+%files gstreamer
+%_libdir/osgPlugins-%version/osgdb_gstreamer.so
+
+%files inventor
+%_libdir/osgPlugins-%version/osgdb_iv.so
+
+%files -n lib%name-devel
+%doc %_cmake__builddir/doc/OpenSceneGraphReferenceDocs
+%_includedir/osg*
+%_pkgconfigdir/openscenegraph*.pc
+%_libdir/libosg*.so
+%_bindir/osgversion
+
+%ifnarch %e2k
+#files examples-SDL
+#_bindir/osgviewerSDL
+
 %files examples
 %_bindir/osg2cpp
+%_bindir/osgbindlesstext
 %_bindir/osgdatabaserevisions
+%_bindir/osgdeferred
 %_bindir/osgfpdepth
+%_bindir/osgframerenderer
 %_bindir/osggpx
 %_bindir/osggraphicscost
 %_bindir/osgmultiviewpaging
+%_bindir/osgobjectcache
 %_bindir/osgoit
 %_bindir/osgoutline
 %_bindir/osgparticleshader
@@ -234,7 +370,7 @@ Sample applications for OpenSceneGraph
 %_bindir/osgcompositeviewer
 %_bindir/osgcopy
 %_bindir/osgcubemap
-%_bindir/osgdelaunay
+#_bindir/osgdelaunay
 %_bindir/osgdepthpartition
 %_bindir/osgdistortion
 %_bindir/osgfadetext
@@ -271,13 +407,17 @@ Sample applications for OpenSceneGraph
 %_bindir/osgprerender
 %_bindir/osgprerendercubemap
 %_bindir/osgreflect
+%_bindir/osgsampler
 %_bindir/osgscalarbar
 %_bindir/osgscribe
 %_bindir/osgsequence
 %_bindir/osgshaders
+%_bindir/osgshadermultiviewport
+%_bindir/osgshaderpipeline
 %_bindir/osgshaderterrain
 %_bindir/osgshadow
 %_bindir/osgshape
+%_bindir/osgsimpleMDI
 %_bindir/osgsimplifier
 %_bindir/osgslice
 %_bindir/osgspacewarp
@@ -294,9 +434,10 @@ Sample applications for OpenSceneGraph
 %_bindir/osgtexturerectangle
 %_bindir/osgunittests
 %_bindir/osgvertexprogram
-%_bindir/osgviewerGLUT
-#_bindir/osgviewerWX
+#_bindir/osgviewerGLUT
+%_bindir/osgviewerWX
 %_bindir/osgvolume
+%_bindir/osgvnc
 %_bindir/osgwindows
 
 %_bindir/osgphotoalbum
@@ -327,31 +468,9 @@ Sample applications for OpenSceneGraph
 %_datadir/OpenSceneGraph
 %endif
 
-# libOpenThreads
-%package -n libOpenThreads
-Summary: OpenThreads
-Group: System/Libraries
-Provides: OpenThreads = %name-%version
-
-%description -n libOpenThreads
-OpenThreads is intended to provide a minimal & complete Object-Oriented
-(OO) thread interface for C++ programmers.  It is loosely modeled on the
-Java thread API, and the POSIX Threads standards.  The architecture of
-the library is designed around "swappable" thread models which are
-defined at compile-time in a shared object library.
-
 %files -n libOpenThreads
-%doc AUTHORS.txt LICENSE.txt NEWS.txt README.txt
+%doc AUTHORS.txt LICENSE.txt NEWS.txt README.md
 %_libdir/libOpenThreads.so.*
-
-# libOpenThreads-devel
-%package -n libOpenThreads-devel
-Summary: Development files for OpenThreads
-Group: Development/C++
-Requires: libOpenThreads = %version-%release
-
-%description -n libOpenThreads-devel
-Development files for OpenThreads
 
 %files -n libOpenThreads-devel
 %doc %_cmake__builddir/doc/OpenThreadsReferenceDocs
@@ -360,6 +479,13 @@ Development files for OpenThreads
 %_includedir/OpenThreads
 
 %changelog
+* Tue Jan 11 2022 Anton Midyukov <antohami@altlinux.org> 3.6.5-alt1
+- new version (3.6.5) with rpmgs script
+- unpackaged files in buildroot should terminate build
+- update build requires
+- cleanup spec
+- new subpackages with plugins: gdal, gstreamer, inventor
+
 * Sun Nov 28 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.4.1-alt2.2
 - fixed passing optlevel to cmake
 
