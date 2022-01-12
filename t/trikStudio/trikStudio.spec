@@ -1,17 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %set_verify_elf_method unresolved=relaxed
+
 %def_without separate_trikruntime
 %def_without sanitize
 %def_without debug
 %define appname trik-studio
 
 Name: trikStudio
-Version: 2021.1
-Release: alt4
+Version: 2021.2
+Release: alt1
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
 Group: Education
-Url: https://github.com/qreal/qreal/
+Url: https://github.com/trikset/trik-studio
 
 Packager: Evgeny Sinelnikov <sin@altlinux.org>
 Source: %name-%version.tar
@@ -21,8 +23,7 @@ Patch2: alt-ftbfs.patch
 Patch3: fix-build-with-qt5-quazip1.patch
 
 BuildRequires: gcc-c++ qt5-base-devel qt5-svg-devel qt5-script-devel qt5-multimedia-devel libusb-devel libudev-devel libgmock-devel
-BuildRequires: libqscintilla2-qt5-devel zlib-devel python3-dev libhidapi-devel libusb-devel
-BuildRequires: quazip-qt5-devel
+BuildRequires: libqscintilla2-qt5-devel zlib-devel libquazip-qt5-devel python3-dev libhidapi-devel libusb-devel quazip-qt5-devel
 # Workaround due project build with -fsanitize=undefined natively
 # https://bugzilla.altlinux.org/show_bug.cgi?id=38106
 #if_with sanitize
@@ -32,7 +33,9 @@ BuildRequires: libubsan-devel-static
 #endif
 BuildRequires: rsync qt5-tools
 
-Requires: %name-data
+Requires: libhidapi
+Requires: %name-data = %version-%release
+Conflicts: lib%name
 
 %description
 Intuitive programming environment allows you to program robots using a sequence
@@ -85,34 +88,20 @@ Trik runtime development files for %name
 sed -e '2 a export LD_LIBRARY_PATH=%_libdir\/%name\/' -i installer/platform/trikStudio.sh
 sed -e 's|^trik-studio|%_libdir/%name/trik-studio|' -i installer/platform/trikStudio.sh
 
-pushd plugins/robots/thirdparty/Box2D
-tar -xf Box2D.tar.bz2
-popd
-pushd plugins/robots/thirdparty/trikRuntime
-tar -xf trikRuntime.tar.bz2
-popd
-pushd thirdparty/gamepad
+tar -xf ./.gear/Box2D.tar.bz2
+tar -xf ./.gear/trikRuntime.tar.bz2
+tar -xf ./.gear/gamepad.tar.bz2
+tar -xf ./.gear/qt-solutions.tar.bz2
+tar -xf ./.gear/qslog.tar.bz2
+tar -xf ./.gear/checkapp.tar.bz2
 rm -rf qscintilla quazip
-tar -xf gamepad.tar.bz2
+
+pushd thirdparty/gamepad
 %patch1
 popd
-pushd qrgui/thirdparty
-tar -xf qt-solutions.tar.bz2
-popd
-pushd thirdparty/qslog
-tar -xf qslog.tar.bz2
-popd
-%patch2 -p1
-
-%patch3 -p1
-
-if pushd plugins/robots/thirdparty/trikRuntime/trikRuntime/PythonQt/PythonQt ; then
-	[ -e generated_cpp_5.15 ] \
-	    || ln -s generated_cpp_5.14 generated_cpp_5.15
-    popd
-fi
 
 %build
+export NPROCS=1
 %qmake_qt5 -r \
     LIBS+="`pkg-config --libs quazip1-qt5`" \
     INCLUDEPATH+="`pkg-config --cflags-only-I quazip1-qt5 |
@@ -134,6 +123,7 @@ fi
 %make_build
 
 %install
+
 for N in Kernel Network Hal Control ScriptRunner ; do
     [ -e bin/release/libtrik${N}.la ] || ln -sf libtrik${N}.so bin/release/libtrik${N}.la ||:
     [ -e bin/release/trik${N}.pc ] || echo > bin/release/trik${N}.pc ||:
@@ -155,6 +145,7 @@ rm -rf %buildroot%_includedir/trik*
 rm -rf %buildroot%_includedir/qslog*
 rm -rf %buildroot%_includedir/QsLog*
 %endif
+rm -f %buildroot%_prefix/lib/**.pc
 rm -f %buildroot/lib/*PythonQt_QtAll* %buildroot/include/PythonQt_QtAll.h
 rm -f %buildroot%_libdir/%name/plugins/tools/kitPlugins/librobots-null-interpreter.so
 
@@ -164,8 +155,10 @@ for d in examples help translations images; do
 done
 #cp -fr trikSharp %buildroot%_libdir/%name/
 cp -f gamepad %buildroot%_bindir/
+mv -f %buildroot/opt/checkapp/bin/checkapp %buildroot%_bindir/
 mkdir -p %buildroot%_datadir/%name/languages
 cp -f ../../thirdparty/gamepad/gamepad/languages/*.qm %buildroot%_datadir/%name/languages/
+
 popd
 
 %files
@@ -197,6 +190,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 11 2022 Valery Sinelnikov <greh@altlinux.org> 2021.2-alt1
+- Update to 2021.2
+
 * Sun Jan 02 2022 Anton Midyukov <antohami@altlinux.org> 2021.1-alt4
 - fix build with qt5-quazip1
 - clean add_findreq_skiplist
