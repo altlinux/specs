@@ -1,5 +1,5 @@
 Name: far2l
-Version: 2.3.2
+Version: 2.4.0
 Release: alt1
 
 Summary: Linux port of FAR v2
@@ -16,52 +16,58 @@ BuildRequires: libwxGTK3.0-devel
 BuildRequires: libuchardet-devel
 BuildRequires: libspdlog-devel
 BuildRequires: libarchive-devel
-BuildRequires: libpcre2-devel
+BuildRequires: libpcre-devel
 BuildRequires: libssl-devel
 BuildRequires: libssh-devel
 BuildRequires: libnfs-devel
 BuildRequires: libsmbclient-devel
 BuildRequires: libneon-devel
 BuildRequires: libxerces-c-devel
-
-# multiarc/src/arcread.cpp:184:30: error: cast from 'ArcItemUserData*' to 'DWORD_PTR' {aka 'unsigned int'} loses precision [-fpermissive]
-ExcludeArch: ppc64le
+BuildRequires: libXi-devel
+BuildRequires: libX11-devel
 
 %description
 Linux port of FAR v2.
-ALPHA VERSION - Currently interesting only for enthusiasts!!!
-Plug-ins that are currently working: NetRocks 
-(SFTP/SCP/FTP/FTPS/SMB/NFS/WebDAV), colorer, multiarc, tmppanel,
-align, autowrap, drawline, editcase, SimpleIndent, Calculator,
-Python (optional scripting support).
+BETA VERSION.
+Use on your own risk!
+Plug-ins that are currently working: NetRocks (SFTP/SCP/FTP/FTPS/SMB/NFS/WebDAV),
+colorer, multiarc, tmppanel, align, autowrap, drawline, editcase, SimpleIndent,
+Calculator, Python (optional scripting support)
 
 Used code from projects:
-FAR for Windows
-WINE
-ANSICON
-Portable UnRAR
-7z ANSI-C Decoder
+- FAR for Windows and some of its plugins
+- WINE
+- ANSICON
+- Portable UnRAR
+- 7z ANSI-C Decoder
+- utf-cpp by ww898
 
 %prep
 %setup
 
 %build
-%cmake_insource -DPCRE_INCLUDE_DIR=%_includedir/pcre -DPYTHON=no
-%make_build
-# FIXME: NEW bad_elf_symbols detected during build on ALT Linux build system
-rm -rf install/Plugins/{farftp,multiarc}/
+%cmake \
+	-DPCRE_INCLUDE_DIR=%_includedir/pcre \
+	-DPYTHON=no
+
+%cmake_build
 
 %install
-mkdir -p %buildroot%_bindir/
-mkdir -p %buildroot%_libexecdir/%name/
-cp -a install/* %buildroot%_libexecdir/%name/
-ln -s ../../%_libexecdir/%name/far2l %buildroot%_bindir/%name
+%cmake_install
 
 %files
 %_bindir/%name
 %_libexecdir/%name/
+%_datadir/%name/
+%_desktopdir/far2l.desktop
+%_iconsdir/hicolor/*/apps/*.svg
+%_iconsdir/far2l.svg
 
 %changelog
+* Wed Jan 12 2022 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
+- new version (2.4.0) with rpmgs script
+- cleanup spec
+
 * Sun Jan 02 2022 Anton Midyukov <antohami@altlinux.org> 2.3.2-alt1
 - new version (2.3.2) with rpmgs script (Closes: 41647)
 
