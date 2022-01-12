@@ -1,6 +1,6 @@
 Name: libaacs
 Version: 0.11.0
-Release: alt1
+Release: alt1.1
 
 Summary: BD AACS library
 License: LGPL-2.1
@@ -24,6 +24,14 @@ This package contains the headers and libraries for libaacs development.
 
 %prep
 %setup
+%ifarch %e2k
+# the compiler is called with "-Werror=implicit-function-declaration"
+# and there's a trick in "keydbcfg-parser.c":
+#   GCC diagnostic ignored "-Wimplicit-function-declaration"
+# which doesn't work for EDG frontend,
+# and it stops compiling with an error.
+sed -i "s/-Werror/-Wno-error/" configure.ac
+%endif
 
 %build
 %autoreconf
@@ -44,6 +52,9 @@ rm -v %buildroot%_libdir/libaacs.a
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Jan 12 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.11.0-alt1.1
+- fixed build for Elbrus
+
 * Mon Sep 20 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.11.0-alt1
 - 0.11.0 released
 
