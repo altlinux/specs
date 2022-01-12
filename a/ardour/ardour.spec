@@ -4,7 +4,7 @@
 
 Name:    ardour
 Version: 6.9
-Release: alt1
+Release: alt2
 
 Summary: Professional multi-track audio recording application
 License: GPLv2+
@@ -63,8 +63,6 @@ BuildRequires: taglib-devel
 # For video import
 #Requires:      harvid
 #Requires:      xjadeo
-
-Requires:       jack-audio-connection-kit
 
 %description
 Ardour is a digital audio workstation. You can use it to record, edit
@@ -136,6 +134,9 @@ cp -f %buildroot%_datadir/%name2/icons/application-x-ardour_48px.png \
 %_iconsdir/ardour6.png
 
 %changelog
+* Wed Jan 12 2022 Grigory Ustinov <grenka@altlinux.org> 6.9-alt2
+- Remove jack-audio-connection-kit from Requires (Closes: #41496).
+
 * Tue Sep 14 2021 Grigory Ustinov <grenka@altlinux.org> 6.9-alt1
 - Build new version.
 
