@@ -2,7 +2,7 @@
 %def_without check
 
 Name: mercurial
-Version: 5.9.1
+Version: 6.0.1
 Release: alt1
 
 Summary: Mercurial source code management system
@@ -12,7 +12,6 @@ License: GPLv2+
 Url: https://mercurial-scm.org
 
 Source0: %name-%version.tar
-Patch1: %name-%version-%release.patch
 
 Packager: Yury Yurevich <anarresti@altlinux.org>
 
@@ -90,7 +89,6 @@ This extensions are included in package:
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %python3_build
@@ -136,6 +134,9 @@ mkdir -p %buildroot%_sysconfdir/%name/hgrc.d
 %python3_sitelibdir/hgext3rd
 
 %changelog
+* Tue Jan 11 2022 Grigory Ustinov <grenka@altlinux.org> 6.0.1-alt1
+- 6.0.1.
+
 * Mon Sep 13 2021 Grigory Ustinov <grenka@altlinux.org> 5.9.1-alt1
 - 5.9.1.
 
