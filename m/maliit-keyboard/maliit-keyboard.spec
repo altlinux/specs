@@ -1,6 +1,6 @@
 
 Name: maliit-keyboard
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 %K5init no_altplace
 
@@ -61,5 +61,8 @@ rm -rf %buildroot/%_defaultdocdir/maliit-plugins/html
 %_datadir/glib-2.0/schemas/org.maliit.keyboard.maliit.gschema.xml
 
 %changelog
+* Wed Jan 12 2022 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt1
+- new version
+
 * Fri Jun 04 2021 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt1
 - initial build

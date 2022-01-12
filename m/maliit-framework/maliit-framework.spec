@@ -1,7 +1,7 @@
 
 Name: maliit-framework
-Version: 2.0.0
-Release: alt3
+Version: 2.1.1
+Release: alt1
 %define sover 2
 %define libmaliit libmaliit%sover
 %define libmaliit_glib libmaliit-glib%sover
@@ -161,7 +161,7 @@ rm -rf %buildroot/%_docdir/maliit-framework-doc
 %_bindir/gtk-query-immodules-3.0 --update-cache >/dev/null 2>&1 ||:
 
 %files
-%doc README LICENSE.* NEWS
+%doc README* LICENSE* NEWS
 %dir %_libdir/maliit/
 %dir %_libdir/maliit/plugins*/
 %dir %_libdir/maliit/plugins*/factories
@@ -218,6 +218,9 @@ rm -rf %buildroot/%_docdir/maliit-framework-doc
 #%_libdir/gtk-3.0/3.0.0/immodules/libim-maliit.so*
 
 %changelog
+* Wed Jan 12 2022 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt1
+- new version
+
 * Thu Nov 18 2021 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt3
 - don't package xinput config
 
