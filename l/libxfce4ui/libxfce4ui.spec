@@ -1,10 +1,18 @@
-%def_enable epoxy
 %def_enable introspection
 %def_enable vala
+%def_disable glibtop
+
+%if_disabled glibtop
+%def_disable epoxy
+%def_disable gudev
+%else
+%def_enable epoxy
+%def_enable gudev
+%endif
 
 Name: libxfce4ui
 Version: 4.17.3
-Release: alt1
+Release: alt2
 
 Summary: Various GTK widgets for Xfce
 Summary (ru_RU.UTF-8): Набор виджетов GTK для Xfce
@@ -22,8 +30,8 @@ BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: gtk-doc intltool libSM-devel libstartup-notification-devel libxfce4util-devel >= 4.15.6-alt1 libxfconf-devel xorg-cf-files
 BuildRequires: libgtk+3-devel
 BuildRequires: libgladeui2.0-devel
-BuildRequires: libgtop-devel
-BuildRequires: libgudev-devel
+%{?_enable_glibtop:BuildRequires: libgtop-devel}
+%{?_enable_gudev:BuildRequires: libgudev-devel}
 %{?_enable_epoxy:BuildRequires: libepoxy-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxfce4util-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools libxfce4util-vala}
@@ -127,8 +135,8 @@ This package contains the 'About Xfce' dialog.
 	--enable-gtk-doc \
 	--enable-startup-notification \
 	--enable-gladeui2 \
-	--enable-glibtop \
-	--enable-gudev \
+	%{subst_enable glibtop} \
+	%{subst_enable gudev} \
 	%{subst_enable epoxy} \
 	%{subst_enable introspection} \
 	%{subst_enable vala} \
@@ -186,6 +194,9 @@ make check
 %_desktopdir/xfce4-about.desktop
 
 %changelog
+* Wed Jan 12 2022 Mikhail Efremov <sem@altlinux.org> 4.17.3-alt2
+- Disabled libgtop support.
+
 * Mon Dec 27 2021 Mikhail Efremov <sem@altlinux.org> 4.17.3-alt1
 - Updated to 4.17.3.
 
