@@ -1,7 +1,7 @@
 %define oname eigen
 Name: %{oname}3
 Version: 3.4.0
-Release: alt2
+Release: alt2.1
 
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
@@ -17,15 +17,13 @@ Patch1: eigen_pkgconfig.patch
 # Fix the include paths in the new Eigen3Config.cmake file
 Patch2: eigen3-3.3.1-fixcmake.patch
 # Avoid SSE4.2/AVX on e2k
-Patch3: eigen3-3.3.7-alt-e2k.patch
+Patch3: eigen3-3.4.0-alt-e2k.patch
 # Temporarily disable EIGEN_ALTIVEC_DISABLE_MMA on PPC64le
 Patch4: eigen_mma.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
-%ifnarch %e2k
 BuildRequires: libsuitesparse-devel libscotch-devel libgoogle-sparsehash
-%endif
 BuildRequires: gcc-c++ doxygen
 BuildRequires: libsuperlu-devel libmpfr-devel libgmp-devel
 BuildRequires: libfftw3-devel libGLU-devel libgsl-devel gcc-fortran
@@ -72,6 +70,8 @@ This package contains examples for Eigen.
 %patch2 -p0 -b .fixcmake
 %ifarch %e2k
 %patch3 -p2 -b .e2k
+# crashes with a bus error
+rm -f unsupported/doc/examples/BVH_Example.cpp
 %endif
 %ifarch ppc64le
 %patch4 -p1
@@ -86,14 +86,8 @@ export PATH=$PATH:%_libdir/pastix/bin
 	-DPKGCONFIG_INSTALL_DIR=%_libdir/pkgconfig \
 	-DCMAKEPACKAGE_INSTALL_DIR=%_libdir/cmake/%name \
 	-DOpenGL_GL_PREFERENCE=GLVND \
-%ifarch %e2k
-	-DEIGEN_TEST_AVX512=OFF \
-	-DEIGEN_TEST_AVX=OFF \
-	-DEIGEN_TEST_SSE4_2=OFF \
-%else
 	-DCHOLMOD_INCLUDES=%_includedir/suitesparse \
 	-DUMFPACK_INCLUDES=%_includedir/suitesparse \
-%endif
 	-DEIGEN_TEST_NOQT=ON \
 	-DSUPERLU_LIBRARIES=-lsuperlu_4.0 \
 	-DCMAKE_STRIP="/bin/echo" \
@@ -102,37 +96,34 @@ export PATH=$PATH:%_libdir/pastix/bin
 	-DMETIS_INCLUDE_DIRS=%_includedir/metis
 
 %cmake_build
-%ifnarch %e2k
 %cmake_build -t doc
-%endif
 
 %install
 %cmake_install
 
 install -d %buildroot%_bindir
-%ifnarch %e2k
 cd %_cmake__builddir
 rm -fR doc/examples/CMakeFiles doc/examples/*.out \
 	doc/examples/*.cmake
 install -m755 doc/examples/* %buildroot%_bindir
 cd -
-%endif
 
 %files
 %_includedir/*
 %_pkgconfigdir/*
 %_libdir/cmake/%name
 
-%ifnarch %e2k
 %files examples
 %_bindir/*
 %doc doc/examples/*
 
 %files docs
 %doc %_cmake__builddir/doc/html/*
-%endif
 
 %changelog
+* Wed Jan 12 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.4.0-alt2.1
+- E2K: updated patch, enabled build of docs and examples
+
 * Tue Aug 31 2021 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt2
 - Temporarily disable EIGEN_ALTIVEC_DISABLE_MMA on ppc64le (ALT #40833).
 
