@@ -2,12 +2,12 @@
 
 Name: cuneiform
 Version: 1.1.0
-Release: alt5
+Release: alt6
 
 Summary: Cuneiform is an OCR system originally developed and open sourced by Cognitive technologies.
-Summary(ru_RU.KOI8-R): Программа распознавания символов (OCR) Cuneiform, Linux-версия
+Summary(ru_RU.UTF-8): п÷я─п╬пЁя─п╟п╪п╪п╟ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦я▐ я│п╦п╪п╡п╬п╩п╬п╡ (OCR) Cuneiform, Linux-п╡п╣я─я│п╦я▐
 
-License: BSD-style
+License: BSD
 Group: Graphics
 Url: https://launchpad.net/cuneiform-linux
 
@@ -29,6 +29,7 @@ Patch8: strings.patch
 
 # Patches from Gentoo
 Patch50: cuneiform-1.1.0-gcc7.patch
+Patch51: cuneiform-1.1.0-gcc11.patch
 
 Requires: %name-data
 
@@ -36,28 +37,27 @@ BuildRequires: gcc-c++ cmake
 BuildRequires: libGraphicsMagick-devel libGraphicsMagick-c++-devel
 
 %description
-Cuneiform is an OCR system originally developed and open sourced by
-Cognitive technologies. This project aims to create a fully portable
-version of Cuneiform.
+Cuneiform is an OCR system originally developed and open sourced by Cognitive
+technologies. This project aims to create a fully portable version of
+Cuneiform.
 
-%description -l ru_RU.KOI8-R
-Программа распознавания символов (OCR) Cuneiform, некогда очень
-популярная в нашей стране, была выложена компанией Cognitive
-Technologies в свободный доступ в 2008 году. Проект cuneiform-linux
-ставит своей целью полное портирование и дальнейшее развитие Cuneiform
-под Linux и другие операционные системы.
+%description -l ru_RU.UTF-8
+п÷я─п╬пЁя─п╟п╪п╪п╟ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦я▐ я│п╦п╪п╡п╬п╩п╬п╡ (OCR) Cuneiform, п╫п╣п╨п╬пЁп╢п╟ п╬я┤п╣п╫я▄ п©п╬п©я┐п╩я▐я─п╫п╟я▐ п╡
+п╫п╟я┬п╣п╧ я│я┌я─п╟п╫п╣, п╠я▀п╩п╟ п╡я▀п╩п╬п╤п╣п╫п╟ п╨п╬п╪п©п╟п╫п╦п╣п╧ Cognitive Technologies п╡ я│п╡п╬п╠п╬п╢п╫я▀п╧ п╢п╬я│я┌я┐п©
+п╡ 2008 пЁп╬п╢я┐. п÷я─п╬п╣п╨я┌ cuneiform-linux я│я┌п╟п╡п╦я┌ я│п╡п╬п╣п╧ я├п╣п╩я▄я▌ п©п╬п╩п╫п╬п╣ п©п╬я─я┌п╦я─п╬п╡п╟п╫п╦п╣ п╦
+п╢п╟п╩я▄п╫п╣п╧я┬п╣п╣ я─п╟п╥п╡п╦я┌п╦п╣ Cuneiform п©п╬п╢ Linux п╦ п╢я─я┐пЁп╦п╣ п╬п©п╣я─п╟я├п╦п╬п╫п╫я▀п╣ я│п╦я│я┌п╣п╪я▀.
 
 %package data
 Summary: Language support and other data files required for Cuneiform OCR
-Summary(ru_RU.KOI8-R): Поддержка различных языков и другие файлы с данными для OCR Cuneiform
+Summary(ru_RU.UTF-8): п÷п╬п╢п╢п╣я─п╤п╨п╟ я─п╟п╥п╩п╦я┤п╫я▀я┘ я▐п╥я▀п╨п╬п╡ п╦ п╢я─я┐пЁп╦п╣ я└п╟п╧п╩я▀ я│ п╢п╟п╫п╫я▀п╪п╦ п╢п╩я▐ OCR Cuneiform
 Group: Graphics
 BuildArch: noarch
 
 %description data
 Language support and other data files required for Cuneiform OCR
 
-%description -l ru_RU.KOI8-R data
-Поддержка различных языков и другие файлы с данными для OCR Cuneiform
+%description -l ru_RU.UTF-8 data
+п÷п╬п╢п╢п╣я─п╤п╨п╟ я─п╟п╥п╩п╦я┤п╫я▀я┘ я▐п╥я▀п╨п╬п╡ п╦ п╢я─я┐пЁп╦п╣ я└п╟п╧п╩я▀ я│ п╢п╟п╫п╫я▀п╪п╦ п╢п╩я▐ OCR Cuneiform
 
 %prep
 %setup
@@ -70,8 +70,10 @@ Language support and other data files required for Cuneiform OCR
 %patch7 -p1
 %patch8 -p1
 %patch50 -p1
+%patch51 -p1
 
 %build
+%add_optflags -std=c++11
 %add_optflags -fcommon
 %cmake
 %cmake_build
@@ -92,6 +94,11 @@ install -D -p -m644 %SOURCE1 %buildroot%_man1dir/cuneiform.1
 %_datadir/%name/*
 
 %changelog
+* Wed Jan 12 2022 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt6
+- FTBFS: fix build with gcc11 (thanks Gentoo for patch)
+- Convert localized summary and description from koi8-r to utf-8.
+- Fix License tag according to SPDX.
+
 * Mon Mar 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt5
 - Applied patches from Debian and Gentoo and fixed build with gcc-10.
 
