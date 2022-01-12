@@ -1,6 +1,6 @@
 Name: dansguardian
 Version: 2.12.0.3
-Release: alt3
+Release: alt3.1
 
 Summary: Content filter
 Summary(ru_RU.UTF-8): Фильтр WEB-содержимого
@@ -34,6 +34,7 @@ DansGuardian - фильтр WEB содержимого, который испо�
 %patch3 -p2
 
 %build
+%add_optflags -std=c++11 
 %configure  --enable-clamd \
 	    --enable-ntlm \
 	    --with-logdir=/var/log/%name \
@@ -77,6 +78,9 @@ rm -rf %buildroot/usr/share/doc/%name
 %attr(2775,root,%name) /var/run/%name
 
 %changelog
+* Wed Jan 12 2022 Andrey Cherepanov <cas@altlinux.org> 2.12.0.3-alt3.1
+- FTBFS: fix build with gcc11.
+
 * Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 2.12.0.3-alt3
 - NMU: remove rpm-build-ubt from BR:
 
