@@ -1,19 +1,20 @@
 %define so_version 1
 
 Name: qbs
-Version: 1.20.1
-Release: alt2
+Version: 1.21.0
+Release: alt1
 
 Summary: Qt Build Suite
 License: LGPL-3.0-only OR (GPL-2.0-only OR GPL-3.0-or-later) AND (LGPL-2.1-only OR LGPL-3.0-only WITH Qt-LGPL-exception-1.1) AND GPL-3.0-only WITH Qt-GPL-exception-1.0
 Group: Development/Tools
 
-Url: http://qt-project.org/wiki/Qbs
+Url: https://qt-project.org/wiki/Qbs
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://download.qt.io/official_releases/%name/%version/%name-src-%version.tar.gz
 Source: %name-src-%version.tar
 
+BuildRequires: libstdc++-devel-static
 BuildRequires: qt5-script-devel
 BuildRequires: rpm-build-python3
 
@@ -99,6 +100,7 @@ export LD_LIBRARY_PATH=`pwd`/lib
 %_man1dir/%name.1*
 
 %files common
+%dir %_datadir/%name
 %_datadir/%name
 %exclude %_datadir/%name/examples
 
@@ -114,6 +116,9 @@ export LD_LIBRARY_PATH=`pwd`/lib
 %_datadir/%name/examples
 
 %changelog
+* Wed Jan 12 2022 Nazarov Denis <nenderus@altlinux.org> 1.21.0-alt1
+- Version 1.21.0
+
 * Sun Nov 14 2021 Nazarov Denis <nenderus@altlinux.org> 1.20.1-alt2
 - Add conflicts to qt-creator-core
 - Separate shared library and common files
