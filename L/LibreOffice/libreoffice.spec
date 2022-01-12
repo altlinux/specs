@@ -29,7 +29,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1.1
+Release: alt2
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -93,6 +93,9 @@ Patch403: alt-003-skia-freetype-2.11.patch
 Patch404: alt-004-shortint.patch
 
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
+
+# content of patch shared to Weblate-LibreOffice by @NeuroFreak
+Patch600: LibreOffice-7.2.0.1-update-russian-translation.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
@@ -312,6 +315,9 @@ tar cJf ext_sources/skia-m90-45c57e116ee0ce214bdf78405a4762722e4507d9.tar.xz ski
 %patch404 -p1
 
 %patch500 -p0
+
+# Patch with russian translation update
+%patch600 -p1
 
 # Hack in ALT pixman path
 sed -i 's@ -I@ -I /usr/include/pixman-1 -I@' canvas/Library_cairocanvas.mk
@@ -622,6 +628,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Sat Jan 01 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 7.2.0.1-alt2
+- Update russian translation for 7.2.0.1
+
 * Tue Aug 03 2021 Andrey Cherepanov <cas@altlinux.org> 7.2.0.1-alt1.1
 - FTBFS: patch bundled Skia for freetype 2.11 (ALT #40642)
 
