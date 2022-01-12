@@ -1,6 +1,6 @@
 Name: xfce4-sensors-plugin
-Version: 1.4.1
-Release: alt2
+Version: 1.4.2
+Release: alt1
 
 Summary: Sensors plugin for Xfce Desktop
 License: GPLv2+
@@ -18,12 +18,13 @@ Patch: %name-%version-%release.patch
 %def_disable xnvctrl
 %endif
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
+BuildRequires: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: gcc-c++
+BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
 BuildRequires: hddtemp intltool libsensors3-devel libnotify-devel
 %{?_enable_xnvctrl:BuildRequires: nvidia-settings-devel}
 
-Requires: xfce4-panel >= 4.11 hddtemp lm_sensors3
+Requires: xfce4-panel >= 4.14 hddtemp lm_sensors3
 
 %define _unpackaged_files_terminate_build 1
 
@@ -61,7 +62,6 @@ Requires: xfce4-panel >= 4.11 hddtemp lm_sensors3
 %_iconsdir/*/*/*/*
 %_libdir/xfce4/panel/plugins/*.so
 %_libdir/xfce4/modules/libxfce4sensors.so*
-%_liconsdir/*.png
 %_datadir/xfce4/panel/plugins/*.desktop
 %_datadir/xfce4/panel/plugins/%name.css
 %_man1dir/xfce4-sensors.1*
@@ -70,6 +70,11 @@ Requires: xfce4-panel >= 4.11 hddtemp lm_sensors3
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Jan 12 2022 Mikhail Efremov <sem@altlinux.org> 1.4.2-alt1
+- Don't use -export-symbols-regex for libxfce4sensors.
+- Dropped obsoleted patch.
+- Updated to 1.4.2.
+
 * Fri Aug 13 2021 Mikhail Efremov <sem@altlinux.org> 1.4.1-alt2
 - Increase tachometers spacing (closes: #40699).
 
