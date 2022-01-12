@@ -1,18 +1,20 @@
 Name:		mdevctl
-Version:	0.81
+Version:	1.1.0
 Release:	alt1
 Summary:	Mediated device management and persistence utility
 
 Group:		System/Configuration/Hardware
 License:	LGPLv2
 URL:		https://github.com/mdevctl/mdevctl
-BuildArch:	noarch
 
 Source0:	%name-%version.tar
-Patch0:     %name-%version.patch
+Patch0:		%name-%version.patch
 
 BuildRequires: pkgconfig(udev)
-Requires: coreutils udev jq
+BuildRequires: rust-cargo
+BuildRequires: /proc
+
+Requires: udev
 
 %description
 mdevctl is a utility for managing and persisting devices in the
@@ -24,9 +26,25 @@ vfio-mdev for assignment to virtual machines.
 %prep
 %setup
 %patch0 -p1
+mkdir -p .cargo
+cat >> .cargo/config <<EOF
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
+EOF
+
+%build
+cargo build --offline --release
 
 %install
 %makeinstall_std
+
+%check
+export RUST_BACKTRACE=1
+cargo check
+cargo test --release --no-fail-fast
 
 %files
 %doc README.md
@@ -36,8 +54,16 @@ vfio-mdev for assignment to virtual machines.
 %dir %_sysconfdir/mdevctl.d
 %_man8dir/mdevctl.8*
 %_man8dir/lsmdev.8*
+%_datadir/bash-completion/completions/*
 
 %changelog
+* Fri Sep 10 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.1.0-alt1
+- new version 1.1.0
+- enable %%check
+
+* Sat Jul 10 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.0.0-alt1
+- new version 1.0.0
+
 * Fri Jun 25 2021 Alexey Shabalin <shaba@altlinux.org> 0.81-alt1
 - new version 0.81
 
@@ -49,5 +75,4 @@ vfio-mdev for assignment to virtual machines.
 
 * Fri Jul 10 2020 Alexey Shabalin <shaba@altlinux.org> 0.61-alt1
 - Initial build
-
 
