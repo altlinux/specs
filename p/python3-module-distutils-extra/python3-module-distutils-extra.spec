@@ -1,28 +1,33 @@
-%define _name python-distutils-extra
-%define ver_major 2.39
+%define modname python-distutils-extra
+%define ver_major 2.45
+
+%def_enable check
 
 Name: python3-module-distutils-extra
 Version: %ver_major
-Release: alt2
+Release: alt1
 
 Summary: Integrate more support into Python's distutils
 Group: Development/Python3
 License: GPLv2+
-Url: https://launchpad.net/%_name
+Url: https://salsa.debian.org/python-team/packages/python-distutils-extra
 
-Source: https://launchpad.net/%_name/trunk/%ver_major/+download/%_name-%version.tar.gz
+Vcs: https://salsa.debian.org/python-team/packages/python-distutils-extra.git
+Source: %modname-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
+%{?_enable_check:BuildRequires: /proc python3-module-pytest python3-module-httplib2
+BuildRequires: python3-module-pygobject3 intltool python3-module-pyflakes}
 
 %description
 Enables you to easily integrate gettext support, themed icons and
 documentation into Python's distutils.
 
 %prep
-%setup -n %_name-%version
+%setup -n %modname-%version
 
 %build
 %python3_build
@@ -32,6 +37,10 @@ documentation into Python's distutils.
 
 chmod a+x %buildroot%python3_sitelibdir/DistUtilsExtra/command/build_extra.py
 
+%check
+%__python3 test/auto.py -v
+%_bindir/pyflakes-py3  DistUtilsExtra/ test/
+
 %files
 %doc doc/*
 %python3_sitelibdir/DistUtilsExtra/
@@ -39,6 +48,10 @@ chmod a+x %buildroot%python3_sitelibdir/DistUtilsExtra/command/build_extra.py
 
 
 %changelog
+* Wed Jan 12 2022 Yuri N. Sedunov <aris@altlinux.org> 2.45-alt1
+- 2.45 (new Debian upstream)
+- enabled %%check
+
 * Fri Jul 23 2021 Yuri N. Sedunov <aris@altlinux.org> 2.39-alt2
 - python3-only build
 
