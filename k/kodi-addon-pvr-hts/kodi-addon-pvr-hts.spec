@@ -1,12 +1,12 @@
 Name: kodi-addon-pvr-hts
 Version: 19.0
-Release: alt5
+Release: alt6
 
 Summary: PVR TVheadend addon for Kodi
 License: GPLv2
 Group: Video
 
-ExclusiveArch: armh aarch64 %ix86 x86_64
+ExclusiveArch: armh aarch64 %ix86 x86_64 %e2k
 
 Source: %name-%version.tar
 
@@ -30,6 +30,9 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix -DCMAKE_INSTALL_LIBDIR=%_libdir/kodi
 %_datadir/kodi/addons/pvr.hts
 
 %changelog
+* Tue Jan 11 2022 Michael Shigorin <mike@altlinux.org> 19.0-alt6
+- build on Elbrus as well
+
 * Mon Oct 11 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.0-alt5
 - 19.0-Matrix released
 
