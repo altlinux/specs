@@ -1,8 +1,9 @@
+%def_enable snapshot
 %define api_ver 0.1
 %define libname libcallaudio
 
 Name: callaudiod
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Summary: Daemon for dealing with audio routing during phone calls
@@ -10,13 +11,17 @@ Group: System/Servers
 License: GPL-3.0-or-later
 Url: https://gitlab.com/mobian1/callaudiod
 
-Vcs: https://gitlab.com/mobian1/callaudiod.git
+%if_disabled snapshot
 Source: https://gitlab.com/mobian1/%name/-/archive/%version/%name-%version.tar.gz
+%else
+Vcs: https://gitlab.com/mobian1/callaudiod.git
+Source: %name-%version.tar
+%endif
 
 Requires: %libname = %EVR
 
-BuildRequires(pre): meson
-BuildRequires: gcc-c++
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++
 BuildRequires: pkgconfig(gio-unix-2.0)
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(libpulse-mainloop-glib)
@@ -70,6 +75,9 @@ applications that use %libname.
 %_pkgconfigdir/%libname-%api_ver.pc
 
 %changelog
+* Wed Jan 12 2022 Yuri N. Sedunov <aris@altlinux.org> 0.1.3-alt1
+- updated to 0.1.3-1-g17464ac
+
 * Wed Jan 05 2022 Yuri N. Sedunov <aris@altlinux.org> 0.1.2-alt1
 - 0.1.2
 
