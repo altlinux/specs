@@ -2,8 +2,8 @@
 %def_with emacs
 
 Name: gnuplot
-Version: 5.4.2
-Release: alt3
+Version: 5.4.3
+Release: alt1
 Epoch: 1
 
 Summary: A program for plotting mathematical expressions and data
@@ -29,7 +29,7 @@ Patch2: gnuplot-4.2.0-fonts.patch
 Patch3: gnuplot-4.6.1-plot-sigsegv.patch
 Patch4: gnuplot-5.2.2-doc.patch
 # this from suse
-Patch5: gnuplot-5.4.0-libgd.patch
+Patch5: gnuplot-5.4.3-libgd.patch
 # ALT 34350
 Patch6: gnuplot-5.4.0-fix-help.patch
 
@@ -271,6 +271,9 @@ rm -f demo/html/Makefile*
 %doc demo
 
 %changelog
+* Wed Jan 12 2022 Grigory Ustinov <grenka@altlinux.org> 1:5.4.3-alt1
+- Automatically updated to 5.4.3.
+
 * Thu Nov 04 2021 Grigory Ustinov <grenka@altlinux.org> 1:5.4.2-alt3
 - Simple rebuild (Closes: #41268).
 
