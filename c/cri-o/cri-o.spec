@@ -14,7 +14,7 @@
 
 Name: cri-o
 Version: 1.22.1
-Release: alt1
+Release: alt2
 Summary: Kubernetes Container Runtime Interface for OCI-based containers
 Group: Development/Other
 License: Apache-2.0
@@ -85,17 +85,14 @@ cd .build/src/%import_path
       --runroot "/var/run/containers/storage" \
       --listen "/var/run/crio/crio.sock" \
       --conmon "%_bindir/conmon" \
-      --cni-plugin-dir "%_libexecdir/cni" \
+      --cni-plugin-dir "%_libexecdir/cni,/opt/cni/bin" \
       --storage-opt "overlay.override_kernel_check=1" \
       config > ./crio.conf
 
 # install conf files
 install -dp %buildroot%_sysconfdir/cni/net.d
-install -p -m 644 contrib/cni/10-crio-bridge.conf %buildroot%_sysconfdir/cni/net.d/100-crio-bridge.conf
-install -p -m 644 contrib/cni/99-loopback.conf %buildroot%_sysconfdir/cni/net.d/200-loopback.conf
-
-install -dp %buildroot%_sysconfdir/sysconfig
-install -p -m 644 contrib/sysconfig/crio %buildroot%_sysconfdir/sysconfig/crio
+install -p -m 644 contrib/cni/10-crio-bridge.conf %buildroot%_sysconfdir/cni/net.d/100-crio-bridge.conf.sample
+install -p -m 644 contrib/cni/99-loopback.conf %buildroot%_sysconfdir/cni/net.d/200-loopback.conf.sample
 
 %make PREFIX=%buildroot%prefix DESTDIR=%buildroot \
             install.bin \
@@ -113,9 +110,8 @@ install -p -m 644 contrib/sysconfig/crio %buildroot%_sysconfdir/sysconfig/crio
 %_man8dir/crio-status.*
 %dir %_sysconfdir/crio
 %config(noreplace) %_sysconfdir/crio/crio.conf
-%config(noreplace) %_sysconfdir/sysconfig/crio
-%config(noreplace) %_sysconfdir/cni/net.d/100-crio-bridge.conf
-%config(noreplace) %_sysconfdir/cni/net.d/200-loopback.conf
+%_sysconfdir/cni/net.d/100-crio-bridge.conf.sample
+%_sysconfdir/cni/net.d/200-loopback.conf.sample
 %config(noreplace) %_sysconfdir/crictl.yaml
 %_unitdir/*.service
 %_datadir/oci-umount
@@ -124,6 +120,10 @@ install -p -m 644 contrib/sysconfig/crio %buildroot%_sysconfdir/sysconfig/crio
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Wed Jan 12 2022 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.1-alt2
+- Rename default network configs to samples
+- Add /opt/cni/bin (it is default place for some k8s networks) to plugins dir
+
 * Thu Dec 02 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.1-alt1
 - 1.22.1
 
