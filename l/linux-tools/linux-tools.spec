@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 5.15
+%define kernel_base_version 5.16
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/traceevent/plugins/*
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
@@ -38,6 +38,7 @@ BuildRequires: libhugetlbfs-devel
 BuildRequires: liblzma-devel
 BuildRequires: libmnl-devel
 BuildRequires: libmount-devel
+BuildRequires: libpfm-devel
 BuildRequires: libpopt-devel
 %ifnarch %arm
 BuildRequires: libnuma-devel
@@ -229,6 +230,8 @@ sed -i 's/-s\b/-g/' testing/selftests/size/Makefile
 sed -i 's/-std=gnu99/& -g/' testing/selftests/vDSO/Makefile
 sed -Ei '\!^CFLAGS!s!(-Wl,-rpath=)\./!\1/usr/lib/kselftests/rseq!' testing/selftests/rseq/Makefile
 
+%define optflags_lto %nil
+
 %build
 banner build
 cd %kernel_source/tools
@@ -242,6 +245,7 @@ rst2man() {
 # Noiseless git stub
 git() { exit 1; }; export -f git
 
+export EXTRA_CFLAGS="%optflags" V=1
 %define perf_opts \\\
 	PERF_VERSION=%version-%release \\\
 	JOBS=%__nprocs \\\
@@ -249,6 +253,7 @@ git() { exit 1; }; export -f git
 	NO_GTK2=1 \\\
 	PYTHON=python3 \\\
 	PYTHON_CONFIG=python3-config \\\
+	LIBPFM4=1 \\\
 	%nil
 
 %define install_opts \\\
@@ -263,8 +268,7 @@ make -C perf \
      all \
      man \
      python \
-     libtraceevent_plugins \
-     V=1
+     libtraceevent_plugins
 
 ### build bpf tools
 # runqslower does not build with: `Couldn't find kernel BTF; set VMLINUX_BTF to specify its location.`
@@ -314,6 +318,8 @@ make acpi
 %install
 banner install
 cd %kernel_source/tools
+
+export EXTRA_CFLAGS="%optflags" V=1
 
 ### Install perf
 # Note: perf's Makefile cannot set `mandir=%%_mandir` properly.
@@ -598,6 +604,10 @@ fi
 %_libexecdir/kselftests
 
 %changelog
+* Mon Jan 10 2022 Vitaly Chikunov <vt@altlinux.org> 5.16-alt1
+- Updated to v5.16 (2022-01-09).
+- Enable PMU event selection using libpfm4 syntax (--pfm-events).
+
 * Tue Nov 02 2021 Vitaly Chikunov <vt@altlinux.org> 5.15-alt1
 - Update to v5.15 (2021-10-31).
 
