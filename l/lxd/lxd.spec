@@ -6,7 +6,7 @@
 
 Name:		lxd
 Version:	4.21
-Release:	alt1
+Release:	alt2
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
 Group:		Development/Other
@@ -39,6 +39,7 @@ Requires:	rsync
 Requires:	iptables
 Requires:	ebtables
 Requires:	dnsmasq
+Requires:	attr
 
 BuildRequires: libcap-devel
 BuildRequires: libuv-devel
@@ -187,6 +188,9 @@ fi
 %exclude %go_path/src/%import_path/go.sum
 
 %changelog
+* Wed Jan 12 2022 Mikhail Gordeev <obirvalger@altlinux.org> 4.21-alt2
+- Add requires to attr.
+
 * Wed Dec 22 2021 Alexey Shabalin <shaba@altlinux.org> 4.21-alt1
 - new version 4.21.
 
