@@ -11,7 +11,7 @@
 %def_enable man
 
 Name: gnome-session
-Version: %ver_major.1.1
+Version: %ver_major.8
 Release: alt1%beta
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -49,8 +49,8 @@ Requires: xdg-user-dirs
 
 Requires: icon-theme-hicolor gnome-icon-theme-symbolic gnome-themes-standard
 
-BuildRequires(pre): meson rpm-build-gnome pkgconfig(systemd)
-BuildRequires: libGConf2-devel
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-systemd
+BuildRequires: meson libGConf2-devel
 BuildRequires: libgio-devel glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 # https://bugzilla.gnome.org/show_bug.cgi?id=710383
@@ -177,9 +177,13 @@ export PATH=$PATH:/sbin
 
 %files wayland
 %_datadir/wayland-sessions/gnome.desktop
+%_datadir/wayland-sessions/gnome-wayland.desktop
 
 
 %changelog
+* Wed Jan 12 2022 Yuri N. Sedunov <aris@altlinux.org> 40.8-alt1
+- 40.8
+
 * Sat May 15 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1.1-alt1
 - 40.1.1
 

@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: nautilus
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Nautilus is a network user environment
@@ -52,8 +52,8 @@ Requires: %_bindir/bwrap
 Requires: totem-video-thumbnailer
 %{?_enable_tracker:Requires: tracker-miners3}
 
-BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
-BuildRequires: desktop-file-utils >= %desktop_file_utils_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires: meson desktop-file-utils >= %desktop_file_utils_ver
 BuildRequires: libappstream-glib-devel
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgnome-desktop3-devel >= %desktop_ver
@@ -70,7 +70,8 @@ BuildRequires: libportal-devel >= %portal_ver
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 %{?_enable_docs:BuildRequires: docbook-utils gtk-doc}
 %{?_enable_tracker:BuildRequires: pkgconfig(tracker-sparql-3.0) tracker3-sandbox}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
+%{?_enable_introspection:BuildRequires(pre): rpm-build-gir
+BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel >= %selinux_ver}
 %{?_enable_check:
 BuildRequires(pre): rpm-build-python3
@@ -204,6 +205,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Wed Jan 12 2022 Yuri N. Sedunov <aris@altlinux.org> 41.2-alt1
+- 41.2
+
 * Sat Oct 30 2021 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
 - 41.1
 
