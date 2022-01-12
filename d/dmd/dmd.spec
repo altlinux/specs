@@ -1,4 +1,5 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 ExclusiveArch: %ix86 x86_64
 
@@ -9,7 +10,7 @@ ExclusiveArch: %ix86 x86_64
 %endif
 
 Name: dmd
-Version: 2.097.0
+Version: 2.098.1
 Release: alt1
 Summary: The D Programming Language
 Group: Development/Other
@@ -214,6 +215,9 @@ cp -r ../tools/man/man1/* %buildroot%_man1dir/
 %_libdir/libphobos2.a
 
 %changelog
+* Wed Jan 12 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 2.098.1-alt1
+- Updated to upstream version 2.098.1.
+
 * Tue Jun 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.097.0-alt1
 - Updated to upstream version 2.097.0.
 
