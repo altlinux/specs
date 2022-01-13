@@ -1,12 +1,12 @@
 %def_without xen
-%define githash 856c13e97e974f8e0dec77dd3738372d4c234d2e
+%define githash ef3ee681e05e886fcd890466d8d99aefd80b724c
 %define gitdiff c6e62702d5e4fb2cf6b3fa27e67cb0d4b399a30b
 %define _localstatedir %_var
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: drbd-utils
-Version: 9.19.1
-Release: alt4
+Version: 9.20.0
+Release: alt1
 
 Summary: DRBD user-land tools and scripts
 License: GPLv2+
@@ -186,6 +186,9 @@ make test
 %_datadir/cluster/drbd.metadata
 
 %changelog
+* Thu Jan 13 2022 Andrew A. Vasilyev <andy@altlinux.org> 9.20.0-alt1
+- 9.20.0
+
 * Fri Dec 03 2021 Egor Ignatov <egori@altlinux.org> 9.19.1-alt4
 - drbd.ocf: change type name 'numeric' to 'integer'
 
