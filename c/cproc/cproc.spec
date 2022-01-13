@@ -1,9 +1,9 @@
 Name:       cproc
 # git log -1 --format='%as' | tr - .  
-Version:    2021.08.20
+Version:    2021.12.06
 Release:    alt1
 Group:      Development/C
-# git clone git://c9x.me/cproc.git 
+# git clone     https://git.sr.ht/~mcf/cproc
 # cd cproc; git archive --prefix=cproc-`git log -1 --format='%as' | tr - .`/ --output=../RPM/SOURCES/cproc-`git log -1 --format='%as' | tr - .`.tar HEAD
 Source:     %name-%version.tar
 License:    ISC
@@ -41,5 +41,8 @@ make bootstrap
 make check
 
 %changelog
+* Wed Jan 12 2022 Fr. Br. George <george@altlinux.ru> 2021.12.06-alt1
+- Version up
+
 * Sat Aug 21 2021 Fr. Br. George <george@altlinux.ru> 2021.08.20-alt1
 - Initial build for ALT
