@@ -1,5 +1,5 @@
 Name: kernel-image-un-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	5.15
 %define kernel_sublevel .14
@@ -54,7 +54,17 @@ Group: System/Kernel and hardware
 Url: http://www.kernel.org/
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
-Patch0: %name-%version-%release.patch
+Patch0: stable.patch
+Patch1: alt.patch
+Patch2: altha.patch
+Patch3: idmounts.patch
+Patch4: acs-overrides.patch
+Patch5: core-kmod.patch
+Patch6: arg-size.patch
+Patch7: proc-iterrupts.patch
+Patch8: xt_audit.patch
+Patch9: userns.patch
+Patch10: baikalm.patch
 
 %if "%sub_flavour" == "pae"
 ExclusiveArch: i586
@@ -314,7 +324,16 @@ rm -rf kernel-source-%kernel_base_version
 tar -xf %kernel_src/kernel-source-%kernel_base_version.tar
 %setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_base_version
 %patch0 -p1
-
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
 
 # this file should be usable both with make and sh (for broken modules
 # which do not use the kernel makefile system)
@@ -658,6 +677,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Jan 13 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.15.14-alt2
+- gear repository schema changed
+
 * Wed Jan 12 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.15.14-alt1
 - v5.15.14
 
