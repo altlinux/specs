@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 40
+%define ver_major 41
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
@@ -11,7 +11,7 @@
 %def_enable man
 
 Name: gnome-session
-Version: %ver_major.8
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -181,6 +181,9 @@ export PATH=$PATH:/sbin
 
 
 %changelog
+* Wed Jan 12 2022 Yuri N. Sedunov <aris@altlinux.org> 41.3-alt1
+- 41.3
+
 * Wed Jan 12 2022 Yuri N. Sedunov <aris@altlinux.org> 40.8-alt1
 - 40.8
 
