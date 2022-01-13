@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 40
+%define centos_release 41
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -629,6 +629,16 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Jan 13 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.41-alt1.el9
+- af_unix: Return errno instead of NULL in  unix_create1()
+- ftrace: do CPU checking after preemption disabled
+- redhat: build and include memfd to kernel-selftests-internal
+- netfilter: stable backports for rhel 9.0
+- netfilter: ipvs: make global sysctl readonly in non-init netns
+- netfilter: ipvs: make global sysctl readonly in non-init netns
+- net/sched: 9.0 P1 backports from upstream
+- redhat/configs/evaluate_configs: Add find dead configs option
+
 * Tue Jan 11 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.40-alt1.el9
 - Replace deprecated CPU-hotplug functions for kernel-rt
 - Input: i8042 - Add quirk for Fujitsu Lifebook T725
