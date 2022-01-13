@@ -1,5 +1,5 @@
 Name: mdds
-Version: 1.6.0
+Version: 2.0.1
 Release: alt1
 Summary: A collection of multi-dimensional data structures and indexing algorithms
 
@@ -10,9 +10,9 @@ Url: https://gitlab.com/mdds/mdds
 Source0: %name-%version.tar.bz2
 Patch: mdds-1.5.0-python3.patch
 
-# Automatically added by buildreq on Sat Jun 13 2020
-# optimized out: libstdc++-devel perl python2-base python3 python3-base python3-module-OpenSSL python3-module-Pygments python3-module-babel python3-module-cffi python3-module-chardet python3-module-cryptography python3-module-docutils python3-module-idna python3-module-imagesize python3-module-jinja2 python3-module-markupsafe python3-module-packaging python3-module-pkg_resources python3-module-pytz python3-module-requests python3-module-six python3-module-sphinx python3-module-urllib3 sh4 xz
-BuildRequires: ctags doxygen gcc-c++ libgomp-devel python3-module-alabaster python3-module-breathe python3-module-sphinx_rtd_theme python3-module-sphinxcontrib-applehelp python3-module-sphinxcontrib-devhelp python3-module-sphinxcontrib-htmlhelp python3-module-sphinxcontrib-jsmath python3-module-sphinxcontrib-qthelp python3-module-sphinxcontrib-serializinghtml
+# Automatically added by buildreq on Thu Jan 13 2022
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libstdc++-devel perl python3 python3-base python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-charset-normalizer python3-module-docutils python3-module-idna python3-module-imagesize python3-module-jinja2 python3-module-markupsafe python3-module-packaging python3-module-pkg_resources python3-module-pytz python3-module-requests python3-module-sphinx python3-module-urllib3 sh4 xz
+BuildRequires: boost-devel-headers ctags doxygen gcc-c++ python3-module-breathe python3-module-sphinx_rtd_theme python3-module-sphinxcontrib-applehelp python3-module-sphinxcontrib-devhelp python3-module-sphinxcontrib-htmlhelp python3-module-sphinxcontrib-jsmath python3-module-sphinxcontrib-qthelp python3-module-sphinxcontrib-serializinghtml
 
 BuildRequires: boost-devel
 %description
@@ -56,10 +56,11 @@ sed -i -e '/^CPPFLAGS_NODEBUG=/s/=.*/="%optflags"/' configure
 
 %build
 %configure --enable-docs
-%make_build all html
+%make_build all
+%make_build doc-sphinx
 
 %check
-%make check
+%make_build check
 
 %install
 %makeinstall
@@ -83,6 +84,9 @@ cp -a ./example %buildroot/%_docdir/%name-%version/
 %_datadir/pkgconfig/*
 
 %changelog
+* Thu Jan 13 2022 Fr. Br. George <george@altlinux.ru> 2.0.1-alt1
+- Autobuild version bump to 2.0.1
+
 * Sat Jun 13 2020 Fr. Br. George <george@altlinux.ru> 1.6.0-alt1
 - Autobuild version bump to 1.6.0
 
