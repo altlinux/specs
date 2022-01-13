@@ -20,7 +20,7 @@
 Summary: The PHP scripting language
 Name:	 php%_php_suffix
 Version: %_php_major.%_php_minor.%_php_release_version
-Release: alt1
+Release: alt1.1
 
 License: PHP-3.01
 Group:	 Development/Other
@@ -56,6 +56,8 @@ Patch20: php7-7.4-fix-run-openssl-tests-server.patch
 
 Patch70: php8.0-debian-Add-support-for-use-of-the-system-timezone-database.patch
 Patch71: php8.0-debian-Use-system-timezone.patch
+
+Patch2000: php-8.1-e2k.patch
 
 Requires(pre):  php%_php_suffix-libs = %EVR
 Provides: php-engine = %EVR
@@ -180,6 +182,10 @@ in use by other PHP-related packages.
 
 %patch70 -p1
 %patch71 -p1
+
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 
 cp -dpR %SOURCE2 .
@@ -457,6 +463,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Wed Jan 12 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 8.1.1-alt1.1
+- makecontext() patch for Elbrus
+
 * Mon Dec 20 2021 Anton Farygin <rider@altlinux.ru> 8.1.1-alt1
 - 8.1.1
 
