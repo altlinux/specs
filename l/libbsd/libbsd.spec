@@ -1,6 +1,6 @@
 Name: libbsd
 Version: 0.11.3
-Release: alt1
+Release: alt1.1
 
 Summary: Library providing BSD-compatible functions for portability
 
@@ -36,8 +36,10 @@ Development files for the libbsd library.
 %setup
 %ifarch %e2k
 %patch -p1
-%endif
+%else
+# this patch breaks Elbrus build
 %patch3 -p1
+%endif
 
 %build
 %configure --disable-static
@@ -68,6 +70,9 @@ rm %buildroot/%_man3dir/setproctitle*
 %_pkgconfigdir/%name-overlay.pc
 
 %changelog
+* Thu Jan 13 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.11.3-alt1.1
+- fixed build for Elbrus
+
 * Sat Sep 04 2021 Vitaly Lipatov <lav@altlinux.ru> 0.11.3-alt1
 - new version 0.11.3 (with rpmrb script)
 - add LTO fix from Fedora
