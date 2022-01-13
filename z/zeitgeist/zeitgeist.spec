@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define major 1.0
 %define api_ver 2.0
@@ -11,8 +11,8 @@
 %def_enable docs
 
 Name: zeitgeist
-Version: %major.3
-Release: alt2
+Version: %major.4
+Release: alt1
 
 Summary: Framework providing Desktop activity awareness
 Group: Office
@@ -21,9 +21,9 @@ License: LGPL-2.1 and GPL-2.0
 Url: https://launchpad.net/zeitgeist
 
 %if_disabled snapshot
-Source: http://launchpad.net/%name/%major/%version/+download/%name-%version.tar.gz
+Source: http://launchpad.net/%name/%major/%version/+download/%name-%version.tar.xz
 %else
-# VCS: git://anongit.freedesktop.org/zeitgeist/zeitgeist
+Vcs: https://gitlab.freedesktop.org/zeitgeist/zeitgeist.git
 Source: %name-%version.tar
 %endif
 
@@ -33,8 +33,7 @@ Requires: lib%name%api_ver = %version-%release
 %define vala_ver 0.22
 %define tp_glib_ver 0.18
 
-# can't do buildreq correctly
-BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires(pre): rpm-build-python3 rpm-build-gir rpm-build-systemd
 BuildRequires: python3-devel python3-module-rdflib
 BuildRequires: gcc-c++ libsqlite3-devel libdbus-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel libjson-glib-devel
@@ -42,7 +41,6 @@ BuildRequires: libxapian-devel
 BuildRequires: libtelepathy-glib-devel >= %tp_glib_ver
 BuildRequires: gobject-introspection-devel
 BuildRequires: vala-tools >= %vala_ver libtelepathy-glib-vala
-BuildRequires: pkgconfig(systemd)
 %{?_enable_docs:BuildRequires: gtk-doc valadoc}
 # for autoreconf
 BuildRequires: gettext-tools
@@ -194,6 +192,9 @@ cp -aR doc/lib%name/{docs_c/html,docs_vala} %buildroot%pkgdocdir
 %endif
 
 %changelog
+* Thu Jan 13 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
+- 1.0.4
+
 * Tue Apr 13 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt2
 - updated to v1.0.3-3-g702fdbac (fixed build with vala-0.52)
 
