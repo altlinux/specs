@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 41
+%define centos_release 42
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -629,6 +629,19 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Jan 13 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.42-alt1.el9
+- smartpqi updates
+- powerpc/module_64: Fix livepatching for RO modules
+- net-sysfs: try not to restart the syscall if it will fail eventually
+- CI: Cleanup residue from ARK and enable RT check baselines
+- redhat: tune rpminspect configuration for upstream and badfuncs tests
+- redhat/configs: Enable CONFIG_CRYPTO_BLAKE2B
+- netfilter: conntrack: switch to siphash and include zone id in hash again
+- redhat: configs: increase CONFIG_DEBUG_KMEMLEAK_MEM_POOL_SIZE
+- iommu/dma: Fix incorrect error return on iommu deferred attach
+- RDMA/siw: Mark Software iWARP Driver as tech-preview
+- genirq changes for kernel-rt
+
 * Thu Jan 13 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.41-alt1.el9
 - af_unix: Return errno instead of NULL in  unix_create1()
 - ftrace: do CPU checking after preemption disabled
