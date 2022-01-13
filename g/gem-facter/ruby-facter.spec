@@ -2,7 +2,7 @@
 %define        pkgname facter
 
 Name:          gem-%pkgname
-Version:       4.2.6
+Version:       4.2.7
 Release:       alt1
 Summary:       Ruby library for retrieving facts from operating systems
 Group:         Development/Ruby
@@ -91,6 +91,9 @@ addresses, and SSH keys.
 
 
 %changelog
+* Thu Jan 13 2022 Andrey Cherepanov <cas@altlinux.org> 4.2.7-alt1
+- New version.
+
 * Fri Dec 10 2021 Andrey Cherepanov <cas@altlinux.org> 4.2.6-alt1
 - New version.
 
