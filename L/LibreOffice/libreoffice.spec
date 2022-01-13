@@ -29,7 +29,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt3
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -91,6 +91,9 @@ Patch401: alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
 Patch402: alt-002-tmpdir.patch
 Patch403: alt-003-skia-freetype-2.11.patch
 Patch404: alt-004-shortint.patch
+Patch405: alt-005-svg-icons-1.patch
+Patch406: alt-006-svg-icons-2.patch
+Patch407: alt-007-svg-icons-3.patch
 
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
 
@@ -121,7 +124,7 @@ BuildRequires: java-devel junit ant bsh pentaho-reporting-flow-engine
 %endif
 
 %if_enabled qt5
-BuildRequires: qt5-base-devel qt5-x11extras-devel 
+BuildRequires: qt5-base-devel qt5-svg-devel qt5-x11extras-devel 
 BuildRequires: libxcbutil-icccm-devel
 BuildRequires: libpixman-devel
 %endif
@@ -313,6 +316,9 @@ tar xf ext_sources/skia-m90-45c57e116ee0ce214bdf78405a4762722e4507d9.tar.xz
 %patch403 -p1 -d skia
 tar cJf ext_sources/skia-m90-45c57e116ee0ce214bdf78405a4762722e4507d9.tar.xz skia
 %patch404 -p1
+%patch405 -p1
+%patch406 -p1
+%patch407 -p1
 
 %patch500 -p0
 
@@ -628,6 +634,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Thu Jan 13 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 7.2.0.1-alt3
+- Enabled SVG icon themes by default for Qt5 and KF5 backends (Closes: #35436).
+
 * Sat Jan 01 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 7.2.0.1-alt2
 - Update russian translation for 7.2.0.1
 
