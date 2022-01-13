@@ -1,6 +1,6 @@
 Name:    netplan
 Version: 0.103
-Release: alt1
+Release: alt2
 
 Summary: Backend-agnostic network configuration in YAML
 License: GPL-3.0
@@ -24,6 +24,7 @@ Requires:       iproute2
 
 Source:  %name-%version.tar
 Patch1: alt-use-proper-print-format.patch
+Patch2: replace-g_spawn_check_exit_status-with-spawn_check_wait_status.patch
 
 %description
 %summary
@@ -31,6 +32,7 @@ Patch1: alt-use-proper-print-format.patch
 %prep
 %setup -n %name-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 %make_build
@@ -52,6 +54,9 @@ mkdir -p %buildroot%_sysconfdir/%name
 %_man8dir/%{name}*
 
 %changelog
+* Thu Jan 13 2022 Mikhail Gordeev <obirvalger@altlinux.org> 0.103-alt2
+- Fix rebuild
+
 * Mon Nov 08 2021 Mikhail Gordeev <obirvalger@altlinux.org> 0.103-alt1
 - new version 0.103
 
