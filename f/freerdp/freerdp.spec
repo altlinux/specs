@@ -7,7 +7,7 @@
 %def_without mbedtls
 
 Name: freerdp
-Version: 2.4.1
+Version: 2.5.0
 Release: alt1
 
 Group: Networking/Remote access
@@ -360,6 +360,9 @@ popd
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Wed Jan 12 2022 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt1
+- New version.
+
 * Thu Oct 21 2021 Andrey Cherepanov <cas@altlinux.org> 2.4.1-alt1
 - New version.
 - Security fixes:
