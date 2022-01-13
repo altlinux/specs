@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A framework for creating UPnP devices and control points
@@ -87,15 +87,14 @@ sed -i '/\--nowrite/d' doc/meson.build
 %{?_enable_gtk_doc:-Dgtk_doc=true} \
 %{?_disable_introspection:-Dintrospection=false} \
 %{?_disable_vala:-Dvapi=false}
-
+%nil
 %meson_build
 
 %install
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %_bindir/%_name-binding-tool-%api_ver
@@ -125,6 +124,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Thu Jan 13 2022 Yuri N. Sedunov <aris@altlinux.org> 1.4.3-alt1
+- 1.4.3
+
 * Sat Jan 08 2022 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1
 - 1.4.2
 
