@@ -1,12 +1,14 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %def_with python3
 # dane_ta_usage requires openssl >= 1.1.0
-%def_without dane_ta_usage
+%def_with dane_ta_usage
 
 Name: ldns
-Version: 1.7.1
-Release: alt3.git.e99accb9
+Version: 1.8.1
+Release: alt1
 License: BSD
 Url: http://www.nlnetlabs.nl/%name/
 Group: System/Libraries
@@ -14,6 +16,8 @@ Summary: Lowlevel DNS(SEC) library with API
 
 # https://github.com/NLnetLabs/ldns.git
 Source: %name-%version.tar
+
+Patch1: ldns-alt-python3-compat.patch
 
 BuildRequires: gcc-c++ libssl-devel doxygen perl libpcap-devel
 %if_with python3
@@ -75,8 +79,11 @@ Python extensions for ldns
 
 %prep
 %setup
+%patch1 -p1
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %autoreconf
 %configure \
 	--disable-rpath \
@@ -155,6 +162,9 @@ install -pD -m644 libdns.vim %buildroot%_sysconfdir/vim/libldns
 %endif
 
 %changelog
+* Thu Jan 13 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.1-alt1
+- Updated to upstream release version 1.8.1.
+
 * Tue Aug 31 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.1-alt3.git.e99accb9
 - Disabled static libraries.
 
