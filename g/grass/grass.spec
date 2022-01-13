@@ -3,7 +3,7 @@
 
 Name:    grass
 Version: 7.8.6
-Release: alt1
+Release: alt2
 
 %def_with mysql
 %def_with postgres
@@ -75,7 +75,7 @@ BuildRequires: liblapack-devel
 BuildRequires: lesstif-devel
 BuildRequires: libGLw-devel
 BuildRequires: libunixODBC-devel
-BuildRequires: libwxGTK-devel
+BuildRequires: libwxGTK3.1-devel
 BuildRequires: libmariadbd-devel
 BuildRequires: xorg-glproto-devel
 BuildRequires: desktop-file-utils
@@ -311,6 +311,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Thu Jan 13 2022 Andrey Cherepanov <cas@altlinux.org> 7.8.6-alt2
+- FTBFS: fix build with strict version on libwxGTK.
+
 * Mon Oct 11 2021 Andrey Cherepanov <cas@altlinux.org> 7.8.6-alt1
 - New version.
 
