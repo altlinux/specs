@@ -1,7 +1,10 @@
 %def_disable check
+%{!?_systemdgeneratordir: %global _systemdgeneratordir /lib/systemd/system-generators}
+%define _libexecdir %_usr/libexec
+%def_with tests
 
 Name: ostree
-Version: 2021.6
+Version: 2022.1
 Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
@@ -9,9 +12,7 @@ License: LGPLv2+
 Group: Development/Other
 Url: https://github.com/ostreedev/ostree
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-# Source-url: https://github.com/ostreedev/ostree/releases/download/v%version/lib%name-%version.tar.gz
+Vcs: https://github.com/ostreedev/ostree.git
 Source: %name-%version.tar
 # Note! Always use HEAD!!
 # Source1-url: https://github.com/GNOME/libglnx/archive/master.zip
@@ -21,45 +22,92 @@ Source2: bsdiff.tar
 
 Patch1: %name-%version.patch
 
-Requires: libostree = %version-%release
+Requires: libostree = %EVR
 Requires: %_bindir/gpg2
 
-BuildRequires: db2latex-xsl libarchive-devel libe2fs-devel
-BuildRequires: libfuse-devel libgpgme-devel liblzma-devel libsystemd-devel
-BuildRequires: zlib-devel libselinux-devel libcurl-devel libssl-devel
-BuildRequires: libgpgme-devel liblzma-devel libmount-devel
-BuildRequires: gobject-introspection-devel
-BuildRequires: libsoup-devel libattr-devel
-BuildRequires: libavahi-glib-devel libgjs-devel
+BuildRequires(pre): rpm-macros-systemd
+
+# Core requirements
+BuildRequires: pkgconfig(gio-unix-2.0) >= 2.44.0
+BuildRequires: pkgconfig(zlib)
+BuildRequires: pkgconfig(libcurl) >= 7.29.0
+BuildRequires: pkgconfig(libcrypto) >= 1.0.1
+# The tests still require soup
+BuildRequires: pkgconfig(libsoup-2.4) >= 2.39.1
+BuildRequires: libattr-devel
+# The tests require attr
+BuildRequires: attr
+# Extras
+BuildRequires: pkgconfig(libarchive) >= 2.8.0
+BuildRequires: pkgconfig(liblzma) >= 5.0.5
+BuildRequires: pkgconfig(libselinux) >= 2.1.13
+BuildRequires: pkgconfig(mount)
+BuildRequires: pkgconfig(fuse)
+BuildRequires: pkgconfig(e2p)
+BuildRequires: libcap-devel
+BuildRequires: pkgconfig(gpgme) >= 1.1.8 pkgconfig(gpg-error)
+#BuildRequires: pkgconfig(libsodium) >= 1.0.14
+BuildRequires: pkgconfig(libsystemd) pkgconfig(systemd)
+BuildRequires: /usr/bin/g-ir-scanner
+BuildRequires: dracut
+BuildRequires: bison
+
+#BuildRequires: libavahi-glib-devel libgjs-devel
+
 # For docs
 BuildRequires: gtk-doc
+BuildRequires: xsltproc docbook-style-xsl
 
 %description
-See https://ostree.readthedocs.io/en/latest/
+libostree is a shared library designed primarily for
+use by higher level tools to manage host systems (e.g. rpm-ostree),
+as well as container tools like flatpak and the atomic CLI.
 
-%package -n libostree
+%package grub2
+Summary: GRUB2 integration for OSTree
+Group: System/Configuration/Boot and Init
+%ifnarch aarch64 %arm
+Requires: grub2
+%else
+Requires: grub2-efi
+%endif
+Requires: %name
+
+%description grub2
+GRUB2 integration for OSTree
+
+%package tests
+Summary: Tests for the %name package
+Group: Development/Other
+Requires: %name = %EVR
+
+%description tests
+This package contains tests that can be used to verify
+the functionality of the installed %name package.
+
+%package -n lib%name
 Summary: Library files of %name
-Group: Development/C
+Group: System/Libraries
 License: LGPLv2
 
-%description -n libostree
+%description -n lib%name
 Library files of %name.
 
-%package -n libostree-devel
+%package -n lib%name-devel
 Summary: Library and header files of %name
 Group: Development/C
 License: LGPLv2
-Requires: libostree = %version-%release
+Requires: lib%name = %version-%release
 
-%description -n libostree-devel
+%description -n lib%name-devel
 Development package containing library and header files of %name.
 
-%package -n libostree-devel-doc
+%package -n lib%name-devel-doc
 Summary: Development documentation for lib%name
 Group: Development/Documentation
 BuildArch: noarch
 
-%description -n libostree-devel-doc
+%description -n lib%name-devel-doc
 This package contains development documentation for lib%name.
 
 %prep
@@ -71,61 +119,89 @@ This package contains development documentation for lib%name.
 NOCONFIGURE=1 sh -x ./autogen.sh
 
 %configure --disable-silent-rules \
-	   --with-dracut \
            --with-selinux \
            --with-curl \
            --with-openssl \
            --enable-gtk-doc \
-	   --enable-trivial-httpd-cmdline \
-	   --with-builtin-grub2-mkconfig \
-	   --without-grub2-mkconfig-path
+           --enable-trivial-httpd-cmdline \
+           --with-builtin-grub2-mkconfig \
+           --without-grub2-mkconfig-path \
+           %{?with_tests:--enable-installed-tests=exclusive} \
+           --with-dracut=yesbutnoconf
+
+#           --with-dracut \
 
 # hack to fix missed dirname declaration
-echo "#include <libgen.h>" >>config.h
+#echo "#include <libgen.h>" >>config.h
 
 %make_build
 
 %install
 %makeinstall_std
-rm -rf %buildroot%_sysconfdir/grub.d/15_ostree
-rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 
 %check
 %make check
 
+# Needed to enable the service at compose time currently
+%post
+%systemd_post ostree-remount.service
+
+%preun
+%systemd_preun ostree-remount.service
+
 %files
 %doc COPYING README.md
 #%_sysconfdir/grub.d/15_ostree
-%_bindir/ostree
+%_bindir/%name
 %_bindir/rofiles-fuse
-%_sysconfdir/dracut.conf.d/*
-%prefix/lib/dracut/*
-%_libexecdir/lib%name/
-%_libexecdir/%name/
-%_datadir/%name/
-%_unitdir/ostree-prepare-root.service
-%_unitdir/ostree-remount.service
-%_tmpfilesdir/ostree-tmpfiles.conf
-%_datadir/bash-completion/completions/ostree
-%_unitdir/ostree-finalize-staged.service
-%_unitdir/ostree-finalize-staged.path
-%_typelibdir/*.typelib
+%_datadir/%name
+%_datadir/bash-completion/completions/%name
+#%_sysconfdir/dracut.conf.d/*
+%prefix/lib/dracut/modules.d/*
+%_systemdgeneratordir/ostree-system-generator
+%_unitdir/ostree-*
+%_tmpfilesdir/*.conf
+%_libexecdir/lib%name
+%_prefix/lib/%name
 %_man1dir/*
 %_man5dir/ostree*
+#%exclude %_sysconfdir/grub.d/*ostree
+#%exclude %_libexecdir/lib%name/grub2*
+%exclude %_libexecdir/lib%name/ostree-trivial-httpd
 
-%files -n libostree
-%_libdir/libostree*.so.*
+#%files grub2
+#%_sysconfdir/grub.d/*ostree
+#%_libexecdir/lib%name/grub2*
 
-%files -n libostree-devel
-%_includedir/ostree-1/
-%_libdir/libostree*.so
+%if_with tests
+%files tests
+#%_libexecdir/installed-tests
+#%_datadir/installed-tests
+%_libexecdir/libostree/ostree-trivial-httpd
+%endif
+
+%files -n lib%name
+%_libdir/*.so.*
+%_typelibdir/*.typelib
+
+%files -n lib%name-devel
+%_includedir/ostree-1
+%_libdir/*.so
 %_pkgconfigdir/*.pc
 %_girdir/*.gir
 
-%files -n libostree-devel-doc
-%_datadir/gtk-doc/html/ostree/
+%files -n lib%name-devel-doc
+%_datadir/gtk-doc/html/%name
 
 %changelog
+* Tue Jan 11 2022 Alexey Shabalin <shaba@altlinux.org> 2022.1-alt1
+- 2022.1
+- define /usr/libexec as %%_libexecdir
+- update BR
+- add tests package
+- build --with-dracut=xyesbutnoconf
+- build without avahi support
+
 * Wed Nov 24 2021 Andrey Sokolov <keremet@altlinux.org> 2021.6-alt1
 - 2021.6
 
