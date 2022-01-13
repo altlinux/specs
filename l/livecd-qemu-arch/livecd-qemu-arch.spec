@@ -1,5 +1,5 @@
 Name: livecd-qemu-arch
-Version: 0.6.3
+Version: 0.7.0
 Release: alt1
 
 Summary: prepare live-builder.iso for ARM/PPC/aarch64/armh/mipsel/riscv64 QEMU
@@ -90,11 +90,11 @@ EOF
 
 cat > %buildroot%_sysconfdir/apt/sources.list.sisyphus.riscv64 << EOF
 # https://www.altlinux.org/Ports/riscv64
-rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/ports/riscv64 Sisyphus/riscv64 classic
-rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/ports/riscv64 Sisyphus/noarch classic
+#rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/ports/riscv64 Sisyphus/riscv64 classic
+#rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/ports/riscv64 Sisyphus/noarch classic
 #Yandex mirror
-#rpm http://mirror.yandex.ru/altlinux/ports/riscv64 Sisyphus/riscv64 classic
-#rpm http://mirror.yandex.ru/altlinux/ports/riscv64 Sisyphus/noarch classic
+rpm http://mirror.yandex.ru/altlinux/ports/riscv64 Sisyphus/riscv64 classic
+rpm http://mirror.yandex.ru/altlinux/ports/riscv64 Sisyphus/noarch classic
 EOF
 
 cat > %buildroot%_sysconfdir/apt/apt.conf.sisyphus.mipsel << EOF
@@ -106,27 +106,11 @@ EOF
 
 cat > %buildroot%_sysconfdir/apt/sources.list.sisyphus.mipsel << EOF
 # https://www.altlinux.org/Ports/mipsel
-rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/ports/mipsel Sisyphus/mipsel classic
-rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/ports/mipsel Sisyphus/noarch classic
+#rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/ports/mipsel Sisyphus/mipsel classic
+#rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/ports/mipsel Sisyphus/noarch classic
 #Yandex mirror
-#rpm http://mirror.yandex.ru/altlinux/ports/mipsel Sisyphus/mipsel classic
-#rpm http://mirror.yandex.ru/altlinux/ports/mipsel Sisyphus/noarch classic
-EOF
-
-cat > %buildroot%_sysconfdir/apt/apt.conf.p9.mipsel << EOF
-Dir::Etc::main "/dev/null";
-Dir::Etc::parts "/var/empty";
-Dir::Etc::SourceParts "/var/empty";
-Dir::Etc::sourcelist "/etc/apt/sources.list.p9.mipsel";
-EOF
-
-cat > %buildroot%_sysconfdir/apt/sources.list.p9.mipsel << EOF
-# https://www.altlinux.org/Ports/mipsel
-rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/ports/mipsel p9/mipsel classic
-rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/ports/mipsel p9/noarch classic
-#Yandex mirror
-#rpm http://mirror.yandex.ru/altlinux/ports/mipsel p9/mipsel classic
-#rpm http://mirror.yandex.ru/altlinux/ports/mipsel p9/noarch classic
+rpm http://mirror.yandex.ru/altlinux/ports/mipsel Sisyphus/mipsel classic
+rpm http://mirror.yandex.ru/altlinux/ports/mipsel Sisyphus/noarch classic
 EOF
 
 cat > %buildroot%_sysconfdir/apt/apt.conf.sisyphus.aarch64 << EOF
@@ -138,21 +122,27 @@ EOF
 
 cat > %buildroot%_sysconfdir/apt/sources.list.sisyphus.aarch64 << EOF
 # https://www.altlinux.org/Ports/aarch64
-rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/Sisyphus aarch64 classic
-rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/Sisyphus noarch classic
+#rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/Sisyphus aarch64 classic
+#rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/Sisyphus noarch classic
+#Yandex mirror
+rpm http://mirror.yandex.ru/altlinux/Sisyphus aarch64 classic
+rpm http://mirror.yandex.ru/altlinux/Sisyphus noarch classic
 EOF
 
-cat > %buildroot%_sysconfdir/apt/apt.conf.p9.aarch64 << EOF
+cat > %buildroot%_sysconfdir/apt/apt.conf.p10.aarch64 << EOF
 Dir::Etc::main "/dev/null";
 Dir::Etc::parts "/var/empty";
 Dir::Etc::SourceParts "/var/empty";
-Dir::Etc::sourcelist "/etc/apt/sources.list.p9.aarch64";
+Dir::Etc::sourcelist "/etc/apt/sources.list.p10.aarch64";
 EOF
 
-cat > %buildroot%_sysconfdir/apt/sources.list.p9.aarch64 << EOF
+cat > %buildroot%_sysconfdir/apt/sources.list.p10.aarch64 << EOF
 # https://www.altlinux.org/Ports/aarch64
-rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/p9/branch aarch64 classic
-rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/p9/branch noarch classic
+#rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/p10/branch aarch64 classic
+#rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/p10/branch noarch classic
+#Yandex mirror
+rpm http://mirror.yandex.ru/altlinux/p10/branch aarch64 classic
+rpm http://mirror.yandex.ru/altlinux/p10/branch noarch classic
 EOF
 
 cat > %buildroot%_sysconfdir/apt/apt.conf.sisyphus.armh << EOF
@@ -164,35 +154,27 @@ EOF
 
 cat > %buildroot%_sysconfdir/apt/sources.list.sisyphus.armh << EOF
 # https://www.altlinux.org/Ports/arm
-rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/Sisyphus armh classic
-rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/Sisyphus noarch classic
+#rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/Sisyphus armh classic
+#rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/Sisyphus noarch classic
+#Yandex mirror
+rpm http://mirror.yandex.ru/altlinux/Sisyphus armh classic
+rpm http://mirror.yandex.ru/altlinux/Sisyphus noarch classic
 EOF
 
-cat > %buildroot%_sysconfdir/apt/apt.conf.p9.armh << EOF
+cat > %buildroot%_sysconfdir/apt/apt.conf.p10.armh << EOF
 Dir::Etc::main "/dev/null";
 Dir::Etc::parts "/var/empty";
 Dir::Etc::SourceParts "/var/empty";
-Dir::Etc::sourcelist "/etc/apt/sources.list.p9.armh";
+Dir::Etc::sourcelist "/etc/apt/sources.list.p10.armh";
 EOF
 
-cat > %buildroot%_sysconfdir/apt/sources.list.p9.armh << EOF
+cat > %buildroot%_sysconfdir/apt/sources.list.p10.armh << EOF
 # https://www.altlinux.org/Ports/arm
-rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/p9/branch armh classic
-rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/p9/branch noarch classic
-EOF
-
-cat > %buildroot%_sysconfdir/apt/apt.conf.4.1.ppc << EOF
-Dir::Etc::main "/dev/null";
-Dir::Etc::parts "/var/empty";
-Dir::Etc::SourceParts "/var/empty";
-Dir::Etc::sourcelist "/etc/apt/sources.list.4.1.ppc";
-EOF
-
-cat > %buildroot%_sysconfdir/apt/sources.list.4.1.ppc << EOF
-# https://www.altlinux.org/Ports/ppc
-rpm http://ftp.altlinux.org/pub/people/wart/repos/lioka/powerpc ppc classic
-rpm http://ftp.altlinux.org/pub/people/wart/repos/lioka/powerpc ppc64 classic
-rpm http://ftp.altlinux.org/pub/people/wart/repos/lioka/powerpc noarch classic
+#rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/p10/branch armh classic
+#rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/p10/branch noarch classic
+#Yandex mirror
+rpm http://mirror.yandex.ru/altlinux/p10/branch armh classic
+rpm http://mirror.yandex.ru/altlinux/p10/branch noarch classic
 EOF
 
 cat > %buildroot%_sysconfdir/apt/apt.conf.sisyphus.ppc64le << EOF
@@ -204,21 +186,27 @@ EOF
 
 cat > %buildroot%_sysconfdir/apt/sources.list.sisyphus.ppc64le << EOF
 # https://www.altlinux.org/Ports/ppc64le
-rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/Sisyphus ppc64le classic
-rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/Sisyphus noarch classic
+#rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/Sisyphus ppc64le classic
+#rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/Sisyphus noarch classic
+#Yandex mirror
+rpm http://mirror.yandex.ru/altlinux/Sisyphus ppc64le classic
+rpm http://mirror.yandex.ru/altlinux/Sisyphus noarch classic
 EOF
 
-cat > %buildroot%_sysconfdir/apt/apt.conf.p9.ppc64le << EOF
+cat > %buildroot%_sysconfdir/apt/apt.conf.p10.ppc64le << EOF
 Dir::Etc::main "/dev/null";
 Dir::Etc::parts "/var/empty";
 Dir::Etc::SourceParts "/var/empty";
-Dir::Etc::sourcelist "/etc/apt/sources.list.p9.ppc64le";
+Dir::Etc::sourcelist "/etc/apt/sources.list.p10.ppc64le";
 EOF
 
-cat > %buildroot%_sysconfdir/apt/sources.list.p9.ppc64le << EOF
+cat > %buildroot%_sysconfdir/apt/sources.list.p10.ppc64le << EOF
 # https://www.altlinux.org/Ports/ppc64le
-rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/p9/branch ppc64le classic
-rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/p9/branch noarch classic
+#rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/p10/branch ppc64le classic
+#rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/p10/branch noarch classic
+#Yandex mirror
+rpm http://mirror.yandex.ru/altlinux/p10/branch ppc64le classic
+rpm http://mirror.yandex.ru/altlinux/p10/branch noarch classic
 EOF
 
 %files
@@ -227,6 +215,11 @@ EOF
 %attr(755,root,root) %_bindir/register-qemu-*
 
 %changelog
+* Thu Jan 13 2022 Anton Midyukov <antohami@altlinux.org> 0.7.0-alt1
+- replace apt.conf.p9.* to apt.conf.p10.*
+- switch repo to yandex mirror
+- drop apt.conf.4.1.ppc
+
 * Thu Nov 05 2020 Anton Midyukov <antohami@altlinux.org> 0.6.3-alt1
 - Added apt.conf for p9
 - Fix typo in register-qemu-ppc64le
