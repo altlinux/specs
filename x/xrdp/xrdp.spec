@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
-Version: 0.9.17
-Release: alt2
+Version: 0.9.18
+Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
 
@@ -33,7 +33,6 @@ Patch12: xrdp-alt-startwm.patch
 Patch13: alt-add-russian-keyboard.patch
 Patch14: xrdp-alt-add-comment-about-windows_xp.patch
 Patch16: xrdp-alt-ppc64le-support.patch
-Patch17: xrdp-alt-fix-rfb_get_eds_status_msg.patch
 
 # Fedora patches
 Patch21: xrdp-0.9.4-service.patch
@@ -73,6 +72,9 @@ Obsoletes: librfxcodec < %EVR
 Provides: librfxcodec-devel = %EVR
 Obsoletes: librfxcodec-devel < %EVR
 
+%filter_from_requires \,^/etc/X11/xinit/Xsession,d
+%filter_from_requires \,^/usr/etc/X11/xdm/Xsession,d
+
 %description
 xrdp offers a graphical login to a remote client using
 RDP (the Remote Desktop Protocol). xrdp can connect to
@@ -110,7 +112,6 @@ tar xf %SOURCE6
 %patch13 -p1
 %patch14 -p1
 %patch16 -p1
-%patch17 -p1
 %patch21 -p1
 %patch22 -p1
 %patch25 -p1
@@ -275,6 +276,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Wed Jan 12 2022 Andrey Cherepanov <cas@altlinux.org> 0.9.18-alt1
+- New version.
+
 * Wed Dec 08 2021 Andrey Cherepanov <cas@altlinux.org> 0.9.17-alt2
 - Enable glamor support for xorgxrdp.
 
