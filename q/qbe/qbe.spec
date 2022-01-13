@@ -1,6 +1,6 @@
 Name:       qbe
 # git log -1 --format='%as' | tr - .  
-Version:    2021.07.06
+Version:    2021.12.05
 Release:    alt1
 Group:      Development/C
 # git clone git://c9x.me/qbe.git 
@@ -39,5 +39,8 @@ install -D minic/minic %buildroot%_bindir/%name-minic
 make check
 
 %changelog
+* Wed Jan 12 2022 Fr. Br. George <george@altlinux.ru> 2021.12.05-alt1
+- Version up
+
 * Sat Aug 21 2021 Fr. Br. George <george@altlinux.ru> 2021.07.06-alt1
 - Initial build for ALT
