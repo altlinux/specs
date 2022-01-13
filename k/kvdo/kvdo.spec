@@ -1,6 +1,6 @@
 Name: kvdo
 Version: 6.2.6.3
-Release: alt2
+Release: alt3
 
 Summary: Kernel Modules for Virtual Data Optimizer
 License: GPL-2.0-only
@@ -35,6 +35,9 @@ install -pDm0644 %_sourcedir/%name-%version.tar %kernel_srcdir/kernel-source-%na
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar
 
 %changelog
+* Thu Jan 13 2022 Alexey Shabalin <shaba@altlinux.org> 6.2.6.3-alt3
+- update to snapshot rhawalsh/6.2.6.3-COPR.
+
 * Wed Nov 24 2021 Alexey Shabalin <shaba@altlinux.org> 6.2.6.3-alt2
 - deleted -Werror.
 
