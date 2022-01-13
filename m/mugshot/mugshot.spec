@@ -1,6 +1,6 @@
 Name:    mugshot
 Version: 0.4.3
-Release: alt1
+Release: alt2
 
 Summary: Mugshot is a lightweight user configuration utility that allows you to easily update personal user details
 License: GPLv3+
@@ -41,11 +41,8 @@ install -Dm0644 build/share/applications/org.bluesabre.Mugshot.desktop %buildroo
 %python3_install --prefix=/usr
 rm -rf %buildroot%_datadir/doc/%name \
        %buildroot%_datadir/%name/metainfo
-
-mkdir %buildroot%_datadir/locale
-cp -av build/mo/* %buildroot%_datadir/locale
-
 %find_lang %name
+echo "%_datadir/locale/ms@Arab/LC_MESSAGES/%name.mo" >> %name.lang
 
 %files -f %name.lang
 %doc AUTHORS NEWS README.md
@@ -60,6 +57,9 @@ cp -av build/mo/* %buildroot%_datadir/locale
 %_man1dir/%name.1*
 
 %changelog
+* Thu Jan 13 2022 Andrey Cherepanov <cas@altlinux.org> 0.4.3-alt2
+- FTBFS: fix localization install.
+
 * Tue Dec 29 2020 Andrey Cherepanov <cas@altlinux.org> 0.4.3-alt1
 - New version.
 
