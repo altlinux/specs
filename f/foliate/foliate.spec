@@ -1,12 +1,10 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 2.6
 %define rdn_name com.github.johnfactotum.Foliate
 
-
-
 Name: foliate
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A simple and modern GTK eBook reader
@@ -17,12 +15,13 @@ Url: https://github.com/johnfactotum/foliate
 %if_disabled snapshot
 Source: %url/archive/%version/%name-%version.tar.gz
 %else
-# VCS: https://github.com/johnfactotum/foliate.git
+Vcs: https://github.com/johnfactotum/foliate.git
 Source: %name-%version.tar
 %endif
 
 %define handy_api_ver 1
-%define tracker_api_ver 2.0
+%define webkit_api_ver 4.0
+%define tracker_api_ver 3.0
 %define gjs_ver 1.52
 %define iso_codes_ver 3.57
 
@@ -41,7 +40,7 @@ Requires: typelib(Handy) = %handy_api_ver
 Requires: typelib(Pango)
 Requires: typelib(Soup)
 Requires: typelib(Tracker) = %tracker_api_ver
-Requires: typelib(WebKit2)
+Requires: typelib(WebKit2) = %webkit_api_ver
 
 %add_python3_path %_datadir/%rdn_name
 
@@ -81,11 +80,14 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|
 %_iconsdir/hicolor/symbolic/apps/%rdn_name-symbolic.svg
 %_iconsdir/hicolor/scalable/apps/%rdn_name.svg
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
-%_datadir/metainfo/%rdn_name.appdata.xml
+%_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README*
 
 
 %changelog
+* Fri Jan 14 2022 Yuri N. Sedunov <aris@altlinux.org> 2.6.4-alt1
+- updated to 2.6.4-1-ged40d8b
+
 * Sun Apr 11 2021 Yuri N. Sedunov <aris@altlinux.org> 2.6.3-alt1
 - 2.6.3
 
