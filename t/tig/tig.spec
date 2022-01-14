@@ -3,37 +3,36 @@
 %set_verify_elf_method strict
 
 Name: tig
-Version: 2.5.4
-Release: alt2
+Version: 2.5.5
+Release: alt1
 
-Summary: text-mode interface for git
+Summary: Text-mode interface for git
 License: GPLv2+
 Group: Development/Other
 
-URL: http://jonas.nitro.dk/tig/
-Source: tig-%version.tar
-Patch: tig-%version-%release.patch
+URL: https://jonas.github.io/tig/
+VCS: https://github.com/jonas/tig.git
+Source: %name-%version.tar
 
 Requires: git-core
 
-# Automatically added by buildreq on Sat Nov 23 2019
-BuildRequires: asciidoc libncursesw-devel libreadline-devel xmlto
+BuildRequires: asciidoc
+BuildRequires: libncursesw-devel
+BuildRequires: libpcre-devel
+BuildRequires: libreadline-devel
+BuildRequires: xmlto
 
 %description
-Tig is a git repository browser that additionally can act as a pager
-for output from various git commands.
-
-When browsing repositories, it uses the underlying git commands to
-present the user with various views, such as summarized revision log
-and showing the commit with the log message, diffstat, and the diff.
-
-Using it as a pager, it will display input from stdin and colorize it.
+Tig is an ncurses-based text-mode interface for git. It functions mainly
+as a Git repository browser, but can also assist in staging changes
+for commit at chunk level and act as a pager for output from various
+Git commands.
 
 %prep
-%setup -q
-%patch -p1
+%setup
 
 %build
+export C_INCLUDE_PATH=/usr/include/pcre
 %add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure
@@ -50,6 +49,9 @@ install -p -m644 contrib/*.tigrc %buildroot%_datadir/tig/
 install -pD -m644 contrib/tig-completion.bash %buildroot%_datadir/bash-completion/completions/tig
 install -pD -m644 contrib/tig-completion.zsh  %buildroot%_datadir/zsh/site-functions/_tig
 
+%check
+src/tig -v
+
 %files
 %doc COPYING NEWS.adoc README.adoc doc/manual.adoc
 %_bindir/tig
@@ -62,6 +64,9 @@ install -pD -m644 contrib/tig-completion.zsh  %buildroot%_datadir/zsh/site-funct
 %_datadir/zsh/site-functions/_tig
 
 %changelog
+* Fri Jan 14 2022 Vitaly Chikunov <vt@altlinux.org> 2.5.5-alt1
+- Updated to tig-2.5.5 (2022-01-11).
+
 * Sun Dec 19 2021 Vitaly Chikunov <vt@altlinux.org> 2.5.4-alt2
 - Packaged tig-pick, completions, tigrc examples, and manual.
 - Fixed lfs=strict build on 32-bit systems.
