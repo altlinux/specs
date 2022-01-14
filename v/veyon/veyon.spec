@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.6.0
-Release: alt4
+Version: 4.7.0
+Release: alt1
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -24,6 +24,7 @@ Patch1: alt-veyon-libdir.patch
 Patch3: alt-fix-builtindirectory-computers-list-display.patch
 Patch4: alt-fix-dm-login.patch
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: rpm-build-kf5
 BuildRequires: gcc-c++ make cmake
 BuildRequires: qt5-base-devel
@@ -120,6 +121,9 @@ sed -i "s/-Werror/-Wno-error/" CMakeLists.txt
 %_datadir/%name
 
 %changelog
+* Tue Dec 28 2021 Egor Ignatov <egori@altlinux.org> 4.7.0-alt1
+- new version
+
 * Wed Nov 10 2021 Egor Ignatov <egori@altlinux.org> 4.6.0-alt4
 - Build with downstream commits
 
