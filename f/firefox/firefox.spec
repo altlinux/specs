@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        95.0.1
+Version:        96.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -39,7 +39,7 @@ Patch011: 0011-bmo-1559213-Support-system-av1.patch
 Patch012: 0012-VAAPI-Add-extra-frames.patch
 Patch013: 0013-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch014: 0014-ALT-fix-double_t-redefinition.patch
-Patch015: 0015-Bug-1745560-Add-missing-stub-for-wl_proxy_marshal_fl.patch
+Patch015: 0015-build-Disable-Werror.patch
 ### End Patches
 
 %define _unpackaged_files_terminate_build 1
@@ -83,6 +83,7 @@ BuildRequires: pkgconfig(xft)
 BuildRequires: pkgconfig(xrandr)
 BuildRequires: pkgconfig(xscrnsaver)
 BuildRequires: pkgconfig(xdamage)
+BuildRequires: pkgconfig(xtst)
 BuildRequires: pkgconfig(libcurl)
 BuildRequires: pkgconfig(gtk+-2.0)
 BuildRequires: pkgconfig(gtk+-3.0)
@@ -207,9 +208,9 @@ ac_add_options --enable-linker=lld
 ac_add_options --enable-lto=cross
 %endif
 %endif
-#ifnarch x86_64
-#ac_add_options --disable-webrtc
-#endif
+%ifarch armh ppc64le
+ac_add_options --disable-webrtc
+%endif
 %ifarch armh %{ix86} x86_64
 ac_add_options --disable-elf-hack
 %endif
@@ -451,6 +452,29 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Jan 12 2022 Alexey Gladkov <legion@altlinux.ru> 96.0-alt1
+- New release (96.0).
+- Disable webrtc for armh, ppc64le.
+- Security fixes:
+  + CVE-2022-22746: Calling into reportValidity could have lead to fullscreen window spoof
+  + CVE-2022-22743: Browser window spoof using fullscreen mode
+  + CVE-2022-22742: Out-of-bounds memory access when inserting text in edit mode
+  + CVE-2022-22741: Browser window spoof using fullscreen mode
+  + CVE-2022-22740: Use-after-free of ChannelEventQueue::mOwner
+  + CVE-2022-22738: Heap-buffer-overflow in blendGaussianBlur
+  + CVE-2022-22737: Race condition when playing audio files
+  + CVE-2021-4140: Iframe sandbox bypass with XSLT
+  + CVE-2022-22750: IPC passing of resource handles could have lead to sandbox bypass
+  + CVE-2022-22749: Lack of URL restrictions when scanning QR codes
+  + CVE-2022-22748: Spoofed origin on external protocol launch dialog
+  + CVE-2022-22745: Leaking cross-origin URLs through securitypolicyviolation event
+  + CVE-2022-22744: The 'Copy as curl' feature in DevTools did not fully escape website-controlled data, potentially leading to command injection
+  + CVE-2022-22747: Crash when handling empty pkcs7 sequence
+  + CVE-2022-22736: Potential local privilege escalation when loading modules from the install directory.
+  + CVE-2022-22739: Missing throttling on external protocol launch dialog
+  + CVE-2022-22751: Memory safety bugs fixed in Firefox 96 and Firefox ESR 91.5
+  + CVE-2022-22752: Memory safety bugs fixed in Firefox 96
+
 * Fri Dec 17 2021 Alexey Gladkov <legion@altlinux.ru> 95.0.1-alt1
 - New release (95.0.1).
 
