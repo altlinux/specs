@@ -5,7 +5,7 @@
 
 Name: plasma5-%rname
 Version: 5.23.5
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -72,6 +72,7 @@ KF5 library
 sed -i 's|\(^Name.*=.*\)|\1 KDE5|' app/systemsettings.desktop
 sed -i '/^Name.*=/s/KDE/KDE5/' app/kdesystemsettings.desktop
 sed -i 's|\(^Exec.*=\)\(.*\)|\1kde5 \2|' app/kdesystemsettings.desktop
+sed -i '/EnabledByDefault/s|true|false|' runner/systemsettingsrunner.json
 
 %build
 %K5build \
@@ -80,7 +81,7 @@ sed -i 's|\(^Exec.*=\)\(.*\)|\1kde5 \2|' app/kdesystemsettings.desktop
 
 %install
 %K5install
-%K5install_move data systemsettings kpackage kglobalaccel
+%K5install_move data systemsettings kpackage kglobalaccel locale
 
 
 mkdir -p %buildroot/%_desktopdir/kf5
@@ -116,6 +117,9 @@ mv %buildroot/%_kf5_xdgapp/kdesystemsettings.desktop %buildroot/%_desktopdir/kf5
 %_K5lib/libsystemsettingsview.so.*
 
 %changelog
+* Fri Jan 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.5-alt2
+- disable runner by default (closes: 41435)
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.5-alt1
 - new version
 
