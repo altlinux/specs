@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/doxygen gcc-c++ libGLU-devel libglvnd-devel python3-deve
 %define devname lib%{name}-devel
 
 Name:           assimp
-Version:        5.1.0
+Version:        5.1.5
 Release:        alt1_1
 Summary:        Library to import various 3D model formats into applications
 Group:          Graphics
@@ -33,7 +33,7 @@ Source0:        %{name}-%{version}-free.tar.xz
 Source1:        assimp_generate_tarball.sh
 
 # Un-bundle libraries that are provided by the distribution.
-Patch0:         assimp-5.1.0-mga-unbundle.patch
+Patch0:         assimp-5.1.5-mga-unbundle.patch
 
 BuildRequires:  boost-complete
 BuildRequires:  cmake
@@ -125,6 +125,11 @@ rm -rf contrib/utf8cpp
 rm -rf contrib/zlib
 
 %build
+# mike@
+%ifarch %e2k
+# as of lcc 1.25.20
+%add_optflags -Wno-error=maybe-uninitialized
+%endif
 %{mageia_cmake} \
   -DASSIMP_BUILD_TESTS=OFF
 
@@ -135,6 +140,9 @@ rm -rf contrib/zlib
 
 
 %changelog
+* Fri Jan 14 2022 Igor Vlasenko <viy@altlinux.org> 5.1.5-alt1_1
+- new version + e2k support
+
 * Sun Jan 02 2022 Igor Vlasenko <viy@altlinux.org> 5.1.0-alt1_1
 - update by mgaimport
 
