@@ -57,7 +57,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt3
+Release: alt4
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -91,6 +91,7 @@ Patch88: boost-1.73.0-fedora-cmakedir.patch
 Patch94: boost-1.73-fedora-locale-empty-vector.patch
 
 Patch1000: boost-1.63.0-alt-python-paths.patch
+Patch1001: boost-1.77.0-upstream-python-3.10-compat.patch
 Patch2000: boost-1.76-e2k-makecontext.patch
 
 # we use %%_python3_abiflags
@@ -1221,6 +1222,9 @@ applications. This package contains python module.
 %patch88 -p1
 %patch94 -p1
 %patch1000 -p2
+pushd tools/boost_install &>/dev/null
+%patch1001 -p1
+popd &>/dev/null
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -1798,6 +1802,9 @@ done
 
 
 %changelog
+* Fri Jan 14 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.77.0-alt4
+- Fixed compatibility with python-3.10.
+
 * Wed Dec 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.77.0-alt3
 - Fixed passing LTO flags to linker.
 
