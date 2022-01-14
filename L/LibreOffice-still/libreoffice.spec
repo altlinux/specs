@@ -31,7 +31,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -421,6 +421,7 @@ fi
 	--disable-lto \
         --with-vendor="ALT Linux Team" \
         --without-system-poppler \
+        --without-system-mdds \
         %{?_without_orcus:--without-system-orcus } \
         %{subst_enable mergelibs} \
         --enable-odk \
@@ -693,6 +694,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Jan 14 2022 Andrey Cherepanov <cas@altlinux.org> 7.1.8.1-alt2
+- Use bundled mdds-1.5.
+
 * Mon Dec 06 2021 Andrey Cherepanov <cas@altlinux.org> 7.1.8.1-alt1
 - New version.
 
