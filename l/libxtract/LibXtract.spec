@@ -1,22 +1,25 @@
-%def_with python3
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: libxtract
 Version: 0.7.1
-Release: alt1.beta.git20140717.1.1
+Release: alt2.beta.git20140717
 Summary: Simple, portable, lightweight library of audio feature extraction functions
 License: MIT
 Group: System/Libraries
 Url: https://github.com/jamiebullock/LibXtract
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/jamiebullock/LibXtract.git
 Source: %name-%version.tar
 
-BuildPreReq: doxygen graphviz python-devel swig gcc-c++
-%if_with python3
+Patch1: libxtract-alt-python3-compat.patch
+
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
-%endif
+BuildRequires: gcc-c++
+BuildRequires: doxygen graphviz
+BuildRequires: python3-devel
+BuildRequires: swig
 
 %description
 LibXtract is a simple, portable, lightweight library of audio feature
@@ -50,19 +53,6 @@ designed to be 'cascaded' to create a extraction hierarchies.
 
 This package contains development documentation for %name.
 
-%package -n python-module-%name
-Summary: Python module of %name
-Group: Development/Python
-Requires: %name = %EVR
-
-%description -n python-module-%name
-LibXtract is a simple, portable, lightweight library of audio feature
-extraction functions. The purpose of the library is to provide a
-relatively exhaustive set of feature extraction primatives that are
-designed to be 'cascaded' to create a extraction hierarchies.
-
-This package contains Python module of %name.
-
 %package -n python3-module-%name
 Summary: Python module of %name
 Group: Development/Python3
@@ -78,31 +68,12 @@ This package contains Python module of %name.
 
 %prep
 %setup
+%patch1 -p1
 
 touch NEWS README AUTHORS
 
-%if_with python3
-cp -fR . ../python3
-sed -i 's|\(lpython\${ac_python_version}\)|\1%_python3_abiflags|' \
-	../python3/m4/ax_python_devel.m4
-sed -i 's|\(\$(SWIG)\)|\1 -py3|' \
-	../python3/swig/python/Makefile.am
-%endif
-
 %build
 %add_optflags -std=gnu++11
-%autoreconf
-%configure \
-	--enable-static=no \
-	--enable-simpletest \
-	--enable-debug \
-	--enable-swig \
-	--with-ooura \
-	--with-python
-%make_build
-
-%if_with python3
-pushd ../python3
 export PYTHON=python3
 %autoreconf
 %configure \
@@ -111,30 +82,18 @@ export PYTHON=python3
 	--enable-debug \
 	--enable-swig \
 	--with-ooura \
-	--with-python
+	--with-python \
+	%nil
+
 %make_build
-popd
-%endif
 
 %install
 %makeinstall_std
-rm -f %buildroot%python_sitelibdir/libxtract/*.la
-%ifarch x86_64
-mv %buildroot%python_sitelibdir_noarch/libxtract/* \
-	%buildroot%python_sitelibdir/libxtract/
-%endif
-
-%if_with python3
-pushd ../python3
-%make install DESTDIR=$PWD/buildroot
-install -d %buildroot%python3_sitelibdir
-mv buildroot%python3_sitelibdir/* %buildroot%python3_sitelibdir/
 rm -f %buildroot%python3_sitelibdir/libxtract/*.la
-%ifarch x86_64
-mv buildroot%python3_sitelibdir_noarch/libxtract/* \
+
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
+mv %buildroot%python3_sitelibdir_noarch/libxtract/* \
 	%buildroot%python3_sitelibdir/libxtract/
-%endif
-popd
 %endif
 
 %files
@@ -146,18 +105,16 @@ popd
 %_libdir/*.so
 %_pkgconfigdir/*
 
-%files -n python-module-%name
-%python_sitelibdir/*
-
 %files devel-docs
 %doc doc/html/*
 
-%if_with python3
 %files -n python3-module-%name
-%python3_sitelibdir/*
-%endif
+%python3_sitelibdir/%name
 
 %changelog
+* Fri Jan 14 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.1-alt2.beta.git20140717
+- Rebuilt without python-2.
+
 * Mon Mar 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.1-alt1.beta.git20140717.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
