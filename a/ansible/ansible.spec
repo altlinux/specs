@@ -1,7 +1,7 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
-Version: 2.9.26
-Release: alt3
+Version: 2.9.27
+Release: alt1
 
 Group:   System/Configuration/Other
 License: GPL-3.0
@@ -93,6 +93,9 @@ grep -Rl '^#!.*python$' %buildroot | xargs subst 's|^#!.*python$|#!%__python3|'
 %doc README.rst changelogs/CHANGELOG-v*.rst CODING_GUIDELINES.md MODULE_GUIDELINES.md
 
 %changelog
+* Fri Jan 14 2022 Andrey Cherepanov <cas@altlinux.org> 2.9.27-alt1
+- New version.
+
 * Tue Dec 07 2021 Slava Aseev <ptrnine@altlinux.org> 2.9.26-alt3
 - Prohibit pkg5 usage (closes: #41494)
 
