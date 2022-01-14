@@ -3,17 +3,16 @@
 %set_verify_elf_method strict
 
 Name: warzone2100
-Version: 4.2.3
+Version: 4.2.4
 Release: alt1
-
 Summary: Warzone 2100 Resurrection Project (RTS 3D game)
 License: GPLv2+ and CC-BY-SA-3.0
 Group: Games/Strategy
-
 Url: https://wz2100.net
 
 # https://github.com/Warzone2100/warzone2100.git
 Source: %name-%version.tar
+
 #Source1: http://www.deviantart.com/download/92153956/Warzone_2100_Tango_Icon_by_Unit66.zip
 Source1: Warzone_2100_Tango_Icon_by_Unit66.tar
 
@@ -125,6 +124,9 @@ rm -rf %buildroot%_iconsdir/warzone2100.png
 %_datadir/warzone2100
 
 %changelog
+* Fri Jan 14 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.4-alt1
+- Updated to upstream version 4.2.4.
+
 * Wed Dec 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.3-alt1
 - Updated to upstream version 4.2.3.
 
