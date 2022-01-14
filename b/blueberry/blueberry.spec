@@ -1,5 +1,5 @@
 Name: blueberry
-Version: 1.4.6
+Version: 1.4.7
 Release: alt1
 Summary: A Bluetooth configuration tool
 License: GPLv3
@@ -44,6 +44,9 @@ Utility for Bluetooth devices graphical configuration
 %_iconsdir/hicolor/*/status/*
 
 %changelog
+* Thu Jan 13 2022 Vladimir Didenko <cow@altlinux.org> 1.4.7-alt1
+- 1.4.7
+
 * Wed Dec 15 2021 Vladimir Didenko <cow@altlinux.org> 1.4.6-alt1
 - 1.4.6
 

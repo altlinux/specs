@@ -3,7 +3,7 @@
 %define api_ver 3.0
 
 Name: xed
-Version: 3.2.1
+Version: 3.2.2
 Release: alt1
 
 Summary: xed is a small and lightweight text editor.
@@ -140,6 +140,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/*
 
 %changelog
+* Thu Jan 13 2022 Vladimir Didenko <cow@altlinux.org> 3.2.2-alt1
+- New version
+
 * Wed Dec 15 2021 Vladimir Didenko <cow@altlinux.org> 3.2.1-alt1
 - New version
 
