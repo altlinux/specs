@@ -1,14 +1,14 @@
 Summary: Network traffic analyzer
 Name:    darkstat
-Version: 3.0.719
+Version: 3.0.721
 Release: alt1
 License: GPLv2
 Group:   Monitoring
-Url: http://dmr.ath.cx/net/darkstat/
+Url: https://unix4lyfe.org/darkstat/
 
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-Source: http://dmr.ath.cx/net/darkstat/darkstat-%version.tar.bz2
+Source: http://dmr.ath.cx/net/darkstat/darkstat-%version.tar.gz
 Source1:       %{name}.service
 Source2:       %{name}.sysconfig
 
@@ -29,6 +29,7 @@ all sorts of useless but interesting statistics.
 
 %prep
 %setup
+%autoreconf
 
 %build
 #configure
@@ -52,7 +53,7 @@ exit 0
 
 
 %files
-%doc AUTHORS COPYING* INSTALL LICENSE NEWS README *.txt
+%doc AUTHORS COPYING* INSTALL LICENSE NEWS README.git *.txt
 %_man8dir/darkstat.8*
 %_sbindir/darkstat
 %attr(0600,%{name},root) %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
@@ -60,6 +61,10 @@ exit 0
 
 
 %changelog
+* Fri Jan 14 2022 Ilya Mashkin <oddity@altlinux.ru> 3.0.721-alt1
+- 3.0.721
+- Update url
+
 * Sat Mar 13 2021 Ilya Mashkin <oddity@altlinux.ru> 3.0.719-alt1
 - 3.0.719
 
