@@ -3,15 +3,15 @@
 
 Name: kernel-source-lkrg
 Version: %module_version
-Release: alt1
+Release: alt2
 
 Summary:  Linux Kernel Runtime Guard module sources
 
 License: GPL-2.0
 Group: Development/Kernel
-Url:  https://www.openwall.com/lkrg/
+Url:  https://lkrg.org/
 
-VCS: https://github.com/openwall/lkrg.git
+VCS: https://github.com/lkrg-org/lkrg.git
 Source: %module_name-%version.tar
 Source1: %module_name.init
 
@@ -60,8 +60,8 @@ cp -a %SOURCE1 .
 %install
 mkdir -p %kernel_srcdir
 tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %module_name-%version
-mkdir -p %buildroot%_sysconfdir/sysctl.d
-cp -a %module_name-%version/scripts/bootup/lkrg.conf %buildroot%_sysconfdir/sysctl.d/lkrg.conf
+mkdir -p %buildroot%_sysconfdir
+cp -a %module_name-%version/scripts/bootup/lkrg.conf %buildroot%_sysconfdir/lkrg.conf
 
 mkdir -p %buildroot%_initdir
 install -pm755 lkrg.init %buildroot%_initdir/lkrg
@@ -99,8 +99,14 @@ for V in $(ls /lib/modules); do
 	make -s %_smp_mflags KERNELRELEASE=$V
 done
 
-%post -n lkrg-common
-%post_service lkrg
+%triggerun -n lkrg-common -- lkrg-config < 0.9.2.0.1.git10ba314-alt2 lkrg-common < 0.9.2.0.1.git10ba314-alt2
+if [ -e %_sysconfdir/sysctl.d/lkrg.conf ]; then
+	echo "Migrating an LKRG config to the new place"
+	if ! diff -q %_sysconfdir/{,sysctl.d/}lkrg.conf >/dev/null; then
+		mv %_sysconfdir/lkrg.conf{,.rpmnew}
+	fi
+	mv %_sysconfdir/sysctl.d/lkrg.conf %_sysconfdir/lkrg.conf
+fi
 
 %preun -n lkrg-common
 %preun_service lkrg
@@ -109,12 +115,18 @@ done
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %files -n lkrg-common
-%config(noreplace) %_sysconfdir/sysctl.d/lkrg.conf
+%config(noreplace) %_sysconfdir/lkrg.conf
 %_initdir/lkrg
 %_unitdir/lkrg.service
 %_presetdir/30-lkrg.preset
 
 %changelog
+* Fri Jan 14 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.2.0.1.git10ba314-alt2
+- Updated upstream URL and VCS.
+- lkrg-common:
+  + Moved lkrg.conf to %%_sysconfdir;
+  + Enhanced init script.
+
 * Sat Jan 08 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.2.0.1.git10ba314-alt1
 - Updated to v0.9.2-1-g10ba314.
 
