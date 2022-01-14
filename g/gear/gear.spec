@@ -1,11 +1,11 @@
 Name: gear
-Version: 2.5.0
+Version: 2.5.1
 Release: alt1
 
 Summary: Get Every Archive from git package Repository
 License: GPLv2+
 Group: Development/Other
-Url: http://www.altlinux.org/Gear
+Url: https://www.altlinux.org/Gear
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -89,6 +89,12 @@ ln -s gear-store-tags.1 %buildroot%_man1dir/gear-update-tag.1
 %_man1dir/describe-specfile*
 
 %changelog
+* Fri Jan 14 2022 Dmitry V. Levin <ldv@altlinux.org> 2.5.1-alt1
+- gear-rules.5: added references to git glob syntax (closes: #39804).
+- gear-store-tags: fixed the warning about specsubst directive (closes: #39898).
+- gear-edit-spec: do not invoke an editor when no spec file was found (closes: #40023).
+- gear: added git worktree support (closes: #40990).
+
 * Wed Mar 17 2021 Dmitry V. Levin <ldv@altlinux.org> 2.5.0-alt1
 - Added exclude= option for tar: and zip: directives
   (by Alexey Gladkov; closes: #39801).
