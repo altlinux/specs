@@ -2,7 +2,7 @@
 
 Name: kernel-source-hifc
 Version: 3.5.0.11
-Release: alt2
+Release: alt3
 Summary: Huawei Fibre Channel Adapter
 License: GPL-2.0-only
 Group: Development/Kernel
@@ -34,6 +34,9 @@ make -C /lib/modules/*-std-def-*/build M=$PWD/drivers/scsi/huawei/hifc modules C
 %kernel_src/%name-%version.tar
 
 %changelog
+* Thu Jan 13 2022 Andrew A. Vasilyev <andy@altlinux.org> 3.5.0.11-alt3
+- fix build for 5.16 kernel
+
 * Mon Aug 09 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.5.0.11-alt2
 - update sources from openEuler 5.10
 - fix build for 5.13 kernel

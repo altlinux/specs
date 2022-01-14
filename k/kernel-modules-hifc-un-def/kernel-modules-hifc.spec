@@ -1,6 +1,6 @@
 %define module_name     hifc
 %define module_version  3.5.0.11
-%define module_release  alt2
+%define module_release  alt3
 %define flavour         un-def
 %define karch x86_64 aarch64
 
