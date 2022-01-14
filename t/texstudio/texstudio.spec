@@ -6,8 +6,8 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ libX11-devel libqt4-devel p
 %define _localstatedir %{_var}
 %define fontpkgname texstudio
 Name:           texstudio
-Version:        4.1.2
-Release:        alt2
+Version:        4.2.0
+Release:        alt1
 
 Summary:        A feature-rich editor for LaTeX documents
 # texstudio binary: GPLv3 due to static linkage of bundled qcodeedit
@@ -128,6 +128,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE1}
 %doc utilities/AUTHORS utilities/COPYING utilities/manual/CHANGELOG.txt
 
 %changelog
+* Fri Jan 14 2022 Ilya Mashkin <oddity@altlinux.ru> 4.2.0-alt1
+- 4.2.0
+
 * Sat Jan 01 2022 Anton Midyukov <antohami@altlinux.org> 4.1.2-alt2
 - use pkgconfig for quazip PATH definitions
 
