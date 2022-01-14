@@ -1,7 +1,7 @@
 %define  modulename sphinx-issues
 
 Name:    python3-module-%modulename
-Version: 2.0.0
+Version: 3.0.1
 Release: alt1
 
 Summary: A Sphinx extension for linking to your project's issue tracker
@@ -37,6 +37,9 @@ support for GitHub (though this works with other services).
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jan 14 2022 Andrey Cherepanov <cas@altlinux.org> 3.0.1-alt1
+- New version.
+
 * Wed Jan 05 2022 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
 - New version.
 
