@@ -12,13 +12,13 @@
 # no tags
 %define zart_ver 939cf38
 # https://github.com/c-koi/gmic-qt
-%define gmic_qt_ver v.2.9.9
+%define gmic_qt_ver v.3.0.0-18-gd31ff4d
 # https://github.com/dtschump/gmic-community.git
-%define gmic_comm_ver untagged-89bfcf54f1870e5bf4fe-2-g38af865
+%define gmic_comm_ver gmic-3.0.0-Win-30-ge08f685
 
 Name: gmic
-Version: 2.9.9
-Release: alt2
+Version: 3.0.1
+Release: alt1
 
 Summary: GREYC's Magic Image Converter
 License: CECILL-2.0 and GPL-3.0
@@ -118,17 +118,19 @@ sed -i "s|cimg_use_openmp||;s|-fopenmp||" gmic-qt/gmic_qt.pro zart/zart.pro
 
 dos2unix src/Makefile
 # fix libdir
-subst 's|\$(USR)/\$(LIB)/|$(USR)/%_lib/|' src/Makefile
+sed -i 's|\$(USR)/\$(LIB)/|$(USR)/%_lib/|' src/Makefile
 # fix libcgmic path
 subst 's| \.\.\/\(\.\.\/gmic-community/libcgmic\)| \1|' src/Makefile
 %ifnarch %ix86 x86_64
-subst 's|-mtune=generic||' src/Makefile
+sed -i 's|-mtune=generic||' src/Makefile
 %endif
+# remove unusual rpath
+sed -i 's|-Wl,-rpath,.||' src/Makefile
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
 pushd src
-%make NOSTRIP=1 OPT_CFLAGS="%optflags_default" cli lib libc
+%make V=1 NOSTRIP=1 OPT_CFLAGS="%optflags" cli lib libc
 popd
 
 pushd %name-qt
@@ -203,6 +205,9 @@ popd
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Fri Jan 14 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
+- 3.0.1
+
 * Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 2.9.9-alt2
 - disabled OpenMP support for %%e2k (ilyakurdyukov@)
 
