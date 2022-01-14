@@ -90,8 +90,8 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.7
-Release: alt8
+Version: %ver_major.9
+Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -2272,6 +2272,9 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Fri Jan 14 2022 Alexey Shabalin <shaba@altlinux.org> 1:249.9-alt1
+- 249.9 (Fixes: CVE-2021-3997)
+
 * Mon Dec 27 2021 Alexey Shabalin <shaba@altlinux.org> 1:249.7-alt8
 - Provides ntp-server was disable temporary in systemd-timesyncd.
 
