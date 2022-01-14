@@ -10,8 +10,8 @@
 %define soname 2.0
 
 Name:           lib%oname%soname
-Version:        2.0.2
-Release:        alt3
+Version:        2.0.3
+Release:        alt1
 Summary:        Enables color transforms and image display across graphics apps
 Group:          System/Libraries
 
@@ -25,6 +25,7 @@ Patch1: opencolorio-alt-install.patch
 Patch2: opencolorio-alt-armh-multiple-definition.patch
 Patch3: opencolorio-alt-openimageio-linking.patch
 Patch4: opencolorio-upstream-tests.patch
+Patch5: opencolorio-upstream-python-tests.patch
 
 # Utilities
 BuildRequires: cmake gcc-c++
@@ -91,6 +92,7 @@ Group:          Development/Python3
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -164,6 +166,9 @@ popd
 %python3_sitelibdir/*.so
 
 %changelog
+* Fri Jan 14 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.3-alt1
+- Updated to upstream version 2.0.3.
+
 * Wed Dec 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.2-alt3
 - Fixed build with new dependencies.
 
