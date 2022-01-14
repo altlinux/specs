@@ -1,7 +1,7 @@
 Name: iputils
-%define timestamp 20210722
+%define timestamp 20211215
 Version: %timestamp
-Release: alt3
+Release: alt1
 
 Summary: Utilities for IPv4/IPv6 networking
 License: BSD-3-Clause and GPL-2.0+ and Rdisc
@@ -12,10 +12,6 @@ Source0: %name-%version.tar
 Source1: ping.control
 Source2: ninfod.init
 Patch: %name-%version-%release.patch
-
-# Patch from upstream git.
-# Drop them when new version will be released.
-Patch100: meson-Make-tests-optional.patch
 
 Conflicts: netkit-base
 
@@ -55,7 +51,6 @@ Queries.
 %prep
 %setup
 %patch -p1
-%patch100 -p1
 
 %build
 %add_optflags -fno-strict-aliasing -Wstrict-prototypes
@@ -70,7 +65,6 @@ Queries.
 
 export LDFLAGS='-pie'
 %meson \
-	-DBUILD_TFTPD=false \
 	-Dsystemdunitdir=%_unitdir \
 	-DINSTALL_SYSTEMD_UNITS=true \
 	-DNO_SETCAP_OR_SUID=true \
@@ -161,6 +155,10 @@ fi
 %_man8dir/ninfod.*
 
 %changelog
+* Fri Jan 14 2022 Mikhail Efremov <sem@altlinux.org> 20211215-alt1
+- Dropped obsoleted patch.
+- 20210722 -> 20211215.
+
 * Fri Aug 06 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 20210722-alt3
 - disabled -Werror option for Elbrus build
 
