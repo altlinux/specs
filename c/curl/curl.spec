@@ -4,7 +4,7 @@
 
 Name: curl
 Version: 7.81.0
-Release: alt1
+Release: alt2
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -155,6 +155,10 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Sat Jan 08 2022 Anton Farygin <rider@altlinux.ru> 7.81.0-alt2
+- disabled rewindaftersend logic for auth via kerberos to resolve problems with
+  hdfs (fix for curl issue #8264)
+
 * Wed Jan 05 2022 Anton Farygin <rider@altlinux.ru> 7.81.0-alt1
 - 7.80.0 -> 7.81.0
 
