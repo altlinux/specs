@@ -1,9 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define cfg %_builddir/%name-%version/
-# See https://svn.freepascal.org/svn/lazarus/tags/lazarus_2_0_2/ for example
-%define rev 63942
 
 Name:    lazarus
-Version: 2.0.12
+Version: 2.2.0.4
 Release: alt1
 Epoch:   1
 
@@ -11,6 +10,7 @@ Summary: Lazarus Component Library and IDE
 License: GPL-2.0 and LGPL-2.0 and MPL-1.1
 Group:   Development/Other
 Url:     http://www.lazarus-ide.org/
+# Git: https://gitlab.com/freepascal.org/lazarus/lazarus.git
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -133,15 +133,15 @@ find . -name *.lpi -print0 -o -name *.kof -print0 | xargs -0 -L 1 subst 's,[\\/]
 # Install to %%_libdir instead of %%_datadir because lasarus dir contains binaries
 subst 's|share/lazarus|%_lib/lazarus|' Makefile
 
+# Generate revision.inc
+echo "const RevisionStr = '${SVNVERSION}';" > ide/revision.inc
+
 %build
 MAKEOPTS="-Fl/opt/gnome/lib"
 if [ -n "$FPCCfg" ]; then
   MAKEOPTS="$MAKEOPTS -n @$FPCCfg"
 fi
 #CHMHELP:MAKEOPTS="$MAKEOPTS -dUseCHMHelp"
-
-# Put SVN revision into revision.inc
-echo "const RevisionStr = '%rev';" > ide/revision.inc
 
 # Make IDE
 # Build IDE based on Qt5
@@ -289,6 +289,10 @@ ln -s ../../bin/lazarus %buildroot$LAZARUSDIR/lazarus
 %_libdir/libQt5Pas.so
 
 %changelog
+* Mon Jan 10 2022 Andrey Cherepanov <cas@altlinux.org> 1:2.2.0.4-alt1
+- New version.
+- Build from upstream Git: https://gitlab.com/freepascal.org/lazarus/lazarus.git
+
 * Wed Jun 16 2021 Andrey Cherepanov <cas@altlinux.org> 1:2.0.12-alt1
 - New version.
 

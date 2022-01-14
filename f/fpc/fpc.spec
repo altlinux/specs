@@ -8,7 +8,7 @@
 
 Name: 	  fpc
 Version:  3.2.2
-Release:  alt1
+Release:  alt2
 Epoch:    3
 
 Summary:  Free Pascal Compiler -- Meta Package
@@ -80,6 +80,8 @@ Patch31: fpc-docs-message.patch
 Patch32: fpc-auto-add-help-index.patch
 # Show progress in writeidx
 Patch33: fpc-writeidx-show-progress.patch
+Patch34: fpc-3.2.0--glibc-2.34.patch
+Patch35: fpc-fppkg-pathes.patch
 
 Requires: fpc-units-rtl
 Requires: fpc-compiler
@@ -148,7 +150,7 @@ popd
 %patch12 -p1
 %patch13 -p1
 #patch15 -p1 TODO see patch16
-#patch16 -p1 TODO neew adapt
+#patch16 -p1 TODO need adapt
 %patch17 -p2
 %patch18 -p1
 #patch19 -p1 TODO need adapt
@@ -164,6 +166,8 @@ popd
 %patch31 -p0
 %patch32 -p2
 %patch33 -p2
+%patch34 -p1 -d fpcsrc
+%patch35 -p2
 
 %if_with sources
 cp -a fpcsrc{,.orig}
@@ -302,6 +306,9 @@ mv %buildroot%fpc_dir/ide/fp.ans{,.original}
 # Remove installer executable
 rm -f %buildroot%_bindir/installer
 
+# Create directory for fppkgconf.d/*.conf
+mkdir -p %buildroot%_sysconfdir/fppkgconf.d
+
 %files
 
 %package common
@@ -346,6 +353,7 @@ This package contains the command line compiler.
 %config(noreplace) %_sysconfdir/%name.cfg
 %if_disabled bootstrap
 %config(noreplace) %_sysconfdir/fppkg.cfg
+%dir %_sysconfdir/fppkgconf.d
 %dir %_sysconfdir/fppkg
 %config(noreplace) %_sysconfdir/fppkg/default
 %endif
@@ -1019,6 +1027,10 @@ Free Pascal runtime library units cross-compiled for win32.
 %endif
 
 %changelog
+* Fri Jan 14 2022 Andrey Cherepanov <cas@altlinux.org> 3:3.2.2-alt2
+- Fix build with glibc-2.34.
+- Make fppkg usable by fix its configuration.
+
 * Sun May 30 2021 Andrey Cherepanov <cas@altlinux.org> 3:3.2.2-alt1
 - New version.
 
