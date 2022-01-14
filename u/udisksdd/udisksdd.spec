@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    udisksdd
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: a dd(1) drop-in replacement that makes use of udisks(8)
@@ -56,5 +56,8 @@ echo 'import setuptools; setuptools.setup()' > setup.py
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat Jan 15 2022 Arseny Maslennikov <arseny@altlinux.org> 0.2-alt1
+- 0.1 -> 0.2.
+
 * Sat Apr 10 2021 Arseny Maslennikov <arseny@altlinux.org> 0.1-alt1
 - Initial build for ALT Sisyphus.
