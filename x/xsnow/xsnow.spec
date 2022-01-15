@@ -1,5 +1,5 @@
 Name: xsnow
-Version: 3.3.6
+Version: 3.4.3
 Release: alt1
 
 Summary: An X Window System based dose of Christmas cheer
@@ -33,7 +33,7 @@ Xsnow добавляет анимированные снежинки и Сант
 %build
 %autoreconf
 %configure
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -64,6 +64,9 @@ desktop-file-install --dir %buildroot/%_desktopdir \
 %_datadir/metainfo/*
  
 %changelog
+* Sat Jan 15 2022 Alexei Mezin <alexvm@altlinux.org> 3.4.3-alt1
+- New version
+
 * Sat Dec 04 2021 Alexei Mezin <alexvm@altlinux.org> 3.3.6-alt1
 - New version
 - Fix repocop warnings:
