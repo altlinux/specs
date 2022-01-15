@@ -3,13 +3,15 @@
 
 Name: perl-%module_name
 Version: 0.202
-Release: alt4
-Summary: Perl interface to the Zstd (Zstandard) (de)compressor
-Group: Development/Perl
-License: BSD
-URL: https://github.com/pmqs/Compress-Stream-Zstd
+Release: alt5
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PM/PMQS/%{module_name}-%{version}.tar.gz
+Summary: Perl interface to the Zstd (Zstandard) (de)compressor
+License: BSD
+Group: Development/Perl
+
+Url: https://github.com/pmqs/Compress-Stream-Zstd
+Source: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PM/PMQS/%module_name-%version.tar.gz
+Patch: zstd-1.4.5-alt-e2k.patch
 
 BuildRequires: gcc-c++ libcurl-devel libgtest-devel liblz4-devel liblzma-devel libsowing-devel libxxhash-devel libzstd-devel perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/ParseXS.pm) perl(Module/Build.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(parent.pm) zlib-devel
 BuildRequires: rpm-build-perl perl-devel perl-podlators
@@ -19,7 +21,12 @@ The Compress::Stream::Zstd module provides an interface to the Zstd
 (de)compressor.
 
 %prep
-%setup -q -n %{module_name}-%{version}
+%setup -n %module_name-%version
+%ifarch %e2k
+pushd ext/zstd
+%patch -p1
+popd
+%endif
 
 %build
 %perl_vendor_build
@@ -33,6 +40,10 @@ The Compress::Stream::Zstd module provides an interface to the Zstd
 %perl_vendor_autolib/*
 
 %changelog
+* Sat Jan 15 2022 Michael Shigorin <mike@altlinux.org> 0.202-alt5
+- E2K: apply zstd arch support patch (ALT version)
+- minor spec cleanup
+
 * Fri Nov 26 2021 L.A. Kostis <lakostis@altlinux.ru> 0.202-alt4
 - Rebuild by human.
 
