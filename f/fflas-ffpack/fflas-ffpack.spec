@@ -1,21 +1,22 @@
 %def_without openblas
 
+%define lname libfflas0
+
 Name: fflas-ffpack
-%define lname	libfflas0
 Version: 2.4.3
-Release: alt1
+Release: alt2
+
 Summary: Finite Field Linear Algebra Subroutines
 License: LGPL-2.1+
 Group: Sciences/Mathematics
+
 Url: https://linbox-team.github.io/fflas-ffpack/
-
 #Git-Clone: https://github.com/linbox-team/fflas-ffpack
-
 Source: https://github.com/linbox-team/fflas-ffpack/releases/download/%version/fflas-ffpack-%version.tar.gz
-Patch1: reproducible.patch
+Patch: reproducible.patch
 
 # Couldn't find package libatlas-devel on aarch64, armh and ppc64le.
-ExclusiveArch: i586 x86_64
+ExclusiveArch: i586 x86_64 %e2k
 
 BuildPreReq: fdupes
 BuildRequires: gcc-c++
@@ -58,7 +59,7 @@ the FFLAS-FFPACK API.
 
 %prep
 %setup
-%patch1 -p1
+%patch -p1
 
 #Do not compile in DATE and TIME
 sed '/HTML_TIMESTAMP/s/YES/NO/' -i doc/Doxyfile
@@ -95,6 +96,10 @@ fdupes %buildroot%prefix
 %_docdir/%name/
 
 %changelog
+* Sat Jan 15 2022 Michael Shigorin <mike@altlinux.org> 2.4.3-alt2
+- E2K: build against openblas (specified on girar side)
+- minor spec cleanup
+
 * Thu Nov 11 2021 Leontiy Volodin <lvol@altlinux.org> 2.4.3-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
 - Built as require for sagemath.
