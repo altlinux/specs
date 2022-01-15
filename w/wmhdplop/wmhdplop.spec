@@ -1,6 +1,6 @@
 Name: wmhdplop
 Version: 0.9.9
-Release: alt8
+Release: alt9
 
 Summary: Cute hard drive monitoring applet
 License: GPL-2.0
@@ -71,6 +71,8 @@ Try to launch openoffice and enjoy the wmhdplop show!
 %patch3 -p2
 %patch4 -p2
 %patch5 -p2
+# imlib2-config is broken
+sed -e 's,imlib2-config,pkg-config imlib2,g' -i configure.ac
 
 %build
 %autoreconf
@@ -94,6 +96,9 @@ install -pD -m644 %SOURCE3 %buildroot%_man1dir/%name.1
 %_libdir/gkrellm2/plugins/gkhdplop.so
 
 %changelog
+* Sun Jan 16 2022 Michael Shigorin <mike@altlinux.org> 0.9.9-alt9
+- fix imlib2-config related ftbfs (thx bidulock for AUR fix)
+
 * Sat Sep 11 2021 Michael Shigorin <mike@altlinux.org> 0.9.9-alt8
 - fix LTO ftbfs
 
