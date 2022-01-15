@@ -1,16 +1,15 @@
 Name: wlroots
-Version: 0.14.1
+Version: 0.15.0
 Release: alt1
 
 Summary: Modular Wayland compositor library
 License: MIT
 Group: System/Libraries
-Url: https://github.com/swaywm/wlroots
+Url: https://gitlab.freedesktop.org/wlroots/wlroots
 
-# VCS: https://github.com/swaywm/wlroots.git
 Source: %name.tar
 
-%define soversion 9
+%define soversion 10
 %define soname %name%soversion
 
 BuildRequires(pre): meson
@@ -89,6 +88,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Dec 25 2021 Alexey Gladkov <legion@altlinux.ru> 0.15.0-alt1
+- New version (0.15.0)
+
 * Sat Jul 17 2021 Alexey Gladkov <legion@altlinux.ru> 0.14.1-alt1
 - New version (0.14.1)
 

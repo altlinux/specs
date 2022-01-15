@@ -1,6 +1,6 @@
 Name: sway
-Version: 1.6.1
-Release: alt1
+Version: 1.7.0
+Release: alt1.rc2
 Epoch:   1
 Summary: i3wm drop-in replacement for Wayland
 License: MIT
@@ -13,7 +13,7 @@ Source0: %name-%version.tar
 Source1: startsway
 Source2: Sway_Wallpaper_Gray.png
 
-Patch00: sway-config.patch
+Patch1: 0001-Change-config.patch
 
 %define _unpackaged_files_terminate_build 1
 
@@ -67,7 +67,7 @@ This package contains data files.
 
 %prep
 %setup
-%patch00 -p2
+%autopatch -p1
 
 %build
 %meson \
@@ -107,6 +107,12 @@ install -p -m0644 -D %SOURCE2 %buildroot/%_datadir/backgrounds/%name/
 %_datadir/backgrounds/%name/*
 
 %changelog
+* Sat Jan 15 2022 Alexey Gladkov <legion@altlinux.ru> 1:1.7.0-alt1.rc2
+- New version (1.7-rc2)
+
+* Sat Dec 25 2021 Alexey Gladkov <legion@altlinux.ru> 1:1.7.0-alt1.rc1
+- New version (1.7-rc1)
+
 * Sat Jul 17 2021 Alexey Gladkov <legion@altlinux.ru> 1:1.6.1-alt1
 - New version (1.6.1)
 
