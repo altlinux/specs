@@ -1,13 +1,13 @@
 Name: xsnow
 Version: 3.4.3
-Release: alt1
+Release: alt2
 
 Summary: An X Window System based dose of Christmas cheer
 License: GPLv3+
 Group: Toys
 
 Url: https://www.ratrabbit.nl/ratrabbit/xsnow/index.html
-Source0: xsnow-%version.tar.gz
+Source: xsnow-%version.tar.gz
 Packager: Alexei Mezin <alexvm@altlinux.org>
 
 Summary(ru_RU.UTF8):  Немножко новогоднего настроения на рабочий стол
@@ -15,7 +15,7 @@ Summary(ru_RU.UTF8):  Немножко новогоднего настроени
 # Automatically added by buildreq on Wed Jan 01 2020
 # optimized out: at-spi2-atk fontconfig glib2-devel glibc-kernheaders-generic libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libwayland-client libwayland-cursor libwayland-egl pkg-config python-modules python2-base python3 python3-base python3-dev sh4 xorg-proto-devel
 ###BuildRequires: i586-libxcb libXpm-devel libXt-devel libdb4-devel libdbus-devel libgtk+3-devel libxml2-devel python3-module-mpl_toolkits python3-module-yieldfrom selinux-policy
-BuildRequires: libXpm-devel libXt-devel libgtk+3-devel libxml2-devel libdbus-devel gcc-c++ ImageMagick-tools
+BuildRequires: libXpm-devel libXt-devel libgtk+3-devel libxml2-devel libdbus-devel gcc-c++ ImageMagick-tools desktop-file-utils
 
 ###BuildRequires: gccmakedep imake libXext-devel libXpm-devel libXt-devel xorg-cf-files
 
@@ -64,6 +64,9 @@ desktop-file-install --dir %buildroot/%_desktopdir \
 %_datadir/metainfo/*
  
 %changelog
+* Sun Jan 16 2022 Michael Shigorin <mike@altlinux.org> 3.4.3-alt2
+- Added explicit BR: desktop-file-utils (older libgio didn't pull it in)
+
 * Sat Jan 15 2022 Alexei Mezin <alexvm@altlinux.org> 3.4.3-alt1
 - New version
 
