@@ -2,20 +2,25 @@
 
 Name: cgal
 Version: 5.3
-Release: alt1
-Summary: Easy access to efficient and reliable geometric algorithms
-License: Free for non-commertial using
-Group: Sciences/Mathematics
-Url: https://www.cgal.org/
+Release: alt2
 
+Summary: Easy access to efficient and reliable geometric algorithms
+License: Free for non-commertial use
+Group: Sciences/Mathematics
+
+Url: https://www.cgal.org/
 # https://github.com/CGAL/cgal/releases
-# Source-url: https://github.com/CGAL/cgal/archive/refs/tags/v%version.tar.gz
-Source: CGAL-%version.tar
+# Source0-url: https://github.com/CGAL/cgal/archive/refs/tags/v%version.tar.gz
+Source0: CGAL-%version.tar
 # Source1-url: https://github.com/CGAL/cgal/releases/download/v%version/CGAL-%version-doc_html.tar.xz
 Source1: CGAL-%version-doc_html.tar
 
 BuildRequires(pre): rpm-build-python3
+%ifarch %e2k
+BuildRequires: gcc-c++
+%else
 BuildRequires: gcc-c++ >= 8.3
+%endif
 BuildRequires: cmake >= 3.14
 BuildRequires: gcc-fortran qt5-base-devel qt5-svg-devel
 BuildRequires: boost-devel libgmp-devel libgmpxx-devel eigen3
@@ -76,11 +81,11 @@ Thid package contains development documentation for CGAL.
 install -d %buildroot%_docdir/%name
 cp -fR doc_html %buildroot%_docdir/%name
 #cp -fR examples %buildroot%_docdir/%name
-# due python2 scripts
+# due to python2 scripts
 rm -rfv %buildroot%_libdir/cmake/CGAL/Help
 
 %files devel
-#%_bindir/*
+#_bindir/*
 %_man1dir/*
 %_includedir/*
 %_libdir/cmake/CGAL
@@ -89,6 +94,10 @@ rm -rfv %buildroot%_libdir/cmake/CGAL/Help
 %doc %_docdir/%{name}*
 
 %changelog
+* Sat Jan 15 2022 Michael Shigorin <mike@altlinux.org> 5.3-alt2
+- E2K: lcc 1.25 pretends to be like gcc7 (but builds cgal just fine)
+- minor spec cleanup
+
 * Mon Aug 09 2021 Vitaly Lipatov <lav@altlinux.ru> 5.3-alt1
 - NMU: new version 5.3 (with rpmrb script)
 - use cmake >= 3.14, g++ >= 8.3
