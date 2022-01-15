@@ -2,7 +2,7 @@
 
 Name: SDL2_mixer
 Version: 2.0.4
-Release: alt2
+Release: alt3
 
 Summary: Simple DirectMedia Layer - Sample Mixer Library
 License: zlib
@@ -11,13 +11,15 @@ Group: System/Libraries
 Url: http://www.libsdl.org/projects/SDL_mixer/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source: http://www.libsdl.org/projects/SDL_mixer/release/%name-%version.tar.gz
+# http://www.libsdl.org/projects/SDL_mixer/release/%name-%version.tar.gz
+Source: %name-%version.tar
 
 BuildRequires: libSDL2-devel
 BuildRequires: libflac-devel
 %{?!_with_bootstrap:BuildRequires: libfluidsynth-devel}
 BuildRequires: libmodplug-devel
 BuildRequires: libmpg123-devel
+BuildRequires: libopusfile-devel
 BuildRequires: libvorbis-devel
 
 %description
@@ -68,6 +70,9 @@ libraries.
 %_libdir/lib%name.so
 
 %changelog
+* Sat Jan 15 2022 Nazarov Denis <nenderus@altlinux.org> 2.0.4-alt3
+- Build with opus support (ALT #41721)
+
 * Sun Apr 07 2019 Nazarov Denis <nenderus@altlinux.org> 2.0.4-alt2
 - Remove %ubt macro
 
