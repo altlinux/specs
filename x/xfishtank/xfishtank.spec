@@ -1,6 +1,6 @@
 Name: xfishtank
-Version: 3.0.0
-Release: alt2
+Version: 3.1.1
+Release: alt1
 
 Summary:  An aquarium for your screen, with fish swimming around on your desktop.
 License: GPLv3+
@@ -47,6 +47,9 @@ desktop-file-install --dir %buildroot/%_desktopdir \
 %_desktopdir/*
  
 %changelog
+* Sat Jan 15 2022 Alexei Mezin <alexvm@altlinux.org> 3.1.1-alt1
+- New version
+
 * Sun Dec 05 2021 Alexei Mezin <alexvm@altlinux.org> 3.0.0-alt2
 - Fix packaging error
 - Minor spec cleanup
