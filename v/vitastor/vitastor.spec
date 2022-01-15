@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: vitastor
-Version: 0.6.10
+Version: 0.6.11
 Release: alt1
 Summary: Vitastor, a fast software-defined clustered block storage
 Group: System/Base
@@ -175,6 +175,9 @@ useradd  -r -g %name -s /sbin/nologin -c "Vitastor daemons" -M -d %_localstatedi
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Jan 15 2022 Alexey Shabalin <shaba@altlinux.org> 0.6.11-alt1
+- 0.6.11
+
 * Fri Dec 17 2021 Alexey Shabalin <shaba@altlinux.org> 0.6.10-alt1
 - 0.6.10
 
