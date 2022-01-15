@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: autorepo-altnode-config
-Version: 0.16
+Version: 0.17
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -120,6 +120,9 @@ fi
 %_sysconfdir/autorepo/apt/sources.list.*
 
 %changelog
+* Sat Jan 15 2022 Igor Vlasenko <viy@altlinux.org> 0.17-alt1
+- added p10
+
 * Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - added armh and lowercase sisyphus
 
