@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: swayidle
-Version: 1.6
+Version: 1.7.1
 Release: alt1
-Summary: Idle management daemon for Wayland 
+Summary: Idle management daemon for Wayland
 License: MIT
 Url: https://github.com/swaywm/swayidle
 Group: Graphical desktop/Other
@@ -26,6 +26,10 @@ any Wayland compositor which implements the KDE idle protocol.
 %prep
 %setup
 
+%ifarch armh %{ix86}
+sed -i -e "s/'werror=true'/'werror=false'/" meson.build
+%endif
+
 %build
 %meson
 %meson_build
@@ -46,6 +50,9 @@ rm -rf -- \
 %_man1dir/*
 
 %changelog
+* Sat Jan 15 2022 Alexey Gladkov <legion@altlinux.ru> 1.7.1-alt1
+- New version (1.7.1)
+
 * Fri Mar 27 2020 Alexey Gladkov <legion@altlinux.ru> 1.6-alt1
 - New version (1.6)
 

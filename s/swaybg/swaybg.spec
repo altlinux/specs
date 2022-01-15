@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: swaybg
-Version: 1.0
+Version: 1.1
 Release: alt1
-Summary: Wallpaper tool for Wayland compositors 
+Summary: Wallpaper tool for Wayland compositors
 License: MIT
 Url: https://github.com/swaywm/swaybg
 Group: Graphical desktop/Other
@@ -37,5 +37,8 @@ BuildRequires: wayland-protocols
 %_man1dir/*
 
 %changelog
+* Sat Jan 15 2022 Alexey Gladkov <legion@altlinux.ru> 1.1-alt1
+- New version (1.1).
+
 * Wed May 22 2019 Alexey Gladkov <legion@altlinux.ru> 1.0-alt1
 - Initial build
