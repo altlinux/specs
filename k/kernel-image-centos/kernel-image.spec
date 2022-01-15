@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 42
+%define centos_release 43
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -629,6 +629,13 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sat Jan 15 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.43-alt1.el9
+- mm: fix for "CoW after fork()" "GUP after fork()" bug
+- powerpc/xive: Change IRQ domain to a tree domain
+- net: core stable backport for rhel 9.0
+- vhost_net: fix OoB on sendmsg() failure.
+- printk changes for kernel-rt
+
 * Thu Jan 13 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.42-alt1.el9
 - smartpqi updates
 - powerpc/module_64: Fix livepatching for RO modules
