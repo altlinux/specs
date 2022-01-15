@@ -2,10 +2,11 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%def_without python
+%def_enable spreadsheet-model
+%def_with python
 Name: liborcus
-Version: 0.16.1
-Release: alt2
+Version: 0.17.2
+Release: alt1
 Summary: Standalone file import filter library for spreadsheet documents
 
 Group: System/Libraries
@@ -13,13 +14,11 @@ License: MPL-2.0
 Url: https://gitlab.com/orcus/orcus
 Source: orcus-%version.tar.gz
 
-Patch1: liborcus-alt-gcc11-compat.patch
-
-%define libver 0.16
+%define libver 0.17
 
 # Automatically added by buildreq on Thu Jul 25 2013
 # optimized out: boost-devel boost-intrusive-devel libstdc++-devel pkg-config
-BuildRequires: boost-devel-headers boost-interprocess-devel boost-program_options-devel gcc-c++ zlib-devel boost-filesystem-devel mdds-devel python3-devel
+BuildRequires: boost-devel-headers boost-interprocess-devel boost-program_options-devel gcc-c++ zlib-devel boost-filesystem-devel mdds-devel python3-devel libixion-devel
 
 %description
 %name is a standalone file import filter library for spreadsheet
@@ -50,7 +49,6 @@ Python3 bindings for Orcus
 
 %prep
 %setup
-%patch1 -p2
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -68,7 +66,7 @@ sed -i 's/liborcus_parser_.*_la_LIBADD = /& $(BOOST_SYSTEM_LIB) /' src/parser/Ma
 	--with-pic \
 	--with-boost \
 	--with-boost-system \
-	--disable-spreadsheet-model \
+	%subst_enable spreadsheet-model \
 %if_without python
 	--disable-python \
 %endif
@@ -105,6 +103,11 @@ ln -s %name-%libver.pc %buildroot%_pkgconfigdir/%name.pc
 %endif
 
 %changelog
+* Thu Jan 13 2022 Fr. Br. George <george@altlinux.ru> 0.17.2-alt1
+- Autobuild version bump to 0.17.2
+- Enable python module
+- Add ixion support
+
 * Wed Oct 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.16.1-alt2
 - Fixed build with gcc-11
 

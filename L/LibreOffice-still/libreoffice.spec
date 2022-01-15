@@ -6,7 +6,8 @@
 %def_without fetch
 %def_without lto
 %def_with dconf
-%def_with orcus
+%def_without mdds
+%def_without orcus
 
 # enable kde5 UI
 %def_enable kde5
@@ -31,7 +32,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt2.1
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -421,7 +422,7 @@ fi
 	--disable-lto \
         --with-vendor="ALT Linux Team" \
         --without-system-poppler \
-        --without-system-mdds \
+        %{?_without_mdds:--without-system-mdds } \
         %{?_without_orcus:--without-system-orcus } \
         %{subst_enable mergelibs} \
         --enable-odk \
@@ -694,6 +695,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Jan 14 2022 Fr. Br. George <george@altlinux.ru> 7.1.8.1-alt2.1
+- Use bundled liborcus
+
 * Fri Jan 14 2022 Andrey Cherepanov <cas@altlinux.org> 7.1.8.1-alt2
 - Use bundled mdds-1.5.
 

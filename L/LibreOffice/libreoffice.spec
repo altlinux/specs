@@ -1,10 +1,9 @@
-# 7.2.0.1
-%def_without forky
+# 7.3.0.1
 %def_without python
 %def_with parallelism
 %def_without fetch
-%def_with lto
-%def_with dconf
+%def_enable lto
+%def_enable dconf
 
 # enable kde5 UI
 %def_enable kf5
@@ -22,14 +21,14 @@
 %def_disable mergelibs
 
 Name: LibreOffice
-%define hversion 7.2
+%define hversion 7.3
 %define urelease 0.1
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt3
+Release: alt1
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -47,49 +46,37 @@ Provides: %name-full = %EVR
 Provides: libreoffice = %EVR
 Obsoletes: libreoffice < 3.99
 Obsoletes: %name-full < %EVR
-Obsoletes: LibreOffice4
 
 %define with_lang ru be de fr uk pt-BR es kk tt
 #Requires: java xdg-utils hunspell-en hyphen-en mythes-en
 #Requires: gst-plugins-bad1.0 gst-plugins-good1.0 gst-plugins-nice1.0 gst-plugins-ugly1.0 gst-plugins-base1.0
 Requires: gst-libav
 
-Source:		libreoffice-%version.tar.xz
-Source1:	libreoffice-dictionaries-%version.tar.xz
-Source2:	libreoffice-help-%version.tar.xz
-Source3:	libreoffice-translations-%version.tar.xz
+Source:         libreoffice-%version.tar.xz
+Source1:        libreoffice-dictionaries-%version.tar.xz
+Source2:        libreoffice-help-%version.tar.xz
+Source3:        libreoffice-translations-%version.tar.xz
 
-Source10:	libreoffice-ext_sources.%version.tar
-Source100:	forky.c
-Source200:	key.gpg
-Source300:	libreoffice.unused
+Source10:       libreoffice-ext_sources.%version.tar
+Source100:      forky.c
+Source200:      key.gpg
+Source300:      libreoffice.unused
 
 ## FC patches
 Patch1: FC-0001-don-t-suppress-crashes.patch
 Patch2: FC-0001-disble-tip-of-the-day-dialog-by-default.patch
 Patch3: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
-Patch4: FC-0001-fix-detecting-qrcodegen.patch
-Patch5: FC-0001-rhbz-1918152-fix-FTBFS.patch
-Patch6: FC-0001-Get-rid-of-apache-commons-logging.patch
-Patch7: FC-0001-Adapt-to-libstdc-Implement-LWG-1203-for-rvalue-iostr.patch
-Patch8: FC-0001-Adapt-to-hamcrest-2.2-3.fc35.noarch.rpm.patch
-Patch9: FC-0001-gtk3-workaround-missing-gdk_threads_enter-calls-in-e.patch
-Patch10: FC-0001-Replace-inet_ntoa-with-inet_ntop.patch
-Patch11: FC-0001-Simplify-construction-of-a-hardcoded-IPv4-address.patch
-Patch12: FC-0001-dtd-files-are-not-xml-files-and-shouldn-t-have-xml-h.patch
-Patch13: FC-0002-xmllint-Namespace-prefix-menu-on-menuseparator-is-no.patch
-Patch14: FC-0001-allow-system-firebird-4.patch
-Patch15: FC-0001-Remove-unused-DOCTYPE-from-odk-examples-xcu-file.patch
-Patch16: FC-0001-math.desktop-include-Spreadsheet-category.patch
-Patch17: FC-0001-add-missing-xmlns-loext-to-example_sl-SI.xml.patch
-Patch18: FC-0001-disable-libe-book-support.patch
+Patch4: FC-0001-make-with-idlc-cpp-cpp-work-for-gcc-cpp-as-a-ucpp-re.patch
+Patch5: FC-0001-Revert-tdf-101630-gdrive-support-w-oAuth-and-Drive-A.patch
+Patch6: FC-0001-annocheck-warning-about-missing-.note.gnu.property-s.patch
+Patch7: FC-0001-disable-libe-book-support.patch
 
 ## Long-term FC patches
 
 ## ALT patches
 Patch401: alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
 Patch402: alt-002-tmpdir.patch
-Patch403: alt-003-skia-freetype-2.11.patch
+#Patch403: alt-003-skia-freetype-2.11.patch
 Patch404: alt-004-shortint.patch
 Patch405: alt-005-svg-icons-1.patch
 Patch406: alt-006-svg-icons-2.patch
@@ -119,8 +106,11 @@ BuildRequires: libbox2d-devel
 # 7.2
 BuildRequires: libpixman-devel
 
+# 7.3
+BuildRequires: libcuckoo-devel libopenjpeg2.0-devel libabseil-cpp-devel
+
 %if_with java
-BuildRequires: java-devel junit ant bsh pentaho-reporting-flow-engine 
+BuildRequires: java-devel >= 9.0.0 junit ant bsh pentaho-reporting-flow-engine 
 %endif
 
 %if_enabled qt5
@@ -137,7 +127,7 @@ BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-kwindowsystem-devel
 BuildRequires: python3-dev
 %endif
 
-%if_with dconf
+%if_enabled dconf
 BuildRequires: libdconf-devel
 %endif
 
@@ -151,7 +141,6 @@ other office packages, except of language packs and GNOME/KDE bindings.
 %package common
 Summary: Basic installation of %name
 Group: Office
-Obsoletes: LibreOffice4-common
 AutoReqProv: yes, noshell, nopython
 %description common
 Common part of %name that does not interfere with other packages
@@ -160,7 +149,6 @@ Common part of %name that does not interfere with other packages
 Summary: Binaries, icons and desktop files for %name
 Group: Office
 Provides: %uname = %EVR
-Obsoletes: LibreOffice4-integrated
 Requires: %name-common = %EVR
 %if_with java
 Requires: pentaho-reporting-flow-engine
@@ -184,7 +172,6 @@ Summary: Qt5 Extensions for %name
 Group:  Office
 Requires: %uname = %EVR
 Requires: %name-common = %EVR
-Obsoletes: LibreOffice4-kde4 < %EVR
 %description qt5
 qt5 extensions for %name
 %endif
@@ -199,6 +186,14 @@ Provides: %name-kde = %EVR
 Provides: %name-kf5 = %EVR
 %description kde5
 KDE5 extensions for %name
+
+%package gtk3-kde5
+Summary: GTK3 Extensions for %name with KDE5 filepicker
+Group:  Office
+Requires: %uname = %EVR
+Requires: %name-common = %EVR
+%description gtk3-kde5
+GTK3 Extensions for %name with KDE5 filepicker
 %endif
 
 %package -n libreofficekit
@@ -223,7 +218,6 @@ Summary: Additional extensions for %name
 Group:  Office
 Requires: %uname = %EVR
 AutoReqProv: yes, noshell, nopython
-Obsoletes: LibreOffice4-extensions
 %description extensions
 Additional extensions for %name.
 One can choose either to install this package at once,
@@ -233,7 +227,6 @@ or to download and install (possibly newer) extensions manually.
 Summary: Mimetype keys support for %name
 Group: Office
 BuildArch: noarch
-Obsoletes: LibreOffice4-mimetypes
 %description mimetypes
 %name is distributed along with some mimetype settings and files.
 This package installs them.
@@ -271,7 +264,6 @@ Group:  Office \
 Requires: %uname = %EVR \
 %{-m:Requires: mythes-%lang} \
 %{-h:Requires: hyphen-%lang} \
-Obsoletes: LibreOffice4-%{pkgname} \
 %description %{pkgname} \
 Provides additional %{langname} translations and resources for %name. \
 \
@@ -279,51 +271,30 @@ Provides additional %{langname} translations and resources for %name. \
 %{nil}
 
 %prep
-%if_with forky
-echo Using forky
-%else
-echo Direct build
-%endif
 %setup -q -n libreoffice-%version -a10 -b1 -b2 -b3
 
 ## FC apply patches
-%patch1 -p1
+#patch1 -p1
 %patch2 -p1
 %patch3 -p1
-##patch4 -p1
+#patch4 -p1
 ##patch5 -p1
-#patch6 -p1
+%patch6 -p1
 #patch7 -p1
-#patch8 -p1
-##patch9 -p1
-#patch10 -p1
-#patch11 -p1
-#patch12 -p1
-#patch13 -p1
-#patch14 -p1
-#patch15 -p1
-#patch16 -p1
-#patch17 -p1
-#patch18 -p1
 
 ## Long-term FC patches applying
 
 ## ALT apply patches
 %patch401 -p0
 %patch402 -p1
-# Patch bundled Skia fior freetype-2.11
-tar xf ext_sources/skia-m90-45c57e116ee0ce214bdf78405a4762722e4507d9.tar.xz
-%patch403 -p1 -d skia
-tar cJf ext_sources/skia-m90-45c57e116ee0ce214bdf78405a4762722e4507d9.tar.xz skia
 %patch404 -p1
 %patch405 -p1
 %patch406 -p1
 %patch407 -p1
 
 %patch500 -p0
-
 # Patch with russian translation update
-%patch600 -p1
+# patch600 -p1
 
 # Hack in ALT pixman path
 sed -i 's@ -I@ -I /usr/include/pixman-1 -I@' canvas/Library_cairocanvas.mk
@@ -348,17 +319,15 @@ sed -i 's/libodbc.so.1/libodbc.so.2/g' connectivity/source/drivers/odbc/OFunctio
 
 rm -fr %name-tnslations/git-hooks
 
-install -D %SOURCE100 forky.c
-
 # create shell wrappers
 for n in office writer impress calc base draw math qstart; do
-	oname=lo$n
-	case "$n" in 
-		office) opt=""; oname=libreoffice%hversion;;
-		qstart) opt="--quickstart --nologo --nodefault";;
-		*) opt="--$n";;
-	esac
-	cat > $oname.sh <<@@@
+        oname=lo$n
+        case "$n" in 
+                office) opt=""; oname=libreoffice%hversion;;
+                qstart) opt="--quickstart --nologo --nodefault";;
+                *) opt="--$n";;
+        esac
+        cat > $oname.sh <<@@@
 #!/bin/sh
 exec %lodir/program/soffice $opt "\$@"
 @@@
@@ -375,94 +344,87 @@ test -r %conffile && . %conffile ||:
 
 %build
 grep -l GCC_VERSION configure* | while read F; do
-	sed -i '/GCC_VERSION=.*AWK/s/.*/GCC_VERSION="$_gcc_version"/' $F
+        sed -i '/GCC_VERSION=.*AWK/s/.*/GCC_VERSION="${_gcc_version%%%%.*}"/' $F
 done
 %ifarch mipsel
 export CFLAGS="-Os --param ggc-min-expand=20 --param ggc-min-heapsize=32768 -g1"
 export CXXFLAGS="$CFLAGS"
 %endif
 
+# XXX no "thin" LTO option in GCC!
+sed -i 's/-flto=thin/-flto=jobserver/g' solenv/gbuild/platform/com_GCC_defs.mk
+
 PARALLEL=$(nproc)
 
 %ifarch ppc64le
 # reduce excessive resource use
 if [ "$PARALLEL" -gt 24 ] ; then
-	PARALLEL=24
+        PARALLEL=24
 fi
 %endif
 
 ./autogen.sh \
-	--prefix=%_prefix \
-	--libdir=%_libdir \
-	--disable-lto \
+        --prefix=%_prefix \
+        --libdir=%_libdir \
         --with-vendor="ALT Linux Team" \
+        %{subst_enable lto} \
         %{subst_enable mergelibs} \
         --enable-odk \
-	--disable-firebird-sdbc \
-	--disable-coinmp \
+        --disable-firebird-sdbc \
+        --disable-coinmp \
         --enable-dbus \
         --enable-evolution2 \
         --enable-gio \
-	--enable-build-opensymbol \
-  	--enable-avahi \
+        --enable-build-opensymbol \
+        --enable-avahi \
         %{subst_with java} \
         --without-fonts \
         --without-myspell-dicts \
-	\
+        \
         --with-external-dict-dir=%_datadir/myspell \
         --with-external-hyph-dir=%_datadir/hyphen \
         --with-external-thes-dir=%_datadir/mythes \
         --with-lang="en-US %with_lang" \
         --with-external-tar=`pwd`/ext_sources \
-	\
-	--enable-ext-nlpsolver \
-	--enable-ext-numbertext \
-	--enable-ext-wiki-publisher \
-	--enable-ext-ct2n \
-	--disable-ext-languagetool \
+        \
+        --enable-ext-nlpsolver \
+        --enable-ext-numbertext \
+        --enable-ext-wiki-publisher \
+        --enable-ext-ct2n \
+        --disable-ext-languagetool \
   \
-	--enable-release-build \
-	--with-help \
+        --enable-release-build \
+        --with-help \
   \
-	%{subst_enable kf5} \
-	%{subst_enable qt5} \
-	--enable-gtk3 \
-	--enable-introspection \
-  	--enable-cipher-openssl-backend \
-	--enable-eot \
-	--enable-formula-logger \
-%if 0
-    # TODO build libzxing and turn it on
+        %{subst_enable kf5} \
+        %{subst_enable qt5} \
+        %{subst_enable dconf} \
+        --enable-gtk3 \
+%if_enabled kf5 \
+        --enable-gtk3-kde5 \
 %endif
-    --disable-zxing \
+        --enable-introspection \
+        --enable-cipher-openssl-backend \
+        --enable-eot \
+        --enable-formula-logger \
+        --disable-zxing \
   \
-%if_with lto
-  	--enable-lto \
-%endif
 %if_with parallelism
-	--with-parallelism="$PARALLEL" \
+        --with-parallelism="$PARALLEL" \
 %else   
         --without-parallelism \
 %endif
 %if_with python
-	--enable-python=internal \
-%endif
-%if_with dconf
-    --enable-dconf \
+        --enable-python=internal \
 %endif
 %if_with fetch
-	--enable-fetch-external
+        --enable-fetch-external
 %else
-	--with-system-libs \
-	--disable-fetch-external
+        --with-system-libs \
+        --disable-fetch-external
 %endif
 
-# TODO  --enable-vlc
-
-%if_with forky
-# Make forky
-gcc -g -DHAVE_CONFIG_H -shared -O3 -fomit-frame-pointer -fPIC forky.c -oforky.so -ldl
-%endif
+# TODO  --enable-vlc --enable-zxing
 
 %make bootstrap
 
@@ -470,22 +432,7 @@ gcc -g -DHAVE_CONFIG_H -shared -O3 -fomit-frame-pointer -fPIC forky.c -oforky.so
 export _JAVA_OPTIONS="-XX:ParallelGCThreads=4 $_JAVA_OPTIONS"
 %endif
 
-%if_with forky
-# TODO prefect forky_max tune
-echo Using forky
-export forky_divider=21
-export forky_max_procs=`awk '/^Max processes/{print int(5*$3/'$forky_divider')}' < /proc/self/limits`
-export forky_max_rss=6400000
-export forky_max_vsz=9600000
-export forky_verbose=1
-echo "max_procs $forky_max_procs / max_vsz $forky_max_vsz / max_rss $forky_max_rss" | tee $HOME/forky.log
-export LD_PRELOAD=`pwd`/forky.so
-
-%make build-nocheck || { tail -100 $HOME/forky.log; head -1 $HOME/forky.log; wc $HOME/forky.log; false; }
-test -r $HOME/forky.log && echo "Fork() was `wc -l $HOME/forky.log` times delayed" || :
-%else
 %make verbose=true build-nocheck
-%endif
 
 # Generate typelib files
 ## TODO use stuff generated here
@@ -508,21 +455,24 @@ chmod -x %buildroot%lodir/program/python-core*/lib/cgi.py
 
 # Pick up LOO-generated file lists
 for l in %with_lang; do
-	ll="`echo "$l" | tr '-' '_'`"
-	cat %buildroot/gid_*_$ll | sort -u > $l.lang
+        ll="`echo "$l" | tr '-' '_'`"
+        cat %buildroot/gid_*_$ll | sort -u > $l.lang
 done
 
 # Create gtk3 plugin list
-find %buildroot%lodir -name "*_gtk3*" ! -name "*_kde5*" | sed 's@^%buildroot@@' > files.gtk3
+find %buildroot%lodir -name "*gtk3lo*" | sed 's@^%buildroot@@' > files.gtk3
 
 # Create qt5 plugin list
 find %buildroot%lodir -name "*qt5*"   | sed 's@^%buildroot@@' > files.qt5
 
 # Create kde5 plugin list
-find %buildroot%lodir -name "*_kde5*" -o -name "libkde5*" -o -name "*kf5*" | sed 's@^%buildroot@@' > files.kde5
+find %buildroot%lodir -name "*kf5*" | sed 's@^%buildroot@@' > files.kde5
+
+# Create gkt3-kde5 plugin list
+find %buildroot%lodir -name "*kde5*" | sed 's@^%buildroot@@' > files.gtk3-kde5
 
 # Generate base filelist by removing files from  separated packages
-{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gtk3 files.kde5 files.qt5; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
+{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gtk3-kde5 files.gtk3 files.kde5 files.qt5; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
 
 unset RPM_PYTHON
 
@@ -535,10 +485,10 @@ install -m755 libreoffice%hversion.sh %buildroot%_bindir/libreoffice%hversion
 
 # install icons
 for f in `( cd sysui/desktop/icons; find hicolor -type f )`; do
-	d=`dirname "$f"`; n=`basename "$f"`
-	install -D sysui/desktop/icons/$f \
+        d=`dirname "$f"`; n=`basename "$f"`
+        install -D sysui/desktop/icons/$f \
             %buildroot%_iconsdir/$d/libreoffice%hversion-$n
-	ln -sr %buildroot%_iconsdir/$d/libreoffice%hversion-$n \
+        ln -sr %buildroot%_iconsdir/$d/libreoffice%hversion-$n \
             %buildroot%_iconsdir/$d/libreoffice-$n
     case "$n" in
         *calc*) ;;
@@ -554,7 +504,7 @@ sed -i 's/Education;//' %buildroot%lodir/share/xdg/math.desktop
 
 mkdir -p %buildroot%_desktopdir
 for n in writer impress calc base draw math;  do
-	#ln %buildroot%lodir/share/xdg/$n.desktop %buildroot%_desktopdir/$n.desktop
+        #ln %buildroot%lodir/share/xdg/$n.desktop %buildroot%_desktopdir/$n.desktop
     sed "s/%hversion-/-/" < %buildroot%lodir/share/xdg/$n.desktop > %buildroot%_desktopdir/$n.desktop
 done
 
@@ -585,7 +535,7 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %exclude /gid_Module*
 %_bindir/libreoffice%hversion
 %config %conffile
-%lodir/share/extensions/package.txt
+#lodir/share/extensions/package.txt
 #lodir/share/extensions/presentation-minimizer
 %_iconsdir/*/*/apps/libreoffice%{hversion}-*.*g
 
@@ -606,11 +556,12 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 
 %if_enabled kf5
 %files kde5 -f files.kde5
+%files gtk3-kde5 -f files.gtk3-kde5
 %endif
 
 %files extensions
 %lodir/share/extensions/*
-%exclude %lodir/share/extensions/package.txt
+#exclude %lodir/share/extensions/package.txt
 
 %files mimetypes
 %_datadir/mime/packages/libreoffice%hversion.xml
@@ -634,6 +585,11 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Sat Jan 15 2022 Fr. Br. George <george@altlinux.ru> 7.3.0.1-alt1
+- Update to 7.3.0.1
+- Update buildreq (Closes: #40915, #37391)
+- Remove forky.c support
+
 * Thu Jan 13 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 7.2.0.1-alt3
 - Enabled SVG icon themes by default for Qt5 and KF5 backends (Closes: #35436).
 
