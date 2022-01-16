@@ -2,9 +2,9 @@
 %define qIF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
 %define _localstatedir %_var
 
-%define pkg_version 6.3
+%define pkg_version 6.4
 %define xdg_name org.a11y.brlapi
-%define api_ver 0.8.2
+%define api_ver 0.8.3
 %define _exec_prefix %nil
 %define _jnidir %_libdir/java
 
@@ -399,6 +399,9 @@ chmod +x %buildroot%_bindir/%name-config.sh
 %endif
 
 %changelog
+* Sun Jan 16 2022 Yuri N. Sedunov <aris@altlinux.org> 6.4-alt1
+- 6.4
+
 * Tue Jul 27 2021 Yuri N. Sedunov <aris@altlinux.org> 6.3-alt1
 - 6.3
 - disabled useless python2 support
