@@ -11,7 +11,7 @@
 
 Name: MySQL
 Version: 8.0.27
-Release: alt1
+Release: alt1.1
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -66,7 +66,7 @@ Patch125: boost-1.57.0-mpl-print.patch
 # Patches for mysql-shell
 Patch201: mysql-shell-8.0.26-alt-link-secret-store-login-path-with-ssl.patch
 
-Patch2000: mysql-8.0.26-alt-e2k-fixes.patch
+Patch2000: mysql-8.0.27-alt-e2k-fixes.patch
 
 # Automatically added by buildreq on Tue Nov 20 2018 (-bi)
 # optimized out: cmake cmake-modules control elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libcrypt-devel libsasl2-3 libstdc++-devel libtinfo-devel perl pkg-config python-base sh3 xz
@@ -384,6 +384,13 @@ popd
 
 %ifarch %e2k
 %patch2000 -p1
+sed -i "/using __base/{N;N;s/^.*using __base.*EncodeBase.*friend __base.*$/EncodeBase_EDG/}" \
+	router/src/mysql_protocol/include/mysqlrouter/classic_protocol_codec_*.h
+sed -i "/#include <filesystem>/c #define preferred_separator preferred_separator_1\n#include <experimental/filesystem>\nnamespace std { namespace filesystem = experimental::filesystem; }" \
+	mysql-shell/{configure.cmake,mysqlshdk/libs/storage/backend/directory.cc}
+sed -i "s/-Werror/-Wno-error/" mysql-shell/cmake/compiler.cmake
+# error: cpio archive too big - 4381M
+%define optflags_debug -g0
 %endif
 
 # with patch4
@@ -419,6 +426,8 @@ sed -i 's/ADD_SUBDIRECTORY(router)/# ADD_SUBDIRECTORY(router)/' CMakeLists.txt
 	-DINSTALL_SUPPORTFILESDIR=share/mysql \
 	-DINSTALL_MYSQLDATADIR="%ROOT" \
 	-DINSTALL_MYSQLKEYRINGDIR="/var/lib/mysql-keyring" \
+	-DCMAKE_C_FLAGS_RELWITHDEBINFO="-DNDEBUG" \
+	-DCMAKE_CXX_FLAGS_RELWITHDEBINFO="-DNDEBUG" \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DMYSQL_UNIX_ADDR="%ROOT/mysql.sock" \
 	-DMYSQL_DATADIR="%ROOT" \
@@ -883,6 +892,9 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Sat Jan 15 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 8.0.27-alt1.1
+- update alt-e2k-fixes patch 8.0.26 -> 8.0.27
+
 * Mon Nov 08 2021 Nikolai Kostrigin <nickel@altlinux.org> 8.0.27-alt1
 - new version
   + (fixes: CVE-2021-2478, CVE-2021-2479, CVE-2021-2481, CVE-2021-3711)
