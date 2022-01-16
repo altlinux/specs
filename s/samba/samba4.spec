@@ -75,7 +75,7 @@
 
 Name:    samba
 Version: 4.14.11
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -576,7 +576,6 @@ Obsoletes: %dcname-test < 4.10
 %rname-test provides testing tools for both the server and client
 packages of Samba.
 
-%if_with winbind
 %package winbind-common
 Summary: Files used by MIT and Heimdal Winbind servers
 Group: System/Servers
@@ -629,7 +628,6 @@ Obsoletes: %dcname-winbind-krb5-localauth < 4.10
 The winbind krb5 localauth is a plugin that permits the MIT Kerberos libraries
 that Kerberos principals can be validated against local user accounts.
 
-%if_with clustering_support
 %package ctdb
 Summary: A Clustered Database based on Samba's Trivial Database (TDB)
 Group: System/Servers
@@ -673,9 +671,7 @@ CTDB is a cluster implementation of the TDB database used by Samba and other
 projects to store temporary data. If an application is already using TDB for
 temporary data it is very easy to convert that application to be cluster aware
 and use CTDB instead.
-%endif
 
-%if_with doc
 %package doc
 Summary: Documentation for the Samba suite
 Group: Documentation
@@ -687,7 +683,6 @@ Obsoletes: %dcname-doc < 4.10
 %description doc
 The samba-doc package includes all the non-manpage documentation for the
 Samba suite.
-%endif
 
 %package -n task-samba-dc
 Summary: Complete Samba Active Directory Domain Controller with Heimdal Kerberos
@@ -839,8 +834,7 @@ cp -a ../%rname-%version ../%rname-%version-separate-heimdal-server
 	--with-modulesdir=%_samba_mod_libdir \
 	--with-privatelibdir=%_samba_mod_libdir \
 	--with-pammodulesdir=/%_lib/security \
-	--with-pam \
-%endif
+	--with-pam
 
 %if_with separate_heimdal_server
 pushd ../%rname-%version-separate-heimdal-server
@@ -1927,7 +1921,13 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_includedir/samba-4.0/private
 
 %changelog
-* Mon Dec 15 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.11-alt1
+* Sun Jan 16 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.14.11-alt2
+- Apply s4u support patch for samba-4.15 (due already updated kdb code base):
+  + basic local realm S4U support
+  + enable S4U client support for MIT build
+  + wip: for canonicalization with new MIT kdc code
+
+* Wed Dec 15 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.11-alt1
 - Update to latest maintenance release of Samba 4.14.
 - Fix broken of recursive directory delete with veto files.
 - Fix directory containing dangling symlinks cannot be deleted by
@@ -1948,7 +1948,7 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 * Sat Nov 13 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.10-alt2
 - Add support samba-tool-plus alternative for samba-dc build with heimdal.
 
-* Tue Nov 07 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.10-alt1
+* Sun Nov 07 2021 Evgeny Sinelnikov <sin@altlinux.org> 4.14.10-alt1
 - Update to latest security release of Samba 4.14
 - Security fixes:
   + CVE-2016-2124:  SMB1 client connections can be downgraded to plaintext
