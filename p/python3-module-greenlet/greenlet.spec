@@ -3,7 +3,7 @@
 %define oname greenlet
 
 Name: python3-module-%oname
-Version: 1.1.0
+Version: 1.1.2
 Release: alt1
 
 Summary: Lightweight in-process concurrent programming
@@ -18,7 +18,6 @@ Source: %oname-%version.tar
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
-
 
 %description
 The greenlet package is a spin-off of Stackless, a version of CPython
@@ -40,6 +39,14 @@ tests/test_generator.py.
 Greenlets are provided as a C extension module for the regular
 unmodified interpreter.
 
+%package devel
+Summary: C development headers for %name
+Group:   Development/C
+Requires: %name = %EVR
+
+%description devel
+%summary.
+
 %prep
 %setup -n %oname-%version
 
@@ -56,9 +63,16 @@ unmodified interpreter.
 %files
 %doc AUTHORS CHANGES.rst LICENSE* README*
 %python3_sitelibdir/*
+
+%files devel
+%doc AUTHORS CHANGES.rst LICENSE* README*
 %_includedir/python%_python3_version%_python3_abiflags/greenlet
 
 %changelog
+* Sat Jan 15 2022 Grigory Ustinov <grenka@altlinux.org> 1.1.2-alt1
+- Build new version.
+- Move include files to devel subpackage (Closes: #41567).
+
 * Sat Jul 03 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
 - new version 1.1.0 (with rpmrb script)
 
