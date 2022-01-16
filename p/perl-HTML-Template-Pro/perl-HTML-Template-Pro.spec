@@ -6,7 +6,7 @@
 %define module HTML-Template-Pro
 
 Name: perl-%module
-Version: 0.9523
+Version: 0.9524
 Release: alt1
 
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -53,6 +53,9 @@ in the Perl script.
 #perl_vendor_man3dir/*
 
 %changelog
+* Sun Jan 16 2022 Igor Vlasenko <viy@altlinux.org> 0.9524-alt1
+- new version; see Changes
+
 * Wed Dec 15 2021 Igor Vlasenko <viy@altlinux.org> 0.9523-alt1
 - new version; see Changes
 
