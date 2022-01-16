@@ -5,7 +5,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.9.0
-Release: alt0.5.20210910
+Release: alt0.6.20220115
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -22,6 +22,7 @@ Patch6: qtvcp_import_fix.patch
 Patch7: not_require_dpkg.patch
 Patch8: linuxcnc-alt-python3.patch
 Patch9: linuxcnc-alt-tirpc.patch
+Patch10: autoconf.patch
 Buildrequires(pre): rpm-build-tcl rpm-build-python3
 Buildrequires: rpm-build-gir
 Buildrequires: python3-devel
@@ -42,6 +43,7 @@ BuildRequires: python3-modules-tkinter
 #python3-modules-unittest
 BuildRequires: python3-module-yapps2
 BuildRequires: boost-devel-headers
+BuildRequires: boost-lockfree-devel
 BuildRequires: boost-python3-devel
 BuildRequires: tcl-devel tk-devel tcl-img tclx bwidget
 #BuildRequires: tcl-blt-devel
@@ -225,7 +227,6 @@ rm %buildroot%_libdir/*.a
 %_tcllibdir/%name
 %python3_sitelibdir/*
 %_sysconfdir/%name
-%_initdir/realtime
 %_udevrulesdir/*.rules
 %_desktopdir/*.desktop
 %_sysconfdir/X11/app-defaults/*
@@ -265,6 +266,9 @@ rm %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Thu Jan 13 2022 Anton Midyukov <antohami@altlinux.org> 2.9.0-alt0.6.20220115
+- new snapshot
+
 * Fri Sep 10 2021 Anton Midyukov <antohami@altlinux.org> 2.9.0-alt0.5.20210910
 - new snapshot
 - include pncconf, stepconf again
