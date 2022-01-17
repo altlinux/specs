@@ -41,7 +41,7 @@
 %brp_strip_none %sysroot/*  %prefix/lib/gcc/*.a %prefix/lib/gcc/*.o
 
 Name: cross-toolchain-%target
-Version: 20210923
+Version: 20220112
 Release: alt1
 Summary: GCC cross-toolchain for %target
 License: LGPL-2.1-or-later and LGPL-3.0-or-later and GPL-2.0-or-later and GPL-3.0-or-later and GPL-3.0-or-later with GCC-exception-3.1
@@ -52,14 +52,10 @@ ExclusiveArch: x86_64
 # gcc patches
 Patch5: gcc-alt-riscv64-not-use-lp64d.patch
 
-# binutils patches
-Patch7: binutils-riscv-fix-pie-tls-textrels.patch
-
-
 %define gcc_version 10.3.1
 %define gcc_branch %(v=%gcc_version; v=${v%%%%.*}; echo $v)
-%define binutils_version 2.35.2
-%define glibc_version 2.32
+%define binutils_version 2.37
+%define glibc_version 2.34.0.39.024a7
 %define kernel_version 5.10
 
 
@@ -73,8 +69,8 @@ BuildRequires: /usr/bin/qemu-%target_qemu_arch-static
 BuildRequires: python3
 
 Source0: gcc-10.3.1-20210703.tar
-Source1: binutils-2.35.2.tar
-Source2: glibc-2.32-alt4.rv64.tar
+Source1: binutils-2.37-alt3.rv64.1.tar
+Source2: glibc-2.34.0.39.024a7-alt1.rv64.tar
 
 %description
 GCC cross-toolchain for %target
@@ -142,9 +138,6 @@ rm -rf stage
 %if "%target_arch" == "riscv64"
 pushd gcc
 %patch5 -p1
-popd
-pushd binutils
-%patch7 -p1
 popd
 %endif
 
@@ -231,6 +224,8 @@ cd ../obj_gcc
 	--with-arch=rv64gc \
 	--with-abi=lp64d \
 %endif
+	--enable-default-pie \
+	--enable-linker-build-id \
 	%nil
 
 %make_build all-gcc
@@ -573,6 +568,15 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 
 %changelog
+* Wed Jan 12 2022 Ivan A. Melnikov <iv@altlinux.org> 20220112-alt1
+- Sync sources with sisyphus_riscv64:
+  - update binutils to 2.37-alt3.rv64.1;
+  - update glibc to 2.34.0.39.024a7.
+
+* Thu Nov 11 2021 Ivan A. Melnikov <iv@altlinux.org> 20211111-alt1
+- Update binutils to 2.37-alt3.rv64;
+- Enable default-pie and linker-build-id for cross-gcc.
+
 * Thu Sep 23 2021 Ivan A. Melnikov <iv@altlinux.org> 20210923-alt1
 - Put source tarballs into SRPM.
 
