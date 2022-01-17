@@ -12,7 +12,7 @@
 
 Name: LibreSSL
 Version: 3.4.2
-Release: alt1
+Release: alt2
 
 Summary: OpenBSD fork of OpenSSL library
 
@@ -33,6 +33,7 @@ Patch5: 0005-ALT-OPENSSLDIR.patch
 Patch6: 0006-SUSE-des-fcrypt.patch
 Patch7: 0007-SUSE-extra-symver.patch
 Patch8: 0008-ALT-netcat-fix-linkage-with-libcrypto.patch
+Patch9: 0009-ALT-TLS_DEFAULT_CA_FILE-and-cert.pem.patch
 
 %define common_descr \
 LibreSSL is a version of the TLS/crypto stack forked from OpenSSL in\
@@ -184,6 +185,10 @@ Common uses include:
 %install
 %makeinstall_std
 
+mkdir -p %buildroot%_var/lib/libressl
+ln -s -r %buildroot%_datadir/ca-certificates/ca-bundle.crt \
+	%buildroot%_var/lib/libressl/cert.pem
+
 pushd %buildroot%_bindir
 	mv openssl{,-LibreSSL}
 	ln -s nc netcat
@@ -236,10 +241,12 @@ xz %buildroot%docdir/ChangeLog
 
 %dir %_sysconfdir/%oname/
 %config(noreplace) %_sysconfdir/%oname/openssl.cnf
+%config(noreplace) %_sysconfdir/%oname/x509v3.cnf
 %_sysconfdir/%oname/*
 %_man5dir/openssl-LibreSSL.cnf.5*
 %_libdir/libcrypto.so.%libcrypto_sover
 %_libdir/libcrypto.so.%libcrypto_sover.*
+%_var/lib/libressl/cert.pem
 
 %files -n libssl%libssl_sover
 %dir %docdir
@@ -270,6 +277,9 @@ xz %buildroot%docdir/ChangeLog
 %_man1dir/netcat.1*
 
 %changelog
+* Mon Jan 17 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.4.2-alt2
+- cert.pem is pointed to ca-bundle.crt now (fixed dist-upgrade).
+
 * Mon Jan 17 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.4.2-alt1
 - Updated to 3.4.2.
 
