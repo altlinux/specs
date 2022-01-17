@@ -1,7 +1,7 @@
 # obsoleted koffice version
 %define koffice_ver 4:2.3.70
 
-%define sover 20
+%define sover 17
 %define libkritacommand libkritacommand%sover
 %define libkritaimpex libkritaimpex%sover
 %define libkritalibkis libkritalibkis%sover
@@ -28,9 +28,12 @@
 %define libkritacolor libkritacolor%sover
 %define libkritacolord libkritacolord%sover
 %define libkritatext libkritatext%sover
+%define libkritaqmicinterface libkritaqmicinterface%sover
+%define libkritaresources libkritaresources%sover
+%define libkritaresourcewidgets libkritaresourcewidgets%sover
 
 Name: krita
-Version: 4.4.8
+Version: 5.0.2
 Release: alt1
 %K5init no_altplace
 
@@ -63,7 +66,7 @@ BuildRequires(pre): rpm-build-python3 rpm-build-kf5
 BuildRequires: zlib-devel libssl-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: qt5-multimedia-devel qt5-svg-devel qt5-wayland-devel qt5-x11extras-devel
-BuildRequires: python3-devel python3-module-PyQt5-devel python3-module-sip5
+BuildRequires: python3-devel python3-module-PyQt5-devel python3-module-sip6
 BuildRequires: eigen3 libfftw3-devel libgomp-devel libgsl-devel
 BuildRequires: boost-devel boost-geometry-devel
 #BuildRequires: libgif-devel
@@ -278,6 +281,27 @@ Requires: %name-common = %EVR
 %description -n %libkritametadata
 %name library
 
+%package -n %libkritaresourcewidgets
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common = %EVR
+%description -n %libkritaresourcewidgets
+%name library
+
+%package -n %libkritaresources
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common = %EVR
+%description -n %libkritaresources
+%name library
+
+%package -n %libkritaqmicinterface
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common = %EVR
+%description -n %libkritaqmicinterface
+%name library
+
 %prep
 %setup
 %patch1 -p1
@@ -317,7 +341,7 @@ done
 %config(noreplace) %_K5xdgconf/kritarc
 %_K5bin/krita*
 %_libdir/kritaplugins/
-%_libdir/krita-python-libs/
+#%_libdir/krita-python-libs/
 %_K5qml/org/krita/
 %_datadir/krita/
 %_datadir/kritaplugins/
@@ -328,10 +352,21 @@ done
 %_K5data/color-schemes/*
 %_datadir/metainfo/*krita*.xml
 
-#%files devel
-#%_K5link/lib*.so
+%files devel
+%_K5link/lib*.so
 #%_K5inc/krita/
 #%_K5inc/*.h
+%_includedir/*.h
+
+%files -n %libkritaqmicinterface
+%_libdir/libkritaqmicinterface.so.%sover
+%_libdir/libkritaqmicinterface.so.*
+%files -n %libkritaresources
+%_libdir/libkritaresources.so.%sover
+%_libdir/libkritaresources.so.*
+%files -n %libkritaresourcewidgets
+%_libdir/libkritaresourcewidgets.so.%sover
+%_libdir/libkritaresourcewidgets.so.*
 
 %files -n %libkritacommand
 %_libdir/libkritacommand.so.%sover
@@ -349,10 +384,6 @@ done
 %_libdir/libkritaqml.so.%sover
 %_libdir/libkritaqml.so.*
 
-%files -n %libkritatext
-%_libdir/libkritatext.so.%sover
-%_libdir/libkritatext.so.*
-
 %files -n %libkritacolord
 %_libdir/libkritacolord.so.%sover
 %_libdir/libkritacolord.so.*
@@ -364,10 +395,6 @@ done
 %files -n %libkritapigment
 %_libdir/libkritapigment.so.%sover
 %_libdir/libkritapigment.so.*
-
-%files -n %libkritaodf
-%_libdir/libkritaodf.so.%sover
-%_libdir/libkritaodf.so.*
 
 %files -n %libkritalibpaintop
 %_libdir/libkritalibpaintop.so.%sover
@@ -384,14 +411,6 @@ done
 %files -n %libkritaui
 %_libdir/libkritaui.so.%sover
 %_libdir/libkritaui.so.*
-
-%files -n %libkritatextlayout
-%_libdir/libkritatextlayout.so.%sover
-%_libdir/libkritatextlayout.so.*
-
-#%files -n %libkritaundo2
-#%_libdir/libkritaundo2.so.%sover
-#%_libdir/libkritaundo2.so.*
 
 %files -n %libkritaflake
 %_libdir/libkritaflake.so.%sover
@@ -434,6 +453,9 @@ done
 %_libdir/libkritametadata.so.*
 
 %changelog
+* Fri Jan 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.0.2-alt1
+- new version
+
 * Wed Nov 10 2021 Sergey V Turchin <zerg@altlinux.org> 4.4.8-alt1
 - new version
 
