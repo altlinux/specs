@@ -7,8 +7,8 @@
 %define libkdeconnectsmshelper libkdeconnectsmshelper%sover
 
 Name: kde5-connect
-Version: 21.08.3
-Release: alt2
+Version: 21.12.1
+Release: alt1
 %K5init
 
 Group: Communications
@@ -40,6 +40,7 @@ BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel 
 BuildRequires: kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel
 BuildRequires: kf5-kservice-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel
 BuildRequires: kf5-kdoctools-devel kf5-kirigami-devel kf5-kpeople-devel kf5-qqc2-desktop-style-devel
+BuildRequires: kf5-kpackage-devel
 # KF5PulseAudioQt
 
 %description
@@ -151,6 +152,9 @@ done
 #%_K5lib/libkdeconnectsmshelper.so.*
 
 %changelog
+* Mon Jan 17 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Mon Dec 06 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt2
 - fix to show docs from settings
 

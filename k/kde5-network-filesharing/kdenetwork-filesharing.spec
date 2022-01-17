@@ -2,8 +2,8 @@
 %define pkg_samba samba
 
 Name: kde5-network-filesharing
-Version: 21.08.3
-Release: alt2
+Version: 21.12.1
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -65,6 +65,10 @@ cat %SOURCE10 >>po/ru/kfileshare.po
 %_datadir/polkit-1/actions/org.kde.filesharing.samba.policy
 
 %changelog
+* Mon Jan 17 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+- fix crash on file properties dialog (thanks ptrnine@alt)
+
 * Fri Dec 10 2021 Slava Aseev <ptrnine@altlinux.org> 21.08.3-alt2
 - Add shared folder permission helper patch
 

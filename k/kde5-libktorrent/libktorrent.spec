@@ -3,7 +3,7 @@
 %define libkf5torrent libkf5torrent%sover
 
 Name: kde5-libktorrent
-Version: 21.08.3
+Version: 21.12.1
 Release: alt1
 %K5init
 
@@ -64,6 +64,7 @@ This package contains the development files for %name.
 %files common -f %name.lang
 
 %files -n %libkf5torrent
+%doc LICENSES/*
 %_libdir/libKF5Torrent.so.%sover
 %_libdir/libKF5Torrent.so.*
 
@@ -73,6 +74,9 @@ This package contains the development files for %name.
 %_K5link/lib*.so
 
 %changelog
+* Mon Jan 17 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 

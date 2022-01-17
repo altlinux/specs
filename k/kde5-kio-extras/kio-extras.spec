@@ -8,8 +8,8 @@
 %def_enable exiv2
 
 Name: kde5-%rname
-Version: 21.08.3
-Release: alt2
+Version: 21.12.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -32,7 +32,6 @@ Source: %rname-%version.tar
 Patch11: alt-smb-share.patch
 Patch12: alt-fix-permissions.patch
 Patch13: alt-find-samba.patch
-Patch14: alt-fix-smb-url.patch
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils glibc-devel-static ilmbase-devel kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libstdc++-devel libxcbutil-keysyms pkg-config python-base qt5-base-devel ruby ruby-stdlibs samba-libs shared-mime-info xml-common xml-utils
@@ -95,7 +94,6 @@ KF5 library
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
-%patch14 -p1
 
 %build
 %K5build
@@ -149,6 +147,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libkioarchive.so.%kioarchive_sover
 
 %changelog
+* Mon Jan 17 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Tue Dec 21 2021 Oleg Solovyov <mcpain@altlinux.org> 21.08.3-alt2
 - Fix SMB tree view in Dolphin (Closes: #41527)
 

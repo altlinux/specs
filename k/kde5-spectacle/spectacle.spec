@@ -5,7 +5,7 @@
 %define service_name app-org.kde.spectacle
 
 Name: kde5-%rname
-Version: 21.08.3
+Version: 21.12.1
 Release: alt1
 %K5init altplace no_appdata
 
@@ -59,7 +59,7 @@ developing applications that use %name.
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+#%patch3 -p1
 #%patch4 -p1
 
 %build
@@ -91,6 +91,9 @@ developing applications that use %name.
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Mon Jan 17 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 

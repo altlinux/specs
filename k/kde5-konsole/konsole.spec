@@ -9,13 +9,13 @@
 %def_disable obsolete_kde4
 %endif
 
-%define sover 21
+%define sover 1
 %define libkonsoleprivate libkonsoleprivate%sover
 %define libkonsoleapp libkonsoleapp%sover
 
 Name: kde5-%rname
-Version: 21.08.3
-Release: alt4
+Version: 21.12.1
+Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{?_enable_obsolete_kde4:appdata}%{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Terminals
@@ -142,6 +142,7 @@ __EOF__
 %_K5bin/konsole
 %_K5bin/konsoleprofile
 %_K5plug/konsole*.so
+%_K5plug/konsoleplugins/
 %_K5xdgapp/org.kde.konsole.desktop
 %if_enabled obsolete_kde4
 %_datadir/konsole/
@@ -175,6 +176,9 @@ __EOF__
 %_K5lib/libkonsoleapp.so.%sover
 
 %changelog
+* Mon Jan 17 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Fri Dec 17 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt4
 - update default color theme
 
