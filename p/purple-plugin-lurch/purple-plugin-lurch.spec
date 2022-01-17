@@ -1,8 +1,8 @@
 %define _name lurch
 
 Name: purple-plugin-lurch
-Version: 0.6.8
-Release: alt2
+Version: 0.7.0
+Release: alt1
 
 Summary: OMEMO for libpurple
 License: GPL-3.0-only
@@ -13,9 +13,7 @@ Url: https://github.com/gkdr/lurch
 # repacked https://github.com/gkdr/lurch/releases/download/v%version/lurch-%version-src.tar.gz
 Source: %_name-%version-src.tar
 
-Patch1: 0001-SUSE-libomemo-fix-dino-compat.patch
-Patch2: 0002-ALT-fix-linking-with-libjabber.so.patch
-Patch3: 0003-GH-libomemo-12-byte-for-initilization-vector.patch
+Patch1: 0001-ALT-fix-linking-with-libjabber.so.patch
 
 BuildRequires: cmake gcc-c++ libgcrypt-devel libmxml-devel libpurple-devel libsqlite3-devel libxml2-devel
 
@@ -39,6 +37,9 @@ export CFLAGS='%optflags'
 %_libdir/purple-2/%_name.so
 
 %changelog
+* Mon Jan 17 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7.0-alt1
+- Updated to 0.7.0.
+
 * Sat Nov 28 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.6.8-alt2
 - Fixed OMEMO 12 byte for initilization vector (GH:gkdr/libomemo#24).
 
