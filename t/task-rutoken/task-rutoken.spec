@@ -1,6 +1,6 @@
 Name: task-rutoken
-Version: 1.0
-Release: alt5
+Version: 1.1
+Release: alt1
 
 Summary: Metapackage to install all software for Rutoken support
 License: GPL
@@ -10,8 +10,10 @@ Url: http;//www.rutoken.ru
 ExclusiveArch: i586 x86_64 armh aarch64 mipsel mips64el e2k e2kv4
 
 Requires: librtpkcs11ecp
-%ifarch i586 x86_64
+%ifarch x86_64 aarch64 armh
 Requires: rtadmin
+%endif
+%ifarch %ix86 x86_64 aarch64 armh
 Requires: openssl-engines-rutoken
 %endif
 Requires: pcsc-lite-ccid
@@ -21,6 +23,9 @@ Metapackage to install all software for Rutoken support
 
 %files
 %changelog
+* Mon Jan 17 2022 Andrey Cherepanov <cas@altlinux.org> 1.1-alt1
+- Fix supported architectures for rtadmin-2.3.
+
 * Thu Jan 21 2021 Andrey Cherepanov <cas@altlinux.org> 1.0-alt5
 - Do not require missing rutoken-plugin.
 
