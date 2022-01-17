@@ -1,11 +1,13 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %define realname esip
 
 %set_verify_elf_method relaxed
 
 Name: erlang-%realname
-Version: 1.0.43
+Version: 1.0.45
 Release: alt1
 Summary: ProcessOne SIP server component in Erlang
 Group: Development/Erlang
@@ -45,6 +47,9 @@ ProcessOne SIP server component in Erlang.
 %_erllibdir/%realname-%version
 
 %changelog
+* Mon Jan 17 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.45-alt1
+- Updated to upstream version 1.0.45.
+
 * Mon Jul 26 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.43-alt1
 - Updated to upstream version 1.0.43.
 

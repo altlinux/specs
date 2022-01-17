@@ -1,9 +1,11 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %define realname p1_pgsql
 
 Name: erlang-%realname
-Version: 1.1.12
+Version: 1.1.16
 Release: alt1
 Summary: Pure Erlang PostgreSQL driver
 Group: Development/Erlang
@@ -18,6 +20,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-erlang
 BuildRequires: erlang-otp-devel erlang-devel
 BuildRequires: /usr/bin/rebar
+BuildRequires: erlang-xmpp
 
 Obsoletes: erlang-pgsql < %EVR
 Provides: erlang-pgsql = %EVR
@@ -43,6 +46,9 @@ This is an Erlang PostgreSQL driver.
 %_erllibdir/%realname-%version
 
 %changelog
+* Mon Jan 17 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.16-alt1
+- Updated to upstream version 1.1.16.
+
 * Mon Jul 26 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.12-alt1
 - Updated to upstream version 1.1.12.
 

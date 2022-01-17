@@ -1,11 +1,13 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %global realname fast_xml
 
 %set_verify_elf_method relaxed
 
 Name: erlang-%realname
-Version: 1.1.47
+Version: 1.1.48
 Release: alt1
 Summary: Fast Expat based Erlang XML parsing library
 Group: Development/Erlang
@@ -57,6 +59,9 @@ after major optimisations to put emphasis on the fact it is damn fast.
 %_erllibdir/%realname-%version
 
 %changelog
+* Mon Jan 17 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.48-alt1
+- Updated to upstream version 1.1.48.
+
 * Mon Jul 26 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.47-alt1
 - Updated to upstream version 1.1.47.
 

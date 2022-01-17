@@ -1,4 +1,6 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %def_disable hipe
 %def_enable stun
@@ -12,7 +14,7 @@
 %def_enable lua
 
 Name: ejabberd
-Version: 21.07
+Version: 21.12
 Release: alt1
 Summary: Fault-tolerant distributed Jabber server written in Erlang
 License: GPL-2.0 with OpenSSL-exception
@@ -223,6 +225,9 @@ install -p -m 0644 sql/pg.sql    %buildroot%_erllibdir/%name-%version/priv/sql/
 %attr(1770,root,ejabberd) %dir %_lockdir/ejabberd
 
 %changelog
+* Mon Jan 17 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 21.12-alt1
+- Updated to upstream version 21.12.
+
 * Mon Jul 26 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 21.07-alt1
 - Updated to upstream version 21.07.
 

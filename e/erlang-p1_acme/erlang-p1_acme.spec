@@ -1,9 +1,11 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %global realname p1_acme
 
 Name: erlang-%realname
-Version: 1.0.13
+Version: 1.0.16
 Release: alt1
 Summary: ACME client library for Erlang
 Group: Development/Erlang
@@ -24,6 +26,7 @@ BuildRequires: erlang-jiffy
 BuildRequires: erlang-yconf
 BuildRequires: erlang-idna
 BuildRequires: erlang-jose
+BuildRequires: erlang-base64url
 
 %description
 Erlang ACME client (RFC8555).
@@ -46,6 +49,9 @@ Erlang ACME client (RFC8555).
 %_erllibdir/%realname-%version
 
 %changelog
+* Mon Jan 17 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.16-alt1
+- Updated to upstream version 1.0.16.
+
 * Mon Jul 26 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.13-alt1
 - Updated to upstream version 1.0.13.
 

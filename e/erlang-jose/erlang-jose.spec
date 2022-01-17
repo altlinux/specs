@@ -1,4 +1,6 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %define realname jose
 
@@ -35,7 +37,7 @@
 
 Name: erlang-%realname
 Version: 1.11.2
-Release: alt1
+Release: alt2
 Summary: JSON Object Signing and Encryption (JOSE) for Erlang and Elixir
 Group: Development/Erlang
 License: MIT
@@ -50,7 +52,6 @@ BuildRequires(pre): rpm-build-erlang
 BuildRequires: erlang-otp-devel erlang-devel
 BuildRequires: /usr/bin/rebar
 BuildRequires: erlang-common_test-devel
-BuildRequires: erlang-base64url
 BuildRequires: erlang-proper
 
 %description
@@ -74,6 +75,9 @@ JSON Object Signing and Encryption (JOSE) for Erlang and Elixir.
 %_erllibdir/%realname-%version
 
 %changelog
+* Mon Jan 17 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.11.2-alt2
+- Updated build dependencies.
+
 * Thu Oct 21 2021 Egor Ignatov <egori@altlinux.org> 1.11.2-alt1
 - 1.11.2
 
