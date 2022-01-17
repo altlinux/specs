@@ -1,8 +1,8 @@
 %define gcc_branch 8
 
 Name: gcc%gcc_branch
-Version: 8.4.1
-Release: alt2
+Version: 8.5.0
+Release: alt1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -16,7 +16,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20200305
+%define snapshot 20210514
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -133,11 +133,9 @@ Url: https://gcc.gnu.org/
 
 Source: %srcfilename.tar
 
-# Upstream branch.
-Patch0: gcc-8-branch.patch
-
 # Upstream backports.
 Patch10: powerpc-predefined-macros.patch
+Patch11: gcc-9.4.0-runtime-cast-SIGSTKSZ-to-uintptr.patch
 
 # Fedora patches.
 Patch99: gcc-fedora-vendor-branch.patch
@@ -975,11 +973,9 @@ version %version.
 %prep
 %setup -n %srcdirname
 
-# Upstream branch.
-%patch0 -p1
-
 # Upstream backports.
 %patch10 -p1
+%patch11 -p1
 
 # Fedora patches.
 %patch99 -p1
@@ -2073,6 +2069,12 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Mon Jan 17 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.5.0-alt1
+- Updated to git://gcc.gnu.org/git/gcc.git releases/gcc-8
+  commit eafe83f2f20ef0c1e7703c361ba314b44574523c.
+- Rebased redhat vendor branch to releases/gcc-8 branch.
+- Fixed build with glibc 2.34.
+
 * Thu Sep 23 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.4.1-alt2
 - Fixed FTBFS by using gcc 10 for build and disabling global lto flags.
 
