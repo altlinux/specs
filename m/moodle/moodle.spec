@@ -2,7 +2,7 @@
 
 Name: moodle
 Version: 3.11.5
-Release: alt1
+Release: alt2
 
 Summary: The world's open source learning platform
 License: GPLv3
@@ -22,6 +22,7 @@ BuildRequires: unzip
 Source: %name-%version.tar
 
 Source1: distrolib.php
+Source2: %name.cron
 Source10: %moodle_name.httpd.conf
 Source20: %moodle_name.httpd2.conf
 Source21: %moodle_name.start.extra.conf
@@ -201,11 +202,17 @@ s@%%(\{moodle_dir\}|moodle_dir([[:space:]/'\"=]))@%moodle_dir\2@g
 s@%%(\{moodle_datadir\}|moodle_datadir([[:space:]/'\"=]))@%moodle_datadir\2@g
 "
 
-# Install languahe files
+# Install language files
 mkdir -p %buildroot%moodle_langdir
 tar xvf %SOURCE30 -C %buildroot%moodle_langdir
 cd %buildroot%moodle_langdir
 for ar in *.zip;do unzip "$ar" >/dev/null && rm -f "$ar";done
+
+# Remove vendor subdirectories
+find %buildroot -name vendor | xargs rm -rf
+
+# Install cron scripts
+install -Dpm0644 %SOURCE2 %buildroot%_sysconfdir/cron.d/%name
 
 %files
 
@@ -213,6 +220,7 @@ for ar in *.zip;do unzip "$ar" >/dev/null && rm -f "$ar";done
 %dir %attr(2775,root,%webserver_group) %moodle_dir/
 %ghost %config(noreplace) %moodle_dir/config.php
 %config(noreplace) %moodle_dir/install/distrolib.php
+%config(noreplace) %_sysconfdir/cron.d/%name
 %moodle_dir/*
 %if_with pam
 %exclude %moodle_authdir/pam/
@@ -234,6 +242,10 @@ for ar in *.zip;do unzip "$ar" >/dev/null && rm -f "$ar";done
 %endif
 
 %changelog
+* Mon Jan 17 2022 Andrey Cherepanov <cas@altlinux.org> 3.11.5-alt2
+- Remove vendor subdirectories.
+- Add cron rule.
+
 * Sat Jan 15 2022 Andrey Cherepanov <cas@altlinux.org> 3.11.5-alt1
 - New version.
 
