@@ -2,8 +2,8 @@
 %def_disable tests
 
 Name: libkeyfinder
-Version: 2.2.5
-Release: alt2
+Version: 2.2.6
+Release: alt1
 
 Summary: Musical key detection for digital audio
 Summary(ru_RU.UTF-8): Обнаружение музыкального ключа для цифрового звука
@@ -80,6 +80,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/cmake/KeyFinder/*
 
 %changelog
+* Mon Jan 17 2022 Leontiy Volodin <lvol@altlinux.org> 2.2.6-alt1
+- New version (2.2.6).
+
 * Thu Oct 14 2021 Leontiy Volodin <lvol@altlinux.org> 2.2.5-alt2
 - Fixed build with glibc 2.34.
 - Built via ninja again.
