@@ -6,26 +6,26 @@
 %def_enable ffmpegthumbnailer
 
 Name: geeqie
-Version: 1.6
-Release: alt4
+Version: 1.7.1
+Release: alt1
 
 Summary: Graphics file browser utility
 License: GPLv2+
 Group: Graphics
+Url: https://www.%name.org
 
-Url: https://%name.org
 %if_disabled snapshot
-Source: %url/%name-%version.tar.xz
+Source: https://github.com/BestImageViewer/geeqie/archive/v%version/%name-%version.tar.gz
+#Source: %url/%name-%version.tar.bz2
 %else
 Vcs: https://github.com/BestImageViewer/geeqie.git
 Source: %name-%version.tar
 %endif
+# produced by gen_changelog.sh from git tree
+Source1: ChangeLog
+Source2: ChangeLog.html
 
 Patch: %name-1.5-libdir-fix.patch
-Patch1: %name-1.6-up-doc-build.patch
-Patch2: geeqie-1.6-up-clutter.patch
-Patch3: geeqie-1.6-up-wayland.patch
-Patch4: geeqie-1.6-up-image-not-shown.patch
 
 Provides: gqview = %version-%release
 Obsoletes: gqview < %version
@@ -39,7 +39,7 @@ BuildRequires: python3-module-markdown
 BuildRequires: libgtk+3-devel libjpeg-devel libtiff-devel libwebp-devel
 BuildRequires: libopenjpeg2.0-devel libdjvu-devel liblcms2-devel
 BuildRequires: libpoppler-glib-devel libheif-devel
-BuildRequires: libexiv2-devel liblirc-devel
+BuildRequires: libexiv2-devel liblirc-devel zlib-devel
 %{?_enable_map:BuildRequires: libgps-devel pkgconfig(clutter-gtk-1.0) libchamplain-gtk3-devel}
 %{?_enable_ffmpegthumbnailer:BuildRequires: libffmpegthumbnailer-devel}
 
@@ -52,10 +52,7 @@ ExifTool.
 %prep
 %setup
 %patch -b .libdir
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+cp %SOURCE1 %SOURCE2 ./
 
 sed -i 's/\-Werror//' configure.ac
 
@@ -87,6 +84,9 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %doc NEWS README.*
 
 %changelog
+* Mon Jan 17 2022 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
+- 1.7.1
+
 * Thu Aug 19 2021 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt4
 - applied upstream fixes for "Run time check on GDK display backend"
   and "Images fail to render on MacOS"
