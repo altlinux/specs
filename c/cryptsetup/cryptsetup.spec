@@ -12,7 +12,7 @@
 %define default_luks_format LUKS2
 
 Name: cryptsetup
-Version: 2.4.2
+Version: 2.4.3
 Release: alt1
 
 Summary: Utility to setup a encrypted disks with LUKS support
@@ -244,6 +244,9 @@ rm -rf %buildroot/%_lib/%name/*.la
 %_root_sbindir/cryptsetup-ssh
 
 %changelog
+* Mon Jan 17 2022 Alexey Shabalin <shaba@altlinux.org> 2.4.3-alt1
+- 2.4.3 (Fixes: CVE-2021-4122).
+
 * Sat Nov 27 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.2-alt1
 - 2.4.2.
 - Add ssh-token subpackage.
