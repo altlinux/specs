@@ -1,6 +1,6 @@
 Name: bluefish
 Version: 2.2.12
-Release: alt2
+Release: alt3
 
 Summary: A GTK3 web development application for experienced users
 
@@ -15,6 +15,8 @@ Source: %name-%version.tar
 
 # Russian translation
 Source1: ru.po
+Source2: plugin_about-ru.po
+Source3: plugin_htmlbar-ru.po
 
 # Fedora patchs
 # Avoid potential aliasing issues in zencoding plugin
@@ -65,7 +67,15 @@ find data -type f -name \*.py -exec sed -i 's/\r//' {} \;
 %patch3 -p2
 
 # Update russian translation
-cp %SOURCE1 po/
+cp %SOURCE1 po/ru.po
+cp %SOURCE2 src/plugin_about/po/ru.po
+cp %SOURCE3 src/plugin_htmlbar/po/ru.po
+
+# Update binary translation
+rm src/plugin_about/po/ru.gmo
+rm src/plugin_htmlbar/po/ru.gmo
+msgfmt src/plugin_about/po/ru.po -o src/plugin_about/po/ru.gmo
+msgfmt src/plugin_htmlbar/po/ru.po -o src/plugin_htmlbar/po/ru.gmo
 
 %build
 %autoreconf
@@ -104,6 +114,9 @@ cat %{name}_plugin_*.lang >> %name.lang
 %_datadir/xml/%name/*
 
 %changelog
+* Mon Jan 17 2022 Anton Midyukov <antohami@altlinux.org> 2:2.2.12-alt3
+- Update russian translation for plugins (thanks Olesya Gerasimenko)
+
 * Fri Jan 07 2022 Anton Midyukov <antohami@altlinux.org> 2:2.2.12-alt2
 - fix command 'chmod a+x' for PATH with spacebar (Closes: 41636)
 - enable autoreconf
