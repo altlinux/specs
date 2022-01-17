@@ -1,5 +1,5 @@
 Name: builder-useradd
-Version: 1.0
+Version: 1.1
 Release: alt1
 Summary: Add user and configure hasher and gear for him/her
 License: GPLv2+
@@ -35,10 +35,18 @@ install -m 644 %SOURCE2 ./
 %_sbindir/%name
 
 %changelog
+* Mon Jan 17 2022 Anton Midyukov <antohami@altlinux.org> 1.1-alt1
+- new version:
+  + Unify code style and set -efu
+  + Fix get variables for $USER
+  + Fix owner for created files
+  + Fix execution for an existing user
+  + Do not add everything 'rpm-dir file://$HOME/hasher/repo'
+  + Add config for mkimage-profiles
+  + Add apt.conf's for supported branches
+
 * Fri Aug 09 2019 Dmitry Terekhin <jqt4@altlinux.org> 1.0-alt1
 - Prepared for publication
 
 * Tue Mar 19 2019 Dmitry Terekhin <jqt4@altlinux.org> 0.1-alt1
 - Initial build
-
-
