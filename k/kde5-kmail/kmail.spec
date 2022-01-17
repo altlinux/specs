@@ -4,7 +4,7 @@
 %define libkmailprivate libkmailprivate%pim_sover
 
 Name: kde5-%rname
-Version: 21.08.3
+Version: 21.12.1
 Release: alt1
 %K5init no_appdata
 
@@ -93,34 +93,21 @@ Requires: %name-common = %version-%release
 %_K5xdgapp/org.kde.*.desktop
 %_K5xdgapp/kmail_view.desktop
 %_K5data/kmail2/
-%_K5cf_upd/*
-#%_K5data/messageviewer/
-#%_K5xmlgui/kmail2/
+#%_K5cf_upd/*
 %_K5xmlgui/kontactsummary/*
 %_K5srv/kontact/*.desktop
-#%_K5srv/ServiceMenus/*.desktop
 %_K5srv/*.desktop
 %_K5icon/*/*/apps/kmail.*
 %_K5notif/kmail2.notifyrc
 %_K5notif/akonadi_*_agent.notifyrc
-#%doc %_K5doc/en/kmail/
 %_datadir/akonadi5/agents/*.desktop
-%_K5data/kontact/ksettingsdialog/*
+#%_K5data/kontact/ksettingsdialog/*
 %_K5dbus_srv/*kmail*.service
 #
 %_K5bin/ktnef
 %_K5xdgapp/org.kde.ktnef.desktop
 %_K5icon/*/*/apps/ktnef.*
 #%doc %_K5doc/en/ktnef/
-#
-#%_K5xdgapp/org.kde.headerthemeeditor.desktop
-#%_K5bin/headerthemeeditor
-#%doc %_K5doc/en/headerthemeeditor/
-#
-#%_K5bin/sieveeditor
-#%_K5xdgapp/org.kde.sieveeditor.desktop
-#%_K5cf_upd/*sieveeditor*
-#%doc %_K5doc/en/sieveeditor/
 
 #%files devel
 #%_K5inc/kmail_version.h
@@ -134,6 +121,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkmailprivate.so.*
 
 %changelog
+* Thu Jan 13 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 

@@ -6,7 +6,7 @@
 %define libkorganizerprivate libkorganizerprivate%pim_sover
 
 Name: kde5-%rname
-Version: 21.08.3
+Version: 21.12.1
 Release: alt1
 %K5init no_appdata
 
@@ -105,15 +105,12 @@ Requires: %name-common = %version-%release
 %_K5plug/kontact5/kontact_*.so
 %_K5start/org.kde.korgac.desktop
 %_K5xdgapp/*korganizer*.desktop
-#%_K5data/korgac/
 %_K5data/korganizer/
-%_K5data/kontact/ksettingsdialog/*
 %_K5data/knsrcfiles/*korganizer*
 %_K5cfg/*korganizer*
-%_K5cf_upd/*korganizer*
+%_K5conf_up/*korganizer*
 %_K5srv/kontact/korganizerplugin.desktop
 %_K5srv/korganizer_*.desktop
-#%_K5srv/webcal.protocol
 %_K5srv/kcmapptsummary.desktop
 %_K5srv/kcmsdsummary.desktop
 %_K5srv/kcmtodosummary.desktop
@@ -145,6 +142,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkorganizerprivate.so.*
 
 %changelog
+* Thu Jan 13 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 

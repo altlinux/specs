@@ -1,7 +1,7 @@
 %define rname kmail-account-wizard
 
 Name: kde5-%rname
-Version: 21.08.3
+Version: 21.12.1
 Release: alt1
 %K5init
 
@@ -56,6 +56,9 @@ Launch the account wizard to configure PIM accounts.
 %_K5data/knsrcfiles/*accountwizard*
 
 %changelog
+* Thu Jan 13 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define libkpimimportwizard libkpimimportwizard%sover
 
 Name: kde5-%rname
-Version: 21.08.3
+Version: 21.12.1
 Release: alt1
 %K5init
 
@@ -78,7 +78,7 @@ sed -i '/DESTINATION/s/\${KDE_INSTALL_INCLUDEDIR}\/KPim\//${KDE_INSTALL_INCLUDED
 %_K5data/*importwizard*/
 %_K5xdgapp/*importwizard*.desktop
 %_K5icon/*/*/apps/*import-wizard*
-%_K5conf_up/*importwizard*
+#%_K5conf_up/*importwizard*
 
 %files devel
 %_K5inc/importwizard_version.h
@@ -92,6 +92,9 @@ sed -i '/DESTINATION/s/\${KDE_INSTALL_INCLUDEDIR}\/KPim\//${KDE_INSTALL_INCLUDED
 %_K5lib/libKPimImportWizard.so.*
 
 %changelog
+* Thu Jan 13 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 

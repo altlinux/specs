@@ -3,8 +3,8 @@
 %def_enable tools
 
 Name: kde5-%rname
-Version: 21.08.3
-Release: alt2
+Version: 21.12.1
+Release: alt1
 %K5init altplace
 
 Group: Databases
@@ -201,7 +201,8 @@ done
 
 
 %files
-%_K5dbus_srv/org.freedesktop.Akonadi.Control.service
+%config(noreplace) %_K5xdgconf/akonadi/mysql-*.conf
+%_bindir/akonadi5_mysql_install_db
 %_K5bin/akonadi_agent_launcher
 %_K5bin/akonadi_agent_server
 %_K5bin/akonadi_rds
@@ -209,6 +210,7 @@ done
 %_K5bin/akonadictl
 %_K5bin/akonadiserver
 %_K5bin/akonadiselftest
+%_K5dbus_srv/org.freedesktop.Akonadi.Control.service
 %if_enabled tools
 %_K5bin/akonadi2xml
 %_K5bin/akonaditest
@@ -225,11 +227,7 @@ done
 %files database-3-sqlite3
 %files database-5-postgresql
 %files database-7-mysql
-%config(noreplace) %_K5xdgconf/akonadi/mysql-*.conf
-%_bindir/akonadi5_mysql_install_db
 %files database-9-mariadb
-%config(noreplace) %_K5xdgconf/akonadi/mysql-*.conf
-%_bindir/akonadi5_mysql_install_db
 
 %files common -f %name.lang
 %doc LICENSES/*
@@ -289,6 +287,9 @@ done
 %endif
 
 %changelog
+* Thu Jan 13 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Tue Nov 16 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt2
 - make collective package for MySQL
 

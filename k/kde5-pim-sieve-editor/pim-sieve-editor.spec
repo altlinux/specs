@@ -4,7 +4,7 @@
 %define libsieveeditor libsieveeditor%sover
 
 Name: kde5-%rname
-Version: 21.08.3
+Version: 21.12.1
 Release: alt1
 %K5init no_appdata
 
@@ -70,7 +70,7 @@ Requires: %name-common = %version-%release
 %files
 %doc LICENSES/*
 %_K5bin/*sieveeditor*
-%_K5conf_up/*sieveeditor*
+#%_K5conf_up/*sieveeditor*
 %_K5xdgapp/*sieveeditor*.desktop
 %_K5cfg/*sieveeditor*
 %_datadir/qlogging-categories5/*.*categories
@@ -80,6 +80,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libsieveeditor.so.*
 
 %changelog
+* Thu Jan 13 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 

@@ -15,10 +15,11 @@
 %define libexpireaccounttrashfolderconfig libexpireaccounttrashfolderconfig%sover
 %define libfolderconfiguresettings libfolderconfiguresettings%sover
 %define libkmailconfirmbeforedeleting libkmailconfirmbeforedeleting%sover
+%define libscamconfiguresettings libscamconfiguresettings%sover
 
 
 Name: kde5-pim-addons
-Version: 21.08.3
+Version: 21.12.1
 Release: alt1
 %K5init
 
@@ -113,87 +114,94 @@ Requires: %name-common = %version-%release
 
 %package -n %libkaddressbookmergelibprivate
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common
 %description -n %libkaddressbookmergelibprivate
-KF5 library
+%name library
 
 %package -n %libkaddressbookimportexportlibprivate
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common
 %description -n %libkaddressbookimportexportlibprivate
-KF5 library
+%name library
 
 %package -n %libshorturlpluginprivate
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common
 %description -n %libshorturlpluginprivate
-KF5 library
+%name library
 
 %package -n %libadblocklibprivate
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common
 %description -n %libadblocklibprivate
-KF5 library
+%name library
 
 %package -n %libgrammarcommon
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common
 %description -n %libgrammarcommon
-KF5 library
+%name library
 
 %package -n %libkmailgrammalecte
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common
 %description -n %libkmailgrammalecte
-KF5 library
+%name library
 
 %package -n %libkmaillanguagetool
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common
 %description -n %libkmaillanguagetool
-KF5 library
+%name library
 
 %package -n %libkmailmarkdown
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common
 %description -n %libkmailmarkdown
-KF5 library
+%name library
 
 %package -n %libdkimverifyconfigure
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common
 %description -n %libdkimverifyconfigure
-KF5 library
+%name library
 
 %package -n %libkmailquicktextpluginprivate
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common
 %description -n %libkmailquicktextpluginprivate
-KF5 library
+%name library
 
 %package -n %libexpireaccounttrashfolderconfig
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common
 %description -n %libexpireaccounttrashfolderconfig
-KF5 library
+%name library
 
 %package -n %libfolderconfiguresettings
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common
 %description -n %libfolderconfiguresettings
-KF5 library
+%name library
+
+%package -n %libscamconfiguresettings
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common
+%description -n %libscamconfiguresettings
+%name library
 
 %prep
 %setup -n %rname-%version
@@ -217,6 +225,7 @@ KF5 library
 %config(noreplace) %_K5xdgconf/kmail.*
 %_datadir/qlogging-categories5/*.*categories
 %_K5conf_up/*.upd
+%_K5icon/hicolor/*/status/*moon*.*
 
 %files kaddressbook
 %_K5plug/kaddressbook/
@@ -256,6 +265,9 @@ KF5 library
 #%_K5archdata/mkspecs/modules/qt_kdepim-addons.pri
 #%_datadir/qtcreator/templates/*/
 
+%files -n %libscamconfiguresettings
+%_K5lib/libscamconfiguresettings.so.%sover
+%_K5lib/libscamconfiguresettings.so.*
 %files -n %libkaddressbookmergelibprivate
 %_K5lib/libkaddressbookmergelibprivate.so.%sover
 %_K5lib/libkaddressbookmergelibprivate.so.*
@@ -297,6 +309,9 @@ KF5 library
 %_K5lib/libkmailconfirmbeforedeleting.so.*
 
 %changelog
+* Thu Jan 13 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 

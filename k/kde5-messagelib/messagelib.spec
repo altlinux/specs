@@ -10,7 +10,7 @@
 %define libkf5webengineviewer libkf5webengineviewer%sover
 
 Name: kde5-%rname
-Version: 21.08.3
+Version: 21.12.1
 Release: alt1
 %K5init
 
@@ -132,7 +132,7 @@ KF5 library
 %_K5data/org.kde.syntax-highlighting/
 %_K5data/knsrcfiles/*message*.knsrc
 %_K5cfg/*.kcfg
-%_K5conf_up/*message*.upd
+#%_K5conf_up/*message*.upd
 %_K5notif/*message*.notifyrc
 
 %files devel
@@ -175,6 +175,9 @@ KF5 library
 %_K5lib/libKF5WebEngineViewer.so.*
 
 %changelog
+* Thu Jan 13 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 

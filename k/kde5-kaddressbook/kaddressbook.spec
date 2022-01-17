@@ -1,7 +1,7 @@
 %define rname kaddressbook
 
 Name: kde5-%rname
-Version: 21.08.3
+Version: 21.12.1
 Release: alt1
 %K5init no_appdata
 
@@ -89,19 +89,17 @@ done
 
 %files
 %_K5bin/kaddressbook
-#%dir %_K5lib/akonadi5/contact/
-#%dir %_K5lib/akonadi5/contact/editorpageplugins/
 %_K5plug/pim/kcms/kaddressbook/
 %_K5plug/*kaddressbook*.so
 %_K5plug/kontact5/*kaddressbook*.so
 %_K5xdgapp/*kaddressbook*.desktop
-%_K5conf_up/*kaddressbook*
+#%_K5conf_up/*kaddressbook*
 %_K5data/kaddressbook/
 %_K5srv/kontact/kaddressbookplugin.desktop
 %_K5srv/*kaddressbook*.desktop
 %_K5icon/*/*/apps/kaddressbook.*
 #
-%_K5data/kontact/ksettingsdialog/*kaddressbook*
+#%_K5data/kontact/ksettingsdialog/*kaddressbook*
 
 %files devel
 %_K5inc/KPim/KAddressBookImportExport/
@@ -120,6 +118,9 @@ done
 %_K5lib/libKPimAddressbookImportExport.so.*
 
 %changelog
+* Thu Jan 13 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 

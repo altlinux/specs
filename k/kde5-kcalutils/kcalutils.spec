@@ -1,7 +1,7 @@
 %define rname kcalutils
 
 Name: kde5-%rname
-Version: 21.08.3
+Version: 21.12.1
 Release: alt1
 %K5init altplace
 
@@ -80,6 +80,9 @@ KF5 library
 %_K5lib/libKF5CalendarUtils.so.*
 
 %changelog
+* Thu Jan 13 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 

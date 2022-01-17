@@ -4,7 +4,7 @@
 %define libkontactprivate libkontactprivate%pim_sover
 
 Name: kde5-%rname
-Version: 21.08.3
+Version: 21.12.1
 Release: alt1
 %K5init no_appdata
 
@@ -73,13 +73,11 @@ Requires: %name-common = %version-%release
 
 %files
 %_K5bin/*kontact*
-%_K5plug/*kontact*.so
+%_K5plug/pim/kcms/kontact/*.so
 %_K5xdgapp/*kontact*.desktop
-#%_K5data/kontact/
 %_K5data/messageviewer/about/default/*kontact*
 %_K5cfg/*kontact*.kcfg
-%_K5cf_upd/*kontact*
-#%_K5xmlgui/*kontact*/
+#%_K5cf_upd/*kontact*
 %_K5srv/*kontact*.desktop
 %_K5icon/*/*/apps/*kontact*.*
 %_K5dbus_srv/*kontact*.service
@@ -96,6 +94,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkontactprivate.so.*
 
 %changelog
+* Thu Jan 13 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 
