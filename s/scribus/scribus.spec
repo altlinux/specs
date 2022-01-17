@@ -1,6 +1,6 @@
 Name: scribus
 Version: 1.5.7
-Release: alt1.2
+Release: alt3
 Epoch: 1
 
 Summary: Desktop Publishing application written in Qt
@@ -15,7 +15,8 @@ Packager: Paul Wolneykien <manowar@altlinux.ru>
 # Source-url: http://prdownloads.sf.net/%name/%version/%name-%version.tar.xz
 Vcs: https://github.com/scribusproject/scribus.git
 Source: %name-%version.tar
-Patch: scribus-1.5.7-up-harfbuzz-3.0.0.patch
+Patch0: scribus-1.5.7-up-harfbuzz-3.0.0.patch
+Patch1: scribus-1.5.7-no-execbit-plugins.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake zlib-devel libssl-devel
@@ -111,7 +112,8 @@ BuildArch: noarch
 
 %prep
 %setup
-%patch -p1 -b .harfbuzz
+%patch0 -p1 -b .harfbuzz
+%patch1 -p2
 # don't
 # brain damage with #if (PODOFO_VERSION < PODOFO_MAKE_VERSION(0, 9, 7))
 subst 's|\(pBase->SetOwner\)|//\1|' scribus/pdf_analyzer.cpp
@@ -138,7 +140,6 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 
 %install
 %cmake_install
-chmod -R  0755 %buildroot%_libdir/%name/plugins/*.so
 
 pushd %buildroot%_docdir/%name
 for i in $(ls ChangeLog*); do
@@ -183,6 +184,9 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Mon Jan 17 2022 Paul Wolneykien <manowar@altlinux.org> 1:1.5.7-alt3
+- Search for plugins without the exec bit (closes: 36962).
+
 * Wed Sep 22 2021 Yuri N. Sedunov <aris@altlinux.org> 1:1.5.7-alt1.2
 - applied upstream patches for Harfbuzz 3.0.0
 
