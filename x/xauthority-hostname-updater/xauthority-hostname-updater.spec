@@ -3,7 +3,7 @@
 #%%def_enable debug_output
 
 Name: xauthority-hostname-updater
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Daemon that keeps hostname in the Xauthority files up-to-date
@@ -50,6 +50,9 @@ install -m 644 %name.8.xz %buildroot%_man8dir/
 %_man8dir/*
 
 %changelog
+* Mon Jan 17 2022 Slava Aseev <ptrnine@altlinux.org> 0.3-alt1
+- Fix build with glibc < 2.32 (thx ilyakurdyukov@)
+
 * Thu Dec 23 2021 Slava Aseev <ptrnine@altlinux.org> 0.2-alt1
 - Shutdown gracefully on SIGHUP
 - Do not become "zombie" after external kill signal
