@@ -1,6 +1,6 @@
 Name:    git-crypt
-Version: 0.6.0
-Release: alt1.1
+Version: 0.6.0.11.g1c905fa
+Release: alt1
 
 Summary: Transparent file encryption in git
 Url:     https://github.com/AGWA/git-crypt
@@ -11,7 +11,7 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 
 Source0: %name-%version.tar
 
-BuildRequires: LibreSSL-devel gcc-c++ xsltproc docbook-style-xsl
+BuildRequires: libssl-devel gcc-c++ xsltproc docbook-style-xsl
 
 %description
 The %name enables transparent encryption and decryption of files in a git
@@ -41,6 +41,10 @@ down your entire repository.
 %_man1dir/*
 
 %changelog
+* Mon Jan 17 2022 Alexey Gladkov <legion@altlinux.ru> 0.6.0.11.g1c905fa-alt1
+- Upstream snapshot.
+- Build with OpenSSL.
+
 * Sat Jun 09 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.6.0-alt1.1
 - Rebuilt against libtls17.
 
