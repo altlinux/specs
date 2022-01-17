@@ -1,8 +1,8 @@
 %define gcc_branch 9
 
 Name: gcc%gcc_branch
-Version: 9.3.1
-Release: alt4
+Version: 9.4.1
+Release: alt1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -17,7 +17,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20200123
+%define snapshot 20220113
 
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
@@ -2138,6 +2138,11 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Mon Jan 17 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.4.1-alt1
+- Updated to git://gcc.gnu.org/git/gcc.git releases/gcc-9
+  commit a05145be7443b5715e58f9fb1a260f9d83121fd4.
+- Rebased redhat vendor branch to releases/gcc-9 branch.
+
 * Thu Sep 23 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.3.1-alt4
 - Fixed FTBFS by using gcc 10 for build and disabling global lto flags.
 
