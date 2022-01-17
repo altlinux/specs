@@ -1,7 +1,7 @@
 %define oname libressl
-%define libcrypto_sover 46
-%define libssl_sover 48
-%define libtls_sover 20
+%define libcrypto_sover 47
+%define libssl_sover 50
+%define libtls_sover 22
 
 # to avoid colission with OpenSSL pkgconfig provides
 %filter_from_provides /^pkgconfig(libcrypto)/d
@@ -11,7 +11,7 @@
 %filter_from_requires /^pkgconfig(libssl)/d
 
 Name: LibreSSL
-Version: 3.3.5
+Version: 3.4.2
 Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
@@ -270,6 +270,9 @@ xz %buildroot%docdir/ChangeLog
 %_man1dir/netcat.1*
 
 %changelog
+* Mon Jan 17 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.4.2-alt1
+- Updated to 3.4.2.
+
 * Mon Oct 04 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.3.5-alt1
 - Update to 3.3.5.
 
