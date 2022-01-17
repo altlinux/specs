@@ -2,8 +2,8 @@
 
 Name: doublecmd
 Summary: Twin-panel (commander-style) file manager
-Version: 0.9.10
-Release: alt2
+Version: 1.0.3
+Release: alt1
 Epoch:   1
 Url: https://doublecmd.sourceforge.io
 
@@ -11,14 +11,13 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source0: %name-%version.tar
 Source1: %name-qt.desktop
-License: GPLv2+ and LGPLv2+ and Expat and MPL-1.1 and MPL-2.0 and Apache-2.0 and BSD and Expat and Zlib
+License: GPLv2+ and LGPLv2+ and MIT and MPL-1.1 and MPL-2.0 and Apache-2.0 and BSD and Zlib
 Group: File tools
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: fpc >= 2.6.2
 BuildRequires: fpc-src
 %if_with gtk
-# lcl_gtk3 is still unstable in Lazarus
 BuildRequires: libgtk+2-devel
 %endif
 BuildRequires: lazarus >= 1.0.10
@@ -31,7 +30,6 @@ BuildRequires: /proc
 Patch0: doublecmd-use-default-terminal.patch
 Patch1: doublecmd-not-install-zdli.patch
 Patch2: doublecmd-alt-build-in-one-thread.patch
-Patch3: doublecmd-alt-fix-py-scripts.patch
 
 ExclusiveArch: x86_64 aarch64
 
@@ -74,18 +72,15 @@ Common files for Double Commander
 
 %prep
 %setup
-%patch0 -p2
-%patch1 -p2
-%patch2 -p2
-%patch3 -p2
+%autopatch -p2
 
 %build
 export MAKEOPTS="-XX"
-lcl=qt5 ./build.sh beta
+./build.sh debug qt5
 cp ./%name ./%name-qt
 %if_with gtk
 ./clean.sh
-lcl=gtk2 ./build.sh beta
+./build.sh debug gtk2
 %endif
 
 %ifarch %ix86
@@ -150,6 +145,13 @@ convert -resize 16x16 pixmaps/mainicon/alt/256px-dcfinal.png %buildroot%_miconsd
 %_pixmapsdir/%name.png
 
 %changelog
+* Mon Jan 17 2022 Andrey Cherepanov <cas@altlinux.org> 1:1.0.3-alt1
+- New version.
+- Fix License.
+
+* Wed Dec 22 2021 Andrey Cherepanov <cas@altlinux.org> 1:1.0.2-alt1
+- New version.
+
 * Wed May 05 2021 Andrey Cherepanov <cas@altlinux.org> 1:0.9.10-alt2
 - FTBFS: Set autoreq for Python scripts using rpm-build-python3.
 
