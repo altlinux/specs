@@ -1,5 +1,15 @@
+%define _libexecdir /usr/libexec
+%define vzdir /etc/vz
+%define confdir %vzdir/conf
+%define namesdir %vzdir/names
+%define lockdir /var/lib/vz/lock
+%define vzctl_lockdir /var/lock/vzctl
+%define spooldir /var/lib/vz
+%define netdir /etc/sysconfig/network-scripts
+%define bashcompldir /etc/bash_completion.d
+
 Name:     vzmigrate
-Version:  7.0.147
+Version:  7.0.149
 Release:  alt1
 
 Summary:  Virtuozzo migration tool
@@ -32,18 +42,6 @@ BuildRequires: libzstd-devel
 BuildRequires: kernel-headers-ovz-el7 >= 3.10.0
 BuildRequires: boost-asio-devel boost-devel boost-devel-headers
 
-%define _libexecdir /usr/libexec
-%define vzdir /etc/vz
-%define confdir %vzdir/conf
-%define namesdir %vzdir/names
-%define lockdir /var/lib/vz/lock
-%define vzctl_lockdir /var/lock/vzctl
-%define spooldir /var/lib/vz
-%define netdir /etc/sysconfig/network-scripts
-%define bashcompldir /etc/bash_completion.d
-
-#add_optflags "-D_GNU_SOURCE -DVERSION=\\"%version-%release\\""
-
 %description
 %summary
 
@@ -52,7 +50,6 @@ BuildRequires: boost-asio-devel boost-devel boost-devel-headers
 %patch -p1
 
 %build
-#make_build CFLAGS="%optflags -D_GNU_SOURCE -DVERSION=\\\"%version-%release\\\""
 %make_build
 
 %install
@@ -79,6 +76,9 @@ make install \
 %doc *.md
 
 %changelog
+* Mon Jan 17 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.0.149-alt1
+- 7.0.149
+
 * Fri Aug 06 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.147-alt1
 - 7.0.147
 
