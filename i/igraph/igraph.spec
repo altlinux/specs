@@ -1,7 +1,7 @@
 %define soname 0
 
 Name: igraph
-Version: 0.9.5
+Version: 0.9.6
 Release: alt1
 Summary: Library for creating and manipulating graphs
 
@@ -95,6 +95,9 @@ find . -name '.arch-ids' | xargs rm -rf
 %exclude %_man3dir/igraph.3*
 
 %changelog
+* Mon Jan 17 2022 Leontiy Volodin <lvol@altlinux.org> 0.9.6-alt1
+- New version (0.9.6).
+
 * Mon Nov 22 2021 Leontiy Volodin <lvol@altlinux.org> 0.9.5-alt1
 - New version (0.9.5).
 
