@@ -1,20 +1,20 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %def_disable static
 %define realname irrlicht
 %define major 1
-%define irrxml_major 1
 %define libname %name%major
 
 Name: libirrlicht
-Version: 1.8.4
-Release: alt4
-
+Version: 1.8.5
+Release: alt1
 Summary: Fast Open-source 3D engine
 License: zlib
 Group: System/Libraries
-
 Url: http://irrlicht.sourceforge.net/
+
 Source: %realname-%version.tar
 
 # Patches from Fedora
@@ -29,9 +29,6 @@ Patch1: irrlicht-1.8-glext.patch
 # Use system libaesgm
 Patch2: irrlicht18-libaesgm.patch
 
-# Make libIrrXML.so
-Patch4: irrlicht-1.8-irrXML-shared-library.patch
-
 # Fix issue with definition of LOCALE_DECIMAL_POINTS
 Patch5: irrlicht-1.8-fix-locale-decimal-points.patch
 
@@ -40,10 +37,6 @@ Patch6: irrlicht-1.8.1-mesa10.patch
 
 # Use RPM_LD_FLAGS
 Patch7: irrlicht-1.8.4-ldflags.patch
-
-# sysctl.h was removed from glibc in f33.
-# it is only actually used on OSX, so we just conditionalize the include to match the call
-Patch8: irrlicht-1.8.4-no-sysctl-on-linux.patch
 
 BuildRequires: pkg-config unzip gcc-c++ zlib-devel
 BuildRequires: ImageMagick
@@ -74,7 +67,6 @@ a well designed C++ interface, which is extremely easy to use.
 Summary: Headers for %name
 Group: Development/C
 Requires: %name = %EVR
-#Requires: irrXML-devel = %EVR
 
 %description devel
 Headers for building software that uses %name
@@ -100,29 +92,6 @@ shadows, particle systems, character animation, indoor and outdoor
 technology, and collision detection. All this is accessible through
 a well designed C++ interface, which is extremely easy to use.
 
-%package -n libirrXML%{irrxml_major}
-Summary: Simple and fast XML parser for C++
-Group: System/Libraries
-
-%description -n libirrXML%{irrxml_major}
-irrXML is a simple and fast open source xml parser for C++.
-
-%package -n irrXML-devel
-Summary: Development headers and libraries for irrXML
-Group: Development/C
-Requires: libirrXML%{irrxml_major} = %EVR
-
-%description -n irrXML-devel
-Development headers and libraries for irrXML.
-
-%package examples
-Summary: Examples for %name
-Group: Development/C
-Requires: %name = %EVR
-
-%description examples
-Examples that uses %name
-
 %if_enabled static
 %package devel-static
 Summary: Static libraries for %name
@@ -138,12 +107,9 @@ Static libs for building statically linked software that uses %name
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-# TODO: separate libIrrXML.so
-#patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
 
 # make readme.txt and changes.txt utf8 with LF line endings
 sed -i 's/\r//' readme.txt changes.txt
@@ -158,6 +124,8 @@ rm -rf source/Irrlicht/{jpeglib,zlib,libpng,bzip2,aesGladman}
 sed -i -e '/_IRR_MATERIAL_MAX_TEXTURES_/s/4/8/' include/IrrCompileConfig.h
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %make_build -C source/Irrlicht sharedlib NDEBUG=1
 
 %install
@@ -174,36 +142,10 @@ cp -a include/*.h %buildroot%_includedir/%realname/
 %_libdir/libIrrlicht.so.%{major}.*
 
 %files devel
-%_libdir/libIrrlicht.so
-%_includedir/%realname
-#exclude %_includedir/%realname/fast_atof.h
-#exclude %_includedir/%realname/heapsort.h
-#exclude %_includedir/%realname/irrArray.h
-#exclude %_includedir/%realname/irrString.h
-#exclude %_includedir/%realname/irrTypes.h
-#exclude %_includedir/%realname/irrXML.h
-
-#doc doc/html doc/index.html
 %doc doc/upgrade-guide.txt
 %doc readme.txt changes.txt
-
-#files -n libirrXML%{irrxml_major}
-#_libdir/libIrrXML.so.%{irrxml_major}
-#_libdir/libIrrXML.so.%{irrxml_major}.*
-
-#files -n irrXML-devel
-#_libdir/libIrrXML.so
-#dir %_includedir/%realname
-#_includedir/%realname/fast_atof.h
-#_includedir/%realname/heapsort.h
-#_includedir/%realname/irrArray.h
-#_includedir/%realname/irrString.h
-#_includedir/%realname/irrTypes.h
-#_includedir/%realname/irrXML.h
-
-#%files examples
-#%_bindir/*
-#%_datadir/irrlicht
+%_libdir/libIrrlicht.so
+%_includedir/%realname
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -211,6 +153,9 @@ cp -a include/*.h %buildroot%_includedir/%realname/
 %endif
 
 %changelog
+* Mon Jan 17 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.5-alt1
+- Updated to upstream version 1.8.5.
+
 * Tue Jan 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.4-alt4
 - Fixed build with new glibc.
 - Applied patches from Fedora.
