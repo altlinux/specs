@@ -2,7 +2,7 @@
 %define _scriptdir %_libexecdir/%name
 
 Name: ploop
-Version: 7.0.266
+Version: 7.0.268
 Release: alt1
 Group: System/Base
 License: GPLv2
@@ -99,6 +99,9 @@ rm -f %buildroot%_libdir/libploop.a
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jan 17 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.0.268-alt1
+- 7.0.268
+
 * Tue Dec 21 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.266-alt1
 - 7.0.266
 
