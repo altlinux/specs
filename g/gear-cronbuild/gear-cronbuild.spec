@@ -1,5 +1,5 @@
 Name: gear-cronbuild
-Version: 1.41
+Version: 1.42
 Release: alt1
 
 Summary: gear repository automated build utility
@@ -11,7 +11,6 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-# TODO use /usr/bin/gear-rules-print-specfile
 BuildRequires: perl-RPM-Source-Editor perl-devel /usr/bin/pod2man /usr/bin/gear-rules-print-specfile /usr/bin/gear-remotes-restore
 Requires: gear rpm-uscan > 0.15 gear-uupdate > 0.16
 
@@ -45,6 +44,9 @@ install -m 644 *.1 %buildroot%_man1dir/
 %_mandir/man?/*
 
 %changelog
+* Tue Jan 18 2022 Igor Vlasenko <viy@altlinux.org> 1.42-alt1
+- new version
+
 * Fri Jan 10 2020 Igor Vlasenko <viy@altlinux.ru> 1.41-alt1
 - bugfix release
 
