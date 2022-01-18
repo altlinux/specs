@@ -1,5 +1,5 @@
 Name: pigz
-Version: 2.6
+Version: 2.7
 Release: alt1
 
 Summary: Parallel Implementation of GZip
@@ -38,6 +38,9 @@ make test
 %_man1dir/*
 
 %changelog
+* Tue Jan 18 2022 Michael Shigorin <mike@altlinux.org> 2.7-alt1
+- 2.7
+
 * Sat Feb 06 2021 Michael Shigorin <mike@altlinux.org> 2.6-alt1
 - 2.6
 
