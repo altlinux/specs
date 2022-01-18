@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: cmark
-Version: 0.30.1
+Version: 0.30.2
 Release: alt1
 Summary: CommonMark parsing and rendering
 License: BSD and MIT
@@ -80,6 +80,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Mon Jan 17 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 0.30.2-alt1
+- Updated to upstream version 0.30.2.
+
 * Tue Sep 07 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.30.1-alt1
 - Updated to upstream version 0.30.1.
 
