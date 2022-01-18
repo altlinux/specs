@@ -1,6 +1,6 @@
 Name: SDL2_ttf
 Version: 2.0.18
-Release: alt1
+Release: alt1.1
 
 Summary: Simple DirectMedia Layer - Sample TrueType Font Library
 License: zlib
@@ -39,6 +39,10 @@ applications.
 
 %prep
 %setup
+%ifarch %e2k
+# C++ objects must be linked using the C++ linker, not just for Windows!
+sed -i 's/LINKER = $(LINK)/LINKER = $(CXXLINK)/' Makefile.{in,am}
+%endif
 
 %build
 ./autogen.sh
@@ -60,6 +64,9 @@ applications.
 %_libdir/lib%name.so
 
 %changelog
+* Tue Jan 18 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.0.18-alt1.1
+- Fixed build for Elbrus
+
 * Tue Jan 11 2022 Nazarov Denis <nenderus@altlinux.org> 2.0.18-alt1
 - Version 2.0.18
 
