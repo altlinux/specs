@@ -13,7 +13,7 @@
 %def_without system_tzdata
 
 Name: libical
-Version: 3.0.12
+Version: 3.0.13
 Release: alt1
 
 Summary: An implementation of basic iCAL protocols
@@ -26,20 +26,21 @@ Source: %url/%name/releases/download/v%version/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
-Patch: %name-1.0.1-alt-libdir.patch
 
 %define tzdata_ver 2021e
 %define glib_ver 2.38
 %{?_with_system_tzdata:Requires: tzdata >= %tzdata_ver}
 
-BuildRequires(pre): rpm-macros-cmake rpm-build-gir
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ ctest gtk-doc libicu-devel icu-utils
 %{?_enable_ninja:BuildRequires: ninja-build}
 %{?_with_system_tzdata:BuildRequires: tzdata >= %tzdata_ver}
 %{?_with_bdb:BuildRequires: libdb4-devel}
 %{?_enable_ical_glib:BuildRequires: libgio-devel >= %glib_ver libxml2-devel}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel}
-%{?_enable_vala:BuildRequires: vala-tools}
+%{?_enable_introspection:BuildRequires(pre): rpm-build-gir
+BuildRequires: gobject-introspection-devel}
+%{?_enable_vala:BuildRequires(pre): rpm-build-vala
+BuildRequires: vala-tools}
 %{?_enable_check:BuildRequires: python3-module-pygobject3}
 
 %description
@@ -126,7 +127,6 @@ library.
 
 %prep
 %setup
-#%%patch -p1
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -157,7 +157,7 @@ LD_LIBRARY_PATH=%buildroot%_libdir %cmake_build -t test
 %_libdir/libical_cxx.so.*
 %_libdir/libicalss_cxx.so.*
 %endif
-%doc TODO TEST THANKS ReleaseNotes.txt ReadMe.txt
+%doc TODO TEST THANKS ReleaseNotes.txt README*
 
 %files devel
 %_includedir/%name/
@@ -203,6 +203,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %cmake_build -t test
 
 
 %changelog
+* Tue Jan 18 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.13-alt1
+- 3.0.13
+
 * Thu Dec 09 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.12-alt1
 - 3.0.12
 - build with ninja instead of make
