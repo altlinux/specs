@@ -4,7 +4,7 @@
 
 Name: fflas-ffpack
 Version: 2.4.3
-Release: alt2
+Release: alt3
 
 Summary: Finite Field Linear Algebra Subroutines
 License: LGPL-2.1+
@@ -85,6 +85,13 @@ trap "" ERR
 rm -f "%buildroot%_docdir/%name/fflas-ffpack-html/INSTALL"
 fdupes %buildroot%prefix
 
+%ifarch %e2k
+# unsupported as of lcc 1.25.20 (linbox-1.6.3 ftbfs)
+sed -i 's,-fabi-version=6,,' \
+	%buildroot%_bindir/fflas-ffpack-config \
+	%buildroot%_pkgconfigdir/fflas-ffpack.pc
+%endif
+
 %files devel
 %doc ChangeLog
 %doc COPYING.LESSER
@@ -96,6 +103,9 @@ fdupes %buildroot%prefix
 %_docdir/%name/
 
 %changelog
+* Wed Jan 19 2022 Michael Shigorin <mike@altlinux.org> 2.4.3-alt3
+- E2K: avoid lcc-unsupported option hardwired into fflas-ffpack-config
+
 * Sat Jan 15 2022 Michael Shigorin <mike@altlinux.org> 2.4.3-alt2
 - E2K: build against openblas (specified on girar side)
 - minor spec cleanup
