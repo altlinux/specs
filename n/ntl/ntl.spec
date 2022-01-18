@@ -3,7 +3,7 @@
 
 Name: ntl
 Version: 11.5.1
-Release: alt1
+Release: alt1.1
 Summary: High-performance algorithms for vectors, matrices, and polynomials
 License: LGPL-2.0+
 Group: Sciences/Mathematics
@@ -71,6 +71,10 @@ Group: Development/Other
 %prep
 %setup
 %patch -p0
+%ifarch %e2k
+# the supplied config is too old and doesn't have e2k arch 
+cp /usr/share/gnu-config/config.{guess,sub} src/libtool-origin/
+%endif
 
 %build
 # TODO: Once we can assume z15, add TUNE=linux-s390x to the flags for s390x
@@ -92,6 +96,9 @@ pushd src
   TUNE=x86 \
 %else
   TUNE=generic \
+%endif
+%ifarch %e2k
+  NTL_SAFE_VECTORS=off \
 %endif
   SHARED=on
 popd
@@ -141,6 +148,9 @@ rm -fv  %buildroot%_libdir/libntl.a
 %_libdir/libntl.so
 
 %changelog
+* Tue Jan 18 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 11.5.1-alt1.1
+- Fixed build for Elbrus.
+
 * Mon Oct 18 2021 Leontiy Volodin <lvol@altlinux.org> 11.5.1-alt1
 - Initial build for ALT Sisyphus (thanks fedora for the spec).
 - Built as require for sagemath.
