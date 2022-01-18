@@ -10,7 +10,7 @@
 %define soname 2.3
 
 Name:           lib%oname
-Version:        2.3.10.1
+Version:        2.3.11.0
 Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
@@ -27,7 +27,6 @@ Source0:        %name-%version.tar
 Source2: %oname.watch
 
 Patch1: %oname-alt-armh-disable-neon.patch
-Patch2: %oname-alt-disable-tests.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires:  python3-devel
@@ -139,7 +138,6 @@ Development files for package %name
 %ifarch armh
 %patch1 -p1
 %endif
-%patch2 -p1
 
 # Remove bundled pugixml
 rm -fr src/include/OpenImageIO/detail/pugixml/
@@ -225,6 +223,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Tue Jan 18 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.11.0-alt1
+- Updated to upstream version 2.3.11.0.
+
 * Thu Dec 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.10.1-alt1
 - Updated to upstream version 2.3.10.1.
 
