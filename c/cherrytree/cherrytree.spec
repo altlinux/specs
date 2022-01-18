@@ -1,6 +1,6 @@
 Name: cherrytree
 Version: 0.99.40
-Release: alt1
+Release: alt1.1
 
 Summary: Hierarchical note taking application
 Summary(ru_RU.UTF-8): Записная книжка иерархической структуры для заметок
@@ -44,6 +44,14 @@ file with extension ".ctd".
 %prep
 %setup
 %patch -p0
+%ifarch %e2k
+# workaround for EDG frontend
+sed -i "s|g_autofree gchar\*|g_autofree_edg_ex(gchar,Glib::ustring) |" src/ct/ct_{misc_utils,storage_xml}.cc
+sed -i "s|g_autofree gchar\*|g_autofree_edg_ex(gchar,std::string) |" src/ct/ct_*.cc
+sed -i "s|pConverted+|(gchar*)&|" src/ct/ct_misc_utils.cc
+sed -i "s|save_to_buffer(|&(gchar*\&)|" src/ct/ct_{imports,image,parser_html}.cc
+sed -i "s|filename(pOutStr|filename((gchar*)pOutStr|" src/ct/ct_filesystem.cc
+%endif
 
 %build
 %cmake  -DBUILD_TESTING=OFF -DCT_VERSION=%version
@@ -67,6 +75,9 @@ file with extension ".ctd".
 
 
 %changelog
+* Tue Jan 18 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.99.40-alt1.1
+- g_autofree workaround for the E2K compiler
+
 * Fri Aug 13 2021 Vitaly Lipatov <lav@altlinux.ru> 0.99.40-alt1
 - NMU: new version 0.99.40 (with rpmrb script)
 
