@@ -1,4 +1,3 @@
-%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %def_enable trust_module
@@ -8,22 +7,19 @@
 %define trust_paths %_sysconfdir/pki/ca-trust/source:%_datadir/pki/ca-trust-source
 %def_disable systemd
 
+%define _unpackaged_files_terminate_build 1
+
 Name: p11-kit
-Version: 0.23.15
-Release: alt2
+Version: 0.24.1
+Release: alt1
 
 Summary: Utilities for PKCS#11 modules
 Group: Security/Networking
-License: BSD
+License: BSD-3-Clause
 Url: http://p11-glue.freedesktop.org/p11-kit.html
 
-%if_enabled snapshot
-# VCS: https://github.com/p11-glue/p11-kit.git
+Vcs: https://github.com/p11-glue/p11-kit.git
 Source: %name-%version.tar
-%else
-#Source: http://p11-glue.freedesktop.org/releases/%name-%version.tar.gz
-Source: https://github.com/p11-glue/%name/releases/download/%version/%name-%version.tar.gz
-%endif
 
 Source1: p11-kit-extract-trust
 Patch: %name-%version-%release.patch
@@ -33,7 +29,7 @@ Requires: %_datadir/pki/ca-trust-source/ca-bundle.trust.p11-kit
 Requires: %name-trust = %version-%release
 
 BuildRequires(pre): rpm-macros-alternatives
-BuildRequires: libtasn1-devel libffi-devel
+BuildRequires: libtasn1-devel libtasn1-utils libffi-devel
 %if %hash_impl == freebl
 BuildRequires: libnss-devel
 %endif
@@ -120,11 +116,11 @@ system only and should not be installed in the real systems.
 %prep
 %setup -n %name-%version
 %patch -p1
-%{?_enable_snapshot:NOCONFIGURE=1 ./autogen.sh}
+
+%autoreconf
 %patch1
 
 %build
-%autoreconf
 %configure --disable-static \
 	--enable-debug=no \
 	%{subst_enable trust_module} \
@@ -229,6 +225,13 @@ rm -r -- "$TEST_DIR"
 
 %files checkinstall
 %changelog
+* Tue Jan 18 2022 Mikhail Efremov <sem@altlinux.org> 0.24.1-alt1
+- Add libtasn1-utils to BR.
+- Use _unpackaged_files_terminate_build.
+- Add Vcs tag.
+- Fix license tag.
+- 0.24.1.
+
 * Thu Jun 04 2020 Andrew Savchenko <bircoph@altlinux.org> 0.23.15-alt2
 - Add rpm-macros-alternatives build dependency for %%_altdir.
 
