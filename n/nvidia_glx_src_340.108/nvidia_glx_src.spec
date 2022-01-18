@@ -14,7 +14,7 @@
 %define nv_version 340
 %define nv_release 108
 %define nv_minor %nil
-%define pkg_rel alt173
+%define pkg_rel alt174
 %def_enable egl
 %def_enable kernelsource
 %def_disable package_wfb
@@ -94,6 +94,7 @@ Patch9: xf86-video-nvidia-legacy-0005-fix-5.9.patch
 Patch10: xf86-video-nvidia-legacy-0006-fix-5.10.patch 
 Patch11: nvidia-340.108-fix-5.11-kernel-compile.patch
 Patch12: kernel-5.14.patch
+Patch13: kernel-5.16.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-build-kernel rpm-macros-alternatives
@@ -182,6 +183,7 @@ pushd kernel/
 %patch10 -p2
 %patch11 -p2
 %patch12 -p2
+%patch13 -p2
 rm -rf precompiled
 touch .nv-kernel.o.cmd
 popd
@@ -330,6 +332,9 @@ fi
 %endif
 
 %changelog
+* Tue Jan 18 2022 Sergey V Turchin <zerg@altlinux.org> 340.108-alt174
+- add fix against 5.16 kernel
+
 * Fri Sep 03 2021 Sergey V Turchin <zerg@altlinux.org> 340.108-alt173
 - add fix against 5.14 kernel
 
