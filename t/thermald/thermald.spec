@@ -6,8 +6,8 @@
 %def_with monitor
 
 Name: thermald
-Version: 2.4.6
-Release: alt2
+Version: 2.4.7
+Release: alt1
 
 Summary: Thermal daemon for IA
 
@@ -184,6 +184,10 @@ exit 0
 %endif
 
 %changelog
+* Mon Jan 10 2022 Nikolai Kostrigin <nickel@altlinux.org> 2.4.7-alt1
+- new version 2.4.7
+  + Alder Lake and Jasper Lake support introduced by upstream
+
 * Wed Oct 06 2021 Nikolai Kostrigin <nickel@altlinux.org> 2.4.6-alt2
 - add alt-ui-cosmetic-fixes-to-avoid-label-cut-in-dialogs patch
   (closes: #41065)
