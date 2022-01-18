@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 21.12.1
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -52,6 +52,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+cp -ar po/ru/docs/kwallet5 po/ru/docs/kwalletmanager5
 
 %build
 %K5build
@@ -80,6 +81,9 @@ KF5 library
 
 
 %changelog
+* Tue Jan 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt2
+- fix to show russian help from app menu
+
 * Mon Jan 17 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
 - new version
 
