@@ -2,7 +2,7 @@
 
 Name: onsetsds
 Version: 2011.02.10
-Release: alt1
+Release: alt1.1
 Summary: Musical onset detection library
 License: GPLv2
 Group: Sound
@@ -63,9 +63,9 @@ This package contains development documentation for %name.
 
 pushd src
 for i in *.c; do
-	g++ %optflags %optflags_shared -c $i
+	gcc %optflags %optflags_shared -c $i
 done
-g++ -shared *.o -Wl,-soname=lib%name.so.%sover \
+gcc -shared *.o -Wl,-soname=lib%name.so.%sover \
 	-lfftw3f -lsndfile -o lib%name.so.%sover
 popd
 
@@ -89,6 +89,9 @@ ln -s lib%name.so.%sover %buildroot%_libdir/lib%name.so
 %doc doc/html/*
 
 %changelog
+* Tue Jan 18 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2011.02.10-alt1.1
+- C sources must be compiled with a C compiler
+
 * Sat Sep 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2011.02.10-alt1
 - Initial build for Sisyphus
 
