@@ -7,8 +7,8 @@
 %define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher docs-alt-education docs-alt-kworkstation docs-alt-server docs-alt-workstation docs-alt-spworkstation docs-alt-server-v
 
 Name: docs-%variant
-Version: 9.2
-Release: alt2
+Version: 10.0
+Release: alt1
 
 Summary: %Variant documentation
 License: %fdl
@@ -49,6 +49,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Tue Jan 18 2022 Elena Mishina <lepata@altlinux.org> 10.0-alt1
+- update to ALT Kworkstation 10.0beta
+
 * Fri Aug 20 2021 Elena Mishina <lepata@altlinux.org> 9.2-alt2
 - server-network delete alterator-net-domain, squid, squidmill, dhcp, ulogd
 - update screenshots
