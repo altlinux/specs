@@ -1,7 +1,7 @@
 %define rname sweeper
 
 Name: kde5-%rname
-Version: 21.08.3
+Version: 21.12.1
 Release: alt1
 %K5init no_appdata
 
@@ -57,13 +57,16 @@ Requires: %name-common = %version-%release
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5bin/sweeper
 %_K5xdgapp/org.kde.sweeper.desktop
 %_K5xmlgui/sweeper/
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Tue Jan 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 

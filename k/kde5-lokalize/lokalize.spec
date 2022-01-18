@@ -20,7 +20,7 @@
 
 %define rname lokalize
 Name: kde5-%rname
-Version: 21.08.3
+Version: 21.12.1
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{!?_enable_obsolete_kde4:no_appdata}
 
@@ -76,7 +76,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
     %buildroot/%_K5xdgapp/org.kde.lokalize.desktop
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5bin/lokalize
 %if_enabled obsolete_kde4
 %_datadir/lokalize/
@@ -92,6 +92,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Tue Jan 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 

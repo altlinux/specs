@@ -1,7 +1,7 @@
 %define rname kcron
 
 Name: kde5-%rname
-Version: 21.08.3
+Version: 21.12.1
 Release: alt1
 %K5init altplace no_appdata
 
@@ -62,11 +62,19 @@ KF5 library
 
 %files -f %name.lang
 %doc LICENSES/*
-%_K5plug/kcm_cron.so
-%_K5srv/kcm_cron.desktop
+%_K5plug/*cron*.so
+%_K5srv/*cron*.desktop
 %_datadir/qlogging-categories5/*.*categories
+#
+%_K5libexecdir/kauth/*kcron*
+%_K5dbus_sys_srv/*kcron*.service
+%_K5dbus/system.d/*kcron*.conf
+%_datadir/polkit-1/actions/*kcron*.policy
 
 %changelog
+* Tue Jan 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 

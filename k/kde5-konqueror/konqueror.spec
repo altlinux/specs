@@ -10,7 +10,7 @@
 %define libkonqsidebarplugin libkonqsidebarplugin%konqsidebarplugin_sover
 
 Name: kde5-%rname
-Version: 21.08.3
+Version: 21.12.1
 Release: alt1
 %K5init no_appdata
 
@@ -137,7 +137,7 @@ done
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5icon/*/*/apps/konqueror.*
 %_K5icon/*/*/apps/fsview.*
 %_K5icon/*/*/apps/webengine.*
@@ -158,6 +158,7 @@ done
 %_K5lib/libkdeinit5_kfmclient.so
 %_K5lib/libkwebenginepart.so
 %_K5plug/*.so
+%_K5plug/konqueror_kcms/
 %_K5plug/kf5/kfileitemaction/*.so
 %_K5plug/kf5/parts/*.so
 %_K5start/*.desktop
@@ -198,6 +199,9 @@ done
 %_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Tue Jan 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 
