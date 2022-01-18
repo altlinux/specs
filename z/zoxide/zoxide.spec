@@ -5,14 +5,13 @@
 
 Name: zoxide
 Version: 0.8.0
-Release: alt1
+Release: alt2
 
 Summary:  A smarter cd command. Supports all major shells.
 License: MIT
 Group: System/Libraries
 
-#https://github.com/librsync/librsync
-Url: https://librsync.github.io/
+Url: https://github.com/ajeetdsouza/zoxide
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
@@ -69,5 +68,8 @@ cargo test --release
 %_datadir/fish/vendor_completions.d/zoxide.fish
 
 %changelog
+* Tue Jan 18 2022 Egor Ignatov <egori@altlinux.org> 0.8.0-alt2
+- spec: fix url
+
 * Tue Jan 11 2022 Egor Ignatov <egori@altlinux.org> 0.8.0-alt1
 - Firt build for ALT
