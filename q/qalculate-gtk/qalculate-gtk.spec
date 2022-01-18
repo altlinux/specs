@@ -1,9 +1,11 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %define shortname qalculate
 
 Name: qalculate-gtk
-Version: 3.20.1
+Version: 3.22.0
 Release: alt1
 Summary: A very versatile desktop calculator - GTK+ version.
 Group: Office
@@ -26,6 +28,8 @@ A GTK+ graphical interface for Qalculate!
 %setup
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %autoreconf
 %configure --disable-rpath --enable-static=no
 %make_build
@@ -55,6 +59,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/gnome-shell/search-providers/io.github.Qalculate.search-provider.ini
 
 %changelog
+* Tue Jan 18 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 3.22.0-alt1
+- Updated to upstream version 3.22.0.
+
 * Fri Aug 20 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.20.1-alt1
 - Updated to upstream version 3.20.1.
 

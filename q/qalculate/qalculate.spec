@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %def_without static
 
 Name: qalculate
-Version: 3.20.1
+Version: 3.22.0
 Release: alt1
-
 Summary: A very versatile desktop calculator
 Group: Office
 License: GPL-2.0+
@@ -65,6 +66,8 @@ This package contains common files used by qalculate frontends.
 %setup -q -n lib%name-%version
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %autoreconf
 
 %configure \
@@ -111,6 +114,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Tue Jan 18 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 3.22.0-alt1
+- Updated to upstream version 3.22.0.
+
 * Fri Aug 20 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.20.1-alt1
 - Updated to upstream version 3.20.1.
 
