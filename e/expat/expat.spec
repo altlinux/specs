@@ -1,6 +1,6 @@
 Name: expat
-Version: 2.4.1
-Release: alt2
+Version: 2.4.3
+Release: alt1
 
 %def_disable static
 %define pkgdocdir %_docdir/%name-%version
@@ -106,6 +106,19 @@ install -p -m644 examples/*.c %buildroot%pkgdocdir/examples/
 %endif	# enabled static
 
 %changelog
+* Tue Jan 18 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.4.3-alt1
+- Updated to 2.4.3 (with multiple security fixes).
+- Fixes:
+  + CVE-2021-45960 issues with left shift by >= 29 places in function storeAtts that
+    can lead to realloc misbehavior;
+  + CVE-2021-46143 Integer overflow on variable m_groupSize in function doProlog;
+  + CVE-2022-22822 Integer overflows near memory allocation in function addBinding;
+  + CVE-2022-22823 Integer overflows near memory allocation in function build_model;
+  + CVE-2022-22824 Integer overflows near memory allocation in function defineAttribute;
+  + CVE-2022-22825 Integer overflows near memory allocation in function lookup;
+  + CVE-2022-22826 Integer overflows near memory allocation in function nextScaffoldPart;
+  + CVE-2022-22827 Integer overflows near memory allocation in function storeAtts.
+
 * Tue Dec 14 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.4.1-alt2
 - Fixed cmake macros (closes #41571).
 
