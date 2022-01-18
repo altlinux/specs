@@ -1,6 +1,6 @@
 Name: firmware-linux
 Version: 20220111
-Release: alt1
+Release: alt2
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -76,6 +76,9 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Jan 18 2022 Igor Vlasenko <viy@altlinux.org> 20220111-alt2
+- NMU for cronbuild: verbose update for better debugging
+
 * Tue Jan 18 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 20220111-alt1
 - upstream changes (GIT 13dca28):
   + update firmware for MT7915 (thx Shayne Chen)
