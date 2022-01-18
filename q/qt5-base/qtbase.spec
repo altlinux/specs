@@ -38,7 +38,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.15.2
-Release: alt8
+Release: alt9
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -408,7 +408,7 @@ EGL integration library for the Qt%major toolkit
 %patch1007 -p1
 #%patch1008 -p1
 %patch1009 -p1
-%patch1010 -p1
+%patch1010 -p1 -b .zonetab
 %patch1011 -p1
 %patch1012 -p1
 %patch1013 -p1
@@ -846,6 +846,9 @@ make check -k ||:
 
 
 %changelog
+* Thu Jan 13 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt9
+- fix parse zone1970.tab
+
 * Tue Jan 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt8
 - using zone1970.tab by default
 
