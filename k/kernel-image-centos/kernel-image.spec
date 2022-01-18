@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 43
+%define centos_release 44
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -629,6 +629,17 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Jan 18 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.44-alt1.el9
+- dm: sync with upstream 5.16 fixes and improvements
+- redhat: Pull in openssl-devel as a build dependency correctly
+- platform/x86: think-lmi: add debug_cmd
+- include/linux/timer.h: Pad timer_list struct for KABI
+- kernel: Include RHEL Ecosystem message
+- include/linux/ioport.h: Pad resource struct for KABI
+- include/linux/hrtimer.h: Pad hrtimer struct for KABI
+- redhat/configs: Enable Zstandard compression
+- Enable iSER on s390x
+
 * Sat Jan 15 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.43-alt1.el9
 - mm: fix for "CoW after fork()" "GUP after fork()" bug
 - powerpc/xive: Change IRQ domain to a tree domain
