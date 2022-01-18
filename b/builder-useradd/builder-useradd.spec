@@ -1,5 +1,5 @@
 Name: builder-useradd
-Version: 1.1
+Version: 1.2
 Release: alt1
 Summary: Add user and configure hasher and gear for him/her
 License: GPLv2+
@@ -35,6 +35,11 @@ install -m 644 %SOURCE2 ./
 %_sbindir/%name
 
 %changelog
+* Tue Jan 18 2022 Anton Midyukov <antohami@altlinux.org> 1.2-alt1
+- new version:
+  + Add sign repo in generated sources.lists for ports
+  + Fix generated sources.lists for ports of stable branches
+
 * Mon Jan 17 2022 Anton Midyukov <antohami@altlinux.org> 1.1-alt1
 - new version:
   + Unify code style and set -efu
