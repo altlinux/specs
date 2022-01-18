@@ -1,15 +1,16 @@
+%def_with dcmtk
 %define _unpackaged_files_terminate_build 1
-
 %define soname 3
 
 Name: biosig
 Version: 2.3.1
-Release: alt1
-Summary: Reading and writing routines for different biosignal data formats
-Group: Sciences/Medicine
-License: GPL-3.0+
-Url: http://biosig.sourceforge.net
+Release: alt2
 
+Summary: Reading and writing routines for different biosignal data formats
+License: GPL-3.0+
+Group: Sciences/Medicine
+
+Url: http://biosig.sourceforge.net
 Source: %name-%version.tar
 
 Patch1: %name-alt-return-type.patch
@@ -21,7 +22,9 @@ BuildRequires: gcc-c++
 BuildRequires: libalsa-devel
 BuildRequires: libb64-devel
 BuildRequires: libsuitesparse-devel
+%if_with dcmtk
 BuildRequires: libdcmtk-devel
+%endif
 BuildRequires: zlib-devel
 BuildRequires: tinyxml-devel
 
@@ -149,5 +152,8 @@ rm -f biosig4c++/doc/mexSLOAD.1
 %python3_sitelibdir/Biosig-%version-py%{_python3_version}.egg-info
 
 %changelog
+* Wed Jan 19 2022 Michael Shigorin <mike@altlinux.org> 2.3.1-alt2
+- Introduce dcmtk knob (on by default).
+
 * Mon Jul 26 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.1-alt1
 - Initial build for ALT.
