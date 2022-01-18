@@ -1,7 +1,9 @@
 %define  modulename faker
+# https://github.com/joke2k/faker/issues/1575
+%def_without check
 
 Name:    python3-module-%modulename
-Version: 9.9.0
+Version: 11.3.0
 Release: alt1
 
 Summary: Faker is a Python package that generates fake data for you.
@@ -12,6 +14,15 @@ URL:     https://github.com/joke2k/faker
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-dateutil
+BuildRequires: python3-module-text-unidecode
+BuildRequires: python3-module-validators
+BuildRequires: python3-module-freezegun
+BuildRequires: python3-module-random2
+%endif
 
 BuildArch: noarch
 
@@ -29,6 +40,10 @@ Source:  %modulename-%version.tar
 %install
 %python3_install
 
+%check
+# Exclude tests that require the faker.sphinx module
+py.test3 --ignore-glob='tests/sphinx/*'
+
 %files
 %_bindir/%modulename
 %python3_sitelibdir/%modulename/
@@ -36,6 +51,9 @@ Source:  %modulename-%version.tar
 %doc *.md
 
 %changelog
+* Mon Jan 17 2022 Grigory Ustinov <grenka@altlinux.org> 11.3.0-alt1
+- Automatically updated to 11.3.0.
+
 * Tue Nov 30 2021 Grigory Ustinov <grenka@altlinux.org> 9.9.0-alt1
 - Automatically updated to 9.9.0.
 
