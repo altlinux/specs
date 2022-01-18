@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20211216
+Version: 20220111
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,28 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Jan 18 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 20220111-alt1
+- upstream changes (GIT 13dca28):
+  + update firmware for MT7915 (thx Shayne Chen)
+  + iwlwifi: add new FWs from core63-136 release (thx Luca Coelho)
+  + iwlwifi: add new FWs from core66-88 release (thx Luca Coelho)
+  + iwlwifi: update 9000-family firmwares to core66-88 (thx Luca Coelho)
+  + add firmware for MT7916 (thx Shayne Chen)
+  + Update firmware file for Intel Bluetooth 9462 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9560 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX211 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX210 (thx Kiran K)
+  + WHENCE: add missing symlink for NanoPi R1 (thx Vijai Kumar K)
+  + amdgpu: update yellow carp dmcub firmware (thx Mario Limonciello)
+  + cxgb4: Update firmware to revision 1.26.6.0 (thx Rahul Lakkireddy)
+  + cnm: add chips&media wave521c firmware. (thx Nas Chung)
+  + update firmware for MT7921 WiFi device (thx Deren Wu)
+  + update firmware for mediatek bluetooth chip (MT7921) (thx Mark Chen)
+  + rtw88: 8822c: Update normal firmware to v9.9.11 (thx Po-Hao Huang)
+  + QCA: Update Bluetooth WCN685x firmware to 2.1.0-00298 (thx Zijun Hu)
+- Updated upstream branch name (master -> main) to fix cronbuild updates.
+
 * Wed Dec 22 2021 Cronbuild Service <cronbuild@altlinux.org> 20211216-alt1
 - upstream changes (GIT f682ecb):
   + amdgpu: update green sardine PSP firmware (thx Alex Deucher)
