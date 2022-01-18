@@ -1,6 +1,6 @@
 Name: idesk
 Version: 0.7.5
-Release: alt3.1
+Release: alt3.2
 Serial: 1
 
 Summary: Desktop icon manager with support for PNG/SVG icons and antialiased text
@@ -12,6 +12,7 @@ Source0: http://osdl.dl.sourceforge.net/sourceforge/%name/%name-%version.tar.bz2
 Source1: %name.desktop
 Source2: start%name
 Patch: idesk-0.7.5-alt-glibc-2.16.patch
+Patch2: idesk-0.7.5-alt-configure.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Requires: xterm menu-icons-default >= 0.1-alt2
@@ -43,6 +44,7 @@ when startidesk helper is running first time.
 %prep
 %setup
 %patch -p2
+%patch2 -p2
 
 %build
 autoreconf -fisv
@@ -61,6 +63,9 @@ install -pD -m755 %SOURCE2 %buildroot%_x11bindir/start%name
 %_desktopdir/*
 
 %changelog
+* Tue Jan 18 2022 Alexander Danilov <admsasha@altlinux.org> 1:0.7.5-alt3.2
+- fixed FTBFS
+
 * Wed Nov 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.7.5-alt3.1
 - Fixed build with glibc 2.16
 - Built support for the XShape extension
