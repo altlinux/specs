@@ -1,6 +1,6 @@
 Name: firmware-linux
-Version: 20220111
-Release: alt2
+Version: 20220114
+Release: alt1
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -76,6 +76,13 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Jan 18 2022 Cronbuild Service <cronbuild@altlinux.org> 20220114-alt1
+- upstream changes (GIT 1e744b8):
+  + update firmware for mediatek bluetooth chip(MT7921) (thx Mark Chen)
+  + update firmware for MT7921 WiFi device (thx Deren Wu)
+  + Mellanox: Add new mlxsw_spectrum firmware xx.2010.1232 (thx Petr Machata)
+  + add marvell CPT firmware images (thx DhanaSaravanan)
+
 * Tue Jan 18 2022 Igor Vlasenko <viy@altlinux.org> 20220111-alt2
 - NMU for cronbuild: verbose update for better debugging
 
