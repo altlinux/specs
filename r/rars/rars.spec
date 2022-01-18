@@ -1,6 +1,6 @@
 Name: rars
 Version: 1.5
-Release: alt1
+Release: alt2
 
 Summary: RISC-V Assembler and Runtime Simulator
 
@@ -8,13 +8,11 @@ License: MIT
 Group: Emulators
 Url: https://github.com/TheThirdOne/rars
 
-Packager: Nikita Ermakov <arei@altlinux.org>
-
 Source: %name-%version.tar
 Source1: jsoftfloat.tar
 Patch: %name-%version.patch
 
-BuildRequires: java-devel-default
+BuildRequires: java-devel-default ImageMagick-tools
 BuildArch: noarch
 Requires: java-openjdk
 
@@ -35,6 +33,20 @@ Documentation and license for %name.
 %setup -a1
 %patch -p1
 
+cat > %name.desktop <<@@@
+[Desktop Entry]
+Name=RARS
+GenericName=RISC-V Assembly Language Programming Environment
+Comment=Develop in assembly language for the RISC-V family of processors
+Exec=%name
+Terminal=false
+Type=Application
+Categories=Development;IDE;Emulator
+Icon=%name
+@@@
+
+for i in 16 32 48 64 128; do convert src/images/RISC-V.png $i.png; done
+
 %build
 export LC_ALL=ru_RU.UTF-8
 ./build-jar.sh
@@ -50,16 +62,25 @@ cp -p rars.sh %{buildroot}%{_bindir}/rars
 # javadoc
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr License.txt README.md %{buildroot}%{_javadocdir}/%{name}/
+install -D %name.desktop %buildroot/%_desktopdir/%name.desktop
+for i in 16 32 48 64 128; do
+    install -D $i.png %buildroot/%_iconsdir/hicolor/${i}x${i}/apps/%name.png
+done
 
 %files
 %_javadir/*
 %_bindir/*
+%_desktopdir/*
+%_iconsdir/*/*/apps/*
 
 %files javadoc
 %dir %{_javadocdir}/%{name}
 %{_javadocdir}/%{name}/*
 
 %changelog
+* Tue Jan 18 2022 Fr. Br. George <george@altlinux.ru> 1.5-alt2
+- Provide desktop file
+
 * Wed Dec 15 2021 Fr. Br. George <george@altlinux.ru> 1.5-alt1
 - Version up
 - Import JSoftFloat submodule
