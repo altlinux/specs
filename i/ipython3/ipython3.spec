@@ -7,7 +7,7 @@
 %def_with doc
 
 Name: ipython3
-Version: 7.27.0
+Version: 8.0.0
 Release: alt1
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
@@ -18,8 +18,8 @@ BuildArch: noarch
 
 # https://github.com/ipython/ipython.git
 Source: %name-%version.tar
+
 Patch1: %name-alt-docs.patch
-Patch2: %name-alt-dont-import-tests.patch
 
 %add_findreq_skiplist %python3_sitelibdir/IPython/utils/eventful.py
 
@@ -27,12 +27,14 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(prompt_toolkit)
 BuildRequires: python3(backcall)
+BuildRequires: python3(stack_data)
 
 %if_with doc
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx-devel python3-module-matplotlib-sphinxext python3-module-numpydoc
 BuildRequires: python3(sphinx_rtd_theme) graphviz
 BuildRequires: python3(traitlets) python3(pexpect) python3(pickleshare) python3(ipykernel) python3-module-sphinx-sphinx-build-symlink
+BuildRequires: python3(black) python3(jedi)
 %endif
 
 %add_python3_req_skip __main__
@@ -108,7 +110,6 @@ This package contains tests for Python-3.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 
 %if_with doc
 %prepare_sphinx3 docs
@@ -148,46 +149,32 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 # everything except for skipdoctest.py from IPython/testing is packaged into tests package
 %exclude %python3_sitelibdir/IPython/testing/plugin
 %exclude %python3_sitelibdir/IPython/testing/__init__.py
-%exclude %python3_sitelibdir/IPython/testing/__main__.py
 %exclude %python3_sitelibdir/IPython/testing/decorators.py
 %exclude %python3_sitelibdir/IPython/testing/globalipapp.py
-%exclude %python3_sitelibdir/IPython/testing/iptest.py
-%exclude %python3_sitelibdir/IPython/testing/iptestcontroller.py
 %exclude %python3_sitelibdir/IPython/testing/ipunittest.py
 %exclude %python3_sitelibdir/IPython/testing/tools.py
 %exclude %python3_sitelibdir/IPython/testing/__pycache__/__init__.*
-%exclude %python3_sitelibdir/IPython/testing/__pycache__/__main__.*
 %exclude %python3_sitelibdir/IPython/testing/__pycache__/decorators.*
 %exclude %python3_sitelibdir/IPython/testing/__pycache__/globalipapp.*
-%exclude %python3_sitelibdir/IPython/testing/__pycache__/iptest.*
-%exclude %python3_sitelibdir/IPython/testing/__pycache__/iptestcontroller.*
 %exclude %python3_sitelibdir/IPython/testing/__pycache__/ipunittest.*
 %exclude %python3_sitelibdir/IPython/testing/__pycache__/tools.*
 %exclude %python3_sitelibdir/IPython/*/tests
-%exclude %python3_sitelibdir/IPython/external/decorators
 %exclude %python3_sitelibdir/IPython/conftest.py
 %exclude %python3_sitelibdir/IPython/__pycache__/conftest.*
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/IPython/testing/plugin
 %python3_sitelibdir/IPython/testing/__init__.py
-%python3_sitelibdir/IPython/testing/__main__.py
 %python3_sitelibdir/IPython/testing/decorators.py
 %python3_sitelibdir/IPython/testing/globalipapp.py
-%python3_sitelibdir/IPython/testing/iptest.py
-%python3_sitelibdir/IPython/testing/iptestcontroller.py
 %python3_sitelibdir/IPython/testing/ipunittest.py
 %python3_sitelibdir/IPython/testing/tools.py
 %python3_sitelibdir/IPython/testing/__pycache__/__init__.*
-%python3_sitelibdir/IPython/testing/__pycache__/__main__.*
 %python3_sitelibdir/IPython/testing/__pycache__/decorators.*
 %python3_sitelibdir/IPython/testing/__pycache__/globalipapp.*
-%python3_sitelibdir/IPython/testing/__pycache__/iptest.*
-%python3_sitelibdir/IPython/testing/__pycache__/iptestcontroller.*
 %python3_sitelibdir/IPython/testing/__pycache__/ipunittest.*
 %python3_sitelibdir/IPython/testing/__pycache__/tools.*
 %python3_sitelibdir/IPython/*/tests
-%python3_sitelibdir/IPython/external/decorators
 %python3_sitelibdir/IPython/conftest.py
 %python3_sitelibdir/IPython/__pycache__/conftest.*
 
@@ -203,6 +190,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Tue Jan 18 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 8.0.0-alt1
+- Updated to upstream version 8.0.0.
+
 * Tue Sep 07 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.27.0-alt1
 - Updated to upstream version 7.27.0.
 
