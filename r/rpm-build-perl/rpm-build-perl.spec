@@ -2,7 +2,7 @@
 
 Name: rpm-build-perl
 Version: 0.85
-Release: alt2
+Release: alt3
 
 Summary: RPM helper scripts to calculate Perl dependencies
 License: GPLv2+
@@ -79,6 +79,9 @@ install -pm644 macros.env %buildroot%_rpmmacrosdir/perl5.env
 %config %_rpmmacrosdir/perl5.env
 
 %changelog
+* Wed Jan 19 2022 Igor Vlasenko <viy@altlinux.org> 0.85-alt3
+- applied crux's patch (closes: #9307)
+
 * Tue Nov 23 2021 Igor Vlasenko <viy@altlinux.org> 0.85-alt2
 - perl.prov: support for package Foo ... {
 
