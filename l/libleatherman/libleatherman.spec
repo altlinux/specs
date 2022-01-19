@@ -1,6 +1,6 @@
 Name:    libleatherman
-Version: 1.12.6
-Release: alt2
+Version: 1.12.7
+Release: alt1
 Summary: A collection of C++ and CMake utility libraries
  
 Group:   System/Libraries
@@ -79,6 +79,9 @@ zip -ru Catch-1.10.0.zip Catch-1.10.0/
 %_libdir/cmake/leatherman
 
 %changelog
+* Wed Jan 19 2022 Andrey Cherepanov <cas@altlinux.org> 1.12.7-alt1
+- New version.
+
 * Fri Oct 29 2021 Andrey Cherepanov <cas@altlinux.org> 1.12.6-alt2
 - FTBFS: SIGSTKSZ is no longer a constexpr.
 
