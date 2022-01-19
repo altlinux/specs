@@ -13,8 +13,8 @@
 %def_disable check
 
 Name: flatpak
-Version: 1.12.2
-Release: alt2.1
+Version: 1.12.4
+Release: alt1
 
 Summary: Application deployment framework for desktop apps
 Group: Development/Tools
@@ -127,6 +127,7 @@ NOCONFIGURE=1 ./autogen.sh
            --with-systemdsystemunitdir=%_unitdir \
            --with-systemduserunitdir=%_userunitdir \
            --with-sysusersdir=%_sysusersdir \
+           --with-systemdsystemenvgendir=%_env_gen_dir \
            %endif
            %{?_with_system_dbus_proxy:DBUS_PROXY=%_bindir/xdg-dbus-proxy}
 %nil
@@ -182,8 +183,8 @@ install -d %buildroot%_localstatedir/lib/flatpak
 %_userunitdir/%name-portal.service
 %_userunitdir/%name-session-helper.service
 %_sysusersdir/%name.conf
-%_prefix/lib/systemd/user-environment-generators/60-%name
-%_prefix/lib/systemd/system-environment-generators/60-%name-system-only
+%_env_gen_dir/60-%name-system-only
+%_user_env_gen_dir/60-%name
 %_userunitdir/%name-oci-authenticator.service
 %endif
 
@@ -212,6 +213,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Wed Jan 19 2022 Yuri N. Sedunov <aris@altlinux.org> 1.12.4-alt1
+- 1.12.4 (fixed CVE-2022-21682, CVE-2021-43860)
+
 * Sat Dec 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt2.1
 - /etc/profile.d/flatpak.sh: fixed syntax
 - supressed output from %%post

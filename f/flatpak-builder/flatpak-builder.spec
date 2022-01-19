@@ -9,7 +9,7 @@
 %{?_enable_docs:%def_enable docbook_docs}
 
 Name: flatpak-builder
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 Epoch:1
 
@@ -27,7 +27,7 @@ Source: %name-%version.tar
 
 %define glib_ver 2.44
 %define ostree_ver 2017.14
-%define flatpak_ver 0.99.1
+%define flatpak_ver 1.12.4
 %define debugedit_ver 5.0
 %define libdw_ver 0.172
 
@@ -91,6 +91,9 @@ See http://flatpak.org/ for more information.
 %{?_enable_docbook_docs:%doc %_docdir/%name}}
 
 %changelog
+* Wed Jan 19 2022 Yuri N. Sedunov <aris@altlinux.org> 1:1.2.2-alt1
+- 1.2.2 (fixed CVE-2022-21682)
+
 * Sun Jan 09 2022 Yuri N. Sedunov <aris@altlinux.org> 1:1.2.1-alt1
 - 1.2.1
 
