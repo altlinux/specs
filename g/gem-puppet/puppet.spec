@@ -3,7 +3,7 @@
 %define confdir ext/redhat
 
 Name:          gem-%pkgname
-Version:       7.13.1
+Version:       7.14.0
 Release:       alt1
 Summary:       A network tool for managing many disparate systems
 Group:         Development/Ruby
@@ -193,6 +193,9 @@ sed -e "s,sample.server.name,$(hostname)," \
 %ruby_gemdocdir
 
 %changelog
+* Wed Jan 19 2022 Andrey Cherepanov <cas@altlinux.org> 7.14.0-alt1
+- New version.
+
 * Fri Dec 10 2021 Andrey Cherepanov <cas@altlinux.org> 7.13.1-alt1
 - New version.
 
