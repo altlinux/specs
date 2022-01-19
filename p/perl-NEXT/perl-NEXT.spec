@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist NEXT
 Name: perl-%dist
-Version: 0.68
+Version: 0.69
 Release: alt1
 
 Summary: A pseudo-class NEXT that allows method redispatch
@@ -35,6 +35,9 @@ as if the calling method had not originally been found.
 %perl_vendor_privlib/NEXT.pm
 
 %changelog
+* Wed Jan 19 2022 Igor Vlasenko <viy@altlinux.org> 0.69-alt1
+- automated CPAN update
+
 * Wed Apr 21 2021 Igor Vlasenko <viy@altlinux.org> 0.68-alt1
 - automated CPAN update
 
