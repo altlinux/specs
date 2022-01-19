@@ -1,5 +1,5 @@
 Name: atf-imx
-Version: 2.5
+Version: 2.6
 Release: alt1
 
 Summary: ARM Trusted Firmware
@@ -33,6 +33,9 @@ cp -a out/* %buildroot%_datadir/atf/
 %_datadir/atf/*
 
 %changelog
+* Wed Jan 19 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.6-alt1
+- 2.6 released
+
 * Thu Jun 10 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5-alt1
 - initial
 

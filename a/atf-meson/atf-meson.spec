@@ -1,5 +1,5 @@
 Name: atf-meson
-Version: 2.5
+Version: 2.6
 Release: alt1
 
 Summary: ARM Trusted Firmware
@@ -13,13 +13,14 @@ Source: %name-%version-%release.tar
 %description
 ARM Trusted Firmware provides a reference implementation of secure world
 software for ARMv8-A, including Exception Level 3 (EL3) software.
-This release provides initial support for the AMLogic GXBB, GXL and G12A SoC families.
+This release provides initial support for the AMLogic AXG, GXBB, GXL and
+G12A SoC families.
 
 %prep
 %setup
 
 %build
-for plat in gxbb gxl g12a; do
+for plat in axg gxbb gxl g12a; do
 	make PLAT=$plat bl31
 	install -pm0644 -D build/$plat/release/bl31.bin out/$plat/bl31.bin
 	make distclean
@@ -33,6 +34,9 @@ cp -a out/* %buildroot%_datadir/atf/
 %_datadir/atf/*
 
 %changelog
+* Wed Jan 19 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.6-alt1
+- 2.6 released
+
 * Thu Jun 10 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5-alt1
 - 2.5 released
 
