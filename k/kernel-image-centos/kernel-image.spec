@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 44
+%define centos_release 45
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -629,6 +629,24 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Jan 19 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.45-alt1.el9
+- Workqueue update for RT prerequisites
+- nvme: avoid race in shutdown namespace removal
+- powerpc/xmon: Dump XIVE information for online-only processors.
+- CVE-2021-20322 - ipv4: make exception cache less predictible
+- [s390] s390/cio: make ccw_device_dma_* more robust
+- [s390] s390/pci: add s390_iommu_aperture kernel parameter
+- [s390] s390/pci: cleanup resources only if necessary
+- [s390] s390/sclp: fix Secure-IPL facility detection
+- Revert "[redhat] Generate a crashkernel.default for each kernel build"
+- ibmvnic: fix kdump over nfs when auto priority disabled for ibmvnic
+- ibmvnic: don't stop queue in xmit
+- bpf/selftests: allow disabling tests
+- kernel/crash_core: suppress unknown crashkernel parameter warning
+- mm: fix memory onlining under the debug kernel
+- Fixing CVE-2021-3752 for RHEL-9
+- zstd: Sync with upstream 5.16 fixes and improvements
+
 * Tue Jan 18 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.44-alt1.el9
 - dm: sync with upstream 5.16 fixes and improvements
 - redhat: Pull in openssl-devel as a build dependency correctly
