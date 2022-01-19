@@ -1,5 +1,5 @@
 Name:    ibus-m17n
-Version: 1.4.8
+Version: 1.4.9
 Release: alt1
 Group:   System/Libraries
 Summary: The M17N engine for IBus platform
@@ -7,10 +7,6 @@ License: GPL-2.0+
 URL: https://github.com/ibus/ibus-m17n
 
 Source0: %name-%version.tar
-
-# Fedora specific patches:
-# Don't make the status button clickable (maybe obsolete).
-Patch101: ibus-m17n-hide-title-status.patch
 
 BuildRequires: gettext-tools libasprintf-devel
 BuildRequires: gcc-c++
@@ -28,7 +24,6 @@ the input table maps from m17n-db.
 
 %prep
 %setup
-%patch101 -p1
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -54,6 +49,9 @@ make check
 %_datadir/glib-2.0/schemas/org.freedesktop.ibus.engine.m17n.gschema.xml
 
 %changelog
+* Wed Jan 19 2022 Andrey Cherepanov <cas@altlinux.org> 1.4.9-alt1
+- New version.
+
 * Wed Oct 20 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.8-alt1
 - New version.
 
