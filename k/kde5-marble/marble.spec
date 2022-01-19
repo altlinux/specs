@@ -6,7 +6,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: kde5-%rname
-Version: 21.08.3
+Version: 21.12.1
 Release: alt1
 %K5init no_appdata
 
@@ -108,7 +108,7 @@ rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %_K5cfg/marble.kcfg
 %_K5xdgmime/geo-kde5.xml
 
@@ -123,8 +123,7 @@ rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 %_K5data/knsrcfiles/*marble*.knsrc
 %_K5lib/marble/
 %_K5qml/org/kde/marble/
-%_K5srv/*marble*.desktop
-#%_K5srv/*world*.desktop
+%_K5srv/*.desktop
 %_K5xdgapp/*marble*.desktop
 %_K5icon/*/*/apps/marble.*
 %_iconsdir/*/*/apps/marble.*
@@ -144,6 +143,9 @@ rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 %_K5lib/libmarblewidget-qt5.so.*
 
 %changelog
+* Tue Jan 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 

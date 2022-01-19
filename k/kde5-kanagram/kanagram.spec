@@ -1,7 +1,7 @@
 %define rname kanagram
 
 Name: kde5-%rname
-Version: 21.08.3
+Version: 21.12.1
 Release: alt1
 %K5init no_appdata
 
@@ -40,19 +40,22 @@ vocabularies, and distribute them through Kanagram's KNewStuff download service.
 
 %install
 %K5install
-%K5install_move data kanagram
+%K5install_move data kanagram knsrcfiles
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
 %doc COPYING*
-%config(noreplace) %_K5xdgconf/kanagram.knsrc
 %_K5bin/kanagram
 %_K5xdgapp/org.kde.kanagram.desktop
 %_K5data/kanagram/
+%_K5data/knsrcfiles/*.knsrc
 %_K5cfg/kanagram.kcfg
 %_K5icon/*/*/apps/kanagram*.*
 
 %changelog
+* Tue Jan 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 
