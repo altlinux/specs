@@ -1,6 +1,6 @@
 Name: SDL2_ttf
 Version: 2.0.18
-Release: alt1.1
+Release: alt1.2
 
 Summary: Simple DirectMedia Layer - Sample TrueType Font Library
 License: zlib
@@ -40,8 +40,26 @@ applications.
 %prep
 %setup
 %ifarch %e2k
-# C++ objects must be linked using the C++ linker, not just for Windows!
-sed -i 's/LINKER = $(LINK)/LINKER = $(CXXLINK)/' Makefile.{in,am}
+# HarfBuzz is written in C++ and pretends not to use
+# the C++ runtime, but it relies on non-portable hacks.
+# (1) dynamic -lstdc++
+#sed -i 's/LINKER = $(LINK)/LINKER = $(CXXLINK)/' Makefile.am
+# (2) static -lsupc++, worse
+#sed -i 's/$(TTF_LIBS) @MATHLIB@/& -lsupc++/' Makefile.am
+# (3) only include what's missing
+cat >> "$(echo external/harfbuzz-*/src/hb-common.cc)" << "EOF"
+extern "C" __attribute__((visibility("hidden")))
+void __cxa_vec_ctor(void *a, size_t n, size_t size,
+		void (*c)(void*), void (*d)(void*)) {
+	size_t i = 0;
+	if (c) while (n--) c((char*)a + size * i++);
+}
+extern "C" __attribute__((visibility("hidden")))
+void __cxa_vec_dtor(void *a, size_t n, size_t size,
+		void (*d)(void*)) {
+	if (d) while (n--) d((char*)a + size * n);
+}
+EOF
 %endif
 
 %build
@@ -64,6 +82,9 @@ sed -i 's/LINKER = $(LINK)/LINKER = $(CXXLINK)/' Makefile.{in,am}
 %_libdir/lib%name.so
 
 %changelog
+* Wed Jan 19 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.0.18-alt1.2
+- Better fix for Elbrus
+
 * Tue Jan 18 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.0.18-alt1.1
 - Fixed build for Elbrus
 
