@@ -1,6 +1,6 @@
 Name: scribus
 Version: 1.5.7
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Desktop Publishing application written in Qt
@@ -17,6 +17,7 @@ Vcs: https://github.com/scribusproject/scribus.git
 Source: %name-%version.tar
 Patch0: scribus-1.5.7-up-harfbuzz-3.0.0.patch
 Patch1: scribus-1.5.7-no-execbit-plugins.patch
+Patch2: scribus-1.5.7-fix-undefined-mnone-color.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake zlib-devel libssl-devel
@@ -114,6 +115,7 @@ BuildArch: noarch
 %setup
 %patch0 -p1 -b .harfbuzz
 %patch1 -p2
+%patch2 -p2
 # don't
 # brain damage with #if (PODOFO_VERSION < PODOFO_MAKE_VERSION(0, 9, 7))
 subst 's|\(pBase->SetOwner\)|//\1|' scribus/pdf_analyzer.cpp
@@ -184,6 +186,9 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Tue Jan 18 2022 Paul Wolneykien <manowar@altlinux.org> 1:1.5.7-alt4
+- Fixed undefined m_NoneColor (closes: 41728).
+
 * Mon Jan 17 2022 Paul Wolneykien <manowar@altlinux.org> 1:1.5.7-alt3
 - Search for plugins without the exec bit (closes: 36962).
 
