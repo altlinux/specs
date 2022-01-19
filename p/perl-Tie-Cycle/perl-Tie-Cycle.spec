@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Tie-Cycle
-Version: 1.226
+Version: 1.227
 Release: alt1
 
 Summary: Cycle through a list of values via a scalar
@@ -63,6 +63,9 @@ example of this effect.
 %perl_vendor_privlib/Tie/*
 
 %changelog
+* Wed Jan 19 2022 Igor Vlasenko <viy@altlinux.org> 1.227-alt1
+- automated CPAN update
+
 * Fri Jan 15 2021 Igor Vlasenko <viy@altlinux.ru> 1.226-alt1
 - automated CPAN update
 
