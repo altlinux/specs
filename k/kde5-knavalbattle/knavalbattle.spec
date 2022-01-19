@@ -1,7 +1,7 @@
 %define rname knavalbattle
 
 Name: kde5-%rname
-Version: 21.08.3
+Version: 21.12.1
 Release: alt1
 %K5init
 
@@ -42,13 +42,14 @@ BuildRequires: kf5-kxmlgui-devel kf5-sonnet-devel kf5-kcrash-devel
 %_datadir/qlogging-categories5/*.*categories
 %_K5bin/knavalbattle
 %_K5data/knavalbattle/
-#%_K5srv/knavalbattle.protocol
-#%_K5xmlgui/knavalbattle/
 %_K5icon/*/*/apps/knavalbattle.*
 %_K5xdgapp/org.kde.knavalbattle.desktop
-%_K5conf_up/knavalbattle.upd
+#%_K5conf_up/knavalbattle.upd
 
 %changelog
+* Tue Jan 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- new version
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt1
 - new version
 
