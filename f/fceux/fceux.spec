@@ -1,5 +1,5 @@
 Name: fceux
-Version: 2.6.0
+Version: 2.6.1
 Release: alt1
 
 Summary: FCEUX is a Nintendo Entertainment System (NES), Famicom, and Famicom Disk System (FDS) emulator
@@ -147,6 +147,9 @@ install -D -m 644 %SOURCE3 %buildroot/%_pixmapsdir/%name-big.png
 
 
 %changelog
+* Thu Jan 20 2022 Ilya Mashkin <oddity@altlinux.ru> 2.6.1-alt1
+- 2.6.1
+
 * Fri Jan 14 2022 Ilya Mashkin <oddity@altlinux.ru> 2.6.0-alt1
 - 2.6.0
 
