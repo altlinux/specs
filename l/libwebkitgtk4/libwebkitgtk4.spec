@@ -35,7 +35,7 @@
 
 Name: libwebkitgtk4
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -52,7 +52,7 @@ Patch1: webkitgtk-2.33.3-alt-python3.patch
 Patch2: webkitgtk-2.30.0-alt-arm64-return-type.patch
 Patch3: webkitgtk-2.32.2-alt-no_forsed_sse.patch
 Patch10: webkitgtk-2.33.90-alt-format.patch
-Patch2000: webkitgtk-2.32.3-1-alt-e2k.patch
+Patch2000: webkitgtk-2.34.3-alt-e2k.patch
 
 %define bwrap_ver 0.3.1
 %define soup_ver 2.62
@@ -374,6 +374,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 %_girdir/JavaScriptCore-%api_ver.gir
 
 %changelog
+* Wed Jan 19 2022 Michael Shigorin <mike@altlinux.org> 2.34.3-alt2
+- updated e2k patch (ilyakurdyukov@)
+
 * Mon Dec 20 2021 Yuri N. Sedunov <aris@altlinux.org> 2.34.3-alt1
 - 2.34.3 (fixed CVE-2021-30809, CVE-2021-30818, CVE-2021-30823,
   CVE-2021-30836, CVE-2021-30884, CVE-2021-30887, CVE-2021-30888,
