@@ -1,5 +1,5 @@
 %define module_name	virtualbox
-%define module_version	6.1.30
+%define module_version	6.1.32
 
 %define module_release	alt1
 
@@ -118,6 +118,9 @@ install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnet
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Jan 19 2022 Valery Sinelnikov <greh@altlinux.org> 6.1.32-alt1
+- Updated template for virtualbox 6.1.32
 
 * Tue Nov 23 2021 Valery Sinelnikov <greh@altlinux.org> 6.1.30-alt1
 - Updated template for virtualbox  6.1.30
