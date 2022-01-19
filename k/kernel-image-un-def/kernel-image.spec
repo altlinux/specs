@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
 Release: alt1
 epoch:1 
-%define kernel_base_version	5.15
-%define kernel_sublevel .15
+%define kernel_base_version	5.16
+%define kernel_sublevel .0
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -335,6 +335,7 @@ tar -xf %kernel_src/kernel-source-%kernel_base_version.tar
 %patch9 -p1
 %patch10 -p1
 
+
 # this file should be usable both with make and sh (for broken modules
 # which do not use the kernel makefile system)
 echo 'export GCC_VERSION=%kgcc_version' > gcc_version.inc
@@ -508,6 +509,7 @@ KbuildFiles="
 	scripts/depmod.sh
 	scripts/gcc-plugins/*.so
 	scripts/ld-version.sh
+	scripts/pahole-flags.sh
 	tools/objtool/objtool
 
 	.config
@@ -615,6 +617,8 @@ check-pesign-helper
 %exclude %modules_dir/kernel/drivers/media/
 %exclude %modules_dir/kernel/drivers/staging/
 %exclude %modules_dir/kernel/drivers/gpu/
+%exclude %modules_dir/kernel/drivers/usb/typec/altmodes/typec_displayport.ko
+%exclude %modules_dir/kernel/drivers/usb/typec/altmodes/typec_nvidia.ko
 %ghost %modules_dir/modules.alias.bin
 %ghost %modules_dir/modules.dep.bin
 %ghost %modules_dir/modules.symbols.bin
@@ -645,6 +649,8 @@ check-pesign-helper
 %files -n kernel-modules-drm-%flavour
 %modules_dir/kernel/drivers/gpu/
 %modules_dir/kernel/drivers/media/
+%modules_dir/kernel/drivers/usb/typec/altmodes/typec_displayport.ko
+%modules_dir/kernel/drivers/usb/typec/altmodes/typec_nvidia.ko
 %exclude %modules_dir/kernel/drivers/gpu/drm/nouveau
 %exclude %modules_dir/kernel/drivers/gpu/drm/mgag200
 %ifnarch aarch64 armh
@@ -677,14 +683,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
-* Sun Jan 16 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.15.15-alt1
-- v5.15.15
-
-* Thu Jan 13 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.15.14-alt2
-- gear repository schema changed
-
-* Wed Jan 12 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.15.14-alt1
-- v5.15.14
+* Tue Jan 11 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.16.0-alt1
+- v5.16
+- new gear repo scheme
 
 * Sun Jan 09 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.15.13-alt1
 - v5.15.13
