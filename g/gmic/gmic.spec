@@ -12,12 +12,12 @@
 # no tags
 %define zart_ver 939cf38
 # https://github.com/c-koi/gmic-qt
-%define gmic_qt_ver v.3.0.0-18-gd31ff4d
+%define gmic_qt_ver v.3.0.0-20-gd7cc0fc
 # https://github.com/dtschump/gmic-community.git
-%define gmic_comm_ver gmic-3.0.0-Win-30-ge08f685
+%define gmic_comm_ver gmic-3.0.2-Win-16-g99ba8a4
 
 Name: gmic
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 
 Summary: GREYC's Magic Image Converter
@@ -35,6 +35,9 @@ Source1: zart-%zart_ver.tar
 Source2: gmic-qt-%gmic_qt_ver.tar
 Source3: gmic-community-%gmic_comm_ver.tar
 
+# https://github.com/c-koi/zart/pull/20
+Patch10: gmic-3.0.2-up-zart-build.patch
+
 Requires: lib%name = %version-%release
 
 BuildRequires: dos2unix
@@ -45,6 +48,7 @@ BuildRequires: libswscale-devel libtiff-devel openexr-devel xorg-cf-files zlib-d
 BuildRequires: libcurl-devel
 BuildRequires: bash-completion
 # for -zart and -qt
+BuildRequires(pre): rpm-macros-qt5
 BuildRequires: qt5-base-devel qt5-tools-devel
 
 %description
@@ -110,6 +114,9 @@ multi-spectral image datasets.
 
 %prep
 %setup -n gmic-%version -a1 -a2 -a3
+pushd zart
+%patch10 -p1
+popd
 
 %if_disabled openmp
 sed -i "s|-fopenmp -Dcimg_use_openmp||;s|-lgomp||" src/Makefile
@@ -205,6 +212,9 @@ popd
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Wed Jan 19 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt1
+- 3.0.2
+
 * Fri Jan 14 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
 - 3.0.1
 
