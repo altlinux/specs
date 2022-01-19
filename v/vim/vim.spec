@@ -52,8 +52,8 @@
 
 Name: vim
 %define branch 8.2
-Version: %branch.0011
-Release: alt3
+Version: %branch.4141
+Release: alt1
 Epoch: 4
 
 Summary: VIsual editor iMproved
@@ -76,7 +76,7 @@ Source: %name-%version-%release.tar
 # {{{ BuildRequires
 # Automatically added by buildreq on Mon Apr 28 2003 and filtered by raorn
 # Common requires
-BuildPreReq: alternatives >= 0.2.0-alt0.7
+BuildRequires(pre): alternatives >= 0.2.0-alt0.7
 BuildPreReq: iconv
 BuildPreReq: libacl-devel
 BuildPreReq: libattr-devel
@@ -517,7 +517,7 @@ touch src/auto/*
 #__subst 's|^.*#[[:blank:]]*define[[:blank:]]\+DFLT_HELPFILE[[:blank:]]\+.*$|#define DFLT_HELPFILE "$VIMRUNTIME/doc/help.txt.gz"|' src/feature.h
 
 VIMSPELLVERSION=`grep '^[[:blank:]]*#define[[:blank:]]\+VIMSPELLVERSION[[:blank:]]\+[[:digit:]]\+[[:blank:]]*$' src/spellfile.c | sed -e 's/^[[:blank:]]*#define[[:blank:]]\+VIMSPELLVERSION[[:blank:]]\+\([[:digit:]]\+\)[[:blank:]]*$/\1/'`
-VIMSUGVERSION=`grep '^[[:blank:]]*#define[[:blank:]]\+VIMSUGVERSION[[:blank:]]\+[[:digit:]]\+[[:blank:]]*$' src/spell.c | sed -e 's/^[[:blank:]]*#define[[:blank:]]\+VIMSUGVERSION[[:blank:]]\+\([[:digit:]]\+\)[[:blank:]]*$/\1/'`
+VIMSUGVERSION=`grep '^[[:blank:]]*#define[[:blank:]]\+VIMSUGVERSION[[:blank:]]\+[[:digit:]]\+[[:blank:]]*$' src/spell.h | sed -e 's/^[[:blank:]]*#define[[:blank:]]\+VIMSUGVERSION[[:blank:]]\+\([[:digit:]]\+\)[[:blank:]]*$/\1/'`
 if [ "$VIMSPELLVERSION.$VIMSUGVERSION" != "%vimspell_version" ]; then
   echo "FATAL: %%vimspell_version (%vimspell_version) does not match source ($VIMSPELLVERSION.$VIMSUGVERSION)"
   exit 1
@@ -875,6 +875,31 @@ install -p -m644 runtime/langmap/*.vim %buildroot%_datadir/vim/langmap
 # 2}}}
 # }}}
 
+# cleanup unpackaged files
+cd %buildroot
+rm ./usr/share/applications/vim.desktop
+rm ./usr/share/icons/locolor/16x16/apps/gvim.png
+rm ./usr/share/icons/locolor/32x32/apps/gvim.png
+rm ./usr/share/vim/doc/vim2html.pl
+rm ./usr/share/vim/spell/check_locales.vim
+rm ./usr/share/vim/spell/en.ascii.spl
+rm ./usr/share/vim/spell/en.ascii.sug
+rm ./usr/share/vim/spell/en.latin1.spl
+rm ./usr/share/vim/spell/en.latin1.sug
+rm ./usr/share/vim/spell/en.utf-8.spl
+rm ./usr/share/vim/spell/en.utf-8.sug
+rm ./usr/share/vim/spell/he.vim
+rm ./usr/share/vim/spell/spell.vim
+rm ./usr/share/vim/spell/yi.vim
+rm ./usr/share/vim/tutor/tutor.bar
+rm ./usr/share/vim/tutor/tutor.bar.utf-8
+rm ./usr/share/vim/tutor/tutor.zh_cn.utf-8
+rm ./usr/share/vim/tutor/tutor.zh_tw.utf-8
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %check
 # This testsuite requires terminal for some tests
 # At least, expect is not worse way to do this.
@@ -946,7 +971,6 @@ fi
 %_datadir/vim/pack
 %_datadir/vim/plugin
 %_datadir/vim/print
-%_datadir/vim/rgb.txt
 %dir %_datadir/vim/spell
 %_datadir/vim/spell/cleanadd.vim
 %_datadir/vim/spell/fixdup.vim
@@ -1071,6 +1095,14 @@ fi
 
 # {{{ changelog
 %changelog
+* Wed Jan 19 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.2.4141-alt1
+- Updated to 8.2.4141.
+- Disabled bell by default (ALT#37754).
+- Added syntax support to spec.vim:
+  + Vcs: tag (ALT#37754);
+  + longer CVE identifiers (ALT#35865);
+  + MFSA, OVE, and BDU identifiers.
+
 * Tue May 25 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.2.0011-alt3
 - %name-common: changed demoserver.py shebang to python3.
 
