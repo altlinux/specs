@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	5.16
-%define kernel_sublevel .0
+%define kernel_sublevel .1
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -16,6 +16,9 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %define flavour		%( s='%name'; printf %%s "${s#kernel-image-}" )
 %define base_flavour	%( s='%flavour'; printf %%s "${s%%%%-*}" )
 %define sub_flavour	%( s='%flavour'; printf %%s "${s#*-}" )
+
+Source1: rules
+%define patches		%(grep name=.*patch %SOURCE1 | nl -v0 | sed 's/^\\s*\\([0-9]*\\).*name=\\(.*\\.patch\\).*$/Patch\\1: \\2/')
 
 # Build options
 # You can change compiler version by editing this line:
@@ -54,17 +57,7 @@ Group: System/Kernel and hardware
 Url: http://www.kernel.org/
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
-Patch0: stable.patch
-Patch1: alt.patch
-Patch2: altha.patch
-Patch3: idmounts.patch
-Patch4: acs-overrides.patch
-Patch5: core-kmod.patch
-Patch6: arg-size.patch
-Patch7: proc-iterrupts.patch
-Patch8: xt_audit.patch
-Patch9: userns.patch
-Patch10: baikalm.patch
+%patches
 
 %if "%sub_flavour" == "pae"
 ExclusiveArch: i586
@@ -323,17 +316,7 @@ Verify EFI-stub signature.
 rm -rf kernel-source-%kernel_base_version
 tar -xf %kernel_src/kernel-source-%kernel_base_version.tar
 %setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_base_version
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
+%autopatch -p1
 
 
 # this file should be usable both with make and sh (for broken modules
@@ -683,6 +666,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Jan 19 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.16.1-alt1
+- v5.16.1
+
 * Tue Jan 11 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.16.0-alt1
 - v5.16
 - new gear repo scheme
