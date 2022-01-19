@@ -58,13 +58,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.32.12
+Version: 1.34.0
 Release: alt2%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
 Url: https://networkmanager.dev/
-Vcs: git://git.freedesktop.org/git/NetworkManager/NetworkManager.git
+Vcs: https://gitlab.freedesktop.org/NetworkManager/NetworkManager.git
 Source: %name-%version.tar
 Source1: %name.conf
 Source2: 50-ntp
@@ -473,7 +473,7 @@ SYSTEMCTL=systemctl
 if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
 	"$SYSTEMCTL" daemon-reload ||:
 	if [ "$1" -eq 1 ]; then
-		"$SYSTEMCTL" -q preset %name.service %name-wait-online.service %name-dispatcher.service ||:
+		"$SYSTEMCTL" -q preset %name.service %name-wait-online.service %name-dispatcher.service nm-priv-helper.service ||:
 	fi
 else
 	if [ "$1" -eq 1 ]; then
@@ -488,7 +488,7 @@ fi
 if [ "$1" -eq 0 ]; then
 	SYSTEMCTL=systemctl
 	if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
-		"$SYSTEMCTL" --no-reload -q disable %name.service %name-wait-online.service %name-dispatcher.service ||:
+		"$SYSTEMCTL" --no-reload -q disable %name.service %name-wait-online.service %name-dispatcher.service nm-priv-helper.service ||:
 	else
 		chkconfig --del NetworkManager ||:
 	fi
@@ -558,6 +558,7 @@ fi
 %{?_enable_systemd:/lib/systemd/system/%name.service}
 %{?_enable_systemd:/lib/systemd/system/%name-wait-online.service}
 %{?_enable_systemd:/lib/systemd/system/%name-dispatcher.service}
+%{?_enable_systemd:/lib/systemd/system/nm-priv-helper.service}
 %exclude %dispatcherdir/90-nm-cloud-setup.sh
 %exclude %dispatcherdir/no-wait.d/90-nm-cloud-setup.sh
 %_usr/lib/firewalld/zones/*.xml
@@ -644,6 +645,14 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Jan 19 2022 Mikhail Efremov <sem@altlinux.org> 1.34.0-alt2
+- Updated Vcs tag.
+
+* Wed Jan 19 2022 Mikhail Efremov <sem@altlinux.org> 1.34.0-alt1
+- Packaged nm-priv-helper.service.
+- etcnet-alt: Replace nmtst_connection_assert_unchanging().
+- Updated to 1.34.0.
+
 * Tue Dec 28 2021 Mikhail Efremov <sem@altlinux.org> 1.32.12-alt2
 - Fixed build: added systemd to BR.
 
