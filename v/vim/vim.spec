@@ -52,12 +52,12 @@
 
 Name: vim
 %define branch 8.2
-Version: %branch.4141
+Version: %branch.4146
 Release: alt1
 Epoch: 4
 
 Summary: VIsual editor iMproved
-License: Charityware
+License: Vim
 Group: Editors
 Url: http://www.vim.org
 Packager: Gleb Fotengauer-Malinovskiy <glebfm@altlinux.org>
@@ -1095,6 +1095,11 @@ fi
 
 # {{{ changelog
 %changelog
+* Wed Jan 19 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.2.4146-alt1
+- Updated to 8.2.4146.
+- %name-minimal: fixed vimrc loading regression.
+- Fixed package license (Charityware -> Vim).
+
 * Wed Jan 19 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.2.4141-alt1
 - Updated to 8.2.4141.
 - Disabled bell by default (ALT#37754).
