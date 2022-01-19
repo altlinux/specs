@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 21.1.2
-Release: alt1
+Release: alt2
 
 Summary: Coroutine-based network library
 
@@ -24,7 +24,7 @@ BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires: libev-devel libuv-devel libcares-devel
 
 BuildRequires: python3-module-repoze.sphinx.autointerface
-BuildRequires: python3-module-greenlet
+BuildRequires: python3-module-greenlet-devel
 BuildRequires: python3-module-OpenSSL
 BuildRequires: python3-module-Cython python3-module-cryptography python3-module-html5lib
 
@@ -142,6 +142,9 @@ cp -fR src/greentest %buildroot%python3_sitelibdir/
 #doc examples
 
 %changelog
+* Tue Jan 18 2022 Grigory Ustinov <grenka@altlinux.org> 21.1.2-alt2
+- Fixed BuildRequires.
+
 * Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 21.1.2-alt1
 - new version (21.1.2) with rpmgs script
 - build python3 module separately
