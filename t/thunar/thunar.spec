@@ -1,6 +1,6 @@
 Name: thunar
 Version: 4.17.7
-Release: alt1
+Release: alt2
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Файловый менеджер Thunar
@@ -11,6 +11,7 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Vcs: https://gitlab.xfce.org/xfce/thunar.git
 Source: %name-%version.tar
+Source1: for_translation_thunar_master_ru.po
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-xfce4 >= 0.1.0
@@ -78,6 +79,8 @@ This package contains development documentation for lib%name.
 
 mkdir -p m4/
 
+cp -a %SOURCE1 po/ru.po
+
 %build
 %xfce4reconf
 %configure \
@@ -113,7 +116,7 @@ make check
 %_datadir/metainfo/org.xfce.thunar.appdata.xml
 %_datadir/Thunar
 %_datadir/xfce4/panel/plugins/*.desktop
-%_usr/lib/systemd/user/thunar.service
+%_user_unitdir/thunar.service
 %_libdir/xfce4/panel/plugins/*.so
 %exclude %_libdir/xfce4/panel/plugins/*.la
 %dir %_libdir/thunarx-*/
@@ -136,6 +139,10 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Thu Jan 20 2022 Mikhail Efremov <sem@altlinux.org> 4.17.7-alt2
+- Use our own Russian translation (closes: #41698).
+- Use _user_unitdir macro.
+
 * Tue Nov 23 2021 Mikhail Efremov <sem@altlinux.org> 4.17.7-alt1
 - Updated to 4.17.7.
 
