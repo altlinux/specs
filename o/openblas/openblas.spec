@@ -23,7 +23,7 @@
 
 Name: openblas
 Version: 0.3.19
-Release: alt1
+Release: alt1.1
 
 Summary: Optimized BLAS library based on GotoBLAS2 1.13 
 License: BSD
@@ -147,6 +147,9 @@ sed -i 's,%buildroot,,' %buildroot%_pkgconfigdir/openblas.pc
 %_includedir/openblas
 
 %changelog
+* Thu Jan 20 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.3.19-alt1.1
+- e2k patch update
+
 * Mon Dec 20 2021 Ivan A. Melnikov <iv@altlinux.org> 0.3.19-alt1
 - Version 0.3.19
 - %%mips support
