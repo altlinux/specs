@@ -2,25 +2,27 @@
 BuildRequires: gcc-c++ perl(Date/Format.pm)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
+%define _localstatedir %_var
 
 %global commit 28d9b8d6df708024af5227c551673fdb2519f5bf
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
+%global shortcommit %(c=%commit; echo ${c:0:7})
 
-Name:           asio
-Version:        1.21.0
-Release:        alt1
-Summary:        A cross-platform C++ library for network programming
+Name: asio
+Version: 1.21.0
+Release: alt2
+
+Summary: A cross-platform C++ library for network programming
+License: Boost Software License
+Group: Development/C++
+
+Url: https://think-async.com
+Source: %name-%version.tar.bz2
 Packager: Ilya Mashkin <oddity@altlinux.ru>
-Group:          Development/C++
-License:        Boost Software License
-URL:            https://think-async.com
-Source0:        %{name}-%{version}.tar.bz2
 
-BuildRequires:  autoconf
-BuildRequires:  automake
-BuildRequires:  libssl-devel
-BuildRequires:  boost-devel boost-devel-headers boost-python-headers
+BuildRequires: autoconf
+BuildRequires: automake
+BuildRequires: libssl-devel
+BuildRequires: boost-devel boost-devel-headers boost-python-headers
 Source44: import.info
 
 %description
@@ -29,8 +31,8 @@ that provides developers with a consistent asynchronous I/O model using a
 modern C++ approach.
 
 %package devel
-Summary:        Header files for asio
-Group:          Development/Other
+Summary: Header files for asio
+Group: Development/Other
 
 %description devel
 Header files you can use to develop applications with asio.
@@ -40,7 +42,13 @@ that provides developers with a consistent asynchronous I/O model using a
 modern C++ approach.
 
 %prep
-%setup -q 
+%setup
+
+%ifarch %e2k
+%add_optflags -Wno-unused-variable
+# lcc 1.25's EDG frontend can't handle such C++ code
+echo "int main() {}" > src/examples/cpp14/executors/pipeline.cpp
+%endif
 
 %build
 #./autogen.sh
@@ -48,16 +56,19 @@ modern C++ approach.
 %make_build
 
 %install
-make install DESTDIR=%{buildroot}
+%makeinstall_std
 
 %files devel
 %doc doc/*
 %doc LICENSE*
-%dir %{_includedir}/asio
-%{_includedir}/asio/*
-%{_includedir}/asio.hpp
+%dir %_includedir/asio
+%_includedir/asio/*
+%_includedir/asio.hpp
 
 %changelog
+* Thu Jan 20 2022 Michael Shigorin <mike@altlinux.org> 1.21.0-alt2
+- E2K: ftbfs workaround (ilyakurdyukov@)
+
 * Sun Nov 07 2021 Ilya Mashkin <oddity@altlinux.ru> 1.21.0-alt1
 - 1.21.0
 
