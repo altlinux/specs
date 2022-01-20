@@ -1,6 +1,6 @@
 Name: far2l
 Version: 2.4.0
-Release: alt1
+Release: alt2
 
 Summary: Linux port of FAR v2
 
@@ -10,6 +10,9 @@ Url: https://github.com/elfmz/far2l
 
 # Source-url: https://github.com/elfmz/far2l/archive/refs/tags/v_%version.tar.gz
 Source: %name-%version.tar
+
+# Upstream patch for build on e2k
+Patch: 0001-remove-stuff-that-breaks-lcc-compilation-cosmetic.patch
 
 BuildRequires: cmake gcc-c++ glib2-devel
 BuildRequires: libwxGTK3.0-devel
@@ -44,6 +47,7 @@ Used code from projects:
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %cmake \
@@ -64,6 +68,9 @@ Used code from projects:
 %_iconsdir/far2l.svg
 
 %changelog
+* Thu Jan 20 2022 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt2
+- add upstream patch for build on e2k (Closes: 41745)
+
 * Wed Jan 12 2022 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
 - new version (2.4.0) with rpmgs script
 - cleanup spec
