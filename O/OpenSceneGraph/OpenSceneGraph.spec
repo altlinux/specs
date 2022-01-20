@@ -19,7 +19,7 @@
 
 Name: OpenSceneGraph
 Version: 3.6.5
-Release: alt1
+Release: alt2
 
 Summary: High performance real-time graphics toolkit
 License: OSGPL (wxWidgets, clarified LGPL)
@@ -254,6 +254,7 @@ rm -rf %buildroot/usr/doc/
 %_bindir/osgconv
 %_bindir/osgviewer
 %_bindir/osgfilecache
+%_bindir/present3D
 
 %files -n lib%name
 %_libdir/osgPlugins-%version
@@ -310,7 +311,6 @@ rm -rf %buildroot/usr/doc/
 %_bindir/osguserstats
 %_bindir/osgvertexattributes
 %_bindir/osgvirtualprogram
-%_bindir/present3D
 %_bindir/osganalysis
 %_bindir/osganimationeasemotion
 %_bindir/osganimationmorph
@@ -463,8 +463,6 @@ rm -rf %buildroot/usr/doc/
 
 %_bindir/osgviewerGTK
 
-%_bindir/present3D
-
 %_datadir/OpenSceneGraph
 %endif
 
@@ -479,6 +477,9 @@ rm -rf %buildroot/usr/doc/
 %_includedir/OpenThreads
 
 %changelog
+* Thu Jan 20 2022 Michael Shigorin <mike@altlinux.org> 3.6.5-alt2
+- move present3D from examples (it isn't) to the main package
+
 * Tue Jan 11 2022 Anton Midyukov <antohami@altlinux.org> 3.6.5-alt1
 - new version (3.6.5) with rpmgs script
 - unpackaged files in buildroot should terminate build
