@@ -10,8 +10,8 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.27
-Release: alt1.1
+Version: 8.0.28
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -88,9 +88,14 @@ BuildRequires: libsystemd-devel
 BuildRequires: protobuf-compiler
 BuildRequires: libprotobuf-lite-devel
 BuildRequires: libcurl-devel
+BuildRequires: libicu-devel
 %if %(test -f /usr/include/rpc/rpc.h && echo 0 || echo 1)
 BuildRequires: libtirpc-devel
 BuildRequires: rpcgen
+%endif
+
+%if_with mysql_router
+BuildRequires: libssh-devel
 %endif
 
 %add_python3_lib_path %_libexecdir/mysqlsh/
@@ -401,6 +406,10 @@ sed -n 's/^\([[:space:]]*{[[:space:]]*SYM.*(\)\("[&<=>|!A-Z][^"]*"\).*/{\2,0, 0,
 sed -i 's/ADD_SUBDIRECTORY(router)/# ADD_SUBDIRECTORY(router)/' CMakeLists.txt
 %endif
 
+# make sure bundled library is not involved in building process
+# TODO: unbundle as many as possible
+rm -rf extra/icu
+
 %build
 
 %cmake \
@@ -438,6 +447,7 @@ sed -i 's/ADD_SUBDIRECTORY(router)/# ADD_SUBDIRECTORY(router)/' CMakeLists.txt
 	-DWITH_LIBEVENT=system \
 	-DWITH_EDITLINE=system \
 	-DWITH_PROTOBUF=system \
+	-DWITH_ICU=system \
 	-DWITH_PIC=ON \
 	-DWITH_EXTRA_CHARSETS=all \
 	-DWITH_ARCHIVE_STORAGE_ENGINE=ON \
@@ -892,6 +902,20 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Wed Jan 19 2022 Nikolai Kostrigin <nickel@altlinux.org> 8.0.28-alt1
+- new version
+  + (fixes: CVE-2021-22946, CVE-2022-21245, CVE-2022-21249, CVE-2022-21253)
+  + (fixes: CVE-2022-21254, CVE-2022-21256, CVE-2022-21264, CVE-2022-21265)
+  + (fixes: CVE-2022-21270, CVE-2022-21278, CVE-2022-21297, CVE-2022-21301)
+  + (fixes: CVE-2022-21302, CVE-2022-21303, CVE-2022-21304, CVE-2022-21339)
+  + (fixes: CVE-2022-21342, CVE-2022-21344, CVE-2022-21348, CVE-2022-21351)
+  + (fixes: CVE-2022-21352, CVE-2022-21358, CVE-2022-21362, CVE-2022-21367)
+  + (fixes: CVE-2022-21368, CVE-2022-21370, CVE-2022-21372, CVE-2022-21374)
+  + (fixes: CVE-2022-21378, CVE-2022-21379)
+- update mysql-shell 8.0.27 -> 8.0.28
+- unbundle libicu
+- add libssh-devel to BR: for mysql-router
+
 * Sat Jan 15 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 8.0.27-alt1.1
 - update alt-e2k-fixes patch 8.0.26 -> 8.0.27
 
