@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
 Name:		karbowanecwallet
-Version:	1.7.7
+Version:	1.7.8
 Release:	alt1
 Summary:	Karbowanec (Karbo) KRB wallet
 Url:		https://karbo.io/
@@ -64,6 +64,9 @@ convert -resize 16x16 %SOURCE2 %buildroot%_miconsdir/karbowanec.png
 %_liconsdir/karbowanec.png
 
 %changelog
+* Thu Jan 20 2022 Motsyo Gennadi <drool@altlinux.ru> 1.7.8-alt1
+- 1.7.8
+
 * Fri Jan 14 2022 Motsyo Gennadi <drool@altlinux.ru> 1.7.7-alt1
 - 1.7.7
 
