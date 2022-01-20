@@ -11,7 +11,7 @@
 
 Name:           lib%oname%soname
 Version:        2.0.3
-Release:        alt1
+Release:        alt1.1
 Summary:        Enables color transforms and image display across graphics apps
 Group:          System/Libraries
 
@@ -93,6 +93,11 @@ Group:          Development/Python3
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%ifarch %e2k
+# ld: multiple definition of LoadLutFile
+sed -i "s/OCIO::LocalCachedFileRcPtr LoadLutFile/static &/" \
+	tests/cpu/fileformats/*_tests.cpp
+%endif
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -166,6 +171,9 @@ popd
 %python3_sitelibdir/*.so
 
 %changelog
+* Thu Jan 20 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.0.3-alt1.1
+- Fixed build for Elbrus.
+
 * Fri Jan 14 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.3-alt1
 - Updated to upstream version 2.0.3.
 
