@@ -1,5 +1,5 @@
 Name: u-boot-rpi3
-Version: 2021.10
+Version: 2022.01
 Release: alt1
 
 Summary: Das U-Boot
@@ -48,6 +48,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Thu Jan 20 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.01-alt1
+- 2022.01 released
+
 * Tue Oct 05 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.10-alt1
 - 2021.10 released
 
