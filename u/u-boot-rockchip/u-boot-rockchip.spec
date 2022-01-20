@@ -1,5 +1,5 @@
 Name: u-boot-rockchip
-Version: 2021.10
+Version: 2022.01
 Release: alt1
 
 Summary: Das U-Boot
@@ -10,7 +10,7 @@ ExclusiveArch: aarch64
 
 Source: %name-%version-%release.tar
 
-BuildRequires: atf-rockchip >= 2.4
+BuildRequires: atf-rockchip >= 2.6
 BuildRequires: bc ccache dtc >= 1.4 flex libssl-devel
 BuildRequires: python3-dev swig
 BuildRequires: python3(pkg_resources)
@@ -25,7 +25,6 @@ This package supports various Rockchip RK3399 based boards.
 %prep
 %setup
 egrep -lr 'CONFIG_ROCKCHIP_(PX30|RK3328|RK3399)' configs |xargs sed -i \
-	-e '/^CONFIG_DEFAULT_FDT_FILE/ s,rockchip/,,' \
 	-e '/^CONFIG_BAUDRATE/ s,1500000,115200,'
 
 %build
@@ -35,10 +34,8 @@ buildit()
 {
   mkdir build
   BL31=%_datadir/atf/$1/bl31.elf \
-  %make_build O=build ${board}_defconfig all
-  install -pm0644 -D build/u-boot.itb out/${board}/u-boot.itb
-  install -pm0644 build/idbloader.img out/${board}/
-  install -pm0644 build/u-boot-rockchip.bin out/${board}/
+  %make_build HOSTCC='ccache gcc' CC='ccache gcc' O=build ${board}_defconfig all
+  install -pm0644 -D build/u-boot-rockchip.bin out/${board}/u-boot-rockchip.bin
   rm -rf build
 }
 
@@ -57,6 +54,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Thu Jan 20 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.01-alt1
+- 2022.01 released
+
 * Tue Oct 05 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.10-alt1
 - 2021.10 released
 
