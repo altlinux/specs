@@ -1,12 +1,12 @@
 Name: u-boot-tools
-Version: 2021.10
+Version: 2022.01
 Release: alt1
 
 Summary: Das U-Boot
 License: GPLv2+
 Group: System/Kernel and hardware
 
-ExclusiveArch: armh aarch64 mipsel %ix86 x86_64
+ExclusiveArch: armh aarch64 mipsel riscv64 %ix86 x86_64
 
 Provides: uboot-tools = %version-%release
 Obsoletes: uboot-tools
@@ -38,6 +38,9 @@ ln -s fw_printenv %buildroot%_bindir/fw_setenv
 %_bindir/*
 
 %changelog
+* Thu Jan 20 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.01-alt1
+- 2022.01 released
+
 * Tue Oct 05 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.10-alt1
 - 2021.10 released
 
