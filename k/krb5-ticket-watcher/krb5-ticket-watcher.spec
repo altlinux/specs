@@ -1,13 +1,14 @@
 BuildRequires: desktop-file-utils
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt18
+Release: alt19
 Summary: A Tray Applet for Watching, Renewing, and Reinitializing Kerberos Tickets
 Url: http://sourceforge.net/projects/krb5ticketwatch
 License: %gpl2plus
 Group: System/X11
 
 Source: %name-%version.tar
+Source10: ru.po
 Patch1: 0001-made-default-realm-the-first-one-in-list.patch
 Patch2: krb5-ticket-watcher-1.0-alt-date-fix.patch
 Patch3: krb5-ticket-watcher-1.0.3-alt-fix-includes.patch
@@ -40,6 +41,7 @@ tickets.
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+cat %SOURCE10 > po/ru.po
 
 %build
 %add_optflags -DDEBUG -I%_includedir/krb5
@@ -54,16 +56,19 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	%buildroot%_desktopdir/krb5-ticket-watcher.desktop
 desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
 	%buildroot/%_desktopdir/krb5-ticket-watcher.desktop
+%find_lang --all-name %name
 
-%files
+%files -f %name.lang
 %_bindir/krb5-ticket-watcher
 %_pixmapsdir/krb5-ticket-watcher.png
 %_desktopdir/krb5-ticket-watcher.desktop
 %_xdgconfigdir/autostart/krb5-ticket-watcher.desktop
-%{_datadir}/locale/*/*/*.mo
 %doc COPYING Changes News TODO
 
 %changelog
+* Thu Jan 20 2022 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt19
+- update russian translation
+
 * Thu Jul 25 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.3-alt18
 - patch of fix deprecated krb5 api meth updated
 
