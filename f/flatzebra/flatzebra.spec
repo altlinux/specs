@@ -10,13 +10,13 @@ BuildRequires: gcc-c++
 %define develname lib%{name}-devel
 
 Name:		flatzebra
-Version:	0.1.6
-Release:	alt1_10
+Version:	0.1.7
+Release:	alt1_1
 Summary:	A Generic Game Engine library for 2D double-buffering animation
 Group:		System/Libraries
 License:	GPLv2
-URL:		http://sarrazip.com/dev/burgerspace.html
-Source:		http://sarrazip.com/dev/%{name}-%{version}.tar.gz
+URL:		http://perso.b2b2c.ca/~sarrazip/dev/burgerspace.html
+Source:		http://perso.b2b2c.ca/~sarrazip/dev/burgerspace.html/dev/%{name}-%{version}.tar.gz
 BuildRequires:	pkgconfig(sdl)
 BuildRequires:	pkgconfig(SDL_image)
 BuildRequires:	pkgconfig(SDL_mixer)
@@ -51,7 +51,6 @@ applications which will use %{name}.
 %setup -q
 
 %build
-%add_optflags -std=c++14
 # fix build on aarch64
 autoreconf -vfi
 
@@ -77,6 +76,9 @@ rm -rf %{buildroot}%{_docdir}/%{name}-%{version}
 
 
 %changelog
+* Thu Jan 20 2022 Igor Vlasenko <viy@altlinux.org> 0.1.7-alt1_1
+- update by mgaimport
+
 * Fri Oct 01 2021 Igor Vlasenko <viy@altlinux.org> 0.1.6-alt1_10
 - fixed build with gcc11
 
