@@ -3,7 +3,7 @@
 
 Name: xfce4-panel
 Version: 4.16.3
-Release: alt1
+Release: alt2
 
 Summary: Panel for Xfce
 Summary(ru_RU.UTF-8): Панель для окружения рабочего стола Xfce
@@ -13,6 +13,7 @@ Url: https://www.xfce.org/
 
 Vcs: https://gitlab.xfce.org/xfce/xfce4-panel.git
 Source: %name-%version.tar
+Source1: for_translation_xfce4-panel_master_ru.po
 Patch: %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
@@ -106,6 +107,8 @@ Vala bindings for libxfce4panel-gtk3.
 %setup
 %patch -p1
 
+cp -a %SOURCE1 po/ru.po
+
 %build
 # Don't use git tag in version.
 %xfce4_drop_gitvtag xfce4_panel_version_tag configure.ac.in
@@ -160,6 +163,9 @@ Vala bindings for libxfce4panel-gtk3.
 %endif
 
 %changelog
+* Thu Jan 20 2022 Mikhail Efremov <sem@altlinux.org> 4.16.3-alt2
+- Use our own Russian translation.
+
 * Wed May 12 2021 Mikhail Efremov <sem@altlinux.org> 4.16.3-alt1
 - Updated to 4.16.3.
 
