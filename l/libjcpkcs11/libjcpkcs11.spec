@@ -8,7 +8,7 @@
 
 Name: libjcpkcs11
 Version: 2.7.4
-Release: alt1
+Release: alt4
 
 Summary: Aladdin JaCarta PKCS#11 library
 License: Proprietary
@@ -42,24 +42,31 @@ L-02210004 от 04.02.2021.
 %setup
 
 %install
-%define sobasename libjcPKCS11-2.so
-install -pDm644 %_arch/%sobasename.%version \
-                %buildroot%_libdir/%sobasename.%version
-mkdir -p %buildroot%_libdir/pkcs11
-ln -s ../%sobasename.%version \
-      %buildroot%_libdir/pkcs11/%sobasename
-
-install -pDm644 jcpkcs11.module \
-        %buildroot%_sysconfdir/pkcs11/modules/jcpkcs11.module
+%makeinstall ARCH=%_arch
 
 %files
-%doc README.ALT EULA.pdf
+%dir %_datadir/doc/%name-%version
+%_datadir/doc/%name-%version/README.ALT
+%_datadir/doc/%name-%version/EULA.pdf
 %_libdir/*.so.%version
 %_libdir/*.so
 %_libdir/pkcs11/*.so
+%_bindir/jcverify
+%dir %_datadir/%name
+%_datadir/%name/jcverify.txt
+%_datadir/%name/jckt2.txt
 %config(noreplace) %_sysconfdir/pkcs11/modules/jcpkcs11.module
 
 %changelog
+* Wed Jan 19 2022 Paul Wolneykien <manowar@altlinux.org> 2.7.4-alt4
+- Fix: Package %_datadir/doc/%name-%version and %_datadir/%name.
+
+* Wed Jan 19 2022 Paul Wolneykien <manowar@altlinux.org> 2.7.4-alt3
+- Fix: Pass ARCH to make install.
+
+* Wed Jan 19 2022 Paul Wolneykien <manowar@altlinux.org> 2.7.4-alt2
+- Included other files, provided by the vendor.
+
 * Thu Nov 18 2021 Paul Wolneykien <manowar@altlinux.org> 2.7.4-alt1
 - Updated to v2.7.4.534 + i586.
 
