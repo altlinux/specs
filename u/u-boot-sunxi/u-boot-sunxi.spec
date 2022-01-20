@@ -1,5 +1,5 @@
 Name: u-boot-sunxi
-Version: 2021.10
+Version: 2022.01
 Release: alt1
 
 Summary: Das U-Boot
@@ -15,7 +15,7 @@ Provides: u-boot-sunxi64 = %version-%release
 Obsoletes: u-boot-sunxi64
 
 %ifarch aarch64
-%define ATF atf-sunxi >= 2.4
+%define ATF atf-sunxi >= 2.6
 %else
 %define ATF %nil
 %endif
@@ -36,7 +36,6 @@ See http://linux-sunxi.org/Bootable_SD_card#Bootloader for details.
 %setup
 
 %build
-export PYTHON=python3
 %ifarch aarch64
 boards=$(grep -lr MACH_SUN50I configs |sed 's,^configs/\(.\+\)_defconfig,\1,')
 %else
@@ -45,9 +44,11 @@ boards=$(grep -lr 'MACH_SUN[4-9]I' configs |sed 's,^configs/\(.\+\)_defconfig,\1
 for board in $boards; do
 	mkdir build
 %ifarch aarch64
-	fgrep -q SUN50I_H6 configs/${board}_defconfig && \
-		export BL31=%_datadir/atf/sun50i_h6/bl31.bin || \
-		export BL31=%_datadir/atf/sun50i_a64/bl31.bin
+	export BL31=%_datadir/atf/sun50i_a64/bl31.bin
+	fgrep -q SUN50I_H6= configs/${board}_defconfig && \
+		export BL31=%_datadir/atf/sun50i_h6/bl31.bin
+	fgrep -q SUN50I_H616= configs/${board}_defconfig && \
+		export BL31=%_datadir/atf/sun50i_h616/bl31.bin
 %endif
 	%make_build HOSTCC='ccache gcc' CC='ccache gcc' O=build ${board}_defconfig all
 	install -pm0644 -D build/u-boot-sunxi-with-spl.bin out/${board}/u-boot-sunxi-with-spl.bin
@@ -64,6 +65,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Wed Jan 19 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.01-alt1
+- 2022.01 released
+
 * Tue Oct 05 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.10-alt1
 - 2021.10 released
 
