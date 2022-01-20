@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
 Version:        96.0.2
-Release:        alt1
+Release:        alt2
 License:        MPL-2.0
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -452,6 +452,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Fri Jan 21 2022 Alexey Gladkov <legion@altlinux.ru> 96.0.2-alt2
+- Add forgotten source code updates.
+
 * Thu Jan 20 2022 Alexey Gladkov <legion@altlinux.ru> 96.0.2-alt1
 - New release (96.0.2).
 
