@@ -1,5 +1,5 @@
 Name: u-boot-imx
-Version: 2021.10
+Version: 2022.01
 Release: alt1
 
 Summary: Das U-Boot
@@ -16,7 +16,9 @@ Source: %name-%version-%release.tar
 %define ATF %nil
 %endif
 
-BuildRequires: %ATF bc ccache dtc >= 1.4 flex libssl-devel lzop python3-dev swig zip
+BuildRequires: %ATF bc ccache dtc >= 1.4 flex libssl-devel lzop zip
+BuildRequires: python3-dev swig
+BuildRequires: python3(pkg_resources)
 
 %description
 boot loader for embedded boards based on PowerPC, ARM, MIPS and several
@@ -30,7 +32,7 @@ This package supports some of iMX6|iMX8 family boards.
 %build
 %ifarch aarch64
 export BL31=%_datadir/atf/imx8mq/bl31.bin
-boards='imx8mq_bcp pico-imx8mq imx8mq_evk imx8mq_phanbell'
+boards='pico-imx8mq imx8mq_evk imx8mq_phanbell'
 %else
 boards=$(grep -lr ARCH_MX6 configs|xargs grep -l ^CONFIG_SPL=y|sed 's,^configs/\(.\+\)_defconfig,\1,'|grep -v display5|sort)
 %endif
@@ -63,6 +65,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Wed Jan 19 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.01-alt1
+- 2022.01 released
+
 * Tue Oct 05 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.10-alt1
 - 2021.10 released
 
