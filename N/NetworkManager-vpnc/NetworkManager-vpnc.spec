@@ -8,18 +8,23 @@
 
 %define _unpackaged_files_terminate_build 1
 
+%ifarch %e2k
+%define more_warnings no
+%else
+%define more_warnings error
+%endif
+
 Name: NetworkManager-vpnc
 Version: 1.2.6
-Release: alt1%git_date
-License: %gpl2plus
+Release: alt2%git_date
+License: GPLv2+
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for vpnc
-Url: http://www.gnome.org/projects/NetworkManager/
-# git://git.gnome.org/network-manager-vpnc
+Url: https://networkmanager.dev/docs/vpn/
+Vcs: https://gitlab.gnome.org/GNOME/NetworkManager-vpnc.git
 Source: %name-%version.tar
+Source1: NetworkManager-vpnc.master.ru.po
 Patch: %name-%version-%release.patch
-
-BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: libnm-devel >= %nm_version
 BuildRequires: libnma-devel >= %nm_applet_version
@@ -40,7 +45,7 @@ This package contains software for integrating the vpnc VPN software
 with NetworkManager and the GNOME desktop
 
 %package gtk
-License: %gpl2plus
+License: GPLv2+
 Summary: Applications for use %name with %nm_applet_name
 Group: Graphical desktop/GNOME
 Requires: %nm_applet_name >= %nm_applet_version
@@ -57,6 +62,8 @@ NetworkManager panel applet.
 %setup
 %patch -p1
 
+cp -a %SOURCE1 po/ru.po
+
 %build
 %autoreconf
 %configure \
@@ -66,7 +73,7 @@ NetworkManager panel applet.
 %if_without libnm_glib
 	--without-libnm-glib \
 %endif
-	--enable-more-warnings=yes
+	--enable-more-warnings=%more_warnings
 %make_build
 
 %install
@@ -99,6 +106,14 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Thu Jan 20 2022 Mikhail Efremov <sem@altlinux.org> 1.2.6-alt2
+- Disable -Werror on e2k.
+- Set enable-more-warnings to error.
+- Update Url tag.
+- Add Vcs tag.
+- Don't use rpm-build-licenses.
+- Use our own Russian translation (closes: #37827).
+
 * Wed Aug 01 2018 Mikhail Efremov <sem@altlinux.org> 1.2.6-alt1
 - Disable libnm-glib-* support.
 - Fix build without libnm-glib-*.
