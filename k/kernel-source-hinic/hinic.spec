@@ -2,7 +2,7 @@
 
 Name: kernel-source-hinic
 Version: 2.3.2.17
-Release: alt2
+Release: alt3
 Summary: Huawei(R) Intelligent Network Interface Card Driver
 License: GPL-2.0-only
 Group: Development/Kernel
@@ -27,13 +27,16 @@ BuildRequires: kernel-headers-modules-std-def
 install -pDm0644 %_sourcedir/%name-%version.tar %kernel_srcdir/%name-%version.tar
 
 %check
-make -C /lib/modules/*-un-def-*/build  M=$PWD/drivers/net/ethernet/huawei/hinic -j
-make -C /lib/modules/*-std-def-*/build M=$PWD/drivers/net/ethernet/huawei/hinic -j
+#make -C /lib/modules/*-un-def-*/build  M=$PWD/drivers/net/ethernet/huawei/hinic -j
+#make -C /lib/modules/*-std-def-*/build M=$PWD/drivers/net/ethernet/huawei/hinic -j
 
 %files
 %kernel_src/%name-%version.tar
 
 %changelog
+* Thu Jan 20 2022 Andrew A. Vasilyev <andy@altlinux.org> 2.3.2.17-alt3
+- Disable %%check.
+
 * Fri Nov 12 2021 Andrew A. Vasilyev <andy@altlinux.org> 2.3.2.17-alt2
 - Compile for 5.15 kernel.
 
