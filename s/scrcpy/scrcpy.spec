@@ -4,7 +4,7 @@
 %def_disable build_server
 
 Name: scrcpy
-Version: 1.19
+Version: 1.21
 Release: alt1
 Summary: Display and control your Android device screen
 License: Apache-2.0
@@ -27,9 +27,9 @@ BuildPreReq: java-devel unzip
 %endif
 
 BuildRequires(pre): meson
-# Automatically added by buildreq on Tue Sep 14 2021
+# Automatically added by buildreq on Thu Jan 20 2022
 # optimized out: fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavformat-devel libavutil-devel libcairo-gobject libcdio-paranoia libdc1394-22 libgdk-pixbuf libglvnd-devel libgpg-error libopencore-amrnb0 libopencore-amrwb0 libp11-kit librabbitmq-c libraw1394-11 libx265-199 ninja-build pkg-config python3 python3-base sh4 xz
-BuildRequires: libSDL2-devel libavdevice-devel meson
+BuildRequires: libSDL2-devel libavdevice-devel libusb-devel meson python2-base
 
 Requires: android-tools
 
@@ -63,14 +63,22 @@ export ANDROID_SDK_ROOT=$PWD/android-sdk
 %endif
 %meson_install
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %files
 %doc README.md DEVELOP.md FAQ.md LICENSE
 %_bindir/%name
 %_datadir/%name
 %_datadir/%name/%name-server
+%_iconsdir/hicolor/256x256/apps/*
 %_mandir/man1/scrcpy.1.*
 
 %changelog
+* Thu Jan 20 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.21-alt1
+- Updated to v1.21.
+
 * Tue Sep 14 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.19-alt1
 - Updated to v1.19.
 
