@@ -1,5 +1,5 @@
 Name: patchelf
-Version: 0.12
+Version: 0.14.3
 Release: alt1
 Summary: A utility for patching ELF binaries
 
@@ -45,6 +45,9 @@ rm -rf %buildroot/usr/share/doc/%name
 %_mandir/man1/patchelf.1*
 
 %changelog
+* Thu Jan 20 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.14.3-alt1
+- Updated to 0.14.3.
+
 * Sat Mar 27 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.12-alt1
 - Updated to 0.12.
 
