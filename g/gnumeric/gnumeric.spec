@@ -11,8 +11,8 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.50
-Release: alt1.1
+Version: %ver_major.51
+Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
 License: GPL-2.0 or GPL-3.0
@@ -25,10 +25,10 @@ Patch: gnumeric-desktop-alt.patch
 Obsoletes: %name-light
 Provides: %name-light = %version-%release
 
-%define gsf_ver 1.14.47
+%define gsf_ver 1.14.48
 %define gda_ver 5.2
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.49
+%define goffice_ver 0.10.51
 
 %{?_with_python:
 %add_python3_path %_libdir/%name/%version/plugins
@@ -183,6 +183,9 @@ subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
 %_pkgconfigdir/*
 
 %changelog
+* Thu Jan 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.12.51-alt1
+- 1.12.51
+
 * Sat Nov 06 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.50-alt1.1
 - fixed build with python3 >= 3.9.7-alt3
 
