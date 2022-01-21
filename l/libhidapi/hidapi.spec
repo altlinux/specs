@@ -7,7 +7,7 @@ Group: Development/Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libhidapi
-Version:        0.11.0
+Version:        0.11.2
 Release:        alt1_1
 Summary:        Library for communicating with USB and Bluetooth HID devices
 
@@ -71,6 +71,9 @@ rm -rf %{buildroot}%{_defaultdocdir}/%{oldname}
 %{_libdir}/pkgconfig/hidapi-libusb.pc
 
 %changelog
+* Fri Jan 21 2022 Igor Vlasenko <viy@altlinux.org> 0.11.2-alt1_1
+- update to new release by fcimport
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 0.11.0-alt1_1
 - update to new release by fcimport
 
