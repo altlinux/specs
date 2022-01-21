@@ -23,7 +23,7 @@
 Name: kde5-%rname
 %define lname lib%name
 Version: 7.3.0
-Release: alt1.1
+Release: alt2
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 %define sover %version
@@ -97,6 +97,7 @@ Source10: mysql_install_db
 # ALT
 Patch100: alt-libraw-aarch64.patch
 Patch101: alt-own-mysql-install-db.patch
+Patch102: alt-akonadi-compat.patch
 
 %description
 DigiKam is an advanced digital photo management application for KDE.
@@ -179,6 +180,7 @@ install -m 0644 %SOURCE6 ./
 pushd core
 %patch100 -p1
 %patch101 -p1
+%patch102 -p2
 popd
 
 # change double to qreal for casting on arm
@@ -322,6 +324,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Thu Jan 20 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 7.3.0-alt2
+- Fixed build with new akonadi
+
 * Sat Jan 08 2022 Michael Shigorin <mike@altlinux.org> 7.3.0-alt1.1
 - E2K: build with webkit for now
 

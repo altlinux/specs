@@ -1,4 +1,6 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 # LTO causes errors, disable it
 %global optflags_lto %nil
@@ -9,7 +11,6 @@
 %def_with openmp
 %def_without unicap
 %def_with swig
-%def_without python
 %def_with python3
 %def_without xine
 %def_without octave
@@ -43,8 +44,8 @@
 %define sover 4.5
 Name: lib%bname
 Epoch: 1
-Version: 4.5.3
-Release: alt3
+Version: 4.5.5
+Release: alt1
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -63,6 +64,7 @@ Source3: %bname-xfeatures2d-vgg-%version.tar
 
 Patch1: %name-%version-alt-python-paths.patch
 Patch2: %name-%version-alt-linking.patch
+Patch3: %name-%version-alt-build.patch
 Patch2000: %name-e2k-simd.patch
 
 BuildRequires: gcc-c++ libjasper-devel libjpeg-devel libtiff-devel
@@ -90,10 +92,6 @@ BuildRequires: ceres-solver-devel
 %{?_with_gstreamer:BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel}
 %{?_with_gtk:BuildRequires: libgtk+3-devel}
 %{?_with_xine:BuildRequires: libxine-devel}
-%{?_with_python:
-BuildRequires: python-devel
-BuildRequires: libnumpy-devel
-}
 %{?_with_python3:
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -107,8 +105,9 @@ BuildRequires: libnumpy-py3-devel
 BuildRequires: openni-devel
 BuildRequires: openni-primesense
 }
+BuildRequires: libade-devel
 
-%add_findprov_skiplist /usr/share/OpenCV/samples/*
+%add_findprov_skiplist %_datadir/OpenCV/samples/*
 
 %description
 %Name means Intel(R) Open Source Computer Vision Library. It is a
@@ -205,32 +204,6 @@ improving Python bindings to %Name.
 
 This package contains %Name demo applications.
 
-%if_with python
-%package -n python-module-%bname
-Group: Development/Python
-Summary: Python modules for %Name
-Provides: python-module-%{bname}2 = %EVR
-Provides: python-module-%{bname}3.4 = %EVR
-Conflicts: python-module-%{bname}2 < %EVR
-Obsoletes: python-module-%{bname}2 < %EVR
-Conflicts: python-module-%{bname}2.3
-Obsoletes: python-module-%{bname}2.3
-Conflicts: python-module-%{bname}3.4 < %EVR
-Obsoletes: python-module-%{bname}3.4 < %EVR
-Provides: python%{__python_version}(%bname)
-
-%description -n python-module-%bname
-%Name means Intel(R) Open Source Computer Vision Library. It is a
-collection of C functions and a few C++ classes that implement many
-popular Image Processing and Computer Vision algorithms.
-%Name provides cross-platform middle-to-high level API that includes
-about 300 C functions and a few C++ classes. Also there are constantly
-improving Python bindings to %Name.
-
-This package contains an extension module for python that provides a
-Python language mapping for the %Name.
-%endif
-
 %if_with python3
 %package -n python3-module-%bname
 Group: Development/Python3
@@ -277,6 +250,7 @@ This package contains %Name examples.
 pushd ../%bname-contrib-%version >/dev/null
 %patch2 -p1
 popd >/dev/null
+%patch3 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -288,6 +262,8 @@ cp %_builddir/%bname-xfeatures2d-boostdesc-%version/* %_cmake__builddir/download
 cp %_builddir/%bname-xfeatures2d-vgg-%version/* %_cmake__builddir/downloads/xfeatures2d/
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %cmake \
 	-DBUILD_PACKAGE:BOOL=ON \
 	-DBUILD_TESTS:BOOL=OFF \
@@ -358,11 +334,6 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* %_cmake__builddir/downloads/xfea
 %files utils
 %_bindir/*
 
-%if_with python
-%files -n python-module-%bname
-%python_sitelibdir/*
-%endif
-
 %if_with python3
 %files -n python3-module-%bname
 %python3_sitelibdir/*
@@ -375,6 +346,9 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* %_cmake__builddir/downloads/xfea
 %_datadir/%Name/quality
 
 %changelog
+* Tue Jan 18 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.5.5-alt1
+- Updated to upstream version 4.5.5.
+
 * Mon Aug 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.5.3-alt3
 - Disabled LTO.
 
