@@ -1,8 +1,8 @@
 %def_enable embedded_cryptopp
 
 Name: urbackup-server
-Version: 2.4.13
-Release: alt3
+Version: 2.4.14
+Release: alt1
 
 Summary: Efficient Client-Server backup system for Linux and Windows
 License: AGPL-3.0+
@@ -51,7 +51,7 @@ Common directories and user for urbackup server and client
 
 sed -i "s@/var/urbackup@%_localstatedir/urbackup@g" docs/urbackupsrv.1
 sed -i "s@/etc/default/urbackupsrv@%_sysconfdir/sysconfig/%name@g" %name.service
-sed -i 's,armhf,armh,' cryptoplugin/src/configure.ac
+sed -i 's,armhf,armhf|armh|armv7l,' cryptoplugin/src/configure.ac
 
 %build
 export SUID_CFLAGS=-fPIE
@@ -114,6 +114,9 @@ useradd -g urbackup -c 'UrBackup pseudo user' \
 %dir %attr(0755,urbackup,urbackup) %_localstatedir/urbackup
 
 %changelog
+* Mon Jan 17 2022 Alexey Shabalin <shaba@altlinux.org> 2.4.14-alt1
+- 2.4.14
+
 * Fri Nov 12 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.13-alt3
 - build with embedded cryptopp
 
