@@ -175,7 +175,7 @@
 %def_without modular_daemons
 
 Name: libvirt
-Version: 7.10.0
+Version: 8.0.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -210,7 +210,7 @@ BuildRequires(pre): meson >= 0.54.0
 %{?_with_libpcap:BuildRequires: libpcap-devel >= 1.5.0}
 %{?_with_libnl:BuildRequires: libnl-devel}
 %{?_with_selinux:BuildRequires: libselinux-devel}
-%{?_with_network:BuildRequires: dnsmasq iptables iptables-ipv6 radvd openvswitch}
+%{?_with_network:BuildRequires: dnsmasq iptables iptables-ipv6 openvswitch}
 %{?_with_nwfilter:BuildRequires: ebtables}
 %{?_with_sasl:BuildRequires: libsasl2-devel >= 2.1.6}
 %{?_with_libssh:BuildRequires: pkgconfig(libssh) >= 0.7}
@@ -253,10 +253,8 @@ BuildRequires: dmidecode
 BuildRequires: libtirpc-devel /usr/bin/rpcgen
 BuildRequires: glibc-utils
 BuildRequires: kmod
-BuildRequires: radvd
 BuildRequires: dnsmasq
 BuildRequires: mdevctl
-BuildRequires: libxfs-devel
 
 %description
 Libvirt is a C toolkit to interact with the virtualization capabilities
@@ -961,7 +959,7 @@ fi
 %files docs
 %doc NEWS.rst README.rst
 %doc docs/*.xml
-%doc docs/html docs/*.gif
+%doc docs/html
 
 %files client
 %_bindir/virsh
@@ -1025,6 +1023,7 @@ fi
 %_man8dir/virtlockd*
 %_man7dir/virkey*
 %_man1dir/virt-host-validate.*
+%_man1dir/virt-pki-query-dn.*
 
 #virtlogd
 %config(noreplace) %_sysconfdir/libvirt/virtlogd.conf
@@ -1046,6 +1045,7 @@ fi
 %_sbindir/virtproxyd
 %_man8dir/libvirtd.*
 %_man8dir/virtproxyd.*
+%_man8dir/virt-ssh-helper.*
 
 %_datadir/augeas/lenses/libvirtd.aug
 %_datadir/augeas/lenses/tests/test_libvirtd.aug
@@ -1225,6 +1225,7 @@ fi
 %files daemon-driver-qemu
 %config(noreplace) %_sysconfdir/sysconfig/virtqemud
 %config(noreplace) %_sysconfdir/libvirt/virtqemud.conf
+%_sysctldir/60-qemu-postcopy-migration.conf
 %_datadir/augeas/lenses/virtqemud.aug
 %_datadir/augeas/lenses/tests/test_virtqemud.aug
 %_unitdir/virtqemud*
@@ -1372,6 +1373,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Fri Jan 21 2022 Alexey Shabalin <shaba@altlinux.org> 8.0.0-alt1
+- 8.0.0 (Fixes: CVE-2021-4147)
+
 * Fri Dec 17 2021 Alexey Shabalin <shaba@altlinux.org> 7.10.0-alt1
 - 7.10.0
 
