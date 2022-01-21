@@ -1,75 +1,98 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: libxml2-devel
-# END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:		libmetalink
-Version:	0.1.3
-Release:	alt1_13
-Summary:	Metalink library written in C
-License:	MIT
-URL:		https://launchpad.net/libmetalink
-Source0:	https://launchpad.net/libmetalink/trunk/%{name}-%{version}/+download/%{name}-%{version}.tar.bz2
+%define autorelease 24
+
+Name:           libmetalink
+Version:        0.1.3
+%global so_version 3
+Release:        alt1_%autorelease
+Summary:        Metalink library written in C
+
+License:        MIT
+URL:            https://github.com/metalink-dev/libmetalink
+Source0:        %{url}/archive/release-%{version}/libmetalink-release-%{version}.tar.gz
+
+# NULL ptr deref in initial_state_start_fun
 # https://bugs.launchpad.net/libmetalink/+bug/1888672
-Patch0:     libmetalink-0.1.3-ns_uri.patch
+Patch0:         https://bugs.launchpad.net/libmetalink/+bug/1888672/+attachment/5395227/+files/libmetalink-0.1.3-ns_uri.patch
+# Fix few issues found by the Coverity static analysis tool
+# https://bugs.launchpad.net/libmetalink/+bug/1784359
+# https://github.com/metalink-dev/libmetalink/pull/2
+Patch1:         https://bugs.launchpad.net/libmetalink/+bug/1784359/+attachment/5169495/+files/0001-fix-covscan-issues.patch
+
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
 
 BuildRequires:  gcc
-BuildRequires:	libexpat-devel
-BuildRequires:	CUnit-devel
+
+BuildRequires:  pkgconfig(expat)
+BuildRequires:  pkgconfig(cunit)
+# Required for AM_PATH_XML2 m4 macro so we can a.'autoreconfa.'; however, expat is
+# used preferentially where available.
+BuildRequires:  libxml2-devel
 Source44: import.info
 
 %description
 libmetalink is a Metalink C library. It adds Metalink functionality such as
 parsing Metalink XML files to programs written in C.
 
-%package	devel
-Group: Development/Other
-Summary:	Files needed for developing with %{name}
-Requires:	%{name} = %{version}-%{release}
 
-%description	devel
+%package        devel
+Group: Development/Other
+Summary:        Files needed for developing with libmetalink
+
+Requires:       libmetalink = %{version}-%{release}
+
+%description    devel
 Files needed for building applications with libmetalink.
 
+
 %prep
-%setup -q
+%setup -q -n libmetalink-release-%{version}
 %patch0 -p1
+%patch1 -p1
+
 
 
 %build
+autoreconf --force --install --verbose
 %configure --disable-static
 %make_build
 
+
 %check
-make check
+%make_build check
+
 
 %install
 %makeinstall_std
-find $RPM_BUILD_ROOT -name *.la -exec rm {} \;
-
+find '%{buildroot}' -type f -name '*la' -print -delete
 
 
 %files
-%{!?_licensedir:%global license %%doc}
 %doc --no-dereference COPYING
-%doc README 
-%{_libdir}/libmetalink.so.*
+%doc AUTHORS
+%doc ChangeLog
+%doc NEWS
+%doc README
+%{_libdir}/libmetalink.so.%{so_version}
+%{_libdir}/libmetalink.so.%{so_version}.*
 
 
 %files devel
-%dir %{_includedir}/metalink/
-%{_includedir}/metalink/metalink_error.h
-%{_includedir}/metalink/metalink.h
-%{_includedir}/metalink/metalink_parser.h
-%{_includedir}/metalink/metalink_types.h
-%{_includedir}/metalink/metalinkver.h
+%{_includedir}/metalink/
 %{_libdir}/libmetalink.so
-%{_libdir}/pkgconfig/%{name}.pc
-%{_mandir}/man3/*
+%{_libdir}/pkgconfig/libmetalink.pc
+%{_mandir}/man3/metalink*.3*
 
 
 %changelog
+* Fri Jan 21 2022 Igor Vlasenko <viy@altlinux.org> 0.1.3-alt1_24
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt1_13
 - update to new release by fcimport
 
