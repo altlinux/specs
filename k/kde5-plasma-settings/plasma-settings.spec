@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 21.12
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -10,7 +10,8 @@ Summary: Settings application for Plasma Mobile
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
-Requires: qml(org.kde.kcm)
+Requires: %name-core
+Requires: %name-virtualkeyboard
 
 Source: %rname-%version.tar
 
@@ -28,6 +29,14 @@ BuildRequires: pkgconfig(gobject-2.0) pkgconfig(gio-2.0)
 %description
 Settings application for Plasma Mobile.
 
+%package virtualkeyboard
+Group: Editors
+Summary: Text editor for KDE
+#Requires: %name-common
+Requires: %name-core
+%description virtualkeyboard
+Text editor for KDE
+
 %package common
 Summary: %name common package
 Group: System/Configuration/Other
@@ -35,6 +44,16 @@ BuildArch: noarch
 Requires: kf5-filesystem
 %description common
 %name common package
+
+%package core
+Summary: Core files needed for %rname
+Group: Graphical desktop/KDE
+Requires: %name-common
+Requires: qml(org.kde.kcm)
+Requires: /usr/bin/vulkaninfo
+Requires: /usr/bin/wayland-info
+%description core
+Core files needed for %rname
 
 %package devel
 Group: Development/KDE and QT
@@ -62,14 +81,26 @@ Requires: %name-common
 %K5install_move data kpackage
 %find_lang %name --with-kde --all-name
 
-%files -f %name.lang
+%files common -f %name.lang
 %doc LICENSES/*
-%_K5bin/plasma-settings
-%_K5plug/kcms/*.so
+
+%files
 %_K5xdgapp/*plasmasettings*.desktop
 %_K5data/kpackage/kcms/*/
-%_K5data/kpackage/genericqml/org.kde.plasma.settings/
+%exclude %_K5data/kpackage/kcms/*virtualkeyboard*/
+%_K5plug/kcms/*.so
+%exclude %_K5plug/kcms/*virtualkeyboard*.so
 %_K5srv/*.desktop
+%exclude %_K5srv/*virtualkeyboard*.desktop
+
+%files core
+%_K5bin/plasma-settings
+%_K5data/kpackage/genericqml/org.kde.plasma.settings/
+
+%files virtualkeyboard
+%_K5data/kpackage/kcms/*virtualkeyboard*/
+%_K5plug/kcms/*virtualkeyboard*.so
+%_K5srv/*virtualkeyboard*.desktop
 
 #%files devel
 #%_K5inc/plasma-settings_version.h
@@ -82,6 +113,9 @@ Requires: %name-common
 #%_K5lib/libplasma-settings.so.*
 
 %changelog
+* Fri Jan 21 2022 Sergey V Turchin <zerg@altlinux.org> 21.12-alt2
+- move virtualkeyboard to separate package
+
 * Fri Dec 10 2021 Sergey V Turchin <zerg@altlinux.org> 21.12-alt1
 - new version
 
