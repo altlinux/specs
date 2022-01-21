@@ -1,5 +1,5 @@
 Name: mrtg
-Version: 2.17.8
+Version: 2.17.10
 Release: alt1
 
 Summary: Multi Router Traffic Grapher
@@ -124,6 +124,8 @@ cp -r contrib %buildroot%_libmrtg/
 %_man1dir/indexmaker*.1*
 %_man1dir/cfgmaker*.1*
 %_man1dir/mrtg*.1*
+%_man1dir/rateup.1*
+%_man3dir/mrtg*
 %_bindir/*
 %_libmrtg/*.pm
 %_libmrtg/helpers/*
@@ -133,6 +135,9 @@ cp -r contrib %buildroot%_libmrtg/
 %_libmrtg/contrib/*
 
 %changelog
+* Fri Jan 21 2022 Ilya Mashkin <oddity@altlinux.ru> 2.17.10-alt1
+- 2.17.10
+
 * Fri Aug 13 2021 Ilya Mashkin <oddity@altlinux.ru> 2.17.8-alt1
 - 2.17.8
 - cleanup spec according repocop patch
