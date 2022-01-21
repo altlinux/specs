@@ -1,6 +1,6 @@
 Name:		libbox2d
 Version:	2.4.1
-Release:	alt1.1
+Release:	alt1.2
 Summary:	A 2D physics engine for games
 Group:		System/Libraries
 License:	MIT
@@ -49,6 +49,9 @@ Development files for %name, %summary
 %_libdir/cmake/*
 
 %changelog
+* Mon Jan 17 2022 Alexander Danilov <admsasha@altlinux.org> 2.4.1-alt1.2
+- FTBFS: fix build
+
 * Fri Jun 04 2021 Arseny Maslennikov <arseny@altlinux.org> 2.4.1-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
