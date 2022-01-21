@@ -6,7 +6,7 @@ Group: Development/Other
 
 Summary: A pipeline manipulation library
 Name: libpipeline
-Version: 1.5.4
+Version: 1.5.5
 Release: alt1_1
 License: GPLv3+
 URL: http://libpipeline.nongnu.org/
@@ -53,7 +53,7 @@ rm $RPM_BUILD_ROOT/%{_libdir}/libpipeline.la
 %files
 %{!?_licensedir:%global license %%doc}
 %doc --no-dereference COPYING
-%doc README.md ChangeLog NEWS
+%doc README.md ChangeLog
 %{_libdir}/libpipeline.so.*
 
 %files devel
@@ -63,6 +63,9 @@ rm $RPM_BUILD_ROOT/%{_libdir}/libpipeline.la
 %{_mandir}/man3/*
 
 %changelog
+* Fri Jan 21 2022 Igor Vlasenko <viy@altlinux.org> 1.5.5-alt1_1
+- update to new release by fcimport
+
 * Sat Nov 13 2021 Igor Vlasenko <viy@altlinux.org> 1.5.4-alt1_1
 - update to new release by fcimport
 
