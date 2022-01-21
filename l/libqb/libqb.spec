@@ -11,19 +11,19 @@ Group: System/Libraries
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-BuildRequires: /usr/bin/git
 %bcond_without check
 
 Name:           libqb
 Version:        2.0.4
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Library providing high performance logging, tracing, ipc, and poll
 
 License:        LGPLv2+
 URL:            https://github.com/ClusterLabs/libqb
 Source0:        https://github.com/ClusterLabs/libqb/releases/download/v%{version}/%{name}-%{version}.tar.xz
 
-#Patch1:         libqb-2.0.1-remove-deprecated-check-macros.patch
+Patch0: add-async-connect.patch
+Patch1: bump-version-for-async.patch
 
 BuildRequires:  autoconf automake libtool
 BuildRequires:  libcheck-devel
@@ -55,14 +55,9 @@ and polling.
 This package contains the shared library.
 
 %prep
-%setup -q # for when patches around
-git init -q
-git config user.name "rpmbuild"
-git config user.email "<rpmbuild>"
-git config gc.auto 0
-git add --force .
-git commit -q --allow-empty -a --author "rpmbuild <rpmbuild>" -m "%{NAME}-%{VERSION} base"
-
+%setup -q -n %{name}-%{version}
+%patch0 -p1 -b .add-async-connect
+%patch1 -p1 -b .bump-version-for-async
 
 %build
 ./autogen.sh
@@ -118,6 +113,9 @@ This package contains a program to create nicely-formatted man pages from Doxyge
 
 
 %changelog
+* Fri Jan 21 2022 Igor Vlasenko <viy@altlinux.org> 2.0.4-alt1_2
+- update to new release by fcimport
+
 * Tue Nov 30 2021 Igor Vlasenko <viy@altlinux.org> 2.0.4-alt1_1
 - update to new release by fcimport
 
