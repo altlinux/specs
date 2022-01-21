@@ -4,7 +4,7 @@
 
 Name: qscintilla2
 Version: 2.13.1
-Release: alt1
+Release: alt1.1
 
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 
@@ -144,6 +144,10 @@ forDebug
 %make_build
 popd
 
+%ifarch %e2k
+# Qsci: error while loading shared libraries: libqscintilla2_qt5.so.15
+export LD_LIBRARY_PATH=$(pwd)/src
+%endif
 pushd Python
 cp -v pyproject-qt5.toml pyproject.toml
 sip-build \
@@ -235,6 +239,9 @@ rm -rf %buildroot/%python3_sitelibdir/QScintilla-%version.dist-info
 %_docdir/%libname-%version
 
 %changelog
+* Fri Jan 21 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.13.1-alt1.1
+- fixed build for Elbrus
+
 * Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 2.13.1-alt1
 - new version 2.13.1 (with rpmrb script)
 - build with sip6
