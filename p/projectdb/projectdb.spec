@@ -1,12 +1,12 @@
 Name: projectdb
-Version: 0.0.20190413
+Version: 0.0.20220121
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
 Summary: ProjectDb database data file
 Group: Development/Other
-License: GPL or Artistic
+License: GPLv2+ or Artistic-2.0
 Source: %name-%version.tar
 Url: https://www.altlinux.org/Packaging_Automation/ProjectDb
 
@@ -30,6 +30,9 @@ done
 %_datadir/projectdb
 
 %changelog
+* Fri Jan 21 2022 Igor Vlasenko <viy@altlinux.org> 0.0.20220121-alt1
+- db update
+
 * Sat Apr 13 2019 Igor Vlasenko <viy@altlinux.ru> 0.0.20190413-alt1
 - db update
 
