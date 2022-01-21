@@ -1,5 +1,5 @@
 Name: mednafen
-Version: 1.28.0
+Version: 1.29.0
 Release: alt1
 
 Summary: Multi-consoles Emulator
@@ -51,7 +51,7 @@ reasons.
 %prep
 %setup -n %name
 %patch1 -p1
-%patch2 -p1
+#patch2 -p1
 
 %build
 # This package has a configure test which uses ASMs, but does not link the
@@ -86,6 +86,9 @@ export CXXFLAGS
 
 
 %changelog
+* Fri Jan 21 2022 Ilya Mashkin <oddity@altlinux.ru> 1.29.0-alt1
+- version 1.29.0
+
 * Sat Nov 27 2021 Ilya Mashkin <oddity@altlinux.ru> 1.28.0-alt1
 - version 1.28.0
 
