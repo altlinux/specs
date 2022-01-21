@@ -22,11 +22,12 @@
 %define label digiKam
 Name: kde5-%rname
 %define lname lib%name
-Version: 7.3.0
-Release: alt2
+Version: 7.5.0
+Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
-%define sover %version
+#define sover %version
+%define sover 7.3.0
 %define libdigikamdatabase libdigikamdatabase%sover
 %define libdigikamcore libdigikamcore%sover
 %define libdigikamgui libdigikamgui%sover
@@ -65,7 +66,7 @@ BuildRequires: qt5-webengine-devel
 BuildRequires: libx265-devel
 BuildRequires: libXres-devel libexiv2-devel libexpat-devel libgomp-devel libgphoto2-devel libjpeg-devel libpng-devel
 %{?_enable_jasper:BuildRequires: libjasper-devel}
-BuildRequires: libqtav-devel
+BuildRequires: libqtav-devel libde265-devel
 BuildRequires: liblcms2-devel liblensfun-devel liblqr-devel libtiff-devel libusb-devel libtbb-devel libxml2-devel libxslt-devel
 BuildRequires: libEGL-devel libGL-devel libGLU-devel
 BuildRequires: libImageMagick-devel
@@ -97,7 +98,6 @@ Source10: mysql_install_db
 # ALT
 Patch100: alt-libraw-aarch64.patch
 Patch101: alt-own-mysql-install-db.patch
-Patch102: alt-akonadi-compat.patch
 
 %description
 DigiKam is an advanced digital photo management application for KDE.
@@ -180,7 +180,6 @@ install -m 0644 %SOURCE6 ./
 pushd core
 %patch100 -p1
 %patch101 -p1
-%patch102 -p2
 popd
 
 # change double to qreal for casting on arm
@@ -324,6 +323,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Fri Jan 21 2022 Sergey V Turchin <zerg@altlinux.org> 7.5.0-alt1
+- new version
+
 * Thu Jan 20 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 7.3.0-alt2
 - Fixed build with new akonadi
 
