@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 45
+%define centos_release 46
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -629,6 +629,10 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Jan 21 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.46-alt1.el9
+- Updated to kernel-5.14.0-46.el9:
+  + crypto: qat: Update QAT drivers upto v5.15
+
 * Wed Jan 19 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.45-alt1.el9
 - Workqueue update for RT prerequisites
 - nvme: avoid race in shutdown namespace removal
