@@ -34,7 +34,7 @@
 
 Name: krita
 Version: 5.0.2
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Group: Graphics
@@ -72,7 +72,7 @@ BuildRequires: boost-devel boost-geometry-devel
 #BuildRequires: libgif-devel
 BuildRequires: quazip-qt5-devel
 #BuildRequires: libquadmath-devel
-BuildRequires: libopencolorio-devel
+BuildRequires: libopencolorio2.0-devel
 BuildRequires: libXres-devel libxcbutil-devel
 BuildRequires: libjpeg-devel libpng-devel libpoppler-qt5-devel libraw-devel libtiff-devel
 #BuildRequires: libheif-devel openexr-devel
@@ -453,6 +453,9 @@ done
 %_libdir/libkritametadata.so.*
 
 %changelog
+* Fri Jan 21 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.2-alt2
+- Rebuilt with opencolorio 2.0
+
 * Fri Jan 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.0.2-alt1
 - new version
 
