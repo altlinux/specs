@@ -2,12 +2,10 @@
 %def_with ldap
 %def_with gssapi
 %def_with ssl
-%def_with memcached
 %def_with lua
 %def_without gamin
 %def_with pgsql
 %def_with tests
-%def_with geoip
 %def_with maxminddb
 
 %define lighttpd_user lighttpd
@@ -17,7 +15,7 @@
 %define docdir %_docdir/%name-%version-doc
 
 Name: lighttpd
-Version: 1.4.63
+Version: 1.4.64
 Release: alt1
 
 Summary: A fast webserver with minimal memory-footprint
@@ -36,15 +34,13 @@ Provides: webserver
 BuildRequires(pre): rpm-macros-webserver-common
 # Automatically added by buildreq on Wed Dec 02 2020
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libcom_err-devel libcrypt-devel libkrb5-devel libsasl2-3 perl pkg-config python2-base sh4
-BuildRequires: bzlib-devel libbrotli-devel libfcgi-devel libpcre-devel libxxhash-devel zlib-devel
+BuildRequires: bzlib-devel libbrotli-devel libfcgi-devel libpcre2-devel libxxhash-devel zlib-devel
 
 %{?_with_maxminddb:BuildPreReq: libmaxminddb-devel}
-%{?_with_geoip:BuildPreReq: libGeoIP-devel}
 %{?_with_mysql:BuildPreReq: libmysqlclient-devel}
 %{?_with_gssapi:BuildPreReq: libkrb5-devel}
 %{?_with_ssl:BuildPreReq: libssl-devel}
 %{?_with_ldap:BuildPreReq: libldap-devel}
-%{?_with_memcached:BuildPreReq: libmemcached-devel}
 %{?_with_lua:BuildPreReq: lua-devel}
 %{?_with_gamin:BuildPreReq: libgamin-devel}
 %{?_with_pgsql:BuildPreReq: postgresql-devel}
@@ -62,14 +58,6 @@ Requires: %name = %version-%release
 
 %description mysql-vhost
 This module provides virtual hosts (vhosts) based on a MySQL table.
-
-%package auth-mysql
-Summary: MySQL authentication for %name
-Group: System/Servers
-Requires: %name = %version-%release
-
-%description auth-mysql
-MySQL authentication for %name
 %endif #mysql
 
 %if_with ldap
@@ -89,17 +77,6 @@ Requires: %name = %version-%release
 %description ldap-vhost
 This module provides virtual hosts (vhosts) based on a LDAP.
 %endif #ldap
-
-%if_with geoip
-%package geoip
-Summary: GeoIP module (plugin) for %name
-Group: System/Servers
-Requires: %name = %version-%release
-
-%description geoip
-The module loads a geoip database of type "country" or "city" and sets new
-ENV vars based on ip record lookups.
-%endif #geoip
 
 %if_with maxminddb
 %package maxminddb
@@ -131,23 +108,6 @@ Requires: %name = %version-%release
 %description pgsql-vhost
 This module provides virtual hosts (vhosts) based on a PostgreSQL table.
 %endif #pgsql
-
-%package cml
-Summary: CML (Cache Meta Language) %name module
-Group: System/Servers
-Requires: %name = %version-%release
-
-%description cml
-CML is a Meta language to describe the dependencies of a page at one side and
-building a page from its fragments on the other side using LUA. 
-
-%package trigger_b4_dl
-Summary: another anti hot-linking %name module
-Group: System/Servers
-Requires: %name = %version-%release
-
-%description trigger_b4_dl
-another anti hot-linking module.
 
 %package rrdtool
 Summary: rrdtool support %name module
@@ -183,11 +143,9 @@ libtoolize -f -c
     %{?_with_pgsql:       --with-pgsql} \
     %{?_with_ssl:         --with-openssl} \
     %{?_with_ldap:	  --with-ldap} \
-    %{?_with_memcached:	  --with-memcached} \
     %{?_with_lua:	  --with-lua} \
     %{?_with_gamin:	  --with-fam} \
     %{?_with_gssapi:	  --with-krb5} \
-    %{?_with_geoip:	  --with-geoip} \
     %{?_with_maxminddb:	  --with-maxminddb} \
     %{?_with_lua:	  LUA_CFLAGS="-I/usr/include/" LUA_LIBS="-llua"}
 
@@ -262,8 +220,6 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*.so
 
 %if_with mysql
-%exclude %_libdir/%name/*_authn_mysql.so
-%exclude %_libdir/%name/*_mysql_vhost.so
 %exclude %_libdir/%name/*_vhostdb_mysql.so
 %endif #mysql
 
@@ -280,21 +236,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %exclude %_libdir/%name/*_authn_gssapi.so
 %endif gssapi
 
-%if_with lua
-%exclude %_libdir/%name/*_cml.so
-%endif #cml
-
-%if_with memcached
-%exclude %_libdir/%name/*_trigger_b4_dl.so
-%endif #trigger_b4_dl
-
 %if_with maxminddb
 %exclude %_libdir/%name/*_maxminddb.so
 %endif #maxminddb
-
-%if_with geoip
-%exclude %_libdir/%name/*_geoip.so
-%endif #geoip
 
 %exclude %_libdir/%name/*_rrdtool.so
 %_sbindir/*
@@ -305,11 +249,7 @@ gpasswd -a %lighttpd_user %webserver_group
 
 %if_with mysql
 %files mysql-vhost
-%_libdir/%name/*mysql_vhost.so
 %_libdir/%name/*_vhostdb_mysql.so
-
-%files auth-mysql
-%_libdir/%name/*_authn_mysql.so
 %endif #mysql
 
 %if_with ldap
@@ -330,30 +270,20 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*_vhostdb_pgsql.so
 %endif #pgsql
 
-%if_with geoip
-%files geoip
-%_libdir/%name/*_geoip.so
-%endif #geoip
-
 %if_with maxminddb
 %files maxminddb
 %_libdir/%name/*_maxminddb.so
 %endif #maxminddb
 
-%if_with lua
-%files cml
-%_libdir/%name/*cml.so
-%endif #lua
-
-%if_with memcached
-%files trigger_b4_dl
-%_libdir/%name/*trigger_b4_dl.so
-%endif #memcached
-
 %files rrdtool
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Fri Jan 21 2022 Alexei Takaseev <taf@altlinux.org> 1.4.64-alt1
+- 1.4.64
+- BR: libpcre -> libpcre2
+- Remove deprecated modules
+
 * Tue Dec 07 2021 Alexei Takaseev <taf@altlinux.org> 1.4.63-alt1
 - 1.4.63
 
