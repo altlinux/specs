@@ -1,7 +1,7 @@
 %define oname DistroDbMaker
 
 Name: %oname
-Version: 0.031
+Version: 0.032
 Release: alt1
 Summary: DistroDb Maker tools
 License: LGPLv2+
@@ -47,6 +47,9 @@ sed -i 1s,/usr/bin/python,/usr/bin/python3, *.py
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jan 21 2022 Igor Vlasenko <viy@altlinux.org> 0.032-alt1
+- new version
+
 * Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 0.031-alt1
 - new version
 
