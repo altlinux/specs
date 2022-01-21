@@ -3,7 +3,7 @@
 
 Name: kde5-%origname
 Version: 2.7.2
-Release: alt1
+Release: alt2
 
 # https://download.kde.org/stable/%origname/%version/%origname-%version.tar.xz
 Source: %origname-%version.tar
@@ -82,6 +82,9 @@ published under the GNU General Public Licence
 %_datadir/metainfo/org.kde.%origname.appdata.xml
 
 %changelog
+* Fri Jan 21 2022 Nazarov Denis <nenderus@altlinux.org> 2.7.2-alt2
+- restore translation
+
 * Mon Dec 27 2021 Nazarov Denis <nenderus@altlinux.org> 2.7.2-alt1
 - new 2.7.2 version (ALT #40495)
 
