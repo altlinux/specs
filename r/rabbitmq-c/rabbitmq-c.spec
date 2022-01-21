@@ -1,28 +1,47 @@
-Name:           librabbitmq-c
-Version:        0.11.0
-Release:        alt1
-Summary:        This is a C-language AMQP client library for use with AMQP servers speaking protocol versions 0-9-1
-Group:          System/Libraries
-License:        MIT
-URL:            https://github.com/alanxz/rabbitmq-c
-# https://github.com/alanxz/rabbitmq-c.git
-Source:         %name-%version.tar
+%define _unpackaged_files_terminate_build 1
 
-BuildRequires: python-module-json libpopt-devel xmlto cmake ctest libssl-devel doxygen
+%global sover 4
+
+Name:		rabbitmq-c
+Version:	0.11.0
+Release:	alt2
+
+Summary:	RabbitMQ C client
+Group:		System/Libraries
+License:	MIT
+URL:		https://github.com/alanxz/rabbitmq-c
+
+Source: %name-%version.tar
+
+Obsoletes: librabbitmq-c < %EVR
+
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake ctest xmlto
+BuildRequires: doxygen
 BuildRequires: graphviz
+BuildRequires: libssl-devel
+BuildRequires: libpopt-devel
 
 %description
-This is a C-language AMQP client library for use with AMQP servers
-speaking protocol versions 0-9-1.
+This is a C-language AMQP client library for use with v2.0+ of the
+RabbitMQ broker.
 
-%package        devel
-Summary:        Development files for %name
-Group:          System/Libraries
-Requires:       pkgconfig, %name = %version-%release
+%package -n librabbitmq-c%sover
+Summary:		Libraries for %name
+Group:			System/Libraries
+Provides:		librabbitmq-c = %EVR
+Conflicts:		librabbitmq-c
 
-%description   devel
-The %name-devel package contains libraries and header files for
-developing applications that use %name.
+%description -n librabbitmq-c%sover
+%summary
+
+%package -n librabbitmq-c-devel
+Summary:		Development files for %name
+Group:			System/Libraries
+Requires:		pkgconfig
+
+%description -n librabbitmq-c-devel
+%summary
 
 %prep
 %setup
@@ -48,17 +67,23 @@ popd
 %files
 %doc AUTHORS CONTRIBUTING.md ChangeLog.md LICENSE-MIT README.md THANKS TODO
 %_bindir/*
-%_libdir/librabbitmq.so.*
 %_man1dir/*
+%_man7dir/*
 
-%files devel
+%files -n librabbitmq-c%sover
+%_libdir/librabbitmq.so.*
+
+%files -n librabbitmq-c-devel
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*
 %_libdir/cmake
-%_man7dir/*
 
 %changelog
+* Fri Jan 21 2022 Egor Ignatov <egori@altlinux.org> 0.11.0-alt2
+- Rename package: librabbitmq-c -> rabbitmq-c
+- Split tools and libraries into different packages (Closes: #41742)
+
 * Wed Jun 30 2021 Grigory Ustinov <grenka@altlinux.org> 0.11.0-alt1
 - Build new version (Closes: #40331).
 
