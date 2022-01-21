@@ -2,7 +2,7 @@ Group: System/Base
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-validate glib2-devel pkgconfig(gtk+-3.0)
 # END SourceDeps(oneline)
-%define fedora 29
+%define fedora 34
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %if 0%{!?_with_xfce:1} && 0%{!?_without_xfce:1}
@@ -15,12 +15,12 @@ BuildRequires: /usr/bin/desktop-file-validate glib2-devel pkgconfig(gtk+-3.0)
 
 Name:		im-chooser
 Version:	1.7.4
-Release:	alt1
+Release:	alt1_2
 License:	GPLv2+ and LGPLv2+
 URL:		http://pagure.io/im-chooser/
-%{?_with_gtk2:BuildRequires:	gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel}
+%{?_with_gtk2:BuildRequires:	gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel}
 %{!?_with_gtk2:BuildRequires:	gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel}
-BuildRequires:	libSM-devel imsettings-devel >= 1.8.0
+BuildRequires:	libSM-devel imsettings-devel >= 1.8.3
 %if 0%{?_with_xfce}
 BuildRequires:	libxfce4util-devel
 %endif
@@ -74,6 +74,7 @@ This package contains the XFCE settings panel for im-chooser.
 %setup -q
 %patch0 -p1
 
+
 %build
 %configure
 %make_build
@@ -123,6 +124,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/applications/im-chooser-panel.desktop
 %endif
 
 %changelog
+* Fri Jan 21 2022 Igor Vlasenko <viy@altlinux.org> 1.7.4-alt1_2
+- update to new release by fcimport
+
 * Fri Dec 17 2021 Ilya Mashkin <oddity@altlinux.ru> 1.7.4-alt1
 - 1.7.4
 
