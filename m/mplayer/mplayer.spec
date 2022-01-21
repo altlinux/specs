@@ -315,7 +315,7 @@
 
 Name: %lname
 Version: 1.4
-Release: alt9.%svnrev.1
+Release: alt9.%svnrev.2
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -371,6 +371,9 @@ Patch22: 0022-add-po-dir.patch
 Patch23: 0023-fix-usage-mp_msg.patch
 Patch24: 0024-po-mp_msg2po.awk-fix-po-generation.patch
 Patch25: 0025-fix-po-mp_help2msg.awk.patch
+%ifarch %e2k
+Patch2000: mplayer-e2k.patch
+%endif
 
 %if_enabled gui
 Provides: %name-gui = %version-%release
@@ -1156,6 +1159,9 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Thu Jan 20 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.4-alt9.38327.2
+- Added patch for Elbrus.
+
 * Sat Dec 04 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4-alt9.38327.1
 - Updated to SNV snapshot (revision 38327).
 - Fixed FTBFS: Disabled libilbc support.
