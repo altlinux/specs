@@ -38,7 +38,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.15.2
-Release: alt9
+Release: alt10
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -488,6 +488,7 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
 %endif
     -no-reduce-relocations \
     -opengl %opengl_type -egl -eglfs -kms \
+    -xcb-native-painting \
     -system-sqlite \
     %{?_enable_sql_tds:-plugin-sql-tds}%{!?_enable_sql_tds:-no-sql-tds} \
     %{?_enable_sql_ibase:-plugin-sql-ibase}%{!?_enable_sql_ibase:-no-sql-ibase} \
@@ -846,6 +847,10 @@ make check -k ||:
 
 
 %changelog
+* Fri Jan 21 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt10
+- build xcb native painting engine
+- update kde/5.15 branch patches
+
 * Thu Jan 13 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt9
 - fix parse zone1970.tab
 
