@@ -7,7 +7,7 @@ BuildRequires(pre): rpm-macros-fedora-compat
 %define _localstatedir %{_var}
 Name: xsd
 Version: 4.1.0
-Release: alt1_0.7.a11
+Release: alt1_0.8.a11
 Summary: W3C XML schema to C++ data binding compiler
 # Exceptions permit otherwise GPLv2 incompatible combination with ASL 2.0
 License: GPLv2 with exceptions and ASL 2.0  
@@ -60,16 +60,12 @@ This package contains API documentation for %{name}.
 rm -rf libcutl
 
 %build
-%add_optflags -std=c++14
-%if 0%{?rhel} < 7
-%{!?__global_ldflags: %global __global_ldflags -Wl,-z,relro}
-%endif
 %make_build verbose=1 CXX=g++ CC=gcc CXXFLAGS="$RPM_OPT_FLAGS -std=c++14 -fPIC -pie -Wl,-z,now" LDFLAGS="%{__global_ldflags} -fPIC -pie -Wl,-z,now" BOOST_LINK_SYSTEM=y EXTERNAL_LIBCUTL=y
 
 %install
 rm -rf apidocdir
 
-%makeinstall_std LDFLAGS="%{__global_ldflags}" install_prefix=$RPM_BUILD_ROOT%{_prefix} \
+%makeinstall_std  install_prefix=$RPM_BUILD_ROOT%{_prefix} \
  install_bin_dir=$RPM_BUILD_ROOT%{_bindir} install_man_dir=$RPM_BUILD_ROOT%{_mandir} EXTERNAL_LIBCUTL=y BOOST_LINK_SYSTEM=y
 
 # Split API documentation to -doc subpackage.
@@ -127,6 +123,9 @@ make -j 1 test EXTERNAL_LIBCUTL=y BOOST_LINK_SYSTEM=y
 %doc apidocdir/*
 
 %changelog
+* Fri Jan 21 2022 Igor Vlasenko <viy@altlinux.org> 4.1.0-alt1_0.8.a11
+- update to new release by fcimport
+
 * Fri Oct 01 2021 Igor Vlasenko <viy@altlinux.org> 4.1.0-alt1_0.7.a11
 - fixed build with gcc11
 
