@@ -1,14 +1,15 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%set_verify_elf_method strict,lint=relaxed
 
 %define optflags_lto -flto=thin
 
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name:		bpftrace
-Version:	0.12.1
-Release:	alt3
+Version:	0.13.1
+Release:	alt1
 Summary:	High-level tracing language for Linux eBPF
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -37,6 +38,7 @@ BuildRequires:  llvm-devel-static >= 11
 BuildRequires: clang-devel-static >= 11
 BuildRequires:   lld >= 11
 BuildRequires: libbcc-devel
+BuildRequires: libbpf-devel
 BuildRequires: libelf-devel
 BuildRequires: binutils-devel
 BuildRequires: /proc
@@ -73,7 +75,6 @@ export Clang_DIR=/usr/share/cmake/Modules/clang
 %cmake_build
 
 %install
-%set_verify_elf_method relaxed
 %cmake_install
 find %buildroot%_datadir/%name/tools -name '*.bt' | xargs chmod a+x
 
@@ -82,6 +83,10 @@ pushd %buildroot%_man8dir
  rename '' bpftrace- *.gz
  rename bpftrace- '' bpftrace-bpftrace.8.gz
 popd
+
+# Need to keep BEGIN_trigger and END_trigger
+# https://github.com/iovisor/bpftrace/issues/954
+%brp_strip_debug %_bindir/bpftrace
 
 %check
 %_cmake__builddir/src/bpftrace --version	 # not requires root
@@ -120,6 +125,10 @@ fi
 %_man8dir/*
 
 %changelog
+* Fri Jan 21 2022 Vitaly Chikunov <vt@altlinux.org> 0.13.1-alt1
+- Updated to v0.13.1 (2021-12-21).
+- Do not strip BEGIN/END triggers from bpftrace (closes: #41750).
+
 * Thu Sep 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.12.1-alt3
 - Rebuilt with LTO.
 
