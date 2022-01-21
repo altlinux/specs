@@ -1,6 +1,6 @@
 Name: prosody
 Version: 0.11.12
-Release: alt1
+Release: alt2
 
 Summary: Modern XMPP communication server
 
@@ -21,13 +21,15 @@ Source10: autobuild.watch
 Source11: upstream-signing-key.asc
 
 Patch1: prosody-0.11.5-alt-user.patch
+Patch2: prosody-0.11.12-upstream-fix-memleak.patch
 
 %description
 %summary
 
 %prep
 %setup
-%autopatch -p2
+%patch1 -p2
+%patch2 -p1
 
 %build
 ./configure --prefix=/usr
@@ -67,8 +69,11 @@ install -Dpm644 %SOURCE4 %buildroot/%_tmpfilesdir/prosody.conf
 %_man1dir/*
 
 %changelog
+* Fri Jan 21 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.11.12-alt2
+- Fixed memory leak.
+
 * Mon Jan 17 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.11.12-alt1
-- Updated to 0.11.12.
+- Updated to 0.11.12 (fixes CVE-2022-0217).
 
 * Tue Aug 17 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.11.10-alt1
 - Updated to 0.11.10.
