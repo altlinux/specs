@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: dosfstools
 Version: 4.2
-Release: alt1
+Release: alt2
 
 Summary: Utilities to create and check MS-DOS FAT filesystems
 License: GPL
@@ -33,7 +33,7 @@ code.
 %build
 ./autogen.sh
 %autoreconf
-%configure --prefix=/ --sbindir=/sbin
+%configure --prefix=/ --sbindir=/sbin --enable-compat-symlinks
 %make_build \
 	CFLAGS="%optflags\
 		-D_LARGEFILE_SOURCE \
@@ -53,6 +53,9 @@ make check
 %doc doc/*
 
 %changelog
+* Sat Jan 22 2022 Anton Midyukov <antohami@altlinux.org> 4.2-alt2
+- enable compat symlinks
+
 * Mon Feb 15 2021 Anton Farygin <rider@altlinux.org> 4.2-alt1
 - 4.2
 - enabled tests
