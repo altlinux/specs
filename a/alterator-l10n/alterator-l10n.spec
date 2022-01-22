@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.104
+Version: 2.9.105
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -115,6 +115,9 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Sat Jan 22 2022 Andrey Cherepanov <cas@altlinux.org> 2.9.105-alt1
+- alterator-datetime: update localization (ALT #41763).
+
 * Fri Dec 17 2021 Ivan Razzhivin <underwit@altlinux.org> 2.9.104-alt1
 - alterator-multiseat: update help
 
