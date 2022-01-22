@@ -3,7 +3,7 @@
 
 Name:     ArxLibertatis
 Version:  1.2
-Release:  alt1.20200607.1
+Release:  alt2
 
 Summary:  Cross-platform port of Arx Fatalis, a first-person role-playing game
 License:  GPL-3.0-or-later
@@ -60,6 +60,7 @@ rm -r %buildroot%_datadir/blender
 
 %files
 %_bindir/*
+%_prefix/libexec/arxtool
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/*
 %_libdir/*.so.*
@@ -73,6 +74,9 @@ rm -r %buildroot%_datadir/blender
 %_includedir/*
 
 %changelog
+* Sat Jan 22 2022 Anton Midyukov <antohami@altlinux.org> 1.2-alt2
+- 1.2 Release
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 1.2-alt1.20200607.1
 - NMU: spec: adapted to new cmake macros.
 
