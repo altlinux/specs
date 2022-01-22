@@ -1,6 +1,6 @@
 Name: radeon-profile-daemon
 Version: 20190603
-Release: alt1
+Release: alt2
 
 Summary: Daemon for radeon-profile GUI
 Summary(ru_RU.UTF-8): Демон для графического интерфейса radeon-profile
@@ -11,6 +11,8 @@ Packager: Evgeny Chuck <koi at altlinux.org>
 
 Source: %name-%version.tar
 # Source-url: https://github.com/marazmista/radeon-profile-daemon/archive/refs/tags/%version.tar.gz
+Source1: radeon-profile-daemon
+
 Patch: 20190603-fixed-systemd-path.patch
 
 Requires: radeon-profile
@@ -45,6 +47,8 @@ Supports opensource xf86-video-ati and xf86-video-amdgpu drivers.
 %install
 %makeinstall_std INSTALL_ROOT=%buildroot
 
+install -Dm 755 %SOURCE1 %buildroot/%_initdir/%name
+
 %post
 SYSTEMCTL=systemctl
 %post_service radeon-profile-daemon
@@ -59,7 +63,11 @@ fi
 %doc README.md LICENSE
 %_bindir/%name
 %_unitdir/%name.service
+%_initdir/%name
 
 %changelog
+* Wed Jan 19 2022 Evgeny Chuck <koi@altlinux.org> 20190603-alt2
+- Added SysV service script
+
 * Sun Nov 07 2021 Evgeny Chuck <koi@altlinux.org> 20190603-alt1
 - initial build for ALT Linux Sisyphus
