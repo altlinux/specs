@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.27
+Version: 1.28
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -170,13 +170,6 @@ chmod a+twx /mnt
 
 # Allow user creation (for openssh)
 chmod a+r /etc/login.defs
-
-%ifarch armh
-# Workaround to KVM not working on armh: signal to scripts that we don't have
-# kvm. This will work on normal build, but will be cleared on hsh-shell, that
-# will not produce failure though, just more warnings from qemu.
-chmod go-rwx /dev/kvm
-%endif
 %endif
 
 %pre checkinstall
@@ -190,14 +183,17 @@ set | grep ^LD_
 timeout 300 vm-run --verbose uname -a
 timeout 300 vm-run --verbose --overlay=ext4 uname -a
 
-%ifarch %ix86 x86_64 ppc64le aarch64
+%ifarch %ix86 x86_64 ppc64le aarch64 armh
 %check
 # Verify availability of KVM in girar & beehiver.
-# armh is intentionally excluded from the test.
 ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Sat Jan 22 2022 Vitaly Chikunov <vt@altlinux.org> 1.28-alt1
+- Remove stray dependence on qemu-system-aarch64-core-bundle.
+- Do not exclude armh from KVM support.
+
 * Thu Dec 16 2021 Vitaly Chikunov <vt@altlinux.org> 1.27-alt1
 - Added KVM support for aarch32.
 
