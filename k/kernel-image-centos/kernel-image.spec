@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 46
+%define centos_release 47
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -152,6 +152,9 @@ of the operating system: memory allocation, process allocation, device
 input and output, etc.
 
 This is a "centos stream" variant of kernel packages.
+
+The list of certified hardware and cloud instances for RHEL9 can be viewed
+at the Red Hat Ecosystem Catalog, https://catalog.redhat.com.
 
 %package -n kernel-modules-drm-%flavour
 Summary: The Direct Rendering Infrastructure modules
@@ -629,6 +632,18 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sat Jan 22 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.47-alt1.el9
+- Updated to kernel-5.14.0-47.el9 (fixes: CVE-2021-4001):
+  + nvmet: make discovery NQN configurable
+  + nitro_enclaves: Use get_user_pages_unlocked() call to handle mmap assert
+  + include/linux/pci.h: Exclude struct hotplug_slot from KABI
+  + net/vsock: backport vsock fixes for RHEL-9.0
+  + include/linux/irq*.h: Pad irq structs for KABI
+  + include/linux/fwnode.h: Exclude fwnode structs from KABI
+  + bpf: Fix toctou on read-only map's constant scalar tracking
+  + ACPI: tables: FPDT: Do not print FW_BUG message if record types are reserved
+  + virtio: support virtio-mem on x86-64 as tech-preview
+
 * Fri Jan 21 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.46-alt1.el9
 - Updated to kernel-5.14.0-46.el9:
   + crypto: qat: Update QAT drivers upto v5.15
