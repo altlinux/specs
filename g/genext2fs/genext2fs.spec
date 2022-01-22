@@ -1,6 +1,6 @@
 Name: genext2fs
 Version: 1.5.0
-Release: alt1
+Release: alt2
 Summary: genext2fs creates a virtual ext2 file system in a single file
 License: GPL-2.0
 Group: File tools
@@ -23,12 +23,18 @@ you become the superuser to make device nodes.
 %install
 %makeinstall_std
 
+%check
+%make_build check
+
 %files
 %doc AUTHORS README.md TODO device_table.txt
 %_bindir/*
 %_man8dir/*
 
 %changelog
+* Sat Jan 22 2022 Anton Midyukov <antohami@altlinux.org> 1.5.0-alt2
+- enable check
+
 * Mon Aug 10 2020 Anton Midyukov <antohami@altlinux.org> 1.5.0-alt1
 - 1.5.0
 - Fix License tag
