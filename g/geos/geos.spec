@@ -6,7 +6,7 @@
 %def_without tests
 
 Name: geos
-Version: 3.9.1
+Version: 3.10.2
 Release: alt1
 
 Summary: Geometry Engine - Open Source
@@ -18,9 +18,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # VCS: https://git.osgeo.org/gogs/geos/geos.git
 Source: %name-%version.tar
-Patch1: %name-fix-lib-destination.patch
-Patch2: %name-alt-fix-link-benchmarks.patch
-Patch3: %name-fix-geos-config--libs.patch
+Patch1: %name-alt-fix-link-benchmarks.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires(pre): cmake
@@ -96,8 +94,6 @@ Ruby bindings for the lib%name library.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %ifarch %e2k
 # strip UTF-8 BOM
@@ -111,17 +107,6 @@ cp -fR . ../python3
 %endif
 
 %build
-./autogen.sh
-%undefine _configure_gettext
-%configure \
-	--disable-static \
-%if_with python
-	--enable-python \
-%else
-	--disable-python \
-%endif
-	--disable-ruby
-
 %if_with python3
 pushd ../python3
 sed -i 's|\(\-python\)|\1 -py3|' macros/ac_pkg_swig.m4
@@ -143,7 +128,6 @@ LIB_SUFFIX=64
 
 # E2K: tests/unit/tut/tut.hpp: excessive recursion at instantiation [...]
 %cmake_insource -GNinja \
-	-DGEOS_BUILD_STATIC:BOOL=OFF \
 %ifarch armh
 	-DDISABLE_GEOS_INLINE=ON \
 %endif
@@ -189,6 +173,9 @@ rm -f %buildroot%python3_sitelibdir/geos/*.la
 %ninja_build check || exit 0
 %endif
 
+%files
+%_bindir/geosop
+
 %files -n lib%name
 %doc AUTHORS NEWS README.md
 %_libdir/lib*.so.*
@@ -217,6 +204,15 @@ rm -f %buildroot%python3_sitelibdir/geos/*.la
 %endif
 
 %changelog
+* Mon Jan 17 2022 Andrey Cherepanov <cas@altlinux.org> 3.10.2-alt1
+- New version.
+
+* Wed Nov 03 2021 Andrey Cherepanov <cas@altlinux.org> 3.10.1-alt1
+- New version.
+
+* Thu Oct 21 2021 Andrey Cherepanov <cas@altlinux.org> 3.10.0-alt1
+- New version.
+
 * Thu Feb 11 2021 Andrey Cherepanov <cas@altlinux.org> 3.9.1-alt1
 - New version.
 

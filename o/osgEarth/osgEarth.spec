@@ -2,7 +2,7 @@
 
 Name: osgEarth
 Version: 3.2
-Release: alt2
+Release: alt3
 
 Summary: Dynamic map generation toolkit for OpenSceneGraph
 License: LGPL
@@ -10,13 +10,27 @@ Group: Graphics
 
 Url: http://osgearth.org
 Source: osgearth-%version.tar
-Patch: geos-3_8-support.patch
-Packager: Dmitry Derjavin <dd@altlinux.org>
 
-# Automatically added by buildreq on Wed Sep 22 2010
-BuildRequires: cmake gcc-c++ libGL-devel libOpenSceneGraph-devel libXrandr-devel libXrender-devel libXt-devel libcurl-devel libexpat-devel libgdal-devel libgeos-devel libsqlite3-devel libzip-devel
+BuildRequires(pre): cmake
+BuildRequires: gcc-c++
+BuildRequires: git-core
+BuildRequires: libGL-devel
+BuildRequires: libGLEW-devel
 BuildRequires: libGLU-devel
-BuildRequires: /usr/bin/osgversion
+BuildRequires: libOpenSceneGraph-devel
+BuildRequires: libXrandr-devel
+BuildRequires: libXrender-devel
+BuildRequires: libXt-devel
+BuildRequires: libcurl-devel
+BuildRequires: libexpat-devel
+BuildRequires: libgdal-devel
+BuildRequires: libgeos-devel
+BuildRequires: libprotobuf-devel
+BuildRequires: libsqlite3-devel
+BuildRequires: libwebp-devel
+BuildRequires: libzip-devel
+BuildRequires: libzip-utils
+BuildRequires: protobuf-compiler
 
 %description
 osgEarth is a scalable terrain rendering toolkit for
@@ -87,7 +101,13 @@ This package contains sample data files for osgEarth.
 
 %prep
 %setup -n osgearth-%version
-%patch -p1
+# Remove non-free content
+rm -rf data/loopix
+ 
+# Disable fastdxt driver on non x86 arches, requires x86 intrinsics
+%ifnarch x86_64
+sed -i 's|add_subdirectory(fastdxt)|# add_subdirectory(fastdxt)|' src/osgEarthDrivers/CMakeLists.txt
+%endif
 
 %build
 %ifarch %e2k
@@ -96,28 +116,21 @@ This package contains sample data files for osgEarth.
 # OpenSceneGraph debuginfo too large now => unmets
 %global __find_debuginfo_files %nil
 %endif
-mkdir BUILD
-pushd BUILD
-cmake \
-	-DCMAKE_BUILD_TYPE="Release" \
-	-DCMAKE_INSTALL_PREFIX:PATH=%_usr \
-	-DCMAKE_CXX_FLAGS="%optflags" \
-	..
-%make_build VERBOSE=1
-popd
+%cmake \
+       -Wno-dev \
+       -DCMAKE_BUILD_TYPE="Release"
+%cmake_build
 
 %install
-pushd BUILD
-%makeinstall_std
+%cmakeinstall_std
 # Supposed to take data files
 mkdir -p %buildroot%_datadir/osgEarth
-cp -a ../data ../tests %buildroot%_datadir/osgEarth
-popd
+cp -a data tests %buildroot%_datadir/osgEarth
 
 %files -n lib%name
 %doc README.md
 %_libdir/libosgEarth*.so.*
-%_libdir/osgdb*.so
+%_libdir/osgPlugins-*/osgdb_*.so
 
 %files -n lib%name-devel
 %_includedir/osg*
@@ -130,6 +143,11 @@ popd
 %_datadir/osgEarth
 
 %changelog
+* Wed Jan 19 2022 Andrey Cherepanov <cas@altlinux.org> 3.2-alt3
+- Rebuild with geos-3.10.
+- Build from upstream git tag.
+- Use cmake macros.
+
 * Wed Oct 27 2021 Michael Shigorin <mike@altlinux.org> 3.2-alt2
 - E2K: avoid OSG debuginfo unmets
 
