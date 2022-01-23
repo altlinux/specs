@@ -1,6 +1,6 @@
 %define module_name rtl88x2bu
 %define module_version 5.8.7.1
-%define module_release alt1
+%define module_release alt2
 
 %define flavour	std-def
 %define karch %ix86 x86_64
@@ -48,7 +48,7 @@ tar xvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
     CROSS_COMPILE= \
     KSRC=%_usrsrc/linux-%kversion-%flavour \
     modules \
-    USER_EXTRA_CFLAGS="-Wno-error=date-time -Wno-error=incompatible-pointer-types"
+    USER_EXTRA_CFLAGS="-Wno-error=date-time -Wno-error=incompatible-pointer-types -Wno-misleading-indentation"
 
 %install
 install -D -m 644 88x2bu.ko %buildroot/%module_dir/%module_name.ko
