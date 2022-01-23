@@ -1,7 +1,7 @@
 %define py_name yt_dlp
 
 Name: yt-dlp
-Version: 2021.12.27
+Version: 2022.01.21
 Release: alt1
 
 Summary: A tool for downloading from video services for offline watching
@@ -66,5 +66,8 @@ rm %buildroot/usr/share/doc/yt_dlp/README.txt
 %python3_sitelibdir/%py_name-*.egg-info
 
 %changelog
+* Sun Jan 23 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 2022.01.21-alt1
+- Updated to 2022.01.21.
+
 * Sun Jan 09 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 2021.12.27-alt1
 - Initial build for ALT Sisyphus (2021.12.27) (ALT#41434).
