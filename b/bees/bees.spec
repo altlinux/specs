@@ -1,6 +1,6 @@
 Name: bees
-Version: 0.6.6
-Release: alt0.pre
+Version: 0.7
+Release: alt1
 
 Summary: Best-Effort Extent-Same, a btrfs deduplication agent
 
@@ -63,6 +63,9 @@ EOF
 %config(noreplace) %_sysconfdir/bees/beesd.conf.sample
 
 %changelog
+* Sun Jan 23 2022 Vitaly Lipatov <lav@altlinux.ru> 0.7-alt1
+- new version 0.7 (with rpmrb script)
+
 * Sun Aug 29 2021 Vitaly Lipatov <lav@altlinux.ru> 0.6.6-alt0.pre
 - build pre 0.6.6 from git 081a6af (see https://github.com/Zygo/bees/issues/187)
 
