@@ -6,8 +6,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: kubernetes
-Version: 1.22.5
-Release: alt2
+Version: 1.22.6
+Release: alt1
 Summary: Container cluster management
 
 Group: System/Configuration/Other
@@ -337,6 +337,9 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Thu Jan 20 2022 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.6-alt1
+- 1.22.6
+
 * Fri Dec 24 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.5-alt2
 - Comment etcnet hardcoded net.ipv4.ip_forward default
 - Add zsh completion
