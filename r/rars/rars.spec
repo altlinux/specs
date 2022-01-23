@@ -1,6 +1,6 @@
 Name: rars
 Version: 1.5
-Release: alt2
+Release: alt3
 
 Summary: RISC-V Assembler and Runtime Simulator
 
@@ -14,20 +14,13 @@ Patch: %name-%version.patch
 
 BuildRequires: java-devel-default ImageMagick-tools
 BuildArch: noarch
-Requires: java-openjdk
+Obsoletes: %name-javadoc
 
 %description
 RARS, the RISC-V Assembler, Simulator, and Runtime, will assemble and
 simulate the execution of RISC-V assembly language programs. Its
 primary goal is to be an effective development environment for people
 getting started with RISC-V.
-
-%package javadoc
-Group: Documentation
-Summary: Javadoc for %name
-
-%description javadoc
-Documentation and license for %name.
 
 %prep
 %setup -a1
@@ -52,32 +45,25 @@ export LC_ALL=ru_RU.UTF-8
 ./build-jar.sh
 
 %install
-# jar and launcher
-install -d -m 755 %{buildroot}%{_javadir}/
-install -d -m 755 %{buildroot}%{_bindir}/
-cp -p %name.jar %{buildroot}%{_javadir}/%name-%version.jar
-ln -s %name-%version.jar %{buildroot}%{_javadir}/%name.jar
-cp -p rars.sh %{buildroot}%{_bindir}/rars
-
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr License.txt README.md %{buildroot}%{_javadocdir}/%{name}/
+install -D %name.jar %buildroot%_javadir/%name-%version.jar
+ln -s %name-%version.jar %buildroot%_javadir/%name.jar
+install -D rars.sh %buildroot%_bindir/rars
 install -D %name.desktop %buildroot/%_desktopdir/%name.desktop
 for i in 16 32 48 64 128; do
     install -D $i.png %buildroot/%_iconsdir/hicolor/${i}x${i}/apps/%name.png
 done
 
 %files
+%doc *.md src/*.txt src/help/*
 %_javadir/*
 %_bindir/*
 %_desktopdir/*
 %_iconsdir/*/*/apps/*
 
-%files javadoc
-%dir %{_javadocdir}/%{name}
-%{_javadocdir}/%{name}/*
-
 %changelog
+* Sun Jan 23 2022 Fr. Br. George <george@altlinux.ru> 1.5-alt3
+- Obsolete javadoc package
+
 * Tue Jan 18 2022 Fr. Br. George <george@altlinux.ru> 1.5-alt2
 - Provide desktop file
 
