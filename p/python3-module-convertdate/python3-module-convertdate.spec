@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-%modname
-Version: 2.3.2
+Version: 2.4.0
 Release: alt1
 
 Summary: Utils for converting between date formats and calculating holidays
@@ -40,10 +40,14 @@ export PYTHONPATH=%buildroot/%python3_sitelibdir
 py.test-3 tests
 
 %files
+%_bindir/censusgeocode
 %python3_sitelibdir/*
 %doc *.rst *.md
 
 %changelog
+* Sun Jan 23 2022 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Wed Apr 14 2021 Yuri N. Sedunov <aris@altlinux.org> 2.3.2-alt1
 - 2.3.2
 
