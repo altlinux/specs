@@ -1,5 +1,5 @@
 Name: bat
-Version: 0.18.3
+Version: 0.19.0
 Release: alt1
 Summary: A cat(1) clone with syntax highlighting and Git integration
 License: MIT or Apache-2.0
@@ -49,6 +49,9 @@ install -Dm 0644 target/release/build/%name-*/out/assets/completions/bat.fish %b
 %doc README.md LICENSE-MIT LICENSE-APACHE
 
 %changelog
+* Sun Jan 23 2022 Alexander Makeenkov <amakeenk@altlinux.org> 0.19.0-alt1
+- Updated to version 0.19.0
+
 * Tue Sep 21 2021 Alexander Makeenkov <amakeenk@altlinux.org> 0.18.3-alt1
 - Updated to version 0.18.3
 - Added conflict with bacula11-bat package
