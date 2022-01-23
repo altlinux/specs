@@ -27,7 +27,7 @@
   --enable-toolbar
 
 Name: xterm
-Version: 369
+Version: 370
 Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
@@ -157,6 +157,9 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Sun Jan 23 2022 Fr. Br. George <george@altlinux.ru> 370-alt1
+- Autobuild version bump to 370
+
 * Thu Sep 30 2021 Fr. Br. George <george@altlinux.ru> 369-alt1
 - Autobuild version bump to 369
 
