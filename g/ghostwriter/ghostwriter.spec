@@ -1,5 +1,5 @@
 Name: ghostwriter
-Version: 2.0.2
+Version: 2.1.1
 Release: alt1
 
 Summary: Cross-platform, aesthetic, distraction-free Markdown editor
@@ -77,6 +77,9 @@ sed -i 's@appdata/@metainfo/@g' %name.pro
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Mon Jan 24 2022 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
+- new version 2.1.1 (with rpmrb script)
+
 * Thu Aug 19 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.2-alt1
 - new version 2.0.2 (with rpmrb script)
 
