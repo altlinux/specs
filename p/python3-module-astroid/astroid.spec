@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.5.6
-Release: alt1
+Release: alt2
 
 Summary: Python Abstract Syntax Tree New Generation
 License: LGPLv2.1+
@@ -63,9 +63,12 @@ tox.py3 --sitepackages --no-deps -vvr -- tests -vra
 %files
 %doc ChangeLog README.rst
 %python3_sitelibdir/astroid/
-%python3_sitelibdir/astroid-*.egg-info/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Jan 20 2022 Stanislav Levin <slev@altlinux.org> 2.5.6-alt2
+- Fixed FTBFS (setuptools 60+).
+
 * Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 2.5.6-alt1
 - 2.5.3 -> 2.5.6.
 

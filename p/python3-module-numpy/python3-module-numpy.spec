@@ -14,8 +14,8 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 1.21.4
-Release: alt3
+Version: 1.22.1
+Release: alt1
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD-3-Clause
 Group: Development/Python3
@@ -24,17 +24,21 @@ Url: https://www.numpy.org/
 # VCS: https://github.com/numpy/numpy.git
 Source: %name-%version.tar
 Source2: site.cfg
+Source3: svml.tar
 
 Patch: numpy-1.20.2-Remove-strict-dependency-on-testing-package.patch
 Patch1: numpy-1.21.1-alt-use-system-fallocate-declaration.patch
 Patch2: numpy-1.21.1-alt-recfunctions-use-warnings-instead-of-suppress_warnings.patch
-Patch3: numpy-1.21.4-upstream-fix-generic-aliases-tests.patch
 Patch4: numpy-1.21.4-alt-use-sleep-in-auxv-test.patch
+Patch5: numpy-1.22.1-alt-Revert-MAINT-Raise-RuntimeError-if-setuptools-versio.patch
+Patch6: numpy-1.22.1-Migrate-distutils.LooseVersion-to-packaging.version.patch
 
 # E2K patchset with MCST numbering scheme
+%ifarch %e2k
 Patch1001: 0001-arch_e2k_define.patch
 Patch1002: 0002-bug92804.patch
 Patch1003: 0003-lcc-1.24-compat.patch
+%endif
 
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
@@ -128,18 +132,8 @@ create arrays of arbitrary type.
 This package contains pickles for NumPy.
 
 %prep
-%setup
-%patch -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-
-%ifarch %e2k
-%patch1001 -p1
-%patch1002 -p1
-%patch1003 -p1
-%endif
+%setup -a 3
+%autopatch -p1
 
 install -m644 %SOURCE2 .
 sed -i 's|@LIBDIR@|%_libdir|g' site.cfg
@@ -170,7 +164,17 @@ DEFS="$DEFS -UNPY_CPU_AMD64 -UNPY_CPU_X86"
 %python3_build_debug --fcompiler=gnu95
 
 %check
-python3 runtests.py -v %{?relax_tests:||:}
+# point to correct (existing) include dir for tests
+ln -sf %buildroot%_includedir/python%_python3_version/%oname \
+	%buildroot%python3_sitelibdir/%oname/core/include/
+
+# avoid double build
+export PYTHONPATH=%buildroot%python3_sitelibdir
+python3 runtests.py --no-build -v %{?relax_tests:||:}
+
+# restore back link
+ln -sf %_includedir/python%_python3_version/%oname \
+	%buildroot%python3_sitelibdir/%oname/core/include/
 
 %install
 INCS="-I%_includedir/suitesparse -I$PWD/numpy/core/include/numpy"
@@ -206,6 +210,7 @@ cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
 %python3_sitelibdir/%oname
 %exclude %python3_sitelibdir/%oname/conftest.py
 %exclude %python3_sitelibdir/%oname/_pytesttester.py
+%exclude %python3_sitelibdir/%oname/_pytesttester.pyi
 %exclude %python3_sitelibdir/%oname/__pycache__/conftest.*
 %exclude %python3_sitelibdir/%oname/__pycache__/_pytesttester.*
 %exclude %python3_sitelibdir/%oname/f2py/f2py_testing.py
@@ -230,6 +235,7 @@ cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
 %python3_sitelibdir/%oname/testing
 %python3_sitelibdir/%oname/conftest.py
 %python3_sitelibdir/%oname/_pytesttester.py
+%python3_sitelibdir/%oname/_pytesttester.pyi
 %python3_sitelibdir/%oname/__pycache__/conftest.*
 %python3_sitelibdir/%oname/__pycache__/_pytesttester.*
 
@@ -251,6 +257,9 @@ cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Fri Jan 21 2022 Stanislav Levin <slev@altlinux.org> 1:1.22.1-alt1
+- 1.21.4 -> 1.22.1.
+
 * Tue Dec 21 2021 Ivan A. Melnikov <iv@altlinux.org> 1:1.21.4-alt3
 - site.cfg: use openblas by default on mipsel
 

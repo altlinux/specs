@@ -6,7 +6,7 @@
 %def_without bootstrap
 
 Name: python3-module-%oname
-Version: 0.37.0
+Version: 0.37.1
 Release: alt1
 Summary: A built-package format for Python3
 License: MIT
@@ -95,6 +95,9 @@ tox.py3 --sitepackages --no-deps -vvr
 %endif
 
 %changelog
+* Thu Jan 13 2022 Stanislav Levin <slev@altlinux.org> 0.37.1-alt1
+- 0.37.0 -> 0.37.1.
+
 * Fri Sep 10 2021 Stanislav Levin <slev@altlinux.org> 0.37.0-alt1
 - 0.36.2 -> 0.37.0.
 

@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.8.1
-Release: alt2
+Version: 4.10.1
+Release: alt1
 Summary: Library to access the metadata for a Python package
 License: Apache-2.0
 Group: Development/Python3
@@ -18,7 +18,6 @@ Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools_scm)
-BuildRequires: python3(toml)
 
 %if_with check
 # install_requires:
@@ -76,6 +75,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
 %python3_sitelibdir/importlib_metadata/
 
 %changelog
+* Wed Jan 19 2022 Stanislav Levin <slev@altlinux.org> 4.10.1-alt1
+- 4.8.1 -> 4.10.1.
+
 * Tue Nov 23 2021 Stanislav Levin <slev@altlinux.org> 4.8.1-alt2
 - Obsoleted importlib_metadata (closes: #41400).
 

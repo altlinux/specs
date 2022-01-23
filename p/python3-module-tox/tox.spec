@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.24.4
+Version: 3.24.5
 Release: alt1
 
 Summary: virtualenv-based automation of test activities
@@ -36,7 +36,6 @@ BuildRequires: python3(psutil)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_mock)
 BuildRequires: python3(pytest_randomly)
-BuildRequires: python3(pytest_xdist)
 %endif
 
 BuildArch: noarch
@@ -94,6 +93,9 @@ export TOXENV=py3
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Jan 13 2022 Stanislav Levin <slev@altlinux.org> 3.24.5-alt1
+- 3.24.4 -> 3.24.5.
+
 * Fri Sep 17 2021 Stanislav Levin <slev@altlinux.org> 3.24.4-alt1
 - 3.24.3 -> 3.24.4.
 

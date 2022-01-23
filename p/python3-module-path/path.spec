@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 16.0.0
+Version: 16.3.0
 Release: alt1
 
 Summary: A module wrapper for os.path
@@ -66,6 +66,9 @@ tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
 %python3_sitelibdir/path-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Jan 11 2022 Stanislav Levin <slev@altlinux.org> 16.3.0-alt1
+- 16.0.0 -> 16.3.0.
+
 * Tue Jul 20 2021 Stanislav Levin <slev@altlinux.org> 16.0.0-alt1
 - 13.2.0 -> 16.0.0.
 

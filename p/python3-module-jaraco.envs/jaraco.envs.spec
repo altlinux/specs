@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.1.1
+Version: 2.2.0
 Release: alt1
 
 Summary: Classes for orchestrating Python virtual environments
@@ -62,5 +62,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Jan 11 2022 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
+- 2.1.1 -> 2.2.0.
+
 * Fri Mar 26 2021 Stanislav Levin <slev@altlinux.org> 2.1.1-alt1
 - Initial build for Sisyphus.

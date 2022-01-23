@@ -4,7 +4,7 @@
 
 Name: python3-module-pywayland
 Version: 0.4.8
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for the libwayland library
 License: Apache-2.0
@@ -50,9 +50,12 @@ mkdir $XDG_RUNTIME_DIR
 %doc LICENSE README.rst
 %_bindir/pywayland-scanner
 %python3_sitelibdir/pywayland
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/pywayland-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Jan 21 2022 Stanislav Levin <slev@altlinux.org> 0.4.8-alt2
+- Fixed FTBFS (setuptools 60+).
+
 * Thu Jan 13 2022 Egor Ignatov <egori@altlinux.org> 0.4.8-alt1
 - new version 0.4.8
 

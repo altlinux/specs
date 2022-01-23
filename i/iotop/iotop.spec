@@ -1,6 +1,6 @@
 Name: iotop
 Version: 0.6
-Release: alt2
+Release: alt3
 
 Summary: Top like utility for I/O
 License: GPLv2
@@ -40,7 +40,7 @@ process is the I/O going on.
 %python3_build
 
 %install
-%python3_install
+%python3_install --install-scripts %_sbindir
 
 %files
 %_sbindir/iotop
@@ -48,6 +48,9 @@ process is the I/O going on.
 %_man8dir/*
 
 %changelog
+* Wed Jan 19 2022 Stanislav Levin <slev@altlinux.org> 0.6-alt3
+- Fixed FTBFS (setuptools 60+).
+
 * Sun Nov 10 2019 Anton Midyukov <antohami@altlinux.org> 0.6-alt2
 - rebuild with python3
 

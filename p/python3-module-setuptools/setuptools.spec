@@ -7,7 +7,7 @@
 
 Name: python3-module-%mname
 Epoch: 1
-Version: 59.6.0
+Version: 60.5.4
 Release: alt1
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
@@ -27,11 +27,14 @@ BuildRequires: python3(mock)
 BuildRequires: python3(jaraco.envs)
 BuildRequires: python3(jaraco.path)
 BuildRequires: python3(pip)
+BuildRequires: python3(build)
+BuildRequires: python3(filelock)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_xdist)
 BuildRequires: python3(pytest_virtualenv)
 BuildRequires: python3(pytest_enabler)
 BuildRequires: python3(sphinx)
+BuildRequires: python3(tomli)
 BuildRequires: python3(tox)
 BuildRequires: python3(tox_console_scripts)
 BuildRequires: python3(tox_no_deps)
@@ -56,8 +59,15 @@ Requires: python3-dev
 %filter_from_requires /python3\(\.[[:digit:]]\)\?(pkg_resources\.extern\..*)/d
 %filter_from_requires /python3\(\.[[:digit:]]\)\?(setuptools\.extern\..*)/d
 
+# switch to 'local' copy of distutils
+%filter_from_requires /python3(distutils\(\..*\)\?)/d
+
 # hide bundled packages
 %add_findprov_skiplist %python3_sitelibdir/setuptools/_vendor/*
+
+# ms windows compilers (some packages want to import these modules)
+%add_findreq_skiplist %python3_sitelibdir/setuptools/_distutils/*msvc*compiler*.py*
+%add_findprov_skiplist %python3_sitelibdir/setuptools/_distutils/*msvc*compiler*.py*
 
 %package -n python3-module-pkg_resources
 Summary: Package Discovery and Resource Access for Python3 libraries
@@ -107,10 +117,31 @@ Provides the seed package for virtualenv(packaged as wheel).
 # built wheel being installed into virtualenv will lack of unbundled packages
 
 # Remove bundled exes
-rm -f setuptools/*.exe
+# today's paths containing *.exe
+# setuptools/
+# setuptools/_distutils/command/
+find -type f -name '*.exe' -delete
 
 # do not generate version like release.postdate, we need release one
 sed -i '/^tag_build =.*/d;/^tag_date = 1/d' setup.cfg
+
+# Make sure distutils looks at the right pyconfig.h file
+# See https://bugzilla.redhat.com/show_bug.cgi?id=201434
+# Similar for sysconfig: sysconfig.get_config_h_filename tries to locate
+# pyconfig.h so it can be parsed, and needs to do this at runtime in site.py
+# when python starts up (see https://bugzilla.redhat.com/show_bug.cgi?id=653058)
+#
+# Split this out so it goes directly to the pyconfig-32.h/pyconfig-64.h
+# variants:
+%ifarch x86_64 %ix86
+%ifarch x86_64
+%define _pyconfig_h pyconfig-64.h
+%else
+%define _pyconfig_h pyconfig-32.h
+%endif
+
+sed -i "s@'pyconfig.h'@'%_pyconfig_h'@" setuptools/_distutils/sysconfig.py
+%endif
 
 %build
 %global python3_setup_buildrequires %nil
@@ -132,10 +163,10 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %check
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
+export NO_INTERNET=YES
 export TOXENV=py3
-export TOX_TESTENV_PASSENV='PIP_NO_BUILD_ISOLATION'
-tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
-    --ignore pavement.py -vra
+export TOX_TESTENV_PASSENV='PIP_NO_BUILD_ISOLATION NO_INTERNET'
+tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- -vra
 
 %files
 %doc LICENSE *.rst
@@ -162,6 +193,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
 %endif
 
 %changelog
+* Tue Jan 18 2022 Stanislav Levin <slev@altlinux.org> 1:60.5.4-alt1
+- 59.6.0 -> 60.5.4 (closes: #41643).
+
 * Wed Dec 15 2021 Stanislav Levin <slev@altlinux.org> 1:59.6.0-alt1
 - 58.4.0 -> 59.6.0.
 

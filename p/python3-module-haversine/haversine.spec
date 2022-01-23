@@ -1,53 +1,64 @@
 %define _unpackaged_files_terminate_build 1
 %define oname haversine
 
-Name: python3-module-%oname
-Version: 0.4.5
-Release: alt2
+%def_with check
 
-Summary: Calculate the distance bewteen 2 points on Earth
-License: GPLv3
+Name: python3-module-%oname
+Version: 2.5.1
+Release: alt1
+
+Summary: Calculate the distance between 2 points on Earth
+License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/haversine/
+Url: https://pypi.org/project/haversine/
 # https://github.com/mapado/haversine.git
 
-Source0: https://pypi.python.org/packages/57/b4/3b1f5ca78876ad00cbb2a2bf7bcebfe4751c00ddabc47005b59f33835646/%{oname}-%{version}.tar.gz
+Source0: %name-%version.tar
 
+BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 
-%py3_provides %oname
-
+%if_with check
+BuildRequires: python3(numpy.testing)
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+%endif
 
 %description
-Calculate the distance (in km or in miles) bewteen two points on Earth,
+Calculate the distance (in km or in miles) between two points on Earth,
 located by their latitude and longitude.
 
 %prep
-%setup -q -n %{oname}-%{version}
-
-SUFF=$(echo %_python3_version%_python3_abiflags |sed 's|\.||')
-sed -i "s|libhsine.so|libhsine.cpython-$SUFF.so|" %oname/__init__.py
+%setup
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
-%if "%_libexecdir" != "%_libdir"
-mv %buildroot%_libexecdir %buildroot%_libdir
-%endif
-
 %check
-python3 setup.py build_ext -i
-python3 -c "from %oname import %oname"
+cat > tox.ini <<'EOF'
+[testenv]
+usedevelop=True
+commands =
+    {envbindir}/pytest {posargs:-vra}
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr -s false
 
 %files
-%doc *.txt
-%python3_sitelibdir/*
-
+%doc README.md
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Jan 17 2022 Stanislav Levin <slev@altlinux.org> 2.5.1-alt1
+- 0.4.5 -> 2.5.1.
+
 * Tue Nov 05 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.4.5-alt2
 - disable python2
 

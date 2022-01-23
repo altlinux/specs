@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 21.10b0
+Version: 21.12b0
 Release: alt1
 
 Summary: The Uncompromising Code Formatter
@@ -26,7 +26,6 @@ BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3(click)
 BuildRequires: python3(platformdirs)
 BuildRequires: python3(tomli)
-BuildRequires: python3(regex)
 BuildRequires: python3(pathspec)
 BuildRequires: python3(mypy_extensions)
 %if %typing_extensions
@@ -98,6 +97,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/blib2to3/
 
 %changelog
+* Fri Jan 14 2022 Stanislav Levin <slev@altlinux.org> 21.12b0-alt1
+- 21.10b0 -> 21.12b0.
+
 * Mon Nov 01 2021 Stanislav Levin <slev@altlinux.org> 21.10b0-alt1
 - 21.9b0 -> 21.10b0.
 

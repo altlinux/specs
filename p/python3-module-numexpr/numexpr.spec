@@ -1,27 +1,33 @@
+%define _unpackaged_files_terminate_build 1
 %define oname numexpr
 
-Name:           python3-module-%oname
-Version:        2.7.3
-Release:        alt1
-Epoch:          1
+%def_with check
 
-Summary:        Fast numerical array expression evaluator for Python and NumPy
+Name: python3-module-%oname
+Version: 2.8.1
+Release: alt1
+Epoch: 1
 
-Group:          Development/Python3
-License:        MIT
-URL:            https://github.com/pydata/numexpr
+Summary: Fast numerical array expression evaluator for Python and NumPy
 
-# Source-url: %__pypi_url %oname
-Source:         %name-%version.tar
-Source1:        site.cfg
+Group: Development/Python3
+License: MIT
+Url: https://github.com/pydata/numexpr
 
-BuildRequires(pre): rpm-build-intro >= 2.2.4
+Source: %name-%version.tar
+Source1: site.cfg
+Patch: %name-%version-alt.patch
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: libnumpy-py3-devel python3-module-numpy-testing
+BuildRequires: libnumpy-py3-devel
 
 BuildRequires: gcc-c++ liblapack-devel
 
-Requires: /proc
+%if_with check
+BuildRequires: /proc
+BuildRequires: python3(tox)
+BuildRequires: python3(numpy.testing)
+%endif
 
 %description
 The numexpr package evaluates multiple-operator array expressions many
@@ -39,9 +45,7 @@ allows to use multiple cores in your computations.
 
 %prep
 %setup
-%__subst "s|'mkl'|'openblas_lapack'|" setup.py
-# don't require tests from the main module
-%__subst "s|from numexpr.tests.*||" numexpr/__init__.py
+%autopatch -p1
 
 install -p -m644 %SOURCE1 ./
 sed -i 's|@LIBDIR@|%_libdir|' site.cfg
@@ -57,18 +61,29 @@ sed -i 's|@PYVER@|%_python3_version%_python3_abiflags|' \
 
 %install
 %python3_install
-%python3_prune
 
 %check
-pushd build/lib.linux*
-PYTHONPATH=$(pwd) python3 -c 'import numexpr.tests; numexpr.tests.test()'
-popd
+cat > tox.ini <<'EOF'
+[testenv]
+usedevelop=True
+commands =
+    # must be synced with CI config (e.g. travis)
+    python -c 'import sys, numexpr; sys.exit(0 if numexpr.test().wasSuccessful() else 1)'
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vvr -s false
 
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Jan 17 2022 Stanislav Levin <slev@altlinux.org> 1:2.8.1-alt1
+- 2.7.3 -> 2.8.1.
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1:2.7.3-alt1
 - new version 2.7.3 (with rpmrb script)
 

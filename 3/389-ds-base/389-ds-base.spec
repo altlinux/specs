@@ -15,7 +15,7 @@
 
 Name: 389-ds-base
 Version: 1.4.3.28
-Release: alt1
+Release: alt2
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
@@ -396,6 +396,9 @@ fi
 %endif
 
 %changelog
+* Thu Jan 20 2022 Stanislav Levin <slev@altlinux.org> 1.4.3.28-alt2
+- Fixed FTBFS (argparse-manpage 2.1).
+
 * Thu Oct 28 2021 Stanislav Levin <slev@altlinux.org> 1.4.3.28-alt1
 - 1.4.3.25 -> 1.4.3.28.
 

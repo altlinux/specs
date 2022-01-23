@@ -3,19 +3,18 @@
 %define oname selenium
 
 Name: python3-module-%oname
-Version: 3.0.2
-Release: alt3
+Version: 3.14.1
+Release: alt1
 
 Summary: Python bindings for Selenium
-License: ASL
+License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/selenium/
 
-Source0: https://pypi.python.org/packages/0c/42/20c235e604bf736bc970c1275a78c4ea28c6453a0934002f95df9c49dad0/%{oname}-%{version}.tar.gz
+Source0: %name-%version.tar
 Patch: selenium-use-without-bundled-libs.patch
 
 BuildRequires(pre): rpm-build-python3
-
 
 %description
 Python language bindings for Selenium WebDriver.
@@ -24,8 +23,8 @@ The selenium package is used automate web browser interaction from
 Python.
 
 %prep
-%setup -q -n %{oname}-%{version}
-%patch -p1
+%setup
+%autopatch -p1
 
 %build
 %python3_build_debug
@@ -40,13 +39,15 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 find %buildroot -type f -name '*.so' -exec rm -f '{}' +
 
 %check
-%__python3 setup.py test
 
 %files
-%python3_sitelibdir/*
-
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Jan 20 2022 Stanislav Levin <slev@altlinux.org> 3.14.1-alt1
+- 3.0.2 -> 3.14.1.
+
 * Mon Feb 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.0.2-alt3
 - Build for python2 disabled.
 

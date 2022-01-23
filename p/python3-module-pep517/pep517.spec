@@ -1,17 +1,19 @@
 %define _unpackaged_files_terminate_build 1
-%define oname tomli
+%define oname pep517
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.0.0
+Version: 0.12.0
 Release: alt1
 
-Summary: A lil' TOML parser
-License: MIT
+Summary: API to call PEP 517 hooks for building Python packages
+
 Group: Development/Python3
-# Source-git: https://github.com/hukkin/tomli.git
-Url: https://pypi.org/project/tomli
+License: MIT
+Url: https://github.com/pypa/pep517
+
+BuildArch: noarch
 
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
@@ -20,25 +22,29 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(flit)
 
 %if_with check
-BuildRequires: python3(dateutil)
+# install_requires:
+BuildRequires: python3(tomli)
+
+# tests
 BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
 BuildRequires: python3(tox_console_scripts)
+BuildRequires: python3(tox_no_deps)
 %endif
 
-BuildArch: noarch
+%py3_requires tomli
 
 %description
-Tomli is a Python library for parsing TOML. Tomli is fully compatible with TOML
-v1.0.0.
+PEP 517 specifies a standard API for systems which build Python packages.
 
 %prep
 %setup
 %autopatch -p1
 
 %build
-# generate setup.py for legacy builder(flit build backend)
+# setup.py-less projects
+# flit build backend
+# generate setup.py for legacy builder
 %__python3 - <<-'EOF'
 from pathlib import Path
 from flit.sdist import SdistBuilder
@@ -57,26 +63,24 @@ EOF
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
+export NO_INTERNET=YES
+export TOX_TESTENV_PASSENV='NO_INTERNET'
 tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
 
 %files
-%doc README.md
+%doc README.rst
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
-* Tue Jan 11 2022 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
-- 1.2.2 -> 2.0.0.
+* Tue Jan 11 2022 Stanislav Levin <slev@altlinux.org> 0.12.0-alt1
+- 0.10.0 -> 0.12.0.
 
-* Tue Nov 02 2021 Stanislav Levin <slev@altlinux.org> 1.2.2-alt1
-- 1.2.1 -> 1.2.2.
+* Thu Apr 22 2021 Vitaly Lipatov <lav@altlinux.ru> 0.10.0-alt2
+- initial build for ALT Sisyphus
 
-* Wed Sep 29 2021 Stanislav Levin <slev@altlinux.org> 1.2.1-alt1
-- 1.1.0 -> 1.2.1.
+* Tue Apr 20 2021 Pablo Soldatoff <soldatoff@etersoft.ru> 0.10.0-alt1
+- new version (0.10.0) with rpmgs script
 
-* Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt2
-- NMU: drop BR: python3-module-flit (publishing tool)
 
-* Mon Jul 26 2021 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
-- Initial build for Sisyphus.
 

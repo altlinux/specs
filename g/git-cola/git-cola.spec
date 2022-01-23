@@ -1,6 +1,6 @@
 Name: git-cola
 Version: 3.11.0
-Release: alt1
+Release: alt2
 
 Summary: A highly caffeinated git gui
 License: GPL-2.0-or-later
@@ -34,7 +34,6 @@ and caffeine-inspired features.
 # fix python shebangs
 sed -i 's|/usr/bin/env python|%__python3|' $(find ./ -name '*.py')
 sed -i 's|/usr/bin/env python|%__python3|' bin/git-cola bin/git-cola-sequence-editor bin/git-dag
-sed -i 's|python|%__python3|' setup.cfg
 
 %prepare_sphinx3 share/doc/%name
 
@@ -60,6 +59,9 @@ chmod +x %buildroot%_datadir/git-cola/lib/cola/widgets/spellcheck.py
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jan 19 2022 Stanislav Levin <slev@altlinux.org> 3.11.0-alt2
+- Fixed FTBFS (setuptools 60+).
+
 * Wed Oct 20 2021 Leontiy Volodin <lvol@altlinux.org> 3.11.0-alt1
 - New version 3.11.0.
 

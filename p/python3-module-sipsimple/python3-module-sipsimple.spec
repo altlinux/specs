@@ -2,7 +2,7 @@
 
 Name: python3-module-%modulename
 Version: 5.2.6
-Release: alt1
+Release: alt2
 
 Summary: SIP SIMPLE implementation for Python
 License: GPL-3.0+
@@ -20,7 +20,7 @@ ExclusiveArch: x86_64
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-distribute
-BuildRequires: python3-module-setuptools_cython
+BuildRequires: python3-module-Cython
 BuildRequires: gcc-c++
 BuildRequires: libalsa-devel
 BuildRequires: libavformat-devel
@@ -64,6 +64,9 @@ sed -i 's,^#elif defined(__aarch64__),& || defined(__e2k__),' \
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Jan 20 2022 Stanislav Levin <slev@altlinux.org> 5.2.6-alt2
+- Fixed FTBFS (setuptools 60+).
+
 * Thu Sep 16 2021 Andrey Cherepanov <cas@altlinux.org> 5.2.6-alt1
 - New version.
 
