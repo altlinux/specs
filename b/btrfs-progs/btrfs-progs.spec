@@ -1,6 +1,12 @@
+%ifarch x86_64 aarch64
+%def_with check
+%else
+%def_without check
+%endif
+
 %define _unpackaged_files_terminate_build 0
 Name: btrfs-progs
-Version: 5.15.1
+Version: 5.16
 Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
@@ -22,6 +28,13 @@ BuildRequires: xmlto
 BuildRequires: libzstd-devel
 BuildRequires: libudev-devel
 BuildRequires: libselinux-devel
+%if_with check
+BuildRequires: /proc /dev/kvm
+BuildRequires: /sbin/dmsetup
+BuildRequires: /usr/bin/getfacl
+BuildRequires: /sbin/udevadm
+BuildRequires: rpm-build-vm
+%endif
 
 %description
 Btrfs (B-tree FS or usually pronounced "Butter FS") is a copy-on-write
@@ -82,6 +95,20 @@ ln -s ../../sbin/btrfs %buildroot%_bindir/btrfs
 rm -f %buildroot/%{_lib}/libbtrfs.so
 rm -f %buildroot/%{_lib}/libbtrfsutil.so
 
+%check
+# failed: setfattr -n user.foo -v bar1 /usr/src/RPM/BUILD/btrfs-progs-5.16/tests/mnt/acls/acls.1
+rm -rf tests/convert-tests/001-ext2-basic
+rm -rf tests/convert-tests/002-ext3-basic
+rm -rf tests/convert-tests/003-ext4-basic
+rm -rf tests/convert-tests/005-delete-all-rollback
+
+# mknod is not allowed in virtual environment
+rm -rf tests/mkfs-tests/009-special-files-for-rootdir
+# don't run all fuzzing tests
+rm -rf tests/fuzz-tests/0*
+
+vm-run --sbin --udevd --kvm=cond make test
+
 %files
 /sbin/*
 %_bindir/btrfs
@@ -99,6 +126,10 @@ rm -f %buildroot/%{_lib}/libbtrfsutil.so
 %_includedir/*
 
 %changelog
+* Mon Jan 17 2022 Anton Farygin <rider@altlinux.ru> 5.16-alt1
+- 5.15.1 -> 5.16
+- enabled tests
+
 * Thu Nov 25 2021 Anton Farygin <rider@altlinux.ru> 5.15.1-alt1
 - 5.15 -> 5.15.1
 
