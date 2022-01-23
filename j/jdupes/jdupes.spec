@@ -1,5 +1,5 @@
 Name: jdupes
-Version: 1.20.0
+Version: 1.20.2
 Release: alt1
 
 Summary: A powerful duplicate file finder and an enhanced fork of 'fdupes'
@@ -43,6 +43,9 @@ between the two programs. For example, the -I switch in jdupes means
 %_man1dir/*
 
 %changelog
+* Mon Jan 24 2022 Vitaly Lipatov <lav@altlinux.ru> 1.20.2-alt1
+- new version 1.20.2 (with rpmrb script)
+
 * Sat Aug 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1.20.0-alt1
 - new version 1.20.0 (with rpmrb script)
 
