@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qview
-Version: 4.0
+Version: 5.0
 Release: alt1
 
 Summary: Practical and minimal image viewer
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 Packager: Alexander Makeenkov <amakeenk@altlinux.org>
 
 BuildRequires: qt5-base-devel
+BuildRequires: qt5-tools
 
 %description
 qView is an image viewer designed with minimalism and usability in mind.
@@ -37,13 +38,17 @@ rm -rf %buildroot%_datadir/licenses/%name
 
 %files
 %_bindir/%name
-%_desktopdir/qView.desktop
-%_datadir/metainfo/%name.appdata.xml
-%_iconsdir/hicolor/*x*/apps/%name.png
-%_iconsdir/hicolor/scalable/apps/%name.svg
+%_desktopdir/com.interversehq.qView.desktop
+%_datadir/metainfo/com.interversehq.qView.appdata.xml
+%_iconsdir/hicolor/*x*/apps/com.interversehq.qView.png
+%_iconsdir/hicolor/scalable/apps/com.interversehq.qView.svg
+%_iconsdir/hicolor/symbolic/apps/com.interversehq.qView-symbolic.svg
 %doc LICENSE
 
 %changelog
+* Sun Jan 23 2022 Alexander Makeenkov <amakeenk@altlinux.org> 5.0-alt1
+- Updated to version 5.0
+
 * Wed Jan 06 2021 Alexander Makeenkov <amakeenk@altlinux.org> 4.0-alt1
 - Updated to version 4.0
 
