@@ -1,6 +1,6 @@
 Name: libuser
 Version: 0.63
-Release: alt1
+Release: alt2
 
 Summary: A user and group account administration library
 License: LGPLv2+
@@ -120,6 +120,9 @@ make
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Jan 24 2022 Nikolay Burykin <bne@altlinux.org> 0.63-alt2
+- update Release to avoid conflicts with Autoimports
+
 * Wed Jan 12 2022 Nikolay Burykin <bne@altlinux.org> 0.63-alt1
 - Build from Autoimports to Sisyphus
 
