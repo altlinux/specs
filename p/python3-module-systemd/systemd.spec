@@ -5,7 +5,7 @@
 Name: python3-module-systemd
 Epoch: 1
 Version: 234
-Release: alt2
+Release: alt3
 Summary: Python module wrapping systemd functionality
 Group: Development/Python3
 
@@ -21,6 +21,7 @@ BuildRequires: libsystemd-devel
 %if_with check
 BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 %description
@@ -44,27 +45,25 @@ provided by libsystemd is also wrapped.
 rm -r %buildroot%python3_sitelibdir/systemd/test/
 
 %check
-cat > tox.ini <<EOF
+cat > tox.ini <<'EOF'
 [testenv]
-whitelist_externals =
-    /bin/cp
-    /bin/sed
-commands_pre =
-    /bin/cp /usr/bin/py.test3 {envbindir}/py.test
-    /bin/sed -i '1c #!{envpython}' {envbindir}/py.test
 commands =
-    {envbindir}/py.test {posargs} ./systemd/test/
+    {envbindir}/pytest {posargs:-vra systemd/test}
 EOF
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
-tox.py3 --sitepackages -vvr
+tox.py3 --sitepackages --console-scripts -vvr
 
 %files
 %doc README.md LICENSE.txt
-%python3_sitelibdir/*
+%python3_sitelibdir/systemd/
+%python3_sitelibdir/systemd_python-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Jan 24 2022 Stanislav Levin <slev@altlinux.org> 1:234-alt3
+- Applied upstream patches (fixed build against Python3.10).
+
 * Mon Oct 05 2020 Stanislav Levin <slev@altlinux.org> 1:234-alt2
 - Stopped Python2 package build.
 - Enabled testing.
