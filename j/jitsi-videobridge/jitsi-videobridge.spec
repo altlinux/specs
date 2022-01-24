@@ -5,7 +5,7 @@
 
 Name:           jitsi-videobridge
 Version:        2.1
-Release:        alt0.6
+Release:        alt0.7
 
 Summary:        Jitsi Videobridge - WebRTC compatible Selective Forwarding Unit
 #Group:          Networking/Instant messaging
@@ -68,7 +68,7 @@ install -Dm0755 %SOURCE2 %buildroot%_sbindir/%{name}-configure
 install -D -m 644 debian/manpage.1 %buildroot%_man1dir/%name.1
 install -D -m 644 debian/jitsi-videobridge2.service %buildroot%_unitdir/%service_name.service
 sed -i 's,User=jvb,User=%pseudouser_name,' %buildroot%_unitdir/%service_name.service
-install -D -m 644 debian/init.d %buildroot%_initdir/%service_name
+install -D -m 755 debian/init.d %buildroot%_initdir/%service_name
 sed -i 's,NAME=jvb,NAME=%buildroot%_initdir/%service_name,' %buildroot%_initdir/%service_name
 
 mkdir -p %buildroot%_localstatedir/log/jitsi
@@ -111,6 +111,9 @@ fi
 %dir %attr(0755,_jvb,_jvb) %_localstatedir/log/jitsi
 
 %changelog
+* Mon Jan 24 2022 Igor Vlasenko <viy@altlinux.org> 2.1-alt0.7
+- fixed init script permissions (closes: #41778)
+
 * Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 2.1-alt0.6
 - build with java8
 
