@@ -3,10 +3,12 @@
 
 Name: kde5-%origname
 Version: 2.7.2
-Release: alt2
+Release: alt3
 
 # https://download.kde.org/stable/%origname/%version/%origname-%version.tar.xz
-Source: %origname-%version.tar
+Source0: %origname-%version.tar
+
+Source1: %origname.po
 
 Patch1: not_show_hidden_files.patch
 
@@ -58,6 +60,7 @@ published under the GNU General Public Licence
 %prep
 %setup -qn %origname-%version
 %patch1 -p2
+cp -f %SOURCE1 po/ru/
 
 %build
 %add_optflags -fpermissive
@@ -82,6 +85,9 @@ published under the GNU General Public Licence
 %_datadir/metainfo/org.kde.%origname.appdata.xml
 
 %changelog
+* Mon Jan 24 2022 Nazarov Denis <nenderus@altlinux.org> 2.7.2-alt3
+- update russian translation
+
 * Fri Jan 21 2022 Nazarov Denis <nenderus@altlinux.org> 2.7.2-alt2
 - restore translation
 
