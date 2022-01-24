@@ -1,5 +1,5 @@
 Name: proxychains-ng
-Version: 4.15
+Version: 4.16
 Release: alt1
 
 Summary: Redirects the connections through SOCKS4a/5 or HTTP proxies
@@ -51,5 +51,8 @@ ln -s proxychains4 %buildroot%_bindir/proxychains
 %_libdir/%name/libproxychains4.so
 
 %changelog
+* Mon Jan 24 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.16-alt1
+- Updated to 4.16.
+
 * Tue Sep 21 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.15-alt1
 - Initial built for ALT Sisyphus.
