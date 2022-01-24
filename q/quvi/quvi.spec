@@ -1,31 +1,40 @@
-%define ver_major 0.4
+%define _name quvi
+%define ver_major 0.9
 
-Name: quvi
-Version: %ver_major.2
-Release: alt1
+Name: %_name
+Version: %ver_major.5
+Release: alt2
 
 Summary: Command line tool for parsing video download links
 Group: Networking/Other
 License: LGPLv2+
 Url: http://quvi.sourceforge.net/
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: http://downloads.sourceforge.net/project/%name/%ver_major/%name-%version.tar.xz
+Source: http://downloads.sourceforge.net/project/%name/%ver_major/%_name-%version.tar.xz
 
-BuildRequires: lib%name-devel > 0.4.0
-BuildRequires: libcurl-devel
+# opensuse
+Patch0: reproducible.patch
+Patch1: quvi-glibc-2.34.patch
+
+BuildRequires: lib%_name-devel >= 0.9.3
+BuildRequires: libgio-devel libxml2-devel libcurl-devel libjson-glib-devel
 # for check
 #BuildRequires: perl-Test-Deep perl-JSON perl-Test-Pod
+
+Conflicts: quvi0.9 <= 0.9.5-alt1
+Obsoletes: quvi0.9 <= 0.9.5-alt1
 
 %description
 %name is a command line tool for parsing video download links. It
 supports Youtube and other similar video websites.
 
 %prep
-%setup -q
+%setup -n %_name-%version
+%autopatch -p1
 
 %build
-%autoreconf
+# Autoconf version 2.69 or higher is required
+#%autoreconf
 %configure
 %make_build
 
@@ -33,14 +42,32 @@ supports Youtube and other similar video websites.
 #%%make check
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
-%_bindir/%name
-%_man1dir/%name.*
+%_bindir/%_name
+%_man1dir/quvi-dump.1.*
+%_man1dir/quvi-get.1.*
+%_man1dir/quvi-info.1.*
+%_man1dir/quvi-scan.1.*
+%_man1dir/quvi.1.*
+%_man5dir/quvirc.5.*
+
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon Jan 24 2022 Igor Vlasenko <viy@altlinux.org> 0.9.5-alt2
+- consolidated quvi and quvi0.9
+
+* Mon Sep 15 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.5-alt1
+- 0.9.5
+
+* Fri Oct 25 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.4-alt1
+- 0.9.4
+
+* Tue Sep 10 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.3.1-alt1
+- first build for Sisyphus
+
 * Sat May 26 2012 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
 - 0.4.2
 
