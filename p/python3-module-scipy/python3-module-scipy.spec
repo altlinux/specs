@@ -10,7 +10,7 @@
 
 Name: python3-module-%modname
 Version: %ver_major.%ver_minor
-Release: alt2.3
+Release: alt3
 
 Summary: SciPy is the library of scientific codes
 License: BSD-3-Clause
@@ -20,6 +20,9 @@ Url: https://www.scipy.org/
 #VCS git://github.com/scipy/scipy.git
 Source0: %name-%version.tar
 Source1: site.cfg
+
+# will be released with scipy 1.8.0
+Patch0: scipy-1.6.1-MAINT-use-PEP440-vs.-distutils.patch
 
 BuildRequires(pre): rpm-macros-make
 BuildRequires(pre): rpm-macros-sphinx3
@@ -67,6 +70,7 @@ This package contains development files of SciPy.
 
 %prep
 %setup
+%autopatch -p1
 install -p -m644 %SOURCE1 .
 sed -i 's|@LIBDIR@|%_libdir|g' site.cfg doc/Makefile
 sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
@@ -152,6 +156,9 @@ done
 %_includedir/%modname-py3
 
 %changelog
+* Mon Jan 24 2022 Stanislav Levin <slev@altlinux.org> 1.6.1-alt3
+- Fixed FTBFS (Numpy 1.22.1).
+
 * Sat Sep 18 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.6.1-alt2.3
 - E2K: fixed issue with "chla_transtype_" for Cura
 
