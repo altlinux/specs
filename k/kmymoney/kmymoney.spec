@@ -1,6 +1,6 @@
 Name:    kmymoney
 Version: 5.1.2
-Release: alt4
+Release: alt5
 %K5init no_altplace
 
 Summary: A Personal Finance Manager for KDE
@@ -15,6 +15,7 @@ Source0: %name-%version.tar
 Source1: ru.po
 Source2: %name.watch
 Patch0: kmymoney-alt-fix-gcc11.patch
+Patch1: kmymoney-new-akonadi.patch
 
 AutoReq: yes, noperl
 
@@ -256,6 +257,7 @@ Internationalization and documentation for KMyMoney
 %prep
 %setup -q -n %name-%version
 %patch0 -p2
+%patch1 -p1
 cp %SOURCE1 po/ru/kmymoney.po
 
 %build
@@ -376,6 +378,9 @@ cp %SOURCE1 po/ru/kmymoney.po
 %exclude %_K5doc/en
 
 %changelog
+* Mon Jan 24 2022 Andrey Cherepanov <cas@altlinux.org> 5.1.2-alt5
+- FTBFS: Rebuild with new Akonadi.
+
 * Mon Sep 27 2021 Andrey Cherepanov <cas@altlinux.org> 5.1.2-alt4
 - FTBFS: fix build with GCC11.
 
