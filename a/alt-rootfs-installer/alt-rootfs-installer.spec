@@ -1,5 +1,5 @@
 Name: alt-rootfs-installer
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
@@ -41,6 +41,11 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Mon Jan 24 2022 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt1
+- Add new targets sifive_unleashed, sifive_unmatched
+- Update supported boards with u-boot 2022.01
+- Rockchips-aarch64.sh: add support u-boot-rockchip 2022.01
+
 * Sat Dec 04 2021 Anton Midyukov <antohami@altlinux.org> 0.5.2-alt1
 - Add HiFive Unmatched support (thanks jqt4@)
 - socs-utils: fix find_firmware_partition
