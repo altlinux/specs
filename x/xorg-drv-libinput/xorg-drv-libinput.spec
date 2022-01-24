@@ -6,18 +6,19 @@
 %def_enable check
 
 Name: xorg-drv-libinput
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Xorg libinput input driver
 Group: System/X11
 License: MIT
-Url: http://www.x.org
+Url: https://gitlab.freedesktop.org/xorg/driver/xf86-input-libinput
 
 %if_enabled snapshot
+Vcs: https://gitlab.freedesktop.org/xorg/driver/xf86-input-libinput.git
 Source: %_name-%version.tar
 %else
-Source: ftp://ftp.x.org/pub/individual/driver/%_name-%version.tar.bz2
+Source: ftp://ftp.x.org/pub/individual/driver/%_name-%version.tar.xz
 %endif
 Patch: xf86-input-libinput-0.14.0-alt-include.patch
 
@@ -78,6 +79,9 @@ Xorg libinput input driver development files.
 %_includedir/xorg/libinput-properties.h
 
 %changelog
+* Mon Jan 24 2022 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
+- 1.2.1
+
 * Tue Sep 21 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 - enabled %%check
