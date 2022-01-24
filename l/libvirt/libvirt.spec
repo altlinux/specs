@@ -176,7 +176,7 @@
 
 Name: libvirt
 Version: 8.0.0
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -210,7 +210,7 @@ BuildRequires(pre): meson >= 0.54.0
 %{?_with_libpcap:BuildRequires: libpcap-devel >= 1.5.0}
 %{?_with_libnl:BuildRequires: libnl-devel}
 %{?_with_selinux:BuildRequires: libselinux-devel}
-%{?_with_network:BuildRequires: dnsmasq iptables iptables-ipv6 openvswitch}
+%{?_with_network:BuildRequires: dnsmasq iptables iptables-nft iptables-ipv6 openvswitch}
 %{?_with_nwfilter:BuildRequires: ebtables}
 %{?_with_sasl:BuildRequires: libsasl2-devel >= 2.1.6}
 %{?_with_libssh:BuildRequires: pkgconfig(libssh) >= 0.7}
@@ -274,7 +274,7 @@ Summary: Server side daemon and supporting files for libvirt library
 Group: System/Servers
 Requires: %name-libs = %EVR
 Requires: %name-admin = %EVR
-Requires: iptables
+Requires: iptables iptables-nft iptables-ipv6
 %{?_with_pm_utils:Requires: pm-utils}
 Requires: dmidecode
 # libvirtd depends on 'messagebus' service
@@ -330,6 +330,7 @@ bridge capabilities.
 Summary: Nwfilter driver plugin for the libvirtd daemon
 Group: System/Libraries
 Requires: ebtables
+Requires: iptables iptables-nft iptables-ipv6
 Requires: %name-daemon = %EVR
 
 %description daemon-driver-nwfilter
@@ -1373,6 +1374,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Mon Jan 24 2022 Alexey Shabalin <shaba@altlinux.org> 8.0.0-alt2
+- Add requires on iptables-nft to daemon package
+
 * Fri Jan 21 2022 Alexey Shabalin <shaba@altlinux.org> 8.0.0-alt1
 - 8.0.0 (Fixes: CVE-2021-4147)
 
