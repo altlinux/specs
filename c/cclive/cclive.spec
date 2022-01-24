@@ -1,19 +1,36 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/pod2man gcc-c++ pkgconfig(libpcre) pkgconfig(libpcrecpp)
+BuildRequires: /usr/bin/a2x
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           cclive
-Version:        0.7.16
-Release:        alt2.1
+Version:        0.9.3
+Release:        alt1
 Summary:        Command line video extraction utility
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group:          Video
 License:        GPLv3+
 URL:            http://cclive.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.xz
-Patch1:         %name-0.9.3-gentoo-boost-ver-check.patch
 
-BuildRequires: boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel libquvi-devel libcurl-devel pcre-devel chrpath
-Source44: import.info
+#SuSE
+Patch0:         cclive-0.9.3_iostream.patch
+Patch1:         cclive-0.9.3_gcc5.patch
+Patch2:         cclive-0.9.3_subdir.patch
+Patch4:         cclive-0.9.3_boost1.67.patch
+# gentoo (not used)
+Patch3:         %name-0.9.3-gentoo-boost-ver-check.patch
+
+BuildRequires:  gcc-c++
+BuildRequires:  boost-devel
+BuildRequires:  boost-filesystem-devel
+BuildRequires:  boost-program_options-devel
+BuildRequires:  libquvi-devel
+BuildRequires:  pkgconfig(glib-2.0) >= 2.24
+BuildRequires:  pkgconfig(glibmm-2.4) >= 2.24
+BuildRequires:  pkgconfig(libcurl) >= 7.18.0
+BuildRequires:  pkgconfig(libpcre) >= 8.02
+BuildRequires:  pkgconfig(libpcrecpp) >= 8.02
 
 %description
 cclive is a command line video extraction utility similar to clive but with
@@ -22,26 +39,33 @@ Googlevideo, Break, Liveleak, Sevenload, Evisortv and Dailymotion.
 
 %prep
 %setup -q
+%patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch4 -p1
+# gentoo (not used)
+#patch3 -p1
 
 %build
+export DATE=/bin/true
+autoreconf -fiv
 %configure
-
-make %{?_smp_mflags}
-
+%make_build
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
-chrpath --delete $RPM_BUILD_ROOT%{_bindir}/%{name}
+%makeinstall_std
 
 %files
-%doc COPYING README 
-%{_bindir}/%{name}
+%doc COPYING
+%doc ChangeLog NEWS README
+%{_bindir}/cclive
 %{_bindir}/ccl
-%{_mandir}/man1/%{name}.1*
-
+%{_man1dir}/cclive.1*
 
 %changelog
+* Mon Jan 24 2022 Igor Vlasenko <viy@altlinux.org> 0.9.3-alt1
+- NMU: updated to 0.9.3, rebuilt with quvi 0.9, added SuSE patches
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.16-alt2.1
 - NMU: rebuilt with boost-1.67.0
 
