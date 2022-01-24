@@ -1,7 +1,7 @@
 Summary: A collection of basic system utilities
 Name: util-linux
-Version: 2.37.2
-Release: alt2
+Version: 2.37.3
+Release: alt1
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.1-or-later and BSD-3-Clause and BSD-4-Clause-UC and ALT-Public-Domain
 Group: System/Base
 URL: https://kernel.org/pub/linux/utils/util-linux/
@@ -943,6 +943,15 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Mon Jan 24 2022 Alexey Gladkov <legion@altlinux.ru> 2.37.3-alt1
+- New version (2.37.3).
+- Security fixes:
+  + CVE-2021-3995: This issue is related to parsing the /proc/self/mountinfo
+  file allows an unprivileged user to unmount other user's filesystems that are
+  either world-writable themselves or mounted in a world-writable directory.
+  + CVE-2021-3996: Improper UID check in libmount allows an unprivileged user to
+  unmount FUSE filesystems of users with similar UID.
+
 * Tue Aug 31 2021 Alexey Gladkov <legion@altlinux.ru> 2.37.2-alt2
 - Remove obsolete raw utility.
 
