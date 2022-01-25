@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.28
+Version: 1.29
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -190,6 +190,9 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Tue Jan 25 2022 Vitaly Chikunov <vt@altlinux.org> 1.29-alt1
+- Allow core dumps for qemu run (for coredumpctl).
+
 * Sat Jan 22 2022 Vitaly Chikunov <vt@altlinux.org> 1.28-alt1
 - Remove stray dependence on qemu-system-aarch64-core-bundle.
 - Do not exclude armh from KVM support.
