@@ -3,18 +3,19 @@
 %def_disable getsource
 
 Name: shellcheck
-Version: 0.7.1
+Version: 0.8.0
 Release: alt1
-License: %gpl3only
+License: GPL-3.0-or-later
 Url: https://github.com/koalaman/shellcheck
 Group: Development/Tools
 
-BuildRequires(pre): rpm-build-licenses
-BuildRequires: /proc ghc8.6.4 ghc8.6.4-cabal-install
+BuildRequires: /proc ghc8.6.4 ghc8.6.4-cabal-install pandoc
 
 %if_disabled getsource
 Source: %name-%version.tar
 %endif
+
+Source1: shellcheck.1.md
 
 Summary: Shell script analysis tool
 
@@ -51,14 +52,25 @@ ln -s -r -f . $HOME/.cabal
 cabal new-install %_smp_mflags ShellCheck-%version
 %endif
 
+pandoc -s -f markdown-smart -t man %SOURCE1 -o shellcheck.1
+
 %install
 mkdir -p %buildroot%_bindir
+mkdir -p %buildroot%_man1dir
 cp bin/shellcheck %buildroot%_bindir
+cp shellcheck.1 %buildroot%_man1dir
 
 %files
 %_bindir/shellcheck
+%_man1dir/shellcheck.1*
 
 %changelog
+* Thu Jan 20 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.0-alt1
+- Updated to 0.8.0.
+
+* Mon Oct 18 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.2-alt1
+- Updated to 0.7.2.
+
 * Sat Mar 27 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.1-alt1
 - Updated to 0.7.1.
 

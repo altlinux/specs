@@ -2,7 +2,7 @@
 
 Name: ghc8.6.4
 Version: 8.6.4
-Release: alt8
+Release: alt8.qa1
 
 Summary: Glasgow Haskell Compilation system
 License: BSD-3-Clause and HaskellReport
@@ -69,7 +69,9 @@ BuildRequires: ghc(hscolour)
 Provides: haskell(abi) = %version
 
 %ifarch armh aarch64
+BuildRequires: rpm-macros-llvm-common
 BuildRequires: llvm
+Requires: llvm%{?_llvm_version}
 %endif
 
 %description
@@ -262,6 +264,11 @@ sed -i 's/@GHC_VERSION@/%version/' %buildroot%_rpmmacrosdir/ghc
 %exclude %docdir/[AR]*
 
 %changelog
+* Tue Jan 25 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.6.4-alt8.qa1
+- NMU: added R: llvm%%_llvm_version on armh and aarch64 architectures (fixes
+  regression introduced in 8.6.4-alt8 release which caused all packages and
+  applications based on GHC to FTBFS).
+
 * Mon Dec 06 2021 Evgeny Sinelnikov <sin@altlinux.org> 8.6.4-alt8
 - Always use AC_LINK_ELSEIF when testing against assembler
   (autoconf assembler checks and -flto)
