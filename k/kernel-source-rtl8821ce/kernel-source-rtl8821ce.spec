@@ -1,6 +1,6 @@
 Name: kernel-source-rtl8821ce
 Version: 5.5.2
-Release: alt6.gitf93db73
+Release: alt7.gitca204c6
 Summary: Source for the rtl8821ce driver
 License: GPLv2
 Group: Development/Kernel
@@ -26,6 +26,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue Jan 25 2022 Andrey Cherepanov <cas@altlinux.org> 5.5.2-alt7.gitca204c6
+- fixes for Linux 5.15
+
 * Wed Aug 11 2021 Andrey Cherepanov <cas@altlinux.org> 5.5.2-alt6.gitf93db73
 - fixes for Linux 5.12
 
