@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220114
+Version: 20220124
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,19 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Jan 25 2022 Cronbuild Service <cronbuild@altlinux.org> 20220124-alt1
+- upstream changes (GIT eb8ea1b):
+  + mediatek: Update MT8173 VPU firmware to v1.1.7 (thx Irui Wang)
+  + Update firmware file for Intel Bluetooth 9260 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9462 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9560 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX211 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX210 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9560 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX200 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+
 * Tue Jan 18 2022 Cronbuild Service <cronbuild@altlinux.org> 20220114-alt1
 - upstream changes (GIT 1e744b8):
   + update firmware for mediatek bluetooth chip(MT7921) (thx Mark Chen)
