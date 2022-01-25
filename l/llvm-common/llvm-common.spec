@@ -4,7 +4,7 @@
 
 Name: llvm-common
 Version: 12.0.0
-Release: alt2
+Release: alt3
 
 Summary: Common directories, symlinks and tool selection for LLVM
 License: Apache-2.0 with LLVM-exception
@@ -428,6 +428,9 @@ clang-cpp --version
 llc --version
 
 %changelog
+* Tue Jan 25 2022 Arseny Maslennikov <arseny@altlinux.org> 12.0.0-alt3
+- llvm-common.env: Fixed extra quotes. (closes: 41796)
+
 * Fri Aug 20 2021 Arseny Maslennikov <arseny@altlinux.org> 12.0.0-alt2
 - Added %set_llvm_version.
 
