@@ -30,8 +30,8 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium-gost
-Version:        96.0.4664.45
-Release:        alt3
+Version:        97.0.4692.71
+Release:        alt1
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -84,12 +84,6 @@ Patch014: 0014-ALT-Disable-NOMERGE-attribute.patch
 Patch015: 0015-FEDORA-bootstrap-with-python3.patch
 Patch016: 0016-sql-make-VirtualCursor-standard-layout-type.patch
 Patch017: 0017-ALT-fix-build-with-glibc-2.34.patch
-Patch018: 0018-IWYU-add-memory-for-std-unique_ptr-in-base-CommandLi.patch
-Patch019: 0019-libstdc-no-implicit-conversion-from-tuple-created-wi.patch
-Patch020: 0020-IWYU-add-string.h-for-memcmp-in-ui-DrmRenderNodePath.patch
-Patch021: 0021-IWYU-add-vector-for-std-vector-in-CouponDB.patch
-Patch022: 0022-linux-xfce-Introduced-a-hack-for-Xfwm.patch
-Patch023: 0023-linux-x11-Made-the-hidden-window-ignoring-new-proper.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -483,11 +477,51 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Jan 25 2022 Fr. Br. George <george@altlinux.ru> 97.0.4692.71-alt1
+- GOST verson
+
+* Wed Jan 05 2022 Alexey Gladkov <legion@altlinux.ru> 97.0.4692.71-alt1
+- New version (97.0.4692.71).
+- Security fixes:
+  - CVE-2022-0096: Use after free in Storage.
+  - CVE-2022-0097: Inappropriate implementation in DevTools.
+  - CVE-2022-0098: Use after free in Screen Capture.
+  - CVE-2022-0099: Use after free in Sign-in.
+  - CVE-2022-0100: Heap buffer overflow in Media streams API.
+  - CVE-2022-0101: Heap buffer overflow in Bookmarks.
+  - CVE-2022-0102: Type Confusion in V8 .
+  - CVE-2022-0103: Use after free in SwiftShader.
+  - CVE-2022-0104: Heap buffer overflow in ANGLE.
+  - CVE-2022-0105: Use after free in PDF.
+  - CVE-2022-0106: Use after free in Autofill.
+  - CVE-2022-0107: Use after free in File Manager API.
+  - CVE-2022-0108: Inappropriate implementation in Navigation.
+  - CVE-2022-0109: Inappropriate implementation in Autofill.
+  - CVE-2022-0110: Incorrect security UI in Autofill.
+  - CVE-2022-0111: Inappropriate implementation in Navigation.
+  - CVE-2022-0112: Incorrect security UI in Browser UI.
+  - CVE-2022-0113: Inappropriate implementation in Blink.
+  - CVE-2022-0114: Out of bounds memory access in Web Serial.
+  - CVE-2022-0115: Uninitialized Use in File API.
+  - CVE-2022-0116: Inappropriate implementation in Compositing.
+  - CVE-2022-0117: Policy bypass in Service Workers.
+  - CVE-2022-0118: Inappropriate implementation in WebShare.
+  - CVE-2022-0120: Inappropriate implementation in Passwords.
+
+* Tue Dec 14 2021 Alexey Gladkov <legion@altlinux.ru> 96.0.4664.110-alt1
+- New version (96.0.4664.110).
+- Security fixes:
+  - CVE-2021-4098: Insufficient data validation in Mojo.
+  - CVE-2021-4099: Use after free in Swiftshader.
+  - CVE-2021-4100: Object lifecycle issue in ANGLE.
+  - CVE-2021-4101: Heap buffer overflow in Swiftshader.
+  - CVE-2021-4102: Use after free in V8.
+
 * Mon Nov 29 2021 Andrey Cherepanov <cas@altlinux.org> 96.0.4664.45-alt3
-- Allow fallback to any GL implementation.
+- Allow fallback to any GL implementation (ALT#41430).
 
 * Tue Nov 23 2021 Andrey Cherepanov <cas@altlinux.org> 96.0.4664.45-alt2
-- Apply upstream patches for fix window maximization in XFCE (ALT #41247)
+- Apply upstream patches for fix window maximization in XFCE (ALT #41247).
 
 * Fri Nov 19 2021 Fr. Br. George <george@altlinux.ru> 96.0.4664.45-alt1
 - GOST version
