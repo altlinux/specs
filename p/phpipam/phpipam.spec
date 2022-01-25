@@ -1,7 +1,7 @@
 
 Name: phpipam
-Version: 1.42.027
-Release: alt2
+Version: 1.45.031
+Release: alt1
 Summary: PHP-based virtual machine control tool
 Group: Networking/WWW
 License: GPLv3
@@ -13,7 +13,7 @@ Source23: PHPMailer.tar
 Source24: php-saml.tar
 Source25: qrcodejs.tar
 Source11: %name-apache.conf
-# Patch: %name-%version-%release.patch
+# Patch: %%name-%%version-%%release.patch
 
 Provides: %name-php = %EVR
 Provides: %name-php7 = %EVR
@@ -70,13 +70,13 @@ tar -xf %SOURCE22 -C functions/GoogleAuthenticator
 tar -xf %SOURCE23 -C functions/PHPMailer
 tar -xf %SOURCE24 -C functions/php-saml
 tar -xf %SOURCE24 -C functions/qrcodejs
-#%patch -p1
+#%%patch -p1
 
 %install
 mkdir -p %buildroot%webserver_webappsdir
 cp -r ../%name-%version %buildroot%webserver_webappsdir/%name
 #cleaup
-#rm -rf %buildroot%webserver_webappsdir/%name/misc
+#rm -rf %%buildroot%%webserver_webappsdir/%%name/misc
 rm -f %buildroot%webserver_webappsdir/%name/{INSTALL.txt,README,UPDATE}
 rm -f %buildroot%webserver_webappsdir/%name/.gitattributes
 rm -f %buildroot%webserver_webappsdir/%name/.gitignore
@@ -117,6 +117,9 @@ rm -rf %buildroot%webserver_webappsdir/%name/functions/GoogleAuthenticator/tests
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Tue Jan 25 2022 Alexey Shabalin <shaba@altlinux.org> 1.45.031-alt1
+- 1.4.5 Release (Fixes: CVE-2020-7988).
+
 * Tue Feb 09 2021 Alexey Shabalin <shaba@altlinux.org> 1.42.027-alt2
 - 1.4.2 Release.
 
