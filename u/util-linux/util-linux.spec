@@ -1,7 +1,7 @@
 Summary: A collection of basic system utilities
 Name: util-linux
 Version: 2.37.3
-Release: alt1
+Release: alt2
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.1-or-later and BSD-3-Clause and BSD-4-Clause-UC and ALT-Public-Domain
 Group: System/Base
 URL: https://kernel.org/pub/linux/utils/util-linux/
@@ -780,7 +780,8 @@ fi
 
 %files -n mount
 /etc/mtab
-/bin/*mount
+%attr(700,root,root) /bin/mount
+%attr(700,root,root) /bin/umount
 /sbin/swapo*
 %_man5dir/fstab.*
 %_man8dir/*mount*
@@ -939,10 +940,13 @@ fi
 %config(noreplace) %_sysconfdir/pam.d/runuser
 %config(noreplace) %_sysconfdir/pam.d/runuser-l
 %endif
-%attr(2711,root,tty) %_bindir/write
+%attr(700,root,tty) %_bindir/write
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Tue Jan 25 2022 Alexey Gladkov <legion@altlinux.ru> 2.37.3-alt2
+- Set restricted execution mode to mount/umount/write by default.
+
 * Mon Jan 24 2022 Alexey Gladkov <legion@altlinux.ru> 2.37.3-alt1
 - New version (2.37.3).
 - Security fixes:
