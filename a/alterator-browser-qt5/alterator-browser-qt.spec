@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.4.5
+Version: 3.4.6
 Release: alt1
 
 Source:%name-%version.tar
@@ -83,6 +83,9 @@ __EOF__
 
 
 %changelog
+* Tue Jan 25 2022 Sergey V Turchin <zerg at altlinux dot org> 3.4.6-alt1
+- fix set current wizard_face item
+
 * Thu Dec 02 2021 Sergey V Turchin <zerg at altlinux dot org> 3.4.5-alt1
 - align messagboxes text to left
 
