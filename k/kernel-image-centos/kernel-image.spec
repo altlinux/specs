@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 47
+%define centos_release 48
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,18 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Jan 25 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.48-alt1.el9
+- Updated to kernel-5.14.0-48.el9:
+  + net: mana: More MANA driver updates for RHEL 9.0
+  + ibmvnic: fix error when allocating long term buffer during reset
+  + [s390] Upgrade the qeth driver for s390x to latest
+  + [s390] GLIBC: Support for new IBM Z Hardware - kernel part
+  + ima: silence measurement list hexdump during kexec
+  + scsi: lpfc: Update lpfc version to 14.0.0.4
+  + scsi: lpfc: Fix non-recovery of remote ports following an unsolicited LOGO
+  + mm/memcg: Exclude mem_cgroup pointer from kABI signature computation
+  + NFS: Default change_attr_type to NFS4_CHANGE_TYPE_IS_UNDEFINED
+
 * Sat Jan 22 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.47-alt1.el9
 - Updated to kernel-5.14.0-47.el9 (fixes: CVE-2021-4001):
   + nvmet: make discovery NQN configurable
