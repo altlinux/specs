@@ -1,5 +1,5 @@
 Name: openxcom
-Version: 1.0_2021.11.24
+Version: 1.0_2021.12.21
 Release: alt1
 Summary: OpenXcom is an open-source clone of the original X-COM
 License: GPLv3+
@@ -51,6 +51,9 @@ install -pm 644 -D res/linux/openxcom.desktop %buildroot%_desktopdir/%name.deskt
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Jan 25 2022 Igor Vlasenko <viy@altlinux.org> 1.0_2021.12.21-alt1
+- nightly 2021.12.21
+
 * Sat Nov 27 2021 Igor Vlasenko <viy@altlinux.org> 1.0_2021.11.24-alt1
 - nightly 2021.11.24
 
