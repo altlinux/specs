@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/a2x
 %define _localstatedir %{_var}
 Name:           cclive
 Version:        0.9.3
-Release:        alt1
+Release:        alt2
 Summary:        Command line video extraction utility
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group:          Video
@@ -46,6 +46,11 @@ Googlevideo, Break, Liveleak, Sevenload, Evisortv and Dailymotion.
 # gentoo (not used)
 #patch3 -p1
 
+%ifarch %e2k
+# lcc 1.25.20: cpp adds an extra space breaking this regex (mcst#6826)
+sed -i 's,\^boost-lib-version,boost-lib-version,' m4/boost.m4
+%endif
+
 %build
 export DATE=/bin/true
 autoreconf -fiv
@@ -63,6 +68,9 @@ autoreconf -fiv
 %{_man1dir}/cclive.1*
 
 %changelog
+* Wed Jan 26 2022 Michael Shigorin <mike@altlinux.org> 0.9.3-alt2
+- E2K: workaround boost test's issue with lcc's cpp (mcst#6826)
+
 * Mon Jan 24 2022 Igor Vlasenko <viy@altlinux.org> 0.9.3-alt1
 - NMU: updated to 0.9.3, rebuilt with quvi 0.9, added SuSE patches
 
