@@ -3,7 +3,7 @@
 
 Name: polkit
 Version: 0.120
-Release: alt1
+Release: alt1.qa1
 
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
@@ -142,6 +142,11 @@ touch ChangeLog
 %exclude %_datadir/polkit-1/actions/org.freedesktop.policykit.examples.pkexec.policy
 
 %changelog
+* Tue Jan 25 2022 Dmitry V. Levin <ldv@altlinux.org> 0.120-alt1.qa1
+- NMU (fixes: CVE-2021-4034).
+- Applied upstream fix for a trivially exploitable local root vulnerability,
+  see https://www.qualys.com/2022/01/25/cve-2021-4034/pwnkit.txt
+
 * Tue Oct 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.120-alt1
 - 0.120
 
