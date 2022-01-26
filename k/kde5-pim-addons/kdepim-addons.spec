@@ -1,5 +1,10 @@
 %define rname kdepim-addons
 
+%ifarch ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
 
 %define sover 5
 %define libkaddressbookmergelibprivate libkaddressbookmergelibprivate%sover
@@ -17,10 +22,9 @@
 %define libkmailconfirmbeforedeleting libkmailconfirmbeforedeleting%sover
 %define libscamconfiguresettings libscamconfiguresettings%sover
 
-
 Name: kde5-pim-addons
 Version: 21.12.1
-Release: alt1
+Release: alt2
 %K5init
 
 %add_findreq_skiplist %_K5bin/kmail_*.sh
@@ -42,7 +46,10 @@ Patch1: alt-akonadi-plugins-dir.patch
 # optimized out: boost-devel-headers cmake cmake-modules elfutils fontconfig gcc-c++ grantlee5-devel kde5-libkleo-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libgpg-error-devel libgpgme-devel libgst-plugins1.0 libical-devel libjson-c libkf5gpgmepp-pthread libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-script libqt5-sensors libqt5-sql libqt5-svg libqt5-test libqt5-webchannel libqt5-webengine libqt5-webenginecore libqt5-webenginewidgets libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libstdc++-devel libxcbutil-keysyms perl pkg-config python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-webchannel-devel qt5-webkit-devel rpm-build-python3 ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules kde5-akonadi-calendar-devel kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-notes-devel kde5-calendarsupport-devel kde5-eventviews-devel kde5-gpgmepp-devel kde5-grantleetheme-devel kde5-incidenceeditor-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kde5-kdgantt2-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kmailtransport-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-ktnef-devel kde5-libgravatar-devel kde5-libkdepim-devel kde5-mailcommon-devel kde5-messagelib-devel  kde5-pimcommon-devel kf5-kdeclarative-devel kf5-kdelibs4support-devel kf5-kdoctools-devel kf5-kio-devel kf5-kpackage-devel kf5-kwallet-devel kf5-libkgapi-devel libsasl2-devel python-module-google python3-dev qt5-webengine-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules qt5-webengine-devel
+BuildRequires: extra-cmake-modules qt5-base-devel
+%if_enabled qtwebengine
+BuildRequires: qt5-webengine-devel
+%endif
 BuildRequires: libpoppler-qt5-devel libdiscount-devel
 BuildRequires: libsasl2-devel libgpgme-devel libassuan-devel
 BuildRequires: libqtkeychain-qt5-devel
@@ -64,7 +71,7 @@ BuildRequires: kf5-kwallet-devel kf5-syntax-highlighting-devel kf5-prison-devel 
 %package common
 Summary: %name common package
 Group: System/Configuration/Other
-BuildArch: noarch
+#BuildArch: noarch
 Requires: kf5-filesystem
 %description common
 %name common package
@@ -207,6 +214,23 @@ Requires: %name-common
 %setup -n %rname-%version
 #%patch1 -p1
 
+%if_disabled qtwebengine
+sed -i "/KF5WebEngineViewer/d" CMakeLists.txt
+sed -i 's|WebEngineWidgets||' CMakeLists.txt
+sed -i 's|WebEngine||' CMakeLists.txt
+for subd in \
+    plugins/webengineurlinterceptor \
+    kmail/editorconvertertextplugins/markdown \
+    #
+do
+    rs=`basename ${subd}`
+    dir=`dirname ${subd}`
+    sed -i "/add_subdirectory(${rs})/d" ${dir}/CMakeLists.txt
+    rm -rf $subd
+
+done
+%endif
+
 %build
 %K5build \
     -DKDEPIMADDONS_BUILD_EXAMPLES=OFF \
@@ -230,8 +254,6 @@ Requires: %name-common
 %files kaddressbook
 %_K5plug/kaddressbook/
 %_K5lib/contacteditor/editorpageplugins/cryptopageplugin.so
-#%_K5plug/contacteditor/
-#%_K5data/contacteditor/
 
 %files kmail
 %_K5bin/kmail_*.sh
@@ -250,11 +272,11 @@ Requires: %name-common
 %_K5plug/libksieve/*.so
 %_K5plug/pimcommon/
 %_K5plug/messageviewer/
-#%_K5plug/messageviewer_*.so
 %_K5plug/importwizard/
 %_K5plug/templateparser/
+%if_enabled qtwebengine
 %_K5plug/webengineviewer/
-#%_K5data/messageviewer/
+%endif
 
 %files devel
 %_datadir/qtcreator/templates/*
@@ -265,50 +287,54 @@ Requires: %name-common
 #%_K5archdata/mkspecs/modules/qt_kdepim-addons.pri
 #%_datadir/qtcreator/templates/*/
 
-%files -n %libscamconfiguresettings
-%_K5lib/libscamconfiguresettings.so.%sover
-%_K5lib/libscamconfiguresettings.so.*
-%files -n %libkaddressbookmergelibprivate
-%_K5lib/libkaddressbookmergelibprivate.so.%sover
-%_K5lib/libkaddressbookmergelibprivate.so.*
-#%files -n %libkaddressbookimportexportlibprivate
-#%_K5lib/libkaddressbookimportexportlibprivate.so.%sover
-#%_K5lib/libkaddressbookimportexportlibprivate.so.*
-%files -n %libshorturlpluginprivate
-%_K5lib/libshorturlpluginprivate.so.%sover
-%_K5lib/libshorturlpluginprivate.so.*
+%if_enabled qtwebengine
 %files -n %libadblocklibprivate
 %_K5lib/libadblocklibprivate.so.%sover
 %_K5lib/libadblocklibprivate.so.*
-%files -n %libgrammarcommon
-%_K5lib/libgrammarcommon.so.%sover
-%_K5lib/libgrammarcommon.so.*
-%files -n %libkmailgrammalecte
-%_K5lib/libkmailgrammalecte.so.%sover
-%_K5lib/libkmailgrammalecte.so.*
-%files -n %libkmaillanguagetool
-%_K5lib/libkmaillanguagetool.so.%sover
-%_K5lib/libkmaillanguagetool.so.*
 %files -n %libkmailmarkdown
 %_K5lib/libkmailmarkdown.so.%sover
 %_K5lib/libkmailmarkdown.so.*
-%files -n %libkmailquicktextpluginprivate
-%_K5lib/libkmailquicktextpluginprivate.so.%sover
-%_K5lib/libkmailquicktextpluginprivate.so.*
-%files -n %libdkimverifyconfigure
-%_K5lib/libdkimverifyconfigure.so.%sover
-%_K5lib/libdkimverifyconfigure.so.*
-%files -n %libexpireaccounttrashfolderconfig
-%_K5lib/libexpireaccounttrashfolderconfig.so.%sover
-%_K5lib/libexpireaccounttrashfolderconfig.so.*
-%files -n %libfolderconfiguresettings
-%_K5lib/libfolderconfiguresettings.so.%sover
-%_K5lib/libfolderconfiguresettings.so.*
+%endif
+
+%files -n %libshorturlpluginprivate
+%_K5lib/libshorturlpluginprivate.so.%sover
+%_K5lib/libshorturlpluginprivate.so.*
+%files -n %libkaddressbookmergelibprivate
+%_K5lib/libkaddressbookmergelibprivate.so.%sover
+%_K5lib/libkaddressbookmergelibprivate.so.*
 %files -n %libkmailconfirmbeforedeleting
 %_K5lib/libkmailconfirmbeforedeleting.so.%sover
 %_K5lib/libkmailconfirmbeforedeleting.so.*
+%files -n %libscamconfiguresettings
+%_K5lib/libscamconfiguresettings.so.%sover
+%_K5lib/libscamconfiguresettings.so.*
+%files -n %libkmailquicktextpluginprivate
+%_K5lib/libkmailquicktextpluginprivate.so.%sover
+%_K5lib/libkmailquicktextpluginprivate.so.*
+%files -n %libkmaillanguagetool
+%_K5lib/libkmaillanguagetool.so.%sover
+%_K5lib/libkmaillanguagetool.so.*
+%files -n %libkmailgrammalecte
+%_K5lib/libkmailgrammalecte.so.%sover
+%_K5lib/libkmailgrammalecte.so.*
+%files -n %libgrammarcommon
+%_K5lib/libgrammarcommon.so.%sover
+%_K5lib/libgrammarcommon.so.*
+%files -n %libfolderconfiguresettings
+%_K5lib/libfolderconfiguresettings.so.%sover
+%_K5lib/libfolderconfiguresettings.so.*
+%files -n %libexpireaccounttrashfolderconfig
+%_K5lib/libexpireaccounttrashfolderconfig.so.%sover
+%_K5lib/libexpireaccounttrashfolderconfig.so.*
+%files -n %libdkimverifyconfigure
+%_K5lib/libdkimverifyconfigure.so.%sover
+%_K5lib/libdkimverifyconfigure.so.*
+
 
 %changelog
+* Wed Jan 26 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt2
+- build without qtwebengine on ppc64le
+
 * Thu Jan 13 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
 - new version
 
