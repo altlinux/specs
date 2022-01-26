@@ -1,10 +1,14 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+# Requires UserDict which we don't have for pytnon3 yet.
+%def_without python
 
 Name:     trace-cmd
-Version:  2.9.1
-Release:  alt5
+Version:  2.9.6
+Release:  alt1
 
 Summary:  A front-end for Ftrace Linux kernel internal tracer
 License:  GPL-2.0 and LGPL-2.1
@@ -20,20 +24,18 @@ Vcs:      https://git.kernel.org/pub/scm/utils/trace-cmd/trace-cmd.git
 # Article: http://wrightrocket.blogspot.com/2019/07/linux-performance-tool-trace-cmd.html
 
 Source:   %name-%version.tar
+%if_with python
+BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+# else: 'python-dev is not installed, not compiling python plugins'
+%endif
 BuildRequires: asciidoc
 BuildRequires: banner
-BuildRequires: cmake
-BuildRequires: desktop-file-utils
-BuildRequires: gcc-c++
-BuildRequires: libfreeglut-devel
-BuildRequires: libjson-c-devel
-BuildRequires: libXi-devel
-BuildRequires: libxml2-devel
-BuildRequires: libXmu-devel
-BuildRequires: polkit
-BuildRequires: python-devel
-BuildRequires: qt5-base-devel
+BuildRequires: chrpath
+BuildRequires: libaudit-devel
+BuildRequires: libtraceevent-devel
+BuildRequires: libtracefs-devel
 BuildRequires: swig
 BuildRequires: xmlto
 %{?!_without_check:%{?!_disable_check:BuildRequires: CUnit-devel rpm-build-vm}}
@@ -43,91 +45,76 @@ The trace-cmd(1) command interacts with the Ftrace tracer that is built inside
 the Linux kernel. It interfaces with the Ftrace specific files found in the
 debugfs file system under the tracing directory.
 
-%package libs
+%package -n libtracecmd
 Summary: trace-cmd libraries
 Group: System/Libraries
+Conflicts: trace-cmd-libs < 2.9.6-alt1
 
-%description libs
+%description -n libtracecmd
 %summary.
 
-%package devel
-Summary: Development headers of trace-cmd-libs
+%package -n libtracecmd-devel
+Summary: Development headers of libtracecmd
 Group: Development/C
-Requires: %name-libs = %EVR
+Requires: libtracecmd = %EVR
 
-%description devel
+%description -n libtracecmd-devel
 %summary.
 
-%package python3
-Summary: Python plugin support for trace-cmd
+%package -n python3-module-tracecmd
+Summary: Python plugin support for libtracecmd
 Group: Development/Python3
-Requires: %name = %EVR
+Requires: libtracecmd = %EVR
 Provides: python3(tracecmd)
+Obsoletes: trace-cmd-python3 < 2.9.6-alt1
 
-%description python3
+%description -n python3-module-tracecmd
 %summary.
-
-%package -n kernelshark
-Summary: Graphical reader for trace-cmd(1) output
-Group: Development/Debug
-Requires: trace-cmd = %EVR
-
-%description -n kernelshark
-KernelShark is a front end reader of trace-cmd(1) output. It reads a
-trace-cmd.dat(5) formatted file and produces a graph and list view of
-the data.
 
 %prep
 %setup
 sed -i s/not-a-git-repo/%version-%release/ scripts/utils.mk
-sed -i 's/import gtk/from gi.repository import Gtk as gtk/' python/*.py
-sed -i 's/python2/python3/' python/event-viewer.py
+sed -i 's!\(BASH_COMPLETE_DIR\) .*!\1 = %_datadir/bash-completion/completions/!' Makefile
 
 %build
-export CFLAGS="%optflags -D_FORTIFY_SOURCE=2 -fstack-protector-strong -fstack-check"
-%make_build \
-	all doc plugins
-%make_build PYTHON_VERS=python3 python
-
-# Following two cannot be built with make -j:
-make libs
+%define optflags_lto %nil
+%add_optflags -Wno-unused-result %(getconf LFS_CFLAGS)
+export CFLAGS="%optflags -D_GNU_SOURCE"
+# If libtracecmd.so is parallel-built together with all_cmd, libtracecmd.so
+# will miss some functions that will be mis-linked to trace-cmd instead.
+%make_build prefix=%_prefix libdir=%_libdir V=1 \
+	libtracecmd.so
+%make_build prefix=%_prefix libdir=%_libdir V=1 \
+	PYTHON_VERS=python3 python_dir=%python3_sitelibdir/%name \
+	all_cmd \
+	doc
 %{?!_without_check:%{?!_disable_check:make test}}
-
-# Kernelshark shall have trace-cmd already built, or compilation will fail.
-banner gui
-%make_build \
-	prefix=%_prefix \
-	libdir=%_libdir \
-	gui
+chrpath --delete tracecmd/trace-cmd lib/trace-cmd/libtracecmd.so
 
 %install
 banner install
-%makeinstall \
-	etcdir=%buildroot%_sysconfdir \
-	install install_doc install_libs
-%makeinstall \
-	PYTHON_VERS=python3 install_python
-%makeinstall \
-	prefix=%_prefix \
-	libdir=%_libdir \
-	DESTDIR=%buildroot/ \
-	install_gui
-
-# Misinstalled by install_gui.
-rm -rf %buildroot/usr/etc %buildroot/usr/src/tmp
-
-# error: value "1.1.0" for key "Version" in group "Desktop Entry" is not a known version
-sed -i '/Version/d' %buildroot/%_datadir/applications/kernelshark.desktop
+export CFLAGS="%optflags -D_GNU_SOURCE"
+%makeinstall_std prefix=%_prefix libdir=%_libdir V=1 \
+	PYTHON_VERS=python3 python_dir=%python3_sitelibdir/%name \
+	install \
+	install_libs \
+	install_doc
+# Duplicating man pages.
+rm -rf %buildroot%_datadir/doc/libtracecmd-doc
+# GUI script not belonging to the module, requiring gobject and gtk.
+rm -f %buildroot%python3_sitelibdir/%name/event-viewer.py
 
 %check
-desktop-file-validate %buildroot/%_datadir/applications/kernelshark.desktop
-
 # Basic tests
-%buildroot%_bindir/trace-cmd | grep version
+%buildroot%_bindir/trace-cmd | grep version.%version..%version-%release
 %buildroot%_bindir/trace-cmd options
 
+%if_with python
+PYTHONPATH=%buildroot%python3_sitelibdir %__python3 -c 'import tracecmd'
+%endif
+
 # Internal unit tests
-export LD_LIBRARY_PATH=$PWD/lib/tracefs:$PWD/lib/traceevent:$PWD/lib/trace-cmd
+export LD_LIBRARY_PATH=%buildroot%_libdir
 vm-run --cpu=2 '
   set -xe
   utest/trace-utest
@@ -136,39 +123,38 @@ vm-run --cpu=2 '
   trace-cmd report'
 
 %files
-%doc COPYING COPYING.LIB DCO README
+%doc COPYING README
 %_bindir/trace-cmd
-%_sysconfdir/bash_completion.d/trace-cmd.bash
+%_datadir/bash-completion/completions/trace-cmd.bash
 %_man1dir/*.1*
 %_man5dir/*.5*
 
-%files libs
-%exclude %_libdir/trace-cmd/python
-%_libdir/trace-cmd
-%_libdir/traceevent
-%_libdir/tracefs
+%files -n libtracecmd
+%doc COPYING.LIB
+%_libdir/libtracecmd.so.*
 
-%files devel
+%files -n libtracecmd-devel
 %_includedir/trace-cmd
-%_includedir/traceevent
-%_includedir/tracefs
+%_libdir/libtracecmd.so
+%_libdir/pkgconfig/libtracecmd.pc
+%_man3dir/*tracecmd*
 
-%files python3
+%if_with python
+%files -n python3-module-tracecmd
 %doc Documentation/README.PythonPlugin
-%_libdir/trace-cmd/python
-
-%files -n kernelshark
-%_bindir/kernelshark
-%_bindir/kshark-record
-%_bindir/kshark-su-record
-%_libdir/kernelshark
-%_datadir/applications/kernelshark.desktop
-%_datadir/icons/kernelshark
-%_datadir/polkit-1/actions/org.freedesktop.kshark-record.policy
+%python3_sitelibdir/%name
+%endif
 
 %changelog
+* Sat Jan 22 2022 Vitaly Chikunov <vt@altlinux.org> 2.9.6-alt1
+- Updated to trace-cmd-v2.9.6 (2021-11-10).
+- Use external libtraceevent and libtracefs libraries.
+- Build libtracecmd package.
+- Do not package python module.
+- GUI (KernelShark) is not built, to be a separate package.
+
 * Sun Dec 06 2020 Vitaly Chikunov <vt@altlinux.org> 2.9.1-alt5
-- Enable pkexec (RM#24461) in a way complatible with old cmake (for p9).
+- Enable pkexec (RM#24461) in a way compatible with old cmake (for p9).
 
 * Sat Dec 05 2020 Vitaly Chikunov <vt@altlinux.org> 2.9.1-alt4
 - Allow connect from pkexec'd process (RM#24461).
