@@ -2,7 +2,7 @@
 %def_with zfs
 
 Name: libraft
-Version: 0.11.2
+Version: 0.11.3
 Release: alt1
 
 Summary: Fully asynchronous C implementation of the Raft consensus protocol.
@@ -60,6 +60,9 @@ RPC messages) and disk persistence (store log entries and snapshots).
 %_pkgconfigdir/raft.pc
 
 %changelog
+* Wed Jan 26 2022 Alexey Shabalin <shaba@altlinux.org> 0.11.3-alt1
+- new version 0.11.3
+
 * Thu Dec 09 2021 Alexey Shabalin <shaba@altlinux.org> 0.11.2-alt1
 - new version 0.11.2
 

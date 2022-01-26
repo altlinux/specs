@@ -5,8 +5,8 @@
 %define lxduser lxd
 
 Name:		lxd
-Version:	4.21
-Release:	alt2
+Version:	4.22
+Release:	alt1
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
 Group:		Development/Other
@@ -30,7 +30,7 @@ BuildRequires(pre): rpm-build-golang
 BuildRequires(pre): rpm-build-python3
 
 Requires:	shadow-submap
-Requires:	lxc-libs
+Requires:	lxc-runtime >= 4.0.0
 Requires:	lxcfs
 Requires:	btrfs-progs
 Requires:	lvm2
@@ -41,6 +41,7 @@ Requires:	ebtables
 Requires:	dnsmasq
 Requires:	attr
 
+BuildRequires: golang >= 1.16
 BuildRequires: libcap-devel
 BuildRequires: libuv-devel
 
@@ -52,7 +53,7 @@ BuildRequires: help2man
 # Needed for manpages generation. Accessing to '/proc/self/...'
 BuildRequires: /proc
 
-BuildRequires:	lxc-devel
+BuildRequires:	liblxc-devel >= 4.0.0
 BuildRequires:	libacl-devel
 
 %description
@@ -188,6 +189,9 @@ fi
 %exclude %go_path/src/%import_path/go.sum
 
 %changelog
+* Wed Jan 26 2022 Alexey Shabalin <shaba@altlinux.org> 4.22-alt1
+- new version 4.22.
+
 * Wed Jan 12 2022 Mikhail Gordeev <obirvalger@altlinux.org> 4.21-alt2
 - Add requires to attr.
 
