@@ -11,7 +11,7 @@
 
 Name:		containerd
 Version:	1.4.12
-Release:	alt1
+Release:	alt2
 Summary:	A daemon to control runC
 
 Group:		Development/Other
@@ -90,6 +90,9 @@ install -p -D -m 644 %SOURCE4 %{buildroot}%{_sysconfdir}/%{name}/config.toml
 %_unitdir/%name.service
 
 %changelog
+* Wed Jan 26 2022 Alexey Shabalin <shaba@altlinux.org> 1.4.12-alt2
+- Update changelog.
+
 * Wed Dec 1 2021 Vladimir Didenko <cow@altlinux.org> 1.4.12-alt1
 - 1.4.12 (Fixes: CVE-2021-41190)
 
@@ -110,6 +113,9 @@ install -p -D -m 644 %SOURCE4 %{buildroot}%{_sysconfdir}/%{name}/config.toml
 
 * Fri Jan 22 2021 Alexey Shabalin <shaba@altlinux.org> 1.4.3-alt1
 - 1.4.3 (Fixes: CVE-2020-15257)
+
+* Fri Jan 22 2021 Alexey Shabalin <shaba@altlinux.org> 1.3.9-alt1
+- 1.3.9 (Fixes: CVE-2020-15257)
 
 * Fri Dec 4 2020 Vladimir Didenko <cow@altlinux.org> 1.4.2-alt1
 - 1.4.2
