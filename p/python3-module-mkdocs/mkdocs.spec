@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.2.2
-Release: alt2
+Version: 1.2.3
+Release: alt1
 
 Summary: Python tool to create HTML documentation from markdown sources
 License: BSD-2-Clause
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: fonts-font-awesome
 
 %if_with check
 # install_requires:
@@ -47,14 +48,32 @@ configuration file.
 %setup
 %autopatch -p1
 
-rm mkdocs/themes/*/fonts/fontawesome-webfont.*
-
 %build
 %python3_build_debug
 
 %install
 %python3_install
 rm -r %buildroot%python3_sitelibdir/%oname/tests/
+
+# unbundle font-awesome fonts
+FONT_AWESOME_FONTS='%_datadir/fonts-font-awesome/fonts'
+
+fonts_bundled=
+for f in $(find -P %buildroot%python3_sitelibdir/%oname/themes/*/fonts/ -name 'fontawesome-webfont.*' -type f);
+do
+    printf "Found fontawesome font: '%%s'\n" "$f"
+    font_name="$(basename "$f")"
+    system_font="$FONT_AWESOME_FONTS/$font_name"
+    if [ ! -f "$system_font" ]; then
+        # raise to be sure we have synced fonts (bundled vs system)
+        printf "Unknown font name: '%%s'\n" "$font_name"
+        exit 1
+    fi
+
+    ln -sfT "$system_font" "$f"
+    fonts_bundled=yes
+done
+[ "$fonts_bundled" != "yes" ] && exit 1
 
 %check
 export PIP_NO_BUILD_ISOLATION=no
@@ -69,6 +88,9 @@ tox.py3 --sitepackages --no-deps -vvr -s false
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Jan 24 2022 Stanislav Levin <slev@altlinux.org> 1.2.3-alt1
+- 1.2.2 -> 1.2.3 (closes: #41685).
+
 * Sat Aug 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt2
 - fix build requires
 
