@@ -27,7 +27,7 @@
 %define pki_rebranded_version 11.0.0-alt1
 
 Name: dogtag-pki
-Version: 11.0.2
+Version: 11.0.3
 Release: alt1
 
 Summary: Dogtag PKI Certificate System
@@ -776,6 +776,9 @@ fi
 %_datadir/pki/server/webapps/pki/WEB-INF/
 
 %changelog
+* Wed Jan 26 2022 Stanislav Levin <slev@altlinux.org> 11.0.3-alt1
+- 11.0.2 -> 11.0.3.
+
 * Wed Dec 15 2021 Stanislav Levin <slev@altlinux.org> 11.0.2-alt1
 - 11.0.0 -> 11.0.2.
 
