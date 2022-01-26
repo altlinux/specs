@@ -13,7 +13,7 @@
 
 Name: plasma5-%rname
 Version: 5.23.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace
 
@@ -38,7 +38,9 @@ BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: libsensors3-devel
 BuildRequires: zlib-devel libnl-devel libcap-devel libpcap-devel
 BuildRequires: qt5-script-devel qt5-x11extras-devel qt5-tools-devel
+%ifnarch ppc64le
 BuildRequires: qt5-webengine-devel
+%endif
 BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kguiaddons-devel
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kpackage-devel kf5-kservice-devel
@@ -218,6 +220,9 @@ Requires: %name-common
 %_K5lib/libKSysGuardSystemStats.so.*
 
 %changelog
+* Wed Jan 26 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.23.5-alt2
+- build without qtwebengine on ppc64le
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.23.5-alt1
 - new version
 
