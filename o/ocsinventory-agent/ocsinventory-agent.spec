@@ -1,5 +1,5 @@
 Name: ocsinventory-agent
-Version: 2.8.1
+Version: 2.9.1
 Release: alt1
 Epoch: 1
 
@@ -27,6 +27,8 @@ BuildRequires: perl-Net-IP
 BuildRequires: perl-Pod-Parser
 BuildRequires: perl-IO-Socket-SSL
 BuildRequires: perl-Parse-EDID
+
+Requires: perl-MouseX-App-Cmd
 
 %description
 Open Computer and Software Inventory Next Generation is an application
@@ -99,6 +101,12 @@ rm -f %buildroot%perl_vendorlib/Ocsinventory/postinst.pl
 %_var/lib/%name
 
 %changelog
+* Wed Jan 26 2022 Andrey Cherepanov <cas@altlinux.org> 1:2.9.1-alt1
+- New version.
+
+* Wed Dec 15 2021 Andrey Cherepanov <cas@altlinux.org> 1:2.9.0-alt1
+- New version.
+
 * Fri Dec 11 2020 Andrey Cherepanov <cas@altlinux.org> 1:2.8.1-alt1
 - New version.
 
