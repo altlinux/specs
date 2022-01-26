@@ -6,11 +6,11 @@
 %def_enable ffmpegthumbnailer
 
 Name: geeqie
-Version: 1.7.1
+Version: 1.7.2
 Release: alt1
 
 Summary: Graphics file browser utility
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Graphics
 Url: https://www.%name.org
 
@@ -32,14 +32,15 @@ Obsoletes: gqview < %version
 
 Requires: %_bindir/exiftool %_bindir/exiftran
 Requires: %_bindir/convert %_bindir/gphoto2
-Requires: %_bindir/zenity
+Requires: %_bindir/zenity lcms2-utils >= 2.12-alt2
 
 BuildRequires: gcc-c++ yelp-tools intltool libappstream-glib-devel
 BuildRequires: python3-module-markdown
 BuildRequires: libgtk+3-devel libjpeg-devel libtiff-devel libwebp-devel
 BuildRequires: libopenjpeg2.0-devel libdjvu-devel liblcms2-devel
 BuildRequires: libpoppler-glib-devel libheif-devel
-BuildRequires: libexiv2-devel liblirc-devel zlib-devel
+BuildRequires: libraw-devel libgomp-devel
+BuildRequires: libexiv2-devel liblirc-devel zlib-devel libarchive-devel
 %{?_enable_map:BuildRequires: libgps-devel pkgconfig(clutter-gtk-1.0) libchamplain-gtk3-devel}
 %{?_enable_ffmpegthumbnailer:BuildRequires: libffmpegthumbnailer-devel}
 
@@ -57,6 +58,7 @@ cp %SOURCE1 %SOURCE2 ./
 sed -i 's/\-Werror//' configure.ac
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %{?_enable_ffmpegthumbnailer:%add_optflags -Wno-error=unused-function}
 %autoreconf
 %configure --enable-lirc \
@@ -84,6 +86,10 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %doc NEWS README.*
 
 %changelog
+* Wed Jan 26 2022 Yuri N. Sedunov <aris@altlinux.org> 1.7.2-alt1
+- 1.7.2
+- updated BRs and dependencies
+
 * Mon Jan 17 2022 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
 - 1.7.1
 

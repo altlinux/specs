@@ -6,7 +6,7 @@
 
 Name: lib%rname
 Version: 2.12
-Release: alt1
+Release: alt2
 
 Summary: Little cms color engine, version 2
 License: MIT
@@ -72,8 +72,8 @@ This package contains various %name-based utilities
 %add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
-	%{subst_enable static} \
-	--program-suffix=2
+	%{subst_enable static}
+%nil
 %make_build
 
 %install
@@ -83,17 +83,21 @@ This package contains various %name-based utilities
 %make check
 
 %files
-%_libdir/*.so.*
+%_libdir/%name.so.*
 %doc AUTHORS README* COPYING
 
 %files -n lcms2-utils
-%_bindir/*
+%_bindir/jpgicc
+%_bindir/linkicc
+%_bindir/psicc
+%_bindir/tificc
+%_bindir/transicc
 %_man1dir/*
 
 %files devel
 %_includedir/*
-%_libdir/*.so
-%_libdir/pkgconfig/*
+%_libdir/%name.so
+%_pkgconfigdir/%rname.pc
 
 %if_enabled static
 %files devel-static
@@ -101,6 +105,9 @@ This package contains various %name-based utilities
 %endif
 
 %changelog
+* Wed Jan 26 2022 Yuri N. Sedunov <aris@altlinux.org> 2.12-alt2
+- rebuilt without suffix=2 for binaries
+
 * Sat Feb 06 2021 Yuri N. Sedunov <aris@altlinux.org> 2.12-alt1
 - 2.12
 
