@@ -6,7 +6,7 @@
 %def_enable systemd
 
 Name: pcsc-lite
-Version: 1.9.1
+Version: 1.9.5
 Release: alt1
 
 Summary: PC/SC Lite smart card framework and applications
@@ -28,6 +28,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: rpm-build-licenses perl-podlators
 BuildRequires: flex
 BuildRequires: pkgconfig(libudev)
+BuildRequires: autoconf-archive
 
 %{?_enable_polkit:BuildRequires: pkgconfig(polkit-gobject-1) >= 0.111}
 %{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
@@ -62,7 +63,7 @@ PCSC Lite uses the same winscard api as used under Windows(R)
 %package -n libpcsclite-devel
 Group: Development/C
 Summary: Haeders and other development files for libpcsclite
-Requires: libpcsclite = %version-%release
+Requires: libpcsclite = %EVR
 #
 %description -n libpcsclite-devel
 Haeders and other development files for libpcsclite
@@ -70,7 +71,7 @@ Haeders and other development files for libpcsclite
 %package -n libpcsclite-devel-static
 Group: Development/C
 Summary: Static libraries for libpcsclite
-Requires: libpcsclite-devel = %version-%release
+Requires: libpcsclite-devel = %EVR
 #
 %description -n libpcsclite-devel-static
 Static libraries for libpcsclite
@@ -158,6 +159,9 @@ rm -rf %buildroot/%_defaultdocdir/pcsc-lite
 %endif
 
 %changelog
+* Wed Jan 26 2022 Andrey Cherepanov <cas@altlinux.org> 1.9.5-alt1
+- New version.
+
 * Wed May 19 2021 Slava Aseev <ptrnine@altlinux.org> 1.9.1-alt1
 - New version
 - Use python3 in pcsc-spy
