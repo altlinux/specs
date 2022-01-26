@@ -1,12 +1,12 @@
 Name:    empty
-Version: 0.6.18b
-Release: alt1.qa1
+Version: 0.6.21b
+Release: alt1
 
 Summary: Run interactive console applications in batch mode
 License: Common Public License
 Group:   System/Configuration/Other
 Url:     http://%name.sourceforge.net
-Source:  http://heanet.dl.sourceforge.net/sourceforge/%name/%name-%version.tgz
+Source:  http://heanet.dl.sourceforge.net/sourceforge/%name/%name-%version.tar.gz
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 BuildPreReq: glibc-devel >= 2.0
@@ -60,6 +60,9 @@ Empty - это утилита, которая служит для организации автоматического выполнения
 %doc README CHANGELOG examples
 
 %changelog
+* Wed Jan 26 2022 Ilya Mashkin <oddity@altlinux.ru> 0.6.21b-alt1
+- update to new version 0.6.21
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.18b-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
