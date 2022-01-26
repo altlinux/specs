@@ -1,6 +1,6 @@
 Name: postfix
-Version: 3.6.3
-Release: alt2
+Version: 3.6.4
+Release: alt1
 Epoch: 1
 
 Summary: Postfix Mail Transport Agent
@@ -57,7 +57,7 @@ Patch: postfix-%version-%release.patch
 %define libpostfix lib%name-%version.so
 %define libpostfix_dict lib%{name}_dict-%version.so
 
-%define _buildaltdir %_builddir/%name-%version/%name-%version/extra
+%define _buildaltdir %_builddir/%name-%version/%name-%version/alt
 
 Provides: MTA, MailTransportAgent
 Provides: smtpd, smtpdaemon, %name-smtpd
@@ -662,6 +662,9 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %endif #with tls
 
 %changelog
+* Wed Jan 19 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.6.4-alt1
+- Updated to 3.6.4.
+
 * Wed Dec 15 2021 Dmitry V. Levin <ldv@altlinux.org> 1:3.6.3-alt2
 - spec: switched to use %%pre_service_stop_posttrans_start.
 
