@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        97.0.4692.71
+Version:        97.0.4692.99 
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -438,6 +438,31 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Jan 25 2022 Alexey Gladkov <legion@altlinux.ru> 97.0.4692.99-alt1
+- New version (97.0.4692.99).
+- Security fixes:
+  - CVE-2022-0289: Use after free in Safe browsing.
+  - CVE-2022-0290: Use after free in Site isolation.
+  - CVE-2022-0291: Inappropriate implementation in Storage.
+  - CVE-2022-0292: Inappropriate implementation in Fenced Frames.
+  - CVE-2022-0293: Use after free in Web packaging.
+  - CVE-2022-0294: Inappropriate implementation in Push messaging.
+  - CVE-2022-0295: Use after free in Omnibox.
+  - CVE-2022-0296: Use after free in Printing.
+  - CVE-2022-0297: Use after free in Vulkan.
+  - CVE-2022-0298: Use after free in Scheduling.
+  - CVE-2022-0300: Use after free in Text Input Method Editor.
+  - CVE-2022-0301: Heap buffer overflow in DevTools.
+  - CVE-2022-0302: Use after free in Omnibox.
+  - CVE-2022-0304: Use after free in Bookmarks.
+  - CVE-2022-0305: Inappropriate implementation in Service Worker API.
+  - CVE-2022-0306: Heap buffer overflow in PDFium.
+  - CVE-2022-0307: Use after free in Optimization Guide.
+  - CVE-2022-0308: Use after free in Data Transfer.
+  - CVE-2022-0309: Inappropriate implementation in Autofill.
+  - CVE-2022-0310: Heap buffer overflow in Task Manager.
+  - CVE-2022-0311: Heap buffer overflow in Task Manager.
+
 * Wed Jan 05 2022 Alexey Gladkov <legion@altlinux.ru> 97.0.4692.71-alt1
 - New version (97.0.4692.71).
 - Security fixes:
