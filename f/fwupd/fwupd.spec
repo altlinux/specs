@@ -26,7 +26,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.7.3
+Version: 1.7.4
 Release: alt1
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
@@ -338,6 +338,8 @@ rm -rf %buildroot%_docdir/fwupd
 %config(noreplace)%_sysconfdir/grub.d/35_fwupd
 %_datadir/fwupd/uefi-capsule-ux.tar.xz
 %endif
+%fwupd_pluginsdir/libfu_plugin_uf2.so
+%fwupd_pluginsdir/libfu_plugin_usi_dock.so
 %fwupd_pluginsdir/libfu_plugin_vli.so
 %fwupd_pluginsdir/libfu_plugin_upower.so
 %fwupd_pluginsdir/libfu_plugin_wacom_usb.so
@@ -373,6 +375,9 @@ rm -rf %buildroot%_docdir/fwupd
 %config(noreplace)%_sysconfdir/fwupd/remotes.d/fwupd-tests.conf
 
 %changelog
+* Wed Jan 26 2022 Anton Farygin <rider@altlinux.ru> 1.7.4-alt1
+- 1.7.3 -> 1.7.4
+
 * Fri Dec 24 2021 Anton Farygin <rider@altlinux.ru> 1.7.3-alt1
 - 1.7.2 -> 1.7.3
 
