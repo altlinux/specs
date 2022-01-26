@@ -12,7 +12,7 @@
 
 Name: shotwell
 Version: %ver_major.3
-Release: alt2.2
+Release: alt3
 
 Summary: digital photo organizer designed for the GNOME desktop environment
 Group: Graphics
@@ -24,6 +24,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
+Patch: %name-0.31.3-alt-no-dark-theme-by-default.patch
 
 %define gtk_ver 3.22
 %define gexiv_ver 0.12.1
@@ -60,6 +61,7 @@ mode, and export them to share with others.
 
 %prep
 %setup
+%patch -b .no_dark_theme
 
 %build
 %add_optflags -D_GIT_VERSION=%(echo %version | tr -d .)
@@ -109,6 +111,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Wed Jan 26 2022 Yuri N. Sedunov <aris@altlinux.org> 0.31.3-alt3
+- org.gnome.shotwell.gschema.xml: use-dark-theme = false (ALT #41805)
+
 * Mon Jan 24 2022 Yuri N. Sedunov <aris@altlinux.org> 0.31.3-alt2.2
 - fixed build with vala < 0.54 for p10
 
