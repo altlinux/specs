@@ -3,16 +3,18 @@
 
 Name: qt5-webview
 Version: 5.15.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt Web View
 Url: http://qt.io/
-License: LGPLv2 / GPLv3
+License:  LGPL-2.1 with Qt-LGPL-exception-1.1 or LGPL-3.0-only
+
+ExclusiveArch: %qt5_qtwebengine_arches
 
 Source: %qt_module-everywhere-src-%version.tar
 
-BuildRequires(pre): rpm-build-ubt rpm-macros-qt5 qt5-tools
+BuildRequires(pre): rpm-macros-qt5 qt5-tools rpm-macros-qt5-webengine
 BuildRequires: gcc-c++ glibc-devel
 BuildRequires: qt5-base-devel qt5-webengine-devel
 
@@ -90,6 +92,9 @@ Requires: libqt5-core = %_qt5_version
 %_qt5_examplesdir/*
 
 %changelog
+* Wed Jan 26 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt2
+- build with parity of qtwebengine arches
+
 * Mon Jan 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt1
 - new version
 
@@ -126,26 +131,26 @@ Requires: libqt5-core = %_qt5_version
 * Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
 - new version
 
-* Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
+* Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1
 - new version
 
-* Tue Aug 28 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt2%ubt
+* Tue Aug 28 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt2
 - build docs
 
-* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
+* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1
 - new version
 
-* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1%ubt
+* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1
 - new version
 
-* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
+* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1
 - new version
 
-* Thu Feb 15 2018 Oleg Solovyov <mcpain@altlinux.org> 5.9.4-alt3%ubt
+* Thu Feb 15 2018 Oleg Solovyov <mcpain@altlinux.org> 5.9.4-alt3
 - restore dir & move to libqt5-webview
 
-* Thu Feb 15 2018 Oleg Solovyov <mcpain@altlinux.org> 5.9.4-alt2%ubt
+* Thu Feb 15 2018 Oleg Solovyov <mcpain@altlinux.org> 5.9.4-alt2
 - remove unnecessary dir from common pkg
 
-* Wed Feb 14 2018 Oleg Solovyov <mcpain@altlinux.org> 5.9.4-alt1%ubt
+* Wed Feb 14 2018 Oleg Solovyov <mcpain@altlinux.org> 5.9.4-alt1
 - initial build
