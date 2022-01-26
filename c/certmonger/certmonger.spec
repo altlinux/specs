@@ -5,8 +5,8 @@
 %def_with check
 
 Name: certmonger
-Version: 0.79.14
-Release: alt3
+Version: 0.79.15
+Release: alt1
 Summary: Certificate status monitor and PKI enrollment client
 
 Group: System/Base
@@ -48,9 +48,6 @@ system enrolled with a certificate authority (CA) and keeping it enrolled.
 %prep
 %setup
 %patch -p1
-# writerand option is introduced in openssl 1.1.1
-grep -qs 'openssl rand -writerand $$HOME/\.rnd;' tests/Makefile.am || exit 1
-sed -i 's/openssl rand -writerand $$HOME\/\.rnd;/openssl rand -out $$HOME\/\.rnd 1024;/g' tests/Makefile.am
 
 %build
 %autoreconf
@@ -160,6 +157,9 @@ getcert refresh-ca -a >/dev/null 2>&1 || help
 %_man8dir/certmonger.8.*
 
 %changelog
+* Wed Jan 26 2022 Stanislav Levin <slev@altlinux.org> 0.79.15-alt1
+- 0.79.14 -> 0.79.15.
+
 * Tue Oct 05 2021 Stanislav Levin <slev@altlinux.org> 0.79.14-alt3
 - Backported fix for certmonger#223.
 
