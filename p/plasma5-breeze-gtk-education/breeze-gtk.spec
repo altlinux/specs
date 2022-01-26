@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname-education
 Version: 5.22.5
-Release: alt2
+Release: alt3
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -13,8 +13,6 @@ License: GPL-2.0-or-later
 Provides: kde5-breeze-dark-gtk = %EVR
 
 Source: %rname-%version.tar
-Patch1: alt-conf-update.patch
-Patch2: alt-gtk2-progressbar.patch
 
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel
@@ -35,8 +33,7 @@ Provides: gtk3-theme-breeze = %version-%release
 
 %prep
 %setup -n %rname-%version
-#%patch1 -p1
-#%patch2 -p1
+subst 's/Breeze-Dark/Breeze-Education-dark/' src/gtk-dark-3.0.css
 
 %build
 %K5build \
@@ -47,16 +44,20 @@ Provides: gtk3-theme-breeze = %version-%release
 %K5install
 %K5install_move data kconf_update
 mv %buildroot%_datadir/themes/Breeze{,-Education}
-mv %buildroot%_datadir/themes/Breeze-Dark{,-Education}
+mv %buildroot%_datadir/themes/Breeze-{Dark,Education-dark}
 
 %files -n gtk-theme-breeze-education
 %doc LICENSES/*
 #%_K5conf_bin/gtkbreeze*
 #%_K5conf_up/gtkbreeze*
 %_datadir/themes/Breeze-Education
-%_datadir/themes/Breeze-Dark-Education
+%_datadir/themes/Breeze-Education-dark
 
 %changelog
+* Wed Jan 26 2022 Andrey Cherepanov <cas@altlinux.org> 5.22.5-alt3
+- Rename Breeze-Dark-Education to Breeze-Education-dark.
+- Use Breeze-Education-dark as default dark theme for Breeze-Education.
+
 * Tue Nov 30 2021 Andrey Cherepanov <cas@altlinux.org> 5.22.5-alt2
 - Use version 5.22.5 as Breeze-Education.
 
