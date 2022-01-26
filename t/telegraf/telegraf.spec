@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:		telegraf
-Version:	1.20.3
+Version:	1.21.2
 Release:	alt1
 Summary:	The plugin-driven server agent for collecting and reporting metrics
 
@@ -30,11 +30,6 @@ in the community can easily add support for collecting metrics from well known s
 or Google Analytics).
 
 %prep
-# Important!!!
-# The %builddir/.gopath created by the hands. It contains the dependencies required for your project.
-# This is necessary because the gdm cannot work with the vendor directory and always tries to update
-# all dependencies from the external servers. So, we can't use Makefile to compile.
-#
 # $ git rm -rf vendor
 # $ go mod vendor -v
 # $ git add -f vendor
@@ -46,7 +41,7 @@ or Google Analytics).
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-export GO111MODULE=off
+export GOFLAGS="-mod=vendor"
 
 %golang_prepare
 
@@ -113,6 +108,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Wed Jan 26 2022 Alexey Shabalin <shaba@altlinux.org> 1.21.2-alt1
+- 1.21.2
+
 * Wed Nov 17 2021 Alexey Shabalin <shaba@altlinux.org> 1.20.3-alt1
 - 1.20.3
 
