@@ -2,14 +2,13 @@
 
 Summary: EFI Application used by uefi-capsule plugin in fwupd
 Name: fwupd-efi
-Version: 1.1
-Release: alt2
+Version: 1.2
+Release: alt1
 License: LGPLv2+
 Group: System/Configuration/Hardware
 Url: https://github.com/fwupd/fwupd-efi
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
-Patch1: fwupd-efi-1.1-sbat-clarify-project-URL.patch
 ExclusiveArch: x86_64 aarch64
 BuildRequires: meson
 BuildRequires: gnu-efi
@@ -20,7 +19,6 @@ fwupd-efi is the UEFI binary used with fwupd for installing UEFI firmware update
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 
 %build
 %meson \
@@ -40,6 +38,10 @@ fwupd-efi is the UEFI binary used with fwupd for installing UEFI firmware update
 %_libdir/pkgconfig/fwupd-efi.pc
 
 %changelog
+* Tue Jan 25 2022 Nikolai Kostrigin <nickel@altlinux.org> 1.2-alt1
+- new version
+- spec: revert sbat-clarify-project-URL patch addition
+
 * Thu Sep 16 2021 Nikolai Kostrigin <nickel@altlinux.org> 1.1-alt2
 - add sbat-clarify-project-URL patch
 
