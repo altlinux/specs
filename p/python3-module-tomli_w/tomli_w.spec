@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.4.0
+Version: 1.0.0
 Release: alt1
 
 Summary: A lil' TOML writer
@@ -79,6 +79,9 @@ tox.py3 -c tox.ini --sitepackages --console-scripts -vvr
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Jan 26 2022 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1
+- 0.4.0 -> 1.0.0.
+
 * Thu Oct 21 2021 Stanislav Levin <slev@altlinux.org> 0.4.0-alt1
 - 0.3.0 -> 0.4.0.
 
