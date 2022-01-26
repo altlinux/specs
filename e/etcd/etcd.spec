@@ -9,7 +9,7 @@
 
 Name:    etcd
 Version: 3.4.15
-Release: alt1
+Release: alt2
 Summary: A highly-available key value store for shared configuration
 Group:   System/Servers
 
@@ -101,6 +101,12 @@ useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&
 %_unitdir/%name.service
 
 %changelog
+* Wed Jan 26 2022 Alexey Shabalin <shaba@altlinux.org> 3.4.15-alt2
+- Update changelog.
+
+* Thu Oct 28 2021 Paul Wolneykien <manowar@altlinux.org> 3.4.9-alt1.1
+- Fix building on x86_64.
+
 * Fri Mar 19 2021 Alexey Shabalin <shaba@altlinux.org> 3.4.15-alt1
 - 3.4.15
 
