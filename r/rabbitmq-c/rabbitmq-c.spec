@@ -4,7 +4,7 @@
 
 Name:		rabbitmq-c
 Version:	0.11.0
-Release:	alt2
+Release:	alt3
 
 Summary:	RabbitMQ C client
 Group:		System/Libraries
@@ -80,6 +80,10 @@ popd
 %_libdir/cmake
 
 %changelog
+* Tue Jan 25 2022 Egor Ignatov <egori@altlinux.org> 0.11.0-alt3
+- 49a0ba4 tools: print verbose error message when failed to open a socket
+- f194b49 tools: enable ssl in connection_info if --ssl used with --server
+
 * Fri Jan 21 2022 Egor Ignatov <egori@altlinux.org> 0.11.0-alt2
 - Rename package: librabbitmq-c -> rabbitmq-c
 - Split tools and libraries into different packages (Closes: #41742)
