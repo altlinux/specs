@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-GD
-Version: 2.73
-Release: alt2
+Version: 2.75
+Release: alt1
 Epoch: 1
 
 Summary: Perl interface to the GD graphics library
@@ -59,6 +59,9 @@ sed -i- '/CCFLAGS/d' Makefile.PL
 #%perl_vendor_archlib/qd.pl
 
 %changelog
+* Thu Jan 27 2022 Igor Vlasenko <viy@altlinux.org> 1:2.75-alt1
+- automated CPAN update
+
 * Sun Oct 10 2021 Igor Vlasenko <viy@altlinux.org> 1:2.73-alt2
 - fixed build with gd3 with disabled gd2 support
 
