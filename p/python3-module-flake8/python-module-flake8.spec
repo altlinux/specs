@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.9.2
+Version: 4.0.1
 Release: alt1
 
 Summary: Code checking using pep8 and pyflakes
@@ -20,10 +20,12 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
+# install_requires=
 BuildRequires: python3(mccabe)
-BuildRequires: python3(mock)
 BuildRequires: python3(pycodestyle)
 BuildRequires: python3(pyflakes)
+
+# tests
 BuildRequires: python3(tox)
 BuildRequires: python3(tox_no_deps)
 BuildRequires: python3(tox_console_scripts)
@@ -73,6 +75,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Jan 26 2022 Stanislav Levin <slev@altlinux.org> 4.0.1-alt1
+- 3.9.2 -> 4.0.1.
+
 * Tue Sep 07 2021 Stanislav Levin <slev@altlinux.org> 3.9.2-alt1
 - 3.9.1 -> 3.9.2.
 

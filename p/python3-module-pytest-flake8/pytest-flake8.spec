@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.0.7
-Release: alt1
+Release: alt2
 Summary: pytest plugin for efficiently checking PEP8 compliance
 License: BSD
 Group: Development/Python3
@@ -13,6 +13,7 @@ BuildArch: noarch
 Url: https://pypi.org/project/pytest-flake8
 
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -23,10 +24,15 @@ BuildRequires: python3(tox_no_deps)
 BuildRequires: python3(tox_console_scripts)
 %endif
 
+# PyPI name(dash, underscore)
+%py3_provides %oname
+Provides: python3-module-pytest_flake8 = %EVR
+
 %description
 pytest plugin for efficiently checking PEP8 compliance
 %prep
 %setup
+%autopatch -p1
 
 %build
 %python3_build
@@ -41,11 +47,14 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr
 
 %files
 %doc LICENSE CHANGELOG README.rst
-%python3_sitelibdir/pytest_flake8-*.egg-info/
+%python3_sitelibdir/pytest_flake8-%version-py%_python3_version.egg-info/
 %python3_sitelibdir/pytest_flake8.py
 %python3_sitelibdir/__pycache__/
 
 %changelog
+* Thu Jan 27 2022 Stanislav Levin <slev@altlinux.org> 1.0.7-alt2
+- Fixed FTBFS (flake8 4.x).
+
 * Tue Apr 20 2021 Stanislav Levin <slev@altlinux.org> 1.0.7-alt1
 - 1.0.6 -> 1.0.7.
 

@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.3.1
+Version: 2.4.0
 Release: alt1
 
 Summary: A simple program which checks Python source files for errors
@@ -61,11 +61,13 @@ tox.py3 --sitepackages -vvr
 %doc AUTHORS LICENSE README.rst
 %_man1dir/python3-pyflakes.1*
 %_bindir/pyflakes-py3
-%python3_sitelibdir/pyflakes/
-%python3_sitelibdir/pyflakes-*.egg-info/
-
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Jan 26 2022 Stanislav Levin <slev@altlinux.org> 2.4.0-alt1
+- 2.3.1 -> 2.4.0.
+
 * Mon Apr 19 2021 Grigory Ustinov <grenka@altlinux.org> 2.3.1-alt1
 - 2.2.0 -> 2.3.1.
 

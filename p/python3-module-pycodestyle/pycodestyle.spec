@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pycodestyle
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 2.7.0
+Version: 2.8.0
 Release: alt1
 
 Summary: Python style guide checker
@@ -16,8 +18,10 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(tox)
 
+%if_with check
+BuildRequires: python3(tox)
+%endif
 
 %description
 pycodestyle is a tool to check your Python code against some of the style
@@ -33,14 +37,11 @@ conventions in PEP 8.
 %install
 %python3_install
 
-pushd %buildroot%_bindir
-for i in $(ls); do
-    mv $i $i.py3
-done
+mv %buildroot%_bindir/pycodestyle{,.py3}
 
 %check
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
+export TOXENV=py3
 tox.py3 --sitepackages -vvr
 
 %files
@@ -50,8 +51,10 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/__pycache__/pycodestyle.cpython-*
 %python3_sitelibdir/pycodestyle-%version-py%_python3_version.egg-info/
 
-
 %changelog
+* Wed Jan 26 2022 Stanislav Levin <slev@altlinux.org> 2.8.0-alt1
+- 2.7.0 -> 2.8.0.
+
 * Tue Apr 20 2021 Stanislav Levin <slev@altlinux.org> 2.7.0-alt1
 - 2.6.0 -> 2.7.0.
 

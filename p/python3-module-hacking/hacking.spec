@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define oname hacking
 
-%def_enable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 3.2.0
-Release: alt2
+Version: 4.1.0
+Release: alt1
+
 Summary: OpenStack Hacking Guideline Enforcement
 License: Apache-2.0
 Group: Development/Python3
@@ -13,15 +14,25 @@ BuildArch: noarch
 Url: https://pypi.python.org/pypi/hacking/
 
 # https://github.com/openstack-dev/hacking.git
-Source: %oname-%version.tar
+Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-coverage python3-module-eventlet python3-module-html5lib python3-module-mock
-BuildRequires: python3-module-setuptools python3-module-sphinx python3-module-testrepository python3-module-yieldfrom.urllib3
-BuildRequires: python3(pycodestyle) python3-module-flake8 python3-module-mccabe python3-module-stestr
+BuildRequires: python3(pbr)
 
-%py3_provides %oname
-%py3_requires mccabe flake8
+%if_with check
+# install_requires=
+BuildRequires: python3(flake8)
+
+BuildRequires: python3(stestr)
+BuildRequires: python3(ddt)
+
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+BuildRequires: python3(tox_console_scripts)
+%endif
+
+%py3_requires flake8
 
 %description
 hacking is a set of flake8 plugins that test and enforce the OpenStack
@@ -39,26 +50,38 @@ Style Guidlines.
 This package contains tests for %oname.
 
 %prep
-%setup -n %oname-%version
+%setup
+%autopatch -p1
 
 %build
-%python3_build_debug
+# https://docs.openstack.org/pbr/latest/user/packagers.html#versioning
+export PBR_VERSION=%version
+%python3_build
 
 %install
+export PBR_VERSION=%version
 %python3_install
 
 %check
-python3 setup.py test
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+export PBR_VERSION=%version
+tox.py3 --sitepackages --console-scripts --no-deps -vvr
 
 %files
 %doc *.rst doc/source/*.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 
 %changelog
+* Wed Jan 26 2022 Stanislav Levin <slev@altlinux.org> 4.1.0-alt1
+- 3.2.0 -> 4.1.0.
+
 * Thu Jun 24 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.2.0-alt2
 - drop excessive python3-module-jinja2-tests BR
 
