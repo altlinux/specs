@@ -1,7 +1,17 @@
 # -*- mode: rpm-spec; mode: folding -*-
+
+%ifarch %e2k
+# doesn't compile with EDG frontend
+%def_with clang
+# -O3 is the default for e2k
+%global _optlevel 2
+%else
+%def_without clang
+%endif
+
 Name: asterisk
 Version: 17.5.1
-Release: alt2
+Release: alt2.1
 
 Summary: Open source PBX
 License: GPLv2
@@ -20,6 +30,10 @@ BuildRequires: libiksemel-devel libldap-devel libradiusclient-ng-devel
 BuildRequires: libunixODBC-devel postgresql-devel zlib-devel
 BuildRequires: libnet-snmp-devel libsystemd-devel
 BuildRequires: rpm-build-python3
+%if_with clang
+BuildRequires: clang clang-devel llvm llvm-devel
+BuildRequires: libBlocksRuntime-devel
+%endif
 
 Source0: %name-%version-%release.tar
 
@@ -102,11 +116,20 @@ This package contains development part of Asterisk.
 
 %prep
 %setup
+%ifarch %e2k
+# undefined reference to `llvm.objectsize.i64.p0i8'
+sed -i "s/_FORTIFY_SOURCE=2/_FORTIFY_SOURCE=0/" configure{,.ac}
+%endif
 
 %build
 export EXTERNALS_CACHE_DIR=$(pwd)/.gear
 sh bootstrap.sh
-%configure --localstatedir=/var
+%configure \
+%if_with clang
+	CC=clang \
+	CXX=clang++ \
+%endif
+	--localstatedir=/var
 %make_build
 
 %install
@@ -284,6 +307,9 @@ fgrep -rl '/usr/bin/env python' %buildroot%_datadir|xargs sed -i 's,env python,p
 #}}}
 
 %changelog
+* Thu Jan 27 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 17.5.1-alt2.1
+- fixed build for Elbrus
+
 * Tue May 11 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 17.5.1-alt2
 - fix build with recent changes in rpm-build-python*
 
