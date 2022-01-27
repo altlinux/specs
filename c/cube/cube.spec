@@ -1,8 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
+
 Name: cube
 Version: 4.5
-Release: alt1
+Release: alt2
 License: BSD-3-Clause
 Group: Development/Tools
 Summary: Performance report explorer for Scalasca and Score-P
@@ -19,7 +25,7 @@ BuildRequires: gcc-c++ zlib-devel uncrustify doxygen
 BuildRequires: libdbus-devel flex graphviz texlive-base-bin
 BuildRequires: chrpath
 BuildRequires: qt5-base-devel
-%ifnarch %e2k
+%if_enabled qtwebengine
 BuildRequires: qt5-webengine-devel
 %endif
 
@@ -189,7 +195,7 @@ pushd ../cubegui-%version
 # and libtool re-orders them with libcube4gui after what it
 # should link against, and linking fails.
 export LIBS="$LIBS -lQt5PrintSupport -lQt5Widgets -lQt5Gui -lQt5Network -lQt5Concurrent -lQt5Core"
-%ifnarch %e2k
+%if_enabled qtwebengine
 export LIBS="$LIBS -lQt5WebEngineWidgets"
 %endif
 
@@ -256,6 +262,9 @@ find %buildroot -name '*.a' -delete
 %_docdir/*
 
 %changelog
+* Thu Jan 27 2022 Sergey V Turchin <zerg@altlinux.org> 4.5-alt2
+- build without qtwebengine on ppc64le
+
 * Fri Sep 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.5-alt1
 - Updated to upstream version 4.5.
 
