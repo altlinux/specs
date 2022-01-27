@@ -17,9 +17,7 @@
 %def_enable dell
 %endif
 
-%ifarch %ix86 x86_64 armh aarch64 ppc64le %e2k mipsel
 %def_enable flashrom
-%endif
 
 %define fwupd_plugins_version 5
 %define fwupd_pluginsdir %_libdir/fwupd-plugins-%fwupd_plugins_version
@@ -27,7 +25,7 @@
 Summary: Firmware update daemon
 Name: fwupd
 Version: 1.7.4
-Release: alt1
+Release: alt2
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
 Url: https://github.com/fwupd/fwupd
@@ -375,6 +373,9 @@ rm -rf %buildroot%_docdir/fwupd
 %config(noreplace)%_sysconfdir/fwupd/remotes.d/fwupd-tests.conf
 
 %changelog
+* Thu Jan 27 2022 Ivan A. Melnikov <iv@altlinux.org> 1.7.4-alt2
+- enable build with flashrom on all architectures
+
 * Wed Jan 26 2022 Anton Farygin <rider@altlinux.ru> 1.7.4-alt1
 - 1.7.3 -> 1.7.4
 
