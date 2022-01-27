@@ -1,8 +1,6 @@
-# Updated using gear-remotes-uscan
-
 %global import_path github.com/restic/restic
 Name:     restic
-Version:  0.12.0
+Version:  0.12.1
 Release:  alt1
 
 Summary:  Fast, secure, efficient backup program
@@ -42,6 +40,13 @@ for f in doc/man/*.?; do
     install -Dp "$f" "%buildroot/%_man1dir/$(basename "$f")"
 done
 
+mkdir -p %buildroot%_datadir/zsh/site-functions
+%buildroot%_bindir/%name generate --zsh-completion %buildroot%_datadir/zsh/site-functions/_%name
+mkdir -p %buildroot%_datadir/bash-completion/completions
+%buildroot%_bindir/%name generate --bash-completion %buildroot%_datadir/bash-completion/completions/%name
+mkdir -p %buildroot%_datadir/fish/vendor_completions.d
+%buildroot%_bindir/%name generate --fish-completion %buildroot%_datadir/fish/vendor_completions.d/%name.fish
+
 %check
 PATH=%buildroot%_bindir:$PATH
 restic version
@@ -61,8 +66,15 @@ diff -qr %name-%version x
 %_bindir/*
 %_man1dir/*.1*
 %doc *.md
+%_datadir/zsh/site-functions/_%name
+%_datadir/bash-completion/completions/%name
+%_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed Jan 26 2022 Mikhail Gordeev <obirvalger@altlinux.org> 0.12.1-alt1
+- Update to v0.12.1.
+- Add completions
+
 * Wed Feb 17 2021 Mikhail Gordeev <obirvalger@altlinux.org> 0.12.0-alt1
 - Update to v0.12.0.
 
