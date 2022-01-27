@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist MooseX-Types-JSON
 Name: perl-%dist
-Version: 1.00
-Release: alt1.1
+Version: 1.01
+Release: alt1
 
 Summary: JSON datatype for Moose
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MI/MILA/MooseX-Types-JSON-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PL/PLICEASE/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -20,7 +20,7 @@ BuildRequires: perl-Class-C3-XS perl-JSON-XS perl-MooseX-Types perl-Test-Pod per
 %summary.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -29,10 +29,13 @@ BuildRequires: perl-Class-C3-XS perl-JSON-XS perl-MooseX-Types perl-Test-Pod per
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README author.yml examples
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Thu Jan 27 2022 Igor Vlasenko <viy@altlinux.org> 1.01-alt1
+- automated CPAN update
+
 * Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1.1
 - rebuild to restore role requires
 
