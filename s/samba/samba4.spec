@@ -75,7 +75,7 @@
 
 Name:    samba
 Version: 4.14.11
-Release: alt2
+Release: alt3
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1921,6 +1921,17 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_includedir/samba-4.0/private
 
 %changelog
+* Thu Jan 27 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.14.11-alt3
+- Update for the latest fixes release of Samba 4.14
+  + Fix resolv_wrapper with glibc 2.34
+  + kill_tcp_connections does not work
+  + Failed to parse NTLMv2_RESPONSE length 95 - Buffer Size Error -
+    NT_STATUS_BUFFER_TOO_SMALL
+  + Can't connect to Windows shares not requiring authentication using KDE/Gnome
+  + Duplicate SMB file_ids leading to Windows client cache poisoning
+  + Missing pop_sec_ctx() in error path inside close_directory()
+  + rpc_server/netlogon: let CSDVersion="" wipe operatingSystemServicePack
+
 * Sun Jan 16 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.14.11-alt2
 - Apply s4u support patch for samba-4.15 (due already updated kdb code base):
   + basic local realm S4U support
