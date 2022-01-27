@@ -1,6 +1,6 @@
 Name:    mate-menu
-Version: 20.04.3
-Release: alt2
+Version: 22.04.0
+Release: alt1
 
 Summary: An Advanced Menu for the MATE Desktop
 # MIT is needed for keybinding.py
@@ -65,6 +65,9 @@ Supports filtering, favorites, autosession, and many other features.
 %_man1dir/%name.1*
 
 %changelog
+* Thu Jan 27 2022 Andrey Cherepanov <cas@altlinux.org> 22.04.0-alt1
+- New version.
+
 * Sun Aug 15 2021 Anton Midyukov <antohami@altlinux.org> 20.04.3-alt2
 - Fix requires (ALT #39754)
 
