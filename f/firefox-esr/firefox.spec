@@ -15,7 +15,7 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR ver
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
-Version: 91.5.0
+Version: 91.5.1
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -456,6 +456,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Thu Jan 27 2022 Pavel Vasenkov <pav@altlinux.org> 91.5.1-alt1
+- New ESR version.
+
 * Tue Jan 11 2022 Andrey Cherepanov <cas@altlinux.org> 91.5.0-alt1
 - New ESR version.
 - Security fixes:
