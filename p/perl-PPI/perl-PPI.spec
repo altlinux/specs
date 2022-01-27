@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist PPI
 Name: perl-%dist
-Version: 1.270
+Version: 1.271
 Release: alt1
 
 Summary: Parse, Analyze and Manipulate Perl (without perl)
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/M/MI/MITHALDU/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/O/OA/OALDERS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -39,6 +39,9 @@ it's also a reverse acronym for "I Parse Perl".
 %perl_vendor_privlib/PPI*
 
 %changelog
+* Thu Jan 27 2022 Igor Vlasenko <viy@altlinux.org> 1.271-alt1
+- automated CPAN update
+
 * Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.270-alt1
 - automated CPAN update
 
