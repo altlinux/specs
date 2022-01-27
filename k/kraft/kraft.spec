@@ -1,6 +1,6 @@
 Name: kraft
-Version: 0.96
-Release: alt3
+Version: 0.97
+Release: alt1
 
 Summary: Kraft - Software for small business
 Summary(ru_RU.UTF-8): Kraft — программное обеспечение для малого бизнеса
@@ -55,6 +55,9 @@ subst 's|LIBRARY DESTINATION lib/kraft|LIBRARY DESTINATION ${LIB_INSTALL_DIR}|' 
 %_datadir/metainfo/*.appdata.xml
 
 %changelog 
+* Thu Jan 27 2022 Andrey Cherepanov <cas@altlinux.org> 0.97-alt1
+- New version.
+
 * Mon Aug 09 2021 Vitaly Lipatov <lav@altlinux.ru> 0.96-alt3
 - NMU: fix requires (libctemplate is linked, trmltools is not used)
 
