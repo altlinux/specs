@@ -7,8 +7,8 @@ BuildRequires: perl(DateTime/Locale.pm) perl(Term/ReadLine.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-Natural
-Version:        1.12
-Release:        alt2
+Version:        1.13
+Release:        alt1
 Summary:        Create machine readable date/time with natural parsing logic
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/DateTime-Format-Natural
@@ -88,6 +88,9 @@ perl Build.PL installdirs=vendor
 
 
 %changelog
+* Thu Jan 27 2022 Igor Vlasenko <viy@altlinux.org> 1.13-alt1
+- automated CPAN update
+
 * Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 1.12-alt2
 - fixed build
 
