@@ -10,7 +10,7 @@
 
 Name: plymouth
 Version: 0.9.5
-Release: alt6
+Release: alt7
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
@@ -246,6 +246,18 @@ This package contains the "bgrt" boot splash theme for
 Plymouth.
 Jimmac's spinner theme using the ACPI BGRT graphics as background.
 
+%package theme-bgrt-alt
+Summary: Plymouth "BGRT-ALT" theme
+Group: System/Base
+Requires: %name-plugin-two-step = %EVR
+Requires(post): %name-scripts = %version-%release
+BuildArch: noarch
+
+%description theme-bgrt-alt
+This package contains the "bgrt-alt" boot splash theme for
+Plymouth.
+It is a cusomized Jimmac's spinner theme using the ACPI BGRT graphics as
+background and featuring ALT logo.
 
 %prep
 %setup -q
@@ -453,9 +465,15 @@ fi \
 %files theme-bgrt
 %_datadir/plymouth/themes/bgrt
 
+%files theme-bgrt-alt
+%_datadir/plymouth/themes/bgrt-alt
+
 %files system-theme
 
 %changelog
+* Thu Jan 27 2022 Nikolai Kostrigin <nickel@altlinux.org> 1:0.9.5-alt7
+- introduce bgrt-alt customized theme
+
 * Wed Dec 08 2021 Oleg Solovyov <mcpain@altlinux.org> 1:0.9.5-alt6
 - revert commit 3b75b66 (doesn't show splash on boot when using pve)
 

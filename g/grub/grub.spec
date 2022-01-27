@@ -10,7 +10,7 @@
 
 Name: grub
 Version: 2.06
-Release: alt5
+Release: alt6
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -80,6 +80,11 @@ Patch190: grub-2.06-fedora-Rework-how-the-fdt-command-builds.patch
 Patch191: grub-2.06-fedora-Revert-templates-Properly-disable-the-os-prober-by-d.patch
 Patch192: grub-2.06-fedora-Revert-templates-Disable-the-os-prober-by-default.patch
 Patch193: grub-2.06-fedora-blscfg-add-blscfg-module-to-parse-Boot-Loader-Specif.patch
+
+# clean boot patch set
+Patch1000: grub-2.06-fedora-0023-Don-t-write-messages-to-the-screen.patch
+Patch1001: grub-2.06-fedora-0024-Don-t-print-GNU-GRUB-header.patch
+Patch1002: grub-2.06-fedora-0039-Don-t-emit-Booting-.-message.patch
 
 BuildRequires(pre): rpm-macros-uefi
 BuildRequires: flex fonts-bitmap-misc fonts-ttf-dejavu libfreetype-devel python-modules ruby autogen
@@ -247,6 +252,10 @@ when one can't disable it easily, doesn't want to, or needs not to.
 %patch191 -p1
 %patch192 -p1
 %patch193 -p1
+
+%patch1000 -p1
+%patch1001 -p1
+%patch1002 -p1
 
 sed -i "/^AC_INIT(\[GRUB\]/ s/%version[^]]\+/%version-%release/" configure.ac
 sed -i "/^AC_PREREQ/ s/2\.63/2.64/" configure.ac
@@ -503,6 +512,9 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Thu Jan 27 2022 Nikolai Kostrigin <nickel@altlinux.org> 2.06-alt6
+- add basic clean looking, blinkless boot support based on fedora patch set
+
 * Wed Jan 26 2022 Nikolai Kostrigin <nickel@altlinux.org> 2.06-alt5
 - add upstream-grub-mkconfig-Restore-umask-for-the-grub.cfg patch
   (fixes: CVE-2021-3981)
