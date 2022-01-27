@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Set-Object
 Name: perl-%dist
-Version: 1.41
+Version: 1.42
 Release: alt1
 
 Summary: Unordered collections (sets) of Perl Objects
@@ -28,11 +28,14 @@ collection of objects without duplication.
 %perl_vendor_install
 
 %files
-%doc Changes.pod README
+%doc Changes.pod README examples
 %perl_vendor_archlib/Set
 %perl_vendor_autolib/Set
 
 %changelog
+* Thu Jan 27 2022 Igor Vlasenko <viy@altlinux.org> 1.42-alt1
+- automated CPAN update
+
 * Thu Jan 21 2021 Igor Vlasenko <viy@altlinux.ru> 1.41-alt1
 - automated CPAN update
 
