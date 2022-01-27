@@ -1,6 +1,6 @@
 Name: libtasn1
-Version: 4.17.0
-Release: alt2
+Version: 4.18.0
+Release: alt1
 
 Summary: The ASN.1 library used in GNUTLS
 Group: System/Libraries
@@ -77,7 +77,9 @@ This package contains libtasn1 development documentation.
 %def_enable Werror
 %add_optflags -Wno-error=format-truncation
 %autoreconf
-%configure --disable-static --disable-silent-rules
+%configure \
+	--disable-static \
+	--disable-silent-rules
 touch doc/stamp_docs
 %make_build
 
@@ -88,7 +90,6 @@ touch doc/stamp_docs
 mkdir -p %buildroot%docdir
 install -pm644 AUTHORS NEWS README.md THANKS %buildroot%docdir/
 ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
-install -pm644 doc/*.html doc/*.pdf %buildroot%docdir/
 mkdir -p %buildroot%docdir/reference/html
 install -pm644 doc/reference/html/* %buildroot%docdir/reference/html/
 
@@ -116,11 +117,12 @@ install -pm644 doc/reference/html/* %buildroot%docdir/reference/html/
 %_infodir/*
 %_man3dir/*
 %dir %docdir
-%docdir/*.html
-%docdir/*.pdf
 %docdir/reference/
 
 %changelog
+* Thu Jan 27 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
+- Updated to 4.18.0.
+
 * Wed Sep 22 2021 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt2
 - Added Vcs tag.
 - Fixed build with gcc11.
