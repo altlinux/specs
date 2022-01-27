@@ -1,4 +1,6 @@
 %def_enable snapshot
+%define _unpackaged_files_terminate_build 1
+
 %ifarch armh
 %define optflags_lto %nil
 %endif
@@ -19,6 +21,7 @@
 %def_enable webrtc
 %def_enable sdl
 %def_enable lv2
+%def_enable libcanberra
 #system service: not recommended and disabled by default
 %def_disable systemd_system_service
 %def_enable vulkan
@@ -32,7 +35,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.43
+Version: %ver_major.44
 Release: alt1
 
 Summary: Media Sharing Server
@@ -47,7 +50,7 @@ Vcs: https://github.com/PipeWire/pipewire.git
 Source: %name-%version.tar
 %endif
 #https://gitlab.freedesktop.org/pipewire/media-session.git
-# 0.4.1-4-ge4b49a306
+# 0.4.1-8-gc0d036ebd
 Source1: media-session-%ms_ver.tar
 Patch: %name-0.3.19-alt-rpath.patch
 
@@ -55,10 +58,11 @@ Requires: %name-libs = %version-%release
 %{?_enable_wireplumber:Requires: wireplumber}
 Requires: rtkit
 
+%define meson_ver 0.59
 %define gst_ver 1.10
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
-BuildRequires: meson libgio-devel libudev-devel libdbus-devel
+BuildRequires: meson >= %meson_ver libgio-devel libudev-devel libdbus-devel
 BuildRequires: libalsa-devel libpulseaudio-devel
 BuildRequires: libjack-devel
 BuildRequires: libv4l-devel libsamplerate-devel libsndfile-devel
@@ -88,6 +92,7 @@ BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
 %{?_enable_webrtc:BuildRequires: pkgconfig(webrtc-audio-processing)}
 %{?_enable_sdl:BuildRequires: libSDL2-devel}
 %{?_enable_lv2:BuildRequires: liblilv-devel}
+%{?_enable_libcanberra:BuildRequires: libcanberra-devel}
 %{?_enable_docs:BuildRequires: doxygen graphviz fonts-otf-adobe-source-sans-pro fonts-ttf-google-droid-sans}
 %{?_enable_man:BuildRequires: python3-module-docutils}
 %{?_enable_check:BuildRequires: /proc gcc-c++ libcap-devel}
@@ -151,6 +156,7 @@ export LIB=%_lib
 	%{?_disable_webrtc:-Decho-cancel-webrtc=disabled} \
 	%{?_disable_sdl:-Dsdl=disabled} \
 	%{?_disable_lv2:-Dlv2=disabled} \
+	%{?_disable_libcanberra:-Dlibcanberra=disabled} \
 	%{?_disable_systemd:-Dsystemd=disabled} \
 	%{?_enable_systemd_system_service:-Dsystemd-system-service=enabled} \
 	%{?_disable_examples:-Dexamples=disabled} \
@@ -185,6 +191,7 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_datadir/%name/client.conf
 %_datadir/%name/client-rt.conf
 %_datadir/%name/jack.conf
+%_datadir/%name/minimal.conf
 %_datadir/%name/pipewire-pulse.conf
 %dir %_datadir/%name/media-session.d
 %_datadir/%name/media-session.d/alsa-monitor.conf
@@ -283,6 +290,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Thu Jan 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.44-alt1
+- updated to 0.3.44-4-gbb5c43b5b + media-session-0.4.1-8-gc0d036ebd
+
 * Wed Jan 05 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.43-alt1
 - updated to 0.3.43-3-gaf11fb480
 
