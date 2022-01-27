@@ -1,8 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
+
+
 Name: CTK
 Version: 0.1.0
-Release: alt2.git.dc2e1289
+Release: alt3.git.dc2e1289
 Summary: A set of common support code for medical imaging, surgical navigation, and related purposes
 License: Apache-2.0
 Group: Development/Tools
@@ -18,7 +25,12 @@ Patch1: %name-alt-build.patch
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ cmake
-BuildRequires: qt5-base-devel qt5-script-devel qt5-tools-devel-static qt5-webengine-devel qt5-xmlpatterns-devel
+BuildRequires: qt5-base-devel qt5-script-devel qt5-tools-devel-static qt5-xmlpatterns-devel
+%if_enabled qtwebengine
+BuildRequires: qt5-webengine-devel
+%else
+BuildRequires: qt5-webkit-devel
+%endif
 BuildRequires: python3-devel
 BuildRequires: libdcmtk-devel dcmtk
 BuildRequires: libvtk-devel
@@ -85,6 +97,18 @@ This package provides Python bindings to CTK.
 %setup
 %patch1 -p1
 
+%if_disabled qtwebengine
+for f in \
+    CMake/ctkMacroSetupQt.cmake \
+    Libs/CommandLineModules/Frontend/QtWebKit/CMakeLists.txt \
+    #
+do
+    sed -i 's|WebEngineWidgets|WebKitWidgets|' $f
+done
+sed -i 's|QT_VERSION_CHECK(5,|QT_VERSION_CHECK(6,|' Libs/CommandLineModules/Frontend/QtWebKit/ctkCmdLineModuleFrontend*
+%endif
+
+
 %build
 %cmake \
 	-DCTK_SUPERBUILD:BOOL=OFF \
@@ -150,6 +174,9 @@ done
 %python3_sitelibdir/*.so
 
 %changelog
+* Thu Jan 27 2022 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt3.git.dc2e1289
+- build with webkit on e2k and ppc64le
+
 * Fri Jul 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.0-alt2.git.dc2e1289
 - Fixed compatibility with p9.
 
