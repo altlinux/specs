@@ -15,9 +15,8 @@
 
 Name: sbcl
 Summary: Steel Bank Common Lisp
-Version: 2.0.4
+Version: 2.2.0
 Release: alt1
-Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group: Development/Lisp
 License: BSD
 Url: http://sbcl.sourceforge.net/
@@ -84,12 +83,12 @@ Source202: sbcl-install-clc.lisp
 %endif
 
 Patch1: sbcl-2.0.4-lib_dir.patch
-Patch2: sbcl-1.1.13-personality.patch
-Patch3: sbcl-1.3.2-optflags.patch
+Patch2: sbcl-2.2.0-personality.patch
+Patch3: sbcl-2.2.0-optflags.patch
 Patch6: sbcl-0.9.5-verbose-build.patch
 Patch7: sbcl-2.0.4-runtime.patch
 Patch8: concurrency-tests-frlock.patch
-Patch9: sbcl-2.0.4-asm-sb-thread.patch
+Patch9: sbcl-2.2.0-asm-sb-thread.patch
 ## upstreamable patches
 Patch50: sbcl-2.0.4-generate_version.patch
 ## upstream patches
@@ -122,8 +121,8 @@ interpreter, and debugger.
 
 pushd sbcl-%version
 %patch1 -p2
-%patch2 -p1 -b .personality
-%patch3 -p1 -b .optflags
+%patch2 -p2 -b .personality
+%patch3 -p2 -b .optflags
 %{?sbcl_verbose:%patch6 -p1 -b .verbose-build}
 %ifarch aarch64 x86_64
 %patch7 -p2
@@ -138,7 +137,7 @@ pushd sbcl-%version
 find . -name '*.c' | xargs chmod 644
 
 # set version.lisp-expr
-sed -i.rpmver -e "s|\"%version\"|\"%version-%release\"|" version.lisp-expr
+subst "s|\"%version\"|\"%version-%release\"|" version.lisp-expr
 
 # make %%doc items available in parent dir to make life easier
 cp -alf BUGS COPYING README CREDITS NEWS TLA TODO PRINCIPLES ..
@@ -267,6 +266,9 @@ popd
 %_infodir/*.info*
 
 %changelog
+* Tue Jan 25 2022 Andrey Cherepanov <cas@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Wed Apr 29 2020 Andrey Cherepanov <cas@altlinux.org> 2.0.4-alt1
 - 2.0.4
 - packaged info files
