@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 48
+%define centos_release 49
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,26 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Jan 27 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.49-alt1.el9
+- Updated to kernel-5.14.0-49.el9 (fixes: CVE-2021-3773, CVE-2021-4155, CVE-2021-4203):
+  + adding support for c9s automotive coverage build
+  + Add 'redhat/rhdocs/' from commit '8d40464cf1fcc46e23510dd722f9ec747a2ff432'
+  + af_unix: fix races in sk_peer_pid and sk_peer_cred accesses
+  + CNB: net: Remove redundant if statements
+  + ip6_vti: initialize __ip6_tnl_parm struct in vti6_siocdevprivate
+  + KVM: x86: Wait for IPIs to be delivered when handling Hyper-V TLB flush hypercall
+  + netfilter: nat: force port remap to prevent shadowing well-known ports
+  + net: introduce kfree_skb_reason
+  + net: vlan: fix a UAF in vlan_dev_real_dev()
+  + powerpc/cacheinfo: fix bigcores causing irq imbalance with irqbalance
+  + powerpc: fix frame size warnings during kernel compilation with larger NR_CPUS value
+  + powerpc: handle kdump appropriately with crash_kexec_post_notifiers option
+  + powerpc/pseries: Fix memblock warning on bootup
+  + redhat: Add documentation subtree
+  + selftests/powerpc: fix security tests
+  + xfs: map unwritten blocks in XFS_IOC_{ALLOC,FREE}SP just like fallocate
+  + Various changes and improvements that are poorly described in merge.
+
 * Tue Jan 25 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.48-alt1.el9
 - Updated to kernel-5.14.0-48.el9:
   + net: mana: More MANA driver updates for RHEL 9.0
