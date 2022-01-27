@@ -1,11 +1,10 @@
 %global import_path github.com/traefik/traefik
-%global commit 95dc43ce4a0b9a3cdfa1ce33e606af5ef0b09f5b
 
 %global _unpackaged_files_terminate_build 1
 %def_with prebuild_webui
 
 Name: traefik
-Version: 2.5.4
+Version: 2.6.0
 Release: alt1
 Summary: The Cloud Native Edge Router
 
@@ -17,7 +16,6 @@ Patch: %name-%version-%release.patch
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-build-golang rpm-macros-nodejs
-BuildRequires: go-bindata
 %if_without prebuild_webui
 BuildRequires: npm yarn
 BuildRequires: node node-devel node-gyp node-sass
@@ -61,7 +59,7 @@ Documentation: http://docs.traefik.io/
 %patch -p1
 
 %if_without prebuild_webui
-rm -rf static autogen
+rm -rf webui/static
 
 # add symlink to node headers
 node_ver=$(node -v | sed -e "s/v//")
@@ -87,16 +85,17 @@ export npm_config_devdir="$PWD/webui/node_modules/.node-gyp"
 cd .gopath/src/%import_path
 
 export VERSION=%version
-export COMMIT=%commit
+export COMMIT=%release
 export BRANCH=altlinux
 export CODENAME=livarot
-export DATE=$(date -u '+%Y-%m-%d')
+export DATE=$(date -u '+%%Y-%%m-%%d')
 export GOFLAGS="-mod=vendor"
 
 %if_without prebuild_webui
 pushd webui
 npm rebuild
-npm run build
+npm run build:nc
+echo 'For more information show `webui/readme.md`' > static/DONT-EDIT-FILES-IN-THIS-DIRECTORY.md
 popd
 %endif
 
@@ -147,6 +146,12 @@ install -d -m 755 %buildroot%_sharedstatedir/%name
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Thu Jan 27 2022 Alexey Shabalin <shaba@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
+* Mon Dec 13 2021 Alexey Shabalin <shaba@altlinux.org> 2.5.5-alt1
+- 2.5.5
+
 * Fri Nov 12 2021 Alexey Shabalin <shaba@altlinux.org> 2.5.4-alt1
 - 2.5.4
 - Build with prebuilded js static files
