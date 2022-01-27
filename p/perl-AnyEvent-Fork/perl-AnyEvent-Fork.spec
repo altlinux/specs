@@ -1,5 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-AnyEvent-Fork
-Version: 1.31
+Version: 1.32
 Release: alt1
 
 Summary: everything you wanted to use fork() for, but couldn't
@@ -29,6 +30,9 @@ BuildRequires: perl(AnyEvent.pm) perl-devel perl(IO/FDPass.pm) perl(Proc/FastSpa
 %doc README Changes
 
 %changelog
+* Thu Jan 27 2022 Igor Vlasenko <viy@altlinux.org> 1.32-alt1
+- new version
+
 * Fri Nov 18 2016 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1
 - automated CPAN update
 
