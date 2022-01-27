@@ -1,6 +1,4 @@
 %global import_path github.com/containerd/containerd
-%global commit 7b11cfaabd73bb80907dd23182b9347b4245eb5d
-%global abbrev %(c=%{commit}; echo ${c:0:8})
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -10,8 +8,8 @@
 %brp_strip_none %_bindir/*
 
 Name:		containerd
-Version:	1.4.12
-Release:	alt2
+Version:	1.5.9
+Release:	alt1
 Summary:	A daemon to control runC
 
 Group:		Development/Other
@@ -21,7 +19,6 @@ URL:		https://%import_path
 Packager:	Alexey Gladkov <legion@altlinux.ru>
 
 Source0: %name-%version.tar
-Source1: %name.service
 Source2: %name.init
 Source3: %name.limits
 Source4: config.toml
@@ -29,12 +26,14 @@ Source4: config.toml
 ExclusiveArch: %go_arches
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: golang
+BuildRequires: golang go-md2man
 BuildRequires: libbtrfs-devel
 BuildRequires: libseccomp-devel
 
 Provides: docker-%name = %version-%release
 Obsoletes: docker-%name <= 1.0.0
+
+Requires: runc
 
 %description
 containerd is a daemon to control runC, built for performance and density.
@@ -43,38 +42,31 @@ support as well as checkpoint and restore for cloning and live migration of cont
 
 %prep
 %setup -q
+sed -i 's|/usr/local/bin/containerd|/usr/bin/containerd|g' containerd.service
 
 %build
-# Temporary workaround to build with golang 1.16. Containerd 1.5 (beta is already
-# available) supports go modules
-export GO111MODULE=off
 export IMPORT_PATH="%import_path"
 export GOPATH="%go_path:$PWD"
 
 mkdir -p src/github.com/containerd
 ln -rTsf $PWD src/github.com/containerd/containerd
 pushd src/github.com/containerd/containerd
-make VERSION=v%version REVISION=%commit
+make VERSION=v%version REVISION=%release binaries man
 popd
 
 %install
-mkdir -p -- \
-	%buildroot/%_bindir \
-	%buildroot/%_initdir \
-	%buildroot/%_unitdir \
-	%buildroot/%_sysconfdir/sysconfig/limits.d
+install -d -m 0755 %buildroot%_bindir
+install -p -m 0755 bin/* %buildroot%_bindir/
 
-cp -a -- bin/%name              %buildroot/%_bindir/%name
-cp -a -- bin/%name-shim         %buildroot/%_bindir/%name-shim
-cp -a -- bin/ctr                %buildroot/%_bindir/%name-ctr
-cp -a -- bin/%name-stress       %buildroot/%_bindir/%name-stress
-cp -a -- bin/%name-shim-runc-v1 %buildroot/%_bindir/%name-shim-runc-v1
-cp -a -- bin/%name-shim-runc-v2 %buildroot/%_bindir/%name-shim-runc-v2
+install -D -p -m 0644 man/containerd.8 %buildroot%_man8dir/containerd.8
+install -D -p -m 0644 man/containerd-config.8 %buildroot%_man8dir/containerd-config.8
+install -D -p -m 0644 man/ctr.8 %buildroot%_man8dir/ctr.8
+install -D -p -m 0644 man/containerd-config.toml.5 %buildroot%_man5dir/containerd-config.toml.5
 
-cp -a -- %SOURCE1 %buildroot/%_unitdir/%name.service
-cp -a -- %SOURCE2 %buildroot/%_initdir/%name
-cp -a -- %SOURCE3 %buildroot/%_sysconfdir/sysconfig/limits.d/%name
-install -p -D -m 644 %SOURCE4 %{buildroot}%{_sysconfdir}/%{name}/config.toml
+install -D -p -m 0644 containerd.service %buildroot%_unitdir/%name.service
+install -D -p -m 0755 %SOURCE2 %buildroot%_initdir/%name
+install -D -p -m 0644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/limits.d/%name
+install -p -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/%name/config.toml
 
 %post
 %post_service %name
@@ -83,13 +75,20 @@ install -p -D -m 644 %SOURCE4 %{buildroot}%{_sysconfdir}/%{name}/config.toml
 %preun_service %name
 
 %files
-%config(noreplace) %{_sysconfdir}/%{name}/config.toml
+%config(noreplace) %_sysconfdir/%name/config.toml
 %_sysconfdir/sysconfig/limits.d/%name
 %_bindir/*
 %_initdir/%name
 %_unitdir/%name.service
+%_man5dir/*
+%_man8dir/*
 
 %changelog
+* Thu Jan 27 2022 Alexey Shabalin <shaba@altlinux.org> 1.5.9-alt1
+- 1.5.9. (Fixes: CVE-2021-43816)
+- Install upstream systemd unit file.
+- Build and install man pages.
+
 * Wed Jan 26 2022 Alexey Shabalin <shaba@altlinux.org> 1.4.12-alt2
 - Update changelog.
 
