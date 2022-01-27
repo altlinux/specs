@@ -1,19 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Email-Outlook-Message
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(Email/Address.pm) perl(Email/MIME.pm) perl(Email/MIME/ContentType.pm) perl(Email/Sender.pm) perl(Email/Simple.pm) perl(Encode.pm) perl(Encode/CN.pm) perl(Encode/JP.pm) perl(Encode/KR.pm) perl(Encode/TW.pm) perl(File/Basename.pm) perl(Getopt/Long.pm) perl(IO/All.pm) perl(IO/String.pm) perl(Module/Build.pm) perl(OLE/Storage_Lite.pm) perl(POSIX.pm) perl(Pod/Usage.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.920
-Release: alt2
+Version: 0.921
+Release: alt1
 Summary: Read Outlook .msg files
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/M/MV/MVZ/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MV/MVZ/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -37,7 +37,7 @@ scripts for %module_name
 %perl_vendor_install
 
 %files
-%doc README TODO CHANGELOG
+%doc README CHANGELOG
 %perl_vendor_privlib/E*
 
 %files scripts
@@ -45,6 +45,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Thu Jan 27 2022 Igor Vlasenko <viy@altlinux.org> 0.921-alt1
+- automated CPAN update
+
 * Mon Sep 28 2020 Igor Vlasenko <viy@altlinux.ru> 0.920-alt2
 - to Sisyphus (#38978)
 
