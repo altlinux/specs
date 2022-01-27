@@ -1,6 +1,4 @@
 %global import_path github.com/etcd-io/etcd
-%global commit aa7126864d82e88c477594b8a53f55f2e2408aa3
-%global abbrev %(c=%{commit}; echo ${c:0:8})
 
 %define etcd_group etcd
 %define etcd_user  etcd
@@ -8,8 +6,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:    etcd
-Version: 3.4.15
-Release: alt2
+Version: 3.4.18
+Release: alt1
 Summary: A highly-available key value store for shared configuration
 Group:   System/Servers
 
@@ -40,7 +38,7 @@ mv etcdctl/READMEv2.md READMEv2-etcdctl.md
 export CGO_ENABLED=0
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
-export LDFLAGS="-X %import_path/version.GitSHA=%abbrev"
+export LDFLAGS="-X %import_path/version.GitSHA=%release"
 
 %golang_prepare
 
@@ -101,6 +99,9 @@ useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&
 %_unitdir/%name.service
 
 %changelog
+* Thu Jan 27 2022 Alexey Shabalin <shaba@altlinux.org> 3.4.18-alt1
+- 3.4.18
+
 * Wed Jan 26 2022 Alexey Shabalin <shaba@altlinux.org> 3.4.15-alt2
 - Update changelog.
 
