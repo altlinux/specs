@@ -2,8 +2,8 @@
 %def_without winradio
 
 Name:           hamlib
-Version:        3.3
-Release:        alt1.3
+Version:        4.4
+Release:        alt1
 Summary:        Run-time library to control radio transceivers and receivers
 
 Group:          System/Libraries
@@ -23,6 +23,7 @@ BuildRequires:  lua-devel
 BuildRequires:  libreadline-devel
 # explicitly added makeinfo for info files
 BuildRequires: makeinfo
+BuildRequires: source-highlight
 
 %description
 Hamlib provides a standardized programming interface that applications
@@ -159,12 +160,11 @@ find $RPM_BUILD_ROOT -type f -name Hamlib.bs -exec rm -f {} ';'
 find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 
 %files
-%doc AUTHORS ChangeLog PLAN COPYING.LIB COPYING README THANKS TODO
+%doc AUTHORS ChangeLog PLAN COPYING.LIB COPYING README THANKS
 %doc README.developer
 %_bindir/*
 %_libdir/libhamlib.so.*
 %_man1dir/*
-%_infodir/*
 
 %files devel
 %_libdir/libhamlib.so
@@ -175,7 +175,10 @@ find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 %_includedir/hamlib/rig_dll.h
 %_includedir/hamlib/rotator.h
 %_includedir/hamlib/rotlist.h
+%_includedir/hamlib/amplifier.h
+%_includedir/hamlib/amplist.h
 %_libdir/pkgconfig/hamlib.pc
+%_man7dir/hamlib*.7*
 
 %files doc
 
@@ -186,6 +189,7 @@ find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 %_libdir/libhamlib++.so
 %_includedir/hamlib/rigclass.h
 %_includedir/hamlib/rotclass.h
+%_includedir/hamlib/ampclass.h
 
 %files lua
 %_libdir/lua/*/Hamliblua.so
@@ -201,6 +205,9 @@ find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 %_libdir/tcl*/Hamlib/hamlibtcl*
 
 %changelog
+* Thu Jan 27 2022 Andrey Cherepanov <cas@altlinux.org> 4.4-alt1
+- New version.
+
 * Thu Dec 24 2020 Dmitry V. Levin <ldv@altlinux.org> 3.3-alt1.3
 - NMU.
 - Updated URL.
