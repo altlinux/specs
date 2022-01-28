@@ -1,4 +1,11 @@
 %define appdir  %_datadir/gambas3
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%def_disable qtwebkit
+%else
+%def_enable qtwebengine
+%def_enable qtwebkit
+%endif
 %def_enable     opengl
 # jit.h is only available prior to llvm 3.6 and gb.jit can only be compiled with those versions.
 %def_with jit
@@ -10,7 +17,7 @@ Obsoletes: gambas3-%{*} < %EVR \
 
 Name:		gambas
 Version:	3.16.3
-Release:	alt1
+Release:	alt2
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -84,9 +91,13 @@ BuildRequires:	postgresql-devel
 #BuildRequires:	qt4-devel
 BuildRequires:  qt5-base-devel
 BuildRequires:  qt5-svg-devel
-BuildRequires:  qt5-webkit-devel
 BuildRequires:  qt5-x11extras-devel
+%if_enabled qtwebkit
+BuildRequires:  qt5-webkit-devel
+%endif
+%if_enabled qtwebengine
 BuildRequires:  qt5-webengine-devel
+%endif
 BuildRequires:	xdg-utils
 BuildRequires:	zlib-devel
 
@@ -1773,11 +1784,13 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %appdir/info/gb.qt5.wayland.list
 
 %files gb-qt5-webview
+%if_enabled qtwebengine
 %_libdir/gambas3/gb.qt5.webview.component
 %_libdir/gambas3/gb.qt5.webview.so*
 %_libdir/gambas3/gb.qt5.webview.la
 %appdir/info/gb.qt5.webview.info
 %appdir/info/gb.qt5.webview.list
+%endif
 
 %files gb-qt5-x11
 %_libdir/gambas3/gb.qt5.x11.component
@@ -1791,9 +1804,11 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %appdir/info/gb.qt5.opengl.*
 
 %files gb-qt5-webkit
+%if_enabled qtwebkit
 %_libdir/gambas3/gb.qt5.webkit.*
 %appdir/info/gb.qt5.webkit.*
 %appdir/control/gb.qt5.webkit/webview.png
+%endif
 
 %files gb-qt5-ext
 %_libdir/gambas3/gb.qt5.ext.*
@@ -1825,6 +1840,9 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %appdir/info/gb.poppler.list
 
 %changelog
+* Fri Jan 28 2022 Sergey V Turchin <zerg@altlinux.org> 3.16.3-alt2
+- build without qtwebkit and qtwebengine on e2k and ppc64le
+
 * Thu Sep 09 2021 Andrey Cherepanov <cas@altlinux.org> 3.16.3-alt1
 - New version.
 
