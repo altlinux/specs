@@ -1,6 +1,6 @@
 Name: hostapd
-Version: 2.9
-Release: alt2
+Version: 2.10
+Release: alt1
 
 Summary: User space daemon for extended IEEE 802.11 management
 License: BSD
@@ -69,6 +69,10 @@ install -pm0644 -D %name/%{name}_cli.1 %buildroot%_man1dir/%{name}_cli.1
 %_man8dir/*
 
 %changelog
+* Fri Jan 28 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.10-alt1
+- 2.10 relased
+  (Fixes: CVE-2022-23303 CVE-2022-23303)
+
 * Fri Oct 23 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.9-alt2
 - AP: Silently ignore management frame from unexpected source address
   (Fixes: CVE-2019-16275) (Closes: 39131)

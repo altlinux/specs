@@ -1,6 +1,6 @@
 Name: wpa_supplicant
-Version: 2.9
-Release: alt4
+Version: 2.10
+Release: alt1
 
 Summary: wpa_supplicant is an implementation of the WPA Supplicant component
 License: BSD
@@ -49,7 +49,6 @@ This package provides GUI to wpa_supplicant
 cp %name/defconfig %name/.config
 # use prebuilt icons from now
 tar xf %SOURCE2 -C wpa_supplicant/wpa_gui-qt4
-sed -ri 's,^all:.+$,all:,' wpa_supplicant/wpa_gui-qt4/icons/Makefile
 
 %build
 make -C %name
@@ -111,6 +110,10 @@ tar c -C %name/wpa_gui-qt4/icons hicolor |tar x -C %buildroot%_iconsdir
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Fri Jan 28 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.10-alt1
+- 2.10 relased
+  (Fixes: CVE-2022-23303 CVE-2022-23303)
+
 * Mon Mar 01 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.9-alt4
 - P2P: Fix a corner case in peer addition based on PD Request
   (Fixes: CVE-2021-27803)
