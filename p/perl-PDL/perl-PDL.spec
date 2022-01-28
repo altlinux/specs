@@ -1,3 +1,6 @@
+%global optflags_lto %nil
+# tests need network and access to google.com
+%define _without_test 1
 %define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
@@ -35,8 +38,8 @@ BuildRequires: gcc-c++
 
 Name:           perl-PDL
 %global cpan_version 2.047
-Version:        2.057
-Release:        alt2
+Version:        2.063
+Release:        alt1
 Summary:        The Perl Data Language
 License:        GPL+ or Artistic
 Url:            http://pdl.perl.org/
@@ -44,11 +47,11 @@ Source0:        http://www.cpan.org/authors/id/E/ET/ETJ/PDL-%{version}.tar.gz
 # Uncomment to enable PDL::IO::Browser
 # Patch0:         perl-PDL-2.4.10-settings.patch
 # Disable Proj support when it's not compatible, bug #839651
-Patch2:         PDL-2.4.10-Disable-PDL-GIS-Proj.patch
+Patch1:         PDL-2.4.10-Disable-PDL-GIS-Proj.patch
 # Compile Slatec as PIC, needed for ARM
-Patch3:         PDL-2.6.0.90-Compile-Slatec-code-as-PIC.patch
+Patch2:         PDL-2.6.0.90-Compile-Slatec-code-as-PIC.patch
 # Disable Slatec code crashing on PPC64, bug #1041304
-Patch4:         PDL-2.14.0-Disable-PDL-Slatec.patch
+Patch3:         PDL-2.51.0-Disable-PDL-Slatec.patch
 # Fix numbering of line in test when shebang is added
 Patch6:         PDL-2.28.0-Fix-numbering-of-line-in-test.patch
 BuildRequires:  coreutils
@@ -191,9 +194,10 @@ Source44: import.info
 %filter_from_provides /^perl(Win32.*.pm)/d
 %filter_from_requires /^perl(\(Data.Dumper\|File.Spec\|Filter.Simple\|Inline\|Module.Compile\|OpenGL\|Text.Balanced\).pm)/d
 %filter_from_requires /^perl(\(PDL.GIS.Proj\|PDL.IO.HDF.*\).pm)/d
-Patch33: PDL-2.029-alt-link-Slatec-hack.patch
+Patch33: PDL-2.063-alt-link-Slatec-hack.patch
 Patch34: PDL-2.047-alt-gsl-hack.patch
-#Patch35: PDL-2.051-alt-fix-croak.patch
+Patch35: PDL-2.063-alt-link-OpenGL.patch
+Patch36: PDL-2.063-alt-fpic-Minuit.patch
 
 %description
 PDL ("Perl Data Language") gives standard Perl the ability to
@@ -232,9 +236,10 @@ for F in t/*.t; do
     perl -i -MConfig -ple 'print $Config{startperl} if $. == 1 && !s{\A#!.*perl\b}{$Config{startperl}}' "$F"
     chmod +x "$F"
 done
-%patch33 -p1
+#patch33 -p1
 %patch34 -p1
-#patch35 -p1
+%patch35 -p1
+%patch36 -p1
 
 # failed on armh
 [ %version == 2.047 ] && rm IO/FlexRaw/t/flexraw_fortran.t
@@ -300,6 +305,9 @@ make test
 %{_libexecdir}/%{name}
 
 %changelog
+* Fri Nov 26 2021 Igor Vlasenko <viy@altlinux.org> 2.063-alt1
+- automated CPAN update
+
 * Thu Oct 14 2021 Ivan A. Melnikov <iv@altlinux.org> 2.057-alt2
 - riscv64 support
 
