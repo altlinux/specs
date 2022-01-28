@@ -1,5 +1,5 @@
 Name: qelectrotech
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 Epoch: 2
 
@@ -11,7 +11,6 @@ Group: Engineering
 Url: http://qelectrotech.org/
 # Download from https://git.tuxfamily.org/qet/qet.git/
 Source0: qet-%version.tar.gz
-Patch: %name-fix-build-with-qt5.11.patch
 
 BuildRequires: desktop-file-utils
 BuildRequires: gcc-c++
@@ -25,6 +24,7 @@ BuildRequires: libqt5-widgets
 BuildRequires: libqt5-printsupport
 BuildRequires: kf5-kwidgetsaddons-devel
 BuildRequires: kf5-kcoreaddons-devel
+BuildRequires: libsqlite3-devel
 
 Requires: qelectrotech-symbols = %EVR
 Requires: qt5-translations
@@ -98,7 +98,7 @@ Summary(pl): Kolekcja elementów QElectroTech
 Summary(pt): Colecção de elementos para QElectroTech
 Summary(ru): Коллекция элементов для QElectroTech
 Group: Engineering
-License: CC-BY
+License: CC-BY-3.0
 BuildArch: noarch
 Requires: qelectrotech = %EVR
 
@@ -131,7 +131,6 @@ Colecção de elementos para QElectroTech.
 
 %prep
 %setup -n qet-%version
-%patch -p2
 
 sed -e s,/usr/local/,%prefix/, \
     -e /QET_MAN_PATH/s,'man/','share/man', \
@@ -145,7 +144,7 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
 %endif
 
 %build
-lrelease-qt5 %name.pro
+lrelease-qt5 lang/*.ts
 qmake-qt5 %name.pro
 # Fix path to development KF5 libraries
 subst 's|libKF5|kf5/devel/libKF5|g' Makefile*
@@ -189,6 +188,10 @@ rm -f %buildroot%_datadir/%name/lang/qt_*.qm
 %_datadir/%name/titleblocks
 
 %changelog
+* Thu Jan 27 2022 Andrey Cherepanov <cas@altlinux.org> 2:0.8.0-alt1
+- New version.
+- Fix license according to SPDX.
+
 * Tue Oct 20 2020 Andrey Cherepanov <cas@altlinux.org> 2:0.7.0-alt1
 - New version.
 
