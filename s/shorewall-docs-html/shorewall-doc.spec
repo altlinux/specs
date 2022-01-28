@@ -1,14 +1,12 @@
 
 Name: shorewall-docs-html
-Version: 4.4.23.3
+Version: 5.2.8
 Release: alt1
 Summary: Shoreline Firewall is an iptables-based firewall for Linux systems.
-License: GPL
-Group: Security/Networking
+License: GPLv2
+Group: Documentation
 Url: http://www.shorewall.net/
 Source0: %name-%version.tar.bz2
-
-Packager: Alexey Shabalin <shaba@altlinux.ru>
 
 BuildArch: noarch
 
@@ -22,12 +20,15 @@ a multi-function gateway/ router/server or on a standalone GNU/Linux system.
 
 %install
 mkdir -p %buildroot%_docdir
-%__tar -xjf %SOURCE0 -C %buildroot%_docdir/
+tar -xjf %SOURCE0 -C %buildroot%_docdir/
 
 %files
 %_docdir/*
 
 %changelog
+* Fri Jan 28 2022 Alexey Shabalin <shaba@altlinux.org> 5.2.8-alt1
+- 5.2.8
+
 * Wed Sep 21 2011 Alexey Shabalin <shaba@altlinux.ru> 4.4.23.3-alt1
 - 4.4.23.3
 

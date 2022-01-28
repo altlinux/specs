@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define _libexecdir /usr/libexec
 %filter_from_requires /^\/etc\/default\/shorewall-init/d
 
 Name: shorewall-init
-Version: 5.2.3.2
+Version: 5.2.8
 Release: alt1
 Summary: Shorewall-init adds functionality to Shoreline Firewall (Shorewall).
 License: GPLv2
@@ -50,12 +51,16 @@ DESTDIR=%buildroot ./install.sh
 %_unitdir/*.service
 %config(noreplace) %_logrotatedir/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
+%_sysconfdir/NetworkManager/dispatcher.d/01-shorewall
 %dir %_datadir/%name
 %_datadir/%name/*
 %dir %_libexecdir/%name
 %_libexecdir/%name/*
 
 %changelog
+* Fri Jan 28 2022 Alexey Shabalin <shaba@altlinux.org> 5.2.8-alt1
+- 5.2.8
+
 * Mon Mar 25 2019 Alexey Shabalin <shaba@altlinux.org> 5.2.3.2-alt1
 - 5.2.3.2
 
@@ -70,4 +75,3 @@ DESTDIR=%buildroot ./install.sh
 
 * Sat Jul 14 2018 Alexey Shabalin <shaba@altlinux.org> 5.2.1-alt0.Beta2
 - Initial build for 5.2.1-Beta2
-
