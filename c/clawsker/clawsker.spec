@@ -1,6 +1,6 @@
 Name: clawsker
-Version: 1.3.4
-Release: alt2
+Version: 1.3.5
+Release: alt1
 
 Summary: Clawsker is an applet to edit Claws Mail's hidden preferences
 License: GPLv3+
@@ -39,6 +39,10 @@ sed -i -e 's|^all: build|all: build/clawsker|' \
 %find_lang %name
 
 %check
+# No Test::DeedsDisplay in the Sisyphus for now, so remove
+# the test which requires it.
+rm t/get_screen_height.t
+
 make test
 
 %files -f %name.lang
@@ -49,6 +53,10 @@ make test
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Fri Jan 28 2022 Mikhail Efremov <sem@altlinux.org> 1.3.5-alt1
+- Disabled get_screen_height test.
+- Updated to 1.3.5.
+
 * Wed Jul 28 2021 Mikhail Efremov <sem@altlinux.org> 1.3.4-alt2
 - Fixed build without tests.
 
