@@ -9,7 +9,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: buildah
-Version: 1.23.1
+Version: 1.24.0
 Release: alt1
 Summary: A command line tool used to creating OCI Images
 Group: Development/Other
@@ -58,7 +58,7 @@ export GOMD2MAN=go-md2man
 %golang_prepare
 pushd .gopath/src/%import_path
 #%%golang_build cmd/%name
-%make_build all PREFIX=%_prefix
+%make all PREFIX=%_prefix
 popd
 
 %install
@@ -77,10 +77,14 @@ popd
 %doc LICENSE
 %doc README.md
 %_bindir/%name
-%_man1dir/buildah*
+%_man1dir/*
+%_man5dir/*
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Fri Jan 28 2022 Alexey Shabalin <shaba@altlinux.org> 1.24.0-alt1
+- 1.24.0
+
 * Mon Nov 15 2021 Alexey Shabalin <shaba@altlinux.org> 1.23.1-alt1
 - new version 1.23.1
 
