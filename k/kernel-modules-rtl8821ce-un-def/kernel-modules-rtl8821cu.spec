@@ -1,6 +1,6 @@
 %define module_name rtl8821ce
 %define module_version 5.5.2
-%define module_release alt3
+%define module_release alt4
 
 %define flavour	un-def
 %define karch %ix86 x86_64
@@ -22,7 +22,6 @@ License: GPLv2
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 Patch1: 0004-rtl8821ce-guard-wireless_send_event-with-CONFIG_WIRE.patch
-Patch2: 0010-remove-ipx-support.patch
 
 ExclusiveOS: Linux
 ExclusiveArch: %ix86 x86_64
@@ -44,7 +43,6 @@ rm -rf kernel-source-%module_name-%module_version
 tar xvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
 %patch1 -p1
-%patch2 -p1
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
