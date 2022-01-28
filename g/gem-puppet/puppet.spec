@@ -4,7 +4,7 @@
 
 Name:          gem-%pkgname
 Version:       7.14.0
-Release:       alt1
+Release:       alt2
 Summary:       A network tool for managing many disparate systems
 Group:         Development/Ruby
 License:       Apache-2.0
@@ -28,6 +28,7 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(yard)
 
 %gem_replace_version CFPropertyList ~> 3.0
+%gem_replace_version gettext-setup ~> 1.0.1
 %add_findreq_skiplist %ruby_gemslibdir/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Requires:      %pkgname = %EVR
@@ -44,6 +45,7 @@ elements like packages, services, and files.
 Summary:       Executable for a network tool for managing many disparate systems
 Group:         System/Servers
 BuildArch:     noarch
+Requires(preun,post): %name = %EVR
 
 Requires:      shadow-change
 
@@ -193,6 +195,9 @@ sed -e "s,sample.server.name,$(hostname)," \
 %ruby_gemdocdir
 
 %changelog
+* Fri Jan 28 2022 Andrey Cherepanov <cas@altlinux.org> 7.14.0-alt2
+- Requires gem-puppet same version for preun/post scripts.
+
 * Wed Jan 19 2022 Andrey Cherepanov <cas@altlinux.org> 7.14.0-alt1
 - New version.
 
