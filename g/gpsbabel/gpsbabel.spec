@@ -1,10 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
 
 Name: gpsbabel
 Version: 1.7.0
-Release: alt1
+Release: alt2
 Summary: A tool to convert between various formats used by GPS devices
 License: GPL
 Group: Sciences/Geosciences
@@ -18,7 +23,11 @@ Patch1: %name-%version-alt.patch
 BuildRequires: libexpat-devel libusb-devel zlib-devel libminizip-devel gcc-c++
 BuildRequires: libshape-devel
 BuildRequires: qt5-base-devel qt5-tools
+%if_enabled qtwebengine
 BuildRequires: qt5-webengine-devel
+%else
+BuildRequires: qt5-webkit-devel
+%endif
 
 %description
 GPSBabel converts waypoints, tracks, and routes from one format to another,
@@ -69,7 +78,7 @@ sed -i \
 %make_build
 
 pushd gui
-qmake-qt5 USE_GUI=qtwebengine
+%qmake_qt5 app.pro
 lrelease-qt5 *.ts
 %make_build
 popd
@@ -107,6 +116,9 @@ install -m 0644 -p gui/images/appicon.png %buildroot%_iconsdir/hicolor/256x256/a
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Fri Jan 28 2022 Sergey V Turchin <zerg@altlinux.org> 1.7.0-alt2
+- build with qtwebkit instead of qtwebengione on e2k and ppc64le
+
 * Wed Oct 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.0-alt1
 - Updated to upstream version 1.7.0.
 
