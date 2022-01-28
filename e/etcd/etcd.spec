@@ -6,7 +6,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:    etcd
-Version: 3.4.18
+Version: 3.5.1
 Release: alt1
 Summary: A highly-available key value store for shared configuration
 Group:   System/Servers
@@ -29,10 +29,12 @@ partitions and will tolerate machine failure, including the leader.
 %prep
 %setup -q
 
-for d in client clientv3 contrib etcdctl functional hack; do
+for d in contrib etcdctl etcdutl pkg raft hack security; do
 mv $d/README.md README-$d.md
 done
 mv etcdctl/READMEv2.md READMEv2-etcdctl.md
+mv client/v2/README.md README-clientv2.md
+mv client/v3/README.md README-clientv3.md
 
 %build
 export CGO_ENABLED=0
@@ -43,13 +45,14 @@ export LDFLAGS="-X %import_path/version.GitSHA=%release"
 %golang_prepare
 
 cd .build/src/%import_path
-%golang_build .
 
 %golang_build \
-	etcdctl \
-	tools/etcd-dump-db \
-	tools/etcd-dump-logs \
-	tools/etcd-dump-metrics \
+    server \
+    etcdctl \
+    etcdutl \
+    tools/etcd-dump-db \
+    tools/etcd-dump-logs \
+    tools/etcd-dump-metrics \
 #
 
 %install
@@ -58,20 +61,20 @@ export BUILDDIR="$PWD/.build"
 %golang_install
 
 mkdir -p -- \
-	%buildroot%_sbindir \
-	%buildroot%_unitdir \
-	%buildroot%_sysconfdir/%name \
-	%buildroot%_sharedstatedir/%name \
+    %buildroot%_sbindir \
+    %buildroot%_unitdir \
+    %buildroot%_sysconfdir/%name \
+    %buildroot%_sharedstatedir/%name \
 #
 
-mv -f -- %buildroot%_bindir/%name %buildroot%_sbindir/%name
+mv -f -- %buildroot%_bindir/server %buildroot%_sbindir/%name
 
 sed \
-	-e 's,@USER@,%etcd_user,g' \
-	-e 's,@STATEDIR@,%_sharedstatedir/%name,g' \
-	-e 's,@SYSCONFDIR@,%_sysconfdir/%name,g' \
-	-e 's,@BINDIR@,%_sbindir,g' \
-	< rpm/etcd.service > %buildroot%_unitdir/%name.service
+    -e 's,@USER@,%etcd_user,g' \
+    -e 's,@STATEDIR@,%_sharedstatedir/%name,g' \
+    -e 's,@SYSCONFDIR@,%_sysconfdir/%name,g' \
+    -e 's,@BINDIR@,%_sbindir,g' \
+    < rpm/etcd.service > %buildroot%_unitdir/%name.service
 
 install -D -p -m 0644 rpm/etcd.conf    %buildroot%_sysconfdir/%name/%name.conf
 
@@ -99,6 +102,9 @@ useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&
 %_unitdir/%name.service
 
 %changelog
+* Fri Jan 28 2022 Alexey Shabalin <shaba@altlinux.org> 3.5.1-alt1
+- 3.5.1
+
 * Thu Jan 27 2022 Alexey Shabalin <shaba@altlinux.org> 3.4.18-alt1
 - 3.4.18
 
