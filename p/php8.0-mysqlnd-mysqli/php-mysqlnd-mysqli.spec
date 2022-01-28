@@ -2,7 +2,7 @@
 
 Name:	 	php%_php_suffix-mysqlnd-%php_extension
 Version:	%php_version
-Release:	%php_release
+Release:	%php_release.1
 
 Summary:	MySQL Improved Extension for PHP with Native Driver
 
@@ -18,6 +18,10 @@ BuildRequires(pre): rpm-build-php8.0-version
 BuildRequires: php-devel = %php_version
 Conflicts: php%_php_suffix-%php_extension
 Provides: php%_php_suffix-%php_extension = %EVR
+%if "%_php_suffix" == "7"
+Provides: php%_php_suffix-mysqli = %EVR
+Obsoletes: php%_php_suffix-mysqli < %EVR
+%endif
 Requires: php%_php_suffix-mysqlnd = %php_version
 
 %description
