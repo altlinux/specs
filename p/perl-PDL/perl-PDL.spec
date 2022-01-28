@@ -37,8 +37,8 @@ BuildRequires: gcc-c++
 %{bcond_without perl_PDL_enables_optional_test}
 
 Name:           perl-PDL
-%global cpan_version 2.047
-Version:        2.063
+%global cpan_version 2.066
+Version:        2.066
 Release:        alt1
 Summary:        The Perl Data Language
 License:        GPL+ or Artistic
@@ -227,7 +227,7 @@ with "%{_libexecdir}/%{name}/test".
 %if %{without perl_PDL_enables_slatec}
 %patch4 -p1 -b .slatec
 %endif
-%patch6 -p1
+#patch6 -p1
 # Fix shellbang
 perl -MConfig -pi -e 's|^#!/usr/bin/env perl|$Config{startperl}|' Perldl2/pdl2
 
@@ -305,6 +305,12 @@ make test
 %{_libexecdir}/%{name}
 
 %changelog
+* Fri Jan 28 2022 Igor Vlasenko <viy@altlinux.org> 2.066-alt1
+- new version
+
+* Fri Jan 28 2022 Igor Vlasenko <viy@altlinux.org> 2.064-alt1
+- new version
+
 * Fri Nov 26 2021 Igor Vlasenko <viy@altlinux.org> 2.063-alt1
 - automated CPAN update
 
