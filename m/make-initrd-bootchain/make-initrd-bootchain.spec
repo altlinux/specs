@@ -9,7 +9,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt8
+Release: alt9
 
 Summary: %child modules set for %name
 License: GPL-3.0
@@ -209,6 +209,9 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Sat Jan 29 2022 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt9
+- rebuilt with shellcheck 0.8.0
+
 * Tue Nov 16 2021 Ivan A. Melnikov <iv@altlinux.org> 0.1.5-alt8
 - disable check on %%mips and riscv64 (shellcheck is not there yet)
 
