@@ -1,16 +1,21 @@
+%define oname slob
+
 Name: python3-module-slob
-Version: 1.0
-Release: alt0.git.x.g81fbdc.2
+Version: 1.0.2
+Release: alt1.git.x.g018588
 Summary: Aard SLOB module
-BuildArch: noarch
-Group: Development/Python
+Group: Development/Python3
 Url: http://aarddict.org
 License: GPL3
+BuildArch: noarch
 
 #https://github.com/itkach/slob.git
 Source: slob.tar
+Source44: %name.watch
 
-BuildPreReq: rpm-build-python3
+# Automatically added by buildreq on Wed Jan 26 2022
+# optimized out: python3 python3-base python3-dev python3-module-pkg_resources sh4
+BuildRequires: python3-module-setuptools
 
 %description
 Read-only compressed data store
@@ -25,10 +30,14 @@ Read-only compressed data store
 %python3_install --install-lib %python3_sitelibdir --record=INSTALLED_FILES
 
 %files
+%_bindir/*
 %python3_sitelibdir/[Ss]lob*
 %doc LICENSE README*
 
 %changelog
+* Wed Jan 26 2022 Ildar Mulyukov <ildar@altlinux.ru> 1.0.2-alt1.git.x.g018588
+- new version
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0-alt0.git.x.g81fbdc.2
 - (NMU) rebuild with python3.6
 
