@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 49
+%define centos_release 50
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,14 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sat Jan 29 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.50-alt1.el9
+- Updated to kernel-5.14.0-50.el9:
+  + CNB: bridge: update bridge and switchdev to the latest upstream
+  + CNB: rebase/update devlink for RHEL 9.0
+  + kernel: Add redhat code
+  + kernel/rh_taint.c: Update to new messaging
+  + mptcp: rebase to 5.16 net-next
+
 * Thu Jan 27 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.49-alt1.el9
 - Updated to kernel-5.14.0-49.el9 (fixes: CVE-2021-3773, CVE-2021-4155, CVE-2021-4203):
   + adding support for c9s automotive coverage build
