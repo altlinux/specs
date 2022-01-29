@@ -1,9 +1,9 @@
 %define module_name	evdi
-%define module_version	1.9.1
-%define module_release	alt6
+%define module_version	1.10.0
+%define module_release	alt2
 
 %define flavour		std-def
-%define karch %ix86 x86_64 armh
+%define karch %ix86 x86_64 armh aarch64
 BuildRequires(pre): kernel-headers-modules-std-def
 %setup_kernel_module %flavour
 
@@ -31,12 +31,7 @@ PreReq: coreutils
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 ExclusiveArch: %karch
 
-# https://github.com/DisplayLink/evdi/pull/314
-Patch1: 0001-Add-support-for-cursor-planes.patch
-# https://github.com/DisplayLink/evdi/issues/308
-Patch2: 0001-Remove-compat-calls-for-5.15-kernel.patch
-# https://github.com/DisplayLink/evdi/pull/315
-Patch3: 0002-Fix-dma_buf_vunmap-failing-on-kernel-5.11.patch
+Patch: 0001-Remove-compat-calls-for-5.15-kernel.patch
 
 %description
 Extensible Virtual Display Interface
@@ -50,14 +45,10 @@ the libevdi library.
 %prep
 tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
-%patch1 -p2
-# 5.15+
-if [ %kcode -ge 331285 ]; then
-%patch2 -p2
-fi
-# 5.11+
-if [ %kcode -gt 330240 ]; then
-%patch3 -p2
+
+# centos backported some fixes for 5.15+
+if [ %flavour == "centos" ]; then
+%patch -p1
 fi
 
 %build
@@ -74,6 +65,15 @@ install evdi.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sat Jan 29 2022 L.A. Kostis <lakostis@altlinux.org> 1.10.0-alt2
+- Restore workaround for centos.
+
+* Sat Jan 29 2022 L.A. Kostis <lakostis@altlinux.org> 1.10.0-alt1
+- Updated to 1.10.0.
+
+* Sun Dec 19 2021 L.A. Kostis <lakostis@altlinux.org> 1.9.1-alt7
+- Fix compile with recent centos9 kernel.
 
 * Mon Nov 29 2021 L.A. Kostis <lakostis@altlinux.org> 1.9.1-alt6
 - Add -centos kernel support.

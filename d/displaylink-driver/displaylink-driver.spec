@@ -1,7 +1,8 @@
 %define module_name	 evdi
-%define module_version 1.9.1
+%define module_version 1.10.0
 %define sover 0
-%define rel 55.174
+%define stage beta-
+%define rel 59.118
 
 %ifarch x86_64
 %define dl_dir x64-ubuntu-1604
@@ -9,13 +10,16 @@
 %ifarch %ix86
 %define dl_dir x86-ubuntu-1604
 %endif
+%ifarch aarch64
+%define dl_dir aarch64-linux-gnu
+%endif
 %ifarch armh
 %define dl_dir arm-linux-gnueabihf
 %endif
 
 Name: displaylink-driver
-Version: 5.4.1
-Release: alt4.%rel
+Version: 5.5.0
+Release: alt1.%rel
 Summary: DisplayLink library and tools
 Group: System/Kernel and hardware
 
@@ -24,14 +28,12 @@ License: Proprietary
 
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
-ExclusiveArch: %ix86 x86_64 armh
+ExclusiveArch: %ix86 x86_64 aarch64 armh
 
 BuildRequires: libdrm-devel libusb chrpath
-%ifarch armh
 BuildRequires: libgomp-devel
-%endif
 
-Source1: %name-%version-%rel.run
+Source1: %name-%version-%{stage}%{rel}.run
 Source2: %module_name.modprobe
 Source3: %name.service
 Source4: %name.sleep.sh
@@ -75,7 +77,7 @@ Provides: lib%{module_name}%{sover} = %module_version
 
 %prep
 %setup -T -c
-sh %SOURCE1 --nodiskspace --keep --target tmp ||:
+sh %SOURCE1 --nodiskspace --noexec --keep --target tmp ||:
 mv tmp/* . && rm -rf tmp
 %setup -D -T
 
@@ -141,6 +143,11 @@ install -m 0644 *.spkg %buildroot%_datadir/%name/
 %_usrsrc/kernel/sources/kernel-source-%module_name-%module_version.tar.bz2
 
 %changelog
+* Sat Jan 29 2022 L.A. Kostis <lakostis@altlinux.ru> 5.5.0-alt1.59.118
+- New beta release.
+- Enable aarch64 support.
+- Bump evdi version.
+
 * Mon Nov 29 2021 L.A. Kostis <lakostis@altlinux.ru> 5.4.1-alt4.55.174
 - kernel-source: make package noarch.
 
