@@ -1,6 +1,6 @@
 Name: rpcbind
 Version: 1.2.6
-Release: alt1
+Release: alt1.qa1
 
 Summary: RPC port mapper
 License: BSD
@@ -87,6 +87,10 @@ fo=/var/run/control/portmap
 %dir %attr(770,root,rpc) %_localstatedir/rpcbind
 
 %changelog
+* Fri Jan 28 2022 Dmitry V. Levin <ldv@altlinux.org> 1.2.6-alt1.qa1
+- NMU.
+- Fixed rpcbind abort at startup due to a double free bug (closes: #41830).
+
 * Tue May 11 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.6-alt1
 - 1.2.6 released
 
