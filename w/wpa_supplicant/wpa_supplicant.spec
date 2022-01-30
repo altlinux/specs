@@ -1,6 +1,6 @@
 Name: wpa_supplicant
 Version: 2.10
-Release: alt1
+Release: alt2
 
 Summary: wpa_supplicant is an implementation of the WPA Supplicant component
 License: BSD
@@ -110,6 +110,9 @@ tar c -C %name/wpa_gui-qt4/icons hicolor |tar x -C %buildroot%_iconsdir
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Sun Jan 30 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.10-alt2
+- keep using select() in event loop (closes: 41831)
+
 * Fri Jan 28 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.10-alt1
 - 2.10 relased
   (Fixes: CVE-2022-23303 CVE-2022-23303)
