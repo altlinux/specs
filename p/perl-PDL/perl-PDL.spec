@@ -37,8 +37,8 @@ BuildRequires: gcc-c++
 %{bcond_without perl_PDL_enables_optional_test}
 
 Name:           perl-PDL
-%global cpan_version 2.066
-Version:        2.066
+%global cpan_version 2.068
+Version:        2.068
 Release:        alt1
 Summary:        The Perl Data Language
 License:        GPL+ or Artistic
@@ -305,6 +305,9 @@ make test
 %{_libexecdir}/%{name}
 
 %changelog
+* Sun Jan 30 2022 Igor Vlasenko <viy@altlinux.org> 2.068-alt1
+- new version
+
 * Fri Jan 28 2022 Igor Vlasenko <viy@altlinux.org> 2.066-alt1
 - new version
 
