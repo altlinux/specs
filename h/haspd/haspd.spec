@@ -1,35 +1,21 @@
-# TODO: install 64-bit binaries
-
-# Etersoft (c) 2006, 2007, 2008, 2009, 2010, 2013, 2015, 2016
+# Etersoft (c) 2006, 2007, 2008, 2009, 2010, 2013, 2015, 2016, 2021
 # Multiplatform spec for autobuild system Korinf
 
-# For build install,
-# 	kernel-headers-modules-XXXX for ALT Linux
-# 	kernel-devel-XXXX for FCx / ASP Linux
-# 	kernel-source-stripped-XXXX for Mandriva 2007
-# 	linux-headers for Debian / Ubuntu
-# 	kernel-source-XXXX for SuSe
-# 	kernel-source-XXXX for Slackware / MOPSLinux
-
 Name: haspd
-Version: 7.90
+Version: 8.23
 Release: alt2
 
 Summary: Hardware key protection drivers and license managers
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
 License: Proprietary
 Group: System/Kernel and hardware
-Url: http://www.etersoft.ru
+Url: https://etersoft.ru
 
 Source: ftp://updates.etersoft.ru/pub/Etersoft/HASP/unstable/sources/tarball/%name-%version.tar
 
 # compat needs due distr_vendor using
 BuildRequires(pre): rpm-build-intro rpm-build-compat
-BuildRequires: kernel-build-tools libusb-devel libncurses-devel
-
-%define module_dir /lib/modules
+BuildRequires: libusb-devel libncurses-devel
 
 # disable Fedora's build-id
 %global _missing_build_ids_terminate_build 0
@@ -52,20 +38,9 @@ Provides: aksusbd-redhat
 Obsoletes: aksusbd-suse
 Provides: aksusbd-suse
 
-#
-#ifarch x86_64
-#BuildPreReq: i586-glibc-core i586-glibc-pthread
-# we need 32bit glibc in any caseOC
-BuildRequires: ld-linux.so.2 libpthread.so.0
-#else
-Provides: sntl-sud = 7.3.0-0
-#endif
-
 # due propritary library packed
 %set_verify_elf_method skip
 # https://bugzilla.altlinux.org/show_bug.cgi?id=31207
-# find-requires: ERROR: /usr/lib/rpm/lib.req failed
-%add_findreq_skiplist /usr/lib/sentinel/*
 # find-requires: ERROR: /usr/lib/rpm/lib.req failed
 # ldd: ERROR: /tmp/.private/lav/haspd-buildroot/usr/sbin/aksusbd: trace failed
 # ldd: exited with unknown exit code (132)
@@ -76,136 +51,71 @@ Provides: sntl-sud = 7.3.0-0
 %define __find_debuginfo_files %nil
 
 ExclusiveOS: Linux
-%if %_vendor == "alt"
-# have no idea how to build package with 32-bit binaries in the hasher
-ExclusiveArch:  %ix86
-%else
-ExclusiveArch: %ix86 x86_64
-%endif
+ExclusiveArch:  %ix86 x86_64
 
 %description
 HASP - Hardware Against Software Piracy
 
 The RPM package contains
-* The required software for accessing HASP and Hardlock keys from Aladdin
-
-  Supports parallel HASP keys, Hardlock keys, USB HASP keys.
-  It contains kernel module which required when using parallel port keys and
-  USB daemon which is general required to access the HASP/Hardlock key.
-
-* The Smartkey key server for Linux (Smartkey 3 USB/LPT keys) from Eutron
-
-* The SafeNet USB key server and license server for keys from SafeNet Sentinel
+* Sentinel LDK runtime supporting Sentinel, Sentinel HL, HASP 4, and Hardlock keys.
 
 The RPM package prepared in Etersoft for WINE@Etersoft project.
 Please send any comments to hasp@etersoft.ru
 
-Copyright 1985-2008 Aladdin Knowledge Systems http://www.aladdin.com
-Copyright 2006-2007 Eutron SPA http://www.smartkey.eutron.com
-Copyright 2006-2006 SafeNet Sentinel http://www.safenet-inc.com
-Copyright 2015-2016 SafeNet http://safenet-sentinel.ru/
-Copyright 2017 Gemalto http://www.gemalto.com
+(c) 2020 SafeNet, Inc. All rights reserved.
 
-%package modules
-Summary: Linux kernel modules for HASP LPT keys
-Summary(ru_RU.UTF-8): Модули ядра Linux для LPT-ключей HASP
-Group: System/Kernel and hardware
-Requires: %name >= %version
-
-%if %_vendor == "suse"
-# due kernel dependencies
-AutoReq: no
-%endif
-
-%description modules
-Linux kernel modules for HASP LPT keys
 
 %prep
-%setup -q
-patch -p0 <etersoft/aksparpub.c.patch
-patch -p0 <etersoft/aksparpub.h.patch
+%setup
 # Cleanup deprecated compatibility rules
 %__subst '/Compatibility/,$d' aksusbd/udev/rules.d/80-hasp.rules
 
 %build
 
 %install
-#export KBUILD_VERBOSE=1
-MODULEVERSION=%version MAN_DIR=%buildroot%_mandir/ INIT_DIR=%buildroot%_initdir/ \
-    SBIN_DIR=%buildroot%_sbindir/ INSTALL_MOD_PATH=%buildroot%module_dir \
-    LIB_DIR=%buildroot%_libdir/ \
+MAN_DIR=%buildroot%_mandir/ INIT_DIR=%buildroot%_initdir/ \
+    SBIN_DIR=%buildroot%_sbindir/ LIB_DIR=%buildroot%_libdir/ \
         etersoft/build.sh %_lib
 # Install udev rules
 install -m0644 -D aksusbd/udev/rules.d/80-hasp.rules %buildroot%_udevrulesdir/80-hasp.rules
 
-%if %_vendor == "alt"
-# Make symlink to /lib/libusb-1.0.so.0 for require i586-libusb in ALT Linux arepo
-mkdir -p %buildroot/lib/%name
-ln -s /lib/libusb-1.0.so.0 %buildroot/lib/%name/libusb-1.0.so.0
-%endif
-
 %post
 %post_service %name
-%start_service %name
 
 %preun
 %preun_service %name
 
-%post modules
-%post_service %name
-
 %files
 %_initdir/%name
 %_initdir/haspd.outformat
-%if %_vendor == "alt"
-/lib/%name/libusb-1*
-%endif
 
-# Aladdin
 %_sbindir/aksusbd
-%_sbindir/winehasp
-%_sbindir/hasplm
-
+%dir /etc/hasplm/
+/etc/hasplm/templates/
 %_sbindir/hasplmd
 
 #%_sbindir/haspdemo
 #%_sbindir/nethaspdemo
 %_sbindir/usbkeytest
-%dir %_sysconfdir/haspd/
-%_sysconfdir/haspd/hasplm.conf
 
 %_udevrulesdir/80-hasp.rules
 
 %doc winehasp/readme.txt
-%doc aksparlnx/README.html aksparlnx/INSTALL hasplm/hasplm.txt
 %doc doc/NETHASP.INI.example LICENSE.UTF-8.txt doc/README.UTF-8.txt
-%doc smartkey-server-11.5/README.smartkey sentinel/licenseagreement.txt sentinel/sntlconfig.xml sentinel/readme.pdf
-
-# Eutron
-%_sysconfdir/skeyd.conf
-%_sbindir/skeyd
-%_sbindir/skeymon
-#%_sbindir/smartdem-x86
-#%_sbindir/smartdem-amd64
-
-%ifarch x86_64
-# TODO
-%else
-# Sentinel
-%_libdir/sentinel/
-%endif
-
-%_man1dir/*
-%_man5dir/*
-
-%files modules
-%_usrsrc/aksparlnx-%version/
-#dir %module_dir/haspd/
-#ghost %module_dir/haspd/aksparlnx.*
-#module_dir/haspd/*.sh
-#module_dir/2*
 
 %changelog
+* Sun Sep 05 2021 Vitaly Lipatov <lav@altlinux.ru> 8.23-alt2
+- don't pack winehasp (obsoleted, 32bit only)
+
+* Fri Aug 27 2021 Vitaly Lipatov <lav@altlinux.ru> 8.23-alt1
+- update binaries from 8.23.1 Sentinel LDK
+
+* Fri Jul 23 2021 Vitaly Lipatov <lav@altlinux.ru> 8.21-alt2
+- drop obsoleted keys support
+
+* Fri Jul 23 2021 Vitaly Lipatov <lav@altlinux.ru> 8.21-alt1
+- update binaries for 8.21.1 Sentinel LDK
+
 * Thu Jul 11 2019 Vitaly Lipatov <lav@altlinux.ru> 7.90-alt2
 - disable Fedora's build-id
 
