@@ -1,12 +1,12 @@
 Name: cool-retro-term
-Version: 1.1.1
+Version: 1.2.0
 Release: alt1
 
 Summary: Cool Retro Terminal
 License: GPLv3
 Group: Terminals
 
-Url: https://github.com/Swordifish90/cool-retro-term
+Url: https://github.com/Swordfish90/cool-retro-term
 Source0: %name-%version.tar.gz
 Source1: qmltermwidget.tar
 
@@ -15,10 +15,10 @@ BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Gui)
 BuildRequires: pkgconfig(Qt5Quick)
 BuildRequires: qt5-declarative-devel
-BuildRequires: desktop-file-utils
+BuildRequires: desktop-file-utils qt5-quickcontrols2-devel
 
 Requires: qt5-graphicaleffects
-Requires: qt5-quickcontrols
+Requires: qt5-quickcontrols qt5-quickcontrols2
 
 %description
 cool-retro-term is a terminal emulator which tries to mimic the look and feel
@@ -49,6 +49,11 @@ desktop-file-install \
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Sun Jan 30 2022 Ilya Mashkin <oddity@altlinux.ru> 1.2.0-alt1
+- 1.2.0
+- Update url (Closes: #41687)
+- Add BR: qt5-quickcontrols2
+
 * Wed Jun 16 2021 Ilya Mashkin <oddity@altlinux.ru> 1.1.1-alt1
 - 1.1.1
 
