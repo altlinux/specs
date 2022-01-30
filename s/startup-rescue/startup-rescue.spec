@@ -1,5 +1,5 @@
 Name: startup-rescue
-Version: 0.39
+Version: 0.40
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
@@ -65,6 +65,9 @@ install -pm755 rescue-remote.init %buildroot%_initdir/rescue-remote
 %_initdir/rescue-remote
 
 %changelog
+* Sat Jan 29 2022 Anton Midyukov <antohami@altlinux.org> 0.40-alt1
+- rc.sysinit.rescue: add action "Setup serial console"
+
 * Thu Aug 19 2021 Anton Midyukov <antohami@altlinux.org> 0.39-alt1
 - unmount-system: make unmounting more reliable
 
