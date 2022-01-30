@@ -1,5 +1,5 @@
 Name: usermode-fs-tools
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Summary: User-mode filesystems utilities
@@ -132,6 +132,10 @@ done
 %_bindir/iso2stick
 
 %changelog
+* Fri Jan 28 2022 Leonid Krivoshein <klark@altlinux.org> 1.3-alt1
+- dir2extfs.sh: add an option to exclude paths, thx glebfm@.
+- grub2dirs, parts2img: boot from single ESP now allowed.
+
 * Sun Jun 13 2021 Leonid Krivoshein <klark@altlinux.org> 1.2-alt1
 - iso2stick: added support of the new m-p ISO layouting.
 - iso2stick: added --keep-boot/--keep-grub options.
