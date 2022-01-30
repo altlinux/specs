@@ -1,5 +1,5 @@
 %define module_name	lkrg
-%define module_version	0.9.2.0.1.git10ba314
+%define module_version	0.9.2.10.git17752c8
 %define module_release	alt1
 
 %define flavour		std-pae
@@ -40,14 +40,6 @@ Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
 Requires: lkrg-common >= %module_version
-
-# Conflicts due %_sysconfdir/lkrg.conf. These conflicts should be at
-# lkrg-config package, but sisyphus_check does not allow dependencies to kernel
-# modules in ordinary packages.
-Conflicts: kernel-modules-lkrg-std-def = 0.9.1
-Conflicts: kernel-modules-lkrg-un-def = 0.9.1
-Conflicts: kernel-modules-lkrg-std-pae = 0.9.1
-Conflicts: kernel-modules-lkrg-std-debug = 0.9.1
 
 ExclusiveArch: %karch
 
@@ -211,33 +203,6 @@ if [ "$2" -gt 0 ]; then
 fi
 # }}}
 
-# {{{
-# Warning about the conflicted module version
-%triggerpostun -- kernel-modules-lkrg-std-def <= 0.9.1.0.8.git0fba5fe
-if [ "$2" -gt 0 ]; then
-	echo "Warning! Conflicted LKRG module version 0.9.1 for std-def kernel flavor removed."
-	echo "Do not forget to manually install LKRG kernel modules for all the needed kernel flavours if you need them."
-fi
-
-%triggerpostun -- kernel-modules-lkrg-un-def <= 0.9.1.0.8.git0fba5fe
-if [ "$2" -gt 0 ]; then
-	echo "Warning! Conflicted LKRG module version 0.9.1 for un-def kernel flavor removed."
-	echo "Do not forget to manually install LKRG kernel modules for all the needed kernel flavours if you need them."
-fi
-
-%triggerpostun -- kernel-modules-lkrg-std-debug <= 0.9.1.8.git0fba5fe
-if [ "$2" -gt 0 ]; then
-	echo "Warning! Conflicted LKRG module version 0.9.1 for std-debug kernel flavor removed."
-	echo "Do not forget to manually install LKRG kernel modules for all the needed kernel flavours if you need them."
-fi
-
-%triggerpostun -- kernel-modules-lkrg-std-pae <= 0.9.1.8.git0fba5fe
-if [ "$2" -gt 0 ]; then
-	echo "Warning! Conflicted LKRG module version 0.9.1 for std-pae kernel flavor removed."
-	echo "Do not forget to manually install LKRG kernel modules for all the needed kernel flavours if you need them."
-fi
-# }}}
-
 %files
 %doc README
 %dir %module_dir
@@ -246,6 +211,11 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Sun Jan 30 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.2.10.git17752c8-alt1
+- Updated to v0.9.2-10-g17752c8.
+- Built for centos kernel flavour.
+- Removed some non-actual conflicts to older versions of the module.
 
 * Sat Jan 08 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.2.0.1.git10ba314-alt1
 - Updated to v0.9.2-1-g10ba314.
