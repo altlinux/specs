@@ -1,6 +1,6 @@
 Name: hostapd
 Version: 2.10
-Release: alt1
+Release: alt2
 
 Summary: User space daemon for extended IEEE 802.11 management
 License: BSD
@@ -69,6 +69,9 @@ install -pm0644 -D %name/%{name}_cli.1 %buildroot%_man1dir/%{name}_cli.1
 %_man8dir/*
 
 %changelog
+* Sun Jan 30 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.10-alt2
+- keep using select() in event loop
+
 * Fri Jan 28 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.10-alt1
 - 2.10 relased
   (Fixes: CVE-2022-23303 CVE-2022-23303)
