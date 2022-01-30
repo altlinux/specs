@@ -1,9 +1,9 @@
-%define git c9ca053
+%define git %nil
 
 Name: obs-studio-plugin-droidcam
 Summary: Droidcam plugin for OBS studio
-Version: 1.1
-Release: alt2.g%{git}.1
+Version: 1.3
+Release: alt1
 License: GPLv2
 Group: Video
 Url: https://github.com/dev47apps/droidcam-obs-plugin
@@ -44,6 +44,9 @@ cp -ar data/locale %buildroot%_datadir/obs/obs-plugins/droidcam-obs/
 %_datadir/obs/obs-plugins/droidcam-obs/
 
 %changelog
+* Sun Jan 30 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3-alt1
+- 1.3.
+
 * Thu Dec 10 2020 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt2.gc9ca053.1
 - Extend ppc64 build flags (libobs knows how to handle them).
 
