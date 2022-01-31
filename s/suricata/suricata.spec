@@ -1,5 +1,15 @@
+%define _unpackaged_files_terminate_build 1
+%def_enable ebpf_build
+%def_disable prelude
+
+%ifarch x86_64
+%def_enable hyperscan
+%else
+%def_disable hyperscan
+%endif
+
 Name: suricata
-Version: 5.0.5
+Version: 6.0.4
 Release: alt1
 
 Summary: Intrusion Detection System
@@ -17,15 +27,19 @@ Source5: suricata.init
 
 BuildRequires: /proc
 BuildRequires: gcc gcc-c++
-BuildRequires: rust rust-cargo
+BuildRequires: rust >= 1.34.2 rust-cargo cbindgen
 BuildRequires: python3-dev python3-module-yaml
 BuildRequires: libpcap-devel libpcre-devel libyaml-devel
 BuildRequires: libjansson-devel libnss-devel libcap-ng-devel libgnutls-devel
 BuildRequires: libnet-devel libmagic-devel liblua-devel
 BuildRequires: zlib-devel liblzma-devel liblz4-devel
-#BuildRequires: libelf-devel libbpf-devel
-BuildRequires: libnetfilter_queue-devel libhtp-devel >= 0.5.36 libmaxminddb-devel
-BuildRequires: libhiredis-devel libprelude-devel
+%{?_enable_ebpf_build:BuildRequires: libelf-devel libbpf-devel clang llvm}
+BuildRequires: libnfnetlink-devel libnetfilter_queue-devel libnetfilter_log-devel
+BuildRequires: libhtp-devel >= 0.5.39
+BuildRequires: libmaxminddb-devel
+BuildRequires: libhiredis-devel
+%{?_enable_prelude:BuildRequires: libprelude-devel}
+%{?_enable_hyperscan:BuildRequires: libhyperscan-devel}
 
 %description
 The Suricata Engine is an Open Source Next Generation Intrusion
@@ -46,12 +60,14 @@ Matching, and GeoIP identification.
            --disable-gccmarch-native \
            --disable-coccinelle \
            --enable-nfqueue \
+	   --enable-nflog \
            --enable-af-packet \
            --enable-jansson \
            --enable-geoip \
            --enable-lua \
            --enable-hiredis \
-           --enable-prelude \
+	   %{subst_enable prelude} \
+	   %{?_enable_ebpf_build:--enable-ebpf --enable-ebpf-build} \
            --enable-non-bundled-htp \
            --with-libpcre-includes=%_includedir/pcre \
            --with-libprelude-prefix=%prefix \
@@ -70,6 +86,7 @@ Matching, and GeoIP identification.
 mkdir -p %buildroot%_sysconfdir/%name/rules
 install -m 600 rules/*.rules %buildroot%_sysconfdir/%name/rules
 install -m 600 *.config %buildroot%_sysconfdir/%name
+install -m 600 threshold.config %buildroot%_sysconfdir/%name
 install -m 600 suricata.yaml %buildroot%_sysconfdir/%name
 mkdir -p %buildroot%_unitdir
 install -m 0644 %SOURCE1 %buildroot%_unitdir/%name.service
@@ -81,11 +98,12 @@ mkdir -p %buildroot%_logdir/%name
 mkdir -p %buildroot%_logrotatedir
 install -m 644 %SOURCE3 %buildroot%_logrotatedir/%name
 
+# Setup suricata-update data directory
+mkdir -p %buildroot%_localstatedir/%name
+
 # Setup tmpdirs
 mkdir -p %buildroot%_tmpfilesdir
 install -m 0644 %SOURCE4 %buildroot%_tmpfilesdir/%name.conf
-mkdir -p %buildroot%_runtimedir
-install -d -m 0755 %buildroot%_runtimedir/%name/
 
 # Install init.d service
 mkdir -p %buildroot%_initdir
@@ -93,6 +111,7 @@ install -m 755 %SOURCE5 %buildroot%_initdir/%name
 
 # Cleanup
 rm -r %buildroot%_datadir/doc/%name
+rm -rf %buildroot%_includedir
 
 %pre
 groupadd -r -f _suricata 2>/dev/null ||:
@@ -122,11 +141,17 @@ useradd -r -g _suricata -c 'Suricata User' \
 %attr(750,_suricata,root) %dir %_logdir/%name
 %attr(750,_suricata,root) %dir %_sysconfdir/%name
 %attr(750,_suricata,root) %dir %_sysconfdir/%name/rules
-%attr(750,_suricata,root) %dir %_runtimedir/%name/
+%attr(2770,_suricata,_suricata) %dir %_localstatedir/%name
 %_tmpfilesdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Fri Jan 28 2022 Alexey Shabalin <shaba@altlinux.org> 6.0.4-alt1
+- 6.0.4 (Fixes: CVE-2021-35063, CVE-2021-37592)
+- Build without prelude.
+- Build with eBPF support.
+- Build with Hyperscan support for x86_64 arch.
+
 * Mon Dec 21 2020 Alexey Shabalin <shaba@altlinux.org> 5.0.5-alt1
 - 5.0.5
 
