@@ -4,8 +4,8 @@
 ExcludeArch: ppc64le
 
 Name: mellowplayer
-Version: 3.6.7
-Release: alt2
+Version: 3.6.8
+Release: alt1
 Summary: Cloud music integration for your desktop
 License: GPL-2.0
 Group: Sound
@@ -52,6 +52,9 @@ ln -svr %buildroot%_bindir/MellowPlayer %buildroot%_bindir/%name
 %doc LICENSE
 
 %changelog
+* Mon Jan 31 2022 Alexander Makeenkov <amakeenk@altlinux.org> 3.6.8-alt1
+- Updated to version 3.6.8
+
 * Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 3.6.7-alt2
 - exclude ppc64le from build
 
