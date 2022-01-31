@@ -1,7 +1,7 @@
 %define libname gen
 Name: ocaml-%libname
-Version: 0.5.3
-Release: alt5
+Version: 1.0
+Release: alt1
 Summary: Simple and efficient iterators (modules Gen and GenLabels).
 License: BSD
 Group: Development/ML
@@ -27,19 +27,13 @@ developing applications that use %name.
 %setup
 
 %build
-sed -si 's,Pervasives.,Stdlib.,g' src/gen.ml
 %dune_build -p %libname
 
 %install
 %dune_install
 
 %check
-# check disabled on armh due to https://github.com/ocaml/dune/issues/2527
-%ifnarch armh
-# supressed a warning 33 (Unused open)
-export OCAMLPARAM="_,w=-33"
 %dune_check
-%endif
 
 %files -f ocaml-files.runtime
 %doc README.md LICENSE CHANGELOG.md
@@ -48,6 +42,9 @@ export OCAMLPARAM="_,w=-33"
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Jan 30 2022 Anton Farygin <rider@altlinux.ru> 1.0-alt1
+- 0.5.3 -> 1.0
+
 * Fri Nov 26 2021 Anton Farygin <rider@altlinux.ru> 0.5.3-alt5
 - fixed homepage URL
 
