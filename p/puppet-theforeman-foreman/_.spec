@@ -2,8 +2,8 @@
 %define        pkgname theforeman-foreman
 
 Name:          puppet-%pkgname
-Version:       16.0.0
-Release:       alt1.2
+Version:       19.1.1
+Release:       alt1
 Summary:       Foreman server configuration
 License:       GPLv3
 Group:         Development/Ruby
@@ -13,6 +13,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Patch:         sssd.patch
 BuildRequires(pre): rpm-build-ruby
 
 Requires:      puppet
@@ -45,13 +46,13 @@ and related services.
 
 %prep
 %setup
+%autopatch
 
 %build
 %ruby_build --use=%name --srclibdirs=
 
 %install
 %ruby_install
-chmod a+x %buildroot%_libexecdir/%name/files/*.rb
 mkdir -p %buildroot%_libexecdir/puppet-modules/
 mv %buildroot%_libexecdir/%name %buildroot%_libexecdir/puppet-modules/%pkgname
 
@@ -64,6 +65,10 @@ mv %buildroot%_libexecdir/%name %buildroot%_libexecdir/puppet-modules/%pkgname
 
 
 %changelog
+* Mon Jan 31 2022 Pavel Skrylev <majioa@altlinux.org> 19.1.1-alt1
+- ^ 16.0.0 -> 19.1.1
+- !fixed require sssd.rb in facter when it absents
+
 * Wed Dec 23 2020 Pavel Skrylev <majioa@altlinux.org> 16.0.0-alt1.2
 - ! placement for the puppet modules
 
@@ -72,4 +77,4 @@ mv %buildroot%_libexecdir/%name %buildroot%_libexecdir/puppet-modules/%pkgname
 - * to enable execution of embedded scripts
 
 * Tue Dec 08 2020 Pavel Skrylev <majioa@altlinux.org> 16.0.0-alt1
-- + packaged gem with usage Ruby Policy 2.0
+- + packaged puppet module with usage Ruby Policy 2.0

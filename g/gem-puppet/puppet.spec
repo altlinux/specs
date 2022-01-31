@@ -4,7 +4,7 @@
 
 Name:          gem-%pkgname
 Version:       7.14.0
-Release:       alt2
+Release:       alt3
 Summary:       A network tool for managing many disparate systems
 Group:         Development/Ruby
 License:       Apache-2.0
@@ -31,6 +31,7 @@ BuildRequires: gem(yard)
 %gem_replace_version gettext-setup ~> 1.0.1
 %add_findreq_skiplist %ruby_gemslibdir/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+Requires:      puppet-puppetserver-foreman
 Requires:      %pkgname = %EVR
 
 %description
@@ -195,6 +196,10 @@ sed -e "s,sample.server.name,$(hostname)," \
 %ruby_gemdocdir
 
 %changelog
+* Mon Jan 31 2022 Pavel Skrylev <majioa@altlinux.org> 7.14.0-alt3
+- !fixed osfamily for apt rpm to altlinux (closes #41622)
+- !conf to support newer puppetserver-foreman puppet module
+
 * Fri Jan 28 2022 Andrey Cherepanov <cas@altlinux.org> 7.14.0-alt2
 - Requires gem-puppet same version for preun/post scripts.
 
