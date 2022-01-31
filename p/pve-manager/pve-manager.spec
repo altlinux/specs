@@ -1,15 +1,20 @@
+%global _unpackaged_files_terminate_build 1
+
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 7.0.11
-Release: alt4
-License: GPLv3
+Release: alt5
+License: AGPL-3.0+ AND GPLv3 AND MIT
 Group: System/Servers
 Url: https://git.proxmox.com/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64 aarch64
-Requires: cstream lzop pve-vncterm pve-novnc pve-spiceterm pve-xtermjs pve-docs pve-widget-toolkit pve-mini-journalreader
-Requires: perl-LWP-Protocol-https pve-cluster schedutils pve-acme
+Requires: cstream lzop schedutils gdisk hdparm rsync
+Requires: perl-LWP-Protocol-https
+Requires: pve-vncterm pve-novnc pve-spiceterm pve-xtermjs pve-acme
+Requires: pve-cluster pve-container pve-firewall pve-ha-manager pve-qemu-server pve-i18n pve-docs
+Requires: proxmox-widget-toolkit proxmox-mini-journalreader fonts-font-awesome javascript-extjs javascript-qrcodejs
 
 Source0: pve-manager.tar.xz
 Source1: pve-container.tar.xz
@@ -19,15 +24,7 @@ Source4: qemu-server.tar.xz
 
 Source10: pve-guest-common.tar.xz
 Source11: pve-http-server.tar.xz
-Source12: extjs.tar.xz
-Source13: pve-widget-toolkit.tar.xz
-Source14: pve-i18n.tar.xz
-Source15: pve-mini-journalreader.tar.xz
-Source16: jquery-3.5.1.min.js
-Source17: bootstrap-3.4.1-dist.zip
-Source18: marked.min.js
 
-Source5: pve-manager-ru.po
 Source6: basealt_logo.png
 Source70: basealt_bootsplash.svg
 Source71: basealt_bootsplash_yellow.jpg
@@ -54,13 +51,10 @@ Patch16: pve-manager-logrotate.patch
 Patch18: pve-container-lxcnetdelbr.patch
 Patch20: pve-manager-rem-package-ver-btn.patch
 Patch21: pve-http-server-alt.patch
-Patch22: extjs-alt.patch
 Patch23: qemu-server-migrate-local-devices.patch
 Patch24: pve-manager-postfix-ntpd.patch
 Patch25: pve-manager-gettext.patch
 Patch26: pve-ha-manager-watchdog.patch
-Patch27: pve-widget-toolkit-alt.patch
-Patch29: pve-manager-widgettoolkit.patch
 Patch30: pve-manager-perl-T.patch
 Patch31: qemu-server-qemu-3-0-0-alt.patch
 Patch32: pve-manager-alt-rm-pve-version.patch
@@ -68,12 +62,10 @@ Patch33: qemu-server-vga-map.patch
 Patch34: qemu-server-alt-bootsplash.patch
 Patch35: pve-manager-dc-summary.patch
 Patch36: qemu-server-vmgenid-aarch64.patch
-Patch37: pve-mini-journalreader-alt.patch
 Patch38: pve-http-server-glyphicons.patch
 Patch39: qemu-server-aarch64-spice.patch
 Patch41: pve-manager-aarch64.patch
 Patch42: qemu-server-aarch64.patch
-Patch43: pve-mini-journalreader-getopt.patch
 Patch45: qemu-server-xhci.patch
 Patch46: pve-manager-timezone.patch
 Patch47: qemu-server-pci-rng-audio-M90P.patch
@@ -102,7 +94,7 @@ Summary: PVE Container management tool
 Version: 4.0.9
 Group: Development/Perl
 PreReq: shadow-submap
-Requires: pve-lxc dtach pve-lxc-syscalld
+Requires: pve-lxc dtach pve-lxc-syscalld xz
 
 %description -n pve-container
 Tool to manage Linux Containers on PVE
@@ -155,27 +147,10 @@ This package contains a common code base used by pve-container and qemu-server
 Summary: PVE Asynchrounous HTTP Server Implementation
 Version: 4.0.2
 Group: System/Servers
-Requires: fonts-font-awesome
+Requires: fonts-font-awesome javascript-jquery javascript-bootstrap
 
 %description -n pve-http-server
 This is used to implement the PVE REST API
-
-%package -n pve-widget-toolkit
-Summary: ExtJS Helper Classes for PVE
-Version: 3.3.6
-Group: System/Servers
-
-%description -n pve-widget-toolkit
-ExtJS Helper Classes to easy access to PVE APIs
-
-%package -n pve-mini-journalreader
-Summary: Minimal systemd Journal Reader
-Version: 1.1.1
-Group: System/Servers
-
-%description -n pve-mini-journalreader
-A minimal application to read the last X lines of the systemd journal or the
-last X lines before a cursor
 
 %add_findreq_skiplist %perl_vendor_privlib/PVE/HA/Env/PVE2.pm
 %add_findreq_skiplist %_bindir/pve-ha-simulator
@@ -186,7 +161,7 @@ last X lines before a cursor
 %add_findreq_skiplist %perl_vendor_privlib/PVE/Status/InfluxDB.pm
 
 %prep
-%setup -q -c -n pve -a1 -a2 -a3 -a4 -a10 -a11 -a12 -a13 -a14 -a15
+%setup -q -c -n pve -a1 -a2 -a3 -a4 -a10 -a11
 %patch0 -p0 -b .altwww
 %patch1 -p0 -b .alt
 %patch2 -p0 -b .alt
@@ -206,13 +181,10 @@ last X lines before a cursor
 %patch18 -p0 -b .lxcnetdelbr
 %patch20 -p0 -b .rembtn
 %patch21 -p0 -b .alt
-%patch22 -p0 -b .alt
 %patch23 -p0 -b .local-devices
 %patch24 -p0 -b .postfix-3
 %patch25 -p0 -b .gettext
 %patch26 -p0 -b .watchdog
-%patch27 -p0 -b .alt
-%patch29 -p0 -b .widgettoolkit
 %patch30 -p0 -b .T
 %patch31 -p0 -b .qemu-3-0-0
 %patch32 -p0 -b .rm-version
@@ -220,12 +192,10 @@ last X lines before a cursor
 %patch34 -p0 -b .bootsplash
 %patch35 -p0 -b .nosubscription
 %patch36 -p0 -b .vmgenid
-%patch37 -p0 -b .type-limits
 %patch38 -p0 -b .glyphicons
 %patch39 -p0 -b .aarch64-spice
 %patch41 -p0 -b .aarch64
 %patch42 -p0 -b .aarch64
-%patch43 -p0 -b .getopt
 %patch45 -p0 -b .xhci
 %patch46 -p0 -b .timezone
 %patch47 -p0 -b .rng
@@ -247,27 +217,19 @@ grep '/var/run' * -rl | while read f; do
     sed -i 's|/var/run|/run|' $f
 done
 
-install -m0644 %SOURCE5 pve-i18n/ru.po
-install -m0644 %SOURCE18 pve-widget-toolkit/src/
-
 %build
-for d in pve-manager pve-firewall/src pve-ha-manager/src pve-widget-toolkit/src pve-mini-journalreader/src; do
+for d in pve-manager pve-firewall/src pve-ha-manager/src ; do
     pushd $d
     %make PACKAGE="pve-manager" VERSION="7.0-11" PVERELEASE="7.0" REPOID="63d82f4e"
     popd
 done
 
 %install
-for d in pve-manager pve-firewall/src pve-ha-manager/src pve-container/src qemu-server pve-guest-common/src pve-http-server/src extjs pve-widget-toolkit/src pve-i18n pve-mini-journalreader/src; do
+for d in pve-manager pve-firewall/src pve-ha-manager/src pve-container/src qemu-server pve-guest-common/src pve-http-server/src ; do
     pushd $d
     %make DESTDIR=%buildroot install
     popd
 done
-
-install -pD -m0644 %SOURCE16 %buildroot%_datadir/javascript/jquery/jquery.min.js
-unzip %SOURCE17 -d %buildroot%_datadir/javascript/
-mv %buildroot%_datadir/javascript/bootstrap-*-dist %buildroot%_datadir/javascript/bootstrap
-ln -s ../fonts-font-awesome %buildroot%_datadir/javascript/font-awesome
 
 install -m0644 %SOURCE6 %buildroot%_datadir/pve-manager/images/basealt_logo.png
 install -m0644 %SOURCE8 %buildroot%_datadir/pve-manager/images/favicon.ico
@@ -284,10 +246,6 @@ ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-serial1.jpg
 ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-serial2.jpg
 ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-serial3.jpg
 ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-virtio.jpg
-
-mkdir -p %buildroot%_datadir/javascript/qrcodejs
-mv %buildroot%_datadir/%name/js/qrcode.min.js %buildroot%_datadir/javascript/qrcodejs/
-ln -s ../../javascript/qrcodejs/qrcode.min.js %buildroot%_datadir/%name/js/qrcode.min.js
 
 install -m0644 pve-firewall/debian/*.service %buildroot%systemd_unitdir/
 install -m0644 pve-firewall/debian/pve-firewall.logrotate %buildroot%_sysconfdir/logrotate.d/pve-firewall
@@ -310,6 +268,22 @@ mkdir -p %buildroot%_sysconfdir/modules-load.d
 cat << __EOF__ > %buildroot%_sysconfdir/modules-load.d/pve-firewall.conf
 br_netfilter
 __EOF__
+
+# Cleanup
+rm -rf %buildroot%_sysconfdir/apt
+rm -rf %buildroot%_sysconfdir/initramfs-tools
+rm -f  %buildroot%_sysconfdir/modprobe.d/pve-blacklist.conf
+rm -rf %buildroot%_sysconfdir/network
+rm -f  %buildroot%_unitdir/pve-daily-update.service
+rm -f  %buildroot%_unitdir/pve-daily-update.timer
+rm -f  %buildroot%_unitdir/pvebanner.service
+rm -f  %buildroot%_unitdir/pvenetcommit.service
+rm -f  %buildroot%_bindir/pvebanner
+rm -f  %buildroot%_bindir/pvesubscription
+rm -f  %buildroot%_bindir/pveupgrade
+rm -f  %buildroot%_datadir/doc/pve-manager/aplinfo.dat
+rm -f  %buildroot%_man1dir/pvesubscription.1*
+rm -f  %buildroot%_man1dir/pveupgrade.1*
 
 %post
 %post_service pvedaemon
@@ -399,7 +373,6 @@ __EOF__
 %_bindir/vzdump
 %_bindir/pve5to6
 %_bindir/pve6to7
-%_datadir/pve-i18n
 %dir %perl_vendor_privlib/PVE
 %dir %perl_vendor_privlib/PVE/API2
 %dir %perl_vendor_privlib/PVE/CLI
@@ -649,13 +622,16 @@ __EOF__
 %files -n pve-http-server
 %perl_vendor_privlib/PVE/APIServer
 
-%files -n pve-widget-toolkit
-%_datadir/javascript
-
-%files -n pve-mini-journalreader
-%_bindir/mini-journalreader
-
 %changelog
+* Mon Jan 24 2022 Alexey Shabalin <shaba@altlinux.org> 7.0.11-alt5
+- build with external packages:
+  + proxmox-mini-journalreader
+  + proxmox-widget-toolkit
+  + pve-i18n
+  + javascript-extjs
+  + javascript-bootstrap
+  + javascript-jquery
+
 * Sun Nov 07 2021 Valery Inozemtsev <shrek@altlinux.ru> 7.0.11-alt4
 - pve-mini-journalreader, pve-widget-toolkit moved to subpackages
 

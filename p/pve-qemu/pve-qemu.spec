@@ -5,13 +5,14 @@
 %define rulenum 90
 %define _libexecdir /usr/libexec
 %define _localstatedir /var
+%global firmwaredirs "%_datadir/qemu:%_datadir/seabios:%_datadir/seavgabios:%_datadir/ipxe:%_datadir/ipxe.efi"
 
 Name: pve-%rname
 Version: 6.1.0
-Release: alt3
+Release: alt4
 Epoch: 1
 Summary: QEMU CPU Emulator
-License: GPL-1 and LGPLv2 and BSD
+License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
 Group: Emulators
 Requires: %name-system = %EVR %name-user = %EVR
 Conflicts: %rname
@@ -24,8 +25,6 @@ Source4: qemu-kvm.rules
 Source5: qemu-kvm.sh
 # /etc/qemu/bridge.conf
 Source12: bridge.conf
-
-Source100: Logo.bmp
 
 Patch10: 0001-qemu-sockets-fix-unix-socket-path-copy-again.patch
 Patch11: 0002-monitor-qmp-fix-race-with-clients-disconnecting-earl.patch
@@ -93,15 +92,15 @@ Patch71: 0048-PVE-savevm-async-register-yank-before-migration_inco.patch
 Patch100: 0057-cpu-add-Kunpeng-920-cpu-support.patch
 
 ExclusiveArch: x86_64 aarch64
-BuildRequires: acpica bzlib-devel glib2-devel flex libaio-devel libalsa-devel libcap-devel
+BuildRequires: acpica bzlib-devel glib2-devel flex libacl-devel libaio-devel libalsa-devel libattr-devel libcap-devel
 BuildRequires: libcap-ng-devel libcurl-devel libfdt-devel libgnutls-devel libiscsi-devel libjpeg-devel
-BuildRequires: liblzo2-devel libncurses-devel libnettle-devel libnuma-devel libpixman-devel libpng-devel ceph-devel
+BuildRequires: liblzo2-devel libncurses-devel libnettle-devel libnuma-devel libpci-devel libpixman-devel libpng-devel ceph-devel
 BuildRequires: libsasl2-devel libseccomp-devel libspice-server-devel libssh2-devel libusbredir-devel libxfs-devel
-BuildRequires: makeinfo perl-Pod-Usage pkgconfig(glusterfs-api) pkgconfig(virglrenderer) liburing-devel
-BuildRequires: libsystemd-devel libtasn1-devel libpmem-devel ipxe-roms-qemu seavgabios seabios
+BuildRequires: makeinfo perl-Pod-Usage pkgconfig(glusterfs-api) pkgconfig(virglrenderer) liburing-devel libuuid-devel
+BuildRequires: libsystemd-devel libtasn1-devel libpmem-devel libzstd-devel ipxe-roms-qemu seavgabios seabios spice-protocol
 #BuildRequires: librdmacm-devel libibverbs-devel libibumad-devel
-BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme ninja-build
-BuildRequires: libpve-backup-qemu-devel
+BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme ninja-build meson
+BuildRequires: libproxmox-backup-qemu-devel
 
 %description
 QEMU is a fast processor emulator using dynamic translation to achieve
@@ -129,7 +128,7 @@ Requires: seavgabios
 Requires: seabios
 Requires: ipxe-roms-qemu >= 1.0.0-alt4.git93acb5d
 Requires: %name-img = %EVR
-Requires: edk2-ovmf edk2-aarch64
+Requires: edk2-ovmf edk2-aarch64 qboot
 Conflicts: %rname-common
 Obsoletes: %name-aux < %EVR
 
@@ -141,7 +140,7 @@ This package contains common files for qemu.
 %package system
 Summary: QEMU CPU Emulator - full system emulation
 Group: Emulators
-Requires: %name-common = %EVR pve-backup-client pve-backup-file-restore
+Requires: %name-common = %EVR pve-backup-client pve-backup-file-restore numactl
 Conflicts: %rname-system %rname-ivshmem-tools %rname-tools %rname-kvm-core %rname-pr-helper
 
 %description system
@@ -234,6 +233,7 @@ cp -f %SOURCE2 qemu-kvm.control.in
 export CFLAGS="%optflags"
 # non-GNU configure
 ./configure \
+	--with-git-submodules=ignore \
 	--target-list=x86_64-softmmu,aarch64-softmmu \
 	--prefix=%_prefix \
 	--sysconfdir=%_sysconfdir \
@@ -242,7 +242,9 @@ export CFLAGS="%optflags"
 	--libexecdir=%_libexecdir \
 	--localstatedir=%_localstatedir \
 	--extra-cflags="%optflags" \
+	--firmwarepath="%firmwaredirs" \
 	--disable-werror \
+	--disable-debug-tcg \
         --audio-drv-list="alsa" \
         --disable-capstone \
         --disable-gtk \
@@ -316,26 +318,38 @@ rm -f %buildroot%_datadir/%rname/efi*rom
 rm -f %buildroot%_datadir/%rname/vgabios*bin
 rm -f %buildroot%_datadir/%rname/bios.bin
 rm -f %buildroot%_datadir/%rname/bios-256k.bin
-rm -f %buildroot%_datadir/%rname/s390-*.img
+rm -f %buildroot%_datadir/%rname/bios-microvm.bin
+rm -f %buildroot%_datadir/%rname/qboot.rom
 rm -f %buildroot%_datadir/%rname/openbios*
+rm -f %buildroot%_datadir/%rname/*.dtb
+rm -f %buildroot%_datadir/%rname/s390-*.img
+rm -f %buildroot%_datadir/%rname/qemu_vga.ndrv
+rm -f %buildroot%_datadir/%rname/slof.bin
 rm -f %buildroot%_datadir/%rname/u-boot*
+rm -f %buildroot%_datadir/%rname/palcode-clipper
+rm -f %buildroot%_datadir/%rname/opensbi*
+#rm -f %buildroot%_datadir/%rname/edk2-*
+rm -f %buildroot%_datadir/%rname/firmware/*
+rm -f %buildroot%_datadir/%rname/qemu-nsis.bmp
+rm -rf %buildroot%_includedir
 
 for rom in e1000 ne2k_pci pcnet rtl8139 virtio eepro100 e1000e vmxnet3 ; do
   ln -r -s %buildroot%_datadir/ipxe/pxe-${rom}.rom %buildroot%_datadir/%rname/pxe-${rom}.rom
   ln -r -s %buildroot%_datadir/ipxe.efi/efi-${rom}.rom %buildroot%_datadir/%rname/efi-${rom}.rom
 done
 
-for bios in vgabios vgabios-cirrus vgabios-qxl vgabios-stdvga vgabios-vmware vgabios-virtio ; do
+for bios in vgabios vgabios-cirrus vgabios-qxl vgabios-stdvga vgabios-vmware vgabios-virtio vgabios-ramfb vgabios-bochs-display vgabios-ati ; do
   ln -r -s %buildroot%_datadir/seavgabios/${bios}.bin %buildroot%_datadir/%rname/${bios}.bin
 done
 
-ln -r -s %buildroot%_datadir/seabios/{bios,bios-256k}.bin %buildroot%_datadir/%rname/
+ln -r -s %buildroot%_datadir/seabios/{bios,bios-256k,bios-microvm}.bin %buildroot%_datadir/%rname/
+ln -r -s %buildroot%_datadir/qboot/bios.bin %buildroot%_datadir/%rname/qboot.rom
 
 mkdir -p %buildroot%_datadir/pve-edk2-firmware
 ln -sf ../OVMF/OVMF_CODE.fd %buildroot%_datadir/pve-edk2-firmware/OVMF_CODE.fd
 ln -sf ../OVMF/OVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/OVMF_VARS.fd
-ln -sf ../AAVMF/QEMU_EFI-pflash.raw %buildroot%_datadir/pve-edk2-firmware/AAVMF_CODE.fd
-ln -sf ../AAVMF/vars-template-pflash.raw %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.fd
+ln -sf ../AAVMF/AAVMF_CODE.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_CODE.fd
+ln -sf ../AAVMF/AAVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.fd
 
 
 %check
@@ -361,7 +375,7 @@ fi
 %dir %docdir/
 %docdir/LICENSE
 %docdir/MAINTAINERS
-%_datadir/qemu
+%_datadir/%rname
 %_datadir/pve-edk2-firmware
 %dir %_sysconfdir/%name
 %_sysconfdir/udev/rules.d/%rulenum-%rname-kvm.rules
@@ -406,6 +420,14 @@ fi
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Mon Jan 24 2022 Alexey Shabalin <shaba@altlinux.org> 1:6.1.0-alt4
+- build with libproxmox-backup-qemu-devel
+- update BuildRequires and Requires
+- update License
+- build with --firmwarepath
+- fix symlinks to edk2 aarch64 firmware
+- delete /usr/share/qemu/firmware/*, included in edk2 packages
+
 * Tue Dec 07 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:6.1.0-alt3
 - 6.1.0-3
 
