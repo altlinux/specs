@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.1.5
-Release: alt2
+Release: alt3
 Summary: Acceleration code for PyOpenGL
 License: BSD
 Group: Development/Python3
@@ -22,6 +22,10 @@ operations for slow points in PyOpenGL 3.x.
 %prep
 %setup
 
+# Very quick fix for python3.10
+sed -i 's/++Py_REFCNT(o)/Py_SET_REFCNT(o, Py_REFCNT(o) + 1)/' src/vbo.c
+sed -i 's/--Py_REFCNT(o)/Py_SET_REFCNT(o, Py_REFCNT(o) - 1)/' src/vbo.c
+
 %build
 %add_optflags -fno-strict-aliasing
 
@@ -35,6 +39,9 @@ operations for slow points in PyOpenGL 3.x.
 %python3_sitelibdir/*
 
 %changelog
+* Fri Dec 24 2021 Grigory Ustinov <grenka@altlinux.org> 3.1.5-alt3
+- Quickfix for python3.10.
+
 * Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 3.1.5-alt2
 - Drop python2 support.
 

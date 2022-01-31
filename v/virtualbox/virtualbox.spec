@@ -66,7 +66,7 @@
 
 Name: virtualbox
 Version: 6.1.32
-Release: alt1
+Release: alt2
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -954,6 +954,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Thu Jan 27 2022 Grigory Ustinov <grenka@altlinux.org> 6.1.32-alt2
+- Add fixes for build with python3 and support python-3.10
+
 * Wed Jan 19 2022 Valery Sinelnikov <greh@altlinux.org> 6.1.32-alt1
 - Update to newest version 6.1.32
 

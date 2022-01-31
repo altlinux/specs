@@ -2,11 +2,11 @@
 %define oname rasterio
 
 Name: python3-module-%oname
-Version: 1.2.7
-Release: alt1
+Version: 1.3
+Release: alt0.a2.0
 
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/rasterio/
 
 Summary: Fast and direct raster I/O for use with Numpy and SciPy
@@ -47,6 +47,9 @@ more fun.
 %setup
 %__subst "s|/usr/local/share/proj|/usr/share/proj|" setup.py
 
+# remove their cython generated files
+find . -name "_*.cpp" | xargs rm
+
 %build
 %python3_build_debug
 
@@ -67,6 +70,9 @@ xvfb-run py.test3 ||:
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jan 26 2022 Grigory Ustinov <grenka@altlinux.org> 1.3-alt0.a2.0
+- new version 1.3.a2 for python3.10
+
 * Sun Sep 12 2021 Vitaly Lipatov <lav@altlinux.ru> 1.2.7-alt1
 - new version 1.2.7 (with rpmrb script)
 

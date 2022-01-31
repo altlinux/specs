@@ -1,7 +1,7 @@
 %define oname guppy
 
 Name: python3-module-%oname
-Version: 3.1.0
+Version: 3.1.2
 Release: alt1
 
 Summary: Guppy-PE -- A Python Programming Environment
@@ -58,6 +58,9 @@ This package contains tests for guppy.
 %python3_sitelibdir/%oname/heapy/test/
 
 %changelog
+* Mon Dec 06 2021 Grigory Ustinov <grenka@altlinux.org> 3.1.2-alt1
+- Build new version for python3.10.
+
 * Mon Jan 25 2021 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
 - Build new version for python3.9.
 

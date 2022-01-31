@@ -3,8 +3,8 @@
 %def_disable docs
 
 Name: python3-module-%oname
-Version: 1.3.0
-Release: alt5.a1.hg20150730
+Version: 1.5.21
+Release: alt1
 Summary: Cross-platform windowing and multimedia library
 
 Group: Development/Python3
@@ -86,7 +86,7 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %files
-%doc CHANGELOG DESIGN LICENSE NOTICE PY3K README
+%doc DESIGN LICENSE NOTICE README.md
 %python3_sitelibdir/*
 %if_enabled docs
 %exclude %python3_sitelibdir/%oname/pickle
@@ -102,6 +102,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 13 2022 Grigory Ustinov <grenka@altlinux.org> 1.5.21-alt1
+- Automatically updated to 1.5.21.
+
 * Thu Jun 03 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt5.a1.hg20150730
 - Drop python2 support.
 

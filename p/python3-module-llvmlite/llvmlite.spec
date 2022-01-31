@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 0.37.0
-Release: alt1
+Release: alt2
 
 Summary: A lightweight LLVM python binding for writing JIT compilers
 
@@ -38,6 +38,9 @@ following approach:
 
 %prep
 %setup
+# seems to be fine with 3.10 but we need to remove the guard
+# https://github.com/numba/llvmlite/issues/740
+sed -i 's/max_python_version =.*/max_python_version = "3.11"/' setup.py
 
 %build
 %remove_optflags -frecord-gcc-switches
@@ -58,6 +61,9 @@ mv %buildroot%python3_sitelibdir/%oname-*.egg-info %buildroot%python3_sitelibdir
 %doc *.rst
 
 %changelog
+* Mon Dec 06 2021 Grigory Ustinov <grenka@altlinux.org> 0.37.0-alt2
+- Fixed build with python3.10.
+
 * Fri Sep 10 2021 Grigory Ustinov <grenka@altlinux.org> 0.37.0-alt1
 - Build new version (thx sbolshakov@).
 

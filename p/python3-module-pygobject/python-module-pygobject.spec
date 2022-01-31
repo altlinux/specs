@@ -5,7 +5,7 @@
 
 Name: python3-module-pygobject
 Version: %major.6
-Release: alt11
+Release: alt12
 Summary: Python 3 bindings for GObject
 
 License: LGPL
@@ -76,6 +76,9 @@ facilitate the creation of Python bindings.
 
 find -type f -name '*.py' -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
 
+# Make python3.10 happy
+sed -i 's/ _PyUnicode_AsStringAndSize/ PyUnicode_AsUTF8AndSize/g' glib/pyglib-python-compat.h
+
 %build
 export PYTHON=python3
 %autoreconf
@@ -130,6 +133,9 @@ find %buildroot -type f -name '*.py' -exec 2to3 -w '{}' +
 %endif
 
 %changelog
+* Sun Jan 30 2022 Grigory Ustinov <grenka@altlinux.org> 2.28.6-alt12
+- Fixed build with python3.10.
+
 * Sat Jan 30 2021 Grigory Ustinov <grenka@altlinux.org> 2.28.6-alt11
 - Fixed build with python3.9.
 

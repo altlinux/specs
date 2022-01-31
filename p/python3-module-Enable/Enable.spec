@@ -4,8 +4,8 @@
 
 %define oname Enable
 Name: python3-module-%oname
-Version: 4.8.1
-Release: alt3
+Version: 5.2.1
+Release: alt1
 Summary: Drawing and interaction packages
 
 Group: Development/Python3
@@ -13,10 +13,13 @@ License: BSD and GPLv2
 URL: https://github.com/enthought/enable/
 
 # https://github.com/enthought/enable.git
-Source: enable-%version.tar
+Source: %name-%version.tar
 
 Patch: use_system_freetype.patch
-Patch1: 2c9b2090edd03e14857f99778350daed3ccf8e5a.patch
+
+Patch1: 8ffd91b463a58411e088eff6c1638972b3cfe9f1.patch
+Patch2: a33ea7bd6f96fdfb42765605edbb7f1f9e86f13a.patch
+
 
 BuildRequires: gcc-c++ swig
 BuildRequires: libX11-devel libGL-devel libGLU-devel
@@ -98,12 +101,20 @@ This package contains development documentation for Enable project.
 %endif
 
 %prep
-%setup -n enable-%version
-%patch -p1
+%setup
+#patch -p1
 %patch1 -p1
+%patch2 -p1
+
+#remove bundled freetype2 library
+#rm -rf kiva/agg/freetype2
 
 # remove python3-only backend
 rm -rf enable/enable/vtk_backend
+
+# Very quick fix for python3.10
+sed -i 's/++Py_REFCNT(o)/Py_SET_REFCNT(o, Py_REFCNT(o) + 1)/' kiva/_cython_speedups.cpp
+sed -i 's/--Py_REFCNT(o)/Py_SET_REFCNT(o, Py_REFCNT(o) - 1)/' kiva/_cython_speedups.cpp
 
 %if_disabled bootstrap
 %prepare_sphinx .
@@ -161,6 +172,10 @@ cp -fR pickle %buildroot%python_sitelibdir/enable/
 %python3_sitelibdir/*/*/*/tests
 
 %changelog
+* Thu Jan 13 2022 Grigory Ustinov <grenka@altlinux.org> 5.2.1-alt1
+- Build new version.
+- Build with bundled freetype (temporary for python3.10).
+
 * Thu Jun 03 2021 Grigory Ustinov <grenka@altlinux.org> 4.8.1-alt3
 - Drop python2 support.
 

@@ -2,7 +2,7 @@
 
 Name: python3-module-uinput
 Version: 0.10.1
-Release: alt6
+Release: alt7
 
 Summary: Pythonic API to the Linux uinput kernel module
 
@@ -49,11 +49,14 @@ chmod a-x examples/*
 
 %files
 %doc COPYING NEWS README examples
-%python3_sitelibdir/python_uinput-%version-py?.?.egg-info
+%python3_sitelibdir/*.egg-info
 %python3_sitelibdir/_libsuinput.*.so
 %python3_sitelibdir/uinput/
 
 %changelog
+* Mon Dec 06 2021 Grigory Ustinov <grenka@altlinux.org> 0.10.1-alt7
+- Fixed build for python3.10.
+
 * Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 0.10.1-alt6
 - Drop python2 support.
 

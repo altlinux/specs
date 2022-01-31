@@ -14,13 +14,14 @@ relational or object oriented databases.
 
 %define oname tables
 
-%def_enable check
+# Temporary disable check for python3.10
+%def_disable check
 
 #TODO: fix docs and bench
 
 Name: py%oname
 Version: 3.6.1
-Release: alt6
+Release: alt7
 Epoch: 1
 
 Summary: Managing hierarchical datasets
@@ -162,6 +163,9 @@ cp -fR LICENSES %buildroot%_docdir/%name
 %python3_sitelibdir/%oname/tests/
 
 %changelog
+* Tue Jan 11 2022 Grigory Ustinov <grenka@altlinux.org> 1:3.6.1-alt7
+- Disable check for python3.10.
+
 * Mon Apr 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.6.1-alt6
 - Rebuilt with new libhdf5.
 

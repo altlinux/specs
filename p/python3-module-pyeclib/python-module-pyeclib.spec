@@ -2,7 +2,7 @@
 
 Name:           python3-module-%oname
 Version:        1.6.0
-Release:        alt3
+Release:        alt4
 Summary:        Python interface to erasure codes
 Group:          Development/Python3
 
@@ -31,13 +31,16 @@ or through the C interface liberasurecode.
 %install
 %python3_install
 
-find "%buildroot%python3_sitelibdir" -name "pyeclib_c.cpython-??.so" | xargs chrpath -d
+find "%buildroot%python3_sitelibdir" -name "pyeclib_c.cpython-*.so" | xargs chrpath -d
 
 %files
 %doc README.rst
 %python3_sitelibdir/*
 
 %changelog
+* Mon Dec 13 2021 Grigory Ustinov <grenka@altlinux.org> 1.6.0-alt4
+- Fix building with python3.10.
+
 * Mon Jan 25 2021 Grigory Ustinov <grenka@altlinux.org> 1.6.0-alt3
 - Fix building with python3.9.
 

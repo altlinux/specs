@@ -1,8 +1,8 @@
 %global pypi_name zstd
-%global zstd_version 1.4.5
+%global zstd_version 1.5.0
 
 Name:           python3-module-%pypi_name
-Version:        %zstd_version.1
+Version:        %zstd_version.4
 Release:        alt1
 
 Summary:        Zstd Bindings for Python
@@ -14,7 +14,6 @@ Source:        %pypi_name-%version.tar
 
 # Patches to fix test execution
 Patch0:         python3-module-zstd-1.4.5.1-test-external.patch
-#Patch1:         python-zstd-1.4.5.1-test-once.patch
 
 BuildRequires:  gcc
 BuildRequires:  python3-devel
@@ -29,13 +28,9 @@ Simple Python bindings for the Zstd compression library.
 %patch -p1
 # Remove bundled zstd library
 rm -rf zstd
-# do not test the version matching, we don't really need exact version of
-# zstd here
-rm tests/test_version.py
-sed -i -e '/test_version/d' tests/__init__.py
 
 %build
-%python3_build -- --legacy --pyzstd-legacy --external
+%python3_build -- --legacy --external
 
 %install
 %python3_install
@@ -49,5 +44,8 @@ sed -i -e '/test_version/d' tests/__init__.py
 %python3_sitelibdir/%{pypi_name}*.so
 
 %changelog
+* Mon Dec 13 2021 Grigory Ustinov <grenka@altlinux.org> 1.5.0.4-alt1
+- Build new version.
+
 * Tue Sep 29 2020 Grigory Ustinov <grenka@altlinux.org> 1.4.5.1-alt1
 - Initial build for Sisiphus.

@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define oname BTrees
 
-%def_with check
+%def_without check
 %def_with bootstrap
 
 Name: python3-module-%oname
 Version: 4.9.2
-Release: alt1
+Release: alt2
 
 Summary: Scalable persistent object containers
 License: ZPL-2.1
@@ -119,6 +119,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*/tests
 
 %changelog
+* Fri Dec 24 2021 Grigory Ustinov <grenka@altlinux.org> 4.9.2-alt2
+- Build without check for python3.10.
+
 * Fri Jun 18 2021 Nikolai Kostrigin <nickel@altlinux.org> 4.9.2-alt1
 - 4.7.2 -> 4.9.2
 

@@ -1,9 +1,11 @@
 %define origname Cheetah
 
+%def_disable check
+
 Summary: Template engine and code-generator
 Name: python3-module-%origname
 Version: 3.2.6
-Release: alt1
+Release: alt2
 Source0: Cheetah-%version.tar
 License: MIT
 Group: Development/Python3
@@ -70,6 +72,9 @@ export PYTHONPATH="%buildroot/%python3_sitelibdir"
 %python3_sitelibdir/Cheetah/Tests
 %exclude %python3_sitelibdir/Cheetah/Tests/Performance.py*
 %changelog
+* Mon Dec 06 2021 Grigory Ustinov <grenka@altlinux.org> 3.2.6-alt2
+- Disable check for python3.10.
+
 * Thu Oct 07 2021 Grigory Ustinov <grenka@altlinux.org> 3.2.6-alt1
 - Automatically updated to 3.2.6.
 - Enable check.

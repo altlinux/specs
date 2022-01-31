@@ -1,6 +1,6 @@
 Name: python3-module-ruamel-yaml
 Version: 0.15.100
-Release: alt1
+Release: alt2
 
 Summary: is a YAML 1.2 loader/dumper package for Python
 
@@ -28,6 +28,9 @@ It is a derivative of Kirill Simonov's PyYAML 3.11
 
 %prep
 %setup
+# Very quick fix for python3.10
+sed -i 's/++Py_REFCNT(o)/Py_SET_REFCNT(o, Py_REFCNT(o) + 1)/' ext/_ruamel_yaml.c
+sed -i 's/--Py_REFCNT(o)/Py_SET_REFCNT(o, Py_REFCNT(o) - 1)/' ext/_ruamel_yaml.c
 
 %build
 %python3_build
@@ -41,6 +44,9 @@ export RUAMEL_NO_PIP_INSTALL_CHECK="1"
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jan 26 2022 Grigory Ustinov <grenka@altlinux.org> 0.15.100-alt2
+- Fixed build with python3.10.
+
 * Thu Nov 28 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.15.100-alt1
 - 0.15.100 released
 

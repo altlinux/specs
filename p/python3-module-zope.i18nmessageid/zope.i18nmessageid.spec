@@ -5,11 +5,12 @@ This package provides facilities for *declaring* messages within \
 program source text;  translation of the messages is the responsiblity \
 of the 'zope.i18n' package.
 
-%def_with check
+%def_without check
+%def_without docs
 
 Name: python3-module-%oname
 Version: 5.0.1
-Release: alt2
+Release: alt3
 
 Summary: Message Identifiers for internationalization
 Group: Development/Python3
@@ -19,8 +20,11 @@ License: ZPL-2.1
 Url: http://pypi.python.org/pypi/zope.i18nmessageid
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-sphinx3 rpm-build-python3
+BuildRequires(pre): rpm-build-python3
+%if_with docs
+BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx
+%endif
 
 %if_with check
 BuildRequires: python3-module-zope.testing python3-module-zope.testrunner
@@ -60,21 +64,27 @@ This package contains tests for %oname.
 %prep
 %setup
 
+%if_with docs
 %prepare_sphinx3 .
 ln -s ../objects.inv docs/
+%endif
 
 %build
 %add_optflags -fno-strict-aliasing
 %python3_build
 
+%if_with docs
 %make SPHINXBUILD="sphinx-build-3" -C docs pickle
 %make SPHINXBUILD="sphinx-build-3" -C docs html
+%endif
 
 %install
 %python3_install
 
+%if_with docs
 install -d %buildroot%python3_sitelibdir/%oname
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
+%endif
 
 %check
 # coverage is the extra dep
@@ -88,18 +98,23 @@ python3 setup.py test -v
 %doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/zope/i18nmessageid/tests.*
+%if_with docs
 %exclude %python3_sitelibdir/*/pickle
-
-%files tests
-%python3_sitelibdir/zope/i18nmessageid/tests.*
 
 %files docs
 %doc docs/_build/html
 
 %files pickles
 %python3_sitelibdir/*/pickle
+%endif
+
+%files tests
+%python3_sitelibdir/zope/i18nmessageid/tests.*
 
 %changelog
+* Mon Dec 06 2021 Grigory Ustinov <grenka@altlinux.org> 5.0.1-alt3
+- Bootstrap for python3.10.
+
 * Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 5.0.1-alt2
 - Drop specsubst scheme.
 

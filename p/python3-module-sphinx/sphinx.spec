@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_enable docs
+%def_disable docs
 %def_enable check
 
 %define oname sphinx
@@ -8,8 +8,8 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 4.0.2
-Release: alt2
+Version: 4.3.1
+Release: alt1
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
@@ -36,8 +36,6 @@ Source2: macro3
 Source3: refcounting.py
 
 Patch1: %oname-alt-tests-offline.patch
-Patch2: sphinx-4.0.1-man_1.patch
-Patch3: sphinx-4.0.2-Fix-test-Tests-has-been-broken-with-pygments-2.10.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-sphinx-objects.inv
@@ -150,8 +148,6 @@ This packages contains RPM macros for build with Sphinx.
 %prep
 %setup -n sphinx-%version
 %patch1 -p1
-#patch2 -p1
-%patch3 -p1
 
 # ship the stable releases
 sed -i '/^tag_build =.*/d;/^tag_date =.*/d' setup.cfg
@@ -271,6 +267,10 @@ tox.py3 --sitepackages -vvr -s false -- -vra
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Mon Dec 06 2021 Grigory Ustinov <grenka@altlinux.org> 1:4.3.1-alt1
+- Build new version for python3.10.
+- Bootstrap without docs.
+
 * Thu Sep 09 2021 Stanislav Levin <slev@altlinux.org> 1:4.0.2-alt2
 - Fixed FTBFS (new Pygments 2.10).
 

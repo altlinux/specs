@@ -1,4 +1,4 @@
-%def_with check
+%def_without check
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
@@ -15,7 +15,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 1.22.1
-Release: alt1
+Release: alt2
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD-3-Clause
 Group: Development/Python3
@@ -44,7 +44,7 @@ BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: /proc
 BuildRequires: gcc-c++ gcc-fortran liblapack-devel swig
-BuildRequires: python3-module-Cython
+BuildRequires: python3-module-Cython python3-module-packaging
 %{?_with_check:BuildRequires: python3-module-pytest python3-module-hypothesis}
 
 # https://bugzilla.altlinux.org/show_bug.cgi?id=18379
@@ -257,6 +257,9 @@ cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Sun Jan 23 2022 Grigory Ustinov <grenka@altlinux.org> 1:1.22.1-alt2
+- Bootstrap for python3.10.
+
 * Fri Jan 21 2022 Stanislav Levin <slev@altlinux.org> 1:1.22.1-alt1
 - 1.21.4 -> 1.22.1.
 

@@ -2,13 +2,13 @@
 
 %define oname pandas
 
-%def_without bootstrap
+%def_with bootstrap
 %def_disable check
 %def_without docs
 
 Name: python3-module-%oname
 Version: 1.3.1
-Release: alt2
+Release: alt3
 Summary: Python Data Analysis Library
 License: BSD-3-Clause
 Group: Development/Python3
@@ -145,6 +145,9 @@ xvfb-run python3 setup.py test
 %endif
 
 %changelog
+* Mon Dec 06 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt3
+- Bootstrap for python3.10.
+
 * Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt2
 - NMU: statsmodels is a dev dependency (see requirements-dev.txt)
 

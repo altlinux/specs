@@ -8,7 +8,7 @@
 
 Name: trikStudio
 Version: 2021.2
-Release: alt1
+Release: alt2
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
@@ -100,6 +100,9 @@ pushd thirdparty/gamepad
 %patch1
 popd
 
+# Quick hack for python3.10 but think about using system pythonqt library.
+sed -i '/pydebug.h/d' plugins/robots/thirdparty/trikRuntime/trikRuntime/PythonQt/PythonQt/src/PythonQt.cpp
+
 %build
 export NPROCS=1
 %qmake_qt5 -r \
@@ -190,6 +193,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 25 2022 Grigory Ustinov <grenka@altlinux.org> 2021.2-alt2
+- Fixed building with python3.10.
+
 * Tue Jan 11 2022 Valery Sinelnikov <greh@altlinux.org> 2021.2-alt1
 - Update to 2021.2
 

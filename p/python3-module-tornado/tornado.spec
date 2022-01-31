@@ -2,7 +2,7 @@
 
 Name: python3-module-%module_name
 Version: 6.1.0
-Release: alt1
+Release: alt2
 Summary: Scalable, non-blocking web server and tools
 
 License: Apache-2.0
@@ -11,6 +11,7 @@ Url: http://www.tornadoweb.org
 
 # https://github.com/tornadoweb/tornado.git
 Source: %name-%version.tar
+Patch: Do-not-turn-DeprecationWarning-into-Exception.patch
 
 BuildRequires(pre): rpm-build-python3
 Requires: ca-certificates python3-module-certifi
@@ -28,6 +29,7 @@ ideal for real-time web services.
 
 %prep
 %setup
+%patch -p1
 # remove shebang from files
 sed -i.orig -e '/^#!\//, 1d' *py tornado/*.py tornado/*/*.py
 
@@ -52,6 +54,9 @@ export ASYNC_TEST_TIMEOUT=10
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Mon Dec 06 2021 Grigory Ustinov <grenka@altlinux.org> 6.1.0-alt2
+- Fixed build with python3.10.
+
 * Sun Oct 03 2021 Grigory Ustinov <grenka@altlinux.org> 6.1.0-alt1
 - Build new version (Closes: #40697).
 - Fix license tag.

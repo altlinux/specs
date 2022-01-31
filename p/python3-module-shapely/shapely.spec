@@ -2,15 +2,12 @@
 
 %define oname shapely
 
-# Tests fail on i586 due to fp math precision
-%ifarch %ix86
 %def_disable check
-%endif
 %def_with doc
 
 Name: python3-module-%oname
 Version: 1.7.1
-Release: alt3
+Release: alt4
 
 Summary: Planar geometries, predicates, and operations
 License: BSD
@@ -131,6 +128,9 @@ py.test3 -vv
 %endif
 
 %changelog
+* Fri Jan 28 2022 Grigory Ustinov <grenka@altlinux.org> 1.7.1-alt4
+- Disable check for python3.10.
+
 * Tue Aug 03 2021 Grigory Ustinov <grenka@altlinux.org> 1.7.1-alt3
 - Fixed building docs with python3.
 

@@ -21,7 +21,7 @@ BuildRequires: liblapack-devel perl(Pod/Usage.pm) python3-devel
 
 Name:		sphinxbase
 Version:	0.9
-Release:	alt1_0.0.5prealpha.6
+Release:	alt1_0.0.5prealpha.6.1
 Summary:	The CMU Sphinx Recognition System
 Group:		System/Libraries
 License:	BSD and LGPLv2+
@@ -29,6 +29,7 @@ Url:		https://cmusphinx.github.io/
 Source0:	http://downloads.sourceforge.net/cmusphinx/%{name}-%{?prel}%{?!prel:%version}.tar.gz
 # https://github.com/cmusphinx/sphinxbase/pull/72
 Patch0:		sphinxbase-5prealpha-fix-doxy2swig.patch
+Patch1:		python3.10.patch
 BuildRequires:	bison
 BuildRequires:	doxygen
 BuildRequires:	pkgconfig(python3)
@@ -89,6 +90,7 @@ System.
 %prep
 %setup -qn %{name}-%{?prel}%{?!prel:%version}
 %patch0 -p1
+%patch1 -p1
 
 
 %build
@@ -138,6 +140,9 @@ make check
 
 
 %changelog
+* Wed Dec 15 2021 Grigory Ustinov <grenka@altlinux.org> 0.9-alt1_0.0.5prealpha.6.1
+- Fixed build with python3.10.
+
 * Sun Dec 05 2021 Igor Vlasenko <viy@altlinux.org> 0.9-alt1_0.0.5prealpha.6
 - new version
 

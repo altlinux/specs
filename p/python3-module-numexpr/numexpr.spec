@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname numexpr
 
-%def_with check
+%def_without check
 
 Name: python3-module-%oname
 Version: 2.8.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Fast numerical array expression evaluator for Python and NumPy
@@ -81,6 +81,9 @@ tox.py3 --sitepackages -vvr -s false
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sun Jan 23 2022 Grigory Ustinov <grenka@altlinux.org> 1:2.8.1-alt2
+- Bootstrap for python3.10.
+
 * Mon Jan 17 2022 Stanislav Levin <slev@altlinux.org> 1:2.8.1-alt1
 - 2.7.3 -> 2.8.1.
 

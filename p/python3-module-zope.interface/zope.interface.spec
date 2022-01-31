@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zope.interface
 
-%def_with check
+%def_without check
+%def_without docs
 
 Name: python3-module-%oname
 Version: 5.4.0
-Release: alt1
+Release: alt2
 
 Summary: Zope interfaces package
 License: ZPL-2.1
@@ -16,9 +17,11 @@ Url: http://www.python.org/pypi/zope.interface
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+%if_with docs
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-repoze.sphinx.autointerface
+%endif
 
 %if_with check
 BuildRequires: python3-module-tox
@@ -58,8 +61,10 @@ This package contains documentation for %oname.
 %prep
 %setup
 
+%if_with docs
 %prepare_sphinx3 .
 ln -s ../objects.inv docs/
+%endif
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -68,12 +73,14 @@ ln -s ../objects.inv docs/
 %install
 %python3_install
 
+%if_with docs
 export PYTHONPATH=$PWD/src
 %make SPHINXBUILD="sphinx-build-3" -C docs pickle
 %make SPHINXBUILD="sphinx-build-3" -C docs html
 
 install -d %buildroot%python3_sitelibdir/%oname
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
+%endif
 
 %check
 export PIP_INDEX_URL=http://host.invalid./
@@ -85,22 +92,27 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
 %files
 %doc *.txt *.rst
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/pickle
 %exclude %python3_sitelibdir/zope/interface/tests
 %exclude %python3_sitelibdir/zope/interface/common/tests
+%if_with docs
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/pickle
 
 %files pickles
 %python3_sitelibdir/*/pickle
 
 %files docs
 %doc docs/_build/html/*
+%endif
 
 %files tests
 %python3_sitelibdir/zope/interface/tests
 %python3_sitelibdir/zope/interface/common/tests
 
 %changelog
+* Mon Dec 06 2021 Grigory Ustinov <grenka@altlinux.org> 5.4.0-alt2
+- Bootstrap for python3.10.
+
 * Sun Apr 25 2021 Grigory Ustinov <grenka@altlinux.org> 5.4.0-alt1
 - Automatically updated to 5.4.0.
 - Build with check.

@@ -6,7 +6,7 @@
 %define rname getfem
 Name: getfemxx
 Version: 5.3
-Release: alt7
+Release: alt8
 
 Group: Development/C++
 Summary: Generic and efficient C++ library for finite element methods
@@ -18,6 +18,7 @@ Obsoletes: %rname < %EVR
 
 Source0: getfem-%version.tar
 Patch1: alt-ppc64le.patch
+Patch2: getfemxx-ax-python.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-devel gcc-c++ gcc-fortran glibc-devel python3-devel
@@ -56,6 +57,7 @@ Python bindings to %name
 %prep
 %setup -q -n %rname-%version
 %patch1 -p1
+%patch2 -p2
 %autoreconf
 
 ln -sf %__python3 bin/python
@@ -110,6 +112,9 @@ install -m 0644 \
 %python3_sitelibdir/*getfem*.so
 
 %changelog
+* Tue Jan 25 2022 Grigory Ustinov <grenka@altlinux.org> 5.3-alt8
+- fix build with python3.10
+
 * Thu Aug 26 2021 Sergey V Turchin <zerg@altlinux.org> 5.3-alt7
 - fix build requires
 

@@ -1,8 +1,9 @@
 %define pypi_name semantic_version
+%def_with bootstrap
 
 Name: python3-module-%pypi_name
 Version: 2.8.5
-Release: alt4
+Release: alt5
 Summary: A library implementing the 'SemVer' scheme.
 
 Group: Development/Python3
@@ -33,6 +34,10 @@ Documentation for the semantic_version library.
 %install
 %python3_install
 
+%if_with bootstrap
+rm -f %buildroot%python3_sitelibdir/%pypi_name/django_fields.py
+%endif
+
 # Delete tests
 rm -fr %buildroot%python3_sitelibdir/tests
 rm -fr %buildroot%python3_sitelibdir/*/tests
@@ -42,6 +47,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %python3_sitelibdir/*
 
 %changelog
+* Mon Dec 06 2021 Grigory Ustinov <grenka@altlinux.org> 2.8.5-alt5
+- Bootstrap for python3.10.
+
 * Thu Jul 15 2021 Grigory Ustinov <grenka@altlinux.org> 2.8.5-alt4
 - Drop python2 support.
 

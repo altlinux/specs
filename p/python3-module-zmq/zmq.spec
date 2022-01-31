@@ -1,10 +1,10 @@
 %define oname zmq
 
-%def_without bootstrap
+%def_with bootstrap
 
 Name: python3-module-%oname
 Version: 22.3.0
-Release: alt1
+Release: alt2
 Summary: Software library for fast, message-based applications
 
 Group: Development/Python3
@@ -93,6 +93,9 @@ subst "s|/usr/local/include|%_includedir|" setup.cfg
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Sun Dec 05 2021 Grigory Ustinov <grenka@altlinux.org> 22.3.0-alt2
+- Bootstrap for python3.10.
+
 * Wed Oct 06 2021 Grigory Ustinov <grenka@altlinux.org> 22.3.0-alt1
 - Automatically updated to 22.3.0.
 

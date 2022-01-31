@@ -8,9 +8,9 @@
 # but mostly through ALT Sisyphus rpm-build-python3's macros
 # (to make the picture more clear and less error-prone).
 
-%global pybasever 3.9
+%global pybasever 3.10
 # pybasever without the dot:
-%global pyshortver 39
+%global pyshortver 310
 
 %global pyabi %nil
 
@@ -86,7 +86,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %endif
 
 Name: python3
-Version: %{pybasever}.9
+Version: %{pybasever}.0
 Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
@@ -105,7 +105,7 @@ BuildPreReq: liblzma-devel
 # For Bluetooth support
 # see https://bugzilla.redhat.com/show_bug.cgi?id=879720
 BuildRequires: bzip2-devel db4-devel libexpat-devel gcc-c++ libgmp-devel
-BuildRequires: libffi-devel libncursesw-devel
+BuildRequires: libffi-devel libncursesw-devel mpdecimal-devel
 BuildRequires: libssl-devel libreadline-devel libsqlite3-devel
 BuildRequires: zlib-devel libuuid-devel libnsl2-devel
 BuildRequires: desktop-file-utils autoconf-archive
@@ -143,11 +143,6 @@ Patch1: 00001-rpath.patch
 # is not detected to make pip and distutils install into separate location
 # Fedora Change: https://fedoraproject.org/wiki/Changes/Making_sudo_pip_safe
 Patch251: 00251-change-user-install-location.patch
-
-# 00353 #
-# Original names for architectures with different names downstream
-# https://fedoraproject.org/wiki/Changes/Python_Upstream_Architecture_Names
-Patch353: 00353-architecture-names-upstream-downstream.patch
 
 #ALT Linux patches
 
@@ -329,8 +324,8 @@ python 3 code that uses more than just unittest and/or test_support.py.
 
 # Ensure that we're using the system copy of various libraries, rather than
 # copies shipped by upstream in the tarball:
-#   Remove embedded copy of expat:
 rm -r Modules/expat || exit 1
+rm -r Modules/_decimal/libmpdec || exit 1
 
 #   Remove embedded copy of libffi:
 for SUBDIR in darwin libffi_osx ; do
@@ -354,7 +349,6 @@ done
 %patch1 -p1
 
 %patch251 -p1
-%patch353 -p1
 
 # ALT Linux patches
 %patch1003 -p2
@@ -426,6 +420,7 @@ build() {
   --with-dbmliborder=gdbm:ndbm:bdb \
   --with-system-expat \
   --with-system-ffi \
+  --with-system-libmpdec \
   --enable-loadable-sqlite-extensions \
   --with-lto \
   --with-ssl-default-suites=openssl \
@@ -540,12 +535,6 @@ sed -i -e "s/'pyconfig.h'/'%_pyconfig_h'/" \
 # See https://github.com/fedora-python/python-rpm-porting/issues/24
 cp -p Tools/scripts/pathfix.py %{buildroot}%{_bindir}/
 
-## Switch all shebangs to refer to the specific Python version.
-#LD_LIBRARY_PATH=./build/optimized ./build/optimized/python \
-#  Tools/scripts/pathfix.py \
-#  -i "%_bindir/python%pybasever" \
-#  %buildroot
-
 # Remove shebang lines from .py files that aren't executable, and
 # remove executability from .py files that don't have a shebang line:
 find %buildroot -name \*.py \
@@ -555,16 +544,16 @@ find %buildroot -name \*.py \
   -exec chmod a-x {} \; \) \)
 
 # Get rid of DOS batch files:
-find %buildroot -name \*.bat -exec rm {} \;
+find %buildroot -name \*.bat -exec rm -v {} \;
 
 # Get rid of backup files:
-find %buildroot/ -name "*~" -exec rm {} \;
-find . -name "*~" -exec rm {} \;
+find %buildroot/ -name "*~" -exec rm -v {} \;
+find . -name "*~" -exec rm -v {} \;
 
 # Get rid of crappy code:
-rm %buildroot%tool_dir/scripts/abitype.py
-rm %buildroot%tool_dir/scripts/fixcid.py
-rm %buildroot%pylibdir/encodings/{,__pycache__/}rot_13*.py*
+rm -v %buildroot%tool_dir/scripts/abitype.py
+rm -v %buildroot%tool_dir/scripts/fixcid.py
+rm -v %buildroot%pylibdir/encodings/{,__pycache__/}rot_13*.py*
 
 # Skip the 2to3 test data (which might contain Python2 code)
 %global lib2to3_tests %pylibdir/lib2to3/tests
@@ -573,24 +562,24 @@ rm %buildroot%pylibdir/encodings/{,__pycache__/}rot_13*.py*
 %add_findprov_skiplist %lib2to3_tests/data/*
 # http://bugs.python.org/issue26911 :
 # remove a seemingly unused source file with broken code (a broken import):
-rm %buildroot%lib2to3_tests/{,__pycache__/}pytree_idempotency*.py*
+rm -v %buildroot%lib2to3_tests/{,__pycache__/}pytree_idempotency*.py*
 
 # http://bugs.python.org/issue26912 :
 # rm another seemingly unused source file with a broken import:
-rm %buildroot%pylibdir/test/test_email/{,__pycache__/}torture_test*.py*
+rm -v %buildroot%pylibdir/test/test_email/{,__pycache__/}torture_test*.py*
 
 # Get rid of win tests
-rm %buildroot%pylibdir/test/{,__pycache__/}test_winreg*.py*
-rm %buildroot%pylibdir/test/{,__pycache__/}test_winsound*.py*
-rm %buildroot%pylibdir/test/{,__pycache__/}win_console_handler*.py*
-rm %buildroot%pylibdir/distutils/tests/{,__pycache__/}test_msvc{9,}compiler*.py*
-rm %buildroot%pylibdir/test/test_importlib/{,__pycache__/}test_windows*.py*
-rm %buildroot%pylibdir/test/libregrtest/{,__pycache__/}win_utils*.py*
+rm -v %buildroot%pylibdir/test/{,__pycache__/}test_winreg*.py*
+rm -v %buildroot%pylibdir/test/{,__pycache__/}test_winsound*.py*
+rm -v %buildroot%pylibdir/test/{,__pycache__/}win_console_handler*.py*
+rm -v %buildroot%pylibdir/distutils/tests/{,__pycache__/}test_msvc{9,}compiler*.py*
+rm -v %buildroot%pylibdir/test/test_importlib/{,__pycache__/}test_windows*.py*
+rm -v %buildroot%pylibdir/test/libregrtest/{,__pycache__/}win_utils*.py*
 # The libs which are being tested below have been excluded in %%files (long ago):
-rm %buildroot%pylibdir/test/test_asyncio/{,__pycache__/}test_windows_events*.py*
-rm %buildroot%pylibdir/test/test_asyncio/{,__pycache__/}test_windows_utils*.py*
-rm %buildroot%pylibdir/test/{,__pycache__/}test_winconsoleio*.py*
-rm %buildroot%pylibdir/test/{,__pycache__/}test_msilib*.py*
+rm -v %buildroot%pylibdir/test/test_asyncio/{,__pycache__/}test_windows_events*.py*
+rm -v %buildroot%pylibdir/test/test_asyncio/{,__pycache__/}test_windows_utils*.py*
+rm -v %buildroot%pylibdir/test/{,__pycache__/}test_winconsoleio*.py*
+rm -v %buildroot%pylibdir/test/{,__pycache__/}test_msilib*.py*
 
 # Get rid of bad* tests -- just skip them:
 %add_findreq_skiplist %pylibdir/test/bad*.py
@@ -599,27 +588,20 @@ rm %buildroot%pylibdir/test/{,__pycache__/}test_msilib*.py*
 # Get rid of windows-related stuff
 %add_findreq_skiplist %pylibdir/distutils/*msvc*compiler*.py*
 %add_findprov_skiplist %pylibdir/distutils/*msvc*compiler*.py*
-rm %buildroot%pylibdir/distutils/command/{,__pycache__/}bdist_msi*.py*
-rm %buildroot%tool_dir/scripts/win_add2path.py
+rm -v %buildroot%pylibdir/distutils/command/{,__pycache__/}bdist_msi*.py*
+rm -v %buildroot%tool_dir/scripts/win_add2path.py
 
 # Get rid of crap
-rm -r %buildroot%pylibdir/ctypes/macholib/fetch_macholib
-rm %buildroot%tool_dir/scripts/md5sum.py
-rm %buildroot%tool_dir/scripts/parseentities.py
+rm -v -r %buildroot%pylibdir/ctypes/macholib/fetch_macholib
+rm -v %buildroot%tool_dir/scripts/md5sum.py
+rm -v %buildroot%tool_dir/scripts/parseentities.py
 
 # Remove sphinxext (temporary)
-rm -r %buildroot%pylibdir/Doc/tools/{extensions,static,templates}
-rm %buildroot%pylibdir/Doc/tools/susp-ignored.csv
+rm -v -r %buildroot%pylibdir/Doc/tools/{extensions,static,templates}
+rm -v %buildroot%pylibdir/Doc/tools/susp-ignored.csv
 
 # Fix end-of-line encodings:
 find %buildroot/ -name \*.py -exec sed -i 's/\r//' {} \;
-
-# Note that
-#  %pylibdir/Demo/distutils/test2to3/setup.py
-# is in iso-8859-1 encoding, and that this is deliberate; this is test data
-# for the 2to3 tool, and one of the functions of the 2to3 tool is to fixup
-# character encodings within python source code
-
 
 # Fixup permissions for shared libraries from non-standard 555 to standard 755:
 find %buildroot \
@@ -667,7 +649,7 @@ cat <<\EOF >%buildroot%_rpmlibdir/%python3_sitebasename-site-packages-files.req.
 EOF
 
 # Remove extra LICENSE file
-rm -f %buildroot/%pylibdir/LICENSE.txt
+rm -v %buildroot/%pylibdir/LICENSE.txt
 
 # add idle3 to menu
 install -D -m 0644 Lib/idlelib/Icons/idle_16.png %buildroot%_datadir/icons/hicolor/16x16/apps/idle3.png
@@ -684,7 +666,7 @@ rm -f %buildroot%dynload_dir/nis.cpython-%pyshortver%pyabi.so
 %endif
 
 # Clean after static build
-rm -vf %buildroot/%_libdir/libpython%pybasever%pyabi.a
+rm -v %buildroot/%_libdir/libpython%pybasever%pyabi.a
 
 %check
 # ALT#32008:
@@ -712,13 +694,10 @@ export LANG=C
 LD_LIBRARY_PATH="$(pwd)" $(pwd)/python -m test.pythoninfo
 
 # -l (--findleaks) is not compatible with -j
-# Only on i586:
-# self.assertEqual(dist(p, q), fourthmax * math.sqrt(n))
-# AssertionError: 7.784239614998252e+307 != 7.784239614998251e+307
 WITHIN_PYTHON_RPM_BUILD= \
 LD_LIBRARY_PATH="$(pwd)" \
 $(pwd)/python -m test.regrtest \
-    --verbose  %_smp_mflags
+    --verbose --timeout=1800 %_smp_mflags
 
 %files
 %doc LICENSE README.rst
@@ -805,7 +784,6 @@ $(pwd)/python -m test.regrtest \
 %dynload_dir/math.cpython-%pyshortver%pyabi.so
 %dynload_dir/mmap.cpython-%pyshortver%pyabi.so
 %dynload_dir/ossaudiodev.cpython-%pyshortver%pyabi.so
-%dynload_dir/parser.cpython-%pyshortver%pyabi.so
 %dynload_dir/pyexpat.cpython-%pyshortver%pyabi.so
 %dynload_dir/readline.cpython-%pyshortver%pyabi.so
 %dynload_dir/resource.cpython-%pyshortver%pyabi.so
@@ -815,6 +793,7 @@ $(pwd)/python -m test.regrtest \
 %dynload_dir/termios.cpython-%pyshortver%pyabi.so
 %dynload_dir/unicodedata.cpython-%pyshortver%pyabi.so
 %dynload_dir/xxlimited.cpython-%pyshortver%pyabi.so
+%dynload_dir/xxlimited_35.cpython-%pyshortver%pyabi.so
 %dynload_dir/zlib.cpython-%pyshortver%pyabi.so
 
 %pylibdir/*.py
@@ -885,6 +864,11 @@ $(pwd)/python -m test.regrtest \
 %dir %pylibdir/importlib/__pycache__/
 %pylibdir/importlib/*.py
 %pylibdir/importlib/__pycache__/*%bytecode_suffixes
+
+%dir %pylibdir/importlib/metadata
+%dir %pylibdir/importlib/metadata/__pycache__/
+%pylibdir/importlib/metadata/*.py
+%pylibdir/importlib/metadata/__pycache__/*%bytecode_suffixes
 
 %dir %pylibdir/json/
 %dir %pylibdir/json/__pycache__/
@@ -1014,6 +998,9 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Thu Dec 02 2021 Grigory Ustinov <grenka@altlinux.org> 3.10.0-alt1
+- Updated to upstream version 3.10.0.
+
 * Wed Dec 01 2021 Grigory Ustinov <grenka@altlinux.org> 3.9.9-alt1
 - Updated to upstream version 3.9.9.
 

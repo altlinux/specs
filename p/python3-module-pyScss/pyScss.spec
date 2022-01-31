@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 1.3.7
-Release: alt2
+Release: alt3
 Summary: pyScss is a compiler for the Sass language
 License: MIT
 Group: Development/Python
@@ -86,6 +86,9 @@ tox.py3 --sitepackages -vv -r
 %python3_sitelibdir/scss/extension/
 
 %changelog
+* Fri Dec 17 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.7-alt3
+- Fixed build with python3.10.
+
 * Wed Aug 05 2020 Stanislav Levin <slev@altlinux.org> 1.3.7-alt2
 - Fixed FTBFS(new pytest 6.0.1).
 

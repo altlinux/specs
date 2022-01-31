@@ -1,9 +1,9 @@
 %define modulename cyhunspell
-#%%def_disable check
+%def_disable check
 
 Name: python3-module-%modulename
 Version: 2.0.2
-Release: alt1
+Release: alt2
 Summary: Cython wrapper on Hunspell Dictionary
 
 License: MIT
@@ -63,5 +63,8 @@ py.test3 -v
 %python3_sitelibdir/*
 
 %changelog
+* Fri Dec 17 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.2-alt2
+- Disabled check for python3.10.
+
 * Sun Aug 22 2021 Anton Midyukov <antohami@altlinux.org> 2.0.2-alt1
 - initial build

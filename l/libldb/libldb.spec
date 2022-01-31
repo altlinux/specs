@@ -9,7 +9,7 @@
 
 Name: libldb
 Version: 2.3.2
-Release: alt2
+Release: alt3
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -27,7 +27,6 @@ BuildRequires: libpopt-devel libldap-devel xsltproc docbook-style-xsl docbook-dt
 BuildRequires: libcmocka-devel >= 1.1.3
 BuildRequires: socket_wrapper >= 1.3.3
 BuildRequires: nss_wrapper >= 1.1.11
-BuildRequires: resolv_wrapper >= 1.1.7
 BuildRequires: uid_wrapper >= 1.2.7
 BuildRequires: pam_wrapper >= 1.1.2
 BuildRequires: libtdb-devel >= 1.4.3
@@ -187,6 +186,9 @@ make test
 %_pkgconfigdir/pyldb-util.cpython-*.pc
 
 %changelog
+* Sun Jan 23 2022 Grigory Ustinov <grenka@altlinux.org> 2.3.2-alt3
+- Fix build requires.
+
 * Mon Dec 13 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.3.2-alt2
 - Update to latest regression fixes for samba-4.14.10:
   + CVE-2021-3670 ldb: Confirm the request has not yet timed out

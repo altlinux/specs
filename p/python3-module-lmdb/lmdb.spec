@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.93
-Release: alt2
+Release: alt3
 
 Summary: Universal Python binding for the LMDB 'Lightning' Database
 License: OpenLDAP BSD
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: liblmdb-devel
 BuildRequires: python3-module-pytest
-
+BuildRequires: python3-module-cffi
 
 %description
 Universal Python binding for the LMDB 'Lightning' Database.
@@ -42,6 +42,9 @@ py.test3
 
 
 %changelog
+* Sat Dec 11 2021 Grigory Ustinov <grenka@altlinux.org> 0.93-alt3
+- Fixed build with python3.10.
+
 * Mon Feb 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.93-alt2
 - Build for python2 disabled.
 

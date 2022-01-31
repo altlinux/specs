@@ -2,11 +2,11 @@
 %define oname blosc
 
 %def_without check
-%def_with docs
+%def_without docs
 
 Name: python3-module-%oname
 Version: 1.5.1
-Release: alt4
+Release: alt5
 
 Summary: A Python wrapper for the extremely fast Blosc compression library
 License: MIT / BSD
@@ -145,6 +145,9 @@ nosetests3 -v --with-doctest %oname
 
 
 %changelog
+* Thu Dec 09 2021 Grigory Ustinov <grenka@altlinux.org> 1.5.1-alt5
+- Build without docs for python3.10.
+
 * Mon Nov 23 2020 Vitaly Lipatov <lav@altlinux.ru> 1.5.1-alt4
 - NMU: disable tests packing, fix build
 

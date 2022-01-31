@@ -1,6 +1,6 @@
 Name: python3-module-PySide2
-Version: 5.15.0
-Release: alt6
+Version: 5.15.2
+Release: alt1
 
 Summary: Python bindings for the Qt 5 cross-platform application and UI framework
 Group: Development/Python3
@@ -10,7 +10,14 @@ URL: https://wiki.qt.io/Qt_for_Python
 # Download from https://download.qt.io/official_releases/QtForPython/pyside2/PySide2-$version-src/
 Source: pyside-setup-opensource-src-%version.tar
 Patch1: pyside2-link-with-python.patch
-Patch2: pyside2-python3.9-support.patch
+Patch2: python-pyside2-options_py.patch
+
+# patches from debian
+Patch10: py3.10-prep-Finally-support-Python-3.10.patch
+Patch11: py3.10-prep-Fix-a-very-old-refcounting-error-in-time_test.patch
+Patch12: py3.10-prep-Fix-parser.py-for-changed-typing-module.patch
+Patch13: py3.10-prep-reset-the-type-cache-after-feature-switching.patch
+
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires(pre): rpm-build-python3
@@ -127,7 +134,12 @@ the previous versions (without the 2) refer to Qt 4.
 %prep
 %setup -n pyside-setup-opensource-src-%version
 %patch1 -p2
-%patch2 -p2
+%patch2 -p1
+
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
 
 %build
 %ifarch %e2k
@@ -190,6 +202,9 @@ done
 %python3_sitelibdir/shiboken2_generator-*.egg-info/
 
 %changelog
+* Wed Dec 15 2021 Grigory Ustinov <grenka@altlinux.org> 5.15.2-alt1
+- Build new version for python3.10.
+
 * Sat Oct 16 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 5.15.0-alt6
 - fixed build for Elbrus
 

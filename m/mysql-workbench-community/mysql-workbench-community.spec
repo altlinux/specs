@@ -1,6 +1,6 @@
 Name: mysql-workbench-community
 Version: 8.0.25
-Release: alt3
+Release: alt4
 
 Summary: A MySQL visual database modeling tool
 
@@ -23,6 +23,7 @@ Patch4: %name-6.3.4-alt-gcc6.patch
 Patch5: mysql-workbench-community-6.3.10-32bit.patch
 Patch7: mysql-workbench-8.0.17.suppress-unsupported.patch
 Patch8: %name-8.0.20-alt-boost-1.73.0-compat.patch
+Patch9: mysql-workbench-community-8.0.25-update_python_context_for_8.0.28.patch
 
 Provides: mysql-workbench-oss = %version-%release
 Obsoletes: mysql-workbench-oss < %version-%release
@@ -163,6 +164,7 @@ Look to %_defaultdocdir/%name-%version/License.txt
 #endif
 %patch7 -p2
 %patch8 -p2
+%patch9 -p2
 
 sed -i "s|pcre.h|pcre/pcre.h|" library/grt/src/grtpp_shell.cpp
 sed -i "s|ldconfig|/sbin/ldconfig|" frontend/linux/workbench/mysql-workbench.in
@@ -231,6 +233,9 @@ cp %_builddir/%name-%version/images/icons/MySQLWorkbenchDocIcon32x32.png %buildr
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Tue Jan 25 2022 Grigory Ustinov <grenka@altlinux.org> 8.0.25-alt4
+- Fixed build with python3.10.
+
 * Thu Jul 22 2021 Stanislav Levin <slev@altlinux.org> 8.0.25-alt3
 - Dropped no longer used dep on python-paramiko.
 

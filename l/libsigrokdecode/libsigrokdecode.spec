@@ -1,6 +1,6 @@
 Name: libsigrokdecode
 Version: 0.6.0
-Release: alt0.202010729
+Release: alt0.202010729.1
 
 Summary: sigrok -- signal analysis software suite
 License: GPLv3
@@ -8,6 +8,8 @@ Group: System/Libraries
 Url: https://sigrok.org/
 
 Source: %name-%version-%release.tar
+
+Patch: libsigrokdecode-python3.10.patch
 
 BuildRequires: glib2-devel libcheck-devel python3-dev
 
@@ -37,6 +39,7 @@ this package provides development part of libsigrokdecode.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -62,6 +65,9 @@ make check
 %_pkgconfigdir/libsigrokdecode.pc
 
 %changelog
+* Thu Jan 13 2022 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt0.202010729.1
+- Add patch for building with python3.10.
+
 * Tue Aug 03 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.0-alt0.202010729
 - git snapshot libsigrokdecode-unreleased-670-g02aa01a
 

@@ -2,7 +2,7 @@
 
 Name:     python3-module-%oname
 Version:  3.11.0
-Release:  alt1
+Release:  alt2
 
 Summary:  A self-contained cryptographic library for Python
 
@@ -60,13 +60,16 @@ python3 setup.py test
 %files
 %doc AUTHORS.rst Changelog.rst README.rst
 %python3_sitelibdir/Crypto
-%python3_sitelibdir/%oname-%version-py?.?.egg-info
+%python3_sitelibdir/*.egg-info
 %exclude %python3_sitelibdir/*/SelfTest
 
 %files tests
 %python3_sitelibdir/*/SelfTest
 
 %changelog
+* Mon Dec 06 2021 Grigory Ustinov <grenka@altlinux.org> 3.11.0-alt2
+- Fixed build for python3.10.
+
 * Tue Oct 12 2021 Grigory Ustinov <grenka@altlinux.org> 3.11.0-alt1
 - Automatically updated to 3.11.0.
 

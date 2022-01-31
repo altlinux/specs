@@ -1,7 +1,7 @@
 %define  oname numba
 
 Name:    python3-module-%oname
-Version: 0.53.1
+Version: 0.54.1
 Release: alt1
 
 Summary: A Just-In-Time Compiler for Numerical Functions in Python
@@ -16,6 +16,7 @@ BuildRequires(pre): rpm-build-python3 python3-module-six
 BuildRequires: gcc-c++ libgomp-devel libnumpy-py3-devel
 
 Source:  %oname-%version.tar
+Patch: cd68a018058cb5a402f929b8f37eae9349892f5e.patch
 
 %description
 Numba is an open source, NumPy-aware optimizing compiler for Python sponsored by
@@ -29,6 +30,7 @@ C callbacks.
 
 %prep
 %setup -n %oname-%version
+%patch -p1
 
 %build
 %python3_build
@@ -47,6 +49,9 @@ mv %buildroot%_bindir/pycc %buildroot%_bindir/pycc3
 %doc CHANGE_LOG *.rst
 
 %changelog
+* Tue Jan 11 2022 Grigory Ustinov <grenka@altlinux.org> 0.54.1-alt1
+- Build new version.
+
 * Sat Apr 10 2021 Grigory Ustinov <grenka@altlinux.org> 0.53.1-alt1
 - Build new version.
 

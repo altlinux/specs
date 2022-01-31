@@ -1,6 +1,6 @@
 Name: manatee-open
 Version: 2.167.10
-Release: alt5
+Release: alt6
 
 Summary: Manatee is a corpus management tool
 License: LGPLv2+
@@ -40,6 +40,9 @@ indexing library called Finlib.
 %doc doc/*
 
 %changelog
+* Wed Dec 15 2021 Grigory Ustinov <grenka@altlinux.org> 2.167.10-alt6
+- fixed build with python3.10.
+
 * Sun Nov 14 2021 Kirill Maslinsky <kirill@altlinux.org> 2.167.10-alt5
 - fix build
   - disable static library build to avoid LTO problem

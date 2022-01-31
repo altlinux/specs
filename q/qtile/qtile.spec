@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_without check
-%def_with docs
+%def_without docs
 
 Name: qtile
 Version: 0.20.0
-Release: alt1
+Release: alt2
 
 Summary: A full-featured, hackable tiling window manager written and configured in Python
 License: MIT
@@ -81,7 +81,10 @@ mv %buildroot%python3_sitelibdir/libqtile/widget/_pulse_audio.abi3.so %buildroot
 %__python3 -m pytest test
 
 %files
-%doc LICENSE README.rst libqtile/resources/default_config.py docs/_build/html
+%if_with docs
+%doc docs/_build/html
+%endif
+%doc LICENSE README.rst libqtile/resources/default_config.py
 %_bindir/qtile
 %python3_sitelibdir/libqtile
 %python3_sitelibdir/*.egg-info
@@ -89,6 +92,9 @@ mv %buildroot%python3_sitelibdir/libqtile/widget/_pulse_audio.abi3.so %buildroot
 %_datadir/wayland-sessions/qtile-wayland.desktop
 
 %changelog
+* Thu Jan 27 2022 Grigory Ustinov <grenka@altlinux.org> 0.20.0-alt2
+- Build without docs for python3.10.
+
 * Wed Jan 26 2022 Egor Ignatov <egori@altlinux.org> 0.20.0-alt1
 - new version 0.20.0
 
