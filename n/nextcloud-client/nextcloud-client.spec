@@ -1,12 +1,13 @@
 Name: nextcloud-client
 Version: 3.0.1
-Release: alt1
+Release: alt2
 
 Group: Networking/File transfer
 Summary: Nextcloud Desktop Client
 License: GPLv2
 Url: https://github.com/nextcloud/desktop
 
+ExclusiveArch: %qt5_qtwebengine_arches
 
 Provides: mirall = %version-%release
 Obsoletes: mirall <= %version-%release
@@ -21,6 +22,7 @@ Patch3: alt-static-libs.patch
 Patch4: %name-2.3.3-alt-fix-help-url.patch
 Patch5: alt-move-deleted-to-trash.patch
 
+BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires: kde-common-devel rpm-build-kf5
 BuildRequires: doxygen extra-cmake-modules graphviz kf5-kio-devel libqtkeychain-qt5-devel libsqlite3-devel libssl-devel python3-dev qt5-tools-devel qt5-webkit-devel zlib-devel
 BuildRequires: libqt5-webenginewidgets qt5-webengine-devel libgio-devel glib2-devel qt5-svg-devel
@@ -84,6 +86,9 @@ ln -s nextcloud/libocsync.so.%version libocsync.so.0; cd ../..
 %_K5srv/*nextcloud*.desktop
 
 %changelog
+* Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 3.0.1-alt2
+- build according qtwebengine arches
+
 * Mon Sep 07 2020 Evgeniy Korneechev <ekorneechev@altlinux.org> 3.0.1-alt1
 - new version (ALT#38849)
 
