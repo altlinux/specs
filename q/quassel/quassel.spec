@@ -1,6 +1,12 @@
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
+
 Version:	0.13.1
 Name:		quassel
-Release:	alt2
+Release:	alt3
 Summary:	Quassel - IRC client
 License: 	GPLv3
 Group: 		Networking/IRC
@@ -12,7 +18,12 @@ Patch0:		quassel-0.13.1-qt5.14.patch
 
 # Automatically added by buildreq on Sat Jun 26 2021 (-bi)
 # optimized out: cmake cmake-modules elfutils fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdbusmenu-qt52 libgdk-pixbuf libglvnd-devel libgpg-error libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqca-qt5 libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-script libqt5-sql libqt5-webchannel libqt5-webengine libqt5-webenginecore libqt5-webenginewidgets libqt5-widgets libqt5-xml librabbitmq-c libsasl2-3 libstdc++-devel libx265-160 perl python-base python-modules qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel sh4
-BuildRequires: ccmake libdbusmenu-qt5-devel libqca-qt5-devel libssl-devel qt5-multimedia-devel qt5-script-devel qt5-tools-devel qt5-webengine-devel zlib-devel
+BuildRequires: cmake libdbusmenu-qt5-devel libqca-qt5-devel libssl-devel qt5-multimedia-devel qt5-script-devel qt5-tools-devel zlib-devel
+%if_enabled qtwebengine
+BuildRequires: qt5-webengine-devel
+%else
+BuildRequires: qt5-webkit-devel
+%endif
 
 %description
 Quassel IRC is a modern, cross-platform, distributed IRC client based on the Qt4 framework.
@@ -30,17 +41,22 @@ this feature, so Quassel IRC can be setup very easily.
 %patch0 -p1
 
 %build
-cmake \
+%cmake \
 	-DCMAKE_INSTALL_PREFIX=%_prefix \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DUSE_QT5=ON \
+%if_enabled qtwebengine
 	-DWITH_WEBENGINE=ON \
+%else
+	-DWITH_WEBKIT=ON \
+%endif
 	-DWITH_KDE=OFF \
 	-DWITH_OPENSSL=ON
+%cmake_build
 
 %install
-%make DESTDIR=%buildroot install
+%cmake_install
 
 %files
 %dir %_datadir/%name
@@ -50,6 +66,9 @@ cmake \
 %_iconsdir/*/*/apps/%name.png
 
 %changelog
+* Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 0.13.1-alt3
+- build wth qtwebkit instead of qtwebengine on e2k and ppc64le
+
 * Mon Jun 28 2021 Motsyo Gennadi <drool@altlinux.ru> 0.13.1-alt2
 - add patch for Qt >= 5.14 from Gentoo
  (https://raw.githubusercontent.com/gentoo/gentoo/master/net-irc/quassel/files/quassel-0.13.1-qt5.14.patch)
