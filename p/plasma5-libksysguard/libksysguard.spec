@@ -1,4 +1,11 @@
 %define rname libksysguard
+
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
+
 %define sover 9
 %define libksgrd libksgrd%sover
 %define libksignalplotter libksignalplotter%sover
@@ -13,7 +20,7 @@
 
 Name: plasma5-%rname
 Version: 5.23.5
-Release: alt2
+Release: alt3
 Epoch: 1
 %K5init altplace
 
@@ -38,7 +45,7 @@ BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: libsensors3-devel
 BuildRequires: zlib-devel libnl-devel libcap-devel libpcap-devel
 BuildRequires: qt5-script-devel qt5-x11extras-devel qt5-tools-devel
-%ifnarch ppc64le
+%if_enabled qtwebengine
 BuildRequires: qt5-webengine-devel
 %endif
 BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
@@ -220,6 +227,9 @@ Requires: %name-common
 %_K5lib/libKSysGuardSystemStats.so.*
 
 %changelog
+* Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.23.5-alt3
+- build without qtwebengine on e2k
+
 * Wed Jan 26 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.23.5-alt2
 - build without qtwebengine on ppc64le
 
