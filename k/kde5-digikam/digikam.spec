@@ -17,13 +17,18 @@
 %else
 %def_enable opencv3
 %endif
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
 
 %define rname digikam
 %define label digiKam
 Name: kde5-%rname
 %define lname lib%name
 Version: 7.5.0
-Release: alt1
+Release: alt2
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 #define sover %version
@@ -58,10 +63,10 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt libopencv-devel
 #BuildRequires: doxygen eigen3 extra-cmake-modules flex git-core graphviz kde4-marble-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-libkipi-devel kde5-libksane-devel kde5-pimlibs-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-ki18n-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-knotifyconfig-devel kf5-sonnet-devel kf5-threadweaver-devel libXres-devel libexiv2-devel libexpat-devel libgomp-devel libgphoto2-devel libjasper-devel libjpeg-devel liblcms2-devel liblensfun-devel liblqr-devel libopencv-devel libtiff-devel libusb-devel python-module-google python3-dev qt4-dbus qt5-multimedia-devel qt5-webkit-devel qt5-x11extras-devel rpm-build-ruby sqlite3 zlib-devel-static
 BuildRequires: doxygen eigen3 extra-cmake-modules flex graphviz
 BuildRequires: qt5-multimedia-devel qt5-x11extras-devel qt5-xmlpatterns-devel
-%ifarch %e2k
-BuildRequires: qt5-webkit-devel
-%else
+%if_enabled qtwebengine
 BuildRequires: qt5-webengine-devel
+%else
+BuildRequires: qt5-webkit-devel
 %endif
 BuildRequires: libx265-devel
 BuildRequires: libXres-devel libexiv2-devel libexpat-devel libgomp-devel libgphoto2-devel libjpeg-devel libpng-devel
@@ -223,10 +228,10 @@ sed -i '/set(HAVE_OPENGL TRUE)/ s,TRUE,FALSE,' core/CMakeLists.txt
 %ifarch ppc64le
     -DENABLE_FACESENGINE_DNN=OFF \
 %endif
-%ifarch %e2k
-    -DENABLE_QWEBENGINE=OFF \
-%else
+%if_enabled qtwebengine
     -DENABLE_QWEBENGINE=ON \
+%else
+    -DENABLE_QWEBENGINE=OFF \
 %endif
     -DENABLE_INTERNALMYSQL=%{?_enable_mysql:ON}%{!?_enable_mysql:OFF} \
     -DENABLE_MYSQLSUPPORT=%{?_enable_mysql:ON}%{!?_enable_mysql:OFF} \
@@ -323,6 +328,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 7.5.0-alt2
+- build with qtwebkit on ppc64le
+
 * Fri Jan 21 2022 Sergey V Turchin <zerg@altlinux.org> 7.5.0-alt1
 - new version
 
