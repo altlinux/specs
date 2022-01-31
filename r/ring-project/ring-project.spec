@@ -30,12 +30,14 @@
 
 Name: ring-project
 Version: 20210917
-Release: alt1.1
+Release: alt2
 
 Group: Networking/Instant messaging
 Summary: SIP and IAX2 compatible softphone
 Url: http://ring.cx/
 License: GPLv3
+
+ExclusiveArch: %qt5_qtwebengine_arches
 
 Requires(post,preun): alternatives >= 0.2
 #Conflicts: sflphone sflphone-common
@@ -50,6 +52,7 @@ BuildRequires(pre): rpm-build-ubt
 %IF_ver_gteq %ubt_id M90
 BuildRequires: asio-devel
 %endif
+BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires: cmake gcc-c++ glibc-devel autoconf-archive
 BuildRequires: doxygen graphviz gtk-doc
 BuildRequires: qt5-tools-devel
@@ -358,6 +361,9 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir/
 #%_libdir/libring.a
 
 %changelog
+* Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 20210917-alt2
+- build with parity of qtwebengine arches
+
 * Mon Dec 06 2021 Igor Vlasenko <viy@altlinux.org> 20210917-alt1.1
 - NMU: rebuild with libilbc instead of ilbc
 
