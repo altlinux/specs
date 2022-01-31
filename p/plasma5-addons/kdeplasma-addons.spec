@@ -1,5 +1,11 @@
 %define rname kdeplasma-addons
 
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
+
 %define plasmacomicprovidercore_sover 0
 %define libplasmacomicprovidercore libplasmacomicprovidercore%plasmacomicprovidercore_sover
 %define plasmaweatherprivate_sover 0
@@ -9,7 +15,7 @@
 
 Name: plasma5-addons
 Version: 5.23.5
-Release: alt2
+Release: alt3
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -35,7 +41,7 @@ Patch5: alt-fixed-comic-widget-crash.patch
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kemoticons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kpackage-devel kf5-kparts-devel kf5-krunner-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel libibus-devel python-module-google qt5-declarative-devel qt5-x11extras-devel rpm-build-ruby scim-devel
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-declarative-devel qt5-x11extras-devel qt5-script-devel
-%ifnarch ppc64le
+%if_enabled qtwebengine
 BuildRequires: qt5-webengine-devel
 %endif
 BuildRequires: libxcbutil-image-devel libxcb-devel
@@ -164,6 +170,9 @@ done
 %_K5lib/libplasmapotdprovidercore.so.%plasmapotdprovidercore_sover
 
 %changelog
+* Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.23.5-alt3
+- build without qtwebengine on e2k
+
 * Wed Jan 26 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.23.5-alt2
 - build without qtwebengine on ppc64le
 
