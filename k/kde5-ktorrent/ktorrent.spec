@@ -1,3 +1,8 @@
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
 
 %define rname ktorrent
 %define sover 16
@@ -7,7 +12,7 @@
 
 Name: kde5-%rname
 Version: 21.12.1
-Release: alt1
+Release: alt2
 %K5init
 
 Group:     Networking/File transfer
@@ -29,7 +34,10 @@ Patch12: alt-find-taglib.patch
 #BuildRequires: boost-devel-headers extra-cmake-modules kde5-libktorrent-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdewebkit-devel kf5-kdnssd-devel kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-kplotting-devel kf5-kross-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-plasma-workspace-devel kf5-solid-devel kf5-sonnet-devel libGeoIP-devel libgmp-devel libtag-devel python-module-google python3-dev qt5-phonon-devel qt5-script-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: boost-devel extra-cmake-modules
-BuildRequires: qt5-phonon-devel qt5-script-devel qt5-webengine-devel
+BuildRequires: qt5-phonon-devel qt5-script-devel
+%if_enabled qtwebengine
+BuildRequires: qt5-webengine-devel
+%endif
 BuildRequires: libGeoIP-devel libgmp-devel libtag-devel
 BuildRequires: kde5-libktorrent-devel kde5-syndication-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel
@@ -80,7 +88,9 @@ sed -i 's|^add_subdirectory(plasma)||' CMakeLists.txt
 %_K5plug/%rname/
 %_K5xmlgui/%rname/
 %_K5notif/%rname.notifyrc
+%if_enabled qtwebengine
 %_K5data/%rname/
+%endif
 
 %files -n %libktcore
 %_libdir/libktcore.so.%sover
@@ -88,6 +98,9 @@ sed -i 's|^add_subdirectory(plasma)||' CMakeLists.txt
 
 
 %changelog
+* Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt2
+- build without qtbebengine on e2k and ppc64le
+
 * Mon Jan 17 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
 - new version
 
