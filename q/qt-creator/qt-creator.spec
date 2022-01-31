@@ -9,7 +9,7 @@
 
 Name:    qt-creator
 Version: 6.0.1
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -17,6 +17,8 @@ Group:   Development/Tools
 
 Url:     http://qt-project.org/wiki/Category:Tools::QtCreator
 Packager: Andrey Cherepanov <cas@altlinux.org>
+
+ExclusiveArch: %qt5_qtwebengine_arches
 
 Source:  %name-%version.tar
 # VCS:   git://code.qt.io/qt-creator/qt-creator.git
@@ -34,6 +36,7 @@ BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
 BuildRequires(pre): qt5-base-devel >= %qt_version
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires: gcc-c++
 BuildRequires: qt5-designer >= %qt_version
 BuildRequires: qt5-script-devel >= %qt_version
@@ -197,6 +200,9 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 6.0.1-alt2
+- build according qtwebengine arches
+
 * Tue Dec 21 2021 Andrey Cherepanov <cas@altlinux.org> 6.0.1-alt1
 - New version.
 
