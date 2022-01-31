@@ -1,8 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
+
 Name: merkaartor
 Version: 0.18.4
-Release: alt3
+Release: alt4
 
 Summary: an OpenStreetMap editor
 License: GPLv2
@@ -17,7 +23,9 @@ Patch2: %name-%version-upstream-qt5-compat.patch
 BuildRequires: boost-devel gcc-c++ glibc-devel-static
 BuildRequires: libgdal-devel libproj-devel libexiv2-devel zlib-devel libsqlite3-devel
 BuildRequires: qt5-base-devel qt5-svg-devel qt5-tools-devel
+%if_enabled qtwebengine
 BuildRequires: qt5-webengine-devel
+%endif
 BuildRequires: libqtsingleapplication-qt5-devel
 
 %description
@@ -38,10 +46,12 @@ rm -rf 3rdparty
 %add_optflags -I%_includedir/qt5/QtSolutions
 
 lrelease-qt5 Merkaartor.pro
-qmake-qt5 \
+%qmake_qt5 \
 	CONFIG+=release CONFIG+=force_debug_info \
 	PREFIX=%_prefix \
+%if_enabled qtwebengine
 	USEWEBENGINE=1 \
+%endif
 	SYSTEM_QTSA=1 \
 	TRANSDIR_MERKAARTOR=%_datadir/%name/translations/ \
 	-after QMAKE_CFLAGS+='%optflags' \
@@ -61,6 +71,9 @@ qmake-qt5 \
 %_iconsdir/hicolor/*/apps/*.png
 
 %changelog
+* Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 0.18.4-alt4
+- Build without qtwebengine on e2k and ppc64le.
+
 * Fri Sep 04 2020 Sergey V Turchin <zerg@altlinux.org> 0.18.4-alt3
 - Fixed build with qt < 5.15.0.
 
