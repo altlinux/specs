@@ -1,6 +1,9 @@
 Name:     kiwix-desktop
 Version:  2.1.0
-Release:  alt1
+Release:  alt2
+
+# no qtwebengine
+ExcludeArch: ppc64le
 
 Summary:  Kiwix for Windows and GNU/Linux desktops
 License:  GPL-3.0+
@@ -44,6 +47,9 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/mime/packages/*.xml
 
 %changelog
+* Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt2
+- exclude ppc64le from build
+
 * Sat Jan 22 2022 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1
 - New version.
 
