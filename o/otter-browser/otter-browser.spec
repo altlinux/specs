@@ -1,9 +1,15 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
+
 Name:     otter-browser
 Version:  1.0.01
-Release:  alt3.20210207
+Release:  alt4.20210207
 
 Summary:  Otter Browser aims to recreate the best aspects of the classic Opera (12.x) UI using Qt5
 License:  GPL-3.0
@@ -25,8 +31,11 @@ BuildRequires: pkgconfig(Qt5PrintSupport)
 BuildRequires: pkgconfig(Qt5Qml)
 BuildRequires: pkgconfig(Qt5Svg)
 BuildRequires: pkgconfig(Qt5XmlPatterns)
+%if_enabled qtwebengine
 BuildRequires: pkgconfig(Qt5WebEngineWidgets)
-#BuildRequires: pkgconfig(Qt5WebKit)
+%else
+BuildRequires: pkgconfig(Qt5WebKit)
+%endif
 BuildRequires: pkgconfig(Qt5Widgets)
 BuildRequires: pkgconfig(hunspell)
 
@@ -37,7 +46,13 @@ BuildRequires: pkgconfig(hunspell)
 %setup
 
 %build
-%cmake
+%cmake \
+%if_enabled qtwebengine
+    -DENABLE_QTWEBENGINE:BOOL=ON \
+%else
+    -DENABLE_QTWEBKIT:BOOL=ON \
+%endif
+    #
 %cmake_build
 
 %install
@@ -52,6 +67,9 @@ BuildRequires: pkgconfig(hunspell)
 %doc CHANGELOG CONTRIBUTING.md COPYING README.md
 
 %changelog
+* Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 1.0.01-alt4.20210207
+- build wth qtwebkit instead of qtwebengine on e2k and ppc64le
+
 * Sun Feb 07 2021 Anton Midyukov <antohami@altlinux.org> 1.0.01-alt3.20210207
 - new snapshot
 
