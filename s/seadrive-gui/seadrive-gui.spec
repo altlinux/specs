@@ -1,6 +1,12 @@
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
+
 Name: seadrive-gui
 Version: 2.0.19
-Release: alt1
+Release: alt2
 
 Summary: Seafile Drive client
 
@@ -23,10 +29,10 @@ BuildRequires: libevent-devel >= 2.0
 BuildRequires: libglib2-devel libuuid-devel libjansson-devel
 BuildRequires: libsearpc-devel
 
-%ifarch %e2k
-BuildRequires: qt5-webkit-devel
-%else
+%if_enabled qtwebengine
 BuildRequires: qt5-webengine-devel
+%else
+BuildRequires: qt5-webkit-devel
 %endif
 
 %description
@@ -43,7 +49,7 @@ Note: you need install seadrive-daemon also, which not opensourced.
 %prep
 %setup
 sed -i '1iADD_DEFINITIONS(-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_26)' CMakeLists.txt
-%ifarch %e2k
+%if_disabled qtwebengine
 sed -i '/USE_QT_WEBKIT/ {s/OFF/ON/}' CMakeLists.txt
 %endif
 
@@ -63,6 +69,9 @@ PATH=%_qt5_bindir:$PATH %cmake_insource
 %_pixmapsdir/*
 
 %changelog
+* Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 2.0.19-alt2
+- build with qtwebkit on ppc64le
+
 * Mon Jan 24 2022 Vitaly Lipatov <lav@altlinux.ru> 2.0.19-alt1
 - new version 2.0.19 (with rpmrb script)
 
