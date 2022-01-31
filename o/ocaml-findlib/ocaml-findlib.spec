@@ -1,7 +1,7 @@
 %define _name findlib
 Name: ocaml-%_name
-Version: 1.9.1
-Release: alt2
+Version: 1.9.3
+Release: alt1
 Summary: A module packaging tool for OCaml
 License: BSD
 Group: Development/ML
@@ -94,6 +94,9 @@ EOF
 
 
 %changelog
+* Mon Jan 31 2022 Anton Farygin <rider@altlinux.ru> 1.9.3-alt1
+- 1.9.1 -> 1.9.3
+
 * Tue Mar 23 2021 Anton Farygin <rider@altlinux.org> 1.9.1-alt2
 - added dummy META file for seq library
 
