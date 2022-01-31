@@ -176,7 +176,7 @@
 
 Name: libvirt
 Version: 8.0.0
-Release: alt2
+Release: alt3
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -969,6 +969,7 @@ fi
 %_bindir/virt-pki-validate
 %_man1dir/virsh.*
 %_man1dir/virt-xml-validate.*
+%_man1dir/virt-pki-query-dn.*
 %_man1dir/virt-pki-validate.*
 %_datadir/bash-completion/completions/virsh
 
@@ -1024,7 +1025,6 @@ fi
 %_man8dir/virtlockd*
 %_man7dir/virkey*
 %_man1dir/virt-host-validate.*
-%_man1dir/virt-pki-query-dn.*
 
 #virtlogd
 %config(noreplace) %_sysconfdir/libvirt/virtlogd.conf
@@ -1374,6 +1374,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue Feb 01 2022 Michael Shigorin <mike@altlinux.org> 8.0.0-alt3
+- moved virt-pki-query-dn(1) to appropriate subpackage
+
 * Mon Jan 24 2022 Alexey Shabalin <shaba@altlinux.org> 8.0.0-alt2
 - Add requires on iptables-nft to daemon package
 
