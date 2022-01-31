@@ -1,10 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
+%ifarch %e2k ppc64le
+%def_enable webkit
+%else
 %def_disable webkit
+%endif
 
 Name: psi
 Version: 1.5
-Release: alt1
+Release: alt2
 Group: Networking/Instant messaging
 Summary: Psi Jabber client
 Summary(ru_RU.UTF-8): Jabber клиент Psi
@@ -288,6 +292,9 @@ rm -f %buildroot%_libdir/%name/plugins/libripperccplugin.so
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Mon Jan 31 2022 Oleg Solovyov <mcpain@altlinux.org> 1.5-alt2
+- e2k & ppc64le: build with qtwebkit
+
 * Fri Oct 02 2020 Oleg Solovyov <mcpain@altlinux.org> 1.5-alt1
 - Updated to version 1.5
 
