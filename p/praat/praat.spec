@@ -1,5 +1,5 @@
 Name: praat
-Version: 6.2.05
+Version: 6.2.07
 Release: alt1
 
 Summary: A program for speech analysis and synthesis
@@ -92,6 +92,9 @@ install -pDm755 %name %buildroot%_bindir/%name
 #  http://www.fon.hum.uva.nl/praat/download_sources.html praat(\d)(\d)(\d+)_sources.tar.gz debian
 
 %changelog
+* Tue Feb 01 2022 Ilya Mashkin <oddity@altlinux.ru> 6.2.07-alt1
+- 6.2.07
+
 * Sun Jan 16 2022 Ilya Mashkin <oddity@altlinux.ru> 6.2.05-alt1
 - 6.2.05
 
