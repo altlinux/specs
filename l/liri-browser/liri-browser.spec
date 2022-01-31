@@ -1,11 +1,14 @@
 Name: liri-browser
 Version: 0.0.20210809
-Release: alt1
+Release: alt2
 
 Summary: A cross-platform Material Design web browser
 License: GPLv3
 Group: Networking/WWW
 Url: https://github.com/lirios/browser
+
+# no qtwebengine
+ExcludeArch: ppc64le
 
 Source0: %name-%version-%release.tar
 
@@ -37,6 +40,9 @@ BuildRequires: qml(QtGraphicalEffects)
 %_iconsdir/*/*/*/*.svg
 
 %changelog
+* Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 0.0.20210809-alt2
+- exclude ppc64le from build
+
 * Tue Aug 10 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20210809-alt1
 - updated from git.a1d14aa
 
