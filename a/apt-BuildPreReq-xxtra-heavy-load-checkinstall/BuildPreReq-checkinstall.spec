@@ -26,7 +26,7 @@
 
 # %%name should end with -checkinstall, because this is a special package,
 # which shouldn't be visible by normal users.
-Name: %(sed -Ee 's/(-checkinstall|)$/-checkinstall/' <<<'apt-BuildPreReq-heavyload-checkinstall')
+Name: %(sed -Ee 's/(-checkinstall|)$/-checkinstall/' <<<'apt-BuildPreReq-xxtra-heavy-load-checkinstall')
 Version: 1
 Release: alt2
 
@@ -37,7 +37,7 @@ URL: http://git.altlinux.org/people/imz/packages/BuildPreReq-checkinstall.git
 
 BuildArch: noarch
 
-%global other_pkg %(sed -Ee 's/BuildPreReq-//' <<<'apt-BuildPreReq-heavyload-checkinstall')
+%global other_pkg %(sed -Ee 's/BuildPreReq-//' <<<'apt-BuildPreReq-xxtra-heavy-load-checkinstall')
 
 # The main effect of this package: just install another one during build.
 # (Normally, the "checkinstall" component is not available for installation
