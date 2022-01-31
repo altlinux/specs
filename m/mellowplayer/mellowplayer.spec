@@ -1,15 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 
+# no qtwebengine (bug#41476)
+ExcludeArch: ppc64le
+
 Name: mellowplayer
 Version: 3.6.7
-Release: alt1
+Release: alt2
 Summary: Cloud music integration for your desktop
 License: GPL-2.0
 Group: Sound
 Url: https://gitlab.com/ColinDuquesnoy/MellowPlayer
 Source: %name-%version.tar
 Patch1: %name-3.5.5-desktop-additional-categories-fix.patch
-Packager: Alexander Makeenkov <amakeenk@altlinux.org>
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -38,7 +40,7 @@ notifications and more).
 
 %install
 %cmakeinstall_std
-ln -sv %_bindir/MellowPlayer %buildroot%_bindir/%name
+ln -svr %buildroot%_bindir/MellowPlayer %buildroot%_bindir/%name
 
 %files
 %_bindir/MellowPlayer
@@ -50,6 +52,9 @@ ln -sv %_bindir/MellowPlayer %buildroot%_bindir/%name
 %doc LICENSE
 
 %changelog
+* Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 3.6.7-alt2
+- exclude ppc64le from build
+
 * Sat Jan 09 2021 Alexander Makeenkov <amakeenk@altlinux.org> 3.6.7-alt1
 - Updated to version 3.6.7
 
