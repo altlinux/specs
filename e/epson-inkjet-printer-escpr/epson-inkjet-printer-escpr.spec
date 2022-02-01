@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
 %define pkg     epson-inkjet-printer-escpr
-%define ver     1.7.17
+%define ver     1.7.18
 
 %define drivername      epson-inkjet-printer-escpr
 %define driverstr       epson-inkjet-printer-escpr
@@ -81,6 +81,12 @@ gzip -n9 %buildroot%_datadir/cups/model/%name/*.ppd
 %_datadir/cups/model/%name
 
 %changelog
+* Tue Feb 01 2022 Andrey Cherepanov <cas@altlinux.org> 1.7.18-alt1
+- New version.
+- Supported new models:
+  + Epson EP-714A Series
+  + Epson EP-814A Series
+
 * Thu Sep 09 2021 Andrey Cherepanov <cas@altlinux.org> 1.7.17-alt1
 - New version.
 - Supported new models:
