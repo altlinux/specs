@@ -1,6 +1,6 @@
 Name: zynaddsubfx
 Version: 3.0.6
-Release: alt1
+Release: alt2
 
 Summary: %name is a open source software synthesizer
 License: GPLv2+
@@ -57,6 +57,9 @@ interesting sounds that you'll boost to an amazing universe of sounds.
 %_pixmapsdir/zynaddsubfx.*
 
 %changelog
+* Tue Feb 01 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.6-alt2
+- 3.0.6 released
+
 * Wed Dec 01 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.6-alt1
 - 3.0.6-rc4-38-g4b591948
 
