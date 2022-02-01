@@ -1,6 +1,6 @@
 Name:    kmymoney
 Version: 5.1.2
-Release: alt5
+Release: alt6
 %K5init no_altplace
 
 Summary: A Personal Finance Manager for KDE
@@ -11,6 +11,8 @@ URL:     http://kmymoney2.sourceforge.net
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
+ExclusiveArch: %qt5_qtwebengine_arches
+
 Source0: %name-%version.tar
 Source1: ru.po
 Source2: %name.watch
@@ -19,6 +21,7 @@ Patch1: kmymoney-new-akonadi.patch
 
 AutoReq: yes, noperl
 
+BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires(pre): rpm-build-kf5
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev
@@ -378,6 +381,9 @@ cp %SOURCE1 po/ru/kmymoney.po
 %exclude %_K5doc/en
 
 %changelog
+* Tue Feb 01 2022 Sergey V Turchin <zerg@altlinux.org> 5.1.2-alt6
+- Build with parity of qtwebengine arches.
+
 * Mon Jan 24 2022 Andrey Cherepanov <cas@altlinux.org> 5.1.2-alt5
 - FTBFS: Rebuild with new Akonadi.
 
