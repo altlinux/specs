@@ -1,11 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
 
 %define slicerver 4.11
 
 Name: slicer
 Version: %slicerver.20210226
-Release: alt2
+Release: alt3
 Summary: Multi-platform, free open source software for visualization and image computing
 License: BSD-like
 Group: Sciences/Medicine
@@ -33,7 +38,10 @@ BuildRequires(pre): rpm-macros-qt5
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: gcc-c++ cmake
-BuildRequires: qt5-base-devel qt5-multimedia-devel qt5-script-devel qt5-svg-devel qt5-tools-devel-static qt5-webengine-devel qt5-xmlpatterns-devel
+BuildRequires: qt5-base-devel qt5-multimedia-devel qt5-script-devel qt5-svg-devel qt5-tools-devel-static qt5-xmlpatterns-devel
+%if_enabled qtwebengine
+BuildRequires: qt5-webengine-devel
+%endif
 BuildRequires: libitk-devel
 BuildRequires: libvtk-devel
 BuildRequires: CTK-devel
@@ -144,6 +152,7 @@ jqplotdir="$(pwd)/jqPlot"
 	-DSlicer_USE_SYSTEM_TBB:BOOL=ON \
 	-DSlicer_USE_SYSTEM_python:BOOL=ON \
 	-DSlicer_USE_SYSTEM_QT:BOOL=ON \
+	-DSlicer_BUILD_WEBENGINE_SUPPORT:BOOL=%{?_enable_qtwebengine:ON}%{!?_enable_qtwebengine:OFF} \
 	-DSlicer_USE_SYSTEM_LibArchive:BOOL=ON \
 	-DSlicerExecutionModel_DEFAULT_CLI_INSTALL_RUNTIME_DESTINATION:PATH=%_libdir/Slicer-%slicerver/cli-modules \
 	-DSlicerExecutionModel_DEFAULT_CLI_INSTALL_LIBRARY_DESTINATION:PATH=%_libdir/Slicer-%slicerver/lib/Slicer-%slicerver/cli-modules \
@@ -214,6 +223,9 @@ ln -sr %buildroot%_bindir/designer-qt5 %buildroot%_libdir/Slicer-%slicerver/bin/
 %_qt5_plugindir/designer/*.so
 
 %changelog
+* Tue Feb 01 2022 Sergey V Turchin <zerg@altlinux.org> 4.11.20210226-alt3
+- Build with qtwebkit on e2k end ppc64le.
+
 * Tue Oct 05 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.11.20210226-alt2
 - Fixed build with gcc-11.
 - Fixed launch of qt designer.
