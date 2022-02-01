@@ -1,10 +1,15 @@
 %define rname umbrello
 
 #add_findprov_skiplist %_K5data/umbrello5/headings/*.*
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
 
 Name: kde5-%rname
 Version: 21.12.1
-Release: alt2
+Release: alt3
 %K5init no_appdata
 
 Group: Graphical desktop/KDE
@@ -21,7 +26,12 @@ Patch1: alt-no-webkit.patch
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ gtk-update-icon-cache kf5-kdoctools-devel libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms libxml2-devel pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-gir ruby ruby-stdlibs xml-common xml-utils
 #BuildRequires: extra-cmake-modules kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kparts-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libxslt-devel python-module-google qt5-svg-devel rpm-build-python3 rpm-build-ruby xsltproc
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules qt5-base-devel qt5-svg-devel qt5-webengine-devel qt5-tools
+BuildRequires: extra-cmake-modules qt5-base-devel qt5-svg-devel qt5-tools
+%if_enabled qtwebengine
+BuildRequires: qt5-webengine-devel
+%else
+BuildRequires: qt5-webkit-devel
+%endif
 #BuildRequires: llvm-devel llvm-devel-static clang-devel clang-devel-static
 BuildRequires: libxslt-devel xsltproc
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
@@ -39,7 +49,9 @@ standard language.
 
 %prep
 %setup -n %rname-%version
+%if_enabled qtwebengine
 %patch1 -p1
+%endif
 
 # disable unittests
 sed -i 's|\(.*add_subdirectory.*unittests.*\)|#\1|' CMakeLists.txt
@@ -68,6 +80,9 @@ sed -i '/^#!\/usr\/bin\/env/s|python|%__python3|' umbrello/headings/heading.py
 
 
 %changelog
+* Tue Feb 01 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt3
+- build with qtwebkit on e2k and ppc64le
+
 * Wed Jan 19 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt2
 - build without qtwebkit
 
