@@ -1,14 +1,16 @@
-Name: 		skrooge
-Version: 	2.26.1
-Release: 	alt1
-License: 	%gpl2plus
-Summary: 	Personal finances manager for KF5
-Group: 		Office
-URL: 		http://skrooge.org/
-Packager: 	Andrey Cherepanov <cas@altlinux.org> 
+%define _unpackaged_files_terminate_build 1
 
-Source: 	%name-%version.tar.xz
-Source1:	%name.po
+Name: skrooge
+Version: 2.27.0
+Release: alt1
+Summary: Personal finances manager for KF5
+License: %gpl2plus
+Group: Office
+URL: http://skrooge.org/
+Packager: Andrey Cherepanov <cas@altlinux.org> 
+
+Source: %name-%version.tar.xz
+Source1:%name.po
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-kf5
@@ -89,9 +91,8 @@ cp -f %SOURCE1 po/ru/skrooge.po
 %find_lang --with-kde %name
 
 %files -f %name.lang
-%doc AUTHORS CHANGELOG COPYING README
+%doc AUTHORS CHANGELOG README.md
 %_K5bin/*
-%_K5xdgconf/%{name}_*.knsrc
 %_K5cfg/*
 %_K5srv/*
 %_K5srvtyp/*
@@ -106,8 +107,13 @@ cp -f %SOURCE1 po/ru/skrooge.po
 %_K5plug/grantlee/*/grantlee_skgfilters.so
 %_K5notif/%name.notifyrc
 %_datadir/%name
+%_datadir/knsrcfiles/*.knsrc
+%_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Mon Jan 31 2022 Andrey Cherepanov <cas@altlinux.org> 2.27.0-alt1
+- new version 2.27.0
+
 * Thu Jul 29 2021 Andrey Cherepanov <cas@altlinux.org> 2.26.1-alt1
 - new version 2.26.1
 
