@@ -6,7 +6,7 @@
 
 Name: qt5-declarative
 Version: 5.15.2
-Release: alt6
+Release: alt7
 
 Group: System/Libraries
 Summary: Qt5 - QtDeclarative component
@@ -285,6 +285,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 %_bindir/rpmbqml-qmlinfo
 
 %changelog
+* Tue Feb 01 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt7
+- update fixes from kde/qt-5.15
+
 * Mon Jan 24 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt6
 - update fixes from kde/qt-5.15
 
