@@ -3,6 +3,11 @@
 %def_disable python2
 %def_enable python3
 %def_disable luajit
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
 
 %define cantor_sover 28
 %define libcantorlibs libcantorlibs%cantor_sover
@@ -11,7 +16,7 @@
 
 Name: kde5-%rname
 Version: 21.12.1
-Release: alt1
+Release: alt2
 %K5init no_appdata
 
 Group: Education
@@ -19,8 +24,10 @@ Summary: KDE Frontend to Mathematical Software
 Url: http://www.kde.org
 License: GPL-2.0-or-later or GPL-3.0-only
 
+%if_enabled qtwebengine
 Requires: kde5-kalgebra
 Requires: epstool
+%endif
 
 Source: %rname-%version.tar
 Patch1: alt-lib-so-ver.patch
@@ -30,8 +37,11 @@ Patch3: cantor-20.12.3-alt-octave-backend-default-settings.patch
 # Automatically added by buildreq on Wed Mar 30 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ gtk-update-icon-cache kf5-attica-devel kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libqt5-xmlpatterns libstdc++-devel libxcbutil-keysyms pkg-config python-base python-devel python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils
 #BuildRequires: extra-cmake-modules kde5-analitza-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdelibs4support kf5-kdoctools-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libcln-devel liblua5-devel libluajit-devel libspectre-devel python-module-google python3-dev qt5-svg-devel qt5-xmlpatterns-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules qt5-svg-devel qt5-xmlpatterns-devel qt5-tools-devel qt5-webengine-devel
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: extra-cmake-modules qt5-svg-devel qt5-xmlpatterns-devel qt5-tools-devel
+%if_enabled qtwebengine
+BuildRequires: qt5-webengine-devel
+%endif
 BuildRequires: libcln-devel libspectre-devel libdiscount-devel libpoppler-qt5-devel
 %{?_enable_python2:BuildRequires: python-devel}
 %{?_enable_python3:BuildRequires: python3-devel}
@@ -52,7 +62,7 @@ It supports environments for KAlgebra, Lua, Maxima, R, Sage, Octave, Python, Sci
 %package common
 Summary: %name common package
 Group: System/Configuration/Other
-BuildArch: noarch
+#BuildArch: noarch
 Requires: kf5-filesystem
 %description common
 %name common package
@@ -93,20 +103,24 @@ KF5 library
 #popd
 
 %build
+%if_enabled qtwebengine
 %K5build \
     -DKDE_INSTALL_INCLUDEDIR=%_K5inc \
     #
+%endif
 
 %install
+%if_enabled qtwebengine
 %K5install
 %K5install_move data cantor knsrcfiles
 mv %buildroot/%_K5xdgmime/cantor{,-kde5}.xml
 %find_lang %name --with-kde --all-name
-
-%files common -f %name.lang
-%doc LICENSES/*
+%else
+mkdir -p %buildroot
+%endif
 
 %files
+%if_enabled qtwebengine
 %_K5bin/cantor*
 %_K5lib/cantor_pythonbackend.so
 %_K5plug/kf5/parts/*cantor*.so
@@ -118,13 +132,16 @@ mv %buildroot/%_K5xdgmime/cantor{,-kde5}.xml
 %_K5xmlgui/cantor/
 %_K5data/knsrcfiles/*cantor*.knsrc
 %_K5xdgmime/*cantor*.xml
+%endif
+
+%if_enabled qtwebengine
+%files common -f %name.lang
+%doc LICENSES/*
 
 %files devel
-#%_K5inc/cantor_version.h
 %_K5inc/cantor/
 %_K5link/lib*.so
 %_libdir/cmake/Cantor/
-#%_K5archdata/mkspecs/modules/qt_Cantor.pri
 
 %files -n %libcantorlibs
 %_K5lib/libcantorlibs.so.%cantor_sover
@@ -132,8 +149,12 @@ mv %buildroot/%_K5xdgmime/cantor{,-kde5}.xml
 %files -n %libcantor_config
 %_K5lib/libcantor_config.so.%cantor_config_sover
 %_K5lib/libcantor_config.so.*
+%endif
 
 %changelog
+* Tue Feb 01 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt2
+- build empty package on e2k and ppc64le
+
 * Tue Jan 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
 - new version
 
@@ -217,38 +238,38 @@ mv %buildroot/%_K5xdgmime/cantor{,-kde5}.xml
 * Thu Feb 28 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
 - new version
 
-* Thu Jul 26 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
+* Thu Jul 26 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1
 - new version
 
-* Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+* Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1
 - new version
 
-* Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+* Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1
 - new version
 
-* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 17.12.3-alt1%ubt.1
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 17.12.3-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
-* Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
+* Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1
 - new version
 
-* Tue Nov 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+* Tue Nov 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1
 - new version
 
-* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1
 - new version
 
-* Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+* Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1
 - new version
 
-* Wed Jun 07 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+* Wed Jun 07 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1
 - new version
 - don't build lua backend
 
-* Thu Apr 13 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt2%ubt
+* Thu Apr 13 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt2
 - fix to build with luajit-2.0
 
-* Thu Apr 06 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+* Thu Apr 06 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1
 - new version
 
 * Thu Sep 22 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
