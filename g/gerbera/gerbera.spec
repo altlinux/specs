@@ -2,7 +2,7 @@
 
 Name: gerbera
 Version: 1.9.2
-Release: alt1
+Release: alt2
 
 Summary: UPnP Media Server
 Group: System/Servers
@@ -13,6 +13,7 @@ Patch: %name-%version-%release.patch
 
 Requires: %name-data = %EVR
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake >= 3.14
 BuildRequires: gcc-c++
 BuildRequires: libupnp-devel >= 1.14.0
@@ -21,19 +22,19 @@ BuildRequires: libspdlog-devel >= 1.8.1
 BuildRequires: libuuid-devel
 BuildRequires: libexpat-devel
 BuildRequires: libsqlite3-devel >= 3.7.11
-BuildRequires: libduktape-devel
+BuildRequires: libduktape-devel >= 2.2.1
 BuildRequires: libcurl-devel
-BuildRequires: libtag-devel
+BuildRequires: libtag-devel >= 1.12
 BuildRequires: libmagic-devel
-BuildRequires: libpugixml-devel
+BuildRequires: libpugixml-devel >= 1.10
 BuildRequires: libexif-devel
-BuildRequires: libexiv2-devel
+BuildRequires: libexiv2-devel >= 0.26
 BuildRequires: libavformat-devel
 BuildRequires: libavutil-devel
 BuildRequires: libavcodec-devel
-BuildRequires: libffmpegthumbnailer-devel
+BuildRequires: libffmpegthumbnailer-devel >= 2.2.0
 BuildRequires: zlib-devel
-BuildRequires: libebml-devel libmatroska-devel
+BuildRequires: libebml-devel >= 1.3.9 libmatroska-devel >= 1.5.2
 BuildRequires: libsystemd-devel
 BuildRequires: libmysqlclient-devel
 
@@ -120,11 +121,11 @@ useradd -r -n -g %name -d %_localstatedir/%name -s /dev/null \
 
 %files data
 %_datadir/%name
-%config(noreplace) %_datadir/%name/js/import.js
-%config(noreplace) %_datadir/%name/js/playlists.js
-%config(noreplace) %_datadir/%name/js/common.js
 
 %changelog
+* Tue Feb 01 2022 Alexey Shabalin <shaba@altlinux.org> 1.9.2-alt2
+- upstream master snapshot (fixed ftbfs)
+
 * Mon Nov 01 2021 Alexey Shabalin <shaba@altlinux.org> 1.9.2-alt1
 - new version 1.9.2
 
