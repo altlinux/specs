@@ -1,9 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_disable webkit
-
 Name: psi-plus
-Version: 1.5.1552
+Version: 1.5.1600
 Release: alt1
 
 Summary: Psi+ Jabber client
@@ -21,7 +19,6 @@ Patch1: %name-disable-sm-alt.patch
 Patch2: %name-doubleclick-alt.patch
 Patch3: %name-events-alt.patch
 Patch4: %name-disable-omemo-alt.patch
-Patch5: psi-fix-crashes.patch
 
 Requires: qt5-translations
 Requires: qca-qt5-ossl
@@ -40,11 +37,6 @@ BuildRequires: libotr-devel
 BuildRequires: qt5-multimedia-devel
 BuildRequires: qt5-phonon-devel
 BuildRequires: qt5-svg-devel
-%if_enabled webkit
-BuildRequires: libqt5-webkit qt5-webkit-devel
-%else
-BuildRequires: qt5-webengine-devel
-%endif
 BuildRequires: qt5-x11extras-devel
 BuildRequires: zlib-devel
 BuildRequires: libminizip-devel
@@ -577,7 +569,6 @@ mv usrsctp/ iris/3rdparty/
 %patch2 -p1
 %patch3 -p2
 %patch4 -p2
-%patch5 -p1
 
 rm -rf src/libpsi/tools/zip/minizip
 
@@ -607,7 +598,7 @@ install -pDm644 redirectorplugin/libredirectplugin.so %buildroot%_libdir/%name/p
 popd
 
 rm %buildroot%_datadir/%name/{COPYING,README.html}
-rm %buildroot%_libdir/%name/plugins/lib{battleshipgame,openpgp}plugin.so
+rm %buildroot%_libdir/%name/plugins/lib{battleshipgame,openpgp,skins}plugin.so
 
 %files
 %doc COPYING INSTALL.md README.html TODO
@@ -737,6 +728,9 @@ rm %buildroot%_libdir/%name/plugins/lib{battleshipgame,openpgp}plugin.so
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Mon Jan 31 2022 Oleg Solovyov <mcpain@altlinux.org> 1.5.1600-alt1
+- Version 1.5.1600
+
 * Fri Jul 23 2021 Oleg Solovyov <mcpain@altlinux.org> 1.5.1552-alt1
 - Version 1.5.1552
 
