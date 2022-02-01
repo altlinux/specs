@@ -16,7 +16,7 @@
 %def_with x509_alt_username
 
 Name: openvpn
-Version: 2.5.4
+Version: 2.5.5
 Release: alt1
 
 Summary: a full-featured SSL VPN solution
@@ -342,6 +342,9 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %endif
 
 %changelog
+* Tue Feb 01 2022 Nikolay A. Fetisov <naf@altlinux.org> 2.5.5-alt1
+- New version
+
 * Sun Nov 07 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.5.4-alt1
 - New version
   - Fix minor memory leak under certain conditions in add_route()
