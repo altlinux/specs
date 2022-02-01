@@ -8,8 +8,8 @@
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 6.0.1
-Release: alt2
+Version: 6.0.2
+Release: alt1
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -27,6 +27,7 @@ Source2: perfparser.tar
 
 Patch0:  %name-%version-%release.patch
 Patch1:  0001-Link-against-libclang-cpp.so.patch
+Patch2:  0002-QmlDesigner-Fix-32-bit.patch
 
 Provides: qtcreator = %EVR
 Obsoletes: qtcreator-clangcodemodel
@@ -136,6 +137,7 @@ sed -i 's,tools\/qdoc3,bin,' doc/doc.pri
 #subst 's,share\/doc\/qtcreator,share\/qtcreator\/doc,' doc/doc.pri src/plugins/help/helpplugin.cpp
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 %ifarch %e2k
 # strip UTF-8 BOM, lcc 1.23 won't ignore it yet
 find src -type f -print0 -name '*.cpp' -o -name '*.h' |
@@ -200,6 +202,9 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Tue Feb 01 2022 Andrey Cherepanov <cas@altlinux.org> 6.0.2-alt1
+- New version.
+
 * Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 6.0.1-alt2
 - build according qtwebengine arches
 
