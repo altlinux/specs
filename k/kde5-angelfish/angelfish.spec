@@ -5,13 +5,15 @@
 
 Name: kde5-%rname
 Version: 21.12
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Summary: Webbrowser designed for mobile devices
 License: GPLv3+
 Group: Networking/WWW
 Url: https://anongit.kde.org/plasma-angelfish.git
+
+ExclusiveArch: %qt5_qtwebengine_arches
 
 Requires(post,preun): alternatives >= 0.2
 Requires: qt5-feedback
@@ -25,7 +27,7 @@ Patch1: alt-def-size.patch
 # Automatically added by buildreq on Tue Feb 25 2020 (-bi)
 # optimized out: alternatives cmake cmake-modules elfutils fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libgdk-pixbuf libglvnd-devel libgpg-error libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-gui libqt5-network libqt5-positioning libqt5-qml libqt5-quick libqt5-quickcontrols2 libqt5-svg libqt5-test libqt5-webchannel libqt5-webengine libqt5-webenginecore libqt5-widgets libsasl2-3 libstdc++-devel libx265-176 python-modules python2-base python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-webchannel-devel rpm-build-python3 sh4
 #BuildRequires: appstream extra-cmake-modules git-core kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kirigami-devel kf5-purpose-devel libssl-devel python3-dev qt5-quickcontrols2-devel qt5-svg-devel qt5-wayland-devel qt5-webengine-devel
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-macros-qt5-webengine
 BuildRequires: qt5-quickcontrols2-devel qt5-svg-devel qt5-wayland-devel qt5-webengine-devel
 BuildRequires: qt5-feedback-devel
 BuildRequires: extra-cmake-modules kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kirigami-devel kf5-purpose-devel
@@ -74,6 +76,9 @@ __EOF__
 %_K5notif/*angelfish*
 
 %changelog
+* Tue Feb 01 2022 Sergey V Turchin <zerg@altlinux.org> 21.12-alt2
+- build with parity of qtwebengine arches
+
 * Fri Dec 10 2021 Sergey V Turchin <zerg@altlinux.org> 21.12-alt1
 - new version
 
