@@ -12,13 +12,15 @@
 
 Name: falkon
 Version: 3.1.0
-Release: alt3
+Release: alt4
 %K5init no_altplace
 
 Summary: A very fast open source browser based on WebKit core
 License: GPLv3+
 Group: Networking/WWW
 Url: https://www.falkon.org/
+
+ExcludeArch: %e2k ppc64le
 
 Source: %name-%version.tar
 Patch1: alt-qt515.patch
@@ -128,6 +130,9 @@ __EOF__
 %_K5lib/libFalkonPrivate.so.%sover.*
 
 %changelog
+* Tue Feb 01 2022 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt4
+- don't build on e2k and ppc64le
+
 * Fri Aug 28 2020 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt3
 - fix to build with qt-5.15
 
