@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 50
+%define centos_release 51
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,19 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Feb 01 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.51-alt1.el9
+- Updated to kernel-5.14.0-51.el9:
+  + Add packaged but empty /lib/modules/<kver>/systemtap
+  + Add support for new AMD Family 19h models
+  + irdma: Bug fixes from v5.16
+  + powerpc/bpf: Update ldimm64 instructions during extra pass
+  + RDMA: Bug fixes from v5.16
+  + redhat: configs: add CONFIG_NTB and related items
+  + redhat/configs: Enable CONFIG_DM_MULTIPATH_HST
+  + Scheduler KABI padding
+  + selftests: bpf: Fix bind on used port
+  + tipc: backports from upstream
+
 * Sat Jan 29 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.50-alt1.el9
 - Updated to kernel-5.14.0-50.el9:
   + CNB: bridge: update bridge and switchdev to the latest upstream
