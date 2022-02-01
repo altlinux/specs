@@ -7,7 +7,7 @@
 
 Name: kde5-liquidshell
 Version: 1.8.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -90,6 +90,8 @@ Requires: %name-common = %version-%release
 %patch8 -p1
 %patch9 -p1 -b .start
 
+sed -i 's|@CMAKE_INSTALL_FULL_BINDIR@|/usr/bin|' liquidshell-session.desktop
+
 %build
 %K5build
 
@@ -126,6 +128,9 @@ mv %buildroot/%_K5bin/start_liquidshell %buildroot/%_bindir/
 %_datadir/xsessions/liquidshell-session.desktop
 
 %changelog
+* Tue Feb 01 2022 Sergey V Turchin <zerg@altlinux.org> 1.8.0-alt2
+- fix xsession file
+
 * Tue Jan 18 2022 Sergey V Turchin <zerg@altlinux.org> 1.8.0-alt1
 - new version
 
