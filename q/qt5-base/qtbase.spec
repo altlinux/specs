@@ -38,7 +38,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.15.2
-Release: alt10
+Release: alt11
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -847,6 +847,9 @@ make check -k ||:
 
 
 %changelog
+* Tue Feb 01 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt11
+
+
 * Fri Jan 21 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt10
 - build xcb native painting engine
 - update kde/5.15 branch patches
