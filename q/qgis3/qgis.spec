@@ -1,6 +1,6 @@
 # WARNING: Rebuild QGIS whenever a new version of GRASS is shipped! Even though the soname might stay the same, it won't work anymore.
 # http://hub.qgis.org/issues/5274
-%define grass_version 7.8.6
+%define grass_version 8.0.0
 %def_enable grass
 %def_enable python
 %def_enable devel
@@ -9,7 +9,7 @@
 
 Name:    qgis3
 Version: 3.22.3
-Release: alt1
+Release: alt2
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -25,6 +25,9 @@ Source5: qgis.xml
 
 Patch1: qgis-lib64.patch
 Patch2: qgis-serverprefix.patch
+%if_enabled grass
+Patch3: qgis-grass8.patch
+%endif
 
 # Fix unresolved symbols in grass based libs
 %set_verify_elf_method unresolved=relaxed
@@ -165,6 +168,9 @@ Please refer to %name-server-README for details!
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+%if_enabled grass
+%patch3 -p1
+%endif
 
 # Delete bundled libs
 rm -rf src/core/gps/qextserialport
@@ -180,32 +186,32 @@ CFLAGS="${CFLAGS:-%optflags}"; export CFLAGS;
 CXXFLAGS="${CXXFLAGS:-%optflags}"; export CXXFLAGS;
 export LD_LIBRARY_PATH=`pwd`/output/%_lib
 %cmake_insource -GNinja \
-	-DBUILD_SHARED_LIBS:BOOL=ON \
-	-DCMAKE_SKIP_RPATH:BOOL=ON \
-	-DQGIS_LIB_SUBDIR:PATH=%_lib \
-	-DQGIS_MANUAL_SUBDIR:PATH=/share/man \
-	-DQGIS_PLUGIN_SUBDIR:PATH=%_lib/%rname \
-	-DQGIS_CGIBIN_SUBDIR:PATH=%_libexecdir/%rname \
-	-DWITH_BINDINGS:BOOL=%{?_enable_python:ON}%{?!_enable_python:OFF} \
-	-DWITH_SERVER:BOOL=%{?_enable_server:ON}%{?!_enable_server:OFF} \
+    -DBUILD_SHARED_LIBS:BOOL=ON \
+    -DCMAKE_SKIP_RPATH:BOOL=ON \
+    -DQGIS_LIB_SUBDIR:PATH=%_lib \
+    -DQGIS_MANUAL_SUBDIR:PATH=/share/man \
+    -DQGIS_PLUGIN_SUBDIR:PATH=%_lib/%rname \
+    -DQGIS_CGIBIN_SUBDIR:PATH=%_libexecdir/%rname \
+    -DWITH_BINDINGS:BOOL=%{?_enable_python:ON}%{?!_enable_python:OFF} \
+    -DWITH_SERVER:BOOL=%{?_enable_server:ON}%{?!_enable_server:OFF} \
 %if_enabled grass
-	-DWITH_GRASS=TRUE \
-	-DGRASS_PREFIX7=%_libdir/grass \
+    -DWITH_GRASS=TRUE \
+    -DGRASS_PREFIX8=%_libdir/grass \
 %endif
-	-DBINDINGS_GLOBAL_INSTALL:BOOL=TRUE \
-	-DWITH_CUSTOM_WIDGETS:BOOL=TRUE \
-	-DGDAL_INCLUDE_DIR:PATH=%_includedir/gdal \
-	-DGDAL_LIBRARY:PATH=%_libdir/libgdal.so \
-	-DGEOS_LIBRARY:PATH=%_libdir/libgeos_c.so \
+    -DBINDINGS_GLOBAL_INSTALL:BOOL=TRUE \
+    -DWITH_CUSTOM_WIDGETS:BOOL=TRUE \
+    -DGDAL_INCLUDE_DIR:PATH=%_includedir/gdal \
+    -DGDAL_LIBRARY:PATH=%_libdir/libgdal.so \
+    -DGEOS_LIBRARY:PATH=%_libdir/libgeos_c.so \
     -DQWT_INCLUDE_DIR=%_includedir/qt5/qwt \
     -DQWT_LIBRARY=%_libdir/libqwt-qt5.so \
-	-DENABLE_TESTS:BOOL=FALSE \
-	-DWITH_QTMOBILITY:BOOL=FALSE \
+    -DENABLE_TESTS:BOOL=FALSE \
+    -DWITH_QTMOBILITY:BOOL=FALSE \
     -DLIBZIP_INCLUDE_DIR:PATH=%_includedir/libzip \
     -DLIBZIP_CONF_INCLUDE_DIR:PATH=%_libdir/libzip/include \
     -DQCA_INCLUDE_DIR:PATH=%_includedir/qt5/Qca-qt5/QtCrypto \
     -DWITH_OAUTH2_PLUGIN=OFF \
-	.
+    .
 %ifarch %ix86
 export NPROCS=8
 %endif
@@ -357,6 +363,9 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %endif
 
 %changelog
+* Fri Jan 28 2022 Andrey Cherepanov <cas@altlinux.org> 3.22.3-alt2
+- Rebuild with grass-8.0.0.
+
 * Fri Jan 14 2022 Andrey Cherepanov <cas@altlinux.org> 3.22.3-alt1
 - New version.
 

@@ -1,9 +1,9 @@
-%define shortver 78
-%define libver 7.8
+%define shortver 80
+%define libver 8.0
 
 Name:    grass
-Version: 7.8.6
-Release: alt2
+Version: 8.0.0
+Release: alt1
 
 %def_with mysql
 %def_with postgres
@@ -32,7 +32,6 @@ Patch0: %name-pkgconf.patch
 Patch1: %name-use-simplejson.patch
 Patch2: %name-soname.patch
 Patch3: %name-alt-build-with-external-lz4.patch
-Patch4: %name-alt-build-with-gdal.patch
 
 %define grassdir grass%shortver
 #define grassdir grass-%version
@@ -123,13 +122,13 @@ This package contains development headers for GRASS.
 
 %prep
 %setup
+%add_optflags -I%_includedir/gdal
 # Remove bundled lz4
 rm lib/gis/lz4{.h,.c}
 %patch0 -p2
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
-%patch4 -p1
 subst 's/\t/        /g' \
       scripts/v.db.dropcolumn/v.db.dropcolumn.py \
       scripts/v.db.addtable/v.db.addtable.py
@@ -184,7 +183,7 @@ export LDCONFIG=-llz4
 
 # Change GISBASE in startup script
 sed -i -e 's|%buildroot%_prefix|%_libdir|g' \
-        %buildroot%_bindir/%name%shortver
+        %buildroot%_bindir/%name
 
 #TODO: Quotes and linebreaks in sed calls
 # Replace GISBASE environment variable with paths that match our locale file layout
@@ -215,7 +214,6 @@ mv %buildroot%_prefix/%grassdir/locale %buildroot%_datadir/
 #
 # The binary symlink may keeps us from creating the desktop file
 # And we will can just pack it
-ln -s %_bindir/%name%shortver %buildroot%_bindir/%name
 ln -s %_libdir/%grassdir %buildroot%_libdir/%name
 
 mkdir -p %buildroot%_libdir/pkgconfig
@@ -311,6 +309,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Fri Jan 28 2022 Andrey Cherepanov <cas@altlinux.org> 8.0.0-alt1
+- New version.
+
 * Thu Jan 13 2022 Andrey Cherepanov <cas@altlinux.org> 7.8.6-alt2
 - FTBFS: fix build with strict version on libwxGTK.
 
