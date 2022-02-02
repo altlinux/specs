@@ -37,7 +37,7 @@ BuildRequires: gcc-c++
 %{bcond_without perl_PDL_enables_optional_test}
 
 Name:           perl-PDL
-Version:        2.070
+Version:        2.072
 Release:        alt1
 Summary:        The Perl Data Language
 License:        GPL+ or Artistic
@@ -196,7 +196,6 @@ Source44: import.info
 Patch33: PDL-2.063-alt-link-Slatec-hack.patch
 Patch34: PDL-2.047-alt-gsl-hack.patch
 Patch35: PDL-2.063-alt-link-OpenGL.patch
-#Patch36: PDL-2.063-alt-fpic-Minuit.patch
 
 %description
 PDL ("Perl Data Language") gives standard Perl the ability to
@@ -238,7 +237,6 @@ done
 #patch33 -p1
 %patch34 -p1
 %patch35 -p1
-#patch36 -p1
 
 # failed on armh
 [ %version == 2.047 ] && rm IO/FlexRaw/t/flexraw_fortran.t
@@ -304,6 +302,9 @@ make test
 %{_libexecdir}/%{name}
 
 %changelog
+* Wed Feb 02 2022 Igor Vlasenko <viy@altlinux.org> 2.072-alt1
+- new version
+
 * Wed Feb 02 2022 Igor Vlasenko <viy@altlinux.org> 2.070-alt1
 - automated CPAN update
 
