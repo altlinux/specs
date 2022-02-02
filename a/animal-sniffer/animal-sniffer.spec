@@ -1,5 +1,5 @@
 Name:    animal-sniffer
-Version: 1.20
+Version: 1.21
 Release: alt1
 Summary: The Animal Sniffer Plugin is used to build signatures of APIs and to check your classes against previously generated signatures
 
@@ -60,6 +60,9 @@ install -Dpm 644 pom.xml %buildroot%_mavenpomdir/JPP-%name.pom
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Wed Feb 02 2022 Andrey Cherepanov <cas@altlinux.org> 1.21-alt1
+- New version.
+
 * Wed Feb 10 2021 Andrey Cherepanov <cas@altlinux.org> 1.20-alt1
 - New version.
 
