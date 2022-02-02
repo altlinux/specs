@@ -4,7 +4,7 @@
 %define pkgname nest-asyncio
 
 Name: python3-module-%pkgname
-Version: 1.5.1
+Version: 1.5.4
 Release: alt1
 Summary: Patch asyncio to allow nested event loops 
 License: BSD-2-Clause
@@ -53,6 +53,9 @@ py.test3 -vv tests
 %python3_sitelibdir/%oname-%version-py3*.egg-info
 
 %changelog
+* Wed Feb 02 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.4-alt1
+- Updated to upstream version 1.5.4.
+
 * Mon Aug 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.1-alt1
 - Updated to upstream version 1.5.1.
 
