@@ -1,14 +1,15 @@
 %def_with l10n
 %define _hardened_build 1
 %global gitname celeron55
+%define irrlichtmt_version 1.9.0mt4
 
 Name: minetest
-Version: 5.4.1
-Release: alt2
+Version: 5.5.0
+Release: alt1
 Summary: Multiplayer infinite-world block sandbox with survival mode
 License: LGPL-2.0+ and CC-BY-SA-3.0
 Group: Games/Other
-URL: http://minetest.net/index.php
+URL: https://www.minetest.net
 
 # VCS (executable): https://github.com/minetest/minetest.git
 # VCS (data files): https://github.com/minetest/minetest_game.git
@@ -26,15 +27,19 @@ Source4: %{name}.logrotate
 Source5: %{name}.README
 Source6: %{name}_game-%version.tar.gz
 Source7: http://www.gnu.org/licenses/lgpl-2.1.txt
+# Now using its own Minetest-specific fork of irrlicht.
+Source8:	https://github.com/minetest/irrlicht/archive/%{irrlichtmt_version}/irrlicht-%{irrlichtmt_version}.tar.gz
+
 Patch0:   %{name}-gcc11.patch
-ExcludeArch: aarch64
+#ExcludeArch: aarch64
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
-BuildRequires: libirrlicht-devel
+#BuildRequires: libirrlicht-devel
 BuildRequires: bzip2-devel jthread-devel libsqlite3-devel
 BuildRequires: libpng-devel libjpeg-devel libXxf86vm-devel libGL-devel
-BuildRequires: libopenal-devel libvorbis-devel
+BuildRequires: libopenal-devel libvorbis-devel libzstd-devel doxygen  libgraphviz-devel libgmp-devel
+#libdotconf-devel graphviz
 BuildRequires: libfreetype-devel
 BuildRequires: systemd
 BuildRequires: gettext-tools
@@ -50,6 +55,14 @@ BuildRequires: spatialindex-devel jsoncpp-devel
 
 Requires: %name-server = %version-%release
 Requires: icon-theme-hicolor
+
+# Extra deps for irrlichtMT:
+BuildRequires:  pkgconfig(xcursor)
+BuildRequires:  pkgconfig(xext)
+BuildRequires:  pkgconfig(xft)
+BuildRequires:  pkgconfig(xxf86vm)
+
+
 
 %description 
 Game of mining, crafting and building in the infinite world of cubic
@@ -67,15 +80,23 @@ Minetest multiplayer server. This package does not require X Window
 System.
 
 %prep
-%setup -q -n %gitname-%name
+#%setup -q -n %gitname-%name
+%setup -q
+# -a 1 -a 2
 %patch0 -p1
 
 pushd games
 tar xf %SOURCE6
-mv %gitname-%{name}_game %{name}_game
+#mv %gitname-%{name}_game %{name}_game
 popd
 
 cp %SOURCE7 doc/
+
+tar xf %SOURCE8
+mv irrlicht-%{irrlichtmt_version} lib/irrlichtmt
+
+# purge bundled jsoncpp and lua, and gmp
+rm -rf lib/jsoncpp lib/lua lib/gmp
 
 %build
 %ifarch aarch64
@@ -86,7 +107,8 @@ cp %SOURCE7 doc/
 %if_with l10n
     -DENABLE_GETTEXT=TRUE \
 %endif
-    -DJTHREAD_INCLUDE_DIR=%_builddir/%gitname-%name/src/jthread
+    -DJTHREAD_INCLUDE_DIR=%_builddir/%name/src/jthread
+    #-DJTHREAD_INCLUDE_DIR=%_builddir/%gitname-%name/src/jthread
 %ninja_build
 
 %install
@@ -171,6 +193,10 @@ fi
 %_man6dir/minetestserver.6*
 
 %changelog
+* Wed Feb 02 2022 Ilya Mashkin <oddity@altlinux.ru> 5.5.0-alt1
+- 5.5.0
+- Now using its own fork of irrlicht
+
 * Tue Dec 28 2021 Ilya Mashkin <oddity@altlinux.ru> 5.4.1-alt2
 - Add patch to fix build with gcc11
 - ExcludeArch: aarch64
