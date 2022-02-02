@@ -1,6 +1,12 @@
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
+
 Name: python3-module-PySide2
 Version: 5.15.2
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for the Qt 5 cross-platform application and UI framework
 Group: Development/Python3
@@ -22,6 +28,11 @@ Patch13: py3.10-prep-reset-the-type-cache-after-feature-switching.patch
 BuildRequires(pre): rpm-build-kf5
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): cmake
+%if_enabled qtwebengine
+BuildRequires: qt5-webengine-devel
+%else
+BuildRequires: qt5-webkit-devel
+%endif
 BuildRequires: gcc-c++
 BuildRequires: clang-devel
 BuildRequires: llvm-devel
@@ -31,6 +42,7 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-wheel
+BuildRequires: libnumpy-py3-devel
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-xmlpatterns-devel
 BuildRequires: qt5-x11extras-devel
@@ -46,7 +58,6 @@ BuildRequires: qt5-scxml-devel
 BuildRequires: qt5-sensors-devel
 BuildRequires: qt5-speech-devel
 BuildRequires: qt5-svg-devel
-BuildRequires: qt5-webengine-devel
 BuildRequires: qt5-websockets-devel
 BuildRequires: qt5-3d-devel
 BuildRequires: qt5-tools-devel
@@ -202,6 +213,9 @@ done
 %python3_sitelibdir/shiboken2_generator-*.egg-info/
 
 %changelog
+* Tue Feb 01 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt2
+- build wth qtwebkit instead of qtwebengine on e2k and ppc64le
+
 * Wed Dec 15 2021 Grigory Ustinov <grenka@altlinux.org> 5.15.2-alt1
 - Build new version for python3.10.
 
