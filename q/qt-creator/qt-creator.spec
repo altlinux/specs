@@ -9,7 +9,7 @@
 
 Name:    qt-creator
 Version: 6.0.2
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -111,8 +111,9 @@ This is core part of IDE without Qt5 build environment.
 %package doc
 Summary: %name docs
 Group: Documentation
-BuildArch: noarch
+%ifarch %qt5_qtwebengine_arches
 Requires: %name
+%endif
 Requires: qt5-base-doc
 Requires: qt5-tools
 
@@ -122,8 +123,9 @@ Documentation for %name
 %package data
 Summary: Data files for %name
 Group: Development/Tools
-BuildArch: noarch
+%ifarch %qt5_qtwebengine_arches
 Requires: %name-core = %EVR
+%endif
 
 %description data
 Data files for %name
@@ -202,6 +204,9 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Tue Feb 01 2022 Sergey V Turchin <zerg@altlinux.org> 6.0.2-alt2
+- fix requires
+
 * Tue Feb 01 2022 Andrey Cherepanov <cas@altlinux.org> 6.0.2-alt1
 - New version.
 
