@@ -4,7 +4,8 @@
 
 Name: python3-module-%oname
 Version: 0
-Release: alt2.git17bc1d83
+# https://github.com/python/mypy/pull/11600
+Release: alt3.git2445eddb
 
 Summary: External type annotations for the Python packages
 License: Apache-2.0
@@ -39,6 +40,9 @@ cp -a stdlib %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname/
 
 %changelog
+* Thu Jan 27 2022 Stanislav Levin <slev@altlinux.org> 0-alt3.git2445eddb
+- 17bc1d83 -> 2445eddb.
+
 * Wed Jun 23 2021 Stanislav Levin <slev@altlinux.org> 0-alt2.git17bc1d83
 - add4d92f -> 17bc1d83.
 

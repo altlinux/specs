@@ -12,36 +12,39 @@
 %endif
 
 Name:    python3-module-%oname
-Version: 0.910
-Release: alt2
+Version: 0.931
+Release: alt1
 
 Summary: Optional static typing for Python 3 and 2 (PEP 484)
 License: MIT
 Group:   Development/Python3
 URL:     https://github.com/python/mypy
 
-Packager: Grigory Ustinov <grenka@altlinux.org>
-
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
 
 # Needed to generate the man pages
 BuildRequires:  help2man
-BuildRequires: python3-module-typeshed > 0-alt2
+
+# https://github.com/python/mypy/pull/11600
+BuildRequires: python3-module-typeshed > 0-alt3
 
 %if_with check
+# install_requires=
+BuildRequires: python3(typing_extensions)
+BuildRequires: python3(mypy_extensions)
+BuildRequires: python3(tomli)
+
 # TODO: unbundle googletest
 BuildRequires: /proc
 BuildRequires: gcc-c++
 BuildRequires: python3(lxml)
-BuildRequires: python3(mypy_extensions)
 BuildRequires: python3(psutil)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_xdist)
 BuildRequires: python3(tox)
 BuildRequires: python3(tox_no_deps)
 BuildRequires: python3(typing)
-BuildRequires: python3(typing_extensions)
 %endif
 
 Source:  %name-%version.tar
@@ -148,6 +151,9 @@ tox.py3 --sitepackages --no-deps -vvr -s false -- -vv $TESTS
 %endif
 
 %changelog
+* Wed Jan 26 2022 Stanislav Levin <slev@altlinux.org> 0.931-alt1
+- 0.910 -> 0.931.
+
 * Wed Oct 20 2021 Stanislav Levin <slev@altlinux.org> 0.910-alt2
 - Fixed FTBFS (pip 21.3).
 
