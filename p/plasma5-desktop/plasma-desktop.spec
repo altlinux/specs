@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.23.5
-Release: alt2
+Release: alt3
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -244,6 +244,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Wed Feb 02 2022 Oleg Solovyov <mcpain@altlinux.org> 5.23.5-alt3
+- Fix patch against bug 41564
+
 * Thu Jan 13 2022 Oleg Solovyov <mcpain@altlinux.org> 5.23.5-alt2
 - Apply QKeySequence patch against KF 5.90
 
