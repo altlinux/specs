@@ -2,8 +2,8 @@
 
 %define oname ptpython
 
-Name: %{oname}3
-Version: 3.0.5
+Name: python3-module-%oname
+Version: 3.0.20
 Release: alt1
 Summary: Python REPL build on top of prompt_toolkit
 License: BSD-3-Clause
@@ -13,20 +13,31 @@ Url: https://pypi.org/project/ptpython/
 BuildArch: noarch
 
 # https://github.com/jonathanslenders/ptpython.git
-Source: %name-%version.tar
+Source: ptpython-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-prompt_toolkit
 BuildRequires: python3(pygments)
+Provides:   %oname = %version.%release
+Provides:   %{oname}3 = %version.%release
+Obsoletes:  %{oname}3 < %version.%release
 
-%py3_requires  IPython jedi
+%py3_requires  jedi
 
 %description
 ptpython is an advanced Python REPL built on top of the prompt_toolkit
 library.
 
+%package ipython
+Group: Development/Python3
+Summary: IPython addon for ptpython
+Provides: %oname-ipython = %version.%release
+
+%description ipython
+%summary
+
 %prep
-%setup
+%setup -n %oname-%version
 
 %build
 %python3_build_debug
@@ -36,7 +47,7 @@ library.
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
-%__python3 tests/run_tests.py -v
+python3 tests/run_tests.py -v
 
 %files
 %doc LICENSE
@@ -44,8 +55,16 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %_bindir/*
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version-py*.egg-info
+%exclude %python3_sitelibdir/%oname/ipython.py
+
+%files ipython
+%python3_sitelibdir/%oname/ipython.py
 
 %changelog
+* Wed Jan 19 2022 Fr. Br. George <george@altlinux.ru> 3.0.20-alt1
+- Autobuild version bump to 3.0.20
+- Separate IPython add-on
+
 * Tue Sep 15 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.5-alt1
 - Updated to upstream version 3.0.5.
 
