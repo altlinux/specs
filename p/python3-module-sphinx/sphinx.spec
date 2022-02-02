@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_disable docs
+%def_enable docs
 %def_enable check
 
 %define oname sphinx
@@ -9,7 +9,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 4.3.1
-Release: alt1
+Release: alt2
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
@@ -267,6 +267,9 @@ tox.py3 --sitepackages -vvr -s false -- -vra
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Wed Feb 02 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.3.1-alt2
+- Rebuilt with docs.
+
 * Mon Dec 06 2021 Grigory Ustinov <grenka@altlinux.org> 1:4.3.1-alt1
 - Build new version for python3.10.
 - Bootstrap without docs.

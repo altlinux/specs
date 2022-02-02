@@ -1,23 +1,23 @@
 %define _unpackaged_files_terminate_build 1
+
 %define oname traits
 %def_with doc
 
 Name: python3-module-%oname
 Version: 6.2.0
-Release: alt3
-
+Release: alt4
 Summary: Explicitly typed attributes for Python 3
 License: BSD-3-Clause and CC-BY-3.0
 Group: Development/Python3
-
 Url: https://docs.enthought.com/traits/
+
 # https://github.com/enthought/traits.git
 Source: %name-%version.tar
 Patch: %oname-alt-docs.patch
 
 BuildRequires(pre): python3-module-sphinx-devel
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel
 BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-Pygments
 %if_with doc
@@ -119,6 +119,9 @@ cp -fR pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Feb 02 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.0-alt4
+- Updated build dependencies.
+
 * Sun Jul 18 2021 Michael Shigorin <mike@altlinux.org> 6.2.0-alt3
 - Fixed doc knob (overlooked %%exclude).
 
