@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.0
-Release: alt1
+Release: alt2
 Summary: Let your Python tests travel through time
 License: Apache-2.0
 Group: Development/Python3
@@ -13,15 +13,19 @@ Url: https://pypi.org/project/freezegun/
 
 # https://github.com/spulec/freezegun.git
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
+# install_requires=
 BuildRequires: python3(dateutil)
-BuildRequires: python3(mock)
-BuildRequires: python3(pytest)
+
 BuildRequires: python3(sqlite3)
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 %description
@@ -30,11 +34,7 @@ time by mocking the datetime module.
 
 %prep
 %setup
-# unnecessary requirements
-sed -i -e '/.*cover.*/d' \
-       -e '/maya/d' \
-       -e 's/pytest==.*/pytest/' \
-       requirements.txt
+%autopatch -p1
 
 %build
 %python3_build
@@ -45,14 +45,26 @@ sed -i -e '/.*cover.*/d' \
 rm %buildroot%python3_sitelibdir/%oname/_async_coroutine.py
 
 %check
-py.test3 -vra
+cat > tox.ini <<'EOF'
+[testenv]
+usedevelop=True
+commands =
+    {envbindir}/pytest {posargs:-vra}
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr -s false
 
 %files
 %doc *.rst
-%python3_sitelibdir/freezegun/
-%python3_sitelibdir/freezegun-*.egg-info/
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Feb 02 2022 Stanislav Levin <slev@altlinux.org> 1.1.0-alt2
+- Fixed FTBFS (Python3.10).
+
 * Thu Jul 01 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
 - Automatically updated to 1.1.0.
 
