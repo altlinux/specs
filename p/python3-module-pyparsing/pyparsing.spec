@@ -1,30 +1,26 @@
-%define oname pyparsing
-
-%def_without check
+%def_with check
 
 Name: python3-module-pyparsing
-Version: 2.4.7
+Version: 3.0.7
 Release: alt1
 
 Summary: Python parsing module
 
 License: MIT
 Group: Development/Python3
-URL: https://pypi.org/project/pyparsing
+Url: https://pypi.org/project/pyparsing
 
-# Source-url: %__pypi_url %oname
-Source: %name-%version.tar
+Source: pyparsing-%version.tar.gz
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-intro >= 2.2.5
-BuildRequires(pre): rpm-build-python3
+# Automatically added by buildreq on Wed Feb 02 2022
+# optimized out: alt-os-release libgpg-error mpdecimal python3 python3-base python3-dev python3-module-apipkg python3-module-attrs python3-module-distlib python3-module-filelock python3-module-iniconfig python3-module-markupsafe python3-module-packaging python3-module-pkg_resources python3-module-platformdirs python3-module-pluggy python3-module-py python3-module-pyparsing python3-module-pytest python3-module-six python3-module-system-seed-wheels python3-module-toml python3-module-virtualenv python3-modules-sqlite3 sh4 xz
+BuildRequires: python3-module-setuptools
 
 %if_with check
-BuildRequires: python3(coverage)
-BuildRequires: python3(tox)
+BuildRequires: python3-module-coverage python3-module-jinja2 python3-module-railroad-diagrams python3-module-setuptools python3-module-tox
 %endif
-
 
 %description
 The parsing module is an alternative approach to creating and executing
@@ -33,35 +29,27 @@ regular expressions.  The parsing module provides a library of classes
 that client code uses to construct the grammar directly in Python code.
 
 %prep
-%setup
+%setup -n pyparsing-%version
 
 %build
 %python3_build
 
 %install
 %python3_install
-%python3_prune
 
 %check
-sed -i '/^\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py%{python_version_nodots python3}: _COV_BIN=%_bindir\/coverage3\
-commands_pre =\
-    \/bin\/cp {env:_COV_BIN:} \{envbindir\}\/coverage\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/coverage' tox.ini
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -v
+tox.py3 --sitepackages -p auto -v
 
 %files
 %doc CHANGES README.rst
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
-%python3_sitelibdir/%oname.py
-%python3_sitelibdir/__pycache__/%oname.cpython-*.py*
+%python3_sitelibdir/*
 
 %changelog
+* Wed Feb 02 2022 Fr. Br. George <george@altlinux.ru> 3.0.7-alt1
+- Autobuild version bump to 3.0.7
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 2.4.7-alt1
 - new version 2.4.7 (with rpmrb script)
 
