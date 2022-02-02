@@ -1,4 +1,6 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %ifarch %mips32
 %define optflags_debug -g1
@@ -8,7 +10,7 @@
 
 Name: openvdb
 Version: 8.1.0
-Release: alt1
+Release: alt2
 Summary: C++ library for sparse volumetric data discretized on three-dimensional grids
 Group: Graphics
 License: MPL-2.0-no-copyleft-exception
@@ -18,6 +20,9 @@ URL: https://www.openvdb.org
 Source: %name-%version.tar
 
 Patch1: openvdb-8.0.0-alt-link-with-libatomic-on-mips.patch
+
+# https://github.com/AcademySoftwareFoundation/openvdb/pull/1027
+Patch2: openvdb-8.1.0-upstream-tbb-compat.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-complete
@@ -31,7 +36,7 @@ BuildRequires: pkgconfig(glfw3) >= 2.7
 BuildRequires: ilmbase-devel
 BuildRequires: pkgconfig(jemalloc)
 BuildRequires: pkgconfig(log4cplus) >= 1.0
-BuildRequires: pkgconfig(tbb) >= 3.0
+BuildRequires: tbb-devel
 BuildRequires: pkgconfig(xi)
 BuildRequires: pkgconfig(zlib) > 1.2.7
 BuildRequires: pkgconfig(python3)
@@ -90,6 +95,8 @@ sed -i \
 	%name/%name/CMakeLists.txt %name/%name/python/CMakeLists.txt
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %cmake \
 	-DOPENVDB_BUILD_DOCS=ON \
 	-DOPENVDB_CORE_SHARED=ON \
@@ -128,6 +135,9 @@ sed -i \
 %_libdir/cmake/*
 
 %changelog
+* Thu Jan 27 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 8.1.0-alt2
+- Rebuilt with new TBB.
+
 * Fri Jun 18 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 8.1.0-alt1
 - Updated to upstream version 8.1.0.
 

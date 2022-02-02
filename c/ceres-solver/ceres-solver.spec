@@ -10,13 +10,15 @@ Version:        2.0.0
 # Release candidate versions are messy. Give them a release of
 # e.g. "0.1.0%%{?dist}" for RC1 (and remember to adjust the Source0
 # URL). Non-RC releases go back to incrementing integers starting at 1.
-Release:        alt1_6
+Release:        alt2_6
 Summary:        A non-linear least squares minimizer
 
 License:        BSD
 
 URL:            http://ceres-solver.org/
 Source0:        http://%{name}.org/%{name}-%{version}.tar.gz
+
+Patch1: ceres-solver-2.0.0-upstream-tbb-compat.patch
 
 %if 0%{?fedora} >= 33 || 0%{?rhel} >= 9
 %global blaslib flexiblas
@@ -103,6 +105,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
+%patch1 -p1
 
 
 %build
@@ -145,6 +148,9 @@ developing applications that use %{name}.
 
 
 %changelog
+* Fri Jan 28 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt2_6
+- Rebuilt with new TBB.
+
 * Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 2.0.0-alt1_6
 - update to new release by fcimport
 

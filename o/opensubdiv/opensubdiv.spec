@@ -1,10 +1,12 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %define soname 3.4.4
 
 Name: opensubdiv
 Version: %soname
-Release: alt1
+Release: alt2
 Summary: An Open-Source subdivision surface library
 Group: Development/Other
 License: Apache-2.0
@@ -15,6 +17,9 @@ Source: %name-%version.tar
 
 Patch1: opensubdiv-alt-no-static-libraries.patch
 Patch2: opensubdiv-alt-tutorials-install.patch
+
+# https://github.com/PixarAnimationStudios/OpenSubdiv/pull/1234
+Patch3: opensubdiv-upstream-tbb-support.patch
 
 BuildRequires: cmake gcc-c++
 BuildRequires: tbb-devel
@@ -86,8 +91,11 @@ This package contains development files for OpenSubdiv.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %cmake \
 	-DPYTHON_EXECUTABLE=%_bindir/python3 \
 	-DCMAKE_LIBDIR_BASE=%_lib \
@@ -114,5 +122,8 @@ This package contains development files for OpenSubdiv.
 %_includedir/*
 
 %changelog
+* Thu Jan 27 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4.4-alt2
+- Rebuilt with new TBB.
+
 * Fri Jun 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4.4-alt1
 - Initial build for ALT.

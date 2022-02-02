@@ -1,39 +1,27 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: tbb
-Version: 2020.3
-Release: alt2
+Version: 2021.5.0
+Release: alt1
 Summary: Threading Building Blocks
 License: Apache-2.0
 Group: Development/Tools
-Url: https://www.threadingbuildingblocks.org/
+Url: https://github.com/oneapi-src/oneTBB
 
-# https://github.com/intel/tbb.git
+# https://github.com/oneapi-src/oneTBB.git
 Source: %name-%version.tar
-
-# These are downstream sources. (from mageia spec file)
-Source6: tbb.pc
-Source7: tbbmalloc.pc
-Source8: tbbmalloc_proxy.pc
 
 # Fedora patches
 
-# Don't snip -Wall from C++ flags.  Add -fno-strict-aliasing, as that
-# uncovers some static-aliasing warnings.
-# Related: https://bugzilla.redhat.com/show_bug.cgi?id=1037347
-Patch1: tbb-2019-dont-snip-Wall.patch
-
-# Fix test-thread-monitor, which had multiple bugs that could (and did, on
-# ppc64le) result in a hang.
-Patch2: tbb-2019-test-thread-monitor.patch
-
-# Fix a test that builds a 4-thread barrier, but cannot guarantee that more
-# than 2 threads will be available to use it.
-Patch3: tbb-2019-test-task-scheduler-init.patch
-
 # Fix compilation on aarch64 and s390x.  See
-# https://github.com/intel/tbb/issues/186
+# https://github.com/oneapi-src/oneTBB/issues/186
 Patch4: tbb-2019-fetchadd4.patch
+
+# ALT patches
+# https://github.com/oneapi-src/oneTBB/pull/609
+Patch1000: tbb-2021.5-upstream-i586-fix.patch
 
 # Elbrus support
 Patch2000: tbb-e2k.patch
@@ -42,8 +30,12 @@ Requires: lib%name = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
+BuildRequires: libgomp-devel
 BuildRequires: python3-devel
 BuildRequires: swig
+BuildRequires: cmake ctest
+# needed for some tests
+BuildRequires: /proc
 
 %description
 Threading Building Blocks offers a rich and complete approach to
@@ -66,8 +58,8 @@ This package contains shared libraries of Threading Building Blocks.
 %package devel
 Summary: Development libraries and headers of Threading Building Blocks
 Group: Development/C++
-Requires: lib%name = %version-%release
-Requires: %name-headers = %version-%release
+Requires: lib%name = %EVR
+Requires: %name-headers = %EVR
 Provides: lib%name-devel = %EVR
 Conflicts: lib%name-devel < %EVR
 Obsoletes: lib%name-devel
@@ -82,20 +74,6 @@ leverage multi-core processors for performance and scalability without
 having to be a threading expert.
 
 This package contains development libraries for Threading Building
-Blocks.
-
-%package docs
-Summary: Documentation for Threading Building Blocks
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-Threading Building Blocks offers a rich and complete approach to
-expressing parallelism in a C++ program. It is a library that helps you
-leverage multi-core processors for performance and scalability without
-having to be a threading expert.
-
-This package contains development documentation for Threading Building
 Blocks.
 
 %package examples
@@ -126,15 +104,15 @@ This package contains python3 module for Threading Building Blocks.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 %patch4 -p1
+%patch1000 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 export CFLAGS="${CFLAGS:-%optflags} -DDO_ITT_NOTIFY -DUSE_PTHREAD"
 export CXXFLAGS="${CXXFLAGS:-%optflags} -DDO_ITT_NOTIFY -DUSE_PTHREAD"
 export CPLUS_FLAGS="%{optflags} -DDO_ITT_NOTIFY -DUSE_PTHREAD"
@@ -145,98 +123,50 @@ export LDFLAGS="${LDFLAGS:-} -latomic"
 export RPM_LD_FLAGS="${RPM_LD_FLAGS:-} -latomic"
 %endif
 
-%make_build stdver=c++14
+%cmake \
+	-DCMAKE_CXX_STANDARD=14 \
+	-DTBB_EXAMPLES:BOOL=ON \
+	-DTBB_STRICT:BOOL=OFF \
+	-DTBB4PY_BUILD:BOOL=ON \
+	%nil
 
-for file in %{SOURCE6} %{SOURCE7} %{SOURCE8}; do
-    base=$(basename ${file})
-    sed 's/_FEDORA_VERSION/%{version}/' ${file} > ${base}
-    touch -r ${file} ${base}
-done
-
-. build/linux*release/tbbvars.sh
-pushd python
-%make_build -C rml stdver=c++14 \
-  CPLUS_FLAGS="%{optflags} -DDO_ITT_NOTIFY -DUSE_PTHREAD" \
-  PIC_KEY="-fPIC -Wl,--as-needed" \
-  LDFLAGS="$RPM_LD_FLAGS"
-cp -p rml/libirml.so* .
-%python3_build_debug
-popd
+%cmake_build
+%cmake_build -t python_build
 
 %install
-install -d %buildroot%_libdir
-install -m644 build/linux*release/*.so.* \
-	%buildroot%_libdir
-pushd %buildroot%_libdir
-for i in *.so.*
-do
-	devlib=$(echo $i|sed 's|\.1||')
-	devlib=$(echo $devlib|sed 's|\.2||')
-	ln -s $i $devlib
-done
-popd
+%cmakeinstall_std
 
-install -d %buildroot%_includedir
-cp -fR include/%name %buildroot%_includedir/
+rm -f %buildroot%_defaultdocdir/TBB/README.md
 
-install -d %buildroot%_datadir/%name
-cp -fR examples %buildroot%_datadir/%name/
-
-for i in $(find ./ -name '*.html'); do
-	install -Dm644 $i %buildroot%_docdir/%name/$i
-done
-
-pushd %buildroot%_docdir/%name
-	rm -fr examples
-	rm -fr python
-popd
-
-install -p -m644 CHANGES LICENSE README* %buildroot%_docdir/%name
-
-for file in %{SOURCE6} %{SOURCE7} %{SOURCE8}; do
-    install -p -D -m 644 $(basename ${file}) \
-        $RPM_BUILD_ROOT/%{_libdir}/pkgconfig/$(basename ${file})
-done
-
-# Install the rml headers
-mkdir -p $RPM_BUILD_ROOT%{_includedir}/rml
-cp -p src/rml/include/*.h $RPM_BUILD_ROOT%{_includedir}/rml
-
-. build/linux*release/tbbvars.sh
-pushd python
-%python3_install
-cp -p libirml.so.1 $RPM_BUILD_ROOT%{_libdir}
-ln -s libirml.so.1 $RPM_BUILD_ROOT%{_libdir}/libirml.so
-popd
-
-# Install the cmake files
-mkdir -p $RPM_BUILD_ROOT%{_libdir}/cmake
-cp -a cmake $RPM_BUILD_ROOT%{_libdir}/cmake/%{name}
-rm $RPM_BUILD_ROOT%{_libdir}/cmake/%{name}/README.rst
+%ifnarch ppc64le aarch64 %arm
+%check
+%cmake_build -t test
+%endif
 
 %files -n lib%name
+%doc LICENSE.txt
+%doc README.md
 %_libdir/*.so.*
 
 %files devel
-%_includedir/rml
+%_includedir/oneapi
 %_includedir/tbb
-%_libdir/cmake/tbb
+%_libdir/cmake/TBB
 %_libdir/lib*.so
 %_pkgconfigdir/*.pc
 
-%files docs
-%_docdir/%name
-
 %files examples
-%_datadir/%name/
+%doc examples
 
 %files -n python3-module-%name
-%doc python/index.html
 %python3_sitelibdir/TBB*
 %python3_sitelibdir/tbb
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Tue Jan 25 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 2021.5.0-alt1
+- Updated to upstream version 2021.5.0.
+
 * Mon Aug 16 2020 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2020.3-alt2
 - Added patch with Elbrus support.
 

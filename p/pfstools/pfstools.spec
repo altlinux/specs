@@ -6,7 +6,7 @@
 
 Name: pfstools
 Version: 2.2.0
-Release: alt1
+Release: alt2
 
 Summary: High Dynamic Range (HDR) Images and Video manipulation tools
 License: GPLv2+
@@ -15,6 +15,7 @@ Group: Graphics
 Url: http://pfstools.sourceforge.net/
 Source: %name-%version.tar
 Patch0: %name-2.1.0-gcc8-fix.patch
+Patch1: %name-2.2.0-alt-build.patch
 
 BuildRequires: gcc-c++ libImageMagick-devel libfftw3-devel libGLUT-devel libgeos-devel
 BuildRequires: libjpeg-devel liblapack-devel libncurses-devel libnetpbm-devel
@@ -37,7 +38,7 @@ BuildRequires: qt5-base-devel libtiff-devel
 BuildRequires: gcc-fortran
 BuildRequires(pre): rpm-macros-cmake
 
-Requires: %lib_name = %version-%release
+Requires: %lib_name = %EVR
 
 # TODO: Move pfsglview and pfsview to own packages to prevent users from
 # having to install OpenGL/GLUT and Qt?
@@ -61,7 +62,7 @@ This package contain the library needed to run programs linked with %lib_name.
 Summary: Headers for developing programs that will use %lib_name
 Group: Development/C++
 License: LGPLv2.1+
-Requires: %lib_name = %version-%release
+Requires: %lib_name = %EVR
 
 %description -n %lib_name-devel
 This package contains the headers that programmers will need to develop
@@ -79,6 +80,7 @@ channels or luminance channels in pfs stream using Octave.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p2
 
 %build
 %cmake \
@@ -229,6 +231,9 @@ channels or luminance channels in pfs stream using Octave.
 %endif
 
 %changelog
+* Fri Jan 28 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.0-alt2
+- Rebuilt with new TBB.
+
 * Wed Sep 29 2021 Anton Farygin <rider@altlinux.ru> 2.2.0-alt1
 - 2.2.0
 
