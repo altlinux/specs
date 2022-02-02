@@ -10,7 +10,7 @@
 
 Name: assaultcube
 Version: 1.2.0.2
-Release: alt6.%rev
+Release: alt7.%rev
 Summary: Free first-person-shooter based on the game Cube
 Group: Games/Arcade
 License: Creative Commons
@@ -31,6 +31,12 @@ Patch1: %name-%version-alt-gcc.patch
 # Automatically added by buildreq on Sun Mar 23 2014
 # optimized out: libGL-devel libGLU-devel libSDL-devel libX11-devel libcloog-isl4 libogg-devel llvm xorg-xproto-devel
 BuildRequires: clang libSDL_image-devel libcurl-devel libopenal-devel libstdc++-devel libvorbis-devel zlib-devel
+%ifarch %e2k
+# because of the missing <new>
+BuildRequires: gcc-c++
+# -O3 is the default for e2k
+%global _optlevel 2
+%endif
 
 Requires: %name-data = %version
 
@@ -43,6 +49,10 @@ game is all about team oriented multiplayer fun.
 %prep
 %setup
 %patch1 -p2
+%ifarch %e2k
+# the provided config is outdated and doesn't know about e2k
+cp /usr/share/gnu-config/config.{guess,sub} source/enet/
+%endif
 
 %build
 %add_optflags -D__STRICT_ANSI__
@@ -76,6 +86,9 @@ mv README.html %buildroot/%_docdir/%name/
 %_liconsdir/*.png
 
 %changelog
+* Wed Feb 02 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.2.0.2-alt7.779627cb
+- Fixed build for Elbrus.
+
 * Mon Aug 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0.2-alt6.779627cb
 - Disabled LTO.
 
