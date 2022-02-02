@@ -2,13 +2,13 @@
 
 Name: %srcname
 Version: 2.4.0
-Release: alt1
+Release: alt2
 Summary: A keyboard-driven, vim-like browser based on PyQt5 and QtWebEngine
 License: GPLv3
 Group: Networking/WWW
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Url: http://www.qutebrowser.org
-Source0: https://github.com/%srcname/%srcname/releases/download/v%version/%srcname-%version.tar.gz
+Source0: %srcname-%version.tar
 BuildArch: noarch
 BuildRequires: python3-devel
 BuildRequires: asciidoc asciidoc-a2x
@@ -26,9 +26,8 @@ BuildRequires: desktop-file-utils python3-module-setuptools rpm-build-python3
 #Requires: qt5-qtwebengine qt5-qtwebkit python3-qt5-webkit python3-cssutils
 Provides: python3(qutebrowser.extensions)
 Provides: python3(qutebrowser.components.utils)
-#add_python3_req_skip python3(PyQt5.QtWebKit)
-#add_python3_req_skip python3(PyQt5.QtWebKitWidgets)
-%add_python3_req_skip PyQt5.QtWebKit PyQt5.QtWebKitWidgets
+#add_python3_req_skip PyQt5.QtWebKit PyQt5.QtWebKitWidgets
+%add_python3_req_skip PyQt5.QtWebEngineCore PyQt5.QtWebEngine PyQt5.QtWebEngineWidgets
 
 
 %description
@@ -80,7 +79,7 @@ find %buildroot -size 0 -delete
 %files
 #license LICENSE
 %doc README.asciidoc doc/changelog.asciidoc doc/img/* 
-%python3_sitelibdir/%srcname-%version-py?.?.egg-info
+%python3_sitelibdir/%srcname-%version-py?.*.egg-info
 %python3_sitelibdir/%srcname
 %_bindir/%srcname
 %_datadir/applications/org.%srcname.%srcname.desktop
@@ -96,6 +95,9 @@ find %buildroot -size 0 -delete
 %_datadir/icons/hicolor/512x512/apps/%srcname.png
 
 %changelog
+* Wed Feb 02 2022 Sergey V Turchin <zerg@altlinux.org> 2.4.0-alt2
+- no qtwebengine on e2k and ppc64le (see bug#41476)
+
 * Fri Oct 22 2021 Ilya Mashkin <oddity@altlinux.ru> 2.4.0-alt1
 - 2.4.0 (Fixes: CVE-2021-41146)
 
