@@ -1,5 +1,5 @@
 Name: nfs
-Version: 2.5.4
+Version: 2.6.1
 Release: alt1
 Epoch: 1
 
@@ -90,6 +90,7 @@ This package provides the Linux NFS stats utilities.
 %build
 [ -f ./autogen.sh ] && sh ./autogen.sh
 %configure \
+    --enable-nfsv4server \
     --enable-mount \
     --enable-libmount-mount \
     --enable-gss \
@@ -202,6 +203,8 @@ touch /var/lock/subsys/rpc.svcgssd
 %systemd_unitdir/nfs-idmapd.service
 %systemd_unitdir/rpc-svcgssd.service
 %systemd_unitdir/proc-fs-nfsd.mount
+%systemd_unitdir/nfsv4-server.service
+%systemd_unitdir/nfsv4-exportd.service
 
 /sbin/nfsdcltrack
 %_sbindir/exportfs
@@ -210,6 +213,7 @@ touch /var/lock/subsys/rpc.svcgssd
 %_sbindir/rpc.mountd
 %_sbindir/rpc.nfsd
 %_sbindir/rpc.svcgssd
+%_sbindir/nfsv4.exportd
 
 %_man5dir/exports.*
 %_man7dir/nfsd.*
@@ -224,6 +228,8 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/rpc.nfsd.*
 %_man8dir/svcgssd.*
 %_man8dir/rpc.svcgssd.*
+%_man8dir/exportd.*
+%_man8dir/nfsv4.exportd.*
 
 %config(noreplace) %_localstatedir/nfs/etab
 %config(noreplace) %_localstatedir/nfs/rmtab
@@ -305,6 +311,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Fri Jan 28 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.6.1-alt1
+- 2.6.1 released
+
 * Tue Jun 15 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.5.4-alt1
 - 2.5.4 released
 
