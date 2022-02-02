@@ -3,8 +3,8 @@
 %define oname qtconsole
 
 Name: python3-module-%oname
-Version: 5.1.1
-Release: alt2
+Version: 5.2.2
+Release: alt1
 Summary: Jupyter Qt console
 License: BSD
 Group: Development/Python3
@@ -82,6 +82,9 @@ xvfb-run py.test3 -vv -ra -k "not (test_00 and (test_scroll or test_debug or tes
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Wed Feb 02 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 5.2.2-alt1
+- Updated to upstream version 5.2.2.
+
 * Fri Oct 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.1-alt2
 - Updated build dependencies.
 
