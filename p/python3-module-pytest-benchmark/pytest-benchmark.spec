@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.2.3
-Release: alt2
+Version: 3.4.1
+Release: alt1
 Summary: pytest fixture for benchmarking code
 License: BSD-2-Clause
 Group: Development/Python3
@@ -19,20 +19,25 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: git-core
+# install_requires=
+BuildRequires: python3(pytest)
+BuildRequires: python3(cpuinfo)
+
 BuildRequires: python3(tox)
 BuildRequires: python3(tox_console_scripts)
 BuildRequires: python3(tox_no_deps)
 
 BuildRequires: python3(aspectlib)
-BuildRequires: python3(cpuinfo)
 BuildRequires: python3(elasticsearch)
 BuildRequires: python3(freezegun)
 BuildRequires: python3(pygal)
-BuildRequires: python3(pytest-xdist)
+BuildRequires: /usr/bin/git
 %endif
 
 %py3_requires cpuinfo
+
+# PEP503 name
+%py3_provides %oname
 
 %description
 A pytest fixture for benchmarking code.
@@ -61,9 +66,12 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr
 %_bindir/py.test-benchmark.py3
 %_bindir/pytest-benchmark.py3
 %python3_sitelibdir/pytest_benchmark/
-%python3_sitelibdir/pytest_benchmark-*.egg-info/
+%python3_sitelibdir/pytest_benchmark-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Feb 02 2022 Stanislav Levin <slev@altlinux.org> 3.4.1-alt1
+- 3.2.3 -> 3.4.1.
+
 * Thu Apr 15 2021 Stanislav Levin <slev@altlinux.org> 3.2.3-alt2
 - Fixed FTBFS.
 
