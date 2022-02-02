@@ -1,5 +1,5 @@
 Name: nv-codec-headers
-Version: 11.0.10.0
+Version: 11.1.5.1
 Release: alt1
 Group: Development/C
 License: MIT
@@ -32,5 +32,8 @@ make PREFIX=/usr LIBDIR=share DESTDIR=%buildroot install
 %doc LICENSE
 
 %changelog
+* Sun Jan 30 2022 L.A. Kostis <lakostis@altlinux.ru> 11.1.5.1-alt1
+- Updated to n11.1.5.1.
+
 * Mon Dec 07 2020 L.A. Kostis <lakostis@altlinux.ru> 11.0.10.0-alt1
 - Initial build for Sisyphus.
