@@ -4,11 +4,12 @@
 
 Name:           python3-module-%oname
 Version:        1.2.4
-Release:        alt1
+Release:        alt2
 Summary:        Sphinx API for Web Apps
 License:        BSD
 Group:          Development/Python3
 URL:            http://sphinx-doc.org/
+
 BuildArch:      noarch
 
 # https://github.com/sphinx-doc/sphinxcontrib-websupport.git
@@ -33,10 +34,13 @@ documentation into your Web application.
 %files
 %doc LICENSE README.rst
 %python3_sitelibdir/sphinxcontrib/websupport
-%python3_sitelibdir/sphinxcontrib_websupport-%{version}*-py?.?-*.pth
-%python3_sitelibdir/sphinxcontrib_websupport-%{version}*-py?.?.egg-info
+%python3_sitelibdir/sphinxcontrib_websupport-%{version}*-py3.*-*.pth
+%python3_sitelibdir/sphinxcontrib_websupport-%{version}*-py3.*.egg-info
 
 %changelog
+* Wed Feb 02 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.4-alt2
+- Fixed build.
+
 * Tue Aug 24 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.4-alt1
 - Updated to upstream version 1.2.4.
 
