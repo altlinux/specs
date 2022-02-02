@@ -15,8 +15,8 @@
 %endif
 
 Name:     openmodelica
-Version:  1.17.0
-Release:  alt4.1
+Version:  1.18.1
+Release:  alt1
 
 Summary:  OpenModelica is an open-source Modelica-based modeling and simulation environment intended for industrial and academic usage
 License:  GPL-3.0+ and OSMC-PL
@@ -26,15 +26,8 @@ Url:      https://openmodelica.org/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: OpenModelica-%version.tar
-Source1: OMOptim.tar
-Source2: OMLibraries.tar
-Source3: OMSimulator.tar
-Source4: OMCompiler-3rdParty.tar
-Source5: OMSens.tar
-Source6: OMSens_Qt.tar
-Source7: OMTLMSimulator.tar
-Source8: OMSimulator-3rdParty.tar
-Source9: external-libraries.tar
+Source1: submodules.tar
+Source2: external-libraries.tar
 
 Patch1: openmodelica-alt-not-retrieve-libraries.patch
 Patch2: openmodelica-alt-disable-tests-for-FMIL.patch
@@ -42,7 +35,6 @@ Patch3: openmodelica-alt-disable-FFLAGS-check-in-sundials.patch
 Patch4: openmodelica-alt-adapt-script-to-python3.patch
 Patch5: openmodelica-alt-fix-lib64-in-rpath.patch
 Patch6: openmodelica-alt-installdir-in-settings.patch
-Patch7: openmodelica-cmake-3.20.patch
 
 Patch2000: libgc8-e2k.patch
 
@@ -106,13 +98,6 @@ tools, and applications.
 %setup -n OpenModelica-%version
 tar xf %SOURCE1
 tar xf %SOURCE2
-tar xf %SOURCE3
-tar xf %SOURCE4
-tar xf %SOURCE5
-tar xf %SOURCE6
-tar xf %SOURCE7
-tar xf %SOURCE8
-tar xf %SOURCE9
 # Use common subdirectory from as submodule path
 for i in OMSens_Qt OMOptim; do rm -rf $i/common; ln -s ../common $i;done
 # Put package version
@@ -124,7 +109,6 @@ echo -e "#!/bin/sh\necho %version" > OMCompiler/common/semver.sh
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
 
 %ifarch %e2k
 %patch2000 -p1 -d OMCompiler/3rdParty/gc
@@ -188,6 +172,9 @@ mv %buildroot%_libdir/omc %buildroot%_libexecdir
 mkdir -p %buildroot%_libexecdir/omlibrary
 cp -a libraries/build/* %buildroot%_libexecdir/omlibrary
 
+# Remove static libraries
+find %buildroot%_libdir -name \*.a -exec rm -f '{}' ';'
+
 %files
 %doc *.md OSMC-License.txt
 %_bindir/*
@@ -208,6 +195,10 @@ cp -a libraries/build/* %buildroot%_libexecdir/omlibrary
 %endif
 
 %changelog
+* Thu Jan 27 2022 Andrey Cherepanov <cas@altlinux.org> 1.18.1-alt1
+- New version.
+- Package all submodules to tarball.
+
 * Tue Dec 07 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.17.0-alt4.1
 - Elbrus support.
 
