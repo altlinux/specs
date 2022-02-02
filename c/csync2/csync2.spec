@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/pdftotext
 
 Name: csync2
 Version: 2.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Csync2 is a cluster synchronization tool
 
@@ -37,6 +37,10 @@ much more than just 2 hosts, handle file deletions and can detect conflicts.
 
 %prep
 %setup -q
+%ifarch %e2k
+# name collision with existing function from "string.h"
+sed -i "s/strlcpy/rsync_strlcpy/" rsync.c
+%endif
 
 %build
 %autoreconf
@@ -78,6 +82,9 @@ touch %buildroot/etc/%name/csync2_ssl_key.pem
 %ghost /etc/%name/csync2_ssl_key.pem
 
 %changelog
+* Wed Feb 02 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.0-alt1.2
+- Fixed build for Elbrus.
+
 * Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1.1
 - NMU: applied logoved fixes
 
