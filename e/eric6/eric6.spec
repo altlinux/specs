@@ -1,13 +1,15 @@
 Name: eric6
 Summary: Python IDE
 Version: 19.8
-Release: alt3
+Release: alt4
 
 License: GPLv3+
 Group: Development/Python3
 Url: http://eric-ide.python-projects.org
 Packager: Anton Midyukov <antohami@altlinux.org>
-BuildArch: noarch
+
+# See https://bugzilla.altlinux.org/41476
+ExcludeArch: ppc64le
 
 Source: http://downloads.sourceforge.net/sourceforge/eric-ide/%name-%version.tar.gz
 Source1: http://downloads.sourceforge.net/sourceforge/eric-ide/%name-i18n-de-%version.tar.gz
@@ -92,6 +94,9 @@ desktop-file-validate %buildroot%_desktopdir/eric6.desktop
 %_qt5_datadir/qsci/api/*/*
 
 %changelog
+* Wed Feb 02 2022 Anton Midyukov <antohami@altlinux.org> 19.8-alt4
+- ExcludeArch: ppc64le
+
 * Fri Jan 07 2022 Anton Midyukov <antohami@altlinux.org> 19.8-alt3
 - fix python3 version check
 
