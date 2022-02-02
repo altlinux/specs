@@ -1,6 +1,6 @@
 Name: xfce4-sensors-plugin
-Version: 1.4.2
-Release: alt2
+Version: 1.4.3
+Release: alt1
 
 Summary: Sensors plugin for Xfce Desktop
 License: GPLv2+
@@ -70,6 +70,9 @@ Requires: xfce4-panel >= 4.14 hddtemp lm_sensors3
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Feb 02 2022 Mikhail Efremov <sem@altlinux.org> 1.4.3-alt1
+- Updated to 1.4.3.
+
 * Mon Jan 31 2022 Mikhail Efremov <sem@altlinux.org> 1.4.2-alt2
 - Fixed translations.
 
