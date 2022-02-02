@@ -5,8 +5,8 @@ BuildRequires: gcc-c++
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		fcitx-cloudpinyin
-Version:	0.3.5
-Release:	alt1_1
+Version:	0.3.7
+Release:	alt1
 Summary:	Cloudpinyin module for fcitx
 Group:		System/Libraries
 License:	GPLv2+
@@ -48,6 +48,9 @@ popd
 
 
 %changelog
+* Wed Feb 02 2022 Ilya Mashkin <oddity@altlinux.ru> 0.3.7-alt1
+- 0.3.7
+
 * Mon Oct 30 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.5-alt1_1
 - update to new version by fcimport
 
