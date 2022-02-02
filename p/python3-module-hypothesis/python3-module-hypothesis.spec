@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 6.36.0
-Release: alt1
+Release: alt2
 
 Summary: A library for property based testing
 
@@ -80,6 +80,9 @@ tox.py3 --sitepackages -vvr --no-deps -- --numprocesses auto tests
 %python3_sitelibdir/_hypothesis_pytestplugin.py
 
 %changelog
+* Wed Feb 02 2022 Stanislav Levin <slev@altlinux.org> 6.36.0-alt2
+- Fixed FTBFS (Python3.10).
+
 * Sat Jan 22 2022 Stanislav Levin <slev@altlinux.org> 6.36.0-alt1
 - 6.14.8 -> 6.36.0.
 
