@@ -6,7 +6,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 0.2.1
-Release: alt1
+Release: alt2
 
 Summary: Markdown to reStructuredText converter
 
@@ -53,6 +53,9 @@ export TOXENV=py3
 tox.py3 --sitepackages -vvr
 
 %changelog
+* Wed Feb 02 2022 Stanislav Levin <slev@altlinux.org> 1:0.2.1-alt2
+- Fixed FTBFS (Python3.10).
+
 * Wed Mar 10 2021 Stanislav Levin <slev@altlinux.org> 1:0.2.1-alt1
 - 0.11 -> 0.2.1.
 
