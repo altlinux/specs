@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%mname
-Version: 0.13.0
-Release: alt2
+Version: 0.15.0
+Release: alt1
 
 Summary: Python LESS Compiler
 License: MIT
@@ -19,11 +19,14 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 
 %if_with check
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-ply
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-flake8
-BuildRequires: python3-module-nose
+# install_requires=
+BuildRequires: python3(ply)
+BuildRequires: python3(six)
+
+BuildRequires: python3(nose)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+BuildRequires: python3(tox_no_deps)
 %endif
 
 BuildArch: noarch
@@ -38,9 +41,6 @@ utilize this to build in proper syntax checking and perhaps YUI compressing.
 
 %prep
 %setup
-# fix tests https://github.com/lesscpy/lesscpy/pull/99/files
-sed -i 's@lessf = less.split(\x27.\x27)\[0\].split(\x27/\x27)\[-1\]@lessf = less.rpartition(\x27.\x27)\[0\].split(\x27/\x27)\[-1\]@' \
-       test/core.py
 
 %build
 %python3_build
@@ -50,19 +50,20 @@ sed -i 's@lessf = less.split(\x27.\x27)\[0\].split(\x27/\x27)\[-1\]@lessf = less
 mv %buildroot/%_bindir/{lesscpy,py3-lesscpy}
 
 %check
-export PIP_INDEX_URL=http://host.invalid./
-# copy necessary exec deps
-tox.py3 --sitepackages -e py%{python_version_nodots python3} --notest
-cp -f %_bindir/nosetests3 .tox/py%{python_version_nodots python3}/bin/nosetests
-tox.py3 --sitepackages -e py%{python_version_nodots python3}
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false
 
 %files
 %doc LICENSE README.rst
 %_bindir/py3-lesscpy
-%python3_sitelibdir/%mname
-%python3_sitelibdir/%{mname}*.egg-info
+%python3_sitelibdir/%mname/
+%python3_sitelibdir/%mname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Feb 02 2022 Stanislav Levin <slev@altlinux.org> 0.15.0-alt1
+- 0.13.0 -> 0.15.0.
+
 * Wed Sep 09 2020 Stanislav Levin <slev@altlinux.org> 0.13.0-alt2
 - Stopped Python2 package build.
 
