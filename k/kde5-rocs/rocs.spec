@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 21.12.1
-Release: alt1
+Release: alt2
 %K5init no_appdata
 
 Group: Education
@@ -14,6 +14,7 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Source: %rname-%version.tar
+Patch1: fix-crash.patch
 
 # Automatically added by buildreq on Fri Apr 01 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ gtk-update-icon-cache kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libgpg-error libgst-plugins1.0 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-script libqt5-sensors libqt5-sql libqt5-svg libqt5-test libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libqt5-xmlpatterns libstdc++-devel libxcbutil-keysyms python-base python-modules python3 qt5-base-devel qt5-declarative-devel rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils
@@ -58,6 +59,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build \
@@ -92,6 +94,9 @@ KF5 library
 %_K5lib/librocsgraphtheory.so.*
 
 %changelog
+* Wed Feb 02 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt2
+- fix crash
+
 * Tue Jan 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
 - new version
 
