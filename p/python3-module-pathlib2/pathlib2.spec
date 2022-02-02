@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.3.3
-Release: alt2
+Version: 2.3.6
+Release: alt1
 
 Summary: Object-oriented filesystem paths
 License: MIT
@@ -13,14 +13,17 @@ Group: Development/Python3
 
 # Source-git: https://github.com/mcmtroffaes/pathlib2
 Url: https://pypi.org/project/pathlib2
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python3-test
-BuildRequires: python3(pytest)
+# install_requires=
 BuildRequires: python3(six)
+
+BuildRequires: python3(test)
+BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
 %endif
 
@@ -36,6 +39,7 @@ pathlib can be used also on older Python versions.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %python3_build
@@ -56,10 +60,13 @@ tox.py3 --sitepackages -vvr -s false
 
 %files
 %doc CHANGELOG.rst LICENSE.rst README.rst
-%python3_sitelibdir/pathlib2/
-%python3_sitelibdir/pathlib2-*.egg-info/
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Feb 02 2022 Stanislav Levin <slev@altlinux.org> 2.3.6-alt1
+- 2.3.3 -> 2.3.6.
+
 * Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 2.3.3-alt2
 - Built Python3 package from its ows src.
 
