@@ -1,8 +1,14 @@
 %def_without tests
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
+ExcludeArch: %e2k ppc64le
 
 Name:    retext
 Version: 7.2.2
-Release: alt1
+Release: alt2
 License: GPL-3.0+
 Summary: Text editor for Markdown and reStructuredText
 Summary(de): Texteditor für Markdown und reStructuredText
@@ -38,7 +44,11 @@ BuildRequires:  libappstream-glib
 %py3_requires docutils enchant markdown sip mdx_math chardet pygments
 %add_python3_req_skip FakeVim
 
-%add_python3_req_skip PyQt5.QtWebKit PyQt5.QtWebKitWidgets
+%if_enabled qtwebengine
+#add_python3_req_skip PyQt5.QtWebKit PyQt5.QtWebKitWidgets
+%else
+#add_python3_req_skip PyQt5.QtWebEngineCore PyQt5.QtWebEngineWidgets
+%endif
 
 %description
 ReText is a simple but powerful text editor for Markdown and
@@ -90,6 +100,9 @@ python3 setup.py test
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Wed Feb 02 2022 Sergey V Turchin <zerg@altlinux.org> 7.2.2-alt2
+- Exclude e2k and ppc64le.
+
 * Thu Oct 14 2021 Andrey Cherepanov <cas@altlinux.org> 7.2.2-alt1
 - New version.
 
