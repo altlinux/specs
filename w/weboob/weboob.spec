@@ -1,6 +1,18 @@
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
+
+# hack against python non-identical noarch packages
+%define python3_sitelibdir %_prefix/lib/python3/site-packages
+%add_python3_req_skip PyQt5.QtWebEngine PyQt5.QtWebEngineCore PyQt5.QtWebEngineWidgets
+%add_python3_req_skip argparse PyQt5.QtCore PyQt5.QtNetwork PyQt5.QtWidgets
+%filter_from_provides /.*blinkpdf.*/d
+
 Name:    weboob
 Version: 2.0
-Release: alt3
+Release: alt4
 
 Summary: Weboob is a collection of applications able to interact with websites, without requiring the user to open them in a browser
 License: AGPL-3.0+
@@ -13,13 +25,15 @@ BuildRequires: rpm-build-python3
 BuildRequires: python3-module-distribute
 BuildRequires: python3-module-PyQt5-devel
 
-BuildArch: noarch
-
 Source: %name-%version.tar
 Patch1: weboob-alt-disable-webkit-formatter.patch
 Patch2: weboob-alt-import-from-urllib3-directly.patch
 
 Requires: python3-module-weboob = %EVR
+# hack against python non-identical noarch packages
+%if_enabled qtwebengine
+Requires: python3-module-PyQtWebEngine
+%endif
 
 %description
 Weboob is a collection of applications able to interact with websites,
@@ -28,7 +42,9 @@ without requiring the user to open them in a browser.
 %package -n python3-module-weboob
 Summary: Python module for Weboob
 Group: Development/Python3
-
+BuildArch: noarch
+# hack against python non-identical noarch packages
+Requires: python3-module-PyQt5
 %description -n python3-module-weboob
 Python module for Weboob.
 
@@ -62,6 +78,9 @@ cp -a icons/*.png %buildroot%_iconsdir/hicolor/64x64/apps
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Feb 02 2022 Sergey V Turchin <zerg@altlinux.org> 2.0-alt4
+- disable using of qtwebengine on e2k and ppc64le
+
 * Wed Jul 14 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0-alt3
 - add require python module weboob (ALT bug 40486)
 
