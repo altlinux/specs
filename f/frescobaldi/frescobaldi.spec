@@ -1,6 +1,6 @@
 Name: frescobaldi
 Version: 3.1.3
-Release: alt2
+Release: alt3
 
 Summary: LilyPond music score editor
 License: %gpl2plus
@@ -8,12 +8,13 @@ Group: Publishing
 
 Url: http://www.frescobaldi.org/
 
-BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses rpm-macros-qt5-webengine
 
 BuildRequires: ImageMagick-tools
 BuildRequires: librsvg-utils python3-module-setuptools
 
 BuildArch: noarch
+ExclusiveArch: %qt5_qtwebengine_arches
 
 Requires: lilypond
 
@@ -71,6 +72,9 @@ rsvg-convert -w 48 -h 48  \
 %_man1dir/*
 
 %changelog
+* Wed Feb 02 2022 Sergey V Turchin <zerg@altlinux.org> 3.1.3-alt3
+- build according qtwebengine arches
+
 * Mon Apr 26 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.3-alt2
 - build with i18n
 
