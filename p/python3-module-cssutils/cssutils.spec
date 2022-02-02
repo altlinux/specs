@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.3.0
-Release: alt1
+Release: alt2
 
 Summary: CSS Cascading Style Sheets library for Python
 
@@ -24,6 +24,7 @@ BuildRequires: python3(setuptools_scm)
 
 %if_with check
 BuildRequires: python3(lxml)
+BuildRequires: python3(cssselect)
 BuildRequires: python3(mock)
 BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
@@ -71,6 +72,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- -vra
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Feb 02 2022 Stanislav Levin <slev@altlinux.org> 2.3.0-alt2
+- Fixed FTBFS (Python3.10).
+
 * Fri Jan 14 2022 Stanislav Levin <slev@altlinux.org> 2.3.0-alt1
 - 1.0.2 -> 2.3.0.
 
