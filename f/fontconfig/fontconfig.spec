@@ -1,6 +1,11 @@
+%ifndef xmlcatalog
+%define xmlcatalog %_sysconfdir/xml/catalog
+%endif
+%define xmlcatalog_bin %_bindir/xmlcatalog
+
 Name: fontconfig
 Version: 2.13.1
-Release: alt2
+Release: alt3
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -83,14 +88,24 @@ while read CONF ; do
 done
 
 %post
+XMLCATALOG_BIN=%xmlcatalog_bin
+if [ -e %xmlcatalog -a -x $XMLCATALOG_BIN ]; then
+  %xmlcatalog_bin --noout --add system \
+    "urn:fontconfig:fonts.dtd" \
+    "file://%{_datadir}/xml/fontconfig/fonts.dtd" \
+    %xmlcatalog ||:
+fi
 [ -n "$DURING_INSTALL" ] || %_sysconfdir/firsttime.d/%name ||:
 
-%triggerin -- %name < 2.10.91-alt2
-find %_datadir/fonts -depth -type f -name fonts.cache-1 -delete
-find %_var/cache/%name -depth -type f -name \*.cache-\[123\] -delete
+%postun
+XMLCATALOG_BIN=%xmlcatalog_bin
+if [ -e %xmlcatalog -a -x $XMLCATALOG_BIN ]; then
+  %xmlcatalog_bin --noout --del system \
+    "urn:fontconfig:fonts.dtd" \
+    "file://%{_datadir}/xml/fontconfig/fonts.dtd" \
+    %xmlcatalog ||:
+fi
 
-%triggerpostun -- %name < 2.10.0-alt1
-find -L %_sysconfdir/fonts/conf.d -type l -delete
 
 %files
 %_sysconfdir/firsttime.d/%name
@@ -141,6 +156,9 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Wed Feb 02 2022 Sergey V Turchin <zerg@altlinux.org> 2.13.1-alt3
+- register font.dtd in system xml catalog (closes: 41849)
+
 * Wed Aug 18 2021 Sergey V Turchin <zerg@altlinux.org> 2.13.1-alt2
 - fix build requires
 
