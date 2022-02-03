@@ -1,6 +1,6 @@
 Name: anki2
 Version: 2.1.12
-Release: alt1
+Release: alt2
 
 Summary: Flashcard program for using space repetition learning
 
@@ -11,11 +11,11 @@ Url: https://apps.ankiweb.net/
 # Source-url: https://apps.ankiweb.net/downloads/current/anki-%version-source.tgz
 Source: %name-%version.tar
 
-BuildArch: noarch
+ExclusiveArch: %qt5_qtwebengine_arches
 
 Conflicts: anki < %version-%release
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-macros-qt5-webengine
 
 %add_python3_path %_datadir/anki/
 
@@ -41,6 +41,8 @@ sed -e 's:@PREFIX@:%_prefix:' tools/runanki.system.in > tools/runanki.system
 
 %install
 install -pD -m755 tools/runanki.system %buildroot%_bindir/anki
+
+touch touch-%_arch
 
 mkdir -p %buildroot%_datadir/anki
 cp -a anki aqt web locale %buildroot%_datadir/anki/
@@ -81,9 +83,12 @@ done
 %_datadir/anki/web/
 %_datadir/anki/locale/
 %_man1dir/anki.*
-%doc LICENSE* README*
+%doc touch-%_arch LICENSE* README*
 
 %changelog
+* Thu Feb 03 2022 Sergey V Turchin <zerg@altlinux.org> 2.1.12-alt2
+- build according qtwebengine arches
+
 * Thu Apr 25 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.12-alt1
 - NMU: new version (2.1.12) with rpmgs script
 - switched to python3 and Qt5, add mpv require
