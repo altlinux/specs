@@ -12,7 +12,7 @@
 
 Name: kde5-%rname
 Version: 21.12.1
-Release: alt2
+Release: alt3
 %K5init
 
 Group:     Networking/File transfer
@@ -24,6 +24,8 @@ Provides: ktorrent = %version-%release
 Requires: kde5-kross-python
 
 Source: %rname-%version.tar
+Patch1: apply-plugins-fix.patch
+
 # ALT
 Patch10: alt-defaults.patch
 Patch11: alt-short-date.patch
@@ -61,6 +63,7 @@ KTorrent library
 
 %prep
 %setup -q -n %rname-%version
+%patch1 -p1
 %patch10 -p1 -b .defaults
 %patch11 -p1
 %patch12 -p1
@@ -98,6 +101,9 @@ sed -i 's|^add_subdirectory(plasma)||' CMakeLists.txt
 
 
 %changelog
+* Thu Feb 03 2022 Oleg Solovyov <mcpain@altlinux.org> 21.12.1-alt3
+- backport plugin loader fix (Closes: #41853)
+
 * Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt2
 - build without qtbebengine on e2k and ppc64le
 
