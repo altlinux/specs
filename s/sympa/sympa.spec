@@ -1,6 +1,6 @@
 Name: sympa
-Version: 6.2.67
-Release: alt0.1.b2
+Version: 6.2.68
+Release: alt0.1
 
 %def_without authorcheck
 %define ngxconfdir %_sysconfdir/nginx/sites-available.d
@@ -752,6 +752,9 @@ fi
 %static_content
 
 %changelog
+* Mon Jan 31 2022 L.A. Kostis <lakostis@altlinux.ru> 6.2.68-alt0.1
+- Updated to 6.2.68.
+
 * Fri Nov 26 2021 L.A. Kostis <lakostis@altlinux.ru> 6.2.67-alt0.1.b2
 - Updated to 6.2.67b.2
 - Req: added perl-Archive-Zip-SimpleZip (see upstream issue #1235)
