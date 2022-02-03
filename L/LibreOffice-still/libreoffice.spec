@@ -25,14 +25,14 @@
 %def_disable mergelibs
 
 Name: LibreOffice-still
-%define hversion 7.1
-%define urelease 8.1
+%define hversion 7.2
+%define urelease 5.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2.1
+Release: alt1
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -77,30 +77,34 @@ Source400: libreoffice-icons-oxygen.zip
 Source401: libreoffice-icons-symbolic.tar
 
 ## FC patches
-Patch0: 0001-don-t-suppress-crashes.patch
-# disable tip-of-the-day dialog by default
-Patch1: 0001-disble-tip-of-the-day-dialog-by-default.patch
-# rhbz#1736810 disable opencl by default again
-Patch2: 0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
-# backported
-Patch3: 0001-fix-detecting-qrcodegen.patch
-Patch4: 0001-rhbz-1918152-fix-FTBFS.patch
-Patch5: 0001-Get-rid-of-apache-commons-logging.patch
-Patch6: 0001-gtk3-workaround-missing-gdk_threads_enter-calls-in-e.patch
-Patch7: 0001-Replace-inet_ntoa-with-inet_ntop.patch
-Patch8: 0001-Simplify-construction-of-a-hardcoded-IPv4-address.patch
-Patch10: 0001-math.desktop-include-Spreadsheet-category.patch
-Patch11: 0001-rhbz-1980800-allow-convert-to-csv-to-write-each-shee.patch
-Patch12: 0001-make-with-idlc-cpp-cpp-work-for-gcc-cpp-as-a-ucpp-re.patch
-# not upstreamed
-Patch14: 0001-disable-libe-book-support.patch
+Patch1: FC-0001-don-t-suppress-crashes.patch
+Patch2: FC-0001-disble-tip-of-the-day-dialog-by-default.patch
+Patch3: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
+Patch4: FC-0001-fix-detecting-qrcodegen.patch
+Patch5: FC-0001-rhbz-1918152-fix-FTBFS.patch
+Patch6: FC-0001-Get-rid-of-apache-commons-logging.patch
+Patch7: FC-0001-Adapt-to-libstdc-Implement-LWG-1203-for-rvalue-iostr.patch
+Patch8: FC-0001-Adapt-to-hamcrest-2.2-3.fc35.noarch.rpm.patch
+Patch9: FC-0001-gtk3-workaround-missing-gdk_threads_enter-calls-in-e.patch
+Patch10: FC-0001-Replace-inet_ntoa-with-inet_ntop.patch
+Patch11: FC-0001-Simplify-construction-of-a-hardcoded-IPv4-address.patch
+Patch12: FC-0001-dtd-files-are-not-xml-files-and-shouldn-t-have-xml-h.patch
+Patch13: FC-0002-xmllint-Namespace-prefix-menu-on-menuseparator-is-no.patch
+Patch14: FC-0001-allow-system-firebird-4.patch
+Patch15: FC-0001-Remove-unused-DOCTYPE-from-odk-examples-xcu-file.patch
+Patch16: FC-0001-math.desktop-include-Spreadsheet-category.patch
+Patch17: FC-0001-add-missing-xmlns-loext-to-example_sl-SI.xml.patch
+Patch18: FC-0001-disable-libe-book-support.patch
 
 ## ALT patches
 Patch401: alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
 Patch402: alt-002-tmpdir.patch
-Patch404: alt-004-shortint.patch
-Patch410: alt-006-unversioned-desktop-files.patch
-Patch412: alt-008-mkdir-for-external-project.patch
+Patch403: alt-004-shortint.patch
+Patch404: alt-006-unversioned-desktop-files.patch
+Patch405: alt-008-mkdir-for-external-project.patch
+Patch406: alt-009-fix-appdata.patch
+
+Patch500: alt-010-mips-fix-linking-with-libatomic.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
@@ -172,6 +176,8 @@ BuildRequires: java-devel >= 9.0.0
 # 7.1.5.2
 BuildRequires: libbox2d-devel
 BuildRequires: libpixman-devel
+# 7.2.5.2
+BuildRequires: libzxing-cpp-devel
 
 %if_without python
 BuildRequires: python3-dev
@@ -337,26 +343,19 @@ echo Direct build
 %setup -q -n libreoffice-%version -a10 -b1 -b2 -b3
 
 ## FC apply patches
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch14 -p1
 
 ## ALT apply patches
 %patch401 -p0
 %patch402 -p1
+%patch403 -p1
 %patch404 -p1
-%patch410 -p1
-%patch412 -p1
+%patch405 -p1
+%patch406 -p1
+
+%patch500 -p0
 
 # Hack in proper LibreOffice PATH in libreofficekit
 sed -i 's@/libreoffice/@/LibreOffice/@g' libreofficekit/Library_libreofficekitgtk.mk
@@ -695,6 +694,10 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Feb 02 2022 Andrey Cherepanov <cas@altlinux.org> 7.2.5.2-alt1
+- New Still version.
+- Add information about Still version and package names to appdata files.
+
 * Fri Jan 14 2022 Fr. Br. George <george@altlinux.ru> 7.1.8.1-alt2.1
 - Use bundled liborcus
 
