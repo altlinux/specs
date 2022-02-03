@@ -1,6 +1,6 @@
 Name: frescobaldi
 Version: 3.1.3
-Release: alt3
+Release: alt4
 
 Summary: LilyPond music score editor
 License: %gpl2plus
@@ -13,7 +13,6 @@ BuildRequires(pre): rpm-build-licenses rpm-macros-qt5-webengine
 BuildRequires: ImageMagick-tools
 BuildRequires: librsvg-utils python3-module-setuptools
 
-BuildArch: noarch
 ExclusiveArch: %qt5_qtwebengine_arches
 
 Requires: lilypond
@@ -56,15 +55,21 @@ Frescobaldi is a LilyPond music score editor, with following features:
 
 %install
 %python3_install
+if [ "%python3_sitelibdir" != "%python3_sitelibdir_noarch" ] ; then
+    mkdir -p %buildroot/%python3_sitelibdir
+    mv %buildroot/%python3_sitelibdir_noarch/* %buildroot/%python3_sitelibdir/
+fi
+
 install -d %buildroot%_liconsdir/
 rsvg-convert -w 48 -h 48  \
 %buildroot%_iconsdir/hicolor/scalable/apps/org.frescobaldi.Frescobaldi.svg \
   -o %buildroot%_liconsdir/org.frescobaldi.Frescobaldi.png
 
+
 %files
 %doc README.md
 %_bindir/%name
-%python3_sitelibdir_noarch/*
+%python3_sitelibdir/*
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/scalable/apps/*.svg
 %_datadir/metainfo/org.frescobaldi.Frescobaldi.metainfo.xml
@@ -72,6 +77,9 @@ rsvg-convert -w 48 -h 48  \
 %_man1dir/*
 
 %changelog
+* Thu Feb 03 2022 Sergey V Turchin <zerg@altlinux.org> 3.1.3-alt4
+- don't noarch
+
 * Wed Feb 02 2022 Sergey V Turchin <zerg@altlinux.org> 3.1.3-alt3
 - build according qtwebengine arches
 
