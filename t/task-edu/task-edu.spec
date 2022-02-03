@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.5.7
-Release: alt1
+Release: alt2
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
 Group:   Education
@@ -379,8 +379,10 @@ Requires: wxMaxima
 %endif
 Requires: octave
 Requires: gnuplot-qt
+%ifnarch %e2k ppc64le
 Requires: qt-creator
 Requires: qt-creator-doc
+%endif
 Requires: cmake
 Requires: ninja-build
 Requires: qt5-base-devel
@@ -460,7 +462,9 @@ Requires: kde5-connect
 %ifnarch armh
 Requires: %{lo_name}-kde5
 %endif
+%ifnarch %e2k ppc64le
 Requires: nextcloud-client-kde5
+%endif
 Requires: branding-alt-education-kde-settings
 %description kde5
 %{summary}.
@@ -610,6 +614,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Thu Feb 03 2022 Sergey V Turchin <zerg@altlinux.org> 1.5.7-alt2
+- Update requires for qt-creator and nextcloud-client.
+
 * Thu Nov 11 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.7-alt1
 - Add moodle-qtype_coderunner to server-apps.
 
