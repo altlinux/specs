@@ -6,7 +6,7 @@
 
 Name: ravada
 Summary: Remote Virtual Desktops Manager
-Version: 1.3.0
+Version: 1.3.2
 Release: alt1
 License: AGPL-3.0
 Group: Development/Perl
@@ -72,12 +72,14 @@ Ravada is a software that allows the user to connect to a remote virtual desktop
 
 %prep
 %setup -q -n %name-%version
+# ALT doesn't ship kvm-spice but qemu-kvm
+find . -type f -name "*.xml" -exec sed -i 's|kvm-spice|qemu-kvm|g' {} ';'
 
 %build
 # set environment variable to make sure DateTime::TimeZone::Local
 # could determine timezone during tests
 export TZ=UTC
-perl Makefile.PL INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1 NO_PERLLOCAL=1
 %make_build
 
 %install
@@ -85,13 +87,19 @@ export TZ=UTC
 %perl_vendor_install
 install -D -m755 script/rvd_back %buildroot%_sbindir/rvd_back
 install -D -m755 script/rvd_front %buildroot%_sbindir/rvd_front
+mkdir -p %buildroot%_localstatedir/%name
+cp -aR etc/xml %buildroot%_localstatedir/%name/
 mkdir -p %buildroot%_datadir/%name
-cp -rp templates %buildroot%_datadir/%name
+cp -aR public %buildroot%_datadir/%name/
+cp -aR templates %buildroot%_datadir/%name/
 mkdir -p %buildroot%_sysconfdir
 install -p -m644 etc/%name.conf %buildroot%_sysconfdir/%name.conf
 install -p -m644 etc/rvd_front.conf.example %buildroot%_sysconfdir/rvd_front.conf
 mkdir -p %buildroot%_unitdir
 install -p -m644 etc/systemd/*.service %buildroot%_unitdir
+
+# Remove empty files
+find %buildroot -size 0 -delete
 
 %check
 export TZ=UTC
@@ -122,11 +130,15 @@ fi
 %perl_vendor_privlib/*
 %_sbindir/*
 %_datadir/%name
+%_localstatedir/%name
 %_unitdir/*.service
 %config(noreplace)%_sysconfdir/%name.conf
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Thu Feb 03 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.3.2-alt1
+- 1.3.2
+
 * Tue Jan 11 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.3.0-alt1
 - 1.3.0
 
