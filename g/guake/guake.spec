@@ -1,5 +1,5 @@
 Name:    guake
-Version: 3.8.1
+Version: 3.8.2
 Release: alt1
 Summary: guake - a drop-down terminal
 Summary(ru.UTF-8):guake — выпадающий эмулятор терминала
@@ -17,7 +17,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: rpm-build-gir
-BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-pbr
 BuildRequires: python3-module-pip
 BuildRequires: libgio
@@ -40,11 +40,11 @@ just need to press a key to invoke him, and press again to hide.
 %patch2 -p1
 
 %build
-export PBR_VERSION="%version"
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %make_build
 
 %install
-export PBR_VERSION="%version"
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %makeinstall_std PREFIX=%_prefix
 install -Dm0644 guake/data/autostart-guake.desktop %buildroot%_sysconfdir/xdg/autostart/guake.desktop
 # Remove compiled gscheme
@@ -64,6 +64,9 @@ rm -f %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Feb 03 2022 Andrey Cherepanov <cas@altlinux.org> 3.8.2-alt1
+- New version.
+
 * Tue Oct 26 2021 Andrey Cherepanov <cas@altlinux.org> 3.8.1-alt1
 - New version.
 
