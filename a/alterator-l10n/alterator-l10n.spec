@@ -1,16 +1,16 @@
 Name: alterator-l10n
-Version: 2.9.105
+Version: 2.9.106
 Release: alt1
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
-
-BuildArch:	noarch
-
-Source:%name-%version.tar
 
 Summary: translations for all alterator modules
 License: GPL
 Group: System/Configuration/Other
+
+Url: http://altlinux.org/alterator/l10n
+Source: %name-%version.tar
+Packager: Andrey Cherepanov <cas@altlinux.org>
+
+BuildArch: noarch
 
 Conflicts: alterator                      < 4.7-alt1
 Conflicts: alterator-ahttpd               < 0.5-alt4
@@ -62,7 +62,7 @@ Conflicts: alterator-gpupdate             < 1.3-alt1
 translations for all alterator modules
 
 %prep
-%setup -q
+%setup
 
 %build
 make check
@@ -87,6 +87,7 @@ make check
 %lang(es) %config(noreplace) %_sysconfdir/alterator/l10n/*-es_*
 %lang(kk) %config(noreplace) %_sysconfdir/alterator/l10n/*-kk_*
 %lang(de) %config(noreplace) %_sysconfdir/alterator/l10n/*-de_*
+%lang(da) %config(noreplace) %_sysconfdir/alterator/l10n/*-da_*
 
 %dir %_datadir/alterator/help/
 %lang(en) %dir %_datadir/alterator/help/en_US/
@@ -114,7 +115,13 @@ make check
 
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
+%lang(da) %_datadir/locale/da/LC_MESSAGES/*.mo
+
 %changelog
+* Thu Feb 03 2022 Michael Shigorin <mike@altlinux.org> 2.9.106-alt1
+- added Danish translations by Carl Andersen
+- minor spec cleanup
+
 * Sat Jan 22 2022 Andrey Cherepanov <cas@altlinux.org> 2.9.105-alt1
 - alterator-datetime: update localization (ALT #41763).
 
