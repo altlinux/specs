@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 51
+%define centos_release 53
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,14 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Feb 03 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.53-alt1.el9
+- Updated to kernel-5.14.0-53.el9 (fixes: CVE-2021-40490):
+  + ext4, jbd2 update for RHEL9.0
+
+* Tue Feb 01 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.52-alt1.el9
+- Updated to kernel-5.14.0-52.el9:
+  + KVM: AArch64: Rebase to v5.15
+
 * Tue Feb 01 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.51-alt1.el9
 - Updated to kernel-5.14.0-51.el9:
   + Add packaged but empty /lib/modules/<kver>/systemtap
