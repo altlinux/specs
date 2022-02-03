@@ -1,6 +1,6 @@
 Name: opencascade
 Version: 7.5.3
-Release: alt2
+Release: alt3
 Summary: SDK intended for development of applications dealing with 3D CAD data
 License: LGPL-2.1-only-with-OCCT-exception-1.0
 Group: Development/Tools
@@ -12,6 +12,7 @@ Url: http://www.opencascade.org
 Source: %name-%version.tar
 Patch1: opencascade-cmake.patch
 Patch2: opencascade-alt-arm-build.patch
+Patch3: opencascade-alt-vtk-9.1-compat.patch
 Patch2000: opencascade-e2k-disable-fenv.patch
 
 Requires: lib%name = %version-%release
@@ -81,6 +82,7 @@ This package contains documentation for Open CASCADE.
 %ifarch %arm
 %patch2 -p2
 %endif
+%patch3 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -93,7 +95,7 @@ export DESTDIR="%buildroot"
        -DCMAKE_BUILD_TYPE=RelWithDebInfo \
        -DUSE_TBB=False \
        -DUSE_VTK=True \
-       -D3RDPARTY_VTK_INCLUDE_DIR=%_includedir/vtk-9.0 \
+       -D3RDPARTY_VTK_INCLUDE_DIR=%_includedir/vtk-9.1 \
        -DINSTALL_DIR_LIB=%_lib \
        -DINSTALL_DIR_CMAKE=%_lib/cmake/%name
 %ninja_build
@@ -131,6 +133,9 @@ rm -f /usr/share/doc/opencascade/*
 %_datadir/doc/%name
 
 %changelog
+* Mon Jan 24 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 7.5.3-alt3
+- Rebuilt with VTK-9.1.0.
+
 * Fri Oct 22 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 7.5.3-alt2
 - e2k: disabled use of "feclearexcept" (freecad crashes with SIGILL)
 

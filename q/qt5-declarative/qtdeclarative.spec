@@ -6,7 +6,7 @@
 
 Name: qt5-declarative
 Version: 5.15.2
-Release: alt7
+Release: alt8
 
 Group: System/Libraries
 Summary: Qt5 - QtDeclarative component
@@ -285,6 +285,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 %_bindir/rpmbqml-qmlinfo
 
 %changelog
+* Wed Feb 02 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 5.15.2-alt8
+- Broke infinite loop in qml.prov triggered in vtk-9.1.0.
+
 * Tue Feb 01 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt7
 - update fixes from kde/qt-5.15
 

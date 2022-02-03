@@ -10,7 +10,7 @@
 
 Name: slicer
 Version: %slicerver.20210226
-Release: alt3
+Release: alt4
 Summary: Multi-platform, free open source software for visualization and image computing
 License: BSD-like
 Group: Sciences/Medicine
@@ -33,6 +33,7 @@ Patch1: %name-alt-build.patch
 Patch2: %name-alt-python3-compat.patch
 Patch3: %name-upstream-python39-compat.patch
 Patch4: %name-alt-gcc11-compat.patch
+Patch5: %name-alt-vtk-9.1-compat.patch
 
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires(pre): rpm-build-python3
@@ -120,6 +121,7 @@ This package contains Slicer plugins for qt5 designer.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 install %SOURCE2 ./CMake/
 
@@ -223,6 +225,9 @@ ln -sr %buildroot%_bindir/designer-qt5 %buildroot%_libdir/Slicer-%slicerver/bin/
 %_qt5_plugindir/designer/*.so
 
 %changelog
+* Wed Feb 02 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 4.11.20210226-alt4
+- Rebuilt with VTK-9.1.
+
 * Tue Feb 01 2022 Sergey V Turchin <zerg@altlinux.org> 4.11.20210226-alt3
 - Build with qtwebkit on e2k end ppc64le.
 

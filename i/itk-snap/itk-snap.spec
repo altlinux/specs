@@ -6,7 +6,7 @@
 
 Name: itk-snap
 Version: 3.8.0
-Release: alt7
+Release: alt8
 Summary: Software application used to segment structures in 3D medical images
 Group: Sciences/Medicine
 License: GPLv3
@@ -23,6 +23,7 @@ Patch1: %name-alt-no-git.patch
 Patch2: %name-alt-build.patch
 Patch3: %name-alt-unbundle.patch
 Patch4: %name-alt-glibc-compat.patch
+Patch5: %name-alt-vtk-9.1-compat.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ cmake
@@ -78,6 +79,7 @@ with the bulk of the development effort dedicated to the user interface.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 # remove unbundled libraries
 rm -rf Common/JSon
@@ -125,6 +127,9 @@ install -m644 GUI/Qt/Resources/logo_square.png %buildroot%_datadir/%name/
 %_datadir/%name/logo_square.png
 
 %changelog
+* Mon Jan 24 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 3.8.0-alt8
+- Rebuilt with VTK-9.1.0.
+
 * Tue Oct 05 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.8.0-alt7
 - Fixed build with gcc-11.
 
