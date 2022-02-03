@@ -2,8 +2,8 @@
 %define srcname svg-path
 
 Name: python3-module-svg-path
-Version: 2.2
-Release: alt3
+Version: 4.1
+Release: alt1
 Summary: SVG path objects and parser
 
 Group: Development/Python3
@@ -11,7 +11,7 @@ License: CC0
 Url: http://pypi.python.org/pypi/svg.path
 
 Source: %srcname-%version.tar
-#Source-url: https://github.com/regebro/svg.path/archive/%version.tar.gz
+# Source-url: https://github.com/regebro/svg.path/archive/%version.tar.gz
 
 BuildArch: noarch
 
@@ -41,6 +41,9 @@ commands in SVG, and a parser for SVG path definitions.
 %exclude %python3_sitelibdir/svg/path/tests
 
 %changelog
+* Thu Feb 03 2022 Anton Midyukov <antohami@altlinux.org> 4.1-alt1
+- new version (4.1) with rpmgs script
+
 * Tue May 25 2021 Anton Midyukov <antohami@altlinux.org> 2.2-alt3
 - rename srpm to python3-module-svg-path
 - drop python2 subpackage
