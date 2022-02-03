@@ -1,5 +1,5 @@
 Name: alterator-users
-Version: 10.12
+Version: 10.13
 Release: alt1
 
 Summary: alterator module for system users administration
@@ -17,6 +17,8 @@ Requires: alterator >= 4.10-alt5
 Requires: alterator-sh-functions >= 0.12
 Requires: autologin-sh-functions >= 0.2.1
 Requires: shadow-groups, coreutils, passwdqc-utils
+Requires: alterator-l10n >= 2.9.107-alt1
+Requires: libnss-role >= 0.5.6-alt1
 Conflicts: alterator-fbi < 5.16-alt1
 Conflicts: alterator-lookout < 2.1-alt1
 
@@ -43,6 +45,13 @@ alterator module for system users administration
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Aug 10 2021 Ivan Savin <svn17@altlinux.org> 10.13-alt1
+- Add display of groups to which the user belongs
+- Add the ability to assign system roles to a user
+- Default group is users when libnss-role is enabled.
+  When creating a user, if libnss is enabled, the user is assigned a default
+  group users.
+
 * Fri Sep 11 2020 Michael Shigorin <mike@altlinux.org> 10.12-alt1
 - don't mess up multiseat autologin
 

@@ -1,8 +1,8 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.43.9
-Release: alt5
+Version: 0.43.10
+Release: alt1
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d;/^gpupdate$/d;/gpupdate-setup/d
 
@@ -12,13 +12,15 @@ Summary: Alterator module for system wide auth settings
 License: GPL
 Group: System/Configuration/Other
 Requires: alterator >= 4.7-alt4
-Requires: alterator-l10n >= 2.0-alt1
+Requires: alterator-l10n >= 2.9.107-alt1
 Requires: pam-config >= 1.7.0-alt1
 Requires: pam_krb5
 Requires: libnss-myhostname
+Requires: libnss-role >= 0.5.6-alt1
 Requires: avahi-daemon
 Requires: settime-rfc867
 Requires: bind-utils
+Requires: local-policy >= 0.4.8-alt1
 
 Conflicts: alterator-fbi < 5.9-alt2
 Conflicts: alterator-lookout < 1.6-alt6
@@ -169,6 +171,10 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Wed Aug 25 2021 Ivan Savin <svn17@altlinux.org> 0.43.10-alt1
+- Add sssd settings.
+- Add use of control libnss-role instead of write_nsswitch
+
 * Tue Jul 27 2021 Lenar Shakirov <snejok@altlinux.org> 0.43.9-alt5
 - backend: fix list ldap local_bases (namingContexts) (ALT #40569)
 - sbin/system-auth: fix sssd package check, old LDAP auth scheme
