@@ -3,8 +3,8 @@
 %def_without docs
 
 Name:           python3-module-%oname
-Version:        4.80
-Release:        alt2
+Version:        4.82
+Release:        alt1
 Summary:        Python Remote Objects
 Group:          Development/Python3
 License:        LGPL-2.0-or-later
@@ -155,6 +155,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir %__python3 tests/run_testsuite.py
 %endif #docs
 
 %changelog
+* Thu Feb 03 2022 Anton Midyukov <antohami@altlinux.org> 4.82-alt1
+- 4.82
+
 * Fri May 29 2020 Anton Midyukov <antohami@altlinux.org> 4.80-alt2
 - Added conflict with python-module-Pyro4 < 0.75-alt3
 
