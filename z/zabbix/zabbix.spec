@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		d81e50696fa
+%define svnrev		db03ff023da
 
 %def_with pgsql
 %def_enable java
@@ -16,7 +16,7 @@
 %endif
 
 Name: zabbix
-Version: 5.4.9
+Version: 5.4.10
 Release: alt1
 Epoch: 1
 
@@ -674,6 +674,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Thu Feb 03 2022 Alexei Takaseev <taf@altlinux.org> 1:5.4.10-alt1
+- 5.4.10
+
 * Fri Dec 24 2021 Alexei Takaseev <taf@altlinux.org> 1:5.4.9-alt1
 - 5.4.9
     * [ZBX-20388] fixed XSS vulnerability in multiselect
