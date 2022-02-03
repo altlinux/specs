@@ -6,8 +6,8 @@
 %def_with doc
 
 Name: python3-module-%oname
-Version: 1.7.1
-Release: alt4
+Version: 1.8.0
+Release: alt1
 
 Summary: Planar geometries, predicates, and operations
 License: BSD
@@ -16,16 +16,6 @@ Group: Development/Python3
 Url: http://pypi.python.org/pypi/Shapely
 # https://github.com/Toblerity/Shapely.git
 Source: %name-%version.tar
-
-# Backport a relevant subset of commit
-# 611a0b3b2047bf8a49db32dc4b30684a10f5b6eb, which fixes
-# https://github.com/Toblerity/Shapely/issues/1079 (Test failure with geos
-# 3.9.0) and corresponds to https://github.com/Toblerity/Shapely/pull/1042/
-# (Expand CI and tests to support GEOS 3.9.0beta2). The particular test vectors
-# must be adjusted in the backport because
-# https://github.com/Toblerity/Shapely/pull/1031 is not in 1.7.1;
-# in particular, “WKTWriter.defaults = {}” is still in tests/__init__.py.
-Patch: shapely-1.7.1-611a0b3b-subset.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx3
 BuildRequires: libgeos-devel
@@ -76,7 +66,6 @@ This package contains documentation for %oname.
 
 %prep
 %setup
-%patch -p1
 
 %if_with doc
 %prepare_sphinx3 .
@@ -128,6 +117,9 @@ py.test3 -vv
 %endif
 
 %changelog
+* Thu Feb 03 2022 Andrey Cherepanov <cas@altlinux.org> 1.8.0-alt1
+- New version.
+
 * Fri Jan 28 2022 Grigory Ustinov <grenka@altlinux.org> 1.7.1-alt4
 - Disable check for python3.10.
 
