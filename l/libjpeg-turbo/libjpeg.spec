@@ -2,8 +2,8 @@
 %def_enable profiling
 
 Name: libjpeg-turbo
-Version: 2.0.6
-Release: alt4
+Version: 2.1.2
+Release: alt1
 Epoch: 2
 
 Summary: A SIMD-accelerated library for manipulating JPEG image format files
@@ -182,6 +182,7 @@ install -pm644 README* change.log \
 %dir %docdir
 %docdir/[^CLR]*
 %_pkgconfigdir/libjpeg.pc
+%_libdir/cmake/libjpeg-turbo
 
 %if_enabled static
 %files -n libjpeg-devel-static
@@ -197,6 +198,9 @@ install -pm644 README* change.log \
 %_pkgconfigdir/libturbojpeg.pc
 
 %changelog
+* Thu Feb 03 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2:2.1.2-alt1
+- 2.1.2 released
+
 * Mon Aug 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2:2.0.6-alt4
 - rebuilt with lto on
 
