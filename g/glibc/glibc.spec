@@ -1,7 +1,7 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.34.0.39.024a7
+Version: 2.34.0.103.008003
 Release: alt1
 Epoch: 6
 
@@ -783,6 +783,10 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Tue Feb 01 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.34.0.103.008003-alt1
+- Updated to glibc-2.34-103-g008003dc6e (fixes: CVE-2022-23219, CVE-2022-23218,
+  CVE-2021-3998, CVE-2021-3999).
+
 * Tue Oct 26 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.34.0.39.024a7-alt1
 - Updated to glibc-2.34-39-g024a7640ab.
 - Fixed FTBFS on some hosts (due to testsuite LWP bug).
