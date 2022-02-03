@@ -4,11 +4,10 @@
 %else
 %def_enable qtwebengine
 %endif
-ExcludeArch: %e2k ppc64le
 
 Name:    retext
 Version: 7.2.2
-Release: alt2
+Release: alt3
 License: GPL-3.0+
 Summary: Text editor for Markdown and reStructuredText
 Summary(de): Texteditor für Markdown und reStructuredText
@@ -17,8 +16,6 @@ URL:     https://github.com/retext-project/retext
 
 Source0: %name-%version.tar
 Source1: %name.1
-
-BuildArch: noarch
 
 AutoProv:yes,nopython3
 
@@ -43,11 +40,10 @@ BuildRequires:  libappstream-glib
 
 %py3_requires docutils enchant markdown sip mdx_math chardet pygments
 %add_python3_req_skip FakeVim
-
 %if_enabled qtwebengine
-#add_python3_req_skip PyQt5.QtWebKit PyQt5.QtWebKitWidgets
+%add_python3_req_skip PyQt5.QtWebKit PyQt5.QtWebKitWidgets
 %else
-#add_python3_req_skip PyQt5.QtWebEngineCore PyQt5.QtWebEngineWidgets
+%add_python3_req_skip PyQt5.QtWebEngineCore PyQt5.QtWebEngineWidgets
 %endif
 
 %description
@@ -67,6 +63,10 @@ export PATH=%_qt5_bindir:$PATH
 
 %install
 %python3_install
+if [ "%python3_sitelibdir" != "%python3_sitelibdir_noarch" ] ; then
+    mkdir -p %buildroot/%python3_sitelibdir
+    mv %buildroot/%python3_sitelibdir_noarch/* %buildroot/%python3_sitelibdir/
+fi
 
 install -Dm 0644 %SOURCE1 %buildroot/%_man1dir/%name.1
 
@@ -100,6 +100,9 @@ python3 setup.py test
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Thu Feb 03 2022 Sergey V Turchin <zerg@altlinux.org> 7.2.2-alt3
+- build with qtwebkit instead of qtwebengine on e2k and ppc64le
+
 * Wed Feb 02 2022 Sergey V Turchin <zerg@altlinux.org> 7.2.2-alt2
 - Exclude e2k and ppc64le.
 
