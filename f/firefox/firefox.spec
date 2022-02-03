@@ -2,8 +2,8 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        96.0.2
-Release:        alt2
+Version:        96.0.3
+Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -120,10 +120,11 @@ BuildRequires: pkgconfig(dav1d)
 BuildRequires: /dev/shm
 
 BuildRequires: python3-base
-BuildRequires: python3(setuptools)
-BuildRequires: python3(pip)
-BuildRequires: python3(sqlite3)
 BuildRequires: python3(hamcrest)
+BuildRequires: python3(pip)
+#BuildRequires: python3(pkg_resources)
+BuildRequires: python3(setuptools)
+BuildRequires: python3(sqlite3)
 
 # Rust requires
 BuildRequires: /proc
@@ -217,6 +218,12 @@ ac_add_options --disable-elf-hack
 %ifarch %{ix86}
 ac_add_options --disable-av1
 %endif
+%ifarch armh %{ix86}
+ac_add_options --enable-strip
+ac_add_options --enable-install-strip
+ac_add_options --disable-rust-debug
+ac_add_options --disable-debug-symbols
+%endif
 EOF
 
 find third_party \
@@ -224,6 +231,7 @@ find third_party \
 	-delete
 
 rm -rf -- obj-x86_64-pc-linux-gnu
+rm -rf -- third_party/python/setuptools/setuptools*
 
 
 %build
@@ -269,7 +277,11 @@ export SHELL=/bin/sh
 export PATH="$CBINDGEN_BINDIR:$PATH"
 
 export RUST_BACKTRACE=1
+%ifarch armh %{ix86}
 export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=0"
+%else
+export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=2"
+%endif
 
 #export WASM_SANDBOXED_LIBRARIES=graphite,ogg
 #export WASM_CC="$CC --target=wasm32-wasi"
@@ -452,6 +464,13 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Feb 01 2022 Alexey Gladkov <legion@altlinux.ru> 96.0.3-alt1
+- New release (96.0.3).
+- Enable debuginfo on 64-bit architectures.
+- Privacy config:
+  + Disable merino service.
+  + Disable more suggests in the urlbar.
+
 * Fri Jan 21 2022 Alexey Gladkov <legion@altlinux.ru> 96.0.2-alt2
 - Add forgotten source code updates.
 
