@@ -4,15 +4,15 @@
 %def_enable qtwebengine
 %endif
 
-# hack against python non-identical noarch packages
-%define python3_sitelibdir %_prefix/lib/python3/site-packages
-%add_python3_req_skip PyQt5.QtWebEngine PyQt5.QtWebEngineCore PyQt5.QtWebEngineWidgets
-%add_python3_req_skip argparse PyQt5.QtCore PyQt5.QtNetwork PyQt5.QtWidgets
-%filter_from_provides /.*blinkpdf.*/d
+%if_enabled qtwebengine
+%add_python3_req_skip PyQt5.QtWebKit PyQt5.QtWebKitWidgets
+%else
+%add_python3_req_skip PyQt5.QtWebEngineCore PyQt5.QtWebEngineWidgets
+%endif
 
 Name:    weboob
 Version: 2.0
-Release: alt4
+Release: alt5
 
 Summary: Weboob is a collection of applications able to interact with websites, without requiring the user to open them in a browser
 License: AGPL-3.0+
@@ -30,10 +30,6 @@ Patch1: weboob-alt-disable-webkit-formatter.patch
 Patch2: weboob-alt-import-from-urllib3-directly.patch
 
 Requires: python3-module-weboob = %EVR
-# hack against python non-identical noarch packages
-%if_enabled qtwebengine
-Requires: python3-module-PyQtWebEngine
-%endif
 
 %description
 Weboob is a collection of applications able to interact with websites,
@@ -42,9 +38,6 @@ without requiring the user to open them in a browser.
 %package -n python3-module-weboob
 Summary: Python module for Weboob
 Group: Development/Python3
-BuildArch: noarch
-# hack against python non-identical noarch packages
-Requires: python3-module-PyQt5
 %description -n python3-module-weboob
 Python module for Weboob.
 
@@ -56,12 +49,19 @@ Python module for Weboob.
 rm -rf weboob/tools/application/formatters/webkit
 # Set correct python3 executable in shebang
 subst 's|#!.*python[0-9.]*$|#!%__python3|' $(grep -Rl '#!.*python[0-9.]*$' *)
+%if_disabled qtwebengine
+rm -rf weboob/tools/blinkpdf.py
+%endif
 
 %build
 %python3_build
 
 %install
 %python3_install
+if [ "%python3_sitelibdir" != "%python3_sitelibdir_noarch" ] ; then
+    mkdir -p %buildroot/%python3_sitelibdir
+    mv %buildroot/%python3_sitelibdir_noarch/* %buildroot/%python3_sitelibdir/
+fi
 mkdir -p %buildroot%_desktopdir
 cp -a desktop/*.desktop %buildroot%_desktopdir
 mkdir -p %buildroot%_iconsdir/hicolor/64x64/apps
@@ -70,7 +70,7 @@ cp -a icons/*.png %buildroot%_iconsdir/hicolor/64x64/apps
 %files
 %_bindir/*
 %_desktopdir/*.desktop
-%_iconsdir/hicolor/64x64/apps/*.png
+%_iconsdir/hicolor/*/apps/*.*
 %_man1dir/*
 
 %files -n python3-module-weboob
@@ -78,6 +78,9 @@ cp -a icons/*.png %buildroot%_iconsdir/hicolor/64x64/apps
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Feb 03 2022 Sergey V Turchin <zerg@altlinux.org> 2.0-alt5
+- fix previous ugly packaging
+
 * Wed Feb 02 2022 Sergey V Turchin <zerg@altlinux.org> 2.0-alt4
 - disable using of qtwebengine on e2k and ppc64le
 
