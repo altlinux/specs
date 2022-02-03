@@ -1,5 +1,5 @@
 Name: firewalld
-Version: 0.9.7
+Version: 1.0.3
 Release: alt1
 
 Summary: A firewall daemon with D-BUS interface providing a dynamic firewall
@@ -21,11 +21,14 @@ BuildRequires: intltool xsltproc docbook-style-xsl docbook-dtds glib2-devel libg
 Requires: iptables ebtables iptables-ipv6
 Requires: python3-module-nftables >= 0.9.3-alt2
 Requires: libnftables >= 0.9.3-alt2
+Requires: python3-module-libcap-ng
 
 %allow_python3_import_path %_datadir/firewalld
 %add_python3_path %_datadir/firewalld
 
 %define _unpackaged_files_terminate_build 1
+
+%def_disable testsuite
 
 %description
 firewalld is a firewall service daemon that provides a dynamic
@@ -58,6 +61,15 @@ Group: Development/Python3
 
 %description -n python3-module-firewall
 Python3 bindings for firewalld.
+
+%if_enabled testsuite
+%package testsuite
+Summary: Firewalld testsuite
+Group: Development/Debug
+
+%description testsuite
+This package provides the firewalld testsuite.
+%endif
 
 %prep
 %setup
@@ -129,6 +141,7 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %_iconsdir/hicolor/*/apps/firewall-config*
 %_datadir/glib-2.0/schemas/org.fedoraproject.FirewallConfig.gschema.xml
 %_man1dir/firewall-config*.1*
+%exclude %_datadir/firewalld/testsuite/
 
 %files -n firewall-applet
 %dir %_sysconfdir/firewall
@@ -140,7 +153,17 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %files -n python3-module-firewall
 %python3_sitelibdir_noarch/firewall
 
+%if_enabled testsuite
+%files testsuite
+%_datadir/firewalld/testsuite
+%endif
+
 %changelog
+* Thu Feb 03 2022 Mikhail Efremov <sem@altlinux.org> 1.0.3-alt1
+- Require python3-module-libcap-ng.
+- Add testsuite subpackage (disabled by default).
+- Updated to 1.0.3.
+
 * Fri Jan 28 2022 Mikhail Efremov <sem@altlinux.org> 0.9.7-alt1
 - Updated to 0.9.7.
 
