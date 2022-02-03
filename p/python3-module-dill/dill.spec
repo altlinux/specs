@@ -1,7 +1,9 @@
+%def_disable check
+
 %define oname dill
 
 Name:           python3-module-%oname
-Version:        0.3.1
+Version:        0.3.4
 Release:        alt1
 Summary:        Serialize all of Python
 Group:          Development/Python3
@@ -14,6 +16,10 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
+%if_disabled check
+%else
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 Dill extends python's 'pickle' module for serializing and de-serializing
@@ -35,12 +41,20 @@ command.
 # Remove unpackges files
 rm -r %buildroot%_bindir
 
+%check
+export PYTHONPATH=%buildroot/%python3_sitelibdir/
+py.test3 -v
+
 %files
 %doc LICENSE README.md
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py?.?.egg-info
+%python3_sitelibdir/%oname-%version-py*.egg-info
 
 %changelog
+* Thu Feb 03 2022 Anton Midyukov <antohami@altlinux.org> 0.3.4-alt1
+- New version 0.3.4
+- fix packaging with python >= 3.10
+
 * Sun May 24 2020 Anton Midyukov <antohami@altlinux.org> 0.3.1-alt1
 - New version 0.3.1
 
