@@ -1,4 +1,4 @@
-# 7.3.0.1
+# 7.3.0.3
 %def_without python
 %def_with parallelism
 %def_without fetch
@@ -22,7 +22,7 @@
 
 Name: LibreOffice
 %define hversion 7.3
-%define urelease 0.1
+%define urelease 0.3
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -66,10 +66,8 @@ Source300:      libreoffice.unused
 Patch1: FC-0001-don-t-suppress-crashes.patch
 Patch2: FC-0001-disble-tip-of-the-day-dialog-by-default.patch
 Patch3: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
-Patch4: FC-0001-make-with-idlc-cpp-cpp-work-for-gcc-cpp-as-a-ucpp-re.patch
-Patch5: FC-0001-Revert-tdf-101630-gdrive-support-w-oAuth-and-Drive-A.patch
-Patch6: FC-0001-annocheck-warning-about-missing-.note.gnu.property-s.patch
-Patch7: FC-0001-disable-libe-book-support.patch
+Patch4: FC-0001-Revert-tdf-101630-gdrive-support-w-oAuth-and-Drive-A.patch
+Patch5: FC-0001-disable-libe-book-support.patch
 
 ## Long-term FC patches
 
@@ -277,10 +275,8 @@ Provides additional %{langname} translations and resources for %name. \
 #patch1 -p1
 %patch2 -p1
 %patch3 -p1
-#patch4 -p1
-##patch5 -p1
-%patch6 -p1
-#patch7 -p1
+%patch4 -p1
+#patch5 -p1
 
 ## Long-term FC patches applying
 
@@ -585,6 +581,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Thu Feb 03 2022 Fr. Br. George <george@altlinux.ru> 7.3.0.3-alt1
+- Update to 7.3.0.3 (7.3.0 release)
+
 * Sat Jan 15 2022 Fr. Br. George <george@altlinux.ru> 7.3.0.1-alt1
 - Update to 7.3.0.1
 - Update buildreq (Closes: #40915, #37391)
