@@ -2,7 +2,7 @@
 #
 
 Name:     minitube
-Version:  3.9.2
+Version:  3.9.3
 Release:  alt1
 
 Summary: a YouTube desktop application
@@ -84,6 +84,9 @@ ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING) COPYING
 %_datadir/%name
 
 %changelog
+* Thu Feb 03 2022 Nikolay A. Fetisov <naf@altlinux.org> 3.9.3-alt1
+- New version
+
 * Fri Nov 19 2021 Nikolay A. Fetisov <naf@altlinux.org> 3.9.2-alt1
 - New version
 
