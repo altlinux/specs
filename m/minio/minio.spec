@@ -1,8 +1,8 @@
 %global import_path github.com/minio/minio
-%global commit f4b55ea7a70f8a065fb7065797696e815241ff93
+%global commit 067d21d0f23254ea9ced107ef1a408fed83964a5
 %global shortcommit %(c=%{commit}; echo ${c:0:12})
-%global tag RELEASE.2021-11-09T03-21-45Z
-%define version 2021.11.09
+%global tag RELEASE.2022-02-01T18-00-14Z
+%define version 2022.02.01
 
 %global _unpackaged_files_terminate_build 1
 
@@ -94,6 +94,9 @@ useradd -r -g _%name -c "Minio" -d %_sharedstatedir/%name -s /dev/null -n _%name
 %_unitdir/%name.service
 
 %changelog
+* Thu Feb 03 2022 Alexey Shabalin <shaba@altlinux.org> 2022.02.01-alt1
+- Update to RELEASE.2022-02-01T18-00-14Z
+
 * Thu Nov 11 2021 Alexey Shabalin <shaba@altlinux.org> 2021.11.09-alt1
 - Update to RELEASE.2021-11-09T03-21-45Z
 

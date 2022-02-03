@@ -1,8 +1,8 @@
 %global import_path github.com/minio/mc
-%global commit 9f6b50014291a9e8d325b104de998f12395eb309
+%global commit a7147d221dd7cb2388a1f88647048f6506d06f22
 %global shortcommit %(c=%{commit}; echo ${c:0:12})
-%global tag RELEASE.2021-11-05T10-05-06Z
-%define version 2021.11.05
+%global tag RELEASE.2022-02-02T02-03-24Z
+%define version 2022.02.02
 
 %global _unpackaged_files_terminate_build 1
 
@@ -66,6 +66,9 @@ install -p -m 755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Thu Feb 03 2022 Alexey Shabalin <shaba@altlinux.org> 2022.02.02-alt1
+- Update to RELEASE.2022-02-02T02-03-24Z
+
 * Thu Nov 11 2021 Alexey Shabalin <shaba@altlinux.org> 2021.11.05-alt1
 - Update to RELEASE.2021-11-05T10-05-06Z
 
