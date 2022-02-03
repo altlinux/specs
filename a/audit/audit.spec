@@ -5,7 +5,7 @@
 %def_without prelude
 
 Name: audit
-Version: 3.0.6
+Version: 3.0.7
 Release: alt1
 Summary: User space tools for Linux kernel 2.6+ auditing
 License: GPL
@@ -22,6 +22,7 @@ Requires: service >= 0.5.26-alt1
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libkrb5-devel perl-XML-Parser python-devel swig intltool
 BuildRequires: python3-devel
+BuildRequires: libcap-ng-devel
 %endif
 
 %{?_enable_static:BuildRequires: glibc-devel-static}
@@ -90,10 +91,6 @@ and libauparse can be used by python.
 %prep
 %setup
 %patch0 -p1
-sed -i 's@/etc/init.d/auditd restart@/etc/init.d/auditd stop\nservice auditd start@' \
-	init.d/auditd.restart
-sed -i 's@RETVAL=1@&\nstart-stop-daemon -p "/var/run/auditd.pid" -u root -K -n auditd -t >/dev/null \&\& \\@' \
-	init.d/auditd.condrestart
 
 %build
 %autoreconf
@@ -103,9 +100,12 @@ sed -i 's@RETVAL=1@&\nstart-stop-daemon -p "/var/run/auditd.pid" -u root -K -n a
 	--libdir=%_libdir \
 	--with-aarch64 \
 	--with-arm \
+	--with-libcap-ng=auto \
 %if_with bootstrap
 	--without-python \
 	--without-python3 \
+%else
+	--enable-gssapi-krb5 \
 %endif
 	%{?!_with_ldap:--disable-zos-remote} \
 	%{subst_enable static} \
@@ -141,6 +141,7 @@ install -pD -m755 init.d/%{name}d.rotate %buildroot/usr/libexec/service/legacy-a
 install -pD -m755 init.d/%{name}d.stop %buildroot/usr/libexec/service/legacy-actions/%{name}d/stop
 install -pD -m755 init.d/%{name}d.restart %buildroot/usr/libexec/service/legacy-actions/%{name}d/restart
 install -pD -m644 rules/10-base-config.rules %buildroot%_sysconfdir/%name/rules.d/10-base-config.rules
+install -pD -m755 init.d/%{name}-functions %buildroot/usr/libexec/audit-functions
 
 %post
 %post_service %{name}d
@@ -203,6 +204,7 @@ fi
 %attr(700,root,root) %dir %_libdir/audit
 /usr/libexec/service/legacy-actions/%{name}d
 
+/usr/libexec/audit-functions
 
 %files -n lib%{name}1
 /%_lib/libaudit.so.*
@@ -227,6 +229,11 @@ fi
 %endif
 
 %changelog
+* Mon Jan 31 2022 Egor Ignatov <egori@altlinux.org> 3.0.7-alt1
+- new version 3.0.7
+- Update scripts in init.d
+- spec: Build with libcap-ng and krb5
+
 * Mon Oct 04 2021 Egor Ignatov <egori@altlinux.org> 3.0.6-alt1
 - new version 3.0.6
 
