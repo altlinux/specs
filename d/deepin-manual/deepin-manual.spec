@@ -1,8 +1,13 @@
 #%%set_verify_elf_method relaxed
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
 
 Name: deepin-manual
 Version: 5.7.0.75
-Release: alt3
+Release: alt4
 Summary: Help files for DDE
 License: GPL-3.0+ and (BSD-3-Clause and Qt.Commercial) and ISC
 Group: Graphical desktop/Other
@@ -12,7 +17,11 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: gcc-c++ cmake qt5-base-devel qt5-tools-devel qt5-webchannel-devel dtk5-widget-devel qt5-x11extras-devel qt5-webengine-devel libgmock-devel
+BuildRequires: gcc-c++ cmake qt5-base-devel qt5-tools-devel qt5-webchannel-devel dtk5-widget-devel qt5-x11extras-devel libgmock-devel
+%if_enabled qtwebengine
+BuildRequires: qt5-webengine-devel
+%endif
+
 Requires: %name-data
 
 %description
@@ -21,8 +30,6 @@ Requires: %name-data
 %package data
 Summary: Data files for %name
 Group: Graphical desktop/Other
-BuildArch: noarch
-
 %description data
 Data files for %name.
 
@@ -31,6 +38,7 @@ Data files for %name.
 subst 's|lrelease|lrelease-qt5|' translate_generation.sh
 
 %build
+%if_enabled qtwebengine
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -42,8 +50,10 @@ subst 's|lrelease|lrelease-qt5|' translate_generation.sh
 
 %install
 %cmake_install
+%endif
 
 %files
+%if_enabled qtwebengine
 %doc LICENSE README.md CHANGELOG.md
 %_bindir/dman
 %_bindir/dmanHelper
@@ -51,11 +61,17 @@ subst 's|lrelease|lrelease-qt5|' translate_generation.sh
 %_datadir/dbus-1/services/com.deepin.Manual.Open.service
 %_datadir/dbus-1/services/com.deepin.Manual.Search.service
 %_iconsdir/hicolor/scalable/apps/%name.svg
+%endif
 
 %files data
+%if_enabled qtwebengine
 %_datadir/%name/
+%endif
 
 %changelog
+* Thu Feb 03 2022 Sergey V Turchin <zerg@altlinux.org> 5.7.0.75-alt4
+- Build empty packages on e2k and ppc64le.
+
 * Thu Jul 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.7.0.75-alt3
 - Fixed build with libgmock.so.1.11.0.
 
