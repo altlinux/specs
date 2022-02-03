@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-pywlroots
-Version: 0.15.1
+Version: 0.15.3
 Release: alt1
 
 Summary: Python binding to the wlroots library using cffi
@@ -19,6 +19,7 @@ BuildRequires: rpm-build-python3
 BuildRequires: libxkbcommon-devel
 BuildRequires: libwlroots-devel
 BuildRequires: libinput-devel
+BuildRequires: libxcb-devel
 BuildRequires: python3-module-xkbcommon
 BuildRequires: python3-module-pywayland
 
@@ -51,6 +52,9 @@ provide wlroots keyboard functionality.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Jan 28 2022 Egor Ignatov <egori@altlinux.org> 0.15.3-alt1
+- new version 0.15.3
+
 * Mon Jan 17 2022 Alexey Gladkov <legion@altlinux.ru> 0.15.1-alt1
 - NMU: New version (0.15.1).
 
