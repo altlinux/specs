@@ -1,23 +1,37 @@
+%define _unpackaged_files_terminate_build 1
 %define oname factory_boy
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 2.4.1
-Release: alt2
+Version: 3.2.1
+Release: alt1
 
 Summary: A test fixtures replacement for Python
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/factory_boy/
+Url: https://pypi.org/project/factory-boy/
 BuildArch: noarch
 
-# https://github.com/rbarrois/factory_boy.git
+# https://github.com/FactoryBoy/factory_boy.git
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-sphinx
 
-%py3_provides factory
+%if_with check
+# install_requires=
+BuildRequires: python3(faker)
 
+BuildRequires: python3(django)
+BuildRequires: python3(sqlalchemy)
+BuildRequires: python3(django.db.backends.sqlite3)
+BuildRequires: python3(tox)
+%endif
+
+# PEP503 name
+Provides: python3-module-factory-boy = %EVR
+%py3_provides factory-boy
 
 %description
 factory_boy is a fixtures replacement based on thoughtbot's
@@ -26,67 +40,37 @@ factory_girl.
 As a fixtures replacement tool, it aims to replace static, hard to
 maintain fixtures with easy-to-use factories for complex object.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-factory_boy is a fixtures replacement based on thoughtbot's
-factory_girl.
-
-As a fixtures replacement tool, it aims to replace static, hard to
-maintain fixtures with easy-to-use factories for complex object.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-factory_boy is a fixtures replacement based on thoughtbot's
-factory_girl.
-
-As a fixtures replacement tool, it aims to replace static, hard to
-maintain fixtures with easy-to-use factories for complex object.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
+%autopatch -p1
 
-sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
-
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
-export PYTHONPATH=%buildroot%python3_sitelibdir
-%make -C docs pickle
-%make -C docs html
-
-install -d %buildroot%python3_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
+%check
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+# mongoengine is not packaged in Sisyphus
+export SKIP_MONGOENGINE=1
+export TOX_TESTENV_PASSENV='SKIP_MONGOENGINE'
+tox.py3 --sitepackages -vvr -s false
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/pickle
-
-%files pickles
-%python3_sitelibdir/*/pickle
-
-%files docs
-%doc docs/_build/html/*
-
+%python3_sitelibdir/factory/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Feb 03 2022 Stanislav Levin <slev@altlinux.org> 3.2.1-alt1
+- 2.4.1 -> 3.2.1.
+
 * Thu Dec 05 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.4.1-alt2
 - python2 disabled
 

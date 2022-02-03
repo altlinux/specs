@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.7.0
+Version: 3.11.0
 Release: alt1
 
 Summary: Pytest plugin to randomly order tests and control random.seed
@@ -19,14 +19,16 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python3(appdirs)
-BuildRequires: python3(entrypoints)
+# install_requires=
+BuildRequires: python3(pytest)
+
 BuildRequires: python3(factory)
 BuildRequires: python3(faker)
 BuildRequires: python3(numpy)
-BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_xdist)
+
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
 BuildRequires: python3(tox_console_scripts)
 %endif
 
@@ -62,15 +64,17 @@ filled in randomly due to not being specified.
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -- -vra
+tox.py3 --sitepackages --no-deps --console-scripts -vvr -- -vra
 
 %files
 %doc README.rst
-%python3_sitelibdir/pytest_randomly.py
-%python3_sitelibdir/__pycache__/pytest_randomly.*.py*
-%python3_sitelibdir/pytest_randomly-*.egg-info/
+%python3_sitelibdir/pytest_randomly/
+%python3_sitelibdir/pytest_randomly-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Feb 03 2022 Stanislav Levin <slev@altlinux.org> 3.11.0-alt1
+- 3.7.0 -> 3.11.0.
+
 * Mon Apr 19 2021 Stanislav Levin <slev@altlinux.org> 3.7.0-alt1
 - 3.5.0 -> 3.7.0.
 
