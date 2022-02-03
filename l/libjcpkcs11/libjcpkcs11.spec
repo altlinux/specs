@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
-%ifarch %ix86
+#%ifarch %ix86
 %set_verify_elf_method relaxed
-%endif
+#%endif
 
 %brp_strip_none
 
 Name: libjcpkcs11
 Version: 2.7.4
-Release: alt4
+Release: alt5
 
 Summary: Aladdin JaCarta PKCS#11 library
 License: Proprietary
@@ -58,6 +58,9 @@ L-02210004 от 04.02.2021.
 %config(noreplace) %_sysconfdir/pkcs11/modules/jcpkcs11.module
 
 %changelog
+* Thu Feb 03 2022 Paul Wolneykien <manowar@altlinux.org> 2.7.4-alt5
+- Set verify ELF method to 'relaxed' for all arches.
+
 * Wed Jan 19 2022 Paul Wolneykien <manowar@altlinux.org> 2.7.4-alt4
 - Fix: Package %_datadir/doc/%name-%version and %_datadir/%name.
 
