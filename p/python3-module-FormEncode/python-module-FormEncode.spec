@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 Epoch: 1
 
@@ -24,8 +24,12 @@ BuildRequires: python3(setuptools_scm)
 BuildRequires: python3(setuptools_scm_git_archive)
 
 %if_with check
+# install_requires=
+BuildRequires: python3(six)
+
 BuildRequires: python3(dns)
 BuildRequires: python3(pytest)
+BuildRequires: python3(pycountry)
 BuildRequires: python3(tox)
 BuildRequires: python3(tox_no_deps)
 BuildRequires: python3(tox_console_scripts)
@@ -72,6 +76,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
 %python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Feb 03 2022 Stanislav Levin <slev@altlinux.org> 1:2.0.1-alt1
+- 2.0.0 -> 2.0.1.
+
 * Fri Sep 17 2021 Stanislav Levin <slev@altlinux.org> 1:2.0.0-alt1
 - 1.3.1 -> 2.0.0.
 
