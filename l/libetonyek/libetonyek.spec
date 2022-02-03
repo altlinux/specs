@@ -1,10 +1,10 @@
 Name: libetonyek
 Version: 0.1.9
-Release: alt2
+Release: alt3
 Summary: A library for import of Apple Keynote presentations
 
 Group: System/Libraries
-License: MPLv2.0
+License: MPL-2.0
 # https://gerrit.libreoffice.org/#/admin/projects/libetonyek
 Url: http://www.freedesktop.org/wiki/Software/libetonyek/
 Source: %name-%version.tar.xz
@@ -60,7 +60,7 @@ Currently supported: XHTML, raw, text.
 
 %build
 %autoreconf
-%configure --disable-silent-rules --disable-static --disable-werror --with-mdds=1.5
+%configure --disable-silent-rules --disable-static --disable-werror --with-mdds=2.0
 sed -i \
     -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
     -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
@@ -95,6 +95,9 @@ make check
 %_bindir/*
 
 %changelog
+* Thu Feb 03 2022 Andrey Cherepanov <cas@altlinux.org> 0.1.9-alt3
+- FTBFS: fix build with mdds-2.0.
+
 * Sat Jun 13 2020 Fr. Br. George <george@altlinux.ru> 0.1.9-alt2
 - Fix build
 
