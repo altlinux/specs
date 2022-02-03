@@ -3,7 +3,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.2.2
-Release: alt1
+Release: alt2
 Summary: A py.test plug-in which executes only tests affected by recent changes
 Group: Development/Python
 License: MIT
@@ -33,12 +33,15 @@ executes only tests affected by recent changes.
 %check
 # upstream no longer provides the test suite
 
-%files -n python3-module-%pypi_name
+%files
 %doc README.rst LICENSE
-%python3_sitelibdir/testmon
-%python3_sitelibdir/pytest_testmon-%version-py?.?.egg-info
+%python3_sitelibdir/testmon/
+%python3_sitelibdir/pytest_testmon-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Feb 03 2022 Stanislav Levin <slev@altlinux.org> 1.2.2-alt2
+- Fixed FTBFS (Python3.10).
+
 * Mon Nov 29 2021 Anton Farygin <rider@altlinux.ru> 1.2.2-alt1
 - 1.0.3 -> 1.2.2
 
