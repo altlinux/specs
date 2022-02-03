@@ -1,6 +1,12 @@
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
+
 Name:    kmymoney
 Version: 5.1.2
-Release: alt6
+Release: alt7
 %K5init no_altplace
 
 Summary: A Personal Finance Manager for KDE
@@ -11,8 +17,6 @@ URL:     http://kmymoney2.sourceforge.net
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-ExclusiveArch: %qt5_qtwebengine_arches
-
 Source0: %name-%version.tar
 Source1: ru.po
 Source2: %name.watch
@@ -21,7 +25,6 @@ Patch1: kmymoney-new-akonadi.patch
 
 AutoReq: yes, noperl
 
-BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires(pre): rpm-build-kf5
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev
@@ -29,7 +32,11 @@ BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: qt5-declarative-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: qt5-script-devel
+%if_enabled qtwebengine
 BuildRequires: qt5-webengine-devel
+%else
+BuildRequires: qt5-webkit-devel kf5-kdewebkit-devel
+%endif
 BuildRequires: kf5-kauth-devel
 BuildRequires: kf5-kbookmarks-devel
 BuildRequires: kf5-kcodecs-devel
@@ -268,7 +275,11 @@ cp %SOURCE1 po/ru/kmymoney.po
 #export NPROCS=1
 %K5build -DCMAKE_SKIP_RPATH=1 \
          -DKDE_INSTALL_METAINFODIR=%_datadir/appdata \
+%if_enabled qtwebengine
          -DENABLE_WEBENGINE=ON \
+%else
+         -DENABLE_WEBENGINE=OFF \
+%endif
          -DENABLE_SQLCIPHER=OFF
 
 %install
@@ -381,6 +392,9 @@ cp %SOURCE1 po/ru/kmymoney.po
 %exclude %_K5doc/en
 
 %changelog
+* Thu Feb 03 2022 Sergey V Turchin <zerg@altlinux.org> 5.1.2-alt7
+- Build with qtwebkit instead of qtwebengine on e2k and ppc64le.
+
 * Tue Feb 01 2022 Sergey V Turchin <zerg@altlinux.org> 5.1.2-alt6
 - Build with parity of qtwebengine arches.
 
