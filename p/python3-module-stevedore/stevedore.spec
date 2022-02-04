@@ -1,10 +1,10 @@
 %define oname stevedore
 
-%def_disable check
+%def_enable check
 
 Name: python3-module-%oname
 Version: 1.32.0
-Release: alt3
+Release: alt3.1
 Summary: Manage dynamic plugins for Python applications
 Group: Development/Python3
 License: Apache-2.0
@@ -15,6 +15,9 @@ BuildArch: noarch
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-sphinx-devel
+%if_enabled check
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-Pillow
 BuildRequires: python3-module-oslotest
@@ -23,10 +26,9 @@ BuildRequires: python3-module-coverage
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-mox3
 BuildRequires: python3-module-mimeparse
-BuildRequires: python3-module-sphinx-devel
-BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-bandit
+%endif
 
 %py3_provides %oname
 
@@ -82,10 +84,8 @@ export PBR_VERSION=$(pbr.py3 --version)
 cp -fR doc/build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-python3 setup.py test
-rm -fR build
 export PYTHONPATH=$PWD
-py.test-%_python3_version
+py.test3
 
 %files
 %doc README.rst LICENSE
@@ -108,6 +108,9 @@ py.test-%_python3_version
 %doc doc/build/html/*
 
 %changelog
+* Fri Jan 28 2022 Ivan A. Melnikov <iv@altlinux.org> 1.32.0-alt3.1
+- Enable %%check.
+
 * Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 1.32.0-alt3
 - Fixed BuildRequires.
 
