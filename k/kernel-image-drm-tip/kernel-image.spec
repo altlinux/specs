@@ -5,9 +5,9 @@
 
 Name: kernel-image-drm-tip
 %define kernel_source_version	5.12
-%define kernel_base_version	5.16
+%define kernel_base_version	5.17
 %define kernel_sublevel .0
-%define kernel_extra_version	+rel.20220120
+%define kernel_extra_version	+rc2.20220203
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1
 
@@ -104,6 +104,7 @@ tar -xf %kernel_src/kernel-source-%kernel_source_version.tar
 %patch0 -p1
 
 subst 's/EXTRAVERSION[[:space:]]*=.*/EXTRAVERSION = %kernel_extra_version-%flavour-%krelease/g' Makefile
+sed -i '/vmbus_dma_mask/s/DMA_BIT_MASK(64)/~0ULL/' drivers/hv/vmbus_drv.c
 
 %build
 export CC=clang LLVM=1
@@ -224,6 +225,6 @@ fi
 %modules_dir/build
 
 %changelog
-* Fri Jan 21 2022 Kernel Pony <kernelpony@altlinux.org> 5.16.0+rel.20220120-alt1
-- drm-tip 2022y-01m-20d-19h-10m-51s (95f7fe1c9f81).
+* Fri Feb 04 2022 Kernel Pony <kernelpony@altlinux.org> 5.17.0+rc2.20220203-alt1
+- drm-tip 2022y-02m-03d-22h-03m-45s (11e50b5b196e).
 
