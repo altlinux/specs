@@ -1,60 +1,59 @@
-%define py_vers_nodot %{python_version_nodots python3}
+%define _unpackaged_files_terminate_build 1
 
 Name: summain
-Version: 0.20
-Release: alt3
+Version: 0.26.0
+Release: alt1
 
 Summary: File manifest generator
 License: GPLv3+
 Group: File tools
-Url: http://liw.fi/%name/
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+Url: https://doc.liw.fi/summain/
 
-Source: http://code.liw.fi/debian/pool/main/s/%name/%{name}_%version.orig.tar.gz
-Patch0: port-to-python3.patch
+Source0: %name-%version.tar
+Source1: vendor.tar
+Source2: cargo_config.toml
+Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel libattr-devel
-BuildRequires: python3-module-cliapp >= 1.20160724-alt3
-
-Requires: python3-module-cliapp >= 1.20160724-alt3
-
+BuildRequires: rust-cargo
+BuildRequires: /proc
 
 %description
-Summain generates file manifests, which contain metadata about the
-files, and a checksum of their content for regular files. The manifest
-can be generated for a directory tree at different points in time and
-compared (with diff) to see if something has changed.
+Produce a manifest of specified files. The manifest lists the files, and for
+each file its important metadata, and if it's a regular file, the checksum of
+the contents. The order in the output is deterministic: if the program is run
+twice for the same file, and files haven't changed, the output is identical.
+
+This is meant for testing that a backup has been restored correctly.
 
 %prep
-%setup
-%patch0 -p2
+%setup -a1
+%autopatch -p1
+
+# point to vendored sources
+export CARGO_HOME=${PWD}/.cargo
+mkdir "$CARGO_HOME"
+cp "%SOURCE2" "$CARGO_HOME/config.toml"
 
 %build
-%python3_build_debug
-
-# Generate manpages
-make summain.1
+export CARGO_HOME=${PWD}/.cargo
+cargo build --offline --release
 
 %install
-%python3_install
-
-# fix permission
-chmod 755 %buildroot%python3_sitelibdir/_summain.cpython-%{py_vers_nodot}.so
+export CARGO_HOME=${PWD}/.cargo
+cargo install --offline --force --root %buildroot/%_usr --path ./ --no-track
 
 %check
-# exit 0
-# TODO: add and use python_check
-%__python3 setup.py check
+# requires Subplot: https://subplot.liw.fi/
+# see 'check' file for details
 
 %files
-%doc COPYING NEWS README
-%_man1dir/summain.1*
+%doc *.md
 %_bindir/summain
-%python3_sitelibdir/*
-
 
 %changelog
+* Fri Feb 04 2022 Stanislav Levin <slev@altlinux.org> 0.26.0-alt1
+- 0.20 -> 0.26.0 (Python => Rust).
+
 * Fri Jul 30 2021 Stanislav Levin <slev@altlinux.org> 0.20-alt3
 - Fixed build on e2k (thanks to ilyakurdyukov@).
 
