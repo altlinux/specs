@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name poetry-core
 
-%def_with bootstrap
+%def_without bootstrap
 %def_with check
 
 %if_with bootstrap
@@ -19,7 +19,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.0.7
-Release: alt1
+Release: alt2
 
 Summary: Poetry Core
 License: MIT
@@ -128,6 +128,9 @@ tox.py3 --sitepackages --console-scripts -vvr -s false
 %python3_sitelibdir/poetry_core-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Feb 04 2022 Stanislav Levin <slev@altlinux.org> 1.0.7-alt2
+- Built without vendored distributions
+
 * Fri Jan 28 2022 Stanislav Levin <slev@altlinux.org> 1.0.7-alt1
 - Initial build for Sisyphus.
 
