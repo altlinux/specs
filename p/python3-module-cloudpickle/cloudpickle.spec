@@ -1,7 +1,7 @@
 %define oname cloudpickle
 
 Name:           python3-module-%oname
-Version:        1.4.1
+Version:        2.0.0
 Release:        alt1
 Summary:        Extended pickling support for Python objects
 Group:          Development/Python
@@ -16,6 +16,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
 BuildRequires: python3(mock) python3(pytest) python3(tornado) python3(curses)
 BuildRequires: python3(psutil) python3(typing_extensions) python3(numpy)
+BuildRequires: python3(numpy.testing)
+BuildRequires: pytest3
 BuildRequires: /proc
 
 %description
@@ -37,16 +39,21 @@ interactively in the __main__ module.
 %python3_install
 
 %check
-# There is one test not working with Python 3
-#https://github.com/cloudpipe/cloudpickle/issues/114
-%__python3 setup.py test ||:
+# file_handles tests fail, TypeError: cannot pickle '_io.FileIO' object
+# GH issue: https://github.com/cloudpipe/cloudpickle/issues/114
+export PYTHONPATH=tests/cloudpickle_testpkg
+pytest3 -v -k "not file_handles"
 
 %files
 %doc LICENSE README.md
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py?.?.egg-info
+%python3_sitelibdir/%oname-%version-py*.egg-info
 
 %changelog
+* Thu Feb 03 2022 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
+- New version 2.0.0
+- fix packaging with python >= 3.10
+
 * Sun May 24 2020 Anton Midyukov <antohami@altlinux.org> 1.4.1-alt1
 - New version 1.4.1
 
