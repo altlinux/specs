@@ -1,5 +1,5 @@
 Name: expat
-Version: 2.4.3
+Version: 2.4.4
 Release: alt1
 
 %def_disable static
@@ -70,8 +70,8 @@ rm %buildroot%_libdir/libexpat.so
 ln -s ../../%_lib/libexpat.so.1 %buildroot%_libdir/libexpat.so
 
 install -d -m755 %buildroot%pkgdocdir
-install -p -m644 README.md COPYING Changes %buildroot%pkgdocdir/
-install -p -m644 doc/*.{html,css,png} %buildroot%pkgdocdir/
+install -p -m644 AUTHORS README.md COPYING Changes %buildroot%pkgdocdir/
+install -p -m644 doc/*.{html,css} %buildroot%pkgdocdir/
 install -d -m755 %buildroot%pkgdocdir/examples
 install -p -m644 examples/*.c %buildroot%pkgdocdir/examples/
 
@@ -85,6 +85,7 @@ install -p -m644 examples/*.c %buildroot%pkgdocdir/examples/
 %files -n lib%name
 /%_lib/*.so.*
 %dir %pkgdocdir
+%pkgdocdir/AUTHORS
 %pkgdocdir/Changes
 %pkgdocdir/COPYING
 %pkgdocdir/README.md
@@ -97,7 +98,6 @@ install -p -m644 examples/*.c %buildroot%pkgdocdir/examples/
 %dir %pkgdocdir
 %pkgdocdir/*.html
 %pkgdocdir/*.css
-%pkgdocdir/*.png
 %pkgdocdir/examples
 
 %if_enabled static
@@ -106,6 +106,9 @@ install -p -m644 examples/*.c %buildroot%pkgdocdir/examples/
 %endif	# enabled static
 
 %changelog
+* Fri Feb 04 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.4.4-alt1
+- Updated to 2.4.4 (fixes: CVE-2022-23852 and CVE-2022-23990).
+
 * Tue Jan 18 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.4.3-alt1
 - Updated to 2.4.3 (with multiple security fixes).
 - Fixes:
