@@ -1,64 +1,81 @@
+%define _unpackaged_files_terminate_build 1
 %define oname babelfish
 
-Name:       python3-module-%oname
-Version:    0.5.5
-Release:    alt4
+%def_with check
 
-Summary:    A module to work with countries and languages
-License:    BSD
-Group:      Development/Python3
-Url:        https://pypi.python.org/pypi/babelfish/
+Name: python3-module-%oname
+Version: 0.6.0
+Release: alt1
 
-BuildArch:  noarch
+Summary: A module to work with countries and languages
+License: BSD
+Group: Development/Python3
+Url: https://pypi.org/project/babelfish/
 
-#           https://github.com/Diaoul/babelfish.git
-Source:     %name-%version.tar
-Patch1:     %oname-%version-alt-build.patch
+BuildArch: noarch
+
+# https://github.com/Diaoul/babelfish.git
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3(poetry.core)
 
-%py3_provides %oname
-
+%if_with check
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+%endif
 
 %description
 BabelFish is a Python library to work with countries and languages.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-BabelFish is a Python library to work with countries and languages.
-
-This package contains tests for %oname.
-
 %prep
 %setup
-%patch1 -p1
+%autopatch -p1
 
 %build
-%python3_build_debug
+# generate legacy setup.py, PEP517 builds are not currently supported
+%__python3 - <<-'EOF'
+from pathlib import Path
+
+from poetry.core.factory import Factory
+from poetry.core.masonry.builders.sdist import SdistBuilder
+
+
+poetry = Factory().create_poetry(Path(".").resolve(), with_dev=False)
+builder = SdistBuilder(poetry)
+
+setup = builder.build_setup()
+
+with open("setup.py", "wb") as f:
+    f.write(setup)
+EOF
+%python3_build
 
 %install
 %python3_install
 
 %check
-%__python3 setup.py test
+cat > tox.ini <<'EOF'
+[testenv]
+usedevelop=True
+commands =
+    {envbindir}/pytest {posargs:-vra}
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr -s false
 
 %files
-%doc AUTHORS *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests.*
-%exclude %python3_sitelibdir/*/*/tests.*
-
-%files tests
-%python3_sitelibdir/*/tests.*
-%python3_sitelibdir/*/*/tests.*
-
+%doc *.md
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Feb 04 2022 Stanislav Levin <slev@altlinux.org> 0.6.0-alt1
+- 0.5.5 -> 0.6.0.
+
 * Thu Feb 06 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.5.5-alt4
 - Build for python2 disabled.
 
