@@ -3,7 +3,7 @@
 # Use current date as version
 
 Name:    appstream-data-generator
-Version: 20190718
+Version: 20220402
 Release: alt1
 Summary: Collection of tools for generation of appstream-data
 Group:   System/Configuration/Packaging
@@ -38,6 +38,13 @@ Collection of tools for generation of appstream-data
 %_bindir/*
 
 %changelog
+* Fri Feb 04 2022 Andrey Cherepanov <cas@altlinux.org> 20220402-alt1
+- Show XML parse error text.
+- Parse appdata files of any types (for example, fonts).
+- Ignore missing icons if --allownoicons is used.
+- First use cached iconname from appdata file.
+- Show package and metainfo file in verbose mode.
+
 * Thu Jul 18 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 20190718-alt1
 - Improved icons processing.
 - Converted icons now should keep transparency.
