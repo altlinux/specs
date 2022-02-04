@@ -18,7 +18,7 @@ BuildRequires: /usr/bin/desktop-file-install python3(sqlite3) python3-module-set
 Name:		mnemosyne
 Summary:	Flash-card learning tool
 Version:	2.6.1
-Release:	alt2_4
+Release:	alt3_4
 URL:		https://www.mnemosyne-proj.org/
 Source0:	https://downloads.sourceforge.net/sourceforge/mnemosyne-proj/Mnemosyne-%{version}.tar.gz
 # contains missing tests and LICENSE files from upstream repo
@@ -28,9 +28,9 @@ Source10:       mnemosyne-mktarball.sh
 Patch0:		mnemosyne-desktop.patch
 License:	AGPLv3
 
-BuildArch:	noarch
 # no python3-qt5-webengine on power64
 ExclusiveArch:	noarch %{qt5_qtwebengine_arches}
+BuildRequires(pre):	rpm-macros-qt5-webengine
 BuildRequires:	desktop-file-utils
 BuildRequires:	python3-devel
 BuildRequires:	python3-module-distribute
@@ -45,7 +45,9 @@ BuildRequires:	texlive
 %endif
 Requires:	icon-theme-hicolor
 Requires:	python3-module-PyQt5
+%ifarch %qt5_qtwebengine_arches
 Requires:	python3-module-PyQtWebEngine
+%endif
 Requires:	python3-module-matplotlib-qt5
 Requires:	python3-module-cherrypy
 Requires:	python3-module-webob
@@ -75,6 +77,11 @@ cp -p openSM2sync/LICENSE LICENSE.openSM2sync
 
 %install
 %python3_install
+# make arch dependent
+if [ "%python3_sitelibdir" != "%python3_sitelibdir_noarch" ] ; then
+    mkdir -p %buildroot/%python3_sitelibdir
+    mv %buildroot/%python3_sitelibdir_noarch/* %buildroot/%python3_sitelibdir/
+fi
 
 install -d %{buildroot}%{_datadir}/applications
 desktop-file-install --vendor="" \
@@ -98,13 +105,16 @@ popd
 %doc ChangeLog README
 %doc --no-dereference LICENSE LICENSE.mnemosyne LICENSE.openSM2sync
 %{_bindir}/%{name}
-%{python3_sitelibdir_noarch}/%{name}
-%{python3_sitelibdir_noarch}/Mnemosyne-%{version}-py%{__python3_version}.egg-info
-%{python3_sitelibdir_noarch}/openSM2sync
+%{python3_sitelibdir}/%{name}
+%{python3_sitelibdir}/Mnemosyne-%{version}-py%{__python3_version}.egg-info
+%{python3_sitelibdir}/openSM2sync
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Fri Feb 04 2022 Igor Vlasenko <viy@altlinux.org> 2.6.1-alt3_4
+- support for qt5_qtwebengine_arches (closes: #41870)
+
 * Sun Aug 15 2021 Igor Vlasenko <viy@altlinux.org> 2.6.1-alt2_4
 - no python2
 
