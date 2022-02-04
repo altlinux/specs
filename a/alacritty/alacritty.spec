@@ -1,6 +1,6 @@
 Name: alacritty
-Version: 0.9.0
-Release: alt2
+Version: 0.10.0
+Release: alt1
 
 Summary: A fast, cross-platform, OpenGL terminal emulator
 License: Apache-2.0
@@ -11,7 +11,6 @@ Source0: %name-%version.tar
 Source1: crates.tar
 
 BuildRequires: rust-cargo /proc
-BuildRequires: /usr/bin/tic
 BuildRequires: pkgconfig(expat)
 BuildRequires: pkgconfig(freetype2)
 BuildRequires: pkgconfig(fontconfig)
@@ -42,11 +41,6 @@ install -pm0644 -D extra/linux/Alacritty.desktop %buildroot%_desktopdir/Alacritt
 install -pm0644 -D extra/logo/alacritty-term.svg %buildroot%_iconsdir/hicolor/scalable/Alacritty.svg
 install -pm0644 -D alacritty.yml %buildroot%_sysconfdir/alacritty/alacritty.yml
 
-mkdir -p %buildroot%_datadir/terminfo/a %buildroot/lib/terminfo
-tic -xe alacritty,alacritty-direct extra/alacritty.info -o %buildroot/lib/terminfo
-ln -srv %buildroot/lib/terminfo/a/alacritty %buildroot%_datadir/terminfo/a/
-ln -srv %buildroot/lib/terminfo/a/alacritty-direct %buildroot%_datadir/terminfo/a/
-
 %files
 %doc README* LICENSE* docs/*
 
@@ -55,15 +49,15 @@ ln -srv %buildroot/lib/terminfo/a/alacritty-direct %buildroot%_datadir/terminfo/
 
 %_bindir/alacritty
 
-/lib/terminfo/a/alacritty*
-%_datadir/terminfo/a/alacritty*
-
 %_desktopdir/Alacritty.desktop
 %_iconsdir/hicolor/scalable/Alacritty.svg
 
 %_man1dir/alacritty.1*
 
 %changelog
+* Mon Jan 31 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.10.0-alt1
+- 0.10.0 released
+
 * Wed Aug 11 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.0-alt2
 - lower required OpenGL version to 3.1
 
