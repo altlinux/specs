@@ -86,7 +86,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %endif
 
 Name: python3
-Version: %{pybasever}.0
+Version: %{pybasever}.2
 Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
@@ -136,13 +136,6 @@ Source10: idle3.desktop
 # Fixup distutils/unixccompiler.py to remove standard library path from rpath:
 # Was Patch0 in ivazquez' python3000 specfile:
 Patch1: 00001-rpath.patch
-
-# 00251 #
-# Set values of prefix and exec_prefix in distutils install command
-# to /usr/local if executable is /usr/bin/python* and RPM build
-# is not detected to make pip and distutils install into separate location
-# Fedora Change: https://fedoraproject.org/wiki/Changes/Making_sudo_pip_safe
-Patch251: 00251-change-user-install-location.patch
 
 #ALT Linux patches
 
@@ -347,8 +340,6 @@ done
 # Apply patches:
 #
 %patch1 -p1
-
-%patch251 -p1
 
 # ALT Linux patches
 %patch1003 -p2
@@ -998,6 +989,9 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Wed Feb 02 2022 Grigory Ustinov <grenka@altlinux.org> 3.10.2-alt1
+- Updated to upstream version 3.10.2
+
 * Thu Dec 02 2021 Grigory Ustinov <grenka@altlinux.org> 3.10.0-alt1
 - Updated to upstream version 3.10.0.
 
