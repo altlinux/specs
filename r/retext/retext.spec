@@ -6,8 +6,8 @@
 %endif
 
 Name:    retext
-Version: 7.2.2
-Release: alt3
+Version: 7.2.3
+Release: alt1
 License: GPL-3.0+
 Summary: Text editor for Markdown and reStructuredText
 Summary(de): Texteditor für Markdown und reStructuredText
@@ -100,6 +100,9 @@ python3 setup.py test
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Fri Feb 04 2022 Andrey Cherepanov <cas@altlinux.org> 7.2.3-alt1
+- New version.
+
 * Thu Feb 03 2022 Sergey V Turchin <zerg@altlinux.org> 7.2.2-alt3
 - build with qtwebkit instead of qtwebengine on e2k and ppc64le
 
