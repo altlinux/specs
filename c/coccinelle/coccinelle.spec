@@ -3,7 +3,7 @@
 
 Name:		coccinelle
 Version:	1.1.1
-Release:	alt1
+Release:	alt2
 Summary:	Semantic patching for Linux (spatch)
 
 Group:		Development/C
@@ -96,12 +96,18 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}
 sed -i '1s:^#!/usr/bin/env python$:#!/usr/bin/python3:' tools/pycocci
 
+# On 32-bit ARM only, use of recent menhir leads to memory exhaustion. Turn
+# down the menhir optimization level to cope.
+%ifarch armh
+sed -i 's/--infer/& -O 1/' Makefile
+%endif
+
 %build
 ./autogen
 %configure \
 	--with-python=%_bindir/python3 \
 
-%make_build EXTLIBDIR=`ocamlc -where`/extlib
+%make_build
 
 %install
 %make DESTDIR=%buildroot install
@@ -164,6 +170,10 @@ cd %_docdir/%name-demos-%version
 %files checkinstall
 
 %changelog
+* Fri Feb 04 2022 Vitaly Chikunov <vt@altlinux.org> 1.1.1-alt2
+- Fixed rebuild with python 3.10.
+- Resolved memory exhaustion when building on armh.
+
 * Tue Oct 12 2021 Vitaly Chikunov <vt@altlinux.org> 1.1.1-alt1
 - Update to 1.1.1 (2021-09-06).
 
