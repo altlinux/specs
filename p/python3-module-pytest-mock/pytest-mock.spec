@@ -4,14 +4,14 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.5.1
+Version: 3.7.0
 Release: alt1
 
 Summary: Thin-wrapper around the mock package for easier use with py.test
 License: MIT
 Group: Development/Python3
 # https://github.com/pytest-dev/pytest-mock.git
-Url: https://pypi.python.org/pypi/pytest-mock
+Url: https://pypi.org/project/pytest-mock/
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -20,6 +20,9 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools_scm)
 
 %if_with check
+# install_requires=
+BuildRequires: python3(pytest)
+
 BuildRequires: python3(pytest-asyncio)
 BuildRequires: python3(tox)
 %endif
@@ -60,9 +63,12 @@ tox.py3 --sitepackages -vvr
 %files
 %doc LICENSE *.rst
 %python3_sitelibdir/pytest_mock/
-%python3_sitelibdir/pytest_mock-*.egg-info/
+%python3_sitelibdir/pytest_mock-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Feb 03 2022 Stanislav Levin <slev@altlinux.org> 3.7.0-alt1
+- 3.5.1 -> 3.7.0.
+
 * Mon Apr 19 2021 Stanislav Levin <slev@altlinux.org> 3.5.1-alt1
 - 3.3.1 -> 3.5.1.
 
