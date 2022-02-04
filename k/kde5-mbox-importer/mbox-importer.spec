@@ -2,13 +2,15 @@
 
 Name: kde5-%rname
 Version: 21.12.1
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
 Summary: MBox Importer
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
+
+ExclusiveArch: %qt5_qtwebengine_arches
 
 Conflicts: kde5-pim-common < 16.12
 
@@ -17,7 +19,7 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Mon Mar 20 2017 (-bi)
 # optimized out: cmake cmake-modules elfutils fontconfig gcc-c++ kde5-libkleo-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libgpg-error-devel libgpgme-devel libgst-plugins1.0 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-script libqt5-sensors libqt5-sql libqt5-svg libqt5-webchannel libqt5-webenginecore libqt5-webenginewidgets libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libstdc++-devel libxcbutil-keysyms perl pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3
 #BuildRequires: boost-devel-headers extra-cmake-modules kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-kcontacts-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-mailcommon-devel kde5-mailimporter-devel kde5-messagelib-devel kde5-pimcommon-devel kf5-kcrash-devel kf5-kio-devel kf5-kitemmodels-devel kf5-ktextwidgets-devel libassuan-devel libdb4-devel libsasl2-devel python-module-google python3-dev ruby ruby-stdlibs
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt rpm-macros-qt5-webengine
 BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: boost-devel libassuan-devel libdb4-devel libsasl2-devel
 BuildRequires: libqtkeychain-qt5-devel
@@ -79,6 +81,9 @@ KF5 library
 #%_K5lib/libmbox-importer.so.*
 
 %changelog
+* Fri Feb 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt2
+- build with parity of qtwebengine arches
+
 * Thu Jan 13 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
 - new version
 
