@@ -1,6 +1,6 @@
 Name: grsync
 Version: 1.3.0
-Release: alt2
+Release: alt3
 
 Summary: Grsync is a GUI for rsync
 License: GPLv2
@@ -20,7 +20,7 @@ Requires: rsync
 
 BuildRequires(pre): rpm-build-xdg
 # Automatically added by buildreq on Sun Jan 15 2012
-BuildRequires: dos2unix intltool libwebkitgtk3-devel
+BuildRequires: dos2unix intltool libwebkitgtk4-devel
 
 %description
 Grsync is a GUI (Graphical User Interface) for rsync, the command line file and
@@ -62,6 +62,9 @@ install -pD -m644 %_sourcedir/grsync16.png %buildroot%_miconsdir/grsync.png
 %doc AUTHORS NEWS README
 
 %changelog
+* Thu Jan 27 2022 Alexander Danilov <admsasha@altlinux.org> 1.3.0-alt3
+- Fixed FTBFS (Move to libwebkitgtk4-devel).
+
 * Wed Sep 15 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.3.0-alt2
 - Removed nested function for Elbrus build.
 
