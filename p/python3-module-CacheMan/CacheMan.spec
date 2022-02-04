@@ -1,28 +1,33 @@
 %define modulename CacheMan
 
-%def_disable check
+%def_with check
 
 Name: python3-module-%modulename
 Version: 2.1.0
-Release: alt1
+Release: alt2
+
 Summary: A Python interface for managing dependent caches
 
-License: BSD
+License: BSD-2-Clause
 Group: Development/Python3
 Url: https://github.com/MSeal/py_cache_manager
 # Source-url: https://github.com/MSeal/py_cache_manager/archive/refs/tags/%version.tar.gz
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %modulename-%version.tar
+# Fix compatibility with Python 3.10
+Patch: d8d9adbce96cf132504d0cd9bd64a2ada72875cd.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
 
-%if_disabled check
-%else
+%if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-future
+BuildRequires: python3-module-six
+BuildRequires: python3-module-psutil
+BuildRequires: /proc
 %endif
 
 %description
@@ -41,6 +46,7 @@ an AutoSyncCache from the autosync submodule.
 
 %prep
 %setup -n %modulename-%version
+%patch -p1
 
 %build
 %python3_build
@@ -57,5 +63,9 @@ py.test3 -v
 %python3_sitelibdir/*
 
 %changelog
+* Fri Feb 04 2022 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt2
+- Fix compatibility with Python 3.10.
+- Enable check.
+
 * Sun Aug 22 2021 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
 - initial build
