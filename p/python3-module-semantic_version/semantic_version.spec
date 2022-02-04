@@ -1,9 +1,9 @@
 %define pypi_name semantic_version
-%def_with bootstrap
+%def_without bootstrap
 
 Name: python3-module-%pypi_name
 Version: 2.8.5
-Release: alt5
+Release: alt6
 Summary: A library implementing the 'SemVer' scheme.
 
 Group: Development/Python3
@@ -47,6 +47,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %python3_sitelibdir/*
 
 %changelog
+* Fri Feb 04 2022 Grigory Ustinov <grenka@altlinux.org> 2.8.5-alt6
+- Change all back.
+
 * Mon Dec 06 2021 Grigory Ustinov <grenka@altlinux.org> 2.8.5-alt5
 - Bootstrap for python3.10.
 
