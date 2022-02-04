@@ -1,4 +1,4 @@
-%def_without check
+%def_with check
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
@@ -15,7 +15,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 1.22.1
-Release: alt2
+Release: alt3
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD-3-Clause
 Group: Development/Python3
@@ -257,6 +257,9 @@ cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Fri Feb 04 2022 Grigory Ustinov <grenka@altlinux.org> 1:1.22.1-alt3
+- Enable check back.
+
 * Sun Jan 23 2022 Grigory Ustinov <grenka@altlinux.org> 1:1.22.1-alt2
 - Bootstrap for python3.10.
 
