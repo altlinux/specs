@@ -1,65 +1,48 @@
+%define _unpackaged_files_terminate_build 1
 %define oname clize
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 4.1.1
-Release: alt2
+Version: 4.2.1
+Release: alt1
 
 Summary: Command-line argument parsing for Python, without the effort
 
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/clize/
+Url: https://pypi.org/project/clize/
 
 # https://github.com/epsy/clize.git
 # Source-url: https://pypi.io/packages/source/c/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-sigtools >= 2.0
-BuildRequires: python3-module-attrs >= 17.4.0
-BuildRequires: python3-module-six
-BuildRequires: python3-module-od
+
+%if_with check
+# install_requires=
+BuildRequires: python3(sigtools)
+BuildRequires: python3(six)
+BuildRequires: python3(attr)
+BuildRequires: python3(od)
+BuildRequires: python3(docutils)
+
+BuildRequires: python3(repeated_test)
 BuildRequires: python3(dateutil)
-BuildRequires: python3(unittest2) python3(repeated_test) python3(pygments)
-
-%py3_provides %oname
-%py3_requires sigtools six
-
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-sphinx
+BuildRequires: python3(pygments)
+BuildRequires: python3(tox)
+%endif
 
 %description
 Clize procedurally turns your functions into convenient command-line
 interfaces.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-Clize procedurally turns your functions into convenient command-line
-interfaces.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-Clize procedurally turns your functions into convenient command-line
-interfaces.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
-
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
+%autopatch -p1
 
 %build
 %python3_build
@@ -68,27 +51,24 @@ ln -s ../objects.inv docs/
 %python3_install
 rm -rf %buildroot%python3_sitelibdir/clize/tests/
 
-export PYTHONPATH=$PWD
-#make SPHINXBUILD="sphinx-build-3" -C docs pickle
-#make SPHINXBUILD="sphinx-build-3" -C docs html
-
-#cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
-
 %check
-python3 setup.py test
+cat > tox.ini <<'EOF'
+[testenv]
+usedevelop=True
+commands =
+    python -m unittest {posargs:-v}
+EOF
+tox.py3 --sitepackages -vvr
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
-#exclude %python3_sitelibdir/*/pickle
-
-%files pickles
-#python3_sitelibdir/*/pickle
-
-%files docs
-#doc docs/_build/html examples
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Feb 04 2022 Stanislav Levin <slev@altlinux.org> 4.2.1-alt1
+- 4.1.1 -> 4.2.1.
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 4.1.1-alt2
 - Drop python2 support.
 
