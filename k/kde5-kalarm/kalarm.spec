@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 21.12.1
-Release: alt1
+Release: alt2
 %K5init no_appdata
 
 Group: Graphical desktop/KDE
@@ -90,6 +90,9 @@ KF5 library
 
 
 %changelog
+* Fri Feb 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt2
+- update code from 21.12 branch
+
 * Thu Jan 13 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
 - new version
 
