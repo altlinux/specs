@@ -1,7 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %global oname croniter
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.0.11
+Version: 1.2.0
 Release: alt1
 
 Summary: Iteration for datetime object with cron like format
@@ -11,21 +14,25 @@ Url: http://github.com/kiorky/croniter
 
 BuildArch: noarch
 
-Source0: %oname-%version.tar
+Source0: %name-%version.tar
+Patch: %name-%version-alt.patch
 
-BuildRequires: rpm-build-python3 python3(setuptools) python3(dateutil)
-# tests
+BuildRequires: rpm-build-python3
+%if_with check
+# install_requires=
+BuildRequires: python3(dateutil)
+
 BuildRequires: python3(pytz)
 BuildRequires: python3(pytest)
+%endif
 
 %description
 Croniter provides iteration for datetime object with cron like format.
 
 %prep
-%setup -q -n %oname-%version
+%setup
+%autopatch -p1
 
-# Remove bundled egg-info
-rm -rf %oname.egg-info
 # Remove reundant script header to avoid rpmlint warnings
 find -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
@@ -37,14 +44,17 @@ find -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
 %check
 # TimezoneDateutil test fails, see https://bugzilla.altlinux.org/show_bug.cgi?id=39164
-py.test3 -v ||:
+py.test3 -vra -k 'not testTimezoneDateutil'
 
 %files
 %doc README.rst docs/LICENSE
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py?.?.egg-info
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Feb 04 2022 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
+- 1.0.11 -> 1.2.0.
+
 * Mon Apr 12 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.11-alt1
 - 1.0.11
 
