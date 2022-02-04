@@ -32,7 +32,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -694,6 +694,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Feb 04 2022 Andrey Cherepanov <cas@altlinux.org> 7.2.5.2-alt2
+- Fix id and add icons to appdata metainfo.
+
 * Wed Feb 02 2022 Andrey Cherepanov <cas@altlinux.org> 7.2.5.2-alt1
 - New Still version.
 - Add information about Still version and package names to appdata files.
