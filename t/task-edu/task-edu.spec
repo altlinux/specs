@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.5.7
-Release: alt2
+Release: alt3
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
 Group:   Education
@@ -405,8 +405,10 @@ Summary(ru_RU.UTF-8): Образовательное программное об
 Summary: Educational software (university)
 Group: Education
 Requires: codeblocks
+%ifnarch %e2k ppc64le
 Requires: qt-creator
 Requires: qt-creator-doc
+%endif
 Requires: cmake
 Requires: ninja-build
 Requires: qt5-base-devel
@@ -614,6 +616,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Fri Feb 04 2022 Sergey V Turchin <zerg@altlinux.org> 1.5.7-alt3
+- Update requires for qt-creator.
+
 * Thu Feb 03 2022 Sergey V Turchin <zerg@altlinux.org> 1.5.7-alt2
 - Update requires for qt-creator and nextcloud-client.
 
