@@ -2,12 +2,12 @@
 
 %define oname shapely
 
-%def_disable check
+%def_with check
 %def_with doc
 
 Name: python3-module-%oname
 Version: 1.8.0
-Release: alt1
+Release: alt2
 
 Summary: Planar geometries, predicates, and operations
 License: BSD
@@ -117,6 +117,9 @@ py.test3 -vv
 %endif
 
 %changelog
+* Fri Feb 04 2022 Grigory Ustinov <grenka@altlinux.org> 1.8.0-alt2
+- Enable check back.
+
 * Thu Feb 03 2022 Andrey Cherepanov <cas@altlinux.org> 1.8.0-alt1
 - New version.
 
