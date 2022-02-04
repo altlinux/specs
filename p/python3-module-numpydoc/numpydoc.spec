@@ -1,44 +1,37 @@
 %define oname numpydoc
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.7.0
-Release: alt2
+Version: 1.2.0
+Release: alt1
 Epoch: 1
 
 Summary: Numpy's Sphinx extensions
-License: BSD
+
+License: BSD-2-Clause
 Group: Development/Python3
 Url: http://numpy.scipy.org/
-BuildArch: noarch
 
 # https://github.com/numpy/numpydoc.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-tools-2to3
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-sphinx
+%endif
+
+BuildArch: noarch
 
 %description
 Numpy's documentation uses several custom extensions to Sphinx.  These
 are shipped in this ``numpydoc`` package, in case you want to make use
 of them in third-party projects.
 
-%package tests
-Summary: Tests for numpydoc
-Group: Development/Python3
-BuildArch: noarch
-Requires: %name = %EVR
-
-%description tests
-Numpy's documentation uses several custom extensions to Sphinx.  These
-are shipped in this ``numpydoc`` package, in case you want to make use
-of them in third-party projects.
-
-This package contains tests for numpydoc.
-
 %prep
 %setup
-
-find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
 %python3_build
@@ -46,15 +39,21 @@ find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %install
 %python3_install
 
+rm -rf %buildroot%python3_sitelibdir/%oname/tests
+
+%check
+# Deselected tests need to download an inventory from docs.python.org
+%{__python3} -m pytest -v -k "not test_MyClass and not test_my_function"
+
 %files
 %doc LICENSE.txt README.rst
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/tests
-
-%files tests
-%python3_sitelibdir/%oname/tests
 
 %changelog
+* Fri Feb 04 2022 Grigory Ustinov <grenka@altlinux.org> 1:1.2.0-alt1
+- Automatically updated to 1.2.0.
+- Added check section.
+
 * Thu Aug 05 2021 Grigory Ustinov <grenka@altlinux.org> 1:0.7.0-alt2
 - Drop python2 support.
 
