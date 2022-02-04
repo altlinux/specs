@@ -1,8 +1,8 @@
 %def_without netgen
 
 Name:     smesh
-Version:  8.3.0.4
-Release:  alt2.1
+Version:  9.7.0.1
+Release:  alt1
 
 Summary:  OpenCascade based MESH framework
 License:  LGPL-2.1
@@ -12,11 +12,8 @@ Url:      https://github.com/LaughlinResearch/SMESH
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:   %name-%version.tar
+Source1:  submodules.tar
 Patch1:   smesh-install.patch
-Patch2:   smesh-alt-return-type.patch
-Patch3:   smesh-alt-link-with-dl.patch
-Patch4:   smesh-alt-cmake-pathes.patch
-Patch5:   smesh-alt-vtk-compat.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -35,6 +32,7 @@ BuildRequires: libXi-devel
 BuildRequires: libXmu-devel
 BuildRequires: libnetcdf-devel
 BuildRequires: libxml2-devel
+BuildRequires: python3-module-patch
 BuildRequires: doxygen graphviz
 
 %description
@@ -67,11 +65,9 @@ Development files and headers for libsmesh.
 
 %prep
 %setup
+tar xf %SOURCE1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
+python3 prepare.py
 
 %build
 %cmake -GNinja \
@@ -85,14 +81,16 @@ Development files and headers for libsmesh.
 
 %files -n libsmesh
 %doc README.md
-%_libdir/*.so.*
+%_libdir/*.so
 
 %files -n libsmesh-devel
-%_libdir/*.so
 %_includedir/*
-%_libdir/cmake/SMESHConfig.cmake
+%_libdir/cmake/*.cmake
 
 %changelog
+* Thu Jan 27 2022 Andrey Cherepanov <cas@altlinux.org> 9.7.0.1-alt1
+- New version.
+
 * Wed Jun 02 2021 Arseny Maslennikov <arseny@altlinux.org> 8.3.0.4-alt2.1
 - NMU: spec: adapted to new cmake macros.
 
