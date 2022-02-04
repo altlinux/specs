@@ -1,8 +1,13 @@
 %define rname kaccounts-providers
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
 
 Name: kde5-%rname
 Version: 21.12.1
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -20,7 +25,10 @@ Source: %rname-%version.tar
 #BuildRequires: accounts-qt5-devel extra-cmake-modules intltool kde5-kaccounts-integration-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kpackage-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel qt5-declarative-devel rpm-build-python3 rpm-build-ruby signon-devel
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: accounts-qt5-devel signon-devel intltool
-BuildRequires: extra-cmake-modules qt5-declarative-devel qt5-webengine-devel
+BuildRequires: extra-cmake-modules qt5-declarative-devel
+%if_enabled qtwebengine
+BuildRequires: qt5-webengine-devel
+%endif
 BuildRequires: kde5-kaccounts-integration-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
@@ -59,6 +67,9 @@ Requires: kf5-filesystem
 
 
 %changelog
+* Fri Feb 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt2
+- build without qtwebengine on e2k and ppc64le
+
 * Thu Jan 13 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
 - new version
 
