@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-mageia-compat
 BuildRequires: /usr/bin/doxygen
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -11,12 +12,14 @@ BuildRequires: /usr/bin/doxygen
 
 Name:          liblscp
 Summary:       LinuxSampler Control Protocol (LSCP) wrapper library
-Version:       0.9.3
+Version:       0.9.5
 Release:       alt1_1
-License:       GPLv2
+License:       LGPLv2
 Group:         System/Libraries
 URL:           http://www.linuxsampler.org/
 Source0:       https://sourceforge.net/projects/qsampler/files/liblscp/%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires: cmake
 Source44: import.info
 
 %description
@@ -47,28 +50,34 @@ Provides:       %{name}-devel = %{version}-%{release}
 Development libraries from %oname.
 
 %files -n %develname
-%doc COPYING
-%dir %_includedir/lscp
-%_includedir/lscp/*.h
-%_libdir/liblscp.so
-%_libdir/pkgconfig/lscp.pc
+%doc --no-dereference LICENSE  
+%dir %{_includedir}/lscp
+%{_includedir}/lscp/*.h
+%{_libdir}/liblscp.so
+%{_libdir}/pkgconfig/lscp.pc
 
 #--------------------------------------------------------------------
 
 %prep
 %setup -q
 
+
 %build
-%configure --disable-static
-%make_build
+%{mageia_cmake} -DCMAKE_INSTALL_PREFIX=%{_usr} \
+       -DCMAKE_INSTALL_LIBDIR=%{_lib}
+
+%mageia_cmake_build
 
 %install
-%makeinstall_std
+%mageia_cmake_install
 
 find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Sat Feb 05 2022 Igor Vlasenko <viy@altlinux.org> 0.9.5-alt1_1
+- update by mgaimport
+
 * Mon Jul 05 2021 Igor Vlasenko <viy@altlinux.org> 0.9.3-alt1_1
 - update by mgaimport
 
