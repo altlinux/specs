@@ -1,11 +1,11 @@
 Name: skiboot
-Version: 6.3.3
+Version: 7.0
 Release: alt1
 Summary: OPAL Processor Recovery Diagnostics Daemon
 
 Group: System/Servers
 License: Apache-2.0
-Url: http://github.com/open-power/skiboot
+Url: https://github.com/open-power/skiboot
 ExclusiveArch: ppc64le
 
 BuildRequires: libssl-devel
@@ -105,6 +105,9 @@ install -m 644 -p skiboot.lid %buildroot%_datadir/%name/skiboot.lid
 %_datadir/%name/
 
 %changelog
+* Thu Dec 02 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.0-alt1
+- Updated to v7.0.
+
 * Mon Aug 19 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.3.3-alt1
 - Updated to 6.3.3.
 - opal-firmware: move firmware to /usr/share/skiboot to avoid conflict
