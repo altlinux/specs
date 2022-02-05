@@ -20,7 +20,7 @@
 Summary: Library for accessing and modifying virtual machine disk images
 Name: libguestfs
 Version: 1.46.2
-Release: alt1
+Release: alt2
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -269,7 +269,7 @@ export PYTHON=%__python3
 	%{subst_enable vala} \
 	%{subst_enable rust} \
 	%{subst_enable static} \
-	--with-default-backend=libvirt \
+	--with-default-backend=direct \
 	--with-extra="ALTLinux,release=%version-%release,libvirt" \
 	--with-qemu="qemu-kvm qemu-system-%_build_arch qemu" \
 	--disable-silent-rules \
@@ -461,6 +461,9 @@ rm -f %buildroot%_man1dir/guestfs-release-notes*
 %endif #erlang
 
 %changelog
+* Sat Feb 05 2022 Anton Farygin <rider@altlinux.ru> 1.46.2-alt2
+- the default backend switched to direct (closes: #41783)
+
 * Mon Jan 10 2022 Anton Farygin <rider@altlinux.ru> 1.46.2-alt1
 - 1.46.1 -> 1.46.2
 
