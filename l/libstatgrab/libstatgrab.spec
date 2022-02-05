@@ -1,6 +1,6 @@
 BuildRequires: chrpath
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ perl(Config.pm) perl(Exporter.pm) perl(IPC/Cmd.pm) perl(Test/More.pm)
+BuildRequires: gcc-c++ perl(IPC/Cmd.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -10,8 +10,8 @@ BuildRequires: gcc-c++ perl(Config.pm) perl(Exporter.pm) perl(IPC/Cmd.pm) perl(T
 %define libnamedevel	lib%{shortname}-devel
 
 Name:		libstatgrab
-Version:	0.92
-Release:	alt1_3
+Version:	0.92.1
+Release:	alt1_1
 Summary:	Make system statistics
 License:	LGPLv2+ and GPLv2+
 Group:		Monitoring
@@ -86,7 +86,7 @@ applications which will use %{name}.
 
 %prep
 %setup -q
-%patch0 -p0
+%patch0
 
 
 %build
@@ -125,6 +125,9 @@ done
 
 
 %changelog
+* Sat Feb 05 2022 Igor Vlasenko <viy@altlinux.org> 0.92.1-alt1_1
+- update by mgaimport
+
 * Wed Jan 13 2021 Igor Vlasenko <viy@altlinux.ru> 0.92-alt1_3
 - update by mgaimport
 
