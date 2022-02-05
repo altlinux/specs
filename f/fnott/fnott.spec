@@ -1,5 +1,5 @@
 Name: fnott
-Version: 1.1.2
+Version: 1.2.0
 Release: alt1
 
 Summary: Notification daemon for wlroots-based Wayland compositor
@@ -11,7 +11,7 @@ Source: %name-%version-%release.tar
 
 BuildRequires: meson scdoc
 BuildRequires: pkgconfig(dbus-1)
-BuildRequires: pkgconfig(fcft)
+BuildRequires: pkgconfig(fcft) >= 3.0.0
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(pixman-1)
 BuildRequires: pkgconfig(tllist)
@@ -34,7 +34,7 @@ wlroots-based Wayland compositors.
 %meson_install
 
 %files
-%doc README* LICENSE
+%doc %_defaultdocdir/fnott
 %_bindir/fnott
 %_bindir/fnottctl
 %_datadir/fnott
@@ -45,6 +45,9 @@ wlroots-based Wayland compositors.
 %_man5dir/fnott.ini.5*
 
 %changelog
+* Sat Feb 05 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.0-alt1
+- 1.2.0 released
+
 * Sun Oct 10 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.2-alt1
 - 1.1.2 released
 

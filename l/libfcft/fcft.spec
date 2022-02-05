@@ -1,5 +1,5 @@
 Name: libfcft
-Version: 2.5.1
+Version: 3.0.0
 Release: alt1
 
 Summary: A small font loading and glyph rasterization library
@@ -15,15 +15,24 @@ BuildRequires: pkgconfig(freetype2)
 BuildRequires: pkgconfig(pixman-1)
 BuildRequires: pkgconfig(tllist)
 
+%package -n libfcft4
+Summary: A small font loading and glyph rasterization library
+Group: System/Libraries
+
 %package devel
 Summary: Development part of fcft
 Group: Development/C
 
-%description
-%summary
+%define desc \
+A small font loading and glyph rasterization library.
 
-%description devel
-%summary
+%description %desc
+
+%description -n libfcft4 %desc
+This package contains shared libfcft.
+
+%description devel %desc
+This package contains development part of libfcft.
 
 %prep
 %setup
@@ -35,8 +44,7 @@ Group: Development/C
 %install
 %meson_install
 
-%files
-%doc README* LICENSE
+%files -n libfcft4
 %_libdir/libfcft.so.*
 
 %files devel
@@ -44,8 +52,12 @@ Group: Development/C
 %_libdir/libfcft.so
 %_man3dir/fcft*
 %_pkgconfigdir/fcft.pc
+%doc %_defaultdocdir/fcft
 
 %changelog
+* Sat Feb 05 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.0-alt1
+- 3.0.0 released
+
 * Tue Feb 01 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5.1-alt1
 - 2.5.1 released
 
