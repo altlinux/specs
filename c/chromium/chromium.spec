@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        97.0.4692.99 
+Version:        98.0.4758.80
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -74,11 +74,10 @@ Patch009: 0009-ALT-allow-to-override-clang-through-env-variables.patch
 Patch010: 0010-ALT-Hack-to-avoid-build-error-with-clang7.patch
 Patch011: 0011-ALT-disable-asm-on-x86-in-dav1d.patch
 Patch012: 0012-Move-offending-function-to-chromeos-only.patch
-Patch013: 0013-ALT-Do-not-use-no-canonical-prefixes-clang-option.patch
-Patch014: 0014-ALT-Disable-NOMERGE-attribute.patch
-Patch015: 0015-FEDORA-bootstrap-with-python3.patch
-Patch016: 0016-sql-make-VirtualCursor-standard-layout-type.patch
-Patch017: 0017-ALT-fix-build-with-glibc-2.34.patch
+Patch013: 0013-ALT-Disable-NOMERGE-attribute.patch
+Patch014: 0014-FEDORA-bootstrap-with-python3.patch
+Patch015: 0015-sql-make-VirtualCursor-standard-layout-type.patch
+Patch016: 0016-ALT-fix-build-with-glibc-2.34.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -163,9 +162,12 @@ BuildRequires:  node
 BuildRequires:  usbids
 BuildRequires:  xdg-utils
 
-BuildRequires:  python
-BuildRequires:  python-modules-json
 BuildRequires:  python3
+BuildRequires:  python3(bs4)
+BuildRequires:  python3(html5lib)
+BuildRequires:  python3(markupsafe)
+BuildRequires:  python3(ply)
+BuildRequires:  python3(simplejson)
 
 Requires: libva
 Requires: xdg-utils
@@ -179,8 +181,8 @@ faster, and more stable way for all Internet users to experience the web.
 %autopatch -p1
 
 sed -i \
-	-e '/"-Wno-non-c-typedef-for-linkage"/d' \
 	-e 's/"-ffile-compilation-dir=."//g' \
+	-e 's/"-no-canonical-prefixes"//g' \
 	build/config/compiler/BUILD.gn
 
 mkdir -p third_party/node/linux/node-linux-x64/bin
@@ -214,6 +216,11 @@ bits=$(getconf LONG_BIT)
 export RANLIB="ranlib"
 export PATH="$PWD/third_party/depot_tools:$PATH"
 export CHROMIUM_RPATH="%_libdir/%name"
+
+FLAGS='-Wno-unknown-warning-option'
+
+export CFLAGS="$FLAGS"
+export CXXFLAGS="$FLAGS"
 
 CHROMIUM_GN_DEFINES=
 gn_arg() { CHROMIUM_GN_DEFINES="$CHROMIUM_GN_DEFINES $*"; }
@@ -310,7 +317,7 @@ unbundle_lib ffmpeg opus
 	build/linux/unbundle/replace_gn_files.py --system-libraries $unbundle
 
 tools/gn/bootstrap/bootstrap.py --gn-gen-args="$CHROMIUM_GN_DEFINES" --build-path=%target
-%target/gn gen --args="$CHROMIUM_GN_DEFINES" %target
+%target/gn --script-executable=%__python3 gen --args="$CHROMIUM_GN_DEFINES" %target
 
 n=%build_parallel_jobs
 [ "$n" -lt 20 ] || n=20
@@ -438,6 +445,30 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Feb 04 2022 Alexey Gladkov <legion@altlinux.ru> 98.0.4758.80-alt1
+- New version (98.0.4758.80).
+- Build with python3.
+- Security fixes:
+  - CVE-2022-0452: Use after free in Safe Browsing.
+  - CVE-2022-0453: Use after free in Reader Mode.
+  - CVE-2022-0454: Heap buffer overflow in ANGLE.
+  - CVE-2022-0455: Inappropriate implementation in Full Screen Mode.
+  - CVE-2022-0456: Use after free in Web Search.
+  - CVE-2022-0457: Type Confusion in V8.
+  - CVE-2022-0458: Use after free in Thumbnail Tab Strip.
+  - CVE-2022-0459: Use after free in Screen Capture.
+  - CVE-2022-0460: Use after free in Window Dialog.
+  - CVE-2022-0461: Policy bypass in COOP.
+  - CVE-2022-0462: Inappropriate implementation in Scroll.
+  - CVE-2022-0463: Use after free in Accessibility.
+  - CVE-2022-0464: Use after free in Accessibility.
+  - CVE-2022-0465: Use after free in Extensions.
+  - CVE-2022-0466: Inappropriate implementation in Extensions Platform.
+  - CVE-2022-0467: Inappropriate implementation in Pointer Lock.
+  - CVE-2022-0468: Use after free in Payments.
+  - CVE-2022-0469: Use after free in Cast.
+  - CVE-2022-0470: Out of bounds memory access in V8.
+
 * Tue Jan 25 2022 Alexey Gladkov <legion@altlinux.ru> 97.0.4692.99-alt1
 - New version (97.0.4692.99).
 - Security fixes:
