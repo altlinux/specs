@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 2.6.3
+Version: 2.7
 Release: alt1
 
 Summary: A tool for static C/C++ code analysis
@@ -64,7 +64,7 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.c' -o -name '*.h' |
 %endif
 
 # Make sure bundled tinyxml2 is not used
-rm -r externals/tinyxml2
+#rm -r externals/tinyxml2
 
 %build
 
@@ -77,7 +77,6 @@ rm -r externals/tinyxml2
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
 	-DBUILD_TESTS:BOOL=ON \
 	-DFILESDIR=%{_datadir}/Cppcheck \
-	-DUSE_BUNDLED_TINYXML2=OFF \
 	-DPCRE_INCLUDE="%_includedir/pcre" \
 	%nil
 
@@ -122,6 +121,9 @@ grep -l "#\!%__python3" %buildroot%_datadir/Cppcheck/addons/*.py | xargs chmod +
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Feb 05 2022 Andrew A. Vasilyev <andy@altlinux.org> 2.7-alt1
+- 2.7
+
 * Fri Dec 17 2021 Andrew A. Vasilyev <andy@altlinux.org> 2.6.3-alt1
 - 2.6.3
 
