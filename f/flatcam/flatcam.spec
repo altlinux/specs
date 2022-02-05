@@ -1,6 +1,6 @@
 Name: flatcam
 Version: 8.994
-Release: alt1.20210406
+Release: alt2.20220203 
 Summary: 2D Computer-Aided PCB Manufacturing
 Group: Engineering
 License: MIT
@@ -52,6 +52,10 @@ for Isolation routing.
 #exclude %python3_sitelibdir/descartes
 
 %changelog
+* Fri Feb 04 2022 Anton Midyukov <antohami@altlinux.org> 8.994-alt2.20220203
+- new snapshot
+- fix build with python 3.10
+
 * Fri Jul 30 2021 Anton Midyukov <antohami@altlinux.org> 8.994-alt1.20210406
 - new snapshot
 - build with pyQt5 (Closes: 40601)
