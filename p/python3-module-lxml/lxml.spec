@@ -1,10 +1,10 @@
-%def_with bootstrap
+%def_without bootstrap
 
 %define oname lxml
 
 Name: python3-module-lxml
-Version: 4.6.4
-Release: alt2
+Version: 4.7.1
+Release: alt1
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API
 
@@ -88,6 +88,10 @@ PYTHONPATH=src python3 src/lxml/tests/selftest2.py
 %doc doc samples
 
 %changelog
+* Sat Feb 05 2022 Grigory Ustinov <grenka@altlinux.org> 4.7.1-alt1
+- Build new version.
+- Disable bootstrap.
+
 * Mon Dec 06 2021 Grigory Ustinov <grenka@altlinux.org> 4.6.4-alt2
 - Bootstrap for python3.10.
 
