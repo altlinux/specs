@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 53
+%define centos_release 55
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,18 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sat Feb 05 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.55-alt1.el9
+- Updated to kernel-5.14.0-55.el9:
+  + nvme: drop scan_lock and always kick requeue list when removing namespaces
+  + redhat/configs: Cleanup pending-common directory
+  + redhat/configs: Enable CONFIG_PCI_P2PDMA
+  + Resolve cpufreq errors on Alder Lake-S (ADL-S)
+  + selftests: 9.0 P2 backport from upstream
+
+* Fri Feb 04 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.54-alt1.el9
+- Updated to kernel-5.14.0-54.el9:
+  + Wireless stack and drivers update to v5.15
+
 * Thu Feb 03 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.53-alt1.el9
 - Updated to kernel-5.14.0-53.el9 (fixes: CVE-2021-40490):
   + ext4, jbd2 update for RHEL9.0
