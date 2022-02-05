@@ -2,11 +2,11 @@
 
 %define oname traitsui
 
-%def_enable bootstrap
+%def_disable bootstrap
 
 Name: python3-module-%oname
 Version: 7.2.1
-Release: alt4
+Release: alt5
 Summary: A set of user interface tools designed to complement Traits
 Group: Development/Python3
 License: EPL-1.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause
@@ -160,6 +160,9 @@ cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sat Feb 05 2022 Grigory Ustinov <grenka@altlinux.org> 7.2.1-alt5
+- Disable bootstrap.
+
 * Sat Dec 25 2021 Grigory Ustinov <grenka@altlinux.org> 7.2.1-alt4
 - Bootstrap for python3.10.
 
