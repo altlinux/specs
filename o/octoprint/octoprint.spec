@@ -4,7 +4,7 @@
 
 Name:    octoprint
 Version: 1.6.1
-Release: alt4
+Release: alt5
 
 Summary: OctoPrint is the snappy web interface for your 3D printer
 License: AGPL-3.0
@@ -62,6 +62,7 @@ BuildRequires: python3-module-psutil
 BuildRequires: python3-module-filetype
 BuildRequires: python3-module-pip
 BuildRequires: python3-module-requests
+BuildRequires: python3-module-immutabledict
 %endif
 
 %py3_requires frozendict websocket blinker
@@ -121,6 +122,9 @@ py.test3 -v tests
 %doc *.md
 
 %changelog
+* Sat Feb 05 2022 Anton Midyukov <antohami@altlinux.org> 1.6.1-alt5
+- add buildrequires to python3-module-immutabledict
+
 * Sat Aug 21 2021 Anton Midyukov <antohami@altlinux.org> 1.6.1-alt4
 - add BR: python3-module-requests (for tests)
 
