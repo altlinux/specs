@@ -3,7 +3,7 @@
 
 Summary: SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:    sogo
-Version: 5.5.0
+Version: 5.5.1
 Release: alt1
 
 License: GPL-2.0+ and LGPL-2.1+
@@ -22,7 +22,7 @@ Packager:Andrey Cherepanov <cas@altlinux.org>
 
 Source: SOGo-%version.tar
 Source1: sogo.init
-Source2: angular-material.tar
+Source2: submodules.tar
 Patch1: sogo-alt-fix-enter-letters-in-address-field.patch
 Patch2: sogo-alt-fixes.patch
 Patch4: sogo-alt-fix-timeZoneWithAbbreviation.patch
@@ -439,6 +439,10 @@ fi
 %preun_service sogo
 
 %changelog
+* Sat Feb 05 2022 Andrey Cherepanov <cas@altlinux.org> 5.5.1-alt1
+- New version.
+- Package submodule as tarball.
+
 * Wed Jan 19 2022 Andrey Cherepanov <cas@altlinux.org> 5.5.0-alt1
 - New version.
 
