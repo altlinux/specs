@@ -3,8 +3,8 @@
 
 Name: 	       pcs
 Epoch:         1
-Version:       0.11.1
-Release:       alt3
+Version:       0.11.2
+Release:       alt1
 Summary:       Pacemaker/Corosync configuration system
 License:       GPL-2.0 and Apache-2.0 and MIT
 Group:         System/Servers
@@ -179,6 +179,9 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Sat Feb 05 2022 Andrey Cherepanov <cas@altlinux.org> 1:0.11.2-alt1
+- New version.
+
 * Fri Dec 03 2021 Egor Ignatov <egori@altlinux.org> 1:0.11.1-alt3
 - package ocf-1.0.rng and ocf-1.1.rng
 
