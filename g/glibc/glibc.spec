@@ -1,7 +1,7 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.34.0.103.008003
+Version: 2.35.0.5.249624
 Release: alt1
 Epoch: 6
 
@@ -783,6 +783,9 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Sat Feb 05 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.35.0.5.249624-alt1
+- Updated to glibc-2.35-5-g2496242707.
+
 * Tue Feb 01 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.34.0.103.008003-alt1
 - Updated to glibc-2.34-103-g008003dc6e (fixes: CVE-2022-23219, CVE-2022-23218,
   CVE-2021-3998, CVE-2021-3999).
