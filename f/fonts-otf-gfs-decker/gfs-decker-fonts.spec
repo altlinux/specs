@@ -9,7 +9,7 @@ BuildRequires: rpm-build-fedora-compat-fonts unzip
 %define fontpkgname gfs-decker-fonts
 # SPDX-License-Identifier: MIT
 Version: 20090618
-Release: alt3_24
+Release: alt4_24
 URL:     http://www.greekfontsociety-gfs.gr/typefaces/19th_century
 
 %global foundry           GFS
@@ -109,10 +109,10 @@ EOF_APPSTREAM
 %install
 echo "Installing "gfs-decker-fonts
 echo "" > "gfs-decker-fonts.list"
-install -m 0755 -vd %buildroot%_fontsdir/otf/gfs-decker-fonts/
-echo "%%dir %_fontsdir/otf/gfs-decker-fonts" >> "gfs-decker-fonts.list"
-install -m 0644 -vp "GFSDecker.otf" %buildroot%_fontsdir/otf/gfs-decker-fonts/
-echo \"%_fontsdir/otf/gfs-decker-fonts//$(basename "${font}")\" >> 'gfs-decker-fonts.list'
+install -m 0755 -vd %buildroot%_fontsdir/otf/gfs-decker/
+echo "%%dir %_fontsdir/otf/gfs-decker" >> "gfs-decker-fonts.list"
+install -m 0644 -vp "GFSDecker.otf" %buildroot%_fontsdir/otf/gfs-decker/
+echo \"%_fontsdir/otf/gfs-decker//$(basename "${font}")\" >> 'gfs-decker-fonts.list'
 (
 
   IFS= lines=$(
@@ -143,15 +143,15 @@ for fontappstream in 'org.altlinux.gfs-decker-fonts.metainfo.xml'; do
 done
 
 for fontdoc in 'OFL-FAQ.txt' 'OFL.txt'; do
-  echo %%doc "${fontdoc}" >> "gfs-decker-fonts.list"
+  echo %%doc "'${fontdoc}'" >> "gfs-decker-fonts.list"
 done
 
 for fontlicense in 'OFL.txt'; do
-  echo %%doc "${fontlicense}" >> "gfs-decker-fonts.list"
+  echo %%doc "'${fontlicense}'" >> "gfs-decker-fonts.list"
 done
 
 %check
-
+# fontcheck
 grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'gfs-decker-fonts.list' \
   | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
 grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'gfs-decker-fonts.list' \
@@ -164,6 +164,9 @@ grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'gfs-decker-fonts.list' \
 %doc *.pdf
 
 %changelog
+* Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 20090618-alt4_24
+- use short alt-style fontdir name
+
 * Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 20090618-alt3_24
 - update to new release by fcimport
 
