@@ -1,109 +1,167 @@
 Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-fonts
+BuildRequires: rpm-build-fedora-compat-fonts unzip
 # END SourceDeps(oneline)
 %define oldname gfs-didot-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global fontname gfs-didot
-%global fontconf 60-%{fontname}.conf
-
-%global archivename GFS_DIDOT_OT
-
-Name:    fonts-otf-gfs-didot
+%define fontpkgname gfs-didot-fonts
+# SPDX-License-Identifier: MIT
 Version: 20070616
-Release: alt3_23
-Summary: GFS Didot fonts
+Release: alt3_33
+URL:     http://www.greekfontsociety-gfs.gr/typefaces/20th_21st_century
 
-License:   OFL
-URL:       http://www.greekfontsociety.gr/pages/en_typefaces20th.html
-Source0:   http://www.greekfontsociety.gr/%{archivename}.zip
-Source1:   %{oldname}-fontconfig.conf
-Source2:   %{fontname}.metainfo.xml
+%global foundry           GFS
+%global fontlicense       OFL
+%global fontlicenses      OFL.txt
+%global fontdocs          *.txt
+%global fontdocsex        %{fontlicenses}
 
-BuildArch:     noarch
-BuildRequires: fontpackages-devel
+%global fontfamily        Didot
+%global fontsummary       GFS Didot, a 20th century Greek font family
+%global fonts             *.otf
+%global fontdescription   \
+Didota.'s type was the base for a new font, GFS Didot (1994) which was designed\
+by Takis Katsoulidis, and digitized by George Matthiopoulos. The typeface is\
+accompanied by a matching Latin alphabet based on Hermann Zapfa.'s PaLatino.
+
+%global archivename GFS_Didot
+
+Source0:  http://www.greekfontsociety-gfs.gr/_assets/fonts/%{archivename}.zip
+Source10: 60-%{fontpkgname}.xml
+
+Name:           fonts-otf-gfs-didot
+Summary:        %{fontsummary}
+License:        %{fontlicense}
+BuildArch:      noarch
+BuildRequires:  rpm-build-fonts
+%{?fontpkgheader}
 Source44: import.info
+%description -n fonts-otf-gfs-didot
+%{?fontdescription}
 
-%description
-Didota.'s type was the base for a new font, GFS Didot (1994) which was designed
-by Takis Katsoulidis, and digitised by George Matthiopoulos. The typeface is
-accompanied by a matching latin alphabet based on Hermann Zapfa.'s Palatino.
-
+%package   doc
+Group: System/Fonts/True type
+Summary:   Optional documentation files of %{oldname}
+BuildArch: noarch
+%description doc
+This package provides optional documentation files shipped with
+%{oldname}.
 
 %prep
+%global fontconfngs       %{SOURCE10}
 %setup -n %{oldname}-%{version} -q -c -T
-unzip -j -L -q %{SOURCE0}
-chmod 0644 *.txt
-for txt in *.txt ; do
-   fold -s $txt > $txt.new
-   sed -i 's/\r//' $txt.new
-   touch -r $txt $txt.new
-   mv $txt.new $txt
-done
-
+unzip -j -q  %{SOURCE0}
+%linuxtext *.txt
 
 %build
 
-
-%install
-install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p *.otf %{buildroot}%{_fontdir}
-
-install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
-                   %{buildroot}%{_fontconfig_confdir}
-
-install -m 0644 -p %{SOURCE1} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
-ln -s %{_fontconfig_templatedir}/%{fontconf} \
-      %{buildroot}%{_fontconfig_confdir}/%{fontconf}
-
-# Add AppStream metadata
-install -Dm 0644 -p %{SOURCE2} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
+fontnames=$(
+  for font in 'GFSDidot.otf' 'GFSDidotBold.otf' 'GFSDidotBoldItalic.otf' 'GFSDidotItalic.otf'; do
+    fc-scan "${font}" -f "    <font>%%{fullname[0]}</font>\n"
+  done | sort -u
+)
+if [[ -n "${fontnames}" ]] ; then
+  fontnames=$'\n'"  <provides>"$'\n'"${fontnames}"$'\n'"  </provides>"
+fi
+fontlangs=$(
+  for font in 'GFSDidot.otf' 'GFSDidotBold.otf' 'GFSDidotBoldItalic.otf' 'GFSDidotItalic.otf'; do
+    fc-scan "${font}" -f "%%{[]lang{    <lang>%%{lang}</lang>\n}}"
+  done | sort -u
+)
+if [[ -n "${fontlangs}" ]] ; then
+  fontlangs=$'\n'"  <languages>"$'\n'"${fontlangs}"$'\n'"  </languages>"
 fi
 
-%files
-%{_fontconfig_templatedir}/%{fontconf}
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}
-%{_fontbasedir}/*/%{_fontstem}/*.otf
-%doc *.txt *.pdf
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+echo "Generating the gfs-didot-fonts appstream file"
+cat > "org.altlinux.gfs-didot-fonts.metainfo.xml" << EOF_APPSTREAM
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: MIT -->
+<component type="font">
+  <id>org.altlinux.gfs-didot-fonts</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>OFL</project_license>
+  <name>GFSDidot</name>
+  <summary><![CDATA[GFS Didot, a 20th century Greek font family]]></summary>
+  <description>
+    <p><![CDATA[Didot’s type was the base for a new font, GFS Didot (1994) which was designed]]></p><p><![CDATA[by Takis Katsoulidis, and digitized by George Matthiopoulos. The typeface is]]></p>
+  </description>
+  <updatecontact>devel@lists.altlinux.org</updatecontact>
+  <url type="homepage">http://www.greekfontsociety-gfs.gr/typefaces/20th_21st_century</url>
+  <releases>
+    <release version="%{version}-%{release}" date="$(date -d @$SOURCE_DATE_EPOCH -u --rfc-3339=d)"/>
+  </releases>${fontnames}${fontlangs}
+</component>
+EOF_APPSTREAM
+
+%install
+echo "Installing "gfs-didot-fonts
+echo "" > "gfs-didot-fonts.list"
+install -m 0755 -vd %buildroot%_fontsdir/otf/gfs-didot-fonts/
+echo "%%dir %_fontsdir/otf/gfs-didot-fonts" >> "gfs-didot-fonts.list"
+install -m 0644 -vp "GFSDidot.otf" %buildroot%_fontsdir/otf/gfs-didot-fonts/
+echo \"%_fontsdir/otf/gfs-didot-fonts//$(basename "${font}")\" >> 'gfs-didot-fonts.list'
+install -m 0644 -vp "GFSDidotBold.otf" %buildroot%_fontsdir/otf/gfs-didot-fonts/
+echo \"%_fontsdir/otf/gfs-didot-fonts//$(basename "${font}")\" >> 'gfs-didot-fonts.list'
+install -m 0644 -vp "GFSDidotBoldItalic.otf" %buildroot%_fontsdir/otf/gfs-didot-fonts/
+echo \"%_fontsdir/otf/gfs-didot-fonts//$(basename "${font}")\" >> 'gfs-didot-fonts.list'
+install -m 0644 -vp "GFSDidotItalic.otf" %buildroot%_fontsdir/otf/gfs-didot-fonts/
+echo \"%_fontsdir/otf/gfs-didot-fonts//$(basename "${font}")\" >> 'gfs-didot-fonts.list'
+(
+
+  IFS= lines=$(
+    for fontconfng in '%SOURCE10'; do
+      gen-fontconf -x "${fontconfng}" -w -f 'GFSDidot.otf' 'GFSDidotBold.otf' 'GFSDidotBoldItalic.otf' 'GFSDidotItalic.otf'
+    done
+  )
+  while IFS= read -r line; do
+    [[ -n $line ]] && newfontconfs+=("$line")
+  done <<< ${lines}
+
+  install -m 0755 -vd "%{buildroot}%{_fontconfig_templatedir}" \
+                    "%{buildroot}%{_fontconfig_confdir}"
+  for fontconf in  "${newfontconfs[@]}"; do
+    if [[ -n $fontconf ]] ; then
+      install -m 0644 -vp "${fontconf}" "%{buildroot}%{_fontconfig_templatedir}"
+      echo \"%{_fontconfig_templatedir}/$(basename "${fontconf}")\"                  >> "gfs-didot-fonts.list"
+      ln -vsr "%{buildroot}%{_fontconfig_templatedir}/$(basename "${fontconf}")" "%{buildroot}%{_fontconfig_confdir}"
+      echo "%%config(noreplace)" \"%{_fontconfig_confdir}/$(basename "${fontconf}")\" >> "gfs-didot-fonts.list"
+    fi
+  done
+)
+
+install -m 0755 -vd "%{buildroot}%{_metainfodir}"
+for fontappstream in 'org.altlinux.gfs-didot-fonts.metainfo.xml'; do
+  install -m 0644 -vp "${fontappstream}" "%{buildroot}%{_metainfodir}"
+  echo \"%{_metainfodir}/$(basename "${fontappstream}")\" >> "gfs-didot-fonts.list"
+done
+
+for fontdoc in 'OFL-FAQ.txt' 'OFL.txt'; do
+  echo %%doc "${fontdoc}" >> "gfs-didot-fonts.list"
+done
+
+for fontlicense in 'OFL.txt'; do
+  echo %%doc "${fontlicense}" >> "gfs-didot-fonts.list"
+done
+
+%check
+
+grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'gfs-didot-fonts.list' \
+  | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
+grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'gfs-didot-fonts.list' \
+  | xargs -I{} --        appstream-util validate-relax --nonet '%{buildroot}{}'
+
+%files -n fonts-otf-gfs-didot -f gfs-didot-fonts.list
+
+%files doc
+%doc --no-dereference OFL.txt
+%doc *.pdf
 
 %changelog
+* Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 20070616-alt3_33
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 20070616-alt3_23
 - update to new release by fcimport
 
