@@ -2,11 +2,12 @@
 
 %define oname bootstrap
 %global fontname glyphicons-halflings
+%global _fontdir /usr/share/fonts/%fontname
 
 Name: javascript-%oname
 Summary: HTML, CSS and JS framework
 Version: 3.4.1
-Release: alt1
+Release: alt2
 License: MIT
 Group: Development/Other
 Url: https://getbootstrap.com/
@@ -16,7 +17,7 @@ BuildArch: noarch
 Provides: libjs-%oname = %EVR
 
 Requires: javascript-common javascript-jquery fonts-glyphicons-halflings
-BuildRequires(pre): rpm-macros-javascript rpm-macros-fontpackages
+BuildRequires(pre): rpm-macros-javascript
 
 %description
 Bootstrap is a popular HTML, CSS, and JS framework for developing
@@ -58,5 +59,8 @@ done
 %_fontdir
 
 %changelog
+* Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 3.4.1-alt2
+- NMU: do not use deprecated rpm-macros-fontpackages
+
 * Tue Jan 25 2022 Alexey Shabalin <shaba@altlinux.org> 3.4.1-alt1
 - Initial build.
