@@ -1,13 +1,14 @@
 Epoch: 1
 Group: Security/Networking
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/protoc /usr/bin/protoc-c binutils-devel libdw-devel libsensors3-devel libunwind-devel zlib-devel
+BuildRequires: /usr/bin/protoc /usr/bin/protoc-c binutils-devel libbladerf-devel libdw-devel libsensors3-devel libunwind-devel pkgconfig(libusb-1.0) zlib-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name kismet
-%global _version        2020-09-R4
+%global _hardened_build 1
+%global _version        2022-01-R3
 
 ## {Local macros...
 %global cfgdir          %_sysconfdir/%name
@@ -20,7 +21,7 @@ BuildRequires: /usr/bin/protoc /usr/bin/protoc-c binutils-devel libdw-devel libs
 Summary:        WLAN detector, sniffer and IDS
 Name:           kismet
 Version:        %_rpmversion
-Release:        alt2_2
+Release:        alt1_1
 License:        GPLv2+
 URL:            http://www.kismetwireless.net/
 Source0:        http://www.kismetwireless.net/code/%{name}-%_version.tar.xz
@@ -35,8 +36,8 @@ BuildRequires:  libpcap-devel libpcre-devel libpcrecpp-devel
 BuildRequires:  libssl-devel libcap-devel libnl-devel
 BuildRequires:  libbluez-devel
 BuildRequires:  libmicrohttpd-devel libprotobuf-devel libprotobuf-c-devel
-BuildRequires:  libnm-devel libnm-gir-devel libusb-devel
-BuildRequires:  libsqlite3-devel
+BuildRequires:  libnm-devel libnm-gir-devel libusb-compat-devel
+BuildRequires:  libsqlite3-devel libwebsockets-devel
 Source44: import.info
 Conflicts: kismet-server < 2014.02.R4
 
@@ -81,17 +82,46 @@ export LDFLAGS='-Wl,--as-needed'
 sed -i s/2019-08-GIT/%{version}-%{release}%{?dist}/g packaging/kismet.pc
 
 %install
-BIN=$RPM_BUILD_ROOT/bin ETC=$RPM_BUILD_ROOT/etc %makeinstall_std
+BIN=$RPM_BUILD_ROOT/bin ETC=$RPM_BUILD_ROOT/etc make suidinstall DESTDIR=%{?buildroot} INSTALL="install -p"
+
+sed -i 's,^Version:[[:space:]]*$,Version: %version-%release,' %buildroot%{_libdir}/pkgconfig/kismet.pc
+
+%pre
+getent group kismet >/dev/null || groupadd -f -r kismet
 
 %files
-%doc CHANGELOG README* docs/
+%doc CHANGELOG README*
 %dir %attr(0755,root,root) %cfgdir
 %config(noreplace) %cfgdir/*
-%{_bindir}/kismet*
+%{_bindir}/kismet
+%{_bindir}/kismet_cap_kismetdb
+%{_bindir}/kismet_cap_pcapfile
+%{_bindir}/kismet_discovery
+%{_bindir}/kismet_server
+%{_bindir}/kismetdb_clean
+%{_bindir}/kismetdb_dump_devices
+%{_bindir}/kismetdb_statistics
+%{_bindir}/kismetdb_strip_packets
+%{_bindir}/kismetdb_to_gpx
+%{_bindir}/kismetdb_to_kml
+%{_bindir}/kismetdb_to_pcap
+%{_bindir}/kismetdb_to_wiglecsv
+%attr(4711,root,root) %{_bindir}/kismet_cap_linux_bluetooth
+%attr(4711,root,root) %{_bindir}/kismet_cap_linux_wifi
+%attr(4711,root,root) %{_bindir}/kismet_cap_nrf_51822
+%attr(4711,root,root) %{_bindir}/kismet_cap_nrf_52840
+%attr(4711,root,root) %{_bindir}/kismet_cap_nrf_mousejack
+%attr(4711,root,root) %{_bindir}/kismet_cap_nxp_kw41z
+%attr(4711,root,root) %{_bindir}/kismet_cap_rz_killerbee
+%attr(4711,root,root) %{_bindir}/kismet_cap_ti_cc_2531
+%attr(4711,root,root) %{_bindir}/kismet_cap_ti_cc_2540
 %{_datadir}/kismet
 %{_libdir}/pkgconfig/kismet.pc
 
 %changelog
+* Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 1:0.0.2022.01.R3-alt1_1
+- update to new release by fcimport
+
 * Fri Oct 01 2021 Igor Vlasenko <viy@altlinux.org> 1:0.0.2020.09.R4-alt2_2
 - added conflict with kismet-server (closes: #41029)
 
