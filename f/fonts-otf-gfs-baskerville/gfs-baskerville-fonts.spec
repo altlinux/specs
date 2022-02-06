@@ -1,127 +1,179 @@
 Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-fonts
+BuildRequires: rpm-build-fedora-compat-fonts unzip
 # END SourceDeps(oneline)
 %define oldname gfs-baskerville-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global fontname gfs-baskerville
-%global fontconf 61-%{fontname}.conf
-
-%global archivename GFS_BASKERVILLE_OT
-
-Name:    fonts-otf-gfs-baskerville
+%define fontpkgname gfs-baskerville-fonts
+# SPDX-License-Identifier: MIT
 Version: 20070327
-Release: alt3_24
-Summary: GFS Baskerville Greek font
+Release: alt3_34
+URL:     http://www.greekfontsociety-gfs.gr/typefaces/18th_century
 
-License:   OFL
-URL:       http://www.greekfontsociety.gr/pages/en_typefaces18th.html
-Source0:   http://www.greekfontsociety.gr/%{archivename}.zip
-Source1:   %{oldname}-fontconfig.conf
-Source2:   %{fontname}.metainfo.xml
+%global foundry           GFS
+%global fontlicense       OFL
+%global fontlicenses      OFL.txt
+%global fontdocs          *.txt
+%global fontdocsex        %{fontlicenses}
 
-BuildArch:     noarch
-BuildRequires: fontpackages-devel
-Source44: import.info
-
-%description
-John Baskerville (1706-1775) got involed in typography late in his career but
-his contribution was significant. He was a successful entrepreneur and
-possesed an inquiring mind which he applied to produce many aesthetic and
-technical innovations in printing. He invented a new ink formula, a new type
-of smooth paper and made various improvements in the printing press. He was
-also involved in type design which resulted in a latin typeface which was used
-for the edition of Virgil, in 1757. The quality of the type was admired
-throughout of Europe and America and was revived with great success in the
-early 20th century.
-
-Baskerville was also involved in the design of a Greek typeface which he used
-in an edition of the New Testament for Oxford University, in 1763. He adopted
-the practice of avoiding the excessive number of ligatures which Alexander
-Wilson had started a few years earlier but his Greek types were rather narrow
-in proportion and did not win the sympathy of the philologists and other
-scholars of his time. They did influence, however, the Greek types of
-Giambattista Bodoni. and through him Didot's Greek in Paris.
-
-The typeface has been digitally revived as GFS Baskerville Classic by Sophia
-Kalaitzidou and George D. Matthiopoulos and is now available as part of GFS'
+%global fontfamily        Baskerville
+%global fontsummary       GFS Baskerville, an 18th century oblique Greek font family
+%global fonts             *.otf
+%global fontdescription   \
+John Baskerville (1706-1775) got involved in typography late in his career but\
+his contribution was significant. He was a successful entrepreneur and\
+possessed an inquiring mind which he applied to produce many aesthetic and\
+technical innovations in printing. He invented a new ink formula, a new type\
+of smooth paper and made various improvements in the printing press. He was\
+also involved in type design which resulted in a Latin typeface which was used\
+for the edition of Virgil, in 1757. The quality of the type was admired\
+throughout of Europe and America and was revived with great success in the\
+early 20th century.\
+\
+Baskerville was also involved in the design of a Greek typeface which he used\
+in an edition of the New Testament for Oxford University, in 1763. He adopted\
+the practice of avoiding the excessive number of ligatures which Alexander\
+Wilson had started a few years earlier but his Greek types were rather narrow\
+in proportion and did not win the sympathy of the philologists and other\
+scholars of his time. They did influence, however, the Greek types of\
+Giambattista Bodoni. and through him Didota.'s Greek in Paris.\
+\
+The typeface has been digitally revived as GFS Baskerville Classic by Sophia\
+Kalaitzidou and George D. Matthiopoulos and is now available as part of GFSa.'\
 type library.
 
+%global archivename GFS_Baskerville
+
+Source0:  http://www.greekfontsociety-gfs.gr/_assets/fonts/%{archivename}.zip
+Source10: 61-%{fontpkgname}.xml
+
+Name:           fonts-otf-gfs-baskerville
+Summary:        %{fontsummary}
+License:        %{fontlicense}
+BuildArch:      noarch
+BuildRequires:  rpm-build-fonts
+%{?fontpkgheader}
+Source44: import.info
+%description -n fonts-otf-gfs-baskerville
+%{?fontdescription}
+
+%package   doc
+Group: System/Fonts/True type
+Summary:   Optional documentation files of %{oldname}
+BuildArch: noarch
+%description doc
+This package provides optional documentation files shipped with
+%{oldname}.
 
 %prep
+%global fontconfngs       %{SOURCE10}
 %setup -n %{oldname}-%{version} -q -c -T
-unzip -j -L -q %{SOURCE0}
-chmod 0644 *.txt
-for txt in *.txt ; do
-   fold -s $txt > $txt.new
-   sed -i 's/\r//' $txt.new
-   touch -r $txt $txt.new
-   mv $txt.new $txt
-done
-
+unzip -j -q  %{SOURCE0}
+%linuxtext *.txt
 
 %build
 
-
-%install
-install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p *.otf %{buildroot}%{_fontdir}
-
-install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
-                   %{buildroot}%{_fontconfig_confdir}
-
-install -m 0644 -p %{SOURCE1} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
-ln -s %{_fontconfig_templatedir}/%{fontconf} \
-      %{buildroot}%{_fontconfig_confdir}/%{fontconf}
-
-# Add AppStream metadata
-install -Dm 0644 -p %{SOURCE2} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
+fontnames=$(
+  for font in 'GFSBaskerville.otf'; do
+    fc-scan "${font}" -f "    <font>%%{fullname[0]}</font>\n"
+  done | sort -u
+)
+if [[ -n "${fontnames}" ]] ; then
+  fontnames=$'\n'"  <provides>"$'\n'"${fontnames}"$'\n'"  </provides>"
+fi
+fontlangs=$(
+  for font in 'GFSBaskerville.otf'; do
+    fc-scan "${font}" -f "%%{[]lang{    <lang>%%{lang}</lang>\n}}"
+  done | sort -u
+)
+if [[ -n "${fontlangs}" ]] ; then
+  fontlangs=$'\n'"  <languages>"$'\n'"${fontlangs}"$'\n'"  </languages>"
 fi
 
-%files
-%{_fontconfig_templatedir}/%{fontconf}
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}
-%{_fontbasedir}/*/%{_fontstem}/*.otf
-%doc *.txt *.pdf
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+echo "Generating the gfs-baskerville-fonts appstream file"
+cat > "org.altlinux.gfs-baskerville-fonts.metainfo.xml" << EOF_APPSTREAM
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: MIT -->
+<component type="font">
+  <id>org.altlinux.gfs-baskerville-fonts</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>OFL</project_license>
+  <name>GFSBaskerville</name>
+  <summary><![CDATA[GFS Baskerville, an 18th century oblique Greek font family]]></summary>
+  <description>
+    <p><![CDATA[John Baskerville (1706-1775) got involved in typography late in his career but]]></p><p><![CDATA[his contribution was significant. He was a successful entrepreneur and]]></p><p><![CDATA[possessed an inquiring mind which he applied to produce many aesthetic and]]></p><p><![CDATA[technical innovations in printing. He invented a new ink formula, a new type]]></p><p><![CDATA[of smooth paper and made various improvements in the printing press. He was]]></p><p><![CDATA[also involved in type design which resulted in a Latin typeface which was used]]></p><p><![CDATA[for the edition of Virgil, in 1757. The quality of the type was admired]]></p><p><![CDATA[throughout of Europe and America and was revived with great success in the]]></p><p><![CDATA[early 20th century.]]></p> Baskerville was also involved in the design of a Greek typeface which he used in an edition of the New Testament for Oxford University, in 1763. He adopted the practice of avoiding the excessive number of ligatures which Alexander Wilson had started a few years earlier but his Greek types were rather narrow in proportion and did not win the sympathy of the philologists and other scholars of his time. They did influence, however, the Greek types of Giambattista Bodoni. and through him Didot’s Greek in Paris. The typeface has been digitally revived as GFS Baskerville Classic by Sophia Kalaitzidou and George D. Matthiopoulos and is now available as part of GFS’
+  </description>
+  <updatecontact>devel@lists.altlinux.org</updatecontact>
+  <url type="homepage">http://www.greekfontsociety-gfs.gr/typefaces/18th_century</url>
+  <releases>
+    <release version="%{version}-%{release}" date="$(date -d @$SOURCE_DATE_EPOCH -u --rfc-3339=d)"/>
+  </releases>${fontnames}${fontlangs}
+</component>
+EOF_APPSTREAM
+
+%install
+echo "Installing "gfs-baskerville-fonts
+echo "" > "gfs-baskerville-fonts.list"
+install -m 0755 -vd %buildroot%_fontsdir/otf/gfs-baskerville-fonts/
+echo "%%dir %_fontsdir/otf/gfs-baskerville-fonts" >> "gfs-baskerville-fonts.list"
+install -m 0644 -vp "GFSBaskerville.otf" %buildroot%_fontsdir/otf/gfs-baskerville-fonts/
+echo \"%_fontsdir/otf/gfs-baskerville-fonts//$(basename "${font}")\" >> 'gfs-baskerville-fonts.list'
+(
+
+  IFS= lines=$(
+    for fontconfng in '%SOURCE10'; do
+      gen-fontconf -x "${fontconfng}" -w -f 'GFSBaskerville.otf'
+    done
+  )
+  while IFS= read -r line; do
+    [[ -n $line ]] && newfontconfs+=("$line")
+  done <<< ${lines}
+
+  install -m 0755 -vd "%{buildroot}%{_fontconfig_templatedir}" \
+                    "%{buildroot}%{_fontconfig_confdir}"
+  for fontconf in  "${newfontconfs[@]}"; do
+    if [[ -n $fontconf ]] ; then
+      install -m 0644 -vp "${fontconf}" "%{buildroot}%{_fontconfig_templatedir}"
+      echo \"%{_fontconfig_templatedir}/$(basename "${fontconf}")\"                  >> "gfs-baskerville-fonts.list"
+      ln -vsr "%{buildroot}%{_fontconfig_templatedir}/$(basename "${fontconf}")" "%{buildroot}%{_fontconfig_confdir}"
+      echo "%%config(noreplace)" \"%{_fontconfig_confdir}/$(basename "${fontconf}")\" >> "gfs-baskerville-fonts.list"
+    fi
+  done
+)
+
+install -m 0755 -vd "%{buildroot}%{_metainfodir}"
+for fontappstream in 'org.altlinux.gfs-baskerville-fonts.metainfo.xml'; do
+  install -m 0644 -vp "${fontappstream}" "%{buildroot}%{_metainfodir}"
+  echo \"%{_metainfodir}/$(basename "${fontappstream}")\" >> "gfs-baskerville-fonts.list"
+done
+
+for fontdoc in 'OFL-FAQ.txt' 'OFL.txt'; do
+  echo %%doc "${fontdoc}" >> "gfs-baskerville-fonts.list"
+done
+
+for fontlicense in 'OFL.txt'; do
+  echo %%doc "${fontlicense}" >> "gfs-baskerville-fonts.list"
+done
+
+%check
+
+grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'gfs-baskerville-fonts.list' \
+  | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
+grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'gfs-baskerville-fonts.list' \
+  | xargs -I{} --        appstream-util validate-relax --nonet '%{buildroot}{}'
+
+%files -n fonts-otf-gfs-baskerville -f gfs-baskerville-fonts.list
+
+%files doc
+%doc --no-dereference OFL.txt
+%doc *.pdf
 
 %changelog
+* Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 20070327-alt3_34
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 20070327-alt3_24
 - update to new release by fcimport
 
