@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.180
+Version: 4.0.4.181
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -384,6 +384,11 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Sun Feb 06 2022 Dmitry V. Levin <ldv@altlinux.org> 4.0.4.181-alt1
+- lib.req: upgraded "library not found" warnings to errors:
+  these warnings are real packaging errors,
+  they also cause further ldd errors down the line.
+
 * Tue Nov 16 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.4.180-alt1
 - platform.in: added %%pre_service_stop_posttrans_start and
   %%post_service_posttrans_restart.
