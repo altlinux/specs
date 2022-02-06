@@ -1,6 +1,6 @@
 Name: i3
-Version: 4.18.2
-Release: alt1
+Version: 4.19
+Release: alt2
 
 Summary: I3 window manager
 License: BSD-like
@@ -17,7 +17,7 @@ Packager: %packager
 Requires: dmenu
 
 # Automatically added by buildreq on Tue Mar 03 2015
-BuildRequires: libev-devel libpango-devel libpcre-devel libstartup-notification-devel libxcbutil-cursor-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-keysyms-devel libxkbcommon-x11-devel libyajl-devel libxcbutil-xrm-devel
+BuildRequires: libev-devel libpango-devel libpcre-devel libstartup-notification-devel libxcbutil-cursor-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-keysyms-devel libxkbcommon-x11-devel libyajl-devel libxcbutil-xrm-devel xmlto asciidoc meson ninja-build
 
 # Добавлено вручную - автоматика, увы, не находит.
 BuildRequires: perl-Pod-Parser perl-AnyEvent-I3
@@ -58,26 +58,23 @@ that can interact with i3 window manager via it's IPC.
 %setup -n %name-%version
 
 %build
-%configure
 
-%make_build -C *-alt-linux-gnu*
+mkdir build
+cd build
+meson --buildtype release -Ddocs=True -Dmans=True --prefix /usr ..
+ninja
 
 # Сжимаем страницы руководств
-cd man
+cd ../man
 bzip -9 *.1
-
-cd ..
 
 %install
 
 mkdir -p %buildroot%_bindir
 
-%make install -C *-alt-linux-gnu* DESTDIR=%buildroot
-
-#%%ifarch x86_64
-#install -d %buildroot%_libdir
-#mv %buildroot%_libexecdir/*.so %buildroot%_libdir/
-#%%endif
+cd build
+meson install --destdir %buildroot
+cd ..
 
 %define i3dir /etc/i3
 
@@ -101,13 +98,7 @@ EOF
 
 # Раскладываем документацию по каталогам.
 # Всё, за исключением *.dia и Makefile.
-%define docdir %_docdir/%name-%version
-
-mkdir -p %buildroot%docdir/{html,refcard}
-install -pm644 docs/*.html %buildroot%docdir/html/
-install -pm644 docs/*.png %buildroot%docdir/html/
-install -pm644 docs/{debugging,hacking-howto,ipc,multi-monitor,testsuite,userguide,wsbar} %buildroot%docdir
-install -pm644 docs/refcard.* %buildroot%docdir/refcard
+%define docdir %_docdir/%name
 
 # Устанавливаем страницы руководств.
 mkdir -p %buildroot%_man1dir
@@ -118,7 +109,7 @@ install -pm644 -D %SOURCE1 %buildroot%docdir/
 
 %files
 
-%%doc %docdir
+%doc %docdir
 %%config %i3dir/
 %_bindir/*
 %_man1dir/*
@@ -130,6 +121,12 @@ install -pm644 -D %SOURCE1 %buildroot%docdir/
 %_includedir/*
 
 %changelog
+* Sat Feb 05 2022 Andrey Bergman <vkni@altlinux.org> 4.19-alt2
+- Correct buildreq.
+
+* Wed Nov 18 2020 Andrey Bergman <vkni@altlinux.org> 4.19-alt1
+- Version update
+
 * Wed Sep 30 2020 Andrey Bergman <vkni@altlinux.org> 4.18.2-alt1
 - Version update
 
