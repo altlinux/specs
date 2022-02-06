@@ -9,7 +9,7 @@ BuildRequires: rpm-build-fedora-compat-fonts unzip
 %define fontpkgname gfs-bodoni-classic-fonts
 # SPDX-License-Identifier: MIT
 Version: 20070415
-Release: alt3_33
+Release: alt4_33
 URL:     http://www.greekfontsociety-gfs.gr/typefaces/18th_century
 
 %global foundry           GFS
@@ -115,10 +115,10 @@ EOF_APPSTREAM
 %install
 echo "Installing "gfs-bodoni-classic-fonts
 echo "" > "gfs-bodoni-classic-fonts.list"
-install -m 0755 -vd %buildroot%_fontsdir/otf/gfs-bodoni-classic-fonts/
-echo "%%dir %_fontsdir/otf/gfs-bodoni-classic-fonts" >> "gfs-bodoni-classic-fonts.list"
-install -m 0644 -vp "GFSBodoniClassic.otf" %buildroot%_fontsdir/otf/gfs-bodoni-classic-fonts/
-echo \"%_fontsdir/otf/gfs-bodoni-classic-fonts//$(basename "${font}")\" >> 'gfs-bodoni-classic-fonts.list'
+install -m 0755 -vd %buildroot%_fontsdir/otf/gfs-bodoni-classic/
+echo "%%dir %_fontsdir/otf/gfs-bodoni-classic" >> "gfs-bodoni-classic-fonts.list"
+install -m 0644 -vp "GFSBodoniClassic.otf" %buildroot%_fontsdir/otf/gfs-bodoni-classic/
+echo \"%_fontsdir/otf/gfs-bodoni-classic//$(basename "${font}")\" >> 'gfs-bodoni-classic-fonts.list'
 (
 
   IFS= lines=$(
@@ -149,15 +149,15 @@ for fontappstream in 'org.altlinux.gfs-bodoni-classic-fonts.metainfo.xml'; do
 done
 
 for fontdoc in 'OFL-FAQ.txt' 'OFL.txt'; do
-  echo %%doc "${fontdoc}" >> "gfs-bodoni-classic-fonts.list"
+  echo %%doc "'${fontdoc}'" >> "gfs-bodoni-classic-fonts.list"
 done
 
 for fontlicense in 'OFL.txt'; do
-  echo %%doc "${fontlicense}" >> "gfs-bodoni-classic-fonts.list"
+  echo %%doc "'${fontlicense}'" >> "gfs-bodoni-classic-fonts.list"
 done
 
 %check
-
+# fontcheck
 grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'gfs-bodoni-classic-fonts.list' \
   | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
 grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'gfs-bodoni-classic-fonts.list' \
@@ -170,6 +170,9 @@ grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'gfs-bodoni-classic-fonts.list'
 %doc *.pdf
 
 %changelog
+* Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 20070415-alt4_33
+- use short alt-style fontdir name
+
 * Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 20070415-alt3_33
 - update to new release by fcimport
 
