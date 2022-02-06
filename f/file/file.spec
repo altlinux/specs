@@ -5,7 +5,7 @@
 
 Name: file
 Version: 5.41
-Release: alt2
+Release: alt3
 
 Summary: File type guesser
 License: BSD-2-Clause
@@ -75,7 +75,7 @@ set -o pipefail
 strace_file() {
 	local ret=0
 	strace -nfo strace.log -- src/file "$@" > stdout.log || ret=$?
-	! grep -w -e EPERM -e SIGSYS strace.log >&2 || ret=$?
+	! grep -w -e ENOSYS -e EPERM -e SIGSYS strace.log >&2 || ret=$?
 	cat < stdout.log >&2
 	cat < stdout.log
 	return $ret
@@ -116,6 +116,11 @@ make check
 %_man3dir/libmagic.3*
 
 %changelog
+* Sun Feb 06 2022 Vitaly Chikunov <vt@altlinux.org> 5.41-alt3
+- Fix ALT beekeeper rebuild failure due to use of rseq syscall after glibc
+  update to 2.35.
+- Make seccomp filter return ENOSYS instead of EPERM.
+
 * Mon Oct 25 2021 Ivan A. Melnikov <iv@altlinux.org> 5.41-alt2
 - Fix %%check on systems with file < 5.40.
 
