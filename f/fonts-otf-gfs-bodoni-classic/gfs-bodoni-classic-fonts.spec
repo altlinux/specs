@@ -1,122 +1,178 @@
 Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-fonts
+BuildRequires: rpm-build-fedora-compat-fonts unzip
 # END SourceDeps(oneline)
 %define oldname gfs-bodoni-classic-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global fontname gfs-bodoni-classic
-%global fontconf 61-%{fontname}.conf
-
-%global archivename GFS_BODONICLASS_OT
-
-Name:    fonts-otf-gfs-bodoni-classic
+%define fontpkgname gfs-bodoni-classic-fonts
+# SPDX-License-Identifier: MIT
 Version: 20070415
-Release: alt3_23
-Summary: GFS Bodoni Classic oblique Greek font
+Release: alt3_33
+URL:     http://www.greekfontsociety-gfs.gr/typefaces/18th_century
 
-License:   OFL
-URL:       http://www.greekfontsociety.gr/pages/en_typefaces18th.html
-Source0:   http://www.greekfontsociety.gr/%{archivename}.zip
-Source1:   %{oldname}-fontconfig.conf
-Source2:   %{fontname}.metainfo.xml
+%global foundry           GFS
+%global fontlicense       OFL
+%global fontlicenses      OFL.txt
+%global fontdocs          *.txt
+%global fontdocsex        %{fontlicenses}
 
-BuildArch:     noarch
-BuildRequires: fontpackages-devel
+%global fontfamily        Bodoni Classic
+%global fontsummary       GFS Bodoni Classic, an 18th century oblique Greek font family
+%global fontpkgheader     \
+Requires: font(gfsbodoni)\
+
+%global fonts             *.otf
+%global fontdescription   \
+Giambattista Bodoni was the most prolific Italian type cutter of the 18th\
+century. While he worked in the Vatican Press he was involved in the\
+type cutting of a.'exotica.' languages for which catholic literature was printed.\
+When he established his own press in Parma he did publish many books of the\
+classics with his own Greek typefaces in the last quarter of the 18th century.\
+He was among the first European type cutters to move away from the byzantine\
+cursive tradition with the numerous ligatures which was the norm until then.\
+His Greek types influenced many subsequent designers, yet they fell in disuse\
+by the middle of the 19th century.\
+\
+GFS presented Bodonia.'s original Greek typeface in the commemorative edition of\
+Pindara.'s Olympian Odes (2004), in digital version by George D. Matthiopoulos,\
+and is now available as free ware for the general public. In the OpenType\
+features, under ligatures, one may alternately use diphthongs with the accents\
+placed in between the characters, as Giambattista Bodoni did when setting\
+Greek texts.\
+
+
+%global archivename GFS_Bodoni_Classic
+
+Source0:  http://www.greekfontsociety-gfs.gr/_assets/fonts/%{archivename}.zip
+Source10: 61-%{fontpkgname}.xml
+
+Name:           fonts-otf-gfs-bodoni-classic
+Summary:        %{fontsummary}
+License:        %{fontlicense}
+BuildArch:      noarch
+BuildRequires:  rpm-build-fonts
+%{?fontpkgheader}
 Source44: import.info
+%description -n fonts-otf-gfs-bodoni-classic
+%{?fontdescription}
 
-%description
-Giambattista Bodoni was the most prolific Italian typecutter of the 18th
-century. While he worked in the Vatican Press he was involved in the
-typecutting of a.'exotica.' languages for which catholic literature was printed.
-When he established his own press in Parma he did publish many books of the
-classics with his own Greek typefaces in the last quarter of the 18th century.
-He was among the first European typecutters to move away from the byzantine
-cursive tradition with the numerous ligatures which was the norm until then.
-His Greek types influenced many subsequent designers, yet they fell in disuse
-by the middle of the 19th century.
-
-GFS presented Bodoni's original Greek typeface in the commemorative edition of
-Pindar's Olympian Odes (2004), in digital version by George D. Matthiopoulos,
-and is now available as free ware for the general public. In the OpenType
-features, under ligatures, one may alternately use diphthongs with the accents
-placed in between the characters, as Giambattista Bodoni did when setting
-greek texts.
-
+%package   doc
+Group: System/Fonts/True type
+Summary:   Optional documentation files of %{oldname}
+BuildArch: noarch
+%description doc
+This package provides optional documentation files shipped with
+%{oldname}.
 
 %prep
+%global fontconfngs       %{SOURCE10}
 %setup -n %{oldname}-%{version} -q -c -T
-unzip -j -L -q %{SOURCE0}
-chmod 0644 *.txt
-for txt in *.txt ; do
-   fold -s $txt > $txt.new
-   sed -i 's/\r//' $txt.new
-   touch -r $txt $txt.new
-   mv $txt.new $txt
-done
-
+unzip -j -q  %{SOURCE0}
+%linuxtext *.txt
 
 %build
 
-
-%install
-install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p *.otf %{buildroot}%{_fontdir}
-
-install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
-                   %{buildroot}%{_fontconfig_confdir}
-
-install -m 0644 -p %{SOURCE1} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
-ln -s %{_fontconfig_templatedir}/%{fontconf} \
-      %{buildroot}%{_fontconfig_confdir}/%{fontconf}
-
-# Add AppStream metadata
-install -Dm 0644 -p %{SOURCE2} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
+fontnames=$(
+  for font in 'GFSBodoniClassic.otf'; do
+    fc-scan "${font}" -f "    <font>%%{fullname[0]}</font>\n"
+  done | sort -u
+)
+if [[ -n "${fontnames}" ]] ; then
+  fontnames=$'\n'"  <provides>"$'\n'"${fontnames}"$'\n'"  </provides>"
+fi
+fontlangs=$(
+  for font in 'GFSBodoniClassic.otf'; do
+    fc-scan "${font}" -f "%%{[]lang{    <lang>%%{lang}</lang>\n}}"
+  done | sort -u
+)
+if [[ -n "${fontlangs}" ]] ; then
+  fontlangs=$'\n'"  <languages>"$'\n'"${fontlangs}"$'\n'"  </languages>"
 fi
 
-%files
-%{_fontconfig_templatedir}/%{fontconf}
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}
-%{_fontbasedir}/*/%{_fontstem}/*.otf
-%doc *.txt *.pdf
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+echo "Generating the gfs-bodoni-classic-fonts appstream file"
+cat > "org.altlinux.gfs-bodoni-classic-fonts.metainfo.xml" << EOF_APPSTREAM
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: MIT -->
+<component type="font">
+  <id>org.altlinux.gfs-bodoni-classic-fonts</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>OFL</project_license>
+  <name>GFSBodoni Classic</name>
+  <summary><![CDATA[GFS Bodoni Classic, an 18th century oblique Greek font family]]></summary>
+  <description>
+    <p><![CDATA[Giambattista Bodoni was the most prolific Italian type cutter of the 18th]]></p><p><![CDATA[century. While he worked in the Vatican Press he was involved in the]]></p><p><![CDATA[type cutting of “exotic” languages for which catholic literature was printed.]]></p><p><![CDATA[When he established his own press in Parma he did publish many books of the]]></p><p><![CDATA[classics with his own Greek typefaces in the last quarter of the 18th century.]]></p><p><![CDATA[He was among the first European type cutters to move away from the byzantine]]></p><p><![CDATA[cursive tradition with the numerous ligatures which was the norm until then.]]></p><p><![CDATA[His Greek types influenced many subsequent designers, yet they fell in disuse]]></p><p><![CDATA[by the middle of the 19th century.]]></p> GFS presented Bodoni’s original Greek typeface in the commemorative edition of Pindar’s Olympian Odes (2004), in digital version by George D. Matthiopoulos, and is now available as free ware for the general public. In the OpenType features, under ligatures, one may alternately use diphthongs with the accents placed in between the characters, as Giambattista Bodoni did when setting
+  </description>
+  <updatecontact>devel@lists.altlinux.org</updatecontact>
+  <url type="homepage">http://www.greekfontsociety-gfs.gr/typefaces/18th_century</url>
+  <releases>
+    <release version="%{version}-%{release}" date="$(date -d @$SOURCE_DATE_EPOCH -u --rfc-3339=d)"/>
+  </releases>${fontnames}${fontlangs}
+</component>
+EOF_APPSTREAM
+
+%install
+echo "Installing "gfs-bodoni-classic-fonts
+echo "" > "gfs-bodoni-classic-fonts.list"
+install -m 0755 -vd %buildroot%_fontsdir/otf/gfs-bodoni-classic-fonts/
+echo "%%dir %_fontsdir/otf/gfs-bodoni-classic-fonts" >> "gfs-bodoni-classic-fonts.list"
+install -m 0644 -vp "GFSBodoniClassic.otf" %buildroot%_fontsdir/otf/gfs-bodoni-classic-fonts/
+echo \"%_fontsdir/otf/gfs-bodoni-classic-fonts//$(basename "${font}")\" >> 'gfs-bodoni-classic-fonts.list'
+(
+
+  IFS= lines=$(
+    for fontconfng in '%SOURCE10'; do
+      gen-fontconf -x "${fontconfng}" -w -f 'GFSBodoniClassic.otf'
+    done
+  )
+  while IFS= read -r line; do
+    [[ -n $line ]] && newfontconfs+=("$line")
+  done <<< ${lines}
+
+  install -m 0755 -vd "%{buildroot}%{_fontconfig_templatedir}" \
+                    "%{buildroot}%{_fontconfig_confdir}"
+  for fontconf in  "${newfontconfs[@]}"; do
+    if [[ -n $fontconf ]] ; then
+      install -m 0644 -vp "${fontconf}" "%{buildroot}%{_fontconfig_templatedir}"
+      echo \"%{_fontconfig_templatedir}/$(basename "${fontconf}")\"                  >> "gfs-bodoni-classic-fonts.list"
+      ln -vsr "%{buildroot}%{_fontconfig_templatedir}/$(basename "${fontconf}")" "%{buildroot}%{_fontconfig_confdir}"
+      echo "%%config(noreplace)" \"%{_fontconfig_confdir}/$(basename "${fontconf}")\" >> "gfs-bodoni-classic-fonts.list"
+    fi
+  done
+)
+
+install -m 0755 -vd "%{buildroot}%{_metainfodir}"
+for fontappstream in 'org.altlinux.gfs-bodoni-classic-fonts.metainfo.xml'; do
+  install -m 0644 -vp "${fontappstream}" "%{buildroot}%{_metainfodir}"
+  echo \"%{_metainfodir}/$(basename "${fontappstream}")\" >> "gfs-bodoni-classic-fonts.list"
+done
+
+for fontdoc in 'OFL-FAQ.txt' 'OFL.txt'; do
+  echo %%doc "${fontdoc}" >> "gfs-bodoni-classic-fonts.list"
+done
+
+for fontlicense in 'OFL.txt'; do
+  echo %%doc "${fontlicense}" >> "gfs-bodoni-classic-fonts.list"
+done
+
+%check
+
+grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'gfs-bodoni-classic-fonts.list' \
+  | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
+grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'gfs-bodoni-classic-fonts.list' \
+  | xargs -I{} --        appstream-util validate-relax --nonet '%{buildroot}{}'
+
+%files -n fonts-otf-gfs-bodoni-classic -f gfs-bodoni-classic-fonts.list
+
+%files doc
+%doc --no-dereference OFL.txt
+%doc *.pdf
 
 %changelog
+* Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 20070415-alt3_33
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 20070415-alt3_23
 - update to new release by fcimport
 
