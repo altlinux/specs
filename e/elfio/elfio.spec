@@ -1,11 +1,16 @@
 Group: Other
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
+# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%define autorelease 4
+
 %global debug_package %{nil}
 
 Name:           elfio
 Version:        3.9
-Release:        alt1_1
+Release:        alt1_%autorelease
 Summary:        C++ library for reading and generating ELF files
 
 License:        MIT
@@ -13,6 +18,7 @@ URL:            http://elfio.sourceforge.net/
 Source0:        https://downloads.sf.net/elfio/elfio-%{version}.tar.gz
 
 BuildRequires:  gcc-c++
+BuildRequires:  ctest cmake
 Source44: import.info
 
 %description
@@ -54,27 +60,27 @@ format is required. Such Information can easily be found on the Web.
 # -std=c++03 by default as of lcc 1.23.12
 %add_optflags -std=c++11
 %endif
-%configure
-%make_build
-
+%{fedora_v2_cmake} -DELFIO_BUILD_EXAMPLES=ON
+%fedora_v2_cmake_build
 
 %install
-%makeinstall_std
-# Binaries are the examples and have too generic names: elfdump tutorial write_obj writer
-rm %{buildroot}%{_bindir}/*
-
+%fedora_v2_cmake_install
 
 %check
 # Sanity check
-examples/elfdump/elfdump %{_bindir}/make
+%{_vpath_builddir}/examples/elfdump/elfdump %{_bindir}/cmake
 
 %files devel
 %doc --no-dereference COPYING
 %doc AUTHORS doc/elfio.pdf README
 %{_includedir}/elfio/
+%{_datadir}/elfio/
 
 
 %changelog
+* Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 3.9-alt1_4
+- update to new release by fcimport
+
 * Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 3.9-alt1_1
 - update to new release by fcimport
 
