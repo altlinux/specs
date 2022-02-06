@@ -9,7 +9,7 @@ BuildRequires: rpm-build-fedora-compat-fonts unzip
 %define fontpkgname gfs-complutum-fonts
 # SPDX-License-Identifier: MIT
 Version: 20070413
-Release: alt3_34
+Release: alt4_34
 URL:     http://www.greekfontsociety-gfs.gr/typefaces/16th_century
 
 %global foundry           GFS
@@ -121,10 +121,10 @@ EOF_APPSTREAM
 %install
 echo "Installing "gfs-complutum-fonts
 echo "" > "gfs-complutum-fonts.list"
-install -m 0755 -vd %buildroot%_fontsdir/otf/gfs-complutum-fonts/
-echo "%%dir %_fontsdir/otf/gfs-complutum-fonts" >> "gfs-complutum-fonts.list"
-install -m 0644 -vp "GFSPolyglot.otf" %buildroot%_fontsdir/otf/gfs-complutum-fonts/
-echo \"%_fontsdir/otf/gfs-complutum-fonts//$(basename "${font}")\" >> 'gfs-complutum-fonts.list'
+install -m 0755 -vd %buildroot%_fontsdir/otf/gfs-complutum/
+echo "%%dir %_fontsdir/otf/gfs-complutum" >> "gfs-complutum-fonts.list"
+install -m 0644 -vp "GFSPolyglot.otf" %buildroot%_fontsdir/otf/gfs-complutum/
+echo \"%_fontsdir/otf/gfs-complutum//$(basename "${font}")\" >> 'gfs-complutum-fonts.list'
 (
 
   IFS= lines=$(
@@ -155,15 +155,15 @@ for fontappstream in 'org.altlinux.gfs-complutum-fonts.metainfo.xml'; do
 done
 
 for fontdoc in 'OFL-FAQ.txt' 'OFL.txt'; do
-  echo %%doc "${fontdoc}" >> "gfs-complutum-fonts.list"
+  echo %%doc "'${fontdoc}'" >> "gfs-complutum-fonts.list"
 done
 
 for fontlicense in 'OFL.txt'; do
-  echo %%doc "${fontlicense}" >> "gfs-complutum-fonts.list"
+  echo %%doc "'${fontlicense}'" >> "gfs-complutum-fonts.list"
 done
 
 %check
-
+# fontcheck
 grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'gfs-complutum-fonts.list' \
   | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
 grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'gfs-complutum-fonts.list' \
@@ -176,6 +176,9 @@ grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'gfs-complutum-fonts.list' \
 %doc *.pdf
 
 %changelog
+* Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 20070413-alt4_34
+- use short alt-style fontdir name
+
 * Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 20070413-alt3_34
 - update to new release by fcimport
 
