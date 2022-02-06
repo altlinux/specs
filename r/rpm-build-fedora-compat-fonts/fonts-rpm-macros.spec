@@ -42,7 +42,7 @@ Version: 2.0.5
 BuildArch: noarch
 
 Name:      rpm-build-fedora-compat-fonts
-Release:   alt1_6
+Release:   alt1_7
 Summary:   Build-stage rpm automation for fonts packages
 
 License:   GPLv3+
@@ -63,6 +63,11 @@ Requires:  libuchardet uchardet
 Requires:  python3-module-ruamel-yaml
 Requires:  python3-module-lxml
 Source44: import.info
+# for %%fontcheck
+Requires: /usr/bin/appstream-util /usr/bin/xmllint
+Source45: macros.fedora-compat-fonts
+
+Requires: rpm-build-fonts rpm-macros-fedora-compat-fonts
 
 %description
 This package provides build-stage rpm automation to simplify the creation of
@@ -70,6 +75,21 @@ fonts packages.
 
 It does not need to be included in the default build root: fonts-srpm-macros
 will pull it in for fonts packages only.
+
+%package -n rpm-macros-fedora-compat-fonts
+Summary: Set of RPM macros for packaging %name-based applications
+Group: Development/Other
+Provides: rpm-macros-fontpackages = %EVR
+Obsoletes: rpm-macros-fontpackages < 2
+Requires: rpm-macros-fonts > 0.6
+BuildArch: noarch
+
+%description -n rpm-macros-fedora-compat-fonts
+Set of RPM macros for packaging fedora-compat-fonts-based applications for ALT Linux.
+Install this package if you want to create RPM packages that use %name.
+
+%files -n rpm-macros-fedora-compat-fonts
+%_rpmmacrosdir/fedora-compat-fonts
 
 %package -n fonts-srpm-macros
 Group: Development/Other
@@ -102,7 +122,7 @@ Group: Development/Other
 Summary:   Example fonts packages rpm spec templates
 License:   MIT
 
-Requires:    fonts-rpm-macros = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:    rpm-build-fedora-compat-fonts = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description -n fonts-rpm-templates
 This package contains documented rpm spec templates showcasing how to use the
@@ -141,6 +161,7 @@ install -m 0644 -vp   rpm/lua/rpm/*lua \
 
 install -m 0755 -vd   %{buildroot}%{_bindir}
 install -m 0755 -vp   bin/* %{buildroot}%{_bindir}
+install -D -m644 %SOURCE45 %buildroot%_rpmmacrosdir/fedora-compat-fonts
 
 %files
 %doc --no-dereference LICENSE.txt
@@ -154,6 +175,9 @@ install -m 0755 -vp   bin/* %{buildroot}%{_bindir}
 %doc %{ftcgtemplatedir}/*txt
 
 %changelog
+* Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 1:2.0.5-alt1_7
+- added dependencies
+
 * Fri Jan 28 2022 Igor Vlasenko <viy@altlinux.org> 1:2.0.5-alt1_6
 - new version
 
