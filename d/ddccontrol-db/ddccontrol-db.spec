@@ -3,7 +3,7 @@ Group: System/Base
 %define _localstatedir %{_var}
 Name:             ddccontrol-db
 URL:              https://github.com/ddccontrol/ddccontrol-db
-Version:          20210812
+Version:          20220119
 Release:          alt1_1
 # Agreed by usptream to be GPLv2+
 # http://sourceforge.net/mailarchive/message.php?msg_id=29762202
@@ -40,6 +40,9 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/%{name}
 
 %changelog
+* Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 20220119-alt1_1
+- update to new release by fcimport
+
 * Fri Oct 15 2021 Igor Vlasenko <viy@altlinux.org> 20210812-alt1_1
 - update to new release by fcimport
 
