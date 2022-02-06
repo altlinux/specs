@@ -42,7 +42,7 @@ Version: 2.0.5
 BuildArch: noarch
 
 Name:      rpm-build-fedora-compat-fonts
-Release:   alt1_7
+Release:   alt2_7
 Summary:   Build-stage rpm automation for fonts packages
 
 License:   GPLv3+
@@ -50,10 +50,10 @@ URL:       https://docs.fedoraproject.org/en-US/packaging-guidelines/FontsPolicy
 Source:    %{forgesource}
 
 
-Provides:  fontpackages-devel = %{?epoch:%{epoch}:}%{version}-%{release}
-Obsoletes: fontpackages-devel < %{?epoch:%{epoch}:}%{version}-%{release}
+#Provides:  fontpackages-devel = %{?epoch:%{epoch}:}%{version}-%{release}
+#Obsoletes: fontpackages-devel < %{?epoch:%{epoch}:}%{version}-%{release}
 # Tooling dropped for now as no one was willing to maintain it
-Obsoletes: fontpackages-tools < %{?epoch:%{epoch}:}%{version}-%{release}
+#Obsoletes: fontpackages-tools < %{?epoch:%{epoch}:}%{version}-%{release}
 
 Requires:  fontconfig
 Requires:  libappstream-glib libappstream-glib-gir
@@ -65,7 +65,7 @@ Requires:  python3-module-lxml
 Source44: import.info
 # for %%fontcheck
 Requires: /usr/bin/appstream-util /usr/bin/xmllint
-Source45: macros.fedora-compat-fonts
+Source45: macros.fedora-fonts
 
 Requires: rpm-build-fonts rpm-macros-fedora-compat-fonts
 
@@ -79,8 +79,6 @@ will pull it in for fonts packages only.
 %package -n rpm-macros-fedora-compat-fonts
 Summary: Set of RPM macros for packaging %name-based applications
 Group: Development/Other
-Provides: rpm-macros-fontpackages = %EVR
-Obsoletes: rpm-macros-fontpackages < 2
 Requires: rpm-macros-fonts > 0.6
 BuildArch: noarch
 
@@ -175,6 +173,9 @@ install -D -m644 %SOURCE45 %buildroot%_rpmmacrosdir/fedora-compat-fonts
 %doc %{ftcgtemplatedir}/*txt
 
 %changelog
+* Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 1:2.0.5-alt2_7
+- do not obsolete fontpackages
+
 * Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 1:2.0.5-alt1_7
 - added dependencies
 
