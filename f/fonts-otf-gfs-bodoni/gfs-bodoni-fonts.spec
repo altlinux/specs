@@ -9,7 +9,7 @@ BuildRequires: rpm-build-fedora-compat-fonts unzip
 %define fontpkgname gfs-bodoni-fonts
 # SPDX-License-Identifier: MIT
 Version: 20070415
-Release: alt3_32
+Release: alt4_32
 URL:     http://www.greekfontsociety-gfs.gr/typefaces/20th_21st_century
 
 %global foundry           GFS
@@ -100,16 +100,16 @@ EOF_APPSTREAM
 %install
 echo "Installing "gfs-bodoni-fonts
 echo "" > "gfs-bodoni-fonts.list"
-install -m 0755 -vd %buildroot%_fontsdir/otf/gfs-bodoni-fonts/
-echo "%%dir %_fontsdir/otf/gfs-bodoni-fonts" >> "gfs-bodoni-fonts.list"
-install -m 0644 -vp "GFSBodoni.otf" %buildroot%_fontsdir/otf/gfs-bodoni-fonts/
-echo \"%_fontsdir/otf/gfs-bodoni-fonts//$(basename "${font}")\" >> 'gfs-bodoni-fonts.list'
-install -m 0644 -vp "GFSBodoniBold.otf" %buildroot%_fontsdir/otf/gfs-bodoni-fonts/
-echo \"%_fontsdir/otf/gfs-bodoni-fonts//$(basename "${font}")\" >> 'gfs-bodoni-fonts.list'
-install -m 0644 -vp "GFSBodoniBoldIt.otf" %buildroot%_fontsdir/otf/gfs-bodoni-fonts/
-echo \"%_fontsdir/otf/gfs-bodoni-fonts//$(basename "${font}")\" >> 'gfs-bodoni-fonts.list'
-install -m 0644 -vp "GFSBodoniIt.otf" %buildroot%_fontsdir/otf/gfs-bodoni-fonts/
-echo \"%_fontsdir/otf/gfs-bodoni-fonts//$(basename "${font}")\" >> 'gfs-bodoni-fonts.list'
+install -m 0755 -vd %buildroot%_fontsdir/otf/gfs-bodoni/
+echo "%%dir %_fontsdir/otf/gfs-bodoni" >> "gfs-bodoni-fonts.list"
+install -m 0644 -vp "GFSBodoni.otf" %buildroot%_fontsdir/otf/gfs-bodoni/
+echo \"%_fontsdir/otf/gfs-bodoni//$(basename "${font}")\" >> 'gfs-bodoni-fonts.list'
+install -m 0644 -vp "GFSBodoniBold.otf" %buildroot%_fontsdir/otf/gfs-bodoni/
+echo \"%_fontsdir/otf/gfs-bodoni//$(basename "${font}")\" >> 'gfs-bodoni-fonts.list'
+install -m 0644 -vp "GFSBodoniBoldIt.otf" %buildroot%_fontsdir/otf/gfs-bodoni/
+echo \"%_fontsdir/otf/gfs-bodoni//$(basename "${font}")\" >> 'gfs-bodoni-fonts.list'
+install -m 0644 -vp "GFSBodoniIt.otf" %buildroot%_fontsdir/otf/gfs-bodoni/
+echo \"%_fontsdir/otf/gfs-bodoni//$(basename "${font}")\" >> 'gfs-bodoni-fonts.list'
 (
 
   IFS= lines=$(
@@ -140,15 +140,15 @@ for fontappstream in 'org.altlinux.gfs-bodoni-fonts.metainfo.xml'; do
 done
 
 for fontdoc in 'OFL-FAQ.txt' 'OFL.txt' 'readme.rtf'; do
-  echo %%doc "${fontdoc}" >> "gfs-bodoni-fonts.list"
+  echo %%doc "'${fontdoc}'" >> "gfs-bodoni-fonts.list"
 done
 
 for fontlicense in 'OFL.txt'; do
-  echo %%doc "${fontlicense}" >> "gfs-bodoni-fonts.list"
+  echo %%doc "'${fontlicense}'" >> "gfs-bodoni-fonts.list"
 done
 
 %check
-
+# fontcheck
 grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'gfs-bodoni-fonts.list' \
   | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
 grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'gfs-bodoni-fonts.list' \
@@ -161,6 +161,9 @@ grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'gfs-bodoni-fonts.list' \
 %doc *.pdf
 
 %changelog
+* Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 20070415-alt4_32
+- use short alt-style fontdir name
+
 * Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 20070415-alt3_32
 - update to new release by fcimport
 
