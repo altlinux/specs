@@ -15,8 +15,10 @@ BuildRequires: perl(Text/Diff/Config.pm) perl-podlators
 %bcond_without biber_enables_extra_test
 
 Name:           biber
-Version:        2.16
-Release:        alt1_4
+# Export $BCF_VERSION from lib/Biber/Constants.pm, bug #2048536
+%define bcfversion 3.8
+Version:        2.17
+Release:        alt1_2
 Summary:        Command-line bibliographic manager, BibTeX replacement
 # bin/biber:        Artistic 2.0
 # data/texmap.xsl:  Artistic 2.0
@@ -149,25 +151,18 @@ Requires:       perl(Text/BibTeX.pm) >= 0.880
 # Unicode::Collate::Locale version from Unicode::Collate in Build.PL
 Requires:       perl(Unicode/Collate/Locale.pm) >= 1.290
 Requires:       perl(XML/LibXSLT.pm)
-# Biber does not use biblatex, but it expects a compatible biblatex file format
-# (see doc/biber.tex "Compatibility Matrix"):
-#     biber | texlive-biblatex
-#     ------+-----------------
-#     1.8   | 2.8a
-#     2.1   | 3.0
-#     2.6   | 3.5, 3.6
-#     2.7   | 3.7       (bug #1401482)
-#     2.8   | 3.8
-#     2.9   | 3.9
-#     2.10  | 3.10
-#     2.11  | 3.11
-#     2.12  | 3.12
-#     2.13  | 3.13
-#     2.14  | 3.14
-# (biblatex also has minimum biber requirements). Provided that texlive-biblatex
-# package (e.g. 2020) does not RPM-export biblatex's version (e.g. 3.14) and
-# biblatex reached 3.14 version many years ago, it does not make sense to keep
-# the dependency from biber on texlive-biblatex >= 7:svn42680 here.
+# Biber does not use biblatex, but it requires a compatible version of
+# a biblatex control file (BCF) which is produced by biblatex. See @bcfversion
+# definition in /usr/share/texlive/texmf-dist/tex/latex/biblatex/biblatex.sty
+# and a corresponding $BCF_VERSION in lib/Biber/Constants.pm. Unfortunally,
+# Biber supports only one version of BCF. See "Compatibility Matrix" in
+# doc/biber.tex.
+# Because Biber does not use texlive-biblatex, Biber cannot Require it's exact
+# version. Because it is expensive to rebuild texlive, it's not good to
+# Require a specific biber version from texlive-biblatex.
+# Hence I proposed a bcfversion dependency which both packages can agree on
+# (bug #2048536).
+Provides:       bcfversion = %{bcfversion}
 # Version at least the main module
 Provides:       perl(Biber.pm) = %{version}
 
@@ -277,6 +272,9 @@ export HARNESS_OPTIONS=j$(perl -e 'if ($ARGV[0] =~ /.*-j([0-9][0-9]*).*/) {print
 
 
 %changelog
+* Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 2.17-alt1_2
+- update to new release by fcimport
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 2.16-alt1_4
 - update to new release by fcimport
 
