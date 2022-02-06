@@ -11,7 +11,7 @@ BuildRequires: unzip
 %global archivename SourceHanSerifCN
 
 Name:           fonts-otf-adobe-source-han-serif-cn
-Version:        2.000
+Version:        2.001
 Release:        alt1_1
 Summary:        Adobe OpenType Pan-CJK font family for Simplified Chinese
 
@@ -85,13 +85,16 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
-%dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/*.otf
+%dir %{_fontsdir}/*/%{_fontstem}/
+%{_fontsdir}/*/%{_fontstem}/*.otf
 
 %doc --no-dereference LICENSE.txt
 
 
 %changelog
+* Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 2.001-alt1_1
+- update to new release by fcimport
+
 * Sat Nov 13 2021 Igor Vlasenko <viy@altlinux.org> 2.000-alt1_1
 - update to new release by fcimport
 
