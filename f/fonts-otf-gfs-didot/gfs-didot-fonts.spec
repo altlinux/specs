@@ -9,7 +9,7 @@ BuildRequires: rpm-build-fedora-compat-fonts unzip
 %define fontpkgname gfs-didot-fonts
 # SPDX-License-Identifier: MIT
 Version: 20070616
-Release: alt3_33
+Release: alt4_33
 URL:     http://www.greekfontsociety-gfs.gr/typefaces/20th_21st_century
 
 %global foundry           GFS
@@ -98,16 +98,16 @@ EOF_APPSTREAM
 %install
 echo "Installing "gfs-didot-fonts
 echo "" > "gfs-didot-fonts.list"
-install -m 0755 -vd %buildroot%_fontsdir/otf/gfs-didot-fonts/
-echo "%%dir %_fontsdir/otf/gfs-didot-fonts" >> "gfs-didot-fonts.list"
-install -m 0644 -vp "GFSDidot.otf" %buildroot%_fontsdir/otf/gfs-didot-fonts/
-echo \"%_fontsdir/otf/gfs-didot-fonts//$(basename "${font}")\" >> 'gfs-didot-fonts.list'
-install -m 0644 -vp "GFSDidotBold.otf" %buildroot%_fontsdir/otf/gfs-didot-fonts/
-echo \"%_fontsdir/otf/gfs-didot-fonts//$(basename "${font}")\" >> 'gfs-didot-fonts.list'
-install -m 0644 -vp "GFSDidotBoldItalic.otf" %buildroot%_fontsdir/otf/gfs-didot-fonts/
-echo \"%_fontsdir/otf/gfs-didot-fonts//$(basename "${font}")\" >> 'gfs-didot-fonts.list'
-install -m 0644 -vp "GFSDidotItalic.otf" %buildroot%_fontsdir/otf/gfs-didot-fonts/
-echo \"%_fontsdir/otf/gfs-didot-fonts//$(basename "${font}")\" >> 'gfs-didot-fonts.list'
+install -m 0755 -vd %buildroot%_fontsdir/otf/gfs-didot/
+echo "%%dir %_fontsdir/otf/gfs-didot" >> "gfs-didot-fonts.list"
+install -m 0644 -vp "GFSDidot.otf" %buildroot%_fontsdir/otf/gfs-didot/
+echo \"%_fontsdir/otf/gfs-didot//$(basename "${font}")\" >> 'gfs-didot-fonts.list'
+install -m 0644 -vp "GFSDidotBold.otf" %buildroot%_fontsdir/otf/gfs-didot/
+echo \"%_fontsdir/otf/gfs-didot//$(basename "${font}")\" >> 'gfs-didot-fonts.list'
+install -m 0644 -vp "GFSDidotBoldItalic.otf" %buildroot%_fontsdir/otf/gfs-didot/
+echo \"%_fontsdir/otf/gfs-didot//$(basename "${font}")\" >> 'gfs-didot-fonts.list'
+install -m 0644 -vp "GFSDidotItalic.otf" %buildroot%_fontsdir/otf/gfs-didot/
+echo \"%_fontsdir/otf/gfs-didot//$(basename "${font}")\" >> 'gfs-didot-fonts.list'
 (
 
   IFS= lines=$(
@@ -138,15 +138,15 @@ for fontappstream in 'org.altlinux.gfs-didot-fonts.metainfo.xml'; do
 done
 
 for fontdoc in 'OFL-FAQ.txt' 'OFL.txt'; do
-  echo %%doc "${fontdoc}" >> "gfs-didot-fonts.list"
+  echo %%doc "'${fontdoc}'" >> "gfs-didot-fonts.list"
 done
 
 for fontlicense in 'OFL.txt'; do
-  echo %%doc "${fontlicense}" >> "gfs-didot-fonts.list"
+  echo %%doc "'${fontlicense}'" >> "gfs-didot-fonts.list"
 done
 
 %check
-
+# fontcheck
 grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'gfs-didot-fonts.list' \
   | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
 grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'gfs-didot-fonts.list' \
@@ -159,6 +159,9 @@ grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'gfs-didot-fonts.list' \
 %doc *.pdf
 
 %changelog
+* Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 20070616-alt4_33
+- use short alt-style fontdir name
+
 * Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 20070616-alt3_33
 - update to new release by fcimport
 
