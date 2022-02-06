@@ -9,7 +9,7 @@ BuildRequires: rpm-build-fedora-compat-fonts unzip
 %define fontpkgname gfs-artemisia-fonts
 # SPDX-License-Identifier: MIT
 Version: 20070415
-Release: alt3_33
+Release: alt4_33
 URL:     http://www.greekfontsociety-gfs.gr/typefaces/20th_21st_century
 
 %global foundry           GFS
@@ -103,16 +103,16 @@ EOF_APPSTREAM
 %install
 echo "Installing "gfs-artemisia-fonts
 echo "" > "gfs-artemisia-fonts.list"
-install -m 0755 -vd %buildroot%_fontsdir/otf/gfs-artemisia-fonts/
-echo "%%dir %_fontsdir/otf/gfs-artemisia-fonts" >> "gfs-artemisia-fonts.list"
-install -m 0644 -vp "GFSArtemisia.otf" %buildroot%_fontsdir/otf/gfs-artemisia-fonts/
-echo \"%_fontsdir/otf/gfs-artemisia-fonts//$(basename "${font}")\" >> 'gfs-artemisia-fonts.list'
-install -m 0644 -vp "GFSArtemisiaBold.otf" %buildroot%_fontsdir/otf/gfs-artemisia-fonts/
-echo \"%_fontsdir/otf/gfs-artemisia-fonts//$(basename "${font}")\" >> 'gfs-artemisia-fonts.list'
-install -m 0644 -vp "GFSArtemisiaBoldIt.otf" %buildroot%_fontsdir/otf/gfs-artemisia-fonts/
-echo \"%_fontsdir/otf/gfs-artemisia-fonts//$(basename "${font}")\" >> 'gfs-artemisia-fonts.list'
-install -m 0644 -vp "GFSArtemisiaIt.otf" %buildroot%_fontsdir/otf/gfs-artemisia-fonts/
-echo \"%_fontsdir/otf/gfs-artemisia-fonts//$(basename "${font}")\" >> 'gfs-artemisia-fonts.list'
+install -m 0755 -vd %buildroot%_fontsdir/otf/gfs-artemisia/
+echo "%%dir %_fontsdir/otf/gfs-artemisia" >> "gfs-artemisia-fonts.list"
+install -m 0644 -vp "GFSArtemisia.otf" %buildroot%_fontsdir/otf/gfs-artemisia/
+echo \"%_fontsdir/otf/gfs-artemisia//$(basename "${font}")\" >> 'gfs-artemisia-fonts.list'
+install -m 0644 -vp "GFSArtemisiaBold.otf" %buildroot%_fontsdir/otf/gfs-artemisia/
+echo \"%_fontsdir/otf/gfs-artemisia//$(basename "${font}")\" >> 'gfs-artemisia-fonts.list'
+install -m 0644 -vp "GFSArtemisiaBoldIt.otf" %buildroot%_fontsdir/otf/gfs-artemisia/
+echo \"%_fontsdir/otf/gfs-artemisia//$(basename "${font}")\" >> 'gfs-artemisia-fonts.list'
+install -m 0644 -vp "GFSArtemisiaIt.otf" %buildroot%_fontsdir/otf/gfs-artemisia/
+echo \"%_fontsdir/otf/gfs-artemisia//$(basename "${font}")\" >> 'gfs-artemisia-fonts.list'
 (
 
   IFS= lines=$(
@@ -143,15 +143,15 @@ for fontappstream in 'org.altlinux.gfs-artemisia-fonts.metainfo.xml'; do
 done
 
 for fontdoc in 'OFL-FAQ.txt' 'OFL.txt' 'readme.rtf'; do
-  echo %%doc "${fontdoc}" >> "gfs-artemisia-fonts.list"
+  echo %%doc "'${fontdoc}'" >> "gfs-artemisia-fonts.list"
 done
 
 for fontlicense in 'OFL.txt'; do
-  echo %%doc "${fontlicense}" >> "gfs-artemisia-fonts.list"
+  echo %%doc "'${fontlicense}'" >> "gfs-artemisia-fonts.list"
 done
 
 %check
-
+# fontcheck
 grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'gfs-artemisia-fonts.list' \
   | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
 grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'gfs-artemisia-fonts.list' \
@@ -164,6 +164,9 @@ grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'gfs-artemisia-fonts.list' \
 %doc *.pdf
 
 %changelog
+* Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 20070415-alt4_33
+- use short alt-style fontdir name
+
 * Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 20070415-alt3_33
 - update to new release by fcimport
 
