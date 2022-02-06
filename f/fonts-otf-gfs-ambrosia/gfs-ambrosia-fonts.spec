@@ -9,7 +9,7 @@ BuildRequires: rpm-build-fedora-compat-fonts unzip
 %define fontpkgname gfs-ambrosia-fonts
 # SPDX-License-Identifier: MIT
 Version: 20080624
-Release: alt3_27
+Release: alt4_27
 URL:     http://www.greekfontsociety-gfs.gr/typefaces/majuscule
 
 %global foundry           GFS
@@ -105,10 +105,10 @@ EOF_APPSTREAM
 %install
 echo "Installing "gfs-ambrosia-fonts
 echo "" > "gfs-ambrosia-fonts.list"
-install -m 0755 -vd %buildroot%_fontsdir/otf/gfs-ambrosia-fonts/
-echo "%%dir %_fontsdir/otf/gfs-ambrosia-fonts" >> "gfs-ambrosia-fonts.list"
-install -m 0644 -vp "GFSAmbrosia.otf" %buildroot%_fontsdir/otf/gfs-ambrosia-fonts/
-echo \"%_fontsdir/otf/gfs-ambrosia-fonts//$(basename "${font}")\" >> 'gfs-ambrosia-fonts.list'
+install -m 0755 -vd %buildroot%_fontsdir/otf/gfs-ambrosia/
+echo "%%dir %_fontsdir/otf/gfs-ambrosia" >> "gfs-ambrosia-fonts.list"
+install -m 0644 -vp "GFSAmbrosia.otf" %buildroot%_fontsdir/otf/gfs-ambrosia/
+echo \"%_fontsdir/otf/gfs-ambrosia//$(basename "${font}")\" >> 'gfs-ambrosia-fonts.list'
 (
 
   IFS= lines=$(
@@ -139,15 +139,15 @@ for fontappstream in 'org.altlinux.gfs-ambrosia-fonts.metainfo.xml'; do
 done
 
 for fontdoc in 'OFL-FAQ.txt' 'OFL.txt'; do
-  echo %%doc "${fontdoc}" >> "gfs-ambrosia-fonts.list"
+  echo %%doc "'${fontdoc}'" >> "gfs-ambrosia-fonts.list"
 done
 
 for fontlicense in 'OFL.txt'; do
-  echo %%doc "${fontlicense}" >> "gfs-ambrosia-fonts.list"
+  echo %%doc "'${fontlicense}'" >> "gfs-ambrosia-fonts.list"
 done
 
 %check
-
+# fontcheck
 grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'gfs-ambrosia-fonts.list' \
   | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
 grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'gfs-ambrosia-fonts.list' \
@@ -156,6 +156,9 @@ grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'gfs-ambrosia-fonts.list' \
 %files -n fonts-otf-gfs-ambrosia -f gfs-ambrosia-fonts.list
 
 %changelog
+* Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 20080624-alt4_27
+- use short alt-style fontdir name
+
 * Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 20080624-alt3_27
 - update to new release by fcimport
 
