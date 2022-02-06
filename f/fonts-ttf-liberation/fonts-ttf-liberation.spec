@@ -5,7 +5,7 @@
 
 Name: fonts-ttf-%fontname
 Version: 2.00.4
-Release: alt2
+Release: alt3
 
 Summary: Fonts to replace commonly used Microsoft Windows Fonts
 
@@ -37,7 +37,7 @@ Requires: %name-narrow
 # To satisfy requirements of official Google Chrome RPM package
 Provides: liberation-fonts
 
-BuildRequires: rpm-build-fonts rpm-macros-fontpackages
+BuildRequires: rpm-build-fonts
 BuildRequires: python3-module-fonttools fontforge fontpackages-devel
 
 %description
@@ -81,6 +81,9 @@ done
 %config(noreplace) %{_fontconfig_confdir}/*-%{fontname}-*.conf
 
 %changelog
+* Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 2.00.4-alt3
+- NMU: removed rpm-macros-fontpackages, use new rpm-macros-fonts
+
 * Tue Nov 19 2019 Ivan Zakharyaschev <imz@altlinux.org> 2.00.4-alt2
 - Made additional useful part of this font set (Liberation Narrow) be installed
   together with this package always, to make users happier. (By a Requires.
