@@ -9,7 +9,7 @@ BuildRequires: rpm-build-fedora-compat-fonts unzip
 %define fontpkgname gfs-didot-classic-fonts
 # SPDX-License-Identifier: MIT
 Version: 20080702
-Release: alt3_28
+Release: alt4_28
 URL:     http://www.greekfontsociety-gfs.gr/typefaces/19th_century
 
 %global foundry           GFS
@@ -113,10 +113,10 @@ EOF_APPSTREAM
 %install
 echo "Installing "gfs-didot-classic-fonts
 echo "" > "gfs-didot-classic-fonts.list"
-install -m 0755 -vd %buildroot%_fontsdir/otf/gfs-didot-classic-fonts/
-echo "%%dir %_fontsdir/otf/gfs-didot-classic-fonts" >> "gfs-didot-classic-fonts.list"
-install -m 0644 -vp "GFSDidot_Classic.otf" %buildroot%_fontsdir/otf/gfs-didot-classic-fonts/
-echo \"%_fontsdir/otf/gfs-didot-classic-fonts//$(basename "${font}")\" >> 'gfs-didot-classic-fonts.list'
+install -m 0755 -vd %buildroot%_fontsdir/otf/gfs-didot-classic/
+echo "%%dir %_fontsdir/otf/gfs-didot-classic" >> "gfs-didot-classic-fonts.list"
+install -m 0644 -vp "GFSDidot_Classic.otf" %buildroot%_fontsdir/otf/gfs-didot-classic/
+echo \"%_fontsdir/otf/gfs-didot-classic//$(basename "${font}")\" >> 'gfs-didot-classic-fonts.list'
 (
 
   IFS= lines=$(
@@ -147,15 +147,15 @@ for fontappstream in 'org.altlinux.gfs-didot-classic-fonts.metainfo.xml'; do
 done
 
 for fontdoc in 'OFL-FAQ.txt' 'OFL.txt'; do
-  echo %%doc "${fontdoc}" >> "gfs-didot-classic-fonts.list"
+  echo %%doc "'${fontdoc}'" >> "gfs-didot-classic-fonts.list"
 done
 
 for fontlicense in 'OFL.txt'; do
-  echo %%doc "${fontlicense}" >> "gfs-didot-classic-fonts.list"
+  echo %%doc "'${fontlicense}'" >> "gfs-didot-classic-fonts.list"
 done
 
 %check
-
+# fontcheck
 grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'gfs-didot-classic-fonts.list' \
   | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
 grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'gfs-didot-classic-fonts.list' \
@@ -168,6 +168,9 @@ grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'gfs-didot-classic-fonts.list' 
 %doc *.pdf
 
 %changelog
+* Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 20080702-alt4_28
+- use short alt-style fontdir name
+
 * Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 20080702-alt3_28
 - update to new release by fcimport
 
