@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.1.0
-Release: alt1
+Release: alt2
 
 Summary: Group policy editor
 License: GPLv2+
@@ -14,7 +14,9 @@ BuildRequires: rpm-macros-cmake
 BuildRequires: cmake-modules
 BuildRequires: gcc-c++
 BuildRequires: qt5-base-devel
+BuildRequires: qt5-declarative-devel
 BuildRequires: qt5-tools-devel
+BuildRequires: libsmbclient-devel libsmbclient
 
 BuildRequires: qt5-base-common
 BuildRequires: doxygen
@@ -49,7 +51,21 @@ Group policy editor
 %_libdir/gpui/plugins/libadmx-plugin.so
 %_libdir/gpui/plugins/libreg-plugin.so
 %_libdir/gpui/plugins/libspol-plugin.so
+%_libdir/gpui/plugins/libpol-plugin.so
+
+%_libdir/gpui/plugins/libdrives-plugin.so
+%_libdir/gpui/plugins/libfiles-plugin.so
+%_libdir/gpui/plugins/libfolders-plugin.so
+%_libdir/gpui/plugins/libini-plugin.so
+%_libdir/gpui/plugins/libshares-plugin.so
+%_libdir/gpui/plugins/libshortcuts-plugin.so
+%_libdir/gpui/plugins/libvariables-plugin.so
+
+%_libdir/gpui/plugins/libsmb-storage-plugin.so
 
 %changelog
+* Tue Feb 01 2022 Vladimir Rubanov <august@altlinux.org> 0.1.0-alt2
+- A first implementation of smb routines.
+
 * Mon Jul 05 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.1.0-alt1
 - Initial build
