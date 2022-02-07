@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.24
+Version: 1.4.25
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,28 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Feb 07 2022 Anton Midyukov <antohami@altlinux.org> 1.4.25-alt1
+- stage2: add Baikal M support to 50-stage2-usb list
+- server-v: use crio instead of docker with k8s (thanks 
+  obirvalger@altlinux.org)
+- dev: fix owner:group for /home/altlinux/*
+- dev: add apt.conf's and source.list's for supported BRANCHES
+  and ARCHES
+- regular.mk: switch regular-builder on systemd, add regular-builder-sysv
+- disable gpm.service for regular-builder
+- add NetworkManager-tui to regular-builder
+- grub: Add ability to override terminal from external grub.cfg on ESP
+- init: do not add systemd-utils-standalone to use/init/sysv
+  (fix build target with sysvinit on p9)
+- uboot: update list for riscv64
+- alt-server.mk: switch to grub-efi for bootloading iso on x86_64 UEFI
+- init: not copy os-release in live, rescue (more not needed)
+- reports.mk: do not abort, if not available rpm cache
+- regular.mk: add use/tty for all regulars
+- repo: add the ability to select a repository mirror (default http/alt)
+- repo: setup mirror in install script 99-online-repo.sh
+- e2k: fix bootloading iso from CD/DVD
+
 * Thu Dec 30 2021 Anton Midyukov <antohami@altlinux.org> 1.4.24-alt1
 - regular-server-sysv: add use/power/acpi/button
 - fix META_VOL_ID for Starterkits
