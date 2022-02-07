@@ -1,5 +1,5 @@
 Name: algol68g
-Version: 2.8.4
+Version: 3.0.4
 Release: alt1
 Summary: Algol 68 interpreter
 License: GPL
@@ -8,7 +8,7 @@ Url: http://jmvdveer.home.xs4all.nl/algol.html
 Packager: %packager
 
 Source: %name-%version.tar
-Patch: algol68g-2.2.0-alt-configure.patch
+Patch: algol68g-3.0.4-alt-configure.patch
 
 # Automatically added by buildreq on Sun Aug 14 2011
 # optimized out: libtinfo-devel
@@ -30,6 +30,7 @@ can optionally be compiled.
 %patch -p1
 
 %build
+autoconf
 %configure
 %make
 
@@ -48,6 +49,9 @@ install -pm644 ChangeLog %buildroot%_docdir/
 %_docdir/*
 
 %changelog
+* Thu Feb 03 2022 Andrey Bergman <vkni@altlinux.org> 3.0.4-alt1
+- Version update
+
 * Sat Jan 21 2017 Andrey Bergman <vkni@altlinux.org> 2.8.4-alt1
 - Version update
 
