@@ -7,12 +7,13 @@ Group: System/Fonts/True type
 %global fontconf %{priority}-%{fontname}
 
 Name:	fonts-ttf-paktype-tehreer
-Version:     5.0
-Release:     alt1_1
+Version:     6.0
+Release:     alt1_3
 Summary:     Fonts for Arabic from PakType
 License:     GPLv2 with exceptions
 URL:		https://sourceforge.net/projects/paktype/
-Source0:	https://sourceforge.net/projects/paktype/files/PakType-Release-2019-03-11.tar.gz#/%{oldname}-%{version}.tar.gz
+Source0:	https://sourceforge.net/p/paktype/code/HEAD/tree/Fonts/Release/PakType-Tehreer-%{version}.tar.gz?format=raw#/%{oldname}-%{version}.tar.gz
+
 Source1:	%{fontconf}.conf
 BuildArch:   noarch
 BuildRequires:	fontpackages-devel
@@ -27,8 +28,8 @@ Arabic from the PakType by Lateef Sagar.
 %setup -n %{oldname}-%{version} -q -c
 rm -rf Code
 # get rid of the white space (' ')
-mv License\ files/PakType\ Tehreer\ License.txt  PakType_Tehreer_License.txt
-mv Features/PakType\ Tehreer\ Features.pdf PakTypeTehreerFeatures.pdf
+mv PakType\ Tehreer\ License.txt  PakType_Tehreer_License.txt
+mv PakType\ Tehreer\ Features.pdf PakTypeTehreerFeatures.pdf
 
 sed -i 's/\r//' PakType_Tehreer_License.txt
 chmod a-x PakType_Tehreer_License.txt PakTypeTehreerFeatures.pdf
@@ -84,16 +85,18 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
-%dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/PakTypeTehreer.ttf
+%dir %{_fontsdir}/*/%{_fontstem}/
+%{_fontsdir}/*/%{_fontstem}/PakTypeTehreer.ttf
 
 %doc PakType_Tehreer_License.txt PakTypeTehreerFeatures.pdf 
 
 %changelog
+* Mon Feb 07 2022 Igor Vlasenko <viy@altlinux.org> 6.0-alt1_3
+- update to new release by fcimport
+
 * Mon Mar 30 2020 Igor Vlasenko <viy@altlinux.ru> 5.0-alt1_1
 - update
 
