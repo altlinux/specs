@@ -1,6 +1,6 @@
 
 Name: kde5-set
-Version: 21.04.1
+Version: 21.08.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -137,7 +137,8 @@ Group: Graphical desktop/KDE
 Requires: kde5-runtime
 Requires: kde5-kanagram kde5-khangman kde5-parley kde5-kwordquiz kde5-kturtle kde5-marble
 Requires: kde5-step kde5-kstars kde5-kig kde5-kmplot kde5-kalgebra kde5-cantor kde5-rocs
-Requires: kde5-kbruch kde5-kgeography kde5-ktouch kde5-kalzium
+Requires: kde5-kbruch kde5-kgeography kde5-ktouch
+# openbabel Requires: kde5-kalzium
 Requires: kde5-minuet
 %description -n kde5-edu
 Educational software based on the KDE technologies
@@ -203,6 +204,9 @@ Requires: kde5-kaddressbook kde5-pim-addons
 %files -n kde5-pim
 
 %changelog
+* Wed Dec 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
+- drop requires to kde5-kalzium
+
 * Thu Aug 19 2021 Sergey V Turchin <zerg@altlinux.org> 21.04.1-alt1
 - move kf5-baloo to small subpackage
 
