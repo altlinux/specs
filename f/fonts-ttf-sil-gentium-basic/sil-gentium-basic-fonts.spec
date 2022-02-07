@@ -1,161 +1,277 @@
 Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-fonts
+BuildRequires: rpm-build-fedora-compat-fonts unzip
 # END SourceDeps(oneline)
 %define oldname sil-gentium-basic-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define fontname sil-gentium-basic
-%define fontconf 59-%{fontname}
+%define fontpkgname sil-gentium-basic-fonts
+# SPDX-License-Identifier: MIT
+Version: 1.102
+Release: alt1_3
+URL:     https://software.sil.org/gentium/
 
-%define common_desc \
+%global foundry           SIL
+%global fontlicense       OFL
+%global fontlicenses      OFL.txt
+
+%global common_description \
 Gentium Basic and Gentium Book Basic are font families based on the\
-original Gentium design, but with additional weights. Both families come \
-with a complete regular, bold, italic and bold italic set of fonts. \
-These "Basic" fonts support only the Basic Latin and Latin-1 Supplement \
+original Gentium design, but with additional weights. Both families come\
+with a complete regular, bold, italic and bold italic set of fonts.\
+These "Basic" fonts support only the Basic Latin and Latin-1 Supplement\
 Unicode ranges, plus a selection of the more commonly used extended Latin\
-characters, with miscellaneous diacritical marks, symbols and punctuation.
+characters, with miscellaneous diacritical marks, symbols and punctuation.\
 
 
-Name: fonts-ttf-sil-gentium-basic
-Version: 1.1
-Release: alt3_16
-Summary: SIL Gentium Basic font family
+%global fontfamily0       Gentium Basic
+%global fontsummary0      SIL Gentium Basic font family
+%global fontpkgheader0    \
+Obsoletes: sil-gentium-basic-fonts-common < %{version}-%{release}\
 
-License:   OFL
-URL:       http://scripts.sil.org/Gentium_Basic
-Source0:   GentiumBasic_110.zip
-Source1:   %{fontname}-fontconfig.conf
-Source2:   %{fontname}-book-fontconfig.conf
-Source3:   %{fontname}.metainfo.xml
-Source4:   %{fontname}-book.metainfo.xml
-
-BuildArch:     noarch
-BuildRequires: fontpackages-devel
-
-Requires: %{name}-common = %{version}-%{release}
-Source44: import.info
-
-%description
-%common_desc
-
+%global fonts0            GenBas*
+%global fontdescription0  \
+%{common_description}\
+\
 This is the base variant.
 
-%files
-%{_fontconfig_templatedir}/%{fontconf}.conf
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
-%{_fontbasedir}/*/%{_fontstem}/GenBas*.ttf
-%{_datadir}/appdata/%{fontname}.metainfo.xml
-
-%package -n fonts-ttf-sil-gentium-basic-common
-Group: System/Fonts/True type
-Summary:  Common files of %{fontname}
-
-%description -n fonts-ttf-sil-gentium-basic-common
-%common_desc
-
-This package consists of files used by other %{fontname} packages.
-
-%package  -n fonts-ttf-sil-gentium-basic-book
-Group: System/Fonts/True type
-Summary:  SIL Gentium Book Basic font family
-Requires: %{name}-common = %{version}-%{release}
-
-%description -n fonts-ttf-sil-gentium-basic-book
-%common_desc
-
+%global fontfamily2       Gentium Basic Book
+%global fontsummary2      SIL Gentium Book Basic font family
+%global fonts2            GenBkBas*
+%global fontdescription2  \
+%global fontpkgname2       sil-gentium-basic-book-fonts\
+%{common_description}\
+\
 The "Book" family is slightly heavier.
 
-%files -n fonts-ttf-sil-gentium-basic-book
-%{_fontconfig_templatedir}/%{fontconf}-book.conf
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-book.conf
-%{_fontbasedir}/*/%{_fontstem}/GenBkBas*.ttf
-%{_datadir}/appdata/%{fontname}-book.metainfo.xml
 
+%global archivename GentiumBasic_1102
+
+Source0:   https://software.sil.org/downloads/r/gentium/%{archivename}.zip
+Source10:  59-sil-gentium-basic-fonts.conf
+Source12:  59-sil-gentium-basic-book-fonts.conf
+
+
+Name:           fonts-ttf-sil-gentium-basic
+Summary:        %{fontsummary0}
+License:        %{fontlicense}
+BuildArch:      noarch
+BuildRequires:  rpm-build-fonts
+%{?fontpkgheader0}
+Source44: import.info
+%description
+%{?fontdescription0}
+%package     -n fonts-ttf-sil-gentium-basic-book
+Group: System/Fonts/True type
+Summary:        %{fontsummary2}
+License:        %{fontlicense}
+BuildArch:      noarch
+BuildRequires:  rpm-build-fonts
+%{?fontpkgheader2}
+%description -n fonts-ttf-sil-gentium-basic-book
+%{?fontdescription2}
+
+%package   all
+Group: System/Fonts/True type
+Summary:   All the font packages, generated from %{oldname}
+Requires:  fonts-ttf-sil-gentium-basic = %EVR
+Requires:  fonts-ttf-sil-gentium-basic-book = %EVR
+BuildArch: noarch
+%description all
+This meta-package installs all the font packages, generated from the %{oldname}
+ source package.
+
+%files all
+
+
+%package   doc
+Group: System/Fonts/True type
+Summary:   Optional documentation files of %{oldname}
+BuildArch: noarch
+%description doc
+This package provides optional documentation files shipped with
+%{oldname}.
 
 %prep
-%setup -q -n "Gentium Basic 1.1"
-for txt in *.txt ; do
-        fold -s $txt > $txt.new
-        sed -i 's/\r//' $txt.new
-        touch -r $txt $txt.new
-        mv $txt.new $txt
-done
-
-# Convert to UTF-8
-iconv -f iso-8859-1 -t utf-8 GENTIUM-FAQ.txt -o GENTIUM-FAQ.txt_
-touch -r GENTIUM-FAQ.txt GENTIUM-FAQ.txt_
-mv GENTIUM-FAQ.txt_ GENTIUM-FAQ.txt
+%global fontconfs0        %{SOURCE10}
+%global fontconfs2        %{SOURCE12}
+%setup -q -n %{archivename}
+%linuxtext *.txt
 
 %build
-
-%install
-
-install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
-
-install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
-                   %{buildroot}%{_fontconfig_confdir}
-
-
-install -m 0644 -p %{SOURCE1} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}.conf
-
-install -m 0644 -p %{SOURCE2} \
-         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-book.conf
-
-for fconf in %{fontconf}.conf\
-         %{fontconf}-book.conf ; do
-  ln -s %{_fontconfig_templatedir}/$fconf \
-        %{buildroot}%{_fontconfig_confdir}/$fconf
-done
-
-# Add AppStream metadata
-install -Dm 0644 -p %{SOURCE3} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
-install -Dm 0644 -p %{SOURCE4} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}-book.metainfo.xml
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
+# fontbuild 0
+fontnames=$(
+  for font in 'GenBasB.ttf' 'GenBasBI.ttf' 'GenBasI.ttf' 'GenBasR.ttf'; do
+    fc-scan "${font}" -f "    <font>%%{fullname[0]}</font>\n"
+  done | sort -u
+)
+if [[ -n "${fontnames}" ]] ; then
+  fontnames=$'\n'"  <provides>"$'\n'"${fontnames}"$'\n'"  </provides>"
+fi
+fontlangs=$(
+  for font in 'GenBasB.ttf' 'GenBasBI.ttf' 'GenBasI.ttf' 'GenBasR.ttf'; do
+    fc-scan "${font}" -f "%%{[]lang{    <lang>%%{lang}</lang>\n}}"
+  done | sort -u
+)
+if [[ -n "${fontlangs}" ]] ; then
+  fontlangs=$'\n'"  <languages>"$'\n'"${fontlangs}"$'\n'"  </languages>"
 fi
 
+echo "Generating the sil-gentium-basic-fonts appstream file"
+cat > "org.altlinux.sil-gentium-basic-fonts.metainfo.xml" << EOF_APPSTREAM
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: MIT -->
+<component type="font">
+  <id>org.altlinux.sil-gentium-basic-fonts</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>OFL</project_license>
+  <name>SIL Gentium Basic</name>
+  <summary><![CDATA[SIL Gentium Basic font family]]></summary>
+  <description>
+    <p><![CDATA[Gentium Basic and Gentium Book Basic are font families based on the]]></p><p><![CDATA[original Gentium design, but with additional weights. Both families come]]></p><p><![CDATA[with a complete regular, bold, italic and bold italic set of fonts.]]></p><p><![CDATA[These "Basic" fonts support only the Basic Latin and Latin-1 Supplement]]></p><p><![CDATA[Unicode ranges, plus a selection of the more commonly used extended Latin]]></p><p><![CDATA[characters, with miscellaneous diacritical marks, symbols and punctuation.]]></p>
+  </description>
+  <updatecontact>devel@lists.altlinux.org</updatecontact>
+  <url type="homepage">https://software.sil.org/gentium/</url>
+  <releases>
+    <release version="%{version}-%{release}" date="$(date -d @$SOURCE_DATE_EPOCH -u --rfc-3339=d)"/>
+  </releases>${fontnames}${fontlangs}
+</component>
+EOF_APPSTREAM
+# fontbuild 2
+fontnames=$(
+  for font in 'GenBkBasB.ttf' 'GenBkBasBI.ttf' 'GenBkBasI.ttf' 'GenBkBasR.ttf'; do
+    fc-scan "${font}" -f "    <font>%%{fullname[0]}</font>\n"
+  done | sort -u
+)
+if [[ -n "${fontnames}" ]] ; then
+  fontnames=$'\n'"  <provides>"$'\n'"${fontnames}"$'\n'"  </provides>"
+fi
+fontlangs=$(
+  for font in 'GenBkBasB.ttf' 'GenBkBasBI.ttf' 'GenBkBasI.ttf' 'GenBkBasR.ttf'; do
+    fc-scan "${font}" -f "%%{[]lang{    <lang>%%{lang}</lang>\n}}"
+  done | sort -u
+)
+if [[ -n "${fontlangs}" ]] ; then
+  fontlangs=$'\n'"  <languages>"$'\n'"${fontlangs}"$'\n'"  </languages>"
+fi
 
-%files -n fonts-ttf-sil-gentium-basic-common
-%doc FONTLOG.txt GENTIUM-FAQ.txt OFL-FAQ.txt OFL.txt
+echo "Generating the sil-gentium-basic-book-fonts appstream file"
+cat > "org.altlinux.sil-gentium-basic-book-fonts.metainfo.xml" << EOF_APPSTREAM
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: MIT -->
+<component type="font">
+  <id>org.altlinux.sil-gentium-basic-book-fonts</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>OFL</project_license>
+  <name>SIL Gentium Basic Book</name>
+  <summary><![CDATA[SIL Gentium Book Basic font family]]></summary>
+  <description>
+     fontpkgname2       sil-gentium-basic-book-fonts<p><![CDATA[Gentium Basic and Gentium Book Basic are font families based on the]]></p><p><![CDATA[original Gentium design, but with additional weights. Both families come]]></p><p><![CDATA[with a complete regular, bold, italic and bold italic set of fonts.]]></p><p><![CDATA[These "Basic" fonts support only the Basic Latin and Latin-1 Supplement]]></p><p><![CDATA[Unicode ranges, plus a selection of the more commonly used extended Latin]]></p><p><![CDATA[characters, with miscellaneous diacritical marks, symbols and punctuation.]]></p>
+  </description>
+  <updatecontact>devel@lists.altlinux.org</updatecontact>
+  <url type="homepage">https://software.sil.org/gentium/</url>
+  <releases>
+    <release version="%{version}-%{release}" date="$(date -d @$SOURCE_DATE_EPOCH -u --rfc-3339=d)"/>
+  </releases>${fontnames}${fontlangs}
+</component>
+EOF_APPSTREAM
 
+%install
+echo "Installing "sil-gentium-basic-fonts
+echo "" > "sil-gentium-basic-fonts0.list"
+install -m 0755 -vd %buildroot%_fontsdir/ttf/sil-gentium-basic/
+echo "%%dir %_fontsdir/ttf/sil-gentium-basic" >> "sil-gentium-basic-fonts0.list"
+install -m 0644 -vp "GenBasB.ttf" %buildroot%_fontsdir/ttf/sil-gentium-basic/
+echo \"%_fontsdir/ttf/sil-gentium-basic//$(basename "GenBasB.ttf")\" >> 'sil-gentium-basic-fonts0.list'
+install -m 0644 -vp "GenBasBI.ttf" %buildroot%_fontsdir/ttf/sil-gentium-basic/
+echo \"%_fontsdir/ttf/sil-gentium-basic//$(basename "GenBasBI.ttf")\" >> 'sil-gentium-basic-fonts0.list'
+install -m 0644 -vp "GenBasI.ttf" %buildroot%_fontsdir/ttf/sil-gentium-basic/
+echo \"%_fontsdir/ttf/sil-gentium-basic//$(basename "GenBasI.ttf")\" >> 'sil-gentium-basic-fonts0.list'
+install -m 0644 -vp "GenBasR.ttf" %buildroot%_fontsdir/ttf/sil-gentium-basic/
+echo \"%_fontsdir/ttf/sil-gentium-basic//$(basename "GenBasR.ttf")\" >> 'sil-gentium-basic-fonts0.list'
+(
+
+  install -m 0755 -vd "%{buildroot}%{_fontconfig_templatedir}" \
+                    "%{buildroot}%{_fontconfig_confdir}"
+  for fontconf in '%SOURCE10' "${newfontconfs[@]}"; do
+    if [[ -n $fontconf ]] ; then
+      install -m 0644 -vp "${fontconf}" "%{buildroot}%{_fontconfig_templatedir}"
+      echo \"%{_fontconfig_templatedir}/$(basename "${fontconf}")\"                  >> "sil-gentium-basic-fonts0.list"
+      ln -vsr "%{buildroot}%{_fontconfig_templatedir}/$(basename "${fontconf}")" "%{buildroot}%{_fontconfig_confdir}"
+      echo "%%config(noreplace)" \"%{_fontconfig_confdir}/$(basename "${fontconf}")\" >> "sil-gentium-basic-fonts0.list"
+    fi
+  done
+)
+
+install -m 0755 -vd "%{buildroot}%{_metainfodir}"
+for fontappstream in 'org.altlinux.sil-gentium-basic-fonts.metainfo.xml'; do
+  install -m 0644 -vp "${fontappstream}" "%{buildroot}%{_metainfodir}"
+  echo \"%{_metainfodir}/$(basename "${fontappstream}")\" >> "sil-gentium-basic-fonts0.list"
+done
+
+for fontlicense in 'OFL.txt'; do
+  echo %%doc "'${fontlicense}'" >> "sil-gentium-basic-fonts0.list"
+done
+echo "Installing "sil-gentium-basic-book-fonts
+echo "" > "sil-gentium-basic-book-fonts2.list"
+install -m 0755 -vd %buildroot%_fontsdir/ttf/sil-gentium-basic/
+echo "%%dir %_fontsdir/ttf/sil-gentium-basic" >> "sil-gentium-basic-book-fonts2.list"
+install -m 0644 -vp "GenBkBasB.ttf" %buildroot%_fontsdir/ttf/sil-gentium-basic/
+echo \"%_fontsdir/ttf/sil-gentium-basic//$(basename "GenBkBasB.ttf")\" >> 'sil-gentium-basic-book-fonts2.list'
+install -m 0644 -vp "GenBkBasBI.ttf" %buildroot%_fontsdir/ttf/sil-gentium-basic/
+echo \"%_fontsdir/ttf/sil-gentium-basic//$(basename "GenBkBasBI.ttf")\" >> 'sil-gentium-basic-book-fonts2.list'
+install -m 0644 -vp "GenBkBasI.ttf" %buildroot%_fontsdir/ttf/sil-gentium-basic/
+echo \"%_fontsdir/ttf/sil-gentium-basic//$(basename "GenBkBasI.ttf")\" >> 'sil-gentium-basic-book-fonts2.list'
+install -m 0644 -vp "GenBkBasR.ttf" %buildroot%_fontsdir/ttf/sil-gentium-basic/
+echo \"%_fontsdir/ttf/sil-gentium-basic//$(basename "GenBkBasR.ttf")\" >> 'sil-gentium-basic-book-fonts2.list'
+(
+
+  install -m 0755 -vd "%{buildroot}%{_fontconfig_templatedir}" \
+                    "%{buildroot}%{_fontconfig_confdir}"
+  for fontconf in '%SOURCE12' "${newfontconfs[@]}"; do
+    if [[ -n $fontconf ]] ; then
+      install -m 0644 -vp "${fontconf}" "%{buildroot}%{_fontconfig_templatedir}"
+      echo \"%{_fontconfig_templatedir}/$(basename "${fontconf}")\"                  >> "sil-gentium-basic-book-fonts2.list"
+      ln -vsr "%{buildroot}%{_fontconfig_templatedir}/$(basename "${fontconf}")" "%{buildroot}%{_fontconfig_confdir}"
+      echo "%%config(noreplace)" \"%{_fontconfig_confdir}/$(basename "${fontconf}")\" >> "sil-gentium-basic-book-fonts2.list"
+    fi
+  done
+)
+
+install -m 0755 -vd "%{buildroot}%{_metainfodir}"
+for fontappstream in 'org.altlinux.sil-gentium-basic-book-fonts.metainfo.xml'; do
+  install -m 0644 -vp "${fontappstream}" "%{buildroot}%{_metainfodir}"
+  echo \"%{_metainfodir}/$(basename "${fontappstream}")\" >> "sil-gentium-basic-book-fonts2.list"
+done
+
+for fontlicense in 'OFL.txt'; do
+  echo %%doc "'${fontlicense}'" >> "sil-gentium-basic-book-fonts2.list"
+done
+
+%check
+# fontcheck 0
+grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'sil-gentium-basic-fonts0.list' \
+  | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
+grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'sil-gentium-basic-fonts0.list' \
+  | xargs -I{} --        appstream-util validate-relax --nonet '%{buildroot}{}'
+# fontcheck 2
+grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'sil-gentium-basic-book-fonts2.list' \
+  | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
+grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'sil-gentium-basic-book-fonts2.list' \
+  | xargs -I{} --        appstream-util validate-relax --nonet '%{buildroot}{}'
+
+%files -n fonts-ttf-sil-gentium-basic -f sil-gentium-basic-fonts0.list
+%files -n fonts-ttf-sil-gentium-basic-book -f sil-gentium-basic-book-fonts2.list
+
+%files doc
+%doc --no-dereference OFL.txt
+%doc FONTLOG.txt GENTIUM-FAQ.txt OFL-FAQ.txt
 
 %changelog
+* Mon Feb 07 2022 Igor Vlasenko <viy@altlinux.org> 1.102-alt1_3
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_16
 - update to new release by fcimport
 
