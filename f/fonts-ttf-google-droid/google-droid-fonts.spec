@@ -1,224 +1,459 @@
 Group: System/Fonts/True type
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-fonts
+BuildRequires: rpm-build-fedora-compat-fonts
+# END SourceDeps(oneline)
 %define oldname google-droid-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name google-droid-fonts
-%define version 20120715
-%global fontname google-droid
-%global archivename %{oldname}-%{version}
+%define fontpkgname google-droid-fonts
+# SPDX-License-Identifier: MIT
+BuildArch: noarch
 
-%global common_desc \
-The Droid typeface family was designed in the fall of 2006 by Ascender's \
-Steve Matteson, as a commission from Google to create a set of system fonts \
-for its Android platform. The goal was to provide optimal quality and comfort \
-on a mobile handset when rendered in application menus, web browsers and for \
-other screen text. \
-The family was later extended in collaboration with other designers such as \
+# No sane versionning upstream, use git clone timestamp
+Version: 20200215
+Release: alt1_12
+License: ASL 2.0
+URL:     https://android.googlesource.com/
+
+%global source_name       google-droid-fonts
+
+%global foundry           Google
+%global fontlicenses      NOTICE
+%global fontdocs          *.txt
+
+%global common_description \
+The Droid font family was designed in the fall of 2006 by Ascendera.'s Steve\
+Matteson, as a commission from Google to create a set of system fonts for its\
+Android platform. The goal was to provide optimal quality and comfort on a\
+mobile handset when rendered in application menus, web browsers and for other\
+screen text.\
+\
+The family was later extended in collaboration with other designers such as\
 Pascal Zoghbi of 29ArabicLetters.
 
-Name:    fonts-ttf-google-droid
-# No sane versionning upstream, use git clone timestamp
-Version: 20120715
-Release: alt3_12
-Summary: General-purpose fonts released by Google as part of Android
+%global fontfamily1       Droid Sans
+%global fontsummary1      Droid Sans, a humanist sans-serif font family
+%global fontpkgheader1   \
+Obsoletes: google-droid-kufi-fonts < %{version}-%{release}\
+Requires: font(notosans)\
 
-License:   ASL 2.0
-URL:       https://android.googlesource.com/
-Source0:   %{archivename}.tar.xz
-#Brutal script used to pull sources from upstream git
-Source1:   getdroid.sh
-Source10:  %{oldname}-sans-fontconfig.conf
-Source11:  %{oldname}-sans-mono-fontconfig.conf
-Source12:  %{oldname}-serif-fontconfig.conf
-Source13:  %{oldname}-kufi-fontconfig.conf
-Source14:  %{fontname}-sans.metainfo.xml
-Source15:  %{fontname}-sans-mono.metainfo.xml
-Source16:  %{fontname}-serif.metainfo.xml
-Source17:  %{fontname}-kufi.metainfo.xml
+%global fonts1            DroidSans*ttf DroidKufi*ttf
+%global fontsex1          DroidSansMono*ttf DroidSansFallback.ttf DroidSansHebrew.ttf
+%global fontdescription1  \
+%{common_description}\
+\
+Droid Sans is a humanist sans serif font family designed for user interfaces and electronic communication.\
+\
+The Arabic block was initially designed by Steve Matteson of Ascender under the\
+Droid Kufi name, with consulting by Pascal Zoghbi of 29ArabicLetters to\
+finalize the font family.
 
-BuildArch:     noarch
-BuildRequires: fontpackages-devel
-Source44: import.info
+%global fontfamily2       Droid Sans Mono
+%global fontsummary2      Droid Sans Mono, a humanist mono-space sans-serif font family
+%global fontpkgheader2    \
+Requires: font(notosansmono)\
 
-%description
-%common_desc
+%global fonts2            DroidSansMono*ttf
+%global fontdescription2  \
+%{common_description}\
+\
+Droid Sans Mono is a humanist mono-space sans serif font family designed for\
+user interfaces and electronic communication.
 
+%global fontfamily3       Droid Serif
+%global fontsummary3      Droid Serif, a contemporary serif font family
+%global fontpkgheader3    \
+Requires: font(notoserif)\
 
-%package -n fonts-ttf-google-droid-sans
-Group: System/Fonts/True type
-Summary:   A humanist sans serif typeface
-Obsoletes: %{oldname}-common <= 20090906-5.fc12
-
-Provides: fonts-ttf-droid = %version
-Obsoletes: fonts-ttf-droid < 1.01
-Conflicts: fonts-ttf-droid < 1.01
-
-
-%description -n fonts-ttf-google-droid-sans
-%common_desc
-
-Droid Sans is a humanist sans serif typeface designed for user interfaces and
-electronic communication.
-
-%files -n fonts-ttf-google-droid-sans
-%{_fontconfig_templatedir}/??-%{fontname}-sans.conf
-%config(noreplace) %{_fontconfig_confdir}/??-%{fontname}-sans.conf
-%{_fontbasedir}/*/%{_fontstem}/DroidSans*ttf
-%exclude %{_fontbasedir}/*/%{_fontstem}/DroidSansMono*ttf
-%doc README.txt NOTICE
-%{_datadir}/appdata/%{fontname}-sans.metainfo.xml
-
-%package -n fonts-ttf-google-droid-sans-mono
-Group: System/Fonts/True type
-Summary:  A humanist monospace sans serif typeface
-
-Provides: fonts-ttf-droid = %version
-Obsoletes: fonts-ttf-droid < 1.01
-Conflicts: fonts-ttf-droid < 1.01
-
-
-%description -n fonts-ttf-google-droid-sans-mono
-%common_desc
-
-Droid Sans Mono is a humanist monospace sans serif typeface designed for user
-interfaces and electronic communication.
-
-%files -n fonts-ttf-google-droid-sans-mono
-%{_fontconfig_templatedir}/??-%{fontname}-sans-mono.conf
-%config(noreplace) %{_fontconfig_confdir}/??-%{fontname}-sans-mono.conf
-%{_fontbasedir}/*/%{_fontstem}/DroidSansMono.ttf
-%doc README.txt NOTICE
-%{_datadir}/appdata/%{fontname}-sans-mono.metainfo.xml
-
-%package -n fonts-ttf-google-droid-serif
-Group: System/Fonts/True type
-Summary:  A contemporary serif typeface
-Provides: %{fontname}-naskh-fonts = %{version}-%{release}
-
-Provides: fonts-ttf-droid = %version
-Obsoletes: fonts-ttf-droid < 1.01
-Conflicts: fonts-ttf-droid < 1.01
-
-
-%description -n fonts-ttf-google-droid-serif
-%common_desc
-
-Droid Serif is a contemporary serif typeface family designed for comfortable
-reading on screen. Droid Serif is slightly condensed to maximize the amount of
-text displayed on small screens. Vertical stress and open forms contribute to
-its readability while its proportion and overall design complement its
-companion Droid Sans.
-The Arabic block was designed by Pascal Zoghbi of 29ArabicLetters under the
+%global fonts3            DroidSerif*ttf DroidNaskh*ttf
+%global fontsex3          DroidNaskhUI-Regular.ttf DroidNaskh-Regular-Shift.ttf
+%global fontdescription3  \
+%{common_description}\
+\
+Droid Serif is a contemporary serif typeface family designed for comfortable\
+reading on screen. Droid Serif is slightly condensed to maximize the amount of\
+text displayed on small screens. Vertical stress and open forms contribute to\
+its readability while its proportion and overall design complement its\
+companion Droid Sans.\
+\
+The Arabic block was designed by Pascal Zoghbi of 29ArabicLetters under the\
 Droid Naskh name.
 
-%files -n fonts-ttf-google-droid-serif
-%{_fontconfig_templatedir}/??-%{fontname}-serif.conf
-%config(noreplace) %{_fontconfig_confdir}/??-%{fontname}-serif.conf
-%{_fontbasedir}/*/%{_fontstem}/DroidSerif*ttf
-%{_fontbasedir}/*/%{_fontstem}/DroidNaskh*ttf
-%doc README.txt NOTICE
-%{_datadir}/appdata/%{fontname}-serif.metainfo.xml
+%global archivename google-droid-fonts-%{version}
 
-%package -n fonts-ttf-google-droid-kufi
+
+Source0:  %{archivename}.tar.xz
+# Brutal script used to pull sources from upstream git
+# Needs at least 2 Gib of space in /var/tmp
+Source1:  getdroid.sh
+Source11: 66-google-droid-sans-fonts.xml
+Source12: 60-google-droid-sans-mono-fonts.xml
+Source13: 66-google-droid-serif-fonts.xml
+
+Name:     fonts-ttf-google-droid
+Summary:  A set of general-purpose font families released by Google as part of Android
+Source44: import.info
+%description
+%common_description
+
+%package     -n fonts-ttf-google-droid-sans
 Group: System/Fonts/True type
-Summary:  A kufi Arabic titling typeface designed to complement Droid Sans
-Requires: fonts-ttf-google-droid-kufi
+Summary:        %{fontsummary1}
+BuildArch:      noarch
+BuildRequires:  rpm-build-fonts
+%{?fontpkgheader1}
+Conflicts: fonts-ttf-droid < 1.01
+%description -n fonts-ttf-google-droid-sans
+%{?fontdescription1}
+%package     -n fonts-ttf-google-droid-sans-mono
+Group: System/Fonts/True type
+Summary:        %{fontsummary2}
+BuildArch:      noarch
+BuildRequires:  rpm-build-fonts
+%{?fontpkgheader2}
+Conflicts: fonts-ttf-droid < 1.01
+%description -n fonts-ttf-google-droid-sans-mono
+%{?fontdescription2}
+%package     -n fonts-ttf-google-droid-serif
+Group: System/Fonts/True type
+Summary:        %{fontsummary3}
+BuildArch:      noarch
+BuildRequires:  rpm-build-fonts
+%{?fontpkgheader3}
+Conflicts: fonts-ttf-droid < 1.01
+%description -n fonts-ttf-google-droid-serif
+%{?fontdescription3}
 
-%description -n fonts-ttf-google-droid-kufi
-%common_desc
+%package   all
+Group: System/Fonts/True type
+Summary:   All the font packages, generated from %{oldname}
+Requires:  fonts-ttf-google-droid-sans = %EVR
+Requires:  fonts-ttf-google-droid-sans-mono = %EVR
+Requires:  fonts-ttf-google-droid-serif = %EVR
+BuildArch: noarch
+%description all
+This meta-package installs all the font packages, generated from the %{oldname}
+ source package.
 
-Droid Kufi is a stylized display font suitable for titles and short runs of
-text, and designed to complement Droid Sans. It was initialy designed by
-Steve Matteson of Ascender with consulting by Pascal Zoghbi of 29ArabicLetters
-to finalize the font family.
+%files all
 
-%files -n fonts-ttf-google-droid-kufi
-%{_fontconfig_templatedir}/??-%{fontname}-kufi.conf
-%config(noreplace) %{_fontconfig_confdir}/??-%{fontname}-kufi.conf
-%{_fontbasedir}/*/%{_fontstem}/DroidKufi*ttf
-%{_datadir}/appdata/%{fontname}-kufi.metainfo.xml
 
 %prep
+%global fontconfngs1      %{SOURCE11}
+%global fontconfngs2      %{SOURCE12}
+%global fontconfngs3      %{SOURCE13}
 %setup -q -n %{archivename}
 
-
 %build
-
-
-%install
-install -m 0755 -d %{buildroot}%{_fontdir}
-
-install -m 0644 -p $(ls *ttf | grep -v DroidSansFallbackFull\
-                             | grep -v DroidSansFallbackLegacy\
-                             | grep -v DroidNaskh-Regular-SystemUI) \
-                    %{buildroot}%{_fontdir}
-
-install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
-                   %{buildroot}%{_fontconfig_confdir}
-
-install -m 0644 -p %{SOURCE10} \
-        %{buildroot}%{_fontconfig_templatedir}/65-%{fontname}-sans.conf
-install -m 0644 -p %{SOURCE11} \
-        %{buildroot}%{_fontconfig_templatedir}/60-%{fontname}-sans-mono.conf
-install -m 0644 -p %{SOURCE12} \
-        %{buildroot}%{_fontconfig_templatedir}/65-%{fontname}-serif.conf
-install -m 0644 -p %{SOURCE13} \
-        %{buildroot}%{_fontconfig_templatedir}/65-%{fontname}-kufi.conf
-
-for fontconf in 65-%{fontname}-sans.conf \
-                60-%{fontname}-sans-mono.conf \
-                65-%{fontname}-serif.conf \
-                65-%{fontname}-kufi.conf ; do
-  ln -s %{_fontconfig_templatedir}/$fontconf \
-        %{buildroot}%{_fontconfig_confdir}/$fontconf
-done
-
-# Add AppStream metadata
-install -Dm 0644 -p %{SOURCE14} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}-sans.metainfo.xml
-install -Dm 0644 -p %{SOURCE15} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}-sans-mono.metainfo.xml
-install -Dm 0644 -p %{SOURCE16} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}-serif.metainfo.xml
-install -Dm 0644 -p %{SOURCE17} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}-kufi.metainfo.xml
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
+# fontbuild 1
+fontnames=$(
+  for font in 'DroidSans-Bold.ttf' 'DroidSans.ttf' 'DroidSansArmenian.ttf' 'DroidSansDevanagari-Regular.ttf' 'DroidSansEthiopic-Bold.ttf' 'DroidSansEthiopic-Regular.ttf' 'DroidSansFallbackFull.ttf' 'DroidSansGeorgian.ttf' 'DroidSansHebrew-Bold.ttf' 'DroidSansHebrew-Regular.ttf' 'DroidSansJapanese.ttf' 'DroidSansTamil-Bold.ttf' 'DroidSansTamil-Regular.ttf' 'DroidSansThai.ttf' 'DroidKufi-Bold.ttf' 'DroidKufi-Regular.ttf'; do
+    fc-scan "${font}" -f "    <font>%%{fullname[0]}</font>\n"
+  done | sort -u
+)
+if [[ -n "${fontnames}" ]] ; then
+  fontnames=$'\n'"  <provides>"$'\n'"${fontnames}"$'\n'"  </provides>"
+fi
+fontlangs=$(
+  for font in 'DroidSans-Bold.ttf' 'DroidSans.ttf' 'DroidSansArmenian.ttf' 'DroidSansDevanagari-Regular.ttf' 'DroidSansEthiopic-Bold.ttf' 'DroidSansEthiopic-Regular.ttf' 'DroidSansFallbackFull.ttf' 'DroidSansGeorgian.ttf' 'DroidSansHebrew-Bold.ttf' 'DroidSansHebrew-Regular.ttf' 'DroidSansJapanese.ttf' 'DroidSansTamil-Bold.ttf' 'DroidSansTamil-Regular.ttf' 'DroidSansThai.ttf' 'DroidKufi-Bold.ttf' 'DroidKufi-Regular.ttf'; do
+    fc-scan "${font}" -f "%%{[]lang{    <lang>%%{lang}</lang>\n}}"
+  done | sort -u
+)
+if [[ -n "${fontlangs}" ]] ; then
+  fontlangs=$'\n'"  <languages>"$'\n'"${fontlangs}"$'\n'"  </languages>"
 fi
 
+echo "Generating the google-droid-sans-fonts appstream file"
+cat > "org.altlinux.google-droid-sans-fonts.metainfo.xml" << EOF_APPSTREAM
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: MIT -->
+<component type="font">
+  <id>org.altlinux.google-droid-sans-fonts</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>ASL 2.0</project_license>
+  <name>Google Droid Sans</name>
+  <summary><![CDATA[Droid Sans, a humanist sans-serif font family]]></summary>
+  <description>
+    <p><![CDATA[The Droid font family was designed in the fall of 2006 by Ascender’s Steve]]></p><p><![CDATA[Matteson, as a commission from Google to create a set of system fonts for its]]></p><p><![CDATA[Android platform. The goal was to provide optimal quality and comfort on a]]></p><p><![CDATA[mobile handset when rendered in application menus, web browsers and for other]]></p><p><![CDATA[screen text.]]></p> The family was later extended in collaboration with other designers such as Pascal Zoghbi of 29ArabicLetters. Droid Sans is a humanist sans serif font family designed for user interfaces and electronic communication. The Arabic block was initially designed by Steve Matteson of Ascender under the Droid Kufi name, with consulting by Pascal Zoghbi of 29ArabicLetters to
+  </description>
+  <updatecontact>devel@lists.altlinux.org</updatecontact>
+  <url type="homepage">https://android.googlesource.com/</url>
+  <releases>
+    <release version="%{version}-%{release}" date="$(date -d @$SOURCE_DATE_EPOCH -u --rfc-3339=d)"/>
+  </releases>${fontnames}${fontlangs}
+</component>
+EOF_APPSTREAM
+# fontbuild 2
+fontnames=$(
+  for font in 'DroidSansMono.ttf'; do
+    fc-scan "${font}" -f "    <font>%%{fullname[0]}</font>\n"
+  done | sort -u
+)
+if [[ -n "${fontnames}" ]] ; then
+  fontnames=$'\n'"  <provides>"$'\n'"${fontnames}"$'\n'"  </provides>"
+fi
+fontlangs=$(
+  for font in 'DroidSansMono.ttf'; do
+    fc-scan "${font}" -f "%%{[]lang{    <lang>%%{lang}</lang>\n}}"
+  done | sort -u
+)
+if [[ -n "${fontlangs}" ]] ; then
+  fontlangs=$'\n'"  <languages>"$'\n'"${fontlangs}"$'\n'"  </languages>"
+fi
+
+echo "Generating the google-droid-sans-mono-fonts appstream file"
+cat > "org.altlinux.google-droid-sans-mono-fonts.metainfo.xml" << EOF_APPSTREAM
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: MIT -->
+<component type="font">
+  <id>org.altlinux.google-droid-sans-mono-fonts</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>ASL 2.0</project_license>
+  <name>Google Droid Sans Mono</name>
+  <summary><![CDATA[Droid Sans Mono, a humanist mono-space sans-serif font family]]></summary>
+  <description>
+    <p><![CDATA[The Droid font family was designed in the fall of 2006 by Ascender’s Steve]]></p><p><![CDATA[Matteson, as a commission from Google to create a set of system fonts for its]]></p><p><![CDATA[Android platform. The goal was to provide optimal quality and comfort on a]]></p><p><![CDATA[mobile handset when rendered in application menus, web browsers and for other]]></p><p><![CDATA[screen text.]]></p> The family was later extended in collaboration with other designers such as Pascal Zoghbi of 29ArabicLetters. Droid Sans Mono is a humanist mono-space sans serif font family designed for
+  </description>
+  <updatecontact>devel@lists.altlinux.org</updatecontact>
+  <url type="homepage">https://android.googlesource.com/</url>
+  <releases>
+    <release version="%{version}-%{release}" date="$(date -d @$SOURCE_DATE_EPOCH -u --rfc-3339=d)"/>
+  </releases>${fontnames}${fontlangs}
+</component>
+EOF_APPSTREAM
+# fontbuild 3
+fontnames=$(
+  for font in 'DroidSerif-Bold.ttf' 'DroidSerif-BoldItalic.ttf' 'DroidSerif-Italic.ttf' 'DroidSerif-Regular.ttf' 'DroidNaskh-Bold.ttf' 'DroidNaskh-Regular.ttf'; do
+    fc-scan "${font}" -f "    <font>%%{fullname[0]}</font>\n"
+  done | sort -u
+)
+if [[ -n "${fontnames}" ]] ; then
+  fontnames=$'\n'"  <provides>"$'\n'"${fontnames}"$'\n'"  </provides>"
+fi
+fontlangs=$(
+  for font in 'DroidSerif-Bold.ttf' 'DroidSerif-BoldItalic.ttf' 'DroidSerif-Italic.ttf' 'DroidSerif-Regular.ttf' 'DroidNaskh-Bold.ttf' 'DroidNaskh-Regular.ttf'; do
+    fc-scan "${font}" -f "%%{[]lang{    <lang>%%{lang}</lang>\n}}"
+  done | sort -u
+)
+if [[ -n "${fontlangs}" ]] ; then
+  fontlangs=$'\n'"  <languages>"$'\n'"${fontlangs}"$'\n'"  </languages>"
+fi
+
+echo "Generating the google-droid-serif-fonts appstream file"
+cat > "org.altlinux.google-droid-serif-fonts.metainfo.xml" << EOF_APPSTREAM
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: MIT -->
+<component type="font">
+  <id>org.altlinux.google-droid-serif-fonts</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>ASL 2.0</project_license>
+  <name>Google Droid Serif</name>
+  <summary><![CDATA[Droid Serif, a contemporary serif font family]]></summary>
+  <description>
+    <p><![CDATA[The Droid font family was designed in the fall of 2006 by Ascender’s Steve]]></p><p><![CDATA[Matteson, as a commission from Google to create a set of system fonts for its]]></p><p><![CDATA[Android platform. The goal was to provide optimal quality and comfort on a]]></p><p><![CDATA[mobile handset when rendered in application menus, web browsers and for other]]></p><p><![CDATA[screen text.]]></p> The family was later extended in collaboration with other designers such as Pascal Zoghbi of 29ArabicLetters. Droid Serif is a contemporary serif typeface family designed for comfortable reading on screen. Droid Serif is slightly condensed to maximize the amount of text displayed on small screens. Vertical stress and open forms contribute to its readability while its proportion and overall design complement its companion Droid Sans. The Arabic block was designed by Pascal Zoghbi of 29ArabicLetters under the
+  </description>
+  <updatecontact>devel@lists.altlinux.org</updatecontact>
+  <url type="homepage">https://android.googlesource.com/</url>
+  <releases>
+    <release version="%{version}-%{release}" date="$(date -d @$SOURCE_DATE_EPOCH -u --rfc-3339=d)"/>
+  </releases>${fontnames}${fontlangs}
+</component>
+EOF_APPSTREAM
+
+%install
+echo Installing google-droid-sans-fonts
+echo "" > "google-droid-sans-fonts1.list"
+install -m 0755 -vd %buildroot%_fontsdir/ttf/google-droid/
+echo "%%dir %_fontsdir/ttf/google-droid" >> "google-droid-sans-fonts1.list"
+install -m 0644 -vp "DroidSans-Bold.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidSans-Bold.ttf")\" >> 'google-droid-sans-fonts1.list'
+install -m 0644 -vp "DroidSans.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidSans.ttf")\" >> 'google-droid-sans-fonts1.list'
+install -m 0644 -vp "DroidSansArmenian.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidSansArmenian.ttf")\" >> 'google-droid-sans-fonts1.list'
+install -m 0644 -vp "DroidSansDevanagari-Regular.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidSansDevanagari-Regular.ttf")\" >> 'google-droid-sans-fonts1.list'
+install -m 0644 -vp "DroidSansEthiopic-Bold.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidSansEthiopic-Bold.ttf")\" >> 'google-droid-sans-fonts1.list'
+install -m 0644 -vp "DroidSansEthiopic-Regular.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidSansEthiopic-Regular.ttf")\" >> 'google-droid-sans-fonts1.list'
+install -m 0644 -vp "DroidSansFallbackFull.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidSansFallbackFull.ttf")\" >> 'google-droid-sans-fonts1.list'
+install -m 0644 -vp "DroidSansGeorgian.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidSansGeorgian.ttf")\" >> 'google-droid-sans-fonts1.list'
+install -m 0644 -vp "DroidSansHebrew-Bold.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidSansHebrew-Bold.ttf")\" >> 'google-droid-sans-fonts1.list'
+install -m 0644 -vp "DroidSansHebrew-Regular.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidSansHebrew-Regular.ttf")\" >> 'google-droid-sans-fonts1.list'
+install -m 0644 -vp "DroidSansJapanese.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidSansJapanese.ttf")\" >> 'google-droid-sans-fonts1.list'
+install -m 0644 -vp "DroidSansTamil-Bold.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidSansTamil-Bold.ttf")\" >> 'google-droid-sans-fonts1.list'
+install -m 0644 -vp "DroidSansTamil-Regular.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidSansTamil-Regular.ttf")\" >> 'google-droid-sans-fonts1.list'
+install -m 0644 -vp "DroidSansThai.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidSansThai.ttf")\" >> 'google-droid-sans-fonts1.list'
+install -m 0644 -vp "DroidKufi-Bold.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidKufi-Bold.ttf")\" >> 'google-droid-sans-fonts1.list'
+install -m 0644 -vp "DroidKufi-Regular.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidKufi-Regular.ttf")\" >> 'google-droid-sans-fonts1.list'
+(
+
+  IFS= lines=$(
+    for fontconfng in '%SOURCE11'; do
+      gen-fontconf -x "${fontconfng}" -w -f 'DroidSans-Bold.ttf' 'DroidSans.ttf' 'DroidSansArmenian.ttf' 'DroidSansDevanagari-Regular.ttf' 'DroidSansEthiopic-Bold.ttf' 'DroidSansEthiopic-Regular.ttf' 'DroidSansFallbackFull.ttf' 'DroidSansGeorgian.ttf' 'DroidSansHebrew-Bold.ttf' 'DroidSansHebrew-Regular.ttf' 'DroidSansJapanese.ttf' 'DroidSansTamil-Bold.ttf' 'DroidSansTamil-Regular.ttf' 'DroidSansThai.ttf' 'DroidKufi-Bold.ttf' 'DroidKufi-Regular.ttf'
+    done
+  )
+  while IFS= read -r line; do
+    [[ -n $line ]] && newfontconfs+=("$line")
+  done <<< ${lines}
+
+  install -m 0755 -vd "%{buildroot}%{_fontconfig_templatedir}" \
+                    "%{buildroot}%{_fontconfig_confdir}"
+  for fontconf in  "${newfontconfs[@]}"; do
+    if [[ -n $fontconf ]] ; then
+      install -m 0644 -vp "${fontconf}" "%{buildroot}%{_fontconfig_templatedir}"
+      echo \"%{_fontconfig_templatedir}/$(basename "${fontconf}")\"                  >> "google-droid-sans-fonts1.list"
+      ln -vsr "%{buildroot}%{_fontconfig_templatedir}/$(basename "${fontconf}")" "%{buildroot}%{_fontconfig_confdir}"
+      echo "%%config(noreplace)" \"%{_fontconfig_confdir}/$(basename "${fontconf}")\" >> "google-droid-sans-fonts1.list"
+    fi
+  done
+)
+
+install -m 0755 -vd "%{buildroot}%{_metainfodir}"
+for fontappstream in 'org.altlinux.google-droid-sans-fonts.metainfo.xml'; do
+  install -m 0644 -vp "${fontappstream}" "%{buildroot}%{_metainfodir}"
+  echo \"%{_metainfodir}/$(basename "${fontappstream}")\" >> "google-droid-sans-fonts1.list"
+done
+
+for fontdoc in 'README.txt'; do
+  echo %%doc "'${fontdoc}'" >> "google-droid-sans-fonts1.list"
+done
+
+for fontlicense in 'NOTICE'; do
+  echo %%doc "'${fontlicense}'" >> "google-droid-sans-fonts1.list"
+done
+echo Installing google-droid-sans-mono-fonts
+echo "" > "google-droid-sans-mono-fonts2.list"
+install -m 0755 -vd %buildroot%_fontsdir/ttf/google-droid/
+echo "%%dir %_fontsdir/ttf/google-droid" >> "google-droid-sans-mono-fonts2.list"
+install -m 0644 -vp "DroidSansMono.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidSansMono.ttf")\" >> 'google-droid-sans-mono-fonts2.list'
+(
+
+  IFS= lines=$(
+    for fontconfng in '%SOURCE12'; do
+      gen-fontconf -x "${fontconfng}" -w -f 'DroidSansMono.ttf'
+    done
+  )
+  while IFS= read -r line; do
+    [[ -n $line ]] && newfontconfs+=("$line")
+  done <<< ${lines}
+
+  install -m 0755 -vd "%{buildroot}%{_fontconfig_templatedir}" \
+                    "%{buildroot}%{_fontconfig_confdir}"
+  for fontconf in  "${newfontconfs[@]}"; do
+    if [[ -n $fontconf ]] ; then
+      install -m 0644 -vp "${fontconf}" "%{buildroot}%{_fontconfig_templatedir}"
+      echo \"%{_fontconfig_templatedir}/$(basename "${fontconf}")\"                  >> "google-droid-sans-mono-fonts2.list"
+      ln -vsr "%{buildroot}%{_fontconfig_templatedir}/$(basename "${fontconf}")" "%{buildroot}%{_fontconfig_confdir}"
+      echo "%%config(noreplace)" \"%{_fontconfig_confdir}/$(basename "${fontconf}")\" >> "google-droid-sans-mono-fonts2.list"
+    fi
+  done
+)
+
+install -m 0755 -vd "%{buildroot}%{_metainfodir}"
+for fontappstream in 'org.altlinux.google-droid-sans-mono-fonts.metainfo.xml'; do
+  install -m 0644 -vp "${fontappstream}" "%{buildroot}%{_metainfodir}"
+  echo \"%{_metainfodir}/$(basename "${fontappstream}")\" >> "google-droid-sans-mono-fonts2.list"
+done
+
+for fontdoc in 'README.txt'; do
+  echo %%doc "'${fontdoc}'" >> "google-droid-sans-mono-fonts2.list"
+done
+
+for fontlicense in 'NOTICE'; do
+  echo %%doc "'${fontlicense}'" >> "google-droid-sans-mono-fonts2.list"
+done
+echo Installing google-droid-serif-fonts
+echo "" > "google-droid-serif-fonts3.list"
+install -m 0755 -vd %buildroot%_fontsdir/ttf/google-droid/
+echo "%%dir %_fontsdir/ttf/google-droid" >> "google-droid-serif-fonts3.list"
+install -m 0644 -vp "DroidSerif-Bold.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidSerif-Bold.ttf")\" >> 'google-droid-serif-fonts3.list'
+install -m 0644 -vp "DroidSerif-BoldItalic.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidSerif-BoldItalic.ttf")\" >> 'google-droid-serif-fonts3.list'
+install -m 0644 -vp "DroidSerif-Italic.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidSerif-Italic.ttf")\" >> 'google-droid-serif-fonts3.list'
+install -m 0644 -vp "DroidSerif-Regular.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidSerif-Regular.ttf")\" >> 'google-droid-serif-fonts3.list'
+install -m 0644 -vp "DroidNaskh-Bold.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidNaskh-Bold.ttf")\" >> 'google-droid-serif-fonts3.list'
+install -m 0644 -vp "DroidNaskh-Regular.ttf" %buildroot%_fontsdir/ttf/google-droid/
+echo \"%_fontsdir/ttf/google-droid//$(basename "DroidNaskh-Regular.ttf")\" >> 'google-droid-serif-fonts3.list'
+(
+
+  IFS= lines=$(
+    for fontconfng in '%SOURCE13'; do
+      gen-fontconf -x "${fontconfng}" -w -f 'DroidSerif-Bold.ttf' 'DroidSerif-BoldItalic.ttf' 'DroidSerif-Italic.ttf' 'DroidSerif-Regular.ttf' 'DroidNaskh-Bold.ttf' 'DroidNaskh-Regular.ttf'
+    done
+  )
+  while IFS= read -r line; do
+    [[ -n $line ]] && newfontconfs+=("$line")
+  done <<< ${lines}
+
+  install -m 0755 -vd "%{buildroot}%{_fontconfig_templatedir}" \
+                    "%{buildroot}%{_fontconfig_confdir}"
+  for fontconf in  "${newfontconfs[@]}"; do
+    if [[ -n $fontconf ]] ; then
+      install -m 0644 -vp "${fontconf}" "%{buildroot}%{_fontconfig_templatedir}"
+      echo \"%{_fontconfig_templatedir}/$(basename "${fontconf}")\"                  >> "google-droid-serif-fonts3.list"
+      ln -vsr "%{buildroot}%{_fontconfig_templatedir}/$(basename "${fontconf}")" "%{buildroot}%{_fontconfig_confdir}"
+      echo "%%config(noreplace)" \"%{_fontconfig_confdir}/$(basename "${fontconf}")\" >> "google-droid-serif-fonts3.list"
+    fi
+  done
+)
+
+install -m 0755 -vd "%{buildroot}%{_metainfodir}"
+for fontappstream in 'org.altlinux.google-droid-serif-fonts.metainfo.xml'; do
+  install -m 0644 -vp "${fontappstream}" "%{buildroot}%{_metainfodir}"
+  echo \"%{_metainfodir}/$(basename "${fontappstream}")\" >> "google-droid-serif-fonts3.list"
+done
+
+for fontdoc in 'README.txt'; do
+  echo %%doc "'${fontdoc}'" >> "google-droid-serif-fonts3.list"
+done
+
+for fontlicense in 'NOTICE'; do
+  echo %%doc "'${fontlicense}'" >> "google-droid-serif-fonts3.list"
+done
+
+%check
+# fontcheck 1
+grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'google-droid-sans-fonts1.list' \
+  | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
+grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'google-droid-sans-fonts1.list' \
+  | xargs -I{} --        appstream-util validate-relax --nonet '%{buildroot}{}'
+# fontcheck 2
+grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'google-droid-sans-mono-fonts2.list' \
+  | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
+grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'google-droid-sans-mono-fonts2.list' \
+  | xargs -I{} --        appstream-util validate-relax --nonet '%{buildroot}{}'
+# fontcheck 3
+grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'google-droid-serif-fonts3.list' \
+  | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
+grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'google-droid-serif-fonts3.list' \
+  | xargs -I{} --        appstream-util validate-relax --nonet '%{buildroot}{}'
+
+%files -n fonts-ttf-google-droid-sans -f google-droid-sans-fonts1.list
+%files -n fonts-ttf-google-droid-sans-mono -f google-droid-sans-mono-fonts2.list
+%files -n fonts-ttf-google-droid-serif -f google-droid-serif-fonts3.list
+
 %changelog
+* Mon Feb 07 2022 Igor Vlasenko <viy@altlinux.org> 20200215-alt1_12
+- update
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 20120715-alt3_12
 - update to new release by fcimport
 
