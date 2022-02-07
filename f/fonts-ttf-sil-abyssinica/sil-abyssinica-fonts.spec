@@ -1,114 +1,150 @@
 Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-fonts
+BuildRequires: rpm-build-fedora-compat-fonts unzip
 # END SourceDeps(oneline)
 %define oldname sil-abyssinica-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global fontname     sil-abyssinica
-%global archive_name AbyssinicaSIL
-%global fontconf     66-%{fontname}.conf
-
-Name:           fonts-ttf-sil-abyssinica
+%define fontpkgname sil-abyssinica-fonts
 Version:        1.200
-Release:        alt2_12
-Summary:        SIL Abyssinica fonts
+Release:        alt2_23
 
-License:        OFL
-URL:            http://scripts.sil.org/AbyssinicaSIL
-# download from http://scripts.sil.org/cms/scripts/render_download.php?site_id=nrsi&format=file&media_id=AbyssinicaSIL1.200.zip&filename=AbyssinicaSIL1.200.zip
-Source0:        %{archive_name}%{version}.zip
-Source1:        %{fontconf}
-Source2:        %{fontname}.metainfo.xml
+%global foundry           SIL
+%global fontlicense       OFL
+%global fontlicenses      OFL.txt
+%global fontdocs          *.txt documentation/*.txt
+%global fontdocsex        %{fontlicenses}
 
-BuildArch:      noarch
-BuildRequires:  fontpackages-devel
-BuildRequires:  dos2unix
-Source44: import.info
-
-
-%description
-SIL Abyssinica is a Unicode typeface family containing glyphs for the
-Ethiopic script.
-
-The Ethiopic script is used for writing many of the languages of Ethiopia and
-Eritrea. Abyssinica SIL supports all Ethiopic characters which are in Unicode
-including the Unicode 4.1 extensions. Some languages of Ethiopia are not yet
-able to be fully represented in Unicode and, where necessary, we have included
-non-Unicode characters in the Private Use Area (see Private-use (PUA)
-characters supported by Abyssinica SIL).
-
-Abyssinica SIL is based on Ethiopic calligraphic traditions. This release is
+%global fontfamily        Abyssinica SIL
+%global fontsummary       SIL Abyssinica fonts
+%global projectname       AbyssinicaSIL
+%global archivename       AbyssinicaSIL%{version}
+URL:                      https://software.sil.org/%{projectname}/
+%global fonts             *.ttf
+%global fontdescription   \
+SIL Abyssinica is a Unicode typeface family containing glyphs for the\
+Ethiopic script.\
+\
+The Ethiopic script is used for writing many of the languages of Ethiopia and\
+Eritrea. Abyssinica SIL supports all Ethiopic characters which are in Unicode\
+including the Unicode 4.1 extensions. Some languages of Ethiopia are not yet\
+able to be fully represented in Unicode and, where necessary, we have included\
+non-Unicode characters in the Private Use Area (see Private-use (PUA)\
+characters supported by Abyssinica SIL).\
+\
+Abyssinica SIL is based on Ethiopic calligraphic traditions. This release is\
 a regular typeface, with no bold or italic version available or planned.
 
 
-%prep
-%setup -q -n %{archive_name}-%{version}
+# download from http://scripts.sil.org/cms/scripts/render_download.php?site_id=nrsi&format=file&media_id=AbyssinicaSIL1.200.zip&filename=AbyssinicaSIL1.200.zip
+Source0:        %{archivename}.zip
+Source1:        66-sil-abyssinica-fonts.conf
 
+Name:           fonts-ttf-sil-abyssinica
+Summary:        %{fontsummary}
+License:        %{fontlicense}
+BuildArch:      noarch
+BuildRequires:  rpm-build-fonts
+%{?fontpkgheader}
+Source44: import.info
+%description
+%{?fontdescription}
+
+%prep
+%global fontconfs         %{SOURCE1}
+%setup -q -n %{projectname}-%{version}
+%linuxtext FONTLOG.txt OFL.txt OFL-FAQ.txt README.txt documentation/DOCUMENTATION.txt
 
 %build
-dos2unix FONTLOG.txt OFL.txt OFL-FAQ.txt README.txt documentation/DOCUMENTATION.txt
-
-
-%install
-#fonts
-install -d -m 0755 %{buildroot}%{_fontdir}
-install -m 0644 *.ttf %{buildroot}%{_fontdir}
-
-#fontconfig
-install -d -m 0755 %{buildroot}%{_fontconfig_templatedir} \
-                   %{buildroot}%{_fontconfig_confdir}
-install -m 0644 -p %{SOURCE1} %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
-ln -s %{_fontconfig_templatedir}/%{fontconf} \
-      %{buildroot}%{_fontconfig_confdir}/%{fontconf}
-
-# Add AppStream metadata
-install -Dm 0644 -p %{SOURCE2} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
+# fontbuild 
+fontnames=$(
+  for font in 'AbyssinicaSIL-R.ttf'; do
+    fc-scan "${font}" -f "    <font>%%{fullname[0]}</font>\n"
+  done | sort -u
+)
+if [[ -n "${fontnames}" ]] ; then
+  fontnames=$'\n'"  <provides>"$'\n'"${fontnames}"$'\n'"  </provides>"
+fi
+fontlangs=$(
+  for font in 'AbyssinicaSIL-R.ttf'; do
+    fc-scan "${font}" -f "%%{[]lang{    <lang>%%{lang}</lang>\n}}"
+  done | sort -u
+)
+if [[ -n "${fontlangs}" ]] ; then
+  fontlangs=$'\n'"  <languages>"$'\n'"${fontlangs}"$'\n'"  </languages>"
 fi
 
-%files
-%{_fontconfig_templatedir}/%{fontconf}
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}
-%{_fontbasedir}/*/%{_fontstem}/*.ttf
-%doc FONTLOG.txt OFL.txt OFL-FAQ.txt README.txt
-%doc documentation/*
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+echo "Generating the sil-abyssinica-fonts appstream file"
+cat > "org.altlinux.sil-abyssinica-fonts.metainfo.xml" << EOF_APPSTREAM
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: MIT -->
+<component type="font">
+  <id>org.altlinux.sil-abyssinica-fonts</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>OFL</project_license>
+  <name>SIL Abyssinica SIL</name>
+  <summary><![CDATA[SIL Abyssinica fonts]]></summary>
+  <description>
+    <p><![CDATA[SIL Abyssinica is a Unicode typeface family containing glyphs for the]]></p><p><![CDATA[Ethiopic script.]]></p> The Ethiopic script is used for writing many of the languages of Ethiopia and Eritrea. Abyssinica SIL supports all Ethiopic characters which are in Unicode including the Unicode 4.1 extensions. Some languages of Ethiopia are not yet able to be fully represented in Unicode and, where necessary, we have included non-Unicode characters in the Private Use Area (see Private-use (PUA) characters supported by Abyssinica SIL). Abyssinica SIL is based on Ethiopic calligraphic traditions. This release is
+  </description>
+  <updatecontact>devel@lists.altlinux.org</updatecontact>
+  <url type="homepage">https://software.sil.org/%{projectname}/</url>
+  <releases>
+    <release version="%{version}-%{release}" date="$(date -d @$SOURCE_DATE_EPOCH -u --rfc-3339=d)"/>
+  </releases>${fontnames}${fontlangs}
+</component>
+EOF_APPSTREAM
+
+%install
+echo "Installing "sil-abyssinica-fonts
+echo "" > "sil-abyssinica-fonts.list"
+install -m 0755 -vd %buildroot%_fontsdir/ttf/sil-abyssinica/
+echo "%%dir %_fontsdir/ttf/sil-abyssinica" >> "sil-abyssinica-fonts.list"
+install -m 0644 -vp "AbyssinicaSIL-R.ttf" %buildroot%_fontsdir/ttf/sil-abyssinica/
+echo \"%_fontsdir/ttf/sil-abyssinica//$(basename "AbyssinicaSIL-R.ttf")\" >> 'sil-abyssinica-fonts.list'
+(
+
+  install -m 0755 -vd "%{buildroot}%{_fontconfig_templatedir}" \
+                    "%{buildroot}%{_fontconfig_confdir}"
+  for fontconf in '%SOURCE1' "${newfontconfs[@]}"; do
+    if [[ -n $fontconf ]] ; then
+      install -m 0644 -vp "${fontconf}" "%{buildroot}%{_fontconfig_templatedir}"
+      echo \"%{_fontconfig_templatedir}/$(basename "${fontconf}")\"                  >> "sil-abyssinica-fonts.list"
+      ln -vsr "%{buildroot}%{_fontconfig_templatedir}/$(basename "${fontconf}")" "%{buildroot}%{_fontconfig_confdir}"
+      echo "%%config(noreplace)" \"%{_fontconfig_confdir}/$(basename "${fontconf}")\" >> "sil-abyssinica-fonts.list"
+    fi
+  done
+)
+
+install -m 0755 -vd "%{buildroot}%{_metainfodir}"
+for fontappstream in 'org.altlinux.sil-abyssinica-fonts.metainfo.xml'; do
+  install -m 0644 -vp "${fontappstream}" "%{buildroot}%{_metainfodir}"
+  echo \"%{_metainfodir}/$(basename "${fontappstream}")\" >> "sil-abyssinica-fonts.list"
+done
+
+for fontdoc in 'FONTLOG.txt' 'OFL-FAQ.txt' 'README.txt' 'documentation/DOCUMENTATION.txt'; do
+  echo %%doc "'${fontdoc}'" >> "sil-abyssinica-fonts.list"
+done
+
+for fontlicense in 'OFL.txt'; do
+  echo %%doc "'${fontlicense}'" >> "sil-abyssinica-fonts.list"
+done
+
+%check
+# fontcheck 
+grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'sil-abyssinica-fonts.list' \
+  | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
+grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'sil-abyssinica-fonts.list' \
+  | xargs -I{} --        appstream-util validate-relax --nonet '%{buildroot}{}'
+
+%files -n fonts-ttf-sil-abyssinica -f sil-abyssinica-fonts.list
+
 
 %changelog
+* Mon Feb 07 2022 Igor Vlasenko <viy@altlinux.org> 1.200-alt2_23
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.200-alt2_12
 - update to new release by fcimport
 
