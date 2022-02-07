@@ -1,107 +1,138 @@
 Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-fonts
+BuildRequires: rpm-build-fedora-compat-fonts unzip
 # END SourceDeps(oneline)
 %define oldname jomolhari-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global	fontname jomolhari
-%global fontconf 65-0-%{fontname}.conf
+%define fontpkgname jomolhari-fonts
+Version:        0.003
+Release:        alt3_35
 
-Name:		fonts-ttf-jomolhari
-Version:	0.003
-Release:	alt3_23
-Summary:	Jomolhari a Bhutanese style font for Tibetan and Dzongkha
+URL: https://fonts.google.com/specimen/Jomolhari
 
-License:	OFL
-# Looks like currently following URL is gone now. Maybe temporary issue
-#URL:		http://chris.fynn.googlepages.com/jomolhari
-# Try following URL for this package
-#URL:           https://sites.google.com/site/chrisfynn2/home/fonts/jomolhari
-Source0:	http://chris.fynn.googlepages.com/jomolhari-alpha003c.zip
-Source1:        %{oldname}-fontconfig.conf
-Source2:        %{fontname}.metainfo.xml
+%global fontlicense       OFL
+%global fontlicenses      OFL.txt
+%global fontdocs          *.txt
+%global fontdocsex        %{fontlicenses}
 
-BuildArch:	noarch
-BuildRequires:	fontpackages-devel
-Source44: import.info
-
-%description
-Jomolhari is an TrueType OpenType Bhutanese style font for Dzongkha and
-Tibetan text. It is based on Bhutanese manuscript examples, supports the
-Unicode and the Chinese encoding for Tibetan.
+%global fontfamily        Jomolhari
+%global fontsummary       Jomolhari a Bhutanese style font for Tibetan and Dzongkha
+%global archivename       jomolhari-alpha003c
+%global fonts             *.ttf
+%global fontdescription   \
+Jomolhari is an TrueType OpenType Bhutanese style font for Dzongkha and\
+Tibetan text. It is based on Bhutanese manuscript examples, supports the\
+Unicode and the Chinese encoding for Tibetan.\
 The font supports the standard combinations used in most texts.
 
+Source0: http://chris.fynn.googlepages.com/%{archivename}.zip
+Source1:        65-0-jomolhari-fonts.conf
+
+Name:           fonts-ttf-jomolhari
+Summary:        %{fontsummary}
+License:        %{fontlicense}
+BuildArch:      noarch
+BuildRequires:  rpm-build-fonts
+%{?fontpkgheader}
+Source44: import.info
+%description
+%{?fontdescription}
+
 %prep
+%global fontconfs         %{SOURCE1}
 %setup -n %{oldname}-%{version} -q -c
+%linuxtext FONTLOG.txt OFL-FAQ.txt OFL.txt
 
 %build
-# Empty build section
-
-%install
-install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
-
-install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
-                   %{buildroot}%{_fontconfig_confdir}
-
-install -m 0644 -p %{SOURCE1} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
-ln -s %{_fontconfig_templatedir}/%{fontconf} \
-      %{buildroot}%{_fontconfig_confdir}/%{fontconf}
-
-for i in FONTLOG.txt OFL-FAQ.txt OFL.txt
-do
-	tr -d '\r' < $i > ${i}.tmp
-	mv -f ${i}.tmp $i
-done
-
-# Add AppStream metadata
-install -Dm 0644 -p %{SOURCE2} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
+# fontbuild 
+fontnames=$(
+  for font in 'Jomolhari-alpha3c-0605331.ttf'; do
+    fc-scan "${font}" -f "    <font>%%{fullname[0]}</font>\n"
+  done | sort -u
+)
+if [[ -n "${fontnames}" ]] ; then
+  fontnames=$'\n'"  <provides>"$'\n'"${fontnames}"$'\n'"  </provides>"
+fi
+fontlangs=$(
+  for font in 'Jomolhari-alpha3c-0605331.ttf'; do
+    fc-scan "${font}" -f "%%{[]lang{    <lang>%%{lang}</lang>\n}}"
+  done | sort -u
+)
+if [[ -n "${fontlangs}" ]] ; then
+  fontlangs=$'\n'"  <languages>"$'\n'"${fontlangs}"$'\n'"  </languages>"
 fi
 
-%files
-%{_fontconfig_templatedir}/65-0-%{fontname}.conf
-%config(noreplace) %{_fontconfig_confdir}/65-0-%{fontname}.conf
-%{_fontbasedir}/*/%{_fontstem}/*.ttf
-%doc FONTLOG.txt OFL-FAQ.txt OFL.txt
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+echo "Generating the jomolhari-fonts appstream file"
+cat > "org.altlinux.jomolhari-fonts.metainfo.xml" << EOF_APPSTREAM
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: MIT -->
+<component type="font">
+  <id>org.altlinux.jomolhari-fonts</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>OFL</project_license>
+  <name>Jomolhari</name>
+  <summary><![CDATA[Jomolhari a Bhutanese style font for Tibetan and Dzongkha]]></summary>
+  <description>
+    <p><![CDATA[Jomolhari is an TrueType OpenType Bhutanese style font for Dzongkha and]]></p><p><![CDATA[Tibetan text. It is based on Bhutanese manuscript examples, supports the]]></p><p><![CDATA[Unicode and the Chinese encoding for Tibetan.]]></p>
+  </description>
+  <updatecontact>devel@lists.altlinux.org</updatecontact>
+  <url type="homepage">https://fonts.google.com/specimen/Jomolhari</url>
+  <releases>
+    <release version="%{version}-%{release}" date="$(date -d @$SOURCE_DATE_EPOCH -u --rfc-3339=d)"/>
+  </releases>${fontnames}${fontlangs}
+</component>
+EOF_APPSTREAM
+
+%install
+echo "Installing "jomolhari-fonts
+echo "" > "jomolhari-fonts.list"
+install -m 0755 -vd %buildroot%_fontsdir/ttf/jomolhari/
+echo "%%dir %_fontsdir/ttf/jomolhari" >> "jomolhari-fonts.list"
+install -m 0644 -vp "Jomolhari-alpha3c-0605331.ttf" %buildroot%_fontsdir/ttf/jomolhari/
+echo \"%_fontsdir/ttf/jomolhari//$(basename "Jomolhari-alpha3c-0605331.ttf")\" >> 'jomolhari-fonts.list'
+(
+
+  install -m 0755 -vd "%{buildroot}%{_fontconfig_templatedir}" \
+                    "%{buildroot}%{_fontconfig_confdir}"
+  for fontconf in '%SOURCE1' "${newfontconfs[@]}"; do
+    if [[ -n $fontconf ]] ; then
+      install -m 0644 -vp "${fontconf}" "%{buildroot}%{_fontconfig_templatedir}"
+      echo \"%{_fontconfig_templatedir}/$(basename "${fontconf}")\"                  >> "jomolhari-fonts.list"
+      ln -vsr "%{buildroot}%{_fontconfig_templatedir}/$(basename "${fontconf}")" "%{buildroot}%{_fontconfig_confdir}"
+      echo "%%config(noreplace)" \"%{_fontconfig_confdir}/$(basename "${fontconf}")\" >> "jomolhari-fonts.list"
+    fi
+  done
+)
+
+install -m 0755 -vd "%{buildroot}%{_metainfodir}"
+for fontappstream in 'org.altlinux.jomolhari-fonts.metainfo.xml'; do
+  install -m 0644 -vp "${fontappstream}" "%{buildroot}%{_metainfodir}"
+  echo \"%{_metainfodir}/$(basename "${fontappstream}")\" >> "jomolhari-fonts.list"
+done
+
+for fontdoc in 'FONTLOG.txt' 'OFL-FAQ.txt'; do
+  echo %%doc "'${fontdoc}'" >> "jomolhari-fonts.list"
+done
+
+for fontlicense in 'OFL.txt'; do
+  echo %%doc "'${fontlicense}'" >> "jomolhari-fonts.list"
+done
+
+%check
+# fontcheck 
+grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'jomolhari-fonts.list' \
+  | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
+grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'jomolhari-fonts.list' \
+  | xargs -I{} --        appstream-util validate-relax --nonet '%{buildroot}{}'
+
+%files -n fonts-ttf-jomolhari -f jomolhari-fonts.list
 
 %changelog
+* Mon Feb 07 2022 Igor Vlasenko <viy@altlinux.org> 0.003-alt3_35
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.003-alt3_23
 - update to new release by fcimport
 
