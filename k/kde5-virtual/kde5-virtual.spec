@@ -1,6 +1,11 @@
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
 
 Name: kde5-virtual
-Version: 5.22.0
+Version: 5.23.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -262,7 +267,9 @@ Requires: sddm sddm-theme-breeze plasma5-sddm-kcm
 %files -n kde5-volume-control-4-plasmapulse
 
 %files -n kde5-email-client-0-dummy
+%if_enabled qtwebengine
 %files -n kde5-email-client-2-kmail
+%endif
 %ifnarch armh
 %files -n kde5-email-client-4-thunderbird
 %endif
@@ -281,6 +288,9 @@ Requires: sddm sddm-theme-breeze plasma5-sddm-kcm
 %files -n kde5-display-manager-5-sddm
 
 %changelog
+* Mon Feb 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.0-alt1
+- update requires
+
 * Wed Nov 03 2021 Sergey V Turchin <zerg@altlinux.org> 5.22.0-alt1
 - use lightdm-kde-greeter for lightdm
 
