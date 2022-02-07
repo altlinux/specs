@@ -1,13 +1,16 @@
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
 
 Name: kde5-set
-Version: 21.08.0
+Version: 21.08.1
 Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
 License: Public Domain
-
-BuildArch: noarch
 
 %description
 %summary
@@ -127,7 +130,9 @@ Requires: kde5-dolphin-plugins
 Requires: kde5-lokalize kde5-okteta kde5-kapptemplate kde5-dev-scripts kde5-kompare
 Requires: kde5-sdk-thumbnailers kde5-poxml kde5-umbrello
 Requires: kde5-kcachegrind
+%if_enabled qtwebengine
 Requires: kde5-kimagemapeditor
+%endif
 %description -n kde5-somedevel
 %summary
 
@@ -135,7 +140,11 @@ Requires: kde5-kimagemapeditor
 Summary: Educational software based on the KDE technologies
 Group: Graphical desktop/KDE
 Requires: kde5-runtime
-Requires: kde5-kanagram kde5-khangman kde5-parley kde5-kwordquiz kde5-kturtle kde5-marble
+%if_enabled qtwebengine
+Requires: kde5-parley
+%endif
+Requires: kde5-kanagram kde5-khangman
+Requires: kde5-kwordquiz kde5-kturtle kde5-marble
 Requires: kde5-step kde5-kstars kde5-kig kde5-kmplot kde5-kalgebra kde5-cantor kde5-rocs
 Requires: kde5-kbruch kde5-kgeography kde5-ktouch
 # openbabel Requires: kde5-kalzium
@@ -176,12 +185,15 @@ KDE image scanning support applications.
 %package -n kde5-pim
 Summary: %summary
 Group: Graphical desktop/KDE
-Requires: kde5-kontact kde5-pim-data-exporter
 ##Requires: kde5-akonadiconsole
 Requires: kde5-email-client
-Requires: kde5-akregator kde5-kalarm kde5-knotes
+%if_enabled qtwebengine
+Requires: kde5-pim-data-exporter kde5-pim-addons
+Requires: kde5-akregator kde5-kontact
+%endif
+Requires: kde5-kalarm kde5-knotes
 Requires: kde5-korganizer kde5-akonadi-calendar-tools
-Requires: kde5-kaddressbook kde5-pim-addons
+Requires: kde5-kaddressbook
 ##Requires:  kde5-blogilo
 # akonadi based email client
 #Requires: kde5-akonadi-import-wizard kde5-mbox-importer kde5-pim-sieve-editor kde5-mbox-importer kde5-pim-sieve-editor kde5-grantlee-editor
@@ -204,6 +216,9 @@ Requires: kde5-kaddressbook kde5-pim-addons
 %files -n kde5-pim
 
 %changelog
+* Mon Feb 07 2022 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt1
+- update requires
+
 * Wed Dec 08 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.0-alt1
 - drop requires to kde5-kalzium
 
