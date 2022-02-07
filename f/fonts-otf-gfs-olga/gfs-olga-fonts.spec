@@ -1,119 +1,171 @@
 Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-fonts
+BuildRequires: rpm-build-fedora-compat-fonts unzip
 # END SourceDeps(oneline)
 %define oldname gfs-olga-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global fontname gfs-olga
-%global fontconf 61-%{fontname}.conf
+%define fontpkgname gfs-olga-fonts
+# SPDX-License-Identifier: MIT
+Version: 20160509
+Release: alt1_5
+URL:     http://www.greekfontsociety-gfs.gr/typefaces/20th_21st_century
 
-%global archivename GFS_OLGA_OT
+%global foundry           GFS
+%global fontlicense       OFL
+%global fontlicenses      OFL.txt
+%global fontdocs          *.txt
+%global fontdocsex        %{fontlicenses}
 
-Name:    fonts-otf-gfs-olga
-Version: 20060908
-Release: alt3_22
-Summary: GFS Olga experimental oblique font
-
-License:   OFL
-URL:       http://www.greekfontsociety.gr/pages/en_typefaces20th.html
-Source0:   http://www.greekfontsociety.gr/%{archivename}.zip
-Source1:   %{oldname}-fontconfig.conf
-Source2:   %{fontname}.metainfo.xml
-
-BuildArch:     noarch
-BuildRequires: fontpackages-devel
-Source44: import.info
-
-%description
-In Greece the terms italic and oblique have the same meaning since they are
-borrowed from the latin typographic practice without any real historical
-equivalent in Greek history. Until the end of the 19th century Greek typefaces
-were cut and cast indepedently, not as members of a typefamily. The
-mechanisation of typecutting allowed the transformation of upright Greek
-typefaces to oblique designs. Nonetheless, the typesetting practice of a
-cursive Greek font to complement an upright one did not survive the 19th
-century.
-
-The experimental font GFS Olga (1995) attempts to revive this lost tradition.
-The typeface was designed and digitised by George Matthiopoulos, based on the
-historical Porson Greek type (1803) with the intention to be the companion of
+%global fontfamily        Olga
+%global fontsummary       GFS Olga, a 20th century oblique Greek font family
+%global fonts             *.otf
+%global fontdescription   \
+In Greece the terms italic and oblique have the same meaning since they are\
+borrowed from the Latin typographic practice without any real historical\
+equivalent in Greek history. Until the end of the 19th century Greek typefaces\
+were cut and cast independently, not as members of a font family. The\
+mechanization of type cutting allowed the transformation of upright Greek\
+typefaces to oblique designs. Nonetheless, the typesetting practice of a\
+cursive Greek font to complement an upright one did not survive the 19th\
+century.\
+\
+The experimental font GFS Olga (1995) attempts to revive this lost tradition.\
+The typeface was designed and digitized by George Matthiopoulos, based on the\
+historical Porson Greek type (1803) with the intention to be the companion of\
 the upright GFS Didot font whenever there is a need for an italic alternative.
 
+%global archivename GFS_Olga
+
+Source0:  http://www.greekfontsociety-gfs.gr/_assets/fonts/%{archivename}.zip
+Source10: 61-gfs-olga-fonts.xml
+
+Name:           fonts-otf-gfs-olga
+Summary:        %{fontsummary}
+License:        %{fontlicense}
+BuildArch:      noarch
+BuildRequires:  rpm-build-fonts
+%{?fontpkgheader}
+Source44: import.info
+%description
+%{?fontdescription}
+
+%package   doc
+Group: System/Fonts/True type
+Summary:   Optional documentation files of %{oldname}
+BuildArch: noarch
+%description doc
+This package provides optional documentation files shipped with
+%{oldname}.
 
 %prep
+%global fontconfngs       %{SOURCE10}
 %setup -n %{oldname}-%{version} -q -c -T
-unzip -j -L -q %{SOURCE0}
-chmod 0644 *.txt
-for txt in *.txt ; do
-   fold -s $txt > $txt.new
-   sed -i 's/\r//' $txt.new
-   touch -r $txt $txt.new
-   mv $txt.new $txt
-done
-
+unzip -j -q  %{SOURCE0}
+%linuxtext *.txt
 
 %build
-
-
-%install
-install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p *.otf %{buildroot}%{_fontdir}
-
-install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
-                   %{buildroot}%{_fontconfig_confdir}
-
-install -m 0644 -p %{SOURCE1} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
-ln -s %{_fontconfig_templatedir}/%{fontconf} \
-      %{buildroot}%{_fontconfig_confdir}/%{fontconf}
-
-# Add AppStream metadata
-install -Dm 0644 -p %{SOURCE2} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
+# fontbuild 
+fontnames=$(
+  for font in 'GFSOlga.otf'; do
+    fc-scan "${font}" -f "    <font>%%{fullname[0]}</font>\n"
+  done | sort -u
+)
+if [[ -n "${fontnames}" ]] ; then
+  fontnames=$'\n'"  <provides>"$'\n'"${fontnames}"$'\n'"  </provides>"
+fi
+fontlangs=$(
+  for font in 'GFSOlga.otf'; do
+    fc-scan "${font}" -f "%%{[]lang{    <lang>%%{lang}</lang>\n}}"
+  done | sort -u
+)
+if [[ -n "${fontlangs}" ]] ; then
+  fontlangs=$'\n'"  <languages>"$'\n'"${fontlangs}"$'\n'"  </languages>"
 fi
 
-%files
-%{_fontconfig_templatedir}/%{fontconf}
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}
-%{_fontbasedir}/*/%{_fontstem}/*.otf
-%doc *.txt *.pdf
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+echo "Generating the gfs-olga-fonts appstream file"
+cat > "org.altlinux.gfs-olga-fonts.metainfo.xml" << EOF_APPSTREAM
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: MIT -->
+<component type="font">
+  <id>org.altlinux.gfs-olga-fonts</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>OFL</project_license>
+  <name>GFS Olga</name>
+  <summary><![CDATA[GFS Olga, a 20th century oblique Greek font family]]></summary>
+  <description>
+    <p><![CDATA[In Greece the terms italic and oblique have the same meaning since they are]]></p><p><![CDATA[borrowed from the Latin typographic practice without any real historical]]></p><p><![CDATA[equivalent in Greek history. Until the end of the 19th century Greek typefaces]]></p><p><![CDATA[were cut and cast independently, not as members of a font family. The]]></p><p><![CDATA[mechanization of type cutting allowed the transformation of upright Greek]]></p><p><![CDATA[typefaces to oblique designs. Nonetheless, the typesetting practice of a]]></p><p><![CDATA[cursive Greek font to complement an upright one did not survive the 19th]]></p><p><![CDATA[century.]]></p> The experimental font GFS Olga (1995) attempts to revive this lost tradition. The typeface was designed and digitized by George Matthiopoulos, based on the historical Porson Greek type (1803) with the intention to be the companion of
+  </description>
+  <updatecontact>devel@lists.altlinux.org</updatecontact>
+  <url type="homepage">http://www.greekfontsociety-gfs.gr/typefaces/20th_21st_century</url>
+  <releases>
+    <release version="%{version}-%{release}" date="$(date -d @$SOURCE_DATE_EPOCH -u --rfc-3339=d)"/>
+  </releases>${fontnames}${fontlangs}
+</component>
+EOF_APPSTREAM
+
+%install
+echo "Installing "gfs-olga-fonts
+echo "" > "gfs-olga-fonts.list"
+install -m 0755 -vd %buildroot%_fontsdir/otf/gfs-olga/
+echo "%%dir %_fontsdir/otf/gfs-olga" >> "gfs-olga-fonts.list"
+install -m 0644 -vp "GFSOlga.otf" %buildroot%_fontsdir/otf/gfs-olga/
+echo \"%_fontsdir/otf/gfs-olga//$(basename "GFSOlga.otf")\" >> 'gfs-olga-fonts.list'
+(
+
+  IFS= lines=$(
+    for fontconfng in '%SOURCE10'; do
+      gen-fontconf -x "${fontconfng}" -w -f 'GFSOlga.otf'
+    done
+  )
+  while IFS= read -r line; do
+    [[ -n $line ]] && newfontconfs+=("$line")
+  done <<< ${lines}
+
+  install -m 0755 -vd "%{buildroot}%{_fontconfig_templatedir}" \
+                    "%{buildroot}%{_fontconfig_confdir}"
+  for fontconf in  "${newfontconfs[@]}"; do
+    if [[ -n $fontconf ]] ; then
+      install -m 0644 -vp "${fontconf}" "%{buildroot}%{_fontconfig_templatedir}"
+      echo \"%{_fontconfig_templatedir}/$(basename "${fontconf}")\"                  >> "gfs-olga-fonts.list"
+      ln -vsr "%{buildroot}%{_fontconfig_templatedir}/$(basename "${fontconf}")" "%{buildroot}%{_fontconfig_confdir}"
+      echo "%%config(noreplace)" \"%{_fontconfig_confdir}/$(basename "${fontconf}")\" >> "gfs-olga-fonts.list"
+    fi
+  done
+)
+
+install -m 0755 -vd "%{buildroot}%{_metainfodir}"
+for fontappstream in 'org.altlinux.gfs-olga-fonts.metainfo.xml'; do
+  install -m 0644 -vp "${fontappstream}" "%{buildroot}%{_metainfodir}"
+  echo \"%{_metainfodir}/$(basename "${fontappstream}")\" >> "gfs-olga-fonts.list"
+done
+
+for fontdoc in 'OFL-FAQ.txt'; do
+  echo %%doc "'${fontdoc}'" >> "gfs-olga-fonts.list"
+done
+
+for fontlicense in 'OFL.txt'; do
+  echo %%doc "'${fontlicense}'" >> "gfs-olga-fonts.list"
+done
+
+%check
+# fontcheck 
+grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'gfs-olga-fonts.list' \
+  | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
+grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'gfs-olga-fonts.list' \
+  | xargs -I{} --        appstream-util validate-relax --nonet '%{buildroot}{}'
+
+%files -n fonts-otf-gfs-olga -f gfs-olga-fonts.list
+
+%files doc
+%doc --no-dereference OFL.txt
+%doc *.pdf
 
 %changelog
+* Mon Feb 07 2022 Igor Vlasenko <viy@altlinux.org> 20160509-alt1_5
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 20060908-alt3_22
 - update to new release by fcimport
 
