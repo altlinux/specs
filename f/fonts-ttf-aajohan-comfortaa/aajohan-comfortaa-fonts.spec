@@ -1,110 +1,152 @@
 Group: System/Fonts/True type
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-fonts
+BuildRequires: rpm-build-fedora-compat-fonts
+# END SourceDeps(oneline)
 %define oldname aajohan-comfortaa-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global fontname aajohan-comfortaa
-%global fontconf 61-%{fontname}.conf
+# %%oldname is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name aajohan-comfortaa-fonts
+%define fontpkgname aajohan-comfortaa-fonts
+Version:        3.101
+Release:        alt1_4
+URL:            https://www.deviantart.com/aajohan
+
+%global foundry           Aajohan
+%global fontlicense       OFL
+%global fontlicenses      OFL.txt
+%global fontdocs          AUTHORS.txt CONTRIBUTORS.txt FONTLOG.txt DESCRIPTION.en_us.html README.md
+%global fontdocsex        %{fontlicenses}
+
+%global fontfamily        Comfortaa
+%global fontsummary       Modern style true type font
+%global fonts             fonts/OTF/*.otf fonts/TTF/*.ttf
+%global fontdescription   \
+Comfortaa is a sans-serif font comfortable in every aspect with\
+Bold, Regular, and Thin variants.\
+It has very good European language coverage and decent Cyrillic coverage.
+
+Source0:        https://github.com/googlefonts/comfortaa/archive/%{version}%{?prerelease}/%{oldname}-%{version}%{?prerelease}.tar.gz
+Source1:        61-aajohan-comfortaa-fonts.conf
 
 Name:           fonts-ttf-aajohan-comfortaa
-Version:        3.101
-Release:        alt1_1
-Summary:        Modern style true type font
-
-License:        OFL
-URL:            http://aajohan.deviantart.com
-Source0:        https://github.com/googlefonts/comfortaa/archive/%{version}%{?prerelease}/%{oldname}-%{version}%{?prerelease}.tar.gz
-Source1:        %{oldname}-fontconfig.conf
-Source2:        %{fontname}.metainfo.xml
-
+Summary:        %{fontsummary}
+License:        %{fontlicense}
 BuildArch:      noarch
-BuildRequires:  fontpackages-devel
-BuildRequires:	libappstream-glib
+BuildRequires:  rpm-build-fonts
+%{?fontpkgheader}
 Source44: import.info
-
 %description
-Comfortaa is a sans-serif font comfortable in every aspect with
-Bold, Regular, and Thin variants.
-It has very good European language coverage and decent Cyrillic coverage.  
+%{?fontdescription}
 
 %prep
+%global fontconfs         %{SOURCE1}
 %setup -q -n comfortaa-%{version}
 
-
-# Fixing
-# wrong-file-end-of-line-encoding issue
-# Thanks to Paul Flo Williams
-
-for file in *.txt; do
- sed 's/\r//g' "$file" | \
- fold -s > "$file.new" && \
- touch -r "$file" "$file.new" && \
- mv "$file.new" "$file"
-done
+chmod 644 AUTHORS.txt CONTRIBUTORS.txt
+%linuxtext FONTLOG.txt OFL.txt
 
 %build
+# fontbuild 
+fontnames=$(
+  for font in 'fonts/OTF/Comfortaa-Bold.otf' 'fonts/OTF/Comfortaa-Light.otf' 'fonts/OTF/Comfortaa-Regular.otf' 'fonts/TTF/Comfortaa-Bold.ttf' 'fonts/TTF/Comfortaa-Light.ttf' 'fonts/TTF/Comfortaa-Regular.ttf'; do
+    fc-scan "${font}" -f "    <font>%%{fullname[0]}</font>\n"
+  done | sort -u
+)
+if [[ -n "${fontnames}" ]] ; then
+  fontnames=$'\n'"  <provides>"$'\n'"${fontnames}"$'\n'"  </provides>"
+fi
+fontlangs=$(
+  for font in 'fonts/OTF/Comfortaa-Bold.otf' 'fonts/OTF/Comfortaa-Light.otf' 'fonts/OTF/Comfortaa-Regular.otf' 'fonts/TTF/Comfortaa-Bold.ttf' 'fonts/TTF/Comfortaa-Light.ttf' 'fonts/TTF/Comfortaa-Regular.ttf'; do
+    fc-scan "${font}" -f "%%{[]lang{    <lang>%%{lang}</lang>\n}}"
+  done | sort -u
+)
+if [[ -n "${fontlangs}" ]] ; then
+  fontlangs=$'\n'"  <languages>"$'\n'"${fontlangs}"$'\n'"  </languages>"
+fi
+
+echo "Generating the aajohan-comfortaa-fonts appstream file"
+cat > "org.altlinux.aajohan-comfortaa-fonts.metainfo.xml" << EOF_APPSTREAM
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: MIT -->
+<component type="font">
+  <id>org.altlinux.aajohan-comfortaa-fonts</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>OFL</project_license>
+  <name>Aajohan Comfortaa</name>
+  <summary><![CDATA[Modern style true type font]]></summary>
+  <description>
+    <p><![CDATA[Comfortaa is a sans-serif font comfortable in every aspect with]]></p><p><![CDATA[Bold, Regular, and Thin variants.]]></p>
+  </description>
+  <updatecontact>devel@lists.altlinux.org</updatecontact>
+  <url type="homepage">https://www.deviantart.com/aajohan</url>
+  <releases>
+    <release version="%{version}-%{release}" date="$(date -d @$SOURCE_DATE_EPOCH -u --rfc-3339=d)"/>
+  </releases>${fontnames}${fontlangs}
+</component>
+EOF_APPSTREAM
 
 %install
-install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p fonts/OTF/*.otf %{buildroot}%{_fontdir}
-install -m 0644 -p fonts/TTF/*.ttf %{buildroot}%{_fontdir}
-install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
-                   %{buildroot}%{_fontconfig_confdir}
-install -m 0644 -p %{SOURCE1} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
+echo "Installing "aajohan-comfortaa-fonts
+echo "" > "aajohan-comfortaa-fonts.list"
+install -m 0755 -vd %buildroot%_fontsdir/otf/aajohan-comfortaa/
+echo "%%dir %_fontsdir/otf/aajohan-comfortaa" >> "aajohan-comfortaa-fonts.list"
+install -m 0755 -vd %buildroot%_fontsdir/ttf/aajohan-comfortaa/
+echo "%%dir %_fontsdir/ttf/aajohan-comfortaa" >> "aajohan-comfortaa-fonts.list"
+install -m 0644 -vp "fonts/OTF/Comfortaa-Bold.otf" %buildroot%_fontsdir/otf/aajohan-comfortaa/
+echo \"%_fontsdir/otf/aajohan-comfortaa//$(basename "fonts/OTF/Comfortaa-Bold.otf")\" >> 'aajohan-comfortaa-fonts.list'
+install -m 0644 -vp "fonts/OTF/Comfortaa-Light.otf" %buildroot%_fontsdir/otf/aajohan-comfortaa/
+echo \"%_fontsdir/otf/aajohan-comfortaa//$(basename "fonts/OTF/Comfortaa-Light.otf")\" >> 'aajohan-comfortaa-fonts.list'
+install -m 0644 -vp "fonts/OTF/Comfortaa-Regular.otf" %buildroot%_fontsdir/otf/aajohan-comfortaa/
+echo \"%_fontsdir/otf/aajohan-comfortaa//$(basename "fonts/OTF/Comfortaa-Regular.otf")\" >> 'aajohan-comfortaa-fonts.list'
+install -m 0644 -vp "fonts/TTF/Comfortaa-Bold.ttf" %buildroot%_fontsdir/ttf/aajohan-comfortaa/
+echo \"%_fontsdir/ttf/aajohan-comfortaa//$(basename "fonts/TTF/Comfortaa-Bold.ttf")\" >> 'aajohan-comfortaa-fonts.list'
+install -m 0644 -vp "fonts/TTF/Comfortaa-Light.ttf" %buildroot%_fontsdir/ttf/aajohan-comfortaa/
+echo \"%_fontsdir/ttf/aajohan-comfortaa//$(basename "fonts/TTF/Comfortaa-Light.ttf")\" >> 'aajohan-comfortaa-fonts.list'
+install -m 0644 -vp "fonts/TTF/Comfortaa-Regular.ttf" %buildroot%_fontsdir/ttf/aajohan-comfortaa/
+echo \"%_fontsdir/ttf/aajohan-comfortaa//$(basename "fonts/TTF/Comfortaa-Regular.ttf")\" >> 'aajohan-comfortaa-fonts.list'
+(
 
-ln -s %{_fontconfig_templatedir}/%{fontconf} \
-      %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+  install -m 0755 -vd "%{buildroot}%{_fontconfig_templatedir}" \
+                    "%{buildroot}%{_fontconfig_confdir}"
+  for fontconf in '%SOURCE1' "${newfontconfs[@]}"; do
+    if [[ -n $fontconf ]] ; then
+      install -m 0644 -vp "${fontconf}" "%{buildroot}%{_fontconfig_templatedir}"
+      echo \"%{_fontconfig_templatedir}/$(basename "${fontconf}")\"                  >> "aajohan-comfortaa-fonts.list"
+      ln -vsr "%{buildroot}%{_fontconfig_templatedir}/$(basename "${fontconf}")" "%{buildroot}%{_fontconfig_confdir}"
+      echo "%%config(noreplace)" \"%{_fontconfig_confdir}/$(basename "${fontconf}")\" >> "aajohan-comfortaa-fonts.list"
+    fi
+  done
+)
 
-# Add AppStream metadata
-install -Dm 0644 -p %{SOURCE2} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
+install -m 0755 -vd "%{buildroot}%{_metainfodir}"
+for fontappstream in 'org.altlinux.aajohan-comfortaa-fonts.metainfo.xml'; do
+  install -m 0644 -vp "${fontappstream}" "%{buildroot}%{_metainfodir}"
+  echo \"%{_metainfodir}/$(basename "${fontappstream}")\" >> "aajohan-comfortaa-fonts.list"
 done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
-fi
-%check
-appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/%{fontname}.metainfo.xml
 
-%files
-%{_fontconfig_templatedir}/%{fontconf}
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}
-%dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/*.otf
-%{_fontbasedir}/*/%{_fontstem}/*.ttf
-%doc FONTLOG.txt OFL.txt
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+for fontdoc in 'AUTHORS.txt' 'CONTRIBUTORS.txt' 'FONTLOG.txt' 'DESCRIPTION.en_us.html' 'README.md'; do
+  echo %%doc "'${fontdoc}'" >> "aajohan-comfortaa-fonts.list"
+done
+
+for fontlicense in 'OFL.txt'; do
+  echo %%doc "'${fontlicense}'" >> "aajohan-comfortaa-fonts.list"
+done
+
+%check
+# fontcheck 
+grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'aajohan-comfortaa-fonts.list' \
+  | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
+grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'aajohan-comfortaa-fonts.list' \
+  | xargs -I{} --        appstream-util validate-relax --nonet '%{buildroot}{}'
+
+%files -n fonts-ttf-aajohan-comfortaa -f aajohan-comfortaa-fonts.list
 
 %changelog
+* Mon Feb 07 2022 Igor Vlasenko <viy@altlinux.org> 3.101-alt1_4
+- update to new release by fcimport
+
 * Thu Jul 08 2021 Igor Vlasenko <viy@altlinux.org> 3.101-alt1_1
 - update to new release by fcimport
 
