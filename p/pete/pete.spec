@@ -1,6 +1,6 @@
 Name: pete
 Version: 2.1.0
-Release: alt2
+Release: alt2.1
 Summary: Portable Expression Template Engine
 License: ACL/LANL
 Group: Sciences/Mathematics
@@ -43,6 +43,10 @@ Documentation for Expression Template Engine (PETE).
 
 %prep
 %setup
+%ifarch %e2k
+# error: identifier "joinWithComma" is undefined
+sed -i '1i #include "Join.h"' src/Tools/PrintOperators.h
+%endif
 
 %build
 export PETEARCH=LINUXEGCS
@@ -72,6 +76,9 @@ mv %buildroot/html/* %buildroot%_docdir/%name/
 %_docdir/%name
 
 %changelog
+* Mon Feb 07 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.1.0-alt2.1
+- Fixed build for Elbrus.
+
 * Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt2
 - Fixed build with gcc 4.7
 
