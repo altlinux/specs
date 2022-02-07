@@ -1,8 +1,8 @@
 %define srcName clean
 
 Name: clean
-Version: 3.0
-Release: alt1.7
+Version: 3.1
+Release: alt1
 Summary: The Clean programming language compiler and environment
 Summary(ru_RU.UTF-8): Компилятор и системная библиотека для языка Clean
 License: BSD license
@@ -43,9 +43,9 @@ library. This is a bootstrap package for 64-bit intel architecture.
 # Компилируем стандартную библиотеку - надо спросить Камила
 cd target/clean-base/lib/StdEnv/
 for f in `ls *.icl`; do
-  PATH=$PATH:../../bin/ CLEANLIB=../exe clm -I . -PO `echo $f | sed s/.icl//`
+  PATH=$PATH:../../bin/ CLEANLIB=../exe clm -dynamics -I . -PO `echo $f | sed s/.icl//`
 done
-PATH=$PATH:../../bin/ CLEANLIB=../exe clm -I . -PO StdEnv
+PATH=$PATH:../../bin/ CLEANLIB=../exe clm -dynamics -I . -PO StdEnv
 cd ../../../../
 
 # Снимаем бит exec stack - разработчик John van Groningen
@@ -104,6 +104,9 @@ touch "/usr/lib64/clean/StdEnv/Clean System Files"/*.o
 %docdir/*
 
 %changelog
+* Sun Feb 06 2022 Andrey Bergman <vkni@altlinux.org> 3.1-alt1
+- Update to 3.1 version. Enabled dynamics.
+
 * Thu Jan 28 2021 Andrey Bergman <vkni@altlinux.org> 3.0-alt1.7
 - Update to recent unstable version.
 
