@@ -1,102 +1,140 @@
 Group: System/Fonts/True type
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-fonts
+BuildRequires: rpm-build-fedora-compat-fonts
+# END SourceDeps(oneline)
 %define oldname oflb-asana-math-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global fontname oflb-asana-math
-%global fontconf 63-%{fontname}.conf
-
-Name:           fonts-otf-oflb-asana-math
+%define fontpkgname oflb-asana-math-fonts
 Version:        0.954
-Release:        alt1_5
-Summary:        An OpenType font with a MATH table
-
-License:        OFL
+Release:        alt1_16
 ## Note that upstream is dead and there is no download link available at this minute
 ## so please don't report FTBFS bugs for this package.
 URL:            http://www.ctan.org/tex-archive/fonts/Asana-Math/
+
+%global foundry           oflb
+%global fontlicense       OFL
+%global fontlicenses      License.txt
+%global fontdocs          *.txt README.license
+%global fontdocsex        %{fontlicenses}
+
+%global fontfamily        Asana Math
+%global fontsummary       An OpenType font with a MATH table
+%global fonts             Asana-Math.otf
+%global fontdescription   \
+An OpenType font with a MATH table that can be used with XeTeX to typeset math\
+content.
+
 Source0:        http://mirrors.ctan.org/fonts/Asana-Math/Asana-Math.otf
-Source1:        %{oldname}-fontconfig.conf
+Source1:        63-oflb-asana-math-fonts.conf
 Source2:        README.license
 #license text extracted from font file
 Source3:        License.txt
-Source4:        %{fontname}.metainfo.xml
 
+Name:           fonts-otf-oflb-asana-math
+Summary:        %{fontsummary}
+License:        %{fontlicense}
 BuildArch:      noarch
-BuildRequires:  fontpackages-devel
-Obsoletes:      asana-math-fonts < 0.914-8
-Provides:       asana-math-fonts = %{version}-%{release}
+BuildRequires:  rpm-build-fonts
+%{?fontpkgheader}
 Source44: import.info
-
 %description
-An OpenType font with a MATH table that can be used with XeTeX to typeset math
-content
-
+%{?fontdescription}
 
 %prep
+%global fontconfs         %{SOURCE1}
+%setup -n %{oldname}-%{version} -q -c -T
 cp -p %{SOURCE0} %{SOURCE1} %{SOURCE2} %{SOURCE3} .
 
 %build
-#nothing to do
-
-%install
-install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p %{SOURCE0} %{buildroot}%{_fontdir}
-
-install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
-                   %{buildroot}%{_fontconfig_confdir}
-
-install -m 0644 -p %{SOURCE1} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
-ln -s %{_fontconfig_templatedir}/%{fontconf} \
-      %{buildroot}%{_fontconfig_confdir}/%{fontconf}
-
-# Add AppStream metadata
-install -Dm 0644 -p %{SOURCE4} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
+# fontbuild 
+fontnames=$(
+  for font in 'Asana-Math.otf'; do
+    fc-scan "${font}" -f "    <font>%%{fullname[0]}</font>\n"
+  done | sort -u
+)
+if [[ -n "${fontnames}" ]] ; then
+  fontnames=$'\n'"  <provides>"$'\n'"${fontnames}"$'\n'"  </provides>"
+fi
+fontlangs=$(
+  for font in 'Asana-Math.otf'; do
+    fc-scan "${font}" -f "%%{[]lang{    <lang>%%{lang}</lang>\n}}"
+  done | sort -u
+)
+if [[ -n "${fontlangs}" ]] ; then
+  fontlangs=$'\n'"  <languages>"$'\n'"${fontlangs}"$'\n'"  </languages>"
 fi
 
-%files
-%{_fontconfig_templatedir}/%{fontconf}
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}
-%{_fontbasedir}/*/%{_fontstem}/*.otf
-%doc README.license License.txt
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+echo "Generating the oflb-asana-math-fonts appstream file"
+cat > "org.altlinux.oflb-asana-math-fonts.metainfo.xml" << EOF_APPSTREAM
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: MIT -->
+<component type="font">
+  <id>org.altlinux.oflb-asana-math-fonts</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>OFL</project_license>
+  <name>oflb Asana Math</name>
+  <summary><![CDATA[An OpenType font with a MATH table]]></summary>
+  <description>
+    <p><![CDATA[An OpenType font with a MATH table that can be used with XeTeX to typeset math]]></p>
+  </description>
+  <updatecontact>devel@lists.altlinux.org</updatecontact>
+  <url type="homepage">http://www.ctan.org/tex-archive/fonts/Asana-Math/</url>
+  <releases>
+    <release version="%{version}-%{release}" date="$(date -d @$SOURCE_DATE_EPOCH -u --rfc-3339=d)"/>
+  </releases>${fontnames}${fontlangs}
+</component>
+EOF_APPSTREAM
 
+%install
+echo "Installing "oflb-asana-math-fonts
+echo "" > "oflb-asana-math-fonts.list"
+install -m 0755 -vd %buildroot%_fontsdir/otf/oflb-asana-math/
+echo "%%dir %_fontsdir/otf/oflb-asana-math" >> "oflb-asana-math-fonts.list"
+install -m 0644 -vp "Asana-Math.otf" %buildroot%_fontsdir/otf/oflb-asana-math/
+echo \"%_fontsdir/otf/oflb-asana-math//$(basename "Asana-Math.otf")\" >> 'oflb-asana-math-fonts.list'
+(
+
+  install -m 0755 -vd "%{buildroot}%{_fontconfig_templatedir}" \
+                    "%{buildroot}%{_fontconfig_confdir}"
+  for fontconf in '%SOURCE1' "${newfontconfs[@]}"; do
+    if [[ -n $fontconf ]] ; then
+      install -m 0644 -vp "${fontconf}" "%{buildroot}%{_fontconfig_templatedir}"
+      echo \"%{_fontconfig_templatedir}/$(basename "${fontconf}")\"                  >> "oflb-asana-math-fonts.list"
+      ln -vsr "%{buildroot}%{_fontconfig_templatedir}/$(basename "${fontconf}")" "%{buildroot}%{_fontconfig_confdir}"
+      echo "%%config(noreplace)" \"%{_fontconfig_confdir}/$(basename "${fontconf}")\" >> "oflb-asana-math-fonts.list"
+    fi
+  done
+)
+
+install -m 0755 -vd "%{buildroot}%{_metainfodir}"
+for fontappstream in 'org.altlinux.oflb-asana-math-fonts.metainfo.xml'; do
+  install -m 0644 -vp "${fontappstream}" "%{buildroot}%{_metainfodir}"
+  echo \"%{_metainfodir}/$(basename "${fontappstream}")\" >> "oflb-asana-math-fonts.list"
+done
+
+for fontdoc in 'README.license'; do
+  echo %%doc "'${fontdoc}'" >> "oflb-asana-math-fonts.list"
+done
+
+for fontlicense in 'License.txt'; do
+  echo %%doc "'${fontlicense}'" >> "oflb-asana-math-fonts.list"
+done
+
+%check
+# fontcheck 
+grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'oflb-asana-math-fonts.list' \
+  | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
+grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'oflb-asana-math-fonts.list' \
+  | xargs -I{} --        appstream-util validate-relax --nonet '%{buildroot}{}'
+
+%files -n fonts-otf-oflb-asana-math -f oflb-asana-math-fonts.list
 
 %changelog
+* Mon Feb 07 2022 Igor Vlasenko <viy@altlinux.org> 0.954-alt1_16
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.954-alt1_5
 - update to new release by fcimport
 
