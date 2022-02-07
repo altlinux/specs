@@ -58,8 +58,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.34.0
-Release: alt2%git_hash
+Version: 1.35.90
+Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -400,6 +400,7 @@ export LDFLAGS=-pie
 	--disable-undefined-sanitizer \
 %endif
 	--with-iwd=%iwd_support \
+	--with-config-wifi-backend-default=wpa_supplicant \
 	--with-dist-version=%version-%release \
 	--disable-silent-rules \
 	--enable-more-warnings=%more_warnings
@@ -645,6 +646,11 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Feb 07 2022 Mikhail Efremov <sem@altlinux.org> 1.35.90-alt1
+- Fixed test_system_encodings.
+- Explicitly set wpa_supplicant as default wifi backend.
+- Updated to 1.35.90 (1.36-rc1).
+
 * Wed Jan 19 2022 Mikhail Efremov <sem@altlinux.org> 1.34.0-alt2
 - Updated Vcs tag.
 
