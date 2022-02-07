@@ -19,7 +19,7 @@ Pelican is a static site generator, written in Python_.\
 
 Name: python3-module-%{pypi_name}
 Version: 4.6.0
-Release: alt2
+Release: alt3
 Summary: %{short_desc}
 Group: Development/Python3
 
@@ -117,13 +117,16 @@ nosetests-3 -sv --with-coverage --cover-package=%{pypi_name} %{pypi_name}
 %_bindir/%{pypi_name}-quickstart
 %_bindir/%{pypi_name}-themes
 %{python3_sitelibdir_noarch}/%{pypi_name}
-%{python3_sitelibdir_noarch}/%{pypi_name}-*-py?.?.egg-info
+%{python3_sitelibdir_noarch}/%{pypi_name}-%{version}-py*.*.egg-info
 
 %files -n %{pypi_name}
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Mon Feb 07 2022 Alexey Appolonov <alexey@altlinux.org> 4.6.0-alt3
+- Fixed build (the build was broken after python3 upgrade to v3.10).
+
 * Tue Jul 06 2021 Alexey Appolonov <alexey@altlinux.org> 4.6.0-alt2
 - Requirement of the "python3-module-beautifulsoup4" package, which some of
   the plugins can use.
