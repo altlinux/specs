@@ -6,7 +6,7 @@
 
 Name: prometheus-%oname
 Version: 0.21.0
-Release: alt1
+Release: alt2
 Summary: Prometheus Alertmanager
 
 Group: Development/Other
@@ -77,6 +77,9 @@ install -m0644 template/default.tmpl %buildroot%_sysconfdir/prometheus/alertmana
 %dir %attr(775, root, prometheus) %_localstatedir/prometheus/%oname
 
 %changelog
+* Mon Feb 07 2022 Alexey Shabalin <shaba@altlinux.org> 0.21.0-alt2
+- Fix config example.
+
 * Tue Jan 26 2021 Alexey Shabalin <shaba@altlinux.org> 0.21.0-alt1
 - 0.21.0.
 
