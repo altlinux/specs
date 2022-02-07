@@ -1,5 +1,5 @@
 Name: alterator-kiosk
-Version: 1.6
+Version: 1.7
 Release: alt1
 
 Source: %name-%version.tar
@@ -54,6 +54,9 @@ install -Dm 0644 %SOURCE2 %buildroot%_unitdir/kiosk.service
 %_sysconfdir/alterator/kiosk/profiles/
 
 %changelog
+* Mon Feb 07 2022 Oleg Solovyov <mcpain@altlinux.org> 1.7-alt1
+- update profiles for LDE startup and shotdown
+
 * Tue Sep 21 2021 Ivan Razzhivin <underwit@altlinux.org> 1.6-alt1
 - add okular and projectlibre to profiles
 
