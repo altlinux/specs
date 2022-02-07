@@ -39,7 +39,7 @@
 %add_findreq_skiplist %_libexecdir/lxc/lxc-net
 
 Name: lxc
-Version: 4.0.11
+Version: 4.0.12
 Release: alt1
 
 Summary: Linux Containers
@@ -77,7 +77,7 @@ Group: System/Configuration/Other
 Requires: rsync
 Requires: service
 %ifarch x86_64 aarch64 ppc64le
-Requires: criu
+Requires: criu >= 3.15
 %endif
 Obsoletes: lxc-sysvinit
 
@@ -318,6 +318,9 @@ groupadd -r -f vmusers ||:
 %_man8dir/pam_cgfs.8*
 
 %changelog
+* Mon Feb 07 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.12-alt1
+- Updated to lxc-4.0.12.
+
 * Sat Dec 04 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.11-alt1
 - Updated to lxc-4.0.11.
 - lxc-net: Added missing dependency to iptables.
