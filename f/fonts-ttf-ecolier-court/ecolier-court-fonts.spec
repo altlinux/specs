@@ -1,162 +1,281 @@
+Group: System/Fonts/True type
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-fonts
+BuildRequires: rpm-build-fedora-compat-fonts
+# END SourceDeps(oneline)
 %define oldname ecolier-court-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global fontname ecolier-court
-%global fontconf 61-%{fontname}
-
-%global common_desc\
-A.colier court fonts were created by Jean-Marie Douteau to mimic the \
-traditional cursive writing French children are taught in school. \
-\
-He kindly released two of them under the OFL, which are redistributed in \
-this package.
-
-
-Name:    fonts-ttf-ecolier-court
+%define fontpkgname ecolier-court-fonts
+# SPDX-License-Identifier: MIT
 Version: 20070702
-Release: alt3_23
-Summary: Schoolchildren cursive fonts
+Release: alt3_33
+# This used to be published here, copies are all over the web now
+#URL:     http://perso.orange.fr/jm.douteau/page_ecolier.htm
 
-Group:     System/Fonts/True type
-License:   OFL
-URL:       http://perso.orange.fr/jm.douteau/page_ecolier.htm
-# The author links to third-party licence documents not included there
-Source0:   http://perso.orange.fr/jm.douteau/polices/ecl_cour.ttf
-Source1:   http://perso.orange.fr/jm.douteau/polices/ec_cour.ttf
-Source2:   http://perso.orange.fr/jm.douteau/polices/lisez_moi.txt
-Source3:   README-Fedora.txt
-Source4:   %{oldname}-fontconfig.conf
-Source5:   %{oldname}-lignes-fontconfig.conf
-Source6:   %{fontname}.metainfo.xml
-Source7:   %{fontname}-lignes.metainfo.xml
+%global fontlicense       OFL
+%global fontlicenses      lisez_moi.txt
+%global fontdocs          README-Fedora.txt
+
+%global common_description \
+The A.colier court font families were created by Jean-Marie Douteau to mimic the\
+traditional cursive writing French children are taught in school.\
+\
+He kindly released two of them under the OFL, which are redistributed in this\
+package.
+
+%global fontfamily0       Ecolier Court
+%global fontsummary0      A.colier Court, a schoolchildren cursive Latin font family
+%global fontpkgheader0    \
+Obsoletes: ecolier-court-fonts-common < %{version}-%{release}\
+
+%global fontdescription0  \
+%{common_description}
+
+%global fontfamily1       Ecolier Lignes Court
+%global fontsummary1      A.colier Lignes Court, a schoolchildren cursive Latin font family with lines
+%global fontpkgheader1    \
+Obsoletes: ecolier-court-lignes-fonts < %{version}-%{release}\
 
 
-BuildArch:     noarch
-BuildRequires: fontpackages-devel
-Requires:      %{name}-common = %{version}-%{release}
+%global fontdescription1  \
+%{common_description}\
+\
+The A. lignes A. (lines) A.colier Court font variant includes the Seyes lining\
+commonly used on schoolchildren notepads.
+
+Source0:  lisez_moi.txt
+Source1:  README-Fedora.txt
+Source10: ec_cour.ttf
+Source11: ecl_cour.ttf
+Source20: 61-ecolier-court-fonts.xml
+Source21: 61-ecolier-lignes-court-fonts.xml
+
+Name:           fonts-ttf-ecolier-court
+Summary:        %{fontsummary0}
+License:        %{fontlicense}
+BuildArch:      noarch
+BuildRequires:  rpm-build-fonts
+%{?fontpkgheader0}
 Source44: import.info
-
+Url: http://perso.orange.fr/jm.douteau/page_ecolier.htm
 %description
-%common_desc
-
-%files
-%{_fontconfig_templatedir}/%{fontconf}-lignes.conf
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-lignes.conf
-%{_fontbasedir}/*/%{_fontstem}/ecl_cour.ttf
-%{_datadir}/appdata/%{fontname}-lignes.metainfo.xml
-
-
-%package -n fonts-ttf-ecolier-court-common
+%{?fontdescription0}
+%package     -n fonts-ttf-ecolier-court-lignes
 Group: System/Fonts/True type
-Summary:  Common files of the A.colier Court font set
-
-%description -n fonts-ttf-ecolier-court-common
-%common_desc
-
-This package consists of files used by other %{oldname} packages.
-
-
-%package -n fonts-ttf-ecolier-court-lignes
-Group: System/Fonts/True type
-Summary:  Schoolchildren cursive fonts with lines
-Requires: %{name}-common = %{version}-%{release}
-
-Obsoletes: %{oldname}-lignes < 20070702-7
-
+Summary:        %{fontsummary1}
+License:        %{fontlicense}
+BuildArch:      noarch
+BuildRequires:  rpm-build-fonts
+%{?fontpkgheader1}
 %description -n fonts-ttf-ecolier-court-lignes
-%common_desc
+%{?fontdescription1}
 
-The A. lignes A. (lines) A.colier court font variant includes the Seyes lining
-commonly used by schoolchildren notepads.
+%package   all
+Group: System/Fonts/True type
+Summary:   All the font packages, generated from %{oldname}
+Requires:  fonts-ttf-ecolier-court = %EVR
+Requires:  fonts-ttf-ecolier-court-lignes = %EVR
+BuildArch: noarch
+%description all
+This meta-package installs all the font packages, generated from the %{oldname}
+ source package.
 
-%files -n fonts-ttf-ecolier-court-lignes
-%{_fontconfig_templatedir}/%{fontconf}.conf
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
-%{_fontbasedir}/*/%{_fontstem}/ec_cour.ttf
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+%files all
 
 
 %prep
+%global fonts0            %{SOURCE10}
+%global fontconfngs0      %{SOURCE20}
+%global fonts1            %{SOURCE11}
+%global fontconfngs1      %{SOURCE21}
 %setup -n %{oldname}-%{version} -q -c -T
-iconv -f iso-8859-15 -t utf-8 %{SOURCE2} > lisez_moi.txt
-touch -r %{SOURCE2} lisez_moi.txt
-for txt in *.txt ; do
-   fold -s $txt > $txt.new
-   sed -i 's/\r//' $txt.new
-   touch -r $txt $txt.new
-   mv $txt.new $txt
-done
-install -m 0644 -p %{SOURCE3} .
-
+install -m 0644 -p %{SOURCE0} %{SOURCE1} .
+%linuxtext *.txt
 
 %build
-
-
-%install
-rm -fr %{buildroot}
-
-install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p %{SOURCE0} %{SOURCE1} %{buildroot}%{_fontdir}
-
-install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
-                   %{buildroot}%{_fontconfig_confdir}
-
-install -m 0644 -p %{SOURCE4} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}.conf
-install -m 0644 -p %{SOURCE5} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-lignes.conf
-
-for fconf in %{fontconf}.conf \
-             %{fontconf}-lignes.conf ; do
-  ln -s %{_fontconfig_templatedir}/$fconf \
-        %{buildroot}%{_fontconfig_confdir}/$fconf
-done
-
-# Add AppStream metadata
-install -Dm 0644 -p %{SOURCE6} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
-install -Dm 0644 -p %{SOURCE7} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}-lignes.metainfo.xml
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
+# fontbuild 0
+fontnames=$(
+  for font in '%SOURCE10'; do
+    fc-scan "${font}" -f "    <font>%%{fullname[0]}</font>\n"
+  done | sort -u
+)
+if [[ -n "${fontnames}" ]] ; then
+  fontnames=$'\n'"  <provides>"$'\n'"${fontnames}"$'\n'"  </provides>"
+fi
+fontlangs=$(
+  for font in '%SOURCE10'; do
+    fc-scan "${font}" -f "%%{[]lang{    <lang>%%{lang}</lang>\n}}"
+  done | sort -u
+)
+if [[ -n "${fontlangs}" ]] ; then
+  fontlangs=$'\n'"  <languages>"$'\n'"${fontlangs}"$'\n'"  </languages>"
 fi
 
-%files -n fonts-ttf-ecolier-court-common
-%doc *.txt
+echo "Generating the ecolier-court-fonts appstream file"
+cat > "org.altlinux.ecolier-court-fonts.metainfo.xml" << EOF_APPSTREAM
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: MIT -->
+<component type="font">
+  <id>org.altlinux.ecolier-court-fonts</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>OFL</project_license>
+  <name>Ecolier Court</name>
+  <summary><![CDATA[Écolier Court, a schoolchildren cursive Latin font family]]></summary>
+  <description>
+    <p><![CDATA[The Écolier court font families were created by Jean-Marie Douteau to mimic the]]></p><p><![CDATA[traditional cursive writing French children are taught in school.]]></p> He kindly released two of them under the OFL, which are redistributed in this
+  </description>
+  <updatecontact>devel@lists.altlinux.org</updatecontact>
+  <url type="homepage">http://perso.orange.fr/jm.douteau/page_ecolier.htm</url>
+  <releases>
+    <release version="%{version}-%{release}" date="$(date -d @$SOURCE_DATE_EPOCH -u --rfc-3339=d)"/>
+  </releases>${fontnames}${fontlangs}
+</component>
+EOF_APPSTREAM
+# fontbuild 1
+fontnames=$(
+  for font in '%SOURCE11'; do
+    fc-scan "${font}" -f "    <font>%%{fullname[0]}</font>\n"
+  done | sort -u
+)
+if [[ -n "${fontnames}" ]] ; then
+  fontnames=$'\n'"  <provides>"$'\n'"${fontnames}"$'\n'"  </provides>"
+fi
+fontlangs=$(
+  for font in '%SOURCE11'; do
+    fc-scan "${font}" -f "%%{[]lang{    <lang>%%{lang}</lang>\n}}"
+  done | sort -u
+)
+if [[ -n "${fontlangs}" ]] ; then
+  fontlangs=$'\n'"  <languages>"$'\n'"${fontlangs}"$'\n'"  </languages>"
+fi
 
+echo "Generating the ecolier-lignes-court-fonts appstream file"
+cat > "org.altlinux.ecolier-lignes-court-fonts.metainfo.xml" << EOF_APPSTREAM
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: MIT -->
+<component type="font">
+  <id>org.altlinux.ecolier-lignes-court-fonts</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>OFL</project_license>
+  <name>Ecolier Lignes Court</name>
+  <summary><![CDATA[Écolier Lignes Court, a schoolchildren cursive Latin font family with lines]]></summary>
+  <description>
+    <p><![CDATA[The Écolier court font families were created by Jean-Marie Douteau to mimic the]]></p><p><![CDATA[traditional cursive writing French children are taught in school.]]></p> He kindly released two of them under the OFL, which are redistributed in this package. The « lignes » (lines) Écolier Court font variant includes the Seyes lining
+  </description>
+  <updatecontact>devel@lists.altlinux.org</updatecontact>
+  <url type="homepage">http://perso.orange.fr/jm.douteau/page_ecolier.htm</url>
+  <releases>
+    <release version="%{version}-%{release}" date="$(date -d @$SOURCE_DATE_EPOCH -u --rfc-3339=d)"/>
+  </releases>${fontnames}${fontlangs}
+</component>
+EOF_APPSTREAM
+
+%install
+echo Installing ecolier-court-fonts
+echo "" > "ecolier-court-fonts0.list"
+install -m 0755 -vd %buildroot%_fontsdir/ttf/ecolier-court/
+echo "%%dir %_fontsdir/ttf/ecolier-court" >> "ecolier-court-fonts0.list"
+install -m 0644 -vp "%SOURCE10" %buildroot%_fontsdir/ttf/ecolier-court/
+echo \"%_fontsdir/ttf/ecolier-court//$(basename "%SOURCE10")\" >> 'ecolier-court-fonts0.list'
+(
+
+  IFS= lines=$(
+    for fontconfng in '%SOURCE20'; do
+      gen-fontconf -x "${fontconfng}" -w -f '%SOURCE10'
+    done
+  )
+  while IFS= read -r line; do
+    [[ -n $line ]] && newfontconfs+=("$line")
+  done <<< ${lines}
+
+  install -m 0755 -vd "%{buildroot}%{_fontconfig_templatedir}" \
+                    "%{buildroot}%{_fontconfig_confdir}"
+  for fontconf in  "${newfontconfs[@]}"; do
+    if [[ -n $fontconf ]] ; then
+      install -m 0644 -vp "${fontconf}" "%{buildroot}%{_fontconfig_templatedir}"
+      echo \"%{_fontconfig_templatedir}/$(basename "${fontconf}")\"                  >> "ecolier-court-fonts0.list"
+      ln -vsr "%{buildroot}%{_fontconfig_templatedir}/$(basename "${fontconf}")" "%{buildroot}%{_fontconfig_confdir}"
+      echo "%%config(noreplace)" \"%{_fontconfig_confdir}/$(basename "${fontconf}")\" >> "ecolier-court-fonts0.list"
+    fi
+  done
+)
+
+install -m 0755 -vd "%{buildroot}%{_metainfodir}"
+for fontappstream in 'org.altlinux.ecolier-court-fonts.metainfo.xml'; do
+  install -m 0644 -vp "${fontappstream}" "%{buildroot}%{_metainfodir}"
+  echo \"%{_metainfodir}/$(basename "${fontappstream}")\" >> "ecolier-court-fonts0.list"
+done
+
+for fontdoc in 'README-Fedora.txt'; do
+  echo %%doc "'${fontdoc}'" >> "ecolier-court-fonts0.list"
+done
+
+for fontlicense in 'lisez_moi.txt'; do
+  echo %%doc "'${fontlicense}'" >> "ecolier-court-fonts0.list"
+done
+echo Installing ecolier-lignes-court-fonts
+echo "" > "ecolier-lignes-court-fonts1.list"
+install -m 0755 -vd %buildroot%_fontsdir/ttf/ecolier-court/
+echo "%%dir %_fontsdir/ttf/ecolier-court" >> "ecolier-lignes-court-fonts1.list"
+install -m 0644 -vp "%SOURCE11" %buildroot%_fontsdir/ttf/ecolier-court/
+echo \"%_fontsdir/ttf/ecolier-court//$(basename "%SOURCE11")\" >> 'ecolier-lignes-court-fonts1.list'
+(
+
+  IFS= lines=$(
+    for fontconfng in '%SOURCE21'; do
+      gen-fontconf -x "${fontconfng}" -w -f '%SOURCE11'
+    done
+  )
+  while IFS= read -r line; do
+    [[ -n $line ]] && newfontconfs+=("$line")
+  done <<< ${lines}
+
+  install -m 0755 -vd "%{buildroot}%{_fontconfig_templatedir}" \
+                    "%{buildroot}%{_fontconfig_confdir}"
+  for fontconf in  "${newfontconfs[@]}"; do
+    if [[ -n $fontconf ]] ; then
+      install -m 0644 -vp "${fontconf}" "%{buildroot}%{_fontconfig_templatedir}"
+      echo \"%{_fontconfig_templatedir}/$(basename "${fontconf}")\"                  >> "ecolier-lignes-court-fonts1.list"
+      ln -vsr "%{buildroot}%{_fontconfig_templatedir}/$(basename "${fontconf}")" "%{buildroot}%{_fontconfig_confdir}"
+      echo "%%config(noreplace)" \"%{_fontconfig_confdir}/$(basename "${fontconf}")\" >> "ecolier-lignes-court-fonts1.list"
+    fi
+  done
+)
+
+install -m 0755 -vd "%{buildroot}%{_metainfodir}"
+for fontappstream in 'org.altlinux.ecolier-lignes-court-fonts.metainfo.xml'; do
+  install -m 0644 -vp "${fontappstream}" "%{buildroot}%{_metainfodir}"
+  echo \"%{_metainfodir}/$(basename "${fontappstream}")\" >> "ecolier-lignes-court-fonts1.list"
+done
+
+for fontdoc in 'README-Fedora.txt'; do
+  echo %%doc "'${fontdoc}'" >> "ecolier-lignes-court-fonts1.list"
+done
+
+for fontlicense in 'lisez_moi.txt'; do
+  echo %%doc "'${fontlicense}'" >> "ecolier-lignes-court-fonts1.list"
+done
+
+%check
+# fontcheck 0
+grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'ecolier-court-fonts0.list' \
+  | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
+grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'ecolier-court-fonts0.list' \
+  | xargs -I{} --        appstream-util validate-relax --nonet '%{buildroot}{}'
+# fontcheck 1
+grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'ecolier-lignes-court-fonts1.list' \
+  | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
+grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'ecolier-lignes-court-fonts1.list' \
+  | xargs -I{} --        appstream-util validate-relax --nonet '%{buildroot}{}'
+
+%files -n fonts-ttf-ecolier-court -f ecolier-court-fonts0.list
+%files -n fonts-ttf-ecolier-court-lignes -f ecolier-lignes-court-fonts1.list
 
 %changelog
+* Mon Feb 07 2022 Igor Vlasenko <viy@altlinux.org> 20070702-alt3_33
+- update
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 20070702-alt3_23
 - update to new release by fcimport
 
