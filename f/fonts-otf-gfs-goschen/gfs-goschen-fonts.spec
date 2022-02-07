@@ -1,126 +1,178 @@
 Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-fonts
+BuildRequires: rpm-build-fedora-compat-fonts unzip
 # END SourceDeps(oneline)
 %define oldname gfs-goschen-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global fontname gfs-goschen
-%global fontconf 64-%{fontname}.conf
-
-%global archivename GFS_GOSCHEN
-
-Name:    fonts-otf-gfs-goschen
+%define fontpkgname gfs-goschen-fonts
+# SPDX-License-Identifier: MIT
 Version: 20100203
-Release: alt3_12
-Summary: A 19th century Greek typeface
+Release: alt3_21
+URL:     http://www.greekfontsociety-gfs.gr/typefaces/19th_century
 
-License:   OFL
-URL:       http://www.greekfontsociety.gr/pages/en_typefaces19th.html
-Source0:   http://www.greekfontsociety.gr/%{archivename}.zip
-Source1:   %{oldname}-fontconfig.conf
-Source2:   %{fontname}.metainfo.xml
+%global foundry           GFS
+%global fontlicense       OFL
+%global fontlicenses      OFL.txt
+%global fontdocs          *.txt
+%global fontdocsex        %{fontlicenses}
 
-BuildArch:     noarch
-BuildRequires: fontpackages-devel
-Source44: import.info
-
-%description
-Georg Joachim GA.schen founded in 1782 the publishing house of G.J.
-GA.schensche Verlagsbuchhandlung in Leipzig and was one of the most active
-publishers of the period in Germany. GA.schen was very interested in
-typography, influenced by the fame and quality of the editions of G. Bodoni
-and F. Didot.
-
-In 1797, he collaborated with the leading scholar of the period, Johann Jakob
-Griesbach, to edit and publish the New Testament in Greek for which he formed
-a committee of scholars to decide the new Greek type which were eventually
-cut by Johann Prillwitz. The book appeared in 1803 and the types show many
-influences from the Greek types of Bodoni. Their characteristic was the
-neoclassical form of marked contrast between thick and thin strokes, the
-cursive style and the large size of the font.
-
-The design was too cumbersome to allow general use and can be considered
-successful only for its indirect influence on the later cut Greek Leipzig
-type. It is, however, part of the greater heritage of Greek type design and
-therefore the type has been digitized by George D. Matthiopoulos in 2009 and
-is part of GFS' type library under the name GFS GA.schen cursive, in
+%global fontfamily        Goschen
+%global fontsummary       GFS GA.schen, a 19th century neoclassical cursive Greek font family
+%global fonts             *.otf
+%global fontdescription   \
+Georg Joachim GA.schen founded in 1782 the publishing house of G.J.\
+GA.schensche Verlagsbuchhandlung in Leipzig and was one of the most active\
+publishers of the period in Germany. GA.schen was very interested in\
+typography, influenced by the fame and quality of the editions of G. Bodoni\
+and F. Didot.\
+\
+In 1797, he collaborated with the leading scholar of the period, Johann Jakob\
+Griesbach, to edit and publish the New Testament in Greek for which he formed\
+a committee of scholars to decide the new Greek type which were eventually\
+cut by Johann Prillwitz. The book appeared in 1803 and the types show many\
+influences from the Greek types of Bodoni. Their characteristic was the\
+neoclassical form of marked contrast between thick and thin strokes, the\
+cursive style and the large size of the font.\
+\
+The design was too cumbersome to allow general use and can be considered\
+successful only for its indirect influence on the later cut Greek Leipzig\
+type. It is, however, part of the greater heritage of Greek type design and\
+therefore the type has been digitized by George D. Matthiopoulos in 2009 and\
+is part of GFSa.' type library under the name GFS GA.schen cursive, in\
 commemoration of the great German publisher.
 
+%global archivename GFS_Goschen
+
+Source0:  http://www.greekfontsociety-gfs.gr/_assets/fonts/%{archivename}.zip
+Source10: 64-gfs-goschen-fonts.xml
+
+Name:           fonts-otf-gfs-goschen
+Summary:        %{fontsummary}
+License:        %{fontlicense}
+BuildArch:      noarch
+BuildRequires:  rpm-build-fonts
+%{?fontpkgheader}
+Source44: import.info
+%description
+%{?fontdescription}
+
+%package   doc
+Group: System/Fonts/True type
+Summary:   Optional documentation files of %{oldname}
+BuildArch: noarch
+%description doc
+This package provides optional documentation files shipped with
+%{oldname}.
 
 %prep
+%global fontconfngs       %{SOURCE10}
 %setup -n %{oldname}-%{version} -q -c -T
-unzip -j -L -q %{SOURCE0}
-chmod 0644 *.txt
-for txt in *.txt ; do
-   fold -s $txt > $txt.new && \
-   sed -i 's/\r//' $txt.new && \
-   touch -r $txt $txt.new && \
-   mv $txt.new $txt
-done
-
+unzip -j -q  %{SOURCE0}
+%linuxtext *.txt
 
 %build
-
-
-%install
-install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p *.otf %{buildroot}%{_fontdir}
-
-install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
-                   %{buildroot}%{_fontconfig_confdir}
-
-install -m 0644 -p %{SOURCE1} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
-ln -s %{_fontconfig_templatedir}/%{fontconf} \
-      %{buildroot}%{_fontconfig_confdir}/%{fontconf}
-
-# Add AppStream metadata
-install -Dm 0644 -p %{SOURCE2} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
+# fontbuild 
+fontnames=$(
+  for font in 'GFS Goschen-Italic.otf'; do
+    fc-scan "${font}" -f "    <font>%%{fullname[0]}</font>\n"
+  done | sort -u
+)
+if [[ -n "${fontnames}" ]] ; then
+  fontnames=$'\n'"  <provides>"$'\n'"${fontnames}"$'\n'"  </provides>"
+fi
+fontlangs=$(
+  for font in 'GFS Goschen-Italic.otf'; do
+    fc-scan "${font}" -f "%%{[]lang{    <lang>%%{lang}</lang>\n}}"
+  done | sort -u
+)
+if [[ -n "${fontlangs}" ]] ; then
+  fontlangs=$'\n'"  <languages>"$'\n'"${fontlangs}"$'\n'"  </languages>"
 fi
 
-%files
-%{_fontconfig_templatedir}/%{fontconf}
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}
-%{_fontbasedir}/*/%{_fontstem}/*.otf
-%doc *.txt *.pdf
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+echo "Generating the gfs-goschen-fonts appstream file"
+cat > "org.altlinux.gfs-goschen-fonts.metainfo.xml" << EOF_APPSTREAM
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: MIT -->
+<component type="font">
+  <id>org.altlinux.gfs-goschen-fonts</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>OFL</project_license>
+  <name>GFS Goschen</name>
+  <summary><![CDATA[GFS Göschen, a 19th century neoclassical cursive Greek font family]]></summary>
+  <description>
+    <p><![CDATA[Georg Joachim Göschen founded in 1782 the publishing house of G.J.]]></p><p><![CDATA[Göschensche Verlagsbuchhandlung in Leipzig and was one of the most active]]></p><p><![CDATA[publishers of the period in Germany. Göschen was very interested in]]></p><p><![CDATA[typography, influenced by the fame and quality of the editions of G. Bodoni]]></p><p><![CDATA[and F. Didot.]]></p> In 1797, he collaborated with the leading scholar of the period, Johann Jakob Griesbach, to edit and publish the New Testament in Greek for which he formed a committee of scholars to decide the new Greek type which were eventually cut by Johann Prillwitz. The book appeared in 1803 and the types show many influences from the Greek types of Bodoni. Their characteristic was the neoclassical form of marked contrast between thick and thin strokes, the cursive style and the large size of the font. The design was too cumbersome to allow general use and can be considered successful only for its indirect influence on the later cut Greek Leipzig type. It is, however, part of the greater heritage of Greek type design and therefore the type has been digitized by George D. Matthiopoulos in 2009 and is part of GFS’ type library under the name GFS Göschen cursive, in
+  </description>
+  <updatecontact>devel@lists.altlinux.org</updatecontact>
+  <url type="homepage">http://www.greekfontsociety-gfs.gr/typefaces/19th_century</url>
+  <releases>
+    <release version="%{version}-%{release}" date="$(date -d @$SOURCE_DATE_EPOCH -u --rfc-3339=d)"/>
+  </releases>${fontnames}${fontlangs}
+</component>
+EOF_APPSTREAM
+
+%install
+echo "Installing "gfs-goschen-fonts
+echo "" > "gfs-goschen-fonts.list"
+install -m 0755 -vd %buildroot%_fontsdir/otf/gfs-goschen/
+echo "%%dir %_fontsdir/otf/gfs-goschen" >> "gfs-goschen-fonts.list"
+install -m 0644 -vp "GFS Goschen-Italic.otf" %buildroot%_fontsdir/otf/gfs-goschen/
+echo \"%_fontsdir/otf/gfs-goschen//$(basename "GFS Goschen-Italic.otf")\" >> 'gfs-goschen-fonts.list'
+(
+
+  IFS= lines=$(
+    for fontconfng in '%SOURCE10'; do
+      gen-fontconf -x "${fontconfng}" -w -f 'GFS Goschen-Italic.otf'
+    done
+  )
+  while IFS= read -r line; do
+    [[ -n $line ]] && newfontconfs+=("$line")
+  done <<< ${lines}
+
+  install -m 0755 -vd "%{buildroot}%{_fontconfig_templatedir}" \
+                    "%{buildroot}%{_fontconfig_confdir}"
+  for fontconf in  "${newfontconfs[@]}"; do
+    if [[ -n $fontconf ]] ; then
+      install -m 0644 -vp "${fontconf}" "%{buildroot}%{_fontconfig_templatedir}"
+      echo \"%{_fontconfig_templatedir}/$(basename "${fontconf}")\"                  >> "gfs-goschen-fonts.list"
+      ln -vsr "%{buildroot}%{_fontconfig_templatedir}/$(basename "${fontconf}")" "%{buildroot}%{_fontconfig_confdir}"
+      echo "%%config(noreplace)" \"%{_fontconfig_confdir}/$(basename "${fontconf}")\" >> "gfs-goschen-fonts.list"
+    fi
+  done
+)
+
+install -m 0755 -vd "%{buildroot}%{_metainfodir}"
+for fontappstream in 'org.altlinux.gfs-goschen-fonts.metainfo.xml'; do
+  install -m 0644 -vp "${fontappstream}" "%{buildroot}%{_metainfodir}"
+  echo \"%{_metainfodir}/$(basename "${fontappstream}")\" >> "gfs-goschen-fonts.list"
+done
+
+for fontdoc in 'OFL-FAQ.txt'; do
+  echo %%doc "'${fontdoc}'" >> "gfs-goschen-fonts.list"
+done
+
+for fontlicense in 'OFL.txt'; do
+  echo %%doc "'${fontlicense}'" >> "gfs-goschen-fonts.list"
+done
+
+%check
+# fontcheck 
+grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'gfs-goschen-fonts.list' \
+  | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
+grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'gfs-goschen-fonts.list' \
+  | xargs -I{} --        appstream-util validate-relax --nonet '%{buildroot}{}'
+
+%files -n fonts-otf-gfs-goschen -f gfs-goschen-fonts.list
+
+%files doc
+%doc --no-dereference OFL.txt
+%doc *.pdf
 
 %changelog
+* Mon Feb 07 2022 Igor Vlasenko <viy@altlinux.org> 20100203-alt3_21
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 20100203-alt3_12
 - update to new release by fcimport
 
