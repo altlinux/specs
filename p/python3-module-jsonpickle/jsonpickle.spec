@@ -2,9 +2,11 @@
 
 %define oname jsonpickle
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 2.0.0
-Release: alt2
+Version: 2.1.0
+Release: alt1
 Summary: Python library for serializing any arbitrary object graph into JSON
 License: BSD-3-Clause
 Group: Development/Python3
@@ -14,39 +16,48 @@ BuildArch: noarch
 
 # git://github.com/jsonpickle/jsonpickle.git
 Source: %name-%version.tar
-
-Patch1: %oname-alt-disable-pytest-black.patch
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3(setuptools_scm) python3(toml)
-BuildRequires: python3-module-demjson python3-module-jsonlib
-BuildRequires: python3-module-ujson
-BuildRequires: python3-module-numpy
-BuildRequires: python3-module-numpy-testing
-BuildRequires: /usr/bin/pytest-3 python3-module-pytest-flake8 python3-module-pytest-cov
-BuildRequires: python3(pandas)
+BuildRequires: python3(setuptools_scm)
 
-%py3_provides %oname
-%py3_requires demjson jsonlib ujson
+%if_with check
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+BuildRequires: python3(numpy)
+BuildRequires: python3(numpy.testing)
+BuildRequires: python3(pandas)
+BuildRequires: python3(pytz)
+%endif
 
 %description
 jsonpickle converts complex Python objects to and from JSON.
 
 %prep
 %setup
-%patch1 -p1
+%autopatch -p1
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build_debug
+%python3_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 
 %check
-pytest3 -vv
+cat > tox.ini <<'EOF'
+[testenv]
+usedevelop=True
+commands =
+    {envbindir}/pytest {posargs:-vra}
+EOF
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr -s false
 
 %files
 %doc LICENSE
@@ -55,6 +66,9 @@ pytest3 -vv
 %python3_sitelibdir/%oname-%version-py*.egg-info
 
 %changelog
+* Mon Feb 07 2022 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
+- 2.0.0 -> 2.1.0.
+
 * Tue Oct 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt2
 - Updated build and runtime dependencies.
 
