@@ -1,5 +1,5 @@
 Name: rtl_433
-Version: 21.05
+Version: 21.12
 Release: alt1
 
 Summary: Generic radio data receiver
@@ -7,36 +7,26 @@ License: GPLv2
 Group: Communications
 Url: https://github.com/merbanan/rtl_433
 
+Provides: rtl_433-devel = %version-%release
+Obsoletes: rtl_433-devel
+
 Source: %name-%version-%release.tar
 
-BuildRequires: libusb-devel rtl-sdr-devel
-
-%package devel
-Summary: Generic radio data receiver
-Group: Development/C
+BuildRequires: cmake libusb-devel rtl-sdr-devel
 
 %description
 %name (despite the name) is a generic data receiver, mainly
 for the 433.92 MHz, 868 MHz (SRD), 315 MHz, and 915 MHz ISM bands.
 
-%description devel
-%name (despite the name) is a generic data receiver, mainly
-for the 433.92 MHz, 868 MHz (SRD), 315 MHz, and 915 MHz ISM bands.
-This  package contains development part of %name
-
 %prep
 %setup
 
 %build
-%autoreconf
-%configure
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
-install -pm0644 -D man/man1/rtl_433.1 %buildroot%_man1dir/rtl_433.1
-mkdir -p %buildroot%_sysconfdir/rtl_433
-cp -a conf/*.conf %buildroot%_sysconfdir/rtl_433
+%cmakeinstall_std
 touch %buildroot%_sysconfdir/rtl_433/rtl_433.conf
 
 %files
@@ -46,12 +36,12 @@ touch %buildroot%_sysconfdir/rtl_433/rtl_433.conf
 
 %_bindir/rtl_433
 %_man1dir/rtl_433.1*
-
-%files devel
 %_includedir/rtl_433*.h
-%_pkgconfigdir/rtl433.pc
 
 %changelog
+* Mon Feb 07 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 21.12-alt1
+- 21.12 released
+
 * Thu Sep 23 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 21.05-alt1
 - 21.05 released
 
