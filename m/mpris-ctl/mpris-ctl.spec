@@ -1,5 +1,5 @@
 Name: mpris-ctl
-Version: 0.8.4
+Version: 0.8.5
 Release: alt1
 
 Summary: CLI tool for controlling MPRIS-enabled audio players
@@ -31,5 +31,8 @@ make DESTDIR=%buildroot INSTALL_PREFIX=%_prefix install
 %_man1dir/mpris-ctl.1*
 
 %changelog
+* Mon Feb 07 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.5-alt1
+- 0.8.5 released
+
 * Mon Aug 02 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.4-alt1
 - 0.8.4 released
