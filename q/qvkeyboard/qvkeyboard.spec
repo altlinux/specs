@@ -1,26 +1,33 @@
+Name: qvkeyboard
+Version: 1.0.0
+Release: alt2.qa3
+
+Summary: Virtual keyboard for X11
+License: GPLv2
+Group: Accessibility
+
+Url: http://qt-apps.org/content/show.php/QVKeyboard?content=77983
+Source0: http://qt-apps.org/CONTENT/content-files/77983-%name.tgz
+Source1: %name.png
+Source2: %name.desktop
+Patch: qvkeyboard-1.0.0-alt-DSO.patch
+Packager: Motsyo Gennadi <drool@altlinux.ru>
+
 BuildRequires: desktop-file-utils
-Name:		qvkeyboard
-Version:	1.0.0
-Release:	alt2.qa2
-Summary:	Virtual keyboard for X11
-Source0:	http://qt-apps.org/CONTENT/content-files/77983-%name.tgz
-Source1:	%name.png
-Source2:	%name.desktop
-Patch0: qvkeyboard-1.0.0-alt-DSO.patch
-URL:		http://qt-apps.org/content/show.php/QVKeyboard?content=77983
-Group:		Accessibility
-License:	GPLv2
-Packager:	Motsyo Gennadi <drool@altlinux.ru>
 
 # Automatically added by buildreq on Thu Apr 03 2008 (-bi)
-BuildRequires: gcc-c++ ImageMagick libqt4-devel libXtst-devel
+BuildRequires: gcc-c++ ImageMagick-tools libqt4-devel libXtst-devel
 
 %description
 Virtual keyboard for X11. Has support for languages via xml file.
 
 %prep
-%setup -q -n %name
+%setup -n %name
 %patch0 -p2
+%ifarch %e2k
+# error: a value of type "const QMyButton *" cannot be assigned to an entity of type "QMyButton *"
+sed -i 's/QMyButton \*btn;/const &/' mainfrm.cpp
+%endif
 
 %build
 export PATH=$PATH:%_qt4dir/bin
@@ -58,6 +65,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_liconsdir/%name.png
 
 %changelog
+* Mon Feb 07 2022 Michael Shigorin <mike@altlinux.org> 1.0.0-alt2.qa3
+- E2K: ftbfs workaround (by ilyakurdyukov@)
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt2.qa2
 - Fixed build
 
