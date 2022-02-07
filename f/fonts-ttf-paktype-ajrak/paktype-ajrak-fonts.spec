@@ -7,13 +7,13 @@ Group: System/Fonts/True type
 %global fontconf %{priority}-%{fontname}
 
 Name:	fonts-ttf-paktype-ajrak
-Version:     5.0
-Release:     alt1_1
+Version:     6.0
+Release:     alt1_6
 Summary:     Fonts for Arabic from PakType
 
 License:     GPLv2 with exceptions
 URL:	https://sourceforge.net/projects/paktype/
-Source0:	https://sourceforge.net/projects/paktype/files/PakType-Release-2019-03-11.tar.gz#/%{oldname}-%{version}.tar.gz
+Source0:	https://sourceforge.net/p/paktype/code/HEAD/tree/Fonts/Release/PakType-Ajrak-6.0.tar.gz?format=raw#/%{oldname}-%{version}.tar.gz
 Source1:	%{fontconf}.conf
 BuildArch:   noarch
 BuildRequires:	fontpackages-devel
@@ -27,8 +27,8 @@ Arabic from the PakType by Lateef Sagar.
 %setup -n %{oldname}-%{version} -q -c
 rm -rf Code
 # get rid of the white space (' ')
-mv License\ files/PakType\ Ajrak\ License.txt  PakType_Ajrak_License.txt
-mv Features/PakType\ Ajrak\ Features.pdf PakTypeAjrakFeatures.pdf
+mv PakType\ Ajrak\ License.txt PakType_Ajrak_License.txt
+mv PakType\ Ajrak\ Features.pdf PakTypeAjrakFeatures.pdf
 
 sed -i 's/\r//' PakType_Ajrak_License.txt
 chmod a-x PakType_Ajrak_License.txt PakTypeAjrakFeatures.pdf
@@ -84,16 +84,18 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
-%dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/PakTypeAjrak.ttf
+%dir %{_fontsdir}/*/%{_fontstem}/
+%{_fontsdir}/*/%{_fontstem}/PakTypeAjrak.ttf
 
 %doc PakType_Ajrak_License.txt PakTypeAjrakFeatures.pdf 
 
 %changelog
+* Mon Feb 07 2022 Igor Vlasenko <viy@altlinux.org> 6.0-alt1_6
+- update to new release by fcimport
+
 * Mon Mar 30 2020 Igor Vlasenko <viy@altlinux.ru> 5.0-alt1_1
 - update
 
