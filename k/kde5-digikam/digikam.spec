@@ -28,7 +28,7 @@
 Name: kde5-%rname
 %define lname lib%name
 Version: 7.5.0
-Release: alt2
+Release: alt3
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 #define sover %version
@@ -328,6 +328,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Thu Feb 03 2022 Sergey V Turchin <zerg@altlinux.org> 7.5.0-alt3
+- add russian docs
+
 * Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 7.5.0-alt2
 - build with qtwebkit on ppc64le
 
