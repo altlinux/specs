@@ -50,8 +50,8 @@
 %define Name GraphicsMagick
 Name: %Name
 %define lname lib%name
-Version: 1.3.36
-Release: alt2
+Version: 1.3.37
+Release: alt1
 Summary: An X application for displaying and manipulating images
 Summary(ru_RU.UTF-8): Программа для отображения и редактирования изображений
 License: %mit
@@ -512,6 +512,9 @@ __MENU__
 %endif
 
 %changelog
+* Mon Feb 07 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.37-alt1
+- 1.3.37 released
+
 * Mon Aug 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.36-alt2
 - devel-static subpackage dropped
 
