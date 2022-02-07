@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 
 Name: crtools
-Version: 3.16
+Version: 3.16.1
 Release: alt1
 
 Summary: Utility to checkpoint/restore tasks
@@ -13,9 +13,8 @@ Url: http://criu.org
 VCS: git://github.com/checkpoint-restore/criu.git
 Source: criu-%version.tar
 Source1: criu.watch
-Patch1: 0001-FEDORA-aio-fix.patch
-Patch2: 0002-ALT-build-against-python3.patch
-Patch3: 0003-ALT-criu-ns-uses-python3.patch
+# git://git.altlinux.org/gears/c/%%name.git
+Patch: %name-%version-%release.patch
 
 Provides: criu = %EVR
 ExclusiveArch: x86_64 aarch64 ppc64le
@@ -132,8 +131,11 @@ find %buildroot -name 'lib*.a' -delete
 %_pkgconfigdir/criu.pc
 
 %changelog
+* Tue Dec 07 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.16.1-alt1
+- Updated to 3.16.1.
+
 * Mon Sep 27 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.16-alt1
-- Update to 3.16.
+- Updated to 3.16.
 
 * Tue Jul 13 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.15-alt2
 - Do not build on armh (closes #40335).
