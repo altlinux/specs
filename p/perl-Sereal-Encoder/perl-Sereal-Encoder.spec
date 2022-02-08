@@ -6,7 +6,7 @@ BuildRequires: perl(Data/Dumper.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Pa
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 4.018
+Version: 4.019
 Release: alt1
 Summary: Fast, compact, powerful binary serialization
 Group: Development/Perl
@@ -49,6 +49,9 @@ export NPROCS=1
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Feb 08 2022 Igor Vlasenko <viy@altlinux.org> 4.019-alt1
+- automated CPAN update
+
 * Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 4.018-alt1
 - automated CPAN update
 
