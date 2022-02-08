@@ -1,6 +1,6 @@
 Name: libbctoolbox
 Version: 0.6.0
-Release: alt4
+Release: alt5
 Summary: Utilities library used by Belledonne Communications softwares
 
 Group: System/Libraries
@@ -33,6 +33,9 @@ Libraries and headers required to develop software with belle-sip, mediastreamer
 %patch0 -p1
 
 %build
+# Glibc 2.33 deprecated mallinfo() in favor of mallinfo2() 
+sed -e 's,mallinfo,mallinfo2,g' -i src/tester.c
+
 %ifnarch %e2k
 %set_gcc_version 8
 export CC="gcc-%{_gcc_version}"
@@ -57,6 +60,9 @@ export CXX="g++-%{_gcc_version}"
 %_libdir/pkgconfig/bctoolbox.pc
 
 %changelog
+* Wed Jan 19 2022 Alexander Danilov <admsasha@altlinux.org> 0.6.0-alt5
+- fixed FTBFS
+
 * Sun Jul 11 2021 Alexei Takaseev <taf@altlinux.org> 0.6.0-alt4
 - Build with mbedtls 2.27.0
 - Fix License
