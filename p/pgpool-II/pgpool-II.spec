@@ -3,8 +3,8 @@
 %define sname pgpool
 
 Name: pgpool-II
-Version: 4.2.2
-Release: alt2
+Version: 4.2.7
+Release: alt1
 Summary: Pgpool is a connection pooling/replication server for PostgreSQL
 License: BSD
 Group: Databases
@@ -154,6 +154,9 @@ fi
 %_datadir/pgsql/extension/*
 
 %changelog
+* Tue Feb 08 2022 Alexey Shabalin <shaba@altlinux.org> 4.2.7-alt1
+- 4.2.7
+
 * Thu Mar 11 2021 Alexey Shabalin <shaba@altlinux.org> 4.2.2-alt2
 - Fixed config files permissions.
 
