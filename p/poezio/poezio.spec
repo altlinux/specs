@@ -1,15 +1,13 @@
 Name: poezio
-Version: 0.12
+Version: 0.13.1
 Release: alt1
 
 Summary: A console Jabber/XMPP client
 Group: Networking/Instant messaging
 Url: http://poez.io/en
-Source: %name-%version.tar.gz
-License: BSD-like
+Source: %name-v%version.tar.gz
+License: Zlib
 BuildRequires(pre): rpm-build-python3
-Patch: poezio-0.12-relative-import.patch
-BuildArch: noarch
 
 # Automatically added by buildreq on Wed Mar 06 2019
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libcrypt-devel pkg-config python-base python3 python3-base python3-dev python3-module-OpenSSL python3-module-Pygments python3-module-babel python3-module-cffi python3-module-chardet python3-module-cryptography python3-module-docutils python3-module-idna python3-module-imagesize python3-module-jinja2 python3-module-markupsafe python3-module-pkg_resources python3-module-pytz python3-module-requests python3-module-six python3-module-sphinx python3-module-urllib3 sh4 xz
@@ -20,9 +18,6 @@ BuildRequires: python3-devel
 Requires: python3-module-%name = %version
 Requires: python3-module-%name-themes = %version
 Requires: python3-module-%name-plugins = %version
-
-#add_python3_path %python3_sitelibdir_noarch/%name
-#allow_python3_import_path %python3_sitelibdir_noarch/%name
 
 # For more accurate deps:
 %python3_req_hier
@@ -42,7 +37,6 @@ MUCs, especially XEP 0045.
 %package -n python3-module-%name
 Group: Development/Python3
 Summary: Supplemental python package for %name, a console Jabber/XMPP client
-BuildArch: noarch
 # Workaround a module name clash between the externally visible namespace and
 # the internal one (which we want to allow to use in our subpkgs) --
 # we expose the externally visible module by force:
@@ -57,14 +51,12 @@ Supplemental python package for %name, a console Jabber/XMPP client
 %package -n python3-module-%name-plugins
 Group: Development/Python3
 Summary: Plugins for %name, a console Jabber/XMPP client
-BuildArch: noarch
 %description -n python3-module-%name-plugins
 Plugins for %name, a console Jabber/XMPP client
 
 %package -n python3-module-%name-themes
 Group: Development/Python3
 Summary: Themes for %name, a console Jabber/XMPP client
-BuildArch: noarch
 %description -n python3-module-%name-themes
 Themes for %name, a console Jabber/XMPP client
 
@@ -76,9 +68,8 @@ Themes for %name, a console Jabber/XMPP client
 #time-critical python functions that are too slow
 
 %prep
-%setup
-%patch -p2
-find * -name \*.py -exec sed -i '1i#!/usr/bin/env python3' {} \;
+%setup -n %name-v%version
+find * -name \*.py -exec sed -i '1i#!/usr/bin/python3' {} \;
 #sed -i 's/sys.path.append(/sys.path.insert(0,/' src/poezio.py
 
 %build
@@ -87,11 +78,6 @@ sphinx-build-3 %_smp_mflags -b html -d build/doctrees doc/source build/html
 
 %install
 %python3_install
-#if [ %python3_sitelibdir_noarch != %python3_sitelibdir ] ; then
-#  install -d %buildroot%python3_sitelibdir_noarch
-#  mv %buildroot%python3_sitelibdir/poezio* %buildroot%python3_sitelibdir_noarch/
-#fi
-#mv %buildroot%python3_sitelibdir_noarch/poezio/poopt* %buildroot%python3_sitelibdir/
 
 %files
 %doc build/html
@@ -99,21 +85,26 @@ sphinx-build-3 %_smp_mflags -b html -d build/doctrees doc/source build/html
 %_man1dir/*
 %_bindir/*
 %_datadir/%name
+%_desktopdir/*
+%_datadir/metainfo/*
 
 #files -n python3-module-poopt
 #python3_sitelibdir/poopt.*.so
 
 %files -n python3-module-%name
-%python3_sitelibdir_noarch/%name
-%python3_sitelibdir_noarch/%name-*
+%python3_sitelibdir/%name
+%python3_sitelibdir/%name-*
 
 %files -n python3-module-%name-plugins
-%python3_sitelibdir_noarch/%{name}_plugins
+%python3_sitelibdir/%{name}_plugins
 
 %files -n python3-module-%name-themes
-%python3_sitelibdir_noarch/%{name}_themes
+%python3_sitelibdir/%{name}_themes
 
 %changelog
+* Tue Feb 08 2022 Fr. Br. George <george@altlinux.ru> 0.13.1-alt1
+- Autobuild version bump to 0.13.1
+
 * Wed Mar 06 2019 Fr. Br. George <george@altlinux.ru> 0.12-alt1
 - Autobuild version bump to 0.12
 
