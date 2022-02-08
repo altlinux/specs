@@ -1,5 +1,5 @@
 Name: wlroots
-Version: 0.15.0
+Version: 0.15.1
 Release: alt1
 
 Summary: Modular Wayland compositor library
@@ -13,17 +13,24 @@ Source: %name.tar
 %define soname %name%soversion
 
 BuildRequires(pre): meson
+BuildRequires: cmake
 BuildRequires: ctags
+BuildRequires: glslang
 
 BuildRequires: pkgconfig(egl)
 BuildRequires: pkgconfig(freerdp2)
 BuildRequires: pkgconfig(gbm)
 BuildRequires: pkgconfig(glesv2)
+BuildRequires: pkgconfig(libavcodec)
+BuildRequires: pkgconfig(libavformat)
+BuildRequires: pkgconfig(libavutil)
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(libinput)
+BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(libseat)
 BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(pixman-1)
+BuildRequires: pkgconfig(vulkan)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-egl)
@@ -35,6 +42,7 @@ BuildRequires: pkgconfig(xcb)
 BuildRequires: pkgconfig(xcb-composite)
 BuildRequires: pkgconfig(xcb-icccm)
 BuildRequires: pkgconfig(xcb-render)
+BuildRequires: pkgconfig(xcb-renderutil)
 BuildRequires: pkgconfig(xcb-xfixes)
 BuildRequires: pkgconfig(xcb-xinput)
 BuildRequires: pkgconfig(xkbcommon)
@@ -88,6 +96,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Feb 08 2022 Alexey Gladkov <legion@altlinux.ru> 0.15.1-alt1
+- New version (0.15.1)
+
 * Sat Dec 25 2021 Alexey Gladkov <legion@altlinux.ru> 0.15.0-alt1
 - New version (0.15.0)
 

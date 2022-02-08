@@ -1,5 +1,5 @@
 Name: scdoc
-Version: 1.11.1
+Version: 1.11.2
 Release: alt1
 License: MIT
 Summary: Tool for generating roff manual pages
@@ -44,6 +44,9 @@ sed -i 's/\tinstall/\t$(INSTALL)/g' Makefile
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Feb 08 2022 Alexey Gladkov <legion@altlinux.ru> 1.11.2-alt1
+- New version (1.11.2)
+
 * Sat Jul 17 2021 Alexey Gladkov <legion@altlinux.ru> 1.11.1-alt1
 - New version (1.11.1)
 
