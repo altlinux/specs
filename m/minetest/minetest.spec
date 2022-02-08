@@ -5,7 +5,7 @@
 
 Name: minetest
 Version: 5.5.0
-Release: alt1
+Release: alt2
 Summary: Multiplayer infinite-world block sandbox with survival mode
 License: LGPL-2.0+ and CC-BY-SA-3.0
 Group: Games/Other
@@ -48,10 +48,13 @@ BuildRequires: libuuid-devel
 BuildRequires: libbrotli-devel
 %ifnarch %e2k
 BuildRequires: libluajit-devel
+%else
+BuildRequires: libluajit-e2k-devel
 %endif
+
 BuildRequires: libncurses-devel
 BuildRequires: libleveldb-devel
-BuildRequires: spatialindex-devel jsoncpp-devel
+BuildRequires: spatialindex-devel jsoncpp-devel libpcre-devel
 
 Requires: %name-server = %version-%release
 Requires: icon-theme-hicolor
@@ -193,6 +196,9 @@ fi
 %_man6dir/minetestserver.6*
 
 %changelog
+* Tue Feb 08 2022 Ilya Mashkin <oddity@altlinux.ru> 5.5.0-alt2
+- fix build on e2k
+
 * Wed Feb 02 2022 Ilya Mashkin <oddity@altlinux.ru> 5.5.0-alt1
 - 5.5.0
 - Now using its own fork of irrlicht
