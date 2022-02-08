@@ -2,7 +2,7 @@
 
 Name: fonts-bitmap-%cname
 Version: 3.3
-Release: alt1
+Release: alt2
 Summary: XTermG fonts - a fixed width English/Cyrillic fonts with some additional characters
 License: MIT
 Group: System/Fonts/X11 bitmap
@@ -35,6 +35,9 @@ Sizes: 12x20 12x20 8x14 8x16 8x16 8x8
 %doc TODO
 
 %changelog
+* Sun Jan 09 2022 Fr. Br. George <george@altlinux.ru> 3.3-alt2
+- Initial new symbols
+
 * Sat Oct 09 2021 Fr. Br. George <george@altlinux.ru> 3.3-alt1
 - New symbols
 
