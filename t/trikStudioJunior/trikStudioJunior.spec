@@ -6,7 +6,7 @@
 
 Name: trikStudioJunior
 Version: 2020.2
-Release: alt2
+Release: alt3
 Summary: Intuitive graphical programming environment
 Summary(ru_RU.UTF-8): Интуитивно-понятная графическая среда программирования
 License: Apache-2.0
@@ -81,6 +81,8 @@ popd
 %else
     CONFIG-=debug CONFIG+=release \
 %endif
+    QMAKE_LFLAGS+=-Wl,-rpath-link=%_builddir/%name-%version/bin/release \
+    QMAKE_LFLAGS+=-Wl,-rpath=%_libdir/%name \
 %if_with sanitize
     CONFIG+=!nosanitizers \
 %endif
@@ -126,6 +128,11 @@ done
 %doc LICENSE NOTICE README.md
 
 %changelog
+* Tue Feb 08 2022 Valery Sinelnikov <greh@altlinux.org> 2020.2-alt3
+- Rebuild with RPATH due upgraded lib.req which sets "library not found"
+  warnings to errors.
+- Fixed desktop file for trikStudioJunior
+
 * Sat Jan 01 2022 Anton Midyukov <antohami@altlinux.org> 2020.2-alt2
 - fix build with qt5-quazip1
 - clean add_findreq_skiplist
