@@ -4,13 +4,13 @@ BuildRequires: /usr/bin/desktop-file-install perl(Proc/Simple.pm) perl(Tk.pm)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: alevt
-Version: 1.6.2
-Release: alt2_29
+Version: 1.8.1
+Release: alt1
 Summary: Teletext decoder/browser
 Group: Video
-License: GPLv2
-URL: http://goron.de/~froese
-Source: http://goron.de/~froese/%{name}/%{name}-%{version}.tar.gz
+License: GPLv2+
+URL: https://gitlab.com/alevt/alevt
+Source: %{name}-v%{version}.tar.bz2
 Source1: alevt.desktop
 Patch0: alevt-1.6.2-pixmap.patch
 Patch1: alevt-1.6.2-manpath.patch
@@ -32,11 +32,11 @@ one to capture teletext pages from scripts.
 
 
 %prep
-%setup -q
+%setup -q -n alevt-v%{version}
 %patch0 -p1 -b .pixmap
 %patch1 -p1 -b .manpath
-%patch2 -p1 -b .rusgreek
-%patch3 -p1 -b .double
+#patch2 -p1 -b .rusgreek
+#patch3 -p1 -b .double
 %patch4 -p1 -b .zlib
 
 %build
@@ -62,9 +62,13 @@ desktop-file-install \
 %{_datadir}/applications/%{name}.desktop
 %{_mandir}/man?/%{name}*
 %{_datadir}/pixmaps/mini-alevt.xpm
-%doc README CHANGELOG COPYRIGHT
+%doc README* CHANGELOG COPYRIGHT
 
 %changelog
+* Tue Feb 08 2022 Ilya Mashkin <oddity@altlinux.ru> 1.8.1-alt1
+- 1.8.1
+- Update URL and License tags
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt2_29
 - update to new release by fcimport
 
