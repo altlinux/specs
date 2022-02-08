@@ -1,5 +1,5 @@
 Name: gnupg2
-Version: 2.2.33
+Version: 2.2.34
 Release: alt1
 
 Group: Text tools
@@ -182,6 +182,9 @@ install -pm 0644 doc/*.8 %buildroot%_man8dir/
 %doc tools/addgnupghome tools/applygnupgdefaults
 
 %changelog
+* Tue Feb 08 2022 Alexey Gladkov <legion@altlinux.ru> 2.2.34-alt1
+- New version (2.2.34).
+
 * Wed Dec 08 2021 Alexey Gladkov <legion@altlinux.ru> 2.2.33-alt1
 - New version (2.2.33).
 - Set GPG_TTY in profile.d (ALT#41509).

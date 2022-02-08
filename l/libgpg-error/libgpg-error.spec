@@ -1,5 +1,5 @@
 Name: libgpg-error
-Version: 1.43
+Version: 1.44
 Release: alt1
 
 Group: System/Libraries
@@ -19,6 +19,7 @@ Patch1: 0001-Fix-LFS-on-32-bit-systems.patch
 Patch2: 0002-ALT-version-is-not-beta.patch
 
 BuildRequires: makeinfo
+BuildRequires: gettext-tools
 
 %package devel
 Summary: Development files for the %name package
@@ -45,6 +46,9 @@ cat > doc/version.texi <<EOF
 @set EDITION %version
 @set VERSION %version
 EOF
+
+# Let the autoreconf sync po.m4 and po/Makefile.in.in .
+rm -f -- m4/po.m4 po/Makefile.in.in
 
 %build
 %autoreconf
@@ -87,6 +91,9 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_datadir/common-lisp/source/gpg-error
 
 %changelog
+* Tue Feb 08 2022 Alexey Gladkov <legion@altlinux.ru> 1.44-alt1
+- New version (1.44).
+
 * Sat Nov 20 2021 Alexey Gladkov <legion@altlinux.ru> 1.43-alt1
 - New version (1.43).
 
