@@ -1,7 +1,7 @@
 %global repo dde-network-utils
 
 Name: deepin-network-utils
-Version: 5.4.12
+Version: 5.4.13
 Release: alt1
 Summary: Deepin desktop-environment - network utils
 License: GPL-3.0-or-later
@@ -39,10 +39,10 @@ Header files and libraries for %name.
 
 %prep
 %setup -n %repo-%version
-sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
-sed -i 's|/lib$|/%_lib|' dde-network-utils/dde-network-utils.pro
+sed -i '/target.path/s|\$\$PREFIX/lib|%_libdir|' dde-network-utils/dde-network-utils.pro
 
 %build
+export PATH=%_qt5_bindir:$PATH
 %qmake_qt5 \
     CONFIG+=nostrip \
     PREFIX=%prefix
@@ -62,6 +62,9 @@ sed -i 's|/lib$|/%_lib|' dde-network-utils/dde-network-utils.pro
 %_libdir/lib%{repo}.so
 
 %changelog
+* Fri Feb 04 2022 Leontiy Volodin <lvol@altlinux.org> 5.4.13-alt1
+- New version (5.4.13).
+
 * Fri Aug 20 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.12-alt1
 - New version (5.4.12).
 

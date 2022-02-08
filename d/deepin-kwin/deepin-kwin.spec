@@ -10,8 +10,8 @@
 %def_disable clang
 
 Name: deepin-kwin
-Version: 5.3.14
-Release: alt3
+Version: 5.4.12
+Release: alt1
 
 Summary: KWin configuration for Deepin Desktop Environment
 License: GPL-3.0+ and MIT
@@ -58,8 +58,8 @@ Header files and libraries for %name.
 
 %prep
 %setup -n %repo-%version
-%patch -p1
-%patch1 -p1
+#%%patch -p1
+#%%patch1 -p1
 %patch2 -R -p1
 %patch3 -p1
 # %patch4 -p1
@@ -73,7 +73,7 @@ sed -i 's|/usr/include/KWaylandServer|%_K5inc/KWaylandServer|' CMakeLists.txt
 # sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
 #     plugins/kwineffects/multitasking/background.cpp \
 #     deepin-wm-dbus/deepinwmfaker.cpp
-sed -i 's|/usr/lib/deepin-daemon|/usr/libexec/deepin-daemon|' deepin-wm-dbus/deepinwmfaker.cpp
+sed -i 's|/usr/lib/deepin-daemon|%_libexecdir/deepin-daemon|' deepin-wm-dbus/deepinwmfaker.cpp
 sed -i 's|/usr/lib|/%_libdir|' \
     plugins/platforms/plugin/main_wayland.cpp \
     plugins/platforms/plugin/main.cpp
@@ -96,16 +96,15 @@ export AR="llvm-ar"
 %install
 %cmake_install
 chmod +x %buildroot%_bindir/kwin_no_scale
-# install debian/dde-kwin.postinst %%buildroot%%_datadir/kwin/scripts/
-# chmod 755 %%buildroot%%_datadir/kwin/scripts/dde-kwin.postinst
-
-# %%post
-# bash -x %%_datadir/kwin/scripts/dde-kwin.postinst
+mkdir -p %buildroot%_K5data/kwin/scripts/
+install rpm/dde-kwin.postinst %buildroot%_K5data/kwin/scripts/
+chmod +x %buildroot%_K5data/kwin/scripts/dde-kwin.postinst
 
 %files
 %doc CHANGELOG.md LICENSE
 %_sysconfdir/xdg/*
 %_bindir/kwin_no_scale
+%_K5data/kwin/scripts/dde-kwin.postinst
 %if_enabled kwin_ext
 %_bindir/deepin-wm-dbus
 %_K5plug/platforms/lib%repo-xcb.so
@@ -137,6 +136,9 @@ chmod +x %buildroot%_bindir/kwin_no_scale
 %endif
 
 %changelog
+* Fri Feb 04 2022 Leontiy Volodin <lvol@altlinux.org> 5.4.12-alt1
+- New version (5.4.12).
+
 * Mon Nov 08 2021 Sergey V Turchin <zerg@altlinux.org> 5.3.14-alt3
 - fix to build with new kwin
 

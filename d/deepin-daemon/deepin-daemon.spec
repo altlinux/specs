@@ -3,8 +3,8 @@
 %global repo dde-daemon
 
 Name: deepin-daemon
-Version: 5.13.12
-Release: alt2.1
+Version: 6.0.0
+Release: alt1
 Epoch: 1
 Summary: Daemon handling the DDE session settings
 License: GPL-3.0+
@@ -17,72 +17,16 @@ Source2: %name.sysusers
 Source3: deepin-auth
 # archlinux patches
 Patch: deepin-daemon-fix-vanilla-libinput.patch
-# alt patches
-Patch1: deepin-daemon-alt-lightdm-lock-screen.patch
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: glib2-devel
-BuildRequires: libgio-devel
-BuildRequires: libgtk+3-devel
-BuildRequires: libsystemd-devel
-BuildRequires: libudev-devel
-BuildRequires: fontconfig-devel
-BuildRequires: libbamf3-devel
-BuildRequires: libpam0-devel
-BuildRequires: libnl-devel
-BuildRequires: librsvg-devel
-BuildRequires: libfprint2-devel
-BuildRequires: libalsa-devel
-BuildRequires: libpulseaudio-devel
-BuildRequires: libXcursor-devel
-BuildRequires: libXfixes-devel
-BuildRequires: libpulseaudio-devel
-BuildRequires: libXi-devel
-BuildRequires: libgudev-devel
-BuildRequires: libinput-devel
-BuildRequires: libddcutil-devel
-BuildRequires: librsvg-utils
-BuildRequires: deepin-gettext-tools
-BuildRequires: deepin-gir-generator
-BuildRequires: deepin-clipboard
-BuildRequires: libgdk-pixbuf-xlib-devel
+BuildRequires: glib2-devel libgio-devel libgtk+3-devel libsystemd-devel libudev-devel fontconfig-devel libbamf3-devel libpam0-devel libnl-devel librsvg-devel libfprint2-devel libalsa-devel libpulseaudio-devel libXcursor-devel libXfixes-devel libpulseaudio-devel libXi-devel libgudev-devel libinput-devel libddcutil-devel librsvg-utils deepin-gettext-tools deepin-clipboard libgdk-pixbuf-xlib-devel
 # nm module
 #BuildRequires: libnm-gir-devel
 #BuildRequires: python3-module-pygobject3
 #BuildRequires: golang-gopkg-yaml-2-devel
-# golang BR
-BuildRequires: golang-github-go-dbus-devel
-BuildRequires: golang-deepin-go-lib-devel
-BuildRequires: golang-github-linuxdeepin-dbus-factory-devel
-BuildRequires: golang-deepin-go-x11-client-devel
-BuildRequires: golang-github-fsnotify-devel
-BuildRequires: golang-golang-x-sys-devel
-BuildRequires: golang-github-axgle-mahonia-devel
-BuildRequires: golang-github-jinzhu-gorm-devel
-BuildRequires: golang-github-jinzhu-inflection-devel
-BuildRequires: golang-github-jinzhu-now-devel
-BuildRequires: golang-github-kelvins-sunrisesunset-devel
-BuildRequires: golang-github-mattn-sqlite3-devel
-BuildRequires: golang-github-mozillazg-go-pinyin-devel
-BuildRequires: golang-github-nfnt-resize-devel
-BuildRequires: golang-github-rickb777-date-devel
-BuildRequires: golang-github-teambition-rrule-go-devel
-BuildRequires: golang-golang-x-net-devel
-BuildRequires: golang-x-image-devel
-BuildRequires: golang-x-text-devel
-BuildRequires: golang-x-xerrors-devel
-BuildRequires: golang-gopkg-alecthomas-kingpin-2-devel
-BuildRequires: golang-github-alecthomas-template-devel
-BuildRequires: golang-github-alecthomas-units-devel
-BuildRequires: golang-github-rickb777-plural-devel
 BuildRequires: golang-deepin-api-devel
-BuildRequires: golang-github-cryptix-wav-devel
-BuildRequires: golang-github-davecgh-spew-devel
-BuildRequires: go-xgettext-devel
-BuildRequires: golang-github-msteinert-pam-devel
-BuildRequires: golang-github-lofanmi-pinyin-devel
 # Requires: bamfdaemon libbluez deepin-desktop-base deepin-desktop-schemas deepin-session-ui deepin-polkit-agent
-%ifnarch s390 s390x %arm power64
+%ifnarch s390 s390x %arm ppc64le
 Requires: rfkill
 %endif
 # Requires: upower udisks2 systemd pulseaudio libnm polkit-gnome gnome-keyring deepin-session-ui xorg-drv-wacom libinput xdotool fontconfig pam libnl3 libfprint2 dnsmasq
@@ -98,86 +42,22 @@ Daemon handling the DDE session settings
 
 %prep
 %setup -n %repo-%version
-# %patch -p1
-%patch1 -p2
-# patch langselector/locale.go < rpm/locale.go.patch
-# install -m 644 %SOURCE3 misc/etc/pam.d/deepin-auth
-
-# sed -i 's|"github.com/jinzhu/gorm"|"gorm.io/gorm"|' calendar/{job,module,scheduler,type}.go
-
-# --- 5.11 ---
-
-# Fix library exec path
-sed -i '/deepin/s|lib|libexec|' Makefile
-sed -i '/${DESTDIR}\/usr\/lib\/deepin-daemon\/service-trigger/s|${DESTDIR}%_libexecdir/deepin-daemon/service-trigger|${DESTDIR}/usr/libexec/deepin-daemon/service-trigger|g' Makefile
-sed -i '/${DESTDIR}${PREFIX}\/lib\/deepin-daemon/s|${DESTDIR}${PREFIX}/lib/deepin-daemon|${DESTDIR}${PREFIX}/usr/libexec/deepin-daemon|g' Makefile
-#sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
-#    accounts/user.go \
-#    accounts/users/testdata/autologin/lxdm.conf
-
-for file in $(grep "%_libexecdir/deepin-daemon" * -nR |awk -F: '{print $1}')
-do
-    sed -i 's|%_libexecdir/deepin-daemon|/usr/libexec/deepin-daemon|g' $file
-done
-#sed -i 's|%_libexecdir/deepin-daemon|/usr/libexec/deepin-daemon|g' \
-#    misc/applications/deepin-toggle-desktop.desktop
-#sed -i 's|%_libexecdir/fprintd/fprintd|%_libexecdir/fprintd|' \
-#    bin/dde-authority/fprint_transaction.go
-
-sed -i 's|/bin/nologin|/sbin/nologin|' accounts/users/users_test.go
-#sed -i 's|/etc/systemd/system/display-manager.service|/lib/systemd/system/display-manager.service|' \
-#    accounts/users/display_manager.go
-#sed -i 's|/etc/gdm/custom.conf|/etc/X11/gdm/custom.conf|' \
-#    accounts/users/display_manager.go
-#sed -i 's|/etc/sddm.conf|/etc/X11/sddm/sddm.conf|' \
-#    accounts/users/display_manager.go
-#sed -i 's|/usr/bin/X11/xauth|/usr/bin/xauth|' \
-#    accounts/users/testdata/autologin/slim.conf
-#sed -i 's|/usr/bin/X11/X|/usr/bin/X|' \
-#    accounts/users/testdata/autologin/slim.conf
-
-#sed -i 's|/etc/X11/default-display-manager|/etc/rc.d/init.d/dm|' \
-#    accounts/users/display_manager.go
-#sed -i 's|/deepin-screenshot.desktop|/deepin-screen-recorder.desktop|' \
-#    dock/desktop_file_path_test.go
-#sed -i 's|/usr/local/share/applications/deepin-screenshot.desktop|%_desktopdir/deepin-screen-recorder.desktop|' \
-#    launcher/utils_test.go
-#sed -i 's|/etc/default/keyboard|/dev/input/keyboard|' \
-#    inputdevices/keyboard.go
+patch langselector/locale.go < rpm/locale.go.patch
+# %%patch -p1
+# install -m 644 %%SOURCE3 misc/etc/pam.d/deepin-auth
 
 # Fix autologin
-#sed -i 's|/usr/libexec/lxdm-greeter-gtk|%_libexecdir/lxdm-greeter-gtk|' \
-#    accounts/users/testdata/autologin/lxdm_autologin.conf \
-#    accounts/users/testdata/autologin/lxdm.conf
-#sed -i 's|/usr/bin/lightdm|/usr/sbin/lightdm|' \
-#    accounts/users/testdata/autologin/lightdm.service
-
-## Fix activate services failed (Permission denied)
-## dbus service
-pushd misc/system-services/
-sed -i '$aSystemdService=deepin-accounts-daemon.service' com.deepin.system.Power.service \
-    com.deepin.daemon.{Accounts,Apps,Daemon}.service \
-    com.deepin.daemon.{Gesture,SwapSchedHelper,Timedated}.service
-sed -i '$aSystemdService=dbus-com.deepin.dde.lockservice.service' com.deepin.dde.LockService.service
-popd
-## systemd service
-cat > misc/systemd/services/dbus-com.deepin.dde.lockservice.service <<EOF
-[Unit]
-Description=Deepin Lock Service
-Wants=user.slice dbus.socket
-After=user.slice dbus.socket
-
-[Service]
-Type=dbus
-BusName=com.deepin.dde.LockService
-ExecStart=%_prefix/libexec/%name/dde-lockservice
-
-[Install]
-WantedBy=graphical.target
-EOF
+sed -i 's|/usr/libexec/lxdm-greeter-gtk|%_libexecdir/lxdm-greeter-gtk|' \
+   accounts/users/testdata/autologin/{lxdm,lxdm_autologin}.conf
+sed -i 's|/usr/bin/lightdm|/usr/sbin/lightdm|' \
+   accounts/users/testdata/autologin/{lightdm,display-manager}.service
 
 # Replace reference of google-chrome to chromium-browser
-#sed -i 's/google-chrome/chromium-browser/g' misc/dde-daemon/mime/data.json
+sed -i 's/google-chrome/chromium-browser/g' \
+    bin/user-config/config_datas.go \
+    launcher/manager_uninstall.go \
+    misc/data/deepin_icons.ini \
+    misc/data/window_patterns.json
 
 # -- 5.12 ---
 
@@ -189,88 +69,69 @@ sed -i 's|/etc/lightdm/deepin/qt-theme.ini|/etc/skel/.config/deepin/qt-theme.ini
 sed -i 's|/etc/gdm3/custom.conf|/etc/X11/gdm/custom.conf|' \
     accounts/users/display_manager.org
 sed -i 's|/etc/sddm.conf|/etc/X11/sddm/sddm.conf|' \
-    accounts/users/display_manager.org
+    accounts/users/display_manager.{go,org}
 sed -i 's|/etc/systemd/system/display-manager.service|/lib/systemd/system/display-manager.service|' \
-    accounts/users/display_manager.org
-# '/etc/adduser.conf' accounts/users/manager.go
-# '/etc/X11/default-display-manager' accounts/users/display_manager.org
-# '/etc/sysconfig/network-scripts/ifcfg-*' network/nm_generator/nm_docs/NetworkManager.conf.html
+    accounts/users/display_manager.go
 
 # /bin
 sed -i 's|/bin/nologin|/sbin/nologin|' \
     accounts/users/users_test.go
 # '/usr/bin/dcop' misc/etc/acpi/powerbtn.sh
 sed -i 's|/usr/bin/X11/X|/usr/bin/X|' \
-    accounts/users/testdata/autologin/slim_autologin.conf \
-    accounts/users/testdata/autologin/slim.conf
+    accounts/users/testdata/autologin/{slim,slim_autologin}.conf
 sed -i 's|/usr/bin/X11/xauth|/usr/bin/xauth|' \
-    accounts/users/testdata/autologin/slim_autologin.conf \
-    accounts/users/testdata/autologin/slim.conf
-sed -i 's|/usr/bin/lightdm|/usr/sbin/lightdm|' \
-    accounts/users/testdata/autologin/lightdm.service
+    accounts/users/testdata/autologin/{slim,slim_autologin}.conf
 
 # /sbin
 
 # /lib
-sed -i 's|/usr/lib/deepin-daemon/|/usr/libexec/deepin-daemon/|' \
-    service_trigger/manager.go \
-    network/secret_agent.go
-sed -i 's|%_libexecdir/fprintd/fprintd|%_libexecdir/fprintd|' \
+sed -i 's|/usr/lib/fprintd/fprintd|%_libexecdir/fprintd|' \
     bin/dde-authority/fprint_transaction.go
-sed -i 's|/usr/libexec/lxdm-greeter-gtk|%_libexecdir/lxdm-greeter-gtk|' \
-    accounts/users/testdata/autologin/lxdm_autologin.conf \
-    accounts/users/testdata/autologin/lxdm.conf
 
 # /usr/share
 # '/usr/share/wallpapers/deepin/desktop.bmp' appearance/background/custom_wallpapers.go
 # '/usr/share/acpi-support/power-funcs' misc/etc/acpi/powerbtn.sh
-sed -i 's|/usr/share/backgrounds/default.png|/usr/share/design-current/backgrounds/default.png|' \
-    accounts/users/testdata/autologin/lxdm_autologin.conf \
-    accounts/users/testdata/autologin/lxdm.conf
+# sed -i 's|/usr/share/backgrounds/default.png|/usr/share/design-current/backgrounds/default.png|' \
+#     accounts/users/testdata/autologin/{lxdm,lxdm_autologin.conf}
 
-sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
-    accounts/users/testdata/autologin/lxdm_autologin.conf \
-    accounts/users/testdata/autologin/lxdm.conf
+# sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
+#     accounts/users/testdata/autologin/{lxdm,lxdm_autologin}.conf
+
+# Remove unneeded service
+sed -i '/github.com\/linuxdeepin\/dde-daemon\/system\/uadp/'d \
+    bin/dde-system-daemon/main.go
+
+# Switch deepin lockscreen to lightdm
+sed -i 's|dbus-send --print-reply --dest=com.deepin.dde.lockFront /com/deepin/dde/lockFront com.deepin.dde.lockFront.Show|dde-switchtogreeter|' \
+    keybinding/shortcuts/system_shortcut.go \
+    misc/dde-daemon/keybinding/system_actions.json
 
 %build
 export BUILDDIR="$PWD/.build"
-export GOPATH="%go_path"
-export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw"
+export GOPATH="$(pwd)/.build:%go_path:$(pwd)/vendor"
+# export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw"
 export LIBS+="-L/%_lib -lpam -lsystemd"
-export GO111MODULE="auto"
+export GO111MODULE="off"
 #make -C network/nm_generator gen-nm-code
 %make_build
 
 %install
 export BUILDDIR="$PWD/.build"
-export GOPATH="%go_path"
-export LIBS+="-L/%_lib -lpam -lsystemd"
-export GO111MODULE="auto"
+export GOPATH="%go_path:$(pwd)/vendor"
+
 %makeinstall_std PAM_MODULE_DIR=/%_lib/security
-
-# install -Dm644 %SOURCE2 %buildroot%_libexecdir/sysusers.d/%name.conf
-
-# fix systemd/logind config
-install -d %buildroot/lib/systemd/logind.conf.d/
-cat > %buildroot/lib/systemd/logind.conf.d/10-%repo.conf <<EOF
-[Login]
-HandlePowerKey=ignore
-HandleSuspendKey=ignore
-EOF
-
 chmod +x %buildroot%_datadir/%repo/audio/echoCancelEnable.sh
-
 %find_lang %repo
 
 %files -f %repo.lang
 %doc README.md LICENSE CHANGELOG.md
 %_sysconfdir/default/grub.d/10_deepin.cfg
 %_sysconfdir/grub.d/35_deepin_gfxmode
+%_sysconfdir/deepin/grub2_edit_auth.conf
 %_sysconfdir/pam.d/deepin-auth-keyboard
-# %_sysconfdir/pam.d/deepin-auth
-%_prefix/libexec/%name/
-/lib/systemd/logind.conf.d/10-%repo.conf
-# %_libexecdir/sysusers.d/%name.conf
+%_sysconfdir/lightdm/deepin/xsettingsd.conf
+%_libexecdir/%name/
+%_prefix/libexec/dde-daemon/keybinding/shortcut-dde-grand-search.sh
 %_datadir/dbus-1/services/*.service
 %_datadir/dbus-1/system-services/*.service
 %_datadir/dbus-1/system.d/*.conf
@@ -278,24 +139,23 @@ chmod +x %buildroot%_datadir/%repo/audio/echoCancelEnable.sh
 %_datadir/%repo/
 %_datadir/dde/
 %_datadir/polkit-1/actions/*.policy
-#%_var/cache/appearance/
 %_var/lib/polkit-1/localauthority/10-vendor.d/com.deepin.daemon.Accounts.pkla
 %_var/lib/polkit-1/localauthority/10-vendor.d/com.deepin.daemon.Grub2.pkla
 %_sysconfdir/acpi/actions/deepin_lid.sh
 %_sysconfdir/acpi/events/deepin_lid
 %_sysconfdir/pulse/daemon.conf.d/10-deepin.conf
 %_sysconfdir/NetworkManager/conf.d/deepin.dde.daemon.conf
-#%_sysconfdir/modules-load.d/i2c_dev.conf
 /lib/udev/rules.d/80-deepin-fprintd.rules
-#%_datadir/pam-configs/deepin-auth
 /var/lib/polkit-1/localauthority/10-vendor.d/com.deepin.daemon.Fprintd.pkla
-#/%_lib/security/pam_deepin_auth.so
-%_unitdir/dbus-com.deepin.dde.lockservice.service
 %_unitdir/deepin-accounts-daemon.service
-%_unitdir/hwclock_stop.service
 %_datadir/locale/es_419/LC_MESSAGES/dde-daemon.mo
+%_datadir/dsg/apps/dde-session-daemon/configs/gesture.json
 
 %changelog
+* Thu Feb 03 2022 Leontiy Volodin <lvol@altlinux.org> 1:6.0.0-alt1
+- New version (6.0.0).
+- Built with internal golang submodules.
+
 * Tue Dec 14 2021 Leontiy Volodin <lvol@altlinux.org> 1:5.13.12-alt2.1
 - Removed unused requires from previous versions.
 

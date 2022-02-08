@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
 Name: deepin-terminal
-Version: 5.4.13
+Version: 5.4.28
 Release: alt1
 Summary: Default terminal emulation application for Deepin
 License: GPL-3.0+ and (LGPL-2.0+ and GPL-2.0+ and BSD-3-Clause)
@@ -9,7 +9,6 @@ Group: Terminals
 Url: https://github.com/linuxdeepin/deepin-terminal
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-terminal-5.4.12-gcc10.patch
 
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
@@ -77,7 +76,6 @@ Development package for QTermWidget. Contains headers and dev-libs.
 
 %prep
 %setup
-%patch -p1
 # Much upstream weirdness
 # sed -i '/<QHash>/i#include <QObject>\n#include <QMap>' 3rdparty/terminalwidget/lib/SessionManager.h
 sed -i '/LXQtCompilerSettings/a remove_definitions(-DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII)' 3rdparty/terminalwidget/CMakeLists.txt
@@ -127,6 +125,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_includedir/terminalwidget5/
 
 %changelog
+* Fri Feb 04 2022 Leontiy Volodin <lvol@altlinux.org> 5.4.28-alt1
+- New version (5.4.28).
+
 * Fri Oct 01 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.13-alt1
 - New version (5.4.13).
 

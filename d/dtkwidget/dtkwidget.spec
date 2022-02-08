@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkwidget
-Version: 5.5.17.1
+Version: 5.5.37
 Release: alt1
 Summary: Deepin tool kit widget modules
 License: LGPL-3.0+ and GPL-3.0+
@@ -10,7 +10,6 @@ Url: https://github.com/linuxdeepin/dtkwidget
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: dtkwidget-5.4.10-gcc10.patch
 
 %if_enabled clang
 BuildRequires(pre): clang12.0-devel
@@ -66,7 +65,6 @@ Examples for %name.
 
 %prep
 %setup
-%patch -p2
 sed -i "s|'/lib'|'/%_lib'|" conanfile.py
 sed -i 's|dtkBuildMultiVersion(5.5)|dtkBuildMultiVersion|' \
     src/src.pro
@@ -109,6 +107,9 @@ export PATH=%{_qt5_bindir}:$PATH
 %_libdir/dtkwidget5-examples/
 
 %changelog
+* Tue Feb 08 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.37-alt1
+- New version (5.5.37).
+
 * Tue Jul 06 2021 Leontiy Volodin <lvol@altlinux.org> 5.5.17.1-alt1
 - New version (5.5.17.1).
 

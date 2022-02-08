@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkcommon
-Version: 5.5.17
+Version: 5.5.20
 Release: alt1
 Summary: Deepin desktop schemas
 License: LGPL-3.0+ and GPL-3.0+
@@ -36,6 +36,8 @@ sed -i 's|$$PREFIX/lib/$$ARCH|%_libdir|; s|$$PREFIX/lib/$(ARCH)|%_libdir|' \
     dtkcommon.pro
 
 %build
+export QTDIR=%_qt5_prefix
+export PATH=%_qt5_bindir:$PATH
 %qmake_qt5 \
 %if_enabled clang
     QMAKE_STRIP= -spec linux-clang \
@@ -55,11 +57,15 @@ sed -i 's|$$PREFIX/lib/$$ARCH|%_libdir|; s|$$PREFIX/lib/$(ARCH)|%_libdir|' \
 %files -n dtk5-common
 %doc LICENSE README.md
 %_libdir/cmake/Dtk/DtkConfig.cmake
+%_libdir/cmake/Dtk/DtkInstallDConfigConfig.cmake
 %_qt5_archdatadir/mkspecs/features/*.prf
 %_qt5_archdatadir/mkspecs/modules/qt_lib_dtkcommon.pri
 %_datadir/glib-2.0/schemas/com.deepin.dtk.gschema.xml
 
 %changelog
+* Tue Feb 08 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.20-alt1
+- New version (5.5.20).
+
 * Tue Jul 06 2021 Leontiy Volodin <lvol@altlinux.org> 5.5.17-alt1
 - New version (5.5.17).
 

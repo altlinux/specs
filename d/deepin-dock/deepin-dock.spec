@@ -3,10 +3,10 @@
 %def_disable clang
 
 Name: deepin-dock
-Version: 5.4.39
+Version: 5.4.69.1
 Release: alt1
 Summary: Deepin desktop-environment - Dock module
-License: GPL-3.0+
+License: LGPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-dock
 Packager: Leontiy Volodin <lvol@altlinux.org>
@@ -38,7 +38,7 @@ BuildRequires: libxcbutil-image-devel
 BuildRequires: libgtest-devel
 BuildRequires: libgmock-devel
 BuildRequires: dtk5-common
-Requires: libdbusmenu-qt52 libddenetworkutils libdframeworkdbus2 libxcb libxcbutil-icccm libxcbutil-image
+# Requires: libdbusmenu-qt52 libddenetworkutils libdframeworkdbus2 libxcb libxcbutil-icccm libxcbutil-image
 
 %description
 Deepin desktop-environment - Dock module.
@@ -54,18 +54,19 @@ Header files and libraries for %name.
 %setup -n %repo-%version
 %patch -p2
 
-sed -i '/TARGETS/s|lib|%_lib|' plugins/*/CMakeLists.txt
-sed -E '/dpkg-architecture|EXIT_CODE/d' CMakeLists.txt
-sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
-sed -i 's|/usr/lib/deepin-daemon|/usr/libexec/deepin-daemon|' \
+sed -i '/TARGETS/s|lib/|%_lib/|' plugins/*/CMakeLists.txt
+sed -i 's|/usr/lib/deepin-daemon|%_libexecdir/deepin-daemon|' \
     plugins/show-desktop/showdesktopplugin.cpp \
     frame/window/mainpanelcontrol.cpp
 sed -i 's|${prefix}/lib/@HOST_MULTIARCH@|%_libdir|' dde-dock.pc.in
 sed -i 's|/usr/lib|%_libdir|' \
     frame/controller/dockpluginscontroller.cpp \
     plugins/tray/system-trays/systemtrayscontroller.cpp
+sed -i '/void changedConnections(const QList<QJsonObject> &connInfos);/d' \
+    plugins/network/item/wireditem.h
 
 %build
+export PATH=%_qt5_bindir:$PATH
 %if_enabled clang
 export CC="clang"
 export CXX="clang++"
@@ -75,9 +76,8 @@ export AR="llvm-ar"
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DARCHITECTURE=%_arch
-%cmake_build
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
@@ -100,6 +100,9 @@ export AR="llvm-ar"
 %_libdir/cmake/DdeDock/DdeDockConfig.cmake
 
 %changelog
+* Mon Feb 07 2022 Leontiy Volodin <lvol@altlinux.org> 5.4.69.1-alt1
+- New version (5.4.69.1).
+
 * Fri Aug 20 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.39-alt1
 - New version (5.4.39).
 

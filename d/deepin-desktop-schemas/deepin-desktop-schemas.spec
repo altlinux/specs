@@ -1,5 +1,5 @@
 Name: deepin-desktop-schemas
-Version: 5.9.18
+Version: 5.10.2
 Release: alt1
 Summary: GSettings deepin desktop-wide schemas
 License: GPL-3.0
@@ -16,7 +16,7 @@ BuildRequires(pre): rpm-build-golang
 BuildRequires: python3
 BuildRequires: glib2
 BuildRequires: libgio
-BuildRequires: golang-deepin-go-lib-devel
+# BuildRequires: golang-deepin-go-lib-devel
 # Requires: deepin-sound-theme
 Requires: gnome-backgrounds
 Requires: icon-theme-deepin
@@ -31,17 +31,17 @@ Requires(postun): dconf gsettings-desktop-schemas
 %setup
 %patch -p1
 
+sed -i 's|pkg.deepin.io/lib/|github.com/linuxdeepin/go-lib/|' \
+    $(find ./ -type f -name '*.go')
 sed -i 's|adwaita-lock.jpg|adwaita-night.jpg|' \
     schemas/wrap/com.deepin.wrap.gnome.desktop.screensaver.gschema.xml
 # sed -i 's|python|python3|' Makefile tools/overrides.py
-sed -i 's|org.deepin.browser|firefox|' \
-    overrides/common/desktop/dock.override
-sed -i 's|uos-browser|firefox|' \
-    overrides/common/*.override \
-    overrides/common/*/*.override
+sed -i 's|uos-browser|chromium-browser|' \
+    overrides/common/*/*.override \
+    schemas/com.deepin.dde.dock.gschema.xml
 
 %build
-export GOPATH=%go_path
+export GOPATH="%go_path:$(pwd)/vendor"
 export SYSTYPE=Desktop
 %make_build ARCH=%_arch
 
@@ -87,6 +87,10 @@ dconf update
 %_sysconfdir/dconf/db/local.d/01-deepin-disable-timeout-lockscreen
 
 %changelog
+* Mon Feb 07 2022 Leontiy Volodin <lvol@altlinux.org> 5.10.2-alt1
+- New version (5.10.2).
+- Built with internal golang submodules.
+
 * Fri Aug 20 2021 Leontiy Volodin <lvol@altlinux.org> 5.9.18-alt1
 - New version (5.9.18).
 

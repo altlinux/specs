@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkcore
-Version: 5.5.17.1
+Version: 5.5.23
 Release: alt1
 Summary: Deepin tool kit core modules
 License: LGPL-2.1 and LGPL-3.0+ and GPL-3.0
@@ -10,7 +10,6 @@ Url: https://github.com/linuxdeepin/dtkcore
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: dtkcore-5.4.15-ALT-gcc10.patch
 
 %if_enabled clang
 BuildRequires(pre): clang12.0-devel
@@ -56,7 +55,6 @@ Header files and libraries for %name.
 
 %prep
 %setup
-%patch -p2
 chmod +x tools/script/dtk-{license,translate}.py
 sed -i 's|dtkBuildMultiVersion(5.5)|dtkBuildMultiVersion|'  \
     src/src.pro
@@ -73,7 +71,7 @@ sed -i 's|dtkBuildMultiVersion(5.5)|dtkBuildMultiVersion|'  \
     LIB_INSTALL_DIR=%_libdir \
     unix:LIBS+="-ldl" \
     DEEPIN_OS_TYPE=Desktop \
-    DEEPIN_OS_VERSION=20.2.2 \
+    DEEPIN_OS_VERSION=20.4 \
 #
 %make_build
 
@@ -100,6 +98,9 @@ sed -i 's|dtkBuildMultiVersion(5.5)|dtkBuildMultiVersion|'  \
 %_pkgconfigdir/dtkcore.pc
 
 %changelog
+* Tue Feb 08 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.23-alt1
+- New version (5.5.23).
+
 * Tue Jul 06 2021 Leontiy Volodin <lvol@altlinux.org> 5.5.17.1-alt1
 - New version (5.5.17.1).
 

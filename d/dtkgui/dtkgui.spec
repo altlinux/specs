@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkgui
-Version: 5.5.17.1
+Version: 5.5.21
 Release: alt1
 Summary: Deepin Toolkit, gui module for DDE look and feel
 License: LGPL-3.0
@@ -76,6 +76,9 @@ sed -i '/*build-*/d' .gitignore
 %_libdir/libdtkgui.so
 
 %changelog
+* Tue Feb 08 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.21-alt1
+- New version (5.5.21).
+
 * Mon Jul 12 2021 Leontiy Volodin <lvol@altlinux.org> 5.5.17.1-alt1
 - New version (5.5.17.1).
 
