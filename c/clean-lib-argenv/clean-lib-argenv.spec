@@ -2,7 +2,7 @@
 
 Name: clean-lib-argenv
 Version: 1.0.3
-Release: alt3
+Release: alt4
 Summary: Clean low level interface to command line and environment
 Summary(ru_RU.UTF-8): Библиотека параметров командной строки для языка Clean
 License: BSD license
@@ -27,7 +27,7 @@ programming language.
 
 # После исправления clm так, чтобы он заранее содержал StdEnv,
 # убрать!
-CLEANLIB=/usr/lib64/clean/exe/ make CLM="clm -I /usr/lib64/clean/StdEnv/"
+CLEANLIB=/usr/lib64/clean/exe/ make CLM="clm -dynamics -I /usr/lib64/clean/StdEnv/"
 
 %install
 
@@ -50,6 +50,9 @@ touch "/usr/lib64/clean/ArgEnv/Clean System Files"/*.o
 %_libdir/*
 
 %changelog
+* Mon Feb 07 2022 Andrey Bergman <vkni@altlinux.org> 1.0.3-alt4
+- Rebuild for 3.1 Clean, enable dynamics.
+
 * Sun Jan 26 2020 Andrey Bergman <vkni@altlinux.org> 1.0.3-alt3
 - Rebuild with new compiler.
 
