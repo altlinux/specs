@@ -5,7 +5,7 @@
 %def_without check
 
 Name:       python3-module-%oname
-Version:    2.3.0
+Version:    2.3.1
 Release:    alt1
 
 Summary:    Sphinx theme for RST-sourced documentation published to docs.openstack.org
@@ -86,6 +86,9 @@ python3 setup.py test
 %endif
 
 %changelog
+* Tue Feb 08 2022 Grigory Ustinov <grenka@altlinux.org> 2.3.1-alt1
+- Build new version.
+
 * Sun Jun 06 2021 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt1
 - Build new version.
 
