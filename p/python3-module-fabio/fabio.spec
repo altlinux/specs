@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 Summary: Image IO for fable
 License: MIT
@@ -67,6 +67,9 @@ python3 setup.py test
 %python3_sitelibdir/%oname/test
 
 %changelog
+* Tue Feb 08 2022 Grigory Ustinov <grenka@altlinux.org> 0.13.0-alt1
+- Automatically updated to 0.13.0.
+
 * Thu Aug 12 2021 Grigory Ustinov <grenka@altlinux.org> 0.12.0-alt1
 - Automatically updated to 0.12.0.
 
