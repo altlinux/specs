@@ -1,6 +1,6 @@
 Name: dwm
-Version: 6.1
-Release: alt2
+Version: 6.3
+Release: alt1
 
 Summary: Dynamic window manager for X
 
@@ -34,23 +34,23 @@ use and the task performed. It is the little brother of wmii.
 %setup
 %patch0 -p1
 # Nuke the silent build.
-sed -i.backup -e 's|\t@|\t|' Makefile
-cmp -s Makefile{,.backup} && false
+#sed -i.backup -e 's|\t@|\t|' Makefile
+#cmp -s Makefile{,.backup} && false
 # Insert optflags
-sed -i.backup -e 's|-Os|%optflags -D_DEFAULT_SOURCE|' config.mk
-cmp -s config.mk{,.backup} && false
+#sed -i.backup -e 's|-Os|%optflags -D_DEFAULT_SOURCE|' config.mk
+#cmp -s config.mk{,.backup} && false
 # No strip for debuginfo, and insert ldflags to enhance the security.
-sed -i.backup -e 's|-s ${LIBS}|${LIBS}|' config.mk
-cmp -s config.mk{,.backup} && false
+#sed -i.backup -e 's|-s ${LIBS}|${LIBS}|' config.mk
+#cmp -s config.mk{,.backup} && false
 # X includedir path fix
-sed -i.backup -e 's|X11INC = .*|X11INC = %_includedir|' config.mk
-cmp -s config.mk{,.backup} && false
+#sed -i.backup -e 's|X11INC = .*|X11INC = %_includedir|' config.mk
+#cmp -s config.mk{,.backup} && false
 # libdir path fix
-sed -i.backup -e 's|X11LIB = .*|X11LIB = %_libdir|' config.mk
-cmp -s config.mk{,.backup} && false
+#sed -i.backup -e 's|X11LIB = .*|X11LIB = %_libdir|' config.mk
+#cmp -s config.mk{,.backup} && false
 
 %build
-%make_build
+%make_build CXXFLAGS="%optflags"
 
 %install
 %makeinstall_std PREFIX=%prefix
@@ -75,6 +75,9 @@ sed -i "s/VERSION/%version/;s/RELEASE/%release/" \
 %_niconsdir/%name.png
 
 %changelog
+* Tue Feb 08 2022 Ilya Mashkin <oddity@altlinux.ru> 6.3-alt1
+- 6.3
+
 * Thu Nov 11 2021 Igor Vlasenko <viy@altlinux.org> 6.1-alt2
 - NMU: WM packaging policy 2.0: added .desktop and pixmap
 
