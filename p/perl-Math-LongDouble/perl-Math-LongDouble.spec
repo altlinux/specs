@@ -1,7 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %ifarch armh
 %define _without_test 1
 %endif
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(overload.pm) perl(Math/Trig.pm)
 # END SourceDeps(oneline)
@@ -9,8 +9,8 @@ BuildRequires: perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUti
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.22
-Release: alt2
+Version: 0.23
+Release: alt1
 Summary: perl module %module_name
 Group: Development/Perl
 License: perl
@@ -36,6 +36,9 @@ Source0: http://www.cpan.org/authors/id/S/SI/SISYPHUS/%{module_name}-%{version}.
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Feb 08 2022 Igor Vlasenko <viy@altlinux.org> 0.23-alt1
+- automated CPAN update
+
 * Sun Sep 20 2020 Igor Vlasenko <viy@altlinux.ru> 0.22-alt2
 - disabled tests on armh for perl 5.30 update
 
