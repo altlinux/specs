@@ -2,8 +2,8 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: openssl1.1
-Version: 1.1.1l
-Release: alt2
+Version: 1.1.1m
+Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: OpenSSL
@@ -467,6 +467,9 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Tue Feb 08 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1m-alt1
+- Updated to 1.1.1m.
+
 * Sat Oct 16 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.1.1l-alt2
 - FTBFS: fixed build with lto.
 
