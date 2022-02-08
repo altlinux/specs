@@ -1,6 +1,6 @@
 Name: hex-a-hop
 Version: 1.0.0
-Release: alt5
+Release: alt6
 
 Summary: Puzzle game based on hexagonal tiles
 License: GPLv2+
@@ -11,6 +11,7 @@ Source: %name.tar.gz
 Patch: %name.gcc44.patch
 # http://ftp.de.debian.org/debian/pool/main/h/hex-a-hop/hex-a-hop_0.0.20070315.orig.tar.gz
 # svn export svn://svn.debian.org/svn/pkg-games/packages/trunk/hex-a-hop/ --force
+Patch2: hex-a-hop-1.0.0-fix-translates.patch
 
 #ExclusiveArch: %ix86 x86_64 %e2k
 Packager: Fr. Br. George <george@altlinux.ru>
@@ -40,6 +41,7 @@ Hex-a-hop - это интересная игра-головоломка, в ко
 %setup -n %name
 for P in `cat debian/patches/series`; do patch -p1 < debian/patches/$P; done
 %patch -p1
+%patch2 -p1
 
 %build
 %make CXXFLAGS="-Wall -W -g -DUSE_GETTEXT" NAME="%name" DATA_DIR="%_gamesdatadir/%name"
@@ -64,6 +66,9 @@ cp -a levels.dat graphics %buildroot%_gamesdatadir/%name/
 %_mandir/*/*
 
 %changelog
+* Fri Jan 28 2022 Alexander Danilov <admsasha@altlinux.org> 1.0.0-alt6
+- fixed FTBFS (corrected translations)
+
 * Fri Jul 23 2021 Michael Shigorin <mike@altlinux.org> 1.0.0-alt5
 - dropped EA: (builds on ppc64le, aarch64 and e2k just fine)
 - clarified License:
