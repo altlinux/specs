@@ -1,6 +1,6 @@
 Name: xfce4-clipman-plugin
 Version: 1.6.2
-Release: alt1
+Release: alt2
 
 Summary: Clipboard history plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Менеджер буфера обмена для Xfce
@@ -74,6 +74,10 @@ Clipman это менеджер буфера обмена для Xfce. Он со
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Tue Feb 08 2022 Mikhail Efremov <sem@altlinux.org> 1.6.2-alt2
+- Patch from upstream git:
+  + Fix invalid "Show full history..." menu item behavior.
+
 * Wed May 12 2021 Mikhail Efremov <sem@altlinux.org> 1.6.2-alt1
 - Updated to 1.6.2.
 
