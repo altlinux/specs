@@ -8,8 +8,8 @@
 %def_disable systemtap
 
 Name: sssd
-Version: 2.6.1
-Release: alt3
+Version: 2.6.3
+Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -477,7 +477,7 @@ Provides python3 programs with sssd analyze tools
 %install
 for f in \
     src/tools/sss_obfuscate \
-    src/tools/analyzer/sss_analyze.py;
+    src/tools/analyzer/sss_analyze;
 do
     sed -i -e 's:/usr/bin/python:/usr/bin/python3:' \
            -e 's:/usr/bin/env\s*python\s*:/usr/bin/python3:' \
@@ -512,6 +512,13 @@ rm -Rf %buildroot%_docdir/%name
 
 mkdir -p %buildroot%pubconfpath/krb5.include.d
 mkdir -p %buildroot%dotcachepath
+mkdir -p %buildroot%_sysconfdir/krb5.conf.d
+
+# Kerberos KCM credential cache would be ruled by control
+# cp %buildroot%_datadir/sssd/krb5-snippets/kcm_default_ccache %buildroot%_sysconfdir/krb5.conf.d/kcm_default_ccache
+
+# krb5 configuration snippet
+cp %buildroot%_datadir/sssd/krb5-snippets/enable_sssd_conf_dir %buildroot%_sysconfdir/krb5.conf.d/enable_sssd_conf_dir
 
 # Add alternatives for idmap-plugin
 mkdir -p %buildroot/%_altdir
@@ -674,6 +681,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_man5dir/sssd-krb5*
 %_mandir/*/man5/sssd-krb5*
 %_datadir/%name/sssd.api.d/sssd-krb5.conf
+%config(noreplace) %_sysconfdir/krb5.conf.d/enable_sssd_conf_dir
+%dir %_datadir/sssd/krb5-snippets
+%_datadir/sssd/krb5-snippets/enable_sssd_conf_dir
 
 %files pac
 %_libexecdir/%name/sssd_pac
@@ -728,6 +738,7 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %files tools
 %_sbindir/sss_*
 %_sbindir/sssctl
+%_libexecdir/%name/sss_analyze
 %_man8dir/sss_*
 %_mandir/*/man8/sss_*
 %_man8dir/sssctl*
@@ -842,6 +853,26 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Thu Jan 27 2022 Evgeny Sinelnikov <sin@altlinux.org> 2.6.3-alt1
+- AD Domain in the AD Forest Missing after sssd latest update
+- sdap_idmap.c/sssd_idmap.c incorrectly calculates rangesize from upper/lower
+- Regression on rawhide with ssh auth using password
+- sssd-ad broken in 2.6.2, 389 used as kerberos port
+- sssd error triggers backtrace: write_krb5info_file_from_fo_server
+
+* Wed Jan 12 2022 Evgeny Sinelnikov <sin@altlinux.org> 2.6.2-alt1
+- Update to latest release:
+  + Lookup with fully-qualified name does not work with cache_first is True.
+  + sssd_be segfault due to empty forest root name.
+  + Groups are missing while performing id lookup as SSSD switching to offline
+    mode due to the wrong domain name in the ldap-pings(netlogon).
+  + LDAP sp_expire policy does not match other libraries.
+  + Passwordless (GSSAPI) SSH not working due to missing
+    includedir  /var/lib/sss/pubconf/krb5.include.d directive in /etc/krb5.conf.
+  + pam responder does not call initgroups to refresh the user entry.
+  + FindByValidCertificate() treats unconfigured CA as Invalid certificate provide.
+  + sssd does not use kerberos port that is set.
+
 * Mon Dec 13 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.6.1-alt3
 - Update with latest libldb-2.3.2-alt2 fixes.
 - Backport newest fixes from upstream:
