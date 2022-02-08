@@ -1,6 +1,6 @@
 Name: pinfo
 Version: 0.6.13
-Release: alt2
+Release: alt3
 
 Summary: Przemek's Info Viewer - a (much) better info
 Group: System/Base
@@ -12,6 +12,7 @@ Source: v%version.tar.gz
 Patch1: pinfo-0.6.10-xz.patch
 Patch2: pinfo-0.6.13-fix-global-variable.patch
 Patch3: pinfo-0.6.13-fix-string-overflow.patch
+Patch4: pinfo-0.6.13-ftbfs-fix-video-format.patch
 
 Requires: url_handler
 
@@ -29,6 +30,7 @@ pages as man pages. Regexp searching included.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %autoreconf
@@ -50,6 +52,9 @@ ln -s %name %buildroot%_bindir/pman
 %_infodir/*.info*
 
 %changelog
+* Fri Jan 14 2022 Alexander Danilov <admsasha@altlinux.org> 0.6.13-alt3
+- FTBFS: fixed format argument
+
 * Mon Mar 15 2021 Ivan A. Melnikov <iv@altlinux.org> 0.6.13-alt2
 - Fix build with gcc10
 
