@@ -1,10 +1,10 @@
 %define oname wrapt
 
-%def_disable check
+%def_enable check
 
 Name: python3-module-%oname
-Version: 1.12.1
-Release: alt2
+Version: 1.13.3
+Release: alt1
 Summary: A Python module for decorators, wrappers and monkey patching
 License: BSD
 Group: Development/Python3
@@ -84,6 +84,10 @@ py.test3
 %doc docs/_build/html blog
 
 %changelog
+* Tue Feb 08 2022 Grigory Ustinov <grenka@altlinux.org> 1.13.3-alt1
+- Build new version.
+- Enable check.
+
 * Mon Feb 08 2021 Grigory Ustinov <grenka@altlinux.org> 1.12.1-alt2
 - Disable check for python3.9.
 
