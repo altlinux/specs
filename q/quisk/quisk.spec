@@ -1,6 +1,6 @@
 Name: quisk
 Version: 4.1.93
-Release: alt1
+Release: alt2
 Summary: QUISK is a Software Defined Radio (SDR) transceiver that can control various radio hardware
 
 License: GPL-2.0
@@ -18,6 +18,7 @@ BuildRequires: libportaudio2-devel
 BuildRequires: libpulseaudio-devel
 
 %filter_from_requires /^python3(\(_quisk\|ftd2xx\))/d
+%py3_requires usb PIL
 
 %description
 QUISK is a Software Defined Radio (SDR) transceiver. You supply radio hardware
@@ -57,5 +58,8 @@ find . -type f -exec chmod a-x '{}' ';'
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Feb 08 2022 Andrey Cherepanov <cas@altlinux.org> 4.1.93-alt2
+- Requires python3(usb) and python3(PIL).
+
 * Mon Jan 24 2022 Andrey Cherepanov <cas@altlinux.org> 4.1.93-alt1
 - Initial build in Sisyphus.
