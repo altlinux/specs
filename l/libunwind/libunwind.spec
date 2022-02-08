@@ -1,6 +1,6 @@
 Name: libunwind
-Version: 1.5.0
-Release: alt2
+Version: 1.6.2
+Release: alt1
 
 Summary: An unwinding library
 License: MIT
@@ -53,6 +53,9 @@ make
 %_includedir/*
 
 %changelog
+* Tue Feb 08 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.6.2-alt1
+- Updated to 1.6.2.
+
 * Fri Sep 24 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.5.0-alt2
 - Fixed FTBFS with gcc11 (by disabling libunwind-setjmp library, it's no longer
   compatible with glibc anyway).
