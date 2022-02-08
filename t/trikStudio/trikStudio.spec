@@ -8,7 +8,7 @@
 
 Name: trikStudio
 Version: 2021.2
-Release: alt2
+Release: alt3
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
@@ -116,8 +116,9 @@ export NPROCS=1
 %endif
 %ifarch %e2k
     CONFIG+=noPch CONFIG+=warn_off \
-    QMAKE_LFLAGS+=-Wl,-rpath-link=%_builddir/%name-%version/bin/release \
 %endif
+    QMAKE_LFLAGS+=-Wl,-rpath-link=%_builddir/%name-%version/bin/release \
+    QMAKE_LFLAGS+=-Wl,-rpath=%_libdir/%name \
 %if_with sanitize
     CONFIG+=!nosanitizers \
 %endif
@@ -193,6 +194,10 @@ popd
 %endif
 
 %changelog
+* Mon Feb 07 2022 Valery Sinelnikov <greh@altlinux.org> 2021.2-alt3
+- Rebuild with RPATH due upgraded lib.req which sets "library not found"
+  warnings to errors.
+
 * Tue Jan 25 2022 Grigory Ustinov <grenka@altlinux.org> 2021.2-alt2
 - Fixed building with python3.10.
 
