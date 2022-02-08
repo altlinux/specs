@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-Mojolicious-Plugin-OAuth2
-Version: 2.01
+Version: 2.02
 Release: alt1
 Summary: A Mojolicious plugin that allows OAuth2 authentication
 License: Artistic-2.0
@@ -39,6 +39,9 @@ rm -f %buildroot%perl_vendorlib/Mojolicious/Plugin/README.pod
 %perl_vendorlib/Mojolicious/Plugin*
 
 %changelog
+* Tue Feb 08 2022 Igor Vlasenko <viy@altlinux.org> 2.02-alt1
+- automated CPAN update
+
 * Mon Nov 01 2021 Igor Vlasenko <viy@altlinux.org> 2.01-alt1
 - automated CPAN update
 
