@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 55
+%define centos_release 56
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,20 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Feb 08 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.56-alt1.el9
+- Updated to kernel-5.14.0-56.el9:
+  + clocksource: Backport upstream fix for hpet fallback problem
+  + CNB: pci: Make pci_enable_ptm() accessible for drivers
+  + configs: disable CONFIG_CRAMFS
+  + iommu/vt-d: Fix unmap_pages support
+  + KVM: VMX: switch blocked_vcpu_on_cpu_lock to raw spinlock
+  + Merge remote-tracking branch 'gitlab/rh/centos-stream-9/merge-requests/338' into cs9/bz2041931/kfree-skb-reason
+  + net: backports before kABI freeze
+  + PCI: Add kABI extensions for the kernel's PCI subsystem
+  + ppp: ensure minimum packet size in ppp_write()
+  + [RHEL-9.0] IPMI Add RH_KABI_RESERVE to kABI sensitive structs
+  + x86/hyperv: Properly deal with empty cpumasks in hyperv_flush_tlb_multi()
+
 * Sat Feb 05 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.55-alt1.el9
 - Updated to kernel-5.14.0-55.el9:
   + nvme: drop scan_lock and always kick requeue list when removing namespaces
