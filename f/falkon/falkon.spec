@@ -11,8 +11,8 @@
 %define libfalkonprivate libfalkonprivate%sover
 
 Name: falkon
-Version: 3.1.0
-Release: alt4
+Version: 3.2.0
+Release: alt1
 %K5init no_altplace
 
 Summary: A very fast open source browser based on WebKit core
@@ -23,14 +23,15 @@ Url: https://www.falkon.org/
 ExcludeArch: %e2k ppc64le
 
 Source: %name-%version.tar
-Patch1: alt-qt515.patch
 # Automatically added by buildreq on Thu Apr 07 2016
 # optimized out: fontconfig gcc-c++ libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-positioning libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-sql libqt5-webchannel libqt5-webenginecore libqt5-webenginewidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel pkg-config python-base python-modules qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules
 BuildRequires: libssl-devel libxcbutil-devel
 BuildRequires: qt5-multimedia-devel qt5-script-devel qt5-tools-devel qt5-webengine-devel qt5-websockets-devel qt5-x11extras-devel
+#BuildRequires: python3-devel python3-module-PySide2-devel
 BuildRequires: kf5-kwallet-devel kf5-ki18n-devel kf5-kio-devel kf5-kcrash-devel kf5-kcoreaddons-devel kf5-purpose-devel
+BuildRequires: kf5-karchive-devel
 BuildRequires: libgnome-keyring-devel
 
 %description
@@ -86,7 +87,6 @@ Summary: %name library
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %K5build
@@ -112,10 +112,9 @@ __EOF__
 %exclude %_K5plug/falkon/KDEFrameworksIntegration.so
 %exclude %_K5plug/falkon/GnomeKeyringPasswords.so
 %_K5xdgapp/org.kde.falkon.desktop
-%_pixmapsdir/falkon.png
+#%_pixmapsdir/falkon.png
 %_K5icon/hicolor/*/*/*.png
 %_K5icon/hicolor/*/*/*.svg
-#%_datadir/locale/*/*/*.qm
 %_datadir/falkon/
 %_datadir/bash-completion/completions/falkon
 
@@ -130,6 +129,9 @@ __EOF__
 %_K5lib/libFalkonPrivate.so.%sover.*
 
 %changelog
+* Fri Feb 04 2022 Sergey V Turchin <zerg@altlinux.org> 3.2.0-alt1
+- new version
+
 * Tue Feb 01 2022 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt4
 - don't build on e2k and ppc64le
 
