@@ -1,23 +1,22 @@
 Group: System/Fonts/True type
-# BEGIN SourceDeps(oneline):
-BuildRequires: perl(FileHandle.pm) perl(Font/TTF/Font.pm) perl(IO/File.pm) perl(Parse/RecDescent.pm) perl(Pod/Usage.pm)
-# END SourceDeps(oneline)
 %define oldname sil-nuosu-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 2.200
 %global fontname sil-nuosu
 %global fontconf 66-%{fontname}.conf
 
-%global archivename ttf-sil-nuosusil-2.1.1.tar.gz
+%global archivename NuosuSIL-%{version}.tar.xz
 
 Name:           fonts-ttf-sil-nuosu
-Version:        2.1.1
-Release:        alt3_13
+Version:        2.200
+Release:        alt1_4
 Summary:        The Nuosu SIL Font
 
 License:        OFL
 URL:            http://scripts.sil.org/SILYi_home
-Source0:        %{archivename}
+Source0:        https://github.com/silnrsi/font-nuosu/releases/download/v%{version}/%{archivename}
 Source1:        %{oldname}-fontconfig.conf
 Source2:        %{fontname}.metainfo.xml
 
@@ -31,8 +30,8 @@ used by a large ethnic group in southwestern China.
 Until this version, the font was called SIL Yi.
 
 %prep
-%setup -n %{oldname}-%{version} -q -c %{oldname}
-sed -i 's/\r//' OFL.txt doc/FONTLOG.txt
+%setup -q -n NuosuSIL-%{version}
+sed -i 's/\r//' OFL.txt FONTLOG.txt
 
 %build
 
@@ -90,11 +89,15 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
-%{_fontbasedir}/*/%{_fontstem}/*.ttf
-%doc OFL.txt doc/FONTLOG.txt
+%dir %{_fontsdir}/*/%{_fontstem}/
+%{_fontsdir}/*/%{_fontstem}/*.ttf
+%doc OFL.txt FONTLOG.txt
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Wed Feb 09 2022 Igor Vlasenko <viy@altlinux.org> 2.200-alt1_4
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt3_13
 - update to new release by fcimport
 
