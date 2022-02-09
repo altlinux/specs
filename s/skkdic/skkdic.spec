@@ -1,65 +1,86 @@
 Group: System/Libraries
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global	cvsDATE	20181016
-%global	cvsTIME	1609
+%global         githash     1ca80982c5a32c82bfc5e98e1fe9d8751ab44946
+%global         shorthash   %(TMP=%githash ; echo ${TMP:0:10})
+%global         gitdate     Wed, 17 Feb 2021 00:09:15 +0900
+%global         gitdate_num 20210217
+
+%global         githash_tools     0fe2106fbc052445c611e6c5b2a79899d740edcb
 
 %undefine        _changelog_trimtime
 
 Summary:	Dictionaries for SKK (Simple Kana-Kanji conversion program)
 Name:		skkdic
-Version:	%{cvsDATE}
-Release:	alt1_2.T1609
-License:	GPLv2+
-# To create source tarball, use Source10
-Source0:	skkdic-%{cvsDATE}T%{cvsTIME}.tar.bz2
-Source1:	http://openlab.ring.gr.jp/skk/skk/tools/unannotation.awk
-Source10:	create-skkdic-source.sh
+Version:	%{gitdate_num}
+Release:	alt1_3.git1ca80982c5
+# See Source2
+License:	GPLv2+ and CC-BY-SA and Unicode and Public Domain and MIT
+
+Source0:	https://github.com/skk-dev/dict/archive/%{githash}/%{name}-%{gitdate_num}.git%{githash}.tar.gz
+Source1:	https://raw.githubusercontent.com/skk-dev/skktools/%{githash_tools}/unannotation.awk
+Source2:	license-investigation.txt
 Source200:	README-skkdic.rh.ja
-URL:		http://openlab.ring.gr.jp/skk/skk/dic/
+
+URL:		https://skk-dev.github.io/dict/
 BuildArch:	noarch
 Source44: import.info
+
 
 %description
 This package includes the SKK dictionaries, including the large dictionary
 SKK-JISYO.L and pubdic+ dictionary.
 
 %prep
-%setup -q
+%setup -q -c -T -a 0
+ln -sf dict-%{githash} src
+mkdir tools
 
 cp -p %SOURCE200 .
-cp -p %SOURCE1 .
-mv zipcode/README.ja zipcode/README-zipcode.ja 
+cp -p %SOURCE1 tools
+
+pushd src
+cp -a zipcode/README.md zipcode/README-zipcode.md
+popd
 
 %build
+pushd src
+
 for dic in \
 	SKK-JISYO.L.unannotated \
 	SKK-JISYO.wrong
 do
 	rm -f $dic
-	make $dic TOOLS_DIR=.
+	make $dic
 done
+
+popd
 
 %install
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/skk
 
+pushd src
 for f in SKK-JISYO* zipcode/SKK-JISYO*
 do
 	install -p -m 644 $f $RPM_BUILD_ROOT%{_datadir}/skk
 done
 gzip -9 ChangeLog
 
+popd
+
 %files
-%doc	ChangeLog.gz
+%doc	src/ChangeLog.gz
 %doc	README-skkdic.rh.ja
-%doc	READMEs/committers.txt
-%doc	edict_doc.txt
-%doc	zipcode/README-zipcode.ja
+%doc	src/committers.md
+%doc	src/edict_doc.html
+%doc	src/zipcode/README-zipcode.md
 
 %{_datadir}/skk/
 
-
 %changelog
+* Wed Feb 09 2022 Igor Vlasenko <viy@altlinux.org> 20210217-alt1_3.git1ca80982c5
+- update to new release by fcimport
+
 * Sat Mar 16 2019 Igor Vlasenko <viy@altlinux.ru> 20181016-alt1_2.T1609
 - update to new release by fcimport
 
