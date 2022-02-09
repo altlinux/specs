@@ -5,7 +5,7 @@
 %endif
 
 Name: kde5-set
-Version: 21.08.1
+Version: 21.12.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -37,7 +37,7 @@ Summary: %summary
 Group: Graphical desktop/KDE
 Requires: kde5-mini
 Requires: kde5-volume-control
-Requires: webclient
+Requires: /usr/bin/x-www-browser
 #
 Requires: icon-theme-breeze
 Requires: kf5-kwallet kf5-kconfig kf5-kglobalaccel kf5-kimageformats kde5-svgpart
@@ -216,6 +216,9 @@ Requires: kde5-kaddressbook
 %files -n kde5-pim
 
 %changelog
+* Wed Feb 09 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.0-alt1
+- change requires from webclient to /usr/bin/x-www-browser to exclude lynx-like console browsers
+
 * Mon Feb 07 2022 Sergey V Turchin <zerg@altlinux.org> 21.08.1-alt1
 - update requires
 
