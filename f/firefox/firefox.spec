@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        96.0.3
+Version:        97.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -47,9 +47,9 @@ Patch015: 0015-build-Disable-Werror.patch
 
 %define gst_version   1.0
 %define nspr_version  4.32
-%define nss_version   3.72
-%define rust_version  1.56.0
-%define cargo_version 1.56.0
+%define nss_version   3.75
+%define rust_version  1.58.1
+%define cargo_version 1.58.1
 %define llvm_version  12.0
 
 #ExcludeArch: ppc64le
@@ -464,6 +464,22 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Feb 09 2022 Alexey Gladkov <legion@altlinux.ru> 97.0-alt1
+- New release (97.0).
+- Security fixes:
+  + CVE-2022-22753: Privilege Escalation to SYSTEM on Windows via Maintenance Service
+  + CVE-2022-22754: Extensions could have bypassed permission confirmation during update
+  + CVE-2022-22755: XSL could have allowed JavaScript execution after a tab was closed
+  + CVE-2022-22756: Drag and dropping an image could have resulted in the dropped object being an executable
+  + CVE-2022-22757: Remote Agent did not prevent local websites from connecting
+  + CVE-2022-22758: tel: links could have sent USSD codes to the dialer on Firefox for Android
+  + CVE-2022-22759: Sandboxed iframes could have executed script if the parent appended elements
+  + CVE-2022-22760: Cross-Origin responses could be distinguished between script and non-script content-types
+  + CVE-2022-22761: frame-ancestors Content Security Policy directive was not enforced for framed extension pages
+  + CVE-2022-22762: JavaScript Dialogs could have been displayed over other domains on Firefox for Android
+  + CVE-2022-22764: Memory safety bugs fixed in Firefox 97 and Firefox ESR 91.6
+  + CVE-2022-0511: Memory safety bugs fixed in Firefox 97
+
 * Tue Feb 01 2022 Alexey Gladkov <legion@altlinux.ru> 96.0.3-alt1
 - New release (96.0.3).
 - Enable debuginfo on 64-bit architectures.
