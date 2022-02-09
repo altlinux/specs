@@ -1,7 +1,7 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.35.0.5.249624
+Version: 2.35.0.6.491f2e
 Release: alt1
 Epoch: 6
 
@@ -669,6 +669,7 @@ fi
 /lib/ld-linux-riscv64-lp64d.so.1
 %endif
 %exclude /%_lib/libnss_[a-eg-z]*
+%_bindir/ld.so
 /sbin/glibc_post_upgrade
 /sbin/glibc_fix_*
 /sbin/*ldconfig
@@ -724,6 +725,7 @@ fi
 %files utils
 /sbin/sln
 %_bindir/*
+%exclude %_bindir/ld.so
 %exclude %_bindir/iconv*
 %exclude %_bindir/locale
 %if_enabled memusagestat
@@ -783,6 +785,10 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Wed Feb 09 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.35.0.6.491f2e-alt1
+- Updated to glibc-2.35-6-g491f2ef1f0.
+- Applied patch to fix sw#28868 (thx Adhemerval Zanella).
+
 * Sat Feb 05 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.35.0.5.249624-alt1
 - Updated to glibc-2.35-5-g2496242707.
 
