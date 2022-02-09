@@ -5,8 +5,8 @@
 %define appname trik-studio-junior
 
 Name: trikStudioJunior
-Version: 2020.2
-Release: alt3
+Version: 2021.3
+Release: alt1
 Summary: Intuitive graphical programming environment
 Summary(ru_RU.UTF-8): Интуитивно-понятная графическая среда программирования
 License: Apache-2.0
@@ -15,7 +15,6 @@ Url: https://github.com/trikset/trik-studio
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
-Patch1: fix-build-with-qt5-quazip1.patch
 
 BuildRequires: gcc-c++ qt5-base-devel qt5-svg-devel qt5-script-devel qt5-multimedia-devel libusb-devel libudev-devel libgmock-devel
 BuildRequires: libqscintilla2-qt5-devel zlib-devel python3-dev
@@ -65,7 +64,8 @@ Data files for %name
 sed -e '2 a export LD_LIBRARY_PATH=%_libdir\/%name\/' -i installer/platform/trikStudio.sh
 sed -e 's|^trik-studio|%_libdir/%name/trik-studio|' -i installer/platform/trikStudio.sh
 
-%patch1 -p1
+tar -xf ./.gear/qslog.tar.bz2
+tar -xf ./.gear/checkapp.tar.bz2
 
 pushd qrgui/thirdparty
 tar -xf qt-solutions.tar.bz2
@@ -87,7 +87,7 @@ popd
     CONFIG+=!nosanitizers \
 %endif
     CONFIG+=no_rpath \
-    PREFIX=%_prefix LIBDIR=%_libdir studio.pro
+    PREFIX=%_prefix LIBDIR=%_libdir TRIK_STUDIO_VERSION=Junior-%version studio.pro
 %make_build
 
 %install
@@ -128,6 +128,9 @@ done
 %doc LICENSE NOTICE README.md
 
 %changelog
+* Wed Feb 09 2022 Valery Sinelnikov <greh@altlinux.org> 2021.3-alt1
+- Update to jr2021.3
+
 * Tue Feb 08 2022 Valery Sinelnikov <greh@altlinux.org> 2020.2-alt3
 - Rebuild with RPATH due upgraded lib.req which sets "library not found"
   warnings to errors.
