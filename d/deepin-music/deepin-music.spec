@@ -5,8 +5,8 @@
 %define optflags_lto %nil
 
 Name: deepin-music
-Version: 6.1.7
-Release: alt2
+Version: 6.2.8
+Release: alt1
 Summary: Awesome music player with brilliant and tweakful UI Deepin-UI based
 License: GPL-3.0+ and LGPL-2.1+
 Group: Sound
@@ -18,7 +18,6 @@ Source: %url/archive/%version/%name-%version.tar.gz
 BuildRequires(pre): clang12.0-devel
 %else
 BuildRequires(pre): gcc-c++
-BuildRequires(pre): libgomp10-devel
 %endif
 BuildRequires(pre): rpm-build-kf5 cmake rpm-build-ninja
 BuildRequires: git-core
@@ -56,8 +55,8 @@ Provides: lib%name = %version
 Obsoletes: lib%name < %version
 Provides: %name-devel = %version
 Obsoletes: %name-devel < %version
-# Provides: lib%name-static = %version
-# Obsoletes: lib%name-static < %version
+# Provides: lib%%name-static = %%version
+# Obsoletes: lib%%name-static < %%version
 
 %description -n lib%repo-devel-static
 This package provides static libraries for %name.
@@ -84,7 +83,6 @@ export READELF="llvm-readelf"
     -DLIB_INSTALL_DIR=%_libdir \
     -DAPP_VERSION=%version \
     -DVERSION=%version
-# %%cmake_build
 cmake --build %_cmake__builddir -j%__nprocs
 
 %install
@@ -116,6 +114,9 @@ rm -f %buildroot%_libdir/lib%repo.a
 %endif
 
 %changelog
+* Wed Feb 09 2022 Leontiy Volodin <lvol@altlinux.org> 6.2.8-alt1
+- New version (6.2.8).
+
 * Fri Aug 27 2021 Leontiy Volodin <lvol@altlinux.org> 6.1.7-alt2
 - Disabled static library.
 - Temporarily disabled link-time optimization.

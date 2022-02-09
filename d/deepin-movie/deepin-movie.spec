@@ -1,8 +1,12 @@
-%def_disable clang
+%def_enable clang
+
+%if_enabled clang
+%define optflags_lto -flto=thin
+%endif
 
 Name: deepin-movie
-Version: 5.7.15
-Release: alt1.gitfe98519
+Version: 5.9.8
+Release: alt1
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
 License: GPL-3.0+ and OpenSSL-exception
 Group: Video
@@ -10,12 +14,12 @@ Url: https://github.com/linuxdeepin/deepin-movie-reborn
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-reborn-%version.tar.gz
-Patch: deepin-movie-5.7.15-alt-fix-build.patch
+Patch: deepin-movie-5.9.8-alt-fix-build.patch
 
 ExcludeArch: armh
 
 %if_enabled clang
-BuildRequires(pre): clang11.0-devel
+BuildRequires(pre): clang12.0-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
@@ -64,7 +68,6 @@ This package provides development files for libdmr.
 %prep
 %setup -n %name-reborn-%version
 %patch -p1
-sed -i '/#include <DPalette>/a #include <QPainterPath>' src/widgets/{tip,toolbutton}.h
 
 %build
 %if_enabled clang
@@ -109,6 +112,9 @@ export AR="llvm-ar"
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Wed Feb 09 2022 Leontiy Volodin <lvol@altlinux.org> 5.9.8-alt1
+- New version (5.9.8).
+
 * Thu Jun 10 2021 Leontiy Volodin <lvol@altlinux.org> 5.7.15-alt1.gitfe98519
 - New version (5.7.15).
 - Updated to git commit fe98519031e8482cba72bfca4ad67269cd98a1de.
