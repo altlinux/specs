@@ -15,7 +15,7 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR ver
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
-Version: 91.5.1
+Version: 91.6.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -54,7 +54,6 @@ Patch013: 0013-bmo-1559213-Support-system-av1.patch
 Patch014: 0014-VAAPI-Add-extra-frames.patch
 Patch015: 0015-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch016: 0016-ALT-Fix-redefinition-double_t.patch
-Patch017: 0017-Bug-1745560-Add-missing-stub-for-wl_proxy_marshal_fl.patch
 ### End Patches
 
 # Hang up on build browser/components/about
@@ -208,7 +207,6 @@ Most likely you don't need to use this package.
 %patch014 -p1
 %patch015 -p1
 %patch016 -p1
-%patch017 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -456,6 +454,18 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Feb 09 2022 Pavel Vasenkov <pav@altlinux.org> 91.6.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2022-22753 Privilege Escalation to SYSTEM on Windows via Maintenance Service
+  + CVE-2022-22754 Extensions could have bypassed permission confirmation during update
+  + CVE-2022-22756 Drag and dropping an image could have resulted in the dropped object being an executable
+  + CVE-2022-22759 Sandboxed iframes could have executed script if the parent appended elements
+  + CVE-2022-22760 Cross-Origin responses could be distinguished between script and non-script content-types
+  + CVE-2022-22761 frame-ancestors Content Security Policy directive was not enforced for framed extension pages
+  + CVE-2022-22763 Script Execution during invalid object state
+  + CVE-2022-22764 Memory safety bugs fixed in Firefox 97 and Firefox ESR 91.6
+
 * Thu Jan 27 2022 Pavel Vasenkov <pav@altlinux.org> 91.5.1-alt1
 - New ESR version.
 
