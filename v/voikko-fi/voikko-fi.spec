@@ -1,10 +1,9 @@
 Group: Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define fontpkgname voikko-fi
 Name:           voikko-fi
-Version:        2.4
-Release:        alt1_4
+Version:        2.5
+Release:        alt1_1
 Summary:        A description of Finnish morphology written for libvoikko
 
 License:        GPLv2+
@@ -62,6 +61,9 @@ make vvfst-install DESTDIR=$RPM_BUILD_ROOT%{_prefix}/lib/voikko
 %{_prefix}/lib/voikko/5
 
 %changelog
+* Wed Feb 09 2022 Igor Vlasenko <viy@altlinux.org> 2.5-alt1_1
+- update to new release by fcimport
+
 * Sat Dec 18 2021 Igor Vlasenko <viy@altlinux.org> 2.4-alt1_4
 - update to new release by fcimport
 
