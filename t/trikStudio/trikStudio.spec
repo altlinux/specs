@@ -7,8 +7,8 @@
 %define appname trik-studio
 
 Name: trikStudio
-Version: 2021.2
-Release: alt3
+Version: 2022.1
+Release: alt1
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
@@ -194,6 +194,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 09 2022 Valery Sinelnikov <greh@altlinux.org> 2022.1-alt1
+- Update to 2022.1
+
 * Mon Feb 07 2022 Valery Sinelnikov <greh@altlinux.org> 2021.2-alt3
 - Rebuild with RPATH due upgraded lib.req which sets "library not found"
   warnings to errors.
