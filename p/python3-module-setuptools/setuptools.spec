@@ -7,7 +7,7 @@
 
 Name: python3-module-%mname
 Epoch: 1
-Version: 60.5.4
+Version: 60.8.1
 Release: alt1
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
@@ -29,6 +29,7 @@ BuildRequires: python3(jaraco.path)
 BuildRequires: python3(pip)
 BuildRequires: python3(build)
 BuildRequires: python3(filelock)
+BuildRequires: python3(pip_run)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_xdist)
 BuildRequires: python3(pytest_virtualenv)
@@ -65,6 +66,9 @@ Requires: python3-dev
 # hide bundled packages
 %add_findprov_skiplist %python3_sitelibdir/setuptools/_vendor/*
 
+# don't allow vendored distributions have deps other than stdlib
+%add_findreq_skiplist %python3_sitelibdir/setuptools/_vendor/*
+
 # ms windows compilers (some packages want to import these modules)
 %add_findreq_skiplist %python3_sitelibdir/setuptools/_distutils/*msvc*compiler*.py*
 %add_findprov_skiplist %python3_sitelibdir/setuptools/_distutils/*msvc*compiler*.py*
@@ -77,6 +81,9 @@ Conflicts: python3-module-%mname < 39.2.0-alt3
 
 # hide bundled packages
 %add_findprov_skiplist %python3_sitelibdir/pkg_resources/_vendor/*
+
+# don't allow vendored distributions have deps other than stdlib
+%add_findreq_skiplist %python3_sitelibdir/pkg_resources/_vendor/*
 
 %description
 Setuptools is a collection of enhancements to the Python3 distutils
@@ -193,6 +200,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- -vra
 %endif
 
 %changelog
+* Tue Feb 08 2022 Stanislav Levin <slev@altlinux.org> 1:60.8.1-alt1
+- 60.5.4 -> 60.8.1.
+
 * Tue Jan 18 2022 Stanislav Levin <slev@altlinux.org> 1:60.5.4-alt1
 - 59.6.0 -> 60.5.4 (closes: #41643).
 

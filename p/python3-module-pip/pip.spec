@@ -5,7 +5,7 @@
 %def_without bootstrap
 
 Name: python3-module-pip
-Version: 21.3.1
+Version: 22.0.3
 Release: alt1
 
 Summary: The PyPA recommended tool for installing Python packages
@@ -34,7 +34,6 @@ BuildRequires: python3(werkzeug)
 BuildRequires: python3(tomli_w)
 BuildRequires: python3(tox)
 BuildRequires: python3(tox_console_scripts)
-BuildRequires: python3(tox_no_deps)
 %endif
 
 Obsoletes: python3-module-pip-pickles
@@ -42,7 +41,10 @@ Obsoletes: python3-module-pip-pickles
 %summary
 
 %add_findprov_skiplist %python3_sitelibdir/pip/_vendor/*
-%filter_from_requires /python3\(\.[[:digit:]]\)\?(pip\._vendor\..*)/d
+%filter_from_requires /python3\(\.[[:digit:]]\)\?(pip\._vendor\(\..*\)\?)/d
+
+# don't allow vendored distributions have deps other than stdlib
+%add_findreq_skiplist %python3_sitelibdir/pip/_vendor/*
 
 %if_without bootstrap
 %package wheel
@@ -98,12 +100,18 @@ rm -v %buildroot%python3_sitelibdir/pip/_vendor/urllib3/contrib/ntlmpool.py
 %endif
 
 %check
+cat > tox.ini <<'EOF'
+[testenv]
+usedevelop=True
+commands =
+    {envbindir}/pytest {posargs:-vra}
+EOF
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
 export NO_LATEST_WHEELS=YES
 export TOX_TESTENV_PASSENV='NO_LATEST_WHEELS'
-tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
+tox.py3 --sitepackages --console-scripts -vvr -s false -- \
     -m 'not network and unit'
 
 %files -n pip
@@ -122,6 +130,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
 %endif
 
 %changelog
+* Tue Feb 08 2022 Stanislav Levin <slev@altlinux.org> 22.0.3-alt1
+- 21.3.1 -> 22.0.3.
+
 * Mon Oct 25 2021 Stanislav Levin <slev@altlinux.org> 21.3.1-alt1
 - 21.3 -> 21.3.1.
 
