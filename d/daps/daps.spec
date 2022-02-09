@@ -1,5 +1,5 @@
 Name:     daps
-Version:  3.2.0
+Version:  3.3.0
 Release:  alt1
 
 Summary:  DocBook Authoring and Publishing Suite (DAPS)
@@ -9,7 +9,8 @@ Url:      https://github.com/openSUSE/daps
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source:   %name-%version.tar
+Source: %name-%version.tar
+Patch1: daps-remove-isopub.ent.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: ImageMagick
@@ -42,6 +43,8 @@ BuildRequires: xfig
 
 BuildArch: noarch
 
+%filter_from_requires /jing/d
+
 %description
 A complete environment to build HTML, PDF, EPUB and other formats from
 DocBook XML. See https://github.com/openSUSE/daps for more information.
@@ -57,6 +60,7 @@ Documentation for %name.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %autoreconf
@@ -85,6 +89,9 @@ Documentation for %name.
 %_datadir/doc/%name
 
 %changelog
+* Tue Feb 08 2022 Andrey Cherepanov <cas@altlinux.org> 3.3.0-alt1
+- New version.
+
 * Fri Jun 11 2021 Andrey Cherepanov <cas@altlinux.org> 3.2.0-alt1
 - New version.
 
