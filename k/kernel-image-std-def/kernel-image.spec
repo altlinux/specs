@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:2
 %define kernel_base_version	5.10
-%define kernel_sublevel .98
+%define kernel_sublevel .99
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -702,6 +702,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Feb 09 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.10.99-alt1
+- v5.10.99
+
 * Mon Feb 07 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.10.98-alt1
 - v5.10.98
 
