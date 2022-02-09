@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: python3(fontforge)
+# END SourceDeps(oneline)
 Group: System/Fonts/True type
 %define oldname smc-meera-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -6,17 +9,20 @@ Group: System/Fonts/True type
 %global fontconf 65-0-%{fontname}.conf
 
 Name:		fonts-ttf-smc-meera
-Version:	7.0.1
-Release:	alt1_2
+Version:	7.0.3
+Release:	alt1_5
 Summary:	Open Type Fonts for Malayalam script
 License:	OFL
 URL:		https://gitlab.com/smc/fonts/meera
-Source0:	%{url}/-/archive/Version%{version}/meera-Version%{version}.tar.gz
+Source0:	https://gitlab.com/smc/fonts/meera}/-/archive/Version%{version}/meera-Version%{version}.tar.gz
 Source1:	%{fontname}-fontconfig.conf
 Source2:	%{fontname}.metainfo.xml
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
-BuildRequires:	libappstream-glib
+BuildRequires:	libappstream-glib libappstream-glib-gir
+BuildRequires:	libfontforge-devel
+BuildRequires:	python3
+BuildRequires:	python3-module-fonttools
 Obsoletes:	fonts-ttf-smc-common < 6.1-alt1_9
 Source44: import.info
 
@@ -30,13 +36,15 @@ common Malayalam ligatures.
 %setup -q -n meera-Version%{version}
 
 chmod 644 *.txt
+rm -rf ttf
 
-%build
+%build 
+make PY=python3
 
 %install
 
 install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p ttf/*.ttf %{buildroot}%{_fontdir}
+install -m 0644 -p build/*.ttf %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
 	%{buildroot}%{_fontconfig_confdir}
@@ -91,13 +99,16 @@ appstream-util validate-relax --nonet \
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
-%dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/*.ttf
+%dir %{_fontsdir}/*/%{_fontstem}/
+%{_fontsdir}/*/%{_fontstem}/*.ttf
 %doc README.md
 %doc --no-dereference LICENSE.txt
 %{_datadir}/metainfo/%{fontname}.metainfo.xml
 
 %changelog
+* Wed Feb 09 2022 Igor Vlasenko <viy@altlinux.org> 7.0.3-alt1_5
+- update to new release by fcimport
+
 * Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 7.0.1-alt1_2
 - new version
 
