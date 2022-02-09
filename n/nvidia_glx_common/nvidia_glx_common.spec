@@ -14,9 +14,9 @@
 # version-release
 
 %define nv_version 470
-%define nv_release 94
-%define nv_minor %nil
-%define pkg_rel alt248
+%define nv_release 103
+%define nv_minor 01
+%define pkg_rel alt249
 %define set_gl_nvidia_ver 1.5.2
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -333,6 +333,9 @@ fi
 /lib/systemd/system-sleep/nvidia
 
 %changelog
+* Wed Feb 09 2022 Sergey V Turchin <zerg@altlinux.org> 470.103.01-alt249
+- new version
+
 * Thu Dec 30 2021 Sergey V Turchin <zerg@altlinux.org> 470.94-alt248
 - rename nvidia-prime to nvidia-prime-run
 - setup variable for vulkan in nvidia-prime-run script
