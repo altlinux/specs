@@ -1,8 +1,9 @@
 %define oname attr
+%define newoname attrs
 %define pkgname attrs
 
 Name: python3-module-%pkgname
-Version: 21.2.0
+Version: 21.4.0
 Release: alt1
 
 Summary: Python attributes without boilerplate
@@ -33,9 +34,13 @@ chores of implementing the most common attribute-related object protocols.
 %files
 %doc AUTHORS.rst CHANGELOG.rst LICENSE README.rst
 %python3_sitelibdir/%oname/
+%python3_sitelibdir/%newoname/
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Jan 1 2022 Vladimir Didenko <cow@altlinux.org> 21.4.0-alt1
+- New version
+
 * Tue Jun 1 2021 Vladimir Didenko <cow@altlinux.org> 21.2.0-alt1
 - New version
 
