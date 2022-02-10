@@ -8,7 +8,7 @@
 
 Name: trikStudio
 Version: 2022.1
-Release: alt1
+Release: alt2
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
@@ -23,7 +23,7 @@ Patch2: alt-ftbfs.patch
 Patch3: fix-build-with-qt5-quazip1.patch
 
 BuildRequires: gcc-c++ qt5-base-devel qt5-svg-devel qt5-script-devel qt5-multimedia-devel libusb-devel libudev-devel libgmock-devel
-BuildRequires: libqscintilla2-qt5-devel zlib-devel libquazip-qt5-devel python3-dev libhidapi-devel libusb-devel quazip-qt5-devel
+BuildRequires: libqscintilla2-qt5-devel zlib-devel python3-dev libhidapi-devel libusb-devel quazip-qt5-devel
 # Workaround due project build with -fsanitize=undefined natively
 # https://bugzilla.altlinux.org/show_bug.cgi?id=38106
 #if_with sanitize
@@ -194,6 +194,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 10 2022 Valery Sinelnikov <greh@altlinux.org> 2022.1-alt2
+- Removed build dependency libquazip-qt5-devel
+
 * Wed Feb 09 2022 Valery Sinelnikov <greh@altlinux.org> 2022.1-alt1
 - Update to 2022.1
 
