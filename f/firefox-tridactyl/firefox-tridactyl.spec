@@ -4,7 +4,7 @@
 %define cid	tridactyl.vim@cmcaine.co.uk
 
 Name:		%firefox_name-%rname
-Version:	1.21.1
+Version:	1.22.0
 Release:	alt1
 
 Summary:	Tridactyl Firefox extension
@@ -37,5 +37,8 @@ install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 %firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Thu Feb 10 2022 Nikolay A. Fetisov <naf@altlinux.org> 1.22.0-alt1
+- New version
+
 * Tue Jul 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.21.1-alt1
 - Initial build for ALT Linux Sisyphus
