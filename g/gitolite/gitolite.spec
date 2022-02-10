@@ -2,7 +2,7 @@
 
 Name: gitolite
 Version: 3.6.12
-Release: alt1
+Release: alt2
 
 Summary: Highly flexible server for git directory version tracker
 License: %gpl2only
@@ -35,6 +35,9 @@ BuildRequires: perl-Encode perl-Text-Balanced perl-Redis
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: perl-Text-Markdown
+
+# Redis cache module tries to start Redis server - we obviously don't want this inside BTE
+%add_findreq_skiplist */Gitolite/Cache.pm
 
 %define gitolite_homedir %_localstatedir/%name
 
@@ -161,6 +164,9 @@ echo "---------------------------------------------------"
 
 
 %changelog
+* Thu Feb 10 2022 Nikolay A. Fetisov <naf@altlinux.org> 3.6.12-alt2
+- fix build process
+
 * Fri Jul 16 2021 Nikolay A. Fetisov <naf@altlinux.org> 3.6.12-alt1
 - restored from orphaned
 - new version
