@@ -1,8 +1,8 @@
 %global repo dde-calendar
 
 Name: deepin-calendar
-Version: 5.8.2
-Release: alt2
+Version: 5.8.27
+Release: alt1
 Summary: Calendar for Deepin Desktop Environment
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -10,6 +10,9 @@ Url: https://github.com/linuxdeepin/dde-calendar
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+%ifarch aarch64 armh
+Patch: deepin-calendar-5.8.27-alt-aarch64-armh.patch
+%endif
 
 BuildRequires(pre): rpm-build-ninja desktop-file-utils
 BuildRequires: gcc-c++
@@ -30,11 +33,11 @@ Calendar for Deepin Desktop Environment.
 
 %prep
 %setup -n %repo-%version
+%ifarch aarch64 armh
+%patch -p1
+%endif
+
 sed -i 's|/usr/lib/deepin-aiassistant|%_libdir/deepin-aiassistant|' schedule-plugin/CMakeLists.txt
-sed -i 's|lib/deepin-daemon/|libexec/deepin-daemon/|' \
-    calendar-service/CMakeLists.txt \
-    calendar-service/assets/dde-calendar-service.desktop \
-    calendar-service/assets/data/com.deepin.dataserver.Calendar.service
 
 %build
 %cmake \
@@ -44,7 +47,7 @@ sed -i 's|lib/deepin-daemon/|libexec/deepin-daemon/|' \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DAPP_VERSION=%version \
     -DVERSION=%version
-%cmake_build
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
@@ -62,7 +65,7 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop
 %_datadir/dbus-1/services/com.deepin.dataserver.Calendar.service
 %_desktopdir/%repo.desktop
 %_sysconfdir/xdg/autostart/dde-calendar-service.desktop
-%_prefix/libexec/deepin-daemon/dde-calendar-service
+%_libexecdir/deepin-daemon/dde-calendar-service
 %dir %_libdir/deepin-aiassistant/
 %dir %_libdir/deepin-aiassistant/serivce-plugins/
 %_libdir/deepin-aiassistant/serivce-plugins/libuosschedulex-plugin.so
@@ -73,6 +76,9 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop
 %_datadir/deepin-manual/manual-assets/application/%repo/calendar/
 
 %changelog
+* Thu Feb 10 2022 Leontiy Volodin <lvol@altlinux.org> 5.8.27-alt1
+- New version (5.8.27).
+
 * Thu Jul 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.8.2-alt2
 - Fixed build with libgmock.so.1.11.0.
 
