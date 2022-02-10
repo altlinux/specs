@@ -1,6 +1,6 @@
 Name: autofs
 Version: 5.1.8
-Release: alt3
+Release: alt4
 
 Summary: A tool for automatically mounting and unmounting filesystems
 License: GPLv2
@@ -135,6 +135,10 @@ fi
 %_libdir/%name/lookup_sss.so
 
 %changelog
+* Wed Feb 09 2022 Oleg Solovyov <mcpain@altlinux.org> 5.1.8-alt4
+- apply mount-hidden-samba-shares.patch
+- sync auto.smb from upstream (Closes: #33965)
+
 * Thu Nov 18 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.8-alt3
 - do not use rpcbind with nfs4only mounts
 
