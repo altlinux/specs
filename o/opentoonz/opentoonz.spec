@@ -1,4 +1,5 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 # Opentoonz libraries are located in non-standard path.
 # Launching scripts sets LD_LIBRARY_PATH
@@ -6,7 +7,7 @@
 
 Name: opentoonz
 Version: 1.5.0
-Release: alt2
+Release: alt3
 Summary: 2D animation software
 Group: Graphics
 License: BSD-3-Clause and CC0-1.0 and ALT-Public-Domain and libtiff and CC-BY-NC-4.0
@@ -25,7 +26,7 @@ Source2: %name-%version-sample.tar
 
 # NOTE: on each update pull updates to docs and samples
 
-Patch1: %name-1.4.0-alt-libraries-path.patch
+Patch1: %name-1.5.0-alt-libraries-path.patch
 Patch2: %name-1.4.0-alt-data-location.patch
 Patch3: opensuse-0001-Fix-linker-errors-on-Linux.patch
 Patch4: opensuse-0001-Use-the-system-mypaint-brushes.patch
@@ -112,7 +113,8 @@ popd
 # build opentoonz
 pushd toonz/sources
 %cmake \
-	%_cmake_skip_rpath \
+	-DCMAKE_SKIP_RPATH:BOOL=OFF \
+	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
 	-DTIFF_LIBRARY="%_builddir/%name-%version/thirdparty/tiff-4.0.3/libtiff/.libs/libtiff.a" \
 	%nil
 
@@ -123,7 +125,6 @@ popd
 for i in plugins/{blur,geom,multiplugin} ; do
 pushd $i
 %cmake \
-	%_cmake_skip_rpath \
 	%nil
 
 %cmake_build
@@ -162,6 +163,9 @@ done
 %doc additional/sample
 
 %changelog
+* Thu Feb 10 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.0-alt3
+- Fixed build.
+
 * Wed Jun 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.0-alt2
 - Fixed build with new sphinx.
 
