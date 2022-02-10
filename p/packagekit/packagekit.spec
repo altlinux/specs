@@ -5,7 +5,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.2.4
-Release:   alt4
+Release:   alt5
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -287,6 +287,9 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Thu Jan 27 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.4-alt5
+- Reworked refresh action.
+
 * Mon Jan 10 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.4-alt4
 - Packagekit service must wait for network connection (Closes: #41633).
 
