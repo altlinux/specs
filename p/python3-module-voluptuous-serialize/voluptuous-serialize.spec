@@ -1,5 +1,5 @@
 Name: python3-module-voluptuous-serialize
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: Python data validation library
@@ -31,6 +31,9 @@ This package provides Voluptuous schemas to dictionaries converter.
 %python3_sitelibdir/voluptuous_serialize-%version-*-info
 
 %changelog
+* Tue Feb 08 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5.0-alt1
+- 2.5.0 released
+
 * Tue Aug 18 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4.0-alt1
 - 2.4.0 released
 

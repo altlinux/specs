@@ -1,7 +1,7 @@
 %define  modulename httpx
 
 Name:    python3-module-%modulename
-Version: 0.19.0
+Version: 0.22.0
 Release: alt1
 
 Summary: A next generation HTTP client for Python
@@ -43,6 +43,9 @@ A 1.0 release is expected to be issued sometime around mid-2020.
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Tue Feb 08 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.22.0-alt1
+- 0.22.0
+
 * Mon Oct 04 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.19.0-alt1
 - 0.19.0
 

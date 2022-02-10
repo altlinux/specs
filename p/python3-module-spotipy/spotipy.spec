@@ -1,5 +1,5 @@
 Name: python3-module-spotipy
-Version: 2.18.0
+Version: 2.19.0
 Release: alt1
 
 Summary: A light weight Python library for the Spotify Web API
@@ -30,6 +30,9 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %python3_sitelibdir/spotipy-%version-*-info
 
 %changelog
+* Thu Feb 10 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.19.0-alt1
+- 2.19.0 released
+
 * Wed Apr 21 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.18.0-alt1
 - 2.18.0 released
 

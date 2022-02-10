@@ -1,14 +1,13 @@
-%define oname async-timeout
+Name: python3-module-async-timeout
+Version: 4.0.2
+Release: alt1
 
-Name: python3-module-%oname
-Version: 3.0.1
-Release: alt2
 Summary: Timeout context manager for asyncio programs
 License: Apache-2.0
 Group: Development/Python3
 Url: https://github.com/aio-libs/async_timeout/
 
-Source: %oname-%version.tar
+Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -17,7 +16,7 @@ BuildRequires(pre): rpm-build-python3
 Timeout context manager for asyncio programs.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 %python3_build
@@ -30,6 +29,9 @@ Timeout context manager for asyncio programs.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Feb 08 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0.2-alt1
+- 4.0.2
+
 * Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt2
 - Rename package, spec cleanup.
 

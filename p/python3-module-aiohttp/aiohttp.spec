@@ -6,18 +6,21 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 3.7.4
+Version: 3.8.1
 Release: alt1
 Summary: http client/server for asyncio
 License: Apache-2.0
 Group: Development/Python3
 Url: https://github.com/KeepSafe/aiohttp.git
 Source: %name-%version.tar
+# submodule part from pypi archive with pregenerated c sources
+Source1: llhttp.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools python3-module-Cython
+BuildRequires: python3-module-multidict
 %if_with check
-BuildRequires: python3-module-multidict python3-module-yarl python3-module-async-timeout python3-module-pytest-mock
+BuildRequires: python3-module-yarl python3-module-async-timeout python3-module-pytest-mock
 BuildRequires: python3-module-pytest-runner
 %endif
 %if_with docs
@@ -50,15 +53,20 @@ http client/server for asyncio (PEP-3156).
 This package contains documentation for %oname.
 
 %prep
-%setup
-
+%setup -a1
+# gen.py expects to find .git in project root, cheat a bit
+sed -i 's,".git",".gitmodules",' tools/gen.py
+# use system cython
+sed -i '/^cythonize:/ s,.install-cython,,' Makefile
+find tools -type f -name \*.py | xargs sed -ri '/env python$/ s,$,3,'
 %if_with docs
 %prepare_sphinx3 .
 ln -s ../objects.inv docs/
 %endif
 
 %build
-%python3_build_debug
+make cythonize
+%python3_build build_ext
 
 %if_with docs
 %make_build -C docs html SPHINXBUILD=py3_sphinx-build
@@ -88,6 +96,9 @@ python3 setup.py test
 %python3_sitelibdir/*/*/*test*
 
 %changelog
+* Tue Feb 08 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.8.1-alt1
+- 3.8.1 released
+
 * Tue Mar 16 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.7.4-alt1
 - 3.7.4 released
 
@@ -138,7 +149,7 @@ python3 setup.py test
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz at altlinux.org> 0.15.3-alt7.git20150425.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
-  
+
 * Sat Mar  5 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.15.3-alt7.git20150425
 - (.spec) cleanup unneeded BuildRequires(pre): rpm-macros-sphinx
   (and other BuildReq cleanups)

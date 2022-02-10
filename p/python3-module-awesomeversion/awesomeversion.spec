@@ -1,5 +1,5 @@
 Name: python3-module-awesomeversion
-Version: 21.8.1
+Version: 22.1.0
 Release: alt1
 
 Summary: Python version manipulations
@@ -29,6 +29,9 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %python3_sitelibdir/awesomeversion-%version-*-info
 
 %changelog
+* Tue Feb 08 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 22.1.0-alt1
+- 22.1.0
+
 * Mon Oct 04 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 21.8.1-alt1
 - 21.8.1
 

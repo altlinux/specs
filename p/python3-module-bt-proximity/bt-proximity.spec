@@ -1,5 +1,5 @@
 Name: python3-module-bt-proximity
-Version: 0.2
+Version: 0.2.1
 Release: alt1
 
 Summary: Bluetooth Proximity Detection
@@ -30,5 +30,8 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %python3_sitelibdir/bt_proximity-%version-*-info
 
 %changelog
+* Thu Feb 10 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.1-alt1
+- 0.2.1 released
+
 * Mon Jan 13 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2-alt1
 - initial

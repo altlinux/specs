@@ -1,5 +1,5 @@
 Name: hass
-Version: 2021.10.4
+Version: 2022.2.5
 Release: alt1
 
 Summary: Home automation platform
@@ -15,14 +15,16 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %package core
 Summary: Home automation platform
 Group: System/Servers
-Requires: python3-module-yaml >= 5.4.1
-Requires: python3-module-pip >= 8.0.3
+Requires: python3-module-aiohttp >= 3.8.1
 Requires: python3-module-astral >= 2.2
-Requires: python3-module-aiohttp >= 3.7.4
-Requires: python3-module-voluptuous >= 0.12.1
+Requires: python3-module-httpcore >= 0.14.5
+Requires: python3-module-pip >= 8.0.3
+Requires: python3-module-async-timeout >= 4.0.2
 Requires: python3-module-text-unidecode >= 1.3
+Requires: python3-module-voluptuous >= 0.12.2
 Requires: python3-module-websocket-client >= 0.56.0
-Requires: python3-module-hass-frontend >= 20211007.1
+Requires: python3-module-yaml >= 6.0
+Requires: python3-module-hass-frontend >= 20220203.0
 
 %package -n python3-module-hass
 Summary: Home automation platform
@@ -88,6 +90,9 @@ sed -re 's,%exclude ,,' < core.files > rest.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Thu Feb 10 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.2.5-alt1
+- 2022.2.5 released
+
 * Tue Oct 12 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2021.10.4-alt1
 - 2021.10.4 released
 

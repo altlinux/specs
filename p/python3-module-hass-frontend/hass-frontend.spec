@@ -1,5 +1,5 @@
 Name: python3-module-hass-frontend
-Version: 20211007.1
+Version: 20220203.0
 Release: alt1
 
 Summary: Home automation platform -- frontend
@@ -24,9 +24,12 @@ tar xf %SOURCE0 -C %buildroot%python3_sitelibdir/
 
 %files
 %python3_sitelibdir/hass_frontend
-%python3_sitelibdir/home_assistant_frontend-%version-*-info
+%python3_sitelibdir/home_assistant_frontend-*-info
 
 %changelog
+* Thu Feb 10 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 20220203.0-alt1
+- 20220203.0
+
 * Tue Oct 12 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 20211007.1-alt1
 - 20211007.1
 

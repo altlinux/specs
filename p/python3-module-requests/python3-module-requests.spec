@@ -4,8 +4,8 @@
 %def_disable check
 
 Name:           python3-module-%pkgname
-Version:        2.26.0
-Release:        alt2
+Version:        2.27.1
+Release:        alt1
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python3
 
@@ -63,6 +63,9 @@ rm -rf requests/cacert.pem
 %python3_sitelibdir/*
 
 %changelog
+* Tue Feb 08 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.27.1-alt1
+- 2.27.1
+
 * Tue Oct 05 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.26.0-alt2
 - add explicit charset_normalizer req
 

@@ -1,23 +1,17 @@
-%define project PyYAML
-
 Name: python3-module-yaml
-Version: 5.4.1
-Release: alt2
+Version: 6.0
+Release: alt1
 
 Summary: PyYAML, a YAML parser and emitter for Python
-
 License: MIT
 Group: Development/Python3
 Url: https://github.com/yaml/pyyaml
-#BuildArch: noarch
 
 # Source-url: https://github.com/yaml/pyyaml/archive/%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-intro >= 2.0.0
-
 BuildRequires: libyaml-devel
-BuildRequires(pre): rpm-build-python3 python3-module-Cython
+BuildRequires: rpm-build-python3 python3-module-Cython
 
 %description
 YAML is a data serialization format designed for human readability
@@ -32,17 +26,19 @@ support, and relatively sensible error messages.
 
 %build
 %add_optflags -fno-strict-aliasing
-
 %python3_build build_ext
 
 %install
 %python3_install
 
 %files
-%doc CHANGES README
+%doc CHANGES README*
 %python3_sitelibdir/*
 
 %changelog
+* Tue Feb 08 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.0-alt1
+- 6.0 released
+
 * Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 5.4.1-alt2
 - Drop python2 support.
 

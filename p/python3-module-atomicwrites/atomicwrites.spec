@@ -1,11 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%define oname atomicwrites
-
 %def_with check
 
-Name: python3-module-%oname
-Version: 1.3.0
-Release: alt4
+Name: python3-module-atomicwrites
+Version: 1.4.0
+Release: alt1
 
 Summary: Python Atomic file writes on POSIX
 License: MIT
@@ -60,6 +58,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/atomicwrites-*.egg-info/
 
 %changelog
+* Tue Feb 08 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.0-alt1
+- 1.4.0
+
 * Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt4
 - Drop python2 support.
 

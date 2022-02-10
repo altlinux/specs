@@ -1,7 +1,7 @@
 %define oname SQLAlchemy
 
 Name: python3-module-sqlalchemy
-Version: 1.4.25
+Version: 1.4.31
 Release: alt1
 
 Summary: Python SQL toolkit and Object Relational Mapper
@@ -18,7 +18,6 @@ Obsoletes: python3-module-SQLAlchemy
 
 %py3_provides SQLAlchemy
 
-BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 
@@ -68,6 +67,9 @@ This package contains tests for SQLAlchemy.
 %python3_sitelibdir/*/testing
 
 %changelog
+* Wed Feb 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.31-alt1
+- 1.4.31
+
 * Mon Oct 04 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.25-alt1
 - 1.4.25
 

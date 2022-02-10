@@ -2,7 +2,7 @@
 
 Name: conan
 Version: 1.43.1
-Release: alt1
+Release: alt2
 
 Summary: Conan - The open-source C/C++ package manager
 
@@ -31,7 +31,7 @@ AutoProv: no
 %py3_use urllib3 >= 1.26.6
 %py3_use colorama < 0.5.0
 %py3_use colorama >= 0.3.3
-%py3_use yaml < 6.0
+#py3_use yaml < 6.0
 %py3_use yaml >= 3.11
 %py3_use patch-ng < 1.18
 %py3_use patch-ng >= 1.17.4
@@ -94,6 +94,9 @@ rm -rfv %buildroot%python_sitelibdir/conans/test_integration/
 %doc README.rst LICENSE.md
 
 %changelog
+* Thu Feb 10 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.43.1-alt2
+- drop artificial upper bound for yaml req
+
 * Mon Dec 20 2021 Vitaly Lipatov <lav@altlinux.ru> 1.43.1-alt1
 - new version 1.43.1 (with rpmrb script)
 - update buildreqs

@@ -1,5 +1,5 @@
 Name: python3-module-paho
-Version: 1.5.1
+Version: 1.6.1
 Release: alt1
 
 Summary: MQTT Python client library
@@ -29,6 +29,9 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %python3_sitelibdir/paho_mqtt-%version-*-info
 
 %changelog
+* Wed Feb 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.1-alt1
+- 1.6.1 released
+
 * Fri Aug 06 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.1-alt1
 - 1.5.1 released
 

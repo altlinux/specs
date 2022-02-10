@@ -1,11 +1,11 @@
 %define  modulename sniffio
 
 Name:    python3-module-%modulename
-Version: 1.0.0
-Release: alt2
+Version: 1.2.0
+Release: alt1
 
 Summary: Sniff out which async library your code is running under
-License: MIT or Apache 2.0
+License: MIT or Apache-2.0
 Group:   Development/Python3
 URL:     https://github.com/python-trio/sniffio
 
@@ -38,6 +38,9 @@ library (like Trio, and asyncio, and ...) your code is running under.
 %doc *.md *.rst
 
 %changelog
+* Wed Feb 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.0-alt1
+- 1.2.0
+
 * Fri Nov 06 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.0-alt2
 - exclude tests from package due to excessive reqs
 
