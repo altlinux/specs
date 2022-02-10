@@ -6,7 +6,7 @@
 
 %define _unpackaged_files_terminate_build 0
 Name: btrfs-progs
-Version: 5.16
+Version: 5.16.1
 Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
@@ -126,6 +126,9 @@ vm-run --sbin --udevd --kvm=cond make test
 %_includedir/*
 
 %changelog
+* Thu Feb 10 2022 Anton Farygin <rider@altlinux.ru> 5.16.1-alt1
+- 5.16 -> 5.16.1
+
 * Mon Jan 17 2022 Anton Farygin <rider@altlinux.ru> 5.16-alt1
 - 5.15.1 -> 5.16
 - enabled tests
