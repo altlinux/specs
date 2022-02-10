@@ -7,10 +7,14 @@
 %ifarch armh
 %define platform armv7-linux-gcc
 %else
-%ifarch %e2k aarch64
+%ifarch %e2k
 %define platform generic-gnu
 %else
+%ifarch aarch64
+%define platform arm64-linux-gcc
+%else
 %define platform %_arch-linux-gcc
+%endif
 %endif
 %endif
 %endif
@@ -18,7 +22,7 @@
 
 Name: libvpx6
 Version: 1.11.0
-Release: alt1
+Release: alt2
 Summary: VP8 video codec
 Group: Video
 License: BSD
@@ -100,6 +104,9 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %_bindir/*
 
 %changelog
+* Thu Feb 10 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.11.0-alt2
+- Enabled SIMD-optimized decoding on aarch64 (Closes: #41915)
+
 * Sun Oct 17 2021 Anton Farygin <rider@altlinux.ru> 1.11.0-alt1
 - 1.11.0
 
