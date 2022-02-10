@@ -10,7 +10,7 @@
 %define soname 2.3
 
 Name:           lib%oname
-Version:        2.3.11.0
+Version:        2.3.12.0
 Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
@@ -223,6 +223,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Thu Feb 10 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.12.0-alt1
+- Updated to upstream version 2.3.12.0.
+
 * Tue Jan 18 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.11.0-alt1
 - Updated to upstream version 2.3.11.0.
 
