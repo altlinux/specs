@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: thinkfan
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 Summary: simple and lightweight fan control program
 Group: System/Configuration/Hardware
@@ -56,6 +56,9 @@ CPU power as possible.
 %_man5dir/*.5*
 
 %changelog
+* Thu Feb 10 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.1-alt1
+- Updated to upstream version 1.3.1.
+
 * Thu Dec 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.0-alt1
 - Updated to upstream version 1.3.0.
 
