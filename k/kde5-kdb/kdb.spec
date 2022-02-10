@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 3.2.0
-Release: alt3
+Release: alt4
 %K5init altplace
 
 Group: System/Libraries
@@ -121,6 +121,9 @@ sed -i 's|[[:space:]]KF5CoreAddons||' %buildroot/%_pkgconfigdir/KDb3.pc
 %_K5lib/libKDb3.so.*
 
 %changelog
+* Thu Feb 10 2022 Sergey V Turchin <zerg@altlinux.org> 3.2.0-alt4
+- fix find postgresql 14
+
 * Mon Mar 23 2020 Sergey V Turchin <zerg@altlinux.org> 3.2.0-alt3
 - build with python3
 
