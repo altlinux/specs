@@ -6,8 +6,8 @@
 %endif
 
 Name: deepin-manual
-Version: 5.7.0.75
-Release: alt4
+Version: 5.8.4
+Release: alt1
 Summary: Help files for DDE
 License: GPL-3.0+ and (BSD-3-Clause and Qt.Commercial) and ISC
 Group: Graphical desktop/Other
@@ -15,6 +15,9 @@ Url: https://github.com/linuxdeepin/deepin-manual
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+%ifarch aarch64 armh
+Patch: deepin-manual-5.8.4-alt-aarch64-armh.patch
+%endif
 
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++ cmake qt5-base-devel qt5-tools-devel qt5-webchannel-devel dtk5-widget-devel qt5-x11extras-devel libgmock-devel
@@ -35,10 +38,13 @@ Data files for %name.
 
 %prep
 %setup
-subst 's|lrelease|lrelease-qt5|' translate_generation.sh
+%ifarch aarch64 armh
+%patch -p1
+%endif
 
 %build
 %if_enabled qtwebengine
+export PATH=%_qt5_bindir:$PATH
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -46,7 +52,7 @@ subst 's|lrelease|lrelease-qt5|' translate_generation.sh
     -DVERSION=%version \
     -DLIB_INSTALL_DIR=%_libdir \
 #
-%cmake_build
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
@@ -69,6 +75,9 @@ subst 's|lrelease|lrelease-qt5|' translate_generation.sh
 %endif
 
 %changelog
+* Thu Feb 10 2022 Leontiy Volodin <lvol@altlinux.org> 5.8.4-alt1
+- New version (5.8.4).
+
 * Thu Feb 03 2022 Sergey V Turchin <zerg@altlinux.org> 5.7.0.75-alt4
 - Build empty packages on e2k and ppc64le.
 
