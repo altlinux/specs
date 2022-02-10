@@ -2,7 +2,7 @@
 
 Name: schroot
 Version: 1.6.10
-Release: alt1
+Release: alt2
 Summary: Execute commands in a chroot environment
 Group: Development/Tools
 License: GPLv3+
@@ -30,6 +30,7 @@ Patch20: fix-bash-completion.patch
 
 # ALT patches
 Patch50: schroot-alt-configs.patch
+Patch51: schroot-fix-man-building.patch
 
 BuildRequires: gcc-c++
 BuildRequires: cmake
@@ -100,6 +101,7 @@ functionality is available in the next generation tool called schroot.
 %patch20 -p1
 
 %patch50 -p1
+%patch51 -p1
 
 # Release-Date and Released-By fields are taken from Debian tarball for this version
 cat > VERSION << END
@@ -187,6 +189,9 @@ rm -rf %buildroot%_mandir/fr
 %_man1dir/dchroot*
 
 %changelog
+* Wed Feb 09 2022 Andrey Limachko <liannnix@altlinux.org> 1.6.10-alt2
+- Fix man building
+
 * Mon Jun 04 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.10-alt1
 - Updated to upstream version 1.6.10.
 
