@@ -1,14 +1,14 @@
 Summary:	A Linux clone of Notepad++
 Name:		notepadqq
-Version:	1.4.8
-Release:	alt2
-License:	GPLv3
+Version:	2.0.0
+Release:	alt0.1.beta
+License:	GPL-3.0
 Group:		Editors
 URL:		http://notepadqq.altervista.org/wp/
-Source0:	%name-%version.tar
-Source1:	codemirror.tar
 
-Patch1:     fix-context-menu-translation.patch
+Source0: %name-%version.tar
+Source1: codemirror.tar
+Patch1: fix-context-menu-translation.patch
 
 BuildRequires: gcc-c++
 BuildRequires: qt5-base-devel
@@ -17,8 +17,11 @@ BuildRequires: qt5-declarative-devel
 BuildRequires: qt5-webkit-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-svg-devel
+BuildRequires: qt5-websockets-devel
+BuildRequires: qt5-webengine-devel
+BuildRequires: libuchardet-devel
 
-Requires:       qt5-translations
+Requires: qt5-translations
 
 %description
 Notepadqq is a Notepad++-like editor for the Linux desktop.
@@ -31,9 +34,10 @@ mkdir -p src/editor/libs/codemirror/mode/m4
 # (tpg) fix libdir
 sed -i -e "s/lib/%{_lib}/g" src/ui/ui.pro
 
-%patch1 -p0
+#patch1 -p0
 
 %build
+export CXXFLAGS=-I$(pwd)/src/ui/libs/qtpromise/include
 %configure --qmake=qmake-qt5 --lrelease=lrelease-qt5
 %make_build
 
@@ -56,6 +60,9 @@ mv %buildroot%_datadir/{metainfo,appdata}
 %_datadir/notepadqq
 
 %changelog
+* Wed Feb 09 2022 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt0.1.beta
+- New version (beta).
+
 * Fri Jan 11 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.4.8-alt2
 - Translations updated (by Olesya Gerasimenko).
 - Context menu translation added.
