@@ -1,7 +1,7 @@
 %define  modulename openshift
 
 Name:    python3-module-%modulename
-Version:  0.13.0
+Version:  0.13.1
 Release:  alt1
 
 Summary:  OpenShift python client
@@ -45,6 +45,9 @@ make test PYTHON=%__python3
 %python3_sitelibdir/*
 
 %changelog
+* Thu Feb 10 2022 Andrew A. Vasilyev <andy@altlinux.org> 0.13.1-alt1
+- 0.13.1
+
 * Sat Feb 05 2022 Andrew A. Vasilyev <andy@altlinux.org> 0.13.0-alt1
 - 0.13.0
 
