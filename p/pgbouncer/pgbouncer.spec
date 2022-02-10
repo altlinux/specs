@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:       pgbouncer
-Version:    1.15.0
-Release:    alt3
+Version:    1.16.1
+Release:    alt1
 Summary:    Lightweight connection pooler for PostgreSQL
 License:    ISC
 Group:      Databases
@@ -26,7 +26,7 @@ BuildRequires: libpam-devel
 BuildRequires: libsystemd-devel
 BuildRequires: pandoc
 # That was a pkg with an ugly temporary name:
-Obsoletes: pgbouncer17
+Obsoletes: pgbouncer17 < %EVR
 
 %description
 Several levels of brutality when rotating connections:
@@ -58,9 +58,9 @@ export PYTHON=%__python3
 touch lib/mk/install-sh
 ./autogen.sh
 %configure \
-	--with-systemd \
-	--with-pam \
-	--with-root-ca-file=/etc/pki/tls/certs/ca-bundle.crt
+    --with-systemd \
+    --with-pam \
+    --with-root-ca-file=/etc/pki/tls/certs/ca-bundle.crt
 
 %make_build
 
@@ -109,6 +109,9 @@ useradd  -r -g %name -s /sbin/nologin -c "PgBouncer Server" -M -d /run/%name %na
 %attr(1770,root,%name) %dir %_logdir/%name
 
 %changelog
+* Thu Feb 10 2022 Alexey Shabalin <shaba@altlinux.org> 1.16.1-alt1
+- 1.16.1 (Fixes: CVE-2021-3935).
+
 * Thu Feb 11 2021 Alexey Shabalin <shaba@altlinux.org> 1.15.0-alt3
 - Use python3 for build.
 
