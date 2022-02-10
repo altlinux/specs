@@ -40,7 +40,7 @@
 
 Name: lxc
 Version: 4.0.12
-Release: alt1
+Release: alt1.1
 
 Summary: Linux Containers
 
@@ -176,6 +176,9 @@ management using cgroup process tracking.
 %prep
 %setup
 %autopatch -p1
+%ifarch %e2k
+echo -e "#undef ARRAY_SIZE\n#define ARRAY_SIZE(x) (sizeof(x)/sizeof(*(x)))" >> src/lxc/macro.h
+%endif
 
 %build
 export bashcompdir="%_datadir/bash-completion/completions"
@@ -318,6 +321,9 @@ groupadd -r -f vmusers ||:
 %_man8dir/pam_cgfs.8*
 
 %changelog
+* Thu Feb 10 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.0.12-alt1.1
+- Fixed build for Elbrus
+
 * Mon Feb 07 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.12-alt1
 - Updated to lxc-4.0.12.
 
