@@ -1,6 +1,4 @@
-# NB: fails with e.g. --disable bat due to manpage
-%define _unpackaged_files_terminate_build 1
-
+%define _stripped_files_terminate_build 1
 %set_verify_elf_method relaxed
 
 %def_enable bat
@@ -16,7 +14,7 @@
 
 Name: bacula%{bacula_major}
 Version: %{bacula_major}.0.5
-Release: alt3
+Release: alt4
 
 License: AGPL-3.0
 Summary: Network based backup program
@@ -633,7 +631,6 @@ install -p -m644 %SOURCE16 %buildroot%_sysconfdir/logrotate.d/baculum-apache2
 
 # remove unpackaged files
 rm -f %buildroot%_libdir/libbaccats.so
-rm -f %buildroot%_libdir/libbaccats-%version.so
 rm -fr %buildroot%_sysconfdir/baculum/Config-api-lighttpd
 rm -fr %buildroot%_sysconfdir/baculum/Config-web-lighttpd
 rm -f %buildroot%_sysconfdir/baculum/baculum-api-lighttpd.conf
@@ -915,6 +912,9 @@ fi
 %endif
 
 %changelog
+* Wed Feb 09 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 11.0.5-alt4
+- Fixed build.
+
 * Thu Aug 12 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 11.0.5-alt3
 - Added patch for Elbrus that fixes compiler error from pthread hack.
 
