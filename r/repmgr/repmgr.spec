@@ -2,12 +2,13 @@
 %define pg_ver %(c=%{full_ver}; echo ${c%%.*})
 
 Name: repmgr
-Version: 5.2.1
-Release: alt2
+Version: 5.3.0
+Release: alt1
 Summary: Replication Manager for PostgreSQL Clusters
 Group: Databases
 License: GPL-3.0
 Url: http://www.repmgr.org/
+Vcs: https://github.com/EnterpriseDB/repmgr.git
 Source0: %name-%version.tar
 Source1: repmgr.init
 Source2: repmgr.sudoers
@@ -105,6 +106,9 @@ echo "ALTER EXTENSION repmgr UPDATE;                                            
 %doc doc/html
 
 %changelog
+* Thu Feb 10 2022 Alexey Shabalin <shaba@altlinux.org> 5.3.0-alt1
+- 5.3.0
+
 * Wed Feb 24 2021 Alexey Shabalin <shaba@altlinux.org> 5.2.1-alt2
 - Execute service as postgres system user.
 
