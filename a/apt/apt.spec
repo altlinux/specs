@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt74
+Release: alt75
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -13,14 +13,16 @@ URL: http://apt-rpm.org
 # Known upstream "apt-rpm" Git repos:
 # -----------------------------------
 #
-# * http://apt-rpm.org/scm/apt.git
-# * https://github.com/arelixlinux/apt which is said to be a clone from GitLab
+# * http://apt-rpm.org/scm/apt.git -- I've named this remote "apt-rpm";
+# * https://gitlab.com/apt-rpm/apt-rpm.git -- "apt-rpm@gitlab"
+#   (and its clone on Github: https://github.com/arelixlinux/apt
+#    -- "apt-rpm@github").
 #
-# The second repo has a few more recent commits than the first one, a deeper
+# "apt-rpm@gitlab" has a few more recent commits than "apt-rpm", a deeper
 # history (into the past), and some better formatted commit headers (Author).
-# (Compare like this: git range-diff apt-rpm/master...apt-rpm@github/master)
+# (Compare like this: git range-diff apt-rpm/master...apt-rpm@gitlab/master)
 #
-# To graft it (the 2nd deeper history) to ALT's history locally for yourself:
+# To graft it (the deeper "apt-rpm@gitlab" history) to ALT's history locally for yourself:
 #
 # git replace --graft 0.5.15lorg2-alt3 49dff175fb8ea3cd3ef47d45836f3089838246d6 0.5.15cnc6-alt18
 #
@@ -29,21 +31,21 @@ URL: http://apt-rpm.org
 # intersting individual commits from Conectiva's history, and not ALT's one.
 # (Make sure that the grafted source code is identical to ours:
 #
-# git tag apt-0.5.15lorg2@github 49dff175fb8ea3cd3ef47d45836f3089838246d6
-# git diff apt-0.5.15lorg2@github..0.5.15lorg2-alt3 --stat | fgrep -v ' => '
+# git tag apt-rpm@gitlab/apt-0.5.15lorg2 49dff175fb8ea3cd3ef47d45836f3089838246d6
+# git diff apt-rpm@gitlab/apt-0.5.15lorg2..0.5.15lorg2-alt3 --stat | fgrep -v ' => '
 #
 # The only reported difference is that they added a contributed script.)
 #
 # The upstream Debian repo:
 # -------------------------
 #
-# https://salsa.debian.org/apt-team/apt.git
+# https://salsa.debian.org/apt-team/apt.git -- "Debian"
 #
 # To attach it to Conectiva's history (locally for yourself):
 #
-# git tag apt-rpm-MERGED-0.5.4.9@github b780834d0d29cca5b0af1b544d3ff7b2a3d1a7a8
-# git tag 0.5.4.9-MERGED-into-CNC 4968036c93552ff78c1f857a91c685f0f3bcb794
-# git replace --graft apt-rpm-MERGED-0.5.4.9@github 0.5.4.9-MERGED-into-CNC apt-rpm-MERGED-0.5.4.9@github^
+# git tag apt-rpm@gitlab/MERGED-0.5.4.9 b780834d0d29cca5b0af1b544d3ff7b2a3d1a7a8
+# git tag Debian/0.5.4.9-MERGED-into-apt-rpm 4968036c93552ff78c1f857a91c685f0f3bcb794
+# git replace --graft apt-rpm@gitlab/MERGED-0.5.4.9 Debian/0.5.4.9-MERGED-into-apt-rpm apt-rpm@gitlab/MERGED-0.5.4.9^
 #
 # The parent with the richer history is 1st for git blame --first-parent -w.
 #
@@ -312,7 +314,10 @@ EOF
 done
 
 mkdir -p %buildroot%_datadir/%name
-cp -r test/integration %buildroot%_datadir/%name/tests/
+cp -r test/integration -T %buildroot%_datadir/%name/tests
+
+install -m0755 run-tests-dir -t %buildroot%_datadir/%name/
+cp -r tests-under-pkdirect -t %buildroot%_datadir/%name/
 
 %find_lang %name
 
@@ -409,7 +414,7 @@ export APT_TEST_GPGPUBKEY
 
 # Everything has been tested by now.
 
-%package heavyload-checkinstall
+%package xxtra-heavy-load-checkinstall
 Summary: Immediately test %name when installing this package (many times under heavy load)
 Group: Other
 BuildArch: noarch
@@ -417,16 +422,16 @@ Requires(pre): %name-tests
 Requires(pre): %complete_reqs_of_tests
 Requires(pre): gpg-keygen
 
-%description heavyload-checkinstall
+%description xxtra-heavy-load-checkinstall
 Immediately test %name when installing this package.
 
 The tests are run many times and under simulated heavy load (namely,
 in parallel) in order to possibly detect races
 (to make sure no tests are randomly succeeding).
 
-%files heavyload-checkinstall
+%files xxtra-heavy-load-checkinstall
 
-%pre heavyload-checkinstall -p %_sbindir/sh-safely
+%pre xxtra-heavy-load-checkinstall -p %_sbindir/sh-safely
 set -o pipefail
 pushd %_datadir/%name/tests/
 
@@ -467,6 +472,49 @@ fi
 
 seq 0 $((TRIES-1)) | xargs -I'{}' ${NPROCS:+-P$NPROCS --process-slot-var=PARALLEL_SLOT} \
 	-- sh -efuo pipefail -c '%runtests '${NPROCS:+'|& sed --unbuffered -e "s/^/[$PARALLEL_SLOT {}] /"'}
+
+%package under-pkdirect-checkinstall
+Summary: Immediately test %name+PK when installing this package (via packagekit-direct)
+Group: Other
+BuildArch: noarch
+Requires(pre): packagekit
+
+%description under-pkdirect-checkinstall
+Immediately test PackageKit (which is supposed to use %name as the backend)
+when installing this package.
+
+The testing is done via %_libexecdir/packagekit-direct (which works
+without relying on any daemons, DBus, etc.)
+
+Some of the bugs (from the past) which are being tested for by these
+tests could only be seen with APT indices that were big and/or
+acquired from "external" sources (like the real Sisyphus repo). So,
+having just the "internal" system RPM db diminishes the potential
+of these few tests to find interesting bugs. One should set up
+"external" sources for APT (in a real system or in hasher with network).
+
+%files under-pkdirect-checkinstall
+%dir %_datadir/%name
+%_datadir/%name/run-tests-dir
+%_datadir/%name/tests-under-pkdirect
+
+%post under-pkdirect-checkinstall
+# so that the two outputs are not out of sync
+exec 1>&2
+
+%_datadir/%name/run-tests-dir %_datadir/%name/tests-under-pkdirect
+
+# * * *
+#
+# Note that git-bisect(1) expects an "exit with a code between 1 and
+# 127 (inclusive), except 125, if the current source code is bad".
+# Therefore, I suggest to use this test script (or the wrapper
+# ./test-pk-in-hsh.sh) like this:
+#
+#   cd apt
+#   git bisect start --no-checkout PK-BAD PK-GOOD
+#   git bisect run /bin/sh -exc './gear-build-pair-in-hsh.sh . BISECT_HEAD ../packagekit/ revert-apt-API ~/hasher/; hsh-install ~/hasher/ apt-under-pkdirect-checkinstall || { echo BAD: $?; exit 1; }'
+
 
 %files -f %name.lang
 %_bindir/apt-*
@@ -510,9 +558,17 @@ seq 0 $((TRIES-1)) | xargs -I'{}' ${NPROCS:+-P$NPROCS --process-slot-var=PARALLE
 %_libdir/%name/methods/https
 
 %files tests
+%dir %_datadir/%name
 %_datadir/%name/tests/
 
 %changelog
+* Sat Jan 27 2022 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt75
+- Invalidate the in-memory cache of repositories when doing "update" or
+  ListUpdate() to be able to detect updates without exiting the process,
+  e.g., PackageKit or apt-shell (ALT#41816).
+- Added apt-under-pkdirect-checkinstall subpackage
+  and added a test for FileList() API via packagekit.
+
 * Sat Dec 04 2021 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt74
 - Implemented generic callback system for packagekit, allowing to show progress
   during offline-update to user. (Thx Oleg Solovyov mcpain@)
