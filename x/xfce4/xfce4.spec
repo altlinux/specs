@@ -1,8 +1,8 @@
 %def_disable bootstrap
 
 Name: xfce4
-Version: 4.16
-Release: alt2
+Version: 4.17
+Release: alt1
 Summary: Set of Xfce4 Desktop installers.
 License: GPLv2+
 Group: Graphical desktop/XFce
@@ -93,6 +93,7 @@ Requires: xfce4-genmon-plugin \
 Requires: xfce4-mailwatch-plugin \
 Requires: xfce4-mount-plugin \
 Requires: xfce4-netload-plugin \
+Requires: xfce4-notes-plugin \
 Requires: xfce4-places-plugin \
 Requires: xfce4-sensors-plugin \
 Requires: xfce4-smartbookmark-plugin \
@@ -111,9 +112,9 @@ Group: Graphical desktop/XFce
 BuildArch: noarch
 Requires: %name-default = %version-%release
 Requires: xfce-polkit
-Requires: xfce4-screensaver
-Requires: desktop-screensaver-modules-xscreensaver
-Requires: desktop-screensaver-modules-xscreensaver-gl
+#Requires: xfce4-screensaver
+#Requires: desktop-screensaver-modules-xscreensaver
+#Requires: desktop-screensaver-modules-xscreensaver-gl
 %commonreqs
 Requires: xfce4-clipman-plugin
 Requires: xfce4-pulseaudio-plugin
@@ -161,6 +162,11 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
 %endif
 
 %changelog
+* Thu Feb 10 2022 Mikhail Efremov <sem@altlinux.org> 4.17-alt1
+- Fix bogus date in changelog.
+- full: Drop xfce4-screensaver.
+- full,regular: Add xfce4-notes-plugin again.
+
 * Mon Aug 02 2021 Anton Midyukov <antohami@altlinux.org> 4.16-alt2
 - regular: Drop xfce4-clipman
 
@@ -305,7 +311,7 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
 * Fri Sep 12 2003 Andrey Astafiev <andrei@altlinux.ru> 3.99.4-alt1
 - 3.99.4
 
-* Tue Sep 11 2003 Andrey Astafiev <andrei@altlinux.ru> 3.99.3-alt1
+* Thu Sep 11 2003 Andrey Astafiev <andrei@altlinux.ru> 3.99.3-alt1
 - Doesn't depends on packages version anymore.
 
 * Fri Aug 29 2003 Andrey Astafiev <andrei@altlinux.ru> 3.99.3-alt0.9
