@@ -4,7 +4,7 @@
 
 Name: ogre
 Version: 13.2.4
-Release: alt1
+Release: alt2
 Summary: Object-Oriented Graphics Rendering Engine
 # CC-BY-SA is for devel docs
 License: MIT
@@ -16,6 +16,8 @@ Source: %name-%version.tar
 
 # https://github.com/ocornut/imgui
 Source1: %name-%version-imgui.tar
+
+Patch1: ogre-alt-build.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: zziplib-devel libfreetype-devel libgtk+2-devel libois-devel openexr-devel cppunit-devel
@@ -84,6 +86,7 @@ samples.
 
 %prep
 %setup
+%patch1 -p1
 
 mkdir %_cmake__builddir
 pushd %_cmake__builddir &>/dev/null
@@ -102,8 +105,9 @@ find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
 # -std=c++03 by default as of lcc 1.23.20
 %add_optflags -std=c++11
 %endif
-%define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 %cmake \
+	-DCMAKE_SKIP_RPATH:BOOL=OFF \
+	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
 	-DOGRE_LIB_DIRECTORY=%_lib \
 	-DOGRE_INSTALL_SAMPLES=ON \
 	-DOGRE_BUILD_TESTS=ON \
@@ -150,6 +154,9 @@ find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
 %_libdir/OGRE/Samples
 
 %changelog
+* Wed Feb 09 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 13.2.4-alt2
+- Fixed build.
+
 * Wed Jan 12 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 13.2.4-alt1
 - Updated to upstream version 13.2.4.
 
