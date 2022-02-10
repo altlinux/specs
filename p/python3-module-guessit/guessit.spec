@@ -1,35 +1,38 @@
 %define _unpackaged_files_terminate_build 1
-
 %define oname guessit
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 3.3.1
-Release: alt2
+Version: 3.4.3
+Release: alt1
 
 Summary: GuessIt - a library for guessing information from video files
 
 License: LGPLv3
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/guessit/
+Url: https://pypi.org/project/guessit/
 
-# https://github.com/wackou/guessit.git
+# https://github.com/guessit-io/guessit.git
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-babelfish python3-module-stevedore
-BuildRequires: python3-module-requests python3-module-dateutil
-BuildRequires: python3-module-yaml python3-module-guess-language
-BuildRequires: python3-module-enzyme python3-module-nose
-BuildRequires: pylint-py3
-BuildRequires: python3-module-chardet
-BuildRequires: python3-module-unittest2 python3-module-urllib3
-BuildRequires: python3-module-pytest-runner python3(rebulk) python3(pytest_benchmark)
 
-%py3_provides %oname
-%py3_requires babelfish stevedore requests dateutil yaml guess_language
-%py3_requires enzyme json logging
+%if_with check
+# install_requires=
+BuildRequires: python3(rebulk)
+BuildRequires: python3(babelfish)
+BuildRequires: python3(dateutil)
+
+BuildRequires: python3(yaml)
+BuildRequires: python3(pytest)
+BuildRequires: python3(pytest_mock)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+%endif
 
 %description
 GuessIt is a python library that extracts as much information as
@@ -39,81 +42,43 @@ It has a very powerful filename matcher that allows to guess a lot of
 metadata from a video using its filename only. This matcher works with
 both movies and tv shows episodes.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-GuessIt is a python library that extracts as much information as
-possible from a video file.
-
-It has a very powerful filename matcher that allows to guess a lot of
-metadata from a video using its filename only. This matcher works with
-both movies and tv shows episodes.
-
-This package contains tests for %oname.
-
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-GuessIt is a python library that extracts as much information as
-possible from a video file.
-
-It has a very powerful filename matcher that allows to guess a lot of
-metadata from a video using its filename only. This matcher works with
-both movies and tv shows episodes.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-GuessIt is a python library that extracts as much information as
-possible from a video file.
-
-It has a very powerful filename matcher that allows to guess a lot of
-metadata from a video using its filename only. This matcher works with
-both movies and tv shows episodes.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
+%autopatch -p1
 
 # remove mimetypes from test data, see https://github.com/guessit-io/guessit/pull/515
 # TODO: consider removing following line on next release after 2.1.4
 sed -i -e '/mimetype:/d' guessit/test/*.yml
 
 %build
-export LC_ALL=en_US.UTF-8
-%python3_build_debug
+%python3_build
 
 %install
-export LC_ALL=en_US.UTF-8
-
 %python3_install
 
 %check
-export LC_ALL=en_US.UTF-8
-rm -fR build
-python3 setup.py test
+cat > tox.ini <<'EOF'
+[testenv]
+usedevelop=True
+commands =
+    {envbindir}/pytest {posargs:-vra}
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr -s false
 
 %files
 %doc *.md
-%_bindir/*
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test
-
-%files tests
-%python3_sitelibdir/*/test
+%_bindir/guessit
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%exclude %python3_sitelibdir/*/test/
 
 %changelog
+* Wed Feb 09 2022 Stanislav Levin <slev@altlinux.org> 3.4.3-alt1
+- 3.3.1 -> 3.4.3.
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 3.3.1-alt2
 - drop unused BR
 

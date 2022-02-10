@@ -1,23 +1,28 @@
 %define _unpackaged_files_terminate_build 1
 %define oname rebulk
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 3.0.1
+Version: 3.1.0
 Release: alt1
 Summary: Rebulk - define simple search patterns in bulk to perform advanced matching on any string
 License: MIT
 Group: Development/Python3
 BuildArch: noarch
-Url: https://pypi.python.org/pypi/rebulk
+Url: https://pypi.org/project/rebulk/
 
 # https://github.com/Toilal/rebulk.git
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pytest-runner
-BuildRequires: python3-module-six
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pylint
+
+%if_with check
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+%endif
 
 %description
 ReBulk is a python library that performs advanced searches in strings
@@ -26,41 +31,38 @@ that would be hard to implement using re module or String methods only.
 It includes some features like Patterns, Match, Rule that allows developers
 to build a custom and complex string matcher using a readable and extendable API.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-ReBulk is a python library that performs advanced searches in strings
-that would be hard to implement using re module or String methods only.
-
-It includes some features like Patterns, Match, Rule that allows developers
-to build a custom and complex string matcher using a readable and extendable API.
-
-This package contains tests for %oname.
-
 %prep
 %setup
+%autopatch -p1
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
 %check
-python3 setup.py test
+cat > tox.ini <<'EOF'
+[testenv]
+usedevelop=True
+commands =
+    {envbindir}/pytest {posargs:-vra}
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr -s false
 
 %files
 %doc *.md
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 %exclude %python3_sitelibdir/*/test
 
-%files tests
-%python3_sitelibdir/*/test
-
 %changelog
+* Wed Feb 09 2022 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1
+- 3.0.1 -> 3.1.0.
+
 * Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
 - Automatically updated to 3.0.1.
 
