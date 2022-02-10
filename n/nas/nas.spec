@@ -5,8 +5,8 @@
 %def_with pic
 
 Name: nas
-Version: 1.9.4a
-Release: alt2
+Version: 1.9.5
+Release: alt1
 
 Summary: Network Audio System - a portable, network-transparent audio system
 License: MIT
@@ -16,8 +16,8 @@ Url: http://radscan.com/%name.html
 
 %define dname %{name}d
 
-# git://git.code.sf.net/p/nas/nas.git
-Source0: %name-%version.src.tar
+# https://sourceforge.net/projects/%name/files/%name/%name-%version/%name-%version.tar.gz
+Source0: %name-%version.tar
 Source1: %dname.init
 Source2: %dname.service
 Source3: %dname.sysconfig
@@ -216,6 +216,9 @@ echo "# See %dname.conf(5) and sample at %_docdir/%dname-*/" > %buildroot%_sysco
 %_man3dir/*
 
 %changelog
+* Fri Feb 11 2022 Nazarov Denis <nenderus@altlinux.org> 1.9.5-alt1
+- Version 1.9.5
+
 * Sat Dec 11 2021 Nazarov Denis <nenderus@altlinux.org> 1.9.4a-alt2
 - Add LSB Init header
 - Add systemd integration
