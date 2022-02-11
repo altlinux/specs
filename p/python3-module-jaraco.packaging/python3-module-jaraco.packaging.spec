@@ -1,7 +1,7 @@
 %define  modulename jaraco.packaging
 
 Name:    python3-module-%modulename
-Version: 8.2.1
+Version: 9.0.0
 Release: alt1
 
 Summary: Tools to supplement packaging Python releases
@@ -24,6 +24,7 @@ Source:  %modulename-%version.tar
 
 %prep
 %setup -n %modulename-%version
+echo 'import setuptools; setuptools.setup()' > setup.py
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -39,6 +40,9 @@ rm -rf %buildroot/%_bindir/
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Feb 11 2022 Andrey Cherepanov <cas@altlinux.org> 9.0.0-alt1
+- New version.
+
 * Mon Mar 15 2021 Andrey Cherepanov <cas@altlinux.org> 8.2.1-alt1
 - New version.
 
