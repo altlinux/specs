@@ -3,7 +3,7 @@
 %define repo dde-session-ui
 
 Name: deepin-session-ui
-Version: 5.4.29
+Version: 5.5.6
 Release: alt1
 Summary: Deepin desktop-environment - Session UI module
 License: GPL-3.0+
@@ -49,29 +49,12 @@ This project include those sub-project:
 
 %prep
 %setup -n %repo-%version
-# sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
-# sed -i 's|lupdate|lupdate-qt5|' lupdate.sh
 #sed -i 's|default_background.jpg|deepin/desktop.jpg|' \
 #    widgets/fullscreenbackground.cpp \
 #    lightdm-deepin-greeter/logintheme.qrc \
 #    dde-lock/logintheme.qrc
-sed -i 's|/lib/deepin-daemon|/libexec/deepin-daemon|' \
-    misc/applications/deepin-toggle-desktop.desktop* \
-    dde-osd/dde-osd_autostart.desktop \
-    dde-osd/com.deepin.dde.osd.service \
-    dde-osd/notification/files/com.deepin.dde.*.service* \
-    dde-osd/dde-osd.pro \
-    dde-welcome/com.deepin.dde.welcome.service \
-    dde-welcome/dde-welcome.pro \
-    dde-bluetooth-dialog/dde-bluetooth-dialog.pro \
-    dde-touchscreen-dialog/dde-touchscreen-dialog.pro \
-    dde-warning-dialog/com.deepin.dde.WarningDialog.service \
-    dde-warning-dialog/dde-warning-dialog.pro \
-    dde-offline-upgrader/dde-offline-upgrader.pro \
-    dde-suspend-dialog/dde-suspend-dialog.pro \
-    dnetwork-secret-dialog/dnetwork-secret-dialog.pro \
-    dde-lowpower/dde-lowpower.pro
-sed -i 's|/usr/lib/dde-dock|%_libdir/dde-dock|' dde-notification-plugin/notifications/notifications.pro
+sed -i 's|/usr/lib/dde-dock|%_libdir/dde-dock|' \
+    dde-notification-plugin/notifications/notifications.pro
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -82,8 +65,7 @@ export PATH=%_qt5_bindir:$PATH
     CONFIG+=nostrip \
     PREFIX=%_prefix \
     PKGTYPE=rpm \
-#     SYSTYPE=Desktop \
-%ifarch mipsel mips64el sw_64
+%ifarch aarch64 armh ppc64le
     SHUTDOWN_NO_QUIT=YES \
     LOCK_NO_QUIT=YES \
     DISABLE_DEMO_VIDEO=YES \
@@ -92,7 +74,7 @@ export PATH=%_qt5_bindir:$PATH
     USE_CURSOR_LOADING_ANI=YES \
 %endif
 #
-    
+
 %make_build
 
 %install
@@ -106,15 +88,16 @@ export PATH=%_qt5_bindir:$PATH
 %_bindir/dde-switchtogreeter
 %_bindir/dde-wm-chooser
 %_bindir/dmemory-warning-dialog
-%dir %_prefix/libexec/deepin-daemon
-%_prefix/libexec/deepin-daemon/dde-bluetooth-dialog
-%_prefix/libexec/deepin-daemon/dde-lowpower
-%_prefix/libexec/deepin-daemon/dde-osd
-%_prefix/libexec/deepin-daemon/dde-suspend-dialog
-%_prefix/libexec/deepin-daemon/dde-warning-dialog
-%_prefix/libexec/deepin-daemon/dde-touchscreen-dialog
-%_prefix/libexec/deepin-daemon/dde-welcome
-%_prefix/libexec/deepin-daemon/dnetwork-secret-dialog
+%_bindir/dde-hints-dialog
+%dir %_libexecdir/deepin-daemon
+%_libexecdir/deepin-daemon/dde-bluetooth-dialog
+%_libexecdir/deepin-daemon/dde-lowpower
+%_libexecdir/deepin-daemon/dde-osd
+%_libexecdir/deepin-daemon/dde-suspend-dialog
+%_libexecdir/deepin-daemon/dde-warning-dialog
+%_libexecdir/deepin-daemon/dde-touchscreen-dialog
+%_libexecdir/deepin-daemon/dde-welcome
+%_libexecdir/deepin-daemon/dnetwork-secret-dialog
 %_datadir/%repo/
 %_iconsdir/hicolor/*/apps/deepin-*
 %_datadir/dbus-1/services/*.service
@@ -124,6 +107,9 @@ export PATH=%_qt5_bindir:$PATH
 %_libdir/dde-dock/plugins/libnotifications.so
 
 %changelog
+* Fri Feb 11 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.6-alt1
+- New version (5.5.6).
+
 * Fri Aug 20 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.29-alt1
 - New version (5.4.29).
 

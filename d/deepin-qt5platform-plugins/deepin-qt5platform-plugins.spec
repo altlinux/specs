@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-qt5platform-plugins
-Version: 5.0.40
+Version: 5.0.46
 Release: alt1
 Summary: Qt platform integration plugins for Deepin Desktop Environment
 License: GPL-2.0+ and LGPL-3.0 and MIT
@@ -14,7 +14,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 
 %if_enabled clang
-BuildRequires(pre): clang11.0-devel
+BuildRequires(pre): clang12.0-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
@@ -44,16 +44,11 @@ BuildRequires: qt5-base-devel-static
 
 %prep
 %setup -n %repo-%version
-# rm -r xcb/libqt5xcbqpa-dev wayland/qtwayland-dev
 # Disable wayland for now: https://github.com/linuxdeepin/qt5platform-plugins/issues/47
 sed -i '/wayland/d' qt5platform-plugins.pro
 
-# sed -i 's|error(Not support Qt Version: .*)|INCLUDEPATH += %_qt5_headerdir/QtXcb|' xcb/linux.pri
-
-# https://github.com/linuxdeepin/qt5platform-plugins/pull/48
-# sed -i 's/xcbWindow-/window-/' xcb/windoweventhook.cpp
-
 %build
+export PATH=%_qt5_bindir:$PATH
 %qmake_qt5 \
 %if_enabled clang
     QMAKE_STRIP= -spec linux-clang \
@@ -72,6 +67,9 @@ sed -i '/wayland/d' qt5platform-plugins.pro
 %_qt5_plugindir/platforms/libdxcb.so
 
 %changelog
+* Fri Feb 11 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.46-alt1
+- New version (5.0.46).
+
 * Thu Aug 19 2021 Leontiy Volodin <lvol@altlinux.org> 5.0.40-alt1
 - New version (5.0.40) with rpmgs script.
 
