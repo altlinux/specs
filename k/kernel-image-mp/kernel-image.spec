@@ -1,5 +1,5 @@
 %define kernel_base_version	5.16
-%define kernel_sublevel        .4
+%define kernel_sublevel        .8
 %define kernel_extra_version	%nil
 
 Name: kernel-image-mp
@@ -36,7 +36,7 @@ Url: http://www.kernel.org/
 
 Patch0: %name-%version-%release.patch
 
-ExclusiveArch: armh aarch64
+ExclusiveArch: armh aarch64 %{?_enable_extra:%ix86 x86_64}
 
 ExclusiveOS: Linux
 
@@ -45,16 +45,25 @@ BuildRequires: bc flex kmod lzma-utils
 BuildRequires: libdb4-devel
 BuildRequires: gcc%kgcc_version
 BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeric
-BuildRequires: libssl-devel
-BuildRequires: rsync
+BuildRequires: libelf-devel libssl-devel zlib-devel
+BuildRequires: openssl python3 rsync
 
 Requires: bootloader-utils >= 0.5.2-alt3
 Provides: kernel = %kversion
 
 %ifarch %arm
 %define Image zImage
-%else
+%endif
+%ifarch aarch64
 %define Image Image
+%endif
+%ifarch %ix86 x86_64
+%define Image bzImage
+%endif
+%ifarch %arm aarch64
+%define dtb dtbs
+%else
+%define dtb %nil
 %endif
 
 %description
@@ -128,7 +137,7 @@ for f in arch/arm/boot/dts/Makefile arch/arm64/boot/dts/*/Makefile; do
 done
 
 %make_build oldconfig
-%make_build %Image modules dtbs
+%make_build %Image modules %dtb
 
 %install
 export ARCH=%base_arch
@@ -138,15 +147,19 @@ install -Dp -m644 System.map %buildroot/boot/System.map-$KernelVer
 install -Dp -m644 arch/%base_arch/boot/%Image %buildroot/boot/vmlinuz-$KernelVer
 install -Dp -m644 .config %buildroot/boot/config-$KernelVer
 make modules_install INSTALL_MOD_PATH=%buildroot
+%ifarch armh aarch64
 make dtbs_install INSTALL_DTBS_PATH=%buildroot/lib/devicetree/$KernelVer
 %ifarch aarch64
 find %buildroot/lib/devicetree/$KernelVer -mindepth 1 -type d |\
 	while read d; do mv $d/* $d/../ && rmdir $d && ln -srv $d/../ $d; done
 %endif
+%endif
 
 mkdir -p %buildroot%kbuild_dir/arch/%base_arch
 cp -a include %buildroot%kbuild_dir/include
+%ifarch %arm aarch64
 cp -a arch/%base_arch/include %buildroot%kbuild_dir/arch/%base_arch
+%endif
 
 # drivers-headers install
 install -d %buildroot%kbuild_dir/drivers/md
@@ -240,7 +253,9 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 /boot/vmlinuz-%kversion-%flavour-%krelease
 /boot/System.map-%kversion-%flavour-%krelease
 /boot/config-%kversion-%flavour-%krelease
+%ifarch %arm aarch64
 /lib/devicetree/%kversion-%flavour-%krelease
+%endif
 %modules_dir
 %exclude %modules_dir/build
 %ghost %modules_dir/modules.alias.bin
@@ -258,6 +273,9 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Fri Feb 11 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.16.8-alt1
+- 5.16.8
+
 * Mon Jan 31 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.16.4-alt1
 - 5.16.4
 
