@@ -2,7 +2,7 @@
 
 Name:     ipmctl
 Version:  02.00.00.3885
-Release:  alt1
+Release:  alt2
 
 Summary:  ipmctl is a utility for configuring and managing Intel Optane Persistent Memory modules (PMem)
 License:  BSD-3-Clause
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 ExclusiveArch: x86_64
 
 BuildRequires(pre): cmake
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: libndctl-devel
 BuildRequires: libsystemd-devel
@@ -90,5 +90,8 @@ rm -f %buildroot%_defaultdocdir/ipmctl/*
 %_pkgconfigdir/libipmctl.pc
 
 %changelog
+* Fri Feb 11 2022 Andrey Cherepanov <cas@altlinux.org> 02.00.00.3885-alt2
+- Fix require rpm-build-python3.
+
 * Fri Feb 11 2022 Andrey Cherepanov <cas@altlinux.org> 02.00.00.3885-alt1
 - Initial build for Sisyphus.
