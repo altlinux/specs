@@ -1,6 +1,6 @@
 %define module_name	evdi
 %define module_version	1.10.0
-%define module_release	alt3
+%define module_release	alt4
 
 %define flavour		centos
 %define karch x86_64 aarch64
@@ -31,7 +31,9 @@ PreReq: coreutils
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 ExclusiveArch: %karch
 
-Patch: 0001-Remove-compat-calls-for-5.15-kernel.patch
+# https://github.com/DisplayLink/evdi/issues/340
+Patch1: %module_name-1.10.0-340-fix.patch
+Patch2: %module_name-1.10.0-centos9.patch
 
 %description
 Extensible Virtual Display Interface
@@ -46,9 +48,10 @@ the libevdi library.
 tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
 
+%patch1 -p1
 # centos backported some fixes for 5.15+
 if [ %flavour == "centos" ]; then
-%patch -p1
+%patch2 -p1
 fi
 
 %build
@@ -65,6 +68,10 @@ install evdi.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Feb 11 2022 L.A. Kostis <lakostis@altlinux.org> 1.10.0-alt4
+- Fix build with recent centos9 kernel (tnx glebfm@ for ideas)
+- Fix merge from ChromeOS (see upstream issue #340).
 
 * Sat Jan 29 2022 L.A. Kostis <lakostis@altlinux.org> 1.10.0-alt3
 - Restore kmarch for centos.

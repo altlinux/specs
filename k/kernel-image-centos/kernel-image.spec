@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 56
+%define centos_release 57
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,24 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Feb 09 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.57-alt1.el9
+- Updated to kernel-5.14.0-57.el9 (fixes: CVE-2021-44733):
+  + aacraid: add new messaging
+  + arch/x86: KABI structs and array padding
+  + dmaengine: idxd: Add wq occupancy information to sysfs attribute
+  + dm: sync with upstream 5.17 and fix io accounting issue
+  + fix use-after-free in tee driver
+  + hpsa: add new messaging
+  + lpfc: Add new messaging
+  + mpi3mr: driver update
+  + mpt3sas, megaraid_sas, mptsas: Add new messaging
+  + mptcp: disable by default
+  + net/sched: phase-2 stable backports for rhel9
+  + NVMe/FC bug fixes for centos-stream-9
+  + qla2xxx: Add new messaging
+  + redhat: switch the kernel package to use certs from system-sb-certs
+  + vrf: Reset IPCB/IP6CB when processing outbound pkts in vrf dev xmit
+
 * Tue Feb 08 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.56-alt1.el9
 - Updated to kernel-5.14.0-56.el9:
   + clocksource: Backport upstream fix for hpet fallback problem
