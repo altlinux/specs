@@ -4,7 +4,7 @@
 
 Name: deepin-daemon
 Version: 6.0.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Daemon handling the DDE session settings
 License: GPL-3.0+
@@ -106,6 +106,30 @@ sed -i 's|dbus-send --print-reply --dest=com.deepin.dde.lockFront /com/deepin/dd
     keybinding/shortcuts/system_shortcut.go \
     misc/dde-daemon/keybinding/system_actions.json
 
+# Fix activate services failed (Permission denied)
+# dbus service
+pushd misc/system-services/
+sed -i '$aSystemdService=deepin-accounts-daemon.service' com.deepin.system.Power.service \
+    com.deepin.daemon.{Accounts,Apps,Daemon}.service \
+    com.deepin.daemon.{Gesture,SwapSchedHelper,Timedated}.service
+sed -i '$aSystemdService=dbus-com.deepin.dde.lockservice.service' com.deepin.dde.LockService.service
+popd
+# systemd service
+cat > misc/systemd/services/dbus-com.deepin.dde.lockservice.service <<EOF
+[Unit]
+Description=Deepin Lock Service
+Wants=user.slice dbus.socket
+After=user.slice dbus.socket
+
+[Service]
+Type=dbus
+BusName=com.deepin.dde.LockService
+ExecStart=%_libexecdir/%name/dde-lockservice
+
+[Install]
+WantedBy=graphical.target
+EOF
+
 %build
 export BUILDDIR="$PWD/.build"
 export GOPATH="$(pwd)/.build:%go_path:$(pwd)/vendor"
@@ -148,10 +172,14 @@ chmod +x %buildroot%_datadir/%repo/audio/echoCancelEnable.sh
 /lib/udev/rules.d/80-deepin-fprintd.rules
 /var/lib/polkit-1/localauthority/10-vendor.d/com.deepin.daemon.Fprintd.pkla
 %_unitdir/deepin-accounts-daemon.service
+%_unitdir/dbus-com.deepin.dde.lockservice.service
 %_datadir/locale/es_419/LC_MESSAGES/dde-daemon.mo
 %_datadir/dsg/apps/dde-session-daemon/configs/gesture.json
 
 %changelog
+* Fri Feb 11 2022 Leontiy Volodin <lvol@altlinux.org> 1:6.0.0-alt2
+- Fixed deepin-accounts-daemon.service.
+
 * Thu Feb 03 2022 Leontiy Volodin <lvol@altlinux.org> 1:6.0.0-alt1
 - New version (6.0.0).
 - Built with internal golang submodules.
