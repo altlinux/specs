@@ -1,4 +1,4 @@
-%define		svn 9932
+%define		svn 10036
 
 %define		rel alt1
 
@@ -9,7 +9,7 @@ Summary(uk_UA.UTF8): Потужний інтерфейс для MPlayer/MPV (QT5
 License:	GPLv2
 Group:		Video
 Url:		http://smplayer.sourceforge.net
-Version:	21.8.0
+Version:	21.10.0
 Release:	%rel.%svn
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Source0:	http://downloads.sourceforge.net/smplayer/%name-%version.tar.bz2
@@ -106,6 +106,9 @@ export OPTFLAGS="%optflags"
 %files -n %name-mplayer
 
 %changelog
+* Fri Feb 11 2022 Motsyo Gennadi <drool@altlinux.ru> 21.10.0-alt1.10036
+- 21.10.0 (rev10036)
+
 * Tue Sep 07 2021 Motsyo Gennadi <drool@altlinux.ru> 21.8.0-alt1.9932
 - 21.8.0 (rev9932)
 
