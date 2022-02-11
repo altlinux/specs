@@ -1,18 +1,31 @@
-Name: python3-module-click
-Version: 7.1.2
-Release: alt2
+%define _unpackaged_files_terminate_build 1
+%define pypi_name click
 
-Summary: A simple wrapper around optparse for powerful command line utilities
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 8.0.3
+Release: alt1
+
+Summary: Composable command line interface toolkit
 
 License: BSD
 Group: Development/Python
-Url: https://pypi.python.org/pypi/click/
+Url: https://pypi.org/project/click/
 
-# Source-git: https://github.com/mitsuhiko/click.git
+# Source-git: https://github.com/pallets/click.git
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildArch: noarch
 BuildRequires: rpm-build-python3 python3-module-setuptools
+
+%if_with check
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+BuildRequires: python3(tox_console_scripts)
+%endif
 
 %description
 Click is a Python package for creating beautiful command line interfaces
@@ -26,6 +39,7 @@ implement an intended CLI API.
 
 %prep
 %setup
+%autopatch -p1
 rm -vf src/click/_winconsole.py
 
 %build
@@ -36,13 +50,20 @@ rm -vf src/click/_winconsole.py
 rm -rfv %buildroot%python3_sitelibdir/click/tests/
 
 %check
-python3 setup.py test
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false
 
 %files
 %doc README.* LICENSE.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%pypi_name-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Feb 11 2022 Stanislav Levin <slev@altlinux.org> 8.0.3-alt1
+- 7.1.2 -> 8.0.3.
+
 * Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 7.1.2-alt2
 - NMU: don't pack tests, but pack click.testing
 

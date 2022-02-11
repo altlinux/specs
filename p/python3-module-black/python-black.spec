@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 21.12b0
+Version: 22.1.0
 Release: alt1
 
 Summary: The Uncompromising Code Formatter
@@ -74,7 +74,7 @@ cat > tox.ini <<EOF
 [testenv]
 usedevelop=True
 commands =
-    {envpython} -m pytest {posargs} -m 'not python2'
+    {envpython} -m pytest {posargs}
 EOF
 
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -97,6 +97,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/blib2to3/
 
 %changelog
+* Fri Feb 11 2022 Stanislav Levin <slev@altlinux.org> 22.1.0-alt1
+- 21.12b0 -> 22.1.0.
+
 * Fri Jan 14 2022 Stanislav Levin <slev@altlinux.org> 21.12b0-alt1
 - 21.10b0 -> 21.12b0.
 
