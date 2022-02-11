@@ -4,7 +4,7 @@
 
 Name: gtk-sharp
 Version: 2.99.4
-Release: alt1.gitdadc19c
+Release: alt2.gitdadc19c
 
 Summary: C-Sharp Language Bindings for GTK+
 License: LGPLv2
@@ -45,6 +45,7 @@ for use with Mono.
 %package -n lib%name%gtk_version-devel
 Summary: .NET/C-Sharp Bindings for GIO
 Group: Development/Other
+Requires: lib%name%gtk_version = %EVR
 
 %description -n lib%name%gtk_version-devel
 Files for developing programs using the C-Sharp bindings for Gtk+, Gdk, Atk, and Pango.
@@ -61,6 +62,7 @@ compile a project that uses it to bind such a library.
 %package -n lib%name%gtk_version-gapi-devel
 Summary: .NET/C-Sharp Bindings for GIO
 Group: Development/Other
+Requires: lib%name%gtk_version-gapi = %EVR
 
 %description -n lib%name%gtk_version-gapi-devel
 Files for developing programs that use gapi-sharp3.
@@ -82,6 +84,7 @@ This package contains Mono bindings for gio-sharp.
 %package -n lib%name%gtk_version-gio-devel
 Summary: .NET/C-Sharp Bindings for GIO
 Group: Development/Other
+Requires: lib%name%gtk_version-gio = %EVR
 
 %description -n lib%name%gtk_version-gio-devel
 Files for developing programs that use gio-sharp
@@ -179,5 +182,8 @@ NOCONFIGURE=1 ./autogen.sh
 %_monodocdir
 
 %changelog
+* Fri Feb 11 2022 Nazarov Denis <nenderus@altlinux.org> 2.99.4-alt2.gitdadc19c
+- Fix requires on devel subpackages
+
 * Mon Jan 17 2022 Nazarov Denis <nenderus@altlinux.org> 2.99.4-alt1.gitdadc19c
 - Initial build for ALT Linux
