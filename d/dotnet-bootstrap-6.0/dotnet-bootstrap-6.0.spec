@@ -1,22 +1,22 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 6.0
-%define _dotnet_corerelease 6.0.0-preview.6.21352.12
+%define _dotnet_corerelease 6.0.2
 %define _dotnet_sdkmanifestsrelease 6.0.100
-%define _dotnet_sdkrelease 6.0.100-preview.6.21355.2
-%define _dotnet_aspnetcorerelease 6.0.0-preview.6.21355.2
-%define _dotnet_templatesrelease 6.0.0-preview.6.21355.2
-%define _dotnet_coreapprefrelease 6.0.0-preview.6.21352.12
-%define _dotnet_aspnetcoreapprefrelease 6.0.0-preview.6.21355.2
+%define _dotnet_sdkrelease 6.0.102
+%define _dotnet_aspnetcorerelease 6.0.2
+%define _dotnet_templatesrelease 6.0.2
+%define _dotnet_coreapprefrelease 6.0.2
+%define _dotnet_aspnetcoreapprefrelease 6.0.2
 %define _dotnet_netstandartrelease 2.1.0
-%define preview .preview.6
-%define _dotnet_coreshortrelease 6.0.0%preview
-%define _dotnet_sdkshortrelease 6.0.100%preview
+%define preview %nil
+%define _dotnet_coreshortrelease 6.0.2%preview
+%define _dotnet_sdkshortrelease 6.0.102%preview
 
 %define _dotnetdir %_libdir/%name
 
 Name: dotnet-bootstrap-%_dotnet_major
-Version: 6.0.0%preview
+Version: 6.0.2%preview
 Release: alt1
 
 Summary: .NET Core SDK binaries
@@ -29,11 +29,11 @@ Group: Development/Other
 # from https://github.com/dotnet/core/tree/master/release-notes/6.0
 
 # x86_64
-# Source-url: https://download.visualstudio.microsoft.com/download/pr/45f9f84c-dbe6-458e-bea1-c1e931802486/995edcbcd852a07b0a285626f30afb33/dotnet-sdk-6.0.100-preview.6.21355.2-linux-x64.tar.gz
+# Source-url: https://download.visualstudio.microsoft.com/download/pr/e7acb87d-ab08-4620-9050-b3e80f688d36/e93bbadc19b12f81e3a6761719f28b47/dotnet-sdk-6.0.102-linux-x64.tar.gz
 Source: %name-%version.tar
 
 # aarch64
-# Source2-url: https://download.visualstudio.microsoft.com/download/pr/8a6a12fc-35bb-47ca-9353-b1e97d569382/61221db91a720e7ae5833460f2ea53d2/dotnet-sdk-6.0.100-preview.6.21355.2-linux-arm64.tar.gz
+# Source2-url: https://download.visualstudio.microsoft.com/download/pr/93dd8d1e-f2af-45b1-8e86-9b8c3d58f4d2/b3fc3ef9da1db691043387fcb56f4d6f/dotnet-sdk-6.0.102-linux-arm64.tar.gz
 Source2: %name-aarch64-%version.tar
 
 ExclusiveArch: x86_64 aarch64
@@ -134,6 +134,9 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Fri Feb 11 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.2-alt1
+- The .NET 6.0.2 and .NET 6.0.102 SDK releases
+
 * Fri Jul 16 2021 Vitaly Lipatov <lav@altlinux.ru> 6.0.0.preview.6-alt1
 - .NET 6.0.preview.6
 

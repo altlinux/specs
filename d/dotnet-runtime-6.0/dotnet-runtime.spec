@@ -3,11 +3,11 @@
 %def_disable dotnet_host
 
 %define _dotnet_major 6.0
-%define _dotnet_corerelease 6.0.0-preview.6.21352.12
+%define _dotnet_corerelease 6.0.2
 # used for build
-%define _dotnet_sdkrelease 6.0.100-preview.6.21355.2
-%define preview .preview.6
-%define _dotnet_sdkshortrelease 6.0.100%preview
+%define _dotnet_sdkrelease 6.0.102
+%define preview %nil
+%define _dotnet_sdkshortrelease 6.0.102%preview
 
 %define commithash %version-%release
 
@@ -17,7 +17,7 @@
 %def_with libunwind
 
 Name: dotnet-runtime-%_dotnet_major
-Version: 6.0.0%preview
+Version: 6.0.2%preview
 Release: alt1
 
 Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
@@ -368,6 +368,9 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Fri Feb 11 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.2-alt1
+- .NET 6.0.2
+
 * Fri Jul 16 2021 Vitaly Lipatov <lav@altlinux.ru> 6.0.0.preview.6-alt1
 - new version (6.0.0.preview.6) with rpmgs script
 

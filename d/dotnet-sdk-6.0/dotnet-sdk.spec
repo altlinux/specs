@@ -3,20 +3,20 @@
 %def_disable netstandart
 
 %define _dotnet_major 6.0
-%define _dotnet_corerelease 6.0.0-preview.6.21352.12
+%define _dotnet_corerelease 6.0.2
 %define _dotnet_sdkmanifestsrelease 6.0.100
-%define _dotnet_sdkrelease 6.0.100-preview.6.21355.2
-%define _dotnet_templatesrelease 6.0.0-preview.6.21355.2
-%define _dotnet_coreapprefrelease 6.0.0-preview.6.21352.12
+%define _dotnet_sdkrelease 6.0.102
+%define _dotnet_templatesrelease 6.0.2
+%define _dotnet_coreapprefrelease 6.0.2
 %define _dotnet_netstandartrelease 2.1.0
-%define preview .preview.6
-%define _dotnet_coreshortrelease 6.0.0%preview
-%define _dotnet_sdkshortrelease 6.0.100%preview
+%define preview %nil
+%define _dotnet_coreshortrelease 6.0.2%preview
+%define _dotnet_sdkshortrelease 6.0.102%preview
 
 %define bootstrapdir %_libdir/dotnet-bootstrap-%_dotnet_major
 
 Name: dotnet-sdk-%_dotnet_major
-Version: 6.0.100%preview
+Version: 6.0.102%preview
 Release: alt1
 
 Summary: SDK for the .NET
@@ -137,6 +137,9 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %endif
 
 %changelog
+* Fri Feb 11 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.102-alt1
+- .NET SDK 6.0.102
+
 * Fri Jul 16 2021 Vitaly Lipatov <lav@altlinux.ru> 6.0.100.preview.6-alt1
 - .NET SDK 6.0.100
 
