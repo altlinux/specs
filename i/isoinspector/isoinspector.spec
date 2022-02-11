@@ -2,7 +2,7 @@
 
 Name: isoinspector
 Version: 0.1.0
-Release: alt1
+Release: alt2
 
 Summary: Tool that inspect ALT Linux distribution ISO using ALTRepo API
 License: GPL-3.0
@@ -15,11 +15,6 @@ BuildRequires(pre): rpm-build-python3
 
 Requires: fuseiso
 Requires: squashfuse
-#Requires: python3-module-rpm
-#Requires: python3-module-mmh3
-#Requires: python3-module-requests
-
-%add_python3_req_skip isoinspector
 
 Source0: %name-%version.tar
 Patch1: %name-%version-%release.patch
@@ -43,6 +38,9 @@ install -Dm0755 isoinspector %buildroot%_bindir/isoinspector
 %doc LICENSE README.* AUTHORS.txt
 
 %changelog
+* Fri Feb 11 2022 Danil Shein <dshein@altlinux.org> 0.1.0-alt2
+- clear spec file
+
 * Fri Feb 11 2022 Danil Shein <dshein@altlinux.org> 0.1.0-alt1
 - Initial build
 
