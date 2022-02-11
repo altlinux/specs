@@ -1,5 +1,5 @@
 Name:		etcnet
-Version:	0.9.21
+Version:	0.9.22
 Release:	alt1
 
 Summary:	/etc/net network configuration system
@@ -141,6 +141,14 @@ fi
 %files full
 
 %changelog
+* Fri Feb 11 2022 Alexey Shabalin <shaba@altlinux.org> 0.9.22-alt1
+- ovsport: OVS_PATCH option (Closes: #39708).
+- ovsport: HOST must be set.
+- ovsport: BRIDGE must be set.
+- ovsbond: BRIDGE must be set.
+- ovsbond: support VLAN id (Closes: #39707).
+- openvswitch: remove interface before create (Closes: #39709).
+
 * Wed Sep 08 2021 Mikhail Efremov <sem@altlinux.org> 0.9.21-alt1
 - Don't use deprecated PreReq.
 - systemd: Fixed network.service dependencies (closes: #40780).
