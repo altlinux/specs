@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 3.8.1
-Release: alt1
+Release: alt2
 Summary: http client/server for asyncio
 License: Apache-2.0
 Group: Development/Python3
@@ -27,7 +27,9 @@ BuildRequires: python3-module-pytest-runner
 BuildRequires(pre): python3-module-sphinx-devel
 BuildRequires: python3-module-sphinxcontrib-asyncio python3-module-sphinxcontrib-newsfeed
 %endif
-%py3_requires chardet idna_ssl
+
+# conditional imports
+%py3_requires charset_normalizer idna_ssl
 
 %description
 http client/server for asyncio (PEP-3156).
@@ -96,6 +98,9 @@ python3 setup.py test
 %python3_sitelibdir/*/*/*test*
 
 %changelog
+* Fri Feb 11 2022 Stanislav Levin <slev@altlinux.org> 3.8.1-alt2
+- Added missing mandatory runtime dependency on charset_normalizer.
+
 * Tue Feb 08 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.8.1-alt1
 - 3.8.1 released
 
