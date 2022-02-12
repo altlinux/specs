@@ -8,7 +8,7 @@
 
 
 Name: dotnet-hostfxr-%_dotnet_major
-Version: 3.1.16
+Version: 3.1.22
 Release: alt1
 
 Summary: Installer packages for the .NET Core runtime and libraries
@@ -128,6 +128,11 @@ install -m644 %exedir/nethost.h %buildroot%_dotnet_shared/
 %files -n dotnet-%_dotnet_major
 
 %changelog
+* Sat Feb 12 2022 Vitaly Lipatov <lav@altlinux.ru> 3.1.22-alt1
+- new version (3.1.22) with rpmgs script
+- CVE-2021-34485: .NET Core Information Disclosure Vulnerability
+- CVE-2021-26423: .NET Core Denial of Service Vulnerability
+
 * Wed Jun 30 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.16-alt1
 - new version (3.1.16) with rpmgs script
 
