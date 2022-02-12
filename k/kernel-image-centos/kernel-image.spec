@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 57
+%define centos_release 59
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,26 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sat Feb 12 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.59-alt1.el9
+- Updated to kernel-5.14.0-59.el9:
+  + gfs2: Upstream backports for mmap and deadlock fixes
+  + x86/sgx: Update SGX subsystem code upto v5.16-rc5
+
+* Thu Feb 10 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.58-alt1.el9
+- Updated to kernel-5.14.0-58.el9 (fixes: CVE-2022-0185):
+  + CI updates
+  + Fix load tracking WARNINGs
+  + Fix RTC based wakeup for Barcelo
+  + Handle warning of allocation failure on DMA zone w/o managed pages
+  + ipv4: stable backports for rhel 9.0  (phase 2)
+  + KVM: x86: Fix Win11 guests with Hyper-V role + hv_evmcs
+  + netfilter: nft_reject_bridge: Fix for missing reply from prerouting
+  + PCI: hv: Add arm64 Hyper-V vPCI support
+  + pinctrl: amd: Fix wakeups when IRQ is shared with SCI
+  + [s390] s390/pci: move pseudo-MMIO to prevent MIO overlap
+  + selftests/bpf: Enlarge select() timeout for test_maps
+  + vfs: fs_context: fix up param length parsing in legacy_parse_param
+
 * Wed Feb 09 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.57-alt1.el9
 - Updated to kernel-5.14.0-57.el9 (fixes: CVE-2021-44733):
   + aacraid: add new messaging
