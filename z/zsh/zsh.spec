@@ -1,6 +1,6 @@
 Name: zsh
-Version: 5.8
-Release: alt3
+Version: 5.8.1
+Release: alt1
 Epoch: 1
 
 Summary: A shell with lots of features
@@ -136,6 +136,11 @@ make check
 %doc Etc/BUGS Etc/CONTRIBUTORS Etc/FAQ Etc/STD-TODO Etc/TODO
 
 %changelog
+* Sat Feb 12 2022 Arseny Maslennikov <arseny@altlinux.org> 1:5.8.1-alt1
+- 5.8 -> 5.8.1.
+- Fixes:
+  + CVE-2021-45444
+
 * Tue Nov 02 2021 Arseny Maslennikov <arseny@altlinux.org> 1:5.8-alt3
 - New patches:
   + compaudit: fix zsh executable discovery if /proc missing
