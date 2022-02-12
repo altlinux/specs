@@ -4,7 +4,7 @@
 %define major 1.13
 
 Name: sofia-sip
-Version: 1.13.6
+Version: 1.13.7
 Release: alt1
 BuildRequires:  gcc-c++
 BuildRequires:  openssl-devel >= 0.9.7
@@ -17,8 +17,8 @@ Summary: Sofia SIP User-Agent library
 License: LGPLv2.1
 Group: System/Libraries
 Url: http://sofia-sip.sourceforge.net/
+VCS: https://github.com/freeswitch/sofia-sip
 
-# https://github.com/freeswitch/sofia-sip
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
@@ -148,6 +148,9 @@ install -pm0644 man/man1/* %buildroot/%_man1dir/
 %_man1dir/*
 
 %changelog
+* Sat Feb 12 2022 Anton Farygin <rider@altlinux.ru> 1.13.7-alt1
+- 1.13.7
+
 * Thu Oct 28 2021 Anton Farygin <rider@altlinux.ru> 1.13.6-alt1
 - 1.13.6
 
