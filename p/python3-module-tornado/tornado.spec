@@ -2,7 +2,7 @@
 
 Name: python3-module-%module_name
 Version: 6.1.0
-Release: alt2
+Release: alt2.1
 Summary: Scalable, non-blocking web server and tools
 
 License: Apache-2.0
@@ -46,7 +46,7 @@ ln -sf /usr/share/ca-certificates/ca-bundle.crt ca-certificates.crt
 rm -r %buildroot%python3_sitelibdir/tornado/test
 
 %check
-export ASYNC_TEST_TIMEOUT=10
+export ASYNC_TEST_TIMEOUT=120
 %__python3 -m tornado.test.runtests --verbose
 
 %files
@@ -54,6 +54,9 @@ export ASYNC_TEST_TIMEOUT=10
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Sat Feb 12 2022 Ivan A. Melnikov <iv@altlinux.org> 6.1.0-alt2.1
+- Increased test timeout (fixes build on riscv64)
+
 * Mon Dec 06 2021 Grigory Ustinov <grenka@altlinux.org> 6.1.0-alt2
 - Fixed build with python3.10.
 
