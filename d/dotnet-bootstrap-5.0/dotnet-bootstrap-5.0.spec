@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 %define major 5.0
-%define sdkversion 5.0.204
-%define coreversion 5.0.7
+%define sdkversion 5.0.405
+%define coreversion 5.0.14
 %define apprefversion 5.0.0
 %define netstandartversion 2.1.0
 
 Name: dotnet-bootstrap-5.0
-Version: 5.0.7
+Version: 5.0.14
 Release: alt1
 
 Summary: .NET Core SDK binaries
@@ -19,10 +19,10 @@ Group: Development/Other
 # To check we manually update download url
 # from https://github.com/dotnet/core/blob/master/release-notes/5.0/5.0.2/5.0.2.md
 
-# Source-url: https://download.visualstudio.microsoft.com/download/pr/8d4759e7-b95e-4934-854b-088a3c719d47/bf4a2474c123ccf99405e9375d3439da/dotnet-sdk-5.0.204-linux-x64.tar.gz
+# Source-url: https://download.visualstudio.microsoft.com/download/pr/e10f8ecd-eb2c-42a0-a217-98a18517e12c/436b90a4d5be20456b210c406c0f7718/dotnet-sdk-5.0.405-linux-x64.tar.gz
 Source: %name-%version.tar
 
-# Source2-url: https://download.visualstudio.microsoft.com/download/pr/36fbba7c-ae8f-4ae2-82f4-0ef93688fbb9/901237fc7af7b1b14ae4620c3d5fe85e/dotnet-sdk-5.0.204-linux-arm64.tar.gz
+# Source2-url: https://download.visualstudio.microsoft.com/download/pr/3c0011b6-9ec7-484e-9485-56512752c5b5/06c6163c7481da86a15811355ba8beaa/dotnet-sdk-5.0.405-linux-arm64.tar.gz
 Source2: %name-aarch64-%version.tar
 
 ExclusiveArch: x86_64 aarch64
@@ -140,6 +140,15 @@ strip \
 %_libdir/%name/dotnet
 
 %changelog
+* Sat Feb 12 2022 Vitaly Lipatov <lav@altlinux.ru> 5.0.14-alt1
+- .NET 5.0.14 - February 8, 2022
+- CVE-2022-21986 : .NET Denial of Service Vulnerability
+- CVE-2021-43877 : ASP.NET Core Elevation of privilege Vulnerability
+- CVE-2021-41355 : .NET Core Information Disclosure Vulnerability
+- CVE-2021-34485 : .NET Core Information Disclosure Vulnerability
+- CVE-2021-26423 : .NET Core Denial of Service Vulnerability
+- CVE-2021-34532 : ASP.NET Core Information Disclosure Vulnerability
+
 * Wed Jun 30 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.7-alt1
 - new version 5.0.7 (with rpmrb script)
 - CVE-2021-31204: .NET Core Elevation of Privilege Vulnerability
