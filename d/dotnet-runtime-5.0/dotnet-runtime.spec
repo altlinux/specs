@@ -1,4 +1,5 @@
 %define _unpackaged_files_terminate_build 1
+%def_disable dotnet_host
 
 %define _dotnet_major 5.0
 %define _dotnet_corerelease %version
@@ -12,7 +13,7 @@
 
 Name: dotnet-runtime-%_dotnet_major
 Version: 5.0.7
-Release: alt1
+Release: alt2
 
 Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
 
@@ -251,11 +252,14 @@ cp -a artifacts/bin/linux-%_dotnet_arch.Release/corehost/{apphost,coreclr_delega
 cp -a artifacts/bin/linux-%_dotnet_arch.Release/corehost/{nethost.h,libhostpolicy.so,libnethost.a,coreclr_delegates.h,hostfxr.h} %buildroot%_dotnet_shared/
 mkdir -p %buildroot%_dotnet_hostfxr/
 cp -a artifacts/bin/linux-%_dotnet_arch.Release/corehost/libhostfxr.so %buildroot%_dotnet_hostfxr/
+
 mkdir -p %buildroot%_dotnetdir/
+%if_enabled dotnet_host
 install -m755 artifacts/bin/linux-%_dotnet_arch.Release/corehost/dotnet %buildroot%_dotnetdir/
 
 mkdir -p %buildroot%_bindir/
 ln -sr %buildroot%_dotnetdir/dotnet %buildroot%_bindir/dotnet
+%endif
 
 install -D -m644 .version %buildroot%_dotnet_shared/.version
 
@@ -331,6 +335,7 @@ rm -f %buildroot%_dotnet_shared/libprotononjit.so
 %files -n dotnet-%_dotnet_major
 %doc README.md
 
+%if_enabled dotnet_host
 %files -n dotnet-host
 %doc LICENSE.TXT
 %dir %_dotnetdir/
@@ -338,6 +343,7 @@ rm -f %buildroot%_dotnet_shared/libprotononjit.so
 %_bindir/dotnet
 %dir %_dotnetdir/host/
 %dir %_dotnetdir/host/fxr/
+%endif
 
 %files -n dotnet-hostfxr-%_dotnet_major
 %dir %_dotnet_hostfxr/
@@ -360,6 +366,9 @@ rm -f %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Sat Feb 12 2022 Vitaly Lipatov <lav@altlinux.ru> 5.0.7-alt2
+- disable build dotnet-host subpackage (use dotnet-host 6.x)
+
 * Wed Jun 30 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.7-alt1
 - new version 5.0.7 (with rpmrb script)
 

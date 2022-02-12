@@ -1,6 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-# use dotnet-host from 5.0 currently
-%def_disable dotnet_host
+%def_enable dotnet_host
 
 %define _dotnet_major 6.0
 %define _dotnet_corerelease 6.0.2
@@ -18,7 +17,7 @@
 
 Name: dotnet-runtime-%_dotnet_major
 Version: 6.0.2%preview
-Release: alt1
+Release: alt2
 
 Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
 
@@ -368,6 +367,9 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Sat Feb 12 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.2-alt2
+- build dotnet-host subpackage
+
 * Fri Feb 11 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.2-alt1
 - .NET 6.0.2
 
