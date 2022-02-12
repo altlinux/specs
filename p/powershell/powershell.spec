@@ -1,10 +1,10 @@
 # TODO: fix nuget to operate offline
 %def_with prebuild
 
-%define _dotnet_corerelease 5.0*
+%define _dotnet_corerelease 6.0*
 
 Name: powershell
-Version: 7.1.2
+Version: 7.2.1
 Release: alt1
 
 Summary: PowerShell for every system!
@@ -29,10 +29,10 @@ BuildRequires(pre): rpm-macros-dotnet >= 6.0
 AutoReq:yes,nonodejs,nonodejs_native,nomono,nomonolib,nopython,nomingw32,nomingw64,noshebang
 AutoProv: no
 
-Requires: dotnet-5.0
+Requires: dotnet-6.0
 
 BuildRequires: cmake gcc-c++
-BuildRequires: dotnet-sdk-5.0
+BuildRequires: dotnet-sdk-6.0
 
 
 # >= 1.2.100035
@@ -154,6 +154,9 @@ ln -s pwsh %buildroot%_bindir/%name
 %doc docs/*
 
 %changelog
+* Sat Feb 12 2022 Vitaly Lipatov <lav@altlinux.ru> 7.2.1-alt1
+- new version (7.2.1) with rpmgs script
+
 * Sat Feb 20 2021 Vitaly Lipatov <lav@altlinux.ru> 7.1.2-alt1
 - new version 7.1.2 (with rpmrb script)
 
