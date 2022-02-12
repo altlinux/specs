@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.30
+Version: 1.31
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -190,6 +190,9 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Sat Feb 12 2022 Vitaly Chikunov <vt@altlinux.org> 1.31-alt1
+- Allow to vm-run on uninstalled kernels (developer mode).
+
 * Sun Jan 30 2022 Vitaly Chikunov <vt@altlinux.org> 1.30-alt1
 - Enable QEMU '-sandbox' (seccomp) by default.
 - Run temporary depmod when --depmod is not specified.
