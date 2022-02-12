@@ -1,11 +1,11 @@
 %define ShortName DynamicPageList
 
-%define mwversion 1.34
+%define mwversion 1.37
 %setup_mediawiki_ext %mwversion %ShortName
 
 Name: mediawiki-extensions-%ShortName
-Version: 1.7.0
-Release: alt1.1
+Version: 1.37
+Release: alt1
 
 BuildArch: noarch
 
@@ -37,6 +37,10 @@ create a list of pages that are listed in a set of categories.
 %files -f %ShortName.files
 
 %changelog
+* Sun Feb 13 2022 Vitaly Lipatov <lav@altlinux.ru> 1.37-alt1
+- new version (1.37) with rpmgs script
+- switch to MW version
+
 * Fri May 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1.7.0-alt1.1
 - new version (1.7.0) with rpmgs script
 
