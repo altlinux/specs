@@ -1,5 +1,5 @@
 Name: fnott
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Notification daemon for wlroots-based Wayland compositor
@@ -45,6 +45,9 @@ wlroots-based Wayland compositors.
 %_man5dir/fnott.ini.5*
 
 %changelog
+* Sat Feb 12 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.1-alt1
+- 1.2.1 released
+
 * Sat Feb 05 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.0-alt1
 - 1.2.0 released
 
