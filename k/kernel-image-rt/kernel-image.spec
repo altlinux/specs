@@ -6,7 +6,7 @@
 Name: kernel-image-%kflavour
 %define kernel_base_version	5.10
 %define kernel_sublevel		.90
-%define kernel_rt_release	rt60
+%define kernel_rt_release	rt61
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -77,7 +77,7 @@ BuildRequires: openssl
 BuildRequires: openssl-devel
 BuildRequires: rsync
 # for check
-%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run >= 1.15 ltp >= 20210524-alt2 iproute2}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run >= 1.30 ltp >= 20210524-alt2 iproute2}}
 
 Requires: bootloader-utils
 Requires: coreutils
@@ -174,9 +174,8 @@ patch -p1 -s < sched-add-per-cpu-load-measurement.patch # CPU_IDLERUNTIME
 # fix -rt suffix
 rm -f localversion*
 
-# Legacy: this file should be usable both with make and sh (for broken modules
-# which do not use the kernel makefile system)
-echo '# This kernel compiled with GCC_VERSION=%__gcc_version_base' > gcc_version.inc
+# Set GCC version for gcc-wrapper.
+echo 'export GCC_VERSION=%__gcc_version_base' > gcc_version.inc
 
 subst 's/EXTRAVERSION[[:space:]]*=.*/EXTRAVERSION = %kernel_extra_version-%flavour-%krelease/g' Makefile
 
@@ -364,7 +363,7 @@ ln -s ../generated/utsrelease.h
 ln -s ../generated/uapi/linux/version.h
 popd
 
-# remove *.bin files
+# Remove *.bin files, they will be packaged as ghosts.
 rm -f %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 touch %buildroot%modules_dir/modules.{alias,dep,devname,softdep,symbols}
@@ -377,7 +376,7 @@ touch %buildroot%modules_dir/modules.{alias,dep,devname,softdep,symbols}
 %add_verify_elf_skiplist %modules_dir/*
 
 %check
-vm-run --depmod cat /sys/kernel/realtime
+vm-run cat /sys/kernel/realtime
 
 if ! timeout 999 vm-run --kvm=cond \
 	"/sbin/sysctl kernel.printk=8;
@@ -426,6 +425,9 @@ check-pesign-helper /boot/vmlinuz-%kversion-%flavour-%krelease
 %files checkinstall
 
 %changelog
+* Fri Feb 11 2022 Vitaly Chikunov <vt@altlinux.org> 5.10.90-alt1.rt61
+- Update to v5.10.90-rt61 (2022-02-11).
+
 * Sun Jan 09 2022 Vitaly Chikunov <vt@altlinux.org> 5.10.90-alt1.rt60
 - Updated to v5.10.90-rt60 (2022-01-05).
 - spec: Disable GCC plugins and GCC version dependence. Remove dependence
