@@ -1,5 +1,5 @@
 Name: rpm-macros-features
-Version: 0.6
+Version: 0.7
 Release: alt1
 
 Summary: RPM macros to check if can build with a feature
@@ -7,8 +7,6 @@ License: GPLv2
 Group: Development/Other
 
 Source: %name-%version.tar
-
-BuildArch: noarch
 
 Obsoletes: rpm-build-features
 Provides: rpm-build-features
@@ -29,12 +27,28 @@ endif
 %setup
 
 %install
+dfile=''
+
+dfile=macros.%_arch
+
+%ifarch %e2k
+dfile=macros.e2k
+%endif
+
+%ifarch %ix86
+dfile=macros.i586
+%endif
+
 install -D -m644 macros %buildroot/%_rpmmacrosdir/features
+[ -n "$dfile" ] && [ -s "$dfile" ] && cat $dfile >> %buildroot/%_rpmmacrosdir/features
 
 %files
 %_rpmmacrosdir/features
 
 %changelog
+* Sun Feb 13 2022 Vitaly Lipatov <lav@altlinux.ru> 0.7-alt1
+- add arch dependend part for feature macros
+
 * Sun Feb 13 2022 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt1
 - add unwind 1.5.0
 
