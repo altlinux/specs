@@ -1,8 +1,14 @@
 %define sover 1
 
+%ifarch ppc64le
+%def_without mono
+%else
+%def_with mono
+%endif
+
 Name: libayatana-appindicator
 Version: 0.5.90
-Release: alt2
+Release: alt3
 
 Summary: Ayatana application indicators library
 License: LGPLv2.1 AND LGPLv3
@@ -10,8 +16,6 @@ Group: System/Libraries
 
 Url: https://github.com/AyatanaIndicators/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
-
-ExcludeArch: ppc64le
 
 # https://github.com/AyatanaIndicators/%name/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
@@ -33,6 +37,7 @@ BuildRequires(pre): libdatrie-devel
 BuildRequires(pre): libdbus-devel
 BuildRequires(pre): libepoxy-devel
 BuildRequires(pre): libexpat-devel
+BuildRequires(pre): libffi-devel
 BuildRequires(pre): libfribidi-devel
 BuildRequires(pre): libpcre-devel
 BuildRequires(pre): libpixman-devel
@@ -45,12 +50,18 @@ BuildRequires(pre): libxkbcommon-devel
 BuildRequires(pre): libwayland-cursor-devel
 BuildRequires(pre): libwayland-egl-devel
 
+%if_with mono
+BuildRequires: /proc
+%endif
 BuildRequires: cmake
-BuildRequires: libayatana-indicator-devel
+BuildRequires: libayatana-indicator3-devel
 BuildRequires: libdbusmenu-gtk3-devel
+BuildRequires: libgtk+3-gir-devel
+%if_with mono
 BuildRequires: libgtk-sharp3-devel
-BuildRequires: libgtk-sharp3-gapi-devel
+BuildRequires: libgtk-sharp3-gapi
 BuildRequires: mono-devel
+%endif
 BuildRequires: vala-tools
 
 %description
@@ -58,91 +69,117 @@ A library to allow applications to add an icon into the
 StatusNotifier-compatible notification area. If none are available,
 it also provides an XEmbed-tray fallback.
 
-%package -n %name%sover
+%package -n %{name}3-%sover
 Summary: Ayatana application indicators library
 Group: System/Libraries
 
-%description -n %name%sover
+%description -n %{name}3-%sover
 A library to allow applications to add an icon into the
 StatusNotifier-compatible notification area. If none are available,
 it also provides an XEmbed-tray fallback.
 
-%package devel
+%package -n %{name}3-devel
 Summary: Development files for %name
 Group: Development/C++
 
-%description devel
+%description -n %{name}3-devel
 This package contains the development files for the ayatana
 appindicator library..
 
-%package gir
-Summary: GObject introspection data for the %name
+%package -n %{name}3-gir
+Summary: GObject introspection data for the %{name}3
 Group: System/Libraries
-Requires: %name%sover = %EVR
+Requires: %{name}3-%sover = %EVR
 
-%description gir
-This package provides GObject introspection data for the %name.
+%description -n %{name}3-gir
+This package provides GObject introspection data for the %{name}3.
 
-%package gir-devel
-Summary: GObject introspection devel data for the %name
+%package -n %{name}3-gir-devel
+Summary: GObject introspection devel data for the %{name}3
 Group: Development/Other
-Requires: %name-gir = %EVR
+BuildArch: noarch
+Requires: %{name}3-gir = %EVR
 
-%description gir-devel
-This package provides GObject introspection devel data for the %name
+%description -n %{name}3-gir-devel
+This package provides GObject introspection devel data for the %{name}3
 
-%package sharp
+%if_with mono
+%package -n %{name}3-sharp
 Summary: Ayatana application indicators library for C#
 Group: System/Libraries
 
-%description sharp
-This package provides the %name-sharp assembly that
+%description -n %{name}3-sharp
+This package provides the %{name}3-sharp assembly that
 allows CLI (.NET) applications to take menus from applications and
 place them in the panel.
 
-%package sharp-devel
-Summary: Development files for %name-sharp
+%package -n %{name}3-sharp-devel
+Summary: Development files for %{name}3-sharp
 Group: Development/Other
-Requires: %name-sharp = %EVR
+Requires: %{name}3-sharp = %EVR
 
-%description sharp-devel
+%description -n %{name}3-sharp-devel
 This package contains the development files for the
 %name-sharp library.
+%endif
+
+%package -n %{name}3-vala
+Summary: Vala language bindings for %{name}3
+Group: Development/Other
+BuildArch: noarch
+Requires: %{name}3-%sover = %EVR
+
+%description -n %{name}3-vala
+This package provides Vala language bindings for %{name}3.
 
 %prep
 %setup
 
 %build
-%cmake
+%cmake \
+%if_without mono
+	-DENABLE_BINDINGS_MONO:BOOL=FALSE \
+%endif
+	%nil
 %cmake_build
 
 %install
 %cmake_install
 
-%files -n %name%sover
+%files -n %{name}3-%sover
 %doc AUTHORS ChangeLog README
 %_libdir/%{name}3.so.*
 
-%files gir
+%files -n %{name}3-gir
 %_typelibdir/AyatanaAppIndicator3-0.1.typelib
 
-%files gir-devel
+%files -n %{name}3-gir-devel
 %_girdir/AyatanaAppIndicator3-0.1.gir
 
-%files devel
+%files -n %{name}3-devel
 %_includedir/%{name}3-0.1/
 %_libdir/%{name}3.so
 %_pkgconfigdir/ayatana-appindicator3-0.1.pc
-%_datadir/vala/vapi/ayatana-appindicator3-0.1.vapi
-%_datadir/vala/vapi/ayatana-appindicator3-0.1.deps
 
-%files sharp
+%if_with mono
+%files -n %{name}3-sharp
 %_libdir/cli/ayatana-appindicator3-sharp-0.1/
 
-%files sharp-devel
+%files -n %{name}3-sharp-devel
 %_pkgconfigdir/ayatana-appindicator3-sharp-0.1.pc
+%endif
+
+%files -n %{name}3-vala
+%_vapidir/ayatana-appindicator3-0.1.vapi
+%_vapidir/ayatana-appindicator3-0.1.deps
 
 %changelog
+* Sun Feb 13 2022 Nazarov Denis <nenderus@altlinux.org> 0.5.90-alt3
+- Fix BR
+- Rename subpackages
+- Separate vala language bindings subpackage
+- Build on ppc6le without mono
+
 * Sun Feb 13 2022 Nazarov Denis <nenderus@altlinux.org> 0.5.90-alt2
 - Separate GObject introspection data subpackage (ALT #41902)
 - Fix BR
