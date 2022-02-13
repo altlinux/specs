@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.25
+Version: 1.4.26
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,16 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Sun Feb 13 2022 Anton Midyukov <antohami@altlinux.org> 1.4.26-alt1
+- vmguest: fix stage1/modules.d/50-vmguest
+- sub.in/stage1: remove empty lines from kernel modules list
+- drm: exclude ancient from full drm
+- init: clear machine id (reported by obirvalger@)
+- basealt.mk: specify network backend for netplan in alt-workstation-cloud
+  (thanks obirvalger@)
+- regular-lxqt, regular-xfce: replace light-locker to xscreensaver
+- initrd-bootchain: simplify the procedure for adding modules to initrd
+
 * Mon Feb 07 2022 Anton Midyukov <antohami@altlinux.org> 1.4.25-alt1
 - stage2: add Baikal M support to 50-stage2-usb list
 - server-v: use crio instead of docker with k8s (thanks 
