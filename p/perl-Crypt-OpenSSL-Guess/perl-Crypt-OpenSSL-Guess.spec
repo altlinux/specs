@@ -6,7 +6,7 @@ BuildRequires: perl(Config.pm) perl(Exporter.pm) perl(Module/Build/Tiny.pm) perl
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.14
+Version: 0.15
 Release: alt1
 Summary: Guess OpenSSL include path
 Group: Development/Perl
@@ -40,6 +40,9 @@ Original code is taken from `inc/Module/Install/PRIVATE/Net/SSLeay.pm' by the Ne
 %perl_vendor_privlib/C*
 
 %changelog
+* Sun Feb 13 2022 Igor Vlasenko <viy@altlinux.org> 0.15-alt1
+- automated CPAN update
+
 * Mon Nov 01 2021 Igor Vlasenko <viy@altlinux.org> 0.14-alt1
 - automated CPAN update
 
