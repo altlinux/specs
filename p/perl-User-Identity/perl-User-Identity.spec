@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-User-Identity
-Version: 1.00
+Version: 1.01
 Release: alt1
 
 Summary: Define a user
@@ -59,6 +59,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Mail/*
 
 %changelog
+* Sun Feb 13 2022 Igor Vlasenko <viy@altlinux.org> 1.01-alt1
+- automated CPAN update
+
 * Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
 - automated CPAN update
 
