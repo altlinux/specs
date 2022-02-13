@@ -1,5 +1,5 @@
 Name: make-initrd-propagator
-Version: 0.48
+Version: 0.49
 Release: alt1
 
 Summary: Put propagator into make-initrd generated image
@@ -38,6 +38,10 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Sun Feb 13 2022 Anton Midyukov <antohami@altlinux.org> 0.49-alt1
+- rules.mk: no error if existing /lib/firmware
+- Revert "propagator/config.mk: add interface naming udev rules"
+
 * Wed Sep 29 2021 Anton Midyukov <antohami@altlinux.org> 0.48-alt1
 - propagator/config.mk: add interface naming udev rules
 
