@@ -2,7 +2,7 @@
 
 Name: libayatana-indicator
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Summary: Ayatana Indicator Display Objects
 License: GPLv3
@@ -44,7 +44,8 @@ BuildRequires(pre): libwayland-cursor-devel
 BuildRequires(pre): libwayland-egl-devel
 
 BuildRequires: cmake
-BuildRequires: libayatana-ido-devel
+BuildRequires: libayatana-ido3-devel
+BuildRequires: libgtk+2-devel
 
 %description
 This library contains information to build indicators to go into
@@ -66,20 +67,56 @@ Group: Development/C++
 This library contains information to build indicators to go into
 the indicator applet.
 
+%package -n %{name}3-%sover
+Summary: Ayatana Indicator Display Objects
+Group: System/Libraries
+
+%description -n %{name}3-%sover
+This library contains information to build indicators to go into
+the indicator applet.
+
+%package -n %{name}3-devel
+Summary: Development files for the Ayatana panel indicator applet library
+Group: Development/C++
+
+%description -n %{name}3-devel
+This library contains information to build indicators to go into
+the indicator applet.
+
 %prep
-%setup
+%setup -a 0
+%__mv %name-%version %name-%version-gtk3
 
 %build
+# Build with GTK2
+%cmake -DFLAVOUR_GTK2:BOOL=TRUE
+%cmake_build
+
+# Build with GTK3
+pushd %name-%version-gtk3
 %cmake -DCMAKE_INSTALL_LIBEXECDIR:PATH=%_libexecdir
 %cmake_build
+popd
 
 %install
 %cmake_install
 
+pushd %name-%version-gtk3
+%cmake_install
+popd
+
 %files -n %name%sover
-%_libdir/%{name}3.so.*
+%_libdir/%name.so.*
 
 %files devel
+%_includedir/%name-0.4
+%_libdir/%name.so
+%_pkgconfigdir/ayatana-indicator-0.4.pc
+
+%files -n %{name}3-%sover
+%_libdir/%{name}3.so.*
+
+%files -n %{name}3-devel
 %_includedir/%{name}3-0.4
 %_libdir/%{name}3.so
 %_pkgconfigdir/ayatana-indicator3-0.4.pc
@@ -87,5 +124,10 @@ the indicator applet.
 %_datadir/%name
 
 %changelog
+* Sun Feb 13 2022 Nazarov Denis <nenderus@altlinux.org> 0.9.0-alt2
+- Rename subpackages
+- Fix BR
+- Build also with GTK2
+
 * Fri Jan 14 2022 Nazarov Denis <nenderus@altlinux.org> 0.9.0-alt1
 - Initial build for ALT Linux
