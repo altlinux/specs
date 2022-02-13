@@ -1,5 +1,5 @@
 Name: rpm-macros-features
-Version: 0.5
+Version: 0.6
 Release: alt1
 
 Summary: RPM macros to check if can build with a feature
@@ -35,6 +35,9 @@ install -D -m644 macros %buildroot/%_rpmmacrosdir/features
 %_rpmmacrosdir/features
 
 %changelog
+* Sun Feb 13 2022 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt1
+- add unwind 1.5.0
+
 * Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
 - add pcad and llvm versions
 

@@ -2,8 +2,8 @@
 %define targetdir %_libdir/powershell/runtimes/%_dotnet_rid/native
 
 Name: libpsl-native
-Version: 7.1.0
-Release: alt2
+Version: 7.2.0
+Release: alt1
 
 Summary: PowerShell Native library
 
@@ -40,7 +40,7 @@ subst 's|.*CMAKE_CXX_FLAGS.*||' src/libpsl-native/CMakeLists.txt
 
 %build
 pushd src/libpsl-native/
-%cmake_insource -DCMAKE_BUILD_TYPE=Debug
+%cmake_insource -DCMAKE_BUILD_TYPE=Debug -D CMAKE_CXX_FLAGS="%optflags %optflags_shared"
 %make_build VERBOSE=1
 
 %install
@@ -66,6 +66,13 @@ LANG=en_US.utf8 LD_LIBRARY_PATH=$(pwd)/../powershell-unix/ ctest --verbose || tr
 %targetdir/libpsl-native.so
 
 %changelog
+* Sun Feb 13 2022 Vitaly Lipatov <lav@altlinux.ru> 7.2.0-alt1
+- new version 7.2.0 (with rpmrb script)
+- fix build with GTest
+
+* Sun Feb 13 2022 Vitaly Lipatov <lav@altlinux.ru> 7.1.0-alt2
+- more compatibility with old GTest
+
 * Wed Sep 01 2021 Vitaly Lipatov <lav@altlinux.ru> 7.1.0-alt2
 - use optflags+optflags_shared instead of embedded cflags
 

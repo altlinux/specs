@@ -13,11 +13,15 @@
 %def_with bootstrap
 # TODO:
 %def_with skipmanaged
+%if_feature unwind 1.5
 %def_with libunwind
+%else
+%def_without libunwind
+%endif
 
 Name: dotnet-runtime-%_dotnet_major
 Version: 6.0.2%preview
-Release: alt2
+Release: alt3
 
 Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
 
@@ -37,6 +41,7 @@ AutoProv: no
 
 # TODO:
 BuildRequires(pre): rpm-macros-dotnet
+BuildRequires(pre): rpm-macros-features >= 0.6
 
 BuildRequires: /proc
 
@@ -48,7 +53,7 @@ BuildRequires: cmake >= 3.14.5
 
 BuildRequires: libstdc++-devel
 %if_with libunwind
-BuildRequires: libunwind-devel
+BuildRequires: libunwind-devel >= 1.5
 %endif
 BuildRequires: liblttng-ust-devel liblwp-devel
 
@@ -367,6 +372,9 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Sun Feb 13 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.2-alt3
+- build with bundled libunwind if libunwind 1.5 is missed
+
 * Sat Feb 12 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.2-alt2
 - build dotnet-host subpackage
 
