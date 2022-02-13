@@ -4,9 +4,10 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/pdflatex texinfo
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+BuildRequires: /usr/bin/git
 Name:           enigma
 Version:        1.21
-Release:        alt1_16.20160222git0027b3b8e694
+Release:        alt1_22.20160222git0027b3b8e694
 Summary:        Game where you control a marble with the mouse
 
 License:        GPLv2+
@@ -24,7 +25,11 @@ Patch3:         0003-prevent-ImageMagick-inserting-timestamps-to-PNGs.patch
 Patch4:         0004-src-lev-Proxy.cc-fix-check-for-basic_ifstream-s-read.patch
 
 Requires:       %{name}-data = %{version}-%{release}
-Requires:       fonts-ttf-dejavu
+
+# automate finding font paths at build time
+%global fonts font(dejavusans)
+Requires:       %{fonts}
+BuildRequires:  fontconfig %{fonts}
 
 BuildRequires:  gcc-c++
 BuildRequires:  libSDL-devel
@@ -32,8 +37,8 @@ BuildRequires:  libSDL_image-devel
 BuildRequires:  libSDL_mixer-devel
 BuildRequires:  libSDL_ttf-devel
 BuildRequires:  gettext gettext-tools
-BuildRequires:  libpng-devel
-BuildRequires:  libappstream-glib
+BuildRequires:  libpng-devel libpng17-tools
+BuildRequires:  libappstream-glib libappstream-glib-gir
 BuildRequires:  desktop-file-utils
 BuildRequires:  zlib-devel
 BuildRequires:  libxerces-c-devel
@@ -65,10 +70,16 @@ Data files (levels, graphics, sound, music) and documentation for Enigma.
 
 %prep
 %setup -q -n enigma-git0027b3b8e694
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+git init -q
+git config user.name "rpmbuild"
+git config user.email "<rpmbuild>"
+git config gc.auto 0
+git add --force .
+git commit -q --allow-empty -a --author "rpmbuild <rpmbuild>" -m "%{NAME}-%{VERSION} base"
+cat %_sourcedir/0001-Clean-up-.desktop-file-categories.patch | git am --reject -q
+cat %_sourcedir/0002-build-use-system-zipios.patch | git am --reject -q
+cat %_sourcedir/0003-prevent-ImageMagick-inserting-timestamps-to-PNGs.patch | git am --reject -q
+cat %_sourcedir/0004-src-lev-Proxy.cc-fix-check-for-basic_ifstream-s-read.patch | git am --reject -q
 
 rm -r lib-src/zipios++ lib-src/enet/*
 
@@ -81,11 +92,9 @@ aclocal -I m4 && autoheader && automake --add-missing --foreign --copy && autoco
 %makeinstall_std
 
 # Use system fonts instead of bundling our own
-rm -f $RPM_BUILD_ROOT%{_datadir}/%{name}/fonts/DejaVuSansCondensed.ttf
-rm -f $RPM_BUILD_ROOT%{_datadir}/%{name}/fonts/vera_sans.ttf
-ln -s %{_datadir}/fonts/ttf/dejavu/DejaVuSansCondensed.ttf $RPM_BUILD_ROOT%{_datadir}/%{name}/fonts/DejaVuSansCondensed.ttf
-ln -s %{_datadir}/fonts/ttf/dejavu/DejaVuSans.ttf $RPM_BUILD_ROOT%{_datadir}/%{name}/fonts/vera_sans.ttf
-
+ln -f -s $(fc-match -f "%{file}" "dejavusans:condensed") \
+        $RPM_BUILD_ROOT%{_datadir}/%{name}/fonts/DejaVuSansCondensed.ttf
+ln -f -s $(fc-match -f "%{file}" "dejavusans") \
 
 desktop-file-install \
   --remove-key Version \
@@ -109,6 +118,9 @@ appstream-util validate-relax --nonet $RPM_BUILD_ROOT%{_datadir}/appdata/enigma.
 %{_datadir}/enigma
 
 %changelog
+* Wed Feb 09 2022 Igor Vlasenko <viy@altlinux.org> 1.21-alt1_22.20160222git0027b3b8e694
+- update to new release by fcimport
+
 * Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1_16.20160222git0027b3b8e694
 - update to new release by fcimport
 
