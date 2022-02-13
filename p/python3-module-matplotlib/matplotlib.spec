@@ -11,7 +11,7 @@
 
 Name: python3-module-%oname
 Version: %major.2
-Release: alt5
+Release: alt5.1
 
 Summary: Matlab(TM) style python plotting package
 
@@ -34,6 +34,7 @@ BuildRequires: python3-module-wx
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-numpy-testing python3-module-pycairo python3-module-pygobject3 python3-modules-tkinter python3-module-cycler python3-module-pyparsing python3-module-pytz python3-module-dateutil
+BuildRequires: python3-module-pip
 %{?_with_qt4:BuildRequires: python3-module-PyQt4}
 %{?_with_qt5:BuildRequires: python3-module-PyQt5}
 
@@ -264,6 +265,9 @@ done
 %python3_sitelibdir/mpl_toolkits
 
 %changelog
+* Sun Feb 13 2022 Michael Shigorin <mike@altlinux.org> 3.4.2-alt5.1
+- E2K: setup.py => "No module named pip"
+
 * Mon Aug 16 2021 Sergey V Turchin <zerg@altlinux.org> 3.4.2-alt5
 - Drop Qt4 subpackage
 
