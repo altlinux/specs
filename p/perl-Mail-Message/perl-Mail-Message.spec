@@ -6,7 +6,7 @@ BuildRequires: perl(Date/Format.pm) perl(Date/Parse.pm) perl(Email/Simple.pm) pe
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 3.011
+Version: 3.012
 Release: alt1
 Summary: MIME message handling
 Group: Development/Perl
@@ -45,6 +45,9 @@ There are various ways to install this module:
 %perl_vendor_privlib/M*
 
 %changelog
+* Sun Feb 13 2022 Igor Vlasenko <viy@altlinux.org> 3.012-alt1
+- automated CPAN update
+
 * Mon Aug 02 2021 Igor Vlasenko <viy@altlinux.org> 3.011-alt1
 - automated CPAN update
 
