@@ -2,7 +2,7 @@
 
 Name: libayatana-appindicator
 Version: 0.5.90
-Release: alt1
+Release: alt2
 
 Summary: Ayatana application indicators library
 License: LGPLv2.1 AND LGPLv3
@@ -48,9 +48,8 @@ BuildRequires(pre): libwayland-egl-devel
 BuildRequires: cmake
 BuildRequires: libayatana-indicator-devel
 BuildRequires: libdbusmenu-gtk3-devel
-BuildRequires: libgtk-sharp3
 BuildRequires: libgtk-sharp3-devel
-BuildRequires: libgtk-sharp3-gapi
+BuildRequires: libgtk-sharp3-gapi-devel
 BuildRequires: mono-devel
 BuildRequires: vala-tools
 
@@ -75,6 +74,22 @@ Group: Development/C++
 %description devel
 This package contains the development files for the ayatana
 appindicator library..
+
+%package gir
+Summary: GObject introspection data for the %name
+Group: System/Libraries
+Requires: %name%sover = %EVR
+
+%description gir
+This package provides GObject introspection data for the %name.
+
+%package gir-devel
+Summary: GObject introspection devel data for the %name
+Group: Development/Other
+Requires: %name-gir = %EVR
+
+%description gir-devel
+This package provides GObject introspection devel data for the %name
 
 %package sharp
 Summary: Ayatana application indicators library for C#
@@ -108,12 +123,16 @@ This package contains the development files for the
 %doc AUTHORS ChangeLog README
 %_libdir/%{name}3.so.*
 
+%files gir
+%_typelibdir/AyatanaAppIndicator3-0.1.typelib
+
+%files gir-devel
+%_girdir/AyatanaAppIndicator3-0.1.gir
+
 %files devel
 %_includedir/%{name}3-0.1/
 %_libdir/%{name}3.so
-%_libdir/girepository-1.0/AyatanaAppIndicator3-0.1.typelib
 %_pkgconfigdir/ayatana-appindicator3-0.1.pc
-%_datadir/gir-1.0/AyatanaAppIndicator3-0.1.gir
 %_datadir/vala/vapi/ayatana-appindicator3-0.1.vapi
 %_datadir/vala/vapi/ayatana-appindicator3-0.1.deps
 
@@ -124,5 +143,9 @@ This package contains the development files for the
 %_pkgconfigdir/ayatana-appindicator3-sharp-0.1.pc
 
 %changelog
+* Sun Feb 13 2022 Nazarov Denis <nenderus@altlinux.org> 0.5.90-alt2
+- Separate GObject introspection data subpackage (ALT #41902)
+- Fix BR
+
 * Mon Jan 24 2022 Nazarov Denis <nenderus@altlinux.org> 0.5.90-alt1
 - Initial build for ALT Linux
