@@ -1,11 +1,11 @@
-%set_automake_version 1.11
+#set_automake_version 1.11
 
 %define beta %nil
 %def_disable static
 
 Name: recode
-Version: 3.7.9
-Release: alt2
+Version: 3.7.11
+Release: alt1
 
 Summary: The `recode' library converts files between character sets and usages
 # COPYING:              GPLv3 text
@@ -60,8 +60,8 @@ License:    GPLv3+ and LGPLv3+ and BSD and OFSFDL
 
 Group: Text tools
 
-Url: http://recode.progiciels-bpi.ca
-Source: %url/archives/%name-%version%beta.tar.gz
+Url: https://github.com/rrthomas/recode/
+Source: %name-%version%beta.tar.gz
 Patch0: recode4python.patch
 Patch1: recode-3.6-debian-boolsize.patch
 Patch2: recode-3.6-alt-unicode-in-docs.patch
@@ -71,7 +71,7 @@ Patch5: recode-3.7.1-Rename-coliding-hash-functions.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Requires: lib%name = %version-%release
-BuildRequires: chrpath
+BuildRequires: chrpath help2man git libgpgme-devel gettext gnupg flex gcc gcc-c++ iconv
 
 BuildRequires: python3-devel
 BuildRequires: rpm-build-python3
@@ -137,9 +137,17 @@ files to allow you to develop applications using the `recode' libraries.
 %build
 #rm acinclude.m4 m4/libtool.m4 m4/flex.m4
 #sed -i 's/ad_AC_PROG_FLEX/AC_PROG_LEX/' configure.in
-%autoreconf
+%autoreconf -fi
 sed -i 's/--no-verify//' configure
-%configure %{subst_enable static}
+#configure %{subst_enable static}
+%configure \
+    --without-dmalloc \
+    --disable-gcc-warnings \
+    --enable-largefile \
+    --enable-nls \
+    --disable-rpath \
+    --enable-shared \
+    --disable-static
 %make_build
 
 %install
@@ -170,6 +178,10 @@ chrpath -d %buildroot%_bindir/%name
 # - configure.in:18: error: automatic de-ANSI-fication support has been removed
 
 %changelog
+* Sun Feb 13 2022 Ilya Mashkin <oddity@altlinux.ru> 3.7.11-alt1
+- 3.7.11
+- Update url
+
 * Sat Jan 08 2022 Michael Shigorin <mike@altlinux.org> 3.7.9-alt2
 - E2K: dropped patch (unneeded for 3.7)
 
