@@ -1,6 +1,8 @@
+%def_without check
+
 Name: drbd9
 Version: 9.1.5
-Release: alt2
+Release: alt3
 %define githash f41bc23cec1e919932ce35947f1b4e67d9e6db74
 
 Summary: The Linux kernel code for DRBD9.
@@ -15,7 +17,7 @@ Source1: %name-headers-%version.tar
 Patch: %name-%version.patch
 
 BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): kernel-headers-modules-std-def kernel-headers-modules-un-def
+BuildRequires(pre): kernel-headers-modules-std-def kernel-headers-modules-un-def kernel-headers-modules-ovz-el7
 BuildRequires: coccinelle >= 1.0.8
 BuildRequires: libelf-devel
 
@@ -49,8 +51,9 @@ cd ..
 tar -cf %kernel_srcdir/kernel-source-%name-%version.tar %name-%version
 
 %check
-# make -C drbd KDIR=/lib/modules/*-std-def-*/build -k
-# make -C drbd KDIR=/lib/modules/*-un-def-*/build -k
+make -C drbd KDIR=/lib/modules/*-std-def-*/build -k
+make -C drbd KDIR=/lib/modules/*-un-def-*/build -k
+make -C drbd KDIR=/lib/modules/*-ovz*/build -k
 
 %files -n kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar
@@ -59,6 +62,9 @@ tar -cf %kernel_srcdir/kernel-source-%name-%version.tar %name-%version
 %doc README.md COPYING
 
 %changelog
+* Sun Feb 13 2022 Andrew A. Vasilyev <andy@altlinux.org> 9.1.5-alt3
+- Fix build for 3.10 ovz7.
+
 * Sat Feb 12 2022 Andrew A. Vasilyev <andy@altlinux.org> 9.1.5-alt2
 - Fix build for 5.15 and 5.16.
 
