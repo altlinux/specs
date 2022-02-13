@@ -1,5 +1,5 @@
 Name:		xmrig
-Version:	6.16.2
+Version:	6.16.4
 Release:	alt1
 Summary:	RandomX, CryptoNight, AstroBWT and Argon2 miner
 Url:		https://github.com/xmrig/xmrig
@@ -52,6 +52,9 @@ install -Dp -m 0755 ./%name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Sun Feb 13 2022 Motsyo Gennadi <drool@altlinux.ru> 6.16.4-alt1
+- 6.16.4
+
 * Sun Dec 12 2021 Motsyo Gennadi <drool@altlinux.ru> 6.16.2-alt1
 - 6.16.2
 
