@@ -2,13 +2,13 @@
 %def_enable static
 
 Name: libusb
-Version: 1.0.24
-Release: alt2
+Version: 1.0.25
+Release: alt1
 
 Summary: Libusb is a library which allows userspace access to USB devices
-License: LGPL
+License: LGPLv2.1
 Group: System/Libraries
-
+VCS: https://github.com/libusb/libusb.git
 Url: http://libusb.info/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -55,6 +55,12 @@ mkdir m4
 %make_build
 %make -C doc docs
 
+%check
+pushd tests
+make
+./stress
+popd
+
 %install
 %makeinstall_std
 
@@ -83,6 +89,11 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %doc doc/api-1.0
 
 %changelog
+* Sun Feb 13 2022 Anton Farygin <rider@altlinux.ru> 1.0.25-alt1
+- 1.0.24 -> 1.0.25
+- updated License according SPDX
+- enabled tests
+
 * Sat Oct 16 2021 Anton Farygin <rider@altlinux.ru> 1.0.24-alt2
 - fixed build with LTO
 
