@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-macros-java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -68,7 +68,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           jetty
 Version:        9.4.40
-Release:        alt1_1jpp11
+Release:        alt1_2jpp11
 Summary:        Java Webserver and Servlet Container
 
 # Jetty is dual licensed under both ASL 2.0 and EPL 1.0, see NOTICE.txt
@@ -144,7 +144,7 @@ BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-test-policy)
 #BuildRequires:  mvn(org.eclipse.jetty.toolchain.setuid:jetty-setuid-java)
 BuildRequires:  maven-javadoc-plugin
 BuildRequires:  glassfish-el
-BuildRequires:  libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-homed systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
+BuildRequires:  libsystemd-devel libudev-devel systemd systemd-analyze systemd-homed systemd-networkd systemd-portable systemd-sysvinit
 BuildRequires:  junit5
 
 # duplicate providers, choose one
@@ -851,11 +851,6 @@ sed -i '/<SystemProperty name="jetty.state"/d' \
 %install
 %mvn_install
 
-mkdir -p $RPM_BUILD_ROOT`dirname /etc/default/jetty`
-touch $RPM_BUILD_ROOT/etc/default/jetty
-install -D -m 755 %{S:45} %buildroot%_initdir/%name
-
-
 # jp_minimal version doesn't contain main package
 %if %{without jp_minimal}
 # Install jetty home
@@ -942,6 +937,10 @@ do
     touch %buildroot"$rpm404_ghost"
 done
 
+mkdir -p $RPM_BUILD_ROOT`dirname /etc/default/jetty`
+touch $RPM_BUILD_ROOT/etc/default/jetty
+install -D -m 755 %{S:45} %buildroot%_initdir/%name
+
 
 # NOTE: %if %{without jp_minimal} still in effect
 
@@ -983,14 +982,10 @@ exit 0
 %if %{with jp_minimal}
 %files
 # Empty metapackage in minimal mode
-%config(noreplace,missingok) /etc/default/jetty
-%_initdir/%name
 %endif
 
 %if %{without jp_minimal}
 %files -f .mfiles
-%config(noreplace,missingok) /etc/default/jetty
-%_initdir/%name
 %{_tmpfilesdir}/%{name}.conf
 %config(noreplace) %attr(644, root, root) %{_sysconfdir}/logrotate.d/%{name}
 %config(noreplace) %{confdir}
@@ -1003,6 +998,8 @@ exit 0
 %ghost %dir %attr(755, jetty, jetty) %{rundir}
 %{appdir}
 %{_unitdir}/%{name}.service
+%_initdir/%name
+%config(noreplace,missingok) /etc/default/jetty
 
 %files project -f .mfiles-project
 %doc README.md VERSION.txt
@@ -1049,6 +1046,9 @@ exit 0
 %doc --no-dereference LICENSE NOTICE.txt LICENSE-MIT
 
 %changelog
+* Sun Feb 13 2022 Igor Vlasenko <viy@altlinux.org> 9.4.40-alt1_2jpp11
+- do not package init script in minimal version (closes: 41882)
+
 * Tue Jun 15 2021 Igor Vlasenko <viy@altlinux.org> 9.4.40-alt1_1jpp11
 - fc update
 
