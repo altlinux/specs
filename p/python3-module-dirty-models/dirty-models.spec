@@ -1,24 +1,34 @@
+%define _unpackaged_files_terminate_build 1
 %define oname dirty-models
+
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.9.2
-Release: alt1.1
+Version: 0.12.4
+Release: alt1
 Summary: Dirty models for python 3
 License: BSD
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/dirty-models/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://pypi.org/project/dirty-models/
 
 # https://github.com/alfred82santa/dirty-models.git
-Source0: https://pypi.python.org/packages/38/e8/03bdc3d80b75f47956581229edd3f5b6380124107a6a151bda5986db9a6a/dirty-models-%{version}.tar.gz
+Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-dateutil python3-module-nose
-BuildPreReq: python3-module-coverage python3-module-iso8601
 
-%py3_provides dirty_models
-%py3_requires dateutil
+%if_with check
+# install_requires=
+BuildRequires: python3(dateutil)
+
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+BuildRequires: python3(nose2)
+BuildRequires: python3(iso8601)
+%endif
+
+# PEP503 normalized name
+%py3_provides %oname
 
 %description
 Dirty models for python 3.
@@ -47,23 +57,35 @@ Features:
 * No database dependent.
 
 %prep
-%setup -q -n dirty-models-%{version}
+%setup
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
 %check
-python3 setup.py test
-nosetests3 -v --with-coverage -d --cover-package=dirty_models
+cat > tox.ini <<'EOF'
+[testenv]
+usedevelop=True
+commands =
+    nose2
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr -s false
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/dirty_models/
+%python3_sitelibdir/dirty_models-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Feb 08 2022 Stanislav Levin <slev@altlinux.org> 0.12.4-alt1
+- 0.9.2 -> 0.12.4.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
