@@ -1,8 +1,8 @@
 %define oname nose2
 
 Name: python3-module-%oname
-Version: 0.10.0
-Release: alt2
+Version: 0.11.0
+Release: alt1
 
 Summary: A unittest-based testing framework for python that makes writing and running tests easier
 
@@ -42,6 +42,9 @@ rm -f %buildroot%_bindir/nosetests
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Feb 14 2022 Andrey Cherepanov <cas@altlinux.org> 0.11.0-alt1
+- New version.
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 0.10.0-alt2
 - Drop python2 support.
 
