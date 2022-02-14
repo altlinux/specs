@@ -1,6 +1,6 @@
 Name:           xfce4-notifyd
 Version:        0.6.3
-Release:        alt1
+Release:        alt2
 Summary:        Simple notification daemon for Xfce
 Summary(ru_RU.UTF-8): Менеджер уведомлений для Xfce
 
@@ -15,8 +15,8 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4ui-gtk3-devel libxfconf-devel libxfce4util-devel
 BuildRequires: libxfce4panel-gtk3-devel
-BuildRequires: libgio-devel libICE-devel libX11-devel libSM-devel
-BuildRequires: desktop-file-utils libnotify-devel
+BuildRequires: libgio-devel libX11-devel
+BuildRequires: libnotify-devel
 
 # Automatically added by buildreq on Mon Sep 21 2009
 BuildRequires: intltool libglade-devel
@@ -79,7 +79,7 @@ Notification plugin for the Xfce panel.
 %_libdir/xfce4/notifyd/
 %_desktopdir/*.desktop
 %_datadir/dbus-1/services/*
-%_user_unitdir/xfce4-notifyd.service
+%_usr/lib/systemd/user/xfce4-notifyd.service
 %_iconsdir/hicolor/*/*/*.*
 %_datadir/themes/Default/xfce-notify-4.0/
 %_datadir/themes/Bright/
@@ -95,6 +95,10 @@ Notification plugin for the Xfce panel.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Feb 14 2022 Mikhail Efremov <sem@altlinux.org> 0.6.3-alt2
+- Cleanup BR.
+- Don't use _user_unitdir macro.
+
 * Sat Feb 12 2022 Mikhail Efremov <sem@altlinux.org> 0.6.3-alt1
 - Use _user_unitdir macro.
 - Updated to 0.6.3.
