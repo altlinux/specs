@@ -1,5 +1,5 @@
 Name:     daps
-Version:  3.3.0
+Version:  3.3.1
 Release:  alt1
 
 Summary:  DocBook Authoring and Publishing Suite (DAPS)
@@ -89,6 +89,9 @@ Documentation for %name.
 %_datadir/doc/%name
 
 %changelog
+* Mon Feb 14 2022 Andrey Cherepanov <cas@altlinux.org> 3.3.1-alt1
+- New version.
+
 * Tue Feb 08 2022 Andrey Cherepanov <cas@altlinux.org> 3.3.0-alt1
 - New version.
 
