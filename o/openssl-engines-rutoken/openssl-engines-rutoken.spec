@@ -7,7 +7,7 @@
 Summary: Rutoken PKCS#11 engine for OpenSSL
 Name: openssl-engines-rutoken
 Version: 1.4.2
-Release: alt1
+Release: alt2
 Epoch: 1
 Vendor: Aktiv Co.
 License: distributable
@@ -18,6 +18,8 @@ Group: System/Libraries
 Source0: %name-%version.tar
 
 ExclusiveArch: %ix86 x86_64 e2k e2kv4 mipsel aarch64 armh
+
+BuildRequires: libcrypto1.1
 
 Requires: libcrypto1.1
 Requires: openssl-engines
@@ -43,6 +45,9 @@ cp -aRf linux_glibc-%_arch/lib/* %buildroot%_libdir/
 %_libdir/librtengine.so*
 
 %changelog
+* Mon Feb 14 2022 Andrey Cherepanov <cas@altlinux.org> 1:1.4.2-alt2
+- FTBFS: add libcrypto1.1 to fix library autorequirements.
+
 * Fri Dec 03 2021 Andrey Cherepanov <cas@altlinux.org> 1:1.4.2-alt1
 - Use upstream version.
 
