@@ -1,6 +1,6 @@
 Name: make-initrd
-Version: 2.24.0
-Release: alt2
+Version: 2.25.0
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -62,7 +62,6 @@ Requires: util-linux >= 2.17.2-alt1
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
-Patch0: 0001-add-udev-rules-Always-add-system-rules.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -340,8 +339,11 @@ fi
 %_datadir/%name/features/bootloader
 
 %changelog
+* Mon Feb 14 2022 Alexey Gladkov <legion@altlinux.ru> 2.25.0-alt1
+- New version (2.25.0).
+
 * Tue Sep 28 2021 Alexey Gladkov <legion@altlinux.ru> 2.24.0-alt2
-- add-udev-rules: Always add system rules. 
+- add-udev-rules: Always add system rules.
 
 * Tue Sep 21 2021 Alexey Gladkov <legion@altlinux.ru> 2.24.0-alt1
 - New version (2.24.0).
