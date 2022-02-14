@@ -1,18 +1,23 @@
 %def_with gtk
 
 Name: doublecmd
-Summary: Twin-panel (commander-style) file manager
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
-Epoch:   1
-Url: https://doublecmd.sourceforge.io
+Epoch: 1
 
-Packager: Andrey Cherepanov <cas@altlinux.org>
+Summary: Twin-panel (commander-style) file manager
+License: GPLv2+ and LGPLv2+ and MIT and MPL-1.1 and MPL-2.0 and Apache-2.0 and BSD and Zlib
+Group: File tools
+Url: https://doublecmd.sourceforge.io
 
 Source0: %name-%version.tar
 Source1: %name-qt.desktop
-License: GPLv2+ and LGPLv2+ and MIT and MPL-1.1 and MPL-2.0 and Apache-2.0 and BSD and Zlib
-Group: File tools
+Source2: %name.watch
+Patch0: doublecmd-use-default-terminal.patch
+Patch1: doublecmd-not-install-zdli.patch
+Patch2: doublecmd-alt-build-in-one-thread.patch
+
+ExclusiveArch: x86_64 aarch64
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: fpc >= 2.6.2
@@ -26,12 +31,6 @@ BuildRequires: ImageMagick-tools
 BuildRequires: libdbus-devel
 BuildRequires: bzlib-devel
 BuildRequires: /proc
-
-Patch0: doublecmd-use-default-terminal.patch
-Patch1: doublecmd-not-install-zdli.patch
-Patch2: doublecmd-alt-build-in-one-thread.patch
-
-ExclusiveArch: x86_64 aarch64
 
 %add_python3_path %_libdir/doublecmd/scripts
 
@@ -145,6 +144,10 @@ convert -resize 16x16 pixmaps/mainicon/alt/256px-dcfinal.png %buildroot%_miconsd
 %_pixmapsdir/%name.png
 
 %changelog
+* Mon Feb 14 2022 Andrey Cherepanov <cas@altlinux.org> 1:1.0.4-alt1
+- New version.
+- Add watch file.
+
 * Mon Jan 17 2022 Andrey Cherepanov <cas@altlinux.org> 1:1.0.3-alt1
 - New version.
 - Fix License.
