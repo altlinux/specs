@@ -3,10 +3,10 @@
 %def_disable clang
 
 Name: deepin-dock
-Version: 5.4.69.1
+Version: 5.5.9
 Release: alt1
 Summary: Deepin desktop-environment - Dock module
-License: LGPL-3.0+
+License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-dock
 Packager: Leontiy Volodin <lvol@altlinux.org>
@@ -20,6 +20,8 @@ BuildRequires(pre): clang12.0-devel
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: cmake
 BuildRequires: deepin-network-utils-devel
+BuildRequires: deepin-control-center
+BuildRequires: deepin-control-center-devel
 BuildRequires: dtk5-widget-devel
 BuildRequires: deepin-qt-dbus-factory-devel
 BuildRequires: gsettings-qt-devel
@@ -29,6 +31,7 @@ BuildRequires: qt5-base-devel
 BuildRequires: qt5-x11extras-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: qt5-linguist
+BuildRequires: qt5-tools-devel
 BuildRequires: libX11-devel
 BuildRequires: libXtst-devel
 BuildRequires: libXext-devel
@@ -55,15 +58,10 @@ Header files and libraries for %name.
 %patch -p2
 
 sed -i '/TARGETS/s|lib/|%_lib/|' plugins/*/CMakeLists.txt
-sed -i 's|/usr/lib/deepin-daemon|%_libexecdir/deepin-daemon|' \
-    plugins/show-desktop/showdesktopplugin.cpp \
-    frame/window/mainpanelcontrol.cpp
 sed -i 's|${prefix}/lib/@HOST_MULTIARCH@|%_libdir|' dde-dock.pc.in
 sed -i 's|/usr/lib|%_libdir|' \
     frame/controller/dockpluginscontroller.cpp \
     plugins/tray/system-trays/systemtrayscontroller.cpp
-sed -i '/void changedConnections(const QList<QJsonObject> &connInfos);/d' \
-    plugins/network/item/wireditem.h
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -87,11 +85,21 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_bindir/%repo
 %_libdir/%repo/
 %_datadir/%repo/
+%_datadir/dcc-dock-plugin/
 %_datadir/polkit-1/actions/com.deepin.dde.dock.overlay.policy
 %_datadir/glib-2.0/schemas/com.deepin.dde.dock.module.gschema.xml
 %dir %_sysconfdir/%repo/
 %dir %_sysconfdir/%repo/indicator/
 %_sysconfdir/%repo/indicator/keybord_layout.json
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/apps/
+%dir %_datadir/dsg/apps/dde-dock/
+%dir %_datadir/dsg/apps/dde-dock/configs/
+%_datadir/dsg/apps/dde-dock/configs/com.deepin.dde.dock.dconfig.json
+%dir %_datadir/dsg/apps/dde-control-center/
+%dir %_datadir/dsg/apps/dde-control-center/configs/
+%_datadir/dsg/apps/dde-control-center/configs/dde.dock.plugin.dconfig.json
+%_libdir/dde-control-center/modules/libdcc-dock-plugin.so
 
 %files devel
 %doc plugins/plugin-guide
@@ -100,6 +108,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/cmake/DdeDock/DdeDockConfig.cmake
 
 %changelog
+* Mon Feb 14 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.9-alt1
+- New version (5.5.9).
+- Changed licence tag.
+
 * Mon Feb 07 2022 Leontiy Volodin <lvol@altlinux.org> 5.4.69.1-alt1
 - New version (5.4.69.1).
 
