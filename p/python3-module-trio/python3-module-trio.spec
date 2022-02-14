@@ -1,8 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+
 %define  modulename trio
 
 Name:    python3-module-%modulename
-Version: 0.10.0
-Release: alt2
+Version: 0.19.0
+Release: alt1
 
 Summary: Trio - Pythonic async I/O for humans and snake people
 License: MIT or Apache 2.0
@@ -41,6 +43,9 @@ same time with parallelized I/O.
 %doc *.md *.rst
 
 %changelog
+* Mon Feb 14 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 0.19.0-alt1
+- Updated to upstream version 0.19.0 to fix python-3.10 compatibility issues
+
 * Tue Nov 10 2020 Vitaly Lipatov <lav@altlinux.ru> 0.10.0-alt2
 - don't pack tests (ALT bug 39239)
 
