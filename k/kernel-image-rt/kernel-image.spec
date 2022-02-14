@@ -5,8 +5,8 @@
 %define kflavour		rt
 Name: kernel-image-%kflavour
 %define kernel_base_version	5.10
-%define kernel_sublevel		.90
-%define kernel_rt_release	rt61
+%define kernel_sublevel		.100
+%define kernel_rt_release	rt62
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -425,6 +425,9 @@ check-pesign-helper /boot/vmlinuz-%kversion-%flavour-%krelease
 %files checkinstall
 
 %changelog
+* Sun Feb 13 2022 Vitaly Chikunov <vt@altlinux.org> 5.10.100-alt1.rt62
+- Update to v5.10.100-rt62 (2022-02-11).
+
 * Fri Feb 11 2022 Vitaly Chikunov <vt@altlinux.org> 5.10.90-alt1.rt61
 - Update to v5.10.90-rt61 (2022-02-11).
 
