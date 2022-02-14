@@ -1,5 +1,5 @@
 Name: libwaylandpp
-Version: 0.2.8
+Version: 0.2.9
 Release: alt1
 
 Summary: C++ bindings for Wayland
@@ -50,5 +50,8 @@ This package contains development part of waylandpp
 %_datadir/waylandpp
 
 %changelog
+* Mon Feb 14 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.9-alt1
+- 0.2.9 released
+
 * Tue Nov 10 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.8-alt1
 - initial
