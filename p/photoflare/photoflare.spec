@@ -2,7 +2,7 @@
 %define git_hash .git.e200ab7538
 
 Name: photoflare
-Version: 1.6.5
+Version: 1.6.9
 Release: alt1
 
 Group: Graphics
@@ -49,6 +49,12 @@ sed -i 's/^\(\s*app\.setApplicationVersion(QObject::tr("\).*\("))\)/\1%version%g
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Mon Feb 14 2022 Evgeny Sinelnikov <sin@altlinux.org> 1.6.9-alt1
+- Update to latest stable release
+
+* Sun Apr 04 2021 Evgeny Sinelnikov <sin@altlinux.org> 1.6.7.1-alt1
+- Update to latest release
+
 * Mon Oct 05 2020 Evgeny Sinelnikov <sin@altlinux.org> 1.6.5-alt1
 - Initial build for Sisyphus
 
