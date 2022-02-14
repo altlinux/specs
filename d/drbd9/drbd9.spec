@@ -1,9 +1,9 @@
 %def_without check
 
 Name: drbd9
-Version: 9.1.5
-Release: alt3
-%define githash f41bc23cec1e919932ce35947f1b4e67d9e6db74
+Version: 9.1.6
+Release: alt1
+%define githash f85adeb71f16a0aead1e875665e2fb68852d94eb
 
 Summary: The Linux kernel code for DRBD9.
 License: GPLv2
@@ -62,6 +62,9 @@ make -C drbd KDIR=/lib/modules/*-ovz*/build -k
 %doc README.md COPYING
 
 %changelog
+* Mon Feb 14 2022 Andrew A. Vasilyev <andy@altlinux.org> 9.1.6-alt1
+- 9.1.6
+
 * Sun Feb 13 2022 Andrew A. Vasilyev <andy@altlinux.org> 9.1.5-alt3
 - Fix build for 3.10 ovz7.
 
