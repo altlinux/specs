@@ -1,6 +1,6 @@
 Name: tgsend
 Version: 1.3.4
-Release: alt2
+Release: alt3
 License: GPL-2.0-or-later and BSD-3-Clause
 Group: Networking/WWW
 Summary: Simple Telegram bot sender
@@ -27,7 +27,7 @@ sed -i 's/x09@altlinux.org/shevtsov.anton@gmail.com/' tgsend.lpr
 %_bindir/lazbuild --verbose synapse/laz_synapse.lpk
 %_bindir/fpc  -MObjFPC -Scgi -CX -Cg -Os3 -XX -l -vewnhibq -Fu./synapse/lib/%fpc_arch -Fu%_libdir/lazarus/packager/units/%fpc_arch -Fu./ -o./%name -Fr%_libdir/fpc/msg/errore.msg %name.lpr
 
-#%_bindir/upx %_builddir/%name-%version/tgsend
+%_bindir/upx %_builddir/%name-%version/tgsend
 
 %install
 mkdir -p %buildroot%_sysconfdir
@@ -43,6 +43,9 @@ install -m 644 tgsend.conf %buildroot%_sysconfdir/tgsend.conf.example
 %_sysconfdir/tgsend.conf.example
 
 %changelog
+* Mon Feb 14 2022 Andrey Cherepanov <cas@altlinux.org> 1.3.4-alt3
+- Compress executable.
+
 * Mon Feb 14 2022 Andrey Cherepanov <cas@altlinux.org> 1.3.4-alt2
 - Initial build in Sisyphus
 - Fix bogus changelog date strings
