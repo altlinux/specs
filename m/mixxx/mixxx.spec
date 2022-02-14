@@ -7,8 +7,8 @@
 %endif
 
 Name: mixxx
-Version: 2.3.1
-Release: alt2
+Version: 2.3.2
+Release: alt1
 
 Summary: Free digital DJ software
 Summary(ru_RU.UTF-8): Свободная программа для цифрового диджеинга
@@ -24,7 +24,6 @@ Patch2: %name-2.2.4-alt-rpath.patch
 
 Requires: %name-data = %EVR
 Requires: qt5-sql-sqlite3
-Requires: bpm-tools
 
 BuildPreReq: rpm-macros-qt5
 BuildPreReq: rpm-build-ninja
@@ -45,7 +44,7 @@ BuildRequires: libwavpack-devel libfaad-devel libmp4v2-devel
 BuildRequires: libupower-devel
 BuildRequires: qt5-base-devel qt5-script-devel qt5-svg-devel qt5-xmlpatterns-devel qt5-tools-devel qt5-x11extras-devel
 BuildRequires: liblilv-devel libsoundtouch-devel libvorbis-devel libspeex-devel libtheora-devel
-BuildRequires: liblame-devel libqtkeychain-qt5-devel libavcodec-devel libavformat-devel libavutil-devel libswresample-devel libavdevice-devel libavfilter-devel libpostproc-devel libswscale-devel
+BuildRequires: liblame-devel libqtkeychain-qt5-devel libavcodec-devel libavformat-devel libavutil-devel libswresample-devel libavdevice-devel libavfilter-devel libpostproc-devel libswscale-devel libavresample-devel
 BuildRequires: libhidapi-devel libkeyfinder-devel libssl-devel
 BuildRequires: libebur128-devel libshout-idjc-devel libmodplug-devel
 
@@ -105,6 +104,10 @@ chmod +x %buildroot%_datadir/mixxx/controllers/novation-launchpad/scripts/compil
 %_udevrulesdir/69-%name-usb-uaccess.rules
 
 %changelog
+* Mon Feb 14 2022 Leontiy Volodin <lvol@altlinux.org> 2.3.2-alt1
+- Updated to upstream release version 2.3.2 (ALT #41883).
+- Removed bpm-tools from requires.
+
 * Fri Dec 17 2021 Leontiy Volodin <lvol@altlinux.org> 2.3.1-alt2
 - Fixed build.
 - Built with debuginfo.
