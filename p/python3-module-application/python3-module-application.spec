@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 3.0.3
-Release: alt1
+Release: alt2
 
 Summary: Basic building blocks for Python applications
 
@@ -21,6 +21,7 @@ BuildArch: noarch
 
 # Source-url: https://github.com/AGProjects/python3-application/archive/release-%version.tar.gz
 Source: %name-%version.tar
+Patch1: 0001-collections.MutableMapping-was-deprecated-since-Pyth.patch
 
 %add_python3_req_skip __main__
 
@@ -33,6 +34,7 @@ logic itself.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %python3_build
@@ -45,6 +47,9 @@ logic itself.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Feb 14 2022 Andrey Cherepanov <cas@altlinux.org> 3.0.3-alt2
+- collections.MutableMapping stopped working since Python 3.10
+
 * Thu May 27 2021 Andrey Cherepanov <cas@altlinux.org> 3.0.3-alt1
 - new version 3.0.3
 
