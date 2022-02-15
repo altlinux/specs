@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.1.4
-Release: alt3
+Release: alt4
 Summary: Asyncio HTTP library with thread-safe connection pooling, file post, and more
 License: MIT
 Group: Development/Python3
@@ -74,6 +74,9 @@ python3 setup.py test
 %python3_sitelibdir/*.pth
 
 %changelog
+* Tue Feb 15 2022 Slava Aseev <ptrnine@altlinux.org> 0.1.4-alt4
+- Fix FTBFS with python 3.10
+
 * Wed May 19 2021 Slava Aseev <ptrnine@altlinux.org> 0.1.4-alt3
 - Fix FTBFS
 - Remove python2 build
