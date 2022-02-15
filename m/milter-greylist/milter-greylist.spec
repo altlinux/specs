@@ -2,7 +2,7 @@
 
 Name: milter-greylist
 Version: 4.6.4
-Release: alt1
+Release: alt2
 Group: System/Servers
 License: BSD-3-Clause
 Summary: GreyList milter for milter-capable MTA
@@ -144,6 +144,10 @@ fi
 %attr(0600,%user,root) %ghost %_localstatedir/milter-greylist/greylist.db
 
 %changelog
+* Tue Feb 15 2022 L.A. Kostis <lakostis@altlinux.ru> 4.6.4-alt2
+- init: fix socket permissions.
+- alt.patch: use postfix group by default.
+
 * Wed Mar 03 2021 L.A. Kostis <lakostis@altlinux.ru> 4.6.4-alt1
 - Updated to 4.6.4.
 - .spec: fix License field.
