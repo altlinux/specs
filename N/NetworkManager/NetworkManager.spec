@@ -58,7 +58,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.35.90
+Version: 1.35.91
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -646,6 +646,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Feb 15 2022 Mikhail Efremov <sem@altlinux.org> 1.35.91-alt1
+- Updated to 1.35.91 (1.36-rc2).
+
 * Mon Feb 07 2022 Mikhail Efremov <sem@altlinux.org> 1.35.90-alt1
 - Fixed test_system_encodings.
 - Explicitly set wpa_supplicant as default wifi backend.
