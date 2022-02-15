@@ -1,7 +1,7 @@
 %define rname krecorder
 
 Name: kde5-%rname
-Version: 21.12
+Version: 22.02
 Release: alt1
 %K5init no_appdata
 
@@ -18,7 +18,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: qt5-multimedia-devel qt5-quickcontrols2-devel qt5-svg-devel qt5-wayland-devel qt5-webengine-devel
-BuildRequires: kf5-kconfig-devel kf5-ki18n-devel kf5-kirigami-devel
+BuildRequires: kf5-kconfig-devel kf5-ki18n-devel kf5-kirigami-devel kf5-kcoreaddons-devel
 
 %description
 A convergent audio recording application for Plasma.
@@ -73,6 +73,9 @@ Requires: %name-common
 #%_K5lib/libkrecorder.so.*
 
 %changelog
+* Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 22.02-alt1
+- new version
+
 * Fri Dec 10 2021 Sergey V Turchin <zerg@altlinux.org> 21.12-alt1
 - new version
 

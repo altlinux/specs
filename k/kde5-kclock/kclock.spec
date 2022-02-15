@@ -1,7 +1,7 @@
 %define rname kclock
 
 Name: kde5-%rname
-Version: 21.12
+Version: 22.02
 Release: alt1
 %K5init altplace
 
@@ -67,6 +67,7 @@ Requires: %name-common
 %_K5plug/plasma/applets/*kclock*.so
 %_K5start/*kclock*.desktop
 %_K5xdgapp/*kclock*.desktop
+%_K5srv/*kclock*.desktop
 %_K5dbus_srv/*kclock*.service
 %_K5icon/*/*/apps/*kclock*.*
 %_K5data/plasma/plasmoids/org.kde.plasma.kclock*/
@@ -83,6 +84,9 @@ Requires: %name-common
 #%_K5lib/libkclock.so.*
 
 %changelog
+* Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 22.02-alt1
+- new version
+
 * Fri Dec 10 2021 Sergey V Turchin <zerg@altlinux.org> 21.12-alt1
 - new version
 

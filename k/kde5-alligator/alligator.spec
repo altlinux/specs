@@ -1,7 +1,7 @@
 %define rname alligator
 
 Name: kde5-%rname
-Version: 21.12
+Version: 22.02
 Release: alt1
 %K5init no_appdata
 
@@ -73,6 +73,9 @@ Requires: %name-common
 #%_K5lib/liballigator.so.*
 
 %changelog
+* Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 22.02-alt1
+- new version
+
 * Fri Dec 10 2021 Sergey V Turchin <zerg@altlinux.org> 21.12-alt1
 - new version
 

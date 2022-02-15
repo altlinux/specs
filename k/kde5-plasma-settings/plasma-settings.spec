@@ -1,8 +1,8 @@
 %define rname plasma-settings
 
 Name: kde5-%rname
-Version: 21.12
-Release: alt2
+Version: 22.02
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -90,8 +90,8 @@ Requires: %name-common
 %exclude %_K5data/kpackage/kcms/*virtualkeyboard*/
 %_K5plug/kcms/*.so
 %exclude %_K5plug/kcms/*virtualkeyboard*.so
-%_K5srv/*.desktop
-%exclude %_K5srv/*virtualkeyboard*.desktop
+#%_K5srv/*.desktop
+#%exclude %_K5srv/*virtualkeyboard*.desktop
 
 %files core
 %_K5bin/plasma-settings
@@ -100,7 +100,7 @@ Requires: %name-common
 %files virtualkeyboard
 %_K5data/kpackage/kcms/*virtualkeyboard*/
 %_K5plug/kcms/*virtualkeyboard*.so
-%_K5srv/*virtualkeyboard*.desktop
+#%_K5srv/*virtualkeyboard*.desktop
 
 #%files devel
 #%_K5inc/plasma-settings_version.h
@@ -113,6 +113,9 @@ Requires: %name-common
 #%_K5lib/libplasma-settings.so.*
 
 %changelog
+* Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 22.02-alt1
+- new version
+
 * Fri Jan 21 2022 Sergey V Turchin <zerg@altlinux.org> 21.12-alt2
 - move virtualkeyboard to separate package
 
