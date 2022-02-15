@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: git-delta
-Version: 0.11.3
+Version: 0.12.0
 Release: alt1
 Summary: A syntax-highlighting pager for git, diff, and grep output
 Group: Development/Other
@@ -62,5 +63,8 @@ cargo test %_smp_mflags --release --no-fail-fast
 %_datadir/zsh/site-functions/_delta
 
 %changelog
+* Tue Feb 15 2022 Vitaly Chikunov <vt@altlinux.org> 0.12.0-alt1
+- Updated to 0.12.0 (2022-02-14).
+
 * Fri Jan 14 2022 Vitaly Chikunov <vt@altlinux.org> 0.11.3-alt1
 - Imported 0.11.3-28-ge9bec95a (2022-01-14).
