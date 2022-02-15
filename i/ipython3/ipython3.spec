@@ -7,7 +7,7 @@
 %def_with doc
 
 Name: ipython3
-Version: 8.0.0
+Version: 8.0.1
 Release: alt1
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
@@ -190,6 +190,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Tue Feb 15 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 8.0.1-alt1
+- Updated to upstream version 8.0.1.
+
 * Tue Jan 18 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 8.0.0-alt1
 - Updated to upstream version 8.0.0.
 
