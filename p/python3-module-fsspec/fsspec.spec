@@ -3,7 +3,7 @@
 %define oname fsspec
 
 Name: python3-module-%oname
-Version: 2021.7.0
+Version: 2022.01.0
 Release: alt1
 Summary: A specification that python filesystems should adhere to
 License: BSD-3-Clause
@@ -51,8 +51,11 @@ pytest-3 -v \
 %doc LICENSE
 %doc README.md
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%oname-*-py3*.egg-info
 
 %changelog
+* Tue Feb 15 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 2022.01.0-alt1
+- Updated to upstream version 2022.01.0.
+
 * Fri Aug 20 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2021.7.0-alt1
 - Initial build for ALT.
