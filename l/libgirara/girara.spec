@@ -3,8 +3,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lib%_name
-Version: 0.3.6
-Release: alt2
+Version: 0.3.7
+Release: alt1
 
 Summary: GTK-based minimalistic user interface library
 License: Zlib
@@ -50,7 +50,7 @@ developing applications that use %name.
 %find_lang %name-gtk3-%_soname
 
 %files -f %name-gtk3-%_soname.lang
-%doc AUTHORS README LICENSE
+%doc AUTHORS README.md LICENSE
 %_libdir/*.so.%_soname
 %_libdir/*.so.%_soname.*
 
@@ -60,6 +60,9 @@ developing applications that use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Feb 15 2022 Mikhail Efremov <sem@altlinux.org> 0.3.7-alt1
+- Updated to 0.3.7.
+
 * Thu Dec 16 2021 Mikhail Efremov <sem@altlinux.org> 0.3.6-alt2
 - Fixed meson options.
 

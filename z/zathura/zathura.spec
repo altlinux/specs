@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura
-Version: 0.4.8
+Version: 0.4.9
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -77,6 +77,10 @@ mkdir -p %buildroot%_libdir/zathura
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Feb 15 2022 Mikhail Efremov <sem@altlinux.org> 0.4.9-alt1
+- Dropped patch for old libmagic.
+- Updated to 0.4.9.
+
 * Thu Jul 15 2021 Mikhail Efremov <sem@altlinux.org> 0.4.8-alt1
 - Updated to 0.4.8.
 
