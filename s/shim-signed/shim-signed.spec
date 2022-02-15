@@ -1,6 +1,6 @@
 Name: shim-signed
 Version: 15.4
-Release: alt1
+Release: alt2
 
 Summary: UEFI RestrictedBoot shim signed by Microsoft
 License: BSD
@@ -40,6 +40,10 @@ for pefile in $(ls %buildroot%_efi_bindir/*.efi | rev | cut -d/ -f1 | rev);
 %attr(0644,root,root) %_libexecdir/shim/BOOT*.CSV
 
 %changelog
+* Thu Feb 10 2022 Nikolai Kostrigin <nickel@altlinux.org> 15.4-alt2
+- replace with binaries rebuilt with multiple upstream fixes
+  + address https://github.com/fwupd/firmware-lenovo/issues/129
+
 * Thu Jul 08 2021 Nikolai Kostrigin <nickel@altlinux.org> 15.4-alt1
 - new shim version
 
