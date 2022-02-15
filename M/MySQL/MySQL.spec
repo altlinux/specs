@@ -11,7 +11,7 @@
 
 Name: MySQL
 Version: 8.0.28
-Release: alt1
+Release: alt1.1
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -66,7 +66,7 @@ Patch125: boost-1.57.0-mpl-print.patch
 # Patches for mysql-shell
 Patch201: mysql-shell-8.0.26-alt-link-secret-store-login-path-with-ssl.patch
 
-Patch2000: mysql-8.0.27-alt-e2k-fixes.patch
+Patch2000: mysql-8.0.28-alt-e2k.patch
 
 # Automatically added by buildreq on Tue Nov 20 2018 (-bi)
 # optimized out: cmake cmake-modules control elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libcrypt-devel libsasl2-3 libstdc++-devel libtinfo-devel perl pkg-config python-base sh3 xz
@@ -902,6 +902,9 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Tue Feb 15 2022 Michael Shigorin <mike@altlinux.org> 8.0.28-alt1.1
+- update alt-e2k patch: 8.0.27 -> 8.0.28 (ilyakurdyukov@)
+
 * Wed Jan 19 2022 Nikolai Kostrigin <nickel@altlinux.org> 8.0.28-alt1
 - new version
   + (fixes: CVE-2021-22946, CVE-2022-21245, CVE-2022-21249, CVE-2022-21253)
