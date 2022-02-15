@@ -4,7 +4,7 @@
 
 Name: log4cplus
 Version: 2.0.7
-Release: alt1
+Release: alt1.1
 Summary: Logging library to C++
 License: Apache-2.0 or BSD-2-Clause
 Group: Development/C++
@@ -80,6 +80,11 @@ This package contains Python bindings of log4cplus.
 %prep
 %setup -a1 -a2
 %patch1 -p1
+%ifarch %e2k
+# INTEL COMPILER is based on the EDG frontend, so the workarounds
+# for it work for any compiler based on the EDG frontend.
+sed -i "s/__INTEL_COMPILER/__EDG__/" include/log4cplus/config.hxx
+%endif
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -133,6 +138,9 @@ install -m644 docs/man/man3/* %buildroot%_man3dir
 %python3_sitelibdir/%name
 
 %changelog
+* Tue Feb 15 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.0.7-alt1.1
+- Fixed build for Elbrus.
+
 * Mon Jan 10 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.7-alt1
 - Updated to upstream version 2.0.7.
 
