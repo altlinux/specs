@@ -1,4 +1,4 @@
-%define pg_ver 14
+%define pg_ver 10
 
 Name: postgresql%pg_ver-pg_partman
 Version: 4.6.0
