@@ -1,11 +1,12 @@
 Name: xorg-cf-files
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 Summary: config files for Xorg build
-License: MIT/X11
+License: XConsortium and XFree86
 Group: Development/C
 Url: http://xorg.freedesktop.org
 Source: %name-%version.tar.bz2
+Patch: xorg-cf-files-1.0.7-ar-l.patch
 
 BuildRequires: xorg-util-macros xorg-font-utils
 
@@ -14,65 +15,65 @@ Config files for Xorg build
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
 %configure \
-	--with-config-dir=%_datadir/X11/config
+        --with-config-dir=%_datadir/X11/config
 %make
 
 cat > host.def << EOF
-#define XFree86CustomVersion	"ALT Linux build: 7.6.0"
-#define BuilderString		"Build Host: %(hostname)\n"
+#define XFree86CustomVersion    "ALT Linux build: 7.6.0"
+#define BuilderString           "Build Host: %(hostname)\n"
 
-#define XFree86RedHatCustom	YES
-#define BootstrapCFlags		$RPM_OPT_FLAGS
-#define DefaultGcc2i386Opt	$RPM_OPT_FLAGS -fno-strength-reduce GccAliasingArgs -pipe
-#define DefaultGcc2x86_64Opt	$RPM_OPT_FLAGS -fno-strength-reduce GccAliasingArgs -pipe
-#define DefaultGcc2AxpOpt	$RPM_OPT_FLAGS -Wa,-m21164a GccAliasingArgs -pipe
-#define DefaultGcc2PpcOpt	$RPM_OPT_FLAGS GccAliasingArgs -pipe
+#define XFree86RedHatCustom     YES
+#define BootstrapCFlags         $RPM_OPT_FLAGS
+#define DefaultGcc2i386Opt      $RPM_OPT_FLAGS -fno-strength-reduce GccAliasingArgs -pipe
+#define DefaultGcc2x86_64Opt    $RPM_OPT_FLAGS -fno-strength-reduce GccAliasingArgs -pipe
+#define DefaultGcc2AxpOpt       $RPM_OPT_FLAGS -Wa,-m21164a GccAliasingArgs -pipe
+#define DefaultGcc2PpcOpt       $RPM_OPT_FLAGS GccAliasingArgs -pipe
 
-#define ConfigDir		%_datadir/X11/config
-#define X11ProjectRoot		%prefix
-#define ProjectRoot		%prefix
-#define XBinDir			%_bindir
-#define BinDir			%_bindir
-#define XUsrLibDirPath		%_libdir
-#define UsrLibDir		%_libdir
-#define LibDir			%_datadir/X11
-#define IncRoot			%_includedir
-#define ManDirectoryRoot	%_mandir
-#define AdmDir			%_logdir
-#define LbxproxyDir		%_sysconfdir/X11/lbxproxy
-#define ProxyManagerDir		%_sysconfdir/X11/proxymngr
-#define ServerConfigDir		%_sysconfdir/X11/xserver
-#define XdmDir			%_sysconfdir/X11/xdm
-#define XConfigDir		%_sysconfdir/X11
-#define XinitDir		%_sysconfdir/X11/xinit
-#define EtcX11Directory		%_sysconfdir/X11
-#define XAppLoadDir		%_sysconfdir/X11/app-defaults
-#define XPrintDir		%_sysconfdir/X11/xprint
-#define DefaultRGBDatabase	%_datadir/X11/rgb
-#define DefaultFSConfigFile	%_sysconfdir/X11/fs/config
-#define FontDir			%_datadir/X11/fonts
+#define ConfigDir               %_datadir/X11/config
+#define X11ProjectRoot          %prefix
+#define ProjectRoot             %prefix
+#define XBinDir                 %_bindir
+#define BinDir                  %_bindir
+#define XUsrLibDirPath          %_libdir
+#define UsrLibDir               %_libdir
+#define LibDir                  %_datadir/X11
+#define IncRoot                 %_includedir
+#define ManDirectoryRoot        %_mandir
+#define AdmDir                  %_logdir
+#define LbxproxyDir             %_sysconfdir/X11/lbxproxy
+#define ProxyManagerDir         %_sysconfdir/X11/proxymngr
+#define ServerConfigDir         %_sysconfdir/X11/xserver
+#define XdmDir                  %_sysconfdir/X11/xdm
+#define XConfigDir              %_sysconfdir/X11
+#define XinitDir                %_sysconfdir/X11/xinit
+#define EtcX11Directory         %_sysconfdir/X11
+#define XAppLoadDir             %_sysconfdir/X11/app-defaults
+#define XPrintDir               %_sysconfdir/X11/xprint
+#define DefaultRGBDatabase      %_datadir/X11/rgb
+#define DefaultFSConfigFile     %_sysconfdir/X11/fs/config
+#define FontDir                 %_datadir/X11/fonts
 
-#define XOrgNameString		ALTLinux X.Org Maintainer Team
-#define XOrgWebSupportAddress	https://bugzilla.altlinux.org
-#define BuilderEMailAddr	"xorg@packages.altlinux.org"
+#define XOrgNameString          ALTLinux X.Org Maintainer Team
+#define XOrgWebSupportAddress   https://bugzilla.altlinux.org
+#define BuilderEMailAddr        "xorg@packages.altlinux.org"
 
 #define BuildHtmlManPages       NO
-#define ManSuffix		1
-#define LibManSuffix		3
-#define DriverManSuffix		4
-#define FileManSuffix		5
-#define MiscManSuffix		7
+#define ManSuffix               1
+#define LibManSuffix            3
+#define DriverManSuffix         4
+#define FileManSuffix           5
+#define MiscManSuffix           7
 
 EOF
 
 %install
 %make DESTDIR=%buildroot install
 
-# XXX repocop suxx
 mkdir -p %buildroot%_libdir/%name
 for f in host.def linux.cf sgi.cf; do
   mv %buildroot%_datadir/X11/config/$f %buildroot%_libdir/%name/;
@@ -84,6 +85,10 @@ done
 %_libdir/%name/*
 
 %changelog
+* Tue Feb 15 2022 Fr. Br. George <george@altlinux.org> 1.0.7-alt1
+- Autobuild version bump to 1.0.7
+- Complete upstream fix (Closes: #41016)
+
 * Thu Dec 24 2015 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
 - Autobuild version bump to 1.0.6
 
@@ -103,7 +108,7 @@ done
 * Mon Aug 03 2009 Valery Inozemtsev <shrek@altlinux.ru> 1.0.2-alt2
 - fixed build
 
-* Fri Feb 23 2006 Valery Inozemtsev <shrek@altlinux.ru> 1.0.2-alt1
+* Thu Feb 23 2006 Valery Inozemtsev <shrek@altlinux.ru> 1.0.2-alt1
 - 1.0.2
 
 * Tue Feb 07 2006 Valery Inozemtsev <shrek@altlinux.ru> 1.0.1-alt5
