@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: %_name-glib
-Version: 1.30.2
+Version: 1.30.4
 Release: alt1
 
 Summary: QMI modem protocol helper library
@@ -136,6 +136,9 @@ make check
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Feb 15 2022 Mikhail Efremov <sem@altlinux.org> 1.30.4-alt1
+- Updated to 1.30.4.
+
 * Wed Sep 15 2021 Mikhail Efremov <sem@altlinux.org> 1.30.2-alt1
 - Use python3 everywhere.
 - Do not add --no-as-needed to LDFLAGS.
