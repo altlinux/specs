@@ -4,7 +4,7 @@
 
 Name:           python3-module-%oname
 Epoch:          2
-Version:        2.6.2
+Version:        2.6.3
 Release:        alt1
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python3
@@ -116,6 +116,9 @@ rm -rf %buildroot%_defaultdocdir
 %python3_sitelibdir/%oname/*/*/tests
 
 %changelog
+* Tue Feb 15 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 2:2.6.3-alt1
+- Updated to upstream version 2.6.3.
+
 * Tue Aug 24 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2:2.6.2-alt1
 - Updated to upstream version 2.6.2.
 
