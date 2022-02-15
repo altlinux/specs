@@ -40,7 +40,7 @@
 
 Name: lxc
 Version: 4.0.12
-Release: alt1.1
+Release: alt2
 
 Summary: Linux Containers
 
@@ -321,6 +321,9 @@ groupadd -r -f vmusers ||:
 %_man8dir/pam_cgfs.8*
 
 %changelog
+* Tue Feb 15 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.12-alt2
+- Actually built 4.0.12 (pointed by shaba@).
+
 * Thu Feb 10 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.0.12-alt1.1
 - Fixed build for Elbrus
 
