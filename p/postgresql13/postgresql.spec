@@ -7,7 +7,7 @@
 %define prog_name            postgresql
 %define postgresql_major     13
 %define postgresql_minor     5
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -36,7 +36,6 @@ Source0: %name-%version.tar
 
 Patch2: 0002-Fix-search-for-setproctitle.patch
 Patch3: 0003-Use-terminfo-not-termcap.patch
-Patch4: 0004-Fix-includedirs.patch
 Patch6: 0006-Workaround-for-will-always-overflow-destination-buff.patch
 Patch8: 0001-Add-postgresql-startup-method-through-service-1-to-i.patch
 
@@ -77,47 +76,121 @@ if you're installing the postgresql-server package.
 %package -n %libpq_name
 Summary: The shared libraries required for any PostgreSQL clients
 Group: Databases
+Provides: libpq = %EVR
+Obsoletes: libpq < %EVR
 
 %description -n %libpq_name
 C and C++ libraries to enable user programs to communicate with the
 PostgreSQL database backend. The backend can be on another machine and
 accessed through TCP/IP.
 
+%package -n %libpq_name-devel
+Summary: The shared libraries required for any PostgreSQL clients
+Group: Development/Databases
+Requires: %libpq_name = %EVR
+Provides: libpq-devel = %EVR
+Obsoletes: libpq-devel < %EVR
+
+%description -n %libpq_name-devel
+The libpq package provides the essential shared library for any PostgreSQL
+client program or interface.  You will need to install this package to build any
+package or any clients that need to connect to a PostgreSQL server.
+
+%package -n %libpq_name-devel-static
+Summary: Development static library for %libpq_name-devel
+Group: Development/Databases
+Requires: %libpq_name-devel = %EVR
+Provides: libpq-devel-static = %EVR
+Obsoletes: libpq-devel-static < %EVR
+
+%description -n %libpq_name-devel-static
+Development static library for %libpq_name-devel
+
 %package -n %libecpg_name
-Summary: Shared library %libecpg_name for PostgreSQL
+Summary: ECPG - Embedded SQL in C
 Group: Databases
 Requires: %libpq_name = %EVR
+Provides: libecpg = %EVR
+Obsoletes: libecpg < %EVR
 
 %description -n %libecpg_name
-%libecpg_name is used by programs built with ecpg (Embedded PostgreSQL for C)
-Use postgresql-dev to develop such programs.
+An embedded SQL program consists of code written in an ordinary programming
+language, in this case C, mixed with SQL commands in specially marked sections.
+To build the program, the source code (*.pgc) is first passed through the
+embedded SQL preprocessor, which converts it to an ordinary C program (*.c), and
+afterwards it can be processed by a C compiler.
 
-%package -n postgresql-devel
-Summary: PostgreSQL development header files
+%package -n %libecpg_name-devel
+Summary: Development files for ECPG - Embedded SQL in C
 Group: Development/Databases
 Requires: %libpq_name = %EVR
 Requires: %libecpg_name = %EVR
-# TODO remove
-Provides: libpq-devel, libecpg-devel
-Obsoletes: libpq-devel, libecpg-devel
+Provides: libecpg-devel = %EVR
+Obsoletes: libecpg-devel < %EVR
 
-%description -n postgresql-devel
+%description -n %libecpg_name-devel
+ECPG development files.  You will need to install this package to build any
+package or any clients that use the ECPG to connect to a PostgreSQL server.
+
+%package -n %libecpg_name-devel-static
+Summary: Development static library for %libecpg_name-devel
+Group: Development/Databases
+Requires: %libecpg_name-devel = %EVR
+Provides: libecpg-devel-static = %EVR
+Obsoletes: libecpg-devel-static < %EVR
+
+%description -n %libecpg_name-devel-static
+Development static library for %libecpg_name-devel
+
+%package -n %prog_name-devel
+Summary: PostgreSQL development header files
+Group: Development/Databases
+Requires: %libpq_name-devel = %EVR
+Requires: %libecpg_name-devel = %EVR
+Requires: %name-server-devel = %EVR
+
+%description -n %prog_name-devel
 The postgresql-devel package contains the header files needed to compile applications
 which will directly interact with a PostgreSQL database management server.
 You need to install this package if you want to develop applications which will interact
 with a PostgreSQL server.
 
-%package -n postgresql-devel-static
-Summary:  Development static library for postgresql-devel
+%package -n %prog_name-devel-static
+Summary: Development static library for %libpq_name-devel and %libecpg_name-devel
 Group: Development/Databases
-Requires: postgresql-devel = %EVR
-# TODO remove
-Provides: libpq-devel-static, libecpg-devel-static
-Obsoletes: libpq-devel-static, libecpg-devel-static
+Requires: %libpq_name-devel-static = %EVR
+Requires: %libecpg_name-devel-static = %EVR
+Requires: %prog_name-devel = %EVR
 
-%description -n postgresql-devel-static
-Development static library for postgresql-devel
+%description -n %prog_name-devel-static
+Development static library for %libpq_name-devel
+and %libecpg_name-devel
+
+%package -n rpm-macros-%prog_name
+Summary: RPM macros to PostgreSQL
+Group: Development/Other
+BuildArch: noarch
+
+%description -n rpm-macros-%prog_name
+RPM macros to PostgreSQL for build server extentions
 %endif
+
+%package server-devel
+Summary: PostgreSQL development header files
+Group: Development/Databases
+Requires: %libpq_name-devel
+Requires: %libecpg_name-devel
+%if_with devel
+Provides: %prog_name-server-devel = %EVR
+Obsoletes: %prog_name-server-devel < %EVR
+%endif
+%filter_from_requires /^\/usr\/include\/pgsql\/libpq-fe\.h/d
+# 1C
+Conflicts: %{prog_name}13-1C-server-devel
+
+%description server-devel
+The %name-server-devel package contains the header files and configuration
+needed to compile PostgreSQL server extension.
 
 %package docs
 Summary: Extra documentation for PostgreSQL
@@ -171,7 +244,7 @@ to install the postgresql package.
 Summary: The PL/Tcl procedural language for PostgreSQL
 Group: Databases
 Requires: %name-server = %EVR
-Provides: postgresql-tcl
+Provides: %prog_name-tcl = %EVR
 # 1C
 Conflicts: %{prog_name}13-1C-tcl
 
@@ -184,7 +257,7 @@ for the backend.
 Summary: The PL/Perl procedural language for PostgreSQL
 Group: Databases
 Requires: %name-server = %EVR
-Provides: postgresql-perl = %EVR
+Provides: %prog_name-perl = %EVR
 # 1C
 Conflicts: %{prog_name}13-1C-perl
 
@@ -197,7 +270,7 @@ language for the backend.
 Summary: Development module for Python code to access a PostgreSQL DB
 Group: Databases
 Requires: %name-server = %EVR
-Provides: postgresql-python = %EVR
+Provides: %prog_name-python = %EVR
 # 1C
 Conflicts: %{prog_name}13-1C-python
 
@@ -212,7 +285,6 @@ database.
 
 %patch2 -p2
 %patch3 -p2
-%patch4 -p2
 %patch6 -p2
 %patch8 -p1
 
@@ -264,8 +336,6 @@ find doc/src/sgml/ -type f -name "stylesheet.*" -print0 | xargs -0 sed -i \
 
 %install
 %make_build install DESTDIR=%buildroot pkglibdir=%_libdir/%PGSQL
-ln -s /usr/include/pgsql %buildroot%_libdir/%PGSQL/pgxs/src/include
-
 %make_build -C doc install DESTDIR=%buildroot docdir=%docdir
 
 ##### ALT-stuff
@@ -281,6 +351,12 @@ install -p -m 644 -D README.rpm-dist %buildroot%docdir/README.rpm-dist
 
 popd
 ##### end ALT-stuff
+
+# Create file for rpm-build-postgresql
+%if_with devel
+install -d %buildroot%_rpmmacrosdir
+echo "%%pg_ver %postgresql_major" > %buildroot%_rpmmacrosdir/postgresql
+%endif
 
 sed -e 's|^PGVERSION=.*$|PGVERSION=%version|' \
         -e 's|^PGDOCDIR=.*$|PGDOCDIR=%docdir|' \
@@ -299,14 +375,14 @@ install -d -m 700 %buildroot%_localstatedir/%PGSQL/data
 install -d -m 700 %buildroot%_localstatedir/%PGSQL/backups
 
 # Fix a dangling symlink
-mkdir -p %buildroot%_includedir/%PGSQL/port
-cp src/include/port/linux.h %buildroot%_includedir/%PGSQL/port/
-ln -s port/linux.h %buildroot%_includedir/%PGSQL/os.h
 ln -s %_includedir/%PGSQL %buildroot%_includedir/postgresql
 
 pushd contrib
 %make_build install DESTDIR=%buildroot pkglibdir=%_libdir/%PGSQL docdir=%docdir
 popd
+
+# Copy pg_config for server-devel
+cp -a %buildroot%_bindir/pg_config %buildroot%_bindir/pg_server_config
 
 cp -a COPYRIGHT README README.git \
     doc/{KNOWN_BUGS,MISSING_FEATURES,TODO} \
@@ -360,8 +436,9 @@ cat postgres-%postgresql_major.lang \
 
 cat pg_config-%postgresql_major.lang > devel.lang
 
-cat ecpg-%postgresql_major.lang \
-    ecpglib%libecpg_major-%postgresql_major.lang > ecpg.lang
+cat ecpg-%postgresql_major.lang > ecpg.lang
+
+cat ecpglib%libecpg_major-%postgresql_major.lang > ecpglib.lang
 
 cat pg_archivecleanup-%postgresql_major.lang > contrib.lang
 
@@ -509,147 +586,147 @@ fi
 %dir %_datadir/%PGSQL/contrib
 %dir %_libdir/pgsql
 
-%_libdir/pgsql/_int.so
+%_libdir/%PGSQL/_int.so
 %_datadir/%PGSQL/extension/intarray-*.sql
 %_datadir/%PGSQL/extension/intarray.control
-%_libdir/pgsql/adminpack.so
+%_libdir/%PGSQL/adminpack.so
 %_datadir/%PGSQL/extension/adminpack-*.sql
 %_datadir/%PGSQL/extension/adminpack.control
-%_libdir/pgsql/amcheck.so
+%_libdir/%PGSQL/amcheck.so
 %_datadir/%PGSQL/extension/amcheck-*.sql
 %_datadir/%PGSQL/extension/amcheck.control
-%_libdir/pgsql/auth_delay.so
-%_libdir/pgsql/auto_explain.so
-%_libdir/pgsql/autoinc.so
+%_libdir/%PGSQL/auth_delay.so
+%_libdir/%PGSQL/auto_explain.so
+%_libdir/%PGSQL/autoinc.so
 %_datadir/%PGSQL/extension/autoinc-*.sql
 %_datadir/%PGSQL/extension/autoinc.control
-%_libdir/pgsql/bloom.so
+%_libdir/%PGSQL/bloom.so
 %_datadir/%PGSQL/extension/bloom-*.sql
 %_datadir/%PGSQL/extension/bloom.control
-%_libdir/pgsql/btree_gin.so
+%_libdir/%PGSQL/btree_gin.so
 %_datadir/%PGSQL/extension/btree_gin-*.sql
 %_datadir/%PGSQL/extension/btree_gin.control
-%_libdir/pgsql/btree_gist.so
+%_libdir/%PGSQL/btree_gist.so
 %_datadir/%PGSQL/extension/btree_gist-*.sql
 %_datadir/%PGSQL/extension/btree_gist.control
-%_libdir/pgsql/citext.so
+%_libdir/%PGSQL/citext.so
 %_datadir/%PGSQL/extension/citext-*.sql
 %_datadir/%PGSQL/extension/citext.control
-%_libdir/pgsql/cube.so
+%_libdir/%PGSQL/cube.so
 %_datadir/%PGSQL/extension/cube-*.sql
 %_datadir/%PGSQL/extension/cube.control
-%_libdir/pgsql/dblink.so
+%_libdir/%PGSQL/dblink.so
 %_datadir/%PGSQL/extension/dblink-*.sql
 %_datadir/%PGSQL/extension/dblink.control
-%_libdir/pgsql/dict_int.so
+%_libdir/%PGSQL/dict_int.so
 %_datadir/%PGSQL/extension/dict_int-*.sql
 %_datadir/%PGSQL/extension/dict_int.control
-%_libdir/pgsql/dict_xsyn.so
+%_libdir/%PGSQL/dict_xsyn.so
 %_datadir/%PGSQL/extension/dict_xsyn-*.sql
 %_datadir/%PGSQL/extension/dict_xsyn.control
-%_libdir/pgsql/earthdistance.so
+%_libdir/%PGSQL/earthdistance.so
 %_datadir/%PGSQL/extension/earthdistance-*.sql
 %_datadir/%PGSQL/extension/earthdistance.control
-%_libdir/pgsql/file_fdw.so
+%_libdir/%PGSQL/file_fdw.so
 %_datadir/%PGSQL/extension/file_fdw-*.sql
 %_datadir/%PGSQL/extension/file_fdw.control
-%_libdir/pgsql/fuzzystrmatch.so
+%_libdir/%PGSQL/fuzzystrmatch.so
 %_datadir/%PGSQL/extension/fuzzystrmatch-*.sql
 %_datadir/%PGSQL/extension/fuzzystrmatch.control
-%_libdir/pgsql/hstore.so
+%_libdir/%PGSQL/hstore.so
 %_datadir/%PGSQL/extension/hstore-*.sql
 %_datadir/%PGSQL/extension/hstore.control
-%_libdir/pgsql/hstore_plperl.so
+%_libdir/%PGSQL/hstore_plperl.so
 %_datadir/%PGSQL/extension/hstore_plperl*.sql
 %_datadir/%PGSQL/extension/hstore_plperl*.control
-%_libdir/pgsql/insert_username.so
+%_libdir/%PGSQL/insert_username.so
 %_datadir/%PGSQL/extension/insert_username-*.sql
 %_datadir/%PGSQL/extension/insert_username.control
 %_datadir/%PGSQL/extension/intagg-*.sql
 %_datadir/%PGSQL/extension/intagg.control
-%_libdir/pgsql/isn.so
+%_libdir/%PGSQL/isn.so
 %_datadir/%PGSQL/extension/isn-*.sql
 %_datadir/%PGSQL/extension/isn.control
-%_libdir/pgsql/jsonb_plperl.so
+%_libdir/%PGSQL/jsonb_plperl.so
 %_datadir/%PGSQL/extension/jsonb_plperl-*.sql
 %_datadir/%PGSQL/extension/jsonb_plperl.control
 %_datadir/%PGSQL/extension/jsonb_plperlu-*.sql
 %_datadir/%PGSQL/extension/jsonb_plperlu.control
-%_libdir/pgsql/lo.so
+%_libdir/%PGSQL/lo.so
 %_datadir/%PGSQL/extension/lo-*.sql
 %_datadir/%PGSQL/extension/lo.control
-%_libdir/pgsql/ltree.so
+%_libdir/%PGSQL/ltree.so
 %_datadir/%PGSQL/extension/ltree-*.sql
 %_datadir/%PGSQL/extension/ltree.control
-%_libdir/pgsql/moddatetime.so
+%_libdir/%PGSQL/moddatetime.so
 %_datadir/%PGSQL/extension/moddatetime-*.sql
 %_datadir/%PGSQL/extension/moddatetime.control
-%_libdir/pgsql/pageinspect.so
+%_libdir/%PGSQL/pageinspect.so
 %_datadir/%PGSQL/extension/pageinspect-*.sql
 %_datadir/%PGSQL/extension/pageinspect.control
-%_libdir/pgsql/passwordcheck.so
-%_libdir/pgsql/pg_buffercache.so
+%_libdir/%PGSQL/passwordcheck.so
+%_libdir/%PGSQL/pg_buffercache.so
 %_datadir/%PGSQL/extension/pg_buffercache-*.sql
 %_datadir/%PGSQL/extension/pg_buffercache.control
-%_libdir/pgsql/pg_freespacemap.so
+%_libdir/%PGSQL/pg_freespacemap.so
 %_datadir/%PGSQL/extension/pg_freespacemap-*.sql
 %_datadir/%PGSQL/extension/pg_freespacemap.control
-%_libdir/pgsql/pg_prewarm.so
+%_libdir/%PGSQL/pg_prewarm.so
 %_datadir/%PGSQL/extension/pg_prewarm-*.sql
 %_datadir/%PGSQL/extension/pg_prewarm.control
-%_libdir/pgsql/pg_stat_statements.so
+%_libdir/%PGSQL/pg_stat_statements.so
 %_datadir/%PGSQL/extension/pg_stat_statements-*.sql
 %_datadir/%PGSQL/extension/pg_stat_statements.control
-%_libdir/pgsql/pg_trgm.so
+%_libdir/%PGSQL/pg_trgm.so
 %_datadir/%PGSQL/extension/pg_trgm-*.sql
 %_datadir/%PGSQL/extension/pg_trgm.control
-%_libdir/pgsql/pg_visibility.so
+%_libdir/%PGSQL/pg_visibility.so
 %_datadir/%PGSQL/extension/pg_visibility-*.sql
 %_datadir/%PGSQL/extension/pg_visibility.control
-%_libdir/pgsql/pgcrypto.so
+%_libdir/%PGSQL/pgcrypto.so
 %_datadir/%PGSQL/extension/pgcrypto-*.sql
 %_datadir/%PGSQL/extension/pgcrypto.control
-%_libdir/pgsql/pgoutput.so
-%_libdir/pgsql/pgrowlocks.so
+%_libdir/%PGSQL/pgoutput.so
+%_libdir/%PGSQL/pgrowlocks.so
 %_datadir/%PGSQL/extension/pgrowlocks-*.sql
 %_datadir/%PGSQL/extension/pgrowlocks.control
-%_libdir/pgsql/pgstattuple.so
+%_libdir/%PGSQL/pgstattuple.so
 %_datadir/%PGSQL/extension/pgstattuple-*.sql
 %_datadir/%PGSQL/extension/pgstattuple.control
-%_libdir/pgsql/pgxml.so
+%_libdir/%PGSQL/pgxml.so
 %_datadir/%PGSQL/extension/xml2-*.sql
 %_datadir/%PGSQL/extension/xml2.control
-%_libdir/pgsql/postgres_fdw.so
+%_libdir/%PGSQL/postgres_fdw.so
 %_datadir/%PGSQL/extension/postgres_fdw-*.sql
 %_datadir/%PGSQL/extension/postgres_fdw.control
-%_libdir/pgsql/refint.so
+%_libdir/%PGSQL/refint.so
 %_datadir/%PGSQL/extension/refint-*.sql
 %_datadir/%PGSQL/extension/refint.control
-%_libdir/pgsql/seg.so
+%_libdir/%PGSQL/seg.so
 %_datadir/%PGSQL/extension/seg-*.sql
 %_datadir/%PGSQL/extension/seg.control
-%_libdir/pgsql/sepgsql.so
+%_libdir/%PGSQL/sepgsql.so
 %_datadir/%PGSQL/contrib/sepgsql.sql
-%_libdir/pgsql/sslinfo.so
+%_libdir/%PGSQL/sslinfo.so
 %_datadir/%PGSQL/extension/sslinfo-*.sql
 %_datadir/%PGSQL/extension/sslinfo.control
-%_libdir/pgsql/tablefunc.so
+%_libdir/%PGSQL/tablefunc.so
 %_datadir/%PGSQL/extension/tablefunc-*.sql
 %_datadir/%PGSQL/extension/tablefunc.control
-%_libdir/pgsql/tcn.so
+%_libdir/%PGSQL/tcn.so
 %_datadir/%PGSQL/extension/tcn-*.sql
 %_datadir/%PGSQL/extension/tcn.control
-%_libdir/pgsql/test_decoding.so
-%_libdir/pgsql/tsm_system_rows.so
+%_libdir/%PGSQL/test_decoding.so
+%_libdir/%PGSQL/tsm_system_rows.so
 %_datadir/%PGSQL/extension/tsm_system_rows-*.sql
 %_datadir/%PGSQL/extension/tsm_system_rows.control
-%_libdir/pgsql/tsm_system_time.so
+%_libdir/%PGSQL/tsm_system_time.so
 %_datadir/%PGSQL/extension/tsm_system_time-*.sql
 %_datadir/%PGSQL/extension/tsm_system_time.control
-%_libdir/pgsql/unaccent.so
+%_libdir/%PGSQL/unaccent.so
 %_datadir/%PGSQL/extension/unaccent-*.sql
 %_datadir/%PGSQL/extension/unaccent.control
-%_libdir/pgsql/uuid-ossp.so
+%_libdir/%PGSQL/uuid-ossp.so
 %_datadir/%PGSQL/extension/uuid-ossp-*.sql
 %_datadir/%PGSQL/extension/uuid-ossp.control
 
@@ -711,8 +788,12 @@ fi
 %attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL/data
 %_unitdir/*
 
+%files server-devel
+%_bindir/pg_server_config
+%_includedir/%PGSQL/server
+%_libdir/%PGSQL/pgxs
+
 %files -f pltcl-%postgresql_major.lang tcl
-%dir %_libdir/%PGSQL
 %_libdir/%PGSQL/pltcl.so
 %_datadir/%PGSQL/extension/pltcl-*.sql
 %_datadir/%PGSQL/extension/pltcl.control
@@ -720,65 +801,68 @@ fi
 %_datadir/%PGSQL/extension/pltclu.control
 
 %files -f plperl-%postgresql_major.lang perl
-%dir %_libdir/%PGSQL
 %_libdir/%PGSQL/plperl.so
 %_datadir/%PGSQL/extension/plperl-*.sql
 %_datadir/%PGSQL/extension/plperl.control
 %_datadir/%PGSQL/extension/plperlu-*.sql
 %_datadir/%PGSQL/extension/plperlu.control
-%_libdir/pgsql/bool_plperl.so
+%_libdir/%PGSQL/bool_plperl.so
 %_datadir/%PGSQL/extension/bool_plperl-*.sql
 %_datadir/%PGSQL/extension/bool_plperl.control
 %_datadir/%PGSQL/extension/bool_plperlu-*.sql
 %_datadir/%PGSQL/extension/bool_plperlu.control
 
 %files -f plpython-%postgresql_major.lang python
-%dir %docdir
-%dir %_libdir/%PGSQL
 %_libdir/%PGSQL/plpython3.so
 %_datadir/%PGSQL/extension/plpython3u-*.sql
 %_datadir/%PGSQL/extension/plpython3u.control
-%_libdir/pgsql/hstore_plpython3.so
+%_libdir/%PGSQL/hstore_plpython3.so
 %_datadir/%PGSQL/extension/hstore_plpython3u-*.sql
 %_datadir/%PGSQL/extension/hstore_plpython3u.control
-%_libdir/pgsql/jsonb_plpython3.so
+%_libdir/%PGSQL/jsonb_plpython3.so
 %_datadir/%PGSQL/extension/jsonb_plpython3u-*.sql
 %_datadir/%PGSQL/extension/jsonb_plpython3u.control
-%_libdir/pgsql/ltree_plpython3.so
+%_libdir/%PGSQL/ltree_plpython3.so
 %_datadir/%PGSQL/extension/ltree_plpython3u-*.sql
 %_datadir/%PGSQL/extension/ltree_plpython3u.control
 
 %if_with devel
+%files -n %prog_name-devel
+%files -n %prog_name-devel-static
+
 %files -f libpq%libpq_major-%postgresql_major.lang -n %libpq_name
 %_libdir/libpq.so.%libpq_major
 %_libdir/libpq.so.%libpq_major.*
 
-%files -f ecpg.lang -n %libecpg_name
+%files -f devel.lang -n %libpq_name-devel
+%_bindir/pg_config
+%_includedir/%PGSQL
+%_includedir/postgresql
+%exclude %_includedir/%PGSQL/server
+%_libdir/libpq*.so
+%_libdir/pkgconfig/libpq.pc
+%_man1dir/pg_config.*
+%_man3dir/*
+
+%files -f ecpglib.lang -n %libecpg_name
 %_libdir/libecpg.so.%libecpg_major
 %_libdir/libecpg.so.%libecpg_major.*
 %_libdir/libecpg_compat.so.*
 %_libdir/libpgtypes.so.*
 
-%files -f devel.lang -n postgresql-devel
+%files -f ecpg.lang -n %libecpg_name-devel
 %_bindir/ecpg
-%_bindir/pg_config
-%_includedir/%PGSQL
-%_includedir/postgresql
-%dir %_libdir/%PGSQL
-%dir %_libdir/%PGSQL/pgxs/
 %_libdir/libecpg*.so
-%_libdir/libpq*.so
 %_libdir/libpgtypes.so
-%_libdir/%PGSQL/pgxs/*
 %_libdir/pkgconfig/libecpg.pc
 %_libdir/pkgconfig/libecpg_compat.pc
-%_libdir/pkgconfig/libpq.pc
 %_libdir/pkgconfig/libpgtypes.pc
 %_man1dir/ecpg.*
-%_man1dir/pg_config.*
-%_man3dir/*
 
-%files -n postgresql-devel-static
+%files -n %libpq_name-devel-static
+%_libdir/libpq*.a
+
+%files -n %libecpg_name-devel-static
 %_libdir/libecpg*.a
 %_libdir/libpgcommon.a
 %_libdir/libpgcommon_shlib.a
@@ -786,10 +870,23 @@ fi
 %_libdir/libpgtypes.a
 %_libdir/libpgport.a
 %_libdir/libpgport_shlib.a
-%_libdir/libpq*.a
+
+%files -n rpm-macros-%prog_name
+%_rpmmacrosdir/postgresql
 %endif
 
 %changelog
+* Thu Jan 27 2022 Alexei Takaseev <taf@altlinux.org> 13.5-alt2
+- Move %_includedir/%PGSQL/server and %_libdir/%PGSQL/pgxs to
+  separe server-devel subpackage.
+- Remove 0004-Fix-includedirs.patch patch
+- Add %_rpmmacrosdir/postgresql
+- Add Provides: postgresql-server-devel for build _with devel
+- Split postgresql-devel to libpq-devel and libecpg-devel
+- Split postgresql-devel-static to libpq-devel-static and
+  libecpg-devel-static
+- Add Requires: postgresql-server-devel to postgresql-devel
+
 * Wed Nov 10 2021 Alexei Takaseev <taf@altlinux.org> 13.5-alt1
 - 13.5 (Fixes CVE-2021-23214, CVE-2021-23222)
 
