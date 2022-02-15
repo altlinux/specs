@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 59
+%define centos_release 60
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,22 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Feb 15 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.60-alt1.el9
+- Updated to kernel-5.14.0-60.el9 (fixes: CVE-2021-4083):
+  + bnx2x: Fix enabling network interfaces without VFs
+  + bonding: driver update or RHEL 9.0
+  + Change "-auto" suffix to fix CI automotive pipeline issues
+  + crypto: jitter - add oversampling of noise source
+  + fget: check that the fd still exists after getting a ref to it
+  + igbvf: driver update for 9.0
+  + ipv6: 9.0 P2 backports from upstream
+  + nfsd: fix use-after-free due to delegation race
+  + NVMe command id changes for use-after-free CQE detection
+  + Revert "ipv6: Honor all IPv6 PIO Valid Lifetime values"
+  + sctp: backports from upstream, 2nd phase
+  + tun: fix bonding active backup with arp monitoring
+  + udp: backports from upstream, 2nd phase
+
 * Sat Feb 12 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.59-alt1.el9
 - Updated to kernel-5.14.0-59.el9:
   + gfs2: Upstream backports for mmap and deadlock fixes
