@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220124
+Version: 20220126
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,11 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Feb 15 2022 Cronbuild Service <cronbuild@altlinux.org> 20220126-alt1
+- upstream changes (GIT 6342082):
+  + Amphion: Add VPU firmwares for NXP i.MX8Q SoCs (thx Ming Qian)
+  + i915: Add DMC firmware v2.16 for ADL-P (thx Madhumitha Tolakanahalli Pradeep)
+
 * Tue Jan 25 2022 Cronbuild Service <cronbuild@altlinux.org> 20220124-alt1
 - upstream changes (GIT eb8ea1b):
   + mediatek: Update MT8173 VPU firmware to v1.1.7 (thx Irui Wang)
