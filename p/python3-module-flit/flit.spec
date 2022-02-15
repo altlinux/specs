@@ -5,7 +5,7 @@
 %def_disable bootstrap
 
 Name: python3-module-%oname
-Version: 3.3.0
+Version: 3.6.0
 Release: alt1
 Summary: Simplified packaging of Python modules
 # ./flit/logo.py  under ASL 2.0 license
@@ -52,7 +52,7 @@ export PYTHONPATH=$(pwd)/flit_core
 export FLIT_NO_NETWORK=1
 
 pushd flit_core &>/dev/null
-python3 -c 'from flit_core.build_thyself import build_wheel; build_wheel(".")'
+python3 -c 'from flit_core.buildapi import build_wheel; build_wheel(".")'
 mkdir ../dist
 mv flit_core-%version-*-none-any.whl ../dist
 popd &>/dev/null
@@ -73,6 +73,9 @@ pip3 install -I dist/%oname-%version-*-none-any.whl --root %buildroot --prefix %
 %_bindir/flit
 
 %changelog
+* Tue Feb 15 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 3.6.0-alt1
+- Updated to upstream version 3.6.0.
+
 * Tue Aug 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3.0-alt1
 - Updated to upstream version 3.3.0.
 
