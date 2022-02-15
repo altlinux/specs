@@ -1,6 +1,6 @@
 Name: rars
-Version: 1.5
-Release: alt3
+Version: 1.5.20220215
+Release: alt1
 
 Summary: RISC-V Assembler and Runtime Simulator
 
@@ -61,6 +61,9 @@ done
 %_iconsdir/*/*/apps/*
 
 %changelog
+* Tue Feb 15 2022 Fr. Br. George <george@altlinux.ru> 1.5.20220215-alt1
+- Update co continous branch
+
 * Sun Jan 23 2022 Fr. Br. George <george@altlinux.ru> 1.5-alt3
 - Obsolete javadoc package
 
