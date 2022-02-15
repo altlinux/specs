@@ -1,9 +1,11 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %define oname grpcio-tools
 
 Name: python3-module-%oname
-Version: 1.39.0
+Version: 1.43.0
 Release: alt1
 Summary: HTTP/2-based RPC framework
 License: Apache-2.0
@@ -45,6 +47,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Tue Feb 15 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.43.0-alt1
+- Updated to upstream version 1.43.0.
+
 * Fri Aug 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.39.0-alt1
 - Updated to upstream version 1.39.0.
 

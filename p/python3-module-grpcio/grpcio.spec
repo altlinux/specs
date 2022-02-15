@@ -1,10 +1,12 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %define oname grpcio
 
 Name: python3-module-%oname
-Version: 1.39.0
-Release: alt2
+Version: 1.43.0
+Release: alt1
 Summary: HTTP/2-based RPC framework
 License: Apache-2.0
 Group: Development/Python3
@@ -36,6 +38,8 @@ rm -rf third_party/boringssl
 rm -rf third_party/re2
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 export GRPC_PYTHON_BUILD_WITH_CYTHON=1
 export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
 export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
@@ -67,6 +71,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Tue Feb 15 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.43.0-alt1
+- Updated to upstream version 1.43.0.
+
 * Thu Nov 18 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.39.0-alt2
 - Fixed build for Elbrus.
 
