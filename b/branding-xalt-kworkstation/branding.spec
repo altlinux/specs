@@ -3,6 +3,7 @@
 %else
 %def_disable gfxboot
 %endif
+%def_enable flickfree
 
 %define Theme Workstation K
 %define smalltheme kworkstation
@@ -18,7 +19,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt3
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -44,8 +45,8 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel /usr/bin/fribidi
 
 %define variants alt-kdesktop alt-server alt-starterkit alt-workstation altlinux-kdesktop altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench altlinux-sisyphus sisyphus-server school-master school-server school-teacher school-lite school-junior altlinux-gnome-desktop sisyphus-server-light
 
-%define grub_normal white/light-blue
-%define grub_high black/light-gray
+%define grub_normal light-gray/black
+%define grub_high white/dark-gray
 
 Source: %name.tar
 
@@ -75,6 +76,12 @@ Summary: Theme for splash animations during bootup
 License: Distributable
 Group:  System/Configuration/Boot and Init
 Provides: plymouth-theme-%theme plymouth(system-theme)
+%if_enabled flickfree
+%define plymouth_theme bgrt-alt
+Requires: plymouth-theme-bgrt-alt
+%else
+%define plymouth_theme %theme
+%endif
 Requires: plymouth-plugin-script
 Requires: plymouth-plugin-label
 Requires: fonts-ttf-dejavu
@@ -359,12 +366,18 @@ echo $lang > lang
 [ "$lang" = "C" ] || echo lang | cpio -o --append -F message
 %endif
 . shell-config
-shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
-shell_config_set /etc/sysconfig/grub2 GRUB_BACKGROUND /boot/grub/themes/%theme/grub.png
+%if_enabled flickfree
+shell_config_del /etc/sysconfig/grub2 GRUB_THEME
+shell_config_del /etc/sysconfig/grub2 GRUB_BACKGROUND
 # deprecated
+shell_config_del /etc/sysconfig/grub2 GRUB_WALLPAPER
+%else
+shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
+shell_config_set /etc/sysconfig/grub2 GRUB_BACKGROUND /boot/grub/themes/%theme/grub.png
 shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER /boot/grub/themes/%theme/grub.png
+%endif
 
 %if_enabled gfxboot
 %preun bootloader
@@ -377,7 +390,7 @@ shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER /boot/grub/themes/%theme/gr
 %_sbindir/indexhtml-update
 
 %post bootsplash
-sed -i "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf ||:
+sed -i "s/Theme=.*/Theme=%plymouth_theme/" /etc/plymouth/plymouthd.conf ||:
 
 %post release
 # alt-os-release filetrigger do it now
@@ -463,6 +476,12 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Wed Feb 16 2022 Sergey V Turchin <zerg at altlinux dot org> 10.0.0-alt3
+- remove version from indexhtml.desktop
+
+* Tue Feb 15 2022 Sergey V Turchin <zerg at altlinux dot org> 10.0.0-alt2
+- setup grub and plymouth for flicker-free boot
+
 * Wed Jan 19 2022 Sergey V Turchin <zerg at altlinux dot org> 10.0.0-alt1
 - add icons/system-logo.png
 
