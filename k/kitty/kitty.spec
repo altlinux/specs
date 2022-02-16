@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%def_with check
 
 Name: kitty
-Version: 0.23.1
+Version: 0.24.2
 Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
@@ -11,7 +12,7 @@ Url: https://sw.kovidgoyal.net/kitty/
 
 Requires: %name-terminfo = %EVR
 
-# Upstream: https://github.com/kovidgoyal/kitty
+# VCS: https://github.com/kovidgoyal/kitty
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 Patch1: alt-sphinx-use-classic-theme.patch
@@ -31,6 +32,7 @@ BuildRequires: libwayland-cursor-devel
 BuildRequires: libGL-devel
 BuildRequires: libpng-devel
 BuildRequires: libdbus-devel
+BuildRequires: librsync-devel
 BuildRequires: liblcms2-devel
 BuildRequires: fontconfig-devel
 BuildRequires: libharfbuzz-devel
@@ -43,9 +45,11 @@ BuildRequires: python3-module-sphinx-sphinx-build-symlink
 # For tic
 BuildRequires: ncurses
 
-# For tests
+%if_with check
 BuildRequires: /proc
+BuildRequires: /dev/pts
 BuildRequires: fonts-ttf-gnu-freefont-mono
+%endif
 
 %add_python3_path %_libexecdir/%name
 
@@ -145,6 +149,9 @@ python3 setup.py test --prefix=%buildroot%_prefix
 %_datadir/terminfo/*/*
 
 %changelog
+* Wed Feb 16 2022 Egor Ignatov <egori@altlinux.org> 0.24.2-alt1
+- new version 0.24.2
+
 * Tue Sep 07 2021 Egor Ignatov <egori@altlinux.org> 0.23.1-alt1
 - new version 0.23.1
 - cleanup spec
