@@ -5,7 +5,7 @@
 
 Name:		burp
 Version:	2.5.4
-Release:	alt1
+Release:	alt2
 Summary:	Burp is a network-based backup and restore program
 License:	AGPL-3.0 and BSD and GPLv2+ and LGPLv2+
 Group:		Archiving/Backup
@@ -32,6 +32,10 @@ BuildRequires:  zlib-devel
 Burp is a network backup and restore program, using client and server.
 It uses librsync in order to save network traffic and to save on the
 amount of space that is used by each backup.
+
+# 2.5.4: client_protocol1_backup_phase2 test fails with lto
+# and librsync >= 2.0.1
+%define optflags_lto %nil
 
 %prep
 %setup
@@ -97,6 +101,10 @@ fi
 %preun_service burp-server
 
 %changelog
+* Wed Jan 12 2022 Egor Ignatov <egori@altlinux.org> 2.5.4-alt2
+- Disable LTO: client_protocol1_backup_phase2 test fails
+  with librsync >= 2.0.1
+
 * Fri Sep 03 2021 Vitaly Chikunov <vt@altlinux.org> 2.5.4-alt1
 - Update to 2.5.4 (2021-08-14).
 

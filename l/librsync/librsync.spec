@@ -1,80 +1,126 @@
-Name: librsync
-Version: 0.9.7
-Release: alt5
+%define _unpackaged_files_terminate_build 1
 
-Summary: rsync remote network-delta algorithm library
-License: LGPLv2+
+%def_with check
+%def_with doc
+
+Name: librsync
+Version: 2.3.2
+Release: alt1
+
+Summary: remote delta-compression library
+License: LGPL-2.1
 Group: System/Libraries
 
-Url: http://librsync.sourceforge.net/
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-Source: http://download.sourceforge.net/%name/%name-%version.tar.bz2
-Patch1: librsync-debian-manpage.patch
-Patch2: librsync-debian-4gb.patch
-Patch3: librsync-debian-getopt.patch
-Patch4: librsync-debian-format-security.patch
-Patch5: librsync-debian-implicit-declaration.patch
-Patch6: librsync-debian-fix-tests.patch
+#https://github.com/librsync/librsync
+Url: https://librsync.github.io/
+Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
-# Automatically added by buildreq on Thu Dec 08 2011
-BuildRequires: bzlib-devel libpopt-devel zlib-devel
+BuildRequires: cmake
+BuildRequires: zlib-devel
+BuildRequires: bzlib-devel
+BuildRequires: libb2-devel
+BuildRequires: libpopt-devel
+
+%if_with check
+BuildRequires: ctest
+%endif
+
+%if_with doc
+BuildRequires: doxygen
+BuildRequires: graphviz
+%endif
 
 %description
-librsync is a free software library that implements the rsync remote-delta
-algorithm.  This algorithm allows efficient remote updates of a file,
-without requiring the old and new versions to both be present at the
-sending end.  The library uses a "streaming" design similar to that of
-zlib with the aim of allowing it to be embedded into many different
-applications.
+librsync is a library for calculating and applying network deltas, with an
+interface designed to ease integration into diverse network applications.
 
-librsync is not wire-compatible with rsync, and is not likely to be in
-the future.
+librsync encapsulates the core algorithms of the rsync protocol, which help
+with efficient calculation of the differences between two files. The rsync
+algorithm is different from most differencing algorithms because it does
+not require the presence of the two files to calculate the delta. Instead,
+it requires a set of checksums of each block of one file, which together
+form a signature for that file. Blocks at any position in the other file
+which have the same checksum are likely to be identical, and whatever
+remains is the difference.
+
+This algorithm transfers the differences between two files without needing
+both files on the same system.
+
+librsync is for building other programs that transfer files as efficiently
+as rsync. You can use librsync in a program you write to do backups,
+distribute binary patches to programs, or sync directories to a server or
+between peers.
+
+This tree also produces the rdiff command that exposes the key operations
+of librsync: generating file signatures, generating the delta from a
+signature to a new file, and applying the delta to regenerate the new file
+given the old file.
+
+librsync was originally written for the rproxy experiment in
+delta-compression for HTTP. librsync is used by: Dropbox, rdiff-backup,
+Duplicity, and others. (If you would like to be listed here, let me know.)
 
 %package devel
-Summary: Files for development of %name-based applications
+Summary: Headers and development libraries for librsync
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
-This package contains files for development of applications
-which will use %name.
+The librsync-devel package contains header files and library necessary for
+developing programs based on librsync.
+
+%if_with doc
+%package doc
+Summary: Documentation for librsync
+Group: Development/Documentation
+BuildArch: noarch
+
+%description doc
+This package contains the API documentation for developing applications that
+use librsync.
+%endif
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
+%patch0 -p1
 
 %build
-# E2K: see also http://github.com/librsync/librsync/issues/41
-%add_optflags -std=gnu89
-%autoreconf
-%configure --disable-static --enable-shared
-%make_build
+%cmake
+%cmake_build
+%if_with doc
+%cmake_build --target doc
+%endif
 
 %install
-%makeinstall_std
-%set_verify_elf_method strict
-%define _unpackaged_files_terminate_build 1
+%cmakeinstall_std
 
 %check
-%make_build check
+%cmake_build --target check
 
 %files
-%_libdir/*.so.*
+%doc AUTHORS README.md NEWS.md COPYING
 %_bindir/*
+%_libdir/*.so.*
 %_man1dir/*
-%doc AUTHORS README
 
 %files devel
 %_libdir/*.so
 %_includedir/*
 %_man3dir/*
 
+%if_with doc
+%files doc
+%doc %_cmake__builddir/html
+%endif
+
 %changelog
+* Tue Jan 11 2022 Egor Ignatov <egori@altlinux.org> 2.3.2-alt1
+- update to 2.3.2 (closes: #41679)
+- gear: change package build scheme
+  + merge with upstream git
+  + build from release tag
+
 * Mon Apr 20 2020 Michael Shigorin <mike@altlinux.org> 0.9.7-alt5
 - fix build with lcc (and clang: upstream issue #41)
 
