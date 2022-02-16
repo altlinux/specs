@@ -3,8 +3,8 @@ Summary: XDG desktop settings for Kometa distros
 Summary(ru): Настройки рабочего окружения дистрибутивов Комета
 License: GPL-3.0
 Group: Graphical desktop/Other
-Version: 1.3
-Release: alt1
+Version: 1.5
+Release: alt1.1
 Source0: kometa-xdg-%version.tar
 Source1: COPYING
 BuildArch: noarch
@@ -18,19 +18,26 @@ XDG desktop settings for Kometa distros
 #--------------------------------------------------------------
 
 %package core
-Summary: DE-agnostic desktop settings for Kometa distros
-Summary(ru): DE-независимые настройки рабочих окружений дистрибутивов Комета
+Summary: Engine to set distribution-specific desktop settings
+Summary(ru): Движок установки дистрибутиво-специфичных настроек рабочего стола
 Group: Graphical desktop/Other
 Requires: sed
 
 %description core
-DE-agnostic desktop settings for Kometa distros
+Engine to set distribution-specific desktop settings.
+Sets environmental variables $XDG_CONFIG_DIRS and $XDG_DATA_DIRS,
+adding /etc/xdg/kometa and /usr/share/kometa into them.
+Can be used separately from Kometa.
 %description -l ru_RU.UTF-8 core
-DE-независимые настройки рабочих окружений дистрибутивов Комета
+Движок установки дистрибутиво-специфичных настроек рабочего стола.
+Устонавливает переменные окружения $XDG_CONFIG_DIRS и $XDG_DATA_DIRS,
+добавляя в них /etc/xdg/kometa и /usr/share/kometa.
+Может быть использован вне кометы.
 
 %files core
 %doc COPYING
 %dir /etc/xdg/kometa
+%dir /usr/share/kometa
 %_bindir/kometa-xdg-env
 %_user_env_gen_dir/10-kometa-xdg.sh
 /etc/profile.d/10-kometa-xdg.sh
@@ -57,6 +64,9 @@ KDE 5 desktop settings for classic variant of Kometa
 /etc/xdg/kometa/kcminputrc
 /etc/xdg/kometa/kdeglobals
 /etc/xdg/kometa/kxkbrc
+%dir /usr/share/kometa/kxmlgui5
+%dir /usr/share/kometa/kxmlgui5/dolphin
+/usr/share/kometa/kxmlgui5/dolphin/dolphinui.rc
 
 #--------------------------------------------------------------
 
@@ -152,7 +162,9 @@ install -m0755 scripts/profile.sh %buildroot/etc/profile.d/10-kometa-xdg.sh
 install -m0755 scripts/systemd.sh %buildroot%_user_env_gen_dir/10-kometa-xdg.sh
 
 mkdir -p %buildroot/etc/xdg/kometa
-install -m0644 plasma5/* %buildroot/etc/xdg/kometa
+cp -rv plasma5/XDG_CONFIG_DIRS/* %buildroot/etc/xdg/kometa
+mkdir -p %buildroot/usr/share/kometa
+cp -rv plasma5/XDG_DATA_DIRS/* %buildroot/usr/share/kometa
 
 mkdir -p %buildroot%_datadir
 echo QT_QPA_PLATFORMTHEME=gtk3 > %buildroot/%_datadir/kometa-pam-env
@@ -162,6 +174,19 @@ cd scripts
 ./test.sh
 
 %changelog
+* Wed Feb 16 2022 Mikhail Novosyolov <mikhailnov@altlinux.org> 1.5-alt1.1
+- Commit 1.5-alt1 by tema@
+
+* Tue Feb 15 2022 Artem Proskurnev <tema@altlinux.org> 1.5-alt1
+- Add power settings
+- Add Dolphin filer panel
+- Add "Set as wallpaper"
+- Set Chromium as the default browser
+
+* Fri Dec 24 2021 Mikhail Novosyolov <mikhailnov@altlinux.org> 1.4-alt1
+- Add setting $XDG_DATA_DIRS, enable "Show Previews" button in Dolphin
+- Tune description: note that kometa-xdg-core can be used just to set env outside of Kometa
+
 * Thu Dec 16 2021 Mikhail Novosyolov <mikhailnov@altlinux.org> 1.3-alt1
 - Turn off NumLock by default in KDE 5
 
