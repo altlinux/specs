@@ -25,7 +25,7 @@
 %define qsa_major 1
 %define qsa_minor 1
 %define qsa_bugfix 5
-%define rlz alt16
+%define rlz alt16.1
 Name: %rname%major
 Version: %major.%minor.%bugfix
 Release: %rlz
@@ -596,7 +596,7 @@ CNFGR="\
 	-L/usr/X11R6/%_lib \
 	-L`pwd`/Xinerama \
 	-L%_libdir \
-	-I%_includedir/pgsql/ -I%_includedir/mysql/ \
+	-I%_includedir/pgsql/ -I%_includedir/pgsql/server/ -I%_includedir/mysql/ \
 	-I/usr/X11R6/include/X11/Xft -I/usr/include/fontconfig \
         -prefix %qtdir \
 	-bindir %qtdir/bin \
@@ -1317,6 +1317,9 @@ install -m 644 %SOURCE103 %buildroot%_iconsdir/hicolor/48x48/apps/%rname.png
 %_rpmmacrosdir/*
 
 %changelog
+* Sat Jan 29 2022 Alexei Takaseev <taf@altlinux.org> 3.3.8d-alt16.1
+- Add -I%_includedir/pgsql/server/ to configure
+
 * Wed Dec 08 2021 Dmitry V. Levin <ldv@altlinux.org> 3.3.8d-alt16
 - NMU.
 - Disabled build and packaging of static libraries to fix FTBFS.
