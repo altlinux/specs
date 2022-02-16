@@ -1,4 +1,4 @@
-%set_verify_elf_method unresolved=relaxed
+%set_verify_elf_skiplist %_libdir/libspdk*
 
 %define dpdk_build_path "dpdk/build"
 %define dpdk_path "dpdk"
@@ -8,12 +8,12 @@
 %def_disable tests
 
 Name: spdk
-Version: 21.10
+Version: 22.01
 Release: alt1
 
 Summary: Storage Performance Development Kit
 License: BSD-3-Clause
-Group: System/Kernel and hardware
+Group: Development/Tools
 Url: https://spdk.io
 ExcludeArch: i586 ppc64le armh
 
@@ -36,6 +36,7 @@ Patch: spdk-21.10-alt-scripts-syntax.patch
 
 %add_python3_req_skip common rpc.client rpc.helpers
 
+Requires: systemd-utils
 BuildRequires: gcc-c++ glibc-devel rpm-build-python3 libuuid-devel libssl-devel libaio-devel libncurses-devel
 # BuildPreReq: libpmem-devel rdma-core-devel libiscsi-devel liburing-devel librbd-devel libpmem-devel
 %if_enabled dpdk_internal
@@ -220,6 +221,11 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Wed Feb 16 2022 Leontiy Volodin <lvol@altlinux.org> 22.01-alt1
+- New version (22.01).
+- Changed group.
+- Skipped elf check for spdk libs.
+
 * Thu Jan 27 2022 Leontiy Volodin <lvol@altlinux.org> 21.10-alt1
 - Initial build for ALT Sisyphus (ALT #41663).
 
