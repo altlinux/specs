@@ -12,7 +12,7 @@
 
 Name: rdma-core
 Version: 38.0
-Release: alt3
+Release: alt3.1
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
 
@@ -33,7 +33,9 @@ BuildRequires: pkgconfig(libnl-3.0)
 BuildRequires: pkgconfig(libnl-route-3.0)
 BuildRequires: libsystemd-devel
 BuildRequires: /usr/bin/rst2man.py
+%ifnarch %e2k
 BuildRequires: pandoc
+%endif
 Conflicts: infiniband-diags < 2.0.0
 
 %define docdir %_docdir/%name-%version
@@ -223,6 +225,11 @@ discover and use SCSI devices via the SCSI RDMA Protocol over InfiniBand.
 %prep
 %setup
 %patch -p1
+%ifarch %e2k
+# empty manpages because pandoc is unavaiable
+mkdir -p buildlib/pandoc-prebuilt
+sed -i '/rdma_man_get_prebuilt(/a execute_process(COMMAND "echo" " " OUTPUT_FILE "${OBJ}")' buildlib/rdma_man.cmake
+%endif
 subst 's|NAMES rst2man|& rst2man.py|' buildlib/Findrst2man.cmake
 
 %build
@@ -572,6 +579,9 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %docdir/ibsrpdm.md
 
 %changelog
+* Wed Feb 16 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 38.0-alt3.1
+- removed use of pandoc to fix build for Elbrus
+
 * Mon Nov 29 2021 Alexey Shabalin <shaba@altlinux.org> 38.0-alt3
 - filter requires systemd-utils
 
