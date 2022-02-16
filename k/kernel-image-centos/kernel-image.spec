@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 60
+%define centos_release 61
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,21 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Feb 16 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.61-alt1.el9
+- Updated to kernel-5.14.0-61.el9 (fixes: CVE-2021-4197, CVE-2021-4203, CVE-2022-0264):
+  + bpf: Fix kernel address leakage in atomic fetch
+  + cgroup: Use open-time credentials for process migraton perm checks
+  + Enable KUNIT for CI Testing
+  + IB/rdmavt: Validate remote_addr during loopback atomic tests
+  + netfilter: P2 backports from upstream
+  + nvme: fix a possible use-after-free in controller reset during load
+  + ovs: backports P2 for 9.0
+  + redhat/configs: enable CONFIG_CMA on aarch64 as tech-preview
+  + [s390] s390/cpumf: Support for CPU Measurement Facility CSVN 7
+  + [s390] scsi: zfcp: Fix failed recovery on gone remote port with non-NPIV FCP devices
+  + tracing: Fix trace_percpu_buffer
+  + x86: add ITBM support for AlderLake
+
 * Tue Feb 15 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.60-alt1.el9
 - Updated to kernel-5.14.0-60.el9 (fixes: CVE-2021-4083):
   + bnx2x: Fix enabling network interfaces without VFs
