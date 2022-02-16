@@ -1,11 +1,13 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict,lfs=relaxed
 
 %define _pseudouser_user     _greeter
 %define _pseudouser_group    _greeter
 %define _pseudouser_home     %_var/empty
 
 Name: greetd
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 Summary: Generic greeter daemon
 License: GPL-3.0
@@ -99,5 +101,8 @@ install -Dm644 config.toml %buildroot%_sysconfdir/greetd/config.toml
 %_man7dir/*.7*
 
 %changelog
+* Tue Feb 15 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.0-alt1
+- Updated to upstream version 0.8.0.
+
 * Fri Mar 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.0-alt1
 - Initial build for ALT.

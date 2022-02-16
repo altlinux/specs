@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict,lfs=relaxed
 
 Name: wlgreet
 Version: 0.3
-Release: alt1
+Release: alt2
 Summary: Wayland greeter for greetd
 License: GPL-3.0
 Group: Graphical desktop/Other
@@ -52,5 +54,8 @@ cargo test --release
 %_bindir/*
 
 %changelog
+* Tue Feb 15 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3-alt2
+- Applied stricter build checks.
+
 * Fri Mar 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3-alt1
 - Initial build for ALT.
