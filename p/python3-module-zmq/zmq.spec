@@ -1,10 +1,12 @@
 %define oname zmq
 
-%def_with bootstrap
+%def_without bootstrap
+%def_with check
 
 Name: python3-module-%oname
 Version: 22.3.0
-Release: alt2
+Release: alt3
+
 Summary: Software library for fast, message-based applications
 
 Group: Development/Python3
@@ -17,7 +19,11 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: libzeromq-devel
 BuildRequires: python3-module-Cython
 %if_without bootstrap
-BuildPreReq: python3-module-numpy
+BuildRequires: python3-module-cffi
+BuildRequires: python3-module-numpy
+%endif
+%if_with check
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -68,16 +74,21 @@ subst "s|/usr/local/include|%_includedir|" setup.cfg
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build
+%python3_build build_ext --inplace
 
 %install
 %python3_install
 
-#check
-#rm %oname/__*
-#PYTHONPATH=%buildroot%python3_sitelibdir python3 setup.py test
-#rm -rf %python3_sitelibdir/%oname/backend/cffi/__*
-#rm -rf %buildroot%python3_sitelibdir/%oname/backend/cffi/__*
+%check
+# This test wants to build a custom cython extension, but does
+# not have the source files installed into the buildroot
+# That's why test_cython disabled, according to opensuse
+# Note also that it should be build with build_ext --inplace
+# to pass the tests, according to setup.py
+# Tests are not passing in %%buildroot%%python3_sitelibdir
+# because zmq's asyncio conflicts with python3-base's asyncio
+# Maybe it somehow tied with paths
+py.test3 -v -k "not test_cython" %oname/tests
 
 %files
 %doc README.md COPYING.LESSER COPYING.BSD CONTRIBUTING.md AUTHORS.md examples/
@@ -93,6 +104,11 @@ subst "s|/usr/local/include|%_includedir|" setup.cfg
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Mon Feb 14 2022 Grigory Ustinov <grenka@altlinux.org> 22.3.0-alt3
+- Build without bootstrap.
+- Build with cffi.
+- Enabled check.
+
 * Sun Dec 05 2021 Grigory Ustinov <grenka@altlinux.org> 22.3.0-alt2
 - Bootstrap for python3.10.
 

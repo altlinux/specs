@@ -1,7 +1,12 @@
 %def_without pgm
+%def_without libsodium
+%def_without libgssapi_krb5
+%def_disable libunwind
+%def_disable libbsd
+%def_enable Werror
 
 Name: zeromq
-Version: 4.2.5
+Version: 4.3.4
 Release: alt1
 
 Summary: a software library that lets you quickly design and implement a fast message-based application
@@ -10,12 +15,14 @@ License: GPLv3, LGPLv3
 
 Url: http://www.zeromq.org
 Source: %name-%version.tar
-Source1: https://raw.githubusercontent.com/zeromq/cppzmq/master/zmq.hpp
-Source2: https://raw.githubusercontent.com/zeromq/cppzmq/master/LICENSE
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
 BuildRequires: gcc-c++ libuuid-devel glib2-devel asciidoc xmlto
-%{?_with_pgm:BuildRequires: libopenpgm-devel}
+%{?_with_pgm:BuildRequires: libpgm-devel}
+%{?_with_libsodium:BuildRequires: libsodium-devel}
+%{?_with_libgssapi_krb5:BuildRequires: libkrb5-devel}
+%{?_enable_libunwind:BuildRequires: libunwind-devel}
+%{?_enable_libbsd:BuildRequires: libbsd-devel}
 
 Requires: lib%name = %version-%release
 
@@ -55,38 +62,32 @@ message filtering (subscriptions), seamless access to multiple transport
 protocols and more.
 This package contains 0mq library headers
 
-%package -n lib%name-cpp-devel
-Summary: Development files for cppzmq
-Group: Development/C++
-License: MIT
-Requires: lib%name-devel = %version-%release
-
-%description -n lib%name-cpp-devel
-This package contains files for developing C++ %name applications.
-
 %prep
 %setup
-cp -a %SOURCE2 .
 
 %build
 %autoreconf
 %configure --disable-static \
 	--with-pic \
 	--with-gnu-ld \
-	%{subst_with pgm}
+	%{subst_with pgm} \
+	%{subst_with libsodium} \
+	%{subst_with libgssapi_krb5} \
+	%{subst_enable libunwind} \
+	%{subst_enable libbsd} \
+	%{subst_enable Werror}
 
 %make_build
 
 %install
 %makeinstall_std
-install -m644 -p %SOURCE1 %buildroot%_includedir/
 
 %check
 %make check
 
 %files -n lib%name
 %_libdir/libzmq.so.*
-%doc AUTHORS ChangeLog NEWS
+%doc AUTHORS ChangeLog NEWS COPYING
 %_man7dir/zmq.7*
 
 %files -n lib%name-devel
@@ -96,11 +97,11 @@ install -m644 -p %SOURCE1 %buildroot%_includedir/
 %_man3dir/zmq_*3*
 %_man7dir/zmq_*7*
 
-%files -n lib%name-cpp-devel
-%_includedir/zmq.hpp
-%doc LICENSE
-
 %changelog
+* Mon Feb 14 2022 Grigory Ustinov <grenka@altlinux.org> 4.3.4-alt1
+- 4.3.4 (python3-module-zmq wants it)
+- added some knobs.
+
 * Sat May 15 2021 Michael Shigorin <mike@altlinux.org> 4.2.5-alt1
 - 4.2.5 (asked for by Ramil Sattarov in mcst#6019)
 
