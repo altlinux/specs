@@ -13,7 +13,7 @@
 %global forgeurl https://github.com/linuxdeepin/dde-api
 
 Name: deepin-api
-Version: 5.4.32
+Version: 5.5.5
 Release: alt1
 Summary: Go-lang bingding for dde-daemon
 License: GPL-3.0+
@@ -68,7 +68,7 @@ sed -i 's|pkg.deepin.io/dde/api|%goipath|' \
     $(find ./ -type f -name '*.go')
 
 %build
-export GOPATH="$(pwd)/.build:%go_path:$(pwd)/vendor"
+export GOPATH="$(pwd)/.build:$(pwd)/vendor"
 export GO111MODULE=off
 # export GOFLAGS="-mod=vendor"
 
@@ -100,6 +100,9 @@ mkdir -p %buildroot%_sharedstatedir/deepin-sound-player
 %go_path/src/%goipath
 
 %changelog
+* Wed Feb 16 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.5-alt1
+- New version (5.5.5).
+
 * Wed Feb 02 2022 Leontiy Volodin <lvol@altlinux.org> 5.4.32-alt1
 - New version (5.4.32).
 - Built with internal golang submodules.
