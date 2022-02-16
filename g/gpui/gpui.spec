@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.1.0
-Release: alt2
+Version: 0.2.0
+Release: alt1
 
 Summary: Group policy editor
 License: GPLv2+
@@ -23,6 +23,8 @@ BuildRequires: doxygen
 BuildRequires: libxerces-c-devel
 BuildRequires: xsd
 
+BuildRequires: desktop-file-utils
+
 Source0: %name-%version.tar
 
 %description
@@ -37,6 +39,11 @@ Group policy editor
 
 %install
 %cmakeinstall_std
+
+cd %_cmake__builddir
+desktop-file-install --dir=%buildroot%_desktopdir \
+                     --set-key Exec --set-value %_bindir/gpui-main \
+                     ../setup/gpui.desktop
 
 %files
 %doc README.md
@@ -63,7 +70,17 @@ Group policy editor
 
 %_libdir/gpui/plugins/libsmb-storage-plugin.so
 
+%_desktopdir/gpui.desktop
+
 %changelog
+* Wed Feb 16 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt1
+- 0.2.0
+- Features:
+  + Implement signal based save system.
+  + Introduce policy element types into policy elements.
+- Fixes:
+  + Fix combo box indices and values.
+
 * Tue Feb 01 2022 Vladimir Rubanov <august@altlinux.org> 0.1.0-alt2
 - A first implementation of smb routines.
 
