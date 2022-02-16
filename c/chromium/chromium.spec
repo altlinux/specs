@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        98.0.4758.80
+Version:        98.0.4758.102
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -445,6 +445,18 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Feb 16 2022 Alexey Gladkov <legion@altlinux.ru> 98.0.4758.102-alt1
+- New version (98.0.4758.102) (ALT#41964).
+- Security fixes:
+  - CVE-2022-0603: Use after free in File Manager.
+  - CVE-2022-0604: Heap buffer overflow in Tab Groups.
+  - CVE-2022-0605: Use after free in Webstore API.
+  - CVE-2022-0606: Use after free in ANGLE.
+  - CVE-2022-0607: Use after free in GPU.
+  - CVE-2022-0608: Integer overflow in Mojo.
+  - CVE-2022-0609: Use after free in Animation.
+  - CVE-2022-0610: Inappropriate implementation in Gamepad API.
+
 * Fri Feb 04 2022 Alexey Gladkov <legion@altlinux.ru> 98.0.4758.80-alt1
 - New version (98.0.4758.80).
 - Build with python3.
