@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict,unresolved=relaxed
 
 Summary: A popular and easy to use graphical IRC (chat) client
 Name: hexchat
-Version: 2.16.0
+Version: 2.16.1
 Release: alt1
 License: GPLv2+
 Group: Networking/IRC
@@ -77,7 +79,7 @@ This package contains the development files for %name.
 %_libdir/hexchat/plugins/python.so
 %_libdir/hexchat/python
 %_desktopdir/*.desktop
-%_iconsdir//hicolor/*/apps/%name.*
+%_iconsdir//hicolor/*/apps/*
 %_datadir/metainfo/*.appdata.xml
 %_datadir/dbus-1/services/org.hexchat.service.service
 %_man1dir/*
@@ -87,6 +89,9 @@ This package contains the development files for %name.
 %_pkgconfigdir/*
 
 %changelog
+* Wed Feb 16 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 2.16.1-alt1
+- Updated to upstream version 2.16.1.
+
 * Mon Oct 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.16.0-alt1
 - Updated to upstream version 2.16.0.
 
