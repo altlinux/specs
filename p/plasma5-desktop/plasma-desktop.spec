@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.23.5
-Release: alt3
+Release: alt4
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -244,6 +244,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Wed Feb 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.5-alt4
+- don't add tablet mode button to default panel
+
 * Wed Feb 02 2022 Oleg Solovyov <mcpain@altlinux.org> 5.23.5-alt3
 - Fix patch against bug 41564
 
