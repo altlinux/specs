@@ -16,7 +16,7 @@
 
 Name: mkvtoolnix
 Version: 65.0.0
-Release: alt1
+Release: alt2
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
 Group: Video
@@ -58,6 +58,8 @@ Group: Video
 Provides: mmg = %EVR
 Provides: mkvmerge-gui = %EVR
 Obsoletes: mkvmerge-gui < %EVR
+Requires: %name = %EVR
+Requires: mkvinfo = %EVR
 
 %description gui
 Matroska is a new multimedia file format aiming to become the new
@@ -158,6 +160,9 @@ rake V=1 tests:run_unit
 %endif
 
 %changelog
+* Wed Feb 16 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 65.0.0-alt2
+- Updated interpackage dependencies (Closes: #41966).
+
 * Thu Feb 10 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 65.0.0-alt1
 - Updated to upstream version 65.0.0.
 
