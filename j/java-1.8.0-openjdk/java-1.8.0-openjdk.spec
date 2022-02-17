@@ -381,7 +381,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}.%{buildver}
-Release: alt1_%{?eaprefix}%{rpmrelease}%{?extraver}%{?dist}
+Release: alt2_%{?eaprefix}%{rpmrelease}%{?extraver}%{?dist}
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -466,13 +466,6 @@ Source101: config.sub
 # Turn on AssumeMP by default on RHEL systems
 Patch534: rh1648246-always_instruct_vm_to_assume_multiple_processors_are_available.patch
 # RH1655466: Support RHEL FIPS mode using SunPKCS11 provider
-Patch1001: rh1655466-global_crypto_and_fips.patch
-# RH1760838: No ciphersuites available for SSLSocket in FIPS mode
-Patch1002: rh1760838-fips_default_keystore_type.patch
-# RH1582504: Use RSA as default for keytool, as DSA is disabled in all crypto policies except LEGACY
-Patch1003: rh1582504-rsa_default_for_keytool.patch
-# RH1860986: Disable TLSv1.3 with the NSS-FIPS provider until PKCS#11 v3.0 support is available
-Patch1004: rh1860986-disable_tlsv1.3_in_fips_mode.patch
 
 #############################################
 #
@@ -678,6 +671,7 @@ Provides: %{_jvmdir}/%{jredir}/lib/%archinstall/server/libjvm.so(SUNWprivate_1.1
 %endif
 Patch33: java-1.8.0-openjdk-alt-no-Werror.patch
 Patch34: java-1.8.0-openjdk-alt-link.patch
+Patch35: java-1.8.0-openjdk-alt-libjawt-link.patch
 
 # Fix upgrade path after removal of accessibility subpackage
 # on commit 0c79c1451ef42c540682fb75329a92bb110609e7
@@ -748,8 +742,6 @@ Provides: java-headless = %{epoch}:%{javaver}
 Requires: java-common
 Requires: /proc
 Requires(post): /proc
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=1312019
 
 %description headless
 The %{origin_nice} runtime environment %{majorver} without audio and video support.
@@ -1099,14 +1091,6 @@ sh %{SOURCE12}
 %patch539
 %patch600
 
-# Do not apply FIPS support patches
-#patch1000
-#patch1001
-#patch1002
-#patch1003
-#patch1004
-#patch1005
-
 # RHEL-only patches
 %if ! 0%{?fedora} && 0%{?rhel} <= 7
 %patch534
@@ -1167,6 +1151,7 @@ sed -i -e 's, -m32, -m32 %optflags_shared -fpic -D_BLA_BLA_BLA1,' openjdk/hotspo
 sed -i -e 's,DEF_OBJCOPY=/usr/bin/objcopy,DEF_OBJCOPY=/usr/bin/NO-objcopy,' openjdk/hotspot/make/linux/makefiles/defs.make
 %patch33 -p1
 %patch34 -p0
+%patch35 -p1 -d openjdk
 
 %build
 # zerg's girar armh hack:
@@ -1778,6 +1763,9 @@ for i in $RPM_BUILD_ROOT%_man1dir/*.1; do
     [ -f $i ] && gzip -9 $i
 done
 
+# Make symlink to libjvm.so to main library directory
+ln -s server/libjvm.so %buildroot%_jvmdir/%sdkdir/jre/lib/%archinstall/libjvm.so
+
 ##################################################
 # - END alt linux specific, shared with openjdk -#
 ##################################################
@@ -1894,6 +1882,7 @@ fi
 %dir %{etcjavadir}/lib/security/policy/limited
 %dir %{etcjavadir}/lib/security/policy/unlimited
 %{_jvmdir}/%{jredir}/lib/%{archinstall}/server/
+%{_jvmdir}/%{jredir}/lib/%{archinstall}/libjvm.so
 %{_jvmdir}/%{jredir}/lib/%{archinstall}/client/
 %dir %{_jvmdir}/%{jredir}/lib/%{archinstall}
 %dir %{_jvmdir}/%{jredir}/lib/%{archinstall}/jli
@@ -2154,6 +2143,9 @@ fi
 %endif
 
 %changelog
+* Mon Feb 14 2022 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.322.b04-alt2_0.1.eajpp8
+- FTBFS: fixed linking libraries.
+
 * Fri Jan 14 2022 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.322.b04-alt1_0.1.eajpp8
 - New version.
 
