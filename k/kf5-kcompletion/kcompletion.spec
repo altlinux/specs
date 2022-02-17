@@ -6,7 +6,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.90.0
+Version: 5.91.0
 Release: alt1
 %K5init altplace
 
@@ -109,7 +109,7 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 %files devel
 %_K5plug/designer/*.so
-%_K5inc/kcompletion_version.h
+#%_K5inc/kcompletion_version.h
 %_K5inc/KCompletion/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5Completion
@@ -130,6 +130,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.91.0-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.90.0-alt1
 - new version
 

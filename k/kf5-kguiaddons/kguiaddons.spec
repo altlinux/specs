@@ -6,14 +6,16 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.90.0
-Release: alt2
+Version: 5.91.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
 Summary: KDE Frameworks 5 utilities for graphical user interfaces
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: GPL-2.0-or-later and LGPL-2.0-or-later
+
+Requires: %name-common
 
 Source: %rname-%version.tar
 Patch1: fix-modifierless-grabs.patch
@@ -53,7 +55,7 @@ developing applications that use %name.
 %package -n libkf5guiaddons
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n libkf5guiaddons
 KF5 library
 
@@ -62,7 +64,7 @@ KF5 library
 Summary: Python bindings for KGuiAddons
 License: GPLv2+ / LGPLv2+
 Group: Development/Python
-Requires: %name-common = %version-%release
+Requires: %name-common
 Requires: python-module-pykf5
 Requires: python-module-sip = %sipver2
 %description -n python-module-%rname
@@ -79,7 +81,7 @@ Sip files for python-module-%rname
 Summary: Python3 bindings for KGuiAddons
 License: GPLv2+ / LGPLv2+
 Group: Development/Python3
-Requires: %name-common = %version-%release
+Requires: %name-common
 Requires: python3-module-pykf5
 Requires: python3-module-sip = %sipver3
 %description -n python3-module-%rname
@@ -113,8 +115,12 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %dir %_K5plug/kf5/kguiaddons/kmodifierkey/
 %_datadir/qlogging-categories5/*.*categories
 
+%files
+%_K5bin/*geo*handler*
+%_K5xdgapp/*geo*handler*.desktop
+
 %files devel
-%_K5inc/kguiaddons_version.h
+#%_K5inc/kguiaddons_version.h
 %_K5inc/KGuiAddons/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5GuiAddons
@@ -136,6 +142,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Wed Feb 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.91.0-alt1
+- new version
+
 * Wed Feb 16 2022 Oleg Solovyov <mcpain@altlinux.org> 5.90.0-alt2
 - disallow modifierless hotkeys (Closes: #41821)
 

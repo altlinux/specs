@@ -1,7 +1,7 @@
 %define rname kplotting
 
 Name: kf5-%rname
-Version: 5.90.0
+Version: 5.91.0
 Release: alt1
 %K5init altplace
 
@@ -57,7 +57,7 @@ KF5 library
 #%files common
 
 %files devel
-%_K5inc/kplotting_version.h
+#%_K5inc/kplotting_version.h
 %_K5inc/KPlotting/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5Plotting
@@ -69,6 +69,9 @@ KF5 library
 %_K5lib/libKF5Plotting.so.*
 
 %changelog
+* Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.91.0-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.90.0-alt1
 - new version
 

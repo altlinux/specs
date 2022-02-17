@@ -4,7 +4,7 @@
 %define helperpath %_libexecdir/utempter/utempter
 
 Name: kf5-%rname
-Version: 5.90.0
+Version: 5.91.0
 Release: alt1
 %K5init altplace
 
@@ -78,7 +78,7 @@ sed -i '/find_file.*UTEMPTER_EXECUTABLE/s/UTEMPTER_EXECUTABLE/UTEMPTER_EXECUTABL
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-%_K5inc/kpty_version.h
+#%_K5inc/kpty_version.h
 %_K5inc/KPty/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5Pty
@@ -88,6 +88,9 @@ sed -i '/find_file.*UTEMPTER_EXECUTABLE/s/UTEMPTER_EXECUTABLE/UTEMPTER_EXECUTABL
 %_K5lib/libKF5Pty.so.*
 
 %changelog
+* Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.91.0-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.90.0-alt1
 - new version
 

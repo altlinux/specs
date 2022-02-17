@@ -3,8 +3,8 @@
 %add_python3_path %_libdir/cmake
 
 Name: kf5-%rname
-Version: 5.90.0
-Release: alt2
+Version: 5.91.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -57,7 +57,7 @@ Requires: kf5-karchive-devel kf5-kauth-devel kf5-kconfigwidgets-devel kf5-kcorea
 Requires: kf5-kdbusaddons-devel kf5-kdesignerplugin-devel kf5-kdoctools-devel kf5-kguiaddons-devel
 Requires: kf5-kiconthemes-devel kf5-knotifications-devel kf5-kparts-devel kf5-ktextwidgets-devel
 Requires: kf5-kunitconversion-devel kf5-kwindowsystem-devel kf5-kemoticons-devel kf5-kitemmodels-devel
-Requires: kf5-kinit-devel kf5-knotifications-devel
+Requires: kf5-kinit-devel kf5-knotifications-devel kf5-kunitconversion-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -117,7 +117,7 @@ rm -rf %buildroot/%_libdir/cmake/KF5KDELibs4Support/FindSIP.*
 
 %files devel
 %_K5plug/designer/*.so
-%_K5inc/kdelibs4support_version.h
+#%_K5inc/kdelibs4support_version.h
 %_K5inc/KDELibs4Support/
 %_K5link/lib*.so
 %_libdir/cmake/KF5KDELibs4Support/
@@ -130,6 +130,9 @@ rm -rf %buildroot/%_libdir/cmake/KF5KDELibs4Support/FindSIP.*
 %_K5lib/libKF5KDELibs4Support.so.*
 
 %changelog
+* Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.91.0-alt1
+- new version
+
 * Wed Jan 12 2022 Sergey V Turchin <zerg@altlinux.org> 5.90.0-alt2
 - fix parse zone1970.tab
 

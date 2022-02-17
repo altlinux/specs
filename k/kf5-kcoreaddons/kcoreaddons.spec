@@ -5,7 +5,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.90.0
+Version: 5.91.0
 Release: alt1
 %K5init altplace
 
@@ -118,7 +118,7 @@ Sip files for python3-module-%rname
 
 %files devel
 %_K5bin/desktoptojson
-%_K5inc/kcoreaddons_version.h
+#%_K5inc/kcoreaddons_version.h
 %_K5inc/KCoreAddons/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5CoreAddons
@@ -140,6 +140,9 @@ Sip files for python3-module-%rname
 %endif
 
 %changelog
+* Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.91.0-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.90.0-alt1
 - new version
 

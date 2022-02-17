@@ -5,7 +5,7 @@
 %define service_name plasma-kglobalaccel
 
 Name: kf5-%rname
-Version: 5.90.0
+Version: 5.91.0
 Release: alt1
 %K5init altplace
 
@@ -92,7 +92,7 @@ mkdir -p %buildroot/%_K5data/kglobalaccel/
 %_unitdir_user/%service_name.service
 
 %files devel
-%_K5inc/kglobalaccel_version.h
+#%_K5inc/kglobalaccel_version.h
 %_K5inc/KGlobalAccel/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5GlobalAccel/
@@ -105,6 +105,9 @@ mkdir -p %buildroot/%_K5data/kglobalaccel/
 %_K5lib/libKF5GlobalAccelPrivate.so.*
 
 %changelog
+* Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.91.0-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.90.0-alt1
 - new version
 

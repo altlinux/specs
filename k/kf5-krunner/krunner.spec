@@ -1,7 +1,7 @@
 %define rname krunner
 
 Name: kf5-%rname
-Version: 5.90.0
+Version: 5.91.0
 Release: alt1
 %K5init altplace
 
@@ -72,7 +72,7 @@ KF5 library
 
 %files devel
 #%_K5data/kdevappwizard/templates/*
-%_K5inc/krunner_version.h
+#%_K5inc/krunner_version.h
 %_K5inc/KRunner/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5Runner
@@ -84,6 +84,9 @@ KF5 library
 %_K5qml/org/kde/runnermodel/
 
 %changelog
+* Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.91.0-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.90.0-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define libkpimkdav libkpimkdav%sover
 
 Name: kf5-%rname
-Version: 5.90.0
+Version: 5.91.0
 Release: alt1
 Epoch: 1
 %K5init
@@ -70,16 +70,18 @@ Requires: %name-common = %version-%release
 %files devel
 %_K5inc/kdav_version.h
 %_K5inc/KDAV/
-%_K5inc/kdav/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5DAV/
-%_K5archdata/mkspecs/modules/qt_kdav.pri
+%_K5archdata/mkspecs/modules/qt_KDAV.pri
 
 %files -n libkf5dav
 %_K5lib/libKF5DAV.so.%sover
 %_K5lib/libKF5DAV.so.*
 
 %changelog
+* Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.91.0-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.90.0-alt1
 - new version
 

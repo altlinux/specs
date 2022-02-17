@@ -1,7 +1,7 @@
 %define rname syntax-highlighting
 
 Name: kf5-%rname
-Version: 5.90.0
+Version: 5.91.0
 Release: alt1
 %K5init altplace
 
@@ -65,7 +65,7 @@ KF5 library
 %_K5bin/kate-syntax-highlighter
 
 %files devel
-%_K5inc/ksyntaxhighlighting_version.h
+#%_K5inc/ksyntaxhighlighting_version.h
 %_K5inc/KSyntaxHighlighting/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5SyntaxHighlighting/
@@ -76,6 +76,9 @@ KF5 library
 %_K5qml/org/kde/syntaxhighlighting/
 
 %changelog
+* Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.91.0-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.90.0-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname threadweaver
 
 Name: kf5-%rname
-Version: 5.90.0
+Version: 5.91.0
 Release: alt1
 %K5init altplace
 
@@ -60,7 +60,7 @@ KF5 library
 #%files common -f %name.lang
 
 %files devel
-%_K5inc/threadweaver_version.h
+#%_K5inc/threadweaver_version.h
 %_K5inc/ThreadWeaver/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5ThreadWeaver
@@ -71,6 +71,9 @@ KF5 library
 %_K5lib/libKF5ThreadWeaver.so.*
 
 %changelog
+* Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.91.0-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.90.0-alt1
 - new version
 

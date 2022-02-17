@@ -1,7 +1,7 @@
 %define rname knotifications
 
 Name: kf5-%rname
-Version: 5.90.0
+Version: 5.91.0
 Release: alt1
 %K5init altplace
 
@@ -74,7 +74,7 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-%_K5inc/knotifications_version.h
+#%_K5inc/knotifications_version.h
 %_K5inc/KNotifications/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5Notifications
@@ -87,6 +87,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.91.0-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.90.0-alt1
 - new version
 

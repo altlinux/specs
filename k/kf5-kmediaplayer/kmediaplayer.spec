@@ -1,7 +1,7 @@
 %define rname kmediaplayer
 
 Name: kf5-%rname
-Version: 5.90.0
+Version: 5.91.0
 Release: alt1
 %K5init altplace
 
@@ -66,7 +66,7 @@ KF5 library
 %doc LICENSE README.md
 
 %files devel
-%_K5inc/kmediaplayer_version.h
+#%_K5inc/kmediaplayer_version.h
 %_K5inc/KMediaPlayer/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5MediaPlayer
@@ -78,6 +78,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.91.0-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.90.0-alt1
 - new version
 

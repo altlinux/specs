@@ -1,7 +1,7 @@
 %define rname kdewebkit
 
 Name: kf5-%rname
-Version: 5.90.0
+Version: 5.91.0
 Release: alt1
 %K5init altplace
 
@@ -72,7 +72,7 @@ KF5 library
 
 %files devel
 %_K5plug/designer/*.so
-%_K5inc/kdewebkit_version.h
+#%_K5inc/kdewebkit_version.h
 %_K5inc/KDEWebKit/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5WebKit
@@ -82,6 +82,9 @@ KF5 library
 %_K5lib/libKF5WebKit.so.*
 
 %changelog
+* Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.91.0-alt1
+- new version
+
 * Thu Feb 03 2022 Sergey V Turchin <zerg@altlinux.org> 5.90.0-alt1
 - new version
 

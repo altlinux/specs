@@ -6,7 +6,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.90.0
+Version: 5.91.0
 Release: alt1
 %K5init altplace
 
@@ -120,7 +120,8 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 %files devel
 %_K5exec/kconfig_compiler_kf5
-%_K5inc/kconfig_version.h
+#%_K5inc/kconfig_version.h
+%_K5inc/KConfig/kconfig_version.h
 %_K5inc/KConfigCore/
 %_K5inc/KConfigGui/
 %_K5inc/KConfigQml/
@@ -146,6 +147,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.91.0-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.90.0-alt1
 - new version
 

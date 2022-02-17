@@ -1,7 +1,7 @@
 %define rname kwayland
 
 Name: kf5-%rname
-Version: 5.90.0
+Version: 5.91.0
 Release: alt1
 %K5init altplace
 
@@ -78,11 +78,12 @@ KF5 library
 %_K5libexecdir/org-kde-kf5-kwayland-testserver
 
 %files devel
-%_K5inc/kwayland_version.h
+#%_K5inc/kwayland_version.h
 %_K5inc/KWayland/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5Wayland
 %_K5archdata/mkspecs/modules/qt_KWayland*.pri
+%_pkgconfigdir/*ayland*.pc
 
 %files -n libkf5waylandclient
 %_K5lib/libKF5WaylandClient.so.*
@@ -90,6 +91,9 @@ KF5 library
 %_K5lib/libKF5WaylandServer.so.*
 
 %changelog
+* Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.91.0-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.90.0-alt1
 - new version
 
