@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 Summary: Group policy editor
 License: GPLv2+
@@ -73,6 +73,10 @@ desktop-file-install --dir=%buildroot%_desktopdir \
 %_desktopdir/gpui.desktop
 
 %changelog
+* Wed Feb 17 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt2
+- Fixes:
+  + Fix string saving to pol file.
+
 * Wed Feb 16 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt1
 - 0.2.0
 - Features:
