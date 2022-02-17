@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 61
+%define centos_release 62
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,31 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Feb 17 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.62-alt1.el9
+- Updated to kernel-5.14.0-62.el9 (fixes: CVE-2021-43389):
+  + Backport page unpoisoning fixes
+  + blktrace: switch trace spinlock to a raw spinlock
+  + cgroup/cpuset: Fix RCU lockdep splat
+  + CNB: net: create netdev->dev_addr assignment helpers
+  + ext4: fix potential NULL pointer dereference in ext4_fill_super()
+  + firmware: smccc: Fix check for ARCH_SOC_ID not implemented
+  + ibmvnic: fix ethtool -L causing system to hang
+  + ibmvnic: Update driver return codes
+  + igb: driver update for 9.0
+  + isdn: cpai: check ctr->cnr to avoid array index out of bound
+  + netfilter: ipset: Emit deprecation warning at set creation time
+  + NFSv4.1: handle NFS4ERR_NOSPC by CREATE_SESSION
+  + powerpc/fadump: fix "seek error: kernel virtual address: c0000027f5e19000" observed while running crash tool on vmcore captured during fadump
+  + rcu: Tighten rcu_advance_cbs_nowake() checks
+  + redhat/configs: Disable CONFIG_MACINTOSH_DRIVERS
+  + redhat/configs: Enable CONFIG_TEST_BPF
+  + redhat: move CONFIG_ARM64_MTE to aarch64 config directory
+  + s390/pv: fix the forcing of the swiotlb
+  + scsi: bnx2fc: Flush destroy_work queue before calling bnx2fc_interface_put()
+  + scsi: vmw_pvscsi: Set residual data length conditionally
+  + tipc: backports from upstream, 2nd phase
+  + Two small SELinux fixes
+
 * Wed Feb 16 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.61-alt1.el9
 - Updated to kernel-5.14.0-61.el9 (fixes: CVE-2021-4197, CVE-2021-4203, CVE-2022-0264):
   + bpf: Fix kernel address leakage in atomic fetch
