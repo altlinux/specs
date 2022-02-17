@@ -28,7 +28,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -291,6 +291,11 @@ Provides additional %{langname} translations and resources for %name. \
 %patch500 -p0
 # Patch with russian translation update
 # patch600 -p1
+
+# TODO move officebeans to SDK or separate package
+# Hack in -Wl,-rpath=/usr/lib/jvm/jre-11-openjdk/lib
+sed -i 's@JAVA_HOME/lib/ -ljawt@JAVA_HOME/lib/ -Wl,-rpath=/usr/lib/jvm/jre/lib -ljawt@' configure.ac
+%filter_from_requires /libjawt[.]so/d
 
 # Hack in ALT pixman path
 sed -i 's@ -I@ -I /usr/include/pixman-1 -I@' canvas/Library_cairocanvas.mk
@@ -581,6 +586,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Thu Feb 17 2022 Fr. Br. George <george@altlinux.ru> 7.3.0.3-alt2
+- Fix build
+
 * Thu Feb 03 2022 Fr. Br. George <george@altlinux.ru> 7.3.0.3-alt1
 - Update to 7.3.0.3 (7.3.0 release)
 
