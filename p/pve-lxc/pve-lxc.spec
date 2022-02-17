@@ -1,39 +1,33 @@
+%define _unpackaged_files_terminate_build 1
+
 %define rname lxc
 
 Name: pve-%rname
 Version: 4.0.11
-Release: alt1
+Release: alt2
 Summary: Linux containers usersapce tools
 Group: System/Configuration/Other
-License: LGPL
+License: LGPL-2.1+
 URL: https://linuxcontainers.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64 aarch64
+
+Source: %name-%version.tar
+Source2: config.tar
+Source99: debian.tar
+Patch: %name-%version.patch
+
 Requires: lxcfs
-Conflicts: %rname %rname-libs
+Requires: criu >= 3.15
+Requires: rsync wget
+Requires: iproute2 iptables iptables-ipv6
+Conflicts: %rname %rname-libs liblxc1 %rname-core %rname-net %rname-runtime
+Provides: %rname-pve = %EVR
 
-Source: %rname-%version.tar.gz
-Source1: %rname-config.tar
-
-Patch1: 0001-allow-running-lxc-monitord-as-a-system-daemon.patch
-Patch2: 0002-introduce-lxc.cgroup.dir.-monitor-container-containe.patch
-Patch3: 0003-doc-s-lxc.cgroup.container.namespace-lxc.cgroup.cont.patch
-Patch4: 0004-confile-coding-style-fixes-for-set_config_cgroup_con.patch
-Patch5: 0005-api-extensions-add-and-document-cgroup_advanced_isol.patch
-Patch6: 0006-doc-Add-lxc.cgroup.dir.-monitor-container-container..patch
-Patch7: 0007-PVE-Config-lxc.service-start-after-a-potential-syslo.patch
-Patch8: 0008-PVE-Config-deny-rw-mounting-of-sys-and-proc.patch
-Patch9: 0009-PVE-Config-attach-always-use-getent.patch
-Patch10: 0010-Revert-initutils-use-vfork-in-lxc_container_init.patch
-Patch11: 0011-use-2-sysfs-instances-for-sys-mixed.patch
-
-Patch20: lxc-alt.patch
-Patch21: lxc-altlinux-lxc.patch
-Patch23: lxc-alt-remove-dependency-on-policycoreutils.patch
-Patch24: lxc-monitord-service.patch
-
-BuildRequires: docbook2X libcap-devel libdbus-devel libgnutls-devel libseccomp-devel libselinux-devel
+BuildRequires: docbook-utils
+BuildRequires: libcap-devel libseccomp-devel libselinux-devel libssl-devel
+BuildRequires: bash-completion
 
 %description
 Containers provides resource management through control groups and
@@ -46,37 +40,31 @@ an applications or a system.
 %add_findreq_skiplist %_datadir/%rname/templates/*
 
 %prep
-%setup -q -n %rname-%version -a1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
+%setup
+mkdir debian
+tar -xf %SOURCE99 -C debian --strip-components 1
+tar -xf %SOURCE2 -C config --strip-components 1
 
-%patch20 -p1 -b .alt
-%patch21 -p1 -b .altlinux
-%patch23 -p1 -b .pol
-%patch24 -p1
+%patch -p1
+
+for p in `cat debian/patches/series`; do
+    patch -p1 < debian/patches/$p
+done
 
 %build
 %autoreconf
 %configure \
-    --disable-static \
+    --disable-werror \
     --disable-rpath \
     --with-distro=altlinux \
     --with-init-script=systemd \
-    --enable-apparmor \
+    --disable-apparmor \
     --enable-selinux \
     --enable-bash \
     --disable-examples \
     --enable-seccomp \
-    --with-cgroup-pattern='lxc/%n' \
+    --disable-static \
+    --with-cgroup-pattern='lxc/%%n' \
     --localstatedir=%_var
 
 %make_build
@@ -86,20 +74,29 @@ an applications or a system.
 
 mkdir -p %buildroot%_datadir/lxc/config
 for i in config/*.conf.in; do
-	sed -e "s|@LXCTEMPLATECONFIG@|%_datadir/lxc/config|g" $i > %buildroot%_datadir/lxc/${i%.in};
+	sed -e "s|@LXCTEMPLATECONFIG@|%_datadir/lxc/config|g" $i > %buildroot%_datadir/lxc/${i%%.in};
 done
 
-rm -fr %buildroot/usr/lib/%rname/%rname-apparmor-load
+# cleanup
+rm -fr %buildroot%_libexecdir/%rname/%rname-apparmor-load
+rm -f %buildroot%_datadir/lxc/lxc-patch.py
+rm -fr %buildroot%_includedir
+rm -f %buildroot%_libdir/liblxc.so
+rm -fr %buildroot%_pkgconfigdir
+rm -fr %buildroot%_mandir/{ja,ko}
+
+%post
+usermod --add-subgids 100000-165535 --add-subuids 100000-165535 root ||:
 
 %files
 %config(noreplace) %_sysconfdir/sysconfig/%rname
 %dir %_sysconfdir/%rname
 %config(noreplace) %_sysconfdir/%rname/default.conf
-#_sysconfdir/bash_completion.d/%rname
-%systemd_unitdir/*.service
+%_datadir/bash-completion/completions/*
+%_unitdir/*.service
 %_bindir/%rname-*
 %_sbindir/init.%rname
-/usr/lib/%rname
+%_libexecdir/%rname
 %_libdir/%rname
 %_libdir/*.so.*
 %_datadir/%rname
@@ -108,6 +105,13 @@ rm -fr %buildroot/usr/lib/%rname/%rname-apparmor-load
 %_man7dir/*.7*
 
 %changelog
+* Tue Feb 15 2022 Alexey Shabalin <shaba@altlinux.org> 4.0.11-alt2
+- build from gear
+- update requires and conflicts
+- package bash-completion
+- disable apparmor support
+- add usermod in %%post
+
 * Mon Dec 20 2021 Valery Inozemtsev <shrek@altlinux.ru> 4.0.11-alt1
 - 4.0.11-1
 
