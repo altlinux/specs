@@ -9,7 +9,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 4.3.1
-Release: alt2
+Release: alt3
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
@@ -40,6 +40,11 @@ Patch1: %oname-alt-tests-offline.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-sphinx-objects.inv
 BuildRequires: /usr/bin/convert
+
+%if_enabled docs
+BuildRequires: python3(docutils)
+BuildRequires: python3(sphinx)
+%endif
 
 %if_enabled check
 BuildRequires: python3(_testcapi)
@@ -267,6 +272,9 @@ tox.py3 --sitepackages -vvr -s false -- -vra
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Thu Feb 17 2022 Michael Shigorin <mike@altlinux.org> 1:4.3.1-alt3
+- Fix build with --enable docs --disable check.
+
 * Wed Feb 02 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.3.1-alt2
 - Rebuilt with docs.
 
