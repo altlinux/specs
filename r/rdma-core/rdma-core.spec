@@ -3,7 +3,7 @@
 %define _libexecdir  /usr/libexec
 %define _localstatedir %_var
 
-%ifnarch %arm %mips %e2k riscv64
+%ifnarch %arm %mips riscv64
 %def_enable dma_coherent
 %else
 %def_disable dma_coherent
@@ -12,7 +12,7 @@
 
 Name: rdma-core
 Version: 38.0
-Release: alt3.1
+Release: alt3.2
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
 
@@ -24,6 +24,7 @@ License: GPL-2.0-only OR BSD-2-Clause
 Url: https://github.com/linux-rdma/rdma-core
 Source: %name-%version.tar
 Patch: %name-%version.patch
+Patch2000: %name-e2k.patch
 
 BuildRequires: binutils
 BuildRequires: cmake >= 2.8.11 rpm-macros-cmake
@@ -226,6 +227,7 @@ discover and use SCSI devices via the SCSI RDMA Protocol over InfiniBand.
 %setup
 %patch -p1
 %ifarch %e2k
+%patch2000 -p1
 # empty manpages because pandoc is unavaiable
 mkdir -p buildlib/pandoc-prebuilt
 sed -i '/rdma_man_get_prebuilt(/a execute_process(COMMAND "echo" " " OUTPUT_FILE "${OBJ}")' buildlib/rdma_man.cmake
@@ -579,6 +581,9 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %docdir/ibsrpdm.md
 
 %changelog
+* Thu Feb 17 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 38.0-alt3.2
+- dma_coherent support for Elbrus
+
 * Wed Feb 16 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 38.0-alt3.1
 - removed use of pandoc to fix build for Elbrus
 
