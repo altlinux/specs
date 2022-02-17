@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-functions
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Requires: libshell >= 0.1.3 etcnet
@@ -41,6 +41,10 @@ helpers for etcnet administration
 %_libexecdir/%name/
 
 %changelog
+* Thu Feb 17 2022 Mikhail Efremov <sem@altlinux.org> 2.1.1-alt1
+- tests: Add test for valid x.x.x.255 ipv4 address.
+- valid_ipv4addr: Allow 255 in a last byte (closes: #30084).
+
 * Fri Oct 29 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.1.0-alt1
 - Add support systemd-networkd iface control functions
 
