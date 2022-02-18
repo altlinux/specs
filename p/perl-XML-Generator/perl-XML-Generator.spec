@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist XML-Generator
 Name: perl-%dist
-Version: 1.04
+Version: 1.08
 Release: alt1
 
 Summary: Perl extension for generating XML 
@@ -8,7 +9,7 @@ License: Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/B/BH/BHOLZMAN/XML-Generator-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TI/TIMLEGGE/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Apr 20 2010
 BuildRequires: perl-Tie-IxHash perl-XML-DOM perl-devel
@@ -18,7 +19,7 @@ BuildArch: noarch
 A module to help in generating XML documents.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,6 +32,9 @@ A module to help in generating XML documents.
 %perl_vendor_privlib/XML*
 
 %changelog
+* Fri Feb 18 2022 Igor Vlasenko <viy@altlinux.org> 1.08-alt1
+- automated CPAN update
+
 * Wed Sep 21 2011 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
 - automated CPAN update
 
