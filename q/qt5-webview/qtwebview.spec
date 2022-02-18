@@ -3,14 +3,14 @@
 
 Name: qt5-webview
 Version: 5.15.2
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt Web View
 Url: http://qt.io/
 License:  LGPL-2.1 with Qt-LGPL-exception-1.1 or LGPL-3.0-only
 
-ExclusiveArch: %qt5_qtwebengine_arches
+ExcludeArch: %not_qt5_qtwebengine_arches
 
 Source: %qt_module-everywhere-src-%version.tar
 
@@ -92,6 +92,9 @@ Requires: libqt5-core = %_qt5_version
 %_qt5_examplesdir/*
 
 %changelog
+* Fri Feb 18 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt3
+- using not_qt5_qtwebengine_arches macro
+
 * Wed Jan 26 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt2
 - build with parity of qtwebengine arches
 
