@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpupdate
-Version: 0.9.8
+Version: 0.9.9
 Release: alt1
 
 Summary: GPT applier
@@ -60,6 +60,12 @@ ln -s %python3_sitelibdir/gpoa/gpupdate \
 ln -s %python3_sitelibdir/gpoa/gpupdate-setup \
 	%buildroot%_sbindir/gpupdate-setup
 
+mkdir -p \
+	%buildroot%_prefix/libexec/%name
+
+ln -s %python3_sitelibdir/gpoa/pkcon_runner \
+	%buildroot%_prefix/libexec/%name/pkcon_runner
+
 mkdir -p %buildroot%_datadir/%name
 mv %buildroot%python3_sitelibdir/gpoa/templates \
 	%buildroot%_datadir/%name/
@@ -70,6 +76,7 @@ touch %buildroot%_sysconfdir/%name/environment
 install -Dm0644 dist/%name.service %buildroot%_unitdir/%name.service
 install -Dm0644 dist/%name-user.service %buildroot/usr/lib/systemd/user/%name-user.service
 install -Dm0644 dist/system-policy-%name %buildroot%_sysconfdir/pam.d/system-policy-%name
+install -Dm0644 dist/%name-remote-policy %buildroot%_sysconfdir/pam.d/%name-remote-policy
 install -Dm0644 dist/%name.ini %buildroot%_sysconfdir/%name/%name.ini
 install -Dm0644 doc/gpoa.1 %buildroot/%_man1dir/gpoa.1
 install -Dm0644 doc/gpupdate.1 %buildroot/%_man1dir/gpupdate.1
@@ -102,9 +109,11 @@ fi
 %_sbindir/gpoa
 %_sbindir/gpupdate-setup
 %_bindir/gpupdate
+%_prefix/libexec/%name/pkcon_runner
 %attr(755,root,root) %python3_sitelibdir/gpoa/gpoa
 %attr(755,root,root) %python3_sitelibdir/gpoa/gpupdate
 %attr(755,root,root) %python3_sitelibdir/gpoa/gpupdate-setup
+%attr(755,root,root) %python3_sitelibdir/gpoa/pkcon_runner
 %python3_sitelibdir/gpoa
 %_datadir/%name
 %_unitdir/%name.service
@@ -116,6 +125,7 @@ fi
 %config(noreplace) %_sysconfdir/%name/environment
 %config(noreplace) %_sysconfdir/%name/%name.ini
 %config(noreplace) %_sysconfdir/pam.d/system-policy-%name
+%config(noreplace) %_sysconfdir/pam.d/%name-remote-policy
 %dir %attr(0700, root, root) %_cachedir/%name
 %dir %attr(0755, root, root) %_cachedir/%{name}_file_cache
 %dir %attr(0700, root, root) %_cachedir/%name/creds
@@ -125,6 +135,15 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Fri Feb 18 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.9.9-alt1
+- Add gpupdate-remote-policy PAM substack (for pam_mount support)
+- Added lookup for possible dc if first found is unreadable
+- Correct folder applier (still experimental)
+- Update logging and translations
+- Fix error when control facilites not exists
+- Add check for the presence of Gsettings schema and keys exists
+- Add support of package applier via pkcon (still experimental)
+
 * Mon Oct 25 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.9.8-alt1
 - Added exception for org.gnome.Vino authentication-methods
 - Fixed bug for alternative-port in org.gnome.Vino
