@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 21.12.1
-Release: alt2
+Release: alt3
 %K5init no_appdata
 
 Group: Networking/Mail
@@ -13,7 +13,7 @@ Summary: EMail client
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-ExclusiveArch: %qt5_qtwebengine_arches
+ExcludeArch: %not_qt5_qtwebengine_arches
 
 Provides: kde5-pim-kmail = %EVR
 Obsoletes: kde5-pim-kmail < %EVR
@@ -119,6 +119,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkmailprivate.so.*
 
 %changelog
+* Fri Feb 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt3
+- using not_qt5_qtwebengine_arches macro
+
 * Fri Feb 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt2
 - build with parity of qtwebengine arches
 
