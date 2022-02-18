@@ -27,7 +27,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.322.b04
+%define version 1.8.0.322.b06
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -293,9 +293,9 @@ BuildRequires: /proc rpm-build-java
 %endif
 
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
-%global shenandoah_project aarch64-port
-%global shenandoah_repo jdk8u-shenandoah
-%global shenandoah_revision aarch64-shenandoah-jdk8u322-b04
+%global shenandoah_project openjdk
+%global shenandoah_repo shenandoah-jdk8u
+%global shenandoah_revision aarch64-shenandoah-jdk8u322-b06
 # Define old aarch64/jdk8u tree variables for compatibility
 %global project         %{shenandoah_project}
 %global repo            %{shenandoah_repo}
@@ -317,7 +317,7 @@ BuildRequires: /proc rpm-build-java
 # Release will be (where N is usually a number starting at 1):
 # - 0.N%%{?extraver}%%{?dist} for EA releases,
 # - N%%{?extraver}{?dist} for GA releases
-%global is_ga           0
+%global is_ga           1
 %if %{is_ga}
 %global milestone          fcs
 %global milestone_version  %{nil}
@@ -2143,6 +2143,36 @@ fi
 %endif
 
 %changelog
+* Fri Feb 18 2022 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.322.b06-alt2_1jpp8
+- New version.
+- Security fixes:
+  + JDK-8264934, CVE-2022-21248: Enhance cross VM serialization
+  + JDK-8268488: More valuable DerValues
+  + JDK-8268494: Better inlining of inlined interfaces
+  + JDK-8268512: More content for ContentInfo
+  + JDK-8268795: Enhance digests of Jar files
+  + JDK-8268801: Improve PKCS attribute handling
+  + JDK-8268813, CVE-2022-21283: Better String matching
+  + JDK-8269151: Better construction of EncryptedPrivateKeyInfo
+  + JDK-8269944: Better HTTP transport redux
+  + JDK-8270392, CVE-2022-21293: Improve String constructions
+  + JDK-8270416, CVE-2022-21294: Enhance construction of Identity maps
+  + JDK-8270492, CVE-2022-21282: Better resolution of URIs
+  + JDK-8270498, CVE-2022-21296: Improve SAX Parser configuration management
+  + JDK-8270646, CVE-2022-21299: Improved scanning of XML entities
+  + JDK-8271962: Better TrueType font loading
+  + JDK-8271968: Better canonical naming
+  + JDK-8271987: Manifest improved manifest entries
+  + JDK-8272014, CVE-2022-21305: Better array indexing
+  + JDK-8272026, CVE-2022-21340: Verify Jar Verification
+  + JDK-8272236, CVE-2022-21341: Improve serial forms for transport
+  + JDK-8272272: Enhance jcmd communication
+  + JDK-8272462: Enhance image handling
+  + JDK-8273290: Enhance sound handling
+  + JDK-8273748, CVE-2022-21349: Improve Solaris font rendering
+  + JDK-8273756, CVE-2022-21360: Enhance BMP image support
+  + JDK-8273838, CVE-2022-21365: Enhanced BMP processing
+
 * Mon Feb 14 2022 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.322.b04-alt2_0.1.eajpp8
 - FTBFS: fixed linking libraries.
 
