@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 22.02
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Summary: Webbrowser designed for mobile devices
@@ -13,7 +13,7 @@ License: GPLv3+
 Group: Networking/WWW
 Url: https://anongit.kde.org/plasma-angelfish.git
 
-ExclusiveArch: %qt5_qtwebengine_arches
+ExcludeArch: %not_qt5_qtwebengine_arches
 
 Requires(post,preun): alternatives >= 0.2
 Requires: qt5-feedback
@@ -76,6 +76,9 @@ __EOF__
 %_K5notif/*angelfish*
 
 %changelog
+* Fri Feb 18 2022 Sergey V Turchin <zerg@altlinux.org> 22.02-alt2
+- using not_qt5_qtwebengine_arches macro
+
 * Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 22.02-alt1
 - new version
 
