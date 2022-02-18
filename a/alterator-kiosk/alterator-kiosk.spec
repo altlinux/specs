@@ -1,5 +1,5 @@
 Name: alterator-kiosk
-Version: 1.7
+Version: 1.8
 Release: alt1
 
 Source: %name-%version.tar
@@ -54,6 +54,9 @@ install -Dm 0644 %SOURCE2 %buildroot%_unitdir/kiosk.service
 %_sysconfdir/alterator/kiosk/profiles/
 
 %changelog
+* Fri Feb 18 2022 Oleg Solovyov <mcpain@altlinux.org> 1.8-alt1
+- extend apps-common profile
+
 * Mon Feb 07 2022 Oleg Solovyov <mcpain@altlinux.org> 1.7-alt1
 - update profiles for LDE startup and shotdown
 
