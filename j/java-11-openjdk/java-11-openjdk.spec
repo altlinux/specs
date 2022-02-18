@@ -40,7 +40,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-11-openjdk
-%define version 11.0.14.0.1
+%define version 11.0.14.1.1
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -310,7 +310,7 @@ BuildRequires: /proc rpm-build-java
 # for techpreview, using 1, so slowdebugs can have 0
 %define priority %( printf '%08d' 3 )
 %endif
-%global newjavaver      %{majorver}.%{minorver}.%{securityver}
+%global newjavaver      %{majorver}.%{minorver}.%{securityver}.1
 
 %global javaver         %{majorver}
 
@@ -318,7 +318,7 @@ BuildRequires: /proc rpm-build-java
 # Release will be (where N is usually a number starting at 1):
 # - 0.N%%{?extraver}%%{?dist} for EA releases,
 # - N%%{?extraver}{?dist} for GA releases
-%global is_ga           0
+%global is_ga           1
 %if %{is_ga}
 %global ea_designator ""
 %global ea_designator_zip ""
@@ -1228,7 +1228,7 @@ if ! echo $suffix | grep -q "debug" ; then
   install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}
   cp -a %{buildoutputdir}/images/docs $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}
   #cp -a %{buildoutputdir}/bundles/jdk-%{newjavaver}%{ea_designator_zip}+%{buildver}%{lts_designator_zip}-docs.zip $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}.zip
-  cp -a %{buildoutputdir}/bundles/jdk-11.0.14.1-ea+1%{lts_designator_zip}-docs.zip $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}.zip
+  cp -a %{buildoutputdir}/bundles/jdk-11.0.14.1+1%{lts_designator_zip}-docs.zip $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}.zip
 fi
 
 # Install release notes
@@ -1451,6 +1451,9 @@ for i in $RPM_BUILD_ROOT%_man1dir/*.1; do
     [ -f $i ] && gzip -9 $i
 done
 
+# Make symlink to libjvm.so to main library directory
+ln -s server/libjvm.so %buildroot%_jvmdir/%sdkdir/lib/libjvm.so
+
 ##################################################
 # - END alt linux specific, shared with openjdk -#
 ##################################################
@@ -1566,6 +1569,7 @@ fi
 %{_mandir}/man1/rmiregistry%{label}.1*
 %{_mandir}/man1/unpack200%{label}.1*
 %{_jvmdir}/%{sdkdir}/lib/server/
+%{_jvmdir}/%{sdkdir}/lib/libjvm.so
 %ifarch %{share_arches}
 %attr(444, root, root) %ghost %{_jvmdir}/%{sdkdir}/lib/server/classes.jsa
 %endif
@@ -1728,19 +1732,16 @@ fi
 %{_jvmdir}/%{sdkdir}/jmods
 
 %files demo
-%{_jvmdir}/%{sdkdir}/legal
 %{_jvmdir}/%{sdkdir}/demo
 %{_jvmdir}/%{sdkdir}/sample
 
 %files src
-%{_jvmdir}/%{sdkdir}/legal
 %{_jvmdir}/%{sdkdir}/lib/src.zip
 
 %files javadoc
 %_altdir/%altname-javadoc
 %_sysconfdir/buildreqs/packages/substitute.d/%name-javadoc
 %doc %{_javadocdir}/%{uniquejavadocdir}
-%{_jvmdir}/%{sdkdir}/legal
 %if %is_system_jdk
 %if %{is_release_build}
 %ghost %{_javadocdir}/java
@@ -1753,7 +1754,6 @@ fi
 # same for debug variant
 %files javadoc-zip
 %doc %{_javadocdir}/%{uniquejavadocdir}.zip
-%{_jvmdir}/%{sdkdir}/legal
 %if %is_system_jdk
 %if %{is_release_build}
 %ghost %{_javadocdir}/java-zip
@@ -1778,6 +1778,43 @@ fi
 %endif
 
 %changelog
+* Fri Feb 18 2022 Andrey Cherepanov <cas@altlinux.org> 0:11.0.14.1.1-alt1_1jpp11
+- New version.
+- Security fixes
+  + JDK-8217375: jarsigner breaks old signature with long lines in manifest
+  + JDK-8251329: (zipfs) Files.walkFileTree walks infinitely if zip has dir named "." inside
+  + JDK-8264934, CVE-2022-21248: Enhance cross VM serialization
+  + JDK-8268488: More valuable DerValues
+  + JDK-8268494: Better inlining of inlined interfaces
+  + JDK-8268512: More content for ContentInfo
+  + JDK-8268795: Enhance digests of Jar files
+  + JDK-8268801: Improve PKCS attribute handling
+  + JDK-8268813, CVE-2022-21283: Better String matching
+  + JDK-8269151: Better construction of EncryptedPrivateKeyInfo
+  + JDK-8269944: Better HTTP transport redux
+  + JDK-8270386, CVE-2022-21291: Better verification of scan methods
+  + JDK-8270392, CVE-2022-21293: Improve String constructions
+  + JDK-8270416, CVE-2022-21294: Enhance construction of Identity maps
+  + JDK-8270492, CVE-2022-21282: Better resolution of URIs
+  + JDK-8270498, CVE-2022-21296: Improve SAX Parser configuration management
+  + JDK-8270646, CVE-2022-21299: Improved scanning of XML entities
+  + JDK-8270952, CVE-2022-21277: Improve TIFF file handling
+  + JDK-8271962: Better TrueType font loading
+  + JDK-8271968: Better canonical naming
+  + JDK-8271987: Manifest improved manifest entries
+  + JDK-8272014, CVE-2022-21305: Better array indexing
+  + JDK-8272026, CVE-2022-21340: Verify Jar Verification
+  + JDK-8272236, CVE-2022-21341: Improve serial forms for transport
+  + JDK-8272272: Enhance jcmd communication
+  + JDK-8272462: Enhance image handling
+  + JDK-8273290: Enhance sound handling
+  + JDK-8273756, CVE-2022-21360: Enhance BMP image support
+  + JDK-8273838, CVE-2022-21365: Enhanced BMP processing
+  + JDK-8274096, CVE-2022-21366: Improve decoding of image files
+  + JDK-8279541: Improve HarfBuzz
+- Fixed linking libraries.
+- Removed duplicated files with legal information from packages.
+
 * Sun Dec 19 2021 Andrey Cherepanov <cas@altlinux.org> 0:11.0.14.1-alt1_0.1.eajpp11
 - New version.
 
