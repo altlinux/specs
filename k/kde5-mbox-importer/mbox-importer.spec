@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 21.12.1
-Release: alt2
+Release: alt3
 %K5init
 
 Group: Graphical desktop/KDE
@@ -10,7 +10,7 @@ Summary: MBox Importer
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-ExclusiveArch: %qt5_qtwebengine_arches
+ExcludeArch: %not_qt5_qtwebengine_arches
 
 Conflicts: kde5-pim-common < 16.12
 
@@ -81,6 +81,9 @@ KF5 library
 #%_K5lib/libmbox-importer.so.*
 
 %changelog
+* Fri Feb 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt3
+- using not_qt5_qtwebengine_arches macro
+
 * Fri Feb 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt2
 - build with parity of qtwebengine arches
 
