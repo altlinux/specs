@@ -18,7 +18,7 @@
 
 Name: kde5-pim-addons
 Version: 21.12.1
-Release: alt3
+Release: alt4
 %K5init
 
 %add_findreq_skiplist %_K5bin/kmail_*.sh
@@ -28,7 +28,7 @@ Summary: PIM addons
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-ExclusiveArch: %qt5_qtwebengine_arches
+ExcludeArch: %not_qt5_qtwebengine_arches
 
 Requires: %name-kaddressbook
 Requires: %name-kmail
@@ -304,6 +304,9 @@ Requires: %name-common
 
 
 %changelog
+* Fri Feb 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt4
+- using not_qt5_qtwebengine_arches macro
+
 * Fri Feb 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt3
 - build with parity of qtwebengine arches
 
