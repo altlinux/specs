@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 21.12.1
-Release: alt2
+Release: alt3
 %K5init
 
 Group: System/Libraries
@@ -13,7 +13,7 @@ Summary: KDE5 %rname library
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-ExclusiveArch: %qt5_qtwebengine_arches
+ExcludeArch: %not_qt5_qtwebengine_arches
 
 Source: %rname-%version.tar
 
@@ -88,6 +88,9 @@ KF5 library
 %_K5lib/libKF5MailCommon.so.*
 
 %changelog
+* Fri Feb 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt3
+- using not_qt5_qtwebengine_arches macro
+
 * Thu Feb 03 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt2
 - build with parity of qtwebengine arches
 
