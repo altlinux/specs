@@ -30,14 +30,14 @@
 
 Name: ring-project
 Version: 20210917
-Release: alt2
+Release: alt3
 
 Group: Networking/Instant messaging
 Summary: SIP and IAX2 compatible softphone
 Url: http://ring.cx/
 License: GPLv3
 
-ExclusiveArch: %qt5_qtwebengine_arches
+ExcludeArch: %not_qt5_qtwebengine_arches
 
 Requires(post,preun): alternatives >= 0.2
 #Conflicts: sflphone sflphone-common
@@ -361,6 +361,9 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir/
 #%_libdir/libring.a
 
 %changelog
+* Fri Feb 18 2022 Sergey V Turchin <zerg@altlinux.org> 20210917-alt3
+- using not_qt5_qtwebengine_arches macro
+
 * Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 20210917-alt2
 - build with parity of qtwebengine arches
 
