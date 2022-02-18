@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 62
+%define centos_release 64
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,21 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Feb 18 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.64-alt1.el9
+- Updated to kernel-5.14.0-64.el9 (fixes: CVE-2021-3753):
+  + EDAC/i10nm: Retrieve and print retry_rd_err_log registers
+  + ice: bugfix update for 9.0
+  + igc: driver update for 9.0
+  + nvme-fabrics: fix state check in nvmf_ctlr_matches_baseopts()
+  + scsi: reserve space in structures for KABI
+  + vt_kdsetmode: extend console locking
+  + Various changes and improvements that are poorly described in merge.
+
+* Fri Feb 18 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.63-alt1.el9
+- Updated to kernel-5.14.0-63.el9:
+  + ionic: driver update for 9.0
+  + wireguard: 9.0 P2 backports from upstream
+
 * Thu Feb 17 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.62-alt1.el9
 - Updated to kernel-5.14.0-62.el9 (fixes: CVE-2021-43389):
   + Backport page unpoisoning fixes
