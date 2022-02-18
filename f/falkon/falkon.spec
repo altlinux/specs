@@ -12,7 +12,7 @@
 
 Name: falkon
 Version: 3.2.0
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Summary: A very fast open source browser based on WebKit core
@@ -20,12 +20,12 @@ License: GPLv3+
 Group: Networking/WWW
 Url: https://www.falkon.org/
 
-ExcludeArch: %e2k ppc64le
+ExcludeArch: %not_qt5_qtwebengine_arches
 
 Source: %name-%version.tar
 # Automatically added by buildreq on Thu Apr 07 2016
 # optimized out: fontconfig gcc-c++ libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-positioning libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-sql libqt5-webchannel libqt5-webenginecore libqt5-webenginewidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel pkg-config python-base python-modules qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-macros-qt5-webengine
 BuildRequires: extra-cmake-modules
 BuildRequires: libssl-devel libxcbutil-devel
 BuildRequires: qt5-multimedia-devel qt5-script-devel qt5-tools-devel qt5-webengine-devel qt5-websockets-devel qt5-x11extras-devel
@@ -129,6 +129,9 @@ __EOF__
 %_K5lib/libFalkonPrivate.so.%sover.*
 
 %changelog
+* Fri Feb 18 2022 Sergey V Turchin <zerg@altlinux.org> 3.2.0-alt2
+- using not_qt5_qtwebengine_arches macro
+
 * Fri Feb 04 2022 Sergey V Turchin <zerg@altlinux.org> 3.2.0-alt1
 - new version
 
