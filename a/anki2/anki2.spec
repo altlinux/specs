@@ -1,6 +1,6 @@
 Name: anki2
 Version: 2.1.12
-Release: alt2
+Release: alt3
 
 Summary: Flashcard program for using space repetition learning
 
@@ -11,7 +11,7 @@ Url: https://apps.ankiweb.net/
 # Source-url: https://apps.ankiweb.net/downloads/current/anki-%version-source.tgz
 Source: %name-%version.tar
 
-ExclusiveArch: %qt5_qtwebengine_arches
+ExcludeArch: %not_qt5_qtwebengine_arches
 
 Conflicts: anki < %version-%release
 
@@ -86,6 +86,9 @@ done
 %doc touch-%_arch LICENSE* README*
 
 %changelog
+* Fri Feb 18 2022 Sergey V Turchin <zerg@altlinux.org> 2.1.12-alt3
+- using not_qt5_qtwebengine_arches macro
+
 * Thu Feb 03 2022 Sergey V Turchin <zerg@altlinux.org> 2.1.12-alt2
 - build according qtwebengine arches
 
