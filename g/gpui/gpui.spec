@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.0
-Release: alt2
+Release: alt3
 
 Summary: Group policy editor
 License: GPLv2+
@@ -73,6 +73,13 @@ desktop-file-install --dir=%buildroot%_desktopdir \
 %_desktopdir/gpui.desktop
 
 %changelog
+* Fri Feb 18 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt3
+- Fixes:
+  + #73617 Fix difference of about window from that of ADMC.
+  + #73627 Fix invalid header of the main window.
+  + #73629 Fix absent translation of program icon in start menu.
+  + Fix disabling and non configuring policies.
+
 * Wed Feb 17 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt2
 - Fixes:
   + Fix string saving to pol file.
