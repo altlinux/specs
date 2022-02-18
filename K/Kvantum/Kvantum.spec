@@ -1,5 +1,5 @@
 Name: Kvantum
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: SVG-based theme engine for Qt5, KDE and LXQt
@@ -7,7 +7,7 @@ License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 
 Url: https://github.com/tsujan/Kvantum
-# Source-url: https://github.com/tsujan/Kvantum/archive/V%version.tar.gz
+# Source-url: https://github.com/tsujan/Kvantum/archive/V%%version.tar.gz
 Source: %name-%version.tar.gz
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
@@ -89,6 +89,9 @@ desktop-file-validate %buildroot%_desktopdir/kvantummanager.desktop
 %_datadir/themes/Kv*/*
 
 %changelog
+* Fri Feb 18 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.1-alt1
+- 1.0.1.
+
 * Mon Jan 10 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.0-alt1
 - 1.0.0.
 
