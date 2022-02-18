@@ -1,100 +1,158 @@
 Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-fonts
+BuildRequires: rpm-build-fedora-compat-fonts unzip
 # END SourceDeps(oneline)
 %define oldname adobe-source-sans-pro-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global fontname source-sans-pro
-%global fontconf 63-%{fontname}.conf
+%define fontpkgname adobe-source-sans-pro-fonts
+Version:        3.046
+Release:        alt1_3
+URL:            https://github.com/adobe-fonts/source-sans-pro/
+
+%global foundry adobe
+%global fontlicense OFL
+%global fontlicenses LICENSE.md
+%global fontdocs README.md
+%global fontdocsex %{fontlicenses}
+
+%global fontfamily Source Sans Pro
+%global fontsummary A set of OpenType fonts designed for user interfaces
+%global fonts OTF/*.otf
+%global fontdescription Source Sans is a set of OpenType fonts that have been designed to work well in\
+user interface (UI) environments, as well as in text setting for screen and\
+print.
+
+Source0:        https://github.com/adobe-fonts/source-sans-pro/}/releases/download/%{version}R/OTF-source-sans-%{version}R.zip
+# Adjust as necessary. Keeping the filename in sync with the package name is a good idea.
+# See the fontconfig templates in fonts-rpm-templates for information on how to
+# write good fontconfig files and choose the correct priority [number].
+Source10:       63-adobe-source-sans-pro-fonts.conf
 
 Name:           fonts-otf-adobe-source-sans-pro
-Version:        3.006
-Release:        alt1_1
-Summary:        A set of OpenType fonts designed for user interfaces
-
-License:        OFL
-URL:            https://github.com/adobe-fonts/%{fontname}/
-# Can't build fonts without nonfree softwares
-Source0:        %{url}/releases/download/%{version}R/%{fontname}-%{version}R.zip
-Source1:        %{oldname}-fontconfig.conf
-Source2:        %{fontname}.metainfo.xml
-
-BuildRequires:  fontpackages-devel
+Summary:        %{fontsummary}
+License:        %{fontlicense}
 BuildArch:      noarch
+BuildRequires:  rpm-build-fonts
+%{?fontpkgheader}
 Source44: import.info
-
 %description
-Source Sans is a set of OpenType fonts that have been designed to work well in
-user interface (UI) environments, as well as in text setting for screen and
-print.
+%{?fontdescription}
 
 
 %prep
-%setup -q -n %{fontname}-%{version}R
+%global fontconfs %{SOURCE10}
+%setup -n %{oldname}-%{version} -q -c
 
 
 
 %build
+# fontbuild 
+fontnames=$(
+  for font in 'OTF/SourceSans3-Black.otf' 'OTF/SourceSans3-BlackIt.otf' 'OTF/SourceSans3-Bold.otf' 'OTF/SourceSans3-BoldIt.otf' 'OTF/SourceSans3-ExtraLight.otf' 'OTF/SourceSans3-ExtraLightIt.otf' 'OTF/SourceSans3-It.otf' 'OTF/SourceSans3-Light.otf' 'OTF/SourceSans3-LightIt.otf' 'OTF/SourceSans3-Regular.otf' 'OTF/SourceSans3-Semibold.otf' 'OTF/SourceSans3-SemiboldIt.otf'; do
+    fc-scan "${font}" -f "    <font>%%{fullname[0]}</font>\n"
+  done | sort -u
+)
+if [[ -n "${fontnames}" ]] ; then
+  fontnames=$'\n'"  <provides>"$'\n'"${fontnames}"$'\n'"  </provides>"
+fi
+fontlangs=$(
+  for font in 'OTF/SourceSans3-Black.otf' 'OTF/SourceSans3-BlackIt.otf' 'OTF/SourceSans3-Bold.otf' 'OTF/SourceSans3-BoldIt.otf' 'OTF/SourceSans3-ExtraLight.otf' 'OTF/SourceSans3-ExtraLightIt.otf' 'OTF/SourceSans3-It.otf' 'OTF/SourceSans3-Light.otf' 'OTF/SourceSans3-LightIt.otf' 'OTF/SourceSans3-Regular.otf' 'OTF/SourceSans3-Semibold.otf' 'OTF/SourceSans3-SemiboldIt.otf'; do
+    fc-scan "${font}" -f "%%{[]lang{    <lang>%%{lang}</lang>\n}}"
+  done | sort -u
+)
+if [[ -n "${fontlangs}" ]] ; then
+  fontlangs=$'\n'"  <languages>"$'\n'"${fontlangs}"$'\n'"  </languages>"
+fi
+
+echo "Generating the adobe-source-sans-pro-fonts appstream file"
+cat > "org.altlinux.adobe-source-sans-pro-fonts.metainfo.xml" << EOF_APPSTREAM
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: MIT -->
+<component type="font">
+  <id>org.altlinux.adobe-source-sans-pro-fonts</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>OFL</project_license>
+  <name>adobe Source Sans Pro</name>
+  <summary><![CDATA[A set of OpenType fonts designed for user interfaces]]></summary>
+  <description>
+    <p><![CDATA[Source Sans is a set of OpenType fonts that have been designed to work well inuser interface (UI) environments, as well as in text setting for screen and]]></p><p><![CDATA[print.]]></p>
+  </description>
+  <updatecontact>devel@lists.altlinux.org</updatecontact>
+  <url type="homepage">https://github.com/adobe-fonts/source-sans-pro/</url>
+  <releases>
+    <release version="%{version}-%{release}" date="$(date -d @$SOURCE_DATE_EPOCH -u --rfc-3339=d)"/>
+  </releases>${fontnames}${fontlangs}
+</component>
+EOF_APPSTREAM
 
 
 %install
-install -dm 0755 $RPM_BUILD_ROOT%{_fontdir}
-install -pm 0644 OTF/*.otf $RPM_BUILD_ROOT%{_fontdir}
+echo Installing adobe-source-sans-pro-fonts
+echo "" > "adobe-source-sans-pro-fonts.list"
+install -m 0755 -vd %buildroot%_fontsdir/otf/adobe-source-sans-pro/
+echo "%%dir %_fontsdir/otf/adobe-source-sans-pro" >> "adobe-source-sans-pro-fonts.list"
+install -m 0644 -vp "OTF/SourceSans3-Black.otf" %buildroot%_fontsdir/otf/adobe-source-sans-pro/
+echo \"%_fontsdir/otf/adobe-source-sans-pro//$(basename "OTF/SourceSans3-Black.otf")\" >> 'adobe-source-sans-pro-fonts.list'
+install -m 0644 -vp "OTF/SourceSans3-BlackIt.otf" %buildroot%_fontsdir/otf/adobe-source-sans-pro/
+echo \"%_fontsdir/otf/adobe-source-sans-pro//$(basename "OTF/SourceSans3-BlackIt.otf")\" >> 'adobe-source-sans-pro-fonts.list'
+install -m 0644 -vp "OTF/SourceSans3-Bold.otf" %buildroot%_fontsdir/otf/adobe-source-sans-pro/
+echo \"%_fontsdir/otf/adobe-source-sans-pro//$(basename "OTF/SourceSans3-Bold.otf")\" >> 'adobe-source-sans-pro-fonts.list'
+install -m 0644 -vp "OTF/SourceSans3-BoldIt.otf" %buildroot%_fontsdir/otf/adobe-source-sans-pro/
+echo \"%_fontsdir/otf/adobe-source-sans-pro//$(basename "OTF/SourceSans3-BoldIt.otf")\" >> 'adobe-source-sans-pro-fonts.list'
+install -m 0644 -vp "OTF/SourceSans3-ExtraLight.otf" %buildroot%_fontsdir/otf/adobe-source-sans-pro/
+echo \"%_fontsdir/otf/adobe-source-sans-pro//$(basename "OTF/SourceSans3-ExtraLight.otf")\" >> 'adobe-source-sans-pro-fonts.list'
+install -m 0644 -vp "OTF/SourceSans3-ExtraLightIt.otf" %buildroot%_fontsdir/otf/adobe-source-sans-pro/
+echo \"%_fontsdir/otf/adobe-source-sans-pro//$(basename "OTF/SourceSans3-ExtraLightIt.otf")\" >> 'adobe-source-sans-pro-fonts.list'
+install -m 0644 -vp "OTF/SourceSans3-It.otf" %buildroot%_fontsdir/otf/adobe-source-sans-pro/
+echo \"%_fontsdir/otf/adobe-source-sans-pro//$(basename "OTF/SourceSans3-It.otf")\" >> 'adobe-source-sans-pro-fonts.list'
+install -m 0644 -vp "OTF/SourceSans3-Light.otf" %buildroot%_fontsdir/otf/adobe-source-sans-pro/
+echo \"%_fontsdir/otf/adobe-source-sans-pro//$(basename "OTF/SourceSans3-Light.otf")\" >> 'adobe-source-sans-pro-fonts.list'
+install -m 0644 -vp "OTF/SourceSans3-LightIt.otf" %buildroot%_fontsdir/otf/adobe-source-sans-pro/
+echo \"%_fontsdir/otf/adobe-source-sans-pro//$(basename "OTF/SourceSans3-LightIt.otf")\" >> 'adobe-source-sans-pro-fonts.list'
+install -m 0644 -vp "OTF/SourceSans3-Regular.otf" %buildroot%_fontsdir/otf/adobe-source-sans-pro/
+echo \"%_fontsdir/otf/adobe-source-sans-pro//$(basename "OTF/SourceSans3-Regular.otf")\" >> 'adobe-source-sans-pro-fonts.list'
+install -m 0644 -vp "OTF/SourceSans3-Semibold.otf" %buildroot%_fontsdir/otf/adobe-source-sans-pro/
+echo \"%_fontsdir/otf/adobe-source-sans-pro//$(basename "OTF/SourceSans3-Semibold.otf")\" >> 'adobe-source-sans-pro-fonts.list'
+install -m 0644 -vp "OTF/SourceSans3-SemiboldIt.otf" %buildroot%_fontsdir/otf/adobe-source-sans-pro/
+echo \"%_fontsdir/otf/adobe-source-sans-pro//$(basename "OTF/SourceSans3-SemiboldIt.otf")\" >> 'adobe-source-sans-pro-fonts.list'
+(
 
-install -dm 0755 $RPM_BUILD_ROOT%{_fontconfig_templatedir} $RPM_BUILD_ROOT%{_fontconfig_confdir}
-install -m 0644 -p %{SOURCE1} $RPM_BUILD_ROOT%{_fontconfig_templatedir}/%{fontconf}
-ln -s %{_fontconfig_templatedir}/%{fontconf} $RPM_BUILD_ROOT%{_fontconfig_confdir}/%{fontconf}
+  install -m 0755 -vd "%{buildroot}%{_fontconfig_templatedir}" \
+                    "%{buildroot}%{_fontconfig_confdir}"
+  for fontconf in '%SOURCE10' "${newfontconfs[@]}"; do
+    if [[ -n $fontconf ]] ; then
+      install -m 0644 -vp "${fontconf}" "%{buildroot}%{_fontconfig_templatedir}"
+      echo \"%{_fontconfig_templatedir}/$(basename "${fontconf}")\"                  >> "adobe-source-sans-pro-fonts.list"
+      ln -vsr "%{buildroot}%{_fontconfig_templatedir}/$(basename "${fontconf}")" "%{buildroot}%{_fontconfig_confdir}"
+      echo "%%config(noreplace)" \"%{_fontconfig_confdir}/$(basename "${fontconf}")\" >> "adobe-source-sans-pro-fonts.list"
+    fi
+  done
+)
 
-# Add AppStream metadata
-install -Dpm 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/appdata/%{fontname}.metainfo.xml
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
+install -m 0755 -vd "%{buildroot}%{_metainfodir}"
+for fontappstream in 'org.altlinux.adobe-source-sans-pro-fonts.metainfo.xml'; do
+  install -m 0644 -vp "${fontappstream}" "%{buildroot}%{_metainfodir}"
+  echo \"%{_metainfodir}/$(basename "${fontappstream}")\" >> "adobe-source-sans-pro-fonts.list"
 done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
-fi
 
 
-%files
-%{_fontconfig_templatedir}/%{fontconf}
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}
-%dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/*.otf
-%doc README.md
-%doc --no-dereference LICENSE.md
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+%check
+# fontcheck 
+grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'adobe-source-sans-pro-fonts.list' \
+  | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
+grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'adobe-source-sans-pro-fonts.list' \
+  | xargs -I{} --        appstream-util validate-relax --nonet '%{buildroot}{}'
+
+
+%files -n fonts-otf-adobe-source-sans-pro -f adobe-source-sans-pro-fonts.list
 
 
 %changelog
+* Wed Feb 16 2022 Igor Vlasenko <viy@altlinux.org> 3.046-alt1_3
+- update to new release by fcimport
+
 * Fri Dec 27 2019 Igor Vlasenko <viy@altlinux.ru> 3.006-alt1_1
 - update to new release by fcimport
 
