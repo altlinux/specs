@@ -10,7 +10,7 @@
 
 Name: plymouth
 Version: 0.9.5
-Release: alt7
+Release: alt8
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
@@ -471,6 +471,10 @@ fi \
 %files system-theme
 
 %changelog
+* Fri Feb 18 2022 Oleg Solovyov <mcpain@altlinux.org> 1:0.9.5-alt8
+- Fix overlap in bgrt-alt theme
+- Fetch russian translation from upstream
+
 * Thu Jan 27 2022 Nikolai Kostrigin <nickel@altlinux.org> 1:0.9.5-alt7
 - introduce bgrt-alt customized theme
 
