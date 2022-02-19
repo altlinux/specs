@@ -2,7 +2,7 @@
 %def_without check
 
 Name: chisel
-Version: 1.7.6
+Version: 1.7.7
 Release: alt1
 
 Summary: TCP tunnel over HTTP
@@ -50,6 +50,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Mon Feb 14 2022 Vitaly Lipatov <lav@altlinux.ru> 1.7.7-alt1
+- new version 1.7.7 (with rpmrb script)
+
 * Sat Sep 11 2021 Vitaly Lipatov <lav@altlinux.ru> 1.7.6-alt1
 - initial build for ALT Sisyphus
 
