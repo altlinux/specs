@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libfprint2
-Version: 1.94.2
+Version: 1.94.3
 Release: alt1
 
 Summary: Tool kit for fingerprint scanner
@@ -9,8 +9,7 @@ License: LGPLv2+
 Group: System/Libraries
 
 Url: http://www.freedesktop.org/wiki/Software/fprint/libfprint
-# git://anongit.freedesktop.org/libfprint/libfprint
-# https://gitlab.freedesktop.org/libfprint/libfprint
+VCS: https://gitlab.freedesktop.org/libfprint/libfprint
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -73,7 +72,7 @@ export LD_LIBRARY_PATH="libfprint"
 %meson_test
 
 %files
-%doc COPYING INSTALL NEWS TODO THANKS AUTHORS README
+%doc COPYING INSTALL NEWS THANKS AUTHORS README.md
 %_libdir/*.so.*
 %_sysconfdir/udev/rules.d/70-libfprint-2.rules
 
@@ -91,6 +90,9 @@ export LD_LIBRARY_PATH="libfprint"
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Sat Feb 19 2022 Anton Farygin <rider@altlinux.ru> 1.94.3-alt1
+- 1.94.3
+
 * Mon Nov 08 2021 Anton Farygin <rider@altlinux.ru> 1.94.2-alt1
 - 1.94.2
 
