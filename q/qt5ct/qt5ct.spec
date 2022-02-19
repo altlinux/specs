@@ -1,16 +1,15 @@
 Name: qt5ct
 Version: 1.5
-Release: alt1
+Release: alt2
 
 Summary: Qt5 Configuration Tool
 Summary(ru_RU.UTF-8): Инструмент для настройки оформления приложений Qt5
-License: BSD
+License: BSD-2-Clause-NetBSD
 Group: System/Configuration/Other
 Url: https://sourceforge.net/projects/qt5ct
-Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
-Source: %name/%name-%version.tar
 # Source-url: https://sourceforge.net/projects/qt5ct/files/qt5ct-%version.tar.bz2/download
+Source: %name/%name-%version.tar
 
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires: libinput-devel
@@ -67,9 +66,13 @@ install -Dm 0755 %name.csh %buildroot%_sysconfdir/profile.d/%name.csh
 %_desktopdir/%name.desktop
 
 %changelog
+* Sun Feb 13 2022 Evgeny Chuck <koi@altlinux.org> 1.5-alt2
+- fix License tag (BSD -> BSD-2-Clause-NetBSD)
+- cleanup spec
+
 * Sun Dec 05 2021 Evgeny Chuck <koi@altlinux.org> 1.5-alt1
 - new version (1.5) with rpmgs script
-- Update spec for version 1.5
+- Update spec for version 1.5:
   + added package description in Russian
   + minor fixes in spec
 
