@@ -9,16 +9,14 @@
 
 Summary: A clients-server system for collecting checksums of mail messages
 Name: DCC
-Version: 2.3.167
-Release: alt0.2
+Version: 2.3.168
+Release: alt0.1
 License: MIT-0
 Group: System/Servers
 Url: http://www.rhyolite.com/anti-spam/dcc/
 Source0: http://www.rhyolite.com/anti-spam/dcc/source/dcc-%version.tar
 Source1: dcc.service
 Source2: dccifd.socket
-Patch: dcc-alt-fix-fno-common.patch
-
 Requires: spamassassin-spamd
 
 %if_enabled dccm
@@ -37,7 +35,6 @@ common variations in bulk messages, including "personalizations."
 
 %prep
 %setup -n dcc-%version
-%patch -p2
 find . -name Makefile.in | xargs subst 's/chown/:/g'
 
 %build
@@ -90,6 +87,10 @@ ln -s %mylibexec_dir/cron-dccd %buildroot%_sysconfdir/cron.daily/cron-dcc
 %_man8dir/*
 
 %changelog
+* Sat Feb 19 2022 L.A. Kostis <lakostis@altlinux.ru> 2.3.168-alt0.1
+- 2.3.168.
+- systemd: fix stale socket.
+
 * Fri Mar 12 2021 L.A. Kostis <lakostis@altlinux.ru> 2.3.167-alt0.2
 - Added systemd units and sockets.
 - Added sysv init link.
