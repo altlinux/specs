@@ -1,17 +1,13 @@
 Name: pdfmixtool
 Version: 1.0.2
-Release: alt1
+Release: alt2
 
-License: GPLv3
+License: LGPL-3.0-only
 Group: Office
 Url: https://www.scarpetta.eu/pdfmixtool
-Packager: Evgeny Chuck <koi at altlinux.org>
 
-Source: %name-%version.tar
 # Source-url: https://gitlab.com/scarpetta/pdfmixtool/-/archive/v%version/pdfmixtool-v%version.tar.gz
-
-# Automatically added by buildreq on Sun Jul 11 2021 (-bi)
-# optimized out: cmake-modules elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libglvnd-devel libp11-kit libqt5-core libqt5-gui libqt5-widgets libqt5-xml libsasl2-3 libstdc++-devel pkg-config python-base qt5-base-devel qt5-tools sh4
+Source: %name-%version.tar
 
 BuildRequires: cmake
 BuildRequires: libqpdf-devel
@@ -60,5 +56,9 @@ PDF, извлекать страницы из файла PDF, редактиро
 %_datadir/metainfo/eu.scarpetta.PDFMixTool.appdata.xml
 
 %changelog
+* Sun Feb 13 2022 Evgeny Chuck <koi@altlinux.org> 1.0.2-alt2
+- fix License tag (GPLv3 -> LGPL-3.0-only)
+- cleanup spec
+
 * Sun Jul 11 2021 Evgeny Chuck <koi@altlinux.org> 1.0.2-alt1
 - initial build for ALT Sisyphus
