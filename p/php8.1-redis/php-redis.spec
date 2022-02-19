@@ -5,14 +5,12 @@
 %define		php_extension	redis
 %define 	real_name	redis
 Name:	 	php%_php_suffix-%php_extension
-Version:	5.3.6
+Version:	5.3.7
 Release:	alt1.%php_version
 Summary:	Client extension for Redis key-value store
 License:	PHP-3.01
 Group:		System/Servers
 URL:		https://github.com/nicolasff/phpredis
-
-# Source-url:	https://github.com/phpredis/phpredis/archive/%version.tar.gz
 Source:		php-%php_extension-%version.tar
 
 Source1: redis.ini
@@ -63,6 +61,10 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Sat Feb 19 2022 Anton Farygin <rider@altlinux.ru> 5.3.7-alt1
+- 5.3.6 -> 5.3.7
+- built from upstream git
 
 * Wed Feb 02 2022 Anton Farygin <rider@altlinux.ru> 5.3.6-alt1
 - 5.3.5 -> 5.3.6
