@@ -10,7 +10,6 @@ License:	PHP-3.01
 
 Source1:	php-%php_extension.ini
 Source2:	php-%php_extension-params.sh
-Patch0: php-openssl-fix-openssl_x509_checkpurpose_basic.phpt.patch
 
 BuildRequires(pre): rpm-build-php7-version
 BuildRequires:	php-devel = %php_version
@@ -28,7 +27,6 @@ Some of these may be added in the future.
 %prep
 %setup -T -c
 cp -pr %php_extsrcdir/%php_extension/* .
-%patch0 -p3
 
 # simple fix
 mv config0.m4 config.m4

@@ -1,14 +1,14 @@
 %define php_extension	xdebug
 
 Name: php%_php_suffix-%php_extension
-Version: 3.1.2
+Version: 3.1.3
 Epoch: 1
 Release: alt1.%_php_release_version
-
 Summary: xdebug extensions
 Group: System/Servers
 License: Xdebug-1.02
-# Source-url: https://xdebug.org/download#releases
+URL: https://xdebug.org/download#releases
+VCS: https://github.com/xdebug/xdebug
 Source: php-%php_extension-%version.tar
 Source1: php-%php_extension.ini
 Source2: php-%php_extension-params.sh
@@ -56,6 +56,10 @@ install -D -m 644 %SOURCE2 %buildroot%php_extconf/%php_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} 1:%version-%release
 - Rebuild with php-devel %php_version-%php_release
+
+* Sat Feb 19 2022 Anton Farygin <rider@altlinux.ru> 1:3.1.3-alt1
+- 3.1.2 -> 3.1.3
+- built from upstream git
 
 * Sun Dec 05 2021 Anton Farygin <rider@altlinux.ru> 1:3.1.2-alt1
 - 3.0.4 -> 3.1.2

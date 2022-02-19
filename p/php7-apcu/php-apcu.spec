@@ -2,18 +2,16 @@
 %define 	real_name	APCu
 
 Name:	 	php%_php_suffix-%php_extension
-Version:	5.1.20
+Version:	5.1.21
 Epoch:		1
-Release:	alt3.%_php_release_version
+Release:	alt1.%_php_release_version
 
 Summary:	PHP extension APCu - APC User Cache
 
 License:	PHP-3.01
 Group:		System/Servers
 URL:		http://pecl.php.net/package/APCu
-#URL:		https://github.com/krakjoe/apcu
-
-Packager:	Nikolay A. Fetisov <naf@altlinux.org>
+VCS:		https://github.com/krakjoe/apcu
 
 Source0:	php-%php_extension-%version.tar
 Source1:	php-%php_extension.ini
@@ -21,10 +19,6 @@ Source2:	php-%php_extension-params.sh
 
 
 BuildRequires(pre): rpm-build-php7-version
-# Automatically added by buildreq on Tue Jun 13 2017
-# optimized out: gnu-config perl php7-libs python-base python-modules python3 python3-base
-BuildRequires: glibc-devel-static
-
 BuildRequires: php-devel = %php_version
 BuildRequires: php%_php_suffix = %php_version
 
@@ -79,6 +73,9 @@ NO_INTERACTION=1 make test
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} 1:%version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Wed Jan 26 2022 Anton Farygin <rider@altlinux.ru> 1:5.1.21-alt1
+- updated to 5.1.21
 
 * Fri Jan 26 2018 Nikolay A. Fetisov <naf@altlinux.org> 7.1.12-alt1.S1
 - New externsion version 5.1.9
