@@ -15,8 +15,8 @@ and writing passive aggressive office memos.
 
 
 Name:           fonts-otf-comic-neue
-Version:        2.5
-Release:        alt1_1
+Version:        2.51
+Release:        alt1_4
 Summary:        A typeface family inspired by Comic Sans
 
 License:        OFL
@@ -57,6 +57,16 @@ Requires:       fonts-otf-comic-neue-common = %{version}-%{release}
 The Comic Neue Angular variant features angular terminals rather than round.
 
 
+%package -n fonts-web-comic-neue
+Group: System/Fonts/True type
+Summary:        A typeface family inspired by Comic Sans, web files
+Requires:       fonts-otf-comic-neue-common = %{version}-%{release}
+
+%description -n fonts-web-comic-neue
+%common_desc
+
+This package contains Web Open Font Format versions 1 and 2 files.
+
 
 %prep
 %setup -n %{oldname}-%{version} -q -c
@@ -68,6 +78,8 @@ The Comic Neue Angular variant features angular terminals rather than round.
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p %{fontname}-%{version}/OTF/*/*.otf %{buildroot}%{_fontdir}
+install -m 0644 -p %{fontname}-%{version}/WebFonts/*.woff %{buildroot}%{_fontdir}
+install -m 0644 -p %{fontname}-%{version}/WebFonts/*.woff2 %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
@@ -85,12 +97,14 @@ for fconf in %{fontconf}.conf \
 done
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc woff woff2 WOFF WOFF2 pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
 	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
+	woff|WOFF) type=woff;;
+	woff2|WOFF2) type=woff2;;
     esac
     find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
 	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
@@ -121,13 +135,17 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
-%dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/ComicNeue-*.otf
+%dir %{_fontsdir}/*/%{_fontstem}/
+%{_fontsdir}/*/%{_fontstem}/ComicNeue-*.otf
 %files -n fonts-otf-comic-neue-angular
 %{_fontconfig_templatedir}/%{fontconf}-angular.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-angular.conf
-%dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/ComicNeueAngular-*.otf
+%dir %{_fontsdir}/*/%{_fontstem}/
+%{_fontsdir}/*/%{_fontstem}/ComicNeueAngular-*.otf
+%files -n fonts-web-comic-neue
+%dir %{_fontsdir}/*/%{_fontstem}/
+%{_fontsdir}/*/%{_fontstem}/ComicNeue*.woff
+%{_fontsdir}/*/%{_fontstem}/ComicNeue*.woff2
 
 
 %files -n fonts-otf-comic-neue-common
@@ -136,6 +154,9 @@ fi
 
 
 %changelog
+* Sat Feb 19 2022 Igor Vlasenko <viy@altlinux.org> 2.51-alt1_4
+- new version
+
 * Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_1
 - update to new release by fcimport
 
