@@ -1,6 +1,6 @@
 %def_without asserts
 Name: libuv
-Version: 1.42.0
+Version: 1.43.0
 Release: alt1
 
 Summary: Evented I/O for NodeJS
@@ -64,6 +64,9 @@ rm -f %buildroot%_libdir/%name.a
 
 
 %changelog
+* Sun Feb 13 2022 Vitaly Lipatov <lav@altlinux.ru> 1.43.0-alt1
+- new version 1.43.0 (with rpmrb script)
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1.42.0-alt1
 - new version 1.42.0 (with rpmrb script)
 
