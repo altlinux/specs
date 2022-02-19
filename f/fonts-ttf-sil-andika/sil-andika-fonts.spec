@@ -1,126 +1,161 @@
 Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-fonts
+BuildRequires: rpm-build-fedora-compat-fonts unzip
 # END SourceDeps(oneline)
 %define oldname sil-andika-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global fontname sil-andika
-%global fontconf 60-%{fontname}.conf
+%define fontpkgname sil-andika-fonts
+# SPDX-License-Identifier: MIT
+Version: 5.000
+Release: alt1_5
 
-# Someday SIL will release sanely named archives
-%global archivename AndikaBasicR_10
+%global foundry           SIL
+%global fontlicense       OFL
+%global fontlicenses      OFL.txt
+%global fontdocs          *.txt
+%global fontdocsex        %{fontlicenses}
 
-Name:    fonts-ttf-sil-andika
-Version: 1.0
-Release: alt3_18
-Summary: A font for literacy and beginning readers
+%global fontfamily        Andika
+%global fontsummary       SIL Andika, a font family for literacy and beginning readers
+%global projectname       andika
+%global archivename       Andika-%{version}
+URL:                      https://software.sil.org/%{projectname}/
+%global fontpkgheader     \
+#Suggests: font(andikanewbasic)\
 
-License:   OFL
-URL:       http://scripts.sil.org/Andika
-# Actual download URL
-# http://scripts.sil.org/cms/scripts/render_download.php?site_id=nrsi&format=file&media_id=%{archivename}&filename=%{archivename}.zip
-Source0:   %{archivename}.zip
-Source1:   %{oldname}-fontconfig.conf
-Source2:   %{fontname}.metainfo.xml
-
-BuildArch:     noarch
-BuildRequires: fontpackages-devel
-Obsoletes:     andika-fonts < 1.0-4
-Source44: import.info
-
-%description
-Andika is a sans serif, Unicode-compliant font designed especially for
-literacy use, taking into account the needs of beginning readers. The focus is
-on clear, easy-to-perceive letterforms that will not be readily confused with
-one another.
-
-A sans serif font is preferred by some literacy personnel for teaching people
-to read. Its forms are simpler and less cluttered than those of most serif
-fonts. For years, literacy workers have had to make do with fonts that were
-not really suitable for beginning readers and writers. In some cases, literacy
-specialists have had to tediously assemble letters from a variety of fonts in
-order to get all of the characters they need for their particular language
-project, resulting in confusing and unattractive publications. Andika
+%global fonts             *.ttf
+%global fontdescription   \
+Andika is a sans serif, Unicode-compliant font family designed especially for\
+literacy use, taking into account the needs of beginning readers. The focus is\
+on clear, easy-to-perceive letter-forms that will not be readily confused with\
+one another.\
+\
+A sans serif font is preferred by some literacy personnel for teaching people\
+to read. Its forms are simpler and less cluttered than those of most serif\
+fonts. For years, literacy workers have had to make do with fonts that were\
+not really suitable for beginning readers and writers. In some cases, literacy\
+specialists have had to tediously assemble letters from a variety of fonts in\
+order to get all of the characters they need for their particular language\
+project, resulting in confusing and unattractive publications. Andika\
 addresses those issues.
 
+Source0:  https://software.sil.org/downloads/r/%{projectname}/%{archivename}.zip
+Source10: 61-sil-andika-fonts.xml
+
+Name:           fonts-ttf-sil-andika
+Summary:        %{fontsummary}
+License:        %{fontlicense}
+BuildArch:      noarch
+BuildRequires:  rpm-build-fonts
+%{?fontpkgheader}
+Source44: import.info
+%description
+%{?fontdescription}
 
 %prep
+%global fontconfngs       %{SOURCE10}
 %setup -q -n %{archivename}
-
-# Text files sanitization
-for txt in *.txt ; do
-   # Unicode compliant, check
-   iconv -f WINDOWS-1252 -t UTF-8 -o $txt.1 $txt
-   fold -s $txt.1 > $txt.2
-   sed -i 's/\r//' $txt.2
-   touch -r $txt $txt.2
-   mv $txt.2 $txt
-   rm $txt.1
-done
-
+%linuxtext *.txt
 
 %build
-
-
-%install
-install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
-
-install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
-                   %{buildroot}%{_fontconfig_confdir}
-
-install -m 0644 -p %{SOURCE1} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
-ln -s %{_fontconfig_templatedir}/%{fontconf} \
-      %{buildroot}%{_fontconfig_confdir}/%{fontconf}
-
-# Add AppStream metadata
-install -Dm 0644 -p %{SOURCE2} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
+# fontbuild 
+fontnames=$(
+  for font in 'Andika-R.ttf'; do
+    fc-scan "${font}" -f "    <font>%%{fullname[0]}</font>\n"
+  done | sort -u
+)
+if [[ -n "${fontnames}" ]] ; then
+  fontnames=$'\n'"  <provides>"$'\n'"${fontnames}"$'\n'"  </provides>"
+fi
+fontlangs=$(
+  for font in 'Andika-R.ttf'; do
+    fc-scan "${font}" -f "%%{[]lang{    <lang>%%{lang}</lang>\n}}"
+  done | sort -u
+)
+if [[ -n "${fontlangs}" ]] ; then
+  fontlangs=$'\n'"  <languages>"$'\n'"${fontlangs}"$'\n'"  </languages>"
 fi
 
-%files
-%{_fontconfig_templatedir}/%{fontconf}
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}
-%{_fontbasedir}/*/%{_fontstem}/*.ttf
-%doc *.txt
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+echo "Generating the sil-andika-fonts appstream file"
+cat > "org.altlinux.sil-andika-fonts.metainfo.xml" << EOF_APPSTREAM
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: MIT -->
+<component type="font">
+  <id>org.altlinux.sil-andika-fonts</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>OFL</project_license>
+  <name>SIL Andika</name>
+  <summary><![CDATA[SIL Andika, a font family for literacy and beginning readers]]></summary>
+  <description>
+    <p><![CDATA[Andika is a sans serif, Unicode-compliant font family designed especially for]]></p><p><![CDATA[literacy use, taking into account the needs of beginning readers. The focus is]]></p><p><![CDATA[on clear, easy-to-perceive letter-forms that will not be readily confused with]]></p><p><![CDATA[one another.]]></p> A sans serif font is preferred by some literacy personnel for teaching people to read. Its forms are simpler and less cluttered than those of most serif fonts. For years, literacy workers have had to make do with fonts that were not really suitable for beginning readers and writers. In some cases, literacy specialists have had to tediously assemble letters from a variety of fonts in order to get all of the characters they need for their particular language project, resulting in confusing and unattractive publications. Andika addresses those issues.
+  </description>
+  <updatecontact>devel@lists.altlinux.org</updatecontact>
+  <url type="homepage">https://software.sil.org/%{projectname}/</url>
+  <releases>
+    <release version="%{version}-%{release}" date="$(date -d @$SOURCE_DATE_EPOCH -u --rfc-3339=d)"/>
+  </releases>${fontnames}${fontlangs}
+</component>
+EOF_APPSTREAM
+
+%install
+echo Installing sil-andika-fonts
+echo "" > "sil-andika-fonts.list"
+install -m 0755 -vd %buildroot%_fontsdir/ttf/sil-andika/
+echo "%%dir %_fontsdir/ttf/sil-andika" >> "sil-andika-fonts.list"
+install -m 0644 -vp "Andika-R.ttf" %buildroot%_fontsdir/ttf/sil-andika/
+echo \"%_fontsdir/ttf/sil-andika//$(basename "Andika-R.ttf")\" >> 'sil-andika-fonts.list'
+(
+
+  IFS= lines=$(
+    for fontconfng in '%SOURCE10'; do
+      gen-fontconf -x "${fontconfng}" -w -f 'Andika-R.ttf'
+    done
+  )
+  while IFS= read -r line; do
+    [[ -n $line ]] && newfontconfs+=("$line")
+  done <<< ${lines}
+
+  install -m 0755 -vd "%{buildroot}%{_fontconfig_templatedir}" \
+                    "%{buildroot}%{_fontconfig_confdir}"
+  for fontconf in  "${newfontconfs[@]}"; do
+    if [[ -n $fontconf ]] ; then
+      install -m 0644 -vp "${fontconf}" "%{buildroot}%{_fontconfig_templatedir}"
+      echo \"%{_fontconfig_templatedir}/$(basename "${fontconf}")\"                  >> "sil-andika-fonts.list"
+      ln -vsr "%{buildroot}%{_fontconfig_templatedir}/$(basename "${fontconf}")" "%{buildroot}%{_fontconfig_confdir}"
+      echo "%%config(noreplace)" \"%{_fontconfig_confdir}/$(basename "${fontconf}")\" >> "sil-andika-fonts.list"
+    fi
+  done
+)
+
+install -m 0755 -vd "%{buildroot}%{_metainfodir}"
+for fontappstream in 'org.altlinux.sil-andika-fonts.metainfo.xml'; do
+  install -m 0644 -vp "${fontappstream}" "%{buildroot}%{_metainfodir}"
+  echo \"%{_metainfodir}/$(basename "${fontappstream}")\" >> "sil-andika-fonts.list"
+done
+
+for fontdoc in 'FONTLOG.txt' 'OFL-FAQ.txt' 'README.txt'; do
+  echo %%doc "'${fontdoc}'" >> "sil-andika-fonts.list"
+done
+
+for fontlicense in 'OFL.txt'; do
+  echo %%doc "'${fontlicense}'" >> "sil-andika-fonts.list"
+done
+
+%check
+# fontcheck 
+grep -E '^"%{_fontconfig_templatedir}/.+\.conf"' 'sil-andika-fonts.list' \
+  | xargs -I{} -- sh -c "xmllint --loaddtd --valid     --nonet '%{buildroot}{}' >/dev/null && echo %{buildroot}{}: OK"
+grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'sil-andika-fonts.list' \
+  | xargs -I{} --        appstream-util validate-relax --nonet '%{buildroot}{}'
+
+%files -n fonts-ttf-sil-andika -f sil-andika-fonts.list
 
 %changelog
+* Sat Feb 19 2022 Igor Vlasenko <viy@altlinux.org> 5.000-alt1_5
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_18
 - update to new release by fcimport
 
