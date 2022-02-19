@@ -6,13 +6,14 @@
 
 %define _unpackaged_files_terminate_build 0
 Name: btrfs-progs
-Version: 5.16.1
+Version: 5.16.2
 Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
 Group: System/Kernel and hardware
 Url: http://btrfs.wiki.kernel.org/
+VCS: git://git.kernel.org/pub/scm/linux/kernel/git/kdave/btrfs-progs.git
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
@@ -126,6 +127,9 @@ vm-run --sbin --udevd --kvm=cond make test
 %_includedir/*
 
 %changelog
+* Sat Feb 19 2022 Anton Farygin <rider@altlinux.ru> 5.16.2-alt1
+- 5.16.1 -> 5.16.2
+
 * Thu Feb 10 2022 Anton Farygin <rider@altlinux.ru> 5.16.1-alt1
 - 5.16 -> 5.16.1
 
