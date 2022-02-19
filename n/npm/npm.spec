@@ -1,5 +1,5 @@
 Name: npm
-Version: 6.14.15
+Version: 8.3.1
 Release: alt1
 
 Summary: A package manager for node
@@ -34,15 +34,12 @@ at https://registry.npmjs.org by default.
 
 It is not recommended to build binary libraries within npm module,
 but you can install node-gyp package to support that.
-In most cases it is enough to install appropriate node- subpackage (like node-sass).
+
+In most cases it is enough to install appropriate node- package (like node-sass).
 
 %prep
 %setup
-rm -rf bin/node-gyp-bin node_modules/node-gyp/ node_modules/.bin/node-gyp node_modules/npm-lifecycle/node-gyp-bin
-# fix 
-# npm ERR! code MODULE_NOT_FOUND
-# npm ERR! Cannot find module 'node-gyp/bin/node-gyp
-%__subst "s|const DEFAULT_NODE_GYP_PATH = .*|const DEFAULT_NODE_GYP_PATH = '/usr/bin/node-gyp'|" node_modules/npm-lifecycle/index.js
+rm -rv bin/node-gyp-bin node_modules/node-gyp/
 
 %build
 #make man
@@ -74,6 +71,12 @@ rm -rf %buildroot%nodejs_sitelib/%name/node_modules/request/node_modules/node-uu
 %nodejs_sitelib/%name/
 
 %changelog
+* Sun Feb 13 2022 Vitaly Lipatov <lav@altlinux.ru> 8.3.1-alt1
+- new version 8.3.1 (with rpmrb script)
+
+* Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 8.1.2-alt1
+- new version 8.1.2 for node 16 LTS (with rpmrb script)
+
 * Wed Sep 01 2021 Vitaly Lipatov <lav@altlinux.ru> 6.14.15-alt1
 - new version 6.14.15 (with rpmrb script)
 - CVE-2021-32803, CVE-2021-32804, CVE-2021-37701, CVE-2021-37712, CVE-2021-37713, CVE-2021-39134, CVE-2021-39135
