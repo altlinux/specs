@@ -1,9 +1,14 @@
+%ifarch ppc64le
+%def_without check
+%else
+%def_with check
+%endif
 %define		php_extension	opcache
 %{?optflags_lto:%global optflags_lto %nil}
 
 Name:	 	php%_php_suffix-%php_extension
 Version:	%php_version
-Release:	%php_release
+Release:	%php_release.1
 
 Summary:	Zend Opcache extension for opcode caching and optimization
 
