@@ -90,7 +90,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
@@ -2272,6 +2272,9 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Wed Feb 16 2022 Alexey Shabalin <shaba@altlinux.org> 1:249.10-alt1
+- 249.10 (Fixes: CVE-2021-4034)
+
 * Fri Jan 14 2022 Alexey Shabalin <shaba@altlinux.org> 1:249.9-alt1
 - 249.9 (Fixes: CVE-2021-3997)
 
