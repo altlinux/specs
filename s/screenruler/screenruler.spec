@@ -2,24 +2,24 @@
 
 Name: screenruler
 Version: 0.96
-Release: alt1
+Release: alt2
 
 Summary: GNOME screen ruler - measure objects on screen with a variety of metrics
-
 License: GPLv2+
 Group: Graphical desktop/GNOME
+
 Url: https://launchpad.net/screenruler/
 
 # Source-url: http://launchpad.net/screenruler/trunk/%oversion/+download/%name-%oversion.tar.gz
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source: %name-%version.tar
+Source0: %name-%version.tar
 Source1: %name.desktop
 Source2: %name.appdata.xml
 
-Patch: screenruler-ruby19.patch
-# %_datadir/screenruler/utils/addons_ruby.rb:62:in `loop': wrong number of arguments (given 0, expected 2..3) (ArgumentError)
+Patch0: screenruler-ruby19.patch
+# %%_datadir/screenruler/utils/addons_ruby.rb:62:in `loop': wrong number of arguments (given 0, expected 2..3) (ArgumentError)
 Patch1: screenruler-ruby25-loop.patch
+
+Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
@@ -28,6 +28,7 @@ BuildRequires: desktop-file-utils
 
 Requires: ruby
 Requires: gem-gtk2 gem-cairo gem-gettext
+Requires: libatk-gir libpango-gir libgdk-pixbuf-gir
 
 Provides: gruler = %version-%release
 Obsoletes: gruler
@@ -46,10 +47,9 @@ and as a percentage of the ruler's length.
 %install
 mkdir -p %buildroot
 cat << EOF > screenruler
-#!/bin/bash
-
+#!/bin/sh
 cd %_datadir/%name
-ruby ./screenruler.rb
+exec ruby screenruler.rb
 EOF
 
 chmod 0755 screenruler
@@ -76,6 +76,9 @@ install -Dm 0644 -p %SOURCE2 %buildroot%_datadir/appdata/%name.appdata.xml
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Sun Feb 20 2022 Michael Shigorin <mike@altlinux.org> 0.96-alt2
+- add missing Requires: (fixes: #42003)
+
 * Wed Nov 18 2020 Vitaly Lipatov <lav@altlinux.ru> 0.96-alt1
 - new version (0.96) with rpmgs script
 - sync spec with Fedora
