@@ -1,6 +1,6 @@
 %define mversion	6
 %define dversion	%mversion.9.12
-%define drelease	34
+%define drelease	40
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		7
@@ -178,6 +178,7 @@ sed -i 's,-lomp,-fopenmp,g' configure* # -lomp was wrong in the first place
 	--disable-hdri \
 	--with-gcc-arch=no \
 	--with-perl \
+	--with-xml \
 	%{subst_enable openmp} \
 	--with-perl-options="PREFIX=%_prefix INSTALLDIRS=vendor" \
 	%{subst_enable static}
@@ -270,6 +271,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Sun Feb 20 2022 Anton Farygin <rider@altlinux.ru> 6.9.12.40-alt1
+- new version 6.9.12.40
+
 * Fri Dec 31 2021 Anton Farygin <rider@altlinux.ru> 6.9.12.34-alt1
 - new version 6.9.12.34
 
