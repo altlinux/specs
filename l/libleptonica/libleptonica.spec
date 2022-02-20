@@ -2,7 +2,7 @@
 
 Name: libleptonica
 Version: 1.82.0
-Release: alt1
+Release: alt2
 
 Summary: A library for manipulating images
 Summary(ru_RU.UTF-8): Библиотека для операций над изображениями
@@ -11,10 +11,11 @@ License: BSD-2-Clause
 Group: System/Libraries
 Url: http://www.leptonica.com
 
-Packager: %packager
-
-Source: leptonlib-%version.tar.bz2
 # Source-url: https://github.com/DanBloomberg/leptonica/releases/download/%version/leptonica-%version.tar.gz
+Source: leptonlib-%version.tar.bz2
+
+Patch: %name-1.69-alt-debuginfo.patch
+Patch1: %name-alt-makefile.patch
 
 BuildRequires: doxygen
 BuildRequires: libjpeg-devel
@@ -87,6 +88,7 @@ Doxygen документация в html формате по функциям б
 
 %prep
 %setup -n %srcName-%version
+%autopatch -p1
 
 %build
 # Packaging static libraries lto * .a
@@ -127,6 +129,12 @@ rm -f %buildroot%_libdir/*.la
 %doc doc/html/*
 
 %changelog
+* Sun Feb 13 2022 Evgeny Chuck <koi@altlinux.org> 1.82.0-alt2
+- Restoring deleted patches:
+  + libleptonica-alt-makefile.patch
+  + libleptonica-1.69-alt-debuginfo.patch
+- cleanup spec
+
 * Thu Dec 16 2021 Evgeny Chuck <koi@altlinux.org> 1.82.0-alt1
 - new version (1.82.0) with rpmgs script
 - Added OpenJPEG codec for working with jpeg images
