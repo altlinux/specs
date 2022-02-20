@@ -6,7 +6,7 @@
 # $ git commit -n --no-post-rewrite -m "add go vendor modules"
 
 Name: clickhouse-backup
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 Summary: Tool for easy ClickHouse backup and restore with cloud storages support
 Group: Databases
@@ -48,6 +48,9 @@ go build -ldflags " \
 %attr(0640,root,root) %config(noreplace) %_sysconfdir/%name/config.yml
 
 %changelog
+* Sun Feb 20 2022 Anton Farygin <rider@altlinux.ru> 1.3.1-alt1
+- 1.3.0 -> 1.3.1
+
 * Sat Feb 12 2022 Anton Farygin <rider@altlinux.ru> 1.3.0-alt1
 - 1.2.2 -> 1.3.0
 
