@@ -8,8 +8,8 @@
 %define rname qgis
 
 Name:    qgis3
-Version: 3.22.3
-Release: alt2
+Version: 3.24.0
+Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -25,9 +25,6 @@ Source5: qgis.xml
 
 Patch1: qgis-lib64.patch
 Patch2: qgis-serverprefix.patch
-%if_enabled grass
-Patch3: qgis-grass8.patch
-%endif
 
 # Fix unresolved symbols in grass based libs
 %set_verify_elf_method unresolved=relaxed
@@ -168,9 +165,6 @@ Please refer to %name-server-README for details!
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
-%if_enabled grass
-%patch3 -p1
-%endif
 
 # Delete bundled libs
 rm -rf src/core/gps/qextserialport
@@ -321,7 +315,6 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %endif
 %if_enabled grass
 %exclude %_libdir/libqgisgrass*.so.*
-%exclude %_libdir/%rname/libgrassplugin*.so
 %exclude %_libdir/%rname/libprovider_grass*.so
 %exclude %_libdir/%rname/libprovider_grassraster*.so
 %exclude %_libdir/%rname/grass
@@ -339,7 +332,6 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %if_enabled grass
 %files grass
 %_libdir/libqgisgrass*.so.*
-%_libdir/%rname/libgrassplugin*.so
 %_libdir/%rname/libprovider_grass*.so
 %_libdir/%rname/libprovider_grassraster*.so
 %_libdir/%rname/grass
@@ -363,6 +355,9 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %endif
 
 %changelog
+* Fri Feb 18 2022 Andrey Cherepanov <cas@altlinux.org> 3.24.0-alt1
+- New version.
+
 * Fri Jan 28 2022 Andrey Cherepanov <cas@altlinux.org> 3.22.3-alt2
 - Rebuild with grass-8.0.0.
 
