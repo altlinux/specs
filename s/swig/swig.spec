@@ -14,7 +14,7 @@
 # vim:set ft=spec:
 Name: swig
 Version: 4.0.2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
@@ -24,6 +24,9 @@ Url: https://github.com/swig/swig
 
 # Source-url: https://github.com/swig/swig/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+
+# Upstream patches
+Patch10: swig-4.0.2-Fix-overload_simple_cast-test-with-Python-3.10.patch
 
 %def_enable testsuite
 
@@ -145,6 +148,7 @@ This package contains SWIG runtime tcl library.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 ./autogen.sh
@@ -236,6 +240,9 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Sat Feb 19 2022 Anton Midyukov <antohami@altlinux.org> 1:4.0.2-alt2
+- fix build with python 3.10
+
 * Wed Jan 05 2022 Anton Midyukov <antohami@altlinux.org> 1:4.0.2-alt1
 - new version (4.0.2) with rpmgs script
 - enable testsuite
