@@ -1,7 +1,7 @@
 %def_with check
 %define  modulename luv
 Name:    ocaml-%modulename
-Version: 0.5.10
+Version: 0.5.11
 Release: alt1
 Summary: Binding to libuv for ocaml: cross-platform asynchronous I/O
 License: MIT
@@ -51,6 +51,9 @@ export LUV_USE_SYSTEM_LIBUV=yes
 %check
 export LUV_USE_SYSTEM_LIBUV=yes
 export TRAVIS=true
+# remove version test, broken in upstream
+rm -f test/version.ml
+sed -i '/Version\.tests\;/d' test/tester.ml
 %dune_check
 
 %files -f ocaml-files.runtime
@@ -59,6 +62,9 @@ export TRAVIS=true
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Feb 20 2022 Anton Farygin <rider@altlinux.ru> 0.5.11-alt1
+- 0.5.11
+
 * Mon Aug 16 2021 Anton Farygin <rider@altlinux.ru> 0.5.10-alt1
 - 0.5.10
 
