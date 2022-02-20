@@ -9,12 +9,13 @@
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: python3-module-%oname
-Version: %branch.11
+Version: %branch.12
 Release: alt1
 Source0: %origname-%version.tar
 License: BSD
 Group: Development/Python3
 BuildArch: noarch
+VCS: https://github.com/django/django
 URL: http://www.djangoproject.com/
 Provides: %name%branch = %EVR
 Provides: %name%branch-tests = %EVR
@@ -180,6 +181,12 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Sun Feb 20 2022 Anton Farygin <rider@altlinux.ru> 3.2.12-alt1
+- 3.2.11 -> 3.2.12
+- Fixes for the following security vulnerabilities:
+  + CVE-2022-22818: Possible XSS via {% debug %} template tag.
+  + CVE-2022-23833: Denial-of-service possibility in file uploads.
+
 * Tue Jan 18 2022 Alexey Shabalin <shaba@altlinux.org> 3.2.11-alt1
 - new version 3.2.11
 - Fixes for the following security vulnerabilities:
