@@ -29,7 +29,7 @@
 #%%define _libexecdir %_prefix/libexec
 
 Name: snapd
-Version: 2.54.1
+Version: 2.54.3
 Release: alt1
 Summary: A transactional software package manager
 License: GPLv3
@@ -451,6 +451,9 @@ fi
 %endif
 
 %changelog
+* Sun Feb 20 2022 Alexey Shabalin <shaba@altlinux.org> 2.54.3-alt1
+- 2.54.3 (Fixes: CVE-2021-44730, CVE-2021-44731, CVE-2021-4120)
+
 * Sat Dec 25 2021 Alexey Shabalin <shaba@altlinux.org> 2.54.1-alt1
 - 2.54.1
 - /etc/profile.d/snapd.sh: made executable (ALT #41625)
