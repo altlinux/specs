@@ -2,7 +2,7 @@
 
 Name: python3-module-%modulename
 Version: 5.2.6
-Release: alt2
+Release: alt3
 
 Summary: SIP SIMPLE implementation for Python
 License: GPL-3.0+
@@ -15,7 +15,7 @@ Patch: python-module-sipsimple-alt-add-arch-webrtc-defines.patch
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 %e2k
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -64,6 +64,9 @@ sed -i 's,^#elif defined(__aarch64__),& || defined(__e2k__),' \
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sun Feb 20 2022 Michael Shigorin <mike@altlinux.org> 5.2.6-alt3
+- Buuild for %%e2k either.
+
 * Thu Jan 20 2022 Stanislav Levin <slev@altlinux.org> 5.2.6-alt2
 - Fixed FTBFS (setuptools 60+).
 
