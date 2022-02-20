@@ -17,7 +17,7 @@ Group: System/Fonts/True type
 
 Name:           fonts-ttf-google-noto-emoji
 Version:        20210716
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Google a.'Noto Emojia.' Black-and-White emoji font
 
 # In noto-emoji-fonts source
@@ -105,12 +105,14 @@ install -m 0644 -p %{SOURCE2} %{buildroot}%{_datadir}/appdata
 install -m 0644 -p %{SOURCE3} %{buildroot}%{_datadir}/appdata
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc woff woff2 WOFF WOFF2 otb OTB pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
+	pcf*|bdf*|otb|OTB) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
+	woff|WOFF) type=woff;;
+	woff2|WOFF2) type=woff2;;
     esac
     find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
 	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
@@ -139,21 +141,24 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 %files
-%dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/NotoEmoji-Regular.ttf
+%dir %{_fontsdir}/*/%{_fontstem}/
+%{_fontsdir}/*/%{_fontstem}/NotoEmoji-Regular.ttf
 %doc --no-dereference LICENSE
 %doc AUTHORS CONTRIBUTING.md CONTRIBUTORS README.md
 %{_datadir}/appdata/google-noto-emoji.metainfo.xml
 
 %files -n fonts-ttf-google-noto-emoji-color
-%dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/NotoColorEmoji.ttf
+%dir %{_fontsdir}/*/%{_fontstem}/
+%{_fontsdir}/*/%{_fontstem}/NotoColorEmoji.ttf
 %doc --no-dereference LICENSE
 %doc AUTHORS CONTRIBUTING.md CONTRIBUTORS README.md
 %{_datadir}/appdata/google-noto-emoji-color.metainfo.xml
 
 
 %changelog
+* Sun Feb 20 2022 Igor Vlasenko <viy@altlinux.org> 20210716-alt1_2
+- new version
+
 * Fri Oct 01 2021 Igor Vlasenko <viy@altlinux.org> 20210716-alt1_1
 - update to new release by fcimport
 
