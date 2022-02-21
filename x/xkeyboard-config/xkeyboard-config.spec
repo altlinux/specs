@@ -1,6 +1,6 @@
 Name: xkeyboard-config
 Summary: XML-based XKB configuration registry
-Version: 2.29
+Version: 2.35
 Release: alt1
 Epoch: 1
 License: X11/MIT
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildArch: noarch
-BuildRequires: intltool xkbcomp glib2-devel libX11-devel xorg-util-macros xsltproc
+BuildRequires: meson intltool xkbcomp glib2-devel libX11-devel xorg-util-macros xsltproc
 
 %description
 Just XML stuff. Later hopefully will be part of Xorg
@@ -32,12 +32,11 @@ XML-based XKB configuration registry development package
 %patch -p1
 
 %build
-%autoreconf
-%configure \
-	--with-xkb-base=%_datadir/X11/xkb \
-	--enable-compat-rules \
-	--with-xkb-rules-symlink=xorg
-%make
+%meson \
+	-Dxkb-base=%_datadir/X11/xkb \
+	-Dcompat-rules=true \
+	-Dxorg-rules-symlinks=true
+%meson_build -v
 
 for d in compat geometry keycodes symbols types; do
 	cd $d
@@ -46,7 +45,7 @@ for d in compat geometry keycodes symbols types; do
 done
 
 %install
-%make DESTDIR=%buildroot install
+%meson_install
 
 rm -f %buildroot%_datadir/X11/xkb/compiled
 
@@ -65,6 +64,9 @@ rm -f %buildroot%_datadir/X11/xkb/compiled
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Mon Feb 21 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:2.35-alt1
+- 2.35
+
 * Thu Mar 12 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:2.29-alt1
 - 2.29
 
