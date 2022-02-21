@@ -11,9 +11,7 @@
 %define _deffontdir catalogue:%_sysconfdir/X11/fontpath.d
 
 %def_enable glamor
-%def_disable xwayland
 
-%def_enable dmx
 %def_enable xnest
 %def_enable ipv6
 
@@ -27,7 +25,7 @@
 %def_enable systemd
 
 Name: xorg-server
-Version: 1.20.14
+Version: 21.1.3
 Release: alt1
 Epoch: 2
 License: MIT/X11
@@ -37,8 +35,8 @@ Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 # grep ABI_ hw/xfree86/common/xf86Module.h
-Provides: XORG_ABI_VIDEODRV = 24.1
-Provides: XORG_ABI_XINPUT = 24.1
+Provides: XORG_ABI_VIDEODRV = 25.2
+Provides: XORG_ABI_XINPUT = 24.4
 Provides: XORG_ABI_EXTENSION = 10.0
 Provides: xorg-x11-server = %epoch:%version-%release xorg-extensions-glx = %epoch:%version-%release
 %if_enabled glamor
@@ -57,14 +55,11 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: doxygen flex libGL-devel libXau-devel libXaw-devel libXdmcp-devel libXext-devel libXfixes-devel libXfont-devel libXmu-devel
-BuildRequires: libXi-devel libXpm-devel libXrender-devel libXres-devel libXtst-devel libXv-devel libdmx-devel libudev-devel libSM-devel
+BuildRequires: libXi-devel libXpm-devel libXrender-devel libXres-devel libXtst-devel libXv-devel libxcvt-devel libudev-devel libSM-devel
 BuildRequires: libpciaccess-devel libpixman-devel libssl-devel libxkbfile-devel xorg-proto-devel xorg-font-utils xorg-xtrans-devel xkbcomp
 BuildRequires: xorg-util-macros libselinux-devel libaudit-devel xmlto xorg-sgml-doctools libxshmfence-devel libdrm-devel libXfont2-devel
 %if_enabled glamor
 BuildRequires: libEGL-devel libgbm-devel libepoxy-devel
-%endif
-%if_enabled xwayland
-BuildRequires: libwayland-client-devel wayland-protocols
 %endif
 %if_enabled xephyr
 BuildRequires: libxcbutil-devel libxcbutil-image-devel libxcbutil-icccm-devel libxcbutil-keysyms-devel libxcb-render-util-devel
@@ -141,33 +136,6 @@ It uses SHM Images and shadow framebuffer updates to provide
 good performance.
 It also has a visual debugging mode for observing screen updates.
 
-%package -n xorg-xdmx
-Summary: Multi-head X server
-Group: System/X11
-Requires: %name = %epoch:%version-%release
-
-%description -n xorg-xdmx
-Xdmx  is  a proxy X server that uses one or more other X servers as its
-display devices.  It provides multi-head X functionality  for  displays
-that  might  be  located  on  different  machines.  Xdmx functions as a
-front-end X server that acts as a proxy to a set of back-end X servers.
-All  of  the  visible  rendering  is  passed to the back-end X servers.
-Clients connect to the Xdmx front-end, and  everything  appears  as  it
-would  in  a  regular multi-head configuration.  If Xinerama is enabled
-(e.g., with +xinerama on the command line), the clients  see  a  single
-large screen.
-
-Xdmx communicates to the back-end X servers using the standard X11 pro-
-tocol, and standard and/or commonly available X server extensions.
-
-%package -n xorg-xwayland
-Summary: Wayland X server
-Group: System/X11
-Requires: %name = %epoch:%version-%release
-
-%description -n xorg-xwayland
-Xwayland is an X server for running X clients under Wayland
-
 %package -n xorg-sdk
 Summary: SDK for X server driver module development
 Group: Development/C
@@ -190,16 +158,12 @@ drivers, input drivers, or other X modules should install this package.
 %build
 %autoreconf
 %configure \
-	--with-os-name="%(cat %_sysconfdir/altlinux-release)" \
-	--with-os-vendor="%(uname -m)" \
-	--with-builder-addr="%packager" \
 	--with-serverconfig-path=%_datadir/X11 \
 	--with-module-dir=%_modulesdir \
 	--with-log-dir=%_logdir \
 	--with-xkb-path=%_datadir/X11/xkb \
 	--with-xkb-output=%_localstatedir/xkb \
 	--with-default-font-path=%_deffontdir \
-	--with-shared-memory-dir=/dev/shm \
 %ifarch %ix86 x86_64
 	--with-int10=x86emu \
 %endif
@@ -210,9 +174,7 @@ drivers, input drivers, or other X modules should install this package.
 	--disable-linux-apm \
 	--disable-linux-acpi \
 	--enable-record \
-	%{subst_enable xwayland} \
 	%{subst_enable glamor} \
-	%{subst_enable dmx} \
 	%{subst_enable xnest} \
 	%{subst_enable xephyr} \
 	%{subst_enable kdrive} \
@@ -254,7 +216,6 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_bindir/X
 %attr(0700,root,root) %_bindir/Xorg
 %_bindir/gtf
-%_bindir/cvt
 %dir %_modulesdir/drivers
 %dir %_modulesdir/input
 %dir %_modulesdir/extensions
@@ -262,14 +223,15 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_modulesdir/*.so
 %_man1dir/Xorg.1*
 %_man1dir/gtf.1*
-%_man1dir/cvt.1*
 %_man1dir/Xserver.1*
 %_man4dir/fbdevhw.4*
 %_man4dir/exa.4*
 %_man5dir/xorg.conf.5*
 %_man5dir/xorg.conf.d.5*
 %_modulesdir/drivers/modesetting_drv.so
+%_modulesdir/input/inputtest_drv.so
 %_man4dir/modesetting.4*
+%_man4dir/inputtestdrv.4*
 
 %files common
 %dir %_sysconfdir/X11/app-defaults
@@ -297,17 +259,6 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_man1dir/Xephyr.1*
 %endif
 
-%if_enabled dmx
-%files -n xorg-xdmx
-%_bindir/*dmx*
-%_man1dir/*dmx*.1*
-%endif
-
-%if_enabled xwayland
-%files -n xorg-xwayland
-%_bindir/Xwayland
-%endif
-
 %files -n xorg-sdk
 %_includedir/xorg
 %_pkgconfigdir/*.pc
@@ -315,6 +266,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Mon Jan 03 2022 Valery Inozemtsev <shrek@altlinux.ru> 2:21.1.3-alt1
+- 21.1.3
+
 * Thu Dec 16 2021 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.14-alt1
 - 1.20.14
 

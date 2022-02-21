@@ -1,5 +1,5 @@
 Name: xorg-drv-vesa
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 Epoch: 1
 Summary: Generic VESA video driver
@@ -13,6 +13,7 @@ PreReq: XORG_ABI_VIDEODRV = %get_xorg_abi_videodrv
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+ExclusiveArch: %ix86 x86_64
 BuildRequires(Pre): xorg-sdk xorg-util-macros
 BuildRequires: libXext-devel xorg-proto-devel
 
@@ -43,6 +44,12 @@ depths 8, 15 16 and 24.
 %_man4dir/*
 
 %changelog
+* Fri Feb 18 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:2.5.0-alt1
+- 2.5.0
+
+* Mon Nov 08 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.0-alt2
+- requires XORG_ABI_VIDEODRV = 25.2
+
 * Thu May 31 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.0-alt1
 - 2.4.0
 

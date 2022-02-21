@@ -1,6 +1,6 @@
 Name: xorg-drv-cirrus
 Version: 1.5.3
-Release: alt3
+Release: alt4
 Epoch: 1
 Summary: Cirrus Logic video driver
 License: MIT/X11
@@ -14,6 +14,7 @@ Requires: XORG_ABI_VIDEODRV = %get_xorg_abi_videodrv
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+ExcludeArch: armh
 BuildRequires(Pre): xorg-sdk
 BuildRequires: xorg-proto-devel
 
@@ -40,6 +41,9 @@ cirrus is an Xorg driver for Cirrus Logic video chips
 %_man4dir/*
 
 %changelog
+* Fri Feb 18 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:1.5.3-alt4
+- requires XORG_ABI_VIDEODRV = 25.2
+
 * Mon May 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.5.3-alt3
 - requires XORG_ABI_VIDEODRV = 24.0
 

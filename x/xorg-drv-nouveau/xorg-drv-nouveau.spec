@@ -1,6 +1,6 @@
 Name: xorg-drv-nouveau
 Version: 1.0.17
-Release: alt1
+Release: alt2
 Epoch: 2
 Summary: NVIDIA video driver
 License: MIT/X11
@@ -42,6 +42,9 @@ for these depths
 %_man4dir/*
 
 %changelog
+* Tue Nov 09 2021 Valery Inozemtsev <shrek@altlinux.ru> 2:1.0.17-alt2
+- requires XORG_ABI_VIDEODRV = 25.2
+
 * Mon Jan 25 2021 Valery Inozemtsev <shrek@altlinux.ru> 2:1.0.17-alt1
 - 1.0.17
 
