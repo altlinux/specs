@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qucs-s
-Version: 0.0.22
+Version: 0.0.23
 Release: alt1
 
 Summary: Circuit simulator
@@ -14,11 +14,20 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 Buildrequires (pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++ libqt4-devel
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-tools-devel
+BuildRequires: qt5-script-devel
+BuildRequires: qt5-svg-devel
 BuildRequires: rpm-build-python3
 Requires: %name-data = %EVR
-Requires: qucs
+#Requires: qucs
 Requires: ngspice
+%add_python3_path %_datadir/%name/python
+
+Obsoletes: qucs-s-data =< %EVR
+Provides: qucs-s-data = %EVR
 
 %description
 Qucs-S is spin-off of Qucs.
@@ -29,15 +38,6 @@ and simulate the large-signal, small-signal and noise
 behaviour of the circuit. After that simulation has finished
 you can view the simulation results on a presentation page or
 window.
-
-%package data
-Group: Education
-Summary: Data files for %name, a circuit simulator
-Buildarch: noarch
-%add_python3_path %_datadir/%name/python
-
-%description data
-Data files for %name, a circuit simulator.
 
 %prep
 %setup
@@ -55,16 +55,19 @@ for l in $(find %buildroot%_datadir/%name/lang -name \*.qm); do
 done > %name.lang
 
 %files
+%doc AUTHORS COPYING README.md README_qucs
 %_bindir/*
 %_desktopdir/*
-
-%files data
-%doc AUTHORS COPYING README.md README_qucs
 %_datadir/%name
 %_iconsdir/hicolor/*/apps/*
 %_man1dir/*
 
 %changelog
+* Mon Feb 21 2022 Anton Midyukov <antohami@altlinux.org> 0.0.23-alt1
+- new version 0.0.23
+- drop subpackage qucs-s-data
+- do not require qucs (qucs needed qt4, qucsator is not default more)
+
 * Fri May 21 2021 Anton Midyukov <antohami@altlinux.org> 0.0.22-alt1
 - new version 0.0.22
 
