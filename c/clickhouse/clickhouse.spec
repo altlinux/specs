@@ -23,7 +23,7 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 %endif
 
 Name: clickhouse
-Version: 21.8.13.6
+Version: 21.8.14.5
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -56,29 +56,28 @@ Source20: %name-%version-contrib-fmtlib.tar
 Source21: %name-%version-contrib-gcem.tar
 Source22: %name-%version-contrib-googletest.tar
 Source23: %name-%version-contrib-grpc.tar
-Source24: %name-%version-contrib-grpc-third_party-cares-cares.tar
-Source25: %name-%version-contrib-h3.tar
-Source26: %name-%version-contrib-libcxx.tar
-Source27: %name-%version-contrib-libcxxabi.tar
-Source28: %name-%version-contrib-libhdfs3.tar
-Source29: %name-%version-contrib-libpq.tar
-Source30: %name-%version-contrib-libpqxx.tar
-Source31: %name-%version-contrib-llvm.tar
-Source32: %name-%version-contrib-miniselect.tar
-Source33: %name-%version-contrib-nanodbc.tar
-Source34: %name-%version-contrib-NuRaft.tar
-Source35: %name-%version-contrib-poco.tar
-Source36: %name-%version-contrib-protobuf.tar
-Source37: %name-%version-contrib-re2.tar
-Source38: %name-%version-contrib-replxx.tar
-Source39: %name-%version-contrib-rocksdb.tar
-Source40: %name-%version-contrib-sentry-native.tar
-Source41: %name-%version-contrib-simdjson.tar
-Source42: %name-%version-contrib-sparsehash-c11.tar
-Source43: %name-%version-contrib-stats.tar
-Source44: %name-%version-contrib-thrift.tar
-Source45: %name-%version-contrib-yaml-cpp.tar
-Source46: %name-%version-contrib-zlib-ng.tar
+Source24: %name-%version-contrib-h3.tar
+Source25: %name-%version-contrib-libcxx.tar
+Source26: %name-%version-contrib-libcxxabi.tar
+Source27: %name-%version-contrib-libhdfs3.tar
+Source28: %name-%version-contrib-libpq.tar
+Source29: %name-%version-contrib-libpqxx.tar
+Source30: %name-%version-contrib-llvm.tar
+Source31: %name-%version-contrib-miniselect.tar
+Source32: %name-%version-contrib-nanodbc.tar
+Source33: %name-%version-contrib-NuRaft.tar
+Source34: %name-%version-contrib-poco.tar
+Source35: %name-%version-contrib-protobuf.tar
+Source36: %name-%version-contrib-re2.tar
+Source37: %name-%version-contrib-replxx.tar
+Source38: %name-%version-contrib-rocksdb.tar
+Source39: %name-%version-contrib-sentry-native.tar
+Source40: %name-%version-contrib-simdjson.tar
+Source41: %name-%version-contrib-sparsehash-c11.tar
+Source42: %name-%version-contrib-stats.tar
+Source43: %name-%version-contrib-thrift.tar
+Source44: %name-%version-contrib-yaml-cpp.tar
+Source45: %name-%version-contrib-zlib-ng.tar
 
 Source1000: %name.watch
 
@@ -185,7 +184,7 @@ Requires: %name-client = %EVR
 ClickHouse tests
 
 %prep
-%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22 -a23 -a24 -a25 -a26 -a27 -a28 -a29 -a30 -a31 -a32 -a33 -a34 -a35 -a36 -a37 -a38 -a39 -a40 -a41 -a42 -a43 -a44 -a45 -a46
+%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22 -a23 -a24 -a25 -a26 -a27 -a28 -a29 -a30 -a31 -a32 -a33 -a34 -a35 -a36 -a37 -a38 -a39 -a40 -a41 -a42 -a43 -a44 -a45
 
 %if_without clang
 # remove unneeded bundles
@@ -391,6 +390,9 @@ fi
 %_datadir/clickhouse-test
 
 %changelog
+* Mon Feb 14 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 21.8.14.5-alt1
+- Updated to lts upstream version 21.8.14.5.
+
 * Mon Jan 10 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 21.8.13.6-alt1
 - Updated to lts upstream version 21.8.13.6.
 
