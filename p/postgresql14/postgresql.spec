@@ -6,8 +6,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     14
-%define postgresql_minor     1
-%define postgresql_altrel    2
+%define postgresql_minor     2
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -886,6 +886,9 @@ fi
 %endif
 
 %changelog
+* Mon Feb 21 2022 Alexei Takaseev <taf@altlinux.org> 14.2-alt1
+- 14.2
+
 * Thu Jan 27 2022 Alexei Takaseev <taf@altlinux.org> 14.1-alt2
 - Move %_includedir/%PGSQL/server and %_libdir/%PGSQL/pgxs to
   separe server-devel subpackage.
