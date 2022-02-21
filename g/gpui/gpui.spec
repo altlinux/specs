@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.0
-Release: alt3
+Release: alt4
 
 Summary: Group policy editor
 License: GPLv2+
@@ -23,7 +23,9 @@ BuildRequires: doxygen
 BuildRequires: libxerces-c-devel
 BuildRequires: xsd
 
-BuildRequires: desktop-file-utils
+BuildRequires: desktop-file-utils ImageMagick-tools
+
+Requires: admx-basealt
 
 Source0: %name-%version.tar
 
@@ -44,6 +46,12 @@ cd %_cmake__builddir
 desktop-file-install --dir=%buildroot%_desktopdir \
                      --set-key Exec --set-value %_bindir/gpui-main \
                      ../setup/gpui.desktop
+
+for size in 48 64 128 256 512; do
+    mkdir -p %buildroot%_datadir/icons/hicolor/''${size}x''${size}/apps/
+    convert ../setup/logo_1024_1024.png -resize ''${size}x''${size} \
+    %buildroot%_datadir/icons/hicolor/''${size}x''${size}/apps/gpui.png
+done
 
 %files
 %doc README.md
@@ -70,9 +78,23 @@ desktop-file-install --dir=%buildroot%_desktopdir \
 
 %_libdir/gpui/plugins/libsmb-storage-plugin.so
 
+%_datadir/icons/hicolor/48x48/apps/gpui.png
+%_datadir/icons/hicolor/64x64/apps/gpui.png
+%_datadir/icons/hicolor/128x128/apps/gpui.png
+%_datadir/icons/hicolor/256x256/apps/gpui.png
+%_datadir/icons/hicolor/512x512/apps/gpui.png
+
 %_desktopdir/gpui.desktop
 
 %changelog
+* Mon Feb 21 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt4
+- Fixes:
+  + #73754 Fix translations in open admx dialog.
+  + #73747 Fix translation of command line options.
+  + #73625 Fix add application icon.
+  + #73788 Fix add admx-basealt to spec.
+  + #73738 Fix add manual.
+
 * Fri Feb 18 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt3
 - Fixes:
   + #73617 Fix difference of about window from that of ADMC.
