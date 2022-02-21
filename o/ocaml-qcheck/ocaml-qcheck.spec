@@ -5,7 +5,7 @@
 
 %define libname qcheck
 Name: ocaml-%libname
-Version: 0.18
+Version: 0.18.1
 Release: alt1
 Summary: QuickCheck inspired property-based testing for OCaml
 Group: Development/ML
@@ -53,6 +53,9 @@ sed -i '19d' example/alcotest/output.txt.expected
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Feb 21 2022 Anton Farygin <rider@altlinux.ru> 0.18.1-alt1
+- 0.18.1
+
 * Wed Nov 03 2021 Anton Farygin <rider@altlinux.ru> 0.18-alt1
 - 0.18
 
