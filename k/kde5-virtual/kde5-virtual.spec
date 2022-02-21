@@ -1,4 +1,4 @@
-%ifarch %e2k ppc64le
+%ifarch %not_qt5_qtwebengine_arches
 %def_disable qtwebengine
 %else
 %def_enable qtwebengine
@@ -6,13 +6,15 @@
 
 Name: kde5-virtual
 Version: 5.23.0
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: Virtual packages for KDE 5
 License: Public Domain
 
 #BuildArch: noarch
+
+BuildRequires(pre): rpm-macros-qt5-webengine
 
 %description
 %summary
@@ -288,6 +290,9 @@ Requires: sddm sddm-theme-breeze plasma5-sddm-kcm
 %files -n kde5-display-manager-5-sddm
 
 %changelog
+* Mon Feb 21 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.0-alt2
+- using not_qt5_qtwebengine_arches macro
+
 * Mon Feb 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.0-alt1
 - update requires
 
