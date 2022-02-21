@@ -1,38 +1,55 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Summary: Terminal multiplexer
 Name: tmux
-Version: 3.1c
+Version: 3.2a
 Release: alt1
 Source0: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
-License: BSD
+Source1: bash_completion_tmux.sh
+License: ISC and BSD-3-Clause and BSD-2-Clause
 Group: Terminals
-Url: http://tmux.sourceforge.net/
+Url: https://tmux.github.io/
+Vcs: https://github.com/tmux/tmux
 
-# Automatically added by buildreq on Tue Mar 16 2010
-BuildRequires: libevent-devel libncurses-devel
+BuildRequires: libevent-devel >= 2.0
+BuildRequires: libncurses-devel
+BuildRequires: libutempter-devel
 
 %description
-tmux is a "terminal multiplexer". It allows a number of terminals (or
-windows) to be accessed and controlled from a single terminal. It is
-intended to be a simple, modern, BSD-licensed alternative to programs
-such as GNU screen.
+tmux is a terminal multiplexer: it enables a number of terminals to
+be created, accessed, and controlled from a single screen. tmux may
+be detached from a screen and continue running in the background, then
+later reattached.
 
 %prep
 %setup
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
-%configure
+%configure --enable-utempter
 %make_build
 
 %install
 %makeinstall_std
+install -Dpm 644 %SOURCE1 %buildroot%_datadir/bash-completion/completions/tmux
 
 %files
-%doc CHANGES README
+%doc CHANGES README COPYING example_tmux.conf
 %_bindir/*
 %_man1dir/*
+%_datadir/bash-completion/completions/tmux
 
 %changelog
+* Sat Feb 19 2022 Vitaly Chikunov <vt@altlinux.org> 3.2a-alt1
+- Updated to 3.2a (2021-06-10).
+- Enable LFS on 32-bit architectures.
+- Add simple bash-completion script.
+- Fix License tag. Update Url, Vcs tags, and description.
+- Enable libutempter.
+
 * Fri Nov 06 2020 Fr. Br. George <george@altlinux.ru> 3.1c-alt1
 - Autobuild version bump to 3.1c
 
