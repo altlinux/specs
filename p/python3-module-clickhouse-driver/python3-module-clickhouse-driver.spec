@@ -2,8 +2,8 @@
 %define oname clickhouse-driver
 
 Name:       python3-module-%oname
-Version:    0.2.2
-Release:    alt2
+Version:    0.2.3
+Release:    alt1
 License:    %mit
 Group:      Development/Python3
 Summary:    ClickHouse Python Driver with native interface support.
@@ -60,6 +60,9 @@ install -pm0644 docs/*/man/*.1 %buildroot/%_man1dir/
 %python3_sitelibdir/clickhouse_driver/tests/
 
 %changelog
+* Mon Feb 21 2022 Anton Farygin <rider@altlinux.ru> 0.2.3-alt1
+- 0.2.2 -> 0.2.3
+
 * Tue Dec 14 2021 Anton Farygin <rider@altlinux.ru> 0.2.2-alt2
 - make pandas requires optional
 
