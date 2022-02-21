@@ -1,4 +1,4 @@
-%ifarch %e2k ppc64le
+%ifarch %not_qt5_qtwebengine_arches
 %def_disable qtwebengine
 %else
 %def_enable qtwebengine
@@ -6,11 +6,13 @@
 
 Name: kde5-set
 Version: 21.12.0
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
 License: Public Domain
+
+BuildRequires(pre): rpm-macros-qt5-webengine
 
 %description
 %summary
@@ -88,7 +90,7 @@ Requires: plasma5-xdg-desktop-portal-kde
 Requires: plasma5-workspace-wallpapers
 Requires: plasma5-kwrited
 Requires: plasma5-user-manager kde5-ksystemlog
-Requires: kde5-kate kde5-krdc
+Requires: kde5-krdc
 Requires: kde5-pim kde5-kcron kde5-kruler kde5-ffmpegthumbs
 Requires: kde5-connect
 Requires: kde5-krfb
@@ -102,7 +104,6 @@ Requires: kde5-graphics-thumbnailers
 %package -n kde5-maxi
 Summary: %summary
 Group: Graphical desktop/KDE
-# webclient
 Requires: kde5-big
 Requires: kde5-edu
 Requires: kde5-games
@@ -126,6 +127,7 @@ Requires: kde5-digikam kde5-kipi-plugins
 Summary: %summary
 Group: Graphical desktop/KDE
 Requires: kde5-runtime
+Requires: kde5-kate
 Requires: kde5-dolphin-plugins
 Requires: kde5-lokalize kde5-okteta kde5-kapptemplate kde5-dev-scripts kde5-kompare
 Requires: kde5-sdk-thumbnailers kde5-poxml kde5-umbrello
@@ -216,6 +218,9 @@ Requires: kde5-kaddressbook
 %files -n kde5-pim
 
 %changelog
+* Mon Feb 21 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.0-alt2
+- using not_qt5_qtwebengine_arches macro
+
 * Wed Feb 09 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.0-alt1
 - change requires from webclient to /usr/bin/x-www-browser to exclude lynx-like console browsers
 
