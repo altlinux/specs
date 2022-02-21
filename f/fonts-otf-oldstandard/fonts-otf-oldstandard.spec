@@ -1,26 +1,27 @@
 %define fname oldstandard
 
 Name: fonts-otf-%fname
-Version: 2.2
-Release: alt1.qa1
+Version: 2.6
+Release: alt1
 
 Summary: OpenType version of Old Standard fonts
 
 License: SIL OFL
 Group: System/Fonts/True type
-Url: http://www.thessalonica.org.ru
+Url: https://gitlab.com/ralessi/oldstandard
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Provides: fonts-otf-oldstandart
 Obsoletes: fonts-otf-oldstandart
 
-Source: http://www.thessalonica.org.ru/downloads/%fname-%version.otf.zip
+# Source-url: https://gitlab.com/ralessi/oldstandard/-/archive/v%version/oldstandard-v%version.tar.bz2
+Source: %name-%version.tar
+
 
 BuildArch: noarch
 
-BuildRequires: unzip rpm-build-fonts >= 0.3
-PreReq: fontconfig >= 2.4.2
+BuildRequires: rpm-build-fonts >= 0.3
 
 %description
 The Old Standard font family is an attempt to revive a specific type of
@@ -30,7 +31,8 @@ abandoned later.
 Designed by Alexey Krukov.
 
 %prep
-%setup -c %name
+%setup
+mv otf/*.otf .
 
 %install
 %otf_fonts_install %fname
@@ -39,6 +41,10 @@ Designed by Alexey Krukov.
 %doc OFL*.txt
 
 %changelog
+* Wed Jan 26 2022 Vitaly Lipatov <lav@altlinux.ru> 2.6-alt1
+- new version (2.6) with rpmgs script
+- switch to the fork from Robert Alessi (updated URL and Source)
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1.qa1
 - NMU: applied repocop patch
 
