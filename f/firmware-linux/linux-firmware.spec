@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220126
+Version: 20220218
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,35 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Feb 22 2022 Cronbuild Service <cronbuild@altlinux.org> 20220218-alt1
+- upstream changes (GIT c53073d):
+  + rtl_bt: Update RTL8852A BT USB firmware to 0xDFB7_6D7A (thx Hilda Wu)
+  + rtl_bt: Update RTL8822C BT USB firmware to 0x19B7_6D7D (thx Hilda Wu)
+  + rtl_bt: Update RTL8822C BT UART firmware to 0x15B7_6D7D (thx Hilda Wu)
+  + amdgpu: Update yellow carp firmware from 21.50 (thx Alex Deucher)
+  + amdgpu: Update vega20 firmware from 21.50 (thx Alex Deucher)
+  + amdgpu: Update vega12 firmware from 21.50 (thx Alex Deucher)
+  + amdgpu: Update vega10 firmware from 21.50 (thx Alex Deucher)
+  + amdgpu: Update vangogh firmware from 21.50 (thx Alex Deucher)
+  + amdgpu: Update renoir firmware from 21.50 (thx Alex Deucher)
+  + amdgpu: Update raven2 firmware from 21.50 (thx Alex Deucher)
+  + amdgpu: Update raven firmware from 21.50 (thx Alex Deucher)
+  + amdgpu: Update picasso firmware from 21.50 (thx Alex Deucher)
+  + amdgpu: Update beige goby firmware from 21.50 (thx Alex Deucher)
+  + amdgpu: Update dimgrey cavefish firmware from 21.50 (thx Alex Deucher)
+  + amdgpu: Update navy flounder firmware from 21.50 (thx Alex Deucher)
+  + amdgpu: Update sienna cichlid firmware from 21.50 (thx Alex Deucher)
+  + amdgpu: Update navi14 firmware from 21.50 (thx Alex Deucher)
+  + amdgpu: Update navi12 firmware from 21.50 (thx Alex Deucher)
+  + amdgpu: Update navi10 firmware from 21.50 (thx Alex Deucher)
+  + amdgpu: Update cyan skillfish2 firmware from 21.50 (thx Alex Deucher)
+  + amdgpu: Update green sardine firmware from 21.50 (thx Alex Deucher)
+  + amdgpu: Update arcturus firmware from 21.50 (thx Alex Deucher)
+  + amdgpu: Add aldebaran firmware from 21.50 (thx Alex Deucher)
+  + LICENSE.amdgpu: update copyright date (thx Alex Deucher)
+  + Update AMD cpu microcode (thx John Allen)
+  + update firmware for MT7921 WiFi device (thx Deren Wu)
+
 * Tue Feb 15 2022 Cronbuild Service <cronbuild@altlinux.org> 20220126-alt1
 - upstream changes (GIT 6342082):
   + Amphion: Add VPU firmwares for NXP i.MX8Q SoCs (thx Ming Qian)
