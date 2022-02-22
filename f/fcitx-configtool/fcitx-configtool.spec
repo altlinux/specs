@@ -1,6 +1,6 @@
 Name:    fcitx-configtool
 Version: 0.4.10
-Release: alt1
+Release: alt4
 
 Summary: A gtk based configure tool for fcitx
 License: GPL-2.0
@@ -45,5 +45,8 @@ Requires: fcitx
 %_bindir/fcitx-config-gtk3
 
 %changelog
+* Tue Feb 22 2022 Andrey Cherepanov <cas@altlinux.org> 0.4.10-alt4
+- Bumped release to keep version in Sisyphus greater than in autoimports.
+
 * Mon Feb 21 2022 Andrey Cherepanov <cas@altlinux.org> 0.4.10-alt1
 - Initial build for Sisyphus (ALT #40162).
