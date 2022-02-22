@@ -1,6 +1,6 @@
 Name:    system-config-printer
-Version: 1.5.15
-Release: alt4
+Version: 1.5.16
+Release: alt1
 
 Summary: A printer administration tool
 Group:   System/Configuration/Printing
@@ -9,12 +9,12 @@ Url:     http://cyberelk.net/tim/software/system-config-printer/
 # Git:   https://github.com/OpenPrinting/system-config-printer
 
 Source: %name-%version.tar
-Source1: ru.po
 Patch0: %name-1.5.11-alt.patch
 Patch1: fix_search_printer.patch
 Patch2: about_logo.patch
 Patch3: %name-alt-fix-SMB-auth-fields-order.patch
 Patch4: %name-1.5.11-plugins.patch
+Patch5: %name-1.5.16-alt-fix-configure.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -73,12 +73,11 @@ sed -i 's/mod.*ins.*_aft.*//' newprinter.py
 %patch2 -p0
 %patch3 -p1
 %patch4 -p1
-cat %SOURCE1 > po/ru.po
+%patch5 -p1
 
 %build
 ./bootstrap
-%configure --with-udev-rules \
-           --with-polkit-1
+%configure --with-udev-rules
 
 %install
 %makeinstall_std udevrulesdir=/lib/udev/rules.d \
@@ -119,6 +118,9 @@ exit 0
 %python3_sitelibdir_noarch/cupshelpers-*
 
 %changelog
+* Mon Feb 21 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.16-alt1
+- New version.
+
 * Tue Nov 02 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.15-alt4
 - Require typelib(Gdk) = 3.0 (ALT #41156).
 
