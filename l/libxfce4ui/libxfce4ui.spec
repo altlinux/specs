@@ -11,8 +11,8 @@
 %endif
 
 Name: libxfce4ui
-Version: 4.17.3
-Release: alt2
+Version: 4.17.4
+Release: alt1
 
 Summary: Various GTK widgets for Xfce
 Summary (ru_RU.UTF-8): Набор виджетов GTK для Xfce
@@ -27,7 +27,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: gtk-doc intltool libSM-devel libstartup-notification-devel libxfce4util-devel >= 4.15.6-alt1 libxfconf-devel xorg-cf-files
+BuildRequires: gtk-doc intltool libSM-devel libstartup-notification-devel libxfce4util-devel >= 4.17.2-alt1 libxfconf-devel xorg-cf-files
 BuildRequires: libgtk+3-devel
 BuildRequires: libgladeui2.0-devel
 %{?_enable_glibtop:BuildRequires: libgtop-devel}
@@ -194,6 +194,9 @@ make check
 %_desktopdir/xfce4-about.desktop
 
 %changelog
+* Tue Feb 22 2022 Mikhail Efremov <sem@altlinux.org> 4.17.4-alt1
+- Updated to 4.17.4.
+
 * Wed Jan 12 2022 Mikhail Efremov <sem@altlinux.org> 4.17.3-alt2
 - Disabled libgtop support.
 
