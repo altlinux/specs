@@ -2,7 +2,7 @@
 
 Name: postgresql%pg_ver-timescaledb
 Version: 2.6.0
-Release: alt2
+Release: alt3
 Summary: Open-source time-series database powered by PostgreSQL
 Group: Databases
 License: Apache-2.0 and Timescale License
@@ -10,7 +10,7 @@ Url: http://www.timescale.com
 Source0: %name-%version.tar
 
 BuildRequires: cmake
-BuildRequires: libssl-devel
+BuildRequires: libssl-devel libkrb5-devel
 BuildRequires: postgresql%pg_ver-server-devel
 
 Requires: postgresql%pg_ver-server
@@ -49,6 +49,9 @@ echo "ALTER EXTENSION timescaledb UPDATE;                                       
 %_datadir/pgsql/extension/*
 
 %changelog
+* Tue Feb 22 2022 Alexei Takaseev <taf@altlinux.org> 2.6.0-alt3
+- Add BR: libkrb5-devel
+
 * Mon Feb 21 2022 Alexei Takaseev <taf@altlinux.org> 2.6.0-alt2
 - Rename to postgresql%pg_ver-%name
 - Build with TSL extentions
