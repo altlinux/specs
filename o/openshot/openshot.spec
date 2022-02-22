@@ -1,10 +1,15 @@
 %def_disable snapshot
+%ifarch %e2k ppc64le
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
+
 %define ver_major 2.6
 %define xdg_name org.openshot.OpenShot
-
 Name: openshot
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Non Linear Video Editor using Python and MLT
 Group: Video
@@ -30,8 +35,11 @@ Requires: blender inkscape xdg-utils
 %add_python3_req_skip classes classes.legacy.openshot.classes images
 # should be provided by blender
 %add_python3_req_skip bpy.props
-# drop obsolete QtWebkit deps
-%add_python3_req_skip QtWebKitWidgets
+%if_enabled qtwebengine
+%add_python3_req_skip PyQt5.QtWebKit PyQt5.QtWebKitWidgets
+%else
+%add_python3_req_skip PyQt5.QtWebEngineCore PyQt5.QtWebEngineWidgets
+%endif
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: python3-devel python3-module-setuptools python3-module-PyQt5
@@ -64,6 +72,9 @@ Xbox, and many more common formats.
 
 
 %changelog
+* Fri Feb 04 2022 Sergey V Turchin <zerg@altlinux.org> 2.6.1-alt1.1
+- using qtwebkit instead of qtwebengine on e2k and ppc64le
+
 * Tue Sep 07 2021 Yuri N. Sedunov <aris@altlinux.org> 2.6.1-alt1
 - 2.6.1
 
