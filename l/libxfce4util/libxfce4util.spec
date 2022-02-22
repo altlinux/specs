@@ -2,7 +2,7 @@
 %def_enable vala
 
 Name: libxfce4util
-Version: 4.17.1
+Version: 4.17.2
 Release: alt1
 
 Summary: Utility library for the Xfce desktop environment
@@ -115,6 +115,9 @@ Vala bindings for %name.
 %endif
 
 %changelog
+* Tue Feb 22 2022 Mikhail Efremov <sem@altlinux.org> 4.17.2-alt1
+- Updated to 4.17.2.
+
 * Thu Jul 22 2021 Mikhail Efremov <sem@altlinux.org> 4.17.1-alt1
 - Updated to 4.17.1.
 
