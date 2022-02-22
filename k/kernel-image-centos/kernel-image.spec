@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 64
+%define centos_release 67
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,22 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Feb 22 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.67-alt1.el9
+- Updated to kernel-5.14.0-67.el9:
+  + block: fix for recent update to v5.16
+  + ice: westport channel GPIO and SDP support
+  + kabi: add lib ACKed symbols
+  + redhat: switch the vsyscall config to CONFIG_LEGACY_VSYSCALL_XONLY=y
+  + usb: xhci: Enable runtime-pm by default on AMD Yellow Carp platform
+
+* Mon Feb 21 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.66-alt1.el9
+- Updated to kernel-5.14.0-66.el9:
+  + Update NFS to upstream v5.16
+
+* Sun Feb 20 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.65-alt1.el9
+- Updated to kernel-5.14.0-65.el9:
+  + ALSA: backport for RHEL 9.0
+
 * Fri Feb 18 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.64-alt1.el9
 - Updated to kernel-5.14.0-64.el9 (fixes: CVE-2021-3753):
   + EDAC/i10nm: Retrieve and print retry_rd_err_log registers
