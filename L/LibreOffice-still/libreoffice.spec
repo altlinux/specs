@@ -32,7 +32,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt3
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -356,6 +356,14 @@ echo Direct build
 %patch406 -p1
 
 %patch500 -p0
+
+# TODO move officebeans to SDK or separate package
+# Hack in -Wl,-rpath=/usr/lib/jvm/jre-11-openjdk/lib
+sed -i 's@JAVA_HOME/lib/ -ljawt@JAVA_HOME/lib/ -Wl,-rpath=/usr/lib/jvm/jre/lib -ljawt@' configure.ac
+%filter_from_requires /libjawt[.]so/d
+
+# Choose right path to kcoreaddons_version.h
+sed -i -e 's/kf5_test_include="KF5\/kcoreaddons_version.h"/kf5_test_include="KF5\/KCoreAddons\/kcoreaddons_version.h"/' configure.ac
 
 # Hack in proper LibreOffice PATH in libreofficekit
 sed -i 's@/libreoffice/@/LibreOffice/@g' libreofficekit/Library_libreofficekitgtk.mk
@@ -694,6 +702,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Feb 23 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 7.2.5.2-alt3
+- NMU: Fix build (ftbfs)
+
 * Fri Feb 04 2022 Andrey Cherepanov <cas@altlinux.org> 7.2.5.2-alt2
 - Fix id and add icons to appdata metainfo.
 
