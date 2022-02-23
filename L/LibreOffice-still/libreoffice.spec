@@ -32,7 +32,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt3
+Release: alt4
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -363,7 +363,9 @@ sed -i 's@JAVA_HOME/lib/ -ljawt@JAVA_HOME/lib/ -Wl,-rpath=/usr/lib/jvm/jre/lib -
 %filter_from_requires /libjawt[.]so/d
 
 # Choose right path to kcoreaddons_version.h
-sed -i -e 's/kf5_test_include="KF5\/kcoreaddons_version.h"/kf5_test_include="KF5\/KCoreAddons\/kcoreaddons_version.h"/' configure.ac
+if [ -e "%_includedir/KF5/KCoreAddons/kcoreaddons_version.h" ]; then  
+    sed -i -e 's|kf5_test_include="KF5/kcoreaddons_version.h"|kf5_test_include="KF5/KCoreAddons/kcoreaddons_version.h"|' configure.ac
+fi
 
 # Hack in proper LibreOffice PATH in libreofficekit
 sed -i 's@/libreoffice/@/LibreOffice/@g' libreofficekit/Library_libreofficekitgtk.mk
@@ -702,6 +704,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Feb 23 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 7.2.5.2-alt4
+- NMU: - adapted spec for kf5-kcoreaddons-devel-5.91.0-alt1 and kf5-kcoreaddons-devel-5.90.0-alt1
+
 * Wed Feb 23 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 7.2.5.2-alt3
 - NMU: Fix build (ftbfs)
 
