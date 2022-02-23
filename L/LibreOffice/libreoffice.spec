@@ -28,7 +28,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt3
+Release: alt4
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -298,7 +298,9 @@ sed -i 's@JAVA_HOME/lib/ -ljawt@JAVA_HOME/lib/ -Wl,-rpath=/usr/lib/jvm/jre/lib -
 %filter_from_requires /libjawt[.]so/d
 
 # Choose right path to kcoreaddons_version.h
-sed -i -e 's/kf5_test_include="KF5\/kcoreaddons_version.h"/kf5_test_include="KF5\/KCoreAddons\/kcoreaddons_version.h"/' configure.ac
+if [ -e "%_includedir/KF5/KCoreAddons/kcoreaddons_version.h" ]; then  
+    sed -i -e 's|kf5_test_include="KF5/kcoreaddons_version.h"|kf5_test_include="KF5/KCoreAddons/kcoreaddons_version.h"|' configure.ac
+fi
 
 # Hack in ALT pixman path
 sed -i 's@ -I@ -I /usr/include/pixman-1 -I@' canvas/Library_cairocanvas.mk
@@ -589,6 +591,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Feb 23 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 7.3.0.3-alt4
+- NMU: - adapted spec for kf5-kcoreaddons-devel-5.91.0-alt1 and kf5-kcoreaddons-devel-5.90.0-alt1
+
 * Mon Feb 22 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 7.3.0.3-alt3
 - NMU:
   + Update russian translation for 7.3.0.3
