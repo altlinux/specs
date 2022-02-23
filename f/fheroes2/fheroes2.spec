@@ -5,7 +5,7 @@ Epoch: 2
 Version: 0.9.12
 #define rev 20210604
 #Release: alt1.%rev
-Release: alt1
+Release: alt2
 Summary: Free implementation of Heroes of the Might and Magic II engine
 License: GPLv2+
 Group: Games/Strategy
@@ -53,7 +53,9 @@ export LANG=en_US.UTF-8
 %if_with sdl2
 export WITH_SDL2="ON"
 %endif
-%make_build CONFIGURE_FHEROES2_DATA="%_gamesdatadir/%name/"
+%add_optflags -DCONFIGURE_FHEROES2_DATA="%_gamesdatadir/%name/"
+CFLAGS="${CFLAGS:-%optflags}"; export CFLAGS;
+%make_build
 make -C files/lang
 %endif
 
@@ -96,6 +98,9 @@ install -pD -m 644 %SOURCE4 %SOURCE5 %buildroot%_docdir/%name/
 %_gamesdatadir/%name
 
 %changelog
+* Wed Feb 23 2022 Igor Vlasenko <viy@altlinux.org> 2:0.9.12-alt2
+- properly set CONFIGURE_FHEROES2_DATA
+
 * Fri Feb 11 2022 Igor Vlasenko <viy@altlinux.org> 2:0.9.12-alt1
 - new version
 - added translations (closes: #42001)
