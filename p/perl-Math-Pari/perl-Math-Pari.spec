@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Epoch: 2
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
@@ -11,17 +12,17 @@ BuildRequires: perl(LWP/UserAgent.pm) perl(Net/FTP.pm) perl-podlators unzip
 
 Summary:	Perl interface to PARI
 Name:		perl-Math-Pari
-Version:	2.030518
-Release:	alt1_3
+Version:	2.030519
+Release:	alt1
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Math-Pari
-Source0:	https://cpan.metacpan.org/modules/by-module/Math/Math-Pari-%{version}%{extraversion}%{?extrasuffix}.zip
+Source0:	http://www.cpan.org/authors/id/I/IL/ILYAZ/modules/Math-Pari-%{version}.tar.gz
 Patch0:		Math-Pari-2.030518-system-pari.patch
 Patch1:		Math-Pari-2.030506-docs-and-testsuite.patch
 Patch3:		Math-Pari-2.030512-utf8.patch
 Patch4:		Math-Pari-2.030506-escape-left-braces-in-regex.patch
 Patch5:		Math-Pari-2.030518-MP_NOGNUPLOT.patch
-Patch6:		Math-Pari-2.030509-optflags.patch
+Patch6:		Math-Pari-2.030519-optflags.patch
 # Module Build
 BuildRequires:	coreutils
 BuildRequires:	findutils
@@ -60,7 +61,7 @@ scientific/ number-theoretic calculations. It allows use of most PARI functions
 as Perl functions, and (almost) seamless merging of PARI and Perl data.
 
 %prep
-%setup -q -n Math-Pari-%{version}%{extraversion}
+%setup -q -n Math-Pari-%{version}
 
 # Create a directory structure for libpari23 like Math::Pari expects it to be
 mkdir libpari23
@@ -106,7 +107,7 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 make test MP_NOGNUPLOT=1
 
 %files
-%doc Changes README
+%doc Changes README TODO-inprogress
 %dir %{perl_vendor_archlib}/Math/
 %exclude %doc %{perl_vendor_archlib}/Math/libPARI.dumb.pod
 %doc %{perl_vendor_archlib}/Math/libPARI.pod
@@ -114,6 +115,9 @@ make test MP_NOGNUPLOT=1
 %{perl_vendor_archlib}/auto/Math/
 
 %changelog
+* Wed Feb 23 2022 Igor Vlasenko <viy@altlinux.org> 2:2.030519-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 2:2.030518-alt1_3
 - update to new release by fcimport
 
