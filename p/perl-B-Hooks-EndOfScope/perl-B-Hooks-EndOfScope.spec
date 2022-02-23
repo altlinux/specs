@@ -4,7 +4,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm)
 # END SourceDeps(oneline)
 %define dist B-Hooks-EndOfScope
 Name: perl-%dist
-Version: 0.25
+Version: 0.26
 Release: alt1
 
 Summary: Execute code after a scope finished compilation
@@ -36,6 +36,9 @@ surrounding scope.
 %perl_vendor_privlib/B/Hooks/EndOfScope*
 
 %changelog
+* Wed Feb 23 2022 Igor Vlasenko <viy@altlinux.org> 0.26-alt1
+- automated CPAN update
+
 * Mon Oct 11 2021 Igor Vlasenko <viy@altlinux.org> 0.25-alt1
 - automated CPAN update
 
