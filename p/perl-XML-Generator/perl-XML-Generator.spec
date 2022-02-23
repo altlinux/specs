@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-Generator
 Name: perl-%dist
-Version: 1.08
+Version: 1.09
 Release: alt1
 
 Summary: Perl extension for generating XML 
@@ -32,6 +32,9 @@ A module to help in generating XML documents.
 %perl_vendor_privlib/XML*
 
 %changelog
+* Wed Feb 23 2022 Igor Vlasenko <viy@altlinux.org> 1.09-alt1
+- automated CPAN update
+
 * Fri Feb 18 2022 Igor Vlasenko <viy@altlinux.org> 1.08-alt1
 - automated CPAN update
 
