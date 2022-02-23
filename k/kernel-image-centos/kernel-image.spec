@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 67
+%define centos_release 68
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,23 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Feb 23 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.68-alt1.el9
+- Updated to kernel-5.14.0-68.el9 (fixes: CVE-2021-22600, CVE-2021-4028, CVE-2022-0330):
+  + drm/i915: Flush TLBs before releasing backing store
+  + ena: update elastic network adapter to the latest upstream
+  + ext4: fix remount with 'abort' option
+  + kernel/sched/sched.h: Exclude cpuidle from KABI
+  + kernel.spec: Add glibc-static build requirement
+  + libbpf: Use dynamically allocated buffer when receiving netlink messages
+  + netfilter:  nf_conntrack incorrectly checking SEQ on syn-ack packets
+  + net/packet: rx_owner_map depends on pg_vec
+  + powerpc: security: Lock down the kernel if booted in secure boot mode
+  + RDMA/cma: Do not change route.addr.src_addr.ss_family
+  + redhat/configs: Disable arch_hw disabled CONFIGS
+  + redhat/configs: Disable CONFIG_SENSORS_NCT6683 in RHEL for arm/aarch64
+  + sfc: update to v5.16
+  + Thunderbolt: various fixes
+
 * Tue Feb 22 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.67-alt1.el9
 - Updated to kernel-5.14.0-67.el9:
   + block: fix for recent update to v5.16
