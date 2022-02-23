@@ -1,5 +1,5 @@
 Name: mcelog
-Version: 179
+Version: 180
 Release: alt1
 
 Summary: Tool to translate x86_64 CPU Machine Check Exception data
@@ -69,6 +69,9 @@ install -pDm644 mcelog.8 %buildroot%_man8dir/mcelog.8
 %_sysconfdir/cron.hourly/mcelog.cron
 
 %changelog
+* Wed Feb 23 2022 Anton Farygin <rider@altlinux.ru> 180-alt1
+- 179 -> 180
+
 * Tue Dec 07 2021 Anton Farygin <rider@altlinux.ru> 179-alt1
 - 178 -> 179
 
