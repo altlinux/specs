@@ -28,7 +28,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt3
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -83,7 +83,7 @@ Patch407: alt-007-svg-icons-3.patch
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
 
 # content of patch shared to Weblate-LibreOffice by @NeuroFreak
-Patch600: LibreOffice-7.2.0.1-update-russian-translation.patch
+Patch600: LibreOffice-7.3.0.3-update-russian-translation.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
@@ -290,12 +290,15 @@ Provides additional %{langname} translations and resources for %name. \
 
 %patch500 -p0
 # Patch with russian translation update
-# patch600 -p1
+%patch600 -p1
 
 # TODO move officebeans to SDK or separate package
 # Hack in -Wl,-rpath=/usr/lib/jvm/jre-11-openjdk/lib
 sed -i 's@JAVA_HOME/lib/ -ljawt@JAVA_HOME/lib/ -Wl,-rpath=/usr/lib/jvm/jre/lib -ljawt@' configure.ac
 %filter_from_requires /libjawt[.]so/d
+
+# Choose right path to kcoreaddons_version.h
+sed -i -e 's/kf5_test_include="KF5\/kcoreaddons_version.h"/kf5_test_include="KF5\/KCoreAddons\/kcoreaddons_version.h"/' configure.ac
 
 # Hack in ALT pixman path
 sed -i 's@ -I@ -I /usr/include/pixman-1 -I@' canvas/Library_cairocanvas.mk
@@ -586,6 +589,11 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Feb 22 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 7.3.0.3-alt3
+- NMU:
+  + Update russian translation for 7.3.0.3
+  + FTBFS: Fix build
+
 * Thu Feb 17 2022 Fr. Br. George <george@altlinux.ru> 7.3.0.3-alt2
 - Fix build
 
