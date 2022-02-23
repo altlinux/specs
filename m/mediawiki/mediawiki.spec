@@ -3,7 +3,7 @@
 
 Name: mediawiki
 Version: %major.1
-Release: alt1
+Release: alt2
 
 Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
 
@@ -138,8 +138,9 @@ Obsoletes: mediawiki-extensions-ReplaceText
 Obsoletes: mediawiki-extensions-StubManager
 
 # since 1.34
-Provides: mediawiki-extensions-Scribunto
-Obsoletes: mediawiki-extensions-Scribunto
+# we pack separate subpackage since 1.37.1
+#Provides: mediawiki-extensions-Scribunto
+#Obsoletes: mediawiki-extensions-Scribunto
 
 # since 1.35
 Provides: mediawiki-extensions-VisualEditor
@@ -224,6 +225,21 @@ specified page.
 
 Recommended: poppler (for PDF metainfo retrieving)
 
+%package extensions-Scribunto
+Summary: The extension allows for embedding scripting languages in MediaWiki
+Group: Networking/WWW
+Requires: %name-common = %version-%release
+Conflicts: %name-common < 1.37.1-alt1
+
+# TODO: also can use php module luasandbox
+Requires: /usr/bin/lua5.1
+# we miss module versions
+#Requires: php7-pcre >= 8.33
+Requires: php7-mbstring
+
+%description extensions-Scribunto
+The Scribunto (Latin: "they shall write") extension allows for embedding scripting languages in MediaWiki.
+Currently the only supported scripting language is Lua.
 
 %prep
 %setup
@@ -254,7 +270,8 @@ rm -rf %buildroot%_mediawikidir/maintenance/language/zhtable
 
 rm -rf %buildroot%_mediawikidir/vendor/zordius/lightncandy/build/
 
-rm -rf %buildroot%_mediawikidir//extensions/Scribunto/includes/engines/LuaStandalone/binaries/
+# remove embedded lua binaries
+rm -rv %buildroot%_mediawikidir/extensions/Scribunto/includes/engines/LuaStandalone/binaries
 
 # devel tools, reqs node
 rm -rfv %buildroot%_mediawikidir/vendor/wikimedia/parsoid/tools/test.selser.sh
@@ -262,9 +279,9 @@ rm -rfv %buildroot%_mediawikidir/vendor/wikimedia/parsoid/bin/debug_selser.sh
 rm -rfv %buildroot%_mediawikidir/vendor/wikimedia/parsoid/bin/*.js
 rm -rfv %buildroot%_mediawikidir/vendor/wikimedia/parsoid/bin/toolcheck.js.sh
 rm -rfv %buildroot%_mediawikidir/vendor/wikimedia/parsoid/bin/start-rt-test.sh
-rm -rfv %buildroot%_mediawikidir/extensions/VisualEditor/lib/ve/bin/
-rm -rfv %buildroot%_mediawikidir/extensions/VisualEditor/bin/
-rm -rfv %buildroot%_mediawikidir/vendor/wikimedia/wikipeg/tools/impact
+rm -rv %buildroot%_mediawikidir/extensions/VisualEditor/lib/ve/bin/
+rm -rv %buildroot%_mediawikidir/extensions/VisualEditor/bin/
+rm -rv %buildroot%_mediawikidir/vendor/wikimedia/wikipeg/tools/impact
 
 
 
@@ -330,8 +347,15 @@ wfLoadExtension('PdfHandler');
 \$wgFileExtensions[] = 'pdf';
 EOF
 
+cat > %buildroot%_mediawiki_settings_dir/50-Scribunto.php << EOF
+<?php
+wfLoadExtension('Scribunto');
+\$wgScribuntoDefaultEngine = 'luastandalone';
+\$wgScribuntoEngineConf['luastandalone']['luaPath'] = '/usr/bin/lua5.1';
+EOF
+
 # remove embedded python module
-rm -rfv %buildroot%_mediawikidir/extensions/SyntaxHighlight_GeSHi/pygments/*
+rm -rv %buildroot%_mediawikidir/extensions/SyntaxHighlight_GeSHi/pygments/*
 # instead of set wgPygmentizePath
 ln -s %_bindir/pygmentize3 %buildroot%_mediawikidir/extensions/SyntaxHighlight_GeSHi/pygments/pygmentize
 
@@ -381,7 +405,9 @@ fi
 %exclude %_mediawikidir/extensions/SyntaxHighlight_GeSHi/
 %exclude %_mediawiki_settings_dir/50-SyntaxHighlight_GeSHi.php
 %exclude %_mediawikidir/extensions/PdfHandler/
+%exclude %_mediawikidir/extensions/Scribunto/
 %exclude %_mediawiki_settings_dir/50-PdfHandler.php
+%exclude %_mediawiki_settings_dir/50-Scribunto.php
 #exclude %_datadir/%name/maintenance/hiphop/
 %attr(2750,root,%webserver_group) %dir %webappdir/
 %attr(2770,root,%webserver_group) %dir %webappdir/config/
@@ -418,7 +444,14 @@ fi
 %_mediawikidir/extensions/PdfHandler/
 %_mediawiki_settings_dir/50-PdfHandler.php
 
+%files extensions-Scribunto
+%_mediawikidir/extensions/Scribunto/
+%_mediawiki_settings_dir/50-Scribunto.php
+
 %changelog
+* Thu Feb 24 2022 Vitaly Lipatov <lav@altlinux.ru> 1.37.1-alt2
+- pack Scribunto extension separately
+
 * Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.37.1-alt1
 - new version 1.37.1 (with rpmrb script)
 - (T292763, CVE-2021-44854) (T271037, CVE-2021-44856)
@@ -521,7 +554,7 @@ fi
 * Sun Apr 29 2018 Vitaly Lipatov <lav@altlinux.ru> 1.30.0-alt2
 - switch to php7 using
 
-* Wed Mar 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1.30.0-alt1
+* Fri Mar 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1.30.0-alt1
 - new version 1.30.0 (with rpmrb script)
 
 * Thu Mar 29 2018 Igor Vlasenko <viy@altlinux.ru> 1.29.2-alt2
