@@ -1,10 +1,11 @@
 %def_with sdl2
+%def_without cmake
 Name: fheroes2
 Epoch: 2
-Version: 0.9.11
+Version: 0.9.12
 #define rev 20210604
 #Release: alt1.%rev
-Release: alt2
+Release: alt1
 Summary: Free implementation of Heroes of the Might and Magic II engine
 License: GPLv2+
 Group: Games/Strategy
@@ -18,15 +19,19 @@ Source2: %name.sh
 Source3: %name.png
 Source4: fheroes2-data.spec
 Source5: README.ALT
-Patch: fheroes2-0.9.11-random-skills.patch
+Patch0: fheroes2-0.9.12-random-skills.patch
+Patch1: fheroes2-0.9.11-use-python3.patch
 
 # Automatically added by buildreq on Wed Oct 03 2012
 # optimized out: libSDL-devel libstdc++-devel zlib-devel
-BuildRequires: gcc-c++ libogg-devel libfreetype-devel libpng-devel
+BuildRequires: gcc-c++ libogg-devel libfreetype-devel libpng-devel gettext-tools
 %if_with sdl2
 BuildRequires: libSDL2_image-devel libSDL2_mixer-devel libSDL2_net-devel libSDL2_ttf-devel
 %else
 BuildRequires: libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel
+%endif
+%if_with cmake
+BuildRequires: cmake
 %endif
 
 %description
@@ -36,31 +41,45 @@ into your /usr/share/games/fheroes2/{maps,data} directories respectively
 
 %prep
 %setup -q
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
+export LANG=en_US.UTF-8
+%if_with cmake
+%cmake -DCONFIGURE_FHEROES2_DATA="%_gamesdatadir/%name/"
+%cmake_build
+%else
 %if_with sdl2
 export WITH_SDL2="ON"
 %endif
 %make_build CONFIGURE_FHEROES2_DATA="%_gamesdatadir/%name/"
-
-%install
-%if_without cmake
+make -C files/lang
 %endif
 
+%install
+%if_with cmake
+%cmake_install
+%else
 # let's create directory structure...
-mkdir -p %buildroot%_gamesdatadir/%name/{data,maps}
+mkdir -p %buildroot%_gamesdatadir/%name/{data,maps,files/lang}
 
 # and install what we need where we need it to be...
-install -pD -m 755 %name %buildroot%_bindir/%name.bin
-install -pD -m 755 %SOURCE2 %buildroot%_bindir/%name
+install -pD -m 755 %name %buildroot%_bindir/%name
 install -pD -m 644 %name.key %buildroot%_gamesdatadir/%name/
-cp -a files/ %buildroot%_gamesdatadir/%name/
+cp -a files/{data,images} %buildroot%_gamesdatadir/%name/files/
+cp -a files/lang/*.mo %buildroot%_gamesdatadir/%name/files/lang/
+
+install -pD -m 644 script/packaging/common/fheroes2.desktop %buildroot%_desktopdir/%name.desktop
+%endif
+
+# bin wrapper
+mv %buildroot%_bindir/%name{,.bin}
+install -pD -m 755 %SOURCE2 %buildroot%_bindir/%name
 
 # install resources
 install -pD -m 644 %SOURCE3 %buildroot%_niconsdir/%name.png
 install -pD -m 644 src/resources/fheroes2.png %buildroot%_iconsdir/hicolor/128x128/apps/%name.png
-install -pD -m 644 script/packaging/common/fheroes2.desktop %buildroot%_desktopdir/%name.desktop
 
 # docs
 mkdir -p %buildroot%_docdir/%name
@@ -77,6 +96,11 @@ install -pD -m 644 %SOURCE4 %SOURCE5 %buildroot%_docdir/%name/
 %_gamesdatadir/%name
 
 %changelog
+* Fri Feb 11 2022 Igor Vlasenko <viy@altlinux.org> 2:0.9.12-alt1
+- new version
+- added translations (closes: #42001)
+- python3 support (closes: #42002)
+
 * Sun Jan 09 2022 Igor Vlasenko <viy@altlinux.org> 2:0.9.11-alt2
 - XDG_DATA_DIR migration
 - random-skills.patch
