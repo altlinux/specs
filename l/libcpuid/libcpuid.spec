@@ -3,7 +3,7 @@
 
 Name: libcpuid
 Version: 0.5.1
-Release: alt1
+Release: alt2.20220206
 Summary: Provides CPU identification for x86, x86_64, aarch64, armh
 License: BSD-2-Clause
 Group: Development/C
@@ -54,6 +54,9 @@ on the project's site (http://libcpuid.sourceforge.net/)
 %_prefix/lib/cmake/cpuid
 
 %changelog
+* Wed Feb 23 2022 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt2.20220206
+- new snapshot
+
 * Fri Apr 09 2021 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt1
 - new version 0.5.1
 
