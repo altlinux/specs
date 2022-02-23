@@ -8,8 +8,8 @@
 %endif
 
 Name:     otter-browser
-Version:  1.0.01
-Release:  alt4.20210207
+Version:  1.0.03
+Release:  alt1
 
 Summary:  Otter Browser aims to recreate the best aspects of the classic Opera (12.x) UI using Qt5
 License:  GPL-3.0
@@ -67,6 +67,9 @@ BuildRequires: pkgconfig(hunspell)
 %doc CHANGELOG CONTRIBUTING.md COPYING README.md
 
 %changelog
+* Wed Feb 23 2022 Anton Midyukov <antohami@altlinux.org> 1.0.03-alt1
+- new version 1.0.03
+
 * Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 1.0.01-alt4.20210207
 - build wth qtwebkit instead of qtwebengine on e2k and ppc64le
 
