@@ -6,8 +6,8 @@
 %endif
 
 Name: kde5-%rname
-Version: 21.12.1
-Release: alt2
+Version: 21.12.2
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -67,6 +67,9 @@ Requires: kf5-filesystem
 
 
 %changelog
+* Mon Feb 21 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.2-alt1
+- new version
+
 * Fri Feb 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt2
 - build without qtwebengine on e2k and ppc64le
 

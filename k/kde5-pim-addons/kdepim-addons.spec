@@ -17,8 +17,8 @@
 %define libscamconfiguresettings libscamconfiguresettings%sover
 
 Name: kde5-pim-addons
-Version: 21.12.1
-Release: alt4
+Version: 21.12.2
+Release: alt1
 %K5init
 
 %add_findreq_skiplist %_K5bin/kmail_*.sh
@@ -304,6 +304,9 @@ Requires: %name-common
 
 
 %changelog
+* Mon Feb 21 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.2-alt1
+- new version
+
 * Fri Feb 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt4
 - using not_qt5_qtwebengine_arches macro
 

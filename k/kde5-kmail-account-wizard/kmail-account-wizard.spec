@@ -1,7 +1,7 @@
 %define rname kmail-account-wizard
 
 Name: kde5-%rname
-Version: 21.12.1
+Version: 21.12.2
 Release: alt1
 %K5init
 
@@ -23,7 +23,7 @@ BuildRequires: libqtkeychain-qt5-devel
 BuildRequires: kde5-libkleo-devel
 BuildRequires: kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-kcontacts-devel kde5-kidentitymanagement-devel
 BuildRequires: kde5-kimap-devel kde5-kldap-devel kde5-kmailtransport-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-libkdepim-devel
-BuildRequires: kde5-mailcommon-devel kde5-messagelib-devel kde5-pimcommon-devel kf5-kcmutils-devel kf5-kcrash-devel kf5-kdbusaddons-devel
+BuildRequires: kde5-messagelib-devel kde5-pimcommon-devel kf5-kcmutils-devel kf5-kcrash-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kdoctools-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemmodels-devel kf5-knewstuff-devel
 BuildRequires: kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-kross-devel kf5-ktexteditor-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-kwallet-devel kf5-syntax-highlighting-devel
@@ -56,6 +56,9 @@ Launch the account wizard to configure PIM accounts.
 %_K5data/knsrcfiles/*accountwizard*
 
 %changelog
+* Mon Feb 21 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.2-alt1
+- new version
+
 * Thu Jan 13 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
 - new version
 

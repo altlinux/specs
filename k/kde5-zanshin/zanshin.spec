@@ -4,14 +4,16 @@
 %define libzanshin libzanshin%sover
 
 Name: kde5-%rname
-Version: 21.12.1
+Version: 21.12.2
 Release: alt1
 %K5init
 
 Group: Office
 Summary: TODO Manager
 Url: http://www.kde.org
-License: LGPG-2.0 or GPL-3.0
+License: LGPL-2.0-or-later and GPL-2.0-or-later
+
+Requires: kde5-akonadi
 
 Source: %rname-%version.tar
 
@@ -91,5 +93,8 @@ KF5 library
 #%_K5lib/libzanshin.so.*
 
 %changelog
+* Mon Feb 21 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.2-alt1
+- new version
+
 * Tue Feb 15 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
 - initial build

@@ -1,8 +1,8 @@
 %define rname kalarm
 
 Name: kde5-%rname
-Version: 21.12.1
-Release: alt3
+Version: 21.12.2
+Release: alt1
 %K5init no_appdata
 
 Group: Graphical desktop/KDE
@@ -26,7 +26,7 @@ BuildRequires: extra-cmake-modules qt5-base-devel qt5-phonon-devel qt5-x11extras
 BuildRequires: boost-devel xsltproc libXres-devel libsasl2-devel
 BuildRequires: kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-kalarmcal-devel kde5-kcalcore-devel kde5-kcalutils-devel
 BuildRequires: kde5-kcontacts-devel kf5-kholidays-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kmailtransport-devel kde5-kmime-devel
-BuildRequires: kde5-kpimtextedit-devel kde5-libkdepim-devel kde5-mailcommon-devel kde5-messagelib-devel  kde5-pimcommon-devel
+BuildRequires: kde5-kpimtextedit-devel kde5-libkdepim-devel kde5-messagelib-devel  kde5-pimcommon-devel
 BuildRequires: kf5-kcmutils-devel kf5-kdelibs4support-devel kf5-kdoctools-devel kf5-kio-devel kf5-kwallet-devel
 BuildRequires: kf5-kglobalaccel-devel kf5-kidletime-devel kf5-knotifyconfig-devel
 
@@ -92,6 +92,9 @@ KF5 library
 
 
 %changelog
+* Mon Feb 21 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.2-alt1
+- new version
+
 * Mon Feb 07 2022 Oleg Solovyov <mcpain@altlinux.org> 21.12.1-alt3
 - fix calendar errors for new users (Closes: #41874)
 

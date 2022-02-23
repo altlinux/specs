@@ -16,8 +16,8 @@
 %define libkf5webengineviewer libkf5webengineviewer%sover
 
 Name: kde5-%rname
-Version: 21.12.1
-Release: alt3
+Version: 21.12.2
+Release: alt1
 %K5init
 
 Group: System/Libraries
@@ -194,6 +194,9 @@ done
 %_K5lib/libKF5MimeTreeParser.so.*
 
 %changelog
+* Mon Feb 21 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.2-alt1
+- new version
+
 * Sat Feb 19 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt3
 - using not_qt5_qtwebengine_arches macro
 

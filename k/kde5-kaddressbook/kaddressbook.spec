@@ -1,7 +1,7 @@
 %define rname kaddressbook
 
 Name: kde5-%rname
-Version: 21.12.1
+Version: 21.12.2
 Release: alt1
 %K5init no_appdata
 
@@ -30,7 +30,7 @@ BuildRequires: libqtkeychain-qt5-devel
 BuildRequires: kde5-libkleo-devel
 BuildRequires: kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-search-devel kde5-grantleetheme-devel
 BuildRequires: kde5-kcalcore-devel kde5-kcontacts-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kmime-devel
-BuildRequires: kde5-kontactinterface-devel kde5-kpimtextedit-devel kde5-libkdepim-devel kde5-mailcommon-devel kde5-messagelib-devel
+BuildRequires: kde5-kontactinterface-devel kde5-kpimtextedit-devel kde5-libkdepim-devel kde5-messagelib-devel
 BuildRequires:  kde5-pimcommon-devel
 BuildRequires: kf5-kcmutils-devel kf5-kdelibs4support-devel kf5-kdoctools-devel kf5-kio-devel kf5-prison-devel
 
@@ -118,6 +118,9 @@ done
 %_K5lib/libKPimAddressbookImportExport.so.*
 
 %changelog
+* Mon Feb 21 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.2-alt1
+- new version
+
 * Thu Jan 13 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
 - new version
 
