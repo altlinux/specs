@@ -6,11 +6,11 @@
 %define optflags_debug -g1
 %endif
 
-%define soname 8.1
+%define soname 9.0
 
 Name: openvdb
-Version: 8.1.0
-Release: alt2
+Version: 9.0.0
+Release: alt1
 Summary: C++ library for sparse volumetric data discretized on three-dimensional grids
 Group: Graphics
 License: MPL-2.0-no-copyleft-exception
@@ -20,9 +20,6 @@ URL: https://www.openvdb.org
 Source: %name-%version.tar
 
 Patch1: openvdb-8.0.0-alt-link-with-libatomic-on-mips.patch
-
-# https://github.com/AcademySoftwareFoundation/openvdb/pull/1027
-Patch2: openvdb-8.1.0-upstream-tbb-compat.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-complete
@@ -135,6 +132,9 @@ sed -i \
 %_libdir/cmake/*
 
 %changelog
+* Thu Feb 24 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.0-alt1
+- Updated to upstream version 9.0.0.
+
 * Thu Jan 27 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 8.1.0-alt2
 - Rebuilt with new TBB.
 
