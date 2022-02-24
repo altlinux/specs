@@ -1,10 +1,10 @@
-%define subname        avkys
-%define major	8.8
+%define subname		avkys
+%define major		9.0
 %define libname lib%name
 
 Name: webcamoid
 Version: %major.0
-Release: alt2
+Release: alt1
 
 Summary: A webcam funny video tool
 
@@ -12,22 +12,39 @@ Group: Video
 License: GPL-3.0-or-later
 Url: https://github.com/hipersayanX/webcamoid
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+Packager: Alexei Mezin <alexvm@altlinux.ru>
 
 # Source-url: https://github.com/webcamoid/webcamoid/archive/%version.tar.gz
 Source: %name-%version.tar
-Patch0: %name-numeric_limits.patch
+Patch0: %{name}_manpath.patch
 
+BuildPreReq: rpm-macros-cmake cmake
 
-BuildRequires: pkgconfig(libavcodec)
-BuildRequires: pkgconfig(libv4l2)
 BuildRequires: pkgconfig(Qt5Concurrent)
 BuildRequires: pkgconfig(Qt5Multimedia)
 BuildRequires: pkgconfig(Qt5OpenGL)
 BuildRequires: pkgconfig(Qt5QuickControls2)
 BuildRequires: pkgconfig(Qt5Svg)
 BuildRequires: pkgconfig(Qt5Xml)
-BuildRequires: qt5-tools
+BuildRequires: pkgconfig(gstreamer-pbutils-1.0)
+BuildRequires: pkgconfig(gstreamer-app-1.0)
+BuildRequires: pkgconfig(gstreamer-1.0)
+BuildRequires: pkgconfig(libavdevice)
+BuildRequires: pkgconfig(libavformat)
+BuildRequires: pkgconfig(libavcodec)
+BuildRequires: pkgconfig(libv4l2)
+BuildRequires: pkgconfig(libffi)
+BuildRequires: pkgconfig(libvlc)
+BuildRequires: pkgconfig(libuvc)
+BuildRequires: pkgconfig(libpulse-simple)
+BuildRequires: pkgconfig(libkmod)
+BuildRequires: pkgconfig(libpcre)
+BuildRequires: pkgconfig(libswscale)
+BuildRequires: pkgconfig(libswresample)
+BuildRequires: pkgconfig(libavfilter)
+BuildRequires: pkgconfig(libpostproc)
+BuildRequires: pkgconfig(libavresample)
+BuildRequires: pipewire-libs-devel libjack-devel liborc-devel pipewire-libs-devel libalsa-devel
 
 Requires: %libname = %EVR
 
@@ -66,11 +83,11 @@ applications which will use avkys library as webcamoid.
 %patch0 -p1
 
 %build
-%qmake_qt5 PREFIX=%_prefix CONFIG+=debug
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std INSTALL_ROOT=%buildroot
+%cmake_install
 
 %files
 %doc AUTHORS TODO README.md
@@ -79,17 +96,20 @@ applications which will use avkys library as webcamoid.
 %_iconsdir/hicolor/*/apps/webcamoid.*
 %_man1dir/webcamoid.1*
 %_libdir/avkys
-%_libdir/qt5/qml/AkQml
+# libdir/qt5/qml/AkQml
 %_datadir/licenses/webcamoid/COPYING
 
 %files -n %libname
 %_libdir/lib%subname.so.*
-%_datadir/licenses/avkys/COPYING
+# datadir/licenses/avkys/COPYING
 
 %files -n %libname-devel
 %_libdir/*.so
 
 %changelog
+* Thu Feb 24 2022 Alexei Mezin <alexvm@altlinux.org> 9.0.0-alt1
+- New version
+
 * Sat Dec 11 2021 Alexei Mezin <alexvm@altlinux.org> 8.8.0-alt2
 - Minor fixes in src
 
