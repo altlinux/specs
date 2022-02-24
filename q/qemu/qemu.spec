@@ -132,7 +132,7 @@
 
 Name: qemu
 Version: 6.2.0
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -1316,6 +1316,13 @@ fi
 %exclude %docdir/LICENSE
 
 %changelog
+* Thu Feb 24 2022 Alexey Shabalin <shaba@altlinux.org> 6.2.0-alt2
+- Fixes for the following security vulnerabilities:
+  + CVE-2022-0358 virtiofsd: Drop membership of all supplementary groups
+  + CVE-2021-4158 acpi: validate hotplug selector on access
+  + CVE-2021-3929: hw/nvme: fix
+- 9pfs: Fix segfault in do_readdir_many caused by struct dirent overread
+
 * Fri Dec 17 2021 Alexey Shabalin <shaba@altlinux.org> 6.2.0-alt1
 - 6.2.0.
 - Fixes for the following security vulnerabilities:
