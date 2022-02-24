@@ -7,7 +7,7 @@
 %def_without mbedtls
 
 Name: freerdp
-Version: 2.5.0
+Version: 2.6.0
 Release: alt1
 
 Group: Networking/Remote access
@@ -296,6 +296,9 @@ pushd %_cmake__builddir/server/proxy
 popd
 %endif
 
+# Set rpath to library
+patchelf --set-rpath '$ORIGIN' %buildroot%_libdir/freerdp2/liburbdrc-client-libusb.so
+
 %files
 
 %files -n xfreerdp
@@ -360,6 +363,9 @@ popd
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Tue Feb 22 2022 Andrey Cherepanov <cas@altlinux.org> 2.6.0-alt1
+- New version.
+
 * Wed Jan 12 2022 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt1
 - New version.
 
