@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 Name: calibre
 Version: 5.36.0
-Release: alt1
+Release: alt1.1
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
@@ -21,7 +21,7 @@ Patch: calibre-no-update.patch
 Patch1: calibre-0.8.55-alt-no-macmenu.patch
 
 AutoProv:yes,nopython3
-ExclusiveArch: %qt5_qtwebengine_arches
+ExcludeArch: %not_qt5_qtwebengine_arches
 
 Requires: fonts-ttf-core
 Requires: xkeyboard-config
@@ -238,6 +238,9 @@ rm -vf %buildroot%_libdir/calibre/calibre/translations/msgfmt.py
 %_datadir/mime/packages/calibre-mimetypes.xml
 
 %changelog
+* Fri Feb 18 2022 Sergey V Turchin <zerg@altlinux.org> 5.36.0-alt1.1
+- NMU: using not_qt5_qtwebengine_arches macro
+
 * Fri Feb 04 2022 Vitaly Lipatov <lav@altlinux.ru> 5.36.0-alt1
 - new version 5.36.0 (with rpmrb script)
 
