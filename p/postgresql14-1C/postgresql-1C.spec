@@ -5,9 +5,9 @@
 %def_with icu
 
 %define prog_name            postgresql
-%define postgresql_major     13
-%define postgresql_minor     5
-%define postgresql_altrel    1
+%define postgresql_major     14
+%define postgresql_minor     1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -275,7 +275,7 @@ database.
 %prep
 %setup -q
 
-%patch2 -p2
+%patch2 -p1
 %patch3 -p2
 %patch6 -p2
 %patch8 -p1
@@ -389,6 +389,7 @@ cp -a COPYRIGHT README \
 %find_lang ecpg-%postgresql_major
 %find_lang initdb-%postgresql_major
 %find_lang libpq%libpq_major-%postgresql_major
+%find_lang pg_amcheck-%postgresql_major
 %find_lang pg_archivecleanup-%postgresql_major
 %find_lang pg_basebackup-%postgresql_major
 %find_lang pg_config-%postgresql_major
@@ -417,7 +418,8 @@ cat psql-%postgresql_major.lang \
     pg_basebackup-%postgresql_major.lang \
     pg_test_fsync-%postgresql_major.lang \
     pg_test_timing-%postgresql_major.lang \
-    pg_verifybackup-%postgresql_major.lang > main.lang
+    pg_verifybackup-%postgresql_major.lang \
+    pg_amcheck-%postgresql_major.lang > main.lang
 
 cat postgres-%postgresql_major.lang \
     pg_controldata-%postgresql_major.lang \
@@ -502,12 +504,12 @@ if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
 
-%triggerpostun -- %{prog_name}13-1C-server
+%triggerpostun -- %{prog_name}14-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
 
-%triggerpostun -- %{prog_name}14-server
+%triggerpostun -- %{prog_name}14-1C-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
@@ -518,6 +520,7 @@ fi
 %_bindir/createuser
 %_bindir/dropdb
 %_bindir/dropuser
+%_bindir/pg_amcheck
 %_bindir/pg_dump
 %_bindir/pg_dumpall
 %_bindir/pg_restore
@@ -535,6 +538,7 @@ fi
 %_man1dir/createuser.1*
 %_man1dir/dropdb.1*
 %_man1dir/dropuser.1*
+%_man1dir/pg_amcheck.1*
 %_man1dir/pg_dump.1*
 %_man1dir/pg_restore.1*
 %_man1dir/pg_dumpall.1*
@@ -568,18 +572,17 @@ fi
 
 %files -f contrib.lang contrib
 %_bindir/oid2name
-%_bindir/pg_standby
 %_bindir/pgbench
 %_bindir/vacuumlo
 %_bindir/pg_archivecleanup
 
 %_man1dir/oid2name.1*
 %_man1dir/pg_archivecleanup.1*
-%_man1dir/pg_standby.1*
 %_man1dir/pgbench.1*
 %_man1dir/vacuumlo.1*
 
 %dir %_datadir/%PGSQL/contrib
+%dir %_libdir/%PGSQL
 
 %_libdir/%PGSQL/_int.so
 %_datadir/%PGSQL/extension/intarray-*.sql
@@ -674,6 +677,9 @@ fi
 %_libdir/%PGSQL/moddatetime.so
 %_datadir/%PGSQL/extension/moddatetime-*.sql
 %_datadir/%PGSQL/extension/moddatetime.control
+%_libdir/%PGSQL/old_snapshot.so
+%_datadir/%PGSQL/extension/old_snapshot-*.sql
+%_datadir/%PGSQL/extension/old_snapshot.control
 %_libdir/%PGSQL/pageinspect.so
 %_datadir/%PGSQL/extension/pageinspect-*.sql
 %_datadir/%PGSQL/extension/pageinspect.control
@@ -690,6 +696,9 @@ fi
 %_libdir/%PGSQL/pg_stat_statements.so
 %_datadir/%PGSQL/extension/pg_stat_statements-*.sql
 %_datadir/%PGSQL/extension/pg_stat_statements.control
+%_libdir/%PGSQL/pg_surgery.so
+%_datadir/%PGSQL/extension/pg_surgery-*.sql
+%_datadir/%PGSQL/extension/pg_surgery.control
 %_libdir/%PGSQL/pg_trgm.so
 %_datadir/%PGSQL/extension/pg_trgm-*.sql
 %_datadir/%PGSQL/extension/pg_trgm.control
@@ -793,6 +802,8 @@ fi
 %_datadir/%PGSQL/*.sample
 %_datadir/%PGSQL/information_schema.sql
 %_datadir/%PGSQL/sql_features.txt
+%_datadir/%PGSQL/system_constraints.sql
+%_datadir/%PGSQL/system_functions.sql
 %_datadir/%PGSQL/system_views.sql
 %_datadir/%PGSQL/snowball_create.sql
 %_localstatedir/%PGSQL
@@ -817,14 +828,15 @@ fi
 
 %files -f plperl-%postgresql_major.lang perl
 %_libdir/%PGSQL/plperl.so
-%_datadir/%PGSQL/extension/bool_plperl--1.0.sql
-%_datadir/%PGSQL/extension/bool_plperl.control
-%_datadir/%PGSQL/extension/bool_plperlu--1.0.sql
-%_datadir/%PGSQL/extension/bool_plperlu.control
 %_datadir/%PGSQL/extension/plperl-*.sql
 %_datadir/%PGSQL/extension/plperl.control
 %_datadir/%PGSQL/extension/plperlu-*.sql
 %_datadir/%PGSQL/extension/plperlu.control
+%_libdir/%PGSQL/bool_plperl.so
+%_datadir/%PGSQL/extension/bool_plperl--1.0.sql
+%_datadir/%PGSQL/extension/bool_plperl.control
+%_datadir/%PGSQL/extension/bool_plperlu--1.0.sql
+%_datadir/%PGSQL/extension/bool_plperlu.control
 
 %files -f plpython-%postgresql_major.lang python
 %_libdir/%PGSQL/plpython3.so
@@ -870,22 +882,18 @@ fi
 %files -n %libecpg_name-devel-static
 %_libdir/libecpg*.a
 %_libdir/libpgcommon.a
-%_libdir/libpgcommon_shlib.a
 %_libdir/libpgfeutils.a
 %_libdir/libpgtypes.a
 %_libdir/libpgport.a
-%_libdir/libpgport_shlib.a
+%_libdir/libpq*.a
 
 %files -n rpm-macros-%prog_name
 %_rpmmacrosdir/postgresql
 %endif
 
 %changelog
-* Mon Feb 21 2022 Alexei Takaseev <taf@altlinux.org> 13.5-alt1
-- 13.5
+* Mon Feb 21 2022 Alexei Takaseev <taf@altlinux.org> 14.1-alt2
 - Update 1C patch
-
-* Fri Feb 04 2022 Alexei Takaseev <taf@altlinux.org> 13.4-alt2
 - Move %_includedir/%PGSQL/server and %_libdir/%PGSQL/pgxs to
   separe server-devel subpackage.
 - Remove 0004-Fix-includedirs.patch patch
@@ -895,6 +903,10 @@ fi
 - Split postgresql-devel-static to libpq-devel-static and
   libecpg-devel-static
 - Add Requires: postgresql-server-devel to postgresql-devel
+
+* Mon Jan 10 2022 Alexei Takaseev <taf@altlinux.org> 14.1-alt1
+- 14.1
+- Update 1C patch
 
 * Fri Dec 24 2021 Alexei Takaseev <taf@altlinux.org> 13.4-alt1
 - 13.4
