@@ -1,7 +1,10 @@
-%global appid net.lutris.Lutris
+%def_enable meson
+
+%define appid net.lutris.Lutris
+
 Name: lutris
-Version: 0.5.9.1
-Release: alt1
+Version: 0.5.10
+Release: alt0.beta1
 Summary: Manager for game installation and execution
 License: GPL-2.0 and GPL-2.0+ and GPL-3.0+ and CC0-1.0 and LGPL-2.1+ and CC-BY-NC-SA-2.0 and CC-BY-SA-3.0
 Group: Games/Other
@@ -10,15 +13,17 @@ Url: http://lutris.net
 Source: http://lutris.net/releases/lutris_%version.tar.xz
 Patch: lutris_0.5.8_alt_python3_pixbuf_path.patch
 
-BuildRequires(pre): meson
+Provides: python3(lutris.util.ubisoft)
+Conflicts: lutris-standalone
+
+%if_enabled meson
+BuildPreReq: meson
+%endif
+BuildRequires: rpm-build-python3
 # Automatically added by buildreq on Fri Aug 30 2019 (-bi)
 # optimized out: bash4 bashrc kmod perl python-base python-modules python3 python3-base python3-dev python3-module-pkg_resources rpm-build-python3 sh4 tzdata xz
-BuildRequires: eject fuse python3-module-setuptools rpm-build-gir unzip xlsfonts
-# Requires: cabextract fluid-soundfont-gm python3-module-Pillow python3-module-yaml python3-module-pygobject python3-module-requests winetricks libgdk-pixbuf-gir libgnome-desktop3-gir xrandr pciutils
+#BuildRequires: eject fuse python3-module-setuptools rpm-build-gir unzip xlsfonts
 Requires: python3-module-magic python3-module-pygobject3 python3-module-yaml python3-module-requests python3-module-pylint python3-module-distro python3-module-setproctitle python3-module-Pillow libgdk-pixbuf-gir libgnome-desktop3-gir libwebkit2gtk-gir libnotify-gir libgtk+3-gir
-# settings menu
-# Requires: lsblk glxinfo
-# controller support
 Requires: python3-module-evdev
 # Recommends: psmisc p7zip curl cabextract xrandr glibc-gconv-modules winetricks
 
@@ -40,13 +45,22 @@ sed -i 's|GdkPixbuf.InterpType.NEAREST|1|' \
     lutris/gui/widgets/utils.py
 
 %build
+%if_enabled meson
 %meson
 %meson_build
+%else
+%python3_build
+%endif
 
 %install
+%if_enabled meson
 %meson_install
+%else
+%python3_install
+%endif
+%find_lang %name
 
-%files
+%files -f %name.lang
 %doc README.rst CONTRIBUTING.md AUTHORS
 %doc LICENSE
 %_bindir/%name
@@ -55,12 +69,14 @@ sed -i 's|GdkPixbuf.InterpType.NEAREST|1|' \
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/??x??/apps/%name.png
 %_iconsdir/hicolor/???x???/apps/%name.png
-%python3_sitelibdir/%name/
+%python3_sitelibdir/%{name}*
 %_datadir/metainfo/%appid.metainfo.xml
-%_datadir/locale/*/LC_MESSAGES/%name.mo
 %_man1dir/%name.1.xz
 
 %changelog
+* Thu Feb 24 2022 Leontiy Volodin <lvol@altlinux.org> 0.5.10-alt0.beta1
+- New version (0.5.10-beta1).
+
 * Tue Oct 19 2021 Leontiy Volodin <lvol@altlinux.org> 0.5.9.1-alt1
 - New version (0.5.9.1).
 
