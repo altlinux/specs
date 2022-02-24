@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.10.1
+Version: 4.11.1
 Release: alt1
 Summary: Library to access the metadata for a Python package
 License: Apache-2.0
@@ -53,6 +53,14 @@ CPython.
 # its used as the primary source for the version number in which
 # case it will be a unparsed string
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+
+# setup.py less project, PEP517 builds are not supported in sisyphus for now
+cat > setup.py <<'EOF'
+import setuptools
+
+if __name__ == "__main__":
+    setuptools.setup()
+EOF
 %python3_build
 
 %install
@@ -64,8 +72,6 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
-export REQUIRES_INTERNET=YES
-export TOX_TESTENV_PASSENV='REQUIRES_INTERNET'
 tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
     --ignore exercises.py
 
@@ -75,6 +81,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
 %python3_sitelibdir/importlib_metadata/
 
 %changelog
+* Tue Feb 22 2022 Stanislav Levin <slev@altlinux.org> 4.11.1-alt1
+- 4.10.1 -> 4.11.1.
+
 * Wed Jan 19 2022 Stanislav Levin <slev@altlinux.org> 4.10.1-alt1
 - 4.8.1 -> 4.10.1.
 

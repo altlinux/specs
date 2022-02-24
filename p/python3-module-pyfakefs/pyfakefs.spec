@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.7.1
+Version: 4.5.5
 Release: alt1
 
 Summary: Implements a fake file system that mocks the Python file system modules
@@ -14,11 +14,14 @@ Group: Development/Python3
 Url: https://pypi.org/project/pyfakefs/
 
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
+BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
 %endif
 
 BuildArch: noarch
@@ -31,9 +34,7 @@ modification to work with pyfakefs.
 
 %prep
 %setup
-# remove extra deps
-grep -qsF '-rextra_requirements.txt' tox.ini || exit 1
-sed -i '/-rextra_requirements\.txt/d' tox.ini
+%autopatch -p1
 
 %build
 %python3_build
@@ -45,13 +46,16 @@ rm -r %buildroot%python3_sitelibdir/%oname/{tests,pytest_tests}
 
 %check
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -vv
+export TOXENV=py3
+tox.py3 --sitepackages --no-deps -vvr -s false
 
 %files
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Feb 24 2022 Stanislav Levin <slev@altlinux.org> 4.5.5-alt1
+- 3.7.1 -> 4.5.5.
+
 * Wed Feb 12 2020 Stanislav Levin <slev@altlinux.org> 3.7.1-alt1
 - Initial build.
