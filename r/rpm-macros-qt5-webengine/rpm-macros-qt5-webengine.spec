@@ -1,5 +1,5 @@
 Name: rpm-macros-qt5-webengine
-Version: 0.3
+Version: 0.4
 Release: alt1
 BuildArch: noarch
 
@@ -23,6 +23,9 @@ cp %SOURCE0 %buildroot%_rpmmacrosdir/qt5-webengine
 %_rpmmacrosdir/qt5-webengine
 
 %changelog
+* Fri Feb 18 2022 Sergey V Turchin <zerg@altlinux.org> 0.4-alt1
+- %%qt5_qtwebengine_arches: remove ppc64le architecture.
+
 * Fri Feb 18 2022 Sergey V Turchin <zerg@altlinux.org> 0.3-alt1
 - add %%not_qt5_qtwebengine_arches macro
 

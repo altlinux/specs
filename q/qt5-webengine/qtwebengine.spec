@@ -29,8 +29,8 @@
 %endif
 
 Name: qt5-webengine
-Version: 5.15.6
-Release: alt3
+Version: 5.15.8
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -41,9 +41,6 @@ ExclusiveArch: %qt5_qtwebengine_arches
 Source: %qt_module-everywhere-src-%version.tar
 Source100: pako.min.js
 Source101: d3.min.js
-# upstream
-Patch1: chromium-harfbuzz-3.0.0.patch
-Patch2: skia-harfbuzz-3.0.0.patch
 # FC
 Patch3:  qtwebengine-opensource-src-5.15.0-fix-extractcflag.patch
 Patch4:  qtwebengine-everywhere-src-5.10.0-system-nspr-prtime.patch
@@ -57,13 +54,10 @@ Patch30: chromium-non-void-return.patch
 Patch31: armv6-ffmpeg-no-thumb.patch
 Patch32: disable-gpu-when-using-nouveau-boo-1005323.diff
 # Debian
-Patch40: verbose-gn-bootstrap.patch
-Patch41: sandbox-fstatat-syscalls.patch
+Patch41: verbose-gn-bootstrap.patch
 Patch42: sandbox-time64-syscalls.patch
 Patch43: python2.patch
 Patch44: remove-benchmark-from-inputs.patch
-Patch45: glibc-2.34-SIGSTKSZ.patch
-Patch46: glibc-2.34-clone3.patch
 # ALT
 Patch101: alt-pepflashplayer.patch
 Patch102: alt-fix-shrank-by-one-character.patch
@@ -178,7 +172,6 @@ Requires: libqt5-core = %_qt5_version
 
 %prep
 %define icu_ver %{get_version libicu-devel}
-%define harfbuzz_ver %{get_version libharfbuzz-devel}
 %IF_ver_gteq %icu_ver 5.9
 %def_enable system_icu
 %else
@@ -186,14 +179,6 @@ Requires: libqt5-core = %_qt5_version
 %endif
 %setup -n %qt_module-everywhere-src-%version
 ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
-%IF_ver_gteq %harfbuzz_ver 3.0
-pushd src/3rdparty/chromium
-%patch1 -p1
-pushd third_party/skia
-%patch2 -p1
-popd
-popd
-%endif
 #
 %patch3 -p1
 #patch4 -p1
@@ -209,13 +194,10 @@ popd
 %patch31 -p1
 %patch32 -p1
 #
-%patch40 -p1
 %patch41 -p1
 %patch42 -p1
 %patch43 -p1
 %patch44 -p1
-%patch45 -p1
-%patch46 -p1
 #
 %patch101 -p1
 %patch102 -p1
@@ -437,6 +419,12 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Thu Jan 20 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.8-alt1
+- new version
+
+* Wed Dec 01 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt1
+- new version
+
 * Wed Oct 13 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.6-alt3
 - add fix against glibc-2.34
 
