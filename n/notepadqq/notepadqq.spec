@@ -1,15 +1,19 @@
 Summary:	A Linux clone of Notepad++
 Name:		notepadqq
 Version:	2.0.0
-Release:	alt0.1.beta
+Release:	alt0.2.beta
 License:	GPL-3.0
 Group:		Editors
 URL:		http://notepadqq.altervista.org/wp/
+
+# Required qt5-qtwebengine is not available on some arches.
+ExcludeArch: %not_qt5_qtwebengine_arches
 
 Source0: %name-%version.tar
 Source1: codemirror.tar
 Patch1: fix-context-menu-translation.patch
 
+BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires: gcc-c++
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools
@@ -60,6 +64,9 @@ mv %buildroot%_datadir/{metainfo,appdata}
 %_datadir/notepadqq
 
 %changelog
+* Thu Feb 24 2022 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt0.2.beta
+- using not_qt5_qtwebengine_arches macro to exclude e2k and ppc64le from build
+
 * Wed Feb 09 2022 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt0.1.beta
 - New version (beta).
 
