@@ -3,21 +3,22 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.5.4
-Release: alt2
+Version: 0.5.7
+Release: alt1
 Summary: script for cloning a non-relocatable virtualenv
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/virtualenv-clone/
 Source: %name-%version.tar.gz
 Patch0: %name-%version-%release.patch
-Patch1: %oname-python39-support.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
+BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
 BuildRequires: python3(virtualenv)
 %endif
 
@@ -26,8 +27,7 @@ A script for cloning a non-relocatable virtualenv.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
+%autopatch -p1
 
 %build
 %python3_build
@@ -36,16 +36,10 @@ A script for cloning a non-relocatable virtualenv.
 %python3_install
 
 %check
-sed -i '/\[testenv\]/a whitelist_externals =\
-   \/bin\/cp\
-   \/bin\/sed\
-commands_pre =\
-   \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/py.test\
-   \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
 export PIP_NO_INDEX=YES
 export TOX_TESTENV_PASSENV='PIP_NO_INDEX'
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -v
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr
 
 %files
 %doc LICENSE README.md
@@ -55,6 +49,9 @@ tox.py3 --sitepackages -v
 %_bindir/virtualenv-clone
 
 %changelog
+* Thu Feb 24 2022 Stanislav Levin <slev@altlinux.org> 0.5.7-alt1
+- 0.5.4 -> 0.5.7.
+
 * Mon Apr 12 2021 Nikita Obukhov <nickf@altlinux.org> 0.5.4-alt2
 - Add patch to support python3.9
 
