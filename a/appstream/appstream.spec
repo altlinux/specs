@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%def_without docs
+%def_with docs
 
 Name:    appstream
-Version: 0.15.1
+Version: 0.15.2
 Release: alt1
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
@@ -39,6 +39,8 @@ BuildRequires: gtk-doc
 BuildRequires: libsoup-devel
 BuildRequires: /proc
 BuildRequires: libxmlb-devel
+BuildRequires: qt5-tools
+BuildRequires: daps
 
 #Requires: appstream-data
 
@@ -125,7 +127,7 @@ rm -f %buildroot%_datadir/installed-tests/appstream/metainfo-validate.test
 #%%meson_test
 
 %files -f appstream.lang
-%doc AUTHORS LICENSE.GPLv2 LICENSE.LGPLv2.1 MAINTAINERS NEWS README.md RELEASE
+%doc AUTHORS MAINTAINERS NEWS README.md RELEASE
 %config(noreplace) %_sysconfdir/appstream.conf
 %_bindir/appstreamcli
 %dir %_datadir/app-info/
@@ -160,9 +162,11 @@ rm -f %buildroot%_datadir/installed-tests/appstream/metainfo-validate.test
 
 %files doc
 %_defaultdocdir/%name
-%_datadir/gtk-doc/html/%name
 
 %changelog
+* Wed Feb 23 2022 Andrey Cherepanov <cas@altlinux.org> 0.15.2-alt1
+- New version.
+
 * Sat Jan 01 2022 Andrey Cherepanov <cas@altlinux.org> 0.15.1-alt1
 - New version (ALT #41655).
 
