@@ -1,6 +1,6 @@
 Name:           nftables
 Epoch:          1
-Version:        1.0.1
+Version:        1.0.2
 Release:        alt1
 Summary:        nftables is the project that aims to replace the existing {ip,ip6,arp,eb}tables framework
 Group:          System/Libraries
@@ -31,13 +31,6 @@ Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
 The devel package contains the include files
-
-%package -n lib%name-devel-static
-Summary: Static library for %name
-Group: System/Libraries
-
-%description -n lib%name-devel-static
-This package contains static libraries used by %name.
 
 %package -n python3-module-%name
 Summary: Python3 modules and extensions for %name
@@ -103,13 +96,14 @@ install -pDm0644 nftables.service %buildroot%_unitdir/nftables.service
 %_man3dir/*
 %_man5dir/*
 
-%files -n lib%name-devel-static
-%_libdir/lib%name.a
-
 %files -n python3-module-%name
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Tue Feb 22 2022 Alexei Takaseev <taf@altlinux.org> 1:1.0.2-alt1
+- Version 1.0.2
+- Remove devel-static. Not supported by upstream.
+
 * Mon Nov 22 2021 Alexei Takaseev <taf@altlinux.org> 1:1.0.1-alt1
 - Version 1.0.1
 
