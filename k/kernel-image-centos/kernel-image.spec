@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 68
+%define centos_release 70
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,19 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Feb 24 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.70-alt1.el9
+- Updated to kernel-5.14.0-70.el9 (fixes: CVE-2022-0435, CVE-2022-0492, CVE-2022-24122):
+  + Backport fixes for ucounts
+  + bpf, arm64: Use emit_addr_mov_i64() for BPF_PSEUDO_FUNC
+  + cgroup-v1: Require capabilities to set release_agent (CVE-2022-0492)
+  + mm: fix invalid page pointer returned with FOLL_PIN gups
+  + net: stmmac: Fix excessive swiotlb memory in nic driver
+  + tipc: improve size validations for received domain records
+
+* Thu Feb 24 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.69-alt1.el9
+- Updated to kernel-5.14.0-69.el9:
+  + wireless update to v5.16+
+
 * Wed Feb 23 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.68-alt1.el9
 - Updated to kernel-5.14.0-68.el9 (fixes: CVE-2021-22600, CVE-2021-4028, CVE-2022-0330):
   + drm/i915: Flush TLBs before releasing backing store
