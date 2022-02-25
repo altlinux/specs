@@ -4,11 +4,11 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.6.0
-Release: alt3
+Version: 1.7.1
+Release: alt1
 
 Summary: A fast and thorough lazy object proxy
-License: BSD
+License: BSD-2-Clause
 Group: Development/Python3
 # Source-git: https://github.com/ionelmc/python-lazy-object-proxy.git
 Url: https://pypi.org/project/lazy-object-proxy/
@@ -22,7 +22,6 @@ BuildRequires: python3(setuptools_scm)
 %if_with check
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_benchmark)
-BuildRequires: python3(pytest_cov)
 BuildRequires: python3(tox)
 BuildRequires: python3(tox_no_deps)
 BuildRequires: python3(tox_console_scripts)
@@ -52,7 +51,7 @@ wrapt.ObjectProxy just forwards the method calls to the target object.
 %check
 export PIP_NO_INDEX=YES
 export PIP_NO_BUILD_ISOLATION=no
-export TOXENV=py%{python_version_nodots python3}-cover
+export TOXENV=py3-nocov
 tox.py3 --sitepackages -vvr --no-deps --console-scripts -s false
 
 %files
@@ -64,6 +63,9 @@ tox.py3 --sitepackages -vvr --no-deps --console-scripts -s false
 %python3_sitelibdir/lazy_object_proxy-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Jan 27 2022 Stanislav Levin <slev@altlinux.org> 1.7.1-alt1
+- 1.6.0 -> 1.7.1.
+
 * Wed Jul 28 2021 Stanislav Levin <slev@altlinux.org> 1.6.0-alt3
 - Obsoleted previously duplicated package.
 

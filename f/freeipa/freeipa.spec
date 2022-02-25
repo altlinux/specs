@@ -52,7 +52,7 @@
 Name: freeipa
 # don't forget to update .gear/rules
 Version: 4.9.8
-Release: alt1
+Release: alt2
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -1090,6 +1090,9 @@ fi
 %python3_sitelibdir/ipaplatform-*.egg-info/
 
 %changelog
+* Fri Feb 25 2022 Stanislav Levin <slev@altlinux.org> 4.9.8-alt2
+- Fixed FTBFS (Pylint 2.12.2).
+
 * Mon Nov 29 2021 Stanislav Levin <slev@altlinux.org> 4.9.8-alt1
 - 4.9.7 -> 4.9.8.
 

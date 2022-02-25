@@ -1,67 +1,110 @@
+%define _unpackaged_files_terminate_build 1
 %define oname GitPython
 
-%def_disable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 3.1.14
+Version: 3.1.27
 Release: alt1
 
 Summary: GitPython is a python library used to interact with Git repositories
 
 License: BSD
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/GitPython/
+Url: https://pypi.org/project/GitPython/
 
-# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
-Patch1: %oname-alt-build.patch
+Source1: git-history-tests.tar
+Patch0: %name-%version-alt.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-build-intro >= 2.2.4
 
-#BuildRequires: git-core
+%if_with check
+# install_requires=
+BuildRequires: python3(gitdb)
+BuildRequires: python3(gitdb.test)
+BuildRequires: /usr/bin/git
+BuildRequires: /usr/sbin/git-daemon
 
-BuildRequires: python3-module-setuptools python3(gitdb) python3-module-ddt python3-module-mock
+BuildRequires: /proc
+BuildRequires: python3(ddt)
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+%endif
 
-Requires: git-core
+Requires: /usr/bin/git
+
+# PyPI names
+Provides: python3-module-gitpython = %EVR
+%py3_provides GitPython
+%py3_provides gitpython
 
 %description
 A simple, flexible, easy-to-use configfile and command-line parsing library
 built on top of the standard library optparse module.
 
 %prep
-%setup
-#patch1 -p1
+%setup -a 1
+%autopatch -p1
+
+# unbundle
+rm -vr git/ext/*
 
 %build
 %python3_build
 
 %install
 %python3_install
-%python3_prune
 
 %check
-# needed for tests
-#git config --global user.email "darktemplar at altlinux.org"
-#git config --global user.name "darktemplar"
+# Tests expect project's own git repo + submodules
+export GIT_CONFIG_GLOBAL=~/.gitconfig
+cat test/fixtures/.gitconfig > "$GIT_CONFIG_GLOBAL"
+git config --global user.email "someone@somewhere.com"
+git config --global user.name "someone"
 
-rm -f .gitmodules
+# prepare test git repo
+TEST_REPO="$(pwd)/test_repo"
+rm -rf "$TEST_REPO"
+mkdir "$TEST_REPO"
+cp -a .git "$TEST_REPO"/
+pushd "$TEST_REPO"
+# see .github/workflows/pythonpackage.yml
+TRAVIS=yes ../init-tests-after-clone.sh
+popd
+export GIT_PYTHON_TEST_GIT_REPO_BASE="$TEST_REPO"
 
-git init
-git add -A
-git commit -m "%version"
-git tag %version -m "%version"
+cat > tox.ini <<'EOF'
+[testenv]
+usedevelop=True
+commands =
+    {envbindir}/pytest {posargs:-vra}
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+# /usr/sbin/git-daemon
+export PATH=$PATH:%_sbindir
+export NO_SUBMODULES=YES
+export NO_INTERNET=YES
+export TOX_TESTENV_PASSENV='PATH GIT_PYTHON_TEST_GIT_REPO_BASE NO_SUBMODULES NO_INTERNET GIT_CONFIG_GLOBAL'
 
-git tag 0.1.6 -m "0.1.6"
-
-nosetests3
+tox.py3 --sitepackages --console-scripts -vvr -s false -- \
+    -vra \
+    --ignore test/test_installation.py \
+    --ignore test/test_submodule.py
 
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/git/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Feb 25 2022 Stanislav Levin <slev@altlinux.org> 3.1.27-alt1
+- 3.1.14 -> 3.1.27.
+
 * Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.14-alt1
 - new version
 - build python3 module standalone

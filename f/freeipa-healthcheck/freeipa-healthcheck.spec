@@ -3,8 +3,8 @@
 %def_with check
 
 Name: freeipa-healthcheck
-Version: 0.9
-Release: alt3
+Version: 0.10
+Release: alt1
 
 Summary: Check the health of a FreeIPA installation
 License: GPLv3
@@ -121,6 +121,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/ipahealthcheck/core/
 
 %changelog
+* Fri Feb 11 2022 Stanislav Levin <slev@altlinux.org> 0.10-alt1
+- 0.9 -> 0.10.
+
 * Thu Dec 02 2021 Stanislav Levin <slev@altlinux.org> 0.9-alt3
 - Applied upstream fixes.
 

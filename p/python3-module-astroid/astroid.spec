@@ -1,11 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define oname astroid
 
+%define typing_extensions %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 10)))')
+
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.5.6
-Release: alt2
+Version: 2.9.3
+Release: alt1
 
 Summary: Python Abstract Syntax Tree New Generation
 License: LGPLv2.1+
@@ -17,20 +19,31 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pytest-runner
 
 %if_with check
-BuildRequires: python3-module-lazy-object-proxy
-BuildRequires: python3-module-nose
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-wrapt
-BuildRequires: python3-module-numpy
-BuildRequires: python3-module-dateutil
-BuildRequires: python3-module-tox
+# install_requires=
+BuildRequires: python3(lazy_object_proxy)
+BuildRequires: python3(wrapt)
+%if %typing_extensions
+BuildRequires: python3(typing_extensions)
+%endif
+
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
 BuildRequires: python3(tox_no_deps)
+
+# extra tests deps
+BuildRequires: python3(numpy)
+BuildRequires: python3(dateutil)
+
 %endif
 
 BuildArch: noarch
+
+%if %typing_extensions
+# rebuild for new Python3.10 is required to get rid of old dependency
+%py3_requires typing_extensions
+%endif
 
 %description
 The aim of this module is to provide a common base representation of python
@@ -66,6 +79,9 @@ tox.py3 --sitepackages --no-deps -vvr -- tests -vra
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Jan 27 2022 Stanislav Levin <slev@altlinux.org> 2.9.3-alt1
+- 2.5.6 -> 2.9.3.
+
 * Thu Jan 20 2022 Stanislav Levin <slev@altlinux.org> 2.5.6-alt2
 - Fixed FTBFS (setuptools 60+).
 

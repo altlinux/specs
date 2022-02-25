@@ -8,7 +8,7 @@
 
 Name: fleet-commander-admin
 Version: 0.15.1
-Release: alt8
+Release: alt9
 
 Summary: Fleet Commander
 License: LGPLv2+ or MIT or BSD
@@ -128,7 +128,8 @@ ln -s %_datadir/spice-html5 \
 
 %check
 %make pylint
-%make check || { cat ./tests/test-suite.log; exit 1; }
+export TESTS_LOGGER_TIMEOUT=10000
+%make VERBOSE=1 check
 
 %files
 %doc README
@@ -160,6 +161,10 @@ ln -s %_datadir/spice-html5 \
 %_datadir/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/{c73e87a7-b5a1-4b6f-b10b-0bd70241a64d}.xpi
 
 %changelog
+* Thu Feb 17 2022 Stanislav Levin <slev@altlinux.org> 0.15.1-alt9
+- Fixed FTBFS (Pylint 2.12.2).
+- Raised timeout for logger tests (closes: #40473).
+
 * Tue Jun 29 2021 Stanislav Levin <slev@altlinux.org> 0.15.1-alt8
 - Dropped dependency on cockpit-dashboard.
 

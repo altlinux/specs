@@ -8,7 +8,7 @@
 
 Name: opendnssec
 Version: 2.1.10
-Release: alt2
+Release: alt3
 
 Summary: DNSSEC key and zone management software
 License: BSD-2-Clause
@@ -157,6 +157,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Thu Feb 10 2022 Stanislav Levin <slev@altlinux.org> 2.1.10-alt3
+- Fixed FTBFS (Pylint 2.12.2).
+
 * Wed Sep 22 2021 Stanislav Levin <slev@altlinux.org> 2.1.10-alt2
 - Fixed migration of default installations.
 

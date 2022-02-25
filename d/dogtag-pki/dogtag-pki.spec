@@ -28,7 +28,7 @@
 
 Name: dogtag-pki
 Version: 11.0.3
-Release: alt1
+Release: alt2
 
 Summary: Dogtag PKI Certificate System
 License: %gpl2only
@@ -776,6 +776,9 @@ fi
 %_datadir/pki/server/webapps/pki/WEB-INF/
 
 %changelog
+* Wed Feb 16 2022 Stanislav Levin <slev@altlinux.org> 11.0.3-alt2
+- Fixed FTBFS (Pylint 2.12.2).
+
 * Wed Jan 26 2022 Stanislav Levin <slev@altlinux.org> 11.0.3-alt1
 - 11.0.2 -> 11.0.3.
 
