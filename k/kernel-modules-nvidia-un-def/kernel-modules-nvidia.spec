@@ -12,7 +12,7 @@
 %ifarch %ix86 armh
 %define module_version	390.147
 %endif
-%define module_release	alt1
+%define module_release	alt2
 %define flavour		un-def
 %define karch x86_64 aarch64 %ix86
 
@@ -24,7 +24,7 @@
 %endif
 
 %define legacy6 %nil
-%nvIF_ver_lt %xorg_ver 1.21
+%nvIF_ver_lt %xorg_ver 22
 %define legacy6 390.147
 %endif
 %define legacy6_src %(echo %legacy6 | tr -d .)
@@ -280,6 +280,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Feb 25 2022 Sergey V Turchin <zerg at altlinux dot org> NNN.XX-alt1
+- fix maximum xserver version for 390
 
 * Wed Feb 09 2022 Sergey V Turchin <zerg at altlinux dot org> 470.103.01-alt1
 - new release(470.103.01)
