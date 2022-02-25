@@ -4,7 +4,7 @@
 
 Name: sympy
 Epoch: 1
-Version: 1.8
+Version: 1.9
 Release: alt1
 Summary: A Python library for symbolic mathematics
 License: BSD-3-Clause
@@ -33,6 +33,7 @@ BuildRequires: python3-module-sphinx-math-dollar
 BuildRequires: python3(matplotlib) python3(matplotlib.sphinxext)
 BuildRequires: python3-module-sphinx-pickles
 %endif
+BuildRequires: /usr/bin/pytest-3
 
 Requires: python3-module-%name = %EVR
 
@@ -136,8 +137,13 @@ rm -rfv %buildroot%python3_sitelibdir/%name/utilities/{*test.py,_compilation/}
 rm -rfv %buildroot%python3_sitelibdir/%name/parsing/autolev/test-examples/
 
 %check
-#python3 setup.py test -v
-#python3 bin/test -v
+# very long test case
+#pytest-3 -vv \
+#	--deselect=sympy/integrals/tests/test_failing_integrals.py::test_issue_15227 \
+#	--deselect=sympy/matrices/tests/test_matrices.py::test_pinv_rank_deficient_when_diagonalization_fails \
+#	--deselect=sympy/solvers/ode/tests/test_systems.py::test_linear_new_order1_type2_de_lorentz_slow_check \
+#	%nil
+
 %if_with doc
 python3 bin/doctest -v ||:
 %endif
@@ -165,6 +171,9 @@ python3 bin/doctest -v ||:
 %endif
 
 %changelog
+* Fri Feb 25 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.9-alt1
+- Updated to upstream version 1.9.
+
 * Wed Aug 25 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.8-alt1
 - Updated to upstream version 1.8.
 
