@@ -1,5 +1,5 @@
 Name:    mate-menu
-Version: 22.04.0
+Version: 22.04.1
 Release: alt1
 
 Summary: An Advanced Menu for the MATE Desktop
@@ -65,6 +65,9 @@ Supports filtering, favorites, autosession, and many other features.
 %_man1dir/%name.1*
 
 %changelog
+* Fri Feb 25 2022 Andrey Cherepanov <cas@altlinux.org> 22.04.1-alt1
+- New version.
+
 * Thu Jan 27 2022 Andrey Cherepanov <cas@altlinux.org> 22.04.0-alt1
 - New version.
 
