@@ -16,7 +16,7 @@
 %define nv_version 470
 %define nv_release 103
 %define nv_minor 01
-%define pkg_rel alt249
+%define pkg_rel alt250
 %define set_gl_nvidia_ver 1.5.2
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -79,6 +79,7 @@ Source2: nvidia-install-driver
 Source3: nvidia-clean-driver
 Source4: nvidia-prime-run
 Source10: nvidia-sleep.tar
+Source11: udev.rules
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: libsysfs-devel
@@ -267,7 +268,9 @@ mkdir -p %buildroot/lib/systemd/system-sleep/
 install -Dpm 0755 nvidia-sleep/nvidia %buildroot/lib/systemd/system-sleep/
 mkdir -p %buildroot/%_bindir
 install -Dpm 0755 nvidia-sleep/nvidia-sleep.sh %buildroot/%_bindir
-
+# udev
+mkdir -p %buildroot/%_udevrulesdir/
+install -m 0644 %SOURCE11 %buildroot/%_udevrulesdir/71-nvidia.rules
 
 %post -n %{bin_pkg_name}_common
 if [ -z "$DURING_INSTALL" ]; then
@@ -331,8 +334,12 @@ fi
 %_presetdir/??-nvidia-*.preset
 %_unitdir/nvidia-*.service
 /lib/systemd/system-sleep/nvidia
+%_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Fri Feb 25 2022 Sergey V Turchin <zerg@altlinux.org> 470.103.01-alt250
+- add common udev rules
+
 * Wed Feb 09 2022 Sergey V Turchin <zerg@altlinux.org> 470.103.01-alt249
 - new version
 
