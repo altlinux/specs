@@ -1,5 +1,5 @@
 Name: installer-feature-sddm-setup
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: Setup SDDM after install
@@ -31,6 +31,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Fri Feb 25 2022 Sergey V Turchin <zerg@altlinux.org> 0.4-alt1
+- fix get first user name
+
 * Thu Feb 24 2022 Sergey V Turchin <zerg@altlinux.org> 0.3-alt1
 - set default user when empty
 
