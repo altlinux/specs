@@ -12,7 +12,7 @@
 
 Name: branding-%flavour
 Version: p10
-Release: alt2
+Release: alt3
 
 Url: http://en.altlinux.org/starterkits
 
@@ -74,6 +74,7 @@ BuildArch: noarch
 Provides: plymouth-theme-%theme plymouth(system-theme)
 Requires: plymouth-plugin-script
 Requires: plymouth
+Requires: plymouth-theme-bgrt-alt
 %branding_add_conflicts %flavour bootsplash
 
 %description bootsplash
@@ -283,7 +284,7 @@ shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER ''
 
 #bootsplash
 %post bootsplash
-subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
+subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 
 %files alterator
 %config %_altdir/*.rcc
@@ -295,7 +296,7 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_datadir/design
 
 %files bootsplash
-%_datadir/plymouth/themes/%theme/*
+#_datadir/plymouth/themes/%theme/*
 
 %files release
 %ghost %config(noreplace) %_sysconfdir/os-release
@@ -329,6 +330,10 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/autostart/*
 
 %changelog
+* Fri Feb 25 2022 Anton Midyukov <antohami@altlinux.org> p10-alt3
+- bootsplash: set theme bgrt-alt
+- graphics: added system-logo
+
 * Tue Jan 11 2022 Anton Midyukov <antohami@altlinux.org> p10-alt2
 - drop old bootsplash support
 - fix Requires tag for alternatives
