@@ -1,6 +1,6 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict,unresolved=relaxed
 
 %def_disable debug
 
@@ -9,9 +9,8 @@
 %define PRIO 05
 
 Name: sawfish
-Version: 1.12.90
-Release: alt4
-
+Version: 1.13.0
+Release: alt1
 Summary: An extensible window manager for the X Window System
 Group: Graphical desktop/Sawfish
 License: GPLv2
@@ -64,17 +63,6 @@ Provides: gnome-wm
 %description gnome
 Sawfish GNOME integration package.
 
-%package themer
-Summary: GUI for creating sawfish window manager themes
-Group: Graphical desktop/Sawfish
-Requires: rep-gtk-libglade
-Requires: %name = %EVR
-
-%description themer
-The sawfish-themer package contains an optional theme builder for the
-sawfish window manager. sawfish-themer allows static window themes to
-be created and edited in a graphical environment.
-
 %package devel
 Summary: Development files for sawfish
 Group: Development/Other
@@ -100,6 +88,8 @@ RPM macros for sawfish-related packages.
 sed -ie 's,^subversion=.*$,subversion="-%release",' configure.ac
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %if_enabled debug
 %add_optflags -DDEBUG=1
 %endif
@@ -214,12 +204,6 @@ rm -fv %buildroot%_datadir/xsessions/sawfish-xfce.desktop
 %files gnome
 %_datadir/gnome/wm-properties/sawfish-wm.desktop
 
-%if 0
-%files themer
-%_bindir/sawfish-themer
-%_datadir/sawfish/%version/themer.glade
-%endif
-
 %files devel
 %_includedir/sawfish
 %_pkgconfigdir/sawfish.pc
@@ -228,6 +212,9 @@ rm -fv %buildroot%_datadir/xsessions/sawfish-xfce.desktop
 %_rpmmacrosdir/sawfish
 
 %changelog
+* Fri Feb 25 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.13.0-alt1
+- Updated to upstream version 1.13.0.
+
 * Mon Feb 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.90-alt4
 - Fixed build with gcc-10.
 
