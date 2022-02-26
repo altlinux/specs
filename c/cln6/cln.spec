@@ -3,12 +3,12 @@
 %define oname cln
 
 Name: %oname%abiversion
-Version: 1.3.3
-Release: alt3
+Version: 1.3.6
+Release: alt1
 
 Summary: CLN - Class Library for Numbers
 Group: System/Libraries
-License: GPL
+License: GPLv2+
 Url: http://www.ginac.de/CLN
 
 Source: %oname-%version.tar
@@ -80,7 +80,7 @@ Conflicts: puppet
 Compute decimal Archimedes' constant Pi to arbitrary accuracy.
 
 %prep
-%setup
+%setup 
 rm -f aclocal.m4
 
 %build
@@ -123,6 +123,10 @@ rm -f %buildroot%_libdir/*.a
 %_bindir/pi
 
 %changelog
+* Sun Feb 27 2022 Ilya Mashkin <oddity@altlinux.ru> 1.3.6-alt1
+- 1.3.6
+- Update License tag
+
 * Mon Sep 02 2019 Michael Shigorin <mike@altlinux.org> 1.3.3-alt3
 - fixed build on e2k (patch sent upstream)
   + NB: there's official aarch64/riscv64 support in current version
