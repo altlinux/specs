@@ -1,11 +1,11 @@
 Name:     mpc-qt
-Version:  20.10
+Version:  22.02
 Release:  alt1
 
 Summary:  A clone of Media Player Classic reimplemented in Qt.
 License:  GPL-2.0
 Group:    Video
-Url:      https://github.com/cmdrkotori/mpc-qt-origin.git
+Url:      https://github.com/mpc-qt/mpc-qt
 
 Source:   %name-%version.tar
 
@@ -22,6 +22,7 @@ interface and functionality of mpc-h.
 
 %prep
 %setup
+rm -rf mpv-dev
 
 %build
 %qmake_qt5 PREFIX=%prefix
@@ -38,6 +39,10 @@ interface and functionality of mpc-h.
 %_datadir/%name
 
 %changelog
+* Sat Feb 26 2022 Anton Midyukov <antohami@altlinux.org> 22.02-alt1
+- New version 22.02
+- Update url
+
 * Sun Nov 29 2020 Anton Midyukov <antohami@altlinux.org> 20.10-alt1
 - New version 20.10
 - Update url
