@@ -4,10 +4,13 @@
 # Use ICU
 %def_with icu
 
+# Use JIT
+%def_with jit
+
 %define prog_name            postgresql
 %define postgresql_major     13
 %define postgresql_minor     6
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -52,6 +55,9 @@ BuildRequires: postgresql-devel
 %endif
 %if_with icu
 BuildRequires: libicu-devel
+%endif
+%if_with jit
+BuildRequires: llvm-devel >= 5.0 clang-devel >= 5.0 gcc-c++
 %endif
 
 %description
@@ -180,6 +186,9 @@ Summary: PostgreSQL development header files
 Group: Development/Databases
 Requires: %libpq_name-devel
 Requires: %libecpg_name-devel
+%if_with jit
+Requires: clang-devel llvm-devel gcc-c++
+%endif
 %if_with devel
 Provides: %prog_name-server-devel = %EVR
 Obsoletes: %prog_name-server-devel < %EVR
@@ -280,6 +289,21 @@ system.  The postgresql-python package includes a module for
 developers to use when writing Python code for accessing a PostgreSQL
 database.
 
+%if_with jit
+%package llvmjit
+Summary: Just-in-time compilation support for PostgreSQL
+Group: Databases
+Requires: %name-server = %EVR
+Requires: llvm >= 5.0
+Provides: %prog_name-llvmjit = %EVR
+
+%description llvmjit
+The postgresql-llvmjit package contains support for
+just-in-time compiling parts of PostgreSQL queries. Using LLVM it
+compiles e.g. expressions and tuple deforming into native code, with the
+goal of accelerating analytics queries.
+%endif
+
 %prep
 %setup
 
@@ -305,6 +329,9 @@ database.
     --enable-thread-safety \
 %if_with icu
     --with-icu \
+%endif
+%if_with jit
+    --with-llvm \
 %endif
     --with-docdir=%docdir \
     --with-includes=%_includedir/krb5 \
@@ -875,7 +902,17 @@ fi
 %_rpmmacrosdir/postgresql
 %endif
 
+%if_with jit
+%files llvmjit
+%_libdir/pgsql/bitcode
+%_libdir/pgsql/llvmjit.so
+%_libdir/pgsql/llvmjit_types.bc
+%endif
+
 %changelog
+* Sat Feb 26 2022 Alexei Takaseev <taf@altlinux.org> 13.6-alt3
+- Build with JIT feature
+
 * Thu Feb 24 2022 Alexei Takaseev <taf@altlinux.org> 13.6-alt2
 - Conflicts: 13-1C -> 14-1C
 
