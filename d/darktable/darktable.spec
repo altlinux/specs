@@ -1,7 +1,8 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %define beta %nil
 %def_enable noise_tools
-%def_disable libavif
+%def_enable libavif
+%def_enable libheif
 
 Name: darktable
 Version: %ver_major.1
@@ -36,7 +37,7 @@ Requires: iso-codes >= %iso_codes_ver
 Requires: icon-theme-adwaita
 
 BuildRequires(pre):rpm-macros-cmake
-BuildRequires: /proc cmake >= %cmake_ver gcc-c++ libgomp-devel
+BuildRequires: /proc cmake >= %cmake_ver ninja-build gcc-c++ libgomp-devel
 BuildRequires: intltool desktop-file-utils libappstream-glib-devel po4a
 BuildRequires: perl-Pod-Parser xsltproc exiftool
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libxml2-devel
@@ -54,9 +55,10 @@ BuildRequires: libpugixml-devel >= %pugixml_ver libcups-devel
 BuildRequires: libosm-gps-map1.0-devel
 BuildRequires: /usr/bin/jsonschema
 BuildRequires: iso-codes-devel >= %iso_codes_ver
-BuildRequires: libgmic-devel
+BuildRequires: libgmic-devel libjasper-devel
 # since 3.2.0
 %{?_enable_libavif:BuildRequires: libavif-devel >= %libavif_ver}
+%{?_enable_libheif:BuildRequires: libheif-devel}
 # for not recommended build from git tree
 #BuildRequires: gnome-doc-utils fop saxon ...
 
@@ -75,6 +77,7 @@ light table. It also enables you to develop raw images and enhance them.
 %endif
 %define _optlevel 3
 %cmake \
+-GNinja \
 -DCMAKE_SKIP_RPATH:BOOL=OFF \
 -DCMAKE_BUILD_TYPE=Release \
 -DBINARY_PACKAGE_BUILD:BOOL=ON \
@@ -115,6 +118,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %doc README* RELEASE_NOTES*
 
 %changelog
+* Sat Feb 26 2022 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+
 * Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 
