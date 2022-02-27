@@ -1,5 +1,5 @@
 Name: goverlay
-Version: 0.7.1
+Version: 0.8
 Release: alt1
 
 Summary: Graphical UI to help manage Linux overlays
@@ -10,8 +10,8 @@ Url: https://github.com/benjamimgois/goverlay
 Source: https://github.com/benjamimgois/goverlay/archive/%version/%name-%version.tar.gz
 Patch: goverlay-enable-debuginfo-generation.patch
 
-ExclusiveArch: x86_64
-#ExcludeArch: ppc64le armh
+#ExclusiveArch: x86_64
+ExcludeArch: ppc64le armh
 BuildRequires: lazarus rpm-build-fpc fpc libappstream-glib-devel qt5pas-devel
 
 Requires: mangohud
@@ -51,6 +51,9 @@ help manage Linux overlays. Currently supported:
 /usr/libexec/goverlay
 
 %changelog
+* Mon Feb 28 2022 Ilya Mashkin <oddity@altlinux.ru> 0.8-alt1
+- 0.8
+
 * Fri Dec 17 2021 Ilya Mashkin <oddity@altlinux.ru> 0.7.1-alt1
 - 0.7.1
 
