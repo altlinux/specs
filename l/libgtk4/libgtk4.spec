@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name gtk
 %define ver_major 4.4
@@ -32,8 +32,8 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
 Group: System/Libraries
@@ -74,7 +74,7 @@ Requires: librsvg >= %rsvg_ver
 Requires: gtk+3-themes-incompatible
 %{?_enable_colord:Requires: colord}
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
 BuildRequires: meson gcc-c++ sassc
 BuildRequires: glib2-devel >= %glib_ver libgio-devel
 BuildRequires: libcairo-devel >= %cairo_ver
@@ -370,6 +370,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Sun Feb 27 2022 Yuri N. Sedunov <aris@altlinux.org> 4.4.2-alt1
+- 4.4.2
+
 * Mon Nov 22 2021 Yuri N. Sedunov <aris@altlinux.org> 4.4.1-alt2
 - updated to 4.4.1-14-gb3840c6a0d
 
