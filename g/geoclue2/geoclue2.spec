@@ -1,8 +1,8 @@
 %def_disable snapshot
 
 %define _name geoclue
-%define __name org.freedesktop.GeoClue2
-%define ver_major 2.5
+%define xdg_name org.freedesktop.GeoClue2
+%define ver_major 2.6
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 
@@ -10,10 +10,11 @@
 %def_enable nmea
 %def_enable gtk_doc
 %def_enable introspection
+%def_enable vala
 %def_enable check
 
 Name: %{_name}2
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt1
 
 Summary: The Geoinformation Service
@@ -36,7 +37,7 @@ BuildRequires(pre): meson rpm-build-xdg
 BuildRequires: yelp-tools gtk-doc libgio-devel >= %glib_ver
 BuildRequires: libjson-glib-devel libsoup-devel >= %soup_ver
 BuildRequires: libdbus-devel libnotify-devel systemd-devel
-BuildRequires: vala-tools
+%{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_nmea:BuildRequires: libavahi-glib-devel}
 %{?_enable_3g:BuildRequires: libmm-glib-devel >= %mm_ver}
@@ -148,14 +149,15 @@ install -D -m644 /dev/stdin %buildroot%_tmpfilesdir/%_name.conf
 
 %files
 %_libexecdir/%_name
-%_sysconfdir/dbus-1/system.d/%__name.conf
-%_sysconfdir/dbus-1/system.d/%__name.Agent.conf
-%_datadir/dbus-1/interfaces/%__name.Agent.xml
-%_datadir/dbus-1/interfaces/%__name.Client.xml
-%_datadir/dbus-1/interfaces/%__name.Location.xml
-%_datadir/dbus-1/interfaces/%__name.Manager.xml
-%_datadir/dbus-1/interfaces/%__name.xml
-%_datadir/dbus-1/system-services/%__name.service
+%_sysconfdir/dbus-1/system.d/%xdg_name.conf
+%_sysconfdir/dbus-1/system.d/%xdg_name.Agent.conf
+%_datadir/dbus-1/interfaces/%xdg_name.Agent.xml
+%_datadir/dbus-1/interfaces/%xdg_name.Client.xml
+%_datadir/dbus-1/interfaces/%xdg_name.Location.xml
+%_datadir/dbus-1/interfaces/%xdg_name.Manager.xml
+%_datadir/dbus-1/interfaces/%xdg_name.xml
+%_datadir/dbus-1/system-services/%xdg_name.service
+%_datadir/polkit-1/rules.d/%xdg_name.rules
 %systemd_unitdir/%_name.service
 %config %_sysconfdir/%_name/%_name.conf
 %attr(755,%_name,%_name) %dir %_localstatedir/%_name
@@ -173,8 +175,8 @@ install -D -m644 /dev/stdin %buildroot%_tmpfilesdir/%_name.conf
 %_includedir/lib%_name-%api_ver/
 %_libdir/lib%_name-2.so
 %_pkgconfigdir/lib%_name-%api_ver.pc
-%_vapidir/lib%_name-%api_ver.deps
-%_vapidir/lib%_name-%api_ver.vapi
+%{?_enable_vala:%_vapidir/lib%_name-%api_ver.deps
+%_vapidir/lib%_name-%api_ver.vapi}
 
 %if_enabled introspection
 %files -n lib%name-gir
@@ -198,6 +200,9 @@ install -D -m644 /dev/stdin %buildroot%_tmpfilesdir/%_name.conf
 %_xdgconfigdir/autostart/%_name-demo-agent.desktop
 
 %changelog
+* Mon Feb 28 2022 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
 * Sat Dec 26 2020 Yuri N. Sedunov <aris@altlinux.org> 2.5.7-alt1
 - 2.5.7
 
