@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %def_enable daemon
 %def_enable session_helper
@@ -26,8 +26,8 @@
 %define _localstatedir %_var
 
 Name: colord
-Version: 1.4.5
-Release: alt2
+Version: 1.4.6
+Release: alt1
 
 Summary: Color daemon
 License: GPLv2+
@@ -319,6 +319,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon Feb 28 2022 Yuri N. Sedunov <aris@altlinux.org> 1.4.6-alt1
+- 1.4.6
+
 * Sat Jan 02 2021 Yuri N. Sedunov <aris@altlinux.org> 1.4.5-alt2
 - updated to 1.4.5-4-gdcfe824
 - disabled ArgyllCMS support
