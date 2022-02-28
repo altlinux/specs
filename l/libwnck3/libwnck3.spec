@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: %{_name}3
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: libwnck is a Window Navigator Construction Kit
@@ -117,6 +117,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Mon Feb 28 2022 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
+- 40.1
+
 * Mon May 10 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 
