@@ -21,7 +21,7 @@
 %def_disable wmsession
 
 Name: enlightenment
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 Epoch: 1
 
@@ -235,6 +235,9 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Mon Feb 28 2022 Yuri N. Sedunov <aris@altlinux.org> 1:0.25.3-alt1
+- 0.25.3
+
 * Sat Feb 26 2022 Yuri N. Sedunov <aris@altlinux.org> 1:0.25.2-alt1
 - 0.25.2
 
