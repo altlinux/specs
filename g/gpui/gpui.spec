@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.0
-Release: alt4
+Release: alt5
 
 Summary: Group policy editor
 License: GPLv2+
@@ -87,6 +87,17 @@ done
 %_desktopdir/gpui.desktop
 
 %changelog
+* Mon Feb 28 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt5
+- Fixes:
+  + #73976 Correct dialog flags to provide ability to select folders.
+  + #73977 Switch to Qt based dialog to add application icon to dialog.
+  + #73617 Fix bug with caption in about window.
+  + #74027 Fix version command.
+  + #74048 Fix English translation of help menu.
+  + #74052 Fix remove empty strings from multi-string.
+  + #74051 Fix saving of language settings.
+  + #74002 Fix saving of admx settings.
+
 * Mon Feb 21 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt4
 - Fixes:
   + #73754 Fix translations in open admx dialog.
