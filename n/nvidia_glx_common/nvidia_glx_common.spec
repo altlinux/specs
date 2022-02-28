@@ -16,7 +16,7 @@
 %define nv_version 470
 %define nv_release 103
 %define nv_minor 01
-%define pkg_rel alt250
+%define pkg_rel alt251
 %define set_gl_nvidia_ver 1.5.2
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -337,6 +337,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Mon Feb 28 2022 Sergey V Turchin <zerg@altlinux.org> 470.103.01-alt251
+- don't load nvidia module by udev rules
+
 * Fri Feb 25 2022 Sergey V Turchin <zerg@altlinux.org> 470.103.01-alt250
 - add common udev rules
 
