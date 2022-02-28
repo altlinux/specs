@@ -10,7 +10,7 @@
 
 Name: grub
 Version: 2.06
-Release: alt6
+Release: alt7
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -391,8 +391,6 @@ install -pDm644 build-efi/grub.efi %buildroot%_efi_bindir/grub%{efi_suff}.efi
 # Remove headers
 rm -f %buildroot%_libdir/grub-efi/*/*.h
 %endif
-rm %buildroot%_sysconfdir/grub.d/README
-rm %buildroot%_sysconfdir/grub.d/41_custom
 
 %files common -f grub.lang
 %dir %_sysconfdir/grub.d
@@ -409,6 +407,8 @@ rm %buildroot%_sysconfdir/grub.d/41_custom
 %_sysconfdir/grub.d/30_uefi-firmware
 %_sysconfdir/grub.d/39_memtest
 %config(noreplace) %_sysconfdir/grub.d/40_custom
+%config(noreplace) %_sysconfdir/grub.d/41_custom
+%_sysconfdir/grub.d/README
 %config(noreplace) %_sysconfdir/sysconfig/grub2
 %ghost %config(noreplace) /boot/grub/grub.cfg
 %_sysconfdir/grub.cfg
@@ -498,6 +498,7 @@ grub-autoupdate || {
 %endif
 
 %post efi
+[ -z "$DURING_INSTALL" ] || exit 0
 modprobe efivars
 grep -q '^GRUB_DISTRIBUTOR=' %_sysconfdir/sysconfig/grub2 ||
 	echo 'GRUB_DISTRIBUTOR="ALT Linux"' >> %_sysconfdir/sysconfig/grub2
@@ -512,6 +513,13 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Thu Feb 24 2022 Nikolai Kostrigin <nickel@altlinux.org> 2.06-alt7
+- grub-efi: improve RPM filetrigger and post install script to skip all
+  actions in case of being invoked at package installing stage by OS installer
+  (closes: #42025)
+- 30_uefi-firmware.in: Fix for zero supported indications (closes: #41970)
+- pack 41_custom as there appear to be users of it (closes: #41832)
+
 * Thu Jan 27 2022 Nikolai Kostrigin <nickel@altlinux.org> 2.06-alt6
 - add basic clean looking, blinkless boot support based on fedora patch set
 
