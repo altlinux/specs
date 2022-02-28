@@ -1,4 +1,4 @@
-%define ver_major 1.12
+%define ver_major 1.14
 %def_with exiv2
 %def_with chm
 %def_with taglib
@@ -8,7 +8,7 @@
 %def_with unique
 
 Name: gnome-commander
-Version: %ver_major.3.1
+Version: %ver_major.0
 Release: alt1
 
 %define xdg_name org.gnome.%name
@@ -23,7 +23,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define gtk_ver 2.24
 
 Requires: dconf xdg-utils
-Requires: %_bindir/gio gnome-vfs gnome-vfs-module-sftp gnome-vfs-module-smb
+Requires: %_bindir/gio gvfs
 
 BuildRequires: flex gcc-c++
 BuildRequires: yelp-tools libappstream-glib-devel
@@ -68,12 +68,12 @@ sed -i.e2k "/g_autofree gchar/{s|g_autofree gchar|g_autofree_edg(gchar)|;s|\*||g
 %files -f %name.lang
 %_bindir/*
 %_libdir/%name/
-%_datadir/applications/%name.desktop
+%_datadir/applications/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/%xdg_name.enums.xml
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/pixmaps/%name.svg
 %_datadir/pixmaps/%name/
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %_man1dir/*
 %doc AUTHORS ChangeLog NEWS README TODO doc/*.txt
 
@@ -82,6 +82,9 @@ sed -i.e2k "/g_autofree gchar/{s|g_autofree gchar|g_autofree_edg(gchar)|;s|\*||g
 
 
 %changelog
+* Mon Feb 28 2022 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt1
+- 1.14.0
+
 * Sun Nov 21 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.3.1-alt1
 - 1.12.3.1
 
