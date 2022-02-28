@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: ibsim
 Summary: InfiniBand fabric simulator for management
-Version: 0.9
+Version: 0.11
 Release: alt1
 License: GPLv2 or BSD
 Group: Monitoring
@@ -25,11 +27,17 @@ OFA OpenSM, diagnostic and management tools.
 %patch1 -p1
 
 %build
-%make_build CFLAGS="%optflags %optflags_shared -I. -I../include"
+%add_optflags -D_FILE_OFFSET_BITS=64
+
+%make_build \
+	CFLAGS="%optflags %optflags_shared -I. -I../include" \
+	%nil
 
 %install
 %makeinstall_std \
-	prefix=%_prefix libpath=%_libdir binpath=%_bindir
+	CFLAGS="%optflags %optflags_shared -I. -I../include" \
+	prefix=%_prefix libpath=%_libdir binpath=%_bindir \
+	%nil
 
 %files
 %doc README TODO net-examples scripts
@@ -37,6 +45,9 @@ OFA OpenSM, diagnostic and management tools.
 %_bindir/*
 
 %changelog
+* Mon Feb 28 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 0.11-alt1
+- Updated to version 0.11.
+
 * Thu Jun 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9-alt1
 - Updated to version 0.9.
 
