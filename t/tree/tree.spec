@@ -1,39 +1,44 @@
+# SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: tree
-Version: 1.0.0
-Release: alt5
+Version: 2.0.2
+Release: alt1
 Epoch: 1
 
-Summary: A utility which displays a tree view of the contents of directories
+Summary: List contents of directories in a tree-like format
 Group: File tools
-License: GPL
-URL: www.altlinux.org
+License: GPL-2.0-or-later
+URL: http://mama.indstate.edu/users/ice/tree/
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Tue Mar 30 2004
-BuildRequires: help2man
-
 %description
-The %name utility recursively displays the contents of directories in a
-tree-like format.  Tree is basically a UNIX port of the %name DOS
-utility.
-
-Install %name if you think it would be useful to view the contents of
-specified directories in a tree-like format.
+Tree is a recursive directory listing program that produces a depth
+indented listing of files, which is colorized ala dircolors if the
+LS_COLORS environment variable is set and output is to tty.
 
 %prep
-%setup -q
+%setup
 
 %build
-%make_build
+# Upstream have LDFLAGS=-s causing binaries to be stripped.
+%make_build CFLAGS="%optflags %(getconf LFS_CFLAGS)" LDFLAGS=
 
 %install
-%makeinstall_std
+install -Dpm755 -t %buildroot%_bindir  tree
+install -Dpm644 -t %buildroot%_man1dir doc/tree.1
 
 %files
-%_bindir/*
-%_mandir/man?/*
+%doc LICENSE CHANGES README
+%_bindir/tree
+%_man1dir/tree.1*
 
 %changelog
+* Fri Feb 25 2022 Vitaly Chikunov <vt@altlinux.org> 1:2.0.2-alt1
+- Change upstream and update to 2.0.2 (02/16/2022).
+
 * Sat Apr 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.0.0-alt5
 - Fixed build with new toolchain.
 
