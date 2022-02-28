@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: plzip
-Version: 1.8
+Version: 1.10
 Release: alt1
-
 Summary: Plzip is a parallel version of the lzip data compressor
 License: GPLv3+
 Group: Archiving/Compression
@@ -41,6 +42,9 @@ make check
 %_infodir/*.info*
 
 %changelog
+* Mon Feb 28 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.10-alt1
+- Updated to upstream version 1.10.
+
 * Fri Jul 05 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8-alt1
 - Updated to upstream version 1.8.
 
