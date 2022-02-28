@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 21.12.2
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Office
@@ -13,6 +13,8 @@ Summary: TODO Manager
 Url: http://www.kde.org
 License: LGPL-2.0-or-later and GPL-2.0-or-later
 
+Provides: %{name}-common = %EVR
+Obsoletes: %{name}-common < %EVR
 Requires: kde5-akonadi
 
 Source: %rname-%version.tar
@@ -25,37 +27,9 @@ BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: kf5-kcalcore-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kpackage-devel kf5-kparts-devel
 BuildRequires: kf5-krunner-devel kf5-ktextwidgets-devel
 BuildRequires: kde5-akonadi-calendar-devel kde5-akonadi-devel kde5-kontactinterface-devel
-#libXScrnSaver-devel libXaw-devel libXcomposite-devel libXcursor-devel libXdamage-devel
-#libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXres-devel
-#libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libxcbutil-devel
-#libxcbutil-icccm-devel libxkbcommon-x11-devel libxkbfile-devel
-#python-modules-compiler python3-module-setuptools python3-module-zope qt5-imageformats qt5-svg-devel qt5-wayland-devel qt5-webengine-devel
 
 %description
 A Getting Things Done application which aims at getting your mind like water.
-
-%package common
-Summary: %name common package
-Group: System/Configuration/Other
-BuildArch: noarch
-Requires: kf5-filesystem
-%description common
-%name common package
-
-%package devel
-Group: Development/KDE and QT
-Summary: Development files for %name
-%description devel
-The %name-devel package contains libraries and header files for
-developing applications that use %name.
-
-%package -n %libzanshin
-Group: System/Libraries
-Summary: KF5 library
-Requires: %name-common = %version-%release
-%description -n %libzanshin
-KF5 library
-
 
 %prep
 %setup -n %rname-%version
@@ -68,12 +42,9 @@ KF5 library
 %K5install_move data krdc
 %find_lang %name --with-kde --all-name
 
-%files common -f %name.lang
+%files -f %name.lang
 %doc LICENSES/*
 #%_datadir/qlogging-categories5/*.*categories
-#%_K5srvtyp/*zanshin*.desktop
-
-%files
 %_K5bin/zanshin*
 %_K5plug/kontact5/*zanshin*.so
 %_K5plug/*zanshin*.so
@@ -83,16 +54,10 @@ KF5 library
 %_K5xmlgui/zanshin/
 %_K5icon/hicolor/*/apps/*zanshin*.*
 
-#%files devel
-#%_K5inc/*_export.h
-#%_K5inc/%rname/
-#%_K5link/lib*.so
-
-#%files -n %libzanshin
-#%_K5lib/libzanshin.so.%sover
-#%_K5lib/libzanshin.so.*
-
 %changelog
+* Mon Feb 28 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.2-alt2
+- fix package translations
+
 * Mon Feb 21 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.2-alt1
 - new version
 
