@@ -11,8 +11,8 @@
 %def_disable check
 
 Name: libsecret
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.5
+Release: alt1
 
 Summary: A client library for the Secret Service DBus API
 Group: System/Libraries
@@ -26,8 +26,6 @@ Vcs: https://gitlab.gnome.org/GNOME/libsecret.git
 Source: %name-%version.tar
 %endif
 Patch: %name-0.20.0-alt-python3_shebang.patch
-# "Create default collection after DBus.Error.UnknownObject" (ALT #40714)
-Patch10: libsecret-0.20.4-up-d620c79d83acc1bae0bbd7153a691f952b74ca31.patch
 
 %define glib_ver 2.44.0
 %define vala_ver 0.17.2.12
@@ -37,10 +35,11 @@ BuildRequires(pre): meson >= 0.50
 BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgcrypt-devel >= %gcrypt_ver
+BuildRequires: libtpm2-tss-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools >= %vala_ver}
-%{?_enable_gtk_doc:BuildRequires: gtk-doc}
-%{?_enable_man:BuildRequires: xsltproc}
+%{?_enable_gtk_doc:BuildRequires: gi-docgen}
+%{?_enable_man:BuildRequires: xsltproc docbook-style-xsl}
 %{?_enable_check:
 BuildRequires: /proc fuse-gvfs dbus-tools-gui python3-module-dbus-gobject
 BuildRequires: python3-module-pygobject3 python3-module-mock libgjs}
@@ -100,7 +99,6 @@ GObject introspection devel data for %name.
 %prep
 %setup
 %patch -p1
-%patch10 -p1
 
 %build
 %meson \
@@ -123,7 +121,7 @@ dbus-run-session %meson_test
 %_bindir/secret-tool
 %_libdir/%name-%api_ver.so.*
 %{?_enable_man:%_man1dir/secret-tool.1.*}
-%doc AUTHORS README* NEWS
+%doc README* NEWS
 
 %files devel
 %_includedir/%name-%api_ver
@@ -137,7 +135,7 @@ dbus-run-session %meson_test
 
 %if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/*
+%_datadir/doc/%name-%api_ver
 %endif
 
 %if_enabled introspection
@@ -150,6 +148,9 @@ dbus-run-session %meson_test
 
 
 %changelog
+* Mon Feb 28 2022 Yuri N. Sedunov <aris@altlinux.org> 0.20.5-alt1
+- 0.20.5
+
 * Wed Aug 18 2021 Yuri N. Sedunov <aris@altlinux.org> 0.20.4-alt2
 - libsecret/secret-methods.c: applied upstream patch
   "Create default collection after DBus.Error.UnknownObject"
