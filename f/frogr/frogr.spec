@@ -1,11 +1,11 @@
-%def_enable snapshot
-%define ver_major 1.6
+%def_disable snapshot
+%define ver_major 1.7
 %def_enable video
 %define xdg_name org.gnome.frogr
 
 Name: frogr
 Version: %ver_major
-Release: alt2
+Release: alt1
 
 Summary: A Flickr Remote Organizer for GNOME
 License: GPL-3.0
@@ -58,6 +58,9 @@ a flickr account from the desktop.
 
 
 %changelog
+* Tue Mar 01 2022 Yuri N. Sedunov <aris@altlinux.org> 1.7-alt1
+- 1.7
+
 * Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt2
 - updated to RELEASE_1.6-16-g25e585d
 
