@@ -7,8 +7,10 @@
 %define beta %nil
 # %%ver_major - 32
 %define api_ver 9
+%define sover 0
 %define xdg_name org.gnome.mutter
 %define _libexecdir %_prefix/libexec
+# only private lib now
 %def_enable privatelib
 %def_enable remote_desktop
 %def_enable installed_tests
@@ -16,7 +18,7 @@
 %def_enable wayland_eglstream
 
 Name: mutter
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 Epoch: 1
 
@@ -70,6 +72,7 @@ Requires: zenity
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
 BuildRequires: meson /proc xvfb-run
+#BuildRequires: catchsegv
 BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgio-devel >= %glib_ver
@@ -165,6 +168,8 @@ the functionality of the installed Mutter.
 %prep
 %setup -n %name-%version%beta
 %patch
+# we have no catchsegv
+sed -i '/catchsegv/d' meson.build
 # Also disable KMS modifiers for baikal-vdu
 echo 'DRIVERS=="baikal-vdu", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-modifiers"' \
 >> data/61-%name.rules
@@ -181,6 +186,12 @@ echo 'DRIVERS=="baikal-vdu", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-m
 %install
 %meson_install
 %find_lang --with-gnome %name creating-%name-themes
+
+ln -sf %name-%api_ver/lib%name-clutter-%api_ver.so.%sover \
+%buildroot%_libdir/lib%name-clutter-%api_ver.so.%sover
+
+ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
+%buildroot%_libdir/lib%name-cogl-%api_ver.so.%sover
 
 %files -f %name.lang
 %_bindir/%name
@@ -200,6 +211,9 @@ echo 'DRIVERS=="baikal-vdu", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-m
 %pkglibdir/lib%name-clutter-%api_ver.so.*
 %pkglibdir/lib%name-cogl-pango-%api_ver.so.*
 %pkglibdir/lib%name-cogl-%api_ver.so.*
+# symlinks
+%_libdir/lib%name-clutter-%api_ver.so.%sover
+%_libdir/lib%name-cogl-%api_ver.so.%sover
 
 %files -n lib%name-devel
 %_includedir/%name-%api_ver/
@@ -237,6 +251,9 @@ echo 'DRIVERS=="baikal-vdu", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-m
 %endif
 
 %changelog
+* Sun Feb 27 2022 Yuri N. Sedunov <aris@altlinux.org> 1:41.4-alt1
+- 41.4
+
 * Tue Jan 11 2022 Yuri N. Sedunov <aris@altlinux.org> 1:41.3-alt1
 - 41.3
 

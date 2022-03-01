@@ -14,7 +14,7 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -33,7 +33,7 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 
 %define session_ver 3.26
 %define clutter_ver 1.21.5
-%define gjs_ver 1.65.1
+%define gjs_ver 1.70.1
 %define mutter_ver %version
 %define gtk_ver 3.16.0
 %define gio_ver 2.56.0
@@ -281,6 +281,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %endif
 
 %changelog
+* Sun Feb 27 2022 Yuri N. Sedunov <aris@altlinux.org> 41.4-alt1
+- 41.4
+
 * Tue Jan 11 2022 Yuri N. Sedunov <aris@altlinux.org> 41.3-alt1
 - 41.3
 
