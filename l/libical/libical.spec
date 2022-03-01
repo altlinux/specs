@@ -13,7 +13,7 @@
 %def_without system_tzdata
 
 Name: libical
-Version: 3.0.13
+Version: 3.0.14
 Release: alt1
 
 Summary: An implementation of basic iCAL protocols
@@ -31,7 +31,7 @@ Source: %name-%version.tar
 %define glib_ver 2.38
 %{?_with_system_tzdata:Requires: tzdata >= %tzdata_ver}
 
-BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake rpm-build-gir
 BuildRequires: cmake gcc-c++ ctest gtk-doc libicu-devel icu-utils
 %{?_enable_ninja:BuildRequires: ninja-build}
 %{?_with_system_tzdata:BuildRequires: tzdata >= %tzdata_ver}
@@ -203,6 +203,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %cmake_build -t test
 
 
 %changelog
+* Tue Mar 01 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.14-alt1
+- 3.0.14
+
 * Tue Jan 18 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.13-alt1
 - 3.0.13
 
