@@ -1,6 +1,6 @@
 Name: installer-distro-altlinux-server
 Version: 7.0.2
-Release: alt1
+Release: alt2
 
 Summary: Installer configuration (server)
 License: GPL
@@ -77,6 +77,9 @@ sed -i 's,^\(X-Alterator-URI=\).*$,\1/vm/ortodox,' \
 %files stage3
 
 %changelog
+* Tue Mar 01 2022 Anton Midyukov <antohami@altlinux.org> 7.0.2-alt2
+- 05-vm-profile: add support nvme*, mmc*
+
 * Fri Mar 11 2016 Michael Shigorin <mike@altlinux.org> 7.0.2-alt1
 - tweaked disk partitioning profiles towards capping the size
   of partitions differing from the "main" one (otherwise it's

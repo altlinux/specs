@@ -1,5 +1,5 @@
 Name: volumes-profile-regular
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: Volumes description for ALT Linux Regular builds
@@ -28,6 +28,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Mar 01 2022 Anton Midyukov <antohami@altlinux.org> 0.4.2-alt1
+- 10-vm-profile.sh: add support nvme*, mmc*
+
 * Fri Aug 20 2021 Michael Shigorin <mike@altlinux.org> 0.4.1-alt1
 - E2K: increase /boot size from 512 Mb to 1 Gb for serviceability
 
