@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.0
-Release: alt5
+Release: alt6
 
 Summary: Group policy editor
 License: GPLv2+
@@ -87,6 +87,10 @@ done
 %_desktopdir/gpui.desktop
 
 %changelog
+* Tue Mar 01 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt6
+- Fixes:
+  + #74114 Fix ability to load ADMX bundle.
+
 * Mon Feb 28 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt5
 - Fixes:
   + #73976 Correct dialog flags to provide ability to select folders.
