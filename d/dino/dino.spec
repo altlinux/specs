@@ -3,7 +3,7 @@
 %define rdn_name im.dino.Dino
 
 Name: dino
-Version: 0.2.2
+Version: 0.3.0
 Release: alt1
 
 Summary: Modern Jabber/XMPP client
@@ -20,9 +20,11 @@ Source: %name-%version.tar
 Requires: lib%name = %EVR
 
 BuildRequires(pre): cmake
-BuildRequires: vala-tools libgtk+3-devel libgee0.8-devel libsoup-devel
+BuildRequires: gcc-c++ vala-tools libgtk+3-devel libgee0.8-devel libsoup-devel
 BuildRequires: libicu-devel pkgconfig(libqrencode) >= 4.0 libgcrypt-devel
-BuildRequires: libgpgme-devel libsignal-protocol-c-devel libsqlite3-devel
+BuildRequires: gst-plugins1.0-devel libnice-devel
+BuildRequires: libgpgme-devel libgnutls-devel libsignal-protocol-c-devel libsqlite3-devel libsrtp2-devel
+BuildRequires: libenchant-devel libgspell-devel
 
 %description
 Dino is a modern open-source chat client for the desktop. It focuses on
@@ -70,25 +72,35 @@ This package provides libraries and headers needed to develop Dino plugins.
 %_libdir/%name/plugins/http-files.so
 %_libdir/%name/plugins/omemo.so
 %_libdir/%name/plugins/openpgp.so
+%_libdir/%name/plugins/ice.so
+%_libdir/%name/plugins/rtp.so
 %doc README*
 
 %files -n lib%name
 %_libdir/lib%name.so.*
 %_libdir/libqlite.so.*
 %_libdir/libxmpp-vala.so.*
+%_libdir/libcrypto-vala.so.*
 
 %files -n lib%name-devel
 %_includedir/*.h
 %_libdir/lib%name.so
 %_libdir/libqlite.so
 %_libdir/libxmpp-vala.so
-# vapi(icu-uc) required, but
-#$ find ./ -name "*icu-uc*"
-#./main/vapi/icu-uc.vapi
-#./xmpp-vala/vapi/icu-uc.vapi
-#%_vapidir/*
+%_libdir/libcrypto-vala.so
+#%_datadir/vala/vapi/crypto-vala.deps
+#%_datadir/vala/vapi/crypto-vala.vapi
+#%_datadir/vala/vapi/dino.deps
+#%_datadir/vala/vapi/dino.vapi
+#%_datadir/vala/vapi/qlite.deps
+#%_datadir/vala/vapi/qlite.vapi
+#%_datadir/vala/vapi/xmpp-vala.deps
+#%_datadir/vala/vapi/xmpp-vala.vapi
 
 %changelog
+* Tue Mar 01 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Thu Sep 23 2021 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt1
 - 0.2.2
 
