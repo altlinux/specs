@@ -1,4 +1,6 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %ifarch %e2k ppc64le
 %def_disable qtwebengine
@@ -7,8 +9,8 @@
 %endif
 
 Name: merkaartor
-Version: 0.18.4
-Release: alt4
+Version: 0.19.0
+Release: alt1
 
 Summary: an OpenStreetMap editor
 License: GPLv2
@@ -18,7 +20,6 @@ Url: https://github.com/openstreetmap/merkaartor
 # https://github.com/openstreetmap/merkaartor.git
 Source: %name-%version.tar
 Patch1: %name-0.18.3-fedora-no-git-version.patch
-Patch2: %name-%version-upstream-qt5-compat.patch
 
 BuildRequires: boost-devel gcc-c++ glibc-devel-static
 BuildRequires: libgdal-devel libproj-devel libexiv2-devel zlib-devel libsqlite3-devel
@@ -36,12 +37,12 @@ editing environment for free geographical data.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 
 # remove bundled libraries
 rm -rf 3rdparty
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %add_optflags -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H=1
 %add_optflags -I%_includedir/qt5/QtSolutions
 
@@ -66,11 +67,15 @@ lrelease-qt5 Merkaartor.pro
 %files
 %_bindir/merkaartor
 %_datadir/%name/
+%_datadir/metainfo/*.xml
 %_libdir/%name/
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/*.png
 
 %changelog
+* Tue Mar 01 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 0.19.0-alt1
+- Updated to upstream version 0.19.0.
+
 * Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 0.18.4-alt4
 - Build without qtwebengine on e2k and ppc64le.
 
