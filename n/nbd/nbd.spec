@@ -1,4 +1,6 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %def_disable debug
 %def_enable syslog
@@ -9,7 +11,7 @@
 %def_without  static_client
 
 Name: nbd
-Version: 3.20
+Version: 3.23
 Release: alt1
 Summary: Network Block Device user space tools
 License: GPL
@@ -27,6 +29,7 @@ Source4: nbd.sysconfig
 Patch1: %name-alt.patch
 
 BuildRequires: glib2-devel docbook-utils
+BuildRequires: autoconf-archive bison flex
 %{?_with_setproctitle:BuildRequires: setproctitle-devel}
 %{?_enable_gznbd:BuildRequires: zlib-devel}
 %{?_with_static_client:BuildRequires: dietlibc}
@@ -78,6 +81,8 @@ This package contains a statically linked edition of nbd-client.
 %patch1 -p1
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 ./autogen.sh
 
 %if_with static_client
@@ -149,6 +154,9 @@ install -pm644 README.md tests/run/simple_test %buildroot%docdir/
 %endif
 
 %changelog
+* Tue Mar 01 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 3.23-alt1
+- Updated to upstream version 3.23.
+
 * Thu Oct 29 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.20-alt1
 - Updated to upstream version 3.20 (Fixes: CVE-2013-6410, CVE-2013-7441, CVE-2015-0847).
 
