@@ -5,7 +5,7 @@
 
 %global provider_prefix %provider/%project/%repo
 %global import_path %provider_prefix
-%global commit 63ca93845d5fe05cdca826367afcb601ece8d7ad
+%global commit b030be8379c8000ab93abec6b9c05df001ed93bb
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %global _unpackaged_files_terminate_build 1
@@ -13,8 +13,8 @@
 %define _libexecdir /usr/libexec
 
 Name: cri-o
-Version: 1.22.1
-Release: alt2
+Version: 1.22.2
+Release: alt1
 Summary: Kubernetes Container Runtime Interface for OCI-based containers
 Group: Development/Other
 License: Apache-2.0
@@ -120,6 +120,9 @@ install -p -m 644 contrib/cni/99-loopback.conf %buildroot%_sysconfdir/cni/net.d/
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Tue Mar 01 2022 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.2-alt1
+- 1.22.2
+
 * Wed Jan 12 2022 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.1-alt2
 - Rename default network configs to samples
 - Add /opt/cni/bin (it is default place for some k8s networks) to plugins dir
