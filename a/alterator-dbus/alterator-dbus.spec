@@ -1,8 +1,8 @@
 %define dname ru.basealt.alterator
 
 Name: alterator-dbus
-Version: 0.0.2
-Release: alt3
+Version: 0.0.3
+Release: alt1
 
 Summary: D-Bus woo-bus gate
 License: GPL-2
@@ -34,6 +34,15 @@ D-Bus woo-bus gate.
 %_datadir/polkit-1/rules.d/%dname.rules
 
 %changelog
+* Mon Feb 28 2022 Valery Sinelnikov <greh@altlinux.org> 0.0.3-alt1
+- Used new define CONTENT_BETWEEN_METHODNAME_EMPTY
+- Changed the method of generating a request
+- Addede define CONTENT_BETWEEN_METHODNAME_EMPTY
+- ActionName dynamic memory allocation for
+  converting_answer_to_strings
+- ActionName dynamic memory allocation for make_request_woobus
+
+
 * Thu Jul 08 2021 Valery Sinelnikov <greh@altlinux.org> 0.0.2-alt3
 - Fixed losing arguments when querying woobus
 
