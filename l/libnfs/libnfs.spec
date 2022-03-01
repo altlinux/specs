@@ -1,7 +1,9 @@
+%def_enable snapshot
 %def_enable utils
+%define sover 14
 
 Name: libnfs
-Version: 4.0.0
+Version: 5.0.1
 Release: alt1
 
 Summary: NFS client library
@@ -10,8 +12,12 @@ License: LGPLv2.1
 Group: System/Libraries
 Url: https://github.com/sahlberg/%name
 
+%if_disabled snapshot
 Source: %url/archive/%name-%version.tar.gz
-#Source: %name-%version.tar
+%else
+Vcs: https://github.com/sahlberg/libnfs.git
+Source: %name-%version.tar
+%endif
 
 %description
 LIBNFS is a client library for accessing NFS shares over a network.
@@ -37,7 +43,7 @@ This package provides utilities from LibNFS package.
 
 
 %prep
-%setup -n %name-%name-%version
+%setup %{?_disable_snapshot:-n %name-%name-%version}
 
 %build
 %autoreconf
@@ -61,12 +67,16 @@ This package provides utilities from LibNFS package.
 %_bindir/nfs-ls
 %_bindir/nfs-cat
 %_bindir/nfs-cp
+%_bindir/nfs-stat
 %_man1dir/nfs-ls.1.*
 %_man1dir/nfs-cat.1.*
 %_man1dir/nfs-cp.1.*
 %endif
 
 %changelog
+* Tue Mar 01 2022 Yuri N. Sedunov <aris@altlinux.org> 5.0.1-alt1
+- updated to libnfs-5.0.1-3-g1703d44
+
 * Wed Feb 13 2019 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
 - 4.0.0
 
