@@ -1,5 +1,5 @@
 Name: firewalld
-Version: 1.0.3
+Version: 1.1.0
 Release: alt1
 
 Summary: A firewall daemon with D-BUS interface providing a dynamic firewall
@@ -159,6 +159,10 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %endif
 
 %changelog
+* Tue Mar 01 2022 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1
+- Use nftables backend by default.
+- Updated to 1.1.0.
+
 * Thu Feb 03 2022 Mikhail Efremov <sem@altlinux.org> 1.0.3-alt1
 - Require python3-module-libcap-ng.
 - Add testsuite subpackage (disabled by default).
