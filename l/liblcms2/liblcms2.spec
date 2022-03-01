@@ -5,8 +5,8 @@
 %define rname lcms2
 
 Name: lib%rname
-Version: 2.12
-Release: alt2
+Version: 2.13.1
+Release: alt1
 
 Summary: Little cms color engine, version 2
 License: MIT
@@ -105,6 +105,9 @@ This package contains various %name-based utilities
 %endif
 
 %changelog
+* Tue Mar 01 2022 Yuri N. Sedunov <aris@altlinux.org> 2.13.1-alt1
+- 2.13.1
+
 * Wed Jan 26 2022 Yuri N. Sedunov <aris@altlinux.org> 2.12-alt2
 - rebuilt without suffix=2 for binaries
 
