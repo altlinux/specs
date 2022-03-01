@@ -3,7 +3,7 @@
 Name:          rpm-build-ruby
 Epoch:         1
 Version:       1.0.0
-Release:       alt17
+Release:       alt18
 Summary:       RPM helper scripts to calculate Ruby dependencies
 License:       GPLv2
 Group:         Development/Ruby
@@ -20,9 +20,7 @@ Requires:      libruby-devel
 Requires:      /usr/bin/rdoc
 Requires:      /usr/bin/rake
 Requires:      /usr/bin/ruby
-Requires:      /usr/bin/setup.rb
 Requires:      /bin/sed
-Requires:      gem(bundler)
 
 %{!?_disable_check:BuildRequires: ruby >= 1.9 ruby-stdlibs >= 1.9}
 
@@ -56,6 +54,9 @@ install -p -m 0644 ruby.env %buildroot%_rpmmacrosdir/
 %_rpmmacrosdir/ruby
 
 %changelog
+* Mon Jan 31 2022 Pavel Skrylev <majioa@altlinux.org> 1:1.0.0-alt18
+- * some cleanups
+
 * Sat Jan 22 2022 Pavel Skrylev <majioa@altlinux.org> 1:1.0.0-alt17
 - ! lost provides / requires for aliases (closes #41774)
 

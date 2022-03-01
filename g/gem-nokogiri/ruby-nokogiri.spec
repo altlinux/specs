@@ -1,7 +1,7 @@
 %define        gemname nokogiri
 
 Name:          gem-nokogiri
-Version:       1.12.5
+Version:       1.13.1
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
 License:       MIT
@@ -15,28 +15,33 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: libxml2-devel
 BuildRequires: libxslt-devel
 BuildRequires: zlib-devel
+BuildRequires: gem(mini_portile2) >= 2.7.0 gem(mini_portile2) < 2.8
 BuildRequires: gem(racc) >= 1.4 gem(racc) < 2
-BuildRequires: gem(mini_portile2) >= 2.6.1 gem(mini_portile2) < 3
 BuildRequires: gem(bundler) >= 2.1.4 gem(bundler) < 3
 BuildRequires: gem(hoe-markdown) >= 1.4 gem(hoe-markdown) < 2
-BuildRequires: gem(minitest) >= 5.8 gem(minitest) < 6
+BuildRequires: gem(minitest) >= 5.15 gem(minitest) < 6
 BuildRequires: gem(minitest-reporters) >= 1.4 gem(minitest-reporters) < 2
 BuildRequires: gem(rake) >= 13.0 gem(rake) < 14
-BuildRequires: gem(rake-compiler) >= 1.1 gem(rake-compiler) < 2
+BuildRequires: gem(rake-compiler) >= 1.1.2 gem(rake-compiler) < 2
 BuildRequires: gem(rake-compiler-dock) >= 0.7.2 gem(rake-compiler-dock) < 2
-BuildRequires: gem(rexical) >= 1.0.5 gem(rexical) < 1.1
-BuildRequires: gem(rubocop) >= 1.7 gem(rubocop) < 2
+BuildRequires: gem(rdoc) >= 6.1.1 gem(rdoc) < 7
+BuildRequires: gem(rexical) >= 1.0.7 gem(rexical) < 1.1
+BuildRequires: gem(rubocop) >= 1.15.0 gem(rubocop) < 2
+BuildRequires: gem(rubocop-minitest) >= 0.13.0 gem(rubocop-minitest) < 1
+BuildRequires: gem(rubocop-performance) >= 1.11.3 gem(rubocop-performance) < 2
+BuildRequires: gem(rubocop-rake) >= 0.6 gem(rubocop-rake) < 1
+BuildRequires: gem(rubocop-shopify) >= 2.3 gem(rubocop-shopify) < 3
+BuildRequires: gem(ruby_memcheck) >= 1.0 gem(ruby_memcheck) < 2
 BuildRequires: gem(simplecov) >= 0.17 gem(simplecov) < 1
-BuildRequires: gem(yard) >= 0.9 gem(yard) < 1
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency mini_portile2 >= 2.7.0,mini_portile2 < 3
+%ruby_use_gem_dependency rake-compiler-dock >= 0.7.2,rake-compiler-dock < 2
+Requires:      gem(mini_portile2) >= 2.7.0 gem(mini_portile2) < 2.8
 Requires:      gem(racc) >= 1.4 gem(racc) < 2
-Requires:      gem(mini_portile2) >= 2.6.1 gem(mini_portile2) < 3
 Obsoletes:     ruby-nokogiri < %EVR
 Provides:      ruby-nokogiri = %EVR
-Provides:      gem(nokogiri) = 1.12.5
+Provides:      gem(nokogiri) = 1.13.1
 
 
 %description
@@ -46,14 +51,14 @@ contanis Ruby libraries for Nokogiri.
 
 
 %package       -n nokogiri
-Version:       1.12.5
+Version:       1.13.1
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета nokogiri
 Group:         Development/Other
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.12.5
+Requires:      gem(nokogiri) = 1.13.1
 
 %description   -n nokogiri
 Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
@@ -68,14 +73,14 @@ contanis Ruby libraries for Nokogiri.
 
 
 %package       -n gem-nokogiri-doc
-Version:       1.12.5
+Version:       1.13.1
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета nokogiri
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.12.5
+Requires:      gem(nokogiri) = 1.13.1
 
 %description   -n gem-nokogiri-doc
 Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) documentation
@@ -90,25 +95,30 @@ contanis Ruby libraries for Nokogiri.
 
 
 %package       -n gem-nokogiri-devel
-Version:       1.12.5
+Version:       1.13.1
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета nokogiri
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.12.5
+Requires:      gem(nokogiri) = 1.13.1
 Requires:      gem(bundler) >= 2.1.4 gem(bundler) < 3
 Requires:      gem(hoe-markdown) >= 1.4 gem(hoe-markdown) < 2
-Requires:      gem(minitest) >= 5.8 gem(minitest) < 6
+Requires:      gem(minitest) >= 5.15 gem(minitest) < 6
 Requires:      gem(minitest-reporters) >= 1.4 gem(minitest-reporters) < 2
 Requires:      gem(rake) >= 13.0 gem(rake) < 14
-Requires:      gem(rake-compiler) >= 1.1 gem(rake-compiler) < 2
-Requires:      gem(rake-compiler-dock) >= 0.7.2 gem(rake-compiler-dock) <= 2
-Requires:      gem(rexical) >= 1.0.5 gem(rexical) < 1.1
-Requires:      gem(rubocop) >= 1.7 gem(rubocop) < 2
+Requires:      gem(rake-compiler) >= 1.1.2 gem(rake-compiler) < 2
+Requires:      gem(rake-compiler-dock) >= 0.7.2 gem(rake-compiler-dock) < 2
+Requires:      gem(rdoc) >= 6.1.1 gem(rdoc) < 7
+Requires:      gem(rexical) >= 1.0.7 gem(rexical) < 1.1
+Requires:      gem(rubocop) >= 1.15.0 gem(rubocop) < 2
+Requires:      gem(rubocop-minitest) >= 0.13.0 gem(rubocop-minitest) < 1
+Requires:      gem(rubocop-performance) >= 1.11.3 gem(rubocop-performance) < 2
+Requires:      gem(rubocop-rake) >= 0.6 gem(rubocop-rake) < 1
+Requires:      gem(rubocop-shopify) >= 2.3 gem(rubocop-shopify) < 3
+Requires:      gem(ruby_memcheck) >= 1.0 gem(ruby_memcheck) < 2
 Requires:      gem(simplecov) >= 0.17 gem(simplecov) < 1
-Requires:      gem(yard) >= 0.9 gem(yard) < 1
 Requires:      libxml2-devel
 Requires:      libxslt-devel
 Requires:      java-devel
@@ -158,6 +168,9 @@ contanis Ruby libraries for Nokogiri.
 
 
 %changelog
+* Tue Jan 18 2022 Pavel Skrylev <majioa@altlinux.org> 1.13.1-alt1
+- ^ 1.12.5 -> 1.13.1
+
 * Mon Dec 06 2021 Pavel Skrylev <majioa@altlinux.org> 1.12.5-alt1
 - ^ 1.12.4 -> 1.12.5
 - ! CVE-2021-41098
@@ -273,25 +286,3 @@ contanis Ruby libraries for Nokogiri.
 
 * Sat Dec 15 2012 Led <led@altlinux.ru> 1.5.5-alt2
 - fixed for renamed %%_bindir/rex -> %%_bindir/rexical
-- %%files: fixed "File listed twice"
-
-* Fri Dec 07 2012 Led <led@altlinux.ru> 1.5.5-alt1.1
-- Rebuilt with ruby-1.9.3-alt1
-
-* Wed Mar 24 2012 Andriy Stepanov <stanv@altlinux.ru> 1.5.5-alt1
-- New version
-
-* Wed Mar 23 2011 Andriy Stepanov <stanv@altlinux.ru> 1.4.4.2-alt2
-- Fix build
-
-* Wed Mar 23 2011 Andriy Stepanov <stanv@altlinux.ru> 1.4.4.2-alt1
-- [1.4.4.2]
-
-* Wed Mar 17 2010 Timur Batyrshin <erthad@altlinux.org> 1.4.0-alt1
-- [1.4.0]
-
-* Sun Jun 28 2009 Alexey I. Froloff <raorn@altlinux.org> 1.3.2-alt1
-- [1.3.2]
-
-* Thu Sep 25 2008 Grigory Batalov <bga@altlinux.ru> 1.1.0-alt1
-- Initial build for ALT Linux.
