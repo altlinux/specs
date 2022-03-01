@@ -1,7 +1,7 @@
 %def_enable introspection
 
 Name: libqrtr-glib
-Version: 1.2.0
+Version: 1.2.2
 Release: alt1
 
 Summary: Qualcomm IPC Router protocol helper library
@@ -107,6 +107,9 @@ This package contains development documentation for %name
 
 
 %changelog
+* Tue Mar 01 2022 Mikhail Efremov <sem@altlinux.org> 1.2.2-alt1
+- Updated to 1.2.2.
+
 * Thu Dec 09 2021 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
 - Updated to 1.2.0.
 
