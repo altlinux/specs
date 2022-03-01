@@ -3,7 +3,7 @@
 %global source_directory 1.44-development
 
 Name: virt-v2v
-Version: 1.44.0
+Version: 1.44.2
 Release: alt1
 Summary: Convert a virtual machine to run on KVM
 Group: Development/Other
@@ -90,6 +90,9 @@ rm -r %buildroot%_libdir/ocaml/stublibs/dllv2v_test_harness*
 %_datadir/bash-completion/completions/virt-v2v*
 
 %changelog
+* Tue Mar 01 2022 Mikhail Gordeev <obirvalger@altlinux.org> 1.44.2-alt1
+- new version 1.44.2
+
 * Tue Sep 07 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.44.0-alt1
 - new version 1.44.0
 
