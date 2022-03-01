@@ -2,7 +2,7 @@
 %define libver 8.0
 
 Name:    grass
-Version: 8.0.0
+Version: 8.0.1
 Release: alt1
 
 %def_with mysql
@@ -309,6 +309,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Fri Feb 25 2022 Andrey Cherepanov <cas@altlinux.org> 8.0.1-alt1
+- New version.
+
 * Fri Jan 28 2022 Andrey Cherepanov <cas@altlinux.org> 8.0.0-alt1
 - New version.
 
