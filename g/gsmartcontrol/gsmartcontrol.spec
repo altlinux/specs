@@ -1,6 +1,6 @@
 Name: gsmartcontrol
-Version: 1.1.3
-Release: alt2
+Version: 1.1.4
+Release: alt1
 
 Summary: GSmartControl - Hard disk drive and SSD health inspection tool
 Group: Monitoring
@@ -49,6 +49,9 @@ to determine its health, as well as run various tests on it.
 %exclude %_defaultdocdir/%name/LICENSE*
 
 %changelog
+* Tue Mar 01 2022 Yuri N. Sedunov <aris@altlinux.org> 1.1.4-alt1
+- 1.1.4
+
 * Thu Apr 16 2020 Yuri N. Sedunov <aris@altlinux.org> 1.1.3-alt2
 - removed obsolete gksu from dependencies
 - changed Group tag to Monitoring
