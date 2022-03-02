@@ -1,16 +1,21 @@
-Name: ode
-Version: 0.13.1
-Release: alt3.hg20140702
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
+Name: ode
+Version: 0.16.2
+Release: alt1
 Summary: The Open Dynamics Engine (ODE)
 License: LGPLv2.1+
 Group: Graphics
-
 Url: http://www.ode.org/
-# hg clone https://bitbucket.org/odedevs/ode
+
+# https://bitbucket.org/odedevs/ode.git
 Source: %name-%version.tar
-Source1: http://www.ode.org/ode-latest-userguide.pdf
-Source2: http://www.ode.org/joints.pdf
+# http://www.ode.org/ode-latest-userguide.pdf
+Source1: ode-latest-userguide.pdf
+# http://www.ode.org/joints.pdf
+Source2: joints.pdf
 
 BuildRequires: gcc-c++ libX11-devel libICE-devel libGL-devel libGLU-devel
 BuildRequires: libSM-devel libgmp-devel
@@ -42,7 +47,7 @@ This package contains shared libraries of ODE.
 %package -n lib%name-devel
 Summary: Development files of The Open Dynamics Engine (ODE)
 Group: Development/C++
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 ODE is an open source, high performance library for simulating rigid
@@ -74,7 +79,7 @@ This package contains development documentation for ODE.
 %package demos
 Summary: Demos of The Open Dynamics Engine (ODE)
 Group: Graphics
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description demos
 ODE is an open source, high performance library for simulating rigid
@@ -93,6 +98,8 @@ This package contains demos of ODE.
 touch libccd/NEWS libccd/AUTHORS libccd/ChangeLog
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 ./bootstrap
 #autoreconf
 %add_optflags -fno-strict-aliasing
@@ -115,7 +122,9 @@ touch libccd/NEWS libccd/AUTHORS libccd/ChangeLog
 	--with-capsule-cylinder=libccd \
 	--with-convex-box=libccd \
 	--with-convex-capsule=libccd \
-	--with-convex-cylinder=libccd
+	--with-convex-cylinder=libccd \
+	%nil
+
 %make_build -C ou/src/ou
 %make_build
 
@@ -156,6 +165,9 @@ install -p -m644 %SOURCE1 %SOURCE2 \
 %_libdir/%name/
 
 %changelog
+* Tue Mar 01 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 0.16.2-alt1
+- Updated to upstream version 0.16.2.
+
 * Wed Jun 19 2019 Michael Shigorin <mike@altlinux.org> 0.13.1-alt3.hg20140702
 - E2K: explicit -std=c++11
 
