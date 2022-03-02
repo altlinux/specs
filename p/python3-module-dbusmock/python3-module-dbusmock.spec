@@ -3,11 +3,11 @@
 %def_enable check
 
 Name: python3-module-dbusmock
-Version: 0.25.0
+Version: 0.26.1
 Release: alt1
 
 Summary: mock D-Bus objects for tests
-License: LGPL-3.0
+License: LGPL-3.0-or-later
 Group: Development/Python3
 Url: https://github.com/martinpitt/python-dbusmock
 # https://pypi.python.org/pypi/%_name
@@ -52,6 +52,9 @@ See %_docdir/%name-%version/README.rst for more information.
 %doc NEWS PKG-INFO README*
 
 %changelog
+* Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 0.26.1-alt1
+- 0.26.1
+
 * Sat Dec 25 2021 Yuri N. Sedunov <aris@altlinux.org> 0.25.0-alt1
 - 0.25.0
 
