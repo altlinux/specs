@@ -4,7 +4,7 @@
 %def_enable man
 
 Name: ocserv
-Version: 1.1.5
+Version: 1.1.6
 Release: alt1
 
 Summary: OpenConnect SSL VPN server
@@ -136,6 +136,9 @@ export PATH=/sbin:/usr/sbin:$PATH
 %_initdir/%name
 
 %changelog
+* Wed Mar 02 2022 Alexey Shabalin <shaba@altlinux.org> 1.1.6-alt1
+- new version 1.1.6
+
 * Wed Dec 22 2021 Alexey Shabalin <shaba@altlinux.org> 1.1.5-alt1
 - new version 1.1.5
 
