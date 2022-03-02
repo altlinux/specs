@@ -7,7 +7,7 @@
 
 Name: kde5-kcm-grub2
 Version: 0.6.4
-Release: alt4
+Release: alt5
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -19,6 +19,7 @@ Source: %rname-%version.tar
 Source1: po.tar
 Patch1: alt-no-details-btn.patch
 Patch2: alt-wallpaper.patch
+Patch3: alt-parent-category.patch
 
 BuildRequires(pre): rpm-build-kf5
 
@@ -38,6 +39,7 @@ A KDE Control Module for configuring the GRUB2 bootloader.
 %setup -n %rname-%version -a1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %K5build \
@@ -69,6 +71,9 @@ A KDE Control Module for configuring the GRUB2 bootloader.
 
 
 %changelog
+* Tue Mar 01 2022 Slava Aseev <ptrnine@altlinux.org> 0.6.4-alt5
+- fix the inability to run from the System Settings
+
 * Wed Sep 22 2021 Sergey V Turchin <zerg@altlinux.org> 0.6.4-alt4
 - update from upstream/master
 
