@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python3-module-%oname
-Version: 2.38.0
+Version: 2.39.0
 Release: alt1
 Summary: Google API Client Library for Python
 License: Apache-2.0
@@ -57,6 +57,9 @@ rm -f docs/build
 %doc docs/*
 
 %changelog
+* Wed Mar 02 2022 Andrey Cherepanov <cas@altlinux.org> 2.39.0-alt1
+- New version.
+
 * Thu Feb 24 2022 Andrey Cherepanov <cas@altlinux.org> 2.38.0-alt1
 - New version.
 
