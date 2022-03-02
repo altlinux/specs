@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: xdg-dbus-proxy
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: D-Bus connections proxy
@@ -47,6 +47,9 @@ to facilitate using it in other contexts.
 
 
 %changelog
+* Wed Mar 02 2022 Yuri N. Sedunov <aris@altlinux.org> 0.1.3-alt1
+- updated to 0.1.3-6-gc38d44a
+
 * Tue Sep 24 2019 Yuri N. Sedunov <aris@altlinux.org> 0.1.2-alt1
 - 0.1.2
 - removed obsolete patches
