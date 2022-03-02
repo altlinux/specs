@@ -1,22 +1,19 @@
-%define optflags_lto -flto=thin
-
-%define llvm_version 12.0
-
-%define git_ver 13138
-%define git_commit 61d9852632e5b417acf47299532c9f80f54d0fd5
+%define git_ver 13326
+%define git_commit a8e62e1bc1ca6d9e9d4c2309398806f3566f42d0
 
 %define glslang_version 11.7.1
-%define asmjit_commit eae7197fce03fd52a6e71ca89207a88ce270fb1a
-%define hidapi_commit 01f601a1509bf9c67819fbf521df39644bab52d5
+%define asmjit_commit fc2a5d82f7434d7d03161275a764c051f970f41c
+%define hidapi_commit 6cf133697c4413dc9ae0fefefeba5f33587dff76
 %define yaml_cpp_commit 0b67821f307e8c6bf0eba9b6d3250e3cf1441450
-%define llvm_commit 1c0ca194dc501ffb1674868babf8bd52658a0734
+%define llvm_commit 509d31ad89676522f7121b3bb8688f7d29b7ee60
 %define spirv_headers_version 1.5.3.reservations1
 %define spirv_tools_version 2020.4
 %define cubeb_commit d512bfa07a327e0ae7e7aef892dcce01cbeaa67c
+%define soundtouch_commit 83cfba67b6af80bb9bfafc0b324718c4841f2991
 
 Name: rpcs3
-Version: 0.0.20
-Release: alt2
+Version: 0.0.21
+Release: alt1
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -45,12 +42,13 @@ Source6: SPIRV-Headers-%spirv_headers_version.tar
 Source7: SPIRV-Tools-%spirv_tools_version.tar
 # https://github.com/mozilla/cubeb/archive/%cubeb_commit/cubeb-%cubeb_commit.tar.gz
 Source8: cubeb-%cubeb_commit.tar
+# https://github.com/RPCS3/soundtouch/archive/%soundtouch_commit/soundtouch-%soundtouch_commit.tar.gz
+Source9: soundtouch-%soundtouch_commit.tar
 
 Patch0: %name-alt-git.patch
 Patch1: %name-alt-jit-events.patch
 
 BuildRequires: /proc
-BuildRequires: clang%llvm_version
 BuildRequires: cmake >= 3.16.9
 BuildRequires: doxygen
 BuildRequires: git-core
@@ -80,7 +78,6 @@ BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: pkgconfig(wayland-server)
 BuildRequires: pkgconfig(wolfssl)
-BuildRequires: llvm%llvm_version
 BuildRequires: ocaml-ctypes
 BuildRequires: ocaml-findlib
 BuildRequires: python3-module-yaml
@@ -92,7 +89,7 @@ BuildPreReq: python3-module-Pygments
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9
 
 %patch0 -p1
 %patch1 -p1
@@ -105,6 +102,7 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 %__mv -Tf ../SPIRV-Headers-%spirv_headers_version 3rdparty/SPIRV/SPIRV-Headers
 %__mv -Tf ../SPIRV-Tools-%spirv_tools_version 3rdparty/SPIRV/SPIRV-Tools
 %__mv -Tf ../cubeb-%cubeb_commit 3rdparty/cubeb/cubeb
+%__mv -Tf ../soundtouch-%soundtouch_commit 3rdparty/SoundTouch/soundtouch
 
 #Generate Version Strings
 GIT_VERSION=$(echo %git_ver)
@@ -121,15 +119,7 @@ echo "// This is a generated file.
 " > %name/git-version.h
 
 %build
-export ALTWRAP_LLVM_VERSION=%llvm_version
-
 %cmake \
-	-DCMAKE_C_COMPILER:STRING=clang \
-	-DCMAKE_CXX_COMPILER:STRING=clang++ \
-	-DCMAKE_RANLIB:PATH=%_bindir/llvm-ranlib \
-	-DCMAKE_AR:PATH=%_bindir/llvm-ar \
-	-DCMAKE_NM:PATH=%_bindir/llvm-nm \
-	-DCMAKE_EXE_LINKER_FLAGS:STRING="-fuse-ld=lld" \
 	-DUSE_NATIVE_INSTRUCTIONS:BOOL=FALSE \
 	-DUSE_SYSTEM_FFMPEG:BOOL=TRUE \
 	-DUSE_SYSTEM_LIBPNG:BOOL=TRUE \
@@ -140,7 +130,6 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 	-DUSE_SYSTEM_XXHASH:BOOL=TRUE \
 	-DUSE_SYSTEM_WOLFSSL:BOOL=TRUE \
 	-DUSE_SYSTEM_FAUDIO:BOOL=TRUE \
-	-DLLVM_ENABLE_LLD:BOOL=TRUE \
 	-DPython3_EXECUTABLE="%__python3" \
 	-GNinja \
 	-Wno-dev
@@ -160,6 +149,10 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Wed Mar 02 2022 Nazarov Denis <nenderus@altlinux.org> 0.0.21-alt1
+- Version 0.0.21
+- Build with GCC
+
 * Mon Jan 10 2022 Nazarov Denis <nenderus@altlinux.org> 0.0.20-alt2
 - Set ALTWRAP_LLVM_VERSION to select correct LLVM version
 - Fix BR
