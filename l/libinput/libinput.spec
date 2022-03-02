@@ -8,7 +8,7 @@
 %def_enable install_tests
 
 Name: libinput
-Version: 1.19.3
+Version: 1.20.0
 Release: alt1
 
 Summary: Input devices library
@@ -17,7 +17,8 @@ License: MIT
 Url: http://www.freedesktop.org/wiki/Software/libinput/
 
 %if_disabled snapshot
-Source: http://www.freedesktop.org/software/%name/%name-%version.tar.xz
+Source: https://gitlab.freedesktop.org/%name/%name/-/archive/%version/%name-%version.tar.bz2
+#Source: http://www.freedesktop.org/software/%name/%name-%version.tar.xz
 %else
 Vcs: https://gitlab.freedesktop.org/libinput/libinput.git
 Source: %name-%version.tar
@@ -151,6 +152,9 @@ This package contains visual debug helper for %name.
 
 
 %changelog
+* Wed Mar 02 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1
+- 1.20.0
+
 * Mon Dec 13 2021 Yuri N. Sedunov <aris@altlinux.org> 1.19.3-alt1
 - 1.19.3
 
