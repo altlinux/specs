@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %ifarch armh
@@ -35,7 +35,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.44
+Version: %ver_major.47
 Release: alt1
 
 Summary: Media Sharing Server
@@ -208,6 +208,7 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_datadir/%name/filter-chain/sink-virtual-surround-5.1-kemar.conf
 %_datadir/%name/filter-chain/sink-virtual-surround-7.1-hesuvi.conf
 %_datadir/%name/filter-chain/source-rnnoise.conf
+%_datadir/%name/filter-chain/duplicate-FL.conf
 %dir %_datadir/spa-%spa_api_ver
 %dir %_datadir/spa-%spa_api_ver/bluez5
 %_datadir/spa-%spa_api_ver/bluez5/bluez-hardware.conf
@@ -290,6 +291,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Wed Mar 02 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.47-alt1
+- 0.3.47
+
 * Thu Jan 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.44-alt1
 - updated to 0.3.44-4-gbb5c43b5b + media-session-0.4.1-8-gc0d036ebd
 
