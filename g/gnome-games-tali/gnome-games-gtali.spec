@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Gnome version of Yahtzee Dice Game
@@ -16,9 +16,9 @@ Url: https://wiki.gnome.org/Apps/Tali
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-Provides:  %_name = %version-%release
+Provides: %_name = %version-%release
 Obsoletes: gnome-games-gtali
-Provides:  gnome-games-gtali = %version-%release
+Provides: gnome-games-gtali = %version-%release
 
 %define glib_ver 2.32.0
 %define gtk_ver 3.16.0
@@ -55,6 +55,9 @@ include any or all of your dice.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 40.5-alt1
+- 40.5
+
 * Sat Oct 30 2021 Yuri N. Sedunov <aris@altlinux.org> 40.4-alt1
 - 40.4
 
@@ -138,6 +141,4 @@ include any or all of your dice.
 
 * Tue Dec 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.7.2-alt1
 - first build for people/gnome
-
-
 
