@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220218
+Version: 20220225
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,31 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Mar 02 2022 Cronbuild Service <cronbuild@altlinux.org> 20220225-alt1
+- upstream changes (GIT ee0667a):
+  + amdgpu: update raven2 VCN firmware (thx Alex Deucher)
+  + amdgpu: update raven VCN firmware (thx Alex Deucher)
+  + amdgpu: update picasso VCN firmware (thx Alex Deucher)
+  + Update firmware file for Intel Bluetooth 9462 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9560 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX211 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX210 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX200 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9560 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9260 (thx Kiran K)
+  + Update AMD SEV firmware (thx John Allen)
+  + rtw89: 8852a: update fw to v0.13.35.0 (thx Chin-Yen Lee)
+  + Mellanox: Add new mlxsw_spectrum firmware xx.2010.1406 (thx Petr Machata)
+  + wfx: update to firmware 3.14 (thx J?r?me Pouiller)
+  + wfx: add antenna configuration files (thx J?r?me Pouiller)
+  + wfx: rename silabs/ into wfx/ (thx J?r?me Pouiller)
+  + update firmware for mediatek bluetooth chip(MT7921) (thx Mark Chen)
+  + Update firmware patch for Intel Bluetooth 8260 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 8265 (thx Kiran K)
+  + Intel BT 7265: Fix Security Issues (thx Kiran K)
+
 * Tue Feb 22 2022 Cronbuild Service <cronbuild@altlinux.org> 20220218-alt1
 - upstream changes (GIT c53073d):
   + rtl_bt: Update RTL8852A BT USB firmware to 0xDFB7_6D7A (thx Hilda Wu)
