@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: gamescope
-Version: 3.11.25
+Version: 3.11.26
 Release: alt1
 Summary: SteamOS session compositing window manager
 Group: System/X11
@@ -102,6 +102,9 @@ export PKG_CONFIG_PATH=pkgconfig
 %_bindir/gamescope
 
 %changelog
+* Wed Mar 02 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 3.11.26-alt1
+- Updated to upstream version 3.11.26.
+
 * Mon Feb 28 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 3.11.25-alt1
 - Updated to upstream version 3.11.25.
 
