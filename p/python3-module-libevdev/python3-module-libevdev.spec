@@ -2,8 +2,8 @@
 %def_enable check
 
 Name: python3-module-%modname
-Version: 0.9
-Release: alt2
+Version: 0.10
+Release: alt1
 
 Summary: Python wrapper around the libevdev C library
 Group: Development/Python3
@@ -12,7 +12,7 @@ Url: https://pypi.org/project/%modname
 
 BuildArch: noarch
 
-#VCS: https://gitlab.freedesktop.org/libevdev/python-libevdev
+Vcs: https://gitlab.freedesktop.org/libevdev/python-libevdev
 Source: https://pypi.io/packages/source/l/%modname/%modname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
@@ -45,6 +45,9 @@ py.test3
 %doc README*
 
 %changelog
+* Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 0.10-alt1
+- 0.10
+
 * Mon Nov 16 2020 Yuri N. Sedunov <aris@altlinux.org> 0.9-alt2
 - fixed %%check
 
