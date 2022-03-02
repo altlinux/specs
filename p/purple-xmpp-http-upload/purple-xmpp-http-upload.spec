@@ -1,5 +1,5 @@
 Name:     purple-xmpp-http-upload
-Version:  0.2.2
+Version:  0.2.4
 Release:  alt1
 
 Summary:  HTTP File Upload plugin for libpurple (XMPP Protocol)
@@ -22,6 +22,7 @@ XEP-0363: HTTP File Upload plugin for libpurple (Pidgin, Finch, etc.)
 %setup
 
 %build
+export LDFLAGS="-Wl,-rpath,%_libdir/purple-2"
 %make_build
 
 %install
@@ -31,6 +32,9 @@ XEP-0363: HTTP File Upload plugin for libpurple (Pidgin, Finch, etc.)
 %_libdir/purple-2/*.so
 
 %changelog
+* Wed Mar 02 2022 Evgeniy Korneechev <ekorneechev@altlinux.org> 0.2.4-alt1
+- New version
+
 * Thu Dec 10 2020 Evgeniy Korneechev <ekorneechev@altlinux.org> 0.2.2-alt1
 - New version
 
