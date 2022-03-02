@@ -1,13 +1,13 @@
 %def_disable snapshot
 
 %define _name libsigc++
-%define ver_major 3.0
+%define ver_major 3.2
 %define api_ver 3.0
 %def_enable docs
 %def_enable check
 
 Name: %{_name}3
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt1
 
 Summary: The Typesafe Callback Framework for C++
@@ -18,12 +18,12 @@ Url: https://libsigcplusplus.github.io/libsigcplusplus/
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %else
-#VCS: https://github.com/libsigcplusplus/libsigcplusplus.git
+Vcs: https://github.com/libsigcplusplus/libsigcplusplus.git
 Source: %_name-%version.tar
 %endif
 
-BuildRequires(pre): meson
-BuildRequires: gcc-c++ mm-common >= 1.0.3
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++ mm-common >= 1.0.4
 %{?_enable_docs:BuildRequires: docbook-style-xsl doxygen graphviz xsltproc}
 
 %description
@@ -89,6 +89,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Thu May 20 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.7-alt1
 - 3.0.7
 
