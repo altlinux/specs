@@ -9,7 +9,7 @@
 
 Name: spdk
 Version: 22.01
-Release: alt1
+Release: alt2
 
 Summary: Storage Performance Development Kit
 License: BSD-3-Clause
@@ -35,6 +35,7 @@ Patch: spdk-21.10-alt-scripts-syntax.patch
 #Requires: zlib
 
 %add_python3_req_skip common rpc.client rpc.helpers
+%filter_from_requires /apt*/d
 
 Requires: systemd-utils
 BuildRequires: gcc-c++ glibc-devel rpm-build-python3 libuuid-devel libssl-devel libaio-devel libncurses-devel
@@ -221,6 +222,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Wed Mar 02 2022 Leontiy Volodin <lvol@altlinux.org> 22.01-alt2
+- Fixed build on p10 branch.
+
 * Wed Feb 16 2022 Leontiy Volodin <lvol@altlinux.org> 22.01-alt1
 - New version (22.01).
 - Changed group.
