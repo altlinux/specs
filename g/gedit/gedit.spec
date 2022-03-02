@@ -3,7 +3,7 @@
 %define xdg_name org.gnome.gedit
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 40
+%define ver_major 41
 %define api_ver 3.0
 %def_enable plugins
 %def_enable introspection
@@ -11,8 +11,8 @@
 %def_enable gtk_doc
 
 Name: gedit
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: gEdit is a small but powerful text editor for GNOME
 License: GPL-2.0
@@ -133,6 +133,9 @@ This package contains documentation needed to develop plugins for gedit.
 %install
 %meson_install
 
+ln -sf %name/lib%name-%ver_major.so \
+%buildroot%_libdir/lib%name-%ver_major.so
+
 # additional mime types
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-mime-type=text/css \
@@ -173,6 +176,8 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_bindir/*
 %dir %pkglibdir
 %pkglibdir/lib%{name}*.so
+#symlink
+%_libdir/lib%name-%ver_major.so
 %dir %gedit_pluginsdir
 %gedit_pluginsdir/*
 %{?_enable_plugins:%python3_sitelibdir_noarch/gi/overrides/Gedit.py*}
@@ -210,6 +215,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Mon Feb 28 2022 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1.1
 - fixed meson options
 
