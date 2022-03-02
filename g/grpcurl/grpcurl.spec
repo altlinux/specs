@@ -1,6 +1,6 @@
 %global import_path github.com/fullstorydev/grpcurl
 Name:     grpcurl
-Version:  1.7.0
+Version:  1.8.6
 Release:  alt1
 
 Summary:  Like cURL, but for gRPC: Command-line tool for interacting with gRPC servers
@@ -37,10 +37,16 @@ export IGNORE_SOURCES=1
 
 %golang_install
 
+%check
+%gotest
+
 %files
 %_bindir/*
 %doc *.md
 
 %changelog
+* Wed Mar 02 2022 Mikhail Gordeev <obirvalger@altlinux.org> 1.8.6-alt1
+- new version 1.8.6
+
 * Tue Jan 05 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.7.0-alt1
 - Initial build for Sisyphus
