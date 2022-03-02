@@ -1,11 +1,18 @@
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
 
+%_K5if_ver_gteq %ubt_id M100
+%def_enable obsolete_kde4
+%else
+%def_disable obsolete_kde4
+%endif
 %def_disable mp4
 
 %define rname kid3
 Name: kde5-%rname
-Version: 3.8.7
+Version: 3.9.1
 Release: alt1
-%K5init altplace
+%K5init %{?_enable_obsolete_kde4:no_altplace}%{!?_enable_obsolete_kde4:altplace}
 
 Group: Sound
 Summary: ID3 tagger
@@ -18,7 +25,7 @@ Source1: ru.po
 # Automatically added by buildreq on Fri Nov 13 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gtk-update-icon-cache id3lib kf5-kdoctools-devel libEGL-devel libGL-devel libavcodec-devel libavutil-devel libflac-devel libgpg-error libjson-c libogg-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl-parent pkg-config python-base python3 python3-base qt5-base-devel qt5-tools ruby ruby-stdlibs xml-common xml-utils zlib-devel
 #BuildRequires: extra-cmake-modules gcc-c++ id3lib-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libavdevice-devel libavformat-devel libavresample-devel libchromaprint-devel libflac++-devel libreadline-devel libswscale-devel libtag-devel libvorbis-devel python-module-google qt5-multimedia-devel qt5-tools-devel rpm-build-python3 rpm-build-ruby xsltproc
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: cmake extra-cmake-modules
 BuildRequires: gettext-tools
 BuildRequires: gcc-c++ glib2-devel libreadline-devel /usr/bin/xsltproc
@@ -80,10 +87,14 @@ Core files needed for %name
 %package -n %rname-ui-kde5
 Summary: ID3 tagger KDE5 UI
 Group: Sound
-Requires: %name-core = %EVR
 Provides: %rname = %version-%release
 Provides: kde5-kid3 = %EVR
 Obsoletes: kde5-kid3 < %EVR
+%if_enabled obsolete_kde4
+Provides: kid3-ui-kde4 = %version-%release
+Obsoletes: kid3-ui-kde4 < %version-%release
+%endif
+Requires: %name-core = %EVR
 %description -n %rname-ui-kde5
 Package contains KDE5 UI.
 %{description}
@@ -91,8 +102,13 @@ Package contains KDE5 UI.
 %package -n %rname-ui-qt5
 Summary: ID3 tagger Qt5 UI
 Group: Sound
-Requires: %name-core = %EVR
+%if_enabled obsolete_kde4
+Provides: kid3-ui-qt4 = %version-%release
+Obsoletes: kid3-ui-qt4 < %version-%release
+%else
 Conflicts: kid3-ui-qt4
+%endif
+Requires: %name-core = %EVR
 %description -n %rname-ui-qt5
 Package contains Qt5 UI.
 %{description}
@@ -100,6 +116,10 @@ Package contains Qt5 UI.
 %package -n %rname-ui-cli5
 Summary: ID3 tagger CLI UI
 Group: Sound
+%if_enabled obsolete_kde4
+Provides: kid3-ui-cli = %version-%release
+Obsoletes: kid3-ui-cli < %version-%release
+%endif
 Requires: %name-core = %EVR
 %description -n %rname-ui-cli5
 Package contains command line UI.
@@ -186,18 +206,22 @@ done
 %_K5xmlgui/kid3/
 %_K5xdgapp/*.kid3.desktop
 %_K5icon/hicolor/*/apps/kid3.*
+%if_enabled obsolete_kde4
+%_datadir/metainfo/*.kid3.*
+%endif
 
 %files -n %rname-ui-qt5
 %doc AUTHORS NEWS README ChangeLog
-#_bindir/%rname-qt
 %_K5bin/%rname-qt
 %doc %_docdir/kde5-kid3/
 %_iconsdir/*/*/apps/kid3-qt.*
 %_desktopdir/*.kid3-qt.desktop
+%if_enabled obsolete_kde4
+%_datadir/metainfo/*.kid3-qt.*
+%endif
 
 %files -n %rname-ui-cli5
 %doc AUTHORS NEWS README ChangeLog
-#_bindir/%rname-cli
 %_K5bin/%rname-cli
 
 %files -n libkid3-core5
@@ -211,6 +235,10 @@ done
 #%_K5dbus_iface/*id3*
 
 %changelog
+* Wed Mar 02 2022 Sergey V Turchin <zerg@altlinux.org> 3.9.1-alt1
+- new version
+- obsolete kid3-kde4
+
 * Thu Sep 30 2021 Sergey V Turchin <zerg@altlinux.org> 3.8.7-alt1
 - new version
 
