@@ -2,18 +2,20 @@
 %define ver_major 0.20
 %define api_ver 0.8
 %def_disable static
+%def_enable check
 
 Name: %_name%api_ver
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: a collection library providing GObject-based interfaces
 License: LGPL-2.1
 Group: System/Libraries
-Url: http://live.gnome.org/Libgee
+Url: https://wiki.gnome.org/Projects/Libgee
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
+BuildRequires(pre): rpm-build-gir rpm-build-gnome
 BuildRequires: libgio-devel >= 2.36 gobject-introspection-devel
 BuildRequires: libvala-devel >= 0.23.2 vala-tools
 
@@ -111,6 +113,9 @@ applications with %name.
 %endif
 
 %changelog
+* Wed Mar 02 2022 Yuri N. Sedunov <aris@altlinux.org> 0.20.5-alt1
+- 0.20.5
+
 * Wed Mar 17 2021 Yuri N. Sedunov <aris@altlinux.org> 0.20.4-alt1
 - 0.20.4
 
