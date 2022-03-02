@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.26
+Version: 1.4.27
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,28 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Tue Mar 01 2022 Anton Midyukov <antohami@altlinux.org> 1.4.27-alt1
+- regular.mk: add regular-xfce-install target
+- regular.mk: add use/firmware to regular-builder
+- regular.mk: set KFLAVOUR to un-def for regular-builder on x86_64, aarch64
+- dev: fix links to repositories for ports Sisyphus in generated source lists
+- vmguest: exclude xorg-dri-virtio for armh
+- plymouth: require branding-@BRANDING@-graphics
+- cleanup: add CLEANUP_LIVE_PACKAGES
+- mixin.mk: add polkit-rule-admin-root to mixin/regular-desktop
+- .gitignore: exclude .image.in/files/.empty
+- initrd-propagator: not add empty layer
+- build-vm: fix PATH to tar2fs with future mkimage
+- lib/profile.mk, build-distro: save current commit
+- vmguest: update stage1 modules list
+- stage2: stage1 modules list update
+- live.mk: add language submenu to grub-net-install
+- mixin.mk: control libnss-role is disabled for regular-desktops
+- kernel: exclude bcmwl kernel module, see ALT bug 41620
+- kworkstation: add latest commits from zerg@
+- kworkstation: add stage2 lists
+- all distro: add use/stage2/ata
+
 * Sun Feb 13 2022 Anton Midyukov <antohami@altlinux.org> 1.4.26-alt1
 - vmguest: fix stage1/modules.d/50-vmguest
 - sub.in/stage1: remove empty lines from kernel modules list
