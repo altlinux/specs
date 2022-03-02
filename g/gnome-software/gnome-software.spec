@@ -39,7 +39,7 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 
 Summary: Software manager for GNOME
@@ -145,6 +145,9 @@ GNOME Software.
 %meson_install
 %find_lang --with-gnome %name
 
+ln -sf %name/libgnomesoftware.so.%plugins_ver \
+%buildroot%_libdir/libgnomesoftware.so.%plugins_ver
+
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
@@ -157,6 +160,8 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %{?_enable_external_appstream:%_libexecdir/%name-install-appstream}
 %dir %_libdir/%name
 %_libdir/%name/libgnomesoftware.so*
+#symlink
+%_libdir/libgnomesoftware.so.%plugins_ver
 %_libdir/%name/plugins-%plugins_ver/
 %_desktopdir/%name-local-file.desktop
 %_desktopdir/%xdg_name.desktop
@@ -183,6 +188,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Mon Feb 28 2022 Yuri N. Sedunov <aris@altlinux.org> 41.4-alt1
+- 41.4
+
 * Fri Jan 07 2022 Yuri N. Sedunov <aris@altlinux.org> 41.3-alt1
 - 41.3
 
