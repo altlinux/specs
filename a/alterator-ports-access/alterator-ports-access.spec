@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-ports-access
-Version: 0.4
+Version: 0.5.2
 Release: alt1
 BuildArch: noarch
 Source:%name-%version.tar
@@ -9,8 +9,8 @@ Summary: alterator module to control ports access
 License: %gpl2plus
 Group: System/Configuration/Other
 Requires: alterator >= 4.10-alt8 alterator-sh-functions >= 0.6-alt5 libshell >= 0.0.1-alt4 gettext
-Requires: alterator-l10n >= 2.7-alt10
-Requires: %name-cmdline
+Requires: alterator-l10n >= 2.9.110
+Requires: %name-cmdline = %version-%release
 BuildPreReq: rpm-build-licenses
 BuildPreReq: rpm-macros-alterator
 BuildRequires: alterator
@@ -36,6 +36,11 @@ Command line part of alterator module to control serial/USB ports access
 %makeinstall
 #find_lang %name
 
+mkdir -p %buildroot%_sysconfdir/udev/rules.d
+touch %buildroot%_sysconfdir/udev/rules.d/40-alterator-ports-access.rules
+touch %buildroot%_sysconfdir/udev/rules.d/40-alterator-ports-access-serial.rules
+touch %buildroot%_sysconfdir/udev/rules.d/99-alterator-ports-access-usbdevs.rules
+
 #files -f %name.lang
 %files
 %_altdata_dir/applications/*
@@ -44,12 +49,42 @@ Command line part of alterator module to control serial/USB ports access
 %_altdata_dir/help/*/*
 
 %files cmdline
-%_sysconfdir/rc.d/rc.serial
 %_bindir/%name
+%_bindir/%name-lib.sh
 /lib/udev/alterator-ports-access
 %config(noreplace) %_sysconfdir/alterator-ports-access.conf
+%ghost %_sysconfdir/udev/rules.d/40-alterator-ports-access.rules
+%ghost %_sysconfdir/udev/rules.d/40-alterator-ports-access-serial.rules
+%ghost %_sysconfdir/udev/rules.d/99-alterator-ports-access-usbdevs.rules
 
 %changelog
+* Thu Mar 03 2022 Paul Wolneykien <manowar@altlinux.org> 0.5.2-alt1
+- UI improved: Turn the widgets on and off according with a list
+  entry selection.
+
+* Thu Mar 03 2022 Paul Wolneykien <manowar@altlinux.org> 0.5.1-alt1
+- Fix: Enable UART on all serial ports when control is disabled.
+
+* Mon Feb 28 2022 Paul Wolneykien <manowar@altlinux.org> 0.5-alt1
+- Update the captions and messages for better translation.
+- Expand the main tables to full width.
+- Specify the width of 100% for all inputs inside the tables.
+- Include into the package the paths of the generated rule files
+  as %%ghost files.
+- Apply access mode options to block, input and other USB device
+  nodes.
+- Fix: Don't use bash for the unauthorized device access message.
+- FIX: Run 'udevadm control -R' to update the rules before triggering
+  them!
+- Disable verbose mode for udevadm invocations.
+- Allow to edit the USB device rules.
+- Remove the rc.serial script: run 'setserial' from the serial udev
+  rules (40-alterator-ports-access-serial.rules).
+- Use alterator-service-functions to cotnrol udev and udisks2
+  services.
+- Allow to specify owner, group and access mode for serial and USB
+  devices.
+
 * Mon Jan 11 2021 Ivan Razzhivin <underwit@altlinux.org> 0.4-alt1
 - enforce changes to udisks2 and udevd
 

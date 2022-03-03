@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.109
+Version: 2.9.110
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -118,6 +118,9 @@ make check
 %lang(da) %_datadir/locale/da/LC_MESSAGES/*.mo
 
 %changelog
+* Mon Feb 28 2022 Paul Wolneykien <manowar@altlinux.org> 2.9.110-alt1
+- Updated translations for alterator-ports-access (v0.5).
+
 * Fri Feb 11 2022 Michael Shigorin <mike@altlinux.org> 2.9.109-alt1
 - twelve more Danish translations by Carl
 - alterator-auth: update Danish translation (ditto)
