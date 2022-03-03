@@ -1,10 +1,10 @@
 %global _unpackaged_files_terminate_build 1
-%define git_commit f6fbc8f840df1a414f31a60953ae514fa497c748
+%define git_commit 61c9600d1335127eba65632731e2d72bc3f0b9e8
 %define __nprocs 8
 
 Summary: OCI runtime written in C
 Name: crun
-Version: 1.4.2
+Version: 1.4.3
 Release: alt1
 Group: Development/Other
 License: GPLv2+
@@ -58,6 +58,9 @@ rm -f %buildroot%_libdir/*.a
 %_man1dir/*
 
 %changelog
+* Thu Mar 03 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.4.3-alt1
+- 1.4.3
+
 * Wed Jan 26 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.4.2-alt1
 - 1.4.2
 
