@@ -1,20 +1,20 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict,lfs=relaxed
 
-%define sover 7.3
+%define sover 8.4
+
 Name: racket
-Version: 7.3
-Release: alt2
-
+Version: 8.4
+Release: alt1
 Summary: Racket programming language
-
 License: LGPL
 Group: Development/Scheme
 Url: https://racket-lang.org/
 
-ExcludeArch: armh
+ExcludeArch: armh %ix86
 
 Source: %name-%version.tar
-Patch1: %name-alt-debuginfo.patch
 
 # do not scan collects for requires and provides
 %add_findreq_skiplist  %_libdir/%name/collects/*/*
@@ -33,7 +33,9 @@ BuildRequires: desktop-file-utils libffi-devel libgc-devel
 BuildRequires: libgtk+3-devel libgtkglext-devel libwxGTK3.1-devel
 BuildRequires: libssl-devel zlib-devel
 
+%ifarch ppc64le
 Requires: lib%name = %EVR
+%endif
 Requires: %name-data = %EVR
 
 %description
@@ -98,7 +100,9 @@ This package contains shared libraries of Racket.
 %package -n lib%name-devel
 Summary: Development files of Racket
 Group: Development/Scheme
+%ifarch ppc64le
 Requires: lib%name = %EVR
+%endif
 Provides: libmzscheme-devel = %EVR
 Obsoletes: libmzscheme-devel < %EVR
 
@@ -116,15 +120,13 @@ This package contains development files of Racket.
 
 %prep
 %setup
-%patch1 -p2
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 # FIXME: %%autoreconf?
 # But the configure.ac is not in src/. (It's in src/racket.)
 pushd src
-%ifarch %ix86
-%add_optflags -march=i686 -mtune=i686
-%endif
 %add_optflags %optflags_shared
 %configure \
 	--docdir=%_docdir/%name-%version \
@@ -134,7 +136,12 @@ pushd src
 	--enable-xrender \
 	--enable-xft \
 	--enable-docs=yes \
-	--disable-strip
+	--disable-strip \
+%ifarch ppc64le
+	--enable-bcdefault \
+%endif
+	%nil
+
 %make_build
 popd
 
@@ -184,16 +191,24 @@ rm -f %buildroot%_libdir/*.a
 %doc %_docdir/%name-%version
 %exclude %_docdir/%name-%version/README
 
+%ifarch ppc64le
 %files -n lib%name
 %_libdir/*-%sover.so
+%endif
 
 %files -n lib%name-devel
 %doc src/README.txt
+%ifarch ppc64le
 %_libdir/*.so
 %exclude %_libdir/*-%sover.so
+%endif
 %_includedir/*
 
 %changelog
+* Mon Feb 28 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 8.4-alt1
+- Updated to upstream version 8.4.
+- Disabled build on i586 architecture.
+
 * Tue Aug 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 7.3-alt2
 - Disabled build on armh architecture.
 
