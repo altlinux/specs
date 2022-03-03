@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.18
+%define ver_major 1.20
 %define api_ver 1.6
 %define gst_api_ver 1.0
 
@@ -8,7 +8,7 @@
 %def_disable doc
 
 Name: gstreamer-vaapi
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer plugins to use VA-API video acceleration
@@ -36,7 +36,7 @@ BuildRequires: libdrm-devel libudev-devel
 BuildRequires: libGL-devel libXrandr-devel libXrender-devel
 BuildRequires: libEGL-devel
 %{?_enable_wayland:BuildRequires: wayland-devel libwayland-client-devel libwayland-server-devel wayland-protocols}
-%{?_enable_doc:BuildRequires: hotdoc gtk-doc gstreamer%api_ver-utils}
+%{?_enable_doc:BuildRequires: hotdoc gstreamer%api_ver-utils}
 
 %description
 A collection of plugins and helper libraries to use VA-API video
@@ -79,6 +79,9 @@ GStreamer applications.
 %endif
 
 %changelog
+* Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1
+- 1.20.0
+
 * Thu Sep 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1
 - 1.18.5
 

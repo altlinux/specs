@@ -1,17 +1,17 @@
 %define _name gstreamer
-%define ver_major 1.18
+%define ver_major 1.20
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define api_ver 1.0
 
-%def_disable gtk_doc
+%def_disable doc
 %def_disable debug
 %def_disable libunwind
 %def_disable libdw
 %def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer streaming media framework runtime
@@ -39,7 +39,7 @@ BuildRequires: libcap-devel libcap-utils
 BuildRequires: bash-completion
 %{?_enable_libunwind:BuildRequires: libunwind-devel}
 %{?_enable_libdw:BuildRequires: libdw-devel}
-%{?_enable_gtk_doc:BuildRequires: hotdoc gtk-doc}
+%{?_enable_doc:BuildRequires: hotdoc}
 
 %description
 GStreamer is a streaming-media framework, based on graphs of filters which
@@ -118,9 +118,10 @@ export LIBS=-lcxa
 	-Dpackage-origin=%name \
 	-Dexamples=disabled \
 	%{?_enable_check:-Dtests=enabled} \
-	%{?_disable_gtk_doc:-Dgtk_doc=disabled} \
+	%{?_disable_doc:-Ddoc=disabled} \
 	%{?_enable_debug:-Dgst_debug=true} \
 	-Dptp-helper-permissions="capabilities"
+%nil
 %meson_build
 
 %install
@@ -128,8 +129,7 @@ export LIBS=-lcxa
 %find_lang %_name-%api_ver
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %post
 setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-ptp-helper 2>/dev/null ||:
@@ -170,7 +170,7 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 %_girdir/GstController-%api_ver.gir
 %_girdir/GstNet-%api_ver.gir
 
-%if_enabled gtk_doc
+%if_enabled doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
 %endif
@@ -191,6 +191,9 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 %_libexecdir/%_name-%api_ver/gst-plugins-doc-cache-generator
 
 %changelog
+* Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1
+- 1.20.0
+
 * Thu Sep 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1
 - 1.18.5
 

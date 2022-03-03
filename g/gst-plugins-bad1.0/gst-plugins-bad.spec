@@ -26,16 +26,15 @@
 
 %define _name gst-plugins
 %define api_ver 1.0
-%define ver_major 1.18
+%define ver_major 1.20
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
-%define _gtk_docdir %_datadir/gtk-doc/html
 
-%def_disable gtk_doc
+%def_disable doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.5
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -61,7 +60,7 @@ BuildRequires: meson gcc-c++
 BuildRequires: gst-plugins%api_ver-devel >= %version gst-plugins%api_ver-gir-devel
 BuildRequires: bzlib-devel libSDL-devel libX11-devel
 BuildRequires: libalsa-devel libcdaudio-devel libdca-devel libdirac-devel libdvdnav-devel libexif-devel
-BuildRequires: libgio-devel libgsm-devel libjasper-devel libmms-devel
+BuildRequires: libgio-devel libgsm-devel libjasper-devel libmms-devel libzvbi-devel
 %{?_enable_mjpegtools:BuildRequires: libmjpegtools-devel}
 BuildRequires: libmpcdec-devel libneon-devel liboil-devel libsoundtouch-devel libssl-devel libmodplug-devel
 BuildRequires: libcelt-devel libxvid-devel
@@ -72,6 +71,7 @@ BuildRequires: libvpx-devel liborc-devel orc libofa-devel libmusicbrainz-devel l
 %{?_enable_wayland:BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel wayland-protocols}
 %{?_enable_zbar:BuildRequires: libzbar-devel}
 BuildRequires: libEGL-devel libwebp-devel libopenjpeg2.0-devel libbluez-devel
+BuildRequires: libsoup-devel libspandsp-devel libfreeaptx-devel
 BuildRequires: libdbus-devel libxml2-devel libgnutls-devel libvdpau-devel
 BuildRequires: libsbc-devel libusb-devel libgudev-devel libopus-devel
 BuildRequires: libcurl-devel libssh2-devel
@@ -94,7 +94,7 @@ BuildRequires: libwebrtc-devel >= 0.3
 # since 1.13.x
 BuildRequires: libnice-devel libva-devel liblcms2-devel
 %{?_enable_liblilv:BuildRequires: liblilv-devel}
-%{?_enable_gtk_doc:BuildRequires: hotdoc gtk-doc gstreamer%api_ver-utils}
+%{?_enable_doc:BuildRequires: hotdoc gstreamer%api_ver-utils}
 %{?_enable_check: BuildRequires: /proc %_bindir/gst-tester-%api_ver}
 
 %description
@@ -136,9 +136,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %meson \
 	-Dexamples=disabled \
 	%{?_enable_check:-Dtests=enabled} \
-	%{?_disable_gtk_doc:-Ddoc=disabled} \
+	%{?_disable_doc:-Ddoc=disabled} \
 	%{?_enable_debug:-Dgst_debug=true}
-
+%nil
 %meson_build
 
 %install
@@ -156,6 +156,7 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_typelibdir/GstInsertBin-%api_ver.typelib
 %_typelibdir/GstMpegts-%api_ver.typelib
 %_typelibdir/GstPlayer-%api_ver.typelib
+%_typelibdir/GstPlay-%api_ver.typelib
 %_typelibdir/GstTranscoder-%api_ver.typelib
 %_typelibdir/GstWebRTC-%api_ver.typelib
 %_datadir/gstreamer-%api_ver/presets/GstVoAmrwbEnc.prs
@@ -170,6 +171,7 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_datadir/gstreamer-%api_ver/encoding-profiles/file-extension/ogv.gep
 %_datadir/gstreamer-%api_ver/encoding-profiles/file-extension/webm.gep
 %_datadir/gstreamer-%api_ver/encoding-profiles/online-services/youtube.gep
+%_datadir/gstreamer-%api_ver/encoding-profiles/file-extension/ts.gep
 
 %files devel
 %_includedir/gstreamer-%api_ver/*
@@ -182,14 +184,18 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_girdir/GstBadAudio-%api_ver.gir
 %_girdir/GstCodecs-%api_ver.gir
 %_girdir/GstTranscoder-%api_ver.gir
+%_girdir/GstPlay-%api_ver.gir
 
-%if_enabled gtk_doc
+%if_enabled doc
 %files doc
 %_gtk_docdir/gst-plugins-bad-plugins-%api_ver
 %_gtk_docdir/gst-plugins-bad-libs-%api_ver
 %endif
 
 %changelog
+* Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1
+- 1.20.0
+
 * Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1.1
 - fixed meson options
 

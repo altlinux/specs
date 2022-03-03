@@ -1,19 +1,19 @@
 %define _name gst-plugins
-%define ver_major 1.18
+%define ver_major 1.20
 %define api_ver 1.0
 
 %define _gst_datadir %_datadir/gstreamer-%api_ver
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 %define _gtk_docdir %_datadir/gtk-doc/html
 
-%def_disable gtk_doc
+%def_disable doc
 %def_disable debug
 %def_disable examples
 %def_disable check
 
 Name: %_name-ugly%api_ver
-Version: %ver_major.5
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: A set of encumbered GStreamer plugins
 Group: System/Libraries
@@ -35,7 +35,7 @@ BuildRequires: meson gcc-c++ orc liborc-test-devel gst-plugins%api_ver-devel >= 
 BuildRequires: liba52-devel libcdio-devel libid3tag-devel
 BuildRequires: libmad-devel libmpeg2-devel liboil-devel libx264-devel
 BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel libdvdread-devel
-%{?_enable_gtk_doc:BuildRequires: hotdoc gtk-doc gstreamer%api_ver-utils}
+%{?_enable_doc:BuildRequires: hotdoc gtk-doc gstreamer%api_ver-utils}
 %{?_enable_check:BuildRequires: /proc gstreamer%api_ver-utils}
 
 %description
@@ -61,9 +61,9 @@ collection.
 %build
 %meson \
 	%{?_enable_check:-Dtests=enabled} \
-	%{?_disable_gtk_doc:-Ddoc=disabled} \
+	%{?_disable_doc:-Ddoc=disabled} \
 	%{?_enable_debug:-Dgst_debug=true}
-
+%nil
 %meson_build
 
 %install
@@ -71,20 +71,22 @@ collection.
 %find_lang %_name-ugly-%api_ver
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files -f %_name-ugly-%api_ver.lang
 %doc AUTHORS NEWS README RELEASE
 %_gst_libdir/*.so
 %_datadir/gstreamer-%api_ver/*
 
-%if_enabled gtk_doc
+%if_enabled doc
 %files devel-doc
 %_gtk_docdir/%_name-ugly-plugins-%api_ver/*
 %endif
 
 %changelog
+* Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1
+- 1.20.0
+
 * Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1.1
 - fixed meson options
 

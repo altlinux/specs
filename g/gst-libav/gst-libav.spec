@@ -1,4 +1,4 @@
-%define ver_major 1.18
+%define ver_major 1.20
 %define gst_api_ver 1.0
 %define _gst_libdir %_libdir/gstreamer-%gst_api_ver
 # switched from libav to ffmpeg since 1.5.90
@@ -15,7 +15,6 @@
 %def_with system_libav
 
 %if_without system_libav
-%def_enable doc
 %def_enable gpl
 %def_enable gnutls
 %def_enable libxvid
@@ -56,7 +55,7 @@
 %endif
 
 Name: gst-libav
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer (%gst_api_ver API) streaming media framework plug-in using FFmpeg
@@ -70,7 +69,7 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gcc-c++ orc
 BuildRequires: gst-plugins%gst_api_ver-devel >= %version
 BuildRequires: liborc-test-devel zlib-devel bzlib-devel liblzma-devel
-%{?_enable_doc:BuildRequires: hotdoc gtk-doc gstreamer%api_ver-utils}
+%{?_enable_doc:BuildRequires: hotdoc gstreamer%api_ver-utils}
 %if_with system_libav
 BuildRequires: libavformat-devel >= %libav_ver
 BuildRequires: libswscale-devel libavresample-devel libavfilter-devel
@@ -131,7 +130,6 @@ plug-in.
 %setup
 
 %build
-
 %meson %{?_disable_doc:-Ddoc=disabled}
 %meson_build
 
@@ -148,6 +146,9 @@ plug-in.
 %endif
 
 %changelog
+* Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1
+- 1.20.0
+
 * Thu Sep 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1
 - 1.18.5
 

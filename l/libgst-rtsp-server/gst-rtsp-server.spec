@@ -1,5 +1,5 @@
 %define _name gst-rtsp-server
-%define ver_major 1.18
+%define ver_major 1.20
 %define gst_api_ver 1.0
 %define api_ver 1.0
 
@@ -9,7 +9,7 @@
 %{?_with_test_package:%def_enable examples}
 
 Name: lib%_name
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer-%api_ver RTSP server library
@@ -30,7 +30,7 @@ BuildRequires: gstreamer%api_ver-devel >= %gst_ver
 BuildRequires: gst-plugins%api_ver-devel >= %gst_ver gst-plugins-good%api_ver gst-plugins-bad%api_ver-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel gst-plugins%api_ver-gir-devel}
 BuildRequires: libcgroup-devel
-%{?_enable_doc:BuildRequires: hotdoc gtk-doc gstreamer%api_ver-utils}
+%{?_enable_doc:BuildRequires: hotdoc gstreamer%api_ver-utils}
 
 %description
 A GStreamer-based RTSP server library.
@@ -131,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1
+- 1.20.0
+
 * Thu Sep 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1
 - 1.18.5
 

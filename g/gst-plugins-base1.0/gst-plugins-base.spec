@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name gst-plugins
-%define ver_major 1.18
+%define ver_major 1.20
 %define api_ver 1.0
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
@@ -9,9 +9,9 @@
 %ifarch %e2k
 # https://gitlab.gnome.org/GNOME/gnome-build-meta/issues/38
 # https://gitlab.freedesktop.org/gstreamer/gst-plugins-base/issues/564
-%def_disable gtk_doc
+%def_disable doc
 %else
-%def_disable gtk_doc
+%def_disable doc
 %endif
 %def_disable debug
 %def_disable libunwind
@@ -20,8 +20,8 @@
 %def_disable check
 
 Name: %_name-base%api_ver
-Version: %ver_major.5
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: An essential set of GStreamer plugins
 Group: System/Libraries
@@ -56,7 +56,7 @@ BuildRequires: libcdparanoia-devel libtheora-devel libvorbis-devel libopus-devel
 BuildRequires: gobject-introspection-devel
 %{?_enable_libunwind:BuildRequires: libunwind-devel}
 %{?_enable_libdw:BuildRequires: libdw-devel}
-%{?_enable_gtk_doc:BuildRequires: hotdoc gtk-doc gstreamer%api_ver-utils}
+%{?_enable_doc:BuildRequires: hotdoc gstreamer%api_ver-utils}
 %{?_enable_check:BuildRequires: /proc gstreamer%api_ver %_bindir/gst-tester-%api_ver}
 
 %description
@@ -135,9 +135,9 @@ GObject introspection devel data for the GStreamer library
 	-Dexamples=disabled \
 	-Dgio=enabled \
 	%{?_enable_check:-Dtests=enabled} \
-	%{?_disable_gtk_doc:-Ddoc=disabled} \
+	%{?_disable_doc:-Ddoc=disabled} \
 	%{?_enable_debug:-Dgst_debug=true}
-
+%nil
 %meson_build
 
 %install
@@ -145,8 +145,7 @@ GObject introspection devel data for the GStreamer library
 %find_lang %_name-base-%api_ver
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files -f %_name-base-%api_ver.lang
 %dir %_gst_libdir
@@ -182,7 +181,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
-%if_enabled gtk_doc
+%if_enabled doc
 %files -n %_name%api_ver-devel-doc
 %_gtk_docdir/%_name-base-*/
 %endif
@@ -204,6 +203,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1
+- 1.20.0
+
 * Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1.1
 - fixed meson options
 
