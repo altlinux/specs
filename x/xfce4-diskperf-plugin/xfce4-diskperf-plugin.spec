@@ -1,5 +1,5 @@
 Name: xfce4-diskperf-plugin
-Version: 2.6.3
+Version: 2.7.0
 Release: alt1
 
 Summary: Disk performance plugin for the Xfce panel
@@ -12,10 +12,10 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-diskperf-plugin.git
 Source: %name-%version.tar
 #Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel
+BuildRequires: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
 
-Requires: xfce4-panel >= 4.11
+Requires: xfce4-panel >= 4.14
 
 %define _unpackaged_files_terminate_build 1
 
@@ -39,13 +39,16 @@ Requires: xfce4-panel >= 4.11
 %find_lang %name
 
 %files -f %name.lang
-%doc README AUTHORS NEWS COPYING
+%doc README.md AUTHORS NEWS COPYING
 %_libdir/xfce4/panel/plugins/*.so
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Mar 03 2022 Mikhail Efremov <sem@altlinux.org> 2.7.0-alt1
+- Updated for 2.7.0.
+
 * Mon Dec 21 2020 Mikhail Efremov <sem@altlinux.org> 2.6.3-alt1
 - Updated for 2.6.3.
 
