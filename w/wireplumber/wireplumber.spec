@@ -9,7 +9,7 @@
 %define soversion 0
 
 Name: wireplumber
-Version: 0.4.7
+Version: 0.4.8
 Release: alt1
 
 Summary: a modular session/policy manager for PipeWire
@@ -19,11 +19,11 @@ Group: Sound
 URL: https://pipewire.pages.freedesktop.org/wireplumber/
 
 BuildRequires(pre): meson >= 0.56
-BuildRequires: pkgconfig(gobject-2.0) >= 2.58
-BuildRequires: pkgconfig(gmodule-2.0) >= 2.58
-BuildRequires: pkgconfig(gio-2.0) >= 2.58
-BuildRequires: pkgconfig(gio-unix-2.0) >= 2.58
-BuildRequires: pkgconfig(libpipewire-0.3) >= 0.3.41
+BuildRequires: pkgconfig(gobject-2.0) >= 2.62
+BuildRequires: pkgconfig(gmodule-2.0) >= 2.62
+BuildRequires: pkgconfig(gio-2.0) >= 2.62
+BuildRequires: pkgconfig(gio-unix-2.0) >= 2.62
+BuildRequires: pkgconfig(libpipewire-0.3) >= 0.3.45
 BuildRequires: liblua5.3-devel
 %if_enabled introspection
 BuildRequires(pre): gobject-introspection-devel
@@ -185,6 +185,9 @@ mv -v %buildroot%_datadir/doc/%name %buildroot%{docdir %name-doc}
 %endif
 
 %changelog
+* Mon Feb 07 2022 Arseny Maslennikov <arseny@altlinux.org> 0.4.8-alt1
+- 0.4.7 -> 0.4.8.
+
 * Fri Jan 14 2022 Arseny Maslennikov <arseny@altlinux.org> 0.4.7-alt1
 - 0.4.6 -> 0.4.7.
 
