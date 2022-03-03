@@ -14,7 +14,7 @@
 # git rev-list --count remotes/upstream/releases/FreeCAD-0-17
 
 Name:    freecad
-Version: 0.19.3
+Version: 0.19.4
 Release: alt1
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
@@ -252,6 +252,9 @@ sed -i '1s:#!/usr/bin/python:#!/usr/bin/python3:' %buildroot%_libdir/freecad/Mod
 %ldir/doc
 
 %changelog
+* Thu Mar 03 2022 Andrey Cherepanov <cas@altlinux.org> 1:0.19.4-alt1
+- New version.
+
 * Mon Dec 06 2021 Andrey Cherepanov <cas@altlinux.org> 1:0.19.3-alt1
 - New version.
 
