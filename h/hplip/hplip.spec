@@ -28,7 +28,7 @@
 %endif
 
 Name:    hplip
-Version: 3.21.12
+Version: 3.22.2
 Release: alt1
 Epoch:   1
 
@@ -237,7 +237,6 @@ Patch144: hplip-hpcups-crash.patch
 Patch145: hplip-covscan.patch
 Patch146: hplip-logging-segfault.patch
 Patch147: hplip-systray-blockerror.patch
-Patch148: hplip-missing-drivers.patch
 Patch149: hplip-model-mismatch.patch
 Patch150: hplip-unicodeerror.patch
 Patch151: hplip-fix-Wreturn-type-warning.patch
@@ -529,7 +528,6 @@ rm prnt/hpcups/ErnieFilter.{cpp,h} prnt/hpijs/ernieplatform.h
 %patch145 -p1 -b .covscan
 %patch146 -p1 -b .logging-segfault
 %patch147 -p1 -b .systray-blockerror
-%patch148 -p1 -b .missing-drivers
 %patch149 -p1 -b .model-mismatch
 %patch150 -p1 -b .unicodeerror
 %patch151 -p1 -b .Wreturn-fix
@@ -537,7 +535,7 @@ rm prnt/hpcups/ErnieFilter.{cpp,h} prnt/hpijs/ernieplatform.h
 %patch153 -p1 -b .dialog-infinite-loop
 %patch154 -p1 -b .find-driver
 %patch155 -p1 -b .clean-ldl
-%patch156 -p1 -b .revert-plugins
+%patch156 -p2 -b .revert-plugins
 #patch157 -p1 -b .thread-isalive-removed
 #patch158 -p1 -b .timed-removed
 #patch159 -p1 -b .check-userperms
@@ -1125,6 +1123,25 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Thu Mar 03 2022 Andrey Cherepanov <cas@altlinux.org> 1:3.22.2-alt1
+- New version.
+- Added support for the following new printers:
+  + HP LaserJet Tank MFP 1602a, 1602w
+  + HP LaserJet Tank MFP 1604w
+  + HP LaserJet Tank MFP 2602dn, 2602sdn, 2602sdw, 2602dw
+  + HP LaserJet Tank MFP 2604dw, 2604sdw
+  + HP LaserJet Tank MFP 2603dw, 2603sdw
+  + HP LaserJet Tank MFP 2605sdw
+  + HP LaserJet Tank MFP 2606dn, 2606sdn, 2606sdw, 2606dw, 2606dc
+  + HP LaserJet Tank MFP 1005, 1005w, 1005nw
+  + HP LaserJet Tank 1502a, 1502w
+  + HP LaserJet Tank 1504w
+  + HP LaserJet Tank 2502dw, 2502dn
+  + HP LaserJet Tank 2504dw
+  + HP LaserJet Tank 2503dw
+  + HP LaserJet Tank 2506dw, 2506d, 2506dn
+  + HP LaserJet Tank 1020, 1020w, 1020nw
+
 * Sun Jan 02 2022 Andrey Cherepanov <cas@altlinux.org> 1:3.21.12-alt1
 - New version.
 
