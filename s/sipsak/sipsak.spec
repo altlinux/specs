@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: sipsak
-Version: 0.9.7
-Release: alt1.git.02e5b5c
+Version: 0.9.8.1
+Release: alt1
 Summary: CLI tool for SIP developers and administrators
 License: GPLv2+
 Group: Communications
@@ -23,6 +25,8 @@ simple tests on SIP applications and devices.
 %setup
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %autoreconf
 %configure
 %make_build
@@ -37,6 +41,9 @@ simple tests on SIP applications and devices.
 %_man1dir/*
 
 %changelog
+* Thu Mar 03 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.8.1-alt1
+- Updated to upstream version 0.9.8.1.
+
 * Fri Dec 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.7-alt1.git.02e5b5c
 - Updated to latest upstream commit.
 
