@@ -1,7 +1,7 @@
 %define oname pivy
 Name: python3-module-%oname
-Version: 0.6.5
-Release: alt2
+Version: 0.6.6
+Release: alt1
 Epoch: 2
 Summary: Pivy is a Coin binding for Python
 License: ISC
@@ -10,15 +10,16 @@ Url: https://github.com/coin3d/pivy
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
-Patch1: pivy-cmake.patch
+Patch1: pivy-0.6.6-0001-fix-CMakeLists.txt-for-distutils_cmake.patch
+Patch2: pivy-0.6.6-0002-Gentoo-specific-clear-swig-deprecation-warning.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-python3
-BuildRequires: libcoin3d-devel
-BuildRequires: swig
-BuildRequires: libsoqt-devel
 BuildRequires: gcc-c++
+BuildRequires: libcoin3d-devel
+BuildRequires: libsoqt-devel
 BuildRequires: qt5-base-devel
+BuildRequires: swig
 
 %description
 Pivy is a Coin binding for Python. Coin is a high-level 3D graphics
@@ -30,6 +31,7 @@ applications.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 #add_optflags -I%_includedir/qt4/Qt -fno-strict-aliasing
@@ -50,6 +52,9 @@ mv %buildroot%python3_sitelibdir_noarch/%oname \
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 03 2022 Andrey Cherepanov <cas@altlinux.org> 2:0.6.6-alt1
+- New version.
+
 * Mon May 24 2021 Grigory Ustinov <grenka@altlinux.org> 2:0.6.5-alt2
 - Drop python2 support.
 
