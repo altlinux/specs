@@ -1,8 +1,8 @@
 %define pymodule GTG
 
 Name: gtg
-Version: 0.5
-Release: alt3
+Version: 0.6
+Release: alt1
 
 Summary: A personal tasks and TODO list items organizer.
 License: GPL-3.0-or-later
@@ -63,6 +63,9 @@ need to do and need to know, from small tasks to large projects.
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Thu Mar 3 2022 Vladimir Didenko <cow@altlinux.org> 0.6-alt1
+- New version
+
 * Thu Dec 16 2021 Vladimir Didenko <cow@altlinux.org> 0.5-alt3
 - Fix build with the new version of meson
 
