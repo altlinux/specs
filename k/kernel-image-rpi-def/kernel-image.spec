@@ -1,12 +1,13 @@
+%def_without cross_toolchain_aarch64
 %def_disable check
 
 Name: kernel-image-rpi-def
 Release: alt1
 epoch:1
-%define kernel_need_version	5.10
+%define kernel_need_version	5.15
 # Used when kernel-source-x.y does not currently exist in repository.
-%define kernel_base_version	5.10
-%define kernel_sublevel .81
+%define kernel_base_version	5.15
+%define kernel_sublevel .25
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -85,8 +86,14 @@ BuildRequires: libelf-devel
 BuildRequires: bc
 BuildRequires: rsync
 BuildRequires: openssl-devel
+%if_with cross_toolchain_aarch64
+BuildRequires: gcc-aarch64-linux-gnu
+%endif
+
 # for check
 %{?!_without_check:%{?!_disable_check:BuildRequires: qemu-system-%qemu_pkg-core ipxe-roms-qemu glibc-devel-static}}
+Provides:  kernel-modules-v4l-%kversion-%flavour-%krelease = %version-%release
+Provides:  kernel-modules-staging-%kversion-%flavour-%krelease = %version-%release
 
 %if_enabled docs
 BuildRequires: python3-module-sphinx /usr/bin/sphinx-build perl-Pod-Usage python3-module-sphinx_rtd_theme
@@ -104,14 +111,14 @@ BuildRequires: ccache
 Requires: bootloader-utils >= 0.4.24-alt1
 Requires: module-init-tools >= 3.1
 Requires: mkinitrd >= 1:2.9.9-alt1
+Requires(pre): rpi4-boot-switch
+Requires(pre): rpi4-boot-nouboot-filetrigger
 
 Provides: kernel = %kversion
 
 Requires(pre): coreutils
 Requires(pre): module-init-tools >= 3.1
 Requires(pre): mkinitrd >= 1:2.9.9-alt1
-Requires(pre): rpi4-boot-switch
-Requires(pre): rpi4-boot-nouboot-filetrigger
 
 %description
 This package contains the Linux kernel that is used to boot and run
@@ -139,42 +146,6 @@ Most XEN virtualization system versions can not boot lzma-compressed
 kernel images. This is an optional package with uncompressed linux
 kernel image for this special case. If you do not know what is it XEN
 it seems that you do not need this package.
-
-%package -n kernel-modules-v4l-%flavour
-Summary: Video4Linux driver modules (obsolete)
-Group: System/Kernel and hardware
-Provides:  kernel-modules-v4l-%kversion-%flavour-%krelease = %version-%release
-Conflicts: kernel-modules-v4l-%kversion-%flavour-%krelease < %version-%release
-Conflicts: kernel-modules-v4l-%kversion-%flavour-%krelease > %version-%release
-Provides:  kernel-modules-uvcvideo-%kversion-%flavour-%krelease = %version-%release
-Provides:  kernel-modules-gspca-%kversion-%flavour-%krelease = %version-%release
-Provides:  kernel-modules-lirc-%kversion-%flavour-%krelease = %version-%release
-Provides:  kernel-modules-lirc-%flavour = %version-%release
-Requires(pre): coreutils
-Requires(pre): module-init-tools >= 3.1
-Requires(pre): %name = %epoch:%version-%release
-Requires(postun): %name = %epoch:%version-%release
-
-%description -n kernel-modules-v4l-%flavour
-Video for linux drivers
-
-%package -n kernel-modules-staging-%flavour
-Summary:  Kernel modules under development
-Group: System/Kernel and hardware
-Provides:  kernel-modules-staging-%kversion-%flavour-%krelease = %version-%release
-Conflicts: kernel-modules-staging-%kversion-%flavour-%krelease < %version-%release
-Conflicts: kernel-modules-staging-%kversion-%flavour-%krelease > %version-%release
-Requires: kernel-modules-v4l-%kversion-%flavour-%krelease = %version-%release
-Requires(pre,post,postun): %name = %EVR
-Requires(pre): coreutils
-Requires(pre): module-init-tools >= 3.1
-Requires(pre): %name = %epoch:%version-%release
-Requires(postun): %name = %epoch:%version-%release
-
-%description -n kernel-modules-staging-%flavour
-Drivers and filesystems that are not ready to be merged into the main
-portion of the Linux kernel tree at this point in time for various
-technical reasons.
 
 %package -n kernel-headers-%flavour
 Summary: Header files for the Linux kernel
@@ -242,7 +213,9 @@ tar -xf %kernel_src/kernel-source-%kernel_base_version.tar
 echo 'export GCC_VERSION=%kgcc_version' > gcc_version.inc
 
 subst 's/EXTRAVERSION[[:space:]]*=.*/EXTRAVERSION = %kernel_extra_version-%flavour-%krelease/g' Makefile
+%if_without cross_toolchain_aarch64
 subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := $(shell echo $${GCC_USE_CCACHE:+ccache}) gcc-%kgcc_version/g' Makefile
+%endif
 
 # get rid of unwanted files resulting from patch fuzz
 find . -name "*.orig" -delete -or -name "*~" -delete
@@ -252,6 +225,9 @@ chmod +x tools/objtool/sync-check.sh
 %build
 export ARCH=%base_arch
 export NPROCS=%__nprocs
+%if_with cross_toolchain_aarch64
+export CROSS_COMPILE=aarch64-linux-gnu-
+%endif
 KernelVer=%kversion-%flavour-%krelease
 
 echo "Building Kernel $KernelVer"
@@ -292,18 +268,6 @@ install -Dp -m644 .config %buildroot/boot/config-$KernelVer
 
 make modules_install INSTALL_MOD_PATH=%buildroot
 find %buildroot -name '*.ko' | xargs gzip
-
-# Move some modules to kernel-image package tree
-install -d %buildroot%modules_dir/kernel/drivers/media-core/
-mv %buildroot%modules_dir/kernel/drivers/media/common/videobuf2/ %buildroot%modules_dir/kernel/drivers/media-core/
-%ifarch %arm
-mv %buildroot%modules_dir/kernel/drivers/media/mc/ %buildroot%modules_dir/kernel/drivers/media-core/
-mv %buildroot%modules_dir/kernel/drivers/media/v4l2-core/videodev.ko.gz %buildroot%modules_dir/kernel/drivers/media-core/
-%endif
-%ifarch aarch64
-mv %buildroot%modules_dir/kernel/drivers/media/rc/rc-core.ko.xz %buildroot%modules_dir/kernel/drivers/media-core/
-mv %buildroot%modules_dir/kernel/drivers/media/radio/tea575x.ko.xz %buildroot%modules_dir/kernel/drivers/media-core/
-%endif
 
 mkdir -p %buildroot/lib/devicetree/$KernelVer
 find arch/%arch_dir/boot/dts -type f -name \*.dtb | xargs -iz install -pm0644 z %buildroot/lib/devicetree/$KernelVer
@@ -471,8 +435,6 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %defattr(0600,root,root,0700)
 %modules_dir/*
 %exclude %modules_dir/build
-%exclude %modules_dir/kernel/drivers/media/
-%exclude %modules_dir/kernel/drivers/staging/
 %ghost %modules_dir/modules.alias.bin
 %ghost %modules_dir/modules.dep.bin
 %ghost %modules_dir/modules.symbols.bin
@@ -498,13 +460,15 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %doc %_docdir/kernel-doc-%base_flavour-%version
 %endif
 
-%files -n kernel-modules-v4l-%flavour
-%modules_dir/kernel/drivers/media/
-
-%files -n kernel-modules-staging-%flavour
-%modules_dir/kernel/drivers/staging/
-
 %changelog
+* Thu Mar 03 2022 Dmitry Terekhin <jqt4@altlinux.org> 1:5.15.25-alt1
+- Updated to 5.15.25 (still RPi-specific)
+- https://github.com/raspberrypi/linux.git rpi-5.15.y
+- commit 2f17f80d7fa9734b1af6ae94ecd35cd9c71770fa
+- Replaced config-aarch64 file based on rpi-un
+- Move v4l and staging modules to kernel-image package
+- Add the ability to build a package using a cross compiler
+
 * Tue Nov 30 2021 Dmitry Terekhin <jqt4@altlinux.org> 1:5.10.81-alt1
 - Updated to 5.10.81 (still RPi-specific)
 - https://github.com/raspberrypi/linux.git rpi-5.10.y
