@@ -3,7 +3,7 @@
 
 Name: photoflare
 Version: 1.6.9
-Release: alt1
+Release: alt2
 
 Group: Graphics
 Summary: Simple but powerful Cross Platform Image Editor
@@ -49,6 +49,10 @@ sed -i 's/^\(\s*app\.setApplicationVersion(QObject::tr("\).*\("))\)/\1%version%g
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Mon Feb 14 2022 Evgeny Sinelnikov <sin@altlinux.org> 1.6.9-alt2
+- Drawing performance regression in 1.6.9 Photoflare#463
+- Fix missing taskbar icon on kde plasma
+
 * Mon Feb 14 2022 Evgeny Sinelnikov <sin@altlinux.org> 1.6.9-alt1
 - Update to latest stable release
 
