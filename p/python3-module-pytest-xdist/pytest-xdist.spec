@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.1.0
+Version: 2.5.0
 Release: alt1
 
 Summary: pytest xdist plugin for distributed testing and loop-on-failing modes
@@ -21,11 +21,17 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools_scm
 %if_with check
 BuildRequires: /dev/pts
-BuildRequires: python3-module-execnet
-BuildRequires: python3-module-pexpect
-BuildRequires: python3-module-psutil
-BuildRequires: python3-module-pytest-forked
-BuildRequires: python3-module-tox
+# install_requires=
+BuildRequires: python3(execnet)
+BuildRequires: python3(pytest)
+BuildRequires: python3(pytest_forked)
+
+# optional
+BuildRequires: python3(psutil)
+BuildRequires: python3(pexpect)
+
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 %py3_provides %oname
@@ -59,12 +65,6 @@ BuildArch: noarch
 %setup
 %patch -p1
 
-# adjust timeouts for aarch64/beehive
-# the default one is 10sec
-grep -qrs 'child\.expect(.*)' testing/ || exit 1
-grep -lrs 'child\.expect(.*)' testing/ | xargs \
-sed -i '/[^#][[:space:]]\+child\.expect(.*)/{s/)[[:space:]]*$/, timeout=30)/g}'
-
 %build
 # SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
 # its used as the primary source for the version number in which
@@ -77,27 +77,21 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 
 %check
-sed -i '/^\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
-    \/bin\/sed -i \x271c \#!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-
-tox.py3 --sitepackages -vvr
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr
 
 %files
 %doc CHANGELOG.rst LICENSE README.rst example
 %python3_sitelibdir/xdist/
-%python3_sitelibdir/pytest_xdist-*.egg-info/
+%python3_sitelibdir/pytest_xdist-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Feb 28 2022 Stanislav Levin <slev@altlinux.org> 2.5.0-alt1
+- 2.1.0 -> 2.5.0.
+
 * Wed Oct 14 2020 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
 - 1.29.0 -> 2.1.0.
 - Stopped Python2 package build(Python2 EOL).

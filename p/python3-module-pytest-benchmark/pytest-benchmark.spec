@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 3.4.1
-Release: alt1
+Release: alt2
 Summary: pytest fixture for benchmarking code
 License: BSD-2-Clause
 Group: Development/Python3
@@ -69,6 +69,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr
 %python3_sitelibdir/pytest_benchmark-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Mar 01 2022 Stanislav Levin <slev@altlinux.org> 3.4.1-alt2
+- Fixed FTBFS (Pytest 7).
+
 * Wed Feb 02 2022 Stanislav Levin <slev@altlinux.org> 3.4.1-alt1
 - 3.2.3 -> 3.4.1.
 

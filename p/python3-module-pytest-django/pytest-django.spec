@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.0.0
-Release: alt2
+Version: 4.5.2
+Release: alt1
 
 Summary: A Django plugin for py.test
 
@@ -17,16 +17,20 @@ Url: https://pypi.org/project/pytest-django/
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools_scm)
 
 %if_with check
+# install_requires=
+BuildRequires: python3(pytest)
+
 BuildRequires: python3-module-django
-BuildRequires: python3-module-django-tests
 BuildRequires: python3-module-django-dbbackend-sqlite3
 BuildRequires: python3(pytest-xdist)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 %py3_provides %oname
@@ -41,42 +45,41 @@ the pytest testing tool.
 
 %prep
 %setup
-# haven't packaged yet
-grep -qsF 'django-configurations' setup.cfg || exit 1
-sed -i '/django-configurations/d' setup.cfg
+%autopatch -p1
 
 %build
 # SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
 # its used as the primary source for the version number in which
 # case it will be a unparsed string
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build_debug
+%python3_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 
 %check
-sed -i -e '/^\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' \
--e '/^setenv[ ]*=/a\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3' \
-tox.ini
-
+cat > tox.ini <<'EOF'
+[testenv]
+usedevelop=True
+commands =
+    {envbindir}/pytest {posargs:-vra}
+EOF
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -v
+export TOXENV=py3
+tox.py3 --sitepackages -vvr --console-scripts
 
 %files
 %doc AUTHORS *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/pytest_django/
+%python3_sitelibdir/pytest_django-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Feb 25 2022 Stanislav Levin <slev@altlinux.org> 4.5.2-alt1
+- 4.0.0 -> 4.5.2.
+
 * Tue Aug 24 2021 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt2
 - fix BR
 

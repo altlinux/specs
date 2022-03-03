@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-
 %define oname sphinx-gallery
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.9.0
+Version: 0.10.1
 Release: alt1
 Summary: Sphinx extension for automatic generation of an example gallery
 License: BSD-3-Clause
@@ -15,29 +16,32 @@ BuildArch: noarch
 # https://github.com/sphinx-gallery/sphinx-gallery.git
 Source: %name-%version.tar
 
-Patch1: %oname-alt-python3-compat.patch
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-sphinx
-BuildRequires: /usr/bin/pytest-3 python3-module-pytest-cov python3(numpy.testing) python3(matplotlib) python3(joblib)
+
+%if_with check
+BuildRequires: /proc
+
+# install_requires=
+BuildRequires: python3(sphinx)
+
+# optional
+BuildRequires: python3(matplotlib)
+BuildRequires: python3(numpy)
+BuildRequires: python3(numpy.testing)
+BuildRequires: python3(joblib)
+BuildRequires: python3-module-Pillow
+
+BuildRequires: python3(pytest)
+%endif
 
 %description
 A Sphinx extension that builds an HTML version of any Python script and puts it into an examples gallery.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-A Sphinx extension that builds an HTML version of any Python script and puts it into an examples gallery.
-
-This package contains tests for %oname.
-
 %prep
 %setup
-%patch1 -p1
+%autopatch -p1
 
 %build
 %python3_build
@@ -45,8 +49,14 @@ This package contains tests for %oname.
 %install
 %python3_install
 
+# outdated script requiring dropped easy_install
+rm %buildroot%_bindir/copy_sphinxgallery.sh
+
+# drop `.py` suffix to avoid clash as Python module
+mv %buildroot%_bindir/sphx_glr_python_to_jupyter{.py,}
+
 %check
-pytest-3 -vv \
+py.test3 -vra \
 	--deselect=sphinx_gallery/tests/test_docs_resolv.py::test_embed_code_links_get_data \
 	--deselect=sphinx_gallery/tests/test_full.py \
 	%nil
@@ -54,15 +64,15 @@ pytest-3 -vv \
 %files
 %doc LICENSE
 %doc README.rst RELEASES.md CHANGES.rst
-%_bindir/*
+%_bindir/sphx_glr_python_to_jupyter
 %python3_sitelibdir/sphinx_gallery
 %python3_sitelibdir/sphinx_gallery-%version-*.egg-info
 %exclude %python3_sitelibdir/sphinx_gallery/tests
 
-%files tests
-%python3_sitelibdir/sphinx_gallery/tests
-
 %changelog
+* Tue Mar 01 2022 Stanislav Levin <slev@altlinux.org> 0.10.1-alt1
+- 0.9.0 -> 0.10.1.
+
 * Tue Aug 24 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.0-alt1
 - Updated to upstream version 0.9.0.
 - Enabled tests.

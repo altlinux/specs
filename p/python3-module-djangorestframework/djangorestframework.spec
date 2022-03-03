@@ -5,13 +5,12 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.12.4
-Release: alt3
+Version: 3.13.1
+Release: alt1
 Summary: Web APIs for Django, made easy
 License: BSD
 Group: Development/Python3
 Url: https://pypi.org/project/djangorestframework
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # Source-git: https://github.com/encode/django-rest-framework.git
 Source: %name-%version.tar
@@ -27,10 +26,13 @@ BuildRequires: python3(livereload)
 %endif
 
 %if_with check
+# install_requires=
+BuildRequires: python3(pytz)
+BuildRequires: python3-module-django
+
 BuildRequires: python3(tox)
 BuildRequires: python3(tox_no_deps)
 BuildRequires: python3(pytest_django)
-BuildRequires: python3-module-django
 BuildRequires: python3-module-django-tests
 BuildRequires: python3-module-django-dbbackend-sqlite3
 %endif
@@ -59,7 +61,7 @@ This package contains documentation for %oname.
 %autopatch -p1
 
 %build
-%python3_build_debug
+%python3_build
 
 %if_with docs
 mkdocs build
@@ -75,7 +77,8 @@ tox.py3 --sitepackages --no-deps -vvr
 
 %files
 %doc *.md
-%python3_sitelibdir/*
+%python3_sitelibdir/rest_framework/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %if_with docs
 %files docs
@@ -84,6 +87,9 @@ tox.py3 --sitepackages --no-deps -vvr
 
 
 %changelog
+* Mon Feb 28 2022 Stanislav Levin <slev@altlinux.org> 3.13.1-alt1
+- 3.12.4 -> 3.13.1.
+
 * Thu Sep 09 2021 Alexey Shabalin <shaba@altlinux.org> 3.12.4-alt3
 - Fix BR.
 - Backport upstream patches for fix tests with Django-3.2.

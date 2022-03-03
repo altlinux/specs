@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Summary: pytest plugin for coverage reporting with support for centralised and distributed testing
 License: MIT
@@ -66,6 +66,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr
 %python3_sitelibdir/pytest_cov-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Mar 02 2022 Stanislav Levin <slev@altlinux.org> 3.0.0-alt2
+- Fixed FTBFS (pytest-xdist 2.5.0).
+
 * Mon Oct 11 2021 Stanislav Levin <slev@altlinux.org> 3.0.0-alt1
 - 2.11.1 -> 3.0.0.
 

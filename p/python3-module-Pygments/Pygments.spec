@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-Pygments
-Version: 2.10.0
+Version: 2.11.2
 Release: alt1
 
 Summary: Pygments is a syntax highlighting package written in Python
@@ -22,11 +22,15 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
+BuildRequires: python3(lxml)
 BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
 BuildRequires: python3(tox_console_scripts)
 BuildRequires: python3(tox_no_deps)
 %endif
+
+# PEP503 normalized name
+Provides: python3-module-pygments = %EVR
 
 %description
 It is a generic syntax highlighter for general use in all kinds of
@@ -41,12 +45,6 @@ to prettify source code. Highlights are:
 %prep
 %setup
 %autopatch -p1
-
-# drop post release tags
-sed -i \
-    -e 's/^tag_build[[:space:]]*=.*$/tag_build =/' \
-    -e 's/^tag_date[[:space:]]*=.*$/tag_date = 0/' \
-setup.cfg
 
 %build
 %python3_build
@@ -73,6 +71,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Feb 25 2022 Stanislav Levin <slev@altlinux.org> 2.11.2-alt1
+- 2.10.0 -> 2.11.2.
+
 * Wed Sep 08 2021 Stanislav Levin <slev@altlinux.org> 2.10.0-alt1
 - 2.8.1 -> 2.10.0.
 

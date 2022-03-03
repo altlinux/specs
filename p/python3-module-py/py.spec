@@ -2,7 +2,7 @@
 %define oname py
 
 Name: python3-module-%oname
-Version: 1.10.0
+Version: 1.11.0
 Release: alt1
 
 Summary: Testing and distributed programming library
@@ -69,6 +69,9 @@ diff -y move.expected.list move.actual.list
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Feb 25 2022 Stanislav Levin <slev@altlinux.org> 1.11.0-alt1
+- 1.10.0 -> 1.11.0.
+
 * Fri May 07 2021 Stanislav Levin <slev@altlinux.org> 1.10.0-alt1
 - 1.9.0 -> 1.10.0.
 - Built Python3 package from its own src.

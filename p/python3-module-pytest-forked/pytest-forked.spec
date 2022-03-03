@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: pytest plugin for running tests in isolated forked subprocesses
@@ -20,8 +20,12 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools_scm
 
 %if_with check
-BuildRequires: python3-module-pycmd
-BuildRequires: python3-module-tox
+# install_requires=
+BuildRequires: python3(py)
+BuildRequires: python3(pytest)
+
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 BuildArch: noarch
@@ -49,27 +53,28 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 
 %check
-sed -i '/^\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
-    \/bin\/sed -i \x271c \#!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
+cat > tox.ini <<'EOF'
+[testenv]
+usedevelop=True
+commands =
+    {envbindir}/pytest {posargs:-vra}
+EOF
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export TOXENV=py%{python_version_nodots python3}
+export TOXENV=py3
 
-tox.py3 --sitepackages -vvr
+tox.py3 --sitepackages --console-scripts -vvr
 
 %files
-%doc LICENSE CHANGELOG README.rst
+%doc LICENSE CHANGELOG.rst README.rst
 %python3_sitelibdir/pytest_forked/
-%python3_sitelibdir/pytest_forked-*.egg-info/
+%python3_sitelibdir/pytest_forked-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Feb 28 2022 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
+- 1.3.0 -> 1.4.0.
+
 * Wed Oct 14 2020 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
 - 1.1.3 -> 1.3.0.
 - Stopped Python2 package build(Python2 EOL).

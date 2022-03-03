@@ -4,21 +4,20 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.2.5
+Version: 7.0.1
 Release: alt1
 
 Summary: Python test framework
 License: MIT
 Group: Development/Python3
 # Source-git: https://github.com/pytest-dev/pytest.git
-Url: https://pypi.python.org/pypi/pytest
+Url: https://pypi.org/project/pytest/
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools_scm)
-BuildRequires: python3(toml)
 
 %if_with check
 # install_requires:
@@ -27,7 +26,7 @@ BuildRequires: python3(iniconfig)
 BuildRequires: python3(packaging)
 BuildRequires: python3(pluggy)
 BuildRequires: python3(py)
-BuildRequires: python3(toml)
+BuildRequires: python3(tomli)
 
 # extras_require:
 BuildRequires: python3(argcomplete)
@@ -36,23 +35,24 @@ BuildRequires: python3(mock)
 BuildRequires: python3(nose)
 BuildRequires: python3(requests)
 BuildRequires: python3(xmlschema)
+BuildRequires: python3-module-Pygments > 2.4.2
 
 BuildRequires: /dev/pts
 BuildRequires: /dev/shm
 
 BuildRequires: python3(tox)
+
+# optional
 BuildRequires: python3(decorator)
-BuildRequires: python3(funcsigs)
 BuildRequires: python3(jinja2)
 BuildRequires: python3(numpy)
 BuildRequires: python3(pexpect)
-BuildRequires: python3-module-Pygments > 2.4.2
 %endif
 
 BuildArch: noarch
 
 %py3_requires py
-%py3_requires toml
+%py3_requires tomli
 %py3_requires packaging
 
 %description
@@ -98,7 +98,7 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
-tox.py3 --sitepackages -vvr -s false
+tox.py3 --sitepackages -vvr -s false -- -vra
 
 %files
 %doc AUTHORS LICENSE *.rst
@@ -113,6 +113,9 @@ tox.py3 --sitepackages -vvr -s false
 %_bindir/pytest-3
 
 %changelog
+* Fri Feb 25 2022 Stanislav Levin <slev@altlinux.org> 7.0.1-alt1
+- 6.2.5 -> 7.0.1.
+
 * Wed Sep 08 2021 Stanislav Levin <slev@altlinux.org> 6.2.5-alt1
 - 6.2.4 -> 6.2.5.
 

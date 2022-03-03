@@ -4,18 +4,19 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.14.1
+Version: 1.1.0
 Release: alt1
 
 Summary: Lightweight pipelining: using Python functions as pipeline jobs
 License: BSD
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/joblib
+Url: https://pypi.org/project/joblib/
 
 BuildArch: noarch
 
 # https://github.com/joblib/joblib.git
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -23,11 +24,18 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: /proc
 BuildRequires: python3(numpy)
 BuildRequires: python3(numpy.testing)
+BuildRequires: python3(threadpoolctl)
+BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 # `distributed` is not packaged yet
 %filter_from_requires /python[3]\(\.[[:digit:]]\)\?(distributed\()\|\..*)\)/d
+
+# TODO: unbundle loky and cloudpickle
+# hide vendored packages
+%add_findprov_skiplist %python3_sitelibdir/%oname/externals/*
 
 %description
 Joblib is a set of tools to provide lightweight pipelining in Python. In
@@ -41,57 +49,37 @@ particular, joblib offers:
 Joblib is optimized to be fast and robust in particular on large data
 and has specific optimizations for numpy arrays.
 
-%package tests
-Summary: Tests for joblib
-Group: Development/Python3
-Requires: %name = %version-%release
-
-%description tests
-Joblib is a set of tools to provide lightweight pipelining in Python. In
-particular, joblib offers:
-
-  1. transparent disk-caching of the output values and lazy
-     re-evaluation (memoize pattern)
-  2. easy simple parallel computing
-  3. logging and tracing of the execution
-
-Joblib is optimized to be fast and robust in particular on large data
-and has specific optimizations for numpy arrays.
-
-This package contains tests for joblib.
-
 %prep
 %setup
+%autopatch -p1
 
 %build
 %python3_build
 
 %install
-%python3_build_install
+%python3_install
 
 %check
-%if 0
 cat > tox.ini <<EOF
 [testenv]
 commands =
-    {envpython} -m pytest {posargs:-vra}
+    pytest {posargs:-vra}
 EOF
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -vr
-%endif
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 %exclude %python3_sitelibdir/%oname/test*
 %exclude %python3_sitelibdir/%oname/__pycache__/test*
 
-%files tests
-%python3_sitelibdir/%oname/test*
-%python3_sitelibdir/%oname/__pycache__/test*
-
 %changelog
+* Tue Mar 01 2022 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
+- 0.14.1 -> 1.1.0.
+
 * Tue Mar 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.14.1-alt1
 - Version updated to 0.14.1
 - build for python2 disabled.
