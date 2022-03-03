@@ -1,7 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: xosview
-Version: 1.22
+Version: 1.23
 Release: alt1
 Summary: An X Window System utility for monitoring system resources
 License: GPL-2.0 and BSD-4-Clause-UC
@@ -14,8 +16,6 @@ Source1: xosview16.png
 Source2: xosview32.png
 Source3: xosview48.png
 
-Patch: xosview-1.21-alt-e2k.patch
-
 BuildRequires: gcc-c++ libXpm-devel libX11-devel desktop-file-utils
 
 %description
@@ -25,9 +25,10 @@ Xosview runs under the X Window System.
 
 %prep
 %setup
-%patch -p1
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 %make_build OPTFLAGS="${CFLAGS:-%optflags}"
 
 cat > %{name}.desktop <<EOF
@@ -69,6 +70,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_miconsdir/*.png
 
 %changelog
+* Thu Mar 03 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.23-alt1
+- Updated to upstream version 1.23.
+
 * Fri Jul 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.22-alt1
 - Updated to upstream version 1.22.
 
