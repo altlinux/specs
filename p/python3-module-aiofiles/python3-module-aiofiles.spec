@@ -1,7 +1,7 @@
 %define  modulename aiofiles
 
 Name:    python3-module-%modulename
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: File support for asyncio
@@ -37,6 +37,9 @@ BuildRequires: python3-devel python3-module-setuptools
 %doc *.rst LICENSE
 
 %changelog
+* Thu Mar 03 2022 Anton Midyukov <antohami@altlinux.org> 0.8.0-alt1
+- new version (0.8.0) with rpmgs script
+
 * Tue Nov 09 2021 Anton Midyukov <antohami@altlinux.org> 0.7.0-alt1
 - new version (0.7.0) with rpmgs script
 - source from tarball

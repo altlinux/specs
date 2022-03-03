@@ -11,7 +11,7 @@
 %add_python3_req_skip prompt_toolkit.terminal.vt100_output
 
 Name: gns3-server
-Version: 2.2.29
+Version: 2.2.31
 Release: alt1
 
 Summary: GNS3 server manages emulators such as Dynamips, VirtualBox or Qemu/KVM
@@ -32,7 +32,7 @@ BuildRequires: python3-devel python3-module-setuptools
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 Requires: cpulimit
 Requires: dynamips >= 0.2.11
-Requires: python3-module-aiofiles >= 0.7.0
+Requires: python3-module-aiofiles >= 0.8.0
 Requires: python3-module-aiohttp >= 3.7.4
 Requires: python3-module-aiohttp-cors >= 0.7.0
 Requires: python3-module-async-timeout >= 3.0.1
@@ -90,6 +90,9 @@ py.test3 -v
 %python3_sitelibdir/gns3_server-*.egg-info
 
 %changelog
+* Thu Mar 03 2022 Anton Midyukov <antohami@altlinux.org> 2.2.31-alt1
+- new version 2.2.31
+
 * Wed Jan 12 2022 Anton Midyukov <antohami@altlinux.org> 2.2.29-alt1
 - new version 2.2.29
 
