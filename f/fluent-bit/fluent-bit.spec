@@ -2,7 +2,7 @@
 
 Name: fluent-bit
 Version: 1.8.12
-Release: alt1
+Release: alt2
 Summary: Fast data collector for Linux
 License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT
 Group: Monitoring
@@ -63,6 +63,7 @@ Fluent Bit is a high performance and multi-platform log forwarder.
     -DFLB_IN_SYSTEMD=On \
     -DFLB_OUT_TD=Off \
     -DFLB_OUT_ES=Off \
+    -DFLB_OUT_KAFKA=On \
     -DFLB_SHARED_LIB=Off \
     -DFLB_TESTS_RUNTIME=On \
     -DFLB_TESTS_INTERNAL=Off \
@@ -97,5 +98,8 @@ ctest
 %_unitdir/%name.service
 
 %changelog
+* Thu Mar 03 2022 Nikolay Burykin <bne@altlinux.org> 1.8.12-alt2
+- Add build option -DFLB_OUT_KAFKA=On
+
 * Tue Feb 15 2022 Leontiy Volodin <lvol@altlinux.org> 1.8.12-alt1
 - Initial build for ALT Sisyphus (thanks fedora for the spec).
