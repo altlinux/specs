@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: bamf
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: BAMF Application Matching Framework
@@ -12,7 +12,7 @@ License: GPL-3.0 and LGPL-3.0
 Group: Graphical desktop/Other
 Url: https://launchpad.net/bamf
 
-Source: %url/%ver_major/%version/+download/%name-%version.tar.xz
+Source: %url/%ver_major/%version/+download/%name-%version.tar.gz
 
 BuildRequires: libgtk+3-devel gtk-doc gnome-common
 BuildRequires: libdbus-glib-devel libwnck3-devel libgtop-devel
@@ -145,6 +145,9 @@ export PYTHON=%__python3
 %_datadir/gir-1.0/Bamf-3.gir
 
 %changelog
+* Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 0.5.6-alt1
+- 0.5.6
+
 * Sat Apr 10 2021 Yuri N. Sedunov <aris@altlinux.org> 0.5.5-alt1
 - 0.5.5
 - removed debian patchset
