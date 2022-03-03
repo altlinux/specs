@@ -6,8 +6,8 @@
 %endif
 
 Name: bubblewrap
-Version: 0.5.0
-Release: alt2
+Version: 0.6.1
+Release: alt1
 
 Summary: Unprivileged sandboxing tool
 
@@ -28,8 +28,10 @@ Patch1: bubblewrap-fix-run-path.patch
 Requires(pre): libcap-utils
 %endif
 
-BuildRequires: gcc-c++ binutils-devel libelf-devel
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++ binutils-devel libelf-devel
 BuildRequires: db2latex-xsl docbook-style-xsl libcap-devel xsltproc
+BuildRequires: python3 bash-completion
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 
 %description
@@ -44,15 +46,14 @@ because it is trivial to turn such access into to a fully privileged root shell 
 %patch1 -p1
 
 %build
-%autoreconf
-%configure \
-	%{subst_enable selinux} \
-	%{?_enable_userns:--enable-require-userns=yes}
+%meson \
+	%{?_disable_selinux:-Dselinux=disabled} \
+	%{?_enable_userns:-Drequire_userns=true}
 %nil
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %if_enabled userns
 mkdir -p %buildroot%_sysctldir
@@ -78,6 +79,9 @@ setcap -q "cap_sys_admin,cap_net_admin,cap_sys_chroot,cap_setuid,cap_setgid=ep" 
 %_datadir/zsh/site-functions/_bwrap
 
 %changelog
+* Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
+- 0.6.1 (ported to Meson build system)
+
 * Tue Nov 23 2021 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt2
 - disabled user namespaces in a setuid mode (ALT #41418)
 
