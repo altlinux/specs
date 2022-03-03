@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: uid_wrapper
-Version: 1.2.8
-Release: alt1.1
+Version: 1.2.9
+Release: alt1
 
 Summary: A wrapper for privilege separation
 License: GPLv3+
@@ -58,6 +58,9 @@ popd
 %_man1dir/uid_wrapper.1*
 
 %changelog
+* Sun Feb 27 2022 Evgeny Sinelnikov <sin@altlinux.org> 1.2.9-alt1
+- Update to latest release with support for getgroups_chk()
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1.2.8-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
