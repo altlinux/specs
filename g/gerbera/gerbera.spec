@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gerbera
-Version: 1.9.2
-Release: alt2
+Version: 1.10.0
+Release: alt1
 
 Summary: UPnP Media Server
 Group: System/Servers
@@ -14,15 +14,15 @@ Patch: %name-%version-%release.patch
 Requires: %name-data = %EVR
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake >= 3.14
+BuildRequires: cmake >= 3.18
 BuildRequires: gcc-c++
-BuildRequires: libupnp-devel >= 1.14.0
+BuildRequires: libupnp-devel >= 1.14.12
 BuildRequires: libfmt-devel >= 7.1.3
-BuildRequires: libspdlog-devel >= 1.8.1
+BuildRequires: libspdlog-devel >= 1.8.5
 BuildRequires: libuuid-devel
 BuildRequires: libexpat-devel
-BuildRequires: libsqlite3-devel >= 3.7.11
-BuildRequires: libduktape-devel >= 2.2.1
+BuildRequires: libsqlite3-devel >= 3.35.5
+BuildRequires: libduktape-devel >= 2.5.0
 BuildRequires: libcurl-devel
 BuildRequires: libtag-devel >= 1.12
 BuildRequires: libmagic-devel
@@ -34,7 +34,7 @@ BuildRequires: libavutil-devel
 BuildRequires: libavcodec-devel
 BuildRequires: libffmpegthumbnailer-devel >= 2.2.0
 BuildRequires: zlib-devel
-BuildRequires: libebml-devel >= 1.3.9 libmatroska-devel >= 1.5.2
+BuildRequires: libebml-devel >= 1.4.2 libmatroska-devel >= 1.6.3
 BuildRequires: libsystemd-devel
 BuildRequires: libmysqlclient-devel
 
@@ -123,6 +123,9 @@ useradd -r -n -g %name -d %_localstatedir/%name -s /dev/null \
 %_datadir/%name
 
 %changelog
+* Fri Mar 04 2022 Alexey Shabalin <shaba@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Tue Feb 01 2022 Alexey Shabalin <shaba@altlinux.org> 1.9.2-alt2
 - upstream master snapshot (fixed ftbfs)
 
