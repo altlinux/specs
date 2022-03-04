@@ -1,17 +1,18 @@
 %def_disable snapshot
 %define ver_major 1.0
-%define beta .alpha.4
+%define beta %nil
 %define api_ver 1
+%define xdg_name org.gnome.Adwaita%api_ver
 
 %def_enable introspection
 %def_enable vala
-%def_enable inspector
 %def_enable gtk_doc
+%def_enable examples
 %def_disable check
 
 Name: libadwaita
-Version: %ver_major.0
-Release: alt0.3%beta
+Version: %ver_major.2
+Release: alt1%beta
 Epoch: 1
 
 Summary: Library with GTK4 widgets for mobile devices
@@ -28,8 +29,8 @@ Source: %name-%version.tar
 %endif
 
 %define meson_ver 0.59
-%define glib_ver 2.44
-%define gtk_ver 4.4.0
+%define glib_ver 2.66
+%define gtk_ver 4.5.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson >= %meson_ver sassc
@@ -37,7 +38,8 @@ BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: libfribidi-devel
 %{?_enable_introspection:BuildRequires: pkgconfig(gobject-introspection-1.0) gir(Gtk) = 4.0}
-%{?_enable_vala:BuildRequires: vala-tools}
+%{?_enable_vala:BuildRequires(pre): rpm-build-vala
+BuildRequires: vala-tools}
 %{?_enable_gtk_doc:BuildRequires: gi-docgen}
 %{?_enable_check:BuildRequires: xvfb-run librsvg}
 
@@ -82,14 +84,22 @@ Conflicts: %name < %EVR
 %description devel-doc
 This package contains development documentation for %name library.
 
+%package demo
+Summary: %name widgets demonstration programs
+Group: Development/GNOME and GTK+
+Requires: %name = %EVR
+
+%description demo
+This package contains a program, along with its source code, that
+demonstrates %name variety of all its widgets.
+
 %prep
 %setup -n %name-%version%beta
 
 %build
 %meson \
-    -Dgtk_doc=true \
-    -Dexamples=false \
-    %{?_disable_inspector:-Dinspector=false}
+    %{?_enable_gtk_doc:-Dgtk_doc=true} \
+    %{?_disable_examples:-Dexamples=false}
 %nil
 %meson_build
 
@@ -103,8 +113,7 @@ xvfb-run -s -noreset %meson_test
 
 %files -f %name.lang
 %_libdir/%name-%api_ver.so.*
-%{?_enable_inspector:%_libdir/gtk-4.0/inspector/libadwaita-inspector-module1.so}
-%doc README.md
+%doc README.md NEWS
 
 %files devel
 %_includedir/%name-%api_ver/
@@ -122,11 +131,28 @@ xvfb-run -s -noreset %meson_test
 
 %if_enabled gtk_doc
 %files devel-doc
-#%_datadir/gtk-doc/html/%name-%api_ver/
 %_datadir/doc/%name-%api_ver/
 %endif
 
+%if_enabled examples
+%files demo
+%_bindir/adwaita-%api_ver-demo
+%_desktopdir/%{xdg_name}.Demo.desktop
+%_iconsdir/hicolor/*/apps/%{xdg_name}.Demo*.svg
+%_datadir/metainfo/%{xdg_name}.Demo.metainfo.xml
+%endif
+
 %changelog
+* Fri Mar 04 2022 Yuri N. Sedunov <aris@altlinux.org> 1:1.0.2-alt1
+- 1.0.2
+
+* Sun Jan 02 2022 Yuri N. Sedunov <aris@altlinux.org> 1:1.0.1-alt1
+- 1.0.1
+
+* Fri Dec 31 2021 Yuri N. Sedunov <aris@altlinux.org> 1:1.0.0-alt1
+- 1.0.0
+- new -demo subpackage
+
 * Tue Nov 02 2021 Yuri N. Sedunov <aris@altlinux.org> 1:1.0.0-alt0.3.alpha.4
 - 1.0.0
 
