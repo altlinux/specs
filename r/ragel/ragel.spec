@@ -1,18 +1,29 @@
-# vim: set ft=spec: -*- rpm-spec -*-
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: ragel
-Version: 6.10
-Release: alt1.1
-
+Version: 7.0.4
+Release: alt1
 Summary: Ragel State Machine Compiler
 Group: Development/Other
-License: GPLv2
-Url: http://www.complang.org/ragel/
+License: MIT
+Url: http://www.colm.net/open-source/ragel/
 
+# https://github.com/adrian-thurston/ragel.git
 Source: %name-%version.tar
+
+# watch file
+Source1000: %name.watch
+
+Patch1: ragel-alt-build.patch
 
 # Automatically added by buildreq on Fri Jul 25 2008
 BuildRequires: gcc-c++ ghostscript-classic texlive-context texlive-collection-latexrecommended transfig vim-devel
+BuildRequires: colm
+BuildRequires: asciidoc-a2x asciidoc-latex
+
+Requires: lib%name = %EVR
 
 %description
 Ragel compiles executable finite state machines from regular
@@ -31,13 +42,28 @@ PreReq: vim-common
 %description -n vim-plugin-%name-syntax
 Vim syntax for Ragel.
 
+%package -n lib%name
+Summary: Ragel libraries
+Group: System/Libraries
+
+%description -n lib%name
+Ragel libraries
+
 %prep
 %setup
+%patch1 -p1
 
 %build
-%add_optflags -fpermissive
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 export CPPFLAGS="%optflags"
-%configure --docdir=%_docdir/%name-%version
+%autoreconf
+%configure \
+	--disable-static \
+	--with-colm=%_prefix \
+	--docdir=%_docdir/%name-%version \
+	%nil
+
 %make_build
 %make_build -C doc
 
@@ -45,15 +71,12 @@ export CPPFLAGS="%optflags"
 mkdir -p %buildroot{%vim_syntax_dir,%vim_ftdetect_dir}
 %makeinstall_std
 %makeinstall_std -C doc
-cp CREDITS README TODO %buildroot%_docdir/%name-%version
+cp COPYING CREDITS README TODO-aapl TODO-ragel %buildroot%_docdir/%name-%version
 
 install -p -m644 ragel.vim %buildroot%vim_syntax_dir/
 cat <<EOF >%buildroot%vim_ftdetect_dir/ragel.vim
 au BufNewFile,BufRead *.rl  setf ragel
 EOF
-
-%check
-#make -C test check
 
 %files
 %doc %_docdir/%name-%version
@@ -64,7 +87,15 @@ EOF
 %vim_syntax_dir/ragel.vim
 %vim_ftdetect_dir/ragel.vim
 
+%files -n lib%name
+%_libdir/*.so
+%_libdir/*.so.*
+%_datadir/*.lm
+
 %changelog
+* Thu Mar 03 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 7.0.4-alt1
+- Updated to upstream version 7.0.4.
+
 * Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 6.10-alt1.1
 - NMU: rebuild with TeXLive instead of TeTeX
 - note: disabled %%check to rebuild successfully
