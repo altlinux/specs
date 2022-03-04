@@ -5,7 +5,7 @@
 %def_with x2go
 
 Name: remmina
-Version: 1.4.23
+Version: 1.4.24
 Release: alt1
 Summary: Remote Desktop Client
 
@@ -323,6 +323,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Fri Mar 04 2022 Alexey Shabalin <shaba@altlinux.org> 1.4.24-alt1
+- new version 1.4.24
+
 * Sat Dec 25 2021 Alexey Shabalin <shaba@altlinux.org> 1.4.23-alt1
 - new version 1.4.23.
 
