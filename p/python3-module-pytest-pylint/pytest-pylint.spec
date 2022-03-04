@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.18.0
-Release: alt2
+Release: alt3
 
 Summary: pytest plugin to check source code with pylint
 License: MIT
@@ -55,6 +55,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/pytest_pylint-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Mar 04 2022 Stanislav Levin <slev@altlinux.org> 0.18.0-alt3
+- Fixed FTBFS (Pytest 7).
+
 * Thu Feb 10 2022 Stanislav Levin <slev@altlinux.org> 0.18.0-alt2
 - Fixed FTBFS (Pylint 2.12.2).
 
