@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.3.1
+Version: 0.3.4
 Release: alt1
 
 Summary: Low-level functions for packaging and distribution of Python software
@@ -34,8 +34,6 @@ use the library.
 %setup
 %patch -p1
 
-# backports
-rm -rv distlib/_backport/
 # win files
 rm -v distlib/*.exe
 
@@ -57,6 +55,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Mar 04 2022 Stanislav Levin <slev@altlinux.org> 0.3.4-alt1
+- 0.3.1 -> 0.3.4.
+
 * Mon Oct 26 2020 Stanislav Levin <slev@altlinux.org> 0.3.1-alt1
 - Initial build for Sisyphus.
 

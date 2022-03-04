@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 20.13.1
+Version: 20.13.2
 Release: alt1
 
 Summary: Virtual Python Environment builder
@@ -103,6 +103,9 @@ tox.py3 --sitepackages --no-deps -vvr -s false
 %python3_sitelibdir/virtualenv-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Mar 04 2022 Stanislav Levin <slev@altlinux.org> 20.13.2-alt1
+- 20.13.1 -> 20.13.2.
+
 * Tue Feb 08 2022 Stanislav Levin <slev@altlinux.org> 20.13.1-alt1
 - 20.13.0 -> 20.13.1.
 

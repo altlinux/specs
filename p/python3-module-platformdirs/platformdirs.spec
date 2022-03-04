@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.5.0
+Version: 2.5.1
 Release: alt1
 
 Summary: Determining appropriate platform-specific dirs
@@ -63,6 +63,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- tests
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Mar 04 2022 Stanislav Levin <slev@altlinux.org> 2.5.1-alt1
+- 2.5.0 -> 2.5.1.
+
 * Fri Feb 11 2022 Stanislav Levin <slev@altlinux.org> 2.5.0-alt1
 - 2.4.1 -> 2.5.0.
 
