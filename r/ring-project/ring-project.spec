@@ -29,12 +29,12 @@
 %define libringclient libringclient%ringclient_sover
 
 Name: ring-project
-Version: 20210917
-Release: alt3
+Version: 20211223
+Release: alt1
 
 Group: Networking/Instant messaging
 Summary: SIP and IAX2 compatible softphone
-Url: http://ring.cx/
+Url: https://jami.net/
 License: GPLv3
 
 ExcludeArch: %not_qt5_qtwebengine_arches
@@ -47,6 +47,7 @@ Source: %name-%version.tar
 Patch3: alt-armh.patch
 Patch4: alt-ppc.patch
 Patch5: alt-qt-build.patch
+Patch6: alt-link.patch
 
 BuildRequires(pre): rpm-build-ubt
 %IF_ver_gteq %ubt_id M90
@@ -166,6 +167,7 @@ developing applications that use %name.
 %patch3 -p1
 %patch4 -p1
 #%patch5 -p1
+%patch6 -p1
 
 # don't build internal vpx
 rm -rf daemon/contrib/src/vpx
@@ -361,6 +363,9 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir/
 #%_libdir/libring.a
 
 %changelog
+* Thu Mar 03 2022 Sergey V Turchin <zerg@altlinux.org> 20211223-alt1
+- new version
+
 * Fri Feb 18 2022 Sergey V Turchin <zerg@altlinux.org> 20210917-alt3
 - using not_qt5_qtwebengine_arches macro
 
