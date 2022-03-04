@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        98.0.4758.102
+Version:        99.0.4844.51
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -445,6 +445,31 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Mar 03 2022 Alexey Gladkov <legion@altlinux.ru> 99.0.4844.51-alt1
+- New version (99.0.4844.51).
+- Security fixes:
+  - CVE-2022-0789: Heap buffer overflow in ANGLE.
+  - CVE-2022-0790: Use after free in Cast UI.
+  - CVE-2022-0791: Use after free in Omnibox.
+  - CVE-2022-0792: Out of bounds read in ANGLE.
+  - CVE-2022-0793: Use after free in Views.
+  - CVE-2022-0794: Use after free in WebShare.
+  - CVE-2022-0795: Type Confusion in Blink Layout.
+  - CVE-2022-0796: Use after free in Media.
+  - CVE-2022-0797: Out of bounds memory access in Mojo.
+  - CVE-2022-0798: Use after free in MediaStream.
+  - CVE-2022-0799: Insufficient policy enforcement in Installer.
+  - CVE-2022-0800: Heap buffer overflow in Cast UI.
+  - CVE-2022-0801: Inappropriate implementation in HTML parser.
+  - CVE-2022-0802: Inappropriate implementation in Full screen mode.
+  - CVE-2022-0803: Inappropriate implementation in Permissions.
+  - CVE-2022-0804: Inappropriate implementation in Full screen mode.
+  - CVE-2022-0805: Use after free in Browser Switcher.
+  - CVE-2022-0806: Data leak in Canvas.
+  - CVE-2022-0807: Inappropriate implementation in Autofill.
+  - CVE-2022-0808: Use after free in Chrome OS Shell.
+  - CVE-2022-0809: Out of bounds memory access in WebXR.
+
 * Wed Feb 16 2022 Alexey Gladkov <legion@altlinux.ru> 98.0.4758.102-alt1
 - New version (98.0.4758.102) (ALT#41964).
 - Security fixes:
