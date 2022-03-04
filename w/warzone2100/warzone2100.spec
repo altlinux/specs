@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: warzone2100
-Version: 4.2.4
+Version: 4.2.6
 Release: alt1
 Summary: Warzone 2100 Resurrection Project (RTS 3D game)
 License: GPLv2+ and CC-BY-SA-3.0
@@ -37,6 +37,8 @@ Source8: %name-%version-3rdparty-SQLiteCpp.tar
 Source9: %name-%version-3rdparty-SQLiteCpp-googletest.tar
 Source10: %name-%version-data-base-texpages.tar
 Source11: %name-%version-data-music.tar
+
+Source1000: %name.watch
 
 Patch1: %name-alt-unbundle-libs.patch
 Patch2: %name-alt-dont-install-portable-marker.patch
@@ -124,6 +126,9 @@ rm -rf %buildroot%_iconsdir/warzone2100.png
 %_datadir/warzone2100
 
 %changelog
+* Fri Mar 04 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.6-alt1
+- Updated to upstream version 4.2.6.
+
 * Fri Jan 14 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.4-alt1
 - Updated to upstream version 4.2.4.
 
