@@ -1,5 +1,5 @@
 Name: xfce4-terminal
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 
 Summary: Terminal emulator application for Xfce
@@ -12,13 +12,11 @@ Vcs: https://gitlab.xfce.org/apps/xfce4-terminal.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4ui-gtk3-devel
-BuildPreReq: gtk-doc
+BuildRequires: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libxfconf-devel >= 4.16 libxfce4ui-gtk3-devel >= 4.16
 BuildRequires: libpcre2-devel
-
-# Automatically added by buildreq on Fri Aug 07 2009
-BuildRequires: docbook-dtds docbook-style-xsl intltool libSM-devel libdbus-glib-devel libvte3-devel time xorg-cf-files
+BuildRequires: docbook-dtds docbook-style-xsl intltool libvte3-devel
+BuildRequires: xsltproc
 
 Requires: xfce4-common
 
@@ -47,7 +45,6 @@ xfce4-terminal - легкий и удобный эмулятор термина�
 %xfce4reconf
 %configure \
 	--enable-maintainer-mode \
-	--enable-gen-doc \
 	--enable-debug=minimum
 %make_build
 
@@ -65,6 +62,11 @@ xfce4-terminal - легкий и удобный эмулятор термина�
 %_desktopdir/*
 
 %changelog
+* Fri Mar 04 2022 Mikhail Efremov <sem@altlinux.org> 0.9.2-alt1
+- Drop gtk-doc check.
+- Cleanup BR.
+- Updated to 0.9.2.
+
 * Sat Dec 11 2021 Mikhail Efremov <sem@altlinux.org> 0.9.1-alt1
 - Updated to 0.9.1.
 
