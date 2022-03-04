@@ -1,9 +1,9 @@
 %def_disable snapshot
 %define _name python-efl
-%define efl_ver 1.25.0
+%define efl_ver 1.26.0
 
 Name: python3-module-efl
-Version: 1.25.0
+Version: 1.26.0
 Release: alt1
 
 Summary: Python 3 bindings for EFL libraries
@@ -21,7 +21,7 @@ Source: %_name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: efl-libs-devel >= %efl_ver libelementary-devel >= %efl_ver
 BuildRequires: python3-module-dbus-devel
-BuildRequires: python3-devel python3-module-Cython
+BuildRequires: python3-devel python3-module-Cython python3-module-packaging
 
 %description
 EFL is a collection of libraries for handling many common tasks a
@@ -54,6 +54,9 @@ with Python 3 programms.
 %exclude %python3_sitelibdir/efl/utils/setup.py*
 
 %changelog
+* Fri Mar 04 2022 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt1
+- 1.26.0
+
 * Wed Oct 28 2020 Yuri N. Sedunov <aris@altlinux.org> 1.25.0-alt1
 - 1.25.0 (python3-only)
 
