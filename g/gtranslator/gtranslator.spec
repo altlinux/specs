@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 40
+%define ver_major 41
 %define api_ver 3.0
 %define xdg_name org.gnome.Gtranslator
 
@@ -8,7 +8,7 @@
 
 Name: gtranslator
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: A GNOME po file editor with many bells and whistles.
 License: GPLv3
@@ -21,7 +21,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-Requires: libgda5-sqlite gettext-tools
+Requires: libgda6-sqlite gettext-tools
 
 %define gtk_ver 3.22.20
 %define gspell_ver 1.2.0
@@ -30,7 +30,7 @@ Requires: libgda5-sqlite gettext-tools
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson yelp-tools gtk-doc libgtk+3-devel >= %gtk_ver
-BuildRequires: libgda5-devel libgtksourceview4-devel >= %gtksourceview_ver
+BuildRequires: libgda6-devel libgtksourceview4-devel >= %gtksourceview_ver
 BuildRequires: libsoup-devel gsettings-desktop-schemas-devel iso-codes-devel
 BuildRequires: libgspell-devel >= %gspell_ver libxml2-devel >= %xml_ver
 BuildRequires: libjson-glib-devel libdazzle-devel
@@ -93,6 +93,9 @@ This package contains documentation needed to develop %name plugins.
 %_datadir/gtk-doc/html/%name/}
 
 %changelog
+* Tue Mar 01 2022 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
+- 41.0
+
 * Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt2
 - updated to 40.0-12-g1becbcdf
 - fixed meson options

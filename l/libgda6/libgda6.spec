@@ -1,42 +1,45 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name libgda
-%define ver_major 5.2
-%define abi_ver 5.0
-# to avoid conflict with old libgda
-%def_disable default_binary
-
-%def_disable static
-%def_enable gtk_doc
-
+%define ver_major 6.0
+%define abi_ver_major 6
+%define abi_ver 6.0
+%def_disable doc
 %def_with mysql
 %def_with postgres
+%def_with sqlite
+%def_with sqlcipher
+%def_enable system_sqlite
+# experimental
+%def_without ldap
+%def_without web
+# not supported in 6.0
 %def_without odbc
 %def_without mdb
-%def_with bdb
-%def_with ldap
+%def_without bdb
+%def_without interbase
 %def_without oracle
 %def_without tds
 %def_without sybase
-%def_with sqlite
-%def_enable system_sqlite
-%def_without interbase
 %def_without java
-%def_disable crypto
+
 %def_enable introspection
 %def_enable vala
-%def_with ui
+# experimental would be defined for ui
+%def_enable experimental
+%def_enable ui
 %def_with gtksourceview
 %def_enable glade
+%def_enable tools
 
 %add_python3_path %_datadir/%_name-%abi_ver
 # openerp provides this
 %add_python3_req_skip rml2html
 
-Name: %{_name}5
-Version: %ver_major.10
-Release: alt3
+Name: %{_name}%abi_ver_major
+Version: %ver_major.0
+Release: alt1
 
 Summary: Library for writing gnome database programs
 Group: System/Libraries
@@ -48,39 +51,33 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %else
 Source: %_name-%version.tar
 %endif
-
-# fix build against libmysqlclient21 by nikel@
-Patch: libgda-5.2.4-mysql8-transition.patch
+Patch: libgda-6.0.0-alt-meson.patch
 
 Obsoletes: libgda2 < %version
-Provides: libgda2 = %version-%release
+Provides: libgda2 = %EVR
 
 %define mysql_ver 8.0
-%define mdbtools_ver 0.9
+%define mdbtools_ver 0.7
 %define ldap_ver 2.2.27-alt1.1
 %define freetds_ver 0.63
-%define vala_ver 0.50
+%define vala_ver 0.54
 %define sqlite_ver 3.10.2
 
-BuildRequires(pre): rpm-build-gir rpm-build-vala rpm-build-python3
-BuildRequires: gcc-c++
-BuildPreReq: intltool >= 0.35.5
-BuildPreReq: gnome-common >= 2.8.0
-BuildPreReq: perl-XML-Parser
-BuildPreReq: glib2-devel >= 2.12.0
-BuildPreReq: libgio-devel >= 2.12.0
-BuildPreReq: libxslt-devel >= 1.0.9
+BuildRequires(pre): meson rpm-build-gir rpm-build-vala rpm-build-python3
+BuildRequires: intltool gcc-c++
+BuildRequires: glib2-devel >= 2.12.0
+BuildRequires: libgio-devel >= 2.12.0
+BuildRequires: libxslt-devel >= 1.0.9
 BuildRequires: libgee0.8-devel
-BuildPreReq: gtk-doc >= 1.0
-BuildPreReq: libldap-devel >= %ldap_ver libsasl2-devel
 BuildRequires: libjson-glib-devel libunixODBC-devel libssl-devel
 BuildRequires: libgnome-keyring-devel libsecret-devel iso-codes-devel
 BuildRequires: libncurses-devel libreadline-devel libsoup-devel libgcrypt-devel
+%{?_with_ldap:BuildRequires: libldap-devel >= %ldap_ver libsasl2-devel}
 %{?_enable_glade:BuildRequires: libgladeui2.0-devel}
 %{?_enable_vala:BuildRequires: vala-tools >= %vala_ver}
-BuildRequires: yelp-tools
+BuildRequires: yelp-tools valadoc
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.6.7}
-%{?_with_ui:BuildRequires: libgtk+3-devel libgtk+3-gir-devel}
+%{?_enable_ui:BuildRequires: libgtk+3-devel libgtk+3-gir-devel libgoocanvas2-devel}
 %{?_with_gtksourceview:BuildRequires: libgtksourceview3-devel}
 
 %if_with postgres
@@ -100,12 +97,16 @@ BuildRequires: libmdbtools-devel >= %mdbtools_ver
 %endif
 
 %if_with interbase
-#BuildRequires: interbase
+#BuildPreReq: interbase
 BuildRequires: FirebirdCS
 %endif
 
 %if_with sqlite
 BuildRequires: libsqlite3-devel >= %sqlite_ver
+%endif
+
+%if_with sqlcipher
+BuildRequires: libsqlcipher-devel
 %endif
 
 %if_with ldap
@@ -144,34 +145,34 @@ developed based on it.
 Summary: GDA service providers for %_name
 Group: System/Libraries
 %if_with mysql
-Requires: %name-mysql = %version-%release
+Requires: %name-mysql = %EVR
 %endif
 %if_with postgres
-Requires: %name-postgresql = %version-%release
+Requires: %name-postgresql = %EVR
 %endif
 %if_with odbc
-Requires: %name-odbc = %version-%release
+Requires: %name-odbc = %EVR
 %endif
 %if_with mdb
-Requires: %name-mdb = %version-%release
+Requires: %name-mdb = %EVR
 %endif
 %if_with interbase
-Requires: %name-interbase = %version-%release
+Requires: %name-interbase = %EVR
 %endif
 %if_with ldap
-Requires: %name-ldap = %version-%release
+Requires: %name-ldap = %EVR
 %endif
 %if_with tds
-Requires: %name-tds = %version-%release
+Requires: %name-tds = %EVR
 %endif
 %if_with sqlite
-Requires: %name-sqlite = %version-%release
+Requires: %name-sqlite = %EVR
 %endif
 %if_with bdb
-Requires: %name-bdb = %version-%release
+Requires: %name-bdb = %EVR
 %endif
 %if_with java
-Requires: %name-jdbc = %version-%release
+Requires: %name-jdbc = %EVR
 %endif
 
 %description providers
@@ -210,7 +211,7 @@ JDBC provider.
 %package mysql
 Summary: GDA MySQL Provider
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description mysql
 This package includes the GDA MySQL provider.
@@ -218,7 +219,7 @@ This package includes the GDA MySQL provider.
 %package bdb
 Summary: GDA BerkleyDB Provider
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description bdb
 This package includes the GDA BerkleyDB provider.
@@ -226,7 +227,7 @@ This package includes the GDA BerkleyDB provider.
 %package postgresql
 Summary: GDA PostgreSQL Provider
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description postgresql
 This package includes the GDA PostgreSQL provider.
@@ -234,7 +235,7 @@ This package includes the GDA PostgreSQL provider.
 %package odbc
 Summary: GDA ODBC Provider
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description odbc
 This package includes the GDA ODBC provider.
@@ -242,7 +243,7 @@ This package includes the GDA ODBC provider.
 %package mdb
 Summary: GDA MS Access Provider
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description mdb
 This package includes the GDA MS Access provider.
@@ -250,7 +251,7 @@ This package includes the GDA MS Access provider.
 %package interbase
 Summary: GDA Interbase Provider
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 #Requires: interbase
 
 %description interbase
@@ -259,7 +260,7 @@ This package includes the GDA Intebase provider
 %package ldap
 Summary: GDA LDAP Provider
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description ldap
 This package includes the GDA LDAP provider
@@ -267,7 +268,7 @@ This package includes the GDA LDAP provider
 %package tds
 Summary: CDA Provider for TDS-based databases
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tds
 This package includes the GDA provider for TDS-based databases (using
@@ -276,7 +277,7 @@ FreeTDS).
 %package sqlite
 Summary: GDA SQLite Provider
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description sqlite
 This package includes the GDA SQLite provider
@@ -284,7 +285,7 @@ This package includes the GDA SQLite provider
 %package jdbc
 Summary: GDA JDBC Provider
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description jdbc
 This package includes the GDA JDBC provider
@@ -292,12 +293,12 @@ This package includes the GDA JDBC provider
 %package devel
 Summary: Development libraries and header files for libgda
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Obsoletes: libgda2-devel < %version
-Provides: libgda2-devel = %version-%release
+Provides: libgda2-devel = %EVR
 
-%if 0
-Requires: %name-providers = %version-%release
+
+Requires: %name-providers = %EVR
 
 %if_with openldap
 Requires: libldap-devel >= %ldap_ver
@@ -324,7 +325,6 @@ Requires: libfreetds-devel >= %freetds_ver
 %if_with bdb
 Requires: libdb4.7-devel
 %endif
-%endif
 
 %description devel
 This package contains the header files and libraries needed to write
@@ -342,7 +342,7 @@ This package provides documentation needed to write programs that use libgda.
 %package gir
 Summary: GObject introspection data for the GDA library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the GNU Data Access library.
@@ -351,52 +351,52 @@ GObject introspection data for the GNU Data Access library.
 Summary: GObject introspection devel data for the GDA library
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-gir = %EVR
 
 %description gir-devel
 GObject introspection devel data for the GNU Data Access library.
 
-%package -n libgdaui5
+%package -n libgdaui%abi_ver_major
 Summary: GNU Data Access user interface library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
-%description -n libgdaui5
+%description -n libgdaui%abi_ver_major
 This package provides GNU Data Access user interface library.
 
-%package -n libgdaui5-devel
+%package -n libgdaui%abi_ver_major-devel
 Summary: Development libraries and header files for GDAUI library
 Group: Development/C
-Requires: libgdaui5 = %version-%release
+Requires: libgdaui%abi_ver_major = %EVR
 
-%description -n libgdaui5-devel
+%description -n libgdaui%abi_ver_major-devel
 This package contains the header files and libraries needed to write or
 compile programs that use GNU Data Access user interface library.
 
-%package -n libgdaui5-gir
+%package -n libgdaui%abi_ver_major-gir
 Summary: GObject introspection data for the GDAUI library
 Group: System/Libraries
-Requires: libgdaui5 = %version-%release
+Requires: libgdaui%abi_ver_major = %EVR
 
-%description -n libgdaui5-gir
+%description -n libgdaui%abi_ver_major-gir
 GObject introspection data for the GNU Data Access user interface
 library.
 
-%package -n libgdaui5-gir-devel
+%package -n libgdaui%abi_ver_major-gir-devel
 Summary: GObject introspection devel data for the GDAUI library
 Group: System/Libraries
 BuildArch: noarch
-Requires: libgdaui5-devel = %version-%release
-Requires: libgdaui5-gir = %version-%release
+Requires: libgdaui%abi_ver_major-devel = %EVR
+Requires: libgdaui%abi_ver_major-gir = %EVR
 
-%description -n libgdaui5-gir-devel
+%description -n libgdaui%abi_ver_major-gir-devel
 GObject introspection devel data for the GNU Data Access user interface
 library.
 
 %package devel-static
 Summary: Static libraries for libgda
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 This package contains the static version of %name libraries.
@@ -404,7 +404,7 @@ This package contains the static version of %name libraries.
 %package -n gda-browser
 Summary: GDA Browser
 Group: Databases
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n gda-browser
 GDA Browser is a tool for database administrators: they can analyse
@@ -412,153 +412,103 @@ database's schemas to understand how data is organized, run SQL commands
 interactively, and in a broader way manage the data contained in the
 databases.
 
+%package demo
+Summary: GDA Demo
+Group: Databases
+Requires: %name = %EVR
+
+%description demo
+This package provides GDA Demo Applications.
+
+%package report-engine
+Summary: GDA Report Engine
+Group: Databases
+Requires: %name = %EVR
+BuildArch: noarch
+%add_python3_path %_datadir/%_name-%abi_ver
+
+%description report-engine
+This package provides GDA Python-based report engine.
+
+
 %prep
 %setup -n %_name-%version
-%patch -p1
-touch config.rpath
-
-%if_enabled crypto
-sed -e 's/^[[:blank:]]//' libgda/libgda.symbols |grep '^_' > libgda/private.sym
-%define private_sym _gda_server_operation_new_from_string|_split_identifier_string|_gda_vconnection_change_working_obj|_gda_vconnection_set_working_obj
-%endif
-
-# itstool breaks on cs help
-#rm -rf tools/browser/help/cs
-#sed -i 's/ cs / /' tools/browser/help/Makefile.am
+%patch
 
 %build
-#NOCONFIGURE=1 ./autogen.sh
-%add_optflags %(getconf LFS_CFLAGS)
-%autoreconf
-export ac_cv_path_VAPIGEN=%_bindir/vapigen
-export VALA_API_VERSION=%vala_ver
-%configure \
-	%{subst_enable static} \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{?_disable_default_binary:--disable-default-binary} \
-%if_with bdb
-    --with-bdb=%_prefix \
-    --with-bdb-libdir-name=%_lib \
-%endif
-%if_with mysql
-	--with-mysql=%prefix \
-%endif
-%if_with postgres
-	--with-postgres=%prefix \
-%endif
-%if_with odbc
-	--with-odbc \
-%endif
-%if_with mdb
-	--with-mdb \
-%endif
-%if_with oracle
-	--with-oracle \
-%endif
-%if_with sqlite
-	%{?_enable_system_sqlite:--enable-system-sqlite} \
-%endif
-	%{subst_enable crypto} \
-	%{?_without_java:--with-java=no} \
-	%{subst_enable vala} \
-	%{subst_with ui} \
-%if_enabled introspection
-	--enable-gda-gi \
-	--enable-gdaui-gi
-%endif
-
-# SMP-incompatible build
-%if_enabled crypto
-%make LIBTOOL_EXPORT_OPTIONS='-export-symbols-regex "^(gda_|fnYM49765777344607__gda|%private_sym).*"'
-%else
-%make
-%endif
+export VALA_VERSION=%vala_ver
+%meson \
+    %{?_with_ldap:-Dldap=true} \
+    %{?_with_web:-Dweb=true} \
+    %{?_enable_experimental:-Dexperimental=true} \
+    %{?_disable_ui:-Dui=false} \
+    %{?_enable_tools:-Dtools=true}
+%nil
+%meson_build
 
 %install
-mkdir -p %buildroot%_datadir/gtk-doc/html/gda-browser
-%makeinstall_std install_sh="/bin/sh $(pwd)/install-sh"
-
+%meson_install
 %find_lang --with-gnome %_name-%abi_ver gda-browser
 
 %files -f %_name-%abi_ver.lang
-%_bindir/gda-list-config-%abi_ver
-%_bindir/gda-list-server-op-%abi_ver
-%_bindir/gda-sql-%abi_ver
-%_bindir/gda-test-connection-%abi_ver
-%_bindir/gdaui-demo-%abi_ver
 %_libdir/libgda-%abi_ver.so.*
 %_libdir/libgda-report-%abi_ver.so.*
 %_libdir/libgda-xslt-%abi_ver.so.*
 %dir %_libdir/%_name-%abi_ver
 %dir %_libdir/%_name-%abi_ver/providers
-%dir %_libdir/%_name-%abi_ver/plugins
-%{?_enable_crypto:%_libdir/%_name-%abi_ver/providers/libgda-sqlcipher.so}
-%_libdir/%_name-%abi_ver/providers/libgda-web.so
+%{?_with_sqlcipher:%_libdir/%_name-%abi_ver/providers/libgda-sqlcipher-%abi_ver.so}
+%{?_with_web:%_libdir/%_name-%abi_ver/providers/libgda-web-%abi_ver.so}
 %dir %_datadir/%_name-%abi_ver/
 %_datadir/%_name-%abi_ver/dtd/
-%exclude %_datadir/%_name-%abi_ver/dtd/gdaui-layout.dtd
-%_datadir/%_name-%abi_ver/language-specs/
-%_datadir/%_name-%abi_ver/gda_trml2*
-%_datadir/%_name-%abi_ver/web/
-%_datadir/%_name-%abi_ver/information_schema.xml
-%_datadir/%_name-%abi_ver/web_specs*.xml
 %{?_enable_crypto:%_datadir/%_name-%abi_ver/sqlcipher_*}
-%_man1dir/gda-sql*
-%dir %_sysconfdir/%_name-%abi_ver
-%config(noreplace) %_sysconfdir/%_name-%abi_ver/config
 %doc AUTHORS ChangeLog README NEWS
+
 
 %files providers
 
 %if_with mysql
 %files mysql
-%_libdir/%_name-%abi_ver/*/*-mysql.so
-%_datadir/%_name-%abi_ver/mysql_*.xml
+%_libdir/%_name-%abi_ver/*/*-mysql-%abi_ver.so
 %endif
 
 %if_with postgres
 %files postgresql
-%_libdir/%_name-%abi_ver/*/*-postgres.so
-%_datadir/%_name-%abi_ver/postgres_*.xml
+%_libdir/%_name-%abi_ver/*/*-postgres-%abi_ver.so
 %endif
 
 %if_with mdb
 %files mdb
-%_libdir/%_name-%abi_ver/*/*-mdb.so
-%_datadir/%_name-%abi_ver/mdb_*.xml
+%_libdir/%_name-%abi_ver/*/*-mdb-%abi_ver.so
 %endif
 
 %if_with bdb
 %files bdb
-%_libdir/%_name-%abi_ver/*/*-bdb.so
-%_datadir/%_name-%abi_ver/bdb_*.xml
+%_libdir/%_name-%abi_ver/*/*-bdb-%abi_ver.so
 %endif
 
 %if_with odbc
 %files odbc
-%_libdir/%_name-%abi_ver/*/*-odbc.so
+%_libdir/%_name-%abi_ver/*/*-odbc-%abi_ver.so
 %endif
 
 %if_with interbase
 %files interbase
-%_libdir/%_name-%abi_ver/*/*-firebird.so
+%_libdir/%_name-%abi_ver/*/*-firebird-%abi_ver.so
 %endif
 
 %if_with ldap
 %files ldap
-%_libdir/%_name-%abi_ver/*/*-ldap.so
-%_datadir/%_name-%abi_ver/ldap_*.xml
+%_libdir/%_name-%abi_ver/*/*-ldap-%abi_ver.so
 %endif
 
 %if_with tds
 %files tds
-%_libdir/%_name-%abi_ver/*/*-freetds.so
+%_libdir/%_name-%abi_ver/*/*-freetds-%abi_ver.so
 %endif
 
 %if_with sqlite
 %files sqlite
-%_libdir/%_name-%abi_ver/*/*-sqlite.so
-%_datadir/%_name-%abi_ver/sqlite_*.xml
+%_libdir/%_name-%abi_ver/*/*-sqlite-%abi_ver.so
 %endif
 
 %if_with jdbc
@@ -570,17 +520,20 @@ mkdir -p %buildroot%_datadir/gtk-doc/html/gda-browser
 %files devel
 %dir %_includedir/libgda-%abi_ver
 %_includedir/libgda-%abi_ver/libgda
-%_includedir/libgda-%abi_ver/libgda-report
-%_includedir/libgda-%abi_ver/libgda-xslt
-%_libdir/libgda-%abi_ver.so
+%_includedir/%_name-%abi_ver/libgda-report/
+%dir %_includedir/%_name-%abi_ver/providers/
+%_includedir/%_name-%abi_ver/providers/sqlcipher/
 %_libdir/libgda-report-%abi_ver.so
 %_libdir/libgda-xslt-%abi_ver.so
-%_pkgconfigdir/libgda-%abi_ver.pc
 %_pkgconfigdir/libgda-report-%abi_ver.pc
 %_pkgconfigdir/libgda-xslt-%abi_ver.pc
+%_libdir/libgda-%abi_ver.so
+%_pkgconfigdir/libgda-%abi_ver.pc
+%_pkgconfigdir/libgda-capi-6.0.pc
+%_pkgconfigdir/libgda-models-6.0.pc
 # .pc files for providers
-%{?_enable_crypto:%_pkgconfigdir/libgda-sqlcipher-%abi_ver.pc}
-%_pkgconfigdir/libgda-web-%abi_ver.pc
+%{?_with_sqlcipher:%_pkgconfigdir/libgda-sqlcipher-%abi_ver.pc}
+%{?_with_web:%_pkgconfigdir/libgda-web-%abi_ver.pc}
 %{?_with_mdb:%_pkgconfigdir/*mdb*}
 %{?_with_mysql:%_pkgconfigdir/*mysql*}
 %{?_with_postgres:%_pkgconfigdir/*postgres*}
@@ -588,32 +541,28 @@ mkdir -p %buildroot%_datadir/gtk-doc/html/gda-browser
 %{?_with_sqlite:%_pkgconfigdir/*sqlite*}
 %{?_with_jdbc:%_pkgconfigdir/libgda-jdbc-%abi_ver.pc}
 %{?_with_ldap:%_pkgconfigdir/libgda-ldap-%abi_ver.pc}
-%{?_enable_vala:%_vapidir/*.vapi}
+%{?_enable_vala:
+%_vapidir/*.vapi
+%_vapidir/*.deps}
 
-%if_enabled gtk_doc
+%if_enabled doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
 %endif
 
-%files -n libgdaui5
+%if_enabled ui
+%files -n libgdaui%abi_ver_major
 %_libdir/libgda-ui-%abi_ver.so.*
 %_libdir/%_name-%abi_ver/plugins/libgda-ui*.so
-%_libdir/%_name-%abi_ver/plugins/gdaui*.xml
-%_datadir/%_name-%abi_ver/dtd/gdaui-layout.dtd
 %_datadir/%_name-%abi_ver/ui/
-%_datadir/%_name-%abi_ver/server_operation.glade
-%dir %_datadir/%_name-%abi_ver/pixmaps
-%_datadir/%_name-%abi_ver/pixmaps/bin-attachment*.png
-%_datadir/%_name-%abi_ver/pixmaps/gdaui-generic.png
 
-%exclude %_libdir/%_name-%abi_ver/plugins/libgda-ui*.la
-
-%files -n libgdaui5-devel
+%files -n libgdaui%abi_ver_major-devel
 %_includedir/libgda-%abi_ver/libgda-ui
 %_libdir/libgda-ui-%abi_ver.so
 %{?_enable_glade:%_datadir/glade/catalogs/gdaui-catalog.xml
 %_datadir/glade/pixmaps/widget-gdaui-*.png}
 %_pkgconfigdir/libgda-ui-%abi_ver.pc
+%endif
 
 %if_enabled introspection
 %files gir
@@ -622,11 +571,13 @@ mkdir -p %buildroot%_datadir/gtk-doc/html/gda-browser
 %files gir-devel
 %_datadir/gir-1.0/Gda-%abi_ver.gir
 
-%files -n libgdaui5-gir
+%if_enabled ui
+%files -n libgdaui%abi_ver_major-gir
 %_typelibdir/Gdaui-%abi_ver.typelib
 
-%files -n libgdaui5-gir-devel
+%files -n libgdaui%abi_ver_major-gir-devel
 %_girdir/Gdaui-%abi_ver.gir
+%endif
 %endif
 
 %if_enabled static
@@ -635,31 +586,35 @@ mkdir -p %buildroot%_datadir/gtk-doc/html/gda-browser
 %_libdir/%_name-%abi_ver/*/*.a
 %endif
 
-#%files -n gda-browser -f gda-browser.lang
-#%_bindir/gda-browser-%abi_ver
-#%_bindir/gda-control-center-%abi_ver
-#%_datadir/applications/gda-browser-%abi_ver.desktop
-#%_datadir/applications/gda-control-center-%abi_ver.desktop
-#%_iconsdir/hicolor/*x*/apps/gda-control-center.png
-#%_datadir/%_name-%abi_ver/import_encodings.xml
-#%_datadir/%_name-%abi_ver/icons/hicolor/*/actions/*
-#%_datadir/%_name-%abi_ver/pixmaps/gda-browser*.png
-#%_datadir/%_name-%abi_ver/pixmaps/gda-control-center*.png
-#%_datadir/pixmaps/gda-browser*.png
-#%_datadir/appdata/gda-browser-%abi_ver.appdata.xml
+%if_enabled tools
+%files -n gda-browser -f gda-browser.lang
+%_bindir/gda-list-config-%abi_ver
+%_bindir/gda-list-server-op-%abi_ver
+%_bindir/gda-sql-%abi_ver
+%_bindir/gda-control-center-%abi_ver
+%_bindir/org.gnome.gda.Browser
+%_desktopdir/org.gnome.gda.Browser.desktop
+%_iconsdir/hicolor/*/*/org.gnome.gda.Browser.*
+%_datadir/pixmaps/org.gnome.gda.Browser.png
+%_datadir/%_name-%abi_ver/information_schema.xml
+%_datadir/%_name-%abi_ver/gda-sql/
+%_man1dir/gda-sql.1*
+%_datadir/metainfo/org.gnome.gda.Browser.appdata.xml
+%endif
 
-%exclude %_libdir/%_name-%abi_ver/providers/*.la
-%exclude %_sysconfdir/%_name-%abi_ver/sales_test.db
-%exclude %_datadir/%_name-%abi_ver/demo
-%exclude %_datadir/%_name-%abi_ver/php
+%files demo
+%_bindir/org.gnome.gda.Demoui
+%_datadir/%_name-%abi_ver/demo/
+
+%files report-engine
+%_bindir/trml2html.py
+%_bindir/trml2pdf.py
+%_datadir/%_name-%abi_ver/gda_trml2html/
+%_datadir/%_name-%abi_ver/gda_trml2pdf/
 
 %changelog
-* Fri Mar 04 2022 Yuri N. Sedunov <aris@altlinux.org> 5.2.10-alt3
-- don't package gda-browser to avoid conflict with one from libgda6
-
-* Sat Nov 06 2021 Yuri N. Sedunov <aris@altlinux.org> 5.2.10-alt2
-- updated to LIBGDA_5_2_10-13-ga15dfa49e
-- disabled useless mdbtools support (required old mdbtools <= 0.8.2)
+* Tue Mar 01 2022 Yuri N. Sedunov <aris@altlinux.org> 6.0.0-alt1
+- updated to LIBGDA_6_0_0-72-g9a89053d5
 
 * Mon Nov 09 2020 Yuri N. Sedunov <aris@altlinux.org> 5.2.10-alt1
 - 5.2.10 release
