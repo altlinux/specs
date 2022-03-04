@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.3
 Release: alt1
 
 Summary: GXml provides a GObject API for manipulating XML
@@ -122,6 +122,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat Mar 05 2022 Yuri N. Sedunov <aris@altlinux.org> 0.20.3-alt1
+- updated to 0.20.3-7-g3eac3ac
+
 * Sun Dec 19 2021 Yuri N. Sedunov <aris@altlinux.org> 0.20.1-alt1
 - updated to 0.20.1-10-gf02031e
 
