@@ -1,7 +1,7 @@
 %define debug_level 1
 
 Name: seabios
-Version: 1.15.0
+Version: 1.16.0
 Release: alt1
 Summary: Open-source legacy BIOS implementation
 
@@ -128,6 +128,9 @@ done
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Fri Mar 04 2022 Alexey Shabalin <shaba@altlinux.org> 1.16.0-alt1
+- 1.16.0
+
 * Wed Dec 22 2021 Alexey Shabalin <shaba@altlinux.org> 1.15.0-alt1
 - 1.15.0.
 
