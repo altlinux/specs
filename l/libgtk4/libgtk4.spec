@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gtk
-%define ver_major 4.4
+%define ver_major 4.6
 %define api_ver_major 4
 %define api_ver %api_ver_major.0
 %define binary_ver 4.0.0
@@ -32,7 +32,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -51,7 +51,7 @@ Patch: gtk+-2.16.5-alt-stop-spam.patch
 %define glib_ver 2.66.0
 %define gi_ver 1.41.0
 %define cairo_ver 1.14.0
-%define pango_ver 1.47.0
+%define pango_ver 1.50.0
 %define atk_ver 2.15.1
 %define pixbuf_ver 2.30.0
 %define fontconfig_ver 2.2.1-alt2
@@ -82,6 +82,7 @@ BuildRequires: libcairo-gobject-devel >= %cairo_ver
 BuildRequires: libpango-devel >= %pango_ver
 BuildRequires: libatk-devel >= %atk_ver
 BuildRequires: libgdk-pixbuf-devel >= %pixbuf_ver
+BuildRequires: libtiff-devel libjpeg-devel
 BuildRequires: fontconfig-devel >= %fontconfig_ver
 BuildRequires: libcups-devel >= %cups_ver
 BuildRequires: libepoxy-devel >= %epoxy_ver
@@ -96,7 +97,7 @@ BuildRequires: libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXr
 BuildRequires: libXrender-devel libXt-devel
 %endif
 %{?_enable_gtk_doc:BuildRequires: gi-docgen}
-%{?_enable_man:BuildRequires: xsltproc docbook-style-xsl}
+%{?_enable_man:BuildRequires: python3-module-docutils}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver libpango-gir-devel libatk-gir-devel >= %atk_ver libgdk-pixbuf-gir-devel libgraphene-gir-devel}
 %{?_enable_colord:BuildRequires: libcolord-devel >= %colord_ver}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel >= %xkbcommon_ver wayland-protocols >= %wayland_protocols_ver}
@@ -104,7 +105,7 @@ BuildRequires: libXrender-devel libXt-devel
 %{?_enable_tracker3:BuildRequires: tracker3-devel}
 %{?_enable_vulkan:BuildRequires: vulkan-devel}
 # for examples
-BuildRequires: libcanberra-gtk3-devel libharfbuzz-devel
+BuildRequires: libcanberra-gtk3-devel libharfbuzz-devel python3-module-pygobject3
 %{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 %{?_enable_tests:BuildRequires: librsvg-devel >= %rsvg_ver}
 %{?_enable_check:BuildRequires: /proc dbus-tools-gui icon-theme-hicolor gnome-icon-theme-symbolic}
@@ -206,6 +207,7 @@ the functionality of the installed GTK+3 packages.
 %prep
 %setup -n %_name-%version
 %patch -p1
+sed -i "s|\('rst2man\)|\1.py|" docs/reference/gtk/meson.build
 
 %build
 %meson \
@@ -370,6 +372,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Fri Mar 04 2022 Yuri N. Sedunov <aris@altlinux.org> 4.6.1-alt1
+- 4.6.1
+
 * Sun Feb 27 2022 Yuri N. Sedunov <aris@altlinux.org> 4.4.2-alt1
 - 4.4.2
 

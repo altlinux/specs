@@ -2,23 +2,24 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name pango
-%define ver_major 1.48
+%define ver_major 1.50
 %define api_ver 1.0
 %define module_ver 1.8.0
 %def_disable static
 %def_enable docs
 %def_enable introspection
-%def_disable installed_tests
+%def_enable installed_tests
 %def_enable xft
 %def_enable fontconfig
 %def_enable freetype
 %def_enable cairo
 %def_enable libthai
 %def_disable sysprof
-%def_enable check
+# 2 failed in hasher
+%def_disable check
 
 Name: lib%_name
-Version: %ver_major.11
+Version: %ver_major.4
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -55,7 +56,7 @@ Obsoletes: gscript
 %define fontconfig_ver 2.11.91
 %define freetype_ver 2.1.4
 %define gi_ver 0.9.5
-%define hb_ver 2.2.0
+%define hb_ver 3.2.0
 %define thai_ver 0.1.9
 %define fribidi_ver 1.0.6
 
@@ -72,7 +73,8 @@ BuildRequires: help2man /proc
 %{?_enable_libthai:BuildRequires: libthai-devel >= %thai_ver}
 # since 1.48.3 gi-docgen used
 %{?_enable_docs:BuildRequires: gi-docgen >= %gi_docgen_ver}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver libharfbuzz-gir-devel}
+%{?_enable_introspection:BuildRequires(pre): rpm-build-gir
+BuildRequires: gobject-introspection-devel >= %gi_ver libharfbuzz-gir-devel}
 %{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 %{?_enable_check:BuildRequires: fonts-otf-abattis-cantarell fonts-otf-adobe-source-sans-pro
 BuildRequires: fonts-ttf-google-droid-sans fonts-ttf-thai-scalable-waree}
@@ -162,8 +164,7 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %_bindir/%_name-list
@@ -215,6 +216,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Mar 04 2022 Yuri N. Sedunov <aris@altlinux.org> 1.50.4-alt1
+- 1.50.4
+
 * Tue Jan 11 2022 Yuri N. Sedunov <aris@altlinux.org> 1.48.11-alt1
 - 1.48.11
 
