@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 Summary: An ISO 8601 date/time/duration parser and formater
 License: BSD
@@ -40,20 +40,6 @@ are not allowed by the Python date and datetime classes. Additionally
 fractional seconds are limited to microseconds. That means if the parser
 finds for instance nanoseconds it will round it to microseconds.
 
-%package tests
-Summary: Tests for isodate
-Group: Development/Python3
-Requires: %name = %version-%release
-
-%description tests
-This module implements ISO 8601 date, time and duration parsing. The
-implementation follows ISO8601:2004 standard, and implements only
-date/time representations mentioned in the standard. If something is not
-mentioned there, then it is treated as non existent, and not as an
-allowed option.
-
-This package contains tests for isodate.
-
 %prep
 %setup
 
@@ -64,8 +50,13 @@ This package contains tests for isodate.
 %python3_install
 
 %check
-# setuptools' `test` command is deprecated
-sed -i 's/{envpython} setup.py test/python -m unittest discover src/' tox.ini
+# override upstream's tox config
+cat > tox.ini <<'EOF'
+[testenv]
+usedevelop=True
+commands =
+    python -m unittest discover -v src
+EOF
 export PIP_NO_INDEX=YES
 export TOXENV=py3
 tox.py3 --sitepackages -vvr -s false
@@ -76,10 +67,10 @@ tox.py3 --sitepackages -vvr -s false
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 %exclude %python3_sitelibdir/*/tests
 
-%files tests
-%python3_sitelibdir/*/tests
-
 %changelog
+* Sat Mar 05 2022 Stanislav Levin <slev@altlinux.org> 0.6.1-alt1
+- 0.6.0 -> 0.6.1.
+
 * Thu Sep 16 2021 Stanislav Levin <slev@altlinux.org> 0.6.0-alt1
 - 0.5.4 -> 0.6.0.
 
