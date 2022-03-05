@@ -1,8 +1,8 @@
 Name: deepin-gettext-tools
 Version: 1.0.8
-Release: alt1
+Release: alt2.gitc913e2d
 Summary: Deepin Gettext Tools
-License: GPLv3
+License: GPL-2.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-gettext-tools
 Packager: Leontiy Volodin <lvol@altlinux.org>
@@ -53,5 +53,9 @@ install -m755 src/update_pot.py %buildroot%_bindir/deepin-update-pot
 %_bindir/deepin-generate-mo
 
 %changelog
+* Sat Mar 05 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.8-alt2.gitc913e2d
+- Built from commit c913e2d7f9ea6ee394e3640dfca807d802806607.
+- Update license tag.
+
 * Wed Mar 04 2020 Leontiy Volodin <lvol@altlinux.org> 1.0.8-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
