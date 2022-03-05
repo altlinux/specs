@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname mock
 
 %def_with check
 
 Name: python3-module-mock
 Version: 4.0.3
-Release: alt1
+Release: alt2
 
 Summary: A Python Mocking and Patching Library for Testing
 
@@ -14,6 +15,7 @@ Url: https://pypi.python.org/pypi/mock
 
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
+Patch: mock-4.0.3-fix-tests-that-should-test-mock-but-were-testing-uni.patch
 
 BuildArch: noarch
 
@@ -38,6 +40,7 @@ compatible with Python 3.6 and up.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %python3_build
@@ -52,9 +55,13 @@ py.test3 -vv
 
 %files
 %doc README.rst LICENSE.txt
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sat Mar 05 2022 Stanislav Levin <slev@altlinux.org> 4.0.3-alt2
+- Fixed FTBFS (Python 3.10).
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 4.0.3-alt1
 - new version 4.0.3 (with rpmrb script)
 
