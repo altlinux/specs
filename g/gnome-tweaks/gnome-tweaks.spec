@@ -6,7 +6,7 @@
 %define xdg_name org.gnome.tweaks
 
 Name: gnome-tweaks
-Version: %ver_major.0
+Version: %ver_major.10
 Release: alt1%beta
 
 Summary: A tool to customize advanced GNOME 3 options
@@ -79,6 +79,9 @@ Features:
 %doc AUTHORS NEWS README*
 
 %changelog
+* Sat Mar 05 2022 Yuri N. Sedunov <aris@altlinux.org> 40.10-alt1
+- 40.10
+
 * Sun Mar 28 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 
