@@ -36,7 +36,7 @@
 
 Name: pipewire
 Version: %ver_major.48
-Release: alt1
+Release: alt1.1
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -273,7 +273,7 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_bindir/pw-record
 %_bindir/pw-top
 %_bindir/pw-v4l2
-%{?_enable_examples:%_bindir/pw-reserve}
+%_bindir/pw-reserve
 %_bindir/spa-inspect
 %_bindir/spa-json-dump
 %_bindir/spa-monitor
@@ -291,6 +291,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Sat Mar 05 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.48-alt1.1
+- pw-reserve is a tool, not example
+
 * Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.48-alt1
 - updated to 0.3.48-3-gce2f1b373
 
