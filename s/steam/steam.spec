@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.74
-Release: alt1.1
+Release: alt2
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -27,6 +27,7 @@ Requires: libdbusmenu-gtk2
 Requires: libGL
 Requires: libnsl1
 Requires: libnss
+Requires: sysctl-conf-userns
 Requires: xz
 
 %add_python3_path %_libexecdir/%name/%{name}_launcher
@@ -63,6 +64,9 @@ savegame and screenshot functionality, and many social features.
 %config %_udevrulesdir/60-%name-vr.rules
 
 %changelog 
+* Sat Mar 05 2022 Nazarov Denis <nenderus@altlinux.org> 1.0.0.74-alt2
+- Add require on sysctl-conf-userns (ALT #42070)
+
 * Sun Dec 05 2021 Nazarov Denis <nenderus@altlinux.org> 1.0.0.74-alt1.1
 - Fix BR
 
