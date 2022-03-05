@@ -1,8 +1,8 @@
 %define rname kwalletmanager
 
 Name: kde5-%rname
-Version: 21.12.1
-Release: alt2
+Version: 21.12.3
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -81,6 +81,9 @@ cp -ar po/ru/docs/kwallet5 po/ru/docs/kwalletmanager5
 
 
 %changelog
+* Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
+- new version
+
 * Tue Jan 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt2
 - fix to show russian help from app menu
 

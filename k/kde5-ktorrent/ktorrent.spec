@@ -11,8 +11,8 @@
 %add_findreq_skiplist %_K5data/%rname/scripts/*.py
 
 Name: kde5-%rname
-Version: 21.12.1
-Release: alt3
+Version: 21.12.3
+Release: alt1
 %K5init
 
 Group:     Networking/File transfer
@@ -101,6 +101,9 @@ sed -i 's|^add_subdirectory(plasma)||' CMakeLists.txt
 
 
 %changelog
+* Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
+- new version
+
 * Thu Feb 03 2022 Oleg Solovyov <mcpain@altlinux.org> 21.12.1-alt3
 - backport plugin loader fix (Closes: #41853)
 

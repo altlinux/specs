@@ -10,7 +10,7 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
-Version: 21.12.1
+Version: 21.12.3
 Release: alt1
 %K5init
 
@@ -138,6 +138,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
+- new version
+
 * Mon Jan 17 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
 - new version
 

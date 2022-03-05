@@ -4,7 +4,7 @@
 %define libkateinterfaces libkateinterfaces%sover
 
 Name: kde5-%rname
-Version: 21.12.1
+Version: 21.12.3
 Release: alt1
 %K5init
 
@@ -13,8 +13,8 @@ Summary: Advanced text editor
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-Requires: %name-common = %version-%release
-#Requires: %name-core = %version-%release
+Requires: %name-common
+#Requires: %name-core
 Requires: kf5-syntax-highlighting
 
 Source: %rname-%version.tar
@@ -48,7 +48,7 @@ Requires: kf5-filesystem
 %package core
 Summary: Core files needed for %rname
 Group: Graphical desktop/KDE
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description core
 Core files needed for %rname
 
@@ -62,15 +62,15 @@ developing applications that use %name.
 %package -n kde5-kwrite
 Group: Editors
 Summary: Text editor for KDE
-Requires: %name-common = %version-%release
-#Requires: %name-core = %version-%release
+Requires: %name-common
+#Requires: %name-core
 %description -n kde5-kwrite
 Text editor for KDE
 
 %package -n %libkateinterfaces
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n %libkateinterfaces
 KF5 library
 
@@ -167,6 +167,9 @@ kde5_add_text_mimes %buildroot/%_K5xdgapp/org.kde.kwrite.desktop
 #%_K5link/lib*.so
 
 %changelog
+* Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
+- new version
+
 * Mon Jan 17 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
 - new version
 

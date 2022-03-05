@@ -14,8 +14,8 @@
 %define libkonsoleapp libkonsoleapp%sover
 
 Name: kde5-%rname
-Version: 21.12.1
-Release: alt3
+Version: 21.12.3
+Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{?_enable_obsolete_kde4:appdata}%{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Terminals
@@ -178,6 +178,9 @@ __EOF__
 %_K5lib/libkonsoleapp.so.%sover
 
 %changelog
+* Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
+- new version
+
 * Fri Feb 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt3
 - update russian translation
 
