@@ -1,6 +1,6 @@
 Summary: usb-modeswitch is  a mode switching tool for controlling "flip flop" (multiple device) USB gear
 Name: usb-modeswitch
-Version: 2.6.0
+Version: 2.6.1
 Release: alt1
 License: GPL-2.0-or-later
 
@@ -51,6 +51,9 @@ DESTDIR=%buildroot make install
 %_unitdir/*
 
 %changelog
+* Sat Mar 05 2022 Sergey Y. Afonin <asy@altlinux.org> 2.6.1-alt1
+- 2.6.1
+
 * Mon Feb 10 2020 Sergey Y. Afonin <asy@altlinux.org> 2.6.0-alt1
 - 2.6.0 (ALT #33493)
 - updated License tag to SPDX syntax
