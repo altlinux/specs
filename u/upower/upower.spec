@@ -7,7 +7,7 @@
 %endif
 
 Name: upower
-Version: 0.99.13
+Version: 0.99.16
 Release: alt1
 
 Summary: Power Management Service
@@ -32,7 +32,8 @@ Patch: %name-%version-%release.patch
 
 Requires: dbus >= %dbus_ver
 
-BuildRequires: libgio-devel >= %glib_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-systemd
+BuildRequires: meson libgio-devel >= %glib_ver
 BuildRequires: gtk-doc libusb-devel libgudev-devel >= %gudev_ver libdbus-devel >= %dbus_ver
 BuildRequires: libpolkit-devel libudev-devel gobject-introspection-devel
 BuildRequires: libimobiledevice-devel > %imobiledevice_ver pkgconfig(libplist-2.0) pkgconfig(systemd)
@@ -87,24 +88,17 @@ GObject introspection devel data for the UPower library
 %setup
 %patch -p1
 
-rm -f acinclude.m4
-
 %build
-%autoreconf
-%configure \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	--libexecdir=%_libexecdir \
-	--localstatedir=%_var \
-	--disable-static
-%make_build
+%meson \
+	%{?_disable_gtk_doc:-Dgtk-doc=false} \
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang %name
 
 %check
-PYTHON=%__python3 %make -k check VERBOSE=1
+%__meson_test
 
 %files -f %name.lang
 %doc AUTHORS NEWS README
@@ -127,7 +121,7 @@ PYTHON=%__python3 %make -k check VERBOSE=1
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 %_datadir/dbus-1/interfaces/*.xml
-%_datadir/gtk-doc/html/*
+%{?_enable_gtk_doc:%_datadir/gtk-doc/html/*}
 
 %files -n lib%name-gir
 %_typelibdir/*.typelib
@@ -136,6 +130,9 @@ PYTHON=%__python3 %make -k check VERBOSE=1
 %_girdir/*.gir
 
 %changelog
+* Sat Mar 05 2022 Yuri N. Sedunov <aris@altlinux.org> 0.99.16-alt1
+- updated to v0.99.16-3-g2f81d69 (ported to Meson build system)
+
 * Thu Aug 19 2021 Yuri N. Sedunov <aris@altlinux.org> 0.99.13-alt1
 - 0.99.13
 
