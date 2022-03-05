@@ -1,6 +1,6 @@
 Name:    blueman
-Version: 2.1.4
-Release: alt2
+Version: 2.2.3
+Release: alt1
 
 Summary: Blueman is a GTK+ Bluetooth Manager
 License: GPL-3.0-or-later
@@ -24,6 +24,8 @@ Requires: bluez
 
 # Build with --disable-appindicator
 %add_typelib_req_skiplist typelib(AppIndicator3)
+
+%add_python3_req_skip gi.repository.GObject
 
 %description
 %summary
@@ -59,6 +61,11 @@ rm -fr %buildroot/%_datadir/doc
 # remove static library
 rm -fr %buildroot/%python3_sitelibdir/_blueman.la
 
+# replace config
+mkdir -p %buildroot%_sysconfdir/dbus-1/system.d
+mv %buildroot%_datadir/dbus-1/system.d/org.blueman.Mechanism.conf \
+	%buildroot%_sysconfdir/dbus-1/system.d
+
 %find_lang %name
 
 %post
@@ -81,8 +88,10 @@ fi
 %_altdir/%name
 %doc CHANGELOG.md FAQ README.md
 %_bindir/blue*
+%_prefix/lib/systemd/user/blueman-manager.service
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.blueman.Mechanism.conf
-%_datadir/dbus-1/system-services/org.%name.Mechanism.service
+%_datadir/dbus-1/system-services/org.blueman.Mechanism.service
+%_datadir/dbus-1/services/org.blueman.Manager.service
 %_datadir/applications/blueman-*.desktop
 %_datadir/dbus-1/services/org.blueman.Applet.service
 %_datadir/%name
@@ -95,7 +104,6 @@ fi
 %_libexecdir/%name-mechanism
 %_libexecdir/blueman-rfcomm-watcher
 %_man1dir/%name-*.1*
-%_pixmapsdir/%name
 %_prefix/lib/systemd/user/blueman-applet.service
 %_prefix/lib/systemd/system/blueman-mechanism.service
 %python3_sitelibdir_noarch/blueman
@@ -103,6 +111,9 @@ fi
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Fri Mar 04 2022 Anton Midyukov <antohami@altlinux.org> 2.2.3-alt1
+- new version 2.2.3
+
 * Fri Jan 22 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.4-alt2
 - Added changes for P9 compatibility.
 
