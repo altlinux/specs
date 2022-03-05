@@ -74,8 +74,8 @@
 %endif
 
 Name:    samba
-Version: 4.14.11
-Release: alt3
+Version: 4.14.12
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1921,6 +1921,17 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_includedir/samba-4.0/private
 
 %changelog
+* Thu Mar 03 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.14.12-alt2
+- Fix linking of some libraries (libsmbldap.so.2.1.0, libpopt-samba3-samba4.so,
+  libsamba-modules-samba4.so, winbind_krb5_locator.so and smbpasswd.so):
+  + find-requires: ERROR: /usr/lib/rpm/lib.req failed.
+
+* Tue Feb 09 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.14.12-alt1
+- Update to latest security release of Samba 4.14
+- Security fixes:
+  + CVE-2021-44142: Out-of-Bound Read/Write on Samba vfs_fruit module.
+  + CVE-2022-0336:  Re-adding an SPN skips subsequent SPN conflict checks.
+
 * Thu Jan 27 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.14.11-alt3
 - Update for the latest fixes release of Samba 4.14
   + Fix resolv_wrapper with glibc 2.34
