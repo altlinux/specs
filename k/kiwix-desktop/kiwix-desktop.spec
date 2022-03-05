@@ -1,6 +1,6 @@
 Name:     kiwix-desktop
-Version:  2.1.0
-Release:  alt2
+Version:  2.2.0
+Release:  alt1
 
 # no qtwebengine
 ExcludeArch: ppc64le
@@ -47,6 +47,9 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/mime/packages/*.xml
 
 %changelog
+* Sat Mar 05 2022 Andrey Cherepanov <cas@altlinux.org> 2.2.0-alt1
+- New version.
+
 * Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt2
 - exclude ppc64le from build
 
