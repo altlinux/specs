@@ -19,7 +19,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -41,7 +41,7 @@ Source13: pangoft2-compat.lds
 Source14: pangocairo-compat.map
 Source15: pangocairo-compat.lds
 
-Patch: pango-1.45.1-alt-compat-version-script.patch
+Patch: pango-1.50-alt-compat-version-script.patch
 
 Provides: %_name = %version
 Obsoletes: %_name < %version
@@ -197,9 +197,12 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 %if_enabled docs
 %files devel-doc
-#%_datadir/gtk-doc/html/*
-%dir %_datadir/doc/%_name
-%_datadir/doc/%_name/reference/
+%_datadir/doc/Pango
+%_datadir/doc/PangoCairo
+%_datadir/doc/PangoFc
+%_datadir/doc/PangoFT2
+%_datadir/doc/PangoOT
+%_datadir/doc/PangoXft
 %endif
 
 %if_enabled static
@@ -216,6 +219,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Sat Mar 05 2022 Yuri N. Sedunov <aris@altlinux.org> 1.50.5-alt1
+- 1.50.5
+
 * Fri Mar 04 2022 Yuri N. Sedunov <aris@altlinux.org> 1.50.4-alt1
 - 1.50.4
 
