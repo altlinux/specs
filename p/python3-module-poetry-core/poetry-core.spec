@@ -18,8 +18,8 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 1.0.7
-Release: alt2
+Version: 1.0.8
+Release: alt1
 
 Summary: Poetry Core
 License: MIT
@@ -128,6 +128,9 @@ tox.py3 --sitepackages --console-scripts -vvr -s false
 %python3_sitelibdir/poetry_core-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sat Mar 05 2022 Stanislav Levin <slev@altlinux.org> 1.0.8-alt1
+- 1.0.7 -> 1.0.8.
+
 * Fri Feb 04 2022 Stanislav Levin <slev@altlinux.org> 1.0.7-alt2
 - Built without vendored distributions
 
