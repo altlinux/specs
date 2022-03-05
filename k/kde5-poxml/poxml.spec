@@ -1,7 +1,7 @@
 %define rname poxml
 
 Name: kde5-%rname
-Version: 21.12.1
+Version: 21.12.3
 Release: alt1
 %K5init no_appdata
 
@@ -37,6 +37,9 @@ BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel kf5-ki18n-d
 %_K5bin/*
 
 %changelog
+* Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
+- new version
+
 * Tue Jan 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
 - new version
 

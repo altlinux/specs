@@ -8,8 +8,8 @@
 %endif
 
 Name: kde5-%rname
-Version: 21.12.1
-Release: alt3
+Version: 21.12.3
+Release: alt1
 %K5init no_appdata
 
 Group: Graphical desktop/KDE
@@ -80,6 +80,9 @@ sed -i '/^#!\/usr\/bin\/env/s|python|%__python3|' umbrello/headings/heading.py
 
 
 %changelog
+* Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
+- new version
+
 * Tue Feb 01 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt3
 - build with qtwebkit on e2k and ppc64le
 

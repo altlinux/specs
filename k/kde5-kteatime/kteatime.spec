@@ -1,7 +1,7 @@
 %define rname kteatime
 
 Name: kde5-%rname
-Version: 21.12.1
+Version: 21.12.3
 Release: alt1
 %K5init altplace no_appdata
 
@@ -44,6 +44,9 @@ Handy timer for steeping tea.
 %_K5notif/kteatime*
 
 %changelog
+* Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
+- new version
+
 * Tue Jan 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
 - new version
 

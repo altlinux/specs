@@ -1,8 +1,8 @@
 %define rname kimagemapeditor
 
 Name: kde5-%rname
-Version: 21.12.1
-Release: alt3
+Version: 21.12.3
+Release: alt1
 %K5init no_appdata
 
 Group: Development/Other
@@ -72,6 +72,9 @@ Requires: %name-common = %version-%release
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
+- new version
+
 * Fri Feb 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt3
 - using not_qt5_qtwebengine_arches macro
 
