@@ -7,8 +7,8 @@
 %endif
 
 Name: kde5-%rname
-Version: 21.12.1
-Release: alt2
+Version: 21.12.3
+Release: alt1
 %K5init no_appdata
 
 Group: Education
@@ -66,6 +66,9 @@ however, one does not need to know MathML to use KAlgebra.
 %endif
 
 %changelog
+* Sat Mar 05 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
+- new version
+
 * Tue Feb 01 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt2
 - build without qtwebengine on e2k and ppc64le
 

@@ -15,8 +15,8 @@
 %define libcantor_config libcantor_config%cantor_config_sover
 
 Name: kde5-%rname
-Version: 21.12.1
-Release: alt2
+Version: 21.12.3
+Release: alt1
 %K5init no_appdata
 
 Group: Education
@@ -152,6 +152,9 @@ mkdir -p %buildroot
 %endif
 
 %changelog
+* Sat Mar 05 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
+- new version
+
 * Tue Feb 01 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt2
 - build empty package on e2k and ppc64le
 

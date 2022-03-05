@@ -2,8 +2,8 @@
 %add_findreq_skiplist %_K5data/parley/plugins/*.py
 
 Name: kde5-%rname
-Version: 21.12.1
-Release: alt3
+Version: 21.12.3
+Release: alt1
 %K5init no_appdata
 
 Group: Education
@@ -63,6 +63,9 @@ also known as flash cards.
 %_K5data/knsrcfiles/*parley*.knsrc
 
 %changelog
+* Sat Mar 05 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
+- new version
+
 * Fri Feb 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt3
 - using not_qt5_qtwebengine_arches macro
 
