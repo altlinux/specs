@@ -4,7 +4,7 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2
-Version: 20211125
+Version: 20220221
 Release: alt1
 Summary: EFI Development Kit II
 
@@ -266,6 +266,9 @@ done
 %_prefix/lib64/efi/shell.efi
 
 %changelog
+* Fri Mar 04 2022 Alexey Shabalin <shaba@altlinux.org> 20220221-alt1
+- edk2-stable202202
+
 * Tue Dec 28 2021 Alexey Shabalin <shaba@altlinux.org> 20211125-alt1
 - edk2-stable202111
 

@@ -3,7 +3,7 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-aarch64
-Version: 20211125
+Version: 20220221
 Release: alt1
 Summary: AARCH64 Virtual Machine Firmware
 
@@ -173,6 +173,9 @@ ln -r -s %buildroot%_datadir/AAVMF/AAVMF_VARS.fd %buildroot%_datadir/edk2/aarch6
 %_datadir/qemu/firmware/*edk2-aarch64*.json
 
 %changelog
+* Fri Mar 04 2022 Alexey Shabalin <shaba@altlinux.org> 20220221-alt1
+- edk2-stable202202
+
 * Thu Jan 06 2022 Alexey Shabalin <shaba@altlinux.org> 20211125-alt1
 - edk2-stable202111
 
