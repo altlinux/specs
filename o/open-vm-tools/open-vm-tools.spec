@@ -15,9 +15,9 @@
 %def_with gtk3
 %def_with gtkmm3
 
-%global majorversion    11.3
-%global minorversion    5
-%global toolsbuild      18557794
+%global majorversion    12.0
+%global minorversion    0
+%global toolsbuild      19345655
 %global toolsversion    %majorversion.%minorversion
 %global toolsdaemon     vmtoolsd
 %global vgauthdaemon    vgauthd
@@ -295,6 +295,9 @@ fi
 
 
 %changelog
+* Sat Mar 05 2022 Andrew A. Vasilyev <andy@altlinux.org> 12.0.0-alt1
+- 12.0.0
+
 * Fri Sep 24 2021 Andrew A. Vasilyev <andy@altlinux.org> 11.3.5-alt1
 - 11.3.5
 
