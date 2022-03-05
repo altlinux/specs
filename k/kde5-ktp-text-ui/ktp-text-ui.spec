@@ -6,8 +6,8 @@
 %endif
 
 Name: kde5-%rname
-Version: 21.12.1
-Release: alt2
+Version: 21.12.3
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -127,6 +127,9 @@ KF5 library
 %_K5lib/libktpimagesharer.so.*
 
 %changelog
+* Sat Mar 05 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
+- new version
+
 * Thu Feb 03 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt2
 - use old webkit version on e2k and ppc64le
 
