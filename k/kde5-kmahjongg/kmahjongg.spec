@@ -1,7 +1,7 @@
 %define rname kmahjongg
 
 Name: kde5-%rname
-Version: 21.12.1
+Version: 21.12.3
 Release: alt1
 %K5init
 
@@ -48,6 +48,9 @@ a variation usually known as Mahjong Solitaire.
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Sat Mar 05 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
+- new version
+
 * Tue Jan 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
 - new version
 

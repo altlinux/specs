@@ -1,7 +1,7 @@
 %define rname bovo
 
 Name: kde5-%rname
-Version: 21.12.1
+Version: 21.12.3
 Release: alt1
 %K5init
 
@@ -46,6 +46,9 @@ where you try to connect five in a row prior to your opponent.
 #%_K5xmlgui/bovo/
 
 %changelog
+* Sat Mar 05 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
+- new version
+
 * Tue Jan 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
 - new version
 
