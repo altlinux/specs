@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name aisleriot
 %define ver_major 3.22
@@ -11,7 +11,7 @@
 %def_enable theme_kde
 
 Name: gnome-games-%_name
-Version: %ver_major.20
+Version: %ver_major.21
 Release: alt1
 
 Summary: A collection of card games
@@ -79,6 +79,9 @@ which are easy to play with the aid of a mouse.
 %exclude %_libdir/valgrind/aisleriot.supp
 
 %changelog
+* Sun Mar 06 2022 Yuri N. Sedunov <aris@altlinux.org> 3.22.21-alt1
+- updated to 3.22.21-6-ge8d8bffd
+
 * Fri Dec 10 2021 Yuri N. Sedunov <aris@altlinux.org> 3.22.20-alt1
 - 3.22.20
 
