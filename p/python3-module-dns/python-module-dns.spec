@@ -1,11 +1,11 @@
 %define oname dnspython
 
 # Testing requires network access
-%def_without check
+%def_with check
 
 Name: python3-module-dns
-Version: 1.16.0
-Release: alt2
+Version: 2.2.0
+Release: alt1
 Epoch: 1
 
 Summary: DNS toolkit
@@ -15,7 +15,6 @@ Group: Development/Python
 Url: http://www.dnspython.org
 
 # Source-url: %__pypi_url %oname
-# Source-url: https://pypi.org/packages/source/d/dnspython/dnspython-%version.zip
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -24,6 +23,9 @@ BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-wheel
+BuildRequires: pytest3
 
 # optional
 %add_python3_req_skip curio curio.socket
@@ -50,13 +52,17 @@ rm -f examples/._*
 %python3_prune
 
 %check
-%make PYTHONPATH="../:$PYTHONPATH" check -C tests
+py.test3 -v
 
 %files
 %doc README.md examples/ LICENSE
 %python3_sitelibdir/*
 
 %changelog
+* Sat Feb 12 2022 Anton Midyukov <antohami@altlinux.org> 1:2.2.0-alt1
+- new version (2.2.0) with rpmgs script
+- enable check
+
 * Wed Nov 18 2020 Vitaly Lipatov <lav@altlinux.ru> 1:1.16.0-alt2
 - return to 1.16.0 due https://github.com/eventlet/eventlet/issues/619
 

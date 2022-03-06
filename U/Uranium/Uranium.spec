@@ -6,7 +6,7 @@
 %add_python3_compile_include %_libexecdir/uranium
 
 Name:    Uranium
-Version: 4.12.1
+Version: 4.13.0
 Release: alt1
 
 Summary:  A Python framework for building Desktop applications.
@@ -94,6 +94,9 @@ python3 -m pytest -v
 %doc html LICENSE
 
 %changelog
+* Wed Jan 26 2022 Anton Midyukov <antohami@altlinux.org> 4.13.0-alt1
+- new version (4.13.0) with rpmgs script
+
 * Mon Dec 13 2021 Anton Midyukov <antohami@altlinux.org> 4.12.1-alt1
 - new version (4.12.1) with rpmgs script
 

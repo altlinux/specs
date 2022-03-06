@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libArcus
-Version: 4.12.1
+Version: 4.13.0
 Release: alt1
 
 Summary: Communication library between internal components for Ultimaker software
@@ -68,6 +68,9 @@ sed -i 's/Python3_SITELIB/Python3_SITEARCH/' cmake/SIPMacros.cmake
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jan 26 2022 Anton Midyukov <antohami@altlinux.org> 4.13.0-alt1
+- new version (4.13.0) with rpmgs script
+
 * Mon Dec 13 2021 Anton Midyukov <antohami@altlinux.org> 4.12.1-alt1
 - new version (4.12.1) with rpmgs script
 

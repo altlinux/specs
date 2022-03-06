@@ -3,7 +3,7 @@
 
 Name: CuraEngine
 Epoch: 1
-Version: 4.12.1
+Version: 4.13.0
 Release: alt1
 
 Summary: Engine for processing 3D models into G-code instructions for 3D printers
@@ -16,7 +16,6 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 # Source-url: https://github.com/Ultimaker/%name/archive/refs/tags/%version.tar.gz
 
-Patch1: %name-rpath.patch
 Patch2: %name-static-libstdcpp.patch
 
 # A weird part of cmake stuff that does not work at all, not present in upstream master
@@ -44,16 +43,14 @@ to the old Skeinforge engine.
 
 %prep
 %setup
-
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%autopatch -p1
 
 # bundled libraries
 rm -rf libs
 
 %build
 %cmake -DBUILD_SHARED_LIBS:BOOL=OFF \
+       -DSET_RPATH:BOOL=OFF \
        -DCURA_ENGINE_VERSION:STRING=%version \
        -DUSE_SYSTEM_LIBS:BOOL=ON \
        -DCMAKE_CXX_FLAGS_RELEASE_INIT:STRING="%optflags -fPIC" \
@@ -73,6 +70,9 @@ rm -rf libs
 %doc LICENSE README.md
 
 %changelog
+* Wed Jan 26 2022 Anton Midyukov <antohami@altlinux.org> 1:4.13.0-alt1
+- new version (4.13.0) with rpmgs script
+
 * Mon Dec 13 2021 Anton Midyukov <antohami@altlinux.org> 1:4.12.1-alt1
 - new version (4.12.1) with rpmgs script
 
