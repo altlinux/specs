@@ -6,7 +6,7 @@
 %define libktcore libktcore%sover
 
 Name: kde5-%rname
-Version: 21.12.2
+Version: 21.12.3
 Release: alt1
 %K5init altplace appdata
 
@@ -25,7 +25,7 @@ BuildRequires(pre): rpm-build-kf5
 # Automatically added by buildreq on Fri Sep 18 2020 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 kf5-kauth-devel kf5-kbookmarks-devel kf5-kcalcore-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcontacts-devel kf5-kcoreaddons-devel kf5-kdoctools kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel libaccounts-glib libaccounts-qt51 libcairo-gobject libdbusmenu-qt52 libgdk-pixbuf libglvnd-devel libgpg-error libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-positioning libqt5-printsupport libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-quickwidgets libqt5-svg libqt5-test libqt5-texttospeech libqt5-webchannel libqt5-webenginecore libqt5-webenginewidgets libqt5-widgets libqt5-x11extras libqt5-xml librabbitmq-c libsasl2-3 libsignon-qt51 libssl-devel libstdc++-devel libx265-192 libxcbutil-keysyms perl perl-Encode perl-XML-Parser perl-parent pkg-config python-modules python2-base python3 python3-base python3-dev python3-module-paste qt5-base-devel rpm-build-python3 sh4 xml-common xml-utils
 #BuildRequires: accounts-qt5-devel appstream extra-cmake-modules intltool kde5-kaccounts-integration-devel kde5-libkgapi-devel kf5-kdoctools-devel kf5-ki18n-devel kf5-kio-devel kf5-knotifications-devel python-modules-compiler python3-module-mpl_toolkits qt5-svg-devel qt5-wayland-devel qt5-webengine-devel signon-devel
-BuildRequires: extra-cmake-modules gettext-tools qt5-svg-devel qt5-wayland-devel qt5-webengine-devel
+BuildRequires: extra-cmake-modules gettext-tools qt5-svg-devel qt5-wayland-devel
 %if_enabled qtkeychain
 BuildRequires: libqtkeychain-qt5-devel
 %else
@@ -69,6 +69,9 @@ rm -f "$tmp_file"
 %endif
 
 %changelog
+* Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
+- new version
+
 * Mon Feb 21 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.2-alt1
 - new version
 

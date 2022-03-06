@@ -4,8 +4,8 @@
 %define libzanshin libzanshin%sover
 
 Name: kde5-%rname
-Version: 21.12.2
-Release: alt2
+Version: 21.12.3
+Release: alt1
 %K5init
 
 Group: Office
@@ -55,6 +55,9 @@ A Getting Things Done application which aims at getting your mind like water.
 %_K5icon/hicolor/*/apps/*zanshin*.*
 
 %changelog
+* Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
+- new version
+
 * Mon Feb 28 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.2-alt2
 - fix package translations
 

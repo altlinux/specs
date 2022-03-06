@@ -11,7 +11,7 @@
 %define libkpimgapitasks libkpimgapitasks%sover
 
 Name: kde5-%rname
-Version: 21.12.2
+Version: 21.12.3
 Release: alt1
 %K5init altplace
 
@@ -29,7 +29,7 @@ Source: %rname-%version.tar
 # optimized out: cmake cmake-modules elfutils gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libgst-plugins1.0 libical-devel libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-sensors libqt5-sql libqt5-svg libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules kde5-kcalcore-devel kde5-kcontacts-devel kf5-kdelibs4support-devel kf5-kdoctools-devel kf5-kio-devel python-module-google python3-dev qt5-webkit-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules qt5-webengine-devel qt5-tools-devel
+BuildRequires: extra-cmake-modules qt5-tools-devel
 BuildRequires: libsasl2-devel
 BuildRequires: kf5-kcalcore-devel kf5-kcontacts-devel
 BuildRequires: kf5-kdelibs4support-devel kf5-kdoctools-devel kf5-kio-devel kf5-kwallet-devel
@@ -169,6 +169,9 @@ done
 %_K5lib/libKPimGAPITasks.so.*
 
 %changelog
+* Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
+- new version
+
 * Mon Feb 21 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.2-alt1
 - new version
 
