@@ -1,6 +1,6 @@
 Name:     tupitube-desk
 Version:  0.2.18
-Release:  alt2
+Release:  alt3
 
 Summary:  TupiTube Desk is vector editor for images, storyboards and animations
 License:  GPL-2.0
@@ -35,7 +35,7 @@ development resource the Qt framework.
 %prep
 %setup -n tupitube.desk-%version
 %autopatch1 -p2
-subst 's|@LIBDIR@|%_libdir|' src/shell/shell.pro
+subst 's|@LIBDIR@|%_libdir|' src/framework/gui/gui.pro
 
 %build
 %configure
@@ -55,6 +55,9 @@ subst 's|@LIBDIR@|%_libdir|' src/shell/shell.pro
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Fri Mar 04 2022 Andrey Cherepanov <cas@altlinux.org> 0.2.18-alt3
+- FTBFS: linked libraries in subdirectories.
+
 * Thu Jan 13 2022 Andrey Cherepanov <cas@altlinux.org> 0.2.18-alt2
 - FTBFS: fix build with quazip-qt5-1.2.
 
