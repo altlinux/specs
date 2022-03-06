@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        97.0.1
+Version:        97.0.2
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -464,6 +464,12 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Sun Mar 06 2022 Alexey Gladkov <legion@altlinux.ru> 97.0.2-alt1
+- New release (97.0.2).
+- Security fixes:
+  + CVE-2022-26485: Use-after-free in XSLT parameter processing
+  + CVE-2022-26486: Use-after-free in WebGPU IPC Framework
+
 * Fri Feb 18 2022 Alexey Gladkov <legion@altlinux.ru> 97.0.1-alt1
 - New release (97.0.1).
 
