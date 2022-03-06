@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.1.9
+Version: 0.1.10
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,13 @@ done
 %_destdir
 
 %changelog
+* Wed Mar 02 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.1.10-alt1
+- Correct adml definitions for controls and group policies.
+- Update machine and user packages settings.
+- Add Gsettings for windows manager Marco.
+- Add policies for local users support.
+- Add Simply Linux 10 as BaseALT product.
+
 * Fri Oct 22 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.1.9-alt1
 - Fixed typo in screensaver setting in Russian translations
 - Improve English translation of gsettings strings
