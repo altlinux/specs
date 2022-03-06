@@ -1,7 +1,9 @@
 %def_disable snapshot
 %define ver_major 91
 
+%ifnarch %ix86 armh
 %def_enable optimize
+%endif
 %def_with system_icu
 
 ## fc
@@ -16,7 +18,7 @@
 %endif
 
 Name: libmozjs%ver_major
-Version: %ver_major.0.1
+Version: %ver_major.5.0
 Release: alt1
 
 Summary: JavaScript interpreter and libraries
@@ -31,6 +33,7 @@ Source: https://ftp.gnome.org/pub/gnome/teams/releng/tarballs-needing-help/mozjs
 Vcs: https://github.com/ptomato/mozjs.git
 Source: %name-%version.tar
 %endif
+Patch16: 0016-ALT-Fix-redefinition-double_t.patch
 # fc armv7 fix
 Patch17: mozjs78-armv7_disable_WASM_EMULATE_ARM_UNALIGNED_FP_ACCESS.patch
 # 0ad links with SharedArrayRawBufferRefs
@@ -39,10 +42,11 @@ Patch20: mozjs78-0ad-FixSharedArray.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: /dev/shm /proc
 BuildRequires: python3-devel python3-module-setuptools python3-module-six
-BuildRequires: gcc-c++ nasm yasm
+BuildRequires: gcc-c++ nasm
 BuildRequires: libreadline-devel zip unzip
 BuildRequires: libffi-devel libffi-devel-static
-BuildRequires: rust-cargo >= 1.50 clang-devel llvm-devel
+BuildRequires: rust-cargo >= 1.50
+BuildRequires: llvm
 BuildRequires: zlib-devel
 %{?_with_system_icu:BuildRequires: libicu-devel}
 
@@ -83,10 +87,12 @@ interface to the JavaScript engine.
 %prep
 #%%setup -n firefox-%{version}esr
 %setup -n mozjs-%version
+%patch16 -p2
+
 %ifarch armh
 # Disable WASM_EMULATE_ARM_UNALIGNED_FP_ACCESS as it causes the compilation to fail
 # https://bugzilla.mozilla.org/show_bug.cgi?id=1526653
-%patch17 -p1
+#%%patch17 -p1
 %endif
 
 %patch20 -p1 -b .0ad
@@ -125,7 +131,7 @@ export PYTHON=%__python3
 	--with-system-zlib \
 	%{?_with_system_icu:--with-system-icu} \
 	--with-intl-api \
-	--enable-lto
+	%{?optflags_lto:--enable-lto}
 %nil
 %if_enabled big_endian
 echo "Generate big endian version of config/external/icu/data/icud67l.dat"
@@ -178,6 +184,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 %_libdir/*.a
 
 %changelog
+* Sun Mar 06 2022 Yuri N. Sedunov <aris@altlinux.org> 91.5.0-alt1
+- 91.5.0
+
 * Fri Aug 27 2021 Yuri N. Sedunov <aris@altlinux.org> 91.0.1-alt1
 - first build for Sisyphus
 
