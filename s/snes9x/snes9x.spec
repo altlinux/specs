@@ -1,6 +1,9 @@
+%define glslang_version 8.13.3743
+%define spirv_cross_commit 1458bae62ec67ea7d12c5a13b740e23ed4bb226c
+
 Name: snes9x
-Version: 1.60
-Release: alt3
+Version: 1.61
+Release: alt1
 
 Summary: Super Nintendo Entertainment System emulator
 License: Distributable
@@ -10,9 +13,11 @@ Url: http://www.snes9x.com/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/%{name}git/%name/archive/%version/%name-%version.tar.gz
-Source: %name-%version.tar
-
-Patch0: %name-alt-gcc11.patch
+Source0: %name-%version.tar
+# https://github.com/KhronosGroup/glslang/archive/%glslang_version/glslang-%glslang_version.tar.gz
+Source1: glslang-%glslang_version.tar
+# https://github.com/KhronosGroup/SPIRV-Cross/archive/%spirv_cross_commit/SPIRV-Cross-%spirv_cross_commit.tar.gz
+Source2: SPIRV-Cross-%spirv_cross_commit.tar
 
 BuildRequires: gcc-c++
 BuildRequires: libSDL2-devel
@@ -20,7 +25,7 @@ BuildRequires: libSM-devel
 BuildRequires: libXrandr-devel
 BuildRequires: libXv-devel
 BuildRequires: libepoxy-devel
-BuildRequires: libgtk+3-devel
+BuildRequires: libgtkmm3-devel
 BuildRequires: libminizip-devel
 BuildRequires: libportaudio2-devel
 BuildRequires: libpulseaudio-devel
@@ -56,8 +61,10 @@ real gems that were only ever released in Japan.
 This package contains a graphical user interface using GTK+.
 
 %prep
-%setup
-%patch0 -p1
+%setup -b 1 -b 2
+
+%__mv -Tf ../glslang-%glslang_version shaders/glslang
+%__mv -Tf ../SPIRV-Cross-%spirv_cross_commit shaders/SPIRV-Cross
 
 %build
 # Build CLI version
@@ -91,7 +98,7 @@ popd
 %files gtk -f gtk/%name-gtk.lang
 %doc docs/*.txt gtk/AUTHORS
 %_bindir/%name-gtk
-%_datadir/%name/cheats.bml
+%_datadir/%name
 %_desktopdir/%name-gtk.desktop
 %_miconsdir/%name.png
 %_niconsdir/%name.png
@@ -109,6 +116,9 @@ popd
 %_iconsdir/hicolor/256x256/apps/%name.png
 
 %changelog
+* Sun Mar 06 2022 Nazarov Denis <nenderus@altlinux.org> 1.61-alt1
+- Version 1.61
+
 * Sun Sep 26 2021 Nazarov Denis <nenderus@altlinux.org> 1.60-alt3
 - Add patch to fix compilation error in gcc11
 
