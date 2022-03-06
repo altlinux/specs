@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.6.1
-Release: alt2
+Release: alt2.1
 Summary: Utility for starting a server in a directory
 License: BSD
 Url: https://github.com/lepture/python-livereload
@@ -47,9 +47,12 @@ nosetests3 -s
 %doc README.rst CHANGES.rst LICENSE
 %_bindir/%pypi_name
 %python3_sitelibdir/%pypi_name
-%python3_sitelibdir/%pypi_name-%version-py?.?.egg-info
+%python3_sitelibdir/%pypi_name-%version-py%_python3_version.egg-info
 
 %changelog
+* Sun Mar 06 2022 Ivan A. Melnikov <iv@altlinux.org> 2.6.1-alt2.1
+- Fix FTBFS with python 3.10
+
 * Thu May 27 2021 Grigory Ustinov <grenka@altlinux.org> 2.6.1-alt2
 - Drop python2 support.
 
