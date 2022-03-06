@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: picom
-Version: 8.2
-Release: alt2
+Version: 9.1
+Release: alt1
 Summary: A lightweight compositor for X11
 License: MPL-2.0 or MIT
 Group: System/X11
@@ -64,6 +64,9 @@ sed -i "/#warning Use of -ffast-math/s/#warning/#error/" src/utils.h
 %_iconsdir/hicolor/*/*/*
 
 %changelog
+* Sun Mar 06 2022 Anton Midyukov <antohami@altlinux.org> 9.1-alt1
+- new version 9.1
+
 * Sat Oct 30 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 8.2-alt2
 - fixed build for Elbrus
 
