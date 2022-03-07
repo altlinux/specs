@@ -2,7 +2,7 @@
 %define git_date %nil
 
 Name: xfce4-screenshooter
-Version: 1.9.9
+Version: 1.9.10
 Release: alt1%git_date
 
 Summary: Screenshot Xfce4 panel plugin
@@ -18,7 +18,8 @@ Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel libexo-gtk3-devel
-BuildPreReq: libxml2-devel libXi-devel libpango-devel
+BuildPreReq: libxml2-devel libXi-devel
+BuildRequires: libpango-devel >= 1.44.0
 BuildRequires: intltool libsoup-devel libXext-devel libICE-devel libXfixes-devel libSM-devel
 # Seems GTK-based programs needed X server even to display a version.
 # So don't install help2man and use pre-generated man page from upstream
@@ -77,6 +78,9 @@ mkdir m4/
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Mar 07 2022 Mikhail Efremov <sem@altlinux.org> 1.9.10-alt1
+- Updated to 1.9.10.
+
 * Mon May 24 2021 Mikhail Efremov <sem@altlinux.org> 1.9.9-alt1
 - Added libpango-devel to BR.
 - Updated to 1.9.9.
