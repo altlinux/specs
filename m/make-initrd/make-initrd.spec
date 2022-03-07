@@ -1,6 +1,6 @@
 Name: make-initrd
-Version: 2.25.0
-Release: alt2
+Version: 2.26.0
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -62,7 +62,6 @@ Requires: util-linux >= 2.17.2-alt1
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
-Patch0: 0001-Feature-ucode-Don-t-throw-an-error-if-no-cpu-updates.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -340,6 +339,27 @@ fi
 %_datadir/%name/features/bootloader
 
 %changelog
+* Mon Mar 07 2022 Alexey Gladkov <legion@altlinux.ru> 2.26.0-alt1
+- New version (2.26.0).
+- Runtime:
+  + Show a message if the root is not found for more than 15 seconds (ALT#42016).
+- New fearure:
+  + Add locales feature. The feature adds locales and translations of utilities.
+- Feature ucode:
+  + Don't throw an error if no cpu updates are found for intel.
+  + Fix firmware definition for amd cpu (ALT#41878).
+- Feature raid:
+  + Remove feature due to deprecation.
+- Feature cleanup:
+  + Allow to delete temporary files of features.
+- Utilities:
+  + initrd-ls, initrd-extract: Fix use-after-free if cpio is empty.
+  + replace: Replace utility with bash builtins.
+- Misc:
+  + By default show only summary about the build of image.
+  + Generate content of sysconfig files.
+  + Add more unit tests.
+
 * Wed Feb 16 2022 Alexey Gladkov <legion@altlinux.ru> 2.25.0-alt2
 - Feature ucode: Don't throw an error if no cpu updates are found
   for intel (ALT#41960).
