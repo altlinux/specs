@@ -9,7 +9,7 @@
 %define subst_o_post() %{expand:%%{?_enable_%{1}:%{1}%{2},}}
 
 %define prerel %nil
-%define svnrev 38327
+#define svnrev 38327
 %define lname mplayer
 %define gname g%lname
 %define Name MPlayer
@@ -48,7 +48,7 @@
 %def_enable gnutls
 %def_disable winsock2
 %def_enable smb
-%def_enable live
+%def_disable live
 %def_enable vcd
 %def_enable bluray
 %def_enable dvdnav
@@ -230,7 +230,7 @@
 
 # Other parameters
 %def_enable nls
-%def_without htmldocs
+%def_with htmldocs
 %def_with tools
 %define default_vo %{subst_o xv}%{subst_o gl}%{subst_o x11}%{subst_o_pre x vidix}%{subst_o mga}%{subst_o dfbmga}%{subst_o tdfxfb}%{subst_o 3dfx}%{subst_o s3fb}%{subst_o_pre c vidix}%{subst_o_post fbdev 2}%{subst_o vesa}%{subst_o caca}%{subst_o aa}
 %define default_ao %{subst_o pulse}%{subst_o alsa}%{subst_o sdl}%{subst_o oss}%{subst_o openal}%{subst_o nas}
@@ -314,8 +314,8 @@
 
 
 Name: %lname
-Version: 1.4
-Release: alt9.%svnrev.2
+Version: 1.5
+Release: alt1
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -366,11 +366,7 @@ Patch17: 0017-compilation-fix-with-glibc-2.27.patch
 Patch18: 0018-stream-stream_smb.c-include-time.h.patch
 Patch19: 0019-ppc-disable-vsx-on-little-endian-systems.patch
 Patch20: 0020-fix-tools-build-with-shared-ffmpeg.patch
-Patch21: 0021-add-NLS-support.patch
-Patch22: 0022-add-po-dir.patch
-Patch23: 0023-fix-usage-mp_msg.patch
-Patch24: 0024-po-mp_msg2po.awk-fix-po-generation.patch
-Patch25: 0025-fix-po-mp_help2msg.awk.patch
+Patch21: 0021-fix-usage-mp_msg.patch
 %ifarch %e2k
 Patch2000: mplayer-e2k.patch
 %endif
@@ -679,6 +675,9 @@ subst 's|\\/\\/|//|g' help/help_mp-zh_??.h
 ls DOCS/man/*/%lname.1 | grep -v '^DOCS/man/en/' | xargs sed -i '1i.\\" -*- mode: troff; coding: utf-8 -*-'
 echo "NotShowIn=KDE;" >> etc/%lname.desktop
 
+# remove bundled ffmpeg
+rm -r ffmpeg
+
 %build
 %define _optlevel 3
 %add_optflags -Wno-switch-enum -Wno-switch
@@ -905,8 +904,6 @@ export CFLAGS="%optflags"
 
 %make_build
 
-%{?_enable_nls:%make_build -C po}
-
 # make conf file
 sed	-e 's/^@VO@/vo = %default_vo/' \
 	-e 's/^@AO@/ao = %default_ao/' \
@@ -1003,9 +1000,6 @@ install -p -m 0644 DOCS/tech/realcodecs/{TODO,*.txt} %buildroot%_docdir/%name-%v
 %find_lang --with-man %lname %lname-man
 
 %if_enabled nls
-for l in po/*.gmo; do
-	install -pD -m 0644 $l %buildroot%_datadir/locale/$(basename $l .gmo)/LC_MESSAGES/%name.mo
-done
 %find_lang %lname
 %endif
 
@@ -1027,6 +1021,7 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 %doc %dir %_docdir/%name-%version
 %doc %_docdir/%name-%version/README
 %doc %_docdir/%name-%version/AUTHORS
+%doc %_docdir/%name-%version/Changelog.*
 %_bindir/%lname
 %_man1dir/%lname.*
 %dir %_sysconfdir/%name
@@ -1159,6 +1154,13 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Sun Mar 06 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.5-alt1
+- Updated to 1.5.
+- Disabled live555 support by upstream.
+- mplayer: Packed Changelog.
+- Built htmldoc again.
+- Revised patches.
+
 * Thu Jan 20 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.4-alt9.38327.2
 - Added patch for Elbrus.
 
