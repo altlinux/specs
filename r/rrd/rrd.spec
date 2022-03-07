@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: rrd
 Version: 1.7.2
-Release: alt2
+Release: alt3
 %define native rrdtool
 %define abiversion 8
 %define rrdcached_user root
@@ -8,7 +10,7 @@ Release: alt2
 
 # fixed rrdcached.pid place
 # https://lists.altlinux.org/pipermail/devel/2017-October/203277.html
-%define	_localstatedir	/var
+%define _localstatedir /var
 
 Summary: RRD - round robin database
 License: GPL-2.0+ AND LGPL-2.0+
@@ -19,7 +21,8 @@ Url: http://oss.oetiker.ch/rrdtool
 Source0: http://oss.oetiker.ch/rrdtool/pub/%native-%version.tar
 Source1: rrdcached.init
 Source2: rrdcached.sysconfig
-
+Source3: rrdcached.service
+Source4: rrdcached.socket
 Source10: MRTG-HOWTO
 
 Patch0: rrd-1.7.2-alt-build-tcl.patch
@@ -30,15 +33,16 @@ Patch3: rrdtool-1.5.3-top-dir.patch
 Requires: lib%name = %version-%release
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: rpm-build-licenses
 BuildRequires: chrpath
 BuildRequires: python3-module-setuptools
 %if_with tcl
-BuildRequires: rpm-build-tcl tcl-devel
+BuildRequires(pre): rpm-build-tcl
+BuildRequires: tcl-devel
 %endif
 
 # Automatically added by buildreq on Wed Oct 12 2011
 BuildRequires: groff-base libdbi-devel libpango-devel libpng-devel libxml2-devel lua5 perl-Pod-Parser perl-devel python3-devel
+BuildRequires: libfreetype-devel zlib-devel fonts-ttf-dejavu
 
 Summary(ru_RU.UTF-8): RRDtool - база данных с "циклическим обновлением"
 
@@ -281,10 +285,15 @@ cp CONTRIBUTORS COPYRIGHT TODO NEWS THREADS LICENSE  %buildroot%_docdir/%native-
 #
 # rrdcached
 #
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/{rc.d/init.d,sysconfig}
-install -d $RPM_BUILD_ROOT%_localstatedir/lib/rrdcached
-install -m644 %SOURCE1 $RPM_BUILD_ROOT%_initdir/rrdcached
-sed -e 's|@@USER@@|%rrdcached_user|g' < %SOURCE2 > $RPM_BUILD_ROOT%_sysconfdir/sysconfig/rrdcached
+mkdir -p %buildroot{%_initdir,%_unitdir,%_sysconfdir/sysconfig}
+mkdir -p %buildroot%_localstatedir/lib/rrdcached/{db,journal}
+install -m755 %SOURCE1 %buildroot%_initdir/rrdcached
+install -m644 %SOURCE3 %buildroot%_unitdir/rrdcached.service
+install -m644 %SOURCE4 %buildroot%_unitdir/rrdcached.socket
+
+sed -e 's|@@USER@@|%rrdcached_user|g' < %SOURCE2 > %buildroot%_sysconfdir/sysconfig/rrdcached
+
+%find_lang %native
 
 # warning: Installed (but unpackaged) file(s) found:
 #    /usr/lib/perl/5.16.3/RRDp.pm
@@ -296,10 +305,10 @@ sed -e 's|@@USER@@|%rrdcached_user|g' < %SOURCE2 > $RPM_BUILD_ROOT%_sysconfdir/s
 #    /usr/lib/perl/5.16.3/x86_64-linux-thread-multi/perllocal.pod
 rm -rf %buildroot/usr/lib/perl
 
-# warning: Installed (but unpackaged) file(s) found:
-#    /usr/share/locale/hu/LC_MESSAGES/rrdtool.mo
-# hu only in 1.7.0, removed
-rm -f %buildroot/usr/share/locale/hu/LC_MESSAGES/rrdtool.mo
+#warning: Installed (but unpackaged) file(s) found:
+#    /usr/share/tcl/tclrrd1.7.2/ifOctets.tcl
+#    /usr/share/tcl/tclrrd1.7.2/pkgIndex.tcl
+rm -rf %buildroot/usr/share/tcl
 
 %pre cached
 # %%rrdcached_user is root now, so groupadd/useradd is not needed
@@ -321,16 +330,19 @@ rm -f %buildroot/usr/share/locale/hu/LC_MESSAGES/rrdtool.mo
 %_libdir/lib*.so
 %_libdir/pkgconfig/*
 
-%files utils
+%files utils -f %native.lang
 %doc COPYRIGHT
 %exclude %_bindir/rrdcached
 %_bindir/*
 
 %files cached
 %_bindir/rrdcached
-%attr(0755,root,root) %config %_initdir/rrdcached
+%_initdir/rrdcached
+%_unitdir/rrdcached.*
 %config(noreplace) %_sysconfdir/sysconfig/rrdcached
 %attr(3775,root,%rrdcached_user) %dir %_localstatedir/lib/rrdcached
+%attr(3775,root,%rrdcached_user) %dir %_localstatedir/lib/rrdcached/db
+%attr(3775,root,%rrdcached_user) %dir %_localstatedir/lib/rrdcached/journal
 
 %files man
 %_man1dir/*
@@ -358,6 +370,10 @@ rm -f %buildroot/usr/share/locale/hu/LC_MESSAGES/rrdtool.mo
 #   (the tcl one looks broken too as of 1.5.4-alt2.1)
 
 %changelog
+* Mon Mar 07 2022 Alexey Shabalin <shaba@altlinux.org> 1.7.2-alt3
+- update sysv init script
+- add systemd service and socket units
+
 * Thu Jan 09 2020 Anton Farygin <rider@altlinux.ru> 1.7.2-alt2
 - switched to python-3.7
 - fixed License and added copyright to library and utils package
@@ -444,7 +460,7 @@ rm -f %buildroot/usr/share/locale/hu/LC_MESSAGES/rrdtool.mo
 - fixed URL
 
 * Wed May 05 2010 Sergey Y. Afonin <asy@altlinux.ru> 1.4.3-alt4
-- changed "License: %gpl2only" to "License: %gpl2plus with exceptions"
+- changed "License: %%gpl2only" to "License: %%gpl2plus with exceptions"
 - added CONTRIBUTORS,COPYRIGHT,README,TODO,NEWS,THREADS to rrd-doc package
 - added "Requires: fonts-ttf-dejavu" for librrd package (thanks john#sakh.com)
 - separated rrd-cached package, initial configuration for rrdcached
