@@ -2,10 +2,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_with gcr
+%def_with gtk4
 
 Name: libnma
 Version: 1.8.34
-Release: alt1
+Release: alt2
 License: GPLv2+ and LGPLv2.1+
 Group: Graphical desktop/GNOME
 Summary: NetworkManager GUI library
@@ -24,6 +25,7 @@ BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: mobile-broadband-provider-info
 BuildRequires: gtk-doc
 %{?_with_gcr:BuildRequires: gcr-libs-devel}
+%{?_with_gtk4:BuildRequires: libgtk4-devel libgtk4-gir-devel}
 
 %description
 This package contains the library used for integrating GUI tools with
@@ -58,6 +60,45 @@ Requires: %name-devel = %version-%release
 %description gir-devel
 GObject introspection devel data for the libnma.
 
+%if_with gtk4
+%package gtk4
+Summary: Experimental GTK 4 version of NetworkManager GUI library
+Group: Graphical desktop/GNOME
+
+%description gtk4
+This package contains the experimental GTK4 version of library used for
+integrating GUI tools with NetworkManager.
+
+%package gtk4-devel
+Group: Development/GNOME and GTK+
+Summary: Devel files for experimental GTK4 version of NetworkManager GUI library
+Requires: %name-gtk4 = %EVR
+Requires: libnm-devel >= %nm_version
+Requires: libgtk4-devel
+
+%description gtk4-devel
+This package contains the experimental GTK4 version of header and pkg-config
+files to be used for integrating GUI tools with NetworkManager.
+
+%package gtk4-gir
+Group: System/Libraries
+Summary: GObject introspection data for the libnma-gtk4
+Requires: %name-gtk4 = %EVR
+
+%description gtk4-gir
+GObject introspection data for the libnma-gtk4.
+
+%package gtk4-gir-devel
+Group: System/Libraries
+Summary: GObject introspection devel data for the libnma-gtk4
+BuildArch: noarch
+Requires: %name-gtk4-gir = %version-%release
+Requires: %name-gtk4-devel = %version-%release
+
+%description gtk4-gir-devel
+GObject introspection devel data for the libnma-gtk4.
+%endif
+
 %package devel-doc
 Summary: Development documentation for libnma-devel-doc
 Group: Development/Documentation
@@ -81,7 +122,11 @@ This package contains development documentation for libnma-devel-doc.
 %endif
 	-Dintrospection=true \
 	-Dvapi=false \
+%if_with gtk4
+	-Dlibnma_gtk4=true \
+%else
 	-Dlibnma_gtk4=false \
+%endif
 	-Dmobile_broadband_provider_info=true \
 	-Diso_codes=true \
 	-Dgtk_doc=true
@@ -108,10 +153,29 @@ This package contains development documentation for libnma-devel-doc.
 %files gir-devel
 %_datadir/gir-1.0/NMA-1.0.gir
 
+%if_with gtk4
+%files gtk4
+%_libdir/libnma-gtk4.so.*
+
+%files gtk4-devel
+%_includedir/libnma/
+%_libdir/libnma-gtk4.so
+%_pkgconfigdir/libnma-gtk4.pc
+
+%files gtk4-gir
+%_libdir/girepository-1.0/NMA4-1.0.typelib
+
+%files gtk4-gir-devel
+%_datadir/gir-1.0/NMA4-1.0.gir
+%endif
+
 %files devel-doc
 %doc %_datadir/gtk-doc/html/libnma
 
 %changelog
+* Mon Mar 07 2022 Mikhail Efremov <sem@altlinux.org> 1.8.34-alt2
+- Enabled experimental GTK4 version build.
+
 * Tue Mar 01 2022 Mikhail Efremov <sem@altlinux.org> 1.8.34-alt1
 - Updated to 1.8.34.
 
