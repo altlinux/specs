@@ -2,7 +2,7 @@
 %define modname show-in-file-manager
 
 Name: showinfilemanager
-Version: 1.1.1
+Version: 1.1.4
 Release: alt1
 
 Summary: Show in File Manager
@@ -47,6 +47,9 @@ install -pD -m644 man/%name.1 %buildroot%_man1dir/%name.1
 %doc README* CHANGELOG*
 
 %changelog
+* Mon Mar 07 2022 Yuri N. Sedunov <aris@altlinux.org> 1.1.4-alt1
+- 1.1.4
+
 * Tue Dec 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
 - first build for Sisyphus
 
