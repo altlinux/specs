@@ -1,7 +1,7 @@
 Summary: usb-modeswitch is  a mode switching tool for controlling "flip flop" (multiple device) USB gear
 Name: usb-modeswitch
 Version: 2.6.1
-Release: alt2
+Release: alt3
 License: GPL-2.0-or-later
 
 Group: System/Configuration/Hardware
@@ -46,12 +46,14 @@ DESTDIR=%buildroot make install
 %config(noreplace) %_sysconfdir/usb_modeswitch.conf
 %_sbindir/*
 %_man1dir/*
-%_sysconfdir/usb_modeswitch.conf
 /lib/udev/*
 %_localstatedir/usb_modeswitch
 %_unitdir/*
 
 %changelog
+* Mon Mar 07 2022 Sergey Y. Afonin <asy@altlinux.org> 2.6.1-alt3
+- cleanup %%files section in spec
+
 * Mon Mar 07 2022 Sergey Y. Afonin <asy@altlinux.org> 2.6.1-alt2
 - updated systemd-detection.patch (ALT #38132)
 - added %%config(noreplace) for %%_sysconfdir/usb_modeswitch.conf
