@@ -8,8 +8,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name%api_ver_major
-Version: %ver_major.1
-Release: alt1.1%beta
+Version: %ver_major.2
+Release: alt1%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPL-2.0 and LGPL-2.1-or-later
@@ -47,7 +47,6 @@ Patch: %_name-3.2.0-alt-link.patch
 %def_enable libosinfo
 %def_enable playlist
 %def_enable network_manager
-%def_enable docs
 %def_enable man
 
 %define glib_ver 2.62
@@ -95,7 +94,6 @@ BuildRequires: pkgconfig(gupnp-dlna-gst-2.0)
 %{?_enable_libvorbis:BuildRequires: libvorbis-devel >= %vorbis_ver}
 %{?_enable_libvorbis:BuildRequires: libflac-devel >= %flac_ver}
 %{?_enable_exempi:BuildRequires: libexempi-devel >= %exempi_ver}
-%{?_enable_docs:BuildRequires: gtk-doc docbook-utils graphviz}
 %{?_enable_libgif:BuildRequires: libgif-devel}
 %{?_enable_libcue:BuildRequires: libcue-devel >= %libcue_ver }
 %{?_enable_libosinfo:BuildRequires: libosinfo-devel >= %libosinfo_ver}
@@ -141,7 +139,6 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 	%{?_enable_icon:-Dicon=true} \
 	%{?_enable_libosinfo:-Diso=enabled} \
 	%{?_enable_playlist:-Dplaylist=enabled} \
-	%{?_disable_docs:-Ddocs=false} \
 	%{?_disable_man:-Dman=false} \
 	-Dsystemd_user_services_dir='%_userunitdir'
 %nil
@@ -149,22 +146,23 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 
 %install
 %meson_install
+ln -sf %_name-%api_ver/libtracker-extract.so \
+%buildroot%_libdir/libtracker-extract.so
+
 %find_lang tracker%api_ver_major-miners
 
 %files -f tracker%api_ver_major-miners.lang
 %_xdgconfigdir/autostart/tracker-miner-fs-%api_ver_major.desktop
 %_xdgconfigdir/autostart/tracker-miner-rss-%api_ver_major.desktop
 %_libdir/%_name-%api_ver/
+# symlink
+%_libdir/libtracker-extract.so
 %_libexecdir/tracker-extract-%api_ver_major
 %_libexecdir/tracker-miner-fs-%api_ver_major
 %_libexecdir/tracker-writeback-%api_ver_major
 %_libexecdir/tracker-miner-fs-control-%api_ver_major
 %_libexecdir/tracker%api_ver_major/
 %{?_enable_rss:%_libexecdir/tracker-miner-rss-%api_ver_major}
-%{?_enable_man:
-#%_man1dir/tracker-miner-fs.*
-#%{?_enable_rss:%_man1dir/tracker-miner-rss-%api_ver_major.1.*}
-}
 %_datadir/tracker%api_ver_major-miners/
 %_prefix/lib/systemd/user/tracker-extract*.service
 %_prefix/lib/systemd/user/tracker-miner-fs*.service
@@ -200,6 +198,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 %doc AUTHORS NEWS README*
 
 %changelog
+* Mon Mar 07 2022 Yuri N. Sedunov <aris@altlinux.org> 3.2.2-alt1
+- 3.2.2
+
 * Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1.1
 - fixed meson options
 
