@@ -1,8 +1,8 @@
 %define sover 7
 
 Name: libayatana-indicator
-Version: 0.9.0
-Release: alt2
+Version: 0.9.1
+Release: alt1
 
 Summary: Ayatana Indicator Display Objects
 License: GPLv3
@@ -124,6 +124,9 @@ popd
 %_datadir/%name
 
 %changelog
+* Mon Mar 07 2022 Nazarov Denis <nenderus@altlinux.org> 0.9.1-alt1
+- Version 0.9.1
+
 * Sun Feb 13 2022 Nazarov Denis <nenderus@altlinux.org> 0.9.0-alt2
 - Rename subpackages
 - Fix BR

@@ -1,8 +1,8 @@
 %define sover 0
 
 Name: ayatana-ido
-Version: 0.9.0
-Release: alt2
+Version: 0.9.1
+Release: alt1
 
 Summary: Ayatana Indicator Display Objects
 License: LGPLv3 AND LGPLv2.1
@@ -128,6 +128,9 @@ This package provides Vala language bindings for %{name}3.
 %_vapidir/AyatanaIdo3-0.4.vapi
 
 %changelog
+* Mon Mar 07 2022 Nazarov Denis <nenderus@altlinux.org> 0.9.1-alt1
+- Version 0.9.1
+
 * Sun Feb 13 2022 Nazarov Denis <nenderus@altlinux.org> 0.9.0-alt2
 - Rename subpackages
 - Separate GObject introspection data and vala language bindings subpackages
