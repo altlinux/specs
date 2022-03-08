@@ -2,7 +2,7 @@
 %define xdg_name com.github.wwmm.easyeffects
 
 Name: easyeffects
-Version: 6.1.5
+Version: 6.2.4
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -17,8 +17,9 @@ Vcs: https://github.com/wwmm/easyeffects.git
 Source: %name-%version.tar
 %endif
 
-%define glibmm_ver 2.68
+%define sigc_ver 3.0.6
 %define gtk_ver 4.2.1
+%define adwaita_ver 1.0.0
 %define pw_api_ver 0.3
 %define pw_ver 0.3.31
 %define lv2_ver 1.18.2
@@ -35,8 +36,9 @@ Requires: lv2-lsp-plugins >= %lsp_ver
 %endif
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson gcc-c++ yelp-tools desktop-file-utils libappstream-glib-devel
-BuildRequires: libgtkmm4-devel >= %gtk_ver
+BuildRequires: meson gcc-c++ pkgconfig(sigc++-3.0) >= %sigc_ver libfmt-devel
+BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel
+BuildRequires: libgtk4-devel >= %gtk_ver pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(libpipewire-%pw_api_ver) >= %pw_ver
 BuildRequires: nlohmann-json-devel
 BuildRequires: lv2-devel >= %lv2_ver
@@ -81,6 +83,15 @@ mkdir -p %buildroot%_sysconfdir/EasyEffects
 %doc README* CHANGELOG.*
 
 %changelog
+* Tue Mar 08 2022 Yuri N. Sedunov <aris@altlinux.org> 6.2.4-alt1
+- 6.2.4
+
+* Tue Mar 01 2022 Yuri N. Sedunov <aris@altlinux.org> 6.2.3-alt1
+- 6.2.3
+
+* Thu Jan 06 2022 Yuri N. Sedunov <aris@altlinux.org> 6.2.1-alt1
+- updated to v6.2.1-1-gcd8967b5 (ported to GTK4 + LibAdwaita)
+
 * Thu Nov 18 2021 Yuri N. Sedunov <aris@altlinux.org> 6.1.5-alt1
 - 6.1.5
 
