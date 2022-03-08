@@ -5,7 +5,7 @@
 %def_disable debug
 
 Name: dovecot
-Version: 2.3.17
+Version: 2.3.18
 Release: alt1
 
 Summary: Dovecot secure IMAP/POP3 server
@@ -22,6 +22,7 @@ Source2: dovecot.init
 Source3: dovecot-auth.control
 Source4: http://www.unicode.org/Public/UNIDATA/UnicodeData.txt
 Source5: %name.watch
+Source6: 90-dovecot.filetrigger
 
 Patch1: fix-mail_plugin_dir-default.patch
 Patch2: dovecot-2.0-defaultconfig.patch
@@ -160,6 +161,8 @@ d /run/dovecot/empty 0750 root root -
 d /run/dovecot/login 0700 root root -
 END
 
+install -pD %SOURCE6 %buildroot%_rpmlibdir/90-%name.filetrigger
+
 %pre
 %pre_control mailboxes
 groupadd -r -f dovecot 2>/dev/null ||:
@@ -183,15 +186,11 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %dir %_datadir/dovecot
 %_datadir/dovecot/*
 %_unitdir/*
-
 %dir %_cachedir/dovecot
 %dir %_cachedir/dovecot/indexes
 %dir %_localstatedir/dovecot
-
 %_tmpfilesdir/%name.conf
-
 %_initdir/dovecot
-
 %dir %_sysconfdir/dovecot
 %dir %_sysconfdir/dovecot/conf.d
 %config(noreplace) %_sysconfdir/dovecot/dovecot.conf
@@ -200,19 +199,16 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %config(noreplace) %_ssldir/dovecot-openssl.cnf
 %attr(0600,root,root) %ghost %config(missingok,noreplace) %verify(not md5 size mtime) %_ssldir/certs/dovecot.pem
 %attr(0600,root,root) %ghost %config(missingok,noreplace) %verify(not md5 size mtime) %_ssldir/private/dovecot.pem
-
 %_libexecdir/dovecot
-
 %_docdir/dovecot
-
 %_man1dir/*
 %_man7dir/doveadm-search-query.*
-
 # hi buildreq
 %_libdir/lib*.so.*
 %_libdir/dovecot
 %exclude %_libdir/dovecot/libdovecot*.so
 %exclude %_libdir/dovecot/dovecot-config
+%_rpmlibdir/90-%name.filetrigger
 
 %files -n %name-devel
 %_includedir/dovecot
@@ -221,6 +217,10 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Thu Feb 10 2022 Andrey Cherepanov <cas@altlinux.org> 2.3.18-alt1
+- Updated to 2.3.18.
+- Restart service on any Dovecot module update by filetrigger (ALT #40786).
+
 * Thu Oct 28 2021 Andrey Cherepanov <cas@altlinux.org> 2.3.17-alt1
 - Updated to 2.3.17.
 
