@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220225
+Version: 20220303
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,15 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Mar 08 2022 Cronbuild Service <cronbuild@altlinux.org> 20220303-alt1
+- upstream changes (GIT f011ccb):
+  + add firmware for MT7986 (thx Shayne Chen)
+  + amdgpu: add firmware for SDMA 5.2.7 IP block (thx Alex Deucher)
+  + amdgpu: add firmware for PSP 13.0.8 IP block (thx Alex Deucher)
+  + amdgpu: add firmware for DCN 3.1.6 IP block (thx Alex Deucher)
+  + amdgpu: add firmware for GC 10.3.7 IP block (thx Alex Deucher)
+  + rtw89: 8852a: update fw to v0.13.36.0 (thx Zong-Zhe Yang)
+
 * Wed Mar 02 2022 Cronbuild Service <cronbuild@altlinux.org> 20220225-alt1
 - upstream changes (GIT ee0667a):
   + amdgpu: update raven2 VCN firmware (thx Alex Deucher)
