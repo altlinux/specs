@@ -5,7 +5,7 @@
 
 Name: lmms
 Version: 1.2.2
-Release: alt2.1
+Release: alt3
 
 Summary: Linux MultiMedia Studio
 License: GPL-2.0-or-later
@@ -97,7 +97,8 @@ find -type f -name '*.cpp' | xargs -r sed -ri 's,^\xEF\xBB\xBF,,'
     -DWANT_SWH:BOOL=ON \
     -DWANT_CALF:BOOL=ON \
     -DWANT_VST_NOWINE:BOOL=ON \
-    -DWANT_CARLA:BOOL=OFF
+    -DWANT_CARLA:BOOL=OFF \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF
 
 %cmake_build
 
@@ -126,6 +127,9 @@ rm -f %buildroot%_libdir/*.a
 %_includedir/%name
 
 %changelog
+* Tue Mar 08 2022 Anton Midyukov <antohami@altlinux.org> 1.2.2-alt3
+- enable RPATH (fix FTBFS)
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 1.2.2-alt2.1
 - NMU: spec: adapted to new cmake macros.
 
