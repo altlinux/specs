@@ -1,10 +1,9 @@
-%def_without bash
 %def_with keyutils
 # too old kernel in hasher
 %def_disable check
 
 Name: ndctl
-Version: 72.1
+Version: 73
 Release: alt1
 
 Summary: Manage NVDIMM subsystem devices (Non-volatile Memory)
@@ -14,12 +13,14 @@ Url: https://github.com/pmem/ndctl
 
 Vcs: https://github.com/pmem/ndctl.git
 Source: %url/archive/v%version/%name-%version.tar.gz
-Patch: %name-72.1-alt-iniparser.patch
+Patch: %name-73-alt-iniparser.patch
 
 Requires: lib%name = %EVR
 Requires: libdaxctl = %EVR
 Requires: kmod
 
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
 BuildRequires: pkgconfig(libkmod)
 BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(uuid)
@@ -125,20 +126,19 @@ communicating with CXL devices.
 %patch -b .iniparser
 
 %build
-echo %version > version
-./autogen.sh
-%configure --disable-static \
-	%{subst_with bash} \
-	%{subst_with keyutils} \
-	--with-udevrulesdir=%_udevrulesdir
+%add_optflags %(pkg-config --cflags iniparser)
+%meson \
+	-Dversion-tag='%version' \
+	%{?_disable_keyutils:-Dkeyutils=false} \
+	-Dbashcompletiondir=%_datadir/bash-completion/completions
 %nil
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-%make check
+%__meson_test
 
 %files
 %_bindir/%name
@@ -151,7 +151,9 @@ echo %version > version
 %config(noreplace) %_sysconfdir/%name.conf.d/%name.conf
 %config(noreplace) %_sysconfdir/modprobe.d/nvdimm-security.conf
 %_unitdir/%name-monitor.service
-%{?_with_bash:%_datadir/bash-completion/completions/%name}
+%_datadir/bash-completion/completions/cxl
+%_datadir/bash-completion/completions/daxctl
+%_datadir/bash-completion/completions/%name
 
 %files -n lib%name
 %_libdir/lib%name.so.*
@@ -196,6 +198,9 @@ echo %version > version
 %_man3dir/*cxl*
 
 %changelog
+* Tue Mar 08 2022 Yuri N. Sedunov <aris@altlinux.org> 73-alt1
+- 73 (ported to Meson build system)
+
 * Fri Jan 07 2022 Yuri N. Sedunov <aris@altlinux.org> 72.1-alt1
 - 72.1
 
