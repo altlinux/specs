@@ -1,6 +1,6 @@
 Name: python3-module-Pillow
 Version: 9.0.1
-Release: alt1
+Release: alt2
 
 Summary: Python Imaging Library
 License: MIT
@@ -19,6 +19,7 @@ BuildRequires: pkgconfig(lcms2)
 BuildRequires: pkgconfig(imagequant)
 BuildRequires: pkgconfig(libwebp)
 BuildRequires: pkgconfig(libwebpmux)
+BuildRequires: pkgconfig(xcb)
 
 %description
 Pillow is the friendly PIL fork by Alex Clark and Contributors.
@@ -44,6 +45,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir python3 selftest.py
 %python3_sitelibdir/Pillow-%version-*-info
 
 %changelog
+* Sun Mar 06 2022 Anton Midyukov <antohami@altlinux.org> 9.0.1-alt2
+- rebuild with xcb
+
 * Wed Feb 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 9.0.1-alt1
 - 9.0.1 released
 - fixes:

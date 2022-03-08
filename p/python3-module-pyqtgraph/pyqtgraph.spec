@@ -1,15 +1,12 @@
 %define modulename pyqtgraph
 
-# segfault python3 on i586 and ppc64le when running tests
-%ifarch x86_64 aarch64
-%def_with check
-%else
-%def_without check
+%ifarch %arm
+%def_disable check
 %endif
 
 Name: python3-module-%modulename
-Version: 0.11.0
-Release: alt3.rc0
+Version: 0.12.4
+Release: alt1
 
 Summary: Scientific Graphics and GUI Library for Python
 License: MIT
@@ -28,18 +25,25 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-PyQt5
 BuildRequires: python3-module-numpy
 BuildRequires: python3-module-OpenGL
-# For Tests
-%if_with check
+
+%if_disabled check
+%else
 BuildRequires: python3-module-pytest python3-module-six
 BuildRequires: python3-module-six
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-h5py
 BuildRequires: python3-module-scipy
+BuildRequires: python3-module-matplotlib-qt5
 BuildRequires: xvfb-run
+BuildRequires: python3-module-pytest-xvfb
+BuildRequires: mesa-dri-drivers
 %endif
 
 # skip optional dependencies
-%add_python3_req_skip PyQt4 PySide PySide2 matplotlib.backends.backend_qt4agg
+%add_python3_req_skip jupyter_rfb
+%add_python3_req_skip PyQt6
+%add_python3_req_skip PySide2 PySide2.QtCore PySide2.QtGui PySide2.QtWidgets
+%add_python3_req_skip PySide6.QtCore PySide6.QtGui PySide6.QtWidgets
 
 %description
 PyQtGraph is a pure-python graphics and GUI library built on PyQt5 / PySide2
@@ -61,7 +65,8 @@ GraphicsView framework for fast display.
 rm -r %buildroot/%python3_sitelibdir/pyqtgraph/examples
 
 %check
-PYTHONDONTWRITEBYTECODE=1 xvfb-run -a py.test3 -k "not (test_ImageItem or test_ImageItem_axisorder or test_PlotCurveItem or test_getArrayRegion or test_getArrayRegion_axisorder or test_PolyLineROI or test_exit_crash)"
+export PYTHONPATH=%buildroot/%python3_sitelibdir/
+py.test3 -v -k "not (test_reload) and not (test_PolyLineROI)"
 
 %files
 %doc CHANGELOG README.md
@@ -69,6 +74,12 @@ PYTHONDONTWRITEBYTECODE=1 xvfb-run -a py.test3 -k "not (test_ImageItem or test_I
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Mar 07 2022 Anton Midyukov <antohami@altlinux.org> 0.12.4-alt1
+- 0.12.4
+
+* Thu Feb 03 2022 Anton Midyukov <antohami@altlinux.org> 0.12.3-alt1
+- 0.12.3
+
 * Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 0.11.0-alt3.rc0
 - NMU: don't pack tests
 
