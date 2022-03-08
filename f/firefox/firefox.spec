@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        97.0.2
+Version:        98.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -46,10 +46,10 @@ Patch015: 0015-build-Disable-Werror.patch
 %set_verify_elf_method relaxed
 
 %define gst_version   1.0
-%define nspr_version  4.32
-%define nss_version   3.75
-%define rust_version  1.58.1
-%define cargo_version 1.58.1
+%define nspr_version  4.33
+%define nss_version   3.76
+%define rust_version  1.59.0
+%define cargo_version 1.59.0
 %define llvm_version  12.0
 
 #ExcludeArch: ppc64le
@@ -200,13 +200,13 @@ tar -xf %SOURCE11
 
 cp -f %SOURCE4 .mozconfig
 
-cat >> .mozconfig <<'EOF'
+tee -a .mozconfig <<'EOF'
 ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
 %ifnarch %{ix86} ppc64le
 ac_add_options --enable-linker=lld
 %ifnarch armh
-ac_add_options --enable-lto=cross
+ac_add_options --enable-lto=thin
 %endif
 %endif
 %ifarch armh ppc64le
@@ -464,6 +464,17 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Mar 08 2022 Alexey Gladkov <legion@altlinux.ru> 98.0-alt1
+- New release (98.0).
+- Security fixes:
+  + CVE-2022-26383: Browser window spoof using fullscreen mode
+  + CVE-2022-26384: iframe allow-scripts sandbox bypass
+  + CVE-2022-26387: Time-of-check time-of-use bug when verifying add-on signatures
+  + CVE-2022-26381: Use-after-free in text reflows
+  + CVE-2022-26382: Autofill Text could be exfiltrated via side-channel attacks
+  + CVE-2022-26385: Use-after-free in thread shutdown
+  + CVE-2022-0843: Memory safety bugs fixed in Firefox 98
+
 * Sun Mar 06 2022 Alexey Gladkov <legion@altlinux.ru> 97.0.2-alt1
 - New release (97.0.2).
 - Security fixes:
