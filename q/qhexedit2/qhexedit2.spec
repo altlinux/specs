@@ -1,12 +1,11 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%def_without python2
 %def_without python3
 
 Name: qhexedit2
-Version: 0.8.3
-Release: alt4
+Version: 0.8.9
+Release: alt1
 
 Summary: Binary Editor for Qt
 License: LGPLv2
@@ -15,19 +14,13 @@ Group: Editors
 Url: https://github.com/Simsys/qhexedit2
 Source0: %name-%version.tar
 Source1: qhexedit.desktop
-Patch: qhexedit2_build.patch
-Packager: Anton Midyukov <antohami@altlinux.org>
+
+# Fedora patches
+Patch10: qhexedit2_build.patch
 
 BuildRequires: desktop-file-utils
 BuildRequires: gcc-c++
 BuildRequires: qt5-base-devel
-
-%if_with python2
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-module-sip-devel
-BuildRequires: python-module-PyQt5-devel
-BuildRequires: python-module-enum34
-%endif
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -66,25 +59,6 @@ BuildArch: noarch
 %description doc
 The %name-doc package contains the documentation and examples for %name.
 
-%if_with python2
-%package -n python-module-%name-qt5
-Summary: %name Qt5 Python bindings
-Group: Development/Python
-Requires: %name-qt5-libs = %EVR
-
-%description -n python-module-%name-qt5
-%name Qt5 Python bindings.
-%endif
-
-%package -n python-module-%name-qt5-devel
-Summary: Development files for the %name Qt5 Python bindings
-Group: Development/Python
-Requires: python-module-%name-qt5 = %EVR
-Requires: sip-devel
-
-%description -n python-module-%name-qt5-devel
-Development files for the %name Qt5 Python bindings.
-
 %if_with python3
 %package -n python3-module-%name-qt5
 Summary: %name Qt5 Python3 bindings
@@ -106,7 +80,7 @@ Development files for the %name Qt5 Python3 bindings
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 # Prevent rpmlint W: doc-file-dependency %%_docdir/qhexedit2-doc/html/installdox %%_bindir/perl
 rm -f doc/html/installdox
@@ -124,10 +98,6 @@ LDFLAGS="%optflags -Wl,--as-needed" %qmake_qt5 ../src/qhexedit.pro
 %make_build
 popd
 
-%if_with python2
-# Build sip bindings, qt5, python2
-USE_QT5=1 CFLAGS="%optflags" %__python setup.py build --build-base=build-python-qt5
-%endif
 %if_with python3
 # Build sip bindings, qt5, python3
 USE_QT5=1 CFLAGS="%optflags" %__python3 setup.py build --build-base=build-python3-qt5
@@ -162,10 +132,6 @@ EOF
 
 # Python bindings
 # Distutils does not support --build-base with install, you need to build also...
-%if_with python2
-USE_QT5=1 CFLAGS="%optflags" %__python setup.py build --build-base=build-python2-qt5 install --skip-build --root %buildroot
-install -Dpm 0644 src/qhexedit.sip %buildroot%_datadir/sip/qhexedit/qhexedit.sip
-%endif
 %if_with python3
 USE_QT5=1 CFLAGS="%optflags" %__python3 setup.py build --build-base=build-python3-qt5 install --skip-build --root %buildroot
 #install -Dpm 0644 src/qhexedit.sip %buildroot%_datadir/sip3/qhexedit/qhexedit.sip
@@ -193,15 +159,6 @@ desktop-file-install --dir=%buildroot%_desktopdir/ %SOURCE1
 %doc src/license.txt
 %doc doc/html
 
-%if_with python2
-%files -n python-module-%name-qt5
-%python_sitelibdir/qhexedit-qt5.so
-%python_sitelibdir/QHexEdit_qt5-%version-*.egg-info
-
-%files -n python-module-%name-qt5-devel
-%_datadir/sip/qhexedit/
-%endif
-
 %if_with python3
 %files -n python3-module-%name-qt5
 %python3_sitelibdir/qhexedit-qt5.*.so
@@ -212,6 +169,10 @@ desktop-file-install --dir=%buildroot%_desktopdir/ %SOURCE1
 %endif
 
 %changelog
+* Tue Mar 08 2022 Anton Midyukov <antohami@altlinux.org> 0.8.9-alt1
+- new version 0.8.9
+- cleanup spec
+
 * Wed Jul 14 2021 Vitaly Lipatov <lav@altlinux.ru> 0.8.3-alt4
 - temp. disable python3 module (sip5 issue)
 
