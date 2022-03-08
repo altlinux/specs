@@ -14,7 +14,7 @@
 # vim:set ft=spec:
 Name: swig
 Version: 4.0.2
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
@@ -41,9 +41,6 @@ Patch10: swig-4.0.2-Fix-overload_simple_cast-test-with-Python-3.10.patch
 %{?_with_R:BuildPreReq: R-devel}
 %{?_with_ruby:BuildPreReq: libruby-devel ruby ruby-module-etc}
 %{?_with_scheme:BuildPreReq: chicken guile22-devel}
-%ifarch %ix86 x86_64
-%{?_with_scheme:BuildPreReq: libracket-devel racket}
-%endif
 %{?_with_tcl:BuildPreReq: tcl-devel}
 
 BuildRequires: gcc-c++
@@ -240,6 +237,9 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Tue Mar 08 2022 Anton Midyukov <antohami@altlinux.org> 1:4.0.2-alt3
+- build without libracket
+
 * Sat Feb 19 2022 Anton Midyukov <antohami@altlinux.org> 1:4.0.2-alt2
 - fix build with python 3.10
 
