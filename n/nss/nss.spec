@@ -1,6 +1,6 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.75
+Version:	3.76
 Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
@@ -262,6 +262,9 @@ popd
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_Releases
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Tue Mar 08 2022 Alexey Gladkov <legion@altlinux.ru> 3.76-alt1
+- New version (3.76).
+
 * Wed Feb 09 2022 Alexey Gladkov <legion@altlinux.ru> 3.75-alt1
 - New version (3.75).
 
