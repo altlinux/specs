@@ -3,7 +3,7 @@
 
 Name:    lazarus
 Version: 2.2.0.4
-Release: alt1
+Release: alt2
 Epoch:   1
 
 Summary: Lazarus Component Library and IDE
@@ -74,6 +74,7 @@ Summary: Interface for Lazarus based on Qt5
 Group: Development/Other
 Provides: lazarus-lcl
 Requires: qt5pas-devel
+Requires: %name = %EVR
 
 %description qt5
 Interface for Lazarus based on Qt5.
@@ -82,6 +83,7 @@ Interface for Lazarus based on Qt5.
 Summary: Interface for Lazarus based on GTK+
 Group: Development/Other
 Provides: lazarus-lcl
+Requires: %name = %EVR
 
 %description gtk
 Interface for Lazarus based on GTK+.
@@ -289,6 +291,9 @@ ln -s ../../bin/lazarus %buildroot$LAZARUSDIR/lazarus
 %_libdir/libQt5Pas.so
 
 %changelog
+* Tue Mar 08 2022 Andrey Cherepanov <cas@altlinux.org> 1:2.2.0.4-alt2
+- Frontend subpackages require lazarus (ALT #42077).
+
 * Mon Jan 10 2022 Andrey Cherepanov <cas@altlinux.org> 1:2.2.0.4-alt1
 - New version.
 - Build from upstream Git: https://gitlab.com/freepascal.org/lazarus/lazarus.git
