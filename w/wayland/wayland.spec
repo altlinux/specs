@@ -8,7 +8,7 @@
 
 Name: wayland
 Version: %main_ver
-Release: alt1
+Release: alt1.1
 
 Summary: Wayland protocol libraries
 Group: System/X11
@@ -25,7 +25,7 @@ Source: %name-%version.tar
 BuildRequires(pre): meson >= 0.52.1
 BuildRequires: /proc gcc-c++ doxygen libexpat-devel libffi-devel
 BuildRequires: libxml2-devel xsltproc docbook-style-xsl
-%{?_enable_doc:BuildRequires: graphviz >= 2.26 xmlto}
+%{?_enable_doc:BuildRequires: graphviz >= 2.26 xmlto fonts-ttf-roboto fonts-ttf-google-noto-sans-vf}
 
 %description
 Wayland is a project to define a protocol for a compositor to talk to
@@ -195,6 +195,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Wed Mar 09 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1.1
+- added some fonts to BR to fix docs build
+
 * Fri Dec 10 2021 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1
 - 1.20.0
 
