@@ -2,15 +2,17 @@
 
 Name: nasm
 Version: 2.15.05
-Release: alt1
+Release: alt1.1
 
 Summary: The Netwide Assembler, a portable x86 assembler with Intel-like syntax
 License: BSD-2-Clause
 Group: Development/Other
 Url: http://www.nasm.us/
 
-#VCS: https://github.com/netwide-assembler/nasm.git
+Vcs: https://github.com/netwide-assembler/nasm.git
 Source: http://www.nasm.us/pub/nasm/releasebuilds/%version/nasm-%version.tar.bz2
+# fc
+Patch: nasm-SourceSans-font-name.patch
 
 BuildRequires: ghostscript-utils groff-base xmlto asciidoc-a2x
 BuildRequires: texinfo
@@ -44,6 +46,7 @@ include linker, library manager, loader, and information dump.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %configure
@@ -85,6 +88,9 @@ python3 travis/nasm-t.py run
 %_man1dir/rdx*
 
 %changelog
+* Wed Mar 09 2022 Yuri N. Sedunov <aris@altlinux.org> 2.15.05-alt1.1
+- doc/psfonts.ph: renamed SourceSans font family to fix docs build (fc)
+
 * Sat Aug 29 2020 Yuri N. Sedunov <aris@altlinux.org> 2.15.05-alt1
 - 2.15.05
 - enabled %%check
