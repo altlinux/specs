@@ -3,8 +3,8 @@
 %def_with check
 
 Name: curl
-Version: 7.81.0
-Release: alt2
+Version: 7.82.0
+Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -110,7 +110,7 @@ applications that utilize lib%name.
 
 %build
 ./maketgz %version only
-./buildconf
+%autoreconf
 %configure \
 	--with-ssl \
 	--with-libidn \
@@ -155,6 +155,9 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Wed Mar 09 2022 Anton Farygin <rider@altlinux.ru> 7.82.0-alt1
+- 7.81.0 -> 7.82.0
+
 * Sat Jan 08 2022 Anton Farygin <rider@altlinux.ru> 7.81.0-alt2
 - disabled rewindaftersend logic for auth via kerberos to resolve problems with
   hdfs (fix for curl issue #8264)
