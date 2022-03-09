@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		9aa30c495c1
+%define svnrev		a80cb13868f
 
 %def_with pgsql
 %def_enable java
@@ -16,7 +16,7 @@
 %endif
 
 Name: zabbix
-Version: 5.4.11
+Version: 6.0.1
 Release: alt1
 Epoch: 1
 
@@ -434,6 +434,8 @@ install -Dpm 644 sources/%name-tmpfiles.conf %buildroot/lib/tmpfiles.d/%name.con
 %if_enabled agent2
 install -dm0750 %buildroot%_sysconfdir/%name/zabbix_agent2.conf.d
 install -m0640 src/go/conf/zabbix_agent2.conf %buildroot%_sysconfdir/%name/
+install -dm0750 %buildroot%_sysconfdir/%name/zabbix_agent2.conf.d/plugins.d
+install -m0640 src/go/conf/zabbix_agent2.d/plugins.d/*.conf %buildroot%_sysconfdir/%name/zabbix_agent2.conf.d/plugins.d/
 %endif
 
 # frontends
@@ -644,6 +646,8 @@ fi
 %files agent2
 %config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/%name/%{name}_agent2.conf
 %dir %attr(0750,root,%zabbix_group) %_sysconfdir/%name/zabbix_agent2.conf.d
+%dir %attr(0750,root,%zabbix_group) %_sysconfdir/%name/zabbix_agent2.conf.d/plugins.d
+%config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/%name/zabbix_agent2.conf.d/plugins.d/*
 %_initdir/%{name}_agent2
 %_unitdir/*agent2*
 %_sbindir/%{name}_agent2
@@ -674,6 +678,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Wed Mar 02 2022 Alexei Takaseev <taf@altlinux.org> 1:6.0.1-alt1
+- 6.0.1
+
 * Wed Mar 02 2022 Alexei Takaseev <taf@altlinux.org> 1:5.4.11-alt1
 - 5.4.11
 
