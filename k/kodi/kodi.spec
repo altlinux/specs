@@ -1,6 +1,6 @@
 Name: kodi
-Version: 19.3
-Release: alt3
+Version: 19.4
+Release: alt1
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -44,7 +44,6 @@ BuildRequires: pkgconfig(libass)
 BuildRequires: pkgconfig(libavcodec)
 BuildRequires: pkgconfig(libavfilter)
 BuildRequires: pkgconfig(libavformat)
-BuildRequires: pkgconfig(libavresample)
 BuildRequires: pkgconfig(libavutil)
 BuildRequires: pkgconfig(libbluray)
 BuildRequires: pkgconfig(libcap)
@@ -193,6 +192,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Wed Mar 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.4-alt1
+- 19.4 Matrix released
+
 * Mon Nov 08 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.3-alt3
 - rebuilt with recent spdlog
 
