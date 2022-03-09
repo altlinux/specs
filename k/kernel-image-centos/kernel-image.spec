@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 70
+%define centos_release 71
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,11 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Mar 09 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.71-alt1.el9
+- Updated to kernel-5.14.0-71.el9:
+  + MDRAID - Update to the latest upstream
+  + redhat: Bump RHEL_MINOR for 9.1
+
 * Thu Feb 24 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.70-alt1.el9
 - Updated to kernel-5.14.0-70.el9 (fixes: CVE-2022-0435, CVE-2022-0492, CVE-2022-24122):
   + Backport fixes for ucounts
