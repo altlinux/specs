@@ -9,7 +9,7 @@
 
 Name: lib%_name
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 Summary: GXml provides a GObject API for manipulating XML
 Group: System/Libraries
@@ -33,7 +33,8 @@ BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgee0.8-devel >= %gee_ver
 BuildRequires: libxml2-devel >= %xml2_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgee0.8-gir-devel}
-%{?_enable_docs:BuildRequires: valadoc yelp-tools graphviz gtk-doc}
+%{?_enable_docs:BuildRequires: valadoc yelp-tools graphviz gtk-doc
+BuildRequires: fonts-ttf-roboto fonts-ttf-google-noto-sans-vf}
 
 %description
 GXml provides a GObject API for manipulating XML. Most functionality
@@ -122,6 +123,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Mar 09 2022 Yuri N. Sedunov <aris@altlinux.org> 0.20.3-alt1.1
+- added some fonts to BR to fix docs build
+
 * Sat Mar 05 2022 Yuri N. Sedunov <aris@altlinux.org> 0.20.3-alt1
 - updated to 0.20.3-7-g3eac3ac
 
