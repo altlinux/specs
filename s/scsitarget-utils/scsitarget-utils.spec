@@ -8,7 +8,7 @@
 %endif
 
 Name: scsitarget-utils
-Version: 1.0.80
+Version: 1.0.81
 Release: alt1
 
 Summary: The SCSI target daemon and utility programs
@@ -65,7 +65,7 @@ Requires: %name = %version-%release
 Adds support for the Ceph rbd backstore to scsi-target-utils.
 
 %package gluster
-Summary:        Support for the Gluster backstore to scsi-target-utils
+Summary: Support for the Gluster backstore to scsi-target-utils
 Group: System/Configuration/Hardware
 Requires: %name = %version-%release
 
@@ -92,14 +92,14 @@ Adds support for the Gluster glfs backstore to scsi-target-utils.
 
 %install
 mkdir -p %buildroot{%_sbindir,%_initdir,%_unitdir,%_sysconfdir/tgt/conf.d,%_sysconfdir/sysconfig,%_man5dir,%_man8dir}
+mkdir -p %buildroot%_sysconfdir/tgt/include.d %buildroot%_sysconfdir/tgt/examples
 
 install -p -m 0755 scripts/tgt-setup-lun %buildroot%_sbindir
 install -p -m 0644 %SOURCE1 %buildroot%_unitdir
 install -p -m 0755 scripts/tgt-admin %buildroot/%_sbindir/tgt-admin
 install -p -m 0644 doc/manpages/targets.conf.5 %buildroot/%_man5dir
-install -p -m 0644 doc/manpages/tgtadm.8 %buildroot/%_man8dir
-install -p -m 0644 doc/manpages/tgt-admin.8 %buildroot/%_man8dir
-install -p -m 0644 doc/manpages/tgt-setup-lun.8 %buildroot/%_man8dir
+install -pD -m 0644 doc/manpages/*.8 %buildroot/%_man8dir
+install -pD -m 0644 conf/examples/* %buildroot%_sysconfdir/tgt/examples
 install -p -m 0600 %SOURCE2 %buildroot%_sysconfdir/sysconfig/tgtd
 install -p -m 0600 %SOURCE3 %buildroot%_sysconfdir/tgt
 install -p -m 0600 %SOURCE4 %buildroot%_sysconfdir/tgt/conf.d
@@ -125,7 +125,7 @@ mkdir -p %buildroot%_libdir/tgt/backing-store
 %preun_service tgt
 
 %files
-%doc README doc/README.iscsi doc/README.iser doc/README.lu_configuration doc/README.mmc doc/README.ssc
+%doc doc/README.* doc/*.txt doc/htmlpages
 %_sbindir/tgtd
 %_sbindir/tgtadm
 %_sbindir/tgt-setup-lun
@@ -139,6 +139,8 @@ mkdir -p %buildroot%_libdir/tgt/backing-store
 %dir %_libdir/tgt/backing-store
 %dir %_sysconfdir/tgt
 %dir %_sysconfdir/tgt/conf.d
+%dir %_sysconfdir/tgt/include.d
+%_sysconfdir/tgt/examples
 %attr(0600,root,root) %config(noreplace) %_sysconfdir/sysconfig/tgtd
 %attr(0600,root,root) %config(noreplace) %_sysconfdir/tgt/targets.conf
 %attr(0600,root,root) %config(noreplace) %_sysconfdir/tgt/tgtd.conf
@@ -157,6 +159,9 @@ mkdir -p %buildroot%_libdir/tgt/backing-store
 %endif
 
 %changelog
+* Wed Mar 09 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.0.81-alt1
+- 1.0.81
+
 * Mon Feb 15 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.0.80-alt1
 - 1.0.80
 
