@@ -5,7 +5,7 @@
 %def_without bootstrap
 
 Name: python3-module-pip
-Version: 22.0.3
+Version: 22.0.4
 Release: alt1
 
 Summary: The PyPA recommended tool for installing Python packages
@@ -130,6 +130,9 @@ tox.py3 --sitepackages --console-scripts -vvr -s false -- \
 %endif
 
 %changelog
+* Wed Mar 09 2022 Stanislav Levin <slev@altlinux.org> 22.0.4-alt1
+- 22.0.3 -> 22.0.4.
+
 * Tue Feb 08 2022 Stanislav Levin <slev@altlinux.org> 22.0.3-alt1
 - 21.3.1 -> 22.0.3.
 
