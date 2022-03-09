@@ -3,7 +3,7 @@
 
 Name: python3-module-%modname
 Version: 0.6.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: %modname is a project for parsing and processing D-Bus introspection XML
 Group: Development/Python3
@@ -51,6 +51,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %doc README* NEWS
 
 %changelog
+* Wed Mar 09 2022 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1.2
+- fixed build
+
 * Sat Aug 07 2021 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1.1
 - fixed BR
 
