@@ -4,7 +4,7 @@
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %def_disable static
-%def_disable compat
+%def_enable compat
 
 %if_disabled compat
 %def_enable cpp
@@ -29,15 +29,15 @@
 %endif
 
 %define rname poppler
-%define somajor 119
+%define somajor 115
 %define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
 %define somajor_qt5 1
 %define somajor_qt6 3
 %define somajor_glib 8
-%define major 22
-%define minor 03
+%define major 21
+%define minor 11
 %define bugfix 0
 
 %if_disabled compat
@@ -47,7 +47,7 @@
 %endif
 Name: %pkgname
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt4
 
 %if_disabled compat
 %define poppler_devel lib%rname-devel
@@ -461,8 +461,8 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
-* Wed Mar 09 2022 Sergey V Turchin <zerg@altlinux.org> 22.03.0-alt1
-- new version
+* Wed Mar 09 2022 Sergey V Turchin <zerg@altlinux.org> 21.11.0-alt4
+- build only compat library
 
 * Wed Dec 01 2021 Sergey V Turchin <zerg@altlinux.org> 21.11.0-alt3
 - fix libpoppler_cpp package name
