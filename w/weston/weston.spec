@@ -1,6 +1,7 @@
-%define ver_major 9
+%define ver_major 10
 %define api_ver %ver_major
 %define clientsdir %_libdir/%name/clients
+%define soname 0
 
 # Weston backend: DRM/KMS
 %def_enable backend_drm
@@ -23,8 +24,8 @@
 # Weston backend: X11 (nested)
 %def_enable backend_x11
 
-# Weston backend: fbdev
-%def_enable backend_fbdev
+# Weston backend: fbdev (deprecated)
+%def_disable deprecated_backend_fbdev
 
 # Default backend when no parent display server detected
 # 'auto', 'drm', 'wayland', 'x11', 'fbdev', 'headless'
@@ -33,8 +34,8 @@
 # Weston renderer: EGL / OpenGL ES 2.x
 %def_enable renderer_gl
 
-# Weston launcher for systems without logind
-%def_enable weston_launch
+# Weston launcher for systems without logind (deprecated)
+%def_enable deprecated_weston_launch
 
 # Xwayland: support for X11 clients inside Weston
 %def_enable xwayland
@@ -46,7 +47,7 @@
 %def_enable remoting
 
 # Virtual remote output with Pipewire on DRM backend
-%def_disable pipewire
+%def_enable pipewire
 
 # Weston shell UI: traditional desktop
 %def_enable shell_desktop
@@ -77,6 +78,9 @@
 
 # WebP loading support
 %def_enable image_webp
+
+# Compositor color management: Little CMS
+%def_enable color_management_lcms
 
 # List of accessory clients to build and install
 # choices: [ 'calibrator', 'debug', 'info', 'terminal', 'touch-calibrator' ],
@@ -109,7 +113,7 @@
 
 Name: weston
 Version: %ver_major.0.0
-Release: alt1.2
+Release: alt2
 
 Summary: Reference compositor for Wayland
 Group: Graphical desktop/Other
@@ -118,6 +122,7 @@ Url: http://wayland.freedesktop.org/
 
 Vcs: https://gitlab.freedesktop.org/wayland/weston.git
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 # https://gitlab.freedesktop.org/wayland/weston/-/issues/517
 Patch1: weston-9.0.0-alt-ivi-shell-test_LTO.patch
 Patch2: weston-9.0.0-alt-launch-group.patch
@@ -126,7 +131,8 @@ Requires: lib%name = %EVR
 Requires: xkeyboard-config
 Requires: xorg-dri-swrast
 
-%define pw_api_ver 0.2
+%define pw_api_ver 0.3
+%define pw_ver 0.3
 %define gst_api_ver 1.0
 
 BuildRequires(pre): meson
@@ -160,7 +166,7 @@ BuildRequires: pkgconfig(xcb-shape) pkgconfig(xcb-xfixes)
 BuildRequires: pkgconfig(xcursor) pkgconfig(cairo-xcb)}
 %{?_enable_backend_rdp:BuildRequires: libfreerdp-devel}
 %{?_enable_backend_x11:BuildRequires: pkgconfig(xcb) pkgconfig(xcb-xkb)}
-%{?_enable_pipewire:BuildRequires: pkgconfig(libpipewire-%pw_api_ver)}
+%{?_enable_pipewire:BuildRequires: pkgconfig(libpipewire-%pw_api_ver) >= %pw_ver}
 %{?_enable_remoting:
 BuildRequires: pkgconfig(gstreamer-%gst_api_ver) pkgconfig(gstreamer-allocators-%gst_api_ver)
 BuildRequires: pkgconfig(gstreamer-app-%gst_api_ver) pkgconfig(gstreamer-video-%gst_api_ver)}
@@ -205,30 +211,36 @@ Header files for doing development with the weston.
 
 %prep
 %setup
+%patch -p1
 %patch1 -p1 -b .ivi
-%patch2 -p1 -b .launch-group
+%{?_enable_deprecated_weston_launch:%patch2 -p1 -b .launch_group}
 
 %build
 %meson \
+	%{?_enable_deprecated_weston_launch:-Ddeprecated-weston-launch=true \
+	-Dweston-launch-group=xgrp} \
 	--libexecdir=%clientsdir \
-	-Dweston-launch-group=xgrp \
 	%{?_disable_backend_x11:-Dbackend-x11=false} \
 	%{?_disable_backend_rdp:-Dbackend-rdp=false} \
 	%{?_disable_xwayland:-Dxwayland=false} \
 	%{?_disable_remoting:-Dremoting=false} \
 	%{?_disable_shell_ivi:-Dshell-ivi=false} \
 	%{?_disable_pipewire:-Dpipewire=false} \
-	%{?_disable_test_junit_xml:-Dtest-junit-xml=false}
+	%{?_disable_test_junit_xml:-Dtest-junit-xml=false} \
+	%{?_enable_deprecated_backend_fbdev:-Ddeprecated-backend-fbdev=true} \
+	%{?_disable_color_management_lcms:-Dcolor-management-lcms=false}
 %nil
 %meson_build -v
 
 %install
 %meson_install
-
 mkdir -p -- %buildroot/%_xdgconfigdir/%name
 sed \
 	-e 's,@clientsdir@,%clientsdir,g' \
 	.gear/%name.ini > %buildroot/%_xdgconfigdir/%name/%name.ini
+
+ln -sf %name/libexec_%{name}.so.0 \
+%buildroot%_libdir/libexec_%{name}.so.0
 
 %check
 %__meson_test
@@ -237,7 +249,7 @@ sed \
 %dir %_xdgconfigdir/%name
 %config(noreplace) %_xdgconfigdir/%name/%name.ini
 %_bindir/*
-%attr (4710,root,xgrp) %_bindir/weston-launch
+%{?_enable_deprecated_weston_launch:%attr (4710,root,xgrp) %_bindir/weston-launch}
 %dir %_libdir/%name
 %{?_enable_color_management_colord:%_libdir/%name/cms-colord.so}
 %{?_enable_color_management_lcms:%_libdir/%name/cms-static.so}
@@ -247,7 +259,6 @@ sed \
 %_libdir/%name/hmi-controller.so
 %_libdir/%name/ivi-shell.so}
 %{?_enable_shell_kiosk:%_libdir/%name/kiosk-shell.so}
-%_libdir/%name/libexec_weston.so*
 %{?_enable_screenshare:%_libdir/%name/screen-share.so}
 %{?_enable_systemd:%_libdir/%name/systemd-notify.so}
 # clients
@@ -273,17 +284,23 @@ sed \
 %{?_enable_renderer_gl:%_libdir/lib%name-%api_ver/gl-renderer.so}
 %{?_enable_remoting:%_libdir/lib%name-%api_ver/remoting-plugin.so}
 %{?_enable_xwayland:%_libdir/lib%name-%api_ver/xwayland.so}
+%{?_enable_pipewire:%_libdir/lib%name-%api_ver/pipewire-plugin.so}
+%_libdir/%name/libexec_weston.so.*
+#  symlink
+%_libdir/libexec_%{name}.so.%soname
 # backends
 %_libdir/lib%name-%api_ver/drm-backend.so
-%{?_enable_backend_fbdev:%_libdir/lib%name-%api_ver/fbdev-backend.so}
+%{?_enable_deprecated_backend_fbdev:%_libdir/lib%name-%api_ver/fbdev-backend.so}
 %{?_enable_backend_headless:%_libdir/lib%name-%api_ver/headless-backend.so}
 %{?_enable_backend_rdp:%_libdir/lib%name-%api_ver/rdp-backend.so}
 %{?_enable_backend_wayland:%_libdir/lib%name-%api_ver/wayland-backend.so}
 %{?_enable_backend_x11:%_libdir/lib%name-%api_ver/x11-backend.so}
+%{?_enable_color_management_lcms:%_libdir/lib%name-%api_ver/color-lcms.so}
 
 %files -n lib%name-devel
 %_includedir/lib%name-%api_ver/
 %_libdir/lib%{name}*.so
+%_libdir/%name/libexec_weston.so
 %_pkgconfigdir/lib%{name}*.pc
 
 %files -n lib%name-protocols
@@ -291,6 +308,15 @@ sed \
 %_datadir/pkgconfig/lib%name-%api_ver-protocols.pc
 
 %changelog
+* Wed Mar 09 2022 Yuri N. Sedunov <aris@altlinux.org> 10.0.0-alt2
+- enabled deprecated weston launcher for systems without logind
+
+* Tue Mar 08 2022 Yuri N. Sedunov <aris@altlinux.org> 10.0.0-alt1.1
+- libexec_weston.so.* private libraries moved to libname package
+
+* Tue Mar 08 2022 Yuri N. Sedunov <aris@altlinux.org> 10.0.0-alt1
+- 10.0.0
+
 * Sun Oct 31 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 9.0.0-alt1.2
 - weston-launch: changed perms mode, subject of xgrp group (closes #41205)
 
