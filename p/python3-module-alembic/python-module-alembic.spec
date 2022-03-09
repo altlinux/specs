@@ -1,21 +1,21 @@
+%define _unpackaged_files_terminate_build 1
 %define oname alembic
 
 %def_without test
 
 Name: python3-module-alembic
-Version: 1.6.5
+Version: 1.7.6
 Release: alt1
 
 Summary: Database migration tool for SQLAlchemy
 
 License: MIT
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/alembic
+Url: https://alembic.sqlalchemy.org
+VCS: https://github.com/sqlalchemy/alembic
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-# Source-url: %__pypi_url %oname
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildArch: noarch
 
@@ -24,7 +24,6 @@ Provides: python-module-alembic = %EVR
 
 BuildRequires: help2man
 
-BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-mako
 BuildRequires: python3-module-SQLAlchemy python3-module-setuptools
@@ -32,9 +31,6 @@ BuildRequires: python3-module-dateutil
 %if_with test
 BuildRequires: python3-module-pytest python3-module-nose
 %endif
-
-# some autoprov problem?
-%py3_provides alembic.migration alembic.environment
 
 %description
 Alembic is a new database migrations tool, written by the author of
@@ -53,17 +49,14 @@ Documentation and status of Alembic is at http://readthedocs.org/docs/alembic/
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %python3_build
 
 %install
 %python3_install
-%python3_prune
 rm -rfv %buildroot%python3_sitelibdir/alembic/testing/
-
-#mkdir -p %buildroot%_man1dir/
-#help2man --version-string %{version} --no-info -s 1 bin/alembic > %buildroot%_man1dir/alembic.1
 
 %if_with test
 %check
@@ -73,10 +66,12 @@ rm -rfv %buildroot%python3_sitelibdir/alembic/testing/
 %files
 %doc README.rst LICENSE CHANGES docs
 %_bindir/%oname
-#_man1dir/alembic.1*
 %python3_sitelibdir/*
 
 %changelog
+* Sat Mar 05 2022 Danil Shein <dshein@altlinux.org> 1.7.6-alt1
+- new version
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1.6.5-alt1
 - new version 1.6.5 (with rpmrb script)
 

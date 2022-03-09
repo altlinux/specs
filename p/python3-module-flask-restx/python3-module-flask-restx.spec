@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname flask_restx
 
-%def_disable check
+%def_enable check
 
 Name: python3-module-flask-restx
 Version: 0.5.1
-Release: alt1
+Release: alt2
 
 Summary: Flask-RESTX is a community driven fork of Flask-RESTPlus
 License: BSD-3-Clause
@@ -13,18 +13,18 @@ Group: Development/Python3
 URL: https://github.com/python-restx/flask-restx
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-jsonschema
+BuildRequires: python3-module-flask
+BuildRequires: python3-module-werkzeug
+BuildRequires: python3-module-pytz
+BuildRequires: python3-module-six
+BuildRequires: python3-module-aniso8601
 
 %if_enabled check
 BuildRequires: /dev/pts
 BuildRequires: python3-module-tox
 BuildRequires: python3-module-tox-console-scripts
 BuildRequires: python3-module-tox-no-deps
-BuildRequires: python3-module-jsonschema
-BuildRequires: python3-module-flask
-BuildRequires: python3-module-werkzeug
-BuildRequires: python3-module-tzlocal
-BuildRequires: python3-module-six
-BuildRequires: python3-module-aniso8601
 BuildRequires: python3-module-faker
 BuildRequires: python3-module-invoke
 BuildRequires: python3-module-blinker
@@ -40,6 +40,8 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: node_modules.tar.gz
 Patch0: %name-%version-%release.patch
+Patch1: skip_logging_tests.patch
+Patch2: skip_domain_name_resolve_tests.patch
 
 %description
 Flask-RESTX is an extension for Flask that adds support for quickly building 
@@ -65,20 +67,27 @@ cp -R node_modules/typeface-droid-sans/files flask_restx/static/
 %install
 %python3_install
 
-#exit 1
-
 %check
+cat > tox.ini <<'EOF'
+[testenv]
+usedevelop=True
+commands =
+    {envbindir}/pytest {posargs:-vra}
+EOF
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
 tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false
 
 %files
-%doc LICENSE README.* CONTRIBUTING.rst
+%doc LICENSE README.rst CHANGELOG.rst CONTRIBUTING.rst
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Fri Mar 04 2022 Danil Shein <dshein@altlinux.org> 0.5.1-alt2
+- enable tests
+
 * Tue Sep 07 2021 Danil Shein <dshein@altlinux.org> 0.5.1-alt1
 - new version 0.5.1
 

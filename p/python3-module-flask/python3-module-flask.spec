@@ -1,40 +1,45 @@
+%define _unpackaged_files_terminate_build 1
 %define oname Flask
 
+%def_enable check
+
 Name: python3-module-flask
-Version: 1.1.2
-Release: alt2
+Version: 2.0.3
+Release: alt1
 
-Summary: A micro-framework for Python based on Werkzeug, Jinja 2 and good intentions
-License: BSD
+Summary: Flask is a lightweight WSGI web application framework.
+License: BSD-3-Clause
 Group: Development/Python3
+URL: https://palletsprojects.com/p/flask/
+VCS:  https://github.com/pallets/flask
 
-URL: http://flask.pocoo.org/
-BuildArch: noarch
-
-# Source-url: %__pypi_url %oname
-Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-simplejson
 BuildRequires: python3-module-jinja2
+BuildRequires: python3-module-werkzeug >= 2.0
+BuildRequires: python3-module-itsdangerous
+BuildRequires: python3-module-click
+%if_enabled check
+BuildRequires: pytest3
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-tox-no-deps
+BuildRequires: python3-module-tox-console-scripts
+%endif
 
 # /usr/bin/flask
 Obsoletes: python-module-flask
 Conflicts: python-module-flask
 
-%py3_requires click.testing
+BuildArch: noarch
+
+Source0: %name-%version.tar
 
 %description
-Flask is called a "micro-framework" because the idea to keep the core
-simple but extensible. There is no database abstraction layer, no form
-validation or anything else where different libraries already exist that
-can handle that.  However Flask knows the concept of extensions that can
-add this functionality into your application as if it was implemented in
-Flask itself. There are currently extensions for object relational
-mappers, form validation, upload handling, various open authentication
-technologies and more.
+Flask is a lightweight WSGI web application framework. It is designed to 
+make getting started quick and easy, with the ability to scale up to complex 
+applications. It began as a simple wrapper around Werkzeug and Jinja and 
+has become one of the most popular Python web application frameworks.
 
 %prep
 %setup
@@ -44,18 +49,24 @@ technologies and more.
 
 %install
 %python3_install
-%python3_prune
 
 %check
-#pytest3
+export PYTHONPATH=%buildroot%python3_sitelibdir/
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts --no-deps -vvr -- -vra
 
 %files
-%doc README.rst LICENSE.rst
+%doc *.rst
 %_bindir/flask
 %python3_sitelibdir/flask/
 %python3_sitelibdir/%oname-*.egg-info
 
 %changelog
+* Thu Mar 03 2022 Danil Shein <dshein@altlinux.org> 2.0.3-alt1
+- new version 1.1.2 -> 2.0.3
+  + enable tests
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt2
 - set Conflicts to python2 module instead of Provides
 

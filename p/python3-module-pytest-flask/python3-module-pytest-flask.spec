@@ -1,58 +1,69 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pytest-flask
 
-Name: python3-module-%oname
-Version: 0.10.0
-Release: alt2
+%def_enable check
 
-Summary: A set of py.test fixtures to test Flask applications
+Name: python3-module-%oname
+Version: 1.2.0
+Release: alt1
+
+Summary: A set of pytest fixtures to test Flask applications
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/pytest-flask/
-# https://github.com/vitalk/pytest-flask.git
+Url: https://github.com/pytest-dev/pytest-flask
+VCS: https://github.com/pytest-dev/pytest-flask
+
 BuildArch: noarch
 
-Source0: https://pypi.python.org/packages/b4/b5/6d86a2362be78d1d817c7a1d5105100b7b51089dd56ca907d4fed9461570/%{oname}-%{version}.tar.gz
+Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-pip
 BuildRequires: python3-module-flask
+BuildRequires: python3-module-setuptools_scm
+%if_enabled check
+BuildRequires: pytest3
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-tox-no-deps
+BuildRequires: python3-module-tox-console-scripts
+BuildRequires: python3-module-coverage
+%endif
 
 %py3_provides pytest_flask
 
-
 %description
-A set of py.test fixtures to test Flask extensions and applications.
-
-Plugin provides some fixtures to simplify app testing:
-
-* client - an instance of app.test_client,
-* client_class - client fixture for class-based tests,
-* config - you application config,
-* accept_json, accept_jsonp, accept_any - accept headers suitable to use
-  as parameters in client.
+An extension of pytest test runner which provides a set of useful 
+tools to simplify testing and development of the Flask extensions 
+and applications.
 
 %prep
-%setup -q -n %{oname}-%{version}
-
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
+%setup
 
 %build
-%python3_build_debug
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%python3_build
 
 %install
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 
 %check
-python3 setup.py test
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+export PYTHONPATH=%buildroot%python3_sitelibdir/
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts --no-deps -vvr
 
 %files
-%doc PKG-INFO README.rst docs
+%doc LICENSE *.rst
 %python3_sitelibdir/*
 
 
 %changelog
+* Fri Mar 04 2022 Danil Shein <dshein@altlinux.org> 1.2.0-alt1
+- new version 0.10.0 -> 1.2.0
+
 * Wed Nov 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.10.0-alt2
 - python2 disabled
 

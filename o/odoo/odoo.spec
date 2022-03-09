@@ -1,9 +1,9 @@
 %define  snapshot  20210112
 %define  addonsdir %python_sitelibdir/odoo/addons
 
-Name: 	 odoo
+Name:    odoo
 Version: 14.0
-Release: alt2.%snapshot
+Release: alt3.%snapshot
 
 Summary: Odoo is a suite of web based open source business apps
 License: LGPL-3.0
@@ -17,6 +17,7 @@ Source2: odoo.init
 Source3: README.ALT
 
 Patch1: %name-alt-fix-openerp-import.patch
+Patch2: %name-alt-fix-werkzeug-import.patch
 
 BuildArch: noarch
 
@@ -70,6 +71,7 @@ http://www.openerp.com/ or  http://apps.openerp.com/
 %prep
 %setup -q -n %name
 %patch1 -p1
+%patch2 -p1
 cp %SOURCE3 .
 
 %build
@@ -140,6 +142,9 @@ getent passwd _odoo > /dev/null || \
 #%%attr(-,openerp,openerp) %ghost %_logdir/openerp/openerp-server.log
 
 %changelog
+* Sat Mar 05 2022 Danil Shein <dshein@altlinux.org> 14.0-alt3.20210112
+- fix werkzeug deprecated import
+
 * Thu Sep 16 2021 Stanislav Levin <slev@altlinux.org> 14.0-alt2.20210112
 - Dropped no longer used dependency on vatnumber(odoo#36978).
 
