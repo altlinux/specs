@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.7
+Version: %ver_major.9
 Release: alt1
 
 Summary: Glorious MIME Utility Library
@@ -18,17 +18,18 @@ Group: System/Libraries
 Url: https://github.com/jstedfast/gmime
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+Source: https://github.com/jstedfast/gmime/releases/download/%version/%_name-%version.tar.xz
 %else
-# VCS: https://github.com/jstedfast/gmime.git
+Vcs: https://github.com/jstedfast/gmime.git
 Source: %_name-%version.tar
 %endif
 
-%define glib_ver 2.32.0
+%define glib_ver 2.58.0
 %define gi_ver 1.30.0
 
+BuildRequires(pre): rpm-build-gnome rpm-build-gir rpm-build-vala
 BuildRequires: /proc
-BuildPreReq: rpm-build-gnome
 BuildRequires: gcc-c++ libgio-devel >= %glib_ver
 BuildRequires: libidn2-devel zlib-devel
 BuildRequires: gtk-doc docbook-utils
@@ -37,7 +38,6 @@ BuildRequires: vala-tools
 %{?_enable_crypto:BuildRequires: libgpgme-devel}
 
 %description
-
 GMime is a C/C++ library for the creation and parsing of messages using
 the Multipurpose Internet Mail Extension (MIME) as defined by numerous
 IETF specifications.
@@ -95,11 +95,12 @@ statically linked GMime-based software.
 %build
 %{?_enable_snapshot:NOCONFIGURE=1 ./autogen.sh}
 %configure  %{subst_enable static} \
-	    %{subst_enable crypto} \
-	    --enable-introspection \
-	    --enable-vala \
-	    --enable-largefile \
-	    --enable-gtk-doc
+    %{subst_enable crypto} \
+    --enable-introspection \
+    --enable-vala \
+    --enable-largefile \
+    --enable-gtk-doc
+%nil
 %make_build
 
 %install
@@ -134,6 +135,9 @@ statically linked GMime-based software.
 %endif
 
 %changelog
+* Wed Mar 09 2022 Yuri N. Sedunov <aris@altlinux.org> 3.2.9-alt1
+- 3.2.9
+
 * Sat Mar 21 2020 Yuri N. Sedunov <aris@altlinux.org> 3.2.7-alt1
 - 3.2.7
 - enabled %%check
