@@ -7,12 +7,11 @@
 Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
-Version: 27.1.1
+Version: 27.2.3
 Release: alt1
 License: GPLv2+
 Group: Video
 Url: https://github.com/jp9000/obs-studio.git
-Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
@@ -49,6 +48,7 @@ BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(gio-unix-2.0)
+BuildRequires: pkgconfig(libpci)
 BuildRequires: pipewire-libs-devel
 BuildRequires: libdrm-devel
 %ifarch %luajit_arches
@@ -135,8 +135,8 @@ sed -i 's|OBS_MULTIARCH_SUFFIX|LIB_SUFFIX|g' cmake/Modules/ObsHelpers.cmake
 
 %build
 %cmake \
-    -DOBS_VERSION_OVERRIDE=%version \
-    -DUNIX_STRUCTURE=1 \
+	-DOBS_VERSION_OVERRIDE=%version \
+	-DUNIX_STRUCTURE=1 \
 	-DBUILD_BROWSER=OFF \
 	-DBUILD_VST=OFF
 
@@ -154,7 +154,7 @@ sed -i 's|OBS_MULTIARCH_SUFFIX|LIB_SUFFIX|g' cmake/Modules/ObsHelpers.cmake
 %_datadir/obs/*
 %exclude %_datadir/obs/libobs/
 %_desktopdir/*.desktop
-%_iconsdir/hicolor/*/apps/*.png
+%_iconsdir/hicolor/*/apps/*.*
 %_libdir/obs-scripting/
 %_libdir/obs-plugins
 %exclude %_libdir/obs-plugins/linux-jack.so
@@ -184,6 +184,9 @@ sed -i 's|OBS_MULTIARCH_SUFFIX|LIB_SUFFIX|g' cmake/Modules/ObsHelpers.cmake
 %_datadir/obs/obs-plugins/linux-pulseaudio/
 
 %changelog
+* Tue Mar 08 2022 Anton Midyukov <antohami@altlinux.org> 27.2.3-alt1
+- new version 27.2.3
+
 * Sat Oct 02 2021 Anton Midyukov <antohami@altlinux.org> 27.1.1-alt1
 - new version 27.1.1
 
