@@ -6,7 +6,7 @@
 
 Name: hotdoc
 Version: %ver_major.7
-Release: alt1
+Release: alt2
 
 Summary: Hotdoc is a documentation framework
 License: LGPL-2.1-or-later
@@ -43,14 +43,14 @@ BuildRequires(pre): rpm-build-gir rpm-build-python3
 BuildRequires: python3-module-setuptools cmake gcc-c++ bison flex
 BuildRequires: pkgconfig(libxml-2.0) pkgconfig(gio-2.0) pkgconfig(json-glib-1.0)
 # for hotdoc_bootstrap_theme
-BuildRequires: meson npm
+BuildRequires: meson npm node-gyp
 %{?_enable_check:
 BuildRequires: python3-module-appdirs python3-module-contextlib2
 BuildRequires: python3-module-lxml python3-module-cchardet
 BuildRequires: python3-module-schema python3-module-toposort
 BuildRequires: python3-module-unittest2 python3-module-wheezy.template
 BuildRequires: python3-module-yaml python3-module-dbus-deviation
-BuildRequires: python3-module-networkx-core}
+BuildRequires: python3-module-networkx-core python3-module-feedgen}
 
 %description
 Hotdoc is a documentation micro-framework. It provides an interface for
@@ -83,6 +83,9 @@ mv %name-%version-bootstrap_theme.tar %_sourcedir/
 %doc README.md
 
 %changelog
+* Thu Mar 10 2022 Yuri N. Sedunov <aris@altlinux.org> 0.13.7-alt2
+- updated BR
+
 * Fri Oct 01 2021 Yuri N. Sedunov <aris@altlinux.org> 0.13.7-alt1
 - 0.13.7
 
