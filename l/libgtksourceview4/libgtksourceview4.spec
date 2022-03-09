@@ -17,7 +17,7 @@
 
 Name: lib%{_name}4
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: GtkSourceView text widget library
 License: LGPLv2+
@@ -46,7 +46,8 @@ BuildRequires: perl-XML-Parser zlib-devel
 %{?_enable_gspell:BuildRequires: libgspell-devel >= %gspell_ver}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools libvala-devel}
-%{?_enable_check:BuildRequires: xvfb-run %{?_enable_valgrind:valgrind}}
+%{?_enable_check:BuildRequires: xvfb-run %{?_enable_valgrind:valgrind}
+BuildRequires: fonts-ttf-roboto fonts-ttf-google-noto-sans-vf}
 
 %description
 GtkSourceView is a text widget that extends the standard gtk+ 2.x text
@@ -162,6 +163,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Wed Mar 09 2022 Yuri N. Sedunov <aris@altlinux.org> 4.8.2-alt1.1
+- fixed %%check
+
 * Sat Sep 04 2021 Yuri N. Sedunov <aris@altlinux.org> 4.8.2-alt1
 - 4.8.2
 
