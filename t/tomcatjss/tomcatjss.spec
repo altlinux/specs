@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
 # JSS built with Java11
-%define jss_version 5.0.0
+%define jss_version 5.1.0
 %define tomcat_version 9.0.37
 %define java_version 11
 
 Name: tomcatjss
-Version: 8.0.0
+Version: 8.1.0
 Release: alt1
 
 Summary: JSSE module for Apache Tomcat that uses JSS
@@ -44,8 +44,6 @@ Services (NSS).
 %autopatch -p1
 
 %build
-
-%install
 # get Tomcat <major>.<minor> version number
 tomcat_version=`/usr/sbin/tomcat version | sed -n 's/Server number: *\([0-9]\+\.[0-9]\+\).*/\1/p'`
 app_server=tomcat-$tomcat_version
@@ -54,16 +52,23 @@ ant -v -f build.xml \
     -Dversion=%version \
     -Dsrc.dir=$app_server \
     -Djnidir=%_jnidir \
-    -Dinstall.doc.dir=%buildroot%_docdir/%name-%version \
+    compile package
+
+%install
+ant -v -f build.xml \
+    -Dversion=%version \
+    -Dinstall.doc.dir=%buildroot%_docdir \
     -Dinstall.jar.dir=%buildroot%_javadir \
     install
 
 %files
-%doc README LICENSE
+%doc %_docdir/%name/
 %_javadir/tomcatjss.jar
-%_javadir/tomcatjss-%version.jar
 
 %changelog
+* Thu Mar 03 2022 Stanislav Levin <slev@altlinux.org> 8.1.0-alt1
+- 8.0.0 -> 8.1.0.
+
 * Thu Nov 25 2021 Stanislav Levin <slev@altlinux.org> 8.0.0-alt1
 - 7.6.1 -> 8.0.0.
 

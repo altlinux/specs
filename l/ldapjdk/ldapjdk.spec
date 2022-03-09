@@ -3,13 +3,13 @@
 %define _localstatedir  %_var
 
 # JSS built with Java11
-%define jss_version 5.0.0
+%define jss_version 5.1.0
 
 %define java_version 11
 
 Name: ldapjdk
 Epoch: 1
-Version: 5.0.0
+Version: 5.1.0
 Release: alt1
 
 Summary: LDAP SDK
@@ -111,6 +111,9 @@ ln -s ldapjdk.jar %buildroot%_javadir/ldapsdk.jar
 
 ################################################################################
 %changelog
+* Fri Mar 04 2022 Stanislav Levin <slev@altlinux.org> 1:5.1.0-alt1
+- 5.0.0 -> 5.1.0.
+
 * Thu Nov 25 2021 Stanislav Levin <slev@altlinux.org> 1:5.0.0-alt1
 - 4.22.0 -> 5.0.0.
 

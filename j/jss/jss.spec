@@ -7,7 +7,7 @@
 %define java_version 11
 
 Name: jss
-Version: 5.0.0
+Version: 5.1.0
 Release: alt1
 
 Summary: Java Security Services (JSS)
@@ -82,8 +82,8 @@ export BUILD_OPT=1
 %cmake \
     -DJAVA_HOME=%java_home \
     -DVERSION=%version \
-    -DJAVA_LIB_INSTALL_DIR=%_jnidir \
-    -DJSS_LIB_INSTALL_DIR=%_libdir/jss \
+    -DJNI_DIR=%_jnidir \
+    -DLIB_DIR=%_libdir \
     -DWITH_JAVADOC=FALSE \
     ..
 
@@ -108,9 +108,15 @@ CTEST_OUTPUT_ON_FAILURE=1 %cmake_build --target test
 %dir %_libdir/jss
 %_libdir/jss/jss.jar
 %_libdir/jss/libjss.so
+%_libdir/jss/jss-symkey.jar
+%_libdir/jss/libjss-symkey.so
 %_jnidir/jss.jar
+%_jnidir/jss-symkey.jar
 
 %changelog
+* Thu Mar 03 2022 Stanislav Levin <slev@altlinux.org> 5.1.0-alt1
+- 5.0.0 -> 5.1.0.
+
 * Wed Nov 24 2021 Stanislav Levin <slev@altlinux.org> 5.0.0-alt1
 - 4.8.1 -> 5.0.0.
 

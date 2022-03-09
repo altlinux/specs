@@ -10,15 +10,13 @@
 %define pki_homedir %_localstatedir/pki
 
 %define java_home           %_jvmdir/jre
-%define resteasy_lib        %_javadir/resteasy
-%define jaxrs_api_jar       %_javadir/jboss-jaxrs-2.0-api.jar
 
 # tomcatjss built with Java11
-%define tomcatjss_version 8.0.0
+%define tomcatjss_version 8.1.0
 # jss built with Java11
-%define jss_version 5.0.0
+%define jss_version 5.1.0
 # ldapjdk built with Java11
-%define ldapjdk_version 5.0.0
+%define ldapjdk_version 5.1.0
 
 # https://bugzilla.altlinux.org/40727
 %define java_version 11
@@ -27,8 +25,8 @@
 %define pki_rebranded_version 11.0.0-alt1
 
 Name: dogtag-pki
-Version: 11.0.3
-Release: alt2
+Version: 11.1.0
+Release: alt1
 
 Summary: Dogtag PKI Certificate System
 License: %gpl2only
@@ -49,11 +47,13 @@ BuildRequires: java-devel >= %java_version
 BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: sh4
-BuildRequires: apache2-devel
 BuildRequires: apache-commons-cli
 BuildRequires: apache-commons-httpclient
 BuildRequires: apache-commons-net
 BuildRequires: apache-commons-logging
+
+BuildRequires: libldap-devel
+BuildRequires: libapr1-devel
 
 BuildRequires: libnss-devel
 BuildRequires: zlib-devel
@@ -63,7 +63,6 @@ BuildRequires: jackson
 BuildRequires: ldapjdk >= %ldapjdk_version
 BuildRequires: resteasy
 BuildRequires: tomcatjss >= %tomcatjss_version
-BuildRequires: xalan-j2
 BuildRequires: slf4j-jdk14
 BuildRequires: junit
 
@@ -97,7 +96,7 @@ BuildRequires: python3(tox_no_deps)
 #### Meta package ####
 Requires: dogtag-pki-server-theme
 Requires: python3-module-dogtag-pki
-Requires: dogtag-pki-base-java
+Requires: dogtag-pki-java
 Requires: dogtag-pki-tools
 Requires: dogtag-pki-server
 Requires: dogtag-pki-acme
@@ -111,6 +110,7 @@ Requires: dogtag-pki-tps
 Obsoletes: idm-console-framework <= 1.2.0-alt1
 Obsoletes: pki-console < 11.0.0
 Obsoletes: dogtag-pki-console-theme < 11.0.0
+Obsoletes: dogtag-pki-symkey < 11.1.0-alt1
 
 Provides: pki-core = %EVR
 Obsoletes: pki-core < %pki_rebranded_version
@@ -129,20 +129,6 @@ Dogtag PKI consists of the following components:
   * Token Processing Service (TPS)
 
 
-%package -n dogtag-pki-symkey
-Summary: Dogtag PKI Symmetric Key Package
-Group: System/Libraries
-Requires: jss >= %jss_version
-Requires: javapackages-tools
-Provides: symkey = %EVR
-Obsoletes: symkey < %EVR
-Provides: pki-symkey = %EVR
-Obsoletes: pki-symkey < %pki_rebranded_version
-
-%description -n dogtag-pki-symkey
-The Dogtag PKI Symmetric Key Java Package supplies various native
-symmetric key operations to Java programs.
-
 %package -n dogtag-pki-base
 Summary: Dogtag PKI Base Package
 Group: System/Base
@@ -159,17 +145,18 @@ Requires(post): python3-module-dogtag-pki
 The Dogtag PKI Base Package contains the common and client libraries
 and utilities written in Python.
 
-%package -n dogtag-pki-base-java
+%package -n dogtag-pki-java
 Summary: Dogtag PKI Base Java Package
 Group: System/Base
 Requires: dogtag-pki-base
 Requires: java >= %java_version
-Requires: xalan-j2
-Requires: xml-commons-resolver
 Provides: pki-base-java = %EVR
 Obsoletes: pki-base-java < %pki_rebranded_version
 
-%description -n dogtag-pki-base-java
+Provides: dogtag-pki-base-java = %EVR
+Obsoletes: dogtag-pki-base-java < 11.1.0-alt1
+
+%description -n dogtag-pki-java
 The Dogtag PKI Base Java Package contains the common and client
 libraries and utilities written in Java.
 
@@ -186,7 +173,7 @@ This package contains Dogtag PKI client library for Python3.
 %package -n dogtag-pki-tools
 Summary: Dogtag PKI Tools Package
 Group: System/Base
-Requires: dogtag-pki-base-java
+Requires: dogtag-pki-java
 Requires: openldap-clients
 Requires: nss-utils
 Requires: p11-kit-trust
@@ -204,7 +191,6 @@ Certificate System into a more complete and robust PKI solution.
 %package -n dogtag-pki-server
 Summary: Dogtag PKI Server Package
 Group: System/Base
-Requires: dogtag-pki-symkey
 Requires: dogtag-pki-tools
 Requires: openssl
 # https://bugzilla.altlinux.org/40819
@@ -407,9 +393,6 @@ interface for Dogtag PKI Server.
 # change port from 8080 to 8090
 # Port 8080 is used by alterator-ahttpd-server
 grep -rl 8080 | xargs sed -i 's/\(\W\|^\)8080\(\W\|$\)/\18090\2/g'
-# change apache2 alt paths
-grep -rPl '#include \x22httpd/' | \
-xargs sed -i 's/#include \x22httpd\//#include \x22apache2\//g'
 
 # replace python2 shebangs with python3 to fix unmets
 grep -rlsm1 '^#!/usr/bin/python[[:space:]]*$' | \
@@ -438,8 +421,6 @@ set +o pipefail
     -DJAVA_LIB_INSTALL_DIR=%_jnidir \
     -DSYSTEMD_LIB_INSTALL_DIR=%_unitdir \
     -DAPP_SERVER=$app_server \
-    -DJAXRS_API_JAR=%jaxrs_api_jar \
-    -DRESTEASY_LIB=%resteasy_lib \
     -DNSS_DEFAULT_DB_TYPE=%nss_default_db_type \
     -DBUILD_PKI_CORE:BOOL=ON \
     -DPYTHON_EXECUTABLE=%__python3 \
@@ -465,7 +446,6 @@ ln -sf %_datadir/java/jboss-logging/jboss-logging.jar %buildroot%_datadir/pki/li
 ln -sf %_datadir/java/jakarta-annotations/jakarta.annotation-api.jar %buildroot%_datadir/pki/lib/jakarta.annotation-api.jar
 
 # Customize server library links in /usr/share/pki/server/common/lib
-ln -sf %jaxrs_api_jar %buildroot%_datadir/pki/server/common/lib/jboss-jaxrs-2.0-api.jar
 ln -sf %_datadir/java/jboss-logging/jboss-logging.jar %buildroot%_datadir/pki/server/common/lib/jboss-logging.jar
 ln -sf %_datadir/java/jakarta-annotations/jakarta.annotation-api.jar %buildroot%_datadir/pki/server/common/lib/jakarta.annotation-api.jar
 
@@ -479,7 +459,6 @@ mkdir %buildroot%_logdir/pki/server
 mkdir %buildroot%_logdir/pki/server/upgrade
 
 ln -sf tps/libtps.so %buildroot%_libdir/libtps.so
-ln -sf tps/libtokendb.so %buildroot%_libdir/libtokendb.so
 
 # don't package tests
 rm -r %buildroot%_datadir/pki/tests/
@@ -543,10 +522,6 @@ fi
 
 %files
 
-%files -n dogtag-pki-symkey
-%_jnidir/symkey.jar
-%_libdir/symkey/
-
 %files -n dogtag-pki-base
 %doc %_datadir/doc/pki-base/html
 %doc %_datadir/pki/server/docs
@@ -570,7 +545,7 @@ fi
 %_man5dir/pki-logging.5.*
 %_man8dir/pki-upgrade.8.*
 
-%files -n dogtag-pki-base-java
+%files -n dogtag-pki-java
 %_datadir/pki/examples/java/
 %_datadir/pki/lib/*.jar
 %dir %_javadir/pki
@@ -736,9 +711,7 @@ fi
 %_man1dir/tpsclient.1.*
 %_bindir/tpsclient
 %_libdir/tps/libtps.so
-%_libdir/tps/libtokendb.so
 %_libdir/libtps.so
-%_libdir/libtokendb.so
 
 %if_with javadoc
 %files -n dogtag-pki-javadoc
@@ -776,6 +749,9 @@ fi
 %_datadir/pki/server/webapps/pki/WEB-INF/
 
 %changelog
+* Fri Mar 04 2022 Stanislav Levin <slev@altlinux.org> 11.1.0-alt1
+- 11.0.3 -> 11.1.0.
+
 * Wed Feb 16 2022 Stanislav Levin <slev@altlinux.org> 11.0.3-alt2
 - Fixed FTBFS (Pylint 2.12.2).
 
