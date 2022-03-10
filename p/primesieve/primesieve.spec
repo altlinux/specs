@@ -1,7 +1,7 @@
 %define soname 9
 
 Name: primesieve
-Version: 7.7
+Version: 7.8
 Release: alt1
 Summary: A prime number generator
 License: BSD-2-Clause
@@ -79,6 +79,9 @@ ctest
 %_pkgconfigdir/primesieve.pc
 
 %changelog
+* Thu Mar 10 2022 Leontiy Volodin <lvol@altlinux.org> 7.8-alt1
+- New version (7.8).
+
 * Wed Dec 08 2021 Leontiy Volodin <lvol@altlinux.org> 7.7-alt1
 - New version (7.7).
 
