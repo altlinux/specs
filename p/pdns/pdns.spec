@@ -5,7 +5,7 @@
 
 Name: pdns
 Version: 4.2.2
-Release: alt4
+Release: alt4.1
 Summary: A modern, advanced and high performance authoritative-only nameserver
 Group: System/Servers
 License: GPLv2
@@ -26,6 +26,7 @@ BuildRequires: libzeromq-devel
 BuildRequires: openssl-devel
 BuildRequires: libprotobuf-devel
 BuildRequires: protobuf-compiler
+BuildRequires: libkrb5-devel
 Provides: powerdns = %version-%release
 %global backends %backends bind random
 
@@ -359,6 +360,9 @@ mkdir -p %buildroot%_localstatedir/%name
 %_unitdir/ixfrdist@.service
 
 %changelog
+* Thu Mar 10 2022 Alexei Takaseev <taf@altlinux.org> 4.2.2-alt4.1
+- Add missing BR: libkrb5-devel
+
 * Mon May 24 2021 Ivan A. Melnikov <iv@altlinux.org> 4.2.2-alt4
 - Add missing include to fix build on mipsel.
 
