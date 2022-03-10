@@ -1,6 +1,6 @@
 Name: libdvbpsi
 Version: 1.3.0
-Release: alt1.1
+Release: alt2
 
 Summary: A library for decoding and generating MPEG 2 and DVB PSI sections
 License: LGPLv2.1
@@ -8,8 +8,6 @@ Group: System/Libraries
 Url: http://www.videolan.org/
 
 Source: %name-%version.tar
-
-BuildRequires: doxygen graphviz fonts-type1-urw
 
 %define soname 10
 
@@ -45,7 +43,7 @@ information using the libdvbpsi
 %build
 %autoreconf
 %configure --disable-static --enable-release
-%make_build all doc
+%make_build
 
 %install
 %makeinstall
@@ -55,12 +53,15 @@ information using the libdvbpsi
 %_libdir/*.so.*
 
 %files devel
-%doc ChangeLog doc/doxygen/html
+%doc ChangeLog
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Mar 10 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.0-alt2
+- do not package api documentation
+
 * Mon May 28 2018 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1.1
 - NMU: Update licence tag.
 
