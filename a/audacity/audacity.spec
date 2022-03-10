@@ -9,7 +9,8 @@
 
 Name: audacity
 Version: 3.1.2
-Release: alt1
+Release: alt2
+
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
 License: GPL
@@ -37,6 +38,9 @@ BuildRequires: cmake
 # -Daudacity_conan_enabled=Off is a temporary workaround according to
 # https://github.com/audacity/audacity/pull/1030
 #BuildRequires: conan
+%ifarch %e2k
+BuildRequires: chrpath
+%endif
 BuildRequires: patchelf
 BuildRequires: gettext-devel
 BuildRequires: ImageMagick
@@ -141,6 +145,10 @@ export CXX="$PWD/g++"
 export CC="$(command -v gcc)"
 
 %cmake \
+%ifarch %e2k
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+  -DCMAKE_INSTALL_RPATH:PATH='$ORIGIN' \
+%endif
   -Daudacity_lib_preference:STRING=system \
   -Daudacity_has_networking=no \
   -Daudacity_conan_enabled=Off \
@@ -180,10 +188,16 @@ rm -rf %buildroot%_prefix/%name
 # Remove absolute RPATHs
 # https://github.com/audacity/audacity/pull/1030#issuecomment-873630620
 # https://github.com/audacity/audacity/issues/2165
-patchelf --set-rpath '$ORIGIN/../%_lib/audacity' %buildroot%_bindir/audacity
+%ifarch %e2k
+# patchelf damages e2k binaries
+setrpath="chrpath -r"
+%else
+setrpath="patchelf --set-rpath"
+%endif
+$setrpath '$ORIGIN/../%_lib/audacity' %buildroot%_bindir/audacity
 find %buildroot%_libdir/audacity -name '*.so' -print | while read -r line
 do
-	patchelf --set-rpath '$ORIGIN' "$line"
+	$setrpath '$ORIGIN' "$line"
 done
 
 %find_lang %name
@@ -220,6 +234,9 @@ echo "$p" | grep -q libmp3lame
 %_datadir/%name/help
 
 %changelog
+* Thu Mar 10 2022 Michael Shigorin <mike@altlinux.org> 3.1.2-alt2
+- E2K: build fix by ilyakurdyukov@ (patchelf is not ported properly yet)
+
 * Fri Nov 19 2021 Mikhail Novosyolov <mikhailnov@altlinux.org> 3.1.2-alt1
 - Version 3.1.2 (Closes: 40174, 38790, 38662, 41340)
 - Do load plugins from /usr/lib/ladspa in addition to /usr/lib64/ladspa
