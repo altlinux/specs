@@ -1,5 +1,7 @@
+%def_enable appindicator
+
 Name: xpad
-Version: 5.4.0
+Version: 5.7.0
 Release: alt1
 
 Summary: A virtual sticky pad system using GTK+3
@@ -9,9 +11,9 @@ Url: https://launchpad.net/xpad
 
 Source: http://launchpad.net/xpad/trunk/%version/+download/xpad-%version.tar.bz2
 
-BuildRequires: libgtk+3-devel >= 3.22 libgtksourceview3-devel >= 3.10 at-spi2-atk-devel
-BuildRequires: libSM-devel
-BuildRequires: intltool desktop-file-utils libappstream-glib-devel
+BuildRequires: libgtk+3-devel >= 3.22 libgtksourceview4-devel >= 4.0.3 at-spi2-atk-devel
+BuildRequires: libSM-devel desktop-file-utils libappstream-glib-devel
+%{?_enable_appindicator:BuildRequires: pkgconfig(ayatana-appindicator3-0.1)}
 
 %description
 Xpad is a sticky note application that strives to be simple, fault-tolerant,
@@ -23,7 +25,7 @@ a text box in which notes can be written.
 
 %build
 %autoreconf
-%configure
+%configure %{subst_enable appindicator}
 %make_build
 
 %install
@@ -45,6 +47,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc README ChangeLog TODO
 
 %changelog
+* Thu Mar 10 2022 Yuri N. Sedunov <aris@altlinux.org> 5.7.0-alt1
+- 5.7.0
+
 * Wed Jan 09 2019 Yuri N. Sedunov <aris@altlinux.org> 5.4.0-alt1
 - 5.4.0
 
