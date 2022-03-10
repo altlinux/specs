@@ -2,7 +2,7 @@
 
 Name: libxine2
 Version: 1.2.9
-Release: alt3
+Release: alt3.1
 
 Summary: Free libraries for play video and audio
 License: GPLv2+
@@ -25,6 +25,7 @@ BuildRequires: libmodplug-devel libmpcdec-devel libmng-devel libspeex-devel
 BuildRequires: libtheora-devel libvorbis-devel libwavpack-devel
 BuildRequires: libfame-devel libvcd-devel libvpx-devel
 BuildRequires: librsvg-utils lynx xmlto
+BuildRequires: fonts-ttf-dejavu
 
 %description
 %name is a free gpl-licensed video player libraries and plugins for
@@ -106,6 +107,9 @@ mv %buildroot%_man5dir/xine.5 %buildroot%_man5dir/xine2.5
 %_libdir/xine/plugins/%plugin_version/xineplug_inp_smb.so
 
 %changelog
+* Thu Mar 10 2022 Ivan A. Melnikov <iv@altlinux.org> 1.2.9-alt3.1
+- fixed build of docs by adding BR on fonts
+
 * Tue Jan 26 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.9-alt3
 - fixed build with gcc10
 
