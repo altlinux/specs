@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: quilt
-Version: 0.66
-Release: alt2
+Version: 0.67
+Release: alt1
 
 Summary: Scripts for working with series of patches
 License: GPLv2+
@@ -38,7 +40,7 @@ found at http://userweb.kernel.org/~akpm/stuff/patch-scripts.tar.gz.
 
 %install
 %makeinstall_std COMPAT_SYMLINKS=sendmail BUILD_ROOT=%buildroot
-install -pm644 AUTHORS NEWS TODO doc/README.EMACS doc/*.pdf \
+install -pm644 AUTHORS NEWS TODO doc/README.EMACS doc/*.pdf COPYING \
 	%buildroot%docdir/
 %find_lang %name
 
@@ -55,6 +57,9 @@ install -pm644 AUTHORS NEWS TODO doc/README.EMACS doc/*.pdf \
 %docdir/
 
 %changelog
+* Thu Mar 10 2022 Vitaly Chikunov <vt@altlinux.org> 0.67-alt1
+- Updated to v0.67 (2022-02-15).
+
 * Sat Aug 07 2021 Dmitry V. Levin <ldv@altlinux.org> 0.66-alt2
 - Removed texlive from BR, packaged bundled docs instead.
 
