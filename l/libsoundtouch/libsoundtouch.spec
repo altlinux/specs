@@ -5,13 +5,13 @@
 
 Name: libsoundtouch
 Version: 2.3.1
-Release: alt1
+Release: alt2
 
 Summary: SoundTouch audio processing library
 Group: System/Libraries
 License: LGPLv2.1
-Url: http://www.surina.net/soundtouch/
 
+Url: http://www.surina.net/soundtouch/
 %if_disabled snapshot
 Source: https://gitlab.com/%_name/%_name/-/archive/%version/%_name-%version.tar.gz
 %else
@@ -40,6 +40,13 @@ Libraries/include files for development with %name.
 
 %prep
 %setup -n %_name-%version
+%if_enabled openmp
+%ifarch %e2k
+# for unknown reason, libtool uses the -nostdlib option when linking,
+# and -fopenmp is ignored in this case 
+echo "libSoundTouch_la_LDFLAGS+=-lomp" >> source/SoundTouch/Makefile.am
+%endif
+%endif
 
 %build
 #touch NEWS README AUTHORS ChangeLog
@@ -47,7 +54,6 @@ Libraries/include files for development with %name.
 ./bootstrap
 %configure --disable-static \
     %{subst_enable openmp}
-%nil
 %make_build
 
 %install
@@ -69,6 +75,9 @@ rm -rf %buildroot/%_prefix/doc
 %_pkgconfigdir/%_name.pc
 
 %changelog
+* Thu Mar 10 2022 Michael Shigorin <mike@altlinux.org> 2.3.1-alt2
+- E2K: openmp build fix by ilyakurdyukov@
+
 * Tue Sep 07 2021 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1
 - 2.3.1
 
