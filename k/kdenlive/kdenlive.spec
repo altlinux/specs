@@ -3,8 +3,8 @@
 %define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
 
 Name: kdenlive
-Version: 21.08.3
-Release: alt2
+Version: 21.12.3
+Release: alt1
 %K5init no_altplace man appdata
 
 Summary: KDE Non Linear Video Editor
@@ -37,7 +37,7 @@ BuildRequires(pre): rpm-build-kf5
 BuildRequires(pre): libavformat-devel
 BuildRequires(pre): mlt-utils
 BuildRequires: extra-cmake-modules
-BuildRequires: qt5-script-devel qt5-svg-devel qt5-declarative-devel qt5-webengine-devel qt5-multimedia-devel qt5-quickcontrols2-devel qt5-networkauth-devel
+BuildRequires: qt5-script-devel qt5-svg-devel qt5-declarative-devel qt5-multimedia-devel qt5-quickcontrols2-devel qt5-networkauth-devel
 BuildRequires: shared-mime-info libEGL-devel libGLU-devel libv4l-devel
 BuildRequires: mlt7-devel mlt7xx-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
@@ -97,6 +97,9 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 
 
 %changelog
+* Thu Mar 10 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
+- new version
+
 * Fri Dec 10 2021 Sergey V Turchin <zerg@altlinux.org> 21.08.3-alt2
 - require mlt version (closes 39476)
 
