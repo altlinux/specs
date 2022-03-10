@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: GLib-based test library
@@ -21,8 +21,8 @@ Source: %name-%version.tar
 
 %define glib_ver 2.54
 
-BuildRequires(pre): meson
-BuildRequires: pkgconfig(gio-2.0) >= %glib_ver gtk-doc
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson pkgconfig(gio-2.0) >= %glib_ver gtk-doc
 %{?_enable_check:BuildRequires: dbus}
 
 %description
@@ -75,6 +75,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Thu Mar 10 2022 Yuri N. Sedunov <aris@altlinux.org> 0.1.1-alt1
+- 0.1.1-4-g366dab0
+
 * Wed Sep 16 2020 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt1
 - first build for Sisyphus (0.1.0-2-g0c6454f)
 
