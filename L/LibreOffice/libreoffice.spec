@@ -1,4 +1,4 @@
-# 7.3.0.3
+# 7.3.1.3
 %def_without python
 %def_with parallelism
 %def_without fetch
@@ -22,13 +22,13 @@
 
 Name: LibreOffice
 %define hversion 7.3
-%define urelease 0.3
+%define urelease 1.3
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt4
+Release: alt1
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -290,7 +290,7 @@ Provides additional %{langname} translations and resources for %name. \
 
 %patch500 -p0
 # Patch with russian translation update
-%patch600 -p1
+## patch600 -p1
 
 # TODO move officebeans to SDK or separate package
 # Hack in -Wl,-rpath=/usr/lib/jvm/jre-11-openjdk/lib
@@ -369,6 +369,8 @@ if [ "$PARALLEL" -gt 24 ] ; then
 fi
 %endif
 
+export ac_cv_prog_LO_CLANG_CXX=""
+export ac_cv_prog_LO_CLANG_CC=""
 ./autogen.sh \
         --prefix=%_prefix \
         --libdir=%_libdir \
@@ -427,6 +429,7 @@ fi
         --enable-fetch-external
 %else
         --with-system-libs \
+        --without-system-poppler \
         --disable-fetch-external
 %endif
 
@@ -591,6 +594,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Thu Mar 10 2022 Fr. Br. George <george@altlinux.ru> 7.3.1.3-alt1
+- Update to 7.3.1.3
+
 * Wed Feb 23 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 7.3.0.3-alt4
 - NMU: - adapted spec for kf5-kcoreaddons-devel-5.91.0-alt1 and kf5-kcoreaddons-devel-5.90.0-alt1
 
