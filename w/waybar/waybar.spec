@@ -1,5 +1,5 @@
 Name: waybar
-Version: 0.9.9
+Version: 0.9.12
 Release: alt1
 License: MIT
 Summary: Highly customizable Wayland bar for Sway and Wlroots based compositors
@@ -88,6 +88,9 @@ install -m 755 -- %SOURCE2 %buildroot/%helperdir/
 %_man5dir/*
 
 %changelog
+* Thu Mar 10 2022 Alexey Gladkov <legion@altlinux.ru> 0.9.12-alt1
+- New version (0.9.12).
+
 * Sat Jan 15 2022 Alexey Gladkov <legion@altlinux.ru> 0.9.9-alt1
 - New version (0.9.9).
 
