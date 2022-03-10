@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: strawberry
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 Summary: Audio player and music collection organizer
 
@@ -20,7 +20,7 @@ Source: https://github.com/strawberrymusicplayer/strawberry/archive/%version/%na
 
 BuildRequires(pre): desktop-file-utils rpm-build-ninja
 BuildRequires: boost-program_options-devel gettext-tools glib2-devel gst-plugins1.0-devel gstreamer1.0-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libfftw3-devel libgio-devel libgnutls-devel libgpod-devel libimobiledevice-devel libmtp-devel libplist-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel libtag-devel libusbmuxd-devel libvlc-devel libxine2-devel qt5-phonon-devel qt5-x11extras-devel
-BuildRequires: cmake libappstream-glib qt5-tools-devel protobuf-compiler libusb-devel
+BuildRequires: cmake libappstream-glib qt5-tools-devel protobuf-compiler libusb-devel libgtest-devel
 %ifnarch s390 s390x
 BuildRequires: libgpod-devel
 %endif
@@ -102,6 +102,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Thu Mar 10 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.2-alt1
+- New version (1.0.2).
+
 * Fri Jan 28 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.1-alt1
 - New version (1.0.1).
 
