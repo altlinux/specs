@@ -1,12 +1,12 @@
 %set_verify_elf_method unresolved=relaxed
 
 %define ver_major 2.3
-%define ver_api 2.0
+%define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 
 Name: tracker-miners
 Version: %ver_major.5
-Release: alt1.1
+Release: alt1.2
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPL-2.0
@@ -15,7 +15,7 @@ Url: http://wiki.gnome.org/Projects/Tracker
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-%add_findprov_lib_path %_libdir/%name-%ver_api/
+%add_findprov_lib_path %_libdir/%name-%api_ver/
 
 %def_enable xml
 %def_enable rss
@@ -135,6 +135,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 
 %install
 %meson_install
+ln -sf %name-%api_ver/libtracker-extract.so \
+%buildroot%_libdir/libtracker-extract.so
+
 %find_lang %name
 
 %files -f %name.lang
@@ -143,7 +146,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 %_xdgconfigdir/autostart/tracker-miner-fs.desktop
 %_xdgconfigdir/autostart/tracker-miner-rss.desktop
 %endif
-%_libdir/%name-%ver_api/
+%_libdir/%name-%api_ver/
+# symlink
+%exclude %_libdir/libtracker-extract.so
 %_libexecdir/tracker-extract
 %_libexecdir/tracker-miner-fs
 %_libexecdir/tracker-writeback
@@ -170,6 +175,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 
 
 %changelog
+* Thu Mar 10 2022 Yuri N. Sedunov <aris@altlinux.org> 2.3.5-alt1.2
+- fixed "library libtracker-extract.so not found"
+
 * Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 2.3.5-alt1.1
 - fixed meson options
 
