@@ -11,7 +11,7 @@
 
 Name: %_name%api_ver
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Library with GTK+3 widgets for mobile devices (API version 1)
 Group: System/Libraries
@@ -39,7 +39,7 @@ BuildRequires: pkgconfig(fribidi)
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_glade_catalog:BuildRequires: pkgconfig(gladeui-2.0) >= %glade_ver}
-%{?_enable_check:BuildRequires: xvfb-run librsvg}
+%{?_enable_check:BuildRequires: xvfb-run librsvg fonts-ttf-liberation}
 
 %description
 libhandy provides GTK+3 widgets and GObjects to ease developing
@@ -124,6 +124,9 @@ xvfb-run -s -noreset %meson_test
 %endif
 
 %changelog
+* Fri Mar 11 2022 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1.1
+- fixed %%check
+
 * Fri Nov 12 2021 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
 - 1.5.0
 
