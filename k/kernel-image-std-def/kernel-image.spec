@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:2 
 %define kernel_base_version	5.15
-%define kernel_sublevel .27
+%define kernel_sublevel .28
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -660,6 +660,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Mar 11 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.28-alt1
+- v5.15.28 (Fixes: CVE-2022-23036, CVE-2022-23037, CVE-2022-23038, CVE-2022-23039,
+  CVE-2022-23040, CVE-2022-23041, CVE-2022-23042)
+
 * Tue Mar 08 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.27-alt1
 - v5.15.27
 
