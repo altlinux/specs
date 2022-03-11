@@ -4,7 +4,7 @@
 %def_without ImageMagick
 
 Name: vapoursynth
-Version: 54
+Version: 57
 Release: alt1
 Summary: Video processing framework with simplicity in mind
 License: WTFPL and LGPL-2.1+ and OFL-1.1 and GPL-2.0+ and ISC and MIT
@@ -15,7 +15,6 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: https://github.com/%name/%name/archive/R%version/%name-R%version.tar.gz
 Patch: %name-version-info.patch
-Patch1: %name-python38.patch
 
 #ExclusiveArch: %%ix86 x86_64
 
@@ -73,36 +72,35 @@ Group: Development/Other
 %description devel
 Development files for %name.
 
-# %%package tools
-# Summary: Extra tools for VapourSynth
-# Group: Video
-
-# %%description tools
-# This package contains the vspipe tool for interfacing with VapourSynth.
-
-%package plugins
-Summary: VapourSynth plugins
+%package tools
+Summary: Extra tools for VapourSynth
 Group: Video
 
-%description plugins
-VapourSynth plugins.
+%description tools
+This package contains the vspipe tool for interfacing with VapourSynth.
+
+# %%package plugins
+# Summary: VapourSynth plugins
+# Group: Video
+
+# %%description plugins
+# VapourSynth plugins.
 
 %prep
 %setup -n %name-R%version
-#%%patch -p1
-#%%patch1 -p1
+%patch -p1
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' setup.py
 
 %build
 %add_optflags -L/%_lib -lpthread
-autoreconf -vif
+%autoreconf
 %configure \
     --disable-static \
     --enable-x86-asm \
     --enable-core \
     --enable-vsscript \
-    --disable-vspipe \
+    --enable-vspipe \
     --enable-python-module \
     --enable-eedi3 \
 %if_with ImageMagick
@@ -122,7 +120,7 @@ autoreconf -vif
 # %%python3_build
 
 %install
-# %%python3_install
+%python3_install
 %makeinstall_std
 find %buildroot -type f -name "*.la" -delete
 
@@ -136,28 +134,35 @@ python3 -m pytest -v
 
 %files -n lib%name
 %doc ChangeLog COPYING.LESSER README.md
-#%_libdir/lib%name.so.*
-%_libdir/lib%name.so
+%_libdir/lib%name.so.*
 %_libdir/lib%name-script.so.*
 
 %files -n python3-module-%name
 %python3_sitelibdir/%name.so
-#%python3_sitelibdir/VapourSynth-*.egg-info
+%python3_sitelibdir/VapourSynth-*.egg-info
 
 %files devel
 %_includedir/%name/
+%_libdir/lib%name.so
 %_libdir/lib%name-script.so
 %_pkgconfigdir/%name.pc
 %_pkgconfigdir/%name-script.pc
 
-# %%files tools
-# %%_bindir/vspipe
+%files tools
+%_bindir/vspipe
 
-%files plugins
-%dir %_libdir/%name
-%_libdir/%name/lib*.so
+# %%files plugins
+# %%dir %%_libdir/%%name
+# %%_libdir/%%name/lib*.so
 
 %changelog
+* Thu Mar 10 2022 Leontiy Volodin <lvol@altlinux.org> 57-alt1
+- New version (57).
+- Subpackages:
+  + Disabled plugins.
+  + Enabled tools.
+  + Fixed python3 module.
+
 * Wed Jul 28 2021 Leontiy Volodin <lvol@altlinux.org> 54-alt1
 - New version (54).
 
