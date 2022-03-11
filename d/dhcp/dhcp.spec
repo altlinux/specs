@@ -8,8 +8,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dhcp
-Version: 4.4.2.P1
-Release: alt2
+Version: 4.4.3
+Release: alt1
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -84,7 +84,6 @@ Patch0036: 0036-dhclient-Don-t-hang-before-returning.patch
 Patch0037: 0037-dhcrelay-fix-relaying-of-return-packets.patch
 Patch0038: 0038-dhcpctl.3-avoid-undefined-manpage-macro.patch
 Patch0039: 0039-fix-spelling-mistakes.patch
-Patch0040: 0040-Fixed-gcc-10-compilation-issues.patch
 
 # due to copy_resolv_conf/copy_resolv_lib
 BuildPreReq: chrooted >= 0.3
@@ -238,7 +237,6 @@ server
 %patch0037 -p2
 %patch0038 -p2
 %patch0039 -p2
-%patch0040 -p2
 
 install -pm644 %_sourcedir/update_dhcp.pl .
 find -type f -print0 |
@@ -567,6 +565,10 @@ fi
 # }}}
 
 %changelog
+* Thu Mar 10 2022 Mikhail Efremov <sem@altlinux.org> 1:4.4.3-alt1
+- Updated patches.
+- Updated to 4.4.3.
+
 * Tue Sep 07 2021 Mikhail Efremov <sem@altlinux.org> 1:4.4.2.P1-alt2
 - Don't treat stringop-overflow warnings as error.
 - Fixed build with LTO.

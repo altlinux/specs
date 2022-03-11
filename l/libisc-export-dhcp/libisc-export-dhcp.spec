@@ -1,11 +1,11 @@
 Name: libisc-export-dhcp
-Version: 9.11.32
-Release: alt2
+Version: 9.11.36
+Release: alt1
 
-Summary: ISC BIND 9.9.x exportable libraries to build ISC DHCP
+Summary: ISC BIND-9 exportable libraries to build ISC DHCP
 License: MPL-2.0
 Group: System/Libraries
-Url: http://www.isc.org/products/BIND/
+Url: https://www.isc.org/bind/
 
 %define vsuffix -P5
 # NOTE: vsuffix removed from Source0
@@ -33,7 +33,7 @@ BuildPreReq: gcc-c++
 %define bind_export_libs isc dns isccfg irs
 
 %package devel
-Summary: ISC 9.9.x BIND development files for exportable libraries
+Summary: ISC BIND-9 development files for exportable libraries
 Group: Development/C
 Requires: %name = %version-%release
 Obsoletes: libisc-export-devel <= 9.9.9
@@ -43,7 +43,7 @@ Conflicts: bind-devel
 This package contains shared libraries used to build ISC DHCP
 
 %description devel
-This package contains develompent files for ISC 9.9.x BIND libraries
+This package contains develompent files for ISC BIND-9 libraries
 used to build ISC DHCP.
 
 %prep
@@ -112,7 +112,14 @@ done;
 %_libdir/lib*-export.so
 
 %changelog
+* Thu Mar 10 2022 Mikhail Efremov <sem@altlinux.org> 9.11.36-alt1
+- Fixed summary and description.
+- Updated Url tag.
+- Fixed changelog.
+- Updated to 9.11.36.
+
 * Tue Sep 07 2021 Mikhail Efremov <sem@altlinux.org> 9.11.32-alt2
+- Fixed build on ppc with LTO.
 - Added conflict with bind-devel (closes: #40190).
 
 * Tue Jun 01 2021 Mikhail Efremov <sem@altlinux.org> 9.11.32-alt1
