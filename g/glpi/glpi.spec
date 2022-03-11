@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 9.5.6
+Version: 9.5.7
 Release: alt1
 
 Summary: IT and asset management software
@@ -41,8 +41,8 @@ Apache 2.x web-server configuration for %name
 Summary: PHP7 dependencies for %name
 Group: Networking/Other
 Requires: %name = %version-%release
-Requires: php7-curl, php7-fileinfo, php7-gd2, php7-json, php7-mbstring, php7-mysqlnd-mysqli, php7-session, php7-zlib, php7-simplexml, php7-xml, php7-intl
-Requires: php7-bz2, php7-imap, php7-ldap, php7-openssl, php7-apcu, php7-xmlrpc, php7-zip
+Requires: php7-curl, php7-fileinfo, php7-gd2, php7-exif, php7-json, php7-mbstring, php7-mysqlnd-mysqli, php7-session, php7-zlib, php7-simplexml, php7-xml, php7-intl
+Requires: php7-bz2, php7-imap, php7-ldap, php7-openssl, php7-apcu, php7-xmlrpc, php7-zip, php7-sodium, php7-opcache
 
 %description php7
 PHP7 dependencies for %name
@@ -96,9 +96,6 @@ fi
 %files
 %dir %installdir
 %dir %attr(2770,root,%webserver_group) %installdir/config
-#%config %attr(0664,root,%webserver_group) %installdir/config/based_config.php
-#%config %attr(0664,root,%webserver_group) %installdir/config/config.php
-#%config %attr(0664,root,%webserver_group) %installdir/config/define.php
 %dir %attr(2770,root,%webserver_group) %installdir/files
 %attr(2770,root,%webserver_group) %installdir/files/*
 %dir %attr(2770,root,%webserver_group) %installdir/marketplace
@@ -121,8 +118,6 @@ fi
 %installdir/sound
 %installdir/vendor
 %installdir/*.php
-#%installdir/*.js
-#%installdir/*.json
 %installdir/COPYING.txt
 %doc CHANGELOG.md
 %doc CONTRIBUTING.md
@@ -139,6 +134,13 @@ fi
 %files php7
 
 %changelog
+* Thu Jan 27 2022 Pavel Zilke <zidex at altlinux dot org> 9.5.7-alt1
+- New version 9.5.7
+- This is a security release, upgrading is recommended
+- Security fixes:
+ + CVE-2022-21720 : SQL injection using custom CSS administration form
+ + CVE-2022-21719 : Reflected XSS using reload button
+
 * Tue Oct 12 2021 Pavel Zilke <zidex at altlinux dot org> 9.5.6-alt1
 - New version 9.5.6
 - This is a security release, upgrading is recommended
