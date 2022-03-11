@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.5.6
+Version: 3.1.0
 Release: alt1
 
 Summary: A module with some convenient utilities not included with the standard Python install
@@ -19,18 +19,18 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pytest-runner
 
 %if_with check
 # install_requires:
-BuildRequires: python3(six)
 
 BuildRequires: python3(pytest)
+BuildRequires: python3(pytest_asyncio)
 BuildRequires: python3(tox)
 BuildRequires: python3(tox_no_deps)
 BuildRequires: python3(tox_console_scripts)
 %endif
 
+Provides: python3-module-python-utils = %EVR
 %py3_provides python-utils
 
 %description
@@ -44,7 +44,7 @@ extending it.
 %autopatch -p1
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -52,7 +52,7 @@ extending it.
 %check
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
+tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false --develop
 
 %files
 %doc *.rst
@@ -60,6 +60,9 @@ tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
 %python3_sitelibdir/python_utils-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Mar 11 2022 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1
+- 2.5.6 -> 3.1.0.
+
 * Mon Apr 26 2021 Stanislav Levin <slev@altlinux.org> 2.5.6-alt1
 - 2.2.0 -> 2.5.6.
 
