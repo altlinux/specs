@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
-
 %define oname s3transfer
 
-Name: python3-module-%oname
-Version: 0.3.3
-Release: alt2
+%def_with check
 
-Summary:  Amazon S3 Transfer Manager for Python
+Name: python3-module-%oname
+Version: 0.5.2
+Release: alt1
+
+Summary: An Amazon S3 Transfer Manager
 
 License: Apache-2.0
 Group: Development/Python3
@@ -17,44 +18,51 @@ BuildArch: noarch
 # Source-git: https://github.com/boto/s3transfer.git
 Source: %name-%version.tar
 
-Patch1: %oname-alt-unvendor.patch
-# https://github.com/boto/s3transfer/pull/164
-Patch2: %oname-upstream-python-3.8-compat.patch
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools python3-module-unittest2 python3-module-mock
-BuildRequires: python3-module-botocore python3-module-html5lib python3-module-nose python3-module-pbr
-BuildRequires: python3(requests) python3(six)
-BuildRequires: /usr/bin/py.test3
 
-%py3_provides %oname
-%add_python3_req_skip requests.packages.urllib3.exceptions
+%if_with check
+# install_requires=
+BuildRequires: python3(botocore)
+
+# deps on packages bundled by botocore
+BuildRequires: python3(requests)
+BuildRequires: python3(six)
+
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+%endif
+
+# awscrt is extra stuff required by `s3transfer[crt]` => `botocore[crt]`
+# awscrt is not packaged yet
+%filter_from_requires /python3(awscrt\(\..*\)\?)/d
 
 %description
-S3transfer is a Python library for managing Amazon S3 transfers.
+%oname is a Python library for managing Amazon S3 transfers.
 
-Note
-
-This project is not currently GA. If you are planning to use this code in production,
-make sure to lock to a minor version as interfaces may break from minor version to minor version.
-For a basic, stable interface of s3transfer, try the interfaces exposed in boto3
+Note.
+This project is not currently GA. If you are planning to use this code in
+production, make sure to lock to a minor version as interfaces may break from
+minor version to minor version.  For a basic, stable interface of %oname,
+try the interfaces exposed in boto3.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
+%autopatch1 -p1
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
 %check
-# remove tests depending on network
-rm -rf tests/integration
-
-py.test3
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr -s false --develop
 
 %files
 %doc *.rst
@@ -63,6 +71,9 @@ py.test3
 %python3_sitelibdir/%oname-%version-py*.egg-info
 
 %changelog
+* Wed Mar 09 2022 Stanislav Levin <slev@altlinux.org> 0.5.2-alt1
+- 0.3.3 -> 0.5.2.
+
 * Thu Jun 17 2021 Vitaly Lipatov <lav@altlinux.ru> 0.3.3-alt2
 - build python3 module separately
 

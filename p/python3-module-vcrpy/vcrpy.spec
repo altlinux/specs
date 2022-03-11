@@ -5,12 +5,11 @@
 
 Name: python3-module-%oname
 Version: 4.1.1
-Release: alt1
+Release: alt2
 Summary: Automatically mock your HTTP interactions to simplify and speed up testing
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/vcrpy/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/kevin1024/vcrpy.git
 Source: %name-%version.tar
@@ -20,10 +19,15 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python3(tox)
+# install_requires=
 BuildRequires: python3(wrapt)
 BuildRequires: python3(yaml)
 BuildRequires: python3(yarl)
+BuildRequires: python3(six)
+
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 %description
@@ -34,37 +38,36 @@ testing.
 %setup
 %autopatch -p1
 
+# don't package boto stubs, this code should be unreachable with boto3
+rm vcr/stubs/boto_stubs.py
+
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
 %check
-cat > tox.ini <<EOF
+cat > tox.ini <<'EOF'
 [testenv]
-usedevelop=True
-whitelist_externals =
-    /bin/cp
-    /bin/sed
-commands_pre =
-    /bin/cp %_bindir/py.test3 {envbindir}/py.test
-    /bin/sed -i '1c #!{envpython}' {envbindir}/py.test
 commands =
-    {envbindir}/py.test {posargs:-vra}
+    {envbindir}/pytest -vra {posargs:tests}
 EOF
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
 export REQUIRES_INTERNET=yes
 export TOX_TESTENV_PASSENV='REQUIRES_INTERNET'
-tox.py3 --sitepackages -vvr -- tests/unit
+tox.py3 --sitepackages --console-scripts -vvr --develop -- tests/unit
 
 %files
 %doc LICENSE.txt README.rst
 %python3_sitelibdir/*
 
 %changelog
+* Wed Mar 09 2022 Stanislav Levin <slev@altlinux.org> 4.1.1-alt2
+- Dropped dependency on unmaintained and unused boto.
+
 * Mon Oct 19 2020 Stanislav Levin <slev@altlinux.org> 4.1.1-alt1
 - 1.2.0 -> 4.1.1.
 

@@ -5,10 +5,10 @@
 
 Name: python3-module-%modname
 
-Version: 1.4.11
+Version: 2.0.0
 Release: alt1
 
-Summary: Assertion toolbox for python
+Summary: An idiomatic testing library for python with powerful and flexible assertions.
 
 Group: Development/Python3
 License: GPLv3+
@@ -22,13 +22,22 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
+# install_requires=
 BuildRequires: python3(mock)
-BuildRequires: python3(nose)
+BuildRequires: python3(six)
+
+BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
+# try-except import
+%py3_requires mock
+
 %description
-A Python assertion toolbox that works fine with nose.
+An idiomatic testing library for python with powerful and flexible assertions.
+Sure's developer experience is inspired and modeled after RSpec Expectations and
+should.js.
 
 %prep
 %setup
@@ -41,17 +50,27 @@ A Python assertion toolbox that works fine with nose.
 %python3_install
 
 %check
+cat > tox.ini <<'EOF'
+[testenv]
+usedevelop=True
+commands =
+    pytest {posargs:-vra}
+EOF
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
-tox.py3 --sitepackages -vvr
+tox.py3 --sitepackages --console-scripts -vvr
 
 %files
+%_bindir/%modname
 %doc README.rst COPYING
 %python3_sitelibdir/%modname
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%modname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sat Mar 05 2022 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
+- 1.4.11 -> 2.0.0.
+
 * Fri Oct 23 2020 Stanislav Levin <slev@altlinux.org> 1.4.11-alt1
 - 1.2.12 -> 1.4.11.
 

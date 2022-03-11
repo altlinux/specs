@@ -1,71 +1,52 @@
+%define _unpackaged_files_terminate_build 1
 %define oname filedepot
+# depends on unmaintained nose
 %def_disable check
 
 Name: python3-module-%oname
-Version: 0.7.1
+Version: 0.8.0
 Release: alt1
 Summary: Toolkit for storing files and attachments in web applications
 License: MIT
 Group: Development/Python3
 BuildArch: noarch
-Url: https://pypi.python.org/pypi/filedepot/
+Url: https://pypi.org/project/filedepot/
 
 # https://github.com/amol-/depot.git
 Source: %name-%version.tar
-Patch1: %oname-0.5.0-alt.patch
 
-BuildRequires(pre): rpm-macros-sphinx3 python3-module-sphinx-sphinx-build-symlink
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-pytest python3-module-unittest2
-BuildRequires: python3-module-TurboGears2
-BuildRequires: python3-module-webtest
-BuildRequires: python3-module-repoze.lru python3-module-yaml python3(requests)
-BuildRequires: python3-module-ecdsa python3-module-pbr
-BuildRequires: python3-module-sphinx
+
+%py3_requires anyascii
+%py3_provides %oname
 
 %description
 DEPOT is a framework for easily storing and serving files in web
 applications on Python2.6+ and Python3.2+.
 
-%py3_provides %oname depot
-%py3_requires pymongo sqlalchemy PIL ming boto
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-DEPOT is a framework for easily storing and serving files in web
-applications on Python2.6+ and Python3.2+.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
-%patch1 -p1
 
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
+# drop boto-based connector (boto was replaced with boto3)
+rm depot/io/awss3.py
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
-export PYTHONPATH=$PWD
-%make -C docs html
-
 %check
-python3 setup.py test
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/depot/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Mar 09 2022 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1
+- 0.7.1 -> 0.8.0.
+
 * Wed Dec 04 2019 Anton Farygin <rider@altlinux.ru> 0.7.1-alt1
 - 0.7.1
 - disabled python2 version

@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-
 %define oname botocore
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.20.96
+Version: 1.24.15
 Release: alt1
 
 Summary: The low-level, core functionality of boto 3
@@ -16,16 +17,28 @@ BuildArch: noarch
 
 # Source-git: https://github.com/boto/botocore.git
 Source: %name-%version.tar
-
-Patch1: %oname-%version-alt-docsetup.patch
-Patch3: %oname-%version-alt-no-vendored-packages.patch
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-dateutil python3-module-html5lib python3-module-nose python3-module-pbr python3-module-setuptools
-BuildRequires: python3-module-unittest2
-BuildRequires: python3-module-requests python3-module-six python3-module-urllib3 python3-module-mock python3-module-docutils python3-module-jmespath
+
+%if_with check
+# required for test_resource_leaks
+BuildRequires: /proc
+
+# install_requires=
+BuildRequires: python3(jmespath)
+BuildRequires: python3(dateutil)
+BuildRequires: python3(urllib3)
+
+# unbundled
+BuildRequires: python3(requests)
+BuildRequires: python3(six)
+
 BuildRequires: python3(jsonschema)
-BuildRequires: /usr/bin/py.test3
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+%endif
 
 %py3_provides %oname
 
@@ -33,40 +46,23 @@ BuildRequires: /usr/bin/py.test3
 A low-level interface to a growing number of Amazon Web Services. The
 botocore package is the foundation for AWS-CLI.
 
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-A low-level interface to a growing number of Amazon Web Services. The
-botocore package is the foundation for AWS-CLI.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
-%patch1 -p1
-%patch3 -p1
+%autopatch -p1
 
-rm -rf botocore/vendored
-
-#prepare_sphinx docs
-#ln -s ../objects.inv docs/source/
+rm -r botocore/vendored
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
 %check
-# following test fails, remove it for now
-rm -rf tests/functional/leak/test_resource_leaks.py
-# remove tests requiring network
-rm -rf tests/integration
-
-py.test3
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr -s false --develop
 
 %files
 %doc LICENSE.txt
@@ -75,6 +71,9 @@ py.test3
 %python3_sitelibdir/%oname-%version-py*.egg-info
 
 %changelog
+* Wed Mar 09 2022 Stanislav Levin <slev@altlinux.org> 1.24.15-alt1
+- 1.20.96 -> 1.24.15.
+
 * Thu Jun 17 2021 Vitaly Lipatov <lav@altlinux.ru> 1.20.96-alt1
 - new version 1.20.96 (with rpmrb script)
 

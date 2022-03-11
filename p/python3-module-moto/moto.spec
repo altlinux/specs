@@ -1,9 +1,14 @@
 %define _unpackaged_files_terminate_build 1
-
 %define oname moto
 
+%def_with check
+# full testsuite takes too long for now, run it locally
+# name                      aarch64   armh   i586  ppc64le  x86_64
+# python3-module-moto         20:32  35:22  12:18    25:10   12:09
+%def_without full_testsuite
+
 Name: python3-module-%oname
-Version: 1.3.16
+Version: 3.0.7
 Release: alt1
 
 Summary: A library that allows your python tests to easily mock out the boto library
@@ -15,23 +20,40 @@ BuildArch: noarch
 
 # https://github.com/spulec/moto.git
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-chardet python3-module-coverage
-BuildRequires: python3-module-ecdsa
-BuildRequires: python3(boto)
+
+%if_with check
+# install_requires=
 BuildRequires: python3(boto3)
 BuildRequires: python3(botocore)
-BuildRequires: python3(httpretty)
+BuildRequires: python3(cryptography)
+BuildRequires: python3(requests)
+BuildRequires: python3(xmltodict)
+BuildRequires: python3(werkzeug)
+BuildRequires: python3(pytz)
+BuildRequires: python3(dateutil)
+BuildRequires: python3(responses)
+BuildRequires: python3(jinja2)
+
 BuildRequires: python3(sure)
-BuildRequires: python3-module-html5lib python3-module-mimeparse
-BuildRequires: python3-module-nose python3-module-pbr
-BuildRequires: python3-module-pycrypto python3-module-pytest
-BuildRequires: python3-module-unittest2 python3-module-urllib3
-BuildRequires: python3-module-yaml python3-module-yieldfrom.urllib3
-BuildRequires: python3(werkzeug) python3(flask) python3(zipp) python3(responses)
-BuildRequires: python3(xmltodict) python3(docker) python3(parameterized) python3(freezegun)
-BuildRequires: python3(jose) python3(aws_xray_sdk)
+BuildRequires: python3(freezegun)
+BuildRequires: python3(flask)
+BuildRequires: python3(flask_cors)
+BuildRequires: python3(jose)
+BuildRequires: python3(aws_xray_sdk)
+BuildRequires: python3(yaml)
+BuildRequires: python3(jsondiff)
+BuildRequires: python3(docker)
+
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+%endif
+
+# not detected external dep
+%py3_requires responses
 
 %description
 Moto is a library that allows your python tests to easily mock out the
@@ -39,27 +61,51 @@ boto library.
 
 %prep
 %setup
-sed -i 's|^#!/usr/bin/env python$|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
+%autopatch -p1
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
 %check
-%__python3 setup.py test
-nosetests3 -v ||:
+cat > tox.ini <<'EOF'
+[testenv]
+commands =
+    pytest {posargs:-vra}
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export NO_INTERNET=YES
+export NO_DOCKERD=YES
+export TOXENV=py3
+export TOX_TESTENV_PASSENV='NO_INTERNET NO_DOCKERD'
+%if_with full_testsuite
+export TESTS=tests
+%else
+export TESTS=tests/test_core
+%endif
+# test_batch_jobs requires internet
+tox.py3 --sitepackages --console-scripts -vvr -s false --develop -- \
+    -vra $TESTS \
+    -m 'not network' \
+    --ignore tests/test_batch/test_batch_jobs.py
 
 %files
 %doc LICENSE
 %doc *.md
-%_bindir/*
+%_bindir/moto_server
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version-py*.egg-info
 
 %changelog
+* Wed Mar 09 2022 Stanislav Levin <slev@altlinux.org> 3.0.7-alt1
+- 3.0.5 -> 3.0.7.
+
+* Sat Mar 05 2022 Stanislav Levin <slev@altlinux.org> 3.0.5-alt1
+- 1.3.16 -> 3.0.5.
+
 * Fri Oct 23 2020 Stanislav Levin <slev@altlinux.org> 1.3.16-alt1
 - 1.3.15 -> 1.3.16.
 

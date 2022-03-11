@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.17.96
-Release: alt2
+Version: 1.21.15
+Release: alt1
 
 Summary: The AWS SDK for Python
 
@@ -18,17 +18,21 @@ BuildArch: noarch
 # Source-git: https://github.com/boto/boto3.git
 Source: %name-%version.tar
 
-Patch1: %oname-alt-docs.patch
-Patch2: %oname-alt-unvendor.patch
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-pbr
-BuildRequires: python3(six)
 %if_with check
-BuildRequires: python3-module-unittest2 python3-module-mock
-BuildRequires: python3-module-botocore python3-module-html5lib python3-module-nose
-BuildRequires: python3(s3transfer) python3(jmespath)
+# install_requires=
+BuildRequires: python3(botocore)
+BuildRequires: python3(jmespath)
+BuildRequires: python3(s3transfer)
+
+# deps on packages bundled by botocore
+BuildRequires: python3(six)
+
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 %description
@@ -42,20 +46,19 @@ pull requests on this repository. Thanks!
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
+%autopatch1 -p1
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
 %check
-# skip tests depending on network
-rm -rf tests/integration
-
-nosetests3
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr -s false --develop
 
 %files
 %doc LICENSE
@@ -64,6 +67,9 @@ nosetests3
 %python3_sitelibdir/%oname-%version-py*.egg-info
 
 %changelog
+* Wed Mar 09 2022 Stanislav Levin <slev@altlinux.org> 1.21.15-alt1
+- 1.17.96 -> 1.21.15.
+
 * Sat Aug 14 2021 Ivan A. Melnikov <iv@altlinux.org> 1.17.96-alt2
 - minor build requirements cleanup
 - enable %%check
