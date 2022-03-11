@@ -1,7 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define  modulename slugify
 
+%def_with check
+
 Name:    python3-module-%modulename
-Version: 4.0.1
+Version: 6.1.1
 Release: alt1
 
 Summary: Returns unicode slugs
@@ -9,34 +12,53 @@ License: MIT
 Group:   Development/Python3
 URL:     https://github.com/un33k/python-slugify
 
-Packager: Mikhail Gordeev <obirvalger@altlinux.org>
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+
+%if_with check
+# install_requires=
+BuildRequires: python3(text_unidecode)
+
+BuildRequires: python3(tox)
+%endif
 
 BuildArch: noarch
 
-Source:  %modulename-%version.tar
+Source: %name-%version.tar
+
+# try-except import
+%py3_requires text_unidecode
 
 %description
 A Python slugify application that handles unicode.
 
 %prep
-%setup -n %modulename-%version
+%setup
 
 %build
 %python3_build
 
 %install
 %python3_install
-mv %buildroot/%_bindir/slugify{,3}
+
+%check
+cat > tox.ini <<'EOF'
+[testenv]
+commands =
+    python test.py
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vvr -s false --develop
 
 %files
 %python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
-%_bindir/slugify3
+%python3_sitelibdir/python_slugify-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Mar 11 2022 Stanislav Levin <slev@altlinux.org> 6.1.1-alt1
+- 4.0.1 -> 6.1.1.
+
 * Tue Aug 18 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0.1-alt1
 - 4.0.1 released
 

@@ -1,22 +1,33 @@
+%define _unpackaged_files_terminate_build 1
 %define oname shiftschema
+
+%def_without check
+
 Name: python3-module-%oname
-Version: 0.0.11
-Release: alt2
+Version: 0.3.0
+Release: alt1
 Summary: Python3 filtering and validation library
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/shiftschema/
+Url: https://pypi.org/project/shiftschema/
 
 # https://github.com/projectshift/shift-schema.git
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-nose python3-module-rednose
-BuildRequires: python3(flask_wtf)
+# bad pattern in upstream for reading its own version (self-import)
+BuildRequires: python3(bleach)
+BuildRequires: python3(slugify)
 
-%py3_provides %oname
+%if_with check
+BuildRequires: python3(flask_wtf)
+BuildRequires: python3(nose)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+%endif
 
 %description
 Filtering and validation library for Python3. Can filter and validate
@@ -29,22 +40,34 @@ and your domain logic, not your views or forms logic.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
 %check
-python3 setup.py test
-nosetests3 -v
+cat > tox.ini <<'EOF'
+[testenv]
+commands =
+    {envbindir}/nosetests -v {posargs:tests}
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr -s false --develop
 
 %files
 %doc README.md
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Mar 10 2022 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1
+- 0.0.11 -> 0.3.0.
+
 * Fri Oct 23 2020 Stanislav Levin <slev@altlinux.org> 0.0.11-alt2
 - Dropped dependency on coveralls.
 
