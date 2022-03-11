@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.4.0
+Version: 3.0.1
 Release: alt1
 
 Summary:  Automated testing for the examples in your documentation.
@@ -17,19 +17,19 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python3(nose)
 BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 # https://github.com/cjw296/sybil.git
-Source:  %oname-%version.tar
+Source: %name-%version.tar
 
 %description
 Automated testing for the examples in your documentation.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 %python3_build
@@ -38,29 +38,25 @@ Automated testing for the examples in your documentation.
 %python3_install
 
 %check
-cat > tox.ini <<EOF
+cat > tox.ini <<'EOF'
 [testenv]
-usedevelop=True
-whitelist_externals =
-    /bin/cp
-    /bin/sed
-commands_pre =
-    /bin/cp %_bindir/py.test3 {envbindir}/py.test
-    /bin/sed -i '1c #!{envpython}' {envbindir}/py.test
 commands =
-    {envbindir}/py.test {posargs:-vra}
+    {envbindir}/pytest {posargs:-vra}
 EOF
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
-tox.py3 --sitepackages -vvr
+tox.py3 --sitepackages --console-scripts -vvr -s false --develop
 
 %files
 %doc README.rst
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Mar 11 2022 Stanislav Levin <slev@altlinux.org> 3.0.1-alt1
+- 1.4.0 -> 3.0.1.
+
 * Fri Oct 16 2020 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
 - 1.0.7 -> 1.4.0.
 - Stopped Python2 package build.

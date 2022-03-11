@@ -1,46 +1,36 @@
+%define _unpackaged_files_terminate_build 1
 %define  modulename testfixtures
-%def_with docs
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 6.14.1
-Release: alt2
+Version: 6.18.5
+Release: alt1
 
 Summary: A collection of helpers and mock objects for unit tests and doc tests
 License: MIT
 Group:   Development/Python3
 URL:     http://www.simplistix.co.uk/software/python/testfixtures
 
-Packager: Andrey Cherepanov <cas@altlinux.org>
-
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-distribute
-BuildRequires: python3-module-twisted-logger
-BuildRequires: python3-module-twisted-core-test
-BuildRequires: python3-module-service-identity
 
 %if_with check
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-sybil
-BuildRequires: python3-module-django
-BuildRequires: python3-module-zope.component
-%endif
+BuildRequires: python3(sybil)
+BuildRequires: python3(django)
+BuildRequires: python3(django.db.backends.sqlite3)
+BuildRequires: python3(zope.component)
+BuildRequires: python3(twisted.trial)
 
-%if_with docs
-BuildRequires: python3-module-sphinx-devel
-BuildRequires: python3-module-sybil
-BuildRequires: python3-module-django
-BuildRequires: python3-module-zope.component
+BuildRequires: python3(pytest)
+BuildRequires: python3(pytest_django)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 Source:  %modulename-%version.tar
 #VCS:    https://github.com/Simplistix/testfixtures
-
-# Should be removed with update
-Patch: 9684e9816c39377f5cc08819dee711b2255fb2d3.patch
 
 %description
 TestFixtures is a collection of helpers and mock objects that are useful
@@ -48,12 +38,6 @@ when writing unit tests or doc tests.
 
 %prep
 %setup -n %modulename-%version
-%patch -p1
-
-%if_with docs
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
-%endif
 
 %build
 %python3_build
@@ -62,26 +46,26 @@ ln -s ../objects.inv docs/
 %python3_install
 %python3_prune
 
-%if_with docs
-PYTHONPATH=$(pwd) %make -C docs html SPHINXBUILD=sphinx-build-3
-mv docs/_build/html ./
-rm -rf docs/_build
-%endif
-
 %check
-rm -rf build
-rm -f testfixtures/tests/test_django/test_compare.py
-PYTHONPATH=$(pwd) py.test3 testfixtures/tests
+cat > tox.ini <<'EOF'
+[testenv]
+commands =
+    {envbindir}/pytest -vra {posargs:testfixtures/tests}
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr --develop
 
 %files
-%doc README.rst docs
-%if_with docs
-%doc html
-%endif
+%doc README.rst
 %python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Mar 11 2022 Stanislav Levin <slev@altlinux.org> 6.18.5-alt1
+- 6.14.1 -> 6.18.5.
+
 * Mon Nov 09 2020 Vitaly Lipatov <lav@altlinux.ru> 6.14.1-alt2
 - NMU: don't pack tests
 
