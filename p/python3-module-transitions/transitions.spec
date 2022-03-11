@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.8.8
+Version: 0.8.11
 Release: alt1
 
 Summary: A lightweight, object-oriented Python state machine implementation
@@ -23,6 +23,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(six)
 
 BuildRequires: graphviz
+# dot crashes without fonts
+BuildRequires: fonts-ttf-dejavu
 BuildRequires: python3(graphviz)
 BuildRequires: python3(pygraphviz)
 BuildRequires: python3(pycodestyle)
@@ -58,6 +60,9 @@ tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Mar 11 2022 Stanislav Levin <slev@altlinux.org> 0.8.11-alt1
+- 0.8.8 -> 0.8.11.
+
 * Fri Jul 23 2021 Stanislav Levin <slev@altlinux.org> 0.8.8-alt1
 - 0.2.3 -> 0.8.8.
 - Enabled testing.
