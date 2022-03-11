@@ -16,7 +16,7 @@
 
 Name: libmozjs%ver_major
 Version: %ver_major.11.0
-Release: alt1.1
+Release: alt2
 
 Summary: JavaScript interpreter and libraries
 Group: System/Libraries
@@ -34,6 +34,8 @@ Source: %name-%version.tar
 Patch17: mozjs78-armv7_disable_WASM_EMULATE_ARM_UNALIGNED_FP_ACCESS.patch
 # 0ad links with SharedArrayRawBufferRefs
 Patch20: mozjs78-0ad-FixSharedArray.patch
+# fix build with ptrthon-3.10 (backported from 91)
+Patch30: mozjs-78.11.0-mozbuild-util.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: /dev/shm /proc
@@ -89,6 +91,7 @@ interface to the JavaScript engine.
 %endif
 
 %patch20 -p1 -b .0ad
+%patch30 -p1 -b .collection
 
 %build
 mkdir _build
@@ -125,7 +128,7 @@ export PYTHON=%__python3
 	--with-system-zlib \
 	%{?_with_system_icu:--with-system-icu} \
 	--with-intl-api \
-	--enable-lto
+	%{?optflags_lto:--enable-lto}
 %nil
 %if_enabled big_endian
 echo "Generate big endian version of config/external/icu/data/icud67l.dat"
@@ -179,6 +182,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 
 
 %changelog
+* Fri Mar 11 2022 Yuri N. Sedunov <aris@altlinux.org> 78.11.0-alt2
+- fixed build with Python-3.10
+
 * Fri Aug 27 2021 Yuri N. Sedunov <aris@altlinux.org> 78.11.0-alt1.1
 - added -ffat-lto-objects to %%optflags_lto
 
