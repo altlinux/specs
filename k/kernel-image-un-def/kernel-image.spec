@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	5.16
-%define kernel_sublevel .13
+%define kernel_sublevel .14
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -666,6 +666,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Mar 11 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.16.14-alt1
+- v5.16.14 (Fixes: CVE-2022-23036, CVE-2022-23037, CVE-2022-23038, CVE-2022-23039,
+  CVE-2022-23040, CVE-2022-23041, CVE-2022-23042)
+
 * Tue Mar 08 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.16.13-alt1
 - v5.16.13
 
