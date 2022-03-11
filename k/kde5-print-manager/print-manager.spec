@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 21.12.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Configuration/Printing
@@ -13,8 +13,9 @@ Summary: Printer management for KDE
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-Requires: cups printer-drivers-X11
-#Requires: system-config-printer-udev
+Requires: cups
+#Requires: printer-drivers-X11
+Requires: system-config-printer-lib
 
 Source: %rname-%version.tar
 Patch1: alt-lib-sover.patch
@@ -92,6 +93,9 @@ KF5 library
 %_K5lib/libkcupslib.so.*
 
 %changelog
+* Fri Mar 11 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt2
+- fix requires
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 
