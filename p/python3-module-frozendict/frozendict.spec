@@ -2,8 +2,8 @@
 
 %define modulename frozendict
 Name: python3-module-frozendict
-Version: 1.2
-Release: alt2
+Version: 2.3.0
+Release: alt1
 
 Summary: An immutable dictionary
 
@@ -15,8 +15,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://pypi.io/packages/source/f/%modulename/%modulename-%version.tar.gz
 Source: %modulename-%version.tar
-
-BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -35,10 +33,14 @@ for dictionaries where immutability is desired.
 %python3_install
 
 %files
-%doc README.rst
+%doc README.md
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 10 2022 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
+- new version 2.3.0 (with rpmrb script)
+- frozendict is arch dependent package now
+
 * Thu Jul 22 2021 Grigory Ustinov <grenka@altlinux.org> 1.2-alt2
 - Drop python2 support.
 
