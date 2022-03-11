@@ -1,7 +1,7 @@
 %define        gemname nokogiri
 
 Name:          gem-nokogiri
-Version:       1.13.1
+Version:       1.13.2
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
 License:       MIT
@@ -15,7 +15,7 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: libxml2-devel
 BuildRequires: libxslt-devel
 BuildRequires: zlib-devel
-BuildRequires: gem(mini_portile2) >= 2.7.0 gem(mini_portile2) < 2.8
+BuildRequires: gem(mini_portile2) >= 2.8.0 gem(mini_portile2) < 2.9
 BuildRequires: gem(racc) >= 1.4 gem(racc) < 2
 BuildRequires: gem(bundler) >= 2.1.4 gem(bundler) < 3
 BuildRequires: gem(hoe-markdown) >= 1.4 gem(hoe-markdown) < 2
@@ -31,17 +31,16 @@ BuildRequires: gem(rubocop-minitest) >= 0.13.0 gem(rubocop-minitest) < 1
 BuildRequires: gem(rubocop-performance) >= 1.11.3 gem(rubocop-performance) < 2
 BuildRequires: gem(rubocop-rake) >= 0.6 gem(rubocop-rake) < 1
 BuildRequires: gem(rubocop-shopify) >= 2.3 gem(rubocop-shopify) < 3
-BuildRequires: gem(ruby_memcheck) >= 1.0 gem(ruby_memcheck) < 2
+# BuildRequires: gem(ruby_memcheck) >= 1.0 gem(ruby_memcheck) < 2
 BuildRequires: gem(simplecov) >= 0.17 gem(simplecov) < 1
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rake-compiler-dock >= 0.7.2,rake-compiler-dock < 2
-Requires:      gem(mini_portile2) >= 2.7.0 gem(mini_portile2) < 2.8
+Requires:      gem(mini_portile2) >= 2.8.0 gem(mini_portile2) < 2.9
 Requires:      gem(racc) >= 1.4 gem(racc) < 2
 Obsoletes:     ruby-nokogiri < %EVR
 Provides:      ruby-nokogiri = %EVR
-Provides:      gem(nokogiri) = 1.13.1
+Provides:      gem(nokogiri) = 1.13.2
 
 
 %description
@@ -51,14 +50,14 @@ contanis Ruby libraries for Nokogiri.
 
 
 %package       -n nokogiri
-Version:       1.13.1
+Version:       1.13.2
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета nokogiri
 Group:         Development/Other
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.13.1
+Requires:      gem(nokogiri) = 1.13.2
 
 %description   -n nokogiri
 Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
@@ -73,14 +72,14 @@ contanis Ruby libraries for Nokogiri.
 
 
 %package       -n gem-nokogiri-doc
-Version:       1.13.1
+Version:       1.13.2
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета nokogiri
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.13.1
+Requires:      gem(nokogiri) = 1.13.2
 
 %description   -n gem-nokogiri-doc
 Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) documentation
@@ -95,14 +94,14 @@ contanis Ruby libraries for Nokogiri.
 
 
 %package       -n gem-nokogiri-devel
-Version:       1.13.1
+Version:       1.13.2
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета nokogiri
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.13.1
+Requires:      gem(nokogiri) = 1.13.2
 Requires:      gem(bundler) >= 2.1.4 gem(bundler) < 3
 Requires:      gem(hoe-markdown) >= 1.4 gem(hoe-markdown) < 2
 Requires:      gem(minitest) >= 5.15 gem(minitest) < 6
@@ -168,6 +167,9 @@ contanis Ruby libraries for Nokogiri.
 
 
 %changelog
+* Fri Mar 11 2022 Pavel Skrylev <majioa@altlinux.org> 1.13.2-alt1
+- ^ 1.13.1 -> 1.13.2
+
 * Tue Jan 18 2022 Pavel Skrylev <majioa@altlinux.org> 1.13.1-alt1
 - ^ 1.12.5 -> 1.13.1
 

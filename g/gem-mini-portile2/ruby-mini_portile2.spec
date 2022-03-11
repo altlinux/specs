@@ -1,7 +1,7 @@
 %define        gemname mini_portile2
 
 Name:          gem-mini-portile2
-Version:       2.7.0
+Version:       2.8.0
 Release:       alt1
 Summary:       Simple autoconf builder for developers
 License:       MIT
@@ -13,19 +13,19 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(bundler) >= 2.1 gem(bundler) < 3
-BuildRequires: gem(minitar) >= 0.7 gem(minitar) < 1
-BuildRequires: gem(minitest) >= 5.11 gem(minitest) < 6
-BuildRequires: gem(minitest-hooks) >= 1.5.0 gem(minitest-hooks) < 1.6
+BuildRequires: gem(bundler) >= 2.1.4 gem(bundler) < 3
+BuildRequires: gem(minitar) >= 0.9 gem(minitar) < 1
+BuildRequires: gem(minitest) >= 5.15 gem(minitest) < 6
+BuildRequires: gem(minitest-hooks) >= 1.5 gem(minitest-hooks) < 2
 BuildRequires: gem(rake) >= 13.0 gem(rake) < 14
-BuildRequires: gem(webrick) >= 1.0 gem(webrick) < 2
+BuildRequires: gem(webrick) >= 1.7 gem(webrick) < 2
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_alias_names mini_portile2,mini-portile2
 Obsoletes:     ruby-mini_portile2 < %EVR
 Provides:      ruby-mini_portile2 = %EVR
-Provides:      gem(mini_portile2) = 2.7.0
+Provides:      gem(mini_portile2) = 2.8.0
 
 
 %description
@@ -35,14 +35,14 @@ version of an underlying dependency that you'd like to use.
 
 
 %package       -n gem-mini-portile2-doc
-Version:       2.7.0
+Version:       2.8.0
 Release:       alt1
 Summary:       Simple autoconf builder for developers documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета mini_portile2
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(mini_portile2) = 2.7.0
+Requires:      gem(mini_portile2) = 2.8.0
 
 %description   -n gem-mini-portile2-doc
 Simple autoconf builder for developers documentation files.
@@ -56,20 +56,20 @@ version of an underlying dependency that you'd like to use.
 
 
 %package       -n gem-mini-portile2-devel
-Version:       2.7.0
+Version:       2.8.0
 Release:       alt1
 Summary:       Simple autoconf builder for developers development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета mini_portile2
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(mini_portile2) = 2.7.0
-Requires:      gem(bundler) >= 2.1 gem(bundler) < 3
-Requires:      gem(minitar) >= 0.7 gem(minitar) < 1
-Requires:      gem(minitest) >= 5.11 gem(minitest) < 6
-Requires:      gem(minitest-hooks) >= 1.5.0 gem(minitest-hooks) < 1.6
+Requires:      gem(mini_portile2) = 2.8.0
+Requires:      gem(bundler) >= 2.1.4 gem(bundler) < 3
+Requires:      gem(minitar) >= 0.9 gem(minitar) < 1
+Requires:      gem(minitest) >= 5.15 gem(minitest) < 6
+Requires:      gem(minitest-hooks) >= 1.5 gem(minitest-hooks) < 2
 Requires:      gem(rake) >= 13.0 gem(rake) < 14
-Requires:      gem(webrick) >= 1.0 gem(webrick) < 2
+Requires:      gem(webrick) >= 1.7 gem(webrick) < 2
 
 %description   -n gem-mini-portile2-devel
 Simple autoconf builder for developers development package.
@@ -108,6 +108,9 @@ version of an underlying dependency that you'd like to use.
 
 
 %changelog
+* Fri Mar 11 2022 Pavel Skrylev <majioa@altlinux.org> 2.8.0-alt1
+- ^ 2.7.0 -> 2.8.0
+
 * Sat Sep 04 2021 Pavel Skrylev <majioa@altlinux.org> 2.7.0-alt1
 - ^ 2.5.0 -> 2.7.0
 

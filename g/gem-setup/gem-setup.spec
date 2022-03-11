@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.5
-Release:       alt11
+Release:       alt12
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -89,6 +89,9 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Thu Mar 03 2022 Pavel Skrylev <majioa@altlinux.org> 5.999.5-alt12
+- ! for jeweler, and some others spec parser to properly load and store specs
+
 * Mon Oct 25 2021 Pavel Skrylev <majioa@altlinux.org> 5.999.5-alt11
 - ^ 5.999.4 -> 5.999.5
 - ! pass option hash to gem requirement constructor in setup deps

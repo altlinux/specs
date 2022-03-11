@@ -1,7 +1,7 @@
 %define        gemname image_size
 
 Name:          gem-image-size
-Version:       2.1.1
+Version:       3.0.1
 Release:       alt1
 Summary:       HTML entity encoding and decoding for Ruby
 License:       Ruby
@@ -15,11 +15,12 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(rspec) >= 3.0 gem(rspec) < 4
 BuildRequires: gem(rubocop) >= 1.0 gem(rubocop) < 2
+BuildRequires: gem(rubocop-rspec) >= 2.0 gem(rubocop-rspec) < 3
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_alias_names image_size,image-size
-Provides:      gem(image_size) = 2.1.1
+Provides:      gem(image_size) = 3.0.1
 
 
 %description
@@ -29,14 +30,14 @@ documents.
 
 
 %package       -n gem-image-size-doc
-Version:       2.1.1
+Version:       3.0.1
 Release:       alt1
 Summary:       HTML entity encoding and decoding for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета image_size
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(image_size) = 2.1.1
+Requires:      gem(image_size) = 3.0.1
 
 %description   -n gem-image-size-doc
 HTML entity encoding and decoding for Ruby documentation files.
@@ -50,16 +51,17 @@ documents.
 
 
 %package       -n gem-image-size-devel
-Version:       2.1.1
+Version:       3.0.1
 Release:       alt1
 Summary:       HTML entity encoding and decoding for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета image_size
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(image_size) = 2.1.1
+Requires:      gem(image_size) = 3.0.1
 Requires:      gem(rspec) >= 3.0 gem(rspec) < 4
 Requires:      gem(rubocop) >= 1.0 gem(rubocop) < 2
+Requires:      gem(rubocop-rspec) >= 2.0 gem(rubocop-rspec) < 3
 
 %description   -n gem-image-size-devel
 HTML entity encoding and decoding for Ruby development package.
@@ -98,6 +100,9 @@ documents.
 
 
 %changelog
+* Fri Mar 11 2022 Pavel Skrylev <majioa@altlinux.org> 3.0.1-alt1
+- ^ 2.1.1 -> 3.0.1
+
 * Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 2.1.1-alt1
 - ^ 2.0.0 -> 2.1.1
 

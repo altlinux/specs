@@ -1,8 +1,8 @@
-%define        pkgname ed25519
+%define        gemname ed25519
 
-Name:          gem-%pkgname
-Version:       1.2.4
-Release:       alt3
+Name:          gem-ed25519
+Version:       1.3.0
+Release:       alt1
 Summary:       Ruby library for the Ed25519 public-key signature system
 License:       MIT
 Group:         Development/Ruby
@@ -11,42 +11,60 @@ Vcs:           https://github.com/crypto-rb/ed25519.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
-
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(bundler) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+Obsoletes:     ruby-ed25519 < %EVR
+Provides:      ruby-ed25519 = %EVR
+Provides:      gem(ed25519) = 1.3.0
+
 
 %description
 A Ruby binding to the Ed25519 elliptic curve public-key signature system
 described in RFC 8032.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-ed25519-doc
+Version:       1.3.0
+Release:       alt1
+Summary:       Ruby library for the Ed25519 public-key signature system documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ed25519
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(ed25519) = 1.3.0
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-ed25519-doc
+Ruby library for the Ed25519 public-key signature system documentation files.
+
+A Ruby binding to the Ed25519 elliptic curve public-key signature system
+described in RFC 8032.
+
+%description   -n gem-ed25519-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета ed25519.
 
 
-%package       devel
-Summary:       Development files for %gemname gem
+%package       -n gem-ed25519-devel
+Version:       1.3.0
+Release:       alt1
+Summary:       Ruby library for the Ed25519 public-key signature system development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ed25519
 Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   devel
-Development files for %gemname gem.
+Requires:      gem(ed25519) = 1.3.0
+Requires:      gem(bundler) >= 0
 
-%description   devel -l ru_RU.UTF8
-Файлы заголовков для самоцвета %gemname.
+%description   -n gem-ed25519-devel
+Ruby library for the Ed25519 public-key signature system development package.
+
+A Ruby binding to the Ed25519 elliptic curve public-key signature system
+described in RFC 8032.
+
+%description   -n gem-ed25519-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета ed25519.
 
 
 %prep
@@ -62,18 +80,24 @@ Development files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         doc
+%files         -n gem-ed25519-doc
+%doc README.md
 %ruby_gemdocdir
 
-%files         devel
+%files         -n gem-ed25519-devel
+%doc README.md
 %ruby_includedir/*
 
+
 %changelog
+* Fri Mar 11 2022 Pavel Skrylev <majioa@altlinux.org> 1.3.0-alt1
+- ^ 1.2.4 -> 1.3.0
+
 * Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 1.2.4-alt3
 - ! spec tags and syntax
 

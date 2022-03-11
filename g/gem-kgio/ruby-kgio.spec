@@ -1,54 +1,76 @@
-%define        pkgname kgio
+%define        gemname kgio
 
-Name:          gem-%pkgname
-Version:       2.11.3
+Name:          gem-kgio
+Version:       2.11.4
 Release:       alt1
 Summary:       kinder, gentler I/O for Ruby
+License:       LGPL-2.1+
 Group:         Development/Ruby
-License:       LGPLv2
 Url:           https://bogomips.org/kgio
 Vcs:           https://bogomips.org/kgio.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(olddoc)
+BuildRequires: gem(test-unit) >= 3.0 gem(test-unit) < 4
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+Obsoletes:     ruby-kgio < %EVR
+Provides:      ruby-kgio = %EVR
+Provides:      gem(kgio) = 2.11.4
+
 
 %description
-kgio provides non-blocking I/O methods for Ruby without raising
-exceptions on EAGAIN and EINPROGRESS. It is intended for use with the
-Unicorn and Rainbows! Rack servers, but may be used by other
-applications (that run on Unix-like platforms).
+kgio provides non-blocking I/O methods for Ruby without raising exceptions on
+EAGAIN and EINPROGRESS. It is intended for use with the Unicorn and Rainbows!
+Rack servers, but may be used by other applications (that run on Unix-like
+platforms).
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-kgio-doc
+Version:       2.11.4
+Release:       alt1
+Summary:       kinder, gentler I/O for Ruby documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета kgio
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(kgio) = 2.11.4
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-kgio-doc
+kinder, gentler I/O for Ruby documentation files.
+
+kgio provides non-blocking I/O methods for Ruby without raising exceptions on
+EAGAIN and EINPROGRESS. It is intended for use with the Unicorn and Rainbows!
+Rack servers, but may be used by other applications (that run on Unix-like
+platforms).
+
+%description   -n gem-kgio-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета kgio.
 
 
-%package       devel
-Summary:       Development files for %gemname gem
+%package       -n gem-kgio-devel
+Version:       2.11.4
+Release:       alt1
+Summary:       kinder, gentler I/O for Ruby development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета kgio
 Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   devel
-Development files for %gemname gem.
+Requires:      gem(kgio) = 2.11.4
+Requires:      gem(test-unit) >= 3.0 gem(test-unit) < 4
 
-%description   devel -l ru_RU.UTF8
-Файлы заголовков для самоцвета %gemname.
+%description   -n gem-kgio-devel
+kinder, gentler I/O for Ruby development package.
+
+kgio provides non-blocking I/O methods for Ruby without raising exceptions on
+EAGAIN and EINPROGRESS. It is intended for use with the Unicorn and Rainbows!
+Rack servers, but may be used by other applications (that run on Unix-like
+platforms).
+
+%description   -n gem-kgio-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета kgio.
 
 
 %prep
@@ -64,17 +86,24 @@ Development files for %gemname gem.
 %ruby_test
 
 %files
+%doc README
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         devel
-%ruby_includedir/*
-
-%files         doc
+%files         -n gem-kgio-doc
+%doc README
 %ruby_gemdocdir
 
+%files         -n gem-kgio-devel
+%doc README
+%ruby_includedir/*
+
+
 %changelog
+* Fri Mar 11 2022 Pavel Skrylev <majioa@altlinux.org> 2.11.4-alt1
+- ^ 2.11.3 -> 2.11.4
+
 * Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 2.11.3-alt1
 - ^ 2.11.2 -> 2.11.3
 - ! spec tags and syntax

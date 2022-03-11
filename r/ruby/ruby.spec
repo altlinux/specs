@@ -11,7 +11,7 @@
 
 Name:          ruby
 Version:       %_version
-Release:       alt1.1
+Release:       alt1.2
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -133,6 +133,7 @@ Requires:      libyaml2
 Requires:      libgdbm
 Requires:      libssl1.1
 Requires:      libcrypto1.1
+Requires:      libffi8
 Requires:      gem(minitest) >= 5.13.0
 Requires:      gem(net-telnet) >= 0.2
 Requires:      gem(power_assert) >= 1.1.7
@@ -233,7 +234,7 @@ on different arches.
 %package       -n gem
 Epoch:         2
 Version:       3.1.6
-Release:       alt1.3
+Release:       alt1.4
 Summary:       Ruby gem executable and framefork
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -459,6 +460,9 @@ ln -s armh-linux "${EX}/armh-linux-eabi"
 %endif
 
 %changelog
+* Fri Mar 11 2022 Pavel Skrylev <majioa@altlinux.org> 2.7.5-alt1.2
+- !fix dependency to libffi8
+
 * Tue Jan 18 2022 Pavel Skrylev <majioa@altlinux.org> 2.7.5-alt1.1
 - ! %%ruby_sitearchdir path (ALT #41688)
 
