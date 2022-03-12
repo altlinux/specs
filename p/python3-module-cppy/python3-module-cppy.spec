@@ -1,7 +1,7 @@
 %define  modulename cppy
 
 Name:    python3-module-%modulename
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: A collection of C++ headers which make it easier to write Python C extension modules
@@ -39,5 +39,8 @@ methods for performing common object operations.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat Mar 12 2022 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
+- New version.
+
 * Fri Mar 27 2020 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus.
