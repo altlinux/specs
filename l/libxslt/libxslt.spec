@@ -1,6 +1,6 @@
 Name: libxslt
-Version: 1.1.34
-Release: alt3
+Version: 1.1.35
+Release: alt1
 
 Summary: Library providing XSLT support
 License: MIT
@@ -184,6 +184,9 @@ make check
 %endif # enabled python
 
 %changelog
+* Sat Mar 12 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.35-alt1
+- Updated to v1.1.35.
+
 * Fri Jun 25 2021 Alexey Shabalin <shaba@altlinux.org> 1.1.34-alt3
 - Build without crypto.
 - Fixed build with libxml2 2.9.12.
