@@ -8,14 +8,20 @@
 %def_enable introspection
 %def_enable vala
 %def_enable installed_tests
+
+%ifarch armh
+%def_disable check
+%else
 %def_enable check
+%endif
+
 %ifarch %valgrind_arches
 %def_enable valgrind
 %endif
 
 Name: lib%{_name}%api_ver
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: GtkSourceView text widget library
 License: LGPLv2+
@@ -45,7 +51,8 @@ BuildRequires: libfribidi-devel >= %fribidi_ver
 BuildRequires: perl-XML-Parser zlib-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk4-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools libvala-devel}
-%{?_enable_check:BuildRequires: xvfb-run %{?_enable_valgrind:valgrind}}
+%{?_enable_check:BuildRequires: xvfb-run %{?_enable_valgrind:valgrind}
+BuildRequires: fonts-ttf-roboto}
 
 %description
 GtkSourceView is a text widget that extends the standard gtk+ 2.x text
@@ -163,6 +170,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Fri Mar 11 2022 Yuri N. Sedunov <aris@altlinux.org> 5.2.0-alt1.1
+- fixed %%check
+
 * Sat Sep 04 2021 Yuri N. Sedunov <aris@altlinux.org> 5.2.0-alt1
 - 5.2.0
 
