@@ -1,7 +1,7 @@
 %define oname itsdangerous
 
 Name: python3-module-%oname
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 Summary: Various helpers to pass trusted data to untrusted environments and back
 License: BSD-3-Clause
@@ -36,6 +36,9 @@ back safe and sound.
 %python3_sitelibdir/*
 
 %changelog
+* Sat Mar 12 2022 Andrey Cherepanov <cas@altlinux.org> 2.1.1-alt1
+- New version.
+
 * Fri Feb 18 2022 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1
 - New version.
 
