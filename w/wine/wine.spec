@@ -1,10 +1,19 @@
 %define _unpackaged_files_terminate_build 1
+
+%if %_vendor == "alt"
+# hack for lib.req: ERROR: /tmp/.private/lav/wine-etersoft-buildroot/usr/lib64/wine/x86_64-unix/ws2_32.so: library ntdll.so not found
+%filter_from_requires /^ntdll.so.*/d
+%global __find_debuginfo_files %nil
+%endif
+
 %def_disable static
 %def_without vanilla
 %define gecko_version 2.47.2
 %define mono_version 7.0.0
+%define winetricks_version 20210206
 
-%define major 6.22
+%define basemajor 6.x
+%define major 6.23
 %define rel %nil
 %define stagingrel %nil
 # the packages will conflict with that
@@ -71,7 +80,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # TODO: major in gear
 
-# Source-url: https://dl.winehq.org/wine/source/6.x/wine-%major%rel.tar.xz
+# Source-url: https://dl.winehq.org/wine/source/%basemajor/wine-%major%rel.tar.xz
 Source: %name-%version.tar
 # Source1-url: https://github.com/wine-staging/wine-staging/archive/v%major%stagingrel.tar.gz
 Source1: %name-staging-%version.tar
@@ -84,7 +93,7 @@ Source6: %name-%version-bin-scripts.tar
 # local patches
 Source10: %name-patches-%version.tar
 
-AutoReq: yes,noperl
+AutoReq: yes, noperl, nomingw32
 
 ExclusiveArch: %ix86 x86_64 aarch64
 
@@ -165,6 +174,9 @@ ExclusiveArch: %ix86 x86_64 aarch64
 # TODO: remove it for mingw build (when there will no any dll.so files)
 %add_verify_elf_skiplist %libwinedir/%winesodir/*.*.so
 %add_findreq_skiplist %libwinedir/%winepedir/*
+
+#add_findprov_lib_path %libwinedir/%winesodir
+
 #
 # /usr/bin/strip: ./usr/lib64/wine/x86_64-windows/stqrTIUz/stPNVRry/dsound.dll: warning: line number count (0x10000) exceeds section size (0x8)
 # /usr/bin/strip: ./usr/lib64/wine/x86_64-windows/stbguFIA: file format not recognized
@@ -368,7 +380,7 @@ Requires: %name-gl = %EVR
 
 Requires: wine-mono = %mono_version
 Requires: wine-gecko = %gecko_version
-Requires: winetricks
+Requires: winetricks >= %winetricks_version
 
 Conflicts: %conflictbase-full
 
@@ -596,14 +608,19 @@ mv -v %buildroot%libwinedir/%winesodir/libwine.so.1* %buildroot%libdir
 rm -v %buildroot%libwinedir/%winesodir/libwine.so.1*
 %endif
 
+# hack for lib.req: ERROR: /tmp/.private/lav/wine-etersoft-buildroot/usr/lib64/wine/x86_64-unix/ws2_32.so: library ntdll.so not found
+%if %_vendor == "alt"
+cp -v %buildroot%libwinedir/%winesodir/ntdll.so %buildroot%libdir
+%endif
+
 mkdir -p %buildroot%_bindir/
 
 # hack: move all programs back to _bindir
 find %buildroot%winebindir -mindepth 0 -maxdepth 1 -not -type d | \
     egrep -v '/wine$|/wine-preloader$|/wineserver$|/wine64$|/wine64-preloader$|/wineserver64|/winegcc|/wineg++|/winecpp|/winebuild$' | \
     xargs mv -v -t %buildroot%_bindir/
-ln -sv --relative %buildroot%winebindir/wineg++ %buildroot%_bindir/
-ln -sv --relative %buildroot%winebindir/winecpp %buildroot%_bindir/
+[ -s %buildroot%_bindir/wineg++ ] || ln -sv --relative %buildroot%winebindir/wineg++ %buildroot%_bindir/
+[ -s %buildroot%_bindir/winecpp ] || ln -sv --relative %buildroot%winebindir/winecpp %buildroot%_bindir/
 
 # wine64 and wine64-preloader are already built as wine64*
 mv -v %buildroot%winebindir/wineserver %buildroot%winebindir/%wineserver
@@ -684,7 +701,9 @@ fi
 %endif
 
 %files
+%if "%winebindir" != "%libwinedir"
 %dir %winebindir/
+%endif
 %if_with build64
 %winebindir/wine64
 %_bindir/wine64
@@ -694,9 +713,14 @@ fi
 %winebindir/%wineserver
 %winebindir/%winepreloader
 
+
 %dir %libwinedir/
 %dir %libwinedir/%winesodir/
 %dir %libwinedir/%winepedir/
+
+%if %_vendor == "alt"
+%exclude %libdir/ntdll.so
+%endif
 
 %libwinedir/%winesodir/avicap32.so
 %libwinedir/%winesodir/ntdll.so
@@ -708,6 +732,7 @@ fi
 %libwinedir/%winesodir/odbc32.so
 %libwinedir/%winesodir/crypt32.so
 %libwinedir/%winesodir/kerberos.so
+%libwinedir/%winesodir/mountmgr.so
 %libwinedir/%winesodir/netapi32.so
 %libwinedir/%winesodir/nsiproxy.so
 %libwinedir/%winesodir/wldap32.so
@@ -720,7 +745,9 @@ fi
 %endif
 %libwinedir/%winesodir/secur32.so
 %libwinedir/%winesodir/winepulse.so
+%if_with pcap
 %libwinedir/%winesodir/wpcap.so
+%endif
 %libwinedir/%winesodir/winebus.so
 
 %if_without mingw
@@ -945,6 +972,10 @@ fi
 %endif
 
 %changelog
+* Fri Mar 04 2022 Vitaly Lipatov <lav@altlinux.ru> 1:6.23.1-alt1
+- new version (6.23.1) with rpmgs script
+- fix build (add hack with ntdll.so and disable debuginfo subpackages)
+
 * Sat Nov 27 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.22.1-alt1
 - new version (6.22.1) with rpmgs script
 - add check for libpcap and llvm versions

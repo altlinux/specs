@@ -1,8 +1,19 @@
 %define _unpackaged_files_terminate_build 1
+
+%if %_vendor == "alt"
+# hack for lib.req: ERROR: /tmp/.private/lav/wine-etersoft-buildroot/usr/lib64/wine/x86_64-unix/ws2_32.so: library ntdll.so not found
+%filter_from_requires /^ntdll.so.*/d
+%global __find_debuginfo_files %nil
+%endif
+
 %def_disable static
 %def_with vanilla
 %define gecko_version 2.47.2
 %define mono_version 7.0.0
+%define winetricks_version 20220207
+
+%define basemajor 7.x
+%define major 7.1
 %define rel %nil
 %define conflictbase wine
 
@@ -50,7 +61,7 @@
 %endif
 
 Name: wine-vanilla
-Version: 6.22
+Version: %major
 Release: alt1
 Epoch: 1
 
@@ -62,7 +73,7 @@ Url: http://winehq.org
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://dl.winehq.org/wine/source/6.x/wine-%version%rel.tar.xz
+# Source-url: https://dl.winehq.org/wine/source/%basemajor/wine-%version%rel.tar.xz
 Source: %name-%version.tar
 
 Source3: %name-%version-desktop.tar
@@ -73,7 +84,7 @@ Source6: %name-%version-bin-scripts.tar
 # local patches
 #Source10: %name-patches-%version.tar
 
-AutoReq: yes,noperl
+AutoReq: yes, noperl, nomingw32
 
 ExclusiveArch: %ix86 x86_64 aarch64
 
@@ -356,7 +367,7 @@ Requires: %name-gl = %EVR
 
 Requires: wine-mono = %mono_version
 Requires: wine-gecko = %gecko_version
-Requires: winetricks
+Requires: winetricks >= %winetricks_version
 
 Conflicts: %conflictbase-full
 
@@ -578,14 +589,19 @@ mv -v %buildroot%libwinedir/%winesodir/libwine.so.1* %buildroot%libdir
 rm -v %buildroot%libwinedir/%winesodir/libwine.so.1*
 %endif
 
+# hack for lib.req: ERROR: /tmp/.private/lav/wine-etersoft-buildroot/usr/lib64/wine/x86_64-unix/ws2_32.so: library ntdll.so not found
+%if %_vendor == "alt"
+cp -v %buildroot%libwinedir/%winesodir/ntdll.so %buildroot%libdir
+%endif
+
 mkdir -p %buildroot%_bindir/
 
 # hack: move all programs back to _bindir
 find %buildroot%winebindir -mindepth 0 -maxdepth 1 -not -type d | \
     egrep -v '/wine$|/wine-preloader$|/wineserver$|/wine64$|/wine64-preloader$|/wineserver64|/winegcc|/wineg++|/winecpp|/winebuild$' | \
     xargs mv -v -t %buildroot%_bindir/
-ln -sv --relative %buildroot%winebindir/wineg++ %buildroot%_bindir/
-ln -sv --relative %buildroot%winebindir/winecpp %buildroot%_bindir/
+[ -s %buildroot%_bindir/wineg++ ] || ln -sv --relative %buildroot%winebindir/wineg++ %buildroot%_bindir/
+[ -s %buildroot%_bindir/winecpp ] || ln -sv --relative %buildroot%winebindir/winecpp %buildroot%_bindir/
 
 # wine64 and wine64-preloader are already built as wine64*
 mv -v %buildroot%winebindir/wineserver %buildroot%winebindir/%wineserver
@@ -666,7 +682,9 @@ fi
 %endif
 
 %files
+%if "%winebindir" != "%libwinedir"
 %dir %winebindir/
+%endif
 %if_with build64
 %winebindir/wine64
 %_bindir/wine64
@@ -676,9 +694,14 @@ fi
 %winebindir/%wineserver
 %winebindir/%winepreloader
 
+
 %dir %libwinedir/
 %dir %libwinedir/%winesodir/
 %dir %libwinedir/%winepedir/
+
+%if %_vendor == "alt"
+%exclude %libdir/ntdll.so
+%endif
 
 %libwinedir/%winesodir/avicap32.so
 %libwinedir/%winesodir/ntdll.so
@@ -690,6 +713,7 @@ fi
 %libwinedir/%winesodir/odbc32.so
 %libwinedir/%winesodir/crypt32.so
 %libwinedir/%winesodir/kerberos.so
+%libwinedir/%winesodir/mountmgr.so
 %libwinedir/%winesodir/netapi32.so
 %libwinedir/%winesodir/nsiproxy.so
 %libwinedir/%winesodir/wldap32.so
@@ -702,7 +726,9 @@ fi
 %endif
 %libwinedir/%winesodir/secur32.so
 %libwinedir/%winesodir/winepulse.so
+%if_with pcap
 %libwinedir/%winesodir/wpcap.so
+%endif
 %libwinedir/%winesodir/winebus.so
 
 # FIXME: https://bugzilla.altlinux.org/38130
@@ -930,6 +956,10 @@ fi
 %endif
 
 %changelog
+* Wed Feb 09 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.1-alt1
+- new version 7.1 (with rpmrb script)
+- fix build (add hack with ntdll.so and disable debuginfo subpackages)
+
 * Sat Nov 20 2021 Vitaly Lipatov <lav@altlinux.ru> 1:6.22-alt1
 - new version 6.22 (with rpmrb script)
 
