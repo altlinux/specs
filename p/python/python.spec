@@ -8,7 +8,7 @@
 Name: %real_name
 
 Version: 2.7.18
-Release: alt8
+Release: alt9
 
 %define package_name		%real_name
 %define weight			1001
@@ -130,6 +130,9 @@ Patch109: python-2.7.18-fc-cve-2021-23336.patch
 
 Patch110: python-2.7.18-fc-cve-2021-3733.patch
 Patch111: python-2.7.18-fc-cve-2021-3737.patch
+Patch112: python-2.7-fc-cve-2021-4189.patch
+Patch113: python-2.7-fc-cve-2022-0391.patch
+Patch114: python-2.7-fc-expat-2-4-5.patch
 
 # XXX ignore pydoc dependencies for now
 %add_findreq_skiplist %_bindir/pydoc*
@@ -765,6 +768,9 @@ install -p -m644 %SOURCE12 -t Lib/distutils/command
 %patch109 -p1
 %patch110 -p1
 %patch111 -p1
+%patch112 -p1
+%patch113 -p1
+%patch114 -p1
 
 # XXX temporary Issue20445 fix
 sed -i 's/val1 == nice(2)/val1 == nice(2)+2/' configure.ac
@@ -1215,8 +1221,12 @@ rm %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Sat Mar 12 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.18-alt9
+- Security update (fixed: CVE-2021-4189 and CVE-2022-0391);
+- Fixed FTBFS against libexpat >= 2.4.5.
+
 * Fri Oct 08 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.18-alt8
-- Fixed CVE-2021-3733 and CVE-2021-3737.
+- Security update (fixed: CVE-2021-3733 and CVE-2021-3737).
 
 * Sat Aug 28 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.18-alt7
 - Enabled LTO.
