@@ -13,8 +13,8 @@
 %brp_strip_none %_bindir/*
 
 Name:           runc
-Version:        1.0.3
-Release:        alt2
+Version:        1.1.0
+Release:        alt1
 Summary:        CLI for running Open Containers
 Group:          Development/Other
 License:        Apache-2.0
@@ -73,6 +73,9 @@ EOF
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Fri Mar 11 2022 Vladimir Didenko <cow@altlinux.ru> 1.1.0-alt1
+- New version
+
 * Wed Dec 22 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.3-alt2
 - Define COMMIT as %%release
 - Build and install man pages

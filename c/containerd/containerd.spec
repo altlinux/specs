@@ -8,7 +8,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		containerd
-Version:	1.5.9
+Version:	1.6.1
 Release:	alt1
 Summary:	A daemon to control runC
 
@@ -22,6 +22,8 @@ Source0: %name-%version.tar
 Source2: %name.init
 Source3: %name.limits
 Source4: config.toml
+
+Patch1: %name-1.6.1-alt-use-vendor-mod-for-man-pages.patch
 
 ExclusiveArch: %go_arches
 
@@ -42,6 +44,7 @@ support as well as checkpoint and restore for cloning and live migration of cont
 
 %prep
 %setup -q
+%autopatch -p1
 sed -i 's|/usr/local/bin/containerd|/usr/bin/containerd|g' containerd.service
 
 %build
@@ -84,6 +87,9 @@ install -p -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/%name/config.toml
 %_man8dir/*
 
 %changelog
+* Fri Mar 11 2022 Vladimir Didenko <cow@altlinux.org> 1.6.1-alt1
+- 1.6.1 (Fixes: CVE-2022-23648)
+
 * Thu Jan 27 2022 Alexey Shabalin <shaba@altlinux.org> 1.5.9-alt1
 - 1.5.9. (Fixes: CVE-2021-43816)
 - Install upstream systemd unit file.

@@ -11,7 +11,7 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:    docker-engine
-Version: 20.10.11
+Version: 20.10.13
 Release: alt1
 Summary: The open-source application container engine
 License: Apache-2.0
@@ -121,6 +121,9 @@ exit 0
 %{_sysconfdir}/udev/rules.d/80-docker.rules
 
 %changelog
+* Fri Mar 11 2022 Vladimir Didenko <cow@altlinux.org> 20.10.13-alt1
+- 20.10.13
+
 * Wed Dec 1 2021 Vladimir Didenko <cow@altlinux.org> 20.10.11-alt1
 - 20.10.11
 
