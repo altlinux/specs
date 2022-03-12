@@ -1,6 +1,6 @@
 Name: libxslt
 Version: 1.1.35
-Release: alt1
+Release: alt2
 
 Summary: Library providing XSLT support
 License: MIT
@@ -155,6 +155,7 @@ make check
 %_libdir/*.so
 %_libdir/*.sh
 %_includedir/*
+%_libdir/cmake/libxslt
 %_libdir/pkgconfig/*
 %_datadir/aclocal/*
 
@@ -184,6 +185,9 @@ make check
 %endif # enabled python
 
 %changelog
+* Sat Mar 12 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.35-alt2
+- devel: Packed cmake files.
+
 * Sat Mar 12 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.35-alt1
 - Updated to v1.1.35.
 
