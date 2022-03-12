@@ -1,6 +1,6 @@
 Name: hpsahba
-Version: 20201220
-Release: alt3
+Version: 20210904
+Release: alt1
 
 Summary: Tool to enable/disable HBA mode on some HP Smart Array controllers
 
@@ -80,6 +80,9 @@ tar jcf %kernel_srcdir/%module_name-%version.tar.bz2 %module_name-%version
 %attr(0644,root,root) %kernel_src/%module_name-%version.tar.bz2
 
 %changelog
+* Sun Mar 13 2022 Vitaly Lipatov <lav@altlinux.ru> 20210904-alt1
+- new version (20210904) with rpmgs script
+
 * Sun Aug 22 2021 Vitaly Lipatov <lav@altlinux.ru> 20201220-alt3
 - BR: s/kernel-build-tools/rpm-build-kernel/
 
