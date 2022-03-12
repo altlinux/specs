@@ -12,7 +12,7 @@
 
 Name: eog
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Eye Of Gnome
 License: GPL-2.0
@@ -117,6 +117,9 @@ the functionality of the EOG GUI.
 
 %install
 %meson_install
+ln -sf %name/lib%name.so \
+%buildroot%_libdir/lib%name.so
+
 %find_lang --with-gnome %name
 
 %files -f %name.lang
@@ -126,6 +129,8 @@ the functionality of the EOG GUI.
 %_datadir/%name/icons/
 %dir %_libdir/%name
 %_libdir/%name/lib%name.so
+# symlink
+%_libdir/lib%name.so
 %dir %_libdir/%name/plugins/
 %_libdir/%name/plugins/*.so
 %_libdir/%name/plugins/*.plugin
@@ -163,6 +168,9 @@ the functionality of the EOG GUI.
 
 
 %changelog
+* Sat Mar 12 2022 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1.1
+- fixed "library libeog.so not found" lib.req error
+
 * Sat Dec 04 2021 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
 - 41.1
 
