@@ -1,16 +1,13 @@
 Name: wsjtx
-Version: 2.2.2
-Release: alt2
+Version: 2.5.4
+Release: alt1
 Summary: WSJT-X implements communication protocols or "modes" called JT4, JT9, JT65, and WSPR
 License: GPL-3.0
 Group: Engineering
 Url: http://physics.princeton.edu/pulsar/k1jt/wsjtx.html
-Packager: Anton Midyukov <antohami@altlinux.org>
 
-Source: %name-%version.tar
 # Source-url: http://physics.princeton.edu/pulsar/k1jt/%name-%version.tgz
-Patch0: wsjtx-2.2.2-compile-fix.patch
-Patch1: %name-1.9-alt-cmake.patch
+Source: %name-%version.tar
 
 Buildrequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -21,6 +18,8 @@ BuildRequires: hamlib-devel
 BuildRequires: pkgconfig(libxslt)
 BuildRequires: libudev-devel
 BuildRequires: boost-program_options-devel
+BuildRequires: boost-filesystem-devel
+BuildRequires: boost-log-devel
 BuildRequires: libgomp-devel
 BuildRequires: libportaudio2-devel
 BuildRequires: libfftw3-devel
@@ -37,7 +36,8 @@ BuildRequires: makeinfo
 BuildRequires: asciidoctor
 BuildRequires: asciidoc-a2x
 
-Requires: %name-data = %version-%release
+Provides: %name-data = %EVR
+Obsoletes: %name-data < %EVR
 
 %description
 WSJT-X implements communication protocols or "modes" called JT4, JT9, JT65, and
@@ -57,14 +57,6 @@ propagation paths with low-power transmissions.  WSPR has now been fully
 implemented within WSJT-X, including automatic band-hopping, so all modes are
 available in a single program.
 
-%package data
-Summary: Data files for %name
-Buildarch: noarch
-Group: Engineering
-
-%description data
-Data files for %name
-
 %prep
 %setup
 
@@ -75,15 +67,12 @@ tar -xzf src/%name.tgz
 # remove archive
 rm -f src/wsjtx.tgz*
 
-%patch0 -p1
-%patch1 -p2
-
 pushd %name
 # remove bundled boost
 rm -rf boost
 
 # convert CR + LF to LF
-dos2unix *.ui *.iss *.rc *.txt
+dos2unix *.ui *.iss *.txt
 popd
 
 %build
@@ -106,36 +95,34 @@ for x in 16 32 48; do
     convert %buildroot%_pixmapsdir/wsjtx_icon.png -resize $x'x'$x %buildroot/%_iconsdir/hicolor/$x'x'$x/apps/wsjtx_icon.png
 done
 
-
 # desktop files
 desktop-file-validate %buildroot%_desktopdir/wsjtx.desktop
 desktop-file-validate %buildroot%_desktopdir/message_aggregator.desktop
 
 # fix docs
-rm -f %buildroot%_docdir/WSJT-X/{INSTALL,COPYING,copyright,changelog.Debian.gz}
-mv %buildroot%_docdir/WSJT-X %buildroot%_docdir/%name
 install -p -m 0644 -t %buildroot%_docdir/%name GUIcontrols.txt jt9.txt \
-  mouse_commands.txt prefixes.txt shortcuts.txt v1.7_Features.txt \
-  wsjtx_changelog.txt
+  v1.7_Features.txt wsjtx_changelog.txt
 
 popd
-
-mv %buildroot%_docdir/%name %buildroot%_docdir/WSJT-X
 
 %files -f %name/%name.lang
 %_bindir/*
 %_desktopdir/*.desktop
-
-%files data
 %_man1dir/*
 %exclude %_pixmapsdir/*
 %_liconsdir/wsjtx_icon.png
 %_niconsdir/wsjtx_icon.png
 %_miconsdir/wsjtx_icon.png
 %_datadir/%name
-%_docdir/WSJT-X
+%_docdir/%name
 
 %changelog
+* Sat Mar 12 2022 Anton Midyukov <antohami@altlinux.org> 2.5.4-alt1
+- new version (2.5.4) with rpmgs script (Closes: 42108)
+- cleanup spec
+- drop old patches
+- obsoletes data subpackage
+
 * Sat Aug 28 2021 Anton Midyukov <antohami@altlinux.org> 2.2.2-alt2
 - disable LTO compiler flag
 
