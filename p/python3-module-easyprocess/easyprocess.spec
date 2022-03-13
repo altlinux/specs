@@ -3,7 +3,7 @@
 
 Name: python3-module-%modulename
 Summary: Easy to use Python subprocess interface
-Version: 0.3
+Version: 1.1
 Release: alt1
 License: BSD
 Group: Development/Python3
@@ -49,5 +49,8 @@ py.test3 -v
 %python3_sitelibdir/%modulename/
 
 %changelog
+* Sun Mar 13 2022 Anton Midyukov <antohami@altlinux.org> 1.1-alt1
+- new version (1.1) with rpmgs script
+
 * Sun Mar 06 2022 Anton Midyukov <antohami@altlinux.org> 0.3-alt1
 - initial build
