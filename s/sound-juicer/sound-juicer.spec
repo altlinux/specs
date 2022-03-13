@@ -7,7 +7,7 @@
 
 Name: sound-juicer
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: Clean and lean CD ripper
 Group: Sound
@@ -80,6 +80,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_datadir/doc/%name/
 
 %changelog
+* Sun Mar 13 2022 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt3
+- updated to 3.38.0-27-g9f97ca1f (fixed build with meson-0.61)
+
 * Wed Sep 08 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt2
 - updated to 3.38.0-23-gf449f627
 - fixed help build (ALT #40874)
