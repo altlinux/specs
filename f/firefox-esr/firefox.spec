@@ -15,7 +15,7 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR ver
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
-Version: 91.6.1
+Version: 91.7.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -454,6 +454,15 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Sun Mar 13 2022 Pavel Vasenkov <pav@altlinux.org> 91.7.0-alt1
+- New ESR version.
+- Security fixes: 
+  + CVE-2022-26383 Browser window spoof using fullscreen mode
+  + CVE-2022-26384 iframe allow-scripts sandbox bypass
+  + CVE-2022-26387 Time-of-check time-of-use bug when verifying add-on signatures
+  + CVE-2022-26381 Use-after-free in text reflows
+  + CVE-2022-26386 Temporary files downloaded to /tmp and accessible by other local users
+
 * Mon Mar 07 2022 Pavel Vasenkov <pav@altlinux.org> 91.6.1-alt1
 - New ESR version.
 - Security fixes:
