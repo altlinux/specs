@@ -18,8 +18,8 @@
 %def_disable debug
 
 Name: evince
-Version: %ver_major.3
-Release: alt1.1
+Version: %ver_major.4
+Release: alt1
 
 Summary: A document viewer
 Group: Office
@@ -225,6 +225,9 @@ using Evince library.
 
 
 %changelog
+* Mon Mar 14 2022 Yuri N. Sedunov <aris@altlinux.org> 41.4-alt1
+- 41.4
+
 * Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 41.3-alt1.1
 - fixed meson options
 
