@@ -7,10 +7,10 @@
 %undefine cvs
 
 Name: bzflag
-Version: 2.4.22
+Version: 2.4.24
 
 # %%ifndef git_commit
-Release: alt3
+Release: alt1
 # %%else
 # Release: alt0.git_1_%git_commit
 # %%endif
@@ -80,7 +80,7 @@ This package contains BZFlags standalone game server.
 
 %prep
 %setup -n %name
-#setup -n %name-%version -c
+#setup -n %name-%version
 
 
 #patch -p1
@@ -144,6 +144,7 @@ This package contains BZFlags standalone game server.
 
 %build
 %autoreconf
+#autogen.sh
 export CARES_DIR=%_includedir
 # Use PIE because bzflag/bzfs are networked server applications
 CFLAGS='-fPIC %{optflags} -fno-strict-aliasing' \
@@ -232,6 +233,9 @@ mkdir -p %buildroot/var/run/%name
 %_initdir/bzfs
 
 %changelog
+* Mon Mar 14 2022 Ilya Mashkin <oddity@altlinux.ru> 2.4.24-alt1
+- 2.4.24
+
 * Wed Nov 03 2021 Ilya Mashkin <oddity@altlinux.ru> 2.4.22-alt3
 - fix path
 
