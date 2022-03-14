@@ -23,8 +23,8 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 %endif
 
 Name: clickhouse-lts
-Version: 21.8.14.5
-Release: alt2
+Version: 21.8.15.7
+Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
 Group: Databases
@@ -406,6 +406,9 @@ fi
 %_datadir/clickhouse-test
 
 %changelog
+* Wed Mar 09 2022 Anton Farygin <rider@altlinux.ru> 21.8.15.7-alt1
+- 21.8.14.5 -> 21.8.15.7
+
 * Thu Feb 17 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 21.8.14.5-alt2
 - Renamed to clickhouse-lts.
 
