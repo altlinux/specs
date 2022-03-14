@@ -21,7 +21,7 @@ AutoProv: yes, nopython nopython3
 
 Name: extra-cmake-modules
 Version: 5.91.0
-Release: alt1
+Release: alt2
 
 Group: Development/Other
 Summary: Additional modules for CMake build system
@@ -67,6 +67,9 @@ if [ "$(arch)" = "e2k" ]; then
 	# kf5-kcoreaddons linking warning gets fatal otherwise (mcst#3675)
 	sed -i 's|-Wl,--fatal-warnings|-Wl,--no-warn-shared-textrel|' \
 		kde-modules/KDECompilerSettings.cmake
+	# kf5-ki18n ftbfs with -Werror=missing-return (mcst#7001)
+	sed -i 's|-Werror|-Wno-error|g' \
+		kde-modules/KDECompilerSettings.cmake
 fi
 
 %build
@@ -88,6 +91,9 @@ fi
 %endif
 
 %changelog
+* Mon Mar 14 2022 Michael Shigorin <mike@altlinux.org> 5.91.0-alt2
+- E2K: -Wno-error (thx ilyakurdyukov@; see also mcst#7001)
+
 * Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.91.0-alt1
 - new version
 
