@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.0
-Release: alt6
+Release: alt7
 
 Summary: Group policy editor
 License: GPLv2+
@@ -87,6 +87,18 @@ done
 %_desktopdir/gpui.desktop
 
 %changelog
+* Mon Mar 14 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt7
+- Fixes:
+  + #74215 Add message for the change of policy's state.
+  + #74217 Add ability to select policies with keyboard.
+  + #74208 Add policy name label.
+  + #74172 Make list dialog modal.
+  + #74005 Remove empty folders from tree view.
+  + #74015 Add ability to resize right frame.
+  + #74028 Remove --help-all command argument.
+  + #74046 Improve sort order of tree view.
+  + #74054 Fix ability to save integer values.
+
 * Tue Mar 01 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt6
 - Fixes:
   + #74114 Fix ability to load ADMX bundle.
