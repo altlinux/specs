@@ -1,8 +1,8 @@
 %def_without pam
 
 Name: moodle
-Version: 3.11.5
-Release: alt2
+Version: 3.11.6
+Release: alt1
 
 Summary: The world's open source learning platform
 License: GPLv3
@@ -242,6 +242,9 @@ install -Dpm0644 %SOURCE2 %buildroot%_sysconfdir/cron.d/%name
 %endif
 
 %changelog
+* Sun Mar 13 2022 Andrey Cherepanov <cas@altlinux.org> 3.11.6-alt1
+- New version.
+
 * Mon Jan 17 2022 Andrey Cherepanov <cas@altlinux.org> 3.11.5-alt2
 - Remove vendor subdirectories.
 - Add cron rule.
