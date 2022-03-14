@@ -2,6 +2,7 @@
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
+%define xdg_name org.freedesktop.IBus
 
 %def_enable gtk2
 %def_enable gtk4
@@ -21,7 +22,7 @@
 %def_disable installed_tests
 
 Name: ibus
-Version: 1.5.25
+Version: 1.5.26
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
@@ -58,6 +59,7 @@ BuildRequires(pre): rpm-build-python3
 %add_python3_path %_datadir/%name/setup
 %endif
 
+BuildRequires(pre): rpm-build-xdg rpm-build-systemd
 %{?_enable_python2:BuildRequires(pre): rpm-build-python}
 BuildRequires: vala-tools >= 0.18
 %{?_enable_gtk2:BuildRequires: libgtk+2-devel}
@@ -78,11 +80,13 @@ BuildRequires: libnotify-devel
 %{?_enable_dconf:BuildRequires: libdconf-devel /proc dbus-tools-gui dconf}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel libxkbcommon-devel}
 # since 1.5.14
-%{?_enable_emoji_dict:BuildRequires: cldr-emoji-annotation-devel unicode-emoji unicode-ucd gir(Gtk) = 3.0}
+%{?_enable_emoji_dict:BuildRequires: cldr-emoji-annotation-devel >= 40.0
+BuildRequires: unicode-emoji >= 14.0 unicode-ucd gir(Gtk) = 3.0}
 %{?_enable_appindicator:BuildRequires: qt5-base-devel}
 %{?_enable_check:BuildRequires: xvfb-run gnome-desktop-testing}
 
 %define _xinputconf %_sysconfdir/X11/xinit/xinput.d/ibus.conf
+
 
 %description
 IBus means Intelligent Input Bus. It is an input framework for Linux OS.
@@ -247,6 +251,7 @@ install -pm 644 -D %SOURCE1 %buildroot%_xinputconf
 xvfb-run %make check
 
 %files -f %{name}10.lang
+%_xdgconfigdir/Xwayland-session.d/10-%name-x11
 %dir %_datadir/%name/
 %_bindir/%name
 %_bindir/%name-daemon
@@ -276,8 +281,12 @@ xvfb-run %make check
 %_datadir/GConf/gsettings/%name.convert
 %_datadir/glib-2.0/schemas/org.freedesktop.%name.gschema.xml
 %endif
-%_datadir/dbus-1/services/org.freedesktop.IBus.service
+%_datadir/dbus-1/services/%xdg_name.service
 %_datadir/dbus-1/services/org.freedesktop.portal.IBus.service
+%_userunitdir/gnome-session.target.wants/%xdg_name.session.GNOME.service
+%_userunitdir/%xdg_name.session.GNOME.service
+%_userunitdir/%xdg_name.session.generic.service
+
 %config %_xinputconf
 %_localstatedir/cache/%name
 %_man1dir/%name-daemon.1.*
@@ -351,6 +360,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Mon Mar 14 2022 Yuri N. Sedunov <aris@altlinux.org> 1.5.26-alt1
+- 1.5.26
+
 * Sat Aug 21 2021 Yuri N. Sedunov <aris@altlinux.org> 1.5.25-alt1
 - 1.5.25
 

@@ -1,16 +1,22 @@
+%define tag_ver release-40
+%def_enable check
+
 Name: cldr-emoji-annotation
-Version: 36.12.120191002_0
+Version: 40.0
 Release: alt1
 
 # Annotation files are in Unicode license
 Summary: Emoji annotation files in CLDR
 Group: Development/Other
 License: LGPL-2.0-or-later and Unicode
-Url: https://github.com/fujiwarat/cldr-emoji-annotation
+Url: https://github.com/unicode-org/cldr
 
-Source: %url/releases/download/%version/%name-%version.tar.gz
+Vcs: https://github.com/unicode-org/cldr.git
+Source: %url/releases/download/%tag_ver/cldr-common-%version.zip
 
 BuildArch: noarch
+
+BuildRequires: unzip xmllint
 
 %description
 This package provides the emoji annotation files by language in CLDR.
@@ -26,25 +32,71 @@ This package contains the pkg-config files for development
 when building programs that use cldr-annotations.
 
 %prep
-%setup
-
-%build
-%autoreconf
-%configure
-%make_build
+%setup -c -n cldr-%tag_ver
 
 %install
-%makeinstall_std
+pushd $PWD
+ANNOTATION_DIR=common/annotations
+CLDR_DIR=%_datadir/unicode/cldr/$ANNOTATION_DIR
+pushd $ANNOTATION_DIR
+for xml in *.xml ; do
+    install -pm 644 -D $xml $RPM_BUILD_ROOT$CLDR_DIR/$xml
+done
+popd
+
+ANNOTATION_DIR=common/annotationsDerived
+CLDR_DIR=%_datadir/unicode/cldr/$ANNOTATION_DIR
+pushd $ANNOTATION_DIR
+for xml in *.xml ; do
+    install -pm 644 -D $xml $RPM_BUILD_ROOT$CLDR_DIR/$xml
+done
+popd
+
+DTD_DIR=common/dtd
+CLDR_DIR=%_datadir/unicode/cldr/$DTD_DIR
+pushd $DTD_DIR
+for dtd in *.dtd ; do
+    install -pm 644 -D $dtd $RPM_BUILD_ROOT$CLDR_DIR/$dtd
+done
+popd
+
+install -pm 755 -d $RPM_BUILD_ROOT%_datadir/pkgconfig
+cat >> $RPM_BUILD_ROOT%_datadir/pkgconfig/%name.pc <<_EOF
+prefix=/usr
+
+Name: cldr-emoji-annotations
+Description: annotation files in CLDR
+Version: %version
+_EOF
+
+%check
+ANNOTATION_DIR=common/annotations
+CLDR_DIR=%_datadir/unicode/cldr/$ANNOTATION_DIR
+for xml in $ANNOTATION_DIR/*.xml ; do
+    xmllint --noout --valid --postvalid $xml
+done
+
+ANNOTATION_DIR=common/annotationsDerived
+CLDR_DIR=%_datadir/unicode/cldr/$ANNOTATION_DIR
+for xml in $ANNOTATION_DIR/*.xml ; do
+    xmllint --noout --valid --postvalid $xml
+done
 
 %files
-%_datadir/unicode/cldr/*
-%doc AUTHORS NEWS README unicode-license.txt
+%_datadir/unicode/cldr/common/annotations
+%_datadir/unicode/cldr/common/annotationsDerived
+%dir %_datadir/unicode/cldr
+%dir %_datadir/unicode/cldr/common
+%_datadir/unicode/cldr/common/dtd
+%doc README-common.md
 
 %files devel
 %_datadir/pkgconfig/*.pc
 
-
 %changelog
+* Mon Mar 14 2022 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
+- 40.0 (adapted fc spec)
+
 * Tue Mar 17 2020 Yuri N. Sedunov <aris@altlinux.org> 36.12.120191002_0-alt1
 - 36.12.120191002_0
 
