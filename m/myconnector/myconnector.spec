@@ -2,7 +2,7 @@
 %define xdgdir  %_xdgconfigdir/autostart
 
 Name:     myconnector
-Version:  2.1.3
+Version:  2.2
 Release:  alt1
 
 Summary:  MyConnector - remote desktop client
@@ -136,6 +136,16 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %doc docs/*
 
 %changelog
+* Mon Mar 14 2022 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.2-alt1
+- Saving a password is a configurable option now
+- Added inversion of the keyboard layout for filtering
+- FreeRDP auth window:
+-- Replace domain in command
+-- Added saving username/domain
+- Added recent files and connections menus
+- Pop-up menu:added connection renaming
+- Minor changes and bugfixes
+
 * Thu Jul 01 2021 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.1.3-alt1
 - Fixed NX, SPICE & XDMCP start
 
