@@ -33,7 +33,7 @@
 %def_disable doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -146,7 +146,6 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %find_lang %_name-bad-%api_ver
 
 %files -f %_name-bad-%api_ver.lang
-%doc AUTHORS NEWS README RELEASE
 %_bindir/gst-transcoder-%api_ver
 %_libdir/*.so.*
 %dir %_gst_libdir
@@ -172,6 +171,7 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_datadir/gstreamer-%api_ver/encoding-profiles/file-extension/webm.gep
 %_datadir/gstreamer-%api_ver/encoding-profiles/online-services/youtube.gep
 %_datadir/gstreamer-%api_ver/encoding-profiles/file-extension/ts.gep
+%doc AUTHORS NEWS README* RELEASE
 
 %files devel
 %_includedir/gstreamer-%api_ver/*
@@ -193,6 +193,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Mon Mar 14 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.1-alt1
+- 1.20.1
+
 * Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1
 - 1.20.0
 

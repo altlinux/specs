@@ -19,7 +19,7 @@
 %def_disable check
 
 Name: %_name-good%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A set of GStreamer plugins considered good
@@ -95,7 +95,7 @@ This package contains development documentation for GStreamer Good Plugins
 %_gst_libdir/*.so
 %{?_enable_qt5:%exclude %_gst_libdir/libgstqmlgl.so}
 %_gst_datadir/*
-%doc AUTHORS NEWS README RELEASE
+%doc AUTHORS NEWS README* RELEASE
 
 %if_enabled qt5
 %files qt5
@@ -108,6 +108,9 @@ This package contains development documentation for GStreamer Good Plugins
 %endif
 
 %changelog
+* Mon Mar 14 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.1-alt1
+- 1.20.1
+
 * Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1
 - 1.20.0
 

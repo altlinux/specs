@@ -8,7 +8,7 @@
 %def_disable doc
 
 Name: gstreamer-vaapi
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GStreamer plugins to use VA-API video acceleration
@@ -19,7 +19,7 @@ Url: http://gstreamer.freedesktop.org/modules/gstreamer-vaapi.html
 %if_disabled snapshot
 Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
 %else
-# VCS: git://anongit.freedesktop.org/gstreamer/gstreamer-vaapi
+Vcs: git://anongit.freedesktop.org/gstreamer/gstreamer-vaapi
 Source: %name/%name-%version.tar
 %endif
 
@@ -71,7 +71,7 @@ GStreamer applications.
 
 %files
 %_libdir/gstreamer-%gst_api_ver/*.so
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README*
 
 %if_enabled doc
 %files devel-doc
@@ -79,6 +79,9 @@ GStreamer applications.
 %endif
 
 %changelog
+* Mon Mar 14 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.1-alt1
+- 1.20.1
+
 * Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1
 - 1.20.0
 
