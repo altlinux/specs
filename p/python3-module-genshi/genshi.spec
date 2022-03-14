@@ -1,7 +1,7 @@
 %define modulename genshi
 
 Name: python3-module-%modulename
-Version: 0.7.5
+Version: 0.7.6
 Release: alt1
 
 Summary: A toolkit for stream-based generation of output for the web
@@ -10,17 +10,13 @@ License: BSD
 Group: Development/Python3
 Url: http://genshi.edgewall.org/
 
-Source: %modulename-%version.tar
-
-BuildArch: noarch
+# https://github.com/edgewall/genshi
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-six
-
-%add_python3_req_skip compiler
-%add_python3_req_skip compiler.ast
 
 %description
 Genshi is a Python library that provides an integrated set of
@@ -28,47 +24,8 @@ components for parsing, generating, and processing HTML, XML or
 other textual content for output generation on the web. The major
 feature is a template language, which is heavily inspired by Kid.
 
-%package tests
-Summary: Tests for Genshi
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-Genshi is a Python library that provides an integrated set of
-components for parsing, generating, and processing HTML, XML or
-other textual content for output generation on the web. The major
-feature is a template language, which is heavily inspired by Kid.
-
-This package contains tests for Genshi.
-
-%package doc
-Summary: Documentation for Genshi
-Group: Development/Documentation
-BuildArch: noarch
-
-%description doc
-Genshi is a Python library that provides an integrated set of
-components for parsing, generating, and processing HTML, XML or
-other textual content for output generation on the web. The major
-feature is a template language, which is heavily inspired by Kid.
-
-This package contains documentation for Genshi.
-
-%package examples
-Summary: Examples for Genshi
-Group: Development/Documentation
-BuildArch: noarch
-
-%description examples
-Genshi is a Python library that provides an integrated set of
-components for parsing, generating, and processing HTML, XML or
-other textual content for output generation on the web. The major
-feature is a template language, which is heavily inspired by Kid.
-
-This package contains examples for Genshi.
-
 %prep
-%setup -n %modulename-%version
+%setup
 
 %build
 %python3_build
@@ -78,25 +35,16 @@ This package contains examples for Genshi.
 %python3_prune
 
 %check
-%__python3 setup.py test
+%python3_test
 
 %files
 %python3_sitelibdir/%modulename
 %python3_sitelibdir/*.egg-info
-%if 0
-%exclude %python3_sitelibdir/%modulename/tests
-
-%files tests
-%python3_sitelibdir/%modulename/tests
-%endif
-
-%files doc
-%doc doc
-
-%files examples
-%doc examples
 
 %changelog
+* Mon Mar 14 2022 Grigory Ustinov <grenka@altlinux.org> 0.7.6-alt1
+- Build new version.
+
 * Sat Oct 16 2021 Grigory Ustinov <grenka@altlinux.org> 0.7.5-alt1
 - Build new version.
 
