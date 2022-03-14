@@ -1,6 +1,6 @@
 %define distro centaurus
 Name: installer-distro-%distro
-Version: 9.0
+Version: 9.1
 Release: alt1
 
 Summary: Installer files for Centaurus distro
@@ -42,7 +42,7 @@ Requires: alterator-net-eth dhcpcd
 Requires: alterator-net-general
 Requires: alterator-net-bond alterator-net-bridge
 Requires: installer-feature-nfs-server-stage3
-%ifnarch %e2k
+%ifnarch %e2k %arm
 Requires: installer-feature-powerbutton-stage3
 Requires: alterator-grub
 %endif
@@ -69,6 +69,10 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Mon Mar 14 2022 Sergey V Turchin <zerg@altlinux.org> 9.1-alt1
+- mark x11 module for expert
+- don't require alterator-grub on armh
+
 * Wed Jun 26 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 9.0-alt1
 - run getty@tty1 by default
 
