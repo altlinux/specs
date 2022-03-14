@@ -5,7 +5,7 @@
 
 Name: python3-module-flask
 Version: 2.0.3
-Release: alt1
+Release: alt2
 
 Summary: Flask is a lightweight WSGI web application framework.
 License: BSD-3-Clause
@@ -14,17 +14,15 @@ URL: https://palletsprojects.com/p/flask/
 VCS:  https://github.com/pallets/flask
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-jinja2
-BuildRequires: python3-module-werkzeug >= 2.0
-BuildRequires: python3-module-itsdangerous
-BuildRequires: python3-module-click
 %if_enabled check
-BuildRequires: pytest3
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-tox
 BuildRequires: python3-module-tox-no-deps
 BuildRequires: python3-module-tox-console-scripts
+BuildRequires: python3-module-jinja2
+BuildRequires: python3-module-werkzeug >= 2.0
+BuildRequires: python3-module-itsdangerous
+BuildRequires: python3-module-click
 %endif
 
 # /usr/bin/flask
@@ -63,6 +61,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -- -vra
 %python3_sitelibdir/%oname-*.egg-info
 
 %changelog
+* Mon Mar 14 2022 Danil Shein <dshein@altlinux.org> 2.0.3-alt2
+- spec clean up
+
 * Thu Mar 03 2022 Danil Shein <dshein@altlinux.org> 2.0.3-alt1
 - new version 1.1.2 -> 2.0.3
   + enable tests
