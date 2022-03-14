@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     polyphone
-Version:  2.2.0
+Version:  2.3.0
 Release:  alt1
 
 Summary:  A soundfont editor for quickly designing musical instruments
@@ -14,7 +14,7 @@ Source:   %name-%version.tar
 Patch:    %name-%version-%release.patch
 
 BuildRequires: rpm-build-xdg
-BuildRequires: qt5-base-devel qt5-svg-devel
+BuildRequires: qt5-base-devel qt5-tools qt5-svg-devel
 BuildRequires: qcustomplot-qt5-devel
 BuildRequires: libstk-devel
 
@@ -53,7 +53,10 @@ instruments, featuring:
 
 %build
 pushd sources
-%qmake_qt5 PREFIX=%prefix
+%qmake_qt5 PREFIX=%prefix \
+    QMAKE_LFLAGS+="%optflags" \
+    QMAKE_STRIP=echo
+
 %make_build
 popd
 
@@ -64,12 +67,18 @@ rm -rf %buildroot%_mandir/fr
 %files
 %_bindir/*
 %_man1dir/*
+%_mandir/ru/man1/*
 %_desktopdir/*.desktop
 %_xdgmimedir/packages/*.xml
+%_datadir/metainfo/*%{name}*.xml
 %_iconsdir/*/*/apps/polyphone.*
 %_iconsdir/*/*/mimetypes/audio-x-soundfont.*
 %doc %_docdir/%name
 
 %changelog
+* Mon Mar 14 2022 Ivan A. Melnikov <iv@altlinux.org> 2.3.0-alt1
+- 2.3.0
+- add Rissian translation
+
 * Thu May 20 2021 Ivan A. Melnikov <iv@altlinux.org> 2.2.0-alt1
 - Initial build for Sisyphus
