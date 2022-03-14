@@ -5,7 +5,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.2.5
-Release:   alt1
+Release:   alt2
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -50,7 +50,6 @@ cross-architecture API.
 %package -n lib%name-glib
 Summary: GLib libraries for accessing PackageKit
 Group: Other
-Requires: %name = %EVR
 
 %description -n lib%name-glib
 GLib libraries for accessing PackageKit.
@@ -185,7 +184,7 @@ if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
 		"$SYSTEMCTL" -q preset %name
 	else
 		# only request stop of service, don't restart it
-		"$SYSTEMCTL" is-active --quiet %name && %_bindir/pkcon quit ||:
+		"$SYSTEMCTL" stop --quiet %name
 	fi
 fi
 
@@ -195,8 +194,7 @@ SYSTEMCTL=systemctl
 [ "$RPM_INSTALL_ARG1" -eq 0 ] 2>/dev/null || exit 0
 
 if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
-        "$SYSTEMCTL" --no-reload -q disable "$1.service"
-        %_bindir/pkcon quit ||:
+        "$SYSTEMCTL" --no-reload -q --now disable "$1.service"
 fi
 
 %triggerin -- librpm7
@@ -205,7 +203,7 @@ if [ $2 -eq 2 ] ; then
 	# if librpm7 is updated, prohibit packagekit to start and ask it to quit
 	touch %_localstatedir/PackageKit/upgrade_lock
 	SYSTEMCTL=systemctl
-	sd_booted && $SYSTEMCTL is-active --quiet %name && %_bindir/pkcon quit ||:
+	sd_booted && "$SYSTEMCTL" stop --quiet %name
 fi
 :
 
@@ -287,6 +285,10 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Mon Mar 14 2022 Oleg Solovyov <mcpain@altlinux.org> 1.2.5-alt2
+- Avoid restarting via 'pkcon quit'
+- Break circular dependencies between packagekit and libpackagekit-glib
+
 * Thu Feb 24 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.5-alt1
 - Updated to upstream version 1.2.5.
 
