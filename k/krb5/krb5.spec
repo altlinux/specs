@@ -8,8 +8,8 @@
 %def_enable check
 
 Name: krb5
-Version: 1.19.2
-Release: alt2
+Version: 1.19.3
+Release: alt1
 
 %if_without bootstrap
 %if_with doc
@@ -519,6 +519,9 @@ fi
 # {{{ changelog
 
 %changelog
+* Tue Mar 15 2022 Ivan A. Melnikov <iv@altlinux.org> 1.19.3-alt1
+- 1.19.2 (Fixes: CVE-2021-37750)
+
 * Mon Aug 02 2021 Ivan A. Melnikov <iv@altlinux.org> 1.19.2-alt2
 - Fix documentation build
   + switch to python3-module-sphinx
