@@ -1,26 +1,24 @@
 %define oname wrapt
 
-%def_enable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 1.13.3
+Version: 1.14.0
 Release: alt1
 Summary: A Python module for decorators, wrappers and monkey patching
 License: BSD
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/wrapt/
+Url: https://pypi.python.org/pypi/wrapt
 
-# https://github.com/GrahamDumpleton/wrapt.git
+# https://github.com/GrahamDumpleton/wrapt
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
-
-%py3_provides %oname
-
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-devel python3-module-tox rpm-build-python3 time python3-module-pytest
+BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx3
+BuildRequires: python3-devel python3-module-pytest
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinx_rtd_theme
+
+%py3_provides %oname
 
 %description
 The aim of the wrapt module is to provide a transparent object proxy for
@@ -74,7 +72,8 @@ py.test3
 
 %files
 %doc README.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/*.egg-info
 %exclude %python3_sitelibdir/*/pickle
 
 %files pickles
@@ -84,6 +83,9 @@ py.test3
 %doc docs/_build/html blog
 
 %changelog
+* Tue Mar 15 2022 Grigory Ustinov <grenka@altlinux.org> 1.14.0-alt1
+- Automatically updated to 1.14.0.
+
 * Tue Feb 08 2022 Grigory Ustinov <grenka@altlinux.org> 1.13.3-alt1
 - Build new version.
 - Enable check.
