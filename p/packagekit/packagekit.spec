@@ -5,13 +5,14 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.2.5
-Release:   alt2
+Release:   alt3
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
 
 # https://github.com/PackageKit/PackageKit.git
 Source: %name-%version.tar
+Source2: packagekit.sh
 Patch1: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
@@ -165,6 +166,9 @@ rm -f %buildroot%_datadir/PackageKit/helpers/aptcc/pkconffile.nodiff
 
 touch %buildroot%_localstatedir/PackageKit/upgrade_lock
 
+mkdir -p %buildroot%_sysconfdir/NetworkManager/dispatcher.d/pre-up.d/
+install -m 0755 %SOURCE2 %buildroot%_sysconfdir/NetworkManager/dispatcher.d/pre-up.d/
+
 %find_lang PackageKit
 
 # We have to choose against which executable to verify the symbols
@@ -184,7 +188,7 @@ if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
 		"$SYSTEMCTL" -q preset %name
 	else
 		# only request stop of service, don't restart it
-		"$SYSTEMCTL" stop --quiet %name
+		"$SYSTEMCTL" stop --quiet %name ||:
 	fi
 fi
 
@@ -194,7 +198,7 @@ SYSTEMCTL=systemctl
 [ "$RPM_INSTALL_ARG1" -eq 0 ] 2>/dev/null || exit 0
 
 if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
-        "$SYSTEMCTL" --no-reload -q --now disable "$1.service"
+        "$SYSTEMCTL" --no-reload -q --now disable "$1.service" ||:
 fi
 
 %triggerin -- librpm7
@@ -203,7 +207,7 @@ if [ $2 -eq 2 ] ; then
 	# if librpm7 is updated, prohibit packagekit to start and ask it to quit
 	touch %_localstatedir/PackageKit/upgrade_lock
 	SYSTEMCTL=systemctl
-	sd_booted && "$SYSTEMCTL" stop --quiet %name
+	sd_booted && "$SYSTEMCTL" stop --quiet %name ||:
 fi
 :
 
@@ -240,7 +244,6 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %ghost %verify(not md5 size mtime) %_localstatedir/PackageKit/transactions.db
 %ghost %_localstatedir/PackageKit/upgrade_lock
 %_datadir/dbus-1/system-services/*.service
-%_datadir/dbus-1/interfaces/*.xml
 %_unitdir/packagekit-offline-update.service
 %_unitdir/packagekit.service
 %_unitdir/system-update.target.wants/
@@ -248,6 +251,7 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %config %_sysconfdir/apt/apt.conf.d/20packagekit
 %_libdir/packagekit-backend/libpk_backend_aptcc.so
 %_libexecdir/pk-invoke-filetriggers.sh
+%_sysconfdir/NetworkManager/dispatcher.d/pre-up.d/packagekit.sh
 
 %files -n lib%name-glib
 %_libdir/*packagekit-glib2.so.*
@@ -276,6 +280,7 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %dir %_includedir/PackageKit
 %dir %_includedir/PackageKit/packagekit-glib2
 %_includedir/PackageKit/packagekit-glib*/*.h
+%_datadir/dbus-1/interfaces/*.xml
 %_datadir/gir-1.0/PackageKitGlib-1.0.gir
 %_datadir/gtk-doc/html/PackageKit
 %_datadir/vala/vapi/packagekit-glib2.vapi
@@ -285,6 +290,10 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Tue Mar 15 2022 Oleg Solovyov <mcpain@altlinux.org> 1.2.5-alt3
+- Fix package for dependent builds
+- Restart service before connecting to network
+
 * Mon Mar 14 2022 Oleg Solovyov <mcpain@altlinux.org> 1.2.5-alt2
 - Avoid restarting via 'pkcon quit'
 - Break circular dependencies between packagekit and libpackagekit-glib
