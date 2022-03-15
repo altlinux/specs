@@ -1,5 +1,5 @@
 Name: kernel-image-un-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	5.16
 %define kernel_sublevel .14
@@ -666,6 +666,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Mar 14 2022 Nikolai Kostrigin <nickel@altlinux.org> 1:5.16.14-alt2
+- config: enable Atheros ath11k PCI support
+- Revert "Input: clear BTN_RIGHT/MIDDLE on buttonpads" to fix touchpad
+  right button operation on ICL Si1516 laptop (closes: #42123)
+
 * Fri Mar 11 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.16.14-alt1
 - v5.16.14 (Fixes: CVE-2022-23036, CVE-2022-23037, CVE-2022-23038, CVE-2022-23039,
   CVE-2022-23040, CVE-2022-23041, CVE-2022-23042)
