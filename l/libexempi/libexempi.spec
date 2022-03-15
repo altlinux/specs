@@ -7,13 +7,13 @@
 %define _name exempi
 
 Name: lib%_name
-Version: 2.5.2
-Release: alt1.1
+Version: 2.6.1
+Release: alt1
 
 Summary: Library for easy parsing of XMP metadata
 Group: System/Libraries
 License: BSD-3-Clause
-Url: http://libopenraw.freedesktop.org/wiki/%Name
+Url: https://libopenraw.freedesktop.org/exempi/
 
 %if_disabled snapshot
 Source: http://libopenraw.freedesktop.org/download/%_name-%version.tar.bz2
@@ -21,6 +21,8 @@ Source: http://libopenraw.freedesktop.org/download/%_name-%version.tar.bz2
 Vcs: https://gitlab.freedesktop.org/libopenraw/exempi.git
 Source: %_name-%version.tar
 %endif
+# fc: Avoid multiple definitions of typeinfos
+Patch: exempi-fc-e23c213-typeinfos.patch
 
 BuildRequires: boost-test-devel gcc-c++ libexpat-devel zlib-devel
 
@@ -51,6 +53,7 @@ This package contains the static library needed for developing with
 
 %prep
 %setup -n %_name-%version
+%patch -p1
 # fix boost.m4 for gcc < 5, lcc < 1.23
 sed -i~ 's|\^\(boost-lib-version\)|\1|' m4/boost.m4
 
@@ -65,13 +68,13 @@ sed -i~ 's|\^\(boost-lib-version\)|\1|' m4/boost.m4
 %makeinstall_std
 
 %check
-%make check
+%make -k check VERBOSE=1
 
 %files
 %_bindir/%_name
 %_libdir/*.so.*
 %_man1dir/%_name.1.*
-%doc AUTHORS ChangeLog NEWS README
+%doc AUTHORS ChangeLog NEWS README*
 
 %files devel
 %_includedir/%_name-2.0/
@@ -85,6 +88,9 @@ sed -i~ 's|\^\(boost-lib-version\)|\1|' m4/boost.m4
 
 
 %changelog
+* Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 2.6.1-alt1
+- 2.6.1
+
 * Thu Aug 26 2021 Yuri N. Sedunov <aris@altlinux.org> 2.5.2-alt1.1
 - added -ffat-lto-objects to %%optflags_lto if static build enabled
 
