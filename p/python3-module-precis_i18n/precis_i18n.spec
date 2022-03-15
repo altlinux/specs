@@ -1,7 +1,7 @@
 %define  oname precis_i18n
 
 Name:    python3-module-%oname
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Summary: Python3 implementation of PRECIS framework (RFC 8264, RFC 8265, RFC 8266)
@@ -10,15 +10,13 @@ License: MIT
 Group:   Development/Python3
 URL:     https://pypi.org/project/precis-i18n
 # https://github.com/byllyfish/precis_i18n
+Source:  %name-%version.tar
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev
 
 BuildArch: noarch
-
-Source:  %oname-%version.tar
 
 %description
 If you want your application to accept unicode user names and passwords,
@@ -37,7 +35,7 @@ Representing Usernames and Passwords (RFC 8265)
 Representing Nicknames (RFC 8266)
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 %python3_build
@@ -45,12 +43,19 @@ Representing Nicknames (RFC 8266)
 %install
 %python3_install
 
+%check
+%__python3 setup.py test
+
 %files
-%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname
 %python3_sitelibdir/*.egg-info
 %doc *.rst
 
 %changelog
+* Tue Mar 15 2022 Grigory Ustinov <grenka@altlinux.org> 1.0.4-alt1
+- Automatically updated to 1.0.4.
+- Build with check.
+
 * Wed Mar 03 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.3-alt1
 - Automatically updated to 1.0.3.
 
