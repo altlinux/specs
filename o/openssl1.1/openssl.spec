@@ -2,7 +2,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: openssl1.1
-Version: 1.1.1m
+Version: 1.1.1n
 Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
@@ -467,6 +467,9 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Tue Mar 15 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1n-alt1
+- Updated to 1.1.1n (fixes CVE-2022-0778).
+
 * Tue Feb 08 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1m-alt1
 - Updated to 1.1.1m.
 
