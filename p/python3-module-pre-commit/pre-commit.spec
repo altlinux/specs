@@ -1,7 +1,5 @@
-%define  modulename pre-commit
-
-Name:    python3-module-%modulename
-Version: 2.15.0
+Name:    python3-module-pre-commit
+Version: 2.17.0
 Release: alt1
 
 Summary: A framework for managing and maintaining multi-language pre-commit hooks.
@@ -16,19 +14,22 @@ BuildRequires(pre): rpm-build-python3
 
 BuildArch: noarch
 
-Source:  %modulename-%version.tar
+Source:  %name-%version.tar
 
 %description
 %summary
 
 %prep
-%setup -n %modulename-%version
+%setup -n %name-%version
 
 %build
 %python3_build
 
 %install
 %python3_install
+
+%check
+# tests need lots of network, git and other stuff
 
 %files
 %doc *.md
@@ -37,6 +38,9 @@ Source:  %modulename-%version.tar
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Mar 15 2022 Grigory Ustinov <grenka@altlinux.org> 2.17.0-alt1
+- Automatically updated to 2.17.0.
+
 * Tue Sep 07 2021 Grigory Ustinov <grenka@altlinux.org> 2.15.0-alt1
 - Automatically updated to 2.15.0.
 
