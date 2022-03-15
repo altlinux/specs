@@ -7,7 +7,7 @@
 %endif
 
 Name: upower
-Version: 0.99.16
+Version: 0.99.17
 Release: alt1
 
 Summary: Power Management Service
@@ -130,6 +130,9 @@ GObject introspection devel data for the UPower library
 %_girdir/*.gir
 
 %changelog
+* Tue Mar 15 2022 Yuri N. Sedunov <aris@altlinux.org> 0.99.17-alt1
+- 0.99.17
+
 * Sat Mar 05 2022 Yuri N. Sedunov <aris@altlinux.org> 0.99.16-alt1
 - updated to v0.99.16-3-g2f81d69 (ported to Meson build system)
 
