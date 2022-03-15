@@ -5,14 +5,15 @@
 
 Name: lutris-standalone
 Version: 0.5.7.1
-Release: alt1
+Release: alt2
 Summary: Manager for game installation and execution
 License: GPL-2.0 and GPL-2.0+ and GPL-3.0+ and CC0-1.0 and LGPL-2.1+ and CC-BY-NC-SA-2.0 and CC-BY-SA-3.0
 Group: Games/Other
 Url: https://lutris.net
 
 Source: http://lutris.net/releases/lutris_%version.tar.xz
-Patch: lutris_0.5.7_alt_python3_pixbuf_path.patch
+Patch: lutris-0.5.7-alt-python3-pixbuf-path.patch
+Patch1: lutris-standalone-0.5.7-alt-dxvk-url.patch
 
 AutoProv: no, nopython
 # %brp_strip_none %_alterator_libdir/*
@@ -45,6 +46,7 @@ Recommends for install: psmisc p7zip curl cabextract xrandr glibc-gconv-modules 
 %prep
 %setup -n %name
 %patch -p2
+%patch1 -p1
 
 %build
 %if_enabled meson
@@ -76,5 +78,8 @@ Recommends for install: psmisc p7zip curl cabextract xrandr glibc-gconv-modules 
 %_man1dir/%repo.1.xz
 
 %changelog
+* Tue Mar 15 2022 Leontiy Volodin <lvol@altlinux.org> 0.5.7.1-alt2
+- Fix dxvk url (ALT #42128).
+
 * Mon Feb 21 2022 Leontiy Volodin <lvol@altlinux.org> 0.5.7.1-alt1
 - Built as standalone stable version.
