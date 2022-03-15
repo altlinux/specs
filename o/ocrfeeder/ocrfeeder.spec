@@ -3,12 +3,12 @@
 %define xdg_name org.gnome.OCRFeeder
 
 Name: ocrfeeder
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: OCRFeeder is a document layout analysis and optical character recognition system
 Group: Graphics
-License: GPL-3.0-or-later 
+License: GPL-3.0-or-later
 Url: https://wiki.gnome.org/Apps/OCRFeeder
 
 BuildArch: noarch
@@ -82,6 +82,9 @@ export PYTHON=%__python3
 %python3_sitelibdir/ocrfeeder
 
 %changelog
+* Tue Mar 15 2022 Yuri N. Sedunov <aris@altlinux.org> 0.8.5-alt1
+- 0.8.5
+
 * Tue Mar 15 2022 Yuri N. Sedunov <aris@altlinux.org> 0.8.4-alt1
 - 0.8.4
 
