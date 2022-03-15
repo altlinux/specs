@@ -9,7 +9,7 @@
 
 Name: spdk
 Version: 22.01
-Release: alt2
+Release: alt3
 
 Summary: Storage Performance Development Kit
 License: BSD-3-Clause
@@ -19,6 +19,7 @@ ExcludeArch: i586 ppc64le armh
 
 Source: spdk-%version.tar.gz
 Patch: spdk-21.10-alt-scripts-syntax.patch
+Patch1: spdk-21.10-alt-scripts-startup.patch
 
 # This is a minimal set of requirements needed for SPDK apps to run when built with
 # default configuration. These are also predetermined by rpmbuild. Extra requirements
@@ -86,6 +87,7 @@ SPDK devel libraries
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 sed -i 's|/etc/lsb-release|/etc/os-release|' \
 	scripts/vagrant/update.sh
@@ -222,6 +224,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Tue Mar 15 2022 Leontiy Volodin <lvol@altlinux.org> 22.01-alt3
+- Fix setup.sh startup (ALT #42131).
+
 * Wed Mar 02 2022 Leontiy Volodin <lvol@altlinux.org> 22.01-alt2
 - Fixed build on p10 branch.
 
