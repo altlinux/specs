@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220303
+Version: 20220309
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,15 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Mar 15 2022 Cronbuild Service <cronbuild@altlinux.org> 20220309-alt1
+- upstream changes (GIT cd01f85):
+  + iwlwifi: add new FWs from core68-60 release (thx Luca Coelho)
+  + ath11k: add links for WCN6855 hw2.1 (thx Kalle Valo)
+  + ath11k: WCN6855 hw2.0: add
+    WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3 (thx Kalle Valo)
+  + ath11k: WCN6855 hw2.0: add board-2.bin and regdb.bin (thx Kalle Valo)
+  + ath10k/ath11k: mark notice.txt as "File:" (thx Kalle Valo)
+
 * Tue Mar 08 2022 Cronbuild Service <cronbuild@altlinux.org> 20220303-alt1
 - upstream changes (GIT f011ccb):
   + add firmware for MT7986 (thx Shayne Chen)
