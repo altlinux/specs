@@ -9,8 +9,8 @@ BuildRequires: libgudev-gir
 %global repo go-gir-generator
 
 Name:           deepin-gir-generator
-Version:        2.0.2
-Release:        alt3.gitd9225a1
+Version:        3.0.0
+Release:        alt1
 Summary:        Generate static golang bindings for GObject
 License:        GPL-3.0+
 URL:            https://github.com/linuxdeepin/go-gir-generator
@@ -37,14 +37,14 @@ Generate static golang bindings for GObject
 %prep
 %setup -q -n %{repo}-%{version}
 
-GIO_VER=$(v=$(rpm -q --qf %{RPMTAG_VERSION} gobject-introspection); echo ${v//./})
+GIO_VER=$(v=$(rpm -q --qf %{VERSION} gobject-introspection); echo ${v//./})
 #if [ $GIO_VER -ge 1521 ]; then
 # Our gobject-introspection is too new
 # https://cr.deepin.io/#/c/16880/
 #patch0 -p1
 #patch1 -p1
 #fi
-%patch2 -p2
+#patch2 -p2
 
 %build
 export GOPATH="%{go_path}"
@@ -58,9 +58,12 @@ export GO111MODULE="auto"
 %doc README.md
 %doc --no-dereference LICENSE
 %{_bindir}/gir-generator
-%{go_path}/src/pkg.deepin.io/gir/
+%{go_path}/src/github.com/linuxdeepin/go-gir/
 
 %changelog
+* Wed Mar 16 2022 Leontiy Volodin <lvol@altlinux.org> 3.0.0-alt1
+- new version (3.0.0) with rpmgs script
+
 * Wed Mar 03 2021 Leontiy Volodin <lvol@altlinux.org> 2.0.2-alt3.gitd9225a1
 - updated from commit d9225a117934f5776fd45c52e3eca2001c044c0f
 - fixed build with golang 1.16
