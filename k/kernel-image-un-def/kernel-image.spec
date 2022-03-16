@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
-Release: alt2
+Release: alt1
 epoch:1 
 %define kernel_base_version	5.16
-%define kernel_sublevel .14
+%define kernel_sublevel .15
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -666,6 +666,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Mar 16 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.16.15-alt1
+- v5.16.15
+
 * Mon Mar 14 2022 Nikolai Kostrigin <nickel@altlinux.org> 1:5.16.14-alt2
 - config: enable Atheros ath11k PCI support
 - Revert "Input: clear BTN_RIGHT/MIDDLE on buttonpads" to fix touchpad
