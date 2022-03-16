@@ -4,7 +4,7 @@
 %def_disable clang
 
 Name: deepin-qt-dbus-factory
-Version: 5.5.5
+Version: 5.5.22
 Release: alt1
 Summary: A repository stores auto-generated Qt5 dbus code
 # The entire source code is GPL-3.0+ except
@@ -66,6 +66,9 @@ Header files and libraries for %name.
 %_libdir/lib%soname.so
 
 %changelog
+* Wed Mar 16 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.22-alt1
+- New version (5.5.22).
+
 * Mon Feb 14 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.5-alt1
 - New version (5.5.5).
 
