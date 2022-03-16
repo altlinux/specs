@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 2.9.3
-Release: alt1
+Release: alt2
 
 Summary: Python Abstract Syntax Tree New Generation
 License: LGPLv2.1+
@@ -79,6 +79,9 @@ tox.py3 --sitepackages --no-deps -vvr -- tests -vra
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Mar 16 2022 Stanislav Levin <slev@altlinux.org> 2.9.3-alt2
+- Fixed FTBFS (wrapt 1.14.0).
+
 * Thu Jan 27 2022 Stanislav Levin <slev@altlinux.org> 2.9.3-alt1
 - 2.5.6 -> 2.9.3.
 
