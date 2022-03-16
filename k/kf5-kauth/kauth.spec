@@ -6,7 +6,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.91.0
+Version: 5.92.0
 Release: alt1
 %K5init altplace
 
@@ -124,9 +124,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 %files devel
 #%_K5inc/kauth_version.h
-%_K5inc/KAuth/
+%_K5inc/KAuth*/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5Auth
+%_K5lib/cmake/KF5Auth/
 %_K5archdata/mkspecs/modules/qt_KAuth*.pri
 %_K5data/kauth/
 
@@ -150,6 +150,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Mon Mar 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.92.0-alt1
+- new version
+
 * Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.91.0-alt1
 - new version
 

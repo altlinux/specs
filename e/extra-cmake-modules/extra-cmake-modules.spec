@@ -20,8 +20,8 @@ AutoProv: yes, nopython nopython3
 %add_python3_path %_datadir/ECM/find-modules
 
 Name: extra-cmake-modules
-Version: 5.91.0
-Release: alt2
+Version: 5.92.0
+Release: alt1
 
 Group: Development/Other
 Summary: Additional modules for CMake build system
@@ -91,6 +91,9 @@ fi
 %endif
 
 %changelog
+* Mon Mar 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.92.0-alt1
+- new version
+
 * Mon Mar 14 2022 Michael Shigorin <mike@altlinux.org> 5.91.0-alt2
 - E2K: -Wno-error (thx ilyakurdyukov@; see also mcst#7001)
 

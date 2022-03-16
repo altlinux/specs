@@ -1,7 +1,7 @@
 %define rname kwallet
 
 Name: kf5-%rname
-Version: 5.91.0
+Version: 5.92.0
 Release: alt1
 %K5init altplace
 
@@ -116,6 +116,9 @@ LD_LIBRARY_PATH=BUILD/bin BUILD/bin/fdo_secrets_test
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Mon Mar 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.92.0-alt1
+- new version
+
 * Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.91.0-alt1
 - new version
 

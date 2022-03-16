@@ -1,7 +1,7 @@
 %define rname kcontacts
 
 Name: kf5-%rname
-Version: 5.91.0
+Version: 5.92.0
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -16,8 +16,8 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Tue Aug 11 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libqt5-core libqt5-dbus libqt5-gui libqt5-xml libstdc++-devel python-base python3 python3-base ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kcodecs-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-ki18n-devel libdb4-devel python-module-google qt5-base-devel rpm-build-python3 rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-declarative-devel
 BuildRequires: kf5-kcodecs-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-ki18n-devel
 
 %description
@@ -78,6 +78,9 @@ mkdir -p %buildroot/%_K5data/kcontacts/
 %_K5lib/libKF5Contacts.so.*
 
 %changelog
+* Mon Mar 14 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.92.0-alt1
+- new version
+
 * Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.91.0-alt1
 - new version
 
@@ -195,46 +198,46 @@ mkdir -p %buildroot/%_K5data/kcontacts/
 * Wed Jan 30 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.1-alt1
 - new version
 
-* Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
+* Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1
 - new version
 
-* Tue Jun 26 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+* Tue Jun 26 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1
 - new version
 
-* Tue May 15 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+* Tue May 15 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1
 - new version
 
-* Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
+* Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1
 - new version
 
-* Tue Feb 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
+* Tue Feb 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1
 - new version
 
-* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1
 - new version
 
-* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.2-alt1%ubt
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.2-alt1
 - new version
 
-* Mon Jul 17 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.3-alt2%ubt
+* Mon Jul 17 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.3-alt2
 - Fix: parsing vcard will fail in case of missing trailing newline
 
-* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1
 - new version
 
-* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1
 - new version
 
-* Mon May 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+* Mon May 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1
 - new version
 
-* Mon Apr 24 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+* Mon Apr 24 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1
 - new version
 
-* Wed Mar 15 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+* Wed Mar 15 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1
 - new version
 
-* Thu Mar 09 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.2-alt1%ubt
+* Thu Mar 09 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.2-alt1
 - new version
 
 * Mon Nov 28 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt0.M80P.1

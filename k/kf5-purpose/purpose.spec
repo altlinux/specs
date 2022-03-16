@@ -7,7 +7,7 @@
 %define libreviewboardhelpers libreviewboardhelpers%sover
 
 Name: kf5-%rname
-Version: 5.91.0
+Version: 5.92.0
 Release: alt1
 %K5init altplace
 
@@ -92,6 +92,10 @@ KF5 library
 %prep
 %setup -n %rname-%version
 
+%if_enabled bootstrap
+sed -i 's|KAccounts|KAccounts_BUILD_DEPS_LOOP_WITH_APPS|' CMakeLists.txt
+%endif
+
 %build
 %K5build
 
@@ -140,6 +144,9 @@ mkdir -p %buildroot/%_datadir/accounts/services/kde/
 %_K5lib/libKF5PurposeWidgets.so.*
 
 %changelog
+* Mon Mar 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.92.0-alt1
+- new version
+
 * Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.91.0-alt1
 - new version
 
