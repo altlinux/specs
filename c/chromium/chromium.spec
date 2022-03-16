@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        99.0.4844.51
+Version:        99.0.4844.74
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -445,6 +445,20 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Mar 16 2022 Alexey Gladkov <legion@altlinux.ru> 99.0.4844.74-alt1
+- New version (99.0.4844.74).
+- Security fixes:
+  - CVE-2022-0971: Use after free in Blink Layout.
+  - CVE-2022-0972: Use after free in Extensions.
+  - CVE-2022-0973: Use after free in Safe Browsing.
+  - CVE-2022-0974: Use after free in Splitscreen.
+  - CVE-2022-0975: Use after free in ANGLE.
+  - CVE-2022-0976: Heap buffer overflow in GPU.
+  - CVE-2022-0977: Use after free in Browser UI.
+  - CVE-2022-0978: Use after free in ANGLE.
+  - CVE-2022-0979: Use after free in Safe Browsing.
+  - CVE-2022-0980: Use after free in New Tab Page.
+
 * Thu Mar 03 2022 Alexey Gladkov <legion@altlinux.ru> 99.0.4844.51-alt1
 - New version (99.0.4844.51).
 - Security fixes:
