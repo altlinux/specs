@@ -11,8 +11,8 @@
 %filter_from_requires /^pkgconfig(libssl)/d
 
 Name: LibreSSL
-Version: 3.4.2
-Release: alt2
+Version: 3.4.3
+Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
 
@@ -277,6 +277,9 @@ xz %buildroot%docdir/ChangeLog
 %_man1dir/netcat.1*
 
 %changelog
+* Wed Mar 16 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.4.3-alt1
+- Updated to 3.4.3 (fixed: OVE-20220316-0001).
+
 * Mon Jan 17 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.4.2-alt2
 - cert.pem is pointed to ca-bundle.crt now (fixed dist-upgrade).
 
