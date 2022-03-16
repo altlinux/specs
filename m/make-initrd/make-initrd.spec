@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 2.26.0
-Release: alt1
+Release: alt2
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -62,6 +62,7 @@ Requires: util-linux >= 2.17.2-alt1
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
+Patch0: 0001-Read-system-wide-locales.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -339,6 +340,9 @@ fi
 %_datadir/%name/features/bootloader
 
 %changelog
+* Wed Mar 16 2022 Alexey Gladkov <legion@altlinux.ru> 2.26.0-alt2
+- Feature locales: Read system-wide locales.
+
 * Mon Mar 07 2022 Alexey Gladkov <legion@altlinux.ru> 2.26.0-alt1
 - New version (2.26.0).
 - Runtime:
