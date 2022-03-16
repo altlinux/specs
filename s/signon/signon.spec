@@ -8,7 +8,7 @@
 
 Name: signon
 Version: 8.60
-Release: alt3
+Release: alt4
 
 Group: System/Servers
 Summary: Accounts framework for Linux and POSIX based platforms
@@ -86,9 +86,16 @@ Requires: %name-common = %version-%release
 
 sed -i '/^SUBDIRS/s|tests||'  signon.pro
 
-find -type f -name \*.pc.in -o -name \*.h | \
+find -type f \( -name \*.pc.in -o -name \*.h \) | \
 while read f ; do
     sed -i 's|/usr/lib|%_libdir|' $f
+done
+
+find -type f \( -name \*.pro -o -name \*.pri \) | \
+while read f ; do
+    sed -i 's|-fno-rtti|-frtti|' $f
+    sed -i 's|-fno-exceptions|-fexceptions|' $f
+    sed -i 's|exceptions_off|exceptions|' $f
 done
 
 %build
@@ -147,6 +154,9 @@ mkdir -p %buildroot/%_libdir/signon/extensions/
 %_libdir/libsignon-qt5.so.*
 
 %changelog
+* Wed Mar 16 2022 Sergey V Turchin <zerg@altlinux.org> 8.60-alt4
+- update compile flags
+
 * Tue Sep 22 2020 Sergey V Turchin <zerg@altlinux.org> 8.60-alt3
 - add upstream fix against deprecated QHash::unite
 
