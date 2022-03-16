@@ -1,6 +1,6 @@
 Summary: Tools to access and modify virtual machine disk images
 Name: guestfs-tools
-Version: 1.47.3
+Version: 1.48.0
 Release: alt1
 Group: File tools
 License: GPLv2+
@@ -128,6 +128,7 @@ rm -rf %buildroot%_mandir/{ja,uk}
 %_bindir/virt-sparsify
 %_bindir/virt-sysprep
 %_bindir/virt-tail
+%_man1dir/guestfs-tools-release-notes-*.1*
 %_man1dir/virt-alignment-scan.1*
 %_man1dir/virt-builder-repository.1*
 %_man1dir/virt-builder.1*
@@ -162,6 +163,12 @@ rm -rf %buildroot%_mandir/{ja,uk}
 %_mandir/man1/virt-dib.1*
 
 %changelog
+* Wed Mar 16 2022 Anton Farygin <rider@altlinux.ru> 1.48.0-alt1
+- 1.47.5 -> 1.48.0
+
+* Wed Mar 16 2022 Anton Farygin <rider@altlinux.ru> 1.47.5-alt1
+- 1.47.3 -> 1.47.5
+
 * Tue Dec 07 2021 Anton Farygin <rider@altlinux.ru> 1.47.3-alt1
 - 1.47.2 -> 1.47.3
 
