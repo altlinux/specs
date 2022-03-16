@@ -4,7 +4,7 @@
 
 Name: golang-github-burntsushi-toml-test
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: Language agnostic test suite for TOML
 License: MIT
@@ -14,7 +14,6 @@ Url: https://github.com/BurntSushi/toml-test.git
 Source0: %name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: golang-github-burntsushi-toml-devel
 
 Provides: toml-test = %EVR
 
@@ -52,6 +51,9 @@ cp -a tests %buildroot%_datadir/toml-test/
 %_datadir/toml-test/
 
 %changelog
+* Wed Mar 16 2022 Stanislav Levin <slev@altlinux.org> 1.1.0-alt2
+- Fixed FTBFS (dropped extra build dep on removed burntsushi-toml).
+
 * Tue Feb 01 2022 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
 - 0.2.0 -> 1.1.0.
 
