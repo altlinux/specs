@@ -1,7 +1,7 @@
 # %%set_findreq_skiplist %%_iconsdir/bloom/actions/24/arrow-{down,left,right,up,empty}.svg
 
 Name: icon-theme-deepin
-Version: 2021.08.19
+Version: 2021.11.24
 Release: alt1
 Summary: Icons for the Deepin Desktop Environment
 License: GPL-3.0-only
@@ -21,7 +21,6 @@ BuildRequires: python3-devel gtk-update-icon-cache xcursorgen
 %prep
 %setup -n icon-theme-deepin-%version
 
-sed -i 's/deepin/bloom/g' tools/hicolor.links
 sed -i 's|python|python3|' Makefile
 sed -i 's|/usr/bin/env python|/usr/bin/env python3|' \
 	$(find ./ -name '*.py')
@@ -45,6 +44,10 @@ cp -a ./Sea ./usr/share/icons/hicolor %buildroot/usr/share/icons/
 %_iconsdir/Vintage/
 
 %changelog
+* Tue Mar 15 2022 Leontiy Volodin <lvol@altlinux.org> 2021.11.24-alt1
+- New version (2021.11.24).
+- Fixed missing icons (ALT #41363).
+
 * Wed Nov 03 2021 Leontiy Volodin <lvol@altlinux.org> 2021.08.19-alt1
 - New version (2021.08.19) with rpmgs script.
 - Fixed installation error.
