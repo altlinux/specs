@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-ports-access
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 BuildArch: noarch
 Source:%name-%version.tar
@@ -58,6 +58,10 @@ touch %buildroot%_sysconfdir/udev/rules.d/99-alterator-ports-access-usbdevs.rule
 %ghost %_sysconfdir/udev/rules.d/99-alterator-ports-access-usbdevs.rules
 
 %changelog
+* Thu Mar 17 2022 Paul Wolneykien <manowar@altlinux.org> 0.5.3-alt1
+- Added -v option to turn on verbose mode.
+- Fixed help info output (closes: 42142).
+
 * Thu Mar 03 2022 Paul Wolneykien <manowar@altlinux.org> 0.5.2-alt1
 - UI improved: Turn the widgets on and off according with a list
   entry selection.
