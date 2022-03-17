@@ -1,10 +1,8 @@
 %define nm_version 1.1.90
-%define nm_applet_version 1.1.90
-%define nm_applet_name NetworkManager-applet-gtk
 %define git_date %nil
 #define git_date .git20110510
 
-%def_without libnm_glib
+%def_with gtk4
 
 %define _unpackaged_files_terminate_build 1
 
@@ -15,8 +13,8 @@
 %endif
 
 Name: NetworkManager-vpnc
-Version: 1.2.6
-Release: alt2%git_date
+Version: 1.2.8
+Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for vpnc
@@ -27,13 +25,9 @@ Source1: NetworkManager-vpnc.master.ru.po
 Patch: %name-%version-%release.patch
 
 BuildRequires: libnm-devel >= %nm_version
-BuildRequires: libnma-devel >= %nm_applet_version
-%if_with libnm_glib
-BuildRequires: NetworkManager-devel >= %nm_version
-BuildRequires: libnm-glib-vpn-devel >= %nm_version
-BuildRequires: libnm-gtk-devel >= %nm_applet_version
-%endif
+BuildRequires: libnma-devel
 BuildRequires: libgtk+3-devel
+%{?_with_gtk4:BuildRequires: libgtk4-devel libnma-gtk4-devel xvfb-run}
 BuildRequires: libsecret-devel
 BuildRequires: intltool gettext
 
@@ -42,21 +36,42 @@ Requires: vpnc             >= 0.4
 
 %description
 This package contains software for integrating the vpnc VPN software
-with NetworkManager and the GNOME desktop
+with NetworkManager
 
-%package gtk
+%package gtk-common
 License: GPLv2+
-Summary: Applications for use %name with %nm_applet_name
+Summary: Common part of %name GTK support
 Group: Graphical desktop/GNOME
-Requires: %nm_applet_name >= %nm_applet_version
 Requires: NetworkManager-vpnc = %version-%release
+
+%description gtk-common
+This package contains common part for %name GTK support.
+
+%package gtk3
+License: GPLv2+
+Summary: Files for GTK3 applications to use %name
+Group: Graphical desktop/GNOME
+Requires: %name-gtk-common = %version-%release
 
 Obsoletes: %name-gnome < 0.9.8.6
 Provides: %name-gnome = %version-%release
 
-%description gtk
-This package contains applications for use with
-NetworkManager panel applet.
+Obsoletes: %name-gtk < 1.2.8-alt1
+Provides: %name-gtk = %version-%release
+
+%description gtk3
+This package contains files for GTK3 applications to use %name.
+
+%if_with gtk4
+%package gtk4
+License: GPLv2+
+Summary: Files for GTK4 applications to use %name
+Group: Graphical desktop/GNOME
+Requires: %name-gtk-common = %version-%release
+
+%description gtk4
+This package contains files for GTK4 applications to use %name.
+%endif
 
 %prep
 %setup
@@ -70,11 +85,14 @@ cp -a %SOURCE1 po/ru.po
 	--disable-static \
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
-%if_without libnm_glib
 	--without-libnm-glib \
-%endif
+	%{subst_with gtk4} \
 	--enable-more-warnings=%more_warnings
+%if_with gtk4
+xvfb-run %make_build
+%else
 %make_build
+%endif
 
 %install
 %makeinstall_std
@@ -85,27 +103,33 @@ make check
 
 %files
 %doc AUTHORS
-%config %_sysconfdir/dbus-1/system.d/nm-vpnc-service.conf
 %_libexecdir/NetworkManager/nm-vpnc-service
 %_libexecdir/NetworkManager/nm-vpnc-service-vpnc-helper
 %_libdir/NetworkManager/libnm-vpn-plugin-vpnc.so
-%if_with libnm_glib
-%config %_sysconfdir/NetworkManager/VPN/nm-vpnc-service.name
-%endif
+%config %_datadir/dbus-1/system.d/nm-vpnc-service.conf
 %config %_libexecdir/NetworkManager/VPN/nm-vpnc-service.name
 
-%files gtk -f %name.lang
-%if_with libnm_glib
-%_libdir/NetworkManager/libnm-vpnc-properties.so
-%endif
+%files gtk-common -f %name.lang
 %_libexecdir/NetworkManager/nm-vpnc-auth-dialog
-%_datadir/gnome-vpn-properties/*
+%_datadir/metainfo/*.xml
+
+%files gtk3
 %_libdir/NetworkManager/libnm-vpn-plugin-vpnc-editor.so
-%_datadir/appdata/*.xml
+
+%if_with gtk4
+%files gtk4
+%_libdir/NetworkManager/libnm-gtk4-vpn-plugin-vpnc-editor.so
+%endif
 
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Thu Mar 17 2022 Mikhail Efremov <sem@altlinux.org> 1.2.8-alt1
+- Used xvfb-run.
+- Added gtk4 subpackage.
+- Dropped libnm_glib support.
+- Updated to 1.2.8.
+
 * Thu Jan 20 2022 Mikhail Efremov <sem@altlinux.org> 1.2.6-alt2
 - Disable -Werror on e2k.
 - Set enable-more-warnings to error.
