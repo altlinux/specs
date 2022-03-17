@@ -5,8 +5,8 @@
 %endif
 
 Name: kde5-set
-Version: 21.12.0
-Release: alt2
+Version: 21.12.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -193,7 +193,7 @@ Requires: kde5-email-client
 Requires: kde5-pim-data-exporter kde5-pim-addons
 Requires: kde5-akregator kde5-kontact
 %endif
-Requires: kde5-kalarm kde5-knotes
+Requires: kde5-kalarm kde5-knotes kde5-zanshin
 Requires: kde5-korganizer kde5-akonadi-calendar-tools
 Requires: kde5-kaddressbook
 ##Requires:  kde5-blogilo
@@ -218,6 +218,9 @@ Requires: kde5-kaddressbook
 %files -n kde5-pim
 
 %changelog
+* Thu Mar 17 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
+- add zanshin to pim
+
 * Mon Feb 21 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.0-alt2
 - using not_qt5_qtwebengine_arches macro
 
