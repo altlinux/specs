@@ -1,10 +1,8 @@
 %define nm_version 1.1.90
-%define nm_applet_version 1.1.90
-%define nm_applet_name NetworkManager-applet-gtk
 %define git_date %nil
 #define git_date .git20111101
 
-%def_without libnm_glib
+%def_with gtk4
 
 %define _unpackaged_files_terminate_build 1
 
@@ -15,7 +13,7 @@
 %endif
 
 Name: NetworkManager-openvpn
-Version: 1.8.16
+Version: 1.8.18
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -27,14 +25,10 @@ Patch: %name-%version-%release.patch
 
 BuildRequires: intltool
 BuildRequires: libnm-devel >= %nm_version
-BuildRequires: libnma-devel >= %nm_applet_version
-%if_with libnm_glib
-BuildRequires: NetworkManager-devel >= %nm_version
-BuildRequires: libnm-glib-vpn-devel >= %nm_version
-BuildRequires: libnm-gtk-devel >= %nm_applet_version
-%endif
+BuildRequires: libnma-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libsecret-devel
+%{?_with_gtk4:BuildRequires: libgtk4-devel libnma-gtk4-devel xvfb-run}
 
 Requires: NetworkManager-daemon   >= %nm_version
 Requires: openvpn          >= 2.1
@@ -43,19 +37,40 @@ Requires: openvpn          >= 2.1
 NetworkManager-openvpn provides VPN support to NetworkManager for
 OpenVPN.
 
-%package gtk
+%package gtk-common
 License: GPLv2+
-Summary: Applications for use %name with %nm_applet_name
+Summary: Common part of %name GTK support
 Group: Graphical desktop/GNOME
-Requires: %nm_applet_name >= %nm_applet_version
 Requires: NetworkManager-openvpn = %version-%release
+
+%description gtk-common
+This package contains common part for %name GTK support.
+
+%package gtk3
+License: GPLv2+
+Summary: Files for GTK3 applications to use %name
+Group: Graphical desktop/GNOME
+Requires: %name-gtk-common = %version-%release
 
 Obsoletes: %name-gnome < 0.9.8.4
 Provides: %name-gnome = %version-%release
 
-%description gtk
-This package contains applications for use with
-NetworkManager panel applet.
+Obsoletes: %name-gtk < 1.8.18-alt1
+Provides: %name-gtk = %version-%release
+
+%description gtk3
+This package contains files for GTK3 applications to use %name.
+
+%if_with gtk4
+%package gtk4
+License: GPLv2+
+Summary: Files for GTK4 applications to use %name
+Group: Graphical desktop/GNOME
+Requires: %name-gtk-common = %version-%release
+
+%description gtk4
+This package contains files for GTK4 applications to use %name.
+%endif
 
 %prep
 %setup
@@ -67,12 +82,15 @@ NetworkManager panel applet.
 	--disable-static \
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
-%if_without libnm_glib
 	--without-libnm-glib \
-%endif
+	%{subst_with gtk4} \
 	--disable-silent-rules \
 	--enable-more-warnings=%more_warnings
+%if_with gtk4
+xvfb-run %make_build
+%else
 %make_build
+%endif
 
 %install
 %makeinstall_std
@@ -87,22 +105,29 @@ make check
 %_libexecdir/NetworkManager/nm-openvpn-service-openvpn-helper
 %_libdir/NetworkManager/libnm-vpn-plugin-openvpn.so
 %config %_datadir/dbus-1/system.d/nm-openvpn-service.conf
-%if_with libnm_glib
-%config %_sysconfdir/NetworkManager/VPN/nm-openvpn-service.name
-%endif
 %config %_libexecdir/NetworkManager/VPN/nm-openvpn-service.name
 
-%files gtk -f %name.lang
-%if_with libnm_glib
-%_libdir/NetworkManager/libnm-openvpn-properties.so*
-%endif
+%files gtk-common -f %name.lang
 %_libexecdir/NetworkManager/nm-openvpn-auth-dialog
-%_libdir/NetworkManager/libnm-vpn-plugin-openvpn-editor.so
 %_datadir/metainfo/*.xml
+
+%files gtk3
+%_libdir/NetworkManager/libnm-vpn-plugin-openvpn-editor.so
+
+%if_with gtk4
+%files gtk4
+%_libdir/NetworkManager/libnm-gtk4-vpn-plugin-openvpn-editor.so
+%endif
 
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Wed Mar 16 2022 Mikhail Efremov <sem@altlinux.org> 1.8.18-alt1
+- Used xvfb-run.
+- Added gtk4 subpackage.
+- Dropped libnm_glib support.
+- Updated to 1.8.18.
+
 * Fri Oct 29 2021 Mikhail Efremov <sem@altlinux.org> 1.8.16-alt1
 - Updated Url tag.
 - Updated to 1.8.16.
