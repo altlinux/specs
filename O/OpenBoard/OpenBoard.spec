@@ -4,7 +4,7 @@
 %define dest_dir %_libdir/OpenBoard
 Name: OpenBoard
 Version: 1.6.1
-Release: alt3
+Release: alt4
 Summary: Interactive whiteboard for schools and universities
 License: GPL-3.0+
 Group: Education
@@ -12,6 +12,8 @@ Url: https://github.com/OpenBoard-org/OpenBoard
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+
+Patch: fix-build-with-poppler-22.patch
 
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: desktop-file-utils
@@ -54,13 +56,14 @@ Interactive whiteboard for schools and universities.
 
 %prep
 %setup
+%patch -p1
 
 # remove unwanted and nonfree libraries
 sed -i -e 's|-lfdk-aac ||' src/podcast/podcast.pri
 sed -i -e 's|-lx264 ||' src/podcast/podcast.pri
 
 # fix build with poppler 0.83
-sed -i -e 's,std=c++11,std=c++14,g' src/podcast/podcast.pri
+#sed -i -e 's,std=c++11,std=c++14,g' src/podcast/podcast.pri
 
 # drop quazip LIBS INCLUDEPATH
 sed -i -e '/LIBS += -lquazip5/d' \
@@ -151,6 +154,9 @@ cp -R resources/customizations %buildroot%dest_dir/
 %_bindir/%name
 
 %changelog
+* Thu Mar 17 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.1-alt4
+- fix build with poppler-22
+
 * Sat Jan 01 2022 Anton Midyukov <antohami@altlinux.org> 1.6.1-alt3
 - realy fix build with libquazip1-qt5
 
