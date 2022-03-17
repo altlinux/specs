@@ -7,14 +7,15 @@ BuildRequires: texinfo
 %define soname 0
 
 %def_enable static
+%def_disable tests
 
 %if_enabled static
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %endif
 
 Name: mpfi
-Version: 1.5.3
-Release: alt3
+Version: 1.5.4
+Release: alt1
 
 Summary: An interval arithmetic library based on MPFR
 
@@ -22,7 +23,7 @@ License: LGPL-2.1+
 Group: Engineering
 Url: http://perso.ens-lyon.fr/nathalie.revol/software.html
 
-Source: https://gforge.inria.fr/frs/download.php/file/37331/%name-%version.tar.bz2
+Source: https://perso.ens-lyon.fr/nathalie.revol/softwares/%name-%version.tar.bz2
 Source44: import.info
 
 BuildRequires: gcc
@@ -97,11 +98,16 @@ rm -f %buildroot%_infodir/dir
 rm -f %buildroot%_libdir/lib%name.a
 %endif
 
+# Package docs in %%doc
+rm -rf %buildroot%_datadir/doc/mpfi/
+
+%if_enabled tests
 %check
 make check
+%endif
 
 %files -n lib%name%soname
-%doc AUTHORS NEWS TODO
+%doc AUTHORS NEWS TODO COPYING COPYING.LESSER
 %_libdir/libmpfi.so.%{soname}*
 
 %files -n lib%name-devel
@@ -109,6 +115,7 @@ make check
 %_includedir/mpfi_io.h
 %_infodir/%name.info*
 %_libdir/libmpfi.so
+%_pkgconfigdir/mpfi.pc
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -116,6 +123,9 @@ make check
 %endif
 
 %changelog
+* Thu Mar 17 2022 Leontiy Volodin <lvol@altlinux.org> 1.5.4-alt1
+- New version (1.5.4) with rpmgs script.
+
 * Wed Oct 20 2021 Leontiy Volodin <lvol@altlinux.org> 1.5.3-alt3
 - Initial build for ALT Sisyphus.
 - Built as require for sagemath.

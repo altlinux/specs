@@ -2,7 +2,7 @@
 
 Name: planarity
 Summary: Implementations of several planarity-related graph algorithms
-Version: 3.0.1.1
+Version: 3.0.2.0
 Release: alt1
 License: BSD
 Group: Sciences/Mathematics
@@ -103,6 +103,9 @@ rm -rf %buildroot%_docdir
 %_libdir/lib%name.so
 
 %changelog
+* Thu Mar 17 2022 Leontiy Volodin <lvol@altlinux.org> 3.0.2.0-alt1
+- New version (3.0.2.0).
+
 * Thu Oct 21 2021 Leontiy Volodin <lvol@altlinux.org> 3.0.1.1-alt1
 - Initial build for ALT Sisyphus (thanks fedora for the spec).
 - Built as require for sagemath.
