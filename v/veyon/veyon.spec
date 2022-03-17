@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.7.0
+Version: 4.7.2
 Release: alt1
 Group: Education
 License: GPLv2
@@ -121,6 +121,9 @@ sed -i "s/-Werror/-Wno-error/" CMakeLists.txt
 %_datadir/%name
 
 %changelog
+* Thu Mar 17 2022 Egor Ignatov <egori@altlinux.org> 4.7.2-alt1
+- new version
+
 * Tue Dec 28 2021 Egor Ignatov <egori@altlinux.org> 4.7.0-alt1
 - new version
 
