@@ -1,6 +1,6 @@
 Name: R-base
-Version: 4.0.5
-Release: alt2
+Version: 4.1.3
+Release: alt1
 
 Summary: A language for data analysis and graphics
 License: GPLv2
@@ -15,7 +15,7 @@ Patch: R-%version-%release.patch
 BuildRequires: bzlib-devel gcc-c++ gcc-fortran libXmu-devel libjpeg-devel liblzma-devel libpango-devel libpcre2-devel libpng-devel libreadline-devel libtiff-devel texlive-collection-latex texlive-dist tk-devel zlib-devel makeinfo texi2dvi libcurl-devel libcairo-devel libtre-devel rpm-build-java java-devel-default
 BuildRequires: libopenblas-devel
 
-BuildPreReq: liblapack-devel libicu-devel libgomp8-devel
+BuildPreReq: liblapack-devel libicu-devel libgomp-devel
 
 %description
 R is `GNU S' - A language and environment for statistical computing
@@ -45,7 +45,7 @@ rm src/extra/blas/*.f src/modules/lapack/*.f
 %define Rdocdir %_docdir/R-%verid
 export	lt_cv_prog_cc_static_works=no \
 	ac_cv_path_R_ZIPCMD=zip ac_cv_path_R_UNZIPCMD=unzip \
-	ac_cv_path_R_BROWSER=firefox ac_cv_path_R_PDFVIEWER=evince \
+	ac_cv_path_R_BROWSER=xdg-open ac_cv_path_R_PDFVIEWER=xdg-open \
 	ac_cv_path_PAGER='less -isR' ac_cv_prog_R_PRINTCMD=lpr
 %add_optflags -fno-strict-aliasing
 %ifarch ppc64le
@@ -118,7 +118,11 @@ ln -snfv `relative %_bindir/libtool %Rhome/bin/libtool` %buildroot%Rhome/bin/lib
 rm -fv %buildroot%_infodir/dir*
 
 %check
+%ifarch ppc64le
+export TZ="UTC"
+%else
 export TZ=""
+%endif
 make check
 
 %files 
@@ -284,6 +288,7 @@ language and Tk GUI elements.
 Summary: HTML manuals for the R Statistical Environment
 Group: Sciences/Mathematics
 Requires: R-base = %version-%release
+Requires: xdg-utils
 BuildArch: noarch
 
 %description -n R-doc-html
@@ -309,6 +314,7 @@ Summary: PDF manuals for the R Statistical Environment
 Group: Sciences/Mathematics
 Conflicts: R-base > %version, R-base < %version
 BuildArch: noarch
+Requires: xdg-utils
 
 %description -n R-doc-pdf
 R is `GNU S' - A language and environment for statistical computing
@@ -341,6 +347,14 @@ classification, clustering, ...).
 %_infodir/R-*.info*
 
 %changelog
+* Thu Mar 10 2022 Kirill Maslinsky <kirill@altlinux.org> 4.1.3-alt1
+- Version 4.1.3
+
+* Wed Sep 1 2021 Kirill Maslinsky <kirill@altlinux.org> 4.1.0-alt1
+- Version 4.1.0
+- set xdg-open as default browser for html and pdf (closes #40284)
+- build with libgomp-devel instead of libgomp8-devel
+
 * Tue Aug 31 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.0.5-alt2
 - added missing openblas req (need for e2k build)
 
