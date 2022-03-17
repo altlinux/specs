@@ -1,5 +1,5 @@
 Name: gtk-theme-qogir
-Version: 2021.08.02
+Version: 2021.12.25
 Release: alt1
 Epoch: 1
 Summary: Qogir GTK theme
@@ -29,15 +29,18 @@ Based on Arc gtk theme
 mkdir -p %buildroot%_datadir/themes/Qogir
 ./install.sh -d %buildroot%_datadir/themes
 
-%check
-./test.sh
-
 %files
 %doc AUTHORS COPYING HACKING README.md
 %dir %_datadir/themes
 %_datadir/themes/Qogir*
 
 %changelog
+* Thu Mar 17 2022 Leontiy Volodin <lvol@altlinux.org> 1:2021.12.25-alt1
+- New version.
+- Upstream:
+  + Fixed firefox, GDM, cinnamon, gnome-shell issues.
+  + Add rounded window version.
+
 * Fri Aug 20 2021 Leontiy Volodin <lvol@altlinux.org> 1:2021.08.02-alt1
 - New version.
 - Upstream:
