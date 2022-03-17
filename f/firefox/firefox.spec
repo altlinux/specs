@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        98.0
+Version:        98.0.1
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -40,6 +40,7 @@ Patch012: 0012-VAAPI-Add-extra-frames.patch
 Patch013: 0013-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch014: 0014-ALT-fix-double_t-redefinition.patch
 Patch015: 0015-build-Disable-Werror.patch
+Patch016: 0016-Prevent-discrimination-of-Russian-services.patch
 ### End Patches
 
 %define _unpackaged_files_terminate_build 1
@@ -464,6 +465,11 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Thu Mar 17 2022 Alexey Gladkov <legion@altlinux.ru> 98.0.1-alt1
+- New release (98.0.1).
+- Update localization.
+- Prevented exclusion some of Russian extensions and bookmarks.
+
 * Tue Mar 08 2022 Alexey Gladkov <legion@altlinux.ru> 98.0-alt1
 - New release (98.0).
 - Security fixes:
