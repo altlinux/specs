@@ -1,9 +1,10 @@
+%def_enable snapshot
 %define ver_major 0.5
 %define gst_api_ver 1.0
 
 Name: gnome-video-effects
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A collection of GStreamer video effects
 License: GPLv2
@@ -12,14 +13,19 @@ Url: https://wiki.gnome.org/Projects/GnomeVideoEffects
 
 BuildArch: noarch
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 Requires: gst-plugins-base%gst_api_ver
 Requires: gst-plugins-good%gst_api_ver
 Requires: gst-plugins-bad%gst_api_ver
 Requires: frei0r-plugins
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
 
 %description
 A collection of GStreamer video effects to be used in different GNOME Modules.
@@ -52,6 +58,9 @@ This package provides .pc file needed to build apllications using %name.
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Thu Mar 17 2022 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt2
+- updated to 0.5.0-13-gdd9ae10
+
 * Tue Aug 06 2019 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - 0.5.0
 
