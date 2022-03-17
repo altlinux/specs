@@ -1,4 +1,6 @@
-%def_disable snapshot
+
+%def_enable snapshot
+
 %ifarch %e2k ppc64le
 %def_disable qtwebengine
 %else
@@ -9,20 +11,25 @@
 %define xdg_name org.openshot.OpenShot
 Name: openshot
 Version: %ver_major.1
-Release: alt1.1
+Release: alt2
 
 Summary: Non Linear Video Editor using Python and MLT
 Group: Video
 License: GPL-3.0
 Url: http://www.openshotvideo.com/
 
+%define _name  %name-qt
+
 %if_disabled snapshot
 #Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-qt-%version.tar.gz
-Source: https://github.com/OpenShot/openshot-qt/archive/v%version/%name-qt-%version.tar.gz
+Source: https://github.com/OpenShot/openshot-qt/archive/v%version/%_name-%version.tar.gz
 %else
 Vcs: https://github.com/OpenShot/openshot-qt.git
-Source: %name-%version.tar.gz
+Source: %_name-%version.tar
 %endif
+
+# https://github.com/OpenShot/openshot-qt/pull/4527
+Patch10: %_name-2.6.1-py310_fix.patch
 
 # blender > 2.80 doesn't support 32-bit
 ExcludeArch: i586 armh
@@ -51,7 +58,8 @@ and image formats. Create videos for YouTube, Flickr, Vimeo, Metacafe,
 Xbox, and many more common formats.
 
 %prep
-%setup -n %name-qt-%version
+%setup -n %_name-%version
+%patch10 -p1 -b .python3-10
 
 %build
 %python3_build
@@ -72,6 +80,11 @@ Xbox, and many more common formats.
 
 
 %changelog
+* Thu Mar 17 2022 Yuri N. Sedunov <aris@altlinux.org> 2.6.1-alt2
+- updated to v2.6.1-74-gb72327d1 from develop branch as in fedora/rpmfusion
+  openshot-2.6.2*fc37.src.rpm package
+- applied fixes for Python-3.10
+
 * Fri Feb 04 2022 Sergey V Turchin <zerg@altlinux.org> 2.6.1-alt1.1
 - using qtwebkit instead of qtwebengine on e2k and ppc64le
 
