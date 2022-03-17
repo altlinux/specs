@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 71
+%define centos_release 72
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,17 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Mar 17 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.72-alt1.el9
+- Updated to kernel-5.14.0-72.el9:
+  + Merge tag 'kernel-5.14.0-70.1.1.el9_0' from 9.0
+  + redhat/configs: Disable CONFIG_SURFACE_PLATFORMS
+  + redhat/configs: Enable CONFIG_INTEL_PCH_THERMAL for x86
+  + redhat: use centos x509.genkey file if building under centos
+  + Revert 8dffe2b6 "Merge: kabi: add lib ACKed symbols"
+  + SCSI host-managed SMR drive support in RHEL 9 is unmaintained and needs kernel warning message
+  + spec: Fix separate tools build
+  + spec: make linux-firmware weak(er) dependency
+
 * Wed Mar 09 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.71-alt1.el9
 - Updated to kernel-5.14.0-71.el9:
   + MDRAID - Update to the latest upstream
