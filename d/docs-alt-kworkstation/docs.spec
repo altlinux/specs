@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.0
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -49,6 +49,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Thu Mar 17 2022 Elena Mishina <lepata@altlinux.org> 10.0-alt3
+- update to ALT Kworkstation 10.0RC2
+
 * Fri Feb 18 2022 Elena Mishina <lepata@altlinux.org> 10.0-alt2
 - update to ALT Kworkstation 10.0RC1
 
