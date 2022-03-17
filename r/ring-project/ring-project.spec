@@ -30,7 +30,7 @@
 
 Name: ring-project
 Version: 20211223
-Release: alt1
+Release: alt2
 
 Group: Networking/Instant messaging
 Summary: SIP and IAX2 compatible softphone
@@ -363,6 +363,12 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir/
 #%_libdir/libring.a
 
 %changelog
+* Thu Mar 17 2022 Sergey V Turchin <zerg@altlinux.org> 20211223-alt2
+- merge p10 changes
+
+* Tue Mar 15 2022 Sergey V Turchin <zerg@altlinux.org> 20201118-alt4
+- build with parity of qtwebengine arches
+
 * Thu Mar 03 2022 Sergey V Turchin <zerg@altlinux.org> 20211223-alt1
 - new version
 
