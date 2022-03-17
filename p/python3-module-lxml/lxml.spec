@@ -3,7 +3,7 @@
 %define oname lxml
 
 Name: python3-module-lxml
-Version: 4.7.1
+Version: 4.8.0
 Release: alt1
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API
@@ -12,7 +12,6 @@ License: BSD-3-Clause AND GPL-2.0-or-later
 Group: Development/Python3
 URL: https://pypi.org/project/lxml
 
-# Source-url: %__pypi_url %oname
 # https://github.com/lxml/lxml
 Source: %name-%version.tar
 
@@ -24,9 +23,7 @@ BuildRequires: python3-module-cssselect
 Requires: python3-module-cssselect
 %endif
 
-BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-
 BuildRequires: libxslt-devel zlib-devel
 # see doc/build.txt
 BuildRequires: python3-module-Cython >= 0.18
@@ -37,7 +34,6 @@ It provides safe and convenient access to these libraries using the ElementTree 
 
 It extends the ElementTree API significantly to offer support for XPath,
 RelaxNG, XML Schema, XSLT, C14N and much more.
-
 
 %package doc
 Summary: Documentation for lxml
@@ -71,7 +67,6 @@ sed -i 's|/usr/bin/python|/usr/bin/python3|' \
 
 %check
 export LC_ALL=en_US.UTF-8
-
 # see Makefile
 CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ;
 CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ;
@@ -88,6 +83,9 @@ PYTHONPATH=src python3 src/lxml/tests/selftest2.py
 %doc doc samples
 
 %changelog
+* Thu Mar 17 2022 Grigory Ustinov <grenka@altlinux.org> 4.8.0-alt1
+- Automatically updated to 4.8.0.
+
 * Sat Feb 05 2022 Grigory Ustinov <grenka@altlinux.org> 4.7.1-alt1
 - Build new version.
 - Disable bootstrap.
