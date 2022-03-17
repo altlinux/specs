@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: verilator
-Version: 4.218
+Version: 4.220
 Release: alt1
 Summary: A fast and free Verilog HDL simulator
 
@@ -67,6 +67,9 @@ mv %buildroot%_datadir/%name/examples %buildroot%_docdir/%name/
 %_docdir/%name/
 
 %changelog
+* Thu Mar 17 2022 Egor Ignatov <egori@altlinux.org> 4.220-alt1
+- new version 4.220
+
 * Fri Jan 21 2022 Egor Ignatov <egori@altlinux.org> 4.218-alt1
 - new version 4.218
 
