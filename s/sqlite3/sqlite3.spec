@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: sqlite3
-Version: 3.36.0
-Release: alt2
+Version: 3.38.1
+Release: alt1
 Summary: An Embeddable SQL Database Engine
 License: ALT-Public-Domain
 Group: Development/Databases
@@ -14,9 +14,7 @@ Patch1: 0001-FEDORA-no-malloc-usable-size.patch
 Patch2: 0002-FEDORA-percentile-test.patch
 Patch3: 0003-FEDORA-ALT-datetest-2.2c.patch
 Patch4: 0004-ALT-TEA-Policy.patch
-Patch5: 0005-ALT-build-dependencies.patch
-Patch6: 0006-UPSTREAM-Fix-CVE-2021-36690-Check-in-b1e0c22e.patch
-Patch7: 0007-deref-after-null.patch
+Patch5: 0005-UPSTREAM-Only-run-atof1.test-on-x86_64-machines.patch
 
 BuildRequires(Pre): tcl-devel
 BuildRequires: libreadline-devel
@@ -65,8 +63,8 @@ access without running a separate RDBMS process.
 %package -n tcl-sqlite3
 Summary: An Embeddable SQL Database Engine (TCL bindings)
 Group: Development/Tcl
-Provides: sqlite3-tcl
-Obsoletes: sqlite3-tcl
+Provides: sqlite3-tcl = %version
+Obsoletes: sqlite3-tcl < %version
 
 %description -n tcl-sqlite3
 SQLite is a C library that implements an SQL database engine.
@@ -139,11 +137,11 @@ autoreconf -i
 	--enable-threadsafe \
 	#
 
-%make_build all
-make sqlite3_analyzer sqldiff
+make all sqlite3_analyzer sqldiff
 
 %check
 sed -Ei 's@-DSQLITE_ENABLE_FTS[34](\s|$)@@g' Makefile
+export LD_LIBRARY_PATH=%buildroot%_libdir
 %make test
 
 %install
@@ -201,9 +199,13 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Fri Mar 18 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.38.1-alt1
+- 3.38.1.
+- Backported patch to fix atof1 test from upstream.
+
 * Wed Oct 20 2021 Alexander Danilov  <admsasha@altlinux.org> 3.36.0-alt2
 - Fixes:
-  + OVE-20211020-0001 fixed pointer dereference after null check 
+  + OVE-20211020-0001 fixed pointer dereference after null check
     that produces undefined behaviour.
 
 * Mon Sep 20 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.36.0-alt1
