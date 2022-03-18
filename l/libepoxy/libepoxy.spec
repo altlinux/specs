@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: libepoxy
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: Direct Rendering Manager runtime library
@@ -82,6 +82,9 @@ export LD_LIBRARY_PATH=%buildroot/%_libdir
 
 
 %changelog
+* Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 1.5.10-alt1
+- 1.5.10
+
 * Sat Aug 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1.5.9-alt1
 - 1.5.9
 
