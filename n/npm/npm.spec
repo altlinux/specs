@@ -1,6 +1,6 @@
 Name: npm
 Version: 8.3.1
-Release: alt1
+Release: alt2
 
 Summary: A package manager for node
 
@@ -54,16 +54,15 @@ ln -s %nodejs_sitelib/%name/bin/npx-cli.js %buildroot%_bindir/npx
 # just copy, like in node package was
 cp -a . %buildroot%nodejs_sitelib/%name/
 
-rm -rf %buildroot%nodejs_sitelib/%name/node_modules/node-gyp/gyp/tools/emacs
-# need python2.7(TestCommon)
-rm -rf %buildroot%nodejs_sitelib/%name/node_modules/node-gyp/gyp/pylib/gyp/generator/ninja_test.py
-# drop due empty fixtures/package.json
-rm -rf %buildroot%nodejs_sitelib/test/
-# drop due docker requires
-rm -rf %buildroot%nodejs_sitelib/%name/node_modules/node-gyp/test/
+# remove all tests from workspaces (ALT bug 42037)
+rm -rv %buildroot%nodejs_sitelib/%name/workspaces/*/test/
 
-# skip gnuplot and convert reqs
-rm -rf %buildroot%nodejs_sitelib/%name/node_modules/request/node_modules/node-uuid/benchmark/
+# stop symlinks
+find %buildroot%nodejs_sitelib/%name/ -type l | while read link ; do
+    real=$(realpath $link)
+    rm -v $link
+    mv -v $real $link
+done
 
 %files -n npm
 %_bindir/npm
@@ -71,6 +70,10 @@ rm -rf %buildroot%nodejs_sitelib/%name/node_modules/request/node_modules/node-uu
 %nodejs_sitelib/%name/
 
 %changelog
+* Thu Mar 17 2022 Vitaly Lipatov <lav@altlinux.ru> 8.3.1-alt2
+- drop tests from new workspaces libs (ALT bug 42037)
+- don't pack symlinks (ALT bug 42000)
+
 * Sun Feb 13 2022 Vitaly Lipatov <lav@altlinux.ru> 8.3.1-alt1
 - new version 8.3.1 (with rpmrb script)
 
