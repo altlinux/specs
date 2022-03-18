@@ -5,7 +5,7 @@
 
 Name: shadowsocks-libev
 Version: 3.3.5
-Release: alt1
+Release: alt2
 Summary: A fast tunnel proxy that helps you bypass firewalls
 License: GPL-3.0-or-later
 Group: Security/Networking
@@ -67,11 +67,11 @@ install -m0644 .gear/*.json %buildroot%_sysconfdir/%name
 install -m0644 .gear/sysctl.conf* %buildroot%_sysconfdir/sysctl.d/88-%name.conf.example
 
 %post
-%post_service %name-client
+%post_service %name-local
 %post_service %name-server
 
 %preun
-%preun_service %name-client
+%preun_service %name-local
 %preun_service %name-server
 
 %files
@@ -93,5 +93,8 @@ install -m0644 .gear/sysctl.conf* %buildroot%_sysconfdir/sysctl.d/88-%name.conf.
 %_libdir/lib%name.so.*
 
 %changelog
+* Fri Mar 18 2022 Vitaly Chikunov <vt@altlinux.org> 3.3.5-alt2
+- Rename client to local in config and systemd units.
+
 * Mon Mar 14 2022 Vitaly Chikunov <vt@altlinux.org> 3.3.5-alt1
 - First import v3.3.5-34-g46382c2 (2022-02-15).
