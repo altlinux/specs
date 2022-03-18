@@ -3,16 +3,16 @@
 
 Name: qucs-s
 Version: 0.0.23
-Release: alt1
+Release: alt2
 
 Summary: Circuit simulator
 License: GPLv2+
 Group: Education
 Url: https://github.com/ra3xdh/qucs
 
-Packager: Anton Midyukov <antohami@altlinux.org>
-
 Source: %name-%version.tar
+Patch: fix_S4Q_workdir.patch
+
 Buildrequires (pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -41,6 +41,7 @@ window.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=Release
@@ -63,6 +64,9 @@ done > %name.lang
 %_man1dir/*
 
 %changelog
+* Fri Mar 18 2022 Anton Midyukov <antohami@altlinux.org> 0.0.23-alt2
+- fix S4Q_workdir variable with first running (Closes: 42122)
+
 * Mon Feb 21 2022 Anton Midyukov <antohami@altlinux.org> 0.0.23-alt1
 - new version 0.0.23
 - drop subpackage qucs-s-data
