@@ -1,5 +1,5 @@
 Name: rav1e
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Summary: The fastest and safest AV1 encoder
@@ -8,8 +8,7 @@ Group: Video
 Url: https://github.com/xiph/rav1e
 
 Source0: %name-%version.tar
-Source1: cargo.config
-Source2: vendor.tar
+Source1: crates.tar
 
 BuildRequires: rust-cargo rust-cargo-c nasm /proc
 
@@ -38,8 +37,13 @@ i%desc
 this package contains development part of rav1e
 
 %prep
-%setup -a2
-install -pD %SOURCE1 cargo/config
+%setup
+%ifdef bootstrap
+cargo vendor
+tar cf %SOURCE1 vendor
+%else
+tar xf %SOURCE1
+%endif
 
 %build
 export CARGO_HOME=${PWD}/cargo
@@ -63,5 +67,8 @@ cargo cinstall --destdir=%buildroot --includedir=%_includedir \
 %_pkgconfigdir/*pc
 
 %changelog
+* Fri Mar 18 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.1-alt1
+- 0.5.1 released
+
 * Fri Nov 26 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.0-alt1
 - initial
