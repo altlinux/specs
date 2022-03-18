@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpupdate
-Version: 0.9.9
+Version: 0.9.9.1
 Release: alt1
 
 Summary: GPT applier
@@ -135,6 +135,11 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Thu Mar 03 2022 Valery Sinelnikov <greh@altlinux.org> 0.9.9.1-alt1
+- Fixed method call (Closes: 41994)
+- Removed unnecessary replace
+- Fixed declaration of variable
+
 * Fri Feb 18 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.9.9-alt1
 - Add gpupdate-remote-policy PAM substack (for pam_mount support)
 - Added lookup for possible dc if first found is unreadable
