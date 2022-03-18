@@ -15,7 +15,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.6
+Version: %ver_major.8
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -226,6 +226,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 2.42.8-alt1
+- 2.42.8
+
 * Fri Apr 09 2021 Yuri N. Sedunov <aris@altlinux.org> 2.42.6-alt1
 - 2.42.6
 
