@@ -6,7 +6,7 @@ epoch:1
 %define kernel_need_version	5.15
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	5.15
-%define kernel_sublevel .25
+%define kernel_sublevel .28
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -444,6 +444,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Mar 18 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:5.15.28-alt1
+- Updated to 5.15.28
+- https://github.com/raspberrypi/linux.git rpi-5.15.y commit 53c0d5c6893c940cb762d3a474103706b1e5e383
+- Baikal-M: HD audio support
+- Baikal-M: new supported boards: et101 (Elpitech), AQBM1000 (Aquarius)
+
 * Wed Mar 02 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:5.15.25-alt1
 - Updated to 5.15.25
 - https://github.com/raspberrypi/linux.git rpi-5.15.y commit 0efbe86e7248ad9b80a42b37a91c44860f91eee4
