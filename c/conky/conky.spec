@@ -42,7 +42,7 @@
 
 Name: conky
 Version: 1.12.2
-Release: alt1
+Release: alt2
 
 Summary: lightweight graphical system monitor
 Summary(ru_RU.UTF-8): Легковесный графический системный монитор
@@ -197,6 +197,10 @@ rm %buildroot%_libdir/libtcp-portmon.a
 %vim_runtime_dir/syntax/conkyrc.vim
 
 %changelog
+* Fri Mar 18 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.12.2-alt2
+- Fixed conky.watch.
+- Cleaned up gear repo.
+
 * Fri Apr 30 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.12.2-alt1
 - Updated to 1.12.2.
 - Updated conky.watch.
