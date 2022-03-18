@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 7.0.1
+Version: 7.1.1
 Release: alt1
 
 Summary: Python test framework
@@ -32,7 +32,6 @@ BuildRequires: python3(tomli)
 BuildRequires: python3(argcomplete)
 BuildRequires: python3(hypothesis)
 BuildRequires: python3(mock)
-BuildRequires: python3(nose)
 BuildRequires: python3(requests)
 BuildRequires: python3(xmlschema)
 BuildRequires: python3-module-Pygments > 2.4.2
@@ -41,6 +40,7 @@ BuildRequires: /dev/pts
 BuildRequires: /dev/shm
 
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
 
 # optional
 BuildRequires: python3(decorator)
@@ -98,7 +98,7 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
-tox.py3 --sitepackages -vvr -s false -- -vra
+tox.py3 --sitepackages -vvr -s false --no-deps -- -vra
 
 %files
 %doc AUTHORS LICENSE *.rst
@@ -113,6 +113,9 @@ tox.py3 --sitepackages -vvr -s false -- -vra
 %_bindir/pytest-3
 
 %changelog
+* Fri Mar 18 2022 Stanislav Levin <slev@altlinux.org> 7.1.1-alt1
+- 7.0.1 -> 7.1.1.
+
 * Fri Feb 25 2022 Stanislav Levin <slev@altlinux.org> 7.0.1-alt1
 - 6.2.5 -> 7.0.1.
 

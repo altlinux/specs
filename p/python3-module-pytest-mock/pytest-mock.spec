@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 3.7.0
-Release: alt1
+Release: alt2
 
 Summary: Thin-wrapper around the mock package for easier use with py.test
 License: MIT
@@ -66,6 +66,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/pytest_mock-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Mar 18 2022 Stanislav Levin <slev@altlinux.org> 3.7.0-alt2
+- Fixed FTBFS (Pytest 7.1.1).
+
 * Thu Feb 03 2022 Stanislav Levin <slev@altlinux.org> 3.7.0-alt1
 - 3.5.1 -> 3.7.0.
 
