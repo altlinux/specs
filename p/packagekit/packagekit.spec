@@ -5,7 +5,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.2.5
-Release:   alt3
+Release:   alt4
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -290,6 +290,9 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Mar 18 2022 Oleg Solovyov <mcpain@altlinux.org> 1.2.5-alt4
+- Fix gnome-software "No packages to remove" error (Closes: #42094)
+
 * Tue Mar 15 2022 Oleg Solovyov <mcpain@altlinux.org> 1.2.5-alt3
 - Fix package for dependent builds
 - Restart service before connecting to network
