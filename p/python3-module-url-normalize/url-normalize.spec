@@ -1,9 +1,9 @@
 Name: python3-module-url-normalize
-Version: 1.4.2
+Version: 1.4.3
 Release: alt1
 
 Summary: URI Normalization function
-License: Python
+License: MIT
 Group: Development/Python
 Url: https://pypi.org/project/url-normalize/
 
@@ -29,6 +29,8 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %python3_sitelibdir/url_normalize-%version-*-info
 
 %changelog
+* Fri Mar 18 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.3-alt1
+- 1.4.3 released
+
 * Tue Jul 21 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.2-alt1
 - initial
-
