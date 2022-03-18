@@ -66,7 +66,7 @@
 
 Name: virtualbox
 Version: 6.1.32
-Release: alt3
+Release: alt4
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -954,6 +954,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Fri Mar 18 2022 Valery Sinelnikov <greh@altlinux.org> 6.1.32-alt4
+- Fix bug (Closes: 41994)
+
 * Fri Feb 11 2022 Valery Sinelnikov <greh@altlinux.org> 6.1.32-alt3
 - Added rpath for VBoxVNC and VBoxVNCMain
 
