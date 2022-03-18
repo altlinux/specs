@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.0
-Release: alt8
+Release: alt9
 
 Summary: Group policy editor
 License: GPLv2+
@@ -93,6 +93,11 @@ install -v -p -m 644 -D ../setup/man/ru/gpui.1 %buildroot%_mandir/ru/man1/gpui.1
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Fri Mar 18 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt9
+- Fixes:
+  + Fix segmentation fault on selecting new policy item.
+  + Fix translation of message box window.
+
 * Wed Mar 16 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt8
 - Fixes:
   + #74163 Fix segmentation fault on selecting item in "security category".
