@@ -3,7 +3,7 @@
 
 Name: android-tools
 Version: 10.0.0
-Release: alt3.r36
+Release: alt4.r36
 
 Summary: Android Debug CLI tools
 License: APL
@@ -56,7 +56,7 @@ Patch206: alt-libunwindstack-dwarfmemory-include-cstddef.patch
 Requires: udev-android
 
 BuildRequires: gcc-c++
-BuildRequires: p7zip
+BuildRequires: liblzma-devel
 BuildRequires: libssl-devel zlib-devel libselinux-devel
 BuildRequires: libusb-devel libgtest-devel libsafe-iop-devel
 %if_enabled docs
@@ -276,6 +276,9 @@ done
 %aprefix
 
 %changelog
+* Sat Mar 19 2022 Pavel Nakonechnyi <zorg@altlinux.org> 10.0.0-alt4.r36
+- remove p7zip from link dependencies: replacing it with llzma (from Debian)
+
 * Sat Oct 16 2021 Pavel Nakonechnyi <zorg@altlinux.org> 10.0.0-alt3.r36
 - fix build on the update toolchain
 - backport some Debian buildfiles updates
