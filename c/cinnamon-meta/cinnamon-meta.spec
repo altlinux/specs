@@ -1,8 +1,8 @@
-%define ver_major 4.6
+%define ver_major 5.2
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt4
+Release: alt1
 
 Summary: Cinnamon desktop meta package
 License: %gpl2plus
@@ -114,7 +114,7 @@ Requires: xviewer
 Requires: gnome-power-manager
 Requires: NetworkManager-gnome >= 0.8.995
 #Bluetooth configuration
-Requires: blueberry
+Requires: blueman
 
 %description -n cinnamon-regular
 This package provides Cinnamon desktop and set
@@ -127,6 +127,10 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Wed Mar 17 2022 Vladimir Didenko <cow@altlinux.org> 5.2.0-alt1
+- version bump
+- replace blueberry by blueman
+
 * Mon Jun 1 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt4
 - move pulseaudio from cinnamon-default to cinnamon-regular since
   it is not mandatory dependency

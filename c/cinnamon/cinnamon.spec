@@ -2,7 +2,7 @@
 
 Name: cinnamon
 Version: 5.2.7
-Release: alt1
+Release: alt2
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -190,6 +190,9 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Fri Mar 18 2022 Vladimir Didenko <cow@altlinux.org> 5.2.7-alt2
+- Replace blueberry by blueman
+
 * Wed Jan 12 2022 Vladimir Didenko <cow@altlinux.org> 5.2.7-alt1
 - 5.2.7
 
