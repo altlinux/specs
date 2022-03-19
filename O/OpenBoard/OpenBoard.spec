@@ -4,7 +4,7 @@
 %define dest_dir %_libdir/OpenBoard
 Name: OpenBoard
 Version: 1.6.1
-Release: alt4
+Release: alt5
 Summary: Interactive whiteboard for schools and universities
 License: GPL-3.0+
 Group: Education
@@ -154,6 +154,9 @@ cp -R resources/customizations %buildroot%dest_dir/
 %_bindir/%name
 
 %changelog
+* Fri Mar 18 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.1-alt5
+- adapted for build with libpoppler-devel-21.11.0 and libpoppler-devel-22.03.0
+
 * Thu Mar 17 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.1-alt4
 - fix build with poppler-22
 
