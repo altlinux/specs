@@ -1,14 +1,8 @@
-%def_without external_distro_info
-
-%define pkgsystem "%(bin/distr_info -g)"
-%if %pkgsystem == "yum-rpm"
-%def_disable yum
-%else
-%def_enable yum
-%endif
+# from rpm-build-intro
+%define pkgsystem %(distr_vendor -g)
 
 Name: eepm
-Version: 3.14.6
+Version: 3.15.0
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -19,21 +13,20 @@ Url: http://wiki.etersoft.ru/EPM
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# git-clone http://git.etersoft.ru/projects/korinf/eepm.git
+# git clone https://github.com/Etersoft/eepm.git
 Source: ftp://updates.etersoft.ru/pub/Etersoft/Sisyphus/sources/tarball/%name-%version.tar
 
 BuildArchitectures: noarch
 
+# use distr_vendor from it
+BuildRequires: rpm-build-intro
+
 Obsoletes: epm
 Provides: epm = %EVR
 
-%if %_vendor == "alt"
+%if "%_vendor" == "alt"
 # FIXHERE: Replace with target platform package manager
 Requires: apt rpm
-%endif
-
-%if_with external_distro_info
-Requires: distro_info >= 2.5
 %endif
 
 %description
@@ -108,18 +101,12 @@ ln -s serv %buildroot%_sysconfdir/bash_completion.d/cerv
 chmod a+x %buildroot%_datadir/%name/{serv-,epm-}*
 chmod a+x %buildroot%_datadir/%name/tools_*
 
-%if_with external_distro_info
-# use external eget
-#rm -v %buildroot%_datadir/%name/tools_eget
-# use external distro_info
-rm -v %buildroot%_bindir/distr_info
-%endif
+mkdir -p %buildroot/var/lib/eepm/
 
-%if_disabled yum
+%if "%pkgsystem" == "yum-rpm"
 rm -v %buildroot%_bindir/yum
 %endif
 
-mkdir -p %buildroot/var/lib/eepm/
 
 %files
 %doc README.md TODO LICENSE
@@ -134,29 +121,58 @@ mkdir -p %buildroot/var/lib/eepm/
 %_bindir/eepm
 %_bindir/serv
 %_bindir/cerv
-%if_enabled yum
+%if "%pkgsystem" != "yum-rpm"
 %exclude %_bindir/yum
 %endif
 %dir /var/lib/eepm/
-%if_without external_distro_info
 %_bindir/distr_info
-%endif
 %_man1dir/*
 %_datadir/%name/
 %_sysconfdir/bash_completion.d/serv
 %_sysconfdir/bash_completion.d/cerv
 
-%if %_vendor == "alt"
+%if "%_vendor" == "alt"
 %files repack
 %endif
 
-%if_enabled yum
+%if "%pkgsystem" != "yum-rpm"
 # not for yum based system
 %files yum
 %_bindir/yum
 %endif
 
 %changelog
+* Sat Mar 19 2022 Vitaly Lipatov <lav@altlinux.ru> 3.15.0-alt1
+- epm play: add R7 Office from the official site
+- spec: drop ALT specific cases, use rpm-build-intro
+- epm play xnview: remove libs embedded in Plugins
+- epm-release_upgrade: add support for migrate from CentOS/8 to RockyLinux/8
+- epm-release_upgrade: add migrate to Oracle Linux and CentOS Stream
+- epm-repolist: allow args on ALT
+- distr_info: add RockyLinux and OracleLinux support
+- epm-release_upgrade: improve fix CentOS/8 repo
+- distr_info pkgtype: add package type autodetect by package manager
+- distr_info pkgmanager: detect package manager by commands in the system
+- distr_info: add Alma Linux support
+- epm play assistant: update version to 4.7
+- epm-restore: fix for python_version <= 2.7
+- epm-query_file: fix on deb systems
+- epm qf: always use full path for rpm --query
+- epm-release_upgrade: install systemd-settings-disable-kill-user-processes only if missed
+- distr_info: add ALTServer support
+- epm play: add Atom support
+- epm-checkpkg: fix message
+- epm play edge: fix binary interpreter (ALT bug 41921)
+- epm play skype: set SUID for chrome-sandbox if userns_clone is not supported (ALT bug 41599)
+- epm play zoom: fix repack (ALT bug 41775) (ALT bug 41954)
+- epm play: add mssql-tools install
+- epm-repack: allow multidigital versions
+- epm play yandex-browser: add install yandex-browser-beta-codecs-ffmpeg-extra (ALT bug 40113)
+- epm repack yandex-browser-beta.sh: improved
+
+* Mon Dec 20 2021 Vitaly Lipatov <lav@altlinux.ru> 3.14.7-alt1
+- add epm play mssql-server
+
 * Thu Dec 16 2021 Vitaly Lipatov <lav@altlinux.ru> 3.14.6-alt1
 - epm play: add initial --update [receipt|all] support (do update in any case as for now)
 - distr_info: add FedoraLinux support (Fedora 35)
