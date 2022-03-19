@@ -3,8 +3,8 @@
 %define confdir ext/redhat
 
 Name:          gem-%pkgname
-Version:       7.14.0
-Release:       alt4
+Version:       7.15.0
+Release:       alt1
 Summary:       A network tool for managing many disparate systems
 Group:         Development/Ruby
 License:       Apache-2.0
@@ -195,6 +195,9 @@ sed -e "s,sample.server.name,$(hostname)," \
 %ruby_gemdocdir
 
 %changelog
+* Fri Mar 18 2022 Andrey Cherepanov <cas@altlinux.org> 7.15.0-alt1
+- New version.
+
 * Fri Feb 18 2022 Andrey Cherepanov <cas@altlinux.org> 7.14.0-alt4
 - Removed requires of puppet-puppetserver-foreman.
 
