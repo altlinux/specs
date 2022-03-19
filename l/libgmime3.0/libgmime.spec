@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.9
+Version: %ver_major.11
 Release: alt1
 
 Summary: Glorious MIME Utility Library
@@ -135,6 +135,9 @@ statically linked GMime-based software.
 %endif
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 3.2.11-alt1
+- 3.2.11
+
 * Wed Mar 09 2022 Yuri N. Sedunov <aris@altlinux.org> 3.2.9-alt1
 - 3.2.9
 
