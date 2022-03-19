@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: libadwaita
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 Epoch: 1
 
@@ -32,12 +32,13 @@ Source: %name-%version.tar
 %define glib_ver 2.66
 %define gtk_ver 4.5.0
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson >= %meson_ver sassc
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: libfribidi-devel
-%{?_enable_introspection:BuildRequires: pkgconfig(gobject-introspection-1.0) gir(Gtk) = 4.0}
+%{?_enable_introspection:BuildRequires(pre): rpm-build-gir
+BuildRequires: pkgconfig(gobject-introspection-1.0) gir(Gtk) = 4.0}
 %{?_enable_vala:BuildRequires(pre): rpm-build-vala
 BuildRequires: vala-tools}
 %{?_enable_gtk_doc:BuildRequires: gi-docgen}
@@ -143,6 +144,9 @@ xvfb-run -s -noreset %meson_test
 %endif
 
 %changelog
+* Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 1:1.0.3-alt1
+- 1.0.3
+
 * Fri Mar 04 2022 Yuri N. Sedunov <aris@altlinux.org> 1:1.0.2-alt1
 - 1.0.2
 
