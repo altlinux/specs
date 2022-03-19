@@ -18,7 +18,7 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 %endif
 
 Name: clickhouse
-Version: 22.2.3.5
+Version: 22.3.2.2
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -28,15 +28,15 @@ Url: https://clickhouse.yandex/
 # https://github.com/ClickHouse/ClickHouse.git
 Source: %name-%version.tar
 
-Source1:  %name-%version-contrib-abseil-cpp.tar
-Source2:  %name-%version-contrib-AMQP-CPP.tar
-Source3:  %name-%version-contrib-arrow.tar
-Source4:  %name-%version-contrib-arrow-cpp-submodules-parquet-testing.tar
-Source5:  %name-%version-contrib-arrow-testing.tar
-Source6:  %name-%version-contrib-avro.tar
-Source7:  %name-%version-contrib-aws.tar
-Source8:  %name-%version-contrib-aws-c-common.tar
-Source9:  %name-%version-contrib-aws-c-event-stream.tar
+Source1: %name-%version-contrib-abseil-cpp.tar
+Source2: %name-%version-contrib-AMQP-CPP.tar
+Source3: %name-%version-contrib-arrow.tar
+Source4: %name-%version-contrib-arrow-cpp-submodules-parquet-testing.tar
+Source5: %name-%version-contrib-arrow-testing.tar
+Source6: %name-%version-contrib-avro.tar
+Source7: %name-%version-contrib-aws.tar
+Source8: %name-%version-contrib-aws-c-common.tar
+Source9: %name-%version-contrib-aws-c-event-stream.tar
 Source10: %name-%version-contrib-aws-checksums.tar
 Source11: %name-%version-contrib-azure.tar
 Source12: %name-%version-contrib-base64.tar
@@ -344,6 +344,9 @@ fi
 %_datadir/clickhouse-test
 
 %changelog
+* Fri Mar 18 2022 Anton Farygin <rider@altlinux.ru> 22.3.2.2-alt1
+- 22.2.3.5 -> 22.3.2.2
+
 * Mon Feb 28 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 22.2.3.5-alt1
 - Updated to stable upstream version 22.2.3.5.
 
