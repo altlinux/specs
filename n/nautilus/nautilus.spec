@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: nautilus
-Version: %ver_major.2
+Version: %ver_major.5
 Release: alt1%beta
 
 Summary: Nautilus is a network user environment
@@ -70,7 +70,8 @@ BuildRequires: libportal-devel >= %portal_ver
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 %{?_enable_docs:BuildRequires: docbook-utils gtk-doc}
 %{?_enable_tracker:BuildRequires: pkgconfig(tracker-sparql-3.0) tracker3-sandbox}
-%{?_enable_introspection:BuildRequires(pre): rpm-build-gir
+%{?_enable_introspection:
+BuildRequires(pre): rpm-build-gir
 BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel >= %selinux_ver}
 %{?_enable_check:
@@ -205,6 +206,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 41.5-alt1
+- 41.5
+
 * Wed Jan 12 2022 Yuri N. Sedunov <aris@altlinux.org> 41.2-alt1
 - 41.2
 
