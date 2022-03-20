@@ -12,7 +12,7 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.52
+Version: 2.4.53
 Release: alt1
 Epoch: 1
 
@@ -1539,6 +1539,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Sun Mar 20 2022 Anton Farygin <rider@altlinux.ru> 1:2.4.53-alt1
+- 2.4.53 (Fixes:  CVE-2022-23943, CVE-2022-22721,  CVE-2022-22720, CVE-2022-22719)
+
 * Tue Dec 21 2021 Anton Farygin <rider@altlinux.ru> 1:2.4.52-alt1
 - 2.4.52 (Fixes: CVE-2021-44790, CVE-2021-44224)
 
