@@ -5,7 +5,7 @@
 
 Name: shadowsocks-libev
 Version: 3.3.5
-Release: alt3
+Release: alt4
 Summary: A fast tunnel proxy that helps you bypass firewalls
 License: GPL-3.0-or-later
 Group: Security/Networking
@@ -63,8 +63,9 @@ tar xf %SOURCE3 -C .
 %makeinstall_std
 rm -rf %buildroot%_datadir/doc/%name
 mkdir -p %buildroot%_unitdir %buildroot%_sysconfdir/%name %buildroot%_sysconfdir/sysctl.d
-install -m0644 .gear/*.service %buildroot%_unitdir
-install -m0644 .gear/*.json %buildroot%_sysconfdir/%name
+install -m0644 .gear/%name.service %buildroot%_unitdir/%name-local.service
+install -m0644 .gear/%name.service %buildroot%_unitdir/%name-server.service
+install -m0640 .gear/*.json %buildroot%_sysconfdir/%name
 install -m0644 .gear/sysctl.conf* %buildroot%_sysconfdir/sysctl.d/88-%name.conf.example
 
 %check
@@ -80,8 +81,8 @@ install -m0644 .gear/sysctl.conf* %buildroot%_sysconfdir/sysctl.d/88-%name.conf.
 
 %files
 %doc Changes COPYING AUTHORS README.md LICENSE
-%dir %_sysconfdir/%name
-%config %_sysconfdir/%name/*
+%attr(750,root,wheel) %dir %_sysconfdir/%name
+%attr(640,root,wheel) %config(noreplace) %_sysconfdir/%name/*
 %config %_sysconfdir/sysctl.d/*
 %_unitdir/*.service
 %_bindir/ss-*
@@ -97,6 +98,9 @@ install -m0644 .gear/sysctl.conf* %buildroot%_sysconfdir/sysctl.d/88-%name.conf.
 %_libdir/lib%name.so.*
 
 %changelog
+* Sun Mar 20 2022 Vitaly Chikunov <vt@altlinux.org> 3.3.5-alt4
+- Hardened systemd units and configs (latter are made non-world readable).
+
 * Sat Mar 19 2022 Vitaly Chikunov <vt@altlinux.org> 3.3.5-alt3
 - Disable stream ciphers.
 - Add simple testing in %%check.

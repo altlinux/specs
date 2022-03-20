@@ -5,7 +5,7 @@
 
 Name: shadowsocks-rust
 Version: 1.14.1
-Release: alt1
+Release: alt2
 Summary: A fast tunnel proxy that helps you bypass firewalls
 License: MIT
 Group: Security/Networking
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 
 BuildRequires: /proc
 BuildRequires: rust-cargo
+%{?!_without_check:%{?!_disable_check:BuildRequires: banner curl python3}}
 
 %description
 %summary.
@@ -50,8 +51,12 @@ cargo build %_smp_mflags --offline --release
 %install
 cargo install %_smp_mflags --offline --no-track --path .
 mkdir -p %buildroot%_unitdir %buildroot%_sysconfdir/%name
-install -m0644 .gear/*.service %buildroot%_unitdir
-install -m0644 .gear/*.json %buildroot%_sysconfdir/%name
+install -m0644 .gear/%name.service %buildroot%_unitdir/%name-local.service
+install -m0644 .gear/%name.service %buildroot%_unitdir/%name-server.service
+install -m0640 .gear/*.json %buildroot%_sysconfdir/%name
+
+%check
+.gear/ss-test.sh
 
 %post
 %post_service %name-local
@@ -63,11 +68,15 @@ install -m0644 .gear/*.json %buildroot%_sysconfdir/%name
 
 %files
 %doc README.md LICENSE examples/*
-%dir %_sysconfdir/%name
-%config %_sysconfdir/%name/*
+%attr(750,root,wheel) %dir %_sysconfdir/%name
+%attr(640,root,wheel) %config(noreplace) %_sysconfdir/%name/*
 %_unitdir/*.service
 %_bindir/ss*
 
 %changelog
+* Sun Mar 20 2022 Vitaly Chikunov <vt@altlinux.org> 1.14.1-alt2
+- Hardened systemd units and configs (latter are made non-world readable).
+- Run simple smoke test in %%check.
+
 * Thu Mar 17 2022 Vitaly Chikunov <vt@altlinux.org> 1.14.1-alt1
 - First import v1.14.1-5-g62bf462d (2022-03-16).
