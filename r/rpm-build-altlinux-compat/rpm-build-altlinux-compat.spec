@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: rpm-build-altlinux-compat
-Version: 2.2.9
+Version: 2.2.12
 Release: alt1
 
 Summary: ALT Linux compatibility and extensions in rpm build
@@ -17,7 +17,7 @@ Source: ftp://updates.etersoft.ru/pub/Etersoft/Sisyphus/sources/tarball/%name-%v
 BuildArchitectures: noarch
 
 # Tune additional rpm macros file placement
-%if %_vendor == "alt"
+%if "%_vendor" == "alt"
 %define macrofilename macros
 #ifndef _rpmmacrosdir
 %if %{expand:%%{?_rpmmacrosdir:0}%%{!?_rpmmacrosdir:1}}
@@ -29,15 +29,19 @@ BuildArchitectures: noarch
 # Provide included macros (see macros.rpm-build dir)
 Provides: rpm-build-python rpm-build-perl rpm-macros-ttf rpm-build-licenses rpm-macros-cmake
 # FreeBSD
-%if %_vendor == "portbld" || %_vendor == "any"
+%if "%_vendor" == "portbld" || "%_vendor" == "any"
 %define _rpmmacrosdir /usr/local/etc/rpm
 %define macrofilename macros
 %else
 # in Mandriva for example
 %if %{expand:%%{?_sys_macros_dir:1}%%{!?_sys_macros_dir:0}}
 %define _rpmmacrosdir %_sys_macros_dir
-%define macrofilename 99-altlinux-compat.macros
+%define macrofilename altlinux-compat.macros
+%elif %{expand:%%{?rpmmacrodir:1}%%{!?rpmmacrodir:0}} && %{expand:%%{?_rpmmacrosdir:0}%%{!?_rpmmacrosdir:1}}
+%define _rpmmacrosdir %rpmmacrodir
+%define macrofilename altlinux-compat.macros
 %else
+# all scanned dirs listed in /usr/lib/rpm/macrofiles
 %define _rpmmacrosdir /etc/rpm
 %define macrofilename macros
 %endif
@@ -102,7 +106,7 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %install
 ./install.sh %buildroot %_bindir %_rpmmacrosdir %macrofilename
 
-%if %_vendor == "alt"
+%if "%_vendor" == "alt"
 
 %files -n rpm-build-intro
 %doc AUTHORS TODO
@@ -130,6 +134,21 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Sun Mar 20 2022 Vitaly Lipatov <lav@altlinux.ru> 2.2.12-alt1
+- distr_vendor: update to 2.7 version
+
+* Thu Feb 24 2022 Vitaly Lipatov <lav@altlinux.ru> 2.2.11-alt1
+- add features for Astra and RedOS
+
+* Mon Feb 21 2022 Vitaly Lipatov <lav@altlinux.ru> 2.2.10-alt1
+- fix libdir for AstraLinux
+- macros.intro.backport: set correct rpmmacrosdir for ALT
+- install.sh: set platform specific _rpmmacrosdir
+- spec: override _rpmmacrosdir only if empty
+
+* Thu Dec 16 2021 Vitaly Lipatov <lav@altlinux.ru> 2.2.9-alt2
+- fix for bare words are no longer supported
+
 * Thu Sep 30 2021 Vitaly Lipatov <lav@altlinux.ru> 2.2.9-alt1
 - add @zerg's version comparing macros (see altbug 6010)
 
