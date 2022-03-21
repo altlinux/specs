@@ -1,5 +1,5 @@
 Name:    trustedqsl
-Version: 2.5.9
+Version: 2.6
 Release: alt1
 Summary: TrustedQSL ham-radio applications
 
@@ -12,7 +12,6 @@ Source0: tqsl-%version.tar
 Patch1: tqsl-tqsllib.patch
 Patch2: tqsl-fix-undefined-macro.patch
 Patch3: tqsl-ssl-md5.patch
-Patch4: tqsl-alt-standard-lib-path.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -56,7 +55,6 @@ contains the to develop with tqsllib.
 %patch1 -p1
 %patch2 -p2
 %patch3 -p1
-%patch4 -p1
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo
@@ -97,6 +95,9 @@ rm -f %buildroot%_datadir/locale/*/LC_MESSAGES/wxstd.mo
 %_libdir/libtqsllib.so
 
 %changelog
+* Mon Mar 21 2022 Andrey Cherepanov <cas@altlinux.org> 2.6-alt1
+- New version.
+
 * Sat Oct 09 2021 Andrey Cherepanov <cas@altlinux.org> 2.5.9-alt1
 - New version.
 
