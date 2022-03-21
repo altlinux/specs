@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.7.5
+Version: 3.8.2
 Release: alt1
 Summary: Provides an API for communicating with HTTP 1.1 servers
 License: Python-2.0
@@ -20,10 +20,8 @@ BuildRequires(pre): rpm-build-python3
 %if_with check
 BuildRequires: python3(asyncio)
 BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
 %endif
-
-%py3_provides %oname
-%py3_requires asyncio
 
 %description
 The Python Dugong module provides an API for communicating with HTTP 1.1
@@ -35,34 +33,34 @@ servers. It is an alternative to the standard library's http.client
 %autopatch -p1
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
 %check
-cat > tox.ini <<EOF
+cat > tox.ini <<'EOF'
 [testenv]
-usedevelop=True
-whitelist_externals =
-    /bin/cp
-    /bin/sed
-commands_pre =
-    /bin/cp %_bindir/py.test3 {envbindir}/py.test
-    /bin/sed -i '1c #!{envpython}' {envbindir}/py.test
 commands =
-    {envbindir}/py.test {posargs:-vra}
+    {envbindir}/pytest -vra {posargs:test}
 EOF
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
-tox.py3 --sitepackages -vvr
+# custom support for TLS in HTTPServerThread doesn't work with Python3.10
+tox.py3 --sitepackages --console-scripts -vvr -s false --develop -- \
+    --ignore test/test_dugong.py \
+    test
 
 %files
 %doc *.rst examples
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Mar 21 2022 Stanislav Levin <slev@altlinux.org> 3.8.2-alt1
+- 3.7.5 -> 3.8.2.
+
 * Mon Oct 19 2020 Stanislav Levin <slev@altlinux.org> 3.7.5-alt1
 - 3.7.3 -> 3.7.5.
 
