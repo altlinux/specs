@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: fish
-Version: 3.3.1
-Release: alt2
+Version: 3.4.0
+Release: alt1
 
 Summary: A friendly interactive shell
 License: GPLv2+
@@ -18,6 +20,7 @@ BuildRequires: libpcre2-devel >= 10.22
 BuildRequires: cmake
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 # for check
+BuildRequires: ctest
 BuildRequires: /proc /dev/pts
 BuildRequires: procps
 BuildRequires: python3-module-pexpect
@@ -49,6 +52,7 @@ done
 %find_lang %name
 
 rm -f %buildroot%_datadir/fish/completions/docker.fish
+rm -rf %buildroot%_datadir/pkgconfig
 
 %check
 export SHOW_INTERACTIVE_LOG=1
@@ -75,6 +79,9 @@ fi
 %_pixmapsdir/fish.png
 
 %changelog
+* Mon Mar 21 2022 Alexey Shabalin <shaba@altlinux.org> 3.4.0-alt1
+- 3.4.0 (Fixes: CVE-2022-20001)
+
 * Sun Oct 31 2021 Alexey Shabalin <shaba@altlinux.org> 3.3.1-alt2
 - Drop tests with resetting match start inside lookaround.
 
