@@ -3,7 +3,7 @@
 
 Name: plasma5-nm
 Version: 5.23.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -153,7 +153,7 @@ Obsoletes: kf5-plasma-nm-connect-openswan < %EVR
 Group: Graphical desktop/KDE
 Summary: Strongswan support for %name
 Requires: %name
-Requires: strongswan
+Requires: NetworkManager-strongswan
 Provides: kf5-plasma-nm-connect-strongswan = %EVR
 Obsoletes: kf5-plasma-nm-connect-strongswan < %EVR
 %description connect-strongswan
@@ -261,6 +261,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5plug/plasma/network/vpn/plasmanetworkmanagement_sshui.so
 
 %changelog
+* Mon Mar 21 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.23.5-alt2
+- require NetworkManager-strongswan (closes: 42179)
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.23.5-alt1
 - new version
 
