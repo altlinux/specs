@@ -1,4 +1,4 @@
-%define kernel_base_version 5.16
+%define kernel_base_version 5.17
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
@@ -32,7 +32,7 @@ Summary: Linux kernel C header files for use by glibc and other userspace softwa
 # 569 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
 License: GPL-2.0-only with Linux-syscall-note
 Group: Development/Kernel
-Url: http://www.kernel.org/
+Url: https://www.kernel.org/
 
 Source1: cyclades.h
 
@@ -302,6 +302,9 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Sun Mar 20 2022 Dmitry V. Levin <ldv@altlinux.org> 5.17-alt1
+- v5.16 -> v5.17.
+
 * Sun Jan 09 2022 Dmitry V. Levin <ldv@altlinux.org> 5.16-alt1
 - v5.15 -> v5.16.
 
