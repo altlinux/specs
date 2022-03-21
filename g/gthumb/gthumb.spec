@@ -16,7 +16,7 @@
 %def_enable gstreamer
 
 Name: gthumb
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -46,6 +46,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define webkit_ver 2.6.0
 %define champlain_ver 0.12.0
 %define desktop_file_utils_ver 0.8
+%define appstream_ver 0.14.6
 
 Requires: %name-data = %version-%release
 
@@ -76,7 +77,7 @@ BuildRequires: libSM-devel libICE-devel
 
 BuildRequires: desktop-file-utils >= %desktop_file_utils_ver
 BuildRequires: gnome-common >= %gnome_common_ver
-BuildRequires: libappstream-glib-devel
+BuildRequires: libappstream-devel >= %appstream_ver  %_bindir/appstreamcli
 
 %description
 gThumb lets you browse your hard disk, showing thumbnails of image
@@ -171,6 +172,9 @@ This package contains headers needed to build extensions for gThumb.
 %_pkgconfigdir/*
 
 %changelog
+* Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
+- 3.12.1
+
 * Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 
