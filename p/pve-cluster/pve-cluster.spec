@@ -1,14 +1,14 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
 Version: 7.0.3
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64 aarch64
-Requires: bridge-utils chrony ntpdate corosync2 fuse rrd-cached ksmtuned openvswitch
+Requires: bridge-utils chrony ntpdate corosync2 fuse rrd-cached >= 1.7.2-alt3 ksmtuned openvswitch
 Requires: sqlite3 vixie-cron faketime tzdata openssh-server openssh-clients
 
 Source0: %name.tar.xz
@@ -81,35 +81,6 @@ cat << __EOF__ > %buildroot%_sysconfdir/sysconfig/%name
 DAEMON_OPTS=""
 __EOF__
 
-mkdir -p %buildroot%_localstatedir/rrdcached/{db,journal}
-mkdir -p %buildroot%_sysconfdir/systemd/system
-cat << __EOF__ > %buildroot%_sysconfdir/systemd/system/rrdcached.socket
-[Unit]
-Description=sockets activating rrdcached
-
-[Socket]
-ListenStream=/run/rrdcached.sock
-SocketMode=0660
-
-[Install]
-WantedBy=sockets.target
-__EOF__
-
-cat << __EOF__ > %buildroot%_sysconfdir/systemd/system/rrdcached.service
-[Unit]
-Description=Data caching daemon for rrdtool
-After=network.service
-
-[Service]
-Type=forking
-PIDFile=/run/rrdcached.pid
-ExecStart=/usr/bin/rrdcached -j /var/lib/rrdcached/journal/ -F -b /var/lib/rrdcached/db/ -B -p /run/rrdcached.pid -l /run/rrdcached.sock
-
-[Install]
-Also=rrdcached.socket
-WantedBy=default.target
-__EOF__
-
 %post
 %post_service %name
 
@@ -129,7 +100,6 @@ if [ -L %_sysconfdir/cron.d/vzdump ]; then
 fi
 
 %files
-%_sysconfdir/systemd/system/rrdcached.s*
 %systemd_unitdir/%name.service
 %_sysconfdir/bash_completion.d/pvecm
 %dir %_sysconfdir/network
@@ -157,8 +127,6 @@ fi
 %perl_vendor_privlib/PVE/Cluster/IPCConst.pm
 %perl_vendor_privlib/PVE/Cluster/Setup.pm
 %dir %_localstatedir/%name
-%dir %_localstatedir/rrdcached/db
-%dir %_localstatedir/rrdcached/journal
 %_datadir/zsh/vendor-completions/_pvecm
 %_man1dir/pvecm.1*
 %_man5dir/datacenter.cfg.5*
@@ -183,6 +151,10 @@ fi
 %_man1dir/pveum.1*
 
 %changelog
+* Fri Mar 18 2022 Alexey Shabalin <shaba@altlinux.org> 7.0.3-alt2
+- drop rrdcached.service and rrdcached.socket
+- drop ownership /var/lib/rrdcached/{db,journal}
+
 * Tue Jul 27 2021 Valery Inozemtsev <shrek@altlinux.ru> 7.0.3-alt1
 - pve-cluster 7.0-3
 - pve-access-control 7.0-4
