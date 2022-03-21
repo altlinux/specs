@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 72
+%define centos_release 73
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,28 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Mar 21 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.73-alt1.el9
+- Updated to kernel-5.14.0-73.el9 (fixes: CVE-2022-0516, CVE-2022-0847):
+  + Add definition for RAPTOR_LAKE
+  + block: kabi: reserve padding space for public structure
+  + crypto: Make CRYPTO_EC* algos built-in
+  + dm: fix crash and DM IO accounting
+  + [EDAC] backport patches needed to support Genoa
+  + Enable mellanox platform drivers to support LED, fan & watchdog devices
+  + Fix edpc warning message
+  + igb/igc: fix XDP registration
+  + KVM: s390: Return error on SIDA memop on normal guest
+  + lib/iov_iter: initialize "flags" in new pipe_buffer
+  + Merge tag 'kernel-5.14.0-70.2.1.el9_0' from 9.0
+  + nvmet-tcp: fix missing tech preview messages
+  + powerpc: fix kernel panic on boot of PowerVM systems that are running on shared processing mode [Hash]
+  + redhat: change default dist suffix for RHEL 9.0
+  + redhat/configs: Enable CONFIG_ACER_WIRELESS
+  + redhat: prepare to enter into zstream and adjust support for kabi
+  + scsi: lpfc: Fix pt2pt NVMe PRLI reject LOGO loop
+  + scsi: mpt3sas: driver fixes
+  + virtio-net: fix pages leaking when building skb in big mode
+
 * Thu Mar 17 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.72-alt1.el9
 - Updated to kernel-5.14.0-72.el9:
   + Merge tag 'kernel-5.14.0-70.1.1.el9_0' from 9.0
