@@ -5,12 +5,11 @@
 
 Name: python3-module-%oname
 Version: 0.7.5
-Release: alt1
+Release: alt2
 Summary: File system based database that uses python pickles
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/pickleshare
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://pypi.org/project/pickleshare/
 
 # https://github.com/pickleshare/pickleshare.git
 Source0: %name-%version.tar
@@ -59,10 +58,13 @@ tox.py3 --sitepackages --console-scripts -vvr -s false
 %files
 %doc README.md
 %python3_sitelibdir/pickleshare.py
-%python3_sitelibdir/__pycache__/pickleshare.cpython-39*
+%python3_sitelibdir/__pycache__/pickleshare.cpython-*
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Mar 21 2022 Stanislav Levin <slev@altlinux.org> 0.7.5-alt2
+- Fixed FTBFS (Python 3.10).
+
 * Wed Jul 21 2021 Stanislav Levin <slev@altlinux.org> 0.7.5-alt1
 - 0.7.4 -> 0.7.5.
 - Reenabled testing.
