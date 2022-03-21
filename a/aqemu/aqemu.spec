@@ -1,7 +1,7 @@
 Summary: QEMU GUI written in Qt5
 Name: aqemu
 Version: 0.9.4
-Release: alt1
+Release: alt2
 Epoch: 1
 License: GPL-2.0 and Zlib and MIT
 Group: Emulators
@@ -28,13 +28,13 @@ sed -i 's|#include <vector>|#include <vector>\n#include <stdexcept>|' src/docopt
 PATH=%_datadir/qt5/bin:$PATH; export PATH
 %cmake_insource \
     -GNinja \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
-#    -DQT_QMAKE_EXECUTABLE=qmake4 \
 #
-%ninja_build
+cmake --build "%_cmake__builddir" -j1
 
 %install
-%ninja_install
+%cmake_install
 mkdir -p %buildroot%_desktopdir
 install -d %buildroot{%_niconsdir,%_miconsdir,%_liconsdir}
 convert -size 16x16 ./resources/icons/aqemu.png %buildroot%_miconsdir/%name.png
@@ -56,6 +56,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %_pixmapsdir/*.png
 
 %changelog
+* Mon Mar 21 2022 Leontiy Volodin <lvol@altlinux.org> 1:0.9.4-alt2
+- Fixed segfault on restart (ALT #42188).
+
 * Wed Jan 27 2021 Leontiy Volodin <lvol@altlinux.org> 1:0.9.4-alt1
 - 0.9.4 version (more stable).
 
