@@ -7,7 +7,7 @@
 
 Name: python3-module-%mname
 Epoch: 1
-Version: 60.9.3
+Version: 60.10.0
 Release: alt1
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
@@ -34,7 +34,6 @@ BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_xdist)
 BuildRequires: python3(pytest_virtualenv)
 BuildRequires: python3(pytest_enabler)
-BuildRequires: python3(sphinx)
 BuildRequires: python3(tomli)
 BuildRequires: python3(tox)
 BuildRequires: python3(tox_console_scripts)
@@ -200,6 +199,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- -vra
 %endif
 
 %changelog
+* Fri Mar 18 2022 Stanislav Levin <slev@altlinux.org> 1:60.10.0-alt1
+- 60.9.3 -> 60.10.0.
+
 * Tue Feb 22 2022 Stanislav Levin <slev@altlinux.org> 1:60.9.3-alt1
 - 60.8.1 -> 60.9.3.
 
