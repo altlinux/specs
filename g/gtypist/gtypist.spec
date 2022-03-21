@@ -1,11 +1,11 @@
 Name: gtypist
 Version: 2.9.5
-Release: alt1
+Release: alt2
 
 Summary: GNU Typist is a universal typing tutor
 Summary(ru_RU.UTF8): Клавиатурный тренажер для консоли
 Group: Education
-License: GPL
+License: GPLv3
 Url: http://www.gnu.org/software/%name
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
@@ -16,7 +16,9 @@ Source3: %name-16.png
 Source4: %name-64.png
 
 BuildRequires: libncursesw-devel libtinfo-devel
-BuildRequires: emacs-common emacs-leim
+BuildRequires: emacs-common emacs-leim emacs-gnus rpm-build-emacs
+# emacs emacs-el emacs-leim-el
+#
 BuildRequires: help2man
 # explicitly added texinfo for info files
 BuildRequires: texinfo
@@ -132,6 +134,10 @@ __INIT__
 %_emacslispdir/%name-mode.el
 
 %changelog
+* Mon Mar 21 2022 Ilya Mashkin <oddity@altlinux.ru> 2.9.5-alt2
+- add more BR emacs*
+- Update License tag
+
 * Mon Nov 20 2017 Igor Vlasenko <viy@altlinux.ru> 2.9.5-alt1
 - NMU: updated to 2.9.5
 
