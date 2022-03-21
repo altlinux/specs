@@ -1,7 +1,7 @@
 %define lng_list af ar as ast be be@latin bg bn bn_IN br bs ca ca@valencia crh cs csb cy da de el en en_GB en_US eo es es_AR et eu fa fi fr fy ga gd gl gu ha he hi hne hr hsb hu hy ia id is it ja ka kk km kn ko ku lb lt lv mai mk ml mr ms nb nds ne nl nn oc or pa pl ps pt pt_BR ro ru se si sk sl sq sr sr@ijekavian sr@ijekavianlatin sr@latin sv ta te tg th tr tt ug uk uz uz@cyrillic vi wa xh zh_CN zh_HK zh_TW
 
 %define major 5
-%define minor 60
+%define minor 90
 %define bugfix 0
 
 Name: kf5-filesystem
@@ -19,6 +19,7 @@ Obsoletes: kf5-i18n-ru kf5-i18n-uk
 Source1: kde5
 Source2: dbus-session-dir.conf
 Source3: dbus-system-dir.conf
+Source10: kdeglobals
 
 BuildRequires(pre): rpm-build-kf5
 
@@ -95,6 +96,8 @@ install -m 0755 %SOURCE1 %buildroot/%_bindir/kde5
 mkdir -p %buildroot/{%_K5conf_dbus_sessd,%_K5conf_dbus_sysd}
 install -m 0644 %SOURCE2 %buildroot/%_K5conf_dbus_sessd/kf5.conf
 #install -m 0644 %SOURCE3 %buildroot/%_K5conf_dbus_sysd/kf5.conf
+# configs
+install -m 0644 %SOURCE10 %buildroot/%_K5xdgconf/
 
 %files
 %config %_K5conf_dbus_sessd/kf5.conf
@@ -102,7 +105,10 @@ install -m 0644 %SOURCE2 %buildroot/%_K5conf_dbus_sessd/kf5.conf
 %_bindir/kde5
 %_datadir/*5/
 %_K5plug/kf5
-%_sysconfdir/kf5
+%dir %_sysconfdir/kf5
+%dir %_sysconfdir/kf5/*
+%dir %_sysconfdir/kf5/*/*
+%config(noreplace) %_sysconfdir/kf5/*/*
 %dir %_kf5_bin
 %dir %_kf5_sbin
 %dir %_K5cf_bin
@@ -112,6 +118,9 @@ install -m 0644 %SOURCE2 %buildroot/%_K5conf_dbus_sessd/kf5.conf
 %dir %_desktopdir/kf5
 
 %changelog
+* Mon Mar 21 2022 Sergey V Turchin <zerg@altlinux.org> 5.90.0-alt1
+- disable GHNS by default
+
 * Wed Jul 17 2019 Sergey V Turchin <zerg@altlinux.org> 5.60.0-alt1
 - add qlogging-categories5 dir
 
