@@ -14,7 +14,7 @@
 
 Name: cri-o
 Version: 1.22.3
-Release: alt1
+Release: alt2
 Summary: Kubernetes Container Runtime Interface for OCI-based containers
 Group: Development/Other
 License: Apache-2.0
@@ -120,6 +120,10 @@ install -p -m 644 contrib/cni/99-loopback.conf %buildroot%_sysconfdir/cni/net.d/
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Mon Mar 21 2022 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.3-alt2
+- Add cve fix to changelog
+- Fixes: CVE-2022-0811
+
 * Wed Mar 16 2022 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.3-alt1
 - 1.22.3
 
