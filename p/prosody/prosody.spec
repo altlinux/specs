@@ -1,6 +1,6 @@
 Name: prosody
-Version: 0.11.12
-Release: alt2
+Version: 0.12.0
+Release: alt1
 
 Summary: Modern XMPP communication server
 
@@ -8,9 +8,9 @@ Group: System/Servers
 License: MIT
 Url: https://prosody.im/
 
-BuildRequires: openssl lua5 liblua5-devel libidn-devel libssl-devel
+BuildRequires: openssl lua5 liblua5-devel libidn-devel libssl-devel libicu-devel
 
-Requires: openssl lua-module-luaexpat lua-module-luasocket lua-module-luafilesystem lua-module-luasec
+Requires: openssl lua-module-luaexpat lua-module-luasocket lua-module-luafilesystem lua-module-luasec lua-module-unbound
 
 Source0: %name-%version.tar
 Source1: prosody.cfg.lua
@@ -20,16 +20,14 @@ Source4: prosody.tmpfiles
 Source10: autobuild.watch
 Source11: upstream-signing-key.asc
 
-Patch1: prosody-0.11.5-alt-user.patch
-Patch2: prosody-0.11.12-upstream-fix-memleak.patch
+Patch1: prosody-0.12.0-alt-user.patch
 
 %description
 %summary
 
 %prep
 %setup
-%patch1 -p2
-%patch2 -p1
+%patch1 -p1
 
 %build
 ./configure --prefix=/usr
@@ -69,6 +67,9 @@ install -Dpm644 %SOURCE4 %buildroot/%_tmpfilesdir/prosody.conf
 %_man1dir/*
 
 %changelog
+* Mon Mar 21 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.12.0-alt1
+- Updated to 0.12.0.
+
 * Fri Jan 21 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.11.12-alt2
 - Fixed memory leak.
 
