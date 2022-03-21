@@ -18,7 +18,7 @@
 %def_enable wayland_eglstream
 
 Name: mutter
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1%beta
 Epoch: 1
 
@@ -251,6 +251,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 1:41.5-alt1
+- 41.5
+
 * Sun Feb 27 2022 Yuri N. Sedunov <aris@altlinux.org> 1:41.4-alt1
 - 41.4
 
