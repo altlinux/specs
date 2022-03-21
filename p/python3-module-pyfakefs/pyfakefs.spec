@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.5.5
+Version: 4.5.6
 Release: alt1
 
 Summary: Implements a fake file system that mocks the Python file system modules
@@ -54,6 +54,9 @@ tox.py3 --sitepackages --no-deps -vvr -s false
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Mar 21 2022 Stanislav Levin <slev@altlinux.org> 4.5.6-alt1
+- 4.5.5 -> 4.5.6.
+
 * Thu Feb 24 2022 Stanislav Levin <slev@altlinux.org> 4.5.5-alt1
 - 3.7.1 -> 4.5.5.
 
