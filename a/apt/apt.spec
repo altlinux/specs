@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt75
+Release: alt76
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -518,6 +518,7 @@ exec 1>&2
 
 %files -f %name.lang
 %_bindir/apt-*
+%_libexecdir/apt
 %_libdir/%name
 %exclude %_libdir/%name/methods/rsync
 %exclude %_libdir/%name/methods/https
@@ -562,6 +563,10 @@ exec 1>&2
 %_datadir/%name/tests/
 
 %changelog
+* Sun Mar 13 2022 Vitaly Chikunov <vt@altlinux.org> 0.5.15lorg2-alt76
+- Add apt-get guarding wrapper that will prevent apt-get from exiting before
+  all tasks are finished.
+
 * Sat Jan 27 2022 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt75
 - Invalidate the in-memory cache of repositories when doing "update" or
   ListUpdate() to be able to detect updates without exiting the process,
