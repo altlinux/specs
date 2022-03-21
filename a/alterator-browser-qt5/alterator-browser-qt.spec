@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.4.6
+Version: 3.4.7
 Release: alt1
 
 Source:%name-%version.tar
@@ -83,6 +83,9 @@ __EOF__
 
 
 %changelog
+* Mon Mar 21 2022 Sergey V Turchin <zerg at altlinux dot org> 3.4.7-alt1
+- expand combobox list when too short
+
 * Tue Jan 25 2022 Sergey V Turchin <zerg at altlinux dot org> 3.4.6-alt1
 - fix set current wizard_face item
 
