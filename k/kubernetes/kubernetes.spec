@@ -1,12 +1,12 @@
 
 %global import_path github.com/kubernetes/kubernetes
-%global commit 5575935422cc1cf5169dfc8847cb587aa47bac5a
+%global commit 7061dbbf75f9f82e8ab21f9be7e8ffcaae8e0d44
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
 Name: kubernetes
-Version: 1.22.7
+Version: 1.22.8
 Release: alt1
 Summary: Container cluster management
 
@@ -337,6 +337,9 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Tue Mar 22 2022 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.8-alt1
+- 1.22.8
+
 * Sun Feb 20 2022 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.7-alt1
 - 1.22.7
 
