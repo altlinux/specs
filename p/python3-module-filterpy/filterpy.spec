@@ -1,27 +1,35 @@
 %define _unpackaged_files_terminate_build 1
-
 %define oname filterpy
 
-Name:       python3-module-%oname
-Version:    1.4.5
-Release:    alt1
+%def_with check
 
-Summary:    Kalman filtering and optimal estimation library
-License:    MIT
-Group:      Development/Python3
-BuildArch:  noarch
-Url:        https://pypi.python.org/pypi/filterpy/
+Name: python3-module-%oname
+Version: 1.4.5
+Release: alt2
 
-#           https://github.com/rlabbe/filterpy.git
-Source:     %name-%version.tar
-Patch1:     %oname-1.1.0-alt-build.patch
+Summary: Kalman filtering and optimal estimation library
+License: MIT
+Group: Development/Python3
+BuildArch: noarch
+Url: https://pypi.org/project/filterpy/
+
+# https://github.com/rlabbe/filterpy.git
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-numpydoc xvfb-run
-BuildRequires: python3-module-mock python3-module-pytest
-BuildRequires: python3-module-matplotlib python3-module-scipy
-BuildRequires: python3-module-numpy-testing
 
+%if_with check
+# install_requires=
+BuildRequires: python3(numpy)
+BuildRequires: python3(scipy)
+BuildRequires: python3(matplotlib)
+
+BuildRequires: python3(numpy.testing)
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+%endif
 
 %description
 This library provides Kalman filtering and various related optimal and
@@ -30,71 +38,36 @@ filters, Extended Kalman filters, Unscented Kalman filters, Kalman
 smoothers, Least Squares filters, fading memory filters, g-h filters,
 discrete Bayes, and more.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-This library provides Kalman filtering and various related optimal and
-non-optimal filtering software written in Python. It contains Kalman
-filters, Extended Kalman filters, Unscented Kalman filters, Kalman
-smoothers, Least Squares filters, fading memory filters, g-h filters,
-discrete Bayes, and more.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-This library provides Kalman filtering and various related optimal and
-non-optimal filtering software written in Python. It contains Kalman
-filters, Extended Kalman filters, Unscented Kalman filters, Kalman
-smoothers, Least Squares filters, fading memory filters, g-h filters,
-discrete Bayes, and more.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
-%patch1 -p1
-
-sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
+%autopatch -p1
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
-export PYTHONPATH=%buildroot%python3_sitelibdir
-%make -C docs pickle
-%make -C docs html
-
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
-
-rm -f requirements.txt
-
 %check
-rm -f filterpy/common/tests/test_discretization.py
-%__python3 setup.py build_ext -i
-PYTHONPATH=%buildroot%python3_sitelibdir xvfb-run py.test3 -vv
+cat > tox.ini <<'EOF'
+[testenv]
+commands =
+    {envbindir}/pytest {posargs:-vra}
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr --develop
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/pickle
-
-%files pickles
-%python3_sitelibdir/*/pickle
-
-%files docs
-%doc docs/_build/html/*
-
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Mar 21 2022 Stanislav Levin <slev@altlinux.org> 1.4.5-alt2
+- Fixed FTBFS.
+
 * Tue Aug 25 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.5-alt1
 - Updated to upstream version 1.4.5.
 
