@@ -1,8 +1,8 @@
 %define module_name	 evdi
-%define module_version 1.10.0
+%define module_version 1.10.1
 %define sover 0
-%define stage beta-
-%define rel 59.118
+%define stage %nil
+%define rel 59.151
 
 %ifarch x86_64
 %define dl_dir x64-ubuntu-1604
@@ -19,7 +19,7 @@
 
 Name: displaylink-driver
 Version: 5.5.0
-Release: alt1.%rel
+Release: alt3.%rel
 Summary: DisplayLink library and tools
 Group: System/Kernel and hardware
 
@@ -131,7 +131,7 @@ install -m 0644 *.spkg %buildroot%_datadir/%name/
 %_sysconfdir/modprobe.d/%module_name.conf
 %_udev_rulesdir/99-displaylink.rules
 %_systemd_dir/system-sleep/displaylink.sh
-%dir %_logdir/displaylink
+%dir %attr(0700,root,root) %_logdir/displaylink
 
 %files -n lib%{module_name}%{sover}
 %_libdir/*.so*
@@ -143,6 +143,14 @@ install -m 0644 *.spkg %buildroot%_datadir/%name/
 %_usrsrc/kernel/sources/kernel-source-%module_name-%module_version.tar.bz2
 
 %changelog
+* Mon Mar 21 2022 L.A. Kostis <lakostis@altlinux.ru> 5.5.0-alt3.59.151
+- New release (5.5).
+- Update evdi drivers version to 1.10.1.
+- Update udev.rules.
+
+* Thu Feb 03 2022 L.A. Kostis <lakostis@altlinux.ru> 5.5.0-alt2.59.118
+- Restrict access to logs directory.
+
 * Sat Jan 29 2022 L.A. Kostis <lakostis@altlinux.ru> 5.5.0-alt1.59.118
 - New beta release.
 - Enable aarch64 support.

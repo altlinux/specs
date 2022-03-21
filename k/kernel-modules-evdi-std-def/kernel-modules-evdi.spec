@@ -1,6 +1,6 @@
 %define module_name	evdi
-%define module_version	1.10.0
-%define module_release	alt2
+%define module_version	1.10.1
+%define module_release	alt1
 
 %define flavour		std-def
 %define karch %ix86 x86_64 armh aarch64
@@ -31,7 +31,7 @@ PreReq: coreutils
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 ExclusiveArch: %karch
 
-Patch: 0001-Remove-compat-calls-for-5.15-kernel.patch
+Patch1: %module_name-1.10.1-centos9.patch
 
 %description
 Extensible Virtual Display Interface
@@ -48,7 +48,7 @@ tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 
 # centos backported some fixes for 5.15+
 if [ %flavour == "centos" ]; then
-%patch -p1
+%patch1 -p1
 fi
 
 %build
@@ -65,6 +65,17 @@ install evdi.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Mar 21 2022 L.A. Kostis <lakostis@altlinux.org> 1.10.1-alt1
+- Updated to 1.10.1.
+- Cleanup patches.
+
+* Fri Feb 11 2022 L.A. Kostis <lakostis@altlinux.org> 1.10.0-alt4
+- Fix build with recent centos9 kernel (tnx glebfm@ for ideas)
+- Fix merge from ChromeOS (see upstream issue #340).
+
+* Sat Jan 29 2022 L.A. Kostis <lakostis@altlinux.org> 1.10.0-alt3
+- Restore kmarch for centos.
 
 * Sat Jan 29 2022 L.A. Kostis <lakostis@altlinux.org> 1.10.0-alt2
 - Restore workaround for centos.
