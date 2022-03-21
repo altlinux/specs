@@ -11,8 +11,8 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.1
-Release: alt1.1%beta
+Version: %ver_major.2
+Release: alt1%beta
 
 Summary: Eye Of Gnome
 License: GPL-2.0
@@ -168,6 +168,9 @@ ln -sf %name/lib%name.so \
 
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 41.2-alt1
+- 41.2
+
 * Sat Mar 12 2022 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1.1
 - fixed "library libeog.so not found" lib.req error
 
