@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.6.1
-Release: alt2
+Release: alt3
 
 Summary: Implementation of the PEP 3156 event-loop (tulip) api using the Qt Event-Loop
 License: BSD
@@ -47,10 +47,13 @@ xvfb-run py.test3 -v
 
 %files
 %doc README.rst
-%python3_sitelibdir/Quamash-*.egg-info/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 %python3_sitelibdir/quamash/
 
 %changelog
+* Mon Mar 21 2022 Stanislav Levin <slev@altlinux.org> 0.6.1-alt3
+- Fixed FTBFS (Python3.10).
+
 * Mon Aug 03 2020 Stanislav Levin <slev@altlinux.org> 0.6.1-alt2
 - Fixed FTBFS.
 
