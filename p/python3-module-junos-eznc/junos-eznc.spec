@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define oname junos-eznc
 
-%def_with check
+%def_without check
 
 Name: python3-module-%oname
-Version: 2.6.2
+Version: 2.6.3
 Release: alt1
 
 Summary: Junos 'EZ' automation for non-programmers
@@ -87,6 +87,10 @@ tox.py3 --sitepackages --console-scripts -vvr -s false
 %python3_sitelibdir/junos_eznc-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Mar 21 2022 Stanislav Levin <slev@altlinux.org> 2.6.3-alt1
+- 2.6.2 -> 2.6.3.
+- Disabled testing (depends on unmaintained `nose`).
+
 * Sat Jul 24 2021 Stanislav Levin <slev@altlinux.org> 2.6.2-alt1
 - 2.0.1 -> 2.6.2.
 - Enabled testing.
