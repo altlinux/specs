@@ -79,7 +79,7 @@
 %endif
 
 %define ver_major 21.3
-%define ver_minor 7
+%define ver_minor 8
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -566,6 +566,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Mon Mar 21 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:21.3.8-alt1
+- 21.3.8
+
 * Thu Feb 24 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:21.3.7-alt1
 - 21.3.7
 
