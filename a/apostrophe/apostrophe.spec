@@ -1,10 +1,10 @@
 %def_enable snapshot
 %define _name apostrophe
-%define ver_major 2.5
+%define ver_major 2.6
 %define rdn_name org.gnome.gitlab.somas.Apostrophe
 
 Name: %_name
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1
 
 Summary: GTK-based distraction free Markdown editor
@@ -58,6 +58,9 @@ interface.
 
 
 %changelog
+* Sun Mar 20 2022 Yuri N. Sedunov <aris@altlinux.org> 2.6.1-alt1
+- updated to v2.6.1-1-gc06e1d7
+
 * Fri Jan 14 2022 Yuri N. Sedunov <aris@altlinux.org> 2.5-alt1
 - first build for Sisyphus (v2.5-31-ga7459de)
 
