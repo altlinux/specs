@@ -15,7 +15,7 @@
 
 Name: 389-ds-base
 Version: 1.4.3.28
-Release: alt2
+Release: alt3
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
@@ -62,6 +62,8 @@ BuildRequires: rsync
 
 %if_with cockpit
 BuildRequires: npm
+# https://bugzilla.altlinux.org/42036
+BuildRequires: node-gyp
 %endif
 
 %if_with check
@@ -396,6 +398,9 @@ fi
 %endif
 
 %changelog
+* Mon Mar 21 2022 Stanislav Levin <slev@altlinux.org> 1.4.3.28-alt3
+- Fixed FTBFS (ALT's npm 8, #42036).
+
 * Thu Jan 20 2022 Stanislav Levin <slev@altlinux.org> 1.4.3.28-alt2
 - Fixed FTBFS (argparse-manpage 2.1).
 
