@@ -5,7 +5,7 @@
 %def_disable doc
 
 Name: knot-resolver
-Version: 5.4.4
+Version: 5.5.0
 Release: alt1
 Summary: Caching full DNS Resolver
 Group: System/Servers
@@ -24,9 +24,9 @@ BuildRequires: gcc-c++ luajit
 BuildRequires: pkgconfig(cmocka)
 BuildRequires: pkgconfig(gnutls)
 BuildRequires: pkgconfig(libedit)
-BuildRequires: pkgconfig(libknot) >= 2.9
-BuildRequires: pkgconfig(libzscanner) >= 2.9
-BuildRequires: pkgconfig(libdnssec) >= 2.9
+BuildRequires: pkgconfig(libknot) >= 3.0.2
+BuildRequires: pkgconfig(libzscanner) >= 3.0.2
+BuildRequires: pkgconfig(libdnssec) >= 3.0.2
 BuildRequires: pkgconfig(libnghttp2)
 BuildRequires: pkgconfig(libsystemd)
 BuildRequires: pkgconfig(libcap-ng)
@@ -184,6 +184,9 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Knot Resolver" -g %nam
 %_libdir/%name/kres_modules/prometheus.lua
 
 %changelog
+* Mon Mar 21 2022 Alexey Shabalin <shaba@altlinux.org> 5.5.0-alt1
+- 5.5.0
+
 * Fri Jan 07 2022 Alexey Shabalin <shaba@altlinux.org> 5.4.4-alt1
 - 5.4.4
 
