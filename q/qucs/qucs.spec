@@ -1,9 +1,9 @@
 Name: qucs
 Version: 0.0.19
-Release: alt3
+Release: alt4
 
 Summary: Circuit simulator
-License: GPL
+License: GPL-2.0-or-later
 Group: Education
 
 Url: http://qucs.sourceforge.net/
@@ -27,6 +27,7 @@ BuildRequires: chrpath
 BuildRequires: flex gcc-c++ gperf imake xorg-cf-files
 
 Requires: %name-data = %version-%release
+Requires: qucsator = %version-%release
 
 %description
 Qucs is a circuit simulator with graphical user interface.  The
@@ -40,6 +41,13 @@ Buildarch: noarch
 
 %description data
 Data files  for Qucs, a circuit simulator.
+
+%package -n qucsator
+Group:	 Education
+Summary: An integrated electronic circuit simulator
+
+%description -n qucsator
+An integrated electronic circuit simulator.
 
 %package -n libqucs
 Group:	 Education
@@ -89,9 +97,13 @@ chrpath -d %buildroot%_bindir/qucsator
 %files -f %name.lang
 %doc NEWS.md README.md
 %_bindir/*
+%exclude %_bindir/qucsator
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
 %_man1dir/*
+
+%files -n qucsator
+%_bindir/qucsator
 
 %files data
 %dir %_datadir/%name
@@ -122,6 +134,10 @@ chrpath -d %buildroot%_bindir/qucsator
 %_includedir/qucs-core
 
 %changelog
+* Sun Mar 20 2022 Anton Midyukov <antohami@altlinux.org> 0.0.19-alt4
+- Separate subpackage qucsator
+- Fix License tag
+
 * Thu Nov 07 2019 Michael Shigorin <mike@altlinux.org> 0.0.19-alt3
 - E2K: fixed build (see mcst#4487); patch suggested upstream
 - avoid tarball compression
