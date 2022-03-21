@@ -3,7 +3,7 @@
 
 Name: kernel-source-%module_name
 Version: 5.4.1
-Release: alt4.git%git_rev
+Release: alt5.git%git_rev
 
 Summary: Realtek RTL8811CU/RTL8821CU USB wifi adapter driver
 Group: Development/Kernel
@@ -31,6 +31,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Mon Mar 21 2022 Andrey Cherepanov <cas@altlinux.org> 5.4.1-alt5.gitef3ff12
+- Fix source tag for kernel 5.15 support.
+
 * Fri Jan 28 2022 Andrey Cherepanov <cas@altlinux.org> 5.4.1-alt4.gitef3ff12
 - Upstream support of kernel 5.15.
 
