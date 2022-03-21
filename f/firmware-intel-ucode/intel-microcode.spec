@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20210608
+%define orig_timestamp 20220207
 %define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 16
+Version: 17
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -50,6 +50,84 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Mon Mar 21 2022 L.A. Kostis <lakostis@altlinux.ru> 2:17-alt1.20220207
+- Sync with Debian 3.20220207:
+    + new upstream datafile 20220207
+      + Mitigates (*only* when loaded from UEFI firmware through the FIT)
+        CVE-2021-0146, INTEL-SA-00528: VT-d privilege escalation through
+        debug port, on Pentium, Celeron and Atom processors with signatures
+        0x506c9, 0x506ca, 0x506f1, 0x706a1, 0x706a8
+        https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/issues/57#issuecomment-1036363145
+      + Mitigates CVE-2021-0127, INTEL-SA-00532: an unexpected code breakpoint
+        may cause a system hang, on many processors.
+      + Mitigates CVE-2021-0145, INTEL-SA-00561: information disclosure due
+        to improper sanitization of shared resources (fast-store forward
+        predictor), on many processors.
+      + Mitigates CVE-2021-33120, INTEL-SA-00589: out-of-bounds read on some
+        Atom Processors may allow information disclosure or denial of service
+        via network access.
+      + Fixes critical errata (functional issues) on many processors
+      + Adds a MSR switch to enable RAPL filtering (default off, once enabled
+        it can only be disabled by poweroff or reboot).  Useful to protect
+        SGX and other threads from side-channel info leak.  Improves the
+        mitigation for CVE-2020-8694, CVE-2020-8695, INTEL-SA-00389 on many
+        processors.
+      + Disables TSX in more processor models.
+      + Fixes issue with WBINDV on multi-socket (server) systems which could
+        cause resets and unpredictable system behavior.
+      + Adds a MSR switch to 10th and 11th-gen (Ice Lake, Tiger Lake, Rocket
+        Lake) processors, to control a fix for (hopefully rare) unpredictable
+        processor behavior when HyperThreading is enabled.  This MSR switch
+        is enabled by default on *server* processors.  On other processors,
+        it needs to be explicitly enabled by an updated UEFI/BIOS (with added
+        configuration logic).  An updated operating system kernel might also
+        be able to enable it.  When enabled, this fix can impact performance.
+      * Updated Microcodes:
+        sig 0x000306f2, pf_mask 0x6f, 2021-08-11, rev 0x0049, size 38912
+        sig 0x000306f4, pf_mask 0x80, 2021-05-24, rev 0x001a, size 23552
+        sig 0x000406e3, pf_mask 0xc0, 2021-04-28, rev 0x00ec, size 105472
+        sig 0x00050653, pf_mask 0x97, 2021-05-26, rev 0x100015c, size 34816
+        sig 0x00050654, pf_mask 0xb7, 2021-06-16, rev 0x2006c0a, size 43008
+        sig 0x00050656, pf_mask 0xbf, 2021-08-13, rev 0x400320a, size 35840
+        sig 0x00050657, pf_mask 0xbf, 2021-08-13, rev 0x500320a, size 36864
+        sig 0x0005065b, pf_mask 0xbf, 2021-06-04, rev 0x7002402, size 28672
+        sig 0x00050663, pf_mask 0x10, 2021-06-12, rev 0x700001c, size 28672
+        sig 0x00050664, pf_mask 0x10, 2021-06-12, rev 0xf00001a, size 27648
+        sig 0x00050665, pf_mask 0x10, 2021-09-18, rev 0xe000014, size 23552
+        sig 0x000506c9, pf_mask 0x03, 2021-05-10, rev 0x0046, size 17408
+        sig 0x000506ca, pf_mask 0x03, 2021-05-10, rev 0x0024, size 16384
+        sig 0x000506e3, pf_mask 0x36, 2021-04-29, rev 0x00ec, size 108544
+        sig 0x000506f1, pf_mask 0x01, 2021-05-10, rev 0x0036, size 11264
+        sig 0x000606a6, pf_mask 0x87, 2021-12-03, rev 0xd000331, size 291840
+        sig 0x000706a1, pf_mask 0x01, 2021-05-10, rev 0x0038, size 74752
+        sig 0x000706a8, pf_mask 0x01, 2021-05-10, rev 0x001c, size 75776
+        sig 0x000706e5, pf_mask 0x80, 2021-05-26, rev 0x00a8, size 110592
+        sig 0x000806a1, pf_mask 0x10, 2021-09-02, rev 0x002d, size 34816
+        sig 0x000806c1, pf_mask 0x80, 2021-08-06, rev 0x009a, size 109568
+        sig 0x000806c2, pf_mask 0xc2, 2021-07-16, rev 0x0022, size 96256
+        sig 0x000806d1, pf_mask 0xc2, 2021-07-16, rev 0x003c, size 101376
+        sig 0x000806e9, pf_mask 0x10, 2021-04-28, rev 0x00ec, size 104448
+        sig 0x000806e9, pf_mask 0xc0, 2021-04-28, rev 0x00ec, size 104448
+        sig 0x000806ea, pf_mask 0xc0, 2021-04-28, rev 0x00ec, size 103424
+        sig 0x000806eb, pf_mask 0xd0, 2021-04-28, rev 0x00ec, size 104448
+        sig 0x000806ec, pf_mask 0x94, 2021-04-28, rev 0x00ec, size 104448
+        sig 0x00090661, pf_mask 0x01, 2021-09-21, rev 0x0015, size 20480
+        sig 0x000906c0, pf_mask 0x01, 2021-08-09, rev 0x2400001f, size 20480
+        sig 0x000906e9, pf_mask 0x2a, 2021-04-29, rev 0x00ec, size 106496
+        sig 0x000906ea, pf_mask 0x22, 2021-04-28, rev 0x00ec, size 102400
+        sig 0x000906eb, pf_mask 0x02, 2021-04-28, rev 0x00ec, size 104448
+        sig 0x000906ec, pf_mask 0x22, 2021-04-28, rev 0x00ec, size 103424
+        sig 0x000906ed, pf_mask 0x22, 2021-04-28, rev 0x00ec, size 103424
+        sig 0x000a0652, pf_mask 0x20, 2021-04-28, rev 0x00ec, size 93184
+        sig 0x000a0653, pf_mask 0x22, 2021-04-28, rev 0x00ec, size 94208
+        sig 0x000a0655, pf_mask 0x22, 2021-04-28, rev 0x00ee, size 94208
+        sig 0x000a0660, pf_mask 0x80, 2021-04-28, rev 0x00ea, size 94208
+        sig 0x000a0661, pf_mask 0x80, 2021-04-29, rev 0x00ec, size 93184
+        sig 0x000a0671, pf_mask 0x02, 2021-08-29, rev 0x0050, size 102400
+      + Removed Microcodes:
+        sig 0x00080664, pf_mask 0x01, 2021-02-17, rev 0xb00000f, size 130048
+        sig 0x00080665, pf_mask 0x01, 2021-02-17, rev 0xb00000f, size 130048
+
 * Mon Jun 14 2021 L.A. Kostis <lakostis@altlinux.ru> 2:16-alt1.20210608
 - Sync with Debian 3.20210608.1:
   + New upstream microcode datafile 20210608:
