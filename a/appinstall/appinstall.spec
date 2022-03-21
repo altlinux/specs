@@ -1,5 +1,5 @@
 Name: appinstall
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 Summary: GUI frontend for install third-party applications
 
@@ -51,6 +51,9 @@ install -Dpm 0644 %name.desktop %buildroot%_desktopdir/%name.desktop
 %config(noreplace) %_sysconfdir/security/console.apps/%name
 
 %changelog
+* Mon Mar 21 2022 Andrey Cherepanov <cas@altlinux.org> 1.3.2-alt1
+- Update localization for eepm-3.15.1.
+
 * Wed Jan 05 2022 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt1
 - Add extract script for localization.
 - Update localization for eepm-3.14.6.
