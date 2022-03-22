@@ -1,4 +1,5 @@
 %define _unpackaged_files_terminate_build 1
+%global llvm_version 12.0
 
 %def_with clang
 
@@ -19,7 +20,7 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 
 Name: clickhouse
 Version: 22.3.2.2
-Release: alt1
+Release: alt2
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
 Group: Databases
@@ -133,7 +134,7 @@ Patch4: clickhouse-llvm-build.patch
 
 BuildRequires(pre): rpm-build-python3
 %if_with clang
-BuildRequires: clang lld llvm
+BuildRequires: clang%llvm_version llvm%llvm_version lld%llvm_version
 %else
 BuildRequires: gcc-c++
 %endif
@@ -230,7 +231,7 @@ fi
 %define optflags_debug -g0
 
 # -DENABLE_HIVE:BOOL=OFF is needed to circumvent build failure due to not finding orc headers
-
+export ALTWRAP_LLVM_VERSION="%llvm_version"
 %cmake \
 %if_with clang
 	-DCMAKE_C_COMPILER=clang \
@@ -344,6 +345,9 @@ fi
 %_datadir/clickhouse-test
 
 %changelog
+* Tue Mar 22 2022 Anton Farygin <rider@altlinux.ru> 22.3.2.2-alt2
+- simplify backporting for stable ALT branches via define llvm_version
+
 * Fri Mar 18 2022 Anton Farygin <rider@altlinux.ru> 22.3.2.2-alt1
 - 22.2.3.5 -> 22.3.2.2
 
