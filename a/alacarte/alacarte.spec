@@ -1,7 +1,7 @@
-%define ver_major 3.42
+%define ver_major 3.44
 
 Name: alacarte
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Menu editor for GNOME
@@ -18,7 +18,7 @@ BuildArch: noarch
 Requires: typelib(Gtk) = 3.0
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: intltool libgnome-menus-devel >= %menus_ver
+BuildRequires: libgnome-menus-devel >= %menus_ver
 BuildRequires: python3-module-pygobject3-devel
 BuildRequires: docbook-dtds docbook-style-xsl xsltproc
 
@@ -47,6 +47,9 @@ specification.
 %doc README AUTHORS NEWS
 
 %changelog
+* Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 3.44.1-alt1
+- 3.44.1
+
 * Tue Nov 23 2021 Yuri N. Sedunov <aris@altlinux.org> 3.42.0-alt1
 - 3.42.0
 

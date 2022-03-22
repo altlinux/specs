@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.42
+%define ver_major 3.44
 %define api_ver 1.0
 %def_with introspection
 %def_with vapi
@@ -85,12 +85,13 @@ This package contains development documentation for %name
 
 %install
 %meson_install
+%find_lang --output=%name.lang %name-%api_ver
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
 
-%files
+%files -f %name.lang
 %_bindir/dazzle-list-counters
 %_libdir/%name-%api_ver.so.*
 %doc AUTHORS README.md NEWS
@@ -115,6 +116,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 3.44.0-alt1
+- 3.44.0
+
 * Sat Sep 04 2021 Yuri N. Sedunov <aris@altlinux.org> 3.42.0-alt1
 - 3.42.0
 

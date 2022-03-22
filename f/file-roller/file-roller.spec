@@ -2,7 +2,7 @@
 
 %define xdg_name org.gnome.FileRoller
 %define xdg_name1 org.gnome.ArchiveManager
-%define ver_major 3.40
+%define ver_major 3.42
 %def_disable packagekit
 %def_enable libarchive
 %def_enable nautilus_actions
@@ -10,7 +10,7 @@
 
 Name: file-roller
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1
 
 Summary: An archive manager for GNOME
 Summary (ru_RU.UTF-8): Архиватор для GNOME
@@ -21,9 +21,9 @@ Url: http://fileroller.sourceforge.net
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch1: %name-3.3.90-alt-zip_command.patch
 
-# From configure.in
 %define glib_ver 2.36.0
 %define gtk_ver 3.12.0
+%define handy_ver 1.4
 %define libarchive_ver 3.0.0
 %define desktop_file_utils_ver 0.8
 
@@ -34,10 +34,10 @@ Requires: dconf gnome-icon-theme
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-licenses
 BuildRequires: meson yelp-tools
 BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: intltool >= 0.35.0
-BuildPreReq: desktop-file-utils >= %desktop_file_utils_ver
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
+BuildRequires: desktop-file-utils >= %desktop_file_utils_ver
 BuildRequires: libjson-glib-devel libnotify-devel
 %{?_enable_libarchive:BuildRequires: libarchive-devel >= %libarchive_ver}
 %{?_enable_nautilus_actions:BuildRequires: libnautilus-devel}
@@ -122,6 +122,9 @@ rm -f data/%xdg_name.desktop{,.in}
 %doc AUTHORS NEWS README.md
 
 %changelog
+* Sun Mar 20 2022 Yuri N. Sedunov <aris@altlinux.org> 3.42.0-alt1
+- 3.42.0
+
 * Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1.1
 - fixed meson options
 

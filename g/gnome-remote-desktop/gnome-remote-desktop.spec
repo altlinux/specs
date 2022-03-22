@@ -1,14 +1,15 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 
 %def_enable vnc
 %def_enable rdp
-%def_disable nvenc
+# hardware acceleration using NVENC and CUDA for RDP backend
+%def_enable nvenc
 
 Name: gnome-remote-desktop
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Remote Desktop
@@ -35,9 +36,10 @@ Source: %name-%version.tar
 
 Requires: pipewire >= %pw_ver
 Requires: fuse3 >= %fuse_ver
+%{?_enable_rdp:Requires: freerdp >= %freerdp_ver}
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
-BuildRequires: meson libgio-devel >= %glib_ver
+BuildRequires: meson libgio-devel >= %glib_ver libgudev-devel
 BuildRequires: pkgconfig(libpipewire-%pw_api_ver) >= %pw_ver
 %{?_enable_vnc:BuildRequires: libvncserver-devel >= %vnc_ver}
 %{?_enable_rdp:BuildRequires: libfreerdp-devel >= %freerdp_ver}
@@ -45,6 +47,7 @@ BuildRequires: pkgconfig(libpipewire-%pw_api_ver) >= %pw_ver
 BuildRequires: libfuse3-devel >= %fuse_ver
 BuildRequires: libxkbcommon-devel >= %xkbc_ver
 BuildRequires: libsecret-devel libnotify-devel libcairo-devel
+BuildRequires: libepoxy-devel libdrm-devel libgbm-devel
 
 %description
 Remote desktop daemon for GNOME using pipewire.
@@ -65,13 +68,24 @@ Remote desktop daemon for GNOME using pipewire.
 %find_lang %name
 
 %files -f %name.lang
+%_bindir/grdctl
 %_libexecdir/%name-daemon
 %_userunitdir/%name.service
 %_datadir/glib-2.0/schemas/org.gnome.desktop.remote-desktop.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.remote-desktop.enums.xml
+%{?_enable_nvenc:
+%dir %_datadir/%name
+%_datadir/%name/grd-cuda-damage-utils_30.ptx
+%_datadir/%name/grd-cuda-avc-utils_30.ptx}
 %doc README
 
 %changelog
+* Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
+* Mon Mar 07 2022 Yuri N. Sedunov <aris@altlinux.org> 42-alt0.9.rc
+- 42.rc
+
 * Wed Dec 08 2021 Yuri N. Sedunov <aris@altlinux.org> 41.2-alt1
 - 41.2
 

@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%define ver_major 3.42
+%define ver_major 3.44
 %define api_ver 4
 %define xdg_name org.gnome.Sysprof%api_ver
 %define _libexecdir %_prefix/libexec
@@ -14,7 +14,7 @@
 %endif
 
 Name: sysprof
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Sysprof kernel based performance profiler for Linux
@@ -32,13 +32,14 @@ Source: %name-%version.tar
 %define gtk_ver 3.22.0
 %define systemd_ver 222
 %define dazzle_ver 3.40
+%define polkit_ver 0.105
 
 BuildRequires(pre): meson
 BuildRequires: gcc-c++ libappstream-glib-devel yelp-tools
 BuildRequires: glib2-devel >= %glib_ver libjson-glib-devel
 BuildRequires: gobject-introspection-devel
 %{?_enable_gtk:BuildRequires: libgtk+3-devel >= %gtk_ver libdazzle-devel >= %dazzle_ver}
-%{?_with_sysprofd:BuildRequires: pkgconfig(systemd) libpolkit-devel}
+%{?_with_sysprofd:BuildRequires: pkgconfig(systemd) libpolkit-devel >= %polkit_ver}
 %{?_enable_libunwind:BuildRequires: libunwind-devel}
 
 %description
@@ -108,6 +109,9 @@ developing applications that use GtkGHex library.
 %_pkgconfigdir/%name-capture-%api_ver.pc
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 3.44.0-alt1
+- 3.44.0
+
 * Thu Nov 04 2021 Yuri N. Sedunov <aris@altlinux.org> 3.42.1-alt1
 - 3.42.1
 

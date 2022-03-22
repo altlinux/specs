@@ -1,7 +1,7 @@
 %def_disable snapshot
 
-%define ver_major 3.42
-%define api_ver 1.0
+%define ver_major 42
+%define api_ver 2
 %define _name GPaste
 %define xdg_name org.gnome.GPaste
 %define _libexecdir %_prefix/libexec
@@ -9,7 +9,7 @@
 %def_disable applet
 
 Name: gpaste
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: GPaste is a clipboard management system
@@ -22,24 +22,30 @@ Source: %url/archive/v%version/%_name-%version.tar.gz
 %else
 Source: %_name-%version.tar
 %endif
+Patch1: %name-42.0-alt-format.patch
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %define glib_ver 2.70
-%define gtk_ver 3.24.0
+%define gtk3_ver 3.24.0
+%define gtk4_ver 4.6.0
+%define adwaita_ver 1.1
 %define gi_ver 1.58.0
 %define vala_ver 0.42
 %define mutter_ver 40.0
 %define gjs_ver 1.54
 
-BuildRequires(pre): meson rpm-build-gir rpm-build-vala rpm-build-systemd
-BuildRequires: libappstream-glib-devel desktop-file-utils
+BuildRequires(pre):rpm-macros-meson rpm-build-gir rpm-build-vala rpm-build-systemd
+BuildRequires: meson libappstream-glib-devel desktop-file-utils
 BuildRequires: glib2-devel >= %glib_ver
-BuildRequires: libdbus-devel libgtk+3-devel >= %gtk_ver
+BuildRequires: libdbus-devel
+BuildRequires: libgtk+3-devel >= %gtk3_ver
+BuildRequires: libgtk4-devel >= %gtk4_ver pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: libgjs-devel >= %gjs_ver libmutter-devel >= %mutter_ver
 BuildRequires: gnome-control-center-devel
 BuildRequires: gobject-introspection-devel >= %gi_ver libgtk+3-gir-devel
-BuildRequires: vala-tools >= %vala_ver libvala-devel
+BuildRequires: libgtk4-gir-devel libadwaita-gir-devel
+BuildRequires: vala-tools >= %vala_ver
 
 %description
 This package provides gpaste-daemon is a clipboard management daemon with DBus
@@ -57,7 +63,7 @@ work.
 %package -n lib%name-devel
 Summary: Development files for %name
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 The lib%name-devel package contains library and header files for developing
@@ -66,7 +72,7 @@ applications that use %name.
 %package -n lib%name-gir
 Summary: GObject introspection data for the GPaste
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
 GObject introspection data for the GPaste library.
@@ -75,8 +81,8 @@ GObject introspection data for the GPaste library.
 Summary: GObject introspection devel data for the GPaste
 Group: Development/Other
 BuildArch: noarch
-Requires: lib%name-gir = %version-%release
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-gir = %EVR
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the GPaste library.
@@ -86,7 +92,7 @@ Summary: GNOME Shell extension for GPaste
 Group: Graphical desktop/GNOME
 BuildArch: noarch
 Requires: gnome-shell >= %ver_major
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n gnome-shell-extension-%name
 GNOME Shell extension for GPaste clipboard management system.
@@ -94,7 +100,7 @@ GNOME Shell extension for GPaste clipboard management system.
 %package applet
 Summary: Tray applet to manage GPaste
 Group: Graphical desktop/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description applet
 This package provides GPaste applet which starts the status icon
@@ -102,6 +108,9 @@ in notification area.
 
 %prep
 %setup -n %_name-%version
+%ifarch %ix86 armh
+%patch1 -b .format
+%endif
 
 %build
 %meson \
@@ -118,32 +127,49 @@ in notification area.
 %_libexecdir/%name/
 %{?_enable_applet:%exclude %_libexecdir/%name/%name-applet}
 %_desktopdir/%xdg_name.Ui.desktop
+%_desktopdir/%xdg_name.Preferences.desktop
 %_datadir/metainfo/%xdg_name.Ui.appdata.xml
 %_prefix/lib/systemd/user/%xdg_name.Ui.service
 %_datadir/dbus-1/services/*.service
 %_userunitdir/%xdg_name.service
+%_userunitdir/%xdg_name.Preferences.service
 %_datadir/glib-2.0/schemas/*.xml
 %_datadir/gnome-control-center/keybindings/*.xml
 %_man1dir/%name-client.1.*
 
 %_datadir/bash-completion/completions/gpaste-client
-%exclude %_datadir/zsh/site-functions/_gpaste-client
+%_datadir/zsh/site-functions/_gpaste-client
 %doc AUTHORS NEWS README.md THANKS TODO COPYING
 
 %files -n lib%name
-%_libdir/*.so.*
+%_libdir/lib%name-%api_ver.so.*
+%_libdir/lib%name-gtk-3.so.*
+%_libdir/lib%name-gtk4.so.*
 
 %files -n lib%name-devel
-%_includedir/%name/
-%_libdir/*.so
-%_pkgconfigdir/*.pc
-%_vapidir/*
+%_includedir/%name-%api_ver/
+%_libdir/lib%name-%api_ver.so
+%_libdir/lib%name-gtk-3.so
+%_libdir/lib%name-gtk4.so
+%_pkgconfigdir/%name-%api_ver.pc
+%_pkgconfigdir/%name-gtk-3.pc
+%_pkgconfigdir/%name-gtk-4.pc
+%_vapidir/%name-%api_ver.deps
+%_vapidir/%name-%api_ver.vapi
+%_vapidir/%name-gtk-3.deps
+%_vapidir/%name-gtk-3.vapi
+%_vapidir/%name-gtk-4.deps
+%_vapidir/%name-gtk-4.vapi
 
 %files -n lib%name-gir
 %_typelibdir/%_name-%api_ver.typelib
+%_typelibdir/%{_name}Gtk-3.typelib
+%_typelibdir/%{_name}Gtk-4.typelib
 
 %files -n lib%name-gir-devel
 %_girdir/%_name-%api_ver.gir
+%_girdir/%{_name}Gtk-3.gir
+%_girdir/%{_name}Gtk-4.gir
 
 %if_enabled applet
 %files applet
@@ -158,8 +184,10 @@ in notification area.
 %_datadir/gnome-shell/extensions/GPaste@gnome-shell-extensions.gnome.org/
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 
-
 %changelog
+* Sun Mar 20 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Mon Feb 28 2022 Yuri N. Sedunov <aris@altlinux.org> 3.42.6-alt1
 - 3.42.6
 

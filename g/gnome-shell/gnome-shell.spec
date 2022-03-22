@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 %define gst_api_ver 1.0
 # Use Soup 2.4 instead of Soup 3. Must be in sync with libgweather (and WebKit?)
@@ -14,7 +14,7 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -36,12 +36,14 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 %define gjs_ver 1.70.1
 %define mutter_ver %version
 %define gtk_ver 3.16.0
+%define adwaita_ver 1.0
 %define gio_ver 2.56.0
 %define gstreamer_ver 1.0
 %define eds_ver 3.34.0
 %define telepathy_ver 0.17.5
 %define telepathy_logger_ver 0.2.4
 %define polkit_ver 0.100
+%define bt_api_ver 3.0
 %define bluetooth_ver 3.11.3
 %define folks_ver 0.5.2
 %define gi_ver 1.49.1
@@ -92,7 +94,7 @@ Requires: typelib(Gdm)
 Requires: typelib(Geoclue)
 Requires: typelib(Gio)
 Requires: typelib(GLib)
-Requires: typelib(GnomeBluetooth)
+Requires: typelib(GnomeBluetooth) = %bt_api_ver
 Requires: typelib(GnomeDesktop)
 Requires: typelib(GObject)
 Requires: typelib(Graphene)
@@ -130,7 +132,7 @@ BuildRequires: libgjs-devel >= %gjs_ver
 BuildRequires: libgio-devel >= %gio_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver libgtk+3-gir-devel
 # for Shew
-BuildRequires: libgtk4-devel libgtk4-gir-devel
+BuildRequires: libgtk4-devel libgtk4-gir-devel pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: at-spi2-atk-devel >= %atspi_ver
 BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libxml2-devel
@@ -143,7 +145,7 @@ BuildRequires: libjson-glib-devel >= %json_glib_ver
 BuildRequires: libcroco-devel >= %croco_ver
 BuildRequires: libcanberra-devel libcanberra-gtk3-devel
 BuildRequires: libalsa-devel libpulseaudio-devel
-BuildRequires: libgnome-bluetooth-devel >= %bluetooth_ver libgnome-bluetooth-gir-devel gnome-bluetooth
+BuildRequires: pkgconfig(gnome-bluetooth-%bt_api_ver) >= %bluetooth_ver libgnome-bluetooth%bt_api_ver-gir-devel
 BuildRequires: evolution-data-server-devel >= %eds_ver libicu-devel
 # for screencast recorder functionality
 BuildRequires: gstreamer%gst_api_ver-devel >= %gstreamer_ver gst-plugins%gst_api_ver-devel pkgconfig(libpipewire-0.3)
@@ -259,8 +261,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %_datadir/dbus-1/services/%xdg_name.PortalHelper.service
 %_datadir/dbus-1/services/%xdg_name.Screencast.service
 %_datadir/dbus-1/services/org.gnome.ScreenSaver.service
-%_datadir/gnome-control-center/keybindings/50-%name-system.xml
 %_datadir/gnome-control-center/keybindings/50-%name-launchers.xml
+%_datadir/gnome-control-center/keybindings/50-%name-system.xml
+%_datadir/gnome-control-center/keybindings/50-%name-screenshots.xml
 %_datadir/xdg-desktop-portal/portals/%name.portal
 %config %_datadir/glib-2.0/schemas/org.gnome.shell.gschema.xml
 %config %_datadir/glib-2.0/schemas/00_org.gnome.shell.gschema.override
@@ -268,6 +271,7 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %_userunitdir/%xdg_name.target
 %_userunitdir/%{xdg_name}@wayland.service
 %_userunitdir/%{xdg_name}@x11.service
+
 
 %_man1dir/*
 %_iconsdir/hicolor/*/*/*.svg
@@ -281,6 +285,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %endif
 
 %changelog
+* Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 41.5-alt1
 - 41.5
 

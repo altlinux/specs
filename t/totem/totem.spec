@@ -1,8 +1,9 @@
 %def_disable snapshot
 %define optflags_lto %nil
-
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.38
+
+%define ver_major 42
+%define beta %nil
 %define xdg_name org.gnome.Totem
 %define parser_ver 3.10.1
 %define gst_api_ver 1.0
@@ -16,6 +17,7 @@
 %define clutter_gtk_ver 1.5.5
 %define clutter_gst_ver 2.99.2
 %define peas_ver 1.1.0
+%define handy_ver 1.5
 
 %def_disable static
 %def_enable vala
@@ -37,8 +39,8 @@
 
 
 Name: totem
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Movie player for GNOME 3
 Group: Video
@@ -48,8 +50,9 @@ Url: https://wiki.gnome.org/Apps/Videos
 %if_enabled snapshot
 Source: %name-%version.tar
 %else
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %endif
+Patch: totem-42-alt-format.patch
 
 Obsoletes: %name-gstreamer < %version %name-backend-gstreamer < %version %name-backend-xine < %version
 Obsoletes: %name-plugins-mythtv  %name-plugins-galago
@@ -88,6 +91,7 @@ BuildRequires: gst-plugins-bad%gst_api_ver-devel
 
 BuildRequires: iso-codes-devel gnome-icon-theme
 BuildRequires: glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libgio-devel libpeas-devel >= %peas_ver
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 BuildRequires: libtotem-pl-parser-devel >= %parser_ver
 BuildRequires: libXtst-devel libXrandr-devel libXxf86vm-devel xorg-proto-devel
 BuildRequires: libclutter-devel >= %clutter_ver
@@ -160,6 +164,7 @@ A default plugins for Totem:
 	media-player-keys
 	pythonconsole
 	opensubtitles
+	mpris
 
 %package plugins-lirc
 Summary: LIRC (Infrared remote) plugin for Totem
@@ -239,7 +244,10 @@ This package provides a video thumbnailer from Totem package that can be
 used by other applications like filemanagers.
 
 %prep
-%setup
+%setup -n %name-%version%beta
+%ifarch %ix86 armh
+%patch -b .format
+%endif
 subst "s|'pylint'|'pylint.py3'|" meson.build
 
 %build
@@ -259,8 +267,6 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_bindir/*
 %exclude %_bindir/%name-video-thumbnailer
 %dir %_libdir/%name
-# depends on pygtk
-#%_libexecdir/%name/totem-bugreport.py
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/%name/
@@ -293,9 +299,8 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %dir %_libdir/%name/plugins
 %_libdir/%name/plugins/apple-trailers/
 %_libdir/%name/plugins/autoload-subtitles/
-%_libdir/%name/plugins/dbus/
 %_libdir/%name/plugins/im-status/
-%_libdir/%name/plugins/media-player-keys/
+%_libdir/totem/plugins/mpris/
 %_libdir/%name/plugins/open-directory/
 %_libdir/%name/plugins/opensubtitles/
 %_libdir/%name/plugins/properties/
@@ -356,6 +361,9 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Tue Oct 12 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 

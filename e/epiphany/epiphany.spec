@@ -3,16 +3,14 @@
 
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
-%define api_ver 3.10
-%define ua_ver 3.24
 %define xdg_name org.gnome.Epiphany
 
 %def_enable soup2
 
 Name: epiphany
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Epiphany is a GNOME web browser.
@@ -32,8 +30,8 @@ Obsoletes: %name-extensions
 
 %add_findprov_lib_path %_libdir/%name
 
-%define glib_ver 2.64
-%define webkit_ver 2.33.90
+%define glib_ver 2.67.4
+%define webkit_ver 2.33.2
 %define gtk_ver 3.24.0
 %define nettle_ver 3.4
 %define libxml2_ver 2.6.12
@@ -42,10 +40,10 @@ Obsoletes: %name-extensions
 %define secret_ver 0.19
 %define gcr_ver 3.5.5
 %define dazzle_ver 3.37.1
-%define handy_ver 1.1.0
+%define handy_ver 1.5.0
 %define iso_codes_ver 0.35
-%define sqlite_ver 3.22
-%define portal_ver 0.0.2
+%define sqlite_ver 3.24
+%define portal_ver 0.5
 
 Requires: %name-data = %version-%release indexhtml iso-codes
 
@@ -62,7 +60,7 @@ BuildRequires: iso-codes-devel >= %iso_codes_ver
 BuildRequires: gcc-c++ gsettings-desktop-schemas-devel
 BuildRequires: libicu-devel libjson-glib-devel
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
-BuildRequires: libportal-devel >= %portal_ver
+BuildRequires: libportal-gtk3-devel >= %portal_ver
 BuildRequires: libarchive-devel
 %if_enabled soup2
 BuildRequires: libsoup-devel >= %soup_ver pkgconfig(webkit2gtk-4.0)
@@ -122,6 +120,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Thu Mar 17 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Tue Dec 21 2021 Yuri N. Sedunov <aris@altlinux.org> 41.3-alt1
 - 41.3
 

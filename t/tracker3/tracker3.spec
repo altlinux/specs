@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name tracker
-%define ver_major 3.2
+%define ver_major 3.3
 %define beta %nil
 %define api_ver_major 3
 %define api_ver %{api_ver_major}.0
@@ -13,7 +13,7 @@
 %def_enable introspection
 %def_enable upower
 %def_enable stemmer
-%def_enable soup
+%def_enable soup2
 %def_enable soup3
 %def_enable docs
 %def_enable man
@@ -25,7 +25,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name%api_ver_major
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -65,7 +65,7 @@ BuildRequires: /proc meson gcc-c++
 BuildRequires: libxml2-devel libicu-devel libuuid-devel
 BuildRequires: libdbus-devel >= %dbus_ver
 BuildRequires: libgio-devel >= %glib_ver libpango-devel >= %pango_ver libgtk+3-devel >= %gtk_ver
-%{?_enable_soup:BuildRequires: libsoup-devel >= %soup_ver}
+%{?_enable_soup2:BuildRequires: libsoup-devel >= %soup_ver}
 %{?_enable_soup3:BuildRequires: libsoup3.0-devel >= %soup3_ver}
 BuildRequires: libjson-glib-devel
 BuildRequires: gobject-introspection-devel
@@ -183,7 +183,7 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/*/meson.build
 
 %files -n lib%name
 %_libdir/*.so.*
-%{?_enable_soup:%_libdir/%_name-%api_ver/lib%_name-remote-soup2.so}
+%{?_enable_soup2:%_libdir/%_name-%api_ver/lib%_name-remote-soup2.so}
 %{?_enable_soup3:%_libdir/%_name-%api_ver/lib%_name-remote-soup3.so}
 
 %files devel
@@ -211,6 +211,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/*/meson.build
 %endif
 
 %changelog
+* Sun Mar 20 2022 Yuri N. Sedunov <aris@altlinux.org> 3.3.0-alt1
+- 3.3.0
+
 * Sun Oct 31 2021 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
 - 3.2.1
 

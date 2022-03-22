@@ -1,18 +1,24 @@
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
-%define ver_major 40
+%define ver_major 42
+%define beta %nil
 %define xdg_name org.gnome.SoundRecorder
 %define gst_api_ver 1.0
 
 Name: gnome-sound-recorder
 Version: %ver_major.0
-Release: alt1
+Release: alt1%beta
 
 Summary: Sound Recorder for GNOME
 Group: Sound
 License: GPLv2+
 Url: https://wiki.gnome.org/Design/Apps/SoundRecorder
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%if_disabled snapshot
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 BuildArch: noarch
 
@@ -21,43 +27,39 @@ Obsoletes: gnome-media-grecord
 Provides:  gnome-media-grecord = %version-%release
 
 %define glib_ver 2.44
-%define gtk_ver 3.14
+%define gtk_ver 4.2
 %define gjs_ver 1.54
-%define handy_ver 1.1.90
+%define adwaita_ver 1.0.0
 
 Requires: libgjs >= %gjs_ver
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
 Requires: gstreamer%gst_api_ver-utils
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
-Requires: typelib(Gdk)
-Requires: typelib(GdkPixbuf)
+Requires: typelib(Adw) = 1
 Requires: typelib(Gio)
 Requires: typelib(GLib)
 Requires: typelib(GObject)
 Requires: typelib(Gst)
-Requires: typelib(GstAudio)
 Requires: typelib(GstPbutils)
-Requires: typelib(Gtk)
-Requires: typelib(Pango)
-Requires: typelib(Handy) = 1
+Requires: typelib(GstPlayer)
+Requires: typelib(Gtk) = 4.0
 # explicitly required to avoid installation old version
 Requires: libgst-plugins%gst_api_ver-gir
 
-BuildRequires(pre): meson
-BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
-BuildRequires: libgjs-devel libgtk+3-gir-devel yelp-tools
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
+BuildRequires: libgjs-devel libgtk4-gir-devel yelp-tools
 BuildRequires: pkgconfig(gstreamer-player-%gst_api_ver)
 BuildRequires: gst-plugins%gst_api_ver-devel
 BuildRequires: gstreamer%gst_api_ver-utils gst-plugins-base%gst_api_ver
 BuildRequires: gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
-BuildRequires: gobject-introspection-devel pkgconfig(libhandy-1) >= %handy_ver
-
+BuildRequires: gobject-introspection-devel pkgconfig(libadwaita-1) >= %adwaita_ver
 
 %description
 The GNOME application for record and play sound files.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson
@@ -78,6 +80,12 @@ The GNOME application for record and play sound files.
 
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
+* Sun Jan 23 2022 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt2
+- updated to 40.0-33-g7c98b31 (ported to GTK4 + Adwaita)
+
 * Tue Mar 23 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 

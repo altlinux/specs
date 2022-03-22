@@ -2,9 +2,10 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name gnome-desktop
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 %define api_ver 3.0
+%define api_ver4 4.0
 %define gnome_distributor "%vendor"
 %define gnome_date "%(date "+%%B %%e %%Y"), Moscow"
 
@@ -17,7 +18,7 @@
 %def_enable libseccomp
 
 Name: %{_name}3
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Library with common API for various GNOME 3 modules
@@ -40,6 +41,7 @@ BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
 BuildRequires: meson yelp-tools
 BuildRequires: libgdk-pixbuf-devel >= 2.36.5
 BuildRequires: libgtk+3-devel >= 3.3.6
+BuildRequires: libgtk4-devel >= 4.4.0
 BuildRequires: libgio-devel >= 2.54.0
 BuildRequires: gsettings-desktop-schemas-devel >= 3.28.0
 BuildRequires: iso-codes-devel
@@ -48,7 +50,8 @@ BuildRequires: libXrandr-devel >= 1.3 libXext-devel >= 1.1
 BuildRequires: libudev-devel pkgconfig(systemd)
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_libseccomp:BuildRequires: libseccomp-devel}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
+BuildRequires: libgtk4-gir-devel gsettings-desktop-schemas-gir-devel}
 
 %description
 GNOME (GNU Network Object Model Environment) is a user-friendly set of
@@ -146,21 +149,30 @@ the functionality of the Gnome 3 desktop library.
 %find_lang --with-gnome --output=%_name.lang %_name-%api_ver gpl lgpl fdl
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 
 %files -n lib%name -f %_name.lang
-%_libdir/*.so.*
+%_libdir/libgnome-bg-4.so.*
+%_libdir/lib%_name-3.so.*
+%_libdir/lib%_name-4.so.*
+%_libdir/libgnome-rr-4.so.*
 %doc AUTHORS NEWS README*
 
 %files -n lib%name-devel
 %_libexecdir/%_name-debug/
-%_includedir/*
-%_libdir/*.so
+%_includedir/%_name-%api_ver
+%_includedir/%_name-4.0
+%_libdir/libgnome-bg-4.so
+%_libdir/lib%_name-3.so
+%_libdir/lib%_name-4.so
+%_libdir/libgnome-rr-4.so
 %_datadir/gnome/gnome-version.xml
-%_pkgconfigdir/*
+%_pkgconfigdir/gnome-bg-4.pc
+%_pkgconfigdir/%_name-%api_ver.pc
+%_pkgconfigdir/%_name-4.pc
+%_pkgconfigdir/gnome-rr-4.pc
 
 %if_enabled gtk_doc
 %files -n lib%name-devel-doc
@@ -174,10 +186,16 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %if_enabled introspection
 %files -n lib%name-gir
-%_typelibdir/*
+%_typelibdir/GnomeBG-4.0.typelib
+%_typelibdir/GnomeDesktop-%api_ver.typelib
+%_typelibdir/GnomeDesktop-4.0.typelib
+%_typelibdir/GnomeRR-4.0.typelib
 
 %files -n lib%name-gir-devel
-%_girdir/*
+%_girdir/GnomeBG-4.0.gir
+%_girdir/GnomeDesktop-%api_ver.gir
+%_girdir/GnomeDesktop-4.0.gir
+%_girdir/GnomeRR-4.0.gir
 %endif
 
 %if_enabled installed_tests
@@ -188,6 +206,12 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Sun Mar 20 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
+* Sun Mar 13 2022 Yuri N. Sedunov <aris@altlinux.org> 42-alt0.9.rc
+- 42.rc
+
 * Wed Jan 12 2022 Yuri N. Sedunov <aris@altlinux.org> 41.3-alt1
 - 41.3
 

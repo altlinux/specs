@@ -1,4 +1,4 @@
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 %define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
@@ -10,7 +10,7 @@
 %def_enable malcontent
 
 Name: gnome-initial-setup
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Initial Setup
@@ -31,24 +31,26 @@ Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version%beta.
 %define cheese_ver 3.28
 %define ibus_ver 1.4.99
 %define malcontent_ver 0.6.0
+%define handy_ver 1.5.90
 
 Requires: gnome-shell >= 3.37.92 gdm dconf geoclue2 >= %geoclue_ver
 Requires: gsettings-desktop-schemas >= %gsds_ver
 Requires: ibus gnome-keyring
 Requires: gnome-getting-started-docs
 %{?_enable malcontent:Requires: malcontent}
-#Requires: gnome-tour
+Requires: gnome-tour
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
 BuildRequires: meson libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: libnm-devel >= %nm_ver libnma-devel >= %nma_ver
 BuildRequires: libkrb5-devel libpwquality-devel
 BuildRequires: libxkbfile-devel libibus-devel >= %ibus_ver librest-devel
-BuildRequires: libaccountsservice-devel libgnome-desktop3-devel
+BuildRequires: libaccountsservice-devel pkgconfig(gnome-desktop-4)
 BuildRequires: gstreamer%gst_api_ver-devel libclutter-gst3.0-devel
-BuildRequires: libgweather-devel libgnome-online-accounts-devel
+BuildRequires: pkgconfig(gweather4) libgnome-online-accounts-devel
 BuildRequires: gdm-libs-devel iso-codes-devel libpolkit-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libsecret-devel >= %secret_ver
@@ -103,6 +105,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README* NEWS
 
 %changelog
+* Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 41.4-alt1
 - 41.4
 

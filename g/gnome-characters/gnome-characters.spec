@@ -1,13 +1,14 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Characters
-%define ver_major 41
+%define ver_major 42
+%define beta %nil
 %define _libexecdir %_prefix/libexec
 %def_without included_libunistring
 
 Name: gnome-characters
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1%beta
 
 Summary: Character map application for GNOME
 Group: Text tools
@@ -15,7 +16,7 @@ License: BSD and GPLv2+
 Url: https://wiki.gnome.org/Design/Apps/CharacterMap
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Vcs: https://gitlab.gnome.org/GNOME/gnome-characters.git
 Source: %name-%version.tar
@@ -25,27 +26,29 @@ Source: %name-%version.tar
 
 %define gjs_ver 1.50.0
 %define unistring_ver 0.9.5
-%define handy_ver 1.1
+%define adwaita_ver 1.0
 
 Requires: libgjs >= %gjs_ver
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
+Requires: typelib(Adw) = 1
 Requires: typelib(Gc)
-Requires: typelib(Gdk)
+Requires: typelib(GdkPixbuf)
 Requires: typelib(Gio)
 Requires: typelib(GLib)
-Requires: typelib(GnomeDesktop)
+Requires: typelib(GnomeDesktop) = 4.0
 Requires: typelib(GObject)
-Requires: typelib(Gtk) = 3.0
-Requires: typelib(Handy) = 1
+Requires: typelib(Graphene)
+Requires: typelib(Gsk)
+Requires: typelib(Gtk) = 4.0
 Requires: typelib(IBus)
 Requires: typelib(Pango)
 Requires: typelib(PangoCairo)
 
-BuildRequires(pre): meson rpm-build-gir
-BuildRequires: libappstream-glib-devel
-BuildRequires: libgtk+3-devel libgjs-devel >= %gjs_ver libdbus-devel
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson libappstream-glib-devel
+BuildRequires: libgtk4-devel libgjs-devel >= %gjs_ver libdbus-devel
+BuildRequires: gobject-introspection-devel libgtk4-gir-devel
+BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 %{?_without_included_libunistring:BuildRequires: libunistring-devel >= %unistring_ver}
 BuildRequires: gperf
 
@@ -54,7 +57,7 @@ Characters is a simple utility application to find and insert unusual
 characters.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson -Dbuildtype=release
@@ -71,15 +74,15 @@ characters.
 %_desktopdir/%xdg_name.desktop
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/dbus-1/services/%xdg_name.BackgroundService.service
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %_iconsdir/*/*/*/*.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
-%doc NEWS COPYING
-#%doc README
-
+%doc NEWS COPYING README*
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0 (ported to GTK4)
+
 * Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1.1
 - fixed meson options
 

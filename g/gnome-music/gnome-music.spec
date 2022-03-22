@@ -1,10 +1,11 @@
 %def_disable snapshot
 
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 %define xdg_name org.gnome.Music
 %define gst_api_ver 1.0
 %define soup_api_ver 2.4
+%define tracker_api_ver 3.0
 
 Name: gnome-music
 Version: %ver_major.0
@@ -21,43 +22,37 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version.tar
 %endif
 
-%add_typelib_req_skiplist typelib(Gd) typelib(Gfm)
+BuildArch: noarch
 
 %define tracker_ver 3.0
-%define gtk_ver 3.24.14
+%define gtk4_ver 4.5.0
 %define grilo_ver 0.3.13
-%define python_ver 3.3
-%define mediaart_ver 1.9
+%define python_ver 3.7
+%define mediaart_ver 1.9.1
 %define pygobject_ver 3.36.1
 %define pycairo_ver 1.14.0
 %define goa_ver 3.35.90
-%define handy_ver 1.2
+%define adwaita_ver 1.0
 
-Requires: tracker-miners3 >= %tracker_ver typelib(Tracker) = 3.0
+Requires: tracker-miners3 >= %tracker_ver typelib(Tracker) = %tracker_api_ver
 Requires: grilo-tools >= %grilo_ver grilo-plugins
 Requires: gst-plugins-base%gst_api_ver
-Requires: typelib(Gtk) = 3.0 typelib(Soup) = %soup_api_ver
-
-# gir-python.req doesn't recognize multiline expressions (see gnomemusic/albumartcache.py)
-Requires: typelib(MediaArt) = 2.0 typelib(GstTag)
-
-# gnomemusic/widgets/songwidget.py:from gi.repository.Dazzle import BoldingLabel  # noqa: F401
-Requires: typelib(Dazzle)
-
-%add_python3_req_skip gi.repository.Dazzle gi.repository.Gd
+Requires: typelib(Gtk) = 4.0 typelib(Soup) = %soup_api_ver
+Requires: typelib(MediaArt) = 2.0 typelib(GstTag) = %gst_api_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
 BuildRequires: meson %_bindir/git
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
-BuildRequires: libgtk+3-devel >= %gtk_ver libdazzle-devel libsoup-devel
+BuildRequires: libgtk4-devel >= %gtk4_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+BuildRequires: libsoup-devel
 BuildRequires: libgrilo-devel >= %grilo_ver grilo-plugins-devel
 BuildRequires: libmediaart2.0-devel >= %mediaart_ver
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
+BuildRequires: pkgconfig(tracker-sparql-%tracker_api_ver) >= %tracker_ver
 BuildRequires: python3-devel >= %python_ver
-BuildRequires: pkgconfig(tracker-sparql-3.0) >= %tracker_ver
 BuildRequires: python3-module-pygobject3-devel >= %pygobject_ver python3-module-pycairo-devel >= %pycairo_ver
 BuildRequires: libgnome-online-accounts-devel >= %goa_ver
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 
 %description
 Music playing application for GNOME3.
@@ -79,13 +74,15 @@ Music playing application for GNOME3.
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/org.gnome.Music.gschema.xml
 %_iconsdir/hicolor/*/*/*.svg
-%_libdir/%xdg_name/
 %python3_sitelibdir_noarch/gnomemusic/
 %_datadir/metainfo/%xdg_name.appdata.xml
 #%_man1dir/%name.1.*
 %doc README* NEWS*
 
 %changelog
+* Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0 (ported to GTK4)
+
 * Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
 - 41.0
 

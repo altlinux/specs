@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Calendar
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
 %def_disable gtk_doc
 
 Name: gnome-calendar
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Calendar application for GNOME
@@ -25,24 +25,25 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-licenses rpm-build-gnome rpm-macros-meson
 
 %define glib_ver 2.44.0
-%define gtk_ver 3.22.0
+%define gtk4_ver 4.6.0
 %define ical_ver 1.0.1
 %define eds_ver 3.33.2
 %define gsds_ver 3.21.2
-%define gweather_ver 3.27.2
-%define dazzle_ver 3.33.1
-%define handy_ver 1.0.0
+%define gweather_ver 3.99
+%define adwaita_ver 1.0.0
 
+BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson yelp-tools libappstream-glib-devel
-BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
+BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk4_ver
 BuildRequires: libical-devel >= %ical_ver libicu-devel
 BuildRequires: libgnome-online-accounts-devel vala-tools
 BuildRequires: gobject-introspection-devel
 BuildRequires: evolution-data-server-devel >= %eds_ver
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
-BuildRequires: libdazzle-devel >= %dazzle_ver libgweather-devel >= %gweather_ver
+BuildRequires: libgweather4.0-devel >= %gweather_ver
 BuildRequires: libgeoclue2-devel libgeocode-glib-devel
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
+BuildRequires: libsoup-devel
+BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 
 %description
@@ -90,6 +91,9 @@ This package provides Calendar reference manual.
 %endif
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Sat Dec 11 2021 Yuri N. Sedunov <aris@altlinux.org> 41.2-alt1
 - 41.2
 

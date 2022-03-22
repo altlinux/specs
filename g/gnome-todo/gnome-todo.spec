@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 41
@@ -6,14 +6,14 @@
 %define api_ver 1.0
 %define xdg_name org.gnome.Todo
 
-#disabled by default
+# disabled by default
 %def_disable todo_txt_plugin
 %def_disable todoist_plugin
 %def_disable gtk_doc
 
 Name: gnome-todo
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: Todo manager for GNOME
 Group: Graphical desktop/GNOME
@@ -43,7 +43,7 @@ BuildRequires: libgtk4-devel >= %gtk_ver pkgconfig(libadwaita-1) >= %libadwaita_
 BuildRequires: libpeas-devel
 BuildRequires: evolution-data-server-devel >= %eds_ver libical-devel
 BuildRequires: libgnome-online-accounts-devel 
-BuildRequires: librest-devel libjson-glib-devel libportal-devel
+BuildRequires: librest-devel libjson-glib-devel libportal-gtk4-devel
 BuildRequires: gir(Gtk) = 3.0 gir(Adw) = 1
 
 %description
@@ -113,6 +113,9 @@ GObject introspection devel data for the GNOME Todo.
 %_girdir/Gtd-%api_ver.gir
 
 %changelog
+* Mon Mar 14 2022 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt2
+- updated to 41.0-97-g6878771 from master (42.alpha)
+
 * Thu Sep 16 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
 - 41.0
 

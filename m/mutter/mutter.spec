@@ -3,10 +3,10 @@
 
 %def_disable snapshot
 
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 # %%ver_major - 32
-%define api_ver 9
+%define api_ver 10
 %define sover 0
 %define xdg_name org.gnome.mutter
 %define _libexecdir %_prefix/libexec
@@ -18,7 +18,7 @@
 %def_enable wayland_eglstream
 
 Name: mutter
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 Epoch: 1
 
@@ -251,6 +251,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 1:42.0-alt1
+- 42.0
+
 * Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 1:41.5-alt1
 - 41.5
 

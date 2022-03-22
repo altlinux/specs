@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.30
+%define ver_major 1.32
 %define api_ver 1.0
 %define gtk_api_ver 3.0
 
@@ -32,7 +32,7 @@ Source: %name-%version.tar
 %endif
 
 BuildRequires(pre): meson
-BuildRequires: gnome-common gtk-doc
+BuildRequires: gnome-common
 BuildRequires: libgio-devel >= 2.38.0 libgtk+3-devel >= 3.0.0
 # for python3 support
 BuildRequires(pre): rpm-build-python3
@@ -45,6 +45,7 @@ BuildRequires: python-devel python-module-pygobject3-devel >= 3.1.1}
 %{?_enable_gjs:BuildRequires: libgjs-devel >= 1.37.1}
 %{?_enable_lua:BuildRequires: liblua5-devel luajit libluajit-devel lgi >= 0.9.0}
 %{?_enable_vala:BuildRequires: vala-tools >= 0.14}
+%{?_enable_gtk_doc:BuildRequires: gi-docgen}
 %{?_enable_glade_catalog:BuildRequires: libgladeui2.0-devel xmllint}
 %{?_enable_check:BuildRequires: xvfb-run}
 
@@ -202,7 +203,8 @@ xvfb-run %meson_test
 
 %if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/*
+%_datadir/doc/%name-%api_ver
+%_datadir/doc/%name-gtk-%api_ver
 %endif
 
 %files demo
@@ -220,6 +222,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 1.32.0-alt1
+- 1.32.0
+
 * Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 1.30.0-alt1
 - 1.30.0
 

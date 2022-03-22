@@ -1,11 +1,11 @@
 %def_disable snapshot
 %define _name connections
 %define xdg_name org.gnome.Connections
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 
 Name: gnome-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Connections
@@ -22,6 +22,7 @@ Source: %name-%version.tar
 
 %define glib_ver 2.58
 %define gtk_ver 3.22.0
+%define handy_ver 1.2
 
 BuildRequires(pre): meson
 BuildRequires: vala-tools 
@@ -33,8 +34,9 @@ BuildRequires: pkgconfig(gtk-vnc-2.0)
 # for gtk-frdp
 BuildRequires: pkgconfig(freerdp2)
 BuildRequires: pkgconfig(winpr2)
+BuildRequires: pkgconfig(libsecret-1)
 BuildRequires: gobject-introspection-devel gir(Gtk) = 3.0
-BuildRequires: pkgconfig(libhandy-1)
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 
 %description
 %summary
@@ -68,6 +70,9 @@ BuildRequires: pkgconfig(libhandy-1)
 %exclude %_libdir/%name/pkgconfig/
 
 %changelog
+* Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Fri Dec 03 2021 Yuri N. Sedunov <aris@altlinux.org> 41.2-alt1
 - 41.2
 

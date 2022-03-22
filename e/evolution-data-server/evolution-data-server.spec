@@ -7,10 +7,12 @@
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.42
-%define ver_base 3.42
+%define ver_major 3.44
+%define ver_base 3.44
 %define ver_lib 1.2
 %define ver_libecal 2.0
+
+%def_disable gweather4
 
 %def_disable debug
 %def_disable static
@@ -30,7 +32,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution Data Server
@@ -54,6 +56,7 @@ Patch1: %name-1.4.2.1-debug-lock.patch
 %define secret_ver 0.5
 %define sqlite_ver 3.7.17
 %define gweather_ver 3.10.0
+%define gweather4_ver 3.99.0
 %define ical_ver 3.0.7
 %define gdata_ver 0.15.1
 %define goa_ver 3.8.0
@@ -71,7 +74,11 @@ BuildRequires: libgtk+3-devel >= %gtk3_ver
 BuildRequires: libxml2-devel
 BuildRequires: libsoup-devel >= %libsoup_ver
 BuildRequires: libsqlite3-devel >= %sqlite_ver
+%if_enabled gweather4
+BuildRequires: libgweather4.0-devel >= %gweather4_ver
+%else
 BuildRequires: libgweather-devel >= %gweather_ver
+%endif
 BuildRequires: libical-glib-devel >= %ical_ver
 BuildRequires: libgdata-devel >= %gdata_ver
 BuildRequires: libsecret-devel >= %secret_ver
@@ -165,7 +172,7 @@ the functionality of the installed EDS libraries.
 %endif
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 # reenable RPATH* to link against private libraries
 %cmake \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
@@ -187,7 +194,8 @@ the functionality of the installed EDS libraries.
 	%{?_enable_introspection:-DENABLE_INTROSPECTION:BOOL=ON} \
 	%{?_enable_gtk_doc:-DENABLE_GTK_DOC:BOOL=ON} \
 	%{?_enable_vala:-DENABLE_VALA_BINDINGS:BOOL=ON} \
-	%{?_enable_installed_tests:-DENABLE_INSTALLED_TESTS:BOOL=ON}
+	%{?_enable_installed_tests:-DENABLE_INSTALLED_TESTS:BOOL=ON} \
+	%{?_enable_gweather4:-DWITH_GWEATHER4}
 %nil
 %cmake_build
 
@@ -276,6 +284,9 @@ ln -s camel-lock-helper-%ver_lib %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 3.44.0-alt1
+- 3.44.0
+
 * Sun Feb 27 2022 Yuri N. Sedunov <aris@altlinux.org> 3.42.4-alt1
 - 3.42.4
 

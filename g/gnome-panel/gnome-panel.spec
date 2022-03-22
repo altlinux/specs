@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.42
+%define ver_major 3.44
 %define api_ver 3.0
 %define applet_api_ver 6.0
 %define xdg_name org.gnome.gnome-panel
@@ -35,7 +35,7 @@ Source: %name-%version.tar
 %define eds_ver 3.34.0
 %define cairo_ver 1.0
 %define tp_glib_ver 0.14
-%define gweather_ver 3.40
+%define gweather4_ver 3.99
 %define rsvg_ver 2.36.2
 %define gtk_doc_ver 1.24.1
 %define systemd_ver 230
@@ -63,7 +63,8 @@ BuildRequires: libwnck3-devel >= %libwnck_ver
 BuildRequires: libgnome-menus-devel >= %gnome_menus_ver
 BuildRequires: libcairo-devel >= %cairo_ver
 BuildRequires: libtelepathy-glib-devel >= %tp_glib_ver
-BuildRequires: libgweather-devel >= %gweather_ver
+BuildRequires: libgweather4.0-devel >= %gweather4_ver
+BuildRequires: libgeocode-glib-devel
 BuildRequires: librsvg-devel >= %rsvg_ver
 BuildRequires: libX11-devel libXt-devel libXau-devel libXrandr-devel libXi-devel libxml2-devel
 BuildRequires: libdconf-devel >= %dconf_ver libpolkit-devel libSM-devel
@@ -209,6 +210,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 3.44.0-alt1
+- 3.44.0
+
 * Sat Oct 23 2021 Yuri N. Sedunov <aris@altlinux.org> 3.42.0-alt1
 - 3.42.0
 

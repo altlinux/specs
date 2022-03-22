@@ -1,8 +1,8 @@
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 
 Name: gnome-user-docs
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: General GNOME User Documentation
@@ -20,7 +20,7 @@ Provides: gnome-users-guide
 Obsoletes: gnome2-user-docs
 Provides: gnome2-user-docs
 
-%define yelp_ver 3.38.0
+%define yelp_ver 42.0
 
 BuildRequires: rpm-build-gnome rpm-build-licenses
 BuildRequires: yelp-tools >= %yelp_ver
@@ -44,6 +44,9 @@ directly associated with any particular GNOME application or package.
 %doc README NEWS
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Wed Mar 02 2022 Yuri N. Sedunov <aris@altlinux.org> 41.2-alt1
 - 41.2
 

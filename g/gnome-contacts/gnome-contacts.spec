@@ -1,15 +1,15 @@
 %def_disable snapshot
 
-%define ver_major 41
-%define beta %nil
+%define ver_major 42
+%define beta .beta
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
 %define _name org.gnome.Contacts
-%def_with cheese
+%def_without cheese
 
 Name: gnome-contacts
-Version: %ver_major.0
-Release: alt1%beta
+Version: %ver_major
+Release: alt0.5%beta
 
 Summary: Contacts manager for GNOME
 License: GPL-2.0-or-later
@@ -23,25 +23,27 @@ Source: %name-%version.tar
 %endif
 
 %define glib_ver 2.58
-%define gtk_ver 3.24
-%define vala_ver 0.17.2
+%define gtk4_ver 4.6.0
+%define vala_ver 0.40.10
 %define tp_glib_ver 0.22.0
 %define folks_ver 0.14
 %define eds_ver 3.34
 %define cheese_ver 3.5.90
 %define geocode_ver 3.15.3
 %define handy_ver 1.1.0
+%define portal_ver 0.5
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools
 BuildRequires: yelp-tools xsltproc docbook-dtds docbook-style-xsl libappstream-glib-devel valadoc
-BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libtelepathy-glib-devel >= %tp_glib_ver
+BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk4_ver pkgconfig(libadwaita-1)
+BuildRequires:  libtelepathy-glib-devel >= %tp_glib_ver
 BuildRequires: libfolks-devel >= %folks_ver libvala-devel >= %vala_ver libgnome-desktop3-devel
 BuildRequires: libgnome-online-accounts-devel libgee0.8-devel evolution-data-server-devel >= %eds_ver
-BuildRequires: libgeocode-glib-devel >= %geocode_ver libchamplain-gtk3-devel libclutter-gtk3-devel
 %{?_with_cheese:BuildRequires: gstreamer%gst_api_ver-devel libcheese-devel >= %cheese_ver}
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
+BuildRequires: libportal-devel >= %portal_ver
 
 # for build from git
 BuildRequires: libfolks-vala
@@ -53,7 +55,8 @@ BuildRequires: libfolks-vala
 %setup -n %name-%version%beta
 
 %build
-%meson %{?_without_cheese:-Dcheese=false}
+%meson
+# %{?_without_cheese:-Dcheese=false}
 %meson_build
 
 %install
@@ -75,6 +78,9 @@ BuildRequires: libfolks-vala
 %doc NEWS README*
 
 %changelog
+* Mon Mar 14 2022 Yuri N. Sedunov <aris@altlinux.org> 42-alt0.5.beta
+- 42.beta (ported to GTK4)
+
 * Wed Sep 29 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
 - 41.0
 

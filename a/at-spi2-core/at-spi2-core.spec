@@ -1,4 +1,4 @@
-%define ver_major 2.42
+%define ver_major 2.44
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 %def_enable introspection
@@ -111,7 +111,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/defaults/at-spi2/accessibility.conf
 %_sysconfdir/xdg/autostart/at-spi-dbus-bus.desktop
 %_prefix/lib/systemd/user/at-spi-dbus-bus.service
-%doc AUTHORS README NEWS
+%doc AUTHORS README* NEWS
 
 %files -n lib%name
 %_libdir/libatspi.so.*
@@ -135,6 +135,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 2.44.0-alt1
+- 2.44.0
+
 * Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 2.42.0-alt1
 - 2.42.0
 

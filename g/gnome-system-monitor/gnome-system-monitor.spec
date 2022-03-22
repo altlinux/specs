@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 %def_enable systemd
 %def_disable wnck
@@ -26,6 +26,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %define libgtop_ver 2.38.0
 %define libxml_ver 2.0
 %define rsvg_ver 2.35
+%define handy_ver 1.5.0
 
 Requires: polkit
 
@@ -40,7 +41,7 @@ BuildRequires: libgtop-devel >= %libgtop_ver
 BuildRequires: libxml2-devel >= %libxml_ver
 BuildRequires: librsvg-devel >= %rsvg_ver
 BuildRequires: libpolkit-devel
-BuildRequires: pkgconfig(libhandy-1)
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 %{?_enable_wnck:BuildRequires: libwnck3-devel >= %libwnck_ver}
 %{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
 
@@ -77,6 +78,9 @@ Gnome-system-monitor is a simple process and system monitor.
 
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
 - 41.0
 

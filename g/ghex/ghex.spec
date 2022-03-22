@@ -1,16 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.41
-%define beta %nil
-%define api_ver 3.0
-%define libname gtkhex-3
+%define ver_major 4
+%define beta .beta.1
+%define api_ver 4
+%define libname gtkhex-%api_ver
 %define xdg_name org.gnome.GHex
 
+%def_enable introspection
 %def_disable check
 
 Name: ghex
-Version: %ver_major.1
-Release: alt1%beta
+Version: %ver_major
+Release: alt0.5%beta
 
 Summary: Binary editor for GNOME
 Group: Development/Tools
@@ -18,17 +19,18 @@ License: GPLv2+
 Url: https://wiki.gnome.org/Apps/Ghex
 
 Vcs: https://gitlab.gnome.org/GNOME/ghex.git
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major%beta/%name-%version%beta.tar.xz
 
-%define glib_ver 2.31.10
-%define gtk_ver 3.3.8
+%define glib_ver 2.66
+%define gtk4_ver 4.0.0
 
-Requires: libgtkhex = %version-%release
+Requires: libgtkhex = %EVR
 Requires: dconf
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
-BuildRequires: libgail3-devel yelp-tools
+BuildRequires: meson glib2-devel >= %glib_ver libgtk4-devel >= %gtk4_ver
+BuildRequires: yelp-tools
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk4-gir-devel}
 %{?_enable_check:BuildRequires: desktop-file-utils libappstream-glib-devel}
 
 %description
@@ -49,17 +51,36 @@ This package provides shared librarys needed for GtkGHex to work.
 %package -n libgtkhex-devel
 Summary: Development files for GtkHex
 Group: Development/C
-Requires: libgtkhex = %version-%release
+Requires: libgtkhex = %EVR
 
 %description -n libgtkhex-devel
 This package contains libraries and header files for
 developing applications that use GtkGHex library.
 
+%package -n libgtkhex-gir
+Summary: GObject introspection data for the GtkGHex
+Group: System/Libraries
+Requires: libgtkhex = %EVR
+
+%description -n libgtkhex-gir
+GObject introspection data for the GtkGHex library.
+
+%package -n libgtkhex-gir-devel
+Summary: GObject introspection devel data for the GtkGHex
+Group: System/Libraries
+BuildArch: noarch
+Requires: libgtkhex-gir = %EVR
+Requires: libgtkhex-devel = %EVR
+
+%description -n libgtkhex-gir-devel
+GObject introspection devel data for the GtkGHex library.
+
 %prep
 %setup -n %name-%version%beta
 
 %build
-%meson
+%meson \
+    %{?_disable_introspection:-Dintrospection=false}
 %meson_build
 
 %install
@@ -85,7 +106,18 @@ developing applications that use GtkGHex library.
 %_libdir/lib%libname.so
 %_pkgconfigdir/%libname.pc
 
+%if_enabled introspection
+%files -n libgtkhex-gir
+%_typelibdir/Hex-%api_ver.typelib
+
+%files -n libgtkhex-gir-devel
+%_girdir/Hex-%api_ver.gir
+%endif
+
 %changelog
+* Tue Mar 08 2022 Yuri N. Sedunov <aris@altlinux.org> 4-alt0.5.beta.1
+- 4.beta.1
+
 * Sat Dec 04 2021 Yuri N. Sedunov <aris@altlinux.org> 3.41.1-alt1
 - 3.41.1
 

@@ -1,12 +1,12 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define _name vte
-%define ver_major 0.66
+%define ver_major 0.67
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.2
+Version: %ver_major.90
 Release: alt1
 
 %def_disable static
@@ -15,6 +15,7 @@ Release: alt1
 %def_enable glade
 %def_enable check
 %def_disable sixel
+%def_disable gtk4
 
 Summary: Terminal emulator widget for use with GTK+
 License: LGPL-2.0
@@ -29,7 +30,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %_name-%version.tar
 %endif
 
-%define gtk3_ver 3.8.0
+%define gtk3_ver 3.20.0
+%define gtk4_ver 4.0.1
 %define glib_ver 2.52.0
 %define pango_ver 1.22
 %define gir_ver 0.10.2
@@ -42,6 +44,7 @@ BuildRequires: libncurses-devel libcairo-devel
 BuildRequires: gtk-doc >= 1.1.0
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk3_ver
+%{?_enable_gtk4:BuildRequires: libgtk4-devel >= %gtk4_ver}
 BuildRequires: libpango-devel >= %pango_ver
 BuildRequires: libgnutls-devel >= %tls_ver
 BuildRequires: libfribidi-devel
@@ -50,7 +53,8 @@ BuildRequires: vala-tools libvala-devel
 BuildRequires:  pkgconfig(systemd)
 
 %{?_enable_glade:BuildRequires: libgladeui2.0-devel}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel
+%{?_enable_gtk4:BuildRequires:libgtk4-gir-devel}}
 
 %description
 VTE is a terminal emulator widget for use with GTK+
@@ -133,6 +137,7 @@ sed -i "1i #define set_child_setup set_child_setup2" src/spawn.cc
 
 %build
 %meson \
+	%{?_enable_gtk4:-Dgtk4=true} \
 	%{?_disable introspection:-Dgir=false} \
 	%{?_enable_gtk_doc:-Ddocs=true} \
 	%{?_disable_glade:-Dglade=false} \
@@ -155,8 +160,7 @@ find %buildroot -type f -name '*.la' -delete
 %find_lang %_name-%api_ver --output=%name.lang
 
 %check
-LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %_bindir/*
@@ -164,9 +168,8 @@ LD_LIBRARY_PATH=%buildroot%_libdir
 %files -n lib%name -f %name.lang
 %dir %pkgdocdir
 %pkgdocdir/AUTHORS
-#%pkgdocdir/NEWS
 %pkgdocdir/README.md
-%_libdir/*.so.*
+%_libdir/lib%_name-%api_ver.so.*
 %_sysconfdir/profile.d/vte.*sh
 %_libexecdir/vte-urlencode-cwd
 %_userunitdir/vte-spawn-.scope.d/defaults.conf
@@ -174,9 +177,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir
 %files -n lib%name-devel
 %pkgdocdir/*.txt
 %_includedir/*
-%_libdir/*.so
+%_libdir/lib%_name-%api_ver.so
 %_pkgconfigdir/%_name-%api_ver.pc
-%_vapidir/vte-%api_ver.*
+%_vapidir/%_name-%api_ver.*
 %if_enabled glade
 %_datadir/glade/catalogs/vte-%api_ver.xml
 %_datadir/glade/pixmaps/hicolor/*x*/actions/widget-vte-terminal.png
@@ -199,6 +202,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon Mar 07 2022 Yuri N. Sedunov <aris@altlinux.org> 0.67.90-alt1
+- 0.67.90
+
 * Sat Dec 04 2021 Yuri N. Sedunov <aris@altlinux.org> 0.66.2-alt1
 - 0.66.2
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.48
+%define ver_major 1.50
 
 %def_disable gdu
 %def_disable gtk_doc
@@ -33,7 +33,7 @@
 %def_disable check
 
 Name: gvfs
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -59,7 +59,7 @@ Obsoletes: %name-utils < 1.31
 Obsoletes: bash-completion-gvfs < 1.31
 
 %define glib_ver 2.66.0
-%define libsoup_ver 2.42
+%define libsoup3_ver 3.0.0
 %define avahi_ver 0.6
 %define libcdio_paranoia_ver 10.2
 %define bluez_ver 4.0
@@ -102,7 +102,7 @@ BuildRequires: libgcrypt-devel
 %{?_enable_gdu:BuildPreReq: libgdu-devel >= %gdu_ver libgudev-devel}
 %{?_enable_goa:BuildPreReq: libgnome-online-accounts-devel >= %goa_ver}
 %{?_enable_gphoto2:BuildPreReq: libgphoto2-devel}
-%{?_enable_http:BuildPreReq: libsoup-devel >= %libsoup_ver libxml2-devel}
+%{?_enable_http:BuildPreReq: libsoup3.0-devel >= %libsoup3_ver libxml2-devel}
 %{?_enable_keyring:BuildPreReq: libsecret-devel}
 %{?_enable_libmtp:BuildPreReq: libmtp-devel >= %mtp_ver}
 %{?_enable_nfs:BuildPreReq: libnfs-devel >= %nfs_ver}
@@ -539,6 +539,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 1.50.0-alt1
+- 1.50.0
+
 * Fri Apr 30 2021 Yuri N. Sedunov <aris@altlinux.org> 1.48.1-alt1
 - 1.48.1
 

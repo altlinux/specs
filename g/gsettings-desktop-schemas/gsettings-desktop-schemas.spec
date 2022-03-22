@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 %def_enable introspection
 
@@ -22,7 +22,8 @@ Requires(pre): libgio >= %gio_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-licenses rpm-build-gnome
 BuildRequires: meson libgio-devel >= %gio_ver
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel}
+%{?_enable_introspection:BuildRequires(pre): rpm-build-gir
+BuildRequires: gobject-introspection-devel}
 
 %description
 %name contains a collection of GSettings schemas for settings shared by
@@ -80,6 +81,7 @@ GObject introspection devel data for %name.
 
 %files data -f %name.lang
 %_datadir/glib-2.0/schemas/org.gnome.desktop.a11y.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.desktop.a11y.interface.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.a11y.applications.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.a11y.keyboard.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.a11y.magnifier.gschema.xml
@@ -126,6 +128,9 @@ GObject introspection devel data for %name.
 %endif
 
 %changelog
+* Sun Mar 20 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
 - 41.0
 

@@ -1,11 +1,11 @@
-%define ver_major 3.42
+%define ver_major 3.43
 %define xdg_name org.gnome.Terminal
 %define _libexecdir %_prefix/libexec
 
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.2
+Version: %ver_major.90
 Release: alt1
 
 Summary: GNOME Terminal
@@ -17,7 +17,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %define glib_ver 2.40
 %define gtk_ver 3.12.0
-%define vte_ver 0.66.2
+%define vte_ver 0.67.90
 
 Provides: xvt
 
@@ -88,7 +88,7 @@ EOF
 %_man1dir/%name.1*
 %_altdir/%name
 %doc --no-dereference COPYING
-%doc AUTHORS
+%doc README*
 
 %if_with nautilus
 %files nautilus
@@ -97,6 +97,9 @@ EOF
 %endif
 
 %changelog
+* Mon Mar 07 2022 Yuri N. Sedunov <aris@altlinux.org> 3.43.90-alt1
+- 3.43.90
+
 * Sat Dec 04 2021 Yuri N. Sedunov <aris@altlinux.org> 3.42.2-alt1
 - 3.42.2
 

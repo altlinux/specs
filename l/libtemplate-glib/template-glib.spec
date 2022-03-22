@@ -10,7 +10,7 @@
 %def_enable gtk_doc
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A templating library for GLib
@@ -24,8 +24,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %name-%version.tar
 %endif
 
-BuildRequires(pre): meson
-BuildRequires: bison flex gtk-doc vala-tools
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson bison flex gtk-doc vala-tools
 BuildRequires: libgio-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 
@@ -112,6 +112,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
+- 3.34.1
+
 * Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 

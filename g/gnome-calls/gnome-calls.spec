@@ -1,5 +1,5 @@
 %define _name calls
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 %define xdg_name org.gnome.Calls
 
@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: gnome-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A phone dialer and call handler
@@ -18,11 +18,13 @@ Url: https://gitlab.gnome.org/GNOME/calls
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
 
 %define glib_ver 2.58
-%define handy_ver 1.1.90
+%define handy_ver 1.4.0
 %define mm_ver 1.12.0
+%define phosh_ver 0.16
 
 Requires: ModemManager >= %mm_ver
 Requires: gst-plugins-base1.0
+#Requires: phosh >= %phosh_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg
 BuildRequires: meson
@@ -56,12 +58,12 @@ other systems like SIP in future.
 
 %install
 %meson_install
-%find_lang %_name
+%find_lang --output=%name.lang %_name call-ui
 
 %check
 xvfb-run %__meson_test
 
-%files -f %_name.lang
+%files -f %name.lang
 %_xdgconfigdir/autostart/%xdg_name-daemon.desktop
 %_bindir/%name
 %dir %_libdir/%_name
@@ -78,6 +80,9 @@ xvfb-run %__meson_test
 %doc NEWS README.md
 
 %changelog
+* Sun Mar 20 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Sat Oct 30 2021 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
 - 41.1
 

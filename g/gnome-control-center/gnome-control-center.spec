@@ -3,19 +3,19 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 %define api_ver 2.0
+%define xdg_name org.gnome.Settings
 
 %def_disable debug
-%def_with cheese
 %def_with bluetooth
 %def_without snap
 %def_with malcontent
 %def_enable doc
 
 Name: gnome-control-center
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -29,18 +29,18 @@ Source: %name-%version.tar
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %endif
 
-%define gtk_ver 3.22.0
+%define gtk4_ver 4.4.0
 %define glib_ver 2.64.0
 %define desktop_ver 3.33.4
 %define fontconfig_ver 1.0.0
-%define gsds_ver 40
+%define gsds_ver 42
 # nm_client_get_permissions_state()
 %define nm_ver 1.24
 %define goa_ver 3.25.3
 %define acc_ver 0.6.39
-%define sett_daemon_ver 3.33.90
-%define cheese_ver 3.9.5
-%define bt_ver 3.18.2
+%define sett_daemon_ver 42
+%define bt_api_ver 3.0
+%define bt_ver 42
 %define systemd_ver 40
 %define wacom_ver 0.7
 %define ibus_ver 1.5.2
@@ -53,7 +53,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %define malcontent_ver 0.10.0
 %define gudev_ver 232
 %define pulse_ver 2.0
-%define nahdy_ver 1.0
+%define adwaita_ver 1.0
 
 Requires: %name-data = %EVR
 
@@ -64,44 +64,40 @@ Requires: gnome-settings-daemon >= %sett_daemon_ver
 Requires: accountsservice >= %acc_ver
 #Requires: userpasswd
 Requires: gnome-online-accounts >= %goa_ver
-%{?_with_cheese:Requires: cheese >= %cheese_ver}
+Requires: gnome-bluetooth%bt_api_ver
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-systemd
 BuildPreReq: meson desktop-file-utils gtk-doc xsltproc libappstream-glib-devel
 BuildPreReq: fontconfig-devel >= %fontconfig_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
+BuildPreReq: libgtk4-devel >= %gtk4_ver
 BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libgnome-desktop3-devel >= %desktop_ver
+BuildPreReq: pkgconfig(gnome-desktop-4) pkgconfig(gnome-bg-4) pkgconfig(gnome-rr-4)
 BuildPreReq: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildPreReq: gnome-settings-daemon-devel >= %sett_daemon_ver
-BuildPreReq: libcolord-devel >= %colord_ver
-BuildPreReq: libcolord-gtk-devel
+BuildPreReq: libcolord-devel >= %colord_ver pkgconfig(colord-gtk4)
 BuildPreReq: libsoup-devel
 BuildPreReq: libibus-devel >= %ibus_ver libxkbfile-devel
 BuildRequires: libupower-devel >= %upower_ver libpolkit1-devel >= %polkit_ver
-BuildRequires: libgio-devel librsvg-devel libxml2-devel libcanberra-gtk3-devel
-BuildRequires: libX11-devel libXext-devel libSM-devel libXScrnSaver-devel libXt-devel
-BuildRequires: libXft-devel libXi-devel libXrandr-devel libXrender-devel libXcursor-devel libXcomposite-devel
+BuildRequires: libgio-devel librsvg-devel libxml2-devel
+BuildRequires: libX11-devel libXi-devel
 BuildRequires: libgtop-devel libcups-devel libpulseaudio-devel >= %pulse_ver iso-codes-devel
-BuildRequires: libpwquality-devel >= %pwq_ver  libkrb5-devel libsmbclient-devel
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
+BuildRequires: libpwquality-devel >= %pwq_ver libkrb5-devel libsmbclient-devel
+BuildRequires: gobject-introspection-devel libgtk4-gir-devel
 # for test-endianess
 BuildRequires: glibc-i18ndata
-BuildRequires: libnm-devel >= %nm_ver libmm-glib-devel libnma-devel gcr-libs-devel
+BuildRequires: libnm-devel >= %nm_ver libmm-glib-devel pkgconfig(libnma-gtk4) gcr-libs-devel
 BuildRequires: libgnome-online-accounts-devel >= %goa_ver
 BuildRequires: libaccountsservice-devel >= %acc_ver
 BuildRequires: libwacom-devel >= %wacom_ver
-BuildRequires: libclutter-gtk3-devel
 BuildRequires: pkgconfig(systemd) >= %systemd_ver
 BuildRequires: libgrilo-devel >= %grilo_ver
-BuildRequires: libsecret-devel
+BuildRequires: libsecret-devel libgnutls-devel
 BuildRequires: libudisks2-devel
-%{?_with_cheese:BuildPreReq: libcheese-devel >= %cheese_ver}
-%{?_with_bluetooth:BuildRequires: libgnome-bluetooth-devel >= %bt_ver}
+%{?_with_bluetooth:BuildRequires: pkgconfig(gnome-bluetooth-ui-%bt_api_ver) >= %bt_ver}
 %{?_with_snap:BuildRequires: lisnapd-glib-devel >= %snapd_ver}
 %{?_with_malcontent:BuildRequires: pkgconfig(malcontent-0) >= %malcontent_ver}
 BuildRequires: libgudev-devel >= %gudev_ver libgsound-devel
-BuildRequires: pkgconfig(libhandy-1) >= %nahdy_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: libepoxy-devel
 
 %description
@@ -139,7 +135,6 @@ you'll want to install this package.
 
 %build
 %meson \
-    %{?_with_cheese:-Dcheese=true} \
     %{?_with_snap:-Dsnap=true} \
     %{?_with_malcontent:-Dmalcontent=true} \
     %{?_enable_doc:-Ddocumentation=true}
@@ -155,6 +150,7 @@ you'll want to install this package.
 %_libexecdir/cc-remote-login-helper
 %_libexecdir/%name-search-provider
 %_libexecdir/%name-print-renderer
+%_libexecdir/%name-goa-helper
 
 %files data -f %name.lang
 %dir %_datadir/%name
@@ -165,17 +161,17 @@ you'll want to install this package.
 %_iconsdir/hicolor/*/*/*
 %_iconsdir/gnome-logo-text*.svg
 %_datadir/sounds/gnome/default/alerts/*.ogg
-%_datadir/glib-2.0/schemas/org.gnome.ControlCenter.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/polkit-1/actions/org.gnome.controlcenter.datetime.policy
 %_datadir/polkit-1/actions/org.gnome.controlcenter.user-accounts.policy
 %_datadir/polkit-1/rules.d/gnome-control-center.rules
 %_datadir/polkit-1/actions/org.gnome.controlcenter.remote-login-helper.policy
-%_datadir/dbus-1/services/org.gnome.ControlCenter.SearchProvider.service
-%_datadir/dbus-1/services/org.gnome.ControlCenter.service
-%_datadir/gnome-shell/search-providers/gnome-control-center-search-provider.ini
+%_datadir/dbus-1/services/%xdg_name.SearchProvider.service
+%_datadir/dbus-1/services/%xdg_name.service
+%_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %{?_enable_doc:%_man1dir/%name.1.*}
 %_datadir/bash-completion/completions/gnome-control-center
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %doc NEWS README*
 
 %files devel
@@ -187,6 +183,12 @@ you'll want to install this package.
 
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
+* Sun Mar 06 2022 Yuri N. Sedunov <aris@altlinux.org> 42-alt0.9.rc
+- 42.rc (ported to GTK4)
+
 * Mon Feb 28 2022 Yuri N. Sedunov <aris@altlinux.org> 41.4-alt1
 - 41.4
 

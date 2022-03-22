@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 %define api_ver 3.0
 %define xdg_name org.gnome.Nautilus
@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: nautilus
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Nautilus is a network user environment
@@ -33,13 +33,13 @@ Source: %name-%version.tar
 %define desktop_ver 3.3.3
 %define pango_ver 1.28.3
 %define gtk_ver 3.22.27
-%define libxml2_ver 2.4.7
-%define gexiv2_ver 0.10
+%define libxml2_ver 2.7.8
+%define gexiv2_ver 0.14
 %define gir_ver 0.10.2
 %define tracker_ver 2.99.2
-%define autoar_ver 0.3.3
-%define portal_ver 0.3
-%define handy_ver 1.1.0
+%define autoar_ver 0.4
+%define portal_ver 0.5
+%define handy_ver 1.5.0
 %define selinux_ver 2.0
 
 Requires(post): libcap-utils
@@ -66,7 +66,7 @@ BuildRequires: libgnome-autoar-devel >= %autoar_ver
 BuildRequires: libX11-devel
 BuildRequires: libseccomp-devel
 BuildRequires: pkgconfig(gstreamer-tag-1.0) pkgconfig(gstreamer-pbutils-1.0)
-BuildRequires: libportal-devel >= %portal_ver
+BuildRequires: libportal-gtk3-devel >= %portal_ver
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 %{?_enable_docs:BuildRequires: docbook-utils gtk-doc}
 %{?_enable_tracker:BuildRequires: pkgconfig(tracker-sparql-3.0) tracker3-sandbox}
@@ -206,6 +206,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 41.5-alt1
 - 41.5
 

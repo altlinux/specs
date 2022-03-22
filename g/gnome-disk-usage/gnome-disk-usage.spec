@@ -2,38 +2,39 @@
 
 %define _name baobab
 %define xdg_name org.gnome.baobab
-%define ver_major 41
+%define ver_major 42
+%define beta %nil
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
 Name: gnome-disk-usage
 Version: %ver_major.0
-Release: alt1
+Release: alt1%beta
 
 Summary: The GNOME disk usage analyser.
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Baobab
 
-Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
+Source: %gnome_ftp/%_name/%ver_major/%_name-%version%beta.tar.xz
 
 Provides: baobab = %version-%release
 
-%define gtk_ver 3.24.1
+%define gtk4_ver 4.4.0
 %define vala_ver 0.23.3
-%define handy_ver 1.0.0
+%define adwaita_ver 1.0.0
 
-BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
-BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
+BuildRequires: meson libgtk4-devel >= %gtk4_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: yelp-tools xmllint libappstream-glib-devel
-BuildRequires: vala-tools >= %vala_ver gobject-introspection-devel libgtk+3-gir-devel
+BuildRequires: vala-tools >= %vala_ver gobject-introspection-devel libgtk4-gir-devel
 
 %description
 Baobab is a graphical tool to analyse disk usage in local and remote
 filesystems.
 
 %prep
-%setup -n %_name-%version
+%setup -n %_name-%version%beta
 
 %build
 %meson
@@ -60,6 +61,12 @@ popd
 %doc README* NEWS
 
 %changelog
+* Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
+* Tue Mar 08 2022 Yuri N. Sedunov <aris@altlinux.org> 42-alt0.9.rc
+- 42.rc (ported to GTK4)
+
 * Tue Sep 21 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
 - 41.0
 

@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 %define api_ver 2
 # GTK interface library
@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: gnome-calculator
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GTK+3 based desktop calculator
@@ -29,16 +29,23 @@ Provides: gcalctool = 6.6.2
 Requires: libgcalc = %EVR
 Requires: libgci = %EVR
 
+%define glib_ver 2.40
+%define gtk4_ver 4.4.1
+%define adwaita_ver 1.0.0
+%define gee_ver 0.20.0
+%define soup_ver 2.42
+%define gtksource_ver 5.3.0
+
 BuildRequires(pre): rpm-macros-meson rpm-build-licenses rpm-build-gnome
 BuildRequires(pre): rpm-build-gir rpm-build-vala
-BuildRequires: meson vala-tools >= 0.24 valadoc
+BuildRequires: meson vala-tools valadoc
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
-BuildRequires: libgtk+3-devel >= 3.20.0
-BuildRequires: libgio-devel >= 2.50.0 libgee0.8-devel libxml2-devel
-BuildRequires: libmpfr-devel libgtksourceview4-devel >= 4.8
-BuildRequires: libsoup-devel >= 2.42 libmpc-devel
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libgee0.8-gir-devel libsoup-gir-devel
-BuildRequires: pkgconfig(libhandy-1)
+BuildRequires: libgtk4-devel >= %gtk4_ver
+BuildRequires: libgio-devel >= %glib_ver libgee0.8-devel >= %gee_ver libxml2-devel
+BuildRequires: libmpfr-devel libgtksourceview5-devel >= %gtksource_ver
+BuildRequires: libsoup-devel >= %soup_ver libmpc-devel
+BuildRequires: gobject-introspection-devel libgtk4-gir-devel libgee0.8-gir-devel libsoup-gir-devel
+BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 
 %description
 This package provides gcalctool, the calculator application that was
@@ -204,6 +211,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/devhelp/books/GCi-%gci_api_ver/
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0 (ported to GTK4)
+
 * Mon Dec 06 2021 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
 - 41.1
 

@@ -1,12 +1,12 @@
 %def_disable snapshot
-%define ver_major 40
+%define ver_major 42
 %define beta %nil
 %define xdg_name org.gnome.SimpleScan
 
 %def_enable packagekit
 
 Name: simple-scan
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Simple scanning utility
@@ -61,6 +61,9 @@ scanner and quickly have the image/document in an appropriate format.
 %_man1dir/*
 
 %changelog
+* Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Thu Dec 23 2021 Yuri N. Sedunov <aris@altlinux.org> 40.7-alt1
 - 40.7
 

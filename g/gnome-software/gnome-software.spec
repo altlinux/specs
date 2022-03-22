@@ -1,12 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
-%define plugins_ver 16
+%define plugins_ver 17
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Software
 
-%def_enable gspell
+%def_enable soup2
 %def_enable gudev
 %def_enable gnome_desktop
 %def_enable polkit
@@ -39,7 +39,7 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Software manager for GNOME
@@ -55,18 +55,19 @@ Source: %name-%version.tar
 
 Patch: %name-3.32.3-alt-unsupported_mime_types.patch
 
-%define glib_ver 2.46
-%define gtk_ver 3.22.4
+%define glib_ver 2.66
+%define gtk4_ver 4.0.0
 %define appstream_ver 0.14
 %define json_glib_ver 1.1.1
 %define soup_ver 2.52
+%define soup3_ver 3.0
 %define packagekit_ver 1.1.9
 %define gsds_ver 3.18
 %define fwupd_ver 1.0.3
 %define flatpak_ver 0.99.3
 %define ostree_ver 2018.4
 %define xmlb_ver 0.1.4
-%define handy_ver 0.90
+%define adwaita_ver 1.0.1
 
 %{?_enable_fwupd:Requires: fwupd >= %fwupd_ver}
 %{?_enable_packagekit:Requires: appstream-data}
@@ -74,17 +75,20 @@ Patch: %name-3.32.3-alt-unsupported_mime_types.patch
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg rpm-macros-valgrind
 BuildRequires: meson libgio-devel >= %glib_ver
-BuildRequires: libgtk+3-devel >= %gtk_ver pkgconfig(libhandy-1) >= %handy_ver
+BuildRequires: libgtk4-devel >= %gtk4_ver pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(appstream) >= %appstream_ver
 BuildRequires: libjson-glib-devel >= %json_glib_ver
+%if_enabled soup2
 BuildRequires: libsoup-devel >= %soup_ver
+%else
+BuildRequires: libsoup3.0-devel >= %soup3_ver
+%endif
 BuildRequires: yelp-tools gtk-doc xsltproc docbook-style-xsl desktop-file-utils
 BuildRequires: libsqlite3-devel libsecret-devel gsettings-desktop-schemas-devel liboauth-devel
 BuildRequires: libgnome-online-accounts-devel
 BuildRequires: libxmlb-devel >= %xmlb_ver
 %{?_enable sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 %{?_enable_gudev:BuildRequires: libgudev-devel}
-%{?_enable_gspell:BuildRequires: libgspell-devel}
 %{?_enable_gnome_desktop:BuildRequires: gsettings-desktop-schemas >= %gsds_ver}
 %{?_enable_polkit:BuildRequires: libpolkit-devel}
 %{?_enable_fwupd:BuildRequires: fwupd-devel >= %fwupd_ver}
@@ -125,7 +129,7 @@ GNOME Software.
 
 %build
 %meson \
-	%{?_enable_gspell:-Dgspell=true} \
+	%{?_enable_soup2:-Dsoup2=true} \
 	%{?_enable_gudev:-Dgudev=true} \
 	%{?_disable_gnome_desktop:-Dgsettings_desktop_schemas=disabled} \
 	%{?_enable_polkit:-Dpolkit=true} \
@@ -153,7 +157,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
 
 %files -f %name.lang
-%_xdgconfigdir/autostart/%name-service.desktop
+%_xdgconfigdir/autostart/%xdg_name.desktop
 %_bindir/%name
 %_libexecdir/%name-cmd
 %_libexecdir/%name-restarter
@@ -166,10 +170,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_desktopdir/%name-local-file.desktop
 %_desktopdir/%xdg_name.desktop
 %_datadir/app-info/xmls/%xdg_name.Featured.xml
+%_datadir/app-info/xmls/%xdg_name.Popular.xml
 %_datadir/dbus-1/services/%xdg_name.service
 %{?_enable_packagekit:%_datadir/dbus-1/services/org.freedesktop.PackageKit.service}
 %{?_enable_external_appstream:%_datadir/polkit-1/actions/org.gnome.software.external-appstream.policy}
-%_datadir/%name/
 %_datadir/gnome-shell/search-providers/%xdg_name-search-provider.ini
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/glib-2.0/schemas/org.gnome.software.gschema.xml
@@ -188,6 +192,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 41.5-alt1
 - 41.5
 

@@ -1,7 +1,9 @@
-%define ver_major 41
+%def_disable snapshot
+
+%define ver_major 42
 %define beta %nil
 %define xdg_name org.gnome.Polari
-%define mozjs_ver 78
+%define mozjs_ver 91
 
 Name: polari
 Version: %ver_major.0
@@ -12,9 +14,15 @@ License: GPLv2+
 Group: Networking/Chat
 Url: https://wiki.gnome.org/Apps/Polari
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
+%if_disabled snapshot
+Vcs: https://github.com/GNOME/polari.git
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
+Source: https://github.com/GNOME/polari/archive/%version/%name-%version%beta.tar.gz
+%else
+Source: %name-%version.tar
+%endif
 
-%define gtk_ver 3.22.0
+%define gtk4_ver 4.6.0
 %define gspell_ver 1.3.2
 %define gjs_ver 1.69.2
 
@@ -26,6 +34,7 @@ Requires: telepathy-idle
 %set_typelibdir %_libdir/%name/girepository-1.0
 
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
+Requires: typelib(Adw) = 1
 Requires: typelib(Gdk)
 Requires: typelib(GdkPixbuf)
 Requires: typelib(Gio)
@@ -34,22 +43,24 @@ Requires: typelib(GObject)
 Requires: typelib(Graphene)
 Requires: typelib(Gspell)
 Requires: typelib(Gtk) = 3.0
+Requires: typelib(Gtk) = 4.0
 Requires: typelib(Pango)
 Requires: typelib(PangoCairo)
 Requires: typelib(Polari)
 Requires: typelib(Secret)
-Requires: typelib(Soup) = 2.4
 Requires: typelib(TelepathyGLib)
 Requires: typelib(TelepathyLogger)
+Requires: typelib(Soup) = 2.4
+Requires: typelib(Gtk) = 3.0
 Requires: typelib(WebKit2) = 4.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson gtk-doc yelp-tools
 BuildRequires: desktop-file-utils libappstream-glib-devel
 BuildRequires: libgjs-devel >= %gjs_ver  %_bindir/js%mozjs_ver
-BuildRequires: libgtk+3-devel >= %gtk_ver libtelepathy-glib-devel
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
-BuildRequires: libsecret-gir-devel libsoup-gir-devel libgspell-gir-devel >= %gspell_ver
+BuildRequires: libgtk4-devel >= %gtk4_ver libtelepathy-glib-devel
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libsoup-gir-devel
+BuildRequires: libsecret-gir-devel
 BuildRequires: libtelepathy-glib-gir-devel libtelepathy-logger-gir-devel
 
 %description
@@ -84,6 +95,9 @@ with GNOME 3 Desktop.
 
 
 %changelog
+* Sun Mar 20 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Tue Sep 21 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
 - 41.0
 

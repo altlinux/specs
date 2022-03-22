@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Weather
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
@@ -25,32 +25,32 @@ BuildArch: noarch
 Obsoletes: %name-data
 Provides:  %name-data = %version-%release
 
-%define gtk_ver 3.20
+%define gtk4_ver 4.5
 %define gi_ver 1.36.0
-%define gjs_ver 1.50.0
-%define gweather_ver 40.0
-%define handy_ver 1.1.90
+%define gjs_ver 1.71.0
+%define gweather4_ver 3.90
+%define adwaita_ver 1.0
 
-Requires: libgweather-gir >= %gweather_ver
+Requires: libgjs >= %gjs_ver
+Requires: libgweather4.0-gir >= %gweather4_ver
 Requires: geoclue2
 
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
-Requires: typelib(Gdk)
 Requires: typelib(Geoclue)
 Requires: typelib(Gio)
 Requires: typelib(GLib)
-Requires: typelib(GnomeDesktop)
 Requires: typelib(GObject)
-Requires: typelib(Gtk) = 3.0
-Requires: typelib(GWeather)
-Requires: typelib(Handy) = 1
+Requires: typelib(Gtk) = 4.0
+Requires: typelib(GWeather) = 4.0
+Requires: typelib(Adw) = 1
+Requires: typelib(Graphene)
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
 BuildRequires: meson yelp-tools libappstream-glib-devel desktop-file-utils
-BuildRequires: libgtk+3-devel >= %gtk_ver libgjs-devel >= %gjs_ver
-BuildRequires: libgweather-devel >= %gweather_ver pkgconfig(geoclue-2.0)
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
-BuildRequires: gobject-introspection-devel >= %gi_ver libgtk+3-gir-devel libgweather-gir-devel
+BuildRequires: libgtk4-devel >= %gtk4_ver libgjs-devel >= %gjs_ver
+BuildRequires: libgweather4.0-devel >= %gweather4_ver pkgconfig(geoclue-2.0)
+BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+BuildRequires: gobject-introspection-devel >= %gi_ver libgtk4-gir-devel libgweather4.0-gir-devel
 
 %description
 %name is a small application that allows you to monitor the current
@@ -85,6 +85,12 @@ access updated forecasts provided by various internet services.
 %doc NEWS
 
 %changelog
+* Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
+* Tue Mar 08 2022 Yuri N. Sedunov <aris@altlinux.org> 42-alt0.9.rc
+- 42.rc (ported to GTK4)
+
 * Tue Sep 21 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
 - 41.0
 

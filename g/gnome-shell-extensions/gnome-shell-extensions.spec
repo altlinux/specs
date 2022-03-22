@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 %define domain gcampax.github.com
 %define _libexecdir %_prefix/libexec
@@ -8,7 +8,7 @@
 %def_enable classic_mode
 
 Name: gnome-shell-extensions
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Shell Extensions
@@ -59,8 +59,10 @@ See %_docdir/%name-%version/README for more information.
 %files -f %name.lang
 # Classic mode
 %if_enabled classic_mode
-#%_datadir/gnome-session/sessions/gnome-classic.session
 %_datadir/xsessions/gnome-classic.desktop
+%_datadir/wayland-sessions/gnome-classic-wayland.desktop
+%_datadir/wayland-sessions/gnome-classic.desktop
+%_datadir/xsessions/gnome-classic-xorg.desktop
 %_datadir/gnome-shell/modes/classic.json
 %_datadir/gnome-shell/theme/calendar-today.svg
 %_datadir/gnome-shell/theme/classic-toggle-off-intl.svg
@@ -159,6 +161,9 @@ See %_docdir/%name-%version/README for more information.
 %doc NEWS README.md
 
 %changelog
+* Sun Mar 13 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Sun Feb 27 2022 Yuri N. Sedunov <aris@altlinux.org> 41.2-alt1
 - 41.2
 

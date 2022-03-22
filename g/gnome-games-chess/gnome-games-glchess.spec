@@ -3,19 +3,20 @@
 %define _name chess
 %define xdg_name org.gnome.Chess
 %define __name gnome-%_name
-%define ver_major 41
+%define ver_major 42
+%define beta %nil
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: A chess game for GNOME
 Group: Games/Boards
 License: GPLv3+
 Url: https://wiki.gnome.org/Apps/Chess
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version%beta.tar.xz
 
 Provides:  %__name = %version-%release
 Obsoletes: gnome-games-glchess
@@ -26,11 +27,13 @@ Requires: gnuchess >= 6.2.3
 %define gtk_ver 4.0
 %define rsvg_ver 2.46
 %define vala_ver 0.50.0
+%define adwaita_ver 1.0.0
 
-BuildRequires(pre): meson
-BuildRequires: vala-tools >= %vala_ver
+BuildRequires(pre):rpm-macros-meson
+BuildRequires: meson vala-tools >= %vala_ver
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: librsvg-devel >= %rsvg_ver gsettings-desktop-schemas-devel
 BuildRequires: libGL-devel libGLU-devel
 
@@ -39,7 +42,7 @@ A chess game which supports several chess engines, with 2D and optionally
 3D support if OpenGL is present.
 
 %prep
-%setup -n %__name-%version
+%setup -n %__name-%version%beta
 
 %build
 %meson
@@ -60,6 +63,9 @@ A chess game which supports several chess engines, with 2D and optionally
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Thu Mar 17 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Fri Oct 29 2021 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
 - 41.1
 

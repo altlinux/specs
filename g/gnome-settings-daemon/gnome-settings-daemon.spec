@@ -1,9 +1,9 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
-%define api_ver 41
+%define api_ver 42
 %define xdg_name org.gnome.SettingsDaemon
 
 %def_enable smartcard
@@ -16,7 +16,7 @@
 %def_disable suspend_then_hibernate
 
 Name: gnome-settings-daemon
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: A program that manages general GNOME settings
@@ -32,18 +32,18 @@ Source: %name-%version.tar
 
 %define glib_ver 2.58.0
 %define gtk_ver 3.16
-%define gnome_desktop_ver 3.34.2
+%define gnome_desktop_ver 3.37.1
 %define notify_ver 0.7.3
 %define pulse_ver 2.0
-%define gsds_ver 41
+%define gsds_ver 42
 %define colord_ver 0.1.9
 %define dconf_ver 0.8
-%define upower_ver 0.99.8
+%define upower_ver 0.99.12
 %define systemd_ver 40
 %define wacom_ver 0.7
 %define geocode_ver 3.10.0
 %define geoclue_ver 2.3.1
-%define gweather_ver 40
+%define gweather_ver 3.99
 %define nm_ver 1.0
 %define lcms_ver 2.2
 %define polkit_ver 0.114
@@ -82,7 +82,7 @@ BuildRequires: libXrandr-devel xorg-proto-devel libICE-devel libSM-devel
 BuildRequires: libupower-devel >= %upower_ver
 BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel >= %lcms_ver librsvg-devel
 BuildRequires: libwacom-devel >= %wacom_ver xorg-drv-wacom-devel
-BuildRequires: libgweather-devel >= %gweather_ver libgeocode-glib-devel >= %geocode_ver libgeoclue2-devel >= %geoclue_ver
+BuildRequires: libgweather4.0-devel >= %gweather_ver libgeocode-glib-devel >= %geocode_ver libgeoclue2-devel >= %geoclue_ver
 BuildRequires: libnm-devel >= %nm_ver libmm-glib-devel gcr-libs-devel
 %{?_enable_check:BuildRequires: /proc dbus gnome-color-manager}
 
@@ -191,6 +191,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Sun Mar 20 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
+- 42.1
+
 * Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
 - 41.0
 

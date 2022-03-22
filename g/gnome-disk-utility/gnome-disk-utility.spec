@@ -1,4 +1,4 @@
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 %define xdg_name org.gnome.DiskUtility
 %define _libexecdir %_prefix/libexec
@@ -26,7 +26,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %define pwquality_ver 1.0.0
 %define dvdread_ver 4.2.0
 %define lzma_ver 5.0.5
-%define handy_ver 1.1.90
+%define handy_ver 1.5.0
 
 Provides: gnome-disks = %EVR
 Requires: udisks2 >= %udisks_ver
@@ -84,6 +84,12 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
+* Sat Mar 05 2022 Yuri N. Sedunov <aris@altlinux.org> 42-alt0.9.rc
+- 42.rc
+
 * Sat Sep 18 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
 - 41.0
 

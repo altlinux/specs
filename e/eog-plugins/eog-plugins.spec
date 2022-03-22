@@ -1,19 +1,20 @@
 %define _name eog
-%define ver_major 3.26
+%define ver_major 42
+%define beta %nil
 %define api_ver 3.0
 %def_enable map
 %def_disable postr
 %def_enable postasa
 
 Name: %_name-plugins
-Version: %ver_major.8
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: EOG plugins
 License: %gpl2plus
 Group: Graphics
 Url: https://wiki.gnome.org/Apps/EyeOfGnome
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 
 Requires: eog >= %ver_major libpeas-python3-loader
 
@@ -24,13 +25,14 @@ Requires: libpeas-python3-loader
 
 %define libchamplain_ver 0.12
 %define gdata_ver 0.6.0
+%define peas_ver 1.14.1
 
-BuildRequires(pre): rpm-build-licenses rpm-build-gnome rpm-build-gir
-BuildPreReq: eog-devel >= %ver_major
-BuildRequires: libpeas-devel libgnome-desktop3-devel
+BuildRequires(pre): rpm-macros-meson rpm-build-licenses rpm-build-gnome rpm-build-gir
+BuildRequires: meson eog-devel >= %ver_major %_bindir/appstream-util
+BuildRequires: libpeas-devel >= %peas_ver libgnome-desktop3-devel
 %{?_enable_map:BuildRequires: libchamplain-gtk3-devel >= %libchamplain_ver}
 %{?_enable_postasa:BuildRequires: libgdata-devel >= %gdata_ver}
-BuildRequires: libexempi-devel zlib-devel libjpeg-devel liblcms-devel
+BuildRequires: libexempi-devel zlib-devel libjpeg-devel
 BuildRequires: libdbus-glib-devel libxml2-devel librsvg-devel libexif-devel
 BuildRequires: gsettings-desktop-schemas-devel gnome-icon-theme
 
@@ -55,32 +57,29 @@ Requires: %name = %version-%release
 This package provides Eog plugin for upload pictures to Picasa web albums.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
-%autoreconf
-%{?_enable_postr:export ac_cv_path_POSTR=%_bindir/postr}
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --with-gnome %name
 
 %files -f %name.lang
 %_libdir/%_name/plugins/*
 %_datadir/%_name/plugins/*
-%_datadir/appdata/%_name-*.metainfo.xml
+%_datadir/metainfo/%_name-*.appdata.xml
 %if_enabled postasa
 %exclude %_libdir/%_name/plugins/postasa.plugin
 %exclude %_libdir/%_name/plugins/libpostasa.so
-%exclude %_datadir/appdata/%_name-postasa.metainfo.xml
+%exclude %_datadir/metainfo/%_name-postasa.appdata.xml
 %endif
 %if_enabled postr
 %exclude %_libdir/%_name/plugins/postr.plugin
 %exclude %_libdir/%_name/plugins/libpostr.so
-%exclude %_datadir/appdata/%_name-postr.metainfo.xml
+%exclude %_datadir/metainfo/%_name-postr.appdata.xml
 %endif
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.plugins.exif-display.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.plugins.fullscreenbg.gschema.xml
@@ -92,19 +91,23 @@ This package provides Eog plugin for upload pictures to Picasa web albums.
 %files -n %_name-plugins-postr
 %_libdir/%_name/plugins/postr.plugin
 %_libdir/%_name/plugins/libpostr.so
-%_datadir/appdata/%_name-postr.metainfo.xml
+%_datadir/metainfo/%_name-postr.metainfo.xml
 %endif
 
 %if_enabled postasa
 %files -n %_name-plugins-postasa
 %_libdir/%_name/plugins/postasa.plugin
 %_libdir/%_name/plugins/libpostasa.so
-%_datadir/appdata/%_name-postasa.metainfo.xml
+%_datadir/metainfo/%_name-postasa.appdata.xml
 %endif
 
-%exclude %_libdir/%_name/plugins/*.la
-
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
+* Sun Mar 06 2022 Yuri N. Sedunov <aris@altlinux.org> 42-alt0.9.rc
+- 42.rc (ported to Meson build system)
+
 * Sun Jan 09 2022 Yuri N. Sedunov <aris@altlinux.org> 3.26.8-alt1
 - 3.26.8
 

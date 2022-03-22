@@ -9,7 +9,7 @@
 %endif
 
 %define pkglibexecdir %_libexecdir/webkit2gtk-%api_ver
-%define ver_major 2.34
+%define ver_major 2.36
 %define gtk_ver 3.0
 %define gst_ver 1.14.3
 
@@ -34,7 +34,7 @@
 %def_enable bubblewrap_sandbox
 
 Name: libwebkitgtk4
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: Web browser engine
@@ -48,9 +48,8 @@ Source1: webkit2gtk.env
 # https://gitlab.kitware.com/cmake/cmake/issues/18044
 Patch: webkitgtk-2.26.1-alt-bwrap_check.patch
 # python->python3
-Patch1: webkitgtk-2.33.3-alt-python3.patch
+Patch1: webkitgtk-2.35.90-alt-python3.patch
 Patch2: webkitgtk-2.30.0-alt-arm64-return-type.patch
-Patch3: webkitgtk-2.32.2-alt-no_forsed_sse.patch
 Patch10: webkitgtk-2.33.90-alt-format.patch
 Patch2000: webkitgtk-2.34.3-alt-e2k.patch
 
@@ -236,12 +235,9 @@ GObject introspection devel data for the JavaScriptCore library
 %prep
 %setup -n %_name-%version
 %patch -b .bwrap
-%patch1 -p1 -b .python3
+#%%patch1 -p1 -b .python3
 %ifarch aarch64
 %patch2 -b .arm64
-%endif
-%ifarch %ix86
-%patch3 -p1 -b .no_forced_sse
 %endif
 %patch10 -p1 -b .format
 %ifarch %e2k
@@ -374,6 +370,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 %_girdir/JavaScriptCore-%api_ver.gir
 
 %changelog
+* Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 2.36.0-alt1
+- 2.36.0
+
 * Mon Feb 28 2022 Yuri N. Sedunov <aris@altlinux.org> 2.34.6-alt1
 - 2.34.6
 

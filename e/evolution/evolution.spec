@@ -5,8 +5,8 @@
 
 %define xdg_name org.gnome.Evolution
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.42
-%define ver_base 3.42
+%define ver_major 3.44
+%define ver_base 3.44
 %define gst_api_ver 1.0
 
 %def_disable gtk_doc
@@ -21,7 +21,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -60,6 +60,7 @@ Provides: camel
 %define geocode_ver 3.10.0
 %define gcr_ver 3.4
 %define autoar_ver 0.1.1
+%define sqlite3_ver 3.7.17
 
 Requires: %name-data = %version-%release
 Requires: evolution-data-server >= %eds_ver
@@ -85,8 +86,8 @@ BuildRequires: libpst-devel >= %pst_ver
 BuildRequires: libwebkit2gtk-devel >= %webkit_ver
 BuildRequires: libclutter-gtk3-devel >= %clutter_gtk_ver
 BuildRequires: gcr-libs-devel >= %gcr_ver libcryptui-devel
-BuildRequires: libkrb5-devel
-BuildRequires: highlight
+BuildRequires: libkrb5-devel libsqlite3-devel >= %sqlite3_ver
+BuildRequires: cmark-devel highlight
 %{?_enable_map:BuildRequires: libchamplain-gtk3-devel >= %champlain_ver libgeocode-glib-devel >= %geocode_ver}
 %{?_enable_ytnef:BuildRequires: libytnef-devel}
 %{?_enable_autoar:BuildRequires: libgnome-autoar-devel >= %autoar_ver}
@@ -273,6 +274,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 3.44.0-alt1
+- 3.44.0
+
 * Sun Feb 27 2022 Yuri N. Sedunov <aris@altlinux.org> 3.42.4-alt1
 - 3.42.4
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 %define api_ver 1.0
 
@@ -25,7 +25,7 @@
 %def_enable check
 
 Name: gdm
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: The GNOME Display Manager
@@ -87,6 +87,7 @@ BuildRequires: iso-codes-devel
 BuildRequires: glib2-devel >= %glib_ver libgio-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libaccountsservice-devel >= %accountsservice_ver
+BuildRequires: libgudev-devel
 BuildRequires: dconf pkgconfig(systemd) libpam-devel
 %{?_with_selinux:BuildPreReq: libselinux-devel libattr-devel}
 %{?_with_libaudit:BuildPreReq: libaudit-devel}
@@ -221,8 +222,7 @@ install -p -m644 -D %SOURCE3 %buildroot%_localstatedir/lib/gdm/.config/pulse/def
 %find_lang --output=%name-help.lang --without-mo --with-gnome %name
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-dbus-run-session %meson_test
+dbus-run-session %__meson_test
 
 %pre
 %pre_control gdm_xdmcp
@@ -295,6 +295,9 @@ dbus-run-session %meson_test
 
 
 %changelog
+* Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Wed Jan 12 2022 Yuri N. Sedunov <aris@altlinux.org> 41.3-alt1
 - 41.3
 

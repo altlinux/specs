@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 
 %define xdg_name org.gnome.Builder
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define api_ver %ver_major.0
@@ -17,9 +17,12 @@
 %def_with vala
 # Rust Language Server integration plugin (disabled by default)
 %def_without rls
+# SDK for Language Server Protocol (LSP)
+# https://gitlab.gnome.org/esodan/gvls.git
+%def_without gvls
 
 Name: gnome-builder
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Builder - Develop software for GNOME
@@ -32,7 +35,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %else
 Source: %name-%version.tar
 %endif
-Patch: %name-41.3-alt-format.patch
+#https://l10n.gnome.org/media/upload/gnome-builder-master-po-ru-955618_BWaCuRU.po
+Source1: %name-ru.po
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
@@ -54,8 +58,10 @@ Patch: %name-41.3-alt-format.patch
 %define template_glib_ver 3.34.0
 %define soup_ver 2.52
 %define webkit_ver 2.26
-%define portal_ver 0.3
+%define portal_ver 0.5
 %define gi_docgen_ver 2021.9
+%define jsonrpc_ver 3.41.0
+%define handy_ver 1.0
 
 %add_python3_path %_libdir/%name/plugins
 %add_findreq_skiplist %_datadir/%name/plugins/*_templates/resources/*/*.py
@@ -88,10 +94,13 @@ BuildRequires: libgtksourceview4-gir-devel libgit2-glib-gir-devel libpeas-gir-de
 BuildRequires: libjson-glib-gir-devel libsoup-devel >= %soup_ver
 BuildRequires: libvala-devel >= %vala_ver vala-tools
 BuildRequires: libgspell-devel >= %gspell_ver libenchant2-devel
-BuildRequires: libdazzle-devel >= %dazzle_ver libtemplate-glib-devel >= %template_glib_ver libjsonrpc-glib-devel
+BuildRequires: libdazzle-devel >= %dazzle_ver libtemplate-glib-devel >= %template_glib_ver
+BuildRequires: libjsonrpc-glib-devel >= %jsonrpc_ver
 BuildRequires: libdazzle-gir-devel libtemplate-glib-gir-devel  libjsonrpc-glib-gir-devel
 BuildRequires: libgtkmm3-devel >= %gtkmm_ver
 BuildRequires: libgladeui2.0-devel cmark-devel
+BuildRequires: libportal-gtk3-devel
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 %{?_with_clang:BuildRequires: llvm-devel clang-devel}
 %{?_with_docs:BuildRequires: gi-docgen >= %gi_docgen_ver}
 %{?_with_help:BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme}
@@ -121,8 +130,8 @@ This package provides files for Gnome Builder to work with Clang/LLVW.
 
 %prep
 %setup -n %name-%version%beta
-%patch
 sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
+#cp %SOURCE1 po/ru.po
 
 %build
 %meson \
@@ -132,7 +141,8 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 	%{?_with_help:-Dhelp=true} \
 	%{?_without_flatpak:-Dplugin_flatpak=false} \
 	%{?_with_autotools:-Dplugin_autotools=true} \
-	%{?_with_rls:-Dplugin_rls=true}
+	%{?_with_rls:-Dplugin_rls=true} \
+	%{?_with_gvls:-Dplugin_gvls=true}
 %nil
 %meson_build -v
 
@@ -151,6 +161,10 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 
 %dir %_libdir/%name/plugins
 %_libdir/%name/plugins/__pycache__
+%_libdir/%name/plugins/blueprint.plugin
+%_libdir/%name/plugins/blueprint_plugin.py
+%_libdir/%name/plugins/buildstream.plugin
+%_libdir/%name/plugins/buildstream_plugin.py
 %_libdir/%name/plugins/cargo.plugin
 %_libdir/%name/plugins/cargo_plugin.py
 %_libdir/%name/plugins/copyright.plugin
@@ -163,15 +177,15 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %_libdir/%name/plugins/gjs_symbols.py
 %_libdir/%name/plugins/go-langserv.plugin
 %_libdir/%name/plugins/go_langserver_plugin.py
-%{?_with_gvls:%_libdir/%name/plugins/gvls.plugin
-%_libdir/%name/plugins/gvls_plugin.py}
 %_libdir/%name/plugins/gradle.plugin
 %_libdir/%name/plugins/gradle_plugin.py
-%_libdir/%name/plugins/gvls.plugin
-%_libdir/%name/plugins/gvls_plugin.py
+%{?_with_gvls:%_libdir/%name/plugins/gvls_plugin.py
+%_libdir/%name/plugins/gvls.plugin}
 %_libdir/%name/plugins/html-preview.plugin
 %_libdir/%name/plugins/html_preview.gresource
 %_libdir/%name/plugins/html_preview.py
+%_libdir/%name/plugins/intelephense.plugin
+%_libdir/%name/plugins/intelephense.py
 %_libdir/%name/plugins/jedi-language-server.plugin
 %_libdir/%name/plugins/jedi_language_server_plugin.py
 %_libdir/%name/plugins/jhbuild.plugin
@@ -194,8 +208,14 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %_libdir/%name/plugins/python_gi_imports_completion.py
 %{?_with_rls:%_libdir/%name/plugins/rls.plugin
 %_libdir/%name/plugins/rls_plugin.py}
+%_libdir/%name/plugins/rstcheck.plugin
+%_libdir/%name/plugins/rstcheck_plugin.py
+%_libdir/%name/plugins/rubocop.plugin
+%_libdir/%name/plugins/rubocop_plugin.py
 %_libdir/%name/plugins/stylelint.plugin
 %_libdir/%name/plugins/stylelint_plugin.py
+%_libdir/%name/plugins/ts-language-server.plugin
+%_libdir/%name/plugins/ts_language_server_plugin.py
 %{?_with_vala:%_libdir/%name/plugins/vala-pack.plugin
 %_libdir/%name/plugins/vala_pack_plugin.py}
 %_libdir/%name/plugins/valgrind.plugin
@@ -210,8 +230,7 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 
 %_includedir/%name/
 %_includedir/%name-%ver_major/
-%dir %_libdir/%name/pkgconfig
-%_libdir/%name/pkgconfig/%name-%version.pc
+%_pkgconfigdir/%name-%api_ver.pc
 %python3_sitelibdir_noarch/gi/overrides/Ide.py
 %python3_sitelibdir_noarch/gi/overrides/__pycache__/
 %doc README* AUTHORS NEWS
@@ -243,6 +262,9 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %_datadir/glib-2.0/schemas/org.gnome.builder.workbench.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.rust-analyzer.gschema.xml
 %_datadir/gtksourceview-4/styles/*.xml
+%dir %_datadir/gtksourceview-4/language-specs/
+%_datadir/gtksourceview-4/language-specs/blueprint.lang
+
 %_datadir/%name/
 %_iconsdir/hicolor/*/*/*.*
 %_datadir/metainfo/%xdg_name.appdata.xml
@@ -251,6 +273,16 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %{?_with_help:%_datadir/doc/%name/}
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
+* Tue Mar 08 2022 Yuri N. Sedunov <aris@altlinux.org> 42-alt0.9.rc1
+- 42.rc1
+
+* Thu Jan 27 2022 Yuri N. Sedunov <aris@altlinux.org> 41.3-alt2
+- updated to 41.3-14-gc3a428982
+- fixed russian translation (ALT #41815)
+
 * Tue Dec 07 2021 Yuri N. Sedunov <aris@altlinux.org> 41.3-alt1
 - 41.3
 

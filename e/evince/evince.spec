@@ -2,7 +2,8 @@
 %define xdg_name org.gnome.Evince
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 41
+%define ver_major 42
+%define beta %nil
 %define api_ver_major 3
 %define api_ver %api_ver_major.0
 %define so_ver 4
@@ -18,8 +19,8 @@
 %def_disable debug
 
 Name: evince
-Version: %ver_major.4
-Release: alt1
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: A document viewer
 Group: Office
@@ -27,7 +28,7 @@ License: GPL-2.0-or-later
 Url: http://www.gnome.org/projects/evince/
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -39,7 +40,8 @@ Requires: gvfs-backend-recent-files
 Requires: dconf
 %{?_enable_multimedia:Requires: gst-plugins-base1.0 gst-libav}
 
-%define poppler_ver 0.86
+%define poppler_ver 22.02.0
+%define libarchive_ver 3.6.0
 %define gtk_ver 3.22
 %define handy_ver 1.0.0
 %define spectre_ver 0.2.0
@@ -51,7 +53,7 @@ BuildRequires: gcc-c++ gnome-common libappstream-glib-devel yelp-tools
 BuildRequires: icon-theme-adwaita libdjvu-devel libgnome-keyring-devel
 BuildRequires: libspectre-devel >= %spectre_ver libtiff-devel
 BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-schemas-devel
-BuildRequires: zlib-devel libsecret-devel libarchive-devel libgspell-devel
+BuildRequires: zlib-devel libsecret-devel libarchive-devel >= %libarchive_ver libgspell-devel
 BuildRequires: libgnome-desktop3-devel
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 %{?_enable_xps:BuildRequires: libgxps-devel}
@@ -62,7 +64,7 @@ BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 %{?_enable_introspection:
 BuildRequires(pre): rpm-build-gir
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
-%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_gtk_doc:BuildRequires: gi-docgen}
 BuildRequires: libXi-devel
 BuildRequires: pkgconfig(systemd)
 
@@ -131,7 +133,7 @@ using Evince library.
 
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson \
@@ -209,8 +211,8 @@ using Evince library.
 
 %if_enabled gtk_doc
 %files -n lib%name-devel-doc
-%_datadir/gtk-doc/html/%name
-%_datadir/gtk-doc/html/libev*
+%_datadir/doc/libevdocument
+%_datadir/doc/libevview
 %endif
 
 %if_enabled introspection
@@ -225,6 +227,9 @@ using Evince library.
 
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
+- 42.1
+
 * Mon Mar 14 2022 Yuri N. Sedunov <aris@altlinux.org> 41.4-alt1
 - 41.4
 

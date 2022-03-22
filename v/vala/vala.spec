@@ -4,11 +4,11 @@
 %def_disable snapshot
 %def_enable check
 %{?_enable_snapshot:%def_with bootstrap}
-%define ver_major 0.54
-%define api_ver 0.54
+%define ver_major 0.56
+%define api_ver 0.56
 
 Name: vala
-Version: %ver_major.8
+Version: %ver_major.0
 Release: alt1
 
 Summary: Vala is a programming language which makes GNOME programming easy
@@ -29,9 +29,9 @@ Patch1: %name-0.39.7-alt-fixes.patch
 Requires(pre): rpm-build-vala vapi-common = %version-%release
 
 # to avoid duplicate provides
-%filter_from_provides /libsoup-2.4\|libgeoclue-2.0/d
+%filter_from_provides /libsoup-2.4\|libsoup-3.0\|libgeoclue-2.0/d
 
-BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses rpm-build-vala
 BuildRequires: flex libgio-devel >= 2.48.0 xsltproc help2man dbus-tools-gui gobject-introspection-devel
 BuildRequires: /proc rpm-build-vala
 # since 0.37
@@ -268,6 +268,9 @@ mkdir -p %buildroot%_datadir/vala/vapi
 
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 0.56.0-alt1
+- 0.56.0
+
 * Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 0.54.8-alt1
 - 0.54.8
 

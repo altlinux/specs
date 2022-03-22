@@ -7,28 +7,33 @@
 %def_enable docs
 %def_enable tests
 %def_disable check
+%def_enable gtk3
 
 Name: lib%_name-gtk
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Summary: GTK+3 support library for colord daemon
 License: GPLv2+
 Group: System/Libraries
+Url: https://github.com/hughsie/colord-gtk
 
-URL: http://www.freedesktop.org/software/%name/
-Source: http://www.freedesktop.org/software/colord/releases/%_name-gtk-%version.tar.xz
+Vcs: https://github.com/hughsie/colord-gtk.git
+Source: https://github.com/hughsie/colord-gtk/archive/%version/%_name-gtk-%version.tar.gz
 
 %define glib_ver 2.32
 %define colord_ver 0.1.27
 
 Requires: lib%_name >= %colord_ver
 
-BuildRequires(pre): meson rpm-build-gir
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
 %{?_enable_vala:BuildRequires(pre): rpm-build-vala}
-BuildRequires: glib2-devel >= %glib_ver
-BuildRequires: lib%_name-devel >= %colord_ver libgtk+3-devel
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel lib%_name-gir-devel}
+BuildRequires: meson glib2-devel >= %glib_ver
+BuildRequires: lib%_name-devel >= %colord_ver  libgtk4-devel
+%{?_enable_gtk3:BuildRequires: libgtk+3-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel
+BuildRequires: libgtk4-gir-devel lib%_name-gir-devel
+%{?_enable_gtk3:BuildRequires: libgtk+3-gir-devel}}
 %{?_enable_vala:BuildRequires: vala-tools lib%_name-vala}
 %{?_enable_man:BuildRequires: xsltproc docbook5-style-xsl}
 %{?_enable_docs:BuildRequires: gtk-doc}
@@ -91,6 +96,7 @@ This package contains development documentation for  %_name-gtk library.
 
 %build
 %meson \
+	%{?_disable_gtk3:-Dgtk3=false} \
 	%{?_enable_vala:-Dvapi=true} \
 	%{?_disable_man:-Dman=false} \
 	%{?_disable_docs:-Ddocs=false} \
@@ -108,25 +114,28 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %files  -f %_name-gtk.lang
 %_bindir/cd-convert
 %{?_enable_man:%_man1dir/cd-convert.1.*}
-%_libdir/%name.so.*
+%{?_enable_gtk3:%_libdir/%name.so.*}
+%_libdir/lib%_name-gtk4.so.*
 
 %files devel
 %_includedir/%_name-1/%_name-gtk.h
 %_includedir/%_name-1/%_name-gtk/
-%_libdir/%name.so
-%_pkgconfigdir/%_name-gtk.pc
+%{?_enable_gtk3:%_libdir/%name.so}
+%_libdir/lib%_name-gtk4.so
+%{?_enable_gtk3:%_pkgconfigdir/%_name-gtk.pc}
+%_pkgconfigdir/%_name-gtk4.pc
 
 %if_enabled introspection
 %files gir
-%_typelibdir/ColordGtk-%api_ver.typelib
+%{?_enable_gtk3:%_typelibdir/ColordGtk-%api_ver.typelib}
 
 %files gir-devel
-%_girdir/ColordGtk-%api_ver.gir
+%{?_enable_gtk3:%_girdir/ColordGtk-%api_ver.gir}
 %endif
 
 %if_enabled vala
 %files vala
-%_datadir/vala/vapi/%_name-gtk.*
+%{?_enable_gtk3:%_datadir/vala/vapi/%_name-gtk.*}
 %endif
 
 %if_enabled docs
@@ -136,6 +145,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Mon Mar 07 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Thu Jun 20 2019 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - 0.2.0 (ported to Meson build system)
 - new -devel-doc subpackage

@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 48
+%define ver_major 50
 %define beta %nil
 %define domain gsconnect@andyholmes.github.io
 %define xdg_name org.gnome.Shell.Extensions.GSConnect
@@ -29,7 +29,7 @@ Vcs: https://github.com/andyholmes/gnome-shell-extension-gsconnect.git
 Source: %name-%version%beta.tar
 %endif
 
-Requires: gnome-shell >= 3.24
+Requires: gnome-shell >= 42
 Requires: /usr/bin/ffmpeg /usr/bin/fusermount
 Requires: /usr/bin/ssh-keygen /usr/bin/ssh-add
 Requires: fuse-sshfs /usr/bin/openssl
@@ -96,6 +96,9 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Sun Mar 20 2022 Yuri N. Sedunov <aris@altlinux.org> 50-alt1
+- 50
+
 * Tue Oct 05 2021 Yuri N. Sedunov <aris@altlinux.org> 48-alt1
 - 48
 

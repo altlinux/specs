@@ -1,11 +1,10 @@
 %define bname librsvg
-%define ver_major 2.52
+%define ver_major 2.54
 %define api_ver 2.0
 %define gtk_api_ver 2.0
 %define gtk3_api_ver 3.0
 
 %define _libexecdir %_prefix/libexec
-%define _gtk_docdir %_datadir/gtk-doc/html/
 
 %def_disable static
 %def_disable gtk_doc
@@ -16,7 +15,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.8
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -46,10 +45,14 @@ BuildRequires: libxml2-devel >= %libxml2_ver
 BuildRequires: libcairo-devel >= %cairo_ver
 BuildRequires: libfreetype-devel >= %freetype_ver
 BuildRequires: libharfbuzz-devel >= %harfbuzz_ver
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
-BuildRequires: libX11-devel libXt-devel
-BuildRequires: gtk-doc intltool sgml-common zlib-devel
-%{?_enable_vala:BuildRequires: vala-tools >= %vala_ver rpm-build-vala}
+BuildRequires: libX11-devel libXt-devel zlib-devel
+BuildRequires: gi-docgen python3-module-docutils
+%{?_enable_introspection:
+BuildRequires(pre): rpm-build-gir
+BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
+%{?_enable_vala:
+BuildRequires(pre): rpm-build-vala
+BuildRequires: vala-tools >= %vala_ver}
 
 %description
 A high performance SVG rendering library associated with the Gnome Project.
@@ -139,7 +142,8 @@ the functionality of the installed %name.
 	%{?_enable_pixbuf_loader:--enable-pixbuf-loader} \
 	%{?_enable_introspection:--enable-introspection=yes} \
 	%{?_enable_vala:--enable-vala=yes} \
-	%{?_enable_installed_tests:--enable-installed-tests}
+	%{?_enable_installed_tests:--enable-installed-tests} \
+	--docdir=%_datadir/doc/%name
 %nil
 %make_build
 
@@ -163,7 +167,7 @@ the functionality of the installed %name.
 %{?_enable_vala:%_vapidir/%name-%api_ver.vapi}
 
 %files devel-doc
-%_gtk_docdir/*
+%_datadir/doc/%name/Rsvg-%api_ver
 
 %if_enabled static
 %files devel-static
@@ -192,6 +196,9 @@ the functionality of the installed %name.
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 1:2.54.0-alt1
+- 2.54.0
+
 * Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 1:2.52.8-alt1
 - 2.52.8
 

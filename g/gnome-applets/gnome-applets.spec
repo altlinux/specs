@@ -1,12 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 3.42
+%define ver_major 3.44
 %define xdg_name org.gnome.gnome-applets
 
 %def_enable frequency_selector
-%def_enable mini_commander
 %def_enable battstat
 %def_enable command
+%def_enable mini_commander
 %def_enable timer
 %def_enable tracker
 
@@ -31,19 +31,19 @@ Patch1: %name-3.22.0-alt-cpufreq_libs.patch
 # From configure.ac
 %define gtk_ver 3.20.0
 %define glib_ver 2.44.0
-%define gnome_panel_ver 3.38.0
+%define gnome_panel_ver 3.43.1
 %define libgtop_ver 2.12.0
 %define libgail_ver 3.0
 %define libxklavier_ver 4.0
 %define libwnck_ver 2.9.3
 %define libnotify_ver 0.7.1
 %define icon_theme_ver 3.14
-%define libgweather_ver 3.40
+%define libgweather4_ver 3.99
 %define tracker_api_ver 3.0
 
 Requires: gnome-panel >= %gnome_panel_ver
 Requires: gvfs
-%{?_enable tracker:Requires: tracker3}
+%{?_enable_tracker:Requires: tracker3}
 
 Obsoletes: %name-common < 3.37
 Provides: %name-common = %EVR
@@ -73,9 +73,8 @@ Obsoletes: %name-window-title < 3.37
 Provides: %name-window-title = %EVR
 Obsoletes: %name-cpufreq-usermode < 3.37
 Provides: %name-cpufreq-usermode = %EVR
-%{?_enable tracker:
 Obsoletes: %name-tracker-search-bar < 3.37
-Provides: %name-tracker-search-bar = %EVR}
+Provides: %name-tracker-search-bar = %EVR
 %{?_enable_frequency_selector:
 Obsoletes: %name-cpufreq < 3.37
 Provides: %name-cpufreq = %EVR}
@@ -107,13 +106,13 @@ BuildRequires: libnotify-devel >= %libnotify_ver
 BuildRequires: icon-theme-adwaita >= %icon_theme_ver
 BuildRequires: libX11-devel libXt-devel
 BuildRequires: libgucharmap-devel >= 2.33.2
-BuildRequires: libgweather-devel >= %libgweather_ver
+BuildRequires: libgweather4.0-devel >= %libgweather4_ver
 BuildRequires: rpm-build-gnome icon-theme-adwaita
 BuildRequires: gnome-settings-daemon-devel
 BuildRequires: libxml2-devel libdbus-devel
 BuildRequires: libpolkit-devel xorg-cf-files yelp-tools
 %{?_enable_battstat:BuildRequires: libupower-devel}
-%{?_enable tracker:BuildRequires: pkgconfig(tracker-sparql-%tracker_api_ver)}
+%{?_enable_tracker:BuildRequires: pkgconfig(tracker-sparql-%tracker_api_ver)}
 %{?_enable_frequency_selector:BuildRequires: libcpufreq-devel}
 
 %description
@@ -154,16 +153,15 @@ Applet, Memory Load Applet, Net Load Applet and Swap Load Applet.
 %add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
-    %{?_enable_mini_commander:--enable-mini-commander} \
     %{?_disable_battstat:--disable-battstat} \
     %{?_disable_frequency_selector:--disable-frequency-selector}
 %nil
 %make_build
 
 %install
-%makeinstall_std _sklocalstatedir=%buildroot%_sklocalstatedir
+%makeinstall_std localstatedir=%buildroot%_localstatedir
 install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-local.d/01-cpufreq.pkla
-%define applets accessx-status battstat char-palette cpufreq-applet command-line drivemount gweather geyes stickynotes_applet multiload trashapplet netspeed_applet windowpicker brightness inhibit %{?_enable tracker:tracker-search-bar} window-buttons window-title
+%define applets accessx-status battstat char-palette cpufreq-applet command-line drivemount gweather geyes stickynotes_applet multiload trashapplet netspeed_applet windowpicker brightness inhibit %{?_enable_tracker:tracker-search-bar} window-buttons window-title
 %find_lang --with-gnome --output=%name.lang %name %applets
 
 %files -f %name.lang
@@ -199,6 +197,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %exclude %_libdir/gnome-panel/modules/*.la
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 3.44.0-alt1
+- 3.44.0
+
 * Sat Oct 23 2021 Yuri N. Sedunov <aris@altlinux.org> 3.42.0-alt1
 - 3.42.0
 

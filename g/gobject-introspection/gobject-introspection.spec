@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.70
+%define ver_major 1.72
 %def_enable doctool
 %def_enable check
 %def_enable gtk_doc
@@ -141,6 +141,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 1.72.0-alt1
+- 1.72.0
+
 * Fri Sep 17 2021 Yuri N. Sedunov <aris@altlinux.org> 1.70.0-alt1
 - 1.70.0
 

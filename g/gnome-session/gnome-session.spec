@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
@@ -11,7 +11,7 @@
 %def_enable man
 
 Name: gnome-session
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -35,10 +35,10 @@ Patch11: gnome-session-3.3.92-nv30.patch
 
 # From configure.ac
 %define glib_ver 2.46.0
-%define gtk_ver 3.18.0
+%define gtk_ver 3.22.0
 %define polkit_ver 0.91
 %define upower_ver 0.9
-%define systemd_ver 209
+%define systemd_ver 242
 
 Requires(pre): xinitrc libcanberra-gnome libcanberra-gtk3
 Requires: altlinux-freedesktop-menu-gnome3
@@ -181,6 +181,9 @@ export PATH=$PATH:/sbin
 
 
 %changelog
+* Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Wed Jan 12 2022 Yuri N. Sedunov <aris@altlinux.org> 41.3-alt1
 - 41.3
 

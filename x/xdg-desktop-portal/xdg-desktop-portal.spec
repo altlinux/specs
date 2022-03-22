@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: xdg-desktop-portal
-Version: 1.12.1
+Version: 1.14.1
 Release: alt1
 
 Summary: Portal frontend service to Flatpak
@@ -23,6 +23,7 @@ Source: %name-%version.tar
 %define glib_ver 2.60
 %define geoclue_ver 2.5.2
 %define portal_ver 0.2.90
+%define fuse3_ver 3.10.0
 
 Requires: dbus
 Requires: flatpak >= 1.6.0
@@ -30,9 +31,11 @@ Requires: /usr/bin/fusermount
 Requires: pipewire
 Requires: geoclue2 >= %geoclue_ver
 
+BuildRequires(pre): rpm-build-systemd
 BuildRequires: pkgconfig(flatpak)
-BuildRequires: pkgconfig(fuse)
+BuildRequires: pkgconfig(fuse3) >= %fuse3_ver
 BuildRequires: pkgconfig(gio-unix-2.0) >= %glib_ver
+BuildRequires: pkgconfig(gdk-pixbuf-2.0)
 BuildRequires: pkgconfig(libpipewire-0.3)
 BuildRequires: pkgconfig(libgeoclue-2.0) >= %geoclue_ver
 BuildRequires: pkgconfig(systemd)
@@ -40,7 +43,7 @@ BuildRequires: pkgconfig(json-glib-1.0)
 # since 1.5
 BuildRequires: pkgconfig(libportal) >= %portal_ver
 %{?_enable_docs:BuildRequires: xmlto docbook-dtds docbook-style-xsl}
-%{?_enable_check:BuildRequires: /proc python3-module-pygobject3 fuse}
+%{?_enable_check:BuildRequires: /proc python3-module-pygobject3 fuse3 libportal-devel}
 
 %description
 xdg-desktop-portal works by exposing a series of D-Bus interfaces known as
@@ -78,6 +81,8 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 %_libexecdir/%name
 %_libexecdir/xdg-document-portal
 %_libexecdir/xdg-permission-store
+%_libexecdir/%name-validate-icon
+%_libexecdir/%name-rewrite-launchers
 %_datadir/dbus-1/interfaces/org.freedesktop.portal.*.xml
 %_datadir/dbus-1/interfaces/org.freedesktop.impl.portal.*.xml
 %_datadir/dbus-1/services/org.freedesktop.portal.Desktop.service
@@ -87,6 +92,7 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 %_userunitdir/%name.service
 %_userunitdir/xdg-document-portal.service
 %_userunitdir/xdg-permission-store.service
+%_userunitdir/%name-rewrite-launchers.service
 %doc README.md NEWS
 %{?_enable_docs:%doc %_docdir/%name}
 
@@ -95,6 +101,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 
 
 %changelog
+* Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt1
+- 1.14.1
+
 * Thu Dec 23 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.1-alt1
 - 1.12.1
 

@@ -1,17 +1,18 @@
 %define _libexecdir %_prefix/libexec
 %define oldname eog2
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 %define xdg_name org.gnome.eog
 %define api_ver 3.0
 %def_enable color_management
 %def_enable introspection
+%def_enable libportal
 %def_enable gtk_doc
 # python-behave required
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Eye Of Gnome
@@ -30,6 +31,12 @@ Obsoletes: %oldname < 2.14.2-alt1
 
 %add_python3_path %_libdir/%name/plugins
 
+%define peas_ver 0.7.4
+%define portal_ver 0.5
+%define handy_ver 1.5
+%define rsvg_ver 2.44
+%define exempi_ver 1.99.5
+
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: meson python3-devel yelp-tools libappstream-glib-devel
@@ -38,15 +45,16 @@ BuildPreReq: libgio-devel >= 2.54
 BuildPreReq: libgnome-desktop3-devel >= 3.0
 BuildPreReq: gnome-icon-theme >= 2.19.1
 BuildPreReq: shared-mime-info >= 0.60
-BuildPreReq: libexempi-devel >= 1.99.5
+BuildPreReq: libexempi-devel >= %exempi_ver
 BuildPreReq: libexif-devel >= 0.6.14
 %{?_enable_color_management:BuildPreReq: liblcms2-devel}
-%{?_enable_gtk_doc:BuildRequires: gtk-doc}
-BuildPreReq: libjpeg-devel librsvg-devel >= 2.44
-BuildPreReq: libpeas-devel >= 0.7.4
+%{?_enable_gtk_doc:BuildRequires: gi-docgen}
+BuildRequires: libjpeg-devel librsvg-devel >= %rsvg_ver
+BuildRequires: libpeas-devel >= %peas_ver
 BuildRequires: libXt-devel libxml2-devel perl-XML-Parser zlib-devel gsettings-desktop-schemas-devel
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.10.2 libgtk+3-gir-devel}
-BuildRequires: libportal-devel >= 0.3
+%{?_enable_libportal:BuildRequires: libportal-gtk3-devel >= %portal_ver}
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 
 %description
 This is the Eye of GNOME, an image viewer program. It is meant to be
@@ -110,6 +118,7 @@ the functionality of the EOG GUI.
     -Dlibrsvg=true \
     %{?_enable_introspection:-Dintrospection=true} \
     %{?_enable_color_management:-Dcms=true} \
+    %{?_disable_libportal:-Dlibportal=false} \
     %{?_enable_installed_tests:-Dinstalled-tests=true} \
     %{?_enable_gtk_doc:-Dgtk_doc=true}
 %nil
@@ -149,7 +158,7 @@ ln -sf %name/lib%name.so \
 
 %if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/*
+%_datadir/gtk-doc/html/%name
 %endif
 
 %if_enabled introspection
@@ -168,6 +177,9 @@ ln -sf %name/lib%name.so \
 
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 41.2-alt1
 - 41.2
 

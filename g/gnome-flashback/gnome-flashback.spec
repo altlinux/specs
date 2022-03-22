@@ -1,12 +1,12 @@
 %def_disable snapshot
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 3.42
+%define ver_major 3.44
 %define _libexecdir %_prefix/libexec
 %def_with compiz
 
 Name: gnome-flashback
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Flashback session
@@ -25,8 +25,10 @@ Source: %name-%version.tar
 %define desktop_ver 3.12.0
 %define gsds_ver 3.32.0
 %define compiz_ver 0.9.14.0
+%define bt_api_ver 1.0
 
 Requires(pre): xinitrc
+Requires: wm-common-freedesktop
 Requires: gnome-session >= 3.33.90 gnome-settings-daemon
 Requires: gnome-panel >= %ver_major gnome-applets >= %ver_major metacity3.0 >= %ver_major
 Requires: altlinux-freedesktop-menu-gnome3
@@ -42,9 +44,10 @@ Requires: nautilus
 Requires: polkit accountsservice
 Requires: pinentry-gnome3
 Requires: upower
-Requires: bluez
+Requires: bluez gnome-bluetooth
 Requires: NetworkManager-applet-gtk
 Requires: ibus xkeyboard-config
+Requires: alacarte
 # since 3.20
 Conflicts: notification-daemon < 3.20
 
@@ -59,7 +62,7 @@ BuildRequires: libcanberra-gtk3-devel libpulseaudio-devel
 BuildRequires: libXext-devel libXrandr-devel
 BuildRequires: libupower-devel
 # since 3.18
-BuildRequires: libpolkit-devel libgnome-bluetooth-devel libxcb-devel
+BuildRequires: libpolkit-devel pkgconfig(gnome-bluetooth-%bt_api_ver) libxcb-devel
 BuildRequires: libibus-devel libxkbcommon-x11-devel libXi-devel
 BuildRequires: libxkbfile-devel xkeyboard-config-devel
 # since 3.36 (for screensaver)
@@ -119,6 +122,7 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 %exclude %_libdir/gnome-panel/modules/system_indicators.la
 %_libexecdir/%name-metacity
 %_libexecdir/%name-clipboard
+%_libexecdir/%name-media-keys
 %_desktopdir/%name.desktop
 %_datadir/gnome-panel/layouts/%name.layout
 %_datadir/desktop-directories/X-GNOME-Flashback-Settings-System.directory
@@ -129,25 +133,24 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 %_datadir/glib-2.0/schemas/org.gnome.%name.desktop.background.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.%name.desktop.enums.xml
 %_datadir/glib-2.0/schemas/org.gnome.%name.desktop.icons.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.%name.keybindings.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.%name.system-indicators.input-sources.gschema.xml
 %_datadir/glib-2.0/schemas/00_gnome-flashback.gschema.override
+%_datadir/gnome-control-center/keybindings/50-gnome-flashback-screenshots.xml
 %_xdgmenusdir/%name-applications.menu
 %_datadir/xsessions/%name-metacity.desktop
 %_xdgconfigdir/autostart/%name-nm-applet.desktop
 %_xdgconfigdir/autostart/%name-clipboard.desktop
-#%_xdgconfigdir/autostart/%name-screensaver.desktop
+%_xdgconfigdir/autostart/%name-media-keys.desktop
 %_userunitdir/%name.service
 %_userunitdir/%name.target
 %_userunitdir/gnome-session@gnome-flashback-metacity.target.d/session.conf
-
-
 %doc AUTHORS NEWS README
 
 %if_with compiz
 %files session-compiz
 %_libexecdir/%name-compiz
 %_userunitdir/gnome-session@gnome-flashback-compiz.target.d/session.conf
-
 %_datadir/gnome-session/sessions/%name-compiz.session
 %_datadir/xsessions/%name-compiz.desktop
 %_sysconfdir/compizconfig/%name.conf
@@ -156,6 +159,9 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 3.44.0-alt1
+- 3.44.0
+
 * Tue Nov 23 2021 Yuri N. Sedunov <aris@altlinux.org> 3.42.1-alt1
 - 3.42.1
 

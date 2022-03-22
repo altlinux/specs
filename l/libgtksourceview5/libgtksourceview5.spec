@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name gtksourceview
-%define ver_major 5.2
+%define ver_major 5.4
 %define api_ver 5
 
 %def_disable static
@@ -21,7 +21,7 @@
 
 Name: lib%{_name}%api_ver
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1
 
 Summary: GtkSourceView text widget library
 License: LGPLv2+
@@ -34,7 +34,7 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 Source: %_name-%version.tar
 %endif
 
-%define gtk_ver 4.2
+%define gtk_ver 4.4
 %define pcre2_ver 10.21
 %define libxml2_ver 2.6.0
 %define fribidi_ver 0.19.7
@@ -129,8 +129,7 @@ the functionality of the installed GtkSourceView library.
 %find_lang %_name-%api_ver
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-xvfb-run %meson_test
+xvfb-run %__meson_test
 
 %files -f %_name-%api_ver.lang
 %_libdir/lib%_name-%api_ver.so.*
@@ -170,6 +169,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 5.4.0-alt1
+- 5.4.0
+
 * Fri Mar 11 2022 Yuri N. Sedunov <aris@altlinux.org> 5.2.0-alt1.1
 - fixed %%check
 

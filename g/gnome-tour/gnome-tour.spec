@@ -1,13 +1,11 @@
-%define ver_major 41
-%define beta .rc
+%define ver_major 42
+%define beta %nil
 %define xdg_name org.gnome.Tour
-
-%def_disable intro
-%define welcome_video altlinux-initial-intro.webm
+%def_enable check
 
 Name: gnome-tour
-Version: %ver_major
-Release: alt0.9%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: GNOME Tour and Greeter
 Group: Graphical desktop/GNOME
@@ -15,19 +13,19 @@ License: GPL-3.0
 Url: https://gitlab.gnome.org/GNOME/gnome-tour
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
-# https://pagure.io/fedora-workstation/issue/175
-%{?_enable_intro:Source1: %welcome_video}
 
 Requires: /etc/os-release
 
+%define glib_ver 2.64
+%define gtk4_ver 4.4
+%define adwaita_ver 1.0
+
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: /proc meson rust rust-cargo
-BuildRequires: pkgconfig(gio-2.0) >= 2.64
-BuildRequires: pkgconfig(gtk+-3.0)
-BuildRequires: pkgconfig(gstreamer-1.0) > 1.12
-BuildRequires: pkgconfig(gstreamer-video-1.0)
-BuildRequires: pkgconfig(gstreamer-player-1.0)
-BuildRequires: pkgconfig(libhandy-1) >= 1.0
+BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
+BuildRequires: pkgconfig(gtk4) >= %gtk4_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+%{?_enable_check:BuildRequires: desktop-file-utils %_bindir/appstream-util}
 
 %description
 A guided tour and greeter for GNOME.
@@ -36,19 +34,15 @@ A guided tour and greeter for GNOME.
 %setup -n %name-%version%beta
 
 %build
-%meson \
-    %{?_enable_intro:-Dvideo_path=%_datadir/%name/%welcome_video}
-%nil
+%meson
 %meson_build
 
 %install
 %meson_install
-# install ALTLinux video
-%{?_enable_intro:install -pD -m 0644 %SOURCE1 %buildroot%_datadir/gnome-tour/%welcome_video}
 %find_lang %name
 
 %check
-%meson_test
+%__meson_test
 
 %files -f %name.lang
 %_bindir/gnome-tour
@@ -56,13 +50,13 @@ A guided tour and greeter for GNOME.
 %_datadir/icons/hicolor/scalable/apps/%xdg_name.svg
 %_datadir/icons/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %_datadir/metainfo/%xdg_name.metainfo.xml
-%{?_enable_intro:
-%dir %_datadir/%name
-%_datadir/%name/%welcome_video}
+%_datadir/%name
 %doc NEWS README.md
 
-
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0 (ported to GTK4)
+
 * Sun Sep 05 2021 Yuri N. Sedunov <aris@altlinux.org> 41-alt0.9.rc
 - 41.rc
 

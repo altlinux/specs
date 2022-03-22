@@ -4,11 +4,12 @@
 %define _name jsonrpc-glib
 # probably meson bug
 %define libname libjsonrpc-glib
-%define ver_major 3.40
+%define ver_major 3.42
 %define api_ver 1.0
 
 %def_enable introspection
 %def_enable gtk_doc
+%def_enable vala
 %def_disable check
 
 Name: lib%_name
@@ -26,9 +27,14 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %name-%version.tar
 %endif
 
-BuildRequires: meson >= 0.38.1 gtk-doc vala-tools
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson >= 0.49.2 vala-tools
 BuildRequires: libgio-devel libjson-glib-devel
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libjson-glib-gir-devel}
+%{?_enable_introspection:BuildRequires(pre): rpm-build-gir
+BuildRequires: gobject-introspection-devel libjson-glib-gir-devel}
+%{?_enable_gtk_doc:BuildRequires: gi-docgen}
+%{?_enable_vala:BuildRequires(pre):rpm-build-vala
+BuildRequires: vala-tools}
 
 %description
 Jsonrpc-GLib is a JSON-RPC library for GLib. It includes support for
@@ -38,7 +44,7 @@ supports upgrating connections to use GVariant for less runtime overhead.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -47,7 +53,7 @@ developing applications that use %name.
 %package gir
 Summary: GObject introspection data for the %name library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the %name library
@@ -56,8 +62,8 @@ GObject introspection data for the %name library
 Summary: GObject introspection devel data for the %name library
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the %name library
@@ -75,15 +81,16 @@ This package contains development documentation for %name
 %setup -n %_name-%version
 
 %build
-%meson %{?_enable_gtk_doc:-Denable_gtk_doc=true}
+%meson \
+    %{?_enable_gtk_doc:-Denable_gtk_doc=true} \
+    %{?_disable_vala:-Dwith_vapi=false}
 %meson_build
 
 %install
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %_libdir/%libname-%api_ver.so.*
@@ -93,8 +100,8 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_includedir/%_name-%api_ver/
 %_libdir/%libname-%api_ver.so
 %_pkgconfigdir/%_name-%api_ver.pc
-%_vapidir/%_name-%api_ver.deps
-%_vapidir/%_name-%api_ver.vapi
+%{?_enable_vala:%_vapidir/%_name-%api_ver.deps
+%_vapidir/%_name-%api_ver.vapi}
 
 %if_enabled introspection
 %files gir
@@ -106,10 +113,13 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/%_name/
+%_datadir/doc/%_name/
 %endif
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 3.42.0-alt1
+- 3.42.0
+
 * Thu Sep 23 2021 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
 - 3.40.0
 

@@ -2,7 +2,7 @@
 
 %define _unpackaged_files_terminate_build 1
 %define xdg_name org.gnome.Photos
-%define ver_major 40
+%define ver_major 42
 %define _libexecdir %_prefix/libexec
 %define gegl_api_ver 0.4
 %define tracker_api_ver 3.0
@@ -11,7 +11,7 @@
 
 Name: gnome-photos
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1
 
 Summary: Photos - access, organize and share your photos on GNOME
 License: GPL-2.0-or-later
@@ -38,8 +38,8 @@ Source: %name-%version.tar
 
 Requires: grilo-plugins >= %grilo_ver
 
-BuildRequires(pre): meson rpm-build-gnome
-BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires: meson yelp-tools %_bindir/appstream-util desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: pkgconfig(tracker-sparql-%tracker_api_ver) >= %tracker_ver
@@ -95,6 +95,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1.1
 - fixed meson options
 

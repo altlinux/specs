@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name libhandy
-%define ver_major 1.5
+%define ver_major 1.6
 %define api_ver 1
 
 %def_enable introspection
@@ -10,8 +10,8 @@
 %def_enable check
 
 Name: %_name%api_ver
-Version: %ver_major.0
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: Library with GTK+3 widgets for mobile devices (API version 1)
 Group: System/Libraries
@@ -29,15 +29,16 @@ Source: %_name-%version.tar
 %define gtk_ver 3.24.1
 %define glade_ver 3.36
 
-BuildRequires(pre): meson rpm-build-gir
-BuildRequires: pkgconfig(gio-2.0)
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(gmodule-2.0)
 BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver
 BuildRequires: pkgconfig(fribidi)
 %{?_enable_introspection:BuildRequires: pkgconfig(gobject-introspection-1.0) gir(Gtk) = 3.0}
-%{?_enable_vala:BuildRequires: vala-tools}
-%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_vala:BuildRequires(pre): rpm-build-vala
+BuildRequires: vala-tools}
+%{?_enable_gtk_doc:BuildRequires: gi-docgen}
 %{?_enable_glade_catalog:BuildRequires: pkgconfig(gladeui-2.0) >= %glade_ver}
 %{?_enable_check:BuildRequires: xvfb-run librsvg fonts-ttf-liberation}
 
@@ -95,8 +96,7 @@ This package contains development documentation for handy library.
 %find_lang %_name
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-xvfb-run -s -noreset %meson_test
+xvfb-run -s -noreset %__meson_test
 
 %files -f %_name.lang
 %_libdir/%_name-%api_ver.so.*
@@ -120,10 +120,13 @@ xvfb-run -s -noreset %meson_test
 
 %if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/%_name-%api_ver/
+%_datadir/doc/%_name-%api_ver/
 %endif
 
 %changelog
+* Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1
+- 1.6.1
+
 * Fri Mar 11 2022 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1.1
 - fixed %%check
 

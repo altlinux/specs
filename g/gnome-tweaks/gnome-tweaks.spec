@@ -1,13 +1,13 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 40
-%define beta %nil
+%define ver_major 42
+%define beta .beta
 %define old_name gnome-tweak-tool
 %define xdg_name org.gnome.tweaks
 
 Name: gnome-tweaks
-Version: %ver_major.10
-Release: alt1%beta
+Version: %ver_major
+Release: alt0.5%beta
 
 Summary: A tool to customize advanced GNOME 3 options
 Group: Graphical desktop/GNOME
@@ -24,6 +24,7 @@ Patch: %name-3.27.4-alt-desktop.patch
 BuildArch: noarch
 
 %define gsds_ver 40
+%define handy_ver 1.5.0
 
 Requires: gnome-shell >= %ver_major nautilus
 Requires: gsettings-desktop-schemas-devel >= %gsds_ver
@@ -35,6 +36,7 @@ Obsoletes: %old_name < 3.27.4
 BuildRequires(pre): meson rpm-build-gir rpm-build-python3
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: python3-module-pygobject3-devel >= 3.10.0
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver typelib(Handy) = 1
 
 %description
 GNOME Tweaks is an application for changing the advanced settings
@@ -79,6 +81,9 @@ Features:
 %doc AUTHORS NEWS README*
 
 %changelog
+* Sun Mar 06 2022 Yuri N. Sedunov <aris@altlinux.org> 42-alt0.5.beta
+- 42.beta
+
 * Sat Mar 05 2022 Yuri N. Sedunov <aris@altlinux.org> 40.10-alt1
 - 40.10
 

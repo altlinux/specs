@@ -3,13 +3,14 @@
 
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 41
+%define ver_major 42
+%define beta %nil
 %define xdg_name org.gnome.Boxes
 %def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.3
-Release: alt1
+Version: %ver_major.0.1
+Release: alt1%beta
 
 Summary: A simple GNOME 3 application to access remote or virtual systems
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
@@ -18,7 +19,7 @@ License: LGPL-2.0
 Url: https://wiki.gnome.org/Apps/Boxes
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -38,6 +39,7 @@ Source: %name-%version.tar
 %define libarchive_ver 3.0.0
 %define vte_ver 0.40.2
 %define webkit_ver 2.26
+%define handy_ver 1.5.0
 
 Requires: gnome-keyring dconf
 
@@ -73,7 +75,7 @@ BuildRequires: libwebkit2gtk-devel >= %webkit_ver
 BuildRequires: libfreerdp-devel
 BuildRequires: libvte3-devel >= %vte_ver
 BuildRequires: pkgconfig(gtksourceview-4)
-BuildRequires: pkgconfig(libhandy-1)
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 
 %description
 gnome-boxes lets you easily create, setup, access, and use:
@@ -95,7 +97,7 @@ the functionality of the Boxes.
 
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson \
@@ -107,7 +109,7 @@ the functionality of the Boxes.
 %find_lang %name --with-gnome
 
 %files -f %name.lang
-%doc AUTHORS README* NEWS
+%doc README* NEWS
 %_bindir/%name
 %_libdir/%name/
 %_datadir/%name
@@ -129,6 +131,12 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0.1-alt1
+- 42.0.1
+
+* Tue Mar 08 2022 Yuri N. Sedunov <aris@altlinux.org> 42-alt0.9.rc
+- 42.rc
+
 * Fri Jan 07 2022 Yuri N. Sedunov <aris@altlinux.org> 41.3-alt1
 - 41.3
 

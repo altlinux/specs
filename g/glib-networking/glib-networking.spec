@@ -1,7 +1,7 @@
 %def_disable snapshot
 
-%define ver_major 2.70
-%define beta %nil
+%define ver_major 2.72
+%define beta .beta
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
@@ -15,8 +15,8 @@
 %def_disable check
 
 Name: glib-networking
-Version: %ver_major.1
-Release: alt1%beta
+Version: %ver_major
+Release: alt0.5%beta
 
 Summary: Networking support for GIO
 Group: System/Libraries
@@ -32,7 +32,7 @@ Source: %name-%version.tar
 %{?_enable_gnome_proxy:Requires: gsettings-desktop-schemas >= 3.2.0}
 Requires: ca-certificates
 
-%define glib_ver 2.69.0
+%define glib_ver 2.70.0
 %define gnutls_ver 3.6.5
 %define p11kit_ver 0.20
 %define libproxy_ver 0.3.1
@@ -94,6 +94,7 @@ the functionality of the installed %name package.
 %files -f %name.lang
 %{?_enable_tls:%_libdir/gio/modules/libgiognutls.so}
 %{?_enable_gnome_proxy:%_libdir/gio/modules/libgiognomeproxy.so}
+%_libdir/gio/modules/libgioenvironmentproxy.so
 %if_enabled libproxy
 %_libdir/gio/modules/libgiolibproxy.so
 %_libexecdir/glib-pacrunner
@@ -115,6 +116,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Sat Mar 05 2022 Yuri N. Sedunov <aris@altlinux.org> 2.72-alt0.5.beta
+- 2.72
+
 * Mon Dec 06 2021 Yuri N. Sedunov <aris@altlinux.org> 2.70.1-alt1
 - 2.70.1
 

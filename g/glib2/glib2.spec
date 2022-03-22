@@ -3,7 +3,7 @@
 %{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.70
+%define ver_major 2.72
 %define api_ver 2.0
 %define pcre_ver 8.31
 %define gtk_doc_ver 1.32.1
@@ -29,7 +29,7 @@
 %def_disable check
 
 Name: glib2
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -57,7 +57,7 @@ Patch: glib-2.59.3-alt-compat-version-script.patch
 # stop spam about deprecated paths in schemas
 Patch1: glib-2.53.5-alt-deprecated_paths-nowarning.patch
 Patch2: glib-2.61.3-alt-add-xvt.patch
-Patch3: glib-2.38.2-alt-lfs.patch
+Patch3: glib-2.71.3-alt-lfs.patch
 Patch4: glib-2.50.1-alt-dbus_socket_path.patch
 Patch2000: glib-2.64.5-1-alt-e2k.patch
 
@@ -441,6 +441,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Mar 17 2022 Yuri N. Sedunov <aris@altlinux.org> 2.72.0-alt1
+- 2.72.0
+
 * Thu Mar 17 2022 Yuri N. Sedunov <aris@altlinux.org> 2.70.5-alt1
 - 2.70.5
 

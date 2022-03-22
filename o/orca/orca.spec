@@ -1,9 +1,9 @@
-%define ver_major 41
-%define beta %nil
+%define ver_major 42
+%define beta .rc
 
 Name: orca
-Version: %ver_major.2
-Release: alt1%beta
+Version: %ver_major
+Release: alt0.9%beta
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
 Summary(ru_RU.UTF-8): Программа экранного доступа для людей с ограничениями по зрению
@@ -91,6 +91,9 @@ install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autost
 %_datadir/gdm/greeter/autostart/%name-autostart.desktop
 
 %changelog
+* Fri Mar 11 2022 Yuri N. Sedunov <aris@altlinux.org> 42-alt0.9.rc
+- 42.rc
+
 * Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 41.2-alt1
 - 41.2
 

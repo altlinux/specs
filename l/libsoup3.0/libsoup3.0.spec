@@ -17,7 +17,7 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -189,6 +189,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.5-alt1
+- 3.0.5
+
 * Thu Jan 06 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.4-alt1
 - 3.0.4
 

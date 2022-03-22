@@ -3,11 +3,11 @@
 %define _name sudoku
 %define xdg_name org.gnome.Sudoku
 %define __name gnome-%_name
-%define ver_major 40
+%define ver_major 42
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Sudoku game
@@ -23,9 +23,9 @@ Provides:  %__name = %version-%release
 %define gtk_ver 3.24.0
 %define qqwing_ver 1.3.4
 
-BuildRequires(pre): meson
-BuildRequires: vala-tools gcc-c++
-BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson vala-tools gcc-c++
+BuildRequires: yelp-tools %_bindir/appstream-util desktop-file-utils
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver libgee0.8-devel libjson-glib-devel
@@ -56,6 +56,9 @@ in popularity.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Thu Mar 17 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Fri Jul 23 2021 Yuri N. Sedunov <aris@altlinux.org> 40.2-alt1
 - 40.2
 
