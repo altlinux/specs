@@ -1,7 +1,7 @@
 Summary: Wrapper for apt-rpm utilities
 
 Name: papt
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 License: GPL-2.0-or-later
@@ -13,13 +13,24 @@ Source0: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires: help2man
-BuildRequires: perl-AptPkg
-BuildRequires: perl-CryptX
-BuildRequires: perl-JSON
-BuildRequires: perl-Number-Format
-BuildRequires: perl-RPM2
-BuildRequires: perl-WWW-Curl
-BuildRequires: perl-ph
+BuildRequires: perl(AptPkg/Config.pm)
+BuildRequires: perl(Crypt/Digest.pm)
+BuildRequires: perl(Crypt/Digest/BLAKE2b_512.pm)
+BuildRequires: perl(Crypt/Digest/MD5.pm)
+BuildRequires: perl(Crypt/Digest/SHA1.pm)
+BuildRequires: perl(Crypt/Digest/SHA256.pm)
+BuildRequires: perl(Crypt/Digest/SHA512.pm)
+BuildRequires: perl(Data/Dumper.pm)
+BuildRequires: perl(Errno.pm)
+BuildRequires: perl(Fcntl.pm)
+BuildRequires: perl(Getopt/Long.pm)
+BuildRequires: perl(Number/Format.pm)
+BuildRequires: perl(RPM2.pm)
+BuildRequires: perl(Term/ANSIColor.pm)
+BuildRequires: perl(Text/Wrap.pm)
+BuildRequires: perl(WWW/Curl/Easy.pm)
+BuildRequires: perl(WWW/Curl/Multi.pm)
+BuildRequires: perl(sys/ioctl.ph)
 
 Requires: apt
 
@@ -46,6 +57,11 @@ install -D -m644 papt-query.1 %buildroot%_man1dir/papt-query.1
 %_man1dir/papt*.1*
 
 %changelog
+* Tue Mar 22 2022 Alexey Gladkov <legion@altlinux.ru> 0.5.0-alt1
+- papt:
+  + Assume the answer is no if stdin is not available.
+  + Add colors for different lists.
+
 * Mon Nov 01 2021 Alexey Gladkov <legion@altlinux.ru> 0.4.0-alt1
 - Fix regexp for print-uris.
 - Add some debug information.
