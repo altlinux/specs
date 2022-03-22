@@ -1,4 +1,4 @@
-# 7.3.1.3
+# 7.3.2.1
 %def_without python
 %def_with parallelism
 %def_without fetch
@@ -22,7 +22,7 @@
 
 Name: LibreOffice
 %define hversion 7.3
-%define urelease 1.3
+%define urelease 2.1
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -594,6 +594,10 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Mar 21 2022 Andrey Cherepanov <cas@altlinux.org> 7.3.2.1-alt1
+- NMU: Update to 7.3.2.1
+- Fix insert symbols in Math (ALT #41969)
+
 * Thu Mar 10 2022 Fr. Br. George <george@altlinux.ru> 7.3.1.3-alt1
 - Update to 7.3.1.3
 
