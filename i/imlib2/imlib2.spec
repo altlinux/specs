@@ -1,5 +1,5 @@
 Name: imlib2
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary: Image loading, saving, rendering, and manipulation library
@@ -106,6 +106,9 @@ find %buildroot%_libdir/ -name '*.la' -delete
 %endif
 
 %changelog
+* Mon Mar 21 2022 Leontiy Volodin <lvol@altlinux.org> 1.8.1-alt1
+- New version (1.8.1).
+
 * Mon Feb 14 2022 Leontiy Volodin <lvol@altlinux.org> 1.8.0-alt1
 - New version (1.8.0).
 - Fixed underlinked libraries.
