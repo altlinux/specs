@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt76
+Release: alt77
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -563,6 +563,9 @@ exec 1>&2
 %_datadir/%name/tests/
 
 %changelog
+* Tue Mar 22 2022 Vitaly Chikunov <vt@altlinux.org> 0.5.15lorg2-alt77
+- Add wrapper to apt-shell too (closes: #42201).
+
 * Sun Mar 13 2022 Vitaly Chikunov <vt@altlinux.org> 0.5.15lorg2-alt76
 - Add apt-get guarding wrapper that will prevent apt-get from exiting before
   all tasks are finished.
