@@ -10,7 +10,7 @@
 
 Name: xapian-bindings
 Version: 1.4.15
-Release: alt3
+Release: alt4
 
 Summary: Xapian search engine bindings
 
@@ -83,12 +83,10 @@ add advanced indexing and search facilities to applications.
 This package provides the files needed for developing Python 3 scripts
 which use Xapian.
 
-%define get_ruby_version() %(ruby -e 'print RUBY_VERSION' || echo 'unknown')
 %package -n ruby-xapian
 Summary: Ruby bindings for Xapian search engine
 Group: Development/Ruby
 Requires: libxapian = %version
-Requires: ruby = %get_ruby_version
 
 %description -n ruby-xapian
 Xapian is an Open Source Probabilistic Information Retrieval framework.
@@ -98,12 +96,23 @@ add advanced indexing and search facilities to applications.
 This package provides the files needed for developing Ruby scripts
 which use Xapian.
 
+%package -n ruby-xapian-checkinstall
+Summary: Checkinstall test for Ruby bindings for Xapian search engine
+Group: Development/Other
+BuildArch: noarch
+Requires(pre): ruby-xapian
+
+%description -n ruby-xapian-checkinstall
+%summary.
+
 %prep
 %setup
 %if_without doc
 %patch1 -p2
 %endif
 sed -i '/puts/d' ruby/xapian.rb ruby/docs/xapian.rb
+# Link to the libruby for a proper dependency.
+sed -i '/_xapian_la_LDFLAGS/s/$/ -lruby/' ruby/Makefile.am
 
 %build
 %ifarch %e2k
@@ -111,6 +120,8 @@ sed -i '/puts/d' ruby/xapian.rb ruby/docs/xapian.rb
 %add_optflags -ftls-model=global-dynamic
 %endif
 %autoreconf
+export RUBY_LIB=%ruby_vendorlibdir
+export RUBY_LIB_ARCH=%ruby_vendorarchdir
 %configure %{subst_with python} %{subst_with python3} %{subst_with ruby}
 %make_build
 # FIXME: maybe we should drop %version there as well and get rid of this
@@ -118,6 +129,10 @@ sed -i '/puts/d' ruby/xapian.rb ruby/docs/xapian.rb
 %install
 %makeinstall_std
 rm -rf %buildroot%_defaultdocdir/%name/
+
+%pre -n ruby-xapian-checkinstall
+set -xe
+ruby -rxapian -e '(p Xapian.version_string) == "%version"'
 
 %if_with python
 %files -n python-module-xapian
@@ -134,9 +149,11 @@ rm -rf %buildroot%_defaultdocdir/%name/
 %if_with ruby
 %files -n ruby-xapian
 %doc README ruby/docs/*
-%ruby_sitearchdir/_xapian.so
-%ruby_sitelibdir/xapian.rb
+%ruby_vendorarchdir/_xapian.so
+%ruby_vendorlibdir/xapian.rb
 %endif
+
+%files -n ruby-xapian-checkinstall
 
 # TODO:
 # - package other bindings (perl, tcl...)
@@ -147,6 +164,11 @@ rm -rf %buildroot%_defaultdocdir/%name/
 #   I use watch file and it's more convenient to do that with srpms
 
 %changelog
+* Tue Mar 22 2022 Vitaly Chikunov <vt@altlinux.org> 1.4.15-alt4
+- spec: Build ruby module in vendor directories.
+- spec: Build ruby-xapian-checkinstall with a simple test.
+- spec: Link xapian.so with the libruby to cause proper dependence.
+
 * Tue Jan 11 2022 Vitaly Chikunov <vt@altlinux.org> 1.4.15-alt3
 - Fixed build of ruby module.
 
