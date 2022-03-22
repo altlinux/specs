@@ -6,13 +6,14 @@
 
 Name: audit
 Version: 3.0.7
-Release: alt1
+Release: alt2
 Summary: User space tools for Linux kernel 2.6+ auditing
 License: GPL
 Group: Monitoring
 URL: http://people.redhat.com/sgrubb/audit/
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
+Patch1: audit-3.0.8-flex-array-workaround.patch
 
 Requires: lib%{name}1 = %EVR
 Requires: service >= 0.5.26-alt1
@@ -92,6 +93,10 @@ and libauparse can be used by python.
 %setup
 %patch0 -p1
 
+cp /usr/include/linux/audit.h lib/
+%patch1 -p1
+sed -i 's|#include <linux/audit.h>|#include "audit.h"|' lib/libaudit.h
+
 %build
 %autoreconf
 
@@ -112,6 +117,9 @@ and libauparse can be used by python.
 	%{subst_with prelude}
 
 %make_build
+
+# undo the workaround
+sed -i 's|#include "audit.h"|#include <linux/audit.h>|' lib/libaudit.h
 
 %install
 %makeinstall_std
@@ -229,6 +237,9 @@ fi
 %endif
 
 %changelog
+* Tue Mar 22 2022 Egor Ignatov <egori@altlinux.org> 3.0.7-alt2
+- Fix FTBFS: add flex-array-workaround patch
+
 * Mon Jan 31 2022 Egor Ignatov <egori@altlinux.org> 3.0.7-alt1
 - new version 3.0.7
 - Update scripts in init.d
