@@ -1,15 +1,15 @@
 %def_disable snapshot
 
 %define ver_major 42
-%define beta .beta
+%define beta %nil
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
 %define _name org.gnome.Contacts
 %def_without cheese
 
 Name: gnome-contacts
-Version: %ver_major
-Release: alt0.5%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Contacts manager for GNOME
 License: GPL-2.0-or-later
@@ -78,6 +78,9 @@ BuildRequires: libfolks-vala
 %doc NEWS README*
 
 %changelog
+* Tue Mar 22 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Mon Mar 14 2022 Yuri N. Sedunov <aris@altlinux.org> 42-alt0.5.beta
 - 42.beta (ported to GTK4)
 
