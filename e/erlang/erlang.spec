@@ -29,8 +29,8 @@
 %define Name Erlang
 Name: erlang
 Epoch: 1
-Version: 24.1.3
-Release: alt2
+Version: 24.3.2
+Release: alt1
 Summary: A programming language developed by Ericsson
 License: Apache-2.0
 Group: Development/Erlang
@@ -306,6 +306,26 @@ Requires: %name-otp = %EVR
 
 %description jinterface
 %Name's level interface to Java.
+
+
+%package jinterface-debug
+Summary: %Name's level interface to Java - modules with debug information
+Group: Development/Erlang
+BuildArch: noarch
+Requires: %name-jinterface = %EVR
+
+%description jinterface-debug
+%Name's level interface to Java modeles with debug information.
+
+
+%package jinterface-native
+Summary: %Name's level interface to Java - modules with native CPU code
+Group: Development/Erlang
+BuildArch: noarch
+Requires: %name-jinterface = %EVR
+
+%description jinterface-native
+%Name's level interface to Java modules with native CPU code.
 %endif
 
 
@@ -1084,8 +1104,9 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %exclude %_otplibdir/et-*
 %exclude %_otplibdir/observer-*
 %exclude %_otplibdir/odbc-*
-%exclude %_otplibdir/reltool-*/ebin.debug
-%exclude %_otplibdir/wx-*/ebin.debug
+%exclude %_otplibdir/reltool-*
+%exclude %_otplibdir/wx-*
+%exclude %_otplibdir/jinterface-*
 %_otpdir/bin/*.debug
 %dir %_otplibdir/observer-*/ebin.debug
 %_bindir/*.debug
@@ -1121,6 +1142,7 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %exclude %_otplibdir/reltool-*
 %exclude %_otplibdir/wx-*
 %exclude %_otplibdir/odbc-*
+%exclude %_otplibdir/jinterface-*
 %_otpdir/bin/*.native
 %dir %_otplibdir/observer-*/ebin.native
 %_bindir/*.native
@@ -1151,6 +1173,13 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %dir %_otplibdir/jinterface-*
 %_otplibdir/jinterface-*/ebin
 %_otplibdir/jinterface-*/priv
+
+%files jinterface-native
+%_otplibdir/jinterface-*/ebin.native
+
+%files jinterface-debug
+%_otplibdir/jinterface-*/ebin.debug
+
 %endif
 
 
@@ -1191,6 +1220,9 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Mon Mar 21 2022 Egor Ignatov <egori@altlinux.org> 1:24.3.2-alt1
+- new version 34.3.2
+
 * Sat Nov 20 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:24.1.3-alt2
 - E2K: removed unsupported -MG option
 - E2K: disabled use of Labels as Values
