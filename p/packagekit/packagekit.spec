@@ -5,7 +5,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.2.5
-Release:   alt4
+Release:   alt5
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -188,7 +188,7 @@ if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
 		"$SYSTEMCTL" -q preset %name
 	else
 		# only request stop of service, don't restart it
-		"$SYSTEMCTL" stop --quiet %name ||:
+		"$SYSTEMCTL" is-active --quiet %name && %_bindir/pkcon quit 2>/dev/null ||:
 	fi
 fi
 
@@ -198,7 +198,8 @@ SYSTEMCTL=systemctl
 [ "$RPM_INSTALL_ARG1" -eq 0 ] 2>/dev/null || exit 0
 
 if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
-        "$SYSTEMCTL" --no-reload -q --now disable "$1.service" ||:
+	"$SYSTEMCTL" --no-reload -q disable "$1.service"
+	%_bindir/pkcon quit 2>/dev/null ||:
 fi
 
 %triggerin -- librpm7
@@ -207,7 +208,7 @@ if [ $2 -eq 2 ] ; then
 	# if librpm7 is updated, prohibit packagekit to start and ask it to quit
 	touch %_localstatedir/PackageKit/upgrade_lock
 	SYSTEMCTL=systemctl
-	sd_booted && "$SYSTEMCTL" stop --quiet %name ||:
+	sd_booted && $SYSTEMCTL is-active --quiet %name && %_bindir/pkcon quit 2>/dev/null ||:
 fi
 :
 
@@ -290,6 +291,9 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Tue Mar 22 2022 Oleg Solovyov <mcpain@altlinux.org> 1.2.5-alt5
+- Restart via 'pkcon quit'
+
 * Fri Mar 18 2022 Oleg Solovyov <mcpain@altlinux.org> 1.2.5-alt4
 - Fix gnome-software "No packages to remove" error (Closes: #42094)
 
