@@ -25,7 +25,7 @@
 %def_enable impcap
 
 Name: rsyslog
-Version: 8.2110.0
+Version: 8.2202.0
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -479,7 +479,7 @@ install -m640 *_*.conf %buildroot%_sysconfdir/rsyslog.d/
 install -m640 syslog.conf %buildroot%_sysconfdir/syslog.conf
 install -m644 platform/redhat/centos/rsyslog.service %buildroot%_unitdir/rsyslog.service
 install -m755 rsyslog-systemd.prestart %buildroot%_unitdir/../altlinux-rsyslog-extrasockets
-touch %buildroot%_sysconfdir/rsyslog.d/00_extrasockets.conf
+touch %buildroot%_sysconfdir/rsyslog.d/20_extrasockets.conf
 
 # add aliase rsyslogd to rsyslog for systemd
 ln -s rsyslog.service %buildroot%_unitdir/rsyslogd.service
@@ -533,7 +533,7 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %files classic
 %config(noreplace) %attr(640,root,adm) %_sysconfdir/rsyslog.d/*_classic.conf
 %config(noreplace) %attr(640,root,adm) %_sysconfdir/syslog.conf
-%config(noreplace) %verify(not md5 size mtime) %attr(640,root,adm)  %ghost %_sysconfdir/rsyslog.d/00_extrasockets.conf
+%config(noreplace) %verify(not md5 size mtime) %attr(640,root,adm)  %ghost %_sysconfdir/rsyslog.d/20_extrasockets.conf
 %_unitdir/../altlinux-rsyslog-extrasockets
 %_unitdir/rsyslog.service.d/classic.conf
 
@@ -679,6 +679,11 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Tue Mar 22 2022 Alexey Shabalin <shaba@altlinux.org> 8.2202.0-alt1
+- new version 8.2202.0
+- renamed 00_classic.conf to 10_classic.conf
+- renamed 00_extrasockets.conf to 20_extrasockets.conf (ALT#37239)
+
 * Fri Oct 29 2021 Alexey Shabalin <shaba@altlinux.org> 8.2110.0-alt1
 - new version 8.2110.0
 
