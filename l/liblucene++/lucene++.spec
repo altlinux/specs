@@ -3,7 +3,7 @@
 
 Name: lib%_name
 Version: 3.0.8
-Release: alt1.1
+Release: alt2
 
 Summary: A high-performance, full-featured text search engine written in C++
 Group: System/Libraries
@@ -64,6 +64,9 @@ search engine written in C++
 %_libdir/cmake/%{name}*
 
 %changelog
+* Tue Mar 22 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.8-alt2
+- updated to rel_3.0.8-28-g4fb8e5f (ALT #42206)
+
 * Mon May 31 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.8-alt1.1
 - adapted to new cmake macros
 
