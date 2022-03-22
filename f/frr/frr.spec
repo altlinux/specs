@@ -1,5 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %filter_from_requires /.etc.default.frr/d
+%filter_from_requires /.etc.sysconfig.frr/d
 
 %define _localstatedir /var
 %define _runtimedir /run
@@ -34,7 +35,7 @@
 %def_disable backtrace
 
 Name: frr
-Version: 8.1
+Version: 8.2.2
 Release: alt1
 Summary: FRRouting Routing daemon
 License: GPL-2.0-or-later AND LGPL-2.1-or-later
@@ -43,7 +44,8 @@ Url: http://www.frrouting.org
 Vcs: https://github.com/FRRouting/frr.git
 Source0: %name-%version.tar
 Source1: %name-tmpfiles.conf
-Patch: %name-%version.patch
+#Patch: %%name-%%version.patch
+Patch0001: 0001-update-init-script.patch
 
 BuildRequires(pre): rpm-macros-systemd
 BuildRequires: gcc-c++
@@ -86,7 +88,8 @@ FRRouting is a fork of Quagga.
 
 %prep
 %setup
-%patch -p1
+#%%patch -p1
+%patch0001 -p1
 
 %build
 %autoreconf
@@ -177,8 +180,8 @@ cat > %buildroot%_sysconfdir/%name/vtysh.conf << __EOF__
 ! vtysh is using PAM authentication allowing root to use it.
 __EOF__
 
-#%check
-#%make_build check PYTHON=%__python3
+#%%check
+#%%make_build check PYTHON=%%__python3
 
 %pre
 groupadd -r -f %frr_group
@@ -230,6 +233,9 @@ fi
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Mon Mar 21 2022 Alexey Shabalin <shaba@altlinux.org> 8.2.2-alt1
+- 8.2.2
+
 * Sat Feb 19 2022 Alexey Shabalin <shaba@altlinux.org> 8.1-alt1
 - Initial build
 
