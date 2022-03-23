@@ -17,7 +17,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 10
+Version: 10.1
 Release: alt1
 Url: https://basealt.ru
 
@@ -52,7 +52,7 @@ Distro-specific packages with design and texts for %distro_name.
 %package bootloader
 Group:   System/Configuration/Boot and Init
 Summary: Graphical boot logo for grub2, lilo and syslinux
-Summary(ru_RU.UTF-8): Тема для экрана выбора вариантов загрузки (lilo и syslinux) 
+Summary(ru_RU.UTF-8): Тема для экрана выбора вариантов загрузки (lilo и syslinux)
 License: GPLv2+
 
 Requires(pre):    coreutils
@@ -70,7 +70,7 @@ Here you find the graphical boot logo for %distro_name.
 Suitable for both lilo and syslinux.
 
 %description bootloader -l ru_RU.UTF-8
-В данном пакете находится тема для экрана выбора вариантов загрузки (lilo и syslinux) 
+В данном пакете находится тема для экрана выбора вариантов загрузки (lilo и syslinux)
 для дистрибутива %distro_name_ru.
 
 %package bootsplash
@@ -175,7 +175,7 @@ Distribution license and release notes
 Summary: Slideshow for %distro_name installer
 Summary(ru_RU.UTF-8): Изображения для организации "слайдшоу" в установщике дистрибутива %distro_name_ru
 License: Distributable
-Group: System/Configuration/Other 
+Group: System/Configuration/Other
 BuildArch: noarch
 %branding_add_conflicts %flavour slideshow
 
@@ -320,6 +320,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Mar 22 2022 Andrew A. Vasilyev <andy@altlinux.org> 10.1-alt1
+- version 10.1
+
 * Sat Nov 20 2021 Alexey Shabalin <shaba@altlinux.org> 10-alt1
 - release up
 
