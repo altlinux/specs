@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.5
+%define ver_major 0.6
 %define api_ver_major 1
 %define api_ver %api_ver_major.0
 %define soname 0
@@ -39,6 +39,7 @@ BuildRequires: gobject-introspection-devel gir(Gtk) = 3.0 gir(Gtk) = 4.0}
 BuildRequires: vala-tools}
 %{?_enable_docs:BuildRequires: gi-docgen}
 %{?_enable_test:BuildRequires: libgtk+3-devel libgjs-devel pkgconfig(gstreamer-audio-1.0)}
+%{?_enable_check:BuildRequires: xvfb-run}
 
 %description
 %name provides GIO-style async APIs for most Flatpak portals.
@@ -198,7 +199,7 @@ of the installed %name.
 %find_lang %name
 
 %check
-%__meson_test
+xvfb-run %__meson_test
 
 %files -f %name.lang
 %_libdir/%name.so.*
@@ -279,6 +280,9 @@ of the installed %name.
 %endif
 
 %changelog
+* Wed Mar 23 2022 Yuri N. Sedunov <aris@altlinux.org> 1:0.6-alt1
+- 0.6
+
 * Wed Dec 22 2021 Yuri N. Sedunov <aris@altlinux.org> 1:0.5-alt1
 - 0.5
 - new gtk{3,4},qt5 subpackages
