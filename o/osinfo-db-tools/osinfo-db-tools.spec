@@ -1,6 +1,6 @@
 Name: osinfo-db-tools
-Version: 1.9.0
-Release: alt1.1
+Version: 1.10.0
+Release: alt1
 
 Summary: Tools for managing the osinfo database
 License: GPLv2+
@@ -55,6 +55,9 @@ sed -i '/requires GCC or CLang/d' meson.build
 %_man1dir/*
 
 %changelog
+* Wed Mar 23 2022 Alexey Shabalin <shaba@altlinux.org> 1.10.0-alt1
+- new version 1.10.0
+
 * Fri Aug 13 2021 Michael Shigorin <mike@altlinux.org> 1.9.0-alt1.1
 - E2K: don't be so specific about C compiler please
 
