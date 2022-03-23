@@ -1,5 +1,5 @@
 Name:    installer-feature-online-repo
-Version: 0.18
+Version: 0.19
 Release: alt1
 
 Summary: Make online repositories available
@@ -27,6 +27,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Wed Mar 23 2022 Anton Midyukov <antohami@altlinux.org> 0.19-alt1
+- Change default update source to alt mirror.
+
 * Mon Dec 23 2019 Michael Shigorin <mike@altlinux.org> 0.18-alt1
 - No public repos for e2k for now, unfortunately.
 
