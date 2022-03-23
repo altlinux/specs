@@ -4,7 +4,7 @@
 %define dest_dir %_libdir/OpenBoard
 Name: OpenBoard
 Version: 1.6.1
-Release: alt5
+Release: alt6
 Summary: Interactive whiteboard for schools and universities
 License: GPL-3.0+
 Group: Education
@@ -13,7 +13,11 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 
+Source1: %name.svg
+
 Patch: fix-build-with-poppler-22.patch
+
+Patch1: OpenBoard-1.6.1-update-russian-translations.patch
 
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: desktop-file-utils
@@ -50,6 +54,7 @@ BuildRequires: pkgconfig(poppler-cpp)
 BuildRequires: pkgconfig(sdl)
 
 Requires: onboard
+Requires: /sbin/pidof
 
 %description
 Interactive whiteboard for schools and universities.
@@ -57,6 +62,8 @@ Interactive whiteboard for schools and universities.
 %prep
 %setup
 %patch -p1
+# update russian translations
+%patch1 -p1
 
 # remove unwanted and nonfree libraries
 sed -i -e 's|-lfdk-aac ||' src/podcast/podcast.pri
@@ -84,7 +91,7 @@ sed -i -e '/LIBS += -lquazip5/d' \
 
 %install
 %makeinstall_std
-install -D -m 0644 resources/images/OpenBoard.png %buildroot%_pixmapsdir/OpenBoard.png
+install -D -m 0644 %SOURCE1 %buildroot%_iconsdir/hicolor/scalable/apps/OpenBoard.svg
 
 # missing desktop file, creating one
 mkdir -p %buildroot%_desktopdir/
@@ -127,6 +134,9 @@ cat > %buildroot%dest_dir/run.sh <<EOF
 
 env QT_PLUGIN_PATH=\$QT_PLUGIN_PATH:%dest_dir/%name/plugins LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:%dest_dir/plugins/cffadaptor %dest_dir/%name "\$@"
 EOF
+
+sed -i -e '/env QT_PLUGIN_PATH=/i if pid="$(/sbin/pidof OpenBoard)"; then\n    echo "OpenBoard is already running, PID ${pid}."\n    exit 0\nfi\n' %buildroot%dest_dir/run.sh
+
 chmod 0755 %buildroot%dest_dir/run.sh
 mkdir -p %buildroot/%_bindir/
 ln -s -T %dest_dir/run.sh %buildroot/%_bindir/%name
@@ -149,11 +159,16 @@ cp -R resources/customizations %buildroot%dest_dir/
 %files
 %doc COPYRIGHT LICENSE
 %_desktopdir/%name.desktop
-%_pixmapsdir/%name.png
+%_iconsdir/hicolor/scalable/apps/%name.svg
 %_libdir/OpenBoard
 %_bindir/%name
 
 %changelog
+* Wed Mar 23 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.1-alt6
+- Update russian translation for 1.6.1
+- Multiple app instances run ability disabling
+- Replacing the icon from png to svg
+
 * Fri Mar 18 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.1-alt5
 - adapted for build with libpoppler-devel-21.11.0 and libpoppler-devel-22.03.0
 
