@@ -1,6 +1,6 @@
 Name: osc
 Version: 0.174.0
-Release: alt1
+Release: alt2
 
 Summary: Open Build Service Commander
 
@@ -17,7 +17,6 @@ BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python3-module-m2crypto
 BuildRequires: python3-module-rpm
-BuildRequires: python3-module-urlgrabber
 
 %description
 Commandline client for the Open Build Service.
@@ -52,6 +51,9 @@ install -Dpm0644 dist/complete.sh %buildroot/etc/bash_completion.d/osc.sh
 %doc AUTHORS README TODO NEWS
 
 %changelog
+* Wed Mar 23 2022 Stanislav Levin <slev@altlinux.org> 0.174.0-alt2
+- Dropped redundant dependency on removed `urlgrabber`.
+
 * Wed Aug 04 2021 Vitaly Lipatov <lav@altlinux.ru> 0.174.0-alt1
 - new version (0.174.0) with rpmgs script
 - switch to python3
