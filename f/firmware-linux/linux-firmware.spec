@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220309
+Version: 20220315
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,12 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Mar 23 2022 Cronbuild Service <cronbuild@altlinux.org> 20220315-alt1
+- upstream changes (GIT 681281e):
+  + amdgpu: update PSP 13.0.8 firmware (thx Alex Deucher)
+  + amdgpu: update GC 10.3.7 firmware (thx Alex Deucher)
+  + rtl_bt: Add firmware and config files for RTL8852B (thx Max Chou)
+
 * Tue Mar 15 2022 Cronbuild Service <cronbuild@altlinux.org> 20220309-alt1
 - upstream changes (GIT cd01f85):
   + iwlwifi: add new FWs from core68-60 release (thx Luca Coelho)
