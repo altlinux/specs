@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.8.0
+Version: 1.9.3
 Release: alt1
 Summary: Mock out responses from the requests package
 License: Apache-2.0
@@ -19,6 +19,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(pbr)
 
 %if_with check
+BuildRequires: python3(stestr)
 BuildRequires: python3(tox)
 BuildRequires: python3(tox_console_scripts)
 BuildRequires: python3(tox_no_deps)
@@ -26,7 +27,7 @@ BuildRequires: python3(pytest)
 BuildRequires: python3(requests)
 BuildRequires: python3(purl)
 BuildRequires: python3(urllib3)
-BuildRequires: python3(testrepository)
+BuildRequires: python3(testtools)
 %endif
 
 %py3_provides %oname
@@ -60,13 +61,17 @@ export PBR_VERSION=%version
 export PIP_NO_INDEX=YES
 export TOXENV=py3
 export TOX_TESTENV_PASSENV='PBR_VERSION'
-tox.py3 --sitepackages --console-scripts --no-deps -vvr
+tox.py3 --sitepackages --console-scripts --no-deps -vvr --develop
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/requests_mock/
+%python3_sitelibdir/requests_mock-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Mar 22 2022 Stanislav Levin <slev@altlinux.org> 1.9.3-alt1
+- 1.8.0 -> 1.9.3.
+
 * Thu Apr 15 2021 Stanislav Levin <slev@altlinux.org> 1.8.0-alt1
 - 1.3.0 -> 1.8.0.
 
