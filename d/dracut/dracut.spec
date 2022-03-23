@@ -11,8 +11,8 @@
 %filter_from_requires /^\/usr\/share\/pkgconfig/d
 
 Name: dracut
-Version: 055
-Release: alt3
+Version: 056
+Release: alt1
 
 Summary: Initramfs generator using udev
 Group: System/Base
@@ -313,6 +313,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/01systemd-hostnamed
 %dracutlibdir/modules.d/01systemd-ldconfig
 %dracutlibdir/modules.d/01systemd-initrd
+%dracutlibdir/modules.d/01systemd-integritysetup
 %dracutlibdir/modules.d/01systemd-journald
 %dracutlibdir/modules.d/01systemd-modules-load
 %dracutlibdir/modules.d/01systemd-repart
@@ -357,6 +358,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/90qemu
 %dracutlibdir/modules.d/91crypt-gpg
 %dracutlibdir/modules.d/91crypt-loop
+%dracutlibdir/modules.d/91fido2
+%dracutlibdir/modules.d/91pcsc
+%dracutlibdir/modules.d/91pkcs11
 %dracutlibdir/modules.d/91tpm2-tss
 %dracutlibdir/modules.d/95debug
 %dracutlibdir/modules.d/95fstab-sys
@@ -397,6 +401,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dir %_sharedstatedir/initramfs
 %_unitdir/dracut-shutdown.service
 %_unitdir/sysinit.target.wants/dracut-shutdown.service
+%_unitdir/dracut-shutdown-onfailure.service
 %_unitdir/dracut-cmdline.service
 %_unitdir/dracut-initqueue.service
 %_unitdir/dracut-mount.service
@@ -477,6 +482,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 #%dracutlibdir/modules.d/98integrity
 
 %changelog
+* Wed Mar 23 2022 Alexey Shabalin <shaba@altlinux.org> 056-alt1
+- 056
+
 * Wed Aug 11 2021 Andrey Sokolov <keremet@altlinux.org> 055-alt3
 - Move network-manager module to separate package (closes 40705)
 
