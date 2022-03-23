@@ -3,7 +3,7 @@
 
 Name: picom
 Version: 9.1
-Release: alt1
+Release: alt2
 Summary: A lightweight compositor for X11
 License: MPL-2.0 or MIT
 Group: System/X11
@@ -43,7 +43,7 @@ You can leave your feedbacks or thoughts in the discussion tab.
 %prep
 %setup
 %ifarch %e2k
-sed -i "s/const auto/auto/" src/render.c src/backend/xrender/xrender.c
+sed -i "s/const auto/auto/" src/{render,win,picom}.c src/backend/xrender/xrender.c
 sed -i "s/__attribute__((optimize(".*")))//" src/utils.h
 sed -i "/#warning Use of -ffast-math/s/#warning/#error/" src/utils.h
 %endif
@@ -64,6 +64,9 @@ sed -i "/#warning Use of -ffast-math/s/#warning/#error/" src/utils.h
 %_iconsdir/hicolor/*/*/*
 
 %changelog
+* Wed Mar 23 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 9.1-alt2
+- fixed build for Elbrus
+
 * Sun Mar 06 2022 Anton Midyukov <antohami@altlinux.org> 9.1-alt1
 - new version 9.1
 
