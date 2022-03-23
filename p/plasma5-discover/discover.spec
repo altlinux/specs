@@ -15,8 +15,8 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma5-%rname
-Version: 5.23.5
-Release: alt5
+Version: 5.24.3
+Release: alt0.1
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -219,9 +219,8 @@ done
 %_K5notif/*.notifyrc
 %_datadir/metainfo/org.kde.discover.appdata.xml
 #
-%_K5plug/kcms/kcm_updates.so
+%_K5plug/plasma/kcms/systemsettings/kcm_updates.so
 %_K5data/kpackage/kcms/kcm_updates/
-%_K5srv/kcm_updates.desktop
 
 %files kns
 %_K5plug/discover/kns-backend.so
@@ -270,6 +269,9 @@ done
 
 
 %changelog
+* Wed Mar 23 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.3-alt0.1
+- new version
+
 * Fri Mar 04 2022 Slava Aseev <ptrnine@altlinux.org> 5.23.5-alt5
 - keep focus on the search field
 
