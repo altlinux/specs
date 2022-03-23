@@ -3,7 +3,7 @@
 
 Name: plasma5-%rname
 Version: 5.23.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace
 
@@ -17,6 +17,8 @@ Requires: ssh-provider-openssh-askpass-common
 Provides: openssh-askpass-kf5 = %version-%release
 
 Source: %rname-%version.tar
+Source1: ksshaskpass-autostart
+Source2: ksshaskpass.desktop
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
 # optimized out: alternatives cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base xml-common xml-utils
@@ -72,6 +74,10 @@ KF5 library
 mkdir -p %buildroot/%openssh_askpass_dir/
 mv %buildroot/%_K5bin/%rname \
     %buildroot/%openssh_askpass_dir/%name
+mkdir -p %buildroot/%_K5bin/
+install -m 0755 %SOURCE1 %buildroot/%_K5bin/
+mkdir -p %buildroot/%_K5start/
+install -m 0644 %SOURCE2 %buildroot/%_K5start/
 
 # setup alternative
 mkdir -p %buildroot%_altdir
@@ -85,9 +91,14 @@ EOF
 %doc LICENSES/*
 %_altdir/%name
 %openssh_askpass_dir/%name
+%_K5bin/ksshaskpass-autostart
+%_K5start/ksshaskpass.desktop
 #%_K5xdgapp/org.kde.ksshaskpass.desktop
 
 %changelog
+* Wed Mar 23 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.23.5-alt2
+- add autostart entry
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.23.5-alt1
 - new version
 
