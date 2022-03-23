@@ -12,7 +12,7 @@
 
 Name:    docker-engine
 Version: 20.10.13
-Release: alt1
+Release: alt2
 Summary: The open-source application container engine
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -53,6 +53,14 @@ containerizing your applications. Docker Engine acts as a client-server applicat
 * A server with a long-running daemon process dockerd.
 * APIs which specify interfaces that programs can use to talk to and instruct the Docker daemon.
 * A command line interface (CLI) client docker
+
+%package rootless
+Summary: Use docker rootless
+Group: System/Configuration/Other
+Requires: rootlesskit %name slirp4netns
+
+%description rootless
+%summary
 
 %prep
 %setup
@@ -96,6 +104,10 @@ install -p -m 644 altlinux/docker-storage.sysconf %buildroot%_sysconfdir/sysconf
 install -d %buildroot%_sysconfdir/docker
 install -p -m 644 altlinux/daemon.json %buildroot%_sysconfdir/docker/daemon.json
 
+# install rootless scripts
+install -p -D -m 755 contrib/dockerd-rootless-setuptool.sh %{buildroot}%{_bindir}/dockerd-rootless-setuptool.sh
+install -p -D -m 755 contrib/dockerd-rootless.sh %{buildroot}%{_bindir}/dockerd-rootless.sh
+
 %pre
 getent group docker > /dev/null || %{_sbindir}/groupadd -r docker
 exit 0
@@ -105,6 +117,10 @@ exit 0
 
 %preun
 %preun_service docker
+
+%files rootless
+%_bindir/dockerd-rootless-setuptool.sh
+%_bindir/dockerd-rootless.sh
 
 %files
 %doc AUTHORS LICENSE
@@ -121,6 +137,9 @@ exit 0
 %{_sysconfdir}/udev/rules.d/80-docker.rules
 
 %changelog
+* Wed Mar 23 2022 Mikhail Gordeev <obirvalger@altlinux.org> 20.10.13-alt2
+- add rootless subpackage
+
 * Fri Mar 11 2022 Vladimir Didenko <cow@altlinux.org> 20.10.13-alt1
 - 20.10.13
 
