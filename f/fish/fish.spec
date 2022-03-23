@@ -2,7 +2,7 @@
 
 Name: fish
 Version: 3.4.0
-Release: alt1
+Release: alt2
 
 Summary: A friendly interactive shell
 License: GPLv2+
@@ -79,6 +79,9 @@ fi
 %_pixmapsdir/fish.png
 
 %changelog
+* Thu Mar 24 2022 Alexey Shabalin <shaba@altlinux.org> 3.4.0-alt2
+- cherry-pick commits from Integration_3.4.1 branch
+
 * Mon Mar 21 2022 Alexey Shabalin <shaba@altlinux.org> 3.4.0-alt1
 - 3.4.0 (Fixes: CVE-2022-20001)
 
