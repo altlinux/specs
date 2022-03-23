@@ -4,7 +4,7 @@
 
 Name: desktop-file-utils
 Version: 0.26
-Release: alt2
+Release: alt3
 
 Summary: Utilities for manipulating .desktop files
 Group: Graphical desktop/Other
@@ -117,6 +117,9 @@ touch %buildroot/%_desktopdir/mimeinfo.cache
 %endif
 
 %changelog
+* Wed Mar 23 2022 Sergey V Turchin <zerg@altlinux.org> 0.26-alt3
+- add support SingleMainWindow key from 1.5
+
 * Tue Dec 07 2021 Igor Vlasenko <viy@altlinux.org> 0.26-alt2
 - added support for DesktopNames in xsessions and wayland-sessions
 
