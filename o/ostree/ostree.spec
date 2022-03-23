@@ -4,7 +4,7 @@
 %def_with tests
 
 Name: ostree
-Version: 2022.1
+Version: 2022.2
 Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
@@ -194,6 +194,9 @@ NOCONFIGURE=1 sh -x ./autogen.sh
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Wed Mar 23 2022 Alexey Shabalin <shaba@altlinux.org> 2022.2-alt1
+- 2022.2
+
 * Tue Jan 11 2022 Alexey Shabalin <shaba@altlinux.org> 2022.1-alt1
 - 2022.1
 - define /usr/libexec as %%_libexecdir
