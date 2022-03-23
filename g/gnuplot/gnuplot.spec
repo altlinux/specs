@@ -3,7 +3,7 @@
 
 Name: gnuplot
 Version: 5.4.3
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A program for plotting mathematical expressions and data
@@ -35,7 +35,9 @@ Patch6: gnuplot-5.4.0-fix-help.patch
 
 BuildRequires(pre): rpm-build-tex
 BuildPreReq: desktop-file-utils
+BuildRequires: fonts-ttf-liberation
 BuildRequires: gcc-c++ ghostscript-module-X groff-base libXt-devel libncurses-devel libreadline-devel xorg-cf-files zlib-devel libgd3-devel libpng-devel libjpeg-devel libgif-devel
+BuildRequires: libcerf-devel
 BuildRequires: texinfo latex2html
 BuildRequires: dblatex
 %{?_with_emacs:BuildRequires: emacs-common}
@@ -156,7 +158,7 @@ plotting tool
 export CXXFLAGS+=-std=c++11
 %endif
 
-%define configure_opts --with-readline=gnu --with-png --with-pdf --enable-history-file --without-linux-vga --without-row-help --enable-thin-splines --with-texdir=%_texmfmain/%name --with-lua --with-gihdir=%name/%ver_major
+%define configure_opts --with-readline=gnu --enable-history-file --without-row-help --with-texdir=%_texmfmain/%name --with-lua --with-gihdir=%name/%ver_major
 
 sh prepare
 %autoreconf
@@ -180,12 +182,12 @@ cd -
 mkdir qt
 cd qt
 ln -s ../configure .
-%configure %configure_opts --disable-wxwidgets --enable-qt
+%configure %configure_opts --disable-wxwidgets
 %make_build
 cd -
 
 # Docs don't build properly out of tree
-%configure  %configure_opts --with-tutorial
+%configure  %configure_opts
 ln -s ../wx/src/gnuplot src/
 export PERL5LIB=$(pwd)/docs:$(pwd)/docs/htmldocs
 ln -s ../VERSION docs/VERSION
@@ -271,6 +273,10 @@ rm -f demo/html/Makefile*
 %doc demo
 
 %changelog
+* Wed Mar 23 2022 Grigory Ustinov <grenka@altlinux.org> 1:5.4.3-alt2
+- Fixed FTBFS (thx to aris@).
+- Little cleanup spec.
+
 * Wed Jan 12 2022 Grigory Ustinov <grenka@altlinux.org> 1:5.4.3-alt1
 - Automatically updated to 5.4.3.
 
