@@ -3,8 +3,8 @@
 %def_disable clang
 
 Name: deepin-file-manager
-Version: 5.2.0.87
-Release: alt4
+Version: 5.5.1
+Release: alt1
 Summary: Deepin File Manager
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -12,16 +12,17 @@ Url: https://github.com/linuxdeepin/dde-file-manager
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Patch: deepin-file-manager_5.2.0.82_qt5.15.patch
-Patch1: deepin-file-manager_5.2.0.82_desktop.patch
-Patch2: deepin-file-manager_5.2.0.82_gcc10.patch
+Patch1: deepin-file-manager-5.5.1-desktop.patch
+Patch2: deepin-file-manager-5.5.1-gcc10.patch
 Patch3: deepin-file-manager-5.2.0.87-alt-qterminal-instead-xterm.patch
-Patch4: deepin-file-manager-alt-hide-lockscreen-checkbox.patch
+Patch4: deepin-file-manager-5.5.1-hide-lockscreen-checkbox.patch
+Patch5: deepin-file-manager-5.5.1-gcc11-fix-segfault.patch
+Patch6: deepin-file-manager-5.5.1-alt-aarch64.patch
 
 ExcludeArch: armh ppc64le
 
 %if_enabled clang
-BuildRequires(pre): clang12.0-devel
+BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
@@ -39,7 +40,6 @@ BuildRequires: dtk5-widget-devel
 BuildRequires: dtk5-gui-devel
 BuildRequires: deepin-qt-dbus-factory-devel
 BuildRequires: libgtk+2-devel
-BuildRequires: gsettings-qt-devel
 BuildRequires: libsecret-devel
 BuildRequires: libpoppler-cpp-devel
 BuildRequires: libpolkit-devel
@@ -95,37 +95,52 @@ Deepin desktop environment - desktop module.
 
 %prep
 %setup -n %repo-%version
-%patch -p2
-%patch1 -p2
+%patch1 -p1
 %if_disabled clang
-%patch2 -p2
+%patch2 -p1
 %endif
 # %%patch3 -p1
 %patch4 -p1
-
-sed -i 's|lrelease|lrelease-qt5|' \
-    dde-desktop/translate_generation.sh \
-    dde-file-manager-lib/generate_translations.sh \
-    dde-file-manager/generate_translations.sh \
-    dde-file-manager-plugins/generate_translations.sh
-sed -i 's|lupdate|lupdate-qt5|' \
-    dde-file-manager-lib/update_translations.sh \
-    dde-file-manager-plugins/update_translations.sh
+%patch5 -p1
+%patch6 -p1
 
 # sed -i 's|"groups":|"groups"\ :|' dde-file-manager-lib/configure/global-setting-template*.js
 
 # fix file permissions
 find -type f -perm 775 -exec chmod 644 {} \;
-sed -i '/deepin-daemon/s|lib|libexec|' dde-zone/mainwindow.h dde-file-manager-lib/shutil/fileutils.cpp
-sed -i 's|lib/gvfs|libexec/gvfs|' %repo-lib/gvfs/networkmanager.cpp
-sed -i 's|/lib/dde-dock/plugins|/lib64/dde-dock/plugins|' dde-dock-plugins/disk-mount/disk-mount.pro
+sed -i 's|/usr/lib/gvfs|/usr/libexec/gvfs|' \
+    src/%repo-lib/gvfs/networkmanager.cpp
+sed -i 's|/lib/dde-dock/plugins|/%_lib/dde-dock/plugins|' \
+    src/dde-dock-plugins/disk-mount/disk-mount.pro
 
-sed -i 's|systembusconf.path = /etc/dbus-1/system.d|systembusconf.path = /usr/share/dbus-1/system.d|' dde-file-manager-daemon/dde-file-manager-daemon.pro
-sed -i 's|/usr/lib/systemd/system|%_unitdir|' dde-file-manager-daemon/dde-file-manager-daemon.pro dde-file-manager-daemon/test-dde-file-manager-daemon.pro
-sed -i 's|/usr/lib32/libc.so.6|/%_lib/libc.so.6|' dde-file-manager-lib/tests/io/ut_dfilestatisticsjob.cpp
-sed -i 's|/usr/lib|%_libdir|' dde-file-manager-lib/3rdParty/wv2/wv2.pri dde-file-manager-lib/3rdParty/charsetdetect/charsetdetect.pri
+sed -i '/systembusconf.path/s|%_sysconfdir/dbus-1/system.d|%_datadir/dbus-1/system.d|' \
+    src/dde-file-manager-daemon/dde-file-manager-daemon.pro \
+    tests/dde-file-manager-daemon/test-dde-file-manager-daemon.pro
+sed -i 's|/usr/lib/systemd/system|%_unitdir|' \
+   tests/dde-file-manager-daemon/test-dde-file-manager-daemon.pro
+sed -i 's|$$PREFIX/lib/systemd/system|%_unitdir|' \
+    src/dde-file-manager-daemon/dde-file-manager-daemon.pro
+sed -i 's|/usr/lib32/libc.so.6|/%_lib/libc.so.6|' \
+   tests/dde-file-manager-lib/io/ut_dfilestatisticsjob.cpp
+sed -i 's|/usr/lib|%_libdir|' \
+    tests/dde-file-manager-lib/views/ut_dfileview.cpp
+#     dde-file-manager-lib/3rdParty/wv2/wv2.pri \
+#     dde-file-manager-lib/3rdParty/charsetdetect/charsetdetect.pri
 
-sed -i 's|/usr/bin/file-manager.sh|/usr/bin/dde-file-manager|' dde-file-manager/mips/dde-file-manager.desktop
+sed -i 's|/usr/bin/file-manager.sh|/usr/bin/dde-file-manager|' \
+    src/dde-file-manager/mips/dde-file-manager.desktop
+
+%if_enabled clang
+# Fix build on aarch64
+sed -i 's/| isEqual(ARCH, aarch64)//' \
+    src/dde-file-manager-lib/dde-file-manager-lib.pro
+%endif
+
+#%%ifarch aarch64
+#sed -i 's|$$system($$PKG_CONFIG --variable libdir deepin-anything-server-lib)|%%_libdir|' \
+#    deepin-anything-server-plugins/dde-anythingmonitor/dde-anythingmonitor.pro \
+#    deepin-anything-server-plugins/test-deepin-anything-server-plugins.pro
+#%%endif
 
 %build
 %if_enabled clang
@@ -134,7 +149,10 @@ export CXX="clang++"
 export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
+%define optflags_lto %nil
 %endif
+
+export PATH=%_qt5_bindir:$PATH
 %qmake_qt5 \
            CONFIG+=nostrip \
 %ifarch aarch64
@@ -169,6 +187,8 @@ export READELF="llvm-readelf"
 %_bindir/%repo-daemon
 %_bindir/%repo-pkexec
 %_bindir/dde-property-dialog
+%_bindir/dde-select-dialog-x11
+%_bindir/dde-select-dialog-wayland
 %_libdir/lib%repo.so.*
 %dir %_libdir/%repo/
 %dir %_libdir/%repo/tools/
@@ -186,28 +206,31 @@ export READELF="llvm-readelf"
 %_datadir/dbus-1/system-services/com.deepin.filemanager.daemon.service
 %_datadir/dbus-1/system.d/com.deepin.filemanager.daemon.conf
 %_unitdir/dde-filemanager-daemon.service
+%_datadir/dbus-1/services/com.deepin.filemanager.filedialog_x11.service
+%_datadir/dbus-1/services/com.deepin.filemanager.filedialog_wayland.service
 %dir %_datadir/deepin/
 %_datadir/deepin/%repo/
 %_datadir/polkit-1/actions/com.deepin.filemanager.daemon.policy
 %_datadir/polkit-1/actions/com.deepin.pkexec.dde-file-manager.policy
+%_datadir/applications/context-menus/.readme
 %ifnarch aarch64
 %dir %_libdir/deepin-anything-server-lib/
 %dir %_libdir/deepin-anything-server-lib/plugins/
 %dir %_libdir/deepin-anything-server-lib/plugins/handlers/
 %_libdir/deepin-anything-server-lib/plugins/handlers/libdde-anythingmonitor.so
 %endif
-%ifnarch i586
 %dir %_libdir/dde-dock/
 %dir %_libdir/dde-dock/plugins/
 %dir %_libdir/dde-dock/plugins/system-trays/
 %_libdir/dde-dock/plugins/system-trays/libdde-disk-mount-plugin.so
-%endif
 %dir %_libdir/%repo/plugins/
 %dir %_libdir/%repo/plugins/previews/
 %_libdir/%repo/plugins/previews/*.so
-# Bad elfs detected.
-%exclude %_libdir/%repo/plugins/previews/libdde-video-preview-plugin.so
-# %%exclude %%_libdir/%%repo/plugins/previews/libdde-music-preview-plugin.so
+%dir %_datadir/deepin-manual/
+%dir %_datadir/deepin-manual/manual-assets/
+%dir %_datadir/deepin-manual/manual-assets/application/
+%dir %_datadir/deepin-manual/manual-assets/application/%repo/
+%_datadir/deepin-manual/manual-assets/application/%repo/file-manager/
 
 %files devel
 %_includedir/%repo/
@@ -227,6 +250,12 @@ export READELF="llvm-readelf"
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Tue Mar 22 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.1-alt1
+- New version (5.5.1).
+
+* Thu Sep 09 2021 Leontiy Volodin <lvol@altlinux.org> 5.2.0.87-alt5
+- Fixed dde-disk-mount-plugin for i586.
+
 * Fri Jun 25 2021 Leontiy Volodin <lvol@altlinux.org> 5.2.0.87-alt4
 - Hidden lockscreen checkbox more correctly.
 

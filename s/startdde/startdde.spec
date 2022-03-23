@@ -1,8 +1,9 @@
 %def_disable clang
 
 Name: startdde
-Version: 5.8.55
-Release: alt1
+Version: 5.8.31
+Release: alt1.gita7a2b88
+Epoch: 1
 Summary: Starter of deepin desktop environment
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -31,12 +32,6 @@ sed -i 's|/etc/X11/Xresources|/etc/X11|' \
     etc_x11_session_d.go
 sed -i 's|/usr/sbin/|/usr/bin/|' \
     misc/lightdm.conf
-sed -i 's|pkg.deepin.io/dde/api|github.com/linuxdeepin/dde-api|' \
-    $(find ./ -type f -name '*.go')
-sed -i 's|pkg.deepin.io/gir/|github.com/linuxdeepin/go-gir/|' \
-    $(find ./ -type f -name '*.go')
-sed -i 's|pkg.deepin.io/lib/|github.com/linuxdeepin/go-lib/|' \
-    $(find ./ -type f -name '*.go')
 
 %build
 %if_enabled clang
@@ -62,6 +57,7 @@ rm -rf %buildroot%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 %_libexecdir/deepin-daemon/greeter-display-daemon
 %_sysconfdir/X11/xinit/xinitrc.d/00deepin-dde-env
 %_sysconfdir/X11/xinit/xinitrc.d/01deepin-profile
+%_sysconfdir/X11/xinit/xinitrc.d/94qt_env
 %dir %_sysconfdir/profile.d/
 %_sysconfdir/profile.d/deepin-xdg-dir.sh
 %_datadir/%name/
@@ -71,6 +67,10 @@ rm -rf %buildroot%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 %_datadir/glib-2.0/schemas/com.deepin.dde.startdde.gschema.xml
 
 %changelog
+* Thu Feb 17 2022 Leontiy Volodin <lvol@altlinux.org> 1:5.8.31-alt1.gita7a2b88
+- Checkout to master branch.
+- Updated from commit a7a2b887399d78bc03345ccbaf3f49887d81f604.
+
 * Fri Feb 04 2022 Leontiy Volodin <lvol@altlinux.org> 5.8.55-alt1
 - New version (5.8.55).
 - Built with internal golang submodules.
