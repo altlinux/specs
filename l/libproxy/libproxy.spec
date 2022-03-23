@@ -12,7 +12,7 @@
 
 Name: libproxy
 Version: 0.4.17
-Release: alt1.1
+Release: alt2
 Summary: A library handling all the details of proxy configuration
 
 Group: System/Libraries
@@ -22,8 +22,8 @@ Vcs: https://github.com/libproxy/libproxy.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake ctest gcc-c++ zlib-devel
-
 BuildRequires: pkgconfig(libpcre)
 %{?_with_python2:BuildRequires: python-devel}
 %{?_with_python3:BuildRequires: python3-devel}
@@ -264,6 +264,10 @@ mkdir -p %buildroot%modilesdir
 %_datadir/cmake/Modules/Findlibproxy.cmake
 
 %changelog
+* Wed Mar 23 2022 Alexey Shabalin <shaba@altlinux.org> 0.4.17-alt2
+- Support Python 3.10 and above
+- Use kf5-config instead of qtpaths
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.4.17-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
