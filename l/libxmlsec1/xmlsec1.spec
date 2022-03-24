@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: libxmlsec1
-Version: 1.2.31
+Version: 1.2.33
 Release: alt1
 License: MIT
 Summary: Library providing support for "XML Signature" and "XML Encryption" standards
@@ -175,6 +175,9 @@ true || LD_LIBRARY_PATH=%buildroot%_libdir make check
 %_libdir/pkgconfig/xmlsec1-nss.pc
 
 %changelog
+* Thu Mar 24 2022 Alexey Shabalin <shaba@altlinux.org> 1.2.33-alt1
+- new version 1.2.33
+
 * Fri Feb 12 2021 Alexey Shabalin <shaba@altlinux.org> 1.2.31-alt1
 - new version 1.2.31
 
