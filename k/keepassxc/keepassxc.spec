@@ -1,6 +1,6 @@
 Name: keepassxc
-Version:  2.6.6
-Release:  alt4
+Version:  2.7.0
+Release:  alt1
 
 Summary: KeePassXC Password Safe - light-weight cross-platform password manager
 License: GPLv2+
@@ -21,13 +21,14 @@ Source1: keepassx_ru.ts
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake ctest gcc-c++
-BuildRequires: qt5-base-devel >= 5.2.0 qt5-tools-devel >= 5.2.0 qt5-svg-devel
-BuildRequires: libgcrypt-devel >= 1.7.0
+BuildRequires: qt5-base-devel >= 5.9.5 qt5-tools-devel >= 5.9.5 qt5-svg-devel
+BuildRequires: libbotan-devel >= 2.12
 BuildRequires: libargon2-devel
 BuildRequires: libsodium-devel >= 1.0.12
 BuildRequires: zlib-devel >= 1.2.0
 BuildRequires: libqrencode4-devel
-BuildRequires: quazip-qt5-devel
+BuildRequires: libreadline-devel
+BuildRequires: libminizip-devel
 # Optional for Auto-Type on X11/Linux:
 BuildRequires: libXi-devel, libXtst-devel, qt5-x11extras-devel
 # Optional for YubiKey support
@@ -58,14 +59,12 @@ cp -v %SOURCE1 share/translations/keepassx_ru.ts
 %define optflags_lto %{nil}
 
 %cmake \
-  -DWITH_TESTS=OFF \
-  -DWITH_CXX11=ON \
+  -DWITH_TESTS=ON \
   -DWITH_XC_BROWSER=ON \
   -DWITH_XC_NETWORKING=ON \
   -DWITH_XC_AUTOTYPE=ON \
   -DWITH_XC_SSHAGENT=ON \
   -DWITH_XC_KEESHARE=ON \
-  -DWITH_XC_KEESHARE_SECURE=ON \
   -DWITH_XC_UPDATECHECK=OFF \
   -DWITH_XC_FDOSECRETS=ON \
 %if_enabled docs
@@ -78,6 +77,10 @@ cp -v %SOURCE1 share/translations/keepassx_ru.ts
 %endif
 
 %cmake_build
+
+%check
+pushd %_target_platform
+make -j%__nprocs test ARGS+="-E test\(cli\|gui\) --output-on-failure"
 
 %install
 %cmake_install
@@ -95,6 +98,14 @@ cp -v %SOURCE1 share/translations/keepassx_ru.ts
 %endif
 
 %changelog
+* Thu Mar 24 2022 Pavel Nakonechnyi <zorg@altlinux.org> 2.7.0-alt1
+- updated to v2.7.0
+- updated Russian translation from https://www.transifex.com/keepassxc/keepassxc/language/ru/
+- added libbotan-devel build dependency, quazip-qt5-devel removed
+- added libreadline-devel and libminizip-devel build dependencies
+- tests were enabled
+- minor cleanup of cmake build flags
+
 * Thu Nov 11 2021 Sergey V Turchin <zerg@altlinux.org> 2.6.6-alt4
 - update build requires
 
