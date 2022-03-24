@@ -3,7 +3,7 @@
 
 Name: lxqt-build-tools
 Version: 0.10.0
-Release: alt1
+Release: alt2
 
 Summary: Various packaging tools and scripts for LXQt applications
 License: BSD 3-clause
@@ -11,6 +11,9 @@ Group: Graphical desktop/Other
 
 Url: https://lxqt.org
 Source: %name-%version.tar
+
+# https://github.com/lxqt/lxqt-build-tools/pull/74
+Patch: 0001-Replace-gunixconnection.h-file-in-gio-unix-include-d.patch
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: qt5-base-devel qt5-tools-devel glib2-devel
@@ -23,6 +26,8 @@ that used to lurk in liblxqt or got spread over other subprojects.
 
 %prep
 %setup
+%patch -p1
+
 %ifarch %e2k
 # lcc has -fwhole, to be tested though
 sed -i '/-flto/d' cmake/modules/LXQtCompilerSettings.cmake
@@ -41,6 +46,9 @@ sed -i '/-flto/d' cmake/modules/LXQtCompilerSettings.cmake
 %_bindir/*
 
 %changelog
+* Thu Mar 24 2022 Anton Midyukov <antohami@altlinux.org> 0.10.0-alt2
+- fix for glib2 >= 2.71.1
+
 * Fri Nov 05 2021 Anton Midyukov <antohami@altlinux.org> 0.10.0-alt1
 - new version 0.10.0
 
