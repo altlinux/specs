@@ -2,7 +2,7 @@
 
 Name:          gem-facets
 Version:       3.1.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The orginal well curated collection of extension methods for Ruby
 License:       BSD-2-Clause
 Group:         Development/Ruby
@@ -22,6 +22,7 @@ BuildRequires: gem(simplecov) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_ignore_names cgi-exception
 Provides:      gem(facets) = 3.1.0
 
 
@@ -35,7 +36,7 @@ wide variety of applications.
 
 %package       -n gem-facets-doc
 Version:       3.1.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The orginal well curated collection of extension methods for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета facets
 Group:         Development/Documentation
@@ -59,7 +60,7 @@ wide variety of applications.
 
 %package       -n gem-facets-devel
 Version:       3.1.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The orginal well curated collection of extension methods for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета facets
 Group:         Development/Ruby
@@ -113,5 +114,8 @@ wide variety of applications.
 
 
 %changelog
+* Wed Mar 23 2022 Pavel Vasenkov <pav@altlinux.org> 3.1.0-alt1.1
+- + disable provides cgi-exception
+
 * Wed Oct 06 2021 Pavel Skrylev <majioa@altlinux.org> 3.1.0-alt1
 - + packaged gem with Ruby Policy 2.0
