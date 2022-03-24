@@ -1,13 +1,13 @@
 %define soname 0
 
 Name: igraph
-Version: 0.9.6
+Version: 0.9.7
 Release: alt1
 Summary: Library for creating and manipulating graphs
 
 License: GPL-2.0+
 Group: System/Libraries
-Url: http://igraph.sourceforge.net/
+Url: https://igraph.org/
 
 Source: https://github.com/igraph/igraph/releases/download/%version/igraph-%version.tar.gz
 
@@ -15,7 +15,6 @@ BuildRequires: gcc-c++
 BuildRequires: cmake rpm-build-ninja
 BuildRequires: libxml2-devel
 BuildRequires: libgmp-devel
-BuildRequires: libopenblas-devel
 BuildRequires: libarpack-ng-devel
 BuildRequires: libglpk-devel
 BuildRequires: libsuitesparse-devel
@@ -95,6 +94,10 @@ find . -name '.arch-ids' | xargs rm -rf
 %exclude %_man3dir/igraph.3*
 
 %changelog
+* Thu Mar 24 2022 Leontiy Volodin <lvol@altlinux.org> 0.9.7-alt1
+- New version (0.9.7).
+- Updated url.
+
 * Mon Jan 17 2022 Leontiy Volodin <lvol@altlinux.org> 0.9.6-alt1
 - New version (0.9.6).
 
