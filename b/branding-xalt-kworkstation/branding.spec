@@ -19,7 +19,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -476,6 +476,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Mar 24 2022 Sergey V Turchin <zerg at altlinux dot org> 10.0.0-alt4
+- change facebook link to yandex.zen for indexhtml
+
 * Wed Feb 16 2022 Sergey V Turchin <zerg at altlinux dot org> 10.0.0-alt3
 - remove version from indexhtml.desktop
 
