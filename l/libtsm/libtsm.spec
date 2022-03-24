@@ -1,5 +1,5 @@
 Name: libtsm
-Version: 4.0.1
+Version: 4.0.2
 Release: alt1
 Summary: Terminal-emulator State Machine
 Group: System/Libraries
@@ -58,6 +58,9 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Mar 24 2022 Alexey Shabalin <shaba@altlinux.org> 4.0.2-alt1
+- new version 4.0.2
+
 * Thu Aug 01 2019 Alexey Shabalin <shaba@altlinux.org> 4.0.1-alt1
 - 4.0.1
 
