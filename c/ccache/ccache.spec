@@ -1,8 +1,7 @@
-%def_with doc
 %define _unpackaged_files_terminate_build 1
 
 Name: ccache
-Version: 3.7.8
+Version: 4.6
 Release: alt1
 
 Summary: Compiler cache
@@ -12,18 +11,14 @@ Group: Development/Tools
 Url: http://ccache.dev/
 # Source-git: https://github.com/ccache/ccache.git
 Source: %name-%version.tar
-#Patch1: ccache-fedora-rounding.patch
-Patch2: ccache-alt-version.patch
+Patch: %name-%version-alt.patch
 
-Provides: ccache3 = %version-%release
-Obsoletes: ccache3
-
-%if_with doc
-BuildRequires: asciidoc-a2x
-%endif
-
-BuildRequires: gperf
-BuildRequires: zlib-devel
+BuildRequires: asciidoctor
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: libhiredis-devel
+BuildRequires: libzstd-devel
+BuildRequires: rpm-build-python3
 
 %description
 ccache is a compiler cache. It acts as a caching pre-processor to
@@ -33,22 +28,20 @@ in a 5 to 10 times speedup in common compilations.
 
 %prep
 %setup
-#patch1 -p1
-%patch2 -p1
-rm -rfv zlib/
-sed -i "s:@VERSION@:%version:g" dev.mk.in
+%patch -p1
 
 %build
-%autoreconf
-%configure %{!?_with_doc:--disable-man}
-%make_build
-
-%if_with doc
-%make_build docs
-%endif
+%cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo
+%cmake_build
 
 %install
-%makeinstall
+%cmakeinstall_std
+mkdir -p -m755 %buildroot%prefix/lib/ccache
+mkdir -p -m755 %buildroot%prefix/lib/rpm
+mkdir -p -m755 %buildroot%_sbindir
+install -p -m 0755 update-ccache-symlinks.py %buildroot%_sbindir/update-ccache-symlinks
+install -p -m 0755 ccache.filetrigger %buildroot%prefix/lib/rpm
+
 
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/ignore.d
 cat > %buildroot%_sysconfdir/buildreqs/packages/ignore.d/%name << EOF
@@ -57,14 +50,26 @@ EOF
 
 %files
 %doc LICENSE.adoc README.md GPL-3.0.txt
-%if_with doc
 %doc doc
 %_man1dir/ccache.1*
-%endif
 %_bindir/ccache
+%_sbindir/update-ccache-symlinks
 %_sysconfdir/buildreqs/packages/ignore.d/*
+# XXX: don't change this to %_lib, please!
+%dir %prefix/lib/ccache
+%prefix/lib/rpm/ccache.filetrigger
 
 %changelog
+* Wed Mar 23 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.6-alt1
+- new version 4.6
+- in particular solves .incbin false positive
+
+* Tue Nov 23 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.5-alt2
+- automatically create/update symlinks in /usr/lib/ccache
+
+* Mon Nov 15 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.5-alt1
+- new version 4.5
+
 * Sun Mar 29 2020 Vitaly Lipatov <lav@altlinux.ru> 3.7.8-alt1
 - new version 3.7.8 (with rpmrb script)
 
