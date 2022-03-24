@@ -3,10 +3,10 @@
 %def_without cmake
 Name: fheroes2
 Epoch: 2
-Version: 0.9.12
+Version: 0.9.13
 #define rev 20210604
 #Release: alt1.%rev
-Release: alt3
+Release: alt1
 Summary: Free implementation of Heroes of the Might and Magic II engine
 License: GPLv2+
 Group: Games/Strategy
@@ -22,7 +22,6 @@ Source4: fheroes2-data.spec
 Source5: README.ALT
 Patch0: fheroes2-0.9.12-random-skills.patch
 Patch1: fheroes2-0.9.11-use-python3.patch
-Patch2: fheroes2-0.9.12-fix-4997.patch
 
 # Automatically added by buildreq on Wed Oct 03 2012
 # optimized out: libSDL-devel libstdc++-devel zlib-devel
@@ -45,7 +44,6 @@ into your /usr/share/games/fheroes2/{maps,data} directories respectively
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 export LANG=en_US.UTF-8
@@ -110,6 +108,9 @@ install -pD -m 644 %SOURCE4 %SOURCE5 %buildroot%_docdir/%name/
 %_gamesdatadir/%name
 
 %changelog
+* Wed Mar 16 2022 Igor Vlasenko <viy@altlinux.org> 2:0.9.13-alt1
+- new version
+
 * Thu Feb 24 2022 Igor Vlasenko <viy@altlinux.org> 2:0.9.12-alt3
 - support for data in lowercase
 - fheroes2-0.9.12-fix-4997.patch
