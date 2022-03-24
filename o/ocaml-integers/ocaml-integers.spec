@@ -1,7 +1,7 @@
 %define  modulename integers
 
 Name:    ocaml-%modulename
-Version: 0.5.1
+Version: 0.7.0
 Release: alt1
 Summary: Various signed and unsigned integer types for OCaml
 License: MIT
@@ -27,6 +27,7 @@ developing applications that use %name.
 %setup -n %modulename-%version
 
 %build
+sed -i 's,stdlib-shims,,' src/dune
 %dune_build -p %modulename
 
 %install
@@ -42,6 +43,9 @@ developing applications that use %name.
 %_libdir/ocaml/%{modulename}*/*.h
 
 %changelog
+* Thu Mar 24 2022 Anton Farygin <rider@altlinux.ru> 0.7.0-alt1
+- 0.5.1 -> 0.7.0
+
 * Mon Aug 16 2021 Anton Farygin <rider@altlinux.ru> 0.5.1-alt1
 - 0.5.1
 
