@@ -1,5 +1,5 @@
 %define rname kaccounts-providers
-%ifarch %e2k ppc64le
+%ifarch %not_qt5_qtwebengine_arches
 %def_disable qtwebengine
 %else
 %def_enable qtwebengine
@@ -7,7 +7,7 @@
 
 Name: kde5-%rname
 Version: 21.12.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -23,7 +23,7 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Wed Dec 23 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ gtk-update-icon-cache libEGL-devel libGL-devel libaccounts-glib libaccounts-qt51 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsignon-qt51 libstdc++-devel libxcbutil-keysyms perl-Encode perl-XML-Parser pkg-config python-base python-module-google python-modules python3 python3-base qt5-base-devel ruby ruby-stdlibs
 #BuildRequires: accounts-qt5-devel extra-cmake-modules intltool kde5-kaccounts-integration-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kpackage-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel qt5-declarative-devel rpm-build-python3 rpm-build-ruby signon-devel
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf5 rpm-macros-qt5-webengine
 BuildRequires: accounts-qt5-devel signon-devel intltool
 BuildRequires: extra-cmake-modules qt5-declarative-devel
 %if_enabled qtwebengine
@@ -67,6 +67,9 @@ Requires: kf5-filesystem
 
 
 %changelog
+* Thu Mar 24 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt2
+- using not_qt5_qtwebengine_arches macro
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 
@@ -163,34 +166,34 @@ Requires: kf5-filesystem
 * Tue Feb 19 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
 - new version
 
-* Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
+* Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1
 - new version
 
-* Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+* Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1
 - new version
 
-* Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+* Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1
 - new version
 
-* Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
+* Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1
 - new version
 
-* Tue Mar 06 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
+* Tue Mar 06 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1
 - new version
 
-* Mon Nov 13 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+* Mon Nov 13 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1
 - new version
 
-* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1
 - new version
 
-* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1
 - new version
 
-* Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+* Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1
 - new version
 
-* Thu Mar 23 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+* Thu Mar 23 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1
 - new version
 
 * Thu Nov 24 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.3-alt0.M80P.1
