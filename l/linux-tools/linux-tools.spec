@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 5.16
+%define kernel_base_version 5.17
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/traceevent/plugins/*
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
@@ -40,11 +40,14 @@ BuildRequires: libmnl-devel
 BuildRequires: libmount-devel
 BuildRequires: libpfm-devel
 BuildRequires: libpopt-devel
+BuildRequires: libprocps-devel
 %ifnarch %arm
 BuildRequires: libnuma-devel
 %endif
 BuildRequires: libslang2-devel
 BuildRequires: libssl-devel
+BuildRequires: libtracefs-devel >= 1.3.0
+BuildRequires: libuuid-devel
 BuildRequires: libzstd-devel
 BuildRequires: perl-devel
 BuildRequires: rsync
@@ -202,6 +205,19 @@ and booting a kernel.
 
 (This is experimental and internal use only testing package!)
 
+%package -n rtla
+Summary: An interface for osnoise/timerlat tracers
+Group: Development/Tools
+AutoReq: noperl,nopython,noshebang,nolib,noshell
+AutoProv: no
+
+%description -n rtla
+The rtla(1) is a meta-tool that includes a set of commands that
+aims to analyze the real-time properties of Linux. But instead of
+testing Linux as a black box, rtla leverages kernel tracing
+capabilities to provide precise information about the properties
+and root causes of unexpected results.
+
 %prep
 %setup -cT
 tar -xf %kernel_src/%kernel_source.tar
@@ -229,6 +245,9 @@ sed -i 's/*+/*/' perf/trace/beauty/fsconfig.sh
 sed -i 's/-s\b/-g/' testing/selftests/size/Makefile
 sed -i 's/-std=gnu99/& -g/' testing/selftests/vDSO/Makefile
 sed -Ei '\!^CFLAGS!s!(-Wl,-rpath=)\./!\1/usr/lib/kselftests/rseq!' testing/selftests/rseq/Makefile
+
+sed -i 's/rst2man/rst2man.py/' ../Documentation/tools/rtla/Makefile
+sed -i '/ln -s/s/-s $(DESTDIR)/-s /' tracing/rtla/Makefile
 
 %define optflags_lto %nil
 
@@ -302,7 +321,7 @@ sed -i /^install:/s/runqslower_install// bpf/Makefile
 # acpi cannot make in parrallel.
 make acpi
 
-%make_build ASFLAGS=-g \
+%make_build ASFLAGS=-g VERSION=%version \
 	bootconfig \
 	cgroup \
 	firmware \
@@ -313,6 +332,7 @@ make acpi
 	objtool \
 	selftests \
 	tmon \
+	tracing \
 	vm \
 
 %install
@@ -429,6 +449,7 @@ make %install_opts freefall_install
 make %install_opts gpio_install
 make %install_opts iio_install
 make %install_opts vm_install
+make %install_opts tracing_install STRIP=true
 install -p -m755 cgroup/cgroup_event_listener	%buildroot%_bindir
 install -p -m755 firmware/ihex2fw		%buildroot%_bindir
 install -p -m755 kvm/kvm_stat/kvm_stat		%buildroot%_bindir
@@ -525,6 +546,8 @@ fi
 %_sbindir/slabinfo
 %_sbindir/page_owner_sort
 %_bindir/bootconfig
+%_sbindir/pfrut
+%_man8dir/pfrut.*
 
 %files -n perf
 %_bindir/perf
@@ -603,7 +626,18 @@ fi
 %files -n kselftests
 %_libexecdir/kselftests
 
+%files -n rtla
+%_bindir/osnoise
+%_bindir/rtla
+%_bindir/timerlat
+%_sbindir/latency-collector
+%_man1dir/rtla*
+
 %changelog
+* Wed Mar 23 2022 Vitaly Chikunov <vt@altlinux.org> 5.17-alt1
+- Updated to v5.17 (2022-03-20).
+- Package RTLA tools.
+
 * Mon Jan 10 2022 Vitaly Chikunov <vt@altlinux.org> 5.16-alt1
 - Updated to v5.16 (2022-01-09).
 - Enable PMU event selection using libpfm4 syntax (--pfm-events).

@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libtracefs
-Version: 1.2.5
+Version: 1.3.1
 Release: alt1
 Summary: Library to access kernel tracefs
 License: LGPL-2.1-only
@@ -32,6 +32,7 @@ Requires: %name = %EVR
 sed -i 's/,-rpath=\$\$ORIGIN//' scripts/utils.mk
 
 %build
+%define optflags_lto %nil
 %add_optflags %(getconf LFS_CFLAGS)
 export CFLAGS="%optflags"
 %make_build prefix=%_prefix libdir=%_libdir V=1
@@ -50,5 +51,8 @@ rm %buildroot%_libdir/libtracefs.a
 %_libdir/pkgconfig/libtracefs.pc
 
 %changelog
+* Wed Mar 23 2022 Vitaly Chikunov <vt@altlinux.org> 1.3.1-alt1
+- Updated to libtracefs-1.3.1 (2022-03-10).
+
 * Sat Jan 22 2022 Vitaly Chikunov <vt@altlinux.org> 1.2.5-alt1
 - Imported libtracefs-1.2.5 (2021-08-03).
