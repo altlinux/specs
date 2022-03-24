@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: tpm2-tss
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 Summary: TPM2.0 Software Stack
 # The entire source code is under BSD except implementation.h and tpmb.h which
@@ -119,6 +119,9 @@ useradd -g tss -c 'TPM2 Software Stack User' \
 %_man7dir/*
 
 %changelog
+* Thu Mar 24 2022 Alexey Shabalin <shaba@altlinux.org> 3.2.0-alt1
+- new version 3.2.0
+
 * Tue Jul 06 2021 Alexey Shabalin <shaba@altlinux.org> 3.1.0-alt1
 - new version 3.1.0
 - Revert "Added dependency from systemd-stateless"
