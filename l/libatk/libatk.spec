@@ -1,5 +1,5 @@
 %define _name atk
-%define ver_major 2.36
+%define ver_major 2.38
 %def_disable static
 %def_enable docs
 %def_enable introspection
@@ -27,10 +27,11 @@ Obsoletes: atk < %version
 %define glib_ver 2.38
 %define gtk_doc_ver 1.0
 
-BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
-BuildRequires: glib2-devel >= %glib_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires: meson glib2-devel >= %glib_ver
 %{?_enable_docs:BuildRequires: gtk-doc >= %gtk_doc_ver}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.6.7}
+%{?_enable_introspection:BuildRequires(pre): rpm-build-gir
+BuildRequires: gobject-introspection-devel >= 0.6.7}
 
 %description
 Accessibility means providing system infrastructure that allows add-on
@@ -56,7 +57,7 @@ the Accessibility Toolkit.
 %package devel
 Summary: Development environment for atk
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Provides: atk-devel = %version
 Obsoletes: atk-devel < %version
 
@@ -79,7 +80,7 @@ This package contains development documentation for ATK.
 %package devel-static
 Summary: Stuff for developing with atk
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 Provides: atk-devel-static = %version
 Obsoletes: atk-devel-static < %version
 
@@ -90,7 +91,7 @@ linked software for atk, the Accessibility Toolkit.
 %package gir
 Summary: GObject introspection data for the Atk library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the Atk library
@@ -99,8 +100,8 @@ GObject introspection data for the Atk library
 Summary: GObject introspection devel data for the Atk library
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-devel = %version-%release
-Requires: %name-gir = %version-%release
+Requires: %name-devel = %EVR
+Requires: %name-gir = %EVR
 
 %description gir-devel
 GObject introspection devel data for the Atk library
@@ -121,8 +122,7 @@ install -p -m644 %_sourcedir/atk-compat.lds atk/compat.lds
 %find_lang --output=%_name.lang %_name %{_name}10
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %_libdir/*.so.*
@@ -154,6 +154,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Mar 24 2022 Yuri N. Sedunov <aris@altlinux.org> 2.38.0-alt1
+- 2.38.0
+
 * Thu Apr 02 2020 Yuri N. Sedunov <aris@altlinux.org> 2.36.0-alt1
 - 2.36.0
 - enabled "docs" and "check"
