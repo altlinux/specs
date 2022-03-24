@@ -3,7 +3,7 @@
 
 Name: virt-manager
 Version: 4.0.0
-Release: alt1
+Release: alt2
 Summary: Virtual Machine Manager
 
 Group: Emulators
@@ -46,6 +46,7 @@ BuildRequires: bash-completion
 %allow_python3_import_path %_datadir/%name
 # libaptindicator is not package in ALT Linux
 %add_typelib_req_skiplist typelib(AppIndicator3)
+%add_typelib_req_skiplist typelib(AyatanaAppIndicator3)
 
 %description
 Virtual Machine Manager provides a graphical tool for administering
@@ -133,6 +134,9 @@ done
 %_man1dir/virt-xml.1*
 
 %changelog
+* Fri Mar 25 2022 Alexey Shabalin <shaba@altlinux.org> 4.0.0-alt2
+- filter requires typelib(AyatanaAppIndicator3)
+
 * Thu Mar 24 2022 Alexey Shabalin <shaba@altlinux.org> 4.0.0-alt1
 - new version 4.0.0
 
