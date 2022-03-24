@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define _name five-or-more
@@ -7,14 +8,18 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: A GNOME version of the color lines program
 Group: Games/Boards
 License: GPLv3+
 Url: https://wiki.gnome.org/Apps/Five-or-more
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+%else
+Source: %_name-%version.tar
+%endif
 
 Provides:  %_name = %version-%release
 Obsoletes: gnome-games-glines
@@ -28,7 +33,7 @@ BuildRequires: vala-tools
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
-BuildRequires: libgnome-games-support-devel
+BuildRequires: pkgconfig(libgnome-games-support-1)
 
 %description
 Glines, is the GNOME port of the once popular Windows game called Color
@@ -57,6 +62,9 @@ possible, and be #1 in the High Scores.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Thu Mar 24 2022 Yuri N. Sedunov <aris@altlinux.org> 3.32.2-alt2
+- updated to 3.32.2-7-g4b26bc1 (fixed build with vala-0.56)
+
 * Sat Mar 28 2020 Yuri N. Sedunov <aris@altlinux.org> 3.32.2-alt1
 - 3.32.2
 
