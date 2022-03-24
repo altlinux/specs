@@ -7,7 +7,7 @@
 %def_without python
 
 Name:     trace-cmd
-Version:  2.9.6
+Version:  3.0.2
 Release:  alt1
 
 Summary:  A front-end for Ftrace Linux kernel internal tracer
@@ -103,6 +103,8 @@ export CFLAGS="%optflags -D_GNU_SOURCE"
 rm -rf %buildroot%_datadir/doc/libtracecmd-doc
 # GUI script not belonging to the module, requiring gobject and gtk.
 rm -f %buildroot%python3_sitelibdir/%name/event-viewer.py
+# There are already man pages.
+rm %buildroot%_datadir/doc/%name/*.html
 
 %check
 # Basic tests
@@ -146,6 +148,9 @@ vm-run --cpu=2 '
 %endif
 
 %changelog
+* Thu Mar 24 2022 Vitaly Chikunov <vt@altlinux.org> 3.0.2-alt1
+- Updated to trace-cmd-v3.0.2 (2022-03-16).
+
 * Sat Jan 22 2022 Vitaly Chikunov <vt@altlinux.org> 2.9.6-alt1
 - Updated to trace-cmd-v2.9.6 (2021-11-10).
 - Use external libtraceevent and libtracefs libraries.
