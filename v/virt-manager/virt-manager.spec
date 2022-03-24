@@ -2,7 +2,7 @@
 %define _libexecdir /usr/libexec
 
 Name: virt-manager
-Version: 3.2.0
+Version: 4.0.0
 Release: alt1
 Summary: Virtual Machine Manager
 
@@ -20,13 +20,13 @@ Patch0001: 0001-fixed-build-with-python3-module-docutils-on-p9-branch.patch
 Requires: virt-manager-common = %EVR
 Requires: libvirt-client
 Requires: virt-install = %EVR
-Requires: python3-module-pygobject3 >= 3.22
+Requires: python3-module-pygobject3 >= 3.31.3
 Requires: python3-module-libxml2
 Requires: vte3
 Requires: dconf
 Requires: libosinfo >= 0.2.10
 Requires: librsvg
-Requires: genisoimage
+Requires: xorriso
 
 # define version of requires based on "from gi.repository import foo"
 Requires: typelib(Gtk) = 3.0
@@ -36,7 +36,7 @@ Requires: typelib(SpiceClientGtk) = 3.0
 Requires: typelib(Vte) = 2.91
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: python3-devel python3-module-argcomplete
+BuildRequires: python3-devel python3-module-setuptools python3-module-argcomplete
 BuildRequires: libgio
 BuildRequires: gettext-tools
 BuildRequires: python3-module-docutils
@@ -133,6 +133,9 @@ done
 %_man1dir/virt-xml.1*
 
 %changelog
+* Thu Mar 24 2022 Alexey Shabalin <shaba@altlinux.org> 4.0.0-alt1
+- new version 4.0.0
+
 * Thu Nov 19 2020 Alexey Shabalin <shaba@altlinux.org> 3.2.0-alt1
 - new version 3.2.0
 
