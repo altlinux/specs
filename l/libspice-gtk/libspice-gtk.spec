@@ -13,7 +13,7 @@
 %def_enable libva
 
 Name: libspice-gtk
-Version: 0.39
+Version: 0.40
 Release: alt1
 Summary: A GTK widget for SPICE clients
 
@@ -235,6 +235,9 @@ echo "%version" > .tarball-version
 %endif
 
 %changelog
+* Thu Mar 24 2022 Alexey Shabalin <shaba@altlinux.org> 0.40-alt1
+- 0.40
+
 * Tue Dec 08 2020 Alexey Shabalin <shaba@altlinux.org> 0.39-alt1
 - 0.39
 - drop support pulseaudio
