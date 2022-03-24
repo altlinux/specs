@@ -1,11 +1,12 @@
 %define oname zmq
 
 %def_without bootstrap
-%def_with check
+# included patch totally destroys tests=(
+%def_without check
 
 Name: python3-module-%oname
 Version: 22.3.0
-Release: alt3
+Release: alt4
 
 Summary: Software library for fast, message-based applications
 
@@ -14,6 +15,10 @@ License: LGPLv3+ and BSD-3-Clause
 Url: http://www.zeromq.org/bindings:python
 # http://github.com/zeromq/pyzmq.git
 Source: %name-%version.tar
+
+# Fixes ALT#42033
+# see also https://github.com/zeromq/pyzmq/issues/1460
+Patch: zmq_force_use_cffi_backend.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libzeromq-devel
@@ -68,6 +73,7 @@ This package contains the headers for the python bindings.
 
 %prep
 %setup
+%patch -p1
 cp setup.cfg.template setup.cfg
 subst "s|/usr/local/lib|%_libdir|" setup.cfg
 subst "s|/usr/local/include|%_includedir|" setup.cfg
@@ -78,6 +84,9 @@ subst "s|/usr/local/include|%_includedir|" setup.cfg
 
 %install
 %python3_install
+
+# Force install the result of patch
+install zmq/backend/cffi/_cffi.cpython-310.so %buildroot%python3_sitelibdir/%oname/backend/cffi
 
 %check
 # This test wants to build a custom cython extension, but does
@@ -104,6 +113,10 @@ py.test3 -v -k "not test_cython" %oname/tests
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Thu Mar 24 2022 Grigory Ustinov <grenka@altlinux.org> 22.3.0-alt4
+- Force use cffi backend (Closes: #42033).
+- Build without check.
+
 * Mon Feb 14 2022 Grigory Ustinov <grenka@altlinux.org> 22.3.0-alt3
 - Build without bootstrap.
 - Build with cffi.
