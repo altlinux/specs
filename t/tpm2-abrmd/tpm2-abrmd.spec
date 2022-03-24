@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: tpm2-abrmd
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 Summary: A system daemon implementing TPM2 Access Broker and Resource Manager
 Group: System/Servers
@@ -84,6 +84,9 @@ rm -f %buildroot%_presetdir/tpm2-abrmd.preset
 %_mandir/man7/tss2-tcti-tabrmd.7*
 
 %changelog
+* Thu Mar 24 2022 Alexey Shabalin <shaba@altlinux.org> 2.4.1-alt1
+- new version 2.4.1
+
 * Sat Aug 28 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.0-alt1
 - Initial build.
 
