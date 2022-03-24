@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 %define ver_major 40
 %define beta %nil
@@ -13,7 +13,7 @@
 
 Name: geary
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: Email client
 License: LGPL-2.1-or-later
@@ -99,6 +99,10 @@ Geary's development.
 %doc AUTHORS NEWS README* THANKS
 
 %changelog
+* Thu Mar 24 2022 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt2
+- updated to 40.0-52-gc8c7e5e8c from mainline branch
+  (fixed build with vala-0.56, updated translations)
+
 * Fri Apr 23 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 
