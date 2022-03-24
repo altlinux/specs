@@ -1,7 +1,7 @@
 %define modname evdev
 
 Name: python3-module-%modname
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 
 Summary: Python3 bindings to the generic input event interface
@@ -37,6 +37,9 @@ typically located in /dev/input/
 %doc README*
 
 %changelog
+* Thu Mar 24 2022 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Sat Jan 16 2021 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - 1.4.0 (python3-only)
 
