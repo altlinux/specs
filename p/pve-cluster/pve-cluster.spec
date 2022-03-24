@@ -1,28 +1,26 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
-Version: 7.0.3
-Release: alt2
-License: GPLv3
+Version: 7.1.3
+Release: alt1
+License: AGPL-3.0+
 Group: System/Servers
 Url: https://git.proxmox.com/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64 aarch64
-Requires: bridge-utils chrony ntpdate corosync2 fuse rrd-cached >= 1.7.2-alt3 ksmtuned openvswitch
+Requires: chrony ntpdate corosync fuse rrd-cached >= 1.7.2-alt3 ksmtuned openvswitch
 Requires: sqlite3 vixie-cron faketime tzdata openssh-server openssh-clients
 
-Source0: %name.tar.xz
-Source1: pve-access-control.tar.xz
-Source2: pve-apiclient.tar.xz
-
-Patch0: %name.patch
-Patch1: pve-access-control.patch
-Patch2: pve-cluster-install_vzdump_cron_config.patch
-Patch3: pve-cluster-get_guest_config_property.patch
+Source: %name-%version.tar
+Patch: %name-%version.patch
 
 Source3: %name.filetrigger
 
-BuildRequires: pve-common pve-doc-generator libcheck-devel librrd-devel glib2-devel libfuse-devel libcorosync2-devel libsqlite3-devel xmlto
+BuildRequires: pve-common pve-doc-generator libcheck-devel xmlto
+BuildRequires: pve-apiclient pve-access-control
+BuildRequires: pkgconfig(libcpg) pkgconfig(libcpg) pkgconfig(libcmap) pkgconfig(libquorum) pkgconfig(libqb) pkgconfig(glib-2.0) pkgconfig(fuse) pkgconfig(sqlite3) pkgconfig(librrd)
 BuildRequires: perl(ExtUtils/Embed.pm) perl(Term/ReadLine.pm) perl(Digest/HMAC_SHA1.pm) perl(XML/Parser.pm) perl(RRDs.pm)
 BuildRequires: perl(Crypt/OpenSSL/Random.pm) perl(Crypt/OpenSSL/RSA.pm) perl(Net/SSLeay.pm)
 BuildRequires: perl(MIME/Base32.pm) perl(Net/LDAP.pm) perl(Authen/PAM.pm) perl(UUID.pm)
@@ -32,37 +30,36 @@ This package contains the Cluster Infrastructure for the PVE,
 namely a distributed filesystem to store configuration data
 on all nodes.
 
-%package -n pve-access-control
-Summary: PVE access control library
-Version: 7.0.4
+%package -n libpve-cluster-perl
+Summary: Proxmox Virtual Environment cluster Perl modules.
 Group: Development/Perl
+Requires: rrd-cached
 
-%description -n pve-access-control
-This package contains the role based user management and access
-control function used by PVE.
+%description -n libpve-cluster-perl
+%summary.
+This package contains various cluster-related perl modules.
+
+%package -n libpve-cluster-api-perl
+Summary: Proxmox Virtual Environment cluster Perl API modules.
+Group: Development/Perl
+Requires: openssl rsync
+
+%description -n libpve-cluster-api-perl
+%summary.
+This package contains the API2 endpoints and CLI binary 'pvecm'.
 
 %prep
-%setup -q -n %name -a1 -a2
-%patch0 -p1 -b .alt
-%patch1 -p0 -b .acc
-%patch2 -p1 -b .vzdump
-%patch3 -p1 -b .ggcp
+%setup
+%patch -p1
 
-grep '/var/run' * -rl | while read f; do
-    sed -i 's|/var/run|/run|' $f
-done
+%build
+%make -C data
 
 %install
+%makeinstall_std -C data/PVE/Cluster
+%makeinstall_std -C data
 install -pD -m644 debian/%name.service %buildroot%systemd_unitdir/%name.service
-install -pD -m644 debian/sysctl.d/pve.conf %buildroot%_sysconfdir/sysctl.d/pve-cluster.conf
-cd data
-%make -C PVE/Cluster DESTDIR=%buildroot install
-%make PERL_DOC_INC_DIRS=" .. . ../../pve-access-control/src ../../pve-apiclient" DESTDIR=%buildroot install
-cd ../pve-access-control/src
-%make DESTDIR=%buildroot install
-cd ../../pve-apiclient
-%make DESTDIR=%buildroot install
-
+install -pD -m644 debian/sysctl.d/10-pve.conf %buildroot%_sysctldir/10-pve.conf
 install -pD -m0755 %SOURCE3 %buildroot%_prefix/lib/rpm/%name.filetrigger
 
 mkdir -p %buildroot%_sysconfdir/cron.d
@@ -86,9 +83,6 @@ __EOF__
 
 %preun
 %preun_service %name
-if [ $1 -eq 0 ] ; then
-        /sbin/systemctl disable %name.service >/dev/null 2>&1 || :
-fi
 
 %pre
 %_sbindir/groupadd -r -f www-data 2>/dev/null ||:
@@ -100,57 +94,45 @@ if [ -L %_sysconfdir/cron.d/vzdump ]; then
 fi
 
 %files
+%config(noreplace) %_sysconfdir/sysconfig/%name
 %systemd_unitdir/%name.service
-%_sysconfdir/bash_completion.d/pvecm
 %dir %_sysconfdir/network
 %ghost %_sysconfdir/network/interfaces
 %ghost %_sysconfdir/cron.d/vzdump
-%_sysconfdir/sysctl.d/pve-cluster.conf
+%_sysctldir/10-pve.conf
 %_bindir/create_pmxcfs_db
 %_bindir/pmxcfs
-%_bindir/pvecm
-%dir %perl_vendor_autolib/PVE
 %perl_vendor_autolib/PVE/IPCC
-%dir %perl_vendor_privlib/PVE
 %perl_vendor_privlib/PVE/Cluster.pm
-%perl_vendor_privlib/PVE/Corosync.pm
-%perl_vendor_privlib/PVE/IPCC.pm
-%dir %perl_vendor_privlib/PVE/CLI
-%perl_vendor_privlib/PVE/CLI/pvecm.pm
-%dir %perl_vendor_privlib/PVE/APIClient
-%perl_vendor_privlib/PVE/APIClient/Exception.pm
-%perl_vendor_privlib/PVE/APIClient/LWP.pm
-%perl_vendor_privlib/PVE/DataCenterConfig.pm
-%perl_vendor_privlib/PVE/RRD.pm
-%perl_vendor_privlib/PVE/SSHInfo.pm
 %dir %perl_vendor_privlib/PVE/Cluster
 %perl_vendor_privlib/PVE/Cluster/IPCConst.pm
-%perl_vendor_privlib/PVE/Cluster/Setup.pm
+%perl_vendor_privlib/PVE/IPCC.pm
 %dir %_localstatedir/%name
-%_datadir/zsh/vendor-completions/_pvecm
-%_man1dir/pvecm.1*
-%_man5dir/datacenter.cfg.5*
 %_man8dir/pmxcfs.8*
 %_prefix/lib/rpm/%name.filetrigger
 
-%files -n pve-access-control
-%_sysconfdir/bash_completion.d/pveum
-%_bindir/oathkeygen
-%_sbindir/pveum
-%dir %perl_vendor_privlib/PVE
-%perl_vendor_privlib/PVE/RPCEnvironment.pm
-%perl_vendor_privlib/PVE/AccessControl.pm
-%perl_vendor_privlib/PVE/TokenConfig.pm
-%dir %perl_vendor_privlib/PVE/CLI
-%perl_vendor_privlib/PVE/CLI/pveum.pm
-%dir %perl_vendor_privlib/PVE/API2
-%perl_vendor_privlib/PVE/API2/*.pm
-%dir %perl_vendor_privlib/PVE/Auth
-%perl_vendor_privlib/PVE/Auth/*.pm
-%_datadir/zsh/vendor-completions/_pveum
-%_man1dir/pveum.1*
+%files -n libpve-cluster-perl
+%_man5dir/datacenter.cfg.5*
+%perl_vendor_privlib/PVE/Corosync.pm
+%perl_vendor_privlib/PVE/DataCenterConfig.pm
+%perl_vendor_privlib/PVE/RRD.pm
+%perl_vendor_privlib/PVE/SSHInfo.pm
+
+%files -n libpve-cluster-api-perl
+%_bindir/pvecm
+%_datadir/bash-completion/completions/pvecm
+%_datadir/zsh/vendor-completions/_pvecm
+%_man1dir/pvecm.1*
+%perl_vendor_privlib/PVE/API2/*
+%perl_vendor_privlib/PVE/CLI/*
+%perl_vendor_privlib/PVE/Cluster/Setup.pm
 
 %changelog
+* Mon Mar 21 2022 Alexey Shabalin <shaba@altlinux.org> 7.1.3-alt1
+- 7.1-3
+- build pve-access-control and pve-apiclient from separated packages
+- add libpve-cluster-perl and libpve-cluster-api-perl packages
+
 * Fri Mar 18 2022 Alexey Shabalin <shaba@altlinux.org> 7.0.3-alt2
 - drop rrdcached.service and rrdcached.socket
 - drop ownership /var/lib/rrdcached/{db,journal}

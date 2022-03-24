@@ -1,32 +1,42 @@
 Name: pve-storage
 Summary: PVE storage management library
-Version: 7.0.10
+Version: 7.1.1
 Release: alt1
-License: GPLv3
+License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64 aarch64
 
-Requires: open-iscsi smartmontools gdisk parted hdparm
-Requires: multipath-tools ceph >= 12.2.1 zfs-utils
+Provides: libpve-storage-perl = %EVR
+Requires: open-iscsi gdisk parted hdparm
+Requires: multipath-tools lvm2 thin-provisioning-tools
+Requires: ceph-common >= 12.2.1 ceph-fuse
+Requires: cifs-utils samba-client
+Requires: cstream
+Requires: glusterfs-client >= 3.4.0
+Requires: zfs-utils
+Requires: nfs-clients nfs-utils
+Requires: proxmox-backup-client >= 1.0 proxmox-backup-file-restore
+Requires: smartmontools
 
-Source: pve-storage.tar.xz
-Patch: pve-storage-alt.patch
+Source: %name-%version.tar
+Patch: %name-%version.patch
 
-BuildRequires: librados2-perl pve-common pve-cluster pve-doc-generator pve-access-control xmlto
-BuildRequires: perl(File/chdir.pm) perl(Net/DBus.pm)
+BuildRequires: librados2-perl pve-common pve-cluster libpve-cluster-perl pve-doc-generator pve-access-control pve-apiclient xmlto
+BuildRequires: perl(File/chdir.pm) perl(Net/DBus.pm) perl(POSIX/strptime.pm)
+BuildRequires: perl(PVE/DataCenterConfig.pm)
 
 %description
 This package contains the storage management library used by PVE
 
 %prep
-%setup -q -n %name
-%patch -p1 -b .alt
+%setup
+%patch -p1
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 mkdir -p %buildroot%_sysconfdir/modules-load.d
 cat << __EOF__ > %buildroot%_sysconfdir/modules-load.d/pve-storage.conf
@@ -42,6 +52,10 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Mon Mar 07 2022 Alexey Shabalin <shaba@altlinux.org> 7.1.1-alt1
+- 7.1-1
+- update requires
+
 * Thu Sep 23 2021 Valery Inozemtsev <shrek@altlinux.ru> 7.0.10-alt1
 - 7.0-10
 

@@ -1,6 +1,6 @@
 Name: pve-docs
 Summary: PVE Documentation
-Version: 7.0.5
+Version: 7.1.2
 Release: alt1
 License: GPLv3
 Group: Documentation
@@ -11,21 +11,13 @@ Source: %name-%version.tar
 
 ExclusiveArch: x86_64 aarch64
 BuildArch: noarch
-BuildRequires: asciidoc-a2x asciidoc-latex source-highlight xmlto librsvg-utils mailcap pve-common
+BuildRequires: asciidoc-a2x asciidoc-latex source-highlight xmlto librsvg-utils mailcap pve-common pve-doc-generator
 BuildRequires: perl(MediaWiki/API.pm) perl(JSON.pm)
+BuildRequires: pve-manager
+BuildRequires: proxmox-widget-toolkit-dev
 
 %description
 PVE Documentation files
-
-%package -n pve-doc-generator
-Summary: Proxmox VE Documentation helpers
-Group: Documentation
-Requires: asciidoc-a2x source-highlight xmlto
-
-%description -n pve-doc-generator
-Tool to auto-generate various Proxmox VE Documentation files
-
-%add_findreq_skiplist %_datadir/pve-doc-generator/*.pl
 
 %prep
 %setup -q -n %name-%version
@@ -39,10 +31,6 @@ rm -f getting-help.adoc howto-improve-pve-docs.adoc pve-package-repos.adoc pve-f
 %make DOCRELEASE=%version
 
 %install
-mkdir -p %buildroot%_datadir/pve-doc-generator/asciidoc
-cp *.adoc *.pl *.mk *.xml %buildroot%_datadir/pve-doc-generator/
-cp asciidoc/*pve*.conf %buildroot%_datadir/pve-doc-generator/asciidoc/
-install -pD -m755 asciidoc-pve %buildroot%_bindir/asciidoc-pve
 
 mkdir -p %buildroot%_datadir/%name/{api-viewer,images/screenshot}
 install -m644 *.html %buildroot%_datadir/%name/
@@ -54,11 +42,11 @@ install -m644 images/screenshot/*.png %buildroot%_datadir/%name/images/screensho
 %files
 %_datadir/%name
 
-%files -n pve-doc-generator
-%_bindir/asciidoc-pve
-%_datadir/pve-doc-generator
-
 %changelog
+* Mon Mar 21 2022 Alexey Shabalin <shaba@altlinux.org> 7.1.2-alt1
+- 7.1-2
+- build doc generator from separated package
+
 * Tue Jul 27 2021 Valery Inozemtsev <shrek@altlinux.ru> 7.0.5-alt1
 - 7.0-5
 

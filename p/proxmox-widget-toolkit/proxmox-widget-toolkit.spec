@@ -2,8 +2,8 @@
 
 Name: proxmox-widget-toolkit
 Summary: ExtJS Helper Classes for Proxmox
-Version: 3.4
-Release: alt2
+Version: 3.4.7
+Release: alt1
 License: AGPL-3.0+
 Group: Development/Other
 Url: https://www.proxmox.com
@@ -48,6 +48,9 @@ install -pD -m644 src/api-viewer/APIViewer.js %buildroot%_datadir/javascript/%na
 %_datadir/javascript/%name-dev
 
 %changelog
+* Sun Mar 06 2022 Alexey Shabalin <shaba@altlinux.org> 3.4.7-alt1
+- 3.4-7
+
 * Mon Feb 07 2022 Alexey Shabalin <shaba@altlinux.org> 3.4-alt2
 - Add Obsoltes: pve-widget-toolkit.
 

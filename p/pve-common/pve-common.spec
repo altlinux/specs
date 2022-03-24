@@ -2,8 +2,8 @@
 
 Name: pve-common
 Summary: PVE base library
-Version: 7.0.6
-Release: alt2
+Version: 7.1.3
+Release: alt1
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -11,7 +11,8 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar
 
-BuildArch: noarch
+ExclusiveArch: x86_64 aarch64
+
 BuildRequires: perl-ph
 BuildRequires: perl(IO/Socket/IP.pm)
 BuildRequires: perl(Filesys/Df.pm)
@@ -36,6 +37,7 @@ BuildRequires: perl(Net/SSLeay.pm)
 BuildRequires: perl(HTTP/Daemon.pm)
 BuildRequires: perl(CPAN/Meta/YAML.pm)
 BuildRequires: perl(Net/LDAP.pm)
+BuildRequires: perl(PVE/RS/CalendarEvent.pm)
 # alt regressive tests
 BuildRequires: perl(TAP/Harness.pm)
 BuildRequires: perl(Test/MockModule.pm)
@@ -68,6 +70,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Sat Mar 05 2022 Alexey Shabalin <shaba@altlinux.org> 7.1.3-alt1
+- 7.1-3
+
 * Mon Oct 04 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.6-alt2
 - use BRIDGE_OPTIONS for bridge
 - consider ifupdown2 is always true, due to network restart in pve-manager
