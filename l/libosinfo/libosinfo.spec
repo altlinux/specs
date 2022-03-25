@@ -2,13 +2,14 @@
 Summary: A library for managing OS information for virtualization
 Name: libosinfo
 Version: 1.10.0
-Release: alt1
+Release: alt2
 
 License: LGPLv2+
 Group: System/Libraries
 
 Source: %name-%version.tar
 #Patch2: %name-%version-altlinux.patch
+Patch0001: 0001-build-Add-option-to-select-libsoup-ABI.patch
 
 Url: https://libosinfo.org
 BuildRequires(pre): meson >= 0.49.0
@@ -75,11 +76,13 @@ Contains developer documentation for %name.
 %prep
 %setup
 #%%patch2 -p1
+%patch0001 -p1
 
 %build
 %meson \
     -Denable-gtk-doc=true \
     -Denable-tests=true \
+    -Dlibsoup-abi=2.4 \
     -Dwith-usb-ids-path=%_datadir/misc/usb.ids \
     -Dwith-pci-ids-path=%_datadir/misc/pci.ids \
     -Denable-introspection=enabled \
@@ -119,6 +122,9 @@ export LD_LIBRARY_PATH=$(pwd)/%{__builddir}/osinfo
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Mar 25 2022 Alexey Shabalin <shaba@altlinux.org> 1.10.0-alt2
+- build with libsoup-2.4
+
 * Wed Mar 23 2022 Alexey Shabalin <shaba@altlinux.org> 1.10.0-alt1
 - new version 1.10.0
 
