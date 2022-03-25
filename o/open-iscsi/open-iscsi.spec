@@ -5,7 +5,7 @@ Name: open-%bname
 %define module_name %name
 Version: 2.1.4
 License: GPL-2.0-or-later
-Release: alt2
+Release: alt3
 Summary: Utils to operate with %Name
 Group: System/Kernel and hardware
 URL: http://%name.org
@@ -142,6 +142,9 @@ fi
 %_pkgconfigdir/libopeniscsiusr.pc
 
 %changelog
+* Fri Mar 25 2022 Anton Farygin <rider@altlinux.ru> 2.1.4-alt3
+- changed ua.alt to ru.alt default domain name in scsi initiator generator
+
 * Fri Jun 11 2021 Alexey Shabalin <shaba@altlinux.org> 2.1.4-alt2
 - Fixed iscsi-init.service (ALT#40195).
 - Use /var/lib/iscsi/ for configs.
