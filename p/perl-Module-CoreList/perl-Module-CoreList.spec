@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-CoreList
 Name: perl-%dist
-Version: 5.20220220
+Version: 5.20220320
 Release: alt1
 
 Summary: What modules shipped with versions of perl
@@ -36,6 +36,9 @@ shipped with each version of perl.
 %perl_vendor_privlib/Module
 
 %changelog
+* Fri Mar 25 2022 Igor Vlasenko <viy@altlinux.org> 5.20220320-alt1
+- automated CPAN update
+
 * Wed Feb 23 2022 Igor Vlasenko <viy@altlinux.org> 5.20220220-alt1
 - automated CPAN update
 
