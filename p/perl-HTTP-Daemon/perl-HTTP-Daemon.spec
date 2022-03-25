@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist HTTP-Daemon
 Name: perl-%dist
-Version: 6.13
+Version: 6.14
 Release: alt1
 
 Summary: a simple http server class
@@ -38,6 +38,9 @@ too.
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Fri Mar 25 2022 Igor Vlasenko <viy@altlinux.org> 6.14-alt1
+- automated CPAN update
+
 * Sun Feb 13 2022 Igor Vlasenko <viy@altlinux.org> 6.13-alt1
 - automated CPAN update
 
