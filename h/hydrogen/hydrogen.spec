@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hydrogen
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Hydrogen Drum Machine
@@ -12,6 +12,7 @@ URL: http://www.hydrogen-music.org
 
 # https://github.com/hydrogen-music/hydrogen.git
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildRequires: ccmake ctest doxygen gcc-c++ graphviz ladspa_sdk libalsa-devel libarchive-devel libjack-devel liblo-devel liblrdf-devel
 BuildRequires: libportaudio2-devel libportmidi-devel librubberband-devel libsndfile-devel libtar-devel libpulseaudio-devel cppunit-devel
@@ -41,9 +42,12 @@ pattern-based drum programming. Its features include:
 
 %prep
 %setup
+%patch0 -p1
 
 %build
-%cmake -DWANT_RUBBERBAND=ON -DWANT_PORTAUDIO=ON -DWANT_PORTMIDI=ON
+%cmake '-DVERSION_SUFFIX:STRING=%release' \
+    -DWANT_RUBBERBAND=ON \
+    -DWANT_PORTAUDIO=ON -DWANT_PORTMIDI=ON
 %cmake_build
 
 %install
@@ -67,6 +71,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude /usr/include/%name
 
 %changelog
+* Thu Mar 24 2022 Ivan A. Melnikov <iv@altlinux.org> 1.1.1-alt1
+- 1.1.1
+- set VERSION_SUFFIX to %%release
+
 * Thu Sep 23 2021 Ivan A. Melnikov <iv@altlinux.org> 1.1.0-alt1
 - 1.1.0
 - Enable PortAudio and PortMidi support.
