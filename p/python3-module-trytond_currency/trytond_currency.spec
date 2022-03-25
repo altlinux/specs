@@ -2,8 +2,8 @@
 %define oname trytond_currency
 
 Name: python3-module-%oname
-Version: 5.4.0
-Release: alt2
+Version: 6.2.0
+Release: alt1
 
 Summary: Tryton module with currencies
 License: GPL
@@ -11,10 +11,9 @@ Group: Development/Python3
 Url: http://crd.lbl.gov/~dhbailey/mpdist/
 BuildArch: noarch
 
-Source0: https://pypi.python.org/packages/14/b2/b636a2644d3f3401e6ec8e1618e2f669f3239d55359dacea7802df8ffbd1/%{oname}-%{version}.tar.gz
+Source0: https://files.pythonhosted.org/packages/5a/d3/97635ff5dfb7d90fbd9a3578f3d7e069b6ebf8fd9f553fa409e51f696f12/%{oname}-%{version}.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-module-setuptools
 
 
 %description
@@ -34,7 +33,7 @@ This package contains tests for %oname.
 %setup -q -n %{oname}-%{version}
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -50,6 +49,9 @@ This package contains tests for %oname.
 
 
 %changelog
+* Fri Mar 25 2022 Danil Shein <dshein@altlinux.org> 6.2.0-alt1
+- Version updated to 6.2.0
+
 * Tue Aug 24 2021 Vitaly Lipatov <lav@altlinux.ru> 5.4.0-alt2
 - s/python-module-setuptools//
 

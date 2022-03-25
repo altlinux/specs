@@ -1,23 +1,36 @@
 %define _unpackaged_files_terminate_build 1
 %define oname trytond
 
+%def_enable check
+
 Name: python3-module-%oname
-Version: 5.4.6
+Version: 6.2.6
 Release: alt1
 
 Summary: Tryton server
-License: GPL
+License: GPL-3
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/trytond/
+Url: https://www.tryton.org
 
-Source0: https://pypi.python.org/packages/17/f7/c7981ea71084c8dc4adf61627bd9265716407bc7cedf13bc746dd51cde76/%{oname}-%{version}.tar.gz
+Source0: https://files.pythonhosted.org/packages/4e/43/b565c06310a2c00bc09ee676c07f71bd40290353a03bc84c5c458a765f99/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-sphinx
+%if_enabled check
+BuildRequires: python3-module-werkzeug
+BuildRequires: python3-module-lxml
+BuildRequires: python3-modules-sqlite3
+BuildRequires: python3-module-sql
+BuildRequires: python3-module-dateutil
+BuildRequires: python3-module-polib
+BuildRequires: python3-module-defusedxml
+BuildRequires: python3-module-relatorio
+BuildRequires: python3-module-wrapt
+BuildRequires: python3-module-passlib
+%endif
 
 %py_provides %oname
+%add_python3_req_skip __main__
 
 %description
 The server of the Tryton application platform. A three-tiers high-level
@@ -39,36 +52,21 @@ Source ERP. It provides modularity, scalability and security.
 
 This package contains tests for %oname.
 
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-The server of the Tryton application platform. A three-tiers high-level
-general purpose application platform written in Python and use
-Postgresql as main database engine. It is the core base of an Open
-Source ERP. It provides modularity, scalability and security.
-
-This package contains documentation for %oname.
-
 %prep
 %setup -q -n %{oname}-%{version}
 
-# `alt` sphinx-build name in python3 package sphinx-build-3
-sed -i 's/sphinx-build/&-3/' doc/Makefile
-
 %build
-%python3_build_debug
-
-export PYTHONPATH=$PWD
-%make -C doc html
+%python3_build
 
 %install
 %python3_install
 
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir/
+trytond/tests/run-tests.py -v -f --no-doctest
+
 %files
-%doc CHANGELOG README.rst COPYRIGHT
+%doc CHANGELOG LICENSE README.rst COPYRIGHT
 %_bindir/*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test*
@@ -76,11 +74,12 @@ export PYTHONPATH=$PWD
 %files tests
 %python3_sitelibdir/*/test*
 
-%files docs
-%doc doc/_build/html/*
-
 
 %changelog
+* Fri Mar 25 2022 Danil Shein <dshein@altlinux.org> 6.2.6-alt1
+- version updated to 6.2.6
+- tests enabled
+
 * Tue Mar 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 5.4.6-alt1
 - Version updated to 5.4.6.
 

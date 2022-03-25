@@ -1,19 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define oname trytond_party
 
 Name: python3-module-%oname
-Version: 5.4.0
+Version: 6.2.0
 Release: alt1
 
 Summary: Tryton module with parties and addresses
-License: GPL
+License: GPL-3
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/trytond_party/
 
-Source: %name-%version.tar
+Source0: https://files.pythonhosted.org/packages/18/e4/467603b1805ecd33a7a050665a4c713c7f753b8c90f1c7589d9ce4af3cdd/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python3-module-setuptools rpm-build-python3
-
+BuildRequires(pre): rpm-build-python3
 
 %description
 The party module of the Tryton application platform.
@@ -29,10 +29,10 @@ The party module of the Tryton application platform.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -q -n %{oname}-%{version}
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -47,6 +47,9 @@ This package contains tests for %oname.
 
 
 %changelog
+* Fri Mar 25 2022 Danil Shein <dshein@altlinux.org> 6.2.0-alt1
+- Version updated to 6.2.0
+
 * Tue Mar 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 5.4.0-alt1
 - Version updated to 5.4.0.
 

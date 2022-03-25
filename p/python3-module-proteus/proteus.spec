@@ -1,26 +1,27 @@
+%define _unpackaged_files_terminate_build 1
 %define oname proteus
 
 %def_without bootstrap
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.4.1
+Version: 6.2.2
 Release: alt1
 
 Summary: Library to access Tryton server as a client
-License: LGPL
+License: GPL-3
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/proteus/
+Url: https://pypi.org/project/proteus/
 
 Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
 
 %if_with check
-BuildRequires: python3-module-pytest python3-module-trytond-tests
 BuildRequires: python3-modules-sqlite3
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-trytond-tests
 %endif
 
 %if_without bootstrap
@@ -57,7 +58,7 @@ This package contains tests for %oname.
 %if_with check
 %check
 export PYTHONPATH=$PWD
-py.test3 -vv
+py.test3 -vra
 %endif
 
 %files
@@ -70,6 +71,10 @@ py.test3 -vv
 
 
 %changelog
+* Fri Mar 25 2022 Danil Shein <dshein@altlinux.org> 6.2.2-alt1
+- Version updated to 6.2.2
+- fix FTBS
+
 * Tue Mar 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 5.4.1-alt1
 - Version updated to 5.4.1.
 
