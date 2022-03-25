@@ -7,21 +7,21 @@ BuildRequires: perl(Carp.pm) perl(Cwd.pm) perl(File/Spec.pm) perl(File/Spec/Func
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.200
-Release: alt1.1
+Version: 3.0.1
+Release: alt1
 Summary: FindBin::libs - locate and a 'use lib' or export 
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://www.cpan.org/authors/id/L/LE/LEMBARK/Perl6/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/L/LE/LEMBARK/%{module_name}-v%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -q -n %{module_name}-%{version}
+%setup -q -n %{module_name}-v%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/F*
 
 %changelog
+* Fri Mar 25 2022 Igor Vlasenko <viy@altlinux.org> 1:3.0.1-alt1
+- automated CPAN update
+
 * Fri Dec 25 2020 Igor Vlasenko <viy@altlinux.ru> 1:2.200-alt1.1
 - automated CPAN update
 
