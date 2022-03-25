@@ -1,9 +1,11 @@
+%def_enable snapshot
+
 %define api_ver 1.0
 %def_disable doc
 %def_enable check
 
 Name: libevdev
-Version: 1.12.0
+Version: 1.12.1
 Release: alt1
 
 Summary: kernel evdev device wrapper library
@@ -12,7 +14,11 @@ License: MIT and GPL-2.0
 Url: https://www.freedesktop.org/wiki/Software/libevdev
 Vcs: https://gitlab.freedesktop.org/libevdev/libevdev.git
 
+%if_disabled snapshot
 Source: https://www.freedesktop.org/software/%name/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 BuildRequires(pre): rpm-macros-meson rpm-macros-valgrind
 BuildRequires: meson glibc-kernheaders libcheck-devel python3-module-setuptools
@@ -47,8 +53,7 @@ that are needed to write applications that use %name.
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %_bindir/mouse-dpi-tool
@@ -57,6 +62,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/libevdev.so.*
 %_man1dir/libevdev-tweak-device.1.*
 %_man1dir/touchpad-edge-detector.1.*
+%_man1dir/mouse-dpi-tool.1.*
 %doc COPYING
 
 %files devel
@@ -66,6 +72,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man3dir/%name.3.*
 
 %changelog
+* Fri Mar 25 2022 Yuri N. Sedunov <aris@altlinux.org> 1.12.1-alt1
+- 1.12.1
+
 * Tue Nov 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
 - 1.12.0
 
