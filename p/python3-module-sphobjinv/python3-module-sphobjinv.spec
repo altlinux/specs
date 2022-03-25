@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 
 Summary: Sphinx objects.inv Inspection/Manipulation Tool
@@ -44,6 +44,9 @@ py.test3
 
 
 %changelog
+* Fri Mar 25 2022 Yuri N. Sedunov <aris@altlinux.org> 2.2.2-alt1
+- 2.2.2
+
 * Sat Mar 05 2022 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
 - 2.2.1
 
