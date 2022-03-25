@@ -1,18 +1,20 @@
 %def_with cppunit
 
 Name: xournalpp
-Version: 1.0.20
-Release: alt1.1
+Version: 1.1.0
+Release: alt1
 Summary: Handwriting note-taking software with PDF annotation support
 Group: Office
 
 License: GPLv2+
 Url: https://github.com/%name/%name
 Source: %name-%version.tar.gz
+Requires: %name-plugins = %version-%release
+Requires: %name-ui = %version-%release
 
-# Automatically added by buildreq on Thu Jan 23 2020
-# optimized out: at-spi2-atk cmake cmake-modules cppunit fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libalsa-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libpoppler8-glib libsasl2-3 libstdc++-devel libwayland-client libwayland-cursor libwayland-egl pkg-config python-modules python2-base python3 python3-base sh4 shared-mime-info xorg-proto-devel zlib-devel
-BuildRequires: cppunit-devel ctest fonts-bitmap-misc gcc-c++ git-core libXi-devel libgtk+3-devel libpoppler-glib-devel libportaudio2-devel libsndfile-devel libssl-devel libxml2-devel libzip-devel
+# Automatically added by buildreq on Fri Mar 25 2022
+# optimized out: at-spi2-atk cmake cmake-modules cppunit fontconfig fontconfig-devel fonts-ttf-liberation-narrow glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXau-devel libXext-devel libXfixes-devel libXft-devel libXrender-devel libalsa-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libpoppler8-glib libsasl2-3 libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libxcb-devel pkg-config python3 python3-base sh4 shared-mime-info xorg-proto-devel zlib-devel
+BuildRequires: cppunit-devel ctest fonts-ttf-liberation gcc-c++ git-core libXi-devel libgtk+3-devel libpoppler-glib-devel libportaudio2-devel librsvg-devel libsndfile-devel libssl-devel libxml2-devel libzip-devel
 
 %description
 Xournal++ is a handwriting note-taking software with PDF annotation support.
@@ -37,10 +39,6 @@ The %name-ui package contains a graphical user interface for  %name.
 %prep
 %setup
 
-#Fix tlh aka klingon language
-mv po/tlh_AA.po po/tlh.po
-sed -i 's|tlh-AA|tlh|g' po/tlh.po
-
 %build
 %if_with cppunit
 %cmake -DENABLE_CPPUNIT=ON
@@ -57,25 +55,22 @@ sed -i 's|tlh-AA|tlh|g' po/tlh.po
 
 %find_lang %name
 
-#Remove scripts from icons interface
-rm -r %buildroot%_datadir/%name/ui/icons/hicolor/update-icon-cache.sh
-rm -r %buildroot%_datadir/%name/ui/iconsDark/hicolor/update-icon-cache.sh
-
 %check
 %cmake_build --target test
 
 %files -f %name.lang
 %doc README.md AUTHORS
-%_bindir/xournal-thumbnailer
-%_bindir/%name
+%_bindir/*
 %_datadir/applications/com.github.%name.%name.desktop
 %_datadir/icons/hicolor/scalable/apps/com.github.%name.%name.svg
 %_datadir/icons/hicolor/scalable/mimetypes/*
 %_datadir/mime/packages/com.github.%name.%name.xml
-%exclude %_datadir/mimelnk/application/*
 %_datadir/thumbnailers/com.github.%name.%name.thumbnailer
-%dir %_datadir/%name
+%_datadir/%name
 %_datadir/metainfo/com.github.%name.%name.appdata.xml
+%_datadir/mimelnk/application/*
+%exclude %_datadir/%name/plugins
+%exclude %_datadir/%name/ui
 
 %files plugins
 %_datadir/%name/plugins
@@ -84,6 +79,9 @@ rm -r %buildroot%_datadir/%name/ui/iconsDark/hicolor/update-icon-cache.sh
 %_datadir/%name/ui
 
 %changelog
+* Fri Mar 25 2022 Fr. Br. George <george@altlinux.org> 1.1.0-alt1
+- Autobuild version bump to 1.1.0
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1.0.20-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
