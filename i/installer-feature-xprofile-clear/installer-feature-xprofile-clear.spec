@@ -1,5 +1,5 @@
 Name: installer-feature-xprofile-clear
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Clear xprofile
@@ -20,7 +20,7 @@ Clear /etc/skel/.xprofile for new users.
 %build
 
 %install
-%define hookdir %_datadir/install2/postinstall.d
+%define hookdir %_datadir/install2/preinstall.d
 mkdir -p %buildroot%hookdir
 install -pm755 *.sh %buildroot%hookdir/
 
@@ -28,5 +28,8 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Fri Mar 25 2022 Sergey V Turchin <zerg@altlinux.org> 0.2-alt1
+- fix run to late
+
 * Fri Mar 25 2022 Sergey V Turchin <zerg@altlinux.org> 0.1-alt1
 - initial build
