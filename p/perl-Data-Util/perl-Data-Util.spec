@@ -6,8 +6,8 @@ BuildRequires: perl(Attribute/Handlers.pm) perl(Benchmark.pm) perl(CPAN.pm) perl
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.66
-Release: alt3.1
+Version: 0.67
+Release: alt1
 Summary: A selection of utilities for data and data types
 Group: Development/Perl
 License: perl
@@ -45,6 +45,9 @@ export CFLAGS="-std=c99 $CFLAGS"
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Mar 25 2022 Igor Vlasenko <viy@altlinux.org> 0.67-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.66-alt3.1
 - rebuild with new perl 5.28.1
 
