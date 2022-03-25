@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 2.7.3
+Version: 2.7.4
 Release: alt1
 
 Summary: A tool for static C/C++ code analysis
@@ -121,6 +121,9 @@ grep -l "#\!%__python3" %buildroot%_datadir/Cppcheck/addons/*.py | xargs chmod +
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Fri Mar 25 2022 Andrew A. Vasilyev <andy@altlinux.org> 2.7.4-alt1
+- 2.7.4
+
 * Mon Mar 21 2022 Andrew A. Vasilyev <andy@altlinux.org> 2.7.3-alt1
 - 2.7.3
 
