@@ -6,7 +6,7 @@ BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.201
+Version: 1.202
 Release: alt1
 Summary: return a pair only if they are both defined
 Group: Development/Perl
@@ -29,11 +29,14 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc LICENSE README COPYRIGHT Changes CREDITS
+%doc README COPYRIGHT Changes CREDITS
 %perl_vendor_privlib/S*
 %perl_vendor_privlib/P*
 
 %changelog
+* Fri Mar 25 2022 Igor Vlasenko <viy@altlinux.org> 1.202-alt1
+- automated CPAN update
+
 * Fri Dec 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.201-alt1
 - automated CPAN update
 
