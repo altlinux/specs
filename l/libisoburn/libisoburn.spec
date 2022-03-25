@@ -1,6 +1,6 @@
 Name: libisoburn
 Version: 1.5.4
-Release: alt1
+Release: alt2
 
 Summary: ISO9660 filesystem creation library
 License: GPLv2
@@ -8,6 +8,8 @@ Group: System/Libraries
 
 Url: http://libburnia-project.org
 Source: %name-%version.tar
+
+Patch1: dont-require-sudo.patch
 
 BuildRequires: zlib-devel libacl-devel libattr-devel libreadline-devel
 BuildRequires: libburn-devel >= %version, libisofs-devel >= %version
@@ -81,6 +83,7 @@ or extract ISO9660 images common for CD-ROM/DVD media.
 
 %prep
 %setup
+%patch1 -p1
 touch NEWS
 
 %build
@@ -122,6 +125,9 @@ fi
 %_bindir/xorriso-tcltk
 
 %changelog
+* Fri Mar 25 2022 Mikhail Efremov <sem@altlinux.org> 1.5.4-alt2
+- xorriso: Don't pull sudo (closes: #41950).
+
 * Thu Mar 25 2021 Anton Farygin <rider@altlinux.org> 1.5.4-alt1
 - 1.5.4
 
