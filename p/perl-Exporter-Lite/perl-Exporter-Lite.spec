@@ -4,7 +4,7 @@
 %define m_name		Exporter::Lite
 %define m_author_id	MSCHWERN
 Name: perl-%module
-Version: 0.08
+Version: 0.09
 Release: alt1
 
 Summary: Exporter::Lite - Lightweight exporting of variables
@@ -15,7 +15,7 @@ License: Unknown
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Url: http://search.cpan.org/dist/%m_distro/
-Source: http://www.cpan.org/authors/id/N/NE/NEILB/Exporter-Lite-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/N/NE/NEILB/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,7 +33,7 @@ Unlike Exporter, it is not necessary to inherit from Exporter::Lite
 exports its import() function.  This might be called a "mix-in".
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -43,9 +43,13 @@ exports its import() function.  This might be called a "mix-in".
 rm -rf %buildroot%perl_vendor_man3dir/
 
 %files
+%doc README Changes
 %perl_vendor_privlib/Exporter/
 
 %changelog
+* Fri Mar 25 2022 Igor Vlasenko <viy@altlinux.org> 0.09-alt1
+- automated CPAN update
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - automated CPAN update
 
