@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
@@ -15,7 +15,7 @@
 
 Name: gnome-shell
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -285,6 +285,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %endif
 
 %changelog
+* Fri Mar 25 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt2
+- updated to 42.0-40-g90fdd1169
+
 * Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 

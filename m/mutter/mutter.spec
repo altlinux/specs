@@ -1,7 +1,7 @@
 # since 3.21.90 (libmutter-clutter-1.0.so private library)
 %set_verify_elf_method unresolved=relaxed
 
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 42
 %define beta %nil
@@ -19,7 +19,7 @@
 
 Name: mutter
 Version: %ver_major.0
-Release: alt2%beta
+Release: alt3%beta
 Epoch: 1
 
 Summary: Clutter based compositing GTK3 Window Manager
@@ -254,6 +254,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Fri Mar 25 2022 Yuri N. Sedunov <aris@altlinux.org> 1:42.0-alt3
+- updated to 42.0-9-g3c9622bea
+
 * Wed Mar 23 2022 Yuri N. Sedunov <aris@altlinux.org> 1:42.0-alt2
 - data/61-mutter.rules: disabled KMS modifiers for radeon driver again
 
