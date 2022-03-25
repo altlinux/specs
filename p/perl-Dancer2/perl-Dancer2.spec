@@ -2,7 +2,7 @@
 %global oname Dancer2
 
 Name: perl-Dancer2
-Version: 0.301004
+Version: 0.400000
 Release: alt1
 
 Summary: Lightweight yet powerful web application framework
@@ -38,6 +38,9 @@ BuildRequires: perl(Type/Library.pm) perl(Ref/Util.pm) perl(Attribute/Handlers.p
 %doc AUTHORS Changes *.md
 
 %changelog
+* Fri Mar 25 2022 Igor Vlasenko <viy@altlinux.org> 0.400000-alt1
+- new version
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0.301004-alt1
 - new version
 
