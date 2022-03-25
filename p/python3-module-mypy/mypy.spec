@@ -12,8 +12,8 @@
 %endif
 
 Name:    python3-module-%oname
-Version: 0.931
-Release: alt2
+Version: 0.942
+Release: alt1
 
 Summary: Optional static typing for Python 3 and 2 (PEP 484)
 License: MIT
@@ -26,8 +26,8 @@ BuildRequires: python3-dev python3-module-setuptools
 # Needed to generate the man pages
 BuildRequires:  help2man
 
-# https://github.com/python/mypy/pull/11600
-BuildRequires: python3-module-typeshed > 0-alt3
+# https://github.com/python/mypy/pull/11905
+BuildRequires: python3-module-typeshed > 0-alt4
 
 %if_with check
 # install_requires=
@@ -151,6 +151,9 @@ tox.py3 --sitepackages --no-deps -vvr -s false -- -vv $TESTS
 %endif
 
 %changelog
+* Fri Mar 25 2022 Stanislav Levin <slev@altlinux.org> 0.942-alt1
+- 0.931 -> 0.942.
+
 * Thu Mar 03 2022 Stanislav Levin <slev@altlinux.org> 0.931-alt2
 - Fixed FTBFS (pytest-xdist 2.5.0).
 
