@@ -13,7 +13,7 @@
 %def_with jemalloc
 
 Name: blender
-Version: 3.0.1
+Version: 3.1.0
 Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -44,7 +44,6 @@ Patch27: blender-2.90.0-alt-embree-components.patch
 Patch28: blender-3.0.0-alt-doc.patch
 Patch29: blender-2.90-alt-non-x86_64-linking.patch
 Patch30: blender-2.93.0-suse-reproducible.patch
-Patch31: blender-2.93.4-alt-openimageio-compat.patch
 
 Patch2000: blender-e2k-support.patch
 
@@ -178,7 +177,6 @@ This package contains documentation for Blender.
 %patch28 -p1
 %patch29 -p1
 %patch30 -p1
-%patch31 -p1
 %ifarch %e2k
 %patch2000 -p1
 # lcc 1.25.15's EDG bug would fail building OPENVDB+TBB otherwise
@@ -296,6 +294,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Fri Mar 25 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.0-alt1
+- Updated to upstream version 3.1.0.
+
 * Tue Feb 01 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.1-alt1
 - Updated to upstream version 3.0.1.
 
