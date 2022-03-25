@@ -7,7 +7,7 @@
 %def_without python
 
 Name:     trace-cmd
-Version:  3.0.2
+Version:  3.0.3
 Release:  alt1
 
 Summary:  A front-end for Ftrace Linux kernel internal tracer
@@ -46,6 +46,8 @@ the Linux kernel. It interfaces with the Ftrace specific files found in the
 debugfs file system under the tracing directory.
 
 %package -n libtracecmd
+# Libtracecmd which is compiled from the same source have different upstream
+# version numbering. But we cannot set version for sub-package.
 Summary: trace-cmd libraries
 Group: System/Libraries
 Conflicts: trace-cmd-libs < 2.9.6-alt1
@@ -148,6 +150,9 @@ vm-run --cpu=2 '
 %endif
 
 %changelog
+* Fri Mar 25 2022 Vitaly Chikunov <vt@altlinux.org> 3.0.3-alt1
+- Updated to trace-cmd-v3.0.3 (2022-03-24).
+
 * Thu Mar 24 2022 Vitaly Chikunov <vt@altlinux.org> 3.0.2-alt1
 - Updated to trace-cmd-v3.0.2 (2022-03-16).
 
