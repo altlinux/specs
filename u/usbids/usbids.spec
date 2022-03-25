@@ -1,5 +1,5 @@
 Name: usbids
-Version: 20220225
+Version: 20220325
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -28,6 +28,9 @@ install -pD -m644 %SOURCE0 %buildroot%_datadir/misc/usb.ids
 %_datadir/misc/usb.ids
 
 %changelog
+* Fri Mar 25 2022 Cronbuild Service <cronbuild@altlinux.org> 20220325-alt1
+- repocop cronbuild 20220325. At your service.
+
 * Fri Feb 25 2022 Cronbuild Service <cronbuild@altlinux.org> 20220225-alt1
 - repocop cronbuild 20220225. At your service.
 
