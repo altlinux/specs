@@ -2,7 +2,7 @@
 %def_without bootstrap
 %define dist DateTime
 Name: perl-%dist
-Version: 1.55
+Version: 1.57
 Release: alt1
 
 Summary: DateTime base objects
@@ -16,7 +16,7 @@ Patch: DateTime-1.42-alt-syntax-check.patch
 # break dependency loop
 Requires: perl-DateTime-TimeZone
 
-BuildRequires: perl-DateTime-Locale perl-Math-Round perl-Module-Build perl-Test-Exception perl-Test-Warn perl-Test-Fatal perl(Test/Warnings.pm) perl(CPAN/Meta/Check.pm)
+BuildRequires: perl-DateTime-Locale perl-Math-Round perl-Module-Build perl-Test-Exception perl-Test-Warn perl-Test-Fatal perl(Test/Warnings.pm) perl(CPAN/Meta/Check.pm) perl(Test/Without/Module.pm)
 
 %if_with bootstrap
 %define _without_test 1
@@ -50,6 +50,9 @@ http://datetime.perl.org/faq.html.
 %perl_vendor_autolib/DateTime*
 
 %changelog
+* Fri Mar 25 2022 Igor Vlasenko <viy@altlinux.org> 1.57-alt1
+- automated CPAN update
+
 * Wed Dec 29 2021 Igor Vlasenko <viy@altlinux.org> 1.55-alt1
 - automated CPAN update
 
