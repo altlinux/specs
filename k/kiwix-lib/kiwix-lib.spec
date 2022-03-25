@@ -1,5 +1,5 @@
 Name:     kiwix-lib
-Version:  10.0.1
+Version:  10.1.0
 Release:  alt1
 
 Summary:  Common code base for all Kiwix ports
@@ -62,6 +62,9 @@ Group: Development/C++
 %_man1dir/*.1*
 
 %changelog
+* Fri Mar 25 2022 Andrey Cherepanov <cas@altlinux.org> 10.1.0-alt1
+- New version.
+
 * Thu Feb 03 2022 Andrey Cherepanov <cas@altlinux.org> 10.0.1-alt1
 - New version.
 
