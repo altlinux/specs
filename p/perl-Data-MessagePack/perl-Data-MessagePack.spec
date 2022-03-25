@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Data-MessagePack
-Version: 1.01
+Version: 1.02
 Release: alt1
 
 Summary: MessagePack serialising/deserialising
@@ -34,6 +34,9 @@ But unlike JSON, it is very fast and small.
 %perl_vendor_autolib/Data/MessagePack
 
 %changelog
+* Fri Mar 25 2022 Igor Vlasenko <viy@altlinux.org> 1.02-alt1
+- new version
+
 * Wed Mar 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1
 - new version
 
