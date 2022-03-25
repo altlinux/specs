@@ -13,7 +13,7 @@
 %def_disable test
 
 Name: perl-IPC-Shareable
-Version: 1.06
+Version: 1.12
 Release: alt1
 
 Summary: %m_name - share Perl variables between processes
@@ -46,11 +46,14 @@ arrays, hashes of hashes, etc.
 %perl_vendor_install
 
 %files
-%doc Changes README CREDITS DISCLAIMER
+%doc Changes README CREDITS DISCLAIMER docs examples
 %perl_vendor_privlib/IPC*
 %doc CREDITS DISCLAIMER README
 
 %changelog
+* Fri Mar 25 2022 Igor Vlasenko <viy@altlinux.org> 1.12-alt1
+- automated CPAN update
+
 * Fri Sep 17 2021 Igor Vlasenko <viy@altlinux.org> 1.06-alt1
 - automated CPAN update
 
