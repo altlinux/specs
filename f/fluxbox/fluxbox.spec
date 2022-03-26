@@ -5,7 +5,7 @@
 
 Name: fluxbox
 Version: 1.3.7
-Release: alt5
+Release: alt6
 
 Summary: Fast and lightweight window manager
 Summary(ru_RU.UTF-8): Легкий и быстрый оконный менеджер
@@ -26,6 +26,9 @@ Source8: fluxbox-xsessions.desktop
 #Source9: fluxbox-applications.desktop
 Patch0: fluxbox-startfluxbox-pulseaudio.patch
 Patch1: fluxbox-gcc11.patch
+# https://sourceforge.net/p/fluxbox/bugs/1058/
+# https://bugzilla.mozilla.org/show_bug.cgi?id=1714353
+Patch2: 0001-replace-FbRootWindow-depth-with-maxDepth.patch
 
 # Explanation:
 # - xmessages uses by fbsetbg plus can be invoked from menu
@@ -83,6 +86,7 @@ Enable pulseaudio support.
 %setup -a4
 %patch0 -p0
 %patch1 -p0
+%patch2 -p1
 
 # Using mouse wheel for changes Tabs
 sed -i '22a\
@@ -176,6 +180,10 @@ bzip2 ChangeLog
 %vim_ftdetect_dir/%name.vim
 
 %changelog
+* Sat Mar 26 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3.7-alt6
+- src: Fix argb window decoration.
+- .desktop: fix exec param.
+
 * Sun Oct 31 2021 Igor Vlasenko <viy@altlinux.org> 1.3.7-alt5
 - NMU: added requires on fonts-bitmap-artwiz-aleczapka
 
