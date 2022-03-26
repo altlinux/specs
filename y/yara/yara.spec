@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: yara
-Version: 4.1.3
+Version: 4.2.0
 Release: alt1
 License: BSD-3-Clause and Apache-2.0
 Group: Development/Tools
@@ -15,11 +15,11 @@ Vcs: https://github.com/virustotal/yara
 
 Source: %name-%version.tar
 BuildRequires: flex
-BuildRequires: libssl-devel
 BuildRequires: libjansson-devel
 BuildRequires: libmagic-devel
-BuildRequires: protobuf-compiler
 BuildRequires: libprotobuf-c-devel
+BuildRequires: libssl-devel
+BuildRequires: protobuf-compiler
 
 %description
 YARA is a tool aimed at (but not limited to) helping malware researchers to
@@ -55,7 +55,6 @@ Development files for YARA.
 	--with-crypto	\
 	--enable-cuckoo	\
 	--enable-magic	\
-	--enable-dotnet	\
 	--enable-macho	\
 	--enable-dex	\
 	--enable-pb-tests
@@ -67,7 +66,9 @@ rm -f %buildroot%_libdir/libyara.a
 
 %check
 LD_LIBRARY_PATH=%buildroot%_libdir %buildroot%_bindir/yara --version
-%make_build check
+# Parallel make -j check does not work anymore:
+# https://github.com/VirusTotal/yara/issues/1667
+%make check
 
 %files
 %doc AUTHORS CONTRIBUTORS README.md COPYING
@@ -83,6 +84,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %buildroot%_bindir/yara --version
 %_pkgconfigdir/yara.pc
 
 %changelog
+* Sat Mar 26 2022 Vitaly Chikunov <vt@altlinux.org> 4.2.0-alt1
+- Update to v4.2.0 (2022-03-09).
+
 * Tue Oct 26 2021 Vitaly Chikunov <vt@altlinux.org> 4.1.3-alt1
 - Update to v4.1.3 (2021-10-21).
 
