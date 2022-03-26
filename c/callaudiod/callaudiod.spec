@@ -1,9 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
 %define api_ver 0.1
 %define libname libcallaudio
 
 Name: callaudiod
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: Daemon for dealing with audio routing during phone calls
@@ -75,6 +75,9 @@ applications that use %libname.
 %_pkgconfigdir/%libname-%api_ver.pc
 
 %changelog
+* Sat Mar 26 2022 Yuri N. Sedunov <aris@altlinux.org> 0.1.4-alt1
+- 0.1.4
+
 * Wed Jan 12 2022 Yuri N. Sedunov <aris@altlinux.org> 0.1.3-alt1
 - updated to 0.1.3-1-g17464ac
 
