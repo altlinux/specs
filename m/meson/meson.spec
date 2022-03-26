@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.60
+%define ver_major 0.61
 %define libname mesonbuild
 %define pkgdocdir %_docdir/%name-%version
 
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: meson
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: High productivity build system
@@ -31,7 +31,7 @@ Source2: %name.env
 
 BuildArch: noarch
 
-%define python_ver 3.6
+%define python_ver 3.7
 Requires: rpm-macros-%name = %EVR
 Requires: python3 >= %python_ver
 Requires: ninja-build >= 1.7
@@ -135,6 +135,9 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 %endif
 
 %changelog
+* Sat Mar 26 2022 Yuri N. Sedunov <aris@altlinux.org> 0.61.4-alt1
+- 0.61.4
+
 * Wed Dec 22 2021 Yuri N. Sedunov <aris@altlinux.org> 0.60.3-alt1
 - 0.60.3
 
