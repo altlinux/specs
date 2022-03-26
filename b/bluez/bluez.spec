@@ -8,8 +8,8 @@
 %def_enable experimental
 
 Name: bluez
-Version: 5.62
-Release: alt2
+Version: 5.64
+Release: alt1
 
 Summary: Bluetooth utilities
 License: GPL-2.0-or-later
@@ -206,6 +206,9 @@ fi
 %_datadir/zsh/site-functions/_bluetoothctl
 
 %changelog
+* Fri Mar 25 2022 L.A. Kostis <lakostis@altlinux.ru> 5.64-alt1
+- 5.64.
+
 * Mon Nov 29 2021 Alexey Shabalin <shaba@altlinux.org> 5.62-alt2
 - Avoid /bin/systemctl requirements (ALT #41458).
 
