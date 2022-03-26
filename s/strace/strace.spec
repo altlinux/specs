@@ -1,5 +1,5 @@
 Name: strace
-Version: 5.16
+Version: 5.17
 Release: alt1
 
 Summary: Tracks and displays system calls associated with a running process
@@ -90,6 +90,9 @@ echo 'END OF TEST SUITE INFORMATION'
 %doc COPYING CREDITS NEWS README doc/README-linux-ptrace
 
 %changelog
+* Sat Mar 26 2022 Dmitry V. Levin <ldv@altlinux.org> 5.17-alt1
+- v5.16 -> v5.17.
+
 * Mon Jan 10 2022 Dmitry V. Levin <ldv@altlinux.org> 5.16-alt1
 - v5.15 -> v5.16.
 
