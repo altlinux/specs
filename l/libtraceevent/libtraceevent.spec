@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libtraceevent
-Version: 1.5.2
+Version: 1.5.3
 Release: alt1
 Summary: Library to parse raw trace event formats
 License: GPL-2.0-only and LGPL-2.1-only
@@ -56,6 +56,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_man3dir/*.3.*
 
 %changelog
+* Sat Mar 26 2022 Vitaly Chikunov <vt@altlinux.org> 1.5.3-alt1
+- Updated to libtraceevent-1.5.3 (2022-03-24).
+
 * Thu Mar 24 2022 Vitaly Chikunov <vt@altlinux.org> 1.5.2-alt1
 - Updated to libtraceevent-1.5.2 (2022-03-09).
 
