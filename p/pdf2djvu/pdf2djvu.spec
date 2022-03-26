@@ -1,6 +1,6 @@
 Name: pdf2djvu
 Version: 0.9.18.2
-Release: alt1
+Release: alt2
 
 Summary: PDF to DjVu converter
 License: GPL-2.0
@@ -15,6 +15,8 @@ BuildRequires: libgomp-devel libpoppler-devel libxslt-devel pstreams libexiv2-de
 # for manpage
 BuildRequires: xsltproc docbook-dtds docbook-style-xsl
 
+Patch: 0001-pdf-backend-fix-compat-with-Poppler-22.02.patch
+
 %description
 pdf2djvu creates DjVu files from PDF files. It's able to extract:
 - graphics,
@@ -25,6 +27,7 @@ pdf2djvu creates DjVu files from PDF files. It's able to extract:
 
 %prep
 %setup
+%patch -p1
 
 %build
 private/autogen
@@ -44,6 +47,9 @@ popd
 %_man1dir/*
 
 %changelog
+* Sat Mar 26 2022 L.A. Kostis <lakostis@altlinux.ru> 0.9.18.2-alt2
+- Fix build w/ poppler >= 22.02.
+
 * Wed Dec 01 2021 L.A. Kostis <lakostis@altlinux.ru> 0.9.18.2-alt1
 - 0.9.18.2.
 - Update BR manpage.
