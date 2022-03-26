@@ -5,7 +5,7 @@
 
 Name: liboqs
 Version: 0.7.1
-Release: alt1
+Release: alt2
 Summary: C library for prototyping and experimenting with quantum-resistant cryptography
 License: MIT
 Group: System/Libraries
@@ -97,6 +97,9 @@ export LD_LIBRARY_PATH=$PWD/build/lib
 %_libdir/liboqs.so
 
 %changelog
+* Sat Mar 26 2022 Vitaly Chikunov <vt@altlinux.org> 0.7.1-alt2
+- Fix beekeeper package rebuild (yamllint test failure).
+
 * Mon Dec 20 2021 Vitaly Chikunov <vt@altlinux.org> 0.7.1-alt1
 - Updated to 0.7.1 (2021-12-16).
 - Build liboqs.so without executable stack.
