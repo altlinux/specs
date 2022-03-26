@@ -1,7 +1,7 @@
 %add_python3_path /usr/share/lirc/python-pkg/
 Name: lirc
 Version: 0.10.1
-Release: alt4
+Release: alt5
 
 Summary: The Linux Infrared Remote Control package
 License: GPL-2.0-or-later and MIT
@@ -17,6 +17,7 @@ Source5: confs_by_driver.yaml
 
 Patch1: lirc-0.10.1-disable-getconfig.patch
 Patch2: lirc-0.10.1-alt-sysmacros.patch
+Patch3: lirc-0.10.1-yaml6-compat.patch
 
 Obsoletes: %name-remotes
 
@@ -61,6 +62,7 @@ LIRC configuration process.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %add_optflags -I%_includedir/libftdi
@@ -161,6 +163,9 @@ fi
 %python3_sitelibdir/lirc-setup
 
 %changelog
+* Sat Mar 26 2022 L.A. Kostis <lakostis@altlinux.ru> 0.10.1-alt5
+- Fix compile w/ python-yaml >= 6.
+
 * Fri Dec 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.10.1-alt4
 - Adapted for python3.10.
 
