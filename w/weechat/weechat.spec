@@ -1,5 +1,5 @@
 Name: weechat
-Version: 3.0
+Version: 3.5
 Release: alt1
 
 Summary: fast, light & extensible IRC client
@@ -7,23 +7,29 @@ License: GPL-3.0
 Group: Networking/IRC
 
 URL: http://www.weechat.org/
-Source: %name-%version.tar
-Patch0: weechat-alt-python.patch
 
-Packager: Alexey Gladkov <legion@altlinux.ru>
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%define _localstatedir /var
+
+%set_verify_elf_method strict
+
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Thu Oct 20 2011
-BuildRequires: asciidoc asciidoc-a2x
+BuildRequires: asciidoctor
 BuildRequires: libaspell-devel
-BuildRequires: libgcrypt-devel
-BuildRequires: libgnutls-devel
 BuildRequires: lua-devel
-BuildRequires: libcurl-devel
-BuildRequires: zlib-devel
-BuildRequires: libncursesw-devel
 BuildRequires: perl-devel
 BuildRequires: python3-devel
-BuildRequires: tcl-devel
+
+BuildRequires: pkgconfig(gnutls)
+BuildRequires: pkgconfig(libcurl)
+BuildRequires: pkgconfig(libgcrypt)
+BuildRequires: pkgconfig(libzstd)
+BuildRequires: pkgconfig(ncursesw)
+BuildRequires: pkgconfig(tcl)
+BuildRequires: pkgconfig(zlib)
 
 Obsoletes: weechat-plugin-ruby <= 2.6-alt1
 
@@ -80,7 +86,6 @@ This package contains tcl plugin for weechat.
 
 %prep
 %setup
-#patch0 -p2
 
 # build plugins as plugins, not libs
 find ./src/plugins -name "Makefile*" -print0 | xargs -r0 subst 's,\(\-module\),\1 -avoid-version,' --
@@ -89,18 +94,9 @@ find ./src/plugins -name "Makefile*" -print0 | xargs -r0 subst 's,\(\-module\),\
 ./autogen.sh
 
 %configure \
-	--enable-threads \
-	--enable-exec \
-	--enable-buflist \
-	--enable-perl \
 	--disable-ruby \
-	--enable-lua \
-	--enable-python \
-	--disable-python2 \
-	--enable-gnutls \
-	--enable-aspell \
-	--enable-man \
-	--enable-doc
+	--with-debug \
+	--enable-man
 
 %make_build
 
@@ -115,27 +111,29 @@ rm -rf -- \
 find %buildroot -name '*.la' -delete
 find %buildroot -name '*.a' -delete
 
-%find_lang %name
+%find_lang --output=%name.lang --with-man          %name
+%find_lang --output=%name.lang --with-man --append %name-headless
 
 %files -f %name.lang
 %_bindir/*
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins
+%_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/%name.png
 %_libdir/%name/plugins/alias.so
 %_libdir/%name/plugins/buflist.so
 %_libdir/%name/plugins/charset.so
+%_libdir/%name/plugins/exec.so
 %_libdir/%name/plugins/fifo.so
 %_libdir/%name/plugins/fset.so
-%_libdir/%name/plugins/exec.so
-%_libdir/%name/plugins/script.so
 %_libdir/%name/plugins/irc.so
 %_libdir/%name/plugins/logger.so
 %_libdir/%name/plugins/relay.so
-%_libdir/%name/plugins/xfer.so
+%_libdir/%name/plugins/script.so
 %_libdir/%name/plugins/trigger.so
-#_mandir/man*/*
-#_defaultdocdir/%name
+%_libdir/%name/plugins/typing.so
+%_libdir/%name/plugins/xfer.so
+%_mandir/man*/*
 
 %files plugin-aspell
 %_libdir/%name/plugins/spell.so
@@ -153,6 +151,12 @@ find %buildroot -name '*.a' -delete
 %_libdir/%name/plugins/tcl.so
 
 %changelog
+* Sun Mar 27 2022 Alexey Gladkov <legion@altlinux.ru> 3.5-alt1
+- New version (3.5)
+- Build from upstream git repository.
+- Update buildrequires.
+- Add manpages.
+
 * Sat Dec 05 2020 Alexey Gladkov <legion@altlinux.ru> 3.0-alt1
 - New version (3.0)
 
