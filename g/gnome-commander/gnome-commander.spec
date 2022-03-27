@@ -8,7 +8,7 @@
 %def_with unique
 
 Name: gnome-commander
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 %define xdg_name org.gnome.%name
@@ -82,6 +82,9 @@ sed -i.e2k "/g_autofree gchar/{s|g_autofree gchar|g_autofree_edg(gchar)|;s|\*||g
 
 
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 1.14.2-alt1
+- 1.14.2
+
 * Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt1
 - 1.14.1
 
