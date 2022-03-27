@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define _unpackaged_files_terminate_build 1
 %define ver_major 41
 %define beta %nil
@@ -5,24 +7,29 @@
 
 Name: gnome-screenshot
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: The GNOME Screenshot Tool
 Group: Graphical desktop/GNOME
 License: GPLv2+
 Url: https://gitlab.gnome.org/GNOME/gnome-screenshot
 
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
+%else
+Source: %name-%version%beta.tar
+%endif
 
 %define glib_ver 2.36
 %define gtk_ver 3.12
+%define handy_ver 1.5.0
 
-BuildRequires(pre): meson rpm-build-gnome
-BuildPreReq: libgio-devel >= %glib_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires: meson libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver libcanberra-gtk3-devel
 BuildRequires: libX11-devel libXext-devel
-BuildRequires: pkgconfig(libhandy-1)
-BuildRequires: libappstream-glib-devel
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
+BuildRequires: %_bindir/appstream-util
 
 %description
 GNOME Screenshot Tool makes screenshots from desktop.
@@ -49,6 +56,9 @@ GNOME Screenshot Tool makes screenshots from desktop.
 %doc NEWS README*
 
 %changelog
+* Mon Mar 28 2022 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt2
+- updated to 41.0-25-g45f08f0 (fixed build with meson >= 0.61)
+
 * Sun Nov 14 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
 - 41.0
 
