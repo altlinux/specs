@@ -1,5 +1,5 @@
 Name: gcovr
-Version: 5.0
+Version: 5.1
 Release: alt1
 
 Summary: A Python script for summarizing gcov data
@@ -12,6 +12,7 @@ Source: https://pypi.io/packages/source/g/%name/%name-%version.tar.gz
 BuildArch: noarch
 
 Requires: %_bindir/gcov
+Requires: python3-module-jinja2 python3-module-Pygments
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -38,6 +39,9 @@ Python.
 %doc README.rst PKG-INFO
 
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 5.1-alt1
+- 5.1
+
 * Fri Jun 11 2021 Yuri N. Sedunov <aris@altlinux.org> 5.0-alt1
 - 5.0
 - fixed License tag
