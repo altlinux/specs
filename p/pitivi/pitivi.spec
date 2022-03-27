@@ -12,7 +12,7 @@
 
 Name: pitivi
 Version: %ver_major.05
-Release: alt1
+Release: alt1.1
 
 Summary: PiTiVi allows users to easily edit audio/video projects
 License: LGPLv2.1+
@@ -24,6 +24,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
+Patch: %name-2021-05.0-up-meson-0.61.patch
 
 %add_python3_path %_libdir/%name/python
 
@@ -58,6 +59,7 @@ newbies and professionals alike.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %meson
@@ -80,6 +82,9 @@ newbies and professionals alike.
 
 
 %changelog
+* Mon Mar 28 2022 Yuri N. Sedunov <aris@altlinux.org> 2021.05-alt1.1
+- fixed build with meson >= 0.61
+
 * Sun May 30 2021 Yuri N. Sedunov <aris@altlinux.org> 2021.05-alt1
 - 2021.05
 
