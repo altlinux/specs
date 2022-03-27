@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: sqlite3
-Version: 3.38.1
+Version: 3.38.2
 Release: alt1
 Summary: An Embeddable SQL Database Engine
 License: ALT-Public-Domain
@@ -114,7 +114,6 @@ export CFLAGS="%optflags \
 	-DSQLITE_ENABLE_FTS3_PARENTHESIS \
 	-DSQLITE_ENABLE_FTS4 \
 	-DSQLITE_ENABLE_FTS5 \
-	-DSQLITE_ENABLE_JSON1 \
 	-DSQLITE_ENABLE_RTREE \
 	-DSQLITE_ENABLE_UNLOCK_NOTIFY \
 	-DSQLITE_SECURE_DELETE \
@@ -130,7 +129,6 @@ autoreconf -i
 	--enable-fst3 \
 	--enable-fst4 \
 	--enable-fts5 \
-	--enable-json1 \
 	--enable-load-extension \
 	--enable-readline \
 	--enable-rtree \
@@ -199,6 +197,9 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Sun Mar 27 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.38.2-alt1
+- 3.38.2.
+
 * Fri Mar 18 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.38.1-alt1
 - 3.38.1.
 - Backported patch to fix atof1 test from upstream.
