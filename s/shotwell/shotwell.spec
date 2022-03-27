@@ -12,7 +12,7 @@
 
 Name: shotwell
 Version: %ver_major.3
-Release: alt3
+Release: alt3.1
 
 Summary: digital photo organizer designed for the GNOME desktop environment
 Group: Graphics
@@ -34,8 +34,8 @@ Requires: dconf
 # for video-thumbnailer
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-libav
 
-BuildRequires(pre): meson
-BuildRequires: vala-tools
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson vala-tools
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libsoup-devel >= %soup_ver
 BuildRequires: gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel
@@ -62,6 +62,8 @@ mode, and export them to share with others.
 %prep
 %setup
 %patch -b .no_dark_theme
+# comment out duplicate "id" entry from help/LINGUAS
+sed -i '0,/^id$/s/\(^id$\)/#\1/' help/LINGUAS
 
 %build
 %add_optflags -D_GIT_VERSION=%(echo %version | tr -d .)
@@ -111,6 +113,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.31.3-alt3.1
+- fixed build with meson >= 0.61
+
 * Wed Jan 26 2022 Yuri N. Sedunov <aris@altlinux.org> 0.31.3-alt3
 - org.gnome.shotwell.gschema.xml: use-dark-theme = false (ALT #41805)
 
