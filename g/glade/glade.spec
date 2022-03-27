@@ -13,7 +13,7 @@
 
 Name: glade
 Version: %ver_major.0
-Release: alt0.3
+Release: alt0.4
 
 Summary: A user interface designer for Gtk+ and GNOME
 Group: Development/GNOME and GTK+
@@ -32,8 +32,8 @@ Requires: libgladeui%api_ver = %version-%release
 %define gjs_ver 1.64
 %define webkit_ver 2.28
 
-BuildRequires(pre): meson rpm-build-gnome
-BuildRequires: yelp-tools libappstream-glib-devel
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires: meson yelp-tools %_bindir/appstream-util
 BuildRequires: libgtk+3-devel >= %gtk_ver libxml2-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 %if_enabled python
@@ -100,6 +100,10 @@ GObject introspection devel data for the GladeUI library.
 
 %prep
 %setup
+# fix build with meson >= 0.61
+sed -E -i "/^[[:space:]]*('desktop'|'appdata')\,/d" data/meson.build
+# comment out duplicate "da" entry from help/LINGUAS
+sed -i '0,/^da$/s/\(^da$\)/#\1/' help/LINGUAS
 
 %build
 %meson \
@@ -115,8 +119,7 @@ GObject introspection devel data for the GladeUI library.
 %find_lang --with-gnome %name
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-xvfb-run %meson_test
+xvfb-run %__meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -162,6 +165,10 @@ xvfb-run %meson_test
 %_girdir/Gladeui-%api_ver.gir
 
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 3.39.0-alt0.4
+- updated to 3.39.0-120-g8d52d1ec (updated translations)
+- fixed build with meson >= 0.61
+
 * Thu Sep 02 2021 Yuri N. Sedunov <aris@altlinux.org> 3.39.0-alt0.3
 - temporarily disabled webkit2gtk support (not ready for 4.1)
 
