@@ -1,8 +1,8 @@
-%define git 1aedbe7
+%define git adad73c
 
 Name: dhewm3
 Version: 1.5.1
-Release: alt1.g%{git}
+Release: alt2.g%{git}
 Summary: DOOM 3 source port
 Summary(ru_RU.UTF-8): Порт движка оригинального Doom 3
 License: GPL-3.0-only
@@ -10,7 +10,7 @@ Group: Games/Arcade
 Url: https://github.com/dhewm/dhewm3
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 Source1: %name.png
 
 BuildRequires(pre): rpm-macros-cmake ImageMagick-tools
@@ -104,6 +104,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sun Mar 27 2022 L.A. Kostis <lakostis@altlinux.ru> 1.5.1-alt2.gadad73c
+- GIT adad73c.
+
 * Mon Jun 07 2021 L.A. Kostis <lakostis@altlinux.ru> 1.5.1-alt1.g1aedbe7
 - NMU update:
   + GIT 1aedbe7.
