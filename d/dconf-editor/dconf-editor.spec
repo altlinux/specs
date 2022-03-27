@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _unpackaged_files_terminate_build 1
 %define ver_major 3.38
@@ -6,7 +6,7 @@
 
 Name: dconf-editor
 Version: %ver_major.3
-Release: alt1.1
+Release: alt2
 
 Summary: dconf confuguration editor
 Group: Graphical desktop/GNOME
@@ -28,8 +28,8 @@ Source1: %name-3.38.3.ru.po.finziyr
 
 Requires: dconf >= %dconf_ver
 
-BuildRequires(pre): meson
-BuildPreReq: libgio-devel >= %glib_ver
+BuildRequires(pre): rpm-macros-meson gnome-common
+BuildPreReq: meson libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver libdconf-devel >= %dconf_ver
 BuildPreReq: vala-tools >= %vala_ver
 BuildRequires: libxml2-devel rpm-build-gnome
@@ -70,6 +70,10 @@ cp %SOURCE1 po/ru.po
 %doc README*
 
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 3.38.3-alt2
+- updated to 3.38.2-34-g41691c16 from master branch
+  (fixed build with meson >= 0.61)
+
 * Fri Oct 15 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.3-alt1.1
 - updated russian translation
 
