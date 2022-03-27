@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
@@ -8,14 +10,18 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: A 2048 clone for GNOME
 Group: Games/Boards
 License: %gpl3plus
 Url: https://wiki.gnome.org/Apps/2048
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
+%else
+Source: %__name-%version.tar
+%endif
 
 Provides:  %__name = %version-%release
 
@@ -25,8 +31,8 @@ Provides:  %__name = %version-%release
 %define libgames_ver 1.2.0
 %define vala_ver 0.24
 
-BuildRequires(pre): meson rpm-build-licenses
-BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires(pre): rpm-macros-meson rpm-build-licenses
+BuildRequires: meson yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: vala-tools >= %vala_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver libclutter-gtk3-devel >= %clutter_gtk_ver
 BuildRequires: libgee0.8-devel >= %gee_ver libgnome-games-support-devel >= %libgames_ver
@@ -36,6 +42,7 @@ Move the tiles until you obtain the 2048 tile.
 
 %prep
 %setup -n %__name-%version
+sed -E -i "s/^[[:space:]]*'(desktop|appdata)-file'\,//" data/meson.build
 
 %build
 %meson
@@ -54,6 +61,10 @@ Move the tiles until you obtain the 2048 tile.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt2
+- updated to 3.38.2-12-gf080df6 (updated translations)
+- fixed build with meson >= 0.61
+
 * Sun Nov 22 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt1
 - 3.38.2
 
