@@ -5,7 +5,7 @@
 
 Name: revelation
 Version: %ver_major.4
-Release: alt1
+Release: alt1.1
 
 Summary: Password manager for the GNOME 3 desktop
 License: GPL-2.0
@@ -28,7 +28,7 @@ Requires: dconf
 Requires: libgtk+3-gir >= %gtk_ver
 
 BuildRequires(pre): meson rpm-build-python3 rpm-build-gir
-BuildRequires: shared-mime-info desktop-file-utils libappstream-glib-devel
+BuildRequires: shared-mime-info desktop-file-utils %_bindir/appstream-util
 BuildRequires: libgtk+3-gir-devel >= %gtk_ver
 BuildRequires: python3-module-pygobject3-devel
 BuildRequires: python3-module-pycryptodomex
@@ -41,6 +41,8 @@ access to it through a user-friendly graphical interface.
 
 %prep
 %setup -n %name%{?_disable_snapshot:-%name}-%version
+# fix for build with meson >= 0.61
+sed -i '/^[[:space:]]*appdata\,/d' data/meson.build
 
 %build
 %meson
@@ -69,6 +71,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/metainfo/%rdn_name.appdata.xml
 
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.5.4-alt1.1
+- fixed build with meson >= 0.61
+
 * Sun Oct 04 2020 Yuri N. Sedunov <aris@altlinux.org> 0.5.4-alt1
 - 0.5.4 (ported to Meson build sysytem)
 
