@@ -9,7 +9,7 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: Gnome version of Othello (Reversi) board game
 Group: Games/Boards
@@ -27,8 +27,8 @@ Provides:  %_name = %version-%release
 %define glib_ver 2.40.0
 %define gtk_ver 3.22.23
 
-BuildRequires(pre): meson
-BuildRequires: vala-tools
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson vala-tools
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
@@ -40,6 +40,8 @@ Othello.
 
 %prep
 %setup -n %_name-%version
+# comment out duplicate "id" entry from help/LINGUAS
+sed -i '0,/^id$/s/\(^id$\)/#\1/' help/LINGUAS
 
 %build
 %meson
@@ -60,6 +62,10 @@ Othello.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt3
+- upated to 3.38.1-41-g70bc10b
+- fixed build with meson >= 0.61
+
 * Mon Mar 01 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt2
 - updated to 3.38.1-16-gd7b2ed1 (fixed build with vala-0.50.4)
 
