@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 73
+%define centos_release 75
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,31 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sun Mar 27 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.75-alt1.el9
+- Updated to kernel-5.14.0-75.el9 (fixes: CVE-2022-0742, CVE-2022-22942):
+  + drm/ast: Create threshold values for AST2600
+  + drm/vmwgfx: Fix stale file descriptors on failed usercopy
+  + Fix FPU bugs that crash guest kernel after migration between newer->older cpu
+  + gfs2: Fix fault_in_safe_writeable() for s390x
+  + ipv6: fix skb drops in igmp6_event_query() and igmp6_event_report()
+  + Merge tag 'kernel-5.14.0-70.3.1.el9_0' from 9.0
+  + netfilter: nf_queue: fix socket refcount bugs
+  + powerpc: drivers/char: Enable DLPAR operations with systems that have Guest Secure Boot and lockdown enabled
+  + powerpc/pseries/ddw: Revert "Extend upper limit for huge DMA window for persistent memory"
+  + redhat/configs: aarch64: Fix PAC/BTI config settings
+  + redhat/configs: Disable KVM on POWER
+  + redhat/configs: Disable watchdog components
+  + RHEL9.0: arch_hw Update CONFIG_MOUSE_VSXXXAA=m
+  + Sched: Fix fork versus cgroup race
+  + scsi: mpi3mr: bug fixes
+  + x86/cpu: Add Xeon Icelake-D to list of CPUs that support PPIN
+
+* Tue Mar 22 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.74-alt1.el9
+- Updated to kernel-5.14.0-74.el9:
+  + Fix bad page state in process qemu-kvm when using TDP_MMU
+  + powerpc/ibmvnic: DLPAR fix kernel Oops when add of vNIC device
+  + redhat: rpminspect: disable 'patches' check for known empty patch files
+
 * Mon Mar 21 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.73-alt1.el9
 - Updated to kernel-5.14.0-73.el9 (fixes: CVE-2022-0516, CVE-2022-0847):
   + Add definition for RAPTOR_LAKE
