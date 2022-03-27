@@ -1,6 +1,6 @@
 %define pkgname ocamlbuild
 Name: ocaml-%pkgname
-Version: 0.14.0
+Version: 0.14.1
 Release: alt1
 Epoch: 1
 
@@ -66,6 +66,9 @@ rm %buildroot%_libdir/ocaml/%pkgname/META
 %_libdir/ocaml/ocamlbuild/*.mli
 
 %changelog
+* Fri Mar 25 2022 Anton Farygin <rider@altlinux.ru> 1:0.14.1-alt1
+- 0.14.1
+
 * Mon Jul 01 2019 Anton Farygin <rider@altlinux.ru> 1:0.14.0-alt1
 - 0.14.0
 
