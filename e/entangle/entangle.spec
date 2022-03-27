@@ -5,7 +5,7 @@
 
 Name: entangle
 Version: 3.0
-Release: alt3
+Release: alt4
 
 Summary: Tethered Camera Control and Capture tool
 Group: Graphics
@@ -86,6 +86,9 @@ export LD_LIBRARY_PATH=$(pwd)/%__builddir/src/backend:$(pwd)/%__builddir/src/fro
 %_girdir/Entangle-%api_ver.gir
 
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt4
+- updated to v3.0-24-g54795d2 (fixed build with meson >= 0.61)
+
 * Thu Sep 16 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt3
 - fixed build for %%e2k (ilyakurdyukov@)
 
