@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 41
 %define api_ver 3.0
@@ -8,7 +8,7 @@
 
 Name: gtranslator
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A GNOME po file editor with many bells and whistles.
 License: GPLv3
@@ -65,6 +65,8 @@ This package contains documentation needed to develop %name plugins.
 
 %prep
 %setup
+# fix for build with meson >= 0.61
+sed -E -i '/^[[:space:]]*(desktop|appdata)\,/d' data/meson.build
 
 %build
 %meson -Dbuildtype=release \
@@ -93,6 +95,10 @@ This package contains documentation needed to develop %name plugins.
 %_datadir/gtk-doc/html/%name/}
 
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt2
+- updated to 41.0-6-gab775966 (updated translations)
+- fixed build with meson >= 0.61
+
 * Tue Mar 01 2022 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
 - 41.0
 
