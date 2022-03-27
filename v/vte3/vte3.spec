@@ -1,12 +1,12 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define _name vte
-%define ver_major 0.67
+%define ver_major 0.68
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.90
+Version: %ver_major.0
 Release: alt1
 
 %def_disable static
@@ -202,6 +202,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.68.0-alt1
+- 0.68.0
+
 * Mon Mar 07 2022 Yuri N. Sedunov <aris@altlinux.org> 0.67.90-alt1
 - 0.67.90
 
