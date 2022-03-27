@@ -7,7 +7,7 @@
 
 Name: gnome-dictionary
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: Gnome client for MIT dictionary server
 Group: Graphical desktop/GNOME
@@ -60,6 +60,9 @@ correct spelling of words.
 %doc NEWS README*
 
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt3
+- updated to 40.0-64-gd77ecf7 (fixed build with meson >= 0.61, updated translations)
+
 * Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt2
 - updated to 40.0-55-gf558cdc
 - fixed meson options
