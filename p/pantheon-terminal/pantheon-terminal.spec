@@ -7,7 +7,7 @@
 
 Name: pantheon-terminal
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Pantheon Terminal
 Group: Terminals
@@ -28,8 +28,8 @@ Source: %_name-%version.tar
 Requires: elementary-icon-theme
 Provides: %rdn_name = %version-%release
 
-BuildRequires(pre): meson
-BuildRequires: appstream desktop-file-utils
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson appstream desktop-file-utils
 BuildRequires: libgranite-devel >= %granite_ver libnotify-devel
 BuildRequires: libvte3-devel libpcre2-devel libgee0.8-devel
 BuildRequires: vala-tools >= %vala_ver libgranite-vala
@@ -81,6 +81,9 @@ This package provides Vala language bindings for the %name.
 %endif
 
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 6.0.1-alt2
+- updated to 6.0.1-14-gc923bd3b (fixed build with meson >= 0.61)
+
 * Wed Dec 15 2021 Yuri N. Sedunov <aris@altlinux.org> 6.0.1-alt1
 - 6.0.1
 
