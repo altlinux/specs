@@ -1,7 +1,10 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 3.41
+%define gcr_api_ver 3
+%define gck_api_ver 1
+
 %def_enable ssh_agent
 %def_enable introspection
 %def_enable gtk_doc
@@ -9,7 +12,7 @@
 
 Name: gcr
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A GNOME crypto viewer and prompter
 Group: Graphical desktop/GNOME
@@ -34,12 +37,13 @@ Requires: libtasn1-utils
 %define secret_ver 0.20
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-systemd
-BuildRequires: meson gtk-doc python3 glib2-devel >= %glib_ver
+BuildRequires: meson python3 glib2-devel >= %glib_ver
 BuildRequires: libp11-kit-devel >= %p11kit_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libgcrypt-devel >= %gcrypt_ver libtasn1-devel libtasn1-utils libtasn1-utils gnupg2-gpg
+BuildRequires: libvala-devel >= %vala_ver vala-tools
 %{?_enable_ssh_agent:BuildRequires: libsecret-devel >= %secret_ver %_bindir/ssh-agent %_bindir/ssh-add}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
-BuildRequires: libvala-devel >= %vala_ver vala-tools
+%{?_enable_gtk_doc:BuildRequires: gi-docgen}
 %{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools-gui %_bindir/ssh-keygen}
 
 %description
@@ -124,73 +128,78 @@ This package contains development documentation for GCR libraries.
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
-xvfb-run %meson_test
+xvfb-run %__meson_test -t 2
 
 %files -f %name.lang
-%_bindir/gcr-viewer
-%_libexecdir/gcr-prompter
-%_libexecdir/gcr-ssh-askpass
+%_bindir/%name-viewer
+%_libexecdir/%name-prompter
+%_libexecdir/%name-ssh-askpass
 %{?_enable_ssh_agent:
-%_libexecdir/gcr-ssh-agent
-%_userunitdir/gcr-ssh-agent.service
-%_userunitdir/gcr-ssh-agent.socket}
-%_datadir/applications/gcr-viewer.desktop
-%_datadir/applications/gcr-prompter.desktop
+%_libexecdir/%name-ssh-agent
+%_userunitdir/%name-ssh-agent.service
+%_userunitdir/%name-ssh-agent.socket}
+%_datadir/applications/%name-viewer.desktop
+%_datadir/applications/%name-prompter.desktop
 %dir %_datadir/GConf
 %dir %_datadir/GConf/gsettings
 %_datadir/GConf/gsettings/org.gnome.crypto.pgp.convert
 %_datadir/GConf/gsettings/org.gnome.crypto.pgp_keyservers.convert
 %_datadir/glib-2.0/schemas/org.gnome.crypto.pgp.gschema.xml
 %_datadir/icons/hicolor/*/apps/*
-%_datadir/mime/packages/gcr-crypto-types.xml
+%_datadir/mime/packages/%name-crypto-types.xml
 %_datadir/dbus-1/services/org.gnome.keyring.PrivatePrompter.service
 %_datadir/dbus-1/services/org.gnome.keyring.SystemPrompter.service
 
 %files libs
-%_libdir/libgck-1.so.*
-%_libdir/libgcr-base-3.so.*
-%_libdir/libgcr-ui-3.so.*
+%_libdir/libgck-%gck_api_ver.so.*
+%_libdir/lib%name-base-%gcr_api_ver.so.*
+%_libdir/lib%name-ui-%gcr_api_ver.so.*
 
 %files libs-devel
-%_includedir/gck-1
-%_includedir/gcr-3
-%_libdir/libgck-1.so
-%_libdir/libgcr-base-3.so
-%_libdir/libgcr-ui-3.so
-%_pkgconfigdir/gck-1.pc
-%_pkgconfigdir/gcr-3.pc
-%_pkgconfigdir/gcr-base-3.pc
-%_pkgconfigdir/gcr-ui-3.pc
+%_includedir/gck-%gck_api_ver
+%_includedir/%name-%gcr_api_ver
+%_libdir/libgck-%gck_api_ver.so
+%_libdir/lib%name-base-%gcr_api_ver.so
+%_libdir/lib%name-ui-%gcr_api_ver.so
+%_pkgconfigdir/gck-%gck_api_ver.pc
+%_pkgconfigdir/%name-%gcr_api_ver.pc
+%_pkgconfigdir/%name-base-%gcr_api_ver.pc
+%_pkgconfigdir/%name-ui-%gcr_api_ver.pc
 
 %if_enabled gtk_doc
 %files libs-devel-doc
-%_datadir/gtk-doc/html/gck/
-%_datadir/gtk-doc/html/gcr/
+%_datadir/doc/%name-%gcr_api_ver
+%_datadir/doc/%name-ui-%gcr_api_ver
+%_datadir/doc/gck-%gck_api_ver
 %endif
 
 %if_enabled introspection
 %files libs-gir
-%_typelibdir/Gck-1.typelib
-%_typelibdir/Gcr-3.typelib
-%_typelibdir/GcrUi-3.typelib
+%_typelibdir/Gck-%gck_api_ver.typelib
+%_typelibdir/Gcr-%gcr_api_ver.typelib
+%_typelibdir/GcrUi-%gcr_api_ver.typelib
 
 %files libs-gir-devel
-%_girdir/Gck-1.gir
-%_girdir/Gcr-3.gir
-%_girdir/GcrUi-3.gir
+%_girdir/Gck-%gck_api_ver.gir
+%_girdir/Gcr-%gcr_api_ver.gir
+%_girdir/GcrUi-%gcr_api_ver.gir
 %endif
 
 %files libs-vala
-%_vapidir/gck-1.deps
-%_vapidir/gck-1.vapi
-%_vapidir/gcr-3.deps
-%_vapidir/gcr-3.vapi
-%_vapidir/gcr-ui-3.deps
-%_vapidir/gcr-ui-3.vapi
+%_vapidir/gck-%gck_api_ver.deps
+%_vapidir/gck-%gck_api_ver.vapi
+%_vapidir/%name-%gcr_api_ver.deps
+%_vapidir/%name-%gcr_api_ver.vapi
+%_vapidir/%name-ui-%gcr_api_ver.deps
+%_vapidir/%name-ui-%gcr_api_ver.vapi
 %_vapidir/pkcs11.vapi
 
 
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 3.41.0-alt2
+- updated to 3.41.0-27-g31bc9eb from gcr-3-41 branch (fixed build
+  with meson >= 0.61)
+
 * Thu Sep 30 2021 Yuri N. Sedunov <aris@altlinux.org> 3.41.0-alt1
 - 3.41.0
 
