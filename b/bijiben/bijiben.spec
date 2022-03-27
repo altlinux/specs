@@ -8,7 +8,7 @@
 
 Name: bijiben
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Note editor for GNOME
 License: GPL-3.0
@@ -20,6 +20,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
+Patch: bijiben-40.1-up-meson-0.61.patch
 
 %define glib_ver 2.54
 %define gtk_ver 3.20
@@ -30,8 +31,8 @@ Source: %name-%version.tar
 
 Requires: dconf tracker-miners3 >= %tracker_ver
 
-BuildRequires(pre): meson rpm-build-xdg
-BuildRequires: yelp-tools libappstream-glib-devel
+BuildRequires(pre): rpm-macros-meson rpm-build-xdg
+BuildRequires: meson yelp-tools libappstream-glib-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: pkgconfig(tracker-sparql-%tracker_api_ver) >= %tracker_ver
@@ -48,6 +49,7 @@ desktop integration.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %meson \
@@ -77,6 +79,9 @@ desktop integration.
 %doc README* AUTHORS NEWS
 
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1.1
+- fixed build with meson >= 0.61
+
 * Fri Apr 30 2021 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
 - 40.1
 
