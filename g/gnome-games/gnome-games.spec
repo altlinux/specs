@@ -1,4 +1,5 @@
-%def_disable snapshot
+%def_enable snapshot
+
 %define ver_major 40
 %define beta %nil
 %define xdg_name org.gnome.Games
@@ -6,7 +7,7 @@
 
 Name: gnome-games
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: Simple game launcher for GNOME
 License: %gpl3plus
@@ -50,6 +51,8 @@ This package provides files needed to develop plugins for GNOME Games.
 
 %prep
 %setup -n %name-%version%beta
+# fix build with meson >= 0.61
+sed -E -i "s/'(desktop|appdata)-file'\,//" data/meson.build
 
 %build
 %meson
@@ -77,8 +80,11 @@ This package provides files needed to develop plugins for GNOME Games.
 #%_includedir/lib%name.h
 #%_vapidir/%name.vapi
 
-
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt2
+- updated to 40.0-24-g91e76523
+- fixed build with meson >= 0.61
+
 * Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 
