@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define _unpackaged_files_terminate_build 1
 
 %define _name mahjongg
@@ -8,22 +10,26 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Classic Chinese Tile Game
 Group: Games/Boards
 License: GPLv3+
 Url: https://wiki.gnome.org/Apps/Mahjongg
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
+%else
+Source: %__name-%version.tar
+%endif
 
 Provides:  %__name = %version-%release
 
 %define glib_ver 2.40.0
 %define gtk_ver 3.12.0
 
-BuildRequires(pre): meson
-BuildRequires: vala-tools
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson vala-tools
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
@@ -34,6 +40,7 @@ version of the classic Eastern tile game, Mahjongg.
 
 %prep
 %setup -n %__name-%version
+sed -E -i "s/'(desktop|appdata)-file'\,//" data/meson.build
 
 %build
 %meson \
@@ -55,6 +62,10 @@ version of the classic Eastern tile game, Mahjongg.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 3.38.3-alt2
+- updated to 3.38.3-7-g2d161cc
+- fixed build with meson >= 0.61
+
 * Sun Nov 01 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.3-alt1
 - 3.38.3
 
