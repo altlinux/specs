@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define ver_major 41
 %define beta %nil
 %define api_ver_major 3
@@ -9,14 +11,18 @@
 
 Name: devhelp
 Version: %ver_major.2
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: Developer's help program
 Group: Development/Other
 License: GPL-3.0
 Url: https://wiki.gnome.org/Apps/Devhelp
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
+%else
+Source: %name-%version%beta.tar
+%endif
 
 %add_python3_path %_libdir/gedit/plugins
 
@@ -158,6 +164,10 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*}
 
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 41.2-alt2
+- updated to 41.2-48-g14272cae (fixed build with meson >= 0.61,
+  updated translations)
+
 * Fri Oct 01 2021 Yuri N. Sedunov <aris@altlinux.org> 41.2-alt1
 - 41.2
 
