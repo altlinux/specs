@@ -1,20 +1,28 @@
+%def_enable snapshot
+
 %define ver_major 0.12
 %def_enable eds
 
 Name: almanah
 Version: %ver_major.3
-Release: alt2
+Release: alt3
 
 Summary: Diary editor for GNOME
 License: LGPLv3+
 Group: Graphical desktop/GNOME
 Url: http://wiki.gnome.org/Apps/Almanah_Diary
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
-BuildRequires(pre): meson
-BuildRequires: desktop-file-utils libappstream-glib-devel
-BuildRequires: libgio-devel libgtksourceview3-devel libgtkspell3-devel
+%define glib_ver 2.62
+
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson desktop-file-utils libappstream-glib-devel
+BuildRequires: libgio-devel >= %glib_ver libgtksourceview3-devel libgtkspell3-devel
 BuildRequires: libsqlite3-devel libcryptui-devel gcr-libs-devel libgpgme-devel
 %{?_enable_eds:BuildRequires: evolution-data-server-devel >= 3.5.91}
 
@@ -48,6 +56,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc README* AUTHORS NEWS
 
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.12.3-alt3
+- updated to 0.12.3-13-gfe197a0 (fixed build with meson >= 0.61)
+
 * Mon Mar 15 2021 Yuri N. Sedunov <aris@altlinux.org> 0.12.3-alt2
 - rebuild against libedataserver-1.2.so.26
 
