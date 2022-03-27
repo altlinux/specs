@@ -5,7 +5,7 @@
 
 Name: d-feet
 Version: %ver_major.16
-Release: alt1.1
+Release: alt1.2
 
 Summary: A powerful D-Bus Debugger
 Group: Development/Tools
@@ -34,6 +34,8 @@ objects.
 %prep
 %setup
 sed -i 's/\(pycodestyle\)-3/\1.py3/' src/tests/meson.build
+# fix for build with meson >= 0.61
+sed -E -i '/^[[:space:]]*(desktop|appdata)\,/d' data/meson.build
 
 %build
 %meson %{?_disable_tests:-Dtests=false}
@@ -58,6 +60,9 @@ sed -i 's/\(pycodestyle\)-3/\1.py3/' src/tests/meson.build
 %doc AUTHORS README* NEWS
 
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.16-alt1.2
+- fixed build with meson >= 0.61
+
 * Sat Aug 07 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.16-alt1.1
 - fixed BR
 
