@@ -10,7 +10,7 @@ Name: noise
 %define xdg_name org.pantheon.%name
 %define rdn_name io.elementary.%_name
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: The official elementary music player
 Group: Sound
@@ -124,6 +124,9 @@ This package contains the development files.
 %_vapidir/%rdn_name-core.vapi
 
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 5.1.1-alt2
+- updated to 5.1.1-148-g4d974d7f (fixed build with meson >= 0.61)
+
 * Mon Jul 19 2021 Yuri N. Sedunov <aris@altlinux.org> 5.1.1-alt1
 - updated to 5.1.1-16-g7667b8e5
 
