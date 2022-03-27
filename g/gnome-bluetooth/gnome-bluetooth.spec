@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 3.34
 %define api_ver 1.0
@@ -8,10 +8,11 @@
 %def_enable introspection
 %def_enable gtk_doc
 %def_enable check
+%def_enable sendto
 
 Name: gnome-bluetooth
 Version: %ver_major.5
-Release: alt1
+Release: alt2
 
 Summary: The GNOME Bluetooth Subsystem
 License: GPL-2.0 and LGPL-2.1
@@ -90,22 +91,28 @@ GObject introspection devel data for the GNOME Bluetooth library
 
 %prep
 %setup
+# fix for build with meson >= 0.61
+sed -i '/^[[:space:]]*desktop\,/d' sendto/meson.build
 
 %build
 %meson \
 	-Dicon_update=false \
 	%{?_enable_gtk_doc:-Dgtk_doc=true} \
-	%{?_enable_introspection:-Dintrospection=true}
+	%{?_enable_introspection:-Dintrospection=true} \
+	%{?_disable_sendto:-Dsendto=false}
+%nil
 %meson_build
 
 %install
 %meson_install
 
+%if_enabled sendto
 mv %buildroot%_bindir/bluetooth-sendto %buildroot%_bindir/%name-sendto
 mkdir -p %buildroot%_altdir
 cat > %buildroot%_altdir/%name <<EOF
 %_bindir/bluetooth-sendto	%_bindir/%name-sendto	10
 EOF
+%endif
 
 %find_lang --with-gnome --output=global.lang %name gnome-bluetooth2
 
@@ -115,10 +122,10 @@ dbus-run-session %meson_test
 
 
 %files -f global.lang
-%_altdir/%name
-%_bindir/*
-%_desktopdir/*.desktop
-%_datadir/%name
+%{?_enable_sendto:%_altdir/%name
+%_bindir/%name-sendto
+%_desktopdir/*.desktop}
+%_datadir/%name/
 %_iconsdir/hicolor/*/*/*
 %_man1dir/*.1*
 %doc AUTHORS README* NEWS
@@ -143,6 +150,11 @@ dbus-run-session %meson_test
 %endif
 
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 3.34.5-alt2
+- updated to 3.34.5-16-g61cfff1c
+- made sendto optional
+- fixed build with meson >= 0.61
+
 * Fri Mar 26 2021 Yuri N. Sedunov <aris@altlinux.org> 3.34.5-alt1
 - 3.34.5 (changed soname back)
 - enabled %%check
