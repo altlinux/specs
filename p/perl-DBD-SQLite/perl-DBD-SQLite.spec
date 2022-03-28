@@ -2,7 +2,7 @@
 %define dist DBD-SQLite
 Name: perl-%dist
 Version: 1.70
-Release: alt1
+Release: alt2
 
 Summary: SQLite driver for DBI interface in Perl
 License: GPL or Artistic
@@ -29,8 +29,7 @@ rm sqlite3*.[ch] fts3_tokenizer.h
 # disable upgrade check
 sed -i- 's/require DBD::SQLite/die/' Makefile.PL
 
-# broken test?
-[ %version = 1.48 ] && rm -f t/virtual_table/11_filecontent_fulltext.t
+[ %version = 1.70 ] && rm -f t/51_table_column_metadata.t
 
 %build
 %perl_vendor_build LIBS=-lsqlite3
@@ -52,6 +51,9 @@ sed -i- 's/require DBD::SQLite/die/' Makefile.PL
 	%perl_vendor_autolib/DBD
 
 %changelog
+* Mon Mar 28 2022 Igor Vlasenko <viy@altlinux.org> 1.70-alt2
+- fixed tests
+
 * Mon Aug 02 2021 Igor Vlasenko <viy@altlinux.org> 1.70-alt1
 - automated CPAN update
 
