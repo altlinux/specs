@@ -2,7 +2,7 @@
 
 Name: gtg
 Version: 0.6
-Release: alt1
+Release: alt2
 
 Summary: A personal tasks and TODO list items organizer.
 License: GPL-3.0-or-later
@@ -19,6 +19,7 @@ BuildRequires: libgtk+3-devel
 BuildRequires: meson
 BuildRequires: python3-dev
 BuildRequires: libgtk+3-gir-devel
+BuildRequires: itstool
 
 %description
 Getting Things GNOME! (GTG) is a personal tasks and TODO list items
@@ -63,6 +64,9 @@ need to do and need to know, from small tasks to large projects.
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Mon Mar 28 2022 Vladimir Didenko <cow@altlinux.org> 0.6-alt2
+- Fix build requirements
+
 * Thu Mar 3 2022 Vladimir Didenko <cow@altlinux.org> 0.6-alt1
 - New version
 
