@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define ver_major 41
 %define api_ver 1.0
 %define xdg_name org.gnome.gitg
@@ -10,7 +10,7 @@
 
 Name: gitg
 Version: %ver_major
-Release: alt1
+Release: alt2
 
 Summary: git repository viewer targeting gtk+/GNOME
 Group: Development/Other
@@ -22,6 +22,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
+Patch: %name-41-up-meson-0.61.patch
 
 Requires: lib%name = %version-%release
 # gitg/gitg-plugins-engine.vala: repo.require("PeasGtk", "1.0", 0);
@@ -111,6 +112,7 @@ library.
 
 %prep
 %setup
+%patch -p1
 # fix python install path
 subst "s/purelib/platlib/" libgitg-ext/meson.build
 # remove useless rpath
@@ -169,6 +171,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_girdir/GitgExt-%api_ver.gir
 
 %changelog
+* Mon Mar 28 2022 Yuri N. Sedunov <aris@altlinux.org> 41-alt2
+- updated to v41-19-g3458f044 (updated translations)
+- fixed build with meson >= 0.61
+
 * Mon Dec 27 2021 Yuri N. Sedunov <aris@altlinux.org> 41-alt1
 - 41
 
