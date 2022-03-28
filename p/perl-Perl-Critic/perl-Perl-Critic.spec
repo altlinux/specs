@@ -2,7 +2,7 @@
 %define m_distro Perl-Critic
 Name: perl-Perl-Critic
 Version: 1.140
-Release: alt1
+Release: alt2
 
 Summary: Critique Perl source code for best-practices.  
 
@@ -16,7 +16,7 @@ Source0: http://www.cpan.org/authors/id/P/PE/PETDANCE/Perl-Critic-%{version}.tar
 
 BuildRequires: perl-B-Keywords perl-Config-Tiny perl-Exception-Class perl-File-HomeDir perl-File-Which perl-HTML-Parser perl(PPIx/QuoteLike.pm)
 BuildRequires: perl-Module-Build perl-PPI perl-Perl-Tidy perl-Pod-Spell perl-Readonly perl-Regexp-Parser perl-String-Format
-BuildRequires: perl-version perl-podlators perl-Module-Pluggable perl-autodie perl-Email-Address perl-PPIx-Utilities perl-PPIx-Regexp perl-Test-Deep perl(List/MoreUtils.pm)
+BuildRequires: perl-version perl-podlators perl-Module-Pluggable perl-autodie perl-Email-Address perl-PPIx-Utilities perl-PPIx-Regexp perl-Test-Deep perl(List/MoreUtils.pm) perl(IO/String.pm)
 Requires: perl(Module/Pluggable.pm)
 
 %description
@@ -59,6 +59,9 @@ code analysis.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Mon Mar 28 2022 Igor Vlasenko <viy@altlinux.org> 1.140-alt2
+- fixed build
+
 * Wed Mar 31 2021 Igor Vlasenko <viy@altlinux.org> 1.140-alt1
 - automated CPAN update
 
