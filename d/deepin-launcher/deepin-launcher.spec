@@ -1,7 +1,7 @@
 %define repo dde-launcher
 
 Name: deepin-launcher
-Version: 5.4.37
+Version: 5.5.6
 Release: alt1
 Summary: Deepin desktop-environment - Launcher module
 License: GPL-3.0+
@@ -47,7 +47,7 @@ sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DWITHOUT_UNINSTALL_APP=1
-%cmake_build
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
@@ -61,11 +61,16 @@ sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/glib-2.0/schemas/com.deepin.dde.launcher.gschema.xml
 %_desktopdir/%repo.desktop
+%_datadir/dsg/apps/dde-launcher/configs/default.json
 
 %files devel
 %_includedir/%repo/
 
 %changelog
+* Mon Mar 28 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.6-alt1
+- New version (5.5.6).
+- Checkout to master branch.
+
 * Fri Aug 20 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.37-alt1
 - New version (5.4.37).
 
