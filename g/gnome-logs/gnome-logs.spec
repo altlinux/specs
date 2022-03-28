@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.36
+%define ver_major 42
 %define xdg_name org.gnome.Logs
 
 %def_with man
-%def_enable tests
+%def_enable check
 
 Name: gnome-logs
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1
 
 Summary: The GNOME logfile viewer
 Group: Graphical desktop/GNOME
@@ -23,11 +23,13 @@ Requires: gsettings-desktop-schemas
 
 %define glib_ver 2.44
 %define gtk_ver 3.22
+%define handy_ver 1.5.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
-BuildRequires: meson libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
+BuildRequires: meson libgio-devel >= %glib_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver pkgconfig(libhandy-1) >= %handy_ver
 BuildRequires: gsettings-desktop-schemas-devel libsystemd-journal-devel
-BuildRequires: libappstream-glib-devel yelp-tools desktop-file-utils
+BuildRequires: yelp-tools desktop-file-utils /usr/bin/appstream-util
 %{?_with_man:BuildRequires: docbook-dtds docbook-style-xsl xsltproc}
 
 %description
@@ -38,16 +40,14 @@ GNOME Logs is a log viewer for the systemd journal.
 
 %build
 %meson %{?_with_man:-Dman=true}
-%nil
 %meson_build
 
 %install
 %meson_install
-
 %find_lang --with-gnome %name
 
 %check
-%meson_test
+%__meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -62,6 +62,9 @@ GNOME Logs is a log viewer for the systemd journal.
 %doc NEWS README
 
 %changelog
+* Mon Mar 28 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1.1
 - fixed meson options, updated BR
 
