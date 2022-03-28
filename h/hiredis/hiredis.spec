@@ -1,7 +1,7 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%define sover 0.14
+%define sover 1.0.0
 
 %def_with devel
 
@@ -12,8 +12,8 @@ Name: hiredis
 %else
 Name: hiredis%sover
 %endif
-Version: 0.14.1
-Release: alt2
+Version: 1.0.2
+Release: alt1
 Summary: The official C client for Redis
 Group: System/Libraries
 License: BSD-3-Clause
@@ -59,7 +59,6 @@ libraries to develop applications using a Redis database.
 
 %prep
 %setup -n hiredis-%version
-%patch1 -p1
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -91,7 +90,7 @@ libraries to develop applications using a Redis database.
 	LIBRARY_PATH=%_lib \
 	LIB_SUFFIX=%_libsuff \
 	%nil
-
+find %buildroot -name '*.a' -delete -print
 mkdir -p %buildroot%_bindir/
 cp examples/hiredis-example* %buildroot%_bindir/
 cp hiredis-test %buildroot%_bindir/
@@ -111,6 +110,9 @@ cp hiredis-test %buildroot%_bindir/
 %endif
 
 %changelog
+* Mon Mar 28 2022 Anton Farygin <rider@altlinux.ru> 1.0.2-alt1
+- 0.14.1 -> 1.0.2
+
 * Tue Aug 31 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.14.1-alt2
 - Disabled static libraries.
 

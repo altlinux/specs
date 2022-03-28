@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.1.0
-Release: alt2
+Version: 2.0.0
+Release: alt1
 
 Summary: Python wrapper for hiredis
 
@@ -55,6 +55,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Mon Mar 28 2022 Anton Farygin <rider@altlinux.ru> 2.0.0-alt1
+- 1.1.0 -> 2.0.0
+
 * Tue Oct 27 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt2
 - Rebuilt with new hiredis.
 
