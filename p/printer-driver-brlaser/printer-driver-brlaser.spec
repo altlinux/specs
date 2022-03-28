@@ -1,16 +1,18 @@
+%define _cmake__builddir BUILD
+
 Name: printer-driver-brlaser
 Version: 6
-Release: alt2
+Release: alt3
 
 Source: %name-%version.tar
-Patch1: %name-max_lines_per_block_.patch
 
 Summary: Brother laser printer driver
-URL: https://github.com/pdewacht/brlaser
+Url: https://github.com/pdewacht/brlaser
 License: GPL-2.0-or-later
 Group: System/Configuration/Printing
 
 BuildRequires: cmake libcups-devel gcc-c++
+BuildRequires: cups
 
 %description
 brlaser is a CUPS driver for Brother laser printers.
@@ -55,20 +57,30 @@ Lenovo M7605D
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %cmake
 %cmake_build
+pushd BUILD
+    ppdc brlaser.drv
+popd
 
 %install
 %cmakeinstall_std
+# using compiled ppds
+rm %buildroot%_datadir/cups/drv/brlaser.drv
+# install compiled ppds
+install -Dm644 BUILD/ppd/* -t %buildroot/%_datadir/cups/model/brlaser
 
 %files
 %_libexecdir/cups/filter/rastertobrlaser
-%_datadir/cups/drv/brlaser.drv
+%_datadir/cups/model/brlaser
 
 %changelog
+* Mon Mar 28 2022 Sergey V Turchin <zerg@altlinux.org> 6-alt3
+- update to 9d7ddda8383bfc4d205b5e1b49de2b8bcd9137f1 from master branch
+- precompile ppds (closes: 42098)
+
 * Tue Mar 24 2020 Grigory Maksimov <zacat@altlinux.org> 6-alt2
 - Added patch:
   * printer-driver-brlaser-max_lines_per_block_.patch
