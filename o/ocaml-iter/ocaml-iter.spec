@@ -1,6 +1,6 @@
 %define libname iter
 Name: ocaml-%libname
-Version: 1.3
+Version: 1.4
 Release: alt1
 Summary: Simple and lightweight iterator abstract data type for OCaml
 License: BSD
@@ -46,6 +46,9 @@ rm -f dune
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Mar 28 2022 Anton Farygin <rider@altlinux.ru> 1.4-alt1
+- 1.3 -> 1.4
+
 * Fri Nov 26 2021 Anton Farygin <rider@altlinux.ru> 1.3-alt1
 - 1.2.1 -> 1.3
 
