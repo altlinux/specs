@@ -1,12 +1,13 @@
 %def_disable snapshot
-
 %def_enable updatedb
+%def_enable check
+
 %define ver_major 2
-%define ver_minor 1
+%define ver_minor 2
 
 Name: shared-mime-info
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt1
 
 Summary: Shared MIME-Info Specification
 Group: System/Libraries
@@ -20,19 +21,18 @@ Source: https://gitlab.freedesktop.org/xdg/shared-mime-info/-/archive/%version/%
 Vcs: https://gitlab.freedesktop.org/xdg/shared-mime-info.git
 Source: %name-%version.tar
 %endif
-
 Source1: %name.filetrigger
-Patch: %name-2.0-alt-cachedir-param.patch
-Patch1: %name-2.0-alt-swf.patch
-Patch2: %name-2.0-alt-q_option.patch
+# https://gitlab.freedesktop.org/xdg/xdgmime.git
+Source2: xdgmime-92f6a09.tar
 
-Patch10: %name-2.1-up-gettext.patch
+Patch: %name-2.0-alt-cachedir-param.patch
+Patch2: %name-2.0-alt-q_option.patch
 
 %define glib_ver 2.6.0
 %define libxml2_ver 2.4.0
 
-BuildRequires(pre): meson rpm-build-xdg
-BuildRequires: libgio-devel >= %glib_ver libxml2-devel >= %libxml2_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-xdg
+BuildRequires: meson libgio-devel >= %glib_ver libxml2-devel >= %libxml2_ver
 BuildRequires: xmllint xmlto
 
 %description
@@ -61,15 +61,17 @@ format and merging them together.
 %prep
 %setup
 cp %SOURCE1 .
-%patch -p1 -b .cachedir
-%patch1 -p1 -b .swf
-%patch2 -p1 -b .quiet
+tar -xf %SOURCE2 --strip-components=1 -C xdgmime
 
-%patch10 -p1
+%patch -p1 -b .cachedir
+%patch2 -p1 -b .quiet
 
 rm -f freedesktop.org.xml
 
 %build
+pushd xdgmime
+CC=gcc %make_build
+popd
 %meson \
 %{?_enable_updatedb:-Dupdate-mimedb=true}
 %nil
@@ -121,6 +123,11 @@ multipart,text,video,XMLnamespaces}
 %exclude %_datadir/locale
 
 %changelog
+* Mon Mar 28 2022 Yuri N. Sedunov <aris@altlinux.org> 2.2-alt1
+- 2.2
+- removed obsolete SWF patch
+- enabled %%check with xdgmime
+
 * Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt2
 - fixed build with meson-0.60 (upstream patch)
 
