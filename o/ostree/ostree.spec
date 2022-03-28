@@ -2,10 +2,11 @@
 %{!?_systemdgeneratordir: %global _systemdgeneratordir /lib/systemd/system-generators}
 %define _libexecdir %_usr/libexec
 %def_with tests
+%def_with ed25519
 
 Name: ostree
 Version: 2022.2
-Release: alt1
+Release: alt2
 
 Summary: Linux-based operating system develop/build/deploy tool
 License: LGPLv2+
@@ -46,7 +47,7 @@ BuildRequires: pkgconfig(fuse)
 BuildRequires: pkgconfig(e2p)
 BuildRequires: libcap-devel
 BuildRequires: pkgconfig(gpgme) >= 1.1.8 pkgconfig(gpg-error)
-#BuildRequires: pkgconfig(libsodium) >= 1.0.14
+%{?_with_ed25519:BuildRequires: pkgconfig(libsodium) >= 1.0.14}
 BuildRequires: pkgconfig(libsystemd) pkgconfig(systemd)
 BuildRequires: /usr/bin/g-ir-scanner
 BuildRequires: dracut
@@ -122,6 +123,7 @@ NOCONFIGURE=1 sh -x ./autogen.sh
            --with-selinux \
            --with-curl \
            --with-openssl \
+           %{?_with_ed25519:--with-ed25519-libsodium} \
            --enable-gtk-doc \
            --enable-trivial-httpd-cmdline \
            --with-builtin-grub2-mkconfig \
@@ -194,6 +196,9 @@ NOCONFIGURE=1 sh -x ./autogen.sh
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Mon Mar 28 2022 Alexey Shabalin <shaba@altlinux.org> 2022.2-alt2
+- build with ed25519 sign support (ALT#42271)
+
 * Wed Mar 23 2022 Alexey Shabalin <shaba@altlinux.org> 2022.2-alt1
 - 2022.2
 
