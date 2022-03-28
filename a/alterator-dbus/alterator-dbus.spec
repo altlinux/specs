@@ -1,7 +1,7 @@
 %define dname ru.basealt.alterator
 
 Name: alterator-dbus
-Version: 0.0.3
+Version: 0.0.4
 Release: alt1
 
 Summary: D-Bus woo-bus gate
@@ -34,6 +34,9 @@ D-Bus woo-bus gate.
 %_datadir/polkit-1/rules.d/%dname.rules
 
 %changelog
+* Mon Mar 28 2022 Ivan Savin <svn17@altlinux.org> 0.0.4-alt1
+- Added the ability to use boolean type function parameters in introspection
+
 * Mon Feb 28 2022 Valery Sinelnikov <greh@altlinux.org> 0.0.3-alt1
 - Used new define CONTENT_BETWEEN_METHODNAME_EMPTY
 - Changed the method of generating a request
