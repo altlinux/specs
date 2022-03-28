@@ -6,7 +6,7 @@
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: Javascript Bindings for Cinnamon
 Group: System/Libraries
@@ -18,6 +18,7 @@ License: MIT and (MPL-1.1 or GPLv2+ or LGPLv2+)
 Url: https://github.com/linuxmint/cjs
 
 Source: %_name-%version.tar
+Patch: %_name-%version-%release.patch
 
 %define glib_ver 2.33.14
 %define gi_ver 1.33.14
@@ -53,6 +54,7 @@ Files for development with %name.
 
 %prep
 %setup -q -n %_name-%version
+%autopatch -p1
 
 %build
 %meson
@@ -88,6 +90,9 @@ xvfb-run %meson_test
 %doc examples/*
 
 %changelog
+* Mon Mar 28 2022 Vladimir Didenko <cow@altlinux.org> 5.2.0-alt3
+- revert upstream commit to fix build with meson 0.61
+
 * Thu Dec 16 2021 Vladimir Didenko <cow@altlinux.org> 5.2.0-alt2
 - fix build with new meson
 
