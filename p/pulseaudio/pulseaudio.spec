@@ -1,6 +1,6 @@
 Name: pulseaudio
 Version: 15.0
-Release: alt1
+Release: alt2
 
 Summary: PulseAudio is a networked sound server
 Group: System/Servers
@@ -18,6 +18,7 @@ BuildRequires: libsndfile-devel libspeex-devel libspeexdsp-devel libwebrtc-devel
 BuildRequires: libICE-devel libSM-devel libX11-devel libXtst-devel libxcbutil-devel
 BuildRequires: libfftw3-devel libsbc-devel liborc-devel orc xmltoman
 BuildRequires: libcheck-devel libssl-devel libsystemd-devel
+BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
 
 Requires: %name-utils = %version-%release
 Requires: %name-daemon = %version-%release
@@ -179,6 +180,8 @@ echo %version > .tarball-version
     -Daccess_group=audio \
     -Dadrian-aec=true \
     -Dbluez5=enabled \
+    -Dbluez5-gstreamer=enabled \
+    -Dgstreamer=enabled \
     -Dgsettings=enabled \
     -Djack=enabled \
     #
@@ -328,6 +331,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/vala/vapi/*
 
 %changelog
+* Sat Dec 04 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 15.0-alt2
+- compiled in support for bluetooth A2DP via gstreamer
+
 * Wed Jul 28 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 15.0-alt1
 - 15.0 released
 
