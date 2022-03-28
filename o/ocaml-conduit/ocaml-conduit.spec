@@ -1,6 +1,6 @@
 %define  modulename conduit
 Name:    ocaml-%modulename
-Version: 5.0.0
+Version: 5.1.0
 Release: alt1
 Summary: An OCaml network connection establishment library
 License: ISC
@@ -51,6 +51,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Mar 28 2022 Anton Farygin <rider@altlinux.ru> 5.1.0-alt1
+- 5.1.0
+
 * Mon Jan 03 2022 Anton Farygin <rider@altlinux.ru> 5.0.0-alt1
 - 5.0.0
 
