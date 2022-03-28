@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	5.16
-%define kernel_sublevel .17
+%define kernel_sublevel .18
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -623,6 +623,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Mar 28 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.16.18-alt1
+- v5.16.18
+
 * Wed Mar 23 2022 Vitaly Chikunov <vt@altlinux.org> 1:5.16.17-alt1
 - Update to v5.16.17 (2022-03-23).
 - Use selected LTP tests in %%check.
