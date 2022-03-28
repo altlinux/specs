@@ -1,6 +1,6 @@
 %define libname ppx_tools
 Name: ocaml-%libname
-Version: 6.4
+Version: 6.5
 Release: alt1
 Summary: Tools for authors of ppx rewriters and other syntactic tools
 License: MIT
@@ -46,6 +46,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Mar 28 2022 Anton Farygin <rider@altlinux.ru> 6.5-alt1
+- 6.4 - 6.5
+
 * Mon Aug 09 2021 Anton Farygin <rider@altlinux.ru> 6.4-alt1
 - 6.4
 
