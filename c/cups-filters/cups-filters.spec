@@ -2,7 +2,7 @@
 %global _localstatedir %_var
 
 Name: cups-filters
-Version: 1.28.12
+Version: 1.28.13
 Release: alt1
 
 Summary: OpenPrinting CUPS filters and backends
@@ -118,7 +118,6 @@ serial backend for cups
 	   --enable-pclm \
 	   --enable-auto-setup-driverless-only \
 	   --with-gs-path=/usr/bin/gs \
-	   --enable-opvp \
 	   --enable-dbus \
 	   --with-test-font-path=/usr/share/fonts/ttf/dejavu/DejaVuSans.ttf \
 	   --with-pdftops=hybrid
@@ -191,6 +190,9 @@ install -D -m 644 %SOURCE3 %buildroot/%_datadir/cups/data/
 %_libdir/libfontembed.so
 
 %changelog
+* Mon Mar 28 2022 Anton Farygin <rider@altlinux.ru> 1.28.13-alt1
+- 1.28.13
+
 * Sat Feb 19 2022 Anton Farygin <rider@altlinux.ru> 1.28.12-alt1
 - 1.28.12
 
