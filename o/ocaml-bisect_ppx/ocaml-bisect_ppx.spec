@@ -1,6 +1,6 @@
 %define libname bisect_ppx
 Name: ocaml-%libname
-Version: 2.7.1
+Version: 2.8.1
 Release: alt1
 Summary: Code coverage for OCaml
 Group: Development/ML
@@ -48,6 +48,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Mar 28 2022 Anton Farygin <rider@altlinux.ru> 2.8.1-alt1
+- 2.7.1 -> 2.8.1
+
 * Fri Feb 04 2022 Anton Farygin <rider@altlinux.ru> 2.7.1-alt1
 - 2.7.1
 
