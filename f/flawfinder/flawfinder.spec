@@ -1,12 +1,13 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
+%global srcname flawfinder
 
 Name: flawfinder
-Version: 2.0.10
-Release: alt2
+Version: 2.0.19
+Release: alt1
 
 Summary: Examines C/C++ source code for security flaws
-License: GPL
+License: GPLv2+
 Group: Development/Other
 
 Url: http://www.dwheeler.com/flawfinder/
@@ -15,6 +16,7 @@ Source: http://www.dwheeler.com/%name/%name-%version.tar.gz
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: flex
+BuildRequires: python3-devel python3-module-setuptools
 
 Summary(ru_RU.UTF-8): Исследует исходный код на С/С++ на предмет ошибок в безопасности
 
@@ -38,20 +40,29 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 %build
 %make_build
+%python3_build
 %{?!_without_check:%{?!_disable_check:%make_build -k check ||:}}
 
 %install
-%makeinstall_std
+#makeinstall_std
+%python3_install
 xz ChangeLog
 
 %files
+%python3_sitelibdir/%srcname-%version-py3.10.egg-info
+%python3_sitelibdir/__pycache__/%{srcname}*.pyc
+%python3_sitelibdir/%{srcname}.py
 %_bindir/%name
 %_man1dir/%name.1.*
-%doc announcement README ChangeLog* *.pdf
-%doc test.c test2.c
-%{?!_without_check:%{?!_disable_check:%doc test-results.*}}
+%doc announcement README.md ChangeLog* *.pdf
+%doc test/test.c test/test2.c
+%{?!_without_check:%{?!_disable_check:%doc test/*.*}}
 
 %changelog
+* Tue Mar 29 2022 Ilya Mashkin <oddity@altlinux.ru> 2.0.19-alt1
+- 2.0.19
+- Update License tag
+
 * Wed Nov 06 2019 Michael Shigorin <mike@altlinux.org> 2.0.10-alt2
 - Fixed build --without test
 - Converted spec to UTF-8
