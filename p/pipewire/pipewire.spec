@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %ifarch armh
@@ -35,7 +35,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.48
+Version: %ver_major.49
 Release: alt1.1
 
 Summary: Media Sharing Server
@@ -50,7 +50,7 @@ Vcs: https://github.com/PipeWire/pipewire.git
 Source: %name-%version.tar
 %endif
 #https://gitlab.freedesktop.org/pipewire/media-session.git
-# 0.4.1-8-gc0d036ebd
+# 0.4.1-10-gf71506321
 Source1: media-session-%ms_ver.tar
 Patch: %name-0.3.19-alt-rpath.patch
 
@@ -181,7 +181,7 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_bindir/%name
 %_bindir/pw-jack
 %_bindir/%name-pulse
-%{?_enable_examples:%_bindir/%name-media-session}
+%_bindir/%name-media-session
 %{?_enable_gstreamer:%_libdir/gstreamer-%gst_api_ver/libgst%name.so}
 %dir %_sysconfdir/%name/
 %dir %_sysconfdir/%name/media-session.d
@@ -287,10 +287,14 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_man1dir/pw-mididump.1.*
 %_man1dir/pw-mon.1*
 %_man1dir/pw-profiler.1.*
+%_man1dir/pw-top.1.*
 %endif
 
 
 %changelog
+* Tue Mar 29 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.49-alt1.1
+- 0.3.49 + media-session-0.4.1-10-gf71506321
+
 * Sat Mar 05 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.48-alt1.1
 - pw-reserve is a tool, not example
 
