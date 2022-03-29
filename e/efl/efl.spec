@@ -25,6 +25,7 @@
 %def_disable json
 %def_enable heif
 %def_enable avif
+%def_disable physics
 
 # elua disabled by default
 %ifarch %luajit_arches
@@ -38,7 +39,7 @@
 
 Name: efl
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: Enlightenment Foundation Libraries
 Group: System/Libraries
@@ -66,7 +67,7 @@ BuildRequires: libgif-devel libwebp-devel
 %{?_enable_avif:BuildRequires: libavif-devel}
 %{?_enable_heif:BuildRequires: libheif-devel}
 BuildRequires: fontconfig-devel libfreetype-devel libfribidi-devel libharfbuzz-devel
-BuildRequires: libpulseaudio-devel libsndfile-devel libbullet-devel zlib-devel liblz4-devel
+BuildRequires: libpulseaudio-devel libsndfile-devel zlib-devel liblz4-devel
 BuildRequires: libssl-devel libcurl-devel libdbus-devel
 BuildRequires: libmount-devel libblkid-devel
 BuildRequires: libudev-devel libGL-devel libgnutls-devel
@@ -88,6 +89,7 @@ BuildRequires: libunwind-devel
 %{?_enable_egl:BuildRequires: libEGL-devel libwayland-egl-devel}
 %{?_enable_gstreamer:BuildRequires: gst-plugins%gst_api_ver-devel}
 %{?_enable_avahi:BuildRequires: libavahi-glib-devel}
+%{?_enable_physics:BuildRequires: libbullet3-devel}
 # for elementary
 BuildRequires: /proc dbus-tools-gui doxygen /usr/bin/convert
 # for evas_generic_loaders
@@ -249,6 +251,7 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 	%{?_enable_tslib:-Dtslib=true} \
 	%{?_disable_gstreamer:-Dgstreamer=false} \
 	%{?_enable_avahi:-Davahi=true} \
+	%{?_enable_physics:-Dphysics=true} \
 	-Devas-loaders-disabler="[%{?_disable_json:'json',}%{?_disable_avif: 'avif'}%{?_disable_heif: 'heif'}]" \
 	-Dmount-path=/bin/mount \
 	-Dunmount-path=/bin/umount \
@@ -375,6 +378,7 @@ export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_fi
 %_pkgconfigdir/efreet-mime.pc
 %_pkgconfigdir/efreet-trash.pc
 %_pkgconfigdir/efreet.pc
+%{?_enable_physics:%_pkgconfigdir/ephysics.pc}
 %_pkgconfigdir/eina-cxx.pc
 %_pkgconfigdir/eina.pc
 %_pkgconfigdir/eio-cxx.pc
@@ -433,6 +437,9 @@ export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_fi
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Tue Mar 29 2022 Yuri N. Sedunov <aris@altlinux.org> 1.26.2-alt1.1
+- fixed build ephysics against libbullet3-devel (disabled by default)
+
 * Sat Feb 26 2022 Yuri N. Sedunov <aris@altlinux.org> 1.26.2-alt1
 - 1.26.2
 
