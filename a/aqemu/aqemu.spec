@@ -1,7 +1,7 @@
 Summary: QEMU GUI written in Qt5
 Name: aqemu
 Version: 0.9.4
-Release: alt2
+Release: alt3
 Epoch: 1
 License: GPL-2.0 and Zlib and MIT
 Group: Emulators
@@ -14,6 +14,7 @@ BuildRequires(pre): cmake rpm-build-ninja
 BuildRequires: gcc-c++ libvncserver-devel ImageMagick
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools
+Requires: qemu qemu-kvm
 
 %description
 AQEMU is a QEMU GUI written in Qt5.
@@ -56,6 +57,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %_pixmapsdir/*.png
 
 %changelog
+* Tue Mar 29 2022 Leontiy Volodin <lvol@altlinux.org> 1:0.9.4-alt3
+- Fixed errors in some settings (ALT #25201).
+
 * Mon Mar 21 2022 Leontiy Volodin <lvol@altlinux.org> 1:0.9.4-alt2
 - Fixed segfault on restart (ALT #42188).
 
