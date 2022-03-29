@@ -1,7 +1,7 @@
 %define oname asn1crypto
 
 Name: python3-module-%oname
-Version: 1.4.0
+Version: 1.5.1
 Release: alt1
 
 Summary: Python ASN.1 parser
@@ -36,6 +36,9 @@ and TSP.
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Tue Mar 29 2022 Vladimir Didenko <cow@altlinux.ru> 1.5.1-alt1
+- New version
+
 * Fri Sep 4 2020 Vladimir Didenko <cow@altlinux.ru> 1.4.0-alt1
 - New version
 - Build Python 3 version as separate package
