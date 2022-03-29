@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define oname mongoquery
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.3.5
+Version: 1.4.0
 Release: alt1
 
 Summary: A python implementation of mongodb queries
@@ -15,11 +17,15 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-unittest2
 
-%py3_provides %oname
+%if_with check
+# install_requires=
+BuildRequires: python3(six)
 
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+%endif
 
 %description
 A utility library that provides a MongoDB-like query language for
@@ -31,22 +37,31 @@ by JSON or YAML parsers.
 %setup
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
 %check
-%__python3 setup.py test
-export PYTHONPATH=$PWD
-py.test3 -vv
+cat > tox.ini <<'EOF'
+[testenv]
+commands =
+    {envbindir}/pytest -vra {posargs:tests}
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr --develop
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
-
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Mar 29 2022 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
+- 1.3.5 -> 1.4.0.
+
 * Thu Jan 23 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.3.5-alt1
 - Porting on Python3.
 
