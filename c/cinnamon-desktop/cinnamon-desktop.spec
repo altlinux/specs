@@ -7,7 +7,7 @@
 
 Name: cinnamon-desktop
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Library with common API for various Cinnamon modules
 License: GPLv2+ and LGPLv2+ and MIT
@@ -154,6 +154,10 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Tue Mar 29 2022 Vladimir Didenko <cow@altlinux.org> 5.2.1-alt2
+- Fix path to Adwaita wallpaper (closes: #42286)
+- Specify default path to the slideshow image source directory
+
 * Wed Jan 12 2022 Vladimir Didenko <cow@altlinux.org> 5.2.1-alt1
 - 5.2.1
 
