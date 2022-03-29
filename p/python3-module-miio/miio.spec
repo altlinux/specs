@@ -1,5 +1,5 @@
 Name: python3-module-miio
-Version: 0.5.9.2
+Version: 0.5.10
 Release: alt1
 
 Summary: Python miIO library
@@ -33,8 +33,11 @@ with devices using Xiaomi's miIO and miOT protocols.
 
 %install
 %python3_install
-find %buildroot%python3_sitelibdir -type d -name tests |\
+find %buildroot%python3_sitelibdir -type f -name \*.py |\
+	xargs grep -l 'miio.tests.dummies' |\
 	sed 's,%buildroot,%exclude ,' > tests.files
+find %buildroot%python3_sitelibdir -type d -name tests |\
+	sed 's,%buildroot,%exclude ,' >> tests.files
 
 %files -f tests.files
 %python3_sitelibdir/miio
@@ -44,6 +47,9 @@ find %buildroot%python3_sitelibdir -type d -name tests |\
 %_bindir/*
 
 %changelog
+* Tue Mar 29 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.10-alt1
+- 0.5.10 released
+
 * Thu Feb 10 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.9.2-alt1
 - 0.5.9.2 released
 
