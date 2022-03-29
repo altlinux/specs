@@ -1,6 +1,6 @@
 Name: eiskaltdcpp
-Version: 2.4.2
-Release: alt3
+Version: 2.4.2.0.21.git918a6cd
+Release: alt1
 
 Summary: EiskaltDC++ - Direct Connect client
 
@@ -9,7 +9,6 @@ Group: Networking/File transfer
 Url: https://sourceforge.net/projects/eiskaltdcpp
 
 Source: %name-%version.tar
-Patch: eiskaltdcpp-use_libidn2.patch
 
 BuildRequires: bzlib-devel cmake gcc-c++
 BuildRequires: libaspell-devel libgtk+2-devel libidn2-devel liblua-devel
@@ -89,19 +88,19 @@ command line interface for XML-RPC Daemon
 
 %prep
 %setup
-%patch -p1
 %ifarch %e2k
 # workaround for EDG frontend
 sed -i "s|g_autofree gchar \*|g_autofree_edg_ex(gchar,std::string) |" eiskaltdcpp-gtk/src/{adlsearch,hub,mainwindow,uploadqueue}.cc
 %endif
 
 %build
-%add_optflags -fno-strict-aliasing $(pkg-config libpcre --cflags) $(pkg-config harfbuzz --cflags)
+%add_optflags -fno-strict-aliasing
+otherflags="$(pkg-config libpcre --cflags) $(pkg-config harfbuzz --cflags)"
 %cmake_insource \
 -DCMAKE_BUILD_TYPE=Release \
 -DCMAKE_SKIP_RPATH:BOOL=yes \
--DCMAKE_C_FLAGS:STRING="%optflags" \
--DCMAKE_CXX_FLAGS:STRING="%optflags" \
+-DCMAKE_C_FLAGS:STRING="%optflags $otherflags" \
+-DCMAKE_CXX_FLAGS:STRING="%optflags $otherflags" \
 -DCMAKE_INSTALL_PREFIX=%prefix \
 -DLIB_DESTINATION=%_lib \
 %if %_lib == lib64
@@ -176,6 +175,9 @@ sed -i "s|g_autofree gchar \*|g_autofree_edg_ex(gchar,std::string) |" eiskaltdcp
 %_datadir/%name/cli
 
 %changelog
+* Tue Mar 29 2022 Grigory Ustinov <grenka@altlinux.org> 2.4.2.0.21.git918a6cd-alt1
+- Build from commit (fixes utf emojis).
+
 * Thu Sep 16 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.4.2-alt3
 - Fixes for Elbrus build.
 
