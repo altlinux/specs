@@ -1,7 +1,7 @@
 %define oname dotenv
 
 Name: python3-module-%oname
-Version: 0.19.2
+Version: 0.20.0
 Release: alt1
 
 Summary: Reads the key-value pair from .env file and adds them to environment variable.
@@ -40,6 +40,9 @@ rm -f src/dotenv/ipython.py
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Tue Mar 29 2022 Vladimir Didenko <cow@altlinux.org> 0.20.0-alt1
+- new version
+
 * Mon Dec 6 2021 Vladimir Didenko <cow@altlinux.org> 0.19.2-alt1
 - new version
 
