@@ -2,8 +2,8 @@
 %define libname markup
 %define libnamelwt %libname-lwt
 Name: ocaml-%libname
-Version: 1.0.2
-Release: alt2
+Version: 1.0.3
+Release: alt1
 Summary: Error-recovering streaming HTML5 and XML parsers.
 License: MIT
 Group: Development/ML
@@ -92,6 +92,9 @@ programs which use %name-lwt
 %_libdir/ocaml/%libnamelwt/*.mli
 
 %changelog
+* Tue Mar 29 2022 Anton Farygin <rider@altlinux.ru> 1.0.3-alt1
+- 1.0.3
+
 * Wed Nov 03 2021 Anton Farygin <rider@altlinux.ru> 1.0.2-alt2
 - run tests with --release flag
 
