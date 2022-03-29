@@ -1,71 +1,66 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-build-python3
-# END SourceDeps(oneline)
-%define oldname python-webob
-%define fedora 27
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%{!?py3ver: %global py3ver %(%{__python3} -c "import sys ; print(sys.version[:3])")}
-
-
+%define _unpackaged_files_terminate_build 1
 %global modname webob
-%global desc WebOb provides wrappers around the WSGI request environment, and an object to \
-help create WSGI responses. The objects map much of the specified behavior of \
-HTTP, including header parsing and accessors for other standard parts of the \
-environment.
 
+%def_with check
 
-Name:           python3-module-webob
-Summary:        WSGI request and response object
-Version:        1.8.6
-Release:        alt2
-License:        MIT
-Group:          System/Libraries
-URL:            http://pythonpaste.org/webob/
-Source0:        https://files.pythonhosted.org/packages/source/W/WebOb/WebOb-%{version}.tar.gz
-Source1:        README.Fedora
+Name: python3-module-webob
+Version: 1.8.7
+Release: alt1
 
-BuildArch:      noarch
+Summary: WSGI request and response object
+License: MIT
+Group: System/Libraries
+
+Url: https://pypi.org/project/WebOb
+Source0: WebOb-%version.tar
+Patch: webob-1.8.7-s-isAlive-is_alive.patch
+
+BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
 
-%if 0%{?with_tests}
-BuildRequires:  python3-module-nose
-BuildRequires:  python3-module-pytest
-%endif # with_tests
-Source44: import.info
-
+%if_with check
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+%endif
 
 %description
-%{desc}
+WebOb provides wrappers around the WSGI request environment, and an object to
+help create WSGI responses. The objects map much of the specified behavior of
+HTTP, including header parsing and accessors for other standard parts of the
+environment.
 
 %prep
-%setup -q -n WebOb-%{version}
-cp -p %{SOURCE1} .
-# Disable performance_test, which requires repoze.profile, which isn't
-# in Fedora.
-rm -f tests/performance_test.py
-
-# Remove an empty unneeded file that is there for scm purposes.
-rm docs/_static/.empty
+%setup -n WebOb-%version
+%autopatch -p1
 
 %build
-%{__python3} setup.py build
+%python3_build
 
 %install
-%{__python3} setup.py install --skip-build --root %{buildroot}
+%python3_install
 
 %check
-%{__python3} setup.py test
+cat > tox.ini <<'EOF'
+[testenv]
+commands =
+    {envbindir}/pytest -vra {posargs:tests}
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr --develop
 
 %files
-%doc --no-dereference docs/license.txt
-%doc docs/* README.Fedora
-%{python3_sitelibdir_noarch}/webob/
-%{python3_sitelibdir_noarch}/WebOb-%{version}-py%{py3ver}.egg-info
+%doc README.rst
+%python3_sitelibdir_noarch/webob/
+%python3_sitelibdir_noarch/WebOb-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Mar 29 2022 Stanislav Levin <slev@altlinux.org> 1.8.7-alt1
+- 1.8.6 -> 1.8.7.
+
 * Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 1.8.6-alt2
 - Drop python2 support.
 
