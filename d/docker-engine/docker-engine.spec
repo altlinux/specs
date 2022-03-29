@@ -11,8 +11,8 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:    docker-engine
-Version: 20.10.13
-Release: alt2
+Version: 20.10.14
+Release: alt1
 Summary: The open-source application container engine
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -137,6 +137,9 @@ exit 0
 %{_sysconfdir}/udev/rules.d/80-docker.rules
 
 %changelog
+* Mon Mar 28 2022 Vladimir Didenko <cow@altlinux.org> 20.10.14-alt1
+- 20.10.14 (Fixes: CVE-2022-24769)
+
 * Wed Mar 23 2022 Mikhail Gordeev <obirvalger@altlinux.org> 20.10.13-alt2
 - add rootless subpackage
 
