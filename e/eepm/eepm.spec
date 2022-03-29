@@ -2,7 +2,7 @@
 %define pkgsystem apt-rpm
 
 Name: eepm
-Version: 3.16.1
+Version: 3.16.5
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -42,7 +42,7 @@ See detailed description here: http://wiki.etersoft.ru/EPM
 Summary: Etersoft EPM package manager (repack requirements)
 Group: System/Configuration/Packaging
 Requires: %name = %EVR
-Requires: fakeroot alien dpkg
+Requires: fakeroot alien dpkg patchelf
 Requires: /usr/bin/rpmbuild
 
 %description repack
@@ -99,7 +99,7 @@ chmod 0755 %buildroot%_sysconfdir/eepm/play.d/*.sh
 
 mkdir -p %buildroot%_sysconfdir/bash_completion.d/
 install -m 0644 bash_completion/serv %buildroot%_sysconfdir/bash_completion.d/serv
-ln -s serv %buildroot%_sysconfdir/bash_completion.d/cerv
+install -m 0644 bash_completion/cerv %buildroot%_sysconfdir/bash_completion.d/cerv
 
 # shebang.req.files
 chmod a+x %buildroot%_datadir/%name/{serv-,epm-}*
@@ -148,6 +148,28 @@ rm -v %buildroot%_bindir/yum
 %endif
 
 %changelog
+* Mon Mar 28 2022 Vitaly Lipatov <lav@altlinux.ru> 3.16.5-alt1
+- epm repack code: move to /opt
+- add support for ALTServer distro
+
+* Mon Mar 28 2022 Vitaly Lipatov <lav@altlinux.ru> 3.16.4-alt1
+- epm-full_upgrade: run commands separately
+- epm play: refactor yandex-browser-codecs packing
+- add support for epm play yandex-browser beta
+- epm play: add --installed support, cleanup
+
+* Mon Mar 28 2022 Vitaly Lipatov <lav@altlinux.ru> 3.16.3-alt1
+- epm-play: fix description
+- epm-download: implement for apt-get
+- eepm: fix build: drop link to cerv
+
+* Sun Mar 27 2022 Vitaly Lipatov <lav@altlinux.ru> 3.16.2-alt1
+- epm repack: rename common.sh to generic.sh
+- add patchelf to eepm-repack
+- ci testsuite: install rpm-build-intro for build
+- epm play: improve list and description out
+- epm prescription: improve list
+
 * Sat Mar 26 2022 Vitaly Lipatov <lav@altlinux.ru> 3.16.1-alt1
 - tools_json: don't req gawk directly
 - repack: update install_deps for chromium based browsers, use it for vivaldi
