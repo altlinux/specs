@@ -1,48 +1,78 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pkgconfig
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.2.2
-Release: alt2
+Version: 1.5.5
+Release: alt1
 
 Summary: Interface Python with pkg-config
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/pkgconfig/
+Url: https://pypi.org/project/pkgconfig/
 BuildArch: noarch
 
 # https://github.com/matze/pkgconfig.git
-Source0: https://pypi.python.org/packages/9d/ba/80910bbed2b4e646a6adab4474d2e506744c260c7002a0e6b41ef8750d8d/%{oname}-%{version}.tar.gz
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose
+BuildRequires: python3(poetry.core)
 
-%py3_provides %oname
+%if_with check
+BuildRequires: /usr/bin/pkg-config
+# cat data/fake-openssl.pc | grep Requires
+BuildRequires: libssl-devel
 
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+%endif
 
 %description
-pkgconfig is a Python module to interface with the pkg-config command
-line tool and supports Python 2.6+.
+%oname is a Python module to interface with the pkg-config command line tool
+for Python.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %build
-%python3_build_debug
+# generate setup.py for legacy builder
+%__python3 - <<-'EOF'
+from pathlib import Path
+
+from poetry.core.factory import Factory
+from poetry.core.masonry.builders.sdist import SdistBuilder
+
+
+poetry = Factory().create_poetry(Path(".").resolve(), with_dev=False)
+builder = SdistBuilder(poetry)
+
+setup = builder.build_setup()
+
+with open("setup.py", "wb") as f:
+    f.write(setup)
+EOF
+%python3_build
 
 %install
 %python3_install
 
 %check
-%__python3 setup.py test
-nosetests3 -v
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr -s false --develop
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
-
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Mar 25 2022 Stanislav Levin <slev@altlinux.org> 1.5.5-alt1
+- 1.2.2 -> 1.5.5.
+
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.2.2-alt2
 - Build for python2 disabled.
 
