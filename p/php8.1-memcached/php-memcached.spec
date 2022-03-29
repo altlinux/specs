@@ -12,7 +12,7 @@ Source0: php-memcached-%version.tar
 Source1: php-%php_extension.ini
 Source2: php-%php_extension-params.sh
 
-BuildRequires(pre): rpm-build-php8.0-version
+BuildRequires(pre): rpm-build-php8.1-version
 BuildRequires: php-devel = %php_version
 BuildRequires: libmemcached-devel zlib-devel
 BuildRequires: php%_php_suffix memcached /proc
