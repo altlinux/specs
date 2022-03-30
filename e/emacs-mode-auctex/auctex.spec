@@ -10,11 +10,11 @@
 %define _aucstatedir %_localstatedir/%ModeName
 
 Name: emacs-mode-%ModeName
-Version: 11.87
-Release: alt3
+Version: 13.1
+Release: alt1
 
 Summary: Enhanced LaTeX mode for GNU Emacs
-License: GPL
+License: GPLv3
 Group: Editors
 Url: http://www.gnu.org/software/auctex/index.html
 Packager: Emacs Maintainers Team <emacs@packages.altlinux.org>
@@ -53,6 +53,7 @@ Requires: gnu-ghostscript /usr/bin/dvips /usr/bin/latex
 # Automatically added by buildreq on Fri Feb 22 2019
 # optimized out: emacs-base emacs-common fontconfig ghostscript-classic libX11-locales libp11-kit libsasl2-3 perl python-base python-modules sh4 tex-common texlive texlive-collection-basic
 BuildRequires: emacs-nox texlive-dist
+BuildRequires: emacs-common rpm-build-emacs
 
 BuildRequires(pre): rpm-build-tex
 BuildRequires: fontconfig /usr/bin/dvips /usr/bin/latex
@@ -115,9 +116,9 @@ You need to install %name-el only if you intend to modify any of the
 
 %prep
 %setup -q -n %ModeName-%version
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+#patch1 -p1
+#patch2 -p1
+#patch3 -p1
 
 %build
 %configure --with-emacs=%emacsbin --with-tex-input-dirs=/usr/share/texmf/tex 
@@ -162,7 +163,7 @@ mv -f $RPM_BUILD_ROOT/%_docdir/auctex/* $RPM_BUILD_ROOT/%_docdir/%name-%version/
 
 %files -n %name-doc
 %_datadir/texmf/doc/latex/styles/*
-%doc ChangeLog
+%doc ChangeLog*
 %doc ALT-packaging-info
 
 %if_with texmf
@@ -171,6 +172,11 @@ mv -f $RPM_BUILD_ROOT/%_docdir/auctex/* $RPM_BUILD_ROOT/%_docdir/%name-%version/
 %endif
 
 %changelog
+* Wed Mar 30 2022 Ilya Mashkin <oddity@altlinux.ru> 13.1-alt1
+- add BR emacs-common rpm-build-emacs to fix FTBFS
+- skip patches
+- Update License tag
+
 * Fri Feb 22 2019 Dmitry V. Levin <ldv@altlinux.org> 11.87-alt3
 - NMU: updated build dependencies.
 
