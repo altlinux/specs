@@ -1,25 +1,32 @@
+%define _unpackaged_files_terminate_build 1
 %define oname transaction
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 2.1.2
-Release: alt2
+Version: 3.0.1
+Release: alt1
 Summary: Transaction management for Python
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
 BuildArch: noarch
-Url: http://pypi.python.org/pypi/transaction/
+Url: https://pypi.org/project/transaction/
 
 # https://github.com/zopefoundation/transaction.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-docs.patch
 
-BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-coverage python3-module-nose python3-module-zope
-BuildRequires: python3-module-mock python3-module-sphinx python3-module-repoze
-BuildRequires: python3-module-repoze.sphinx python3-module-repoze.sphinx.autointerface
 
-%py3_requires zope.interface
+%if_with check
+# install_requires=
+BuildRequires: python3(zope.interface)
+
+BuildRequires: python3(mock)
+BuildRequires: python3(zope.testrunner)
+
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+%endif
 
 %description
 This package contains a generic transaction implementation for Python.
@@ -31,62 +38,8 @@ easy to express in the interface. This could probably use more work. The
 semantics are presented in detail through examples of a sample data
 manager in transaction.tests.test_SampleDataManager.
 
-%package tests
-Summary: Tests for Transaction management for Python
-Group: Development/Python3
-Requires: %name = %version-%release
-
-%description tests
-This package contains a generic transaction implementation for Python.
-It is mainly used by the ZODB, though.
-
-Note that the data manager API, transaction.interfaces.IDataManager, is
-syntactically simple, but semantically complex. The semantics were not
-easy to express in the interface. This could probably use more work. The
-semantics are presented in detail through examples of a sample data
-manager in transaction.tests.test_SampleDataManager.
-
-This package contains tests for Transaction management for Python.
-
-%package pickles
-Summary: Pickles for Transaction management for Python
-Group: Development/Python3
-
-%description pickles
-This package contains a generic transaction implementation for Python.
-It is mainly used by the ZODB, though.
-
-Note that the data manager API, transaction.interfaces.IDataManager, is
-syntactically simple, but semantically complex. The semantics were not
-easy to express in the interface. This could probably use more work. The
-semantics are presented in detail through examples of a sample data
-manager in transaction.tests.test_SampleDataManager.
-
-This package contains pickles for Transaction management for Python.
-
-%package docs
-Summary: Documentation for Transaction management for Python
-Group: Development/Documentation
-
-%description docs
-This package contains a generic transaction implementation for Python.
-It is mainly used by the ZODB, though.
-
-Note that the data manager API, transaction.interfaces.IDataManager, is
-syntactically simple, but semantically complex. The semantics were not
-easy to express in the interface. This could probably use more work. The
-semantics are presented in detail through examples of a sample data
-manager in transaction.tests.test_SampleDataManager.
-
-This package contains documentation for Transaction management for
-Python.
-
 %prep
 %setup
-%patch1 -p1
-
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
 
 %build
 %python3_build
@@ -94,31 +47,27 @@ ln -s ../objects.inv docs/
 %install
 %python3_install
 
-export PYTHONPATH=%buildroot%python_sitelibdir
-%make SPHINXBUILD="sphinx-build-3" -C docs pickle
-%make SPHINXBUILD="sphinx-build-3" -C docs html
-
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
-
 %check
-python3 setup.py test
+cat > tox.ini <<'EOF'
+[testenv]
+commands =
+    zope-testrunner --test-path=src -vv
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr --develop
 
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 %exclude %python3_sitelibdir/%oname/tests
-%exclude %python3_sitelibdir/%oname/pickle
-
-%files pickles
-%python3_sitelibdir/%oname/pickle
-
-%files docs
-%doc docs/_build/html/*
-
-%files tests
-%python3_sitelibdir/%oname/tests
 
 %changelog
+* Wed Mar 30 2022 Stanislav Levin <slev@altlinux.org> 3.0.1-alt1
+- 2.1.2 -> 3.0.1.
+
 * Thu Jun 03 2021 Grigory Ustinov <grenka@altlinux.org> 2.1.2-alt2
 - Drop python2 support.
 

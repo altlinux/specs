@@ -1,24 +1,34 @@
+%define _unpackaged_files_terminate_build 1
 %define oname zope.filerepresentation
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 4.2.0
+Version: 5.0.0
 Release: alt1
 
 Summary: File-system Representation Interfaces
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.filerepresentation/
+Url: https://pypi.org/project/zope.filerepresentation/
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-zope.interface
-BuildRequires: python3-module-zope.schema
-BuildRequires: python3-module-nose python3-module-coverage
-BuildRequires: python3-module-nosexcover
 
-%py3_requires zope zope.interface zope.schema
+%if_with check
+# install_requires=
+BuildRequires: python3(pkg_resources)
+BuildRequires: python3(zope.interface)
+BuildRequires: python3(zope.schema)
 
+BuildRequires: python3(zope.testrunner)
+
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+%endif
+
+%py3_requires zope zope.schema
 
 %description
 File-system representation interfaces.
@@ -26,20 +36,6 @@ File-system representation interfaces.
 The interfaces defined here are used for file-system and
 file-system-like representations of objects, such as file-system
 synchronization, FTP, PUT, and WebDAV.
-
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-File-system representation interfaces.
-
-The interfaces defined here are used for file-system and
-file-system-like representations of objects, such as file-system
-synchronization, FTP, PUT, and WebDAV.
-
-This package contains tests for %oname.
 
 %prep
 %setup
@@ -57,22 +53,28 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-%__python3 setup.py test -v
-nosetests3 -vv --with-xunit --with-xcoverage
+cat > tox.ini <<'EOF'
+[testenv]
+commands =
+    zope-testrunner --test-path=src -vvc
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr --develop
 
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/zope/filerepresentation/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 %exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/tests.*
-%exclude %python3_sitelibdir/*/*/*/tests.*
-
-%files tests
-%python3_sitelibdir/*/*/tests.*
-%python3_sitelibdir/*/*/*/tests.*
-
+%exclude %python3_sitelibdir/zope/filerepresentation/tests.py
+%exclude %python3_sitelibdir/zope/filerepresentation/__pycache__/tests.*
 
 %changelog
+* Wed Mar 30 2022 Stanislav Levin <slev@altlinux.org> 5.0.0-alt1
+- 4.2.0 -> 5.0.0.
+
 * Tue Dec 10 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.2.0-alt1
 - version updated to 4.2.0
 - build for python2 disabled

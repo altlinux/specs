@@ -4,29 +4,30 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.3.0
-Release: alt2
+Version: 5.4.0
+Release: alt1
 
 Summary: Zope testrunner script
 
 License: ZPL-2.1
 Group: Development/Python3
 # Source-git: https://github.com/zopefoundation/zope.testrunner.git
-Url: http://pypi.python.org/pypi/zope.testrunner
+Url: https://pypi.org/project/zope.testrunner/
 
-# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3-module-setuptools
-
 %if_with check
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-zope.testing
-BuildRequires: python3-module-zope.interface
-BuildRequires: python3-module-six
+# install_requires=
+BuildRequires: python3(six)
+BuildRequires: python3(setuptools)
+BuildRequires: python3(zope.exceptions)
+BuildRequires: python3(zope.interface)
+
+BuildRequires: python3(zope.testing)
+
+BuildRequires: python3(tox)
 %endif
 
 Conflicts: python-module-%oname
@@ -38,18 +39,12 @@ This package provides a flexible test runner with layer support.
 
 %prep
 %setup
-# ALT zope subpackages have to be packaged without pth files
-# due to import errors caused by a namespace specifics.
-# Likewise this file should be removed before tests run.
-sed -i '/commands[[:space:]]*=/a \    bash -c "rm -f {envsitepackagesdir}/*-nspkg.pth"' \
-       tox.ini
 
 %build
 %python3_build
 
 %install
 %python3_install
-%python3_prune
 
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
@@ -59,17 +54,24 @@ mv %buildroot{%python3_sitelibdir_noarch/*,%python3_sitelibdir}
 cp -al %buildroot%_bindir/zope-testrunner{,3}
 
 %check
-export PIP_INDEX_URL=http://host.invalid./
-export PYTHONPATH=build/lib
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vvr -s false --develop
 
 %files
 %doc *.rst
 %_bindir/zope-testrunner
 %_bindir/zope-testrunner3
-%python3_sitelibdir/*
+%python3_sitelibdir/zope/testrunner/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname-%version-py%_python3_version-nspkg.pth
+
+%exclude %python3_sitelibdir/zope/testrunner/tests/
 
 %changelog
+* Wed Mar 30 2022 Stanislav Levin <slev@altlinux.org> 5.4.0-alt1
+- 5.3.0 -> 5.4.0.
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 5.3.0-alt2
 - pack zope-testrunner3 for compatibility
 
