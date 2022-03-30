@@ -1,5 +1,5 @@
 Name: djvu
-Version: 3.5.27
+Version: 3.5.28
 Release: alt1
 
 Summary: DjVu viewers, encoders and utilities
@@ -166,6 +166,9 @@ cp -a COPYRIGHT NEWS README doc %buildroot%docdir/
 %endif #static
 
 %changelog
+* Wed Mar 30 2022 L.A. Kostis <lakostis@altlinux.ru> 3.5.28-alt1
+- Updated to 3.5.28.
+
 * Wed Jun 03 2020 L.A. Kostis <lakostis@altlinux.ru> 3.5.27-alt1
 - Updated to 3.5.27.
 - Remove deprecated desktop files install.
