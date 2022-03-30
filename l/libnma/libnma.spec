@@ -5,8 +5,8 @@
 %def_with gtk4
 
 Name: libnma
-Version: 1.8.34
-Release: alt2
+Version: 1.8.36
+Release: alt1
 License: GPLv2+ and LGPLv2.1+
 Group: Graphical desktop/GNOME
 Summary: NetworkManager GUI library
@@ -127,6 +127,7 @@ This package contains development documentation for libnma-devel-doc.
 %else
 	-Dlibnma_gtk4=false \
 %endif
+	-Dgcr_gtk4=false \
 	-Dmobile_broadband_provider_info=true \
 	-Diso_codes=true \
 	-Dgtk_doc=true
@@ -173,6 +174,9 @@ This package contains development documentation for libnma-devel-doc.
 %doc %_datadir/gtk-doc/html/libnma
 
 %changelog
+* Wed Mar 30 2022 Mikhail Efremov <sem@altlinux.org> 1.8.36-alt1
+- Updated to 1.8.36.
+
 * Mon Mar 07 2022 Mikhail Efremov <sem@altlinux.org> 1.8.34-alt2
 - Enabled experimental GTK4 version build.
 
