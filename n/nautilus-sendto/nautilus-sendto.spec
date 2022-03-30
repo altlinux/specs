@@ -1,20 +1,26 @@
+%def_enable snapshot
 %define ver_major 3.8
 
 Name: nautilus-sendto
 Version: %ver_major.6
-Release: alt1
+Release: alt2
 
 Summary: Nautilus Sendto menu item
 License: GPLv2
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 %define glib_ver 2.26
 
+BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson intltool libgio-devel >= %glib_ver gobject-introspection-devel
-BuildRequires: libappstream-glib-devel
+BuildRequires: %_bindir/appstream-util
 
 %description
 This application provides integration between nautilus and e-mail agents.
@@ -23,6 +29,7 @@ a dialog for insert the email which you want to send the file/files.
 
 %prep
 %setup
+sed -i "s/'appdata'\,//" src/meson.build
 
 %build
 %meson
@@ -30,16 +37,19 @@ a dialog for insert the email which you want to send the file/files.
 
 %install
 %meson_install
-
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/%name
 %_man1dir/%name.1*
-%_datadir/appdata/*.xml
+%_datadir/metainfo/*.xml
 %doc NEWS AUTHORS
 
 %changelog
+* Wed Mar 30 2022 Yuri N. Sedunov <aris@altlinux.org> 3.8.6-alt2
+- updated to 3_8_6-28-gc87aac4
+- fixed build with meson >= 0.61
+
 * Mon Aug 14 2017 Yuri N. Sedunov <aris@altlinux.org> 3.8.6-alt1
 - 3.8.6
 
