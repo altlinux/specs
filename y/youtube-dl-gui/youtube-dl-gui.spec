@@ -2,7 +2,7 @@
 
 Name: youtube-dl-gui
 Version: 1.8.2
-Release: alt1
+Release: alt2
 
 Summary: Front-end GUI of the popular youtube-dl media downloader
 
@@ -29,7 +29,6 @@ BuildRequires(pre): rpm-build-intro
 %py3_use wx <= 4.1.1
 %py3_use wx >= 4.0.7
 
-#BuildRequires: python3-module-twodict
 #BuildRequires: python3-module-json
 
 Requires: %_bindir/xdg-open
@@ -44,7 +43,6 @@ Group: Development/Python3
 
 BuildArch: noarch
 
-%py3_requires twodict
 Requires: python3-module-wx >= 4
 
 %description -n python3-module-%modulename
@@ -75,6 +73,9 @@ desktop-file-install \
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Mar 30 2022 Stanislav Levin <slev@altlinux.org> 1.8.2-alt2
+- Dropped excessive dependency on `twodict`.
+
 * Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.8.2-alt1
 - new version 1.8.2 (with rpmrb script)
 
