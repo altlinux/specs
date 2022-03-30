@@ -8,7 +8,7 @@
 
 Name: gnome-user-share
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: Gnome user file sharing
 Group: Graphical desktop/GNOME
@@ -75,6 +75,9 @@ mDNSResolver running.
 
 
 %changelog
+* Wed Mar 30 2022 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt3
+- updated to 3_34_0-30-gc31b0a8 (fixed build with meson >= 0.61)
+
 * Thu Dec 16 2021 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt2
 - updated to GNOME_USER_SHARE_3_34_0-24-g3432ce7
 - fixed meson options
