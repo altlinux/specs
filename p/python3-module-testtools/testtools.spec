@@ -1,37 +1,42 @@
 %define _unpackaged_files_terminate_build 1
-
 %define oname testtools
+
+%def_with check
 
 Name: python3-module-%oname
 Version: 2.5.0
-Release: alt1
+Release: alt2
 
 Summary: Extensions to the Python standard library's unit testing framework
 
 Group: Development/Python3
 License: MIT
-Url: http://pypi.python.org/pypi/testtools
+Url: https://pypi.org/project/testtools/
 
-# Source-url: %__pypi_url %oname
+# Source-url: https://github.com/testing-cabal/testtools
 Source: %name-%version.tar
 
-# https://github.com/testing-cabal/testtools/pull/271
-Patch2: %oname-2.3.0-py37.patch
-Patch3: testtools-2.4.0-fix_py39_test.patch
+Patch0: testtools-2.5.0-Add-support-for-Python-3.10.patch
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-extras python3-module-mimeparse
-BuildRequires: python3-module-pbr python3-module-pytest python3-module-unittest2
-BuildRequires: python3(testscenarios) python3(fixtures) python3-module-twisted-core-test
+BuildRequires: python3-module-pbr
+
+%if_with check
+# install_requires=
+BuildRequires: python3(extras)
+BuildRequires: python3(fixtures)
+
+BuildRequires: python3(testscenarios)
+BuildRequires: python3(testresources)
+BuildRequires: python3(twisted.trial)
+
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_no_deps)
+%endif
 
 %add_python3_req_skip twisted
-%add_findreq_skiplist %python3_sitelibdir/%oname/_compat2x.py
-%py3_requires traceback2 mimeparse
 
 %description
 testtools is a set of extensions to the Python standard library's unit
@@ -39,31 +44,13 @@ testing framework. These extensions have been derived from years of
 experience with unit testing in Python and come from many different
 sources.
 
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-
-%description docs
-testtools is a set of extensions to the Python standard library's unit
-testing framework. These extensions have been derived from years of
-experience with unit testing in Python and come from many different
-sources.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
-%patch3 -p1
-
-%prepare_sphinx3 .
-ln -s ../objects.inv doc/
+%autopatch -p1
 
 %build
 export PBR_VERSION=%version
 %python3_build
-
-export PYTHONPATH=$PWD
-%make -C doc html SPHINXBUILD=sphinx-build-3
 
 %install
 export PBR_VERSION=%version
@@ -71,17 +58,20 @@ export PBR_VERSION=%version
 
 %check
 export PBR_VERSION=%version
-%make check PYTHON=python3
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --no-deps -vvr -s false --develop
 
 %files
 %doc LICENSE NEWS README*
-%python3_sitelibdir/*
-
-%files docs
-%doc doc/_build/html/*
-
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Mar 30 2022 Stanislav Levin <slev@altlinux.org> 2.5.0-alt2
+- Fixed FTBFS (Python 3.10).
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt1
 - new version 2.5.0 (with rpmrb script)
 
