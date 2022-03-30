@@ -29,7 +29,7 @@
 %define Name Erlang
 Name: erlang
 Epoch: 1
-Version: 24.3.2
+Version: 24.3.3
 Release: alt1
 Summary: A programming language developed by Ericsson
 License: Apache-2.0
@@ -1220,8 +1220,11 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Wed Mar 30 2022 Egor Ignatov <egori@altlinux.org> 1:24.3.3-alt1
+- new version 24.3.3
+
 * Mon Mar 21 2022 Egor Ignatov <egori@altlinux.org> 1:24.3.2-alt1
-- new version 34.3.2
+- new version 24.3.2
 
 * Sat Nov 20 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:24.1.3-alt2
 - E2K: removed unsupported -MG option
