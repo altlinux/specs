@@ -1,6 +1,6 @@
 %define module camlp5
 Name: ocaml-camlp5
-Version: 8.00.02
+Version: 8.00.03
 Release: alt1
 
 Summary: preprocessor-pretty-printer of OCaml
@@ -9,10 +9,9 @@ Group: Development/ML
 Url: https://camlp5.github.io/
 
 Source: %name-%version.tar
-Patch1: camlp5-8.00.01-alt-dynlink.patch
 Provides: camlp5 = %EVR
 Obsoletes: camlp5 < %EVR
-BuildRequires: ocaml >= 4.08.1
+BuildRequires: ocaml >= 4.08.1 ocaml-findlib
 BuildRequires: perl-IPC-System-Simple perl-String-ShellQuote
 
 %description
@@ -24,7 +23,6 @@ compilation of older packages (e.g. ocamlnet).
 
 %prep
 %setup -q
-%patch1 -p1
 
 %build
 ./configure --strict --mandir %_mandir
@@ -43,6 +41,9 @@ install -p -m644 compile/pa_o_fast.cmi %buildroot%_libdir/ocaml/%module/
 %_man1dir/*5*.1*
 
 %changelog
+* Wed Mar 30 2022 Anton Farygin <rider@altlinux.ru> 8.00.03-alt1
+- 8.00.03
+
 * Sun Oct 03 2021 Anton Farygin <rider@altlinux.ru> 8.00.02-alt1
 - 8.00.02
 
