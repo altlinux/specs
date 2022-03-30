@@ -22,7 +22,7 @@
 %def_disable debug
 
 Name: libgtk+3
-Version: %ver_major.32
+Version: %ver_major.33
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -64,7 +64,7 @@ Obsoletes: libgtk3-engine-adwaita < 3.13.0
 Provides: gtk3 = %EVR
 
 Requires: %name-schemas = %EVR
-Requires: gtk-update-icon-cache = %EVR
+Requires: gtk-update-icon-cache >= %version
 Requires: icon-theme-adwaita
 # ALT #32028
 Requires: gtk+3-themes-incompatible
@@ -114,15 +114,6 @@ BuildArch: noarch
 
 %description schemas
 This package provides a set of GTK+3 GSettings schemas.
-
-%package -n gtk-update-icon-cache
-Summary: Icon theme caching utility for GTK+
-Group: System/Libraries
-
-%description -n gtk-update-icon-cache
-gtk-update-icon-cache creates mmap()able cache files for icon themes.
-GTK+ can use the cache files created by gtk-update-icon-cache to avoid
-a lot of system call and disk seek overhead when the application starts.
 
 %package devel
 Summary: Development files and tools for GTK+ applications
@@ -284,9 +275,6 @@ sed -i.glib -e "s|GLIB_MIN_REQUIRED_VERSION|GLIB_VERSION_MIN_REQUIRED|" \
 %makeinstall_std
 install -d %buildroot{%_sysconfdir/gtk-%api_ver,%_libdir/gtk-%api_ver/%binary_ver/engines}
 
-# posttransfiletrigger for update icons cache
-install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/gtk-icon-cache.filetrigger
-
 touch %buildroot%_libdir/gtk-%api_ver/%binary_ver/immodules.cache
 # posttransfiletrigger to update immodules cache
 cat <<EOF > filetrigger
@@ -370,11 +358,6 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %config %_datadir/glib-2.0/schemas/org.gtk.Settings.ColorChooser.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gtk.Settings.Debug.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gtk.Settings.EmojiChooser.gschema.xml
-
-%files -n gtk-update-icon-cache
-%_bindir/gtk-update-icon-cache
-%_man1dir/gtk-update-icon-cache*
-%_rpmlibdir/gtk-icon-cache.filetrigger
 
 %files devel
 %_bindir/gtk-builder-tool
@@ -464,8 +447,14 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %endif
 
 %exclude %fulllibpath/*/*.la
+%exclude %_bindir/gtk-update-icon-cache
+%exclude %_man1dir/gtk-update-icon-cache*
 
 %changelog
+* Mon Mar 28 2022 Yuri N. Sedunov <aris@altlinux.org> 3.24.33-alt1
+- 3.24.33 (no changes since previous 2.4.32)
+- removed gtk-update-icon-cache subpackage
+
 * Fri Mar 04 2022 Yuri N. Sedunov <aris@altlinux.org> 3.24.32-alt1
 - 3.24.32
 

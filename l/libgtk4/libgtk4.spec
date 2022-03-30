@@ -33,7 +33,7 @@
 
 Name: lib%_name%api_ver_major
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: The GIMP ToolKit (GTK)
 Group: System/Libraries
@@ -46,6 +46,7 @@ Source: %_name-%version.tar
 %else
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %endif
+Source5: gtk4-icon-cache.filetrigger
 Patch: gtk+-2.16.5-alt-stop-spam.patch
 
 %define glib_ver 2.66.0
@@ -66,12 +67,11 @@ Patch: gtk+-2.16.5-alt-stop-spam.patch
 %define cloudproviders_ver 0.2.5
 %define rsvg_ver 2.46.0
 
-Requires: gtk-update-icon-cache
+Requires: gtk4-update-icon-cache = %EVR
 Requires: icon-theme-adwaita
 Requires: iso-codes
 Requires: librsvg >= %rsvg_ver
-# ALT #32028
-Requires: gtk+3-themes-incompatible
+
 %{?_enable_colord:Requires: colord}
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
@@ -126,17 +126,28 @@ and programs.
 %package devel
 Summary: Development files and tools for GTK%api_ver_major applications
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: gtk-builder-convert
 
 %description devel
 This package contains development files for GTK%api_ver_major. Use this to
 build programs that use GTK%api_ver_major.
 
+%package -n gtk4-update-icon-cache
+Summary: Icon theme caching utility for GTK
+Group: System/Libraries
+Obsoletes: gtk-update-icon-cache < %version
+Provides: gtk-update-icon-cache = %EVR
+
+%description -n gtk4-update-icon-cache
+gtk-update-icon-cache creates mmap()able cache files for icon themes.
+GTK can use the cache files created by gtk-update-icon-cache to avoid
+a lot of system call and disk seek overhead when the application starts.
+
 %package -n gtk4-demo
 Summary: GTK+ widgets demonstration program
 Group: Development/GNOME and GTK+
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n gtk4-demo
 GTK+ is a multi-platform toolkit for creating graphical user interfaces.
@@ -166,7 +177,7 @@ This package contains sources for example programs.
 %package -n %name-devel-static
 Summary: Static libraries for GTK+ (GIMP ToolKit) applications
 Group: Development/GNOME and GTK+
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n %name-devel-static
 GTK+ is a multi-platform toolkit for creating graphical user interfaces.
@@ -175,7 +186,7 @@ This package contains the static libraries for GTK%api_ver_major.
 %package gir
 Summary: GObject introspection data for the GTK+ library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the GTK%api_ver_major library
@@ -184,8 +195,8 @@ GObject introspection data for the GTK%api_ver_major library
 Summary: GObject introspection devel data for the GTK%api_ver_major library
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the GTK+ library
@@ -195,7 +206,7 @@ This package contains development documentation for GAIL.
 %package tests
 Summary: Tests for the GTK%api_ver_major packages
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package provides tests programs that can be used to verify
@@ -232,6 +243,11 @@ sed -i "s|\('rst2man\)|\1.py|" docs/reference/gtk/meson.build
 %meson_install
 install -d %buildroot{%_sysconfdir/gtk-%api_ver,%_libdir/gtk-%api_ver/%binary_ver/engines}
 
+# posttransfiletrigger for update icons cache
+install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/gtk4-icon-cache.filetrigger
+# backward compatibility symlink
+ln -s gtk4-update-icon-cache %buildroot%_bindir/gtk-update-icon-cache
+
 # The license
 ln -sf %_licensedir/LGPL-2.0-or-later COPYING
 
@@ -253,7 +269,6 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %_bindir/gtk4-query-settings
 %_bindir/gtk4-launch
 %_bindir/gtk4-encode-symbolic-svg
-%_bindir/gtk4-update-icon-cache
 %_libdir/libgtk-4.so.*
 %dir %_libdir/gtk-%api_ver/modules
 %dir %fulllibpath
@@ -271,7 +286,6 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %_man1dir/gtk4-query-settings.1.*
 %_man1dir/gtk4-launch.*
 %_man1dir/gtk4-encode-symbolic-svg.1.*
-%_man1dir/gtk4-update-icon-cache.1.*
 %endif
 
 %_datadir/glib-2.0/schemas/org.gtk.gtk4.Settings.ColorChooser.gschema.xml
@@ -303,6 +317,13 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %_pkgconfigdir/gtk%api_ver_major-broadway.pc
 %endif
 
+%files -n gtk4-update-icon-cache
+%_bindir/gtk4-update-icon-cache
+# compatibility symlink
+%_bindir/gtk-update-icon-cache
+%_man1dir/gtk4-update-icon-cache*
+%_rpmlibdir/gtk4-icon-cache.filetrigger
+
 %files -n gtk4-demo
 %_desktopdir/org.gtk.Demo4.desktop
 %_desktopdir/org.gtk.IconBrowser4.desktop
@@ -315,12 +336,10 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %_bindir/gtk4-print-editor
 %_datadir/glib-2.0/schemas/org.gtk.Demo4.gschema.xml
 %_iconsdir/hicolor/scalable/apps/org.gtk.Demo4.svg
-#%_iconsdir/hicolor/scalable/apps/org.gtk.gtk4.NodeEditor*.svg
 %_iconsdir/hicolor/scalable/apps/org.gtk.IconBrowser4.svg
 %_iconsdir/hicolor/scalable/apps/org.gtk.PrintEditor4*.svg
 %_iconsdir/hicolor/scalable/apps/org.gtk.WidgetFactory4.svg
 %_iconsdir/hicolor/symbolic/apps/org.gtk.Demo4-symbolic.svg
-#%_iconsdir/hicolor/symbolic/apps/org.gtk.gtk4.NodeEditor-symbolic.svg
 %_iconsdir/hicolor/symbolic/apps/org.gtk.IconBrowser4-symbolic.svg
 %_iconsdir/hicolor/symbolic/apps/org.gtk.PrintEditor4-symbolic.svg
 %_iconsdir/hicolor/symbolic/apps/org.gtk.WidgetFactory4-symbolic.svg
@@ -372,6 +391,10 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Mon Mar 28 2022 Yuri N. Sedunov <aris@altlinux.org> 4.6.2-alt2
+- new gtk4-update-icon-cache subpackage obsoletes/provides
+  gtk-update-icon-cache from libgtk+3
+
 * Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 4.6.2-alt1
 - 4.6.2
 
