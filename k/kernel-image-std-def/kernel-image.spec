@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt2
 epoch:2 
 %define kernel_base_version	5.15
 %define kernel_sublevel .32
@@ -88,17 +88,6 @@ ExclusiveArch: i586 x86_64 ppc64le aarch64 armh
 
 %define kvm_modules_dir arch/%arch_dir/kvm
 
-%define qemu_pkg %_arch
-%ifarch %ix86 x86_64
-%define qemu_pkg x86
-%endif
-%ifarch ppc64le
-%define qemu_pkg ppc
-%endif
-%ifarch %arm
-%define qemu_pkg arm
-%endif
-
 ExclusiveOS: Linux
 
 BuildRequires(pre): rpm-build-kernel
@@ -118,7 +107,7 @@ BuildRequires: dwarves >= 1.16
 BuildRequires: u-boot-tools
 %endif
 # for check
-%{?!_without_check:%{?!_disable_check:BuildRequires: qemu-system-%qemu_pkg-core ipxe-roms-qemu glibc-devel-static}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run >= 1.30 ltp >= 20210524-alt2 iproute2}}
 Provides: kernel-modules-eeepc-%flavour = %version-%release
 Provides: kernel-modules-drbd83-%flavour = %version-%release
 Provides: kernel-modules-igb-%flavour = %version-%release
@@ -253,6 +242,7 @@ technical reasons.
 %package -n kernel-headers-%flavour
 Summary: Header files for the Linux kernel
 Group: Development/Kernel
+AutoReqProv: nocpp
 Requires: kernel-headers-common >= 1.1.5
 Provides: kernel-headers = %version
 #Provides: kernel-headers-%base_flavour = %version-%release
@@ -275,6 +265,7 @@ If possible, try to use glibc-kernheaders instead of this package.
 %package -n kernel-headers-modules-%flavour
 Summary: Headers and other files needed for building kernel modules
 Group: Development/Kernel 
+AutoReqProv: nocpp
 Requires: gcc%kgcc_version
 Requires: libelf-devel
 
@@ -370,11 +361,6 @@ eu-strip --remove-comment -o %image_path vmlinux
 %endif
 
 echo "Kernel built $KernelVer"
-
-%if_enabled docs
-# psdocs, pdfdocs don't work yet
-%make_build SPHINXOPTS="-j $([ %__nprocs -ge 8 ] && echo 8 || echo %__nprocs)" htmldocs
-%endif
 
 %install
 export ARCH=%base_arch
@@ -539,49 +525,20 @@ cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 # eu-findtextrel will fail if it is not a DSO or PIE.
 %add_verify_elf_skiplist /boot/vmlinuz-*
 
+%define _unpackaged_files_terminate_build 1
+
 
 %check
-KernelVer=%kversion-%flavour-%krelease
-mkdir -p test
-cd test
-msg='Booted successfully'
-%__cc %optflags -s -static -xc -o init - <<__EOF__
-#include <unistd.h>
-#include <sys/reboot.h>
-int main()
-{
-	static const char msg[] = "$msg\n";
-	write(2, msg, sizeof(msg) - 1);
-	reboot(RB_POWER_OFF);
-	pause();
-}
-__EOF__
-echo init | cpio -H newc -o | gzip -9n > initrd.img
-qemu_arch=%_arch
-qemu_opts=""
-console=ttyS0
-%ifarch %ix86
-qemu_arch=i386
-%endif
-%ifarch ppc64le
-qemu_arch=ppc64
-console=hvc0
-%endif
-%ifarch aarch64
-qemu_opts="-machine accel=tcg,type=virt -cpu cortex-a57 -drive if=pflash,unit=0,format=raw,readonly,file=%_datadir/AAVMF/QEMU_EFI-pflash.raw"
-%endif
-%ifarch %arm
-qemu_arch=arm
-qemu_opts="-machine virt"
-console=ttyAMA0
-%endif
-timeout --foreground 600 qemu-system-"$qemu_arch" -m 512 $qemu_opts -kernel %buildroot/boot/vmlinuz-$KernelVer -nographic -append console="$console no_timer_check" -initrd initrd.img > boot.log &&
-grep -q "^$msg" boot.log &&
-grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
-	cat >&2 boot.log
-	echo >&2 'Marker not found'
-	exit 1
-}
+# First boot-test no matter have KVM or not.
+timeout 300 vm-run --no-quiet uname -a
+# Longer LTP tests only if there is KVM (which is present on all main arches).
+if ! timeout 999 vm-run --kvm=cond \
+        "/sbin/sysctl kernel.printk=8;
+         runltp -f kernel-alt-vm -S skiplist-alt-vm -o out"; then
+        cat /usr/lib/ltp/output/LTP_RUN_ON-out.failed >&2
+        sed '/TINFO/i\\' /usr/lib/ltp/output/out | awk '/TFAIL/' RS= >&2
+        exit 1
+fi
 
 %post checkinstall
 check-pesign-helper
@@ -660,6 +617,14 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Mar 31 2022 Vitaly Chikunov <vt@altlinux.org> 2:5.15.32-alt2
+- Rebuild to create missing kernelbot tags.
+- Use selected LTP tests in %%check.
+- Do not build (redundant) htmldocs for kernel-doc package.
+- config: enable Atheros ath11k PCI support.
+- Revert "Input: clear BTN_RIGHT/MIDDLE on buttonpads" (ALT#42123).
+- config: enable MediaTek Bluetooth USB controllers support.
+
 * Mon Mar 28 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.32-alt1
 - v5.15.32
 
