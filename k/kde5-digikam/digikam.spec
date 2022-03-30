@@ -27,8 +27,8 @@
 %define label digiKam
 Name: kde5-%rname
 %define lname lib%name
-Version: 7.5.0
-Release: alt3
+Version: 7.6.0
+Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 #define sover %version
@@ -328,6 +328,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Tue Mar 29 2022 Sergey V Turchin <zerg@altlinux.org> 7.6.0-alt1
+- new version
+
 * Thu Feb 03 2022 Sergey V Turchin <zerg@altlinux.org> 7.5.0-alt3
 - add russian docs
 
