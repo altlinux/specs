@@ -1,72 +1,66 @@
 %define _unpackaged_files_terminate_build 1
 %define oname shortuuid
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.0.0
+Version: 1.0.8
 Release: alt1
 
 Summary: A generator library for concise, unambiguous and URL-safe UUIDs
 
 License: BSD
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/shortuuid/
+Url: https://pypi.org/project/shortuuid/
 
-# Source-url: %__pypi_url %oname
+# Source-url: https://github.com/skorokithakis/shortuuid.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-intro >= 2.1.3
 BuildRequires(pre): rpm-build-python3
 
 BuildArch: noarch
 
-%py3_provides %oname
+%if_with check
+BuildRequires: python3(tox)
+%endif
 
 %description
 A library that generates short, pretty, unambiguous unique IDs by using
 an extensive, case-sensitive alphabet and omitting similar-looking
 letters and numbers.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-A library that generates short, pretty, unambiguous unique IDs by using
-an extensive, case-sensitive alphabet and omitting similar-looking
-letters and numbers.
-
-This package contains tests for %oname.
-
 %prep
 %setup
-
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
 
 %build
 %python3_build
 
 %install
 %python3_install
-%python3_prune
+# strip tests
+rm %buildroot%python3_sitelibdir/%oname/tests.py
 
 %check
-%__python3 setup.py test
+cat > tox.ini <<'EOF'
+[testenv]
+commands =
+    python %oname/tests.py
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vvr -s false --develop
 
 %files
-%doc *.rst
-%python3_sitelibdir/*
-%if_with pack_test
-%exclude %python3_sitelibdir/*/tests.*
-%exclude %python3_sitelibdir/*/*/tests.*
-
-%files tests
-%python3_sitelibdir/*/tests.*
-%python3_sitelibdir/*/*/tests.*
-%endif
+%doc README.md
+%_bindir/%oname
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Mar 30 2022 Stanislav Levin <slev@altlinux.org> 1.0.8-alt1
+- 1.0.0 -> 1.0.8.
+
 * Fri Aug 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - new version (1.0.0) with rpmgs script
 - cleanup spec, disable packing tests
