@@ -1,5 +1,5 @@
 %define ltr libtorrent-rasterbar-devel
-%define rel alt1
+%define rel alt2
 
 Name: qbittorrent
 Version: 4.4.2
@@ -78,6 +78,15 @@ Default is to listen on tcp/8080 with admin/adminadmin credentials
 %setup -q
 #-n qBittorrent-release-%version
 
+%ifarch %e2k
+sed -i "1i #include <cstdlib>\nnamespace std { using ::aligned_alloc; }" \
+	src/{base/{bittorrent,rss},app,gui{,/properties,/rss,/search},webui/api}/*.cpp \
+	src/base/{tagset,bittorrent/{filterparserthread,session}}.h \
+	src/gui/{addnewtorrentdialog,properties/peersadditiondialog}.h
+sed -i -E '/inline namespace/h;/^ *Q_ENUM_NS\(/{G;s/Q_ENUM_NS/&2/;s/\)\n.*inline namespace/,/;s/$/)/};/#include <QMeta(Type|Enum)>/a #define Q_ENUM_NS2(ENUM,NAME) Q_ENUMS(ENUM) inline Q_DECL_CONSTEXPR const QMetaObject *qt_getEnumMetaObject(ENUM) noexcept { return &NAME::staticMetaObject; } inline Q_DECL_CONSTEXPR const char *qt_getEnumName(ENUM) noexcept { return #ENUM; }' \
+	src/base/bittorrent/*.h
+%endif
+
 %build
 %ifarch %e2k 
 %add_optflags -std=c++14
@@ -111,6 +120,9 @@ make clean
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Mar 30 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:4.4.2-alt2
+- fixed build for Elbrus
+
 * Fri Mar 25 2022 Ilya Mashkin <oddity@altlinux.ru> 1:4.4.2-alt1
 - 4.4.2
 
