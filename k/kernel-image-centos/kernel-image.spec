@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 75
+%define centos_release 76
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,17 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Mar 30 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.76-alt1.el9
+- Updated to kernel-5.14.0-76.el9:
+  + cifs: fix double free race when mount fails in cifs_get_root()
+  + copy_process(): Move fd_install() out of sighand->siglock critical section
+  + kernel/futex: backport new futex_waitv(2) system call
+  + Merge tag 'kernel-5.14.0-70.4.1.el9_0' from 9.0
+  + Move Intel PMT drivers into their own directory
+  + Sync vDPA with upstream for RHEL9
+  + tick/rcu: fix NOHZ tick-stop when performing DLPAR proc remove on ppc64le [P10]
+  + x86/hyperv: Output host build info as normal Windows version number
+
 * Sun Mar 27 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.75-alt1.el9
 - Updated to kernel-5.14.0-75.el9 (fixes: CVE-2022-0742, CVE-2022-22942):
   + drm/ast: Create threshold values for AST2600
