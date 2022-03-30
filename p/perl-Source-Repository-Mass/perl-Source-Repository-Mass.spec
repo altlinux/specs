@@ -1,7 +1,7 @@
 %define module Source-Repository-Mass
 
 Name: perl-%module
-Version: 0.443
+Version: 0.444
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -37,6 +37,9 @@ Conflicts: perl-Source-Repository < 0.391
 %perl_vendor_privlib/Source*
 
 %changelog
+* Wed Mar 30 2022 Igor Vlasenko <viy@altlinux.org> 0.444-alt1
+- new version
+
 * Wed Feb 23 2022 Igor Vlasenko <viy@altlinux.org> 0.443-alt1
 - new version
 
