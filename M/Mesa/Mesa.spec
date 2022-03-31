@@ -41,6 +41,8 @@
 %ifarch %intel_arches
 %dri_drivers_add i915
 %dri_drivers_add i965
+%gallium_drivers_add i915
+%gallium_drivers_add crocus
 %gallium_drivers_add iris
 %endif
 %ifarch %nouveau_arches
@@ -78,8 +80,8 @@
 %vulkan_drivers_add panfrost
 %endif
 
-%define ver_major 21.3
-%define ver_minor 8
+%define ver_major 22.0
+%define ver_minor 1
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -296,7 +298,6 @@ Mesa-based DRI drivers
 %build
 %meson \
 	-Dplatforms=x11,wayland \
-	-Ddri-drivers='%{?dri_drivers}' \
 	-Dgallium-drivers='%{?gallium_drivers}' \
 	-Dvulkan-drivers='%{?vulkan_drivers}' \
 	-Dvulkan-layers=device-select \
@@ -466,9 +467,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %_datadir/drirc.d
 %_libdir/X11/modules/dri/*swrast*_dri.so
 %_libdir/X11/modules/dri/libgallium_dri.so
-%ifarch %dri_megadriver_arches
-%_libdir/X11/modules/dri/libmesa_dri_drivers.so
-%endif
+#%ifarch %dri_megadriver_arches
+#%_libdir/X11/modules/dri/libmesa_dri_drivers.so
+#%endif
 %ifarch %gallium_pipe_arches
 %dir %_libdir/gallium-pipe
 %_libdir/gallium-pipe/pipe_swrast.so
@@ -502,8 +503,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 
 %ifarch %intel_arches
 %files -n xorg-dri-intel
-%_libdir/X11/modules/dri/i8?0_dri.so
+#%_libdir/X11/modules/dri/i8?0_dri.so
 %_libdir/X11/modules/dri/i9?5_dri.so
+%_libdir/X11/modules/dri/crocus_dri.so
 %_libdir/X11/modules/dri/iris_dri.so
 %ifarch %vulkan_intel_arches
 %_libdir/libvulkan_intel.so
@@ -511,6 +513,8 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %dir %_datadir/vulkan/icd.d
 %_datadir/vulkan/icd.d/intel_icd*.json
 %ifarch %gallium_pipe_arches
+%_libdir/gallium-pipe/pipe_i9?5.so
+%_libdir/gallium-pipe/pipe_crocus.so
 %_libdir/gallium-pipe/pipe_iris.so
 %endif
 %endif
@@ -566,6 +570,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Wed Mar 30 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.0.1-alt1
+- 22.0.1
+
 * Mon Mar 21 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:21.3.8-alt1
 - 21.3.8
 
