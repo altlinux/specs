@@ -1,8 +1,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: libluv
-Version: 1.41.0
-Release: alt2
+Version: 1.43.0
+Release: alt1
 
 Summary: libuv bindings for luajit
 
@@ -55,6 +55,9 @@ libluv header and build tools.
 
 
 %changelog
+* Thu Mar 31 2022 Vladimir Didenko <cow@altlinux.ru> 1.43.0-alt1
+- new version
+
 * Mon May 31 2021 Vladimir Didenko <cow@altlinux.ru> 1.41.0-alt2
 - fix build with a new cmake macros
 
