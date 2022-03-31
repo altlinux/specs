@@ -4,7 +4,7 @@
 %brp_strip_none
 
 Name: librtpkcs11ecp
-Version: 2.3.2.0
+Version: 2.3.3.0
 Release: alt1
 
 Summary: Rutoken PKCS#11 Library
@@ -53,6 +53,9 @@ install -pDm644 rutokenecp.module \
 %config(noreplace) %_sysconfdir/pkcs11/modules/rutokenecp.module
 
 %changelog
+* Thu Mar 31 2022 Andrey Cherepanov <cas@altlinux.org> 2.3.3.0-alt1
+- New version.
+
 * Mon Jan 17 2022 Andrey Cherepanov <cas@altlinux.org> 2.3.2.0-alt1
 - New version.
 
