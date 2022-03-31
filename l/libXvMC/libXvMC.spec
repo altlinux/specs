@@ -1,5 +1,5 @@
 Name: libXvMC
-Version: 1.0.12
+Version: 1.0.13
 Release: alt1
 
 Summary: The XvMC Library
@@ -51,6 +51,9 @@ touch %buildroot%_sysconfdir/X11/XvMCConfig
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Mar 31 2022 Valery Inozemtsev <shrek@altlinux.ru> 1.0.13-alt1
+- 1.0.13
+
 * Thu Mar 12 2020 Valery Inozemtsev <shrek@altlinux.ru> 1.0.12-alt1
 - 1.0.12
 
