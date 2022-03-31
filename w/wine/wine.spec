@@ -6,7 +6,6 @@
 %global __find_debuginfo_files %nil
 %endif
 
-%def_disable static
 %def_without vanilla
 %define gecko_version 2.47.2
 %define mono_version 7.0.0
@@ -31,6 +30,8 @@
 %if_feature llvm 11.0
 # build real PE libraries (.dll, not .dll.so), via clang
 %def_with mingw
+%else
+%def_without mingw
 %endif
 
 # https://bugs.etersoft.ru/show_bug.cgi?id=15244
@@ -67,7 +68,7 @@
 
 Name: wine
 Version: %major.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -123,10 +124,9 @@ ExclusiveArch: %ix86 x86_64 aarch64
 
 # TODO: also check build64
 # workaround for https://bugzilla.altlinux.org/38130
-%if_with mingw
-    %def_with build64mingw
-%else
-    %def_without build64mingw
+# notbuild64mingw = without mingw && without build64
+%if %{expand:%%{?_without_mingw:1}%%{!?_without_mingw:0}} && %{expand:%%{?_without_build64:1}%%{!?_without_build64:0}}
+    %define notbuild64mingw 1
 %endif
 
 %define libdir %_libdir
@@ -136,7 +136,6 @@ ExclusiveArch: %ix86 x86_64 aarch64
     %define wineserver wineserver64
     %define winepreloader wine64-preloader
 %else
-    %def_without build64mingw
     %define wineserver wineserver32
     %define winepreloader wine-preloader
 %endif
@@ -498,7 +497,7 @@ Conflicts: %conflictbase-devel-tools
 Conflicts: lib%conflictbase-devel
 Conflicts: lib%name-devel < %version
 %if_without vanilla
-Provides: libwine-devel
+Provides: libwine-devel = %EVR
 %endif
 # we don't need provide anything
 AutoProv:no
@@ -536,19 +535,6 @@ develop programs using %name.
 %name-devel содержит файлы для разработки программ, использующих Wine:
 заголовочные файлы и утилиты, предназначенные
 для компилирования программ с %name.
-
-
-%package devel-static
-Summary: Static libraries for lib%name
-Group: Development/C
-Requires: %name-devel = %EVR
-Conflicts: lib%conflictbase-devel-static
-# we don't need provide anything
-AutoProv:no
-
-%description devel-static
-%name-devel-static contains the static libraries needed to
-develop programs which make use of Wine.
 
 
 %prep
@@ -625,7 +611,7 @@ find %buildroot%winebindir -mindepth 0 -maxdepth 1 -not -type d | \
 # wine64 and wine64-preloader are already built as wine64*
 mv -v %buildroot%winebindir/wineserver %buildroot%winebindir/%wineserver
 %if_with build64
-ln -sv --relative %buildroot%winebindir/wine64 %buildroot%_bindir/
+[ -s %buildroot%_bindir/wine64 ] || ln -sv --relative %buildroot%winebindir/wine64 %buildroot%_bindir/
 %endif
 
 
@@ -667,11 +653,6 @@ rm -rv %buildroot%_mandir/*.UTF-8
 
 # Do not pack dangerous association to run windows executables
 rm -v %buildroot%_desktopdir/wine.desktop
-
-%if_disabled static
-# keep only libwinecrt0.a
-find %buildroot%libwinedir/%winesodir -name "*.a" -not -name libwinecrt0.a -type f -print -delete
-%endif
 
 %if_without debugpe
 # [aarch64] /usr/bin/strip: /usr/src/tmp/wine-staging-buildroot/usr/lib64/wine/aarch64-windows/xinput1_1.dll: file format not recognized
@@ -758,9 +739,11 @@ fi
 %libwinedir/%winesodir/*.ocx.so
 %libwinedir/%winesodir/*.tlb.so
 %libwinedir/%winesodir/*.ax.so
+%libwinedir/%winesodir/*.exe.so
+%libwinedir/%winesodir/*.acm.so
 %endif
 
-%if_without build64mingw
+%ifdef notbuild64mingw
 %libwinedir/%winesodir/*.dll16.so
 %libwinedir/%winesodir/*.drv16.so
 %libwinedir/%winesodir/*.exe16.so
@@ -801,6 +784,7 @@ fi
 %exclude %libwinedir/%winepedir/gphoto2.ds
 %exclude %libwinedir/%winesodir/winevulkan.so
 %if_without mingw
+%exclude %libwinedir/%winesodir/winevulkan.dll.so
 %exclude %libwinedir/%winesodir/twain_32.dll.so
 %exclude %libwinedir/%winesodir/d3d10.dll.so
 %exclude %libwinedir/%winesodir/d3d8.dll.so
@@ -811,7 +795,7 @@ fi
 %exclude %libwinedir/%winesodir/wined3d.dll.so
 %endif
 
-%if_without build64mingw
+%ifdef notbuild64mingw
 %exclude %libwinedir/%winesodir/twain.dll16.so
 %endif
 
@@ -908,8 +892,10 @@ fi
 %libwinedir/%winesodir/sane.so
 %if_without mingw
 %libwinedir/%winesodir/twain_32.dll.so
+%libwinedir/%winesodir/gphoto2.ds.so
+%libwinedir/%winesodir/sane.ds.so
 %endif
-%if_without build64mingw
+%ifdef notbuild64mingw
 %libwinedir/%winesodir/twain.dll16.so
 %endif
 
@@ -959,19 +945,20 @@ fi
 
 
 %files devel
-#libwinedir/%winesodir/lib*.def
 %if_with mingw
 %libwinedir/%winepedir/lib*.a
 %endif
-%libwinedir/%winesodir/libwinecrt0.a
-
-%if_enabled static
-%files devel-static
 %libwinedir/%winesodir/lib*.a
-%exclude %libwinedir/%winesodir/libwinecrt0.a
-%endif
 
 %changelog
+* Thu Mar 31 2022 Vitaly Lipatov <lav@altlinux.ru> 1:6.23.1-alt2
+- set version for provided libwine-devel
+- skip linking wine64 to bindir if it is already exists
+- don't pack libwinecrt0.a twice
+- fix checking for build64mingw, fix build
+- fix build without PE
+- pack lib*.a needed for build with wine
+
 * Fri Mar 04 2022 Vitaly Lipatov <lav@altlinux.ru> 1:6.23.1-alt1
 - new version (6.23.1) with rpmgs script
 - fix build (add hack with ntdll.so and disable debuginfo subpackages)
