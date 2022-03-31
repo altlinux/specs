@@ -1,8 +1,8 @@
 %def_disable kde4
 
 Name: mediainfo
-Version: 21.09
-Release: alt1.1
+Version: 22.03
+Release: alt1
 
 Group: File tools
 Summary: MediaInfo supplies information about a video or audio file
@@ -152,6 +152,9 @@ rm -f %buildroot%_datadir/kde4/services/ServiceMenus/mediainfo-gui.desktop
 %_K5srv/ServiceMenus/%name-gui.desktop
 
 %changelog
+* Thu Mar 31 2022 Yuri N. Sedunov <aris@altlinux.org> 22.03-alt1
+- 22.03
+
 * Sat Sep 25 2021 Yuri N. Sedunov <aris@altlinux.org> 21.09-alt1.1
 - rebuilt with wxGTK3.0
 
