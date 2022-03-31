@@ -10,8 +10,8 @@
 %endif
 
 Name:     davmail
-Version:  6.0.0
-Release:  alt3
+Version:  6.0.1
+Release:  alt1
 Summary:  POP/IMAP/SMTP/Caldav/Carddav/LDAP gateway for Microsoft Exchange
 URL:      http://davmail.sourceforge.net/
 Group:    Networking/Other
@@ -78,6 +78,9 @@ sed -i 's/\r//' releaseguide.txt
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Mon Mar 28 2022 Andrey Cherepanov <cas@altlinux.org> 6.0.1-alt1
+- New version.
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 6.0.0-alt3
 - NMU: drop unused require swig
 
