@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        99.0.4844.74
+Version:        100.0.4896.60
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -66,18 +66,16 @@ Patch001: 0001-OPENSUSE-enables-reading-of-the-master-preference.patch
 Patch002: 0002-ALT-Set-appropriate-desktop-file-name-for-default-br.patch
 Patch003: 0003-DEBIAN-manpage-fixes.patch
 Patch004: 0004-DEBIAN-add-ps-printing-capability-gtk2.patch
-Patch005: 0005-ALT-fix-shrank-by-one-character.patch
-Patch006: 0006-ALT-Fix-last-commit-position-issue.patch
-Patch007: 0007-ALT-Use-rpath-link-and-absolute-rpath.patch
-Patch008: 0008-ALT-openh264-always-pic-on-x86.patch
-Patch009: 0009-ALT-allow-to-override-clang-through-env-variables.patch
-Patch010: 0010-ALT-Hack-to-avoid-build-error-with-clang7.patch
-Patch011: 0011-ALT-disable-asm-on-x86-in-dav1d.patch
-Patch012: 0012-Move-offending-function-to-chromeos-only.patch
-Patch013: 0013-ALT-Disable-NOMERGE-attribute.patch
-Patch014: 0014-FEDORA-bootstrap-with-python3.patch
-Patch015: 0015-sql-make-VirtualCursor-standard-layout-type.patch
-Patch016: 0016-ALT-fix-build-with-glibc-2.34.patch
+Patch005: 0005-ALT-Use-rpath-link-and-absolute-rpath.patch
+Patch006: 0006-ALT-openh264-always-pic-on-x86.patch
+Patch007: 0007-ALT-allow-to-override-clang-through-env-variables.patch
+Patch008: 0008-ALT-Hack-to-avoid-build-error-with-clang7.patch
+Patch009: 0009-ALT-disable-asm-on-x86-in-dav1d.patch
+Patch010: 0010-Move-offending-function-to-chromeos-only.patch
+Patch011: 0011-ALT-Disable-NOMERGE-attribute.patch
+Patch012: 0012-FEDORA-bootstrap-with-python3.patch
+Patch013: 0013-sql-make-VirtualCursor-standard-layout-type.patch
+Patch014: 0014-GCC-explicitely-move-return-value-of-SCTHashdanceMet.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -244,7 +242,6 @@ gn_arg use_system_freetype=false
 gn_arg use_system_harfbuzz=false
 gn_arg link_pulseaudio=true
 gn_arg enable_hangout_services_extension=true
-gn_arg fieldtrial_testing_like_official_build=true
 gn_arg treat_warnings_as_errors=false
 gn_arg fatal_linker_warnings=false
 gn_arg system_libdir=\"%_lib\"
@@ -445,6 +442,30 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Mar 30 2022 Alexey Gladkov <legion@altlinux.ru> 100.0.4896.60-alt1
+- New version (100.0.4896.60) (ALT#42263).
+- Security fixes:
+  - CVE-2022-1125: Use after free in Portals.
+  - CVE-2022-1127: Use after free in QR Code Generator.
+  - CVE-2022-1128: Inappropriate implementation in Web Share API.
+  - CVE-2022-1129: Inappropriate implementation in Full Screen Mode.
+  - CVE-2022-1130: Insufficient validation of untrusted input in WebOTP.
+  - CVE-2022-1131: Use after free in Cast UI.
+  - CVE-2022-1132: Inappropriate implementation in Virtual Keyboard.
+  - CVE-2022-1133: Use after free in WebRTC.
+  - CVE-2022-1134: Type Confusion in V8.
+  - CVE-2022-1135: Use after free in Shopping Cart.
+  - CVE-2022-1136: Use after free in Tab Strip .
+  - CVE-2022-1137: Inappropriate implementation in Extensions.
+  - CVE-2022-1138: Inappropriate implementation in Web Cursor.
+  - CVE-2022-1139: Inappropriate implementation in Background Fetch API.
+  - CVE-2022-1141: Use after free in File Manager.
+  - CVE-2022-1142: Heap buffer overflow in WebUI.
+  - CVE-2022-1143: Heap buffer overflow in WebUI.
+  - CVE-2022-1144: Use after free in WebUI.
+  - CVE-2022-1145: Use after free in Extensions.
+  - CVE-2022-1146: Inappropriate implementation in Resource Timing.
+
 * Wed Mar 16 2022 Alexey Gladkov <legion@altlinux.ru> 99.0.4844.74-alt1
 - New version (99.0.4844.74).
 - Security fixes:
