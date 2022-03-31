@@ -4,7 +4,7 @@
 %define rdn_name org.gnome.gitlab.somas.Apostrophe
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GTK-based distraction free Markdown editor
@@ -17,11 +17,14 @@ Source: %_name-%version.tar
 
 BuildArch: noarch
 
-Requires: pandoc
-Requires: typelib(Gtk) = 3.0
-
+%define gtk_api_ver 3.0
 %define gtk_ver 3.24
 %define handy_ver 1.0.0
+%define webkit_api_ver 4.0
+
+Requires: pandoc
+Requires: typelib(Gtk) = %gtk_api_ver
+Requires: typelib(WebKit2) = %webkit_api_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson sassc /usr/bin/appstream-util desktop-file-utils
@@ -58,6 +61,9 @@ interface.
 
 
 %changelog
+* Thu Mar 31 2022 Yuri N. Sedunov <aris@altlinux.org> 2.6.2-alt1
+- 2.6.2
+
 * Sun Mar 20 2022 Yuri N. Sedunov <aris@altlinux.org> 2.6.1-alt1
 - updated to v2.6.1-1-gc06e1d7
 
