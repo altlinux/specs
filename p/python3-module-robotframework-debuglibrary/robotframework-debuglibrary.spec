@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-
 %define oname robotframework-debuglibrary
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 
 Summary: RobotFramework debug library and an interactive shell
@@ -16,13 +17,24 @@ BuildArch: noarch
 # https://github.com/xyb/robotframework-debuglibrary.git
 Source: %name-%version.tar
 
-Patch1: %oname-alt-tests-python3-compat.patch
+Patch1: %oname-2.2.2-tests-Drop-dependency-on-coverage.patch
+Patch2: %oname-2.2.2-fail-Fixed-expected-attr-name-for-robotframework-5.0.patch
+Patch3: %oname-2.2.2-tests-Make-selenium-tests-conditional.patch
+Patch4: %oname-2.2.2-tests-Mark-step_functional_testing-as-xfail.patch
+Patch5: %oname-2.2.2-deps-Unpin-upper-version-of-prompt-toolkit.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-robotframework
-BuildRequires: python3(pygments) python3(prompt_toolkit)
-BuildRequires: python3(coverage) python3(pexpect)
+
+%if_with check
 BuildRequires: /dev/pts
+# install_requires=
+BuildRequires: python3(prompt_toolkit)
+BuildRequires: python3(robotframework)
+
+BuildRequires: python3(coverage)
+BuildRequires: python3(pexpect)
+BuildRequires: python3(tox)
+%endif
 
 %description
 Robotframework-DebugLibrary is A debug library for RobotFramework, which
@@ -30,19 +42,26 @@ can be used as an interactive shell(REPL) also.
 
 %prep
 %setup
-%patch1 -p1
+%autopatch1 -p1
 
 sed -i 's|^#!/usr/bin/env python$|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
 %check
-%__python3 setup.py test ||:
+cat > tox.ini <<'EOF'
+[testenv]
+commands =
+    python -m unittest -v tests/test_debuglibrary.py
+EOF
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vvr --develop
 
 %files
 %doc LICENSE
@@ -52,6 +71,9 @@ sed -i 's|^#!/usr/bin/env python$|#!/usr/bin/env python3|' \
 %python3_sitelibdir/robotframework_debuglibrary-%version-py*.egg-info
 
 %changelog
+* Thu Mar 31 2022 Stanislav Levin <slev@altlinux.org> 2.2.2-alt1
+- 2.2.1 -> 2.2.2.
+
 * Tue Sep 15 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.1-alt1
 - Updated to upstream version 2.2.1.
 

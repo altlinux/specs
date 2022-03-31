@@ -1,26 +1,34 @@
 %define _unpackaged_files_terminate_build 1
-
 %define oname robotframework-lint
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.7
-Release: alt2
+Version: 1.1
+Release: alt1
 
 Summary: Static analysis tool for robotframework plain text files
-License: ASLv2.0
+License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/robotframework-lint
+Url: https://pypi.org/project/robotframework-lint/
 BuildArch: noarch
 
 # https://github.com/boakley/robotframework-lint.git
-Source0: https://pypi.python.org/packages/27/bf/9caeefff91e49aab3ed8262172251b623fe529674424c86bf2a1345aa801/%{oname}-%{version}.tar.gz
+Source: %name-%version.tar
+Patch0: robotframework-lint-1.1-tests-Sync-expected-out-for-Python-3.10.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-robotframework
-BuildRequires: python-tools-2to3
 
-%py3_provides rflint
+%if_with check
+# install_requires=
+BuildRequires: python3(robotframework)
 
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+%endif
+
+# PEP503 normalized name
+%py3_provides robotframework-lint
 
 %description
 Linter for robot framework plain text files.
@@ -28,26 +36,35 @@ Linter for robot framework plain text files.
 This is a static analysis tool for robot framework plain text files.
 
 %prep
-%setup -q -n %{oname}-%{version}
-
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%setup
+%autopatch -p1
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
 %check
-%__python3 setup.py test
+cat > tox.ini <<'EOF'
+[testenv]
+commands =
+    robot -A tests/conf/smoke.args
+EOF
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts --develop
 
 %files
 %doc *.md
-%_bindir/*
-%python3_sitelibdir/*
-
+%_bindir/rflint
+%python3_sitelibdir/rflint/
+%python3_sitelibdir/robotframework_lint-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Mar 31 2022 Stanislav Levin <slev@altlinux.org> 1.1-alt1
+- 0.7 -> 1.1.
+
 * Mon Jan 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.7-alt2
 - porting on python3
 

@@ -1,29 +1,29 @@
+%define _unpackaged_files_terminate_build 1
 %define oname robotframework
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 3.0.2
-Release: alt2
+Version: 5.0
+Release: alt1
 Summary: A generic test automation framework
 License: Apache-2.0
 Group: Development/Python3
 BuildArch: noarch
-Url: https://pypi.python.org/pypi/robotframework/
+Url: https://pypi.org/project/robotframework/
 
 # https://github.com/robotframework/robotframework.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-tools-2to3
+
+%if_with check
+BuildRequires: python3(jsonschema)
+
+BuildRequires: python3(tox)
+%endif
 
 %py3_provides %oname
-%py3_provides robot
-%add_python3_req_skip java javax java.lang org System UserDict
-%add_findreq_skiplist /usr/lib*/python*/site-packages/robot/libraries/dialogs_ipy.py
-%add_findreq_skiplist /usr/lib*/python*/site-packages/robot/libraries/dialogs_jy.py
-%add_findreq_skiplist /usr/lib*/python*/site-packages/robot/running/timeouts/ironpython.py
-%add_findreq_skiplist /usr/lib*/python*/site-packages/robot/running/timeouts/jython.py
-%add_findreq_skiplist /usr/lib*/python*/site-packages/robot/htmldata/jartemplate.py
-%add_findreq_skiplist /usr/lib*/python*/site-packages/robot/jarrunner.py
 
 Conflicts: python-module-%oname
 Obsoletes: python-module-%oname
@@ -37,26 +37,8 @@ libraries implemented either with Python or Java, and users can create
 new higher-level keywords from existing ones using the same syntax that
 is used for creating test cases.
 
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-Robot Framework is a generic test automation framework for acceptance
-testing and acceptance test-driven development (ATDD). It has
-easy-to-use tabular test data syntax and it utilizes the keyword-driven
-testing approach. Its testing capabilities can be extended by test
-libraries implemented either with Python or Java, and users can create
-new higher-level keywords from existing ones using the same syntax that
-is used for creating test cases.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
-
-find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
 %python3_build
@@ -64,15 +46,29 @@ find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %install
 %python3_install
 
+%check
+cat > tox.ini <<'EOF'
+[testenv]
+commands =
+    # unit tests
+    python utest/run.py -v
+EOF
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vvr --develop
+
 %files
 %doc *.txt *.rst
-%_bindir/*
-%python3_sitelibdir/*
-
-%files docs
-%doc doc/*
+%_bindir/libdoc
+%_bindir/rebot
+%_bindir/robot
+%python3_sitelibdir/robot/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Mar 31 2022 Stanislav Levin <slev@altlinux.org> 5.0-alt1
+- 3.0.2 -> 5.0.
+
 * Tue Aug 03 2021 Grigory Ustinov <grenka@altlinux.org> 3.0.2-alt2
 - Drop python2 support.
 
