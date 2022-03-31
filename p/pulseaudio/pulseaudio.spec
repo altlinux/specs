@@ -1,6 +1,6 @@
 Name: pulseaudio
 Version: 15.0
-Release: alt2
+Release: alt3
 
 Summary: PulseAudio is a networked sound server
 Group: System/Servers
@@ -194,8 +194,10 @@ install -pm0644 -D pulseaudio.sysconfig %buildroot%_sysconfdir/sysconfig/pulseau
 install -pm0755 -D pulseaudio.init %buildroot%_initdir/pulseaudio
 install -pm0644 -D pulseaudio.service %buildroot%_unitdir/pulseaudio.service
 install -pm0644    pulseaudio.socket %buildroot%_unitdir
-mkdir -p %buildroot%_localstatedir/pulse
-find %buildroot%_libdir -name \*.la -delete
+mkdir -p \
+	%buildroot%_sysconfdir/pulse/default.pa.d \
+	%buildroot%_sysconfdir/pulse/system.pa.d \
+	%buildroot%_localstatedir/pulse
 
 %find_lang %name
 
@@ -222,6 +224,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_sysconfdir/xdg/Xwayland-session.d/00-pulseaudio-x11
 
 %dir %_sysconfdir/pulse
+%dir %_sysconfdir/pulse/default.pa.d
 %config(noreplace) %_sysconfdir/pulse/daemon.conf
 %config(noreplace) %_sysconfdir/pulse/default.pa
 
@@ -266,6 +269,7 @@ find %buildroot%_libdir -name \*.la -delete
 %config(noreplace) %_sysconfdir/sysconfig/pulseaudio
 %config(noreplace) %_sysconfdir/dbus-1/system.d/pulseaudio-system.conf
 %config(noreplace) %_sysconfdir/pulse/system.pa
+%dir %_sysconfdir/pulse/system.pa.d
 
 %attr(0770,root,pulse) %dir %_localstatedir/pulse
 
@@ -331,6 +335,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/vala/vapi/*
 
 %changelog
+* Thu Mar 31 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 15.0-alt3
+- package default.pa.d and system.pa.d config directories
+
 * Sat Dec 04 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 15.0-alt2
 - compiled in support for bluetooth A2DP via gstreamer
 
