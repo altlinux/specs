@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 10.1
-Release: alt1
+Release: alt2
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -232,7 +232,14 @@ find %buildroot -name \*.in -delete
 %post bootloader
 %ifarch %ix86 x86_64 aarch64
 ln -snf %theme/message /boot/splash/message
-. /etc/sysconfig/i18n
+LANG="C"
+SYSTEMD_I18N="/etc/locale.conf"
+SYSV_I18N="/etc/sysconfig/i18n"
+if [ -f "$SYSTEMD_I18N" ] ; then
+    . $SYSTEMD_I18N
+elif [ -f "$SYSV_I18N" ] ; then
+    . $SYSV_I18N
+fi
 lang=$(echo $LANG | cut -d. -f 1)
 cd boot/splash/%theme/
 echo $lang > lang
@@ -320,6 +327,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed Mar 30 2022 Andrew A. Vasilyev <andy@altlinux.org> 10.1-alt2
+- use locale.conf if systemd installed, no dependency on startup package
+
 * Tue Mar 22 2022 Andrew A. Vasilyev <andy@altlinux.org> 10.1-alt1
 - version 10.1
 
