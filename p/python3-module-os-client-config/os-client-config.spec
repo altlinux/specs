@@ -1,14 +1,15 @@
 %define oname os-client-config
 
-%ifarch %ix86 x86_64
-%def_with check
-%else
 %def_without check
-%endif
+#ifarch %ix86 x86_64
+#def_with check
+#else
+#def_without check
+#endif
 
 Name: python3-module-%oname
 Version: 2.1.0
-Release: alt2
+Release: alt2.1
 Summary: OpenStack Client Configuration Library
 Group: Development/Python3
 License: Apache-2.0
@@ -28,7 +29,6 @@ BuildRequires: python3-module-keystoneauth1 >= 2.1.0
 BuildRequires: python3-module-requestsexceptions >= 1.1.1
 BuildRequires: python3-module-testtools
 BuildRequires: python3-module-testscenarios
-BuildRequires: python3-module-testrepository
 BuildRequires: python3-module-subunit
 BuildRequires: python3-module-extras
 BuildRequires: python3-module-openstacksdk >= 0.13.0
@@ -95,6 +95,9 @@ python3 setup.py test
 %python3_sitelibdir/*/tests
 
 %changelog
+* Thu Mar 31 2022 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt2.1
+- Fixed build.
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt2
 - drop unneeded BR: python3-module-subunit-tests
 

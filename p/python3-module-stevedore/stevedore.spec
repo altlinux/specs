@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.32.0
-Release: alt3.1
+Release: alt3.2
 Summary: Manage dynamic plugins for Python applications
 Group: Development/Python3
 License: Apache-2.0
@@ -21,7 +21,6 @@ BuildRequires: python3-module-sphinx-devel
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-Pillow
 BuildRequires: python3-module-oslotest
-BuildRequires: python3-module-testrepository
 BuildRequires: python3-module-coverage
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-mox3
@@ -108,6 +107,9 @@ py.test3
 %doc doc/build/html/*
 
 %changelog
+* Thu Mar 31 2022 Grigory Ustinov <grenka@altlinux.org> 1.32.0-alt3.2
+- Fixed BuildRequires.
+
 * Fri Jan 28 2022 Ivan A. Melnikov <iv@altlinux.org> 1.32.0-alt3.1
 - Enable %%check.
 

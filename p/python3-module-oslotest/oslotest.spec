@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 4.2.0
-Release: alt2
+Release: alt2.1
 Summary: OpenStack test framework
 License: ASLv2.0
 Group: Development/Python3
@@ -24,7 +24,6 @@ BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-subunit
 BuildRequires: python3-module-six >= 1.10.0
-BuildRequires: python3-module-testrepository
 BuildRequires: python3-module-testscenarios
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-mock >= 2.0.0
@@ -98,6 +97,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 31 2022 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt2.1
+- Fixed build.
+
 * Fri Jul 30 2021 Ivan A. Melnikov <iv@altlinux.org> 4.2.0-alt2
 - Enable %%check.
 
