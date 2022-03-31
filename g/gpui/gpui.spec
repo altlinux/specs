@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.0
-Release: alt11
+Release: alt12
 
 Summary: Group policy editor
 License: GPLv2+
@@ -97,6 +97,10 @@ install -v -p -m 644 -D ../setup/man/ru/gpui.1 %buildroot%_mandir/ru/man1/gpui.1
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Fri Mar 31 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt12
+- Fixes:
+  + Fix -n command line option.
+
 * Fri Mar 30 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt11
 - Fixes:
   + #74198 Improve ability to detect policy changes and notify user about them.
