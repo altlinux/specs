@@ -20,7 +20,7 @@
 %define ciddir %sm_prefix/extensions/%cid
 
 Name: seamonkey
-Version: 2.53.11
+Version: 2.53.11.1
 Release: alt1
 Epoch: 1
 Summary: Web browser and mail reader
@@ -457,6 +457,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%ciddir/dictionaries/ru.dic
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Thu Mar 31 2022 Andrey Cherepanov <cas@altlinux.org> 1:2.53.11.1-alt1
+- New version.
+
 * Thu Mar 03 2022 Andrey Cherepanov <cas@altlinux.org> 1:2.53.11-alt1
 - New version.
 
