@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define _name five-or-more
@@ -7,8 +7,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: A GNOME version of the color lines program
 Group: Games/Boards
@@ -62,6 +62,9 @@ possible, and be #1 in the High Scores.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Thu Mar 31 2022 Yuri N. Sedunov <aris@altlinux.org> 3.32.3-alt1
+- 3.32.3
+
 * Thu Mar 24 2022 Yuri N. Sedunov <aris@altlinux.org> 3.32.2-alt2
 - updated to 3.32.2-7-g4b26bc1 (fixed build with vala-0.56)
 
