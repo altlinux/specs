@@ -1,8 +1,8 @@
 %define pname node-sass
 
 Name: node-sass
-Version: 6.0.1
-Release: alt1
+Version: 7.0.0
+Release: alt2
 
 Summary: Node.js bindings to libsass
 
@@ -17,6 +17,8 @@ Source: %name-%version.tar
 
 Source1: %name-development-%version.tar
 
+Source2: %name-production-%version.tar
+
 #BuildArch: noarch
 
 BuildRequires(pre): rpm-build-intro >= 1.9.18
@@ -26,7 +28,7 @@ BuildRequires(pre): rpm-macros-nodejs
 
 BuildRequires: libsass-devel
 
-BuildRequires: node-gyp node-mocha node-nan
+BuildRequires: node-gyp node-mocha node-nan node-nyc
 
 #Requires: node >= 8
 
@@ -53,23 +55,22 @@ ln -s %nodejs_sitelib/node-gyp node_modules/
 LIBSASS_EXT=auto npm run-script build
 # can't build in the simple way
 #npm_build
-
 rm -f node_modules/node-gyp
 
 #%check
 #npm test
 
 %install
-# replace node_modules with got after npm install --production
-#rm -rf node_modules
-#tar xf %SOURCE2
 
 %npm_install
+# replace node_modules with got after npm install --production
+rm -rf node_modules
+tar xf %SOURCE2
 mkdir -p %buildroot%_bindir
 ln -sr %buildroot%nodejs_sitelib/%pname/bin/node-sass %buildroot%_bindir/node-sass
 cp -a node_modules %buildroot/%nodejs_sitelib/%pname/
 cp -a vendor %buildroot/%nodejs_sitelib/%pname/
-%npm_prune
+#npm_prune
 
 %files
 %doc LICENSE README.md TROUBLESHOOTING.md
@@ -77,6 +78,12 @@ cp -a vendor %buildroot/%nodejs_sitelib/%pname/
 %nodejs_sitelib/%pname/
 
 %changelog
+* Thu Mar 31 2022 Vitaly Lipatov <lav@altlinux.ru> 7.0.0-alt2
+- update node_modules, fix build
+
+* Fri Mar 18 2022 Vitaly Lipatov <lav@altlinux.ru> 7.0.0-alt1
+- new version 7.0.0 (with rpmrb script)
+
 * Fri Sep 03 2021 Vitaly Lipatov <lav@altlinux.ru> 6.0.1-alt1
 - new version 6.0.1 (with rpmrb script)
 
