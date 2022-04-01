@@ -1,4 +1,4 @@
-%define ver_major 3.41
+%define ver_major 3.42
 %def_enable libnotify
 %def_enable webkitgtk
 %def_enable check
@@ -17,8 +17,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define glib_ver 2.43.4
 %define gtk_ver 3.16.0
 
-BuildRequires(pre): meson
-BuildRequires: yelp-tools
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson yelp-tools
 BuildRequires: glib2-devel > %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 %{?_enable_libnotify:BuildPreReq: libnotify-devel >= 0.7.0}
@@ -56,6 +56,9 @@ a cooler name.
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Fri Apr 01 2022 Yuri N. Sedunov <aris@altlinux.org> 3.42.0-alt1
+- 3.42.0
+
 * Tue Aug 10 2021 Yuri N. Sedunov <aris@altlinux.org> 3.41.0-alt1
 - 3.41.0 (ported to Meson build system)
 
