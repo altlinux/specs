@@ -1,9 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define modulename cherrypy
 
-%def_with docs
-
 Name: python3-module-%modulename
-Version: 18.6.0
+Version: 18.6.1
 Release: alt1
 
 Summary: CherryPy is a pythonic, object-oriented web development framework
@@ -14,33 +13,14 @@ URL: http://www.cherrypy.org
 BuildArch: noarch
 
 # git clone https://github.com/cherrypy/cherrypy
-Source: %modulename-%version.tar
-Patch: disable-codecov_button.patch
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-%if_with docs
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-jaraco.collections
-BuildRequires: python3-module-zc
-BuildRequires: python3-module-zc.lockfile
-BuildRequires: python3-module-portend
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-cheroot-tests
-%endif
 BuildRequires: python3-module-setuptools_scm
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-rst.linker
-BuildRequires: python3-module-jaraco.packaging
-BuildRequires: python3-module-cheroot
-BuildRequires: time
 
-%add_python3_req_skip win32api
-%add_python3_req_skip win32con
-%add_python3_req_skip win32event
-%add_python3_req_skip win32service
-%add_python3_req_skip win32serviceutil
-%add_python3_req_skip sqlobject
+# win32 depends on pywin32
+# note: don't remove win32 module because other packages may rely on it
+%add_findreq_skiplist %python3_sitelibdir/%modulename/process/win32.py
 
 %description
 Your CherryPy powered web applications are in fact stand-alone Python
@@ -48,58 +28,11 @@ applications embedding their own multi-threaded web server. You can deploy
 them anywhere you can run Python applications. Apache is not required,
 but it's possible to run a CherryPy application behind it.
 
-%package tests
-Summary: Tests for CherryPy
-Group: Development/Python3
-Requires: %name = %version-%release
-
-%description tests
-Your CherryPy powered web applications are in fact stand-alone Python
-applications embedding their own multi-threaded web server. You can deploy
-them anywhere you can run Python applications. Apache is not required,
-but it's possible to run a CherryPy application behind it.
-
-This package contains tests for CherryPy.
-
-%package pickles
-Summary: Pickles for CherryPy
-Group: Development/Python3
-
-%description pickles
-Your CherryPy powered web applications are in fact stand-alone Python
-applications embedding their own multi-threaded web server. You can deploy
-them anywhere you can run Python applications. Apache is not required,
-but it's possible to run a CherryPy application behind it.
-
-This package contains pickles for CherryPy.
-
-%package docs
-Summary: Documentation for CherryPy
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-Your CherryPy powered web applications are in fact stand-alone Python
-applications embedding their own multi-threaded web server. You can deploy
-them anywhere you can run Python applications. Apache is not required,
-but it's possible to run a CherryPy application behind it.
-
-This package contains documentation for CherryPy.
-
 %prep
-%setup -n %modulename-%version
-%patch -p1
-sed -i "s/f'/'/;s/f\"/\"/" docs/conf.py
-
-%if_with docs
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
-%endif
+%setup
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-subst 's|%_bindir/python|%_bindir/python3|' \
-      cherrypy/process/servers.py cherrypy/test/sessiondemo.py
 %python3_build
 
 %install
@@ -107,39 +40,17 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 mv %buildroot%_bindir/cherryd %buildroot%_bindir/cherryd3
 
-%if_with docs
-export PYTHONPATH=$PWD
-pushd docs
-python3 /usr/bin/sphinx-build-3 -b html -d build/doctrees . build/html
-python3 /usr/bin/sphinx-build-3 -b pickle -d build/doctrees . build/pickle
-popd
-%endif
-
-%if_with docs
-cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%modulename/
-%endif
-
 %files
 %doc cherrypy/tutorial
 %_bindir/cherryd3
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test
-%if_with docs
-%exclude %python3_sitelibdir/%modulename/pickle
-
-%files pickles
-%python3_sitelibdir/%modulename/pickle
-%endif
-
-%files tests
-%python3_sitelibdir/*/test
-
-%if_with docs
-%files docs
-%doc docs/build/html/*
-%endif
+%python3_sitelibdir/%modulename/
+%python3_sitelibdir/CherryPy-%version-py%_python3_version.egg-info/
+%exclude %python3_sitelibdir/%modulename/test
 
 %changelog
+* Fri Apr 01 2022 Stanislav Levin <slev@altlinux.org> 18.6.1-alt1
+- 18.6.0 -> 18.6.1.
+
 * Sat Apr 18 2020 Andrey Cherepanov <cas@altlinux.org> 18.6.0-alt1
 - New version.
 
