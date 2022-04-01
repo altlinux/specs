@@ -6,14 +6,13 @@
 
 Name: audit
 Version: 3.0.8
-Release: alt1
+Release: alt2
 Summary: User space tools for Linux kernel 2.6+ auditing
 License: GPL
 Group: Monitoring
 URL: http://people.redhat.com/sgrubb/audit/
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
-Patch1: audit-3.0.8-flex-array-workaround.patch
 
 Requires: lib%{name}1 = %EVR
 Requires: service >= 0.5.26-alt1
@@ -93,8 +92,10 @@ and libauparse can be used by python.
 %setup
 %patch0 -p1
 
+#swig flexible array workaround
 cp /usr/include/linux/audit.h lib/
-%patch1 -p1
+sed -i 's/buf\[\];/buf\[0\];/' lib/audit.h
+sed -i 's|%include "/usr/include/linux/audit.h"|%include "../lib/audit.h"|' bindings/swig/src/auditswig.i
 sed -i 's|#include <linux/audit.h>|#include "audit.h"|' lib/libaudit.h
 
 %build
@@ -237,6 +238,9 @@ fi
 %endif
 
 %changelog
+* Fri Apr 01 2022 Egor Ignatov <egori@altlinux.org> 3.0.8-alt2
+- Make swig flexible array workaround compatible with p10
+
 * Wed Mar 30 2022 Egor Ignatov <egori@altlinux.org> 3.0.8-alt1
 - new version 3.0.8
 
