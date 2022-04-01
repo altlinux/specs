@@ -14,7 +14,7 @@
 
 Name: libregf
 Version: 20140427
-Release: alt2
+Release: alt3
 
 Summary: Library to access Windows REGF-type Registry files
 License: LGPL-3.0+ and GFDL-1.3+
@@ -122,6 +122,9 @@ cp -a "%SOURCE1" .
 %python_sitelibdir/pyregf.so
 
 %changelog
+* Fri Apr 01 2022 Grigory Ustinov <grenka@altlinux.org> 20140427-alt3
+- Simple rebuild with release rising.
+
 * Sat May 02 2020 Michael Shigorin <mike@altlinux.org> 20140427-alt2
 - minor spec cleanup (thx ldv@)
 
