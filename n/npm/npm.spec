@@ -1,6 +1,6 @@
 Name: npm
 Version: 8.3.1
-Release: alt2
+Release: alt3
 
 Summary: A package manager for node
 
@@ -10,6 +10,8 @@ Url: http://nodejs.org/
 
 # Source-url: https://github.com/npm/cli/archive/v%version.tar.gz
 Source: %name-%version.tar
+
+Patch1: npm-disable-update-notifier.patch
 
 BuildRequires(pre): rpm-macros-nodejs
 
@@ -39,6 +41,7 @@ In most cases it is enough to install appropriate node- package (like node-sass)
 
 %prep
 %setup
+%patch1 -p2
 rm -rv bin/node-gyp-bin node_modules/node-gyp/
 
 %build
@@ -70,6 +73,9 @@ done
 %nodejs_sitelib/%name/
 
 %changelog
+* Thu Mar 31 2022 Vitaly Lipatov <lav@altlinux.ru> 8.3.1-alt3
+- disable update notifier
+
 * Thu Mar 17 2022 Vitaly Lipatov <lav@altlinux.ru> 8.3.1-alt2
 - drop tests from new workspaces libs (ALT bug 42037)
 - don't pack symlinks (ALT bug 42000)
