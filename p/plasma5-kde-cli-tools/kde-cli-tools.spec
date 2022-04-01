@@ -6,7 +6,7 @@
 
 Name: plasma5-%rname
 Version: 5.23.5
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -36,6 +36,7 @@ BuildRequires: kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-dev
 BuildRequires: kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel
 BuildRequires: kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
 BuildRequires: kf5-kactivities-devel kf5-kdeclarative-devel kf5-kpackage-devel
+BuildRequires: zlib-devel
 
 Provides: kf5-kde-cli-tools = %EVR
 Obsoletes: kf5-kde-cli-tools < %EVR
@@ -91,6 +92,9 @@ KF5 library
 %_K5srv/*.desktop
 
 %changelog
+* Fri Apr 01 2022 Michael Shigorin <mike@altlinux.org> 5.23.5-alt2
+- explicit BR: zlib-devel
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.5-alt1
 - new version
 
