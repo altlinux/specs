@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.8.3
+Version: 0.9.0
 Release: alt1
 
 Summary: AD editor
@@ -65,6 +65,7 @@ Tests for ADMC
 %_libdir/libadldap.so
 %_man1dir/admc*
 %_datadir/applications/admc.desktop
+%_iconsdir/hicolor/scalable/apps/admc.svg
 
 %files test
 %_libdir/libadmctest.so
@@ -75,9 +76,9 @@ Tests for ADMC
 %_bindir/admc_test_country_edit
 %_bindir/admc_test_gplink
 %_bindir/admc_test_ad_interface
+%_bindir/admc_test_ad_security
 %_bindir/admc_test_select_base_widget
 %_bindir/admc_test_filter_widget
-%_bindir/admc_test_security_tab
 %_bindir/admc_test_attributes_tab
 %_bindir/admc_test_member_of_tab
 %_bindir/admc_test_members_tab
@@ -105,8 +106,13 @@ Tests for ADMC
 %_bindir/admc_test_find_object_dialog
 %_bindir/admc_test_rename_object_dialog
 %_bindir/admc_test_create_object_dialog
+%_bindir/admc_test_select_classes_widget
+%_bindir/admc_test_sam_name_edit
 
 %changelog
+* Fri Apr 01 2022 Dmitry Degtyarev <kevl@altlinux.org> 0.9.0-alt1
+- 0.9.0 (See CHANGELOG.txt for details)
+
 * Thu Mar 31 2022 Dmitry Degtyarev <kevl@altlinux.org> 0.8.3-alt1
 - 0.8.3 (See CHANGELOG.txt for details)
 - Removed auto-generated changelog entry in .spec
@@ -167,4 +173,3 @@ Tests for ADMC
 
 * Thu May 21 2020 Igor Chudov <nir@altlinux.org> 0.1.0-alt1
 - Initial build
-
