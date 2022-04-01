@@ -3,7 +3,8 @@
 %define xdg_name org.gnome.gedit
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 41
+%define ver_major 42
+%define lib_ver 41
 %define api_ver 3.0
 %def_enable plugins
 %def_enable introspection
@@ -48,7 +49,7 @@ Requires: libpeas-python3-loader
 Requires: dconf gnome-icon-theme gvfs zenity
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
-BuildRequires: meson yelp-tools libappstream-glib-devel
+BuildRequires: meson yelp-tools %_bindir/appstream-util
 BuildRequires: desktop-file-utils >= 0.22
 BuildRequires: gtk-doc >= 1.0
 BuildRequires: iso-codes-devel >= 0.35
@@ -133,8 +134,8 @@ This package contains documentation needed to develop plugins for gedit.
 %install
 %meson_install
 
-ln -sf %name/lib%name-%ver_major.so \
-%buildroot%_libdir/lib%name-%ver_major.so
+ln -sf %name/lib%name-%lib_ver.so \
+%buildroot%_libdir/lib%name-%lib_ver.so
 
 # additional mime types
 desktop-file-install --dir %buildroot%_desktopdir \
@@ -177,7 +178,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %dir %pkglibdir
 %pkglibdir/lib%{name}*.so
 #symlink
-%_libdir/lib%name-%ver_major.so
+%_libdir/lib%name-%lib_ver.so
 %dir %gedit_pluginsdir
 %gedit_pluginsdir/*
 %{?_enable_plugins:%python3_sitelibdir_noarch/gi/overrides/Gedit.py*}
@@ -215,6 +216,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Sat Apr 02 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Mon Feb 28 2022 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
 - 41.0
 
