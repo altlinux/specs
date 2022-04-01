@@ -5,7 +5,7 @@
 %def_without static
 
 Name: qalculate
-Version: 3.22.0
+Version: 4.1.0
 Release: alt1
 Summary: A very versatile desktop calculator
 Group: Office
@@ -27,7 +27,7 @@ precision, plotting.
 %package -n lib%name
 Summary: libqalculate libraries
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 Requires: /usr/bin/gnuplot
 
 %description -n lib%name
@@ -114,6 +114,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Fri Apr 01 2022 Sergey V Turchin <zerg@altlinux.org> 4.1.0-alt1
+- Updated to upstream version 4.1.0.
+
 * Tue Jan 18 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 3.22.0-alt1
 - Updated to upstream version 3.22.0.
 

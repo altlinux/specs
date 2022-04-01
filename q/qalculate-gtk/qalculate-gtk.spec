@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%define _libexecdir %_prefix/libexec
 %set_verify_elf_method strict
 
 %define shortname qalculate
 
 Name: qalculate-gtk
-Version: 3.22.0
+Version: 4.1.0
 Release: alt1
 Summary: A very versatile desktop calculator - GTK+ version.
 Group: Office
@@ -48,7 +49,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc COPYING
 %doc AUTHORS ChangeLog README README.md
 %_bindir/%name
-%_libdir/qalculate-search-provider
+%_libexecdir/qalculate-search-provider
 %_man1dir/*.1*
 %_datadir/metainfo/%name.appdata.xml
 %_defaultdocdir/%name
@@ -59,6 +60,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/gnome-shell/search-providers/io.github.Qalculate.search-provider.ini
 
 %changelog
+* Fri Apr 01 2022 Sergey V Turchin <zerg@altlinux.org> 4.1.0-alt1
+- new version
+
 * Tue Jan 18 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 3.22.0-alt1
 - Updated to upstream version 3.22.0.
 
