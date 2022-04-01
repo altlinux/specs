@@ -26,13 +26,14 @@
 %define rname digikam
 %define label digiKam
 Name: kde5-%rname
-%define lname lib%name
-Version: 7.6.0
-Release: alt1
+%define ver_major 7
+%define ver_minor 6
+%define ver_bugfix 0
+Version: %ver_major.%ver_minor.%ver_bugfix
+Release: alt2
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
-#define sover %version
-%define sover 7.3.0
+%define sover %version
 %define libdigikamdatabase libdigikamdatabase%sover
 %define libdigikamcore libdigikamcore%sover
 %define libdigikamgui libdigikamgui%sover
@@ -181,12 +182,14 @@ Development files for %label.
 %prep
 %setup -n %rname-%version -c -a1 -a2 -a3
 mv %rname-%version core
-install -m 0644 %SOURCE6 ./
 pushd core
 %patch100 -p1
 %patch101 -p1
 popd
-
+install -m 0644 %SOURCE6 ./
+sed -i '/DIGIKAM_MAJOR_VERSION/s|@VERMAJOR@|%ver_major|' CMakeLists.txt
+sed -i '/DIGIKAM_MINOR_VERSION/s|@VERMINOR@|%ver_minor|' CMakeLists.txt
+sed -i '/DIGIKAM_PATCH_VERSION/s|@VERPATCH@|%ver_bugfix|' CMakeLists.txt
 # change double to qreal for casting on arm
 #find -type f -name \*.cpp | \
 #while read f ; do
@@ -328,6 +331,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Thu Mar 31 2022 Sergey V Turchin <zerg@altlinux.org> 7.6.0-alt2
+- fix internal app version number (closes: 42302)
+
 * Tue Mar 29 2022 Sergey V Turchin <zerg@altlinux.org> 7.6.0-alt1
 - new version
 
