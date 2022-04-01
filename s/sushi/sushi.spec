@@ -10,7 +10,7 @@
 %define lo_bin %_bindir/libreoffice
 
 Name: sushi
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A quick previewer for Nautilus
@@ -22,15 +22,19 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %define gst_ver 1.0
 %define clutter_ver 1.11.4
+%define webkit_api_ver 4.0
+%define webkit_ver 2.36
 
 Requires: gst-plugins-base%gst_api_ver
 Requires: %lo_bin
+Requires: typelib(Gtk) = 3.0
 
-BuildRequires(pre): meson rpm-build-gir
-BuildRequires: libappstream-glib-devel desktop-file-utils
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson %_bindir/appstream-util desktop-file-utils
 BuildRequires: libgtksourceview4-devel libgjs-devel libharfbuzz-devel
 BuildRequires: libclutter-devel >= %clutter_ver libclutter-gtk3-devel libclutter-gst3.0-devel
-BuildRequires: libevince-devel libwebkit2gtk-devel libepoxy-devel
+BuildRequires: libevince-devel libepoxy-devel 
+BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver
 BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver gst-plugins%gst_api_ver-devel
 %if_enabled introspection
 BuildRequires: libgtksourceview4-gir-devel libcogl-gir-devel libclutter-gir-devel libevince-gir-devel
@@ -103,6 +107,9 @@ GObject introspection devel data for the Sushi library.
 %doc README AUTHORS NEWS TODO
 
 %changelog
+* Fri Apr 01 2022 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
+- 41.1
+
 * Tue Sep 21 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
 - 41.0
 
