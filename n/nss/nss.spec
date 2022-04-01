@@ -1,6 +1,6 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.76
+Version:	3.77
 Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
@@ -262,6 +262,17 @@ popd
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_Releases
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Fri Apr 01 2022 Alexey Gladkov <legion@altlinux.ru> 3.77-alt1
+- New version (3.77).
+- Certificate Authority Changes:
+  + Add CN=Telia Root CA v2
+  + Add CN=D-TRUST BR Root CA 1 2020
+  + Add CN=D-TRUST EV Root CA 1 2020
+  + Remove CN=DigiNotar PKIoverheid CA Organisatie - G2
+  + Remove CN=Trustwave Organization Issuing CA, Level 2
+  + Remove TURKTRUST Mis-issued Intermediate CA 1
+  + Remove TURKTRUST Mis-issued Intermediate CA 2
+
 * Tue Mar 08 2022 Alexey Gladkov <legion@altlinux.ru> 3.76-alt1
 - New version (3.76).
 
