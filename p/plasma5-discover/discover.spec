@@ -16,7 +16,7 @@
 
 Name: plasma5-%rname
 Version: 5.24.3
-Release: alt0.1
+Release: alt0.2
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -164,7 +164,7 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p2
-#%patch3 -p2 -b .upd-appstream
+%patch3 -p2 -b .upd-appstream
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
@@ -269,6 +269,9 @@ done
 
 
 %changelog
+* Tue Mar 29 2022 Oleg Solovyov <mcpain@altlinux.org> 5.24.3-alt0.2
+- re-apply appstream patch from darktemplar
+
 * Wed Mar 23 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.3-alt0.1
 - new version
 
