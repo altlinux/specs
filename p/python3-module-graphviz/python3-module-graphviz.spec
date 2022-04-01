@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define  modulename graphviz
 %def_enable check
 
 Name:    python3-module-%modulename
 Version: 0.19.1
-Release: alt1
+Release: alt2
 
 Summary: Simple Python interface for Graphviz
 License: MIT
@@ -11,12 +12,18 @@ Group:   Development/Python3
 URL:     https://github.com/xflr6/graphviz
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
-BuildRequires: python3-module-tox
+
+%if_enabled check
+# related https://bugzilla.altlinux.org/42311
+BuildRequires: fonts-ttf-dejavu
+BuildRequires: graphviz
+
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-pytest-mock
-BuildRequires: python3-module-pytest-cov
-BuildRequires: graphviz
+
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-tox-no-deps
+%endif
 
 BuildArch: noarch
 Source:  %name-%version.tar
@@ -30,24 +37,24 @@ Patch0: %name-%version-%release.patch
 %patch0 -p1
 
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -v
+export TOXENV=py3
+tox.py3 --sitepackages --no-deps -v --develop
 
 %files
-%python3_sitelibdir/%{modulename}*
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%modulename/
+%python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Apr 01 2022 Stanislav Levin <slev@altlinux.org> 0.19.1-alt2
+- Fixed FTBFS (workaround for libpango-1.50.5).
+
 * Fri Dec 17 2021 Anton Farygin <rider@altlinux.ru> 0.19.1-alt1
 - 0.19.1
 
