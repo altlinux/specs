@@ -1,8 +1,8 @@
 Name: ca-certificates
-Version: 2021.10.06
+Version: 2022.04.01
 Release: alt1
 
-Summary: Common CA :Certificates
+Summary: Common CA Certificates
 License: MPL-2.0
 Group: System/Base
 BuildArch: noarch
@@ -48,6 +48,9 @@ install -pD -m 644 ca-bundle.trust.p11-kit \
 %_datadir/pki/ca-trust-source/ca-bundle.trust.p11-kit
 
 %changelog
+* Fri Apr 01 2022 Alexey Gladkov <legion@altlinux.ru> 2022.04.01-alt1
+- mozilla: sync with nss-3.77.
+
 * Wed Oct 06 2021 Alexey Gladkov <legion@altlinux.ru> 2021.10.06-alt1
 - mozilla: sync with nss-3.71.
 
