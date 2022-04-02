@@ -3,7 +3,7 @@
 
 %define _dotnet_major 5.0
 %define _dotnet_corerelease %version
-%define _dotnet_sdkrelease 5.0.405
+%define _dotnet_sdkrelease 5.0.406
 %define commithash %version-%release
 
 %def_with bootstrap
@@ -12,7 +12,7 @@
 %def_with libunwind
 
 Name: dotnet-runtime-%_dotnet_major
-Version: 5.0.14
+Version: 5.0.15
 Release: alt1
 
 Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
@@ -366,6 +366,12 @@ rm -f %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Sat Apr 02 2022 Vitaly Lipatov <lav@altlinux.ru> 5.0.15-alt1
+- new version (5.0.15) with rpmgs script
+- CVE-2022-24464 : .NET Denial of Service Vulnerability
+- CVE-2022-24512 : .NET Remote Code Execution Vulnerability
+- CVE-2020-8927 : .NET Remote Code Execution Vulnerability
+
 * Sat Feb 12 2022 Vitaly Lipatov <lav@altlinux.ru> 5.0.14-alt1
 - new version (5.0.14) with rpmgs script
 - CVE-2022-21986 : .NET Denial of Service Vulnerability

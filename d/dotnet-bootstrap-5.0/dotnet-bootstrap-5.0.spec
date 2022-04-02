@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 %define major 5.0
-%define sdkversion 5.0.405
-%define coreversion 5.0.14
+%define sdkversion 5.0.406
+%define coreversion 5.0.15
 %define apprefversion 5.0.0
 %define netstandartversion 2.1.0
 
 Name: dotnet-bootstrap-5.0
-Version: 5.0.14
+Version: 5.0.15
 Release: alt1
 
 Summary: .NET Core SDK binaries
@@ -17,12 +17,12 @@ Url: https://github.com/dotnet
 Group: Development/Other
 
 # To check we manually update download url
-# from https://github.com/dotnet/core/blob/master/release-notes/5.0/5.0.2/5.0.2.md
+# from https://github.com/dotnet/core/blob/master/release-notes/5.0
 
-# Source-url: https://download.visualstudio.microsoft.com/download/pr/e10f8ecd-eb2c-42a0-a217-98a18517e12c/436b90a4d5be20456b210c406c0f7718/dotnet-sdk-5.0.405-linux-x64.tar.gz
+# Source-url: https://download.visualstudio.microsoft.com/download/pr/91bb8c05-d6d8-42a8-afbe-75301b1afa68/3ec127938c9b934044282a7c7e825f64/dotnet-sdk-5.0.406-linux-x64.tar.gz
 Source: %name-%version.tar
 
-# Source2-url: https://download.visualstudio.microsoft.com/download/pr/3c0011b6-9ec7-484e-9485-56512752c5b5/06c6163c7481da86a15811355ba8beaa/dotnet-sdk-5.0.405-linux-arm64.tar.gz
+# Source2-url: https://download.visualstudio.microsoft.com/download/pr/c4ae19f7-103c-4723-a1a2-f379226664a2/cb31a7dbd166b7e0003129c44845843b/dotnet-sdk-5.0.406-linux-arm64.tar.gz
 Source2: %name-aarch64-%version.tar
 
 ExclusiveArch: x86_64 aarch64
@@ -140,6 +140,12 @@ strip \
 %_libdir/%name/dotnet
 
 %changelog
+* Sat Apr 02 2022 Vitaly Lipatov <lav@altlinux.ru> 5.0.15-alt1
+- The .NET 5.0.15 and .NET 5.0.406 SDK releases
+- CVE-2022-24464 : .NET Denial of Service Vulnerability
+- CVE-2022-24512 : .NET Remote Code Execution Vulnerability
+- CVE-2020-8927 : .NET Remote Code Execution Vulnerability
+
 * Sat Feb 12 2022 Vitaly Lipatov <lav@altlinux.ru> 5.0.14-alt1
 - .NET 5.0.14 - February 8, 2022
 - CVE-2022-21986 : .NET Denial of Service Vulnerability
