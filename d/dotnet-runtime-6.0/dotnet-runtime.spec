@@ -2,11 +2,11 @@
 %def_enable dotnet_host
 
 %define _dotnet_major 6.0
-%define _dotnet_corerelease 6.0.2
+%define _dotnet_corerelease 6.0.3
 # used for build
-%define _dotnet_sdkrelease 6.0.102
+%define _dotnet_sdkrelease 6.0.103
 %define preview %nil
-%define _dotnet_sdkshortrelease 6.0.102%preview
+%define _dotnet_sdkshortrelease 6.0.103%preview
 
 %define commithash %version-%release
 
@@ -20,8 +20,8 @@
 %endif
 
 Name: dotnet-runtime-%_dotnet_major
-Version: 6.0.2%preview
-Release: alt3
+Version: 6.0.3%preview
+Release: alt1
 
 Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
 
@@ -372,6 +372,11 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Sat Apr 02 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.3-alt1
+- new version (6.0.3) with rpmgs script
+- CVE-2022-24464 : .NET Denial of Service Vulnerability
+- CVE-2022-24512 : .NET Remote Code Execution Vulnerability
+
 * Sun Feb 13 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.2-alt3
 - build with bundled libunwind if libunwind 1.5 is missed
 
