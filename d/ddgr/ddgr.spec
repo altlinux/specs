@@ -1,6 +1,6 @@
 Name: ddgr
-Version: 1.9
-Release: alt2
+Version: 2.0
+Release: alt1
 
 Summary: DuckDuckGo from the terminal
 
@@ -63,6 +63,9 @@ make test
 %_datadir/zsh/site-functions/_ddgr
 
 %changelog
+* Sat Apr 02 2022 Vitaly Lipatov <lav@altlinux.ru> 2.0-alt1
+- new version 2.0 (with rpmrb script)
+
 * Sat May 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1.9-alt2
 - use BR: rpm-build-python3
 
