@@ -1,6 +1,6 @@
 Name: djvu
 Version: 3.5.28
-Release: alt1
+Release: alt2
 
 Summary: DjVu viewers, encoders and utilities
 License: GPLv2+
@@ -9,7 +9,10 @@ Url: http://djvu.sourceforge.net/
 
 # http://download.sourceforge.net/djvu/djvulibre-%version.tar.gz
 Source: djvulibre-%version.tar
-Patch: djvulibre-3.5.22-rh-cdefs.patch
+Patch0: djvulibre-3.5.22-rh-cdefs.patch
+# https://bugzilla.altlinux.org/16141
+Patch1: any2djvu-exit-code-fix.patch
+Patch2: djvulibre-git-fixes.patch
 
 # Automatically added by buildreq on Sat Apr 13 2013
 # optimized out: libstdc++-devel
@@ -100,7 +103,9 @@ technology.
 
 %prep
 %setup -n djvulibre-%version
-%patch -p1
+%patch0 -p1
+%patch1 -p2
+%patch2 -p1
 
 %build
 %autoreconf
@@ -166,6 +171,16 @@ cp -a COPYRIGHT NEWS README doc %buildroot%docdir/
 %endif #static
 
 %changelog
+* Fri Apr 01 2022 L.A. Kostis <lakostis@altlinux.ru> 3.5.28-alt2
+- any2djvu: fix exit code (ALT#16141).
+- apply fixes from git:
+  + Reviewed Fedora patches and adopted some of them.
+  + DjVuToPS fix for images without foreground.
+  + fix for incorrect resolution in tiff tags.
+  + fix for upstream bug #302.
+  + Improved merge_and_split_ccs does not join large cc pieces.
+
+
 * Wed Mar 30 2022 L.A. Kostis <lakostis@altlinux.ru> 3.5.28-alt1
 - Updated to 3.5.28.
 
