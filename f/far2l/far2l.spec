@@ -1,6 +1,6 @@
 Name: far2l
 Version: 2.4.0
-Release: alt2
+Release: alt3
 
 Summary: Linux port of FAR v2
 
@@ -28,6 +28,20 @@ BuildRequires: libneon-devel
 BuildRequires: libxerces-c-devel
 BuildRequires: libXi-devel
 BuildRequires: libX11-devel
+
+# skip optional requires from /usr/share/far2l scripts
+%filter_from_requires /^sudo/d
+%filter_from_requires /^rpm/d
+%filter_from_requires /^dpkg/d
+%filter_from_requires /^pandoc/d
+%filter_from_requires /^catdoc/d
+%filter_from_requires /^poppler/d
+%filter_from_requires /^notify-send/d
+%filter_from_requires /^fdisk/d
+%filter_from_requires /^gdisk/d
+%filter_from_requires /^gnupg/d
+%filter_from_requires /^universal-ctags/d
+%filter_from_requires /^perl-Image-ExifTool/d
 
 %description
 Linux port of FAR v2.
@@ -68,6 +82,9 @@ Used code from projects:
 %_iconsdir/far2l.svg
 
 %changelog
+* Sat Apr 02 2022 Vitaly Lipatov <lav@altlinux.ru> 2.4.0-alt3
+- skip optional requires from /usr/share/far2l scripts
+
 * Thu Jan 20 2022 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt2
 - add upstream patch for build on e2k (Closes: 41745)
 
