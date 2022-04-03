@@ -16,7 +16,7 @@
 #
 
 Name: ugrep
-Version: 3.7.6
+Version: 3.7.7
 Release: alt1
 
 Summary: Universal grep: a feature-rich grep implementation with focus on speed
@@ -65,6 +65,9 @@ fuzzy search.
 %_datadir/%name
 
 %changelog
+* Sat Apr 02 2022 Michael Shigorin <mike@altlinux.org> 3.7.7-alt1
+- new version (watch file uupdate)
+
 * Wed Mar 16 2022 Michael Shigorin <mike@altlinux.org> 3.7.6-alt1
 - new version (watch file uupdate)
 
