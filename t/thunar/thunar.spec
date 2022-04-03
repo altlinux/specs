@@ -1,6 +1,6 @@
 Name: thunar
-Version: 4.17.7
-Release: alt2
+Version: 4.17.8
+Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Файловый менеджер Thunar
@@ -16,9 +16,10 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-xfce4 >= 0.1.0
 
-BuildPreReq: xfce4-dev-tools
-BuildPreReq: libxfce4panel-gtk3-devel >= 4.12.0 libxfconf-devel >= 4.12.0 libexo-gtk3-devel >= 4.17.0 libxfce4ui-gtk3-devel >= 4.17.0
-BuildRequires: gtk-doc intltool libSM-devel libexif-devel libgamin-devel libpcre-devel time
+BuildRequires: xfce4-dev-tools
+BuildRequires: libxfce4panel-gtk3-devel >= 4.12.0 libxfconf-devel >= 4.12.0 libexo-gtk3-devel >= 4.17.0
+BuildRequires: libxfce4util >= 4.17.2 libxfce4ui-gtk3-devel >= 4.17.6
+BuildRequires: gtk-doc intltool libSM-devel libexif-devel libpcre-devel
 BuildRequires: libpango-devel
 BuildRequires: libnotify4-devel libgudev-devel
 BuildRequires: desktop-file-utils
@@ -139,6 +140,11 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Sun Apr 03 2022 Mikhail Efremov <sem@altlinux.org> 4.17.8-alt1
+- Updated BR.
+- Dropped libgamin-devel from BR.
+- Updated to 4.17.8.
+
 * Thu Jan 20 2022 Mikhail Efremov <sem@altlinux.org> 4.17.7-alt2
 - Use our own Russian translation (closes: #41698).
 - Use _user_unitdir macro.
