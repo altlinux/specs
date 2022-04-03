@@ -8,11 +8,11 @@
 
 %def_without vanilla
 %define gecko_version 2.47.2
-%define mono_version 7.0.0
-%define winetricks_version 20210206
+%define mono_version 7.1.1
+%define winetricks_version 20220207
 
-%define basemajor 6.x
-%define major 6.23
+%define basemajor 7.x
+%define major 7.5
 %define rel %nil
 %define stagingrel %nil
 # the packages will conflict with that
@@ -42,11 +42,8 @@
 %def_with debugpe
 
 # use rpm-macros-features
-%if_feature vkd3d 1.2
+%if_feature vulkan
 %def_with vulkan
-# vkd3d depends on vulkan
-%def_with vkd3d
-%def_with faudio
 %endif
 
 # TODO
@@ -68,7 +65,7 @@
 
 Name: wine
 Version: %major.1
-Release: alt2
+Release: alt1
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -173,9 +170,6 @@ ExclusiveArch: %ix86 x86_64 aarch64
 # TODO: remove it for mingw build (when there will no any dll.so files)
 %add_verify_elf_skiplist %libwinedir/%winesodir/*.*.so
 %add_findreq_skiplist %libwinedir/%winepedir/*
-
-#add_findprov_lib_path %libwinedir/%winesodir
-
 #
 # /usr/bin/strip: ./usr/lib64/wine/x86_64-windows/stqrTIUz/stPNVRry/dsound.dll: warning: line number count (0x10000) exceeds section size (0x8)
 # /usr/bin/strip: ./usr/lib64/wine/x86_64-windows/stbguFIA: file format not recognized
@@ -209,12 +203,10 @@ BuildRequires(pre): rpm-build-intro >= 2.1.14
 BuildRequires(pre): rpm-macros-features
 BuildRequires: util-linux flex bison
 BuildRequires: fontconfig-devel libfreetype-devel
-BuildRequires: zlib-devel libattr-devel
-BuildRequires: libxslt-devel libxml2-devel
-BuildRequires: libjpeg-devel liblcms2-devel libpng-devel libtiff-devel libjxr-devel
+BuildRequires: libattr-devel
 BuildRequires: libgphoto2-devel libsane-devel libcups-devel
 BuildRequires: libv4l-devel
-BuildRequires: libalsa-devel jackit-devel libgsm-devel libmpg123-devel libpulseaudio-devel
+BuildRequires: libalsa-devel jackit-devel libpulseaudio-devel libgsm-devel
 BuildRequires: libopenal-devel libGLU-devel
 BuildRequires: libSDL2-devel
 BuildRequires: libusb-devel libieee1284-devel
@@ -233,12 +225,6 @@ BuildRequires: libnetapi-devel
 
 %if_with vulkan
 BuildRequires: libvulkan-devel
-%endif
-%if_with vkd3d
-BuildRequires: vkd3d-devel >= 1.2
-%endif
-%if_with faudio
-BuildRequires: libfaudio-devel
 %endif
 
 %if_with opencl
@@ -295,8 +281,6 @@ Requires: %name-common = %EVR
 
 Conflicts: %conflictbase
 
-Requires: cabextract
-
 # Actually for x86_32
 Requires: glibc-nss
 
@@ -306,8 +290,6 @@ Requires: libcups
 Requires: libXrender libXi libXext libX11 libICE
 Requires: libXcomposite libXcursor libXinerama libXrandr
 Requires: libssl libgnutls30
-Requires: libpng16 libjpeg libtiff5
-Requires: libxslt
 
 %if_with gtk3
 Requires: libcairo libgtk+3
@@ -566,13 +548,11 @@ export CROSSCC=clang
 	--without-gstreamer \
 	--without-oss \
 	--without-capi \
-	--without-hal \
 	%{subst_with pcap} \
 	%{subst_with unwind} \
 	%{subst_with mingw} \
 	--with-xattr \
 	%{subst_with vulkan} \
-	%{subst_with vkd3d} \
 	--bindir=%winebindir \
 	%nil
 
@@ -726,13 +706,16 @@ fi
 %endif
 %libwinedir/%winesodir/secur32.so
 %libwinedir/%winesodir/winepulse.so
+%libwinedir/%winesodir/winealsa.so
 %if_with pcap
 %libwinedir/%winesodir/wpcap.so
 %endif
 %libwinedir/%winesodir/winebus.so
 
 %if_without mingw
+#if_without vanilla
 %libwinedir/%winesodir/windows.networking.connectivity.so
+#endif
 %libwinedir/%winesodir/light.msstyles.so
 %libwinedir/%winesodir/*.com.so
 %libwinedir/%winesodir/*.cpl.so
@@ -951,6 +934,12 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Fri Apr 01 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.5.1-alt1
+- new version 7.5
+- drop out unneeded build requires (many libs is embedded now)
+- drop out unneeded requires
+- set strict require wine-mono 7.1.1
+
 * Thu Mar 31 2022 Vitaly Lipatov <lav@altlinux.ru> 1:6.23.1-alt2
 - set version for provided libwine-devel
 - skip linking wine64 to bindir if it is already exists
