@@ -1,18 +1,19 @@
 %def_disable snapshot
 
-%define ver_major 1.12
+%define ver_major 2.2
+%define sover 9
 %def_disable docs
 
 %ifnarch %valgrind_arches
 %def_disable tests
-%def_disable check
+%def_dissable check
 %else
-%def_enable tests
+%def_disable tests
 %def_enable check
 %endif
 
 Name: libwacom
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A Wacom tablets library
@@ -21,7 +22,7 @@ License: MIT
 Url: https://github.com/linuxwacom/libwacom
 
 %if_disabled snapshot
-Source: %url/releases/download/%name-%version/%name-%version.tar.bz2
+Source: %url/releases/download/%name-%version/%name-%version.tar.xz
 %else
 Vcs: https://github.com/linuxwacom/libwacom.git
 Source: %name-%version.tar
@@ -29,12 +30,12 @@ Source: %name-%version.tar
 
 Requires: %name-data = %version-%release
 
-BuildRequires(pre): meson rpm-macros-valgrind rpm-build-python3
-BuildRequires: /proc glib2-devel libgudev-devel libxml2-devel
+BuildRequires(pre): rpm-macros-meson rpm-macros-valgrind rpm-build-python3
+BuildRequires: /proc meson glib2-devel libgudev-devel libxml2-devel
 %{?_enable_docs:BuildRequires: doxygen graphviz}
 %{?_enable_tests:
 BuildRequires: python3-module-pytest
-BuildRequires: libudev-devel python3-module-pyudev
+BuildRequires: udev libudev-devel python3-module-pyudev
 BuildRequires: libevdev-devel python3-module-libevdev
 BuildRequires: valgrind}
 
@@ -92,8 +93,7 @@ developing applications that use %name.
 mkdir -p %buildroot%_sysconfdir/%name
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %dir %_sysconfdir/%name
@@ -101,7 +101,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/%name-list-devices
 %_bindir/%name-update-db
 %_bindir/%name-show-stylus
-%_libdir/*.so.*
+%_libdir/*.so.%{sover}*
 %_udevrulesdir/65-libwacom.rules
 %_man1dir/libwacom-list-local-devices.1*
 %_man1dir/libwacom-list-devices.1*
@@ -123,6 +123,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Apr 01 2022 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0 (soname bumped)
+
 * Mon Jan 17 2022 Yuri N. Sedunov <aris@altlinux.org> 1.12.1-alt1
 - 1.12.1
 
