@@ -2,7 +2,7 @@
 
 %if_without bootstrap
 # help is welcome to re-enable, fix packaging and test
-%def_enable  guile
+%def_disable guile
 %def_enable lua
 %def_disable ocaml
 %def_disable php
@@ -16,9 +16,15 @@
 %define gvlibdir %_libdir/%name
 %define gvtcldir %_libexecdir/%name/tcl
 
+# Fix for the 387 extended precision (rhbz#772637)
+%ifarch %ix86
+%global FFSTORE -ffloat-store
+%endif
+
+
 Name: graphviz
-Version: 2.41.2
-Release: alt5
+Version: 3.0.0
+Release: alt1
 
 Summary: Graphs visualization tools
 License: EPL-1.0 and GPL-2.0+ with Bison-exception and CPL-1.0
@@ -49,11 +55,11 @@ Obsoletes: libdotneato < %version
 
 # Automatically added by buildreq on Wed Apr 23 2014 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel gnu-config guile18 libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXext-devel libXmu-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libcloog-isl4 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgmp-devel libgtk+2-devel libltdl7-devel libpango-devel libpangox-compat libpangox-compat-devel libpng-devel libqt4-core libqt4-devel libqt4-gui libstdc++-devel libwayland-client libwayland-server perl-devel pkg-config python-base rpm-build-tcl tcl tcl-devel tk xorg-renderproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: flex gcc-c++ groff-base imake libXaw-devel libXpm-devel libann-devel libexpat-devel libgd2-devel swig tk-devel xorg-cf-files libltdl-devel
+BuildRequires: flex gcc-c++ groff-base imake libXaw-devel libXpm-devel libann-devel libexpat-devel libgd2-devel swig tk-devel xorg-cf-files libltdl-devel qpdf libgs-devel ghostscript cmake
 
 %{?!_with_bootstrap:BuildRequires: ghostscript-utils libfreeglut-devel libglade-devel libgs-devel libgtkglext-devel libgts-devel liblasi-devel librsvg-devel}
 %{?_enable_lua:BuildRequires: liblua5-devel}
-%{?_enable_guile:BuildRequires: guile-devel}
+%{?_enable_guile:BuildRequires: guile22-devel}
 %if_enabled python3
 BuildRequires(pre): rpm-build-python3 python3-devel
 %add_python3_path %gvlibdir/python3/
@@ -169,26 +175,27 @@ This package makes %name functionality accessible from Tcl
 %patch0 -p1
 #patch1
 %patch2 -p1
-%patch3 -p1
+#patch3 -p1
 
 #patch40 -p1 -b .visio
 #patch41 -p1 -b .python3
 #patch42 -p1 -b .CVE-2018-10196
-%patch43 -p1 -b .dotty-menu-fix
-%patch44 -p1 -b .coverity-scan-fixes
+#patch43 -p1 -b .dotty-menu-fix
+#patch44 -p1 -b .coverity-scan-fixes
 
 # XXX Hack out #!/usr/bin/lua
 for N in tclpkg/gv/demo/*lua; do
 	sed -i 's@#!/usr/bin/lua@#!/usr/bin/env lua@' $N
 done
 
-%ifarch %e2k
+#ifarch %e2k
 # 2.41 got hardwired arch list for libsuffix there :-/
-sed -i 's,sparc64,& | e2k,' configure.ac
-%endif
+#sed -i 's,sparc64,& | e2k,' configure.ac
+#endif
 
 %build
 ./autogen.sh NOCONFIG
+#./autogen.sh
 %add_optflags -DNDEBUG
 # altbug #34101
 sed -i 's,-Wall -ffast-math,-Wall,' configure*
@@ -211,6 +218,7 @@ export LIBLTDL=-lltdl
 	--with-ipsepcola \
 	--with-sfdp \
 	--with-smyrna \
+	--enable-lefty \
 	%{subst_enable guile } \
 	%{subst_enable lua } \
 	%{subst_enable ocaml } \
@@ -222,16 +230,42 @@ export LIBLTDL=-lltdl
 	--disable-python \
 	--disable-java \
 	--disable-sharp
+#	%{subst_enable guile } \
+#make_build 
 
-%make_build
+#cmake 
+#cmake_build
+
+make %{?_smp_mflags} CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -fno-strict-overflow %{?FFSTORE}" \
+  CXXFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -fno-strict-overflow %{?FFSTORE}"
+
 
 %install
-%makeinstall_std
 
-# avoid %%doc, install by hand
+%makeinstall_std DESTDIR=%{buildroot} \
+    docdir=%{buildroot}%{_docdir}/%{name}
+
+## avoid %%doc, install by hand
 mkdir -p %buildroot%_defaultdocdir
-mv %buildroot%gvdatadir/doc %buildroot%_defaultdocdir/%name-%version
+mkdir -p %buildroot%_defaultdocdir/%name-%version
+mv doc/* %buildroot%_defaultdocdir/%name-%version
+#mv pdf/* %buildroot%_defaultdocdir/%name-%version
+##mv doc/*.html %buildroot%_defaultdocdir/%name-%version
+##mv %buildroot%gvdatadir/doc %buildroot%_defaultdocdir/%name-%version
 cp -a AUTHORS COPYING cpl1.0.txt ChangeLog NEWS %buildroot%_defaultdocdir/%name-%version
+
+# Remove metadata from generated PDFs
+pushd %buildroot%_defaultdocdir/%name-%version
+for f in prune lneato.1 lefty.1 gvgen.1 gc.1 dotty.1 dot.1 cluster.1
+do
+  if [ -f $f.pdf ]
+  then
+# ugly, but there is probably no better solution
+    qpdf --empty --static-id --pages $f.pdf -- $f.pdf.$$
+    mv -f $f.pdf.$$ $f.pdf
+  fi
+done
+popd
 
 %if_enabled tcl
 ##mkdir -p %buildroot%_tcldatadir/{%name,gd,tkspline}
@@ -286,12 +320,12 @@ rm -f %buildroot%_man3dir/*.1
 %ghost %gvlibdir/config
 %_man1dir/*
 %_man7dir/*
-%dir %_defaultdocdir/%name-%version/
-%_defaultdocdir/%name-%version/AUTHORS
-%_defaultdocdir/%name-%version/COPYING
-%_defaultdocdir/%name-%version/cpl1.0.txt
-%_defaultdocdir/%name-%version/ChangeLog
-%_defaultdocdir/%name-%version/NEWS
+#dir %_defaultdocdir/%name-%version/
+#_defaultdocdir/%name-%version/AUTHORS
+#_defaultdocdir/%name-%version/COPYING
+#_defaultdocdir/%name-%version/cpl1.0.txt
+#_defaultdocdir/%name-%version/ChangeLog
+#_defaultdocdir/%name-%version/NEWS
 
 %files -n lib%name
 %_libdir/lib*.so.*
@@ -308,11 +342,27 @@ rm -f %buildroot%_man3dir/*.1
 
 %files doc
 %_defaultdocdir/%name-%version/
-%exclude %_defaultdocdir/%name-%version/AUTHORS
-%exclude %_defaultdocdir/%name-%version/COPYING
-%exclude %_defaultdocdir/%name-%version/cpl1.0.txt
-%exclude %_defaultdocdir/%name-%version/ChangeLog
-%exclude %_defaultdocdir/%name-%version/NEWS
+#_defaultdocdir/%name-%version/doc/*
+#exclude %_defaultdocdir/%name-%version/AUTHORS2
+#exclude %_defaultdocdir/%name-%version/COPYING2
+#exclude %_defaultdocdir/%name-%version/cpl1.0.txt
+#exclude %_defaultdocdir/%name-%version/ChangeLog
+#exclude %_defaultdocdir/%name-%version/NEWS
+#dir %gvdatadir/
+%exclude %gvdatadir/doc
+#dir %gvdatadir/doc
+#dir %gvdatadir/doc/html
+#dir %gvdatadir/doc/pdf
+#dir %gvdatadir/doc/html/info
+#dir %gvdatadir/doc/html/schema
+
+#dir %gvdatadir/doc/*
+#dir %gvdatadir/doc/html/*
+#dir %gvdatadir/doc/pdf/*
+#dir %gvdatadir/doc/html/info/*
+#dir %gvdatadir/doc/html/schema/*
+
+
 %{?!_with_bootstrap:%gvdatadir/examples}
 
 %files graphs
@@ -371,6 +421,11 @@ rm -f %buildroot%_man3dir/*.1
 # - enable/fix/test language bindings
 
 %changelog
+* Sun Apr 03 2022 Ilya Mashkin <oddity@altlinux.ru> 3.0.0-alt1
+- 3.0.0
+- Temporariry disable guile subpackage
+- Remove unneeded patches and options for build e2k/riscv64 (upstreamed)
+
 * Tue May 25 2021 Michael Shigorin <mike@altlinux.org> 2.41.2-alt5
 - viewer: avoid hitting menu (ALT#40094); thx zerg@
 
