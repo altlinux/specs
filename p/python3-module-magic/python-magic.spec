@@ -2,7 +2,7 @@
 %define sover 1
 
 Name: python3-module-magic
-Version: 0.4.24
+Version: 0.4.25
 Release: alt1
 
 Summary: File type identification using libmagic
@@ -55,6 +55,9 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %python3_sitelibdir/*
 
 %changelog
+* Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 0.4.25-alt1
+- new version 0.4.25 (with rpmrb script)
+
 * Sun Aug 29 2021 Vitaly Lipatov <lav@altlinux.ru> 0.4.24-alt1
 - new version 0.4.24 (with rpmrb script)
 
