@@ -1,5 +1,5 @@
 Name: onedrive
-Version: 2.4.15
+Version: 2.4.16
 Release: alt1
 
 Summary: OneDrive Free Client written in D
@@ -67,6 +67,9 @@ chmod a-x %buildroot/%_man1dir/%{name}*
 %config %_logrotatedir/onedrive
 
 %changelog
+* Sun Apr 03 2022 Vitaly Lipatov <lav@altlinux.ru> 2.4.16-alt1
+- new version 2.4.16 (with rpmrb script)
+
 * Mon Jan 24 2022 Vitaly Lipatov <lav@altlinux.ru> 2.4.15-alt1
 - new version 2.4.15 (with rpmrb script)
 
