@@ -1,3 +1,4 @@
+%add_findreq_skiplist %_libdir/libjogl_awt.so
 %set_verify_elf_method relaxed
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -10,7 +11,7 @@ Summary:	Java bindings for the OpenGL API
 Epoch:		1
 Name:		jogl
 Version:	1.1.1
-Release:	alt1_13jpp8
+Release:	alt2_13jpp8
 Group:		Development/Java
 License:	BSD
 URL:		http://jogl.dev.java.net/
@@ -26,7 +27,7 @@ BuildRequires:	jpackage-utils
 BuildRequires:	unzip
 BuildRequires:	xml-commons-apis
 BuildRequires:	cpptasks
-BuildRequires:	pkgconfig(x11)
+BuildRequires:	pkgconfig(x11) libXext-devel
 BuildRequires:  pkgconfig(xt)
 BuildRequires:	libEGL-devel
 BuildRequires:	libGL-devel
@@ -38,6 +39,7 @@ BuildRequires:	libXxf86vm-devel
 Requires:	java >= 1.5
 ExclusiveArch:	%{ix86} x86_64
 Source44: import.info
+Patch33: jogl-1.1.1-fix-alt-linkage.patch
 
 %description 
 The JOGL Project hosts a reference implementation of the Java bindings for
@@ -73,6 +75,7 @@ rm -rf gluegen
 pushd make
 %patch0 -p0
 popd
+%patch33 -p0
 (
 cd ../gluegen/
 %patch1 -p1
@@ -143,5 +146,8 @@ ln -s %{name}-%{version} %{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Apr 04 2022 Igor Vlasenko <viy@altlinux.ru> 1:1.1.1-alt2_13jpp8
+- fixed build
+
 * Tue Dec 10 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.1.1-alt1_13jpp8
 - new version
