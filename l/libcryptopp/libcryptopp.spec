@@ -8,8 +8,8 @@
 %endif
 
 Name: libcryptopp
-Version: 8.5.0
-Release: alt2
+Version: 8.6.0
+Release: alt1
 
 # convert 5.6.2 -> 562 format
 %define orig_version	%(echo %version | sed -e "s/\\.//g")
@@ -142,6 +142,9 @@ EOF
 %_datadir/cryptopp/
 
 %changelog
+* Sun Apr 03 2022 Vitaly Lipatov <lav@altlinux.ru> 8.6.0-alt1
+- new version 8.6.0 (with rpmrb script)
+
 * Wed Sep 08 2021 Vitaly Lipatov <lav@altlinux.ru> 8.5.0-alt2
 - disable build devel-static package (due LTO error)
 
