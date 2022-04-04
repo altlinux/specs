@@ -2,7 +2,7 @@
 
 %define modulename canonicaljson
 Name: python3-module-canonicaljson
-Version: 1.4.0
+Version: 1.6.0
 Release: alt1
 
 Summary: Canonical JSONs
@@ -49,6 +49,9 @@ Features:
 %python3_sitelibdir/*
 
 %changelog
+* Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1
+- new version 1.6.0 (with rpmrb script)
+
 * Tue Oct 13 2020 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
 - new version 1.4.0 (with rpmrb script)
 
