@@ -4,7 +4,7 @@
 
 Name: proxmox-backup
 Version: 2.1.5
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -112,19 +112,24 @@ popd
 mkdir -p %buildroot%_sysconfdir/%name
 touch %buildroot%_sysconfdir/%name/{authkey.key,authkey.pub,csrf.key,proxy.key,proxy.pem,user.cfg}
 mkdir -p %buildroot{%_logdir,%_localstatedir,%_cachedir}/%name
+mkdir -p %buildroot%_localstatedir/backups
 
 # Cleanup
 rm -f %buildroot%_libexecdir/%name/%name-banner
 
+%pre file-restore
+groupadd -r -g 37 -f %proxy_user > /dev/null 2>&1 ||:
+useradd -r -u 37 -g %proxy_user -M -d %_localstatedir/backups -s /dev/null -c "backup" %proxy_user > /dev/null 2>&1 ||:
+
 %pre server
-groupadd -r -f %proxy_user > /dev/null 2>&1 ||:
-useradd -r -g %proxy_user -M -d %_localstatedir/%name -s /sbin/nologin -c "PBS proxy user" %proxy_user > /dev/null 2>&1 ||:
+groupadd -r -g 37 -f %proxy_user > /dev/null 2>&1 ||:
+useradd -r -u 37 -g %proxy_user -M -d %_localstatedir/backups -s /dev/null -c "backup" %proxy_user > /dev/null 2>&1 ||:
 usermod -a -G tape %proxy_user ||:
 
-%post
+%post server
 %post_systemd_postponed %name.service %name-proxy.service
 
-%preun
+%preun server
 %preun_systemd %name.service %name-proxy.service %name-daily-update.timer
 
 %files server
@@ -155,7 +160,8 @@ usermod -a -G tape %proxy_user ||:
 %_unitdir/%name-daily-update.timer
 %dir %attr(0755,%proxy_user,%proxy_user) %_logdir/%name
 %dir %attr(0755,%proxy_user,%proxy_user) %_localstatedir/%name
-%dir %_cachedir/%name
+%dir %attr(0755,%proxy_user,%proxy_user) %_cachedir/%name
+%dir %attr(2775,root,%proxy_user) %_localstatedir/backups
 %_man1dir/pmt*.1*
 %_man1dir/proxmox-tape.1*
 %_man1dir/proxmox-backup-manager.1*
@@ -178,6 +184,7 @@ usermod -a -G tape %proxy_user ||:
 %_libexecdir/proxmox-backup/file-restore
 %_datadir/zsh/vendor-completions/_proxmox-file-restore
 %_datadir/bash-completion/completions/proxmox-backup-file-restore
+%dir %attr(2775,root,%proxy_user) %_localstatedir/backups
 
 %_man1dir/proxmox-file-restore.1*
 
@@ -185,6 +192,10 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Thu Mar 31 2022 Alexey Shabalin <shaba@altlinux.org> 1:2.1.5-alt2
+- add backup system user with UID=37 for server and file-restore
+- fix execute post/preun scripts for server
+
 * Thu Mar 24 2022 Alexey Shabalin <shaba@altlinux.org> 1:2.1.5-alt1
 - 2.1.5-1
 
