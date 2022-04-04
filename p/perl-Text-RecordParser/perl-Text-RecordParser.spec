@@ -3,9 +3,7 @@
 
 Name: perl-%dist
 Version: 1.6.5
-Release: alt1
-
-Packager: Victor Forsiuk <force@altlinux.org>
+Release: alt2
 
 Summary: Text::RecordParser - read record-oriented files
 License: GPLv2 only
@@ -23,6 +21,8 @@ BuildRequires: fonts-type1-urw perl-Class-Accessor perl-GraphViz perl-IO-stringy
 # perl-podlators is required for pod2man conversion.
 BuildRequires: perl-podlators
 BuildRequires: perl-Readonly-XS
+# we need a font
+BuildRequires: fonts-ttf-liberation
 
 %description
 This module is for reading record-oriented data. The most common example have
@@ -45,6 +45,9 @@ a file however they may be delimited.
 %_man1dir/*
 
 %changelog
+* Mon Apr 04 2022 Igor Vlasenko <viy@altlinux.org> 1.6.5-alt2
+- fixed build
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.6.5-alt1
 - automated CPAN update
 
