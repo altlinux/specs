@@ -1,6 +1,6 @@
 Name: rpm-build-fonts
 Version: 0.7
-Release: alt1
+Release: alt2
 
 Summary: RPM helper scripts for building font packages
 
@@ -59,6 +59,9 @@ install -D -m755 fontconfig.prov.files %buildroot/usr/lib/rpm/fontconfig.prov.fi
 %_rpmmacrosdir/fonts
 
 %changelog
+* Mon Apr 04 2022 Igor Vlasenko <viy@altlinux.org> 0.7-alt2
+- dropped macros for deprecated %%post(un) section
+
 * Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 0.7-alt1
 - added macros for fontconfig integration
 
