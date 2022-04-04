@@ -2,8 +2,8 @@
 %define oname mccabe
 
 Name:               python3-module-%oname
-Version:            0.6.1
-Release:            alt2
+Version:            0.7.0
+Release:            alt1
 
 Summary:            McCabe complexity checker
 
@@ -41,6 +41,9 @@ checker.
 %python3_sitelibdir/__pycache__/%{oname}.*
 
 %changelog
+* Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 0.7.0-alt1
+- new version 0.7.0 (with rpmrb script)
+
 * Wed Jun 16 2021 Vitaly Lipatov <lav@altlinux.ru> 0.6.1-alt2
 - build python3 module separately
 
