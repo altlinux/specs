@@ -1,7 +1,7 @@
 %define modulename eliot
 
 Name: python3-module-eliot
-Version: 1.12.0
+Version: 1.14.0
 Release: alt1
 
 Summary: Logging library that tells you why it happened
@@ -62,6 +62,9 @@ to aggregate and store logs if you are using multiple processes across multiple 
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 1.14.0-alt1
+- new version 1.14.0 (with rpmrb script)
+
 * Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 1.12.0-alt1
 - new version 1.12.0 (with rpmrb script)
 
