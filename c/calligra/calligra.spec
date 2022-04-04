@@ -8,7 +8,7 @@
 
 Name: calligra
 Version: 3.2.1
-Release: alt3
+Release: alt4
 Epoch: 0
 %K5init no_altplace
 %define libname lib%name
@@ -16,7 +16,7 @@ Epoch: 0
 Group: Office
 Summary: An integrated office suite
 Url: http://www.calligra-suite.org/
-License: GPLv2+ / LGPLv2+
+License: GFDL-1.2-only AND GPL-2.0-or-later AND LGPL-2.1-or-later
 
 Provides: koffice = %koffice_ver
 Obsoletes: koffice < %koffice_ver
@@ -33,7 +33,23 @@ Requires: %name-okular-generators
 
 Source: http://download.kde.org/stable/calligra/%version/calligra-%version.tar
 # upstream
-Patch1: 62f51070.patch
+Patch1: 0001-Fix-some-more-warnings.patch
+Patch2: 0002-Make-show-hidden-row-s-work.patch
+Patch3: 0003-Fix-Bug-423038-Annotation-shape-crashes-on-paste.patch
+Patch4: 0008-Fix-comparison-between-QString-and-0.patch
+Patch5: 0009-Sheets-Fix-Bug-423474-Selections-not-retained-when-s.patch
+Patch6: 0010-ChartTool-KoFormulaTool-Guard-against-crash-if-activ.patch
+Patch7: 0018-Fix-assert-with-invalid-.local-share-autocorrect-cus.patch
+Patch8: 0019-Repair-KFileWidget-integration.patch
+Patch9: 0020-Fix-inserting-a-large-JPEG-image-into-a-presentation.patch
+Patch10: 0032-Remove-duplicated-actions-provided-by-parent-view.patch
+Patch11: 0037-kundo2_aware_xgettext.sh-fix-a-gawk-warning.patch
+Patch12: 0053-Partial-update-of-Commit-62f51070-to-make-it-compile.patch
+# FC
+Patch30: calligra-c++17.patch
+Patch31: calligra-gcc11.patch
+# SuSE
+Patch50: poppler-22.03.0.patch
 # ALT
 Patch103: alt-disable-products.patch
 
@@ -58,7 +74,7 @@ BuildRequires: libexiv2-devel libfftw3-devel libfreetds-devel libGLEW-devel libg
 BuildRequires: liblcms2-devel libmysqlclient-devel
 BuildRequires: libsqlite3-devel sqlite3 libxbase-devel openexr-devel postgresql-devel
 BuildRequires: libvisio-devel libwpg-devel libwpd10-devel libwps-devel libodfgen-devel libetonyek-devel libxml2-devel
-BuildRequires: libdrm-devel libpng-devel libexpat-devel
+BuildRequires: libdrm-devel libpng-devel libexpat-devel libspnav-devel
 
 %description
 %summary.
@@ -184,6 +200,22 @@ Requires: %name-common = %EVR
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+#
+%patch30 -p1
+%patch31 -p1
+#
+%patch50 -p1
 #
 %patch103 -p1
 
@@ -223,14 +255,15 @@ done
 %files core
 %dir %_K5plug/calligra/
 %dir %_K5plug/calligra/colorspaces/
+%dir %_K5plug/calligra/devices/
 %dir %_K5plug/calligra/dockers/
 %dir %_K5plug/calligra/formatfilters/
 %dir %_K5plug/calligra/pageapptools/
 %dir %_K5plug/calligra/shapefiltereffects/
 %dir %_K5plug/calligra/shapes/
+%dir %_K5plug/calligra/tools/
 %dir %_K5plug/calligra/textediting/
 %dir %_K5plug/calligra/textinlineobjects/
-%dir %_K5plug/calligra/tools/
 %config(noreplace) %_K5xdgconf/calligra_stencils.knsrc
 %_K5bin/calligra
 %_K5bin/calligraconverter
@@ -242,6 +275,7 @@ done
 %_K5plug/calligra/tools/calligra_tool_basicflakes.so
 %_K5plug/calligra/textediting/calligra_textediting_changecase.so
 %_K5plug/calligra/tools/calligra_tool_defaults.so
+%_K5plug/calligra/devices/calligra_device_spacenavigator.so
 %_K5plug/calligra/dockers/calligra_docker_defaults.so
 %_K5plug/calligra/dockers/calligra_docker_stencils.so
 %_K5plug/calligrathumbnail.so
@@ -417,6 +451,10 @@ done
 %exclude %_K5lib/libkookularGenerator_odt.so*
 
 %changelog
+* Fri Apr 01 2022 Sergey V Turchin <zerg@altlinux.org> 0:3.2.1-alt4
+- fix to build with new poppler
+- add upstream fixes
+
 * Mon Jul 19 2021 Sergey V Turchin <zerg@altlinux.org> 0:3.2.1-alt3
 - fix to build with new cmake
 
