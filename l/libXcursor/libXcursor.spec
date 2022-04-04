@@ -1,5 +1,5 @@
 Name: libXcursor
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 Summary: X Cursor Library
 License: MIT/X11
@@ -48,6 +48,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Mon Apr 04 2022 Valery Inozemtsev <shrek@altlinux.ru> 1.2.1-alt1
+- 1.2.1
+
 * Mon Mar 18 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.2.0-alt1
 - 1.2.0
 
