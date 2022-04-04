@@ -2,7 +2,7 @@
 %def_without test
 
 Name:    python3-module-%modulename
-Version: 0.15.4
+Version: 0.15.5
 Release: alt1
 
 Summary: The ultimate Python library in building OAuth and OpenID Connect servers
@@ -59,6 +59,9 @@ JWS, JWK, JWA, JWT are included.
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 0.15.5-alt1
+- new version 0.15.5 (with rpmrb script)
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 0.15.4-alt1
 - new version 0.15.4 (with rpmrb script)
 
