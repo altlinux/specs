@@ -1,3 +1,5 @@
+# we need a font
+BuildRequires: fonts-ttf-liberation
 %define _unpackaged_files_terminate_build 1
 %define module_name Devel-PerlySense
 %add_findreq_skiplist %perl_vendor_privlib/Devel/PerlySense.pm
@@ -10,7 +12,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.0221
-Release: alt1
+Release: alt2
 Summary: Perl IDE backend with Emacs frontend.
 Group: Development/Perl
 License: perl
@@ -49,6 +51,9 @@ rm t/PerlySense-Editor-Emacs-class-overview.t
 %_bindir/*
 
 %changelog
+* Mon Apr 04 2022 Igor Vlasenko <viy@altlinux.org> 0.0221-alt2
+- fixed build
+
 * Wed Sep 11 2019 Igor Vlasenko <viy@altlinux.ru> 0.0221-alt1
 - automated CPAN update
 
