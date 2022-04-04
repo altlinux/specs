@@ -1,5 +1,5 @@
 Name: maturin
-Version: 0.11.3
+Version: 0.12.11
 Release: alt1
 
 Summary: Build and publish rust crates as python packages
@@ -58,6 +58,9 @@ EOF
 %attr(755,root,root) %_bindir/maturin
 
 %changelog
+* Sun Apr 03 2022 Vitaly Lipatov <lav@altlinux.ru> 0.12.11-alt1
+- new version 0.12.11 (with rpmrb script)
+
 * Mon Sep 13 2021 Vitaly Lipatov <lav@altlinux.ru> 0.11.3-alt1
 - new version 0.11.3 (with rpmrb script)
 - add requires: rust-cargo, rust
