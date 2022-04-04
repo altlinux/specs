@@ -1,5 +1,5 @@
 Name: libuldaq
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: MCC Universal Library for Linux
@@ -66,6 +66,9 @@ sed -i -e "s@ldconfig@true@" Makefile.am
 #%doc %_defaultdocdir/botan-%version
 
 %changelog
+* Sun Apr 03 2022 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
+- new version 1.2.1 (with rpmrb script)
+
 * Mon May 11 2020 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
 - new version 1.2.0 (with rpmrb script)
 
