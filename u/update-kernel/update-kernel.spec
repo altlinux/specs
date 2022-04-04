@@ -1,5 +1,5 @@
 Name: update-kernel
-Version: 0.9.20
+Version: 0.9.21
 Release: alt1
 
 Summary: Update kernel and modules
@@ -8,6 +8,7 @@ Group: System/Kernel and hardware
 
 Source: %name-%version.tar
 BuildArch: noarch
+BuildRequires: shellcheck
 
 Requires: apt
 Requires: /usr/bin/rpmevrcmp
@@ -34,14 +35,30 @@ http://lists.altlinux.org/pipermail/sisyphus/2006-November/192226.html
 %setup
 
 %install
-install -pDm755 update_kernel_modules_cetus.sh %buildroot%_sbindir/%name
+mkdir -p %buildroot%_sbindir
+install -pm755 update-kernel %buildroot%_sbindir/
 install -pm755 remove-old-kernels %buildroot%_sbindir/
+
+%check
+make check
 
 %files
 %_sbindir/update-kernel
 %_sbindir/remove-old-kernels
 
 %changelog
+* Mon Apr 04 2022 Vitaly Chikunov <vt@altlinux.org> 0.9.21-alt1
+- Tools cannot be used under user anymore because sudo sub-invocation is
+  removed (call them under root instead).
+- Require explicit yes or enter to start installation (previously any key work
+  work except no).
+- Improve package version comparison (ALT#42149).
+- Do not show epoch and disttag in package names.
+- Warn user if installed package (1 month) or APT database (1 day) are stalled.
+- Do not require install of 'apt-scripts' for package availability mark in
+  list mode.
+- Show package age in list mode.
+
 * Thu Nov 19 2020 Vitaly Chikunov <vt@altlinux.org> 0.9.20-alt1
 - update-kernel: Fix and improve -r option (closes: #39041).
 - update-kernel: Add --list option.
@@ -95,7 +112,7 @@ install -pm755 remove-old-kernels %buildroot%_sbindir/
 - Add help/force/dry-run options to remove-old-kernels
 
 * Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 0.9.7-alt1
-- check if we already have lastest kernel package (alt bug #26715)
+- check if we already have latest kernel package (alt bug #26715)
 
 * Thu Jul 11 2013 Vitaly Lipatov <lav@altlinux.ru> 0.9.6-alt1
 - skip install if the latest kernel is already installed (ALT bug #26715)
