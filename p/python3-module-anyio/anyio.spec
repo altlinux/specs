@@ -1,7 +1,7 @@
 %define oname anyio
 
 Name: python3-module-anyio
-Version: 3.3.0
+Version: 3.5.0
 Release: alt1
 
 Summary: High level compatibility layer for multiple asynchronous event loop implementations
@@ -52,5 +52,8 @@ It will blend in with native libraries of your chosen backend.
 %python3_sitelibdir/*
 
 %changelog
+* Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 3.5.0-alt1
+- new version 3.5.0 (with rpmrb script)
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 3.3.0-alt1
 - initial build for ALT Sisyphus
