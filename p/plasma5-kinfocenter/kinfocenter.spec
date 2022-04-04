@@ -1,7 +1,10 @@
 %define rname kinfocenter
 
+%define kinfocenterinternal_sover 0
+%define libkinfocenterinternal libkinfocenterinternal%kinfocenterinternal_sover
+
 Name: plasma5-%rname
-Version: 5.23.5
+Version: 5.24.4
 Release: alt1
 %K5init altplace no_appdata
 
@@ -59,11 +62,11 @@ Obsoletes: kf5-kinfocenter-devel < %EVR
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package -n libkf5infocenter
+%package -n %libkinfocenterinternal
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
-%description -n libkf5infocenter
+Requires: %name-common
+%description -n %libkinfocenterinternal
 KF5 library
 
 
@@ -71,6 +74,10 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+
+grep -e 'add_library.*KInfoCenterInternal' src/CMakeLists.txt \
+ && echo 'set_target_properties(KInfoCenterInternal PROPERTIES VERSION 0.0.0 SOVERSION 0)' >>src/CMakeLists.txt \
+ ||:
 
 %build
 %K5build
@@ -84,21 +91,29 @@ KF5 library
 
 %find_lang %name --with-kde --all-name
 
-%files -f %name.lang
+%files common  -f %name.lang
 %doc LICENSES/*
+
+%files
 %_K5bin/*
-%_K5plug/kcms/
-%_K5plug/*.so
+%_K5plug/plasma/kcms/*.so
+%_K5plug/plasma/kcms/kinfocenter/*.so
 %_K5qml/org/kde/kinfocenter/
 %_K5xdgapp/*.desktop
 %_K5xdgdir/*.directory
 %_K5xdgmenu/*.menu
 %_K5data/kinfocenter/
 %_K5data/kpackage/
-%_K5srv/*
 %_K5srvtyp/*
 
+%files -n %libkinfocenterinternal
+%_K5lib/libKInfoCenterInternal.so.*
+%_K5lib/libKInfoCenterInternal.so.%kinfocenterinternal_sover
+
 %changelog
+* Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.5-alt1
 - new version
 

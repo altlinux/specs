@@ -1,7 +1,7 @@
 %define rname bluedevil
 
 Name: plasma5-%rname
-Version: 5.23.5
+Version: 5.24.4
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -85,8 +85,7 @@ mv %buildroot/%_K5xdgmime/bluedevil-mime.xml %buildroot/%_K5xdgmime/kf5-bluedevi
 %files -f %name.lang
 %doc LICENSES/*
 %_K5bin/*
-#%_K5plug/*.so
-%_K5plug/kcms/*.so
+%_K5plug/plasma/kcms/systemsettings/*.so
 %_K5plug/kf5/kded/*.so
 %_K5plug/kf5/kio/*.so
 %_K5qml/org/kde/plasma/private/bluetooth/
@@ -97,8 +96,8 @@ mv %buildroot/%_K5xdgmime/bluedevil-mime.xml %buildroot/%_K5xdgmime/kf5-bluedevi
 %_K5xdgapp/*.desktop
 %_K5notif/*.notifyrc
 %_K5srv/*.desktop
-#%_K5srv/*.protocol
 %_K5xdgmime/*.xml
+%_datadir/qlogging-categories5/*.*categories
 
 %post
 printf "Updating mime database: "
@@ -109,6 +108,9 @@ else
 fi
 
 %changelog
+* Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.24.4-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.23.5-alt1
 - new version
 

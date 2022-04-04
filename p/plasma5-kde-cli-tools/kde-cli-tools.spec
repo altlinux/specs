@@ -5,8 +5,8 @@
 %add_findreq_skiplist %_K5exec/kdeeject
 
 Name: plasma5-%rname
-Version: 5.23.5
-Release: alt2
+Version: 5.24.4
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -86,12 +86,13 @@ KF5 library
 %_bindir/*5
 %_K5bin/*
 %_K5exec/*
-#%_K5lib/libkdeinit5_*.so
-%_K5plug/*.so
+%_K5plug/plasma/kcms/systemsettings_qwidgets/*.so
 %_K5xdgapp/*.desktop
-%_K5srv/*.desktop
 
 %changelog
+* Mon Apr 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
+- new version
+
 * Fri Apr 01 2022 Michael Shigorin <mike@altlinux.org> 5.23.5-alt2
 - explicit BR: zlib-devel
 

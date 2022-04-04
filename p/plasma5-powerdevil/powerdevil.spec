@@ -12,7 +12,7 @@
 %define libpowerdevilcore libpowerdevilcore%powerdevilcore_sover
 
 Name: plasma5-%rname
-Version: 5.23.5
+Version: 5.24.4
 Release: alt1
 %K5init altplace
 
@@ -34,6 +34,7 @@ Patch1: %rname-alt-kidletime-crash.patch
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-x11extras-devel
 BuildRequires: libudev-devel libddcutil-devel
+BuildRequires: plasma5-libkscreen-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel
 BuildRequires: kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel
@@ -43,7 +44,7 @@ BuildRequires: kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjob
 BuildRequires: kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-kservice-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
 BuildRequires: kf5-kxmlgui-devel plasma5-workspace-devel kf5-solid-devel kf5-sonnet-devel
-BuildRequires: plasma5-libkscreen-devel kf5-kactivities-devel kf5-kwayland-devel
+BuildRequires: kf5-kactivities-devel kf5-kwayland-devel kf5-kirigami-devel
 BuildRequires: kf5-networkmanager-qt-devel kf5-bluez-qt-devel
 # tmp
 BuildRequires: libnm-devel
@@ -159,6 +160,9 @@ done
 %_K5lib/libpowerdevilcore.so.%powerdevilcore_sover
 
 %changelog
+* Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.5-alt1
 - new version
 

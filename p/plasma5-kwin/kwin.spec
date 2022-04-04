@@ -4,8 +4,6 @@
 
 %define rname kwin
 
-%define kwin4_effect_builtins_sover 1
-%define libkwin4_effect_builtins libkwin4_effect_builtins%kwin4_effect_builtins_sover
 %define kwineffects_sover 13
 %define libkwineffects libkwineffects%kwineffects_sover
 %define kwinglutils_sover 13
@@ -18,8 +16,8 @@
 %define libkcmkwincommon libkcmkwincommon%kcmkwincommon_sover
 
 Name: plasma5-%rname
-Version: 5.23.5
-Release: alt2
+Version: 5.24.4
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -30,7 +28,8 @@ License: GPL-2.0-or-later
 Provides: kf5-kwin = %EVR
 Obsoletes: kf5-kwin < %EVR
 
-Requires: xorg-xwayland kf5-kirigami plasma5-kscreenlocker
+Requires: hwdatabase
+Requires: /usr/bin/Xwayland kf5-kirigami plasma5-kscreenlocker
 Requires: qml(QtMultimedia) qml(QtQuick.VirtualKeyboard) qml(QtQuick.Controls)
 Requires: qml(org.kde.kquickcontrols) qml(org.kde.plasma.components) qml(org.kde.plasma.core)
 Requires(post): /sbin/setcap
@@ -41,7 +40,6 @@ Patch1: alt-def-window-buttons.patch
 Patch2: alt-def-nocompositing.patch
 Patch3: alt-def-qcompositing.patch
 Patch4: alt-hwdatabase.patch
-Patch5: backport-new-ghns-class.patch
 
 # Automatically added by buildreq on Thu Mar 05 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils glibc-devel-static kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libgpg-error libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-script libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libudev-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl libxcb-devel libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxcbutil-keysyms-devel libxkbfile-devel pkg-config python-base qt5-base-devel qt5-declarative-devel qt5-tools-devel ruby ruby-stdlibs wayland-devel xml-common xml-utils xorg-kbproto-devel xorg-xextproto-devel xorg-xf86miscproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
@@ -89,13 +87,6 @@ Obsoletes: kf5-kwin-devel < %EVR
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package -n %libkwin4_effect_builtins
-Group: System/Libraries
-Summary: KF5 library
-Requires: %name-common = %version-%release
-%description -n %libkwin4_effect_builtins
-KF5 library
-
 %package -n %libkwineffects
 Group: System/Libraries
 Summary: KF5 library
@@ -137,7 +128,6 @@ KF5 library
 #%patch2 -p1 -b .nocompositing
 #%patch3 -p1 -b .qcompositing
 %patch4 -p1 -b .hwinfo
-%patch5 -p1
 
 %build
 %K5build \
@@ -162,17 +152,14 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 %_K5bin/kwin*
 %_K5exec/*kwin*
-#%_K5plug/platforms/KWinQpaPlugin.so
-#%_K5plug/kf5/org.kde.kidletime.platforms/*.so
-#%_K5plug/kf5/kwindowsystem/*.so
-#%_K5plug/org.kde.kglobalaccel5.platforms/
 %_K5plug/kpackage/packagestructure/kwin_*.so
 %_K5plug/kwin/
 %_K5plug/kcms/*.so
 %_K5plug/org.kde.kdecoration2/
 %_K5plug/org.kde.*kwin*/
 %_K5plug/*.so
-%_K5cf_bin/kwin5*
+%_K5xdgapp/*kwin*.desktop
+%_K5cf_bin/kwin*
 %_K5conf_up/kwin*
 %_K5qml/org/kde/kwin/
 %_K5cfg/*.kcfg
@@ -192,9 +179,6 @@ KF5 library
 %_K5lib/cmake/KWin*/
 %_K5dbus_iface/*.xml
 
-%files -n %libkwin4_effect_builtins
-%_K5lib/libkwin4_effect_builtins.so.%kwin4_effect_builtins_sover
-%_K5lib/libkwin4_effect_builtins.so.*
 %files -n %libkwineffects
 %_K5lib/libkwineffects.so.%kwineffects_sover
 %_K5lib/libkwineffects.so.*
@@ -213,6 +197,9 @@ KF5 library
 
 
 %changelog
+* Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
+- new version
+
 * Mon Mar 28 2022 Oleg Solovyov <mcpain@altlinux.org> 5.23.5-alt2
 - Backport self-hiding GHNS buttons
 

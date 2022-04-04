@@ -1,7 +1,7 @@
 %define rname kscreen
 
 Name: plasma5-%rname
-Version: 5.23.5
+Version: 5.24.4
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -12,6 +12,7 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Requires: xrandr iio-sensor-proxy
+Requires: plasma5-libkscreen-utils
 
 Source: %rname-%version.tar
 Patch1: alt-enable-per-screen-scaling.patch
@@ -21,6 +22,7 @@ Patch1: alt-enable-per-screen-scaling.patch
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kauth-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libkscreen-devel kf5-sonnet-devel python-module-google qt5-declarative-devel qt5-x11extras-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-declarative-devel qt5-x11extras-devel qt5-sensors-devel
+BuildRequires: libxcbutil-devel
 BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kservice-devel kf5-ktextwidgets-devel
@@ -88,6 +90,9 @@ sed -i 's|^\(add_subdirectory.*tests.*\)|#\1|' CMakeLists.txt
 #%_K5archdata/mkspecs/modules/qt_KScreen.pri
 
 %changelog
+* Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.24.4-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.23.5-alt1
 - new version
 

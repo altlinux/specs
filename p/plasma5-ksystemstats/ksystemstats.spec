@@ -5,7 +5,7 @@
 %define rname ksystemstats
 
 Name: plasma5-%rname
-Version: 5.23.5
+Version: 5.24.4
 Release: alt1
 %K5init altplace
 
@@ -81,6 +81,9 @@ Requires: %name-common
 #%_K5lib/libksystemstats.so.*
 
 %changelog
+* Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.5-alt1
 - new version
 

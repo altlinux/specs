@@ -16,7 +16,7 @@
 
 Name: plasma5-%rname
 Version: 5.24.4
-Release: alt0.1
+Release: alt1
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -271,6 +271,9 @@ done
 
 
 %changelog
+* Fri Apr 01 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
+- bump release
+
 * Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt0.1
 - new version
 

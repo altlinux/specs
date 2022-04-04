@@ -1,7 +1,10 @@
-%define rname xdg-desktop-portal-kde
+%ifndef _unitdir_user
+%define _unitdir_user %prefix/lib/systemd/user
+%endif
 
+%define rname xdg-desktop-portal-kde
 Name: plasma5-%rname
-Version: 5.23.5
+Version: 5.24.4
 Release: alt1
 %K5init altplace
 
@@ -52,12 +55,15 @@ install -m 0755 %SOURCE1 %buildroot/%_K5xdgconf/plasma-workspace/env/%{name}.sh
 %_K5xdgapp/*portal*.desktop
 %_K5libexecdir/*portal*kde*
 %_K5dbus_srv/*portal*kde*.service
-%_K5data/xdg-desktop-portal-kde/
 %_K5notif/*portal*.notifyrc
 %_datadir/xdg-desktop-portal/portals/kde.portal
 %config(noreplace) %_K5xdgconf/plasma-workspace/env/*.sh
+%_unitdir_user/*.service
 
 %changelog
+* Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.5-alt1
 - new version
 

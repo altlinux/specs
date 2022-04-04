@@ -1,7 +1,7 @@
 %define rname breeze-gtk
 
 Name: plasma5-%rname
-Version: 5.23.5
+Version: 5.24.4
 Release: alt1
 %K5init no_altplace
 
@@ -33,9 +33,10 @@ This is GTK2/3 port of default KDE Breeze style.
 %package -n gtk-theme-breeze
 Group: Graphical desktop/KDE
 Summary: %summary
-#Requires: gtk-engines-pixmap
+#Requires: gtk-engines-pixmap for gtk2-theme-breeze
 Provides: gtk2-theme-breeze = %version-%release
 Provides: gtk3-theme-breeze = %version-%release
+Provides: gtk4-theme-breeze = %version-%release
 %description -n gtk-theme-breeze
 %{description}
 
@@ -60,6 +61,9 @@ Provides: gtk3-theme-breeze = %version-%release
 %_datadir/themes/Breeze*
 
 %changelog
+* Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.5-alt1
 - new version
 

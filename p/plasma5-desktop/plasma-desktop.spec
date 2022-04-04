@@ -2,8 +2,8 @@
 
 
 Name: plasma5-desktop
-Version: 5.23.5
-Release: alt5
+Version: 5.24.4
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -15,9 +15,6 @@ Requires: plasma5-workspace
 Requires: polkit-kde-plasma-desktop
 # for ibus-ui-emojier-plasma
 Requires: ibus-dicts
-
-Provides: plasma5-user-manager = %EVR
-Obsoletes: plasma5-user-manager < %EVR
 
 Source: %rname-%version.tar
 Source10: kcm_multicomponentchooser-ru-add.po
@@ -42,9 +39,6 @@ Patch19: alt-use-background.patch
 
 # Fix bug #41564
 Patch20: alt-revert-a47ead6.patch
-
-Patch21: send-qkeysequence.patch
-Patch22: fix-screen-mapping.patch
 
 # Automatically added by buildreq on Mon Mar 23 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glib2-devel glibc-devel-static kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libdbusmenu-qt52 libfreetype-devel libgpg-error libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libusb-compat libxcb-devel libxcbutil-image libxcbutil-keysyms libxkbfile-devel mkfontscale pkg-config python-base qt5-base-devel rpm-build-gir ruby ruby-stdlibs xml-common xml-utils xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -135,12 +129,11 @@ Common polkit files for %name
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-%patch17 -p1
+# use-gost-yescrypt
+#%patch17 -p1
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
-%patch21 -p1
-%patch22 -p1
 
 msgcat --use-first po/ru/kcm_componentchooser.po %SOURCE10 > po/ru/kcm_multicomponentchooser.po
 cat po/ru/kcm_multicomponentchooser.po > po/ru/kcm_componentchooser.po
@@ -150,13 +143,13 @@ pushd kcms
 popd
 
 # disable krunners by default
-for d in runners/*/*.desktop ; do
-    sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=false|' $d
+for d in runners/*/*.json ; do
+    sed -i '/EnabledByDefault/s|true|false|' $d
 done
 # enable some krunners by default
 for d in plasma-desktop
 do
-    sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=true|' runners/${d}/plasma-runner-${d}.desktop
+    sed -i '/EnabledByDefault/s|false|true|' runners/${d}/plasma-runner-${d}.json
 done
 
 #Fix translate in Input Method Panel (kimpanel) widget.
@@ -176,7 +169,7 @@ done
 %K5install_move data color-schemes doc kcmmouse knsrcfiles kglobalaccel
 %K5install_move data kcm_componentchooser kcminput kcmkeyboard kcmkeys kcm_phonon kcmsolidactions
 %K5install_move data kcontrol ksmserver kconf_update solid kpackage
-%K5install_move data plasma/desktoptheme plasma/plasmoids/touchpad plasma/avatars
+%K5install_move data plasma/desktoptheme plasma/plasmoids/touchpad
 
 %find_lang %name --with-kde --all-name
 
@@ -186,8 +179,6 @@ done
 %_datadir/locale/*/LC_SCRIPTS/kfontinst/
 %_K5icon/*/*/*/*.*
 %_datadir/qlogging-categories5/*.*categories
-%dir %_K5data/plasma/avatars/
-%dir %_K5data/plasma/avatars/photos/
 
 %files
 %_K5dbus/system.d/*.conf
@@ -200,6 +191,8 @@ done
 %_K5plug/kf5/kded/*.so
 %_K5plug/kf5/krunner/*.so
 %_K5plug/plasma/dataengine/*.so
+%_K5plug/plasma/kcminit/
+%_K5plug/plasma/kcms/*/*.so
 %_K5qml/org/kde/activities/settings/
 %_K5qml/org/kde/plasma/private/*/
 %_K5qml/org/kde/private/*/
@@ -210,7 +203,6 @@ done
 %_K5start/*.desktop
 %_K5cfg/*
 %_K5conf_up/*
-#%_K5srv/kded/*.desktop
 %_K5srv/*.desktop
 %_K5srvtyp/*.desktop
 %_K5notif/*
@@ -218,8 +210,6 @@ done
 %_K5data/kcm*/
 %_K5data/kactivitymanagerd/
 %_K5data/kpackage/kcms/*
-%_K5data/plasma/avatars/*.*
-%_K5data/plasma/avatars/photos/*.*
 %_K5data/plasma/plasmoids/*
 %_K5data/plasma/packages/*
 %_K5data/plasma/layout-templates/*
@@ -246,6 +236,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
+- new version
+
 * Wed Feb 16 2022 Oleg Solovyov <mcpain@altlinux.org> 5.23.5-alt5
 - apply screen mapper fix from upstream (Closes: #41914)
 

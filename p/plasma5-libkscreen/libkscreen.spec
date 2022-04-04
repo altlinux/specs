@@ -1,7 +1,10 @@
-%define rname libkscreen
+%ifndef _unitdir_user
+%define _unitdir_user %prefix/lib/systemd/user
+%endif
 
+%define rname libkscreen
 Name: plasma5-%rname
-Version: 5.23.5
+Version: 5.24.4
 Release: alt1
 %K5init altplace
 
@@ -96,8 +99,12 @@ export PATH=%_qt5_bindir:$PATH
 %_K5exec/kscreen_backend_launcher
 %_K5plug/kf5/kscreen/
 %_K5dbus_srv/org.kde.kscreen.service
+%_unitdir_user/*.service
 
 %changelog
+* Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.5-alt1
 - new version
 

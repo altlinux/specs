@@ -1,7 +1,7 @@
 %define rname kgamma5
 
 Name: plasma5-kgamma
-Version: 5.23.5
+Version: 5.24.4
 Release: alt1
 %K5init altplace
 
@@ -39,8 +39,6 @@ Obsoletes: kf5-kgamma < %EVR
 %patch1 -p1
 %patch2 -p1
 
-sed -i 's|QString::SkipEmptyParts|Qt::SkipEmptyParts|' kcmkgamma/kgamma.cpp
-
 %build
 %K5build
 
@@ -51,11 +49,14 @@ sed -i 's|QString::SkipEmptyParts|Qt::SkipEmptyParts|' kcmkgamma/kgamma.cpp
 
 %files -f %name.lang
 %doc LICENSES/*
-%_K5plug/kcm_kgamma.so
+%_K5plug/plasma/kcminit/*kgamma*.so
+%_K5plug/plasma/kcms/systemsettings/*kgamma*.so
 %_K5data/kgamma/
-%_K5srv/kgamma.desktop
 
 %changelog
+* Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.5-alt1
 - new version
 

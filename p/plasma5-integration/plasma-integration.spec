@@ -1,7 +1,7 @@
 %define rname plasma-integration
 
 Name: plasma5-integration
-Version: 5.23.5
+Version: 5.24.4
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -84,6 +84,9 @@ rm -f %_K5data/kconf_update/fonts_*
 %_libdir/pkgconfig/plasma-key-data.pc
 
 %changelog
+* Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.24.4-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.23.5-alt1
 - new version
 

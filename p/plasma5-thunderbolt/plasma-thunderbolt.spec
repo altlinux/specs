@@ -4,7 +4,7 @@
 %define libkbolt libkbolt%sover
 
 Name: plasma5-thunderbolt
-Version: 5.23.5
+Version: 5.24.4
 Release: alt1
 %K5init altplace
 
@@ -72,11 +72,12 @@ Requires: %name-common
 %doc LICENSES/*
 
 %files
-%_K5plug/kcms/*bolt*.so
+%_K5plug/plasma/kcms/systemsettings/kcm_bolt.so
 %_K5plug/kf5/kded/*bolt*.so
 %_K5data/kpackage/kcms/kcm_bolt/
 %_K5notif/*bolt*.notifyrc
-%_K5srv/*bolt*.desktop
+%_K5xdgapp/*bolt*.desktop
+
 
 #%files devel
 #%_K5inc/plasma-thunderbolt_version.h
@@ -90,6 +91,9 @@ Requires: %name-common
 %_K5lib/libkbolt.so.*
 
 %changelog
+* Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.5-alt1
 - new version
 

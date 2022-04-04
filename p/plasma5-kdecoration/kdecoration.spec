@@ -5,7 +5,7 @@
 %define libkdecorationsprivate libkdecorations2private%sover_private
 
 Name: plasma5-%rname
-Version: 5.23.5
+Version: 5.24.4
 Release: alt1
 %K5init altplace
 
@@ -21,7 +21,7 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules gcc-c++ python-module-google qt5-base-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
-BuildRequires: kf5-ki18n-devel
+BuildRequires: kf5-ki18n-devel kf5-kcoreaddons-devel
 
 Provides: kf5-kdecoration = %EVR
 Obsoletes: kf5-kdecoration < %EVR
@@ -93,6 +93,9 @@ KF5 library
 %_K5lib/libkdecorations2private.so.*
 
 %changelog
+* Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.5-alt1
 - new version
 

@@ -1,9 +1,9 @@
 %define rname plasma-disks
 
 Name: plasma5-disks
-Version: 5.23.5
+Version: 5.24.4
 Release: alt1
-%K5init altplace
+%K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
 Summary: KDE Plasma 5 Hard disk health monitoring
@@ -64,16 +64,18 @@ Requires: %name-common
 %files -f %name.lang
 %doc LICENSES/*
 %_K5dbus_sys_srv/*smart*.service
-%_K5plug/kcms/smart.so
+%_K5plug/plasma/kcms/kinfocenter/*smart*.so
 %_K5plug/kf5/kded/smart.so
 %_K5libexecdir/kauth/*smart*
 %_K5notif/*smart*.notifyrc
 %_K5data/kpackage/kcms/plasma_disks/
-%_K5srv/*smart*.desktop
 %_K5dbus/system.d/*smart*.conf
 %_datadir/polkit-1/actions/*smart*.policy
 
 %changelog
+* Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.5-alt1
 - new version
 

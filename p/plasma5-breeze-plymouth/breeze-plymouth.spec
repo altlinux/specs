@@ -1,7 +1,7 @@
 %define rname breeze-plymouth
 
 Name: plasma5-%{rname}
-Version: 5.23.5
+Version: 5.24.4
 Release: alt1
 %K5init no_altplace
 
@@ -88,6 +88,9 @@ cat %SOURCE11 >breeze/images/os.logo.png
 /usr/share/plymouth/themes/breeze/
 
 %changelog
+* Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.5-alt1
 - new version
 

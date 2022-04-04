@@ -4,7 +4,7 @@
 %define liblayershellqtinterface liblayershellqtinterface%sover
 
 Name: plasma5-%rname
-Version: 5.23.5
+Version: 5.24.4
 Release: alt1
 %K5init altplace
 
@@ -17,11 +17,11 @@ Source: %rname-%version.tar
 
 # Automatically added by buildreq on Fri Jul 02 2021 (-bi)
 # optimized out: cmake cmake-modules debugedit elfutils fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libctf-nobfd0 libglvnd-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-waylandclient libsasl2-3 libssl-devel libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-server-devel libxkbcommon-devel pkg-config python-modules python2-base python3 python3-base python3-module-paste qt5-base-devel qt5-declarative-devel rpm-build-python3 rpm-macros-python sh4 wayland-devel
-#BuildRequires: appstream extra-cmake-modules git-core python-modules-compiler python3-dev python3-module-mpl_toolkits qt5-base-devel-static qt5-svg-devel qt5-wayland-devel qt5-webengine-devel tbb-devel wayland-protocols
+#BuildRequires: appstream extra-cmake-modules git-core python-modules-compiler python3-dev python3-module-mpl_toolkits qt5-base-devel-static qt5-svg-devel qt5-wayland-devel tbb-devel wayland-protocols
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: qt5-base-devel
 BuildRequires: extra-cmake-modules
-BuildRequires: qt5-base-devel-static qt5-svg-devel qt5-wayland-devel qt5-webengine-devel wayland-protocols
+BuildRequires: qt5-base-devel-static qt5-svg-devel qt5-wayland-devel wayland-protocols
 
 %description
 This component is meant for applications to be able to easily use clients based on wlr-layer-shell.
@@ -77,6 +77,9 @@ Requires: %name-common
 %_K5lib/libLayerShellQtInterface.so.*
 
 %changelog
+* Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.5-alt1
 - new version
 

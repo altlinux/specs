@@ -2,8 +2,8 @@
 %def_disable openswan
 
 Name: plasma5-nm
-Version: 5.23.5
-Release: alt2
+Version: 5.24.4
+Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -232,7 +232,7 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5data/plasma/updates/*
 %_K5notif/networkmanagement.notifyrc
 %_K5srv/*.desktop
-#%_K5srvtyp/*networkmanagement*.desktop
+%_datadir/qlogging-categories5/*.*categories
 
 %files maxi
 %files connect-mobile
@@ -261,6 +261,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5plug/plasma/network/vpn/plasmanetworkmanagement_sshui.so
 
 %changelog
+* Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.24.4-alt1
+- new version
+
 * Mon Mar 21 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.23.5-alt2
 - require NetworkManager-strongswan (closes: 42179)
 

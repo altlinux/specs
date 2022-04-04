@@ -1,7 +1,7 @@
 %define rname sddm-kcm
 
 Name: plasma5-%rname
-Version: 5.23.5
+Version: 5.24.4
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -11,6 +11,8 @@ Summary: KDE Workspace 5 SDDM configuration module
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
+Provides: kf5-sddm-kcm = %EVR
+Obsoletes: kf5-sddm-kcm < %EVR
 # kcmshell5 or systemsettings5
 #Requires: kf5-kde-cli-tools or kf5-systemsettings
 Requires: sddm
@@ -30,9 +32,6 @@ BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kglobalaccel-deve
 BuildRequires: kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-ktextwidgets-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
 BuildRequires: kf5-karchive-devel kf5-knewstuff-devel kf5-kdeclarative-devel kf5-kcmutils-devel kf5-kpackage-devel
-
-Provides: kf5-sddm-kcm = %EVR
-Obsoletes: kf5-sddm-kcm < %EVR
 
 %description
 SDDM configuration module.
@@ -71,6 +70,7 @@ KF5 library
 %build
 %K5build \
     -DSDDM_CONFIG_FILE=/etc/X11/sddm/sddm.conf \
+    -DSDDM_SYSTEM_CONFIG_DIR=%_datadir/sddm/conf.d \
     #
 
 %install
@@ -80,19 +80,20 @@ KF5 library
 
 %files -f %name.lang
 %doc LICENSES/*
-#%config(noreplace) %_K5xdgconf/*.knsrc
 %_K5data/knsrcfiles/*.knsrc
-#%config %_K5conf_dbus_sysd/*.conf
 %_K5dbus/system.d/*.conf
 %_K5bin/sddmthemeinstaller
-%_K5plug/kcms/*.so
+%_K5plug/plasma/kcms/systemsettings/*.so
+%_K5xdgapp/*.desktop
 %_K5libexecdir/kauth/*
 %_K5data/kpackage/kcms/kcm_sddm/
-%_K5srv/*
 %_K5dbus_sys_srv/*.service
 %_datadir/polkit-1/actions/*
 
 %changelog
+* Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.24.4-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.23.5-alt1
 - new version
 

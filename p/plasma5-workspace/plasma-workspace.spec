@@ -28,7 +28,7 @@
 %define krdb_sover 5
 %define libkrdb libkrdb%krdb_sover
 
-%def_disable qalculate
+%def_enable qalculate
 %_K5if_ver_gteq %ubt_id M90
 %def_enable appstream
 %else
@@ -36,8 +36,8 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.23.5
-Release: alt6
+Version: 5.24.4
+Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -48,6 +48,8 @@ License: GPL-2.0-or-later
 
 Provides: kf5-plasma-workspace = %EVR
 Obsoletes: kf5-plasma-workspace < %EVR
+Provides: plasma5-user-manager = %EVR
+Obsoletes: plasma5-user-manager < %EVR
 
 #Requires: KIOFuse
 Requires: %name-qml
@@ -101,9 +103,7 @@ Patch132: alt-fix-virtualkeyboard.patch
 Patch133: alt-no-remove-krunner.patch
 Patch134: alt-zonetab.patch
 Patch135: alt-fix-virtualkeyboard-size.patch
-Patch136: fix-kicker-recent-launch.patch
-Patch137: fix-panel-config.patch
-Patch138: backport-new-ghns-class.patch
+Patch136: alt-users-use-gost-yescrypt.patch
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig glib2-devel glibc-devel-static kf5-attica-devel kf5-kdoctools-devel kf5-kjs-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcln-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libgst-plugins1.0 libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-script libqt5-sql libqt5-svg libqt5-test libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libwayland-server libxcb-devel libxcbutil-keysyms libxcbutil-keysyms-devel libxkbfile-devel libxml2-devel pkg-config python-base qt5-base-devel qt5-declarative-devel qt5-webkit-devel rpm-build-gir ruby ruby-stdlibs wayland-devel xml-common xml-utils xorg-fixesproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -113,7 +113,7 @@ BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: qt5-base-devel-static qt5-phonon-devel qt5-script-devel qt5-svg-devel qt5-x11extras-devel qt5-wayland-devel
 BuildRequires: libgps-devel libpam0-devel zlib-devel
 %if_enabled qalculate
-libqalculate-devel
+BuildRequires: libqalculate-devel
 %endif
 %if_enabled appstream
 BuildRequires: appstream-qt-devel
@@ -302,8 +302,6 @@ popd
 %patch134 -p1
 %patch135 -p2
 %patch136 -p1
-%patch137 -p1
-%patch138 -p1
 
 install -m 0644 %SOURCE1 po/ru/freememorynotifier.po
 tar xf %SOURCE11 freememorynotifier/
@@ -321,10 +319,17 @@ sed -i 's|PackageKitQt5|PackageKitQt5_UBUNTU_ONLY|' CMakeLists.txt
 for d in runners/*/*.desktop ; do
     sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=false|' $d
 done
+for d in runners/*/*.json ; do
+    sed -i '/EnabledByDefault/s|true|false|' $d
+done
 # enable some krunners by default
+#for d in appstream services shell
+#do
+#    sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=true|' runners/${d}/plasma-runner-${d}.desktop
+#done
 for d in appstream services shell
 do
-    sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=true|' runners/${d}/plasma-runner-${d}.desktop
+    sed -i '/EnabledByDefault/s|false|true|' runners/${d}/plasma-runner-${d}.json
 done
 
 %build
@@ -339,7 +344,7 @@ done
 %K5install
 %K5install_move data ksplash kstyle solid kdevappwizard kpackage kglobalaccel
 %K5install_move data desktop-directories doc kconf_update kio_desktop knsrcfiles
-%K5install_move data kcontrol kdisplay kfontinst krunner konqsidebartng
+%K5install_move data kcontrol kdisplay kfontinst krunner konqsidebartng plasma/avatars locale
 
 # fix dbus service
 sed -i 's|^Exec=.*|Exec=%_K5bin/krunner|' %buildroot/%_K5dbus_srv/org.kde.krunner.service
@@ -412,17 +417,18 @@ done
 %_K5exec/*
 %_K5libexecdir/kauth/*
 %_K5conf_bin/*
-#%_K5lib/libkdeinit5_*.so
 %_K5plug/plasma/*/*.so
 %_K5plug/phonon_platform/*.so
 %_K5plug/*.so
 %_K5plug/kpackage/
-%_K5plug/kcms/*.so
 %_K5plug/kf5/kded/*.so
 %_K5plug/kf5/kio/*.so
-%_K5plug/kf5/krunner/*.so
+%_K5plug/kf5/krunner/
 %_K5plug/kf5/parts/*.so
 %_K5plug/plasmacalendarplugins/
+%_K5plug/plasma/kcms/systemsettings/
+%_K5plug/plasma/kcms/systemsettings_qwidgets/
+%_K5qml/org/kde/plasma/lookandfeel/
 %_K5qml/org/kde/plasma/private/*
 %_K5qml/org/kde/plasma/wallpapers/*
 %_K5qml/org/kde/taskmanager/
@@ -437,7 +443,6 @@ done
 %_K5data/krunner/
 %_K5data/ksplash/
 %_K5data/kstyle/
-#%_K5data/kdisplay/
 %_K5data/kfontinst/
 %_K5data/konqsidebartng/
 %_K5data/desktop-directories/*
@@ -447,7 +452,6 @@ done
 %_K5notif/*.notifyrc
 %_K5cfg/*.kcfg
 %_K5srv/*.desktop
-#%_K5srv/*.protocol
 %_K5srvtyp/*.desktop
 %_K5dbus_srv/*.service
 %_K5dbus/system.d/*.conf
@@ -510,6 +514,9 @@ done
 
 
 %changelog
+* Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.24.4-alt1
+- new version
+
 * Mon Mar 28 2022 Oleg Solovyov <mcpain@altlinux.org> 1:5.23.5-alt6
 - Backport self-hiding GHNS buttons
 
