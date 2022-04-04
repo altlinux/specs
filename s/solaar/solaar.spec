@@ -1,7 +1,7 @@
 %def_with bootstrap
 
 Name:           solaar
-Version:        1.1.1
+Version:        1.1.2
 Release:        alt1
 
 Group:          System/Configuration/Hardware
@@ -76,6 +76,9 @@ tools/po-compile.sh
 %doc docs
 
 %changelog
+* Sun Mar 27 2022 Andrey Cherepanov <cas@altlinux.org> 1.1.2-alt1
+- New version.
+
 * Sun Jan 02 2022 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt1
 - New version.
 
