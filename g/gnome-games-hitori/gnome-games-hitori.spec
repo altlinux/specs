@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define _name hitori
@@ -7,8 +7,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: GTK+ application to generate and let you play games of Hitori
 Group: Games/Boards
@@ -67,6 +67,9 @@ multiple solutions to a Hitori puzzle board.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Apr 04 2022 Yuri N. Sedunov <aris@altlinux.org> 3.38.4-alt1
+- 3.38.4
+
 * Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 3.38.3-alt2
 - updated to 3.38.3-21-gdd98c53 (fixed build with meson >= 0.61,
   updated translations)
