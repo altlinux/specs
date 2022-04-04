@@ -9,7 +9,7 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 5.1.0
+Version: 5.2.4
 Release: alt1
 
 Group: Development/Python3
@@ -104,6 +104,9 @@ python3 setup.py test
 %endif
 
 %changelog
+* Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 1:5.2.4-alt1
+- new version 5.2.4 (with rpmrb script)
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1:5.1.0-alt1
 - new version 5.1.0 (with rpmrb script)
 
