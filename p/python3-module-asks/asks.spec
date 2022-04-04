@@ -1,7 +1,7 @@
 %define oname asks
 
 Name: python3-module-%oname
-Version: 2.4.12
+Version: 3.0.0
 Release: alt1
 
 Summary: asks - async http
@@ -48,5 +48,8 @@ makes interacting with the web in a sustained and fluid way fast, efficient, and
 %python3_sitelibdir/*
 
 %changelog
+* Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 3.0.0-alt1
+- new version 3.0.0 (with rpmrb script)
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 2.4.12-alt1
 - initial build for ALT Sisyphus
