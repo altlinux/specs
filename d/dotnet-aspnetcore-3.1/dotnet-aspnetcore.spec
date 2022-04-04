@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 3.1
-%define _dotnet_corerelease 3.1.22
+%define _dotnet_corerelease 3.1.23
 
 %define _dotnet_asppackrelease 3.1.10
 %define _dotnet_aspnetcore_app %_dotnetdir/shared/Microsoft.AspNetCore.App/%_dotnet_corerelease/
@@ -11,7 +11,7 @@
 %define pre %nil
 
 Name: dotnet-aspnetcore-%_dotnet_major
-Version: 3.1.22
+Version: 3.1.23
 Release: alt1
 
 Summary: ASP.NET Core is a cross-platform .NET framework for building modern cloud-based web application
@@ -87,6 +87,9 @@ cp -a %bootstrapdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_asppackrelease/*
 %_dotnetdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_asppackrelease/
 
 %changelog
+* Sun Apr 03 2022 Vitaly Lipatov <lav@altlinux.ru> 3.1.23-alt1
+- ASP.NET Core 3.1.23
+
 * Sat Feb 12 2022 Vitaly Lipatov <lav@altlinux.ru> 3.1.22-alt1
 - .NET Core 3.1.22 - December 14, 2021
 - CVE-2021-43877: ASP.NET Core Elevation of privilege Vulnerability

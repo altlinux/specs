@@ -9,7 +9,7 @@
 %define optflags_lto -flto=thin
 
 Name: dotnet-corefx-%_dotnet_major
-Version: 3.1.22
+Version: 3.1.23
 Release: alt1
 
 Summary: .NET Core foundational libraries, called CoreFX
@@ -144,6 +144,9 @@ chmod 0755 %buildroot%_rpmlibdir/%name.filetrigger
 %_dotnet_shared/System.Security.Cryptography.Native.OpenSsl.a
 
 %changelog
+* Sat Apr 02 2022 Vitaly Lipatov <lav@altlinux.ru> 3.1.23-alt1
+- new version (3.1.23) with rpmgs script
+
 * Sat Feb 12 2022 Vitaly Lipatov <lav@altlinux.ru> 3.1.22-alt1
 - new version (3.1.22) with rpmgs script
 - CVE-2021-34485: .NET Core Information Disclosure Vulnerability

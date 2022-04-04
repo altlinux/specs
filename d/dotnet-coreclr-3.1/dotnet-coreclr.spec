@@ -12,7 +12,7 @@
 %define pre %nil
 
 Name: dotnet-coreclr-%_dotnet_major
-Version: 3.1.22
+Version: 3.1.23
 Release: alt1
 
 Summary: .NET Core runtime, called CoreCLR, and the base library, called mscorlib
@@ -170,6 +170,12 @@ chmod 0755 %buildroot%_rpmlibdir/%name.filetrigger
 %_rpmlibdir/%name.filetrigger
 
 %changelog
+* Sat Apr 02 2022 Vitaly Lipatov <lav@altlinux.ru> 3.1.23-alt1
+- .NET Core 3.1.23
+- CVE-2022-24464 : .NET Denial of Service Vulnerability
+- CVE-2022-24512 : .NET Remote Code Execution Vulnerability
+- CVE-2020-8927 : .NET Remote Code Execution Vulnerability
+
 * Sat Feb 12 2022 Vitaly Lipatov <lav@altlinux.ru> 3.1.22-alt1
 - new version (3.1.22) with rpmgs script
 - CVE-2021-34485: .NET Core Information Disclosure Vulnerability
