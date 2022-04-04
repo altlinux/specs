@@ -4,7 +4,7 @@
 
 Name: lightdm-kde-greeter
 Version: 0.3.2.1
-Release: alt5
+Release: alt6
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
 License: GPL-3.0+
@@ -73,6 +73,10 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmlightdm.policy
 
 %changelog
+* Mon Apr 04 2022 Slava Aseev <ptrnine@altlinux.org> 0.3.2.1-alt6
+- Introduce virtual keyboard
+- Fix FTBFS due to deprecated includes
+
 * Tue Jan 11 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.2.1-alt5
 - Updated userbar theme to allow logging in even if username is not listed.
 
