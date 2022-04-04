@@ -1,8 +1,8 @@
 %define  modulename jaraco.itertools
 
 Name:    python3-module-%modulename
-Version: 5.0.0
-Release: alt2
+Version: 6.2.1
+Release: alt1
 
 Summary: Tools to supplement packaging Python releases
 License: MIT
@@ -44,6 +44,9 @@ rm -f %buildroot%python3_sitelibdir/jaraco/__init__*
 %python3_sitelibdir/%modulename-*.egg-info/
 
 %changelog
+* Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 6.2.1-alt1
+- new version 6.2.1 (with rpmrb script)
+
 * Wed Jul 21 2021 Stanislav Levin <slev@altlinux.org> 5.0.0-alt2
 - Provided jaraco.itertools.
 
