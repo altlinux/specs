@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 41
+%define ver_major 42
 %def_enable python
 # removed since 3.36
 %def_disable zeitgeist
@@ -90,6 +90,9 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 
 
 %changelog
+* Mon Apr 04 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Mon Feb 28 2022 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
 - 41.0
 
