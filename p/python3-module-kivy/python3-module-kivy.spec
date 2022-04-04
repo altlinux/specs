@@ -1,8 +1,8 @@
 %define oname Kivy
 
 Name: python3-module-kivy
-Version: 2.0.0
-Release: alt3
+Version: 2.1.0
+Release: alt1
 
 Summary: Open source UI framework written in Python
 
@@ -52,6 +52,9 @@ rm -vrf %buildroot/usr/share/kivy-examples/
 
 
 %changelog
+* Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
+- new version 2.1.0 (with rpmrb script)
+
 * Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt3
 - drop pyjnius requires (it is Android related)
 
