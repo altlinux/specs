@@ -1,15 +1,16 @@
 Epoch: 1
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ python-devel texinfo
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ pkgconfig(jack) python3-devel texinfo
 # END SourceDeps(oneline)
 Summary(ru_RU.UTF-8): Менеджер сессий для сервера JACK
+BuildRequires: chrpath
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Summary:      LASH Audio Session Handler
 Name:         lash
 Version:      0.5.4
-Release:      alt1_43
+Release:      alt1_47
 License:      GPLv2+
 URL:          http://www.nongnu.org/lash/
 Source0:      http://download.savannah.gnu.org/releases/lash/lash-%{version}.tar.gz
@@ -26,8 +27,8 @@ Patch3:       lash-Modernize-texi2html-arguments.patch
 BuildRequires: libalsa-devel
 BuildRequires: desktop-file-utils
 BuildRequires: gcc
-BuildRequires: libgtk+2-devel 
-BuildRequires: libjack-devel
+BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel 
+BuildRequires: pipewire-libs
 BuildRequires: libxml2-devel
 BuildRequires: readline-devel
 BuildRequires: swig
@@ -49,6 +50,7 @@ patches) and the connections between them.
 Group: Development/Other
 Summary:      Development files for LASH
 Requires:     liblash = %{?epoch:%epoch:}%{version}-%{release}
+Requires:     pipewire-libs
 Provides: lash-devel = %EVR
 
 %description -n liblash-devel
@@ -124,6 +126,10 @@ if [ ! -d docs/lash-manual-html-split/lash-manual/ ]; then
   mkdir -p docs/lash-manual-html-split/lash-manual/
   cp -p docs/lash-manual-html-split/*.html docs/lash-manual-html-split/lash-manual/
 fi
+# kill rpath
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
+	chrpath -d $i ||:
+done
 
 
 
@@ -149,6 +155,9 @@ fi
 %{_libdir}/liblash.so.1.*
 
 %changelog
+* Mon Apr 04 2022 Igor Vlasenko <viy@altlinux.org> 1:0.5.4-alt1_47
+- fix build
+
 * Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 1:0.5.4-alt1_43
 - updated buildrequires
 
