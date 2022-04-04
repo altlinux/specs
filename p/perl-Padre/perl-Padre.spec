@@ -1,7 +1,10 @@
+# we need a font
+BuildRequires: fonts-ttf-liberation
 %define dist Padre
 Name: perl-Padre
 Version: 1.00
-Release: alt6.dac1134
+Release: alt7.dac1134
+
 
 Summary: Padre - Perl Application Development and Refactoring Environment
 License: Perl
@@ -67,6 +70,9 @@ EOF
 %doc Changes README* Artistic COPYING
 
 %changelog
+* Mon Apr 04 2022 Igor Vlasenko <viy@altlinux.org> 1.00-alt7.dac1134
+- fixed build
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1.00-alt6.dac1134
 - NMU: drop unused BR: perl-pip
 
