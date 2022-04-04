@@ -1,8 +1,8 @@
 %define oname buildozer
 
 Name: python3-module-buildozer
-Version: 1.2.0
-Release: alt2
+Version: 1.3.0
+Release: alt1
 
 Summary: Generic Python packager for Android and iOS
 
@@ -41,6 +41,9 @@ It automates the entire build process, download the prerequisites like python-fo
 %python3_sitelibdir/%oname-*.egg-info/
 
 %changelog
+* Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
+- new version 1.3.0 (with rpmrb script)
+
 * Thu Apr 22 2021 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt2
 - initial build for ALT Sisyphus
 
