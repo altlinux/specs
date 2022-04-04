@@ -2,7 +2,7 @@
 
 Name: fonts-otf-%fname
 Version: 1.000
-Release: alt2
+Release: alt3
 
 Summary: Philosopher open type font
 
@@ -17,7 +17,6 @@ Source: http://jovanny.ru/fonts/Philosopher.tar.bz2
 BuildArch: noarch
 
 BuildRequires: rpm-build-fonts >= 0.3
-PreReq: fontconfig >= 2.4.2
 
 %description
 Philosopher font.
@@ -28,15 +27,12 @@ Philosopher font.
 %install
 %otf_fonts_install %fname
 
-%post
-%post_fonts
-
-%postun
-%postun_fonts
-
 %files -f %fname.files
 
 %changelog
+* Mon Apr 04 2022 Igor Vlasenko <viy@altlinux.org> 1.000-alt3
+- NMU: dropped deprecated post/un_fonts (closes: #41861)
+
 * Tue Feb 09 2010 Vitaly Lipatov <lav@altlinux.ru> 1.000-alt2
 - drop out broken provides
 
