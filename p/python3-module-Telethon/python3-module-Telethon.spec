@@ -2,7 +2,7 @@
 %def_without test
 
 Name:    python3-module-%modulename
-Version: 1.21.1
+Version: 1.24.0
 Release: alt1
 
 Summary: Pure Python 3 Telegram client library
@@ -58,6 +58,9 @@ test -r %buildroot%python3_sitelibdir/telethon/errors/rpcerrorlist.py
 %python3_sitelibdir/%modulename-*.egg-info/
 
 %changelog
+* Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 1.24.0-alt1
+- new version 1.24.0 (with rpmrb script)
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.21.1-alt1
 - new version 1.21.1 (with rpmrb script)
 
