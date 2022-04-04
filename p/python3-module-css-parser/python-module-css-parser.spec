@@ -1,7 +1,7 @@
 %define oname css-parser
 
 Name: python3-module-css-parser
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 
 Summary: A CSS Cascading Style Sheets library for Python
@@ -49,6 +49,9 @@ This package contains documentation for %name.
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 1.0.7-alt1
+- new version 1.0.7 (with rpmrb script)
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.6-alt1
 - new version 1.0.6 (with rpmrb script)
 
