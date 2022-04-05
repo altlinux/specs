@@ -7,7 +7,7 @@
 
 Name: kde5-%rname
 Version: 21.12.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -17,11 +17,8 @@ License: GPLv2+ / LGPLv2+
 
 Requires: telepathy-logger
 
-%if_enabled qtwebengine
-Source: %rname-%version.tar
-%else
-Source: %rname-old.tar
-%endif
+Source1: %rname-%version.tar
+Source2: %rname-old.tar
 Patch1: alt-soname.patch
 
 # Automatically added by buildreq on Thu Jun 18 2015 (-bi)
@@ -77,9 +74,9 @@ KF5 library
 
 %prep
 %if_enabled qtwebengine
-%setup -n %rname-%version
+%setup -T -b 1 -n %rname-%version
 %else
-%setup -n %rname-old
+%setup -T -b 2 -n %rname-old
 %endif
 %patch1 -p1
 
@@ -127,6 +124,9 @@ KF5 library
 %_K5lib/libktpimagesharer.so.*
 
 %changelog
+* Tue Apr 05 2022 Michael Shigorin <mike@altlinux.org> 21.12.3-alt2
+- fix srpm rebuild with --disable qtwebengine
+
 * Sat Mar 05 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 
