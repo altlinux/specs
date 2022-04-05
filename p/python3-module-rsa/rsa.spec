@@ -1,7 +1,7 @@
 %define oname rsa
 
 Name: python3-module-rsa
-Version: 4.7.2
+Version: 4.8
 Release: alt1
 
 Summary: Pure-Python RSA implementation
@@ -56,6 +56,9 @@ Stuvel.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Apr 05 2022 Vitaly Lipatov <lav@altlinux.ru> 4.8-alt1
+- new version 4.8 (with rpmrb script)
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 4.7.2-alt1
 - new version 4.7.2 (with rpmrb script)
 
