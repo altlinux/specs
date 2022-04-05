@@ -1,7 +1,6 @@
 %define		_oldname	sylpheed-claws
 %def_disable 	debug
 
-%def_disable 	appdata
 %def_enable 	svg
 %ifnarch %e2k
 %def_enable 	networkmanager
@@ -24,8 +23,7 @@
 %def_enable 	gdata
 %def_enable 	litehtmlviewer
 %ifnarch %e2k
-# It is python2, so disable it.
-%def_disable 	python
+%def_enable 	python
 %else
 %def_disable 	python
 %endif
@@ -34,7 +32,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:   	claws-mail
-Version:	3.18.0
+Version:	4.1.0
 Release: 	alt1
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
@@ -56,7 +54,8 @@ BuildRequires: flex libSM-devel libcompface-devel libdbus-glib-devel libenchant2
 # For SNI support
 BuildRequires: libetpan-devel >= 1.9.1-alt3
 BuildRequires: libnettle-devel
-BuildRequires: libgtk+2-devel
+BuildRequires: libgtk+3-devel
+BuildRequires: libcairo-devel
 BuildRequires: rpm-build-python3
 %{?_enable_svg:BuildRequires: librsvg-devel}
 %{?_enable_networkmanager:BuildRequires: libnm-devel}
@@ -72,7 +71,7 @@ BuildRequires: libcurl-devel
 
 # For plugin-fancy
 %if_enabled fancy
-BuildRequires: libwebkitgtk2-devel
+BuildRequires: libwebkit2gtk-devel
 BuildRequires: libsoup-gnome-devel
 %endif
 
@@ -84,7 +83,6 @@ BuildRequires: libgdata-devel >= 0.17.1
 # For plugin-litehtmlviewer
 %if_enabled litehtmlviewer
 BuildRequires: gcc-c++
-BuildRequires: libcairo-devel
 BuildRequires: fontconfig-devel
 BuildRequires: libgumbo-devel
 %endif
@@ -99,13 +97,13 @@ BuildRequires: libpoppler-glib-devel
 BuildRequires: perl-devel sed
 
 # For pligin-python
-%{?_enable_python:BuildRequires: python-devel python-module-pygtk-devel}
+%{?_enable_python:BuildRequires: python3-devel python3-module-pygobject3-devel}
 
 # For plugin-notification
 %def_disable indicator
 %def_enable hotkeys
 BuildRequires: libnotify-devel
-BuildRequires: libcanberra-gtk2-devel
+BuildRequires: libcanberra-gtk3-devel
 %{?_enable_indicator:BuildRequires: libindicate-devel >=  0.3.0}
 %{?_enable_hotkeys:BuildRequires: libgio-devel >= 2.15.6}
 
@@ -160,11 +158,26 @@ Provides:	%_oldname-devel
 This package contains the header files and libraries for building
 program which use %name.
 
-%package	plugins
-Summary:	Install all plugins for %name
+%package	plugins-minimal
+Summary:	Install minimal set of %name plugins
 Group:		Networking/Mail
 BuildArch:	noarch
 Requires:	%name = %version-%release
+
+Requires:	%name-plugin-pgpcore = %version-%release
+Requires:	%name-plugin-pgpinline = %version-%release
+Requires:	%name-plugin-pgpmime = %version-%release
+Requires:	%name-plugin-smime = %version-%release
+
+%description	plugins-minimal
+This package installs minimal set of %name plugins.
+
+%package	plugins-default
+Summary:	Install most of %name plugins
+Group:		Networking/Mail
+BuildArch:	noarch
+Requires:	%name-plugins-minimal = %version-%release
+
 Requires:	%name-plugin-acpinotifier = %version-%release
 Requires:	%name-plugin-addresskeeper = %version-%release
 %if_enabled archive
@@ -176,7 +189,6 @@ Requires:	%name-plugin-bogofilter = %version-%release
 %if_enabled bsfilter
 Requires:	%name-plugin-bsfilter = %version-%release
 %endif
-Requires:	%name-plugin-clamd = %version-%release
 %if_enabled dillo
 Requires:	%name-plugin-dillo = %version-%release
 %endif
@@ -187,33 +199,43 @@ Requires:	%name-plugin-fetchinfo = %version-%release
 %if_enabled gdata
 Requires:	%name-plugin-gdata = %version-%release
 %endif
+Requires:	%name-plugin-keywordwarner = %version-%release
 Requires:	%name-plugin-libravatar = %version-%release
 %if_enabled litehtmlviewer
 Requires:	%name-plugin-litehtmlviewer = %version-%release
 %endif
 Requires:	%name-plugin-mailmbox = %version-%release
-Requires:	%name-plugin-managesieve = %version-%release
 Requires:	%name-plugin-newmail = %version-%release
 Requires:	%name-plugin-notification = %version-%release
 Requires:	%name-plugin-pdfviewer = %version-%release
-Requires:	%name-plugin-perl = %version-%release
-Requires:	%name-plugin-pgpcore = %version-%release
-Requires:	%name-plugin-pgpinline = %version-%release
-Requires:	%name-plugin-pgpmime = %version-%release
-%if_enabled python
-Requires:	%name-plugin-python = %version-%release
-%endif
 Requires:	%name-plugin-rssyl = %version-%release
-Requires:	%name-plugin-smime = %version-%release
-Requires:	%name-plugin-spamassassin = %version-%release
 Requires:	%name-plugin-spamreport = %version-%release
 %if_enabled tnef
 Requires:	%name-plugin-tnef = %version-%release
 %endif
 Requires:	%name-plugin-vcalendar = %version-%release
 
-%description	plugins
-This virtual package installs all plugins for %name.
+%description	plugins-default
+This package installs most of %name plugins.
+
+%package	plugins-full
+Summary:	Install all plugins for %name
+Group:		Networking/Mail
+BuildArch:	noarch
+Requires:	%name-plugins-default = %version-%release
+Obsoletes:	%name-plugins < 4.1.0-alt1
+Provides:	%name-plugins = %version-%release
+
+Requires:	%name-plugin-clamd = %version-%release
+Requires:	%name-plugin-managesieve = %version-%release
+Requires:	%name-plugin-perl = %version-%release
+%if_enabled python
+Requires:	%name-plugin-python = %version-%release
+%endif
+Requires:	%name-plugin-spamassassin = %version-%release
+
+%description	plugins-full
+This package installs all plugins for %name.
 
 %package	plugin-acpinotifier
 Summary:	Mail notification via LEDs on some laptops (Acer, ASUS, Fujitsu, IBM).
@@ -345,6 +367,15 @@ Requires:	%name = %version-%release
 Access to GData (Google services) for Claws Mail.
 The only currently implemented feature is inclusion of
 Google contacts into the Tab-address completion.
+
+%package	plugin-keywordwarner
+Summary:	Warn when message text contains a keyword
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+
+%description	plugin-keywordwarner
+This plugin shows a warning when sending or queueing a message and a reference
+to one or more keywords is found in the message text.
 
 %package	plugin-libravatar
 Summary:	Pligin displays libravatar/gravatar profiles' images
@@ -497,7 +528,6 @@ with PGP/MIME.
 Summary:	This plugin provides Python integration features
 Group:		Networking/Mail
 Requires:	%name = %version-%release
-Requires:	python
 
 %description	plugin-python
 This plugin offers Python scripting access to Claws Mail.
@@ -618,7 +648,6 @@ export LDFLAGS=-pie
 		--with-config-dir=.%name \
 		%{subst_enable manual} \
 		--disable-jpilot \
-		%{subst_enable appdata} \
 		%{subst_enable svg} \
 		%{subst_enable networkmanager} \
 		%if_disabled archive
@@ -681,9 +710,6 @@ install -p -m644 src/plugins/litehtml_viewer/litehtml/LICENSE %buildroot%_defaul
 %_bindir/%name
 %_man1dir/%name.1.*
 %_desktopdir/*.desktop
-%if_enabled appdata
-%_datadir/appdata/claws-mail.appdata.xml
-%endif
 %_iconsdir/hicolor/*x*/apps/%name.png
 %_pixmapsdir/%name.png
 %dir %_libdir/%name
@@ -698,96 +724,64 @@ install -p -m644 src/plugins/litehtml_viewer/litehtml/LICENSE %buildroot%_defaul
 %_includedir/%name
 %_pkgconfigdir/%name.pc
 
-%files plugins
+%files plugins-minimal
+
+%files plugins-default
+
+%files plugins-full
 
 %files plugin-acpinotifier
 %_claws_plugins_path/acpi_notifier.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-acpi_notifier.metainfo.xml
-%endif
 
 %files plugin-addresskeeper
 %_claws_plugins_path/address_keeper.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-address_keeper.metainfo.xml
-%endif
 
 %if_enabled archive
 %files plugin-archive
 %_claws_plugins_path/archive.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-archive.metainfo.xml
-%endif
 %endif
 
 %files plugin-attachwarner
 %_claws_plugins_path/attachwarner.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-attachwarner.metainfo.xml
-%endif
 
 %files plugin-attremover
 %_claws_plugins_path/att_remover.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-att_remover.metainfo.xml
-%endif
 
 %files plugin-bogofilter
 %_claws_plugins_path/bogofilter.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-bogofilter.metainfo.xml
-%endif
 
 %if_enabled bsfilter
 %files plugin-bsfilter
 %_claws_plugins_path/bsfilter.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-bsfilter.metainfo.xml
-%endif
 %endif
 
 %files plugin-clamd
 %_claws_plugins_path/clamd.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-clamd.metainfo.xml
-%endif
 
 %if_enabled dillo
 %files plugin-dillo
 %_claws_plugins_path/dillo.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-dillo.metainfo.xml
-%endif
 %endif
 
 %if_enabled fancy
 %files plugin-fancy
 %_claws_plugins_path/fancy.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-fancy.metainfo.xml
-%endif
 %endif
 
 %files plugin-fetchinfo
 %_claws_plugins_path/fetchinfo.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-fetchinfo.metainfo.xml
-%endif
 
 %if_enabled gdata
 %files plugin-gdata
 %_claws_plugins_path/gdata.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-gdata.metainfo.xml
 %endif
-%endif
+
+%files plugin-keywordwarner
+%_claws_plugins_path/keyword_warner.so
 
 %files plugin-libravatar
 %doc src/plugins/libravatar/README*
 %_claws_plugins_path/libravatar.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-libravatar.metainfo.xml
-%endif
 
 %if_enabled litehtmlviewer
 %files plugin-litehtmlviewer
@@ -797,120 +791,81 @@ install -p -m644 src/plugins/litehtml_viewer/litehtml/LICENSE %buildroot%_defaul
 
 %files plugin-mailmbox
 %_claws_plugins_path/mailmbox.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-mailmbox.metainfo.xml
-%endif
 
 %files plugin-managesieve
 %_claws_plugins_path/managesieve.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-managesieve.metainfo.xml
-%endif
 
 %files plugin-newmail
 %_claws_plugins_path/newmail.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-newmail.metainfo.xml
-%endif
 
 %files plugin-notification
 %_claws_plugins_path/notification.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-notification.metainfo.xml
-%endif
 
 %files plugin-pdfviewer
 %_claws_plugins_path/pdf_viewer.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-pdf_viewer.metainfo.xml
-%endif
 
 %files plugin-perl
 %_claws_plugins_path/perl.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-perl.metainfo.xml
-%endif
 
 %files plugin-pgpcore
 %_claws_plugins_path/pgpcore.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-pgpcore.metainfo.xml
-%endif
 
 %files plugin-pgpinline
 %_claws_plugins_path/pgpinline.so
 %_claws_plugins_path/pgpinline.deps
-%if_enabled appdata
-%_datadir/appdata/claws-mail-pgpinline.metainfo.xml
-%endif
 
 %files plugin-pgpmime
 %_claws_plugins_path/pgpmime.so
 %_claws_plugins_path/pgpmime.deps
-%if_enabled appdata
-%_datadir/appdata/claws-mail-pgpmime.metainfo.xml
-%endif
 
 %if_enabled python
 %files plugin-python
 %_claws_plugins_path/python.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-python.metainfo.xml
-%endif
 %endif
 
 %files plugin-rssyl
 %_claws_plugins_path/rssyl.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-rssyl.metainfo.xml
-%endif
 
 %files plugin-smime
 %_claws_plugins_path/smime.so
 %_claws_plugins_path/smime.deps
-%if_enabled appdata
-%_datadir/appdata/claws-mail-smime.metainfo.xml
-%endif
 
 %files plugin-spamassassin
 %doc src/plugins/spamassassin/README* src/plugins/spamassassin/NOTICE
 %_claws_plugins_path/spamassassin.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-spamassassin.metainfo.xml
-%endif
 
 %files plugin-spamreport
 %_claws_plugins_path/spamreport.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-spam_report.metainfo.xml
-%endif
 
 %if_enabled tnef
 %files plugin-tnef
 %_claws_plugins_path/tnef_parse.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-tnef_parse.metainfo.xml
-%endif
 %endif
 
 %files plugin-vcalendar
 %_claws_plugins_path/vcalendar.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-vcalendar.metainfo.xml
-%endif
 
 %files tools
 %doc tools/README*
 %_datadir/%name/tools/
 %exclude %_datadir/%name/tools/update-po
 %exclude %_datadir/%name/tools/check-appstream.sh
-%exclude %_datadir/%name/tools/ca-certificates.crt
 %exclude %_datadir/%name/tools/gitlog2changelog.py
 
 %exclude %_claws_plugins_path/*.la
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Tue Apr 05 2022 Mikhail Efremov <sem@altlinux.org> 4.1.0-alt1
+- Dropped appdata support from spec.
+- Packaged keywordwarner plugin.
+- Splitted plugins subpackage -> minimal,default,full.
+- Updated to 4.1.0.
+
+* Mon Jul 12 2021 Mikhail Efremov <sem@altlinux.org> 4.0.0-alt1
+- Enabled python plugin.
+- Updated to 4.0.0.
+
 * Mon Jul 12 2021 Mikhail Efremov <sem@altlinux.org> 3.18.0-alt1
 - Updated to 3.18.0.
 
