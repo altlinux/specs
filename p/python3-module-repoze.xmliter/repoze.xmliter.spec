@@ -1,8 +1,8 @@
 %define oname repoze.xmliter
 
 Name: python3-module-%oname
-Version: 0.6
-Release: alt2.git20140921
+Version: 0.6.1
+Release: alt1
 
 Summary: Wrapper for lxml trees which serializes to string upon iteration
 
@@ -53,6 +53,9 @@ rm -fv %buildroot%python3_sitelibdir/repoze/xmliter/tests.py
 %python3_sitelibdir/*
 
 %changelog
+* Tue Apr 05 2022 Vitaly Lipatov <lav@altlinux.ru> 0.6.1-alt1
+- new version 0.6.1 (with rpmrb script)
+
 * Sun Jul 11 2021 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt2.git20140921
 - build python3 module separately
 
