@@ -6,7 +6,7 @@
 
 %ifnarch %valgrind_arches
 %def_disable tests
-%def_dissable check
+%def_disable check
 %else
 %def_disable tests
 %def_enable check
@@ -14,7 +14,7 @@
 
 Name: libwacom
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: A Wacom tablets library
 Group: System/Libraries
@@ -123,6 +123,9 @@ mkdir -p %buildroot%_sysconfdir/%name
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Apr 05 2022 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1.1
+- spec: fixed typo
+
 * Fri Apr 01 2022 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
 - 2.2.0 (soname bumped)
 
