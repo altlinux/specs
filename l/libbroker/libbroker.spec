@@ -1,7 +1,7 @@
 # TODO: add pybind11
 
 Name: libbroker
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 
 Summary: Zeek's Messaging Library 
@@ -90,6 +90,9 @@ ln -s %_datadir/zeek-cmake/ cmake
 %_bindir/broker-*
 
 %changelog
+* Sun Apr 03 2022 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt1
+- new version 2.2.0 (with rpmrb script)
+
 * Mon Oct 25 2021 Alexey Shabalin <shaba@altlinux.org> 2.1.0-alt1
 - new version 2.1.0
 - add broker-tools package
