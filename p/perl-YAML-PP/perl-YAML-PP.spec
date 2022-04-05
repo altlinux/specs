@@ -1,20 +1,20 @@
-%define _unpackaged_files_terminate_build 1
 %define module_name YAML-PP
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(B.pm) perl(B/Deparse.pm) perl(Carp.pm) perl(Cpanel/JSON/XS.pm) perl(Data/Dump.pm) perl(Data/Dumper.pm) perl(Encode.pm) perl(Encode/CN.pm) perl(Encode/JP.pm) perl(Encode/KR.pm) perl(Encode/TW.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Basename.pm) perl(File/Spec.pm) perl(FindBin.pm) perl(HTML/Entities.pm) perl(IO/All.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(JSON.pm) perl(JSON/PP.pm) perl(JSON/XS.pm) perl(MIME/Base64.pm) perl(Module/Load.pm) perl(Mojo/JSON.pm) perl(Mojolicious.pm) perl(Scalar/Util.pm) perl(Term/ANSIColor.pm) perl(Test/Deep.pm) perl(Test/More.pm) perl(Test/Warn.pm) perl(Text/Table.pm) perl(URI/Escape.pm) perl(YAML.pm) perl(YAML/Syck.pm) perl(YAML/Tiny.pm) perl(YAML/XS.pm) perl(base.pm) perl(blib.pm) perl(boolean.pm) perl(constant.pm) perl(lib.pm) perl(overload.pm)
-BuildRequires: perl(strict.pm) perl(warnings.pm)
+BuildRequires: perl(B.pm) perl(B/Deparse.pm) perl(Carp.pm) perl(Cpanel/JSON/XS.pm) perl(Data/Dump.pm) perl(Data/Dumper.pm) perl(Encode.pm) perl(Encode/CN.pm) perl(Encode/JP.pm) perl(Encode/KR.pm) perl(Encode/TW.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Basename.pm) perl(File/Spec.pm) perl(FindBin.pm) perl(Getopt/Long.pm) perl(HTML/Entities.pm) perl(IO/All.pm) perl(IO/File.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(JSON.pm) perl(JSON/PP.pm) perl(JSON/XS.pm) perl(MIME/Base64.pm) perl(Module/Load.pm) perl(Mojo/JSON.pm) perl(Mojolicious.pm) perl(Scalar/Util.pm) perl(Term/ANSIColor.pm) perl(Test/Deep.pm) perl(Test/More.pm) perl(Test/Warn.pm) perl(Text/Table.pm) perl(Tie/Array.pm) perl(Tie/Hash.pm) perl(URI/Escape.pm) perl(YAML.pm) perl(YAML/PP/LibYAML/Parser.pm) perl(YAML/Syck.pm) perl(YAML/Tiny.pm)
+BuildRequires: perl(YAML/XS.pm) perl(base.pm) perl(boolean.pm) perl(constant.pm) perl(lib.pm) perl(overload.pm) perl(strict.pm) perl(warnings.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.031
+Version: 0.032
 Release: alt1
 Summary: YAML Parser and Loader
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://www.cpan.org/authors/id/T/TI/TINITA/%{module_name}-%{version}.tar.gz
+Source0: http://cpan.org.ua/authors/id/T/TI/TINITA/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -41,13 +41,16 @@ scripts for %module_name
 %perl_vendor_install
 
 %files
-%doc CONTRIBUTING.md Changes examples README.md
+%doc CONTRIBUTING.md LICENSE Changes README.md examples
 %perl_vendor_privlib/Y*
 
 %files scripts
 %_bindir/*
 
 %changelog
+* Tue Apr 05 2022 Igor Vlasenko <viy@altlinux.org> 0.032-alt1
+- updated by package builder
+
 * Wed Dec 29 2021 Igor Vlasenko <viy@altlinux.org> 0.031-alt1
 - automated CPAN update
 
