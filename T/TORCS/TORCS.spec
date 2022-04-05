@@ -1,11 +1,9 @@
-# due libs in nonstandard place
-%set_verify_elf_method unresolved=relaxed
-%add_findprov_lib_path %_libdir/torcs/lib
-
 Name: TORCS
 Version: 1.3.7
-Release: alt1
+Release: alt2
+
 Summary: The Open Racing Car Simulator
+
 License: GPL-2.0
 Group: Games/Sports
 Url: http://torcs.sourceforge.net/
@@ -33,6 +31,7 @@ BuildRequires: gcc-c++ imake libGL-devel libXext-devel libXi-devel libXmu-devel
 BuildRequires: libXrandr-devel libXrender-devel libalut-devel libexpat-devel
 BuildRequires: libfreeglut-devel libpng-devel plib-devel xorg-cf-files xorg-sdk
 BuildRequires: libXxf86vm-devel libogg-devel libvorbis-devel libopenal-devel
+
 %description
 A 3D racing car simulator using OpenGL.
 
@@ -65,7 +64,6 @@ export CFLAGS="$CFLAGS -fPIC"
 export CXXFLAGS="$CXXFLAGS -fPIC"
 autoconf
 %configure --x-libraries=%_libdir
-
 %make
 
 %install
@@ -83,9 +81,27 @@ install -m 644 -D %SOURCE11 %buildroot%_miconsdir/%name.xpm
 install -m 644 -D %SOURCE12 %buildroot%_niconsdir/%name.xpm
 install -m 644 -D %SOURCE13 %buildroot%_liconsdir/%name.xpm
 
+# Make lib.req happy!
+for lib in $(ls %buildroot%_libdir/torcs/lib); do
+    ln -sf torcs/lib/$lib %buildroot%_libdir/$lib
+done
+# Make gyle happy!
+%filter_from_requires /libclient.so/d
+%filter_from_requires /libconfscreens.so/d
+%filter_from_requires /liblearning.so/d
+%filter_from_requires /libmusicplayer.so/d
+%filter_from_requires /libraceengine.so/d
+%filter_from_requires /libracescreens.so/d
+%filter_from_requires /librobottools.so/d
+%filter_from_requires /libtgf.so/d
+%filter_from_requires /libtgfclient.so/d
+%filter_from_requires /libtxml.so/d
+
 %files
 %doc README COPYING
 %_bindir/*
+# symlinks
+%_libdir/*.so
 %_libdir/torcs/
 %_desktopdir/*
 %_datadir/appdata/torcs.appdata.xml
@@ -98,6 +114,9 @@ install -m 644 -D %SOURCE13 %buildroot%_liconsdir/%name.xpm
 %_gamesdatadir/torcs/*
 
 %changelog
+* Mon Apr 04 2022 Grigory Ustinov <grenka@altlinux.org> 1.3.7-alt2
+- Fixed ftbfs.
+
 * Tue Jan 21 2020 Artyom Bystrov <arbars@altlinux.org> 1.3.7-alt1
 - Update to 1.3.7
 - Total rework in process of building
