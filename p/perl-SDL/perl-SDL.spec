@@ -1,8 +1,10 @@
+# we need a font
+BuildRequires: fonts-ttf-liberation
 %define _unpackaged_files_terminate_build 1
 %define dist SDL
 Name: perl-%dist
 Version: 2.548
-Release: alt2
+Release: alt3
 
 Summary: Simple DirectMedia Layer for Perl
 License: LGPL
@@ -79,6 +81,9 @@ fi
 %perl_vendor_archlib/Module/Build/SDL.pm
 
 %changelog
+* Tue Apr 05 2022 Igor Vlasenko <viy@altlinux.org> 2.548-alt3
+- fixed build
+
 * Sun Sep 20 2020 Igor Vlasenko <viy@altlinux.ru> 2.548-alt2
 - fixed build on armh
 
