@@ -1,8 +1,8 @@
 %define oname cycler
 
 Name: python3-module-%oname
-Version: 0.10.0
-Release: alt2
+Version: 0.11.0
+Release: alt1
 
 Summary: Composable style cycles
 
@@ -19,6 +19,7 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-setuptools
 BuildPreReq: python3-module-six
 BuildPreReq: python3-module-nose
+BuildPreReq: python3-module-pytest
 
 %description
 The public API of cycler consists of a class Cycler and a factory
@@ -43,6 +44,9 @@ python3 setup.py test -v
 %python3_sitelibdir/*
 
 %changelog
+* Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 0.11.0-alt1
+- new version 0.11.0 (with rpmrb script)
+
 * Tue Nov 03 2020 Vitaly Lipatov <lav@altlinux.ru> 0.10.0-alt2
 - build python3 module separately
 
