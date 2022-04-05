@@ -1,6 +1,6 @@
 %define oname soupsieve
 Name: python3-module-%oname
-Version: 2.2.1
+Version: 2.3.1
 Release: alt1
 
 Summary: A modern CSS selector implementation for BeautifulSoup
@@ -47,6 +47,9 @@ though there are a number that don't make sense in a non-browser environment.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Apr 05 2022 Vitaly Lipatov <lav@altlinux.ru> 2.3.1-alt1
+- new version 2.3.1 (with rpmrb script)
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 2.2.1-alt1
 - new version 2.2.1 (with rpmrb script)
 
