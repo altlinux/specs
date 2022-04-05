@@ -1,5 +1,5 @@
 Name: xfce4-eyes-plugin
-Version: 4.5.1
+Version: 4.6.0
 Release: alt1
 
 Summary: Eyes plugin for Xfce Desktop
@@ -42,7 +42,7 @@ Scary!
 %find_lang %name
 
 %files -f %name.lang
-%doc README.md AUTHORS
+%doc README.md AUTHORS NEWS
 %_libdir/xfce4/panel/plugins/*
 %_datadir/xfce4/eyes/
 %_datadir/xfce4/panel/plugins/*.desktop
@@ -51,6 +51,10 @@ Scary!
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Tue Apr 05 2022 Mikhail Efremov <sem@altlinux.org> 4.6.0-alt1
+- Packaged NEWS file.
+- Updated to 4.6.0.
+
 * Fri Jul 03 2020 Mikhail Efremov <sem@altlinux.org> 4.5.1-alt1
 - Added Vcs tag.
 - Updated url.
