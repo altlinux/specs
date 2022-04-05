@@ -3,7 +3,7 @@
 %def_without doc_package
 
 Name: python3-module-openssl
-Version: 20.0.1
+Version: 22.0.0
 Release: alt1
 
 Summary: Python wrapper module around the OpenSSL library
@@ -92,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 22.0.0-alt1
+- new version 22.0.0 (with rpmrb script)
+
 * Wed Mar 10 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 20.0.1-alt1
 - 20.0.1
 - spec: fix license field
