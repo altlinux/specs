@@ -6,14 +6,14 @@ BuildRequires: perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) per
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.81
+Version: 0.82
 Release: alt1
 Summary: C Language Support for Inline
 Group: Development/Perl
 License: perl
 URL: https://github.com/ingydotnet/inline-c-pm
 
-Source0: http://www.cpan.org/authors/id/T/TI/TINITA/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETJ/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -22,6 +22,12 @@ From summary: %summary
 %prep
 %setup -q -n %{module_name}-%{version}
 
+%ifarch %ix86
+if [ %version = "0.82" ]; then
+rm -f t/26fork.t
+fi
+%endif
+
 %build
 %perl_vendor_build
 
@@ -29,11 +35,14 @@ From summary: %summary
 %perl_vendor_install
 
 %files
-%doc README Changes LICENSE example CONTRIBUTING
+%doc README Changes example CONTRIBUTING
 %perl_vendor_privlib/I*
 %perl_vendor_privlib/auto/*
 
 %changelog
+* Fri Mar 25 2022 Igor Vlasenko <viy@altlinux.org> 0.82-alt1
+- automated CPAN update
+
 * Sun May 12 2019 Igor Vlasenko <viy@altlinux.ru> 0.81-alt1
 - automated CPAN update
 
