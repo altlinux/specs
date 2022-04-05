@@ -1,8 +1,8 @@
 %def_without check
 
 Name: python3-module-signedjson
-Version: 1.1.1
-Release: alt2
+Version: 1.1.4
+Release: alt1
 
 Summary: Sign JSON with Ed25519 signatures
 
@@ -56,6 +56,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/*
 
 %changelog
+* Tue Apr 05 2022 Vitaly Lipatov <lav@altlinux.ru> 1.1.4-alt1
+- new version 1.1.4 (with rpmrb script)
+
 * Wed Aug 11 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt2
 - restore importlib-metadata dependency (ALT bug 40707)
 
