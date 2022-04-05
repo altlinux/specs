@@ -1,7 +1,7 @@
 Summary:        Xapian perl bindings
 
 Name:           perl-Search-Xapian
-Version:        1.2.25.4
+Version:        1.2.25.5
 Release:        alt1
 
 Group: Development/Perl
@@ -39,6 +39,9 @@ export TEST_POD=1
 %perl_vendor_archlib/*
 
 %changelog
+* Tue Apr 05 2022 Igor Vlasenko <viy@altlinux.org> 1.2.25.5-alt1
+- New version (1.2.25.5)
+
 * Sun Nov 29 2020 Alexey Gladkov <legion@altlinux.ru> 1.2.25.4-alt1
 - New version (1.2.25.4)
 
