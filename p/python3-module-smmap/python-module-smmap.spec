@@ -1,7 +1,7 @@
 %define oname smmap
 
 Name: python3-module-%oname
-Version: 4.0.0
+Version: 5.0.0
 Release: alt1
 
 Summary:  Sliding window memory map manager
@@ -51,6 +51,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Tue Apr 05 2022 Vitaly Lipatov <lav@altlinux.ru> 5.0.0-alt1
+- new version 5.0.0 (with rpmrb script)
+
 * Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt1
 - new version (4.0.0) with rpmgs script
 - build python3 module separately
