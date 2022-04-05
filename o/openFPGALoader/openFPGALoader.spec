@@ -5,7 +5,7 @@
 
 Name:     openFPGALoader
 Version:  0.8.0
-Release:  alt2
+Release:  alt3
 
 Summary:  Universal utility for programming FPGA
 License:  Apache-2.0
@@ -47,16 +47,28 @@ Group:   Documentation
 %cmake
 %cmake_build
 %if_with doc
-%make_build -C doc/ html
+%make_build -C doc/ man html
 %endif
 
 %install
 %cmake_install
 
+# install udev rules
+mkdir -p %buildroot/lib/udev/rules.d/
+install -pm644 99-openfpgaloader.rules %buildroot/lib/udev/rules.d/
+
+# install man
+mkdir -p %buildroot%_man1dir
+install -pm644 doc/_build/man/openFPGALoader.1 %buildroot%_man1dir
+
 %files
 %_bindir/%name
+/lib/udev/rules.d/99-openfpgaloader.rules
 %_datadir/%name/
 %doc README.md
+%if_with doc
+%_man1dir/openFPGALoader.1*
+%endif
 
 %if_with doc
 %files doc
@@ -64,6 +76,10 @@ Group:   Documentation
 %endif
 
 %changelog
+* Tue Apr 05 2022 Anton Midyukov <antohami@altlinux.org> 0.8.0-alt3
+- add udev rules
+- build man
+
 * Tue Apr 05 2022 Anton Midyukov <antohami@altlinux.org> 0.8.0-alt2
 - build documentation
 
