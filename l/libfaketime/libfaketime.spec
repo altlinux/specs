@@ -1,5 +1,5 @@
 Name: libfaketime
-Version: 0.9.9
+Version: 0.9.10
 Release: alt1
 
 Summary: Manipulate system time per process for testing purposes
@@ -82,6 +82,9 @@ rm -r %buildroot/%_docdir/faketime
 %_man1dir/*
 
 %changelog
+* Sun Apr 03 2022 Vitaly Lipatov <lav@altlinux.ru> 0.9.10-alt1
+- new version 0.9.10 (with rpmrb script)
+
 * Wed Sep 08 2021 Vitaly Lipatov <lav@altlinux.ru> 0.9.9-alt1
 - new version 0.9.9 (with rpmrb script)
 
