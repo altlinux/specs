@@ -8,7 +8,7 @@
 %def_without doc
 
 Name: python3-module-%oname
-Version: 6.4.4
+Version: 6.4.8
 Release: alt1
 Summary: Jupyter Interactive Notebook
 License: BSD
@@ -153,6 +153,9 @@ nosetests3 -vv --with-coverage --cover-package=%oname %oname
 %endif
 
 %changelog
+* Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 6.4.8-alt1
+- new version 6.4.8 (with rpmrb script)
+
 * Fri Oct 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.4.4-alt1
 - Updated to upstream version 6.4.4.
 
