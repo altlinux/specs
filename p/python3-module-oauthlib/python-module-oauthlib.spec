@@ -1,7 +1,7 @@
 %global oname oauthlib
 
 Name: python3-module-oauthlib
-Version: 3.1.1
+Version: 3.2.0
 Release: alt1
 
 Summary: An implementation of the OAuth request-signing logic
@@ -51,6 +51,9 @@ very little effort.
 %python3_sitelibdir/%oname-*.egg-info
 
 %changelog
+* Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt1
+- new version 3.2.0 (with rpmrb script)
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.1-alt1
 - new version 3.1.1 (with rpmrb script)
 
