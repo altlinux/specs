@@ -4,7 +4,7 @@
 Name: 	       pcs
 Epoch:         1
 Version:       0.11.2
-Release:       alt1
+Release:       alt2
 Summary:       Pacemaker/Corosync configuration system
 License:       GPL-2.0 and Apache-2.0 and MIT
 Group:         System/Servers
@@ -47,6 +47,7 @@ BuildRequires: python3-module-tornado >= 6.0.0
 BuildRequires: python3-module-dateutil
 BuildRequires: python3-module-distro
 BuildRequires: python3-module-wheel
+BuildRequires: python3-module-lxml
 BuildRequires: gem-backports
 BuildRequires: ruby-daemons
 BuildRequires: gem-ethon
@@ -179,6 +180,9 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Tue Apr 05 2022 Alexander Danilov <admsasha@altlinux.org> 1:0.11.2-alt2
+- FTBFS: fixed build
+
 * Sat Feb 05 2022 Andrey Cherepanov <cas@altlinux.org> 1:0.11.2-alt1
 - New version.
 
