@@ -1,6 +1,6 @@
 %define oname dpkt
 Name: python3-module-dpkt
-Version: 1.9.4
+Version: 1.9.7.2
 Release: alt1
 
 Summary: Fast, simple packet creation and parsing
@@ -38,10 +38,13 @@ Fast, simple packet creation / parsing, with definitions for the basic TCP/IP pr
 py.test3 -vv %oname || py.test3 -p no:warnings -vv %oname
 
 %files
-%doc docs AUTHORS CHANGES LICENSE README* examples
+%doc docs AUTHORS LICENSE README* examples
 %python3_sitelibdir/*
 
 %changelog
+* Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 1.9.7.2-alt1
+- new version 1.9.7.2 (with rpmrb script)
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.9.4-alt1
 - build python3 module separately
 
