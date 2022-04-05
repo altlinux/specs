@@ -1,7 +1,7 @@
 %define modulename pem
 
 Name: python3-module-pem
-Version: 20.1.0
+Version: 21.2.0
 Release: alt1
 
 Summary: Easy PEM file parsing in Python
@@ -40,6 +40,9 @@ i.e. Base64 encoded DER keys and certificates.
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 21.2.0-alt1
+- new version 21.2.0 (with rpmrb script)
+
 * Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 20.1.0-alt1
 - new version 20.1.0 (with rpmrb script)
 
