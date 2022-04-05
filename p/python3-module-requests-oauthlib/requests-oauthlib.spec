@@ -2,7 +2,7 @@
 %define oname requests-oauthlib
 
 Name: python3-module-%oname
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: OAuthlib authentication support for Requests
@@ -46,6 +46,9 @@ This project provides first-class OAuth library support for Requests.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Apr 05 2022 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt1
+- new version 1.3.1 (with rpmrb script)
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
 - new version 1.3.0 (with rpmrb script)
 
