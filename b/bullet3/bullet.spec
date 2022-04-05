@@ -5,8 +5,8 @@
 %def_disable static
 
 Name: %{oname}3
-Version: 2.88
-Release: alt2
+Version: 2.89
+Release: alt1
 
 Summary: Professional 3D collision detection library
 License: Zlib
@@ -135,6 +135,7 @@ done
 
 %files -n lib%name-devel
 %_libdir/pkgconfig/%oname.pc
+%_libdir/pkgconfig/bullet_robotics.pc
 %_includedir/*
 %_libdir/cmake/%oname
 %if_disabled static
@@ -145,6 +146,9 @@ done
 %endif #static
 
 %changelog
+* Tue Apr 05 2022 Artyom Bystrov <arbars@altlinux.org> 2.89-alt1
+- Update to version 2.89
+
 * Wed Oct 30 2019 Michael Shigorin <mike@altlinux.org> 2.88-alt2
 - E2K: strip UTF-8 BOM for lcc < 1.24
 
