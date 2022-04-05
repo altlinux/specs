@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-tqdm
-Version: 4.62.2
+Version: 4.63.1
 Release: alt1
 
 Summary: A fast, extensible progress bar for Python and CLI
@@ -54,6 +54,9 @@ py.test3
 %python3_sitelibdir/*
 
 %changelog
+* Tue Apr 05 2022 Vitaly Lipatov <lav@altlinux.ru> 4.63.1-alt1
+- new version 4.63.1 (with rpmrb script)
+
 * Sun Sep 12 2021 Vitaly Lipatov <lav@altlinux.ru> 4.62.2-alt1
 - new version 4.62.2 (with rpmrb script)
 
