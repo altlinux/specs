@@ -2,7 +2,7 @@
 
 Name: touche
 Version: 1.0.7
-Release: alt3
+Release: alt4
 
 Summary: The desktop application to configure Touchegg
 
@@ -24,6 +24,7 @@ Patch2: touche-1.0.7-alt-add-russian-translation.patch
 
 Requires: lib%name%sover = %EVR
 Requires: lib%name-gir = %EVR
+Requires: touchegg
 
 BuildRequires: rpm-macros-nodejs
 BuildRequires: rpm-build-gir
@@ -124,12 +125,15 @@ appstream-util validate-relax --nonet %buildroot%_datadir/appdata/com.github.jos
 %_girdir/Touche-1.0.0.gir
 
 %changelog
+* Mon Apr 04 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.0.7-alt4
+- Added touchegg to Requires
+
 * Wed Nov 17 2021 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.0.7-alt3
 - add russian translation
 
 * Wed Nov 10 2021 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.0.7-alt2
 - add soname to libtouch library
-- packing library files into subpackages 
+- packing library files into subpackages
 
 * Wed Nov 10 2021 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.0.7-alt1
 - Initial build in Sisyphus
