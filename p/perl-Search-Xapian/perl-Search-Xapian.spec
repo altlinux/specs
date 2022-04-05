@@ -2,11 +2,12 @@ Summary:        Xapian perl bindings
 
 Name:           perl-Search-Xapian
 Version:        1.2.25.5
-Release:        alt1
+Release:        alt1.1
 
 Group: Development/Perl
-License: Perl
+License: Artistic-2.0
 URL: https://metacpan.org/release/Search-Xapian
+VCS: git://git.xapian.org/xapian
 
 # https://cpan.metacpan.org/authors/id/O/OL/OLLY/Search-Xapian-%{version}.tar.gz
 Source0: %name-%version.tar
@@ -39,6 +40,9 @@ export TEST_POD=1
 %perl_vendor_archlib/*
 
 %changelog
+* Tue Apr 05 2022 Igor Vlasenko <viy@altlinux.org> 1.2.25.5-alt1.1
+- added VCS: tag and fixed License
+
 * Tue Apr 05 2022 Igor Vlasenko <viy@altlinux.org> 1.2.25.5-alt1
 - New version (1.2.25.5)
 
