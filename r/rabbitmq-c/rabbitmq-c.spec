@@ -2,14 +2,14 @@
 
 %global sover 4
 
-Name:		rabbitmq-c
-Version:	0.11.0
-Release:	alt3
+Name: rabbitmq-c
+Version: 0.11.0
+Release: alt4
 
-Summary:	RabbitMQ C client
-Group:		System/Libraries
-License:	MIT
-URL:		https://github.com/alanxz/rabbitmq-c
+Summary: RabbitMQ C client
+Group: System/Libraries
+License: MIT
+URL: https://github.com/alanxz/rabbitmq-c
 
 Source: %name-%version.tar
 
@@ -27,18 +27,18 @@ This is a C-language AMQP client library for use with v2.0+ of the
 RabbitMQ broker.
 
 %package -n librabbitmq-c%sover
-Summary:		Libraries for %name
-Group:			System/Libraries
-Provides:		librabbitmq-c = %EVR
-Conflicts:		librabbitmq-c
+Summary: Libraries for %name
+Group: System/Libraries
+Provides: librabbitmq-c = %EVR
+Conflicts: librabbitmq-c
 
 %description -n librabbitmq-c%sover
 %summary
 
 %package -n librabbitmq-c-devel
-Summary:		Development files for %name
-Group:			System/Libraries
-Requires:		pkgconfig
+Summary: Development files for %name
+Group: System/Libraries
+Requires: pkgconfig
 
 %description -n librabbitmq-c-devel
 %summary
@@ -80,6 +80,9 @@ popd
 %_libdir/cmake
 
 %changelog
+* Fri Apr 01 2022 Egor Ignatov <egori@altlinux.org> 0.11.0-alt4
+- f54668b tools: multiple tries to make a connection
+
 * Tue Jan 25 2022 Egor Ignatov <egori@altlinux.org> 0.11.0-alt3
 - 49a0ba4 tools: print verbose error message when failed to open a socket
 - f194b49 tools: enable ssl in connection_info if --ssl used with --server
