@@ -1,7 +1,7 @@
 %define oname userspace-rcu
 Name: libuserspace-rcu
-Version: 0.13.0
-Release: alt2
+Version: 0.13.1
+Release: alt1
 
 Summary: RCU (read-copy-update) implementation in user space
 
@@ -95,6 +95,9 @@ make check
 %_pkgconfigdir/liburcu*.pc
 
 %changelog
+* Sun Apr 03 2022 Vitaly Lipatov <lav@altlinux.ru> 0.13.1-alt1
+- new version 0.13.1 (with rpmrb script)
+
 * Tue Sep 21 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.13.0-alt2
 - added patch for Elbrus (uses generic code)
 - added LD_LIBRARY_PATH for tests
