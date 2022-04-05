@@ -1,7 +1,7 @@
 %define oname suds-py3
 
 Name: python3-module-suds
-Version: 1.4.1.0
+Version: 1.4.5.0
 Release: alt1
 
 Summary: Lightweight SOAP python client for consuming Web Services
@@ -44,6 +44,9 @@ Supports pluggable soap bindings.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Apr 05 2022 Vitaly Lipatov <lav@altlinux.ru> 1.4.5.0-alt1
+- new version 1.4.5.0 (with rpmrb script)
+
 * Tue Nov 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1.4.1.0-alt1
 - build python3 package separately, cleanup spec
 - switched to suds-py3 upstream (fork of the original suds)
