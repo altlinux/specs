@@ -1,6 +1,6 @@
 Name:           libmnl
-Version:        1.0.4
-Release:        alt2
+Version:        1.0.5
+Release:        alt1
 Summary:        Minimalistic Netlink library
 Group:          System/Libraries
 License:         LGPLv2.1+
@@ -45,6 +45,9 @@ developing applications that use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Apr 06 2022 Alexei Takaseev <taf@altlinux.org> 1.0.5-alt1
+- 1.0.5
+
 * Tue Feb 05 2019 Alexei Takaseev <taf@altlinux.org> 1.0.4-alt2
 - Rebuild with new glibc-kernheaders-generic
 
