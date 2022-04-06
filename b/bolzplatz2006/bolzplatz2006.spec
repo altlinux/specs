@@ -1,14 +1,16 @@
+# new libs.req stunt
+%add_findreq_skiplist %_libdir/bolzplatz2006/liblwjgl.so
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2007 oc2pus <toni@links2linux.de>
-# Copyright (c) 2007 Hans de Goede <j.w.r.degoede@hhs.nl>
+# Copyright (c) 2007-2021 Hans de Goede <hdegoede@redhat.com>
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
 #
@@ -16,7 +18,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           bolzplatz2006
 Version:        1.0.3
-Release:        alt1_46jpp11
+Release:        alt1_51jpp11
 Summary:        Slam Soccer 2006 is a funny football game in 3D-comic-style
 Summary(fr):    Coup de Foot 2006 est un jeu comique en 3D
 Summary(de):    Bolzplatz 2006 ist ein spaßiges Fußballspiel im 3D-Comic-Stil
@@ -42,16 +44,15 @@ Patch6:         %{name}-lwjgl-Makefile.patch
 Patch7:         %{name}-no-xrandr.patch
 Patch8:         %{name}-versioned-openal.patch
 Patch9:         %{name}-1.0.3-libpng15.patch
-Patch10:        %{name}-class-version15.patch
-Patch11:        %{name}-use-system-extgl.patch
-Patch12:        %{name}-gcc6.patch
-Patch13:        %{name}-openjdk11.patch
+Patch10:        %{name}-use-system-extgl.patch
+Patch11:        %{name}-gcc6.patch
+Patch12:        %{name}-openjdk11.patch
 BuildRequires:  gcc-c++
 BuildRequires:  ant sdljava dom4j vecmath1.2 swig xml-commons-apis
 BuildRequires:  libGLU-devel libdevil-devel libXxf86vm-devel libjpeg-devel
 BuildRequires:  libpng-devel libpng17-tools libXext-devel libXrandr-devel libXcursor-devel
 BuildRequires:  libXt-devel libXrender-devel libvorbis-devel desktop-file-utils
-BuildRequires:  libappstream-glib
+BuildRequires:  libappstream-glib libappstream-glib-gir
 Requires:       sdljava dom4j vecmath1.2 java jpackage-utils
 Requires:       icon-theme-hicolor autodownloader
 # These are dynamically opened by lwjgl:
@@ -126,10 +127,7 @@ Gratuit et open-source.
 
 %prep
 %setup -q -c
-pushd libsrc/jirr-dev
-%patch0 -p0
-cp %{SOURCE6} diff.txt
-popd
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -142,7 +140,8 @@ popd
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
-%patch13 -p1
+
+cp %{SOURCE6} libsrc/jirr-dev/diff.txt
 cp %{SOURCE7} .
 sed -i 's/\r//' license.txt
 # we use the system versions of these
@@ -245,6 +244,9 @@ install -p -m 644 %{name}-functions.sh %{SOURCE8} %{SOURCE9} \
 
 
 %changelog
+* Wed Apr 06 2022 Igor Vlasenko <viy@altlinux.org> 1.0.3-alt1_51jpp11
+- fixed build
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.0.3-alt1_46jpp11
 - update
 
