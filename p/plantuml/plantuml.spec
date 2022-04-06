@@ -1,22 +1,26 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           plantuml
-Version:        1.2021.0
-Release:        alt1_2jpp11
+Version:        1.2022.2
+Release:        alt1_1jpp11
 Epoch:          2
 Summary:        Program to generate UML diagram from a text description
 
 License:        LGPLv3+
 URL:            http://plantuml.com/
-Source0:        http://downloads.sourceforge.net/plantuml/%{name}-lgpl-%{version}.tar.gz
-Patch0:         remove-non-ascii-char.patch
+Source0:        http://downloads.sourceforge.net/%{name}/%{name}-lgpl-%{version}.tar.gz
+#Fix compilation under openjdk
+Patch0:         build-with-javac-utf8-encoding.patch
 
 BuildArch:      noarch
 
 BuildRequires:  ant
+BuildRequires:  fdupes
+BuildRequires:  xmvn
+Requires:       java >= 1.8.0
 BuildRequires:  javapackages-local
 # Explicit requires for javapackages-tools since plantuml script
 # uses /usr/share/java-utils/java-functions
@@ -83,6 +87,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc --no-dereference COPYING
 
 %changelog
+* Wed Apr 06 2022 Igor Vlasenko <viy@altlinux.org> 2:1.2022.2-alt1_1jpp11
+- new version (closes: #42069)
+
 * Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 2:1.2021.0-alt1_2jpp11
 - rebuild with java11 and use jvm_run
 
